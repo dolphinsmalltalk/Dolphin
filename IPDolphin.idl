@@ -1,0 +1,30 @@
+[
+	object,
+	uuid(6D0FA0A9-1A1B-467B-BB99-AD1CCDF513AA),
+	helpstring("IIPDolphin Interface (implemented by image)"),
+	pointer_default(unique)
+]
+interface IIPDolphin : IUnknown
+{
+	HRESULT CanUnloadNow();
+	HRESULT GetClassObject([in]REFCLSID rclsid, [in]REFIID riid, [out,retval,iid_is(riid)]void** ppv);
+	HRESULT RegisterServer();
+	HRESULT UnregisterServer();
+
+	HRESULT OnInitialize();
+	HRESULT OnShutdown();
+};
+
+[
+	object,
+	uuid(7DAC28A4-28F3-4CC9-8BF1-C17FB4CAC8BD),
+	helpstring("IIPPlugHole Interface (implemented by stub)"),
+	pointer_default(unique)
+]
+interface IIPPlugHole : IUnknown
+{
+	[propget, helpstring("Corresponding peer object in the Dolphin image.")]
+		HRESULT Peer([out, retval] IUnknown** pVal);
+	[propput, helpstring("Corresponding peer object in the Dolphin image.")]
+		HRESULT Peer([in,unique] IUnknown* newVal);
+};

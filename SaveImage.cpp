@@ -1,0 +1,338 @@
+/******************************************************************************
+
+	File: image.cpp
+
+	Description:
+
+	Object Memory management image save method
+	definitions for Dolphin Smalltalk
+
+******************************************************************************/
+#include "ist.h"
+
+#if defined(TO_GO)
+	#error To Go VMs cannot save images
+#endif
+
+#include <stdio.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <float.h>
+#include <io.h>
+#include <fcntl.h>
+#include "binstream.h"
+#ifndef _AFX
+	#include "zfbinstream.h"
+#endif
+#include "objmem.h"
+#include "ObjMemPriv.inl"
+#include "interprt.h"
+#include "rc_vm.h"
+
+// Smalltalk classes
+#include "STProcess.h"		// The stacks are patched on loading to new addresses
+#include "STString.h"
+#include "STCharacter.h"
+#include "STClassDesc.h"
+
+#ifdef NDEBUG
+	#pragma optimize("s", on)
+	#pragma auto_inline(off)
+#endif
+
+#ifdef _DEBUG
+	#define PROFILE_IMAGELOADSAVE
+#endif
+
+//////////////////////////////////////////////////////////////////////////////
+// Image Save Methods
+
+bool ObjectMemory::Expire(const char* szFileName)
+{
+	imageStamp.bIsExpired = true;
+	imageStamp.dwSavesRemaining = 1;
+
+	// Note that if we are running a deployed executable image, then this
+	// save will fail because obviously the file cannot be opened while it 
+	// is in use, and in consequence false will be returned, causing the
+	// whole image load to fail, and hence the deployed executable will also
+	// have expired
+
+	return SaveImageFile(szFileName, false, false)==0;
+}
+
+int __stdcall ObjectMemory::SaveImageFile(const char* szFileName, bool bBackup, int nCompressionLevel)
+{
+	// Answer:
+	//	NULL = success
+	//	ZeroPointer = general save error
+	//	OnePointer = image has expired
+
+	WORD today = todayAsDATEWORD();
+
+	if (!szFileName)
+		return 2;
+
+	
+	int nRet = 3;
+
+#if !defined(OAD) && !defined(_AFX)
+	// Deliberately obfuscate the expiry code a bit to deter those attempting to reverse engineer
+	// What we do here is to set a flag we test later on. Note that we still open the file, but
+	// as a backup, which we then don't complete.
+	if (imageStamp.dwSavesRemaining == 0)
+	{
+		// Can't save an expired image.
+		TRACE("Image has expired\n");
+		nRet = 1;
+
+		// We must use a backup in this case
+		bBackup = true;
+	}
+	else
+	{
+		imageStamp.wLastSaveDate = today;
+		imageStamp.dwSavesRemaining--;
+	}
+#endif
+
+	const char* saveName;
+	char bak[_MAX_PATH];
+	if (bBackup)
+	{
+		char folder[_MAX_PATH];
+		char fname[_MAX_FNAME];
+		{
+			char dir[_MAX_DIR];
+			char drive[_MAX_DRIVE];
+			_splitpath_s(szFileName, drive, _MAX_DRIVE, dir, _MAX_DIR, fname, _MAX_FNAME, NULL, 0);
+			_makepath(folder, drive, dir, NULL, NULL);
+			_makepath(bak, drive, dir, fname, "bak");
+		}
+		saveName = _tempnam(folder, fname);
+	}
+	else
+		saveName = szFileName;
+
+	int fd;
+	int err = ::_sopen_s(&fd, saveName, _O_WRONLY|_O_BINARY|_O_CREAT|_O_TRUNC|_O_SEQUENTIAL, _SH_DENYRW, _S_IWRITE|_S_IREAD);
+	if (err != 0)
+	{
+		char buf[256];
+		strerror_s(buf, errno);
+		TRACE("Failed to open image file for save %d:'%s'\n", errno, buf);
+		return 2;
+	}
+
+#ifdef PROFILE_IMAGELOADSAVE
+	TRACESTREAM << "Saving image to '" << saveName << "' ..." << endl;
+	DWORD dwStartTicks = GetTickCount();
+#endif
+
+	::_write(fd, ISTHDRTYPE, sizeof(ISTHDRTYPE));
+
+	ImageHeader header;
+	memset(&header, 0, sizeof(header));
+
+	VS_FIXEDFILEINFO versionInfo;
+	::GetVersionInfo(&versionInfo);
+
+	header.versionMS		= versionInfo.dwProductVersionMS;
+	header.versionLS		= (LOWORD(versionInfo.dwProductVersionLS) << 16) |
+								((isIntegerObject(_Pointers.ImageVersionMinor))?
+								LOWORD(integerValueOf(_Pointers.ImageVersionMinor)) : 0);
+
+	header.flags.bIsCompressed = nCompressionLevel != 0;
+
+	header.nGlobalPointers	= NumPointers;
+
+	// By saving down the base offset with the image, we don't need
+	// to convert on save, only load
+	ASSERT(sizeof(OTE*) == sizeof(DWORD));
+	header.BasePointer		= m_pOT;
+
+	// Saving down current hash counter is not 100% necessary, but ensures
+	// consistent behavior each time image is loaded.
+	header.nNextIdHash		= m_nNextIdHash;
+
+	// User may have modified max table size
+	header.nMaxTableSize	= m_nOTMax;
+
+#ifdef _AFX
+	imageStamp.wImageBootDate = today;
+#endif
+
+	// Create a special Context to hold information about the image and
+	// save it into the image. We'll call this the imageStamp.
+	// When we find this Context on a subsequent image-load, we will be
+	// able to extract this information.
+	
+	PointersOTE* oteStamp = ObjectMemory::newPointerObject(
+		_Pointers.ClassContext, 
+		Context::FixedSize + sizeof(ImageStamp)/4+1);
+	oteStamp->beBytes();
+
+	Context* pContext = reinterpret_cast<Context*>(oteStamp->m_location);
+	pContext->m_frame = Oop(oteStamp);
+	// Add artificial ref. count
+	oteStamp->m_flags.m_count = 1;
+
+	// Transfer the information from ObjectMemory into the ImageStamp.
+	ImageStamp* stamp = reinterpret_cast<ImageStamp*>(&(pContext->m_tempFrame));
+	memcpy(stamp, &ObjectMemory::imageStamp, sizeof(ImageStamp));
+
+	// We must do this after allocating the image stamp so that the OT size is correct
+	unsigned i = lastOTEntry();
+	// Find the last used entry
+	ASSERT(i > NumPermanent);
+	header.nTableSize = i+1;
+
+	::_write(fd, &header, sizeof(ImageHeader));
+	
+	bool bSaved;
+	{
+		BYTE buf[dwAllocationGranularity];
+#ifndef _AFX
+		if (header.flags.bIsCompressed)
+		{
+			zfbinstream stream;
+			//stream.rdbuf()->setbuf(buf, sizeof(buf));
+			//stream.clrlock();
+			stream.attach(fd, "wb", 0, true);
+			//stream << setcompressionlevel(nCompressionLevel);
+			bSaved = SaveImage(stream, &header, nRet);
+		}
+		else
+#endif
+		{
+			fbinstream stream;
+			// We don't need thread synchronisation
+			//stream.clrlock();
+			stream.attach(fd, "wb");
+			stream.setbuf(buf, sizeof(buf));
+
+			bSaved = SaveImage(stream, &header, nRet);
+			stream.close();
+			::_close(fd);
+		}
+
+	#ifndef _AFX
+		// Explicitly free the special MethodContext used for the image stamp
+		oteStamp->decRefs();
+		deallocate(reinterpret_cast<OTE*>(oteStamp));
+	#endif
+
+	#ifdef PROFILE_IMAGELOADSAVE
+		DWORD msToRun = GetTickCount() - dwStartTicks;
+		TRACESTREAM << " done (" << (bSaved ? "Succeeded" : "Failed") << "), binstreams time " << long(msToRun) << "mS" << endl;
+	#endif
+	}
+
+	if (bBackup)
+	{
+		if (bSaved)
+		{
+			remove(bak);
+			rename(szFileName, bak);
+			nRet = rename(saveName, szFileName);
+		}
+		else
+		{
+			remove(saveName);
+		}
+	}
+	else
+	{
+		if (bSaved)
+			nRet = 0;
+	}
+
+	return nRet;
+
+}
+
+bool __stdcall ObjectMemory::SaveImage(obinstream& imageFile, const ImageHeader* pHeader, int nRet)
+{
+	EmptyZct();
+	// Do the save.
+	bool bResult = imageFile.good() != 0 
+		&& (nRet == 3)
+		&& SaveObjectTable(imageFile, pHeader) 
+		&& SaveObjects(imageFile, pHeader) 
+		&& imageFile.flush().good();
+	PopulateZct();
+	return bResult;
+}
+/*
+bool __stdcall ObjectMemory::SaveHeader(int fd, ImageHeader& header)
+{
+	return ::_lseek(fd, sizeof(ISTHDRTYPE), SEEK_SET) == sizeof(ISTHDRTYPE)
+		&& ::write(fd, &header, sizeof(ImageHeader)) == sizeof(ImageHeader);
+}
+*/
+
+// Quick and dirty - save the whole OT wasting space used by empty
+// entries
+bool __stdcall ObjectMemory::SaveObjectTable(obinstream& imageFile, const ImageHeader* pHeader)
+{
+	return imageFile.write(m_pOT, sizeof(OTE)*pHeader->nTableSize);
+}
+
+bool __stdcall ObjectMemory::SaveObjects(obinstream& imageFile, const ImageHeader* pHeader)
+{
+	#ifdef _DEBUG
+		unsigned numObjects = 0;
+		unsigned nFree = 0;
+	#endif
+
+	DWORD dwDataSize = 0;
+	const OTE* pEnd = m_pOT+pHeader->nTableSize;	// Loop invariant
+	for (OTE* ote=m_pOT; ote < pEnd; ote++)
+	{
+		if (!ote->isFree())
+		{
+			#ifdef _DEBUG
+				numObjects++;
+			#endif
+
+			void* obj = ote->m_location;
+
+			if (ote->heapSpace() == OTEFlags::VirtualSpace)
+			{
+				VirtualObject* vObj = reinterpret_cast<VirtualObject*>(obj);
+				VirtualObjectHeader* pHeader = vObj->getHeader();
+
+				imageFile.write(pHeader, sizeof(VirtualObjectHeader));
+				dwDataSize += sizeof(VirtualObjectHeader);
+			}
+
+			// Debug check to catch corruption - it is of course permitted for Object to be 
+			// greater than 512k in size, just unlikely
+			MWORD bytesToWrite = ote->sizeOf();
+			ASSERT(bytesToWrite < 512*1024);
+
+			imageFile.write(obj, bytesToWrite);
+
+			if (imageFile.good() == 0)
+				return false;
+			dwDataSize += bytesToWrite;
+		}
+		else
+		{
+#ifdef _DEBUG
+			nFree++;
+#endif
+		}
+	}
+
+	#ifdef _DEBUG
+		TRACESTREAM << numObjects << " objects saved totalling " << dec << dwDataSize 
+				<< " bytes, " << nFree << " free OTEs"
+				// Compressed stream does not support seeking and sets to bad state
+				//<< ", writing checksum at offset " << imageFile.tellp() 
+				<< endl;
+	#endif
+
+	// Append the amount of data written as a checksum.
+	return imageFile.write(&dwDataSize, sizeof(DWORD));
+}

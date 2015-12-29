@@ -1,0 +1,511 @@
+// Microsoft Visual C++ generated resource script.
+//
+#include "rc_devrs.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "winres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// Neutral resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_NEU)
+LANGUAGE LANG_NEUTRAL, SUBLANG_NEUTRAL
+#pragma code_page(1252)
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+2                       ICON                    "res\\imagedoc.ico"
+!APPLICATION            ICON                    "Res\\flipper.ico"
+ABSTRACTCARDCONTAINER.ICO ICON                    "Res\\AbstractCardContainer.ico"
+ACCELERATORPRESENTER.ICO ICON                    "Res\\AcceleratorPresenter.ico"
+AIBO.ICO                ICON                    "Res\\Aibo.ico"
+APPLICATIONDEPLOYMENTWIZARD.ICO ICON                    "Res\\ApplicationDeploymentWizard.ico"
+ASPECTBUFFER.ICO        ICON                    "Res\\AspectBuffer.ico"
+BAG.ICO                 ICON                    "Res\\Bag.ico"
+BASICINSPECTOR.ICO      ICON                    "Res\\BasicInspector.ico"
+LISTCONTROLVIEW.ICO     ICON                    "Res\\ListControlView.ico"
+BATCHASPECTACCESSOR.ICO ICON                    "Res\\BatchAspectAccessor.ico"
+BEHAVIOR.ICO            ICON                    "Res\\Behavior.ico"
+BLANK.ICO               ICON                    "res\\blank.ico"
+BLOCKCLOSURE.ICO        ICON                    "res\\BlockClosure.ico"
+BOOLEAN.ICO             ICON                    "Res\\Boolean.ico"
+BOOLEANPRESENTER.ICO    ICON                    "Res\\BooleanPresenter.ico"
+BOUNCINGBALLVIEW.ICO    ICON                    "Res\\BouncingBallView.ico"
+BROWSEFOLDERDIALOG.ICO  ICON                    "Res\\BrowseFolderDialog.ico"
+BRUSH.ICO               ICON                    "Res\\Brush.ico"
+BYTEARRAY.ICO           ICON                    "Res\\ByteArray.ico"
+CALCULATOR.ICO          ICON                    "Res\\Calculator.ico"
+CANVAS.ICO              ICON                    "Res\\Canvas.ico"
+CATEGORY.ICO            ICON                    "Res\\Category.ico"
+CHANGED.ICO             ICON                    "res\\Changed.ico"
+CHARACTER.ICO           ICON                    "Res\\Character.ico"
+CHAT.ICO                ICON                    "res\\Chat.ico"
+CHECKBOX.ICO            ICON                    "Res\\CheckBox.ico"
+CHOICEPRESENTER.ICO     ICON                    "Res\\ChoicePresenter.ico"
+CLASS.ICO               ICON                    "res\\Class.ico"
+CLASSBROWSERSHELL.ICO   ICON                    "res\\ClassBrowserShell.ico"
+CLASSCOMMENT.ICO        ICON                    "Res\\ClassComment.ico"
+CLASSHIERARCHYDIAGRAM.ICO ICON                    "res\\ClassHierarchyDiagram.ico"
+CLEARDOCUMENT.ICO       ICON                    "Res\\ClearDocument.ico"
+CLIPBOARD.ICO           ICON                    "Res\\Clipboard.ico"
+CLOSEWINDOW.ICO         ICON                    "Res\\CloseWindow.ico"
+CODEMENTORPLUGIN.ICO    ICON                    "Res\\CodeMentorPlugin.ico"
+COLLECTION.ICO          ICON                    "res\\Collection.ico"
+COLLECTIONPRESENTER.ICO ICON                    "Res\\CollectionPresenter.ico"
+COLOR.ICO               ICON                    "res\\color.ico"
+COLORDIALOG.ICO         ICON                    "Res\\ColorDialog.ico"
+COLORPRESENTER.ICO      ICON                    "Res\\ColorPresenter.ico"
+COLORVIEW.ICO           ICON                    "Res\\ColorView.ico"
+COMBOBOX.ICO            ICON                    "Res\\Combobox.ico"
+COMINTERFACE.ICO        ICON                    "res\\cominter.ico"
+COMPILEDMETHOD.ICO      ICON                    "res\\CompiledMethod.ico"
+COMPILEDMETHOD_DEPRECATED.ICO ICON                    "res\\CompiledMethod_Deprecated.ico"
+COMPILEDMETHOD_PRIVATE.ICO ICON                    "res\\CompiledMethodPrivate.ico"
+COMPILEDMETHOD_PUBLIC.ICO ICON                    "res\\CompiledMethodPublic.ico"
+COMPILEFAILEDMETHOD.ICO ICON                    "res\\CompileFailedMethod.ico"
+COMPILER.ICO            ICON                    "Res\\Compiler.ico"
+CONSOLESESSIONMANAGER.ICO ICON                    "Res\\cmd.ico"
+CONTAINERVIEW.ICO       ICON                    "Res\\ContainerView.ico"
+CONTROLBARABSTRACT.ICO  ICON                    "Res\\ControlBarAbstract.ico"
+DATE.ICO                ICON                    "Res\\Date.ico"
+DATEPRESENTER.ICO       ICON                    "Res\\DatePresenter.ico"
+DATETIMECOMMONCONTROL.ICO ICON                    "Res\\DateTimePicker.ico"
+DEADOBJECT.ICO          ICON                    "Res\\DeadObject.ico"
+DEAFOBJECT.ICO          ICON                    "Res\\DeafObject.ico"
+DEBUGGER.ICO            ICON                    "res\\Debugger.ico"
+DELAY.ICO               ICON                    "Res\\delay.ico"
+DESKTOPVIEW.ICO         ICON                    "Res\\DesktopView.ico"
+DIALOG.ICO              ICON                    "Res\\Dialog.ico"
+DIALOGVIEW.ICO          ICON                    "Res\\DialogView.ico"
+DICTIONARY.ICO          ICON                    "Res\\Dictionary.ico"
+DISASSEMBLYPLUGIN.ICO   ICON                    "Res\\DisassemblyPlugin.ico"
+DISPLAYIT.ICO           ICON                    "Res\\DisplayIt.ico"
+DOCUMENTSHELL.ICO       ICON                    "Res\\DocumentShell.ico"
+DOLPHINPACKAGEFOLDER.ICO ICON                    "Res\\DolphinPackageFolder.ico"
+DOLPHINSERIALNUMBER.ICO ICON                    "res\\DolphinSerialNumber.ico"
+DOLPHINSURECERTIFICATE.ICO ICON                    "Res\\DolphinSureCertificate.ico"
+DOLPHINSURETRUSTEDDATA.ICO ICON                    "Res\\DolphinSureTrustedData.ico"
+DOWNARROW.ICO           ICON                    "Res\\DownArrow.ico"
+EDITCLEAR.ICO           ICON                    "Res\\EditDelete.ico"
+EDITCOPY.ICO            ICON                    "Res\\EditCopy.ico"
+EDITCUT.ICO             ICON                    "Res\\EditCut.ico"
+EDITPASTE.ICO           ICON                    "Res\\EditPaste.ico"
+EDITREDO.ICO            ICON                    "Res\\EditRedo.ico"
+EDITUNDO.ICO            ICON                    "Res\\EditUndo.ico"
+ENVIRONMENTBROWSERSHELL.ICO ICON                    "res\\EnvironmentBrowserShell.ico"
+ETCHASKETCH.ICO         ICON                    "res\\EtchASketch.ico"
+EVALUATEIT.ICO          ICON                    "Res\\EvaluateIt.ico"
+EXCEPTION.ICO           ICON                    "Res\\Exception.ico"
+EXTENT.ICO              ICON                    "res\\EXTENT.ICO"
+EXTERNALSTRUCTURE.ICO   ICON                    "Res\\externalstructure.ico"
+FALSE.ICO               ICON                    "Res\\False.ico"
+FILEDIALOG.ICO          ICON                    "Res\\FileDialog.ico"
+FILENEW.ICO             ICON                    "Res\\DocumentShell.ico"
+FILEOPEN.ICO            ICON                    "Res\\FileOpen.ico"
+FILESAVE.ICO            ICON                    "Res\\FileSave.ico"
+FILESYSTEMMONITOR.ICO   ICON                    "Res\\FileSystemMonitor.ico"
+FINDCLASS.ICO           ICON                    "Res\\Find.ico"
+FINDNEXT.ICO            ICON                    "Res\\FindNext.ico"
+FLOAT.ICO               ICON                    "Res\\Float.ico"
+FOLDER.ICO              ICON                    "Res\\Folder.ico"
+FOLDERPRESENTER.ICO     ICON                    "Res\\FolderPresenter.ico"
+FONT.ICO                ICON                    "res\\font.ico"
+FONTPRESENTER.ICO       ICON                    "Res\\FontPresenter.ico"
+FONTVIEW.ICO            ICON                    "Res\\FontView.ico"
+FRACTION.ICO            ICON                    "Res\\Fraction.ico"
+GDILIBRARY.ICO          ICON                    "Res\\GDILibrary.ico"
+GOSEARCH.ICO            ICON                    "Res\\GoSearch.ico"
+GRAPHICSTOOL.ICO        ICON                    "Res\\GraphicsTool.ico"
+GRAYEDCLASSCOMMENT.ICO  ICON                    "res\\GrayedClassComment.ico"
+GROUPBOX.ICO            ICON                    "Res\\GroupBox.ico"
+HELLOWORLD.ICO          ICON                    "res\\HelloWorld.ico"
+HISTORYBACK.ICO         ICON                    "Res\\HistoryBack.ico"
+HISTORYFORWARD.ICO      ICON                    "Res\\HistoryForward.ico"
+HOTKEY.ICO              ICON                    "Res\\HotKey.ico"
+IAGENTCTLCHARACTER.ICO  ICON                    "Res\\IAgentCtlCharacter.ico"
+FINDDIALOG.ICO          ICON                    "Res\\FindDialog.ico"
+IDI_UNLOCK              ICON                    "Res\\UnlockDialog.ico"
+IDISPATCH.ICO           ICON                    "Res\\idispatch.ico"
+IMAGE.ICO               ICON                    "res\\image.ico"
+IMAGEPRESENTER.ICO      ICON                    "Res\\ImagePresenter.ico"
+IMAGEVIEW.ICO           ICON                    "Res\\ImageView.ico"
+ICON.ICO                ICON                    "Res\\Icon.ico"
+INPLACERENAME.ICO       ICON                    "Res\\Rename.ico"
+INPUTSTATE.ICO          ICON                    "Res\\InputState.ico"
+INSPECTIT.ICO           ICON                    "Res\\InspectIt.ico"
+INTERVAL.ICO            ICON                    "Res\\Interval.ico"
+ITYPELIB.ICO            ICON                    "Res\\typelib.ico"
+KEYBOARD.ICO            ICON                    "Res\\Keyboard.ico"
+LARGEINTEGER.ICO        ICON                    "Res\\LargeInteger.ico"
+LAYOUTMANAGER.ICO       ICON                    "res\\LayoutManager.ico"
+LINTERROR.ICO           ICON                    "Res\\LintError.ico"
+LINTINFO.ICO            ICON                    "Res\\LintInfo.ico"
+LINTPASS.ICO            ICON                    "Res\\LintPass.ico"
+LINTRULE.ICO            ICON                    "Res\\LintRule.ico"
+LINTWARNING.ICO         ICON                    "Res\\LintWarning.ico"
+LISTMODEL.ICO           ICON                    "Res\\ListModel.ico"
+LISTPRESENTER.ICO       ICON                    "Res\\ListPresenter.ico"
+LISTVALUEPRESENTER.ICO  ICON                    "Res\\ListValuePresenter.ico"
+LISTVIEWCOLUMN.ICO      ICON                    "Res\\ListViewColumn.ico"
+LIVEUPDATE.ICO          ICON                    "Res\\LiveUpdate.ico"
+LIVEUPDATEOFF.ICO       ICON                    "Res\\LiveUpdateOff.ico"
+LOCALE.ICO              ICON                    "Res\\Locale.ico"
+MEMORYMANAGER.ICO       ICON                    "Res\\MemoryManager.ico"
+MENU.ICO                ICON                    "Res\\Menu.ico"
+MESSAGE.ICO             ICON                    "Res\\Message.ico"
+MESSAGESENDABSTRACT.ICO ICON                    "Res\\MessageSendAbstract.ico"
+MESSAGESEQUENCEABSTRACT.ICO ICON                    "Res\\MessageSequenceAbstract.ico"
+METACLASS.ICO           ICON                    "Res\\Metaclass.ico"
+METHODBROWSER.ICO       ICON                    "res\\MethodBrowser.ico"
+METHODPROTOCOL.ICO      ICON                    "Res\\methodprotocol.ico"
+METHODPROTOCOL_ANSI.ICO ICON                    "res\\methodprotocolansi.ico"
+METHODPROTOCOL_READONLY.ICO ICON                    "res\\methodprotocolro.ico"
+MODEL.ICO               ICON                    "Res\\Model.ico"
+MOENTREEVIEW.ICO        ICON                    "Res\\MoenTreeView.ico"
+MOUSETRACKER.ICO        ICON                    "Res\\MouseTracker.ico"
+MOVEPRIOR.ICO           ICON                    "Res\\MovePrior.ico"
+MOVENEXT.ICO            ICON                    "Res\\MoveNext.ico"
+MULTIPLESELECTIONLISTBOX.ICO ICON                    "Res\\MultipleSelectionListBox.ico"
+MULTIPLESELECTIONLISTVIEW.ICO ICON                    "Res\\MultipleSelectionListView.ico"
+MUTEX.ICO               ICON                    "Res\\Mutex.ico"
+NEWCLASS.ICO            ICON                    "Res\\NewClass.ico"
+NEWMETHOD.ICO           ICON                    "Res\\NewMethod.ico"
+NUMBER.ICO              ICON                    "Res\\Number.ico"
+NUMBERPRESENTER.ICO     ICON                    "Res\\NumberPresenter.ico"
+OBJECT.ICO              ICON                    "Res\\object.ico"
+OVERRIDDEN.ICO          ICON                    "res\\Overridden.ico"
+PACKAGE.ICO             ICON                    "Res\\Package.ico"
+PANIC.ICO               ICON                    "Res\\Panic.ico"
+PEN.ICO                 ICON                    "Res\\Pen.ico"
+PLAYGROUND.ICO          ICON                    "res\\Playground.ico"
+POINT.ICO               ICON                    "Res\\Point.ico"
+POSITION.ICO            ICON                    "res\\POSITION.ICO"
+POWERSWITCH.ICO         ICON                    "Res\\PowerOff.ico"
+PRESENTER.ICO           ICON                    "Res\\Presenter.ico"
+PROCESS.ICO             ICON                    "Res\\PROCESS.ICO"
+PROCESSMONITOR.ICO      ICON                    "res\\ProcessMonitor.ico"
+PROGRESSBAR.ICO         ICON                    "Res\\ProgressBar.ico"
+PROTOCOLBROWSERSHELL.ICO ICON                    "res\\ProtocolBrowserShell.ico"
+PUSHBUTTON.ICO          ICON                    "Res\\PushButton.ico"
+RADIOBUTTON.ICO         ICON                    "Res\\RadioButton.ico"
+RECTANGLE.ICO           ICON                    "Res\\Rectangle.ico"
+RECYCLEBIN.ICO          ICON                    "Res\\RecycleBin.ico"
+REFACTORING.ICO         ICON                    "Res\\Refactoring.ico"
+REFERENCEVIEW.ICO       ICON                    "Res\\ReferenceView.ico"
+REFRESH.ICO             ICON                    "Res\\Refresh.ico"
+REGKEY.ICO              ICON                    "res\\regkey.ico"
+REGKEYABSTRACT.ICO      ICON                    "res\\REGKEYABSTRACT.ico"
+REGKEYVALUES.ICO        ICON                    "res\\regkeyva.ico"
+REGVALUEBIN.ICO         ICON                    "res\\regvalue.ico"
+RESOURCE.ICO            ICON                    "res\\Resource.ico"
+REVERT.ICO              ICON                    "Res\\Revert.ico"
+RUNTOCURSOR.ICO         ICON                    "Res\\RunToCursor.ico"
+RUN.ICO                 ICON                    "Res\\Run.ico"
+SCALEDDECIMAL.ICO       ICON                    "res\\ScaledDecimal.ico"
+SCINTILLAVIEW.ICO       ICON                    "Res\\ScintillaView.ico"
+SCRIBBLE.ICO            ICON                    "res\\Scribble.ico"
+SCRIBBLEVIEW.ICO        ICON                    "res\\ScribbleView.ico"
+SCROLLBAR.ICO           ICON                    "Res\\ScrollBar.ico"
+SCROLLINGDECORATOR.ICO  ICON                    "Res\\ScrollingDecorator.ico"
+SEARCHTEXT.ICO          ICON                    "Res\\SearchText.ico"
+SHELL.ICO               ICON                    "Res\\Shell.ico"
+SHELLVIEW.ICO           ICON                    "Res\\ShellView.ico"
+SHIELD.ICO              ICON                    "Res\\Shield.ico"
+SHOWNEXTSTATEMENT.ICO   ICON                    "Res\\Forwards.ico"
+SLEEP.ICO               ICON                    "Res\\Sleep.ico"
+SLIDER.ICO              ICON                    "Res\\Slider.ico"
+SMALLTALKOPTIONSFOLDER.ICO ICON                    "res\\SmalltalkSystemOptionSet.ico"
+SMALLTALKSYSTEMFOLDER.ICO ICON                    "res\\SmalltalkSystemFolder.ico"
+SMALLTALKTOOLSFOLDER.ICO ICON                    "res\\SmalltalkSystemToolsFolder.ico"
+SMALLTALKTOOLSHELL.ICO  ICON                    "res\\SmalltalkToolShell.ico"
+SMALLTALKWORKSPACE.ICO  ICON                    "res\\SmalltalkWorkspace.ico"
+SNAPSHOT.ICO            ICON                    "Res\\Snapshot.ico"
+SOUND.ICO               ICON                    "Res\\Sound.ico"
+SOURCEMANAGER.ICO       ICON                    "Res\\SourceManager.ico"
+SOURCETRACKINGSYSTEM.ICO ICON                    "Res\\SourceTrackingSystem.ico"
+SOURCETRACKINGTOOLSFOLDER.ICO ICON                    "Res\\SourceTrackingToolsFolder.ico"
+SOURCETRACKINGTOOLSHELL.ICO ICON                    "Res\\SourceTrackingToolShell.ico"
+SPINBUTTON.ICO          ICON                    "Res\\SpinButton.ico"
+SPLITTER.ICO            ICON                    "Res\\Splitter.ico"
+STATICIMAGE.ICO         ICON                    "Res\\StaticImage.ico"
+STATICTEXT.ICO          ICON                    "Res\\StaticText.ico"
+STATUS.ICO              ICON                    "Res\\Status.ico"
+STEPINTO.ICO            ICON                    "Res\\StepInto.ico"
+STEPOVER.ICO            ICON                    "Res\\StepOver.ico"
+STEPOUT.ICO             ICON                    "Res\\StepOut.ico"
+STRING.ICO              ICON                    "res\\String.ico"
+STSADMINSHELL.ICO       ICON                    "Res\\StsAdminShell.ico"
+STSCLASSEDITION.ICO     ICON                    "Res\\StsClassEdition.ico"
+STSMETHODEDITION.ICO    ICON                    "Res\\StsMethodEdition.ico"
+STSPACKAGEEDITION.ICO   ICON                    "Res\\StsPackageEdition.ico"
+STSPROJECTEDITION.ICO   ICON                    "Res\\StsProjectEdition.ico"
+STSRESOURCEEDITION.ICO  ICON                    "Res\\StsResourceEdition.ico"
+SYMBOL.ICO              ICON                    "res\\symbol.ico"
+SYSTEMBROWSERSHELL.ICO  ICON                    "Res\\SystemBrowserShell.ico"
+SYSTEMDICTIONARY.ICO    ICON                    "Res\\SystemDictionary.ico"
+TABVIEW.ICO             ICON                    "Res\\TabView.ico"
+TEXTEDIT.ICO            ICON                    "Res\\TextEdit.ico"
+TEXTPRESENTER.ICO       ICON                    "Res\\TextPresenter.ico"
+TIME.ICO                ICON                    "Res\\Time.ico"
+TIMEPRESENTER.ICO       ICON                    "Res\\TimePresenter.ico"
+TIMESTAMP.ICO           ICON                    "Res\\TimeStamp.ico"
+TIPOFTHEDAY.ICO         ICON                    "Res\\TipOfTheDay.ico"
+TOGGLELOCALHIERARCHY.ICO ICON                    "Res\\ToggleLocalHierarchy.ico"
+TOOLTIP.ICO             ICON                    "Res\\ToolTip.ico"
+TRANSCRIPTSHELL.ICO     ICON                    "res\\TranscriptShell.ico"
+TRANSFORMATIONRULE.ICO  ICON                    "Res\\Writing.ico"
+TREEMODELABSTRACT.ICO   ICON                    "Res\\TreeModelAbstract.ico"
+TREEPRESENTER.ICO       ICON                    "Res\\TreePresenter.ico"
+TREEVIEW.ICO            ICON                    "Res\\TreeView.ico"
+TRUE.ICO                ICON                    "Res\\True.ico"
+TYPECONVERTER.ICO       ICON                    "res\\TypeConverter.ico"
+UNDEFINEDOBJECT.ICO     ICON                    "Res\\UndefinedObject.ico"
+UP.ICO                  ICON                    "Res\\Up.ico"
+UPARROW.ICO             ICON                    "Res\\UpArrow.ico"
+VALUEADAPTOR.ICO        ICON                    "Res\\ValueAdaptor.ico"
+VALUEBUFFER.ICO         ICON                    "Res\\ValueBuffer.ico"
+VALUECONVERTER.ICO      ICON                    "Res\\ValueConverter.ico"
+VALUECONVERTINGCONTROLVIEW.ICO ICON                    "Res\\ValueConvertingControlView.ico"
+VALUEDIALOG.ICO         ICON                    "Res\\ValueDialog.ico"
+VALUEHOLDER.ICO         ICON                    "Res\\ValueHolder.ico"
+VALUEMODEL.ICO          ICON                    "Res\\ValueModel.ico"
+VALUEPRESENTER.ICO      ICON                    "Res\\ValuePresenter.ico"
+VIDEOLIBRARY.ICO        ICON                    "Res\\VideoLibrary.ico"
+VIDEORECORDING.ICO      ICON                    "Res\\VideoRecording.ico"
+VIDEOTAPE.ICO           ICON                    "Res\\VideoTape.ico"
+VIEW.ICO                ICON                    "Res\\View.ico"
+VIEWCOMPOSER.ICO        ICON                    "Res\\ViewComposer.ico"
+VISUALOBJECTFINDER.ICO  ICON                    "res\\VisualObjectFinder.ico"
+WAIT.ICO                ICON                    "Res\\Wait.ico"
+WINIMAGELIST.ICO        ICON                    "Res\\FilmStrip.ico"
+WIZARD.ICO              ICON                    "res\\Wizard.ico"
+XML.ICO                 ICON                    "res\\Xml.ico"
+RESTART.ICO             ICON                    "Res\\Restart.ico"
+MARKOVGAME.ICO          ICON                    "res\\MarkovGame.ico"
+UNITTESTPLUGIN.ICO      ICON                    "Res\\UnitTestPlugin.ico"
+UNITTESTPLUGINDEFECT.ICO ICON                    "res\\UnitTestPluginDefect.ico"
+UNITTESTPLUGINFAIL.ICO  ICON                    "res\\UnitTestPluginFail.ico"
+UNITTESTPLUGINNOTEST.ICO ICON                    "res\\UnitTestPluginNoTest.ico"
+UNITTESTPLUGINNOTRUN.ICO ICON                    "res\\UnitTestPluginNotRun.ico"
+UNITTESTPLUGINPASS.ICO  ICON                    "res\\UnitTestPluginPass.ico"
+TESTRUNNER.ICO          ICON                    "res\\TestRunner.ico"
+SUNITABSBROWSER.ICO     ICON                    "res\\SUnitAbsBrowser.ico"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Bitmap
+//
+
+TOOLS.BMP               BITMAP                  "res\\Tools.bmp"
+XHATCH.BMP              BITMAP                  "res\\xhatch.bmp"
+LAGOONLOGO.BMP          BITMAP                  "res\\LagoonLogo.bmp"
+HEADERPIN.BMP           BITMAP                  "res\\HeaderPin.bmp"
+#endif    // Neutral resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+/////////////////////////////////////////////////////////////////////////////
+// English (United States) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+#pragma code_page(1252)
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_STRIPPERPROGRESS DIALOGEX 0, 0, 349, 99
+STYLE DS_SETFONT | DS_NOFAILCREATE | DS_CENTER | WS_POPUP | WS_CAPTION
+EXSTYLE WS_EX_CLIENTEDGE
+CAPTION "Dolphin Lagoon - Image Stripping in Progress"
+FONT 8, "Microsoft Sans Serif", 0, 0, 0x1
+BEGIN
+    CONTROL         "LagoonLogo.bmp",IDC_PROGRESSIMAGE,"Static",SS_BITMAP,0,0,15,13
+    CONTROL         "Progress1",IDC_PROGRESSBAR,"msctls_progress32",0x0,114,73,232,9,WS_EX_STATICEDGE
+    LTEXT           "Image Stripping in Progress",IDC_PROGRESSCAPTION,114,2,233,12,NOT WS_VISIBLE
+    LTEXT           "The stripping process may take several minutes depending on the ImageStripper configuration. ",IDC_PROGRESSEXPLANATION,114,4,235,66
+    EDITTEXT        IDC_PROGRESSSTATUS,113,84,232,13,ES_AUTOHSCROLL | NOT WS_BORDER,WS_EX_STATICEDGE
+END
+
+IDD_UNLOCK DIALOGEX 0, 0, 316, 150
+STYLE DS_SETFONT | DS_MODALFRAME | DS_NOIDLEMSG | DS_SETFOREGROUND | DS_3DLOOK | DS_NOFAILCREATE | WS_POPUP | WS_CAPTION
+EXSTYLE WS_EX_CONTROLPARENT
+CAPTION "Dolphin Smalltalk Unlock (Fresh Install)"
+FONT 8, "Microsoft Sans Serif", 0, 0, 0x1
+BEGIN
+    LTEXT           "Please enter your product serial number to unlock this copy of Dolphin Smalltalk. The new Dolphin image file will be signed with your unique customer identifier.",IDC_STATIC,42,8,260,30
+    LTEXT           "&Serial number:",IDC_STATIC,42,66,48,15
+    EDITTEXT        IDC_UNLOCKKEY,94,64,198,12,ES_UPPERCASE | ES_AUTOHSCROLL | NOT WS_BORDER,WS_EX_STATICEDGE
+    LTEXT           "&Machine ID:",IDC_STATIC,197,0,45,15,NOT WS_VISIBLE
+    EDITTEXT        IDC_MACHINEID,245,0,70,14,ES_AUTOHSCROLL | ES_READONLY | NOT WS_VISIBLE
+    LTEXT           "When you click the ""Unlock"" button you will be asked for a directory and name for the new image file. The default location supplied is a sub-folder within your My Documents folder.",IDC_STATIC,41,86,186,36
+    PUSHBUTTON      "Apply for Community Edition Serial Number",IDC_APPLYDCE,40,125,167,14
+    DEFPUSHBUTTON   "&Unlock",IDOK,242,92,50,14
+    PUSHBUTTON      "&Quit",IDCANCEL,242,125,50,14
+    ICON            IDI_UNLOCK,IDC_STATIC,8,9,20,20
+    LTEXT           "IF YOU DON'T YET HAVE A SERIAL NUMBER, YOU MUST EITHER PURCHASE DOLPHIN PROFESSIONAL OR APPLY FOR A FREE COMMUNITY EDITION SERIAL NUMBER USING THE BUTTON BELOW.",IDC_STATIC,42,31,251,26
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO
+BEGIN
+    IDD_STRIPPERPROGRESS, DIALOG
+    BEGIN
+        BOTTOMMARGIN, 98
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE 
+BEGIN
+    "rc_devrs.h\0"
+END
+
+2 TEXTINCLUDE 
+BEGIN
+    "#include ""winres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE 
+BEGIN
+    "#include ""res\\ist.rc2""  // non-Microsoft Visual C++ edited resources\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog Info
+//
+
+IDD_BROWSER DLGINIT
+BEGIN
+    IDC_METHODTYPE, 0x403, 9, 0
+0x6e49, 0x7473, 0x6e61, 0x6563, "\000" 
+    IDC_METHODTYPE, 0x403, 6, 0
+0x6c43, 0x7361, 0x0073, 
+    0
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION 20016,7,0,0
+ PRODUCTVERSION 2016,7,0,0
+ FILEFLAGSMASK 0x1fL
+#ifdef _DEBUG
+ FILEFLAGS 0x1L
+#else
+ FILEFLAGS 0x0L
+#endif
+ FILEOS 0x40004L
+ FILETYPE 0x2L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904b0"
+        BEGIN
+            VALUE "CompanyName", "Object Arts Ltd."
+            VALUE "FileDescription", "Dolphin 7 IDE Resources"
+            VALUE "FileVersion", "20016.7.0.0"
+            VALUE "InternalName", "DolphinDevRes"
+            VALUE "LegalCopyright", "Copyright © Object Arts 1997-2016"
+            VALUE "OriginalFilename", "DolphinDR7.dll"
+            VALUE "ProductName", "Dolphin Smalltalk 7"
+            VALUE "ProductVersion", "2016.7.0.0"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x409, 1200
+    END
+END
+
+#endif    // English (United States) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+/////////////////////////////////////////////////////////////////////////////
+// English (United Kingdom) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENG)
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_UK
+#pragma code_page(1252)
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDEASPACESHELL.ICO      ICON                    "Res\\IdeaSpaceShell.ico"
+TRADINGMACHINEWORKBENCH.ICO ICON                    "Res\\TradingMachineWorkbench.ico"
+STRATEGYANALYSERSHELL.ICO ICON                    "Res\\StrategyAnalyserShell.ico"
+STRATEGYANALYSERPRESENTER.ICO ICON                    "Res\\StrategyAnalyserPresenter.ico"
+IDEASPACEBREAKOUT.ICO   ICON                    "Res\\IdeaSpaceBreakout.ico"
+IDEASPACESHELLADD.ICO   ICON                    "Res\\IdeaSpaceShellAdd.ico"
+IDEASPACESHELLADDDISABLED.ICO ICON                    "res\\IdeaSpaceShellAddDisabled.ico"
+DOLPHINPACKAGE.ICO      ICON                    "Res\\DolphinPackage.ico"
+STSPROJECT.ICO          ICON                    "res\\StsProject.ico"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Bitmap
+//
+
+FINDBAR.BMP             BITMAP                  "Res\\findbar.bmp"
+LISTBAR.BMP             BITMAP                  "Res\\ListBar.bmp"
+EDITBAR.BMP             BITMAP                  "res\\EditBar.bmp"
+FILEBAR.BMP             BITMAP                  "Res\\FileBar.bmp"
+VIEWBAR.BMP             BITMAP                  "res\\ViewBar.bmp"
+VCBAR.BMP               BITMAP                  "Res\\VCBar.bmp"
+IDEASPACECARDBAR.BMP    BITMAP                  "Res\\IdeaSpaceCardBar.bmp"
+#endif    // English (United Kingdom) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+#include "res\ist.rc2"  // non-Microsoft Visual C++ edited resources
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+

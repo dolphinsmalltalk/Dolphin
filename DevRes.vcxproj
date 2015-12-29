@@ -1,0 +1,506 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="VM Debug|Win32">
+      <Configuration>VM Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{FAB6154D-5E54-4967-B55D-F5AEE5DC18F0}</ProjectGuid>
+    <RootNamespace>DevRes</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <PlatformToolset>v120</PlatformToolset>
+    <UseOfMfc>false</UseOfMfc>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <PlatformToolset>v120</PlatformToolset>
+    <UseOfMfc>false</UseOfMfc>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>12.0.30501.0</_ProjectFileVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>$(SolutionDir)$(Configuration)\</OutDir>
+    <IntDir>$(Configuration)\</IntDir>
+    <IgnoreImportLibrary>true</IgnoreImportLibrary>
+    <LinkIncremental>false</LinkIncremental>
+    <TargetName>DolphinDR7</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">
+    <OutDir>$(SolutionDir)$(Configuration)\</OutDir>
+    <IntDir>$(Configuration)\</IntDir>
+    <IgnoreImportLibrary>true</IgnoreImportLibrary>
+    <LinkIncremental>false</LinkIncremental>
+    <TargetName>DolphinDR7</TargetName>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <CustomBuildStep>
+      <Message>Copying binary to image folder</Message>
+      <Command>copy "$(TargetPath)" "$(SolutionDir)..\..\$(TargetFileName)"
+</Command>
+      <Outputs>$(SolutionDir)..\..\$(TargetFileName);%(Outputs)</Outputs>
+    </CustomBuildStep>
+    <Midl>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <TargetEnvironment>Win32</TargetEnvironment>
+      <GenerateStublessProxies>true</GenerateStublessProxies>
+      <TypeLibraryName>.\WinDLL/DevRes.tlb</TypeLibraryName>
+    </Midl>
+    <ClCompile>
+      <AdditionalOptions>/LD  %(AdditionalOptions)</AdditionalOptions>
+      <Optimization>MinSpace</Optimization>
+      <InlineFunctionExpansion>Default</InlineFunctionExpansion>
+      <FavorSizeOrSpeed>Size</FavorSizeOrSpeed>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <StringPooling>true</StringPooling>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
+      <ForceConformanceInForLoopScope>true</ForceConformanceInForLoopScope>
+      <WarningLevel>Level3</WarningLevel>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture>0x0809</Culture>
+    </ResourceCompile>
+    <Link>
+      <AdditionalOptions>/MACHINE:I386 %(AdditionalOptions)</AdditionalOptions>
+      <OutputFile>$(TargetPath)</OutputFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <IgnoreAllDefaultLibraries>true</IgnoreAllDefaultLibraries>
+      <SubSystem>Windows</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <EntryPointSymbol>DllMain</EntryPointSymbol>
+      <RandomizedBaseAddress>false</RandomizedBaseAddress>
+      <DataExecutionPrevention />
+      <ImportLibrary>.\WinDLL/DolphinDR006.lib</ImportLibrary>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">
+    <CustomBuildStep>
+      <Command>copy "$(TargetPath)" $(SolutionDir)..\..\$(TargetName).dll
+</Command>
+      <Outputs>$(SolutionDir)..\..\$(TargetFileName);%(Outputs)</Outputs>
+    </CustomBuildStep>
+    <Midl>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <TargetEnvironment>Win32</TargetEnvironment>
+      <GenerateStublessProxies>true</GenerateStublessProxies>
+      <TypeLibraryName>.\WinDLL/DevRes.tlb</TypeLibraryName>
+    </Midl>
+    <ClCompile>
+      <AdditionalOptions>/LD  %(AdditionalOptions)</AdditionalOptions>
+      <Optimization>MinSpace</Optimization>
+      <InlineFunctionExpansion>Default</InlineFunctionExpansion>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <StringPooling>true</StringPooling>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
+      <ForceConformanceInForLoopScope>true</ForceConformanceInForLoopScope>
+      <WarningLevel>Level3</WarningLevel>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture>0x0809</Culture>
+    </ResourceCompile>
+    <Link>
+      <AdditionalOptions>/MACHINE:I386 %(AdditionalOptions)</AdditionalOptions>
+      <OutputFile>$(TargetPath)</OutputFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <IgnoreAllDefaultLibraries>true</IgnoreAllDefaultLibraries>
+      <SubSystem>Windows</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EntryPointSymbol>DllMain</EntryPointSymbol>
+      <RandomizedBaseAddress>false</RandomizedBaseAddress>
+      <DataExecutionPrevention />
+      <ImportLibrary>.\WinDLL/DolphinDR006.lib</ImportLibrary>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ResourceCompile Include="devres.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="resdllmain.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Res\AbstractCardContainer.ico" />
+    <Image Include="Res\AcceleratorPresenter.ico" />
+    <Image Include="Res\Adk.ico" />
+    <Image Include="Res\Aibo.ico" />
+    <Image Include="Res\ApplicationDeploymentWizard.ico" />
+    <Image Include="Res\AspectBuffer.ico" />
+    <Image Include="Res\AspectInspector.ico" />
+    <Image Include="Res\Bag.ico" />
+    <Image Include="Res\BasicInspector.ico" />
+    <Image Include="Res\BasicListAbstract.ico" />
+    <Image Include="Res\BatchAspectAccessor.ico" />
+    <Image Include="Res\Behavior.ico" />
+    <Image Include="Res\BinaryPackage.ico" />
+    <Image Include="Res\BinaryPackageFile.ico" />
+    <Image Include="Res\blank.ico" />
+    <Image Include="Res\BlockClosure.ico" />
+    <Image Include="Res\Boolean.ico" />
+    <Image Include="Res\BooleanPresenter.ico" />
+    <Image Include="Res\BouncingBallView.ico" />
+    <Image Include="Res\BrowseFolderDialog.ico" />
+    <Image Include="Res\Brush.ico" />
+    <Image Include="Res\ByteArray.ico" />
+    <Image Include="Res\Calculator.ico" />
+    <Image Include="Res\Canvas.ico" />
+    <Image Include="Res\Category.ico" />
+    <Image Include="Res\CD.ico" />
+    <Image Include="Res\Changed.ico" />
+    <Image Include="Res\Character.ico" />
+    <Image Include="Res\Chat.ico" />
+    <Image Include="Res\CheckBox.ico" />
+    <Image Include="Res\ChoicePresenter.ico" />
+    <Image Include="Res\Class.ico" />
+    <Image Include="Res\ClassBrowserShell.ico" />
+    <Image Include="Res\ClassComment.ico" />
+    <Image Include="Res\ClassHierarchyDiagram.ico" />
+    <Image Include="Res\ClearDocument.ico" />
+    <Image Include="Res\Clipboard.ico" />
+    <Image Include="Res\CloseWindow.ico" />
+    <Image Include="Res\cmd.ico" />
+    <Image Include="Res\CodeMentorPlugin.ico" />
+    <Image Include="Res\Collection.ico" />
+    <Image Include="Res\CollectionPresenter.ico" />
+    <Image Include="Res\Color.ico" />
+    <Image Include="Res\ColorDialog.ico" />
+    <Image Include="Res\ColorPresenter.ico" />
+    <Image Include="Res\ColorView.ico" />
+    <Image Include="Res\Combobox.ico" />
+    <Image Include="Res\cominter.ico" />
+    <Image Include="Res\comp.ico" />
+    <Image Include="Res\CompiledMethod.ico" />
+    <Image Include="Res\CompiledMethodPrivate.ico" />
+    <Image Include="Res\CompiledMethodPublic.ico" />
+    <Image Include="Res\CompiledMethod_Deprecated.ico" />
+    <Image Include="Res\CompileFailedMethod.ico" />
+    <Image Include="Res\Compiler.ico" />
+    <Image Include="Res\CompositePresenter.ico" />
+    <Image Include="Res\ContainerView.ico" />
+    <Image Include="Res\ControlBarAbstract.ico" />
+    <Image Include="Res\Date.ico" />
+    <Image Include="Res\DatePresenter.ico" />
+    <Image Include="Res\DateTimePicker.ico" />
+    <Image Include="Res\dbgbar.bmp" />
+    <Image Include="Res\DeadObject.ico" />
+    <Image Include="Res\DeafObject.ico" />
+    <Image Include="Res\Debugger.ico" />
+    <Image Include="Res\Delay.ico" />
+    <Image Include="Res\DesktopView.ico" />
+    <Image Include="Res\Dialog.ico" />
+    <Image Include="Res\DialogView.ico" />
+    <Image Include="Res\Dictionary.ico" />
+    <Image Include="Res\DisassemblyPlugin.ico" />
+    <Image Include="Res\DisplayIt.ico" />
+    <Image Include="Res\DocumentShell.ico" />
+    <Image Include="Res\DolphinPackage.ico" />
+    <Image Include="Res\DolphinPackageFolder.ico" />
+    <Image Include="Res\DolphinSerialNumber.ico" />
+    <Image Include="Res\DolphinSplash.bmp" />
+    <Image Include="Res\DolphinSureCertificate.ico" />
+    <Image Include="Res\DolphinSureTrustedData.ico" />
+    <Image Include="Res\Doltbar.bmp" />
+    <Image Include="Res\DownArrow.ico" />
+    <Image Include="Res\EditBar.bmp" />
+    <Image Include="Res\EditCopy.ico" />
+    <Image Include="Res\EditCut.ico" />
+    <Image Include="Res\EditDelete.ico" />
+    <Image Include="Res\EditPaste.ico" />
+    <Image Include="Res\EditRedo.ico" />
+    <Image Include="Res\EditUndo.ico" />
+    <Image Include="Res\EnvironmentBrowserShell.ico" />
+    <Image Include="Res\EtchASketch.ico" />
+    <Image Include="Res\evalbar.bmp" />
+    <Image Include="Res\EvaluateIt.ico" />
+    <Image Include="Res\Exception.ico" />
+    <Image Include="Res\extent.ico" />
+    <Image Include="Res\externalstructure.ico" />
+    <Image Include="Res\False.ico" />
+    <Image Include="Res\FileBar.bmp" />
+    <Image Include="Res\FileDialog.ico" />
+    <Image Include="Res\FileOpen.ico" />
+    <Image Include="Res\FileSave.ico" />
+    <Image Include="Res\FileSystemMonitor.ico" />
+    <Image Include="Res\FilmStrip.ico" />
+    <Image Include="Res\Find.ico" />
+    <Image Include="Res\findbar.bmp" />
+    <Image Include="Res\FindDialog.ico" />
+    <Image Include="Res\FindNext.ico" />
+    <Image Include="Res\flipper.ico" />
+    <Image Include="Res\FlipperInspector.ico" />
+    <Image Include="Res\Float.ico" />
+    <Image Include="Res\Folder.ico" />
+    <Image Include="Res\FolderPresenter.ico" />
+    <Image Include="Res\Font.ico" />
+    <Image Include="Res\FontDialog.ico" />
+    <Image Include="Res\FontPresenter.ico" />
+    <Image Include="Res\FontView.ico" />
+    <Image Include="Res\Forwards.ico" />
+    <Image Include="Res\Fraction.ico" />
+    <Image Include="Res\GDILibrary.ico" />
+    <Image Include="Res\GoSearch.ico" />
+    <Image Include="Res\GraphicsTool.ico" />
+    <Image Include="Res\grayedclasscoment.ico" />
+    <Image Include="Res\GrayedClassComment.ico" />
+    <Image Include="Res\GroupBox.ico" />
+    <Image Include="Res\HeaderPin.bmp" />
+    <Image Include="Res\HelloWorld.ico" />
+    <Image Include="Res\HistoryBack.ico" />
+    <Image Include="Res\HistoryForward.ico" />
+    <Image Include="Res\HotKey.ico" />
+    <Image Include="Res\IAgentCtlCharacter.ico" />
+    <Image Include="Res\Icon.ico" />
+    <Image Include="Res\icon3.ico" />
+    <Image Include="Res\icon4.ico" />
+    <Image Include="Res\IconicListAbstract.ico" />
+    <Image Include="Res\IdeaSpaceBreakout.ico" />
+    <Image Include="Res\IdeaSpaceCardBar.bmp" />
+    <Image Include="Res\IdeaSpaceShell.ico" />
+    <Image Include="Res\IdeaSpaceShellAdd.ico" />
+    <Image Include="Res\IdeaSpaceShellAddDisabled.ico" />
+    <Image Include="Res\idispatch.ico" />
+    <Image Include="Res\image.ico" />
+    <Image Include="Res\Imagedoc.ico" />
+    <Image Include="Res\ImagePresenter.ico" />
+    <Image Include="Res\ImageView.ico" />
+    <Image Include="Res\IndexedInstVarBatchAccessor.ico" />
+    <Image Include="Res\InputState.ico" />
+    <Image Include="Res\InspectIt.ico" />
+    <Image Include="Res\Inspector.ico" />
+    <Image Include="Res\InspectorShell.ico" />
+    <Image Include="Res\InstVarInspector.ico" />
+    <Image Include="Res\Interval.ico" />
+    <Image Include="Res\Keyboard.ico" />
+    <Image Include="Res\KeyedAspectBatchAccessor.ico" />
+    <Image Include="Res\LagoonLogo.bmp" />
+    <Image Include="Res\LargeInteger.ico" />
+    <Image Include="Res\LayoutManager.ico" />
+    <Image Include="Res\LintError.ico" />
+    <Image Include="Res\LintInfo.ico" />
+    <Image Include="Res\LintPass.ico" />
+    <Image Include="Res\LintRule.ico" />
+    <Image Include="Res\LintWarning.ico" />
+    <Image Include="Res\ListBar.bmp" />
+    <Image Include="Res\ListControlView.ico" />
+    <Image Include="Res\ListModel.ico" />
+    <Image Include="Res\ListPresenter.ico" />
+    <Image Include="Res\ListValuePresenter.ico" />
+    <Image Include="Res\ListViewColumn.ico" />
+    <Image Include="Res\LiveUpdate.ico" />
+    <Image Include="Res\LiveUpdateOff.ico" />
+    <Image Include="Res\Locale.ico" />
+    <Image Include="Res\LookupKey.ico" />
+    <Image Include="Res\MarkovGame.ico" />
+    <Image Include="Res\MemoryManager.ico" />
+    <Image Include="Res\Menu.ico" />
+    <Image Include="Res\menuitem.ico" />
+    <Image Include="Res\Message.ico" />
+    <Image Include="Res\MessageSendAbstract.ico" />
+    <Image Include="Res\MessageSequenceAbstract.ico" />
+    <Image Include="Res\Metaclass.ico" />
+    <Image Include="Res\MethodBrowser.ico" />
+    <Image Include="Res\MethodBrowserShell.ico" />
+    <Image Include="Res\methodprotocol.ico" />
+    <Image Include="Res\methodprotocolansi.ico" />
+    <Image Include="Res\methodprotocolro.ico" />
+    <Image Include="Res\Model.ico" />
+    <Image Include="Res\MoenTreeView.ico" />
+    <Image Include="Res\MouseTracker.ico" />
+    <Image Include="Res\MoveNext.ico" />
+    <Image Include="Res\MovePrior.ico" />
+    <Image Include="Res\MultipleSelectionListBox.ico" />
+    <Image Include="Res\MultipleSelectionListView.ico" />
+    <Image Include="Res\Mutex.ico" />
+    <Image Include="Res\NewClass.ico" />
+    <Image Include="Res\NewMethod.ico" />
+    <Image Include="Res\NewThing.ico" />
+    <Image Include="Res\Number.ico" />
+    <Image Include="Res\NumberPresenter.ico" />
+    <Image Include="Res\object.ico" />
+    <Image Include="Res\Overridden.ico" />
+    <Image Include="Res\Package.ico" />
+    <Image Include="Res\PackageFile.ico" />
+    <Image Include="Res\Panic.ico" />
+    <Image Include="Res\Pen.ico" />
+    <Image Include="Res\Playground.ico" />
+    <Image Include="Res\Point.ico" />
+    <Image Include="Res\position.ico" />
+    <Image Include="Res\PowerOff.ico" />
+    <Image Include="Res\Presenter.ico" />
+    <Image Include="Res\Process.ico" />
+    <Image Include="Res\ProcessMonitor.ico" />
+    <Image Include="Res\ProgressBar.ico" />
+    <Image Include="Res\ProtocolBrowserShell.ico" />
+    <Image Include="Res\PublishedAspectInspector.ico" />
+    <Image Include="Res\PushButton.ico" />
+    <Image Include="Res\RadioButton.ico" />
+    <Image Include="Res\Rectangle.ico" />
+    <Image Include="Res\RecycleBin.ico" />
+    <Image Include="Res\Refactoring.ico" />
+    <Image Include="Res\ReferenceView.ico" />
+    <Image Include="Res\Refresh.ico" />
+    <Image Include="Res\regkey.ico" />
+    <Image Include="Res\regkeyab.ico" />
+    <Image Include="Res\RegKeyAbstract.ico" />
+    <Image Include="Res\regkeyva.ico" />
+    <Image Include="Res\regvalue.ico" />
+    <Image Include="Res\Rename.ico" />
+    <Image Include="Res\Resource.ico" />
+    <Image Include="Res\ResourseBrowser.ico" />
+    <Image Include="Res\Restart.ico" />
+    <Image Include="Res\Revert.ico" />
+    <Image Include="Res\Run.ico" />
+    <Image Include="Res\RunToCursor.ico" />
+    <Image Include="Res\scaledde.ico" />
+    <Image Include="Res\ScaledDecimal.ico" />
+    <Image Include="Res\ScintillaView.ico" />
+    <Image Include="Res\Scribble.ico" />
+    <Image Include="Res\ScribbleView.ico" />
+    <Image Include="Res\ScrollBar.ico" />
+    <Image Include="Res\ScrollingDecorator.ico" />
+    <Image Include="Res\searchtext.ico" />
+    <Image Include="Res\Shell.ico" />
+    <Image Include="Res\ShellView.ico" />
+    <Image Include="Res\Shield.ico" />
+    <Image Include="Res\Sleep.ico" />
+    <Image Include="Res\Slider.ico" />
+    <Image Include="Res\SmalltalkSystemFolder.ico" />
+    <Image Include="Res\SmalltalkSystemOptionSet.ico" />
+    <Image Include="Res\SmalltalkSystemTool.ico" />
+    <Image Include="Res\SmalltalkSystemToolsFolder.ico" />
+    <Image Include="Res\SmalltalkTool.ico" />
+    <Image Include="Res\SmalltalkToolShell.ico" />
+    <Image Include="Res\SmalltalkWorkspace.ico" />
+    <Image Include="Res\SmalltalkWorkspaceDocument.ico" />
+    <Image Include="Res\Snapshot.ico" />
+    <Image Include="Res\Sound.ico" />
+    <Image Include="Res\SourceManager.ico" />
+    <Image Include="Res\SourcePackage.ico" />
+    <Image Include="Res\SourcePackageFile.ico" />
+    <Image Include="Res\SourceTrackingSystem.ico" />
+    <Image Include="Res\SourceTrackingToolsFolder.ico" />
+    <Image Include="Res\SourceTrackingToolShell.ico" />
+    <Image Include="Res\SpinButton.ico" />
+    <Image Include="Res\Splitter.ico" />
+    <Image Include="Res\StaticImage.ico" />
+    <Image Include="Res\StaticText.ico" />
+    <Image Include="Res\Status.ico" />
+    <Image Include="Res\StepInto.ico" />
+    <Image Include="Res\StepOut.ico" />
+    <Image Include="Res\StepOver.ico" />
+    <Image Include="Res\StrategyAnalyserPresenter.ico" />
+    <Image Include="Res\StrategyAnalyserShell.ico" />
+    <Image Include="Res\String.ico" />
+    <Image Include="Res\StsAdmin.ico" />
+    <Image Include="Res\StsAdminShell.ico" />
+    <Image Include="Res\StsClassEdition.ico" />
+    <Image Include="Res\StsMethodEdition.ico" />
+    <Image Include="Res\StsPackageEdition.ico" />
+    <Image Include="Res\StsProject.ico" />
+    <Image Include="Res\StsProjectEdition.ico" />
+    <Image Include="Res\StsResourceEdition.ico" />
+    <Image Include="Res\SUnitAbsBrowser.ico" />
+    <Image Include="Res\symbol.ico" />
+    <Image Include="Res\SystemBrowserShell.ico" />
+    <Image Include="Res\SystemDictionary.ico" />
+    <Image Include="Res\TabView.ico" />
+    <Image Include="Res\TestRunner.ico" />
+    <Image Include="Res\TextEdit.ico" />
+    <Image Include="Res\TextPresenter.ico" />
+    <Image Include="Res\Time.ico" />
+    <Image Include="Res\TimePresenter.ico" />
+    <Image Include="Res\TimeStamp.ico" />
+    <Image Include="Res\TipOfTheDay.ico" />
+    <Image Include="Res\ToggleLocalHierarchy.ico" />
+    <Image Include="Res\ToolBarItem.ico" />
+    <Image Include="Res\ToolbarItem.ico.ico" />
+    <Image Include="Res\Tools.bmp" />
+    <Image Include="Res\ToolsBar.bmp" />
+    <Image Include="Res\ToolTip.ico" />
+    <Image Include="Res\TradingMachineWorkbench.ico" />
+    <Image Include="Res\TranscriptShell.ico" />
+    <Image Include="Res\TranscriptShell.ico.ico" />
+    <Image Include="Res\TreeModelAbstract.ico" />
+    <Image Include="Res\TreePresenter.ico" />
+    <Image Include="Res\TreeView.ico" />
+    <Image Include="Res\True.ico" />
+    <Image Include="Res\TypeConverter.ico" />
+    <Image Include="Res\typelib.ico" />
+    <Image Include="Res\UndefinedObject.ico" />
+    <Image Include="Res\UnitTestPlugin.ico" />
+    <Image Include="Res\UnitTestPluginDefect.ico" />
+    <Image Include="Res\UnitTestPluginFail.ico" />
+    <Image Include="Res\UnitTestPluginNoTest.ico" />
+    <Image Include="Res\UnitTestPluginNotRun.ico" />
+    <Image Include="Res\UnitTestPluginPass.ico" />
+    <Image Include="Res\UnlockDialog.ico" />
+    <Image Include="Res\Up.ico" />
+    <Image Include="Res\UpArrow.ico" />
+    <Image Include="Res\ValueAdaptor.ico" />
+    <Image Include="Res\ValueAspectAdaptor.ico" />
+    <Image Include="Res\ValueBuffer.ico" />
+    <Image Include="Res\ValueConverter.ico" />
+    <Image Include="Res\ValueConvertingControlView.ico" />
+    <Image Include="Res\ValueDialog.ico" />
+    <Image Include="Res\ValueHolder.ico" />
+    <Image Include="Res\ValueIndexedAdaptor.ico" />
+    <Image Include="Res\ValueModel.ico" />
+    <Image Include="Res\ValuePresenter.ico" />
+    <Image Include="Res\VCBar.bmp" />
+    <Image Include="Res\vga256.bmp" />
+    <Image Include="Res\vga256NoVersion.bmp" />
+    <Image Include="Res\VideoLibrary.ico" />
+    <Image Include="Res\VideoRecording.ico" />
+    <Image Include="Res\VideoTape.ico" />
+    <Image Include="Res\View.ico" />
+    <Image Include="Res\ViewBar.bmp" />
+    <Image Include="Res\ViewComposer.ico" />
+    <Image Include="Res\visualob.ico" />
+    <Image Include="Res\VisualObjectFinder.ico" />
+    <Image Include="Res\Wait.ico" />
+    <Image Include="Res\warning.ico" />
+    <Image Include="Res\Wizard.ico" />
+    <Image Include="Res\Writing.ico" />
+    <Image Include="Res\xhatch.bmp" />
+    <Image Include="Res\XML.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Res\hsplit.cur" />
+    <None Include="Res\ist.rc2" />
+    <None Include="Res\vsplit.cur" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="rc_devrs.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

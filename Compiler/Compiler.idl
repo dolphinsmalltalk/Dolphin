@@ -1,0 +1,165 @@
+// Compiler.idl : IDL source for DolphinCR???.dll
+//
+
+// This file will be processed by the MIDL tool to
+// produce the type library (Compiler.tlb) and marshalling code.
+
+import "oaidl.idl";
+import "ocidl.idl";
+
+[
+	uuid(CF88CAFD-2993-11D3-8366-6E485B000000),
+	version(6.0),
+	helpstring("Dolphin Smalltalk Compiler 6.0")
+]
+library CompilerLib
+{
+	importlib("stdole32.tlb");
+	importlib("stdole2.tlb");
+
+	typedef void* POTE;
+	typedef UINT_PTR Oop;
+
+	typedef enum ReservedCodeRanges {
+		LErrMin = 1,
+		LErrMax = 32,
+		CErrMin,
+		CErrMax = 999,
+		CWarnMin,
+		CWarnMax = 1999,
+		CInfoMin,
+		CInfoMax = 2999
+	} ReservedCodeRanges;
+
+	typedef enum LexErrors { 
+		LErrBadChar = LErrMin,
+		LErrCommentNotClosed,
+		LErrStringNotClosed,
+		LErrExpectConst,
+		LErrExpectExtendedLiteral,
+		LErrExpectMetaVariable,
+		LErrExpectChar,
+		LErrInvalidQualifier,
+		LErrQualifiedRefNotClosed,
+		LErrBadNumber
+	} LexErrors;
+
+	typedef enum ParseErrors {
+		CErrTempListNotClosed = CErrMin,
+		CErrInvalExprStart,
+		CErrNonsenseAtMethodEnd,
+		CErrNonsenseAtExprEnd,
+		CErrBraceNotClosed,
+		CErrParenNotClosed,
+		CErrExpectMessage,
+		CErrUnterminatedStatement,
+		CErrExpectVariable,
+		CErrBlockArgListNotClosed,
+		CErrBlockNotClosed,
+		CErrExpectPrimIdx,
+		CErrBadPrimIdx,
+		CErrExpectCloseTag,
+		CErrBadPrimCallType,
+		CErrUnsupportedCallConv,
+		CErrExpectFnName,
+		CErrExpectExtType,
+		CErrArgTypeCannotBeVoid,
+		CErrNotIndirectable,
+		CErrUndefinedClass,
+		CErrInvalidStructArg,
+		CErrBadExtTypeQualifier,
+		CErrInsufficientArgTypes,
+		CErrTooManyArgTypes,
+		CErrExpectVfn,
+		CErrBadVfn,
+		CErrBadTokenInArray,
+		CErrArrayNotClosed,
+		CErrBadValueInByteArray,
+		CErrByteArrayNotClosed,
+		CErrErrorInStaticExpression,
+		CErrTooManyIfNotNilBlockArgs,
+		CErrInternal,
+		CErrAssignmentToArgument,
+		CErrTooManyArgs,
+		CErrTooManyTemps,
+		CErrRedefiningPseudoVar,
+		CErrUndeclared,
+		CErrAssignConstant,
+		CErrStaticExprNotClosed,
+		CErrBadSelector,
+		CErrBadContext=76,
+		CErrIncorrectBlockArgCount,
+		CErrExpectLiteralBlock,
+		CErrMethodTooLarge,
+		CErrTooManyLiterals,
+		CErrBlockNestingTooDeep,
+		CErrBlockArgMissing,
+		CErrBadPools=83,
+		CErrDuplicateTempName=85,
+		CErrDuplicateArgName,
+		CErrRedefiningArg,
+	} ParseErrors;
+
+	typedef enum ParseWarnings {
+		CWarnRedefiningArg = CWarnMin,
+		CWarnRedefiningTemp,
+		CWarnRedefiningInstVar,
+		CWarnRedefiningStatic,
+		CWarnMsgUnimplemented,
+		CWarnUndefinedSelector,
+		CWarnRestrictedSelector,
+		CWarnUnreferencedTemp,
+		CWarnReadNotWritten,
+		CWarnReadBeforeWritten,
+		CWarnWrittenNotRead,
+		CWarnExpectNiladicBlockArg,
+		CWarnExpectMonadicBlockArg,
+		CWarnExpectMonadicOrNiladicBlockArg,
+		CWarnExpectNiladicBlockReceiver,
+		CWarnUnreachable,
+		CWarnUnimplementedAbstractMethod,
+		CWarnUsesBooleanClass,
+	} ParseWarnings;
+
+	typedef enum ParseInformation {
+		CInfoUnreferencedArg = CInfoMin,
+		CInfoSupersendsOther,
+		CInfoHardBreakpoint
+	} ParseInformation;
+
+	typedef enum FirstAndLastCodes {
+		LErrFirst = LErrBadChar,
+		LErrLast = LErrBadNumber,
+		CErrFirst = CErrTempListNotClosed,
+		CErrLast = CErrRedefiningArg,
+		CWarnFirst = CWarnRedefiningArg,
+		CWarnLast = CWarnUsesBooleanClass,
+		CInfoFirst = CInfoUnreferencedArg,
+		CInfoLast = CInfoHardBreakpoint
+	} FirstAndLastCodes;
+
+	typedef enum FLAGS {Default=0x00, SyntaxCheckOnly=0x02, NoOptimize=0x08, TextMap=0x10, TempsMap=0x20, DebugMethod=0x40, Boot=0x80, ScanOnly=0x100, Interactive=0x200, SendYourself=0x400} FLAGS;
+
+	[
+		object,
+		uuid(CF88CAFA-2993-11D3-8366-6E485B000000),
+		pointer_default(unique)
+	]
+	interface ICompiler: IUnknown
+	{
+		POTE CompileForClass([in]IUnknown* piVM, [in]Oop compiler, [in]LPCSTR compiletext, [in]POTE aClass, [in]FLAGS flags, [in]Oop notifier);
+		POTE CompileForEval([in]IUnknown* piVM, [in]Oop compiler, [in]LPCSTR compiletext, [in]POTE aClass, [in]POTE workspacePools, [in]FLAGS flags, [in]Oop notifier);
+	};
+
+	[
+		// uuid(CF88CAFC-2993-11D3-8366-6E485B000000) 3.05
+		//uuid(C47CCC7F-A6B6-401E-8853-F1EC1D20114D) 4.x
+		//uuid(77A96CF7-0709-4EE5-ABCD-EF11735CEA0D)	// 5.0
+		//uuid(52DE08AC-F761-4D50-9FC5-964156F8A0D5)	// 5.04
+		uuid(B1401906-004A-4D84-8A8D-7D7D5F7FEC92)	// 6.0
+	]
+	coclass DolphinCompiler
+	{
+		[default] interface ICompiler;
+	};
+};

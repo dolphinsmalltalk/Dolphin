@@ -1,0 +1,127 @@
+; InProcStub.def : Declares the module parameters.
+
+EXPORTS
+	DllCanUnloadNow     PRIVATE
+	DllGetClassObject   PRIVATE
+	DllRegisterServer   PRIVATE
+	DllUnregisterServer	PRIVATE
+
+HashBytes
+WndProc=?DolphinWndProc@Interpreter@@SGJPAUHWND__@@IIJ@Z
+DlgProc=?DolphinDlgProc@Interpreter@@SGJPAUHWND__@@IIJ@Z
+GenericCallback
+VTable
+AnswerDWORD=?AnswerDWORD@@YGKK@Z
+AnswerQWORD=?AnswerQWORD@@YG?AUQWORD@@KK@Z
+AnswerDQWORD=?AnswerDQWORD@@YG?AUDQWORD@@KKKK@Z
+Dump
+
+CompileForClass=_PrimCompileForClass@20
+CompileForEval=_PrimCompileForEval@24
+
+; Stuff for ActiveXHost
+AtlAxWinInit=AxWinInit
+AxWinTerm
+
+compress2
+uncompress
+
+; CRT functions imported by the image
+
+	__argc DATA
+	__argv DATA
+	_iob DATA
+	__iscsym
+	__iscsymf
+	_chdir
+	_chmod
+	_chmod
+	_clearfp
+	_controlfp
+	_dup
+	_dup2
+	_ecvt
+	_eof
+	_errno
+	_errno
+	_fcvt
+	_fdopen
+	_filelength
+	_fileno
+	_gcvt
+	_getcwd
+	_i64toa
+	_isnan
+	_logb
+	_ltoa
+	_makepath
+	_open_osfhandle
+	_putenv
+	_rotl
+	_rotr
+	_setmode
+	_snprintf
+	_snprintf
+	_snprintf
+	_snprintf
+	_snprintf
+	_snprintf
+	_spawnvp
+	_splitpath
+	_stricmp
+	_stricoll
+	_strnicmp
+	_strrev
+	acos
+	asin
+	atan
+	atan2
+	atoi
+	ceil
+	cos
+	exp
+	fabs
+	fclose
+	feof
+	fflush
+	fgetc
+	fgets
+	floor
+	fopen
+	fputc
+	fread
+	frexp
+	fseek
+	ftell
+	fwrite
+	getenv
+	isalnum
+	iswcntrl
+	iswprint
+	iswpunct
+	iswspace
+	ldexp
+	log
+	log10
+	memcmp
+	memcpy
+	memmove
+	memset
+	modf
+	pow
+	rand
+	rewind
+	setlocale
+	sin
+	sqrt
+	srand
+	strcat
+	strcmp
+	strcspn
+	strerror
+	strncmp
+	strncpy
+	strpbrk
+	tan
+	ungetc
+	wcscspn

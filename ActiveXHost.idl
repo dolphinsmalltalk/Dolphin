@@ -1,0 +1,57 @@
+// ActiveXHost.idl
+//
+
+// This file will be processed by the MIDL tool to
+// produce the type library (ActiveXHost.tlb) and marshalling code.
+
+import "oaidl.idl";
+import "ocidl.idl";
+
+cpp_quote("#if 0")
+typedef [uuid(87B4C518-026E-11D3-9FD7-00A0CC3E4A32)] struct ExternalHandle
+{
+	void* pObj;
+} ExternalHandle;
+
+typedef ExternalHandle HDC;
+typedef ExternalHandle HBITMAP;
+typedef ExternalHandle HPALETTE;
+typedef ExternalHandle HENHMETAFILE;
+typedef ExternalHandle HMETAFILE;
+typedef ExternalHandle HWND;
+typedef ExternalHandle HICON;
+cpp_quote("#endif")
+
+import "atliface.idl";
+
+[
+	uuid(8C5F03C2-A42C-49AE-B02B-F8C555E65EC1),
+	version(1.0),
+	helpstring("Dolphin Smalltalk Active-X Host Library")
+]
+library ActiveXHost
+{
+	importlib("stdole32.tlb");
+	importlib("stdole2.tlb");
+
+	[
+	object, local,
+	uuid(4EA0745E-6C01-4BB4-B0AE-47A53BA9174A),
+	pointer_default(unique)
+	]
+	interface IDolphinAxHost : IUnknown
+	{
+		HRESULT SetExternalDispatch([in] IDispatch* pDisp);
+		HRESULT SetExternalUIHandler([in] IDocHostUIHandlerDispatch* pDisp);
+		HRESULT QueryControl([in] REFIID riid, [out, iid_is(riid)] IUnknown **ppiObject);
+		HRESULT CreateControlLicEx([in] LPCOLESTR lpTricsData, [in] HWND hWnd, [in] IStream* pStream, [out]IUnknown** ppUnk, [in]IPropertyNotifySink* piAdvise, [in] BSTR bstrLic);
+	
+		[propget, helpstring("Is the control being hosted windowless or not?")]
+		HRESULT IsWindowless([out,retval]VARIANT_BOOL* pbIsWindowless);
+	};
+
+	//interface IDocHostUIHandlerDispatch;
+	interface IAxWinAmbientDispatchEx;
+	// We don't normally want these included in the type library, unless we need to regenerate them
+	interface IDolphinAxHost;
+};

@@ -1,0 +1,242 @@
+// Microsoft Visual C++ generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "winres.h"
+#include "..\rc_vm.h"
+#include "..\rc_stub.h"
+
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// Neutral (Default) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_NEUD)
+LANGUAGE LANG_NEUTRAL, SUBLANG_DEFAULT
+#pragma code_page(1252)
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Cursor
+//
+
+HSPLIT                  CURSOR                  "..\\res\\hsplit.cur"
+VSPLIT                  CURSOR                  "..\\res\\vsplit.cur"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_BLANK DIALOGEX 0, 0, 145, 159
+STYLE DS_SETFONT | DS_NOIDLEMSG | WS_POPUP | WS_CAPTION | WS_SYSMENU | WS_THICKFRAME
+EXSTYLE WS_EX_CONTROLPARENT
+FONT 8, "Arial", 0, 0, 0x1
+BEGIN
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO
+BEGIN
+    IDD_BLANK, DIALOG
+    BEGIN
+        RIGHTMARGIN, 144
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+#endif    // Neutral (Default) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+/////////////////////////////////////////////////////////////////////////////
+// English (United States) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+#pragma code_page(1252)
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION 1,0,0,1
+ PRODUCTVERSION 1,0,0,1
+ FILEFLAGSMASK 0x3fL
+#ifdef _DEBUG
+ FILEFLAGS 0x1L
+#else
+ FILEFLAGS 0x0L
+#endif
+ FILEOS 0x4L
+ FILETYPE 0x2L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904b0"
+        BEGIN
+            VALUE "Comments", "Powered by Dolphin Smalltalk"
+            VALUE "FileDescription", "Dolphin ToGo Application"
+            VALUE "FileVersion", "1, 0, 0, 1"
+            VALUE "LegalCopyright", "Portions Copyright © Object Arts 1997-2016."
+            VALUE "OriginalFilename", "GUIToGo.exe"
+            VALUE "ProductName", "A Dolphin ToGo Application"
+            VALUE "ProductVersion", "1, 0, 0, 1"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x409, 1200
+    END
+END
+
+#endif    // English (United States) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+/////////////////////////////////////////////////////////////////////////////
+// English (United Kingdom) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENG)
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_UK
+#pragma code_page(1252)
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+!APPLICATION            ICON                    "..\\Res\\ExeStub.ico"
+UPARROW.ICO             ICON                    "..\\Res\\UpArrow.ico"
+DOWNARROW.ICO           ICON                    "..\\Res\\DownArrow.ico"
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE 
+BEGIN
+    "#include ""winres.h""\r\n"
+    "#include ""..\\rc_vm.h""\r\n"
+    "#include ""..\\rc_stub.h""\r\n"
+    "\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE 
+BEGIN
+    "#include ""messages.rc""\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Bitmap
+//
+
+FINDBAR.BMP             BITMAP                  "..\\Res\\findbar.bmp"
+LISTBAR.BMP             BITMAP                  "..\\res\\ListBar.bmp"
+EDITBAR.BMP             BITMAP                  "..\\Res\\EditBar.bmp"
+FILEBAR.BMP             BITMAP                  "..\\res\\FileBar.bmp"
+VIEWBAR.BMP             BITMAP                  "..\\Res\\ViewBar.bmp"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE
+BEGIN
+    IDS_APPNAME             "A Dolphin Smalltalk ToGo Application"
+END
+
+STRINGTABLE
+BEGIN
+    IDP_CREATEVMFAILED      "Internal error instantiating VM object.%nThe error was: %1!#x!, %2%nPlease ensure that the application is correctly installed and try again."
+    IDP_INVALIDIMAGETYPE    "Executable file '%1' is corrupt"
+    IDP_OPENIMAGEFAILURE    "Fail to load executable '%1'"
+END
+
+STRINGTABLE
+BEGIN
+    IDP_RECURSIVEDNU        "Recursive message not understood (#%2). See crash dump."
+    IDP_STACKOVERFLOW       "Unrecoverable stack overflow (%1!u!, %2!x!, %3!x!, %4!u!). See crash dump."
+    IDP_OTFULL              "Object Table full at %1!u! objects."
+    IDP_OTCOMMITFAIL        "Out of memory attempting to commit further Object Pointers (currently %1!u!). %nPlease close some appliations and try again."
+    IDP_EXIT                "Application exit"
+    IDP_OTRESERVEFAIL       "Unable to reserve memory for %1!u! objects. %nPlease close some appliations and try again."
+    IDP_ZCTRESERVEFAIL      "Unable to reserve memory for %1!u! ZT entries. %nPlease close some appliations and try again."
+    IDP_ZCTCOMMITFAIL       "Out of memory attempting to commit %1!u! ZT entries. %nPlease close some appliations and try again."
+    IDP_BADSYSINFO          "Unexpected page size %1!d! or allocation granularity %2!d!. This application is limited to running on x86 machines with a page size of %3!d! and an allocation granularity of %4!d!."
+    IDP_BADTIMERRES         "Unable to establish desired timer resolution of %1!d!.%nPlease wait a while and try again.%nYou may need to close some applications.%nIf running Windows 95 it may be necessary to reboot."
+    IDP_FAILTOCREATEVMWND   "Failed to create VM message window: %2 (%1!d!)"
+    IDP_CORRUPTIMAGE        "Executable is corrupt.%nMismatched checksums %1!u! and %2!u!"
+    IDP_IMAGEREADERROR      "Error %1!d! loading executable"
+    IDP_IMAGEFILETRUNCATED  "Premature end of file loading executable"
+    IDP_UNKNOWNIMAGEERROR   "An unknown error occurred while loading the executable"
+END
+
+STRINGTABLE
+BEGIN
+    IDP_FAILTOHOOK          "Unable to hook window creation events (%1!d!).%nPlease wait a few moments and try again."
+    IDP_CLOCKSETBACK        "This application was created on a future date (%1!d!/%2!d!/%3!d!).\n\nHas the clock been set back?"
+    IDP_PERMEXPIRED         "Sorry, but this application's license has permanently expired."
+    IDP_WRONGMACHINE        "Sorry, but this application is not licensed for use on this machine."
+    IDP_NEARLYEXPIRED       "This application was deployed from an evaluation copy of Dolphin Smalltalk which will permanently expire on %1!d!/%2!d!/%3!d!."
+END
+
+STRINGTABLE
+BEGIN
+    IDS_INVALIDPROGID       "Invalid or unregistered prog id"
+    IDS_CANTCREATECONTROL   "Unable to create instance of control"
+    IDS_CANTCREATEIE        "Unable to create web browser control"
+    IDS_CANTGETCLASSOBJECT  "Unable to access control's class factory"
+    IDS_AXSITEERRORFMT      "<h2>Dolphin Smalltalk Active-X Host</h2>\n<h3>Error creating control: '%1'</h3>\n<p>%3</p>\n<p>The error was: %2!x! - '%4'</p>"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_APP_SHORT_NAME      "Dolphin"
+END
+
+#endif    // English (United Kingdom) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+#include "messages.rc"
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+
