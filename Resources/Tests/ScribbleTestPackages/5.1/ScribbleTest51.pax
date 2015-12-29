@@ -1,0 +1,63 @@
+| package |
+package := Package name: 'ScribbleTest51'.
+package paxVersion: 0;
+	basicComment: ''.
+
+
+package classNames
+	add: #ScribbleTest;
+	yourself.
+
+package methodNames
+	add: #Scribble -> #looseA;
+	add: #Scribble -> #looseC;
+	yourself.
+
+package resourceNames
+	add: #Scribble -> 'Scribble test';
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package allResourceNames: (Set new
+	add: #Scribble -> 'Scribble test';
+	add: #ScribbleTest -> 'Default scribble test view';
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\..\..\..\..\Object Arts\Dev\Dolphin5\Object Arts\Dolphin\Base\Dolphin';
+	add: '..\..\..\..\..\Object Arts\Dev\Dolphin5\Object Arts\Dolphin\MVP\Base\Dolphin MVP Base';
+	add: '..\..\..\..\..\Object Arts\Dev\Dolphin5\Object Arts\Samples\MVP\Scribble\Scribble';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+Presenter subclass: #ScribbleTest
+	instanceVariableNames: 'scribblePresenter'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+!Scribble methodsFor!
+
+looseA
+	^#A!
+
+looseC
+	^'C'! !
+!Scribble categoriesFor: #looseA!public! !
+!Scribble categoriesFor: #looseC!public! !
+
+"End of package definition"!
+

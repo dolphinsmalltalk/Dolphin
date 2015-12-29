@@ -1,0 +1,1099 @@
+| package |
+package := Package name: 'RBParser'.
+package paxVersion: 1;
+	basicComment: 'Dolphin RBParser Package
+Copyright John Brant and Don Roberts.
+
+This package aliases most of the RBParser classes to the Dolphin equivalents which are then used instead. RB specific classes, such as the search/replace rules are hosted directly in this package.
+
+Should be used in place of the full RBParser package, which contains the ''...parser for the Refactoring Browser. It contains both the ability to parse Smalltalk and also to rewrite Smalltalk code. The refactorings use this rewriting behavior to perform the source code transformations.'''.
+
+
+package classNames
+	add: #ParseTreeRewriter;
+	add: #ParseTreeSearcher;
+	add: #RBBlockReplaceRule;
+	add: #RBParseTreeRule;
+	add: #RBPatternBlockNode;
+	add: #RBPatternMessageNode;
+	add: #RBPatternMethodNode;
+	add: #RBPatternParser;
+	add: #RBPatternScanner;
+	add: #RBPatternVariableNode;
+	add: #RBPatternWrapperBlockNode;
+	add: #RBReplaceRule;
+	add: #RBSearchRule;
+	add: #RBSmallDictionary;
+	add: #RBStringReplacement;
+	add: #RBStringReplaceRule;
+	yourself.
+
+package methodNames
+	add: #CompileFailedMethod -> #refersToVariable:;
+	add: #RBConfigurableFormatter -> #acceptPatternWrapperBlockNode:;
+	add: #RBFormatter -> #acceptPatternWrapperBlockNode:;
+	add: #StAssignmentNode -> #copyInContext:;
+	add: #StAssignmentNode -> #match:inContext:;
+	add: #StAssignmentNode -> #replaceNode:withNode:;
+	add: #StAssignmentNode -> #replaceSourceWith:;
+	add: #StBlockNode -> #copyInContext:;
+	add: #StBlockNode -> #match:inContext:;
+	add: #StBlockNode -> #references:;
+	add: #StBlockNode -> #replaceNode:withNode:;
+	add: #StCascadeNode -> #copyInContext:;
+	add: #StCascadeNode -> #match:inContext:;
+	add: #StCascadeNode -> #replaceNode:withNode:;
+	add: #StLiteralArrayNode -> #copyInContext:;
+	add: #StLiteralArrayNode -> #match:inContext:;
+	add: #StLiteralArrayNode -> #replaceNode:withNode:;
+	add: #StLiteralNode -> #replaceSourceFrom:;
+	add: #StLiteralNode -> #replaceSourceWith:;
+	add: #StLiteralValueNode -> #copyInContext:;
+	add: #StMessageNode -> #copyInContext:;
+	add: #StMessageNode -> #isContainmentReplacement:;
+	add: #StMessageNode -> #match:inContext:;
+	add: #StMessageNode -> #replaceContainmentSourceWith:;
+	add: #StMessageNode -> #replaceNode:withNode:;
+	add: #StMessageNode -> #replaceSourceWith:;
+	add: #StMessageNode -> #replaceSourceWithMessageNode:;
+	add: #StMethodNode -> #addNode:;
+	add: #StMethodNode -> #addReplacement:;
+	add: #StMethodNode -> #addReturn;
+	add: #StMethodNode -> #addSelfReturn;
+	add: #StMethodNode -> #changeSourceSelectors:arguments:;
+	add: #StMethodNode -> #clearReplacements;
+	add: #StMethodNode -> #copyInContext:;
+	add: #StMethodNode -> #initialize;
+	add: #StMethodNode -> #map:to:;
+	add: #StMethodNode -> #mappingFor:;
+	add: #StMethodNode -> #match:inContext:;
+	add: #StMethodNode -> #newSource;
+	add: #StMethodNode -> #references:;
+	add: #StMethodNode -> #reformatSource;
+	add: #StMethodNode -> #renameSelector:andArguments:;
+	add: #StMethodNode -> #replaceNode:withNode:;
+	add: #StOptimizedNode -> #copyInContext:;
+	add: #StOptimizedNode -> #match:inContext:;
+	add: #StOptimizedNode -> #replaceNode:withNode:;
+	add: #StParseNodeVisitor -> #acceptPatternBlockNode:;
+	add: #StParseNodeVisitor -> #acceptPatternWrapperBlockNode:;
+	add: #StProgramNode -> #addReplacement:;
+	add: #StProgramNode -> #asReturn;
+	add: #StProgramNode -> #clearReplacements;
+	add: #StProgramNode -> #copyInContext:;
+	add: #StProgramNode -> #copyList:inContext:;
+	add: #StProgramNode -> #mappingFor:;
+	add: #StProgramNode -> #match:inContext:;
+	add: #StProgramNode -> #matchList:against:inContext:;
+	add: #StProgramNode -> #matchList:index:against:index:inContext:;
+	add: #StProgramNode -> #references:;
+	add: #StProgramNode -> #removeDeadCode;
+	add: #StProgramNode -> #replaceMethodSource:;
+	add: #StProgramNode -> #replaceNode:withNode:;
+	add: #StProgramNode -> #replaceSourceFrom:;
+	add: #StProgramNode -> #replaceSourceWith:;
+	add: #StProgramNode -> #replaceWith:;
+	add: #StProgramNode -> #selfMessages;
+	add: #StProgramNode -> #superMessages;
+	add: #StReturnNode -> #copyInContext:;
+	add: #StReturnNode -> #match:inContext:;
+	add: #StReturnNode -> #replaceNode:withNode:;
+	add: #StSequenceNode -> #addNode:;
+	add: #StSequenceNode -> #addNode:before:;
+	add: #StSequenceNode -> #addNodes:before:;
+	add: #StSequenceNode -> #addSelfReturn;
+	add: #StSequenceNode -> #addTemporariesNamed:;
+	add: #StSequenceNode -> #addTemporaryNamed:;
+	add: #StSequenceNode -> #copyInContext:;
+	add: #StSequenceNode -> #match:inContext:;
+	add: #StSequenceNode -> #references:;
+	add: #StSequenceNode -> #removeDeadCode;
+	add: #StSequenceNode -> #removeNode:;
+	add: #StSequenceNode -> #removeTemporaryNamed:;
+	add: #StSequenceNode -> #replaceNode:withNode:;
+	add: #StSequenceNode -> #replaceNode:withNodes:;
+	add: #StVariableNode -> #copyInContext:;
+	add: #StVariableNode -> #references:;
+	add: #StVariableNode -> #replaceSourceFrom:;
+	add: #StVariableNode -> #replaceSourceWith:;
+	add: 'SmalltalkParser class' -> #parseRewriteExpression:;
+	add: 'SmalltalkParser class' -> #parseRewriteExpression:onError:;
+	add: 'SmalltalkParser class' -> #parseRewriteMethod:;
+	add: 'SmalltalkParser class' -> #parseRewriteMethod:onError:;
+	yourself.
+
+package globalNames
+	add: #RBAssignmentNode;
+	add: #RBAssignmentToken;
+	add: #RBBinarySelectorToken;
+	add: #RBBlockNode;
+	add: #RBCascadeNode;
+	add: #RBIdentifierToken;
+	add: #RBKeywordToken;
+	add: #RBLiteralArrayNode;
+	add: #RBLiteralArrayToken;
+	add: #RBLiteralNode;
+	add: #RBLiteralToken;
+	add: #RBLiteralValueNode;
+	add: #RBMessageNode;
+	add: #RBMethodNode;
+	add: #RBMultiKeywordLiteralToken;
+	add: #RBNumberLiteralToken;
+	add: #RBOptimizedNode;
+	add: #RBOptimizedToken;
+	add: #RBParser;
+	add: #RBProgramNode;
+	add: #RBProgramNodeVisitor;
+	add: #RBReturnNode;
+	add: #RBScanner;
+	add: #RBSequenceNode;
+	add: #RBSpecialCharacterToken;
+	add: #RBToken;
+	add: #RBValueNode;
+	add: #RBValueToken;
+	add: #RBVariableNode;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	add: #RBAssignmentNode;
+	add: #RBAssignmentToken;
+	add: #RBBinarySelectorToken;
+	add: #RBBlockNode;
+	add: #RBCascadeNode;
+	add: #RBIdentifierToken;
+	add: #RBKeywordToken;
+	add: #RBLiteralArrayNode;
+	add: #RBLiteralArrayToken;
+	add: #RBLiteralNode;
+	add: #RBLiteralToken;
+	add: #RBLiteralValueNode;
+	add: #RBMessageNode;
+	add: #RBMethodNode;
+	add: #RBMultiKeywordLiteralToken;
+	add: #RBNumberLiteralToken;
+	add: #RBOptimizedNode;
+	add: #RBOptimizedToken;
+	add: #RBParser;
+	add: #RBProgramNode;
+	add: #RBProgramNodeVisitor;
+	add: #RBReturnNode;
+	add: #RBScanner;
+	add: #RBSequenceNode;
+	add: #RBSpecialCharacterToken;
+	add: #RBToken;
+	add: #RBValueNode;
+	add: #RBValueToken;
+	add: #RBVariableNode;
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\..\..\..\Object Arts\Dolphin\Base\Dolphin';
+	add: '..\Formatters\RBFormatters';
+	add: '..\..\..\..\Object Arts\Dolphin\System\Compiler\Smalltalk Parser';
+	yourself).
+
+package setManualPrerequisites: #(
+	'Smalltalk Parser').
+
+package!
+
+"Class Definitions"!
+
+Object subclass: #RBParseTreeRule
+	instanceVariableNames: 'searchTree owner'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Object subclass: #RBStringReplacement
+	instanceVariableNames: 'startPosition stopPosition string'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Collection subclass: #RBSmallDictionary
+	instanceVariableNames: 'keys values size'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+RBParseTreeRule subclass: #RBReplaceRule
+	instanceVariableNames: 'verificationBlock'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+RBParseTreeRule subclass: #RBSearchRule
+	instanceVariableNames: 'answerBlock'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+RBReplaceRule subclass: #RBBlockReplaceRule
+	instanceVariableNames: 'replaceBlock'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+RBReplaceRule subclass: #RBStringReplaceRule
+	instanceVariableNames: 'replaceTree'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+SmalltalkParser subclass: #RBPatternParser
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+SmalltalkScanner subclass: #RBPatternScanner
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+StParseNodeVisitor subclass: #ParseTreeSearcher
+	instanceVariableNames: 'searches answer argumentSearches context messages'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ParseTreeSearcher subclass: #ParseTreeRewriter
+	instanceVariableNames: 'tree'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+StMethodNode subclass: #RBPatternMethodNode
+	instanceVariableNames: 'isList'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+StBlockNode subclass: #RBPatternBlockNode
+	instanceVariableNames: 'valueBlock'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+RBPatternBlockNode subclass: #RBPatternWrapperBlockNode
+	instanceVariableNames: 'wrappedNode'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+StMessageNode subclass: #RBPatternMessageNode
+	instanceVariableNames: 'isList isCascadeList'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+StVariableNode subclass: #RBPatternVariableNode
+	instanceVariableNames: 'recurseInto isList isLiteral isStatement isAnything'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+RBAssignmentNode := StAssignmentNode!
+
+RBAssignmentToken := StAssignmentToken!
+
+RBBinarySelectorToken := StBinarySelectorToken!
+
+RBBlockNode := StBlockNode!
+
+RBCascadeNode := StCascadeNode!
+
+RBIdentifierToken := StIdentifierToken!
+
+RBKeywordToken := StKeywordToken!
+
+RBLiteralArrayNode := StLiteralArrayNode!
+
+RBLiteralArrayToken := StLiteralArrayToken!
+
+RBLiteralNode := StLiteralNode!
+
+RBLiteralToken := StLiteralToken!
+
+RBLiteralValueNode := StLiteralValueNode!
+
+RBMessageNode := StMessageNode!
+
+RBMethodNode := StMethodNode!
+
+RBMultiKeywordLiteralToken := StMultiKeywordLiteralToken!
+
+RBNumberLiteralToken := StNumberLiteralToken!
+
+RBOptimizedNode := StOptimizedNode!
+
+RBOptimizedToken := StOptimizedToken!
+
+RBParser := SmalltalkParser!
+
+RBProgramNode := StProgramNode!
+
+RBProgramNodeVisitor := StParseNodeVisitor!
+
+RBReturnNode := StReturnNode!
+
+RBScanner := SmalltalkScanner!
+
+RBSequenceNode := StSequenceNode!
+
+RBSpecialCharacterToken := StSpecialCharacterToken!
+
+RBToken := StToken!
+
+RBValueNode := StValueNode!
+
+RBValueToken := StValueToken!
+
+RBVariableNode := StVariableNode!
+
+
+"Loose Methods"!
+
+!CompileFailedMethod methodsFor!
+
+refersToVariable: aString 
+	| tree searcher |
+	tree := self parseTreeNoError.
+	(tree isNil or: [(tree defines: aString) or: [tree body defines: aString]]) ifTrue: [^false].
+	searcher := ParseTreeSearcher new.
+	searcher
+		matches: aString do: [:node :answer | true];
+		matches: '[:`@vars | | `@temps | `@.Stmts]' do: [:node :answer | answer or: [((node defines: aString) or: [node body defines: aString]) not and: [searcher executeTree: node body initialAnswer: false]]].
+	^searcher executeTree: self parseTree initialAnswer: false! !
+!CompileFailedMethod categoriesFor: #refersToVariable:!development!private!testing! !
+
+!RBConfigurableFormatter methodsFor!
+
+acceptPatternWrapperBlockNode: aRBPatternWrapperBlockNode
+	self visitNode: aRBPatternWrapperBlockNode wrappedNode.
+	codeStream nextPut: $`.
+	self 
+		bracketWith: '{}' 
+		around: [self formatBlock: aRBPatternWrapperBlockNode]! !
+!RBConfigurableFormatter categoriesFor: #acceptPatternWrapperBlockNode:!public!visitor/double dispatching! !
+
+!RBFormatter methodsFor!
+
+acceptPatternWrapperBlockNode: aRBPatternWrapperBlockNode 
+	self visitNode: aRBPatternWrapperBlockNode wrappedNode.
+	self 
+		acceptBlockNode: aRBPatternWrapperBlockNode
+		startBlockString: '`{'
+		endBlockString: '}'! !
+!RBFormatter categoriesFor: #acceptPatternWrapperBlockNode:!public!visitor/double dispatching! !
+
+!SmalltalkParser class methodsFor!
+
+parseRewriteExpression: aString 
+	^self parseRewriteExpression: aString onError: nil!
+
+parseRewriteExpression: aString onError: aBlock 
+	^RBPatternParser parseExpression: aString onError: aBlock!
+
+parseRewriteMethod: aString 
+	^self parseRewriteMethod: aString onError: nil!
+
+parseRewriteMethod: aString onError: aBlock 
+	^RBPatternParser parseMethod: aString onError: aBlock! !
+!SmalltalkParser class categoriesFor: #parseRewriteExpression:!parsing!public! !
+!SmalltalkParser class categoriesFor: #parseRewriteExpression:onError:!parsing!public! !
+!SmalltalkParser class categoriesFor: #parseRewriteMethod:!parsing!public! !
+!SmalltalkParser class categoriesFor: #parseRewriteMethod:onError:!parsing!public! !
+
+!StAssignmentNode methodsFor!
+
+copyInContext: aDictionary 
+	^(self class new)
+		variable: (variable copyInContext: aDictionary);
+		value: (value copyInContext: aDictionary);
+		yourself!
+
+match: aNode inContext: aDictionary 
+	aNode class == self class ifFalse: [^false].
+	^(variable match: aNode variable inContext: aDictionary)
+		and: [value match: aNode value inContext: aDictionary]!
+
+replaceNode: aNode withNode: anotherNode 
+	value == aNode ifTrue: [self value: anotherNode].
+	variable == aNode ifTrue: [self variable: anotherNode]!
+
+replaceSourceWith: aNode 
+	"Check if we are being replaced with a setter message send. If so, create the replacements to edit the original source."
+
+	aNode isMessage ifFalse: [^super replaceSourceWith: aNode].
+	aNode receiver isVariable ifFalse: [^super replaceSourceWith: aNode].
+	aNode numArgs = 1 ifFalse: [^super replaceSourceWith: aNode].
+	(self mappingFor: self value) = aNode arguments first 
+		ifFalse: [^super replaceSourceWith: aNode].
+	(self value hasParentheses not 
+		and: [aNode arguments first precedence >= aNode precedence]) 
+			ifTrue: 
+				[self
+					addReplacement: (RBStringReplacement 
+								replaceFrom: self value start
+								to: self value start - 1
+								with: '(');
+					addReplacement: (RBStringReplacement 
+								replaceFrom: self value stop + 1
+								to: self value stop
+								with: ')')].
+	self addReplacement: (RBStringReplacement 
+				replaceFrom: self variable start
+				to: self assignmentPosition + 1
+				with: aNode receiver name , ' ' , aNode selector)! !
+!StAssignmentNode categoriesFor: #copyInContext:!matching!public! !
+!StAssignmentNode categoriesFor: #match:inContext:!matching!public! !
+!StAssignmentNode categoriesFor: #replaceNode:withNode:!public!replacing! !
+!StAssignmentNode categoriesFor: #replaceSourceWith:!public!replacing! !
+
+!StBlockNode methodsFor!
+
+copyInContext: aDictionary 
+	^(self class new)
+		arguments: (self copyList: arguments inContext: aDictionary);
+		body: (body copyInContext: aDictionary);
+		yourself!
+
+match: aNode inContext: aDictionary 
+	aNode class == self class ifFalse: [^false].
+	^(self 
+		matchList: arguments
+		against: aNode arguments
+		inContext: aDictionary) 
+			and: [body match: aNode body inContext: aDictionary]!
+
+references: aVariableName 
+	^body references: aVariableName!
+
+replaceNode: aNode withNode: anotherNode 
+	body == aNode ifTrue: [self body: anotherNode].
+	self arguments: (arguments 
+				collect: [:each | each == aNode ifTrue: [anotherNode] ifFalse: [each]])! !
+!StBlockNode categoriesFor: #copyInContext:!matching!public! !
+!StBlockNode categoriesFor: #match:inContext:!matching!public! !
+!StBlockNode categoriesFor: #references:!public!testing! !
+!StBlockNode categoriesFor: #replaceNode:withNode:!public!replacing! !
+
+!StCascadeNode methodsFor!
+
+copyInContext: aDictionary 
+	^(self class new)
+		messages: (self copyList: messages inContext: aDictionary);
+		yourself!
+
+match: aNode inContext: aDictionary 
+	aNode class == self class ifFalse: [^false].
+	^self 
+		matchList: messages
+		against: aNode messages
+		inContext: aDictionary!
+
+replaceNode: aNode withNode: anotherNode 
+	self messages: (messages 
+				collect: [:each | each == aNode ifTrue: [anotherNode] ifFalse: [each]])! !
+!StCascadeNode categoriesFor: #copyInContext:!matching!public! !
+!StCascadeNode categoriesFor: #match:inContext:!matching!public! !
+!StCascadeNode categoriesFor: #replaceNode:withNode:!public!replacing! !
+
+!StLiteralArrayNode methodsFor!
+
+copyInContext: aDictionary 
+	^self class 
+		startPosition: nil
+		contents: (self copyList: contents inContext: aDictionary)
+		stopPosition: nil
+		isByteArray: isByteArray!
+
+match: aNode inContext: aDictionary 
+	aNode class == self class ifFalse: [^false].
+	self isForByteArray = aNode isForByteArray ifFalse: [^false].
+	^self 
+		matchList: contents
+		against: aNode contents
+		inContext: aDictionary!
+
+replaceNode: aNode withNode: anotherNode 
+	self contents: (contents 
+				collect: [:each | each == aNode ifTrue: [anotherNode] ifFalse: [each]])! !
+!StLiteralArrayNode categoriesFor: #copyInContext:!matching!public! !
+!StLiteralArrayNode categoriesFor: #match:inContext:!matching!public! !
+!StLiteralArrayNode categoriesFor: #replaceNode:withNode:!public!replacing! !
+
+!StLiteralNode methodsFor!
+
+replaceSourceFrom: aNode 
+	self addReplacement: (RBStringReplacement 
+				replaceFrom: aNode start
+				to: aNode stop
+				with: self formattedCode)!
+
+replaceSourceWith: aNode 
+	self addReplacement: (RBStringReplacement 
+				replaceFrom: self start
+				to: self stop
+				with: aNode formattedCode)! !
+!StLiteralNode categoriesFor: #replaceSourceFrom:!private-replacing!public! !
+!StLiteralNode categoriesFor: #replaceSourceWith:!private-replacing!public! !
+
+!StLiteralValueNode methodsFor!
+
+copyInContext: aDictionary
+	^self class literalToken: token removePositions! !
+!StLiteralValueNode categoriesFor: #copyInContext:!matching!public! !
+
+!StMessageNode methodsFor!
+
+copyInContext: aDictionary 
+	^(self class new)
+		receiver: (receiver copyInContext: aDictionary);
+		selectorParts: (selectorParts collect: [:each | each removePositions]);
+		arguments: (arguments collect: [:each | each copyInContext: aDictionary]);
+		yourself!
+
+isContainmentReplacement: aNode 
+	^(self mappingFor: self receiver) = aNode 
+		or: [self arguments anySatisfy: [:each | (self mappingFor: each) = aNode]]!
+
+match: aNode inContext: aDictionary 
+	aNode class == self class ifFalse: [^false].
+	self selector == aNode selector ifFalse: [^false].
+	(receiver match: aNode receiver inContext: aDictionary) ifFalse: [^false].
+	1 to: arguments size
+		do: 
+			[:i | 
+			((arguments at: i) match: (aNode arguments at: i) inContext: aDictionary)
+				ifFalse: [^false]].
+	^true!
+
+replaceContainmentSourceWith: aNode 
+	| originalNode needsParenthesis |
+	needsParenthesis := aNode hasParentheses not and: [aNode needsParenthesis].
+	originalNode := (self mappingFor: self receiver) = aNode 
+				ifTrue: [self receiver]
+				ifFalse: [self arguments detect: [:each | (self mappingFor: each) = aNode]].
+	self
+		addReplacement: (RBStringReplacement 
+					replaceFrom: self start
+					to: originalNode start - 1
+					with: (needsParenthesis ifTrue: ['('] ifFalse: ['']));
+		addReplacement: (RBStringReplacement 
+					replaceFrom: originalNode stop + 1
+					to: self stop
+					with: (needsParenthesis ifTrue: [')'] ifFalse: ['']))!
+
+replaceNode: aNode withNode: anotherNode 
+	"If we're inside a cascade node and are changing the receiver, change all the receivers"
+
+	receiver == aNode 
+		ifTrue: 
+			[self receiver: anotherNode.
+			(parent notNil and: [parent isCascade]) 
+				ifTrue: [parent messages do: [:each | each receiver: anotherNode]]].
+	self arguments: (arguments 
+				collect: [:each | each == aNode ifTrue: [anotherNode] ifFalse: [each]])!
+
+replaceSourceWith: aNode 
+	(self isContainmentReplacement: aNode) 
+		ifTrue: [^self replaceContainmentSourceWith: aNode].
+	aNode isMessage ifFalse: [^super replaceSourceWith: aNode].
+	^self replaceSourceWithMessageNode: aNode!
+
+replaceSourceWithMessageNode: aNode 
+	| isBinaryToKeyword |
+	self numArgs = aNode numArgs ifFalse: [^super replaceSourceWith: aNode].
+	(self mappingFor: self receiver) = aNode receiver 
+		ifFalse: [^super replaceSourceWith: aNode].
+	self arguments with: aNode arguments
+		do: [:old :new | (self mappingFor: old) = new ifFalse: [^super replaceSourceWith: aNode]].
+	(isBinaryToKeyword := self isBinary and: [aNode isKeyword]) 
+		ifTrue: 
+			[(self hasParentheses not and: [self parent precedence <= aNode precedence]) 
+				ifTrue: 
+					[self
+						addReplacement: (RBStringReplacement 
+									replaceFrom: self start
+									to: self start - 1
+									with: '(');
+						addReplacement: (RBStringReplacement 
+									replaceFrom: self stop + 1
+									to: self stop
+									with: ')')]].
+	self selectorParts with: aNode selectorParts
+		do: 
+			[:old :new | 
+			old value ~= new value 
+				ifTrue: 
+					[self addReplacement: (RBStringReplacement 
+								replaceFrom: old start
+								to: old stop
+								with: ((isBinaryToKeyword 
+										and: [(self source at: old start - 1) isSeparator not]) 
+											ifTrue: [' ' , new value]
+											ifFalse: [new value]))]]! !
+!StMessageNode categoriesFor: #copyInContext:!matching!public! !
+!StMessageNode categoriesFor: #isContainmentReplacement:!private-replacing!public! !
+!StMessageNode categoriesFor: #match:inContext:!matching!public! !
+!StMessageNode categoriesFor: #replaceContainmentSourceWith:!private-replacing!public! !
+!StMessageNode categoriesFor: #replaceNode:withNode:!public!replacing! !
+!StMessageNode categoriesFor: #replaceSourceWith:!private-replacing!public! !
+!StMessageNode categoriesFor: #replaceSourceWithMessageNode:!private-replacing!public! !
+
+!StMethodNode methodsFor!
+
+addNode: aNode 
+	^body addNode: aNode!
+
+addReplacement: aStringReplacement 
+	replacements isNil ifTrue: [^self].
+	replacements add: aStringReplacement!
+
+addReturn
+	body addReturn!
+
+addSelfReturn
+	^body addSelfReturn!
+
+changeSourceSelectors: oldSelectorParts arguments: oldArguments 
+	
+	[oldSelectorParts size = selectorParts size ifFalse: [^self].
+	oldArguments size = arguments size ifFalse: [^self].
+	oldSelectorParts with: selectorParts
+		do: 
+			[:old :new | 
+			self addReplacement: (RBStringReplacement 
+						replaceFrom: old start
+						to: old stop
+						with: new value)].
+	oldArguments with: arguments
+		do: 
+			[:old :new | 
+			self addReplacement: (RBStringReplacement 
+						replaceFrom: old start
+						to: old stop
+						with: new value)]] 
+			on: Error
+			do: [:ex | ex return]!
+
+clearReplacements
+	replacements := nil!
+
+copyInContext: aDictionary 
+	^(self class new)
+		selectorParts: (selectorParts collect: [:each | each removePositions]);
+		arguments: (arguments collect: [:each | each copyInContext: aDictionary]);
+		body: (body copyInContext: aDictionary);
+		source: (aDictionary at: '-source-');
+		yourself!
+
+initialize
+	replacements := SortedCollection sortBlock: 
+					[:a :b | 
+					a startPosition < b startPosition 
+						or: [a startPosition = b startPosition and: [a stopPosition < b stopPosition]]].
+	nodeReplacements := IdentityDictionary new!
+
+map: oldNode to: newNode 
+	nodeReplacements at: oldNode put: newNode!
+
+mappingFor: oldNode 
+	^nodeReplacements at: oldNode ifAbsent: [oldNode]!
+
+match: aNode inContext: aDictionary 
+	self class == aNode class ifFalse: [^false].
+	aDictionary at: '-source-' put: aNode source.
+	self selector == aNode selector ifFalse: [^false].
+	^(self 
+		matchList: arguments
+		against: aNode arguments
+		inContext: aDictionary) 
+			and: [body match: aNode body inContext: aDictionary]!
+
+newSource
+	replacements isNil ifTrue: [^self formattedCode].
+	^[self reformatSource] on: Error do: [:ex | ex return: self formattedCode]!
+
+references: aVariableName 
+	^body references: aVariableName!
+
+reformatSource
+	| newSource stream |
+	stream := WriteStream on: (String new: source size + 100).
+	stream 
+		nextPutAll: (source copyFrom: (replacements inject: 1
+						into: 
+							[:sum :each | 
+							stream
+								nextPutAll: (source copyFrom: sum to: each startPosition - 1);
+								nextPutAll: each string.
+							each stopPosition + 1])
+				to: source size).
+	newSource := stream contents.
+	self 
+		= (RBParser parseMethod: newSource onError: [:s :p | ^self formattedCode]) 
+			ifFalse: [^self formattedCode].	"Sanity check -- make sure the formatted code is = self"
+	^newSource!
+
+renameSelector: newSelector andArguments: varNodeCollection 
+	| oldSelectorParts oldArguments |
+	oldSelectorParts := selectorParts.
+	oldArguments := arguments.
+	self
+		arguments: varNodeCollection;
+		selector: newSelector.
+	self changeSourceSelectors: oldSelectorParts arguments: oldArguments!
+
+replaceNode: aNode withNode: anotherNode 
+	aNode == body ifTrue: [self body: anotherNode].
+	self arguments: (arguments 
+				collect: [:each | each == aNode ifTrue: [anotherNode] ifFalse: [each]])! !
+!StMethodNode categoriesFor: #addNode:!accessing!public! !
+!StMethodNode categoriesFor: #addReplacement:!public!replacing! !
+!StMethodNode categoriesFor: #addReturn!accessing!public! !
+!StMethodNode categoriesFor: #addSelfReturn!accessing!public! !
+!StMethodNode categoriesFor: #changeSourceSelectors:arguments:!private!replacing! !
+!StMethodNode categoriesFor: #clearReplacements!public!replacing! !
+!StMethodNode categoriesFor: #copyInContext:!matching!public! !
+!StMethodNode categoriesFor: #initialize!initializing!public! !
+!StMethodNode categoriesFor: #map:to:!public!replacing! !
+!StMethodNode categoriesFor: #mappingFor:!public!replacing! !
+!StMethodNode categoriesFor: #match:inContext:!matching!public! !
+!StMethodNode categoriesFor: #newSource!accessing!public! !
+!StMethodNode categoriesFor: #references:!public!testing! !
+!StMethodNode categoriesFor: #reformatSource!operations!private! !
+!StMethodNode categoriesFor: #renameSelector:andArguments:!accessing!public! !
+!StMethodNode categoriesFor: #replaceNode:withNode:!public!replacing! !
+
+!StOptimizedNode methodsFor!
+
+copyInContext: aDictionary 
+	^self class body: (body copyInContext: aDictionary)!
+
+match: aNode inContext: aDictionary 
+	aNode class == self class ifFalse: [^false].
+	^body match: aNode body inContext: aDictionary!
+
+replaceNode: aNode withNode: anotherNode 
+	body == aNode ifTrue: [self body: anotherNode]! !
+!StOptimizedNode categoriesFor: #copyInContext:!matching!public! !
+!StOptimizedNode categoriesFor: #match:inContext:!matching!public! !
+!StOptimizedNode categoriesFor: #replaceNode:withNode:!public!replacing! !
+
+!StParseNodeVisitor methodsFor!
+
+acceptPatternBlockNode: aRBPatternBlockNode 
+	self visitArguments: aRBPatternBlockNode arguments.
+	self visitNode: aRBPatternBlockNode body!
+
+acceptPatternWrapperBlockNode: aRBPatternWrapperBlockNode 
+	self visitNode: aRBPatternWrapperBlockNode wrappedNode.
+	self visitArguments: aRBPatternWrapperBlockNode arguments.
+	self visitNode: aRBPatternWrapperBlockNode body! !
+!StParseNodeVisitor categoriesFor: #acceptPatternBlockNode:!public!visitor/double dispatching! !
+!StParseNodeVisitor categoriesFor: #acceptPatternWrapperBlockNode:!public!visitor/double dispatching! !
+
+!StProgramNode methodsFor!
+
+addReplacement: aStringReplacement
+	parent isNil ifTrue: [^self].
+	parent addReplacement: aStringReplacement!
+
+asReturn
+	"Change the current node to a return node."
+
+	parent isNil 
+		ifTrue: [self error: 'Cannot change to a return without a parent node.'].
+	parent isSequence 
+		ifFalse: [self error: 'Parent node must be a sequence node.'].
+	(parent isLast: self) ifFalse: [self error: 'Return node must be last.'].
+	^parent addReturn!
+
+clearReplacements
+	parent isNil ifTrue: [^self].
+	parent clearReplacements!
+
+copyInContext: aDictionary
+	^self copy!
+
+copyList: matchNodes inContext: aDictionary 
+	| newNodes |
+	newNodes := OrderedCollection new.
+	matchNodes do: 
+			[:each | 
+			| object |
+			object := each copyInContext: aDictionary.
+			newNodes addAll: object].
+	^newNodes!
+
+mappingFor: aNode
+	| method |
+	method := self methodNode.
+	method isNil ifTrue: [^aNode].
+	^method mappingFor: aNode!
+
+match: aNode inContext: aDictionary 
+	^self = aNode!
+
+matchList: matchNodes against: programNodes inContext: aDictionary 
+	^self
+		matchList: matchNodes
+		index: 1
+		against: programNodes
+		index: 1
+		inContext: aDictionary!
+
+matchList: matchNodes index: matchIndex against: programNodes index: programIndex inContext: aDictionary 
+	| node |
+	matchNodes size < matchIndex ifTrue: [^programNodes size < programIndex].
+	node := matchNodes at: matchIndex.
+	node isList 
+		ifTrue: 
+			[| currentIndex |
+			currentIndex := programIndex - 1.
+			
+			[| currentDictionary |
+			currentDictionary := aDictionary copy.
+			programNodes size < currentIndex or: 
+					[| nodes |
+					nodes := programNodes copyFrom: programIndex to: currentIndex.
+					(currentDictionary at: node ifAbsentPut: [nodes]) = nodes and: 
+							[(self 
+								matchList: matchNodes
+								index: matchIndex + 1
+								against: programNodes
+								index: currentIndex + 1
+								inContext: currentDictionary) 
+									ifTrue: 
+										[currentDictionary keysAndValuesDo: [:key :value | aDictionary at: key put: value].
+										^true].
+							false]]] 
+					whileFalse: [currentIndex := currentIndex + 1].
+			^false].
+	programNodes size < programIndex ifTrue: [^false].
+	(node match: (programNodes at: programIndex) inContext: aDictionary) ifFalse: [^false].
+	^self 
+		matchList: matchNodes
+		index: matchIndex + 1
+		against: programNodes
+		index: programIndex + 1
+		inContext: aDictionary!
+
+references: aVariableName 
+	self childrenDo: [:each | (each references: aVariableName) ifTrue: [^true]].
+	^false!
+
+removeDeadCode
+	self childrenDo: [:each | each removeDeadCode]!
+
+replaceMethodSource: aNode 
+	"We are being replaced with aNode -- if possible try to perform an in place edit of the source."
+
+	| method |
+	method := self methodNode.
+	method notNil ifTrue: [method map: self to: aNode].
+	aNode parent: self parent.
+	[self replaceSourceWith: aNode] on: Error
+		do: 
+			[:ex | 
+			self clearReplacements.
+			ex return]!
+
+replaceNode: aNode withNode: anotherNode 
+	self error: 'I don''t store other nodes'!
+
+replaceSourceFrom: aNode 
+	self clearReplacements!
+
+replaceSourceWith: aNode 
+	aNode replaceSourceFrom: self!
+
+replaceWith: aNode 
+	parent isNil ifTrue: [self error: 'This node doesn''t have a parent'].
+	self replaceMethodSource: aNode.
+	parent replaceNode: self withNode: aNode!
+
+selfMessages
+	| searcher |
+	searcher := ParseTreeSearcher new.
+	searcher matches: 'self `@msg: ``@args'
+		do: 
+			[:aNode :answer | 
+			answer
+				add: aNode selector;
+				yourself].
+	^searcher executeTree: self initialAnswer: Set new!
+
+superMessages
+	| searcher |
+	searcher := ParseTreeSearcher new.
+	searcher matches: 'super `@msg: ``@args'
+		do: 
+			[:aNode :answer | 
+			answer
+				add: aNode selector;
+				yourself].
+	^searcher executeTree: self initialAnswer: Set new! !
+!StProgramNode categoriesFor: #addReplacement:!public!replacing! !
+!StProgramNode categoriesFor: #asReturn!accessing!public! !
+!StProgramNode categoriesFor: #clearReplacements!public!replacing! !
+!StProgramNode categoriesFor: #copyInContext:!matching!public! !
+!StProgramNode categoriesFor: #copyList:inContext:!matching!public! !
+!StProgramNode categoriesFor: #mappingFor:!accessing!public! !
+!StProgramNode categoriesFor: #match:inContext:!matching!public! !
+!StProgramNode categoriesFor: #matchList:against:inContext:!matching!public! !
+!StProgramNode categoriesFor: #matchList:index:against:index:inContext:!matching!public! !
+!StProgramNode categoriesFor: #references:!public!testing! !
+!StProgramNode categoriesFor: #removeDeadCode!public!replacing! !
+!StProgramNode categoriesFor: #replaceMethodSource:!public!replacing! !
+!StProgramNode categoriesFor: #replaceNode:withNode:!public!replacing! !
+!StProgramNode categoriesFor: #replaceSourceFrom:!private-replacing!public! !
+!StProgramNode categoriesFor: #replaceSourceWith:!private-replacing!public! !
+!StProgramNode categoriesFor: #replaceWith:!public!replacing! !
+!StProgramNode categoriesFor: #selfMessages!public!querying! !
+!StProgramNode categoriesFor: #superMessages!public!querying! !
+
+!StReturnNode methodsFor!
+
+copyInContext: aDictionary 
+	^(self class new)
+		value: (value copyInContext: aDictionary);
+		yourself!
+
+match: aNode inContext: aDictionary 
+	aNode class == self class ifFalse: [^false].
+	^value match: aNode value inContext: aDictionary!
+
+replaceNode: aNode withNode: anotherNode 
+	value == aNode ifTrue: [self value: anotherNode]! !
+!StReturnNode categoriesFor: #copyInContext:!matching!public! !
+!StReturnNode categoriesFor: #match:inContext:!matching!public! !
+!StReturnNode categoriesFor: #replaceNode:withNode:!public!replacing! !
+
+!StSequenceNode methodsFor!
+
+addNode: aNode 
+	aNode parent: self.
+	(statements notEmpty and: [statements last isReturn]) 
+		ifTrue: [self error: 'Cannot add statement after return node'].
+	statements := (statements asOrderedCollection)
+				add: aNode;
+				yourself!
+
+addNode: aNode before: anotherNode 
+	| index |
+	index := self indexOfNode: anotherNode.
+	index = 0 ifTrue: [^self addNode: aNode].
+	statements := (statements asOrderedCollection)
+				add: aNode beforeIndex: index;
+				yourself.
+	aNode parent: self!
+
+addNodes: aCollection before: anotherNode 
+	aCollection do: [:each | self addNode: each before: anotherNode]!
+
+addSelfReturn
+	| node |
+	self lastIsReturn ifTrue: [^self].
+	node := RBReturnNode value: (RBVariableNode named: 'self').
+	self addNode: node!
+
+addTemporariesNamed: aCollection 
+	aCollection do: [:each | self addTemporaryNamed: each]!
+
+addTemporaryNamed: aString 
+	| variableNode |
+	variableNode := RBVariableNode named: aString.
+	variableNode parent: self.
+	temporaries := temporaries copyWith: variableNode!
+
+copyInContext: aDictionary 
+	^(self class new)
+		temporaries: (self copyList: temporaries inContext: aDictionary);
+		statements: (self copyList: statements inContext: aDictionary);
+		yourself!
+
+match: aNode inContext: aDictionary 
+	self class == aNode class ifFalse: [^false].
+	^(self 
+		matchList: temporaries
+		against: aNode temporaries
+		inContext: aDictionary) and: 
+				[self 
+					matchList: statements
+					against: aNode statements
+					inContext: aDictionary]!
+
+references: aVariableName 
+	^statements anySatisfy: [:each | each references: aVariableName]!
+
+removeDeadCode
+	(self isUsed ifTrue: [statements size - 1] ifFalse: [statements size]) to: 1
+		by: -1
+		do: 
+			[:i | 
+			(statements at: i) isImmediateNode 
+				ifTrue: 
+					[self clearReplacements.
+					statements removeAtIndex: i]].
+	super removeDeadCode!
+
+removeNode: aNode
+	self replaceNode: aNode withNodes: #()!
+
+removeTemporaryNamed: aName 
+	temporaries := temporaries reject: [:each | each name = aName]!
+
+replaceNode: aNode withNode: anotherNode 
+	self statements: (statements 
+				collect: [:each | each == aNode ifTrue: [anotherNode] ifFalse: [each]]).
+	self temporaries: (temporaries 
+				collect: [:each | each == aNode ifTrue: [anotherNode] ifFalse: [each]])!
+
+replaceNode: aNode withNodes: aCollection 
+	| index newStatements |
+	self clearReplacements.
+	index := self indexOfNode: aNode.
+	newStatements := OrderedCollection new: statements size + aCollection size.
+	1 to: index - 1 do: [:i | newStatements add: (statements at: i)].
+	newStatements addAll: aCollection.
+	index + 1 to: statements size
+		do: [:i | newStatements add: (statements at: i)].
+	aCollection do: [:each | each parent: self].
+	statements := newStatements! !
+!StSequenceNode categoriesFor: #addNode:!adding nodes!public! !
+!StSequenceNode categoriesFor: #addNode:before:!adding nodes!public! !
+!StSequenceNode categoriesFor: #addNodes:before:!adding nodes!public! !
+!StSequenceNode categoriesFor: #addSelfReturn!adding nodes!public! !
+!StSequenceNode categoriesFor: #addTemporariesNamed:!adding nodes!public! !
+!StSequenceNode categoriesFor: #addTemporaryNamed:!adding nodes!public! !
+!StSequenceNode categoriesFor: #copyInContext:!matching!public! !
+!StSequenceNode categoriesFor: #match:inContext:!matching!public! !
+!StSequenceNode categoriesFor: #references:!public!testing! !
+!StSequenceNode categoriesFor: #removeDeadCode!public!replacing! !
+!StSequenceNode categoriesFor: #removeNode:!public!replacing! !
+!StSequenceNode categoriesFor: #removeTemporaryNamed:!accessing!public! !
+!StSequenceNode categoriesFor: #replaceNode:withNode:!public!replacing! !
+!StSequenceNode categoriesFor: #replaceNode:withNodes:!public!replacing! !
+
+!StVariableNode methodsFor!
+
+copyInContext: aDictionary 
+	^self class identifierToken: token removePositions!
+
+references: aVariableName 
+	^self name = aVariableName!
+
+replaceSourceFrom: aNode 
+	self addReplacement: (RBStringReplacement 
+				replaceFrom: aNode start
+				to: aNode stop
+				with: self name)!
+
+replaceSourceWith: aNode
+	self addReplacement: (RBStringReplacement 
+				replaceFrom: self start
+				to: self stop
+				with: aNode formattedCode)! !
+!StVariableNode categoriesFor: #copyInContext:!matching!public! !
+!StVariableNode categoriesFor: #references:!public!testing! !
+!StVariableNode categoriesFor: #replaceSourceFrom:!public!replacing! !
+!StVariableNode categoriesFor: #replaceSourceWith:!public!replacing! !
+
+"End of package definition"!
+

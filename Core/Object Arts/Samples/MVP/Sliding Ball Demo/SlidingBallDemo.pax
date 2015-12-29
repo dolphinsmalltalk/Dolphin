@@ -1,0 +1,56 @@
+| package |
+package := Package name: 'SlidingBallDemo'.
+package paxVersion: 1;
+	basicComment: 'I would like the example to have two rectangles connected by a line.
+One button (called "start") that when presssed will show a small
+circle travel along the line from one rectangle to the other. Upon
+reaching the second rectangle the circle disappears and a dialog box
+appears stating the "The package has arrived"...this would then
+display for 5 seconds and then disappear.
+At any time after the "start" button has been pressed the user can
+pause the circle''s movement by clicking anywhere in the workspace and
+start it again from where it was stopped by also clicking anywhere in
+the work space (I would consider another button that would be where
+the user is required to pause and restart the movement)
+
+SlidingBallDemo new show'.
+
+
+package classNames
+	add: #SlidingBallDemo;
+	add: #SlidingBallSessionManager;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\..\..\Dolphin\Base\Dolphin';
+	add: '..\..\..\Dolphin\MVP\Base\Dolphin MVP Base';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+RuntimeSessionManager subclass: #SlidingBallSessionManager
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DoubleBufferedView subclass: #SlidingBallDemo
+	instanceVariableNames: 'start end circle stepProcess'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+"End of package definition"!
+

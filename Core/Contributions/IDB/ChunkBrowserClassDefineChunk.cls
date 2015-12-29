@@ -1,0 +1,75 @@
+"Filed out from Dolphin Smalltalk X6"!
+
+ChunkBrowserExpressionChunk subclass: #ChunkBrowserClassDefineChunk
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ChunkBrowserClassDefineChunk guid: (GUID fromString: '{9A18662B-ED08-4733-BF8B-C22EDE8994E8}')!
+ChunkBrowserClassDefineChunk comment: 'See [DolphinImageFolder]/Idb/Documentation for details
+
+(C) 2005 Ian Bartholomew
+ian@idb.me.uk
+Public Domain Freeware'!
+!ChunkBrowserClassDefineChunk categoriesForClass!IDB Goodies! !
+!ChunkBrowserClassDefineChunk methodsFor!
+
+browseTarget
+	^self identity1AsClass!
+
+canShowDifferences
+	^self identity1AsClass notNil!
+
+initialize: aString 
+	"Abd subclass: #Def instanceVariableNames: ''	classVariableNames: '' poolDictionaries: '' classInstanceVariableNames: ''
+	Abd variableSubclass: #Def instanceVariableNames: ''	classVariableNames: '' poolDictionaries: '' classInstanceVariableNames: ''
+	Abd variableByteSubclass: #Def instanceVariableNames: ''	classVariableNames: '' poolDictionaries: '' classInstanceVariableNames: ''"
+
+	| space1 space2 eol |
+	super initialize: aString.
+	space1 := rawText indexOf: $ .
+	space2 := rawText 
+				nextIndexOf: $ 
+				from: space1 + 1
+				to: rawText size.
+	eol := rawText 
+				nextIndexOf: String lineDelimiter first
+				from: space2 + 1
+				to: rawText size.
+	identity1 := rawText copyFrom: space2 + 2 to: eol - 1.
+	identity2 := rawText copyFrom: 1 to: space1 - 1!
+
+isMatch
+	^self identity1AsClass ifNotNil: [:arg | arg instanceClass definition = rawText]!
+
+restore
+	^self restoreAndLog: true!
+
+sourceText
+	^self identity1AsClass instanceClass definition! !
+!ChunkBrowserClassDefineChunk categoriesFor: #browseTarget!operations!public! !
+!ChunkBrowserClassDefineChunk categoriesFor: #canShowDifferences!public!testing! !
+!ChunkBrowserClassDefineChunk categoriesFor: #initialize:!initializing!public! !
+!ChunkBrowserClassDefineChunk categoriesFor: #isMatch!public!testing! !
+!ChunkBrowserClassDefineChunk categoriesFor: #restore!operations!public! !
+!ChunkBrowserClassDefineChunk categoriesFor: #sourceText!accessing!public! !
+
+!ChunkBrowserClassDefineChunk class methodsFor!
+
+chunkType
+	^#'Class Define'!
+
+isChunkClassFor: aString 
+	"Abd subclass: #Def instanceVariableNames: ''	classVariableNames: '' poolDictionaries: '' classInstanceVariableNames: ''
+	Abd variableSubclass: #Def instanceVariableNames: ''	classVariableNames: '' poolDictionaries: '' classInstanceVariableNames: ''
+	Abd variableByteSubclass: #Def instanceVariableNames: ''	classVariableNames: '' poolDictionaries: '' classInstanceVariableNames: ''"
+
+	| firstSpaceIndex |
+	(firstSpaceIndex := aString indexOf: Character space) = 0 ifTrue: [^false].
+	^(#(' subclass: ' ' variableSubclass: ' ' variableByteSubclass: ') 
+		anySatisfy: [:each | (aString indexOfSubCollection: each) = firstSpaceIndex]) and: 
+				[#('instanceVariableNames: ' 'classVariableNames: ' 'poolDictionaries: ' 'classInstanceVariableNames: ') 
+					allSatisfy: [:each | (aString indexOfSubCollection: each) ~= 0]]! !
+!ChunkBrowserClassDefineChunk class categoriesFor: #chunkType!constants!public! !
+!ChunkBrowserClassDefineChunk class categoriesFor: #isChunkClassFor:!public!testing! !
+

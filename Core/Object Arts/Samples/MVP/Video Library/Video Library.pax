@@ -1,0 +1,90 @@
+| package |
+package := Package name: 'Video Library'.
+package paxVersion: 1;
+	basicComment: 'Dolphin Smalltalk Video Library Sample. 
+Copyright (c) Object Arts Ltd, 2001.
+
+An example Video Tape Library system for indexing the recordings in a collection of video tapes. This sample package is tied to the Dolphin Pattern Book and is used to illustrate most of the patterns that are presented there. Many methods in the package are annonated with the names of the patterns that they illustrate and most of the patterns in the book will refer back to the classes and methods here.
+
+To display an instance of a video library, evaluate:
+
+VideoLibraryShell show
+'.
+
+package basicPackageVersion: '2005.6.5.15'.
+
+
+package classNames
+	add: #NewVideoTapeDialog;
+	add: #VideoLibrary;
+	add: #VideoLibraryShell;
+	add: #VideoRecording;
+	add: #VideoRecordingDialog;
+	add: #VideoTape;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\..\..\Dolphin\Base\Dolphin';
+	add: '..\..\..\Dolphin\MVP\Presenters\Choice\Dolphin Choice Presenter';
+	add: '..\..\..\Dolphin\MVP\Views\Common Controls\Dolphin Common Controls';
+	add: '..\..\..\Dolphin\MVP\Views\Date Time\Dolphin Date Time Controls';
+	add: '..\..\..\Dolphin\MVP\Presenters\Date Time\Dolphin Date Time Presenters';
+	add: '..\..\..\Dolphin\MVP\Models\List\Dolphin List Models';
+	add: '..\..\..\Dolphin\MVP\Presenters\List\Dolphin List Presenter';
+	add: '..\..\..\Dolphin\MVP\Base\Dolphin MVP Base';
+	add: '..\..\..\Dolphin\MVP\Presenters\Number\Dolphin Number Presenter';
+	add: '..\..\..\Dolphin\MVP\Views\Slider\Dolphin Slider Control';
+	add: '..\..\..\Dolphin\MVP\Presenters\Text\Dolphin Text Presenter';
+	add: '..\..\..\Dolphin\MVP\Type Converters\Dolphin Type Converters';
+	add: '..\..\..\Dolphin\MVP\Models\Value\Dolphin Value Models';
+	add: '..\..\..\Dolphin\IDE\Base\Internal Bitmaps and Icons';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+Object subclass: #VideoLibrary
+	instanceVariableNames: 'owner tapes'
+	classVariableNames: 'DefaultInstance'
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Object subclass: #VideoRecording
+	instanceVariableNames: 'title date time length'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Object subclass: #VideoTape
+	instanceVariableNames: 'name length recordings'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Shell subclass: #VideoLibraryShell
+	instanceVariableNames: 'ownerPresenter tapesPresenter recordingsPresenter'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Dialog subclass: #VideoRecordingDialog
+	instanceVariableNames: 'titlePresenter datePresenter timePresenter lengthPresenter'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ValueDialog subclass: #NewVideoTapeDialog
+	instanceVariableNames: 'namePresenter lengthPresenter'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+"End of package definition"!
+

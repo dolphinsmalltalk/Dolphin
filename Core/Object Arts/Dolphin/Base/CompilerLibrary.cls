@@ -1,0 +1,41 @@
+"Filed out from Dolphin Smalltalk X6"!
+
+ExternalLibrary subclass: #CompilerLibrary
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+CompilerLibrary guid: (GUID fromString: '{87B4C58A-026E-11D3-9FD7-00A0CC3E4A32}')!
+CompilerLibrary comment: 'CompilerLibrary is the <ExternalLibrary> to represent the Dolphin Smalltalk compiler.
+
+In versin 3.0 the compiler is actually implemented as a COM object, but to avoid the necessity of making the OLE COM package part of the base image, the VM exposes some simple wrapper functions which have the same signature as the 2.x compiler API.'!
+!CompilerLibrary categoriesForClass!External-Libraries! !
+!CompilerLibrary methodsFor!
+
+compile: aCompiler source: aString in: aClass flags: anInteger notifying: notifier
+	"Private - Compiler the method source, aString, in the context of the class, aClass,
+	on behalf of the compiler, aCompiler, parameterized by the flags, anInteger,
+	notifying, notifier, of any errors or warnings which are detected."
+
+	<stdcall: oop CompileForClass ote lpstr ote sdword oop>
+	^self invalidCall!
+
+compileForEvaluation: aCompiler source: aString in: aClass evaluationPools: anArray flags: anInteger notifying: notifier
+	"Private - Compiler the expression source, aString, in the context of the class, aClass,
+	on behalf of the compiler, aCompiler, parameterized by the flags, anInteger,
+	notifying, notifier, of any errors or warnings which are detected."
+
+	<stdcall: oop CompileForEval oop lpstr ote ote sdword oop>
+	^self invalidCall! !
+!CompilerLibrary categoriesFor: #compile:source:in:flags:notifying:!compiling!private! !
+!CompilerLibrary categoriesFor: #compileForEvaluation:source:in:evaluationPools:flags:notifying:!compiling!private! !
+
+!CompilerLibrary class methodsFor!
+
+fileName
+	"Answer the host system file name of the external library which
+	the receiver represents."
+
+	^VMLibrary default compilerFileName! !
+!CompilerLibrary class categoriesFor: #fileName!constants!public! !
+

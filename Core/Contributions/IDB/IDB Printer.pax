@@ -1,0 +1,311 @@
+| package |
+package := Package name: 'IDB Printer'.
+package paxVersion: 1;
+	basicComment: 'Printing
+Version 6a - May 2005
+For Version 6 of Dolphin Smalltalk
+
+(C) 2005 Ian Bartholomew
+ian@idb.me.uk
+Public Domain Freeware
+'.
+
+package basicPackageVersion: 'IDB$PACKAGE$VERSION 6a'.
+
+
+package classNames
+	add: #DEVNAMES;
+	add: #IdeBrowserPrinterExtension;
+	add: #IdePrinter;
+	add: #IdePrinterExtensions;
+	add: #PAGESETUPDLG;
+	add: #Printer;
+	yourself.
+
+package methodNames
+	add: #ClassBrowserAbstract -> #canPrint;
+	add: #ClassBrowserAbstract -> #print;
+	add: #ComDlgLibrary -> #pageSetupDlg:;
+	add: #FORMATRANGE -> #cpMax;
+	add: #FORMATRANGE -> #cpMin;
+	add: #MethodBrowserShell -> #canPrint;
+	add: #MethodBrowserShell -> #print;
+	add: #MultilineTextEdit -> #printOn:margins:selectionRange:pageRange:titleBlock:;
+	add: #Notepad -> #filePageSetup;
+	add: #Notepad -> #filePrint;
+	add: #RichTextEdit -> #printOn:margins:selectionRange:pageRange:titleBlock:;
+	add: #ScintillaView -> #printOn:margins:selectionRange:pageRange:titleBlock:;
+	add: #Shell -> #pageSetup;
+	add: #Shell -> #print:;
+	add: #SmalltalkWorkspaceDocument -> #canPrint;
+	add: #SmalltalkWorkspaceDocument -> #print;
+	add: #WordPad -> #filePageSetup;
+	add: #WordPad -> #filePrint;
+	yourself.
+
+package globalNames
+	add: #PrintingConstants;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\Object Arts\Dolphin\IDE\Base\Development System';
+	add: '..\Object Arts\Dolphin\Base\Dolphin';
+	add: '..\Object Arts\Dolphin\MVP\Dialogs\Common\Dolphin Common Dialogs';
+	add: '..\Object Arts\Dolphin\MVP\Dialogs\Common\Dolphin Common Print Dialog';
+	add: '..\Object Arts\Dolphin\MVP\Base\Dolphin MVP Base';
+	add: '..\Object Arts\Dolphin\MVP\Presenters\Text\Dolphin Rich Text Presenter';
+	add: '..\Object Arts\Dolphin\MVP\Views\Scintilla\Dolphin Scintilla View';
+	add: '..\Object Arts\Dolphin\MVP\Presenters\Text\Dolphin Text Presenter';
+	add: 'IDB IDE Extensions';
+	add: '..\Object Arts\Samples\MVP\Notepad\Notepad';
+	add: '..\Object Arts\Samples\MVP\Wordpad\Wordpad';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+Object subclass: #Printer
+	instanceVariableNames: 'hDevNames hDevMode rtMargin margins selectionRange pageRange titleBlock'
+	classVariableNames: 'Default'
+	poolDictionaries: 'PrintingConstants ScintillaConstants Win32Constants'
+	classInstanceVariableNames: ''!
+Win32Structure subclass: #DEVNAMES
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Win32Structure subclass: #PAGESETUPDLG
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+IdeExtensions subclass: #IdePrinterExtensions
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+IdePrinterExtensions subclass: #IdeBrowserPrinterExtension
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Printer subclass: #IdePrinter
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+!ClassBrowserAbstract methodsFor!
+
+canPrint
+	#idbAdded.
+	^#('source' 'definition' 'comment') includes: self currentCard view name!
+
+print
+	#idbAdded.
+	super print: self currentCard view referee! !
+!ClassBrowserAbstract categoriesFor: #canPrint!idb goodies!printing!public!testing! !
+!ClassBrowserAbstract categoriesFor: #print!idb goodies!printing!public! !
+
+!ComDlgLibrary methodsFor!
+
+pageSetupDlg: aWinPAGESETUPDLG 
+	"Private - Displays a Page Setup dialog box.
+
+		BOOL PageSetupDlg(
+			LPPAGESETUPDLG  lppsd 	// address of structure with initialization data
+		);"
+
+	<stdcall: bool PageSetupDlgA lpvoid>
+	#idbAdded.
+	^self invalidCall! !
+!ComDlgLibrary categoriesFor: #pageSetupDlg:!idb goodies!primitives!public!win32 functions-common dialog box! !
+
+!FORMATRANGE methodsFor!
+
+cpMax
+	#idbAdded.
+	^bytes sdwordAtOffset: 44!
+
+cpMin
+	#idbAdded.
+	^bytes sdwordAtOffset: 40! !
+!FORMATRANGE categoriesFor: #cpMax!accessing!idb goodies!public! !
+!FORMATRANGE categoriesFor: #cpMin!accessing!idb goodies!public! !
+
+!MethodBrowserShell methodsFor!
+
+canPrint
+	#idbAdded.
+	^true!
+
+print
+	#idbAdded.
+	super print: browserPresenter sourcePresenter view! !
+!MethodBrowserShell categoriesFor: #canPrint!idb goodies!printing!public!testing! !
+!MethodBrowserShell categoriesFor: #print!idb goodies!printing!public! !
+
+!MultilineTextEdit methodsFor!
+
+printOn: aPrinterCanvas margins: aRectangle selectionRange: selectionIntervalOrNil pageRange: pageIntervalOrNil titleBlock: aBlockOrNil 
+	| richTextEdit |
+	#idbAdded.
+	richTextEdit := (RichTextEdit new)
+				parentView: View desktop;
+				create;
+				yourself.
+	richTextEdit
+		replaceSelection: self text;
+		printOn: aPrinterCanvas
+			margins: aRectangle
+			selectionRange: selectionIntervalOrNil
+			pageRange: pageIntervalOrNil
+			titleBlock: aBlockOrNil! !
+!MultilineTextEdit categoriesFor: #printOn:margins:selectionRange:pageRange:titleBlock:!idb goodies!printing!private! !
+
+!Notepad methodsFor!
+
+filePageSetup
+	self pageSetup!
+
+filePrint
+	self print: documentPresenter view! !
+!Notepad categoriesFor: #filePageSetup!idb goodies!Printing!public! !
+!Notepad categoriesFor: #filePrint!idb goodies!Printing!public! !
+
+!RichTextEdit methodsFor!
+
+printOn: aPrinterCanvas margins: aRectangle selectionRange: selectionIntervalOrNil pageRange: pageIntervalOrNil titleBlock: aBlockOrNil 
+	| formatRange pageRect renderRect currentPage |
+	#idbAdded.
+	"All measurements in TWIPS"
+	pageRect := Point zero extent: (aPrinterCanvas extent * 1440 / aPrinterCanvas resolution) truncated.
+	renderRect := pageRect origin + (aRectangle topLeft * 1.44) truncated 
+				corner: pageRect corner - (aRectangle bottomRight * 1.44) truncated.
+	formatRange := FORMATRANGE new.
+	formatRange
+		hdc: aPrinterCanvas handle;
+		hdcTarget: aPrinterCanvas handle;
+		rc: (RECT fromRectangle: renderRect);
+		rcPage: (RECT fromRectangle: pageRect);
+		cpMin: (selectionIntervalOrNil ifNil: [0] ifNotNil: [selectionIntervalOrNil start]);
+		cpMax: (selectionIntervalOrNil ifNil: [self textLength] ifNotNil: [selectionIntervalOrNil stop]).
+	currentPage := 1.
+	aPrinterCanvas startDocNamed: 'Dolphin'.
+	[formatRange cpMin < formatRange cpMax] whileTrue: 
+			[formatRange cpMin: (self 
+						sendMessage: EM_FORMATRANGE
+						wParam: 0
+						lParam: formatRange yourAddress).
+			(pageIntervalOrNil isNil or: [pageIntervalOrNil includes: currentPage]) 
+				ifTrue: 
+					[aPrinterCanvas startPage.
+					aBlockOrNil 
+						ifNotNil: 
+							[:arg | 
+							arg 
+								value: aPrinterCanvas
+								value: currentPage
+								value: (renderRect left / 1440 * aPrinterCanvas resolution x) truncated
+								value: (renderRect right / 1440 * aPrinterCanvas resolution x) truncated].
+					self 
+						sendMessage: EM_DISPLAYBAND
+						wParam: 0
+						lParam: formatRange rc yourAddress.
+					aPrinterCanvas endPage].
+			currentPage := currentPage + 1].
+	self 
+		sendMessage: EM_FORMATRANGE
+		wParam: 0
+		lParam: 0.
+	aPrinterCanvas endDoc! !
+!RichTextEdit categoriesFor: #printOn:margins:selectionRange:pageRange:titleBlock:!idb goodies!printing!private! !
+
+!ScintillaView methodsFor!
+
+printOn: aPrinterCanvas margins: aRectangle selectionRange: selectionIntervalOrNil pageRange: pageIntervalOrNil titleBlock: aBlockOrNil 
+	| formatRange pageRect renderRect currentPage |
+	#idbAdded.
+	"All measurements in pixels"
+	pageRect := Point zero extent: aPrinterCanvas extent.
+	renderRect := pageRect origin + (aRectangle topLeft / 1000 * aPrinterCanvas resolution) truncated 
+				corner: pageRect corner - (aRectangle bottomRight / 1000 * aPrinterCanvas resolution) truncated.
+	formatRange := FORMATRANGE new.
+	formatRange
+		hdc: aPrinterCanvas handle;
+		hdcTarget: aPrinterCanvas handle;
+		rc: (RECT fromRectangle: renderRect);
+		rcPage: (RECT fromRectangle: pageRect);
+		cpMin: (selectionIntervalOrNil ifNil: [0] ifNotNil: [selectionIntervalOrNil start]);
+		cpMax: (selectionIntervalOrNil ifNil: [self textLength] ifNotNil: [selectionIntervalOrNil stop]).
+	self printColourMode: SC_PRINT_COLOURONWHITE.
+	currentPage := 1.
+	aPrinterCanvas startDocNamed: 'Dolphin'.
+	[formatRange cpMin < formatRange cpMax] whileTrue: 
+			[(pageIntervalOrNil isNil or: [pageIntervalOrNil includes: currentPage]) 
+				ifTrue: 
+					[aPrinterCanvas startPage.
+					aBlockOrNil 
+						ifNotNil: 
+							[:arg | 
+							arg 
+								value: aPrinterCanvas
+								value: currentPage
+								value: renderRect left
+								value: renderRect right].
+					formatRange cpMin: (self sciFormatRange: true fr: formatRange).
+					aPrinterCanvas endPage]
+				ifFalse: [formatRange cpMin: (self sciFormatRange: false fr: formatRange)].
+			currentPage := currentPage + 1].
+	self sciFormatRange: false fr: 0.
+	aPrinterCanvas endDoc! !
+!ScintillaView categoriesFor: #printOn:margins:selectionRange:pageRange:titleBlock:!idb goodies!printing!private! !
+
+!Shell methodsFor!
+
+pageSetup
+	#idbAdded.
+	IdePrinter default showPageSetupDialog: true!
+
+print: aView 
+	#idbAdded.
+	IdePrinter default print: aView showDialog: true! !
+!Shell categoriesFor: #pageSetup!idb goodies!printing!public! !
+!Shell categoriesFor: #print:!idb goodies!printing!public! !
+
+!SmalltalkWorkspaceDocument methodsFor!
+
+canPrint
+	#idbAdded.
+	^true!
+
+print
+	#idbAdded.
+	super print: workspacePresenter view! !
+!SmalltalkWorkspaceDocument categoriesFor: #canPrint!idb goodies!printing!public!testing! !
+!SmalltalkWorkspaceDocument categoriesFor: #print!idb goodies!printing!public! !
+
+!WordPad methodsFor!
+
+filePageSetup
+	self pageSetup!
+
+filePrint
+	self print: documentPresenter view! !
+!WordPad categoriesFor: #filePageSetup!idb goodies!Printing!public! !
+!WordPad categoriesFor: #filePrint!idb goodies!Printing!public! !
+
+"End of package definition"!
+

@@ -1,0 +1,247 @@
+| package |
+package := Package name: 'Internal Bitmaps and Icons'.
+package paxVersion: 1;
+	basicComment: 'One of the most common reasons why Dolphin applications need to use external files is to make use of icon and bitmap resources. These may be required solely to present your Dolphin classes with an icon inside the browsers or for more functional reasons such as toolbar buttons etc. 
+
+This package makes use of GDI+ to load in external image files and hold them as GdiplusBitmap byte array initializers within the image. Hence the appropriate bitmap can be created at anytime without reference to the external file. Typically, the external file will be a PNG file, which can contain transparency information and is therefore capable of replacing most functionality of standard Windows ICO files. Other files, such as BMP and JPG, may also be used if alpha transparency is not required. Note, however, that currently ICO files are not allowed due to an inability to easily load the correct (large) resource from the icon file (anyone care to fix this?)
+
+USAGE:
+
+(1) If you want to install a class side #icon method for one of your classes simply go to any workspace and evaluate:
+
+MyClass createIconMethod.
+
+This will prompt for a (usually PNG) file, and then create a MyClass class>>icon method for it. If you browse this method you''ll see it answers an instance of InternalIcon instantiated from a literal byte array. Note that InternalIcons automatically reformat any image to 48@48 pixels by default.
+
+(2) If you want to add an InternalIcon to a toolbar, in the View Composer first create a ToolbarIconButton in your toolbar and locate the commandDescription/image aspect for this button. Then type and accept:
+
+InternalIcon chooseFile
+
+This will prompt you for a suitable image file (again PNG files work best) and will load the image bytes into a literal byte array from which the InternalIcon can be instantiated when required. 
+
+EFFICIENCY:
+
+Obviously, holding byte array initializers in the Dolphin image is somewhat more inefficient in terms of runtime object memory usage than demand loading external icon files. However, the PNG format in which the image bytes are held is relatively efficient and is significantly smaller than the equivalent ICO file (which often has several different resolution bitmaps within it). So although the object memory load may be greater, the overall application size will generally be smaller. This seems like a worthwhile compromise given the fact that the need to distribute separate ICO/BMP files with your application is eradicated. An additional gain is that, because the InternalIcons are represented entirely within Smalltalk methods, they can be held in an STS repository, which is not possible with external files.
+
+VISUAL RESOLUTION
+
+Unlike ICO files, InternalIcons work by holding a single high (=48@48 by default) resolution image and then rescaling this on demand to any lower resolutions that are required. This generally works rather well, since GDI+ is good at performing anti-aliased scaling. However, this doesn''t have the same flexibility of hand tailoring the lower resolution images that one gets with ICO files. Thus you might have to choose your icon images with more care in order to avoid poor results with smaller icons renditions.
+
+CAUTION:
+
+Both InternalIcons and InternalBitmaps will display their full byte array initializers if you use #displayString or #printString. If you choose to load a huge bitmap into one of these objects (which is not a good idea anyway) this could cause problems if you "Display It" in a workspace. It is for this reason that InternalIcons forcibly reformat any supplied image to a default size of 48@48 pixels. Thus, InternalIcons should never be too large to "Display It". Indeed, this is the only difference between InternalIcons and InternalBitmaps; the latter are not resized on load and so can be arbitrarily large.'.
+
+package basicPackageVersion: '0.010'.
+
+
+package classNames
+	add: #GdiplusBitmapFromBytesInitializer;
+	add: #GdiplusFromBytesInitializer;
+	add: #GdiplusImageFromBytesInitializer;
+	add: #InternalBitmap;
+	add: #InternalIcon;
+	yourself.
+
+package methodNames
+	add: #ClassDescription -> #createIconMethod;
+	add: #ClassDescription -> #createIconMethod:OfSize:;
+	add: #ClassDescription -> #createIconMethod:ofSize:fromFile:;
+	add: #Collection -> #printOn:upTo:;
+	add: #Collection -> #printStringUpTo:;
+	add: #Color -> #icon;
+	add: #GdiplusImage -> #addToImageList:mask:;
+	add: #GdiplusImage -> #internalize;
+	add: 'GdiplusImage class' -> #fromByteArray2:;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\..\Base\Dolphin';
+	add: '..\..\MVP\Dialogs\Common\Dolphin Common Dialogs';
+	add: '..\..\MVP\Base\Dolphin MVP Base';
+	add: '..\..\MVP\Gdiplus\Gdiplus';
+	add: '..\..\ActiveX\Structured Storage\OLE Structured Storage';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+Object subclass: #InternalBitmap
+	instanceVariableNames: 'gdiplusBitmap'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+GdiplusInitializer subclass: #GdiplusFromBytesInitializer
+	instanceVariableNames: 'bytes'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+GdiplusFromBytesInitializer subclass: #GdiplusBitmapFromBytesInitializer
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+GdiplusFromBytesInitializer subclass: #GdiplusImageFromBytesInitializer
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+InternalBitmap subclass: #InternalIcon
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+!ClassDescription methodsFor!
+
+createIconMethod
+	"Prompts the user for an image or icon file and builds and compiles an #icon method from it for this class"
+
+	^self createIconMethod: #icon OfSize: 48!
+
+createIconMethod: methodName OfSize: pixelSize 
+	| extent imageFileName |
+	extent := pixelSize asPoint.
+	imageFileName := FileOpenDialog showModal.
+	imageFileName ifNil: [^self].
+	^self 
+		createIconMethod: methodName
+		ofSize: extent
+		fromFile: imageFileName!
+
+createIconMethod: methodName ofSize: pixelSize fromFile: imageFileName 
+	| extent internalIcon methodSourceStream |
+	extent := pixelSize asPoint.
+	(File splitExtensionFrom: imageFileName) asLowercase = 'ico' 
+		ifTrue: 
+			[#todo.	"Anyone care to fix this?"
+			MessageBox 
+				warning: 'Can''t currently compile from ICO files. 
+
+Why not use: 
+  http://www.converticon.com
+to convert to PNG format first?'.
+			^self].
+
+	"Let GDI+ do the image load"
+	internalIcon := InternalIcon fromFile: imageFileName extent: extent.
+	methodSourceStream := String writeStream.
+	methodSourceStream
+		nextPutAll: methodName;
+		cr;
+		nextPutAll: '
+	"Generated from:
+	self createIconMethod: ';
+		nextPutAll: methodName printString;
+		nextPutAll: ' ofSize: ';
+		nextPutAll: extent printString;
+		nextPutAll: ' fromFile: ';
+		nextPutAll: imageFileName printString;
+		nextPutAll: '.
+	"
+	^'.
+	internalIcon printOn: methodSourceStream.
+	self class compile: methodSourceStream contents
+		categories: (Array with: MethodCategory public with: (MethodCategory name: 'constants'))! !
+!ClassDescription categoriesFor: #createIconMethod!development!public! !
+!ClassDescription categoriesFor: #createIconMethod:OfSize:!public! !
+!ClassDescription categoriesFor: #createIconMethod:ofSize:fromFile:!public! !
+
+!Collection methodsFor!
+
+printOn: aStream upTo: maxPrintCharacters 
+	"Print a string representation of self on aStream. This method suffices for 
+	most collections, and is able to handle cyclic references."
+
+	| printed |
+	printed := Processor activeProcess _alreadyPrinted.
+	(printed includes: self) ifTrue: [^self printCyclicRefOn: aStream].
+	printed add: self.
+	
+	[| tooMany |
+	tooMany := aStream position + maxPrintCharacters.
+	self printPrefixOn: aStream.
+	self do: 
+			[:each | 
+			aStream position > tooMany 
+				ifTrue: 
+					[aStream nextPutAll: '... etc ...'.
+					^self].
+			each printOn: aStream]
+		separatedBy: [aStream space].
+	self printSuffixOn: aStream] 
+			ensure: [printed remove: self ifAbsent: []]!
+
+printStringUpTo: maxPrintCharacters 
+	"Answer a <readableString> whose characters are a description of the receiver 
+	as a developer would want to see it."
+
+	| stream |
+	stream := String writeStream: 32.
+	self printOn: stream upTo: maxPrintCharacters.
+	^stream contents! !
+!Collection categoriesFor: #printOn:upTo:!printing!public! !
+!Collection categoriesFor: #printStringUpTo:!printing!public! !
+
+!Color methodsFor!
+
+icon
+	"Answer a dynamically generated icon to represent the receiver. Note that because Icons are
+	typically placed into the IconImageManager, generating a large number of unique dynamic
+	icons will inflate the size of the image manager. Should be okay to do this for Colors
+	though."
+
+	^InternalIcon new doDrawWithCanvas: 
+			[:canvas | 
+			| useColor |
+			useColor := self isDefault ifTrue: [ColorRef defaultColorRepresentation] ifFalse: [self asRGB].
+			canvas fillRectangle: (Point zero corner: canvas extent) color: useColor]! !
+!Color categoriesFor: #icon!public! !
+
+!GdiplusImage methodsFor!
+
+addToImageList: aWinImageList mask: aColorOrNil 
+	"Private - Add a pictorial representation of the receiver to aWinImageList scaled to the
+	extent of the image list. We assume that the receiver contains transparency information so
+	the mask color is ignored"
+
+	"The chage to use a display compatible bitmap is for #2280"
+
+	| thumb bitmap |
+	thumb := self class fromImage: self extent: aWinImageList extent.
+	bitmap := Bitmap displayCompatibleWithExtent: thumb extent.
+	thumb drawOn: bitmap canvas.
+	^bitmap addToImageList: aWinImageList mask: nil!
+
+internalize
+	"Answer a copy of the receiver created from the PNG bytes. This can be held in the image and
+	removes the need for an external file reference"
+
+	^self class fromByteArray2: (self asByteArray: 'image/png')! !
+!GdiplusImage categoriesFor: #addToImageList:mask:!private! !
+!GdiplusImage categoriesFor: #internalize!public! !
+
+!GdiplusImage class methodsFor!
+
+fromByteArray2: aByteArray 
+	"Answer an instance of the receiver created from data in aByteArray. The results is an instance with a persistent
+	initializer that can be used after an image reload or after passing through STB serialization/deserialization. Eventually,
+	this should replace the original #fromByteArray: method."
+
+	#todo.	"Replace #fromByteArray: with this"
+	^self fromInitializer: (GdiplusImageFromBytesInitializer bytes: aByteArray)! !
+!GdiplusImage class categoriesFor: #fromByteArray2:!instance creation!public! !
+
+"End of package definition"!
+

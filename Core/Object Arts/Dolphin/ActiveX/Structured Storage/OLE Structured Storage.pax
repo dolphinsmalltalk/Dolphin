@@ -1,0 +1,614 @@
+| package |
+package := Package name: 'OLE Structured Storage'.
+package paxVersion: 1;
+	basicComment: 'Dolphin Smalltalk OLE Structured Storage Support. 
+Copyright (c) Object Arts Ltd 1997-2003. Portions copyright (c) CGI Group (Europe) Ltd, 1997.
+
+An OLE Structure Storage is a file system within a file. Each "storage" can contain multiple sub-storages and "streams". Streams are arbitrary byte-streams of data on which any interpretation can be placed, and are thus like files, whereas storages are like directories. Structure storage files are also referred to as "compound documents". See the Microsoft SDK documentation or "Inside OLE, 2e" for further information on structured storage.
+
+This package includes wrappers for all the basic OLE/COM/Active-X structured storage interfaces, the most important of which are IStorage and IStream, which are the main interfaces onto storages and streams respectively. Also included are implementations of IStream onto standard Smalltalk streams, and ILockBytes (the underlying storage mechanism used by the system implementation of IStorage/IStream) onto both ByteArrays and Files.
+
+Lastly the package includes wrappers for functions in the URLMonLibrary which provide high-level functions for downloading files from the Internet, for example:
+
+	f := URLMonLibrary default urlDownloadToCacheFile: ''http://www.object-arts.com/Home.htm''.
+	(FileStream read: f) contents. 	"Display me"
+
+'.
+
+package basicPackageVersion: '6.1'.
+
+
+package classNames
+	add: #ILockBytes;
+	add: #IRootStorage;
+	add: #ISequentialStream;
+	add: #IStorage;
+	add: #IStream;
+	add: #OLELockBytes;
+	add: #OLELockBytesAbstract;
+	add: #OLELockFileBytes;
+	add: #STATSTG;
+	add: #URLMonLibrary;
+	yourself.
+
+package methodNames
+	add: #OLELibrary -> #createILockBytesOnHGlobal:fDeleteOnRelease:pplkbyt:;
+	add: #OLELibrary -> #createStreamOnHGlobal:fDeleteOnRelease:ppstm:;
+	add: #OLELibrary -> #getConvertStg:;
+	add: #OLELibrary -> #getHGlobalFromILockBytes:phglobal:;
+	add: #OLELibrary -> #getHGlobalFromStream:phglobal:;
+	add: #OLELibrary -> #oleDoAutoConvert:pClsidNew:;
+	add: #OLELibrary -> #readClassStg:pclsid:;
+	add: #OLELibrary -> #readClassStm:pclsid:;
+	add: #OLELibrary -> #readFmtUserTypeStg:pcf:lplpszUserType:;
+	add: #OLELibrary -> #setConvertStg:fConvert:;
+	add: #OLELibrary -> #stgCreateDocfile:grfMode:reserved:ppstgOpen:;
+	add: #OLELibrary -> #stgCreateDocfileOnILockBytes:grfMode:reserved:ppstgOpen:;
+	add: #OLELibrary -> #stgIsStorageFile:;
+	add: #OLELibrary -> #stgIsStorageILockBytes:;
+	add: #OLELibrary -> #stgOpenStorage:pstgPriority:grfMode:snbExclude:reserved:ppstgOpen:;
+	add: #OLELibrary -> #stgOpenStorageOnILockBytes:pstgPriority:grfMode:snbExclude:reserved:ppstgOpen:;
+	add: #OLELibrary -> #stgSetTimes:pctime:patime:pmtime:;
+	add: #OLELibrary -> #writeClassStg:rclsid:;
+	add: #OLELibrary -> #writeClassStm:rclsid:;
+	add: #OLELibrary -> #writeFmtUserTypeStg:cf:lpszUserType:;
+	add: #SequencedStream -> #Commit:;
+	add: #SequencedStream -> #CopyTo:cb:pcbRead:pcbWritten:;
+	add: #SequencedStream -> #finalRelease;
+	add: #SequencedStream -> #LockRegion:cb:dwLockType:;
+	add: #SequencedStream -> #queryInterface:;
+	add: #SequencedStream -> #queryInterface:ifNone:;
+	add: #SequencedStream -> #Read:cb:pcbRead:;
+	add: #SequencedStream -> #Revert;
+	add: #SequencedStream -> #Seek:dwOrigin:plibNewPosition:;
+	add: #SequencedStream -> #SetSize:;
+	add: #SequencedStream -> #Stat:grfStatFlag:;
+	add: #SequencedStream -> #UnlockRegion:cb:dwLockType:;
+	add: #SequencedStream -> #Write:cb:pcbWritten:;
+	yourself.
+
+package globalNames
+	add: #OLEStructuredStorageConstants;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\..\Base\Dolphin';
+	add: '..\COM\OLE COM';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+COMInterfaceImp subclass: #OLELockBytesAbstract
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: 'OLEStructuredStorageConstants'
+	classInstanceVariableNames: ''!
+OLELockBytesAbstract subclass: #OLELockBytes
+	instanceVariableNames: 'bytes'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+OLELockBytesAbstract subclass: #OLELockFileBytes
+	instanceVariableNames: 'file'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ExternalLibrary subclass: #URLMonLibrary
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+IUnknown subclass: #ILockBytes
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: 'OLEStructuredStorageConstants'
+	classInstanceVariableNames: ''!
+IUnknown subclass: #IRootStorage
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+IUnknown subclass: #ISequentialStream
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: 'OLEStructuredStorageConstants'
+	classInstanceVariableNames: ''!
+IUnknown subclass: #IStorage
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: 'OLEStructuredStorageConstants'
+	classInstanceVariableNames: ''!
+ISequentialStream subclass: #IStream
+	instanceVariableNames: 'name mode'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+OLEFinalizableStructure subclass: #STATSTG
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: 'OLEStructuredStorageConstants'
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+!OLELibrary methodsFor!
+
+createILockBytesOnHGlobal: hglobal fDeleteOnRelease: fDeleteOnRelease pplkbyt: pplkbyt
+	"Invoke the CreateILockBytesOnHGlobal() function of the module wrapped by the receiver.
+	Helpstring: Creates a byte array object that uses an HGLOBAL memory handle to store the bytes intended for in-memory storage of a compound file. This object is the OLE-provided implementation of the ILockBytes interface
+
+		HRESULT __stdcall CreateILockBytesOnHGlobal(
+			[in]HGLOBAL HGLOBAL,
+			[in]BOOL fDeleteOnRelease,
+			[out, retval]ILockBytes** pplkbyt);"
+
+	<stdcall: hresult CreateILockBytesOnHGlobal handle bool ILockBytes**>
+	^self invalidCall!
+
+createStreamOnHGlobal: hGlobal fDeleteOnRelease: aBoolean ppstm: anIStream
+	"Create an IStream on the specified global memory handle, answering it via the out parameter, 
+	anIStream. hGlobal may be null, in which case the function allocates a zero sized
+	global memory block.
+
+		HRESULT CreateStreamOnHGlobal(
+			HGLOBAL hGlobal,  	//Memory handle for the stream object 
+ 			BOOL fDeleteOnRelease,	//Whether to free memory when the object is released 
+ 			LPSTREAM * ppstm 		//Indirect pointer to the new stream object 
+ 		); "
+  
+	<stdcall: hresult CreateStreamOnHGlobal handle bool lppvoid >
+	^self invalidCall!
+
+getConvertStg: pStg 
+	"Answer the convert bit of the specified storage (see setConvertStg:fConvert:)
+
+		WINOLEAPI GetConvertStg(IStorage* pStg);"
+
+	<stdcall: hresult GetConvertStg IStorage*>
+	^self invalidCall!
+
+getHGlobalFromILockBytes: plkbyt phglobal: phglobal
+	"Invoke the GetHGlobalFromILockBytes() function of the module wrapped by the receiver.
+	Helpstring: Retrieves a global memory handle to a byte array object created using the CreateILockBytesOnHGlobal function
+
+		HRESULT __stdcall GetHGlobalFromILockBytes(
+			[in]ILockBytes* plkbyt,
+			[out, retval]HGLOBAL* phglobal);"
+
+	<stdcall: hresult GetHGlobalFromILockBytes ILockBytes* handle*>
+	^self invalidCall!
+
+getHGlobalFromStream: pstm phglobal: phglobal
+	"Invoke the GetHGlobalFromStream() function of the module wrapped by the receiver.
+	Helpstring: Retrieves the global memory handle to a stream that was created through a call to the CreateStreamOnHGlobal function
+
+		HRESULT __stdcall GetHGlobalFromStream(
+			[in]IStream* pstm,
+			[out, retval]HGLOBAL* phglobal);"
+
+	<stdcall: hresult GetHGlobalFromStream IStream* handle*>
+	^self invalidCall!
+
+oleDoAutoConvert: pStg pClsidNew: aCLSID 
+	"Automatically converts an object to a new class if automatic conversion for that object class is set in the registry.
+	Answer the new class through the out parameter, pClsidNew
+
+		WINOLEAPI OleDoAutoConvert(
+			IStorage * pStg, 	//Pointer to storage object to be converted
+			LPCLSID pClsidNew	//Pointer to new CLSID of converted object
+		);"
+
+	<stdcall: hresult OleDoAutoConvert IStorage* guid*>
+	^self invalidCall!
+
+readClassStg: pStg pclsid: pclsid
+	"Invoke the ReadClassStg() function of the module wrapped by the receiver.
+	Helpstring: Reads a CLSID previously written in a storage object with WriteClassStg
+
+		HRESULT __stdcall ReadClassStg(
+			IStorage* pStg,
+			GUID* pclsid);"
+
+	<stdcall: hresult ReadClassStg IStorage* GUID*>
+	^self invalidCall!
+
+readClassStm: pstm pclsid: pclsid
+	"Invoke the ReadClassStm() function of the module wrapped by the receiver.
+	Helpstring: Reads a CLSID previously written to a stream object with WriteClassStm
+
+		HRESULT __stdcall ReadClassStm(
+			IStream* pstm,
+			GUID* pclsid);"
+
+	<stdcall: hresult ReadClassStm IStream* GUID*>
+	^self invalidCall!
+
+readFmtUserTypeStg: pStg pcf: pcf lplpszUserType: lplpszUserType
+	"Invoke the ReadFmtUserTypeStg() function of the module wrapped by the receiver.
+	Helpstring: Returns the clipboard format and user type previously saved with WriteFmtUserTypeStg
+
+		HRESULT __stdcall ReadFmtUserTypeStg(
+			IStorage* pStg,
+			CLIPFORMAT* pcf,
+			LPWSTR* lplpszUserType);"
+
+	<stdcall: hresult ReadFmtUserTypeStg IStorage* word* lpwstr*>
+	^self invalidCall!
+
+setConvertStg: pStg fConvert: aBoolean 
+	"Set/Reset the the convert bit in a storage to indicate that the object is to be 
+	converted to a new class when it is opened.
+
+		WINOLEAPI SetConvertStg(
+			IStorage * pStg, 	//Pointer to storage object where the conversion bit is to be set
+			BOOL fConvert	//Whether an object is to be converted
+		);"
+
+	<stdcall: hresult SetConvertStg IStorage* bool>
+	^self invalidCall!
+
+stgCreateDocfile: pwcsName grfMode: grfMode reserved: reserved ppstgOpen: ppstgOpen
+	"Invoke the StgCreateDocfile() function of the module wrapped by the receiver.
+	Helpstring: Creates a new compound file storage object using the COM-provided compound file implementation of IStoreage
+
+		HRESULT __stdcall StgCreateDocfile(
+			[in]LPCWSTR pwcsName,
+			[in]STGM grfMode,
+			[in]unsigned long Reserved,
+			[out, retval]IStorage** ppstgOpen);"
+
+	<stdcall: hresult StgCreateDocfile lpwstr sdword dword IStorage**>
+	^self invalidCall!
+
+stgCreateDocfileOnILockBytes: plkbyt grfMode: grfMode reserved: reserved ppstgOpen: ppstgOpen
+	"Invoke the StgCreateDocfileOnILockBytes() function of the module wrapped by the receiver.
+	Helpstring: Creates and opens a new compound file storage object on top of a byte-array object provided by the caller.
+
+		HRESULT __stdcall StgCreateDocfileOnILockBytes(
+			ILockBytes* plkbyt,
+			[in]unsigned long grfMode,
+			[in]unsigned long Reserved,
+			[out, retval]IStorage** ppstgOpen);"
+
+	<stdcall: hresult StgCreateDocfileOnILockBytes ILockBytes* dword dword IStorage**>
+	^self invalidCall!
+
+stgIsStorageFile: pwcsName
+	"Invoke the StgIsStorageFile() function of the module wrapped by the receiver.
+	Helpstring: Indicates whether a particular disk file contains a storage object
+
+		BOOL __stdcall StgIsStorageFile(
+			LPCWSTR pwcsName);"
+
+	<stdcall: bool StgIsStorageFile lpwstr>
+	^self invalidCall!
+
+stgIsStorageILockBytes: plkbyt
+	"Invoke the StgIsStorageILockBytes() function of the module wrapped by the receiver.
+	Helpstring: Indicates whether the specified byte array contains a storage object
+
+		HRESULT __stdcall StgIsStorageILockBytes(
+			[in]ILockBytes* plkbyt);"
+
+	<stdcall: hresult StgIsStorageILockBytes ILockBytes*>
+	^self invalidCall!
+
+stgOpenStorage: pwcsName pstgPriority: pstgPriority grfMode: grfMode snbExclude: snbExclude reserved: reserved ppstgOpen: ppstgOpen
+	"Invoke the StgOpenStorage() function of the module wrapped by the receiver.
+	Helpstring: Opens an existing root storage object in the file system
+
+		HRESULT __stdcall StgOpenStorage(
+			[in]LPCWSTR pwcsName,
+			[in]IStorage* pstgPriority,
+			[in]STGM grfMode,
+			[in]SNB snbExclude,
+			[in]unsigned long Reserved,
+			[out, retval]IStorage** ppstgOpen);"
+
+	<stdcall: hresult StgOpenStorage lpwstr IStorage* sdword lpwstr* dword IStorage**>
+	^self invalidCall!
+
+stgOpenStorageOnILockBytes: plkbyt pstgPriority: pstgPriority grfMode: grfMode snbExclude: snbExclude reserved: reserved ppstgOpen: ppstgOpen
+	"Invoke the StgOpenStorageOnILockBytes() function of the module wrapped by the receiver.
+	Helpstring: Opens an existing storage object that does not reside in a disk file, but instead has an underlying byte array provided by the caller
+
+		HRESULT __stdcall StgOpenStorageOnILockBytes(
+			[in]ILockBytes* plkbyt,
+			[in]IStorage* pstgPriority,
+			[in]unsigned long grfMode,
+			[in]SNB snbExclude,
+			[in]unsigned long Reserved,
+			[out, retval]IStorage** ppstgOpen);"
+
+	<stdcall: hresult StgOpenStorageOnILockBytes ILockBytes* IStorage* dword lpwstr* dword IStorage**>
+	^self invalidCall!
+
+stgSetTimes: lpszName pctime: pctime patime: patime pmtime: pmtime
+	"Invoke the StgSetTimes() function of the module wrapped by the receiver.
+	Helpstring: Sets the creation, access, and modification times of the indicated file
+
+		HRESULT __stdcall StgSetTimes(
+			[in]LPWSTR lpszName,
+			[in]FILETIME* pctime,
+			[in]FILETIME* patime,
+			[in]FILETIME* pmtime);"
+
+	<stdcall: hresult StgSetTimes lpwstr FILETIME* FILETIME* FILETIME*>
+	^self invalidCall!
+
+writeClassStg: pStg rclsid: rclsid
+	"Invoke the WriteClassStg() function of the module wrapped by the receiver.
+	Helpstring: Stores the specified CLSID in a storage object
+
+		HRESULT __stdcall WriteClassStg(
+			IStorage* pStg,
+			GUID* rclsid);"
+
+	<stdcall: hresult WriteClassStg IStorage* GUID*>
+	^self invalidCall!
+
+writeClassStm: pstm rclsid: rclsid
+	"Invoke the WriteClassStm() function of the module wrapped by the receiver.
+	Helpstring: Stores the specified CLSID in a stream
+
+		HRESULT __stdcall WriteClassStm(
+			IStream* pstm,
+			GUID* rclsid);"
+
+	<stdcall: hresult WriteClassStm IStream* GUID*>
+	^self invalidCall!
+
+writeFmtUserTypeStg: pStg cf: cf lpszUserType: lpszUserType
+	"Invoke the WriteFmtUserTypeStg() function of the module wrapped by the receiver.
+	Helpstring: Writes a clipboard format and user type to a storage object
+
+		HRESULT __stdcall WriteFmtUserTypeStg(
+			IStorage* pStg,
+			CLIPFORMAT cf,
+			LPWSTR lpszUserType);"
+
+	<stdcall: hresult WriteFmtUserTypeStg IStorage* word lpwstr>
+	^self invalidCall! !
+!OLELibrary categoriesFor: #createILockBytesOnHGlobal:fDeleteOnRelease:pplkbyt:!**auto generated**!OLE Functions-Structured Storage!public! !
+!OLELibrary categoriesFor: #createStreamOnHGlobal:fDeleteOnRelease:ppstm:!OLE Functions-Structured Storage!public! !
+!OLELibrary categoriesFor: #getConvertStg:!OLE Functions-Structured Storage!primitives!public! !
+!OLELibrary categoriesFor: #getHGlobalFromILockBytes:phglobal:!**auto generated**!OLE Functions-Structured Storage!public! !
+!OLELibrary categoriesFor: #getHGlobalFromStream:phglobal:!**auto generated**!OLE Functions-Structured Storage!public! !
+!OLELibrary categoriesFor: #oleDoAutoConvert:pClsidNew:!OLE Functions-Structured Storage!primitives!public! !
+!OLELibrary categoriesFor: #readClassStg:pclsid:!**auto generated**!OLE Functions-Structured Storage!public! !
+!OLELibrary categoriesFor: #readClassStm:pclsid:!**auto generated**!OLE Functions-Structured Storage!public! !
+!OLELibrary categoriesFor: #readFmtUserTypeStg:pcf:lplpszUserType:!**auto generated**!OLE Functions-Structured Storage!public! !
+!OLELibrary categoriesFor: #setConvertStg:fConvert:!OLE Functions-Structured Storage!primitives!public! !
+!OLELibrary categoriesFor: #stgCreateDocfile:grfMode:reserved:ppstgOpen:!**auto generated**!OLE Functions-Structured Storage!public! !
+!OLELibrary categoriesFor: #stgCreateDocfileOnILockBytes:grfMode:reserved:ppstgOpen:!**auto generated**!OLE Functions-Structured Storage!public! !
+!OLELibrary categoriesFor: #stgIsStorageFile:!**auto generated**!OLE Functions-Structured Storage!public! !
+!OLELibrary categoriesFor: #stgIsStorageILockBytes:!**auto generated**!OLE Functions-Structured Storage!public! !
+!OLELibrary categoriesFor: #stgOpenStorage:pstgPriority:grfMode:snbExclude:reserved:ppstgOpen:!**auto generated**!OLE Functions-Structured Storage!public! !
+!OLELibrary categoriesFor: #stgOpenStorageOnILockBytes:pstgPriority:grfMode:snbExclude:reserved:ppstgOpen:!**auto generated**!OLE Functions-Structured Storage!public! !
+!OLELibrary categoriesFor: #stgSetTimes:pctime:patime:pmtime:!**auto generated**!OLE Functions-Structured Storage!public! !
+!OLELibrary categoriesFor: #writeClassStg:rclsid:!**auto generated**!OLE Functions-Structured Storage!public! !
+!OLELibrary categoriesFor: #writeClassStm:rclsid:!**auto generated**!OLE Functions-Structured Storage!public! !
+!OLELibrary categoriesFor: #writeFmtUserTypeStg:cf:lpszUserType:!**auto generated**!OLE Functions-Structured Storage!public! !
+
+!SequencedStream methodsFor!
+
+Commit: grfCommitFlags 
+	"Implement the IStream::Commit() method.
+	
+		HRESULT __stdcall Commit(
+			[in] unsigned long grfCommitFlags);
+	"
+
+	"Implementation Note: Transactions are not supported, so this method has no effect other
+	than to flush the stream. The flags are ignored."
+
+	self flush.
+	^0	"S_OK"!
+
+CopyTo: pstm cb: cb pcbRead: pcbRead pcbWritten: pcbWritten 
+	"Implement the IStream::CopyTo() method.
+	
+		HRESULT __stdcall CopyTo(
+			[in] IStream* pstm,
+			[in] ULARGE_INTEGER cb,
+			[out] ULARGE_INTEGER* pcbRead,
+			[out] ULARGE_INTEGER* pcbWritten);
+	"
+
+	| read written block countWritten |
+	read := 0.
+	countWritten := pcbWritten bytes notNull.
+	written := 0.
+	[self atEnd or: [read > cb]] whileFalse: 
+			[block := self nextAvailable: 8192.
+			read := read + block size.
+			pstm 
+				Write: block
+				cb: block size
+				pcbWritten: pcbWritten.
+			countWritten ifTrue: [written := written + pcbWritten value]].
+	pcbRead bytes notNull ifTrue: [pcbRead value: read].
+	countWritten ifTrue: [pcbWritten value: written].
+	^0	"S_OK"!
+
+finalRelease
+	"The last reference to the receiver (as a COM object) has been released.
+	This is an opportunity to actively clean up, rather than passively waiting 
+	for finalization which might is asynchronous and may never happen if the 
+	object doesn't become garbage."
+
+	"Override as necessary"
+
+	"Transcript print: self; display: ' final release'; cr"
+
+	!
+
+LockRegion: libOffset cb: cb dwLockType: dwLockType 
+	"Implement the IStream::LockRegion() method.
+	
+		HRESULT __stdcall LockRegion(
+			[in] ULARGE_INTEGER libOffset,
+			[in] ULARGE_INTEGER cb,
+			[in] unsigned long dwLockType);
+	"
+
+	"From MSDN: Support for this method is optional for implementations of stream objects since
+	it may not be supported by the underlying file system. The type of locking supported is also
+	optional. The STG_E_INVALIDFUNCTION error is returned if the requested type of locking is
+	not supported."
+
+	^##(OLEStructuredStorageConstants at: 'STG_E_INVALIDFUNCTION')!
+
+queryInterface: anInterfaceClass 
+	"Answer a new interface which supports the specified interface protocol
+	(usually a class), or nil if the receiver does not support the interface."
+
+	^self queryInterface: anInterfaceClass ifNone: []!
+
+queryInterface: interfaceClass ifNone: exceptionHandler 
+	"Answer a new interface which supports the specified interface protocol
+	(usually a class). If the receiver does not support the interface,
+	answer the result of evaluating the niladic valuable, exceptionHandler.
+	N.B. It is not necessary to answer an instance of the requested interface class,
+	a subinstance will do, or even a completely different class, as long as the
+	protocol of the requested class is supported.."
+
+	^(IStream supportsInterface: interfaceClass) 
+		ifTrue: [IStream on: self]
+		ifFalse: [exceptionHandler value]!
+
+Read: pv cb: cb pcbRead: pcbRead 
+	"Implement the IStream::Read().
+	
+		HRESULT __stdcall Read(
+			[out] byte* pv,
+			[in] unsigned long cb,
+			[out] unsigned long* pcbRead);
+	"
+
+	| count |
+	count := cb min: self size - self position.
+	self 
+		next: count
+		into: pv
+		startingAt: 1.
+	pcbRead bytes notNull ifTrue: [pcbRead value: count].
+	^0	"S_OK"!
+
+Revert
+	"Implement the IStream::Revert() method
+
+		HRESULT __stdcall Revert();
+	"
+
+	"Implementation Note: Transactions are not supported, so this method has no effect."
+
+	^Win32Errors.S_FALSE!
+
+Seek: dlibMove dwOrigin: dwOrigin plibNewPosition: plibNewPosition 
+	"Implement the IStream::Seek() method..
+	
+		HRESULT __stdcall Seek(
+			[in] LARGE_INTEGER dlibMove,
+			[in] unsigned long dwOrigin,
+			[out] ULARGE_INTEGER* plibNewPosition);
+	"
+
+	| hr |
+	hr := 
+			[dwOrigin == ##(OLEStructuredStorageConstants at: 'STREAM_SEEK_SET') 
+				ifTrue: [self position: dlibMove]
+				ifFalse: 
+					[dwOrigin == ##(OLEStructuredStorageConstants at: 'STREAM_SEEK_CUR') 
+						ifTrue: [self skip: dlibMove]
+						ifFalse: 
+							[dwOrigin == ##(OLEStructuredStorageConstants at: 'STREAM_SEEK_END') 
+								ifTrue: [self position: self size - dlibMove]
+								ifFalse: [self errorSubscriptBounds: -1]]].
+			0	"S_OK"] 
+					on: BoundsError
+					do: [:ex | ##(OLEStructuredStorageConstants at: 'STG_E_INVALIDFUNCTION')].
+	plibNewPosition bytes notNull 
+		ifTrue: [plibNewPosition value: (hr < 0 ifTrue: [0] ifFalse: [self position])].
+	^hr!
+
+SetSize: libNewSize 
+	"Invoke the SetSize() method of the object wrapped by the receiver.
+	
+		HRESULT __stdcall SetSize(
+			[in] ULARGE_INTEGER libNewSize);
+	"
+
+	^Win32Errors.E_NOTIMPL!
+
+Stat: pstatstg grfStatFlag: grfStatFlag 
+	"Implement the IStream::Stat() method.
+	
+		HRESULT __stdcall Stat(
+			[out] STATSTG* pstatstg,
+			[in] unsigned long grfStatFlag);
+	"
+
+	"Make sure it is zeroed out"
+
+	pstatstg class init: pstatstg.
+	pstatstg
+		type: ##(OLEStructuredStorageConstants at: 'STGTY_STREAM');
+		cbSize: self size.
+	^0	"S_OK"!
+
+UnlockRegion: libOffset cb: cb dwLockType: dwLockType 
+	"Implement the IStream::UnlockRegion() method.
+	
+		HRESULT __stdcall UnlockRegion(
+			[in] ULARGE_INTEGER libOffset,
+			[in] ULARGE_INTEGER cb,
+			[in] unsigned long dwLockType);
+	"
+
+	"Implementation Note: Locking is not supported."
+
+	^##(OLEStructuredStorageConstants at: 'STG_E_INVALIDFUNCTION')!
+
+Write: pv cb: cb pcbWritten: pcbWritten 
+	"Implement the IStream::Write() method.
+	
+		HRESULT __stdcall Write(
+			[in] byte* pv,
+			[in] unsigned long cb,
+			[out] unsigned long* pcbWritten);
+	"
+
+	self 
+		next: cb
+		putAll: pv
+		startingAt: 1.
+	pcbWritten bytes notNull ifTrue: [pcbWritten value: cb].
+	^0	"S_OK"! !
+!SequencedStream categoriesFor: #Commit:!public! !
+!SequencedStream categoriesFor: #CopyTo:cb:pcbRead:pcbWritten:!public! !
+!SequencedStream categoriesFor: #finalRelease!public! !
+!SequencedStream categoriesFor: #LockRegion:cb:dwLockType:!public! !
+!SequencedStream categoriesFor: #queryInterface:!accessing-interfaces!public! !
+!SequencedStream categoriesFor: #queryInterface:ifNone:!accessing-interfaces!public! !
+!SequencedStream categoriesFor: #Read:cb:pcbRead:!public! !
+!SequencedStream categoriesFor: #Revert!public! !
+!SequencedStream categoriesFor: #Seek:dwOrigin:plibNewPosition:!public! !
+!SequencedStream categoriesFor: #SetSize:!public! !
+!SequencedStream categoriesFor: #Stat:grfStatFlag:!public! !
+!SequencedStream categoriesFor: #UnlockRegion:cb:dwLockType:!public! !
+!SequencedStream categoriesFor: #Write:cb:pcbWritten:!public! !
+
+"End of package definition"!
+

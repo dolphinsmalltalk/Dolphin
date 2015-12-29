@@ -1,0 +1,89 @@
+| package |
+package := Package name: 'OLE Font'.
+package paxVersion: 1;
+	basicComment: 'Dolphin Smalltalk OLE Font component. 
+Copyright (c) Object Arts Ltd 1997-2001.
+
+This package wraps the standard OLE ''Font'' component.'.
+
+package basicPackageVersion: '6.1'.
+
+
+package classNames
+	add: #IFont;
+	add: #IFontDisp;
+	yourself.
+
+package methodNames
+	add: 'AbstractLOGFONT class' -> #fromOleFont:;
+	add: 'Font class' -> #fromOleFont:;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\..\Automation\ActiveX Automation';
+	add: '..\..\..\Base\Dolphin';
+	add: '..\..\..\MVP\Base\Dolphin MVP Base';
+	add: '..\..\COM\OLE COM';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+IUnknown subclass: #IFont
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+IDispatch subclass: #IFontDisp
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+!AbstractLOGFONT class methodsFor!
+
+fromOleFont: pFont
+	"Answer a new instance of the receiver populated with details from the OLE font on which the
+	<IFont>|<IFontDisp> argument, anIFont, is an interface."
+
+	^self new
+		lfHeight: (pFont size * View desktop resolution y / 72) asInteger;
+"		lfWidth:
+		lfEscapement:
+		lfOrientation:
+"		lfWeight: pFont weight;
+		lfItalic: pFont italic asParameter;
+		lfUnderline: pFont underline asParameter;
+		lfStrikeOut: pFont strikethrough asParameter;
+		lfCharSet: pFont charset;
+"		lfOutPrecision:
+		lfClipPrecision:
+		lfQuality:
+		lfPitchAndFamily:
+"		lfFaceName: pFont name;
+		yourself! !
+!AbstractLOGFONT class categoriesFor: #fromOleFont:!instance creation!public! !
+
+!Font class methodsFor!
+
+fromOleFont: pFont
+	"Answer a new instance of the receiver which is equivalent to the OLE font on which the
+	<IFont>|<IFontDisp> argument, anIFont, is an interface."
+
+	^self fromLogFont: (LOGFONT fromOleFont: pFont)! !
+!Font class categoriesFor: #fromOleFont:!instance creation!public! !
+
+"End of package definition"!
+

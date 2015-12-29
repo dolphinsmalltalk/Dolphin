@@ -1,0 +1,75 @@
+"Filed out from Dolphin Smalltalk X6"!
+
+CommonDialog subclass: #FontDialog
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+FontDialog guid: (GUID fromString: '{87B4C6B3-026E-11D3-9FD7-00A0CC3E4A32}')!
+FontDialog comment: 'FontDialog is a <valueDialogPresenter> implementing the Windows ChooseFont common dialog. The associated <valueModel> contains the <Font> chosen.
+
+Instance Variables:
+	logFont		<LOGFONT> holding the logical font information for the font chosen.
+
+
+'!
+!FontDialog categoriesForClass!MVP-Presenters! !
+!FontDialog methodsFor!
+
+basicShowModal
+	"Private - Show the common Font dialog."
+
+	^ComDlgLibrary default chooseFont: self winStruct asParameter!
+
+extractResult: result 
+	"Private - Extract and apply the result from the parameter structure 
+	passed to the Win32 API associated with this common dialog, immediately 
+	after the call to that API."
+
+	result ifFalse: [^self].
+	self value: (Font fromLogFont: self winStruct logFont).
+	self apply!
+
+initialize
+	"Private - Initialize the receiver"
+
+	super initialize.
+	self winStruct maskIn: ##(CF_SCREENFONTS | CF_INITTOLOGFONTSTRUCT)!
+
+model: aValueModel 
+	"Set the model of the receiver to be aValueModel."
+
+	| font |
+	super model: aValueModel.
+	font := self value ifNil: [Font default].
+	self winStruct logFont: font logFont copy!
+
+winStructClass
+	"Private - Answer the class to use for the receiver's associated windows parameter structure."
+
+	^CHOOSEFONT! !
+!FontDialog categoriesFor: #basicShowModal!private!realizing/unrealizing! !
+!FontDialog categoriesFor: #extractResult:!helpers!private! !
+!FontDialog categoriesFor: #initialize!public! !
+!FontDialog categoriesFor: #model:!public! !
+!FontDialog categoriesFor: #winStructClass!constants!private! !
+
+!FontDialog class methodsFor!
+
+defaultModel
+	"Answer a default model to be assigned to the receiver when it
+	is initialized."
+
+	^Font system asValue
+!
+
+initialize
+	"Private - Initialize the receiver's class variables.
+		self initialize
+	"
+
+	hookHandlers := IdentityDictionary new.
+	hookHandlers at: WM_INITDIALOG put: #wmInitDialog:wParam:lParam:! !
+!FontDialog class categoriesFor: #defaultModel!models!public! !
+!FontDialog class categoriesFor: #initialize!initializing!private! !
+

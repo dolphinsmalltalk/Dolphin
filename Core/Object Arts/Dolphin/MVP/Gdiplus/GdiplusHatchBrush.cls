@@ -1,0 +1,88 @@
+"Filed out from Dolphin Smalltalk X6"!
+
+GdiplusBrush subclass: #GdiplusHatchBrush
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+GdiplusHatchBrush guid: (GUID fromString: '{1A1A5EA4-6151-11D7-B609-00E0987E8081}')!
+GdiplusHatchBrush comment: 'A hatch brush paints a background and paints, over that background, a foreground that consists of a pattern of lines, dots, dashes, squares, crosshatch, or some variation of these. The hatch brush consists of two colors: one for the background and one for the foreground.'!
+!GdiplusHatchBrush categoriesForClass!Unclassified! !
+!GdiplusHatchBrush class methodsFor!
+
+exampleGdipHBFillAShape
+	"MSDN: GDI+ > Using GDI+ > Using a Brush to Fill Shapes > Filling a Shape with a Hatch Pattern
+	This example fills an ellipse with a hatch pattern.
+
+		self exampleGdipHBFillAShape showExample
+	"
+
+	| bitmap brush |
+	bitmap := GdiplusBitmap extent: 250 @ 150.
+	brush := GdiplusHatchBrush 
+				style: HatchStyleHorizontal
+				forecolor: ARGB red
+				backcolor: (ARGB fromArray: #(255 128 255 255)).
+	bitmap graphics fillEllipse: (10 @ 10 extent: 200 @ 100) brush: brush.
+	^bitmap!
+
+exampleGdipHBFillAString
+	"This example fills a string with a hatch pattern.
+
+		self exampleGdipHBFillAString showExample
+	"
+
+	| bitmap brush font |
+	bitmap := GdiplusBitmap extent: 600 @ 150.
+	brush := GdiplusHatchBrush 
+				style: HatchStyleLargeConfetti
+				forecolor: (ARGB stdColor: #yellow)
+				backcolor: (ARGB stdColor: #blue).
+	font := GdiplusFont name: 'Arial' emSize: 72.
+	bitmap graphics 
+		drawString: 'Hello Dolphin'
+		font: font
+		at: 10 @ 10
+		format: nil
+		brush: brush.
+	^bitmap!
+
+exampleGdipHBStyles
+	"This example displays the effects of all HatchStyle constants.
+
+		self exampleGdipHBStyles showExample
+	"
+
+	| bitmap styles brush font row col corner |
+	bitmap := GdiplusBitmap extent: 800 @ 530.
+	font := GdiplusFont name: 'Arial' emSize: 10.
+	styles := self enumsHatchStyle.
+	styles removeLast.	"HatchStyleTotal doesn't work"
+	styles keysAndValuesDo: 
+			[:i :e | 
+			brush := GdiplusHatchBrush 
+						style: e value
+						forecolor: ARGB red
+						backcolor: (ARGB stdColor: #yellow).
+			col := (i - 1) \\ 8.
+			row := ((i - 1) / 8) truncated.
+			corner := (col * 100 + 5) @ (row * 75 + 5).
+			(bitmap graphics)
+				fillRectangle: (corner extent: 90 @ 65) brush: brush;
+				drawString: (e key midString: e key size - 10 from: 11)
+					font: font
+					rect: (corner extent: 90 @ 65)
+					format: nil
+					brush: nil].
+	^bitmap!
+
+style: aNumber forecolor: foreARGB backcolor: backARGB
+	^self fromInitializer: (GdiplusHatchBrushInitializer 
+				style: aNumber
+				forecolor: foreARGB
+				backcolor: backARGB)! !
+!GdiplusHatchBrush class categoriesFor: #exampleGdipHBFillAShape!examples!public!sunit! !
+!GdiplusHatchBrush class categoriesFor: #exampleGdipHBFillAString!examples!public!sunit! !
+!GdiplusHatchBrush class categoriesFor: #exampleGdipHBStyles!examples!public!sunit! !
+!GdiplusHatchBrush class categoriesFor: #style:forecolor:backcolor:!instance creation!public! !
+

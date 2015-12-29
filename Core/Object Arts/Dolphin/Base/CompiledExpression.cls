@@ -1,0 +1,87 @@
+"Filed out from Dolphin Smalltalk X6"!
+
+CompiledCode variableSubclass: #CompiledExpression
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+CompiledExpression guid: (GUID fromString: '{87B4C543-026E-11D3-9FD7-00A0CC3E4A32}')!
+CompiledExpression comment: 'CompiledExpression is the class of CompiledCode objects representing unbound compiled expressions, i.e. compiled code resulting from the compilation of arbitrary code segments, rather than actual methods of objects (see also CompiledMethod).
+
+'!
+!CompiledExpression categoriesForClass!Kernel-Methods! !
+!CompiledExpression methodsFor!
+
+evaluate: aString for: anObject evaluationPools: anArrayOfPools
+	"Evaluate the receiver (whose source is aString), with the receiver, anObject, 
+	within the additional compilation context, anArrayOfPools.
+	N.B. This message is sent by the compiler to evaluate constant expressions
+	DO NOT REMOVE IT."
+
+	self storeSourceString: aString evaluationPools: anArrayOfPools logged: false.
+	^self value: anObject!
+
+evaluationPools
+	"Answer the evaluation pools used to compiler the receiver, or nil if none."
+
+	| descrip |
+	descrip := self sourceDescriptor.
+	^descrip isString ifFalse: [descrip at: 2]!
+
+getDebugInfo
+	"Private - Invoke the compiler to answer a compilation result containing a 
+	recompilation of the receiver, a map between IP ranges and expressions 
+	in the source, and a map between IP ranges 	and an OrderedCollection of 
+	Associations between IP positions and temporaries up to that position in 
+	the receiver, ordered by IP."
+
+	^self compilerClass 
+		debugInfoForExpression: self getSource 
+		in: self methodClass
+		evaluationPools: self evaluationPools
+		debug: self isDebugMethod!
+
+getSource
+	"Answer the source of the receiver."
+
+	| descrip |
+	descrip := self sourceDescriptor.
+	^descrip isString ifTrue: [descrip] ifFalse: [descrip at: 1]!
+
+isExpression
+	"Private - Answer whether the receiver is a standalone (unbound) expression as opposed to 
+	a method."
+
+	^true!
+
+owningPackage
+	^self methodClass owningPackage!
+
+storeSourceString: aString evaluationPools: anArray logged: aBoolean 
+	"Private - Ask the receiver's source manager to record its expression 
+	source, aString, logging the evaluation to the change log if requested."
+
+	| pools |
+	aBoolean ifTrue: [self class sourceManager logEvaluate: aString].
+	pools := anArray notNil 
+				ifTrue: 
+					[| nonEmptyPools |
+					nonEmptyPools := anArray reject: [:each | each isEmpty].
+					nonEmptyPools notEmpty ifTrue: [nonEmptyPools]].
+	self 
+		sourceDescriptor: (pools isNil ifTrue: [aString] ifFalse: [Array with: aString with: pools])!
+
+value: anObject
+	"Evaluate the receiver with the argument, anObject, 
+	as its receiver, answering the result."
+
+	^self value: anObject withArguments: #()! !
+!CompiledExpression categoriesFor: #evaluate:for:evaluationPools:!evaluating!public! !
+!CompiledExpression categoriesFor: #evaluationPools!accessing!development!public! !
+!CompiledExpression categoriesFor: #getDebugInfo!development!private! !
+!CompiledExpression categoriesFor: #getSource!accessing!development!public! !
+!CompiledExpression categoriesFor: #isExpression!private!testing! !
+!CompiledExpression categoriesFor: #owningPackage!accessing!public! !
+!CompiledExpression categoriesFor: #storeSourceString:evaluationPools:logged:!accessing!private! !
+!CompiledExpression categoriesFor: #value:!evaluating!public! !
+

@@ -1,0 +1,306 @@
+| package |
+package := Package name: 'Database Connection (Deprecated)'.
+package paxVersion: 1;
+	basicComment: ''.
+
+package basicPackageVersion: '6.0'.
+
+
+package methodNames
+	add: #DBConnection -> #accessibleTables;
+	add: #DBConnection -> #autoCommit;
+	add: #DBConnection -> #autoCommit:;
+	add: #DBConnection -> #dbmsVer;
+	add: #DBConnection -> #defaultTxnIsolation;
+	add: #DBConnection -> #driverVer;
+	add: #DBConnection -> #expressionsInOrderBy;
+	add: #DBConnection -> #identifierQuoteChar;
+	add: #DBConnection -> #iefSupport;
+	add: #DBConnection -> #indicesOf:type:;
+	add: #DBConnection -> #invalidate;
+	add: #DBConnection -> #maxColumnNameLen;
+	add: #DBConnection -> #maxCursorNameLen;
+	add: #DBConnection -> #maxOwnerNameLen;
+	add: #DBConnection -> #maxProcedureNameLen;
+	add: #DBConnection -> #maxQualifierNameLen;
+	add: #DBConnection -> #maxTableNameLen;
+	add: #DBConnection -> #multipleActiveTxn;
+	add: #DBConnection -> #multResultSets;
+	add: #DBConnection -> #odbcSAGConformance;
+	add: #DBConnection -> #odbcVer;
+	add: #DBConnection -> #outerJoins;
+	add: #DBConnection -> #ownerTerm;
+	add: #DBConnection -> #qualifierNameSeparator;
+	add: #DBConnection -> #qualifierTerm;
+	add: #DBConnection -> #readOnly;
+	add: #DBConnection -> #readOnly:;
+	add: #DBConnection -> #rowIdCols:;
+	add: #DBConnection -> #rowUpdates;
+	add: #DBConnection -> #rowVer:;
+	add: #DBConnection -> #scrollConcurrency;
+	add: #DBConnection -> #scrollOptions;
+	add: #DBConnection -> #sourceReadOnly;
+	add: #DBConnection -> #trace;
+	add: #DBConnection -> #trace:;
+	add: #DBConnection -> #txnCapable;
+	add: #DBConnection -> #txnIsolationOptions;
+	add: #DBConnection -> #uniqueIndexOf:;
+	add: #DBResultSet -> #invalidate;
+	add: #DBResultSet -> #prev;
+	add: 'DBConnection class' -> #interpretTxnIsolationMask:;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: 'Database Connection Base';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+!DBConnection methodsFor!
+
+accessibleTables
+	#deprecated.
+	^self hasAccessibleTables!
+
+autoCommit
+	#deprecated.
+	^self willAutoCommit!
+
+autoCommit: aBoolean 
+	#deprecated.
+	self willAutoCommit: aBoolean!
+
+dbmsVer
+	#deprecated.
+	^self dbmsVersion!
+
+defaultTxnIsolation
+	#deprecated.	"Use #defaultTransactionIsolation"
+	^self class 
+		interpretTxnIsolationMask: (self getDWordInfo: SQL_DEFAULT_TXN_ISOLATION)!
+
+driverVer
+	#deprecated.
+	^self driverVersion!
+
+expressionsInOrderBy
+	#deprecated.
+	^self supportsExpressionsInOrderBy!
+
+identifierQuoteChar
+	"Answers the identifier quote character"
+	#deprecated. "Use #identifierQuoteCharacter"
+	^self getStringInfo: SQL_IDENTIFIER_QUOTE_CHAR!
+
+iefSupport
+	#deprecated.
+	^self hasIntegrityEnhancementFacility!
+
+indicesOf: aString type: anInteger
+	#deprecated.	"Use #indicesOf:, #uniqueIndicesOf:, or #statisticsFor:type:accurate:"
+	^self 
+		statisticsFor: aString
+		type: anInteger
+		accurate: true!
+
+invalidate
+	#deprecated.
+	self free!
+
+maxColumnNameLen
+	#deprecated.
+	^self maxColumnNameLength!
+
+maxCursorNameLen
+	#deprecated.
+	^self maxCursorNameLength!
+
+maxOwnerNameLen
+	#deprecated.	"The term 'Owner' is replaced by 'Schema' in ODBC 3.0"
+	^self maxSchemaNameLength!
+
+maxProcedureNameLen
+	#deprecated.
+	^self maxProcedureNameLength!
+
+maxQualifierNameLen
+	#deprecated.	"The term 'Qualifier' is replaced by 'Catalog' in ODBC 3.0"
+	^self maxCatalogNameLength!
+
+maxTableNameLen
+	#deprecated.
+	^self maxTableNameLength!
+
+multipleActiveTxn
+	#deprecated.
+	^self supportsMultipleActiveTransactions!
+
+multResultSets
+	#deprecated.
+	^self supportsMultipleResultSets!
+
+odbcSAGConformance
+	"Answer the level of ODBC SAG conformance"
+
+	#deprecated.	"Use #isSAGConformant"
+	^self getWordInfo: SQL_ODBC_SAG_CLI_CONFORMANCE!
+
+odbcVer
+	#deprecated.
+	^self odbcVersion!
+
+outerJoins
+	#deprecated.
+	^self supportsOuterJoins!
+
+ownerTerm
+	#deprecated.
+	^self schemaTerm!
+
+qualifierNameSeparator
+	#deprecated.
+	^self catalogNameSeparator!
+
+qualifierTerm
+	#deprecated.
+	^self catalogTerm!
+
+readOnly
+	#deprecated.
+	^self isReadOnly!
+
+readOnly: aBoolean 
+	#deprecated.
+	self isReadOnly: aBoolean!
+
+rowIdCols: aString
+	#deprecated.
+	^self rowIdColumns: aString!
+
+rowUpdates
+	#deprecated.
+	^self supportsRowUpdates!
+
+rowVer: aStringTableName 
+	#deprecated.
+	^self rowVersionColumns: aStringTableName!
+
+scrollConcurrency
+	"Answers an array of scroll concurrency options for the receiver."
+
+	| mask |
+	#deprecated.	"Deprecated in ODBC 3.0 - see ODBC help for further information"
+	mask := self getDWordInfo: SQL_SCROLL_CONCURRENCY.
+	^#('SQL_SCCO_READ_ONLY' 'SQL_SCCO_LOCK' 'SQL_SCCO_OPT_TIMESTAMP' 'SQL_SCCO_OPT_VALUES') 
+		select: [:maskName | (mask bitAnd: (ODBCConstants at: maskName)) ~= 0]!
+
+scrollOptions
+	"Answer an array of the names of the scroll options supported by the receiver."
+
+	| mask |
+	#deprecated.	"Use #supportedCursorTypes"
+	mask := self getDWordInfo: SQL_SCROLL_OPTIONS.
+	^#('SQL_SO_FORWARD_ONLY' 'SQL_SO_KEYSET_DRIVEN' 'SQL_SO_DYNAMIC' 'SQL_SO_MIXED') 
+		select: [:maskName | (mask bitAnd: (ODBCConstants at: maskName)) ~= 0]!
+
+sourceReadOnly
+	#deprecated.
+	^self isSourceReadOnly!
+
+trace
+	#deprecated.	"Use isTracing"
+	^self isTracing!
+
+trace: aBoolean 
+	#deprecated.	"Use #isTracing:"
+	self isTracing: aBoolean!
+
+txnCapable
+	#deprecated.
+	^self isTransactionCapable!
+
+txnIsolationOptions
+	#deprecated.	"Use #supportedTransactionIsolationLevels"
+	^self class 
+		interpretTxnIsolationMask: (self getDWordInfo: SQL_TXN_ISOLATION_OPTION)!
+
+uniqueIndexOf: aString 
+	#deprecated.
+	^self uniqueIndicesOf: aString! !
+!DBConnection categoriesFor: #accessibleTables!enquiries!public!testing! !
+!DBConnection categoriesFor: #autoCommit!enquiries!public!testing! !
+!DBConnection categoriesFor: #autoCommit:!accessing!public! !
+!DBConnection categoriesFor: #dbmsVer!enquiries!public! !
+!DBConnection categoriesFor: #defaultTxnIsolation!enquiries!public! !
+!DBConnection categoriesFor: #driverVer!enquiries!public! !
+!DBConnection categoriesFor: #expressionsInOrderBy!enquiries!public!testing! !
+!DBConnection categoriesFor: #identifierQuoteChar!enquiries!public! !
+!DBConnection categoriesFor: #iefSupport!enquiries!public!testing! !
+!DBConnection categoriesFor: #indicesOf:type:!enquiries!public! !
+!DBConnection categoriesFor: #invalidate!private!realizing/unrealizing! !
+!DBConnection categoriesFor: #maxColumnNameLen!enquiries!public! !
+!DBConnection categoriesFor: #maxCursorNameLen!enquiries!public! !
+!DBConnection categoriesFor: #maxOwnerNameLen!enquiries!public! !
+!DBConnection categoriesFor: #maxProcedureNameLen!enquiries!public! !
+!DBConnection categoriesFor: #maxQualifierNameLen!enquiries!public! !
+!DBConnection categoriesFor: #maxTableNameLen!enquiries!public! !
+!DBConnection categoriesFor: #multipleActiveTxn!enquiries!public!testing! !
+!DBConnection categoriesFor: #multResultSets!enquiries!public!testing! !
+!DBConnection categoriesFor: #odbcSAGConformance!enquiries!public! !
+!DBConnection categoriesFor: #odbcVer!enquiries!public! !
+!DBConnection categoriesFor: #outerJoins!enquiries!public! !
+!DBConnection categoriesFor: #ownerTerm!enquiries!public! !
+!DBConnection categoriesFor: #qualifierNameSeparator!enquiries!public! !
+!DBConnection categoriesFor: #qualifierTerm!enquiries!public! !
+!DBConnection categoriesFor: #readOnly!accessing!public! !
+!DBConnection categoriesFor: #readOnly:!accessing!private! !
+!DBConnection categoriesFor: #rowIdCols:!enquiries!public! !
+!DBConnection categoriesFor: #rowUpdates!enquiries!public! !
+!DBConnection categoriesFor: #rowVer:!enquiries!public! !
+!DBConnection categoriesFor: #scrollConcurrency!enquiries!public! !
+!DBConnection categoriesFor: #scrollOptions!enquiries!public! !
+!DBConnection categoriesFor: #sourceReadOnly!enquiries!public!testing! !
+!DBConnection categoriesFor: #trace!development!private! !
+!DBConnection categoriesFor: #trace:!development!private! !
+!DBConnection categoriesFor: #txnCapable!enquiries!public!testing! !
+!DBConnection categoriesFor: #txnIsolationOptions!enquiries!public! !
+!DBConnection categoriesFor: #uniqueIndexOf:!enquiries!public! !
+
+!DBConnection class methodsFor!
+
+interpretTxnIsolationMask: mask 
+	"Private - Answer an array of isolation mask matched by mask."
+
+	#deprecated.
+	^#('SQL_TXN_READ_UNCOMMITTED' 'SQL_TXN_READ_COMMITTED' 'SQL_TXN_REPEATABLE_READ' 'SQL_TXN_SERIALIZABLE' 'SQL_TXN_VERSIONING') 
+		select: [:maskName | (mask bitAnd: (ODBCConstants at: maskName)) ~= 0]! !
+!DBConnection class categoriesFor: #interpretTxnIsolationMask:!operations!private! !
+
+!DBResultSet methodsFor!
+
+invalidate
+	#deprecated.
+	self free!
+
+prev
+	#deprecated.	"use #previous"
+	^self previous! !
+!DBResultSet categoriesFor: #invalidate!operations!public! !
+!DBResultSet categoriesFor: #prev!accessing!public! !
+
+"End of package definition"!
+

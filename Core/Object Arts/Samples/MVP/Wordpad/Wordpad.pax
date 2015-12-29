@@ -1,0 +1,61 @@
+| package |
+package := Package name: 'Wordpad'.
+package paxVersion: 1;
+	basicComment: 'Dolphin Smalltalk Wordpad Sample. 
+Copyright (c) Object Arts Ltd, 2005.
+
+Wordpad is a reduced functionality implementation of the standard system utility WORDPAD.EXE. It is intended to demonstrate the DocumentShell hierarchy of Dolphin''s application framework.
+
+Try me out with:
+
+Wordpad show'.
+
+
+package classNames
+	add: #WordPad;
+	add: #WordpadParagraphDialog;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\..\..\Dolphin\Base\Dolphin';
+	add: '..\..\..\Dolphin\MVP\Presenters\Choice\Dolphin Choice Presenter';
+	add: '..\..\..\Dolphin\MVP\Dialogs\Common\Dolphin Common Dialogs';
+	add: '..\..\..\Dolphin\MVP\Views\Control Bars\Dolphin Control Bars';
+	add: '..\..\..\Dolphin\MVP\Models\List\Dolphin List Models';
+	add: '..\..\..\Dolphin\MVP\Presenters\List\Dolphin List Presenter';
+	add: '..\..\..\Dolphin\MVP\Base\Dolphin MVP Base';
+	add: '..\..\..\Dolphin\MVP\Presenters\Text\Dolphin Rich Text Presenter';
+	add: '..\..\..\Dolphin\MVP\Presenters\Text\Dolphin Text Presenter';
+	add: '..\..\..\Dolphin\MVP\Type Converters\Dolphin Type Converters';
+	add: '..\..\..\Dolphin\MVP\Models\Value\Dolphin Value Models';
+	add: '..\..\..\Dolphin\ActiveX\Shell\Windows Shell';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+Dialog subclass: #WordpadParagraphDialog
+	instanceVariableNames: 'leftPresenter rightPresenter firstLinePresenter alignmentPresenter'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+TextDocument subclass: #WordPad
+	instanceVariableNames: ''
+	classVariableNames: 'ResourceLib'
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+"End of package definition"!
+

@@ -1,0 +1,1237 @@
+"Filed out from Dolphin Smalltalk X6.1"!
+
+Object subclass: #SmalltalkParser
+	instanceVariableNames: 'scanner currentToken nextToken emptyStatements errorBlock methodNode st80Syntax comments methodClass source'
+	classVariableNames: 'MaxPrimIndex MaxVfn'
+	poolDictionaries: 'ExtCallArgTypes SmalltalkParseErrorCodes'
+	classInstanceVariableNames: ''!
+SmalltalkParser guid: (GUID fromString: '{F15A9F2F-3A15-47CD-8EF9-0534B6F91C17}')!
+SmalltalkParser comment: 'Instance Variables:
+	scanner		<SmalltalkScanner>
+	currentToken	<StToken>
+	nextToken	<StToken>
+	emptyStatements	<boolean>
+	errorBlock		<dyadicValuable>
+	source		<readableString>
+	methodClass	<Class>|<Metaclass>
+	methodNode	<StMethodNode>
+
+Class Variables:
+	ExternalValueTypes 		<LookupTable>. Maps standard external type names, as recognised by the old Dolphin Compiler to the parameter types to be used for passing by value and by reference.
+	ExternalReferenceTypes	<Array> of <integer>|<Symbol>. Reference types corresponding to the <integer> external value types.
+	ExternalCallingConventions	<Array> of <String>. External calling convention keywords (e.g. ''cdecl:'').
+	MaxPrimIndex		<integer>. Maximum primitive number.
+	MaxVfn			<integer>. Maximum virtual function number.
+
+'!
+!SmalltalkParser categoriesForClass!System-Compiler! !
+!SmalltalkParser methodsFor!
+
+addCommentsTo: aNode 
+	comments isEmpty 
+		ifTrue: 
+			["This simple optimisation saves about 10%"
+			^self].
+	aNode comments: aNode comments , comments.
+	comments := OrderedCollection new!
+
+assignmentNodeClass
+	^StAssignmentNode!
+
+atEnd
+	^currentToken isEof!
+
+blockNodeClass
+	^StBlockNode!
+
+canHaveStatementsAfterReturn
+	#rbFix. "Dolphin can have statements after the return"
+	^true!
+
+cascadeNodeClass
+	^StCascadeNode!
+
+errorBlock
+	^errorBlock ifNil: [[:err | ]]!
+
+errorBlock: aBlock 
+	"Note difference from RBParser - the Dolphin parser prefers a monadic error block that it
+	expects to pass an appropriately constructed exception containing all details of the error."
+
+	errorBlock := aBlock 
+				ifNotNil: 
+					[aBlock argumentCount == 2 
+						ifTrue: 
+							[
+							[:ex | 
+							aBlock value: ex description value: ex position.
+							ex signal]]
+						ifFalse: [aBlock]].
+	scanner notNil ifTrue: [scanner errorBlock: aBlock]!
+
+errorPosition
+	^currentToken start!
+
+evaluateStatements: anStSequenceNode 
+	methodClass isNil ifTrue: [^nil].
+	^
+	[Compiler 
+		evaluate: (self source copyFrom: anStSequenceNode start to: anStSequenceNode stop)
+		for: methodClass instanceClass
+		logged: false] 
+			on: Error
+			do: [:ex | self parserError: CErrErrorInStaticExpression range: anStSequenceNode sourceInterval]!
+
+externalReferenceTypeFor: anInteger 
+	^(ExternalDescriptor referenceTypeFor: anInteger) ifNil: [ExtCallArgLPPVOID]!
+
+initialize
+	comments := OrderedCollection new.
+	emptyStatements := false.
+	"If true then certain St80 syntax which is not valid ANSI are permitted, e.g. [:a ] is a valid block"
+	st80Syntax := false!
+
+initializeParserWith: aString 
+	source := aString.
+	self scanner: (self scannerClass on: (ReadStream on: self source) errorHandler: self)!
+
+isSpecialVariable: aVariableNode 
+	| identifier |
+	identifier := aVariableNode name.
+	^'self' = identifier or: ['super' = identifier or: ['thisContext' = identifier]]!
+
+line
+	"Anwswer one-based <integer> line number of the receiver's current position in the 
+	source text."
+
+	^scanner line!
+
+literalArrayNodeClass
+	^StLiteralArrayNode!
+
+literalNodeClass
+	^StLiteralNode!
+
+lookupExternalStructType: anStIdentifierToken 
+	| structClass |
+	structClass := (methodClass environment bindingFor: anStIdentifierToken value) 
+				ifNil: 
+					[self parserError: CErrUndefinedClass range: anStIdentifierToken sourceInterval.
+					"Error ignored, attempt to recover..."
+					DWORD]
+				ifNotNil: [:var | var value].
+	((structClass isKindOf: Class) not or: [structClass isPointers and: [structClass instSize < 1]]) 
+		ifTrue: 
+			[self parserError: CErrInvalidStructArg range: anStIdentifierToken sourceInterval.
+			"Error ignored, attempt to recover..."
+			structClass := DWORD].
+	^structClass!
+
+messageNodeClass
+	^StMessageNode!
+
+methodClass: aClass 
+	methodClass := aClass!
+
+methodNodeClass
+	^StMethodNode!
+
+nextToken
+	^nextToken ifNil: [nextToken := scanner next]!
+
+optimizedNodeClass
+	^StOptimizedNode!
+
+parseAssignment
+	"Need one token lookahead to see if we have a ':='. This method could 
+	make it possible to assign the literals true, false and nil."
+
+	| node position |
+	(currentToken isIdentifier and: [self nextToken isAssignment]) 
+		ifFalse: [^self parseCascadeMessage].
+	node := self parseVariableNode.
+	position := currentToken start.
+	self step.
+	^self assignmentNodeClass 
+		variable: node
+		value: self parseAssignment
+		position: position!
+
+parseBinaryMessage
+	| node |
+	node := self parseUnaryMessage.
+	
+	[currentToken isLiteralToken ifTrue: [self patchNegativeLiteral].
+	currentToken isBinary] 
+			whileTrue: [node := self parseBinaryMessageWith: node].
+	^node!
+
+parseBinaryMessageWith: aNode 
+	| binaryToken |
+	binaryToken := currentToken.
+	self step.
+	^self messageNodeClass 
+		receiver: aNode
+		selectorParts: (Array with: binaryToken)
+		arguments: (Array with: self parseUnaryMessage)!
+
+parseBinaryPattern
+	| binaryToken node args |
+	binaryToken := currentToken.
+	self step.
+	args := Array with: self parseVariableNode.
+	node := self methodNodeClass selectorParts: (Array with: binaryToken) arguments: args.
+	node comments: node comments , args last comments.
+	args last comments: nil.
+	^node!
+
+parseBlock
+	| position node |
+	position := currentToken start.
+	self step.
+	node := self blockNodeClass new.
+	#rbFix.	"Set start position before attempting to parse the block args so can use for error reporting if necessary"
+	node left: position.
+	self parseBlockArgsInto: node.
+	node body: (self parseStatementsOf: node allowTag: false).
+	(currentToken isSpecial: $]) 
+		ifFalse: 
+			[| blockEnd |
+			blockEnd := node body sourceInterval stop.
+			blockEnd = 0 ifTrue: [blockEnd := node bar ifNil: [position]].
+			self parserError: CErrBlockNotClosed range: (position to: blockEnd).
+			"Error ignored, attempt to recover..."
+			node right: blockEnd.
+			^node].
+	node right: currentToken start.
+	self step.
+	^node!
+
+parseBlockArgsInto: node 
+	| verticalBar args colons |
+	args := OrderedCollection new: 2.
+	colons := OrderedCollection new: 2.
+	verticalBar := false.
+	[currentToken isSpecial: $:] whileTrue: 
+			[| arg |
+			colons add: currentToken start.
+			self step.	":"
+			verticalBar := true.
+			arg := self parseVariableNode.
+			self validateArg: arg args: args.
+			args add: arg].
+	verticalBar 
+		ifTrue: 
+			[currentToken isBinary 
+				ifTrue: 
+					[node bar: currentToken start.
+					currentToken value == #| 
+						ifTrue: [self step]
+						ifFalse: 
+							[currentToken value == #'||' 
+								ifTrue: 
+									["Hack the current token to be the start 
+									of temps bar"
+									currentToken
+										value: #|;
+										start: currentToken start + 1]
+								ifFalse: 
+									[self parserError: CErrBlockArgListNotClosed range: (node start to: args last sourceInterval stop)]]]
+				ifFalse: 
+					["St-80 allows, for example, [:a] as a valid block, ANSI requires the arg list termination bar, i.e. [:a|]"
+					(st80Syntax and: [currentToken isSpecial: $]]) 
+						ifFalse: 
+							["Error ignored, no recovery needed"
+							self parserError: CErrBlockArgListNotClosed range: (node start to: args last sourceInterval stop)]]].
+	node
+		arguments: args;
+		colons: colons.
+	^node!
+
+parseCascadedMessageFor: aStVariableNode 
+	currentToken isIdentifier ifTrue: [^self parseUnaryMessageWith: aStVariableNode].
+	currentToken isKeyword ifTrue: [^self parseKeywordMessageWith: aStVariableNode].
+	currentToken isLiteralToken ifTrue: [self patchNegativeLiteral].
+	currentToken isBinary 
+		ifFalse: 
+			[self parserError: CErrExpectMessage
+			"Error ignored, how should we recover?".
+			^nil].
+	^self parseBinaryMessageWith: aStVariableNode!
+
+parseCascadeMessage
+	| node |
+	node := self parseKeywordMessage.
+	#rbFix.	"Add outer loop to parse Dolphin's more flexible cascade syntax"
+	
+	[currentToken isKeyword ifTrue: [node := self parseKeywordMessageWith: node].
+	currentToken isBinary ifTrue: [node := self parseBinaryMessageWith: node].
+	currentToken isIdentifier ifTrue: [node := self parseUnaryMessageWith: node].
+	(currentToken isSpecial: $;) and: [node isMessage]] 
+			whileTrue: 
+				[| receiver messages semicolons |
+				receiver := node receiver.
+				messages := OrderedCollection new: 3.
+				semicolons := OrderedCollection new: 3.
+				messages add: node.
+				[currentToken isSpecial: $;] whileTrue: 
+						[semicolons add: currentToken start.
+						self step.
+						(self parseCascadedMessageFor: receiver) ifNotNil: [:msg | messages add: msg]].
+				node := self cascadeNodeClass messages: messages semicolons: semicolons].
+	^node!
+
+parseExpression: aString 
+	| body method |
+	method := self methodNodeClass 
+				selectorParts: (Array with: (scanner identifierTokenClass value: 'doIt' start: nil))
+				arguments: #().
+	method source: aString.
+	body := self parseStatementsOf: method allowTag: false.
+	method body: body.
+	self atEnd 
+		ifFalse: [self parserError: CErrNonsenseAtExprEnd range: (self errorPosition to: self source size)].
+	^body!
+
+parseExtendedExternalCall: startInteger
+	currentToken isIdentifier 
+		ifTrue: 
+			[| modifier |
+			modifier := currentToken value.
+			modifier = 'virtual' 
+				ifTrue: 
+					[self step.
+					^self parseExternalCall: startInteger isVirtual: true]
+				ifFalse: 
+					[modifier = 'overlap' 
+						ifTrue: 
+							[self step.
+							^self parseOverlappedCall: startInteger]]].
+	self parserError: CErrBadPrimCallType.
+	"Attempt to recover..."
+	self step.
+	^self parseExternalCall: startInteger isVirtual: false!
+
+parseExternalArgType
+	| valueType indirections typeToken structClass stop start |
+	start := currentToken sourceInterval start.
+	currentToken isIdentifier 
+		ifFalse: 
+			[self parserError: CErrExpectExtType range: currentToken sourceInterval.
+			"Error ignored, attempt to recover by creating a dummy arg type node and
+			stepping over the offending token..."
+			self step.
+			^(StExternalArgTypeNode new)
+				start: currentToken start;
+				stop: currentToken stop;
+				typeOrdinal: ExtCallArgLPVOID;
+				indirections: 0;
+				yourself].
+	structClass := nil.
+	valueType := ExternalDescriptor typeFromName: currentToken value ifAbsent: [ExtCallArgSTRUCT].
+	structClass := valueType == ExtCallArgSTRUCT 
+				ifTrue: [self lookupExternalStructType: currentToken]
+				ifFalse: [nil].
+	typeToken := currentToken.
+	self step.
+	indirections := self parseExternalArgTypeQualifier.
+	indirections > 0 
+		ifTrue: 
+			[| refType |
+			refType := valueType.
+			indirections > 1 
+				ifTrue: 
+					[valueType == ExtCallArgSTRUCT 
+						ifTrue: [structClass isIndirection ifTrue: [refType := ExtCallArgLPPVOID]]
+						ifFalse: [refType := self externalReferenceTypeFor: valueType]].
+			stop := currentToken stop.
+			refType == ExtCallArgLPPVOID 
+				ifTrue: 
+					[self 
+						parserError: CErrNotIndirectable
+						range: (start to: stop)
+						extra: typeToken value.
+					"Error ignored, to recover just ignore the indirection..."
+					indirections := 0].
+			"Step over the qualifier now we know it is valid"
+			self step]
+		ifFalse: [stop := typeToken stop].
+	^(StExternalArgTypeNode new)
+		start: typeToken start;
+		stop: stop;
+		typeOrdinal: valueType;
+		indirections: indirections;
+		structClass: structClass;
+		yourself!
+
+parseExternalArgTypeQualifier
+	| qualifier |
+	currentToken isBinary ifFalse: [^0].
+	qualifier := currentToken value.
+	qualifier == #> ifTrue: [^0].
+	(qualifier == #*> or: [qualifier == #**>]) ifTrue: [qualifier := self patchExternalDescriptorClose].
+	qualifier == #* ifTrue: [^1].
+	qualifier == #** ifTrue: [^2].
+	self parserError: CErrBadExtTypeQualifier.
+	"Error ignored, attempt to recover by stepping over the bad qualifier and defaulting to no indirection..."
+	self step.
+	^0!
+
+parseExternalCall: startInteger isVirtual: aBoolean 
+	| vfnIndex node |
+	node := StExternalCallNode new.
+	node
+		start: startInteger;
+		callingConvention: self parseExternalCallingConvention;
+		returnType: self parseExternalArgType.
+	aBoolean 
+		ifTrue: 
+			[node isVirtual: true.
+			(currentToken isLiteralToken not or: [(vfnIndex := currentToken value) isInteger not]) 
+				ifTrue: 
+					[self parserError: CErrExpectVfn.
+					"Error ignored, attempt to recover."
+					vfnIndex := 1].
+			(vfnIndex between: 1 and: MaxVfn) 
+				ifFalse: 
+					[self parserError: CErrBadVfn
+					"Error ignored, continue"].
+			node nameOrOrdinal: vfnIndex.
+			self step]
+		ifFalse: [node nameOrOrdinal: self parseExternalCallName].
+	self parseExternalCallArgs: node.
+	^node!
+
+parseExternalCallArgList
+	| args |
+	args := OrderedCollection new.
+	[self atEnd or: [currentToken isBinary: #>]] whileFalse: 
+			[| arg |
+			arg := self parseExternalArgType.
+			(arg typeOrdinal == ExtCallArgVOID and: [arg indirections == 0]) 
+				ifTrue: 
+					[self parserError: CErrArgTypeCannotBeVoid range: arg sourceInterval
+					"Error ignored, no recovery required since this is a semantic rather than syntax error"].
+			args addLast: arg].
+	^args!
+
+parseExternalCallArgs: anStExternalCallNode 
+	| types got expected start |
+	start := currentToken start.
+	types := self parseExternalCallArgList.
+	anStExternalCallNode argumentTypes: types.
+	got := types size.
+	expected := methodNode argumentCount.
+	got < expected 
+		ifTrue: 
+			[self parserError: CErrInsufficientArgTypes range: (start to: self errorPosition - 1)
+			"Error ignored, but no recovery needed as the decl is syntactically correct,it just defines too many types."].
+	got > expected 
+		ifTrue: 
+			[self parserError: CErrTooManyArgTypes range: (start to: types last sourceInterval stop)
+			"Error ignored, but no recovery needed as the decl is syntactically correct,it just defines too many types."].
+	^types!
+
+parseExternalCallingConvention
+	currentToken isKeyword 
+		ifTrue: 
+			[| answer |
+			answer := ExternalDescriptor conventionFromName: currentToken value.
+			answer < 0 
+				ifTrue: 
+					[self parserError: CErrBadPrimCallType.
+					"Error ignored, attempt to recover by using a sensible default..."
+					1].
+			answer > 1 
+				ifTrue: 
+					[self parserError: CErrUnsupportedCallConv.
+					"Error ignored, attempt to recover by using a sensible default.."
+					answer := 0].
+			self step.
+			^answer].
+	self parserError: CErrBadPrimCallType!
+
+parseExternalCallName
+	| nameOrOrdinal |
+	currentToken isLiteralToken 
+		ifTrue: 
+			[| token |
+			token := currentToken value.
+			(token isString or: [token isInteger and: [token >= 0]]) ifTrue: [nameOrOrdinal := token]]
+		ifFalse: [currentToken isIdentifier ifTrue: [nameOrOrdinal := currentToken value]].
+	nameOrOrdinal isNil 
+		ifTrue: 
+			[self parserError: CErrExpectFnName.
+			"Error ignored, attempt to recover..."
+			nameOrOrdinal := '']
+		ifFalse: [self step].
+	^nameOrOrdinal!
+
+parseKeywordMessage
+	^self parseKeywordMessageWith: self parseBinaryMessage!
+
+parseKeywordMessageWith: node 
+	| args isKeyword keywords |
+	args := OrderedCollection new: 3.
+	keywords := OrderedCollection new: 3.
+	isKeyword := false.
+	[currentToken isKeyword] whileTrue: 
+			[keywords add: currentToken.
+			self step.
+			args add: self parseBinaryMessage.
+			isKeyword := true].
+	^isKeyword 
+		ifTrue: 
+			[self messageNodeClass 
+				receiver: node
+				selectorParts: keywords
+				arguments: args]
+		ifFalse: 
+			[node isVariable ifTrue: [node name = 'super' ifTrue: [self parserError: CErrExpectMessage]].
+			node]!
+
+parseKeywordPattern
+	"...It is erroneous if the same identifier is used for more than one <method argument> in an
+	individual <method definition>. It is erroneous if any of the reserved identifiers ('nil',
+	'true', 'false', 'self', and 'super') is used as a <method argument>. "
+
+	| keywords args node |
+	keywords := OrderedCollection new: 2.
+	args := OrderedCollection new: 2.
+	[currentToken isKeyword] whileTrue: 
+			[| arg |
+			keywords add: currentToken.
+			self step.
+			arg := self parseVariableNode.
+			(self validateArg: arg args: args) ifTrue: [args add: arg]].
+	node := self methodNodeClass selectorParts: keywords arguments: args.
+	"Be resilient to the absence of arguments"
+	args isEmpty 
+		ifFalse: 
+			[node comments: node comments , args last comments.
+			args last comments: nil].
+	^node!
+
+parseLiteralArray
+	| stream start stop |
+	start := currentToken start.
+	stream := WriteStream on: (Array new: 5).
+	self step.
+	[self atEnd or: [currentToken isSpecial and: [currentToken value = $)]]] 
+		whileFalse: [stream nextPut: self parseLiteralArrayObject].
+	(currentToken isSpecial and: [currentToken value == $)]) 
+		ifFalse: 
+			[self parserError: CErrArrayNotClosed range: (start to: self errorPosition - 1)
+			"Error ignored, no recovery needed as at EOF"].
+	stop := currentToken stop.
+	self step.
+	^self literalArrayNodeClass 
+		startPosition: start
+		contents: stream contents
+		stopPosition: stop
+		isByteArray: false!
+
+parseLiteralArrayObject
+	currentToken isSpecial 
+		ifTrue: 
+			[currentToken value == $( ifTrue: [^self parseLiteralArray].
+			currentToken value == $[ ifTrue: [^self parseLiteralByteArray]].
+	currentToken isLiteralArrayToken 
+		ifTrue: 
+			[^currentToken isForByteArray 
+				ifTrue: [self parseLiteralByteArray]
+				ifFalse: [self parseLiteralArray]].
+	currentToken isOptimized ifTrue: [^self parseOptimizedExpression].
+	currentToken isLiteralToken ifFalse: [self patchLiteralArrayToken].
+	^self parsePrimitiveLiteral!
+
+parseLiteralByteArray
+	| stream start stop |
+	start := currentToken start.
+	stream := WriteStream on: (Array new: 5).
+	self step.
+	[self atEnd or: [currentToken isSpecial and: [currentToken value = $]]]] 
+		whileFalse: [stream nextPut: self parseLiteralByteArrayObject].
+	(currentToken isSpecial and: [currentToken value == $]]) 
+		ifTrue: [stop := currentToken stop]
+		ifFalse: 
+			[stop := stream isEmpty ifTrue: [start + 1] ifFalse: [stream contents last stop].
+			self parserError: CErrByteArrayNotClosed range: (start to: stop)
+			"Error ignored, but at EOF so no recovery needed..."].
+	self step.
+	^self literalArrayNodeClass 
+		startPosition: start
+		contents: stream contents
+		stopPosition: stop
+		isByteArray: true!
+
+parseLiteralByteArrayObject
+	(currentToken isLiteralToken 
+		and: [currentToken value isInteger and: [currentToken value between: 0 and: 255]]) 
+			ifFalse: 
+				[| token |
+				self parserError: CErrBadValueInByteArray.
+				"Error ignored, attempt to recover"
+				token := scanner literalTokenClass 
+							value: 0
+							start: currentToken start
+							stop: currentToken stop.
+				self step.
+				^self literalNodeClass literalToken: token].
+	^self parsePrimitiveLiteral!
+
+parseMessagePattern
+	currentToken isLiteralToken ifTrue: [self patchLiteralMessage].
+	^currentToken isIdentifier 
+		ifTrue: [self parseUnaryPattern]
+		ifFalse: 
+			[currentToken isKeyword 
+				ifTrue: [self parseKeywordPattern]
+				ifFalse: 
+					[currentToken isBinary 
+						ifTrue: [self parseBinaryPattern]
+						ifFalse: 
+							[self parserError: CErrBadSelector.
+							"Error ignored, attempt to recover by
+							constructing a dummy pattern and method node..."
+							self methodNodeClass selectorParts: (Array with: (scanner identifierTokenClass value: '' start: 1))
+								arguments: #()]]]!
+
+parseMethod
+	methodNode := self parseMessagePattern.
+	"	self parseResourceTag."
+	self addCommentsTo: methodNode.
+	methodNode body: (self parseStatementsOf: methodNode allowTag: true).
+	"	methodNode tags: tags."
+	^methodNode!
+
+parseMethod: aString 
+	| node |
+	node := self parseMethod.
+	self atEnd 
+		ifFalse: 
+			[self parserError: CErrNonsenseAtMethodEnd range: (self errorPosition to: aString size)
+			"Error ignored, but at EOF so no recovery needed."].
+	node source: aString.
+	^node!
+
+parseMethod: aString in: aClass errorBlock: monadicBlock 
+	self errorBlock: monadicBlock.
+	methodClass := aClass.
+	self initializeParserWith: aString.
+	^self parseMethod: aString!
+
+parseOptimizedExpression
+	| position node body isClosed |
+	position := currentToken start.
+	self step.
+	node := self optimizedNodeClass new.
+	body := self parseStatementsOf: node allowTag: false.
+	isClosed := currentToken isSpecial: $).
+	node 
+		left: position
+		body: body
+		right: (isClosed ifTrue: [currentToken start] ifFalse: [scanner previousStepPosition]).
+	isClosed ifFalse: [self parserError: CErrStaticExprNotClosed range: node sourceInterval].
+	#rbFix.	"Evaluate the expression now to record its value."
+	node value: (self evaluateStatements: body).
+	self step.
+	^node!
+
+parseOverlappedCall: startInteger
+	| node |
+	node := self parseExternalCall: startInteger isVirtual: false.
+	node isOverlapped: true.
+	^node!
+
+parseParenthesizedExpression
+	| leftParen node rightParen |
+	leftParen := currentToken start.
+	self step.
+	node := self parseAssignment.
+	(currentToken isSpecial: $)) 
+		ifTrue: 
+			[rightParen := currentToken start.
+			self step]
+		ifFalse: 
+			[rightParen := self errorPosition - 1.
+			self parserError: CErrParenNotClosed range: (leftParen to: rightParen)
+			"Error ignored, attempt to recover...."].
+	node addParenthesis: (leftParen to: rightParen).
+	^node!
+
+parsePrimitiveIdentifier
+	| token node |
+	token := currentToken.
+	self step.
+	node := self variableNodeClass identifierToken: token.
+	self addCommentsTo: node.
+	^node!
+
+parsePrimitiveLiteral
+	| token |
+	token := currentToken.
+	self step.
+	^self literalNodeClass literalToken: token!
+
+parsePrimitiveObject
+	| token node |
+	currentToken isIdentifier ifTrue: [^self parsePrimitiveIdentifier].
+	(currentToken isLiteralToken and: [currentToken isMultiKeyword not]) 
+		ifTrue: [^self parsePrimitiveLiteral].
+	currentToken isLiteralArrayToken 
+		ifTrue: 
+			[^currentToken isForByteArray ifTrue: [self parseLiteralByteArray] ifFalse: [self parseLiteralArray]].
+	currentToken isSpecial 
+		ifTrue: 
+			[currentToken value == $[ ifTrue: [^self parseBlock].
+			currentToken value == $( ifTrue: [^self parseParenthesizedExpression]].
+	currentToken isOptimized ifTrue: [^self parseOptimizedExpression].
+	self parserError: CErrInvalExprStart.
+	"Attempt to recover by treating it as an identifier, the AST will be invalid of course"
+	token := scanner literalTokenClass 
+				value: (self source copyFrom: currentToken start to: currentToken stop)
+				start: currentToken start
+				stop: currentToken stop.
+	self step.
+	node := self literalNodeClass literalToken: token.
+	self addCommentsTo: node.
+	^node!
+
+parserError: anInteger
+	"Raise a <SmalltalkParseError> with the specified <integer> error code and associated arguments
+	(which are used to when formatting the error message)."
+
+	self parserError: anInteger range: currentToken sourceInterval!
+
+parserError: anInteger range: anInterval 
+	"Private - Raise a <SmalltalkParseError> with the specified <integer> error code and associated arguments
+	(which are used to when formatting the error message)."
+
+	^self 
+		parserError: anInteger
+		range: anInterval
+		extras: #()!
+
+parserError: anInteger range: anInterval extra: anObject
+	^self parserError: anInteger range: anInterval extras: (Array with: anObject)!
+
+parserError: anInteger range: anInterval extras: anArray 
+	^self 
+		reportError: anInteger
+		at: self errorPosition
+		line: self line
+		range: anInterval
+		extras: anArray!
+
+parseStatementList: tagBoolean into: sequenceNode 
+	| statements end periods node firstReturn |
+	end := false.
+	statements := OrderedCollection new.
+	periods := OrderedCollection new.
+	self addCommentsTo: sequenceNode.
+	tagBoolean ifTrue: [self parseTag].
+	[self atEnd or: [currentToken isSpecial and: ['])}' identityIncludes: currentToken value]]] 
+		whileFalse: 
+			[end 
+				ifTrue: 
+					[self parserError: CErrUnterminatedStatement range: node sourceInterval.
+					"Attempt to recover..,"
+					end := false].
+			(currentToken isSpecial: $^) 
+				ifTrue: 
+					[| returnPosition |
+					returnPosition := currentToken start.
+					self step.
+					node := self returnNodeClass return: returnPosition value: self parseAssignment.
+					statements add: node.
+					firstReturn ifNil: [firstReturn := statements size].
+					end := self canHaveStatementsAfterReturn not]
+				ifFalse: 
+					[node := self parseAssignment.
+					statements add: node].
+			(currentToken isSpecial: $.) 
+				ifTrue: 
+					[periods add: currentToken start.
+					self step.
+					self addCommentsTo: node]
+				ifFalse: 
+					["An unterminated statement can only occur at the end of a statement list"
+					end := true].
+			emptyStatements 
+				ifTrue: 
+					[[currentToken isSpecial: $.] whileTrue: 
+							[periods add: currentToken start.
+							self step]]].
+	(firstReturn notNil and: [firstReturn < statements size]) 
+		ifTrue: 
+			[self parserError: CWarnUnreachable
+				range: ((statements at: firstReturn + 1) start to: statements last stop)].
+	statements notEmpty ifTrue: [self addCommentsTo: statements last].
+	sequenceNode
+		statements: statements;
+		periods: periods.
+	^sequenceNode!
+
+parseStatementsOf: aNode allowTag: tagBoolean 
+	| temps leftBar rightBar |
+	temps := #().
+	leftBar := rightBar := nil.
+	currentToken isBinary 
+		ifTrue: 
+			[currentToken value == #| 
+				ifTrue: 
+					[leftBar := currentToken start.
+					self step.
+					temps := self parseTempsOf: aNode.
+					(currentToken isBinary: #|) 
+						ifTrue: 
+							[rightBar := currentToken start.
+							self step]
+						ifFalse: 
+							[self parserError: CErrTempListNotClosed range: (leftBar to: self errorPosition - 1).
+							"If this error is ignored, we can recover
+							but it is possible that some of the first
+							statement has been treated as temporary
+							declarations..."
+							rightBar := self errorPosition - 1]]
+				ifFalse: 
+					[currentToken value == #'||' 
+						ifTrue: 
+							[rightBar := (leftBar := currentToken start) + 1.
+							self step]]].
+	^self parseStatementList: tagBoolean
+		into: (self sequenceNodeClass 
+				leftBar: leftBar
+				temporaries: temps
+				rightBar: rightBar)!
+
+parseTag
+	| tag start |
+	(currentToken isBinary: #<) ifFalse: [^self].
+	start := currentToken start.
+	self step.
+	tag := self parseTag: start.
+	methodNode tag: tag.
+	(currentToken isBinary: #>) 
+		ifFalse: 
+			[self parserError: CErrExpectCloseTag.
+			"Error ignored, attempt to recover..."
+			tag stop: currentToken start - 1.
+			^self].
+	tag stop: currentToken start.
+	self step!
+
+parseTag: startInteger 
+	^currentToken isKeyword 
+		ifTrue: 
+			[currentToken value = 'primitive:' 
+				ifTrue: 
+					[| primitiveIndex |
+					self step.
+					(currentToken isLiteralToken not or: [currentToken value isInteger not]) 
+						ifTrue: 
+							[self parserError: CErrExpectPrimIdx.
+							"Error ignored, attempt to recover, skip the
+							offending token unless it is the close tag
+							and return a dummy primitive node..."
+							(currentToken isBinary: #>) ifFalse: [self step].
+							^(StPrimitiveNode primitiveIndex: 0)
+								start: startInteger;
+								yourself].
+					primitiveIndex := currentToken value.
+					(primitiveIndex between: 1 and: MaxPrimIndex) ifFalse: [self parserError: CErrBadPrimIdx].
+					self step.
+					(StPrimitiveNode primitiveIndex: primitiveIndex)
+						start: startInteger;
+						yourself]
+				ifFalse: [self parseExternalCall: startInteger isVirtual: false]]
+		ifFalse: [self parseExtendedExternalCall: startInteger]!
+
+parseTempsOf: aNode 
+	| temps |
+	temps := OrderedCollection new.
+	[currentToken isIdentifier] whileTrue: 
+			[| temp |
+			temp := self parseVariableNode.
+			(self 
+				validateTemp: temp
+				of: aNode
+				temps: temps) ifTrue: [temps add: temp]].
+	^temps!
+
+parseUnaryMessage
+	| node |
+	node := self parsePrimitiveObject.
+	self addCommentsTo: node.
+	
+	[currentToken isLiteralToken ifTrue: [self patchLiteralMessage].
+	currentToken isIdentifier] 
+			whileTrue: [node := self parseUnaryMessageWith: node].
+	self addCommentsTo: node.
+	^node!
+
+parseUnaryMessageWith: aNode 
+	| selector |
+	selector := currentToken.
+	self step.
+	^self messageNodeClass 
+		receiver: aNode
+		selectorParts: (Array with: selector)
+		arguments: #()!
+
+parseUnaryPattern
+	| selector |
+	selector := currentToken.
+	self step.
+	^self methodNodeClass selectorParts: (Array with: selector) arguments: #()!
+
+parseVariableNode
+	| token node |
+	currentToken isIdentifier ifTrue: [^self parsePrimitiveIdentifier].
+	self parserError: CErrExpectVariable.
+	"Error ignored, attempt to recover..."
+	token := scanner identifierTokenClass 
+				value: (self source copyFrom: currentToken start to: currentToken stop)
+				start: currentToken start.
+	self step.
+	node := self variableNodeClass identifierToken: token.
+	self addCommentsTo: node.
+	^node!
+
+patchExternalDescriptorClose
+	"Hack needed because scanner treats trailing *> and **> binary selectors rather than two tokens"
+
+	| qualifier |
+	self assert: [nextToken isNil].
+	qualifier := currentToken value.
+	qualifier := (qualifier copyFrom: 1 to: qualifier size - 1) asSymbol.
+	nextToken := currentToken.
+	currentToken := StBinarySelectorToken value: qualifier start: nextToken start.
+	nextToken value: #>.
+	nextToken start: nextToken start + qualifier size.
+	^qualifier!
+
+patchLiteralArrayToken
+	| value |
+	value := (currentToken isIdentifier or: [currentToken isBinary or: [currentToken isKeyword]]) 
+				ifTrue: [currentToken value]
+				ifFalse: 
+					[self parserError: CErrBadTokenInArray.
+					"Error ignored, attempt to recover..."
+					self source copyFrom: currentToken start to: currentToken stop].
+	currentToken := scanner literalTokenClass 
+				value: value asSymbol
+				start: currentToken start
+				stop: currentToken stop!
+
+patchLiteralMessage
+	| value |
+	value := currentToken value.
+	value == true 
+		ifTrue: 
+			[^currentToken := StIdentifierToken value: 'true' start: currentToken start].
+	value == false 
+		ifTrue: 
+			[^currentToken := StIdentifierToken value: 'false' start: currentToken start].
+	value == nil 
+		ifTrue: 
+			[^currentToken := StIdentifierToken value: 'nil' start: currentToken start]!
+
+patchNegativeLiteral
+	"Private - Handle the special negative number case for binary message sends."
+
+	(currentToken value isKindOf: Number) ifFalse: [^self].
+	currentToken value <= 0 ifFalse: [^self].
+	currentToken value = 0 
+		ifTrue: 
+			[(self source notNil 
+				and: [self source notEmpty and: [(self source at: (currentToken start min: self source size)) == $-]]) 
+					ifFalse: [^self]].
+	nextToken := currentToken.
+	currentToken := StBinarySelectorToken value: #- start: nextToken start.
+	nextToken value: nextToken value negated.
+	(nextToken isKindOf: StNumberLiteralToken) 
+		ifTrue: [nextToken source: (nextToken source copyFrom: 2 to: nextToken source size)].
+	nextToken start: nextToken start + 1!
+
+reportError: anInteger at: posInteger line: lineInteger range: anInterval extras: anArray 
+	| err |
+	err := self class notificationClass 
+				code: anInteger
+				in: source
+				for: methodClass
+				selector: (methodNode ifNotNil: [:m | m selector])
+				position: posInteger
+				line: lineInteger
+				range: anInterval
+				extras: anArray.
+	"Warnings are not passed to the error block"
+	err severityClass == Error ifTrue: [self errorBlock value: err].
+	"If the error block returns, then the exception is signalled"
+	^err signal!
+
+returnNodeClass
+	^StReturnNode!
+
+scanner: aScanner
+	scanner := aScanner.
+	scanner separatorsInLiterals: st80Syntax.
+	self step!
+
+scannerClass
+	^SmalltalkScanner!
+
+sequenceNodeClass
+	^StSequenceNode!
+
+source
+	^ source!
+
+step
+	(currentToken notNil and: [currentToken comments notNil]) 
+		ifTrue: [comments addAll: currentToken comments].
+	nextToken notNil 
+		ifTrue: 
+			[currentToken := nextToken.
+			nextToken := nil]
+		ifFalse: [currentToken := scanner next]!
+
+validateArg: aVariableNode args: anOrderedCollection 
+	"...It is erroneous if the same identifier is used as a <method argument> of a <method
+	definition> and also appears in the method's <temporary variable list>...It is erroneous if
+	the same identifier appears more than once in a single method definition's <temporary
+	variable list>. It is erroneous for any one of the reserved identifiers ('nil', 'true',
+	'false', 'self' and 'super') to appear in a <temporary variable list>."
+
+	(anOrderedCollection includes: aVariableNode) 
+		ifTrue: [self parserError: CErrDuplicateArgName range: aVariableNode sourceInterval]
+		ifFalse: 
+			[(self isSpecialVariable: aVariableNode) 
+				ifTrue: [self parserError: CErrRedefiningPseudoVar range: aVariableNode sourceInterval]
+				ifFalse: [^true]].
+	^false!
+
+validateTemp: aVariableNode of: aNode temps: anOrderedCollection 
+	"...It is erroneous if the same identifier is used as a <method argument> of a <method
+	definition> and also appears in the method's <temporary variable list>...It is erroneous if
+	the same identifier appears more than once in a single method definition's <temporary
+	variable list>. It is erroneous for any one of the reserved identifiers ('nil', 'true',
+	'false', 'self' and 'super') to appear in a <temporary variable list>."
+
+	(anOrderedCollection includes: aVariableNode) 
+		ifTrue: [self parserError: CErrDuplicateTempName range: aVariableNode sourceInterval]
+		ifFalse: 
+			[(self isSpecialVariable: aVariableNode) 
+				ifTrue: [self parserError: CErrRedefiningPseudoVar range: aVariableNode sourceInterval]
+				ifFalse: 
+					[(aNode arguments includes: aVariableNode) 
+						ifTrue: [self parserError: CErrRedefiningArg range: aVariableNode sourceInterval]
+						ifFalse: [^true]]].
+	^false!
+
+variableNodeClass
+	^StVariableNode! !
+!SmalltalkParser categoriesFor: #addCommentsTo:!helpers!private! !
+!SmalltalkParser categoriesFor: #assignmentNodeClass!constants!private! !
+!SmalltalkParser categoriesFor: #atEnd!public!testing! !
+!SmalltalkParser categoriesFor: #blockNodeClass!constants!private! !
+!SmalltalkParser categoriesFor: #canHaveStatementsAfterReturn!public!testing! !
+!SmalltalkParser categoriesFor: #cascadeNodeClass!constants!private! !
+!SmalltalkParser categoriesFor: #errorBlock!accessing!error handling!public! !
+!SmalltalkParser categoriesFor: #errorBlock:!accessing!public! !
+!SmalltalkParser categoriesFor: #errorPosition!error handling!public! !
+!SmalltalkParser categoriesFor: #evaluateStatements:!parsing!private! !
+!SmalltalkParser categoriesFor: #externalReferenceTypeFor:!parsing!private! !
+!SmalltalkParser categoriesFor: #initialize!initializing!public! !
+!SmalltalkParser categoriesFor: #initializeParserWith:!initializing!private! !
+!SmalltalkParser categoriesFor: #isSpecialVariable:!parsing!private! !
+!SmalltalkParser categoriesFor: #line!accessing!public! !
+!SmalltalkParser categoriesFor: #literalArrayNodeClass!constants!private! !
+!SmalltalkParser categoriesFor: #literalNodeClass!constants!private! !
+!SmalltalkParser categoriesFor: #lookupExternalStructType:!parsing!private! !
+!SmalltalkParser categoriesFor: #messageNodeClass!constants!private! !
+!SmalltalkParser categoriesFor: #methodClass:!accessing!public! !
+!SmalltalkParser categoriesFor: #methodNodeClass!constants!private! !
+!SmalltalkParser categoriesFor: #nextToken!helpers!private! !
+!SmalltalkParser categoriesFor: #optimizedNodeClass!constants!private! !
+!SmalltalkParser categoriesFor: #parseAssignment!parsing!private! !
+!SmalltalkParser categoriesFor: #parseBinaryMessage!parsing!private! !
+!SmalltalkParser categoriesFor: #parseBinaryMessageWith:!parsing!private! !
+!SmalltalkParser categoriesFor: #parseBinaryPattern!parsing!private! !
+!SmalltalkParser categoriesFor: #parseBlock!parsing!private! !
+!SmalltalkParser categoriesFor: #parseBlockArgsInto:!parsing!private! !
+!SmalltalkParser categoriesFor: #parseCascadedMessageFor:!parsing!private! !
+!SmalltalkParser categoriesFor: #parseCascadeMessage!parsing!private! !
+!SmalltalkParser categoriesFor: #parseExpression:!parsing!public! !
+!SmalltalkParser categoriesFor: #parseExtendedExternalCall:!parsing!private! !
+!SmalltalkParser categoriesFor: #parseExternalArgType!parsing!private! !
+!SmalltalkParser categoriesFor: #parseExternalArgTypeQualifier!parsing!private! !
+!SmalltalkParser categoriesFor: #parseExternalCall:isVirtual:!parsing!private! !
+!SmalltalkParser categoriesFor: #parseExternalCallArgList!parsing!private! !
+!SmalltalkParser categoriesFor: #parseExternalCallArgs:!parsing!private! !
+!SmalltalkParser categoriesFor: #parseExternalCallingConvention!parsing!private! !
+!SmalltalkParser categoriesFor: #parseExternalCallName!parsing!private! !
+!SmalltalkParser categoriesFor: #parseKeywordMessage!parsing!private! !
+!SmalltalkParser categoriesFor: #parseKeywordMessageWith:!parsing!private! !
+!SmalltalkParser categoriesFor: #parseKeywordPattern!parsing!private! !
+!SmalltalkParser categoriesFor: #parseLiteralArray!parsing!private! !
+!SmalltalkParser categoriesFor: #parseLiteralArrayObject!parsing!private! !
+!SmalltalkParser categoriesFor: #parseLiteralByteArray!parsing!private! !
+!SmalltalkParser categoriesFor: #parseLiteralByteArrayObject!parsing!private! !
+!SmalltalkParser categoriesFor: #parseMessagePattern!parsing!private! !
+!SmalltalkParser categoriesFor: #parseMethod!parsing!private! !
+!SmalltalkParser categoriesFor: #parseMethod:!accessing!public! !
+!SmalltalkParser categoriesFor: #parseMethod:in:errorBlock:!parsing!public! !
+!SmalltalkParser categoriesFor: #parseOptimizedExpression!parsing!private! !
+!SmalltalkParser categoriesFor: #parseOverlappedCall:!parsing!private! !
+!SmalltalkParser categoriesFor: #parseParenthesizedExpression!parsing!private! !
+!SmalltalkParser categoriesFor: #parsePrimitiveIdentifier!parsing!private! !
+!SmalltalkParser categoriesFor: #parsePrimitiveLiteral!parsing!private! !
+!SmalltalkParser categoriesFor: #parsePrimitiveObject!parsing!private! !
+!SmalltalkParser categoriesFor: #parserError:!error handling!private! !
+!SmalltalkParser categoriesFor: #parserError:range:!error handling!private! !
+!SmalltalkParser categoriesFor: #parserError:range:extra:!error handling!private! !
+!SmalltalkParser categoriesFor: #parserError:range:extras:!error handling!private! !
+!SmalltalkParser categoriesFor: #parseStatementList:into:!parsing!private! !
+!SmalltalkParser categoriesFor: #parseStatementsOf:allowTag:!parsing!private! !
+!SmalltalkParser categoriesFor: #parseTag!parsing!private! !
+!SmalltalkParser categoriesFor: #parseTag:!parsing!private! !
+!SmalltalkParser categoriesFor: #parseTempsOf:!parsing!private! !
+!SmalltalkParser categoriesFor: #parseUnaryMessage!parsing!private! !
+!SmalltalkParser categoriesFor: #parseUnaryMessageWith:!parsing!private! !
+!SmalltalkParser categoriesFor: #parseUnaryPattern!parsing!private! !
+!SmalltalkParser categoriesFor: #parseVariableNode!parsing!private! !
+!SmalltalkParser categoriesFor: #patchExternalDescriptorClose!parsing!private! !
+!SmalltalkParser categoriesFor: #patchLiteralArrayToken!parsing!private! !
+!SmalltalkParser categoriesFor: #patchLiteralMessage!helpers!private! !
+!SmalltalkParser categoriesFor: #patchNegativeLiteral!helpers!private! !
+!SmalltalkParser categoriesFor: #reportError:at:line:range:extras:!error handling!private! !
+!SmalltalkParser categoriesFor: #returnNodeClass!constants!private! !
+!SmalltalkParser categoriesFor: #scanner:!accessing!public! !
+!SmalltalkParser categoriesFor: #scannerClass!constants!private! !
+!SmalltalkParser categoriesFor: #sequenceNodeClass!constants!private! !
+!SmalltalkParser categoriesFor: #source!accessing!private! !
+!SmalltalkParser categoriesFor: #step!parsing!private! !
+!SmalltalkParser categoriesFor: #validateArg:args:!parsing!private! !
+!SmalltalkParser categoriesFor: #validateTemp:of:temps:!parsing!private! !
+!SmalltalkParser categoriesFor: #variableNodeClass!constants!private! !
+
+!SmalltalkParser class methodsFor!
+
+errorClass
+	^CompilerErrorNotification!
+
+initialize
+	"Private - Initialize the receiver's class variables.
+		self initialize
+	"
+
+	MaxPrimIndex := 192.
+	MaxVfn := 1024!
+
+new
+	^super new initialize!
+
+notificationClass
+	^CompilerNotification!
+
+parseExistingMethodNoError: aCompiledMethod 
+	^self 
+		parseMethod: aCompiledMethod getSource
+		in: aCompiledMethod methodClass
+		onError: 
+			[:err | 
+			Notification signal: ('Error <1p> on line <2p> of <3p> -> <4s>' 
+						expandMacrosWith: err errorCode
+						with: err line
+						with: aCompiledMethod
+						with: err errorMessage).
+			^nil]!
+
+parseExpression: aString 
+	^self parseExpression: aString onError: nil!
+
+parseExpression: aString in: aClass
+	^self parseExpression: aString in: aClass onError: nil!
+
+parseExpression: aString in: aClass onError: aBlock 
+	| node parser |
+	parser := self new.
+	parser errorBlock: aBlock.
+	parser methodClass: aClass.
+	parser initializeParserWith: aString.
+	node := parser parseExpression: aString.
+	^(node statements size == 1 and: [node temporaries isEmpty]) 
+		ifTrue: [node statements first]
+		ifFalse: [node]!
+
+parseExpression: aString onError: aBlock 
+	^self parseExpression: aString in: Object onError: aBlock!
+
+parseExpressionNoError: aString in: aClass 
+	^self 
+		parseExpression: aString
+		in: aClass
+		onError: [:ex | ^nil]!
+
+parseMethod: aString 
+	^self parseMethod: aString in: UndefinedObject!
+
+parseMethod: aString in: aClass 
+	^self 
+		parseMethod: aString
+		in: aClass
+		onError: nil!
+
+parseMethod: aString in: aClass onError: aBlock 
+	^self new 
+		parseMethod: aString
+		in: aClass
+		errorBlock: aBlock!
+
+parseMethod: aString onError: aBlock 
+	^self 
+		parseMethod: aString
+		in: UndefinedObject
+		onError: aBlock!
+
+parseMethodNoError: aString 
+	^self parseMethodNoError: aString in: UndefinedObject!
+
+parseMethodNoError: aString in: methodClass 
+	^self 
+		parseMethod: aString
+		in: methodClass
+		onError: [:err | ^nil]!
+
+parseMethodPattern: aString 
+	| parser |
+	parser := self new.
+	parser errorBlock: [:error :position | nil].
+	^
+	[parser initializeParserWith: (aString).
+	parser parseMessagePattern selector] on: self errorClass
+			do: [:err | nil]!
+
+warningClass
+	^CompilerWarningNotification! !
+!SmalltalkParser class categoriesFor: #errorClass!constants!public! !
+!SmalltalkParser class categoriesFor: #initialize!development!initializing!public! !
+!SmalltalkParser class categoriesFor: #new!instance creation!public! !
+!SmalltalkParser class categoriesFor: #notificationClass!constants!public! !
+!SmalltalkParser class categoriesFor: #parseExistingMethodNoError:!commands!public! !
+!SmalltalkParser class categoriesFor: #parseExpression:!parsing!public! !
+!SmalltalkParser class categoriesFor: #parseExpression:in:!parsing!public! !
+!SmalltalkParser class categoriesFor: #parseExpression:in:onError:!parsing!public! !
+!SmalltalkParser class categoriesFor: #parseExpression:onError:!parsing!public! !
+!SmalltalkParser class categoriesFor: #parseExpressionNoError:in:!parsing!public! !
+!SmalltalkParser class categoriesFor: #parseMethod:!parsing!public! !
+!SmalltalkParser class categoriesFor: #parseMethod:in:!parsing!public! !
+!SmalltalkParser class categoriesFor: #parseMethod:in:onError:!parsing!public! !
+!SmalltalkParser class categoriesFor: #parseMethod:onError:!parsing!public! !
+!SmalltalkParser class categoriesFor: #parseMethodNoError:!parsing!public! !
+!SmalltalkParser class categoriesFor: #parseMethodNoError:in:!parsing!public! !
+!SmalltalkParser class categoriesFor: #parseMethodPattern:!parsing!public! !
+!SmalltalkParser class categoriesFor: #warningClass!constants!public! !
+

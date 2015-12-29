@@ -1,0 +1,91 @@
+| package |
+package := Package name: 'RBTestMethods'.
+package paxVersion: 1;
+	basicComment: ''.
+
+
+package classNames
+	add: #BasicLintRuleTest;
+	add: #ClassToRename;
+	add: #CompositeLintRuleTest;
+	add: #FooLintRuleTest;
+	add: #LintRuleTest;
+	add: #RefactoryTestDataApp;
+	add: #SubclassOfClassToRename;
+	add: #TransformationRuleTest;
+	yourself.
+
+package globalNames
+	add: #Smalllint;
+	add: #SmalllintResultEditor;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	add: #Smalllint;
+	add: #SmalllintResultEditor;
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\..\..\Object Arts\Dolphin\Base\Dolphin';
+	add: '..\Change Objects\RBChangeObjects';
+	add: '..\Environments\RBEnvironments';
+	add: '..\Parser\RBParser';
+	add: '..\Refactorings\RBRefactorings';
+	add: '..\SmallLint\RBSmallLint';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+Object subclass: #LintRuleTest
+	instanceVariableNames: 'name foo1'
+	classVariableNames: 'Foo1'
+	poolDictionaries: 'CRTConstants'
+	classInstanceVariableNames: ''!
+Object subclass: #RefactoryTestDataApp
+	instanceVariableNames: 'temporaryVariable'
+	classVariableNames: ''
+	poolDictionaries: 'CRTConstants'
+	classInstanceVariableNames: ''!
+LintRuleTest subclass: #BasicLintRuleTest
+	instanceVariableNames: 'classBlock methodBlock result'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+LintRuleTest subclass: #CompositeLintRuleTest
+	instanceVariableNames: 'rules'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+LintRuleTest subclass: #FooLintRuleTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+FooLintRuleTest subclass: #TransformationRuleTest
+	instanceVariableNames: 'rewriteRule builder class'
+	classVariableNames: 'RecursiveSelfRule'
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Model subclass: #ClassToRename
+	instanceVariableNames: 'rewriteRule builder class'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: 'notUsed'!
+ClassToRename subclass: #SubclassOfClassToRename
+	instanceVariableNames: 'rewriteRule1'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+"End of package definition"!
+

@@ -1,0 +1,54 @@
+"Filed out from Dolphin Smalltalk X6"!
+
+FILETIME subclass: #LocalFILETIME
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+LocalFILETIME guid: (GUID fromString: '{87B4C623-026E-11D3-9FD7-00A0CC3E4A32}')!
+LocalFILETIME comment: 'LocalFILETIME is an ExternalStructure class to represent the Win32 FILETIMEs that are in local time, as opposed to the usual UTC of normal FILETIMEs. See <FILETIME> for further details.'!
+!LocalFILETIME categoriesForClass!External-Data-Structured-Win32! !
+!LocalFILETIME methodsFor!
+
+asLocalTime
+	"Answer the receiver in local time (which it is already)."
+
+	^self!
+
+asSYSTEMTIME
+	"Answer the receiver converted to a SYSTEMTIME."
+
+	^self basicAsSYSTEMTIME!
+
+asUTC
+	"Answer the receiver as a UTC FILETIME."
+
+	^FILETIME fromLocalTime: self
+! !
+!LocalFILETIME categoriesFor: #asLocalTime!converting!public! !
+!LocalFILETIME categoriesFor: #asSYSTEMTIME!converting!public! !
+!LocalFILETIME categoriesFor: #asUTC!converting!public! !
+
+!LocalFILETIME class methodsFor!
+
+fromSYSTEMTIME: aSYSTEMTIME
+	"Answer a file time from the specified SYSTEMTIME (assumed to be in
+	local time)."
+
+	| answer |
+	answer := self new.
+	(KernelLibrary default systemTimeToFileTime: aSYSTEMTIME lpFileTime: answer) 
+		ifFalse: [^KernelLibrary default systemError].
+	^answer!
+
+now
+	"Answer the current LocalFILETIME.
+	Use the OLELibrary function if it is available.
+
+		LocalFILETIME now
+	"
+
+	^self fromSYSTEMTIME: SYSTEMTIME now! !
+!LocalFILETIME class categoriesFor: #fromSYSTEMTIME:!instance creation!public! !
+!LocalFILETIME class categoriesFor: #now!instance creation!public! !
+

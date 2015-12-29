@@ -1,0 +1,546 @@
+| package |
+package := Package name: 'Dolphin MVP (Deprecated)'.
+package paxVersion: 1;
+	basicComment: 'Dolphin Smalltalk Graphical User Interface framework (Deprecated Classes and Methods).
+
+This package includes legacy classes and methods from Dolphin''s base package that have been deprecated. If you have no requirement to use code imported from pre-5.0 versions of Dolphin, then this package can be safely uninstalled.
+'.
+
+package basicPackageVersion: '6.2'.
+
+
+package classNames
+	add: #ComparisonPolicy;
+	add: #MultipleSelectionListBox;
+	add: #MultipleSelectionListView;
+	yourself.
+
+package methodNames
+	add: #AcceleratorTable -> #accelerators;
+	add: #AcceleratorTable -> #addKey:commandDescription:;
+	add: #BasicListAbstract -> #basicSelectionByIndex:;
+	add: #BLENDFUNCTION -> #beAlpha;
+	add: #BLENDFUNCTION -> #beNotAlpha;
+	add: #BorderLayout -> #hasCenter;
+	add: #BorderLayout -> #hasEast;
+	add: #BorderLayout -> #hasNorth;
+	add: #BorderLayout -> #hasSouth;
+	add: #BorderLayout -> #hasWest;
+	add: #Canvas -> #origin:;
+	add: #Canvas -> #setTextColor:;
+	add: #ListBox -> #basicSelectionByIndex:;
+	add: #ListModel -> #updateAtIndex:;
+	add: #ListModel -> #updateItem:;
+	add: #ListModel -> #updateItem:ifAbsent:;
+	add: #ListView -> #autoArrange;
+	add: #ListView -> #autoArrange:;
+	add: #ListView -> #columns;
+	add: #ListView -> #hasTrackSelect;
+	add: #ListView -> #hasTrackSelect:;
+	add: #ScrollingDecorator -> #continuousTracking;
+	add: #ScrollingDecorator -> #continuousTracking:;
+	add: #ShellView -> #hasThickFrame;
+	add: #ShellView -> #hasThickFrame:;
+	add: #TextEdit -> #find:range:down:wholeWord:matchCase:;
+	add: #TextEdit -> #findNextWrapped:down:wholeWord:matchCase:;
+	add: #TextEdit -> #isLowercase;
+	add: #TextEdit -> #isLowercase:;
+	add: #TextEdit -> #isNumeric;
+	add: #TextEdit -> #isNumeric:;
+	add: #TextEdit -> #isUpperCase;
+	add: #TextEdit -> #isUppercase:;
+	add: #TextEdit -> #lines;
+	add: #ToolbarButton -> #checked;
+	add: #ToolbarButton -> #checked:;
+	add: #ToolbarButton -> #enabled;
+	add: #ToolbarButton -> #enabled:;
+	add: #ToolbarButton -> #hide:;
+	add: #ToolbarButton -> #indeterminate:;
+	add: #ToolbarButton -> #pressed;
+	add: #ToolbarButton -> #pressed:;
+	add: #TreeView -> #disableExpandAll;
+	add: #TreeView -> #disableExpandAll:;
+	add: #TypeConverter -> #leftExceptionalValue;
+	add: #TypeConverter -> #leftExceptionalValue:;
+	add: #TypeConverter -> #rightExceptionalValue;
+	add: #TypeConverter -> #rightExceptionalValue:;
+	add: #View -> #hasWindowEdge;
+	add: #View -> #hasWindowEdge:;
+	add: 'ChoicePresenter class' -> #resource_Multiselection_list_box;
+	add: 'ChoicePrompter class' -> #resource_Extensible_multiselection_choice_prompter;
+	add: 'ChoicePrompter class' -> #resource_Multiselection_choice_prompter;
+	add: 'Color class' -> #buttonFace;
+	add: 'ListPresenter class' -> #resource_Multiselection_enhanced_list_view;
+	add: 'ListPresenter class' -> #resource_Multiselection_list_box;
+	add: 'WindowsEvent class' -> #message:handle:wParam:lParam:;
+	add: 'WinImageList class' -> #width:height:flags:size:growthGranularity:;
+	yourself.
+
+package globalNames
+	add: #CheckedPushButton;
+	add: #CompositePresenter;
+	add: #MultipleChoicePresenter;
+	add: #StaticViewAbstract;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	add: #CheckedPushButton;
+	add: #CompositePresenter;
+	add: #MultipleChoicePresenter;
+	add: #StaticViewAbstract;
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\..\Base\Dolphin';
+	add: '..\Presenters\Choice\Dolphin Choice Presenter';
+	add: '..\Presenters\Prompters\Dolphin Choice Prompter';
+	add: '..\Views\Common Controls\Dolphin Common Controls';
+	add: '..\Views\Control Bars\Dolphin Control Bars';
+	add: '..\Models\List\Dolphin List Models';
+	add: '..\Presenters\List\Dolphin List Presenter';
+	add: '..\Base\Dolphin MVP Base';
+	add: '..\Views\Scrollbars\Dolphin Scrollbars';
+	add: '..\Presenters\Text\Dolphin Text Presenter';
+	add: '..\Type Converters\Dolphin Type Converters';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+Object subclass: #ComparisonPolicy
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ListBox subclass: #MultipleSelectionListBox
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ListView subclass: #MultipleSelectionListView
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+CheckedPushButton := PushButton!
+
+CompositePresenter := Presenter!
+
+MultipleChoicePresenter := ChoicePresenter!
+
+StaticViewAbstract := StaticView!
+
+
+"Loose Methods"!
+
+!AcceleratorTable methodsFor!
+
+accelerators
+	#deprecated.
+	^commands associations!
+
+addKey: vKeyCode commandDescription: aCommandDescription 
+	#deprecated.
+	aCommandDescription acceleratorKey: vKeyCode.
+	self addCommand: aCommandDescription! !
+!AcceleratorTable categoriesFor: #accelerators!accessing!public! !
+!AcceleratorTable categoriesFor: #addKey:commandDescription:!adding!public! !
+
+!BasicListAbstract methodsFor!
+
+basicSelectionByIndex: anInteger 
+	#deprecated.	"Present for loading of old view resources"
+	self setSingleSelection: anInteger! !
+!BasicListAbstract categoriesFor: #basicSelectionByIndex:!private!selection! !
+
+!BLENDFUNCTION methodsFor!
+
+beAlpha
+	#deprecated.
+	self usePerPixelAlpha: true!
+
+beNotAlpha
+	#deprecated.
+	self usePerPixelAlpha: false! !
+!BLENDFUNCTION categoriesFor: #beAlpha!accessing!public! !
+!BLENDFUNCTION categoriesFor: #beNotAlpha!accessing!public! !
+
+!BorderLayout methodsFor!
+
+hasCenter
+	"Answer whether a view has been arranged to the centre of the layout."
+
+	^self center notNil!
+
+hasEast
+	"Answer whether a view has been arranged to the left edge."
+
+	^self east notNil!
+
+hasNorth
+	"Answer whether a view has been arranged to the top edge."
+
+	^self north notNil!
+
+hasSouth
+	"Answer whether a view has been arranged to the bottom edge."
+
+	^self south notNil!
+
+hasWest
+	"Answer whether a view has been arranged to the right edge."
+
+	^self west notNil! !
+!BorderLayout categoriesFor: #hasCenter!accessing!public! !
+!BorderLayout categoriesFor: #hasEast!accessing!public! !
+!BorderLayout categoriesFor: #hasNorth!accessing!public! !
+!BorderLayout categoriesFor: #hasSouth!accessing!public! !
+!BorderLayout categoriesFor: #hasWest!accessing!public! !
+
+!Canvas methodsFor!
+
+origin: aPoint
+	#deprecated.	"5.0: Use #viewportOrigin:"
+	^self viewportOrigin: aPoint!
+
+setTextColor: colour
+	#deprecated. "6.0 (reprise)"
+	^self forecolor: colour! !
+!Canvas categoriesFor: #origin:!operations!public! !
+!Canvas categoriesFor: #setTextColor:!modes!public! !
+
+!ChoicePresenter class methodsFor!
+
+resource_Multiselection_list_box
+	"Answer the literal data from which the 'Multiselection list box' resource can be reconstituted.
+	DO NOT EDIT OR RECATEGORIZE THIS METHOD.
+
+	If you wish to modify this resource evaluate:
+	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Multiselection_list_box)
+	"
+
+	^#(#'!!STL' 3 788558 10 ##(Smalltalk.STBViewProxy)  8 ##(Smalltalk.MultipleSelectionListBox)  98 17 0 0 98 2 8 1412499713 1025 416 590662 2 ##(Smalltalk.ListModel)  202 208 98 0 0 1114638 ##(Smalltalk.STBSingletonProxy)  8 ##(Smalltalk.SearchPolicy)  8 #identity 524550 ##(Smalltalk.ColorRef)  8 4278190080 0 5 0 0 0 416 0 8 4294906339 459270 ##(Smalltalk.Message)  8 #displayString 98 0 544 32 983302 ##(Smalltalk.MessageSequence)  202 208 98 2 721670 ##(Smalltalk.MessageSend)  8 #createAt:extent: 98 2 328198 ##(Smalltalk.Point)  2799 21 882 251 351 416 818 8 #horizontalExtent: 98 1 1 416 983302 ##(Smalltalk.WINDOWPLACEMENT)  8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 119 5 0 0 10 0 0 0 244 5 0 0 185 0 0 0] 98 0 882 193 193 0 27 )! !
+!ChoicePresenter class categoriesFor: #resource_Multiselection_list_box!public!resources-views! !
+
+!ChoicePrompter class methodsFor!
+
+resource_Extensible_multiselection_choice_prompter
+	"Answer the literal data from which the 'Extensible multiselection choice prompter' resource can be reconstituted.
+	DO NOT EDIT OR RECATEGORIZE THIS METHOD.
+
+	If you wish to modify this resource evaluate:
+	ViewComposer openOn: (ResourceIdentifier class: self name name: 'Extensible multiselection choice prompter')
+	"
+
+	^#(#'!!STL' 3 788558 10 ##(STBViewProxy)  8 ##(DialogView)  98 30 0 0 98 2 26738689 131073 416 0 721158 ##(SystemColor)  31 328198 ##(Point)  501 701 133 0 0 0 416 788230 ##(BorderLayout)  1 1 0 410 8 ##(ContainerView)  98 15 0 416 98 2 8 1140850688 131073 576 0 482 31 0 7 0 0 0 576 852230 ##(FramingLayout)  234 240 98 6 410 8 ##(PushButton)  98 17 0 576 98 2 8 1140924416 1 736 0 524550 ##(ColorRef)  8 4278190080 0 7 0 0 0 736 0 8 4294904615 1180998 4 ##(CommandDescription)  8 #ok 8 'OK' 1 1 0 0 16 983302 ##(MessageSequence)  202 208 98 2 721670 ##(MessageSend)  8 #createAt:extent: 98 2 514 185 21 514 141 51 736 1010 8 #text: 98 1 8 'OK' 736 983302 ##(WINDOWPLACEMENT)  8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 92 0 0 0 10 0 0 0 162 0 0 0 35 0 0 0] 98 0 514 193 193 0 27 1181766 2 ##(FramingConstraints)  1114638 ##(STBSingletonProxy)  8 ##(FramingCalculation)  8 #fixedViewRight -139 1290 1312 8 #fixedParentRight -149 1290 1312 8 #fixedViewBottom -49 1290 1312 8 #fixedParentBottom 1 410 752 98 17 0 576 98 2 8 1140924416 1 1440 0 818 848 0 7 0 0 0 1440 0 8 4294904615 882 8 #newMultipleChoice 8 '&New...' 1 1 0 0 32 946 202 208 98 3 1010 1040 98 2 514 11 21 514 141 51 1440 1010 8 #isEnabled: 98 1 32 1440 1010 1120 98 1 8 '&New...' 1440 1170 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 5 0 0 0 10 0 0 0 75 0 0 0 35 0 0 0] 98 0 1232 0 27 1250 1290 1312 8 #fixedParentLeft 11 1290 1312 8 #fixedViewLeft 141 1376 -49 1408 1 410 752 98 17 0 576 98 2 8 1140924416 1 1920 0 818 848 0 7 0 0 0 1920 0 8 4294904615 882 8 #cancel 8 'Cancel' 1 1 0 0 32 946 202 208 98 2 1010 1040 98 2 514 335 21 514 141 51 1920 1010 1120 98 1 8 'Cancel' 1920 1170 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 167 0 0 0 10 0 0 0 237 0 0 0 35 0 0 0] 98 0 1232 0 27 1250 1296 -139 1344 1 1376 -49 1408 1 234 256 98 0 590342 ##(Rectangle)  514 1 1 514 1 1 946 202 208 98 1 1010 1040 98 2 514 15 559 514 475 71 576 1170 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 7 0 0 0 23 1 0 0 244 0 0 0 58 1 0 0] 98 3 1440 736 1920 1232 0 27 0 0 410 8 ##(MultipleSelectionListView)  98 30 0 416 98 2 8 1140969545 1025 2544 590662 2 ##(ListModel)  202 208 2304 0 1290 8 ##(SearchPolicy)  8 #identity 818 848 0 7 0 0 0 2544 0 8 4294904241 459270 ##(Message)  8 #displayString 98 0 0 1290 8 ##(IconImageManager)  8 #current 0 0 0 0 0 0 202 208 98 1 920646 5 ##(ListViewColumn)  8 '' 467 8 #left 0 8 ##(SortedCollection)  0 0 2544 0 3 0 0 8 #report 2304 0 133185 0 0 946 202 208 98 1 1010 1040 98 2 514 15 15 514 475 545 2544 1170 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 7 0 0 0 7 0 0 0 244 0 0 0 23 1 0 0] 98 0 1232 0 27 234 256 98 2 2544 8 'choices' 2322 514 15 15 514 17 15 0 0 0 0 12695 0 0 0 514 501 311 1 0 0 590598 ##(Semaphore)  0 0 1 0 8 2010572111 946 202 208 98 3 1010 1040 98 2 514 1341 845 514 521 711 416 1010 1120 98 1 8 'Choose one or more of:' 416 1010 8 #menuBar: 98 1 0 416 1170 8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 158 2 0 0 166 1 0 0 162 3 0 0 9 3 0 0] 98 2 2544 576 1232 0 27 )!
+
+resource_Multiselection_choice_prompter
+	"Answer the literal data from which the 'Multiselection choice prompter' resource can be reconstituted.
+	DO NOT EDIT OR RECATEGORIZE THIS METHOD.
+
+	If you wish to modify this resource evaluate:
+	ViewComposer openOn: (ResourceIdentifier class: self name name: 'Multiselection choice prompter')
+	"
+
+	^#(#'!!STL' 3 788558 10 ##(STBViewProxy) 8 ##(DialogView) 98 30 0 0 98 2 26738689 131073 416 0 721158 ##(SystemColor) 31 328198 ##(Point) 501 701 133 0 0 0 416 788230 ##(BorderLayout) 1 1 0 410 8 ##(ReferenceView) 98 14 0 416 98 2 8 1140850688 131073 576 0 0 0 5 0 0 0 576 1638918 ##(ResourceIdentifier) 8 ##(Presenter) 8 #resource_OK_Cancel_button_block 0 983302 ##(MessageSequence) 202 208 98 1 721670 ##(MessageSend) 8 #createAt:extent: 98 2 514 15 559 514 475 71 576 983302 ##(WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 7 0 0 0 23 1 0 0 244 0 0 0 58 1 0 0] 98 0 514 193 193 0 27 0 0 410 8 ##(MultipleSelectionListView) 98 30 0 416 98 2 8 1140969545 1025 960 590662 2 ##(ListModel) 202 208 928 0 1114638 ##(STBSingletonProxy) 8 ##(SearchPolicy) 8 #identity 524550 ##(ColorRef) 8 4278190080 514 485 577 7 0 0 0 960 0 8 4294904241 459270 ##(Message) 8 #displayString 98 0 0 1098 8 ##(IconImageManager) 8 #current 0 0 0 0 0 0 202 208 98 1 920646 5 ##(ListViewColumn) 8 '' 467 8 #left 0 8 ##(SortedCollection) 0 0 960 0 3 0 0 8 #report 928 0 133121 0 0 722 202 208 98 1 786 816 98 2 514 15 15 514 475 545 960 882 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 7 0 0 0 7 0 0 0 244 0 0 0 23 1 0 0] 98 0 944 0 27 234 256 98 2 960 8 'choices' 590342 ##(Rectangle) 514 15 15 514 17 15 0 0 0 0 12711 0 0 0 514 501 311 1 0 0 590598 ##(Semaphore) 0 0 1 0 8 2010572111 722 202 208 98 3 786 816 98 2 514 1341 845 514 521 711 416 786 8 #text: 98 1 8 'Choose one or more of:' 416 786 8 #menuBar: 98 1 0 416 882 8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 158 2 0 0 166 1 0 0 162 3 0 0 9 3 0 0] 98 2 960 576 944 0 27)! !
+!ChoicePrompter class categoriesFor: #resource_Extensible_multiselection_choice_prompter!public!resources-views! !
+!ChoicePrompter class categoriesFor: #resource_Multiselection_choice_prompter!public!resources-views! !
+
+!Color class methodsFor!
+
+buttonFace
+	#deprecated.
+	^Color face3d! !
+!Color class categoriesFor: #buttonFace!instance creation!public! !
+
+!ListBox methodsFor!
+
+basicSelectionByIndex: sel
+	#deprecated.	"Presenter for old view resources"
+	self basicSelectionsByIndex: sel! !
+!ListBox categoriesFor: #basicSelectionByIndex:!private!selection! !
+
+!ListModel methodsFor!
+
+updateAtIndex: anInteger 
+	"Update, and answer, an object in the receiver at anInteger index because 
+	it's contents have changed. If anInteger index does not exist in the list 
+	then raise a suitable exception. Answer anObject."
+
+	| elem |
+	#deprecated.	"Use #refreshAtIndex:"
+	elem := self list at: anInteger.
+	self notifyItem: elem updatedAtIndex: anInteger.
+	^elem!
+
+updateItem: anObject
+	#deprecated.	"Use #refresh:"
+	^self refresh: anObject!
+
+updateItem: anObject ifAbsent: exceptionHandler
+	#deprecated.	"Use #refresh:ifAbsent:"
+	^self refresh: anObject ifAbsent: exceptionHandler! !
+!ListModel categoriesFor: #updateAtIndex:!public!updating! !
+!ListModel categoriesFor: #updateItem:!private!updating! !
+!ListModel categoriesFor: #updateItem:ifAbsent:!public!searching! !
+
+!ListPresenter class methodsFor!
+
+resource_Multiselection_enhanced_list_view
+	"Answer the literal data from which the 'Multiselection enhanced list view' resource can be reconstituted.
+	DO NOT EDIT OR RECATEGORIZE THIS METHOD.
+
+	If you wish to modify this resource evaluate:
+	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Multiselection_enhanced_list_view)
+	"
+
+	^#(#'!!STL' 3 788558 10 ##(STBViewProxy)  8 ##(MultipleSelectionListView)  98 30 0 0 98 2 8 1140920393 1025 416 590662 2 ##(ListModel)  202 208 98 0 0 1114638 ##(STBSingletonProxy)  8 ##(SearchPolicy)  8 #identity 524550 ##(ColorRef)  8 4278190080 0 7 0 0 0 416 0 8 4294902987 459270 ##(Message)  8 #displayString 98 0 8 ##(IconicListAbstract)  570 8 ##(IconImageManager)  8 #current 0 0 0 0 0 0 202 208 98 1 920646 5 ##(ListViewColumn)  8 'Column 1' 201 8 #left 690 720 736 8 ##(SortedCollection)  0 0 416 0 1 0 0 8 #report 544 0 131169 0 0 983302 ##(MessageSequence)  202 208 98 2 721670 ##(MessageSend)  8 #createAt:extent: 98 2 328198 ##(Point)  11 11 1090 401 397 416 1026 8 #text: 98 1 8 'Column 1' 416 983302 ##(WINDOWPLACEMENT)  8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 5 0 0 0 5 0 0 0 205 0 0 0 203 0 0 0] 98 0 1090 193 193 0 27 )!
+
+resource_Multiselection_list_box
+	"Answer the literal data from which the 'Multiselection list box' resource can be reconstituted.
+	DO NOT EDIT OR RECATEGORIZE THIS METHOD.
+
+	If you wish to modify this resource evaluate:
+	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Multiselection_list_box)
+	"
+
+	^#(#'!!STL' 3 788558 10 ##(STBViewProxy)  8 ##(MultipleSelectionListBox)  98 17 0 0 98 2 8 1144064257 1025 416 590662 2 ##(ListModel)  202 208 98 0 0 1114638 ##(STBSingletonProxy)  8 ##(SearchPolicy)  8 #identity 524550 ##(ColorRef)  8 4278190080 0 7 0 0 0 416 0 8 4294903705 459270 ##(Message)  8 #displayString 98 0 544 32 983302 ##(MessageSequence)  202 208 98 2 721670 ##(MessageSend)  8 #createAt:extent: 98 2 328198 ##(Point)  11 11 882 251 351 416 818 8 #horizontalExtent: 98 1 1 416 983302 ##(WINDOWPLACEMENT)  8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 5 0 0 0 5 0 0 0 130 0 0 0 180 0 0 0] 98 0 882 193 193 0 27 )! !
+!ListPresenter class categoriesFor: #resource_Multiselection_enhanced_list_view!public!resources-views! !
+!ListPresenter class categoriesFor: #resource_Multiselection_list_box!public!resources-views! !
+
+!ListView methodsFor!
+
+autoArrange
+	#deprecated.
+	^self isAutoArranged!
+
+autoArrange: aBoolean 
+	#deprecated.
+	self isAutoArranged: aBoolean!
+
+columns
+	#deprecated. "5.0"
+	^self allColumns copyFrom: 2!
+
+hasTrackSelect
+	#deprecated. "6.0"
+	^self hasHotTracking!
+
+hasTrackSelect: aBoolean 
+	#deprecated. "6.0"
+	self hasHotTracking: aBoolean! !
+!ListView categoriesFor: #autoArrange!arranging!public! !
+!ListView categoriesFor: #autoArrange:!accessing-styles!public! !
+!ListView categoriesFor: #columns!columns!public! !
+!ListView categoriesFor: #hasTrackSelect!accessing-styles!public! !
+!ListView categoriesFor: #hasTrackSelect:!accessing-styles!public! !
+
+!ScrollingDecorator methodsFor!
+
+continuousTracking
+	#deprecated.
+	^self isTrackingContinuous!
+
+continuousTracking: aBoolean 
+	#deprecated.
+	self isTrackingContinuous: aBoolean! !
+!ScrollingDecorator categoriesFor: #continuousTracking!modes!public! !
+!ScrollingDecorator categoriesFor: #continuousTracking:!modes!public! !
+
+!ShellView methodsFor!
+
+hasThickFrame
+	#deprecated. "6.0: #1375"
+	^self isResizable!
+
+hasThickFrame: aBoolean 
+	#deprecated. "6.0: #1375"
+	self isResizable: aBoolean! !
+!ShellView categoriesFor: #hasThickFrame!accessing-styles!public! !
+!ShellView categoriesFor: #hasThickFrame:!accessing-styles!public! !
+
+!TextEdit methodsFor!
+
+find: findWhat range: rangeInterval down: downBoolean wholeWord: wordBoolean matchCase: caseBoolean 
+	#deprecated.
+	^(self find: ((FindDetails new)
+				action: #findNext;
+				findWhat: findWhat;
+				isForwards: downBoolean;
+				isWholeWord: wordBoolean;
+				isCaseSensitive: caseBoolean;
+				isRegularExpression: false;
+				yourself)
+		range: rangeInterval) start!
+
+findNextWrapped: aString down: downBoolean wholeWord: wordBoolean matchCase: caseBoolean 
+	#deprecated.
+	self findNextWrapped: ((FindDetails new)
+				isForwards: downBoolean;
+				isWholeWord: wordBoolean;
+				isCaseSensitive: caseBoolean;
+				isRegularExpression: false;
+				action: #findNext;
+				yourself)!
+
+isLowercase
+	#deprecated.	"6.0: Use #format"
+	^self format == #lowercase!
+
+isLowercase: aBoolean 
+	#deprecated.	"6.0: Use #format"
+	self format: #lowercase!
+
+isNumeric
+	#deprecated.	"6.0"
+	^self format == #numeric!
+
+isNumeric: aBoolean 
+	#deprecated.	"6.0"
+	self format: #numeric!
+
+isUpperCase
+	#deprecated.	"6.0: Use #format"
+	^self format == #uppercase!
+
+isUppercase: aBoolean 
+	#deprecated.	"6.0: Use #format:"
+	self format: #uppercase!
+
+lines
+	#deprecated. "5.0"
+	^self lineCount! !
+!TextEdit categoriesFor: #find:range:down:wholeWord:matchCase:!private!searching & replacing! !
+!TextEdit categoriesFor: #findNextWrapped:down:wholeWord:matchCase:!public!searching & replacing! !
+!TextEdit categoriesFor: #isLowercase!public!testing! !
+!TextEdit categoriesFor: #isLowercase:!public!testing! !
+!TextEdit categoriesFor: #isNumeric!public!testing! !
+!TextEdit categoriesFor: #isNumeric:!accessing!public! !
+!TextEdit categoriesFor: #isUpperCase!public!testing! !
+!TextEdit categoriesFor: #isUppercase:!public!testing! !
+!TextEdit categoriesFor: #lines!accessing!public! !
+
+!ToolbarButton methodsFor!
+
+checked
+	#deprecated.
+	^self isChecked!
+
+checked: aBoolean
+	#deprecated.
+	self isChecked: aBoolean!
+
+enabled
+	#deprecated.
+	^self isEnabled!
+
+enabled: aBoolean
+	#deprecated.
+	self isEnabled: aBoolean!
+
+hide: aBoolean
+	#deprecated.
+	self isHidden: aBoolean!
+
+indeterminate: aBoolean
+	#deprecated.
+	self isIndeterminate: aBoolean!
+
+pressed
+	#deprecated.
+	^self isPressed!
+
+pressed: aBoolean
+	#deprecated.
+	self isPressed: aBoolean! !
+!ToolbarButton categoriesFor: #checked!public!testing! !
+!ToolbarButton categoriesFor: #checked:!public!state! !
+!ToolbarButton categoriesFor: #enabled!public!testing! !
+!ToolbarButton categoriesFor: #enabled:!public!state! !
+!ToolbarButton categoriesFor: #hide:!public!state! !
+!ToolbarButton categoriesFor: #indeterminate:!public!state! !
+!ToolbarButton categoriesFor: #pressed!public!testing! !
+!ToolbarButton categoriesFor: #pressed:!public!state! !
+
+!TreeView methodsFor!
+
+disableExpandAll
+	#deprecated.
+	^self isExpandAllEnabled not!
+
+disableExpandAll: aBoolean 
+	#deprecated.
+	self isExpandAllEnabled: aBoolean not! !
+!TreeView categoriesFor: #disableExpandAll!accessing!public! !
+!TreeView categoriesFor: #disableExpandAll:!accessing!public! !
+
+!TypeConverter methodsFor!
+
+leftExceptionalValue
+	#deprecated.
+	^self leftNullValue!
+
+leftExceptionalValue: anObject
+	#deprecated.
+	^self leftNullValue: anObject!
+
+rightExceptionalValue
+	#deprecated.
+	^self rightNullValue!
+
+rightExceptionalValue: anObject
+	#deprecated.
+	^self rightNullValue: anObject! !
+!TypeConverter categoriesFor: #leftExceptionalValue!accessing!public! !
+!TypeConverter categoriesFor: #leftExceptionalValue:!accessing!public! !
+!TypeConverter categoriesFor: #rightExceptionalValue!accessing!public! !
+!TypeConverter categoriesFor: #rightExceptionalValue:!accessing!public! !
+
+!View methodsFor!
+
+hasWindowEdge
+	#deprecated.	"6.0: This style is automatically managed by Windows and changing it has no
+			effect."
+	^self exStyleAllMask: WS_EX_WINDOWEDGE!
+
+hasWindowEdge: aBoolean 
+	#deprecated.	"6.0: This style is automatically managed by Windows and changing it has no
+			effect."
+	(self exStyleMask: WS_EX_WINDOWEDGE set: aBoolean) ifTrue: [self frameChanged]! !
+!View categoriesFor: #hasWindowEdge!accessing-styles!public! !
+!View categoriesFor: #hasWindowEdge:!accessing-styles!public! !
+
+!WindowsEvent class methodsFor!
+
+message: msgInteger handle: wndHandle wParam: wInteger lParam: lInteger 
+	#deprecated.
+	^self 
+		handle: wndHandle
+		message: msgInteger
+		wParam: wInteger
+		lParam: lInteger! !
+!WindowsEvent class categoriesFor: #message:handle:wParam:lParam:!instance creation!public! !
+
+!WinImageList class methodsFor!
+
+width: cx height: cy flags: flags size: sizeInteger growthGranularity: growthInteger
+	"Answer a new instances with the given parameters."
+
+	#deprecated.
+	^self 
+		newExtent: cx @ cy
+		depth: flags
+		initialSize: sizeInteger
+		growBy: growthInteger
+		masked: false! !
+!WinImageList class categoriesFor: #width:height:flags:size:growthGranularity:!instance creation!public! !
+
+"End of package definition"!
+

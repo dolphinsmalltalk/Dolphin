@@ -1,0 +1,110 @@
+| package |
+package := Package name: 'Lagoon Image Stripper'.
+package paxVersion: 1;
+	basicComment: 'Dolphin Smalltalk Lagoon Image Stripper.
+Copyright (c) Object Arts Ltd, 1998-2006.
+
+This package contains the Lagoon Image Stripper which strips down images and creates executable applications.
+
+See also the Application Deployment Kit package.'.
+
+package basicPackageVersion: '6.2'.
+
+
+package classNames
+	add: #BasicImageStripper;
+	add: #ImageStripper;
+	add: #ImageStripperProgress;
+	add: #VersionResource;
+	add: #VS_VERSION_INFO_HEADER;
+	yourself.
+
+package methodNames
+	add: #Package -> #rehydrateImageStripper:;
+	add: #UserLibrary -> #messageBox:lpText:lpCaption:uType:;
+	add: 'ExternalStructure class' -> #fullyCompileDefinition;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\Base\Dolphin';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+Object subclass: #ImageStripperProgress
+	instanceVariableNames: 'handle oldWndProc progressProcess progressRange progress status cursor'
+	classVariableNames: 'CaptionId ExplanationId MessageMap ProgressId StatusId'
+	poolDictionaries: 'Win32Constants'
+	classInstanceVariableNames: ''!
+Object subclass: #VersionResource
+	instanceVariableNames: 'fixedInfo stringTables translations'
+	classVariableNames: ''
+	poolDictionaries: 'Win32Constants'
+	classInstanceVariableNames: ''!
+Win32Structure subclass: #VS_VERSION_INFO_HEADER
+	instanceVariableNames: 'key valueOffset'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Model subclass: #BasicImageStripper
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+BasicImageStripper subclass: #ImageStripper
+	instanceVariableNames: 'rootPackageName executableName runtimeSessionManagerClass flags preStripScript versionResource termWnd stubFilePath logStream elementStack developmentClasses preservedMessages snapshotType rootClasses'
+	classVariableNames: 'AllResourcesStripped ClearGuidsMask CompileStructsMask EmptyMethodDictsMask FoldBytecodesMask FoldMethodDictsMask FoldStringsMask IgnoreViewReferencesMask LogPrerequisitesMask LogReferencesMask NoXPManifestMask PreserveAspectsMask RetainInstVarNamesMask RetainSubclassRespMask StripClassBuilderMask StripClassesMask StripClassInfoMask StripDeprecatedMask StripMethodsMask StripPackagesMask StripResourcesMask StripShouldNotImplMask ToGoMask UnattendedMask WriteLogMask'
+	poolDictionaries: 'MessageBoxConstants Win32Constants'
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+!ExternalStructure class methodsFor!
+
+fullyCompileDefinition
+	"Builds a new template and generates compiled methods for accessing 
+	ALL the fields described by it. This is useful when image stripping to ensure
+	that all methods are known at the time and don't rely on #perform:"
+
+	self newTemplate; defineTemplate.
+	self template do: [:each | each beCompiled].
+	self recompileDefinition; shrink.! !
+!ExternalStructure class categoriesFor: #fullyCompileDefinition!development!public! !
+
+!Package methodsFor!
+
+rehydrateImageStripper: stripperClass 
+	| stripper |
+	stripper := imageStripperBytes notNil ifTrue: [Object fromBinaryStoreBytes: imageStripperBytes].
+	stripper isNil 
+		ifTrue: 
+			[stripper := (stripperClass new)
+						rootPackage: self;
+						stripRedundantClasses: true;
+						yourself]
+		ifFalse: 
+			["If the package has been renamed the STB'd image stripper might lose its root package"
+			stripper rootPackage isNil ifTrue: [stripper rootPackage: self]].
+	^stripper! !
+!Package categoriesFor: #rehydrateImageStripper:!accessing!private! !
+
+!UserLibrary methodsFor!
+
+messageBox: hWnd lpText: lpText lpCaption: lpCaption uType: uType
+	<stdcall: sdword MessageBoxA handle lpstr lpstr dword>
+	^self invalidCall! !
+!UserLibrary categoriesFor: #messageBox:lpText:lpCaption:uType:!public!win32 functions-dialog box! !
+
+"End of package definition"!
+

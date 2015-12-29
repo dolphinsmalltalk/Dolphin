@@ -1,0 +1,259 @@
+"Filed out from Dolphin Smalltalk X6.1"!
+
+StProgramNode subclass: #StMethodNode
+	instanceVariableNames: 'selector selectorParts body source arguments tag replacements nodeReplacements'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+StMethodNode guid: (GUID fromString: '{A10B25E1-F065-457C-90D9-2571EBF23F51}')!
+StMethodNode comment: 'StMethodNode is the parse tree node type that represents a Smalltalk method.
+
+Instance Variables:
+	arguments	<SequenceableCollection> of <StVariableNode>	the arguments to the method
+	body	<StSequenceNode>	the body/statements of the method
+	selector	<Symbol | nil>	the method name (cached)
+	selectorParts	<SequenceableCollection> of <StValueToken>	the tokens for the selector keywords
+	source	<String>	the source we compiled
+	tag	<Interval | nil>	the source location of any resource/primitive tags
+
+'!
+!StMethodNode categoriesForClass!System-Compiler! !
+!StMethodNode methodsFor!
+
+= anObject 
+	self == anObject ifTrue: [^true].
+	self class = anObject class ifFalse: [^false].
+	(self selector = anObject selector and: [self body = anObject body]) ifFalse: [^false].
+	1 to: self arguments size
+		do: [:i | (self arguments at: i) = (anObject arguments at: i) ifFalse: [^false]].
+	^self tag = anObject tag!
+
+acceptVisitor: aProgramNodeVisitor 
+	^aProgramNodeVisitor acceptMethodNode: self!
+
+actualScope
+	"Answer the actual scope in which this nodes variables will be defined."
+
+	^self!
+
+allArgumentVariableNodesDo: aMonadicValuable
+	self arguments do: aMonadicValuable.
+	super allArgumentVariableNodesDo: aMonadicValuable!
+
+allDefinedVariableNodesDo: aMonadicValuable
+	self arguments do: aMonadicValuable.
+	super allDefinedVariableNodesDo: aMonadicValuable!
+
+argumentCount
+	^arguments size!
+
+argumentNames
+	^self arguments collect: [:each | each name]!
+
+arguments
+	^arguments!
+
+arguments: variableNodes 
+	arguments := variableNodes.
+	arguments do: [:each | each parent: self]!
+
+body
+	^body!
+
+body: stmtsNode 
+	body := stmtsNode.
+	body parent: self!
+
+buildSelector
+	| selectorStream |
+	selectorStream := WriteStream on: (String new: 50).
+	selectorParts do: [:each | selectorStream nextPutAll: each value].
+	^selectorStream contents asSymbol!
+
+childrenDo: aMonadicValuable 
+	self arguments do: aMonadicValuable.
+	aMonadicValuable value: self body!
+
+defines: aName 
+	^arguments anySatisfy: [:each | each name = aName]!
+
+equalTo: anObject withMapping: aDictionary 
+	self class = anObject class ifFalse: [^false].
+	(self selector = anObject selector 
+		and: [self body equalTo: anObject body withMapping: aDictionary]) 
+			ifFalse: [^false].
+	1 to: self arguments size
+		do: 
+			[:i | 
+			((self arguments at: i) equalTo: (anObject arguments at: i)
+				withMapping: aDictionary) ifFalse: [^false].
+			aDictionary removeKey: (self arguments at: i) name].
+	^self tag = anObject tag!
+
+hash
+	^(self selector hash bitXor: self body hash) bitXor: self arguments hash!
+
+isExternalCall
+	^tag notNil and: [tag isExternalCall]!
+
+isLast: aNode 
+	^body isLast: aNode!
+
+isMethod
+	^true!
+
+isPrimitive
+	#rbFix.	"On Dolphin primitives are parsed into an AST, so the tag is actually a node"
+	^tag notNil!
+
+lastIsReturn
+	^body lastIsReturn!
+
+methodComments
+	| methodComments |
+	methodComments := OrderedCollection withAll: self comments.
+	arguments do: [:each | methodComments addAll: each comments].
+	^methodComments asSortedCollection: [:a :b | a first < b first]!
+
+methodNode
+	^self!
+
+numArgs
+	^self argumentCount!
+
+outer
+	"Answer the <StMethodNode> or <StBlockNode> being the scope in which this node exists."
+
+	^self!
+
+postCopy
+	super postCopy.
+	self body: body copy.
+	arguments := arguments collect: [:each | each copy].
+	^self!
+
+printOn: aStream 
+	aStream nextPutAll: self formattedCode!
+
+selector
+	^selector ifNil: [selector := self buildSelector]!
+
+selector: aSelector 
+	| keywords numArgs |
+	keywords := aSelector keywords.
+	numArgs := aSelector argumentCount.
+	numArgs == arguments size 
+		ifFalse: 
+			[self 
+				error: 'Attempting to assign selector with wrong number of arguments.'].
+	selectorParts := numArgs == 0 
+				ifTrue: [Array with: (StIdentifierToken value: keywords first start: nil)]
+				ifFalse: 
+					[keywords first last == $: 
+						ifTrue: [keywords collect: [:each | StKeywordToken value: each start: nil]]
+						ifFalse: [Array with: (StBinarySelectorToken value: aSelector start: nil)]].
+	selector := aSelector!
+
+selectorParts
+	^selectorParts!
+
+selectorParts: tokenCollection 
+	selectorParts := tokenCollection!
+
+selectorParts: tokenCollection arguments: variableNodes 
+	selectorParts := tokenCollection.
+	self arguments: variableNodes!
+
+source
+	^source!
+
+source: anObject
+	source := anObject!
+
+start
+	^1!
+
+startWithoutParentheses
+	^self start!
+
+stop
+	^source size!
+
+tag
+	^tag!
+
+tag: anStTagNodeOrNil 
+	tag := anStTagNodeOrNil!
+
+uses: aNode 
+	^body == aNode and: [aNode lastIsReturn]! !
+!StMethodNode categoriesFor: #=!comparing!public! !
+!StMethodNode categoriesFor: #acceptVisitor:!public!visitor! !
+!StMethodNode categoriesFor: #actualScope!public! !
+!StMethodNode categoriesFor: #allArgumentVariableNodesDo:!accessing!public! !
+!StMethodNode categoriesFor: #allDefinedVariableNodesDo:!accessing!public! !
+!StMethodNode categoriesFor: #argumentCount!accessing!public! !
+!StMethodNode categoriesFor: #argumentNames!accessing!public! !
+!StMethodNode categoriesFor: #arguments!accessing!public! !
+!StMethodNode categoriesFor: #arguments:!accessing!public! !
+!StMethodNode categoriesFor: #body!accessing!public! !
+!StMethodNode categoriesFor: #body:!accessing!public! !
+!StMethodNode categoriesFor: #buildSelector!helpers!private! !
+!StMethodNode categoriesFor: #childrenDo:!accessing!public! !
+!StMethodNode categoriesFor: #defines:!public!testing! !
+!StMethodNode categoriesFor: #equalTo:withMapping:!comparing!public! !
+!StMethodNode categoriesFor: #hash!comparing!public! !
+!StMethodNode categoriesFor: #isExternalCall!public!testing! !
+!StMethodNode categoriesFor: #isLast:!public!testing! !
+!StMethodNode categoriesFor: #isMethod!public!testing! !
+!StMethodNode categoriesFor: #isPrimitive!public!testing! !
+!StMethodNode categoriesFor: #lastIsReturn!public!testing! !
+!StMethodNode categoriesFor: #methodComments!accessing!public! !
+!StMethodNode categoriesFor: #methodNode!accessing!public! !
+!StMethodNode categoriesFor: #numArgs!accessing!public! !
+!StMethodNode categoriesFor: #outer!public! !
+!StMethodNode categoriesFor: #postCopy!copying!public! !
+!StMethodNode categoriesFor: #printOn:!printing!public! !
+!StMethodNode categoriesFor: #selector!accessing!public! !
+!StMethodNode categoriesFor: #selector:!accessing!public! !
+!StMethodNode categoriesFor: #selectorParts!accessing!private! !
+!StMethodNode categoriesFor: #selectorParts:!accessing!private! !
+!StMethodNode categoriesFor: #selectorParts:arguments:!initializing!public! !
+!StMethodNode categoriesFor: #source!accessing!public! !
+!StMethodNode categoriesFor: #source:!accessing!public! !
+!StMethodNode categoriesFor: #start!accessing!public! !
+!StMethodNode categoriesFor: #startWithoutParentheses!public! !
+!StMethodNode categoriesFor: #stop!accessing!public! !
+!StMethodNode categoriesFor: #tag!accessing!public! !
+!StMethodNode categoriesFor: #tag:!accessing!private! !
+!StMethodNode categoriesFor: #uses:!public!testing! !
+
+!StMethodNode class methodsFor!
+
+new
+	^(super new)
+		initialize;
+		yourself!
+
+selector: aSymbol arguments: variableNodes body: aSequenceNode 
+	^(self new)
+		arguments: variableNodes;
+		selector: aSymbol;
+		body: aSequenceNode;
+		yourself!
+
+selector: aSymbol body: aSequenceNode 
+	^self 
+		selector: aSymbol
+		arguments: #()
+		body: aSequenceNode!
+
+selectorParts: tokenCollection arguments: variableNodes 
+	^(self new)
+		selectorParts: tokenCollection arguments: variableNodes;
+		yourself! !
+!StMethodNode class categoriesFor: #new!instance creation!public! !
+!StMethodNode class categoriesFor: #selector:arguments:body:!instance creation!public! !
+!StMethodNode class categoriesFor: #selector:body:!instance creation!public! !
+!StMethodNode class categoriesFor: #selectorParts:arguments:!instance creation!public! !
+

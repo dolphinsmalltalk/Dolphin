@@ -1,0 +1,57 @@
+| package |
+package := Package name: 'Source Tracking System Administrator'.
+package paxVersion: 1;
+	basicComment: ''.
+
+package basicPackageVersion: '6.2.1'.
+
+
+package classNames
+	add: #StsAdminShell;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\..\Object Arts\Dolphin\IDE\Base\Development System';
+	add: '..\..\Object Arts\Dolphin\Base\Dolphin';
+	add: '..\..\Object Arts\Dolphin\MVP\Views\Cards\Dolphin Card Containers';
+	add: '..\..\Object Arts\Dolphin\MVP\Views\Common Controls\Dolphin Common Controls';
+	add: '..\..\Object Arts\Dolphin\MVP\Views\Control Bars\Dolphin Control Bars';
+	add: '..\..\Object Arts\Dolphin\MVP\Presenters\Image\Dolphin Image Presenter';
+	add: '..\..\Object Arts\Dolphin\MVP\Models\List\Dolphin List Models';
+	add: '..\..\Object Arts\Dolphin\MVP\Presenters\List\Dolphin List Presenter';
+	add: '..\..\Object Arts\Dolphin\MVP\Base\Dolphin MVP Base';
+	add: '..\..\Object Arts\Dolphin\MVP\Dialogs\Progress\Dolphin Progress Dialog';
+	add: '..\..\Object Arts\Dolphin\MVP\Presenters\Prompters\Dolphin Prompter';
+	add: '..\..\Object Arts\Dolphin\System\Recent\Dolphin Recent Menu';
+	add: '..\..\Object Arts\Dolphin\MVP\Presenters\Text\Dolphin Text Presenter';
+	add: '..\..\Object Arts\Dolphin\MVP\Type Converters\Dolphin Type Converters';
+	add: '..\..\Object Arts\Dolphin\MVP\Models\Value\Dolphin Value Models';
+	add: '..\..\Object Arts\Dolphin\MVP\Gdiplus\Gdiplus';
+	add: '..\..\Object Arts\Dolphin\IDE\Base\Internal Bitmaps and Icons';
+	add: 'OmniBase';
+	add: 'Source Tracking System';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+SmalltalkToolShell subclass: #StsAdminShell
+	instanceVariableNames: 'localRepositoryPathPresenter localRepositoryDeveloperPresenter remoteRepositoryUrlPresenter remoteRepositoryUsernamePresenter remoteRepositoryPasswordPresenter recentLocalFileHandler recentRemoteUrlHandler localStatusPresenter remoteStatusPresenter'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+"End of package definition"!
+

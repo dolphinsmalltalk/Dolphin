@@ -1,0 +1,77 @@
+| package |
+package := Package name: 'Internet Explorer'.
+package paxVersion: 1;
+	basicComment: 'Dolphin Smalltalk Internet Explorer* Package.
+Copyright (c) Object Arts Ltd, 2000.
+
+This package wraps the Microsoft Internet Explorer Web Browser control. 
+
+You can embed Internet Explorer in your applications by using URLPresenter in conjunction with its ''Internet Explorer'' view. See the ''Simple Web Browser'' sample for example usage.
+
+*Internet Explorer is a trademark of Microsoft Corporation.'.
+
+package basicPackageVersion: '6.0'.
+
+
+package classNames
+	add: #IWebBrowser;
+	add: #IWebBrowser2;
+	add: #IWebBrowserApp;
+	add: #URLPresenter;
+	yourself.
+
+package globalNames
+	add: #SHDocVwConstants;
+	add: #SHDocVwLib;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	add: #SHDocVwLib;
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\..\Automation\ActiveX Automation';
+	add: '..\..\Connection Points\ActiveX Connection Points';
+	add: '..\..\OCX\ActiveX Control Hosting';
+	add: '..\..\..\Base\Dolphin';
+	add: '..\..\..\MVP\Base\Dolphin MVP Base';
+	add: '..\..\..\MVP\Type Converters\Dolphin Type Converters';
+	add: '..\..\..\MVP\Models\Value\Dolphin Value Models';
+	add: '..\..\COM\OLE COM';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+IDispatch subclass: #IWebBrowser
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: 'SHDocVwConstants'
+	classInstanceVariableNames: ''!
+IWebBrowser subclass: #IWebBrowserApp
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: 'SHDocVwConstants'
+	classInstanceVariableNames: ''!
+IWebBrowserApp subclass: #IWebBrowser2
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: 'SHDocVwConstants'
+	classInstanceVariableNames: ''!
+ValuePresenter subclass: #URLPresenter
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+"End of package definition"!
+

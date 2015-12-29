@@ -1,0 +1,55 @@
+// Random.idl : IDL source for Random.dll
+//
+
+// This file will be processed by the MIDL tool to
+// produce the type library (Random.tlb) and marshalling code.
+
+import "oaidl.idl";
+import "ocidl.idl";
+	
+	[
+		object,
+		uuid(0E2CEA3B-E6C4-11D2-833B-0020AFAB8EFE),
+		dual,
+		helpstring("IRandomStream Interface"),
+		pointer_default(unique),
+		nonextensible
+	]
+	interface IRandomStream : IDispatch
+	{
+		[id(1), helpstring("Answer the next random number in the stream")]
+			HRESULT Next([out,retval]long* plNext);
+		[propget, id(2), helpstring("Current random seed")]
+			HRESULT Seed([out, retval] long *pVal);
+		[propput, id(2), helpstring("Current random seed")]
+			HRESULT Seed([in] long newVal);
+		[propget, id(3), helpstring("Lower bound of range of random numbers generated")]
+			HRESULT LowerBound([out, retval] long *pVal);
+		[propput, id(3), helpstring("Lower bound of range of random numbers generated")]
+			HRESULT LowerBound([in] long newVal);
+		[propget, id(4), helpstring("Upper bound of range of random numbers generated")]
+			HRESULT UpperBound([out, retval] long *pVal);
+		[propput, id(4), helpstring("Upper bound of range of random numbers generated")]
+			HRESULT UpperBound([in] long newVal);
+	};
+
+[
+	uuid(0E2CEA2F-E6C4-11D2-833B-0020AFAB8EFE),
+	version(1.0),
+	helpstring("Random 1.0 Type Library")
+]
+library RANDOMLib
+{
+	importlib("stdole32.tlb");
+	importlib("stdole2.tlb");
+
+	interface IRandomStream;
+
+	[
+		uuid(A1D42F35-E6C0-11D2-833B-0020AFAB8EFE)
+	]
+	coclass RandomStream
+	{
+		[default] interface IRandomStream;
+	};
+};

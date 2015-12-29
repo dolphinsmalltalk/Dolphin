@@ -1,0 +1,54 @@
+| package |
+package := Package name: 'CSRefactorings'.
+package paxVersion: 1;
+	basicComment: 'Additional Refactorings developed by the Camp Smalltalk "Custom Refactorings and Rewrite Editor Usability" project: 
+
+http://wiki.cs.uiuc.edu/CampSmalltalk/Custom+Refactorings+and+Rewrite+Editor+Usability
+
+Unfortunately the project team have chosen to distribute the custom refactorings as a binary ENVY database, rather than a Smalltalk chunk file, so this Dolphin package may not be up to date.'.
+
+
+package classNames
+	add: #RenameAccessorsForVariableRefactoring;
+	add: #RenameClassVariableAndAccessorsRefactoring;
+	add: #RenameInstanceVariableAndAccessorsRefactoring;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\..\..\..\Object Arts\Dolphin\Base\Dolphin';
+	add: '..\..\..\Refactory\Refactoring Browser\Refactorings\RBRefactorings';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+CreateAccessorsForVariableRefactoring subclass: #RenameAccessorsForVariableRefactoring
+	instanceVariableNames: 'newName'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+RenameClassVariableRefactoring subclass: #RenameClassVariableAndAccessorsRefactoring
+	instanceVariableNames: 'accessorsRefactoring'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+RenameInstanceVariableRefactoring subclass: #RenameInstanceVariableAndAccessorsRefactoring
+	instanceVariableNames: 'accessorsRefactoring'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+"End of package definition"!
+

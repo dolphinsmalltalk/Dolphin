@@ -1,0 +1,55 @@
+| package |
+package := Package name: 'Animals'.
+package paxVersion: 1;
+	basicComment: 'This is a simple animal guessing game designed as a tutorial for the Dolphin Beginner''s Guide. The computer will attempt to guess the name of an animal that you are thinking of. It does this by asking questions to which you must answer yes or no. It might be that you think of an animal that the computer does not know. In this case the game can learn by asking you to enter the name of the new animal and also a question which will distinguish this animal from another in the knowledge base. Next time you play the game will know about the new animal. 
+
+The game starts off by knowing about only one animal; a dog. You can play the game by evaluating: 
+
+Animal playGame. 
+
+As the game learns more animals the knowledge base will grow and this information will remain in your Dolphin image. If you wish to reset this knowledge base back to the starting point then evaluate: 
+
+Animal initialize. 
+
+Because this implementation is really a tutorial it has been kept as simple as possible. For this reason, the user interface is rather rudimentary and based on simple message boxes. The knowledge base is implemented as a binary tree of nodes. The main part of the tree consists of Question nodes which have yes/no branches to indicate the next node to go to based on the response to the question. The leaf nodes in the tree are the Animal instances themselves. When the game reaches an Animal this will be its final guess. If it is correct, the game wins. If not, you will be prompted for the animal you were thinking of and a new Animal instance will be created along with a new instance of Question to distinguish the new animal from the original leaf node. These new nodes are installed in the tree and the game can restart. 
+'.
+
+
+package classNames
+	add: #Animal;
+	add: #Question;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\..\..\Dolphin\Base\Dolphin';
+	add: '..\..\..\Dolphin\MVP\Presenters\Prompters\Dolphin Prompter';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+Object subclass: #Animal
+	instanceVariableNames: 'name'
+	classVariableNames: 'KnowledgeBase'
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Object subclass: #Question
+	instanceVariableNames: 'text yes no'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+"End of package definition"!
+

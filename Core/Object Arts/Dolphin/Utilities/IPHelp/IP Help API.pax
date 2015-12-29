@@ -1,0 +1,252 @@
+| package |
+package := Package name: 'IP Help API'.
+package paxVersion: 1;
+	basicComment: 'Dolphin Smalltalk IP Helper Library Package
+Copyright (c) Object Arts Ltd, 2004
+
+This package provides a wrapping around the IP Help API, which is useful for TCP/IP utilities, etc.'.
+
+package basicPackageVersion: '6.1'.
+
+
+package classNames
+	add: #FIXED_INFO;
+	add: #IP_ADAPTER_INDEX_MAP;
+	add: #IP_ADAPTER_INFO;
+	add: #IP_ADAPTER_ORDER_MAP;
+	add: #IP_ADDR_STRING;
+	add: #IP_INTERFACE_INFO;
+	add: #IP_PER_ADAPTER_INFO;
+	add: #IP_UNIDIRECTIONAL_ADAPTER_ADDRESS;
+	add: #IPHlpApiLibrary;
+	add: #IpHlpApiTableStruct;
+	add: #MIB_ICMP;
+	add: #MIB_ICMP_EX;
+	add: #MIB_IFNUMBER;
+	add: #MIB_IFROW;
+	add: #MIB_IFTABLE;
+	add: #MIB_IPADDRROW;
+	add: #MIB_IPADDRTABLE;
+	add: #MIB_IPFORWARDROW;
+	add: #MIB_IPFORWARDTABLE;
+	add: #MIB_IPNETROW;
+	add: #MIB_IPNETTABLE;
+	add: #MIB_IPSTATS;
+	add: #MIB_TCPEXROW;
+	add: #MIB_TCPEXTABLE;
+	add: #MIB_TCPROW;
+	add: #MIB_TCPSTATS;
+	add: #MIB_TCPTABLE;
+	add: #MIB_UDPEXROW;
+	add: #MIB_UDPEXTABLE;
+	add: #MIB_UDPROW;
+	add: #MIB_UDPSTATS;
+	add: #MIB_UDPTABLE;
+	add: #MIBICMPINFO;
+	add: #MIBICMPSTATS;
+	add: #MIBICMPSTATS_EX;
+	yourself.
+
+package globalNames
+	add: #IPHlpApiConstants;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\..\Base\Dolphin';
+	add: '..\..\System\Win32\Dolphin Overlapped IO';
+	add: '..\..\Sockets\Dolphin Sockets';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+ExternalLibrary subclass: #IPHlpApiLibrary
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: 'IPHlpApiConstants'
+	classInstanceVariableNames: ''!
+ExternalStructure subclass: #FIXED_INFO
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ExternalStructure subclass: #IP_ADAPTER_INDEX_MAP
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ExternalStructure subclass: #IP_ADAPTER_INFO
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ExternalStructure subclass: #IP_ADDR_STRING
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ExternalStructure subclass: #IP_PER_ADAPTER_INFO
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ExternalStructure subclass: #IP_UNIDIRECTIONAL_ADAPTER_ADDRESS
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ExternalStructure subclass: #IpHlpApiTableStruct
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ExternalStructure subclass: #MIB_ICMP
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ExternalStructure subclass: #MIB_ICMP_EX
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ExternalStructure subclass: #MIB_IFNUMBER
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ExternalStructure subclass: #MIB_IFROW
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ExternalStructure subclass: #MIB_IPADDRROW
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ExternalStructure subclass: #MIB_IPFORWARDROW
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ExternalStructure subclass: #MIB_IPNETROW
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ExternalStructure subclass: #MIB_IPSTATS
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ExternalStructure subclass: #MIB_TCPROW
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ExternalStructure subclass: #MIB_TCPSTATS
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ExternalStructure subclass: #MIB_UDPROW
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ExternalStructure subclass: #MIB_UDPSTATS
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ExternalStructure subclass: #MIBICMPINFO
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ExternalStructure subclass: #MIBICMPSTATS
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ExternalStructure subclass: #MIBICMPSTATS_EX
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+IpHlpApiTableStruct subclass: #IP_ADAPTER_ORDER_MAP
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+IpHlpApiTableStruct subclass: #IP_INTERFACE_INFO
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+IpHlpApiTableStruct subclass: #MIB_IFTABLE
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+IpHlpApiTableStruct subclass: #MIB_IPADDRTABLE
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+IpHlpApiTableStruct subclass: #MIB_IPFORWARDTABLE
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+IpHlpApiTableStruct subclass: #MIB_IPNETTABLE
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+IpHlpApiTableStruct subclass: #MIB_TCPTABLE
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+IpHlpApiTableStruct subclass: #MIB_UDPTABLE
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+MIB_TCPTABLE subclass: #MIB_TCPEXTABLE
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+MIB_UDPTABLE subclass: #MIB_UDPEXTABLE
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+MIB_TCPROW subclass: #MIB_TCPEXROW
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+MIB_UDPROW subclass: #MIB_UDPEXROW
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+"End of package definition"!
+

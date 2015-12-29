@@ -1,0 +1,97 @@
+| package |
+package := Package name: 'Dolphin Application Automation'.
+package paxVersion: 1;
+	basicComment: 'Dolphin Smalltalk Application Automation Package
+Copyright (c) Object Arts Ltd, 2004,2005
+
+This package provides services for automating applications (other than through ActiveX Automation) and requires third party AutoIt (Version 2) ActiveX control to be installed. See http://www.hiddensoft.com/AutoIt/.'.
+
+package basicPackageVersion: '6.0'.
+
+
+package classNames
+	add: #ApplicationController;
+	add: #DummyWshExec;
+	add: #HARDWAREINPUT;
+	add: #INPUT;
+	add: #KEYBDINPUT;
+	add: #MOUSEINPUT;
+	yourself.
+
+package methodNames
+	add: #UserLibrary -> #sendInput:pInputs:cbSize:;
+	yourself.
+
+package globalNames
+	add: #SendInputConstants;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\..\ActiveX\Components\AutoIt\AutoIt';
+	add: '..\..\Base\Dolphin';
+	add: '..\..\ActiveX\Components\Wsh\Windows Script Host';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+Object subclass: #ApplicationController
+	instanceVariableNames: 'wshShell execResult autoIt'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Object subclass: #DummyWshExec
+	instanceVariableNames: 'processID'
+	classVariableNames: ''
+	poolDictionaries: 'Win32Constants'
+	classInstanceVariableNames: ''!
+ExternalStructure subclass: #HARDWAREINPUT
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ExternalStructure subclass: #INPUT
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ExternalStructure subclass: #KEYBDINPUT
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ExternalStructure subclass: #MOUSEINPUT
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+!UserLibrary methodsFor!
+
+sendInput: cInputs pInputs: pInputs cbSize: cbSize
+	"Invoke the SendInput() function of the module wrapped by the receiver.
+	Helpstring: Synthesizes keystrokes, mouse motions, and button clicks.
+
+		UINT __stdcall SendInput(
+			[in]UINT cInputs,
+			[in]INPUT* pInputs,
+			[in]int cbSize);"
+
+	<stdcall: dword SendInput dword INPUT* sdword>
+	^self invalidCall! !
+!UserLibrary categoriesFor: #sendInput:pInputs:cbSize:!**auto generated**!public! !
+
+"End of package definition"!
+

@@ -1,0 +1,161 @@
+| package |
+package := Package name: 'Dolphin Memory-Mapped Files'.
+package paxVersion: 1;
+	basicComment: 'Dolphin Smalltalk Memory-Mapped Files
+Copyright (c) Object Arts Ltd, 2004.
+
+Memory-mapped files are a simple and high-performance means of accessing the data in files as if loaded into memory. They are implemented using the operating system''s virtual memory system, and the OS will page the files data into and out of physical memory on demand.
+
+Win32 memory-mapped files involve three objects:
+1) The file (or shared memory section)
+2) The memory-mapping.
+3) A view onto the memory mapping (of which there can be many).
+
+To use memory-mapped files, one must first open a file, for example using Dolphin''s <File> object. One can then create a memory mapping onto that (or use one of the convenience instance creation methods to open the file at the same time as creating the mapping). In Dolphin the mappings are represented by instances of the MemoryMappedFile class. Finally one can create views onto the mapping that effectively make a range of the file available as (what appears to be) a contigous block of memory. Typically one would map a single view onto the entire file, especially since the views must start at 64Kb boundaries. In Dolphin the views are represented by instances of the <MemoryMappedFileView> class. This is a subclass of <ExternalAddress>, and it instances can thus be substitued in place of any other pointer object and used in conjunction with Dolphin''s <ExternalStructure>''s. If, for example, one had a large binary file containing a huge sequence of floating point values, this could be represented by a reference instance of DOUBLEArray pointing at the data through a <MemoryMappedFileView>. This would be a much more efficient way to access the data than loading the entire lot into an in-memory DOUBLEArray.
+
+Note that the memory-mapping and its views can be free''d in any order, so one can discard the <MemoryMappedFile> object before any <MemoryMappedFileView>s. Both are marked as finalizable so they need not be explicitly free''d anyway.
+
+Although memory-mapped files are simple and very fast, they do have certain limitations:
+1) The maximum size of a file mapping (not necessarily the underlying file) is 2Gb, because it must be accessed through the virtual memory system using a 32-bit pointer.
+2) File mappings are static in size; once created, their size cannot increase or decrease. This means if you anticipate writing data to the end of the file, you must calculate or estimate the maximum size that the file will require to be. You might also need to shrink the file (after closing the mapping) to truncate any unused space.
+
+Copy-on-write memory mapped files are not currently supported by this package.'.
+
+package basicPackageVersion: '6.1'.
+
+
+package classNames
+	add: #MemoryMappedFile;
+	add: #MemoryMappedFileView;
+	yourself.
+
+package methodNames
+	add: #KernelLibrary -> #createFileMapping:lpAttributes:flProtect:dwMaximumSizeHigh:dwMaximumSizeLow:lpName:;
+	add: #KernelLibrary -> #flushViewOfFile:dwNumberOfBytesToFlush:;
+	add: #KernelLibrary -> #mapViewOfFile:dwDesiredAccess:dwFileOffsetHigh:dwFileOffsetLow:dwNumberOfBytesToMap:;
+	add: #KernelLibrary -> #mapViewOfFileEx:dwDesiredAccess:dwFileOffsetHigh:dwFileOffsetLow:dwNumberOfBytesToMap:lpBaseAddress:;
+	add: #KernelLibrary -> #openFileMapping:bInheritHandle:lpName:;
+	add: #KernelLibrary -> #unmapViewOfFile:;
+	yourself.
+
+package globalNames
+	add: #MMFConstants;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\..\Base\Dolphin';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+Object subclass: #MemoryMappedFile
+	instanceVariableNames: 'file name handle maximumSize ownsFile'
+	classVariableNames: ''
+	poolDictionaries: 'MMFConstants Win32Constants'
+	classInstanceVariableNames: ''!
+ExternalAddress variableByteSubclass: #MemoryMappedFileView
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+!KernelLibrary methodsFor!
+
+createFileMapping: hFile lpAttributes: lpAttributes flProtect: flProtect dwMaximumSizeHigh: dwMaximumSizeHigh dwMaximumSizeLow: dwMaximumSizeLow lpName: lpName 
+	"Invoke the CreateFileMapping() function of the module wrapped by the receiver.
+	Helpstring: Maps file to memory or creates shared memory (if hFile is -1), assigns lpName to mapping, and returns mapping handle
+
+		long __stdcall CreateFileMapping(
+			HANDLE hFile,
+			[in, defaultvalue(0)]LPSECURITY_ATTRIBUTES lpAttributes,
+			DWORD flProtect,
+			DWORD dwMaximumSizeHigh,
+			DWORD dwMaximumSizeLow,
+			LPSTR lpName);"
+
+	<stdcall: handle CreateFileMappingA handle void* dword dword dword lpstr>
+	^self invalidCall!
+
+flushViewOfFile: lpBaseAddress dwNumberOfBytesToFlush: dwNumberOfBytesToFlush 
+	"Invoke the FlushViewOfFile() function of the module wrapped by the receiver.
+	Helpstring: Writes file mapping to disk
+
+		long __stdcall FlushViewOfFile(
+			void* lpBaseAddress,
+			DWORD dwNumberOfBytesToFlush);"
+
+	<stdcall: sdword FlushViewOfFile void* dword>
+	^self invalidCall!
+
+mapViewOfFile: hFileMappingObject dwDesiredAccess: dwDesiredAccess dwFileOffsetHigh: dwFileOffsetHigh dwFileOffsetLow: dwFileOffsetLow dwNumberOfBytesToMap: dwNumberOfBytesToMap 
+	"Invoke the MapViewOfFile() function of the module wrapped by the receiver.
+	Helpstring: Opens view of specified file mapping
+
+		LPVOID __stdcall MapViewOfFile(
+			HANDLE hFileMappingObject,
+			DWORD dwDesiredAccess,
+			DWORD dwFileOffsetHigh,
+			DWORD dwFileOffsetLow,
+			DWORD dwNumberOfBytesToMap);"
+
+	<stdcall: MemoryMappedFileView MapViewOfFile dword dword dword dword dword>
+	^self invalidCall!
+
+mapViewOfFileEx: hFileMappingObject dwDesiredAccess: dwDesiredAccess dwFileOffsetHigh: dwFileOffsetHigh dwFileOffsetLow: dwFileOffsetLow dwNumberOfBytesToMap: dwNumberOfBytesToMap lpBaseAddress: lpBaseAddress 
+	"Invoke the MapViewOfFileEx() function of the module wrapped by the receiver.
+	Helpstring: Opens view of specified file mapping at suggested address
+
+		LPVOID __stdcall MapViewOfFileEx(
+			DWORD hFileMappingObject,
+			DWORD dwDesiredAccess,
+			DWORD dwFileOffsetHigh,
+			DWORD dwFileOffsetLow,
+			DWORD dwNumberOfBytesToMap,
+			void* lpBaseAddress);"
+
+	<stdcall: MemoryMappedFileView MapViewOfFileEx dword dword dword dword dword void*>
+	^self invalidCall!
+
+openFileMapping: dwDesiredAccess bInheritHandle: bInheritHandle lpName: lpName 
+	"Invoke the OpenFileMapping() function of the module wrapped by the receiver.
+	Helpstring: Opens existing mapping specified by lpName
+
+		HANDLE __stdcall OpenFileMapping(
+			DWORD dwDesiredAccess,
+			BOOL bInheritHandle,
+			LPSTR lpName);"
+
+	<stdcall: handle OpenFileMappingA dword bool lpstr>
+	^self invalidCall!
+
+unmapViewOfFile: lpBaseAddress 
+	"Invoke the UnmapViewOfFile() function of the module wrapped by the receiver.
+	Helpstring: Releases file mapping
+
+		long __stdcall UnmapViewOfFile(
+			void* lpBaseAddress);"
+
+	<stdcall: sdword UnmapViewOfFile void*>
+	^self invalidCall! !
+!KernelLibrary categoriesFor: #createFileMapping:lpAttributes:flProtect:dwMaximumSizeHigh:dwMaximumSizeLow:lpName:!public!win32 functions-file! !
+!KernelLibrary categoriesFor: #flushViewOfFile:dwNumberOfBytesToFlush:!public!win32 functions-memory management! !
+!KernelLibrary categoriesFor: #mapViewOfFile:dwDesiredAccess:dwFileOffsetHigh:dwFileOffsetLow:dwNumberOfBytesToMap:!public!win32 functions-memory management! !
+!KernelLibrary categoriesFor: #mapViewOfFileEx:dwDesiredAccess:dwFileOffsetHigh:dwFileOffsetLow:dwNumberOfBytesToMap:lpBaseAddress:!public!win32 functions-memory management! !
+!KernelLibrary categoriesFor: #openFileMapping:bInheritHandle:lpName:!public!win32 functions-memory management! !
+!KernelLibrary categoriesFor: #unmapViewOfFile:!public!win32 functions-memory management! !
+
+"End of package definition"!
+

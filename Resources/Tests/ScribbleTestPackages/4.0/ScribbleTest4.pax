@@ -1,0 +1,67 @@
+| package |
+package := Package name: 'ScribbleTest4'.
+package paxVersion: 0;
+	basicComment: ''.
+
+package basicPackageVersion: ''.
+
+"Add the package scripts"
+package basicScriptAt: #postinstall put: ''.
+package basicScriptAt: #postuninstall put: ''.
+package basicScriptAt: #preinstall put: ''.
+package basicScriptAt: #preuninstall put: ''.
+
+"Add the class names, loose method names, global names, resource names"
+package classNames
+	add: #ScribbleTest;
+	yourself.
+
+package methodNames
+	add: #Scribble -> #looseA;
+	add: #Scribble -> #looseC;
+	yourself.
+
+package globalNames
+	yourself.
+
+package resourceNames
+	add: #Scribble -> 'Scribble test';
+	yourself.
+
+"Binary Global Names"
+package binaryGlobalNames: (Set new
+	yourself).
+"Resource Names"
+package allResourceNames: (Set new
+	add: #Scribble -> 'Scribble test';
+	add: #ScribbleTest -> 'Default scribble test view';
+	yourself).
+
+"Add the prerequisite names"
+package setPrerequisites: (IdentitySet new
+	add: 'Dolphin';
+	add: 'Scribble';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+CompositePresenter subclass: #ScribbleTest
+	instanceVariableNames: 'scribblePresenter'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+"Loose Methods"!
+
+!Scribble methodsFor!
+
+looseA
+	^#A!
+
+looseC
+	^'C'! !
+!Scribble categoriesFor: #looseA!*-unclassified!public! !
+!Scribble categoriesFor: #looseC!*-unclassified!public! !
+
+"End of package definition"!

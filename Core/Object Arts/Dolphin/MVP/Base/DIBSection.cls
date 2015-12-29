@@ -1,0 +1,205 @@
+"Filed out from Dolphin Smalltalk X6.2"!
+
+Bitmap subclass: #DIBSection
+	instanceVariableNames: 'depth imageBits'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DIBSection guid: (GUID fromString: '{F44C914A-2B3F-11D3-8368-7A8B5A000000}')!
+DIBSection comment: ''!
+!DIBSection categoriesForClass!Graphics-Tools! !
+!DIBSection methodsFor!
+
+baseLoadFlags
+	"Answer the basic load flags to be used when calling LoadImage() to realize the receiver."
+
+	^##(LR_COLOR | LR_CREATEDIBSECTION)!
+
+cacheInfo
+	"Private - Cache info about the receiver garnered from the bitmap itself.
+	Since we also grab a pointer to the image bits, it is now possible to scribble
+	all over a DIB loaded from resources/a file. This should only get invoked
+	for DIBSections loaded from a resource or file."
+
+	| bitmapInfo |
+	bitmapInfo := self getInfo.
+	extent := bitmapInfo extent.
+	depth := bitmapInfo depth.
+	imageBits := bitmapInfo bmBits!
+
+clearCached
+	"Private - Clear down the receiver's handles and cached info."
+ 
+	super clearCached.
+	imageBits := nil.
+	"The depth may doesn't change after creation, so we don't clear it."!
+
+createHandle
+	"Private - Answer an external handle to the image represented by the receiver.
+	If the receiver has an identifier, then we attempt to load the external resource,
+	otherwise we create a DIBSECTION for manipulation."
+
+	| info dibSection |
+	identifier isNil ifFalse: [^super createHandle].
+	info := BITMAPINFOHEADER new.
+	info
+		biWidth: extent x;
+		biHeight: extent y negated;
+		biPlanes: 1;
+		biBitCount: depth;
+		biCompression: BI_RGB.	"Top down pixel order"
+
+	"Slot for pointer to the bitmap bits"
+	imageBits := ExternalAddress new.
+
+	"Create the bitmap but differently for RGB and paletized usage"
+	depth > 8 
+		ifTrue: 
+			["RGB usage"
+
+			dibSection := GDILibrary default 
+						createDIBSection: 0
+						pbmi: info
+						iUsage: DIB_RGB_COLORS
+						ppvBits: imageBits
+						hSection: 0
+						dwOffset: 0]
+		ifFalse: 
+			["Paletized usage"
+
+			| palBitmap canvas bits |
+			bits := DWORD new.
+			palBitmap := Bitmap 
+						width: 1
+						height: 1
+						planes: 1
+						bitsPerPixel: depth
+						bits: bits.
+			canvas := palBitmap canvas.
+			dibSection := GDILibrary default 
+						createDIBSection: canvas asParameter
+						pbmi: info
+						iUsage: DIB_PAL_COLORS
+						ppvBits: imageBits
+						hSection: 0
+						dwOffset: 0.
+			palBitmap free].
+	^dibSection!
+
+depth
+	"Answer the colour depth of the receiver."
+
+	depth isNil ifTrue: [self cacheInfo].
+	^depth!
+
+erase
+	"Private - Erase area occupied by the DIB."
+
+	self canvas 
+		fillRectangle: (Rectangle origin: Point zero extent: self extent) 
+		brush: Brush white!
+
+errorInappropriateColorTable: aRGBQUADArray
+	"Raise an error that the receiver cannot hold aRGBQUADArray as its colour table"
+
+	^self error: 'Inappropriate color table'!
+
+getColorTable
+	"Answer a StructureArray of RGBQUADs which is the colour table for the receiver.
+	Answer nil if the receiver has no color table"
+
+	| bits canvas size quads |
+	bits := self depth.
+	bits > 8 ifTrue: [^nil].
+	size := 2 raisedToInteger: bits.
+	quads := StructureArray length: size elementClass: RGBQUAD.
+	canvas := self canvas.
+	size := GDILibrary default 
+				getDIBColorTable: canvas asParameter
+				uStartIndex: 0
+				cEntries: size
+				pColors: quads.
+	size == 0 ifTrue: [^Win32Error signal].
+	quads length: size.
+	^quads!
+
+getDIBSECTION
+	"Answers a DIBSECTION structure class containing details about the receiver."
+
+	| ds |
+	ds := DIBSECTION new.
+	self getData: ds.
+	^ds!
+
+imageBits
+	"Answer the handle of the receiver's image bits"
+
+	imageBits isNil ifTrue: [self cacheInfo].
+	^imageBits!
+
+setColorTable: anRGBQUADArray 
+	"Sets the colour table for the receiver to be that in anRGBQUADArray.
+	Signals #errorInvalidColorTable if the table is the wrong size, or not appropriate,
+	for the receiver"
+
+	| bits size newSize canvas |
+	bits := self depth.
+	size := 2 raisedToInteger: bits.
+	anRGBQUADArray size = size 
+		ifFalse: 
+			["Inappropriate colour table size"
+
+			self errorInappropriateColorTable: anRGBQUADArray].
+	canvas := self canvas.
+	newSize := GDILibrary default 
+				setDIBColorTable: canvas asParameter
+				uStartIndex: 0
+				cEntries: size
+				pColors: anRGBQUADArray.
+	size == newSize ifFalse: [^Win32Error signal]!
+
+width: w height: h depth: d
+	"Private - Initializes the receiver to dimensions width*height. The number of colour bits
+	per pixel are given by depth. Note that paletized DIBs are now supported but an
+	appropriate color table will need to be set using #setColorTable before using the 
+	DIBSection. Answer the receiver."
+
+	extent := w@h.
+	depth := d! !
+!DIBSection categoriesFor: #baseLoadFlags!constants!public! !
+!DIBSection categoriesFor: #cacheInfo!helpers!private! !
+!DIBSection categoriesFor: #clearCached!initializing!private! !
+!DIBSection categoriesFor: #createHandle!private!realizing/unrealizing! !
+!DIBSection categoriesFor: #depth!accessing!public! !
+!DIBSection categoriesFor: #erase!drawing!private! !
+!DIBSection categoriesFor: #errorInappropriateColorTable:!exceptions!public! !
+!DIBSection categoriesFor: #getColorTable!accessing!public! !
+!DIBSection categoriesFor: #getDIBSECTION!accessing!public! !
+!DIBSection categoriesFor: #imageBits!accessing!public! !
+!DIBSection categoriesFor: #setColorTable:!accessing!public! !
+!DIBSection categoriesFor: #width:height:depth:!initializing!private! !
+
+!DIBSection class methodsFor!
+
+width: width height: height
+	"Answers a true-colour DIBSection bitmap of dimensions width*height*24 bits/pixel."
+
+	^self
+		width: width 
+		height: height 
+		depth: 24
+		!
+
+width: width height: height depth: depth
+	"Answers a DIBSection bitmap of dimensions width*height. The number of colour bits
+	per pixel are given by depth, which must be one of 1,4,8,16,24 or 32 (although
+	see instance side for further current limitations)."
+
+	^super new
+		width: width 
+		height: height 
+		depth: depth
+		! !
+!DIBSection class categoriesFor: #width:height:!accessing!public! !
+!DIBSection class categoriesFor: #width:height:depth:!accessing!public! !
+

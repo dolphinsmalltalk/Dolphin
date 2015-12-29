@@ -1,0 +1,54 @@
+| package |
+package := Package name: 'Notepad'.
+package paxVersion: 1;
+	basicComment: 'Dolphin Smalltalk Notepad Sample. 
+Copyright (c) Object Arts Ltd, 2000-2001.
+
+Notepad is a slightly reduced functionality (printing is missing) implementation of the standard system utility NOTEPAD.EXE. It is intended to demonstrate the DocumentShell hierarchy of Dolphin''''s application framework. It also shows how to write a simple runtime session manager (NotepadSessionManager) with command line handling.
+
+Try me out with:
+
+Notepad show'.
+
+
+package classNames
+	add: #Notepad;
+	add: #NotepadSessionManager;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\..\..\Dolphin\Base\Dolphin';
+	add: '..\..\..\Dolphin\MVP\Dialogs\Common\Dolphin Common Dialogs';
+	add: '..\..\..\Dolphin\MVP\Base\Dolphin MVP Base';
+	add: '..\..\..\Dolphin\MVP\Presenters\Text\Dolphin Text Presenter';
+	add: '..\..\..\Dolphin\MVP\Type Converters\Dolphin Type Converters';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+TextDocument subclass: #Notepad
+	instanceVariableNames: ''
+	classVariableNames: 'ResourceLib'
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+RuntimeSessionManager subclass: #NotepadSessionManager
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+"End of package definition"!
+

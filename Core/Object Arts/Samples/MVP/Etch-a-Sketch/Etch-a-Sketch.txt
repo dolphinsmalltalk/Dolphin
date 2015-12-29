@@ -1,0 +1,61 @@
+Now let's see how to create a simple Etch-a-Sketch component that emulates the popular child's toy.  We will use an instance of Scribble inside this component, so if you haven't already installed the Scribble package you should do so now.
+
+The code is contained in Etch-a-Sketch.pac so load this into your image using the Package Browser.  It's probably best at this stage to play with an instance of EtchASketch to see how it works.  Evaluate:
+
+EtchASketch show.
+
+The instance appears in a dummy shell and you can use the horizontal and vertical scroll bars to draw in the sketch arena.  Now let's go through the code bit by bit to see how it hangs together.
+
+As always with MVP, I believe it is best to decide on the model objects first.  So what should the model be for an instance of EtchASketch?  Well, presumably it is the picture being drawn.  In this case, since we intend to reuse Scribble, the model can be the same as the one that we chose for the latter, i.e. a ListModel holding and OrderedCollection of InkStrokes.  
+
+Usually, the next stage is to decide on a view that is capable of representing the model visually.  Okay, we already have a ScribbleView class that can do this but for Etch-a-Sketch we need something more.  In particular, we are going to need controls to represent the horizontal and vertical drawing "knobs", and we might also want to make it look in basic appearance more like a real Etch-a-Sketch toy.  From within the Resource Browser open the "Basic Etch-a-Sketch" view associated with the EtchASketch class.  Let's explore what you see.
+
+First notice, that the view is an instance of ContainerView.  With Scribble with had to create a new class, ScribbleView to represent it onscreen.  Here, however, we have decided that a suitable view instance can actually be created by composing instances of existing view classes together.  This, of course is the job of the View Composer.
+
+So, the ContainerView is a composite containing:
+
+1/ an Horizontal scroll bar named "leftRightKnob"
+2/ a Vertical scroll bar named "upDownKnob"
+3/ a ScribbleView named "sketchPad"
+4/ a StaticText containing the title "Etch-a-Sketch"
+
+The important thing to realize about naming these views is that the names must correspond to appropriate presenter objects to which the views will eventually be connected.  But, more about this later.
+
+How are the views arranged?  I have used a layout manager associated with the ContainerView to ensure that the sub views will be appropriately positioned whenever the container is resized. Select the ContainerView and take look at its #layoutManagerClass aspect.  You'll see that this has been set to BorderLayout.  A BorderLayout can automatically arrange up to five sub views within its associated container.  These can be arranged at #north, #south, #east, #west and #center positions depending on the #arrangement aspect set for each sub view.  Look at the #arrangement for each sub view:
+
+leftRightKnob: #south
+upDownKnob: #east
+sketchPad: #center
+Etch-a-Sketch: #north
+
+These tell the Border Layout how to automatically position the objects.  However, you'll notice that there is also a border keeping some of these objects away from the very edge of the container.  This is set by the #insets aspect of the ContainerView itself.  If you look, you'll see that this is a Rectangle:
+
+20@0 corner: 20@20
+
+This governs the available area in which the layout manager can operate.  The fact that the top of this rectangle is set to 0 indicates that the #north object (the Etch-a-Sketch static text) can be aligned completely at top edge of the view.
+
+To get the red border effect, the #backcolor aspects of the ContainerView and the StaticText are set to an appropriate red color.
+
+That's all there is to the view for Etch-a-Sketch.  It is saved down and associated with the appropriate presenter, in this case EtchASketch.  So, how do we go about creating this presenter class?
+
+First we must decide where to subclass EtchASketch in the Presenter hierarchy. Since we have decided that the view for EtchASketch is a ContainerView this, almost invariably, determines that the presenter should be a subclass of CompositePresenter.  CompositePresenters have the ability to maintain a collection of sub-presenters and they inherit the ability to automatically connect these to same named sub-views within their overall attached view.  Since our EtchASketch component does not have to be limited to use within a shell or dialog window we have chosen to subclass the presenter directly under CompositePresenter (rather than Shell or Dialog).  This gives it the ability to be easily reused in future as part of any other composite we may wish to create.
+
+Once you have decided where to create a presenter class, the best thing to do first is to add the essential class methods #defaultModel and #defaultView.  For #defaultModel, we have already decided that the model will be (like Scribble) a ListModel that holds an OrderedCollection of InkStrokes.  In the case of #defaultView, we can now save down the view we created in the ViewComposer under a particular name associated with the EtchASketch class.  Here we've chosen "Basic Etch-a-Sketch" and this is the name that must be returned from the #defaultView method.
+
+Now look at the class definition of EtchASketch.  There are three instance variables (upDownKnob, leftRightKnob and sketchPad) that will be used to hold sub-presenters which eventually will be connected to their matching sub-views.  The lastLocation variable is necessary to hold temporary information about the last drawing location.  
+
+The sub-presenters are created in a method called #createComponents. This is usually the first method you will write when creating any CompositePresenter subclass.  Note that the sub-presenters are named to match their associated views.  We mentioned earlier that we would be re-using the Scribble component for the sketch area of EtchASketch and it is here that this instance of Scribble is created.  
+
+Notice too, that we have chosen to make the "knob" components instances of NumberPresenter.  This is because they will contain numeric values that can be changed by the user interface; in this case by the scroll bars.  However, as far as the presenter logic is concerned, it need not know exactly what type of view will eventually be connected.  If, in future, we decide to create a new "KnobView" class to represent a more realistic input device than a scroll bar, then we should be able to place instances of this into the Etch-a-Sketch view and everything will work directly, without having to change any of the presenter code.
+
+The next method to write, for any CompositePresenter that requires it, is #createSchematicWiring.  This method is used to clip onto any interesting events that the sub-presenters may trigger and redirect them to appropriate event handling methods in this class.  Here, we want to intercept changes made to the "knob" values (as the scroll bars are moved) and direct them to our #onKnobChanged method which will perform the drawing.
+
+The #onKnobChanged method is fairly straightforward.  It finds the values of the left and right "knobs" and creates an appropriately scaled Point (the scroll bar views, by default, return values between 0 and 100 and these are scaled to the full extent of the sketchPad view).  This is then used to create an  InkStroke that represents the line from the last location to this new location.  This is added to the receivers model.
+
+Now, there is just one last thing to consider.  We have arranged, courtesy of the #defaultModel class method, for an appropriate model object to be installed into an instance of EtchASketch when it is created.  The #onKnobChanged method will draw new lines into this model as the "knobs" are twiddled.  However, in order for the drawing to appear in the sketch pad area, we need to ensure that this EtchASketch model is also that of the Scribble sub-presenter.  This is made so by overriding the #model: method on the instance side.
+
+You've already seen EtchASketch in use but another interesting demonstration, to show the flexibility that MVP allows when sharing model objects, is to create and EtchASketch on the same model as a Scribble pad.  Try this:
+
+scribble := Scribble show.
+EtchASketch showOn: scribble model.
+

@@ -1,0 +1,219 @@
+| package |
+package := Package name: 'SUnitBrowser'.
+package paxVersion: 1;
+	basicComment: 'SUnit Browser for Dolphin Smalltalk 4.0/5.0 - Version 3.1.5RC1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+Friday, November 22, 2002
+Copyright (c) 2000-2002 by Jeffrey L. Odell
+
+This package contains the Dolphin version of the Smalltalk SUnit Browser development utility.
+
+Please send all feedback to to:
+
+	Web Site: http://www.odellsoft.com/sunitbrowser
+	E-Mail: sunitb@odellsoft.com
+
+Prerequisites
+=============
+
+	SUnit 3.0, included in this distribution.
+
+Installation
+============
+
+1) Minimum requirement: 	Dolphin Smalltalk 4.0 or greater.
+
+	May work correctly on earlier versions of Dolphin Smalltalk,
+	but not tested.  If tested on earlier versions, I will attempt	
+	to fix any problems encountered
+
+2) Install SUnit and SUnit Browser Packages
+
+	Install SUnitBrowser.pac, brings in the SUnit.pac, SUnitPreload.pac package with it.
+
+3) Install sample test cases
+	
+	Install package SUnitTests.pac
+
+4) Execute:
+
+	SUnitBrowser show
+	SUnitBrowser openOnTestCase: SUnitTest
+	SUnitBrowser openOnTestCase: TestCase
+
+5) To integrate into Class Browser Menu, add the following line into the method ClassBrowserShell>>#onViewOpened:
+
+	self sunitbOnViewOpened.
+
+Features Missing from VA Port
+====================
+
+1) Configuration
+
+	Some configuration parameters don''t translate to Dolphin.  They are not
+	not particularly limiting
+
+2) No Tree/List View
+
+	The VA port using EwTableTree, mhich provides a combination Tree and
+	List view.  Dolphin does not have this. in the interim I have used
+	two list views, which in many ways I like better.  I may backport this
+	idea to VisualAge, freeing from this issue on other ports.  Ideas and Feedback
+	requested.'.
+
+package basicPackageVersion: '3.1.5 RC1'.
+
+
+package classNames
+	add: #SUnitAbsBrowser;
+	add: #SUnitAbsWrapper;
+	add: #SUnitBrowser;
+	add: #SUnitResourceBrowser;
+	add: #SUnitStatusTextWrapper;
+	add: #SUnitTestCaseWrapper;
+	add: #SUnitTestResourceWrapper;
+	add: #SUnitToolbar;
+	yourself.
+
+package methodNames
+	add: #ClassSelector -> #browseTests;
+	add: #ClassSelector -> #buildTestSuite;
+	add: #PackageSelector -> #browseTests;
+	add: #PackageSelector -> #buildTestSuite;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\..\..\Object Arts\Dolphin\IDE\Base\Development System';
+	add: '..\..\..\Object Arts\Dolphin\Base\Dolphin';
+	add: '..\..\..\Object Arts\Dolphin\MVP\Views\Common Controls\Dolphin Common Controls';
+	add: '..\..\..\Object Arts\Dolphin\MVP\Views\Control Bars\Dolphin Control Bars';
+	add: '..\..\..\Object Arts\Dolphin\MVP\Models\List\Dolphin List Models';
+	add: '..\..\..\Object Arts\Dolphin\MVP\Presenters\List\Dolphin List Presenter';
+	add: '..\..\..\Object Arts\Dolphin\MVP\Base\Dolphin MVP Base';
+	add: '..\..\..\Object Arts\Dolphin\MVP\Presenters\Text\Dolphin Text Presenter';
+	add: '..\..\..\Object Arts\Dolphin\MVP\Type Converters\Dolphin Type Converters';
+	add: '..\..\Refactory\Refactoring Browser\Environments\RBEnvironments';
+	add: '..\..\Camp Smalltalk\SUnit\SUnit';
+	add: 'SUnitBrowserModelApp';
+	add: '..\..\..\Object Arts\Dolphin\ActiveX\Shell\Windows Shell';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+Object subclass: #SUnitAbsWrapper
+	instanceVariableNames: 'model subject'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+SmalltalkToolShell subclass: #SUnitAbsBrowser
+	instanceVariableNames: 'listModel labelTextPresenter listPresenter statusTextPresenter'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+SUnitAbsBrowser subclass: #SUnitBrowser
+	instanceVariableNames: 'testCaseListModel showAllTextPresenter testCaseListPresenter'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+SUnitAbsBrowser subclass: #SUnitResourceBrowser
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+SUnitAbsWrapper subclass: #SUnitStatusTextWrapper
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+SUnitAbsWrapper subclass: #SUnitTestCaseWrapper
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+SUnitAbsWrapper subclass: #SUnitTestResourceWrapper
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Toolbar subclass: #SUnitToolbar
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+!ClassSelector methodsFor!
+
+browseTests
+	"Open an SUnit Test Browser on the selected Test Case."
+
+	self testBrowserClass sunitbShow: self buildTestSuite!
+
+buildTestSuite
+	| parentEnvironment testEnvironment suite classSelections |
+	classSelections := self selectionEnvironment.
+	suite := TestSuite named: ('Tests in <1p>' expandMacrosWith: classSelections).
+	parentEnvironment := classSelections environment.
+	testEnvironment := classSelections.
+	classSelections classesDo: 
+			[:eachClass | 
+			| hierarchyEnvironment |
+			hierarchyEnvironment := parentEnvironment forClassHierarchyFrom: eachClass.
+			testEnvironment := testEnvironment | hierarchyEnvironment].
+	testEnvironment := testEnvironment selectMethods: [:each | each methodClass isMeta not].
+	testEnvironment classesDo: 
+			[:eachClass | 
+			| classSuite |
+			classSuite := eachClass buildSuite.
+			suite addTests: (classSuite allTests 
+						select: [:eachTest | eachClass canUnderstand: eachTest selector])].
+	^suite! !
+!ClassSelector categoriesFor: #browseTests!commands!public! !
+!ClassSelector categoriesFor: #buildTestSuite!commands!public! !
+
+!PackageSelector methodsFor!
+
+browseTests
+	"Open an SUnit Test Browser on the selected Test Case."
+
+	self testBrowserClass sunitbShow: self buildTestSuite!
+
+buildTestSuite
+	| packages suite parentEnvironment testEnvironment classSelections |
+	packages := self selectionEnvironment.
+	suite := TestSuite named: ('Tests in <1p>' expandMacrosWith: classSelections).
+	classSelections := TestCase allSubclasses 
+				select: [:eachClass | eachClass isAbstract not and: [packages includesClass: eachClass]].
+	parentEnvironment := ClassEnvironment new classes: classSelections.
+	testEnvironment := ClassEnvironment new classes: classSelections.
+	classSelections do: 
+			[:eachClass | 
+			| hierarchyEnvironment |
+			hierarchyEnvironment := parentEnvironment forClassHierarchyFrom: eachClass.
+			testEnvironment := testEnvironment | hierarchyEnvironment].
+	testEnvironment := testEnvironment selectMethods: [:each | each methodClass isMeta not].
+	testEnvironment classesDo: 
+			[:eachClass | 
+			| classSuite |
+			classSuite := eachClass buildSuite.
+			suite 
+				addTests: (classSuite allTests select: [:eachTest | eachClass canUnderstand: eachTest selector])].
+	^suite! !
+!PackageSelector categoriesFor: #browseTests!commands!public! !
+!PackageSelector categoriesFor: #buildTestSuite!commands!public! !
+
+"End of package definition"!
+

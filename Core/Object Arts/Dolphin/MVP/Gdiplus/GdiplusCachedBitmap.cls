@@ -1,0 +1,66 @@
+"Filed out from Dolphin Smalltalk X6"!
+
+GdiplusBase subclass: #GdiplusCachedBitmap
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+GdiplusCachedBitmap guid: (GUID fromString: '{28E34AB0-3F39-40A2-9E59-AF891814C197}')!
+GdiplusCachedBitmap comment: 'GdiplusCachedBitmap stores a bitmap in a format that is optimized for display on a particular device. To display an instance, call the GdiplusGraphics>>drawCachedBitmap method.
+
+'!
+!GdiplusCachedBitmap categoriesForClass!Unclassified! !
+!GdiplusCachedBitmap methodsFor!
+
+basicFree
+	"Private - Free up external resources held by the receiver.  Ignore any errors which might arise."
+
+	GdiplusLibrary default gdipDeleteCachedBitmap: handle! !
+!GdiplusCachedBitmap categoriesFor: #basicFree!private!realizing/unrealizing! !
+
+!GdiplusCachedBitmap class methodsFor!
+
+bitmap: aBitmap graphics: aGraphics
+	"Answer an instance of the receiver that is based on aBitmap and aGraphics objects."
+
+	^self 
+		fromInitializer: (GdiplusCachedBitmapInitializer bitmap: aBitmap graphics: aGraphics)!
+
+exampleGdipCBPerformance
+	"MSDN: Using GDI+ > Using Images, Bitmaps, and Metafiles > Using a Cached Bitmap to Improve Performance
+	This example creates an image from file and a cached bitmap from the image.  It draws 
+	each a number of times, then shows the elapsed times.
+
+		RichTextPresenter showOn: self exampleGdipCBPerformance
+	"
+
+	| bitmap graphics image cachedBitmap strm time1 time2 |
+	bitmap := GdiplusBitmap new.
+	graphics := bitmap graphics.
+	image := GdiplusImage fromFile: 'Resources/Beach Ball.bmp'
+				usingLocator: FileLocator installRelative.
+	cachedBitmap := GdiplusCachedBitmap bitmap: image graphics: graphics.
+	strm := String new writeStream.
+	strm
+		display: 'CachedBitmap drawing time in milliseconds';
+		cr.
+	time1 := Time millisecondClockValue.
+	100 timesRepeat: [graphics drawImage: image at: 10 @ 10].
+	time2 := Time millisecondClockValue.
+	strm
+		display: '#drawImage: ' , (time2 - time1) displayString;
+		cr.
+	time1 := Time millisecondClockValue.
+	100 timesRepeat: [graphics drawCachedBitmap: cachedBitmap at: 10 @ 200].
+	time2 := Time millisecondClockValue.
+	strm display: '#drawCachedBitmap: ' , (time2 - time1) displayString.
+	^strm contents!
+
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^Bitmap icon! !
+!GdiplusCachedBitmap class categoriesFor: #bitmap:graphics:!instance creation!public! !
+!GdiplusCachedBitmap class categoriesFor: #exampleGdipCBPerformance!examples!public!sunit! !
+!GdiplusCachedBitmap class categoriesFor: #icon!constants!development!public! !
+

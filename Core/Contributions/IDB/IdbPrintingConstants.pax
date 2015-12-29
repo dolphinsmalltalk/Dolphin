@@ -1,0 +1,32 @@
+| package |
+package := Package name: 'IdbPrintingConstants'.
+package paxVersion: 1;
+	basicComment: ''.
+
+
+package globalNames
+	add: #IdbPrintingConstants;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\Object Arts\Dolphin\Base\Dolphin';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+"End of package definition"!
+

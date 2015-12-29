@@ -1,0 +1,135 @@
+"Filed out from Dolphin Smalltalk X6"!
+
+Object subclass: #SearchPolicy
+	instanceVariableNames: ''
+	classVariableNames: 'Always CaseInsensitive Equality Identity Never'
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+SearchPolicy guid: (GUID fromString: '{123A1501-7CB8-11D3-93CA-00A024CA708A}')!
+SearchPolicy comment: 'SearchPolicy is for configuring pluggable collections and models to use different searching policies, e.g. equality vs. identity. SearchPolicy itself implements an equality based policy using #= and #hash, etc.
+
+SearchPolicy is the canonical implementation of the <searchPolicy> and <comparisonPolicy> protocols (the latter is really a subset of the former).
+
+The <comparisonPolicy> protocol can be used to compare two objects in order to determine if they are the "same". Different comparison policies can be employed which, for example, consider that two objects are the same iff they are the exact same identical object (i.e. ''''obj1 == obj2'''' is true), or on the other hand if they are of equal value (i.e. ''''obj1 = obj2'''' is true).
+
+SearchPolicy maintains a number of prebuilt instances which implement popular search/comparison policies. These are accessible via class side methods in the ''''instance creation'''' category.
+
+Class Variables:
+	Always		<AlwaysSearchPolicy>. Maintains that two objects are always equal.
+	Identity		<IdentitySearchPolicy>. Singleton instance for identity searching.
+	Equality		<SearchPolicy>. Singleton instance for equality searching.
+	Never		<NeverSearchPolicy>. Maintains that two objects are never equal.
+
+'!
+!SearchPolicy categoriesForClass!Collections-Support! !
+!SearchPolicy methodsFor!
+
+compare: operand1 with: operand2
+	"Answer whether the <Object>, operand1, is considered equivalent to the <Object> argument,
+	operand2, by this search policy."
+
+	^self subclassResponsibility
+!
+
+hash: operand
+	"Answer a suitable hash value for the <Object>, operand, under this search policy."
+
+	^operand hash!
+
+hash: operand max: maximum
+	"Answer a suitable hash value for the <Object>, operand, under this search policy, 
+	between 1 and the <integer>, maximum. If maximum is a significant proportion
+	of the range of hash values generated, then the result should be scaled to distribute
+	evenly between 1 and maximum in order to avoid generating excessive collisions at
+	the low end of the range."
+
+	^(self hash: operand) \\ maximum + 1!
+
+keyAtValue: value in: collection ifAbsent: operation
+	"Answer the <Object> key of the <Object> argument, value in the keyed
+	collection, collection, using the receiver's search policy. If there is no such 
+	value, answer the result of evaluating the <niladicValuable>, operation."
+
+	collection keysAndValuesDo: [:k :v | (self compare: v with: value) ifTrue: [^k]].
+	^operation value!
+
+newLookupTable
+	"Answer a new <LookupTable> with a search policy equivalent to the receiver."
+
+	^PluggableLookupTable searchPolicy: self!
+
+nextIndexOf: anElement in: sequence from: start to: stop
+	"Answer the index of the next occurrence of anElement in the <sequencedReadableCollection>
+	argument,  collection, between startIndex and stopIndex inclusive. If there are no such occurrences, 
+	answer 0."
+
+	sequence from: start to: stop keysAndValuesDo: [:i :elem | (self compare: elem with: anElement) ifTrue: [^i]].
+	^0! !
+!SearchPolicy categoriesFor: #compare:with:!comparing!public! !
+!SearchPolicy categoriesFor: #hash:!comparing!public! !
+!SearchPolicy categoriesFor: #hash:max:!comparing!public! !
+!SearchPolicy categoriesFor: #keyAtValue:in:ifAbsent:!public!searching! !
+!SearchPolicy categoriesFor: #newLookupTable!operations!public! !
+!SearchPolicy categoriesFor: #nextIndexOf:in:from:to:!public!searching! !
+
+SearchPolicy methodProtocol: #comparisonPolicy attributes: #(#readOnly) selectors: #(#compare:with:)!
+SearchPolicy methodProtocol: #searchPolicy attributes: #(#readOnly) selectors: #(#compare:with: #hash: #hash:max: #keyAtValue:in:ifAbsent: #nextIndexOf:in:from:to:)!
+
+!SearchPolicy class methodsFor!
+
+always
+	"Answers the singleton instance of the receiver that always answers 
+	true to #compare:with: (i.e. under this comparison policy two objects 
+	are always considered equal)."
+
+	Always isNil ifTrue: [Always := AlwaysSearchPolicy new].
+	^Always!
+
+caseInsensitive
+	"Answer the singleton sub-instance of the receiver which supports a search policy
+	based on case-insensitive string comparisons."
+
+	CaseInsensitive isNil ifTrue: [CaseInsensitive := CaseInsensitiveSearchPolicy new].
+	^CaseInsensitive
+!
+
+equality
+	"Answer the singleton sub-instance of the receiver which supports a search policy
+	based on equality."
+
+	Equality isNil ifTrue: [Equality := EqualitySearchPolicy new].
+	^Equality
+!
+
+identity
+	"Answer the singleton sub-instance of the receiver which supports a search policy
+	based on identity."
+
+	Identity isNil ifTrue: [Identity := IdentitySearchPolicy new].
+	^Identity!
+
+never
+	"Answers the singleton instance of the receiver that always answers 
+	false to #compare:with: (i.e. under this comparison policy two objects 
+	are never considered equal)."
+
+	Never isNil ifTrue: [Never := NeverSearchPolicy new].
+	^Never!
+
+onPreStripImage
+	"Private - Tidy up the receiver's lazily initialized class vars in preparation for image stripping."
+
+	self uninitialize!
+
+uninitialize
+	"Private - Tidy up the receiver in preparation for removal from the system."
+
+	Always := Never := CaseInsensitive := Equality := Identity := nil! !
+!SearchPolicy class categoriesFor: #always!instance creation!public! !
+!SearchPolicy class categoriesFor: #caseInsensitive!instance creation!public! !
+!SearchPolicy class categoriesFor: #equality!instance creation!public! !
+!SearchPolicy class categoriesFor: #identity!instance creation!public! !
+!SearchPolicy class categoriesFor: #never!instance creation!public! !
+!SearchPolicy class categoriesFor: #onPreStripImage!class hierarchy-removing!private! !
+!SearchPolicy class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+

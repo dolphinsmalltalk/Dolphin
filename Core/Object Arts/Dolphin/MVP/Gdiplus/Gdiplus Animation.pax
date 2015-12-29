@@ -1,0 +1,45 @@
+| package |
+package := Package name: 'Gdiplus Animation'.
+package paxVersion: 1;
+	basicComment: ''.
+
+
+package classNames
+	add: #DesktopAnimation;
+	add: #DesktopDoubleBufferedView;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\..\Base\Dolphin';
+	add: '..\Base\Dolphin MVP Base';
+	add: 'Gdiplus';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+ShellView subclass: #DesktopDoubleBufferedView
+	instanceVariableNames: 'backSurface frontSurface graphics'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DesktopDoubleBufferedView subclass: #DesktopAnimation
+	instanceVariableNames: 'animationView desktopBitmap stepProcess stepStartTime animations'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+"End of package definition"!
+

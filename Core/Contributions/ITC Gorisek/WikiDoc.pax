@@ -1,0 +1,338 @@
+| package |
+package := Package name: 'WikiDoc'.
+package paxVersion: 1;
+	basicComment: ''.
+
+package basicPackageVersion: 'r 460 rc 1'.
+
+package imageStripperBytes: (ByteArray fromBase64String: 'IVNUQiAzIEYPDQAEAAAASW1hZ2VTdHJpcHBlcgAAAABSAAAABwAAAFdpa2lEb2NSAAAAFwAAAElU
+QyBHb3Jpc2VrXFdpa2lEb2MuZXhlmgAAAFIAAAAHAAAAV2lraURvY1IAAAAVAAAAV2lraURvY1Nl
+c3Npb25NYW5hZ2VyL78lAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=').
+
+package classNames
+	add: #WikiDocApplication;
+	add: #WikiDocApplicationAdministrationTask;
+	add: #WikiDocChangePasswordTask;
+	add: #WikiDocCoder;
+	add: #WikiDocCommentary;
+	add: #WikiDocCopyPageTask;
+	add: #WikiDocDownloadableFile;
+	add: #WikiDocDownloadableFileServlet;
+	add: #WikiDocEditPageTask;
+	add: #WikiDocFckEditorImageFileServlet;
+	add: #WikiDocFckEditorPopUpSelectorImageFileServlet;
+	add: #WikiDocFullTextSearchIndex;
+	add: #WikiDocGetRequestParameterFromUrlServlet;
+	add: #WikiDocImage;
+	add: #WikiDocImageFileServlet;
+	add: #WikiDocImageSelectorServlet;
+	add: #WikiDocIndexingPageParser;
+	add: #WikiDocIndexServlet;
+	add: #WikiDocInstaller;
+	add: #WikiDocLinkSelectorServlet;
+	add: #WikiDocLoginTask;
+	add: #WikiDocNewPageTask;
+	add: #WikiDocNewsletterUser;
+	add: #WikiDocObject;
+	add: #WikiDocOverviewTask;
+	add: #WikiDocPage;
+	add: #WikiDocPageParser;
+	add: #WikiDocPageVersion;
+	add: #WikiDocPageVersionsTask;
+	add: #WikiDocPrintablePageParser;
+	add: #WikiDocSearchResultsTask;
+	add: #WikiDocServerManagementTask;
+	add: #WikiDocSession;
+	add: #WikiDocSessionBrowserTask;
+	add: #WikiDocSessionManager;
+	add: #WikiDocTask;
+	add: #WikiDocThumbnailFileServlet;
+	add: #WikiDocTocNode;
+	add: #WikiDocTopReferersStatisticTask;
+	add: #WikiDocUpload;
+	add: #WikiDocUploadedFilesOverviewTask;
+	add: #WikiDocUploadFileTask;
+	add: #WikiDocUploadImageServlet;
+	add: #WikiDocUploadImageTask;
+	add: #WikiDocUploadTask;
+	add: #WikiDocUser;
+	add: #WikiDocUserEditTask;
+	add: #WikiDocUserOverviewTask;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: 'Dialect Abstraction Layer';
+	add: '..\Object Arts\Dolphin\Base\Dolphin';
+	add: 'HTML Forms Generator';
+	add: 'HTML Parser';
+	add: 'HTTP Client';
+	add: 'ITC Full Text Search Support';
+	add: 'ITC Installer Script Generator';
+	add: 'OmniBase';
+	add: 'Web Application StartUp';
+	add: 'Web Frameworks OmniBase';
+	add: 'e-obracuni\Web Server';
+	add: 'Web Server Administration';
+	yourself).
+
+package setManualPrerequisites: #(
+	'Web Frameworks OmniBase').
+
+package!
+
+"Class Definitions"!
+
+Object subclass: #WikiDocObject
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Object subclass: #WikiDocPageParser
+	instanceVariableNames: 'writeStream pageVersion urlPrefix application insideParagraph ident identTags referencedPages pageTitle session table alternateColor figures toolTipIds onLoadScript defaultLanguage'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+HtmlGenericFormsCoder subclass: #WikiDocCoder
+	instanceVariableNames: 'wikiPageTitle'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ItcFullTextSearchIndex subclass: #WikiDocFullTextSearchIndex
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ItcWebAppInstaller subclass: #WikiDocInstaller
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+WebAppStartUp subclass: #WikiDocSessionManager
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+WebApplication subclass: #WikiDocApplication
+	instanceVariableNames: 'urlPrefix pageIndexOid mutex completeToc imageIndexOid downloadableFileIndexOid imagesServlet downloadableFilesServlet linksForPlugIns managedHomepageApplication'
+	classVariableNames: 'LastSessionIndexDict LastSessionIndexMutex'
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+WebHttpServlet subclass: #WikiDocGetRequestParameterFromUrlServlet
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+WebHttpServlet subclass: #WikiDocImageSelectorServlet
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+WebHttpServlet subclass: #WikiDocIndexServlet
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+WebHttpServlet subclass: #WikiDocLinkSelectorServlet
+	instanceVariableNames: 'completeToc'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+WebHttpServlet subclass: #WikiDocUploadImageServlet
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+WebHttpFileServlet subclass: #WikiDocDownloadableFileServlet
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+WebHttpFileServlet subclass: #WikiDocImageFileServlet
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+WikiDocImageFileServlet subclass: #WikiDocFckEditorImageFileServlet
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+WikiDocImageFileServlet subclass: #WikiDocThumbnailFileServlet
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+WikiDocFckEditorImageFileServlet subclass: #WikiDocFckEditorPopUpSelectorImageFileServlet
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+WebTask subclass: #WikiDocTask
+	instanceVariableNames: 'defaultToolbar language transaction'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+WebApplicationAdministrationTask subclass: #WikiDocApplicationAdministrationTask
+	instanceVariableNames: 'defaultToolbar'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+WikiDocTask subclass: #WikiDocChangePasswordTask
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+WikiDocTask subclass: #WikiDocEditPageTask
+	instanceVariableNames: 'pageId'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+WikiDocTask subclass: #WikiDocLoginTask
+	instanceVariableNames: 'onLogin'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+WikiDocTask subclass: #WikiDocOverviewTask
+	instanceVariableNames: 'coll searchFields lastPageNumber'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+WikiDocTask subclass: #WikiDocPageVersionsTask
+	instanceVariableNames: 'pageId'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+WikiDocTask subclass: #WikiDocSearchResultsTask
+	instanceVariableNames: 'searchResults searchFields'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+WikiDocTask subclass: #WikiDocServerManagementTask
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+WikiDocTask subclass: #WikiDocSessionBrowserTask
+	instanceVariableNames: 'wikiSession wikiSessionIndex'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+WikiDocTask subclass: #WikiDocTopReferersStatisticTask
+	instanceVariableNames: 'results'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+WikiDocTask subclass: #WikiDocUploadTask
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+WikiDocTask subclass: #WikiDocUserEditTask
+	instanceVariableNames: 'user'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+WikiDocEditPageTask subclass: #WikiDocCopyPageTask
+	instanceVariableNames: 'pageToCopy'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+WikiDocCopyPageTask subclass: #WikiDocNewPageTask
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+WikiDocOverviewTask subclass: #WikiDocUploadedFilesOverviewTask
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+WikiDocOverviewTask subclass: #WikiDocUserOverviewTask
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+WikiDocUploadTask subclass: #WikiDocUploadFileTask
+	instanceVariableNames: 'fileName'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+WikiDocUploadTask subclass: #WikiDocUploadImageTask
+	instanceVariableNames: 'imageName'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+WikiDocObject subclass: #WikiDocCommentary
+	instanceVariableNames: 'title description status dodanTS'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+WikiDocObject subclass: #WikiDocNewsletterUser
+	instanceVariableNames: 'email ime ip prijavaTS status kategorije'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+WikiDocObject subclass: #WikiDocPage
+	instanceVariableNames: 'pageName currentVersion versions references pageTitle'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+WikiDocObject subclass: #WikiDocPageVersion
+	instanceVariableNames: 'page pageTitle contents parentPage editIP editHostname editTS editUserAgent editSession pagePos isLeafPage tocNodeIcon keywords pageFormat dateFrom dateTo'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+WikiDocObject subclass: #WikiDocSession
+	instanceVariableNames: 'user loginTS loginIP loginHostname loginUserAgent cookie previousSession clientCookie nextSession referer logoutTS usageLog selectedLanguage'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+WikiDocObject subclass: #WikiDocTocNode
+	instanceVariableNames: 'title pageName pagePosition children parentPageName parentNode application isLeafPage nodeIndex nodeIcon languageName'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+WikiDocObject subclass: #WikiDocUpload
+	instanceVariableNames: 'previousVersion uploadIP uploadHostname uploadTS uploadUserAgent uploadSession'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+WikiDocObject subclass: #WikiDocUser
+	instanceVariableNames: 'username fullName password eMail homepage roles inactive lastSession'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+WikiDocUpload subclass: #WikiDocDownloadableFile
+	instanceVariableNames: 'fileName fileSize fileBytes'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+WikiDocUpload subclass: #WikiDocImage
+	instanceVariableNames: 'width height imageName imageBytes thumbnailBytes'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+WikiDocPageParser subclass: #WikiDocIndexingPageParser
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+WikiDocPageParser subclass: #WikiDocPrintablePageParser
+	instanceVariableNames: 'h1Index h2Index headingPrefix pageToPageNumberDictionary'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+"End of package definition"!
+

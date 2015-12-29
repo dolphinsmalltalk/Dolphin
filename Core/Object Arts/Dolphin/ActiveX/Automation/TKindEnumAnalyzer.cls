@@ -1,0 +1,63 @@
+"Filed out from Dolphin Smalltalk X6"!
+
+AXTypeInfoAnalyzer subclass: #TKindEnumAnalyzer
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+TKindEnumAnalyzer guid: (GUID fromString: '{C06F3B68-0868-11D3-93AF-00A024CA708A}')!
+TKindEnumAnalyzer comment: 'TKindEnumAnalyzer is a class which wraps an OLE Automation <ITypeInfo> interface pointer that describes an enumerated type  (i.e. of type TKIND_ENUM). It adds higher level behaviours for analyzing the type information associated with that coclass, and for automatic generation.
+
+TKindEnumAnalyzer generates constants for each of the members of its enumerated type into a <PoolConstantsDictionary> when sent #generate/#generateAs:. Using this facility one can very quickly and easily define a set of constants needed to use some externally defined object or function library, at least when a typelib is available.
+
+The Active-X Component Wizard will automatically generate a constants pool for any type library that contains enumerated types when any structure or interface is generated from that type library.'!
+!TKindEnumAnalyzer categoriesForClass!ActiveX Automation! !
+!TKindEnumAnalyzer methodsFor!
+
+baseClass
+	"Private - Answer the Dolphin class used to represent superclass of the receiver.
+	Implmementation Note. The receiver is not represented by a class of its own."
+
+	^self shouldNotImplement!
+
+constants
+	"Answer <sequencedReadableCollection> of VARDESCs describing the 
+	member variables of the receiver's structure (assumes it is a structure -
+	if it isn't the collection will be empty)."
+
+	^self variables!
+
+name
+	"Answer a <readableString> name for the receiver, retrieved from the
+	documentation."
+	
+	^self nameSansTag!
+
+suggestedGlobalName
+	"Private - Answer a <readableString> name suggested as the (unprefixed) for a global
+	generated to represent the receiver's type.
+	Implementation Note: All enums are generated into the same pool, so the global is shared
+	and under a name related to the library, not the receiver."
+
+	^self typeLib name, 'Constants'!
+
+vt
+	"Answer a variant type code (a member of VARENUM) which describes the type
+	of variant which can be used to represent an object of the type described by
+	the receiver."
+
+	^VT_I4! !
+!TKindEnumAnalyzer categoriesFor: #baseClass!constants!private! !
+!TKindEnumAnalyzer categoriesFor: #constants!enumerating!public! !
+!TKindEnumAnalyzer categoriesFor: #name!accessing!public! !
+!TKindEnumAnalyzer categoriesFor: #suggestedGlobalName!accessing!private! !
+!TKindEnumAnalyzer categoriesFor: #vt!constants!public! !
+
+!TKindEnumAnalyzer class methodsFor!
+
+typekind
+	"Private - Answer the Automation TYPEKIND associated with the receiver."
+	
+	^TKIND_ENUM! !
+!TKindEnumAnalyzer class categoriesFor: #typekind!constants!private! !
+

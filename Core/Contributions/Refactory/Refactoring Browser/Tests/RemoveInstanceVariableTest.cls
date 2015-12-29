@@ -1,0 +1,47 @@
+"Filed out from Dolphin Smalltalk 2000 release 4.01"!
+
+RefactoringTest subclass: #RemoveInstanceVariableTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+RemoveInstanceVariableTest comment: ''!
+
+RemoveInstanceVariableTest guid: (GUID fromString: '{62348167-8106-437B-98FE-52A63F3B89AE}')!
+
+!RemoveInstanceVariableTest categoriesForClass!Refactory-Testing! !
+!RemoveInstanceVariableTest methodsFor!
+
+testModelRemoveInstanceVariable
+	| class |
+	model 
+		defineClass: 'nil subclass: #Object instanceVariableNames: ''foo1'' classVariableNames: '''' poolDictionaries: '''''.
+	class := model classNamed: #Object.
+	self assert: (class definesInstanceVariable: 'foo1').
+	self executeRefactoring: (RemoveInstanceVariableRefactoring 
+				model: model
+				variable: 'foo1'
+				class: class).
+	self deny: (class definesInstanceVariable: 'foo1')!
+
+testNonExistantName
+	self shouldFail: (RemoveInstanceVariableRefactoring variable: 'name1'
+				class: LintRuleTest)!
+
+testReferencedVariable
+	self shouldFail: (RemoveInstanceVariableRefactoring variable: 'name'
+				class: LintRuleTest)!
+
+testRemoveInstVar
+	| refactoring class |
+	refactoring := RemoveInstanceVariableRefactoring variable: 'foo1'
+				class: LintRuleTest.
+	class := refactoring model classNamed: #LintRuleTest.
+	self assert: (class definesInstanceVariable: 'foo1').
+	self executeRefactoring: refactoring.
+	self deny: (class definesInstanceVariable: 'foo1')! !
+!RemoveInstanceVariableTest categoriesFor: #testModelRemoveInstanceVariable!public!tests! !
+!RemoveInstanceVariableTest categoriesFor: #testNonExistantName!failure tests!public! !
+!RemoveInstanceVariableTest categoriesFor: #testReferencedVariable!failure tests!public! !
+!RemoveInstanceVariableTest categoriesFor: #testRemoveInstVar!public!tests! !
+

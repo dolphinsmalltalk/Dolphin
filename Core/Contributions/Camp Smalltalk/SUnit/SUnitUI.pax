@@ -1,0 +1,44 @@
+| package |
+package := Package name: 'SUnitUI'.
+package paxVersion: 1;
+	basicComment: ''.
+
+
+package classNames
+	add: #TestRunner;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\..\..\Object Arts\Dolphin\IDE\Base\Development System';
+	add: '..\..\..\Object Arts\Dolphin\Base\Dolphin';
+	add: '..\..\..\Object Arts\Dolphin\MVP\Models\List\Dolphin List Models';
+	add: '..\..\..\Object Arts\Dolphin\MVP\Presenters\List\Dolphin List Presenter';
+	add: '..\..\..\Object Arts\Dolphin\MVP\Base\Dolphin MVP Base';
+	add: '..\..\..\Object Arts\Dolphin\MVP\Type Converters\Dolphin Type Converters';
+	add: 'SUnit';
+	add: 'SUnitTests';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+Shell subclass: #TestRunner
+	instanceVariableNames: 'result lastPass'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+"End of package definition"!
+

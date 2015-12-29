@@ -1,0 +1,96 @@
+| package |
+package := Package name: 'Dolphin File System Watcher'.
+package paxVersion: 1;
+	basicComment: 'Dolphin Smalltalk File System Watcher
+Copyright (c) Object Arts Ltd, 2005
+
+This package contains classes to monitor the Windows file system for change such as the addition, removal and modification of files.  The FileSystemChangeReader class (and ancilliaries) make use of the Win32 ReadDirectoryChangesW API to monitor file system changes occurring within a specified directory and (optionally) its sub-directories.
+'.
+
+package basicPackageVersion: '6.1'.
+
+
+package classNames
+	add: #FILE_NOTIFY_INFORMATION;
+	add: #FileSystemChange;
+	add: #FileSystemChangeReader;
+	add: #FileSystemChangeStream;
+	add: #FileSystemWatcher;
+	yourself.
+
+package methodNames
+	add: #KernelLibrary -> #readDirectoryChangesW:lpBuffer:nBufferLength:bWatchSubtree:dwNotifyFilter:lpBytesReturned:lpOverlapped:lpCompletionRoutine:;
+	yourself.
+
+package globalNames
+	add: #FileSystemWatcherConstants;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\..\Base\Dolphin';
+	add: 'Dolphin Overlapped IO';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+Object subclass: #FileSystemChange
+	instanceVariableNames: 'time code fileNames'
+	classVariableNames: 'ActionMap'
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Object subclass: #FileSystemChangeReader
+	instanceVariableNames: 'handle directory watchSubDirs notificationMask callback buffer overlapStruct filters'
+	classVariableNames: 'ActionMap FileIOCompletionRoutineDescriptor'
+	poolDictionaries: 'FileSystemWatcherConstants Win32Constants Win32Errors'
+	classInstanceVariableNames: ''!
+ExternalStructure subclass: #FILE_NOTIFY_INFORMATION
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+FileSystemChangeReader subclass: #FileSystemChangeStream
+	instanceVariableNames: 'queue'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+FileSystemChangeReader subclass: #FileSystemWatcher
+	instanceVariableNames: 'events'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+!KernelLibrary methodsFor!
+
+readDirectoryChangesW: hDirectory lpBuffer: lpBuffer nBufferLength: nBufferLength bWatchSubtree: bWatchSubtree dwNotifyFilter: dwNotifyFilter lpBytesReturned: lpBytesReturned lpOverlapped: lpOverlapped lpCompletionRoutine: lpCompletionRoutine
+	"Invoke the ReadDirectoryChangesW() function of the module wrapped by the receiver.
+	Helpstring: retrieves information describing the changes occurring within a directory.
+
+		long __stdcall ReadDirectoryChangesW(
+			[in]long hDirectory,
+			[in, out]void* lpBuffer,
+			[in]unsigned long nBufferLength,
+			[in]BOOL bWatchSubtree,
+			[in]unsigned long dwNotifyFilter,
+			[out]unsigned long* lpBytesReturned,
+			[in]OVERLAPPED* lpOverlapped,
+			[in]long lpCompletionRoutine);"
+
+	<stdcall: sdword ReadDirectoryChangesW  sdword void* dword bool dword dword* OVERLAPPED* lpvoid>
+	^self invalidCall! !
+!KernelLibrary categoriesFor: #readDirectoryChangesW:lpBuffer:nBufferLength:bWatchSubtree:dwNotifyFilter:lpBytesReturned:lpOverlapped:lpCompletionRoutine:!**auto generated**!public! !
+
+"End of package definition"!
+

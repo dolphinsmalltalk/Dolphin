@@ -1,0 +1,34 @@
+"Filed out from Dolphin Smalltalk 2000 release 5.00"!
+
+Refactoring subclass: #MethodRefactoring
+	instanceVariableNames: 'class'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+MethodRefactoring guid: (GUID fromString: '{F93954E7-217F-4070-B44D-B7D1F1BC74D3}')!
+MethodRefactoring comment: ''!
+!MethodRefactoring categoriesForClass!Refactory-Refactorings! !
+!MethodRefactoring methodsFor!
+
+buildSelectorString: aSelector
+	aSelector argumentCount = 0 ifTrue: [^aSelector].
+	^self buildSelectorString: aSelector
+		withPermuteMap: (1 to: aSelector argumentCount)!
+
+buildSelectorString: aSelector withPermuteMap: anIntegerCollection
+	| stream keywords |
+	aSelector argumentCount == 0 ifTrue: [^aSelector asString].
+	stream := WriteStream on: String new.
+	keywords := aSelector keywords.
+	keywords with: anIntegerCollection
+		do: 
+			[:each :i | 
+			stream
+				nextPutAll: each;
+				nextPutAll: ' ``@arg';
+				nextPutAll: i printString;
+				nextPut: $ ].
+	^stream contents! !
+!MethodRefactoring categoriesFor: #buildSelectorString:!private! !
+!MethodRefactoring categoriesFor: #buildSelectorString:withPermuteMap:!private! !
+

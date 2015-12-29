@@ -1,0 +1,204 @@
+| package |
+package := Package name: 'Dolphin Literal Filer'.
+package paxVersion: 1;
+	basicComment: ''.
+
+package basicPackageVersion: '6.1'.
+
+
+package classNames
+	add: #STLDebugger;
+	add: #STLInFiler;
+	add: #STLOutFiler;
+	yourself.
+
+package methodNames
+	add: #ArrayedCollection -> #literalPrintOn:;
+	add: #Class -> #literalPrintOn:;
+	add: #Number -> #literalPrintOn:;
+	add: #Object -> #literalStoreArray;
+	add: #Object -> #literalStoreEvaluationOn:;
+	add: #Object -> #literalStoreEvaluationString;
+	add: #Object -> #literalStoreOn:;
+	add: #PoolConstantsDictionary -> #literalPrintOn:;
+	add: #String -> #literalPrintOn:;
+	add: #Symbol -> #literalPrintOn:;
+	add: 'Object class' -> #fromLiteralStoreArray:;
+	add: 'Object class' -> #fromLiteralStoreArray:context:;
+	add: 'Object class' -> #literalReadFrom:;
+	add: 'Object class' -> #literalReadFrom:context:;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\..\Base\Dolphin';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+STBInFiler subclass: #STLInFiler
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+STLInFiler subclass: #STLDebugger
+	instanceVariableNames: 'indentLevel traceStream printOffsets'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+STBOutFiler subclass: #STLOutFiler
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+!ArrayedCollection methodsFor!
+
+literalPrintOn: aWriteStream 
+	self printPrefixOn: aWriteStream.
+	self do: [:each | each literalPrintOn: aWriteStream] separatedBy: [aWriteStream space].
+	self printSuffixOn: aWriteStream! !
+!ArrayedCollection categoriesFor: #literalPrintOn:!public! !
+
+!Class methodsFor!
+
+literalPrintOn: aWriteStream 
+	aWriteStream
+		nextPutAll: '##(Smalltalk.';
+		display: self name;
+		nextPutAll: ') '! !
+!Class categoriesFor: #literalPrintOn:!public! !
+
+!Number methodsFor!
+
+literalPrintOn: aWriteStream 
+	self printOn: aWriteStream! !
+!Number categoriesFor: #literalPrintOn:!public! !
+
+!Object methodsFor!
+
+literalStoreArray
+	"Answers an Array representation of the receiver stored in a literal form.
+	This can be reconstituted using Object class>>fromLiteralStoreArray:"
+
+	| stream |
+	stream := Array writeStream: 128.
+	self literalStoreOn: stream.
+	^stream contents!
+
+literalStoreEvaluationOn: aCharacterStream 
+	"Stores the receiver in a <readableString> form on aStream that can be reconstituted by
+	evaluating the string. Uses the STL filing mechanism to achieve this. This operation
+	provides an alternative to the legacy #storeOn:/#storeString mechanism. While still used in
+	some parts of the image, #storeOn:, has NOT been implemented as a general case throughout
+	Dolphin. This is where #literalStoreEvaluationOn: can come in handy (although it is
+	difficult to supply a completely general case that will meet all needs)"
+
+	aCharacterStream nextPutAll: '(Object fromLiteralStoreArray: '.
+	self literalStoreArray literalPrintOn: aCharacterStream.
+	aCharacterStream
+		nextPut: $);
+		cr!
+
+literalStoreEvaluationString
+	"Stores the receiver in a <readableString> form that can be reconstituted by evaluating the
+	string. Uses the STL filing mechanism to achieve this. This operation provides an
+	alternative to the legacy #storeOn:/#storeString mechanism. While still used in some parts
+	of the image, #storeOn:, has NOT been implemented as a general case throughout Dolphin. This
+	is where #literalStoreEvaluationString can come in handy (although it is difficult to supply
+	a completely general case that will meet all needs)"
+
+	| stream |
+	stream := String writeStream.
+	self literalStoreEvaluationOn: stream.
+	^stream contents!
+
+literalStoreOn: aStream 
+	"Stores the receiver in a literal form on aStream that can be reconstituted using Object class>>literalReadFrom:.
+	Uses the STL filing mechanism to achieve this. This implementation is sufficient for all objects
+	that do not need to isolate themselves from their surroundings. Sub-classes may override this
+	method to perform such isolation"
+
+	(STLOutFiler on: aStream) nextPut: self! !
+!Object categoriesFor: #literalStoreArray!literal filing!public! !
+!Object categoriesFor: #literalStoreEvaluationOn:!literal filing!public! !
+!Object categoriesFor: #literalStoreEvaluationString!literal filing!public! !
+!Object categoriesFor: #literalStoreOn:!literal filing!public! !
+
+!Object class methodsFor!
+
+fromLiteralStoreArray: anArray 
+	"Answers an object read from its literal representation in anArray.
+	This must have been created using Object>>literalStoreBytes"
+
+	| stream |
+	stream := anArray readStream.
+	^self literalReadFrom: stream!
+
+fromLiteralStoreArray: anArray context: anObject 
+	"Answers an object read from its literal STL representation in anArray.
+	This must have been created using Object>>literalStoreArray"
+
+	| stream |
+	stream := anArray readStream.
+	^self literalReadFrom: stream context: anObject!
+
+literalReadFrom: aStream
+	"Answers an object read from its literal STL representation on aStream.
+	This must have been saved using Object>>literalStoreOn:"
+
+	^self literalReadFrom: aStream context: nil
+
+!
+
+literalReadFrom: aStream context: anObject 
+	"Answers an object read from its literal STL representation on aStream.
+	This must have been saved using Object>>literalStoreOn:"
+
+	^(STLInFiler on: aStream)
+		context: anObject;
+		next! !
+!Object class categoriesFor: #fromLiteralStoreArray:!literal filing!public! !
+!Object class categoriesFor: #fromLiteralStoreArray:context:!literal filing!public! !
+!Object class categoriesFor: #literalReadFrom:!literal filing!public! !
+!Object class categoriesFor: #literalReadFrom:context:!binary filing!literal filing!public! !
+
+!PoolConstantsDictionary methodsFor!
+
+literalPrintOn: aWriteStream 
+	aWriteStream
+		nextPutAll: '##(Smalltalk.';
+		display: self name;
+		nextPutAll: ') '! !
+!PoolConstantsDictionary categoriesFor: #literalPrintOn:!public! !
+
+!String methodsFor!
+
+literalPrintOn: aWriteStream 
+	"Note: 
+		String with: Character null
+	Prints incorrectly, so trim nulls"
+
+	self trimNulls printOn: aWriteStream! !
+!String categoriesFor: #literalPrintOn:!public! !
+
+!Symbol methodsFor!
+
+literalPrintOn: aWriteStream 
+	self printOn: aWriteStream! !
+!Symbol categoriesFor: #literalPrintOn:!public! !
+
+"End of package definition"!
+

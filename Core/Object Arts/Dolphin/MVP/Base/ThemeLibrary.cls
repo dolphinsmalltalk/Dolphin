@@ -1,0 +1,1075 @@
+"Filed out from Dolphin Smalltalk X6.1"!
+
+ExternalLibrary subclass: #ThemeLibrary
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: 'ThemeConstants'
+	classInstanceVariableNames: ''!
+ThemeLibrary guid: (GUID fromString: '{FB91DF3F-4CB4-48A2-ADEE-A75B9A4D30A2}')!
+ThemeLibrary comment: 'ThemeLibrary is the <ExternalLibrary> class to represent the dynamic link library, ''UXTHEME.DLL''.It was generated generated from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library. It contains methods for each of the functions defined by the corresponding module in that type library.
+
+The type library contains the following helpstring for this module
+	"Windows Theme Library. Only available in Windows XP and above."
+
+Warning: This comment was automatically generated from the module''s type information, but any changes made here will not be overwritten if the wrapper class is regenerated.
+
+IDL definition follows:
+
+[
+	dllname("UXTHEME.DLL"), 
+	uuid(FB91DF3F-4CB4-48A2-ADEE-A75B9A4D30A2), 
+	helpstring("Windows Theme Library. Only available in Windows XP and above.")
+]
+module Theme
+{
+	[helpstring("Draw a grayed-out string")] const unsigned long DTT_GRAYED = 1;
+	[helpstring("Theme background segment hit test flag (default)")] const unsigned long HTTB_BACKGROUNDSEG = 0;
+	[helpstring("Fixed border hit test option")] const unsigned long HTTB_FIXEDBORDER = 2;
+	[helpstring("Caption hit test option.")] const unsigned long HTTB_CAPTION = 4;
+	[helpstring("Hit test left resizing border")] const unsigned long HTTB_RESIZINGBORDER_LEFT = 16;
+	[helpstring("Hit test top resizing border")] const unsigned long HTTB_RESIZINGBORDER_TOP = 32;
+	[helpstring("Hit test right resizing border")] const unsigned long HTTB_RESIZINGBORDER_RIGHT = 64;
+	[helpstring("Hit test bottom resizing border")] const unsigned long HTTB_RESIZINGBORDER_BOTTOM = 128;
+	[helpstring("Resizing border hit test flags")] const unsigned long HTTB_RESIZINGBORDER = 240;
+	[helpstring("Resizing border is specified as a template, not just window edges.")] const unsigned long HTTB_SIZINGTEMPLATE = 256;
+	[helpstring("Use system resizing border width rather than theme content margins.")] const unsigned long HTTB_SYSTEMSIZINGMARGINS = 512;
+	[helpstring("disable background texturing")] const unsigned long ETDT_DISABLE = 1;
+	[helpstring("enable the theme-defined dialog background texturing")] const unsigned long ETDT_ENABLE = 2;
+	[helpstring("use the Tab texture (should be combined with ETDT_ENABLE)")] const unsigned long ETDT_USETABTEXTURE = 4;
+	[helpstring("enable the theme-defined background texturing using the Tab texture")] const unsigned long ETDT_ENABLETAB = 6;
+	const unsigned long STAP_ALLOW_NONCLIENT = 1;
+	const unsigned long STAP_ALLOW_CONTROLS = 2;
+	const unsigned long STAP_ALLOW_WEBCONTENT = 4;
+	[helpstring("rcClip has been specified")] const unsigned long DTBG_CLIPRECT = 1;
+	[helpstring("draw transparent/alpha images as solid")] const unsigned long DTBG_DRAWSOLID = 2;
+	[helpstring("don''t draw border of part")] const unsigned long DTBG_OMITBORDER = 4;
+	[helpstring("don''t draw content area of part")] const unsigned long DTBG_OMITCONTENT = 8;
+	[helpstring("TRUE if calling to compute region")] const unsigned long DTBG_COMPUTINGREGION = 16;
+	[helpstring("assume the hdc is mirrorred and flip images as appropriate (currently only supported for bgtype=imagefile)")] const unsigned long DTBG_MIRRORDC = 32;
+
+	[entry(0x60000000), helpstring("Open the theme data for the specified HWND and semi-colon separated list of class names.")]
+	HTHEME __stdcall OpenThemeData(
+		[in]HANDLE hwnd,
+		[in]LPWSTR pszClassList);
+	[entry(0x60000001), helpstring("Closes the theme data handle.")]
+	HRESULT __stdcall CloseThemeData(
+		[in]HTHEME HTHEME);
+	[entry(0x60000002), helpstring("Draws the theme-specified border and fill for the ''iPartId'' and ''iStateId''.")]
+	HRESULT __stdcall DrawThemeBackground(
+		[in]HTHEME HTHEME,
+		[in]HANDLE hDC,
+		[in]int iPartId,
+		[in]int iStateId,
+		[in]RECT* pRect,
+		[in]RECT* pClipRect);
+	[entry(0x60000003), helpstring("Draws the text using the theme-specified color and font for the ''iPartId'' and ''iStateId''")]
+	HRESULT __stdcall DrawThemeText(
+		[in]HTHEME HTHEME,
+		[in]HANDLE hDC,
+		[in]int iPartId,
+		[in]int iStateId,
+		[in]LPWSTR pszText,
+		[in]int iCharCount,
+		[in]unsigned long dwTextFlags,
+		[in]unsigned long dwTextFlags2,
+		[in]RECT* pRect);
+	[entry(0x60000004), helpstring("Gets the size of the content for the theme-defined background.  This is usually the area inside the borders or Margins.")]
+	HRESULT __stdcall GetThemeBackgroundContentRect(
+		[in]HTHEME HTHEME,
+		[in]HANDLE hDC,
+		[in]int iPartId,
+		[in]int iStateId,
+		[in]RECT* pBoundingRect,
+		[out]RECT* pContentRect);
+	[entry(0x60000005), helpstring("Calculates the size/location of the theme-specified background based on the ''pContentRect''.")]
+	HRESULT __stdcall GetThemeBackgroundExtent(
+		[in]HTHEME HTHEME,
+		[in]HANDLE hDC,
+		[in]int iPartId,
+		[in]int iStateId,
+		[in]RECT* pContentRect,
+		[out]RECT* pExtentRect);
+	[entry(0x60000006), helpstring("Returns the specified size of the theme part")]
+	HRESULT __stdcall GetThemePartSize(
+		[in]HTHEME HTHEME,
+		[in]HANDLE hDC,
+		[in]int iPartId,
+		[in]int iStateId,
+		[in]RECT* prc,
+		[in]THEMESIZE eSize,
+		[out]SIZE* psz);
+	[entry(0x60000007), helpstring("Calculates the size/location of the specified text when rendered in the Theme Font")]
+	HRESULT __stdcall GetThemeTextExtent(
+		[in]HTHEME HTHEME,
+		[in]HANDLE hDC,
+		[in]int iPartId,
+		[in]int iStateId,
+		[in]LPWSTR pszText,
+		[in]int iCharCount,
+		[in]unsigned long dwTextFlags,
+		[in]RECT* pBoundingRect,
+		[out]RECT* pExtentRect);
+	[entry(0x60000008), helpstring("Returns info about the theme-specified font for the part/state passed in.")]
+	HRESULT __stdcall GetThemeTextMetrics(
+		[in]HTHEME HTHEME,
+		[in]HANDLE hDC,
+		[in]int iPartId,
+		[in]int iStateId,
+		[out]TEXTMETRIC* ptm);
+	[entry(0x60000009), helpstring("Computes the region for a regular or partially transparent theme-specified background that is bound by the specified ''pRect''.")]
+	HRESULT __stdcall GetThemeBackgroundRegion(
+		[in]HTHEME HTHEME,
+		[in]HANDLE hDC,
+		[in]int iPartId,
+		[in]int iStateId,
+		[in]RECT* pRect,
+		[out]long* pRegion);
+	[entry(0x6000000a), helpstring("Returns a HitTestCode (a subset of the values returned by WM_NCHITTEST) for the point ''ptTest'' within the theme-specified background (bound by pRect).")]
+	HRESULT __stdcall HitTestThemeBackground(
+		[in]HTHEME HTHEME,
+		[in]HANDLE hDC,
+		[in]int iPartId,
+		[in]int iStateId,
+		[in]unsigned long dwOptions,
+		[in]RECT* pRect,
+		[in]long hrgn,
+		[in]POINT ptTest,
+		[out]unsigned short* pwHitTestCode);
+	[entry(0x6000000b), helpstring("Similar to the DrawEdge() API, but uses part colors and is high-DPI aware")]
+	HRESULT __stdcall DrawThemeEdge(
+		[in]HTHEME HTHEME,
+		[in]HANDLE hDC,
+		[in]int iPartId,
+		[in]int iStateId,
+		[in]RECT* pDestRect,
+		[in]unsigned int uEdge,
+		[in]unsigned int uFlags,
+		[out]RECT* pContentRect);
+	[entry(0x6000000c), helpstring("Draws an image within an imagelist based on a (possible) theme-defined effect. ")]
+	HRESULT __stdcall DrawThemeIcon(
+		[in]HTHEME HTHEME,
+		[in]HANDLE hDC,
+		[in]int iPartId,
+		[in]int iStateId,
+		[in]RECT* pRect,
+		[in]HANDLE himl,
+		[in]int iImageIndex);
+	[entry(0x6000000d), helpstring("Returns TRUE if the theme has defined parameters for the specified ''iPartId'' and ''iStateId''.")]
+	BOOL __stdcall IsThemePartDefined(
+		[in]HTHEME HTHEME,
+		[in]int iPartId,
+		[in]int iStateId);
+	[entry(0x6000000e), helpstring("Returns TRUE if the theme specified background for the part/state has transparent pieces or alpha-blended pieces.")]
+	BOOL __stdcall IsThemeBackgroundPartiallyTransparent(
+		[in]HTHEME HTHEME,
+		[in]int iPartId,
+		[in]int iStateId);
+	[entry(0x6000000f), helpstring("Get the value for the specified COLOR property")]
+	HRESULT __stdcall GetThemeColor(
+		[in]HTHEME HTHEME,
+		[in]int iPartId,
+		[in]int iStateId,
+		[in]int iPropId,
+		[out]COLORREF* pColor);
+	[entry(0x60000010), helpstring("Get the value for the specified metric/size property")]
+	HRESULT __stdcall GetThemeMetric(
+		[in]HTHEME HTHEME,
+		[in]HANDLE hDC,
+		[in]int iPartId,
+		[in]int iStateId,
+		[in]int iPropId,
+		[out]int* piVal);
+	[entry(0x60000011), helpstring("Get the value for the specified string property")]
+	HRESULT __stdcall GetThemeString(
+		[in]HTHEME HTHEME,
+		[in]int iPartId,
+		[in]int iStateId,
+		[in]int iPropId,
+		[out]LPWSTR pszBuff,
+		[in]int cchMaxBuffChars);
+	[entry(0x60000012), helpstring("Get the value for the specified BOOL property")]
+	HRESULT __stdcall GetThemeBool(
+		[in]HTHEME HTHEME,
+		[in]int iPartId,
+		[in]int iStateId,
+		[in]int iPropId,
+		[out]long* pfVal);
+	[entry(0x60000013), helpstring("Get the value for the specified int property")]
+	HRESULT __stdcall GetThemeInt(
+		[in]HTHEME HTHEME,
+		[in]int iPartId,
+		[in]int iStateId,
+		[in]int iPropId,
+		[out]int* piVal);
+	[entry(0x60000014), helpstring("Get the value for the specified ENUM property")]
+	HRESULT __stdcall GetThemeEnumValue(
+		[in]HTHEME HTHEME,
+		[in]int iPartId,
+		[in]int iStateId,
+		[in]int iPropId,
+		[out]int* piVal);
+	[entry(0x60000015), helpstring("Get the value for the specified position property")]
+	HRESULT __stdcall GetThemePosition(
+		[in]HTHEME HTHEME,
+		[in]int iPartId,
+		[in]int iStateId,
+		[in]int iPropId,
+		[out]POINT* pPoint);
+	[entry(0x60000016), helpstring("Get the value for the specified font property")]
+	HRESULT __stdcall GetThemeFont(
+		[in]HTHEME HTHEME,
+		[in]HANDLE hDC,
+		[in]int iPartId,
+		[in]int iStateId,
+		[in]int iPropId,
+		[out]LOGFONT* pFont);
+	[entry(0x60000017), helpstring("Get the value for the specified RECT property")]
+	HRESULT __stdcall GetThemeRect(
+		[in]HTHEME HTHEME,
+		[in]int iPartId,
+		[in]int iStateId,
+		[in]int iPropId,
+		[out]RECT* pRect);
+	[entry(0x60000018), helpstring("Get the value for the specified MARGINS property")]
+	HRESULT __stdcall GetThemeMargins(
+		[in]HTHEME HTHEME,
+		[in]HANDLE hDC,
+		[in]int iPartId,
+		[in]int iStateId,
+		[in]int iPropId,
+		[in]RECT* prc,
+		[out]MARGINS* pMargins);
+	[entry(0x60000019), helpstring("Get the value for the specified INTLIST struct")]
+	HRESULT __stdcall GetThemeIntList(
+		[in]HTHEME HTHEME,
+		[in]int iPartId,
+		[in]int iStateId,
+		[in]int iPropId,
+		[out]INTLIST* pIntList);
+	[entry(0x6000001a), helpstring("Searches for the specified theme property and sets ''pOrigin'' to indicate where it was found (or not found)")]
+	HRESULT __stdcall GetThemePropertyOrigin(
+		[in]HTHEME HTHEME,
+		[in]int iPartId,
+		[in]int iStateId,
+		[in]int iPropId,
+		[out]PROPERTYORIGIN* pOrigin);
+	[entry(0x6000001b), helpstring("Redirects an existing Window to use a different section of the current theme information than its class normally asks for")]
+	HRESULT __stdcall SetWindowTheme(
+		[in]HANDLE hwnd,
+		[in]LPWSTR pszSubAppName,
+		[in]LPWSTR pszSubIdList);
+	[entry(0x6000001c), helpstring("Get the value for the specified FILENAME property")]
+	HRESULT __stdcall GetThemeFilename(
+		[in]HTHEME HTHEME,
+		[in]int iPartId,
+		[in]int iStateId,
+		[in]int iPropId,
+		[out]LPWSTR pszThemeFileName,
+		[in]int cchMaxBuffChars);
+	[entry(0x6000001d), helpstring("Get the value of the specified System color")]
+	COLORREF __stdcall GetThemeSysColor(
+		[in]HTHEME HTHEME,
+		[in]int iColorId);
+	[entry(0x6000001e), helpstring("Get the brush for the specified System color")]
+	long __stdcall GetThemeSysColorBrush(
+		[in]HTHEME HTHEME,
+		[in]int iColorId);
+	[entry(0x6000001f), helpstring("Get the boolean value of specified System metric")]
+	BOOL __stdcall GetThemeSysBool(
+		[in]HTHEME HTHEME,
+		[in]int iBoolId);
+	[entry(0x60000020), helpstring("Get the value of the specified System size metric. (scaled for the current logical screen dpi)")]
+	int __stdcall GetThemeSysSize(
+		[in]HTHEME HTHEME,
+		[in]int iSizeId);
+	[entry(0x60000021), helpstring("Get the LOGFONT for the specified System font.")]
+	HRESULT __stdcall GetThemeSysFont(
+		[in]HTHEME HTHEME,
+		[in]int iFontId,
+		[out]LOGFONT* plf);
+	[entry(0x60000022), helpstring("Get the value of specified System string metric.")]
+	HRESULT __stdcall GetThemeSysString(
+		[in]HTHEME HTHEME,
+		[in]int iStringId,
+		[out]LPWSTR pszStringBuff,
+		[in]int cchMaxStringChars);
+	[entry(0x60000023), helpstring("Get the value of specified System int.")]
+	HRESULT __stdcall GetThemeSysInt(
+		[in]HTHEME HTHEME,
+		[in]int iIntId,
+		[out]int* piValue);
+	[entry(0x60000024), helpstring("Can be used to test if a system theme is active for the current user session.")]
+	BOOL __stdcall IsThemeActive();
+	[entry(0x60000025), helpstring("Returns TRUE if a theme is active and available to the current process")]
+	BOOL __stdcall IsAppThemed();
+	[entry(0x60000026), helpstring("If window is themed, returns its most recent HTHEME from OpenThemeData() - otherwise, returns NULL.")]
+	HTHEME __stdcall GetWindowTheme(
+		[in]HANDLE hwnd);
+	[entry(0x60000027), helpstring("Enables/disables dialog background theme.")]
+	HRESULT __stdcall EnableThemeDialogTexture(
+		[in]HANDLE hwnd,
+		[in]unsigned long dwFlags);
+	[entry(0x60000028), helpstring("Reports whether the dialog supports background texturing.")]
+	BOOL __stdcall IsThemeDialogTextureEnabled(
+		[in]HANDLE hwnd);
+	[entry(0x60000029), helpstring("Returns the app property flags that control theming")]
+	unsigned long __stdcall GetThemeAppProperties();
+	[entry(0x6000002a), helpstring("Sets the flags that control theming within the app")]
+	void __stdcall SetThemeAppProperties(
+		[in]unsigned long dwFlags);
+	[entry(0x6000002b), helpstring("Get the name of the current theme in-use. ")]
+	HRESULT __stdcall GetCurrentThemeName(
+		[out]LPWSTR pszThemeFileName,
+		[in]int cchMaxNameChars,
+		[out]LPWSTR pszColorBuff,
+		[in]int cchMaxColorChars,
+		[out]LPWSTR pszSizeBuff,
+		[in]int cchMaxSizeChars);
+	[entry(0x6000002c), helpstring("Get the value for the specified property name from the [documentation] section of the themes.ini file for the specified theme. ")]
+	HRESULT __stdcall GetThemeDocumentationProperty(
+		[in]LPWSTR pszThemeName,
+		[in]LPWSTR pszPropertyName,
+		[out]LPWSTR pszValueBuff,
+		[in]int cchMaxValChars);
+	[entry(0x6000002d), helpstring("Used by partially-transparent or alpha-blended child controls to draw the part of their parent that they appear in front of.")]
+	HRESULT __stdcall DrawThemeParentBackground(
+		[in]HANDLE hwnd,
+		[in]HANDLE hDC,
+		[in, optional]RECT* prc);
+	[entry(0x6000002e), helpstring("Enables or disables themeing for the current user in the current and future sessions.")]
+	HRESULT __stdcall EnableTheming(
+		[in]BOOL fEnable);
+	[entry(0x6000002f), helpstring("Draws the theme-specified border and fill for the ''iPartId'' and ''iStateId''.")]
+	HRESULT __stdcall DrawThemeBackgroundEx(
+		[in]HTHEME HTHEME,
+		[in]HANDLE hDC,
+		[in]int iPartId,
+		[in]int iStateId,
+		[in]RECT* pRect,
+		[in]DTBGOPTS* pOptions);
+};
+'!
+!ThemeLibrary categoriesForClass!Win32-Modules! !
+!ThemeLibrary methodsFor!
+
+closeThemeData: htheme
+	"Invoke the CloseThemeData() function of the module wrapped by the receiver.
+	Helpstring: Closes the theme data handle. Return value is HRESULT error code.
+
+		long __stdcall CloseThemeData(
+			[in]HTHEME HTHEME);"
+
+	<stdcall: sdword CloseThemeData handle>
+	^self invalidCall!
+
+drawThemeBackground: htheme hdc: hdc iPartId: iPartId iStateId: iStateId pRect: pRect pClipRect: pClipRect
+	"Invoke the DrawThemeBackground() function of the module wrapped by the receiver.
+	Helpstring: Draws the theme-specified border and fill for the 'iPartId' and 'iStateId'.
+
+		HRESULT __stdcall DrawThemeBackground(
+			[in]HTHEME HTHEME,
+			[in]HDC HDC,
+			[in]int iPartId,
+			[in]int iStateId,
+			[in]RECT* pRect,
+			[in]RECT* pClipRect);"
+
+	<stdcall: hresult DrawThemeBackground handle handle sdword sdword RECT* RECT*>
+	^self invalidCall!
+
+drawThemeBackgroundEx: htheme hdc: hdc iPartId: iPartId iStateId: iStateId pRect: pRect pOptions: pOptions
+	"Invoke the DrawThemeBackgroundEx() function of the module wrapped by the receiver.
+	Helpstring: Draws the theme-specified border and fill for the 'iPartId' and 'iStateId'.
+
+		HRESULT __stdcall DrawThemeBackgroundEx(
+			[in]HTHEME HTHEME,
+			[in]HDC HDC,
+			[in]int iPartId,
+			[in]int iStateId,
+			[in]RECT* pRect,
+			[in]DTBGOPTS* pOptions);"
+
+	<stdcall: hresult DrawThemeBackgroundEx handle handle sdword sdword RECT* DTBGOPTS*>
+	^self invalidCall!
+
+drawThemeEdge: htheme hdc: hdc iPartId: iPartId iStateId: iStateId pDestRect: pDestRect uEdge: uEdge uFlags: uFlags pContentRect: pContentRect
+	"Invoke the DrawThemeEdge() function of the module wrapped by the receiver.
+	Helpstring: Similar to the DrawEdge() API, but uses part colors and is high-DPI aware
+
+		HRESULT __stdcall DrawThemeEdge(
+			[in]HTHEME HTHEME,
+			[in]HDC HDC,
+			[in]int iPartId,
+			[in]int iStateId,
+			[in]RECT* pDestRect,
+			[in]UINT uEdge,
+			[in]UINT uFlags,
+			[out]RECT* pContentRect);"
+
+	<stdcall: hresult DrawThemeEdge handle handle sdword sdword RECT* dword dword RECT*>
+	^self invalidCall!
+
+drawThemeIcon: htheme hdc: hdc iPartId: iPartId iStateId: iStateId pRect: pRect himl: himl iImageIndex: iImageIndex
+	"Invoke the DrawThemeIcon() function of the module wrapped by the receiver.
+	Helpstring: Draws an image within an imagelist based on a (possible) theme-defined effect. 
+
+		HRESULT __stdcall DrawThemeIcon(
+			[in]HTHEME HTHEME,
+			[in]HDC HDC,
+			[in]int iPartId,
+			[in]int iStateId,
+			[in]RECT* pRect,
+			[in]HIMAGELIST himl,
+			[in]int iImageIndex);"
+
+	<stdcall: hresult DrawThemeIcon handle handle sdword sdword RECT* handle sdword>
+	^self invalidCall!
+
+drawThemeParentBackground: hwnd hdc: hdc prc: prc
+	"Invoke the DrawThemeParentBackground() function of the module wrapped by the receiver.
+	Helpstring: Used by partially-transparent or alpha-blended child controls to draw the part of their parent that they appear in front of.
+
+		HRESULT __stdcall DrawThemeParentBackground(
+			[in]HWND HWND,
+			[in]HDC HDC,
+			[in, optional]RECT* prc);"
+
+	<stdcall: hresult DrawThemeParentBackground handle handle RECT*>
+	^self invalidCall!
+
+drawThemeText: htheme hdc: hdc iPartId: iPartId iStateId: iStateId pszText: pszText iCharCount: iCharCount dwTextFlags: dwTextFlags dwTextFlags2: dwTextFlags2 pRect: pRect
+	"Invoke the DrawThemeText() function of the module wrapped by the receiver.
+	Helpstring: Draws the text using the theme-specified color and font for the 'iPartId' and 'iStateId'
+
+		HRESULT __stdcall DrawThemeText(
+			[in]HTHEME HTHEME,
+			[in]HDC HDC,
+			[in]int iPartId,
+			[in]int iStateId,
+			[in]LPWSTR pszText,
+			[in]int iCharCount,
+			[in]DWORD dwTextFlags,
+			[in]DWORD dwTextFlags2,
+			[in]RECT* pRect);"
+
+	<stdcall: hresult DrawThemeText handle handle sdword sdword lpwstr sdword dword dword RECT*>
+	^self invalidCall!
+
+enableThemeDialogTexture: hwnd dwFlags: dwFlags
+	"Invoke the EnableThemeDialogTexture() function of the module wrapped by the receiver.
+	Helpstring: Enables/disables dialog background theme.
+
+		HRESULT __stdcall EnableThemeDialogTexture(
+			[in]HWND HWND,
+			[in]DWORD dwFlags);"
+
+	<stdcall: hresult EnableThemeDialogTexture handle dword>
+	^self invalidCall!
+
+enableTheming: fEnable
+	"Invoke the EnableTheming() function of the module wrapped by the receiver.
+	Helpstring: Enables or disables themeing for the current user in the current and future sessions.
+
+		HRESULT __stdcall EnableTheming(
+			[in]BOOL fEnable);"
+
+	<stdcall: hresult EnableTheming bool>
+	^self invalidCall!
+
+getCurrentThemeName: pszThemeFileName cchMaxNameChars: cchMaxNameChars pszColorBuff: pszColorBuff cchMaxColorChars: cchMaxColorChars pszSizeBuff: pszSizeBuff cchMaxSizeChars: cchMaxSizeChars
+	"Invoke the GetCurrentThemeName() function of the module wrapped by the receiver.
+	Helpstring: Get the name of the current theme in-use. 
+
+		HRESULT __stdcall GetCurrentThemeName(
+			[out]LPWSTR pszThemeFileName,
+			[in]int cchMaxNameChars,
+			[out]LPWSTR pszColorBuff,
+			[in]int cchMaxColorChars,
+			[out]LPWSTR pszSizeBuff,
+			[in]int cchMaxSizeChars);"
+
+	<stdcall: hresult GetCurrentThemeName lpwstr sdword lpwstr sdword lpwstr sdword>
+	^self invalidCall!
+
+getThemeAppProperties
+	"Invoke the GetThemeAppProperties() function of the module wrapped by the receiver.
+	Helpstring: Returns the app property flags that control theming
+
+		DWORD __stdcall GetThemeAppProperties();"
+
+	<stdcall: dword GetThemeAppProperties>
+	^self invalidCall!
+
+getThemeBackgroundContentRect: htheme hdc: hdc iPartId: iPartId iStateId: iStateId pBoundingRect: pBoundingRect pContentRect: pContentRect
+	"Invoke the GetThemeBackgroundContentRect() function of the module wrapped by the receiver.
+	Helpstring: Gets the size of the content for the theme-defined background.  This is usually the area inside the borders or Margins.
+
+		HRESULT __stdcall GetThemeBackgroundContentRect(
+			[in]HTHEME HTHEME,
+			[in]HDC HDC,
+			[in]int iPartId,
+			[in]int iStateId,
+			[in]RECT* pBoundingRect,
+			[out]RECT* pContentRect);"
+
+	<stdcall: hresult GetThemeBackgroundContentRect handle handle sdword sdword RECT* RECT*>
+	^self invalidCall!
+
+getThemeBackgroundExtent: htheme hdc: hdc iPartId: iPartId iStateId: iStateId pContentRect: pContentRect pExtentRect: pExtentRect
+	"Invoke the GetThemeBackgroundExtent() function of the module wrapped by the receiver.
+	Helpstring: Calculates the size/location of the theme-specified background based on the 'pContentRect'.
+
+		HRESULT __stdcall GetThemeBackgroundExtent(
+			[in]HTHEME HTHEME,
+			[in]HDC HDC,
+			[in]int iPartId,
+			[in]int iStateId,
+			[in]RECT* pContentRect,
+			[out]RECT* pExtentRect);"
+
+	<stdcall: hresult GetThemeBackgroundExtent handle handle sdword sdword RECT* RECT*>
+	^self invalidCall!
+
+getThemeBackgroundRegion: htheme hdc: hdc iPartId: iPartId iStateId: iStateId pRect: pRect pRegion: pRegion
+	"Invoke the GetThemeBackgroundRegion() function of the module wrapped by the receiver.
+	Helpstring: Computes the region for a regular or partially transparent theme-specified background that is bound by the specified 'pRect'.
+
+		HRESULT __stdcall GetThemeBackgroundRegion(
+			[in]HTHEME HTHEME,
+			[in]HDC HDC,
+			[in]int iPartId,
+			[in]int iStateId,
+			[in]RECT* pRect,
+			[out]HRGN* pRegion);"
+
+	<stdcall: hresult GetThemeBackgroundRegion handle handle sdword sdword RECT* handle*>
+	^self invalidCall!
+
+getThemeBool: htheme iPartId: iPartId iStateId: iStateId iPropId: iPropId pfVal: pfVal
+	"Invoke the GetThemeBool() function of the module wrapped by the receiver.
+	Helpstring: Get the value for the specified BOOL property
+
+		HRESULT __stdcall GetThemeBool(
+			[in]HTHEME HTHEME,
+			[in]int iPartId,
+			[in]int iStateId,
+			[in]int iPropId,
+			[out]BOOL* pfVal);"
+
+	<stdcall: hresult GetThemeBool handle sdword sdword sdword bool*>
+	^self invalidCall!
+
+getThemeColor: htheme iPartId: iPartId iStateId: iStateId iPropId: iPropId pColor: pColor
+	"Invoke the GetThemeColor() function of the module wrapped by the receiver.
+	Helpstring: Get the value for the specified COLOR property
+
+		HRESULT __stdcall GetThemeColor(
+			[in]HTHEME HTHEME,
+			[in]int iPartId,
+			[in]int iStateId,
+			[in]int iPropId,
+			[out]COLORREF* pColor);"
+
+	<stdcall: hresult GetThemeColor handle sdword sdword sdword dword*>
+	^self invalidCall!
+
+getThemeDocumentationProperty: pszThemeName pszPropertyName: pszPropertyName pszValueBuff: pszValueBuff cchMaxValChars: cchMaxValChars
+	"Invoke the GetThemeDocumentationProperty() function of the module wrapped by the receiver.
+	Helpstring: Get the value for the specified property name from the [documentation] section of the themes.ini file for the specified theme. 
+
+		HRESULT __stdcall GetThemeDocumentationProperty(
+			[in]LPWSTR pszThemeName,
+			[in]LPWSTR pszPropertyName,
+			[out]LPWSTR pszValueBuff,
+			[in]int cchMaxValChars);"
+
+	<stdcall: hresult GetThemeDocumentationProperty lpwstr lpwstr lpwstr sdword>
+	^self invalidCall!
+
+getThemeEnumValue: htheme iPartId: iPartId iStateId: iStateId iPropId: iPropId piVal: piVal
+	"Invoke the GetThemeEnumValue() function of the module wrapped by the receiver.
+	Helpstring: Get the value for the specified ENUM property
+
+		HRESULT __stdcall GetThemeEnumValue(
+			[in]HTHEME HTHEME,
+			[in]int iPartId,
+			[in]int iStateId,
+			[in]int iPropId,
+			[out]int* piVal);"
+
+	<stdcall: hresult GetThemeEnumValue handle sdword sdword sdword sdword*>
+	^self invalidCall!
+
+getThemeFilename: htheme iPartId: iPartId iStateId: iStateId iPropId: iPropId pszThemeFileName: pszThemeFileName cchMaxBuffChars: cchMaxBuffChars
+	"Invoke the GetThemeFilename() function of the module wrapped by the receiver.
+	Helpstring: Get the value for the specified FILENAME property
+
+		HRESULT __stdcall GetThemeFilename(
+			[in]HTHEME HTHEME,
+			[in]int iPartId,
+			[in]int iStateId,
+			[in]int iPropId,
+			[out]LPWSTR pszThemeFileName,
+			[in]int cchMaxBuffChars);"
+
+	<stdcall: hresult GetThemeFilename handle sdword sdword sdword lpwstr sdword>
+	^self invalidCall!
+
+getThemeFont: htheme hdc: hdc iPartId: iPartId iStateId: iStateId iPropId: iPropId pFont: pFont
+	"Invoke the GetThemeFont() function of the module wrapped by the receiver.
+	Helpstring: Get the value for the specified font property
+
+		HRESULT __stdcall GetThemeFont(
+			[in]HTHEME HTHEME,
+			[in]HDC HDC,
+			[in]int iPartId,
+			[in]int iStateId,
+			[in]int iPropId,
+			[out]LOGFONT* pFont);"
+
+	<stdcall: hresult GetThemeFont handle handle sdword sdword sdword LOGFONT*>
+	^self invalidCall!
+
+getThemeInt: htheme iPartId: iPartId iStateId: iStateId iPropId: iPropId piVal: piVal
+	"Invoke the GetThemeInt() function of the module wrapped by the receiver.
+	Helpstring: Get the value for the specified int property
+
+		HRESULT __stdcall GetThemeInt(
+			[in]HTHEME HTHEME,
+			[in]int iPartId,
+			[in]int iStateId,
+			[in]int iPropId,
+			[out]int* piVal);"
+
+	<stdcall: hresult GetThemeInt handle sdword sdword sdword sdword*>
+	^self invalidCall!
+
+getThemeIntList: htheme iPartId: iPartId iStateId: iStateId iPropId: iPropId pIntList: pIntList
+	"Invoke the GetThemeIntList() function of the module wrapped by the receiver.
+	Helpstring: Get the value for the specified INTLIST struct
+
+		HRESULT __stdcall GetThemeIntList(
+			[in]HTHEME HTHEME,
+			[in]int iPartId,
+			[in]int iStateId,
+			[in]int iPropId,
+			[out]INTLIST* pIntList);"
+
+	<stdcall: hresult GetThemeIntList handle sdword sdword sdword INTLIST*>
+	^self invalidCall!
+
+getThemeMargins: htheme hdc: hdc iPartId: iPartId iStateId: iStateId iPropId: iPropId prc: prc pMargins: pMargins
+	"Invoke the GetThemeMargins() function of the module wrapped by the receiver.
+	Helpstring: Get the value for the specified MARGINS property
+
+		HRESULT __stdcall GetThemeMargins(
+			[in]HTHEME HTHEME,
+			[in]HDC HDC,
+			[in]int iPartId,
+			[in]int iStateId,
+			[in]int iPropId,
+			[in]RECT* prc,
+			[out]MARGINS* pMargins);"
+
+	<stdcall: hresult GetThemeMargins handle handle sdword sdword sdword RECT* MARGINS*>
+	^self invalidCall!
+
+getThemeMetric: htheme hdc: hdc iPartId: iPartId iStateId: iStateId iPropId: iPropId piVal: piVal
+	"Invoke the GetThemeMetric() function of the module wrapped by the receiver.
+	Helpstring: Get the value for the specified metric/size property
+
+		HRESULT __stdcall GetThemeMetric(
+			[in]HTHEME HTHEME,
+			[in]HDC HDC,
+			[in]int iPartId,
+			[in]int iStateId,
+			[in]int iPropId,
+			[out]int* piVal);"
+
+	<stdcall: hresult GetThemeMetric handle handle sdword sdword sdword sdword*>
+	^self invalidCall!
+
+getThemePartSize: htheme hdc: hdc iPartId: iPartId iStateId: iStateId prc: prc eSize: eSize psz: psz
+	"Invoke the GetThemePartSize() function of the module wrapped by the receiver.
+	Helpstring: Returns the specified size of the theme part
+
+		HRESULT __stdcall GetThemePartSize(
+			[in]HTHEME HTHEME,
+			[in]HDC HDC,
+			[in]int iPartId,
+			[in]int iStateId,
+			[in]RECT* prc,
+			[in]THEMESIZE eSize,
+			[out]SIZE* psz);"
+
+	<stdcall: hresult GetThemePartSize handle handle sdword sdword RECT* sdword SIZE*>
+	^self invalidCall!
+
+getThemePosition: htheme iPartId: iPartId iStateId: iStateId iPropId: iPropId pPoint: pPoint
+	"Invoke the GetThemePosition() function of the module wrapped by the receiver.
+	Helpstring: Get the value for the specified position property
+
+		HRESULT __stdcall GetThemePosition(
+			[in]HTHEME HTHEME,
+			[in]int iPartId,
+			[in]int iStateId,
+			[in]int iPropId,
+			[out]POINTL* pPoint);"
+
+	<stdcall: hresult GetThemePosition handle sdword sdword sdword POINTL*>
+	^self invalidCall!
+
+getThemePropertyOrigin: htheme iPartId: iPartId iStateId: iStateId iPropId: iPropId pOrigin: pOrigin
+	"Invoke the GetThemePropertyOrigin() function of the module wrapped by the receiver.
+	Helpstring: Searches for the specified theme property and sets 'pOrigin' to indicate where it was found (or not found)
+
+		HRESULT __stdcall GetThemePropertyOrigin(
+			[in]HTHEME HTHEME,
+			[in]int iPartId,
+			[in]int iStateId,
+			[in]int iPropId,
+			[out]PROPERTYORIGIN* pOrigin);"
+
+	<stdcall: hresult GetThemePropertyOrigin handle sdword sdword sdword sdword*>
+	^self invalidCall!
+
+getThemeRect: htheme iPartId: iPartId iStateId: iStateId iPropId: iPropId pRect: pRect
+	"Invoke the GetThemeRect() function of the module wrapped by the receiver.
+	Helpstring: Get the value for the specified RECT property
+
+		HRESULT __stdcall GetThemeRect(
+			[in]HTHEME HTHEME,
+			[in]int iPartId,
+			[in]int iStateId,
+			[in]int iPropId,
+			[out]RECT* pRect);"
+
+	<stdcall: hresult GetThemeRect handle sdword sdword sdword RECT*>
+	^self invalidCall!
+
+getThemeString: htheme iPartId: iPartId iStateId: iStateId iPropId: iPropId pszBuff: pszBuff cchMaxBuffChars: cchMaxBuffChars
+	"Invoke the GetThemeString() function of the module wrapped by the receiver.
+	Helpstring: Get the value for the specified string property
+
+		HRESULT __stdcall GetThemeString(
+			[in]HTHEME HTHEME,
+			[in]int iPartId,
+			[in]int iStateId,
+			[in]int iPropId,
+			[out]LPWSTR pszBuff,
+			[in]int cchMaxBuffChars);"
+
+	<stdcall: hresult GetThemeString handle sdword sdword sdword lpwstr sdword>
+	^self invalidCall!
+
+getThemeSysBool: htheme iBoolId: iBoolId
+	"Invoke the GetThemeSysBool() function of the module wrapped by the receiver.
+	Helpstring: Get the boolean value of specified System metric
+
+		BOOL __stdcall GetThemeSysBool(
+			[in]HTHEME HTHEME,
+			[in]int iBoolId);"
+
+	<stdcall: bool GetThemeSysBool handle sdword>
+	^self invalidCall!
+
+getThemeSysColor: htheme iColorId: iColorId
+	"Invoke the GetThemeSysColor() function of the module wrapped by the receiver.
+	Helpstring: Get the value of the specified System color
+
+		COLORREF __stdcall GetThemeSysColor(
+			[in]HTHEME HTHEME,
+			[in]int iColorId);"
+
+	<stdcall: dword GetThemeSysColor handle sdword>
+	^self invalidCall!
+
+getThemeSysColorBrush: htheme iColorId: iColorId
+	"Invoke the GetThemeSysColorBrush() function of the module wrapped by the receiver.
+	Helpstring: Get the brush for the specified System color
+
+		HBRUSH __stdcall GetThemeSysColorBrush(
+			[in]HTHEME HTHEME,
+			[in]int iColorId);"
+
+	<stdcall: handle GetThemeSysColorBrush handle sdword>
+	^self invalidCall!
+
+getThemeSysFont: htheme iFontId: iFontId plf: plf
+	"Invoke the GetThemeSysFont() function of the module wrapped by the receiver.
+	Helpstring: Get the LOGFONT for the specified System font.
+
+		HRESULT __stdcall GetThemeSysFont(
+			[in]HTHEME HTHEME,
+			[in]int iFontId,
+			[out]LOGFONT* plf);"
+
+	<stdcall: hresult GetThemeSysFont handle sdword LOGFONT*>
+	^self invalidCall!
+
+getThemeSysInt: htheme iIntId: iIntId piValue: piValue
+	"Invoke the GetThemeSysInt() function of the module wrapped by the receiver.
+	Helpstring: Get the value of specified System int.
+
+		HRESULT __stdcall GetThemeSysInt(
+			[in]HTHEME HTHEME,
+			[in]int iIntId,
+			[out]int* piValue);"
+
+	<stdcall: hresult GetThemeSysInt handle sdword sdword*>
+	^self invalidCall!
+
+getThemeSysSize: htheme iSizeId: iSizeId
+	"Invoke the GetThemeSysSize() function of the module wrapped by the receiver.
+	Helpstring: Get the value of the specified System size metric. (scaled for the current logical screen dpi)
+
+		int __stdcall GetThemeSysSize(
+			[in]HTHEME HTHEME,
+			[in]int iSizeId);"
+
+	<stdcall: sdword GetThemeSysSize handle sdword>
+	^self invalidCall!
+
+getThemeSysString: htheme iStringId: iStringId pszStringBuff: pszStringBuff cchMaxStringChars: cchMaxStringChars
+	"Invoke the GetThemeSysString() function of the module wrapped by the receiver.
+	Helpstring: Get the value of specified System string metric.
+
+		HRESULT __stdcall GetThemeSysString(
+			[in]HTHEME HTHEME,
+			[in]int iStringId,
+			[out]LPWSTR pszStringBuff,
+			[in]int cchMaxStringChars);"
+
+	<stdcall: hresult GetThemeSysString handle sdword lpwstr sdword>
+	^self invalidCall!
+
+getThemeTextExtent: htheme hdc: hdc iPartId: iPartId iStateId: iStateId pszText: pszText iCharCount: iCharCount dwTextFlags: dwTextFlags pBoundingRect: pBoundingRect pExtentRect: pExtentRect
+	"Invoke the GetThemeTextExtent() function of the module wrapped by the receiver.
+	Helpstring: Calculates the size/location of the specified text when rendered in the Theme Font
+
+		HRESULT __stdcall GetThemeTextExtent(
+			[in]HTHEME HTHEME,
+			[in]HDC HDC,
+			[in]int iPartId,
+			[in]int iStateId,
+			[in]LPWSTR pszText,
+			[in]int iCharCount,
+			[in]DWORD dwTextFlags,
+			[in]RECT* pBoundingRect,
+			[out]RECT* pExtentRect);"
+
+	<stdcall: hresult GetThemeTextExtent handle handle sdword sdword lpwstr sdword dword RECT* RECT*>
+	^self invalidCall!
+
+getThemeTextMetrics: htheme hdc: hdc iPartId: iPartId iStateId: iStateId pTM: pTM
+	"Invoke the GetThemeTextMetrics() function of the module wrapped by the receiver.
+	Helpstring: Returns info about the theme-specified font for the part/state passed in.
+
+		HRESULT __stdcall GetThemeTextMetrics(
+			[in]HTHEME HTHEME,
+			[in]HDC HDC,
+			[in]int iPartId,
+			[in]int iStateId,
+			[out]TEXTMETRIC* pTM);"
+
+	<stdcall: hresult GetThemeTextMetrics handle handle sdword sdword TEXTMETRIC*>
+	^self invalidCall!
+
+getWindowTheme: hwnd
+	"Invoke the GetWindowTheme() function of the module wrapped by the receiver.
+	Helpstring: If window is themed, returns its most recent HTHEME from OpenThemeData() - otherwise, returns NULL.
+
+		HTHEME __stdcall GetWindowTheme(
+			[in]HWND HWND);"
+
+	<stdcall: handle GetWindowTheme handle>
+	^self invalidCall!
+
+hitTestThemeBackground: htheme hdc: hdc iPartId: iPartId iStateId: iStateId dwOptions: dwOptions pRect: pRect hrgn: hrgn ptTest: ptTest pwHitTestCode: pwHitTestCode
+	"Invoke the HitTestThemeBackground() function of the module wrapped by the receiver.
+	Helpstring: Returns a HitTestCode (a subset of the values returned by WM_NCHITTEST) for the point 'ptTest' within the theme-specified background (bound by pRect).
+
+		HRESULT __stdcall HitTestThemeBackground(
+			[in]HTHEME HTHEME,
+			[in]HDC HDC,
+			[in]int iPartId,
+			[in]int iStateId,
+			[in]DWORD dwOptions,
+			[in]RECT* pRect,
+			[in]HRGN HRGN,
+			[in]POINTL ptTest,
+			[out]WORD* pwHitTestCode);"
+
+	<stdcall: hresult HitTestThemeBackground handle handle sdword sdword dword RECT* handle POINTL word*>
+	^self invalidCall!
+
+isAppThemed
+	"Invoke the IsAppThemed() function of the module wrapped by the receiver.
+	Helpstring: Returns TRUE if a theme is active and available to the current process
+
+		BOOL __stdcall IsAppThemed();"
+
+	<stdcall: bool IsAppThemed>
+	^self invalidCall!
+
+isThemeActive
+	"Invoke the IsThemeActive() function of the module wrapped by the receiver.
+	Helpstring: Can be used to test if a system theme is active for the current user session.
+
+		BOOL __stdcall IsThemeActive();"
+
+	<stdcall: bool IsThemeActive>
+	^self invalidCall!
+
+isThemeBackgroundPartiallyTransparent: htheme iPartId: iPartId iStateId: iStateId
+	"Invoke the IsThemeBackgroundPartiallyTransparent() function of the module wrapped by the receiver.
+	Helpstring: Returns TRUE if the theme specified background for the part/state has transparent pieces or alpha-blended pieces.
+
+		BOOL __stdcall IsThemeBackgroundPartiallyTransparent(
+			[in]HTHEME HTHEME,
+			[in]int iPartId,
+			[in]int iStateId);"
+
+	<stdcall: bool IsThemeBackgroundPartiallyTransparent handle sdword sdword>
+	^self invalidCall!
+
+isThemeDialogTextureEnabled: hwnd
+	"Invoke the IsThemeDialogTextureEnabled() function of the module wrapped by the receiver.
+	Helpstring: Reports whether the dialog supports background texturing.
+
+		BOOL __stdcall IsThemeDialogTextureEnabled(
+			[in]HWND HWND);"
+
+	<stdcall: bool IsThemeDialogTextureEnabled handle>
+	^self invalidCall!
+
+isThemePartDefined: htheme iPartId: iPartId iStateId: iStateId
+	"Invoke the IsThemePartDefined() function of the module wrapped by the receiver.
+	Helpstring: Returns TRUE if the theme has defined parameters for the specified 'iPartId' and 'iStateId'.
+
+		BOOL __stdcall IsThemePartDefined(
+			[in]HTHEME HTHEME,
+			[in]int iPartId,
+			[in]int iStateId);"
+
+	<stdcall: bool IsThemePartDefined handle sdword sdword>
+	^self invalidCall!
+
+onExit
+	"Private - Perform any uninitialization required at system shutdown time"
+
+	"By default nothing is required"
+
+	!
+
+onStartup
+	"Private - Perform any initialization required at system startup time"
+
+	"By default no action is required"!
+
+openThemeData: hwnd pszClassList: pszClassList
+	"Invoke the OpenThemeData() function of the module wrapped by the receiver.
+	Helpstring: Open the theme data for the specified HWND and semi-colon separated list of class names.
+
+		HTHEME __stdcall OpenThemeData(
+			[in]HWND HWND,
+			[in]LPWSTR pszClassList);"
+
+	<stdcall: handle OpenThemeData handle lpwstr>
+	^self invalidCall!
+
+setThemeAppProperties: dwFlags
+	"Invoke the SetThemeAppProperties() function of the module wrapped by the receiver.
+	Helpstring: Sets the flags that control theming within the app
+
+		void __stdcall SetThemeAppProperties(
+			[in]DWORD dwFlags);"
+
+	<stdcall: void SetThemeAppProperties dword>
+	^self invalidCall!
+
+setWindowTheme: hwnd pszSubAppName: pszSubAppName pszSubIdList: pszSubIdList
+	"Invoke the SetWindowTheme() function of the module wrapped by the receiver.
+	Helpstring: Redirects an existing Window to use a different section of the current theme information than its class normally asks for
+
+		HRESULT __stdcall SetWindowTheme(
+			[in]HWND HWND,
+			[in]LPWSTR pszSubAppName,
+			[in]LPWSTR pszSubIdList);"
+
+	<stdcall: hresult SetWindowTheme handle lpwstr lpwstr>
+	^self invalidCall! !
+!ThemeLibrary categoriesFor: #closeThemeData:!**auto generated**!public! !
+!ThemeLibrary categoriesFor: #drawThemeBackground:hdc:iPartId:iStateId:pRect:pClipRect:!**auto generated**!public! !
+!ThemeLibrary categoriesFor: #drawThemeBackgroundEx:hdc:iPartId:iStateId:pRect:pOptions:!**auto generated**!public! !
+!ThemeLibrary categoriesFor: #drawThemeEdge:hdc:iPartId:iStateId:pDestRect:uEdge:uFlags:pContentRect:!**auto generated**!public! !
+!ThemeLibrary categoriesFor: #drawThemeIcon:hdc:iPartId:iStateId:pRect:himl:iImageIndex:!**auto generated**!public! !
+!ThemeLibrary categoriesFor: #drawThemeParentBackground:hdc:prc:!**auto generated**!public! !
+!ThemeLibrary categoriesFor: #drawThemeText:hdc:iPartId:iStateId:pszText:iCharCount:dwTextFlags:dwTextFlags2:pRect:!**auto generated**!public! !
+!ThemeLibrary categoriesFor: #enableThemeDialogTexture:dwFlags:!**auto generated**!public! !
+!ThemeLibrary categoriesFor: #enableTheming:!**auto generated**!public! !
+!ThemeLibrary categoriesFor: #getCurrentThemeName:cchMaxNameChars:pszColorBuff:cchMaxColorChars:pszSizeBuff:cchMaxSizeChars:!**auto generated**!public! !
+!ThemeLibrary categoriesFor: #getThemeAppProperties!**auto generated**!public! !
+!ThemeLibrary categoriesFor: #getThemeBackgroundContentRect:hdc:iPartId:iStateId:pBoundingRect:pContentRect:!**auto generated**!public! !
+!ThemeLibrary categoriesFor: #getThemeBackgroundExtent:hdc:iPartId:iStateId:pContentRect:pExtentRect:!**auto generated**!public! !
+!ThemeLibrary categoriesFor: #getThemeBackgroundRegion:hdc:iPartId:iStateId:pRect:pRegion:!**auto generated**!public! !
+!ThemeLibrary categoriesFor: #getThemeBool:iPartId:iStateId:iPropId:pfVal:!**auto generated**!public! !
+!ThemeLibrary categoriesFor: #getThemeColor:iPartId:iStateId:iPropId:pColor:!**auto generated**!public! !
+!ThemeLibrary categoriesFor: #getThemeDocumentationProperty:pszPropertyName:pszValueBuff:cchMaxValChars:!**auto generated**!public! !
+!ThemeLibrary categoriesFor: #getThemeEnumValue:iPartId:iStateId:iPropId:piVal:!**auto generated**!public! !
+!ThemeLibrary categoriesFor: #getThemeFilename:iPartId:iStateId:iPropId:pszThemeFileName:cchMaxBuffChars:!**auto generated**!public! !
+!ThemeLibrary categoriesFor: #getThemeFont:hdc:iPartId:iStateId:iPropId:pFont:!**auto generated**!public! !
+!ThemeLibrary categoriesFor: #getThemeInt:iPartId:iStateId:iPropId:piVal:!**auto generated**!public! !
+!ThemeLibrary categoriesFor: #getThemeIntList:iPartId:iStateId:iPropId:pIntList:!**auto generated**!public! !
+!ThemeLibrary categoriesFor: #getThemeMargins:hdc:iPartId:iStateId:iPropId:prc:pMargins:!**auto generated**!public! !
+!ThemeLibrary categoriesFor: #getThemeMetric:hdc:iPartId:iStateId:iPropId:piVal:!**auto generated**!public! !
+!ThemeLibrary categoriesFor: #getThemePartSize:hdc:iPartId:iStateId:prc:eSize:psz:!**auto generated**!public! !
+!ThemeLibrary categoriesFor: #getThemePosition:iPartId:iStateId:iPropId:pPoint:!**auto generated**!public! !
+!ThemeLibrary categoriesFor: #getThemePropertyOrigin:iPartId:iStateId:iPropId:pOrigin:!**auto generated**!public! !
+!ThemeLibrary categoriesFor: #getThemeRect:iPartId:iStateId:iPropId:pRect:!**auto generated**!public! !
+!ThemeLibrary categoriesFor: #getThemeString:iPartId:iStateId:iPropId:pszBuff:cchMaxBuffChars:!**auto generated**!public! !
+!ThemeLibrary categoriesFor: #getThemeSysBool:iBoolId:!**auto generated**!public! !
+!ThemeLibrary categoriesFor: #getThemeSysColor:iColorId:!**auto generated**!public! !
+!ThemeLibrary categoriesFor: #getThemeSysColorBrush:iColorId:!**auto generated**!public! !
+!ThemeLibrary categoriesFor: #getThemeSysFont:iFontId:plf:!**auto generated**!public! !
+!ThemeLibrary categoriesFor: #getThemeSysInt:iIntId:piValue:!**auto generated**!public! !
+!ThemeLibrary categoriesFor: #getThemeSysSize:iSizeId:!**auto generated**!public! !
+!ThemeLibrary categoriesFor: #getThemeSysString:iStringId:pszStringBuff:cchMaxStringChars:!**auto generated**!public! !
+!ThemeLibrary categoriesFor: #getThemeTextExtent:hdc:iPartId:iStateId:pszText:iCharCount:dwTextFlags:pBoundingRect:pExtentRect:!**auto generated**!public! !
+!ThemeLibrary categoriesFor: #getThemeTextMetrics:hdc:iPartId:iStateId:pTM:!**auto generated**!public! !
+!ThemeLibrary categoriesFor: #getWindowTheme:!**auto generated**!public! !
+!ThemeLibrary categoriesFor: #hitTestThemeBackground:hdc:iPartId:iStateId:dwOptions:pRect:hrgn:ptTest:pwHitTestCode:!**auto generated**!public! !
+!ThemeLibrary categoriesFor: #isAppThemed!**auto generated**!public! !
+!ThemeLibrary categoriesFor: #isThemeActive!**auto generated**!public! !
+!ThemeLibrary categoriesFor: #isThemeBackgroundPartiallyTransparent:iPartId:iStateId:!**auto generated**!public! !
+!ThemeLibrary categoriesFor: #isThemeDialogTextureEnabled:!**auto generated**!public! !
+!ThemeLibrary categoriesFor: #isThemePartDefined:iPartId:iStateId:!**auto generated**!public! !
+!ThemeLibrary categoriesFor: #onExit!private! !
+!ThemeLibrary categoriesFor: #onStartup!private! !
+!ThemeLibrary categoriesFor: #openThemeData:pszClassList:!**auto generated**!public! !
+!ThemeLibrary categoriesFor: #setThemeAppProperties:!**auto generated**!public! !
+!ThemeLibrary categoriesFor: #setWindowTheme:pszSubAppName:pszSubIdList:!**auto generated**!public! !
+
+!ThemeLibrary class methodsFor!
+
+fileName
+	"Answer the host system file name for the library."
+
+	^'UXTHEME'
+!
+
+new
+	| osVersion |
+	osVersion := OSVERSIONINFO current.
+	^(osVersion isWinXPOrLater 
+		ifTrue: [osVersion isWinV6OrLater ifTrue: [VistaThemeLibrary] ifFalse: [self]]
+		ifFalse: [MockThemeLibrary]) basicNew!
+
+onStartup2
+	"Private - Perform session startup processing for the receiver and its subclasses."
+
+	default := nil! !
+!ThemeLibrary class categoriesFor: #fileName!**auto generated**!constants!public! !
+!ThemeLibrary class categoriesFor: #new!instance creation!public! !
+!ThemeLibrary class categoriesFor: #onStartup2!event handling!private! !
+

@@ -1,0 +1,72 @@
+| package |
+package := Package name: 'ActiveX Connection Points'.
+package paxVersion: 1;
+	basicComment: 'Dolphin Smalltalk Active-X Connection Points Package. 
+Copyright (c) Object Arts Ltd, 2000.
+
+Connection Points are the generic mechanism by which Active-X components implement the Observer pattern. A connection point is a server defined COM interface through which the server (the oberservee) publishes "events". One or many clients that wish to consume the events (the observers) can implement the COM interface, and then register their interface implementations with the server. Subsequently when the server publishes the event they will receiver a "callback" through the interface. The COM jargon for a connection point interface is a "source" interface. Observers are frequently referred to as "event sinks", or just "sinks".
+
+Source interfaces are almost always pure "dispinterfaces" (that is late-bound IDispatch interfaces) due to historical limitations in Visual Basic which can only (or could only) sink events through dispinterfaces. Dolphin can implement source interfaces as either early-bound COM interfaces (i.e. with a virtual function table, or vtbl) or as dispinterfaces. The AXEventSink class in this package is a generic event sink which can receive events through arbitrary dispinterfaces, and forward them on using Dolphin''s own native SASE event system (#when:send:to:, #trigger:, etc). The parameters to particular events may be either inbound or outbound. An example of the latter might be an event an Active-X control sends seeking permission to do something, such as change selection. In effect the event source sends such events with a value holder (or buffer) which the observers can update to pass information back to the event source.
+
+An example of the use of AXEventSink can be found in the AXControlSite class of Dolphin''s Active-X Control Hosting package, where it is used to sink events from hosted OCXs.'.
+
+package basicPackageVersion: '6.1'.
+
+
+package classNames
+	add: #AXEventSink;
+	add: #CONNECTDATA;
+	add: #IConnectionPoint;
+	add: #IConnectionPointContainer;
+	add: #IEnumConnectionPoints;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\Automation\ActiveX Automation';
+	add: '..\..\Base\Dolphin';
+	add: '..\COM\OLE COM';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+AXDispatchImpAbstract subclass: #AXEventSink
+	instanceVariableNames: 'idMap target connector cookie tiSource flags'
+	classVariableNames: 'GenericEventMask NoIndividualEventsMask TraceMask'
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+IUnknown subclass: #IConnectionPoint
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+IUnknown subclass: #IConnectionPointContainer
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+IEnumUnknown subclass: #IEnumConnectionPoints
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+OLEStructure subclass: #CONNECTDATA
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+"End of package definition"!
+

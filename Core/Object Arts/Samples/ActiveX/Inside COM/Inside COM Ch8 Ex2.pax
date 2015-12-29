@@ -1,0 +1,83 @@
+| package |
+package := Package name: 'Inside COM Ch8 Ex2'.
+package paxVersion: 0;
+	basicComment: 'Implementation of aggregation example 2,  Chapter 8, of Dale Rogerson''s "Inside COM".
+
+Frankly this example is rather lacklustre, but it does at least allow one to easily relate the implementation of aggregation in the Dolphin COM framework to the raw C++ COM implementation in Rogerson''s book.
+
+To test:
+
+1) First create a dynamic registration of Dolphin as the server for this class:
+	COMClassFactory on: CA
+
+2) Now instantiate an instance via CoCreateInstance:
+	piX := IX onCLSID: CA clsid
+
+3) Invoke a method of the outer object (see the Transcript)
+	piX Fx
+
+4) Query off the inner (aggregated) interface
+	piY := piX queryInterface: IY
+
+5) And run a method of the inner component (see the Transcript)
+	piY Fy'.
+
+package basicScriptAt: #postinstall put: 'CA registerClassFactory.
+CB registerClassFactory'.
+package basicScriptAt: #postuninstall put: ''.
+package basicScriptAt: #preinstall put: ''.
+package basicScriptAt: #preuninstall put: ''.
+
+package classNames
+	add: #CA;
+	add: #CB;
+	add: #IX;
+	add: #IY;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package allResourceNames: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\..\..\Dolphin\Base\Dolphin';
+	add: '..\..\..\Dolphin\ActiveX\COM\OLE COM';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+COMInterfaceImp subclass: #CA
+	instanceVariableNames: 'm_pUnknownInner m_pIY'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+COMInterfaceImp subclass: #CB
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+IUnknown subclass: #IX
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+IUnknown subclass: #IY
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+"End of package definition"!
+

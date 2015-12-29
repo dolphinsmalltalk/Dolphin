@@ -1,0 +1,60 @@
+"Filed out from Dolphin Smalltalk X6"!
+
+StaticView subclass: #StaticImage
+	instanceVariableNames: 'image'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+StaticImage guid: (GUID fromString: '{87B4C73F-026E-11D3-9FD7-00A0CC3E4A32}')!
+StaticImage comment: 'StaticImage is an abstract superclass for Windows STATIC controls that display <images>. The <valueModel> associated with a StaticImage must always yield an <image> value when mapped through the installed type converter. A StaticImage will normally be used in conjunction with a <ImagePresenter>.
+
+Instance Variables:
+	image		<image> which is a cache for the image being displayed.
+
+'!
+!StaticImage categoriesForClass!MVP-Views! !
+!StaticImage methodsFor!
+
+displayValue
+	"Private - Answer the displayed contents, the current image,
+	of the receiver"
+
+	^image!
+
+displayValue: anImage
+	"Private - Sets the displayable contents, the image, of the receiver to anImage
+	Since the Windows StaticImage control has a propensity to resize to the image 
+	size, and this would often be considered unacceptable, we force ourselves 
+	back to our original size"
+
+	| extent |
+	extent := self extent.
+	self setImage: anImage.
+	self extent: extent!
+
+image
+	"Private - Answers the image held by the receiver"
+
+	^image!
+
+image: anImage
+	"Sets the image displayed by the receiver."
+
+	self value: anImage!
+
+setImage: anImage
+	^self subclassResponsibility! !
+!StaticImage categoriesFor: #displayValue!private!updating! !
+!StaticImage categoriesFor: #displayValue:!private!updating! !
+!StaticImage categoriesFor: #image!accessing!private! !
+!StaticImage categoriesFor: #image:!accessing!public! !
+!StaticImage categoriesFor: #setImage:!accessing!private! !
+
+!StaticImage class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^##(self) defaultIcon! !
+!StaticImage class categoriesFor: #icon!constants!public! !
+

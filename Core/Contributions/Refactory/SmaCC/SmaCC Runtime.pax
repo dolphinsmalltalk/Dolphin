@@ -1,0 +1,63 @@
+| package |
+package := Package name: 'SmaCC Runtime'.
+package paxVersion: 1;
+	basicComment: 'This package is part of the Smalltalk Compiler-Compiler (SmaCC) written by John Brant and Don Roberts. It contains the runtime part of SmaCC. All parsers created using SmaCC will need this code. 
+
+If you want more information about SmaCC, visit http://www.refactory.com/Software/SmaCC/. '.
+
+
+package classNames
+	add: #SmaCCLineNumberStream;
+	add: #SmaCCParser;
+	add: #SmaCCParserError;
+	add: #SmaCCScanner;
+	add: #SmaCCToken;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\..\Object Arts\Dolphin\Base\Dolphin';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+Object subclass: #SmaCCParser
+	instanceVariableNames: 'scanner currentToken errorToken stateStack nodeStack'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Object subclass: #SmaCCScanner
+	instanceVariableNames: 'stream start matchActions matchEnd currentCharacter outputStream lastOutputStreamMatchPosition lastMatchWasEmpty returnMatchBlock'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: 'keywordMap'!
+Object subclass: #SmaCCToken
+	instanceVariableNames: 'start id value'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Error subclass: #SmaCCParserError
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+SequencedStream subclass: #SmaCCLineNumberStream
+	instanceVariableNames: 'sourceStream previousWasCR eolPositions lastPosition'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+"End of package definition"!
+

@@ -1,0 +1,81 @@
+| package |
+package := Package name: 'PersonalMoney'.
+package paxVersion: 1;
+	basicComment: 'Dolphin Smalltalk Personal Accounts Sample.
+Copyright (c) Object Arts Ltd, 1998-2005
+
+To start the application evaluate: 
+	PersonalMoneyShell show'.
+
+
+package classNames
+	add: #PersonalAccount;
+	add: #PersonalAccountShell;
+	add: #PersonalAccountTransaction;
+	add: #PersonalAccountTransactionDialog;
+	add: #PersonalMoney;
+	add: #PersonalMoneyShell;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\..\..\Dolphin\Base\Dolphin';
+	add: '..\..\..\Dolphin\MVP\Presenters\Boolean\Dolphin Boolean Presenter';
+	add: '..\..\..\Dolphin\MVP\Views\Date Time\Dolphin Date Time Controls';
+	add: '..\..\..\Dolphin\MVP\Presenters\Date Time\Dolphin Date Time Presenters';
+	add: '..\..\..\Dolphin\MVP\Models\List\Dolphin List Models';
+	add: '..\..\..\Dolphin\MVP\Presenters\List\Dolphin List Presenter';
+	add: '..\..\..\Dolphin\MVP\Base\Dolphin MVP Base';
+	add: '..\..\..\Dolphin\MVP\Presenters\Number\Dolphin Number Presenter';
+	add: '..\..\..\Dolphin\MVP\Presenters\Text\Dolphin Text Presenter';
+	add: '..\..\..\Dolphin\MVP\Type Converters\Dolphin Type Converters';
+	add: '..\..\..\Dolphin\MVP\Models\Value\Dolphin Value Models';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+Model subclass: #PersonalAccount
+	instanceVariableNames: 'name accountNumber initialBalance transactions currentBalance'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Model subclass: #PersonalAccountTransaction
+	instanceVariableNames: 'date description amount isDebit'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Model subclass: #PersonalMoney
+	instanceVariableNames: 'owner accounts'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Shell subclass: #PersonalAccountShell
+	instanceVariableNames: 'namePresenter accountNumberPresenter initialBalancePresenter transactionsPresenter currentBalancePresenter'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Dialog subclass: #PersonalAccountTransactionDialog
+	instanceVariableNames: 'datePresenter amountPresenter descriptionPresenter isDebitPresenter'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DocumentShell subclass: #PersonalMoneyShell
+	instanceVariableNames: 'ownerPresenter accountsPresenter'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+"End of package definition"!
+

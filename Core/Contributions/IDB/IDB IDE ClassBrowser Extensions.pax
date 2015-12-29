@@ -1,0 +1,47 @@
+| package |
+package := Package name: 'IDB IDE ClassBrowser Extensions'.
+package paxVersion: 1;
+	basicComment: 'Abstract superclass for all IDB IDE ClassBrowser extensions
+Version 6a - May 2005
+For Version 6 of Dolphin Smalltalk
+
+(C) 2005 Ian Bartholomew
+ian@idb.me.uk
+Public Domain Freeware
+'.
+
+package basicPackageVersion: 'IDB$PACKAGE$VERSION 6a'.
+
+
+package classNames
+	add: #IdeClassBrowserExtensions;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\Object Arts\Dolphin\IDE\Base\Development System';
+	add: 'IDB IDE Extensions';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+IdeExtensions subclass: #IdeClassBrowserExtensions
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+"End of package definition"!
+

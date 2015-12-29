@@ -1,0 +1,59 @@
+| package |
+package := Package name: 'Dolphin Styled Views'.
+package paxVersion: 1;
+	basicComment: ''.
+
+package basicPackageVersion: '0.003'.
+
+
+package classNames
+	add: #StyledContainer;
+	add: #StyledGradientBrush;
+	add: #StyledPen;
+	add: #StyledShadow;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\..\..\Base\Dolphin';
+	add: '..\..\Base\Dolphin MVP Base';
+	add: '..\..\Gdiplus\Gdiplus';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+Object subclass: #StyledGradientBrush
+	instanceVariableNames: 'startColor endColor startPoint endPoint'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Object subclass: #StyledPen
+	instanceVariableNames: 'color width dashPattern'
+	classVariableNames: ''
+	poolDictionaries: 'GdiplusConstants'
+	classInstanceVariableNames: ''!
+Object subclass: #StyledShadow
+	instanceVariableNames: 'color density offset'
+	classVariableNames: ''
+	poolDictionaries: 'GdiplusConstants'
+	classInstanceVariableNames: ''!
+ContainerView subclass: #StyledContainer
+	instanceVariableNames: 'edges styledPen styledBrush cornerRadii isAntialiased styledShadow _spare4'
+	classVariableNames: 'Nest'
+	poolDictionaries: 'GdiplusConstants ThemeConstants Win32Constants'
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+"End of package definition"!
+

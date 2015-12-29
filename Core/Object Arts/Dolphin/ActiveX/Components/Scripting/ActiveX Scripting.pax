@@ -1,0 +1,107 @@
+| package |
+package := Package name: 'ActiveX Scripting'.
+package paxVersion: 1;
+	basicComment: 'Dolphin Smalltalk ActiveX Script Control Support. 
+Copyright (c) Object Arts Ltd, 2000.
+
+This package wraps the Microsoft Active-X script control, a COM component which can be used to compile and evaluate scripting languages such as VBScript and JScript. A simple script editor is included.
+
+    scriptlet := SimpleAXScriptEditor showModal.	"Ctrl+E - Create a scriplet."
+    scriptlet value				"Ctrl+D - runs the scriptlet and answers the result"
+
+The editor shows how to instruct the component to compile and evaluate script. For detailed documentation refer to MSDN.'.
+
+package basicPackageVersion: '6.0'.
+
+
+package classNames
+	add: #ActiveXScriptlet;
+	add: #IScriptControl;
+	add: #IScriptError;
+	add: #IScriptModule;
+	add: #IScriptModuleCollection;
+	add: #IScriptProcedure;
+	add: #IScriptProcedureCollection;
+	add: #SimpleAXScriptEditor;
+	yourself.
+
+package globalNames
+	add: #MSScriptControlConstants;
+	add: #MSScriptControlLib;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	add: #MSScriptControlLib;
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\..\Automation\ActiveX Automation';
+	add: '..\..\..\Base\Dolphin';
+	add: '..\..\..\MVP\Presenters\Choice\Dolphin Choice Presenter';
+	add: '..\..\..\MVP\Dialogs\Common\Dolphin Common Dialogs';
+	add: '..\..\..\MVP\Models\List\Dolphin List Models';
+	add: '..\..\..\MVP\Presenters\List\Dolphin List Presenter';
+	add: '..\..\..\MVP\Base\Dolphin MVP Base';
+	add: '..\..\..\MVP\Views\Scintilla\Dolphin Scintilla View';
+	add: '..\..\..\MVP\Presenters\Text\Dolphin Text Presenter';
+	add: '..\..\..\MVP\Type Converters\Dolphin Type Converters';
+	add: '..\..\..\MVP\Models\Value\Dolphin Value Models';
+	add: '..\..\COM\OLE COM';
+	add: '..\..\Shell\Windows Shell';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+Object subclass: #ActiveXScriptlet
+	instanceVariableNames: 'language expression procedures description globalBindings'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+IDispatch subclass: #IScriptControl
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: 'MSScriptControlConstants'
+	classInstanceVariableNames: ''!
+IDispatch subclass: #IScriptError
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: 'MSScriptControlConstants'
+	classInstanceVariableNames: ''!
+IDispatch subclass: #IScriptModule
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: 'MSScriptControlConstants'
+	classInstanceVariableNames: ''!
+IDispatch subclass: #IScriptModuleCollection
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: 'MSScriptControlConstants'
+	classInstanceVariableNames: ''!
+IDispatch subclass: #IScriptProcedure
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: 'MSScriptControlConstants'
+	classInstanceVariableNames: ''!
+IDispatch subclass: #IScriptProcedureCollection
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: 'MSScriptControlConstants'
+	classInstanceVariableNames: ''!
+Dialog subclass: #SimpleAXScriptEditor
+	instanceVariableNames: 'scriptControl languagePresenter scriptPresenter expressionPresenter resultPresenter filename descriptionPresenter'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+"End of package definition"!
+

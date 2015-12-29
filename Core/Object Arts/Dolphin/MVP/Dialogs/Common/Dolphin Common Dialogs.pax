@@ -1,0 +1,184 @@
+| package |
+package := Package name: 'Dolphin Common Dialogs'.
+package paxVersion: 1;
+	basicComment: 'Dolphin Smalltalk Windows Common Dialogs.
+Copyright (c) Object Arts Ltd. 1997-2005. Portions Copyright (c) CGI Group (Europe) Ltd. 1997.
+
+This package contains Dialog presenter wrappers for the Windows common dialogs for choosing colours (ColorDialog) and fonts (FontDialog), opening (FileOpenDialog) and saving (FileSaveDialog) files, find (FindDialog) and replace (FindReplaceDialog), and printing (PrintDialog). With the exception of the find and replace dialogs, these are all modal dialogs that are opened with #showModal. For further details see the comments for the specific classes.'.
+
+package basicPackageVersion: '6.2'.
+
+
+package classNames
+	add: #CHOOSECOLOR;
+	add: #CHOOSEFONT;
+	add: #ColorDialog;
+	add: #ComDlgLibrary;
+	add: #CommonDialog;
+	add: #CommonDialogStructure;
+	add: #FileDialog;
+	add: #FileOpenDialog;
+	add: #FileSaveDialog;
+	add: #FindDialog;
+	add: #FINDREPLACE;
+	add: #FindReplaceDialog;
+	add: #FontDialog;
+	add: #OFNOTIFY;
+	add: #OFNOTIFYEX;
+	add: #OPENFILENAME;
+	yourself.
+
+package methodNames
+	add: #File -> #title;
+	add: 'Color class' -> #choose;
+	add: 'File class' -> #titleOf:;
+	add: 'Font class' -> #choose;
+	yourself.
+
+package globalNames
+	add: #CommonDialogConstants;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\..\..\Base\Dolphin';
+	add: '..\..\Base\Dolphin MVP Base';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+ExternalLibrary subclass: #ComDlgLibrary
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Win32Structure subclass: #CommonDialogStructure
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: 'CommonDialogConstants'
+	classInstanceVariableNames: ''!
+CommonDialogStructure subclass: #CHOOSECOLOR
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: 'CommonDialogConstants'
+	classInstanceVariableNames: ''!
+CommonDialogStructure subclass: #CHOOSEFONT
+	instanceVariableNames: 'logFont'
+	classVariableNames: ''
+	poolDictionaries: 'CommonDialogConstants'
+	classInstanceVariableNames: ''!
+CommonDialogStructure subclass: #FINDREPLACE
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: 'CommonDialogConstants'
+	classInstanceVariableNames: ''!
+CommonDialogStructure subclass: #OPENFILENAME
+	instanceVariableNames: 'fileName title filter defExt initialDir'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+NMHDR subclass: #OFNOTIFY
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+NMHDR subclass: #OFNOTIFYEX
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ValueDialog subclass: #CommonDialog
+	instanceVariableNames: 'winStruct hook'
+	classVariableNames: ''
+	poolDictionaries: 'CommonDialogConstants Win32Constants'
+	classInstanceVariableNames: 'hookHandlers'!
+CommonDialog subclass: #ColorDialog
+	instanceVariableNames: 'validationBlock'
+	classVariableNames: 'CustomColors WM_COLOROK'
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+CommonDialog subclass: #FileDialog
+	instanceVariableNames: 'style fileTypes validationBlock'
+	classVariableNames: 'CDNMap'
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+CommonDialog subclass: #FindDialog
+	instanceVariableNames: 'findWhatBuf findDetails'
+	classVariableNames: 'HookHandlers'
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+CommonDialog subclass: #FontDialog
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+FileDialog subclass: #FileOpenDialog
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+FileDialog subclass: #FileSaveDialog
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+FindDialog subclass: #FindReplaceDialog
+	instanceVariableNames: 'replaceWith'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+!Color class methodsFor!
+
+choose
+	"Answer a new instance of the receiver chosen from the common color dialog."
+
+	^ColorDialog showModal! !
+!Color class categoriesFor: #choose!instance creation!public! !
+
+!File methodsFor!
+
+title
+	"Answer the receiver's 'title' (i.e. the display name)."
+
+	^self class titleOf: self name! !
+!File categoriesFor: #title!accessing!public! !
+
+!File class methodsFor!
+
+titleOf: aString
+	"Answer the 'title' (i.e. the display name) of a file with the specified path name.
+	The file title may or may not include the extension, depending on the users
+	configuration."
+
+	| buf lib |
+	buf := File pathBuffer.
+	lib := ComDlgLibrary default.
+	(lib getFileTitle: aString lpszTitle: buf cbBuf: buf size) < 0
+		ifTrue: [lib systemError: 123].
+	^buf trimNulls! !
+!File class categoriesFor: #titleOf:!filename manipulation!public! !
+
+!Font class methodsFor!
+
+choose
+	"Answer an instance of the receiver chosen by the user from the common
+	font dialog."
+
+	^FontDialog showModal! !
+!Font class categoriesFor: #choose!instance creation!public! !
+
+"End of package definition"!
+

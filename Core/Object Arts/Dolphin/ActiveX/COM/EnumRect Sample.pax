@@ -1,0 +1,63 @@
+| package |
+package := Package name: 'EnumRect Sample' comment: ''.
+
+"Package version"
+package packageVersion: ''.
+
+"Image stripper bytes"
+package imageStripperBytes: #[33 83 84 66 32 48 32 70 15 13 0 3 0 0 0 73 109 97 103 101 83 116 114 105 112 112 101 114 0 0 0 0 0 0 0 0 54 0 6 0 83 116 114 105 110 103 15 0 0 0 69 110 117 109 82 101 99 116 32 83 97 109 112 108 101 114 0 0 0 0 0 0 0 78 2 13 0 1 0 0 0 83 84 66 67 108 97 115 115 80 114 111 120 121 0 0 0 0 114 0 0 0 26 0 0 0 65 112 112 108 105 99 97 116 105 111 110 32 68 101 112 108 111 121 109 101 110 116 32 75 105 116 114 0 0 0 21 0 0 0 82 117 110 116 105 109 101 83 101 115 115 105 111 110 77 97 110 97 103 101 114 239 63 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 ].
+
+"Add the package scripts"
+package script: #postuninstall put: ''.
+package script: #preuninstall put: ''.
+package script: #preinstall put: ''.
+package script: #postinstall put: ''.
+
+"Add the class names, loose method names, global names, resource names"
+package classNames
+	add: #EnumRECT;
+	add: #IEnumRECT;
+	yourself.
+
+package methodNames
+	yourself.
+
+package globalNames
+	yourself.
+
+package resourceNames
+	yourself.
+
+"Add binary global names as a property"
+package propertyAt: #binaryGlobalNames put: (Set new
+	yourself).
+
+"Add all resource names as a property"
+package propertyAt: #allResourceNames put: (Set new
+	yourself).
+
+"Add the prerequisite names"
+package setPrerequisites: (IdentitySet new
+	add: 'Dolphin';
+	add: 'OLE COM';
+	yourself).
+
+package
+!
+"Class Definitions"!
+
+COMInterfaceImp subclass: #EnumRECT
+	instanceVariableNames: 'm_iCur m_rgrc'
+	classVariableNames: 'CRECTS'
+	poolDictionaries: ''.
+
+!
+IEnumXXXX subclass: #IEnumRECT
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''.
+
+!
+"Loose Methods"!
+
+

@@ -1,0 +1,56 @@
+"Filed out from Dolphin Smalltalk X6"!
+
+Smalltalk at: #IdbPrintingConstantsX6 put: (PoolConstantsDictionary named: #IdbPrintingConstantsX6)!
+IdbPrintingConstantsX6 at: 'DMORIENT_LANDSCAPE' put: 16r2!
+IdbPrintingConstantsX6 at: 'DMORIENT_PORTRAIT' put: 16r1!
+IdbPrintingConstantsX6 at: 'PD_ALLPAGES' put: 16r0!
+IdbPrintingConstantsX6 at: 'PD_COLLATE' put: 16r10!
+IdbPrintingConstantsX6 at: 'PD_CURRENTPAGE' put: 16r400000!
+IdbPrintingConstantsX6 at: 'PD_DISABLEPRINTTOFILE' put: 16r80000!
+IdbPrintingConstantsX6 at: 'PD_ENABLEPRINTHOOK' put: 16r1000!
+IdbPrintingConstantsX6 at: 'PD_ENABLEPRINTTEMPLATE' put: 16r4000!
+IdbPrintingConstantsX6 at: 'PD_ENABLEPRINTTEMPLATEHANDLE' put: 16r10000!
+IdbPrintingConstantsX6 at: 'PD_ENABLESETUPHOOK' put: 16r2000!
+IdbPrintingConstantsX6 at: 'PD_ENABLESETUPTEMPLATE' put: 16r8000!
+IdbPrintingConstantsX6 at: 'PD_ENABLESETUPTEMPLATEHANDLE' put: 16r20000!
+IdbPrintingConstantsX6 at: 'PD_HIDEPRINTTOFILE' put: 16r100000!
+IdbPrintingConstantsX6 at: 'PD_NOCURRENTPAGE' put: 16r800000!
+IdbPrintingConstantsX6 at: 'PD_NONETWORKBUTTON' put: 16r200000!
+IdbPrintingConstantsX6 at: 'PD_NOPAGENUMS' put: 16r8!
+IdbPrintingConstantsX6 at: 'PD_NOSELECTION' put: 16r4!
+IdbPrintingConstantsX6 at: 'PD_NOWARNING' put: 16r80!
+IdbPrintingConstantsX6 at: 'PD_PAGENUMS' put: 16r2!
+IdbPrintingConstantsX6 at: 'PD_PRINTSETUP' put: 16r40!
+IdbPrintingConstantsX6 at: 'PD_PRINTTOFILE' put: 16r20!
+IdbPrintingConstantsX6 at: 'PD_RESULT_APPLY' put: 16r2!
+IdbPrintingConstantsX6 at: 'PD_RESULT_CANCEL' put: 16r0!
+IdbPrintingConstantsX6 at: 'PD_RESULT_PRINT' put: 16r1!
+IdbPrintingConstantsX6 at: 'PD_RETURNDC' put: 16r100!
+IdbPrintingConstantsX6 at: 'PD_RETURNDEFAULT' put: 16r400!
+IdbPrintingConstantsX6 at: 'PD_RETURNIC' put: 16r200!
+IdbPrintingConstantsX6 at: 'PD_SELECTION' put: 16r1!
+IdbPrintingConstantsX6 at: 'PD_SHOWHELP' put: 16r800!
+IdbPrintingConstantsX6 at: 'PD_USEDEVMODECOPIES' put: 16r40000!
+IdbPrintingConstantsX6 at: 'PD_USEDEVMODECOPIESANDCOLLATE' put: 16r40000!
+IdbPrintingConstantsX6 at: 'PSD_DEFAULTMINMARGINS' put: 16r0!
+IdbPrintingConstantsX6 at: 'PSD_DISABLEMARGINS' put: 16r10!
+IdbPrintingConstantsX6 at: 'PSD_DISABLEORIENTATION' put: 16r100!
+IdbPrintingConstantsX6 at: 'PSD_DISABLEPAGEPAINTING' put: 16r80000!
+IdbPrintingConstantsX6 at: 'PSD_DISABLEPAPER' put: 16r200!
+IdbPrintingConstantsX6 at: 'PSD_DISABLEPRINTER' put: 16r20!
+IdbPrintingConstantsX6 at: 'PSD_ENABLEPAGEPAINTHOOK' put: 16r40000!
+IdbPrintingConstantsX6 at: 'PSD_ENABLEPAGESETUPHOOK' put: 16r2000!
+IdbPrintingConstantsX6 at: 'PSD_ENABLEPAGESETUPTEMPLATE' put: 16r8000!
+IdbPrintingConstantsX6 at: 'PSD_ENABLEPAGESETUPTEMPLATEHANDLE' put: 16r20000!
+IdbPrintingConstantsX6 at: 'PSD_INHUNDREDTHSOFMILLIMETERS' put: 16r8!
+IdbPrintingConstantsX6 at: 'PSD_INTHOUSANDTHSOFINCHES' put: 16r4!
+IdbPrintingConstantsX6 at: 'PSD_INWININIINTLMEASURE' put: 16r0!
+IdbPrintingConstantsX6 at: 'PSD_MARGINS' put: 16r2!
+IdbPrintingConstantsX6 at: 'PSD_MINMARGINS' put: 16r1!
+IdbPrintingConstantsX6 at: 'PSD_NOWARNING' put: 16r80!
+IdbPrintingConstantsX6 at: 'PSD_RETURNDEFAULT' put: 16r400!
+IdbPrintingConstantsX6 at: 'PSD_SHOWHELP' put: 16r800!
+IdbPrintingConstantsX6 at: 'S_FAIL' put: 16r1!
+IdbPrintingConstantsX6 at: 'S_OK' put: 16r0!
+IdbPrintingConstantsX6 at: 'START_PAGE_GENERAL' put: -16r1!
+IdbPrintingConstantsX6 shrink!

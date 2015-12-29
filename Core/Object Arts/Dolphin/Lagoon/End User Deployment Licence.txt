@@ -1,0 +1,59 @@
+DOLPHIN SMALLTALK END USER DEPLOYMENT LICENSE
+
+BY CLICKING ON THE "ACCEPT" BUTTON, YOU ARE CONSENTING TO BE BOUND BY, AND ARE BECOMING A PARTY, TO THIS AGREEMENT. IF YOU DO NOT AGREE TO ALL OF THE TERMS OF THIS AGREEMENT CLICK THE "DO NOT ACCEPT" BUTTON AND DO NOT USE THIS SOFTWARE.
+
+LICENSE IN A NUTSHELL.
+
+The full license agreement follows. This paragraph contains the "spirit" of the agreement in an easy to read summary and is provided as a convenience to you. It does not form part of the agreement itself.
+
+This license is an extension to the original Dolphin Development License that you agreed to when installing Dolphin Smalltalk. By agreeing to this you are entitled to install and use the Dolphin Smalltalk Application Deployment Kit on a single computer. You may use it to create executable files (EXEs) for applications you have written using Dolphin and you may distribute these applications for commercial purposes or otherwise. In addition, you may supply, together with your application files, a number of Dolphin's redistributable files that will be required for the application to run successfully on a target computer.
+ 
+The full text of the license agreement follows.
+
+GRANT.
+
+Object Arts Ltd.  (the "Developer") hereby grants you a non-exclusive, non-transferable license to use one copy of the accompanying Dolphin Smalltalk Application Deployment Kit (the "Software") on a single computer. In addition, this license grants rights to redistribute a number of files (the "Redistributable components") from the Dolphin Smalltalk Software Development System. Such additional rights are supplementary to those already granted by the Dolphin Smalltalk Development License to which you must have previously agreed.
+
+SOFTWARE.
+
+1. You may make any number of backup copies of the Software for your individual use but the Software may not be copied or transferred to another person or entity except as expressly licensed herein.
+2. You may not publish, transfer, rent, lease, translate, reverse engineer, or create derivative works based on, the Software.
+
+REDISTRIBUTABLE COMPONENTS
+
+You may distribute the runtime Dynamic Link Libraries ("DLLs") from the original Dolphin Smalltalk Software Development System that are identified in the documentation accompanying the Software, provided that you:
+
+1. Distribute the DLLs only in conjunction with and as an integral part of executable applications created by you utilizing this Software.
+2. Do not distribute any software with your application that utilizes the Dolphin Smalltalk Virtuall Machine DLL unless it was created using this Software. 
+3. Do not use Object Arts' name, logo or trademarks to market your software without the express written permission of Object Arts Ltd.
+4. Agree to indemnify, hold harmless and defend Object Arts Ltd from and against any claims or lawsuits, including attorneys' fees, which arise or result from the use or distribution of your software. 
+
+TITLE.
+
+Title, ownership rights, and intellectual property rights in and to the Software and Documentation shall remain with the Developers. The Software is protected by the copyright laws of the United Kingdom and international copyright treaties.  
+
+DISCLAIMER OF WARRANTY.
+
+The Software and Documentation are provided on an "AS IS" basis, without warranty of any kind, including without limitation the warranties of merchantability, fitness for a particular purpose and non-infringement. The entire risk as to the quality and performance of the Software and Documentation is borne by you. Should the Software or Documentation prove defective, you and not the Developers assume the entire cost of any service and repair. This disclaimer of warranty constitutes an essential part of the agreement. 
+
+SOME JURISDICTIONS DO NOT ALLOW EXCLUSIONS OF AN IMPLIED WARRANTY, SO THIS DISCLAIMER MAY NOT APPLY TO YOU AND YOU MAY HAVE OTHER LEGAL RIGHTS THAT VARY BY JURISDICTION.
+
+LIMITATION OF LIABILITY.
+
+UNDER NO CIRCUMSTANCES AND UNDER NO LEGAL THEORY, TORT, CONTRACT, OR OTHERWISE, SHALL THE DEVELOPERS OR THEIR SUPPLIERS OR RESELLERS BE LIABLE TO YOU OR ANY OTHER PERSON FOR ANY INDIRECT, SPECIAL, INCIDENTAL, OR CONSEQUENTIAL DAMAGES OF ANY CHARACTER INCLUDING, WITHOUT LIMITATION, DAMAGES FOR LOSS OF GOODWILL, WORK STOPPAGE, COMPUTER FAILURE OR MALFUNCTION, OR ANY AND ALL OTHER COMMERCIAL DAMAGES OR LOSSES. 
+
+IN NO EVENT WILL THE DEVELOPERS BE LIABLE FOR ANY DAMAGES IN EXCESS OF THE DEVELOPERS' LIST PRICE FOR A LICENSE TO THE SOFTWARE, EVEN IF THE DEVELOPERS SHALL HAVE BEEN INFORMED OF THE POSSIBILITY OF SUCH DAMAGES, OR FOR ANY CLAIM BY ANY OTHER PARTY. 
+
+THIS LIMITATION OF LIABILITY SHALL NOT APPLY TO LIABILITY FOR DEATH OR PERSONAL INJURY TO THE EXTENT APPLICABLE LAW PROHIBITS SUCH LIMITATION. 
+FURTHERMORE, SOME JURISDICTIONS DO NOT ALLOW THE EXCLUSION OR LIMITATION OF INCIDENTAL OR CONSEQUENTIAL DAMAGES, SO THIS LIMITATION AND EXCLUSION MAY NOT APPLY TO YOU.
+
+TERMINATION.
+
+This license will terminate automatically if you fail to comply with the limitations described above.  On termination, you must destroy all copies of the Software and Documentation.
+
+MISCELLANEOUS.
+
+This Agreement represents the complete agreement concerning this license between the parties and supersedes all prior agreements and representations between them relating to the Software. 
+
+
+

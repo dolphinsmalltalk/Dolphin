@@ -1,0 +1,79 @@
+| package |
+package := Package name: 'Dolphin Base64'.
+package paxVersion: 1;
+	basicComment: 'Dolphin Smalltalk Base64 Codec
+Copyright (c) Object Arts Ltd, 2004.
+
+This package contains a simple but fast implementation of the widely used Base64 binary-to-ASCII text encoding scheme. For further details of Base64 see RFC 3548 (http://www.faqs.org/rfcs/rfc3548.html). Note that the implementation of Base64 is compatible with MIME in that it splits encoded output into lines of 76 characters separated by a CR/LF pair.
+
+The package also extends ByteArray to add methods to store instances in Base64 encoded text form, and to restore instances from that form.'.
+
+package basicPackageVersion: '6.0'.
+
+
+package classNames
+	add: #Base64Codec;
+	yourself.
+
+package methodNames
+	add: #ByteArray -> #base64StoreOn:;
+	add: #ByteArray -> #printBase64On:;
+	add: 'ByteArray class' -> #fromBase64String:;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\..\Base\Dolphin';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+Object subclass: #Base64Codec
+	instanceVariableNames: 'quadsPerLine isPadded'
+	classVariableNames: 'DecodingTable EncodingTable'
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+!ByteArray methodsFor!
+
+base64StoreOn: puttableStream 
+	puttableStream
+		nextPut: $(;
+		print: self class;
+		space;
+		nextPutAll: #fromBase64String:;
+		space;
+		nextPut: $'.
+	self printBase64On: puttableStream.
+	puttableStream nextPutAll: ''')'!
+
+printBase64On: aStream 
+	"Append a base64 string representation of the receiver to the <puttableStream> argument."
+
+	Base64Codec encodeFrom: self readStream onto: aStream! !
+!ByteArray categoriesFor: #base64StoreOn:!printing!public! !
+!ByteArray categoriesFor: #printBase64On:!printing!public! !
+
+!ByteArray class methodsFor!
+
+fromBase64String: aString 
+	| stream |
+	stream := self writeStream: (aString size * 0.75) truncated.
+	Base64Codec decodeFrom: aString readStream onto: stream.
+	^stream contents! !
+!ByteArray class categoriesFor: #fromBase64String:!instance creation!public! !
+
+"End of package definition"!
+

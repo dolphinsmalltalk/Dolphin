@@ -1,0 +1,40 @@
+"Filed out from Dolphin Smalltalk X6"!
+
+GdiplusInitializer subclass: #GdiplusPathGradientFromPointsInitializer
+	instanceVariableNames: 'pathPoints wrapMode'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+GdiplusPathGradientFromPointsInitializer guid: (GUID fromString: '{8F2007E1-7D6C-11D7-B609-00E0987E8081}')!
+GdiplusPathGradientFromPointsInitializer comment: ''!
+!GdiplusPathGradientFromPointsInitializer categoriesForClass!Unclassified! !
+!GdiplusPathGradientFromPointsInitializer methodsFor!
+
+createHandle
+	| gpHandle status |
+	gpHandle := ExternalHandle new.
+	status := self library 
+				gdipCreatePathGradientI: (StructureArray withAll: (pathPoints collect: [:e | POINTL fromPoint: e])
+						elementClass: POINTL)
+				count: pathPoints size
+				wrapMode: wrapMode
+				polyGradient: gpHandle.
+	self assertStatusOk: status.
+	^gpHandle!
+
+gdiplusConstructorErrorDescription
+	^'Error creating PathGradient'!
+
+points: points wrapMode: aWrapModeConstant
+	pathPoints := points.
+	wrapMode := aWrapModeConstant! !
+!GdiplusPathGradientFromPointsInitializer categoriesFor: #createHandle!public!realizing/unrealizing! !
+!GdiplusPathGradientFromPointsInitializer categoriesFor: #gdiplusConstructorErrorDescription!constants!private! !
+!GdiplusPathGradientFromPointsInitializer categoriesFor: #points:wrapMode:!instance creation!public! !
+
+!GdiplusPathGradientFromPointsInitializer class methodsFor!
+
+points: points wrapMode: aWrapModeConstant
+	^self new points: points wrapMode: aWrapModeConstant! !
+!GdiplusPathGradientFromPointsInitializer class categoriesFor: #points:wrapMode:!instance creation!public! !
+

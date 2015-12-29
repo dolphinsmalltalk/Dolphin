@@ -1,0 +1,57 @@
+| package |
+package := Package name: 'Dolphin Number Presenter'.
+package paxVersion: 1;
+	basicComment: 'Dolphin Smalltalk Number Presenter
+Copyright (c) Object Arts Ltd. 1997-2003. Portions Copyright (c) CGI Group (Europe) Ltd. 1997.
+
+This package is part of the Dolphin Smalltalk Model View Presenter user-interface framework.'.
+
+package basicPackageVersion: '6.1'.
+
+
+package classNames
+	add: #IntegerToText;
+	add: #NumberPresenter;
+	add: #NumberToText;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\..\..\Base\Dolphin';
+	add: '..\..\Base\Dolphin MVP Base';
+	add: '..\Text\Dolphin Text Presenter';
+	add: '..\..\Type Converters\Dolphin Type Converters';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+ValuePresenter subclass: #NumberPresenter
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+AbstractToTextConverter subclass: #NumberToText
+	instanceVariableNames: '_reserved1'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+NumberToText subclass: #IntegerToText
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+"End of package definition"!
+

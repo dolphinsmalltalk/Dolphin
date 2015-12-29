@@ -1,0 +1,197 @@
+| package |
+package := Package name: 'Diff Algorithm'.
+package paxVersion: 1;
+	basicComment: 'Diff Algorithm Package
+Copyright (c) Mario Wolczko, 1993, portions copyright (c) Ian Bartholomew 2002.
+
+This is essentially Mario Wolczko''s Smalltalk implementation of the McIlroy-Hunt diff algorithm with some modifications by Ian Bartholomew (and possibly others). It is assumed that the copyright is Mario''s, but the source describes it as a public domain implementation.
+
+"diff.st - A public domain implementation of the diff algorithm"
+
+"$Revision: 21.2 $"
+
+"	NAME		diff
+	AUTHOR		miw@cs.man.ac.uk
+	FUNCTION McIlroy-Hunt diff algorithm for SequenceableCollections 
+	ST-VERSIONS	4.0 4.1
+	PREREQUISITES	 
+	CONFLICTS	
+	DISTRIBUTION  	world
+	VERSION		1.2
+	DATE	3 Nov 1993
+SUMMARY	diff
+	is an implementation of the McIlroy-Hunt "diff" algorithm, for
+   SequenceableCollections.  An example of its use is in conflicts.st.
+
+
+Test example using files /tmp/[12]
+  Smalltalk
+   | b s1 s2 |
+   b := [:n| (Filename named: n)
+     contentsOfEntireFile asSequenceableCollection: Character cr].
+   s1 := b value: ''/tmp/1''.
+   s2 := b value: ''/tmp/2''.
+   20 timesRepeat: [Transcript show: (Time millisecondsToRun: 
+     [s1 longestCommonSubsequence: s2]) printString ; cr]
+
+  Self
+   | b s1 s2 |
+   b := [:n| (self selfLobby unixFile openForReading: n asSelfString)
+     contents asSmalltalkString asSequenceableCollection: Character nl].
+   s1 := b value: ''/tmp/1''.
+   s2 := b value: ''/tmp/2''.
+   20 timesRepeat: [Transcript show: (Time millisecondsToRun: 
+     [s1 longestCommonSubsequence: s2]) printString ; cr]
+
+"'.
+
+package basicPackageVersion: '6.0'.
+
+
+package classNames
+	add: #LinkElement;
+	yourself.
+
+package methodNames
+	add: #SequenceableCollection -> #inverseMatchVector:;
+	add: #SequenceableCollection -> #longestCommonSubsequenceInInterval:withCollection:inInterval:;
+	add: #SortedCollection -> #replaceNextLargerWith:;
+	add: 'Dictionary class' -> #withPositionsOf:inInterval:;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\..\..\Base\Dolphin';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+Link subclass: #LinkElement
+	instanceVariableNames: 'value'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+!Dictionary class methodsFor!
+
+withPositionsOf: aCollection inInterval: anInterval
+	"Create a Dictionary that maps each element of aCollection to the set of positions it occupies in aCollection, restricted to the elements within the range of indexes specified by anInterval."
+
+	| d |
+	d := self new.
+	anInterval 
+		do: [:index | (d at: (aCollection at: index) ifAbsentPut: [OrderedCollection new]) add: index].
+	^d! !
+!Dictionary class categoriesFor: #withPositionsOf:inInterval:!equivalence classes!public! !
+
+!SequenceableCollection methodsFor!
+
+inverseMatchVector: matchVector
+	"If matchVector maps the matching elements of another collection onto me, compute the matchVector that maps me onto the collection."
+
+	| inverseMatchVector |
+	inverseMatchVector := Array new: self size.
+	1 to: matchVector size
+		do: [:i | (matchVector at: i) ifNotNil: [:arg | inverseMatchVector at: arg put: i]].
+	^inverseMatchVector!
+
+longestCommonSubsequenceInInterval: aInterval withCollection: anOrderedCollection inInterval: bInterval 
+	"This method computes the longest common subsequence in self and anOrderedCollection, restricted to aInterval and bInterval respectively.  It uses the algorithm described in A Fast Algorithm for Computing Longest Common Subsequences, CACM, vol.20, no.5, pp.350-353, May 1977, with a few minor improvements to improve the speed."
+
+	"First we prune off any common elements at the beginning or end."
+
+	| aStart aFinish bStart bFinish matchVector bMatches thresh links |
+	aStart := aInterval first.
+	aFinish := aInterval last.
+	bStart := bInterval first.
+	bFinish := bInterval last.
+	matchVector := Array new: aInterval size.
+	
+	[(aStart <= aFinish and: [bStart <= bFinish]) 
+		and: [(self at: aStart) = (anOrderedCollection at: bStart)]] 
+			whileTrue: 
+				[matchVector at: aStart - aInterval first + 1 put: bStart.
+				aStart := aStart + 1.
+				bStart := bStart + 1].
+
+	"now the end"
+	
+	[(aStart <= aFinish and: [bStart <= bFinish]) 
+		and: [(self at: aFinish) = (anOrderedCollection at: bFinish)]] 
+			whileTrue: 
+				[matchVector at: aFinish - aInterval first + 1 put: bFinish.
+				aFinish := aFinish - 1.
+				bFinish := bFinish - 1].
+
+	"Now compute the equivalence classes of positions of elements"
+	bMatches := LookupTable withPositionsOf: anOrderedCollection
+				inInterval: (bStart to: bFinish).
+	thresh := SortedCollection new sortBlock: [:x :y | x < y].
+	links := Array new: (aFinish - aStart + 1 min: bFinish - bStart + 1).
+	aStart to: aFinish
+		do: 
+			[:i | 
+			| ai |
+			ai := self at: i.
+			(bMatches includesKey: ai) 
+				ifTrue: 
+					[(bMatches at: ai) reverseDo: 
+							[:j | 
+							| k |
+							k := thresh replaceNextLargerWith: j.
+							k notNil 
+								ifTrue: 
+									[| link |
+									link := LinkElement new.
+									k > 1 ifTrue: [link nextLink: (links at: k - 1)].
+									link value: (Array with: i with: j).
+									links at: k put: link]]]].
+	thresh size > 0 
+		ifTrue: 
+			[| link |
+			link := links at: thresh size.
+			
+			[matchVector at: (link value at: 1) put: (link value at: 2).
+			link nextLink notNil] 
+					whileTrue: [link := link nextLink]].
+	^matchVector! !
+!SequenceableCollection categoriesFor: #inverseMatchVector:!computing differences!public! !
+!SequenceableCollection categoriesFor: #longestCommonSubsequenceInInterval:withCollection:inInterval:!computing differences!public! !
+
+!SortedCollection methodsFor!
+
+replaceNextLargerWith: aValue
+	"Find the place at which aValue would normally be inserted into
+	 the collection.  If that place is already occupied by aValue, do 
+	 nothing, and return nil.  If the place does not exist (i.e., it is off
+	 the end of the collection), add it to the end, otherwise replace
+	 the element at that point with aValue.
+
+	Because this operation preserves the sort order, it can be implemented
+	in an efficient and direct way."
+
+	| index |
+	index := self indexForInserting: aValue.
+	index > lastIndex 
+		ifTrue: 
+			[self add: aValue.
+			^self size].
+	(self basicAt: index) = aValue ifTrue: [^nil].
+	self basicAt: index put: aValue.
+	^index - firstIndex + 1! !
+!SortedCollection categoriesFor: #replaceNextLargerWith:!adding!public! !
+
+"End of package definition"!
+

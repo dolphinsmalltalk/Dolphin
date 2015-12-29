@@ -1,0 +1,290 @@
+"Filed out from Dolphin Smalltalk X6"!
+
+ListControlView subclass: #BasicListAbstract
+	instanceVariableNames: 'lastSelIndices'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+BasicListAbstract guid: (GUID fromString: '{87B4C725-026E-11D3-9FD7-00A0CC3E4A32}')!
+BasicListAbstract comment: 'BasicListAbstract is an abstract class conforming to the <listView> protocol. Its concrete subclasses are implementations of the original Windows list boxes and combination boxes. All <listView>s are intended to be used in conjunction with a <listModel> holding the list items.
+
+Instance Variables:
+
+	getTextBlock	<monadicValuable> for mapping a list item to its display text.
+	lastSel		<integer> or <Array> indicating the index(es) of the last single or multiple selection.
+
+'!
+!BasicListAbstract categoriesForClass!MVP-Views! !
+!BasicListAbstract methodsFor!
+
+basicAdd: anObject 
+	"Private - Adds a string for the <Object> argument to the listbox control at the end of the
+	list. Answers the argument."
+
+	^self subclassResponsibility!
+
+basicRefreshContents
+	self noRedrawDo: 
+			[self basicClear.
+			self withOldWndProc: [self model do: [:each | self basicAdd: each]]].
+	self invalidate!
+
+basicResetSelection
+	"Private - Set the receiver to have no selection."
+
+	self setSingleSelection: self noSelection!
+
+canHScroll
+	"Answer whether the receiver is in horizontal scrolling mode."
+
+	^self subclassResponsibility!
+
+canHScroll: aBoolean 
+	"Sets the receiver into horizontal scrolling mode if aBoolean is true."
+
+	^self subclassResponsibility!
+
+defaultExtent
+	"Private - Answer the default size of the receiver
+	to be used when it is created."
+
+	^##(125 @ 175)!
+
+defaultWindowExStyle
+	"Private - Answer the default extended window creation style.
+	Use the client edge style for the standard Win95 look."
+
+	^super defaultWindowExStyle bitOr: WS_EX_CLIENTEDGE!
+
+defaultWindowStyle
+	"Private - Answer the default basic window creation style for list view"
+
+	^super defaultWindowStyle bitOr: ##(WS_VSCROLL | WS_HSCROLL)!
+
+displayStringFor: anObject 
+	^(getTextBlock value: anObject) displayString!
+
+ensureSelectionVisible
+	"Ensure the selected item is visible, scrolling it into view if necessary."
+
+	self setSingleSelection: self selectionByIndex!
+
+lastSelIndices
+	^lastSelIndices!
+
+onItem: anObject addedAtIndex: anInteger 
+	"Event received when an <Object> has been added to the receiver's
+	model at the specified <integer> index. Insert the object into the list control."
+
+	self basicAdd: anObject atIndex: anInteger.
+	self updateSelectionCache!
+
+onItem: anObject removedAtIndex: anInteger 
+	"Event received when the <Object>, anObject, has been removed from the receiver's model at
+	the <integer> index, anInteger. Remove the appropriate object from the listbox. We must also
+	account for the fact that a selected item may have been removed."
+
+	#todo.	"Determine if we need different order for single vs multi-select."
+	self isMultiSelect 
+		ifTrue: 
+			[self basicRemoveAtIndex: anInteger.
+			(lastSelIndices includes: anInteger) ifTrue: [self onSelChanged]]
+		ifFalse: 
+			[(lastSelIndices includes: anInteger) ifTrue: [self resetSelection].
+			self basicRemoveAtIndex: anInteger].
+	self updateSelectionCache!
+
+onKeyTyped: aKeyEvent
+	"Default handler for the receiver's view receiving a key entry."
+
+	| answer |
+	answer := super onKeyTyped: aKeyEvent.
+	aKeyEvent code==VK_RETURN ifTrue: [
+		self presenter performAction ].
+	^answer!
+
+onLeftButtonDoubleClicked: aMouseEvent
+	"Default handler for a mouse left button double-click event."
+
+	| answer |
+	answer := super onLeftButtonDoubleClicked: aMouseEvent.
+	self presenter performAction.
+	^answer!
+
+onSelChanged: anArray 
+	lastSelIndices := anArray.
+	super onSelChanged: anArray!
+
+onSelChanging
+	"Private - Handle a (pseudo) selection changing event. Answer whether the selection change was
+	permitted (and indeed has already occurred).
+	Implementation Note: The underlying control does not actually implement this functionality, so we have
+	to simulate it by restoring the previous selection if the presenter requests that the proposed selection
+	change be denied."
+
+	| curSel |
+	(curSel := self selectionsByIndex) = lastSelIndices 
+		ifFalse: 
+			[(self onSelChanging: curSel cause: #unknown) 
+				ifFalse: 
+					["Attempt to revert to previous selection"
+
+					self basicSelectionsByIndex: lastSelIndices.
+					(curSel := self selectionsByIndex) = lastSelIndices 
+						ifTrue: 
+							["Successfully prevented selection change"
+
+							^false]].
+
+			"Selection either could not be maintained or change permitted, so record and notify a selection change"
+			self onSelChanged: curSel].
+	^true!
+
+onSelChanging: anArray cause: aSymbol
+	"Private - Selection is changing in the receiver to the item in the receiver's model at the 
+	specified <integer> index as a direct result of user input.
+	A #selectionChanging: event is triggered to enquire as to whether the selection change 
+	is permissible. If it is not then any observer that wishes to veto the change must set the
+	the value of the <SelectionChangingEvent> to false. Note that selection notifications 
+	are not propagated during state restoral."
+
+	^self isStateRestoring or: 
+			[| event |
+			event := SelectionChangingEvent forSource: self.
+			event
+				newSelections: (anArray collect: [:each | self objectFromHandle: each]);
+				oldSelections: (lastSelIndices collect: [:each | self objectFromHandle: each]);
+				cause: aSymbol.
+			self presenter onSelectionChanging: event.
+			event value]!
+
+onViewCreated
+	"The receiver window has been created. Copy the info held
+	in instance variables across to it"
+
+	super onViewCreated.
+	lastSelIndices := #().
+	self refreshContents!
+
+refreshContents
+	"Refresh the receiver's contents to match the contents collection"
+
+	self isOpen ifFalse: [^self].
+	self basicRefreshContents.
+	self onSelChanged!
+
+selectIndices: aCollection set: aBoolean 
+	"Private - Set/clear (dependeing on the boolean argument) the selection status of the items
+	in the receiver with the <integer> in the <collection>, argument."
+
+	self isMultiSelect 
+		ifTrue: [aCollection do: [:each | self selectIndex: each set: aBoolean]]
+		ifFalse: [self setSingleSelection: aCollection first]!
+
+selections: aCollection ifAbsent: aNiladicOrMonadicValuable 
+	"Select the first occurrences of the specified collection of <Object>s in the receiver and
+	answer the new selection. If any of the elements of the collection are not present in the
+	receiver's list, then answer the result of evaluating the <monadicValuable>,
+	exceptionHandler. If the exception handler expects a single argument it is passed a
+	<collection> of the missing items."
+
+	| missing indices |
+	missing := OrderedCollection new.
+	indices := self handlesFromObjects: aCollection whenAbsent: [:e | missing addLast: e].
+	self setSelectionsByIndex: indices.
+	^missing isEmpty 
+		ifTrue: [aCollection]
+		ifFalse: 
+			[aNiladicOrMonadicValuable argumentCount == 1 
+				ifTrue: [aNiladicOrMonadicValuable value: missing]
+				ifFalse: [aNiladicOrMonadicValuable value]]!
+
+selectionsByIndex: aCollection ifAbsent: exceptionHandler 
+	"Select the objects identified by the <collection> of <integer> indices, indices, in the
+	receiver. If any of the indices are out of bounds, then evaluate the <monadicValuable>,
+	exceptionHandler, passing it a <collection> of the offending indices. For backwards
+	compatibility with the superclass implementation, exceptionHandler can also be a
+	<niladicValuable>, but in that the exception handler must work out for itself which indices
+	were missing."
+
+	| inRange size |
+	size := self size.
+	inRange := aCollection select: [:i | i between: 1 and: size].
+	self setSelectionsByIndex: inRange.
+	^aCollection size ~= inRange size 
+		ifTrue: 
+			[exceptionHandler argumentCount == 1 
+				ifTrue: [exceptionHandler value: (aCollection difference: inRange)]
+				ifFalse: [exceptionHandler value]]
+		ifFalse: [inRange]!
+
+selectionState
+	^MessageSend 
+		receiver: self
+		selector: #basicSelectionsByIndex:
+		argument: self selectionsByIndex!
+
+setSelectionsByIndex: indices 
+	(indices noDifference: lastSelIndices) ifTrue: [^self].
+	self basicSelectionsByIndex: indices.
+	"Note: We have to check again whether the selection has changed because of the single-select
+	case"
+	self onSelChanged!
+
+updateItem: anObject atIndex: anInteger 
+	"Re-render the specified item, which is at the specified <integer> index in the list."
+
+	"Implementation Note: The simple ListBox control has no way to do this directly, so we must
+	add a new item and remove the old one, maintaining the selection as we do so."
+
+	self basicAdd: anObject atIndex: anInteger.
+	(lastSelIndices includes: anInteger) 
+		ifTrue: 
+			[self isMultiSelect 
+				ifTrue: [self selectIndex: anInteger set: true]
+				ifFalse: [self setSingleSelection: anInteger]].
+	self basicRemoveAtIndex: anInteger + 1!
+
+updateSelectionCache
+	"Private - If there is a cached selection, update it."
+
+	lastSelIndices notEmpty ifTrue: [lastSelIndices := self selectionsByIndex]! !
+!BasicListAbstract categoriesFor: #basicAdd:!adding!private! !
+!BasicListAbstract categoriesFor: #basicRefreshContents!private!updating! !
+!BasicListAbstract categoriesFor: #basicResetSelection!private!selection! !
+!BasicListAbstract categoriesFor: #canHScroll!public! !
+!BasicListAbstract categoriesFor: #canHScroll:!public! !
+!BasicListAbstract categoriesFor: #defaultExtent!constants!private! !
+!BasicListAbstract categoriesFor: #defaultWindowExStyle!constants!private! !
+!BasicListAbstract categoriesFor: #defaultWindowStyle!constants!private! !
+!BasicListAbstract categoriesFor: #displayStringFor:!adding!private! !
+!BasicListAbstract categoriesFor: #ensureSelectionVisible!public!selection! !
+!BasicListAbstract categoriesFor: #lastSelIndices!private! !
+!BasicListAbstract categoriesFor: #onItem:addedAtIndex:!event handling!public! !
+!BasicListAbstract categoriesFor: #onItem:removedAtIndex:!event handling!public! !
+!BasicListAbstract categoriesFor: #onKeyTyped:!event handling!public! !
+!BasicListAbstract categoriesFor: #onLeftButtonDoubleClicked:!event handling!public! !
+!BasicListAbstract categoriesFor: #onSelChanged:!event handling!private! !
+!BasicListAbstract categoriesFor: #onSelChanging!event handling!private! !
+!BasicListAbstract categoriesFor: #onSelChanging:cause:!event handling!private! !
+!BasicListAbstract categoriesFor: #onViewCreated!event handling!public! !
+!BasicListAbstract categoriesFor: #refreshContents!public!updating! !
+!BasicListAbstract categoriesFor: #selectIndices:set:!public!selection! !
+!BasicListAbstract categoriesFor: #selections:ifAbsent:!public!selection! !
+!BasicListAbstract categoriesFor: #selectionsByIndex:ifAbsent:!public!selection! !
+!BasicListAbstract categoriesFor: #selectionState!accessing!private! !
+!BasicListAbstract categoriesFor: #setSelectionsByIndex:!public!selection! !
+!BasicListAbstract categoriesFor: #updateItem:atIndex:!event handling!public! !
+!BasicListAbstract categoriesFor: #updateSelectionCache!helpers!private!selection! !
+
+!BasicListAbstract class methodsFor!
+
+value: anObject
+	"Private - Implement #value: in order to provide a default 'get text'
+	monadic valuable for the receiver's subinstances.
+	Implementation Note: More efficient replacement for a block or message
+	valuable, mainly to save space in view resources."
+
+	^anObject displayString! !
+!BasicListAbstract class categoriesFor: #value:!evaluating!private! !
+

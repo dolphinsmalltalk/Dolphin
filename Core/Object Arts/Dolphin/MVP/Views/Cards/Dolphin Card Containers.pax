@@ -1,0 +1,97 @@
+| package |
+package := Package name: 'Dolphin Card Containers'.
+package paxVersion: 1;
+	basicComment: 'Dolphin Smalltalk Card Containers.
+Copyright (c) Object Arts Ltd. 1997-2005. Portions Copyright (c) CGI Group (Europe) Ltd. 1997.'.
+
+package basicPackageVersion: '6.1'.
+
+
+package classNames
+	add: #AbstractCardContainer;
+	add: #CardContainer;
+	add: #CardLabel;
+	add: #CardLayout;
+	add: #WizardCardContainer;
+	yourself.
+
+package methodNames
+	add: 'Presenter class' -> #resource_Card_container;
+	add: 'Presenter class' -> #resource_Wizard_card_container;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\..\..\Base\Dolphin';
+	add: '..\Common Controls\Dolphin Common Controls';
+	add: '..\..\Models\List\Dolphin List Models';
+	add: '..\..\Presenters\List\Dolphin List Presenter';
+	add: '..\..\Base\Dolphin MVP Base';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+Object subclass: #CardLabel
+	instanceVariableNames: 'text iconBlock helpId'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+LayoutManager subclass: #CardLayout
+	instanceVariableNames: 'names currentCard'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ContainerView subclass: #AbstractCardContainer
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+AbstractCardContainer subclass: #CardContainer
+	instanceVariableNames: 'tabs'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+AbstractCardContainer subclass: #WizardCardContainer
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+!Presenter class methodsFor!
+
+resource_Card_container
+	"Answer the literal data from which the 'Card container' resource can be reconstituted.
+	DO NOT EDIT OR RECATEGORIZE THIS METHOD.
+
+	If you wish to modify this resource evaluate:
+	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Card_container)
+	"
+
+	^#(#'!!STL' 3 788558 10 ##(Smalltalk.STBViewProxy)  8 ##(Smalltalk.CardContainer)  98 16 0 0 98 2 8 1409286144 131073 416 0 524550 ##(Smalltalk.ColorRef)  8 4278190080 0 5 0 0 0 416 655878 ##(Smalltalk.CardLayout)  202 208 98 0 0 234 256 592 0 410 8 ##(Smalltalk.TabView)  98 23 0 416 98 2 8 1140916736 1 624 590662 2 ##(Smalltalk.ListModel)  202 208 592 0 1310726 ##(Smalltalk.IdentitySearchPolicy)  721158 ##(Smalltalk.SystemColor)  31 0 1 0 0 0 624 0 8 4294903589 459270 ##(Smalltalk.Message)  8 #displayString 98 0 8 ##(Smalltalk.IconicListAbstract)  1049670 1 ##(Smalltalk.IconImageManager)  0 0 0 0 0 8 #noIcons 983302 ##(Smalltalk.MessageSequence)  202 208 98 2 721670 ##(Smalltalk.MessageSend)  8 #createAt:extent: 98 2 328198 ##(Smalltalk.Point)  1 1 1090 701 501 624 1026 8 #tcmSetExtendedStyle:dwExStyle: 98 2 -1 1 624 983302 ##(Smalltalk.WINDOWPLACEMENT)  8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 94 1 0 0 250 0 0 0] 98 0 1090 193 193 0 27 962 202 208 98 1 1026 1056 98 2 1090 2799 21 1090 701 501 416 1186 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 119 5 0 0 10 0 0 0 213 6 0 0 4 1 0 0] 98 1 624 1248 0 27 )!
+
+resource_Wizard_card_container
+	"Answer the literal data from which the 'Wizard card container' resource can be reconstituted.
+	DO NOT EDIT OR RECATEGORIZE THIS METHOD.
+
+	If you wish to modify this resource evaluate:
+	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Wizard_card_container)
+	"
+
+	^#(#'!!STL' 3 788558 10 ##(STBViewProxy)  8 ##(WizardCardContainer)  98 15 0 0 98 2 8 1140850688 131073 416 0 524550 ##(ColorRef)  8 4278190080 0 7 0 0 0 416 655878 ##(CardLayout)  202 208 98 0 0 234 256 592 0 983302 ##(MessageSequence)  202 208 98 1 721670 ##(MessageSend)  8 #createAt:extent: 98 2 328198 ##(Point)  11 11 754 701 501 416 983302 ##(WINDOWPLACEMENT)  8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 5 0 0 0 5 0 0 0 99 1 0 0 255 0 0 0] 98 0 754 193 193 0 27 )! !
+!Presenter class categoriesFor: #resource_Card_container!public!resources-views! !
+!Presenter class categoriesFor: #resource_Wizard_card_container!public!resources-views! !
+
+"End of package definition"!
+

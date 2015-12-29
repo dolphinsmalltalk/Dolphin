@@ -1,0 +1,245 @@
+| package |
+package := Package name: 'OA SUnit Extensions'.
+package paxVersion: 1;
+	basicComment: 'Object Arts SUnit Extensions.
+Copyright (c) Object Arts Ltd, 2002.
+
+Extensions to the basic SUnit unit testing packages, including the ability to test that the correct set of SASE events are fired for particular actions.'.
+
+
+package methodNames
+	add: #TestCase -> #=;
+	add: #TestCase -> #debugWithResult;
+	add: #TestCase -> #debugWithResult:;
+	add: #TestCase -> #hash;
+	add: #TestCase -> #should:raise:matching:;
+	add: #TestCase -> #should:trigger:against:;
+	add: #TestCase -> #should:trigger:butNot:against:;
+	add: #TestCase -> #should:trigger:matching:against:;
+	add: #TestCase -> #should:triggerAllOf:against:;
+	add: #TestCase -> #should:triggerAllOf:matching:against:;
+	add: #TestCase -> #should:triggerAllOf:matching:butNoneOf:against:;
+	add: #TestCase -> #shouldnt:trigger:against:;
+	add: #TestCase -> #shouldnt:triggerAnyOf:against:;
+	add: #TestResult -> #debugCase:;
+	add: 'TestCase class' -> #debugWithResult:;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\Dolphin\Base\Dolphin';
+	add: '..\..\Camp Smalltalk\SUnit\SUnit';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+!TestCase methodsFor!
+
+= aTestCase 
+	"Answer whether the argument, aTestCase, is considered exactly equivalent to the receiver."
+
+	^self class == aTestCase class and: [self selector == aTestCase selector]!
+
+debugWithResult
+	| result |
+	result := TestResult new.
+	self debugWithResult: result.
+	^result!
+
+debugWithResult: aResult
+	aResult debugCase: self!
+
+hash
+	"Answer the <SmallInteger> hash value for the receiver. We use only the selector at the moment."
+
+	^testSelector hash!
+
+should: aBlock raise: anException matching: discriminator
+	"Example usage:
+		self should: [array at: $1] raise: Error matching: [:ex | ex messageText = 'Index: $1 is not an integer'].
+	"
+
+	| raised |
+	raised := false.
+	aBlock on: anException
+		do: 
+			[:exception | 
+			(discriminator value: exception) ifTrue: [raised := true].
+			"If the exception is resumable, such as a warning, then allow execution of the block to continue"
+			exception exit: nil].
+	self assert: raised!
+
+should: aZeroArgBlock trigger: aSymbol against: anObject 
+	"Example Usage:
+		self 
+			should: [Object trigger: #testNoArgs]
+			trigger: #testNoArgs
+			against: Object.
+	"
+
+	self 
+		should: aZeroArgBlock
+		triggerAllOf: (Array with: aSymbol)
+		against: anObject!
+
+should: aBlock trigger: eventSymbol1 butNot: eventSymbol2 against: anObject 
+	"Example usage:
+		self 
+			should: [presenter selection: each]
+			trigger: #selectionChanged
+			butNot: #selectionChanging:
+			against: presenter.
+	"
+
+	self 
+		should: aBlock
+		triggerAllOf: (Array with: eventSymbol1)
+		matching: [:message | true]
+		butNoneOf: (Array with: eventSymbol2)
+		against: anObject!
+
+should: aZeroArgBlock trigger: aSymbol matching: discriminatorBlock against: anObject 
+	"Example usage:
+		self 
+			should: [Object trigger: #testTwoArgs:arg2:]
+			trigger: #testTwoArgs:arg2:
+			matching: [:arg1 :arg2 | arg1 isNil & arg2 isNil]
+			against: Object.
+	"
+
+	self assert: aSymbol argumentCount = discriminatorBlock argumentCount.
+	self 
+		should: aZeroArgBlock
+		triggerAllOf: (Array with: aSymbol)
+		matching: [:message | discriminatorBlock valueWithArguments: message arguments]
+		against: anObject!
+
+should: aZeroArgBlock triggerAllOf: aCollectionOfSymbols against: anObject 
+	self 
+		should: aZeroArgBlock
+		triggerAllOf: aCollectionOfSymbols
+		matching: [:message | true]
+		against: anObject!
+
+should: aZeroArgBlock triggerAllOf: aCollectionOfSymbols matching: aOneArgBlockOrNil against: anObject 
+	self 
+		should: aZeroArgBlock
+		triggerAllOf: aCollectionOfSymbols
+		matching: aOneArgBlockOrNil
+		butNoneOf: #()
+		against: anObject!
+
+should: aZeroArgBlock triggerAllOf: aCollectionOfSymbols matching: aOneArgBlock butNoneOf: aCollectionOfSymbols2 against: anObject 
+	| fired allEvents |
+	fired := Bag new.
+	allEvents := aCollectionOfSymbols union: aCollectionOfSymbols2.
+	"The expected and unexpected event sets should be disjoint"
+	self assert: allEvents size = (aCollectionOfSymbols size + aCollectionOfSymbols2 size).
+	
+	[allEvents do: 
+			[:each | 
+			"If the event selector is part of nil's protocol, then no MNU will be raised, 
+			and the test will be invalid"
+
+			self deny: (nil respondsTo: each).
+			anObject when: each sendTo: nil].
+	aZeroArgBlock on: MessageNotUnderstood
+		do: 
+			[:mnu | 
+			(mnu receiver ~~ nil or: [(allEvents includes: mnu selector) not]) ifTrue: [mnu pass].
+			((aCollectionOfSymbols2 includes: mnu selector) or: [aOneArgBlock value: mnu message]) 
+				ifTrue: [fired add: mnu selector].
+			mnu resume: mnu receiver]] 
+			ensure: [anObject removeEventsTriggeredFor: nil].
+	"If this assertion fails, then the object did not trigger one or more of the expected events"
+	self assert: (aCollectionOfSymbols difference: fired) isEmpty.
+	"If this assertion fails, then the object triggered one or more events that it should not have"
+	self assert: (aCollectionOfSymbols2 intersection: fired) isEmpty!
+
+shouldnt: aBlock trigger: aSymbol against: anObject 
+	"Example usage:
+		self 
+			shouldnt: [presenter selection: each]
+			trigger: #selectionChanging:
+			against: presenter.
+	"
+
+	self 
+		shouldnt: aBlock
+		triggerAnyOf: (Array with: aSymbol)
+		against: anObject!
+
+shouldnt: aZeroArgBlock triggerAnyOf: aCollectionOfSymbols against: anObject 
+	"Example usage:
+		self 
+			shouldnt: [presenter model remove: objects last]
+			triggerAnyOf: #(#selectionChanged #selectionChanging:)
+			against: presenter.
+	"
+
+	self 
+		should: aZeroArgBlock
+		triggerAllOf: #()
+		matching: [:message | true]
+		butNoneOf: aCollectionOfSymbols
+		against: anObject! !
+!TestCase categoriesFor: #=!comparing!public! !
+!TestCase categoriesFor: #debugWithResult!public!Running! !
+!TestCase categoriesFor: #debugWithResult:!private!Running! !
+!TestCase categoriesFor: #hash!comparing!public! !
+!TestCase categoriesFor: #should:raise:matching:!Accessing!public! !
+!TestCase categoriesFor: #should:trigger:against:!Accessing!public! !
+!TestCase categoriesFor: #should:trigger:butNot:against:!Accessing!public! !
+!TestCase categoriesFor: #should:trigger:matching:against:!helpers!public! !
+!TestCase categoriesFor: #should:triggerAllOf:against:!Accessing!public! !
+!TestCase categoriesFor: #should:triggerAllOf:matching:against:!helpers!public! !
+!TestCase categoriesFor: #should:triggerAllOf:matching:butNoneOf:against:!helpers!public! !
+!TestCase categoriesFor: #shouldnt:trigger:against:!helpers!public! !
+!TestCase categoriesFor: #shouldnt:triggerAnyOf:against:!helpers!public! !
+
+!TestCase class methodsFor!
+
+debugWithResult: aSymbol
+	^(self selector: aSymbol) debugWithResult! !
+!TestCase class categoriesFor: #debugWithResult:!Instance Creation!public! !
+
+!TestResult methodsFor!
+
+debugCase: aTestCase 
+	"Same as runCase:, but must pass out an errors so caught by the debugger"
+
+	| testCasePassed |
+	testCasePassed := true.
+	
+	[
+	[aTestCase runCase.
+	true] sunitOn: self class failure
+			do: 
+				[:signal | 
+				self failures add: aTestCase.
+				testCasePassed := false.
+				signal pass]] 
+			sunitOn: self class error
+			do: 
+				[:signal | 
+				self errors add: aTestCase.
+				testCasePassed := false.
+				signal pass].
+	testCasePassed ifTrue: [self passed add: aTestCase]! !
+!TestResult categoriesFor: #debugCase:!public!Running! !
+
+"End of package definition"!
+

@@ -1,0 +1,225 @@
+| package |
+package := Package name: 'IDB Chunk Browser'.
+package paxVersion: 1;
+	basicComment: 'Chunk Browser
+Version 6a - May 2005
+For Version 6 of Dolphin Smalltalk
+
+(C) 2005 Ian Bartholomew
+ian@idb.me.uk
+Public Domain Freeware
+'.
+
+package basicPackageVersion: 'IDB$PACKAGE$VERSION 6a'.
+
+
+package classNames
+	add: #ChunkBrowser;
+	add: #ChunkBrowserCategoryChunk;
+	add: #ChunkBrowserChunk;
+	add: #ChunkBrowserClassCategoryChunk;
+	add: #ChunkBrowserClassCategorySeriesStartChunk;
+	add: #ChunkBrowserClassCommentChunk;
+	add: #ChunkBrowserClassDefineChunk;
+	add: #ChunkBrowserClassDeleteChunk;
+	add: #ChunkBrowserClassGUIDChunk;
+	add: #ChunkBrowserClassProtocolChunk;
+	add: #ChunkBrowserExpressionChunk;
+	add: #ChunkBrowserFilter;
+	add: #ChunkBrowserMethodCategoryChunk;
+	add: #ChunkBrowserMethodCategorySeriesStartChunk;
+	add: #ChunkBrowserMethodDefineChunk;
+	add: #ChunkBrowserMethodDefineSeriesStartChunk;
+	add: #ChunkBrowserMethodDeleteChunk;
+	add: #ChunkBrowserModel;
+	add: #ChunkBrowserOtherChunk;
+	add: #ChunkBrowserSeriesChunk;
+	add: #ChunkBrowserSeriesStartChunk;
+	add: #ChunkBrowserSystemChunk;
+	add: #MultipleSelectionListPresenter;
+	yourself.
+
+package methodNames
+	add: 'Toolbar class' -> #resource_ChunkBrowser_chunk_tools;
+	add: 'Toolbar class' -> #resource_ChunkBrowser_file_tools;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\Object Arts\Dolphin\IDE\Base\Development System';
+	add: '..\Object Arts\Dolphin\Base\Dolphin';
+	add: '..\Object Arts\Dolphin\MVP\Views\Common Controls\Dolphin Common Controls';
+	add: '..\Object Arts\Dolphin\MVP\Dialogs\Common\Dolphin Common Dialogs';
+	add: '..\Object Arts\Dolphin\MVP\Views\Control Bars\Dolphin Control Bars';
+	add: '..\Object Arts\Dolphin\MVP\Presenters\Difference\Dolphin Differences Presenter';
+	add: '..\Object Arts\Dolphin\MVP\Models\List\Dolphin List Models';
+	add: '..\Object Arts\Dolphin\MVP\Presenters\List\Dolphin List Presenter';
+	add: '..\Object Arts\Dolphin\MVP\Deprecated\Dolphin MVP (Deprecated)';
+	add: '..\Object Arts\Dolphin\MVP\Base\Dolphin MVP Base';
+	add: '..\Object Arts\Dolphin\MVP\Presenters\Text\Dolphin Rich Text Presenter';
+	add: '..\Object Arts\Dolphin\MVP\Views\Scintilla\Dolphin Scintilla View';
+	add: '..\Object Arts\Dolphin\MVP\Presenters\Text\Dolphin Text Presenter';
+	add: '..\Object Arts\Dolphin\MVP\Type Converters\Dolphin Type Converters';
+	add: '..\Object Arts\Dolphin\MVP\Models\Value\Dolphin Value Models';
+	add: 'IDB Common';
+	add: 'IDB Method History';
+	add: '..\Object Arts\Dolphin\System\Compiler\Smalltalk Parser';
+	add: '..\Object Arts\Dolphin\ActiveX\Shell\Windows Shell';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+Object subclass: #ChunkBrowserChunk
+	instanceVariableNames: 'rawText index identity1 identity2 picked'
+	classVariableNames: 'ChunkClasses IconIndices'
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ChunkBrowserChunk subclass: #ChunkBrowserExpressionChunk
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ChunkBrowserChunk subclass: #ChunkBrowserSeriesChunk
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ChunkBrowserChunk subclass: #ChunkBrowserSeriesStartChunk
+	instanceVariableNames: 'owningClass'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ChunkBrowserExpressionChunk subclass: #ChunkBrowserClassCommentChunk
+	instanceVariableNames: 'comment'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ChunkBrowserExpressionChunk subclass: #ChunkBrowserClassDefineChunk
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ChunkBrowserExpressionChunk subclass: #ChunkBrowserClassDeleteChunk
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ChunkBrowserExpressionChunk subclass: #ChunkBrowserClassGUIDChunk
+	instanceVariableNames: 'id'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ChunkBrowserExpressionChunk subclass: #ChunkBrowserClassProtocolChunk
+	instanceVariableNames: 'attributes selectors'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ChunkBrowserExpressionChunk subclass: #ChunkBrowserMethodDeleteChunk
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ChunkBrowserExpressionChunk subclass: #ChunkBrowserOtherChunk
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ChunkBrowserOtherChunk subclass: #ChunkBrowserSystemChunk
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ChunkBrowserSeriesChunk subclass: #ChunkBrowserCategoryChunk
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ChunkBrowserSeriesChunk subclass: #ChunkBrowserMethodDefineChunk
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ChunkBrowserCategoryChunk subclass: #ChunkBrowserClassCategoryChunk
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ChunkBrowserCategoryChunk subclass: #ChunkBrowserMethodCategoryChunk
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ChunkBrowserSeriesStartChunk subclass: #ChunkBrowserClassCategorySeriesStartChunk
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ChunkBrowserSeriesStartChunk subclass: #ChunkBrowserMethodCategorySeriesStartChunk
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ChunkBrowserSeriesStartChunk subclass: #ChunkBrowserMethodDefineSeriesStartChunk
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Model subclass: #ChunkBrowserFilter
+	instanceVariableNames: 'selectedChunkTypes selectedComparisonTypes restrictionRange restrictionClass restrictingMostRecent restrictingPicked'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Model subclass: #ChunkBrowserModel
+	instanceVariableNames: 'chunks'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ListPresenter subclass: #MultipleSelectionListPresenter
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+IdbToolShell subclass: #ChunkBrowser
+	instanceVariableNames: 'chunkList chunkText pathname filter'
+	classVariableNames: 'ChunkTypeSelection CompareMethodsUsingParser'
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+!Toolbar class methodsFor!
+
+resource_ChunkBrowser_chunk_tools
+	"Answer the literal data from which the 'ChunkBrowser chunk tools' resource can be reconstituted.
+	DO NOT EDIT OR RECATEGORIZE THIS METHOD.
+
+	If you wish to modify this resource evaluate:
+	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_ChunkBrowser_chunk_tools)
+	"
+
+	^#(#'!!STL' 3 788558 10 ##(STBViewProxy)  8 ##(Toolbar)  98 25 0 0 98 2 8 1140853516 131137 416 0 524550 ##(ColorRef)  8 4278190080 0 517 0 263174 ##(Font)  0 16 459014 ##(LOGFONT)  8 #[243 255 255 255 0 0 0 0 0 0 0 0 0 0 0 0 144 1 0 0 0 0 0 0 3 2 1 34 65 114 105 97 108 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0] 328198 ##(Point)  193 193 0 416 498 528 8 4294904585 234 256 98 0 234 256 98 40 37585 853766 ##(ToolbarButton)  37585 0 416 1 1180998 4 ##(CommandDescription)  459270 ##(Message)  8 #toggleInclusionOfChunkType: 98 1 8 #'Class Protocol' 8 'Class Protocol' 1 1 0 657990 3 ##(DIBSection)  0 16 1114638 ##(STBSingletonProxy)  8 ##(ImageRelativeFileLocator)  8 #current 8 'Ian Bartholomew\Resources\ChunkBrowser.bmp' 2032142 ##(STBExternalResourceLibraryProxy)  8 'dolphindr006.dll' 0 0 7 626 737 33 9 0 39 37587 754 37587 0 416 5 786 818 848 98 1 8 #'Method Category' 8 'Method Category' 1 1 0 928 13 37589 754 37589 0 416 5 786 818 848 98 1 8 #'Method Define' 8 'Method Define' 1 1 0 928 15 37591 754 37591 0 416 5 786 818 848 98 1 8 #'Method Delete' 8 'Method Delete' 1 1 0 928 17 37593 754 37593 0 416 5 786 818 848 98 1 8 #'Resource Define' 8 'Resource Define' 1 1 0 928 11 37595 754 37595 0 416 1 786 818 848 98 1 8 #'Resource Delete' 8 'Resource Delete' 1 1 0 928 37 37597 754 37597 0 416 1 786 818 848 98 1 8 #System 8 'System' 1 1 0 928 41 37599 754 37599 0 416 5 786 818 848 98 1 8 #Other 8 'Other' 1 1 0 928 19 37601 754 37601 0 416 1 786 8 #selectDefault 8 'Select default chunk types' 1 1 0 928 21 37603 754 37603 0 416 1 786 8 #selectNone 8 'Deselect all chunk types' 1 1 0 928 23 37605 754 37605 0 416 1 786 8 #selectRange 8 'Set range limits' 1 1 0 928 25 37607 754 37607 0 416 1 786 8 #lastOnly 8 'Last' 1 1 0 928 27 37609 754 37609 0 416 5 786 818 8 #toggleComparison: 98 1 8 #Match 8 'Match' 1 1 0 928 29 37611 754 37611 0 416 5 786 818 2064 98 1 8 #Differ 8 'Differ' 1 1 0 928 31 37613 754 37613 0 416 5 786 818 2064 98 1 8 #Missing 8 'Missing' 1 1 0 928 33 37575 754 37575 0 416 5 786 818 848 98 1 8 #'Class Category' 8 'Class Category' 1 1 0 928 1 37577 754 37577 0 416 5 786 818 848 98 1 8 #'Class Define' 8 'Class Define' 1 1 0 928 3 37579 754 37579 0 416 5 786 818 848 98 1 8 #'Class Delete' 8 'Class Delete' 1 1 0 928 5 37581 754 37581 0 416 1 786 818 848 98 1 8 #'Class Comment' 8 'Class Comment' 1 1 0 928 7 37583 754 37583 0 416 5 786 818 848 98 1 8 #'Class GUID' 8 'Class GUID' 1 1 0 928 9 98 24 1050118 ##(ToolbarSeparator)  0 0 416 3 0 1 2320 2416 2512 2608 2704 768 1088 1184 1280 1376 1472 1568 1664 2818 0 0 416 3 0 1 1760 1824 2818 0 0 416 3 0 1 1888 1952 2818 0 0 416 3 0 1 2016 2128 2224 234 240 98 2 928 1 0 1 0 626 33 33 626 45 45 0 656198 1 ##(FlowLayout)  1 1 1 983302 ##(MessageSequence)  202 208 98 2 721670 ##(MessageSend)  8 #createAt:extent: 98 2 626 11 11 626 991 51 416 3058 8 #updateSize 704 416 983302 ##(WINDOWPLACEMENT)  8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 5 0 0 0 5 0 0 0 244 1 0 0 30 0 0 0] 98 0 626 193 193 0 27 )!
+
+resource_ChunkBrowser_file_tools
+	"Answer the literal data from which the 'ChunkBrowser file tools' resource can be reconstituted.
+	DO NOT EDIT OR RECATEGORIZE THIS METHOD.
+
+	If you wish to modify this resource evaluate:
+	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_ChunkBrowser_file_tools)
+	"
+
+	^#(#'!!STL' 3 788558 10 ##(STBViewProxy)  8 ##(Toolbar)  98 25 0 0 98 2 8 1140853516 131137 416 0 524550 ##(ColorRef)  8 4278190080 0 517 0 263174 ##(Font)  0 16 459014 ##(LOGFONT)  8 #[243 255 255 255 0 0 0 0 0 0 0 0 0 0 0 0 144 1 0 0 0 0 0 0 3 2 1 34 65 114 105 97 108 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0] 328198 ##(Point)  193 193 0 416 498 528 8 4294904585 234 256 98 0 234 256 98 12 37621 853766 ##(ToolbarButton)  37621 0 416 1 1180998 4 ##(CommandDescription)  8 #differences 8 'Differences' 1 1 0 657990 3 ##(DIBSection)  0 16 1114638 ##(STBSingletonProxy)  8 ##(ImageRelativeFileLocator)  8 #current 8 'Ian Bartholomew\Resources\ChunkBrowser.bmp' 2032142 ##(STBExternalResourceLibraryProxy)  8 'dolphindr006.dll' 0 0 7 626 737 33 9 0 35 37623 754 37623 0 416 1 786 8 #restoreSelection 8 'Restore selection' 1 1 0 864 43 37625 754 37625 0 416 1 786 8 #restorePicked 8 'Restore picked' 1 1 0 864 45 37615 1246982 ##(ToolbarSystemButton)  37615 0 416 1 786 8 #fileOpen 8 'Open' 1 1 0 1 15 37617 1154 37617 0 416 1 786 8 #copyText 8 'Copy text' 1 1 0 1 3 37619 1154 37619 0 416 1 786 8 #print 8 'Print' 1 1 0 1 29 98 9 1050118 ##(ToolbarSeparator)  0 0 416 3 0 1 1168 1378 0 0 416 3 0 1 1232 1296 1378 0 0 416 3 0 1 768 1024 1088 234 240 98 4 1 1 864 31 0 1 0 626 33 33 626 45 45 0 656198 1 ##(FlowLayout)  1 1 1 983302 ##(MessageSequence)  202 208 98 2 721670 ##(MessageSend)  8 #createAt:extent: 98 2 626 11 11 626 325 51 416 1602 8 #updateSize 704 416 983302 ##(WINDOWPLACEMENT)  8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 5 0 0 0 5 0 0 0 167 0 0 0 30 0 0 0] 98 0 626 193 193 0 27 )! !
+!Toolbar class categoriesFor: #resource_ChunkBrowser_chunk_tools!public!resources-views! !
+!Toolbar class categoriesFor: #resource_ChunkBrowser_file_tools!public!resources-views! !
+
+"End of package definition"!
+

@@ -1,0 +1,315 @@
+| package |
+package := Package name: 'Smalltalk Parser'.
+package paxVersion: 1;
+	basicComment: 'Dolphin Smalltalk Parser
+Based on the Refactoring Browser parser (RBParser), copyright (c) John Brant & Don Roberts. 
+
+The original RB parser has been modified in the following ways for Dolphin:
+
+1) Dolphin format external methods (FFI calls) are parsed, and there are nodes/tokens specifically for this purpose.
+2) The error reporting has been improved to use a specific exception, SmalltalkCompilerError, with more details of the error. Error codes are used rather than error strings, and the error messages are compatible with those from the original Dolphin compiler (where possible). The exception also includes the offending source range and line number, with the former being used to select the erroneous range in the Dolphin browsers.
+3) The scanner has been optimized for improved performance.
+4) A number of miscellaneous minor fixes and refactorings.
+5) All classes renamed to avoid clashing with the originals.
+
+These modifications are Copyright (c) Object Arts Ltd, 2002.
+
+The parser remains compatible with the RBParser, and so can be used in conjunction with the RB refactoring engine. Note that the majority of RB specific methods and classes have been extracted to the RBParser package, which also contains global aliases mapping the class names used in the RB to the corresponding classes in this package.'.
+
+package basicPackageVersion: '6.1'.
+
+
+package classNames
+	add: #PatternBlockToken;
+	add: #SmalltalkParser;
+	add: #SmalltalkScanner;
+	add: #StAssignmentNode;
+	add: #StAssignmentToken;
+	add: #StBinarySelectorToken;
+	add: #StBlockNode;
+	add: #StCascadeNode;
+	add: #StExternalArgTypeNode;
+	add: #StExternalCallNode;
+	add: #StIdentifierToken;
+	add: #StIllegalCharacterToken;
+	add: #StKeywordToken;
+	add: #StLiteralArrayNode;
+	add: #StLiteralArrayToken;
+	add: #StLiteralNode;
+	add: #StLiteralToken;
+	add: #StLiteralValueNode;
+	add: #StMessageNode;
+	add: #StMethodNode;
+	add: #StMultiKeywordLiteralToken;
+	add: #StNumberLiteralToken;
+	add: #StOptimizedNode;
+	add: #StOptimizedToken;
+	add: #StParseNodeVisitor;
+	add: #StPrimitiveNode;
+	add: #StProgramNode;
+	add: #StReturnNode;
+	add: #StSequenceNode;
+	add: #StSpecialCharacterToken;
+	add: #StTagNode;
+	add: #StToken;
+	add: #StValueNode;
+	add: #StValueToken;
+	add: #StVariableNode;
+	yourself.
+
+package methodNames
+	add: #Behavior -> #parseTreeFor:;
+	add: #CompiledCode -> #parseTree;
+	add: #CompiledCode -> #parseTreeNoError;
+	add: #CompiledCode -> #parseTreeOnError:;
+	add: #CompiledExpression -> #parseTreeOnError:;
+	add: #CompiledMethod -> #parseTreeOnError:;
+	add: #CompileFailedMethod -> #accessesInstVar:at:;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\..\Base\Dolphin';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+Object subclass: #SmalltalkParser
+	instanceVariableNames: 'scanner currentToken nextToken emptyStatements errorBlock methodNode st80Syntax comments methodClass source'
+	classVariableNames: 'MaxPrimIndex MaxVfn'
+	poolDictionaries: 'ExtCallArgTypes SmalltalkParseErrorCodes'
+	classInstanceVariableNames: ''!
+Object subclass: #SmalltalkScanner
+	instanceVariableNames: 'stream buffer tokenStart currentCharacter characterType classificationTable separatorsInLiterals extendedLiterals comments errorBlock nameSpaceCharacter line errorHandler'
+	classVariableNames: 'ClassificationTable PatternVariableCharacter'
+	poolDictionaries: 'SmalltalkParseErrorCodes'
+	classInstanceVariableNames: ''!
+Object subclass: #StParseNodeVisitor
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Object subclass: #StProgramNode
+	instanceVariableNames: 'parent comments'
+	classVariableNames: 'FormatterClass'
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Object subclass: #StToken
+	instanceVariableNames: 'sourcePointer comments'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+StProgramNode subclass: #StExternalArgTypeNode
+	instanceVariableNames: 'typeOrdinal structClass indirections start stop'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+StProgramNode subclass: #StMethodNode
+	instanceVariableNames: 'selector selectorParts body source arguments tag replacements nodeReplacements'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+StProgramNode subclass: #StReturnNode
+	instanceVariableNames: 'return value'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+StProgramNode subclass: #StSequenceNode
+	instanceVariableNames: 'leftBar rightBar statements periods temporaries'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+StProgramNode subclass: #StTagNode
+	instanceVariableNames: 'start stop'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+StProgramNode subclass: #StValueNode
+	instanceVariableNames: 'parentheses'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+StTagNode subclass: #StExternalCallNode
+	instanceVariableNames: 'nameOrOrdinal returnType argumentTypes flags callingConvention'
+	classVariableNames: 'OverlappedMask VirtualMask'
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+StTagNode subclass: #StPrimitiveNode
+	instanceVariableNames: 'primitiveIndex'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+StValueNode subclass: #StAssignmentNode
+	instanceVariableNames: 'variable assignment value'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+StValueNode subclass: #StBlockNode
+	instanceVariableNames: 'left right colons body arguments bar'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+StValueNode subclass: #StCascadeNode
+	instanceVariableNames: 'messages semicolons'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+StValueNode subclass: #StLiteralNode
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+StValueNode subclass: #StMessageNode
+	instanceVariableNames: 'receiver selector selectorParts arguments'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+StValueNode subclass: #StOptimizedNode
+	instanceVariableNames: 'left right body value methodClass source'
+	classVariableNames: 'UnevaluatedCookie'
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+StValueNode subclass: #StVariableNode
+	instanceVariableNames: 'token'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+StLiteralNode subclass: #StLiteralArrayNode
+	instanceVariableNames: 'isByteArray stop contents start'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+StLiteralNode subclass: #StLiteralValueNode
+	instanceVariableNames: 'token'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+StToken subclass: #StAssignmentToken
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+StToken subclass: #StOptimizedToken
+	instanceVariableNames: 'stopPosition'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+StToken subclass: #StValueToken
+	instanceVariableNames: 'value'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+StValueToken subclass: #PatternBlockToken
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+StValueToken subclass: #StBinarySelectorToken
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+StValueToken subclass: #StIdentifierToken
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+StValueToken subclass: #StIllegalCharacterToken
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+StValueToken subclass: #StKeywordToken
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+StValueToken subclass: #StLiteralArrayToken
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+StValueToken subclass: #StLiteralToken
+	instanceVariableNames: 'stopPosition'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+StValueToken subclass: #StSpecialCharacterToken
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+StLiteralToken subclass: #StMultiKeywordLiteralToken
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+StLiteralToken subclass: #StNumberLiteralToken
+	instanceVariableNames: 'source'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+!Behavior methodsFor!
+
+parseTreeFor: aSymbol 
+	^SmalltalkParser parseMethod: (self sourceCodeAt: aSymbol)
+		in: self
+		onError: [:aString :pos | ^nil]! !
+!Behavior categoriesFor: #parseTreeFor:!public!RefactoringBrowser! !
+
+!CompiledCode methodsFor!
+
+parseTree
+	^self parseTreeOnError: nil!
+
+parseTreeNoError
+	^self parseTreeOnError: [:err | ^nil]!
+
+parseTreeOnError: aBlock 
+	^self subclassResponsibility! !
+!CompiledCode categoriesFor: #parseTree!parsing!public! !
+!CompiledCode categoriesFor: #parseTreeNoError!parsing!public! !
+!CompiledCode categoriesFor: #parseTreeOnError:!parsing!public! !
+
+!CompiledExpression methodsFor!
+
+parseTreeOnError: aBlock 
+	^SmalltalkParser 
+		parseExpression: self getSource
+		in: self methodClass
+		onError: aBlock! !
+!CompiledExpression categoriesFor: #parseTreeOnError:!parsing!public! !
+
+!CompiledMethod methodsFor!
+
+parseTreeOnError: aBlock 
+	^SmalltalkParser 
+		parseMethod: self getSource
+		in: self methodClass
+		onError: aBlock! !
+!CompiledMethod categoriesFor: #parseTreeOnError:!parsing!public! !
+
+!CompileFailedMethod methodsFor!
+
+accessesInstVar: aString at: anInteger
+	"Answer whether the receiver accesses the instance variable named, aString, which
+	is the instance variable of its method class with the specified <integer> index."
+
+	^self refersToVariable: aString! !
+!CompileFailedMethod categoriesFor: #accessesInstVar:at:!development!public!testing! !
+
+"End of package definition"!
+

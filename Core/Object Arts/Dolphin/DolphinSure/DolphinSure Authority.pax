@@ -1,0 +1,181 @@
+| package |
+package := Package name: 'DolphinSure Authority'.
+package paxVersion: 1;
+	basicComment: 'This package is used by Object Arts, or any other DolphinSure certificate authority, to create DolphinSure digital certificates.
+
+In order to create a certificate, evaluate an expression based on the following:
+
+DolphinSurePersonalCertificate serial: ''XXXXXX'' owner: ''Joe User'' details: ''''.
+
+This will create an encoded certificate and private key and generate a text file that can be used to transmit this information to the new owner.  The text file will be opened in a workspace and contains a series of Smalltalk expressions that can be used to recreate, and display, the certificate in a target image and to enter it into the ''My Certificates'' certificate store.'.
+
+package basicPackageVersion: '6.1'.
+
+
+package methodNames
+	add: 'DolphinSureCertificate class' -> #info:;
+	add: 'DolphinSureCertificate class' -> #serial:owner:details:;
+	add: 'DolphinSureCertificate class' -> #validYears;
+	add: 'NotSignedCertificate class' -> #generate;
+	add: 'NotSignedCertificate class' -> #privateKey;
+	add: 'ObjectArtsCertificate class' -> #privateKey;
+	add: 'ObjectArtsRootCertificate class' -> #privateKey;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\IDE\Base\Development System';
+	add: '..\Base\Dolphin';
+	add: 'DolphinSure';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+!DolphinSureCertificate class methodsFor!
+
+info: certificateInfo
+	"Answers an instance of the receiver"
+
+	| oaCert |
+	oaCert := ObjectArtsRootCertificate new.
+	^self info: certificateInfo 
+		authority: oaCert 
+		authorityPrivateKey: oaCert class privateKey
+!
+
+serial: serial owner: owner details: details
+	"Answers a certificate definition given the above details"
+
+	| keys info cert stream bytes validYears |
+
+	keys := self signatureAlgorithm generateKeySetForGroup: self keyGroup.
+	info := DolphinSureCertificateInfo serial: serial owner: owner publicKey: keys second.
+	info details: details.
+	(validYears := self validYears) notNil ifTrue: [
+		info expiry: (info issued addYears: validYears)].
+
+	"The next line actually encodes the certificate so may take some time"
+	cert := self info: info.
+
+	"Now write code to rebuild the certificate from it's encoded bytes"
+	stream := WriteStream on: String new.
+	stream display: ('"DolphinSure certificate %1 for %2"
+
+"Evaluate the following expressions in a workspace"
+
+"Recreate the certificate from it''s bytes"
+certificate := Object fromBinaryStoreBytes: ' formatWith: serial with: owner).
+
+	bytes := cert binaryStoreBytes.
+	bytes printPrefixOn: stream.
+	bytes do: [:each | stream display: each; display: ' '].
+	bytes printSuffixOn: stream.
+
+	stream display: ('.
+
+"Show the certificate"
+certificate show.
+
+"Add it to your personal store"
+DolphinSureCertificateStore myCertificates addCertificate: certificate.
+
+"Retrieve it from your personal store"
+(DolphinSureCertificateStore myCertificates atSerial: ''%1'' ifAbsent: []) show.
+
+"If it is your default (first) certificate you can retrieve it like this..."
+DolphinSureCertificateStore myCertificates default show.
+
+' formatWith: serial).
+
+	stream display: ('"THIS IS YOUR PRIVATE KEY=%1 (DO NOT DISCLOSE)"
+
+"Sign data with your certificate"
+trustedData := certificate sign: ''This is a secure message'' asByteArray privateKey: %1.
+trustedData validData asString "Display it".
+trustedData data at: 1 put: 0 "Change the data".
+trustedData validData asString "Now try to Display it".
+
+
+"If you have the Web Deployment Kit you can sign binary class files with your certificate"' formatWith: keys first displayString).
+
+	SmalltalkWorkspaceDocument show setDocumentData: stream contents.
+
+	^cert
+
+!
+
+validYears
+	"Private - Answer the number of years that certificates of this class should be valid
+	for by default. Nil indicates valid indefinitely."
+
+	^3! !
+!DolphinSureCertificate class categoriesFor: #info:!instance creation!public! !
+!DolphinSureCertificate class categoriesFor: #serial:owner:details:!operations!public! !
+!DolphinSureCertificate class categoriesFor: #validYears!constants!private! !
+
+!NotSignedCertificate class methodsFor!
+
+generate
+	"Private - Generate an instance of the receiver"
+
+	| oaCert info |
+	oaCert := ObjectArtsRootCertificate new.
+	info := DolphinSureCertificateInfo 
+				serial: 'NotSignedCertificate'
+				owner: ''
+				publicKey: self publicKey.
+	^(self basicNew)
+		publisherCertificate: oaCert;
+		info: info privateKey: oaCert class privateKey;
+		yourself!
+
+privateKey
+	"Private - Answer the NotSigned certificate private key. 
+	Obviously this should not be revealed to anyone
+
+	DigitalSignatureAlgorithm generateKeySetForGroup: self keyGroup
+"
+
+	^1058310943626900867997821150697990214977306640283 ! !
+!NotSignedCertificate class categoriesFor: #generate!instance creation!private! !
+!NotSignedCertificate class categoriesFor: #privateKey!constants!private! !
+
+!ObjectArtsCertificate class methodsFor!
+
+privateKey
+	"Private - Answer the Object Arts private key. 
+	Obviously this should not be revealed to anyone
+
+	DigitalSignatureAlgorithm generateKeySetForGroup: self keyGroup
+"
+
+	^743619062570254295416980240044279984616070844017 ! !
+!ObjectArtsCertificate class categoriesFor: #privateKey!constants!private! !
+
+!ObjectArtsRootCertificate class methodsFor!
+
+privateKey
+	"Private - Answer the Object Arts private key. 
+	Obviously this should not be revealed to anyone
+
+	DigitalSignatureAlgorithm generateKeySetForGroup: self keyGroup
+"
+
+	^365850515379839499900925675512363359809896108505! !
+!ObjectArtsRootCertificate class categoriesFor: #privateKey!constants!public! !
+
+"End of package definition"!
+

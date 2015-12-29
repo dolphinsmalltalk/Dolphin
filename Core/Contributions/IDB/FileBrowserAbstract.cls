@@ -1,0 +1,59 @@
+"Filed out from Dolphin Smalltalk X6"!
+
+Object subclass: #FileBrowserAbstract
+	instanceVariableNames: 'name parent children'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+FileBrowserAbstract guid: (GUID fromString: '{782ED519-5423-11D3-998B-BCA753D3B065}')!
+FileBrowserAbstract comment: 'See [DolphinImageFolder]/Idb/Documentation for details
+
+(C) 2005 Ian Bartholomew
+ian@idb.me.uk
+Public Domain Freeware'!
+!FileBrowserAbstract categoriesForClass!IDB Goodies! !
+!FileBrowserAbstract methodsFor!
+
+name
+	"Answers the name of the receiver. This can be either a complete path (the root folder) or
+	a folder name of a file name depending on the subclass used"
+
+	^name!
+
+parent
+	"Answers the parent of the receiver or nil if it is the root"
+
+	^parent!
+
+path
+	"Creates the path of the receiver by appending to the path of the parent (s)"
+
+	parent isNil ifTrue: [^name].
+	^File composePath: parent path subPath: name!
+
+printOn: aStream 
+	"Answer the String to be used for the receiver in the tree or list"
+
+	aStream nextPutAll: name!
+
+setName: aString parent: aFileBrowserFolderOrNil 
+	"Sets the name of this objects and remembers its parent. The children (folders
+	not files) will be found dynamically by the subclass"
+
+	name := aString.
+	parent := aFileBrowserFolderOrNil.
+	^self! !
+!FileBrowserAbstract categoriesFor: #name!accessing!public! !
+!FileBrowserAbstract categoriesFor: #parent!accessing!public! !
+!FileBrowserAbstract categoriesFor: #path!accessing!public! !
+!FileBrowserAbstract categoriesFor: #printOn:!protocols-Object!public! !
+!FileBrowserAbstract categoriesFor: #setName:parent:!initializing!public! !
+
+!FileBrowserAbstract class methodsFor!
+
+name: aString parent: aFileBrowserFolderOrNil 
+	"Answers a new instance of the receiver"
+
+	^self new setName: aString parent: aFileBrowserFolderOrNil! !
+!FileBrowserAbstract class categoriesFor: #name:parent:!instance creation!public! !
+

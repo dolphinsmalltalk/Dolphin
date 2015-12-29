@@ -1,0 +1,51 @@
+"Filed out from Dolphin Smalltalk X6"!
+
+Object variableSubclass: #MethodContext
+	instanceVariableNames: 'frame method receiver'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+MethodContext guid: (GUID fromString: '{87B4C4A2-026E-11D3-9FD7-00A0CC3E4A32}')!
+MethodContext comment: 'MethodContext is present only to assist in the conversion of old view resources. It is no longer used.'!
+!MethodContext categoriesForClass!Kernel-Methods! !
+!MethodContext methodsFor!
+
+frame
+	^frame!
+
+method
+	^method!
+
+receiver
+	^receiver! !
+!MethodContext categoriesFor: #frame!accessing!private! !
+!MethodContext categoriesFor: #method!accessing!private! !
+!MethodContext categoriesFor: #receiver!accessing!private! !
+
+!MethodContext class methodsFor!
+
+stbConvertFrom: format 
+	^
+	[:data | 
+	| ctxt size |
+	size := data size.
+	format version < 1 
+		ifTrue: 
+			[
+			"Version 0 was the original Dolphin representation (Smalltalk-80 style blocks)"
+			ctxt := self basicNew: size - 3.
+			1 to: data size do: [:i | ctxt instVarAt: i put: (data at: i)]]
+		ifFalse: 
+			[
+			"Version 1 was an interim format used during the migration to the BlockClosure VM"
+			ctxt := Context basicNew: size - 4.
+			1 to: size - 4 do: [:i | ctxt basicAt: i put: (data at: i + 4)].
+			ctxt outer: (data at: 1)].
+	ctxt]!
+
+stbVersion
+	^2
+! !
+!MethodContext class categoriesFor: #stbConvertFrom:!binary filing!private! !
+!MethodContext class categoriesFor: #stbVersion!binary filing!constants!private! !
+

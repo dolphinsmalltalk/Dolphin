@@ -1,0 +1,144 @@
+| package |
+package := Package name: 'Dolphin Control Bars'.
+package paxVersion: 1;
+	basicComment: 'Dolphin Smalltalk Control Bars.
+Copyright (c) Object Arts Ltd, 1997-2002. Portions Copyright (c) CGI Group (Europe) Ltd, 1996.
+
+This package contains MVP View wrappers for the Windows "control bar" controls (e.g. the Status Bar and Tool Bar)'.
+
+package basicPackageVersion: '6.2'.
+
+
+package classNames
+	add: #ControlBarAbstract;
+	add: #NMMOUSE;
+	add: #NMTOOLBAR;
+	add: #StatusBar;
+	add: #StatusBarItem;
+	add: #StatusBarItemAbstract;
+	add: #StatusBarNullItem;
+	add: #TBADDBITMAP;
+	add: #TBBUTTON;
+	add: #TBBUTTONINFO;
+	add: #Toolbar;
+	add: #ToolbarButton;
+	add: #ToolbarIconButton;
+	add: #ToolbarItem;
+	add: #ToolbarSeparator;
+	add: #ToolbarSystemButton;
+	add: #ToolButton;
+	yourself.
+
+package globalNames
+	add: #StatusBarConstants;
+	add: #ToolbarConstants;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\..\..\Base\Dolphin';
+	add: '..\..\Base\Dolphin MVP Base';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+Object subclass: #StatusBarItemAbstract
+	instanceVariableNames: 'border width parentView model'
+	classVariableNames: 'BorderStyles'
+	poolDictionaries: 'StatusBarConstants'
+	classInstanceVariableNames: ''!
+Object subclass: #ToolbarItem
+	instanceVariableNames: 'commandId unused window style commandDescription'
+	classVariableNames: ''
+	poolDictionaries: 'ToolbarConstants'
+	classInstanceVariableNames: ''!
+Win32Structure subclass: #TBADDBITMAP
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Win32Structure subclass: #TBBUTTON
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Win32Structure subclass: #TBBUTTONINFO
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+NMHDR subclass: #NMMOUSE
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+NMHDR subclass: #NMTOOLBAR
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+StatusBarItemAbstract subclass: #StatusBarItem
+	instanceVariableNames: 'getTextBlock getImageBlock reserved1'
+	classVariableNames: ''
+	poolDictionaries: 'Win32Constants'
+	classInstanceVariableNames: ''!
+StatusBarItemAbstract subclass: #StatusBarNullItem
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ToolbarItem subclass: #ToolbarButton
+	instanceVariableNames: 'bitmap bitmapIndex'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ToolbarItem subclass: #ToolbarSeparator
+	instanceVariableNames: 'width'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ToolbarButton subclass: #ToolbarIconButton
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ToolbarButton subclass: #ToolbarSystemButton
+	instanceVariableNames: ''
+	classVariableNames: 'BitmapButtons Bitmaps HistoryButtons StandardButtons ViewButtons'
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+AbstractNonReferenceDelegatingView subclass: #ToolButton
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ControlView subclass: #ControlBarAbstract
+	instanceVariableNames: 'names'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ControlBarAbstract subclass: #StatusBar
+	instanceVariableNames: 'parts leftOverSeparator layoutManager'
+	classVariableNames: ''
+	poolDictionaries: 'StatusBarConstants'
+	classInstanceVariableNames: ''!
+ControlBarAbstract subclass: #Toolbar
+	instanceVariableNames: 'idMap items bitmapsStart insets tbFlags _reserved2 bitmapSize buttonSize tipText layoutManager'
+	classVariableNames: 'LabelsMask TbnMap'
+	poolDictionaries: 'ToolbarConstants'
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+"End of package definition"!
+

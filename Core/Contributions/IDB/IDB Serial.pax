@@ -1,0 +1,97 @@
+| package |
+package := Package name: 'IDB Serial'.
+package paxVersion: 1;
+	basicComment: 'Simple Serial Communications
+Version 6a - May 2005
+For Version 6 of Dolphin Smalltalk
+
+(C) 2005 Ian Bartholomew
+ian@idb.me.uk
+Public Domain Freeware
+'.
+
+package basicPackageVersion: 'IDB$PACKAGE$VERSION 6a'.
+
+
+package classNames
+	add: #SerialChat;
+	add: #SerialIO;
+	yourself.
+
+package methodNames
+	add: #KernelLibrary -> #getCommTimeouts:lpCommTimeouts:;
+	add: #KernelLibrary -> #setCommTimeouts:lpCommTimeouts:;
+	yourself.
+
+package globalNames
+	add: #CommsConstants;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\ITC Gorisek\Dialect Abstraction Layer';
+	add: '..\Object Arts\Dolphin\Base\Dolphin';
+	add: '..\Object Arts\Dolphin\MVP\Views\Control Bars\Dolphin Control Bars';
+	add: '..\Object Arts\Dolphin\MVP\Models\List\Dolphin List Models';
+	add: '..\Object Arts\Dolphin\MVP\Presenters\List\Dolphin List Presenter';
+	add: '..\Object Arts\Dolphin\MVP\Base\Dolphin MVP Base';
+	add: '..\Object Arts\Dolphin\MVP\Presenters\Text\Dolphin Text Presenter';
+	add: '..\Object Arts\Dolphin\MVP\Type Converters\Dolphin Type Converters';
+	add: 'IDB Common';
+	add: '..\Object Arts\Goodies\Internal Bitmaps and Icons\Internal Bitmaps and Icons';
+	add: '..\Object Arts\Dolphin\ActiveX\Shell\Windows Shell';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+Object subclass: #SerialIO
+	instanceVariableNames: 'deviceName handle oldCOMMTIMEOUTS oldDCB'
+	classVariableNames: ''
+	poolDictionaries: 'CommsConstants Win32Constants'
+	classInstanceVariableNames: ''!
+IdbShell subclass: #SerialChat
+	instanceVariableNames: 'serialIO process comPort entry display status'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+!KernelLibrary methodsFor!
+
+getCommTimeouts: aHandle lpCommTimeouts: aCOMMTIMEOUTS 
+	"
+	BOOL GetCommTimeouts(
+		HANDLE hFile,
+		LPCOMMTIMEOUTS lpCommTimeouts,
+		);"
+
+	<stdcall: bool GetCommTimeouts handle COMMTIMEOUTS*>
+	#idbAdded.
+	^self invalidCall!
+
+setCommTimeouts: aHandle lpCommTimeouts: aCOMMTIMEOUTS 
+	"
+	BOOL SetCommTimeouts(
+		HANDLE hFile,
+		LPCOMMTIMEOUTS lpCommTimeouts,
+		);"
+
+	<stdcall: bool SetCommTimeouts handle COMMTIMEOUTS*>
+	#idbAdded.
+	^self invalidCall! !
+!KernelLibrary categoriesFor: #getCommTimeouts:lpCommTimeouts:!idb goodies!public!win32 functions-communications! !
+!KernelLibrary categoriesFor: #setCommTimeouts:lpCommTimeouts:!idb goodies!public!win32 functions-communications! !
+
+"End of package definition"!
+

@@ -1,0 +1,101 @@
+| package |
+package := Package name: 'Dolphin List Presenter'.
+package paxVersion: 1;
+	basicComment: 'Dolphin Smalltalk List Presenter.
+Copyright (c) Object Arts Ltd. 1997-2005. Portions Copyright (c) CGI Group (Europe) Ltd. 1997.
+
+This package is part of the Dolphin Smalltalk Model View Presenter user-interface framework.
+
+<ListPresenter> implements a presentation component that can be used to the lists of items in a <listModel> (of which protocol this package provides an implementation in the <ListModel> class) within various list-like views. The package defines a couple of of such <listView>s, based around the simple Windows ListBox and ComboBox controls. Additional packages define more complex <listView>s, such as the Windows EnhancedListView control which is in the ''Dolphin Common Controls'' package.'.
+
+package basicPackageVersion: '6.1'.
+
+
+package classNames
+	add: #BasicListAbstract;
+	add: #ComboBox;
+	add: #ListBox;
+	add: #ListControlView;
+	add: #ListPresenter;
+	yourself.
+
+package methodNames
+	add: #View -> #wmBeginDrag:wParam:lParam:;
+	add: 'SelectableItemsPresenter class' -> #icon;
+	yourself.
+
+package globalNames
+	add: #ComboBoxConstants;
+	add: #ListBoxConstants;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\..\..\Base\Dolphin';
+	add: '..\..\..\Base\Dolphin Additional Sort Algorithms';
+	add: '..\..\Models\List\Dolphin List Models';
+	add: '..\..\Base\Dolphin MVP Base';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+SelectableItemsPresenter subclass: #ListPresenter
+	instanceVariableNames: 'sortBlock'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ControlView subclass: #ListControlView
+	instanceVariableNames: 'getTextBlock'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ListControlView subclass: #BasicListAbstract
+	instanceVariableNames: 'lastSelIndices'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+BasicListAbstract subclass: #ComboBox
+	instanceVariableNames: 'droppedHeight'
+	classVariableNames: 'CbnMap Modes'
+	poolDictionaries: 'ComboBoxConstants'
+	classInstanceVariableNames: ''!
+BasicListAbstract subclass: #ListBox
+	instanceVariableNames: '_reserved'
+	classVariableNames: 'LbnMap SelectionModeMask SelectionModes'
+	poolDictionaries: 'ListBoxConstants'
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+!SelectableItemsPresenter class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^ListPresenter icon! !
+!SelectableItemsPresenter class categoriesFor: #icon!constants!public! !
+
+!View methodsFor!
+
+wmBeginDrag: message wParam: wParam lParam: lParam
+	"Private - Default handler for a WM_BEGINNDRAG notification that dragging
+	has started within child list box."
+
+	| listbox |
+	listbox := self class withHandle: lParam.
+	^listbox lbnBeginDrag: wParam.
+! !
+!View categoriesFor: #wmBeginDrag:wParam:lParam:!event handling-win32!must not strip!private! !
+
+"End of package definition"!
+

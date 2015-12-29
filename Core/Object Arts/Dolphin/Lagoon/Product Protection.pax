@@ -1,0 +1,62 @@
+| package |
+package := Package name: 'Product Protection'.
+package paxVersion: 1;
+	basicComment: 'Dolphin Smalltalk Product Protection Package.
+Copyright (c) Object Arts Ltd, 2002-2005.
+
+This package implements a protection mechansism for deployed Dolphin applications. Applications are protected by encrypting the bytecodes of the compiled methods with a chosen set of the application packages. The encryption/decryption is performed using a PC1Cipher with the encryption/decryption key being stored within an encoded serial number. 
+
+To add product protection to a product do the following:
+
+1) Create a concrete subclass of ProtectedProductSerialNumber for your company (or yourself). This will act as a factory for generating your product serial numbers. You should override all the methods in the "*-subclass responsiblity" category as described in the method comments in the superclass.
+
+2) Create a concrete session manager class for your product''s startup as a subclasss of ProtectedProductSessionManager. Once again override the methods in the "*-subclass responsibility" category. In particular, you must override #serialNumberClass to answer the serial number factory class created above. You must also override #encryptedPackageNames to answer the array of package names that you want to be encrypted. You should only include packages that are part of your application here otherwise you may find that not enough of the system remains decrypted for the unlocking code to work at application startup. You also need to provide a registry key name in #productRegistryKey where valid serial numbers can be stored in the system registry.
+
+3) You must also override the standard session manager class side method #mainShellClass. If your product start up does anything other than just showing your #mainShellClass then you can implement this by overriding ProtectedProductSessionManager>>main.
+
+4) Generate some serial numbers and deploy the application using the newly created session manager.
+
+The deployed EXE contains encrypted compiled methods. When you start the application you will be prompted to unlock the application with a serial number. Note that if it was possible for someone to patch the image to skip over the serial number check then the application would still not run sucessfully (indeed it will most probably crash) because the method bytecodes contain nonsense. Once you enter a valid serial number then the bytecodes are decrypted and the serial number is stored in the registry for future use. Note that the application is never permanently unlocked. When you next start it, a check is made to see if the registry contains a valid serial number and this is used to unlock the product again. This dynamic unlocking process should be unnoticeable in use providing you don''t choose to encrypt too many classes in your application.
+
+The above scenario uses the default encryption which may not be suitable for all purposes (see the PC1SerialNumberProtector for details).  It is possible to replace both the encryption used for locking methods so they cannout be executed (probably not necessary), and for encrypting the serial number itself for unlocking the methods (may be advisable).
+
+
+'.
+
+package basicPackageVersion: '6.0'.
+
+
+package classNames
+	add: #ProtectedProductSessionManager;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\Base\Dolphin';
+	add: '..\MVP\Base\Dolphin MVP Base';
+	add: '..\MVP\Presenters\Prompters\Dolphin Prompter';
+	add: '..\Registry\Dolphin Registry Access';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+RuntimeSessionManager subclass: #ProtectedProductSessionManager
+	instanceVariableNames: 'encryptedClasses'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+"End of package definition"!
+

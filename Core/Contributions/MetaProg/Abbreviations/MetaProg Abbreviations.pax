@@ -1,0 +1,159 @@
+| package |
+package := Package name: 'MetaProg Abbreviations'.
+package paxVersion: 1;
+	basicComment: 'The MetaProg Abbreviations package adds an enhancement to all code windows. 
+
+A global abbreviations dictionary contains a bunch of (single- or multi-character) abbreviations for code fragments, where the key is the abbreviation and the value is the code fragment. Multi-line code fragments.are supported.
+
+When installed, all you need to do is to type an  abbreviation, hit Shift+Space, and the abbreviation will be expanded into the code snippet. 
+
+Here are some of the default abbreviations:
+
+	''st'' -> ''Smalltalk''
+	''it'' -> ''ifTrue: []''
+	''npa'' -> ''nextPutAll:''
+	''dtn'' -> ''detect: [:each | ] ifNone: []''
+
+There are many more. To see all the default abbreviations, read the source to SmalltalkWorkspace class>>#defaultAbbreviations, or type in ''abb'', hit Shift+Space to expand it to ''SmalltalkWorkspace abbreviations inspect'', and evaluate.
+
+Of course, the tool works the other way around too. You can select any text, hit Ctrl+Space, and add an abbreviation to the dictionary.
+
+After installing, be sure to close and re-open all code windows, since the tool does not add functionality to existing open windows.
+
+February 25, 2003
+Joseph Pelrine
+MetaProg GmbH
+mailto:jpelrine@metaprog.com
+
+(Some modifications for Dolphin integration by Blair McGlashan, Object Arts, March 2003)'.
+
+package basicScriptAt: #postinstall put: 'SmalltalkWorkspace acceleratorKeyBindings: ((SmalltalkWorkspace acceleratorKeyBindings)
+			at: ''Shift+Space'' put: #expandAbbreviation;
+			at: ''Ctrl+Space'' put: #snatchAbbreviation;
+			yourself)!!'.
+package basicScriptAt: #postuninstall put: 'SmalltalkWorkspace classPool removeKey: ''Abbreviations'' ifAbsent: []!!
+| bindings |
+bindings := SmalltalkWorkspace acceleratorKeyBindings.
+#(''Shift+Space'' ''Ctrl+Space'') do: [:each | bindings removeKey: each ifAbsent: []].
+SmalltalkWorkspace acceleratorKeyBindings: bindings!!'.
+
+package methodNames
+	add: #SmalltalkWorkspace -> #expandAbbreviation;
+	add: #SmalltalkWorkspace -> #findSeparatorLeftAndKey:;
+	add: #SmalltalkWorkspace -> #snatchAbbreviation;
+	add: 'SmalltalkWorkspace class' -> #abbreviations;
+	add: 'SmalltalkWorkspace class' -> #defaultAbbreviations;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\..\..\Object Arts\Dolphin\IDE\Base\Development System';
+	add: '..\..\..\Object Arts\Dolphin\Base\Dolphin';
+	add: '..\..\..\Object Arts\Dolphin\MVP\Presenters\Prompters\Dolphin Prompter';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+!SmalltalkWorkspace methodsFor!
+
+expandAbbreviation
+	| startAssoc replace end start abbrev |
+	"#2101"
+	self cancelAutoCompletion.
+	startAssoc := self findSeparatorLeftAndKey: self selectionRange stop.
+	start := startAssoc value + 1.
+	abbrev := startAssoc key.
+	replace := self class abbreviations at: abbrev
+				ifAbsent: 
+					["TextEdit normally inserts a space on Shift+Space, so continue to do that if not an abbreviation..."
+					self replaceSelection: ' '.
+					^self].
+	self selectionRange: (start to: start + abbrev size - 1).
+	self replaceSelection: replace.
+	end := start + replace size.
+	(replace last == $] or: [replace last == $)]) ifTrue: [end := end - 1].
+	self selectionRange: (end to: end - 1)!
+
+findSeparatorLeftAndKey: anInteger 
+	"find the first separator char to the left. Return an
+	Association with the key being the substring, and
+	the value the index of the separator"
+
+	| text position start edit |
+	edit := self view.
+	start := edit positionAtLine: (edit lineFromPosition: anInteger).
+	text := edit plainTextFrom: start to: anInteger.
+	position := anInteger - start + 1.
+	[position > 0 and: [(text at: position) isAlphaNumeric]] 
+		whileTrue: [position := position - 1].
+	^Association key: (text copyFrom: position + 1) value: position + start - 1!
+
+snatchAbbreviation
+	| key text |
+	(text := self selection) isNil ifTrue: [^self].
+	((key := Prompter prompt: 'Desired abbreviation for this text?') notNil 
+		and: [key notEmpty]) 
+			ifTrue: 
+				[(key occurrencesOf: $:) > 0 
+					ifTrue: [^MessageBox warning: 'Do not enter an abbreviation containing a colon.'].
+				self class abbreviations at: key put: text]! !
+!SmalltalkWorkspace categoriesFor: #expandAbbreviation!commands!private! !
+!SmalltalkWorkspace categoriesFor: #findSeparatorLeftAndKey:!helpers!private! !
+!SmalltalkWorkspace categoriesFor: #snatchAbbreviation!commands!private! !
+
+!SmalltalkWorkspace class methodsFor!
+
+abbreviations
+	| pool |
+	pool := ##(self) classPool.
+	^(pool at: 'Abbreviations' ifAbsent: []) 
+		ifNil: [pool at: 'Abbreviations' put: self defaultAbbreviations]!
+
+defaultAbbreviations
+	^(Dictionary new)
+		at: 'in' put: 'isNil ';
+		at: 'nn' put: 'notNil ';
+		at: 'it' put: 'ifTrue: []';
+		at: 'if' put: 'ifFalse: []';
+		at: 'int' put: 'isNil ifTrue: []';
+		at: 'inf' put: 'isNil ifFalse: []';
+		at: 'ints' put: 'isNil ifTrue: [^self]';
+		at: 'infs' put: 'isNil ifFalse: [^self]';
+		at: 'wt' put: 'whileTrue: []';
+		at: 'wf' put: 'whileFalse: []';
+		at: 'do' put: 'do: [:each | ]';
+		at: 'dt' put: 'detect: [:each | ]';
+		at: 'dtn' put: 'detect: [:each | ] ifNone: []';
+		at: 'cl' put: 'collect: [:each | ]';
+		at: 'sl' put: 'select: [:each | ]';
+		at: 'rj' put: 'reject: [:each | ]';
+		at: 'np' put: 'nextPut: ';
+		at: 'npa' put: 'nextPutAll: ';
+		at: 'y' put: 'yourself.';
+		at: 'sh' put: 'self halt.';
+		at: 'ps' put: 'printString';
+		at: 'sr' put: 'self subclassResponsibility';
+		at: 'st' put: 'Smalltalk';
+		at: 'trs' put: 'Transcript cr; display: ';
+		at: 'ik' put: 'includesKey: #';
+		at: 'abb' put: 'SmalltalkWorkspace abbreviations inspect';
+		shrink;
+		yourself! !
+!SmalltalkWorkspace class categoriesFor: #abbreviations!constants!development!public! !
+!SmalltalkWorkspace class categoriesFor: #defaultAbbreviations!constants!development!private! !
+
+"End of package definition"!
+

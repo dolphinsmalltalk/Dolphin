@@ -1,0 +1,56 @@
+| package |
+package := Package name: 'Dolphin Slidey-Inney-Outey Thing'.
+package paxVersion: 1;
+	basicComment: ''.
+
+package basicPackageVersion: '6.1'.
+
+
+package classNames
+	add: #ButtonInteractor;
+	add: #SlideyInneyOuteyThing;
+	add: #SlidingCardTray;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\..\..\Base\Dolphin';
+	add: '..\Cards\Dolphin Card Containers';
+	add: '..\Common Controls\Dolphin Common Controls';
+	add: '..\..\Models\List\Dolphin List Models';
+	add: '..\..\Presenters\List\Dolphin List Presenter';
+	add: '..\..\Base\Dolphin MVP Base';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+CapturingInteractor subclass: #ButtonInteractor
+	instanceVariableNames: 'buttonRect flags commandDescription'
+	classVariableNames: 'HotMask PressedMask'
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ContainerView subclass: #SlideyInneyOuteyThing
+	instanceVariableNames: 'tabs tray trayExtent animationDuration tickCounter siotFlags _siotReserved1 _siotReserved2'
+	classVariableNames: 'AnimatedCardChangeMask AnimatedUnpinMask AnimationDuration AnimationMask Animations HideOnUnpinMask ResizableMask SlideInDelay'
+	poolDictionaries: 'ThemeConstants'
+	classInstanceVariableNames: ''!
+CardContainer subclass: #SlidingCardTray
+	instanceVariableNames: 'theme slider pinSize pinInteractor _sctReserved1 _sctReserved2'
+	classVariableNames: 'PinImageList'
+	poolDictionaries: 'TabViewConstants ThemeConstants'
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+"End of package definition"!
+

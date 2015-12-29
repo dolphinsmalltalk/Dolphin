@@ -1,0 +1,52 @@
+| package |
+package := Package name: 'Mail Sockets'.
+package paxVersion: 1;
+	basicComment: ''.
+
+
+package classNames
+	add: #POPSocket;
+	add: #SimpleClientSocket;
+	add: #SMTPSocket;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\..\Object Arts\Dolphin\Base\Dolphin';
+	add: '..\..\Object Arts\Dolphin\MVP\Presenters\Prompters\Dolphin Prompter';
+	add: '..\..\Object Arts\Dolphin\Sockets\Dolphin Sockets';
+	add: '..\..\Object Arts\Dolphin\Sockets\Sockets Connection';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+Socket subclass: #SimpleClientSocket
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+SimpleClientSocket subclass: #POPSocket
+	instanceVariableNames: 'userName password numMessages'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+SimpleClientSocket subclass: #SMTPSocket
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+"End of package definition"!
+

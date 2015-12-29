@@ -1,0 +1,164 @@
+| package |
+package := Package name: 'Dolphin Rich Text Presenter'.
+package paxVersion: 1;
+	basicComment: 'Dolphin Smalltalk RichTextEdit View.
+Copyright (c) Object Arts Ltd. 1997-2006. Portions Copyright (c) CGI Group (Europe) Ltd. 1997.
+
+A RichTextPresenter is a <TextPresenter> specialised for the display of RTF. The default view is a wrapper around the satndard Windows RichEdit control (RichTextEdit).'.
+
+package basicPackageVersion: '6.1'.
+
+
+package classNames
+	add: #CHARFORMAT;
+	add: #EDITSTREAM;
+	add: #ENLINK;
+	add: #FORMATRANGE;
+	add: #PARAFORMAT;
+	add: #RichText;
+	add: #RichTextEdit;
+	add: #RichTextPresenter;
+	yourself.
+
+package methodNames
+	add: #Clipboard -> #getRichTextIfNone:;
+	add: #String -> #asRichText;
+	add: #TextEdit -> #richText;
+	add: #TextEdit -> #richTextClass;
+	add: #TextEdit -> #selectionRichText:;
+	add: #TextEdit -> #selectionRtf:;
+	add: #View -> #richText;
+	yourself.
+
+package globalNames
+	add: #RichEditConstants;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\..\..\Base\Dolphin';
+	add: '..\..\Dialogs\Common\Dolphin Common Dialogs';
+	add: '..\..\Base\Dolphin MVP Base';
+	add: 'Dolphin Text Presenter';
+	add: '..\..\Type Converters\Dolphin Type Converters';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+Object subclass: #RichText
+	instanceVariableNames: 'rtf'
+	classVariableNames: 'Converter'
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Win32Structure subclass: #CHARFORMAT
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: 'CommonDialogConstants RichEditConstants'
+	classInstanceVariableNames: ''!
+Win32Structure subclass: #EDITSTREAM
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Win32Structure subclass: #FORMATRANGE
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Win32Structure subclass: #PARAFORMAT
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: 'RichEditConstants'
+	classInstanceVariableNames: ''!
+NMHDR subclass: #ENLINK
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+TextPresenter subclass: #RichTextPresenter
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: 'CommonDialogConstants RichEditConstants'
+	classInstanceVariableNames: ''!
+MultilineTextEdit subclass: #RichTextEdit
+	instanceVariableNames: 'streamIn winStruct'
+	classVariableNames: 'AutoUrlDetectionMask ParagraphAlignmentMap RtnMap StreamingDescriptor StreamInIndex'
+	poolDictionaries: 'CommonDialogConstants RichEditConstants'
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+!Clipboard methodsFor!
+
+getRichTextIfNone: exceptionHandler
+        "Answer a <readableString> containing the the Rich Text contents 
+	of the clipboard. If no rich text is currently available, the answers the
+	result of evaluating the <niladicValuable> exceptionHandler."
+
+	^RichText fromRtf: (self getTextFormat: self rtfFormatId ifNone: exceptionHandler)! !
+!Clipboard categoriesFor: #getRichTextIfNone:!accessing!public! !
+
+!String methodsFor!
+
+asRichText
+	"Answer the receiver converted to a RichText instance"
+
+	^RichText fromString: self! !
+!String categoriesFor: #asRichText!converting!public! !
+
+!TextEdit methodsFor!
+
+richText
+	"Answer a RichText containing the rich text contents of the receiver.
+	May be overridden by subclasses which actually contain rich text."
+
+	^self richTextClass fromString: self plainText!
+
+richTextClass
+	"Private - Answer the class of <readableString> used to wrap rich text."
+
+	^RichText
+!
+
+selectionRichText: aRichText
+	"Private - Replace the selected text in the receiver with the RTF 
+	string, aRichText.
+	This is the backend of a double-dispatch protocol between TextEdits and 
+	RichText/Strings."
+
+	self selectionPlainText: aRichText asString
+	!
+
+selectionRtf: aString
+	"Private - Replace the selected text in the receiver with the RTF 
+	string, aString.
+	This is the backend of a double-dispatch protocol between TextEdits and 
+	RichText/Strings."
+
+	! !
+!TextEdit categoriesFor: #richText!accessing!public! !
+!TextEdit categoriesFor: #richTextClass!accessing!private! !
+!TextEdit categoriesFor: #selectionRichText:!private!selection! !
+!TextEdit categoriesFor: #selectionRtf:!private!selection! !
+
+!View methodsFor!
+
+richText
+	"Answer a RichText containing the rich text contents of the receiver.
+	May be overridden by subclasses which actually contain rich text."
+
+	^self plainText asRichText! !
+!View categoriesFor: #richText!accessing!public! !
+
+"End of package definition"!
+

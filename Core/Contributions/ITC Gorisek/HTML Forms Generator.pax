@@ -1,0 +1,940 @@
+| package |
+package := Package name: 'HTML Forms Generator'.
+package paxVersion: 1;
+	basicComment: ''.
+
+package basicPackageVersion: 'r 460 rc 4'.
+
+
+package classNames
+	add: #HtmlAbstractTable;
+	add: #HtmlButton;
+	add: #HtmlCheckBox;
+	add: #HtmlContainer;
+	add: #HtmlDateField;
+	add: #HtmlDropDownList;
+	add: #HtmlElement;
+	add: #HtmlFileUploadForm;
+	add: #HtmlForm;
+	add: #HtmlFullListingOverviewListTable;
+	add: #HtmlGenericFormsCoder;
+	add: #HtmlHiddenField;
+	add: #HtmlImage;
+	add: #HtmlInlineEditFieldTopContainer;
+	add: #HtmlInputField;
+	add: #HtmlLink;
+	add: #HtmlListTable;
+	add: #HtmlNavigationTabs;
+	add: #HtmlNoSpacingTable;
+	add: #HtmlOverviewListTable;
+	add: #HtmlPage;
+	add: #HtmlPasswordField;
+	add: #HtmlRadioButton;
+	add: #HtmlSingleTaskNavigationTabs;
+	add: #HtmlStream;
+	add: #HtmlTable;
+	add: #HtmlTableCell;
+	add: #HtmlTextArea;
+	add: #HtmlTextField;
+	add: #HtmlWriter;
+	add: #JSONResponseObject;
+	yourself.
+
+package methodNames
+	add: #Object -> #generateOn:;
+	add: #Process -> #webAjaxRequestJavascriptCollector;
+	add: #Process -> #webAjaxRequestJavascriptCollectorContentsOrNil;
+	add: #Process -> #webCoderDefaultFormName;
+	add: #Process -> #webCoderDefaultFormName:;
+	add: #Process -> #webCoderIsGeneratingAjaxForm;
+	add: #Process -> #webHtmlPageKeyboardHandlersCollector;
+	add: #Process -> #webHtmlPageKeyboardHandlersCollectorOrNil;
+	add: #String -> #asJavascriptHtmlFragment;
+	add: #String -> #generateOn:;
+	add: #WebTask -> #ajaxPopUpKeyboardHandlerScript;
+	add: #WebTask -> #defaultAjaxPopUpHelpPageId;
+	add: #WebTask -> #defaultHelpPageId;
+	add: #WebTask -> #getFocusFieldFrom:errors:;
+	add: #WebTask -> #newCoder;
+	add: #WebTask -> #newCoder:;
+	add: #WebTask -> #newCoderForAjaxRequest;
+	add: #WebTask -> #putAjaxResultsMessageBox:logText:action:;
+	add: #WebTask -> #putAjaxResultsMessageBox:logText:followedBy:;
+	add: #WebTask -> #putAjaxResultsMessageBoxFollowedByAllDialogsClose:logText:;
+	add: #WebTask -> #showAjaxPopUpFileUploadForm:helpPage:content:bottomContent:width:height:defaultAction:focusField:;
+	add: #WebTask -> #showAjaxPopUpForm:content:bottomContent:width:height:;
+	add: #WebTask -> #showAjaxPopUpForm:content:bottomContent:width:height:defaultAction:;
+	add: #WebTask -> #showAjaxPopUpForm:content:bottomContent:width:height:defaultAction:focusField:;
+	add: #WebTask -> #showAjaxPopUpForm:content:okAction:closeAction:width:height:focusField:;
+	add: #WebTask -> #showAjaxPopUpForm:content:okAction:okActionLabel:width:height:focusField:preventDuplicates:;
+	add: #WebTask -> #showAjaxPopUpForm:content:okAction:width:height:focusField:;
+	add: #WebTask -> #showAjaxPopUpForm:content:okAction:width:height:focusField:preventDuplicates:;
+	add: #WebTask -> #showAjaxPopUpForm:helpPage:content:bottomContent:width:height:;
+	add: #WebTask -> #showAjaxPopUpForm:helpPage:content:bottomContent:width:height:defaultAction:closeAction:focusField:;
+	add: #WebTask -> #showAjaxPopUpForm:helpPage:content:bottomContent:width:height:defaultAction:closeAction:focusField:enableFileUpload:;
+	add: #WebTask -> #showAjaxPopUpForm:helpPage:content:bottomContent:width:height:defaultAction:closeAction:focusField:enableFileUpload:preventDuplicates:;
+	add: #WebTask -> #showAjaxPopUpForm:helpPage:content:bottomContent:width:height:defaultAction:closeAction:focusField:preventDuplicates:;
+	add: #WebTask -> #showAjaxPopUpForm:helpPage:content:bottomContent:width:height:defaultAction:focusField:;
+	add: #WebTask -> #showAjaxPopUpForm:helpPage:content:bottomContent:width:height:defaultAction:focusField:preventDuplicates:;
+	add: #WebTask -> #showAjaxPopUpForm:helpPage:content:okAction:closeAction:width:height:focusField:;
+	add: #WebTask -> #showAjaxPopUpForm:helpPage:content:okAction:okActionLabel:width:height:focusField:preventDuplicates:;
+	add: #WebTask -> #showAjaxPopUpForm:helpPage:content:okAction:width:height:focusField:;
+	add: #WebTask -> #showAjaxPopUpForm:helpPage:content:okAction:width:height:focusField:preventDuplicates:;
+	add: #WebTask -> #showAjaxPopUpFormString:helpPage:content:bottomContent:width:height:defaultAction:closeAction:focusField:enableFileUpload:preventDuplicates:;
+	add: #WebTask -> #updateAjaxPopUpWithContent:bottomContent:defaultAction:closeAction:focusField:;
+	add: #WebTask -> #updateAjaxPopUpWithContent:bottomContent:defaultAction:focusField:;
+	add: #WebTask -> #updateAjaxPopUpWithContent:okAction:focusField:;
+	add: #WebTask -> #updateAjaxPopUpWithContent:okAction:okActionLabel:focusField:;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: 'Dialect Abstraction Layer';
+	add: '..\Object Arts\Dolphin\Base\Dolphin';
+	add: 'e-obracuni\Web Server';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+Object subclass: #HtmlElement
+	instanceVariableNames: 'color background cssClass elementId cssStyle'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Object subclass: #HtmlGenericFormsCoder
+	instanceVariableNames: 'htmlWriter htmlStream urlPrefix sessionURLPrefix session application task style styleLinks pageTitle baseUrl baseTarget topNavigation defaultToolbar topNavigationTabs charSet javascriptLinks favoritesIconUrl'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Object subclass: #HtmlStream
+	instanceVariableNames: 'indent lineBegin stream compact'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Object subclass: #HtmlWriter
+	instanceVariableNames: 'htmlStream'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Object subclass: #JSONResponseObject
+	instanceVariableNames: 'values'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+HtmlElement subclass: #HtmlContainer
+	instanceVariableNames: 'contents javascriptSink'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+HtmlElement subclass: #HtmlImage
+	instanceVariableNames: 'name width height link tooltip'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+HtmlElement subclass: #HtmlInputField
+	instanceVariableNames: 'name value size width maxLength border onKeyUp onKeyDown onKeyPress onChange onBlur onClick readOnly disabled accessKey tabIndex autocomplete onFocus title'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+HtmlElement subclass: #HtmlNavigationTabs
+	instanceVariableNames: 'items selectedIndex selectedTask'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+HtmlContainer subclass: #HtmlAbstractTable
+	instanceVariableNames: 'viewOnly disabled showSmall onSelect onSelectInNewWindow onRowClickJavascriptFunctionName'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+HtmlContainer subclass: #HtmlForm
+	instanceVariableNames: 'action target name'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+HtmlContainer subclass: #HtmlInlineEditFieldTopContainer
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+HtmlContainer subclass: #HtmlLink
+	instanceVariableNames: 'target attributes targetFrame javascript onClick linkTitle'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+HtmlContainer subclass: #HtmlPage
+	instanceVariableNames: 'title marginHeight marginWidth leftMargin topMargin rightMargin pageBackground bgColor focusField charset redirect stylesheet style refreshTimeout meta onLoadScript script framesetString favoritesIconUrl noScroll scriptLinks landscapeBool useSessionRefreshScriptBool'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: 'useGlobalKeyboardHandlerBool'!
+HtmlContainer subclass: #HtmlTableCell
+	instanceVariableNames: 'width height alignment verticalAlignment colSpan bgPicture style noWrap borderTop borderBottom borderLeft borderRight id onClick borderColor cellType'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+HtmlAbstractTable subclass: #HtmlTable
+	instanceVariableNames: 'columns position border width height cellSpacing cellPadding alignment verticalAlignment fieldRowSpan cellWidths defaultFontSize rowBorderTop rowBorderBottom onDoubleClick onMouseOver onMouseOut borderColor onMouseClick rowIdentifiers rowDisplay'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+HtmlTable subclass: #HtmlListTable
+	instanceVariableNames: 'application evenClass oddClass headerClass prestop headerAlignment overviewTaskSortString overviewTaskUrlPrefix dataCellEvenClass dataCellOddClass'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+HtmlTable subclass: #HtmlNoSpacingTable
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+HtmlListTable subclass: #HtmlFullListingOverviewListTable
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+HtmlListTable subclass: #HtmlOverviewListTable
+	instanceVariableNames: 'rowIndexWhileGenerating'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+HtmlForm subclass: #HtmlFileUploadForm
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+HtmlInputField subclass: #HtmlButton
+	instanceVariableNames: 'backToHistory flashingLabel buttonType pleaseWaitNotice'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+HtmlInputField subclass: #HtmlCheckBox
+	instanceVariableNames: 'checked'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+HtmlInputField subclass: #HtmlDateField
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+HtmlInputField subclass: #HtmlDropDownList
+	instanceVariableNames: 'items displaySelector valueSelector automatic listSize'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+HtmlInputField subclass: #HtmlHiddenField
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+HtmlInputField subclass: #HtmlPasswordField
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+HtmlInputField subclass: #HtmlRadioButton
+	instanceVariableNames: 'checked'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+HtmlInputField subclass: #HtmlTextArea
+	instanceVariableNames: 'columns rows text'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+HtmlInputField subclass: #HtmlTextField
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+HtmlNavigationTabs subclass: #HtmlSingleTaskNavigationTabs
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+!Object methodsFor!
+
+generateOn: aStream 
+	^self isBlockClosure ifTrue: [self value] ifFalse: [aStream nextPutAll: self printString]! !
+!Object categoriesFor: #generateOn:!public! !
+
+!Process methodsFor!
+
+webAjaxRequestJavascriptCollector
+	^self attributes at: #webAjaxRequestJavascriptCollector ifAbsentPut: [WriteStream on: String new]!
+
+webAjaxRequestJavascriptCollectorContentsOrNil
+	| stream |
+	^(stream := self attributes at: #webAjaxRequestJavascriptCollector ifAbsent: []) isNil 
+		ifFalse: [stream contents]!
+
+webCoderDefaultFormName
+	^self attributes at: #webCoderDefaultFormName ifAbsent: ['form']!
+
+webCoderDefaultFormName: aString 
+	self attributes at: #webCoderDefaultFormName put: aString!
+
+webCoderIsGeneratingAjaxForm
+	^self webProcessingAjaxRequest and: [self webCoderDefaultFormName beginsWith: 'ajaxf']!
+
+webHtmlPageKeyboardHandlersCollector
+	^self attributes at: #webHtmlPageKeyboardHandlersCollector ifAbsentPut: [OrderedCollection new]!
+
+webHtmlPageKeyboardHandlersCollectorOrNil
+	^self attributes at: #webHtmlPageKeyboardHandlersCollector ifAbsent: []! !
+!Process categoriesFor: #webAjaxRequestJavascriptCollector!public! !
+!Process categoriesFor: #webAjaxRequestJavascriptCollectorContentsOrNil!public! !
+!Process categoriesFor: #webCoderDefaultFormName!public! !
+!Process categoriesFor: #webCoderDefaultFormName:!public! !
+!Process categoriesFor: #webCoderIsGeneratingAjaxForm!public! !
+!Process categoriesFor: #webHtmlPageKeyboardHandlersCollector!public! !
+!Process categoriesFor: #webHtmlPageKeyboardHandlersCollectorOrNil!public! !
+
+!String methodsFor!
+
+asJavascriptHtmlFragment
+	"Metoda doda HTML okvir okrog Javascript-a."
+
+	^HtmlContainer javascriptBeginString , self , HtmlContainer javascriptEndString!
+
+generateOn: aStream
+
+	aStream nextPutAll: self! !
+!String categoriesFor: #asJavascriptHtmlFragment!public! !
+!String categoriesFor: #generateOn:!public! !
+
+!WebTask methodsFor!
+
+ajaxPopUpKeyboardHandlerScript
+	"default action for Esc keyboard button is always to close the ajax pop-up dialog
+
+	other actions are user defined"
+
+	"Be careful, if Esc action is defined earlier, it will be used, not below code!!"
+
+	HtmlPage onKey: #BrowserKeyEsc do: 'closeTopDialogBox();window.focus();'.
+	^'self.itc_gkHandler=function(ev)
+{' 
+		, HtmlPage getKeyboardHandlingScriptForTheCurrentPageOrRequest , '};
+'!
+
+defaultAjaxPopUpHelpPageId
+	"Answer default help page for Ajax dialog boxes."
+
+	^self defaultHelpPageId!
+
+defaultHelpPageId
+	"Answer default help page for HTML forms and pages for this task."
+
+	^nil!
+
+getFocusFieldFrom: arrayOfFormFields errors: errors 
+	"Answer the name of of first form field in the array which has an error entry in errors dictionary.
+	This is used for correctly positioning form field focus upon displaying a form with an errror message.
+	Example, when a user forgets to enter a document date, then an error will be shown there.
+	The form should therefore place focus right into this field instead into the default field with focus.
+	"
+
+	arrayOfFormFields isNilOrEmpty ifTrue: [^nil].
+	errors isNilOrEmpty ifTrue: [^arrayOfFormFields first].
+	arrayOfFormFields do: 
+			[:eachFieldName | 
+			(eachFieldName isSymbol 
+				ifFalse: [errors at: eachFieldName ifAbsent: [errors at: eachFieldName asSymbol ifAbsent: []]]
+				ifTrue: [errors at: eachFieldName ifAbsent: [errors at: eachFieldName asString ifAbsent: []]]) isNil 
+				ifFalse: 
+					["this is the first field with an error, therefore it should get initial focus"
+					^eachFieldName]].
+	^arrayOfFormFields first!
+
+newCoder
+	^self newCoder: self webStream!
+
+newCoder: stream 
+	Processor activeProcess webTask: self.
+	^(application basicNewCoder: stream)
+		task: self urlPrefix: self taskURLPrefix;
+		session: session;
+		sessionURLPrefix: self sessionURLPrefix!
+
+newCoderForAjaxRequest
+	^self newCoder: (WriteStream on: String new)!
+
+putAjaxResultsMessageBox: message logText: logString action: action 
+	"Display message plus batch job log message and set the javascript action on the dialog close button."
+
+	^self 
+		putAjaxResultsMessageBox: message
+		logText: logString
+		followedBy: (self webRequest isInternetExplorer 
+				ifTrue: ['if(AllDialogBoxes)basicCloseAllDialogBoxes();']
+				ifFalse: ['']) , '
+document.location.href=' 
+				, (self taskURLPrefixForAction: action) asJavascriptValue!
+
+putAjaxResultsMessageBox: message logText: logString followedBy: javascript 
+	"Display message plus batch job log message and set the javascript action on the dialog close button."
+
+	self 
+		showAjaxPopUpForm: 'asp.Notification'
+		content: 
+			[:coder | 
+			#itcTodo.
+			"add HTML link here to enable download of complete log file, here it will show only the first 100 Mb"
+			coder
+				paragraph2: message;
+				break;
+				singleLineBorderGreyBackground: (logString copyFrom: 1 to: (logString size min: 102400)) 
+							webHtmlEncoded
+					height: 380]
+		bottomContent: 
+			[:coder | 
+			coder writeActionButtonsCentered: (Array 
+						with: (HtmlButton label: 'asp.button.CloseWindow' onClick: javascript))]
+		width: 500
+		height: 440!
+
+putAjaxResultsMessageBoxFollowedByAllDialogsClose: message logText: logString 
+	"Display message plus batch job log message and set the javascript action on the dialog close button to close all opened dialog boxes."
+
+	^self 
+		putAjaxResultsMessageBox: message
+		logText: logString
+		followedBy: 'javascript:basicCloseAllDialogBoxes();'!
+
+showAjaxPopUpFileUploadForm: title helpPage: helpPageId content: contentBlock bottomContent: bottomContentBlock width: width height: height defaultAction: defaultAction focusField: focusField 
+	self 
+		showAjaxPopUpForm: title
+		helpPage: helpPageId
+		content: contentBlock
+		bottomContent: bottomContentBlock
+		width: width
+		height: height
+		defaultAction: defaultAction
+		closeAction: nil
+		focusField: focusField
+		enableFileUpload: true!
+
+showAjaxPopUpForm: title content: contentBlock bottomContent: bottomContentBlock width: width height: height 
+	^self 
+		showAjaxPopUpForm: title
+		content: contentBlock
+		bottomContent: bottomContentBlock
+		width: width
+		height: height
+		defaultAction: nil
+		focusField: nil!
+
+showAjaxPopUpForm: title content: contentBlock bottomContent: bottomContentBlock width: width height: height defaultAction: defaultAction 
+	^self 
+		showAjaxPopUpForm: title
+		content: contentBlock
+		bottomContent: bottomContentBlock
+		width: width
+		height: height
+		defaultAction: defaultAction
+		focusField: nil!
+
+showAjaxPopUpForm: title content: contentBlock bottomContent: bottomContentBlock width: width height: height defaultAction: defaultAction focusField: focusField 
+	^self 
+		showAjaxPopUpForm: title
+		helpPage: nil
+		content: contentBlock
+		bottomContent: bottomContentBlock
+		width: width
+		height: height
+		defaultAction: defaultAction
+		focusField: focusField!
+
+showAjaxPopUpForm: title content: contentBlock okAction: defaultAction closeAction: closeAction width: width height: height focusField: focusField 
+	^self 
+		showAjaxPopUpForm: title
+		helpPage: nil
+		content: contentBlock
+		okAction: defaultAction
+		closeAction: closeAction
+		width: width
+		height: height
+		focusField: focusField!
+
+showAjaxPopUpForm: title content: contentBlock okAction: defaultAction okActionLabel: okActionLabel width: width height: height focusField: focusField preventDuplicates: preventDuplicatesBoolean 
+	^self 
+		showAjaxPopUpForm: title
+		helpPage: nil
+		content: contentBlock
+		okAction: defaultAction
+		okActionLabel: okActionLabel
+		width: width
+		height: height
+		focusField: focusField
+		preventDuplicates: preventDuplicatesBoolean!
+
+showAjaxPopUpForm: title content: contentBlock okAction: defaultAction width: width height: height focusField: focusField 
+	^self 
+		showAjaxPopUpForm: title
+		helpPage: nil
+		content: contentBlock
+		okAction: defaultAction
+		width: width
+		height: height
+		focusField: focusField!
+
+showAjaxPopUpForm: title content: contentBlock okAction: defaultAction width: width height: height focusField: focusField preventDuplicates: preventDuplicatesBoolean 
+	^self 
+		showAjaxPopUpForm: title
+		helpPage: nil
+		content: contentBlock
+		okAction: defaultAction
+		okActionLabel: nil
+		width: width
+		height: height
+		focusField: focusField
+		preventDuplicates: preventDuplicatesBoolean!
+
+showAjaxPopUpForm: title helpPage: helpPageId content: contentBlock bottomContent: bottomContentBlock width: width height: height 
+	^self 
+		showAjaxPopUpForm: title
+		helpPage: helpPageId
+		content: contentBlock
+		bottomContent: bottomContentBlock
+		width: width
+		height: height
+		defaultAction: nil
+		focusField: nil!
+
+showAjaxPopUpForm: title helpPage: helpPageId content: contentBlock bottomContent: bottomContentBlock width: width height: height defaultAction: defaultAction closeAction: closeAction focusField: focusField 
+	^self 
+		showAjaxPopUpForm: title
+		helpPage: helpPageId
+		content: contentBlock
+		bottomContent: bottomContentBlock
+		width: width
+		height: height
+		defaultAction: defaultAction
+		closeAction: closeAction
+		focusField: focusField
+		enableFileUpload: false!
+
+showAjaxPopUpForm: title helpPage: helpPageId content: contentBlock bottomContent: bottomContentBlock width: width height: height defaultAction: defaultAction closeAction: closeAction focusField: focusField enableFileUpload: enableFileUploadBoolean 
+	self putAjaxResults: (self 
+				showAjaxPopUpFormString: title
+				helpPage: helpPageId
+				content: contentBlock
+				bottomContent: bottomContentBlock
+				width: width
+				height: height
+				defaultAction: defaultAction
+				closeAction: closeAction
+				focusField: focusField
+				enableFileUpload: enableFileUploadBoolean
+				preventDuplicates: nil)!
+
+showAjaxPopUpForm: title helpPage: helpPageId content: contentBlock bottomContent: bottomContentBlock width: width height: height defaultAction: defaultAction closeAction: closeAction focusField: focusField enableFileUpload: enableFileUploadBoolean preventDuplicates: preventDuplicatesBoolean 
+	self putAjaxResults: (self 
+				showAjaxPopUpFormString: title
+				helpPage: helpPageId
+				content: contentBlock
+				bottomContent: bottomContentBlock
+				width: width
+				height: height
+				defaultAction: defaultAction
+				closeAction: closeAction
+				focusField: focusField
+				enableFileUpload: enableFileUploadBoolean
+				preventDuplicates: preventDuplicatesBoolean)!
+
+showAjaxPopUpForm: title helpPage: helpPageId content: contentBlock bottomContent: bottomContentBlock width: width height: height defaultAction: defaultAction closeAction: closeAction focusField: focusField preventDuplicates: preventDuplicatesBoolean 
+	^self 
+		showAjaxPopUpForm: title
+		helpPage: helpPageId
+		content: contentBlock
+		bottomContent: bottomContentBlock
+		width: width
+		height: height
+		defaultAction: defaultAction
+		closeAction: closeAction
+		focusField: focusField
+		enableFileUpload: false
+		preventDuplicates: preventDuplicatesBoolean!
+
+showAjaxPopUpForm: title helpPage: helpPageId content: contentBlock bottomContent: bottomContentBlock width: width height: height defaultAction: defaultAction focusField: focusField 
+	self 
+		showAjaxPopUpForm: title
+		helpPage: helpPageId
+		content: contentBlock
+		bottomContent: bottomContentBlock
+		width: width
+		height: height
+		defaultAction: defaultAction
+		closeAction: nil
+		focusField: focusField!
+
+showAjaxPopUpForm: title helpPage: helpPageId content: contentBlock bottomContent: bottomContentBlock width: width height: height defaultAction: defaultAction focusField: focusField preventDuplicates: preventDuplicatesBoolean 
+	self 
+		showAjaxPopUpForm: title
+		helpPage: helpPageId
+		content: contentBlock
+		bottomContent: bottomContentBlock
+		width: width
+		height: height
+		defaultAction: defaultAction
+		closeAction: nil
+		focusField: focusField
+		preventDuplicates: preventDuplicatesBoolean!
+
+showAjaxPopUpForm: title helpPage: helpPageId content: contentBlock okAction: defaultAction closeAction: closeAction width: width height: height focusField: focusField 
+	^self 
+		showAjaxPopUpForm: title
+		helpPage: helpPageId
+		content: contentBlock
+		okAction: defaultAction
+		okActionLabel: nil
+		width: width
+		height: height
+		focusField: focusField
+		preventDuplicates: nil!
+
+showAjaxPopUpForm: title helpPage: helpPageId content: contentBlock okAction: defaultAction okActionLabel: okActionLabel width: width height: height focusField: focusField preventDuplicates: preventDuplicatesBoolean 
+	^self 
+		showAjaxPopUpForm: title
+		helpPage: helpPageId
+		content: contentBlock
+		bottomContent: 
+			[:coder | 
+			coder 
+				writeActionButtonsCentered: (defaultAction isNil 
+						ifFalse: 
+							[Array 
+								with: defaultAction
+								with: (okActionLabel ifNil: ['asp.button.OK'])
+								with: 2]
+						ifTrue: 
+							["if default action is nil, then only close window button will be shown"
+							#()]) 
+							, (Array with: (HtmlButton label: 'asp.button.Cancel' onClick: 'closeTopDialogBox();'))]
+		width: width
+		height: height
+		defaultAction: defaultAction
+		focusField: focusField
+		preventDuplicates: preventDuplicatesBoolean!
+
+showAjaxPopUpForm: title helpPage: helpPageId content: contentBlock okAction: defaultAction width: width height: height focusField: focusField 
+	^self 
+		showAjaxPopUpForm: title
+		helpPage: helpPageId
+		content: contentBlock
+		bottomContent: 
+			[:coder | 
+			coder 
+				writeActionButtonsCentered: (defaultAction isNil 
+						ifFalse: 
+							[Array 
+								with: defaultAction
+								with: 'asp.button.OK'
+								with: 2]
+						ifTrue: 
+							["if default action is nil, then only close window button will be shown"
+							#()]) 
+							, (Array with: (HtmlButton label: 'asp.button.Cancel' onClick: 'closeTopDialogBox();'))]
+		width: width
+		height: height
+		defaultAction: defaultAction
+		focusField: focusField!
+
+showAjaxPopUpForm: title helpPage: helpPageId content: contentBlock okAction: defaultAction width: width height: height focusField: focusField preventDuplicates: preventDuplicatesBoolean 
+	^self 
+		showAjaxPopUpForm: title
+		helpPage: helpPageId
+		content: contentBlock
+		okAction: defaultAction
+		okActionLabel: nil
+		width: width
+		height: height
+		focusField: focusField
+		preventDuplicates: preventDuplicatesBoolean!
+
+showAjaxPopUpFormString: title helpPage: helpPageId content: contentBlock bottomContent: bottomContentBlock width: width height: height defaultAction: defaultAction closeAction: closeAction focusField: focusField enableFileUpload: enableFileUploadBoolean preventDuplicates: preventDuplicatesBoolean 
+	"Parameters:
+		preventDuplicatesBoolean - if <true>, then check if the top dialog box has the same title. If so, do not open another pop-up dialog box.
+	"
+
+	| coder1 coder2 formName ws defaultActionStr helpPage |
+	defaultActionStr := defaultAction isNil 
+				ifFalse: 
+					[defaultAction isString 
+						ifTrue: 
+							["Check for first character, used for setting WaitClock."
+							(defaultAction size > 1 and: [defaultAction first == $#]) 
+								ifTrue: [defaultAction copyFrom: 2 to: defaultAction size]
+								ifFalse: [defaultAction]]
+						ifFalse: 
+							["It is symbol, don't change anything."
+							defaultAction]].
+	defaultActionStr isNil 
+		ifFalse: 
+			[HtmlPage 
+				onKey: #BrowserKeyEnter
+				task: self
+				action: defaultActionStr.
+			defaultAction = defaultActionStr 
+				ifFalse: 
+					["It is only posible if $# is first character, so show WaitClock."
+					HtmlPage onKey: #BrowserKeyEnter add: 'ITC.widget.WaitClock.Show();']].
+	helpPage := application configuration isNil 
+				ifFalse: 
+					[('/' , application urlPrefix , '/redirect?url=' 
+						, (application configuration helpPageLinkPrefix 
+								, (helpPageId ifNil: [self defaultAjaxPopUpHelpPageId]) asWebString webHttpUrlEncoded) 
+									webHttpUrlEncoded) 
+							webHtmlEncodedForForm asJavascriptValue].
+	helpPage isNil 
+		ifFalse: 
+			["Owerride #onhelp mandatory for IE."
+			HtmlPage onKey: #BrowserKeyF1
+				do: 'document.onhelp=function(){return false};window.open(' , helpPage , ', ''_blank'');'].
+	formName := 'ajaxf' , ItcSystemManager generateRandomString.
+	Processor activeProcess webCoderDefaultFormName: formName.
+	contentBlock isNil 
+		ifFalse: 
+			[coder1 := self newCoderForAjaxRequest.
+			contentBlock value: coder1].
+	bottomContentBlock isNil 
+		ifFalse: 
+			[coder2 := self newCoderForAjaxRequest.
+			bottomContentBlock value: coder2].
+	ws := WriteStream on: String new.
+	ws
+		nextPutAll: 'var dlgBox=new ITC.widget.DialogBox(';
+		nextPutAll: title webTranslate asJavascriptValue;
+		nextPut: $,;
+		nextPutAll: (helpPage ifNil: ['null']);
+		nextPut: $,;
+		nextPutAll: width asJavascriptValue;
+		nextPut: $,;
+		nextPutAll: height asJavascriptValue;
+		nextPut: $,;
+		nextPutAll: (enableFileUploadBoolean 
+					ifTrue: 
+						["this is a hack to enable file upload forms in ajax pop-up - see also the javascript code on string concatenation"
+						(formName , '" enctype="multipart/form-data') asJavascriptValue]
+					ifFalse: [formName asJavascriptValue]);
+		nextPut: $,;
+		nextPutAll: self taskURLPrefix asJavascriptValue;
+		nextPut: $,;
+		nextPutAll: ((defaultActionStr notNil and: [defaultActionStr isAjaxAction]) 
+					ifTrue: ['_apf']
+					ifFalse: ['_self']) asJavascriptValue;
+		nextPut: $,;
+		nextPutAll: (defaultActionStr isNil ifFalse: [defaultActionStr webAsActionString]) asJavascriptValue;
+		nextPutAll: ');
+'.
+	coder1 isNil 
+		ifFalse: 
+			[ws
+				nextPutAll: 'dlgBox.setContent(';
+				nextPutAll: coder1 ajaxHtmlFragment;
+				nextPutAll: ');
+'].
+	coder2 isNil 
+		ifFalse: 
+			[ws
+				nextPutAll: 'dlgBox.setBottomContent(';
+				nextPutAll: coder2 ajaxHtmlFragment;
+				nextPutAll: ');
+'].
+	closeAction isNil 
+		ifFalse: 
+			[ws
+				nextPutAll: (closeAction isAjaxAction 
+							ifTrue: ['dlgBox.m_onClosedAjaxGetUrl=']
+							ifFalse: ['dlgBox.m_onClosedGoToUrl=']);
+				nextPutAll: (self taskURLPrefixForAction: closeAction) asJavascriptValue;
+				nextPut: $;].
+	ws
+		nextPutAll: 'dlgBox.show();dlgBox.resizeToContent();dlgBox=null;';
+		nextPutAll: self ajaxPopUpKeyboardHandlerScript.
+	focusField isNil 
+		ifFalse: 
+			[ws
+				nextPutAll: 'document.';
+				nextPutAll: formName;
+				nextPut: $.;
+				nextPutAll: focusField;
+				nextPutAll: '.focus();'].
+	^preventDuplicatesBoolean = true 
+		ifTrue: 
+			['if(!!getTopDialogBox() || getTopDialogBox().m_Title!!=' , title webTranslate asJavascriptValue 
+				, '){
+' , ws contents 
+				, '
+}']
+		ifFalse: [ws contents]!
+
+updateAjaxPopUpWithContent: contentBlock bottomContent: bottomContentBlock defaultAction: defaultAction closeAction: closeAction focusField: focusField 
+	| coder1 coder2 formName ws request defaultActionStr |
+	defaultActionStr := defaultAction isNil 
+				ifFalse: 
+					[defaultAction isString 
+						ifTrue: 
+							["Check for first character, used for setting WaitClock."
+							(defaultAction size > 1 and: [defaultAction first == $#]) 
+								ifTrue: [defaultAction copyFrom: 2 to: defaultAction size]
+								ifFalse: [defaultAction]]
+						ifFalse: 
+							["It is symbol, don't change anything."
+							defaultAction]].
+	defaultActionStr isNil 
+		ifFalse: 
+			[HtmlPage 
+				onKey: #BrowserKeyEnter
+				task: self
+				action: defaultActionStr.
+			defaultAction = defaultActionStr 
+				ifFalse: 
+					["It is only posible if $# is first character, so show WaitClock."
+					HtmlPage onKey: #BrowserKeyEnter add: 'ITC.widget.WaitClock.Show();']].
+	request := self webRequest.
+	formName := request stringOrNilAt: '_apfn'.
+	Processor activeProcess webCoderDefaultFormName: formName.
+	contentBlock isNil 
+		ifFalse: 
+			[coder1 := self newCoderForAjaxRequest.
+			contentBlock value: coder1].
+	bottomContentBlock isNil 
+		ifFalse: 
+			[coder2 := self newCoderForAjaxRequest.
+			bottomContentBlock value: coder2].
+	ws := WriteStream on: String new.
+	ws
+		nextPutAll: 'var dlgBox=AllDialogBoxes[';
+		nextPutAll: (request integerAt: 'ajaxPopUp') asJavascriptValue;
+		nextPutAll: '];if(dlgBox){'.
+	coder1 isNil 
+		ifFalse: 
+			[ws
+				nextPutAll: 'dlgBox.setContent(';
+				nextPutAll: coder1 ajaxHtmlFragment;
+				nextPutAll: ');'].
+	coder2 isNil 
+		ifFalse: 
+			[ws
+				nextPutAll: 'dlgBox.setBottomContent(';
+				nextPutAll: coder2 ajaxHtmlFragment;
+				nextPutAll: ');'].
+	closeAction isNil 
+		ifTrue: [ws nextPutAll: 'dlgBox.m_onClosedAjaxGetUrl=null;dlgBox.m_onClosedGoToUrl=null;']
+		ifFalse: 
+			[ws
+				nextPutAll: (closeAction isAjaxAction 
+							ifTrue: ['dlgBox.m_onClosedGoToUrl=null;dlgBox.m_onClosedAjaxGetUrl=']
+							ifFalse: ['dlgBox.m_onClosedAjaxGetUrl=null;dlgBox.m_onClosedGoToUrl=']);
+				nextPutAll: (self taskURLPrefixForAction: closeAction) asJavascriptValue;
+				nextPut: $;].
+	ws nextPutAll: 'dlgBox=null;'.
+	formName isNilOrEmpty 
+		ifFalse: 
+			[ws
+				nextPutAll: 'document.';
+				nextPutAll: formName;
+				nextPutAll: '.target=';
+				nextPutAll: ((defaultActionStr notNil and: [defaultActionStr isAjaxAction]) 
+							ifTrue: ['"_apf"']
+							ifFalse: ['null']);
+				nextPutAll: ';document.';
+				nextPutAll: formName;
+				nextPutAll: '._apa.value=';
+				nextPutAll: defaultActionStr webAsActionString asJavascriptValue;
+				nextPut: $;.
+			focusField isNil 
+				ifFalse: 
+					[ws
+						nextPutAll: 'setTimeout("if(document.';
+						nextPutAll: formName;
+						nextPutAll: '&&document.';
+						nextPutAll: formName;
+						nextPut: $.;
+						nextPutAll: focusField;
+						nextPutAll: ')document.';
+						nextPutAll: formName;
+						nextPut: $.;
+						nextPutAll: focusField;
+						nextPutAll: '.focus()",0);']].
+	ws nextPutAll: '};'.
+	self putAjaxResults: ws contents!
+
+updateAjaxPopUpWithContent: contentBlock bottomContent: bottomContentBlock defaultAction: defaultAction focusField: focusField 
+	self 
+		updateAjaxPopUpWithContent: contentBlock
+		bottomContent: bottomContentBlock
+		defaultAction: defaultAction
+		closeAction: nil
+		focusField: focusField!
+
+updateAjaxPopUpWithContent: contentBlock okAction: defaultAction focusField: focusField 
+	^self 
+		updateAjaxPopUpWithContent: contentBlock
+		okAction: defaultAction
+		okActionLabel: nil
+		focusField: focusField!
+
+updateAjaxPopUpWithContent: contentBlock okAction: defaultAction okActionLabel: okActionLabel focusField: focusField 
+	^self 
+		updateAjaxPopUpWithContent: contentBlock
+		bottomContent: 
+			[:coder | 
+			coder 
+				writeActionButtonsCentered: (Array 
+						with: defaultAction
+						with: (okActionLabel ifNil: ['asp.button.OK'])
+						with: 2) , (Array with: (HtmlButton label: 'asp.button.Cancel' onClick: 'closeTopDialogBox();'))]
+		defaultAction: defaultAction
+		focusField: focusField! !
+!WebTask categoriesFor: #ajaxPopUpKeyboardHandlerScript!ajax support!public! !
+!WebTask categoriesFor: #defaultAjaxPopUpHelpPageId!ajax support!public! !
+!WebTask categoriesFor: #defaultHelpPageId!ajax support!public! !
+!WebTask categoriesFor: #getFocusFieldFrom:errors:!ajax support!public! !
+!WebTask categoriesFor: #newCoder!public! !
+!WebTask categoriesFor: #newCoder:!public! !
+!WebTask categoriesFor: #newCoderForAjaxRequest!ajax support!public! !
+!WebTask categoriesFor: #putAjaxResultsMessageBox:logText:action:!ajax support!private!suggest filelds support! !
+!WebTask categoriesFor: #putAjaxResultsMessageBox:logText:followedBy:!ajax support!private!suggest filelds support! !
+!WebTask categoriesFor: #putAjaxResultsMessageBoxFollowedByAllDialogsClose:logText:!ajax support!private!suggest filelds support! !
+!WebTask categoriesFor: #showAjaxPopUpFileUploadForm:helpPage:content:bottomContent:width:height:defaultAction:focusField:!ajax support!public! !
+!WebTask categoriesFor: #showAjaxPopUpForm:content:bottomContent:width:height:!ajax support!public! !
+!WebTask categoriesFor: #showAjaxPopUpForm:content:bottomContent:width:height:defaultAction:!ajax support!public! !
+!WebTask categoriesFor: #showAjaxPopUpForm:content:bottomContent:width:height:defaultAction:focusField:!ajax support!public! !
+!WebTask categoriesFor: #showAjaxPopUpForm:content:okAction:closeAction:width:height:focusField:!ajax support!public! !
+!WebTask categoriesFor: #showAjaxPopUpForm:content:okAction:okActionLabel:width:height:focusField:preventDuplicates:!ajax support!public! !
+!WebTask categoriesFor: #showAjaxPopUpForm:content:okAction:width:height:focusField:!ajax support!public! !
+!WebTask categoriesFor: #showAjaxPopUpForm:content:okAction:width:height:focusField:preventDuplicates:!ajax support!public! !
+!WebTask categoriesFor: #showAjaxPopUpForm:helpPage:content:bottomContent:width:height:!ajax support!public! !
+!WebTask categoriesFor: #showAjaxPopUpForm:helpPage:content:bottomContent:width:height:defaultAction:closeAction:focusField:!ajax support!public! !
+!WebTask categoriesFor: #showAjaxPopUpForm:helpPage:content:bottomContent:width:height:defaultAction:closeAction:focusField:enableFileUpload:!ajax support!public! !
+!WebTask categoriesFor: #showAjaxPopUpForm:helpPage:content:bottomContent:width:height:defaultAction:closeAction:focusField:enableFileUpload:preventDuplicates:!ajax support!public! !
+!WebTask categoriesFor: #showAjaxPopUpForm:helpPage:content:bottomContent:width:height:defaultAction:closeAction:focusField:preventDuplicates:!ajax support!public! !
+!WebTask categoriesFor: #showAjaxPopUpForm:helpPage:content:bottomContent:width:height:defaultAction:focusField:!ajax support!public! !
+!WebTask categoriesFor: #showAjaxPopUpForm:helpPage:content:bottomContent:width:height:defaultAction:focusField:preventDuplicates:!ajax support!public! !
+!WebTask categoriesFor: #showAjaxPopUpForm:helpPage:content:okAction:closeAction:width:height:focusField:!ajax support!public! !
+!WebTask categoriesFor: #showAjaxPopUpForm:helpPage:content:okAction:okActionLabel:width:height:focusField:preventDuplicates:!ajax support!public! !
+!WebTask categoriesFor: #showAjaxPopUpForm:helpPage:content:okAction:width:height:focusField:!ajax support!public! !
+!WebTask categoriesFor: #showAjaxPopUpForm:helpPage:content:okAction:width:height:focusField:preventDuplicates:!ajax support!public! !
+!WebTask categoriesFor: #showAjaxPopUpFormString:helpPage:content:bottomContent:width:height:defaultAction:closeAction:focusField:enableFileUpload:preventDuplicates:!ajax support!public! !
+!WebTask categoriesFor: #updateAjaxPopUpWithContent:bottomContent:defaultAction:closeAction:focusField:!ajax support!public! !
+!WebTask categoriesFor: #updateAjaxPopUpWithContent:bottomContent:defaultAction:focusField:!ajax support!public! !
+!WebTask categoriesFor: #updateAjaxPopUpWithContent:okAction:focusField:!ajax support!public! !
+!WebTask categoriesFor: #updateAjaxPopUpWithContent:okAction:okActionLabel:focusField:!ajax support!public! !
+
+"End of package definition"!
+

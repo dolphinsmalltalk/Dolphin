@@ -1,0 +1,118 @@
+| package |
+package := Package name: 'YAXO Base'.
+package paxVersion: 1;
+	basicComment: 'Yaxo: Yet another XML Framework
+Yaxo is a SAX XML parser for Squeak Smalltalk by: Duane Maxwell, Andres Valloud, Michael Rueger. Ported to Dolphin by Steve Waring.
+See Yaxo''''s home page <http://www.squeaklet.com/Yax/index.html> for more information.
+
+
+==========
+This package contains the core SAX classes.
+
+Certain modifications have been made to:
+1/ Integrate with Dolphin
+2/ Fix some well-formed failing tests that are important to SOAP. I believe that this package passes all well-formed tests necessary to be a SOAP xml parser (ie  DTDs are not allowed in a SOAP envelope)
+
+==========
+Features
+From <http://www.w3.org/TR/REC-xml>
+	"... Validating and non-validating processors alike must report violations of this specification''''s well-formedness constraints in the content of the document entity and any other parsed entities that they read ... " 
+	" ... Non-validating processors are required to check only the document entity, including the entire internal DTD subset, for well-formedness." 
+
+Yaxo is a non-validating processor. Most of Yaxo''''s remaining test failures result from 
+-Not correctly checking the internal DTD for well-formedness. For many uses (including SOAP), this is not important.
+-Whitespace handling.
+-MultiByte encodings.
+
+==========
+Examples
+
+-The "YAXO DOM" package is an example of using YAXO to parse an xml document into DOM nodes.
+-The "Spray WebServices\Spray\XMLEncoding\SW XE XMLNodes Yaxo" package. 
+
+
+==========
+Changed
+
+20021106 v7 ... Modified Stream>>nextOrNil to fix a bug reported by Bill Schwab and Jason Shannon
+
+
+
+'.
+
+package basicPackageVersion: '7'.
+
+
+package classNames
+	add: #DTDEntityDeclaration;
+	add: #DTDExternalEntityDeclaration;
+	add: #DTDParameterEntityDeclaration;
+	add: #SAXDriver;
+	add: #SAXHandler;
+	add: #SAXMalformedException;
+	add: #SAXWarning;
+	add: #XMLTokenizer;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\..\..\Object Arts\Dolphin\Base\Dolphin';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+Object subclass: #DTDEntityDeclaration
+	instanceVariableNames: 'name value ndata'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: 'contextBehavior'!
+Object subclass: #SAXHandler
+	instanceVariableNames: 'document driver eod'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Object subclass: #XMLTokenizer
+	instanceVariableNames: 'stream nestedStreams entities externalEntities parameterEntities parsingMarkup peekChar validating buffer contentBuffer'
+	classVariableNames: 'CharEscapes NameChars NameDelimiters'
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DTDEntityDeclaration subclass: #DTDExternalEntityDeclaration
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DTDEntityDeclaration subclass: #DTDParameterEntityDeclaration
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Error subclass: #SAXMalformedException
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Notification subclass: #SAXWarning
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+XMLTokenizer subclass: #SAXDriver
+	instanceVariableNames: 'saxHandler'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+"End of package definition"!
+

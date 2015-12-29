@@ -1,0 +1,53 @@
+| package |
+package := Package name: 'Seeing the Objects Inside'.
+package paxVersion: 1;
+	basicComment: ''.
+
+
+package classNames
+	add: #DolphinSplash;
+	add: #ObjectInside;
+	add: #SeeingTheObjectsInside;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\..\..\Base\Dolphin';
+	add: '..\..\..\MVP\Base\Dolphin MVP Base';
+	add: '..\..\..\MVP\Views\Tooltips\Dolphin Tooltips';
+	add: '..\..\..\MVP\Gdiplus\Gdiplus';
+	add: '..\Internal Bitmaps and Icons';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+Object subclass: #ObjectInside
+	instanceVariableNames: 'image edgePoints position scale rotation alpha color baseColor matrix'
+	classVariableNames: ''
+	poolDictionaries: 'GdiplusConstants'
+	classInstanceVariableNames: ''!
+Splash subclass: #DolphinSplash
+	instanceVariableNames: 'objectsInside'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+GdiplusDoubleBufferedView subclass: #SeeingTheObjectsInside
+	instanceVariableNames: 'background dolphinOutline points sun stepProcess random insideObjectsScale dolphinIntensity textureMap objects dolphins dolphinInside splashDelay hintBubble startTime'
+	classVariableNames: ''
+	poolDictionaries: 'GdiplusConstants'
+	classInstanceVariableNames: 'splashPlayTheGame difficultyLevel'!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+"End of package definition"!
+

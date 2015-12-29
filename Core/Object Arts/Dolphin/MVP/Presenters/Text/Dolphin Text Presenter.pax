@@ -1,0 +1,108 @@
+| package |
+package := Package name: 'Dolphin Text Presenter'.
+package paxVersion: 1;
+	basicComment: 'Dolphin Smalltalk Text Presenter
+Copyright (c) Object Arts Ltd. 1997-2006. Portions Copyright (c) CGI Group (Europe) Ltd. 1997.
+
+This package is part of the Dolphin Smalltalk Model View Presenter user-interface framework.'.
+
+package basicPackageVersion: '6.2'.
+
+
+package classNames
+	add: #DocumentShell;
+	add: #FINDTEXTEX;
+	add: #MultilineTextEdit;
+	add: #MultilineTextEditWithImage;
+	add: #TextDocument;
+	add: #TextEdit;
+	add: #TextPresenter;
+	add: #TEXTRANGE;
+	yourself.
+
+package methodNames
+	add: #String -> #replaceSelectionIn:;
+	yourself.
+
+package globalNames
+	add: #TextEditConstants;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\..\..\Base\Dolphin';
+	add: '..\..\Dialogs\Common\Dolphin Common Dialogs';
+	add: '..\..\Base\Dolphin MVP Base';
+	add: '..\..\Type Converters\Dolphin Type Converters';
+	add: '..\..\Models\Value\Dolphin Value Models';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+Win32Structure subclass: #TEXTRANGE
+	instanceVariableNames: 'text'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+TEXTRANGE subclass: #FINDTEXTEX
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Shell subclass: #DocumentShell
+	instanceVariableNames: 'filename'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DocumentShell subclass: #TextDocument
+	instanceVariableNames: 'documentPresenter statusModel'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ValuePresenter subclass: #TextPresenter
+	instanceVariableNames: 'findDetails'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ValueConvertingControlView subclass: #TextEdit
+	instanceVariableNames: 'teFlags'
+	classVariableNames: 'AlignmentMap EnMap FindDialogMessage FindDisabledMask FormatMap ModifiedMask ReadOnlyMask StaticMask UpdatePerCharMask WantTabMask'
+	poolDictionaries: 'TextEditConstants'
+	classInstanceVariableNames: ''!
+TextEdit subclass: #MultilineTextEdit
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: 'ButtonConstants'
+	classInstanceVariableNames: ''!
+MultilineTextEdit subclass: #MultilineTextEditWithImage
+	instanceVariableNames: 'backBitmap backMode backBrush'
+	classVariableNames: 'BackModes'
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+!String methodsFor!
+
+replaceSelectionIn: aTextEdit
+	"Sent as part of a double dispatch from View objects to set their text from
+	the receiver. The receiver is assumed to be plain text, so sends the 
+	#replaceSelection message back to aTextEdit.
+	The RichText protocol requires that aTextEdit must implement both #selectionPlainText:
+	and #selectionRtf: methods."
+
+	aTextEdit selectionPlainText: self! !
+!String categoriesFor: #replaceSelectionIn:!double dispatch!public! !
+
+"End of package definition"!
+

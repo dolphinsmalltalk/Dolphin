@@ -1,0 +1,82 @@
+| package |
+package := Package name: 'COM Random Stream'.
+package paxVersion: 1;
+	basicComment: 'Dolphin Smalltalk Random Stream COM Server Sample
+Copyright (c) Object Arts Ltd, 1997-2000. Portions copyright CGI Group (Europe) Ltd, 1997.
+
+The RandomStream Sample demonstrates Dolphin''s basic COM facilities (i.e. calling and implementation of COM interfaces, Dolphin as an out-of-process server, class factories, automatic reference counting, etc).
+
+N.B. This package must be distributed with its type library, Random.tlb, if it is to be invoked from another process, e.g. VB.
+
+The package provides client (IRandomStream) and server (COMRandomStream) implementations of a simple Random Number Generator object. The interface is OLE automation compatible, and can therefore be used without a marshalling DLL if the supplied type library is first registered.
+
+This sample is compatible with Visual Basic 5 and later. When VB (or another tool) is used as a client then Dolphin will be started automatically in embedded (headless) mode and will act as the server. Dolphin automatically registers the class factory when this package is installed (see the post install script to see how this is done). When you release the last interface pointer from a client then Dolphin should close down automatically.
+
+You can also use Dolphin as both client and server.
+
+Note: This sample is not compatible with the sample of the same name in the 2.1 and earlier releases of Dolphin.'.
+
+package basicScriptAt: #postinstall put: 'ShellLibrary default isUserAnAdmin 
+	ifTrue: [COMRandomStream registerClassFactory]
+	ifFalse: 
+		[Notification 
+			signal: ''Unable to register Random Stream sample COM object due to insufficient privileges''].	"Register a class factory for the Random Number Stream"
+COMRandomStream registerClassFactory'.
+package basicScriptAt: #preuninstall put: '	"Revoke the class factory registration."
+	COMRandomStream revokeClassFactories'.
+
+package classNames
+	add: #COMRandomStream;
+	add: #COMRandomStreamSessionManager;
+	add: #IRandomStream;
+	yourself.
+
+package globalNames
+	add: #RANDOMLib;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	add: #RANDOMLib;
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\..\..\Dolphin\ActiveX\Automation\ActiveX Automation';
+	add: '..\..\..\Dolphin\Base\Dolphin';
+	add: '..\..\..\Dolphin\MVP\Base\Dolphin MVP Base';
+	add: '..\..\..\Dolphin\ActiveX\COM\OLE COM';
+	add: '..\..\..\Dolphin\ActiveX\Shell\Windows Shell';
+	yourself).
+
+package setManualPrerequisites: #(
+	'Windows Shell').
+
+package!
+
+"Class Definitions"!
+
+AXDualImp subclass: #COMRandomStream
+	instanceVariableNames: 'lowerBound upperBound stream'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+IDispatch subclass: #IRandomStream
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+RuntimeSessionManager subclass: #COMRandomStreamSessionManager
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+"End of package definition"!
+

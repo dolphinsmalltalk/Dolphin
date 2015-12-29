@@ -1,0 +1,66 @@
+| package |
+package := Package name: 'Simple Web Browser'.
+package paxVersion: 1;
+	basicComment: 'Dolphin Smalltalk Simple Web Browser Sample.
+Copyright (c) Object Arts Ltd, 2000.
+
+This is a minimalist browser based on the Internet Explorer Web Browser control (ShDocVw, which of course is not minimalist in itself).
+
+	WebBrowserShell show
+
+The sample demonstrates the use of Active-X control hosting in Dolphin, including sinking events from the explorer control. 
+
+NOTE: Please don''t try to display a page containing Dolphin Web Applets within this browser; you will get an exception and probably a system crash. This is caused by a threading issue within the Dolphin VM and cannot easily be resolved at present.
+
+'.
+
+
+package classNames
+	add: #WebBrowserSessionManager;
+	add: #WebBrowserShell;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\..\..\Dolphin\ActiveX\Automation\ActiveX Automation';
+	add: '..\..\..\Dolphin\ActiveX\Connection Points\ActiveX Connection Points';
+	add: '..\..\..\Dolphin\ActiveX\OCX\ActiveX Control Hosting';
+	add: '..\..\..\Dolphin\Base\Dolphin';
+	add: '..\..\..\Dolphin\MVP\Views\Control Bars\Dolphin Control Bars';
+	add: '..\..\..\Dolphin\MVP\Presenters\List\Dolphin List Presenter';
+	add: '..\..\..\Dolphin\MVP\Base\Dolphin MVP Base';
+	add: '..\..\..\Dolphin\MVP\Presenters\Text\Dolphin Text Presenter';
+	add: '..\..\..\Dolphin\MVP\Type Converters\Dolphin Type Converters';
+	add: '..\..\..\Dolphin\MVP\Models\Value\Dolphin Value Models';
+	add: '..\..\..\Dolphin\ActiveX\Components\SHDocVw\Internet Explorer';
+	add: '..\..\..\Dolphin\ActiveX\COM\OLE COM';
+	add: '..\..\..\Dolphin\ActiveX\Shell\Windows Shell';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+Shell subclass: #WebBrowserShell
+	instanceVariableNames: 'address browser statusModel commandStates'
+	classVariableNames: ''
+	poolDictionaries: 'SHDocVwConstants'
+	classInstanceVariableNames: ''!
+RuntimeSessionManager subclass: #WebBrowserSessionManager
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+"End of package definition"!
+

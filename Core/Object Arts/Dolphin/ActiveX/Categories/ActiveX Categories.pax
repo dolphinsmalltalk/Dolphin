@@ -1,0 +1,91 @@
+| package |
+package := Package name: 'ActiveX Categories'.
+package paxVersion: 1;
+	basicComment: 'Active-X Categories Package. 
+Copyright (c) Object Arts Ltd, 2000-2001.
+
+This package contains wrapper classes for the Win32 Component Categories Manager, which uses information in the registry to categorize COM components.
+
+Component categories are similar to class categories in Dolphin, in that they provide a way to define arbitrary taxonomies of components, which can then be enquired upon to find components that meet certain criteria. Just as Dolphin classes may belong to multiple categories, so a COM component may be associated with many different categories. 
+
+Microsoft define certain standard categories (such as all Active-X controls, a category which can be enumerated by sending the #controls message to the ICatInformation class). Further categories may be defined as desired. See ICateRegister>>class>>example1 for an example of how to do this.
+
+The category information is held in the registry in a format defined by Microsoft. See the Microsoft Platform SDK documentation for further details.
+
+This package is a pre-requisite for hosting Active-X visual controls (OCXs).'.
+
+package basicPackageVersion: '6.1'.
+
+
+package classNames
+	add: #CATEGORYINFO;
+	add: #COMObjectRegistration;
+	add: #ICatInformation;
+	add: #ICatRegister;
+	yourself.
+
+package methodNames
+	add: #OLELibrary -> #oleRegGetUserType:dwFormOfType:pszUserType:;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\..\Base\Dolphin';
+	add: '..\..\MVP\Base\Dolphin MVP Base';
+	add: '..\..\Registry\Dolphin Registry Access';
+	add: '..\COM\OLE COM';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+Object subclass: #COMObjectRegistration
+	instanceVariableNames: 'clsid name toolboxImage'
+	classVariableNames: ''
+	poolDictionaries: 'Win32Constants'
+	classInstanceVariableNames: ''!
+IUnknown subclass: #ICatInformation
+	instanceVariableNames: ''
+	classVariableNames: 'CatMan Controls'
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+IUnknown subclass: #ICatRegister
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+OLEStructure subclass: #CATEGORYINFO
+	instanceVariableNames: 'wszDescription'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+!OLELibrary methodsFor!
+
+oleRegGetUserType: clsid dwFormOfType: dwFormOfType pszUserType: pszUserType
+	"Get user type string of the specified type for the specified class from the registry.
+
+		WINOLEAPI OleRegGetUserType(
+			REFCLSID clsid,
+			DWORD dwFormOfType,
+			LPOLESTR * pszUserType
+		);
+	"
+ 
+	<stdcall: sdword OleRegGetUserType CLSID* dword lpwstr*>
+	^self invalidCall! !
+!OLELibrary categoriesFor: #oleRegGetUserType:dwFormOfType:pszUserType:!OLE Functions-OLE!public! !
+
+"End of package definition"!
+

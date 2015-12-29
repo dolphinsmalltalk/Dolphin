@@ -1,0 +1,44 @@
+| package |
+package := Package name: 'Dolphin Key-Value Prompter'.
+package paxVersion: 1;
+	basicComment: 'Dolphin Smalltalk Generic Key-Value Pair Prompter.
+Copyright (c) Object Arts Ltd. 2005.'.
+
+package basicPackageVersion: '6.0'.
+
+
+package classNames
+	add: #KeyValuePrompter;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\..\..\Base\Dolphin';
+	add: '..\..\Base\Dolphin MVP Base';
+	add: '..\Text\Dolphin Text Presenter';
+	add: '..\..\Type Converters\Dolphin Type Converters';
+	add: '..\..\Models\Value\Dolphin Value Models';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+Dialog subclass: #KeyValuePrompter
+	instanceVariableNames: 'promptPresenter keyPresenter valuePresenter validationBlock'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+"End of package definition"!
+

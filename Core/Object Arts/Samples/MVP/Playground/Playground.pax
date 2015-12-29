@@ -1,0 +1,88 @@
+| package |
+package := Package name: 'Playground'.
+package paxVersion: 1;
+	basicComment: 'Dolphin Smalltalk Playground Tutorial Sample. 
+Copyright (c) Object Arts Ltd, 1998-2000.
+
+The Playground package is a sample to aid learning Smalltalk. A <Playground> window can be opened, into which several different classes of geometric object (<Square>, <Triangle>, <Circle> etc) can be placed. You can then "talk" to these objects by sending them messages and watch the results draw in the playground window.
+
+The <Playground> is used as part of the Beginner''s Guide to Dolphin Smalltalk in the Education Centre to help newcomers to the Smalltalk language learn about the basic concepts involved. It is introduced in the chapter: "Playing with Objects in the Playground". For a brief introduction try evaluating the following expressions individually:
+
+"Create a new Playground"
+playground := Playground new.
+
+"Add a Triangle and a Square to it"
+teresa := playground add: Triangle new.
+simon := playground add: Square new.
+
+"Tell teresa (the triangle) to rotate by 30 degrees"
+teresa rotateBy: 30.
+
+"Tell simon (the square) to grow by 50 units"
+simon growBy: 50.
+'.
+
+
+package classNames
+	add: #Circle;
+	add: #Playground;
+	add: #PlayShape;
+	add: #RegularPolygon;
+	add: #Square;
+	add: #Triangle;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\..\..\Dolphin\Base\Dolphin';
+	add: '..\..\..\Dolphin\MVP\Dialogs\Common\Dolphin Common Dialogs';
+	add: '..\..\..\Dolphin\MVP\Base\Dolphin MVP Base';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+Object subclass: #PlayShape
+	instanceVariableNames: 'playground'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+PlayShape subclass: #RegularPolygon
+	instanceVariableNames: 'color sides position rotation radius'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+RegularPolygon subclass: #Circle
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+RegularPolygon subclass: #Square
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+RegularPolygon subclass: #Triangle
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ShellView subclass: #Playground
+	instanceVariableNames: 'shapes'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+"End of package definition"!
+

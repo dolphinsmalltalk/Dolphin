@@ -1,0 +1,98 @@
+| package |
+package := Package name: 'XmlPad'.
+package paxVersion: 1;
+	basicComment: 'Dolphin Smalltalk XmlPad Sample. 
+Copyright (c) Object Arts Ltd, 2005
+
+XmlPad is a simple XML text editor. It is intended to demonstrate the DocumentShell hierarchy of Dolphin''s application framework, the Scintilla view component, and the use of the MSXML. If you habitually edit XML with Notepad, you may also find it becomes your main XML editor!!
+
+Try me out with:
+
+XmlPad show'.
+
+
+package classNames
+	add: #XmlFormatter;
+	add: #XmlPad;
+	add: #XmlPadSessionManager;
+	yourself.
+
+package methodNames
+	add: #IXMLDOMEntityReference -> #formatAsText;
+	add: #IXMLDOMNode -> #formatAsText;
+	add: #SmalltalkSystem -> #dropXmlFile:;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\..\..\Dolphin\IDE\Base\Development System';
+	add: '..\..\..\Dolphin\Base\Dolphin';
+	add: '..\..\..\Dolphin\MVP\Views\Control Bars\Dolphin Control Bars';
+	add: '..\..\..\Dolphin\MVP\Dialogs\Find\Dolphin Find Dialog';
+	add: '..\..\..\Dolphin\MVP\Base\Dolphin MVP Base';
+	add: '..\..\..\Dolphin\Registry\Dolphin Registry Access';
+	add: '..\..\..\Dolphin\Registry\Dolphin Registry Serialisation';
+	add: '..\..\..\Dolphin\MVP\Views\Scintilla\Dolphin Scintilla View';
+	add: '..\..\..\Dolphin\MVP\Presenters\Text\Dolphin Text Presenter';
+	add: '..\..\..\Dolphin\MVP\Type Converters\Dolphin Type Converters';
+	add: '..\..\..\Dolphin\MVP\Models\Value\Dolphin Value Models';
+	add: '..\..\..\Dolphin\ActiveX\Components\VBScript\VBScript Regular Expressions';
+	add: '..\..\..\Dolphin\ActiveX\Components\XML DOM\XML DOM';
+	yourself).
+
+package setManualPrerequisites: #(
+	'Dolphin Registry Serialisation'
+	'VBScript Regular Expressions').
+
+package!
+
+"Class Definitions"!
+
+TextDocument subclass: #XmlPad
+	instanceVariableNames: 'viewOptions'
+	classVariableNames: 'RememberPlacementMask'
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+RuntimeSessionManager subclass: #XmlPadSessionManager
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+XmlDomVisitor subclass: #XmlFormatter
+	instanceVariableNames: 'stream indent line newlineNeeded'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+!IXMLDOMEntityReference methodsFor!
+
+formatAsText
+	^true! !
+!IXMLDOMEntityReference categoriesFor: #formatAsText!public! !
+
+!IXMLDOMNode methodsFor!
+
+formatAsText
+	^self isText! !
+!IXMLDOMNode categoriesFor: #formatAsText!public! !
+
+!SmalltalkSystem methodsFor!
+
+dropXmlFile: aString 
+	"Private - Open an XML file. Use the XmlPad for this."
+
+	XmlPad filename: aString! !
+!SmalltalkSystem categoriesFor: #dropXmlFile:!commands!private! !
+
+"End of package definition"!
+

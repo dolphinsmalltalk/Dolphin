@@ -1,0 +1,71 @@
+| package |
+package := Package name: 'Dolphin Slider Control'.
+package paxVersion: 1;
+	basicComment: 'Dolphin Smalltalk SpinButton Common Control.
+Copyright (c) Ian Bartholomew, 2002, and Object Arts Ltd, 2002-2005.
+
+This package contains an MVP View wrapper for the Windows "trackbar" common control.
+
+A Slider is a <valueView> that is analagous to the score keepers used in games such as snooker and billiards, and some card games, in that it has a track with marked positions (or tick marks), and a moveable pointer that can be slid along the track using the mouse or cursor keys. 
+
+Thanks to Ian Bartholomew for donating his original version of this view.'.
+
+package basicPackageVersion: '6.1'.
+
+
+package classNames
+	add: #Slider;
+	yourself.
+
+package methodNames
+	add: 'NumberPresenter class' -> #resource_Slider_view;
+	yourself.
+
+package globalNames
+	add: #TrackBarConstants;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\..\..\Base\Dolphin';
+	add: '..\..\Base\Dolphin MVP Base';
+	add: '..\..\Presenters\Number\Dolphin Number Presenter';
+	add: '..\..\Type Converters\Dolphin Type Converters';
+	add: '..\..\Models\Value\Dolphin Value Models';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+ValueConvertingControlView subclass: #Slider
+	instanceVariableNames: 'autoTickFrequency _reserved1 _reserved2'
+	classVariableNames: 'HorizontalTickStyles TickStyleMask VerticalTickStyles'
+	poolDictionaries: 'TrackBarConstants'
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+!NumberPresenter class methodsFor!
+
+resource_Slider_view
+	"Answer the literal data from which the 'Slider view' resource can be reconstituted.
+	DO NOT EDIT OR RECATEGORIZE THIS METHOD.
+
+	If you wish to modify this resource evaluate:
+	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Slider_view)
+	"
+
+	^#(#'!!STL' 3 788558 10 ##(Smalltalk.STBViewProxy)  8 ##(Smalltalk.Slider)  98 18 0 0 98 2 8 1140916225 1 416 721990 2 ##(Smalltalk.ValueHolder)  0 32 1376774 ##(Smalltalk.PluggableSearchPolicy)  459270 ##(Smalltalk.Message)  8 #= 98 0 562 8 #hash 98 0 1 0 0 7 0 0 0 416 0 8 4294903655 852486 ##(Smalltalk.NullConverter)  0 0 21 0 0 983302 ##(Smalltalk.MessageSequence)  202 208 98 2 721670 ##(Smalltalk.MessageSend)  8 #createAt:extent: 98 2 328198 ##(Smalltalk.Point)  3777 21 850 501 71 416 786 8 #range: 98 1 525062 ##(Smalltalk.Interval)  1 201 21 416 983302 ##(Smalltalk.WINDOWPLACEMENT)  8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 96 7 0 0 10 0 0 0 90 8 0 0 45 0 0 0] 98 0 850 193 193 0 27 )! !
+!NumberPresenter class categoriesFor: #resource_Slider_view!public!resources-views! !
+
+"End of package definition"!
+

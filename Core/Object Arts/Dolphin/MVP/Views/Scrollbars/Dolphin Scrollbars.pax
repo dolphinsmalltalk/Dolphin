@@ -1,0 +1,99 @@
+| package |
+package := Package name: 'Dolphin Scrollbars'.
+package paxVersion: 1;
+	basicComment: 'Dolphin Smalltalk Scrollbars
+Copyright (c) Object Arts Ltd. 1997-2005. Portions Copyright (c) CGI Group (Europe) Ltd. 1997.'.
+
+package basicPackageVersion: '6.0'.
+
+
+package classNames
+	add: #ScrollBar;
+	add: #ScrollingDecorator;
+	add: #ScrollingDecoratorLayout;
+	yourself.
+
+package methodNames
+	add: 'NumberPresenter class' -> #resource_Horizontal_scroll_bar;
+	add: 'NumberPresenter class' -> #resource_Vertical_scroll_bar;
+	add: 'Presenter class' -> #resource_Scrolling_container;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\..\..\Base\Dolphin';
+	add: '..\..\Base\Dolphin MVP Base';
+	add: '..\..\Presenters\Number\Dolphin Number Presenter';
+	add: '..\..\Type Converters\Dolphin Type Converters';
+	add: '..\..\Models\Value\Dolphin Value Models';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+LayoutManager subclass: #ScrollingDecoratorLayout
+	instanceVariableNames: 'stretchToFit'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ContainerView subclass: #ScrollingDecorator
+	instanceVariableNames: 'scrollOffset tracking lineExtent'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ValueConvertingControlView subclass: #ScrollBar
+	instanceVariableNames: 'continuousTracking'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+!NumberPresenter class methodsFor!
+
+resource_Horizontal_scroll_bar
+	"Answer the literal data from which the 'Horizontal scroll bar' resource can be reconstituted.
+	DO NOT EDIT OR RECATEGORIZE THIS METHOD.
+
+	If you wish to modify this resource evaluate:
+	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Horizontal_scroll_bar)
+	"
+
+	^#(#'!!STL' 3 788558 10 ##(Smalltalk.STBViewProxy)  8 ##(Smalltalk.ScrollBar)  98 16 0 0 98 2 8 1409351680 1 416 721990 2 ##(Smalltalk.ValueHolder)  0 0 1114118 ##(Smalltalk.NeverSearchPolicy)  1 524550 ##(Smalltalk.ColorRef)  8 4278190080 0 5 0 0 0 416 0 8 4294904997 852486 ##(Smalltalk.NullConverter)  0 0 16 983302 ##(Smalltalk.MessageSequence)  202 208 98 3 721670 ##(Smalltalk.MessageSend)  8 #createAt:extent: 98 2 328198 ##(Smalltalk.Point)  2799 21 786 351 35 416 722 8 #range: 98 1 525062 ##(Smalltalk.Interval)  1 201 3 416 722 8 #pageSize: 98 1 1 416 983302 ##(Smalltalk.WINDOWPLACEMENT)  8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 119 5 0 0 10 0 0 0 38 6 0 0 27 0 0 0] 98 0 786 193 193 0 27 )!
+
+resource_Vertical_scroll_bar
+	"Answer the literal data from which the 'Vertical scroll bar' resource can be reconstituted.
+	DO NOT EDIT OR RECATEGORIZE THIS METHOD.
+
+	If you wish to modify this resource evaluate:
+	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Vertical_scroll_bar)
+	"
+
+	^#(#'!!STL' 3 788558 10 ##(Smalltalk.STBViewProxy)  8 ##(Smalltalk.ScrollBar)  98 16 0 0 98 2 8 1409351681 1 416 721990 2 ##(Smalltalk.ValueHolder)  0 0 1114118 ##(Smalltalk.NeverSearchPolicy)  1 524550 ##(Smalltalk.ColorRef)  8 4278190080 0 5 0 0 0 416 0 8 4294904997 852486 ##(Smalltalk.NullConverter)  0 0 16 983302 ##(Smalltalk.MessageSequence)  202 208 98 3 721670 ##(Smalltalk.MessageSend)  8 #createAt:extent: 98 2 328198 ##(Smalltalk.Point)  2799 21 786 35 291 416 722 8 #range: 98 1 525062 ##(Smalltalk.Interval)  1 201 3 416 722 8 #pageSize: 98 1 1 416 983302 ##(Smalltalk.WINDOWPLACEMENT)  8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 119 5 0 0 10 0 0 0 136 5 0 0 155 0 0 0] 98 0 786 193 193 0 27 )! !
+!NumberPresenter class categoriesFor: #resource_Horizontal_scroll_bar!public!resources-views! !
+!NumberPresenter class categoriesFor: #resource_Vertical_scroll_bar!public!resources-views! !
+
+!Presenter class methodsFor!
+
+resource_Scrolling_container
+	"Answer the literal data from which the 'Scrolling container' resource can be reconstituted.
+	DO NOT EDIT OR RECATEGORIZE THIS METHOD.
+
+	If you wish to modify this resource evaluate:
+	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Scrolling_container)
+	"
+
+	^#(#'!!STL' 3 788558 10 ##(STBViewProxy)  8 ##(ScrollingDecorator)  98 18 0 0 98 2 8 1143996416 131073 416 0 0 0 5 0 0 0 416 1573190 1 ##(ScrollingDecoratorLayout)  16 234 256 98 0 0 328198 ##(Point)  1 1 16 562 17 17 983302 ##(MessageSequence)  202 208 98 1 721670 ##(MessageSend)  8 #createAt:extent: 98 2 562 11 11 562 701 501 416 983302 ##(WINDOWPLACEMENT)  8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 5 0 0 0 5 0 0 0 99 1 0 0 255 0 0 0] 98 0 562 193 193 0 27 )! !
+!Presenter class categoriesFor: #resource_Scrolling_container!public!resources-views! !
+
+"End of package definition"!
+

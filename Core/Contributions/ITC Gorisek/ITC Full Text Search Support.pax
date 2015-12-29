@@ -1,0 +1,39 @@
+| package |
+package := Package name: 'ITC Full Text Search Support'.
+package paxVersion: 1;
+	basicComment: ''.
+
+package basicPackageVersion: 'r 343 rc13'.
+
+
+package classNames
+	add: #ItcFullTextSearchIndex;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\Object Arts\Dolphin\Base\Dolphin';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+Object subclass: #ItcFullTextSearchIndex
+	instanceVariableNames: 'application'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+"End of package definition"!
+

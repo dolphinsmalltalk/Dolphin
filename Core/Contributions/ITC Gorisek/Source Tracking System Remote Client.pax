@@ -1,0 +1,358 @@
+| package |
+package := Package name: 'Source Tracking System Remote Client'.
+package paxVersion: 1;
+	basicComment: ''.
+
+package basicPackageVersion: '6.1.27'.
+
+
+package classNames
+	add: #StsServerImportChangeSetsBrowserShell;
+	add: #StsServerImportProjectEditionDialog;
+	add: #StsShadowProjectEdition;
+	yourself.
+
+package methodNames
+	add: #StsManager -> #connectToRemoteServerWithCaption:readOnlyAccess:;
+	add: #StsManager -> #exportChangeSetToCurrentRemoteServer:;
+	add: #StsManager -> #exportProjectEditionToCurrentRemoteServer:;
+	add: #StsManager -> #getCurrentServerHttpClient;
+	add: #StsManager -> #getCurrentServerUrl;
+	add: #StsManager -> #getCurrentServerUrlPrefix;
+	add: #StsManager -> #importProjectEditionsFromRemoteServer:;
+	add: #StsProjectBrowserShell -> #menuExportProjectToURL;
+	add: #StsProjectBrowserShell -> #menuImportProjectFromURL;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: 'Dialect Abstraction Layer';
+	add: '..\..\Object Arts\Dolphin\Base\Dolphin';
+	add: '..\..\Object Arts\Dolphin\MVP\Views\Common Controls\Dolphin Common Controls';
+	add: '..\..\Object Arts\Dolphin\MVP\Models\List\Dolphin List Models';
+	add: '..\..\Object Arts\Dolphin\MVP\Presenters\List\Dolphin List Presenter';
+	add: '..\..\Object Arts\Dolphin\MVP\Deprecated\Dolphin MVP (Deprecated)';
+	add: '..\..\Object Arts\Dolphin\MVP\Base\Dolphin MVP Base';
+	add: '..\..\Object Arts\Dolphin\MVP\Dialogs\Progress\Dolphin Progress Dialog';
+	add: '..\..\Object Arts\Dolphin\MVP\Presenters\Prompters\Dolphin Prompter';
+	add: '..\..\Object Arts\Dolphin\MVP\Presenters\Text\Dolphin Text Presenter';
+	add: '..\..\Object Arts\Dolphin\MVP\Type Converters\Dolphin Type Converters';
+	add: 'HTTP Client';
+	add: 'OmniBase';
+	add: 'Source Tracking System';
+	add: 'ZLib Interface';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+Dialog subclass: #StsServerImportChangeSetsBrowserShell
+	instanceVariableNames: 'httpClient urlPrefix textDeveloper textComment textIncludesClass listMinBlessing listChangeSetsOnServer listChangeSetsForImport'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Dialog subclass: #StsServerImportProjectEditionDialog
+	instanceVariableNames: 'serverUrl httpClient urlPrefix result projects projectEditions selectedProjectEditions projectsAndEditionsCacheDict cachedLocalEditions'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+StsProjectEdition subclass: #StsShadowProjectEdition
+	instanceVariableNames: 'isPresentInLocalRepository'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+!StsManager methodsFor!
+
+connectToRemoteServerWithCaption: caption readOnlyAccess: readOnlyBoolean 
+	"Answer <true> if connection to remote server is possible. Else answer <nil> if it can not connect to the remote server (or login failed)."
+
+	| str url error array repeat username password logData httpClient urlPrefix response |
+	str := currentServerURL isNil ifTrue: [''] ifFalse: [currentServerURL].
+	repeat := true.
+	
+	[(str := Prompter 
+				on: str
+				prompt: 'Please enter STS server URL:'
+				caption: caption) isNil 
+		ifTrue: 
+			["answer <nil> if Escape or Cancel is clicked"
+			^nil].
+	error := nil.
+	str isEmpty 
+		ifTrue: [error := 'Please enter STS server URL address']
+		ifFalse: 
+			[url := str.
+			error := nil.
+			[HttpClient decomposeUrl: url] on: Error do: [:ex | error := 'Please enter a valid URL address'].
+			error isNil 
+				ifFalse: 
+					[(url beginsWith: 'http') 
+						ifFalse: 
+							[url := 'http://' , str.
+							
+							[HttpClient decomposeUrl: url.
+							error := nil] on: Error
+									do: [:ex | error := 'Please enter a valid URL address']].
+					error isNil 
+						ifFalse: 
+							[url := url , '/'.
+							
+							[HttpClient decomposeUrl: url.
+							error := nil] on: Error
+									do: [:ex | error := 'Please enter a valid URL address']]]].
+	error isNil 
+		ifFalse: [MessageBox errorMsg: error caption: 'Connecting to remote STS repository']
+		ifTrue: [repeat := false].
+	repeat] 
+			whileTrue: 
+				["repeat while an empty url is entered"
+				].
+	array := HttpClient decomposeUrl: url.
+	array last = '/' ifTrue: [url := url , 'sts/'].
+	url last = $/ ifFalse: [url := url , '/'].
+	urlPrefix := (HttpClient decomposeUrl: url) last , 'StsManager?action='.
+	logData := (loginData ifNil: [loginData := LookupTable new]) at: str ifAbsent: [].
+	logData isNil 
+		ifFalse: 
+			[ItcSystemManager absoluteSecondsClockValue - (logData at: #lastTimeUsed ifAbsent: []) > 2700 
+				ifTrue: [logData := nil]].
+	httpClient := logData isNil 
+				ifTrue: [HttpClient forUrl: url]
+				ifFalse: [logData at: #httpClient ifAbsent: []].
+	httpClient setUserAgentAndEncodingForWebPageCompression.
+	[response := httpClient get: urlPrefix , #processGetServerInfo:on: webAsActionString] on: Error
+		do: [:ex | error := ex description].
+	error isNil 
+		ifFalse: 
+			[MessageBox errorMsg: error caption: 'Could not connect to the remote STS server'.
+			^nil].
+	currentServerURL := str.
+	logData isNil 
+		ifTrue: 
+			[logData := (LookupTable new)
+						at: #httpClient put: httpClient;
+						at: #lastTimeUsed put: ItcSystemManager absoluteSecondsClockValue;
+						at: #urlPrefix put: urlPrefix;
+						yourself].
+	logData at: #serverInfo put: response contents.
+	((response contents endsWith: '/ PUBLIC repository') and: [readOnlyBoolean = true]) 
+		ifTrue: 
+			["no username or password is needed when accessing public repository"
+			loginData at: currentServerURL put: logData.
+			^true].
+	username := logData at: #username ifAbsent: [''].
+	password := logData at: #password ifAbsent: [''].
+	1 to: 4
+		do: 
+			[:index | 
+			(index > 1 or: [username isNil or: [username isEmpty]]) 
+				ifTrue: 
+					[
+					[username := Prompter 
+								on: username
+								prompt: 'Please enter username @ ' , currentServerURL
+								caption: caption.
+					username isNil ifTrue: [^nil].
+					username isEmpty] 
+							whileTrue: [].
+					password := Prompter 
+								on: password
+								prompt: 'Please enter password @ ' , currentServerURL
+								caption: caption.
+					password isNil ifTrue: [^nil]].
+			response := httpClient 
+						get: urlPrefix , #processLogin:on: webAsActionString , '&username=' , username webHttpUrlEncoded 
+								, '&password=' , password webHttpUrlEncoded.
+			(response statusCode = 200 and: [response contents = 'OK']) 
+				ifTrue: 
+					[logData
+						at: #username put: username;
+						at: #password put: password.
+					loginData at: currentServerURL put: logData.
+					^true].
+			response statusCode = 200 
+				ifTrue: 
+					[MessageBox errorMsg: (response contents trimToSize: 300) caption: 'Could not login to STS server']
+				ifFalse: [MessageBox errorMsg: response statusLine caption: 'Could not login to STS server']].
+	logData removeKey: #username ifAbsent: [].
+	^nil!
+
+exportChangeSetToCurrentRemoteServer: changeSet 
+	"This method will export and upload change set to a remote STS repository."
+
+	| httpClient urlPrefix progressDialog response changeSetData errorDescription |
+	progressDialog := nil.
+	httpClient := self getCurrentServerHttpClient.
+	urlPrefix := self getCurrentServerUrlPrefix.
+	progressDialog := ProgressDialog operation: 
+					[:progress | 
+					
+					[progressDialog caption: 'Uploading Change Set: ' , changeSet browserTitle.
+					changeSetData := ZLibInterface 
+								compressForWeb: (ODBSerializer serializeToBytes: (changeSet
+												resolveProxies;
+												yourself)).
+					Cursor wait showWhile: 
+							[
+							[response := httpClient post: urlPrefix , #processChangeSetUpload:on: webAsActionString
+										multipartFormDataEncodedFields: ((OrderedCollection new)
+												add: 'changeSetDescription' -> changeSet displayString;
+												add: (Association key: 'changeSetData' value: 'file' -> changeSetData asString);
+												yourself)] 
+									on: Error
+									do: [:ex | errorDescription := 'Error sending request (' , ex itcDescription , ')']].
+					(response notNil and: [response statusCode == 200]) 
+						ifFalse: 
+							[MessageBox errorMsg: (errorDescription isNil 
+										ifTrue: 
+											['Invalid response received from the server.
+
+- Check if the STS repository server is running.
+- Check STS repository server version.']
+										ifFalse: [errorDescription])
+								caption: 'Error retrieving change sets from server']] 
+							ifCurtailed: [progressDialog view ifNotNil: [:value | value close]]].
+	progressDialog
+		caption: 'Please wait';
+		showModal!
+
+exportProjectEditionToCurrentRemoteServer: projectEdition 
+	"This method will export and upload project edition to a remote STS repository."
+
+	| httpClient urlPrefix stream progressDialog tick packageEditionOIDs transaction response packagesToUpload compressedProjectHeader |
+	httpClient := self getCurrentServerHttpClient.
+	urlPrefix := self getCurrentServerUrlPrefix.
+	tick := 100 / (projectEdition packageEditions size + 2).
+	progressDialog := ProgressDialog operation: 
+					[:progress | 
+					
+					[progressDialog caption: 'Uploading Project Edition: ' , projectEdition name , ' ' 
+								, projectEdition versionDescriptor.
+					stream := WriteStream on: String new.
+					progress value: tick.
+					projectEdition exportHeaderAsXmlOn: stream.
+					compressedProjectHeader := ZLibInterface compressForWeb: stream contents.
+					stream := nil.
+					"write project edition header first, to see which packages have to be uploaded"
+					Cursor wait showWhile: 
+							[response := httpClient 
+										post: urlPrefix , #processQueryMissingPackageEditionsForProjectEditionUpload:on: webAsActionString
+										multipartFormDataEncodedFields: ((OrderedCollection new)
+												add: (Association key: 'projectHeader' value: 'file' -> compressedProjectHeader);
+												yourself).
+							response statusCode = 200 ifFalse: [self error: 'Invalid response from the server']].
+					packagesToUpload := response contents webDeserializeFromString.
+					packageEditionOIDs := OrderedCollection new.
+					projectEdition packageEditions do: 
+							[:eachPackageEdition | 
+							packageEditionOIDs 
+								add: ((packagesToUpload includes: eachPackageEdition name) ifTrue: [eachPackageEdition odbGetOID])].
+					"then upload the missing package editions"
+					packageEditionOIDs do: 
+							[:eachOID | 
+							eachOID isNil 
+								ifFalse: 
+									[| eachPackageEdition |
+									transaction := db newReadOnlyTransaction.
+									eachPackageEdition := transaction objectAt: eachOID.
+									stream := WriteStream on: String new.
+									Cursor wait showWhile: 
+											[progressDialog caption: 'Uploading Package Edition: ' , eachPackageEdition name , ' ' 
+														, eachPackageEdition versionDescriptor.
+											eachPackageEdition exportAsXmlOn: stream.
+											response := httpClient post: urlPrefix , #processUploadPackageEdition:on: webAsActionString
+														multipartFormDataEncodedFields: ((OrderedCollection new)
+																add: 'packageName' -> eachPackageEdition name;
+																add: 'packageVersion' -> eachPackageEdition versionDescriptor;
+																add: (Association key: 'packageExport'
+																			value: 'file' -> (ZLibInterface compressForWeb: stream contents));
+																yourself).
+											response statusCode = 200 ifFalse: [self error: 'Invalid response from the server']]].
+							progress value: progress progress + tick.
+							progressDialog caption: 'Uploading Project Edition: ' , projectEdition name , ' ' 
+										, projectEdition versionDescriptor].
+					"finally, upload the project header again so that it will commit the project with its contained package editions"
+					Cursor wait showWhile: 
+							[response := httpClient post: urlPrefix , #processCompleteProjectEditionUpload:on: webAsActionString
+										multipartFormDataEncodedFields: ((OrderedCollection new)
+												add: 'projectName' -> projectEdition name;
+												add: 'projectVersion' -> projectEdition versionDescriptor;
+												add: (Association key: 'projectHeader' value: 'file' -> compressedProjectHeader);
+												yourself).
+							response statusCode = 200 ifFalse: [self error: 'Invalid response from the server']]] 
+							ifCurtailed: [progressDialog view ifNotNil: [:value | value close]]].
+	progressDialog
+		caption: 'Please wait';
+		showModal!
+
+getCurrentServerHttpClient
+	^(loginData at: currentServerURL ifAbsent: [LookupTable new]) at: #httpClient
+		ifAbsent: [self error: 'Assertion failed, server connection is not established']!
+
+getCurrentServerUrl
+	^currentServerURL!
+
+getCurrentServerUrlPrefix
+	^(loginData at: currentServerURL ifAbsent: [LookupTable new]) at: #urlPrefix
+		ifAbsent: [self error: 'Assertion failed, server connection is not established']!
+
+importProjectEditionsFromRemoteServer: projectEditions 
+	"This method will download and import selected project editions from the remote server."
+
+	| oid |
+	projectEditions do: 
+			[:eachEdition | 
+			Cursor wait showWhile: 
+					[oid := self 
+								findExistingProjectEdition: eachEdition name
+								versionDescriptor: eachEdition versionDescriptor
+								developer: eachEdition developer
+								timestamp: eachEdition timestamp].
+			oid isNil ifTrue: [self importProjectEditionFromRemoteServer: eachEdition]]! !
+!StsManager categoriesFor: #connectToRemoteServerWithCaption:readOnlyAccess:!distributed repository!public! !
+!StsManager categoriesFor: #exportChangeSetToCurrentRemoteServer:!distributed repository!operations!public! !
+!StsManager categoriesFor: #exportProjectEditionToCurrentRemoteServer:!distributed repository!operations!private! !
+!StsManager categoriesFor: #getCurrentServerHttpClient!distributed repository!private! !
+!StsManager categoriesFor: #getCurrentServerUrl!distributed repository!private! !
+!StsManager categoriesFor: #getCurrentServerUrlPrefix!distributed repository!private! !
+!StsManager categoriesFor: #importProjectEditionsFromRemoteServer:!distributed repository!operations!private! !
+
+!StsProjectBrowserShell methodsFor!
+
+menuExportProjectToURL
+	| selection |
+	selection := self selectedSingleProjectEditionOrNil.
+	(self sourceControl connectToRemoteServerWithCaption: 'Exporting ' , selection displayString
+		readOnlyAccess: false) isNil 
+		ifFalse: [self sourceControl exportProjectEditionToCurrentRemoteServer: selection]!
+
+menuImportProjectFromURL
+	| selection selectedEditionsToImport |
+	selection := projectsPresenter selectionOrNil.
+	(self sourceControl connectToRemoteServerWithCaption: 'Importing project edition'
+		readOnlyAccess: true) isNil 
+		ifTrue: [^self].
+	(selectedEditionsToImport := StsServerImportProjectEditionDialog 
+				selectProjectEditionsToImportFromCurrentServerWithDefaultProjectName: selection) isNil 
+		ifTrue: [^self].
+	self sourceControl importProjectEditionsFromRemoteServer: selectedEditionsToImport.
+	self
+		refreshProjectsList;
+		refreshProjectEditionsList! !
+!StsProjectBrowserShell categoriesFor: #menuExportProjectToURL!commands!public! !
+!StsProjectBrowserShell categoriesFor: #menuImportProjectFromURL!commands!public! !
+
+"End of package definition"!
+

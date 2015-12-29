@@ -1,0 +1,40 @@
+"Filed out from Dolphin Smalltalk X6"!
+
+GdiplusInitializerTests subclass: #GdiplusLinearGradientBrushFromRectInitializerTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+GdiplusLinearGradientBrushFromRectInitializerTest guid: (GUID fromString: '{4159F1E0-74DD-4646-832A-12D38B4281C9}')!
+GdiplusLinearGradientBrushFromRectInitializerTest comment: ''!
+!GdiplusLinearGradientBrushFromRectInitializerTest categoriesForClass!Unclassified! !
+!GdiplusLinearGradientBrushFromRectInitializerTest methodsFor!
+
+gdipCreateLineBrushFromRectI: rect color1: color1 color2: color2 mode: mode wrapMode: wrapMode lineGradient: lineGradient 
+	constructorArgs := Processor activeProcess topFrame arguments.
+	^Ok!
+
+setUp
+	super setUp.
+	model := GdiplusLinearGradientBrushFromRectInitializer new library: self!
+
+testCreateHandle
+	| rectangle |
+	model 
+		rect: (rectangle := 1 @ 2 corner: 3 @ 4)
+		color1: (ARGB fromInteger: 1)
+		color2: (ARGB fromInteger: 2)
+		mode: LinearGradientModeBackwardDiagonal.
+	model createHandle.
+	self assert: constructorArgs size = 6.
+	self assert: constructorArgs first class == RECT.
+	self assert: constructorArgs first asRectangle = rectangle.
+	self assert: constructorArgs second = 1.
+	self assert: constructorArgs third = 2.
+	self assert: constructorArgs fourth = LinearGradientModeBackwardDiagonal.
+	self assert: (constructorArgs at: 5) = WrapModeTile.
+	self assertLastArgIsHandle! !
+!GdiplusLinearGradientBrushFromRectInitializerTest categoriesFor: #gdipCreateLineBrushFromRectI:color1:color2:mode:wrapMode:lineGradient:!accessing!public! !
+!GdiplusLinearGradientBrushFromRectInitializerTest categoriesFor: #setUp!public!setup! !
+!GdiplusLinearGradientBrushFromRectInitializerTest categoriesFor: #testCreateHandle!public!unit tests! !
+

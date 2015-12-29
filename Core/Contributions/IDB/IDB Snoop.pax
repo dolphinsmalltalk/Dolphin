@@ -1,0 +1,502 @@
+| package |
+package := Package name: 'IDB Snoop'.
+package paxVersion: 1;
+	basicComment: 'Display the properties of an open shell window and its components
+Version 6a - May 2005
+For Version 6 of Dolphin Smalltalk
+
+(C) 2005 Ian Bartholomew
+ian@idb.me.uk
+Public Domain Freeware
+'.
+
+package basicPackageVersion: 'IDB$PACKAGE$VERSION 6a'.
+
+
+package classNames
+	add: #Snoop;
+	yourself.
+
+package methodNames
+	add: #ClosedCommandDescription -> #snoopAspects;
+	add: #CommandDescription -> #snoopAspects;
+	add: #CommandMenuItem -> #snoopDescription;
+	add: #CommandMenuItem -> #snoopSecond;
+	add: #IconicListAbstract -> #snoopSecond;
+	add: #ListView -> #snoopChildren;
+	add: #ListViewColumn -> #snoopDescription;
+	add: #ListViewColumn -> #snoopSecond;
+	add: #Menu -> #snoopChildren;
+	add: #Menu -> #snoopDescription;
+	add: #Object -> #snoopAspects;
+	add: #Object -> #snoopChildren;
+	add: #Object -> #snoopDescription;
+	add: #Object -> #snoopDescription:;
+	add: #Object -> #snoopFirst;
+	add: #Object -> #snoopIconIndex;
+	add: #Object -> #snoopSecond;
+	add: #Object -> #snoopThird;
+	add: #PoolConstantsDictionary -> #snoopConstant:from:;
+	add: #PoolConstantsDictionary -> #snoopFlags:from:;
+	add: #Presenter -> #snoopChildren;
+	add: #Presenter -> #snoopDescription;
+	add: #Presenter -> #snoopFirst;
+	add: #ShellView -> #snoopSecond;
+	add: #StatusBar -> #snoopChildren;
+	add: #StatusBarItem -> #snoopSecond;
+	add: #StatusBarItemAbstract -> #snoopDescription;
+	add: #StatusBarItemAbstract -> #snoopSecond;
+	add: #Toolbar -> #snoopChildren;
+	add: #ToolbarButton -> #snoopDescription;
+	add: #ToolbarButton -> #snoopSecond;
+	add: #ToolbarSeparator -> #snoopThird;
+	add: #View -> #snoopChildren;
+	add: #View -> #snoopDescription;
+	add: #View -> #snoopFirst;
+	add: #View -> #snoopSecond;
+	add: 'Presenter class' -> #snoop;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\Object Arts\Dolphin\IDE\Base\Development System';
+	add: '..\Object Arts\Dolphin\Base\Dolphin';
+	add: '..\Object Arts\Dolphin\MVP\Views\Cards\Dolphin Card Containers';
+	add: '..\Object Arts\Dolphin\MVP\Presenters\Prompters\Dolphin Choice Prompter';
+	add: '..\Object Arts\Dolphin\MVP\Views\Common Controls\Dolphin Common Controls';
+	add: '..\Object Arts\Dolphin\MVP\Dialogs\Common\Dolphin Common Dialogs';
+	add: '..\Object Arts\Dolphin\MVP\Views\Control Bars\Dolphin Control Bars';
+	add: '..\Object Arts\Dolphin\MVP\Presenters\List\Dolphin List Presenter';
+	add: '..\Object Arts\Dolphin\MVP\Deprecated\Dolphin MVP (Deprecated)';
+	add: '..\Object Arts\Dolphin\MVP\Base\Dolphin MVP Base';
+	add: '..\Object Arts\Dolphin\MVP\Dialogs\Progress\Dolphin Progress Dialog';
+	add: '..\Object Arts\Dolphin\MVP\Presenters\Text\Dolphin Text Presenter';
+	add: '..\Object Arts\Dolphin\MVP\Models\Tree\Dolphin Tree Models';
+	add: '..\Object Arts\Dolphin\MVP\Presenters\Tree\Dolphin Tree Presenter';
+	add: 'IDB Common';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+IdbToolShell subclass: #Snoop
+	instanceVariableNames: 'snoopedShell viewTree presenterTree viewList presenterList status isHidden'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+!ClosedCommandDescription methodsFor!
+
+snoopAspects
+	#idbAdded.
+	^(super snoopAspects)
+		add: 'Receiver' -> self receiver;
+		add: 'QueryBlock' -> queryBlock;
+		yourself! !
+!ClosedCommandDescription categoriesFor: #snoopAspects!accessing!idb goodies!public! !
+
+!CommandDescription methodsFor!
+
+snoopAspects
+	#idbAdded.
+	self command ifNil: [^OrderedCollection new].
+	^(OrderedCollection new)
+		add: 'Command' -> self command;
+		add: 'Description' -> self description;
+		add: 'AcceleratorKey' -> self acceleratorKey;
+		add: 'AcceleratorKeyString' -> self acceleratorKeyString;
+		add: 'IsModalCommand' -> self isModalCommand;
+		add: 'Image' -> self image;
+		yourself! !
+!CommandDescription categoriesFor: #snoopAspects!idb goodies!operations!public! !
+
+!CommandMenuItem methodsFor!
+
+snoopDescription
+	"Answer a description of the receiver for the snoop tree"
+
+	#idbAdded.
+	^self snoopDescription: self command printString!
+
+snoopSecond
+	"Answer any items (name and value) that snoop should disply for the receiver"
+
+	#idbAdded.
+	^(super snoopSecond)
+		add: 'Text' -> self text;
+		add: 'Flags' -> (Win32Constants snoopFlags: self flags
+							from: #(#MF_BYPOSITION #MFS_CHECKED #MFS_DISABLED #MFT_MENUBARBREAK #MFT_MENUBREAK #MF_POPUP #MFT_SEPARATOR #MFS_ENABLED #MFT_STRING #MFT_RADIOCHECK #MFS_UNCHECKED #MFS_DEFAULT));
+		yourself! !
+!CommandMenuItem categoriesFor: #snoopDescription!displaying!idb goodies!public! !
+!CommandMenuItem categoriesFor: #snoopSecond!accessing!idb goodies!public! !
+
+!IconicListAbstract methodsFor!
+
+snoopSecond
+	"Answer any extra items that should be displayed for the receiver"
+
+	#idbAdded.
+	^(super snoopSecond)
+		add: 'Image Manager' -> self imageManager;
+		add: 'State Image Manager' -> self stateImageManager;
+		yourself! !
+!IconicListAbstract categoriesFor: #snoopSecond!accessing!idb goodies!public! !
+
+!ListView methodsFor!
+
+snoopChildren
+	"Answer a collection containing any children of the receiver that should 
+	appear in the snoop tree. ListViews are awkward as they hold the primary 
+	column separate from the rest of the columns"
+
+	#idbAdded.
+	^(super snoopChildren)
+		addAll: self allColumns;
+		yourself! !
+!ListView categoriesFor: #snoopChildren!accessing!idb goodies!public! !
+
+!ListViewColumn methodsFor!
+
+snoopDescription
+	"Answer a description of the receiver for the snoop tree"
+
+	#idbAdded.
+	^self snoopDescription: self text!
+
+snoopSecond
+	"Answer any items (name and value) that snoop should disply for the receiver"
+
+	#idbAdded.
+	^(super snoopSecond)
+		add: 'Parent' -> self parent;
+		add: 'Title' -> self text;
+		add: 'Width' -> self width;
+		add: 'Alignment' -> self alignment;
+		add: 'Auto Resize' -> self isAutoResize;
+		add: 'Get Text Block' -> self getTextBlock;
+		add: 'Get Image Block' -> self getImageBlock;
+		add: 'Get Info Tip Block' -> self getInfoTipBlock;
+		add: 'Get Contents Block' -> self getContentsBlock;
+		add: 'Sort Block' -> self sortBlock;
+		add: 'Custom Draw Block' -> self customDrawBlock;
+		yourself! !
+!ListViewColumn categoriesFor: #snoopDescription!displaying!idb goodies!public! !
+!ListViewColumn categoriesFor: #snoopSecond!accessing!idb goodies!public! !
+
+!Menu methodsFor!
+
+snoopChildren
+	"Answer a collection containing any children of the receiver that should 
+	appear in the snoop tree"
+
+	#idbAdded.
+	^self items!
+
+snoopDescription
+	"Answer a description of the receiver for the snoop tree"
+
+	#idbAdded.
+	^self snoopDescription: self text! !
+!Menu categoriesFor: #snoopChildren!accessing!idb goodies!public! !
+!Menu categoriesFor: #snoopDescription!displaying!idb goodies!public! !
+
+!Object methodsFor!
+
+snoopAspects
+	#idbAdded.
+	^(OrderedCollection new)
+		addAll: self snoopFirst;
+		addAll: self snoopSecond;
+		addAll: self snoopThird;
+		yourself!
+
+snoopChildren
+	"Default for any (leaf) objects that have no children e.g. MenuItem"
+
+	#idbAdded.
+	^#()!
+
+snoopDescription
+	"Default basic description for a snooped class"
+
+	#idbAdded.
+	^self class printString!
+
+snoopDescription: aStringOrNil 
+	"Answers a description of a snooped object. The class name with, possibly, a 
+	descriptive name"
+
+	| stream |
+	#idbAdded.
+	stream := String writeStream.
+	self class printOn: stream.
+	(aStringOrNil notNil and: [aStringOrNil notEmpty]) 
+		ifTrue: 
+			[stream
+				space;
+				nextPut: $(;
+				nextPutAll: aStringOrNil;
+				nextPut: $)].
+	^stream contents!
+
+snoopFirst
+	"Every snooped object has this as its first interest"
+
+	#idbAdded.
+	^OrderedCollection with: 'Self' -> self!
+
+snoopIconIndex
+	"Default icon index for receiver"
+
+	#idbAdded.
+	^self icon imageIndex!
+
+snoopSecond
+	#idbAdded.
+	^((self class canUnderstand: #commandDescription) and: [self commandDescription notNil]) 
+		ifTrue: [self commandDescription snoopAspects]
+		ifFalse: [OrderedCollection new]!
+
+snoopThird
+	| interests |
+	#idbAdded.
+	interests := OrderedCollection new.
+	self events keysAndValuesDo: [:key :value | interests add: ('Event - ' , key) -> value].
+	(self class publishedAspectsOfInstances keys asOrderedCollection copyWithout: #yourself) 
+		do: [:each | interests add: each -> (self perform: each asSymbol)].
+	^interests! !
+!Object categoriesFor: #snoopAspects!accessing!idb goodies!public! !
+!Object categoriesFor: #snoopChildren!accessing!idb goodies!public! !
+!Object categoriesFor: #snoopDescription!displaying!idb goodies!public! !
+!Object categoriesFor: #snoopDescription:!displaying!idb goodies!public! !
+!Object categoriesFor: #snoopFirst!accessing!idb goodies!public! !
+!Object categoriesFor: #snoopIconIndex!accessing!idb goodies!public! !
+!Object categoriesFor: #snoopSecond!accessing!idb goodies!public! !
+!Object categoriesFor: #snoopThird!accessing!idb goodies!public! !
+
+!PoolConstantsDictionary methodsFor!
+
+snoopConstant: anInteger from: aCollection 
+	"Answer the one constant from aCollection that matches anInteger"
+
+	#idbAdded.
+	^aCollection detect: [:each | (self at: each) = anInteger]
+		ifNone: ['Not found (' , anInteger printString , ')']!
+
+snoopFlags: anInteger from: aCollection 
+	"Answer a collection of all the constants in aCollection that 
+	match (bitwise) the value anInteger"
+
+	#idbAdded.
+	^aCollection select: [:each | ((self at: each) bitAnd: anInteger) = (self at: each)]! !
+!PoolConstantsDictionary categoriesFor: #snoopConstant:from:!idb goodies!public!searching! !
+!PoolConstantsDictionary categoriesFor: #snoopFlags:from:!idb goodies!public!searching! !
+
+!Presenter methodsFor!
+
+snoopChildren
+	"Answer a collection containing any children of the receiver that should 
+	appear in the snoop tree"
+
+	#idbAdded.
+	^subPresenters!
+
+snoopDescription
+	"Answer a description of the receiver for the snoop tree"
+
+	#idbAdded.
+	^self snoopDescription: (self parentPresenter isNil ifFalse: [self parentPresenter nameOf: self])!
+
+snoopFirst
+	"Answer any items (name and value) that snoop should display for the receiver"
+
+	#idbAdded.
+	^(super snoopFirst)
+		add: 'Model' -> self model;
+		add: 'View' -> self view;
+		yourself! !
+!Presenter categoriesFor: #snoopChildren!accessing!idb goodies!public! !
+!Presenter categoriesFor: #snoopDescription!displaying!idb goodies!public! !
+!Presenter categoriesFor: #snoopFirst!accessing!idb goodies!public! !
+
+!Presenter class methodsFor!
+
+snoop
+	"Open up a Snoop shell with the receivers view as the snoopee.
+	Do it in this order to ensure that the snooper is on top of the snoopee"
+
+	| shell |
+	#idbAdded.
+	shell := self show.
+	Snoop show snoopOn: shell! !
+!Presenter class categoriesFor: #snoop!idb goodies!operations!public! !
+
+!ShellView methodsFor!
+
+snoopSecond
+	"Answer any extra items that should be displayed for the receiver"
+
+	#idbAdded.
+	^(super snoopSecond)
+		add: 'Default Button Id' -> self defaultButtonId;
+		yourself! !
+!ShellView categoriesFor: #snoopSecond!accessing!idb goodies!public! !
+
+!StatusBar methodsFor!
+
+snoopChildren
+	"Answer a collection containing any children of the receiver that should 
+	appear in the snoop tree"
+
+	#idbAdded.
+	^super snoopChildren , self contents! !
+!StatusBar categoriesFor: #snoopChildren!accessing!idb goodies!public! !
+
+!StatusBarItem methodsFor!
+
+snoopSecond
+	"Answer any items (name and value) that snoop should display for the receiver"
+
+	#idbAdded.
+	^(super snoopSecond)
+		add: 'Value' -> (self model ifNotNil: [:arg | arg value]);
+		add: 'Get Text Block' -> self getTextBlock;
+		add: 'Get Image Block' -> self getImageBlock;
+		add: 'Image Manager' -> self imageManager;
+		yourself! !
+!StatusBarItem categoriesFor: #snoopSecond!accessing!idb goodies!public! !
+
+!StatusBarItemAbstract methodsFor!
+
+snoopDescription
+	"Answer a description of the receiver for the snoop tree"
+
+	#idbAdded.
+	^self snoopDescription: (self parentView nameOf: self)!
+
+snoopSecond
+	"Answer any items (name and value) that snoop should display for the receiver"
+
+	#idbAdded.
+	^(super snoopSecond)
+		add: 'Parent View' -> self parentView;
+		add: 'Model' -> self model;
+		add: 'Rectangle' -> self rectangle;
+		add: 'Width' -> self width;
+		add: 'Border' -> (StatusBarConstants snoopConstant: self border
+							from: #(#SBT_NOBORDERS #SBT_OWNERDRAW #SBT_POPOUT #SBT_RTLREADING));
+		yourself! !
+!StatusBarItemAbstract categoriesFor: #snoopDescription!accessing!idb goodies!public! !
+!StatusBarItemAbstract categoriesFor: #snoopSecond!accessing!idb goodies!public! !
+
+!Toolbar methodsFor!
+
+snoopChildren
+	"Answer a collection containing any children of the receiver that should 
+	appear in the snoop tree"
+
+	#idbAdded.
+	^super snoopChildren , self items! !
+!Toolbar categoriesFor: #snoopChildren!accessing!idb goodies!public! !
+
+!ToolbarButton methodsFor!
+
+snoopDescription
+	"Answer a description of the receiver for the snoop tree"
+
+	#idbAdded.
+	^self snoopDescription: self command printString!
+
+snoopSecond
+	"Answer any items (name and value) that snoop should disply for the receiver"
+
+	#idbAdded.
+	^(super snoopSecond)
+		add: 'Parent' -> self parent;
+		add: 'Bitmap' -> self bitmap;
+		add: 'Bitmap Index' -> self bitmapIndex;
+		add: 'Style' -> (ToolbarConstants snoopConstant: self style
+							from: #(#BTNS_CHECK #BTNS_BUTTON #BTNS_CHECKGROUP #BTNS_GROUP #BTNS_SEP #BTNS_DROPDOWN));
+		add: 'Enabled' -> self isEnabled;
+		add: 'Checked' -> self isChecked;
+		add: 'Pressed' -> self isPressed;
+		yourself! !
+!ToolbarButton categoriesFor: #snoopDescription!displaying!idb goodies!public! !
+!ToolbarButton categoriesFor: #snoopSecond!accessing!idb goodies!public! !
+
+!ToolbarSeparator methodsFor!
+
+snoopThird
+	"Answer any items (name and value) that snoop should disply for the receiver"
+
+	#idbAdded.
+	^(super snoopThird)
+		add: 'Style' -> (ToolbarConstants snoopConstant: self style
+							from: #(#BTNS_CHECK #BTNS_BUTTON #BTNS_CHECKGROUP #BTNS_GROUP #BTNS_SEP));
+		add: 'Width' -> self width;
+		yourself! !
+!ToolbarSeparator categoriesFor: #snoopThird!accessing!idb goodies!public! !
+
+!View methodsFor!
+
+snoopChildren
+	"Answer a collection containing any children of the receiver that should 
+	appear in the snoop tree. Check here for menuBar and menu (they are 
+	not sub views) before adding any other sub views"
+
+	| children |
+	#idbAdded.
+	children := OrderedCollection new.
+	((self respondsTo: #menuBar) and: [self menuBar notNil]) ifTrue: [children add: self menuBar].
+	self contextMenu notNil ifTrue: [children add: self contextMenu].
+	^children , self subViews!
+
+snoopDescription
+	"Answer the default description of the receiver in the snoop tree"
+
+	#idbAdded.
+	^self snoopDescription: self name!
+
+snoopFirst
+	"Answer any items (name and value) that snoop should disply for the receiver"
+
+	| interests parent |
+	#idbAdded.
+	interests := super snoopFirst.
+	interests
+		add: 'Model' -> self model;
+		add: 'Presenter' -> self presenter.
+	parent := self presenter parentPresenter.
+	[parent notNil] whileTrue: 
+			[interests add: 'Parent Presenter' -> parent.
+			parent := parent parentPresenter].
+	^interests!
+
+snoopSecond
+	"Answer any items (name and value) that snoop should disply for the receiver"
+
+	#idbAdded.
+	^(super snoopSecond)
+		add: 'Style' -> (Win32Constants snoopFlags: self getWindowStyle
+							from: #(#WS_BORDER #WS_CHILD #WS_CLIPCHILDREN #WS_CLIPSIBLINGS #WS_DISABLED #WS_DLGFRAME #WS_GROUP #WS_HSCROLL #WS_MAXIMIZE #WS_MAXIMIZEBOX #WS_MINIMIZE #WS_MINIMIZEBOX #WS_OVERLAPPED #WS_POPUP #WS_SYSMENU #WS_TABSTOP #WS_THICKFRAME #WS_VISIBLE #WS_VSCROLL));
+		add: 'Ex Style' -> (Win32Constants snoopFlags: self getWindowExStyle
+							from: #(#WS_EX_CLIENTEDGE #WS_EX_CONTROLPARENT #WS_EX_DLGMODALFRAME #WS_EX_NOTIFYDRAG #WS_EX_OVERLAPPEDWINDOW #WS_EX_STATICEDGE #WS_EX_TOOLWINDOW #WS_EX_TRANSPARENT #WS_EX_WINDOWEDGE));
+		yourself! !
+!View categoriesFor: #snoopChildren!accessing!idb goodies!public! !
+!View categoriesFor: #snoopDescription!displaying!idb goodies!public! !
+!View categoriesFor: #snoopFirst!accessing!idb goodies!public! !
+!View categoriesFor: #snoopSecond!accessing!idb goodies!public! !
+
+"End of package definition"!
+

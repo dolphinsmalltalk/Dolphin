@@ -1,0 +1,54 @@
+| package |
+package := Package name: 'Bouncing Balls'.
+package paxVersion: 1;
+	basicComment: 'Dolphin Smalltalk Bouncing Balls Animation Sample. 
+Copyright (c) Object Arts Ltd, 2001.
+
+Implements a simple window of animated bouncing balls. To show the window, evaluate:
+
+BouncingBallView show
+
+You can control the frame rate and number of balls displayed by editing the BouncingBallView methods #frameRate and #numberOfBalls respectively. If you change the latter then you will have to open a new window. 
+
+The sample demonstrates the use of double buffering to provide non-flickering animation. In this case we have chosen to use Icons for our sprites since these already have the ability to support masking of the graphic to a non-rectangular shape. Please note that no attempt has been made to make the bouncing motion accurate (i.e. the balls don''t bounce off the walls correctly or off each other at all).'.
+
+
+package classNames
+	add: #Ball;
+	add: #BouncingBallView;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\..\..\Dolphin\Base\Dolphin';
+	add: '..\..\..\Dolphin\MVP\Base\Dolphin MVP Base';
+	add: '..\..\..\Dolphin\IDE\Base\Internal Bitmaps and Icons';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+Object subclass: #Ball
+	instanceVariableNames: 'position velocity icon'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DoubleBufferedView subclass: #BouncingBallView
+	instanceVariableNames: 'balls stepProcess'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+"End of package definition"!
+

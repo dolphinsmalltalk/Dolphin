@@ -1,0 +1,99 @@
+| package |
+package := Package name: 'IDB DateAndTime'.
+package paxVersion: 1;
+	basicComment: 'Implementation of the ANSI <DateAndTime> protocol
+Version 6a - May 2005
+For Version 6 of Dolphin Smalltalk
+
+(C) 2005 Ian Bartholomew
+ian@idb.me.uk
+Public Domain Freeware
+
+Some methods provided by Richard Harmon
+'.
+
+package basicPackageVersion: 'IDB$PACKAGE$VERSION 6a'.
+
+
+package classNames
+	add: #DateAndTime;
+	yourself.
+
+package methodNames
+	add: #Duration -> #subtractFromDateAndTime:;
+	add: 'Date class' -> #fromDateAndTime:;
+	add: 'Time class' -> #fromDateAndTime:;
+	add: 'TimeStamp class' -> #fromDateAndTime:;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\Object Arts\Dolphin\Base\Dolphin';
+	add: 'IDB Duration';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+Magnitude subclass: #DateAndTime
+	instanceVariableNames: 'seconds timeZoneOffset fieldValues'
+	classVariableNames: 'DayOfMonth DayOfWeek Hour Minute Month Second Year'
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+!Date class methodsFor!
+
+fromDateAndTime: aDateAndTime 
+	"Answer an instance of Date initialized from aDateAndTime's local time
+	i.e. Any time zone offset in aDateAndTime is ignored"
+
+	#idbAdded.
+	^self 
+		newDay: aDateAndTime dayOfMonth
+		monthIndex: aDateAndTime month
+		year: aDateAndTime year! !
+!Date class categoriesFor: #fromDateAndTime:!idb goodies!instance creation!public! !
+
+!Duration methodsFor!
+
+subtractFromDateAndTime: aDateAndTime 
+	"Part of a double dispatch for <DateAndTime> subtraction. Answers a 
+	<DateAndTime> representing the receiver subtracted from the argument"
+
+	^DateAndTime seconds: aDateAndTime asSeconds - seconds offset: aDateAndTime offset! !
+!Duration categoriesFor: #subtractFromDateAndTime:!arithmetic!double dispatch!idb goodies!public! !
+
+!Time class methodsFor!
+
+fromDateAndTime: aDateAndTime 
+	"Answer an instance of Time initialized from aDateAndTime's local time
+	i.e. Any time zone offset in aDateAndTime is ignored"
+
+	#idbAdded.
+	^self 
+		fromSeconds: (aDateAndTime hour * 60 + aDateAndTime minute) * 60 + aDateAndTime second rounded! !
+!Time class categoriesFor: #fromDateAndTime:!idb goodies!instance creation!public! !
+
+!TimeStamp class methodsFor!
+
+fromDateAndTime: aDateAndTime 
+	"Answer an instance of TimeStamp initialized from aDateAndTime's local time
+	i.e. Any time zone offset in aDateAndTime is ignored"
+
+	#idbAdded.
+	^self date: (Date fromDateAndTime: aDateAndTime) time: (Time fromDateAndTime: aDateAndTime)! !
+!TimeStamp class categoriesFor: #fromDateAndTime:!idb goodies!instance creation!public! !
+
+"End of package definition"!
+

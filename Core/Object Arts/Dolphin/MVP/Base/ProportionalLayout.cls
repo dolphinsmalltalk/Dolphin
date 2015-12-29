@@ -1,0 +1,219 @@
+"Filed out from Dolphin Smalltalk X6"!
+
+LinearLayout subclass: #ProportionalLayout
+	instanceVariableNames: 'proportions isVertical'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ProportionalLayout guid: (GUID fromString: '{87B4C64B-026E-11D3-9FD7-00A0CC3E4A32}')!
+ProportionalLayout comment: 'ProportionalLayout implements a general purpose <layoutManager> to layout <view> objects within a <compositeView>. The managed views are arranged either vertically or horizontally depending on the setting of the <boolean> #isVertical aspect. The layout manager attempts to keep the relative sizes of the views in proportion according to the arrangement aspects of each view, which must be <number>s. Any view with an arrangement of 0 will be left at its original size. Managed views that are not currently visible are ignored, in which case they are allocated no proportion of the available space.
+
+For example. You have four views in a container managed by a ProportionalLayout; each has an arrangement of 2, 0, 5, 3 respectively. The second view will always keep its current size. The remainder of the space available in the container will be split between the remaining views in the ratios 2:5:3. 
+
+Views can also dynamically control whether they are resized in horizontal or vertical dimensions by implementing the #hasFixedWidth and #hasFixedHeight messages. By default all views are resizable in both dimensions.
+
+A ProportionalLayout is commonly used in conjunction with one or more <Splitter>s. In the standard ClassBrowserShell default view you can see two ProportionalLayout managers at work; one separating the panes horizontally and one vertically. Each of the panes is separated by a Splitter which, when moved, can be used to adjust the proportions of the views on either side of it. Note that Splitters are always given an arrangement of 0 so they are not resized by the layout manager and can remain at their preferred width/height.
+
+Instance Variables:
+	proportions		<LookupTable>
+	isVertical		<boolean>
+
+'!
+!ProportionalLayout categoriesForClass!MVP-Layout Managers-General! !
+!ProportionalLayout methodsFor!
+
+arrangementOf: aView 
+	"Answer a <Number> representing the current proportion for aView. Answer the default if a
+	specific value has not been set. The proportion is used to size the views relative to the
+	others managed by the receiver. A value of zero indicates a fixed size view."
+
+	^self proportions at: aView ifAbsent: [aView defaultProportion]!
+
+arrangementOf: aView put: aNumber 
+	"Set the arrangement parameter of aView in the receiver to be anObject"
+
+	self proportions at: aView put: aNumber abs!
+
+hasFixedSize: aView
+	^(self arrangementOf: aView) isZero 
+		or: [self isVertical ifTrue: [aView hasFixedHeight] ifFalse: [aView hasFixedWidth]]!
+
+hideShowSplitters: aCompositeView context: aLayoutContext 
+	"Private - Show only those splitters that have at least one resiable view on either side
+	before the next splitter on that side. This should be the minimal set of splitters that
+	allows for adjustment of the resizable panes, and no more."
+
+	"Implementation Note: The algorithm is to run from left to right (or top to bottom) hiding
+	all splitters that do not follow at least one visible resizable view since the preceeding
+	visible splitter.The direction is reversed, and any splitters that are still visible that do
+	not have a succeeding visible resizable view since the last splitter are also hidden."
+
+	| resizable managed |
+	resizable := false.
+	managed := aCompositeView managedSubViews.
+	managed do: 
+			[:each | 
+			(each isKindOf: Splitter) 
+				ifTrue: 
+					[resizable 
+						ifTrue: 
+							[aLayoutContext showView: each.
+							resizable := false]
+						ifFalse: [aLayoutContext hideView: each]]
+				ifFalse: 
+					[((aLayoutContext isViewVisible: each) and: [(self hasFixedSize: each) not]) 
+						ifTrue: [resizable := true]]].
+	resizable := false.
+	managed reverseDo: 
+			[:each | 
+			(aLayoutContext isViewVisible: each) 
+				ifTrue: 
+					[(each isKindOf: Splitter) 
+						ifTrue: 
+							[resizable 
+								ifTrue: 
+									[aLayoutContext showView: each.
+									resizable := false]
+								ifFalse: [aLayoutContext hideView: each]]
+						ifFalse: [(self hasFixedSize: each) not ifTrue: [resizable := true]]]]!
+
+initialize
+	super initialize.
+	proportions := LookupTable new!
+
+isVertical
+	"Answer whether the receivers components are positioned vertically."
+
+	^isVertical!
+
+isVertical: aBoolean
+	"Set whether the view's managed by the receiver are layed out vertically or horizontally."
+
+	isVertical := aBoolean!
+
+layoutContainer: aCompositeView context: aLayoutContext 
+	"Private - Update the <LayoutContext> argument with rectangles for the sub-views of the
+	specified container view, laying out those sub-views according to the rules and
+	configuration of this particular layout manager."
+
+	| extent majorExtent minorExtent offset freeSize totalProportions fixedSize insets subViews |
+	insets := aCompositeView actualInsets: aLayoutContext.
+	extent := ((aLayoutContext clientRectangleOf: aCompositeView) insetBy: insets) extent.
+	self isVertical 
+		ifTrue: 
+			[majorExtent := extent y.
+			minorExtent := extent x]
+		ifFalse: 
+			[majorExtent := extent x.
+			minorExtent := extent y].
+	self hideShowSplitters: aCompositeView context: aLayoutContext.
+	subViews := self visibleSubViewsOf: aCompositeView context: aLayoutContext.
+	fixedSize := 0.
+	totalProportions := 0.
+	subViews do: 
+			[:each | 
+			(self hasFixedSize: each) 
+				ifTrue: [fixedSize := fixedSize + (self majorDimensionOf: (each layoutExtent: aLayoutContext))]
+				ifFalse: [totalProportions := totalProportions + (self arrangementOf: each)]].
+	freeSize := majorExtent - fixedSize max: 0.
+	offset := insets origin.
+	subViews keysAndValuesDo: 
+			[:index :aView | 
+			| viewMajorExtent viewExtent |
+			viewMajorExtent := (self hasFixedSize: aView) 
+						ifTrue: [self majorDimensionOf: (aView layoutExtent: aLayoutContext)]
+						ifFalse: 
+							[index = subViews size 
+								ifTrue: [majorExtent + (self majorDimensionOf: insets origin) - (self majorDimensionOf: offset)]
+								ifFalse: [((self arrangementOf: aView) / totalProportions * freeSize) truncated]].
+			viewExtent := self pointWithMajor: viewMajorExtent minor: minorExtent.
+			aLayoutContext setView: aView rectangle: (offset extent: viewExtent).
+			offset := offset + (self pointWithMajor: viewMajorExtent minor: 0)]!
+
+nearestResizableViewFrom: fromView inViews: views by: direction 
+	"Private - Answer the first view in a direction from fromView which is resizable (i.e.
+	visible and not of fixed size) or nil if there aren't any."
+
+	| index |
+	index := views identityIndexOf: fromView.
+	
+	[index := index + direction.
+	index between: 1 and: views size] whileTrue: 
+				[| aView |
+				aView := views at: index.
+				(self hasFixedSize: aView) ifFalse: [^aView]].
+	^nil!
+
+proportions
+	"Private - Answer a <dictionary> of <View>s to the proportion number.
+	Use a proportion number of 0 to indicate a view of fixed size."
+
+	^proportions!
+
+removeSubView: aView
+	"Remove view from the collection of views which have been explicitly
+	arranged by the receiver.
+	Answer view."
+
+	self proportions removeKey: aView ifAbsent: [].
+	^super removeSubView: aView!
+
+reposition: aView to: aPoint 
+	"Private - This will expand/shrink the proportions of the two non fixed size views on either
+	side of aView."
+
+	| subviews currentPoint prevView nextView totalProportion changeSize prevSize nextSize containerView |
+	containerView := aView parentView.
+	subviews := containerView managedSubViews select: [:each | each isWindowVisible].
+	currentPoint := aView position.
+	prevView := self 
+				nearestResizableViewFrom: aView
+				inViews: subviews
+				by: -1.
+	nextView := self 
+				nearestResizableViewFrom: aView
+				inViews: subviews
+				by: 1.
+	(prevView isNil or: [nextView isNil]) ifTrue: [^self].
+	self isVertical 
+		ifTrue: 
+			[prevSize := prevView extent y.
+			nextSize := nextView extent y.
+			changeSize := aPoint y - currentPoint y]
+		ifFalse: 
+			[prevSize := prevView extent x.
+			nextSize := nextView extent x.
+			changeSize := aPoint x - currentPoint x].
+	changeSize := changeSize positive 
+				ifTrue: [changeSize min: nextSize - 2]
+				ifFalse: [changeSize max: prevSize negated + 2].
+	prevSize := prevSize + changeSize.
+	nextSize := nextSize - changeSize.
+	totalProportion := self totalProportionsOf: (Array with: prevView with: nextView).
+	prevSize + nextSize = 0 
+		ifFalse: 
+			[self arrangementOf: prevView put: prevSize / (prevSize + nextSize) * totalProportion.
+			self arrangementOf: nextView put: nextSize / (prevSize + nextSize) * totalProportion].
+	prevView basicInvalidateLayout.
+	nextView basicInvalidateLayout!
+
+totalProportionsOf: viewCollection
+	"Private - Answer the sum of all the views proportions."
+
+	^viewCollection inject: 0 into: [:total :aView |
+			total + (self arrangementOf: aView)].
+! !
+!ProportionalLayout categoriesFor: #arrangementOf:!accessing!public! !
+!ProportionalLayout categoriesFor: #arrangementOf:put:!accessing!public! !
+!ProportionalLayout categoriesFor: #hasFixedSize:!private!testing! !
+!ProportionalLayout categoriesFor: #hideShowSplitters:context:!helpers!private! !
+!ProportionalLayout categoriesFor: #initialize!initializing!private! !
+!ProportionalLayout categoriesFor: #isVertical!public!testing! !
+!ProportionalLayout categoriesFor: #isVertical:!accessing!public! !
+!ProportionalLayout categoriesFor: #layoutContainer:context:!helpers!private! !
+!ProportionalLayout categoriesFor: #nearestResizableViewFrom:inViews:by:!helpers!private! !
+!ProportionalLayout categoriesFor: #proportions!accessing!private! !
+!ProportionalLayout categoriesFor: #removeSubView:!public!removing! !
+!ProportionalLayout categoriesFor: #reposition:to:!operations!private! !
+!ProportionalLayout categoriesFor: #totalProportionsOf:!helpers!private! !
+

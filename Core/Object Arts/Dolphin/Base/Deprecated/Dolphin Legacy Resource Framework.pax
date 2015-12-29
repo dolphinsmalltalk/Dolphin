@@ -1,0 +1,157 @@
+| package |
+package := Package name: 'Dolphin Legacy Resource Framework'.
+package paxVersion: 1;
+	basicComment: 'Dolphin Smalltalk Legacy Resource Framework.
+Copyright (c) Object Arts Ltd. 1997-2006. 
+
+Many of the classes here are the vestigial remains of the legacy resource framework from versions of Dolphin prior to 6.0. These are only required when loading view resources saved from these earlier versions of the system. '.
+
+package basicPackageVersion: '6.1.1'.
+
+
+package classNames
+	add: #Resource;
+	add: #ResourceAccessor;
+	add: #ResourceDummyAccessor;
+	add: #ResourceGeneratorAccessor;
+	add: #ResourceSTBAccessor;
+	add: #ResourceSTBByteArrayAccessor;
+	add: #ResourceSTBFileAccessor;
+	add: #STBResourceSTBByteArrayAccessorProxy;
+	add: #STBResourceSTBFileAccessorProxy;
+	add: #ViewResource;
+	yourself.
+
+package methodNames
+	add: #ChunkSourceFiler -> #fileOutResource:;
+	add: #ResourceIdentifier -> #assignBinaryResourceData:;
+	add: #RuntimeSessionManager -> #initializeFromSessionManager:;
+	add: 'ResourceIdentifier class' -> #resourceAt:ifAbsent:;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\Dolphin';
+	add: '..\..\MVP\Base\Dolphin MVP Base';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+Object subclass: #Resource
+	instanceVariableNames: 'accessor icon'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Object subclass: #ResourceAccessor
+	instanceVariableNames: 'flags'
+	classVariableNames: 'ChangedMask'
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Resource subclass: #ViewResource
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ResourceAccessor subclass: #ResourceDummyAccessor
+	instanceVariableNames: 'object'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ResourceAccessor subclass: #ResourceGeneratorAccessor
+	instanceVariableNames: 'class selector'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ResourceAccessor subclass: #ResourceSTBAccessor
+	instanceVariableNames: 'classLocator'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ResourceSTBAccessor subclass: #ResourceSTBByteArrayAccessor
+	instanceVariableNames: 'byteArray'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ResourceSTBAccessor subclass: #ResourceSTBFileAccessor
+	instanceVariableNames: 'fileName'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+STBProxy subclass: #STBResourceSTBByteArrayAccessorProxy
+	instanceVariableNames: 'bytes'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+STBProxy subclass: #STBResourceSTBFileAccessorProxy
+	instanceVariableNames: 'fileName bytes'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+!ChunkSourceFiler methodsFor!
+
+fileOutResource: aResourceIdentifier 
+	"Append a definition of the resource identified by the <ResourceIdentifier>,
+	aResourceIdentifer, to the <puttableStream>, aWriteStream. The definition should be
+	sufficient to recreate a copy of the resource."
+
+	stream
+		nextPut: $(;
+		print: aResourceIdentifier class;
+		nextPutAll: ' class: ';
+		print: aResourceIdentifier owningClass;
+		nextPutAll: ' name: ';
+		print: aResourceIdentifier name;
+		nextPutAll: ') assign: (';
+		print: Object;
+		space;
+		display: #fromBinaryStoreBytes:;
+		cr.
+	aResourceIdentifier resource asInternalResource binaryStoreBytes base64StoreOn: stream.
+	self emitChunk: ')'! !
+!ChunkSourceFiler categoriesFor: #fileOutResource:!public!source filing! !
+
+!ResourceIdentifier methodsFor!
+
+assignBinaryResourceData: aViewResource 
+	| view viewClass |
+	viewClass := self class environment at: #View.
+	view := aViewResource loadWithContext: viewClass desktop forEdit: true.
+	self assign: view literalStoreArray.
+	view destroy! !
+!ResourceIdentifier categoriesFor: #assignBinaryResourceData:!private! !
+
+!ResourceIdentifier class methodsFor!
+
+resourceAt: aResourceIdentifier ifAbsent: aBlock 
+	"Legacy resource location code from the previous resource manager framework.
+	Answers the resource data associated with aResourceIdentifier"
+
+	^aResourceIdentifier resource! !
+!ResourceIdentifier class categoriesFor: #resourceAt:ifAbsent:!accessing!public! !
+
+!RuntimeSessionManager methodsFor!
+
+initializeFromSessionManager: oldSessionManager 
+	"Private - The receiver has taken take over as the current session
+	manager from oldSessionManager. This is an opportunity to transfer
+	state information from the replaced manager."
+
+	super initializeFromSessionManager: oldSessionManager.
+	Smalltalk at: #ResourceAccessor ifPresent: [:ra | ra ensureAccessorsAreInternal]! !
+!RuntimeSessionManager categoriesFor: #initializeFromSessionManager:!initializing!private! !
+
+"End of package definition"!
+

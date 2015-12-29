@@ -1,0 +1,64 @@
+| package |
+package := Package name: 'Dolphin Registry Access'.
+package paxVersion: 1;
+	basicComment: 'Dolphin Smalltalk Windows Registry Access.
+Copyright (c) Object Arts Ltd, 1998-2002.
+
+This package implements collection classes that provide access to the Windows registration database as if it were a collection of nested dictionaries. Note that the structure is more complicated than a standard Smalltalk Dictionary in that the each registry key entry can have both sub-keys, and sub-values. To map this structure to a Smalltalk <abstractDictionary> the registry key entries are represented as instances of the <RegKey> class. Registry sub-key names are treated as the <readableString> "keys" of a <RegKey>, and the registry sub-keys themselves are treated as the ><RegKey>''s "values", with these in turn being represented by instances of <RegKey>. A separate <abstractDictionary> representation of the sub-values of a registry key is accessed by sending the #subValues message to a <RegKey>, yielding an instance of <RegKeyValues>. The "keys" of a <RegKeyValues> are the <readableString> value names, and the values are <Strings>, <Integer>s, and <ByteArray>s representing the actual values.'.
+
+package basicPackageVersion: '6.0'.
+
+
+package classNames
+	add: #RegKey;
+	add: #RegKeyAbstract;
+	add: #RegKeyValues;
+	add: #RegQueryInfo;
+	yourself.
+
+package globalNames
+	add: #WinRegConstants;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\Base\Dolphin';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+Object subclass: #RegQueryInfo
+	instanceVariableNames: 'keyClass subKeyCount maxSubKeyLen maxClassNameLen valueCount maxValueNameLen maxValueLen securityDescriptorLen lastWriteTime'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Dictionary variableSubclass: #RegKeyAbstract
+	instanceVariableNames: 'handle name rootKey parentPath keyInfo sam'
+	classVariableNames: 'AccessModes ValueTypes'
+	poolDictionaries: 'Win32Errors WinRegConstants'
+	classInstanceVariableNames: ''!
+RegKeyAbstract variableSubclass: #RegKey
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+RegKeyAbstract variableSubclass: #RegKeyValues
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+"End of package definition"!
+

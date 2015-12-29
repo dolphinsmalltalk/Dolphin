@@ -1,0 +1,183 @@
+"Filed out from Dolphin Smalltalk XP 2002 release 5.02"!
+
+RefactoringTest subclass: #MoveMethodTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+MoveMethodTest guid: (GUID fromString: '{7313B46F-A4CC-4401-8345-57823FB459AF}')!
+MoveMethodTest comment: ''!
+!MoveMethodTest categoriesForClass!Refactory-Testing! !
+!MoveMethodTest methodsFor!
+
+testMoveMethodIntoArgument
+	| refactoring class |
+	self proceedThroughWarning: 
+			[refactoring := MoveMethodRefactoring 
+						selector: #checkMethod:
+						class: TransformationRuleTest
+						variable: 'aSmalllintContext'.
+			self setupSelfArgumentNameFor: refactoring toReturn: 'transformationRule'.
+			self setupVariableTypesFor: refactoring
+				toReturn: (Array with: (refactoring model classNamed: #SmalllintContext)).
+			self setupMethodNameFor: refactoring toReturn: #foo:.
+			self executeRefactoring: refactoring].
+	class := refactoring model classNamed: #TransformationRuleTest.
+	self 
+		assert: (class parseTreeFor: #checkMethod:) = (RBParser 
+						parseMethod: 'checkMethod: aSmalllintContext aSmalllintContext foo: self').
+	self 
+		assert: ((refactoring model classNamed: #SmalllintContext) 
+				parseTreeFor: #foo:) = (RBParser 
+							parseMethod: 'foo: transformationRule
+	transformationRule class: self selectedClass.
+	(transformationRule rewriteRule executeTree: self parseTree) ifTrue: 
+			[(transformationRule class recursiveSelfRule executeTree: transformationRule rewriteRule tree initialAnswer: false)
+				ifFalse: 
+					[transformationRule builder compile: transformationRule rewriteRule tree printString
+						in: transformationRule class1
+						classified: self protocols]]').
+	self assert: (class parseTreeFor: #class1) 
+				= (RBParser parseMethod: 'class1 ^class').
+	self assert: (class parseTreeFor: #class:) 
+				= (RBParser parseMethod: 'class: anObject class := anObject').
+	self 
+		assert: (class metaclass parseTreeFor: #recursiveSelfRule:) = (RBParser 
+						parseMethod: 'recursiveSelfRule: anObject RecursiveSelfRule := anObject').
+	self assert: (class metaclass parseTreeFor: #recursiveSelfRule) 
+				= (RBParser parseMethod: 'recursiveSelfRule ^RecursiveSelfRule').
+	self assert: (class parseTreeFor: #builder) 
+				= (RBParser parseMethod: 'builder ^builder').
+	self assert: (class parseTreeFor: #builder:) 
+				= (RBParser parseMethod: 'builder: anObject builder := anObject').
+	self assert: (class parseTreeFor: #rewriteRule) 
+				= (RBParser parseMethod: 'rewriteRule ^rewriteRule').
+	self assert: (class parseTreeFor: #rewriteRule:) 
+				= (RBParser parseMethod: 'rewriteRule: anObject rewriteRule := anObject')!
+
+testMoveMethodIntoClassVariable
+	| refactoring class |
+	self proceedThroughWarning: 
+			[refactoring := MoveMethodRefactoring 
+						selector: #checkMethod:
+						class: TransformationRuleTest
+						variable: 'RecursiveSelfRule'.
+			self setupSelfArgumentNameFor: refactoring toReturn: 'transformationRule'.
+			self setupVariableTypesFor: refactoring
+				toReturn: (Array with: (refactoring model classNamed: #ParseTreeSearcher)).
+			self 
+				setupMethodNameFor: refactoring
+				toReturn: #foo:foo:
+				withArguments: #('transformationRule' 'aSmalllintContext').
+			self executeRefactoring: refactoring].
+	class := refactoring model classNamed: #TransformationRuleTest.
+	self 
+		assert: (class parseTreeFor: #checkMethod:) = (RBParser 
+						parseMethod: 'checkMethod: aSmalllintContext RecursiveSelfRule foo: self foo: aSmalllintContext').
+	self 
+		assert: ((refactoring model classNamed: #ParseTreeSearcher) 
+				parseTreeFor: #foo:foo:) = (RBParser 
+							parseMethod: 'foo: transformationRule foo: aSmalllintContext
+	transformationRule class: aSmalllintContext selectedClass.
+	(transformationRule rewriteRule executeTree: aSmalllintContext parseTree) ifTrue: 
+			[(self executeTree: transformationRule rewriteRule tree initialAnswer: false)
+				ifFalse: 
+					[transformationRule builder compile: transformationRule rewriteRule tree printString
+						in: transformationRule class1
+						classified: aSmalllintContext protocols]]').
+	self assert: (class parseTreeFor: #class1) 
+				= (RBParser parseMethod: 'class1 ^class').
+	self assert: (class parseTreeFor: #class:) 
+				= (RBParser parseMethod: 'class: anObject class := anObject').
+	self assert: (class parseTreeFor: #builder) 
+				= (RBParser parseMethod: 'builder ^builder').
+	self assert: (class parseTreeFor: #builder:) 
+				= (RBParser parseMethod: 'builder: anObject builder := anObject').
+	self assert: (class parseTreeFor: #rewriteRule) 
+				= (RBParser parseMethod: 'rewriteRule ^rewriteRule').
+	self assert: (class parseTreeFor: #rewriteRule:) 
+				= (RBParser parseMethod: 'rewriteRule: anObject rewriteRule := anObject')!
+
+testMoveMethodIntoInstanceVariable
+	| refactoring class |
+	self proceedThroughWarning: 
+			[refactoring := MoveMethodRefactoring 
+						selector: #checkMethod:
+						class: TransformationRuleTest
+						variable: 'rewriteRule'.
+			self setupSelfArgumentNameFor: refactoring toReturn: 'transformationRule'.
+			self setupVariableTypesFor: refactoring
+				toReturn: (Array with: (refactoring model classNamed: #ParseTreeRewriter)).
+			self 
+				setupMethodNameFor: refactoring
+				toReturn: #foo:foo:
+				withArguments: #('transformationRule' 'aSmalllintContext').
+			self executeRefactoring: refactoring].
+	class := refactoring model classNamed: #TransformationRuleTest.
+	self 
+		assert: (class parseTreeFor: #checkMethod:) = (RBParser 
+						parseMethod: 'checkMethod: aSmalllintContext rewriteRule foo: self foo: aSmalllintContext').
+	self 
+		assert: ((refactoring model classNamed: #ParseTreeRewriter) 
+				parseTreeFor: #foo:foo:) = (RBParser 
+							parseMethod: 'foo: transformationRule foo: aSmalllintContext
+	transformationRule class: aSmalllintContext selectedClass.
+	(self executeTree: aSmalllintContext parseTree) ifTrue: 
+			[(transformationRule class recursiveSelfRule executeTree: self tree initialAnswer: false)
+				ifFalse: 
+					[transformationRule builder compile: self tree printString
+						in: transformationRule class1
+						classified: aSmalllintContext protocols]]').
+	self assert: (class parseTreeFor: #class1) 
+				= (RBParser parseMethod: 'class1 ^class').
+	self assert: (class parseTreeFor: #class:) 
+				= (RBParser parseMethod: 'class: anObject class := anObject').
+	self 
+		assert: (class metaclass parseTreeFor: #recursiveSelfRule:) = (RBParser 
+						parseMethod: 'recursiveSelfRule: anObject RecursiveSelfRule := anObject').
+	self assert: (class metaclass parseTreeFor: #recursiveSelfRule) 
+				= (RBParser parseMethod: 'recursiveSelfRule ^RecursiveSelfRule').
+	self assert: (class parseTreeFor: #builder) 
+				= (RBParser parseMethod: 'builder ^builder').
+	self assert: (class parseTreeFor: #builder:) 
+				= (RBParser parseMethod: 'builder: anObject builder := anObject')!
+
+testMoveMethodThatReferencesPoolDictionary
+	| refactoring class |
+	self proceedThroughWarning: 
+			[| refactoringTestDataClass |
+			refactoring := MoveMethodRefactoring 
+						selector: #junk
+						class: LintRuleTest
+						variable: 'RefactoryTestDataApp'.
+			self setupSelfArgumentNameFor: refactoring toReturn: 'transformationRule'.
+			refactoringTestDataClass := refactoring model metaclassNamed: #RefactoryTestDataApp.
+			self setupVariableTypesFor: refactoring toReturn: (Array with: refactoringTestDataClass).
+			self setupMethodNameFor: refactoring toReturn: #junk1.
+			self executeRefactoring: refactoring].
+	class := refactoring model classNamed: #LintRuleTest.
+	self assert: (class parseTreeFor: #junk) 
+				= (RBParser parseMethod: 'junk ^RefactoryTestDataApp junk1').
+	self 
+		assert: ((refactoring model metaclassNamed: #RefactoryTestDataApp) parseTreeFor: #junk1) 
+				= (RBParser parseMethod: 'junk1
+	^self printString copyFrom: 1 to: _EM_INVALID').
+	self assert: (class directlyDefinesPoolDictionary: 'CRTConstants' asSymbol)!
+
+testMovePrimitiveMethod
+	| refactoring |
+	(model classNamed: #Object) 
+		compile: 'foo <primitive: 100> ^#() primitiveFailed'
+		classified: #(#accessing).
+	refactoring := MoveMethodRefactoring 
+				model: model
+				selector: #foo
+				class: Object
+				variable: 'OrderedCollection'.
+	self shouldFail: refactoring! !
+!MoveMethodTest categoriesFor: #testMoveMethodIntoArgument!public!tests! !
+!MoveMethodTest categoriesFor: #testMoveMethodIntoClassVariable!public!tests! !
+!MoveMethodTest categoriesFor: #testMoveMethodIntoInstanceVariable!public!tests! !
+!MoveMethodTest categoriesFor: #testMoveMethodThatReferencesPoolDictionary!public!tests! !
+!MoveMethodTest categoriesFor: #testMovePrimitiveMethod!failure tests!public! !
+

@@ -1,0 +1,69 @@
+| package |
+package := Package name: 'Dolphin Radio Buttons'.
+package paxVersion: 1;
+	basicComment: 'Dolphin Smalltalk Radio Buttons.
+Copyright (c) Object Arts Ltd. 1997-2003. Portions Copyright (c) Ian Bartholomew.
+
+RadioButtonSetPresenter is based on Ian Bartholomew''s RadioButtonGroup goodie.'.
+
+package basicPackageVersion: '6.0'.
+
+
+package classNames
+	add: #RadioButton;
+	add: #RadioButtonSetPresenter;
+	yourself.
+
+package methodNames
+	add: 'BooleanPresenter class' -> #resource_Radio_button;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\..\..\Base\Dolphin';
+	add: '..\Boolean\Dolphin Boolean Presenter';
+	add: '..\..\Base\Dolphin MVP Base';
+	add: '..\..\Type Converters\Dolphin Type Converters';
+	add: '..\..\Models\Value\Dolphin Value Models';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+ValuePresenter subclass: #RadioButtonSetPresenter
+	instanceVariableNames: 'ownedRadioButtons'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+CheckButton subclass: #RadioButton
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+!BooleanPresenter class methodsFor!
+
+resource_Radio_button
+	"Answer the literal data from which the 'Radio button' resource can be reconstituted.
+	DO NOT EDIT OR RECATEGORIZE THIS METHOD.
+
+	If you wish to modify this resource evaluate:
+	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Radio_button)
+	"
+
+	^#(#'!!STL' 3 788558 10 ##(Smalltalk.STBViewProxy)  8 ##(Smalltalk.RadioButton)  98 16 0 0 98 2 8 1141058825 1 416 721990 2 ##(Smalltalk.ValueHolder)  0 0 1376774 ##(Smalltalk.PluggableSearchPolicy)  459270 ##(Smalltalk.Message)  8 #= 98 0 562 8 #hash 98 0 32 524550 ##(Smalltalk.ColorRef)  8 4294967295 0 7 0 0 0 416 0 8 4294902423 852486 ##(Smalltalk.NullConverter)  0 0 0 983302 ##(Smalltalk.MessageSequence)  202 208 98 1 721670 ##(Smalltalk.MessageSend)  8 #createAt:extent: 98 2 328198 ##(Smalltalk.Point)  5119 21 898 225 55 416 983302 ##(Smalltalk.WINDOWPLACEMENT)  8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 9 0 0 10 0 0 0 111 10 0 0 37 0 0 0] 98 0 898 193 193 0 27 )! !
+!BooleanPresenter class categoriesFor: #resource_Radio_button!public!resources-views! !
+
+"End of package definition"!
+

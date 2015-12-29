@@ -1,0 +1,67 @@
+| package |
+package := Package name: 'Scribble'.
+package paxVersion: 1;
+	basicComment: 'Dolphin Smalltalk Scribble Sample
+Copyright (c) Object Arts Ltd, 1997-2000.
+
+Scribble is a sample component for accepting ''ink'' as a series of mouse or pen strokes.
+
+To create a Scribble pad in a dummy shell window evaluate:
+
+Scribble show.
+
+To create two Scribble pads sharing the same model and at the same time rendering the model in a standard <listPresenter> try evaluating:
+
+scribble := Scribble show.
+Scribble showOn: scribble model.
+ListPresenter showOn: scribble model.'.
+
+package basicPackageVersion: '2005.6.5.15'.
+
+
+package classNames
+	add: #InkStroke;
+	add: #Scribble;
+	add: #ScribbleView;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\..\..\Dolphin\Base\Dolphin';
+	add: '..\..\..\Dolphin\MVP\Models\List\Dolphin List Models';
+	add: '..\..\..\Dolphin\MVP\Base\Dolphin MVP Base';
+	add: '..\..\..\Dolphin\IDE\Base\Internal Bitmaps and Icons';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+Object subclass: #InkStroke
+	instanceVariableNames: 'data'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Presenter subclass: #Scribble
+	instanceVariableNames: 'newStroke trackingCanvas'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+View subclass: #ScribbleView
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+"End of package definition"!
+

@@ -1,0 +1,98 @@
+| package |
+package := Package name: 'ActiveX Property Bags'.
+package paxVersion: 1;
+	basicComment: 'Dolphin Smalltalk Active-X Property Bags package.
+Copyright (c) Object Arts Ltd, 2000-2001.
+'.
+
+package basicPackageVersion: '6.1'.
+
+
+package classNames
+	add: #AXPropertyBag;
+	add: #AXPropertyBagErrorLog;
+	add: #AXPropertyReadError;
+	add: #IEnumErrorInfo;
+	add: #IErrorLog;
+	add: #IPersistPropertyBag;
+	add: #IPersistPropertyBag2;
+	add: #IPropertyBag;
+	add: #IPropertyBag2;
+	add: #PROPBAG2;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\Automation\ActiveX Automation';
+	add: '..\..\Base\Dolphin';
+	add: '..\COM\OLE COM';
+	add: '..\Persist\OLE Persistence Base';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+COMInterfaceImp subclass: #AXPropertyBag
+	instanceVariableNames: 'propertyTable clsid saveAll clearDirty'
+	classVariableNames: ''
+	poolDictionaries: 'AXAutomationConstants'
+	classInstanceVariableNames: ''!
+COMInterfaceImp subclass: #AXPropertyBagErrorLog
+	instanceVariableNames: 'errors guid'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Error subclass: #AXPropertyReadError
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+IUnknown subclass: #IErrorLog
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+IUnknown subclass: #IPropertyBag
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+IUnknown subclass: #IPropertyBag2
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+IEnumUnknown subclass: #IEnumErrorInfo
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+IPersist subclass: #IPersistPropertyBag
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+IPersistPropertyBag subclass: #IPersistPropertyBag2
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+OLEStructure subclass: #PROPBAG2
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+"End of package definition"!
+

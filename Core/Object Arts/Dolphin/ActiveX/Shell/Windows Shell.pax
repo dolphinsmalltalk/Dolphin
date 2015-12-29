@@ -1,0 +1,137 @@
+| package |
+package := Package name: 'Windows Shell'.
+package paxVersion: 1;
+	basicComment: 'Dolphin Smalltalk Windows Shell Support
+Copyright (c) Object Arts Ltd, 1998-2000. 
+
+This package provides nascent access to the Windows shell by wrapping IShellFolder. It also includes the standard system dialog for locating folders/directories (the BrowseFolderDialog).
+
+For example: 
+
+	BrowseFolderDialog showModal	"Ctrl+D"'.
+
+package basicPackageVersion: '6.1'.
+
+package basicScriptAt: #postinstall put: 'View registerShellMessages.'.
+package basicScriptAt: #preuninstall put: 'View unregisterShellMessages'.
+
+package classNames
+	add: #BrowseFolderDialog;
+	add: #BROWSEINFO;
+	add: #DroppedFilesList;
+	add: #IShellFolder;
+	add: #ITEMIDLIST;
+	add: #ShellLibrary;
+	add: #SHITEMID;
+	add: #WindowsShellMemory;
+	yourself.
+
+package methodNames
+	add: #SessionManager -> #documentsDirectory;
+	add: #View -> #acceptDroppedFiles:;
+	add: #View -> #wmDropFiles:wParam:lParam:;
+	add: 'View class' -> #registerShellMessages;
+	add: 'View class' -> #unregisterShellMessages;
+	yourself.
+
+package globalNames
+	add: #ShellConstants;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\..\Base\Dolphin';
+	add: '..\..\MVP\Dialogs\Common\Dolphin Common Dialogs';
+	add: '..\..\MVP\Base\Dolphin MVP Base';
+	add: '..\COM\OLE COM';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+SequenceableCollection subclass: #DroppedFilesList
+	instanceVariableNames: 'handle size'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ExternalMemory variableByteSubclass: #WindowsShellMemory
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ExternalLibrary subclass: #ShellLibrary
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: 'ShellConstants Win32Constants'
+	classInstanceVariableNames: ''!
+IUnknown subclass: #IShellFolder
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+OLEStructure subclass: #ITEMIDLIST
+	instanceVariableNames: 'back'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Win32Structure subclass: #SHITEMID
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+CommonDialogStructure subclass: #BROWSEINFO
+	instanceVariableNames: 'title displayName'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+CommonDialog subclass: #BrowseFolderDialog
+	instanceVariableNames: 'style bfFlags'
+	classVariableNames: 'InitializedMask'
+	poolDictionaries: 'ShellConstants'
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+!SessionManager methodsFor!
+
+documentsDirectory
+	"Answer the path of the Windows 'My Documents' directory on the host computer for the current user."
+
+	^ShellLibrary default getSpecialFolderLocation: ##(ShellConstants at: 'CSIDL_PERSONAL')! !
+!SessionManager categoriesFor: #documentsDirectory!accessing!public! !
+
+!View methodsFor!
+
+acceptDroppedFiles: aBoolean 
+	ShellLibrary default dragAcceptFiles: self asParameter fAccept: aBoolean!
+
+wmDropFiles: msgInteger wParam: wParamInteger lParam: lParamInteger 
+	| files |
+	files := DroppedFilesList fromHandle: wParamInteger asExternalHandle.
+	self presenter trigger: #dropFiles: with: files! !
+!View categoriesFor: #acceptDroppedFiles:!public! !
+!View categoriesFor: #wmDropFiles:wParam:lParam:!public! !
+
+!View class methodsFor!
+
+registerShellMessages
+	self registerMessages: (Array with: WM_DROPFILES -> #wmDropFiles:wParam:lParam:)!
+
+unregisterShellMessages
+	| aCollectionOfIntegers |
+	aCollectionOfIntegers := Array with: WM_DROPFILES.
+	self unregisterMessages: aCollectionOfIntegers! !
+!View class categoriesFor: #registerShellMessages!public! !
+!View class categoriesFor: #unregisterShellMessages!public! !
+
+"End of package definition"!
+

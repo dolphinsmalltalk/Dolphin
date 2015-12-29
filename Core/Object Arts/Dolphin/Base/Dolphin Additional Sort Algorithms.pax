@@ -1,0 +1,77 @@
+| package |
+package := Package name: 'Dolphin Additional Sort Algorithms'.
+package paxVersion: 1;
+	basicComment: 'Dolphin Smalltalk Additional Sort Algorithms.
+Copyright (c) Object Arts Ltd. 2005.
+
+Some additional sort algorithms over and above the default IntrosortAlgorithm in the base image. These are primarily intended for use with <SortedCollection>, but can in fact be used to sort the indexable instance variables of any object.
+
+This package provides implementations of:
+	Heapsort
+	Insertion Sort
+	Mergesort
+	Quicksort
+	Shellsort
+
+Of these some are present purely for illustrative purposes, but Mergesort is useful as a fast general purpose algorithm that is stable (unlike the default sort, introsort, which is a quicksort/heapsort hybrid).
+
+There are a number of additional algorithms that it would be interesting to implement, not least those specialised for sorting strings (such as Radix sort), and the Sedgwick and Bennets multi-key (or ternary) Quicksort algorithm. A sensible design for the latter might include an additional ''key block'' to extract the key from each object, with this block expected to return a <sequencedReadableCollection> of uniform key parts (for example a string, or byte array, or array of integers, etc). The sort block would be invoked to compare the key parts, rather than the whole key at once. I suspect, however, that the standard Smalltalk sort block comparison mechanism that answers true/false might be rather inefficient for this algorithm (it needs a -1, 0, 1 comparison result really as otherwise it has to compare key parts twice to distinguish the ''equal'' case), so it might be advisable to dispense with convention in this case, or implement a non-pluggable algorithm just for sorting strings.'.
+
+package basicPackageVersion: '6.0'.
+
+
+package classNames
+	add: #HeapsortAlgorithm;
+	add: #InsertionSortAlgorithm;
+	add: #MergesortAlgorithm;
+	add: #QuicksortAlgorithm;
+	add: #ShellsortAlgorithm;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: 'Dolphin';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+PluggableSortAlgorithm subclass: #HeapsortAlgorithm
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+PluggableSortAlgorithm subclass: #InsertionSortAlgorithm
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+PluggableSortAlgorithm subclass: #MergesortAlgorithm
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+PluggableSortAlgorithm subclass: #QuicksortAlgorithm
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+PluggableSortAlgorithm subclass: #ShellsortAlgorithm
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+"End of package definition"!
+

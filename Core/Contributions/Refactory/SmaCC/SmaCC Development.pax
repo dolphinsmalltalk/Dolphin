@@ -1,0 +1,215 @@
+| package |
+package := Package name: 'SmaCC Development'.
+package paxVersion: 1;
+	basicComment: 'This package is part of the Smalltalk Compiler-Compiler (SmaCC) written by John Brant and Don Roberts. It contains the classes used to create a new parser. It is only needed when developing parsers. While these classes can be used directly, it is suggested that you use the GUI in the SmaCC Development UI package to create your parsers. If you wish to use the code directly, you can browse the code in the SmaCC Tests for examples. 
+
+If you want more information about SmaCC, visit http://www.refactory.com/Software/SmaCC/. '.
+
+
+package classNames
+	add: #SmaCCAcceptAction;
+	add: #SmaCCAction;
+	add: #SmaCCCharacterRENode;
+	add: #SmaCCCompilationNotification;
+	add: #SmaCCEdge;
+	add: #SmaCCGrammar;
+	add: #SmaCCGrammarCompiler;
+	add: #SmaCCGrammarParser;
+	add: #SmaCCGrammarScanner;
+	add: #SmaCCItemSet;
+	add: #SmaCCLR1Item;
+	add: #SmaCCNode;
+	add: #SmaCCNonTerminalSymbol;
+	add: #SmaCCOrRENode;
+	add: #SmaCCReduceAction;
+	add: #SmaCCRegularExpressionNode;
+	add: #SmaCCRejectAction;
+	add: #SmaCCRepeatingRENode;
+	add: #SmaCCRHS;
+	add: #SmaCCScannerCompiler;
+	add: #SmaCCScannerParser;
+	add: #SmaCCScannerScanner;
+	add: #SmaCCSequenceRENode;
+	add: #SmaCCShiftAction;
+	add: #SmaCCStartingSymbol;
+	add: #SmaCCSymbol;
+	add: #SmaCCSymbolSet;
+	add: #SmaCCTerminalSymbol;
+	yourself.
+
+package methodNames
+	add: 'SmaCCScanner class' -> #frequencyTable;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\..\Object Arts\Dolphin\Base\Dolphin';
+	add: '..\Refactoring Browser\Change Objects\RBChangeObjects';
+	add: '..\Refactoring Browser\Parser\RBParser';
+	add: '..\Refactoring Browser\Refactorings\RBRefactorings';
+	add: 'SmaCC Runtime';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+Object subclass: #SmaCCAction
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Object subclass: #SmaCCEdge
+	instanceVariableNames: 'toNode characters'
+	classVariableNames: 'IsExpressions'
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Object subclass: #SmaCCGrammar
+	instanceVariableNames: 'type shiftReduceTable symbols tokens otherStartingSymbols'
+	classVariableNames: 'IgnoreCase MaximumCharacterValue'
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Object subclass: #SmaCCGrammarCompiler
+	instanceVariableNames: 'shiftTable itemSets startingStateMap actions parserClass parserDefinitionString scannerCompiler grammar model'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Object subclass: #SmaCCLR1Item
+	instanceVariableNames: 'rhs symbol location followers'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Object subclass: #SmaCCNode
+	instanceVariableNames: 'transitions action id'
+	classVariableNames: 'NextId'
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Object subclass: #SmaCCRegularExpressionNode
+	instanceVariableNames: 'action position'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Object subclass: #SmaCCRHS
+	instanceVariableNames: 'collection reduceAction variableNames'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Object subclass: #SmaCCScannerCompiler
+	instanceVariableNames: 'grammar scannerClass scannerDefinitionString'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Object subclass: #SmaCCSymbol
+	instanceVariableNames: 'name precedence firstItems'
+	classVariableNames: 'EmptySymbol ErrorSymbol SentinelSymbol'
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Set variableSubclass: #SmaCCItemSet
+	instanceVariableNames: 'type'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Notification subclass: #SmaCCCompilationNotification
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Model subclass: #SmaCCSymbolSet
+	instanceVariableNames: 'symbols components'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+SmaCCAction subclass: #SmaCCAcceptAction
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+SmaCCAction subclass: #SmaCCReduceAction
+	instanceVariableNames: 'symbol rhs'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+SmaCCAction subclass: #SmaCCRejectAction
+	instanceVariableNames: ''
+	classVariableNames: 'Reject'
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+SmaCCAction subclass: #SmaCCShiftAction
+	instanceVariableNames: ''
+	classVariableNames: 'Shift'
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+SmaCCParser subclass: #SmaCCGrammarParser
+	instanceVariableNames: 'grammar'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+SmaCCParser subclass: #SmaCCScannerParser
+	instanceVariableNames: 'tokens'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+SmaCCRegularExpressionNode subclass: #SmaCCCharacterRENode
+	instanceVariableNames: 'characters'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+SmaCCRegularExpressionNode subclass: #SmaCCOrRENode
+	instanceVariableNames: 'nodes'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+SmaCCRegularExpressionNode subclass: #SmaCCRepeatingRENode
+	instanceVariableNames: 'node minimumMatches maximumMatches'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+SmaCCRegularExpressionNode subclass: #SmaCCSequenceRENode
+	instanceVariableNames: 'nodes'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+SmaCCScanner subclass: #SmaCCGrammarScanner
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+SmaCCScanner subclass: #SmaCCScannerScanner
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+SmaCCSymbol subclass: #SmaCCNonTerminalSymbol
+	instanceVariableNames: 'productions'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+SmaCCSymbol subclass: #SmaCCTerminalSymbol
+	instanceVariableNames: 'regularExpression createIdMethod'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+SmaCCNonTerminalSymbol subclass: #SmaCCStartingSymbol
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+!SmaCCScanner class methodsFor!
+
+frequencyTable
+	^#(1)! !
+!SmaCCScanner class categoriesFor: #frequencyTable!accessing!public! !
+
+"End of package definition"!
+

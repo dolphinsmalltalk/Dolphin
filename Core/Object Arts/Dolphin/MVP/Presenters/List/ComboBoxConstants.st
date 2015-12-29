@@ -1,0 +1,54 @@
+"Filed out from Dolphin Smalltalk X6"!
+
+Smalltalk at: #ComboBoxConstants put: (PoolConstantsDictionary named: #ComboBoxConstants)!
+ComboBoxConstants at: 'CB_ADDSTRING' put: 16r143!
+ComboBoxConstants at: 'CB_DELETESTRING' put: 16r144!
+ComboBoxConstants at: 'CB_DIR' put: 16r145!
+ComboBoxConstants at: 'CB_ERR' put: -16r1!
+ComboBoxConstants at: 'CB_ERRSPACE' put: -16r2!
+ComboBoxConstants at: 'CB_FINDSTRING' put: 16r14C!
+ComboBoxConstants at: 'CB_FINDSTRINGEXACT' put: 16r158!
+ComboBoxConstants at: 'CB_GETCOUNT' put: 16r146!
+ComboBoxConstants at: 'CB_GETCURSEL' put: 16r147!
+ComboBoxConstants at: 'CB_GETDROPPEDCONTROLRECT' put: 16r152!
+ComboBoxConstants at: 'CB_GETDROPPEDSTATE' put: 16r157!
+ComboBoxConstants at: 'CB_GETDROPPEDWIDTH' put: 16r15F!
+ComboBoxConstants at: 'CB_GETEDITSEL' put: 16r140!
+ComboBoxConstants at: 'CB_GETEXTENDEDUI' put: 16r156!
+ComboBoxConstants at: 'CB_GETHORIZONTALEXTENT' put: 16r15D!
+ComboBoxConstants at: 'CB_GETITEMDATA' put: 16r150!
+ComboBoxConstants at: 'CB_GETITEMHEIGHT' put: 16r154!
+ComboBoxConstants at: 'CB_GETLBTEXT' put: 16r148!
+ComboBoxConstants at: 'CB_GETLBTEXTLEN' put: 16r149!
+ComboBoxConstants at: 'CB_GETLOCALE' put: 16r15A!
+ComboBoxConstants at: 'CB_GETTOPINDEX' put: 16r15B!
+ComboBoxConstants at: 'CB_INITSTORAGE' put: 16r161!
+ComboBoxConstants at: 'CB_INSERTSTRING' put: 16r14A!
+ComboBoxConstants at: 'CB_LIMITTEXT' put: 16r141!
+ComboBoxConstants at: 'CB_OKAY' put: 16r0!
+ComboBoxConstants at: 'CB_RESETCONTENT' put: 16r14B!
+ComboBoxConstants at: 'CB_SELECTSTRING' put: 16r14D!
+ComboBoxConstants at: 'CB_SETCURSEL' put: 16r14E!
+ComboBoxConstants at: 'CB_SETDROPPEDWIDTH' put: 16r160!
+ComboBoxConstants at: 'CB_SETEDITSEL' put: 16r142!
+ComboBoxConstants at: 'CB_SETEXTENDEDUI' put: 16r155!
+ComboBoxConstants at: 'CB_SETHORIZONTALEXTENT' put: 16r15E!
+ComboBoxConstants at: 'CB_SETITEMDATA' put: 16r151!
+ComboBoxConstants at: 'CB_SETITEMHEIGHT' put: 16r153!
+ComboBoxConstants at: 'CB_SETLOCALE' put: 16r159!
+ComboBoxConstants at: 'CB_SETTOPINDEX' put: 16r15C!
+ComboBoxConstants at: 'CB_SHOWDROPDOWN' put: 16r14F!
+ComboBoxConstants at: 'CBS_AUTOHSCROLL' put: 16r40!
+ComboBoxConstants at: 'CBS_DISABLENOSCROLL' put: 16r800!
+ComboBoxConstants at: 'CBS_DROPDOWN' put: 16r2!
+ComboBoxConstants at: 'CBS_DROPDOWNLIST' put: 16r3!
+ComboBoxConstants at: 'CBS_HASSTRINGS' put: 16r200!
+ComboBoxConstants at: 'CBS_LOWERCASE' put: 16r4000!
+ComboBoxConstants at: 'CBS_NOINTEGRALHEIGHT' put: 16r400!
+ComboBoxConstants at: 'CBS_OEMCONVERT' put: 16r80!
+ComboBoxConstants at: 'CBS_OWNERDRAWFIXED' put: 16r10!
+ComboBoxConstants at: 'CBS_OWNERDRAWVARIABLE' put: 16r20!
+ComboBoxConstants at: 'CBS_SIMPLE' put: 16r1!
+ComboBoxConstants at: 'CBS_SORT' put: 16r100!
+ComboBoxConstants at: 'CBS_UPPERCASE' put: 16r2000!
+ComboBoxConstants shrink!

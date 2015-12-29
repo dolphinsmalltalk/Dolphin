@@ -1,0 +1,112 @@
+| package |
+package := Package name: 'Dolphin Date Time Controls'.
+package paxVersion: 1;
+	basicComment: 'Dolphin Smalltalk Date & Time Common Controls.
+Copyright (c) Object Arts Ltd, 1997-2003.
+
+This package contains MVP View wrappers for the Windows date and time common controls, namely the Date Time Picker and MonthCal controls.
+'.
+
+package basicPackageVersion: '6.0'.
+
+
+package classNames
+	add: #DateTimeCommonControl;
+	add: #DateTimePicker;
+	add: #MonthCalendarView;
+	add: #NMSELCHANGE;
+	yourself.
+
+package methodNames
+	add: 'DatePresenter class' -> #resource_Month_calendar_view;
+	add: 'DatePresenter class' -> #resource_Picker_view;
+	add: 'TimePresenter class' -> #resource_Picker_view;
+	yourself.
+
+package globalNames
+	add: #DateTimeCommCtrlConstants;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\..\..\Base\Dolphin';
+	add: '..\..\Presenters\Date Time\Dolphin Date Time Presenters';
+	add: '..\..\Base\Dolphin MVP Base';
+	add: '..\..\Type Converters\Dolphin Type Converters';
+	add: '..\..\Models\Value\Dolphin Value Models';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+NMHDR subclass: #NMSELCHANGE
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ValueConvertingControlView subclass: #DateTimeCommonControl
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: 'DateTimeCommCtrlConstants'
+	classInstanceVariableNames: 'notificationMap'!
+DateTimeCommonControl subclass: #DateTimePicker
+	instanceVariableNames: 'displayFormat'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DateTimeCommonControl subclass: #MonthCalendarView
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+!DatePresenter class methodsFor!
+
+resource_Month_calendar_view
+	"Answer the literal data from which the 'Month calendar view' resource can be reconstituted.
+	DO NOT EDIT OR RECATEGORIZE THIS METHOD.
+
+	If you wish to modify this resource evaluate:
+	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Month_calendar_view)
+	"
+
+	^#(#'!!STL' 3 788558 10 ##(Smalltalk.STBViewProxy)  8 ##(Smalltalk.MonthCalendarView)  98 15 0 0 98 2 8 1409351680 1 416 721990 2 ##(Smalltalk.ValueHolder)  0 32 1310726 ##(Smalltalk.EqualitySearchPolicy)  262406 ##(Smalltalk.Date)  74655 524550 ##(Smalltalk.ColorRef)  8 4278190080 328198 ##(Smalltalk.Point)  395 307 5 0 0 0 416 0 8 4294904889 852486 ##(Smalltalk.NullConverter)  0 0 983302 ##(Smalltalk.MessageSequence)  202 208 98 3 721670 ##(Smalltalk.MessageSend)  8 #createAt:extent: 98 2 642 2799 21 642 395 307 416 786 8 #range: 98 1 98 2 0 0 416 786 8 #mcmSetFirstDayOfWeek: 98 1 1 416 983302 ##(Smalltalk.WINDOWPLACEMENT)  8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 119 5 0 0 10 0 0 0 60 6 0 0 163 0 0 0] 98 0 642 193 193 0 27 )!
+
+resource_Picker_view
+	"Answer the literal data from which the 'Picker view' resource can be reconstituted.
+	DO NOT EDIT OR RECATEGORIZE THIS METHOD.
+
+	If you wish to modify this resource evaluate:
+	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Picker_view)
+	"
+
+	^#(#'!!STL' 3 788558 10 ##(STBViewProxy)  8 ##(DateTimePicker)  98 16 0 0 98 2 8 1140916230 1 416 721990 2 ##(ValueHolder)  0 0 1376774 ##(PluggableSearchPolicy)  459270 ##(Message)  8 #= 98 0 562 8 #hash 98 0 262406 ##(Date)  70769 524550 ##(ColorRef)  8 4278190080 0 7 0 0 0 416 0 8 4294907103 852486 ##(NullConverter)  0 0 0 983302 ##(MessageSequence)  202 208 98 3 721670 ##(MessageSend)  8 #createAt:extent: 98 2 328198 ##(Point)  11 11 930 521 51 416 866 8 #text: 98 1 8 '17 November 1997' 416 866 8 #range: 98 1 98 2 0 0 416 983302 ##(WINDOWPLACEMENT)  8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 5 0 0 0 5 0 0 0 9 1 0 0 30 0 0 0] 98 0 930 193 193 0 27 )! !
+!DatePresenter class categoriesFor: #resource_Month_calendar_view!public!resources-views! !
+!DatePresenter class categoriesFor: #resource_Picker_view!public!resources-views! !
+
+!TimePresenter class methodsFor!
+
+resource_Picker_view
+	"Answer the literal data from which the 'Picker view' resource can be reconstituted.
+	DO NOT EDIT OR RECATEGORIZE THIS METHOD.
+
+	If you wish to modify this resource evaluate:
+	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Picker_view)
+	"
+
+	^#(#'!!STL' 3 788558 10 ##(STBViewProxy)  8 ##(DateTimePicker)  98 16 0 0 98 2 8 1140916235 1 416 721990 2 ##(ValueHolder)  0 0 1376774 ##(PluggableSearchPolicy)  459270 ##(Message)  8 #= 98 0 562 8 #hash 98 0 262406 ##(Time)  1 524550 ##(ColorRef)  8 4278190080 0 7 0 0 0 416 0 8 4294907103 852486 ##(NullConverter)  0 0 0 983302 ##(MessageSequence)  202 208 98 3 721670 ##(MessageSend)  8 #createAt:extent: 98 2 328198 ##(Point)  11 11 930 251 51 416 866 8 #text: 98 1 8 '00:00:00' 416 866 8 #range: 98 1 98 2 0 0 416 983302 ##(WINDOWPLACEMENT)  8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 5 0 0 0 5 0 0 0 130 0 0 0 30 0 0 0] 98 0 930 193 193 0 27 )! !
+!TimePresenter class categoriesFor: #resource_Picker_view!public!resources-views! !
+
+"End of package definition"!
+

@@ -1,0 +1,53 @@
+| package |
+package := Package name: 'IDB CurrencyToText'.
+package paxVersion: 1;
+	basicComment: 'Currency conversion
+Version 6a - May 2005
+For Version 6 of Dolphin Smalltalk
+
+(C) 2005 Ian Bartholomew
+ian@idb.me.uk
+Public Domain Freeware'.
+
+package basicPackageVersion: 'IDB$PACKAGE$VERSION 6a'.
+
+package basicScriptAt: #postinstall put: 'CurrencyToText 
+	propertyAt: #lsd
+	put: (CurrencyToText new
+		currencySymbol: ''£'';
+		fractionLength: 2)
+		'.
+
+package classNames
+	add: #CurrencyToText;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\Object Arts\Dolphin\IDE\Base\Development System';
+	add: '..\Object Arts\Dolphin\Base\Dolphin';
+	add: '..\Object Arts\Dolphin\MVP\Type Converters\Dolphin Type Converters';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+AbstractToTextConverter subclass: #CurrencyToText
+	instanceVariableNames: 'integerLength fractionLength zeroFillInteger commas integerOnly currencySymbol signBeforeCurrency'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+"End of package definition"!
+

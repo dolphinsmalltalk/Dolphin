@@ -1,0 +1,53 @@
+"Filed out from Dolphin Smalltalk 2002 release 5.00"!
+
+RefactoryVariableChange subclass: #RemovePoolVariableChange
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+RemovePoolVariableChange guid: (GUID fromString: '{DC8B3BC9-6D9D-4E17-AA32-596044261886}')!
+RemovePoolVariableChange comment: ''!
+!RemovePoolVariableChange categoriesForClass!Refactory-Change Objects! !
+!RemovePoolVariableChange methodsFor!
+
+asUndoOperation
+	^AddPoolVariableChange add: variable to: self changeClass!
+
+changeObject
+	| dictionary |
+	dictionary := variable isString 
+				ifTrue: [Smalltalk at: variable asSymbol]
+				ifFalse: [variable].
+	^dictionary!
+
+changesFileTemplate
+	^'<1p> <2s> <3s>'!
+
+changeString
+	^'Remove pool variable named, <1s>, from <2s>' 
+		expandMacrosWith: self variable
+		with: self displayClassName!
+
+changeSymbol
+	^#removeSharedPool:!
+
+printOn: aStream 
+	aStream
+		nextPutAll: self displayClassName;
+		nextPutAll: ' removeSharedPool: ';
+		nextPutAll: self variable;
+		nextPut: $!!!
+
+variable
+	^variable isString 
+		ifTrue: [variable]
+		ifFalse: 
+			[Smalltalk keyAtValue: variable ifAbsent: [self error: 'Cannot find value']]! !
+!RemovePoolVariableChange categoriesFor: #asUndoOperation!converting!public! !
+!RemovePoolVariableChange categoriesFor: #changeObject!private! !
+!RemovePoolVariableChange categoriesFor: #changesFileTemplate!constants!private! !
+!RemovePoolVariableChange categoriesFor: #changeString!printing!public! !
+!RemovePoolVariableChange categoriesFor: #changeSymbol!private! !
+!RemovePoolVariableChange categoriesFor: #printOn:!printing!public! !
+!RemovePoolVariableChange categoriesFor: #variable!accessing!private! !
+

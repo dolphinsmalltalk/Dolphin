@@ -1,0 +1,121 @@
+| package |
+package := Package name: 'OLE Drag & Drop'.
+package paxVersion: 1;
+	basicComment: ''.
+
+
+package classNames
+	add: #IDropSource;
+	add: #IDropTarget;
+	yourself.
+
+package methodNames
+	add: #OLELibrary -> #registerDragDrop:pDropTarget:;
+	add: #View -> #DragEnter:grfKeyState:pt:pdwEffect:;
+	add: #View -> #DragLeave;
+	add: #View -> #DragOver:pt:pdwEffect:;
+	add: #View -> #Drop:grfKeyState:pt:pdwEffect:;
+	add: #View -> #registerDragDrop;
+	add: #View -> #revokeDragDrop;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\..\Base\Dolphin';
+	add: '..\..\MVP\Base\Dolphin MVP Base';
+	add: '..\COM\OLE COM';
+	add: '..\Persist\OLE Persistence and Data Transfer';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+IUnknown subclass: #IDropSource
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+IUnknown subclass: #IDropTarget
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+!OLELibrary methodsFor!
+
+registerDragDrop: aHandle pDropTarget: anIDropTarget
+	"Register the specified window as a potential target for OLE drag-and-drop operations.
+		WINOLEAPI RegisterDragDrop(
+  			HWND hwnd,				// Window that can accept drops
+			IDropTarget * pDropTarget	// object that is to be target of drop
+		);"
+
+	<stdcall: hresult RegisterDragDrop handle IDropTarget* >
+	^self invalidCall! !
+!OLELibrary categoriesFor: #registerDragDrop:pDropTarget:!public! !
+
+!View methodsFor!
+
+DragEnter: pDataObj grfKeyState: grfKeyState pt: pt pdwEffect: pdwEffect
+	"Private - Implement the IDropTarget::DragEnter() callback method."
+
+	Notification signal: 'DragEnter: ', pDataObj printString, ', grfKeyState: ', 
+		grfKeyState printString, ', pt: ', pt printString, ' pdwEffect: ', pdwEffect printString.
+	^S_OK
+!
+
+DragLeave
+	"Private - Implement the IDropTarget::DragLeave() callback method."
+
+	Notification signal: 'DragLeave'.
+	^S_OK!
+
+DragOver: grfKeyState pt: pt pdwEffect: pdwEffect 
+	"Private - Implement the IDropTarget>>DragOver callback."
+
+	Notification signal: 'DragOver: ', grfKeyState printString, ' pt: ', pt printString, ' pdwEffect: ', pdwEffect printString.
+	pdwEffect value: 2.
+	^S_OK!
+
+Drop: pDataObj grfKeyState: grfKeyState pt: pt pdwEffect: pdwEffect
+	"Private - Implement the IDropTarget::Drop() callback method."
+
+	Notification signal: 'Drop: ', pDataObj printString, ', grfKeyState: ', 
+		grfKeyState printString, ', pt: ', pt printString, ' pdwEffect: ', pdwEffect printString.
+	^S_OK
+!
+
+registerDragDrop
+	"Register the receiver as a potential target for OLE drops."
+
+	| intf |
+	intf := IDropTarget on: self.
+	OLELibrary default
+		registerDragDrop: self asParameter pDropTarget: intf asParameter.
+	intf release!
+
+revokeDragDrop
+	"Revoke the receiver's status as an OLE Drag/Drop target."
+
+	^OLELibrary default
+		revokeDragDrop: self asParameter! !
+!View categoriesFor: #DragEnter:grfKeyState:pt:pdwEffect:!private! !
+!View categoriesFor: #DragLeave!private! !
+!View categoriesFor: #DragOver:pt:pdwEffect:!private! !
+!View categoriesFor: #Drop:grfKeyState:pt:pdwEffect:!private! !
+!View categoriesFor: #registerDragDrop!public! !
+!View categoriesFor: #revokeDragDrop!public! !
+
+"End of package definition"!
+

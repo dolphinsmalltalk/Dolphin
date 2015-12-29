@@ -1,0 +1,86 @@
+H1 {
+		font-size: 24pt;
+		margin-top: 12pt;
+		margin-bottom: 12pt;
+}
+
+H2 {
+		font-size:14pt;
+		margin-top: 9pt;
+		margin-bottom: 7pt;
+; font-weight: bold
+}
+
+H3 {
+		font-size:14pt;
+		margin-top: 9pt;
+		margin-bottom: 7pt;
+; font-weight: bold
+}
+
+H4 {
+		font-size:14pt;
+		margin-top: 9pt;
+		margin-bottom: 7pt;
+; font-weight: bold
+}
+P.List {  margin-left: 2em}
+P.List-2 {  margin-left: 4em; margin-top: 0.5em}
+
+OL.List {  display: list-item; margin-left: 3em}
+OL.List-2 {  list-style-type: upper-Alpha; margin-left: 4.5em; margin-top: 0.35em; margin-bottom: 0.35em} /*This rule should not be needed, as all list-2 lists should be nested within an OL or UL; it's put here just in case the HTML generation doesn't properly nest the 2nd level list. */
+
+OL.List-Table {  font-size: 9pt; list-style-type: decimal; list-style-position: outside; background-color: eeeeee}
+UL.List-Table {  font-size: 9pt; list-style-type: disc; list-style-position: outside; background-color: eeeeee}
+
+UL.List {  display: list-item; margin-left: 3em} 
+UL.List-2 {  list-style-type: square; margin-left: 4em; margin-top: 0.35em; margin-bottom: 0.35em} /*This rule should not be needed, as all list-2 lists should be nested within an OL or UL; it's put here just in case the HTML generation doesn't properly nest the 2nd level list. */
+
+OL UL.List-2 {  list-style-type: square; margin-left: 1.25em; margin-top: 0.35em; margin-bottom: 0.35em}
+UL UL.List-2 {  list-style-type: square; margin-left: 1.25em; margin-top: 0.35em; margin-bottom: 0.35em}
+OL OL.List-2 {  list-style-type: upper-Alpha; margin-left: 2em; margin-top: 0.35em; margin-bottom: 0.35em}
+UL OL.List-2 {  list-style-type: upper-Alpha; margin-left: 2em; margin-top: 0.35em; margin-bottom: 0.35em}
+body {  font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 10pt; color:#000000; background-color: #FFFFFF}
+
+TD.TableList {  font-size: 9pt; background-color: eeeeee; margin-top: .25em; margin-right: .25em; margin-bottom: .25em; margin-left: .25em} 
+TD.TableList OL.TableList {  font-size: 9pt; list-style-position: outside; list-style-type: decimal}
+TD.TableList UL.TableList {  font-size: 9pt; list-style-position: outside; list-style-type: disc}
+
+
+TD.List {  font-size: 9pt; background-color: eeeeee; margin-top: .25em; margin-right: .25em; margin-bottom: .25em; margin-left: .25em} 
+TD.List OL.List {  font-size: 9pt; list-style-position: outside; list-style-type: decimal}
+TD.List UL.List {  font-size: 9pt; list-style-position: outside; list-style-type: disc}
+
+.TableList {  font-size: 9pt; background-color: eeeeee; list-style-position: outside; list-style-type: disc}
+.Table-List {  font-size: 9pt; background-color: eeeeee; list-style-position: outside; list-style-type: disc}
+.List-Table {  font-size: 9pt; background-color: eeeeee; list-style-position: outside; list-style-type: disc}
+
+h5 {  font-size: 12pt}
+.Body-Text {line-height: 14pt; margin-top: 5pt}
+.Figures {  font-size: 9pt; font-weight: bold}
+.Figures-Table {  font-size: 9pt; font-weight: bold}
+code {  font-family: "Courier New", Courier, mono; margin-left: 0.5in}
+.RelatedHead {  font-size:11pt; font-weight: bold; color: blue; margin-top: -0.25em; margin-bottom: 0.5em}
+.Jump-from-List {  text-decoration: underline; margin-bottom: 3pt; margin-top: -0.25em}
+
+.GlossaryTerm {  font-size: 11pt; margin-top: 2pt; margin-bottom: 2pt; font-style: italic}
+.TOCTitle {  font-size: 24pt; margin-top: 9pt; margin-bottom: 7pt}
+.Definition {  line-height: 14pt; margin-top: 5.75pt; font-style: italic}
+.toc-1 {  font-size: 14pt; margin-top: 12pt; margin-bottom: 6pt}
+.Keyword-Link {  font-size: 11pt; color: blue}
+.Source {  font-family: "Courier New", Courier, mono; margin-top: 0px; margin-left: 0.5in}
+.Jump-Base {  text-decoration: underline; margin-top: 0pt; margin-bottom: 3pt}
+.Jump { text-decoration: underline; margin-top: 0pt; margin-bottom: 3pt }
+.Jump-from-Contents { text-decoration: underline; margin-top: 1pt; margin-bottom: 3pt ; font-size: 11pt; font-weight: bold}
+.Note {  margin-top: 9pt; margin-bottom: 9pt; padding-top: 1px; padding-bottom: 1px; border-color: #000000 black; border-style: solid; border-top-width: 1px; border-right-width: 0px; border-bottom-width: 1px; border-left-width: 0px}
+.toc-2 {  font-size: 11pt; text-decoration: underline; margin-top: 3pt; margin-bottom: 3pt}
+.toc-3 {  }
+.toc-4 {  margin-right: 0.5in; margin-left: 1.5in}
+pre {  font-family: "Courier New", Courier, mono; margin-left: 0.5in}
+
+.heading-2 { font-size:14pt; margin-top: 9pt; margin-bottom: 7pt; ; font-weight: bold }
+.heading-3 { font-size:14pt; margin-top: 9pt; margin-bottom: 7pt; ; font-weight: bold }
+.heading-4 { font-size:14pt; margin-top: 9pt; margin-bottom: 7pt; ; font-weight: bold }
+.TableText {  font-size: 9pt; background-color: eeeeee; margin-top: .25em; margin-right: .25em; margin-bottom: .25em; margin-left: .25em}
+.TableHeading {  font-size: 9pt; background-color: dddddd; margin-top: .25px; margin-right: .25px; margin-bottom: .25px; margin-left: .25px; font-weight: bold}
+.tableBorder {  border: 3px double}

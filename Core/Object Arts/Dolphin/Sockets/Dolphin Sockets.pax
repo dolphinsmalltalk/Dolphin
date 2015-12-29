@@ -1,0 +1,152 @@
+| package |
+package := Package name: 'Dolphin Sockets'.
+package paxVersion: 1;
+	basicComment: 'Dolphin Smalltalk TCP/IP Sockets Support
+Copyright (c) Object Arts Ltd, 2002-2003
+
+This package provides an interface to TCP/IP sockets. This package is a replacement for the older (and somewhat more inefficient) Sockets Connection package. The latter made use of an asynchronous messaging version of the Windows Sockets API provided by WSOCK32.DLL. The newer package in built on top of WS2_32.DLL which makes use of true threaded blocking calls. New applications should make use of this package rather than relying on the approach used by the older Sockets Connection package.
+
+For documentation evaluate:
+	SmalltalkSystem help: ''tcp.ipsocketsconnectivity'''.
+
+package basicPackageVersion: '6.1'.
+
+
+package classNames
+	add: #FD_SET;
+	add: #HOSTENT;
+	add: #IN_ADDR;
+	add: #InternetAddress;
+	add: #PROTOENT;
+	add: #SERVENT;
+	add: #ServerSocket2;
+	add: #SOCKADDR_IN;
+	add: #Socket2;
+	add: #SocketAbstract2;
+	add: #SocketClosed;
+	add: #SocketError;
+	add: #SocketReadStream;
+	add: #SocketWaitCancelled;
+	add: #SocketWriteStream;
+	add: #TIMEVAL;
+	add: #WS2_32Library;
+	add: #WSADATA;
+	yourself.
+
+package globalNames
+	add: #WinSocketConstants;
+	add: #WinSocketErrors;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\Base\Dolphin';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+Object subclass: #InternetAddress
+	instanceVariableNames: 'host ipAddress'
+	classVariableNames: ''
+	poolDictionaries: 'WinSocketConstants'
+	classInstanceVariableNames: ''!
+Object subclass: #SocketAbstract2
+	instanceVariableNames: 'port descriptor'
+	classVariableNames: ''
+	poolDictionaries: 'WinSocketConstants'
+	classInstanceVariableNames: ''!
+Win32Error subclass: #SocketError
+	instanceVariableNames: ''
+	classVariableNames: 'ErrorClasses'
+	poolDictionaries: 'WinSocketConstants WinSocketErrors'
+	classInstanceVariableNames: ''!
+SocketError subclass: #SocketClosed
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+SocketError subclass: #SocketWaitCancelled
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ExternalLibrary subclass: #WS2_32Library
+	instanceVariableNames: 'wsaData'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ExternalStructure subclass: #FD_SET
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ExternalStructure subclass: #TIMEVAL
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Win32Structure subclass: #HOSTENT
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: 'WinSocketConstants'
+	classInstanceVariableNames: ''!
+Win32Structure subclass: #IN_ADDR
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Win32Structure subclass: #PROTOENT
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Win32Structure subclass: #SERVENT
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Win32Structure subclass: #SOCKADDR_IN
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Win32Structure subclass: #WSADATA
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+SocketAbstract2 subclass: #ServerSocket2
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+SocketAbstract2 subclass: #Socket2
+	instanceVariableNames: 'address readStream writeStream isText'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ReadStream subclass: #SocketReadStream
+	instanceVariableNames: 'socket'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+WriteStream subclass: #SocketWriteStream
+	instanceVariableNames: 'socket dirty'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+"End of package definition"!
+

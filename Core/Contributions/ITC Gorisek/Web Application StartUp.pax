@@ -1,0 +1,52 @@
+| package |
+package := Package name: 'Web Application StartUp'.
+package paxVersion: 1;
+	basicComment: ''.
+
+package basicPackageVersion: 'r 404 rc 2'.
+
+
+package classNames
+	add: #WebApplicationServerShell;
+	add: #WebAppStartUp;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: 'Dialect Abstraction Layer';
+	add: '..\Object Arts\Dolphin\Base\Dolphin';
+	add: '..\Object Arts\Dolphin\MVP\Views\Common Controls\Dolphin Common Controls';
+	add: '..\Object Arts\Dolphin\MVP\Models\List\Dolphin List Models';
+	add: '..\Object Arts\Dolphin\MVP\Presenters\List\Dolphin List Presenter';
+	add: '..\Object Arts\Dolphin\MVP\Base\Dolphin MVP Base';
+	add: '..\Object Arts\Dolphin\Sockets\Dolphin Sockets';
+	add: 'e-obracuni\Web Server';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+Shell subclass: #WebApplicationServerShell
+	instanceVariableNames: 'sessionsPresenter serverInstance'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+RuntimeSessionManager subclass: #WebAppStartUp
+	instanceVariableNames: 'errorLog errorLogSemaphore switches'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+"End of package definition"!
+

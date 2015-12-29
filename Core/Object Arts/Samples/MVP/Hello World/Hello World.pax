@@ -1,0 +1,46 @@
+| package |
+package := Package name: 'Hello World'.
+package paxVersion: 1;
+	basicComment: 'Dolphin Smalltalk Hello World Sample. 
+Copyright (c) Object Arts Ltd, 1998-2000.
+
+This package contains a sample "Hello World" class. 
+To open a "Hello World" window evaluate:
+
+HelloWorld new show
+
+Note that it is expected behavior for a mouse click in this window to bring up a #doesNotUnderstand walkback for the message #thisIsADeliberateError. This deliberate error is used to illustrate how such things are reported in the runtime environment.'.
+
+
+package classNames
+	add: #HelloWorld;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\..\..\Dolphin\Base\Dolphin';
+	add: '..\..\..\Dolphin\MVP\Base\Dolphin MVP Base';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+ShellView subclass: #HelloWorld
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+"End of package definition"!
+

@@ -1,0 +1,54 @@
+| package |
+package := Package name: 'Gdiplus ImageView Sample'.
+package paxVersion: 1;
+	basicComment: 'Evaluate
+	GdiplusImageViewSampleShell show'.
+
+package basicPackageVersion: '6.0'.
+
+
+package classNames
+	add: #GdiplusImageViewSampleShell;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\..\..\Base\Dolphin';
+	add: '..\..\Presenters\Choice\Dolphin Choice Presenter';
+	add: '..\..\Dialogs\Common\Dolphin Common Dialogs';
+	add: '..\..\Presenters\Image\Dolphin Image Presenter';
+	add: '..\..\Models\List\Dolphin List Models';
+	add: '..\..\Presenters\List\Dolphin List Presenter';
+	add: '..\..\Base\Dolphin MVP Base';
+	add: '..\..\Presenters\Number\Dolphin Number Presenter';
+	add: '..\..\Presenters\Text\Dolphin Text Presenter';
+	add: '..\..\Type Converters\Dolphin Type Converters';
+	add: '..\..\Models\Value\Dolphin Value Models';
+	add: '..\Gdiplus';
+	add: '..\Gdiplus ImageView';
+	add: '..\..\..\ActiveX\Components\Picture\OLE Picture';
+	add: '..\..\..\ActiveX\Shell\Windows Shell';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+Shell subclass: #GdiplusImageViewSampleShell
+	instanceVariableNames: 'image edgeChoice viewChoice padding interpolationChoice classChoice useImageClass filename'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+"End of package definition"!
+

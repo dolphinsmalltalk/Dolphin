@@ -1,0 +1,97 @@
+| package |
+package := Package name: 'Dolphin Common Print Dialog'.
+package paxVersion: 1;
+	basicComment: 'Dolphin Smalltalk Windows Common Print Dialog.
+Copyright (c) Object Arts Ltd. 1997-2005. Portions Copyright (c) CGI Group (Europe) Ltd. 1997.
+
+This package contains Dialog presenter wrappers for the Windows common printer PrintDialog.'.
+
+package basicPackageVersion: '6.1'.
+
+
+package classNames
+	add: #PrintDialog;
+	add: #PRINTDLG;
+	add: #PRINTDLGEX;
+	add: #PRINTPAGERANGE;
+	yourself.
+
+package methodNames
+	add: #ComDlgLibrary -> #printDlgEx:;
+	add: 'PrinterCanvas class' -> #choose;
+	yourself.
+
+package globalNames
+	add: #PrintDialogConstants;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\..\..\Base\Dolphin';
+	add: 'Dolphin Common Dialogs';
+	add: '..\..\Base\Dolphin MVP Base';
+	add: '..\..\..\ActiveX\COM\OLE COM';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+Win32Structure subclass: #PRINTPAGERANGE
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+CommonDialogStructure subclass: #PRINTDLG
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: 'PrintDialogConstants'
+	classInstanceVariableNames: ''!
+CommonDialogStructure subclass: #PRINTDLGEX
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+CommonDialog subclass: #PrintDialog
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: 'PrintDialogConstants'
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+!ComDlgLibrary methodsFor!
+
+printDlgEx: lppd 
+	"Invoke the PRINTDLGEX() function of the module wrapped by the receiver.
+	Helpstring: Displays a Print property sheet for configuring a print job
+
+		HRESULT __stdcall PRINTDLGEX(
+			PRINTDLGEX* lppd);"
+
+	<stdcall: hresult PrintDlgExA PRINTDLGEX*>
+	^self invalidCall! !
+!ComDlgLibrary categoriesFor: #printDlgEx:!**auto generated**!public! !
+
+!PrinterCanvas class methodsFor!
+
+choose
+	"Answers a new instance of the receiver created with a non-owned hDC to a printer
+	chosen by the user with the PrintDialog. If the user cancels out of the dialog
+	then we answer nil."
+
+	| hDC |
+	^(hDC := PrintDialog showModal) isNil
+		ifFalse: [self withOwnedDC: hDC]! !
+!PrinterCanvas class categoriesFor: #choose!instance creation!public! !
+
+"End of package definition"!
+

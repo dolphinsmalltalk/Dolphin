@@ -1,0 +1,49 @@
+| package |
+package := Package name: 'Protected Scribble'.
+package paxVersion: 1;
+	basicComment: 'This is a version of the standard Scribble application that is protected by serial number. Try deploying this application and then entering the following serial number on startup:
+
+	CWDH-UA9B-VS9Q-TAVQ-FP0C-YBSY-NZ5G-DB'.
+
+package basicPackageVersion: '2005.6.2.23-CU-9'.
+
+
+package classNames
+	add: #MyCompanySerialNumber;
+	add: #ProtectedScribbleSessionManager;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\..\..\Dolphin\Lagoon\Product Protection';
+	add: '..\..\..\Dolphin\Lagoon\Product Protection Base';
+	add: '..\..\MVP\Scribble\Scribble';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+ProtectedProductSerialNumber subclass: #MyCompanySerialNumber
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ProtectedProductSessionManager subclass: #ProtectedScribbleSessionManager
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+"End of package definition"!
+

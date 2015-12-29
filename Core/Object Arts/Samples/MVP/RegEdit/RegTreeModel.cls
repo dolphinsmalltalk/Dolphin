@@ -1,0 +1,45 @@
+"Filed out from Dolphin Smalltalk X6.2"!
+
+VirtualTreeModel subclass: #RegTreeModel
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+RegTreeModel guid: (GUID fromString: '{87B4C674-026E-11D3-9FD7-00A0CC3E4A32}')!
+RegTreeModel comment: 'RegTreeModel implements a <treeModel> representing the hierarchy of <RegKey>s in the Windows system registry. For an example of its use, see the RegEdit sample application.'!
+!RegTreeModel categoriesForClass!MVP-Models! !
+!RegTreeModel methodsFor!
+
+approxSize
+	"Private - Answer the approximate size of the receiver.
+	Implementation Note: This does not have to be accurate, but it should be fast
+	(i.e. don't calculate it by counting the receiver's elements)."
+
+	^5000!
+
+defaultGetChildrenBlock
+	^[:each | each asSortedCollection: [:a :b | a name < b name]]!
+
+defaultGetParentBlock
+	^[:aRegKey | aRegKey parentKey]!
+
+defaultHasChildrenBlock
+	^[:aRegKey | aRegKey notEmpty]! !
+!RegTreeModel categoriesFor: #approxSize!accessing!private! !
+!RegTreeModel categoriesFor: #defaultGetChildrenBlock!initializing!private! !
+!RegTreeModel categoriesFor: #defaultGetParentBlock!initializing!private! !
+!RegTreeModel categoriesFor: #defaultHasChildrenBlock!initializing!private! !
+
+!RegTreeModel class methodsFor!
+
+defaultSearchPolicy
+	"Answer the <searchPolicy> used to compare and search for elements in the receiver's
+	instances."
+
+	"Implementation Note: As we are fronting an externally represented tree (i.e the Registry)
+	the nodes are created to represent the external keys and values, and are not, therefore,
+	identical."
+
+	^SearchPolicy equality! !
+!RegTreeModel class categoriesFor: #defaultSearchPolicy!accessing!public! !
+

@@ -1,0 +1,56 @@
+| package |
+package := Package name: 'SUnit'.
+package paxVersion: 1;
+	basicComment: ''.
+
+
+package classNames
+	add: #TestCase;
+	add: #TestResource;
+	add: #TestResult;
+	add: #TestSuite;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\..\..\Object Arts\Dolphin\Base\Dolphin';
+	add: 'SUnitPreload';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+Object subclass: #TestCase
+	instanceVariableNames: 'testSelector'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Object subclass: #TestResource
+	instanceVariableNames: 'name description'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: 'current'!
+Object subclass: #TestResult
+	instanceVariableNames: 'failures errors passed'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Object subclass: #TestSuite
+	instanceVariableNames: 'tests resources name'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+"End of package definition"!
+

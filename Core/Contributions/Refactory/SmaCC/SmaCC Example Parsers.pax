@@ -1,0 +1,71 @@
+| package |
+package := Package name: 'SmaCC Example Parsers'.
+package paxVersion: 1;
+	basicComment: 'This package is part of the Smalltalk Compiler-Compiler (SmaCC) written by John Brant and Don Roberts. It contains some sample parsers written using SmaCC. The C and Java parsers don''t create any parse trees. However, the Smalltalk parser (StParser) does create a Refactoring Browser parse tree.
+
+If you want more information about SmaCC, visit http://www.refactory.com/Software/SmaCC/. '.
+
+
+package classNames
+	add: #CParser;
+	add: #CScanner;
+	add: #JavaParser;
+	add: #JavaScanner;
+	add: #StParser;
+	add: #StScanner;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\..\Object Arts\Dolphin\Base\Dolphin';
+	add: '..\Refactoring Browser\Parser\RBParser';
+	add: 'SmaCC Runtime';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+SmaCCParser subclass: #CParser
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+SmaCCParser subclass: #JavaParser
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+SmaCCParser subclass: #StParser
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+SmaCCScanner subclass: #CScanner
+	instanceVariableNames: 'typeNames'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+SmaCCScanner subclass: #JavaScanner
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+SmaCCScanner subclass: #StScanner
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+"End of package definition"!
+

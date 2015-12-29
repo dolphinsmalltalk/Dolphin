@@ -1,0 +1,18 @@
+"Filed out from Dolphin Smalltalk X6"!
+
+IXMLDOMNode subclass: #IXMLDOMEntityReference
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: 'MSXMLConstants'
+	classInstanceVariableNames: ''!
+IXMLDOMEntityReference guid: (IID fromString: '{2933BF8E-7B36-11D2-B20E-00C04F983E60}')!
+IXMLDOMEntityReference comment: '<IXMLDOMEntityReference> is a wrapper class for the COM interface ''MSXML.IXMLDOMEntityReference'' generated from type information in the ''Microsoft XML, version 2.0'' library. It contains methods to invoke the member functions exposed by that interface.
+
+This is a specialized DOM node to represent entity references.'!
+!IXMLDOMEntityReference categoriesForClass!COM-Interfaces!MSXML-Interfaces! !
+!IXMLDOMEntityReference methodsFor!
+
+acceptVisitor: anXmlNodeVisitor 
+	anXmlNodeVisitor acceptEntityReference: self! !
+!IXMLDOMEntityReference categoriesFor: #acceptVisitor:!public!visitor! !
+

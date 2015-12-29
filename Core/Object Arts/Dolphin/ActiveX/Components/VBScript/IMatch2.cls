@@ -1,0 +1,73 @@
+"Filed out from Dolphin Smalltalk X6"!
+
+IMatch subclass: #IMatch2
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+IMatch2 guid: (IID fromString: '{3F4DACB1-160D-11D2-A8E9-00104B365C9F}')!
+IMatch2 comment: '<IMatch2> is a wrapper class for the COM interface ''VBScript_RegExp_55.IMatch2'' generated from type information in the ''Microsoft VBScript Regular Expressions 5.5'' library. It contains methods to invoke the member functions exposed by that interface.
+
+The type library contains no documentation for this interface
+
+Warning: This comment was automatically generated from the interface''s type information, but any changes made here will not be overwritten if the wrapper class is regenerated.
+
+IDL definition follows:
+
+[
+	object, 
+	uuid(3F4DACB1-160D-11D2-A8E9-00104B365C9F), 
+	hidden, 
+	dual, 
+	nonextensible
+]
+interface IMatch2 : IDispatch
+ {
+	[id(0000000000), propget]
+	HRESULT __stdcall Value(
+		[out, retval]BSTR* pValue);
+	[id(0x00002711), propget]
+	HRESULT __stdcall FirstIndex(
+		[out, retval]long* pFirstIndex);
+	[id(0x00002712), propget]
+	HRESULT __stdcall Length(
+		[out, retval]long* pLength);
+	[id(0x00002713), propget]
+	HRESULT __stdcall SubMatches(
+		[out, retval]IDispatch** ppSubMatches);
+};
+'!
+!IMatch2 categoriesForClass!COM-Interfaces!VBScript_RegExp_55-Interfaces! !
+!IMatch2 methodsFor!
+
+get_SubMatches: ppSubMatches
+	"Private - Get the value of the 'SubMatches' property of the receiver.
+
+		HRESULT __stdcall SubMatches(
+			[out, retval]IDispatch** ppSubMatches);"
+
+	<virtual stdcall: hresult 11 IDispatch**>
+	^self invalidCall!
+
+subMatches
+	"Answer the <IDispatch> value of the 'SubMatches' property of the receiver."
+
+	| answer |
+	answer := ISubMatches newPointer.
+	self get_SubMatches: answer.
+	^answer asArray! !
+!IMatch2 categoriesFor: #get_SubMatches:!**auto generated**!COM Interfaces-IMatch2!private! !
+!IMatch2 categoriesFor: #subMatches!properties!public! !
+
+!IMatch2 class methodsFor!
+
+defineFunctions
+	"Declare the virtual function table for the COM interface 'VBScript_RegExp_55.IMatch2'
+		IMatch2 defineTemplate"
+
+	self
+		defineFunction: #get_SubMatches:
+			argumentTypes: 'IDispatch**'
+! !
+!IMatch2 class categoriesFor: #defineFunctions!initializing!public! !
+

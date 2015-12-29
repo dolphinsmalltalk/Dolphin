@@ -1,0 +1,53 @@
+| package |
+package := Package name: 'SmaCC Development UI'.
+package paxVersion: 1;
+	basicComment: 'This package is part of the Smalltalk Compiler-Compiler (SmaCC) written by John Brant and Don Roberts. It contains a GUI to create new parsers. It was seperated from the SmaCC Development package to make porting SmaCC easier. The GUI can be accessed through the Tools menu in VA and VW, and through the Additional Tools item in Dolphin.
+
+If you want more information about SmaCC, visit http://www.refactory.com/Software/SmaCC/. '.
+
+package basicScriptAt: #postinstall put: 'Smalltalk developmentSystem addAdditionalToolsFolderIcon: SmaCCParserGenerator toolsFolderIcon!!'.
+package basicScriptAt: #preuninstall put: 'Smalltalk developmentSystem removeSystemFolderIconNamed: SmaCCParserGenerator toolDescription!!'.
+
+package classNames
+	add: #SmaCCParserGenerator;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\..\Object Arts\Dolphin\IDE\Base\Development System';
+	add: '..\..\Object Arts\Dolphin\Base\Dolphin';
+	add: '..\..\Object Arts\Dolphin\MVP\Presenters\Boolean\Dolphin Boolean Presenter';
+	add: '..\..\Object Arts\Dolphin\MVP\Views\Cards\Dolphin Card Containers';
+	add: '..\..\Object Arts\Dolphin\MVP\Presenters\Prompters\Dolphin Choice Prompter';
+	add: '..\..\Object Arts\Dolphin\MVP\Views\Common Controls\Dolphin Common Controls';
+	add: '..\..\Object Arts\Dolphin\MVP\Presenters\List\Dolphin List Presenter';
+	add: '..\..\Object Arts\Dolphin\MVP\Base\Dolphin MVP Base';
+	add: '..\..\Object Arts\Dolphin\MVP\Presenters\Text\Dolphin Text Presenter';
+	add: '..\..\Object Arts\Dolphin\MVP\Type Converters\Dolphin Type Converters';
+	add: '..\..\Object Arts\Dolphin\MVP\Models\Value\Dolphin Value Models';
+	add: 'SmaCC Development';
+	add: 'SmaCC Runtime';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+Shell subclass: #SmaCCParserGenerator
+	instanceVariableNames: 'subcanvasBuilder tabList parserClassNameHolder scannerClassNameHolder conflictHolder scannerHolder parserHolder testHolder generateDefinitionCommentsHolder generateSymbolCommentsHolder generateItemSetCommentsHolder allowUnicodeHolder ignoreCaseHolder'
+	classVariableNames: 'ShowPrecedenceConflicts'
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+"End of package definition"!
+

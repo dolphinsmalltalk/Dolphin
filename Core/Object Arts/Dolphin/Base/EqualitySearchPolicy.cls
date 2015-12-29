@@ -1,0 +1,61 @@
+"Filed out from Dolphin Smalltalk X6"!
+
+SingletonSearchPolicy subclass: #EqualitySearchPolicy
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+EqualitySearchPolicy guid: (GUID fromString: '{1086B60A-DA69-4D8D-82DF-BE610BA9D062}')!
+EqualitySearchPolicy comment: 'EqualitySearchPolicy is for configuring pluggable collections and models to use equality based search and comparisons, i.e. using #= and #hash, etc. Using an instance of this search policy a <PluggableSet> will behave in the same way as a <Set>.'!
+!EqualitySearchPolicy categoriesForClass!Collections-Support! !
+!EqualitySearchPolicy methodsFor!
+
+compare: operand1 with: operand2
+	"Answer whether the <Object>, operand1, is considered equivalent to the <Object> argument,
+	operand2, by this search policy."
+
+	^operand1 = operand2!
+
+hash: operand max: maximum
+	"Answer a suitable hash value for the <Object>, operand, under this search policy, 
+	between 1 and the <integer>, maximum.
+	Implementation Note: Override to avoid a message send (seems trivial but performance
+	of search policies can be important)."
+
+	^operand hash \\ maximum + 1!
+
+keyAtValue: value in: collection ifAbsent: operation
+	"Answer the <Object> key of the <Object> argument, value in the keyed
+	collection, collection, using the receiver's search policy. If there is no such 
+	value, answer the result of evaluating the <niladicValuable>, operation.
+	The reverse mapping equality search operation is used: The collection argument
+	must respond to #keyAtEqualValue:ifAbsent: (there is no keyedCollection protocol
+	defined at present)."
+
+	^collection keyAtEqualValue: value ifAbsent: operation!
+
+newLookupTable
+	"Answer a new <LookupTable> with the receiver as its search policy."
+
+	^LookupTable new!
+
+nextIndexOf: anElement in: collection from: start to: stop
+	"Answer the index of the next occurrence of anElement in the <sequencedReadableCollection>
+	argument,  collection, between startIndex and stopIndex inclusive. If there are no such occurrences, 
+	answer 0."
+
+	^collection nextIndexOf: anElement from: start to: stop! !
+!EqualitySearchPolicy categoriesFor: #compare:with:!comparing!public! !
+!EqualitySearchPolicy categoriesFor: #hash:max:!comparing!public! !
+!EqualitySearchPolicy categoriesFor: #keyAtValue:in:ifAbsent:!public!searching! !
+!EqualitySearchPolicy categoriesFor: #newLookupTable!operations!public! !
+!EqualitySearchPolicy categoriesFor: #nextIndexOf:in:from:to:!public!searching! !
+
+!EqualitySearchPolicy class methodsFor!
+
+current
+	"Answer the singleton instance of the receiver."
+
+	^self equality! !
+!EqualitySearchPolicy class categoriesFor: #current!instance creation!public! !
+

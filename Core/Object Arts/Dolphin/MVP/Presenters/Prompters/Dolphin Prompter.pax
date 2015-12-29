@@ -1,0 +1,45 @@
+| package |
+package := Package name: 'Dolphin Prompter'.
+package paxVersion: 1;
+	basicComment: 'Dolphin Smalltalk Generic Prompter.
+Copyright (c) Object Arts Ltd. 1997-2003. Portions Copyright (c) CGI Group (Europe) Ltd. 1997.
+'.
+
+package basicPackageVersion: '6.1'.
+
+
+package classNames
+	add: #Prompter;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\..\..\Base\Dolphin';
+	add: '..\..\Base\Dolphin MVP Base';
+	add: '..\Text\Dolphin Text Presenter';
+	add: '..\..\Type Converters\Dolphin Type Converters';
+	add: '..\..\Models\Value\Dolphin Value Models';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+ValueDialog subclass: #Prompter
+	instanceVariableNames: 'promptPresenter replyPresenter validationBlock'
+	classVariableNames: ''
+	poolDictionaries: 'Win32Constants'
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+"End of package definition"!
+

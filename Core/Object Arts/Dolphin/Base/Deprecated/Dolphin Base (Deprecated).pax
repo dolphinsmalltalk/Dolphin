@@ -1,0 +1,296 @@
+| package |
+package := Package name: 'Dolphin Base (Deprecated)'.
+package paxVersion: 1;
+	basicComment: 'Dolphin Smalltalk Base System (Deprecated Classes and Methods)
+Copyright (c) Object Arts Ltd 1997-2002. Portions copyright (c) CGI Group (Europe) Ltd, 1997.
+
+This package includes legacy classes and methods from Dolphin''s base package that have been deprecated. If you have no requirement to use code imported from pre-5.0 versions of Dolphin, then this package can be safely uninstalled.
+'.
+
+package basicPackageVersion: '6.1'.
+
+
+package classNames
+	add: #MethodContext;
+	add: #STBSymbolProxy;
+	yourself.
+
+package methodNames
+	add: #_FPIEEE_RECORD -> #causeCode;
+	add: #_FPIEEE_RECORD -> #causeName;
+	add: #_FPIEEE_VALUE -> #valueType;
+	add: #AttributeDescriptor -> #immutable;
+	add: #AttributeDescriptor -> #mutable;
+	add: #Behavior -> #makeIndirect;
+	add: #Behavior -> #makeNullTerminated;
+	add: #ExternalStructure -> #do:;
+	add: #ExternalStructure -> #do:separatedBy:;
+	add: #Integer -> #digitSize;
+	add: #Integer -> #highSWord;
+	add: #Integer -> #lowSWord;
+	add: #Object -> #asDword;
+	add: #OSVERSIONINFO -> #isNT4;
+	add: #OSVERSIONINFO -> #isWin98;
+	add: #OSVERSIONINFO -> #isWinMe;
+	add: #Package -> #script:;
+	add: #Package -> #script:put:;
+	add: #SourceManager -> #nextChunkFrom:;
+	add: #String -> #asDword;
+	add: 'ExternalCallback class' -> #receiver:prototype:;
+	add: 'ExternalCallback class' -> #receiver:prototype:closure:;
+	add: 'ExternalCallback class' -> #receiver:selector:;
+	add: 'ExternalCallback class' -> #receiver:selector:closure:;
+	add: 'ExternalDescriptor class' -> #oneStringArg;
+	add: 'File class' -> #for:inAndBelow:do:;
+	add: 'Package class' -> #name:comment:;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\Dolphin';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+Object variableSubclass: #MethodContext
+	instanceVariableNames: 'frame method receiver'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+STBProxy subclass: #STBSymbolProxy
+	instanceVariableNames: 'string'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+!_FPIEEE_RECORD methodsFor!
+
+causeCode
+	"Answer an <integer> which identifies the cause of the exception."
+
+	#deprecated.	"Could be more than one cause"
+	^(self cause bitAnd: 16r1F) highBit!
+
+causeName
+	"Answer the symbolic name of the type of floating point exception the receiver
+	represents."
+
+	#deprecated.	"Could be more than one cause"
+	^self causeNames last! !
+!_FPIEEE_RECORD categoriesFor: #causeCode!accessing!public! !
+!_FPIEEE_RECORD categoriesFor: #causeName!accessing!public! !
+
+!_FPIEEE_VALUE methodsFor!
+
+valueType
+	#deprecated.
+	^self format! !
+!_FPIEEE_VALUE categoriesFor: #valueType!accessing!public! !
+
+!AttributeDescriptor methodsFor!
+
+immutable
+	#deprecated.
+	self beImmutable!
+
+mutable
+	#deprecated.
+	self beMutable! !
+!AttributeDescriptor categoriesFor: #immutable!accessing!public! !
+!AttributeDescriptor categoriesFor: #mutable!accessing!public! !
+
+!Behavior methodsFor!
+
+makeIndirect
+	#deprecated.
+	self isIndirection: true!
+
+makeNullTerminated
+	#deprecated.
+	self isNullTerminated: true! !
+!Behavior categoriesFor: #makeIndirect!instance specification-accessing!private! !
+!Behavior categoriesFor: #makeNullTerminated!instance specification-accessing!private! !
+
+!ExternalCallback class methodsFor!
+
+receiver: anObject prototype: anExternalMethod
+	#deprecated.	"Use #receiver:selector:descriptor:"
+	self assert: 
+			[(anExternalMethod isKindOf: ExternalMethod) 
+				and: [anExternalMethod primitiveIndex == self callbackPrimitive]].
+	^MessageCallback 
+		receiver: anObject
+		selector: anExternalMethod selector
+		descriptor: anExternalMethod descriptor!
+
+receiver: anObject prototype: anExternalMethod closure: extraObject
+	#deprecated.	"Use #receiver:selector:descriptor: and #closure:"
+	^(self receiver: anObject prototype: anExternalMethod) 
+		closure: extraObject!
+
+receiver: anObject selector: aSymbol
+	#deprecated.	"Use #receiver:selector:descriptor:"
+	^self receiver: anObject prototype: (anObject class definitionOf: aSymbol)!
+
+receiver: anObject selector: aSymbol closure: extraObject
+	#deprecated.	"Use #receiver:selector:descriptor: and #closure:"
+	^(self receiver: anObject selector: aSymbol) closure: extraObject! !
+!ExternalCallback class categoriesFor: #receiver:prototype:!instance creation!public! !
+!ExternalCallback class categoriesFor: #receiver:prototype:closure:!instance creation!public! !
+!ExternalCallback class categoriesFor: #receiver:selector:!instance creation!public! !
+!ExternalCallback class categoriesFor: #receiver:selector:closure:!instance creation!public! !
+
+!ExternalDescriptor class methodsFor!
+
+oneStringArg
+	"Answer a shared instance of the receiver describing a standard function
+	with a single string argument."
+
+	#deprecated.
+	^self argumentTypes: 'lpstr'! !
+!ExternalDescriptor class categoriesFor: #oneStringArg!instance creation!public! !
+
+!ExternalStructure methodsFor!
+
+do: aOneArgumentBlock 
+	#deprecated.
+	self fieldsDo: aOneArgumentBlock!
+
+do: operation separatedBy: separator 
+	#deprecated.
+	self fieldsDo: operation separatedBy: separator! !
+!ExternalStructure categoriesFor: #do:!enumerating!public! !
+!ExternalStructure categoriesFor: #do:separatedBy:!enumerating!public! !
+
+!File class methodsFor!
+
+for: matchString inAndBelow: dirString do: operation
+	#deprecated.	"Use #forAll:in:do:"
+	^self 
+		forAll: matchString
+		in: dirString
+		do: [:each | operation value: each directory value: each]! !
+!File class categoriesFor: #for:inAndBelow:do:!enumerating!public! !
+
+!Integer methodsFor!
+
+digitSize
+	#deprecated.
+	^self digitLength!
+
+highSWord
+	"Answers the high order signed word of the receiver (assumes the receiver is a 32-bit Integer)."
+
+	#deprecated.
+	^(DWORD fromInteger: self) highSWord
+!
+
+lowSWord
+	"Answers the low order signed word of the receiver (assumes the receiver is a 32-bit Integer)."
+
+	#deprecated.
+	^(DWORD fromInteger: self) lowSWord
+! !
+!Integer categoriesFor: #digitSize!accessing!public! !
+!Integer categoriesFor: #highSWord!bit manipulation!public! !
+!Integer categoriesFor: #lowSWord!bit manipulation!public! !
+
+!Object methodsFor!
+
+asDword
+	"Private - Answer the receiver in a form suitable for passing/returning
+	as the 32-bit parameter/return value. The default is self (which
+	will cause the default window proc. of the window to be called
+	for most objects other than Integers when used as a return value)."
+
+	#deprecated.
+	^self! !
+!Object categoriesFor: #asDword!converting!private! !
+
+!OSVERSIONINFO methodsFor!
+
+isNT4
+	"Answer whether the host OS is NT4.
+		OSVERSIONINFO current isNT
+	"
+
+	"NT4 is no longer supported"
+	#deprecated.
+	^false!
+
+isWin98
+	"Answer whether the host OS is Windows 98.
+		OSVERSIONINFO current isWin98
+	"
+
+	"Dolphin no longer supports the pre-NT Windows OSs"
+	#deprecated.
+	^false!
+
+isWinMe
+	"Answer whether the host OS is Windows Me.
+		OSVERSIONINFO current isWinMe
+	"
+
+	"Dolphin no longer supports the pre-NT Windows OSs"
+
+	#deprecated.
+	^false! !
+!OSVERSIONINFO categoriesFor: #isNT4!public!testing! !
+!OSVERSIONINFO categoriesFor: #isWin98!public!testing! !
+!OSVERSIONINFO categoriesFor: #isWinMe!public!testing! !
+
+!Package methodsFor!
+
+script: scriptSymbol
+	#deprecated.	"In 4.0, but needed to load some old format packages"
+	self scriptAt: scriptSymbol!
+
+script: scriptSymbol put: aString 
+	#deprecated.	"In 4.0, but needed to load some old format packages"
+	self scriptAt: scriptSymbol put: aString! !
+!Package categoriesFor: #script:!operations!public! !
+!Package categoriesFor: #script:put:!operations!public! !
+
+!Package class methodsFor!
+
+name: nameString comment: commentString 
+	#deprecated.	"In 4.0, but retained becaused needed to load some old format packages"
+	^(self name: nameString)
+		basicComment: commentString;
+		yourself! !
+!Package class categoriesFor: #name:comment:!instance creation!public! !
+
+!SourceManager methodsFor!
+
+nextChunkFrom: aStream 
+	#deprecated.	"Use a ChunkSourceFiler"
+	^(ChunkSourceFiler on: aStream) nextChunk! !
+!SourceManager categoriesFor: #nextChunkFrom:!private!source filing! !
+
+!String methodsFor!
+
+asDword
+	"Answer the receiver in a form suitable for passing and returning as a
+	32-bit integer value.
+	N.B. Be careful that the receiver is not GC'd until the result is no
+	longer required, or it will be a dangling pointer."
+
+	#deprecated.
+	^self yourAddress! !
+!String categoriesFor: #asDword!converting!public! !
+
+"End of package definition"!
+

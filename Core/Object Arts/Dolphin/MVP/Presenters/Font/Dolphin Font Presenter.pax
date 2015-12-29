@@ -1,0 +1,51 @@
+| package |
+package := Package name: 'Dolphin Font Presenter'.
+package paxVersion: 1;
+	basicComment: 'Dolphin Smalltalk Font Presenter.
+Copyright (c) Object Arts Ltd. 1997-2003. Portions Copyright (c) CGI Group (Europe) Ltd. 1997.
+
+This package is part of the Dolphin Smalltalk Model View Presenter user-interface framework.'.
+
+package basicPackageVersion: '6.0'.
+
+
+package classNames
+	add: #FontPresenter;
+	add: #FontView;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\..\..\Base\Dolphin';
+	add: '..\..\Base\Dolphin MVP Base';
+	add: '..\..\Type Converters\Dolphin Type Converters';
+	add: '..\..\Models\Value\Dolphin Value Models';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+ValuePresenter subclass: #FontPresenter
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+StaticView subclass: #FontView
+	instanceVariableNames: 'previewText'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+"End of package definition"!
+

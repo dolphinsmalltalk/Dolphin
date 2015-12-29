@@ -1,0 +1,746 @@
+| package |
+package := Package name: 'Web Server Administration'.
+package paxVersion: 1;
+	basicComment: ''.
+
+package basicPackageVersion: 'r 454 rc 3'.
+
+
+package classNames
+	add: #WebApplicationAdministrationManager;
+	add: #WebApplicationAdministrationTask;
+	add: #WebHttpBackupReplicationServlet;
+	yourself.
+
+package methodNames
+	add: #HtmlGenericFormsCoder -> #applicationAdministrationCommandLine:errors:;
+	add: #HtmlGenericFormsCoder -> #applicationAdministrationCurrentSessionsPage:;
+	add: #HtmlGenericFormsCoder -> #applicationAdministrationErrorLogPage:errors:args:;
+	add: #HtmlGenericFormsCoder -> #applicationAdministrationLiveUpdatePage:errors:;
+	add: #HtmlGenericFormsCoder -> #applicationAdministrationPreviewPage:error:errors:;
+	add: #HtmlGenericFormsCoder -> #applicationAdministrationSetServerMessage;
+	add: #HtmlGenericFormsCoder -> #applicationAdministrationShowMemoryUsagePage:;
+	add: #HtmlGenericFormsCoder -> #applicationAdministrationShowProcessesPage:;
+	add: #HtmlGenericFormsCoder -> #applicationAdministrationShowServerStatisticsForDbReadAccessLast60minutes:;
+	add: #HtmlGenericFormsCoder -> #applicationAdministrationShowServerStatisticsForDbWriteAccessLast60minutes:;
+	add: #HtmlGenericFormsCoder -> #applicationAdministrationShowServerStatisticsForLast24hours:;
+	add: #HtmlGenericFormsCoder -> #applicationAdministrationShowServerStatisticsForLast60minutes:;
+	add: #HtmlGenericFormsCoder -> #applicationAdministrationShowServerStatisticsFragment:defaultAction:;
+	add: #HtmlGenericFormsCoder -> #applicationAdministrationSQLPrompt:errors:resultTable:;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: 'Dialect Abstraction Layer';
+	add: '..\Object Arts\Dolphin\Base\Dolphin';
+	add: 'HTML Forms Generator';
+	add: 'MD5';
+	add: 'e-obracuni\Web Server';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+Object subclass: #WebApplicationAdministrationManager
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: 'newExecutableFileName scheduledRestartProcess scheduledRestartTimestamp md5digest memoryUsageStats'!
+WebHttpServlet subclass: #WebHttpBackupReplicationServlet
+	instanceVariableNames: 'mutex currentToken currentIP currentFilename lastRequestTS lastPosition hashList'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+WebTask subclass: #WebApplicationAdministrationTask
+	instanceVariableNames: 'formFields currentPath commandInProgress commandProcess lastCommandLog lastCommandErrorLog commandLogReadPosition errorLogNodes errorLogParsingProcess errorLogFormArgs'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+!HtmlGenericFormsCoder methodsFor!
+
+applicationAdministrationCommandLine: args errors: errors 
+	| table |
+	self 
+		formPage: 
+			[self writeTitleBar: 'Command line prompt' helpPage: nil.
+			table := self newFormTable: 1.
+			table
+				labelText: 'Command line script';
+				nextCell;
+				addTextArea: 'cmd'
+					value: (args at: 'cmd')
+					columns: 50
+					rows: 20
+					errors: errors;
+				nextCell;
+				addActionButton: #processCommandLineRun:on: label: 'Run command line script';
+				generateOn: htmlStream.
+			(args includesKey: 'result') 
+				ifTrue: 
+					[self singleLineBorderWhiteBackground: 
+							[self 
+								paragraph: '<span style="font-family:Courier New;fond-size:10pt;">' 
+										, (args at: 'result') asWebString webHtmlEncoded , '</span>']]]
+		focusField: 'cmd'
+		defaultAction: #processCommandLineRun:on:!
+
+applicationAdministrationCurrentSessionsPage: sessions 
+	| table |
+	self formPage: 
+			[table := self newFormTable: 9.
+			table
+				addLabel: 'Server time' data: Timestamp now;
+				addLabel: 'Absolute time' data: ItcSystemManager absoluteSecondsClockValue;
+				addLabel: 'Number of users' data: application activeSuperSessions size;
+				addLabel: 'Number of sessions' data: application activeSessions size;
+				space2;
+				addActionButton: #processShowCurrentSessions:on: label: 'asp.button.Refresh';
+				addActionButton: #processShowCurrentSessionsAndPurge:on: label: 'Remove expired sessions';
+				addActionButton: #processShowCurrentSessionsAndRestartScavenger:on: label: 'Restart scavenger';
+				generateOn: htmlStream.
+			table := HtmlListTable columns: 8.
+			table
+				addHeader: 'User';
+				addHeader: 'UserLog.loginTimestamp';
+				addHeader: 'asp.label.session.expirationTime';
+				addHeader: 'asp.label.session.pageHits';
+				addHeader: 'UserLog.ip';
+				addHeader: 'UserLog.hostname';
+				addHeader: 'UserLog.userAgent';
+				addHeader: ''.
+			sessions do: 
+					[:each | 
+					each user isNil 
+						ifTrue: [table addData: 'N/A']
+						ifFalse: 
+							[table
+								cellNoWrap;
+								addField: '<b>' , each user username asWebString webHtmlEncoded , '</b>'
+									linkInNewWindowTo: sessionURLPrefix , '?action=' , #processSU:on: webAsActionString , '&id=' 
+											, each user partnerId asWebString;
+								addField: '<br />';
+								addField: (self linkForPartner: each user);
+								addField: '<br />';
+								addField: (self linkForPartner: each user partner mandantPartner);
+								addField: '<br /><small>' , each user partner mandantPartner delodajalec statusString , '</small>';
+								nextCell].
+					table
+						addData: each loginTime;
+						cellNoWrap;
+						addField: each expirationTimeInfo , '<br /><br />' , each getLastRequestTime printString , '(' 
+									, each expirationTime printString , ')';
+						nextCell;
+						cellAlignmentRight;
+						addData: each pageHits;
+						addData: each clientIP;
+						addData: each clientHostname;
+						addData: each userAgent;
+						addDeleteLinkTo: urlPrefix , '?action=removeSession&id=' , each sessionId asWebString].
+			table generateOn: htmlStream]!
+
+applicationAdministrationErrorLogPage: errorLogNodes errors: errors args: args 
+	| table node |
+	self
+		javascriptInclude: #javascriptDialogBox;
+		formPage: 
+				[self writeTitleBar: 'ERROR.LOG preview' helpPage: nil.
+				table := self newFormTable: 6.
+				table
+					addLabel: 'Scan only last'
+						textField: #errorLogTailSize
+						valueFrom: args
+						size: 2
+						errors: nil;
+					add: 'MB';
+					nextCell;
+					addLabel: 'Errors from date'
+						dateField: #errorLogDateFrom
+						valueFrom: args;
+					addActionButton: #processErrorLogReload:on: label: 'Reload ERROR.LOG';
+					addActionButton: #processErrorLogDownload:on: label: 'Download last 2MB of ERROR.LOG';
+					generateOn: htmlStream.
+				errorLogNodes isNil 
+					ifTrue: 
+						[self
+							warningBox2: 'ERROR.LOG is being parsed, please wait...';
+							writeActionButtonsCentered: #(#processErrorLog:on: 'Refresh')]
+					ifFalse: 
+						[self writeSubtitle: 'ERROR.LOG records matching your criteria:'.
+						errorLogNodes keys asSortedCollection do: 
+								[:eachKey | 
+								node := errorLogNodes at: eachKey.
+								self 
+									add: '&nbsp;<a href="' 
+											, (self urlPrefixForAction: #ajaxGetExpandErrorLogNode id: eachKey itcAsInteger) , '">' 
+											, '<b>' , (eachKey copyFrom: 1 to: 7) 
+											, '</b>' , ((eachKey copyFrom: 8) trimToSizeWithDots: 120) webHtmlEncoded 
+											, '</a> - <b>' , node size printString 
+											, '</b> time(s) from ' , (node first at: 1) asWebString 
+											, '<div id="error_' , eachKey itcAsInteger printString 
+											, '" style="margin-left:19px;"></div>']]]
+			focusField: nil
+			defaultAction: nil!
+
+applicationAdministrationLiveUpdatePage: args errors: errors 
+	| table dict |
+	self 
+		formPage: 
+			[self writeTitleBar: 'Server live update' helpPage: nil.
+			table := self newFormTable: 1.
+			(table
+				labelText: 'Smalltalk source';
+				nextCell;
+				addTextArea: 'sourceString'
+					value: (args at: 'sourceString')
+					columns: 160
+					rows: 20
+					errors: errors) cssStyle: 'font-family:Arial;font-size:11px;'.
+			table
+				nextCell;
+				addActionButtons: #(#processLiveUpdateUploadPatch:on: 'Upload and compile code' #processLiveUpdateDoIt:on: 'Do it!!');
+				generateOn: htmlStream.
+			(args includesKey: 'doItResult') 
+				ifTrue: 
+					[self
+						writeSubtitle: 'DO IT expression result:';
+						singleLineBorderGreyBackground: (args at: 'doItResult') asWebString webHtmlEncoded;
+						break].
+			self
+				writeSubtitle: 'Currently loaded live update patches:';
+				break.
+			dict := ItcSystemManager getLiveUpdatePatchDict.
+			(dict keys asSortedCollection: (ItcSortBlock with: #printString)) do: 
+					[:eachKey | 
+					self 
+						add: '&nbsp;<a href="' , (self urlPrefixForAction: #ajaxGetLiveUpdateExpandClass
+										id: (task getLiveUpdateDivNameForClass: eachKey)) 
+								, '"><b>' , eachKey asWebString 
+								, '</b></a> - ' , (dict at: eachKey) size printString 
+								, ' method(s) <div id="' , (task getLiveUpdateDivNameForClass: eachKey) 
+								, '" style="margin-left:19px;"></div>']]
+		focusField: 'sourceString'
+		defaultAction: #processLiveUpdate:on:!
+
+applicationAdministrationPreviewPage: fields error: error errors: errors 
+	| table uploadForm table2 |
+	self htmlPage: 
+			[self
+				writeTopNavigationTabs;
+				writeTitleBar: 'Web server and application administration / upload new version'.
+			error isNilOrEmpty ifFalse: [self errorText: error].
+			table := self newFormTable: 2.
+			table
+				background: '#f0f0f0';
+				addHiddenDefaultButton: #processDefault:on:;
+				addLabel: 'Server name';
+				addData: ItcSystemManager getComputerName asWebString , ' / ' 
+							, ItcSystemManager startUpDirectoryPath;
+				addLabel: 'Server process';
+				addData: 'PID=' , ItcSystemManager getCurrentOsProcessId asWebString , ' / ' 
+							, ItcSystemManager imageCommandLine asWebString;
+				addLabel: 'Total allocated memory';
+				addData: ItcSystemManager totalAllocatedMemory asDecimalOrFloat asWebStringWithMinimumDecimals 
+							, ' bytes (' , (ItcSystemManager totalAllocatedMemory / 1048576s) asWebString 
+							, ' Mb)';
+				addLabel: 'Application version';
+				cellNoWrap;
+				addField: (application currentReleaseId asWebString , ' / ' 
+							, application currentReleaseDate asWebString) webHtmlEncoded;
+				space;
+				add: (application serverClusterManager isNil 
+							ifTrue: ['']
+							ifFalse: 
+								[application serverClusterManager isCoordinatedByAnotherServer 
+									ifTrue: ['(worker server) ']
+									ifFalse: ['(coordinator server) ']]);
+				addActionButton: #processRestartApplication:on: label: 'Shutdown and startup current version';
+				nextCell.
+			application serverClusterManager isNil 
+				ifFalse: 
+					[table
+						addLabel: 'Cluster configuration';
+						addData: application serverClusterManager getClusterConfigurationDescription].
+			table
+				addLabel: 'Server time';
+				addData: Timestamp now asWebString;
+				addLabel: 'Upload new server version';
+				add: ((HtmlTable noSpacing: 4)
+							addDropDownList: #platformId
+								items: ((OrderedCollection new)
+										add: #DolphinSmalltalkVM;
+										add: #VastWindowsVM;
+										add: #VastLinuxVM;
+										yourself)
+								displaySelector: #yourself
+								valueSelector: #yourself
+								value: ItcSystemManager currentPlatformID;
+							nextCell;
+							addFileField: 'fileName' errors: nil;
+							nextCell;
+							space;
+							nextCell;
+							addActionButton: #processUploadApplication:on: label: 'asp.button.ImportData';
+							yourself);
+				addFormFieldErrorTextFor: 'fileName'
+					from: errors
+					break: false;
+				nextCell;
+				addLabel: 'HTTP server port'
+					textField: 'serverPort'
+					value: (fields at: 'serverPort').
+			WebApplicationAdministrationManager newExecutableFileNameGetAllAvailablePlatforms isNilOrEmpty 
+				ifFalse: 
+					[table2 := HtmlListTable columns: 3.
+					table2
+						addHeader: 'Platform ID';
+						addHeader: 'Filename';
+						addHeader: 'MD5';
+						cssStyle: 'border:1px solid black'.
+					WebApplicationAdministrationManager newExecutableFileNameGetAllAvailablePlatforms 
+						asSortedCollection do: 
+								[:each | 
+								table2
+									addData: each;
+									addData: (WebApplicationAdministrationManager newExecutableFileNameGetForPlatform: each);
+									addData: (WebApplicationAdministrationManager newExecutableFileGetMD5forPlatform: each)].
+					table
+						addLabel: 'New version file';
+						add: table2;
+						add: ((HtmlTable noSpacing: 3)
+									addBooleanField: 'noAsp' value: (fields at: 'noAsp');
+									nextCell;
+									space;
+									nextCell;
+									add: 'Start with "-noasp" switch';
+									nextCell;
+									addBooleanField: #upgradeAllServersInCluster valueFrom: fields;
+									nextCell;
+									space;
+									nextCell;
+									add: 'Upgrade and restart all servers in the cluster';
+									yourself);
+						add: ((HtmlTable noSpacing: 5)
+									addActionButton: #processStartUploadedApplication:on: label: 'Start new version now';
+									nextCell;
+									space;
+									nextCell;
+									cellNoWrap;
+									addLabel: 'Start new version at';
+									space;
+									addTimeField: #autoUpgradeTime
+										valueFrom: fields
+										errors: errors;
+									nextCell;
+									cellNoWrap;
+									space;
+									addActionButton: #processRestartApplicationAtGivenTime label: 'Schedule automatic restart';
+									yourself);
+						nextCell].
+			table
+				spanRow;
+				break;
+				addActionButton: #processBackupDatabase:on: label: 'Backup PSQL DB';
+				addWaitingActionButton: #processVacuumDatabase label: 'Vacuum PSQL DB';
+				addActionButton: #processDatabaseClose:on: label: 'Close DB';
+				addActionButton: #processBackupFiles:on: label: 'Backup files archive'.
+			application dbBackupUploadUrl isNilOrEmpty 
+				ifFalse: [table addActionButton: #processUploadDatabaseBackup label: 'Upload last DB backup to FTP'].
+			task imagesServerUrl isNilOrEmpty 
+				ifFalse: 
+					[table addActionButton: #processDownloadImagesFromCentralServer
+						label: 'DL images from central server'].
+			table addActionButton: #processReloadNlsFiles:on: label: 'Reload NLS files'.
+			uploadForm := HtmlFileUploadForm name: 'form1' action: urlPrefix.
+			uploadForm
+				add: table;
+				generateOn: htmlStream.
+			self break.
+			table := self newFormTable: 2.
+			table
+				background: '#f0f0f0';
+				addLabel: 'Upload path'
+					dropDownList: #uploadPath
+					items: task uploadDirectoriesValues
+					displaySelector: #key
+					valueSelector: #key
+					valueFrom: fields;
+				addLabel: 'File 1';
+				addFileField: 'file1' errors: errors;
+				nextCell;
+				addLabel: 'File 2';
+				addFileField: 'file2' errors: errors;
+				nextCell;
+				addLabel: 'File 3';
+				addFileField: 'file3' errors: errors;
+				nextCell;
+				addLabel: 'File 4';
+				addFileField: 'file4' errors: errors;
+				nextCell;
+				addLabel: 'File 5';
+				addFileField: 'file5' errors: errors;
+				nextCell;
+				addLabel: 'File 6';
+				addFileField: 'file6' errors: errors;
+				nextCell;
+				nextCell;
+				space;
+				addActionButton: #processUploadAppFile:on: label: 'Upload files locally';
+				space;
+				addActionButton: #processUploadAndBroadcastAppFile:on: label: 'Upload files to all servers'.
+			uploadForm := HtmlFileUploadForm name: 'form2' action: urlPrefix.
+			uploadForm
+				add: table;
+				generateOn: htmlStream]!
+
+applicationAdministrationSetServerMessage
+	| table actions |
+	self formPage: 
+			[self
+				writeTitleBar: 'Server message' helpPage: nil;
+				break.
+			table := self newFormTable: 1.
+			table
+				labelText: 'Server message at server time ' , Timestamp now asWebString , ':';
+				nextCell;
+				addTextArea: 'serverMessage'
+					value: application serverMessage
+					columns: 40
+					rows: 5
+					errors: nil;
+				generateOn: htmlStream.
+			actions := #('serverMessageSet' 'Set message') asOrderedCollection.
+			(application configurationSettingsAt: #serverBlocked ifAbsent: []) = true 
+				ifTrue: 
+					[actions addAll: #('serverMessageSetAndUnblockLogins' 'Set message and unblock server')]
+				ifFalse: 
+					[actions 
+						addAll: #('serverMessageSetAndBlockLogins' 'Set message and disable login for new sessions')].
+			self writeActionButtons: actions]!
+
+applicationAdministrationShowMemoryUsagePage: coll 
+	| table |
+	self formPage: 
+			[self writeTitleBar: 'Memory usage' helpPage: nil.
+			table := self newFormTable: 9.
+			table
+				addLabel: 'Server time' data: Timestamp now;
+				addLabel: 'Number of users' data: application activeSuperSessions size;
+				addLabel: 'Number of sessions' data: application activeSessions size;
+				space2;
+				addActionButton: #processShowMemoryUsage:on: label: 'asp.button.Refresh';
+				addActionButton: #processShowMemoryUsageRefresh:on: label: 'Take new snapshot';
+				addActionButton: #processShowMemoryUsagePerformGC:on: label: 'Perform GC';
+				addActionButton: #processShowMemoryUsageCheckImageConsistency:on: label: 'Check image consistency';
+				generateOn: htmlStream.
+			coll ~= false 
+				ifFalse: [self warningBox2: 'Please wait while calculating memory usage']
+				ifTrue: 
+					[self paragraph: 'Snapshot time: ' , coll key asWebString.
+					table := self newListTable: 8.
+					table
+						addHeader: 'Class name';
+						addHeader: 'Instance count';
+						addHeader: 'Delta 1';
+						addHeader: 'Delta 1 %';
+						addHeader: 'Delta 2';
+						addHeader: 'Delta 2 %';
+						addHeader: 'Delta 3';
+						addHeader: 'Delta 3 %'.
+					coll value do: [:each | 1 to: 8 do: [:i | table addData: (each at: i)]].
+					table generateOn: htmlStream]]!
+
+applicationAdministrationShowProcessesPage: coll 
+	| table |
+	self formPage: 
+			[self writeTitleBar: 'Active processes list' helpPage: nil.
+			table := self newFormTable: 9.
+			table
+				addLabel: 'Server time' data: Timestamp now;
+				addLabel: 'Absolute time' data: ItcSystemManager absoluteMillisecondsClockValue;
+				addLabel: 'Number of users' data: application activeSuperSessions size;
+				addLabel: 'Number of sessions' data: application activeSessions size;
+				space2;
+				addActionButton: #processShowProcesses:on: label: 'asp.button.Refresh';
+				addActionButton: #processShowProcessesPerformGC:on: label: 'Perform GC';
+				addActionButton: #processShowProcessesCheckImageConsistency:on: label: 'Check image consistency';
+				generateOn: htmlStream.
+			table := self newListTable: 9.
+			table
+				addHeader: 'Name';
+				addHeader: 'ID';
+				addHeader: 'State';
+				addHeader: 'Priority';
+				addHeader: 'Size';
+				addHeader: 'IP';
+				addHeader: 'Session / User';
+				addHeader: 'Executing';
+				addHeader: ''.
+			coll do: 
+					[:each | 
+					table
+						addData: each itcProcessName;
+						addData: each itcProcessId;
+						addData: each itcProcessState;
+						addData: each priority;
+						addData: each itcProcessSize;
+						addData: (each webRequest isNil ifFalse: [each webRequest clientIP]);
+						addData: (each webSession isNil ifFalse: [each webSession usernameInfo]);
+						addData: (((each isActive ifTrue: ['...'] ifFalse: [each itcSuspendedFrameString]) 
+									add: (each webRequest isNil ifFalse: [each webRequest header url])
+									withDelimiter: '
+') add: (each webTask isNil ifFalse: ['Task: ' , each webTask class asWebString])
+										withDelimiter: '
+');
+						addConfirmDeleteLinkTo: (self urlPrefixForAction: #processShowProcessesKillPID:on:
+									id: each itcProcessId)
+							confirmationString: 'Are you sure you want to kill process #' , each itcProcessId asWebString].
+			table generateOn: htmlStream]!
+
+applicationAdministrationShowServerStatisticsForDbReadAccessLast60minutes: hourlyStatistics 
+	self applicationAdministrationShowServerStatisticsFragment: 
+			[:w :h | 
+			self
+				writeSubtitle: 'Number of read requests per second - the last 60 min';
+				plotrLineChartLabels: (hourlyStatistics at: #labels)
+					dataSeries: (Array with: (hourlyStatistics at: #numberOfRequestsData))
+					width: w
+					height: h
+					fillChart: nil;
+				writeSubtitle: 'Request response wait duration avg/min in ms - the last 60 min';
+				plotrLineChartLabels: (hourlyStatistics at: #labels)
+					dataSeries: (Array with: (hourlyStatistics at: #avgResponseDuration)
+							with: (hourlyStatistics at: #minResponseDuration))
+					width: w
+					height: h
+					fillChart: nil;
+				writeSubtitle: 'Max response wait duration - the last 60 min';
+				plotrLineChartLabels: (hourlyStatistics at: #labels)
+					dataSeries: (Array with: (hourlyStatistics at: #maxResponseDuration))
+					width: w
+					height: h
+					fillChart: nil]
+		defaultAction: #processShowServerStatisticsForDbReadAccessLast60min:on:!
+
+applicationAdministrationShowServerStatisticsForDbWriteAccessLast60minutes: hourlyStatistics 
+	self applicationAdministrationShowServerStatisticsFragment: 
+			[:w :h | 
+			self
+				writeSubtitle: 'Number of write requests per second - the last 60 min';
+				plotrLineChartLabels: (hourlyStatistics at: #labels)
+					dataSeries: (Array with: (hourlyStatistics at: #numberOfRequestsData))
+					width: w
+					height: h
+					fillChart: nil;
+				writeSubtitle: 'Request response wait duration avg/min in ms - the last 60 min';
+				plotrLineChartLabels: (hourlyStatistics at: #labels)
+					dataSeries: (Array with: (hourlyStatistics at: #avgResponseDuration)
+							with: (hourlyStatistics at: #minResponseDuration))
+					width: w
+					height: h
+					fillChart: nil;
+				writeSubtitle: 'Max response wait duration - the last 60 min';
+				plotrLineChartLabels: (hourlyStatistics at: #labels)
+					dataSeries: (Array with: (hourlyStatistics at: #maxResponseDuration))
+					width: w
+					height: h
+					fillChart: nil]
+		defaultAction: #processShowServerStatisticsForDbWriteAccessLast60min:on:!
+
+applicationAdministrationShowServerStatisticsForLast24hours: dailyStatistics 
+	self applicationAdministrationShowServerStatisticsFragment: 
+			[:w :h | 
+			self
+				writeSubtitle: 'Number of requests per second - the last 24 hours';
+				plotrLineChartLabels: (dailyStatistics at: #labels)
+					dataSeries: (Array with: (dailyStatistics at: #keepAliveRequestData)
+							with: (dailyStatistics at: #newRequestData))
+					width: w
+					height: h
+					fillChart: nil;
+				writeSubtitle: 'Request duration avg/min in ms - the last 24 hours';
+				plotrLineChartLabels: (dailyStatistics at: #labels)
+					dataSeries: (Array with: (dailyStatistics at: #avgDuration) with: (dailyStatistics at: #minDuration))
+					width: w
+					height: h
+					fillChart: nil;
+				writeSubtitle: 'Max request duration in ms - the last 24 hours';
+				plotrLineChartLabels: (dailyStatistics at: #labels)
+					dataSeries: (Array with: (dailyStatistics at: #maxDuration))
+					width: w
+					height: h
+					fillChart: nil;
+				writeSubtitle: 'Server utilization - the last 24 hours';
+				plotrLineChartLabels: (dailyStatistics at: #labels)
+					dataSeries: (Array with: (dailyStatistics at: #serverUtilization))
+					width: w
+					height: h
+					fillChart: nil;
+				writeSubtitle: 'Peak memory usage - the last 24 hours';
+				plotrLineChartLabels: (dailyStatistics at: #labels)
+					dataSeries: (Array with: (dailyStatistics at: #peakMemoryUsage))
+					width: w
+					height: h
+					fillChart: nil]
+		defaultAction: #processShowServerStatisticsForLast24hours:on:!
+
+applicationAdministrationShowServerStatisticsForLast60minutes: hourlyStatistics 
+	self applicationAdministrationShowServerStatisticsFragment: 
+			[:w :h | 
+			self
+				writeSubtitle: 'Number of requests per second - the last 60 min';
+				plotrLineChartLabels: (hourlyStatistics at: #labels)
+					dataSeries: (Array with: (hourlyStatistics at: #keepAliveRequestData)
+							with: (hourlyStatistics at: #newRequestData))
+					width: w
+					height: h
+					fillChart: nil;
+				writeSubtitle: 'Request duration avg/min in ms - the last 60 min';
+				plotrLineChartLabels: (hourlyStatistics at: #labels)
+					dataSeries: (Array with: (hourlyStatistics at: #avgDuration)
+							with: (hourlyStatistics at: #minDuration))
+					width: w
+					height: h
+					fillChart: nil;
+				writeSubtitle: 'Max request duration - the last 60 min';
+				plotrLineChartLabels: (hourlyStatistics at: #labels)
+					dataSeries: (Array with: (hourlyStatistics at: #maxDuration))
+					width: w
+					height: h
+					fillChart: nil;
+				writeSubtitle: 'Server utilization - the last 60 min';
+				plotrLineChartLabels: (hourlyStatistics at: #labels)
+					dataSeries: (Array with: (hourlyStatistics at: #serverUtilization))
+					width: w
+					height: h
+					fillChart: nil;
+				writeSubtitle: 'Total used memory - the last 60 min';
+				plotrLineChartLabels: (hourlyStatistics at: #labels)
+					dataSeries: (Array with: (hourlyStatistics at: #memoryUsage))
+					width: w
+					height: h
+					fillChart: nil]
+		defaultAction: #processShowServerStatistics:on:!
+
+applicationAdministrationShowServerStatisticsFragment: aBlock defaultAction: defaultAction 
+	| w h options |
+	options := OrderedCollection new.
+	options
+		add: (Association key: #processShowServerStatistics:on: webAsActionString
+					value: 'HTTP server - last 60 minutes');
+		add: (Association key: #processShowServerStatisticsForLast24hours:on: webAsActionString
+					value: 'HTTP server - last 24 hours').
+	#OrDBConnectionStatisticsLogger itcAsClassOrNil isNil 
+		ifFalse: 
+			[options
+				add: (Association key: #processShowServerStatisticsForDbReadAccessLast60min:on: webAsActionString
+							value: 'DB read access - last 60 minutes');
+				add: (Association key: #processShowServerStatisticsForDbWriteAccessLast60min:on: webAsActionString
+							value: 'DB write access - last 60 minutes')].
+	w := session getScreenWidth - 180.
+	h := session getScreenHeight // 4.
+	self formPage: 
+			[self writeTitleBar: 'Server load and performance log statistics' helpPage: nil.
+			(self newFormTable: 4)
+				addLabel: 'Statistics for'
+					autoDropDownList: 'action'
+					items: options
+					displaySelector: #value
+					valueSelector: #key
+					value: defaultAction webAsActionString;
+				addLabel: 'Number of users' data: application activeSuperSessions size;
+				generateOn: htmlStream.
+			aBlock value: w value: h.
+			htmlWriter
+				text: 'HTTP 15 min. load: ' 
+							, (WebHttpServer current getRequestCounterArrayForLastNminutes: 15) asWebString;
+				break;
+				text: 'HTTP server performance log file export: ';
+				link: (self 
+							urlPrefixForAction: #processShowServerStatisticsPerformanceLogDownload:on:
+							id: nil
+							filename: 'performance_log.txt')
+					content: 'performance_log.txt';
+				break]!
+
+applicationAdministrationSQLPrompt: args errors: errors resultTable: rows 
+	| table result noOfColumns |
+	self 
+		formPage: 
+			[self writeTitleBar: 'SQL prompt' helpPage: nil.
+			table := self newFormTable: 1.
+			table
+				add: ((HtmlTable columns: 2)
+							addLabel: 'Max rows to fetch'
+								textField: 'limit'
+								value: (args at: 'limit' ifAbsent: [1000]);
+							yourself);
+				nextCell;
+				labelText: 'SQL script';
+				nextCell;
+				addTextArea: 'cmd'
+					value: (args at: 'cmd')
+					columns: 80
+					rows: 16
+					errors: errors;
+				nextCell;
+				addActionButtons: #(#processSqlPromptRunQuery:on: 'Run SQL query' #processSqlPromptExecute:on: 'Execute SQL script');
+				generateOn: htmlStream.
+			result := args at: 'result' ifAbsent: [].
+			result isNilOrEmpty 
+				ifFalse: 
+					[self singleLineBorderWhiteBackground: 
+							[self 
+								paragraph: '<font style="FONT-FAMILY:Courier New;FONT-SIZE:10pt">' 
+										, result asWebString webHtmlEncoded , '</font>']].
+			(args at: 'duration' ifAbsent: []) isNilOrEmpty 
+				ifFalse: [self paragraph: 'SQL executed in ' , (args at: 'duration') asWebString , '  msec'].
+			rows isNilOrEmpty 
+				ifFalse: 
+					[noOfColumns := rows first numberOfFields.
+					self paragraph: rows size printString , ' row(s)'.
+					table := HtmlListTable columns: noOfColumns.
+					table showSmall.
+					1 to: noOfColumns do: [:i | table addHeader: (rows first columnNames at: i)].
+					rows do: 
+							[:eachRow | 
+							1 to: noOfColumns
+								do: 
+									[:i | 
+									"Decimals must be shown as it is in a database."
+									| val |
+									val := eachRow atIndex: i.
+									table addData: ((val isNumber and: [val isInteger not]) 
+												ifTrue: [val asWebStringWith2OrMoreDecimals]
+												ifFalse: [val asWebString])]].
+					table generateOn: htmlStream]]
+		focusField: 'cmd'
+		defaultAction: #processSqlPromptRunQuery:on:! !
+!HtmlGenericFormsCoder categoriesFor: #applicationAdministrationCommandLine:errors:!application administration!public! !
+!HtmlGenericFormsCoder categoriesFor: #applicationAdministrationCurrentSessionsPage:!application administration!public! !
+!HtmlGenericFormsCoder categoriesFor: #applicationAdministrationErrorLogPage:errors:args:!application administration!public! !
+!HtmlGenericFormsCoder categoriesFor: #applicationAdministrationLiveUpdatePage:errors:!application administration!public! !
+!HtmlGenericFormsCoder categoriesFor: #applicationAdministrationPreviewPage:error:errors:!application administration!public! !
+!HtmlGenericFormsCoder categoriesFor: #applicationAdministrationSetServerMessage!application administration!public! !
+!HtmlGenericFormsCoder categoriesFor: #applicationAdministrationShowMemoryUsagePage:!application administration!public! !
+!HtmlGenericFormsCoder categoriesFor: #applicationAdministrationShowProcessesPage:!application administration!public! !
+!HtmlGenericFormsCoder categoriesFor: #applicationAdministrationShowServerStatisticsForDbReadAccessLast60minutes:!application administration!public! !
+!HtmlGenericFormsCoder categoriesFor: #applicationAdministrationShowServerStatisticsForDbWriteAccessLast60minutes:!application administration!public! !
+!HtmlGenericFormsCoder categoriesFor: #applicationAdministrationShowServerStatisticsForLast24hours:!application administration!public! !
+!HtmlGenericFormsCoder categoriesFor: #applicationAdministrationShowServerStatisticsForLast60minutes:!application administration!public! !
+!HtmlGenericFormsCoder categoriesFor: #applicationAdministrationShowServerStatisticsFragment:defaultAction:!application administration!private! !
+!HtmlGenericFormsCoder categoriesFor: #applicationAdministrationSQLPrompt:errors:resultTable:!application administration!public! !
+
+"End of package definition"!
+

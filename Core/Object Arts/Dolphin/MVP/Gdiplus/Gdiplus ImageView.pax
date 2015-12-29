@@ -1,0 +1,135 @@
+| package |
+package := Package name: 'Gdiplus ImageView'.
+package paxVersion: 1;
+	basicComment: 'See the "Gdiplus ImageView Sample" package'.
+
+package basicPackageVersion: '6.1'.
+
+
+package classNames
+	add: #GdiplusImageView;
+	yourself.
+
+package methodNames
+	add: #Bitmap -> #drawOnGraphics:at:extent:from:extent:unit:attributes:;
+	add: #Icon -> #drawOnGraphics:at:extent:from:extent:unit:attributes:;
+	add: #Image -> #drawOnGraphics:at:extent:from:extent:unit:attributes:;
+	add: #OLEPicture -> #drawOnGraphics:at:extent:from:extent:unit:attributes:;
+	add: 'ImagePresenter class' -> #resource_Gdiplus_view;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\..\IDE\Base\Development System';
+	add: '..\..\Base\Dolphin';
+	add: '..\Presenters\Image\Dolphin Image Presenter';
+	add: '..\Base\Dolphin MVP Base';
+	add: '..\Type Converters\Dolphin Type Converters';
+	add: '..\Models\Value\Dolphin Value Models';
+	add: 'Gdiplus';
+	add: '..\..\ActiveX\Components\Picture\OLE Picture';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+ImageViewAbstract subclass: #GdiplusImageView
+	instanceVariableNames: 'interpolationMode swun2 swun3 imageAttributes swun4 swun5 swun6'
+	classVariableNames: ''
+	poolDictionaries: 'GdiplusConstants'
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+!Bitmap methodsFor!
+
+drawOnGraphics: aGraphics at: dstOrigin extent: dstExtent from: srcOrigin extent: srcExtent unit: aUnit attributes: aImageAtt
+	"Subclass are responsible for drawing themselves on aGraphics.
+	Two techniques could be used
+		-The receiver converts itself to a Gdiplus object which draws itself.
+		-The receiver asks the graphics for a canvas"
+
+	aGraphics doWithCanvas: 
+			[:aCanvas | 
+			self 
+				drawOn: aCanvas
+				at: dstOrigin
+				extent: dstExtent
+				from: srcOrigin
+				extent: srcExtent]! !
+!Bitmap categoriesFor: #drawOnGraphics:at:extent:from:extent:unit:attributes:!drawing-gdiplus!public! !
+
+!Icon methodsFor!
+
+drawOnGraphics: aGraphics at: dstOrigin extent: dstExtent from: srcOrigin extent: srcExtent unit: aUnit attributes: aImageAtt
+	"Subclass are responsible for drawing themselves on aGraphics.
+	Two techniques could be used
+		-The receiver converts itself to a Gdiplus object which draws itself.
+		-The receiver asks the graphics for a canvas"
+
+	"Note: the srcOrigin and srcExtent are ignored"
+
+	aGraphics doWithCanvas: 
+			[:aCanvas | 
+			self 
+				drawOn: aCanvas
+				at: dstOrigin
+				extent: dstExtent]! !
+!Icon categoriesFor: #drawOnGraphics:at:extent:from:extent:unit:attributes:!drawing-gdiplus!public! !
+
+!Image methodsFor!
+
+drawOnGraphics: aGraphics at: dstOrigin extent: dstExtent from: srcOrigin extent: srcExtent unit: aUnit attributes: aImageAtt
+	"Subclass are responsible for drawing themselves on aGraphics.
+	Two techniques could be used
+		-The receiver converts itself to a Gdiplus object which draws itself.
+		-The receiver asks the graphics for a canvas"
+
+	"For the moment, signal a warning, not an error if not implement"
+
+	Notification 
+		signal: 'Gdiplus drawOnGraphics not (yet) implement for ' , self class name displayString! !
+!Image categoriesFor: #drawOnGraphics:at:extent:from:extent:unit:attributes:!drawing-gdiplus!public! !
+
+!ImagePresenter class methodsFor!
+
+resource_Gdiplus_view
+	"Answer the literal data from which the 'Gdiplus view' resource can be reconstituted.
+	DO NOT EDIT OR RECATEGORIZE THIS METHOD.
+
+	If you wish to modify this resource evaluate:
+	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Gdiplus_view)
+	"
+
+	^#(#'!!STL' 3 788558 10 ##(STBViewProxy)  8 ##(GdiplusImageView)  98 28 0 0 98 2 8 1140850944 1 416 721990 2 ##(ValueHolder)  0 32 1114638 ##(STBSingletonProxy)  8 ##(SearchPolicy)  8 #equality 0 0 0 5 0 0 0 416 0 8 4294902331 852486 ##(NullConverter)  0 0 0 0 0 1 0 8 #normal 0 8 #none 1 0 0 0 0 983302 ##(MessageSequence)  202 208 98 1 721670 ##(MessageSend)  8 #createAt:extent: 98 2 328198 ##(Point)  1 1 802 201 201 416 983302 ##(WINDOWPLACEMENT)  8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 100 0 0 0 100 0 0 0] 98 0 802 193 193 0 27 )! !
+!ImagePresenter class categoriesFor: #resource_Gdiplus_view!public!resources-views! !
+
+!OLEPicture methodsFor!
+
+drawOnGraphics: aGraphics at: dstOrigin extent: dstExtent from: srcOrigin extent: srcExtent unit: aUnit attributes: aImageAtt
+	"Subclass are responsible for drawing themselves on aGraphics.
+	Two techniques could be used
+		-The receiver converts itself to a Gdiplus object which draws itself.
+		-The receiver asks the graphics for a canvas"
+
+	"Note: the srcOrigin and srcExtent are ignored"
+
+	aGraphics doWithCanvas: 
+			[:aCanvas | 
+			self 
+				drawOn: aCanvas
+				at: dstOrigin
+				extent: dstExtent]! !
+!OLEPicture categoriesFor: #drawOnGraphics:at:extent:from:extent:unit:attributes:!drawing-gdiplus!public! !
+
+"End of package definition"!
+

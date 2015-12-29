@@ -1,0 +1,54 @@
+| package |
+package := Package name: 'Web Plugin Builder'.
+package paxVersion: 1;
+	basicComment: 'Dolphin Smalltalk Web Applet Plug-in Builder.
+Copyright (c) Object Art s Ltd, 1999-2000. 
+
+This package supports the deployment of a Dolphin image as a web browser plug-in. This image and the stripping policy (determined by a PluginImageStripper) determine which base classes are resident when the plug-in loads. If an applet references classes that are not resident in the plug-in image then these will be automatically imported by the plug-in for the duration of the applet''s execution.
+
+The standard plug-in can be created by selecting this package in the Package Browser and choosing Package/Deploy to Executable. Note, though, that this requires that additional packages such as Sockets Connection be installed in the development image before attempting the deployment. This is because the standard plug-in includes these packages as part of its base image.
+
+It is also possible to use the PluginImageStripper class to create customised browser plug-in DLLs.  Please see the PluginImageStripper class comment for more details.
+'.
+
+package basicPackageVersion: '6.0'.
+
+package imageStripperBytes: (ByteArray fromBase64String: 'IVNUQiAzIEYPEwAEAAAAUGx1Z2luSW1hZ2VTdHJpcHBlcgAAAABSAAAAEgAAAFdlYiBQbHVnaW4g
+QnVpbGRlclIAAAANAAAATnBEb2xwaGluLkRMTJoAAABSAAAAEgAAAFdlYiBEZXBsb3ltZW50IEtp
+dFIAAAAUAAAAUGx1Z2luU2Vzc2lvbk1hbmFnZXJfOAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAA==').
+package basicScriptAt: #postinstall put: '(PackageManager current packageNamed: ''Web Plugin Builder'') imageStripper: PluginImageStripper new.'.
+
+package classNames
+	add: #PluginImageStripper;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\..\Base\Dolphin';
+	add: '..\..\Lagoon\Lagoon Image Stripper';
+	add: 'Web Deployment Kit';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+ImageStripper subclass: #PluginImageStripper
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+"End of package definition"!
+

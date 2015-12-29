@@ -1,0 +1,136 @@
+| package |
+package := Package name: 'IDB IDE Method Filer Extension'.
+package paxVersion: 1;
+	basicComment: 'Adds a fileOut for method source
+Version 6a - May 2005
+For Version 6 of Dolphin Smalltalk
+
+(C) 2005 Ian Bartholomew
+ian@idb.me.uk
+Public Domain Freeware
+'.
+
+package basicPackageVersion: 'IDB$PACKAGE$VERSION 6a'.
+
+
+package classNames
+	add: #IdeMethodFilerExtension;
+	yourself.
+
+package methodNames
+	add: #ClassBrowserAbstract -> #fileOutMethod;
+	add: #CompiledMethod -> #fileOut;
+	add: #CompiledMethod -> #fileOutName;
+	add: #CompiledMethod -> #fileOutTo:;
+	add: #MethodBrowserShell -> #fileOutMethod;
+	add: #SmalltalkSystem -> #methodFileOut:;
+	add: #SourceManager -> #fileOutMethod:to:;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\Object Arts\Dolphin\IDE\Base\Development System';
+	add: '..\Object Arts\Dolphin\Base\Dolphin';
+	add: '..\Object Arts\Dolphin\MVP\Dialogs\Common\Dolphin Common Dialogs';
+	add: '..\Object Arts\Dolphin\MVP\Base\Dolphin MVP Base';
+	add: 'IDB IDE ClassBrowser Extensions';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+IdeClassBrowserExtensions subclass: #IdeMethodFilerExtension
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+!ClassBrowserAbstract methodsFor!
+
+fileOutMethod
+	"File out, after asking for filename, the currenly selected method"
+
+	#idbAdded.
+	self systemModel methodFileOut: self method! !
+!ClassBrowserAbstract categoriesFor: #fileOutMethod!idb goodies!public!source filing! !
+
+!CompiledMethod methodsFor!
+
+fileOut
+	"File out the receiver in a st file with the default filename"
+
+	#idbAdded.
+	self fileOutTo: self fileOutName!
+
+fileOutName
+	"Answers a string that can be used as a filename for the receiver"
+
+	#idbAdded.
+	^(String writeStream)
+		nextPutAll: self methodClass printString;
+		space;
+		nextPutAll: (self selector copyReplacing: $: withObject: $_) trimBlanks;
+		nextPutAll: '.st';
+		contents!
+
+fileOutTo: aString 
+	"File out the receiver in a st file using aString as the filename"
+
+	#idbAdded.
+	SourceManager default fileOutMethod: self to: aString! !
+!CompiledMethod categoriesFor: #fileOut!idb goodies!public!source filing! !
+!CompiledMethod categoriesFor: #fileOutName!idb goodies!public!source filing! !
+!CompiledMethod categoriesFor: #fileOutTo:!idb goodies!public!source filing! !
+
+!MethodBrowserShell methodsFor!
+
+fileOutMethod
+	"File out, after asking for filename, the currenly selected method"
+
+	#idbAdded.
+	self systemModel methodFileOut: self browser selectedMethod! !
+!MethodBrowserShell categoriesFor: #fileOutMethod!idb goodies!public!source filing! !
+
+!SmalltalkSystem methodsFor!
+
+methodFileOut: aCompiledMethod 
+	"Save the source and category for aCompiledMethod in chunk format..  Prompt for
+	a file/path name but suggest a default"
+
+	| filename |
+	#idbAdded.
+	filename := (FileSaveDialog new)
+				caption: 'File Out ' , aCompiledMethod printString;
+				fileTypes: (Array with: #('Smalltalk Files (*.st)' '*.st') with: FileDialog allFilesType);
+				defaultExtension: 'st';
+				value: aCompiledMethod fileOutName;
+				showModal.
+	filename notNil ifTrue: [aCompiledMethod fileOutTo: filename]! !
+!SmalltalkSystem categoriesFor: #methodFileOut:!idb goodies!public!source filing! !
+
+!SourceManager methodsFor!
+
+fileOutMethod: aCompiledMethod to: aFileName 
+	"File out the source and category for aCompiledMethod to aFileName"
+
+	| filer |
+	#idbAdded.
+	filer := self newSourceFiler: aFileName.
+	filer fileOutMessages: (OrderedCollection with: aCompiledMethod selector)
+		ofBehavior: aCompiledMethod methodClass.
+	filer close! !
+!SourceManager categoriesFor: #fileOutMethod:to:!idb goodies!public!source filing! !
+
+"End of package definition"!
+

@@ -1,0 +1,96 @@
+| package |
+package := Package name: 'Database Connection'.
+package paxVersion: 1;
+	basicComment: 'Dolphin Smalltalk ODBC Database Connection Development Extensions
+Copyright (c) Object Arts Ltd, 1997-2003. Portions copyright CGI Group (Europe) Ltd, 1997.
+
+This package extends the ''Database Connection Base'' package with tools, etc, for use in development. 
+
+N.B. This is a development time only package, but retains the name of the original Dolphin ODBC package, the runtime content of which is now in ''Database Connection Base''.
+
+For documentation evaluate:
+	SmalltalkSystem help: ''databaseconnectivity'''.
+
+package basicPackageVersion: '6.1'.
+
+package basicScriptAt: #postinstall put: 'ODBCDATE defineTemplate.
+ODBCTIME defineTemplate.
+ODBCTIMESTAMP defineTemplate.
+ODBCLibrary initialize.'.
+
+package methodNames
+	add: #DBAbstractRow -> #publishedAspects;
+	add: #DBResultSet -> #debugPrintString;
+	add: #DBResultSet -> #publishedKeyedAspectsBatchSize;
+	add: 'DBResultSet class' -> #newInstanceAspect:class:;
+	add: 'DBResultSet class' -> #publishedAspectsOfInstances;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: 'Database Connection Base';
+	add: '..\IDE\Base\Development System';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+!DBAbstractRow methodsFor!
+
+publishedAspects
+	"Answer a <LookupTable> of the <Aspect>s published by the receiver."
+
+	| aspects |
+	aspects := self class publishedAspectsOfInstances.
+	self columns 
+		do: [:each | aspects add: ((self at: each name) newAspect: each name class: KeyedAspect)].
+	^aspects! !
+!DBAbstractRow categoriesFor: #publishedAspects!constants!development!public! !
+
+!DBResultSet methodsFor!
+
+debugPrintString
+	^self printString!
+
+publishedKeyedAspectsBatchSize
+	"Private - Answers the number of keyed aspects to display in the PAI return at a time"
+
+	^10
+! !
+!DBResultSet categoriesFor: #debugPrintString!development!printing!public! !
+!DBResultSet categoriesFor: #publishedKeyedAspectsBatchSize!constants!development!private! !
+
+!DBResultSet class methodsFor!
+
+newInstanceAspect: aSymbol class: aspectClass 
+	"Private - Answer a new <Aspect> of the class, aspectClass, and with name, aSymbol, 
+	which is appropriate for representing aspects of the receiver's type."
+
+	"We don't want to inherit the behavior to use a CollectionPresenter aspect to display instances of the receiver
+	because this will attempt to access all the elements"
+
+	^aspectClass name: aSymbol!
+
+publishedAspectsOfInstances
+	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
+
+	^(super publishedAspectsOfInstances)
+		add: (Aspect name: #statement);
+		yourself! !
+!DBResultSet class categoriesFor: #newInstanceAspect:class:!adapters!development!private! !
+!DBResultSet class categoriesFor: #publishedAspectsOfInstances!constants!development!public! !
+
+"End of package definition"!
+

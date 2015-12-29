@@ -1,0 +1,140 @@
+"Filed out from Dolphin Smalltalk X6"!
+
+ExternalLibrary subclass: #ComDlgLibrary
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ComDlgLibrary guid: (GUID fromString: '{6467405A-3A82-101B-8181-00AA003743D3}')!
+ComDlgLibrary comment: 'ComDlgLibrary is the <ExternalLibrary> class to represent the Win32 system DLL, COMDLG32.DLL.
+
+This DLL implements Windows'' standard "common" dialogs, such as the File Open/Save, Find, Find/Replace, Font, Color and Print dialogs. See subclasses of <CommonDialog>, which wrap these behind a Smalltalk API in Dolphin.'!
+!ComDlgLibrary categoriesForClass!External-Libraries-Win32! !
+!ComDlgLibrary methodsFor!
+
+chooseColor: aWinCHOOSECOLOR
+	"Create a Color common dialog box that enables the user to select a color.
+
+		BOOL ChooseColor(
+			LPCHOOSECOLOR  lpcc 	// address of structure with initialization data
+		);"
+
+	<stdcall: bool ChooseColorA lpvoid>
+	^self invalidCall!
+
+chooseFont: aWinCHOOSEFONT
+	"Create a Font common dialog box that enables the user to choose attributes for a logical font.
+	These attributes include a typeface name, style (bold, italic, or regular), point size, character set, and 
+	effects (underline, strikeout, and text color). 
+	
+	BOOL ChooseFont(
+		LPCHOOSEFONT  lpcf 	// address of structure with initialization data
+	);"
+
+	<stdcall: bool ChooseFontA lpvoid>
+	^self invalidCall
+!
+
+commDlgExtendedError
+	"The CommDlgExtendedError function returns a common dialog box error code.
+	This code indicates the most recent error to occur during the execution of one of 
+	the common dialog box functions."
+
+	<stdcall: dword CommDlgExtendedError>
+	^self invalidCall
+!
+
+findText: aWinFINDREPLACE
+	"Create a system-defined modeless dialog box that lets the user specify a string to search for and options to 
+	use when searching for text in a document.
+
+		HWND FindText(
+			LPFINDREPLACE  lpfr 	// address of structure with initialization data
+		);"
+
+	<stdcall: handle FindTextA lpvoid>
+	^self invalidCall
+!
+
+getFileTitle: lpszFile lpszTitle: lpszTitle cbBuf: cbBuf
+	"Answer the title of the file identified by the lpszFile parameter.
+		short GetFileTitle(
+			LPCTSTR lpszFile, 	// pointer to full path and filename for file 	
+			LPTSTR lpszTitle, 	// pointer to buffer that receives filename 	
+			WORD cbBuf 	// length of buffer 	
+		);"
+
+	<stdcall: sword GetFileTitleA lpstr lpstr word>
+	^self invalidCall!
+
+getOpenFileName: aWinOPENFILENAME
+	"Creates an Open common dialog box that lets the user specify the drive, directory, and the name 
+	of a file or set of files to open. 
+
+		BOOL GetOpenFileName(
+			LPOPENFILENAME  lpofn 	// address of structure with initialization data
+		);"
+
+	<stdcall: bool GetOpenFileNameA lpvoid>
+	^self invalidCall!
+
+getSaveFileName: aWinOPENFILENAME
+	"Creates a Save common dialog box that lets the user specify the drive, directory, 
+	and name of a file to save.
+
+		BOOL GetSaveFileName(
+			LPOPENFILENAME  lpofn 	// address of structure with initialization data
+		);"
+
+	<stdcall: bool GetSaveFileNameA lpvoid>
+	^self invalidCall
+!
+
+printDlg: aWinPRINTDLG
+	"Displays a Print dialog box or a Print Setup dialog box. The Print dialog box enables the user to 
+	specify the properties of a particular print job.
+
+		BOOL PrintDlg(
+			LPPRINTDLG  lppd 	// address of structure with initialization data
+		);"
+
+	<stdcall: bool PrintDlgA lpvoid>
+	^self invalidCall
+!
+
+replaceText: aWinFINDREPLACE
+	"Create a system-defined modeless dialog box that lets the user specify
+	a string to search for and a replacement string, as well as options to 
+	control the find and replace operations.
+
+		HWND ReplaceText(
+			LPFINDREPLACE  lpfr 	// address of structure with initialization data
+		);"
+
+	<stdcall: handle ReplaceTextA lpvoid>
+	^self invalidCall
+!
+
+systemError
+	"Generate an error based on the last recorded host system error."
+
+	^self systemError: self commDlgExtendedError! !
+!ComDlgLibrary categoriesFor: #chooseColor:!primitives!private!win32 functions-common dialog box! !
+!ComDlgLibrary categoriesFor: #chooseFont:!primitives!private!win32 functions-common dialog box! !
+!ComDlgLibrary categoriesFor: #commDlgExtendedError!primitives!private!win32 functions-common dialog box! !
+!ComDlgLibrary categoriesFor: #findText:!primitives!private!win32 functions-common dialog box! !
+!ComDlgLibrary categoriesFor: #getFileTitle:lpszTitle:cbBuf:!primitives!private!win32 functions-file! !
+!ComDlgLibrary categoriesFor: #getOpenFileName:!primitives!private!win32 functions-common dialog box! !
+!ComDlgLibrary categoriesFor: #getSaveFileName:!primitives!private!win32 functions-common dialog box! !
+!ComDlgLibrary categoriesFor: #printDlg:!primitives!private!win32 functions-common dialog box! !
+!ComDlgLibrary categoriesFor: #replaceText:!primitives!private!win32 functions-common dialog box! !
+!ComDlgLibrary categoriesFor: #systemError!exceptions!public! !
+
+!ComDlgLibrary class methodsFor!
+
+fileName
+	"Answer the host system file name for the library"
+
+	^'COMDLG32'! !
+!ComDlgLibrary class categoriesFor: #fileName!constants!public! !
+

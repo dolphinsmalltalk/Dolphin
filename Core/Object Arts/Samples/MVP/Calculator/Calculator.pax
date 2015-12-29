@@ -1,0 +1,74 @@
+| package |
+package := Package name: 'Calculator'.
+package paxVersion: 1;
+	basicComment: 'Dolphin Smalltalk GUI Calculator Sample. 
+Copyright (c) Object Arts Ltd, 2000.
+
+A simple GUI calculator that allows Smalltalk expressions to be evaluated in a window. This illustrates the use of the Smalltalk compiler at runtime. Note that when this application is deployed many classes and methods will have been removed from the system so not all expressions that would work in the development environment will work at runtime.
+
+    Calculator show
+
+If you have Dolphin Professional you can deploy Calculator as true executable using the Application Deployment Wizard (select ''Deploy Executable'' from the Package Browser''s package context menu), and follow the instructions. Otherwise you can deploy an unstripped application image as follows:
+
+   CalculatorSessionManager deploy: ''DCalc''
+
+The resulting .img file can be lauched with Dolphin.exe in the normal way. Note, though, that the resulting application cannot be distributed to third parties because it still includes the development system classes.'.
+
+package imageStripperBytes: (ByteArray fromBase64String: 'IVNUQiAzIEYPDQAEAAAASW1hZ2VTdHJpcHBlcgAAAABSAAAACgAAAENhbGN1bGF0b3JSAAAAMQAA
+AE9iamVjdCBBcnRzXFNhbXBsZXNcTVZQXENhbGN1bGF0b3JcQ2FsY3VsYXRvci5leGWaAAAAUgAA
+AAoAAABDYWxjdWxhdG9yUgAAABgAAABDYWxjdWxhdG9yU2Vzc2lvbk1hbmFnZXIfOycAAAAAAAYD
+DwBWZXJzaW9uUmVzb3VyY2UGARAAVlNfRklYRURGSUxFSU5GT3IAAAA0AAAAvQTv/gAAAQAFANIH
+AAAAAAUA0gcAAAAAPwAAAAAAAAAEAAAAAgAAAAAAAAAAAAAAAAAAAOoAAADwAAAAYgAAAAIAAABS
+AAAACAAAADA0MDkwNGIw6gAAAPAAAABiAAAAGAAAAFIAAAAOAAAAUHJvZHVjdFZlcnNpb25SAAAA
+DQAAADIwMDIsIDUsIDAsIDBSAAAACwAAAENvbXBhbnlOYW1lUgAAAAAAAABSAAAADAAAAFByaXZh
+dGVCdWlsZFIAAAAAAAAAUgAAAAwAAABTcGVjaWFsQnVpbGRSAAAAAAAAAFIAAAAPAAAARmlsZURl
+c2NyaXB0aW9uUgAAAB0AAABEb2xwaGluIEdVSSBDYWxjdWxhdG9yIFNhbXBsZVIAAAAPAAAATGVn
+YWxUcmFkZW1hcmtzUgAAADEAAABEb2xwaGluIGlzIGEgdHJhZGVtYXJrIG9mIENHSSBHcm91cCAo
+RXVyb3BlKSBMdGQuUgAAAAwAAABJbnRlcm5hbE5hbWVSAAAAAAAAAFIAAAAQAAAAT3JpZ2luYWxG
+aWxlbmFtZVIAAAAOAAAAQ2FsY3VsYXRvci5leGVSAAAADgAAAExlZ2FsQ29weXJpZ2h0UgAAACIA
+AABDb3B5cmlnaHQgqSBPYmplY3QgQXJ0cyAyMDAwLTIwMDIuUgAAAAgAAABDb21tZW50c1IAAAAc
+AAAAUG93ZXJlZCBieSBEb2xwaGluIFNtYWxsdGFsa1IAAAALAAAARmlsZVZlcnNpb25SAAAADQAA
+ADIwMDIsIDUsIDAsIDBSAAAACwAAAFByb2R1Y3ROYW1lUgAAAB4AAABEb2xwaGluIFNtYWxsdGFs
+ayBQcm9mZXNzaW9uYWzKAAAA0AAAAGIAAAABAAAABgIKAERXT1JEQXJyYXlyAAAABAAAAAkEsAQD
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADQAAAAAAAAA=').
+
+package classNames
+	add: #Calculator;
+	add: #CalculatorSessionManager;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\..\..\Dolphin\Base\Dolphin';
+	add: '..\..\..\Dolphin\MVP\Base\Dolphin MVP Base';
+	add: '..\..\..\Dolphin\MVP\Presenters\Text\Dolphin Text Presenter';
+	add: '..\..\..\Dolphin\MVP\Type Converters\Dolphin Type Converters';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+Shell subclass: #Calculator
+	instanceVariableNames: 'input output'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+RuntimeSessionManager subclass: #CalculatorSessionManager
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+"End of package definition"!
+

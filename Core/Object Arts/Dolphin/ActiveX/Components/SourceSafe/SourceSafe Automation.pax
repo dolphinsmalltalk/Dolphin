@@ -1,0 +1,119 @@
+| package |
+package := Package name: 'SourceSafe Automation'.
+package paxVersion: 1;
+	basicComment: 'Dolphin Smalltalk SourceSafe Automation Package
+Copyright (c) Object Arts Ltd, 2002.
+'.
+
+package basicPackageVersion: '6.0'.
+
+
+package classNames
+	add: #IVSS;
+	add: #IVSSCheckout;
+	add: #IVSSCheckouts;
+	add: #IVSSDatabase;
+	add: #IVSSDatabaseOld;
+	add: #IVSSItem;
+	add: #IVSSItemOld;
+	add: #IVSSItems;
+	add: #IVSSUser;
+	add: #IVSSUsers;
+	add: #IVSSVersion;
+	add: #IVSSVersionOld;
+	add: #IVSSVersions;
+	yourself.
+
+package globalNames
+	add: #SourceSafeTypeLibConstants;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\..\Automation\ActiveX Automation';
+	add: '..\..\..\Base\Dolphin';
+	add: '..\..\COM\OLE COM';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+IDispatch subclass: #IVSS
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: 'SourceSafeTypeLibConstants'
+	classInstanceVariableNames: ''!
+IDispatch subclass: #IVSSCheckout
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: 'SourceSafeTypeLibConstants'
+	classInstanceVariableNames: ''!
+IDispatch subclass: #IVSSCheckouts
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: 'SourceSafeTypeLibConstants'
+	classInstanceVariableNames: ''!
+IDispatch subclass: #IVSSDatabaseOld
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: 'SourceSafeTypeLibConstants'
+	classInstanceVariableNames: ''!
+IDispatch subclass: #IVSSItemOld
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: 'SourceSafeTypeLibConstants'
+	classInstanceVariableNames: ''!
+IDispatch subclass: #IVSSItems
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: 'SourceSafeTypeLibConstants'
+	classInstanceVariableNames: ''!
+IDispatch subclass: #IVSSUser
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: 'SourceSafeTypeLibConstants'
+	classInstanceVariableNames: ''!
+IDispatch subclass: #IVSSUsers
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: 'SourceSafeTypeLibConstants'
+	classInstanceVariableNames: ''!
+IDispatch subclass: #IVSSVersionOld
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: 'SourceSafeTypeLibConstants'
+	classInstanceVariableNames: ''!
+IDispatch subclass: #IVSSVersions
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: 'SourceSafeTypeLibConstants'
+	classInstanceVariableNames: ''!
+IVSSDatabaseOld subclass: #IVSSDatabase
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: 'SourceSafeTypeLibConstants'
+	classInstanceVariableNames: ''!
+IVSSItemOld subclass: #IVSSItem
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: 'SourceSafeTypeLibConstants'
+	classInstanceVariableNames: ''!
+IVSSVersionOld subclass: #IVSSVersion
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: 'SourceSafeTypeLibConstants'
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+"End of package definition"!
+

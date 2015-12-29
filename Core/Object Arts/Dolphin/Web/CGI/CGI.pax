@@ -1,0 +1,41 @@
+| package |
+package := Package name: 'CGI'.
+package paxVersion: 1;
+	basicComment: 'Dolphin Smalltalk CGI (Common Gateway Interface) Package. 
+Copyright (c) Object Arts Ltd, 2001
+'.
+
+package basicPackageVersion: '6.0'.
+
+
+package classNames
+	add: #CGI;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\..\Base\Dolphin';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+Object subclass: #CGI
+	instanceVariableNames: 'paramString'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+"End of package definition"!
+

@@ -1,0 +1,157 @@
+| package |
+package := Package name: 'MetaProg SUnit Extensions'.
+package paxVersion: 0;
+	basicComment: 'SUnit Extensions add some useful extensions like #assert: with a description, and resumable TestFailures. It currently overrides two methods in TestResult which will be changed in the next SUnit core release.
+
+The main method of interest is TestCase>>#assert:description:. This takes a String as second argument. Normally, if the test case fails, this string will be written to the Transcript. Of course, this string can be constructed dynamically. 
+
+	| e |
+	e := 42.
+	self assert: e = 23 description: ''expected 23, got '' e printString
+
+You can choose whether to log by overriding #isLogging, and choose where to log to by overriding #failureLog. This package also provides a number of syntactically sugary extensions to this method.
+
+The second add-on is the resumable TestFailure. Why would you need this? Take a look at this example:
+
+	aCollection do: [ :each | self assert: each isFoo]
+
+In this case, as soon as the first element of the collection isn''t Foo, the test stops. In most cases, however, we would like to continue, and see both haw many elements and which elements aren''t Foo. It would also be nice to log this information. You can do this in this way:
+
+	aCollection do: [ :each | 
+		self 
+			assert: each isFoo 
+			description: each printString, ''is not Foo'' 
+			resumable: true]
+
+This will print out a message on the Transcript for each element that fails. It doesn''t cumulate failures, i.e., if the assertion fail 10 times in your test method, you''ll still only see one failure.
+
+April 15, 2002
+Joseph Pelrine
+MetaProg GmbH
+mailto:jpelrine@metaprog.com'.
+
+
+package classNames
+	add: #ResumableTestFailure;
+	yourself.
+
+package methodNames
+	add: #TestCase -> #assert:description:;
+	add: #TestCase -> #assert:description:resumable:;
+	add: #TestCase -> #deny:description:;
+	add: #TestCase -> #deny:description:resumable:;
+	add: #TestCase -> #failureLog;
+	add: #TestCase -> #isLogging;
+	add: #TestCase -> #logFailure:;
+	add: #TestCase -> #should:description:;
+	add: #TestCase -> #should:raise:description:;
+	add: #TestCase -> #shouldnt:description:;
+	add: #TestCase -> #shouldnt:raise:description:;
+	add: 'TestResult class' -> #resumableFailure;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package allResourceNames: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\..\Camp Smalltalk\SUnit\SUnit';
+	add: '..\..\Camp Smalltalk\SUnit\SUnitPreload';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+TestFailure subclass: #ResumableTestFailure
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+!TestCase methodsFor!
+
+assert: aBoolean description: aString
+	aBoolean ifFalse: [
+		self logFailure: aString.
+		TestResult failure sunitSignalWith: aString]!
+
+assert: aBoolean description: aString resumable: resumableBoolean 
+
+	aBoolean ifFalse: [
+		| exception |
+		self logFailure: aString.
+		exception := resumableBoolean
+			ifTrue: [TestResult resumableFailure]
+			ifFalse: [TestResult failure].
+		exception sunitSignalWith: aString]!
+
+deny: aBoolean description: aString
+	self assert: aBoolean not description: aString!
+
+deny: aBoolean description: aString resumable: resumableBoolean
+	self 
+		assert: aBoolean not
+		description: aString
+		resumable: resumableBoolean!
+
+failureLog
+	"dialect-specific"
+	"VA - System errorLog"
+	"VW, Dolphin - Transcript"
+	
+	^self subclassResponsibility
+!
+
+isLogging
+	^false!
+
+logFailure: aString
+	self isLogging ifTrue: [
+		self failureLog 
+			cr; 
+			nextPutAll: aString; 
+			flush]!
+
+should: aBlock description: aString
+	self assert: aBlock value description: aString!
+
+should: aBlock raise: anExceptionalEvent description: aString 
+	^self assert: (self executeShould: aBlock inScopeOf: anExceptionalEvent)
+		description: aString!
+
+shouldnt: aBlock description: aString
+	self deny: aBlock value description: aString!
+
+shouldnt: aBlock raise: anExceptionalEvent description: aString 
+	^self assert: (self executeShould: aBlock inScopeOf: anExceptionalEvent) not 		description: aString! !
+!TestCase categoriesFor: #assert:description:!Accessing!public! !
+!TestCase categoriesFor: #assert:description:resumable:!public!Running! !
+!TestCase categoriesFor: #deny:description:!Accessing!public! !
+!TestCase categoriesFor: #deny:description:resumable:!Accessing!public! !
+!TestCase categoriesFor: #failureLog!Accessing!public! !
+!TestCase categoriesFor: #isLogging!Accessing!public! !
+!TestCase categoriesFor: #logFailure:!Accessing!public! !
+!TestCase categoriesFor: #should:description:!Accessing!public! !
+!TestCase categoriesFor: #should:raise:description:!Accessing!public! !
+!TestCase categoriesFor: #shouldnt:description:!Accessing!public! !
+!TestCase categoriesFor: #shouldnt:raise:description:!Accessing!public! !
+
+!TestResult class methodsFor!
+
+resumableFailure
+	^ResumableTestFailure! !
+!TestResult class categoriesFor: #resumableFailure!Exceptions!public! !
+
+"End of package definition"!
+

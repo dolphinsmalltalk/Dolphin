@@ -1,0 +1,49 @@
+removed multiple references to Double because Dolphin's Float implementation is already 64 bits.
+
+
+TestRunner open
+
+| x |
+x := DhbPolynomial coefficients: #( 1 2 3 ).
+2 / x
+
+Object>>isNumber
+Rectangle>>positiveRectangle
+UndefinedObject>>ifNil: ifNot:
+UndefinedObject>>ifNotNil:
+Number
+	isNumber
+	asLimitedPrecisionReal
+	beta:
+	equalsTo: aNumber
+	errorFunction
+	gamma
+	logBeta: aNumber
+	logGamma
+	random
+	relativelyEqualsTo: aNumber upTo: aSmallNumber
+	addPolynomial: aPolynomial
+	dividingPolynomial: aPolynomial
+	productWithMatrix: aMatrix
+	productWithVector: aVector
+	subtractToPolynomial: aPolynomial
+	timesPolynomial: aPolynomial
+
+Number class>>random
+	
+
+!Collection asVector
+	
+!String asInteger
+	beginsWith: aString
+	
+
+Integer gamma
+	random
+	
+!Point extentFromBottomLeft: aPoint
+	extentFromBottomRight: aPoint
+	extentFromCenter: aPoint
+	extentFromTopLeft: aPoint
+	extentFromTopRight: aPoint
+	

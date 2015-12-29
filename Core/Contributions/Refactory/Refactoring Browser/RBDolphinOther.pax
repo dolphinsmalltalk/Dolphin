@@ -1,0 +1,123 @@
+| package |
+package := Package name: 'RBDolphinOther'.
+package paxVersion: 0;
+	basicComment: ''.
+
+package basicPackageVersion: ''.
+
+"Add the package scripts"
+package basicScriptAt: #postinstall put: ''.
+package basicScriptAt: #postuninstall put: ''.
+package basicScriptAt: #preinstall put: ''.
+package basicScriptAt: #preuninstall put: ''.
+
+"Add the class names, loose method names, global names, resource names"
+package classNames
+	yourself.
+
+package methodNames
+	add: #SmalltalkSystem -> #browseAClassVariable:class:;
+	add: #SmalltalkSystem -> #browseLocalClassReferences:;
+	add: #SmalltalkSystem -> #browseLocalClassVariables:;
+	yourself.
+
+package globalNames
+	yourself.
+
+package resourceNames
+	yourself.
+
+"Binary Global Names"
+package binaryGlobalNames: (Set new
+	yourself).
+"Resource Names"
+package allResourceNames: (Set new
+	yourself).
+
+"Add the prerequisite names"
+package setPrerequisites: (IdentitySet new
+	add: 'Development System';
+	add: 'Dolphin';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+"Loose Methods"!
+
+!SmalltalkSystem methodsFor!
+
+browseAClassVariable: aVariable class: browseClass
+	"Open a MethodBrowser all methods that refer to the chosen variable.
+	rbDmm added for RefactoringBrowserShell>>removeClassVar"
+
+	| references  startClass anAssoc  |
+	
+	aVariable notNil ifTrue: [
+		references := Set new.
+		startClass := browseClass withAllSuperclasses detect: [:aClass | aClass classVarNames includes: aVariable].
+		anAssoc := startClass classPool associationAt: aVariable.
+		startClass withAllSubclassesDo: [:aClass |
+			references 
+				addAll: (aClass whichMethodsReferTo: anAssoc);
+				addAll: (aClass class whichMethodsReferTo: anAssoc)].
+		references isEmpty
+			ifTrue: [MessageBox notify: browseClass name, ' class variable ', aVariable, ' not referenced']
+			ifFalse: [
+				self 
+					browseMethods: references 
+					caption: 'References to ', anAssoc printString
+					findString: aVariable
+					filter: [:m | m refersTo: anAssoc]]]!
+
+browseLocalClassReferences: aClass 
+	"List all of the methods which reference the class in the class and below ONLY. 
+	rbDmm - added for RefactoringBrowserShell>>classReferences"
+
+	|  references global |
+	
+	global := self globalVariable: aClass. 
+	references := self referencesTo: global inAndBelow: aClass.	
+	references isEmpty
+		ifTrue: [MessageBox notify: 'No local methods reference ', aClass printString]
+		ifFalse: [
+			self
+				browseMethods: references
+				caption: ' Local references to ', aClass name
+				findString: nil
+				filter: nil].
+!
+
+browseLocalClassVariables: browseClass
+	"Opens a selection dialog to choose one of the class variables of browseClass
+	to browse. Then a MethodBrowser is opened on all methods that
+	refer to the chosen variable."
+
+	"rbDmm added for RefactoringBrowserShell>>classVarRefs"
+
+	| references aVariable startClass anAssoc classVars |
+	classVars := OrderedCollection new.
+	browseClass  classVarNames asSortedCollection asArray reverseDo: [:aName | classVars addFirst: aName].
+	aVariable := ChoicePrompter choices: classVars caption: 'Class Variables'.
+	aVariable notNil ifTrue: [
+		references := Set new.
+		startClass := browseClass withAllSuperclasses detect: [:aClass | aClass classVarNames includes: aVariable].
+		anAssoc := startClass classPool associationAt: aVariable.
+		startClass withAllSubclassesDo: [:aClass |
+			references 
+				addAll: (aClass whichMethodsReferTo: anAssoc);
+				addAll: (aClass class whichMethodsReferTo: anAssoc)].
+		references isEmpty
+			ifTrue: [MessageBox notify: browseClass name, ' class variable ', aVariable, ' not referenced']
+			ifFalse: [
+				self 
+					browseMethods: references 
+					caption: 'References to ', anAssoc printString
+					findString: aVariable
+					filter: [:m | m refersTo: anAssoc]]]! !
+!SmalltalkSystem categoriesFor: #browseAClassVariable:class:!browsing!public! !
+!SmalltalkSystem categoriesFor: #browseLocalClassReferences:!operations!public! !
+!SmalltalkSystem categoriesFor: #browseLocalClassVariables:!browsing!public! !
+
+"End of package definition"!

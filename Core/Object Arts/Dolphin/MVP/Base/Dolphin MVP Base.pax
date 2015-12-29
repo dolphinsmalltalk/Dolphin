@@ -1,0 +1,2916 @@
+| package |
+package := Package name: 'Dolphin MVP Base'.
+package paxVersion: 1;
+	basicComment: 'Dolphin Smalltalk Graphical User Interface framework.
+Copyright (c) Object Arts Ltd. 1997-2006. Portions Copyright (c) CGI Group (Europe) Ltd. 1997.
+'.
+
+package basicPackageVersion: '6.2'.
+
+package basicScriptAt: #postinstall put: '"The GDILibrary is a permanent library, and so won''t get opened lazily"
+GDILibrary openDefault!!
+"Opening the CommCtrlLibrary causes the common controls to be registered"
+CommCtrlLibrary default!!
+"Due to a limitation of the Dolphin protocols system, any protocols on a class that are incomplete without loose methods in an add-on package are lost when the add-on package is uninstalled (essentially this is because the package system is largely unaware of protocols, and so only protocols defined in the basic class are maintained). In this case we add #queryCommand: to MessageSend so that it can be used as a closed command. The command routing framework tests for the <commandTarget> protocol to see whether it should include the command itself in the route."
+MessageSend addProtocol: #commandTarget!!'.
+package basicScriptAt: #postuninstall put: '| resIds |
+resIds := ResourceIdentifier allResourceIdentifiers.
+resIds isEmpty 
+	ifFalse: 
+		[| stream |
+		stream := String writeStream.
+		stream
+			nextPutAll: ''MVP base package uninstalled, but the following resources are still present in the image and will be forcibly removed:'';
+			cr.
+		resIds do: 
+				[:each | 
+				stream
+					crtab;
+					print: each].
+		Warning signal: stream contents.
+		resIds do: [:each | SessionManager current resourceManager removeResource: each]]'.
+package basicScriptAt: #preuninstall put: 'MemoryManager current collectGarbage; collectGarbage; administerLastRites!!'.
+
+package classNames
+	add: #AbstractDelegatingView;
+	add: #AbstractLOGFONT;
+	add: #AbstractNonReferenceDelegatingView;
+	add: #ACCEL;
+	add: #AcceleratorTable;
+	add: #Bitmap;
+	add: #BITMAP;
+	add: #BITMAPINFO;
+	add: #BITMAPINFOHEADER;
+	add: #BLENDFUNCTION;
+	add: #BorderLayout;
+	add: #BP_ANIMATIONPARAMS;
+	add: #BP_PAINTPARAMS;
+	add: #Brush;
+	add: #Canvas;
+	add: #CapturingInteractor;
+	add: #CHARRANGE;
+	add: #CheckBox;
+	add: #CheckButton;
+	add: #Clipboard;
+	add: #ClosedCommandDescription;
+	add: #Color;
+	add: #ColorEvent;
+	add: #ColorRef;
+	add: #Command;
+	add: #CommandButton;
+	add: #CommandDescription;
+	add: #CommandMenuItem;
+	add: #CommandPolicy;
+	add: #CommandQuery;
+	add: #CommCtrlLibrary;
+	add: #ContainerView;
+	add: #ControlView;
+	add: #Cursor;
+	add: #DefaultShellSessionManager;
+	add: #DelegatingCommandPolicy;
+	add: #DesktopView;
+	add: #DEVMODE;
+	add: #Dialog;
+	add: #DialogView;
+	add: #DIBSection;
+	add: #DIBSECTION;
+	add: #DividerMenuItem;
+	add: #DOCINFO;
+	add: #DoubleBufferedView;
+	add: #DragDropObject;
+	add: #DragDropSession;
+	add: #DRAWITEMSTRUCT;
+	add: #DTBGOPTS;
+	add: #DwmApiLibrary;
+	add: #Event;
+	add: #FindDetails;
+	add: #FLASHWINFO;
+	add: #FlowLayout;
+	add: #Font;
+	add: #FramingCalculation;
+	add: #FramingConstraints;
+	add: #FramingContext;
+	add: #FramingLayout;
+	add: #GDILibrary;
+	add: #GRADIENT_RECT;
+	add: #GRADIENT_TRIANGLE;
+	add: #GraphicsTool;
+	add: #Grid;
+	add: #GridLayout;
+	add: #GroupBox;
+	add: #GUISessionManager;
+	add: #HistoryList;
+	add: #HTMLHelpLibrary;
+	add: #Icon;
+	add: #IconImageManager;
+	add: #ICONINFO;
+	add: #Image;
+	add: #ImageManager;
+	add: #ImageViewAbstract;
+	add: #IndexedColor;
+	add: #Interactor;
+	add: #InternalDragDropObject;
+	add: #InternalDragDropSession;
+	add: #INTLIST;
+	add: #KeyEvent;
+	add: #LayoutContext;
+	add: #LayoutManager;
+	add: #LegacyCommandPolicy;
+	add: #LinearLayout;
+	add: #LOGBRUSH;
+	add: #LOGFONT;
+	add: #LOGPALETTE;
+	add: #LOGPEN;
+	add: #MARGINS;
+	add: #MEASUREITEMSTRUCT;
+	add: #Menu;
+	add: #MenuBar;
+	add: #MENUINFO;
+	add: #MenuItem;
+	add: #MENUITEMINFOA;
+	add: #MENUITEMINFOV5;
+	add: #MINMAXINFO;
+	add: #MockThemeLibrary;
+	add: #MouseEvent;
+	add: #MouseTracker;
+	add: #Msimg32Library;
+	add: #NCCALCSIZE_PARAMS;
+	add: #NEWTEXTMETRIC;
+	add: #NMHDR;
+	add: #NMTTDISPINFO;
+	add: #NMTTDISPINFOA;
+	add: #NMTTDISPINFOW;
+	add: #NONCLIENTMETRICS;
+	add: #NOTIFYICONDATA;
+	add: #NullIcon;
+	add: #OUTLINETEXTMETRIC;
+	add: #PaintEvent;
+	add: #PAINTSTRUCT;
+	add: #PALETTEENTRY;
+	add: #PANOSE;
+	add: #Pen;
+	add: #PluggableColor;
+	add: #Point3D;
+	add: #PointEvent;
+	add: #POINTL;
+	add: #PositionEvent;
+	add: #Presenter;
+	add: #PrinterCanvas;
+	add: #ProportionalLayout;
+	add: #PushButton;
+	add: #RECT;
+	add: #ReferenceView;
+	add: #Region;
+	add: #RGB;
+	add: #RGBQUAD;
+	add: #RGNDATA;
+	add: #RuntimeSessionManager;
+	add: #ScrollEvent;
+	add: #SCROLLINFO;
+	add: #SelectableItemsPresenter;
+	add: #SelectionChangedEvent;
+	add: #SelectionChangeEvent;
+	add: #SelectionChangingEvent;
+	add: #Shell;
+	add: #ShellView;
+	add: #SIZE;
+	add: #SizeEvent;
+	add: #Splash;
+	add: #Splitter;
+	add: #StaticPath;
+	add: #StaticRectangle;
+	add: #StaticText;
+	add: #StaticView;
+	add: #STBViewProxy;
+	add: #StockBrush;
+	add: #StockFont;
+	add: #StockPen;
+	add: #SysColorBrush;
+	add: #SystemColor;
+	add: #SystemMetrics;
+	add: #TEXTMETRIC;
+	add: #ThemeLibrary;
+	add: #TRACKMOUSEEVENT;
+	add: #TRIVERTEX;
+	add: #ValueConvertingControlView;
+	add: #ValueDialog;
+	add: #ValuePresenter;
+	add: #View;
+	add: #ViewState;
+	add: #VistaThemeLibrary;
+	add: #WINDOWPLACEMENT;
+	add: #WINDOWPOS;
+	add: #WindowsEvent;
+	add: #WinImageList;
+	add: #WNDCLASS;
+	add: #XFORM;
+	yourself.
+
+package methodNames
+	add: #MessageSend -> #queryCommand:;
+	add: #Object -> #addToImageList:mask:;
+	add: #Point -> #@;
+	add: #Point -> #asParameter;
+	add: #Rectangle -> #asParameter;
+	add: #Rectangle -> #subtract:;
+	add: #ResourceIdentifier -> #fixupIcon;
+	add: #ResourceIdentifier -> #loadWithContext:;
+	add: #ResourceIdentifier -> #loadWithContext:forEdit:;
+	add: #String -> #copyToClipboard;
+	add: #String -> #setTextInto:;
+	add: #UserLibrary -> #adjustWindowRectEx:dwStyle:bMenu:dwExStyle:;
+	add: #UserLibrary -> #animateWindow:dwTime:dwFlags:;
+	add: #UserLibrary -> #attachThreadInput:idAttachTo:fAttach:;
+	add: #UserLibrary -> #beginDeferWindowPos:;
+	add: #UserLibrary -> #beginPaint:lpPaint:;
+	add: #UserLibrary -> #bringWindowToTop:;
+	add: #UserLibrary -> #callWindowProc:hWnd:msg:wParam:lParam:;
+	add: #UserLibrary -> #childWindowFromPointEx:pt:uFlags:;
+	add: #UserLibrary -> #clientToScreen:lpPoint:;
+	add: #UserLibrary -> #closeClipboard;
+	add: #UserLibrary -> #countClipboardFormats;
+	add: #UserLibrary -> #createAcceleratorTable:cEntries:;
+	add: #UserLibrary -> #createMenu;
+	add: #UserLibrary -> #createPopupMenu;
+	add: #UserLibrary -> #createWindowEx:lpClassName:lpWindowName:dwStyle:x:y:nWidth:nHeight:hWndParent:hMenu:hInstance:lpParam:;
+	add: #UserLibrary -> #deferWindowPos:hwnd:hwndInsertAfter:x:y:cx:cy:uFlags:;
+	add: #UserLibrary -> #deleteMenu:uPosition:uFlags:;
+	add: #UserLibrary -> #destroyAcceleratorTable:;
+	add: #UserLibrary -> #destroyMenu:;
+	add: #UserLibrary -> #drawEdge:qrc:edge:grfFlags:;
+	add: #UserLibrary -> #drawFocusRect:lprc:;
+	add: #UserLibrary -> #drawFrameControl:lprc:uType:uState:;
+	add: #UserLibrary -> #drawIconEx:xLeft:yTop:hIcon:cxWidth:cyHeight:istepIfAniCur:hbrFlickerFreeDraw:diFlags:;
+	add: #UserLibrary -> #drawMenuBar:;
+	add: #UserLibrary -> #drawState:hbr:lpOutputFunc:lData:wData:x:y:cx:cy:fuFlags:;
+	add: #UserLibrary -> #drawTextEx:lpchText:cchText:lprc:dwDTFormat:lpDTParams:;
+	add: #UserLibrary -> #emptyClipboard;
+	add: #UserLibrary -> #endDeferWindowPos:;
+	add: #UserLibrary -> #endDialog:nResult:;
+	add: #UserLibrary -> #endPaint:lpPaint:;
+	add: #UserLibrary -> #enumClipboardFormats:;
+	add: #UserLibrary -> #fillRect:lprc:hbr:;
+	add: #UserLibrary -> #findWindow:lpWindowName:;
+	add: #UserLibrary -> #flashWindow:bInvert:;
+	add: #UserLibrary -> #flashWindowEx:;
+	add: #UserLibrary -> #frameRect:lprc:hbr:;
+	add: #UserLibrary -> #getCapture;
+	add: #UserLibrary -> #getClassName:lpClassName:nMaxCount:;
+	add: #UserLibrary -> #getClientRect:lpRect:;
+	add: #UserLibrary -> #getClipboardData:;
+	add: #UserLibrary -> #getClipboardFormatName:lpszFormatName:cchMaxCount:;
+	add: #UserLibrary -> #getCursorPos:;
+	add: #UserLibrary -> #getDC:;
+	add: #UserLibrary -> #getDCEx:hrgnClip:flags:;
+	add: #UserLibrary -> #getFocus;
+	add: #UserLibrary -> #getForegroundWindow;
+	add: #UserLibrary -> #getIconInfo:piconinfo:;
+	add: #UserLibrary -> #getLastActivePopup:;
+	add: #UserLibrary -> #getMenuInfo:lpcmi:;
+	add: #UserLibrary -> #getNextDlgGroupItem:hCtl:bPrevious:;
+	add: #UserLibrary -> #getNextDlgTabItem:hCtl:bPrevious:;
+	add: #UserLibrary -> #getProp:lpString:;
+	add: #UserLibrary -> #getScrollInfo:fnBar:lpsi:;
+	add: #UserLibrary -> #getTopWindow:;
+	add: #UserLibrary -> #getUpdateRect:lpRect:bErase:;
+	add: #UserLibrary -> #getWindow:uCmd:;
+	add: #UserLibrary -> #getWindowLongPtr:nIndex:;
+	add: #UserLibrary -> #getWindowPlacement:lpwndpl:;
+	add: #UserLibrary -> #getWindowRect:lpRect:;
+	add: #UserLibrary -> #getWindowText:lpString:nMaxCount:;
+	add: #UserLibrary -> #getWindowTextLength:;
+	add: #UserLibrary -> #getWindowThreadProcessId:lpdwProcessId:;
+	add: #UserLibrary -> #getWindowULong:nIndex:;
+	add: #UserLibrary -> #getWindowULongPtr:nIndex:;
+	add: #UserLibrary -> #insertMenuItem:uItem:fByPosition:lpmii:;
+	add: #UserLibrary -> #invalidate:lpRect:bErase:;
+	add: #UserLibrary -> #invalidateRgn:hRgn:bErase:;
+	add: #UserLibrary -> #invertRect:lprc:;
+	add: #UserLibrary -> #isClipboardFormatAvailable:;
+	add: #UserLibrary -> #isDialogMessage:lpMsg:;
+	add: #UserLibrary -> #loadAccelerators:lpTableName:;
+	add: #UserLibrary -> #loadCursorFromFile:;
+	add: #UserLibrary -> #loadIcon:lpIconName:;
+	add: #UserLibrary -> #loadMenu:lpMenuName:;
+	add: #UserLibrary -> #lockWindowUpdate:;
+	add: #UserLibrary -> #makeDragList:;
+	add: #UserLibrary -> #mapWindowPoints:hWndTo:lpPoints:cPoints:;
+	add: #UserLibrary -> #modifyMenu:uPosition:uFlags:uIDNewItem:lpNewItem:;
+	add: #UserLibrary -> #openClipboard:;
+	add: #UserLibrary -> #printWindow:hdcBlt:nFlags:;
+	add: #UserLibrary -> #redrawWindow:lprcUpdate:hrgnUpdate:flags:;
+	add: #UserLibrary -> #registerClass:;
+	add: #UserLibrary -> #registerClipboardFormat:;
+	add: #UserLibrary -> #registerWindowMessage:;
+	add: #UserLibrary -> #releaseCapture;
+	add: #UserLibrary -> #removeMenu:uPosition:uFlags:;
+	add: #UserLibrary -> #removeProp:lpString:;
+	add: #UserLibrary -> #screenToClient:lpPoint:;
+	add: #UserLibrary -> #scrollWindowEx:dx:dy:prcScroll:prcClip:hrgnUpdate:prcUpdate:flags:;
+	add: #UserLibrary -> #sendDlgItemMessage:nIDDlgItem:msg:wParam:lParam:;
+	add: #UserLibrary -> #setCapture:;
+	add: #UserLibrary -> #setClassLong:nIndex:dwNewLong:;
+	add: #UserLibrary -> #setClipboardData:hMem:;
+	add: #UserLibrary -> #setCursorPosX:y:;
+	add: #UserLibrary -> #setDlgItemInt:nIDDlgItem:uValue:bSigned:;
+	add: #UserLibrary -> #setFocus:;
+	add: #UserLibrary -> #setForegroundWindow:;
+	add: #UserLibrary -> #setLayeredWindowAttributes:lcrKey:bAlpha:dwFlags:;
+	add: #UserLibrary -> #setMenu:hMenu:;
+	add: #UserLibrary -> #setMenuDefaultItem:uItem:fByPos:;
+	add: #UserLibrary -> #setMenuInfo:lpcmi:;
+	add: #UserLibrary -> #setMenuItemInfo:uItem:fByPosition:lpmii:;
+	add: #UserLibrary -> #setParent:hWndNewParent:;
+	add: #UserLibrary -> #setProp:lpString:hData:;
+	add: #UserLibrary -> #setScrollInfo:fnBar:lpsi:fRedraw:;
+	add: #UserLibrary -> #setSysColors:lpaElements:lpaRgbValues:;
+	add: #UserLibrary -> #setWindowLong:nIndex:dwNewLong:;
+	add: #UserLibrary -> #setWindowPlacement:lpwndpl:;
+	add: #UserLibrary -> #setWindowPos:hWndInsertAfter:x:y:cx:cy:uFlags:;
+	add: #UserLibrary -> #showCursor:;
+	add: #UserLibrary -> #subtractRect:lprcSrc1:lprcSrc2:;
+	add: #UserLibrary -> #trackMouseEvent:;
+	add: #UserLibrary -> #trackPopupMenu:uFlags:x:y:nReserved:hWnd:prcRect:;
+	add: #UserLibrary -> #translateAccelerator:haccl:lpmsg:;
+	add: #UserLibrary -> #unregisterClass:hInstance:;
+	add: #UserLibrary -> #validate:lpRect:;
+	add: #UserLibrary -> #windowFromPoint:;
+	add: #UserLibrary -> #winHelp:lpszHelp:uCommand:dwData:;
+	add: 'CompiledMethod class' -> #deprecatedIcon;
+	add: 'CompiledMethod class' -> #privateIcon;
+	add: 'CompiledMethod class' -> #publicIcon;
+	add: 'ConsoleSessionManager class' -> #icon;
+	add: 'Error class' -> #icon;
+	add: 'ExternalLibrary class' -> #icon;
+	add: 'File class' -> #icon;
+	add: 'Notification class' -> #icon;
+	add: 'Warning class' -> #icon;
+	yourself.
+
+package globalNames
+	add: #AlignmentFlags;
+	add: #ButtonConstants;
+	add: #CommCtrlConstants;
+	add: #HTMLHelpConstants;
+	add: #POINT;
+	add: #RECTL;
+	add: #SIZEL;
+	add: #ThemeConstants;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	add: #POINT;
+	add: #RECTL;
+	add: #SIZEL;
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\..\Base\Dolphin';
+	add: '..\..\System\Filer\Dolphin Literal Filer';
+	add: '..\Type Converters\Dolphin Type Converters';
+	add: '..\Models\Value\Dolphin Value Models';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+Object subclass: #Canvas
+	instanceVariableNames: 'handle source owned pen brush font saved saveIds'
+	classVariableNames: 'DesktopResolution'
+	poolDictionaries: 'Win32Constants'
+	classInstanceVariableNames: ''!
+Object subclass: #Clipboard
+	instanceVariableNames: 'isOpen registeredFormats'
+	classVariableNames: 'Current'
+	poolDictionaries: 'Win32Constants'
+	classInstanceVariableNames: ''!
+Object subclass: #Color
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: 'Win32Constants'
+	classInstanceVariableNames: ''!
+Object subclass: #Command
+	instanceVariableNames: 'commandDescription receiver undoAction redoAction isBenign'
+	classVariableNames: 'Current'
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Object subclass: #CommandDescription
+	instanceVariableNames: 'command description acceleratorKey flags image'
+	classVariableNames: 'CommandDescriptionRegistry CurrentId DefaultMask ModalMask'
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Object subclass: #CommandPolicy
+	instanceVariableNames: 'source path'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Object subclass: #CommandQuery
+	instanceVariableNames: 'commandDescription receiver source text flags image'
+	classVariableNames: 'CheckedMask DefaultMask EnabledMask'
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Object subclass: #DragDropObject
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Object subclass: #DragDropSession
+	instanceVariableNames: 'dragSource dragPoint suggestedSource dragObjects defaultOperation dropTarget suggestedTarget operationsSupportedByDropTarget operation inDropTargetScrollZone dragImages scrollProcess'
+	classVariableNames: 'Current DefaultImages OperationDescriptions'
+	poolDictionaries: 'Win32Constants'
+	classInstanceVariableNames: ''!
+Object subclass: #Event
+	instanceVariableNames: 'hWnd'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Object subclass: #FindDetails
+	instanceVariableNames: 'pattern replaceWith searchMode flags action'
+	classVariableNames: 'IgnoreCaseMask UpMask WholeWordMask WrapMask'
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Object subclass: #FramingCalculation
+	instanceVariableNames: 'name framingBlock offsetBlock flags'
+	classVariableNames: 'Calculations IndependentMask ProportionalMask VerticalMask'
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Object subclass: #FramingConstraints
+	instanceVariableNames: 'leftFraming leftOffset rightFraming rightOffset topFraming topOffset bottomFraming bottomOffset'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Object subclass: #FramingContext
+	instanceVariableNames: 'layoutContext view rectangle parentRect'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Object subclass: #GraphicsTool
+	instanceVariableNames: 'handle ownsHandle'
+	classVariableNames: ''
+	poolDictionaries: 'Win32Constants'
+	classInstanceVariableNames: ''!
+Object subclass: #Grid
+	instanceVariableNames: 'resolution'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Object subclass: #HistoryList
+	instanceVariableNames: 'history position maxAge searchPolicy'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Object subclass: #ImageManager
+	instanceVariableNames: 'images imageLists maskcolor backcolor'
+	classVariableNames: ''
+	poolDictionaries: 'Win32Constants'
+	classInstanceVariableNames: ''!
+Object subclass: #Interactor
+	instanceVariableNames: 'presenter'
+	classVariableNames: ''
+	poolDictionaries: 'Win32Constants'
+	classInstanceVariableNames: ''!
+Object subclass: #LayoutContext
+	instanceVariableNames: 'container positions'
+	classVariableNames: ''
+	poolDictionaries: 'Win32Constants'
+	classInstanceVariableNames: ''!
+Object subclass: #LayoutManager
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Object subclass: #MenuItem
+	instanceVariableNames: 'flags'
+	classVariableNames: 'Dividers StringSeparator StylesMask'
+	poolDictionaries: 'Win32Constants'
+	classInstanceVariableNames: ''!
+Object subclass: #Presenter
+	instanceVariableNames: 'model view parentPresenter events subPresenters names helpId'
+	classVariableNames: ''
+	poolDictionaries: 'Win32Constants'
+	classInstanceVariableNames: ''!
+Object subclass: #SystemMetrics
+	instanceVariableNames: 'menuCheckExtent smallIconExtent largeIconExtent dragHysteresis scrollThumbExtent sizingFrameExtent dialogFrameExtent borderExtent nonClientMetrics menuFont edgeExtent hasFlatMenus iconTitleFont hasSmoothScrollingLists'
+	classVariableNames: 'Current'
+	poolDictionaries: 'Win32Constants'
+	classInstanceVariableNames: ''!
+Object subclass: #View
+	instanceVariableNames: 'handle creationParent creationStyle presenter model backcolor preferredExtent flags contextMenu font events interactor'
+	classVariableNames: 'CreateCenteredMask DragSourceMask DropTargetMask LayoutValidMask ManagedMask MessageMap MinimizedMask NextId NoInheritMenuMask StateRestoringMask UIValidMask UsePreferredExtentMask ViewClosedError WndClassAtom'
+	poolDictionaries: 'Win32Constants Win32Errors'
+	classInstanceVariableNames: ''!
+Object subclass: #ViewState
+	instanceVariableNames: 'view state placement subViewStates'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Canvas subclass: #PrinterCanvas
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Color subclass: #ColorRef
+	instanceVariableNames: 'code'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Color subclass: #IndexedColor
+	instanceVariableNames: 'index'
+	classVariableNames: 'ColorsByIndex ColorsByName'
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Color subclass: #PluggableColor
+	instanceVariableNames: 'valuable'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Color subclass: #SystemColor
+	instanceVariableNames: 'id'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ColorRef subclass: #RGB
+	instanceVariableNames: ''
+	classVariableNames: 'StdColours'
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+CommandDescription subclass: #ClosedCommandDescription
+	instanceVariableNames: 'queryBlock receiver'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+CommandPolicy subclass: #DelegatingCommandPolicy
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+CommandPolicy subclass: #LegacyCommandPolicy
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DragDropObject subclass: #InternalDragDropObject
+	instanceVariableNames: 'availableFormats'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DragDropSession subclass: #InternalDragDropSession
+	instanceVariableNames: 'lastImageKey imageList oldCursor dragButton operationDescriptions'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Event subclass: #SelectionChangeEvent
+	instanceVariableNames: 'newSelections oldSelections cause'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Event subclass: #WindowsEvent
+	instanceVariableNames: 'message wParam lParam lResult'
+	classVariableNames: ''
+	poolDictionaries: 'Win32Constants'
+	classInstanceVariableNames: ''!
+SelectionChangeEvent subclass: #SelectionChangedEvent
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+SelectionChangeEvent subclass: #SelectionChangingEvent
+	instanceVariableNames: 'permit'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+WindowsEvent subclass: #ColorEvent
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+WindowsEvent subclass: #KeyEvent
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+WindowsEvent subclass: #PaintEvent
+	instanceVariableNames: 'hdc paintStruct'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+WindowsEvent subclass: #PointEvent
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+WindowsEvent subclass: #PositionEvent
+	instanceVariableNames: 'lpwp'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+WindowsEvent subclass: #ScrollEvent
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+WindowsEvent subclass: #SizeEvent
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+PointEvent subclass: #MouseEvent
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ExternalLibrary subclass: #CommCtrlLibrary
+	instanceVariableNames: ''
+	classVariableNames: 'InitFlags'
+	poolDictionaries: 'CommCtrlConstants'
+	classInstanceVariableNames: ''!
+ExternalLibrary subclass: #DwmApiLibrary
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ExternalLibrary subclass: #HTMLHelpLibrary
+	instanceVariableNames: 'cookie'
+	classVariableNames: ''
+	poolDictionaries: 'HTMLHelpConstants'
+	classInstanceVariableNames: ''!
+ExternalLibrary subclass: #Msimg32Library
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: 'Win32Constants'
+	classInstanceVariableNames: ''!
+ExternalLibrary subclass: #ThemeLibrary
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: 'ThemeConstants'
+	classInstanceVariableNames: ''!
+PermanentLibrary subclass: #GDILibrary
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ThemeLibrary subclass: #MockThemeLibrary
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ThemeLibrary subclass: #VistaThemeLibrary
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ExternalStructure subclass: #BP_ANIMATIONPARAMS
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ExternalStructure subclass: #DEVMODE
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ExternalStructure subclass: #NCCALCSIZE_PARAMS
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ExternalStructure subclass: #XFORM
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Win32Structure subclass: #AbstractLOGFONT
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Win32Structure subclass: #ACCEL
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Win32Structure subclass: #BITMAP
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Win32Structure subclass: #BITMAPINFO
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Win32Structure subclass: #BITMAPINFOHEADER
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Win32Structure subclass: #BLENDFUNCTION
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Win32Structure subclass: #BP_PAINTPARAMS
+	instanceVariableNames: 'blendFunction'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Win32Structure subclass: #CHARRANGE
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Win32Structure subclass: #DIBSECTION
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Win32Structure subclass: #DOCINFO
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Win32Structure subclass: #DRAWITEMSTRUCT
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Win32Structure subclass: #DTBGOPTS
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Win32Structure subclass: #FLASHWINFO
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Win32Structure subclass: #GRADIENT_RECT
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Win32Structure subclass: #GRADIENT_TRIANGLE
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Win32Structure subclass: #ICONINFO
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Win32Structure subclass: #INTLIST
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Win32Structure subclass: #LOGBRUSH
+	instanceVariableNames: 'hatch'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Win32Structure subclass: #LOGPALETTE
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Win32Structure subclass: #LOGPEN
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Win32Structure subclass: #MARGINS
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Win32Structure subclass: #MEASUREITEMSTRUCT
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Win32Structure subclass: #MENUINFO
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Win32Structure subclass: #MENUITEMINFOA
+	instanceVariableNames: 'text'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Win32Structure subclass: #MINMAXINFO
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Win32Structure subclass: #NMHDR
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: 'CommCtrlConstants'
+	classInstanceVariableNames: ''!
+Win32Structure subclass: #NONCLIENTMETRICS
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Win32Structure subclass: #NOTIFYICONDATA
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Win32Structure subclass: #OUTLINETEXTMETRIC
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Win32Structure subclass: #PAINTSTRUCT
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Win32Structure subclass: #PALETTEENTRY
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Win32Structure subclass: #PANOSE
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Win32Structure subclass: #POINTL
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Win32Structure subclass: #RECT
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Win32Structure subclass: #RGBQUAD
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Win32Structure subclass: #RGNDATA
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Win32Structure subclass: #SCROLLINFO
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Win32Structure subclass: #SIZE
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Win32Structure subclass: #TEXTMETRIC
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Win32Structure subclass: #TRACKMOUSEEVENT
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Win32Structure subclass: #TRIVERTEX
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Win32Structure subclass: #WINDOWPLACEMENT
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Win32Structure subclass: #WINDOWPOS
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Win32Structure subclass: #WNDCLASS
+	instanceVariableNames: 'menuName className'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+AbstractLOGFONT subclass: #LOGFONT
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+MENUITEMINFOA subclass: #MENUITEMINFOV5
+	instanceVariableNames: 'bitmap'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+NMHDR subclass: #NMTTDISPINFO
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: 'CommCtrlConstants'
+	classInstanceVariableNames: ''!
+NMTTDISPINFO subclass: #NMTTDISPINFOA
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+NMTTDISPINFO subclass: #NMTTDISPINFOW
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+TEXTMETRIC subclass: #NEWTEXTMETRIC
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+GraphicsTool subclass: #AcceleratorTable
+	instanceVariableNames: 'commands'
+	classVariableNames: 'KeyNamesToModifiers NamesOfModifiers'
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+GraphicsTool subclass: #Brush
+	instanceVariableNames: 'logBrush'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+GraphicsTool subclass: #Font
+	instanceVariableNames: 'logfont resolution'
+	classVariableNames: 'System'
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+GraphicsTool subclass: #Image
+	instanceVariableNames: 'fileLocator identifier instanceHandle'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+GraphicsTool subclass: #Menu
+	instanceVariableNames: 'items text name flags image imageManager id _reserved1 _reserved2'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+GraphicsTool subclass: #Pen
+	instanceVariableNames: 'logPen'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+GraphicsTool subclass: #Region
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+GraphicsTool subclass: #WinImageList
+	instanceVariableNames: 'extent initialSize growBy createFlags'
+	classVariableNames: ''
+	poolDictionaries: 'CommCtrlConstants'
+	classInstanceVariableNames: ''!
+Brush subclass: #StockBrush
+	instanceVariableNames: 'id'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+StockBrush subclass: #SysColorBrush
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Font subclass: #StockFont
+	instanceVariableNames: 'id'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Image subclass: #Bitmap
+	instanceVariableNames: 'hdc flags extent'
+	classVariableNames: 'IsSharedMask Map3DColorsMask SharedBitmaps'
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Image subclass: #Icon
+	instanceVariableNames: ''
+	classVariableNames: 'Blank DefaultApplication Error Information Question Warning WinLogo'
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Bitmap subclass: #DIBSection
+	instanceVariableNames: 'depth imageBits'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Icon subclass: #Cursor
+	instanceVariableNames: ''
+	classVariableNames: 'AppStarting Arrow Cross Current DDCopy DDCopyScroll DDLink DDLinkScroll DDMove DDMoveScroll DDNone Hand Help IBeam No SizeAll SizeNESW SizeNS SizeNWSE SizeWE SplitHorizontal SplitVertical UpArrow Wait'
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Icon subclass: #NullIcon
+	instanceVariableNames: ''
+	classVariableNames: 'Current'
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Menu subclass: #MenuBar
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Pen subclass: #StockPen
+	instanceVariableNames: 'id'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ImageManager subclass: #IconImageManager
+	instanceVariableNames: 'menuBitmaps'
+	classVariableNames: 'Current'
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Interactor subclass: #CapturingInteractor
+	instanceVariableNames: 'oldInteractor'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+CapturingInteractor subclass: #MouseTracker
+	instanceVariableNames: 'dragButton target startPoint startPointLocal origin hysteresis isTracking trackPosition constrain'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+LayoutManager subclass: #BorderLayout
+	instanceVariableNames: 'horizontalGap verticalGap north south east west center'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+LayoutManager subclass: #FlowLayout
+	instanceVariableNames: 'horizontalGap verticalGap flags'
+	classVariableNames: 'AlignmentMap AlignmentMask'
+	poolDictionaries: 'AlignmentFlags'
+	classInstanceVariableNames: ''!
+LayoutManager subclass: #FramingLayout
+	instanceVariableNames: 'framings'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+LayoutManager subclass: #GridLayout
+	instanceVariableNames: 'rows columns horizontalGap verticalGap'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+LayoutManager subclass: #LinearLayout
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+LinearLayout subclass: #ProportionalLayout
+	instanceVariableNames: 'proportions isVertical'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ArithmeticValue subclass: #Point3D
+	instanceVariableNames: 'x y z'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+MenuItem subclass: #CommandMenuItem
+	instanceVariableNames: 'commandDescription image _reserved'
+	classVariableNames: 'IsDefaultMask'
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+MenuItem subclass: #DividerMenuItem
+	instanceVariableNames: ''
+	classVariableNames: 'BarBreak Break DividerLookup Separator'
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Presenter subclass: #SelectableItemsPresenter
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Presenter subclass: #Shell
+	instanceVariableNames: 'caption commandHistory'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Presenter subclass: #ValuePresenter
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Shell subclass: #Dialog
+	instanceVariableNames: 'confirmed ownerView'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Dialog subclass: #ValueDialog
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+SessionManager subclass: #GUISessionManager
+	instanceVariableNames: 'savedWindows'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+GUISessionManager subclass: #RuntimeSessionManager
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+RuntimeSessionManager subclass: #DefaultShellSessionManager
+	instanceVariableNames: 'mainShellClass'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+STBProxy subclass: #STBViewProxy
+	instanceVariableNames: 'viewClass instVars state placement subViews resolution events version'
+	classVariableNames: 'CreationParentIndex CreationStyleIndex EventsIndex HandleIndex'
+	poolDictionaries: 'Win32Constants'
+	classInstanceVariableNames: ''!
+View subclass: #AbstractDelegatingView
+	instanceVariableNames: 'resourceIdentifier referee'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+View subclass: #ContainerView
+	instanceVariableNames: 'layoutManager names insets'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+View subclass: #ControlView
+	instanceVariableNames: 'forecolor oldWndProc'
+	classVariableNames: 'CommonControlCallError NmMap'
+	poolDictionaries: 'CommCtrlConstants'
+	classInstanceVariableNames: ''!
+View subclass: #DesktopView
+	instanceVariableNames: 'resolution defaultExtentBlock dvReserved1 dvReserved2'
+	classVariableNames: 'Current'
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+View subclass: #DoubleBufferedView
+	instanceVariableNames: 'backSurface requiresRender'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+View subclass: #Splitter
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+AbstractDelegatingView subclass: #AbstractNonReferenceDelegatingView
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+AbstractDelegatingView subclass: #ReferenceView
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ContainerView subclass: #ShellView
+	instanceVariableNames: 'menuBar acceleratorTable combinedAcceleratorTable lastFocus defaultButton largeIcon smallIcon maxExtent minExtent flashes svFlags _svReserved2'
+	classVariableNames: 'CreateHookBlock DefaultButtonIndex DefaultExtentBlock DialogMessageMap TransientMask'
+	poolDictionaries: 'ButtonConstants'
+	classInstanceVariableNames: ''!
+ShellView subclass: #DialogView
+	instanceVariableNames: 'endModal isModal oldWndProc'
+	classVariableNames: 'InProcLoopMask'
+	poolDictionaries: 'ThemeConstants'
+	classInstanceVariableNames: ''!
+ShellView subclass: #Splash
+	instanceVariableNames: 'splashDelay bitmap overlayWith'
+	classVariableNames: ''
+	poolDictionaries: 'Win32Constants'
+	classInstanceVariableNames: ''!
+ControlView subclass: #CommandButton
+	instanceVariableNames: 'commandDescription'
+	classVariableNames: 'StandardCommands'
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ControlView subclass: #GroupBox
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: 'ButtonConstants'
+	classInstanceVariableNames: ''!
+ControlView subclass: #StaticRectangle
+	instanceVariableNames: ''
+	classVariableNames: 'StyleMap'
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ControlView subclass: #ValueConvertingControlView
+	instanceVariableNames: 'typeconverter'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+CommandButton subclass: #PushButton
+	instanceVariableNames: 'image isDefault note _reserved1 _reserved2'
+	classVariableNames: 'ButtonStyleMap'
+	poolDictionaries: 'ButtonConstants'
+	classInstanceVariableNames: ''!
+ValueConvertingControlView subclass: #CheckButton
+	instanceVariableNames: 'image'
+	classVariableNames: 'AlignmentMap'
+	poolDictionaries: 'ButtonConstants'
+	classInstanceVariableNames: ''!
+ValueConvertingControlView subclass: #StaticView
+	instanceVariableNames: 'unused'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+CheckButton subclass: #CheckBox
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+StaticView subclass: #ImageViewAbstract
+	instanceVariableNames: 'image viewMode ivFlags insets imageBorder'
+	classVariableNames: 'DoubleBufferMask EdgeStyles EraseWholeMask'
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+StaticView subclass: #StaticText
+	instanceVariableNames: ''
+	classVariableNames: 'AlignmentMap'
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+StaticText subclass: #StaticPath
+	instanceVariableNames: 'text'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+POINT := POINTL!
+
+RECTL := RECT!
+
+SIZEL := SIZE!
+
+
+"Loose Methods"!
+
+!CompiledMethod class methodsFor!
+
+deprecatedIcon
+	"Private - Answers an Icon that can be used to represent a deprecated instance of this class"
+
+	^Icon fromId: 'COMPILEDMETHOD_DEPRECATED.ICO'
+!
+
+privateIcon
+	"Private - Answers an Icon that can be used to represent a private instance of this class"
+
+	^Icon fromId: 'COMPILEDMETHOD_PRIVATE.ICO'!
+
+publicIcon
+	"Private - Answers an Icon that can be used to represent a public instance of this class"
+
+	^Icon fromId: 'COMPILEDMETHOD_PUBLIC.ICO'! !
+!CompiledMethod class categoriesFor: #deprecatedIcon!constants!development!private! !
+!CompiledMethod class categoriesFor: #privateIcon!constants!development!private! !
+!CompiledMethod class categoriesFor: #publicIcon!constants!development!private! !
+
+!ConsoleSessionManager class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^Icon fromId: 3 in: (ExternalResourceLibrary open: 'Shell32')! !
+!ConsoleSessionManager class categoriesFor: #icon!constants!development!public! !
+
+!Error class methodsFor!
+
+icon
+	"Answer the default icon for the receiver and its instances."
+
+	^Icon error! !
+!Error class categoriesFor: #icon!constants!public! !
+
+!ExternalLibrary class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^Icon fromId: 154 in: (ExternalResourceLibrary open: 'Shell32')! !
+!ExternalLibrary class categoriesFor: #icon!constants!public! !
+
+!File class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class. "
+
+	^Icon fromId: 2 in: (ExternalResourceLibrary open: 'Shell32')! !
+!File class categoriesFor: #icon!constants!development!public! !
+
+!MessageSend methodsFor!
+
+queryCommand: query
+	"Private - Enters status and target details about the receiver's own command into the 
+	<CommandQuery>, query.
+	Implementation Note: As the receiver represents a fully closed command, we can
+	skip all further routing (the CommandDescription itself is queried first by default)."
+
+	query isEnabled: true; receiver: self receiver.
+	^true! !
+!MessageSend categoriesFor: #queryCommand:!commands!private! !
+
+!Notification class methodsFor!
+
+icon
+	"Answer the default icon for the receiver and its instances."
+
+	^Icon information! !
+!Notification class categoriesFor: #icon!constants!public! !
+
+!Object methodsFor!
+
+addToImageList: aWinImageList mask: aColorOrNil 
+	"Private - Add a pictorial representation of the receiver to aWinImageList."
+
+	^self icon addToImageList: aWinImageList mask: aColorOrNil! !
+!Object categoriesFor: #addToImageList:mask:!double dispatch!private! !
+
+!Point methodsFor!
+
+@ zCoord
+	"Answer a Point3D with the receiver as X, Y coordinates and the argument as Z."
+
+	^Point3D x: x y: y z: zCoord!
+
+asParameter
+	"Answer the receiver in a form suitable for passing to an external function."
+
+	^POINTL fromPoint: self! !
+!Point categoriesFor: #@!converting!public! !
+!Point categoriesFor: #asParameter!converting!public! !
+
+!Rectangle methodsFor!
+
+asParameter
+	"Answer the receiver in a form suitable for passing to an external function, in this case as
+	a Win32 RECT structure."
+
+	^RECT fromRectangle: self!
+
+subtract: aRectangle
+	| rect |
+	#todo "Implememt in Smalltalk".
+	rect := RECT new.
+	UserLibrary default subtractRect: rect lprcSrc1: self asParameter lprcSrc2: aRectangle asParameter.
+	^rect asObject! !
+!Rectangle categoriesFor: #asParameter!converting!public! !
+!Rectangle categoriesFor: #subtract:!public!rectangle functions! !
+
+!ResourceIdentifier methodsFor!
+
+fixupIcon
+	"Private - Now try to determine the icon to use from the class of the top level object in the 
+	resource. We perform a non-realizing load of the resource object."
+
+	| icon stlInFilerClass |
+	stlInFilerClass := Smalltalk at: #STLInFiler.
+	icon := [(stlInFilerClass on: self resource readStream) basicNext icon] on: Error do: [:x | x icon].
+	self icon: icon.
+	^icon!
+
+loadWithContext: context 
+	"Load and answer the resource represented by the receiver with context context."
+
+	^self loadWithContext: context forEdit: false!
+
+loadWithContext: context forEdit: aBoolean 
+	^self resource 
+		ifNotNil: 
+			[:resource | 
+			(STLInFiler on: resource readStream)
+				isUpgrading: aBoolean;
+				context: context;
+				next]! !
+!ResourceIdentifier categoriesFor: #fixupIcon!helpers!private! !
+!ResourceIdentifier categoriesFor: #loadWithContext:!operations!public! !
+!ResourceIdentifier categoriesFor: #loadWithContext:forEdit:!operations!private! !
+
+!String methodsFor!
+
+copyToClipboard
+	"Copy the #String format of the receiver to the clipboard."
+
+	Clipboard current setText: self format: #String!
+
+setTextInto: aView
+	"Private - Sent as part of a double dispatch from View objects to set their text from
+	the receiver. The receiver is assumed to be plain text, so sends the #plainText
+	message back to aView."
+
+	aView plainText: self! !
+!String categoriesFor: #copyToClipboard!copying!public! !
+!String categoriesFor: #setTextInto:!double dispatch!private! !
+
+!UserLibrary methodsFor!
+
+adjustWindowRectEx: rect dwStyle: styleFlags bMenu: menuPresent dwExStyle: exStyleFlags
+  	"Calculates the required size of the rectangle of a window with extended style based 
+	on the desired client-rectangle size. The window rectangle can then be passed to the 
+	CreateWindowEx function to create a window whose client area is the desired size. 
+
+	BOOL AdjustWindowRectEx(
+		LPRECT lpRect,		// pointer to client-rectangle structure
+		DWORD dwStyle,		// window styles
+		BOOL bMenu,		// menu-present flag
+		DWORD dwExStyle 	// extended style
+		);"
+
+	<stdcall: bool AdjustWindowRectEx RECT* dword bool dword>
+	^self invalidCall!
+
+animateWindow: hwnd dwTime: dwTime dwFlags: dwFlags
+	"Invoke the AnimateWindow() function of the module wrapped by the receiver.
+	Helpstring: Produces special effects when showing or hiding windows. There are four types of animation: roll, slide, collapse or expand, and alpha-blended fade.
+
+		BOOL __stdcall AnimateWindow(
+			[in]HWND HWND,
+			[in]DWORD dwTime,
+			[in]DWORD dwFlags);"
+
+	<stdcall: bool AnimateWindow handle dword dword>
+	^self invalidCall!
+
+attachThreadInput: idAttach idAttachTo: idAttachTo fAttach: aBoolean
+	"The AttachThreadInput function attaches the input processing mechanism of one thread to that of another thread. 
+
+	BOOL AttachThreadInput(
+		DWORD idAttach <>,    // thread to attach
+		DWORD idAttachTo <>,  // thread to attach to
+		BOOL fAttach <>       // attach or detach
+		);"
+
+
+	<stdcall: bool AttachThreadInput DWORD DWORD bool >
+	^self invalidCall!
+
+beginDeferWindowPos: nNumWindows 
+	"Invoke the BeginDeferWindowPos() function of the module wrapped by the receiver.
+	Helpstring: Allocates memory for a multiple-window-position structure and returns the handle to the structure
+
+		HDWP __stdcall BeginDeferWindowPos(
+			int nNumWindows);"
+
+	<stdcall: handle BeginDeferWindowPos sdword>
+	^self invalidCall!
+
+beginPaint: hWindow lpPaint: aPAINTSTRUCT
+	"Prepare the specified window for painting, filling aPAINTSTRUCT
+	structure with information about the painting required. 
+		HDC BeginPaint(
+  			HWND hwnd,			// handle to window
+			LPPAINTSTRUCT lpPaint	// pointer to structure for paint information
+		);"
+
+	<stdcall: handle BeginPaint handle PAINTSTRUCT* >
+	^self invalidCall!
+
+bringWindowToTop: hWnd
+	"Bring the specified window to the top of the Z order, activating it if it is a
+	frame window, or its parent frame if it is not. 
+		BOOL BringWindowToTop(
+			HWND hWnd 	// handle to window
+		);"
+
+	<stdcall: bool BringWindowToTop handle>
+	^self invalidCall!
+
+callWindowProc: lpPrevWndFunc hWnd: hWnd msg: msg wParam: wParam lParam: lParam
+	"Pass a message to the specified window procedure. 
+		LRESULT CallWindowProc(
+  			WNDPROC lpPrevWndFunc,	// pointer to previous procedure
+			HWND hWnd,			// handle to window
+			UINT Msg,				// message
+			WPARAM wParam,			// first message parameter
+			LPARAM lParam 			// second message parameter
+		);
+	N.B. As we don't want to pass the address of a Smalltalk object containing
+	the WNDPROC's address to the function, we specify the first parameter
+	as being a DWORD as this allows us to pass a wider range of types."
+
+	<stdcall: uintptr CallWindowProcA dword handle dword uintptr uintptr>
+	^self invalidCall!
+
+childWindowFromPointEx: hwnd pt: aPOINTL uFlags: flags
+	"Answers the handle of the window that contains the specified point. 
+		HWND ChildWindowFromPointEx(
+			HWND hwndParent, 	// handle to parent window
+			POINT pt, 	// structure with point coordinates
+			UINT uFlags	// skipping flags
+		);"
+
+	<stdcall: handle ChildWindowFromPointEx handle POINTL dword>
+	^self invalidCall!
+
+clientToScreen: aWindowHandle lpPoint: aPOINT
+	"Converts the client coordinates in aPOINT to screen coordinates.
+		BOOL ClientToScreen(
+			HWND hWnd,		// window handle for source coordinates 
+			LPPOINT lpPoint 	// pointer to structure containing screen coordinates  
+		);"
+
+	<stdcall: void ClientToScreen handle POINTL* >
+	^self invalidCall!
+
+closeClipboard
+	"Close the clipboard. Answers 0 if fails.
+
+		BOOL CloseClipboard(VOID)"
+
+	<stdcall: bool CloseClipboard>
+	^self invalidCall!
+
+countClipboardFormats
+	"Answer the number of registered clipboard formats.
+		int CountClipboardFormats(VOID)"
+
+	<stdcall: sdword CountClipboardFormats>
+	^self invalidCall!
+
+createAcceleratorTable: pTable cEntries: tableSize
+	"Create an accelerator table. 
+		HACCEL CreateAcceleratorTable(
+  			LPACCEL lpaccl,	// pointer to structure array with accelerator data
+			int cEntries 		// number of structures in the array
+		);"
+
+	<stdcall: handle CreateAcceleratorTableA lpvoid sdword>
+	^self invalidCall!
+
+createMenu
+	"Create an empty menu.
+		HMENU CreateMenu(VOID)"
+
+	<stdcall: handle CreateMenu>
+	^self invalidCall!
+
+createPopupMenu
+	"Create an empty popup menu.
+		HMENU CreateMenu(VOID)"
+
+	<stdcall: handle CreatePopupMenu>
+	^self invalidCall!
+
+createWindowEx: exstyle lpClassName: classname lpWindowName: windowname dwStyle: style 
+		x: x y: y nWidth: width nHeight: height 
+		hWndParent: parent hMenu: menu hInstance: instance lpParam: lpParam
+	"Creates an overlapped, pop-up, or child window with the specified the parent or owner (if any), class, 
+	title, menu, style (and extended style), position and extent. Answer the handle of the
+	new window, or nil if the create fails.
+	N.B. In order to correctly subclass controls so that Dolphin receive's creation messages
+	for those controls, View>>hookWindowCreate should be called before this function.
+		HWND CreateWindowEx(
+			DWORD dwExStyle,		// extended window style
+			LPCTSTR lpClassName,	// pointer to registered class name
+			LPCTSTR lpWindowName,	// pointer to window name
+			DWORD dwStyle,			// window style
+			int x,				// horizontal position of window
+			int y,				// vertical position of window
+			int nWidth,			// window width
+			int nHeight,			// window height
+			HWND hWndParent,		// handle to parent or owner window
+			HMENU hMenu,			// handle to menu, or child-window identifier
+			HINSTANCE hInstance,	// handle to application instance
+			LPVOID lpParam 		// pointer to window-creation data
+		);"
+
+	<stdcall: handle CreateWindowExA dword lpvoid lpvoid dword sdword sdword sdword sdword handle handle handle lpvoid>
+	^self invalidCall
+!
+
+deferWindowPos: hWinPosInfo hwnd: hwnd hwndInsertAfter: hwndInsertAfter x: x y: y cx: cx cy: cy uFlags: uFlags 
+	"Invoke the DeferWindowPos() function of the module wrapped by the receiver.
+	Helpstring: Updates the specified multiple-window-position structure for the specified window
+
+		long __stdcall DeferWindowPos(
+			HDWP hWinPosInfo,
+			HWND hwnd,
+			HWND hwndInsertAfter,
+			int x,
+			int y,
+			int cx,
+			int cy,
+			UINT uFlags);"
+
+	<stdcall: handle DeferWindowPos handle handle handle sdword sdword sdword sdword dword>
+	^self invalidCall!
+
+deleteMenu: hMenu uPosition: uPosition uFlags: uFlags
+	"Deletes an item from the the Menu with handle, hMenu.
+
+		BOOL DeleteMenu(
+			HMENU hMenu,
+			UINT uPosition,
+			UINT uFlags);"
+
+	<stdcall: bool DeleteMenu handle dword dword>
+	^self invalidCall!
+
+destroyAcceleratorTable: hAcceleratorTable
+	"Destroys an accelerator table.
+		BOOL DestroyAcceleratorTable(
+	  	HACCEL hAccel 	// handle to accelerator table
+		);"
+
+	<stdcall: bool DestroyAcceleratorTable handle>
+	^self invalidCall!
+
+destroyMenu: hMenu
+	"Destroy the specified menu.
+		BOOL DestroyMenu(
+			HMENU hMenu	// handle to menu to destroy
+			);"
+
+	<stdcall: bool DestroyMenu handle>
+	^self invalidCall!
+
+drawEdge: hdc qrc: qrc edge: edge grfFlags: grfFlags
+	"Invoke the DrawEdge() function of the module wrapped by the receiver.
+	Helpstring: Draws a 3-D edge on a rectangle according to the given edge and border flags
+
+		BOOL __stdcall DrawEdge(
+			[in]HDC HDC,
+			[in, out]RECT* qrc,
+			[in]UINT edge,
+			[in]UINT grfFlags);"
+
+	<stdcall: bool DrawEdge handle RECT* dword dword>
+	^self invalidCall!
+
+drawFocusRect: hdc lprc: aRECT
+	"Draw a rectangle in the style used to indicate focus.
+		BOOL DrawFocusRect(
+  			HDC hDC,			// handle to device context
+			CONST RECT *lprc	// pointer to structure for rectangle
+		);"
+
+	<stdcall: bool DrawFocusRect handle RECT* >
+	^self invalidCall!
+
+drawFrameControl: hdc lprc: lprc uType: uType uState: uState
+	"Invoke the DrawFrameControl() function of the module wrapped by the receiver.
+	Helpstring: Draws a control frame of a specified type and style
+
+		BOOL __stdcall DrawFrameControl(
+			[in]HDC HDC,
+			[in, out]RECT* lprc,
+			[in]UINT uType,
+			[in]UINT uState);"
+
+	<stdcall: bool DrawFrameControl handle RECT* dword dword>
+	^self invalidCall!
+
+drawIconEx: hDC xLeft: x yTop: y hIcon: hIcon cxWidth: w cyHeight: h istepIfAniCur: anInteger hbrFlickerFreeDraw: brush diFlags: flags
+	"Draws an icon or cursor on the specified device context as specified by the flags
+	argument, and and stretching or compressing the icon or cursor as specified by the extent.
+
+		BOOL DrawIconEx(
+			HDC hdc,					// handle to device context
+			int xLeft,					// x-coordinate of upper left corner
+			int yTop,					// y-coordinate of upper left corner
+			HICON hIcon,				// handle to icon to draw
+			int cxWidth,				// width of the icon
+			int cyWidth,				// height of the icon
+			UINT istepIfAniCur,			// index of frame in animated cursor
+			HBRUSH hbrFlickerFreeDraw,	// handle to background brush (or nil)
+			UINT diFlags				// icon-drawing flags
+		);"
+
+	<stdcall: bool DrawIconEx handle sdword sdword handle sdword sdword dword handle dword>
+	^self invalidCall!
+
+drawMenuBar: aWindowHandle
+	"Draw the menu bar of the specified window (e.g. when the bars contents
+	are altered).
+		BOOL DrawMenuBar(
+			HWND hWnd	// handle to window with menu bar to redraw  
+		);"
+
+	<stdcall: bool DrawMenuBar handle>
+	^self invalidCall!
+
+drawState: hdc hbr: hbr lpOutputFunc: lpOutputFunc lData: lData wData: wData x: x y: y cx: cx cy: cy fuFlags: fuFlags
+	"Invoke the DrawState() function of the module wrapped by the receiver.
+	Helpstring: Displays an image and applies a visual effect to indicate a state, such as a disabled or default state
+
+		BOOL __stdcall DrawState(
+			[in]HDC HDC,
+			[in]HBRUSH hbr,
+			[in]DRAWSTATEPROC lpOutputFunc,
+			[in]LPARAM lData,
+			[in]WPARAM wData,
+			[in]int x,
+			[in]int y,
+			[in]int cx,
+			[in]int cy,
+			[in]unsigned int fuFlags);"
+
+	<stdcall: bool DrawStateA handle handle void* intptr uintptr sdword sdword sdword sdword dword>
+	^self invalidCall!
+
+drawTextEx: hdc lpchText: lpchText cchText: cchText lprc: lprc dwDTFormat: dwDTFormat lpDTParams: lpdtParams
+	"Draw text in the specified rectange with the specified options (see Win32 docs)
+
+		int DrawTextEx(
+			HDC hdc,			 						// handle to device context
+			LPTSTR lpchText,							// pointer to string to draw 
+			int cchText,								// length of string to draw 
+			LPRECT lprc,								// pointer to rectangle coordinates 
+			UINT dwDTFormat,						// formatting options 
+			LPDRAWTEXTPARAMS lpDTParams	// pointer to struct with options 
+		);
+	" 
+	<stdcall: sdword DrawTextExA handle lpstr sdword RECT* dword lpvoid>
+	^self invalidCall!
+
+emptyClipboard
+	"Empty the (open) clipboard. Answers 0 if fails.
+
+		BOOL EmptyClipboard(VOID)"
+
+	<stdcall: bool EmptyClipboard>
+	^self invalidCall!
+
+endDeferWindowPos: hWinPosInfo 
+	"Invoke the EndDeferWindowPos() function of the module wrapped by the receiver.
+	Helpstring: Updates the position and size of one or more windows in a single screen-refreshing cycle
+
+		BOOL __stdcall EndDeferWindowPos(
+			HDWP hWinPosInfo);"
+
+	<stdcall: bool EndDeferWindowPos handle>
+	^self invalidCall!
+
+endDialog: dialogHandle nResult: anInteger
+	"Destroy a modal dialog box, causing the system to end any processing for the dialog box. 
+		BOOL EndDialog(
+			HWND hDlg,	// handle to dialog box
+			INT_PTR nResult 	// value to return
+		);"
+
+	<stdcall: bool EndDialog handle intptr>
+	^self invalidCall!
+
+endPaint: hWindow lpPaint: aPAINTSTRUCT
+	"Mark the end of painting in the specified window (other half of BeginPaint() sandwich).
+		BOOL EndPaint(
+			HWND hWnd,				// handle to window
+			CONST PAINTSTRUCT *lpPaint // pointer to structure for paint data  
+		);"
+
+	<stdcall: bool EndPaint handle PAINTSTRUCT* >
+	^self invalidCall!
+
+enumClipboardFormats: knownFormat
+	"Enumerate the data formats that are currently available on the clipboard, beginning
+	with that specified (set to 0 to start).  Answers 0 at end (in which case GetLastError()
+	will return NO_ERROR), and also if an error occurs.
+
+		UINT EnumClipboardFormats(
+			UINT format 	// specifies a known available clipboard format 
+		);"
+
+	<stdcall: dword EnumClipboardFormats dword>
+	^self invalidCall!
+
+fillRect: hdc lprc: aRECT hbr: hBrush
+	"Fill a rectangle using the specified brush. Left and top borders are inclusive, 
+	right and bottom exclusive.
+			int FillRect(
+			HDC hDC,			// handle to device context 
+			CONST RECT *lprc,	// pointer to structure with rectangle  
+			HBRUSH hbr 		// handle to brush
+		);"
+
+	<stdcall: bool FillRect handle RECT* handle>
+	^self invalidCall!
+
+findWindow: lpClassName lpWindowName: lpWindowName
+	"Find and answer the handle of the top-level window with matching class name and caption."
+
+	<stdcall: handle FindWindowA lpstr lpstr>
+	^self invalidCall!
+
+flashWindow: hWnd bInvert: bInvert
+	"Flash the window with handle, hWnd."
+
+	<stdcall: bool FlashWindow handle bool>
+	^self invalidCall!
+
+flashWindowEx: pfwi
+	"BOOL FlashWindowEx( PFLASHWINFO pfwi // flash status information );"
+
+	<stdcall: bool FlashWindowEx FLASHWINFO*>
+	^self invalidCall
+!
+
+frameRect: hdc lprc: aRECT hbr: hBrush
+	"Draw a border around the specified rectangle using the specified brush.
+	The borders are one logical unit wide and high.
+		int FrameRect(
+			HDC hDC,			// handle to device context 
+			CONST RECT *lprc,	// pointer to rectangle coordinates  
+			HBRUSH hbr 		// handle to brush 
+		);"
+
+	<stdcall: bool FrameRect handle RECT* handle>
+	^self invalidCall!
+
+getCapture
+	"Retreive the handle of the current window with mouse capture.
+		HANDLE GetCapture(VOID)."
+
+	<stdcall: handle GetCapture>
+	^self invalidCall!
+
+getClassName: aWindowHandle lpClassName: aByteBuffer nMaxCount: anInteger
+	"Retrieves the name of the Windows class to which the specified window belongs.
+		int GetClassName(
+			HWND hWnd,			// handle of window
+			LPTSTR lpClassName,	// address of buffer for class name
+			int nMaxCount 			// size of buffer, in characters
+		);"
+
+	<stdcall: sdword GetClassNameA handle lpvoid sdword>
+	^self invalidCall!
+
+getClientRect: aWindowHandle lpRect: aRECT
+	"Retrieve the coordinates of hWnd's client area into aRECT.
+	The client coordinates specify the upper-left and lower-right corners 
+	of the client area. The coordinates of the upper-left corner are always 0@0.
+
+		BOOL GetClientRect(
+			HWND hWnd,	// handle of window
+			LPRECT lpRect 	// address of structure for client coordinates
+		);"
+
+	<stdcall: bool GetClientRect handle RECT* >
+	^self invalidCall!
+
+getClipboardData: format
+  	"Answer a global memory handle for the clipboard data in the specified format. 
+	
+		HANDLE GetClipboardData(UINT format);"
+
+	<stdcall: handle GetClipboardData dword>
+	^self invalidCall!
+
+getClipboardFormatName: format lpszFormatName: lpszFormatName cchMaxCount: cchMaxCount
+	"Copy the name of the specified registered clipboard format into the
+	supplied buffer.
+
+		int GetClipboardFormatName( 
+			UINT format,				// clipboard format to retrieve 
+			LPTSTR lpszFormatName, 	// address of buffer for name 
+			int cchMaxCount  			// length of name string in characters 
+		);"
+
+	<stdcall: sdword GetClipboardFormatNameA dword lpstr sdword>
+	^self invalidCall!
+
+getCursorPos: aPOINT
+	"Retrieve the cursor's position, in screen coordinates. Answer whether the request succeeds.
+		BOOL GetCursorPos(
+			LPPOINT  lpPoint
+		   );"
+
+	<stdcall: bool GetCursorPos POINTL* >
+	^self invalidCall!
+
+getDC: aWindowHandle
+	"Answer the handle of a display device context (DC) which can be used to draw
+	in the client area of the specified window.
+	The DC may be a common, class, or private device context depending on the class 
+	style specified for the window. Common DCs are reinitialized with default 
+	attributes each time, but class and private device contexts are answered
+	in their current state.
+
+		HDC GetDC(HWND hWnd);"
+
+	<stdcall: handle GetDC handle>
+	^self invalidCall!
+
+getDCEx: aWindowHandle hrgnClip: rgnExternalHandle flags: flagsInteger
+	<stdcall: handle GetDCEx handle handle dword>
+	^self invalidCall!
+
+getFocus
+	"Answers the handle of the keyboard focus window associated with the thread that called the function,
+	or nil if the thread does not own the focus window
+	
+		HWND GetFocus(VOID);"
+
+	<stdcall: handle GetFocus>
+	^self invalidCall!
+
+getForegroundWindow
+	"Answer the handle of the window with which the user is currently working.
+		HWND GetForegroundWindow(VOID)"
+
+	<stdcall: handle GetForegroundWindow>
+	^self invalidCall!
+
+getIconInfo: hIcon piconinfo: anICONINFO
+	"Populate the argument, anICONINFO, with information about the  icon or cursor
+	whose handle is hIcon.
+		BOOL GetIconInfo( 
+			HICON hIcon,			// icon handle	
+			PICONINFO piconinfo 	// address of icon structure	
+		);"
+
+	<stdcall: bool GetIconInfo handle ICONINFO* >
+	^self invalidCall!
+
+getLastActivePopup: aHandle
+	"Answer the handle of the pop-up window owned by the specified window 
+	which was most recently active.
+		HWND GetLastActivePopup(
+			HWND hWnd 	// handle of owner window
+		);"
+
+	<stdcall: handle GetLastActivePopup handle>
+	^self invalidCall!
+
+getMenuInfo: hMenu lpcmi: aMenuItemInfo
+	<stdcall: bool GetMenuInfo handle MENUINFO*>
+	^self invalidCall
+
+!
+
+getNextDlgGroupItem: p1 hCtl: p2 bPrevious: p3
+	"HWND GetNextDlgGroupItem(
+		HWND hDlg,	// handle of dialog box
+		HWND hCtl,	// handle of control
+		BOOL bPrevious 	// direction flag
+		);"
+
+	<stdcall: handle GetNextDlgGroupItem handle handle bool>
+	^self invalidCall!
+
+getNextDlgTabItem: p1 hCtl: p2 bPrevious: p3
+	"HWND GetNextDlgTabItem(
+		HWND hDlg,	// handle of dialog box
+		HWND hCtl,	// handle of known control
+		BOOL bPrevious 	// direction flag
+		);"
+
+	<stdcall: handle GetNextDlgTabItem handle handle bool>
+	^self invalidCall!
+
+getProp: aWindowHandle lpString: name
+	"Answer a data handle which is the previously added (with #setProp:etc) named property 
+	of the given window.
+		HANDLE GetProp(
+			HWND hWnd,	// handle of window
+			LPCTSTR lpString 	// atom or address of string
+		);.
+
+	N.B. The return specification HANDLE here indicates that the value is an opaque 32-bit
+	(DWORD) value, so we use #dword, as we reserve #handle for real handles."
+
+	<stdcall: dword GetPropA handle lpvoid>
+	^self invalidCall
+
+!
+
+getScrollInfo: aWindowHandle fnBar: flag lpsi: struct
+	"Retrieve the parameters of a scroll bar, including the minimum and maximum 
+	scrolling positions, the page size, and the position of the thumb.
+		BOOL GetScrollInfo(
+  			HWND hwnd,	// handle of window with scroll bar
+			int fnBar,	// scroll bar flag
+			LPSCROLLINFO lpsi	// pointer to structure for scroll parameters
+		);"
+
+	<stdcall: bool GetScrollInfo handle sdword SCROLLINFO* >
+	^self invalidCall!
+
+getTopWindow: aHandle
+	"Answer the handle of the top-most child of the window with the specified handle.
+		HWND GetTopWindow(
+			HWND hWnd 	// handle of parent window
+		);"
+
+	<stdcall: handle GetTopWindow handle>
+	^self invalidCall!
+
+getUpdateRect: hWnd lpRect: lpRect bErase: bErase
+	"Get the update rectangle for the Window with handle, hWnd. If the update
+	region is empty then answers false, else true. The lpRect parameter can be
+	null if the caller only wants to determine whether the window requires any
+	repainting.
+
+		BOOL GetUpdateRect(
+			HWND hWnd, // handle of window 
+			LPRECT lpRect , // address of update rectangle coordinates 
+			BOOL bErase <> // erase flag 
+		); "
+
+	<stdcall: bool GetUpdateRect handle RECT* bool>
+	^self invalidCall!
+
+getWindow: hWnd uCmd: flags
+	"Answer the handle of a window that has the specified relationship to hWnd.
+		HWND GetWindow(
+			HWND hWnd,	// handle of original window
+			UINT uCmd 	// relationship flag
+		);"
+
+	<stdcall: handle GetWindow handle dword>
+	^self invalidCall!
+
+getWindowLongPtr: aWindowHandle nIndex: zeroBasedIntegerOffset 
+	"Answer various signed intptr values retrieved from the window with handle, aWindowHandle.
+	If an unsigned value is required, use getWindowULongPtr:nIndex:. Note that this function
+	is only supported on 64-bit Windows.
+
+		LONG_PTR GetWindowLongPtr(
+			HWND hWnd, // handle of window 
+			int nIndex // offset of value to retrieve 
+		);
+
+	Valid offsets are in the range 0 to the number of bytes of extra window memory, minus the
+	size of an intptr, or one of the following values: 
+
+		GWL_EXSTYLE Extended window styles (WS_EX_XXX) 
+		GWL_STYLE Window styles (WS_XXX) 
+		GWLP_WNDPROC Address of the Window Procedure
+		GWLP_HINSTANCE Handle of the application instance which owns the window. 
+		GWLP_HWNDPARENT Handle of the parent window, if any. 
+		GWLP_ID Identifier of the window. GWLP_USERDATA An inptr value associated with the window by the owning application.
+
+	The following values are also available for dialog windows: 
+
+		DWLP_DLGPROC Address of the dialog box procedure. 
+		DWLP_MSGRESULT The return value of a message processed in the dialog	box procedure. 
+		DWLP_USER Extra information private to the application.
+
+	Answers 0 if the function fails."
+
+	<stdcall: intptr GetWindowLongPtrA handle sdword>
+	^self invalidCall!
+
+getWindowPlacement: hWnd lpwndpl: lpwndpl
+	"Retrieve the show state and restored, minimized, and maximized positions 
+	of the specified window.
+		BOOL GetWindowPlacement(
+			HWND hWnd,				// handle of window
+			WINDOWPLACEMENT *lpwndpl 	// address of structure for position data
+		);"
+
+	<stdcall: bool GetWindowPlacement handle WINDOWPLACEMENT* >
+	^self invalidCall!
+
+getWindowRect: aWindowHandle lpRect: aRECT
+	"Retrieves the dimensions of the bounding rectangle of the specified window
+	(in screen coordinates, relative to the upper-left corner of the screen).
+
+		BOOL GetWindowRect(
+			HWND hWnd,	// handle of window
+			LPRECT lpRect 	// address of structure for window coordinates
+		);"
+
+	<stdcall: bool GetWindowRect handle RECT* >
+	^self invalidCall!
+
+getWindowText: aWindow lpString: aBuffer nMaxCount: len
+	"Copy the text of the specified window (its title bar, or other appropriate text)
+	into the supplied buffer, up to the specified maximum length
+		int GetWindowText(
+			HWND hWnd,		// handle of window or control with text
+			LPTSTR lpString,	// address of buffer for text
+			int nMaxCount 		// maximum number of characters to copy
+		);"
+
+	<stdcall: sdword GetWindowTextA handle lpvoid sdword>
+	^self invalidCall
+!
+
+getWindowTextLength: hWnd
+	"Answer the length, in characters, of the specified window's title 'text'
+		int GetWindowTextLength(
+			HWND hWnd 	// handle of window or control with text
+		);"
+
+	<stdcall: sdword GetWindowTextLengthA handle>
+	^self invalidCall
+!
+
+getWindowThreadProcessId: aWindowHandle lpdwProcessId: lpdw
+	"The GetWindowThreadProcessId function retrieves the identifier of the thread that created 
+	the specified window and, optionally, the identifier of the process that created the window. 
+	
+	DWORD GetWindowThreadProcessId(
+		HWND hWnd <>,             // handle to window
+		LPDWORD lpdwProcessId <>  // process identifier
+		);
+"
+
+	<stdcall: DWORD GetWindowThreadProcessId handle DWORD* >
+	^self invalidCall!
+
+getWindowULong: aWindowHandle nIndex: zeroBasedIntegerOffset 
+	"Answer various unsigned 32-bit integer values retrieved from the window with handle,
+	aWindowHandle. See #getWindowLongPtr:offset: for more details"
+
+	<stdcall: dword GetWindowLongA handle sdword>
+	^self invalidCall!
+
+getWindowULongPtr: aWindowHandle nIndex: zeroBasedIntegerOffset 
+	"Answer various unsigned values retrieved from the window with handle, aWindowHandle. See
+	#getWindowLongPtr:offset: for more details"
+
+	<stdcall: uintptr GetWindowLongPtrA handle sdword>
+	^self invalidCall!
+
+insertMenuItem: hMenu uItem: anInteger fByPosition: aBoolean lpmii: aMENUITEMINFOA
+	"Insert a new item into a menu.
+
+		BOOL InsertMenuItem(
+			HMENU hMenu,
+			UINT uItem,
+			BOOL fByPosition,
+			LPCMENUITEMINFO lpmii
+		);"
+
+	<stdcall: bool InsertMenuItemA handle dword bool MENUITEMINFOA*>
+	^self invalidCall!
+
+invalidate: hWnd lpRect: aRECT bErase: aBoolean
+	"Add aRECT to hWnd's update region (that portion of the
+	windows client area that requires repainting).
+		BOOL InvalidateRect(
+  			HWND hWnd,			// handle of window with changed update region  
+			CONST RECT *lpRect,	// address of rectangle coordinates 
+			BOOL bErase			// erase-background flag 
+		);"
+
+	<stdcall: bool InvalidateRect handle RECT* bool>
+	^self invalidCall!
+
+invalidateRgn: hWnd hRgn: aRegion bErase: aBoolean
+	"Invalidates the client area within the specified region by adding it to the current update region of a window. 
+	The invalidated region, along with all other areas in the update region, is marked for painting when the 
+	next paint message occurs. 
+
+		BOOL InvalidateRgn(
+	  	HWND  hWnd,	// handle of window with changed update region  
+		HRGN  hRgn,	// handle of region to add
+		BOOL  bErase 	// erase-background flag
+		);"
+
+	<stdcall: bool InvalidateRgn handle handle bool>
+	^self invalidCall!
+
+invertRect: hdc lprc: aRECT
+	"The InvertRect function inverts a rectangle in a window by performing a logical 
+	NOT operation on the color values for each pixel in the rectangle's interior.
+
+	BOOL InvertRect( 
+		HDC hDC,	// handle of device context	
+		CONST RECT *lprc	// address of structure with rectangle	
+		); "
+
+	<stdcall: bool InvertRect handle RECT* >
+	^self invalidCall!
+
+isClipboardFormatAvailable: format
+  	"Answer whether the clipboard contains data in the specified format. 
+	
+		BOOL IsClipboardFormatAvailable(UINT format);"
+
+	<stdcall: bool IsClipboardFormatAvailable dword>
+	^self invalidCall!
+
+isDialogMessage: aHandle lpMsg: aMSG
+	"Determine whether a message is intended for the specified dialog 
+	box and, if it is, process the message. 
+		BOOL IsDialogMessage(
+  			HWND hDlg,	// handle of dialog box
+			LPMSG lpMsg	// address of structure with message
+		);"
+
+	<stdcall: bool IsDialogMessageA handle MSG* >
+	^self invalidCall!
+
+loadAccelerators: anExternalHandle lpTableName: anIntegerOrString
+	"Load the specified accelerator table from the resources of the application identified
+	by the instance handle, aHandle. The argument anIntegerOrString may be a 16-bit integer
+	resource id, or a String name. Answer the handle of the resource, or nil if the function
+	fails. Loaded accelerator tables will be freed automatically when Dolphin terminates.
+
+		HACCEL LoadAccelerators(
+				HINSTANCE  hInstance,	// handle of application instance
+				LPCTSTR  lpTableName 	// address of table-name string
+			);"
+
+	<stdcall: handle LoadAcceleratorsA handle lpvoid>
+	^self invalidCall!
+
+loadCursorFromFile: aFilename
+	"Creates a cursor based on data contained in the specified file, and answer the handle, 
+	or NULL if it fails. Can load standard (.CUR) or animated (.ANI) cursors.
+
+		HCURSOR LoadCursorFromFile (
+  			LPCTSTR  lpFileName	// pointer to name of cursor file, or system cursor identifier
+	   );"
+
+	<stdcall: handle LoadCursorFromFileA lpvoid>
+	^self invalidCall!
+
+loadIcon: anInstanceHandle lpIconName: anIntegerID
+	"Loads the specified icon resource from the specified module.
+		HICON LoadIcon(
+			HINSTANCE hInstance,	// handle of application instance
+			LPCTSTR lpIconName 	// icon-name string or icon resource identifier
+		);"
+
+	<stdcall: handle LoadIconA handle lpvoid>
+	^self invalidCall
+!
+
+loadMenu: anExternalHandle lpMenuName: anIntegerOrString
+	"Load the specified menu from the resources of the application identified
+	by the instance handle, aHandle. The argument anIntegerOrString may be a 16-bit integer
+	resource id, or a String name. Answer the handle of the resource, or nil if the function
+	fails.
+
+		HMENU LoadMenu(
+			HINSTANCE  hInstance,	// handle of application instance
+			LPCTSTR  lpMenuName	// menu name string or menu-resource identifier  
+			);"
+
+	<stdcall: handle LoadMenuA handle lpvoid>
+	^self invalidCall!
+
+lockWindowUpdate: anExternalHandle
+	<stdcall: bool LockWindowUpdate handle>
+	^self invalidCall!
+
+makeDragList: aWindowHandle
+	"The MakeDragList function changes the specified single-selection list box 
+	to a drag list box.
+
+	BOOL MakeDragList( HWND hLB);"
+
+	<stdcall: bool MakeDragList handle>
+	^self invalidCall!
+
+mapWindowPoints: fromHwnd hWndTo: toHwnd lpPoints: points cPoints: count
+	"Map a set of points from a coordinate space relative to one window 
+	to a coordinate space relative to another window.
+
+		int MapWindowPoints(
+  			HWND hWndFrom,		// handle of window to be mapped from 
+			HWND hWndTo,		// handle of window to be mapped to 
+			LPPOINT lpPoints,	// address of structure array with points to map 
+			UINT cPoints 		// number of structures in array 
+	   );"
+
+	<stdcall: sdword MapWindowPoints handle handle lpvoid dword>
+	^self invalidCall!
+
+modifyMenu: hMenuDrop uPosition: position uFlags: styleFlags uIDNewItem: menuId lpNewItem: menuText
+	"Changes an existing menu item the specified menu with the specified
+	style, identifier and text.
+
+		BOOL ModifyMenu(
+			HMENU hMenu,	// handle to menu
+			UINT uPosition,	// menu item to modify
+			UINT uFlags,		// menu item flags
+			UINT uIDNewItem,	// menu item identifier or pop-up menu handle 
+			LPCTSTR lpNewItem	// menu item content
+		);"
+
+	<stdcall: bool ModifyMenuA handle dword dword dword lpstr>
+	^self invalidCall!
+
+openClipboard: hWnd
+	"Open the clipboard, associating it with the specified window.
+	Answers 0 if fails.
+
+		BOOL OpenClipboard(HWND)"
+
+	<stdcall: bool OpenClipboard handle>
+	^self invalidCall!
+
+printWindow: hwnd hdcBlt: hDC nFlags: anInteger 
+	<stdcall: bool PrintWindow handle handle dword>
+	^self invalidCall!
+
+redrawWindow: hWnd lprcUpdate: lprcUpdate hrgnUpdate: hrgnUpdate flags: flags
+	"Update the specified rectangle or region in a window's client area. 
+		BOOL RedrawWindow(
+			HWND hWnd,				// handle to window
+			CONST RECT *lprcUpdate,	// update rectangle
+			HRGN hrgnUpdate,			// handle to update region
+			UINT flags				// array of redraw flags
+		);
+	"
+
+	<stdcall: bool RedrawWindow handle RECT* handle dword>
+	^self invalidCall!
+
+registerClass: aWNDCLASS
+	"Registers a window class for subsequent use in calls to the CreateWindow or 
+	CreateWindowEx functions. Answers the class atom, or zero if fails.
+		ATOM RegisterClass(
+			CONST WNDCLASS  *lpwc 	// address of structure with class data
+		);"
+
+	<stdcall: word RegisterClassA WNDCLASS* >
+	^self invalidCall!
+
+registerClipboardFormat: formatName
+	"Register a new clipboard format name, answering its system wide identifier.
+
+		UINT RegisterClipboardFormat( 
+			LPCTSTR lpszFormat  // address of name string 
+		);"
+
+	<stdcall: dword RegisterClipboardFormatA lpstr>
+	^self invalidCall!
+
+registerWindowMessage: aString
+	"Defines a new window message that is guaranteed to be unique system wide.
+
+		UINT RegisterWindowMessage(
+			LPCTSTR  lpString 	// address of message string
+		);"
+
+	<stdcall: dword RegisterWindowMessageA lpstr>
+	^self invalidCall!
+
+releaseCapture
+	"Release the mouse capture from a window, restoring normal mouse input processing.
+		BOOL ReleaseCapture(VOID)"
+  
+	<stdcall: bool ReleaseCapture>
+	^self invalidCall!
+
+removeMenu: aMenu uPosition: idOrPos uFlags: flags
+	"Delete a menu item from the specified menu. If the menu item activates a pop-up menu, 
+	RemoveMenu does not destroy the pop-up menu or its handle, allowing the menu to be reused. 
+	Before this function is called, the GetSubMenu function should retrieve the handle of the pop-up menu. 
+		BOOL RemoveMenu(
+			HMENU hMenu,	// handle of menu
+			UINT uPosition,	// menu item identifier or position
+			UINT uFlags	// menu item flag
+		);"
+
+	<stdcall: bool RemoveMenu handle dword dword>
+	^self invalidCall!
+
+removeProp: aWindowHandle lpString: name
+	"Remove an the entry identified by lpString from the property list of 
+	the specified window.
+		HANDLE RemoveProp(
+			HWND hWnd,	// handle to window
+			LPCTSTR lpString 	// atom or address of string
+		);"
+
+	<stdcall: handle RemovePropA handle lpvoid>
+	^self invalidCall
+
+!
+
+screenToClient: aWindowHandle lpPoint: aPOINT
+	"Converts the screen coordinates in aPOINT to client coordinates.
+		BOOL ScreenToClient(
+  			HWND hWnd,		// window handle for source coordinates 
+			LPPOINT lpPoint 	// address of structure containing coordinates  
+		);"
+
+	<stdcall: bool ScreenToClient handle POINTL* >
+	^self invalidCall!
+
+scrollWindowEx: aWindowHandle dx: horizontalScrolling dy: verticalScrolling prcScroll: scrollRECT prcClip: clipRECT
+	hrgnUpdate: hUpdateRegion prcUpdate: update flags: flags
+	"The ScrollWindowEx function scrolls the content of the specified window's client
+	area. This function is similar to the ScrollWindow function, but it has additional features. 
+
+	int ScrollWindowEx(
+		HWND hWnd				// handle of window to scroll
+		int dx				// amount of horizontal scrolling
+		int dy				// amount of vertical scrolling
+		CONST RECT *prcScroll	// address of structure with scroll rectangle
+		CONST RECT *prcClip	// address of structure with clip rectangle
+		HRGN hrgnUpdate		// handle of update region
+		LPRECT prcUpdate		// address of structure for update rectangle
+		UINT flags			// scrolling flags
+	);"
+
+	<stdcall: sdword ScrollWindowEx handle sdword sdword RECT* RECT* handle lpvoid dword>
+	^self invalidCall!
+
+sendDlgItemMessage: aWindowHandle nIDDlgItem: anIntegerId msg: aString wParam: wParam lParam: lParam
+	"Send a message to the specified control in a dialog box. 
+		LRESULT SendDlgItemMessage(
+			HWND  hDlg,		// handle of dialog box
+			int  nIDDlgItem,	// identifier of control
+			UINT  Msg,		// message to send
+			WPARAM  wParam,	// first message parameter
+			LPARAM  lParam 	// second message parameter
+		   );"
+
+	<stdcall: uintptr SendDlgItemMessageA handle sdword dword uintptr intptr>
+	^self invalidCall!
+
+setCapture: aWindowHandle
+	"Set the mouse capture to the specified window. Once a window has captured the mouse, it receivers all
+	mouse input (unless a button is down while the mouse if over another thread's window).
+		HWND SetCapture(
+			HWND hWnd 	// handle of window to receive mouse capture
+		);"
+
+	<stdcall: handle SetCapture handle>
+	^self invalidCall!
+
+setClassLong: aWindowHandle nIndex: offset dwNewLong: value
+	"Change an attribute of the specified window class, setting 
+	a signed 32-bit (long) value at the specified offset into 
+	the extra window memory of a window.
+	Note: This is declared as returning a DWORD.
+
+		DWORD SetClassLong(
+			HWND hWnd,		// handle of window
+			int nIndex,		// offset of value to set
+			LONG dwNewLong 	// new value
+		);"
+
+	<stdcall: dword SetClassLongA handle sdword sdword>
+	^self invalidCall!
+
+setClipboardData: uFormat hMem: hMem
+	"Places data on the clipboard in the specified clipboard format.
+	The clipboard must previously have been opened unless responding to a WM_RENDERXXX
+	message.
+
+		HANDLE SetClipboardData( 
+			UINT uFormat,		// clipboard format 
+			HANDLE hMem	// data handle 
+		);"
+
+	<stdcall: handle SetClipboardData dword handle>
+	^self invalidCall!
+
+setCursorPosX: x y: y
+	"Move the cursor to the specified screen coordinates. The coordinates are clipped to 
+	the rectangle set by the most recent invocation of the ClipCursor function.
+
+		BOOL SetCursorPos(
+  			int  X,	// horizontal position  
+			int  Y 	// vertical position
+		);"
+
+	<stdcall: bool SetCursorPos sdword sdword>
+	^self invalidCall!
+
+setDlgItemInt: hDlg nIDDlgItem: anIntegerId uValue: uValue bSigned: bSigned
+	"Sets the title or text of a control in a dialog box. 
+		BOOL SetDlgItemInt(
+			HWND hDlg, // handle to dialog box
+			int nIDDlgItem, // control identifier 
+			UINT uValue, // value to set 
+			BOOL bSigned // signed or unsigned indicator 
+		);"
+
+	<stdcall: bool SetDlgItemInt handle sdword dword bool>
+	^self invalidCall!
+
+setFocus: aWindowHandle
+	"Transfer the keyboard focus to the specified window. All keyboard input 
+	is directed to the window with focus.
+	Answers the handle of the window which previously had focus, or nil if none.
+		HWND SetFocus(
+  			HWND hWnd 	// handle of window to receive focus
+		);"
+
+	<stdcall: handle SetFocus handle>
+	^self invalidCall!
+
+setForegroundWindow: aHandle
+  	"Makes the specified top-level window associated with the current thread the active window
+	and force it to the foreground.. 
+		HWND SetForegroundWindow( HWND hWnd);"
+
+	<stdcall: handle SetForegroundWindow handle>
+	^self invalidCall!
+
+setLayeredWindowAttributes: aWindowHandle lcrKey: crKey bAlpha: bAlpha dwFlags: flags
+	"The SetLayeredWindowAttributes function sets the opacity and transparency color key of a layered window.
+
+	BOOL SetLayeredWindowAttributes(      
+			HWND hwnd,
+			COLORREF crKey,
+			BYTE bAlpha,
+			DWORD dwFlags
+			);
+	"
+
+	<stdcall: bool SetLayeredWindowAttributes handle dword byte dword>
+	^self invalidCall!
+
+setMenu: windowHandle hMenu: menuHandle
+	"Assign a new menu to the specified window.
+		BOOL SetMenu(
+	  		HWND hWnd,	// handle of window
+			HMENU hMenu	// handle of menu
+		);"
+
+	<stdcall: bool SetMenu handle handle>
+	^self invalidCall!
+
+setMenuDefaultItem: hMenu uItem: uItem fByPos: fByPos
+	"Set the default item for the menu with handle, hMenu
+
+		BOOL SetMenuDefaultItem(
+			HMENU hMenu, 
+			UINT uItem, 
+			UINT fByPos
+		);"
+
+	<stdcall: dword SetMenuDefaultItem handle dword dword>
+	^self invalidCall
+
+!
+
+setMenuInfo: hMenu lpcmi: aMenuItemInfo
+	"Set various information about a menu.
+		BOOL SetMenuInfo(
+			HMENU hMenu,
+			LPMENUINFO lpcmi
+		);"
+
+	<stdcall: bool SetMenuInfo handle MENUINFO*>
+	^self invalidCall
+
+!
+
+setMenuItemInfo: hMenu uItem: anInteger fByPosition: aBoolean lpmii: aMenuItemInfo
+	"Set various information about a menu item.
+		BOOL SetMenuItemInfo(
+			HMENU hMenu,
+			UINT uItem,
+			BOOL fByPosition,
+			LPMENUITEMINFO lpmii
+		);"
+
+	<stdcall: bool SetMenuItemInfoA handle dword bool MENUITEMINFOA*>
+	^self invalidCall
+
+!
+
+setParent: hWndChild hWndNewParent: hWndParent
+	"Set the parent window of the window with handle hWnd.
+	If the function succeeds, answer the handle of the original parent window.
+		HWND SetParent(
+			HWND hWndChild,		// handle of window whose parent is changing
+			HWND hWndNewParent 	// handle of new parent window
+		);"
+
+	<stdcall: dword SetParent handle handle>
+	^self invalidCall!
+
+setProp: aWindowHandle lpString: name hData: anObject
+	"Answer true if name and anObject are successfully added to the property list.
+	The SetProp function adds a new entry or changes an existing entry in the property list of the specified window.
+	The function adds a new entry to the list if the specified character string does not exist already in the list.
+	The new entry contains the string and the handle. Otherwise, the function replaces the string's current handle with the specified handle. 
+		
+		BOOL SetProp(
+			HWND  	hWnd,		// handle of window
+			LPCTSTR  lpString,		// atom or address of string
+			HANDLE  	hData 		// handle of data
+		);
+
+	Before destroying a window (that is, before processing the WM_DESTROY message), an application must remove all entries it has added
+	to the property list. The application must use the RemoveProp function to remove the entries."
+
+	<stdcall: bool SetPropA handle lpvoid handle>
+	^self invalidCall
+
+!
+
+setScrollInfo: aWindowHandle fnBar: flag lpsi: struct fRedraw: redraw
+	"Set the minimum and maximum scrolling positions, the page size, and the position 
+	of thumb, of a scroll bar, redrawing if requested.
+		int SetScrollInfo(
+			HWND hwnd,		// handle of window with scroll bar
+			int fnBar,		// scroll bar flag
+			LPSCROLLINFO lpsi,	// pointer to structure with scroll parameters
+			BOOL fRedraw		// redraw flag
+		);"
+
+	<stdcall: sdword SetScrollInfo handle sdword SCROLLINFO* bool>
+	^self invalidCall!
+
+setSysColors: count lpaElements: elements lpaRgbValues: values
+	"
+		Sets the colors for the specified display elements. Display elements are the various parts of a window and the display that appear on the system display screen.hasCaption: true;
+		hasCaption: false;
+
+		BOOL WINAPI SetSysColors(
+			__in  int cElements,
+			__in  const INT* lpaElements,
+			__in  const COLORREF* lpaRgbValues
+			);"
+
+	<stdcall: bool SetSysColors sdword sdword* ColorRef*>
+	^self invalidCall!
+
+setWindowLong: aWindowHandle nIndex: offset dwNewLong: value
+	"Change an attribute of the specified window, setting 
+	a signed 32-bit (long) value at the specified offset into 
+	the extra window memory of a window.
+		LONG SetWindowLong(
+			HWND hWnd,		// handle of window
+			int nIndex,		// offset of value to set
+			LONG dwNewLong 	// new value
+		);"
+
+	<stdcall: sdword SetWindowLongA handle sdword sdword>
+	^self invalidCall!
+
+setWindowPlacement: aWindowHandle lpwndpl: aWinWINDOWPLACEMENT
+	"Set the show state and the restored, minimized, and maximized positions 
+	of the specified window. Answer whether the request succeeded.
+		BOOL SetWindowPlacement(
+			HWND hWnd,					// handle of window
+			CONST WINDOWPLACEMENT *lpwndpl 	// address of structure with position data
+			);"
+
+	<stdcall: bool SetWindowPlacement handle lpvoid>
+	^self invalidCall!
+
+setWindowPos: aWindowHandle
+	hWndInsertAfter: hwndInsertAfter
+	x: x
+	y: y
+	cx: cx
+	cy: cy
+	uFlags: flags
+	
+	"Change the size, position, and Z order of a child, pop-up, or top-level window.
+	Windows are ordered according to their appearance on the screen. The topmost window 
+	receives the highest rank and is the first window in the Z order. 
+		BOOL SetWindowPos(
+			HWND hWnd,			// handle of window
+			HWND hWndInsertAfter,	// placement-order handle
+			int X,				// horizontal position
+			int Y,				// vertical position
+			int cx,				// width
+			int cy,				// height
+			UINT uFlags 			// window-positioning flags
+		);"
+
+	<stdcall: bool SetWindowPos handle dword sdword sdword sdword sdword dword>
+	^self invalidCall
+		!
+
+showCursor: aBoolean
+	"Show or hide the cursor. N.B. A count is maintained of the number of times 
+	the cursor has been hidden/shown (which is answered), so there may be no visual effect.
+
+		int ShowCursor(
+  			BOOL  bShow 	// cursor visibility flag  
+		);"
+
+	<stdcall: sdword ShowCursor bool>
+	^self invalidCall!
+
+subtractRect: lprcDst lprcSrc1: lprcSrc1 lprcSrc2: lprcSrc2 
+	<stdcall: bool SubtractRect RECT* RECT* RECT*>
+	^self invalidCall!
+
+trackMouseEvent: lpEventTrack 
+	"Invoke the TRACKMOUSEEVENT() function of the module wrapped by the receiver.
+	Helpstring: Posts messages when the mouse pointer leaves a window or hovers over a window for a specified amount of time.
+
+		BOOL __stdcall TRACKMOUSEEVENT(
+			TRACKMOUSEEVENT* lpEventTrack);"
+
+	<stdcall: bool TrackMouseEvent TRACKMOUSEEVENT*>
+	^self invalidCall!
+
+trackPopupMenu: hMenu uFlags: uFlags x: x y: y nReserved: reserved hWnd: hWnd prcRect: aRect
+	"Display a pop-up menu at the specified location (anywhere on the screen) and track the selection of 
+	items on that menu.
+			BOOL TrackPopupMenu(
+  			HMENU hMenu,			// handle of pop-up menu
+			UINT uFlags,			// screen-position and mouse-button flags
+			int x,				// horizontal position, in screen coordinates
+			int y,				// vertical position, in screen coordinates
+			int nReserved,			// reserved, must be zero
+			HWND hWnd,			// handle of owner window
+			CONST RECT *prcRect	// points to RECT that specifies no-dismissal area
+		);"
+
+	<stdcall: bool TrackPopupMenu handle dword sdword sdword sdword handle RECT* >
+	^self invalidCall!
+
+translateAccelerator: handleWindow haccl: handleAccelerators lpmsg: aMSG
+	"Translate accelerator keys for menu commands, translating WM_KEYDOWN or WM_SYSKEYDOWN 
+	messages to WM_COMMAND or WM_SYSCOMMAND messages if there is an entry for the key in the 
+	accelerator table with handle, handleAccelerators, sending the WM_COMMAND or WM_SYSCOMMAND 
+	message directly to the window procedure of the window identified by the handle, handleWindow,
+	returning only when the window procedure returns.
+
+		int TranslateAccelerator(
+			HWND  hwnd,	// handle of destination window
+			HACCEL  haccl,	// handle of accelerator table
+			LPMSG  lpmsg 	// address of structure with message
+		);	
+
+	Answers true if the function succeeds, and has consumed the message. Answers false if the 
+	functions fails. The exact error is available by sending KernelLibrary>>getLastError."
+
+	<stdcall: bool TranslateAccelerator handle handle MSG* >
+	^self invalidCall
+!
+
+unregisterClass: classAtomOrStringName hInstance: instanceHandle
+	"Remove a window class.
+		BOOL UnregisterClass(
+			LPCTSTR lpClassName,	// address of class name string
+			HINSTANCE hInstance 	// handle of application instance
+		);"
+
+	<stdcall: bool UnregisterClassA lpvoid handle>
+	^self invalidCall!
+
+validate: hWnd lpRect: aRECT
+	"Remove aRECT from hWnd's update region (that portion of the
+	windows client area that requires repainting).
+		BOOL ValidateRect(
+  			HWND hWnd,			// handle of window with changed update region  
+			CONST RECT *lpRect		// address of rectangle coordinates 
+		);"
+
+	<stdcall: bool ValidateRect handle RECT* >
+	^self invalidCall!
+
+windowFromPoint: aPOINTL
+	"The WindowFromPoint function retrieves the handle of the window that contains the
+	specified point. 
+		HWND WindowFromPoint(
+			POINT Point); 	// structure with point
+ 
+	Return Values:
+	If the function succeeds, the return value is the handle of the window that contains the 
+	point. If no window exists at the given point, the return value is NULL. 
+
+	Remarks:
+	The WindowFromPoint function does not retrieve the handle of a hidden or disabled 
+	window, even if the point is within the window. Use the ChildWindowFromPoint function 
+	for a nonrestrictive search."
+
+	<stdcall: handle WindowFromPoint POINTL>
+	^self invalidCall!
+
+winHelp: hwndMain lpszHelp: lpszHelp uCommand: uCommand dwData: dwData
+	"Invoke the WinHelp() function of the module wrapped by the receiver.
+	Helpstring: Starts windows help and passes a request for help
+
+		BOOL __stdcall WinHelp(
+			HWND hwndMain,
+			LPCSTR lpszHelp,
+			unsigned int uCommand,
+			ULONG_PTR dwData);"
+
+	<stdcall: bool WinHelpA handle lpstr dword uintptr>
+	^self invalidCall! !
+!UserLibrary categoriesFor: #adjustWindowRectEx:dwStyle:bMenu:dwExStyle:!public!win32 functions-coordinate space and transformation! !
+!UserLibrary categoriesFor: #animateWindow:dwTime:dwFlags:!**auto generated**!public! !
+!UserLibrary categoriesFor: #attachThreadInput:idAttachTo:fAttach:!public!win32 functions-message and message queue! !
+!UserLibrary categoriesFor: #beginDeferWindowPos:!**auto generated**!public! !
+!UserLibrary categoriesFor: #beginPaint:lpPaint:!public!win32 functions-painting and drawing! !
+!UserLibrary categoriesFor: #bringWindowToTop:!public!win32 functions-window! !
+!UserLibrary categoriesFor: #callWindowProc:hWnd:msg:wParam:lParam:!public!win32 functions-window procedure! !
+!UserLibrary categoriesFor: #childWindowFromPointEx:pt:uFlags:!public!win32 functions-window! !
+!UserLibrary categoriesFor: #clientToScreen:lpPoint:!public!win32 functions-coordinate space and transformation! !
+!UserLibrary categoriesFor: #closeClipboard!public!win32 functions-clipboard! !
+!UserLibrary categoriesFor: #countClipboardFormats!public!win32 functions-clipboard! !
+!UserLibrary categoriesFor: #createAcceleratorTable:cEntries:!public!win32 functions-keyboard accelerator! !
+!UserLibrary categoriesFor: #createMenu!public!win32 functions-menu! !
+!UserLibrary categoriesFor: #createPopupMenu!public!win32 functions-menu! !
+!UserLibrary categoriesFor: #createWindowEx:lpClassName:lpWindowName:dwStyle:x:y:nWidth:nHeight:hWndParent:hMenu:hInstance:lpParam:!public!win32 functions-window! !
+!UserLibrary categoriesFor: #deferWindowPos:hwnd:hwndInsertAfter:x:y:cx:cy:uFlags:!**auto generated**!public! !
+!UserLibrary categoriesFor: #deleteMenu:uPosition:uFlags:!public!win32 functions-menu! !
+!UserLibrary categoriesFor: #destroyAcceleratorTable:!public!win32 functions-keyboard accelerator! !
+!UserLibrary categoriesFor: #destroyMenu:!public!win32 functions-menu! !
+!UserLibrary categoriesFor: #drawEdge:qrc:edge:grfFlags:!**auto generated**!public!win32 functions-painting and drawing! !
+!UserLibrary categoriesFor: #drawFocusRect:lprc:!public!win32 functions-painting and drawing! !
+!UserLibrary categoriesFor: #drawFrameControl:lprc:uType:uState:!**auto generated**!public!win32 functions-painting and drawing! !
+!UserLibrary categoriesFor: #drawIconEx:xLeft:yTop:hIcon:cxWidth:cyHeight:istepIfAniCur:hbrFlickerFreeDraw:diFlags:!public!win32 functions-icon! !
+!UserLibrary categoriesFor: #drawMenuBar:!public!win32 functions-menu! !
+!UserLibrary categoriesFor: #drawState:hbr:lpOutputFunc:lData:wData:x:y:cx:cy:fuFlags:!**auto generated**!public! !
+!UserLibrary categoriesFor: #drawTextEx:lpchText:cchText:lprc:dwDTFormat:lpDTParams:!public!win32 functions-font and text! !
+!UserLibrary categoriesFor: #emptyClipboard!public!win32 functions-clipboard! !
+!UserLibrary categoriesFor: #endDeferWindowPos:!**auto generated**!public! !
+!UserLibrary categoriesFor: #endDialog:nResult:!public!win32 functions-dialog box! !
+!UserLibrary categoriesFor: #endPaint:lpPaint:!public!win32 functions-painting and drawing! !
+!UserLibrary categoriesFor: #enumClipboardFormats:!public!win32 functions-clipboard! !
+!UserLibrary categoriesFor: #fillRect:lprc:hbr:!public!win32 functions-filled shape! !
+!UserLibrary categoriesFor: #findWindow:lpWindowName:!public!win32 functions-filled shape! !
+!UserLibrary categoriesFor: #flashWindow:bInvert:!public!win32 functions-error handling! !
+!UserLibrary categoriesFor: #flashWindowEx:!public!win32 functions-error handling! !
+!UserLibrary categoriesFor: #frameRect:lprc:hbr:!public!win32 functions-filled shape! !
+!UserLibrary categoriesFor: #getCapture!public!win32 functions-mouse input! !
+!UserLibrary categoriesFor: #getClassName:lpClassName:nMaxCount:!public!win32 functions-window class! !
+!UserLibrary categoriesFor: #getClientRect:lpRect:!public!win32 functions-window! !
+!UserLibrary categoriesFor: #getClipboardData:!public!win32 functions-clipboard! !
+!UserLibrary categoriesFor: #getClipboardFormatName:lpszFormatName:cchMaxCount:!public!win32 functions-clipboard! !
+!UserLibrary categoriesFor: #getCursorPos:!public!win32 functions-cursor! !
+!UserLibrary categoriesFor: #getDC:!public!win32 functions-device context! !
+!UserLibrary categoriesFor: #getDCEx:hrgnClip:flags:!public!win32 functions-device context! !
+!UserLibrary categoriesFor: #getFocus!public!win32 functions-keyboard input! !
+!UserLibrary categoriesFor: #getForegroundWindow!public!win32 functions-keyboard input! !
+!UserLibrary categoriesFor: #getIconInfo:piconinfo:!public!win32 functions-icon! !
+!UserLibrary categoriesFor: #getLastActivePopup:!public!win32 functions-window! !
+!UserLibrary categoriesFor: #getMenuInfo:lpcmi:!public!win32 functions-menu! !
+!UserLibrary categoriesFor: #getNextDlgGroupItem:hCtl:bPrevious:!public!win32 functions-window! !
+!UserLibrary categoriesFor: #getNextDlgTabItem:hCtl:bPrevious:!public!win32 functions-window! !
+!UserLibrary categoriesFor: #getProp:lpString:!public!win32 functions-window property! !
+!UserLibrary categoriesFor: #getScrollInfo:fnBar:lpsi:!public!win32 functions-scroll bar! !
+!UserLibrary categoriesFor: #getTopWindow:!public!win32 functions-window! !
+!UserLibrary categoriesFor: #getUpdateRect:lpRect:bErase:!public!win32 functions-painting and drawing! !
+!UserLibrary categoriesFor: #getWindow:uCmd:!public!win32 functions-window! !
+!UserLibrary categoriesFor: #getWindowLongPtr:nIndex:!public!win32 functions-window class! !
+!UserLibrary categoriesFor: #getWindowPlacement:lpwndpl:!public!win32 functions-window! !
+!UserLibrary categoriesFor: #getWindowRect:lpRect:!public!win32 functions-window! !
+!UserLibrary categoriesFor: #getWindowText:lpString:nMaxCount:!public!win32 functions-window! !
+!UserLibrary categoriesFor: #getWindowTextLength:!public!win32 functions-window! !
+!UserLibrary categoriesFor: #getWindowThreadProcessId:lpdwProcessId:!public!win32 functions-window! !
+!UserLibrary categoriesFor: #getWindowULong:nIndex:!public!win32 functions-window class! !
+!UserLibrary categoriesFor: #getWindowULongPtr:nIndex:!public!win32 functions-window class! !
+!UserLibrary categoriesFor: #insertMenuItem:uItem:fByPosition:lpmii:!public!win32 functions-menu! !
+!UserLibrary categoriesFor: #invalidate:lpRect:bErase:!public!win32 functions-painting and drawing! !
+!UserLibrary categoriesFor: #invalidateRgn:hRgn:bErase:!public!win32 functions-painting and drawing! !
+!UserLibrary categoriesFor: #invertRect:lprc:!public!win32 functions-filled shape! !
+!UserLibrary categoriesFor: #isClipboardFormatAvailable:!public!win32 functions-clipboard! !
+!UserLibrary categoriesFor: #isDialogMessage:lpMsg:!public!win32 functions-dialog box! !
+!UserLibrary categoriesFor: #loadAccelerators:lpTableName:!public!win32 functions-keyboard accelerator! !
+!UserLibrary categoriesFor: #loadCursorFromFile:!public!win32 functions-cursor! !
+!UserLibrary categoriesFor: #loadIcon:lpIconName:!public!win32 functions-icon! !
+!UserLibrary categoriesFor: #loadMenu:lpMenuName:!public!win32 functions-menu! !
+!UserLibrary categoriesFor: #lockWindowUpdate:!public!win32 functions-painting and drawing! !
+!UserLibrary categoriesFor: #makeDragList:!public!win32 functions-list box! !
+!UserLibrary categoriesFor: #mapWindowPoints:hWndTo:lpPoints:cPoints:!public!win32 functions-coordinate space and transformation! !
+!UserLibrary categoriesFor: #modifyMenu:uPosition:uFlags:uIDNewItem:lpNewItem:!public!win32 functions-menu! !
+!UserLibrary categoriesFor: #openClipboard:!public!win32 functions-clipboard! !
+!UserLibrary categoriesFor: #printWindow:hdcBlt:nFlags:!public!win32 functions-painting and drawing! !
+!UserLibrary categoriesFor: #redrawWindow:lprcUpdate:hrgnUpdate:flags:!public!win32 functions-painting and drawing! !
+!UserLibrary categoriesFor: #registerClass:!public!win32 functions-window class! !
+!UserLibrary categoriesFor: #registerClipboardFormat:!public!win32 functions-clipboard! !
+!UserLibrary categoriesFor: #registerWindowMessage:!public!win32 functions-message and message queue! !
+!UserLibrary categoriesFor: #releaseCapture!public!win32 functions-mouse input! !
+!UserLibrary categoriesFor: #removeMenu:uPosition:uFlags:!public!win32 functions-menu! !
+!UserLibrary categoriesFor: #removeProp:lpString:!public!win32 functions-window property! !
+!UserLibrary categoriesFor: #screenToClient:lpPoint:!public!win32 functions-coordinate space and transformation! !
+!UserLibrary categoriesFor: #scrollWindowEx:dx:dy:prcScroll:prcClip:hrgnUpdate:prcUpdate:flags:!public!win32 functions-window! !
+!UserLibrary categoriesFor: #sendDlgItemMessage:nIDDlgItem:msg:wParam:lParam:!public!win32 functions-dialog box! !
+!UserLibrary categoriesFor: #setCapture:!public!win32 functions-mouse input! !
+!UserLibrary categoriesFor: #setClassLong:nIndex:dwNewLong:!public!win32 functions-window class! !
+!UserLibrary categoriesFor: #setClipboardData:hMem:!public!win32 functions-clipboard! !
+!UserLibrary categoriesFor: #setCursorPosX:y:!public!win32 functions-cursor! !
+!UserLibrary categoriesFor: #setDlgItemInt:nIDDlgItem:uValue:bSigned:!public!win32 functions-dialog box! !
+!UserLibrary categoriesFor: #setFocus:!public!win32 functions-keyboard input! !
+!UserLibrary categoriesFor: #setForegroundWindow:!public!win32 functions-keyboard input! !
+!UserLibrary categoriesFor: #setLayeredWindowAttributes:lcrKey:bAlpha:dwFlags:!public!win32 functions-window! !
+!UserLibrary categoriesFor: #setMenu:hMenu:!public!win32 functions-menu! !
+!UserLibrary categoriesFor: #setMenuDefaultItem:uItem:fByPos:!public!win32 functions-menu! !
+!UserLibrary categoriesFor: #setMenuInfo:lpcmi:!public!win32 functions-menu! !
+!UserLibrary categoriesFor: #setMenuItemInfo:uItem:fByPosition:lpmii:!public!win32 functions-menu! !
+!UserLibrary categoriesFor: #setParent:hWndNewParent:!public!win32 functions-window! !
+!UserLibrary categoriesFor: #setProp:lpString:hData:!public!win32 functions-window property! !
+!UserLibrary categoriesFor: #setScrollInfo:fnBar:lpsi:fRedraw:!public!win32 functions-scroll bar! !
+!UserLibrary categoriesFor: #setSysColors:lpaElements:lpaRgbValues:!public! !
+!UserLibrary categoriesFor: #setWindowLong:nIndex:dwNewLong:!public!win32 functions-window class! !
+!UserLibrary categoriesFor: #setWindowPlacement:lpwndpl:!public!win32 functions-window! !
+!UserLibrary categoriesFor: #setWindowPos:hWndInsertAfter:x:y:cx:cy:uFlags:!public!win32 functions-window! !
+!UserLibrary categoriesFor: #showCursor:!public!win32 functions-cursor! !
+!UserLibrary categoriesFor: #subtractRect:lprcSrc1:lprcSrc2:!public!rectangle functions! !
+!UserLibrary categoriesFor: #trackMouseEvent:!public!win32 functions-mouse input! !
+!UserLibrary categoriesFor: #trackPopupMenu:uFlags:x:y:nReserved:hWnd:prcRect:!public!win32 functions-menu! !
+!UserLibrary categoriesFor: #translateAccelerator:haccl:lpmsg:!public!win32 functions-keyboard accelerator! !
+!UserLibrary categoriesFor: #unregisterClass:hInstance:!public!win32 functions-window class! !
+!UserLibrary categoriesFor: #validate:lpRect:!public!win32 functions-painting and drawing! !
+!UserLibrary categoriesFor: #windowFromPoint:!public!win32 functions-window! !
+!UserLibrary categoriesFor: #winHelp:lpszHelp:uCommand:dwData:!**auto generated**!public! !
+
+!Warning class methodsFor!
+
+icon
+	"Answer the default icon for the receiver and its instances."
+
+	^Icon warning! !
+!Warning class categoriesFor: #icon!constants!public! !
+
+"End of package definition"!
+

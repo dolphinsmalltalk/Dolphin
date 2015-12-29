@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSPY v5 rel. 3 U (http://www.xmlspy.com) by Blair McGlashan (CGI Group (Europe) Ltd) -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+	<xs:simpleType name="MessageText">
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+	<xs:simpleType name="Method">
+		<xs:restriction base="Selector"/>
+	</xs:simpleType>
+	<xs:complexType name="Methods">
+		<xs:sequence>
+			<xs:element name="Method" type="Method" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:attribute name="count" use="required"/>
+	</xs:complexType>
+	<xs:simpleType name="ClassName">
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+	<xs:simpleType name="RemoveClass">
+		<xs:restriction base="ClassName"/>
+	</xs:simpleType>
+	<xs:complexType name="ClassType">
+		<xs:sequence>
+			<xs:element name="Name" type="ClassName"/>
+			<xs:element name="InstanceCount" type="xs:integer" minOccurs="0"/>
+			<xs:element name="Methods" type="Methods"/>
+			<xs:element name="ClassMethods" type="Methods"/>
+		</xs:sequence>
+		<xs:attribute name="unbound" type="xs:boolean"/>
+	</xs:complexType>
+	<xs:complexType name="ClassList">
+		<xs:sequence>
+			<xs:element name="Class" type="ClassType" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:attribute name="count" type="xs:integer" use="required"/>
+	</xs:complexType>
+	<xs:simpleType name="Selector">
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+	<xs:complexType name="Resource">
+		<xs:sequence>
+			<xs:element name="OwningClass" type="ClassName"/>
+			<xs:element name="Name" type="xs:string"/>
+			<xs:element name="ByteSize" type="xs:integer" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ResourceList">
+		<xs:sequence>
+			<xs:sequence>
+				<xs:element name="Resource" type="Resource" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+			<xs:element name="TotalResourcesSize" type="xs:integer" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ImageManifest">
+		<xs:sequence>
+			<xs:element name="ImageStatistics" type="ImageStatistics"/>
+			<xs:element name="Classes" type="ClassList"/>
+			<xs:element name="TotalInstances" type="xs:integer"/>
+			<xs:element name="TotalMethods" type="xs:integer"/>
+			<xs:element name="TotalClassMethods" type="xs:integer"/>
+			<xs:element name="RemainingResources" type="ResourceList"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="Lagoon">
+		<xs:complexType>
+			<xs:sequence maxOccurs="unbounded">
+				<xs:element name="Configuration">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="ImagePath" type="xs:string"/>
+							<xs:element name="TimeStamp" type="xs:dateTime"/>
+							<xs:element name="Target" type="xs:string"/>
+							<xs:element name="ImageStatistics" type="ImageStatistics"/>
+							<xs:element name="DevelopmentMethodCategories" type="MethodCategoryList"/>
+							<xs:element name="RequiredMethodCategories" type="MethodCategoryList"/>
+							<xs:element name="PreservedMessages">
+								<xs:complexType>
+									<xs:sequence maxOccurs="unbounded">
+										<xs:element name="Selector" type="xs:string"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="Notification" type="Exception" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element name="DefineExternalStructures"/>
+				<xs:element name="ForcedStripMethods" type="StripMethods"/>
+				<xs:element name="RedundantPackages" type="PackageList"/>
+				<xs:element name="StripPackages">
+					<xs:complexType>
+						<xs:sequence minOccurs="0" maxOccurs="unbounded">
+							<xs:element name="Notification" type="Exception" minOccurs="0" maxOccurs="unbounded"/>
+							<xs:element name="Error" type="Exception" minOccurs="0" maxOccurs="unbounded"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="RetainedPackages" type="PackageList"/>
+				<xs:element name="RootClasses">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="RootClass" type="ClassName" maxOccurs="unbounded"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="CompileExternalStructures">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="Notification" type="Exception" minOccurs="0" maxOccurs="unbounded"/>
+							<xs:element name="RemoveClass" type="RemoveClass" minOccurs="0" maxOccurs="unbounded"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="StripDevelopmentInfo">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="RemoveCategoryManagement"/>
+							<xs:element name="RemoveMethodProtocols"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="StripCycle" type="StrippingLog" maxOccurs="unbounded"/>
+				<xs:element name="FoldStrings" type="FoldDetails"/>
+				<xs:element name="FoldBytecodes" type="FoldDetails"/>
+				<xs:element name="StripDevelopmentObjects">
+					<xs:complexType>
+						<xs:sequence maxOccurs="unbounded">
+							<xs:element name="StripMethods" type="StripMethods" minOccurs="0"/>
+							<xs:element name="StripClasses" minOccurs="0" maxOccurs="unbounded">
+								<xs:complexType>
+									<xs:sequence maxOccurs="unbounded">
+										<xs:element name="RemoveClass" type="RemoveClass" minOccurs="0" maxOccurs="unbounded"/>
+										<xs:element name="Error" type="Exception" minOccurs="0" maxOccurs="unbounded"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="Notification" type="Exception" minOccurs="0" maxOccurs="unbounded"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="StripCycle" type="StrippingLog" maxOccurs="unbounded"/>
+				<xs:element name="CloseProgressDialog"/>
+				<xs:element name="RemainingGUIDs" type="GUIDList"/>
+				<xs:element name="StripCycle" type="StrippingLog" maxOccurs="unbounded"/>
+				<xs:element name="RemoveClassBuilder">
+					<xs:complexType>
+						<xs:choice>
+							<xs:element name="Progress" type="MessageText" minOccurs="0" maxOccurs="unbounded"/>
+							<xs:element name="RemoveClass" type="RemoveClass" minOccurs="0" maxOccurs="unbounded"/>
+						</xs:choice>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="RemoveClassMetaInfo">
+					<xs:complexType>
+						<xs:choice>
+							<xs:element name="Progress" type="MessageText" minOccurs="0" maxOccurs="unbounded"/>
+						</xs:choice>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="StripMethods" type="StripMethods" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element name="FoldEmptyMethodDictionaries" type="FoldDetails"/>
+				<xs:element name="EmptySystemDictionary"/>
+				<xs:element name="Manifest" type="ImageManifest"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="ImageStatistics">
+		<xs:sequence>
+			<xs:element name="ObjectCount" type="xs:integer"/>
+			<xs:element name="ClassCount" type="xs:integer"/>
+			<xs:element name="MethodCount" type="xs:integer"/>
+			<xs:element name="SymbolCount" type="xs:integer"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PackageList">
+		<xs:sequence minOccurs="0" maxOccurs="unbounded">
+			<xs:element name="Package"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="GUIDList">
+		<xs:sequence>
+			<xs:element name="GUID" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:attribute name="count" type="xs:short" use="required"/>
+	</xs:complexType>
+	<xs:complexType name="MethodCategoryList">
+		<xs:sequence maxOccurs="unbounded">
+			<xs:element name="MethodCategory">
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="xs:string"/>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="StrippingLog">
+		<xs:sequence>
+			<xs:element name="Progress" type="MessageText" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="StripResources" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="RemoveResource" minOccurs="0" maxOccurs="unbounded">
+							<xs:complexType mixed="true">
+								<xs:attribute name="owningClass" type="ClassName" use="required"/>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="StripClasses" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="RemoveClass" type="RemoveClass" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="StripMethods" type="StripMethods" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="FoldDetails">
+		<xs:sequence>
+			<xs:element name="Total" type="xs:integer"/>
+			<xs:element name="Folded" type="xs:integer"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="StripMethods">
+		<xs:sequence>
+			<xs:element name="RemoveMethod" type="RemoveMethod" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="RemoveMethod" mixed="true">
+		<xs:attribute name="methodClass" type="xs:string" use="required"/>
+	</xs:complexType>
+	<xs:complexType name="Exception" mixed="true">
+		<xs:attribute name="class" type="ClassName" use="required"/>
+	</xs:complexType>
+</xs:schema>

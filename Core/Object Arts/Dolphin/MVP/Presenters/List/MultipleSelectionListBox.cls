@@ -1,0 +1,69 @@
+"Filed out from Dolphin Smalltalk XP"!
+
+ListBox subclass: #MultipleSelectionListBox
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+MultipleSelectionListBox guid: (GUID fromString: '{87B4C72D-026E-11D3-9FD7-00A0CC3E4A32}')!
+MultipleSelectionListBox comment: 'MultipleSelectionListBox has now been deprecated - instances should be replaced by <ListBox> instances configured to operate in one of the multiple selection modes.  Note that ListBox corrects the historical design error in MultipleSelectionListBox in that the single selection protocols (#selection[:], #selectionByIndex[:], etc) always operate on a single item (this class redefines the single selection protocols to operate on collections). For multiple selections the multiple selection protocols (e.g. #selections[:], #selectionsByIndex[:], etc) must be used.'!
+!MultipleSelectionListBox categoriesForClass!MVP-Views! !
+!MultipleSelectionListBox methodsFor!
+
+defaultWindowStyle
+	"Private - Answer the default basic window creation style for a list box"
+
+	^super defaultWindowStyle bitOr: LBS_EXTENDEDSEL
+!
+
+isMultiSelect: aBoolean 
+	aBoolean ifFalse: [self error: 'Cannot be switched out of multi-select mode.']!
+
+selection
+	"Legacy behaviour"
+
+	^self selections!
+
+selection: newSelection ifAbsent: exceptionHandler 
+	"Legacy behaviour."
+
+	^self selections: newSelection ifAbsent: exceptionHandler!
+
+selectionByIndex
+	"Legacy behaviour was to redefine the result to be a collection."
+
+	^self getMultipleSelections!
+
+selectionByIndex: anInteger ifAbsent: exceptionHandler 
+	"Legacy behaviour for backwards compatibility."
+
+	^self selectionsByIndex: anInteger ifAbsent: exceptionHandler!
+
+selectionIfNone: aBlock 
+	"Legacy behaviour"
+
+	| selections |
+	selections := self selections.
+	^selections isEmpty ifTrue: [aBlock value] ifFalse: [selections]!
+
+selectionOrNil
+	"Legacy behaviour"
+
+	^self selectionIfNone: [#()]! !
+!MultipleSelectionListBox categoriesFor: #defaultWindowStyle!constants!private! !
+!MultipleSelectionListBox categoriesFor: #isMultiSelect:!public!testing! !
+!MultipleSelectionListBox categoriesFor: #selection!public!selection! !
+!MultipleSelectionListBox categoriesFor: #selection:ifAbsent:!public!selection! !
+!MultipleSelectionListBox categoriesFor: #selectionByIndex!public!selection! !
+!MultipleSelectionListBox categoriesFor: #selectionByIndex:ifAbsent:!public!selection! !
+!MultipleSelectionListBox categoriesFor: #selectionIfNone:!public!selection! !
+!MultipleSelectionListBox categoriesFor: #selectionOrNil!public!selection! !
+
+!MultipleSelectionListBox class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^##(self) defaultIcon! !
+!MultipleSelectionListBox class categoriesFor: #icon!constants!public! !
+

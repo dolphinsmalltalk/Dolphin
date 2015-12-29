@@ -1,0 +1,67 @@
+| package |
+package := Package name: 'RegEdit'.
+package paxVersion: 1;
+	basicComment: 'Dolphin Smalltalk RegEdit Sample.
+Copyright (c) Object Arts Ltd, 1998-2002.
+
+RegEdit is a reduced functionality clone of the well known Windows applet, Regedit.exe. It demonstrates a number of aspects of MVP such as the use of a TreeView in conjunction with a TreePresenter, how to write a custom VirtualTreeModel (RegTreeModel), the use of an enhanced ListView in conjunction with a ListPresenter, and in-place label editing in a ListView. It also shows how to use Dolphin''s powerful registry access classes which model the Windows registry as a set of nested dictionaries.
+
+RegEdit is supplied with a session manager, which Dolphin Pro users can use to deploy RegEdit as a .EXE. 
+
+Try me out with:
+	RegEdit show
+
+Be warned: It is possible to corrupt your registry with this tool, so please use with care!!'.
+
+package basicPackageVersion: '2011.6.5.16'.
+
+
+package classNames
+	add: #RegEdit;
+	add: #RegTreeModel;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\..\..\Dolphin\Base\Dolphin';
+	add: '..\..\..\Dolphin\MVP\Views\Common Controls\Dolphin Common Controls';
+	add: '..\..\..\Dolphin\MVP\Dialogs\Common\Dolphin Common Dialogs';
+	add: '..\..\..\Dolphin\MVP\Views\Control Bars\Dolphin Control Bars';
+	add: '..\..\..\Dolphin\MVP\Models\List\Dolphin List Models';
+	add: '..\..\..\Dolphin\MVP\Presenters\List\Dolphin List Presenter';
+	add: '..\..\..\Dolphin\MVP\Base\Dolphin MVP Base';
+	add: '..\..\..\Dolphin\Registry\Dolphin Registry Access';
+	add: '..\..\..\Dolphin\MVP\Models\Tree\Dolphin Tree Models';
+	add: '..\..\..\Dolphin\MVP\Presenters\Tree\Dolphin Tree Presenter';
+	add: '..\..\..\Dolphin\MVP\Models\Value\Dolphin Value Models';
+	add: '..\..\..\Dolphin\IDE\Base\Internal Bitmaps and Icons';
+	add: '..\..\..\Dolphin\ActiveX\Shell\Windows Shell';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+VirtualTreeModel subclass: #RegTreeModel
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Shell subclass: #RegEdit
+	instanceVariableNames: 'keyPresenter valuesPresenter statusModel'
+	classVariableNames: 'ResourceLib'
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+"End of package definition"!
+

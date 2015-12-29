@@ -1,0 +1,8 @@
+DPRO.*
+DCE.*
+DCORE.*
+DBASE.*
+DBOOT.chg
+*.pac
+*.errors
+testsGdiplus

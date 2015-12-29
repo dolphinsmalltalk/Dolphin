@@ -1,0 +1,56 @@
+| package |
+package := Package name: 'Dolphin Differences Presenter'.
+package paxVersion: 1;
+	basicComment: 'Dolphin Smalltalk Differences Presenter.
+Copyright (c) Ian Bartholomew and Object Arts Ltd. 2002.
+'.
+
+package basicPackageVersion: '6.1'.
+
+
+package classNames
+	add: #DifferencesPresenter;
+	add: #DiffsScintillaStyler;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: 'Diff Algorithm';
+	add: '..\..\..\Base\Dolphin';
+	add: '..\..\Base\Dolphin MVP Base';
+	add: '..\..\Views\Scintilla\Dolphin Scintilla View';
+	add: '..\Text\Dolphin Text Presenter';
+	add: '..\..\Type Converters\Dolphin Type Converters';
+	add: '..\..\Models\Value\Dolphin Value Models';
+	yourself).
+
+package setManualPrerequisites: #(
+	'Diff Algorithm').
+
+package!
+
+"Class Definitions"!
+
+Presenter subclass: #DifferencesPresenter
+	instanceVariableNames: 'beforePresenter afterPresenter beforeTitlePresenter afterTitlePresenter comparisonMode wordSeparators'
+	classVariableNames: 'WordSeparators'
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ScintillaStyler subclass: #DiffsScintillaStyler
+	instanceVariableNames: 'diffs'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+"End of package definition"!
+

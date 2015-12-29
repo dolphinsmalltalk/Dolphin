@@ -1,0 +1,451 @@
+| package |
+package := Package name: 'OLE COM'.
+package paxVersion: 1;
+	basicComment: 'Dolphin Smalltalk OLE COM Support. 
+Copyright (c) Object Arts Ltd 1997-2006. Portions copyright (c) CGI Group (Europe) Ltd, 1997.
+
+This package implements basic COM Functionality for interfacing to externally implemented interfaces, and for implementing COM interfaces. It is the base on which all other COM/OLE/Active-X support in Dolphin is based.'.
+
+package basicPackageVersion: '6.1'.
+
+package basicScriptAt: #postinstall put: 'OLELibrary closeDefault.	"Cause the OLELibrary to be reinitialized"
+COMInterface registerSubclasses.
+VMLibrary default registryAt: #IUnknown put: IUnknown.
+Smalltalk at: #Debugger
+	ifPresent: 
+		[:debugger | 
+		"Skip all COMFunction function callback methods"
+		debugger
+			skipSelector: #callback:vfn:withArgumentsAt:
+				of: COMObjectStub
+				type: 0;
+			skipSelector: #comCallback:id:subId:withArgumentsAt:cookie:
+				of: ProcessorScheduler
+				type: 0;
+			skipSelector: #callback:vfn:withArgumentsAt:
+				of: COMInterface
+				type: 0.
+		COMFunction withAllSubclassesDo: 
+				[:c | 
+				(c includesSelector: #callback:interface:withArgumentsAt:) 
+					ifTrue: 
+						[debugger 
+							skipSelector: #callback:interface:withArgumentsAt:
+							of: c
+							type: 0]]]!!'.
+package basicScriptAt: #preuninstall put: 'Smalltalk at: #Debugger
+	ifPresent: 
+		[:dbg | 
+		dbg unskipSelectorsOf: COMInterface.
+		dbg
+			unskipSelectorsOf: COMObjectStub;
+			unskipSelector: #comCallback:id:subId:withArgumentsAt:cookie: of: ProcessorScheduler.
+		dbg unskipSelectorsOf: COMFunction].
+
+"Clear away all running objects"
+COMObjectStub disconnectAll; initializeRegistries.
+
+"Clear up the IMalloc allocators, etc"
+OLELibrary closeDefault.
+RPCLibrary closeDefault.
+
+"Since we cannot control the order in which classes are removed, we must
+ explicitly uninitialize all the interface classes first so that all IIDs, etc,
+ are first free''d up."
+COMInterface withAllSubclasses do: [:c | c uninitializeBeforeRemove].
+COMInterface initializeRegister.
+'.
+
+package classNames
+	add: #BSTR;
+	add: #CADWORD;
+	add: #CALPOLESTR;
+	add: #CLSID;
+	add: #COAUTHIDENTITY;
+	add: #COAUTHINFO;
+	add: #COMClassFactory;
+	add: #COMEnumerator;
+	add: #COMFunction;
+	add: #COMFunctionAbstract;
+	add: #COMInterface;
+	add: #COMInterfaceEnumerator;
+	add: #COMInterfaceImp;
+	add: #COMObjectStub;
+	add: #COMSingletonClassFactory;
+	add: #COMTaskMemory;
+	add: #COSERVERINFO;
+	add: #EXCEPINFO;
+	add: #IClassFactory;
+	add: #IClassFactory2;
+	add: #ICreateErrorInfo;
+	add: #IEnumString;
+	add: #IEnumStruct;
+	add: #IEnumUnknown;
+	add: #IEnumXXXX;
+	add: #IErrorInfo;
+	add: #IID;
+	add: #IMalloc;
+	add: #IServiceProvider;
+	add: #ISupportErrorInfo;
+	add: #IUnknown;
+	add: #LICINFO;
+	add: #MULTI_QI;
+	add: #OLEAutLibrary;
+	add: #OLECountedArray;
+	add: #OLEEnumerator;
+	add: #OLEFinalizableStructure;
+	add: #OLELibrary;
+	add: #OLEStructure;
+	add: #UnkAddRefFunction;
+	add: #UnkQIFunction;
+	add: #UnkReleaseFunction;
+	yourself.
+
+package methodNames
+	add: #ByteArray -> #copyToCOMTaskMemory;
+	add: #ExternalStructure -> #copyToCOMTaskMemory;
+	add: #ProcessorScheduler -> #comCallback:id:subId:withArgumentsAt:cookie:;
+	add: #ProcessorScheduler -> #registerCOMStub:;
+	add: #ProcessorScheduler -> #unregisterCOMStub:;
+	add: #SessionManager -> #comStartup;
+	add: #String -> #asBSTR;
+	add: #String -> #copyToCOMTaskMemory;
+	add: 'ExternalMemory class' -> #queryInterface:ifNone:;
+	yourself.
+
+package globalNames
+	add: #OLEConstants;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\..\Base\Dolphin';
+	add: '..\..\Registry\Dolphin Registry Access';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+Object subclass: #COMFunctionAbstract
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Object subclass: #COMInterfaceImp
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: 'OLEConstants Win32Errors'
+	classInstanceVariableNames: ''!
+Object subclass: #COMObjectStub
+	instanceVariableNames: 'cookie object count interfaces outerUnknown'
+	classVariableNames: 'IdentityRegistry'
+	poolDictionaries: 'Win32Errors'
+	classInstanceVariableNames: ''!
+SequenceableCollection subclass: #OLEEnumerator
+	instanceVariableNames: 'interface'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ExternalAddress variableByteSubclass: #BSTR
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ExternalMemory variableByteSubclass: #COMTaskMemory
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+COMFunctionAbstract subclass: #COMFunction
+	instanceVariableNames: 'selector descriptor'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+COMFunctionAbstract subclass: #UnkAddRefFunction
+	instanceVariableNames: ''
+	classVariableNames: 'Descriptor'
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+COMFunctionAbstract subclass: #UnkQIFunction
+	instanceVariableNames: ''
+	classVariableNames: 'Descriptor'
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+COMFunctionAbstract subclass: #UnkReleaseFunction
+	instanceVariableNames: ''
+	classVariableNames: 'Descriptor'
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+COMInterfaceImp subclass: #COMClassFactory
+	instanceVariableNames: 'serverClass clsid registration'
+	classVariableNames: 'Factories Instances LockCount'
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+COMInterfaceImp subclass: #COMEnumerator
+	instanceVariableNames: 'enumClass contents'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+COMClassFactory subclass: #COMSingletonClassFactory
+	instanceVariableNames: 'current'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+COMEnumerator subclass: #COMInterfaceEnumerator
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ExternalLibrary subclass: #OLEAutLibrary
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ExternalLibrary subclass: #OLELibrary
+	instanceVariableNames: 'comOnly'
+	classVariableNames: 'DefaultIMalloc'
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ExternalStructure subclass: #COMInterface
+	instanceVariableNames: 'implementor'
+	classVariableNames: 'InterfaceClasses'
+	poolDictionaries: 'OLEConstants Win32Constants Win32Errors'
+	classInstanceVariableNames: 'argSizes functions typeLib'!
+ExternalStructure subclass: #OLEStructure
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: 'OLEConstants'
+	classInstanceVariableNames: ''!
+COMInterface subclass: #IUnknown
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+IUnknown subclass: #IClassFactory
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+IUnknown subclass: #ICreateErrorInfo
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+IUnknown subclass: #IEnumXXXX
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+IUnknown subclass: #IErrorInfo
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+IUnknown subclass: #IMalloc
+	instanceVariableNames: ''
+	classVariableNames: 'Shared Task'
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+IUnknown subclass: #IServiceProvider
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+IUnknown subclass: #ISupportErrorInfo
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+IClassFactory subclass: #IClassFactory2
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+IEnumXXXX subclass: #IEnumString
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+IEnumXXXX subclass: #IEnumStruct
+	instanceVariableNames: 'elementClass'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+IEnumXXXX subclass: #IEnumUnknown
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ExternalArray subclass: #OLECountedArray
+	instanceVariableNames: 'elements'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+OLECountedArray subclass: #CADWORD
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+OLECountedArray subclass: #CALPOLESTR
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+OLEStructure subclass: #COAUTHIDENTITY
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+OLEStructure subclass: #COAUTHINFO
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+OLEStructure subclass: #COSERVERINFO
+	instanceVariableNames: 'hostName'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+OLEStructure subclass: #LICINFO
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+OLEStructure subclass: #OLEFinalizableStructure
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+OLEFinalizableStructure subclass: #EXCEPINFO
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: 'Win32Errors'
+	classInstanceVariableNames: ''!
+OLEFinalizableStructure subclass: #MULTI_QI
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+GUID variableByteSubclass: #CLSID
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+GUID variableByteSubclass: #IID
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+!ByteArray methodsFor!
+
+copyToCOMTaskMemory
+	"Answer a COMTaskMemory object containing a copy of the receiver's
+	bytes."
+
+	| size |
+	size := self byteSize.
+	^(COMTaskMemory new: size)
+		replaceFrom: 1 to: size with: self startingAt: 1! !
+!ByteArray categoriesFor: #copyToCOMTaskMemory!copying!public! !
+
+!ExternalMemory class methodsFor!
+
+queryInterface: interfaceClass ifNone: exceptionHandler
+	"Answer a new interface which supports the specified interface protocol
+	(usually a class). If the receiver does not support the interface,
+	answer the result of evaluating the niladic valuable, exceptionHandler.
+	N.B. It is not necessary to answer an instance of the requested interface class,
+	a subinstance will do, or even a completely different class, as long as the
+	protocol of the requested class is supported.."
+
+	^interfaceClass == IMalloc
+		ifTrue: [interfaceClass on: self]
+		ifFalse: [exceptionHandler value]! !
+!ExternalMemory class categoriesFor: #queryInterface:ifNone:!accessing-interfaces!public! !
+
+!ExternalStructure methodsFor!
+
+copyToCOMTaskMemory
+	"Answer a block of COM Task Memory into which the bytes of the 
+	receiver have been copied."
+
+	^self copy: COMTaskMemory from: 1 to: self byteSize! !
+!ExternalStructure categoriesFor: #copyToCOMTaskMemory!copying!public! !
+
+!ProcessorScheduler methodsFor!
+
+comCallback: vfnIndex 
+		id: objectCookie 
+		subId: interfaceCookie 
+		withArgumentsAt: anAddress 
+		cookie: cookie
+	"Private - Entry point from the VM. Suspend whatever the receiver is doing and send
+	the virtual callback with cookies, objectCookie and interfaceCookie, for the virtual
+	function indexed, vfnIndex, and whose arguments are stored in the VM's stack at the 
+	address, anAddress." 
+
+	"Transcript show: 'Com callback(vfn:', vfnIndex printString, ',', objectCookie printString, ',', interfaceCookie printString, ',', anAddress printString, ')'; cr."
+	self callback: cookie return: 
+		([(comStubs at: objectCookie)
+			callback: interfaceCookie vfn: vfnIndex withArgumentsAt: anAddress]
+				ifCurtailed: [self unwindCallback: cookie])!
+
+registerCOMStub: target
+	"Private - Register the specified argument COM callback target, answering its cookie."
+
+	comStubs isNil ifTrue: [comStubs := PermanentRegistry new].
+	^comStubs addAnsweringIndex: target!
+
+unregisterCOMStub: cookie
+	"Private - Unregister the COM object stub with the specified cookie."
+
+	comStubs isNil ifTrue: [comStubs := PermanentRegistry new].
+	comStubs removeAtIndex: cookie! !
+!ProcessorScheduler categoriesFor: #comCallback:id:subId:withArgumentsAt:cookie:!callbacks!not restartable!private!vm entry points! !
+!ProcessorScheduler categoriesFor: #registerCOMStub:!accessing!private! !
+!ProcessorScheduler categoriesFor: #unregisterCOMStub:!callbacks!private! !
+
+!SessionManager methodsFor!
+
+comStartup
+	"Private - Start up the COM sub-system."
+
+	"Implementation Note: This used to be delayed until tertiary startup and hung off the #sessionStarted
+	event, but that relied on COMInterface having registered itself before certain other event targets
+	and was therefore not reliable."
+
+	IUnknown onStartup.
+	"Attach the outer unknown passed by the stub, if any"
+	self outer notNull ifTrue: [startupArgs at: 2 put: (IUnknown attach: self outer)]! !
+!SessionManager categoriesFor: #comStartup!operations-startup!private! !
+
+!String methodsFor!
+
+asBSTR
+	"Answer the BSTR (AX Automation string) representation of the receiver.
+	This conversion will also work fine for UnicodeString."
+
+	^BSTR fromString: self!
+
+copyToCOMTaskMemory
+	"Answer a COMTaskMemory object containing a copy of the receiver's
+	characters."
+
+	^COMTaskMemory fromString: self! !
+!String categoriesFor: #asBSTR!converting!public! !
+!String categoriesFor: #copyToCOMTaskMemory!copying!public! !
+
+"End of package definition"!
+

@@ -1,0 +1,59 @@
+"Evaluate"
+| package |
+package := Package name: 'RBUITests'.
+package paxVersion: 0;
+	basicComment: ''.
+
+package basicPackageVersion: ''.
+
+"Add the package scripts"
+
+"Add the class names, loose method names, global names, resource names"
+package classNames
+	add: #BrowserInterfaceTest;
+	add: #ReferenceFinderTest;
+	yourself.
+
+"Non-source Global Names"
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+"Resource Names"
+package allResourceNames: (Set new
+	yourself).
+
+"Add the prerequisite names"
+package setPrerequisites: (IdentitySet new
+	add: 'Dolphin';
+	add: 'RBBrowserUI';
+	add: 'RBDolphinUI';
+	add: 'RBEnvironments';
+	add: 'RBRefactorings';
+	add: 'RBTests';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+RefactoringBrowserTest subclass: #BrowserInterfaceTest
+	instanceVariableNames: 'browser'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+RefactoringBrowserTest subclass: #ReferenceFinderTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+"End of package definition"!
+

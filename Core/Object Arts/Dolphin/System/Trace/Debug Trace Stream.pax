@@ -1,0 +1,53 @@
+| package |
+package := Package name: 'Debug Trace Stream'.
+package paxVersion: 1;
+	basicComment: 'Dolphin Smalltalk Debug Trace Stream.
+Copyright (c) Object Arts Ltd, 2002.
+
+This package implements the <puttableStream> protocol on top of the Win32 OutputDebugString() API. Like the Transcript the output is thread safe, and buffered until either an end of line is emitted (i.e. #cr is sent) or the the stream is explicitly flushed (i.e. #flush is sent). For convenience the trace stream is assigned to the global named ''Trace''.
+
+To view trace output you will need a debug output monitor such as the Sysinternals tool ''DebugView'', downloadable from http://www.sysinternals.com
+
+Example usage:
+
+	Trace nextPutAll: ''Hello world''; cr'.
+
+package basicPackageVersion: '6.0'.
+
+
+package classNames
+	add: #DebugTraceStream;
+	yourself.
+
+package globalNames
+	add: #Trace;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	add: #Trace;
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\..\Base\Dolphin';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+Stream subclass: #DebugTraceStream
+	instanceVariableNames: 'buffer bufferProtect'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+"End of package definition"!
+

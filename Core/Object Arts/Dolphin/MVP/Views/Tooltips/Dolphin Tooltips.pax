@@ -1,0 +1,76 @@
+| package |
+package := Package name: 'Dolphin Tooltips'.
+package paxVersion: 1;
+	basicComment: 'Dolphin Smalltalk Tooltips
+Copyright (c) Object Arts Ltd 2003.
+
+This package contains an MVP View wrapper for the Windows Tooltip control, and a useful balloon help style message box. Please see the class comments of Tooltip and MessageBubble for further details.'.
+
+package basicPackageVersion: '6.1'.
+
+
+package classNames
+	add: #MessageBubble;
+	add: #OneOffNoteBubble;
+	add: #TOOLINFOA;
+	add: #Tooltip;
+	yourself.
+
+package methodNames
+	add: #NMTTDISPINFOA -> #toolTipWindow;
+	yourself.
+
+package globalNames
+	add: #TooltipConstants;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\..\..\Base\Dolphin';
+	add: '..\..\Base\Dolphin MVP Base';
+	add: '..\..\..\Registry\Dolphin Registry Access';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+Object subclass: #OneOffNoteBubble
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Win32Structure subclass: #TOOLINFOA
+	instanceVariableNames: 'text'
+	classVariableNames: ''
+	poolDictionaries: 'TooltipConstants'
+	classInstanceVariableNames: ''!
+MessageBoxAbstract subclass: #MessageBubble
+	instanceVariableNames: 'iconId tooltip position itemFlags timeout tooltipStyle timeoutProcess font forecolor backcolor margins maxWidth'
+	classVariableNames: 'IconIds'
+	poolDictionaries: 'TooltipConstants Win32Constants'
+	classInstanceVariableNames: ''!
+ControlView subclass: #Tooltip
+	instanceVariableNames: ''
+	classVariableNames: 'TtnMap'
+	poolDictionaries: 'TooltipConstants'
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+!NMTTDISPINFOA methodsFor!
+
+toolTipWindow
+	^Tooltip fromHandle: self hwndFrom! !
+!NMTTDISPINFOA categoriesFor: #toolTipWindow!public! !
+
+"End of package definition"!
+

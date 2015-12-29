@@ -1,0 +1,642 @@
+<LintChecks>
+	<LintRule>
+		<name>Lint checks</name>
+		<description/>
+		<LintRule>
+			<selector>bugs</selector>
+			<name>Bugs</name>
+			<description>A series of checks for probable bugs in your code.</description>
+			<LintRule>
+				<selector>sentNotImplemented</selector>
+				<name>Messages sent but not implemented</name>
+				<description>This check looks for methods which send messages that are not implemented. Failures will result in a <I>doesNotUnderstand:</I> message during execution but, before assuming a real bug is present, you should check to see if the class in question specifically handles this.</description>
+				<agentdescription>This method sends some messages that are not implemented.</agentdescription>
+				<agentinfo>This will result in a doesNotUnderstand: message during execution. However, before assuming that this is a real bug, you should check to see if the class specifically handles doesNotUnderstand: messages.</agentinfo>
+			</LintRule>
+			<LintRule>
+				<selector>overridesSpecialMessage</selector>
+				<name>Overrides a "special" message</name>
+				<description>This check ensures that a class does not override a message which is essential to the base system. For example, if you override the <I>class</I> method from <I>Object</I>, you are likely to crash the image. You can see the set of special messages that are checked by browsing <I>BasicLintRule&gt;&gt;classShouldNotOverride</I> and <I>BasicLintRule&gt;&gt;metaclassShouldNotOverride.</I>
+				</description>
+				<agentdescription>This method overrides a message which is essential to the base system.
+				</agentdescription>
+				<agentinfo>Some methods must not be overridden otherwise you are in danger of breaking your image. As an example, if you override the class method from Object, you are likely to cause a crash.
+				</agentinfo>
+			</LintRule>
+			<LintRule>
+				<selector>undeclaredReferences</selector>
+				<name>References an undeclared variable</name>
+				<description>This check looks for references to a class or instance variable that has been removed.</description>
+				<agentdescription>This method references a class or instance variable that has been removed.</agentdescription>
+				<agentinfo>When this method was originally compiled the variable existed as part of the class definition. Since then the definition has been changed and the has been variable removed.</agentinfo>
+			</LintRule>
+			<LintRule>
+				<selector>subclassResponsibilityNotDefined</selector>
+				<name>Subclass responsibility not defined</name>
+				<description>This check ensures that all <I>subclassResponsibility</I> methods are defined in all leaf classes. An abstract class often declares one or more methods that send a <I>subclassResponsibility</I> message to <I>self</I>. The intention is that such methods be overridden in concrete subclasses to perform real work. Where this has not been done you are likely to see a <I>SubclassResponsibility</I> walkback at runtime.</description>
+				<agentdescription>This class has some subclassResponsibility methods that are not re-defined in all leaf classes.</agentdescription>
+				<agentinfo>An abstract class will often declare one or more methods that send a subclassResponsibility message to self. The intention is that such methods be overridden in all concrete subclasses to perform real work. Where this has not been done you are likely to see a SubclassResponsibility walkback at runtime.</agentinfo>
+			</LintRule>
+			<LintRule>
+				<selector>booleanPrecedence</selector>
+				<name>Uses A | B = C instead of A | (B = C)</name>
+				<description>Checks precedence ordering of &amp; and | with equality operators. Since | and &amp; have the same precedence as =, there are often mistakes where parenthesis are missing around the equality operators. </description>
+				<agentdescription>This method contains a boolean expression with a likely precedence problem.</agentdescription>
+				<agentinfo>Check the precedence ordering of "and" and "or" expressions with equality operators. Since "and", "or" and = all have the same precedence it is quite common to forget the parentheses around the equality operator. </agentinfo>
+			</LintRule>
+			<LintRule>
+				<selector>variableNotDefined</selector>
+				<name>Variable used, but not defined anywhere</name>
+				<description>This check is similar to the "References an undeclared variable" check, but it looks for variables that are not defined in the class or in the undeclared dictionary. You probably had to work hard to get your code in this state. </description>
+				<agentdescription>This method references a class or instance variable that has been removed.</agentdescription>
+			</LintRule>
+		</LintRule>
+		<LintRule>
+			<name>Possible bugs</name>
+			<description>A series of checks that look for possible bugs in your code.</description>
+			<LintRule>
+				<selector>usesTrue</selector>
+				<name>Uses True/False instead of true/false</name>
+				<description>Checks for uses of the class names <I>True</I> and <I>False</I> instead of the objects <I>true</I> and <I>false</I> in boolean expressions. </description>
+				<agentdescription>This method uses the class names True and False instead of the objects true and false. </agentdescription>
+				<agentinfo>The boolean values "true" and "false" should be spelt with lowercase letters. In fact, True and False spelt with their first letter capitalized represent the classes of these values not the instances. </agentinfo>
+			</LintRule>
+			<LintRule>
+				<selector>fileBlocks</selector>
+				<name>Assignment inside unwind blocks should be outside.</name>
+				<description>Checks for assignment to a variable in the first statement of a value block when it is also used in the unwind block. For example, the following code places the assignment of <I>inputStream</I> inside the <I>ensure:</I> block when it should be outside:
+<PRE><CODE>
+	| inputStream |
+	[inputStream := 'test' asFilename readStream.
+	self parse: inputStream]
+		ensure: [inputStream close]</CODE></PRE>
+<P>Wrapping the assignment of <I>inputStream</I> does not do anything. If the code cannot open the file there is no need to try to close <I>nil</I> (which is what <I>inputStream</I> is since it hasn't been assigned). This code should be rewritten as:</P>
+<PRE><CODE>
+	| inputStream |
+	inputStream := 'test' asFilename readStream.
+	[self parse: inputStream]
+		ensure: [inputStream close]</CODE></PRE>
+<P>Not only does this fix a possible bug that occurs when closing <I>nil</I>, it also eliminates the full block that was necessary with the assignment in the previous version.</P></description>
+			<agentdescription>This method contains an assignment inside a value block that should be outside.</agentdescription>
+			<agentinfo>The assignment is made to a variable in the first statement of the block. When the block is evaluated, if the first statement fails, then the variable will not have been assigned. Subsequently, the variable will be nil when it is used in the unwind block. Hence it is normally preferable to move the initial assignment outside of the block.</agentinfo>
+
+			</LintRule>
+			<LintRule>
+				<selector>returnInEnsure</selector>
+				<name>Contains a return in an ensure: block</name>
+				<description>Checks for an early return out of an <I>ensure:</I> block. This will exit the enclosing method (rather than just the block) and is likely not what is intended.</description>
+				<agentdescription>This method contains an early return out of an ensure: block.</agentdescription>
+				<agentinfo>The return will exit the entire method rather than just the block. This is commonly not what is intended.</agentinfo>
+			</LintRule>
+			<LintRule>
+				<selector>definesEqualNotHash</selector>
+				<name>Defines = but not hash</name>
+				<description>Checks that a class that defines <I>=</I> also defines <I>hash</I>. If <I>hash</I> is missing then the instances of the class might not work correctly in sets or dictionaries. These collections require that equal elements must have the same hash. </description>
+				<agentdescription>This class defines an = method but no hash method.</agentdescription>
+				<agentinfo>If hash is not defined along with = then instances might not work correctly in sets and dictionaries. In these collections, it is important that equal elements must always have the same hash. </agentinfo>
+			</LintRule>
+			<LintRule>
+				<selector>equalNotUsed</selector>
+				<name>Doesn't use the result of a =, ~=, etc.</name>
+				<description>Checks for a comparison message being sent but the result not being used.</description>
+				<agentdescription>This method sends a comparison message, like = or not =, but the result is never used.</agentdescription>
+			</LintRule>
+			<LintRule>
+				<selector>classInstVarNotInitialized</selector>
+				<name>Has class instance variables but no initialize method</name>
+				<description>Checks that a class with class instance variables also has an initialize method. This makes sure that all class instance variables are initialized properly when the class is filed-into a new image. </description>
+				<agentdescription>This class has class instance variables but doesn't have an initialize method.</agentdescription>
+				<agentinfo>Without a class-side initialize method the class instance variables will not be initialized properly when the class is filed-into a new image. </agentinfo>
+			</LintRule>
+			<LintRule>
+				<selector>tempVarOverridesInstVar</selector>
+				<name>Instance variable overridden by temporary variable</name>
+				<description>Checks for methods that have block or temporary variables which override an instance variable. This causes problems if you want to use the instance variable inside the method. </description>
+				<agentdescription>This method has block or temporary variable names which override an instance variable.</agentdescription>
+				<agentinfo>Although not directly a problem, this will cause difficulties if you want to use the instance variable inside the method. It can also be confusing for browsers of this method.</agentinfo>
+			</LintRule>
+			<LintRule>
+				<selector>literalArrayContainsComma</selector>
+				<name>Literal array contains a #,</name>
+				<description>Checks for literal arrays that contain #, elements. Most likely these are unintentional and caused by comma separators being entered in the array declaration (e.g. <I>#(a , b , c)</I>). Literal arrays use whitespace to separate the elements.</description>
+				<agentdescription>This method contains a literal array with comma elements as symbols.</agentdescription>
+				<agentinfo>It is likely these are unintentional and caused by comma separators being entered in the array declaration. Literal arrays use white space to separate the elements.</agentinfo>
+			</LintRule>
+			<LintRule>
+				<selector>superSends</selector>
+				<name>Missing super sends</name>
+				<description>Checks that some methods contain a super message send. Some methods should always contain a super message send. For example, the <I>postCopy</I> method should always contain a "<I>super postCopy</I>". The list of methods that should contain super message sends is in <I>BasicLintRule&gt;&gt;superMessages</I>. </description>
+			</LintRule>
+			<LintRule>
+				<selector>modifiesCollection</selector>
+				<name>Modifies collection while iterating over it</name>
+				<description>Checks for <I>remove:</I>'s of elements inside of collection iteration methods such as <I>do:</I>. These can cause the <I>do:</I> method to break since it will walk off the end of the collection. The most common fix for this problem is to <I>copy</I> the collection before iterating over it. </description>
+				<agentdescription>This method contains a collection iteration block, such as do:, that removes elements within it.</agentdescription>
+				<agentinfo>Removing elements can break an iteration since it will walk off the end of the collection. The most common fix for this problem is to copy the collection before iterating over it. </agentinfo>
+			</LintRule>
+			<LintRule>
+				<selector>addRemoveDependents</selector>
+				<name>Number of addDependent: messages > removeDependent:</name>
+				<description>Checks a class to ensure that the number of <I>addDependent:</I> message sends is less than or equal to the number of <I>removeDependent:</I> messages. If there are more <I>addDependent:</I> messages this may signify that some dependents are not being released.</description>
+				<agentdescription>This class has more addDependent: message sends than removeDependent: sends.</agentdescription>
+				<agentinfo>If there are more addDependent: sends this may signify that some dependents are not being released.</agentinfo>
+			</LintRule>
+			<LintRule>
+				<selector>missingYourself</selector>
+				<name>Possible missing "; yourself"</name>
+				<description>Checks for missing "<I>; yourself</I>" sends in cascaded message sequences. This helps locate common coding mistakes such as "<I>anArray := (Array new: 2) at: 1 put: 1; at: 2 put: 2</I>". In this example, <I>anArray</I> would be assigned to 2 not the array object. </description>
+				<agentdescription>This method contains a cascaded message sequence that doesn't end in ;yourself.</agentdescription>
+				<agentinfo>A common coding mistake is to leave the yourself send off the end of a cascade sequence. This will result in the wrong object being answered as the result of the expression.</agentinfo>
+			</LintRule>
+			<LintRule>
+				<selector>threeElementPoint</selector>
+				<name>Possible three element point (e.g., x @ y + q @ r)</name>
+				<description>Checks arithmetic statements for possible three element points (i.e., a point that has another point in its x or y part). </description>
+				<agentdescription>This method contains an arithmetic statement that may result in an unintentional three element point being created.</agentdescription>
+				<agentinfo>This is usually the result of incorrect precedence. Remember the @ point creation message has the same precedence as other binary messages.</agentinfo>
+			</LintRule>
+			<LintRule>
+				<selector>abstractClass</selector>
+				<name>References an abstract class</name>
+				<description>Checks for classes that have <I>subclassResponsibility</I> methods and that are referenced directly. Such references might be creating instances of the abstract class or more commonly being used as the argument to an <I>isKindOf:</I> message which is considered bad style.</description>
+				<agentdescription>This class is an abstract class that is referenced directly.</agentdescription>
+				<agentinfo>This class contains subclassResponsibility methods and yet is referenced directly. Such references might be creating instances of the abstract class or, more commonly, might be part of an isKindOf: test (which is considered to be bad style).</agentinfo>
+			</LintRule>
+			<LintRule>
+				<selector>returnsBooleanAndOther</selector>
+				<name>Returns a boolean and non boolean</name>
+				<description>Checks for methods that return a boolean value (<I>true</I> or <I>false</I>) but also returns some other value such as <I>nil</I> or <I>self</I> via an alternate path. If the method doesn't actually <I>need</I> to return a boolean at all then you should probably rewrite it to always return non-boolean values to avoid future confusion. </description>
+				<agentdescription>This method returns a boolean value but can also return a non-boolean via an alternate path.</agentdescription>
+				<agentinfo>If the method is supposed to always return boolean values, this signifies that there is at least one path that does not do so. If the method doesn't actually need to return a boolean at all then you should probably rewrite it to always return non-booleans. </agentinfo>
+			</LintRule>
+			<LintRule>
+				<selector>returnsIfTrue</selector>
+				<name>Returns value of ifTrue:/ifFalse: without ifFalse:/ifTrue: block</name>
+				<description>Checks methods that return the value of an <I>ifTrue:</I> or <I>ifFalse:</I> message. These statements return <I>nil</I> when the block is not executed. For example, the following code will return <I>nil</I> when <I>aBoolean</I> is <I>false</I>.
+<PRE><CODE>	^aBoolean ifTrue: [0]
+</CODE></PRE>
+<P>If the code should return <I>nil</I> when <I>aBoolean</I> is <I>false</I>, then it should probably be written explicitly as:</P>
+<PRE><CODE>	^aBoolean
+		ifTrue: [0]
+		ifFalse: [nil]
+</CODE></PRE></description>
+				<agentdescription>This method uses the return value of an ifTrue: or ifFalse: message.</agentdescription>
+				<agentinfo>It is not always obvious to the casual browser that the return value will be nil when the block is not executed. You may wish to rewrite the statement to use ifTrue:ifFalse: or ifFalse:ifTrue: to include an explicit nil block as this may be more intention revealing.</agentinfo>
+			</LintRule>
+			<LintRule>
+				<selector>sendsDifferentSuper</selector>
+				<name>Sends different super message</name>
+				<description>Checks for methods that send a different super message. A common example of this is in creation methods. You might define a method such as:
+<PRE><CODE>	createInstance
+		^super new initialize
+</CODE></PRE>
+<P>If the <I>new</I> method is not defined in the class, you should probably rewrite this to use self instead. Also, if the <I>new</I> method is defined, you might question why you need to use the superclass' <I>new</I> method instead of <I>new</I> method defined in the class.</P></description>
+				<agentdescription>This method sends a different super message.</agentdescription>
+				<agentinfo>This is often not a problem, especially in class-side creation methods. A common example is super new initialize. Often, however, it is possible to rewrite such sequences using self rather than super.</agentinfo>
+			</LintRule>
+			<LintRule>
+				<selector>collectionCopyEmpty</selector>
+				<name>Subclass of collection that has instance variable but doesn't define copyEmpty:</name>
+				<description>Checks classes in the Collection hierarchy that add an instance variable to ensure that they redefine the <I>copyEmpty:</I> method. This method is used when the collection grows. It copies over the necessary instance variables to the new larger collection. </description>
+				<agentdescription>This class is part if the Collection hierarchy and adds an instance variable without redefining the copyEmpty method.</agentdescription>
+				<agentinfo>The copyEmpty method is used when the collection grows. It copies over the necessary instance variables to the new larger collection. </agentinfo>
+			</LintRule>
+			<LintRule>
+				<selector>tempsReadBeforeWritten</selector>
+				<name>Temporaries read before written</name>
+				<description>Checks that all temporaries are assigned before they are used. This can help find possible paths through the code where a variable might be unassigned when it is used. </description>
+				<agentdescription>This method contains a temporary variable that might be used before being assigned.</agentdescription>
+				<agentinfo>This can help find possible paths through the code where a variable might be unassigned when it is used. </agentinfo>
+			</LintRule>
+			<LintRule>
+				<selector>usesAdd</selector>
+				<name>Uses the result of an add: message</name>
+				<description>Check for possible uses of the result returned by an <I>add:</I> or <I>addAll:</I> messages. These messages return their arguments not the receiver. As a result, many uses of the results are wrong. </description>
+				<agentdescription>This method uses the result of an add: or addAll message.</agentdescription>
+				<agentinfo>These messages return their arguments not the receiver. As a result, many uses of the results are wrong.</agentinfo>
+			</LintRule>
+		</LintRule>
+		<LintRule>
+			<selector>unnecessaryCode</selector>
+			<name>Unnecessary code</name>
+			<description>A series of checks that look for redundant code. Failures do not necessarily indicate situations that need to be addressed however you may wish to verify that you code is not larger or slower that it needs to be.</description>
+			<LintRule>
+				<selector>extraBlock</selector>
+				<name>Block immediately evaluated</name>
+				<description>Checks for blocks that are immediately evaluated. Since the block is directly evaluated, there is no need for the statements to be in a block. This can sometimes result from the application of the inline method refactoring.</description>
+				<agentdescription>This method contains a block that is immediately evaluated.</agentdescription>
+				<agentinfo>Since the block is immediately evaluated, there is no need for the statements to be in a block at all. </agentinfo>
+			</LintRule>
+			<LintRule>
+				<selector>endTrueFalse</selector>
+				<name>Same statements at end of ifTrue:ifFalse: blocks</name>
+				<description>Checks for <I>ifTrue:ifFalse:</I> blocks that have the same code at the beginning or end. Instead of having the same code in two places, you should move it outside of the blocks. </description>
+				<agentdescription>This method has ifTrue:ifFalse: blocks with the same code at the beginning or end of them.</agentdescription>
+				<agentinfo>Instead of having the same code in two places, you should move it outside of the blocks. </agentinfo>
+			</LintRule>
+			<LintRule>
+				<selector>classNotReferenced</selector>
+				<name>Class not referenced</name>
+				<description>Check if a class is referenced anywhere in the image. If it is not referenced, either directly or indirectly by a symbol, it can probably be removed.</description>
+				<agentdescription>This class is not referenced anywhere in the image.</agentdescription>
+				<agentinfo>If a class not referenced, either directly or indirectly by a symbol, it can probably be removed.</agentinfo>
+			</LintRule>
+			<LintRule>
+				<selector>onlyReadOrWritten</selector>
+				<name>Instance variables not read AND written</name>
+				<description>Checks that all instance variables are both read and written. If an instance variable is only read, you can replace all of the reads with nil, since it couldn't have been assigned a value. If the variable is only written, then there is really no need to store the result since it is never used. This check is not valid if the instance variables are accessed using <I>instVarAt:</I> or <I>instVarAt:put:</I>. </description>
+				<agentdescription>This class has some instance variables that are not both read and written.</agentdescription>
+				<agentinfo>If an instance variable is only read, you can replace all of the reads with nil, since it was never assigned a value. If the variable is only written, then there is no need to store the result since it is never used.</agentinfo>
+			</LintRule>
+			<LintRule>
+				<selector>justSendsSuper</selector>
+				<name>Method just sends super message</name>
+				<description>Check for methods that just forward the message to its superclass. These methods can be removed. </description>
+				<agentdescription>This method just forwards the message to its superclass.</agentdescription>
+				<agentinfo>Since the superclass does all the work, this method can be removed. </agentinfo>
+			</LintRule>
+			<LintRule>
+				<selector>equivalentSuperclassMethods</selector>
+				<name>Methods equivalently defined in superclass</name>
+				<description>Check for methods that are equivalent to their superclass methods. Such methods don't add anything and can be removed. </description>
+				<agentdescription>This method is equivalent to its superclass implementation.</agentdescription>
+				<agentinfo>Since this method doesn't add anything it can be removed. </agentinfo>
+			</LintRule>
+			<LintRule>
+				<selector>implementedNotSent</selector>
+				<name>Methods that implement messages which are never sent</name>
+				<description>Check for methods that are never sent. Such methods may be candidates for removal. This rule will often fail for libraries or frameworks that provide methods which are part of a general API and therefore not used by all applications. If in doubt, you don't need to remove these redundant methods since they will automatically be discarded by the image stripping process when an application is deployed.</description>
+				<agentdescription>This method is never sent.</agentdescription>
+				<agentinfo>Methods that are not sent may be candidates for removal. Note that libraries or frameworks often provide methods which are part of a general API and therefore not used by all applications. If in doubt, you don't need to remove redundant methods since they will automatically be discarded by the image stripping process during application deployment.</agentinfo>
+			</LintRule>
+			<LintRule>
+				<selector>tempsUnused</selector>
+				<name>Unused temporary variables</name>
+				<description>This checks looks for temporary variables that are declared but never used.</description>
+				<agentdescription>This method has some temporary declarations that aren't used.</agentdescription>
+				<agentinfo>These declarations can obviously be removed.</agentinfo>
+			</LintRule>
+			<LintRule>
+				<selector>equalsTrue</selector>
+				<name>Unnecessary "= true"</name>
+				<description>Check for a =, ==, ~=, or ~~ message being sent to true/false or with true/false as the argument. Many times these can be eliminated since their receivers are already booleans. For example, "anObject isFoo == false" could be replaced with "anObject isFoo not" if isFoo always returns a boolean.  Sometimes variables might refer to true, false, and something else, but this is considered bad style since the variable has multiple types. </description>
+				<agentdescription>This method contains an unnecessary comparison with true or false.</agentdescription>
+				<agentinfo>Often these comparisons can be eliminated since their receivers are already booleans.</agentinfo>
+			</LintRule>
+			<LintRule>
+				<selector>unnecessaryAssignment</selector>
+				<name>Unnecessary assignment to a temporary variable</name>
+				<description>Checks for an assignment to a temporary variable that is not subsequently used.</description>
+				<agentdescription>This method contains an assignment to a temporary variable that is not subsequently used.</agentdescription>
+				<agentinfo>If the code works correctly then the variable and the assignment to it can be removed.</agentinfo>
+			</LintRule>
+			<LintRule>
+				<selector>variableReferencedOnce</selector>
+				<name>Variable referenced in only one method and always assigned first</name>
+				<description>Checks for instance variables that might better be defined as temporary variables. If an instance variable is only used in one method and it is always assigned before it is used, then that method could define that variable as a temporary of the method instead (assuming that the method is not recursive). </description>
+				<agentdescription>This class has instance variables that might better be defined as temporaries.</agentdescription>
+				<agentinfo>If an instance variable is only used in one method and it is always assigned before it is used, then it could be defined as a temporary of the method instead. If the method is recursive then this is not true. </agentinfo>
+			</LintRule>
+			<LintRule>
+				<selector>unreferencedVariables</selector>
+				<name>Unreferenced instance variables</name>
+				<description>Check for instance variables that are not referenced. If a variable is not used in a class, it can be deleted. </description>
+				<agentdescription>This class has instance variables that are not referenced.</agentdescription>
+				<agentinfo>If a variable is not used in a class then it can be deleted. </agentinfo>
+			</LintRule>
+		</LintRule>
+		<LintRule>
+			<selector>intentionRevealing</selector>
+			<name>Intention revealing</name>
+			<description>A series of checks checks that look for code which can probably be rewritten so that is easier to read and better represents the intended operation.</description>
+			<LintRule>
+				<selector>assignmentInIfTrue</selector>
+				<name>Assignment to same variable at end of ifTrue:ifFalse: blocks</name>
+				<description>Checks for <I>ifTrue:ifFalse:</I> blocks that assign the same variable at the end of both blocks. Instead of this one can assign the variable the result of the entire <I>ifTrue:ifFalse:</I> message. For example, this code:
+<PRE><CODE>	aBoolean 
+		ifTrue: [foo := true]
+		ifFalse: [foo := anotherBoolean]</CODE></PRE>
+<P>could be rewritten to:</P>
+<PRE><CODE>	foo := aBoolean 
+		ifTrue: [true]
+		ifFalse: [anotherBoolean]</CODE></PRE>
+<P>Once the expression has been simplified by pulling the assignment out of the blocks, it is obvious that the code is equivalent to:</P>
+<PRE><CODE>	foo := aBoolean or: [anotherBoolean]</CODE></PRE></description>
+				<agentdescription>This method has ifTrue:ifFalse: blocks that assigns the same variable at the end of each block.</agentdescription>
+				<agentinfo>Instead of having the assignment in both blocks you can move it outside and assign the variable the result of the entire ifTrue:ifFalse: message.</agentinfo>
+			</LintRule>
+			<LintRule>
+				<selector>collectSelectNotUsed</selector>
+				<name>Doesn't use the result of a collect:/select:</name>
+				<description>Checks for a <I>collect:</I> or <I>select:</I> message where the result is not used. This is often a beginner's mistake where it is assumed that <I>collect:</I> and <I>select:</I> will modify the original collection.</description>
+				<agentdescription>This method has a collect: or select: message where the result is not used.</agentdescription>
+				<agentinfo>This is often a beginner's mistake where it is assumed that collect: and select: will modify the original collection.</agentinfo>
+			</LintRule>
+			<LintRule>
+				<selector>guardingClause</selector>
+				<name>Guarding clauses</name>
+				<transformationRuleSelector>guardClause</transformationRuleSelector>
+				<description>Checks for <I>ifTrue:</I> or <I>ifFalse:</I> conditions at end of methods that have two or more statements inside their blocks. Such code might better represent the true meaning of the code if they returned <I>self</I> instead. For example, the following code:
+<PRE><CODE>	a isNil ifFalse:
+		[self doSomething.
+		self doSomethingElse]</CODE></PRE>
+<P>might be better represented by: </P>
+<PRE><CODE>	a isNil ifTrue: [^self].
+	self doSomething.
+	self doSomethingElse</CODE></PRE>
+<P>In the first method, <I>a</I> not being <I>nil</I> looks like the exception, but most likely <I>a</I> being <I>nil</I> is the exception which is more obvious in the second rendition.</P></description>
+				<agentdescription>This method has an ifTrue: or ifFalse: condition guarding the execution of most of it's code.</agentdescription>
+				<agentinfo>Such code might better be written with an inverse condition that provides an early return. By the way, there is an automatic transformation available to correct this.</agentinfo>
+			</LintRule>
+			<LintRule>
+				<selector>ifTrueReturns</selector>
+				<name>ifTrue:/ifFalse: returns instead of and:/or:'s</name>
+				<description>Checks for common <I>ifTrue:</I> or <I>ifFalse:</I> returns that could be simplified. For example:
+<CODE><PRE>	foo
+		aCondition ifTrue: [^false].
+		^true</PRE></CODE>
+<P>can be simplified to: </P>
+<CODE><PRE>	foo
+		^aCondition not</PRE></CODE></description>
+				<agentdescription>This method answers the result of an ifTrue: or ifFalse: message that could be simplified to remove the condition.</agentdescription>
+				<agentinfo>It should be possible to remove the conditional message and directly answer the result of a boolean expression.</agentinfo>
+ 			</LintRule>
+			<LintRule>
+				<selector>literalArrayCharacters</selector>
+				<name>Literal array contains only characters</name>
+				<description>Checks for literal arrays that only contain characters. Under most circumstances a literal string would be equivalent, more readable, and occupy less memory.</description>
+				<agentdescription>This method contains a literal array containing only characters.</agentdescription>
+				<agentinfo>Under most circumstances a literal string would be equivalent, more readable, and more efficient.</agentinfo>
+			</LintRule>
+			<LintRule>
+				<selector>missingSubclassResponsibility</selector>
+				<name>Method defined in all subclasses, but not in superclass</name>
+				<description>Checks classes for methods that are defined in all subclasses, but not defined in the class itself. Such methods should most likely be defined as <I>subclassResponsibility</I> methods to help document the class as being abstract. Furthermore, this process often helps to find similar code in all the subclasses that should be pulled up into the superclass. </description>
+				<agentdescription>This class has methods that are defined in all subclasses, but not defined in the class itself. </agentdescription>
+				<agentinfo>Such methods should really be defined as subclassResponsibility methods to help document the class as being abstract. Furthermore, this process often helps to find similar code in all the subclasses that should be pulled up into the superclass. </agentinfo>
+			</LintRule>
+			<LintRule>
+				<selector>collectionMessagesToExternalObject</selector>
+				<name>Sends add:/remove: to external collection</name>
+				<description>Checks for methods that appear to be modifying a collection that is owned by another object. Such modifications can cause problems and are considered bad style as they disobey Demeter's law.</description>
+				<agentdescription>This method appears be using add: or remove: to modify a collection that is owned by another object.</agentdescription>
+				<agentinfo>Such modifications can cause problems and are considered bad style as they disobey Demeter's law.</agentinfo>
+			</LintRule>
+			<LintRule>
+				<selector>indexOf</selector>
+				<name>Uses indexOf: instead of includes:</name>
+				<description>Checks for the use of <I>indexOf:</I> answering non-zero to detect whether a collection includes a particular element. Such situations should be rewritten to use <I>includes:</I>.</description>
+				<agentdescription>This method use an indexOf: message to detect whether a collection includes a particular element.</agentdescription>
+				<agentinfo>You should rewrite this to use an includes: message instead.</agentinfo>
+			</LintRule>
+			<LintRule>
+				<selector>toDoCollect</selector>
+				<name>to:do: doesn't use collect:</name>
+				<description>Checks for the use of <I>to:do</I> to perform the equivalent of a <I>collect:</I> operation.</description>
+				<agentdescription>This method seems to be using to:do to perform the equivalent of a collect: operation.</agentdescription>
+			</LintRule>
+			<LintRule>
+				<selector>toDoWithIncrement</selector>
+				<name>to:do: loop also increments a counter</name>
+				<description>Checks for an unnecessary counter variable being incremented in a <I>to:do:</I> loop.</description>
+				<agentdescription>This method seems to have an unnecessary counter variable being incremented in a to:do: loop.</agentdescription>
+				<agentinfo>Since to:do: passes an index to the supplied block it is likely that this can be re-coded without the additional counter.</agentinfo>
+			</LintRule>
+			<LintRule>
+				<selector>sizeCheck</selector>
+				<name>Unnecessary size check</name>
+				<description>Identifies code that tests if a collection is non-empty before sending it an iteration message (e.g., <I>do:</I>, <I>collect:</I>, etc.). Since the collection iteration messages work for empty collections, such tests are redundant.</description>
+				<agentdescription>This method contains code that tests if a collection is non-empty before sending it an iteration message.</agentdescription>
+				<agentinfo>Since the collection iteration messages work for empty collections, such tests are redundant and should be removed.</agentinfo>
+			</LintRule>
+			<LintRule>
+				<selector>consistencyCheck</selector>
+				<name>Uses "size = 0", "= nil",  or "at: 1" instead of "isEmpty",  "isNil", or "first"</name>
+				<description>Checks for the use of equality tests instead of the appropriate <I>isXXX</I> messages. Since the code "<I>aCollection size = 0</I>" works for all objects, it is more difficult for someone reading such code to determine that "<I>aCollection</I>" is indeed a collection. However, coded as "<I>aCollection isEmpty</I>" then it is apparent that <I>aCollection</I> must be a collection since <I>isEmpty</I> is only defined for collections. </description>
+				<agentdescription>This method makes use of an equality test instead of the appropriate isNil or isEmpty testing message.</agentdescription>
+			</LintRule>
+			<LintRule>
+				<selector>atIfAbsent</selector>
+				<name>Uses at:ifAbsent: instead of at:ifAbsentPut:</name>
+				<transformationRuleSelector>atIfAbsent</transformationRuleSelector>
+				<description>Checks for uses of <I>at:ifAbsent:</I> which could be replaced by the shorter <I>at:ifAbsentPut:</I> message. For example, the code "<I>aDictionary at: aKey ifAbsent: [aDictionary at: aKey put: anObject]</I>" should be rewritten <I>as "aDictionary at: aKey ifAbsentPut: [anObject]</I>".</description>
+				<agentdescription>This method includes a use of at:ifAbsent: which could be replaced by the shorter at:ifAbsentPut: message.</agentdescription>
+			</LintRule>
+			<LintRule>
+				<selector>anySatisfy</selector>
+				<name>Uses detect:ifNone: instead of anySatisfy:</name>
+				<transformationRuleSelector>detectIfNone</transformationRuleSelector>
+				<description>Checks for the common code fragment: "<I>(aCollection detect: [:each | 'some condition'] ifNone: [nil]) ~= nil</I>". ANSI Smalltalk introduced an <I>anySatisfy:</I> method that can simplify this code to "<I>aCollection anySatisfy: [:each | 'some condition']</I>". Not only is the <I>anySatisfy:</I> variant shorter, it better signifies what the code is doing. </description>
+				<agentdescription>This method seems to be using detect: in a situation where anySatisfy: would be preferable.</agentdescription>
+				<agentinfo>ANSI Smalltalk introduced an anySatisfy: method that can be used to replace detect: in many situations. Not only is the anySatisfy: variant shorter, but it better signifies what the code is doing. </agentinfo>
+			</LintRule>
+			<LintRule>
+				<selector>detectAnySatisfy</selector>
+				<name>Uses do: instead of anySatisfy: or detect:'s</name>
+				<description>Checks for the use of the <I>do:</I> method instead of using the <I>anySatisfy:</I> or <I>detect:</I> methods.</description>
+				<agentdescription>This method seems to be using a do: iteration in a situation where anySatisfy: or detect: would be preferable.</agentdescription>
+				<agentinfo>Changing the code to use anySatisfy or detect: should make the method more readable.</agentinfo>
+			</LintRule>
+			<LintRule>
+				<selector>collectionProtocol</selector>
+				<name>Uses do: instead of collect: or select:'s</name>
+				<description>Checks for the use of the <I>do:</I> method instead of using the <I>collect:</I> or <I>select:</I> methods. A common beginners mistake is to write code such as:
+<PRE><CODE>	| newCollection |
+	newCollection := OrderedCollection new.
+	aCollection do: [:each | newCollection add: each doSomething].
+	^newCollection</CODE></PRE>
+<P>instead of using the <I>collect:</I> method: </P>
+<PRE><CODE>	^aCollection collect: [:each | each doSomething]</CODE></PRE>
+<P>The <I>collect:</I> and <I>select:</I> variants express the source code's intentions better.</P></description>
+				<agentdescription>This method seems to be using a do: iteration method instead of using collect: or select:.</agentdescription>
+				<agentinfo>This is a common beginner's mistake made by programmers who are not conversant with the Smalltalk collection iterators.</agentinfo>
+			</LintRule>
+			<LintRule>
+				<selector>minMax</selector>
+				<name>Uses ifTrue:/ifFalse: instead of min: or max:</name>
+				<transformationRuleSelector>minMax</transformationRuleSelector>
+				<description>Checks for uses of <I>ifTrue:</I> and <I>ifFalse:</I> in situations that could be transformed to use <I>min:</I> or <I>max:</I>. For example, this code:
+<CODE><PRE>	a &lt; b  ifTrue: [a] ifFalse: [b]</PRE></CODE>
+<P>can be rewritten as:</P>
+<CODE><PRE>	a min: b</PRE></CODE></description>
+				<agentdescription>This method uses ifTrue: and ifFalse: in a situation that could be transformed to use min: or max:.</agentdescription>
+			<agentinfo>This would obviously be more intention revealing.</agentinfo>
+			</LintRule>
+			<LintRule>
+				<selector>searchingLiteral</selector>
+				<name>Uses or's instead of a searching literal</name>
+				<description>Checks for the use of or's rather than a searching literal.
+<P>For example:</P>
+<PRE><CODE>	x==#a or: [x==#b or: [x== #c]]]</CODE></PRE>
+<P>could better be written as:</P>
+<PRE><CODE>	#(a b c) includes: x</CODE></PRE>
+</description>
+				<agentdescription>This method appears to use a series of or's rather than a searching literal.</agentdescription>
+				<agentinfo>Try reorganizing the code to search a literal array containing all the combinations being tested.</agentinfo>
+			</LintRule>
+			<LintRule>
+				<selector>toDo</selector>
+				<name>Uses to:do: instead of do:, with:do: or timesRepeat:</name>
+				<description>Checks for the use of <I>to:do:</I> when a <I>do:</I>, <I>with:do:</I> or <I>timesRepeat:</I> should be used. </description>
+				<agentdescription>This method contains a use of to:do: that could better be replaced by do:, with:do: or timesRepeat:</agentdescription>
+			</LintRule>
+			<LintRule>
+				<selector>whileTrue</selector>
+				<name>Uses whileTrue: instead of to:do:</name>
+				<description>Checks for uses of <I>whileTrue:</I> when the shorter <I>to:do:</I> would also work. For example, this common C-like code:
+<CODE><PRE>	i := 1.
+	[i &lt;= size]
+		whileTrue: 
+			["self do something with i".
+			i := i + 1]</PRE></CODE>
+<P>can be written as:</P>
+<CODE><PRE>	1 to: size do: [:i | "self do something with i"]</PRE></CODE></description>
+				<agentdescription>This method uses a whileTrue: loop when to:do: could be used instead.</agentdescription>
+				<agentinfo>Using the to:do: iterator is shorter and more intention revealing.</agentinfo>
+			</LintRule>
+			<LintRule>
+				<selector>vernacularSelector</selector>
+				<name>Uses a vernacular selector</name>
+				<description>Checks for use of inappropriate message selectors.</description>
+				<agentdescription>This method uses an inappropriate message selector that could be considered taboo in some cultures.</agentdescription>
+				<agentinfo>Some individuals may consider this rude or offensive. It is recommended that you change it.</agentinfo>
+			</LintRule>
+		</LintRule>
+		<LintRule>
+			<selector>miscellaneous</selector>
+			<name>Miscellaneous</name>
+			<description>A miscellaneous series of checks highlighting patterns that may indicate situations where the code could be improved. Code failing these rules will usually work but may not be optimally efficient or readable.</description>
+			<LintRule>
+				<selector>asOrderedCollectionNotNeeded</selector>
+				<name>#asOrderedCollection/#asArray not needed</name>
+				<description>Checks for a situation where <I>asOrderedCollection</I> and <I>asArray</I> messages are not required because they are sent implicitly.</description>
+				<agentdescription>This method sends redundant asOrderedCollection or asArray messages.</agentdescription>
+				<agentinfo>These messages are not required because they are already sent implicitly.</agentinfo>
+			</LintRule>
+			<LintRule>
+				<selector>yourselfNotUsed</selector>
+				<name>Doesn't use the result of a yourself message</name>
+				<description>Check for methods sending the <I>yourself</I> message when it is not necessary. For example, the following statement doesn't need <I>yourself</I> since it is not assigned to anything:
+<PRE><CODE>	aCollection addAll: #(a b c); yourself</CODE></PRE>
+<P>Now if this statement was assigned to a variable, then one would need to cascade the yourself message in order to get the value of aCollection.</P></description>
+				<agentdescription>This method sends a yourself message when it is not necessary.</agentdescription>
+				<agentinfo>If the result of the statement is not used then there is no need to cascade yourself onto the end of it.</agentinfo>
+			</LintRule>
+			<LintRule>
+				<selector>precedence</selector>
+				<name>Inspect instances of "A + B * C" might be "A + (B * C)"</name>
+				<description>Checks for methods that might have precedence problems. Those used to other languages precedence order often make mistakes when writing Smalltalk code since in Smalltalk all binary operations are performed left-to-right. </description>
+				<agentdescription>This method contains an expression that might have precedence problems.</agentdescription>
+				<agentinfo>You should check the precedence of any complex expressions. Programmers used to the precedence order of other languages often make mistakes in Smalltalk because, here, all binary operations have the same precedence and are performed left-to-right. </agentinfo>
+			</LintRule>
+			<LintRule>
+				<selector>instVarInSubclasses</selector>
+				<name>Instance variables defined in all subclasses</name>
+				<description>Checks classes for instance variables that are defined in all subclasses. Often it is desirable to pull the instance variable up into the class so that all the subclasses do not have to define it. </description>
+				<agentdescription>There are common instance variables defined in all the subclasses of this class.</agentdescription>
+				<agentinfo>Often it is desirable to pull the common instance variables up into the parent class so that all the subclasses do not have to define it. </agentinfo>
+			</LintRule>
+			<LintRule>
+				<selector>longMethods</selector>
+				<name>Long methods</name>
+				<description>Check for methods that are overly long. It reports all methods that have <I>BasicLintRule class&gt;&gt;longMethodSize</I> number of statements. This check counts statements, not lines.</description>
+				<agentdescription>This method is rather long.</agentdescription>
+				<agentinfo>You may wish to refactor the method into several smaller methods. Providing you choose intention revealing names for the new methods the act of splitting up the code should make it easier to read.</agentinfo>
+			</LintRule>
+			<LintRule>
+				<selector>fullBlocks</selector>
+				<name>Methods with full blocks</name>
+				<description>Checks for methods that contain "full" blocks. These are places where inefficiencies can creep in. For example, a common reason why a full block is created is because a block assigns a temporary variable that is not defined inside the block. If the temporary variable is only used inside the block, then the definition of the temporary should be moved inside the block. This can be performed automatically using the "move to inner scope" code refactoring. Another reason a full block might be required is where a return is used inside a block. Such "far" returns should be avoided where efficiency is important.</description>
+				<agentdescription>This method contains some "full" blocks.</agentdescription>
+				<agentinfo>Full blocks are places where inefficiencies can creep in. A common situation is when a block assigns a temporary variable that is not defined inside the block itself. Another reason is where a direct return is used to exit from within a block. Such "far" returns should be avoided where efficiency is important.</agentinfo>
+			</LintRule>
+			<LintRule>
+				<selector>ifTrueBlocks</selector>
+				<name>Non-blocks in ifTrue:/ifFalse: messages</name>
+				<description>Checks for methods that don't use literal blocks with <I>ifTrue:</I> or <I>ifFalse:</I> messages. Those new to Smalltalk might write code such as: <I>"aBoolean ifTrue: (self doSomething)"</I> instead of the correct version: <I>"aBoolean ifTrue: [self doSomething]"</I>. Even if these pieces of code are correct, they cannot be optimized by the Smalltalk compiler. </description>
+				<agentdescription>This method contains some ifTrue: or ifFalse: messages that don't use blocks.</agentdescription>
+				<agentinfo>It is a fairly common beginner's mistake to wrap the conditional code in parentheses rather than enclosing it in a block. Even if these pieces of code are correct, they cannot be optimized by the Smalltalk compiler. </agentinfo>
+			</LintRule>
+			<LintRule>
+				<selector>classNameInSelector</selector>
+				<name>Redundant class name in selector</name>
+				<description>Checks for the class name in a selector. This is redundant since to call the method you must already refer to the class name. For example, <I>openHierarchyBrowserFrom:</I> is a redundant name for a method in <I>HierarchyBrowser</I>.</description>
+				<agentdescription>The name of this method appears to include the class name.</agentdescription>
+				<agentinfo>Often this is considered bad style and redundant, since to make call the you must already refer to the class name.</agentinfo>
+			</LintRule>
+			<LintRule>
+				<selector>refersToClass</selector>
+				<name>Refers to class name instead of "self class"</name>
+				<description>Checks for methods that have their class name directly in the source instead of "<I>self class</I>". The <I>self class</I> variant allows you to create subclasses without needing to redefine that method. </description>
+				<agentdescription>This method refers directly to its class rather than using self class.</agentdescription>
+				<agentinfo>Using self class allows you to create subclasses without needing to redefine the method. </agentinfo>
+			</LintRule>
+			<LintRule>
+				<selector>badMessage</selector>
+				<name>Sends "questionable" message</name>
+				<description>Checks for methods that send messages that are often best avoided. You might want to limit the use of such messages. For example, using <I>become:</I> throughout your application might not be the best thing. Also, using messages such as <I>isKindOf:</I> can signify a lack of polymorphism. You can change which methods are regarded as "questionable" by editing the <I>BasicLintRule&gt;&gt;badSelectors</I> method. </description>
+				<agentdescription>This method sends a questionable message that is often best avoided. </agentdescription>
+				<agentinfo>Some messages are regarded as being questionable and to be avoided in most situations. They tend to be messages that perform low-level operations or use reflection in an inappropriate way. You can find out which messages are regarded as questionable by browsing BasicLintRule badSelectors.</agentinfo>
+			</LintRule>
+			<LintRule>
+				<selector>stringConcatenation</selector>
+				<name>String concatenation instead of streams</name>
+				<description>Checks for uses of string concatenation inside an iteration message. Since string concatenation is O(n^2), it is better to use streaming since it is O(n) - assuming that n is large enough. </description>
+				<agentdescription>This method appears to be performing string concatenation inside an iteration loop. It may be better to use streaming instead. </agentdescription>
+				<agentinfo>For more than two or three concatenations streaming is generally more efficient.</agentinfo>
+			</LintRule>
+			<LintRule>
+				<selector>assignmentInBlock</selector>
+				<name>Unnecessary assignment or return in block</name>
+				<transformationRuleSelector>unwindBlocks</transformationRuleSelector>
+				<description>Checks <I>ensure:</I>, <I>ifCurtailed:</I>, and <I>showWhile:</I> blocks for assignments or returns that are the last statement in the block. These assignments or returns can be moved outside the block since these messages return the value of the block. For example, the code:
+<PRE><CODE>	| fs |
+	fs := FileStream read: 'test' text: false.
+	[| stb |
+		stb := STBInFiler on: fs.
+		^stb next] ensure: [fs close]</CODE></PRE>
+<P>can be rewritten as: </P>
+<PRE><CODE>	| fs |
+	fs := FileStream read: 'test' text: false.
+	^[| stb |
+		stb := STBInFiler on: fs.
+		stb next] ensure: [fs close]</CODE></PRE>
+<P>Having the assignment or return inside the block will require the VM to create a full block. Full blocks run much slower than copying or optimized blocks.</P></description>
+			<agentdescription>This method has an ensure, ifCurtailed or showWhile block with an unnecessary assignment as the last statement in the block.</agentdescription>
+			<agentinfo>These assignments or returns can be moved outside the block since these messages return the value of the block.</agentinfo>
+			</LintRule>
+			<LintRule>
+				<selector>unoptimizedAndOr</selector>
+				<name>Uses "(a and: [b]) and: [c]" instead of "a and: [b and: [c]]"</name>
+				<description>Checks for the message pattern <I>(a and: [b]) and: [c]</I> which can be replaced by the more efficient <I>a and: [b and: [c]]</I>.</description>
+				<agentdescription>This method has a complex boolean expression that could be rewritten more efficiently.</agentdescription>
+			</LintRule>
+			<LintRule>
+				<selector>unoptimizedToDo</selector>
+				<name>Uses (to:)do: instead of to:do:</name>
+				<description>Checks for the message pattern <I>(to:)do:</I> which should be replaced using the more efficient <I>to:do:</I> message.</description>
+				<agentdescription>This method uses separate to: and do: messages which should be replaced by the combined to:do: message.</agentdescription>
+				<agentinfo>Using the combined message is more efficient than sending to: and do: individually.</agentinfo>
+			</LintRule>
+			<LintRule>
+				<selector>utilityMethods</selector>
+				<name>Utility methods</name>
+				<description>Checks for methods that have one or more arguments and do not refer to self or an instance variable. Such methods might be better defined in some other class or as class methods. </description>
+				<agentdescription>This method appears to be a utility or "helper" method.</agentdescription>
+				<agentinfo>Methods that have one or more arguments and do not refer to self or an instance variable are often described as utility methods. Such methods might be better defined in some other class or as class methods. </agentinfo>
+			</LintRule>
+			<LintRule>
+				<selector>variableAssignedLiteral</selector>
+				<name>Variable is only assigned a single literal value</name>
+				<description>If a variable is only assigned a single literal value then that variable is either nil or that literal value. If the variable is always initialized with that literal value, then you could replace each variable reference with a message send to get the value. If the variable can also be nil, then you might want to replace that variable with another that stores true or false depending on whether the old variable had been assigned.</description>
+				<agentdescription>This method has a variable that is only assigned a single literal value.</agentdescription>
+				<agentinfo>If the variable is always initialized with the literal value, then you could replace each variable reference with a message send to get the value.</agentinfo>
+			</LintRule>
+		</LintRule>
+		<LintRule>
+			<selector>passed</selector>
+			<name>All checks passed</name>
+			<description>The Code Mentor did not find any problems with this code.</description>
+		</LintRule>
+	</LintRule>
+</LintChecks>

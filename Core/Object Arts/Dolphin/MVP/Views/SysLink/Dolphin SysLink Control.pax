@@ -1,0 +1,97 @@
+| package |
+package := Package name: 'Dolphin SysLink Control'.
+package paxVersion: 1;
+	basicComment: 'Dolphin Smalltalk SysLink Common Control.
+Copyright (c) Object Arts Ltd, 2005.
+
+This package contains two MVP View wrappers for the Windows XP "SysLink" common control:
+1) SysLinkView
+2) LinkButton
+
+<LinkButton> is the simpler view to use, and can be used as a link-style substitute for <PushButton>, i.e. it is a <commandSource> that fires off a command when the link it contains is clicked, or when it has focus and the Enter key is pressed. However it is limited to displaying and acting on only a single link. If you need more control, then <SysLinkView> can be used. SysLinkView is a static text <valueView>, the value of which is some text that may contain HTML links, e.g. ''<a>Click Me</a>''. If any of these links are clicked by the user then a #linkClicked: event is triggered off the view''s presenter. The argument to the event is an <LITEM> instance containing information about the link that was clicked (such as the URL in the href attribute of the link, if any). See MSDN for a description of the fields in the LITEM structure.
+
+Please Note: The underlying SysLink control which this package relies on is not supported not supported on Windows 2000 and earlier.'.
+
+package basicPackageVersion: '6.1'.
+
+
+package classNames
+	add: #LHITTESTINFO;
+	add: #LinkButton;
+	add: #LITEM;
+	add: #NMLINK;
+	add: #SysLinkView;
+	yourself.
+
+package methodNames
+	add: 'TextPresenter class' -> #resource_Link_text;
+	yourself.
+
+package globalNames
+	add: #SysLinkConstants;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\..\..\Base\Dolphin';
+	add: '..\..\Base\Dolphin MVP Base';
+	add: '..\..\Presenters\Text\Dolphin Text Presenter';
+	add: '..\..\Type Converters\Dolphin Type Converters';
+	add: '..\..\Models\Value\Dolphin Value Models';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+Win32Structure subclass: #LHITTESTINFO
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Win32Structure subclass: #LITEM
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: 'SysLinkConstants'
+	classInstanceVariableNames: ''!
+NMHDR subclass: #NMLINK
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+CommandButton subclass: #LinkButton
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: 'SysLinkConstants'
+	classInstanceVariableNames: ''!
+StaticView subclass: #SysLinkView
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: 'SysLinkConstants'
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+!TextPresenter class methodsFor!
+
+resource_Link_text
+	"Answer the literal data from which the 'Link text' resource can be reconstituted.
+	DO NOT EDIT OR RECATEGORIZE THIS METHOD.
+
+	If you wish to modify this resource evaluate:
+	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Link_text)
+	"
+
+	^#(#'!!STL' 3 788558 10 ##(Smalltalk.STBViewProxy)  8 ##(Smalltalk.SysLinkView)  98 16 0 0 98 2 8 1409286400 1 416 721990 2 ##(Smalltalk.ValueHolder)  0 32 1310726 ##(Smalltalk.EqualitySearchPolicy)  0 0 0 5 0 0 0 416 0 8 4294904867 852486 ##(Smalltalk.NullConverter)  0 0 0 983302 ##(Smalltalk.MessageSequence)  202 208 98 2 721670 ##(Smalltalk.MessageSend)  8 #createAt:extent: 98 2 328198 ##(Smalltalk.Point)  2799 21 738 181 31 416 674 8 #text: 98 1 8 '<A HREF="http://www.object-arts.com">Object Arts Home</A>' 416 983302 ##(Smalltalk.WINDOWPLACEMENT)  8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 119 5 0 0 10 0 0 0 209 5 0 0 25 0 0 0] 98 0 738 193 193 0 27 )! !
+!TextPresenter class categoriesFor: #resource_Link_text!public!resources-views! !
+
+"End of package definition"!
+

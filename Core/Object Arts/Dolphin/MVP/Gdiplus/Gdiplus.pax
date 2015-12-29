@@ -1,0 +1,801 @@
+| package |
+package := Package name: 'Gdiplus'.
+package paxVersion: 1;
+	basicComment: 'Dolphin Smalltalk GDI+ Binding
+Copyright (c) Dan Antion, Object Arts Ltd, Louis Sumberg, Chris Uppal, and Steve Waring, 2003-2004.
+
+Licensed under OpenBSD license (See http://www.openbsd.org/policy.html).
+
+This package includes a complete definition of the GDI+ Flat API (see GdiplusLibrary), including all the supporting structures that are not already defined elsewhere in Dolphin.
+
+Much of GdiplusLibrary is in turn wrapped in the GdiplusBase hierarchy, which contains GDI+ objects such as images and bitmaps, graphics surfaces, fonts, pens and brushes.
+
+Thanks go to Blair McGlashan, Steve Waring, Dan Antion, Chris Uppal, and Louis Sumberg for working together to make the set of Gdiplus packages available.
+
+---------------------------------------------------------
+Examples
+
+Browse the "examples" category for this package or search definitions of ''exampleGdip*'' to find numerous examples using various objects and settings.  Many of the examples are based on examples from MSDN, in which case the comment indicates where in MSDN additional information can be found.  Many of the examples depend on files created through the GdiplusTests package, so it''''s recommended that this be installed also.
+
+---------------------------------------------------------
+v0.06 Changes by Louis Sumberg and Chris Uppal
+See - #CUadded  #LASadded #LASfix.
+---------------------------------------------------------
+v sw1 Changes by Steve Waring
+See - #swAdded #swFix
+ - GdiplusPen, GdiplusLinearGradientBrush, GdiplusBrush, GdiplusBase
+ - GdiplusLinearGradientBrush(class)>>example*
+---------------------------------------------------------
+v sw2 Changes by Steve Waring
+- Cleaned up ARGB
+- Changed from using a parameterized constructor (ie
+constructorSelector/constructorArgument) to GdiplusInitializer constructor
+objects.
+- Moved GdiplusImage and GdiplusBitmap to the GdiplusBase hierarchy
+- Added GdiplusSolidBrush and GdiImageAttributes
+- New examples on the class-side of
+GdiplusGraphics/GdiplusImage/GdiplusBitmap and GdiPlusImageAttributes.
+- Added GdiplusBitmap constructors; #fromIStream: #fromIcon #width:height
+#fromByteArray:
+- Added GdiplusImage constructors; #fromImage:
+------------------------------------------------------------------------
+v sw2.022 Changes by Louis Sumberg
+- Added GdiplusCachedBitmap, GdiplusFont, GdiplusFontCollection, GdiplusFontFamily, GdiplusGraphicsPath, GdiplusHatchBrush, GdiplusInstalledFontCollection, GdiplusMatrix, GdiplusPrivateFontCollection, GdiplusStringFormat, GdiplusTextureBrush, and associated Initializers
+- Added examples in several classes - look for exampleMSDN*
+- Methods added to and changed in existing classes marked with #LASadded or #LASfix.
+
+------------------------------------------------------------------------
+v dev3 
+Changes by Dan Antion 
+- Add-on Rotation package: DaGraphicExtensions
+Changes by Steve Waring
+-Added GdiplusImageFromIStreamInitializer
+
+------------------------------------------------------------------------
+v dev3.015 Changes by Louis Sumberg
+- Added GdiplusRegion and associated initializers.
+- Added helper methods, e.g., Gdiplus>>default and GdiplusImage>>prompt, to make it easier to get a new instance.
+- Added new examples and changed many (though not all) to return a value, so that unit tests could be run on the examples and the examples could still be evaluated by a line in the examples'' comment.
+- GdiplusGraphics:  New methods for "world transformations", e.g., rotating and scaling.  New methods also for clipping, drawing and filling.
+- GdiplusGraphicsPath:  New methods, mostly for adding shapes to a Path.
+- GdiplusImage:  New methods for property items, thumbnails, and encoders/decoders.  Accessors also added to GpPropertyItem to return string names of integer constants.
+- Some cleanup (removed #LASxxx tags, renamed some temp vars, put helper methods in old code).  Miscellaneous methods added and changed, not mentioned above.
+
+------------------------------------------------------------------------
+v dev4 
+ - Fixes and tests by Blair McGlashan.
+ - "Gdiplus ImageView" package by Steve Waring.
+
+ - GdiplusBase example methods, if placed in the ''sunit'' method category, can be run as unit tests, by running the GdiplusExamplesTest class>>buildTestCase script.
+
+------------------------------------------------------------------------
+v dev4.5 Changes by Louis Sumberg
+- Added comments to all classes and most methods in GdiplusBase hierarchy.
+- Added new classes - GdiplusAdjustableArrowCap, GdiplusCustomLineCap, and GdiplusPathGradientBrush - and associated initializer classes.
+- Added new initializer classes for existing classes - GdiplusGraphicsPathFromPointsInitializer, GdiplusRegionInitializer, and GdiplusStringFormatGenericInitializer.
+- Added GdiplusGUIDs, a PoolConstantsDictionary, to GdiplusBase.  Also added a slew of methods to class GdiplusBase that enumerate subsets of constants and GUIDs in GdiplusConstants and GdiplusGUIDs.
+- Renamed a lot of methods and deprecated the old ones.  In general, dropped "get" and "set" from methods names.  Deprecated #newInitialized and #default methods in favor of #new, though not all classes implement #new.
+- Added a lot of example methods and replaced the ''MSDN'' naming scheme with ''Gdip'', since many examples are not from MSDN and so a search for exampleGdip* will return all examples.
+- Miscellaneous methods added and changed, not mentioned above.  In general, most GDI+ features are now implemented in GdiplusBase and GdiplusInitializer hierarchies.
+
+------------------------------------------------------------------------
+v dev5
+-  Deprecated methods removed.
+ - Fixes and tests by Steve Waring, Louis Sumberg, and Blair McGlashan.
+
+
+---------------------------------------------------------
+Maintenance
+
+The following auto-generated methods have been changed:
+ - GdiplusLibrary>>GdipGetFamilyName:name:language:
+ - GpEncoderParameters>>Parameter/Parameter:
+
+A lot of constants were added.
+
+GdiplusGUIDs
+	at:''EncoderCompression''
+		put: (GUIDfromString:''{e09d739d-ccd4-44ee-8eba-3fbf8be4fc58}'');
+	at:''EncoderColorDepth''
+		put: (GUIDfromString:''{66087055-ad66-4c7c-9a18-38a2310b8337}'');
+	at:''EncoderScanMethod''
+		put: (GUIDfromString:''{3a4e2661-3109-4e56-8536-42c156e7dcfa}'');
+	at:''EncoderVersion''
+		put: (GUIDfromString:''{24d18c76-814a-41a4-bf53-1c219cccf797}'');
+	at:''EncoderRenderMethod''
+		put: (GUIDfromString:''{6d42c53a-229a-4825-8bb7-5c99e2b9a8b8}'');
+	at:''EncoderQuality''
+		put: (GUIDfromString:''{1D5BE4B5-FA4A-452D-9CDD-5DB35105E7EB}'');
+	at:''EncoderTransformation''
+		put: (GUIDfromString:''{8D0EB2D1-A58E-4EA8-AA14-108074B7B6F9}'');
+	at:''EncoderLuminanceTable''
+		put: (GUIDfromString:''{edb33bce-0266-4a77-b904-27216099e717}'');
+	at:''EncoderChrominanceTable''
+		put: (GUIDfromString:''{f2e455dc-09b3-4316-8260-676ada32481c}'');
+	at:''EncoderSaveFlag''
+		put: (GUIDfromString:''{292266fc-ac40-47bf-8cfc-a85b89a655de}'');
+	at:''FrameDimensionTime''
+		put: (GUIDfromString:''{6aedbd6d-3fb5-418a-83a6-7f45229dc872}'');
+	at:''FrameDimensionResolution''
+		put: (GUIDfromString:''{84236f7b-3bd3-428f-8dab-4ea1439ca315}'');
+	at:''FrameDimensionPage''
+		put: (GUIDfromString:''{7462dc86-6180-4c7e-8e3f-ee7333a7a483}'');'.
+
+package basicPackageVersion: '6.2'.
+
+
+package classNames
+	add: #ARGB;
+	add: #ENHMETAHEADER3;
+	add: #GdiplusAdjustableArrowCap;
+	add: #GdiplusAdjustableArrowCapInitializer;
+	add: #GdiplusBase;
+	add: #GdiplusBitmap;
+	add: #GdiplusBitmapFromBitmapInitializer;
+	add: #GdiplusBitmapFromBlankInitializer;
+	add: #GdiplusBitmapFromFileInitializer;
+	add: #GdiplusBitmapFromIconInitializer;
+	add: #GdiplusBitmapFromIStreamInitializer;
+	add: #GdiplusBrush;
+	add: #GdiplusCachedBitmap;
+	add: #GdiplusCachedBitmapInitializer;
+	add: #GdiplusCustomLineCap;
+	add: #GdiplusCustomLineCapInitializer;
+	add: #GdiplusDoubleBufferedView;
+	add: #GdiplusError;
+	add: #GdiplusFont;
+	add: #GdiplusFontCollection;
+	add: #GdiplusFontFamily;
+	add: #GdiplusFontFamilyInitializer;
+	add: #GdiplusFontFromFontFamilyInitializer;
+	add: #GdiplusFromFileInitializer;
+	add: #GdiplusGraphics;
+	add: #GdiplusGraphicsFromHDCInitializer;
+	add: #GdiplusGraphicsFromImageInitializer;
+	add: #GdiplusGraphicsPath;
+	add: #GdiplusGraphicsPathFromPointsInitializer;
+	add: #GdiplusGraphicsPathInitializer;
+	add: #GdiplusHatchBrush;
+	add: #GdiplusHatchBrushInitializer;
+	add: #GdiplusImage;
+	add: #GdiplusImageAttributes;
+	add: #GdiplusImageAttributesInitializer;
+	add: #GdiplusImageFromFileInitializer;
+	add: #GdiplusImageFromIStreamInitializer;
+	add: #GdiplusInitializer;
+	add: #GdiplusInstalledFontCollection;
+	add: #GdiplusInstalledFontCollectionInitializer;
+	add: #GdiplusLibrary;
+	add: #GdiplusLinearGradientBrush;
+	add: #GdiplusLinearGradientBrushFromPointsInitializer;
+	add: #GdiplusLinearGradientBrushFromRectInitializer;
+	add: #GdiplusLinearGradientBrushInitializer;
+	add: #GdiplusMatrix;
+	add: #GdiplusMatrixInitializer;
+	add: #GdiplusPathGradientBrush;
+	add: #GdiplusPathGradientFromPathInitializer;
+	add: #GdiplusPathGradientFromPointsInitializer;
+	add: #GdiplusPen;
+	add: #GdiplusPenFromBrushInitializer;
+	add: #GdiplusPenFromColorInitializer;
+	add: #GdiplusPenInitializer;
+	add: #GdiplusPrivateFontCollection;
+	add: #GdiplusPrivateFontCollectionInitializer;
+	add: #GdiplusRegion;
+	add: #GdiplusRegionFromPathInitializer;
+	add: #GdiplusRegionFromRectangleInitializer;
+	add: #GdiplusRegionInitializer;
+	add: #GdiplusSolidBrush;
+	add: #GdiplusSolidBrushFromColorInitializer;
+	add: #GdiplusStartupInput;
+	add: #GdiplusStartupOutput;
+	add: #GdiplusStringFormat;
+	add: #GdiplusStringFormatGenericInitializer;
+	add: #GdiplusStringFormatInitializer;
+	add: #GdiplusTextureBrush;
+	add: #GdiplusTextureBrushInitializer;
+	add: #GpBitmapData;
+	add: #GpCharacterRange;
+	add: #GpColorMap;
+	add: #GpColorMatrix;
+	add: #GpColorPalette;
+	add: #GpEncoderParameter;
+	add: #GpEncoderParameters;
+	add: #GpImageCodecInfo;
+	add: #GpMetafileHeader;
+	add: #GpPathData;
+	add: #GpPropertyItem;
+	add: #GpWmfPlaceableFileHeader;
+	add: #GpWMFRect16;
+	add: #METAHEADER;
+	add: #POINTF;
+	add: #RECTF;
+	yourself.
+
+package methodNames
+	add: #Bitmap -> #asColorKeyedBitmap;
+	add: #Bitmap -> #asColorKeyedBitmap:;
+	add: #Color -> #alpha:;
+	add: #Color -> #asARGB;
+	add: #Point -> #scaledOver:;
+	add: #Point -> #scaledTo:;
+	add: #Rectangle -> #asGdiplusRectangle;
+	add: #View -> #createThumbnailExtent:mask:;
+	yourself.
+
+package globalNames
+	add: #GdiplusConstants;
+	add: #GdiplusGUIDs;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\..\Base\Dolphin';
+	add: '..\Dialogs\Common\Dolphin Common Dialogs';
+	add: '..\Presenters\Image\Dolphin Image Presenter';
+	add: '..\Models\List\Dolphin List Models';
+	add: '..\Base\Dolphin MVP Base';
+	add: '..\..\ActiveX\Structured Storage\OLE Structured Storage';
+	add: '..\..\ActiveX\Shell\Windows Shell';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+Object subclass: #GdiplusInitializer
+	instanceVariableNames: 'library'
+	classVariableNames: ''
+	poolDictionaries: 'GdiplusConstants'
+	classInstanceVariableNames: ''!
+Color subclass: #ARGB
+	instanceVariableNames: 'code'
+	classVariableNames: 'Default StdColours'
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Error subclass: #GdiplusError
+	instanceVariableNames: 'win32Error'
+	classVariableNames: 'ErrorDescriptions'
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ExternalLibrary subclass: #GdiplusLibrary
+	instanceVariableNames: 'token'
+	classVariableNames: ''
+	poolDictionaries: 'GdiplusConstants'
+	classInstanceVariableNames: ''!
+ExternalStructure subclass: #ENHMETAHEADER3
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ExternalStructure subclass: #GdiplusStartupInput
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ExternalStructure subclass: #GdiplusStartupOutput
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ExternalStructure subclass: #GpBitmapData
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ExternalStructure subclass: #GpCharacterRange
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ExternalStructure subclass: #GpColorMap
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ExternalStructure subclass: #GpColorMatrix
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ExternalStructure subclass: #GpColorPalette
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ExternalStructure subclass: #GpEncoderParameter
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ExternalStructure subclass: #GpEncoderParameters
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ExternalStructure subclass: #GpImageCodecInfo
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ExternalStructure subclass: #GpMetafileHeader
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ExternalStructure subclass: #GpPathData
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ExternalStructure subclass: #GpPropertyItem
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ExternalStructure subclass: #GpWmfPlaceableFileHeader
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ExternalStructure subclass: #GpWMFRect16
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ExternalStructure subclass: #METAHEADER
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ExternalStructure subclass: #POINTF
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ExternalStructure subclass: #RECTF
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+GdiplusInitializer subclass: #GdiplusAdjustableArrowCapInitializer
+	instanceVariableNames: 'height width isFilled'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+GdiplusInitializer subclass: #GdiplusBitmapFromBitmapInitializer
+	instanceVariableNames: 'bitmap'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+GdiplusInitializer subclass: #GdiplusBitmapFromBlankInitializer
+	instanceVariableNames: 'width height format'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+GdiplusInitializer subclass: #GdiplusBitmapFromIconInitializer
+	instanceVariableNames: 'icon'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+GdiplusInitializer subclass: #GdiplusBitmapFromIStreamInitializer
+	instanceVariableNames: 'iStream'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+GdiplusInitializer subclass: #GdiplusCachedBitmapInitializer
+	instanceVariableNames: 'bitmap graphics'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+GdiplusInitializer subclass: #GdiplusCustomLineCapInitializer
+	instanceVariableNames: 'fillPath strokePath baseCap baseInset'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+GdiplusInitializer subclass: #GdiplusFontFamilyInitializer
+	instanceVariableNames: 'name fontCollection'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+GdiplusInitializer subclass: #GdiplusFontFromFontFamilyInitializer
+	instanceVariableNames: 'fontFamily emSize style unit'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+GdiplusInitializer subclass: #GdiplusFromFileInitializer
+	instanceVariableNames: 'filename fileLocator'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+GdiplusInitializer subclass: #GdiplusGraphicsFromHDCInitializer
+	instanceVariableNames: 'canvas'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+GdiplusInitializer subclass: #GdiplusGraphicsFromImageInitializer
+	instanceVariableNames: 'image'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+GdiplusInitializer subclass: #GdiplusGraphicsPathFromPointsInitializer
+	instanceVariableNames: 'pathPoints pathTypes fillMode'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+GdiplusInitializer subclass: #GdiplusGraphicsPathInitializer
+	instanceVariableNames: 'fillMode'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+GdiplusInitializer subclass: #GdiplusHatchBrushInitializer
+	instanceVariableNames: 'style forecolor backcolor'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+GdiplusInitializer subclass: #GdiplusImageAttributesInitializer
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+GdiplusInitializer subclass: #GdiplusImageFromIStreamInitializer
+	instanceVariableNames: 'iStream'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+GdiplusInitializer subclass: #GdiplusInstalledFontCollectionInitializer
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+GdiplusInitializer subclass: #GdiplusLinearGradientBrushInitializer
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+GdiplusInitializer subclass: #GdiplusMatrixInitializer
+	instanceVariableNames: 'm11 m12 m21 m22 m31 m32'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+GdiplusInitializer subclass: #GdiplusPathGradientFromPathInitializer
+	instanceVariableNames: 'path'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+GdiplusInitializer subclass: #GdiplusPathGradientFromPointsInitializer
+	instanceVariableNames: 'pathPoints wrapMode'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+GdiplusInitializer subclass: #GdiplusPenInitializer
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+GdiplusInitializer subclass: #GdiplusPrivateFontCollectionInitializer
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+GdiplusInitializer subclass: #GdiplusRegionFromPathInitializer
+	instanceVariableNames: 'path'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+GdiplusInitializer subclass: #GdiplusRegionFromRectangleInitializer
+	instanceVariableNames: 'rectangle'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+GdiplusInitializer subclass: #GdiplusRegionInitializer
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+GdiplusInitializer subclass: #GdiplusSolidBrushFromColorInitializer
+	instanceVariableNames: 'color'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+GdiplusInitializer subclass: #GdiplusStringFormatGenericInitializer
+	instanceVariableNames: 'genericType'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+GdiplusInitializer subclass: #GdiplusStringFormatInitializer
+	instanceVariableNames: 'formatFlags language'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+GdiplusInitializer subclass: #GdiplusTextureBrushInitializer
+	instanceVariableNames: 'image wrapMode rectangle'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+GdiplusFromFileInitializer subclass: #GdiplusBitmapFromFileInitializer
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+GdiplusFromFileInitializer subclass: #GdiplusImageFromFileInitializer
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+GdiplusLinearGradientBrushInitializer subclass: #GdiplusLinearGradientBrushFromPointsInitializer
+	instanceVariableNames: 'point1 point2 color1 color2'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+GdiplusLinearGradientBrushInitializer subclass: #GdiplusLinearGradientBrushFromRectInitializer
+	instanceVariableNames: 'rect color1 color2 mode'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+GdiplusPenInitializer subclass: #GdiplusPenFromBrushInitializer
+	instanceVariableNames: 'brush width'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+GdiplusPenInitializer subclass: #GdiplusPenFromColorInitializer
+	instanceVariableNames: 'color width'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+GraphicsTool subclass: #GdiplusBase
+	instanceVariableNames: 'initializer'
+	classVariableNames: ''
+	poolDictionaries: 'GdiplusConstants GdiplusGUIDs'
+	classInstanceVariableNames: ''!
+GdiplusBase subclass: #GdiplusBrush
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+GdiplusBase subclass: #GdiplusCachedBitmap
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+GdiplusBase subclass: #GdiplusCustomLineCap
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+GdiplusBase subclass: #GdiplusFont
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+GdiplusBase subclass: #GdiplusFontCollection
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+GdiplusBase subclass: #GdiplusFontFamily
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+GdiplusBase subclass: #GdiplusGraphics
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+GdiplusBase subclass: #GdiplusGraphicsPath
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+GdiplusBase subclass: #GdiplusImage
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+GdiplusBase subclass: #GdiplusImageAttributes
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+GdiplusBase subclass: #GdiplusMatrix
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+GdiplusBase subclass: #GdiplusPen
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+GdiplusBase subclass: #GdiplusRegion
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+GdiplusBase subclass: #GdiplusStringFormat
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+GdiplusBrush subclass: #GdiplusHatchBrush
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+GdiplusBrush subclass: #GdiplusLinearGradientBrush
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+GdiplusBrush subclass: #GdiplusPathGradientBrush
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+GdiplusBrush subclass: #GdiplusSolidBrush
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: 'GdiplusConstants'
+	classInstanceVariableNames: ''!
+GdiplusBrush subclass: #GdiplusTextureBrush
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+GdiplusCustomLineCap subclass: #GdiplusAdjustableArrowCap
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+GdiplusFontCollection subclass: #GdiplusInstalledFontCollection
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+GdiplusFontCollection subclass: #GdiplusPrivateFontCollection
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+GdiplusImage subclass: #GdiplusBitmap
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+View subclass: #GdiplusDoubleBufferedView
+	instanceVariableNames: 'backSurface requiresRender'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+!Bitmap methodsFor!
+
+asColorKeyedBitmap
+	^self asColorKeyedBitmap: (self canvas pixelAt: 0 @ 0).
+!
+
+asColorKeyedBitmap: aKeyColor 
+	| image table imageAttributes bitmap keyedBitmap |
+	table := StructureArray length: 1 elementClass: GpColorMap.
+	image := GdiplusBitmap fromBitmap: self.
+	(table at: 1)
+		oldColor: aKeyColor asARGB asParameter;
+		newColor: (ARGB fromArray: #(0 255 255 255)) asParameter.
+	imageAttributes := GdiplusImageAttributes new remapTable: table.
+	bitmap := GdiplusBitmap extent: self extent.
+	bitmap graphics 
+		drawImage: image
+		at: Point zero
+		extent: image extent
+		from: Point zero
+		extent: image extent
+		unit: 2
+		attributes: imageAttributes.
+	keyedBitmap := Bitmap displayCompatibleWithExtent: self extent.
+	bitmap drawOn: keyedBitmap canvas.
+	^keyedBitmap! !
+!Bitmap categoriesFor: #asColorKeyedBitmap!public! !
+!Bitmap categoriesFor: #asColorKeyedBitmap:!public! !
+
+!Color methodsFor!
+
+alpha: anAlphaInteger 
+	"Answer an instance of ARGB which is the equivalent of the receiver with anAlphaInteger applied."
+
+	| rgb |
+	rgb := self asRGB.
+	^ARGB 
+		alpha: anAlphaInteger
+		red: rgb red
+		green: rgb green
+		blue: rgb blue!
+
+asARGB
+	| rgb |
+	rgb := self asRGB.
+	^ARGB 
+		a: self alpha
+		r: rgb red
+		g: rgb green
+		b: rgb blue! !
+!Color categoriesFor: #alpha:!accessing!public! !
+!Color categoriesFor: #asARGB!converting!public! !
+
+!Point methodsFor!
+
+scaledOver: aPoint 
+	"Answer a copy of the receiver scaled over aPoint.  One of the answered 
+	dimensions will be the same as the corresponding dimension in aPoint, 
+	the other dimension will be equal or larger than its counterpart."
+
+	| scale |
+	scale := aPoint x / self x.
+	scale * self y < aPoint y ifTrue: [scale := aPoint y / self y].
+	^scale * self!
+
+scaledTo: aPoint 
+	"Answer a copy of the receiver scaled to aPoint.  One of the answered 
+	dimensions will be the same as the corresponding dimension in aPoint, 
+	the other dimension will be equal or smaller than its counterpart."
+
+	| scale |
+	scale := aPoint x / self x.
+	scale * self y > aPoint y ifTrue: [scale := aPoint y / self y].
+	^scale * self! !
+!Point categoriesFor: #scaledOver:!public! !
+!Point categoriesFor: #scaledTo:!operations!public! !
+
+!Rectangle methodsFor!
+
+asGdiplusRectangle
+	"In Gdiplus the rectangle coordinates include the lower right border"
+
+	^self position extent: self extent - 1 asPoint! !
+!Rectangle categoriesFor: #asGdiplusRectangle!converting!public! !
+
+!View methodsFor!
+
+createThumbnailExtent: extent mask: aColor 
+	| image crop rect scale thumbnail canvas r scaledExtent |
+	image := GdiplusBitmap fromView: self.
+	rect := Rectangle origin: Point zero extent: self extent.
+	crop := GdiplusBitmap extent: rect extent.
+	(crop graphics)
+		clear: aColor asARGB;
+		drawImage: image
+			at: 1 @ 1
+			extent: rect extent
+			from: rect topLeft
+			extent: rect extent;
+		drawRectangle: (rect translatedBy: 1 @ 1) pen: (GdiplusPen color: Color gray asARGB).
+	image := crop.
+
+	"Work out scale to use"
+	r := extent / image extent.
+	scale := r x min: r y.
+
+	"Now create thumbnail"
+	scaledExtent := (image extent * scale) rounded.
+	"image := GdiplusBitmap fromImage: image extent: scaledExtent."
+	image := image thumbnailWithExtent2: scaledExtent.
+	thumbnail := DIBSection width: extent x height: extent y.
+	canvas := thumbnail canvas.
+	"canvas fillRectangle: (0 @ 0 extent: canvas extent) brush: (Brush color: aColor)."
+	image drawOn: canvas at: ((extent - scaledExtent) / 2) rounded.
+	canvas free.
+	^thumbnail! !
+!View categoriesFor: #createThumbnailExtent:mask:!private! !
+
+"End of package definition"!
+

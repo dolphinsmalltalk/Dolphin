@@ -1,0 +1,179 @@
+| package |
+package := Package name: 'AgentObjects'.
+package paxVersion: 1;
+	basicComment: 'Dolphin Smalltalk Microsoft Agent Control Support. 
+Copyright (c) Object Arts Ltd, 1999-2000.
+
+This package wraps the Microsoft Agent COM control, which displays animated characters that can be made to speak, move around,. make gestures. These have obvious uses for giving instruction or help, but they are also most entertaining and include amusing animation sequences that occur randomly or can be triggered on request. 
+
+Dolphin''s AvatarChat sample is an "instant messaging" client with a twist. It uses this package to display an "avatar" to represent the remote user, and speak his or her communications.
+
+Example Usage:
+
+ctl := IAgentCtlEx new.
+
+"Wire up to the events from the control (in case anyone is interested)"
+sink := AXEventSink target: self sourceTypeInfo: ctl coclassTypeInfo defaultSourceInterface.
+sink connect: ctl.
+
+"Enable tracing so we can see the events being fired on the Transcript"
+sink isTracingEnabled: true.
+
+ "Do something for amusement and to cause some events to be fired"
+ctl connected: true.
+ctl characters load: ''Merlin'' loadKey: (File composePath: SessionManager current windowsDirectory subPath: ''msagent\chars\merlin.acs'').
+merlin := ctl characters character: ''Merlin''.
+merlin activate: 1; show: false; soundEffectsOn: true.
+merlin speak: (SessionManager current applicationName, '' is cool'') url: nil.
+
+'.
+
+package basicPackageVersion: '6.0'.
+
+
+package classNames
+	add: #IAgentCtl;
+	add: #IAgentCtlAnimationNames;
+	add: #IAgentCtlAudioObject;
+	add: #IAgentCtlAudioObjectEx;
+	add: #IAgentCtlBalloon;
+	add: #IAgentCtlBalloonEx;
+	add: #IAgentCtlCharacter;
+	add: #IAgentCtlCharacterEx;
+	add: #IAgentCtlCharacters;
+	add: #IAgentCtlCommand;
+	add: #IAgentCtlCommandEx;
+	add: #IAgentCtlCommands;
+	add: #IAgentCtlCommandsEx;
+	add: #IAgentCtlCommandsWindow;
+	add: #IAgentCtlEx;
+	add: #IAgentCtlPropertySheet;
+	add: #IAgentCtlRequest;
+	add: #IAgentCtlSpeechInput;
+	add: #IAgentCtlUserInput;
+	yourself.
+
+package globalNames
+	add: #AgentObjectsLib;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	add: #AgentObjectsLib;
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\..\Automation\ActiveX Automation';
+	add: '..\..\..\Base\Dolphin';
+	add: '..\..\COM\OLE COM';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+IDispatch subclass: #IAgentCtl
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+IDispatch subclass: #IAgentCtlAnimationNames
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+IDispatch subclass: #IAgentCtlAudioObject
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+IDispatch subclass: #IAgentCtlBalloon
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+IDispatch subclass: #IAgentCtlCharacter
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+IDispatch subclass: #IAgentCtlCharacters
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+IDispatch subclass: #IAgentCtlCommand
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+IDispatch subclass: #IAgentCtlCommands
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+IDispatch subclass: #IAgentCtlCommandsWindow
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+IDispatch subclass: #IAgentCtlPropertySheet
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+IDispatch subclass: #IAgentCtlRequest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+IDispatch subclass: #IAgentCtlSpeechInput
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+IDispatch subclass: #IAgentCtlUserInput
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+IAgentCtl subclass: #IAgentCtlEx
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+IAgentCtlAudioObject subclass: #IAgentCtlAudioObjectEx
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+IAgentCtlBalloon subclass: #IAgentCtlBalloonEx
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+IAgentCtlCharacter subclass: #IAgentCtlCharacterEx
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+IAgentCtlCommand subclass: #IAgentCtlCommandEx
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+IAgentCtlCommands subclass: #IAgentCtlCommandsEx
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+"End of package definition"!
+

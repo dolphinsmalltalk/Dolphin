@@ -1,0 +1,1773 @@
+"Filed out from Dolphin Smalltalk X6.1"!
+
+PermanentLibrary subclass: #KernelLibrary
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+KernelLibrary guid: (GUID fromString: '{64674048-3A82-101B-8181-00AA003743D3}')!
+KernelLibrary comment: 'KernelLibrary is the <ExternalLibrary> which represents the Win32 System DLL, KERNEL32.DLL. 
+
+The default instance of this class provides access to most of the base operating system services. New functions may be added as required, but the external function naming convention should be followed.
+
+KernelLibrary is a special case in that its handle is cached by the VM on startup into the VM registry, and it is the means by which all other libraries are opened.
+
+All functions in this library use the stdcall calling convention.'!
+!KernelLibrary categoriesForClass!External-Libraries-Win32! !
+!KernelLibrary methodsFor!
+
+addAtom: aString
+	"The AddAtom function adds a character string to the local atom table and returns a unique value (an atom) identifying the string. 
+	Answer the value is the newly created atom or zero if the function fails.
+
+		ATOM AddAtom(
+			LPCTSTR  lpString 	// address of string to add 
+		);"
+
+	<stdcall: word AddAtomA lpstr>
+	^self invalidCall!
+
+allocConsole
+	"Allocate a new console.
+		BOOL AllocConsole(VOID)"
+
+	<stdcall: bool AllocConsole>
+	^self invalidCall!
+
+beep: anInteger dwDuration: dwDuration
+	"Generates simple tones on the speaker. 
+		BOOL Beep(
+  			DWORD dwFreq,	// sound frequency, in hertz 
+			DWORD dwDuration 	// sound duration, in milliseconds 
+		);
+	Implementation Note:  One might be tempted to make this an overlapped
+	call, and that might indeed be usful when buzzing for long durations, however
+	that would reduce the usefulness of Sound>>bell as a debugging aid by
+	slowing it down and introducing the complication of process switching.
+	It would also make it unsuitable for use from the idle process, which really
+	shouldn't be made to wait on Semaphores (which causes a VM idle panic
+	interrupt, handled by starting a new idle process). Of course you can always
+	add a new overlapped entry point if you wish."
+
+	<stdcall: bool Beep dword dword>
+	^self invalidCall!
+
+beginUpdateResource: fileNameString bDeleteExistingResources: aBoolean
+	"BeginUpdateResource returns a handle that can be used by the UpdateResource
+	function to add, delete, or replace resources in an executable file. 
+
+	HANDLE BeginUpdateResource(
+		LPCTSTR pFileName <>,             // executable file name
+		BOOL bDeleteExistingResources <>  // deletion option
+		);"
+
+	<stdcall: handle BeginUpdateResourceA lpstr bool>
+	^self invalidCall!
+
+close
+	"The kernel library cannot be closed."
+
+	^false!
+
+closeHandle: aHandle
+	"Close an open Win32 object handle, freeing any resources held by it.
+	Once closed a handle is no longer valid. Answer whether the function
+	succeeds.	 See Win32 SDK help for more information.
+
+	BOOL CloseHandle(
+		HANDLE  hObject 	// handle of object to close  
+	);"
+
+	<stdcall: bool CloseHandle handle>
+	^self invalidCall
+!
+
+copyFile: fromString lpNewFileName: toString bfailIfExists: fail
+	"Copies the file named fromString to a file named toString. If
+	toString already exists then the copy will only proceed if fail
+	is false.
+
+	BOOL	CopyFileA(
+		LPCSTR lpExistingFileName,
+		LPCSTR lpNewFileName,
+		BOOL bFailIfExists
+		);"
+
+	<overlap stdcall: bool CopyFileA lpstr lpstr bool>
+	^self invalidCall!
+
+createDirectory: path lpSecurityAttributes: aSECURITYATTRIBUTES 
+	"Create a new directory with the specified <String> path, 
+	answering whether successful.
+
+		BOOL CreateDirectory(
+			LPCTSTR lpPathName,
+			LPSECURITY_ATTRIBUTES lpSecurityAttributes
+		);"
+
+	<stdcall: bool CreateDirectoryA lpstr lpvoid>
+	^self invalidCall!
+
+createEvent: aSECURITYATTRIBUTES bManualReset: aBoolManual bInitialState: aBoolState lpName: aStringPathName
+	"Answer a new Win32 Event object (for thread synchronisation), with the specified
+	security attributes (if aSECURITYATTRIBUTES is nil then the default security 
+	attributes are used), mode (manual or automatic), initial state 
+	(signalled/not-signalled), and name (if aStringPathName is nil, then unnamed).
+	Please see Win32 SDK help for more information."
+
+	"HANDLE CreateEvent(
+		LPSECURITY_ATTRIBUTES  lpEventAttributes,	// address of security attributes  
+		BOOL  bManualReset,	// flag for manual-reset event 
+		BOOL  bInitialState,	// flag for initial state 
+		LPCTSTR  lpName 	// address of event-object name  
+	);"
+
+	<stdcall: handle CreateEventA lpvoid bool bool lpstr>
+	^self invalidCall!
+
+createFile: aStringFileName dwDesiredAccess: anIntegerAccessMode dwSharedMode: anIntegerShareMode 
+		lpSecurityAttributes: aSECURITYATTRIBUTES dwCreationDistribution: anIntegerCreateMode 
+		dwFlagsAndAttributes: anIntegerAttributeFlag hTemplateFile: aHandle
+	"The CreateFile function creates, opens, or truncates a file, pipe, communications resource, disk device,
+	or console. Answer a handle that can be used to access the object. It can also open and return a handle to a directory.
+
+	HANDLE CreateFile(
+		LPCTSTR lpFileName, // address of name of the file 
+		DWORD dwDesiredAccess, // access (read-write) mode 
+		DWORD dwShareMode, // share mode 
+		LPSECURITY_ATTRIBUTES lpSecurityAttributes, // address of security descriptor 
+		DWORD dwCreationDistribution, // how to create 
+		DWORD dwFlagsAndAttributes, // file attributes 
+		HANDLE hTemplateFile // handle of file with attributes to copy  
+	);
+	Please see Win32 SDK help for more information."
+
+	<stdcall: handle CreateFileA lpstr dword dword lpvoid dword dword handle>
+	^self invalidCall!
+
+createMutex: lpMutexAttributes bInitialOwner: bInitialOwner lpName: lpName
+	"Invoke the CreateMutex() function of the module wrapped by the receiver.
+	Helpstring: Creates a named or unnamed mutex object
+
+		HANDLE __stdcall CreateMutex(
+			[in]void* lpMutexAttributes,
+			BOOL bInitialOwner,
+			LPSTR lpName);"
+
+	<stdcall: handle CreateMutexA void* bool lpstr>
+	^self invalidCall!
+
+createProcess: aStringFileName lpCommandLine: cl lpProcessAttributes: pa lpThreadAttributes: ta
+	bInheritsHandles: ih dwCreationFlags: flags lpEnvironment: env lpCurrentDirectory: cd
+	lpStartupInfo: si lpProcessInformation: pi
+
+	"The CreateProcess function creates a new process and its primary thread. 
+	The new process runs the specified executable file. 
+
+	BOOL CreateProcess(
+		LPCTSTR lpApplicationName,  // name of executable module
+		LPTSTR lpCommandLine,       // command line string
+		LPSECURITY_ATTRIBUTES lpProcessAttributes,  // process security attributes
+		LPSECURITY_ATTRIBUTES lpThreadAttributes,   // thread security attributes
+		BOOL bInheritHandles,  // handle inheritance flag
+		DWORD dwCreationFlags, // creation flags
+		LPVOID lpEnvironment,  // pointer to new environment block
+		LPCTSTR lpCurrentDirectory,   // pointer to current directory name
+		LPSTARTUPINFO lpStartupInfo,  // pointer to STARTUPINFO
+		LPPROCESS_INFORMATION lpProcessInformation  // pointer to PROCESS_INFORMATION
+	);
+
+ 	Please see Win32 SDK help for more information."
+
+	<stdcall: bool CreateProcessA lpstr lpstr SECURITY_ATTRIBUTES* SECURITY_ATTRIBUTES*
+		bool dword lpvoid lpstr STARTUPINFO* PROCESS_INFORMATION*>
+
+	^self invalidCall!
+
+debugBreak
+	"Invoke the DebugBreak() function of the module wrapped by the receiver.
+	Helpstring: Break into a debugger
+
+		void __stdcall DebugBreak();"
+
+	<stdcall: void DebugBreak>
+	^self invalidCall!
+
+deleteFile: aStringFileName
+	"The DeleteFile function deletes an existing file. Answer true if the function succeeds.
+
+	BOOL DeleteFile(
+		LPCTSTR lpFileName // address of name of file to delete  
+	);
+
+	If the file does not exist, the DeleteFile function fails.
+	Windows 95:
+		This function deletes a file even if it is open for normal I/O or as a memory-mapped file.
+		To prevent loss of data, close files before attempting to delete them.
+
+	Windows NT:
+		This function fails if an application attempts to delete a file that is open for normal I/O or as a memory-mapped file."
+
+	<stdcall: bool DeleteFileA lpstr>
+	^self invalidCall!
+
+duplicateHandle: sourceProcHandle hSourceHandle: sourceHandle hTargetProcessHandle: targetProcHandle 
+	lpTargetHandle: targetHandle dwDesiredAccess: accessFlagsInteger bInheritHandle: inheritBool
+	dwOptions: optionsFlagInteger
+		"Duplicate a Win32 handle, sourceHandle, belonging to a Win32 Process, 
+		sourceProcHandle, for another Win32 Process, targetProcHandle, writing
+		the result into targetHandle, with the specified access (accessFlagsInteger),
+		inheritance (inheritBool), and options (optionsFlagInteger). Answer whether
+		the functions succeeds or fails. See Win32 SDK help for more information.
+		BOOL DuplicateHandle(
+			HANDLE  hSourceProcessHandle,	// handle of process with handle to duplicate 
+			HANDLE  hSourceHandle,	// handle to duplicate 
+			HANDLE  hTargetProcessHandle,	// handle of process to duplicate to 
+			LPHANDLE  lpTargetHandle,	// address of duplicate handle 
+			DWORD  dwDesiredAccess,	// access for duplicate handle 
+			BOOL  bInheritHandle,	// handle inheritance flag
+			DWORD  dwOptions 	// optional actions 
+		);"
+	<stdcall: bool DuplicateHandle handle handle handle lpvoid dword bool dword>
+	^self invalidCall
+!
+
+endUpdateResource: hUpdate fDiscard: aBoolean
+	"EndUpdateResource ends a resource update in an executable file. 
+	
+	BOOL EndUpdateResource(
+		HANDLE hUpdate <>, // update-file handle
+		BOOL fDiscard <>   // write option 
+		);"
+
+	<stdcall: bool EndUpdateResourceA handle bool>
+	^self invalidCall!
+
+enumDateFormats: aCallbackThunk locale: locale dwFlags: dwFlags
+	"Enumerates the long or short date formats that are available for the specified locale, including 
+	date formats for any alternate calendars. The argument, dwFlags, determines whether the long 
+	or short date formats are enumerated. The function enumerates the date formats by passing 
+	date format string pointers, one at a time, to the callback thunk, aCallbackThunk, continuing
+	until all date formats are enumerated, or the callback returns false.
+
+		BOOL EnumDateFormats(
+			DATEFMT_ENUMPROC lpDateFmtEnumProc,	// pointer to enumeration callback function
+			LCID Locale,						// locale whose date formats are of interest
+			DWORD dwFlags 						// date formats to enumerate
+		);"
+
+	<stdcall: bool EnumDateFormatsA lpvoid dword dword>
+	^self invalidCall!
+
+enumSystemLocales: aCallbackThunk dwFlags: dwFlags
+	"Enumerates the locales that are either installed on or supported by a system, depending on the 
+	dwFlags parameter. The callback is invoked repeatedly until all locales are exhausted, or the
+	callback function returns false.
+
+		BOOL EnumSystemLocales(
+			LOCALE_ENUMPROC lpLocaleEnumProc,	// pointer to enumeration callback function
+			DWORD dwFlags 	// indicates which locales to enumerate
+		);"
+
+	<stdcall: bool EnumSystemLocalesA lpvoid dword>
+	^self invalidCall!
+
+enumTimeFormats: aCallbackThunk locale: locale dwFlags: dwFlags
+	"Enumerates the time formats that are available for the specified locale. The function passes
+	the time format strings, one at a time, to the callback thunk, aCallbackThunk, continuing
+	until all time formats are enumerated, or the callback returns false.
+
+		BOOL EnumTimeFormats(
+			TIMEFMT_ENUMPROC lpTimeFmtEnumProc,	// pointer to enumeration callback function
+			LCID Locale,						// locale whose time formats are of interest
+			DWORD dwFlags 						// unused
+		);"
+
+	<stdcall: bool EnumTimeFormatsA lpvoid dword dword>
+	^self invalidCall!
+
+expandEnvironmentStrings: aString 
+	"Answer the <String> result of replacing environment-variable references of the form
+	%VariableName% with their defined values."
+
+	| answer size |
+	aString isEmpty ifTrue: [^aString].
+	size := self 
+				expandEnvironmentStrings: aString
+				lpDst: nil
+				nSize: 0.
+	size = 0 ifTrue: [self systemError].
+	"If the function succeeds, the return value is the number of TCHARs stored in the
+	destination buffer, including the terminating null character, but in fact it is off by one."
+	answer := String newFixed: size-2.
+	(self 
+		expandEnvironmentStrings: aString
+		lpDst: answer
+		nSize: size) = 0 
+		ifTrue: [self systemError].
+	^answer!
+
+expandEnvironmentStrings: lpSrc lpDst: lpDst nSize: bufSize
+	"Replace environment-variable strings with their defined values. 
+		DWORD ExpandEnvironmentStrings(
+			LPCTSTR lpSrc,
+			LPTSTR lpDst,
+			DWORD nSize);"
+
+	<stdcall: dword ExpandEnvironmentStringsA lpstr lpstr dword>
+	^self invalidCall!
+
+fileTimeToLocalTime: lpFileTime lpLocalFileTime: lpLocalFileTime
+	"Convert a UTC FILETIME to a local FILETIME, answering whether the conversion succeeded.
+		BOOL FileTimeToLocalTime(
+  			CONST FILETIME *lpFileTime,	// pointer to UTC file time to convert 
+			LPFILETIME lpLocalFileTime		// pointer to structure to receive local time  
+		);
+	Implenentation Note: In order to prevent FILETIME>>displayOn: acting as the root of a 
+	dependency tree which keeps FILETIME and SYSTEMTIME in the image regardless of
+	whether they are referenced elsewhere, we have to use void* arguments here to break
+	the  dependencies."
+
+	"<stdcall: bool FileTimeToLocalFileTime FILETIME* FILETIME*>"
+	<stdcall: bool FileTimeToLocalFileTime void* void*>
+	^self invalidCall
+!
+
+fileTimeToSystemTime: lpFileTime lpSystemTime: lpSystemTime
+	"Convert a FILETIME to a SYSTEMTIME, answering whether the conversion succeeded.
+		BOOL FileTimeToSystemTime(
+  			CONST FILETIME *lpFileTime,	// pointer to file time to convert 
+			LPSYSTEMTIME lpSystemTime 		// pointer to structure to receive system time  
+		);
+
+	Implenentation Note: In order to prevent FILETIME>>displayOn: acting as the root of a 
+	dependency tree which keeps FILETIME and SYSTEMTIME in the image regardless of
+	whether they are referenced elsewhere, we have to use void* arguments here to break
+	the  dependencies."
+
+	"<stdcall: bool FileTimeToSystemTime FILETIME* SYSTEMTIME*>"
+	<stdcall: bool FileTimeToSystemTime void* SYSTEMTIME*>
+	^self invalidCall!
+
+findClose: hFindFile
+	"Close the specified find file handle returned by a previous call to FindFirstFile().
+
+		BOOL FindClose( 
+			HANDLE hFindFile
+		);"
+
+	<stdcall: bool FindClose handle>
+	^self invalidCall!
+
+findFirstFile: lpFileName lpFindFileData: aWIN32_FIND_DATA
+	"Search a directory for a file or subdirectory whose name matches the specified filename.
+
+		HANDLE FindFirstFile( 
+			LPCTSTR lpFileName, 
+			LPWIN32_FIND_DATA lpFindFileData 
+		);"
+
+	<stdcall: handle FindFirstFileA lpstr WIN32_FIND_DATA* >
+	^self invalidCall!
+
+findNextFile: hFindFile lpFindFileData: aWIN32_FIND_DATA
+	"Continue a file search initiated by a previous call to FindFirstFile()
+	which returned the handle, hFindFile. Answer whether the call succeeded.
+	No more files is determined by a false return value with GetLastError()
+	returning ERROR_NO_MORE_FILES.
+
+		BOOL FindNextFile( 
+			HANDLE hFindFile, 
+			LPWIN32_FIND_DATA lpFindFileData 
+		);"
+
+	<stdcall: bool FindNextFileA handle WIN32_FIND_DATA* >
+	^self invalidCall!
+
+findResource: anInstanceHandle lpName: anIntegerId lpType: anIntegerType
+	"Determine the location of a resource with the specified type and name in the specified module. 
+		HRSRC FindResource(
+  			HMODULE hModule,	// resource-module handle 
+			LPCTSTR lpName,	// pointer to resource name  
+			LPCTSTR lpType 	// pointer to resource type 
+		);"
+
+	<stdcall: handle FindResourceA handle lpvoid lpvoid>
+	^self invalidCall
+!
+
+flushFileBuffers: aHandle
+	"The FlushFileBuffers function clears the buffers for the specified file
+	and causes all buffered data to be written to the file. 
+	Answer a boolean indicating if the operation was successful.
+
+	BOOL FlushFileBuffers(
+		HANDLE hFile // open handle to file whose buffers are to be flushed 
+		);"
+
+	<stdcall: bool FlushFileBuffers handle>
+	^self invalidCall
+
+!
+
+formatMessage: dwFlags lpSource: aStringOrHandleOrNil dwMessageId: dwMessageId dwLanguageId: dwLanguageId lpBuffer: aBufString nSize: nBufSize arguments: vaArgs 
+	"Format a message string from a message definition, from the format string or module handle specified
+	by the argument, aStringOrHandleOrNil. If the flags specify a system message, aStringOrHandle may be nil,
+	and the function finds the appropriate message in the system message table resource.
+	The function copies the formatted message text to an output buffer, populating any embedded insert 
+	sequences with arguments from vaArgs if requested.
+		DWORD FormatMessage(
+			DWORD dwFlags,	// source and processing options 
+			LPCVOID lpSource,	// pointer to  message source 
+			DWORD dwMessageId,	// requested message identifier 
+			DWORD dwLanguageId,	// language identifier for requested message 
+			LPTSTR lpBuffer,	// pointer to message buffer 
+			DWORD nSize,	// maximum size of message buffer 
+			va_list *Arguments 	// address of array of message inserts 
+		);"
+
+	<stdcall: dword FormatMessageA dword lpvoid dword dword lpvoid dword lpvoid>
+	^self invalidCall!
+
+formatMessage: messageId source: aHandleOrString flags: dwFlag withArguments: arguments 
+	"Answer a <readableString> which is a message formatted from the specified Win32 format
+	string (see Win32 help) and the arguments in the <sequencedReadableCollection>, arguments,
+	which will be substitued for the argument identified as %1..%n in the format string."
+
+	| ptr len msg args |
+	ptr := ExternalMemory new.
+	args := ByteArray new: arguments size * VMConstants.IntPtrSize.
+	arguments keysAndValuesDo: 
+			[:i :a | 
+			args uintPtrAtOffset: (i - 1) * VMConstants.IntPtrSize
+				put: (a isInteger ifTrue: [a] ifFalse: [a yourAddress])].
+	len := self
+				setLastError: 0;
+				formatMessage: (dwFlag bitOr: ##(FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_ARGUMENT_ARRAY))
+					lpSource: aHandleOrString
+					dwMessageId: messageId
+					dwLanguageId: 0
+					lpBuffer: ptr basicYourAddress
+					nSize: 0
+					arguments: args.	"To enable us to distinguish the error case from the empty string case"
+
+	"FormatMessage() unhelpfully treats the empty string result as an error, so we must handle specially."
+	len == 0 
+		ifTrue: 
+			[| err |
+			err := self getLastError.
+			err ~~ 0 ifTrue: [self systemError: err].
+			msg := String new]
+		ifFalse: 
+			[msg := String fromAddress: ptr length: len.
+			ptr free].
+	^msg
+
+	"
+'Blah %1 blah %2!!d!!' formatWithArguments: #('abc' 123)
+"!
+
+freeConsole
+	"Detach from the current console.
+		BOOL FreeConsole(VOID)"
+  
+	<stdcall: bool FreeConsole>
+	^self invalidCall!
+
+freeLibrary: anExternalHandle
+	<stdcall: bool FreeLibrary handle>
+	^self invalidCall!
+
+getACP
+	"Invoke the GetACP() function of the module wrapped by the receiver.
+	Helpstring: Retrieves the current ANSI code-page identifier for the system
+
+		UINT __stdcall GetACP();"
+
+	<stdcall: dword GetACP>
+	^self invalidCall!
+
+getAtomName: id lpBuffer: aString nSize: anInteger
+	"The GetAtomName function retrieves a copy of the character string associated with the specified local atom.
+	This function replaces the GetAtomHandle function. 
+
+		UINT GetAtomName(
+			ATOM  nAtom,		// atom identifying character string 
+			LPTSTR  lpBuffer,	// address of buffer for atom string  
+			int  nSize 		// size of buffer 
+			);	
+
+	Return Value
+	If the function succeeds, the return value is the length of the string copied to the buffer, in characters, not including the terminating null character.
+	If the function fails, the return value is zero. To get extended error information, call GetLastError."
+
+	<stdcall: dword GetAtomNameA word lpstr sdword>
+	^self invalidCall
+!
+
+getCommandLine
+	"Answer a pointer to the command-line string.
+
+		LPTSTR GetCommandLine(VOID)"
+  
+	<stdcall: lpstr GetCommandLineA>
+	^self invalidCall!
+
+getComputerName: buffer nSize: pBufSize
+	"Retrieves the computer name of the current system into the argument, buffer (which must be large
+	enough to contain MAX_COMPUTERNAME_LENGTH+1 characters). Answers whether the name
+	was successfully retrieved. If successful then the value of pBufSize will be the number of characters
+	in the name.
+
+		BOOL GetComputerName(
+			LPTSTR lpBuffer,	// address of name buffer 
+			LPDWORD nSize 		// address of size of lpBuffer
+		);"
+
+	<stdcall: bool GetComputerNameA lpstr DWORD* >
+	^self invalidCall
+
+!
+
+getCPInfo: codepage lpCPInfo: lpCPInfo
+	"Invoke the GetCPInfo() function of the module wrapped by the receiver.
+	Helpstring: Retrieves the current original equipment manufacturer (OEM) code-page identifier for the system
+
+		BOOL __stdcall GetCPInfo(
+			UINT codepage,
+			CPINFO* lpCPInfo);"
+
+	<stdcall: bool GetCPInfo dword CPINFO*>
+	^self invalidCall!
+
+getCurrentProcess
+	"Answer handle of the Dolphin process.
+
+		HANDLE GetCurrentProcess()"
+
+	<stdcall: handle GetCurrentProcess>
+	^self invalidCall
+ !
+
+getCurrentThread
+	"Answer the handle of the current thread
+
+		DWORD GetCurrentThread()"
+
+	<stdcall: handle GetCurrentThread>
+	^self invalidCall
+ !
+
+getCurrentThreadId
+	"Answer thread identifier of the currently executing thread (like Processor activeProcess).
+
+		DWORD GetCurrentThreadId(VOID)"
+
+	<stdcall: dword GetCurrentThreadId>
+	^self invalidCall
+ !
+
+getDateFormat: locale dwFlags: dwFlags lpDate: aWinSYSTEMTIME lpFormat: formatString lpDateStr: outputStringOutput cchDate: anInteger
+	"Format a date as a date string for a specified locale. If formatString is null then the current locale 
+	is used. If aWinSYSTEMTIME is null then the current local date is used.
+
+		int GetDateFormat(
+			LCID  Locale,	// locale for which date is to be formatted 
+			DWORD  dwFlags,	// flags specifying function options 
+			CONST SYSTEMTIME *  lpDate,	// date to be formatted 
+			LPCTSTR  lpFormat,	// date format string 
+			LPTSTR  lpDateStr,	// buffer for storing formatted string 
+			int  cchDate 	// size of buffer 
+		);"
+
+	"Avoid creating indirect ref. to SYSTEMTIME from its own #displayOn: by using void* parm instead"
+	<stdcall: sdword GetDateFormatA dword dword void* lpstr lpstr sdword>
+	^self invalidCall
+
+!
+
+getDiskFreeSpace: lpRootPathName
+	lpSectorsPerCluster: lpSectorsPerCluster
+	lpBytesPerSector: lpBytesPerSector
+	lpNumberOfFreeClusters: lpNumberOfFreeClusters
+	lpTotalNumberOfClusters: lpTotalNumberOfClusters
+	"
+		BOOL GetDiskFreeSpace( 
+			LPCTSTR lpRootPathName,
+			LPDWORD lpSectorsPerCluster,
+			LPDWORD lpBytesPerSector,
+			LPDWORD lpNumberOfFreeClusters,
+			LPDWORD lpTotalNumberOfClusters
+		);
+	"
+
+	<stdcall: bool GetDiskFreeSpaceA lpstr dword* dword* dword* dword*>
+	^self invalidCall!
+
+getDiskFreeSpaceEx: lpDirectoryName
+	lpFreeBytesAvailable: lpFreeBytesAvailable
+	lpTotalNumberOfBytes: lpTotalNumberOfBytes
+	lpTotalNumberOfFreeBytes: lpTotalNumberOfFreeBytes
+	"
+		BOOL GetDiskFreeSpaceEx( 
+			LPCTSTR lpDirectoryName,
+			LPQWORD  lpFreeBytesAvailable,
+			LPQWORD lpTotalNumberOfBytes,
+			LPQWORD lpTotalNumberOfFreeBytes
+		);
+	"
+
+	<stdcall: bool GetDiskFreeSpaceExA lpstr qword* qword* qword*>
+	^self invalidCall!
+
+getEnvironmentVariable: nameString lpBuffer: bufString nSize: bufSize
+	"Populate bufString with the value of the specified environment variable.
+		DWORD GetEnvironmentVariable(
+			LPCTSTR lpName,	// address of environment variable name 
+			LPTSTR lpBuffer,	// address of buffer for variable value 
+			DWORD nSize 	// size of buffer, in characters 
+		);"
+
+	<stdcall: dword GetEnvironmentVariableA lpstr lpstr dword>
+	^self invalidCall!
+
+getFileAttributes: aFileName
+	"Answer attributes for the specified file or directory. 
+		DWORD GetFileAttributes(
+			LPCTSTR  lpFileName 	// address of the name of a file or directory  
+		);"
+
+	<stdcall: sdword GetFileAttributesA lpstr>
+	^self invalidCall!
+
+getFileSize: aHandle lpFileSizeHigh: aDWORD
+	"Answers the low-order dword of the size, in bytes, of the specified file. 
+
+		DWORD GetFileSize(
+			HANDLE hFile, // handle of file to get size of
+			LPDWORD lpFileSizeHigh, // address of high-order word for file size if required.
+		);"
+
+	<stdcall: dword GetFileSize handle lpvoid >
+	^self invalidCall!
+
+getFileTime: hFile 
+		lpCreationTime: lpCreationTime 
+		lpLastAccessTime: lpLastAccessTime 
+		lpLastWriteTime: lpLastWriteTime
+	"Answer file times for the File with the specified handle.
+		BOOL GetFileTime(
+			HANDLE hFile, // 
+			LPFILETIME lpCreationTime, 
+			LPFILETIME lpLastAccessTime, 
+			LPFILETIME lpLastWriteTime 
+		);"
+
+	<stdcall: bool GetFileTime handle FILETIME* FILETIME* FILETIME*>
+	^self invalidCall!
+
+getFullPathName: fname nBufferLength: anInteger lpBuffer: path lpFilePart: aDWORD
+	"Retrieves the full path and filename of the file with name fname, into the buffer, path.
+
+		DWORD GetFullPathName(
+  			LPCTSTR  lpFileName,	// address of name of file to find path for 
+			DWORD  nBufferLength,	// size, in characters, of path buffer 
+			LPTSTR  lpBuffer,		// address of path buffer 
+			LPTSTR  *lpFilePart 	// address of filename in path 
+		);"
+
+	<stdcall: dword GetFullPathNameA lpstr dword lpstr lpvoid>
+	^self invalidCall!
+
+getLastError
+	"Answer the last Win32 error code which occurred.
+		DWORD GetLastError(VOID)"
+  
+	<stdcall: dword GetLastError>
+	^self invalidCall!
+
+getLocaleInfo: locale lCType: lcType lpLCData: outputStringOutput cchData: anInteger
+	"Answer information about a locale. 
+		int GetLocaleInfo(
+	  		LCID  Locale,		// locale identifier 
+			LCTYPE  LCType,	// type of information 
+			LPTSTR  lpLCData,	// address of buffer for information 
+			int  cchData 		// size of buffer 
+		);"
+
+	<stdcall: sdword GetLocaleInfoA dword dword lpstr sdword>
+	^self invalidCall!
+
+getLocalTime: aWinSYSTEMTIME
+	"Retrieve the current local date and time.
+		VOID GetLocalTime(
+  			LPSYSTEMTIME  lpSystemTime 	// address of system time structure  
+		);"
+
+	<stdcall: void GetLocalTime SYSTEMTIME* >
+	^self invalidCall!
+
+getModuleFileName: aHandle lpFilename: aString nSize: anInteger
+	"Retrieve the full path and filename for the executable file containing the specified module.
+
+		DWORD GetModuleFileName(
+  			HMODULE  hModule,		// handle to module to find filename for 
+			LPTSTR  lpFilename,	// pointer to buffer for module path 
+			DWORD  nSize 			// size of buffer, in characters 
+		);"
+
+	<stdcall: dword GetModuleFileNameA handle lpstr dword>
+	^self invalidCall
+
+
+!
+
+getModuleHandle: aString
+
+	<stdcall: handle GetModuleHandleA lpstr>
+	^self invalidCall
+
+
+!
+
+getProcAddress: aHandle lpProcName: aString
+	"Answer the address of an exported function with name, aString, in the
+	module with handle, aHandle. If the function fails, NULL is returned,
+	and #getLastError should be used to retrieve extended error information.
+
+		FARPROC GetProcAddress(
+			HMODULE  hModule,	// handle to DLL module  
+			LPCSTR  lpProcName 	// name of function 
+		);"
+
+	<stdcall: lpvoid GetProcAddress handle lpvoid>
+	^self invalidCall!
+
+getProcAddressDWORD: aHandle lpProcName: aString
+	"Private - As #getProcAddress:name:, but answers the result as a Windows DWORD (unsigned
+	double word). This is useful in conjunction with SetWindowLong() etc."
+
+	<stdcall: dword GetProcAddress handle lpvoid>
+	^self invalidCall!
+
+getProcessHeap
+	"Answer the handle of the heap of the calling process for use with other
+	memory management functions.
+
+		HANDLE GetProcessHeap()"
+
+	<stdcall: handle GetProcessHeap>
+	^self invalidCall
+
+  
+!
+
+getShortPathName: lpszLongPath lpszShortPath: lpszShortPath cchBuffer: cchBuffer
+	"Answers the short pathname form of lpszLongPath in lpszShortPath"
+
+	<stdcall: dword GetShortPathNameA lpstr lpstr dword>
+	^self invalidCall!
+
+getStdHandle: nStdHandle
+	"Get the handle for the standard input, standard output, or standard error device.
+		HANDLE GetStdHandle(
+  			DWORD nStdHandle,	// input, output, or error device 
+		);"
+
+	<stdcall: handle GetStdHandle dword>
+	^self invalidCall!
+
+getSystemDefaultLCID
+  	"Answer the system default locale identifier. 
+
+			LCID GetSystemDefaultLCID(VOID)"
+  
+	<stdcall: dword GetSystemDefaultLCID>
+	^self invalidCall!
+
+getSystemDirectory: lpBuffer uSize: uSize
+  	"Answer the path of the windows system directory.
+
+		UINT GetSystemDirectory(
+			LPTSTR lpBuffer, 
+			UINT uSize);"
+  
+	<stdcall: dword GetSystemDirectoryA lpstr dword>
+	^self invalidCall!
+
+getSystemTime: lpSystemTime
+	"Invoke the GetSystemTime() function of the module wrapped by the receiver.
+	Helpstring: Gets the current system time and date
+
+		void __stdcall GetSystemTime(
+			SYSTEMTIME* lpSystemTime);"
+
+	<stdcall: void GetSystemTime SYSTEMTIME*>
+	^self invalidCall!
+
+getSystemWindowsDirectory: lpBuffer uSize: uSize 
+	"	UINT GetSystemWindowsDirectory(
+			LPTSTR lpBuffer, 
+			UINT uSize); "
+
+	<stdcall: dword GetSystemWindowsDirectoryA lpstr dword>
+	^self invalidCall!
+
+getTempFileName: pathString lpPrefixString: prefixString uUnique: anInteger lpTempFileName: bufferString
+	"Generate a temporary file name by concatenating the specified path and prefix strings, and a hexadecimal string formed from 
+	the Integer, unique, and the .TMP extension. If anInteger is zero, the function generates a suitable value and creates
+	the temporary file in the specified directory, otherwise the function generates the name (using the specified value) but does
+	not create the file.
+
+		UINT GetTempFileName(
+  			LPCTSTR  lpPathName,		// address of directory name for temporary file 
+			LPCTSTR  lpPrefixString,	// address of filename prefix 
+			UINT  uUnique,	// number used to create temporary filename 
+			LPTSTR  lpTempFileName 	// address of buffer that receives the new filename 
+		);"
+
+	<stdcall: dword GetTempFileNameA lpstr lpstr dword lpstr>
+	^self invalidCall!
+
+getTempPath: nBufferLength lpBuffer: lpBuffer
+	"Populate the <String> buffer, lpBuffer, with the system directory designated for temporary files.
+	Answers the number of characters written to the buffer."
+
+	<stdcall: dword GetTempPathA dword lpstr>
+	^self invalidCall!
+
+getThreadTimes: hThread lpCreationTime: creationFILETIME lpExitTime: exitFILETIME lpKernelTime: kernelFILETIME lpUserTime: userFILETIME
+	"
+		BOOL GetThreadTimes(
+			HANDLE hThread, 		// handle to thread 
+			LPFILETIME lpCreationTime,	// thread creation time 
+			LPFILETIME lpExitTime,	// thread exit time 
+			LPFILETIME lpKernelTime,	// thread kernel-mode time 
+			LPFILETIME lpUserTime	// thread user-mode time );
+	"
+
+	<stdcall: bool GetThreadTimes handle FILETIME* FILETIME* FILETIME* FILETIME*>
+	^self invalidCall!
+
+getTimeFormat: locale dwFlags: dwFlags lpTime: aWinSYSTEMTIME lpFormat: formatString lpTimeStr: outputStringOutput cchBuf: anInteger
+	"Format a time as a date string for a specified locale. If formatString is null then the current locale 
+	is used. If aWinSYSTEMTIME is null then the current local time is used.
+
+		int GetTimeFormat(
+			LCID  Locale,					// locale for which time is to be formatted 
+			DWORD  dwFlags,				// flags specifying function options 
+			CONST SYSTEMTIME *  lpTime,	// time to be formatted 
+			LPCTSTR  lpFormat,				// time format string 
+			LPTSTR  lpTimeStr,				// buffer for storing formatted string 
+			int  cchTime					// size of buffer 
+		);"
+
+	"Avoid creating indirect ref. to SYSTEMTIME from its own #displayOn: by using void* parm instead"
+	<stdcall: sdword GetTimeFormatA dword dword void* lpstr lpstr sdword>
+	^self invalidCall
+
+!
+
+getTimeZoneInformation: lpTimeZoneInformation
+	"Populate the fields of lpTimeZoneInformation with the current
+	time-zone parameters. These parameters control the translations between 
+	Coordinated Universal Time (UTC) and local time. Answers an integer from 
+	the TIME_ZONE_XXXX enumeration.
+
+		DWORD GetTimeZoneInformation(
+			LPTIME_ZONE_INFORMATION lpTimeZoneInformation
+		);
+
+	Implementation Note: The error return value is 0xFFFFFFFF so to make stay
+	within SmallInteger range we declare a signed integer return type so that the
+	error return is instead -1."
+
+	<stdcall: sdword GetTimeZoneInformation TIME_ZONE_INFORMATION*>
+	^self invalidCall!
+
+getUserDefaultLCID
+  	"Answer the user default locale identifier. 
+
+		LCID GetUserDefaultLCID(VOID)"
+  
+	<stdcall: dword GetUserDefaultLCID>
+	^self invalidCall!
+
+getVersionEx: anOSVERSIONINFO
+	"Populate the argument with extended OS version information. Answers whether the request succeeded.
+		BOOL GetVersionEx(
+			LPOSVERSIONINFO lpVersionInformation 
+		);"
+
+	<stdcall: bool GetVersionExA OSVERSIONINFO* >
+	^self invalidCall!
+
+getVolumeInformation: lpRootPathName
+	lpVolumeNameBuffer: lpVolumeNameBuffer
+	nVolumeNameSize: nVolumeNameSize
+	lpVolumeSerialNumber: lpVolumeSerialNumber
+	lpMaximumComponentLength: lpMaximumComponentLength
+	lpFileSystemFlags: lpFileSystemFlags
+	lpFileSystemNameBuffer: lpFileSystemNameBuffer
+	nFileSystemNameSize: nFileSystemNameSize
+
+	"
+		BOOL GetVolumeInformation(
+			LPCTSTR lpRootPathName,
+			LPTSTR lpVolumeNameBuffer,
+			DWORD nVolumeNameSize,
+			LPDWORD lpVolumeSerialNumber, 
+			LPDWORD lpMaximumComponentLength,
+			LPDWORD lpFileSystemFlags,
+			LPTSTR lpFileSystemNameBuffer,
+			DWORD nFileSystemNameSize);
+	"
+
+	<stdcall: bool GetVolumeInformationA lpstr lpstr dword dword* dword* dword* lpstr dword>
+	^self invalidCall!
+
+getWindowsDirectory: lpBuffer uSize: uSize
+  	"Answer the path of the windows directory.
+
+		UINT GetWindowsDirectory(
+			LPTSTR lpBuffer, 
+			UINT uSize); "
+  
+	<stdcall: dword GetWindowsDirectoryA lpstr dword>
+	^self invalidCall!
+
+globalAlloc: uFlags dwBytes: dwBytes
+	"Allocates the specified number of bytes from the heap.
+
+		HGLOBAL GlobalAlloc( 
+			UINT uFlags, 		// object allocation attributes 
+			DWORD dwBytes  	// number of bytes to allocate 
+		);"
+
+	<stdcall: handle GlobalAlloc dword dword>
+	^self invalidCall!
+
+globalLock: hGlobal
+	"Answer a pointer to a block of global memory object that was allocated 
+	by the GlobalAlloc(...GMEM_MOVEABLE flag), incrementing its lock count."
+
+	<stdcall: lpvoid GlobalLock handle>
+	^self invalidCall!
+
+globalUnlock: hGlobal
+	"Decrement the lock count of a global memory object that was allocated 
+	by the GlobalAlloc(...GMEM_MOVEABLE flag)."
+
+	<stdcall: bool GlobalUnlock handle>
+	^self invalidCall!
+
+heapAlloc: aHandle dwFlags: flagsInteger dwBytes: byteSizeInteger
+	"Allocate a block of memory from a heap.
+
+		LPVOID HeapAlloc(
+			HANDLE hHeap,	// handle to the private heap block 
+			DWORD dwFlags,	// heap allocation control flags 
+			DWORD dwBytes 	// number of bytes to allocate 
+		);"
+
+	<stdcall: lpvoid HeapAlloc handle dword dword>
+	^self invalidCall!
+
+heapCompact: aHandle dwFlags: anInteger
+	"Minimize the size of the specified heap. Answer the size of the largest
+	available free block (fairly meaningless), or zero on failure.
+		UINT HeapCompact(
+			HANDLE hHeap,	// handle to the heap to compact
+			DWORD dwFlags 	// control flags
+		);"
+
+	<stdcall: dword HeapCompact handle dword>
+	^self invalidCall!
+
+heapFree: aHandle dwFlags: flagsInteger lpMem: byteSizeInteger
+	"Free a block of memory to a heap, answering whether it succeeed.
+	N.B. There is no distinction under Win32 between memory blocks allocated
+	with GlobalAlloc(), LocalAlloc(), or from the default process heap using
+	HeapAlloc(). We therefore standardise on the HeapXXX() set of functions
+	(which are more powerful and allow multiple heaps), and use HeapFree() to
+	free memory blocks where LocalFree()/GlobalFree() are specified.
+
+		LPVOID HeapFree(
+			HANDLE hHeap,	// handle to the heap
+			DWORD dwFlags,	// heap freeing flags 
+			LPVOID lpMem 	// pointer to the memory to free
+		);"
+
+	<stdcall: bool HeapFree handle dword lpvoid>
+	^self invalidCall!
+
+heapReAlloc: aHandle dwFlags: flagsInteger lpMem: anAddress dwBytes: byteSizeInteger
+	"Resize an block of heap memory, answering the new block address (which may or may not change).
+
+		LPVOID HeapReAlloc(
+			HANDLE hHeap,	// handle of a heap 
+			DWORD dwFlags,	// heap reallocation flags 
+			LPVOID lpMem,	// pointer to the memory to reallocate 
+			DWORD dwBytes 	// number of bytes to reallocate 
+		);"
+
+  
+	<stdcall: lpvoid HeapReAlloc handle dword lpvoid dword>
+	^self invalidCall!
+
+heapSize: aHandle dwFlags: flagsInteger lpMem: anAddress
+	"Answer the size of the block of memory allocated at the specified address.
+  
+		DWORD HeapSize(
+			HANDLE hHeap,	// handle to a heap
+			DWORD dwFlags,	// heap size control flags
+			LPCVOID lpMem,	// pointer to the memory block of interest
+		);"
+
+  
+	<stdcall: dword HeapSize handle dword lpvoid>
+	^self invalidCall!
+
+heapValidate: aHandle dwFlags: anInteger lpMem: anAddress
+	"Answer whether the specified heap/memory block in a heap, is valid.
+
+		BOOL HeapValidate(
+			HANDLE hHeap,	// handle to the heap of interest
+			DWORD dwFlags,	// bit flags that control heap access during function operation
+			LPCVOID lpMem 	// optional pointer to individual memory block to validate
+		);"
+
+	<stdcall: bool HeapValidate handle dword lpvoid>
+	^self invalidCall!
+
+isDBCSLeadByte: testChar
+	"Invoke the IsDBCSLeadByte() function of the module wrapped by the receiver.
+	Helpstring: uses the ANSI code page to determine whether a specified byte is potentially a lead byte that is, the first byte of a two-byte character in a double-byte character set (DBCS)
+
+		BOOL __stdcall IsDBCSLeadByte(
+			BYTE TestChar);"
+
+	<stdcall: bool IsDBCSLeadByte byte>
+	^self invalidCall!
+
+isDBCSLeadByteEx: codepage testChar: testChar
+	"Invoke the IsDBCSLeadByteEx() function of the module wrapped by the receiver.
+	Helpstring: determines whether a specified byte is a lead byte, that is, the first byte of a two-byte character in a double-byte character set (DBCS) for the specified code page
+
+		BOOL __stdcall IsDBCSLeadByteEx(
+			UINT codepage,
+			BYTE TestChar);"
+
+	<stdcall: bool IsDBCSLeadByte dword byte>
+	^self invalidCall!
+
+loadLibraryEx: aString hFile: reserved dwFlags: anInteger
+	"Map the specified executable module into the address space of the calling process, and answer the module
+	handle. If the function fails, the return value is nil.
+
+		HINSTANCE LoadLibraryEx(
+			LPCTSTR lpLibFileName,	// points to name of executable module
+			HANDLE hFile,	// reserved, must be NULL 
+			DWORD dwFlags 	// entry-point execution flag 
+		);
+	
+	The library is loaded from either the directory from which Dolphin was loaded, the current directory, 
+	the Windows system directory, the Windows directory, or a directory on the path (in that order)."
+
+	<stdcall: handle LoadLibraryExA lpstr handle dword>
+	^self invalidCall!
+
+loadResource: anInstanceHandle hResInfo: aResourceHandle
+	"Load the specified resource into global memory. 
+		HGLOBAL LoadResource(
+  			HMODULE hModule,	// resource-module handle  
+			HRSRC hResInfo 	// resource handle 
+		);"
+
+	<stdcall: handle LoadResource handle handle>
+	^self invalidCall!
+
+localFileTimeToFileTime: lpLocalFileTime lpFileTime: lpFileTime
+	"Convert a UTC FILETIME to a local FILETIME, answering whether the conversion succeeded.
+		BOOL LocalFileTimeToFileTime(
+  			CONST FILETIME *lpLocalFileTime,	// pointer to UTC file time to convert 
+			LPFILETIME lpFileTime			// pointer to structure to receive UTC
+		);"
+
+	<stdcall: bool LocalFileTimeToFileTime FILETIME* FILETIME* >
+	^self invalidCall!
+
+lockResource: anExternalHandle
+	"Lock the specified resource in memory. 
+		LPVOID LockResource(
+  			HGLOBAL hResData 	// handle to resource to lock 
+		);"
+
+	<stdcall: dword LockResource handle>
+	^self invalidCall!
+
+lstrcmp: aString1 lpString2: aString2
+  	"Answer -1, 0 or 1 depending on whether aString collates before, the same as, 
+	or after aString2 sensitive to case (respectively).
+		int lstrcmp(
+  			LPCTSTR lpString1,	// address of first string 
+			LPCTSTR lpString2 	// address of second string 
+		);
+
+	N.B. If you need more flexibility, implement the CompareStrings() call (which
+	this probably just layers on top of anyway)."
+
+	<stdcall: sdword lstrcmpA lpstr lpstr>
+	^self invalidCall!
+
+lstrcmpi: aString1 lpString2: aString2
+  	"Answer -1, 0 or 1 depending on whether aString collates before, the same as, 
+	or after aString2 ignoring case (respectively).
+		int lstrcmpi(
+  			LPCTSTR lpString1,	// address of first string 
+			LPCTSTR lpString2 	// address of second string 
+		);
+
+	N.B. If you need more flexibility, implement the CompareStrings() call (which
+	this probably just layers on top of anyway)."
+
+	<stdcall: sdword lstrcmpiA lpstr lpstr>
+	^self invalidCall!
+
+lstrlenW: aUnicodeString
+	"Answer the length in characters of the parameter (assumed to point
+	at a null-terminated unicode String."
+
+	<stdcall: sdword lstrlenW lpvoid>
+	^self invalidCall!
+
+moveFile: aStringOldFileName lpNewFileName: aStringnewFileName
+	"The MoveFile function will move (rename) either a file or a directory (including all its children)
+	either in the same directory or across directories. The one caveat is that the MoveFile function will
+	fail on directory moves when the destination is on a different volume. 
+	Answer true if the function succeeds. 
+
+	BOOL MoveFile(
+		LPCTSTR lpExistingFileName, // address of name of the existing file  
+		LPCTSTR lpNewFileName // address of new name for the file 
+		);"
+
+	<stdcall: bool MoveFileA lpstr lpstr>
+	^self invalidCall!
+
+moveFileEx: aStringOldFileName lpNewFileName: aStringnewFileName dwFlags: flags
+	"The MoveFileEx function will move (rename) either a file or a directory (including all its children)
+	either in the same directory or across directories. The one caveat is that the MoveFile function will
+	fail on directory moves when the destination is on a different volume. 
+	Answer true if the function succeeds. 
+
+	BOOL MoveFile(
+		LPCTSTR lpExistingFileName, // address of name of the existing file  
+		LPCTSTR lpNewFileName // address of new name for the file 
+		DWORD dwFlags <> // move options 
+		);"
+
+	<stdcall: bool MoveFileExA lpstr lpstr dword>
+	^self invalidCall!
+
+multiByteToWideChar: intCP dwFlags: intFlags lpMultiByteStr: aStringIn 
+	cchMultiByte: intLenIn
+	lpWideCharStr: aUnicodeStringOut
+	cchWideChar: intLenOut
+
+	"Maps a string to a wide-character (Unicode) string. 
+	Despite the name, aStringIn, need not contain MBCS characters.
+
+		int MultiByteToWideChar(
+			UINT CodePage,	// code page 
+			DWORD dwFlags,	// character-type options 
+			LPCSTR lpMultiByteStr,	// address of string to map 
+			int cchMultiByte,	// number of characters in string 
+			LPWSTR lpWideCharStr,	// address of wide-character buffer 
+			int cchWideChar 	// size of buffer 
+		);"
+
+	<stdcall: sdword MultiByteToWideChar dword dword lpstr sdword lpstr sdword>
+	^self invalidCall!
+
+openProcess: dwDesiredAccess bInheritHandle: bInheritHandle dwProcessId: dwProcessId 
+	"Invoke the OpenProcess() function of the module wrapped by the receiver.
+	Helpstring: Given a process ID number, returns handle of existing process
+
+		long __stdcall OpenProcess(
+			EPROCESSACCESS dwDesiredAccess,
+			long bInheritHandle,
+			unsigned long dwProcessId);"
+
+	<stdcall: sdword OpenProcess sdword sdword dword>
+	^self invalidCall!
+
+outputDebugString: aString
+	"Send aString to the debugger.
+
+		VOID OutputDebugString(
+  			LPCTSTR  lpOutputString 	// address of string to be displayed  
+		);"
+
+	<stdcall: void OutputDebugStringA lpstr>
+	^self invalidCall!
+
+pulseEvent: aHandle
+	"Set to its 'signalled' state the Win32 Event identified by aHandle, 
+	then reset it to its 'non-signalled' state. Answer whether the function 
+	succeeded or failed. Manual reset Events release all waiting threads when
+	pulsed, auto-reset events release a single waiting thread. If no threads
+	are waiting for the event, then the effect is to reset the Event to its
+	non-signalled state."
+
+	"BOOL PulseEvent(
+		HANDLE  hEvent 	// handle of event object 
+	);"
+
+	<stdcall: bool PulseEvent handle>
+	^self invalidCall!
+
+queryPerformanceCounter: aLargeInteger
+	"The QueryPerformanceCounter function retrieves the current value of the high-resolution performance counter, if one exists. 
+		BOOL QueryPerformanceCounter(
+			LARGE_INTEGER *lpPerformanceCount 	// address of current counter value
+		);"
+
+	<stdcall: bool QueryPerformanceCounter LARGE_INTEGER* >
+	^self invalidCall
+
+!
+
+queryPerformanceFrequency: aLargeInteger
+	"The QueryPerformanceFrequency function retrieves the frequency of the high-resolution performance counter, if one exists. 
+		BOOL QueryPerformanceFrequency(
+  			LARGE_INTEGER *lpFrequency 	// address of current frequency
+		);"
+
+	<stdcall: bool QueryPerformanceFrequency LARGE_INTEGER*>
+	^self invalidCall!
+
+raiseException: dwExceptionCode dwExceptionFlags: dwExceptionFlags nNumberOfArguments: nNumberOfArguments lpArguments: lpArguments
+	"Invoke the RaiseException() function of the module wrapped by the receiver.
+	Helpstring: Raises an exception in the calling thread.
+
+		void __stdcall RaiseException(
+			[in]unsigned long dwExceptionCode,
+			[in]unsigned long dwExceptionFlags,
+			[in]unsigned long nNumberOfArguments,
+			[in]ULONG_PTR* lpArguments);"
+
+	<stdcall: void RaiseException dword dword dword uintptr*>
+	^self invalidCall!
+
+readFile: aHandle lpBuffer: anAddress nNumberOfBytesToRead: anIntegerBytesToRead
+		lpNumberOfBytesRead: anAddressBytesRead lpOverlapped: anOVERLAPPED
+	"The ReadFile function reads data from a file, starting at the position indicated by the file pointer.
+	After the read operation has been completed, the file pointer is adjusted by the number of bytes actually read,
+	unless the file handle is created with the overlapped attribute. If the file handle is created for overlapped
+	input and output (I/O), the application must adjust the position of the file pointer after the read operation. 
+
+	BOOL ReadFile(
+		HANDLE hFile, // handle of file to read 
+		LPVOID lpBuffer, // address of buffer that receives data  
+		DWORD nNumberOfBytesToRead, // number of bytes to read 
+		LPDWORD lpNumberOfBytesRead, // address of number of bytes read 
+		LPOVERLAPPED lpOverlapped // address of structure for data 
+		);
+
+	Answer a boolean indicating whether the function succeeds. If successful and bytesRead is left set to zero,
+	the file pointer was beyond the current end of the file at the time of the read operation."
+
+	<stdcall: bool ReadFile handle lpvoid dword lpvoid lpvoid>
+	^self invalidCall!
+
+releaseMutex: hMutex
+	"Invoke the ReleaseMutex() function of the module wrapped by the receiver.
+	Helpstring: Releases the Mutex once
+
+		BOOL __stdcall ReleaseMutex(
+			HANDLE hMutex);"
+
+	<stdcall: bool ReleaseMutex handle>
+	^self invalidCall!
+
+removeDirectory: aStringFileName
+	<stdcall: bool RemoveDirectoryA lpstr>
+	^self invalidCall!
+
+resetEvent: aHandle
+	"Set the specified Win32 Event object to its 'signalled' state.
+	Answer whether the function succeeded or failed. Manual reset
+	Events remain in the signalled state until explicitly reset (e.g.
+	using #resetEvent:), auto-reset events remain in the signalled state
+	until a single thread waiting for the event is released.
+
+		BOOL ResetEvent(
+			HANDLE  hEvent 	// handle of event object 
+		);"
+
+	<stdcall: bool ResetEvent handle>
+	^self invalidCall!
+
+setConsoleCtrlHandler: pHandlerRoutine add: aBoolean
+	"Set the handler function which receives console control events."
+
+	<stdcall: bool SetConsoleCtrlHandler void* bool>
+	^self invalidCall!
+
+setEndOfFile: anExternalHandle
+	<stdcall: bool SetEndOfFile handle>
+	^self invalidCall!
+
+setEnvironmentVariable: lpName lpValue: lpValue
+	"Sets the value of an environment variable for the current process. Answer whether the
+	request was successful.
+		BOOL SetEnvironmentVariable(
+			LPCTSTR lpName,	// address of environment variable name  
+  			LPCTSTR lpValue 	// address of new value for variable 
+		);"
+
+	<stdcall: bool SetEnvironmentVariableA lpstr lpstr>
+	^self invalidCall!
+
+setEvent: aHandle
+	"Set the specified Win32 Event object to its 'signalled' state.
+	Answer whether the function succeeded or failed. Manual reset
+	Events remain in the signalled state until explicitly reset (e.g.
+	using #resetEvent:), auto-reset events remain in the signalled state
+	until a single thread waiting for the event is released.
+
+		BOOL SetEvent(
+			HANDLE  hEvent 	// handle of event object 
+		);"
+
+	<stdcall: bool SetEvent handle>
+	^self invalidCall!
+
+setFilePointer: aHandle lDistanceToMove: loInteger lpDistanceToMoveHigh: anAddress dwMoveMethod: senseOfMove
+	"Moves the file pointer of an open file. 
+
+	DWORD SetFilePointer(
+		HANDLE hFile, 					// handle of file 
+		LONG lDistanceToMove, 			// number of bytes to move file pointer 
+		PLONG lpDistanceToMoveHigh, 	// address of high-order word of distance to move  
+		DWORD dwMoveMethod 			// how to move 
+		);"
+
+	"Implementation Note: The lDistanceToMove parameter is treated as an unsigned integer
+	as we always treat it as the low 32-bits of a 64-bit integer."
+
+	<stdcall: dword SetFilePointer handle dword lpvoid dword>
+	^self invalidCall!
+
+setLastError: anInteger
+	"Set the last Win32 error code which occurred.
+		VOID SetLastError(DWORD dwErrCode)"
+  
+	<stdcall: void SetLastError dword>
+	^self invalidCall!
+
+setStdHandle: nStdHandle hHandle: aHandle
+	"Set the handle for the standard input, standard output, or standard error device.
+		BOOL SetStdHandle(
+  			DWORD nStdHandle,	// input, output, or error device 
+			HANDLE hHandle 	// handle to be a standard handle  
+		);"
+
+	<stdcall: bool SetStdHandle dword handle>
+	^self invalidCall!
+
+setVolumeLabel: lpRootPathName lpVolumeName: lpVolumeName
+	"Set the label of a a file system volume. Answer whether the operation succeeded.
+		BOOL SetVolumeLabel( 
+			LPCTSTR lpRootPathName,
+			LPCTSTR lpVolumeName
+		);"
+
+	<stdcall: bool SetVolumeLabelA lpstr lpstr>
+	^self invalidCall!
+
+sizeOfResource: anExternalHandleInstance hResInfo: anExternalHandleResource
+	"Answer the byte size of the specified resource. 
+		DWORD SizeofResource(
+			HMODULE hModule,	// resource-module handle  
+			HRSRC hResInfo 	// resource handle 
+		);"
+
+	<stdcall: dword SizeofResource handle handle>
+	^self invalidCall!
+
+sleep: anInteger
+	"Put the calling Win32 thread to sleep for anInteger milliseconds.
+		void Sleep(
+			DWORD dwMilliseconds	// sleep duration in millisecs
+		);
+	N.B. This is an overlapped call, and will not interrupt the execution
+	of Dolphin's background threads since it is performed on a separate
+	thread. Only the calling Process will be delayed.!!
+	"
+
+	<overlap stdcall: void Sleep dword>
+	^self invalidCall!
+
+sleepEx: anInteger bAlertable: aBoolean
+	<stdcall: void SleepEx dword bool>
+	^self invalidCall!
+
+systemTimeToFileTime: lpSystemTime lpFileTime: lpFileTime
+ 	"Convert a SYSTEMTIME to a FILETIME, answering whether the conversion succeeded.
+		BOOL SystemTimeToFileTime(
+			CONST SYSTEMTIME *lpSystemTime,	// address of system time to convert 
+			LPFILETIME lpFileTime 	// address of buffer for converted file time 
+		);"
+
+	<stdcall: bool SystemTimeToFileTime SYSTEMTIME* FILETIME* >
+	^self invalidCall!
+
+terminateProcess: aProcessHandle exitCode: anUnsignedInteger
+	"The TerminateProcess function terminates the specified process and all of its threads. 
+
+	BOOL TerminateProcess(
+						HANDLE hProcess, // handle to the process
+						UINT uExitCode   // exit code for the process
+						);
+	Parameters
+		hProcess  [in]		Handle to the process to terminate. 
+						Windows NT/2000: The handle must have PROCESS_TERMINATE
+										access. For more information, see Process
+										Security and Access Rights. 
+		uExitCode [in]		Specifies the exit code for the process and for all threads terminated
+						as a result of this call. Use the GetExitCodeProcess function to
+						retrieve the process's exit value. Use the GetExitCodeThread
+						function to retrieve a thread's exit value."
+
+	<stdcall: bool TerminateProcess handle dword>
+	^self invalidCall!
+
+terminateProcessId: anInteger 
+	| hProcess |
+	hProcess := self 
+				openProcess: PROCESS_TERMINATE
+				bInheritHandle: false asParameter
+				dwProcessId: anInteger.
+	hProcess isNull ifTrue: [self systemError].
+	[(self terminateProcess: hProcess exitCode: 0) ifFalse: [self systemError]] 
+		ensure: [self closeHandle: hProcess]!
+
+threadGetLastError
+	"Answer the last Win32 error code which last occurred in the overlapped call thread
+	associated with the current <Process>."
+
+	<overlap stdcall: dword GetLastError>
+	^self invalidCall!
+
+threadSetLastError: anInteger 
+	"Set the last Win32 error code which occurred for the overlapped call thread associated with
+	the calling <Process>"
+
+	<overlap stdcall: void SetLastError dword>
+	^self invalidCall!
+
+updateResource: hUpdate lpType: resTypeString lpName: resName wLanguage: langId lpData: pData cbData: dataSize
+	"UpdateResource adds, deletes, or replaces a resource in an executable file. 
+
+	BOOL UpdateResource(
+		HANDLE hUpdate <>, // update-file handle
+		LPCTSTR lpType <>, // resource type
+		LPCTSTR lpName <>, // resource name
+		WORD wLanguage <>, // language identifier
+		LPVOID lpData <>,  // resource data
+		DWORD cbData <>    // length of resource data
+		);"
+
+	<stdcall: bool UpdateResourceA handle lpvoid lpvoid word lpvoid dword>
+	^self invalidCall!
+
+updateResourcesOf: aString do: aMonadicValuable 
+	| hUpdate |
+	hUpdate := self beginUpdateResource: aString bDeleteExistingResources: false.
+	[aMonadicValuable value: hUpdate] ifCurtailed: [self endUpdateResource: hUpdate fDiscard: true].
+	(self endUpdateResource: hUpdate fDiscard: false) ifFalse: [self systemError]!
+
+virtualAlloc: lpAddress dwSize: dwSize flAllocationType: flAllocationType flProtect: flProtect
+	"Invoke the VirtualAlloc() function of the module wrapped by the receiver.
+	Helpstring: Reserves or commits a region of pages in the virtual address space
+
+		LPVOID __stdcall VirtualAlloc(
+			LPVOID lpAddress,
+			DWORD dwSize,
+			DWORD flAllocationType,
+			DWORD flProtect);"
+
+	<stdcall: void* VirtualAlloc void* dword dword dword>
+	^self invalidCall!
+
+virtualFree: lpAddress dwSize: dwSize dwFreeType: dwFreeType
+	"Invoke the VirtualFree() function of the module wrapped by the receiver.
+	Helpstring: Releases or decommits (or both) a region of pages within the virtual address space
+
+		BOOL __stdcall VirtualFree(
+			LPVOID lpAddress,
+			DWORD dwSize,
+			DWORD dwFreeType);"
+
+	<stdcall: bool VirtualFree void* dword dword>
+	^self invalidCall!
+
+virtualProtect: lpAddress dwSize: dwSize flNewProtect: flNewProtect lpflOldProtect: lpflOldProtect
+	"Invoke the VirtualProtect() function of the module wrapped by the receiver.
+	Helpstring: Changes the access protection on a region of committed pages in the virtual address space
+
+		BOOL __stdcall VirtualProtect(
+			LPVOID lpAddress,
+			DWORD dwSize,
+			DWORD flNewProtect,
+			DWORD* lpflOldProtect);"
+
+	<stdcall: bool VirtualProtect void* dword dword dword*>
+	^self invalidCall!
+
+virtualQuery: lpAddress lpBuffer: lpBuffer dwLength: dwLength
+	"Invoke the VirtualQuery() function of the module wrapped by the receiver.
+	Helpstring: Provides information about a range of pages in the virtual address space
+
+		DWORD __stdcall VirtualQuery(
+			LPVOID lpAddress,
+			MEMORY_BASIC_INFORMATION* lpBuffer,
+			DWORD dwLength);"
+
+	<stdcall: dword VirtualQuery void* MEMORY_BASIC_INFORMATION* dword>
+	^self invalidCall!
+
+wideCharToMultiByte: codePage
+	dwFlags: dwFlags
+	lpWideCharStr: lpWideCharStr
+	cchWideChar: cchWideChar
+	lpMultiByteStr: lpMultiByteStr
+	cchMultiByte: cchMultiByte
+	lpDefaultChar: lpDefaultChar
+	lpUsedDefaultChar: lpUsedDefaultChar
+
+	"Maps a Unicode string to a multi-byte character string. 
+	Despite the name, aStringOut, need not contain MBCS characters.
+
+		int WideCharToMultiByte(
+			UINT CodePage,			// code page 
+			DWORD dwFlags,			// performance and mapping flags 
+			LPCWSTR lpWideCharStr,	// address of wide-character string 
+			int cchWideChar,		// number of characters in string 
+			LPSTR lpMultiByteStr,	// address of buffer for new string 
+			int cchMultiByte,		// size of buffer 
+			LPCSTR lpDefaultChar,	// address of default for unmappable characters  
+			LPBOOL lpUsedDefaultChar// address of flag set when default char. used 
+		);"
+
+	<stdcall: sdword WideCharToMultiByte dword dword UnicodeString* sdword lpstr sdword lpstr lpvoid>
+	^self invalidCall!
+
+winExec: lpstrCmdLine uCmdShow: nCmdShow
+	"Spawn the specified application. 
+		UINT WinExec(
+  			LPCSTR lpCmdLine,	// address of command line 
+			UINT uCmdShow 	// window style for new application 
+		);
+	Note that this is run as an overlapped call to avoid delaying the entire
+	Smalltalk image."
+
+	<overlap stdcall: dword WinExec lpstr dword>
+	^self invalidCall!
+
+writeFile: aHandle lpBuffer: anAddress nNumberOfBytesToWrite: anIntegerBytesToWrite 
+		lpNumberOfBytesWritten: anAddressBytesWritten lpOverlapped: anOVERLAPPED
+	"The WriteFile function writes data to a file and is designed for both synchronous and asynchronous operation.
+	The function starts writing data to the file at the position indicated by the file pointer. After the write
+	operation has been completed, the file pointer is adjusted by the number of bytes actually written, except when
+	the file is opened with FILE_FLAG_OVERLAPPED. If the file handle was created for overlapped input and output
+	(I/O), the application must adjust the position of the file pointer after the write operation is finished. 
+
+	BOOL WriteFile(
+		HANDLE hFile, // handle of file to write to 
+		LPCVOID lpBuffer, // address of data to write to file 
+		DWORD nNumberOfBytesToWrite, // number of bytes to write 
+		LPDWORD lpNumberOfBytesWritten, // address of number of bytes written 
+		LPOVERLAPPED lpOverlapped // addr. of structure needed for overlapped I/O  
+		);
+
+	Answer a boolean indicating whether the function succeeds."
+
+	<stdcall: bool WriteFile handle lpvoid dword lpvoid lpvoid>
+	^self invalidCall!
+
+writePrivateProfileString: lpszSection lpszEntry: lpszEntry lpszString: lpszString lpszFileName: lpszFileName 
+	"Invoke the WritePrivateProfileString() function of the module wrapped by the receiver.
+	Helpstring: Writes given string value to given entry within given section of INI file
+
+		BOOL__stdcall WritePrivateProfileString(
+			LPSTR lpszSection,
+			LPSTR lpszEntry,
+			LPSTR lpszString,
+			LPSTR lpszFileName);"
+
+	<stdcall: bool WritePrivateProfileStringA lpstr lpstr lpstr lpstr>
+	^self invalidCall!
+
+zeroMemory: pvDest length: cBytes
+	<stdcall: void RtlZeroMemory void* dword>
+	^self invalidCall! !
+!KernelLibrary categoriesFor: #addAtom:!public!win32 functions-atom! !
+!KernelLibrary categoriesFor: #allocConsole!public!win32 functions-console! !
+!KernelLibrary categoriesFor: #beep:dwDuration:!public!win32 functions-error! !
+!KernelLibrary categoriesFor: #beginUpdateResource:bDeleteExistingResources:!public!win32 functions-resource! !
+!KernelLibrary categoriesFor: #close!public!realizing/unrealizing! !
+!KernelLibrary categoriesFor: #closeHandle:!public!win32 functions-handles and objects! !
+!KernelLibrary categoriesFor: #copyFile:lpNewFileName:bfailIfExists:!public!win32 functions-file! !
+!KernelLibrary categoriesFor: #createDirectory:lpSecurityAttributes:!public!win32 functions-file! !
+!KernelLibrary categoriesFor: #createEvent:bManualReset:bInitialState:lpName:!public!win32 functions-synchronization! !
+!KernelLibrary categoriesFor: #createFile:dwDesiredAccess:dwSharedMode:lpSecurityAttributes:dwCreationDistribution:dwFlagsAndAttributes:hTemplateFile:!public!win32 functions-file! !
+!KernelLibrary categoriesFor: #createMutex:bInitialOwner:lpName:!**auto generated**!public! !
+!KernelLibrary categoriesFor: #createProcess:lpCommandLine:lpProcessAttributes:lpThreadAttributes:bInheritsHandles:dwCreationFlags:lpEnvironment:lpCurrentDirectory:lpStartupInfo:lpProcessInformation:!public!win32 functions-process and thread! !
+!KernelLibrary categoriesFor: #debugBreak!**auto generated**!public!win32 functions-debugging! !
+!KernelLibrary categoriesFor: #deleteFile:!public!win32 functions-file! !
+!KernelLibrary categoriesFor: #duplicateHandle:hSourceHandle:hTargetProcessHandle:lpTargetHandle:dwDesiredAccess:bInheritHandle:dwOptions:!public!win32 functions-handles and objects! !
+!KernelLibrary categoriesFor: #endUpdateResource:fDiscard:!public!win32 functions-resource! !
+!KernelLibrary categoriesFor: #enumDateFormats:locale:dwFlags:!public!win32 functions-natural language support! !
+!KernelLibrary categoriesFor: #enumSystemLocales:dwFlags:!public!win32 functions-natural language support! !
+!KernelLibrary categoriesFor: #enumTimeFormats:locale:dwFlags:!public!win32 functions-natural language support! !
+!KernelLibrary categoriesFor: #expandEnvironmentStrings:!public!win32 functions-process and thread! !
+!KernelLibrary categoriesFor: #expandEnvironmentStrings:lpDst:nSize:!public!win32 functions-process and thread! !
+!KernelLibrary categoriesFor: #fileTimeToLocalTime:lpLocalFileTime:!public!win32 functions-date and time! !
+!KernelLibrary categoriesFor: #fileTimeToSystemTime:lpSystemTime:!public!win32 functions-date and time! !
+!KernelLibrary categoriesFor: #findClose:!public!win32 functions-file! !
+!KernelLibrary categoriesFor: #findFirstFile:lpFindFileData:!public!win32 functions-file! !
+!KernelLibrary categoriesFor: #findNextFile:lpFindFileData:!public!win32 functions-file! !
+!KernelLibrary categoriesFor: #findResource:lpName:lpType:!public!win32 functions-resource! !
+!KernelLibrary categoriesFor: #flushFileBuffers:!public!win32 functions-file! !
+!KernelLibrary categoriesFor: #formatMessage:lpSource:dwMessageId:dwLanguageId:lpBuffer:nSize:arguments:!public!win32 functions-error! !
+!KernelLibrary categoriesFor: #formatMessage:source:flags:withArguments:!helpers!public! !
+!KernelLibrary categoriesFor: #freeConsole!public!win32 functions-console! !
+!KernelLibrary categoriesFor: #freeLibrary:!public!win32 functions-dynamic link library! !
+!KernelLibrary categoriesFor: #getACP!**auto generated**!public!win32 functions-natural language support! !
+!KernelLibrary categoriesFor: #getAtomName:lpBuffer:nSize:!public!win32 functions-atom! !
+!KernelLibrary categoriesFor: #getCommandLine!public!win32 functions-process and thread! !
+!KernelLibrary categoriesFor: #getComputerName:nSize:!public!win32 functions-system information! !
+!KernelLibrary categoriesFor: #getCPInfo:lpCPInfo:!**auto generated**!public!win32 functions-natural language support! !
+!KernelLibrary categoriesFor: #getCurrentProcess!public!win32 functions-process and thread! !
+!KernelLibrary categoriesFor: #getCurrentThread!public!win32 functions-process and thread! !
+!KernelLibrary categoriesFor: #getCurrentThreadId!public!win32 functions-process and thread! !
+!KernelLibrary categoriesFor: #getDateFormat:dwFlags:lpDate:lpFormat:lpDateStr:cchDate:!public!win32 functions-natural language support! !
+!KernelLibrary categoriesFor: #getDiskFreeSpace:lpSectorsPerCluster:lpBytesPerSector:lpNumberOfFreeClusters:lpTotalNumberOfClusters:!public!win32 functions-file system! !
+!KernelLibrary categoriesFor: #getDiskFreeSpaceEx:lpFreeBytesAvailable:lpTotalNumberOfBytes:lpTotalNumberOfFreeBytes:!public!win32 functions-file system! !
+!KernelLibrary categoriesFor: #getEnvironmentVariable:lpBuffer:nSize:!public!win32 functions-process and thread! !
+!KernelLibrary categoriesFor: #getFileAttributes:!public!win32 functions-file! !
+!KernelLibrary categoriesFor: #getFileSize:lpFileSizeHigh:!public!win32 functions-file system! !
+!KernelLibrary categoriesFor: #getFileTime:lpCreationTime:lpLastAccessTime:lpLastWriteTime:!public!win32 functions-file! !
+!KernelLibrary categoriesFor: #getFullPathName:nBufferLength:lpBuffer:lpFilePart:!public!win32 functions-file! !
+!KernelLibrary categoriesFor: #getLastError!public!win32 functions-error! !
+!KernelLibrary categoriesFor: #getLocaleInfo:lCType:lpLCData:cchData:!public!win32 functions-natural language support! !
+!KernelLibrary categoriesFor: #getLocalTime:!public!win32 functions-date and time! !
+!KernelLibrary categoriesFor: #getModuleFileName:lpFilename:nSize:!public!win32 functions-dynamic link library! !
+!KernelLibrary categoriesFor: #getModuleHandle:!public!win32 functions-dynamic link library! !
+!KernelLibrary categoriesFor: #getProcAddress:lpProcName:!public!win32 functions-dynamic link library! !
+!KernelLibrary categoriesFor: #getProcAddressDWORD:lpProcName:!private!win32 functions-dynamic link library! !
+!KernelLibrary categoriesFor: #getProcessHeap!public!win32 functions-memory management! !
+!KernelLibrary categoriesFor: #getShortPathName:lpszShortPath:cchBuffer:!public!win32 functions-file! !
+!KernelLibrary categoriesFor: #getStdHandle:!public!win32 functions-console! !
+!KernelLibrary categoriesFor: #getSystemDefaultLCID!public!win32 functions-natural language support! !
+!KernelLibrary categoriesFor: #getSystemDirectory:uSize:!public!win32 functions-system information! !
+!KernelLibrary categoriesFor: #getSystemTime:!**auto generated**!public!win32 functions-date and time! !
+!KernelLibrary categoriesFor: #getSystemWindowsDirectory:uSize:!public!win32 functions-system information! !
+!KernelLibrary categoriesFor: #getTempFileName:lpPrefixString:uUnique:lpTempFileName:!public!win32 functions-file! !
+!KernelLibrary categoriesFor: #getTempPath:lpBuffer:!public!win32 functions-file! !
+!KernelLibrary categoriesFor: #getThreadTimes:lpCreationTime:lpExitTime:lpKernelTime:lpUserTime:!public!win32 functions-process and thread! !
+!KernelLibrary categoriesFor: #getTimeFormat:dwFlags:lpTime:lpFormat:lpTimeStr:cchBuf:!public!win32 functions-natural language support! !
+!KernelLibrary categoriesFor: #getTimeZoneInformation:!public!win32 functions-date and time! !
+!KernelLibrary categoriesFor: #getUserDefaultLCID!public!win32 functions-natural language support! !
+!KernelLibrary categoriesFor: #getVersionEx:!public!win32 functions-system information! !
+!KernelLibrary categoriesFor: #getVolumeInformation:lpVolumeNameBuffer:nVolumeNameSize:lpVolumeSerialNumber:lpMaximumComponentLength:lpFileSystemFlags:lpFileSystemNameBuffer:nFileSystemNameSize:!public!win32 functions-file system! !
+!KernelLibrary categoriesFor: #getWindowsDirectory:uSize:!public!win32 functions-system information! !
+!KernelLibrary categoriesFor: #globalAlloc:dwBytes:!public!win32 functions-memory management! !
+!KernelLibrary categoriesFor: #globalLock:!public!win32 functions-memory management! !
+!KernelLibrary categoriesFor: #globalUnlock:!public!win32 functions-memory management! !
+!KernelLibrary categoriesFor: #heapAlloc:dwFlags:dwBytes:!public!win32 functions-memory management! !
+!KernelLibrary categoriesFor: #heapCompact:dwFlags:!public!win32 functions-memory management! !
+!KernelLibrary categoriesFor: #heapFree:dwFlags:lpMem:!public!win32 functions-memory management! !
+!KernelLibrary categoriesFor: #heapReAlloc:dwFlags:lpMem:dwBytes:!public!win32 functions-memory management! !
+!KernelLibrary categoriesFor: #heapSize:dwFlags:lpMem:!public!win32 functions-memory management! !
+!KernelLibrary categoriesFor: #heapValidate:dwFlags:lpMem:!public!win32 functions-memory management! !
+!KernelLibrary categoriesFor: #isDBCSLeadByte:!**auto generated**!public!win32 functions-natural language support! !
+!KernelLibrary categoriesFor: #isDBCSLeadByteEx:testChar:!**auto generated**!public!win32 functions-natural language support! !
+!KernelLibrary categoriesFor: #loadLibraryEx:hFile:dwFlags:!public!win32 functions-dynamic link library! !
+!KernelLibrary categoriesFor: #loadResource:hResInfo:!public!win32 functions-resource! !
+!KernelLibrary categoriesFor: #localFileTimeToFileTime:lpFileTime:!public!win32 functions-date and time! !
+!KernelLibrary categoriesFor: #lockResource:!public!win32 functions-resource! !
+!KernelLibrary categoriesFor: #lstrcmp:lpString2:!public!win32 functions-string manipulation! !
+!KernelLibrary categoriesFor: #lstrcmpi:lpString2:!public!win32 functions-string manipulation! !
+!KernelLibrary categoriesFor: #lstrlenW:!public!win32 functions-string manipulation! !
+!KernelLibrary categoriesFor: #moveFile:lpNewFileName:!public!win32 functions-file! !
+!KernelLibrary categoriesFor: #moveFileEx:lpNewFileName:dwFlags:!public!win32 functions-file! !
+!KernelLibrary categoriesFor: #multiByteToWideChar:dwFlags:lpMultiByteStr:cchMultiByte:lpWideCharStr:cchWideChar:!public!win32 functions-string manipulation! !
+!KernelLibrary categoriesFor: #openProcess:bInheritHandle:dwProcessId:!public!win32 functions-process and thread! !
+!KernelLibrary categoriesFor: #outputDebugString:!public!win32 functions-debugging! !
+!KernelLibrary categoriesFor: #pulseEvent:!public!win32 functions-synchronization! !
+!KernelLibrary categoriesFor: #queryPerformanceCounter:!public!win32 functions-performance monitoring! !
+!KernelLibrary categoriesFor: #queryPerformanceFrequency:!public!win32 functions-performance monitoring! !
+!KernelLibrary categoriesFor: #raiseException:dwExceptionFlags:nNumberOfArguments:lpArguments:!**auto generated**!public! !
+!KernelLibrary categoriesFor: #readFile:lpBuffer:nNumberOfBytesToRead:lpNumberOfBytesRead:lpOverlapped:!public!win32 functions-file! !
+!KernelLibrary categoriesFor: #releaseMutex:!**auto generated**!public! !
+!KernelLibrary categoriesFor: #removeDirectory:!public!win32 functions-file! !
+!KernelLibrary categoriesFor: #resetEvent:!public!win32 functions-synchronization! !
+!KernelLibrary categoriesFor: #setConsoleCtrlHandler:add:!public!win32 functions-console! !
+!KernelLibrary categoriesFor: #setEndOfFile:!public!win32 functions-file! !
+!KernelLibrary categoriesFor: #setEnvironmentVariable:lpValue:!public!win32 functions-process and thread! !
+!KernelLibrary categoriesFor: #setEvent:!public!win32 functions-synchronization! !
+!KernelLibrary categoriesFor: #setFilePointer:lDistanceToMove:lpDistanceToMoveHigh:dwMoveMethod:!public!win32 functions-file! !
+!KernelLibrary categoriesFor: #setLastError:!public!win32 functions-error! !
+!KernelLibrary categoriesFor: #setStdHandle:hHandle:!public!win32 functions-console! !
+!KernelLibrary categoriesFor: #setVolumeLabel:lpVolumeName:!public!win32 functions-file system! !
+!KernelLibrary categoriesFor: #sizeOfResource:hResInfo:!public!win32 functions-resource! !
+!KernelLibrary categoriesFor: #sleep:!public!win32 functions-process and thread! !
+!KernelLibrary categoriesFor: #sleepEx:bAlertable:!public!win32 functions-process and thread! !
+!KernelLibrary categoriesFor: #systemTimeToFileTime:lpFileTime:!public!win32 functions-date and time! !
+!KernelLibrary categoriesFor: #terminateProcess:exitCode:!public!win32 functions-process and thread! !
+!KernelLibrary categoriesFor: #terminateProcessId:!helpers!public! !
+!KernelLibrary categoriesFor: #threadGetLastError!public!win32 functions-error! !
+!KernelLibrary categoriesFor: #threadSetLastError:!public!win32 functions-error! !
+!KernelLibrary categoriesFor: #updateResource:lpType:lpName:wLanguage:lpData:cbData:!public!win32 functions-resource! !
+!KernelLibrary categoriesFor: #updateResourcesOf:do:!operations!public! !
+!KernelLibrary categoriesFor: #virtualAlloc:dwSize:flAllocationType:flProtect:!**auto generated**!public! !
+!KernelLibrary categoriesFor: #virtualFree:dwSize:dwFreeType:!**auto generated**!public! !
+!KernelLibrary categoriesFor: #virtualProtect:dwSize:flNewProtect:lpflOldProtect:!**auto generated**!public! !
+!KernelLibrary categoriesFor: #virtualQuery:lpBuffer:dwLength:!**auto generated**!public! !
+!KernelLibrary categoriesFor: #wideCharToMultiByte:dwFlags:lpWideCharStr:cchWideChar:lpMultiByteStr:cchMultiByte:lpDefaultChar:lpUsedDefaultChar:!public!win32 functions-string manipulation! !
+!KernelLibrary categoriesFor: #winExec:uCmdShow:!public!win32 functions-process and thread! !
+!KernelLibrary categoriesFor: #writeFile:lpBuffer:nNumberOfBytesToWrite:lpNumberOfBytesWritten:lpOverlapped:!public!win32 functions-file! !
+!KernelLibrary categoriesFor: #writePrivateProfileString:lpszEntry:lpszString:lpszFileName:!**auto generated**!public! !
+!KernelLibrary categoriesFor: #zeroMemory:length:!public!win32 functions-memory management! !
+
+!KernelLibrary class methodsFor!
+
+clear
+	"Private - Clear down cached external function addresses and any default 
+	instances of the receiver from previous runs. etc."
+
+	super clear.
+	OSVERSIONINFO clear
+!
+
+fileName
+	"Answer the host system file name of the external library which
+	the receiver represents."
+
+	^'KERNEL32'!
+
+open
+	"Answer a new instance of the receiver to represent the Kernel32 DLL. Special handling 
+	is required for this library because opening a library is normally done through the 
+	receiver's singleton instance. The VM stores the current Kernel32 handle into the 
+	VM object registry on startup."
+
+	^self fromHandle: VMLibrary default kernelHandle! !
+!KernelLibrary class categoriesFor: #clear!initializing!private! !
+!KernelLibrary class categoriesFor: #fileName!constants!public! !
+!KernelLibrary class categoriesFor: #open!instance creation!public! !
+

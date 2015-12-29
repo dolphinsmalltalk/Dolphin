@@ -1,0 +1,38 @@
+"Filed out from Dolphin Smalltalk 2002 release 5.00"!
+
+RefactoryVariableChange subclass: #AddClassVariableChange
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+AddClassVariableChange guid: (GUID fromString: '{BF346B83-3F40-4EC7-BC19-26C86114E7E2}')!
+AddClassVariableChange comment: ''!
+!AddClassVariableChange categoriesForClass!Refactory-Change Objects! !
+!AddClassVariableChange methodsFor!
+
+asUndoOperation
+	^RemoveClassVariableChange remove: variable from: self changeClass!
+
+changeString
+	^'Add class variable named, <1s>, from <2s>' 
+		expandMacrosWith: variable
+		with: self displayClassName!
+
+changeSymbol
+	^#addClassVarName:!
+
+printOn: aStream 
+	aStream
+		nextPutAll: self displayClassName;
+		nextPutAll: ' addClassVarNamed: ';
+		nextPutAll: variable;
+		nextPut: $!!!
+
+variable
+	^variable asSymbol! !
+!AddClassVariableChange categoriesFor: #asUndoOperation!converting!public! !
+!AddClassVariableChange categoriesFor: #changeString!printing!public! !
+!AddClassVariableChange categoriesFor: #changeSymbol!constants!private! !
+!AddClassVariableChange categoriesFor: #printOn:!printing!public! !
+!AddClassVariableChange categoriesFor: #variable!private! !
+

@@ -1,0 +1,52 @@
+| package |
+package := Package name: 'AvatarChat'.
+package paxVersion: 1;
+	basicComment: 'Dolphin Smalltalk Avatar Chat Sample. 
+Copyright (c) Object Arts Ltd, 1999-2000.
+
+This package is an extension of the standard network Chat application. In this case we use the Microsoft Agent to display an avatar for the person at the other end of the chat link and this is able to speak the messages received. Because of this, we are able to use a simplified view that doesn''t display the text of the conversation. You can use an AvatarChat to talk to another AvatarChat window or to a normal Chat window.
+
+In order to use this application you must have the Microsoft Agent installed with one or more of the Agent characters. For instructions on how to use this application, see the comment for the Chat package. To invoke a single AvatarChat window use:
+
+AvatarChat show'.
+
+
+package classNames
+	add: #AvatarChat;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\..\..\Dolphin\ActiveX\Components\AgentObjects\AgentObjects';
+	add: '..\Chat\Chat';
+	add: '..\..\..\Dolphin\Base\Dolphin';
+	add: '..\..\..\Dolphin\MVP\Presenters\Prompters\Dolphin Choice Prompter';
+	add: '..\..\..\Dolphin\MVP\Views\Control Bars\Dolphin Control Bars';
+	add: '..\..\..\Dolphin\MVP\Presenters\List\Dolphin List Presenter';
+	add: '..\..\..\Dolphin\MVP\Base\Dolphin MVP Base';
+	add: '..\..\..\Dolphin\MVP\Presenters\Text\Dolphin Text Presenter';
+	add: '..\..\..\Dolphin\MVP\Type Converters\Dolphin Type Converters';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+Chat subclass: #AvatarChat
+	instanceVariableNames: 'agent callerAvatar'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+"End of package definition"!
+

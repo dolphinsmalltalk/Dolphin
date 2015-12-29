@@ -1,0 +1,126 @@
+| package |
+package := Package name: 'IDB Duration'.
+package paxVersion: 1;
+	basicComment: 'Implementation of the ANSI <Duration> protocol
+Version 6a - May 2005
+For Version 6 of Dolphin Smalltalk
+
+(C) 2005 Ian Bartholomew
+ian@idb.me.uk
+Public Domain Freeware
+
+Some methods provided by Richard Harmon
+'.
+
+package basicPackageVersion: 'IDB$PACKAGE$VERSION 6a'.
+
+
+package classNames
+	add: #Duration;
+	add: #DurationToText;
+	yourself.
+
+package methodNames
+	add: #Float -> #asRestrictedFraction;
+	add: #Number -> #asRestrictedFraction;
+	add: #Number -> #divideIntoDuration:;
+	add: #String -> #trimZeros;
+	add: 'Time class' -> #fromDuration:;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\Object Arts\Dolphin\Base\Dolphin';
+	add: '..\Object Arts\Dolphin\MVP\Type Converters\Dolphin Type Converters';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+Magnitude subclass: #Duration
+	instanceVariableNames: 'seconds'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+AbstractToTextConverter subclass: #DurationToText
+	instanceVariableNames: 'format'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+!Float methodsFor!
+
+asRestrictedFraction
+	"Overridden to restrict the answered Fraction to the equivalent of six decimal
+	places in the receiver. This allows any precision lost in the conversion to be ignored"
+
+	#idbAdded.
+	^(self fractionPart * 1000000) rounded / 1000000 + self integerPart asInteger! !
+!Float categoriesFor: #asRestrictedFraction!converting!idb goodies!public! !
+
+!Number methodsFor!
+
+asRestrictedFraction
+	"Answer the receiver as a Fraction.  Subclasses can override to restrict 
+	the conversion to a value that is an accurate representetion of the receiver"
+
+	#idbAdded.
+	^self asFraction!
+
+divideIntoDuration: aDuration 
+	"Private - Answer a new <Duration> which represents the the value in 
+	seconds of aDuration divided by the receiver"
+
+	#idbAdded.
+	^Duration seconds: aDuration asSeconds / self! !
+!Number categoriesFor: #asRestrictedFraction!converting!idb goodies!public! !
+!Number categoriesFor: #divideIntoDuration:!double dispatch!idb goodies!public! !
+
+!String methodsFor!
+
+trimZeros
+	"Answer the receiver but with trailing 0s removed from the fractional part (if any).
+	xxxx.0123 -> xxx.0123
+	xxxx.0123000 -> xxxx.0123
+	xxxx.0000 -> xxxx.0
+	xxxx.0 -> xxxx.0
+	xxx0 -> xxx0"
+
+	| index |
+	#idbAdded.
+	(self includes: $.) ifFalse: [^self copy].
+	index := self size.
+	[(self at: index) = $0 and: [index > 1 and: [(self at: index - 1) isDigit]]] whileTrue: 
+			[self at: index put: Character space.
+			index := index - 1].
+	^self trimBlanks! !
+!String categoriesFor: #trimZeros!copying!idb goodies!public! !
+
+!Time class methodsFor!
+
+fromDuration: aDuration 
+	"Answer an instance of Time initialized from aDuration.  
+	NB: 
+		Any day value in aDuration is ignored
+		Negative values for aDuration produce backward Times i.e.
+			Time fromDuration: (Duration days: 0 hours: -1 minutes: -2 seconds: -3) answers 22:57:57"
+
+	#idbAdded.
+	^self 
+		fromMilliseconds: (((aDuration hours * 60 + aDuration minutes) * 60 + aDuration seconds) * 1000) 
+				rounded! !
+!Time class categoriesFor: #fromDuration:!idb goodies!instance creation!public! !
+
+"End of package definition"!
+

@@ -1,0 +1,107 @@
+| package |
+package := Package name: 'VBScript Regular Expressions'.
+package paxVersion: 1;
+	basicComment: 'Dolphin Smalltalk VBScript Regular Expressions Package
+Copyright (c) Object Arts Ltd, 2004.
+
+A simple example:
+
+	regex := IRegExp2 new.
+	"Bracketing is just to get some submatches"
+	regex pattern: ''(a+b*)(c+)''.
+	regex global: true.
+	matches := (regex execute: ''aabcabcdebc'') .
+	matches first subMatches.
+
+Note that sub-matches are not supported by older installations of Windows Scripting, however an update is available from Microsoft.
+
+Some useful references:
+0) "Regular Expression Syntax"
+http://msdn.microsoft.com/library/default.asp?url=/library/en-us/script56/html/jsgrpregexpsyntax.asp
+1) "Introduction to Regular Expressions" http://msdn.microsoft.com/library/en-us/script56/html/reconIntroductionToRegularExpressions.asp
+2) "Microsoft Beefs Up VBScript with Regular Expressions"  http://msdn.microsoft.com/library/en-us/dnclinic/html/scripting051099.asp.
+3) KB818802 "HOW TO: Use Regular Expressions in Microsoft Visual Basic 6.0" http://support.microsoft.com/default.aspx?scid=kb%3Ben-us%3B818802
+4) Microsoft Windows Script Downloads
+http://msdn.microsoft.com/library/default.asp?url=/downloads/list/webdev.asp
+
+
+'.
+
+package basicPackageVersion: '6.0'.
+
+
+package classNames
+	add: #IMatch;
+	add: #IMatch2;
+	add: #IMatchCollection;
+	add: #IMatchCollection2;
+	add: #IRegExp;
+	add: #IRegExp2;
+	add: #IRegExpAbstract;
+	add: #ISubMatches;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\..\Automation\ActiveX Automation';
+	add: '..\..\..\Base\Dolphin';
+	add: '..\..\COM\OLE COM';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+IDispatch subclass: #IMatch
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+IDispatch subclass: #IMatchCollection
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+IDispatch subclass: #IRegExpAbstract
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+IDispatch subclass: #ISubMatches
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+IMatch subclass: #IMatch2
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+IMatchCollection subclass: #IMatchCollection2
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+IRegExpAbstract subclass: #IRegExp
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+IRegExpAbstract subclass: #IRegExp2
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+"End of package definition"!
+

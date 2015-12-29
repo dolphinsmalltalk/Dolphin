@@ -1,0 +1,87 @@
+| package |
+package := Package name: 'ActiveX DLL Server Kit'.
+package paxVersion: 1;
+	basicComment: 'Dolphin Smalltalk Active-X In-Process Server Deployment Kit 
+Copyright (c) Object Arts Ltd, 2001-2002.
+
+This package provides the necessary image stripping and session framework to allow Active-X/COM components written in Dolphin to be deployed as DLLs (i.e. in-process servers).
+
+In order to deploy an in-process Active-X DLL you will also need the in-proc Dolphin stub, IPDolphin.DLL. Then select your COM component package in the Package Browser and choose to deploy it to an executable. Select the AXDllImageStripper, and choose between AXDllSessionManager for non-visual components, and AXDllGUISessionManager for components with visual elements.
+
+In-proc COM components can be tested in the full Dolphin IDE when hosted by any client executable (e.g. the VB development environment or a compiled VB app). In order to set this up it is necessary to send the #register message to one''s COMInterfaceImp subclass (the one that implements the COM component) whilst running a development session. COMInterfaceImp class>>register will make the necessary entries in the registry to use IPDolphin.DLL as a surrogate component, and adds additional entries so that the surrogate can later identify the development image to load.You should then be able to start the client executable or development environment (such as VB) and when an instance of the component is requested, the surrogate will be loaded by COM and it will in turn load the development image into that process and the normal development tools will appear just as they were when the image was last saved. One can then debug and make changes as normal, but one must be careful to save the image so that changes are not lost should the host executable be terminated abrubtly.
+'.
+
+package basicPackageVersion: '6.1'.
+
+package basicScriptAt: #preinstall put: 'Win32Errors at: ''CLASS_E_CLASSNOTAVAILABLE'' put: -16r7FFBFEEF!!'.
+
+package classNames
+	add: #AXDllGUISessionManager;
+	add: #AXDllImageStripper;
+	add: #AXDllSessionManager;
+	add: #IIPDolphin;
+	add: #IIPPlugHole;
+	add: #IPDolphin;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\ActiveX\Automation\ActiveX Automation';
+	add: '..\IDE\Base\Development System';
+	add: '..\Base\Dolphin';
+	add: '..\MVP\Base\Dolphin MVP Base';
+	add: 'Lagoon Image Stripper';
+	add: '..\ActiveX\COM\OLE COM';
+	add: '..\ActiveX\Shell\Windows Shell';
+	yourself).
+
+package setManualPrerequisites: #(
+	'ActiveX Automation').
+
+package!
+
+"Class Definitions"!
+
+COMInterfaceImp subclass: #IPDolphin
+	instanceVariableNames: 'plugHole coclasses'
+	classVariableNames: 'Current'
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+IUnknown subclass: #IIPDolphin
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+IUnknown subclass: #IIPPlugHole
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ImageStripper subclass: #AXDllImageStripper
+	instanceVariableNames: 'typeLibPath'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+SessionManager subclass: #AXDllSessionManager
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+GUISessionManager subclass: #AXDllGUISessionManager
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+"End of package definition"!
+

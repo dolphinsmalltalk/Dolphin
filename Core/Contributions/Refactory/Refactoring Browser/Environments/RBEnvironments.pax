@@ -1,0 +1,204 @@
+| package |
+package := Package name: 'RBEnvironments'.
+package paxVersion: 1;
+	basicComment: 'Refactoring Browser Environments
+Copyright (c) John Brant & Don Roberts.
+
+Ported to Dolphin by Blair McGlashan and Andy Bower at Camp Smalltalk 1 in San Diego, 2000.
+
+Browse the ''*-RB fixes'' pseudo-category to find the modifications made as part of the Dolphin port.'.
+
+
+package classNames
+	add: #AndEnvironment;
+	add: #BrowserEnvironment;
+	add: #BrowserEnvironmentWrapper;
+	add: #CategoryEnvironment;
+	add: #ClassEnvironment;
+	add: #NotEnvironment;
+	add: #ProtocolEnvironment;
+	add: #SelectorEnvironment;
+	add: #VariableEnvironment;
+	yourself.
+
+package methodNames
+	add: #Association -> #binding;
+	add: #Association -> #isVariableBinding;
+	add: #Behavior -> #allSubBehaviorsDo:;
+	add: #Behavior -> #allSubBehaviorsPreOrderDo:;
+	add: #Behavior -> #isBehavior;
+	add: #Behavior -> #selectorsAndMethodsDo:;
+	add: #Behavior -> #subBehaviors;
+	add: #Behavior -> #withAllSubBehaviorsDo:;
+	add: #CompiledCode -> #allLiterals;
+	add: #Metaclass -> #soleInstance;
+	add: #Object -> #isBehavior;
+	add: #Object -> #isVariableBinding;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\..\..\..\Object Arts\Dolphin\Base\Dolphin';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+Object subclass: #BrowserEnvironment
+	instanceVariableNames: 'label searchStrings search filter progressBlock'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+BrowserEnvironment subclass: #BrowserEnvironmentWrapper
+	instanceVariableNames: 'environment'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+BrowserEnvironmentWrapper subclass: #AndEnvironment
+	instanceVariableNames: 'andedEnvironment'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+BrowserEnvironmentWrapper subclass: #CategoryEnvironment
+	instanceVariableNames: 'categories'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+BrowserEnvironmentWrapper subclass: #ClassEnvironment
+	instanceVariableNames: 'classes metaClasses'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+BrowserEnvironmentWrapper subclass: #NotEnvironment
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+BrowserEnvironmentWrapper subclass: #ProtocolEnvironment
+	instanceVariableNames: 'class protocols'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+BrowserEnvironmentWrapper subclass: #SelectorEnvironment
+	instanceVariableNames: 'classSelectors metaClassSelectors'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+BrowserEnvironmentWrapper subclass: #VariableEnvironment
+	instanceVariableNames: 'instanceVariables instanceVariableReaders instanceVariableWriters classVariables selectorCache'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+!Association methodsFor!
+
+binding
+	^self!
+
+isVariableBinding
+	"Answer whether the receiver is a <variableBinding>, i.e. an association which responds
+	to #key and #value methods."
+
+	^true! !
+!Association categoriesFor: #binding!public!testing! !
+!Association categoriesFor: #isVariableBinding!public!testing! !
+
+!Behavior methodsFor!
+
+allSubBehaviorsDo: operation
+	"Private - Evaluate the monadic valuable argument, operation, for each 
+	of the receiver's sub-behaviours using a pre-order depth first traversal."
+
+	self allSubBehaviorsPreOrderDo: operation!
+
+allSubBehaviorsPreOrderDo: operation
+	"Private - Evaluate the monadic valuable, operation, for each 
+	of the receiver's subclasses, visiting the receiver before its
+	subclasses (i.e. a pre-order traversal)."
+
+	| subBehaviors |
+	subBehaviors := self subBehaviors.
+	subBehaviors isNil ifFalse: [
+		subBehaviors do: [:subclass |
+			operation value: subclass.
+			subclass allSubBehaviorsPreOrderDo: operation]]
+!
+
+isBehavior
+	"Answer whether the receiver is a <Behavior>."
+
+	#rbFix. "Dolphin doesn't normally include these horrid type tests"
+	^true!
+
+selectorsAndMethodsDo: aDyadicValuable
+	"Evaluate the <dyadicValuable> argument for each of the selector/method pairs in 
+	the receiver's method dictionary."
+
+	^methodDictionary keysAndValuesDo: aDyadicValuable!
+
+subBehaviors
+	"Answer a <collection> containing the receiver's immediate subclasses."
+
+	^self == Class ifTrue: [Class allRoots collect: [:each | each class]] ifFalse: [self subclasses]!
+
+withAllSubBehaviorsDo: aMonadicValuable
+	"Evaluate the monadic valuable argument for the receiver and each 
+	of its sub-behaviours using a depth-first traversal."
+
+	aMonadicValuable value: self.
+	self allSubBehaviorsDo: aMonadicValuable! !
+!Behavior categoriesFor: #allSubBehaviorsDo:!class hierarchy-accessing!enumerating!private! !
+!Behavior categoriesFor: #allSubBehaviorsPreOrderDo:!class hierarchy-accessing!private! !
+!Behavior categoriesFor: #isBehavior!public!testing! !
+!Behavior categoriesFor: #selectorsAndMethodsDo:!enumerating!public! !
+!Behavior categoriesFor: #subBehaviors!class hierarchy-accessing!public! !
+!Behavior categoriesFor: #withAllSubBehaviorsDo:!enumerating!public! !
+
+!CompiledCode methodsFor!
+
+allLiterals
+	"Answer an array of the literals in the receiver."
+
+	#rbFix. "Dolphin uses #literals"
+	^self literals! !
+!CompiledCode categoriesFor: #allLiterals!accessing!private! !
+
+!Metaclass methodsFor!
+
+soleInstance
+	"Answer the receiver's singleton instance (the actual class object)."
+
+	#rbFix. "Dolphin normally uses #instanceClass"
+	^instanceClass
+! !
+!Metaclass categoriesFor: #soleInstance!accessing!public! !
+
+!Object methodsFor!
+
+isBehavior
+	"Answer whether the receiver is a <Behavior>."
+
+	#rbFix. "Dolphin doesn't include these type tests"
+	^false!
+
+isVariableBinding
+	"Answer whether the receiver is a <variableBinding>, i.e. an association which responds
+	to #key and #value methods."
+
+	^false! !
+!Object categoriesFor: #isBehavior!public!testing! !
+!Object categoriesFor: #isVariableBinding!public!testing! !
+
+"End of package definition"!
+

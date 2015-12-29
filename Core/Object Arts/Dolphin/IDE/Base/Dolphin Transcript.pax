@@ -1,0 +1,43 @@
+| package |
+package := Package name: 'Dolphin Transcript'.
+package paxVersion: 1;
+	basicComment: ''.
+
+package basicPackageVersion: '6.2'.
+
+
+package classNames
+	add: #TranscriptShell;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\..\Base\Dolphin';
+	add: '..\..\MVP\Dialogs\Common\Dolphin Common Dialogs';
+	add: '..\..\MVP\Base\Dolphin MVP Base';
+	add: '..\..\MVP\Presenters\Text\Dolphin Rich Text Presenter';
+	add: '..\..\MVP\Type Converters\Dolphin Type Converters';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+Shell subclass: #TranscriptShell
+	instanceVariableNames: 'outputWindow buffer bufferProtect'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: 'DefaultExtent FlashOnOutput'!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+"End of package definition"!
+

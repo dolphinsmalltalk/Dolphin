@@ -1,0 +1,61 @@
+| package |
+package := Package name: 'EnumRECT'.
+package paxVersion: 1;
+	basicComment: 'Dolphin Smalltalk EnumRect COM Sample.
+Copyright (c) Object Arts Ltd, 1997-2000.
+
+This simple sample is a Smalltalk implementation of the first C/C++ sample in Kraig Brockshmidt''s book, "Inside OLE 2e", Microsoft Press (ch 2, p113-123). It demonstrates COM basics in Dolphin such as interface classes, implementing a COM server, and COM enumerators. If you debug through the code you will be exposed to Dolphin''s COM framework (stubs, class factories, etc). The Smalltalk implementation can be related back to the C/C++ implementation in the book, and is deliberately implemented using the same variable names, etc, even though these do not follow the usual Smalltalk style.
+
+This sample consists of two classes:
+
+1) IEnumRECT, which wraps the RECT enumeration interface. This is used both to perform calls out when Dolphin is acting as a client, and for calls-in when Dolphin is acting as a server.
+2) EnumRECT, which is the implementation of the COM server object (i.e. the object that actually implements the IEnumRECT interface).
+
+For example:
+	rects := EnumRECT new queryInterface: IEnumRECT.	"Create a Dolphin rectangle server"
+	rects next: 5.					"Ask for five rectangles from the server"
+
+Above we are acting as both server and client from within the Dolphin image. You can try debugging through the second expression to see how it calls out through the interface, and back into the image, through the layers of Dolphin''s COM framework, and eventually to the EnumRECT server object. As far as Dolphin is concerned there is no difference between a call originating inside Dolphin, and one from outside. To the server they are the same. A powerful aspect of Dolphin''s COM support is that you can set breakpoints in any of the servers methods, and when an external client calls in the breakpoint will be tracked and result in a familiar walkback/debugger. You can then debug through up to the point that the image returns to the calling client.
+
+As an exercise you may like to try interfacing Kraig''s C++ sample to the Dolphin''s EnumRect sample, which is possible using C++ as a server, or Dolphin as a server. Note, however, that in order to use Dolphin as a server from a separate C++ executable, you will need to build a marshalling DLL (see Kraig''s book).'.
+
+
+package classNames
+	add: #EnumRECT;
+	add: #IEnumRECT;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\..\..\Dolphin\Base\Dolphin';
+	add: '..\..\..\Dolphin\MVP\Base\Dolphin MVP Base';
+	add: '..\..\..\Dolphin\ActiveX\COM\OLE COM';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+COMInterfaceImp subclass: #EnumRECT
+	instanceVariableNames: 'm_iCur m_rgrc'
+	classVariableNames: 'CRECTS'
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+IEnumXXXX subclass: #IEnumRECT
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+"End of package definition"!
+

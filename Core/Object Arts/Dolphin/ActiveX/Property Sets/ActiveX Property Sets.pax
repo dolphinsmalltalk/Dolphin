@@ -1,0 +1,74 @@
+| package |
+package := Package name: 'ActiveX Property Sets'.
+package paxVersion: 1;
+	basicComment: 'Dolphin Smalltalk OLE Property Sets Support. 
+Copyright (c) Object Arts Ltd 1997-2001.
+
+Example:
+
+s := IStorage open: ''<a word document>.doc''.
+set := s queryInterface: IPropertySetStorage.
+stg := set open: (set directory at: 1) fmtid.
+'.
+
+package basicPackageVersion: '6.1'.
+
+
+package classNames
+	add: #IPropertySetStorage;
+	add: #IPropertyStorage;
+	add: #PROPSPEC;
+	add: #STATPROPSETSTG;
+	add: #STATPROPSTG;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\Automation\ActiveX Automation';
+	add: '..\..\Base\Dolphin';
+	add: '..\COM\OLE COM';
+	add: '..\Structured Storage\OLE Structured Storage';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+ExternalStructure subclass: #PROPSPEC
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ExternalStructure subclass: #STATPROPSETSTG
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ExternalStructure subclass: #STATPROPSTG
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+IUnknown subclass: #IPropertySetStorage
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: 'OLEStructuredStorageConstants'
+	classInstanceVariableNames: ''!
+IUnknown subclass: #IPropertyStorage
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+"End of package definition"!
+

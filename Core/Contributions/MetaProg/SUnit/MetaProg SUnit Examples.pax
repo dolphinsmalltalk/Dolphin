@@ -1,0 +1,47 @@
+| package |
+package := Package name: 'MetaProg SUnit Examples'.
+package paxVersion: 0;
+	basicComment: ''.
+
+
+package classNames
+	add: #TestEndNotifierResource;
+	add: #TestEndNotifierTestCase;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package allResourceNames: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\..\Object Arts\Dolphin\Base\Dolphin';
+	add: '..\..\Camp Smalltalk\SUnit\SUnit';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+TestCase subclass: #TestEndNotifierTestCase
+	instanceVariableNames: 'result'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+TestResource subclass: #TestEndNotifierResource
+	instanceVariableNames: 'result'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+"End of package definition"!
+

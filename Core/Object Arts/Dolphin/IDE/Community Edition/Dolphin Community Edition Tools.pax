@@ -1,0 +1,199 @@
+| package |
+package := Package name: 'Dolphin Community Edition Tools'.
+package paxVersion: 1;
+	basicComment: 'Dolphin Smalltalk Community Edition Additional Tools.
+Copyright (c) Object Arts Ltd, 1999-2005
+
+This package contains the additional tools, over and above those in basic Dolphin Development System package, that are included in Dolphin Community Edition. These tools are:
+
+Active-X Control Browser - A generic Active-X control host for exploring the properties, methods, and events of Active-X controls.
+
+Class Hierarchy Diagram - Displays a graphical representation of the entire class hierarchy.
+
+Live Update - Automatically downloads and applies patches to your Dolphin image from the Object Arts Web site.
+
+Protocol Browser - Displays a list of all the <MethodProtocol>s known to the system and allows one to browse the selectors that constitute those protocols, and the classes that conform to it. From within the Protocol Browser it is possible to perform a wide range of protocol housekeeping activities.
+
+Tip of the Day - Displays helpful tips at startup.
+
+Please Note: The contents of this package must not be redistributed in any form.'.
+
+package basicPackageVersion: '6.1'.
+
+
+package classNames
+	add: #ClassHierarchyDiagram;
+	add: #CommunityEditionSmalltalkSystem;
+	add: #DolphinSerialNumber;
+	add: #PoolDictionariesShell;
+	add: #ProtocolBrowserShell;
+	add: #SourceBrowser;
+	add: #TipOfTheDay;
+	add: #UserPreferencesShell;
+	yourself.
+
+package methodNames
+	add: #ClassBrowserAbstract -> #browseMethodProtocol;
+	add: #DolphinProduct -> #serialNumberClass;
+	add: #SmalltalkSystem -> #inspectPoolDictionaries;
+	add: #SmalltalkSystem -> #inspectSystemOptions;
+	add: #SmalltalkSystem -> #tipOfTheDayAtStartup;
+	add: #SmalltalkSystem -> #toggleShowTipsAtStartup;
+	add: 'ITEMIDLIST class' -> #publishedAspectsOfInstances;
+	add: 'Toolbar class' -> #resource_Protocol_tools;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\Base\Development System';
+	add: '..\..\Base\Dolphin';
+	add: '..\..\MVP\Presenters\Boolean\Dolphin Boolean Presenter';
+	add: '..\..\MVP\Views\Cards\Dolphin Card Containers';
+	add: '..\..\MVP\Presenters\Prompters\Dolphin Choice Prompter';
+	add: '..\..\MVP\Views\Common Controls\Dolphin Common Controls';
+	add: '..\..\MVP\Views\Control Bars\Dolphin Control Bars';
+	add: '..\..\MVP\Presenters\Prompters\Dolphin Key-Value Prompter';
+	add: '..\..\MVP\Models\List\Dolphin List Models';
+	add: '..\..\MVP\Presenters\List\Dolphin List Presenter';
+	add: '..\..\MVP\Presenters\ListTree\Dolphin List Tree Presenter';
+	add: '..\..\MVP\Base\Dolphin MVP Base';
+	add: '..\..\Installation Manager\Dolphin Products';
+	add: '..\..\MVP\Presenters\Prompters\Dolphin Prompter';
+	add: '..\..\MVP\Views\Scintilla\Dolphin Scintilla View';
+	add: '..\..\MVP\Models\Tree\Dolphin Tree Models';
+	add: '..\..\MVP\Type Converters\Dolphin Type Converters';
+	add: '..\..\MVP\Models\Value\Dolphin Value Models';
+	add: '..\..\DolphinSure\DolphinSure';
+	add: '..\..\Lagoon\Product Protection Base';
+	add: '..\..\ActiveX\Shell\Windows Shell';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+Object subclass: #TipOfTheDay
+	instanceVariableNames: ''
+	classVariableNames: 'NextTipIndex ShowTipsAtStartup'
+	poolDictionaries: 'Win32Constants'
+	classInstanceVariableNames: ''!
+SmalltalkSystem subclass: #CommunityEditionSmalltalkSystem
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+SmalltalkToolShell subclass: #ClassHierarchyDiagram
+	instanceVariableNames: 'classesPresenter commentPresenter'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+SmalltalkToolShell subclass: #PoolDictionariesShell
+	instanceVariableNames: 'dictionariesPresenter'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+SmalltalkToolShell subclass: #ProtocolBrowserShell
+	instanceVariableNames: 'protocolsPresenter selectorsPresenter classesPresenter'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+SmalltalkToolShell subclass: #SourceBrowser
+	instanceVariableNames: 'listPresenter changedOnly refreshBlock packagesFilter statusModel'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+SmalltalkToolShell subclass: #UserPreferencesShell
+	instanceVariableNames: 'preferencesPresenter'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ProtectedProductSerialNumber subclass: #DolphinSerialNumber
+	instanceVariableNames: ''
+	classVariableNames: 'CompromisedSerialNumbersTrusted UpgradeLevelsMap UpgradeLevelsNamesMap VariationMasksMap'
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+!ClassBrowserAbstract methodsFor!
+
+browseMethodProtocol
+	"Private - Browse the currently selected protocol."
+
+	self model browseProtocols 
+		protocol: self protocols first;
+		actualClass: self actualClass! !
+!ClassBrowserAbstract categoriesFor: #browseMethodProtocol!commands!private! !
+
+!DolphinProduct methodsFor!
+
+serialNumberClass
+	"Answer the class of <ProtectedProductSerialNumber> to use for the receiver"
+
+	^DolphinSerialNumber! !
+!DolphinProduct categoriesFor: #serialNumberClass!constants!public! !
+
+!ITEMIDLIST class methodsFor!
+
+publishedAspectsOfInstances
+	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
+
+	^(super publishedAspectsOfInstances)
+		add: (Aspect integer: #getSize);
+		add: (Aspect boolean: #isSingle);
+		yourself! !
+!ITEMIDLIST class categoriesFor: #publishedAspectsOfInstances!development!must strip!public! !
+
+!SmalltalkSystem methodsFor!
+
+inspectPoolDictionaries
+	"Opens an inspector on the available pool dictionaries"
+
+	| inspector |
+	inspector := PublishedAspectInspector 
+				shellOn: self availablePools asOrderedCollection.
+	inspector topShell caption: 'Available Pool Dictionaries'.
+	^inspector!
+
+inspectSystemOptions
+	"Open a TwoLevelInspector on the system options."
+
+	^UserPreferencesShell showOn: self systemOptions!
+
+tipOfTheDayAtStartup
+	"Private - Show the tip of the day on startup if requested"
+
+	SmalltalkSystemShell showTipsAtStartup ifTrue: [self tipOfTheDay]!
+
+toggleShowTipsAtStartup
+	"Private - Toggle whether the tip of the day is displayed at startup"
+
+	SmalltalkSystemShell showTipsAtStartup: SmalltalkSystemShell showTipsAtStartup not! !
+!SmalltalkSystem categoriesFor: #inspectPoolDictionaries!initializing!public! !
+!SmalltalkSystem categoriesFor: #inspectSystemOptions!commands!public! !
+!SmalltalkSystem categoriesFor: #tipOfTheDayAtStartup!commands!public! !
+!SmalltalkSystem categoriesFor: #toggleShowTipsAtStartup!commands!public! !
+
+!Toolbar class methodsFor!
+
+resource_Protocol_tools
+	"Answer the literal data from which the 'Protocol tools' resource can be reconstituted.
+	DO NOT EDIT OR RECATEGORIZE THIS METHOD.
+
+	If you wish to modify this resource evaluate:
+	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Protocol_tools)
+	"
+
+	^#(#'!!STL' 3 788558 10 ##(Smalltalk.STBViewProxy)  8 ##(Smalltalk.Toolbar)  98 25 0 0 98 2 8 1409289036 131137 416 0 524550 ##(Smalltalk.ColorRef)  8 4278190080 0 517 0 0 0 416 498 528 8 4294903595 234 256 98 0 234 256 98 4 59173 853766 ##(Smalltalk.ToolbarButton)  59173 0 416 1 1180998 4 ##(Smalltalk.CommandDescription)  8 #toggleReadOnly 8 'Lock/unlock protocol' 1 1 0 395334 3 ##(Smalltalk.Bitmap)  0 16 1572870 ##(Smalltalk.ImageRelativeFileLocator)  8 'Tools.bmp' 2032142 ##(Smalltalk.STBExternalResourceLibraryProxy)  8 'dolphindr006.dll' 0 0 71 328198 ##(Smalltalk.Point)  1857 33 77 59175 642 59175 0 416 1 674 8 #toggleANSI 8 'Toggle ANSI status' 1 1 0 752 79 202 208 98 3 656 896 1050118 ##(Smalltalk.ToolbarSeparator)  0 0 416 3 0 1 234 240 98 2 752 1 0 1 0 866 33 33 866 45 45 0 0 983302 ##(Smalltalk.MessageSequence)  202 208 98 2 721670 ##(Smalltalk.MessageSend)  8 #createAt:extent: 98 2 866 2799 21 866 111 51 416 1154 8 #updateSize 592 416 983302 ##(Smalltalk.WINDOWPLACEMENT)  8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 119 5 0 0 10 0 0 0 174 5 0 0 35 0 0 0] 98 0 866 193 193 0 27 )! !
+!Toolbar class categoriesFor: #resource_Protocol_tools!public!resources-views! !
+
+"End of package definition"!
+

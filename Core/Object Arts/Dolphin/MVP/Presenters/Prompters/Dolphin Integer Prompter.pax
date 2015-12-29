@@ -1,0 +1,46 @@
+| package |
+package := Package name: 'Dolphin Integer Prompter'.
+package paxVersion: 1;
+	basicComment: 'Dolphin Smalltalk Generic Integer Prompter.
+Copyright (c) Object Arts Ltd. 2003.'.
+
+package basicPackageVersion: '6.0'.
+
+
+package classNames
+	add: #IntegerPrompter;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\..\..\Base\Dolphin';
+	add: '..\..\Base\Dolphin MVP Base';
+	add: '..\Number\Dolphin Number Presenter';
+	add: 'Dolphin Prompter';
+	add: '..\Text\Dolphin Text Presenter';
+	add: '..\..\Type Converters\Dolphin Type Converters';
+	add: '..\..\Models\Value\Dolphin Value Models';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+Prompter subclass: #IntegerPrompter
+	instanceVariableNames: 'intervalPresenter interval'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+"End of package definition"!
+

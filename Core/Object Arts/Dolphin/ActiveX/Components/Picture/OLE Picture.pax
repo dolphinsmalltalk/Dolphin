@@ -1,0 +1,123 @@
+| package |
+package := Package name: 'OLE Picture'.
+package paxVersion: 1;
+	basicComment: 'Dolphin Smalltalk OLE Picture component. 
+Copyright (c) Object Arts Ltd 2000-2002.
+
+This package wraps the OLE StdPicture object (a useful COM object that can load and paint images of most types including JPEGS, BMPs, etc).'.
+
+package basicPackageVersion: '6.2'.
+
+
+package classNames
+	add: #IPicture;
+	add: #IPictureDisp;
+	add: #OLEPicture;
+	add: #PICTDESC;
+	yourself.
+
+package methodNames
+	add: #OLEAutLibrary -> #oleCreatePictureIndirect:riid:fOwn:ppvObj:;
+	add: #OLEAutLibrary -> #oleLoadPicture:lSize:fRunmode:riid:ppvObj:;
+	add: #OLEAutLibrary -> #oleLoadPicturePath:punkCaller:dwReserved:clrReserved:riid:ppvRet:;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\..\Automation\ActiveX Automation';
+	add: '..\..\..\Base\Dolphin';
+	add: '..\..\..\MVP\Base\Dolphin MVP Base';
+	add: '..\..\COM\OLE COM';
+	add: '..\..\Structured Storage\OLE Structured Storage';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+IUnknown subclass: #IPicture
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+IDispatch subclass: #IPictureDisp
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+OLEStructure subclass: #PICTDESC
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Image subclass: #OLEPicture
+	instanceVariableNames: 'picture extent hmExtent'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+!OLEAutLibrary methodsFor!
+
+oleCreatePictureIndirect: pDesc riid: riid fOwn: fOwn ppvObj: ppvObj
+	"Create an OLE Picture object wrapping the bitmap/icon/metafile described by
+	the <PICTDESC>, pDesc. The graphics object will be released when the picture
+	is destroyed (i.e. on its final release) if the fOwn <boolean> is true. 
+
+		STDAPI OleCreatePictureIndirect(
+			PICTDESC* pFontDesc,
+			REFIID riid,
+			BOOL fOwn,
+			VOID** ppvObj);
+ 	"
+
+	<stdcall: hresult OleCreatePictureIndirect PICTDESC* GUID* bool void**>
+	^self invalidCall!
+
+oleLoadPicture: pStream lSize: lSize fRunmode: fRunmode riid: riid ppvObj: ppvObj
+	"Load an OLE picture object from an IStream.
+
+		STDAPI OleLoadPicture(
+			IStream * pStream,
+			LONG lSize,
+			BOOL fRunmode,
+			REFIID riid,
+			VOID** ppvObj 
+		); 
+		"
+
+	"Avoid creating dependency on structured storage package by declaring stream as void*"
+	<stdcall: hresult OleLoadPicture void* sdword bool GUID* void**>
+	^self invalidCall!
+
+oleLoadPicturePath: szURLOrPath punkCaller: punk dwReserved: dw clrReserved: clr riid: iid ppvRet: ppv
+	"Loads an OLE picture (StdPicture) object from a file. Only mentioned in the doc's, but 
+	included in olectl.h head file. Can load jpeg/gif/bmp/wmf/etc from a file or URL.
+
+		WINOLECTLAPI OleLoadPicturePath(
+			LPOLESTR  szURLorPath,
+			LPUNKNOWN punkCaller,
+			DWORD     dwReserved,
+			OLE_COLOR clrReserved,
+			REFIID    riid,
+			LPVOID *  ppvRet );
+	"
+	<stdcall: hresult OleLoadPicturePath lpwstr IUnknown* dword sdword IID* void**>
+	^self invalidCall
+
+! !
+!OLEAutLibrary categoriesFor: #oleCreatePictureIndirect:riid:fOwn:ppvObj:!OLE Functions-OLE!public! !
+!OLEAutLibrary categoriesFor: #oleLoadPicture:lSize:fRunmode:riid:ppvObj:!OLE Functions-OLE!public! !
+!OLEAutLibrary categoriesFor: #oleLoadPicturePath:punkCaller:dwReserved:clrReserved:riid:ppvRet:!OLE Functions-OLE!public! !
+
+"End of package definition"!
+

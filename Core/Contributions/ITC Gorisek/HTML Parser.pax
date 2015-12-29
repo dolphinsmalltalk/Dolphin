@@ -1,0 +1,101 @@
+| package |
+package := Package name: 'HTML Parser'.
+package paxVersion: 1;
+	basicComment: ''.
+
+package basicPackageVersion: 'r 422 rc 1'.
+
+
+package classNames
+	add: #HtmlParserElement;
+	add: #HtmlParserForm;
+	add: #HtmlParserImage;
+	add: #HtmlParserInlineFrame;
+	add: #HtmlParserLink;
+	add: #HtmlParserPage;
+	add: #HtmlParserReadStream;
+	add: #HtmlParserSelectField;
+	add: #HtmlParserTable;
+	yourself.
+
+package methodNames
+	add: #HttpClientResponse -> #asParsedPage;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: 'Dialect Abstraction Layer';
+	add: '..\..\Object Arts\Dolphin\Base\Dolphin';
+	add: 'HTTP Client';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+Object subclass: #HtmlParserElement
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Object subclass: #HtmlParserReadStream
+	instanceVariableNames: 'stream replacements'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+HtmlParserElement subclass: #HtmlParserForm
+	instanceVariableNames: 'formFields name target action method'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+HtmlParserElement subclass: #HtmlParserImage
+	instanceVariableNames: 'fileName width height toolTip'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+HtmlParserElement subclass: #HtmlParserInlineFrame
+	instanceVariableNames: 'contents src'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+HtmlParserElement subclass: #HtmlParserLink
+	instanceVariableNames: 'url target contents'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+HtmlParserElement subclass: #HtmlParserPage
+	instanceVariableNames: 'contents formFields links forms inlineFrames selectFields'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+HtmlParserElement subclass: #HtmlParserSelectField
+	instanceVariableNames: 'name allItems selectedItems'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+HtmlParserElement subclass: #HtmlParserTable
+	instanceVariableNames: 'rows parseImage collectedString colIndex rowIndex'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+!HttpClientResponse methodsFor!
+
+asParsedPage
+	parsedPage isNil 
+		ifTrue: [parsedPage := HtmlParserPage fromString: self contentsAsLocalCodePageString].
+	^parsedPage! !
+!HttpClientResponse categoriesFor: #asParsedPage!public! !
+
+"End of package definition"!
+

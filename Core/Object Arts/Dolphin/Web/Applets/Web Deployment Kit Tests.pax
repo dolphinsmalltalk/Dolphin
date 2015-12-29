@@ -1,0 +1,42 @@
+| package |
+package := Package name: 'Web Deployment Kit Tests'.
+package paxVersion: 1;
+	basicComment: ''.
+
+package basicPackageVersion: '6.1'.
+
+
+package classNames
+	add: #BinaryPackageTest;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\..\Base\Dolphin';
+	add: '..\..\Tests\Dolphin Tests';
+	add: '..\..\DolphinSure\DolphinSure';
+	add: 'Web Deployment Kit';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+DolphinTest subclass: #BinaryPackageTest
+	instanceVariableNames: 'privateKey cert'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+"End of package definition"!
+

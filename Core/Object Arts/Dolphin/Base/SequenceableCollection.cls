@@ -1,0 +1,1244 @@
+"Filed out from Dolphin Smalltalk X6.1"!
+
+Collection subclass: #SequenceableCollection
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+SequenceableCollection guid: (GUID fromString: '{87B4C50A-026E-11D3-9FD7-00A0CC3E4A32}')!
+SequenceableCollection comment: 'SequenceableCollection is the class of Collections whose elements are ordered and which are externally named by integer indices.'!
+!SequenceableCollection categoriesForClass!Collections-Abstract! !
+!SequenceableCollection methodsFor!
+
+, aSequencedReadableCollection
+	"Answer a new <sequencedReadableCollection> like the receiver (i.e. of the receiver's
+	species but not necessarily the exact same class) containing the elements	of the receiver 
+	in their original order with those of the <sequencedReadableCollection> argument
+	appended in their original order.
+	Note: This is the concatenation operation, and is a simplified form of 
+	#copyReplaceFrom:to:with:."
+
+	| size newSize |
+	size := self size.
+	newSize := size + aSequencedReadableCollection size.
+	^(self copyLikeOfSize: newSize)
+		replaceFrom: 1
+			to: size
+			with: self
+			startingAt: 1;
+		replaceFrom: size + 1
+			to: newSize
+			with: aSequencedReadableCollection
+			startingAt: 1;
+		yourself!
+
+_sameAsString: comparand
+	"Private - Answer whether the receiver collates the same as <readableString>
+	argument, comparand.
+	This will only work if the receiver contains integers in the range of character
+	values, if not an exception will be raised.
+	Implementation Note: Double dispatched from String>>sameAs:."
+
+	| string2 size |
+	size := self size.
+	string2 := String new: size.
+	1 to: size do: [:i | string2 basicAt: i put: (self at: i)].
+	^(comparand _collate: string2) == 0!
+
+= comparand
+	"Answer whether the receiver and the <Object> argument, comparand,
+	are considered equivalent - that is they are of the same class and size, and
+	contain eqivalent elements that are in the same sequence.
+	Implementation Note: We perform a series of tests of increasing slowness, culminating
+	in an element-by-element equality test."
+
+	| size |
+	self == comparand ifTrue: [^true].
+	#todo "ANSI draft says must be same class, not just same species".
+	(self species == comparand species) ifFalse: [^false].
+	size := self size.
+	size = comparand size ifFalse: [^false].
+	1 to: size do: [ :i |
+		(self at: i) = (comparand at: i)
+			ifFalse: [^false]].
+	^true!
+
+after: target
+	"Answer the element after the <Object> argument, target.  
+	Report an error if target is not in the receiver, or if there 
+	are no elements after it."
+
+	^self after: target ifAbsent: [self errorNotFound: target]!
+
+after: target ifAbsent: exceptionHandler
+	"Answer the element after target, or if not present the result of evaluating the
+	niladic valuable, exceptionHandler."
+
+	| index |
+	index := self indexOf: target.
+	^index == 0
+		ifTrue: [exceptionHandler value]
+		ifFalse: [
+			index = self size 
+				ifTrue: [self errorLastObject: target]
+				ifFalse: [self at: index + 1]]!
+
+allButFirst
+	"Answer a copy of the receiver containing all but the first
+	element. Raise an error if there are not enough elements."
+
+	^self allButFirst: 1!
+
+allButFirst: n
+	"Answer a copy of the receiver containing all but the first n
+	elements. Raise an error if there are not enough elements."
+
+	^ self copyFrom: n + 1 to: self size!
+
+allButLast
+	"Answer a copy of the receiver containing all but the last
+	element. Raise an error if there are not enough elements."
+
+	^ self allButLast: 1!
+
+allButLast: anInteger
+	"Answer a copy of the receiver containing all but the last anInteger
+	elements. Raise an error if there are not enough elements."
+
+	^self first: self size - anInteger!
+
+anyOne
+	"Answer an arbitrary element of the collection.Raise an error if the collection is empty."
+
+	^self first!
+
+appendToStream: puttableStream
+	"Private - Append the receiver's elements to the argument, puttableStream.
+	We can be able to do a fast block copy. Answer the receiver.
+	Implementation note: Double dispatched from puttableStream>>nextPutAll:."
+
+	puttableStream next: self size putAll: self startingAt: 1!
+
+approxSize
+	"Private - Answer the approximate size of the receiver.
+	Implementation Note: In general sequenceable collections keep a
+	tally, so we can use the actual size."
+
+	^self size!
+
+asRunArray
+	"Answer a <RunArray> whose elements are the same as those of the receiver. The order of
+	elements will be the same, and there will be the same number when enumerated, but the
+	identity of any duplicated elements in a run will be lost. This is useful for obtaining a
+	compressed representation of a <sequencedReadableCollection> known to contain runs of equal
+	elements."
+
+	| runs values |
+	runs := Array writeStream.
+	values := Array writeStream.
+	self runsAndValuesDo: 
+			[:run :value | 
+			runs nextPut: run.
+			values nextPut: value].
+	^RunArray runs: runs contents values: values contents!
+
+associations
+	"Answer a <SequenceableCollection>, like the receiver, containing the receiver's associations."
+
+	"Implementation Note: SequenceableCollections don't actually contain associations so the result 
+	is built afresh each time and modifying its contents will not affect the original collection. However
+	this is no different to the implementation for LookupTable/IdentityDictionary."
+
+	| answer |
+	answer := self copyLikeOfSize: self copySize.
+	self keysAndValuesDo: [:i :each | answer at: i put: i -> each].
+	^answer!
+
+at: index
+	"Answer an <Object> which is the element of the receiver 
+	at the specified index. If the index is out of bounds, raise an exception."
+
+	^self subclassResponsibility!
+
+at: index ifAbsent: exceptionBlock
+	"Answer an <Object> which is the element of the receiver 
+	at the specified index. If the index is out of bounds answer
+	the result of evaluating the <niladicValuable> exceptionBlock."
+
+	^(index > 0 and: [index <= self size])
+		ifTrue: [self at: index]
+		ifFalse: [exceptionBlock value]!
+
+at: key ifPresent: operation 
+	"Answer the result of evaluating the monadic valuable, operation, if
+	the argument, key, is the key of an element in the receiver, with that
+	element as its argument. If the key is not present, then answer nil."
+
+	| value |
+	value := self at: key ifAbsent: [AbsentCookie].
+	^value == AbsentCookie ifFalse: [operation value: value]!
+
+at: index put: newElement
+	"Replace the element of the receiver at the specified <integer> index with 
+	the <Object> argument, newElement. If the index is out of bounds, raise 
+	a BoundsError."
+
+	^self subclassResponsibility!
+
+atAll: indices put: newElement
+	"Replace the elements of the receiver at each <integer> element of the <collection> 
+	argument, indices, with the <Object> argument, newElement."
+
+	indices do: [:index | self at: index put: newElement]!
+
+atAllPut: newElement
+	"Replace all the elements of the receiver with the <Object> argument,
+	newElement."
+
+	1 to: self size do: [:index | self at: index put: newElement]!
+
+basicBeginsWith: aCollection
+	"Answer whether the receiver begins with the sequence
+	of objects in the <Collection> argument.
+	Should not be overridden (but see #beginsWith:)"
+
+	| i |
+	self size < aCollection size ifTrue: [^false].
+	i := 1.
+	aCollection do: 
+			[:each | 
+			(self at: i) = each ifFalse: [^false].
+			i := i + 1].
+	^true!
+
+before: target
+	"Answer the receiver's element immediately before the argument, target. 
+	Raise an exception if target is not an element of the receiver, or if 
+	there are no elements before it (i.e. it is the first element)."
+
+	^self before: target ifAbsent: [self errorNotFound: target]!
+
+before: target ifAbsent: exceptionHandler
+	"Answer the element before the argument, target, or if not present the 
+	result of evaluating the niladic valuable, exceptionHandler."
+
+	| index |
+	index := self indexOf: target.
+	^index == 0
+		ifTrue: [exceptionHandler value]
+		ifFalse: [
+			index == 1 
+				ifTrue: [self errorFirstObject: target]
+				ifFalse: [self at: index - 1]].!
+
+beginsWith: aCollection
+	"Answer whether the receiver begins with the sequence
+	of objects in the <Collection> argument."
+
+	^self basicBeginsWith: aCollection!
+
+binarySearchFor: anObject using: searchBlock 
+	"Answer the index at which anObject is located using a binary chop search based on searchBlock"
+
+	^self class 
+		binarySearch: self
+		for: anObject
+		using: searchBlock!
+
+collect: transformer 
+	"Evaluate the <monadicValuable> argument, transformer, for each of the 
+	receiver's elements in the order defined by the receiver's implementation of #do:.
+	Answer a new collection like the receiver (i.e. of the same species but not
+	necessarily the exact same class) containing the values returned by transformation
+	block."
+
+	"Implementation Note: By making use of the special instance creation method 
+	#copyLikeOfSize: we can avoid using a WriteStream here."
+
+	| answer |
+	answer := self copyLikeOfSize: self copySize.
+	self keysAndValuesDo: [:i :each | answer at: i put: (transformer value: each)].
+	^answer!
+
+copyFrom: start
+	"Answer a copy of a subset of the receiver which starts with its element at Integer 
+	index start."
+
+	^self copyFrom: start to: self size!
+
+copyFrom: start to: stop
+	"Answer a new <sequencedReadableCollection> like the receiver
+	containing those elements of the receiver between the <integer> indices start
+	and stop, inclusive, and in the same order."
+
+	| len |
+	len := stop - start + 1.
+	^(self copyLikeOfSize: len) 
+		replaceFrom: 1
+		to: len
+		with: self
+		startingAt: start!
+
+copyLikeOfSize: anInteger
+	"Private - Answer a new collection of the same species as the receiver but with
+	anInteger nil or zero elements. 
+	N.B. Subclasses must override to preserve additional instance variables."
+	
+	"Note: This message differs from #copyEmpty: in two ways:
+	1) an instance of the receivers #species, rather than exact class (although this is usually the same) 
+	is answered; and
+	2) the answer doesn't just have sufficient capacity for anInteger elements, but actually has that 
+	many nil or zero elements."
+
+	^self species ofSize: anInteger!
+
+copyReplaceAll: targetElements with: replacementElements
+	"Answer a new <sequencedReadableCollection> which is a copy of the receiver
+	but in which all occurrences of targetElements have been replaced 	by 
+	the elements of the <sequencedReadableCollection> replacementElements."
+
+	| occurrences resultCollection findSize replaceSize extraSpace index sourceIndex resultIndex selfSize |
+	occurrences := self occurrencesOfSubCollection: targetElements.
+	findSize := targetElements size.
+	replaceSize := replacementElements size.
+	extraSpace := (replaceSize - findSize) * occurrences.
+	selfSize := self size.
+	resultCollection := self copyLikeOfSize: selfSize + extraSpace.
+	sourceIndex := 1.
+	resultIndex := 1.
+	
+	[(index := self indexOfSubCollection: targetElements startingAt: sourceIndex) 
+		> 0] 
+			whileTrue: 
+				["We have found a subCollection to replace.
+		Copy the elements before the match."
+
+				index > sourceIndex 
+					ifTrue: 
+						[resultCollection 
+							replaceFrom: resultIndex
+							to: resultIndex + index - sourceIndex - 1
+							with: (self copyFrom: sourceIndex to: index - 1).
+						resultIndex := resultIndex + index - sourceIndex.
+						sourceIndex := index].
+				"Copy the replacement collection."
+				resultCollection 
+					replaceFrom: resultIndex
+					to: resultIndex + replaceSize - 1
+					with: replacementElements.
+				resultIndex := resultIndex + replaceSize.
+				sourceIndex := sourceIndex + findSize].
+
+	"Copy the collection following the last replacement (if any)."
+	resultCollection 
+		replaceFrom: resultIndex
+		to: resultCollection size
+		with: (self copyFrom: sourceIndex to: selfSize).
+	^resultCollection.
+	#todo	"This implementation does not look very efficient. Might be better to use Streams.
+			OR a collection of the positions should be created, and then the construction of the copy
+			could use that."!
+
+copyReplaceFrom: start to: stop with: replacementElements
+	"Answer a new <sequencedReadableCollection> which is a copy of the receiver
+	but in which all elements of the receiver between the <integer> indices
+	start and stop (inclusive) have been replaced by the elements of the
+	<sequencedReadableCollection> replacementElements. The latter need not 
+	be the same size as the range of elements being replaced.
+
+	This message can be used to insert, append, or replace, so the rules are quite complicated!!
+		If stop is less than start, then replacementElements is inserted in the receiver:
+		If start = 1, then prepend
+		If start = size+1 then append
+		stop must = start-1
+		Else treat as replacement"
+
+	| newSize repSize |
+	repSize := replacementElements size.
+	newSize := self size + repSize - (stop - start + 1).
+	^(self copyLikeOfSize: newSize)
+		replaceFrom: 1
+			to: start - 1
+			with: self
+			startingAt: 1;
+		replaceFrom: start
+			to: start + repSize - 1
+			with: replacementElements
+			startingAt: 1;
+		replaceFrom: start + repSize
+			to: newSize
+			with: self
+			startingAt: stop + 1!
+
+copyReplaceFrom: start to: stop withObject: replacementElement
+	"Answer a new <sequencedReadableCollection> which is a copy of 
+	the receiver, but with the elements between the <integer> indices start
+	to stop (inclusive) replaced with the <Object> replacementElement.
+
+	This message can be used to insert, append, or replace:
+	1) stop = start - 1, and start <= receiver size. This is the insert operation:
+	The Replacement element is inserted between the elements at stop and 
+	start. No elements are actually replaced.
+	2) stop = receiver size, and start = stop + 1. This is the append operation:
+	replacementElement is appended to the new collection.
+	3) Otherwise the operation is a replacement and each of the elements
+	in the specified range is replaced in the copy with replacementElement."
+
+	| answer size |
+	size := self size.
+	(start < 1 or: [start > (size + 1)]) 
+		ifTrue: [^self errorSubscriptBounds: start].
+	(stop > size or: [stop < (start - 1)]) 
+		ifTrue: [^self errorSubscriptBounds: stop].
+	(stop = (start - 1) and: [start <= size]) 
+		ifTrue: 
+			["Insert"
+
+			^(self copyLikeOfSize: size + 1)
+				replaceFrom: 1
+					to: stop
+					with: self
+					startingAt: 1;
+				at: start put: replacementElement;
+				replaceFrom: start + 1
+					to: size + 1
+					with: self
+					startingAt: start;
+				yourself].
+	(stop = size and: [start = (stop + 1)]) 
+		ifTrue: 
+			["Append"
+
+			^self copyWith: replacementElement].
+
+	"Replace"
+	answer := self copyLikeOfSize: size.
+	answer 
+		replaceFrom: 1
+		to: start - 1
+		with: self
+		startingAt: 1.
+	start to: stop do: [:i | answer at: i put: replacementElement].
+	answer 
+		replaceFrom: stop + 1
+		to: size
+		with: self
+		startingAt: stop + 1.
+	^answer!
+
+copyReplacing: targetElement withObject: replacementElement
+	"Answer a new <sequencedReadableCollection> which is a copy 
+	of the receiver, but in which any occurrences of the <Object> targetElement
+	are replaced with the <Object> replacementElement."
+
+	^self collect: [:each | each = targetElement 
+		ifTrue: [replacementElement] 
+		ifFalse: [each]].!
+
+copyWith: newElement
+	"Answer a <sequencedReadableCollection> which is a copy of 
+	the receiver that has newElement concatenated to its end."
+
+	| size |
+	size := self size.
+	^(self copyLikeOfSize: size + 1)
+		at: size + 1 put: newElement;
+		replaceFrom: 1
+			to: size
+			with: self
+			startingAt: 1!
+
+copyWithout: oldElement
+	"Answer a <sequencedReadableCollection> which is a copy of the receiver, but in
+	which all occurrences of the <Object> oldElement have been removed."
+
+	| aStream |
+	aStream := (self copyLikeOfSize: self copySize) writeStream.
+	self 
+		do: [:element | element = oldElement ifFalse: [aStream nextPut: element]].
+	^aStream contents!
+
+copyWithoutAll: oldElements
+	"Answer a <sequencedReadableCollection> which is a copy of the receiver, but in
+	which all occurrences of the elements of the <Collection> oldElements have been removed."
+
+	| aStream |
+	aStream := (self copyLikeOfSize: self copySize) writeStream.
+	self 
+		do: [:element | (oldElements includes: element) ifFalse: [aStream nextPut: element]].
+	^aStream contents!
+
+copyWithoutDuplicates
+	"Answers a copy of the receiver that contains no duplicate objects.
+	Uses equality for comparison."
+
+	| set |
+	set := self asSet.
+	^self select: [:each | (set includes: each) 
+		ifTrue: [ set remove:each. true ]
+		ifFalse: [ false ]].!
+
+do: operation 
+	"Evaluate the <monadicValuable> argument, operation, for each of the receiver's elements.
+	Answers the receiver. The elements are enumerated in index order."
+
+	"Implementation Note: Implemented in terms of #keysAndValuesDo: to reduce the burden of
+	subclassing SequenceableCollection. Where performance is an issue subclasses may want to
+	override."
+
+	self keysAndValuesDo: [:i :elem | operation value: elem]!
+
+endsWith: aCollection
+	"Answer whether the receiver begins with the sequence
+	of objects in the <Collection> argument"
+
+	| i |
+	(i := self size - aCollection size + 1) < 1 ifTrue: [^false].
+	aCollection do: 
+			[:each | 
+			(self at: i) = each ifFalse: [^false].
+			i := i + 1].
+	^true!
+
+errorFirstObject: target
+	"Private - Report an error to the effect that an attempt was made to access the object
+	before the argument, target, where the latter is the last element of the receiver."
+
+	^self error: target printString, ' is my first object'!
+
+errorLastObject: target
+	"Private - Report an error to the effect that an attempt was made to access the object
+	after the argument, target, where the latter is the last element of the receiver."
+
+	^self error: target printString, ' is my last object'!
+
+errorValueNotFound: aValue
+	"Private - Report that an attempt was made to look up the key for a value which was not
+	in receiver"
+
+	^self error: 'value not found: ', aValue printString
+!
+
+fifth
+	"Answer an <Object> which is the fifth element of the receiver. 
+	Raise an exception if the element does not exist."
+
+	^self at: 5!
+
+findFirst: discriminator
+	"Answer the <integer> index of the first element of the receiver for which the 
+	<monadicValuable> argument, discriminator, evaluates to true. If there are 
+	no such elements, answer 0.
+	Implementation Note: We use #keysAndValuesDo: because subclass' implementations of
+	#at: may be quite slow (e.g. LinkedList)."
+
+	self keysAndValuesDo: [:i :elem | (discriminator value: elem) ifTrue: [^i]].
+	^0!
+
+findLast: discriminator
+	"Answer the <integer> index of the last element of the receiver for which the 
+	<monadicValuable> argument, discriminator, evaluates to true. If there are 
+	If there are no such elements, answer 0."
+
+	self size to: 1 by: -1 do: [:i | (discriminator value: (self at: i)) ifTrue: [^i]].
+	^0!
+
+first
+	"Answer an <Object> which is the first element of the receiver. 
+	Raise an exception if the receiver contains no elements."
+
+	^self at: 1!
+
+first: anInteger
+	"Answer a copy of the receiver comprising the leftmost anInteger elements."
+
+	^self copyFrom: 1 to: anInteger!
+
+fourth
+	"Answer an <Object> which is the fourth element of the receiver. 
+	Raise an exception if the element does not exist."
+
+	^self at: 4!
+
+from: anInteger do: operation 
+	"Evaluate the <monadicValuable>, operation, for each element of the receiver from start,
+	inclusive. <BoundsError> will be raised if either start or stop is out of bounds."
+
+	self from: anInteger keysAndValuesDo: [:i :each | operation value: each]!
+
+from: anInteger keysAndValuesDo: operation 
+	"Evaluate the <dyadicValuable>, operation, for each element of the receiver starting with
+	the element at the specified <integer> index. A <BoundsError> will be raised if either the
+	starting index is out of bounds."
+
+	self 
+		from: anInteger
+		to: self size
+		keysAndValuesDo: operation!
+
+from: startInteger to: stopInteger do: operation 
+	"Evaluate the <monadicValuable>, operation, for each element of the receiver in the
+	specified (inclusive) range. A <BoundsError> will be raised if either start or stop index is
+	out of bounds."
+
+	"Implementation Note: Implemented in terms of #from:to:keysAndValuesDo: to reduce the burden
+	of subclassing SequenceableCollection."
+
+	self 
+		from: startInteger
+		to: stopInteger
+		keysAndValuesDo: [:i :each | operation value: each]!
+
+from: startInteger to: stopInteger keysAndValuesDo: operation 
+	"Evaluate the <dyadicValuable>, operation, for each element of the receiver
+	between the <integer> indices, start and stop, inclusive with the element and its
+	index as respectively the second and first arguments."
+
+	"Implementation Note: Do the bounds check up front to avoid the need to check
+	on each access."
+
+	startInteger < 1 ifTrue: [self errorSubscriptBounds: startInteger].
+	stopInteger > self size ifTrue: [self errorSubscriptBounds: stopInteger].
+	self 
+		uncheckedFrom: startInteger
+		to: stopInteger
+		keysAndValuesDo: operation!
+
+grow
+	"Private - Increase the capacity of the receiver. Answer the receiver."
+
+	self resize: self size + self growSize!
+
+hash
+	"Answer the <integer> hash value for the receiver.
+	Implementation Note: This is not a terribly good hash function (in particular it
+	exhibits very poor temporal stability), but it is quick, and alternatives involve expensive 
+	iteration through the receiver's elements."
+
+	| size |
+	(size := self size) == 0 ifTrue: [^17171].
+	^size + (self at: 1) hash + (self at: size) hash!
+
+identityIndexOf: anElement
+	"Answer the index of the first occurrence of the object which is the argument 
+	anElement, within the receiver. If the receiver does not contain anElement, 
+	answer 0. This method is the same as #indexOf:, but uses #== for comparison."
+
+	^self nextIdentityIndexOf: anElement from: 1 to: self size!
+
+identityIndexOf: anElement ifAbsent: exceptionBlock
+	"Answer the index of the first occurrence of the object which is the argument 
+	anElement, within the receiver. If the receiver does not contain anElement, answer 
+	the result of evaluating the argument, exceptionBlock. This method is the same
+	as #indexOf:ifAbsent:, but uses #== for comparison."
+
+	| index |
+	index := self identityIndexOf: anElement.
+	^index == 0
+		ifTrue: [exceptionBlock value]
+		ifFalse: [index]!
+
+includesAnyOf: aCollection 
+	"Answer whether the receiver includes any of the elements in the <collection> argument."
+
+	^(self indexOfAnyOf: aCollection startingAt: 1) ~~ 0!
+
+includesKey: anInteger
+	^anInteger between: 1 and: self size!
+
+indexOf: target
+	"Answer the <integer> index of the first element of the receiver which is 
+	equal to the <Object> argument, target, within the receiver. If the receiver 
+	does not contain any elements equal to target, answer 0."
+
+	^self nextIndexOf: target from: 1 to: self size!
+
+indexOf: target ifAbsent: exceptionHandler
+	"Answer the <integer> index of the first element of the receiver which is 
+	equal to the <Object> argument, target, within the receiver. If the receiver 
+	does not contain any elements equal to target, answer the result of evaluating 
+	the <niladicValuable>, exceptionHandler."
+
+	| index |
+	index := self indexOf: target.
+	^index == 0
+		ifTrue: [exceptionHandler value]
+		ifFalse: [index]!
+
+indexOfAnyOf: aCollection startingAt: anInteger 
+	"Answer the one-based integer index of the first encountered element of the receiver which 
+	is equal to one of the elements of the <Collection> argument, starting from the specified
+	one-based <integer> index. If no occurrences are found, then answer 0."
+
+	self from: anInteger
+		keysAndValuesDo: [:i :elem | (aCollection includes: elem) ifTrue: [^i]].
+	^0!
+
+indexOfSubCollection: aSequenceableCollection
+	"Answer the index of the first occurrence within the receiver of aSequenceableCollection,
+	starting at index anInteger. If there are no such occurrences, answer 0."
+
+	^self indexOfSubCollection: aSequenceableCollection startingAt: 1!
+
+indexOfSubCollection: targetSequence startingAt: start 
+	"Answer the <integer> index of the next occurrence within the 
+	receiver of the <sequencedReadableCollection> targetSequence,
+	starting at the <integer> index start.
+	If there are no such occurrences, answer 0."
+
+	| size subSize firstElement |
+	subSize := targetSequence size.
+	subSize == 0 ifTrue: [^0].
+	firstElement := targetSequence at: 1.
+	size := self size.
+	subSize == 1 
+		ifTrue: 
+			[^self 
+				nextIndexOf: firstElement
+				from: start
+				to: size].
+	start to: size - subSize + 1
+		do: 
+			[:i | 
+			(self at: i) = firstElement 
+				ifTrue: 
+					[| j |
+					j := 2.
+					[(self at: i + j - 1) = (targetSequence at: j)] whileTrue: 
+							[j = subSize ifTrue: [^i].
+							j := j + 1]]].
+	^0!
+
+indexOfSubCollection: targetSequence startingAt: start ifAbsent: exceptionHandler
+	"Answer the <integer> index of the next occurrence within the 
+	receiver of the <sequencedReadableCollection> targetSequence,
+	starting at the <integer> index start.
+	If no such match is found, answer the result of evaluating the 
+	<niladicValuable>, exceptionHandler."
+
+	| index |
+	index := self indexOfSubCollection: targetSequence startingAt: start.
+	^index == 0
+		ifTrue: [exceptionHandler value]
+		ifFalse: [index]!
+
+keyAtEqualValue: value ifAbsent: exceptionHandler
+	"Answer the <integer> key of the <object> argument, value. 
+	If there is no such element, answer the result of evaluating the 
+	niladic valuable, exceptionHandler.
+	N.B. Equality is used for comparison of the values (this increases the chances of 
+	returning any duplicates the collection might contain)."
+
+	^self indexOf: value ifAbsent: exceptionHandler!
+
+keyAtValue: value 
+	"Answer the <integer> key of the <Object> argument, value. 
+	If there is no such value, send #errorNotFound: to the receiver with 
+	value as its argument.
+	N.B. Since elements are not necessarily unique, answer the index of the 
+	first one encountered in a serial search."
+
+	| index |
+	index := self keyAtValue: value ifAbsent: [AbsentCookie].
+	^index == AbsentCookie ifTrue: [self errorValueNotFound: value] ifFalse: [index]!
+
+keyAtValue: value ifAbsent: operation
+	"Answer the <integer> key of the <Object> argument, value. 
+	If there is no such value, answer the result of evaluating the 
+	<niladicValuable>, operation. Identity is used for comparison of the values."
+
+	^self identityIndexOf: value ifAbsent: operation!
+
+keys
+	"Answer a <collection> containing the receiver's keys."
+
+	^1 to: self size!
+
+keysAndValuesDo: operation 
+	"Evaluate the <dyadicValuable>, operation, for each element of the receiver
+	with the <integer> index of that element and the element itself as the arguments."
+
+	"Implementation Note: Subclasses should override #from:to:keysAndValuesDo: rather 
+	than this method, unless they have a slow implementation of #size, or one that 
+	relies on #countElements (since that uses #do: to calculate the size and may
+	therefore go infinitely recursive)."
+
+	self 
+		uncheckedFrom: 1
+		to: self size
+		keysAndValuesDo: operation!
+
+last
+	"Answer the <Object> which is the last element of the receiver. 
+	Raise an exception if the receiver contains no elements."
+
+	^self at: self size!
+
+last: anInteger
+	"Answer a copy of the receiver comprising the rightmost anInteger elements."
+
+	| size |
+	size := self size.
+	^self copyFrom: (size + 1 - anInteger) to: size!
+
+lastIndexOf: target
+	"Answer the <integer> index of the last element of the receiver which is 
+	equal to the <Object> argument, target, within the receiver. If the receiver 
+	does not contain any elements equal to target, answer 0."
+
+	^self prevIndexOf: target from: self size to: 1!
+
+lastIndexOf: anObject ifAbsent: exceptionHandler 
+	"Answer the <integer> index of the last element of the receiver which is 
+	equal to the <Object> first argument within the receiver. If the receiver 
+	does not contain any elements equal to target, answer the result of 
+	evaluating the <niladicValuable>, exceptionHandler."
+
+	"Included for compatibility with Visual Works"
+
+	| index |
+	^(index := self lastIndexOf: anObject) == 0 
+		ifTrue: [exceptionHandler value]
+		ifFalse: [index]!
+
+nextIdentityIndexOf: anElement from: start to: stop
+	"Answer the index of the next occurrence of anElement in the receiver's indexable
+	variables between startIndex and stopIndex inclusive. If there are no such occurrences, answer 0.
+	Subclasses may be able to provide a more efficient implementation using 
+	#primIdentityIndexOf:from:to:."
+
+	self from: start to: stop keysAndValuesDo: [:i :elem | elem == anElement ifTrue: [^i]].
+	^0!
+
+nextIndexOf: anElement from: start to: stop
+	"Answer the index of the next occurrence of anElement in the receiver between 
+	startIndex and stopIndex inclusive. If there are no such occurrences, answer 0."
+
+	self from: start to: stop keysAndValuesDo: [:i :elem | elem = anElement ifTrue: [^i]].
+	^0!
+
+occurrencesOfSubCollection: aSubCollection
+	"Private - Answer the number of occurrences of aSubCollection in the receiver."
+
+	| index count size |
+	index := 1.
+	count := 0.
+	size := aSubCollection size.
+	[(index := self indexOfSubCollection: aSubCollection startingAt: index) > 0] whileTrue: [ 
+		count := count + 1.
+		index := index + size].
+	^count!
+
+prevIndexOf: anElement from: start to: stop
+	"Answer the index of the occurrence of anElement in the receiver between previous
+	to start, but after stop. If there are no such occurrences, answer 0."
+
+	start to: stop by: -1 do: [ :i | (self at: i) = anElement ifTrue: [ ^i ]].
+	^0!
+
+prevIndexOfSubCollection: aSequenceableCollection startingAt: anInteger 
+	"Answer the index of the previous occurrence within the receiver between startIndex and stopIndex
+	of aSequenceableCollection, before the element with index, anInteger. If there are no previous
+	occurrences of aSequenceableCollection, answer 0."
+
+	| subSize firstElement |
+	(subSize := aSequenceableCollection size) == 0 ifTrue: [^0].
+	firstElement := aSequenceableCollection at: 1.
+	subSize == 1 
+		ifTrue: 
+			[^self 
+				prevIndexOf: firstElement
+				from: anInteger
+				to: 0].
+	anInteger to: 1
+		by: -1
+		do: 
+			[:i | 
+			(self at: i) = firstElement 
+				ifTrue: 
+					[| j |
+					j := 2.
+					[(self at: i + j - 1) = (aSequenceableCollection at: j)] whileTrue: 
+							[j = subSize ifTrue: [^i].
+							j := j + 1]]].
+	^0!
+
+prevIndexOfSubCollection: aSequenceableCollection startingAt: anInteger ifAbsent: exceptionBlock
+	"Answer the index of the previous occurrence within the receiver between startIndex and stopIndex
+	of aSequenceableCollection, before the element with index, anInteger. If there are no previous
+	occurrences of aSequenceableCollection, answer the result of evaluating exceptionBlock."
+
+	| index |
+	index := self prevIndexOfSubCollection: aSequenceableCollection startingAt: anInteger.
+	^index == 0
+		ifTrue: [exceptionBlock value]
+		ifFalse: [index]
+!
+
+readStream
+	"Answer a ReadStream on the receiver."
+
+	^ReadStream on: self!
+
+remove: oldElement ifAbsent: exceptionHandler
+	"Remove the <Object> oldElement from the receiver's elements.
+	Raise an exception, as SequenceableCollections are not (in general) 
+	contractible."
+
+	^self shouldNotImplement!
+
+replaceBytesOf: aByteObject from: start to: stop startingAt: fromStart
+	"Private - Standard method for transfering bytes from one sequence of bytes (or characters)
+	to another, normally double dispatched from #replaceFrom:to:with:startingAt:
+	by byte subclasses. Implementing this message at this level allows for the concatenation
+	of character arrays to strings, for example.
+	Implementation Note: It is assumed that the receiver and the argument,
+	cannot be the same object, which will be the case for correctly defined subclasses
+	which must override this implementation.."
+
+	| fromOffset |
+	fromOffset := fromStart - start.
+	start to: stop do: [:i | aByteObject at: i put: (self at: i + fromOffset)].
+	^aByteObject!
+
+replaceFrom: start to: stop with: replacementElements
+	"Destructively replace the elements of the receiver between the <integer> arguments
+	start and stop with the <Object> elements of the <sequencedReadableCollection> argument, 
+	replacementElements. Answer the receiver. Raise an Exception if  replacementElements does 
+	not contain the number of elements required to exactly fill the replacement interval in the receiver."
+
+	replacementElements size = (stop - start + 1)
+		ifFalse: [^self error: 'size of replacement incorrect'].
+	^self replaceFrom: start to: stop with: replacementElements startingAt: 1!
+
+replaceFrom: start to: stop with: replacementElements startingAt: repStart
+	"Destructively replace the elements of the receiver between the <integer> arguments
+	start and stop with the <Object> elements of the <sequencedReadableCollection> 
+	argument, replacementElements beginning with its element with <integer> index 
+	repStart. Answer the receiver. Overlapping moves are correctly handled.
+	Unlike #replaceFrom:to:with:, the size of replacementElements is not checked
+	directly (X3J20 does not specify that this should be an error), but an error will
+	be raised when an attempt is made to access an out-of-bounds element in
+	replacementElements.
+	N.B. It is not an error to specify an empty replacement interval, even if
+	start, stop, and/or repStart are out-of-bounds (this is compatible with the major
+	implementations).
+	Implementation Note: The performance of this method is very important to overall 
+	system performance. This implementation is mostly inlined by the compiler."
+
+	| offset |
+	offset := repStart - start.
+	(self == replacementElements and: [repStart < start])
+		ifTrue: [
+			"Move within same object overlaps, so do backwards"
+			stop to: start by: -1 do: [:i |
+				self at: i put: (replacementElements at: offset + i)]]
+		ifFalse: [
+			"Non-overlapping moves are done forwards"
+			start to: stop do: [:i |
+				self at: i put: (replacementElements at: offset + i)]]!
+
+replaceFrom: start to: stop withObject: replacementElement
+	"Destructively replace the elements of the receiver between the
+	<integer> indices start and stop with the <Object> argument,
+	replacementElement. Answer replacementElement."
+
+	start to: stop do: [:i | self at: i put: replacementElement].
+	^replacementElement!
+
+resize: anInteger
+	"Private - Resize the receiver to accomodate anInteger elements.
+	Answer the receiver."
+
+	(self copyEmpty: anInteger)
+		replaceFrom: 1 to: self size with: self startingAt: 1;
+		become: self!
+
+reverse
+	"Answer a new <sequencedReadableCollection> which contains the same elements
+	as the receiver, but in reverse order."
+
+	| answer i |
+	i := self size.
+	answer := self copyLikeOfSize: i.
+	self do: 
+			[:element | 
+			answer at: i put: element.
+			i := i - 1].
+	^answer!
+
+reverseDo: operation
+	"Evaluate the <monadicValuable> argument, operation, against each 
+	element of the receiver in reverse order, from end to start."
+
+	self size to: 1 by: -1 do: [:i | operation value: (self at: i)]!
+
+runsAndValuesDo: aDyadicValuable 
+	"Evaluate the <dyadicValuable> argument passing it the length of each run of equal values in
+	the receiver, and the corresponding value. This is obviously most efficient with a <RunArray>."
+
+	| runLength current |
+	runLength := 0.
+	self do: 
+			[:each | 
+			runLength == 0 
+				ifTrue: 
+					[runLength := 1.
+					current := each]
+				ifFalse: 
+					[each = current 
+						ifTrue: [runLength := runLength + 1]
+						ifFalse: 
+							[aDyadicValuable value: runLength value: current.
+							current := each.
+							runLength := 1]]].
+	runLength > 0 ifTrue: [aDyadicValuable value: runLength value: current]!
+
+second
+	"Answer an <Object> which is the second element of the receiver. 
+	Raise an exception if the element does not exist."
+
+	^self at: 2!
+
+select: discriminator
+	"Evaluate the <monadicValuable> argument, discriminator, for each of the receiver's elements.
+	Answer a new <collection> like the receiver containing only those elements for which 
+	the discriminator evaluates to true."
+
+	| aStream |
+	aStream := self species writeStream: self copySize.
+	self keysAndValuesDo: [:i :elem |
+		(discriminator value: elem) ifTrue: [aStream nextPut: elem]].
+	^aStream contents!
+
+sixth
+	"Answer an <Object> which is the sixth element of the receiver. 
+	Raise an exception if the element does not exist."
+
+	^self at: 6!
+
+size
+	"Answer the <integer> number of elements in the receiver."
+
+	^self subclassResponsibility!
+
+skipOver: stream
+	"Private - Answer whether the receiver matches the contents of <sequencedStream> stream
+	taking account of any case differences. Answers true if a complete match is
+	found, false otherwise. If a match is found then the stream is left pointing to the next character
+	following the match. If not, the stream position is left unchanged."
+
+	| originalPosition |
+	originalPosition := stream position.
+	self do: [ :each | 
+		(stream atEnd or: [stream next~=each]) ifTrue: [ 
+			stream position: originalPosition. ^false]].
+	^true
+!
+
+swap: integerIndex1 with: integerIndex2
+	"Swap the elements of the receiver at the specified indices"
+
+	| element |
+	element := self at: integerIndex1.
+	self at: integerIndex1 put: (self at: integerIndex2).
+	self at: integerIndex2 put: element!
+
+third
+	"Answer an <Object> which is the third element of the receiver. 
+	Raise an exception if the element does not exist."
+
+	^self at: 3!
+
+uncheckedFrom: startInteger to: stopInteger keysAndValuesDo: aDyadicValuable 
+	"Private - Evaluate the <dyadicValuable> argument for each element of the receiver in the
+	specified inclusive range, with the element and its index as respectively the second and
+	first arguments. No bounds checks need be performed since the caller has established that
+	the start and stop indices are in bounds."
+
+	"Implementation Note: Subclasses should override this method in order to replace all #do:
+	family enumerators (#do:, #keysAndValuesDo:, #from:to:do:, and, of course,
+	#from:to:keysAndValuesDo:). Subclasses may also want to override this if they have a slow
+	implementation of the random accessor method #at:, but can be more efficiently accessed
+	serially (e.g. a singly Linked List), or if they have to calculate their size using
+	#countElements (which would cause an infinite recursion as it uses #do:, which uses #size,
+	...)."
+
+	startInteger to: stopInteger do: [:i | aDyadicValuable value: i value: (self at: i)]!
+
+upTo: target
+	"Answer a new <sequencedReadableCollection> containing the elements of 
+	the receiver up to the specified target, or if the target is not present in the receiver, 
+	the rest of the receiver.
+
+	Implementation Note: This is a convenient shortcut method for:
+		self readStream upTo: target
+	And is usually faster since the Streams implementation is generic."
+
+	^self copyFrom: 1 to: (self indexOf: target ifAbsent: [self size+1])-1!
+
+with: otherCollection do: operation
+	"Evaluate the <dyadicValuable> argument, operation, with each of 
+	the receiver's elements along with the corresponding element from the 
+	<sequencedReadableCollection> argument, otherCollection. 
+	Raise an exception if otherCollection is not the same size as the receiver."
+
+	self size = otherCollection size
+		ifFalse: [^self error: 'collections are of different sizes'].
+	self keysAndValuesDo: [:i :elem |
+		operation
+			value: elem
+			value: (otherCollection at: i)]!
+
+writeStream
+	"Answer a WriteStream on the receiver."
+
+	^WriteStream on: self! !
+!SequenceableCollection categoriesFor: #,!copying!public! !
+!SequenceableCollection categoriesFor: #_sameAsString:!comparing!private! !
+!SequenceableCollection categoriesFor: #=!comparing!public! !
+!SequenceableCollection categoriesFor: #after:!public!searching! !
+!SequenceableCollection categoriesFor: #after:ifAbsent:!public!searching! !
+!SequenceableCollection categoriesFor: #allButFirst!copying!public! !
+!SequenceableCollection categoriesFor: #allButFirst:!copying!public! !
+!SequenceableCollection categoriesFor: #allButLast!copying!public! !
+!SequenceableCollection categoriesFor: #allButLast:!copying!public! !
+!SequenceableCollection categoriesFor: #anyOne!accessing!public! !
+!SequenceableCollection categoriesFor: #appendToStream:!double dispatch!private! !
+!SequenceableCollection categoriesFor: #approxSize!accessing!private! !
+!SequenceableCollection categoriesFor: #asRunArray!converting!public! !
+!SequenceableCollection categoriesFor: #associations!accessing!public! !
+!SequenceableCollection categoriesFor: #at:!accessing!public!testing! !
+!SequenceableCollection categoriesFor: #at:ifAbsent:!accessing!public! !
+!SequenceableCollection categoriesFor: #at:ifPresent:!accessing!public! !
+!SequenceableCollection categoriesFor: #at:put:!accessing!public! !
+!SequenceableCollection categoriesFor: #atAll:put:!accessing!public! !
+!SequenceableCollection categoriesFor: #atAllPut:!accessing!public! !
+!SequenceableCollection categoriesFor: #basicBeginsWith:!comparing!public! !
+!SequenceableCollection categoriesFor: #before:!public!searching! !
+!SequenceableCollection categoriesFor: #before:ifAbsent:!public!searching! !
+!SequenceableCollection categoriesFor: #beginsWith:!comparing!public! !
+!SequenceableCollection categoriesFor: #binarySearchFor:using:!public!searching! !
+!SequenceableCollection categoriesFor: #collect:!enumerating!public! !
+!SequenceableCollection categoriesFor: #copyFrom:!copying!public! !
+!SequenceableCollection categoriesFor: #copyFrom:to:!copying!public! !
+!SequenceableCollection categoriesFor: #copyLikeOfSize:!copying!private! !
+!SequenceableCollection categoriesFor: #copyReplaceAll:with:!copying!public! !
+!SequenceableCollection categoriesFor: #copyReplaceFrom:to:with:!copying!public! !
+!SequenceableCollection categoriesFor: #copyReplaceFrom:to:withObject:!copying!public! !
+!SequenceableCollection categoriesFor: #copyReplacing:withObject:!copying!public! !
+!SequenceableCollection categoriesFor: #copyWith:!copying!public! !
+!SequenceableCollection categoriesFor: #copyWithout:!copying!public! !
+!SequenceableCollection categoriesFor: #copyWithoutAll:!copying!public! !
+!SequenceableCollection categoriesFor: #copyWithoutDuplicates!copying!public! !
+!SequenceableCollection categoriesFor: #do:!debugger-step through!enumerating!public! !
+!SequenceableCollection categoriesFor: #endsWith:!comparing!public! !
+!SequenceableCollection categoriesFor: #errorFirstObject:!exceptions!private! !
+!SequenceableCollection categoriesFor: #errorLastObject:!exceptions!private! !
+!SequenceableCollection categoriesFor: #errorValueNotFound:!exceptions!private! !
+!SequenceableCollection categoriesFor: #fifth!accessing!public! !
+!SequenceableCollection categoriesFor: #findFirst:!public!searching! !
+!SequenceableCollection categoriesFor: #findLast:!public!searching! !
+!SequenceableCollection categoriesFor: #first!accessing!public! !
+!SequenceableCollection categoriesFor: #first:!copying!public! !
+!SequenceableCollection categoriesFor: #fourth!accessing!public! !
+!SequenceableCollection categoriesFor: #from:do:!enumerating!public! !
+!SequenceableCollection categoriesFor: #from:keysAndValuesDo:!enumerating!public! !
+!SequenceableCollection categoriesFor: #from:to:do:!enumerating!public! !
+!SequenceableCollection categoriesFor: #from:to:keysAndValuesDo:!enumerating!public! !
+!SequenceableCollection categoriesFor: #grow!mutating!private! !
+!SequenceableCollection categoriesFor: #hash!comparing!public! !
+!SequenceableCollection categoriesFor: #identityIndexOf:!public!searching! !
+!SequenceableCollection categoriesFor: #identityIndexOf:ifAbsent:!public!searching! !
+!SequenceableCollection categoriesFor: #includesAnyOf:!public!searching! !
+!SequenceableCollection categoriesFor: #includesKey:!public!testing! !
+!SequenceableCollection categoriesFor: #indexOf:!public!searching! !
+!SequenceableCollection categoriesFor: #indexOf:ifAbsent:!public!searching! !
+!SequenceableCollection categoriesFor: #indexOfAnyOf:startingAt:!public!searching! !
+!SequenceableCollection categoriesFor: #indexOfSubCollection:!public!searching! !
+!SequenceableCollection categoriesFor: #indexOfSubCollection:startingAt:!public!searching! !
+!SequenceableCollection categoriesFor: #indexOfSubCollection:startingAt:ifAbsent:!public!searching! !
+!SequenceableCollection categoriesFor: #keyAtEqualValue:ifAbsent:!accessing!public! !
+!SequenceableCollection categoriesFor: #keyAtValue:!accessing!public! !
+!SequenceableCollection categoriesFor: #keyAtValue:ifAbsent:!accessing!public! !
+!SequenceableCollection categoriesFor: #keys!accessing!public! !
+!SequenceableCollection categoriesFor: #keysAndValuesDo:!debugger-step through!enumerating!public! !
+!SequenceableCollection categoriesFor: #last!accessing!public! !
+!SequenceableCollection categoriesFor: #last:!copying!public! !
+!SequenceableCollection categoriesFor: #lastIndexOf:!public!searching! !
+!SequenceableCollection categoriesFor: #lastIndexOf:ifAbsent:!public!searching! !
+!SequenceableCollection categoriesFor: #nextIdentityIndexOf:from:to:!public!searching! !
+!SequenceableCollection categoriesFor: #nextIndexOf:from:to:!public!searching! !
+!SequenceableCollection categoriesFor: #occurrencesOfSubCollection:!private!searching! !
+!SequenceableCollection categoriesFor: #prevIndexOf:from:to:!public!searching! !
+!SequenceableCollection categoriesFor: #prevIndexOfSubCollection:startingAt:!public!searching! !
+!SequenceableCollection categoriesFor: #prevIndexOfSubCollection:startingAt:ifAbsent:!public!searching! !
+!SequenceableCollection categoriesFor: #readStream!public!streaming! !
+!SequenceableCollection categoriesFor: #remove:ifAbsent:!public!removing! !
+!SequenceableCollection categoriesFor: #replaceBytesOf:from:to:startingAt:!double dispatch!primitives!private! !
+!SequenceableCollection categoriesFor: #replaceFrom:to:with:!public!replacing! !
+!SequenceableCollection categoriesFor: #replaceFrom:to:with:startingAt:!public!replacing! !
+!SequenceableCollection categoriesFor: #replaceFrom:to:withObject:!public!replacing! !
+!SequenceableCollection categoriesFor: #resize:!mutating!private! !
+!SequenceableCollection categoriesFor: #reverse!copying!public! !
+!SequenceableCollection categoriesFor: #reverseDo:!enumerating!public! !
+!SequenceableCollection categoriesFor: #runsAndValuesDo:!enumerating!public! !
+!SequenceableCollection categoriesFor: #second!accessing!public! !
+!SequenceableCollection categoriesFor: #select:!enumerating!public! !
+!SequenceableCollection categoriesFor: #sixth!accessing!public! !
+!SequenceableCollection categoriesFor: #size!accessing!public! !
+!SequenceableCollection categoriesFor: #skipOver:!private!searching! !
+!SequenceableCollection categoriesFor: #swap:with:!operations!public! !
+!SequenceableCollection categoriesFor: #third!accessing!public! !
+!SequenceableCollection categoriesFor: #uncheckedFrom:to:keysAndValuesDo:!debugger-step through!enumerating!private! !
+!SequenceableCollection categoriesFor: #upTo:!copying!public!searching! !
+!SequenceableCollection categoriesFor: #with:do:!enumerating!public! !
+!SequenceableCollection categoriesFor: #writeStream!public!streaming! !
+
+SequenceableCollection methodProtocol: #sequencedCollection attributes: #(#ansi #readOnly) selectors: #(#, #after: #allSatisfy: #anySatisfy: #asArray #asBag #asByteArray #asOrderedCollection #asSet #asSortedCollection #asSortedCollection: #at: #at:ifAbsent: #at:put: #atAll:put: #atAllPut: #before: #collect: #copyFrom:to: #copyReplaceAll:with: #copyReplaceFrom:to:with: #copyReplaceFrom:to:withObject: #copyReplacing:withObject: #copyWith: #copyWithout: #detect: #detect:ifNone: #do: #do:separatedBy: #findFirst: #findLast: #first #from:to:do: #from:to:keysAndValuesDo: #includes: #indexOf: #indexOf:ifAbsent: #indexOfSubCollection:startingAt: #indexOfSubCollection:startingAt:ifAbsent: #inject:into: #isEmpty #keysAndValuesDo: #last #notEmpty #occurrencesOf: #rehash #reject: #replaceFrom:to:with: #replaceFrom:to:with:startingAt: #replaceFrom:to:withObject: #reverse #reverseDo: #select: #size #with:do:)!
+SequenceableCollection methodProtocol: #sequencedReadableCollection attributes: #(#ansi #readOnly) selectors: #(#, #after: #allSatisfy: #anySatisfy: #asArray #asBag #asByteArray #asOrderedCollection #asSet #asSortedCollection #asSortedCollection: #at: #at:ifAbsent: #before: #collect: #copyFrom:to: #copyReplaceAll:with: #copyReplaceFrom:to:with: #copyReplaceFrom:to:withObject: #copyReplacing:withObject: #copyWith: #copyWithout: #detect: #detect:ifNone: #do: #do:separatedBy: #findFirst: #findLast: #first #from:to:do: #from:to:keysAndValuesDo: #includes: #indexOf: #indexOf:ifAbsent: #indexOfSubCollection:startingAt: #indexOfSubCollection:startingAt:ifAbsent: #inject:into: #isEmpty #keysAndValuesDo: #last #notEmpty #occurrencesOf: #rehash #reject: #reverse #reverseDo: #select: #size #with:do:)!
+
+!SequenceableCollection class methodsFor!
+
+binarySearch: aSequenceableCollection for: anObject using: searchBlock 
+	"Private - Answer the index at which anObject is located within aSequenceableCollection using a binary chop
+	search based on searchBlock"
+
+	| index low high |
+	low := 1.
+	high := aSequenceableCollection size.
+	
+	[index := (high + low) // 2.
+	low > high] whileFalse: 
+				[(searchBlock value: (aSequenceableCollection at: index) value: anObject) 
+					ifTrue: [low := index + 1]
+					ifFalse: [high := index - 1]].
+	^low!
+
+ofSize: anInteger
+	"Private - Answer a new instance of the receiver with anInteger nil elements.
+	This method is subtly different from #new: because that, as defined for 
+	SequenceableCollections, answers a Collection with sufficient space for 
+	anInteger elements, but which, in the case of some subclasses, may be considered 
+	empty - i.e. containing no elements. If we attempt to perform a #replaceFrom:to:with:startingAt:
+	on an empty SequenceableCollection, then a bounds error will result. This protocol 
+	enables SequenceableCollection's implementation of copy replacement to work for most 
+	subclasses."
+
+	^self new: anInteger!
+
+writeStream
+	"Answer a WriteStream on the a new empty instance of the receiver."
+
+	^self new writeStream!
+
+writeStream: anInteger
+	"Answer a WriteStream on the a new instance of the receiver with
+	initialize size, anInteger."
+
+	^(self new: anInteger) writeStream! !
+!SequenceableCollection class categoriesFor: #binarySearch:for:using:!public!searching! !
+!SequenceableCollection class categoriesFor: #ofSize:!instance creation!private! !
+!SequenceableCollection class categoriesFor: #writeStream!instance creation!public!streaming! !
+!SequenceableCollection class categoriesFor: #writeStream:!instance creation!public!streaming! !
+

@@ -1,0 +1,121 @@
+| package |
+package := Package name: 'IDB File Browser'.
+package paxVersion: 1;
+	basicComment: 'File Browser
+Version 6a - May 2005
+For Version 6 of Dolphin Smalltalk
+
+(C) 2005 Ian Bartholomew
+ian@idb.me.uk
+Public Domain Freeware
+'.
+
+package basicPackageVersion: 'IDB$PACKAGE$VERSION 6a'.
+
+
+package classNames
+	add: #FileBrowser;
+	add: #FileBrowserAbstract;
+	add: #FileBrowserFile;
+	add: #FileBrowserFolder;
+	yourself.
+
+package methodNames
+	add: #String -> #asHexText;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\Object Arts\Dolphin\ActiveX\Automation\ActiveX Automation';
+	add: '..\Object Arts\Dolphin\ActiveX\Connection Points\ActiveX Connection Points';
+	add: '..\Object Arts\Dolphin\ActiveX\OCX\ActiveX Control Hosting';
+	add: '..\Object Arts\Dolphin\IDE\Base\Development System';
+	add: '..\Object Arts\Dolphin\Base\Dolphin';
+	add: '..\Object Arts\Dolphin\MVP\Views\Cards\Dolphin Card Containers';
+	add: '..\Object Arts\Dolphin\MVP\Views\Common Controls\Dolphin Common Controls';
+	add: '..\Object Arts\Dolphin\MVP\Dialogs\Common\Dolphin Common Dialogs';
+	add: '..\Object Arts\Dolphin\MVP\Views\Control Bars\Dolphin Control Bars';
+	add: '..\Object Arts\Dolphin\MVP\Presenters\Image\Dolphin Image Presenter';
+	add: '..\Object Arts\Dolphin\MVP\Presenters\List\Dolphin List Presenter';
+	add: '..\Object Arts\Dolphin\MVP\Base\Dolphin MVP Base';
+	add: '..\Object Arts\Dolphin\MVP\Views\Scintilla\Dolphin Scintilla View';
+	add: '..\Object Arts\Dolphin\MVP\Presenters\Text\Dolphin Text Presenter';
+	add: '..\Object Arts\Dolphin\MVP\Models\Tree\Dolphin Tree Models';
+	add: '..\Object Arts\Dolphin\MVP\Presenters\Tree\Dolphin Tree Presenter';
+	add: '..\Object Arts\Dolphin\MVP\Type Converters\Dolphin Type Converters';
+	add: '..\Object Arts\Dolphin\MVP\Models\Value\Dolphin Value Models';
+	add: 'IDB Common';
+	add: '..\Object Arts\Dolphin\ActiveX\Components\SHDocVw\Internet Explorer';
+	add: '..\Object Arts\Dolphin\ActiveX\COM\OLE COM';
+	add: '..\Object Arts\Dolphin\ActiveX\Components\Picture\OLE Picture';
+	add: '..\Object Arts\Dolphin\ActiveX\Shell\Windows Shell';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+Object subclass: #FileBrowserAbstract
+	instanceVariableNames: 'name parent children'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+FileBrowserAbstract subclass: #FileBrowserFile
+	instanceVariableNames: 'size type timeStamp'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+FileBrowserAbstract subclass: #FileBrowserFolder
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+IdbToolShell subclass: #FileBrowser
+	instanceVariableNames: 'folders files text hex image html hexEnabled removeCr currentRootFolder showImageAs'
+	classVariableNames: 'HexEnabled HexFont RemoveCr RootFolder TextFont Warnings'
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+!String methodsFor!
+
+asHexText
+	"Converts? the receiver into a string containing the hex representation of the receiver"
+
+	| stream |
+	#idbAdded.
+	stream := String writeStream.
+	0 to: self size - 1
+		by: 16
+		do: 
+			[:index | 
+			stream nextPutAll: ('%08x  ' sprintfWith: index).
+			0 to: 15
+				do: 
+					[:offset | 
+					index + offset + 1 <= self size 
+						ifTrue: [stream nextPutAll: ('%02x ' sprintfWith: (self at: index + offset + 1))]
+						ifFalse: [stream nextPutAll: '   ']].
+			0 to: 15
+				do: 
+					[:offset | 
+					index + offset + 1 <= self size 
+						ifTrue: 
+							[((self at: index + offset + 1) isPrintable and: [(self at: index + offset + 1) ~= Character tab]) 
+								ifTrue: [stream nextPut: (self at: index + offset + 1)]
+								ifFalse: [stream nextPut: $.]]].
+			stream cr].
+	^stream contents! !
+!String categoriesFor: #asHexText!converting!idb goodies!public! !
+
+"End of package definition"!
+

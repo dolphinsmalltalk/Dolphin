@@ -1,0 +1,81 @@
+| package |
+package := Package name: 'Month View'.
+package paxVersion: 1;
+	basicComment: 'Dolphin Smalltalk Month View Control.
+Copyright (c) Object Arts Ltd, 2001.
+
+MonthView is an Active-X control which displays a date in a familiar calendar-like format.
+
+This class depends on having the "Microsoft Windows Common Controls-2" control (MSCOMCT2.OCX) installed. Development machines with a Microsoft Visual Studio product (such as VB) will have this control. It can also be downloaded from the net. If this view class is used in an application then it is necessary to distribute MSCOMCT2.OCX. Note that this Active-X control is licensed. A Microsoft Installer merge module for the control is available (search the net for "mscomct2.msm")
+
+Documentation on the Month View control is available on MSDN, e.g. see:
+	http://msdn.microsoft.com/library/en-us/cmctl298/html/vbctlMonthViewControl.asp
+'.
+
+package basicPackageVersion: '6.0'.
+
+
+package classNames
+	add: #IMonthView;
+	add: #MonthView;
+	yourself.
+
+package methodNames
+	add: 'DatePresenter class' -> #resource_Month_view;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\..\Automation\ActiveX Automation';
+	add: '..\..\Connection Points\ActiveX Connection Points';
+	add: '..\..\OCX\ActiveX Control Hosting';
+	add: '..\..\..\Base\Dolphin';
+	add: '..\..\..\MVP\Presenters\Date Time\Dolphin Date Time Presenters';
+	add: '..\..\..\MVP\Base\Dolphin MVP Base';
+	add: '..\..\..\MVP\Type Converters\Dolphin Type Converters';
+	add: '..\..\..\MVP\Models\Value\Dolphin Value Models';
+	add: '..\..\COM\OLE COM';
+	add: '..\Font\OLE Font';
+	add: '..\Picture\OLE Picture';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+IMSControl subclass: #IMonthView
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+AXValueConvertingControlSite subclass: #MonthView
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+!DatePresenter class methodsFor!
+
+resource_Month_view
+	"Answer the literal data from which the 'Month view' resource can be reconstituted.
+	DO NOT EDIT OR RECATEGORIZE THIS METHOD.
+
+	If you wish to modify this resource evaluate:
+	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Month_view)
+	"
+
+	^#(#'!!STL' 3 788558 10 ##(STBViewProxy)  8 ##(MonthView)  98 26 0 0 98 2 8 1140916224 1 416 721990 2 ##(ValueHolder)  0 32 1376774 ##(PluggableSearchPolicy)  459270 ##(Message)  8 #= 98 0 562 8 #hash 98 0 0 524550 ##(ColorRef)  8 4278190080 0 7 0 0 0 416 0 81920801 8 'MSComCtl2.MonthView' 656390 ##(IMonthView)  0 0 1444166 1 ##(TKindInterfaceAnalyzer)  590598 ##(ITypeInfo)  0 0 525062 ##(TYPEATTR)  0 816 784 0 1378630 2 ##(AXTypeLibraryAnalyzer)  590342 ##(ITypeLib2)  0 0 1 524550 ##(TLIBATTR)  8 #[52 29 207 134 95 12 210 17 169 252 0 0 248 117 77 161 0 0 0 0 1 0 0 0 2 0 0 0 10 0 0 0] 0 0 0 0 234 240 98 2 8 'GUID' 8 #GUID 0 0 0 51 0 0 0 0 918022 ##(IDolphinAxHost)  0 0 722438 ##(AXEventSink)  234 240 98 36 3 8 #DateClick: 5 8 #DateDblClick: 7 8 #GetDayBold:Count:State: 9 8 #SelChange:EndDate:Cancel: -1207 8 #KeyUp:Shift: -1205 8 #KeyPress: -1203 8 #KeyDown:Shift: -1201 8 #DblClick -1199 8 #Click -1209 8 #MouseDown:Shift:x:y: -1211 8 #MouseMove:Shift:x:y: -1213 8 #MouseUp:Shift:x:y: 3101 8 #OLEStartDrag:AllowedEffects: 3103 8 #OLEGiveFeedback:DefaultCursors: 3105 8 #OLESetData:DataFormat: 3107 8 #OLECompleteDrag: 3109 8 #OLEDragOver:Effect:Button:Shift:x:y:State: 3111 8 #OLEDragDrop:Effect:Button:Shift:x:y: 416 1049094 ##(IConnectionPoint)  0 0 384147073 1378630 1 ##(TKindDispatchAnalyzer)  802 0 0 834 0 1488 1472 0 866 898 0 0 2049 930 8 #[52 29 207 134 95 12 210 17 169 252 0 0 248 117 77 161 0 0 0 0 1 0 0 0 2 0 0 0 10 0 0 0] 0 0 0 0 234 240 98 2 8 'GUID' 1024 0 0 262198 ##(GUID)  16 105 69 46 35 195 135 209 17 139 227 0 0 248 117 77 161 53 0 0 0 1 2761 234 240 98 0 1508358 ##(IAxWinAmbientDispatchEx)  0 0 0 0 524806 ##(IUnknown)  0 0 0 0 0 852486 ##(NullConverter)  0 0 983302 ##(MessageSequence)  202 208 98 4 721670 ##(MessageSend)  8 #createAt:extent: 98 2 328198 ##(Point)  11 11 1922 481 431 416 1858 8 #restoreAmbientProperties 1680 416 1858 8 #docHostFlags: 98 1 9 416 1858 8 #controlBinaryStoreBytes: 98 1 8 #[106 69 46 35 195 135 209 17 139 227 0 0 248 117 77 161 33 67 52 18 8 0 0 0 57 22 0 0 119 20 0 0 26 177 95 192 0 0 6 0 28 0 0 0 138 16 0 0 209 7 8 0 0 0 22 0 0 0 0 0 0 0 0 0 15 39 12 0 5 0 31 0 0 0 0 0 0 0 0 0 217 6 1 0 1 0 1 0 0 0 0 0 0 0 0 0 209 7 8 0 3 0 22 0 14 0 43 0 14 0 119 1 209 7 8 0 3 0 22 0 14 0 43 0 14 0 119 1 0 0 7 0 0 0 0 0 1 239 205 171 0 0 5 0 197 38 129 124 6 128 128 128 0 0 0 0 255 255 255 0 0 0 5 0 31 222 236 189 1 0 5 0 229 250 192 0 3 82 227 11 145 143 206 17 157 227 0 170 0 75 184 81 1 0 0 0 144 1 116 183 1 0 15 84 105 109 101 115 32 78 101 119 32 82 111 109 97 110] 416 983302 ##(WINDOWPLACEMENT)  8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 5 0 0 0 5 0 0 0 245 0 0 0 220 0 0 0] 98 0 1922 193 193 0 27 )! !
+!DatePresenter class categoriesFor: #resource_Month_view!public!resources-views! !
+
+"End of package definition"!
+

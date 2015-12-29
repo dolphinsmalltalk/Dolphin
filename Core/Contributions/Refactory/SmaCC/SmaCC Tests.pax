@@ -1,0 +1,60 @@
+| package |
+package := Package name: 'SmaCC Tests'.
+package paxVersion: 1;
+	basicComment: 'This package is part of the Smalltalk Compiler-Compiler (SmaCC) written by John Brant and Don Roberts. It contains some simple tests for SmaCC. If you wish to port SmaCC or if you want to verify you installation of SmaCC, then these may be useful to you. Under VisualWorks, these tests require loading the MethodWrappers package (http://www.refactory.com/Software/MethodWrappers/).
+
+If you want more information about SmaCC, visit http://www.refactory.com/Software/SmaCC/. '.
+
+
+package classNames
+	add: #LineNumberStreamTest;
+	add: #ParserGeneratorTest;
+	add: #TestParser;
+	add: #TestScanner;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\..\Object Arts\Dolphin\Base\Dolphin';
+	add: 'SmaCC Development';
+	add: 'SmaCC Runtime';
+	add: '..\..\Camp Smalltalk\SUnit\SUnit';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+SmaCCParser subclass: #TestParser
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+SmaCCScanner subclass: #TestScanner
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+TestCase subclass: #LineNumberStreamTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+TestCase subclass: #ParserGeneratorTest
+	instanceVariableNames: 'wrappers'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+"End of package definition"!
+

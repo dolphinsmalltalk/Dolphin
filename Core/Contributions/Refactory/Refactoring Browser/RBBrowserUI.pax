@@ -1,0 +1,182 @@
+| package |
+package := Package name: 'RBBrowserUI'.
+package paxVersion: 0;
+	basicComment: ''.
+
+package basicPackageVersion: ''.
+
+"Add the package scripts"
+package basicScriptAt: #postinstall put: ''.
+package basicScriptAt: #postuninstall put: ''.
+package basicScriptAt: #preinstall put: ''.
+package basicScriptAt: #preuninstall put: ''.
+
+"Add the class names, loose method names, global names, resource names"
+package classNames
+	add: #BrowserApplicationModel;
+	add: #BrowserClassTool;
+	add: #BrowserCommentTool;
+	add: #BrowserNavigator;
+	add: #BrowserNotesTool;
+	add: #BrowserTextTool;
+	add: #CodeModel;
+	add: #CodeModelLockPolicy;
+	add: #CodeTool;
+	add: #CodeToolSelectionPolicy;
+	add: #CommentSelectionPolicy;
+	add: #CompositeRefactoryChangeInspector;
+	add: #DolphinNavigatorState;
+	add: #Navigator;
+	add: #NavigatorState;
+	add: #NotesSelectionPolicy;
+	add: #ReferenceFinder;
+	add: #RewriteCodeTool;
+	add: #SourceSelectionPolicy;
+	add: #StateLockPolicy;
+	add: #VariableNavigatorState;
+	yourself.
+
+package methodNames
+	add: #BrowserEnvironment -> #navigatorClass;
+	yourself.
+
+package globalNames
+	yourself.
+
+package resourceNames
+	yourself.
+
+"Binary Global Names"
+package binaryGlobalNames: (Set new
+	yourself).
+"Resource Names"
+package allResourceNames: (Set new
+	yourself).
+
+"Add the prerequisite names"
+package setPrerequisites: (IdentitySet new
+	add: 'Dolphin';
+	add: 'RBChangeObjects';
+	add: 'RBEnvironments';
+	add: 'RBRefactorings';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+Object subclass: #CodeModelLockPolicy
+	instanceVariableNames: ''
+	classVariableNames: 'WindowHandleCache'
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Object subclass: #CodeToolSelectionPolicy
+	instanceVariableNames: 'name codeModel'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Object subclass: #NavigatorState
+	instanceVariableNames: 'meta classNames protocols selectors applications'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Object subclass: #ReferenceFinder
+	instanceVariableNames: 'backlinks objectsLeft testBlock foundBlock'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+CodeModelLockPolicy subclass: #StateLockPolicy
+	instanceVariableNames: 'locked'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+CodeToolSelectionPolicy subclass: #CommentSelectionPolicy
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+CodeToolSelectionPolicy subclass: #NotesSelectionPolicy
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+CodeToolSelectionPolicy subclass: #SourceSelectionPolicy
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Model subclass: #BrowserApplicationModel
+	instanceVariableNames: 'widgets'
+	classVariableNames: 'ActiveDialogs'
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+BrowserApplicationModel subclass: #CodeModel
+	instanceVariableNames: 'navigator tool lockPolicy state selectionPolicies selectionPolicy timeStamp'
+	classVariableNames: 'DefaultSelectionPolicies'
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+BrowserApplicationModel subclass: #CodeTool
+	instanceVariableNames: 'codeModel'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+BrowserApplicationModel subclass: #CompositeRefactoryChangeInspector
+	instanceVariableNames: 'refactoryBuilder menu'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+BrowserApplicationModel subclass: #Navigator
+	instanceVariableNames: 'applicationMenuHolder classMenuHolder protocolMenuHolder selectorMenuHolder methodTypes isMeta onlyApplicationSelectors viewHierarchy classTypes environment'
+	classVariableNames: 'LastProtocol SortProtocols'
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+CodeTool subclass: #BrowserTextTool
+	instanceVariableNames: 'changed originalText savedText menu undoManager selectionManager'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+CodeTool subclass: #RewriteCodeTool
+	instanceVariableNames: 'rewriteRuleEditor'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+BrowserTextTool subclass: #BrowserClassTool
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+BrowserTextTool subclass: #BrowserCommentTool
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+BrowserTextTool subclass: #BrowserNotesTool
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Navigator subclass: #BrowserNavigator
+	instanceVariableNames: 'dependents acceptAsPrivate'
+	classVariableNames: 'RefactoringOptions'
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+NavigatorState subclass: #DolphinNavigatorState
+	instanceVariableNames: 'selectedClass category method packages filterPresenter mode variables currentView'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+NavigatorState subclass: #VariableNavigatorState
+	instanceVariableNames: 'instanceVariable classVariable variableClassName'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+"Loose Methods"!
+
+!BrowserEnvironment methodsFor!
+
+navigatorClass
+	"rbDmm "
+	^BrowserNavigator! !
+!BrowserEnvironment categoriesFor: #navigatorClass!*-unclassified!public! !
+
+"End of package definition"!

@@ -1,0 +1,139 @@
+| package |
+package := Package name: 'OLE Persistence Base'.
+package paxVersion: 1;
+	basicComment: 'Dolphin Smalltalk OLE Persistence Support. 
+Copyright (c) Object Arts Ltd 2000.
+
+This package wraps the fundamental OLE persistence interfaces in the IPersist hierarchy. These interfaces are implemented by COM objects that support persistence to OLE structure storage streams (IStreams), and less commonly onto blocks of memory (through IPersistMemory). Most Active-X controls, for example, support IPersistStream(Init).'.
+
+package basicPackageVersion: '6.0'.
+
+
+package classNames
+	add: #IPersist;
+	add: #IPersistMemory;
+	add: #IPersistStream;
+	add: #IPersistStreamInit;
+	yourself.
+
+package methodNames
+	add: #IStream -> #nextPutObject:;
+	add: #OLELibrary -> #oleLoadFromStream:iidInterface:ppvObj:;
+	add: #OLELibrary -> #oleSaveToStream:pStm:;
+	add: 'COMInterface class' -> #readFromIStream:;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\..\Base\Dolphin';
+	add: '..\COM\OLE COM';
+	add: '..\Structured Storage\OLE Structured Storage';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+IUnknown subclass: #IPersist
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+IPersist subclass: #IPersistMemory
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+IPersist subclass: #IPersistStream
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+IPersistStream subclass: #IPersistStreamInit
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+!COMInterface class methodsFor!
+
+readFromIStream: anIStream
+	"Answer a new instance of the receiver on a persistent object loaded from the argument, anIStream."
+
+	| answer |
+	answer := self newPointer.
+	OLELibrary default oleLoadFromStream: anIStream iidInterface: self iid ppvObj: answer.
+	^answer! !
+!COMInterface class categoriesFor: #readFromIStream:!instance creation!public! !
+
+!IStream methodsFor!
+
+nextPutObject: unkObj
+	"Append the persisted representation of the COM object representd by the <IUnknown>,
+	unkObj, to the receiver. This is done by using the objects IPersistStream[Init].
+	If the object does not support persistence to a stream, then an attempt is made to
+	at least write the object's CLSID to the stream so that it can be reinstantiated."
+
+	| ips |
+	ips := unkObj queryInterface: IPersistStreamInit ifNone: [unkObj queryInterface: IPersistStream].
+	ips isNull
+		ifTrue: [ | ip |
+			ip := unkObj queryInterface: IPersist ifNone: [
+					^self error: 'Object not persistable: ', unkObj printString].
+			self nextPutCLSID: ip clsid]
+		ifFalse: [OLELibrary default oleSaveToStream: ips pStm: self]
+! !
+!IStream categoriesFor: #nextPutObject:!accessing!public! !
+
+!OLELibrary methodsFor!
+
+oleLoadFromStream: pStm iidInterface: riid ppvObj: ppOut
+	"Load an object from the specified stream, answering the specified interface on
+	it through the output parameter, ppOut.
+	This is equivalent to the following steps:
+		1. Call ReadClassStm() to get the CLSID of the object from the stream.
+		2. Call CoCreateInstance() to instantiate the object.
+		3. Query the object for IPersistStream. 
+		4. Call IPersistStream::Load to load the object's persistent state.
+
+		WINOLEAPI OleLoadFromStream(
+			IStream * pStm, 	//Pointer to stream from which object is to be loaded
+			REFIID iidInterface,	//Interface identifier 
+			void ** ppvObj	//Indirect pointer to the newly loaded object
+		);"
+
+	<stdcall: hresult OleLoadFromStream IStream* IID* lppvoid>
+	^self invalidCall!
+
+oleSaveToStream: pPStm pStm: pStm
+	"Save an object with the specified IPersistStream interface to the specified IStream.
+	This is equivalent to the following steps:
+		1. Call IPersistStream::GetClassID method to get the object's CLSID.
+		2. Write the CLSID to the IStream with the WriteClassStm function.
+		3. Call the IPersistStream::Save method with fClearDirty set to TRUE, to save the object
+		to the IStream (clearing the dirty bit).
+
+	Note that contrary to what the Win32 help says, the pPStm argument cannot be NULL.
+
+		WINOLEAPI OleSaveToStream(
+			IPersistStream * pPStm,	//Pointer to the interface on the object to be saved
+			IStream * pStm	//Pointer to the destination stream to which the object is saved
+		);"
+ 
+	<stdcall: hresult OleSaveToStream IPersistStream* IStream* >
+	^self invalidCall! !
+!OLELibrary categoriesFor: #oleLoadFromStream:iidInterface:ppvObj:!OLE Functions-Persistent Objects!primitives!public! !
+!OLELibrary categoriesFor: #oleSaveToStream:pStm:!OLE Functions-Persistent Objects!primitives!public! !
+
+"End of package definition"!
+

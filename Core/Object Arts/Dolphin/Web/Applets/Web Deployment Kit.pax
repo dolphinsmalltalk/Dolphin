@@ -1,0 +1,457 @@
+| package |
+package := Package name: 'Web Deployment Kit'.
+package paxVersion: 1;
+	basicComment: 'Dolphin Smalltalk Web Deployment Kit.
+Copyright (c) Object Arts Ltd, 1997-2007. Portions copyright CGI Group (Europe) Ltd, 1997.
+
+The Web Deployment Kit (WDK) provides a means whereby Smalltalk classes can be exported from a Dolphin image in binary format such that they can be transported (usually via the web) and then imported into another image to be executed. Typically this transportation mechanism is used by the Smalltalk Web Start package to download binary class files and execute them within the confines of the web start base image.  
+
+Since exported binary classes are effectively executable code that may be transported across the relatively insecure web, it is important to have some mechanism whereby the source of the classes and their veracity can be guaranteed.  The WDK makes use of the DolphinSure cryptography package to encode binary class files along with a publisher''s identification certificate.  This "code signing" is of sufficient strength to virtually ensure that a class arise at its destination untampered with.
+
+In order to deploy a package as a set of binary classes, whether digitally signed or not, the procedure is straightforward. Simply select the appropriate package within the Package Browser and choose Save Binary Classes from the Package menu. You''ll be prompted to choose a certificate and appropriate private key (if you have one).  If you do so, each of the class files will be digitally signed with this certificate but, if you cancel the certificate request, then the classes are exported to unsigned files.
+
+'.
+
+package basicPackageVersion: '2007.6.5.23'.
+
+package basicScriptAt: #preinstall put: '| c |
+c := Smalltalk at: #STBImportedClassProxy ifAbsent: [].
+c notNil ifTrue: [ c removeFromSystem ].
+c := Smalltalk at: #STBImportedMetaclassProxy ifAbsent: [].
+c notNil ifTrue: [ c removeFromSystem ].
+'.
+
+package classNames
+	add: #BinaryPackage;
+	add: #BinaryPackageVersionError;
+	add: #BrowserView;
+	add: #ClassStub;
+	add: #INPApplet;
+	add: #INPDolphin;
+	add: #INPPlugHole;
+	add: #INPStream;
+	add: #INPStreamEvents;
+	add: #MetaclassStub;
+	add: #NPApplet;
+	add: #NPAppletSite;
+	add: #NPDolphin;
+	add: #NPInStream;
+	add: #NPOutStream;
+	add: #NPStream;
+	add: #NPSynchronousStreamHandler;
+	add: #PluginSessionManager;
+	add: #STBBinaryPackageProxy;
+	add: #STBImportedClassProxy;
+	add: #STBImportedMetaclassProxy;
+	add: #URLClassLocator;
+	yourself.
+
+package methodNames
+	add: #ClassLocator -> #binaryPackageFilename;
+	add: #ClassLocator -> #findOrImportForeignClass;
+	add: #PackageSelector -> #saveBinaryPackage;
+	add: #PackageSelector -> #saveBinaryPackage:withCertificate:privateKey:inDirectory:;
+	add: #PackageSelector -> #saveBinaryPackage:withCertificate:privateKey:inDirectory:withPrerequisitesForBaselinePackageSet:;
+	add: #Presenter -> #fileLocator;
+	add: #Presenter -> #site;
+	add: #View -> #fileLocator;
+	add: #View -> #site;
+	add: 'ExternalLibrary class' -> #stbModifyExportProxy:;
+	add: 'Image class' -> #fromURL:;
+	add: 'Presenter class' -> #show:inPlugin:;
+	add: 'Presenter class' -> #showInPlugin:;
+	add: 'Shell class' -> #show:inPlugin:;
+	add: 'ShellView class' -> #show:inPlugin:;
+	add: 'View class' -> #show:inPlugin:;
+	yourself.
+
+package globalNames
+	add: #NPDolphinConstants;
+	add: #PluginConstants;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\..\ActiveX\Automation\ActiveX Automation';
+	add: '..\..\IDE\Base\Development System';
+	add: '..\..\Base\Dolphin';
+	add: '..\..\MVP\Presenters\Prompters\Dolphin Choice Prompter';
+	add: '..\..\MVP\Dialogs\Common\Dolphin Common Dialogs';
+	add: '..\..\MVP\Base\Dolphin MVP Base';
+	add: '..\..\MVP\Presenters\Prompters\Dolphin Prompter';
+	add: '..\..\DolphinSure\DolphinSure';
+	add: '..\..\ActiveX\COM\OLE COM';
+	add: '..\..\ActiveX\Components\Picture\OLE Picture';
+	add: '..\..\ActiveX\Structured Storage\OLE Structured Storage';
+	add: '..\..\ActiveX\Components\XML DOM\XML DOM';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+Object subclass: #BinaryPackage
+	instanceVariableNames: 'name classes methods resources keepSource'
+	classVariableNames: 'ImportedPackages'
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Object subclass: #NPSynchronousStreamHandler
+	instanceVariableNames: 'semaphore localFilename url downloadUrl openTimeout openTimer npresult'
+	classVariableNames: 'DefaultOpenTimeout Opened Pending TimedOut Waiting'
+	poolDictionaries: 'PluginConstants'
+	classInstanceVariableNames: ''!
+COMInterfaceImp subclass: #NPApplet
+	instanceVariableNames: 'instance attributes mimeType displayMode srcURL browserView site pendingURLHandlers urlNotifications srcStream appletClass classLocator appletHolder accessProtect'
+	classVariableNames: 'DownloadFailedSignal MimeStartContexts TimeoutSignal UserAbortSignal'
+	poolDictionaries: 'FacilityCodes PluginConstants Win32Constants'
+	classInstanceVariableNames: ''!
+COMInterfaceImp subclass: #NPDolphin
+	instanceVariableNames: 'plugHole versions allAppletHolders namedAppletHolders'
+	classVariableNames: 'Current'
+	poolDictionaries: 'PluginConstants'
+	classInstanceVariableNames: ''!
+COMInterfaceImp subclass: #NPStream
+	instanceVariableNames: 'npStream applet mode mimeType handler'
+	classVariableNames: ''
+	poolDictionaries: 'PluginConstants'
+	classInstanceVariableNames: ''!
+NPStream subclass: #NPInStream
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+NPStream subclass: #NPOutStream
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Error subclass: #BinaryPackageVersionError
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+IUnknown subclass: #INPApplet
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: 'NPDolphinConstants'
+	classInstanceVariableNames: ''!
+IUnknown subclass: #INPDolphin
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: 'NPDolphinConstants'
+	classInstanceVariableNames: ''!
+IUnknown subclass: #INPPlugHole
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: 'NPDolphinConstants'
+	classInstanceVariableNames: ''!
+IUnknown subclass: #INPStream
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: 'NPDolphinConstants'
+	classInstanceVariableNames: ''!
+IUnknown subclass: #INPStreamEvents
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: 'NPDolphinConstants'
+	classInstanceVariableNames: ''!
+ClassLocator subclass: #URLClassLocator
+	instanceVariableNames: 'transport'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+GUISessionManager subclass: #PluginSessionManager
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+STBProxy subclass: #STBBinaryPackageProxy
+	instanceVariableNames: 'name classes spare methodDictionaries methods resources'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+STBProxy subclass: #STBImportedClassProxy
+	instanceVariableNames: 'name superclass instanceSpec instVarString methodDictionary classPool classInstVarString classInstVarValues classMethodDictionary guid'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+STBProxy subclass: #STBImportedMetaclassProxy
+	instanceVariableNames: 'instanceClass'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ContainerView subclass: #BrowserView
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ContainerView subclass: #NPAppletSite
+	instanceVariableNames: 'context backgroundImage'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ProtoObject subclass: #ClassStub
+	instanceVariableNames: 'classLocator'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ClassStub subclass: #MetaclassStub
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+!ClassLocator methodsFor!
+
+binaryPackageFilename
+	"Private - Answer the filename for the package associated with the receiver"
+
+	^self packageName, '.', BinaryPackage binaryPackageExtension.
+!
+
+findOrImportForeignClass
+	"Private - Answer the 'imported' class referred to by the receiver. If this
+	has already been loaded then answer it from the ImportedClasses Dictionary,
+	otherwise load it. If there is an entry for the class in ImportedClasses but
+	it is is nil, then this indicates that there is a circularity in the class
+	load sequence and the operation will be aborted."
+
+	| class classKey |
+	classKey := self fullClassKey.
+	self class importedClassesMutex critical: 
+			["To avoid leaving the class loader mutex locked if an error occurs we must
+		 establish a guard block - #ifCurtailed: will not do because the mutex will
+	 	still be locked when the walkback appears"
+			
+			[class := ImportedClasses at: classKey
+						ifAbsent: 
+							[self hasPackageName 
+								ifFalse: 
+									["The receiver does not contain a package name. Hence, there is no point	
+				in continuing and trying to load a binary package."
+									self errorClassNotFound].
+							BinaryPackage loadUsing: self copyWithCodeBase.
+							ImportedClasses at: classKey ifAbsent: []]] 
+					on: Error
+					do: 
+						[:e | 
+						self class importedClassesMutex signal.
+						e pass]].
+
+	"You won't get here if an exception occurs - this is where we detect
+	an impending endless recursion."
+	class isNil 
+		ifTrue: 
+			[ImportedClasses removeKey: classKey ifAbsent: [].
+			self errorClassCircularityDetected].
+	^class! !
+!ClassLocator categoriesFor: #binaryPackageFilename!accessing!private! !
+!ClassLocator categoriesFor: #findOrImportForeignClass!operations!private! !
+
+!ExternalLibrary class methodsFor!
+
+stbModifyExportProxy: anSTBImportedClassProxy
+	"Private - This is an opportunity to modifiy the classes' binary export proxy just before it is
+	output (to an STC file). Here we always nil the 'default' class inst var to avoid a proxy
+	fixup sequence problem on load."
+
+	anSTBImportedClassProxy classInstVarValues at: 1 put: nil! !
+!ExternalLibrary class categoriesFor: #stbModifyExportProxy:!binary filing!private! !
+
+!Image class methodsFor!
+
+fromURL: aURLString
+	"Answer an instance loaded from the URL, aURLString."
+
+	^(self fromId: aURLString in: 0) fileLocator: URLClassLocator default; yourself! !
+!Image class categoriesFor: #fromURL:!instance creation!public! !
+
+!PackageSelector methodsFor!
+
+saveBinaryPackage
+	"Save the current package in a binary format suitable for dynamic loading from Plugins, etc."
+
+	| package certificate privateKeyString mainfestFilename retainedPackagesNode basePackages dom |
+	package := self singlePackage.
+	(self okToSavePackage: package) ifFalse: [^self].
+
+	"First prompt to see if the class files should be signed"
+	certificate := (ChoicePrompter create)
+				caption: 'Choose a certificate';
+				choices: DolphinSureCertificateStore myCertificates certificates;
+				showModal.
+	certificate notNil 
+		ifTrue: 
+			["To sign we need a private key that matches the certificate"
+			privateKeyString := Prompter prompt: 'Enter Private Key:' caption: certificate displayString].
+
+	"Next prompt for a baseline manifest XML"
+	mainfestFilename := (FileOpenDialog new)
+				caption: 'Open Baseline Packages Manifest';
+				fileTypes: #(#('XML Manifest Files (*.xml)' '*.xml') #('All Files (*.*)' '*.*'));
+				defaultExtension: 'xml';
+				showModal.
+	mainfestFilename isNil 
+		ifTrue: 
+			[^self 
+				saveBinaryPackage: package
+				withCertificate: certificate
+				privateKey: privateKeyString
+				inDirectory: (File splitPathFrom: package fileOutName)].
+	dom := IXMLDOMDocument new.
+	dom loadURL: 'file://' , mainfestFilename.
+	retainedPackagesNode := dom selectNodes: './/RetainedPackages/Package'.
+	basePackages := (retainedPackagesNode collect: [:each | Package manager packageNamed: each text]) 
+				asSet.
+	self 
+		saveBinaryPackage: package
+		withCertificate: certificate
+		privateKey: privateKeyString
+		inDirectory: (File splitPathFrom: package fileOutName)
+		withPrerequisitesForBaselinePackageSet: basePackages!
+
+saveBinaryPackage: aPackage withCertificate: aDolphinSureCertificate privateKey: privateKeyString inDirectory: path 
+	"Save the current package in a binary format suitable for dynamic loading from Plugins, etc."
+
+	| filename binaryPackage |
+	(self okToSavePackage: aPackage) ifFalse: [^self].
+	binaryPackage := BinaryPackage for: aPackage.
+	filename := binaryPackage fileOutName.
+	path notNil 
+		ifTrue: [filename := File composePath: path subPath: (File splitFilenameFrom: filename)].
+	aDolphinSureCertificate isNil 
+		ifTrue: 
+			["Just save with no signature"
+			^binaryPackage fileOutAs: filename].
+	privateKeyString notNil 
+		ifTrue: 
+			[| privateKey |
+			privateKey := Integer fromString: privateKeyString.
+			binaryPackage 
+				fileOutSignedWith: aDolphinSureCertificate
+				privateKey: privateKey
+				as: filename]!
+
+saveBinaryPackage: aPackage withCertificate: aDolphinSureCertificate privateKey: privateKeyString inDirectory: path withPrerequisitesForBaselinePackageSet: basePackages 
+	"Save the current package and all prequisites that are not contained in aDolphinProduct in a
+	binary format suitable for dynamic loading from Plugins, etc."
+
+	| requiredPackages packagesToSave |
+	Cursor wait showWhile: 
+			[requiredPackages := (aPackage allPrerequisites)
+						add: aPackage;
+						yourself.
+			packagesToSave := requiredPackages - basePackages.
+			packagesToSave do: 
+					[:each | 
+					self 
+						saveBinaryPackage: each
+						withCertificate: aDolphinSureCertificate
+						privateKey: privateKeyString
+						inDirectory: path]]! !
+!PackageSelector categoriesFor: #saveBinaryPackage!commands!must strip!public! !
+!PackageSelector categoriesFor: #saveBinaryPackage:withCertificate:privateKey:inDirectory:!commands!must strip!public! !
+!PackageSelector categoriesFor: #saveBinaryPackage:withCertificate:privateKey:inDirectory:withPrerequisitesForBaselinePackageSet:!commands!must strip!public! !
+
+!Presenter methodsFor!
+
+fileLocator
+	"Answer the file locator that can be used to locate external files used by the receiver"
+
+	^self view fileLocator!
+
+site
+	"Answer the receiver's host site. This is usually, but not necessarily, the parent."
+
+	^self view site! !
+!Presenter categoriesFor: #fileLocator!accessing!public! !
+!Presenter categoriesFor: #site!accessing!public! !
+
+!Presenter class methodsFor!
+
+show: aResourceNameString inPlugin: anNPApplet
+	"Show a new view instance of the receiver as a subview of the applet contexts site."
+
+	| appletPresenter newOne browserView |
+	browserView := anNPApplet site.
+	appletPresenter := (Presenter new)
+				view: browserView;
+				invalidateUserInterface;
+				yourself.
+	newOne := self create: aResourceNameString in: appletPresenter.
+	browserView validateLayout.
+	^newOne show!
+
+showInPlugin: anNPApplet
+	"Show a new default view of the receiver as a subview of the applet contexts site.
+
+	Note that this technique will not work very well with Shells, the two problems being
+	that if a shell is a child (ie its within the internet browser) then Windows will not
+	show its menu bar, and you will find that TextEdit views will not get focus when you
+	click over them."
+
+	^self show: self defaultView inPlugin: anNPApplet
+! !
+!Presenter class categoriesFor: #show:inPlugin:!instance creation!public! !
+!Presenter class categoriesFor: #showInPlugin:!instance creation!public! !
+
+!Shell class methodsFor!
+
+show: aResourceNameString inPlugin: appletContext
+	"Show a new view instance of the receiver as a subview of the applet contexts site."
+
+	| applet |
+	applet := self create: aResourceNameString. 
+	applet view propertyAt: #site put: appletContext site.
+	^applet show! !
+!Shell class categoriesFor: #show:inPlugin:!instance creation!public! !
+
+!ShellView class methodsFor!
+
+show: aResourceNameString inPlugin: appletContext
+	"Show a new view instance of the receiver as a subview of the site of <NPApplet>, appletContext.
+	Note that the resource name is ignored, and that the site property need not be set since it is the
+	parent."
+
+	| applet |
+	applet := self new.
+	applet propertyAt: #site put: appletContext site.
+	^applet show! !
+!ShellView class categoriesFor: #show:inPlugin:!instance creation!public! !
+
+!View methodsFor!
+
+fileLocator
+	"Answer the file locator that can be used to locate external files used by the receiver"
+
+	^self site getFileLocator!
+
+site
+	"Answer the receiver's host site. This is usually, but not necessarily, the parent."
+
+	^self propertyAt: #site ifAbsent: [self parentView]! !
+!View categoriesFor: #fileLocator!accessing!public! !
+!View categoriesFor: #site!accessing!public! !
+
+!View class methodsFor!
+
+show: aResourceNameString inPlugin: appletContext
+	"Show a new view instance of the receiver as a subview of the site of <NPApplet>, appletContext.
+	Note that the resource name is ignored, and that the site property need not be set since it is the
+	parent."
+
+	^appletContext site addSubView: self new; layout! !
+!View class categoriesFor: #show:inPlugin:!instance creation!public! !
+
+"End of package definition"!
+

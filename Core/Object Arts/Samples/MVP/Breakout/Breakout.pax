@@ -1,0 +1,76 @@
+| package |
+package := Package name: 'Breakout'.
+package paxVersion: 0;
+	basicComment: ''.
+
+package basicScriptAt: #postinstall put: ''.
+package basicScriptAt: #postuninstall put: ''.
+package basicScriptAt: #preinstall put: ''.
+package basicScriptAt: #preuninstall put: ''.
+
+package classNames
+	add: #Animation;
+	add: #AnimationObject;
+	add: #AnimationView;
+	add: #BreakOutBall;
+	add: #BreakOutObject;
+	add: #BreakOutWall;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package allResourceNames: (Set new
+	add: #Animation -> 'Default view';
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\..\..\Dolphin\Base\Dolphin';
+	add: '..\..\..\Dolphin\MVP\Base\Dolphin MVP Base';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+Object subclass: #AnimationObject
+	instanceVariableNames: 'position velocity acceleration'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+AnimationObject subclass: #BreakOutObject
+	instanceVariableNames: 'extent color'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+BreakOutObject subclass: #BreakOutBall
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+BreakOutObject subclass: #BreakOutWall
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Presenter subclass: #Animation
+	instanceVariableNames: 'animationProcess ball leftWall rightWall topWall bottomWall'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+View subclass: #AnimationView
+	instanceVariableNames: 'frontSurface backSurface'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+"End of package definition"!
+

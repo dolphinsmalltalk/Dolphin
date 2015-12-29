@@ -1,0 +1,58 @@
+| package |
+package := Package name: 'Etch-a-Sketch'.
+package paxVersion: 1;
+	basicComment: 'Dolphin Smalltalk Etch-A-Sketch(tm) Sample. 
+Copyright (c) Object Arts Ltd, 1998-2000.
+
+EtchASketch is a component that emulates the popular Etch-a-Sketch toy. It allows "ink" to be drawn onto a sketch pad by means of two "knobs"; one for horizontal movement and one for vertical movement. In the basic view the knobs are represented by scroll bars. The EtchASketch makes use of the Scribble component for its sketch area.
+
+To create a single Etch-a-Sketch evaluate:
+
+es := EtchASketch show.
+
+You can draw in the sketch area using the scroll bars or by using the mouse directly. Now try creating a Scribble pad that uses the same model:
+
+Scribble showOn: es model.
+
+Now anything you draw in one will immediately be reflected in the other.'.
+
+
+package classNames
+	add: #EtchASketch;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\..\..\Dolphin\Base\Dolphin';
+	add: '..\..\..\Dolphin\MVP\Models\List\Dolphin List Models';
+	add: '..\..\..\Dolphin\MVP\Base\Dolphin MVP Base';
+	add: '..\..\..\Dolphin\MVP\Presenters\Number\Dolphin Number Presenter';
+	add: '..\..\..\Dolphin\MVP\Views\Slider\Dolphin Slider Control';
+	add: '..\..\..\Dolphin\MVP\Type Converters\Dolphin Type Converters';
+	add: '..\..\..\Dolphin\MVP\Models\Value\Dolphin Value Models';
+	add: '..\..\..\Dolphin\IDE\Base\Internal Bitmaps and Icons';
+	add: '..\Scribble\Scribble';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+Presenter subclass: #EtchASketch
+	instanceVariableNames: 'upDownKnob leftRightKnob sketchPad lastLocation'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+"End of package definition"!
+

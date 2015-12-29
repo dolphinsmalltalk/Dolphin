@@ -1,0 +1,56 @@
+| package |
+package := Package name: 'DolphinSure Example Authority'.
+package paxVersion: 1;
+	basicComment: 'Dolphin Smalltalk Example Authority for DolphinSure Sample
+Copyright (c) Object Arts Ltd, 2006.
+
+This package demonstrates how to create your own DolphinSure certificates for your applications. 
+
+If you are to issue your own certificates you will first need to create a root certificate for yourself as a certifying authority.  In the sample this is MyOwnCertificationAuthorityCertificate. Look in the class side #privateKey method for details on how to generate the public/private key pair and how to add these keys to the #privateKey and #publicKey methods. Once you have these key methods in place then you can generate the certificate itself.  Take a look at the comment for #new which shows how to generate the binary store bytes array which must be pasted into the #new method itself.  At this point you can reconstitute an instance of your certification authority certificate by evaluating MyOwnCertificationAuthorityCertificate new.
+
+Once you have this root certificate you can create a class, MyOwnCertificate, for your user certificates. Here you need to specify the #rootCertificateClass method and have this answer MyOwnCertificationAuthorityCertificate. Now you can generate user certificates using #serial:owner:details:. For more details take a look at the comment in this method.
+
+MyOwnCertificate serial: ''MY100002'' owner: ''My Own Company Inc.'' details: ''security@company.com''
+
+Evaluate the above to create an example certificate for My Own Company inc.'.
+
+
+package classNames
+	add: #MyOwnCertificate;
+	add: #MyOwnCertificationAuthorityCertificate;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\..\Dolphin\IDE\Base\Development System';
+	add: '..\..\Dolphin\Base\Dolphin';
+	add: '..\..\Dolphin\DolphinSure\DolphinSure';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+DolphinSureCertificate subclass: #MyOwnCertificate
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DolphinSureCertificationAuthorityCertificate subclass: #MyOwnCertificationAuthorityCertificate
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+"End of package definition"!
+

@@ -1,0 +1,70 @@
+| package |
+package := Package name: 'SUnitTests'.
+package paxVersion: 1;
+	basicComment: ''.
+
+
+package classNames
+	add: #ExampleSetTest;
+	add: #ResumableTestFailureTestCase;
+	add: #SimpleTestResource;
+	add: #SimpleTestResourceTestCase;
+	add: #SUnitTest;
+	yourself.
+
+package globalNames
+	add: #ExampleTestResource;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	add: #ExampleTestResource;
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\..\..\Object Arts\Dolphin\Base\Dolphin';
+	add: 'SUnit';
+	add: 'SUnitPreload';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+TestCase subclass: #ExampleSetTest
+	instanceVariableNames: 'full empty'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+TestCase subclass: #ResumableTestFailureTestCase
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+TestCase subclass: #SimpleTestResourceTestCase
+	instanceVariableNames: 'resource'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+TestCase subclass: #SUnitTest
+	instanceVariableNames: 'hasRun hasSetup hasRanOnce'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+TestResource subclass: #SimpleTestResource
+	instanceVariableNames: 'runningState hasRun hasSetup hasRanOnce'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+ExampleTestResource := SimpleTestResource!
+
+
+"Loose Methods"!
+
+"End of package definition"!
+

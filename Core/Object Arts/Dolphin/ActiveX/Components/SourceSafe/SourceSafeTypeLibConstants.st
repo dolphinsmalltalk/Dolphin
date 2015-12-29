@@ -1,0 +1,53 @@
+"Filed out from Dolphin Smalltalk X6"!
+
+Smalltalk at: #SourceSafeTypeLibConstants put: (PoolConstantsDictionary named: #SourceSafeTypeLibConstants)!
+SourceSafeTypeLibConstants at: 'VSSFILE_CHECKEDOUT' put: 16r1!
+SourceSafeTypeLibConstants at: 'VSSFILE_CHECKEDOUT_ME' put: 16r2!
+SourceSafeTypeLibConstants at: 'VSSFILE_NOTCHECKEDOUT' put: 16r0!
+SourceSafeTypeLibConstants at: 'VSSFLAG_BINBINARY' put: 16r200000!
+SourceSafeTypeLibConstants at: 'VSSFLAG_BINTEST' put: 16r100000!
+SourceSafeTypeLibConstants at: 'VSSFLAG_BINTEXT' put: 16r300000!
+SourceSafeTypeLibConstants at: 'VSSFLAG_CHKEXCLUSIVENO' put: 16r20000000!
+SourceSafeTypeLibConstants at: 'VSSFLAG_CHKEXCLUSIVEYES' put: 16r10000000!
+SourceSafeTypeLibConstants at: 'VSSFLAG_CMPCHKSUM' put: 16r600!
+SourceSafeTypeLibConstants at: 'VSSFLAG_CMPFAIL' put: 16r800!
+SourceSafeTypeLibConstants at: 'VSSFLAG_CMPFULL' put: 16r200!
+SourceSafeTypeLibConstants at: 'VSSFLAG_CMPTIME' put: 16r400!
+SourceSafeTypeLibConstants at: 'VSSFLAG_DELNO' put: 16r40000!
+SourceSafeTypeLibConstants at: 'VSSFLAG_DELNOREPLACE' put: 16rC0000!
+SourceSafeTypeLibConstants at: 'VSSFLAG_DELTANO' put: 16r800000!
+SourceSafeTypeLibConstants at: 'VSSFLAG_DELTAYES' put: 16r400000!
+SourceSafeTypeLibConstants at: 'VSSFLAG_DELYES' put: 16r80000!
+SourceSafeTypeLibConstants at: 'VSSFLAG_EOLCR' put: 16r10!
+SourceSafeTypeLibConstants at: 'VSSFLAG_EOLCRLF' put: 16r30!
+SourceSafeTypeLibConstants at: 'VSSFLAG_EOLLF' put: 16r20!
+SourceSafeTypeLibConstants at: 'VSSFLAG_FORCEDIRNO' put: 16r4000!
+SourceSafeTypeLibConstants at: 'VSSFLAG_FORCEDIRYES' put: 16r8000!
+SourceSafeTypeLibConstants at: 'VSSFLAG_GETNO' put: 16r8000000!
+SourceSafeTypeLibConstants at: 'VSSFLAG_GETYES' put: 16r4000000!
+SourceSafeTypeLibConstants at: 'VSSFLAG_HISTIGNOREFILES' put: 16r40000000!
+SourceSafeTypeLibConstants at: 'VSSFLAG_KEEPNO' put: 16r10000!
+SourceSafeTypeLibConstants at: 'VSSFLAG_KEEPYES' put: 16r20000!
+SourceSafeTypeLibConstants at: 'VSSFLAG_RECURSNO' put: 16r1000!
+SourceSafeTypeLibConstants at: 'VSSFLAG_RECURSYES' put: 16r2000!
+SourceSafeTypeLibConstants at: 'VSSFLAG_REPASK' put: 16r40!
+SourceSafeTypeLibConstants at: 'VSSFLAG_REPMERGE' put: 16r100!
+SourceSafeTypeLibConstants at: 'VSSFLAG_REPREPLACE' put: 16r80!
+SourceSafeTypeLibConstants at: 'VSSFLAG_REPSKIP' put: 16rC0!
+SourceSafeTypeLibConstants at: 'VSSFLAG_TIMEMOD' put: 16r8!
+SourceSafeTypeLibConstants at: 'VSSFLAG_TIMENOW' put: 16r4!
+SourceSafeTypeLibConstants at: 'VSSFLAG_TIMEUPD' put: 16rC!
+SourceSafeTypeLibConstants at: 'VSSFLAG_UPDASK' put: 16r1000000!
+SourceSafeTypeLibConstants at: 'VSSFLAG_UPDUNCH' put: 16r3000000!
+SourceSafeTypeLibConstants at: 'VSSFLAG_UPDUPDATE' put: 16r2000000!
+SourceSafeTypeLibConstants at: 'VSSFLAG_USERRONO' put: 16r1!
+SourceSafeTypeLibConstants at: 'VSSFLAG_USERROYES' put: 16r2!
+SourceSafeTypeLibConstants at: 'VSSITEM_FILE' put: 16r1!
+SourceSafeTypeLibConstants at: 'VSSITEM_PROJECT' put: 16r0!
+SourceSafeTypeLibConstants at: 'VSSRIGHTS_ADDRENREM' put: 16r4!
+SourceSafeTypeLibConstants at: 'VSSRIGHTS_ALL' put: 16rF!
+SourceSafeTypeLibConstants at: 'VSSRIGHTS_CHKUPD' put: 16r2!
+SourceSafeTypeLibConstants at: 'VSSRIGHTS_DESTROY' put: 16r8!
+SourceSafeTypeLibConstants at: 'VSSRIGHTS_INHERITED' put: 16r10!
+SourceSafeTypeLibConstants at: 'VSSRIGHTS_READ' put: 16r1!
+SourceSafeTypeLibConstants shrink!

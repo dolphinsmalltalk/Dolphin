@@ -1,0 +1,200 @@
+| package |
+package := Package name: 'DolphinSure'.
+package paxVersion: 1;
+	basicComment: 'Dolphin Smalltalk "DolphinSure" encryption and signature support.
+Copyright (c) Object Arts Ltd, 1999-2000.
+
+This package contains digital encryption and code signing/certification facilities..
+
+The DolphinSureTrustedData class provides a vehicle for signing data with a particular publisher certificate in such a way that it can be verified to be unchanged after transmission via an insecure medium. To sign data you will need an appropriate DolphinSureCertificate. Such certificates can be obtained from Object Arts Ltd at http://www.object-arts.com/DolphinSure.
+
+For documentation evaluate:
+	SmalltalkSystem help: ''DolphinSure'''.
+
+package basicPackageVersion: '6.1'.
+
+
+package classNames
+	add: #DigitalSignatureAlgorithm;
+	add: #DolphinSureCertificate;
+	add: #DolphinSureCertificateInfo;
+	add: #DolphinSureCertificateStore;
+	add: #DolphinSureCertificationAuthorityCertificate;
+	add: #DolphinSureCryptoLibrary;
+	add: #DolphinSurePersonalCertificate;
+	add: #DolphinSureTrustedData;
+	add: #NotSignedCertificate;
+	add: #NotTrustedError;
+	add: #ObjectArtsCertificate;
+	add: #ObjectArtsRootCertificate;
+	add: #PC1Cipher;
+	add: #SecureHashAlgorithm;
+	add: #TrustedDataError;
+	yourself.
+
+package methodNames
+	add: #SourceManager -> #emitSecureChunk:description:publisherCertificate:privateKey:on:;
+	add: #SourceManager -> #secureChunkMarker;
+	add: #SourceManager -> #secureFileIn:;
+	add: #SourceManager -> #secureFileInFrom:;
+	add: #SourceManager -> #secureFileItIn:;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\Base\Dolphin';
+	add: '..\Registry\Dolphin Registry Access';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+Object subclass: #DigitalSignatureAlgorithm
+	instanceVariableNames: 'randKey randSeed'
+	classVariableNames: 'HighBitOfByte SmallPrimes'
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Object subclass: #DolphinSureCertificateInfo
+	instanceVariableNames: 'serial owner details issued expiry publicKey'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Object subclass: #DolphinSureCertificateStore
+	instanceVariableNames: 'regKey'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Object subclass: #DolphinSureTrustedData
+	instanceVariableNames: 'data description signature publisherCertificate'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Object subclass: #PC1Cipher
+	instanceVariableNames: 'key box i j'
+	classVariableNames: 'RandPool'
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Object subclass: #SecureHashAlgorithm
+	instanceVariableNames: 'context'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DolphinSureTrustedData subclass: #DolphinSureCertificate
+	instanceVariableNames: ''
+	classVariableNames: 'UntrustedContentWarning'
+	poolDictionaries: 'Win32Constants'
+	classInstanceVariableNames: ''!
+DolphinSureCertificate subclass: #DolphinSureCertificationAuthorityCertificate
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DolphinSureCertificate subclass: #DolphinSurePersonalCertificate
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DolphinSureCertificate subclass: #NotSignedCertificate
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DolphinSureCertificate subclass: #ObjectArtsCertificate
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DolphinSureCertificationAuthorityCertificate subclass: #ObjectArtsRootCertificate
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Error subclass: #NotTrustedError
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Error subclass: #TrustedDataError
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ExternalLibrary subclass: #DolphinSureCryptoLibrary
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+!SourceManager methodsFor!
+
+emitSecureChunk: aString description: description publisherCertificate: certificate privateKey: privateKey on: aStream 
+	"Private - Output the specified text as a trusted chunk on aStream"
+
+	| trusted filer |
+	trusted := DolphinSureTrustedData 
+				data: aString
+				description: description
+				publisherCertificate: certificate
+				privateKey: privateKey.
+	aStream
+		nextPutAll: self secureChunkMarker;
+		cr; cr.
+	filer := self chunkFilerOn: aStream.
+	filer emitChunk: trusted description; cr.
+	filer emitChunk: trusted signature; cr.
+	filer emitChunk: trusted publisherCertificate binaryStoreBytes printString; cr.
+	filer emitChunk: trusted data.
+	filer endChunk!
+
+secureChunkMarker
+	"Private - Answer marker than indicates a secure chunk"
+
+	^'!!DolphinSureTrustedData secure!!'!
+
+secureFileIn: aFileName
+	"File the secure chunk format file in aFileName into the system.
+	The file is first checked to see if it not in a secure format and, if not, then
+	a warning is given to see if the user wished to continue with the file in."
+
+	| stream |
+	stream := FileStream read: aFileName.
+	[self secureFileInFrom: stream] ensure: [stream close].!
+
+secureFileInFrom: aStream
+	"File the secure chunk format on aStream into the system.
+	The stream is first checked to see if it not in a secure format and, if not, then
+	a warning is given to see if the user wished to continue with the file in."
+
+	| secureMarker actual pos |
+	secureMarker := self secureChunkMarker.
+	pos := aStream position.
+	actual := aStream skipSeparators; nextAvailable: secureMarker size.
+	aStream position: pos.
+	((actual = secureMarker) or: [NotSignedCertificate new confirmTrustFor: 'Unknown Content']) ifTrue: [ 
+		self fileInFrom: aStream ]!
+
+secureFileItIn: aString
+	"File the secure chunk format Smalltalk expression in aString into the system.
+	The string is first checked to see if it not in a secure format and, if not, then
+	a warning is given to see if the user wished to continue with the file in."
+
+	self secureFileInFrom: aString readStream! !
+!SourceManager categoriesFor: #emitSecureChunk:description:publisherCertificate:privateKey:on:!private!source filing! !
+!SourceManager categoriesFor: #secureChunkMarker!constants!private! !
+!SourceManager categoriesFor: #secureFileIn:!public!source filing! !
+!SourceManager categoriesFor: #secureFileInFrom:!private!source filing! !
+!SourceManager categoriesFor: #secureFileItIn:!public!source filing! !
+
+"End of package definition"!
+

@@ -1,0 +1,167 @@
+| package |
+package := Package name: 'IDB DeviceIndependentBitmap'.
+package paxVersion: 1;
+	basicComment: 'DeviceIndependentBitmap classes
+Version 6a - May 2005
+For Version 6 of Dolphin Smalltalk
+
+(C) 2005 Ian Bartholomew
+ian@idb.me.uk
+Public Domain Freeware
+'.
+
+package basicPackageVersion: 'IDB$PACKAGE$VERSION 6a'.
+
+package basicScriptAt: #postinstall put: 'Clipboard current initializeForDeviceIndependentBitmap!!'.
+
+package classNames
+	add: #BITMAPFILEHEADER;
+	add: #DeviceIndependentBitmap;
+	yourself.
+
+package methodNames
+	add: #Clipboard -> #getDeviceIndependentBitmap;
+	add: #Clipboard -> #getDeviceIndependentBitmapIfNone:;
+	add: #Clipboard -> #initializeForDeviceIndependentBitmap;
+	add: #Clipboard -> #isDeviceIndependentBitmapAvailable;
+	add: #Clipboard -> #setDeviceIndependentBitmap:;
+	add: #Clipboard -> #setDeviceIndependentBitmap:format:;
+	add: #Clipboard -> #setDeviceIndependentBitmap:formatId:;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\Object Arts\Dolphin\Base\Dolphin';
+	add: '..\Object Arts\Dolphin\MVP\Base\Dolphin MVP Base';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+Win32Structure subclass: #BITMAPFILEHEADER
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Bitmap subclass: #DeviceIndependentBitmap
+	instanceVariableNames: 'depth bitmapStruct bitmapInfoStruct bitmapInfoHeaderStruct dibSectionStruct'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+!Clipboard methodsFor!
+
+getDeviceIndependentBitmap
+	"Get a DeviceIndependentBitmap from the Clipboard"
+
+	#idbAdded.
+	(registeredFormats includesKey: #DIBSection) 
+		ifFalse: [self initializeForDeviceIndependentBitmap].
+	^self getDeviceIndependentBitmapIfNone: [self errorFormatNotAvailable: #DIB]!
+
+getDeviceIndependentBitmapIfNone: exceptionHandler 
+	"Get a DeviceIndependentBitmap from the Clipboard"
+
+	#idbAdded.
+	^self apply: 
+			[| hBitmap pBitmap bitmapInfoHeader colorTable bytes bitmap |
+			hBitmap := UserLibrary default getClipboardData: CF_DIB.
+			hBitmap isNull ifTrue: [^exceptionHandler value].
+			pBitmap := KernelLibrary default globalLock: hBitmap.
+			bitmapInfoHeader := BITMAPINFOHEADER fromAddress: pBitmap.
+
+			"Get the color table and image bits from the Clipboard data structure (a packed BITMAPINFO)"
+			colorTable := bitmapInfoHeader biBitCount <= 8 
+						ifTrue: 
+							[StructureArray 
+								fromAddress: (pBitmap yourAddress + BITMAPINFOHEADER byteSize) asExternalAddress
+								length: (2 raisedToInteger: bitmapInfoHeader biBitCount)
+								elementClass: RGBQUAD]
+						ifFalse: [StructureArray length: 1 elementClass: RGBQUAD].
+			bytes := ByteArray 
+						fromAddress: (pBitmap yourAddress + BITMAPINFOHEADER byteSize + colorTable byteSize) 
+								asExternalAddress
+						length: bitmapInfoHeader biSizeImage.
+			KernelLibrary default globalUnlock: hBitmap.
+
+			"We have to create a new DeviceIndependentBitmap of the appropriate size and then 
+	copy the color table and image bits"
+			bitmap := DeviceIndependentBitmap 
+						width: bitmapInfoHeader biWidth
+						height: bitmapInfoHeader biHeight
+						depth: bitmapInfoHeader biBitCount.
+			bitmap setColorTable: colorTable.
+			bitmap bitmapStruct bmBits 
+				replaceFrom: 1
+				to: bytes size
+				with: bytes
+				startingAt: 1.
+			bitmap]!
+
+initializeForDeviceIndependentBitmap
+	"Added to add a clipboard format for DIBSection"
+
+	#idbAdded.
+	registeredFormats at: #DIBSection put: CF_DIB!
+
+isDeviceIndependentBitmapAvailable
+	"Answer whether the clipboard contains a DIB.(DIBSection or DeviceIndependentBitmap)"
+
+	#idbAdded.
+	^self isFormatIdAvailable: CF_DIB!
+
+setDeviceIndependentBitmap: aDeviceIndependentBitmap
+	"Transfer the specified DIBSection bitmap to the clipboard."
+
+	#idbAdded.
+	(registeredFormats includesKey: #DIBSection) 
+		ifFalse: [self initializeForDeviceIndependentBitmap].
+	self setDeviceIndependentBitmap: aDeviceIndependentBitmap format: #DIBSection!
+
+setDeviceIndependentBitmap: aDeviceIndependentBitmap format: formatName
+	"Copy the specified bitmap to the clipboard as an entry
+	of the specified format name."
+
+	#idbAdded.
+	self setDeviceIndependentBitmap: aDeviceIndependentBitmap
+		formatId: (registeredFormats at: formatName)!
+
+setDeviceIndependentBitmap: aDeviceIndependentBitmap formatId: formatId
+	"Copies a DeviceIndependentBitmap onto the Clipboard
+	The clipboard expects a pached BITMAPINFO (a BITMAPINFO followed immediately 
+	by the image bits)"
+
+	| bytes hMem pMem |
+	#idbAdded.
+	bytes := aDeviceIndependentBitmap bitmapInfoStruct asByteArray 
+				, aDeviceIndependentBitmap imageBytes.
+	hMem := KernelLibrary default globalAlloc: ##(GHND | GMEM_DDESHARE) dwBytes: bytes size.
+	pMem := KernelLibrary default globalLock: hMem.
+	pMem 
+		replaceFrom: 1
+		to: bytes size
+		with: bytes
+		startingAt: 1.
+	KernelLibrary default globalUnlock: hMem.
+	self setData: hMem formatId: formatId! !
+!Clipboard categoriesFor: #getDeviceIndependentBitmap!accessing!idb goodies!public! !
+!Clipboard categoriesFor: #getDeviceIndependentBitmapIfNone:!accessing!idb goodies!public! !
+!Clipboard categoriesFor: #initializeForDeviceIndependentBitmap!idb goodies!initializing!public! !
+!Clipboard categoriesFor: #isDeviceIndependentBitmapAvailable!idb goodies!public!testing! !
+!Clipboard categoriesFor: #setDeviceIndependentBitmap:!accessing!idb goodies!public! !
+!Clipboard categoriesFor: #setDeviceIndependentBitmap:format:!accessing!idb goodies!public! !
+!Clipboard categoriesFor: #setDeviceIndependentBitmap:formatId:!accessing!idb goodies!public! !
+
+"End of package definition"!
+

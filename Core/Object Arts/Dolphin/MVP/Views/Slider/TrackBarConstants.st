@@ -1,0 +1,56 @@
+"Filed out from Dolphin Smalltalk X6"!
+
+Smalltalk at: #TrackBarConstants put: (PoolConstantsDictionary named: #TrackBarConstants)!
+TrackBarConstants at: 'TBM_CLEARSEL' put: 16r413!
+TrackBarConstants at: 'TBM_CLEARTICS' put: 16r409!
+TrackBarConstants at: 'TBM_GETBUDDY' put: 16r421!
+TrackBarConstants at: 'TBM_GETCHANNELRECT' put: 16r41A!
+TrackBarConstants at: 'TBM_GETLINESIZE' put: 16r418!
+TrackBarConstants at: 'TBM_GETNUMTICS' put: 16r410!
+TrackBarConstants at: 'TBM_GETPAGESIZE' put: 16r416!
+TrackBarConstants at: 'TBM_GETPOS' put: 16r400!
+TrackBarConstants at: 'TBM_GETPTICS' put: 16r40E!
+TrackBarConstants at: 'TBM_GETRANGEMAX' put: 16r402!
+TrackBarConstants at: 'TBM_GETRANGEMIN' put: 16r401!
+TrackBarConstants at: 'TBM_GETSELEND' put: 16r412!
+TrackBarConstants at: 'TBM_GETSELSTART' put: 16r411!
+TrackBarConstants at: 'TBM_GETTHUMBLENGTH' put: 16r41C!
+TrackBarConstants at: 'TBM_GETTHUMBRECT' put: 16r419!
+TrackBarConstants at: 'TBM_GETTIC' put: 16r403!
+TrackBarConstants at: 'TBM_GETTICPOS' put: 16r40F!
+TrackBarConstants at: 'TBM_GETTOOLTIPS' put: 16r41E!
+TrackBarConstants at: 'TBM_GETUNICODEFORMAT' put: 16r2006!
+TrackBarConstants at: 'TBM_SETBUDDY' put: 16r420!
+TrackBarConstants at: 'TBM_SETLINESIZE' put: 16r417!
+TrackBarConstants at: 'TBM_SETPAGESIZE' put: 16r415!
+TrackBarConstants at: 'TBM_SETPOS' put: 16r405!
+TrackBarConstants at: 'TBM_SETRANGE' put: 16r406!
+TrackBarConstants at: 'TBM_SETRANGEMAX' put: 16r408!
+TrackBarConstants at: 'TBM_SETRANGEMIN' put: 16r407!
+TrackBarConstants at: 'TBM_SETSEL' put: 16r40A!
+TrackBarConstants at: 'TBM_SETSELEND' put: 16r40C!
+TrackBarConstants at: 'TBM_SETSELSTART' put: 16r40B!
+TrackBarConstants at: 'TBM_SETTHUMBLENGTH' put: 16r41B!
+TrackBarConstants at: 'TBM_SETTIC' put: 16r404!
+TrackBarConstants at: 'TBM_SETTICFREQ' put: 16r414!
+TrackBarConstants at: 'TBM_SETTIPSIDE' put: 16r41F!
+TrackBarConstants at: 'TBM_SETTOOLTIPS' put: 16r41D!
+TrackBarConstants at: 'TBM_SETUNICODEFORMAT' put: 16r2005!
+TrackBarConstants at: 'TBS_AUTOTICKS' put: 16r1!
+TrackBarConstants at: 'TBS_BOTH' put: 16r8!
+TrackBarConstants at: 'TBS_BOTTOM' put: 16r0!
+TrackBarConstants at: 'TBS_ENABLESELRANGE' put: 16r20!
+TrackBarConstants at: 'TBS_FIXEDLENGTH' put: 16r40!
+TrackBarConstants at: 'TBS_HORZ' put: 16r0!
+TrackBarConstants at: 'TBS_LEFT' put: 16r4!
+TrackBarConstants at: 'TBS_NOTHUMB' put: 16r80!
+TrackBarConstants at: 'TBS_NOTICKS' put: 16r10!
+TrackBarConstants at: 'TBS_RIGHT' put: 16r0!
+TrackBarConstants at: 'TBS_TOOLTIPS' put: 16r100!
+TrackBarConstants at: 'TBS_TOP' put: 16r4!
+TrackBarConstants at: 'TBS_VERT' put: 16r2!
+TrackBarConstants at: 'TBTS_BOTTOM' put: 16r2!
+TrackBarConstants at: 'TBTS_LEFT' put: 16r1!
+TrackBarConstants at: 'TBTS_RIGHT' put: 16r3!
+TrackBarConstants at: 'TBTS_TOP' put: 16r0!
+TrackBarConstants shrink!

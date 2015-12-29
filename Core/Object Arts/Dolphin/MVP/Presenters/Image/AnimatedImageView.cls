@@ -1,0 +1,71 @@
+"Filed out from Dolphin Smalltalk X6.1"!
+
+DoubleBufferedView subclass: #AnimatedImageView
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+AnimatedImageView guid: (GUID fromString: '{63997D2B-ABCA-455E-917B-8CF248B11E63}')!
+AnimatedImageView comment: ''!
+!AnimatedImageView categoriesForClass!Unclassified! !
+!AnimatedImageView methodsFor!
+
+connectModel
+	"Connect the receiver to its model, wiring events, etc.
+	ValueConvertingControlViews expect to be connected to a model that obeys the
+	ValueModel protocol; i.e. it must generate a #value event when the value it is wrapping 
+	is replaced."
+
+	self model ifNotNil: 
+			[:m | 
+			m 
+				when: #valueChanged
+				send: #onModelChanged
+				to: self]!
+
+initialize	
+	super initialize.!
+
+render
+	"Private - Render the background image"
+
+	| canvas image |
+	canvas := self canvas.
+	canvas backcolor: self backcolor; erase.
+	image := self value.
+	image notNil ifTrue: [image drawOn: canvas].
+	canvas free.	"useful to avoid build up of finalizable garbage"
+	super render!
+
+value
+	"Answer the receiver's model value"
+
+	^self model value!
+
+value: anObject
+	"Set the receiver's model value to anObject"
+
+	self model value: anObject! !
+!AnimatedImageView categoriesFor: #connectModel!models!public! !
+!AnimatedImageView categoriesFor: #initialize!private! !
+!AnimatedImageView categoriesFor: #render!operations!private! !
+!AnimatedImageView categoriesFor: #value!accessing!public! !
+!AnimatedImageView categoriesFor: #value:!accessing!public! !
+
+!AnimatedImageView class methodsFor!
+
+defaultModel
+	^nil asValue!
+
+resource_Default_view
+	"Answer the literal data from which the 'Default view' resource can be reconstituted.
+	DO NOT EDIT OR RECATEGORIZE THIS METHOD.
+
+	If you wish to modify this resource evaluate:
+	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Default_view)
+	"
+
+	^#(#'!!STL' 3 788558 10 ##(Smalltalk.STBViewProxy)  8 ##(Smalltalk.AnimatedImageView)  98 14 0 0 98 2 8 1409286144 1 416 721990 2 ##(Smalltalk.ValueHolder)  0 32 1310726 ##(Smalltalk.EqualitySearchPolicy)  0 786694 ##(Smalltalk.IndexedColor)  33554471 0 5 0 0 0 416 395334 3 ##(Smalltalk.Bitmap)  0 16 0 0 0 0 1 0 16 983302 ##(Smalltalk.MessageSequence)  202 208 98 1 721670 ##(Smalltalk.MessageSend)  8 #createAt:extent: 98 2 328198 ##(Smalltalk.Point)  2799 21 754 247 201 416 983302 ##(Smalltalk.WINDOWPLACEMENT)  8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 119 5 0 0 10 0 0 0 242 5 0 0 110 0 0 0] 98 0 754 193 193 0 27 )! !
+!AnimatedImageView class categoriesFor: #defaultModel!models!public! !
+!AnimatedImageView class categoriesFor: #resource_Default_view!public!resources-views! !
+

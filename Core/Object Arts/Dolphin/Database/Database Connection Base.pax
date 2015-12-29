@@ -1,0 +1,227 @@
+| package |
+package := Package name: 'Database Connection Base'.
+package paxVersion: 1;
+	basicComment: 'Dolphin Smalltalk ODBC Database Connection Base (run time).
+Copyright (c) Object Arts Ltd, 1997-2003. Portions copyright CGI Group (Europe) Ltd, 1997.
+
+This package provides an interface to ODBC databases.
+
+For documentation evaluate:
+	SmalltalkSystem help: ''databaseconnectivity'''.
+
+package basicPackageVersion: '6.1'.
+
+
+package classNames
+	add: #DBAbstractRow;
+	add: #DBAbstractStatement;
+	add: #DBBoundBuffer;
+	add: #DBColAttr;
+	add: #DBColumnsStatement;
+	add: #DBConnection;
+	add: #DBError;
+	add: #DBErrorDetails;
+	add: #DBExceptionDetails;
+	add: #DBField;
+	add: #DBForeignKeysStatement;
+	add: #DBForwardOnlyResultSet;
+	add: #DBParameterizedStatement;
+	add: #DBPrimaryKeysStatement;
+	add: #DBProceduresStatement;
+	add: #DBResultSet;
+	add: #DBRow;
+	add: #DBRowBuffer;
+	add: #DBSchemaStatement;
+	add: #DBSpecialColumnsStatement;
+	add: #DBStatement;
+	add: #DBStatisticsStatement;
+	add: #DBTablesStatement;
+	add: #DBTxn;
+	add: #DBUnboundBuffer;
+	add: #DBWarning;
+	add: #ODBCDATE;
+	add: #ODBCLibrary;
+	add: #ODBCTIME;
+	add: #ODBCTIMESTAMP;
+	yourself.
+
+package globalNames
+	add: #DBColFlags;
+	add: #ODBCConstants;
+	add: #ODBCCTypes;
+	add: #ODBCRetCodes;
+	add: #ODBCTypes;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\Base\Dolphin';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+Object subclass: #DBAbstractRow
+	instanceVariableNames: 'columns contents selectors status'
+	classVariableNames: ''
+	poolDictionaries: 'ODBCConstants'
+	classInstanceVariableNames: ''!
+Object subclass: #DBAbstractStatement
+	instanceVariableNames: 'handle parent executed cursorType'
+	classVariableNames: 'CursorTypes'
+	poolDictionaries: 'ODBCConstants ODBCRetCodes'
+	classInstanceVariableNames: ''!
+Object subclass: #DBColAttr
+	instanceVariableNames: 'columnNumber name length sqlType precision scale special'
+	classVariableNames: 'SQLToCTypes'
+	poolDictionaries: 'DBColFlags ODBCConstants ODBCCTypes ODBCTypes'
+	classInstanceVariableNames: ''!
+Object subclass: #DBConnection
+	instanceVariableNames: 'handle dsn uid pwd statements transaction connectString flags'
+	classVariableNames: 'Connections DriverCompleteMask HEnv ScrollTypes TxnIsolationLevels'
+	poolDictionaries: 'ODBCConstants ODBCRetCodes'
+	classInstanceVariableNames: ''!
+Object subclass: #DBErrorDetails
+	instanceVariableNames: 'msg nativeErr sqlState origin'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Object subclass: #DBExceptionDetails
+	instanceVariableNames: 'errors hEnv hDBC hStmt code'
+	classVariableNames: ''
+	poolDictionaries: 'ODBCConstants ODBCRetCodes'
+	classInstanceVariableNames: ''!
+Object subclass: #DBField
+	instanceVariableNames: 'column buffer lengthBuf'
+	classVariableNames: 'GetSelectors SetSelectors'
+	poolDictionaries: 'ODBCConstants ODBCCTypes ODBCRetCodes ODBCTypes'
+	classInstanceVariableNames: ''!
+Object subclass: #DBTxn
+	instanceVariableNames: 'connection readOnly creator'
+	classVariableNames: ''
+	poolDictionaries: 'ODBCConstants'
+	classInstanceVariableNames: ''!
+SequenceableCollection subclass: #DBResultSet
+	instanceVariableNames: 'statement buffer columns'
+	classVariableNames: ''
+	poolDictionaries: 'ODBCConstants ODBCRetCodes'
+	classInstanceVariableNames: ''!
+DBResultSet subclass: #DBForwardOnlyResultSet
+	instanceVariableNames: 'position'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DBAbstractRow subclass: #DBRow
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DBAbstractRow subclass: #DBRowBuffer
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DBRowBuffer subclass: #DBBoundBuffer
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: 'ODBCConstants ODBCCTypes'
+	classInstanceVariableNames: ''!
+DBRowBuffer subclass: #DBUnboundBuffer
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DBAbstractStatement subclass: #DBSchemaStatement
+	instanceVariableNames: 'catalogName schemaName tableName'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DBAbstractStatement subclass: #DBStatement
+	instanceVariableNames: 'sqlString'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DBSchemaStatement subclass: #DBColumnsStatement
+	instanceVariableNames: 'columnName'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DBSchemaStatement subclass: #DBForeignKeysStatement
+	instanceVariableNames: 'foreignCatalogName foreignSchemaName foreignTableName'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DBSchemaStatement subclass: #DBPrimaryKeysStatement
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DBSchemaStatement subclass: #DBProceduresStatement
+	instanceVariableNames: 'procedureName'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DBSchemaStatement subclass: #DBSpecialColumnsStatement
+	instanceVariableNames: 'columnType scope nullable'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DBSchemaStatement subclass: #DBStatisticsStatement
+	instanceVariableNames: 'type accurate'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DBSchemaStatement subclass: #DBTablesStatement
+	instanceVariableNames: 'tableType'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DBStatement subclass: #DBParameterizedStatement
+	instanceVariableNames: 'values parameters paramCols isPrepared'
+	classVariableNames: ''
+	poolDictionaries: 'ODBCCTypes'
+	classInstanceVariableNames: ''!
+Error subclass: #DBError
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: 'ODBCConstants ODBCRetCodes'
+	classInstanceVariableNames: ''!
+Notification subclass: #DBWarning
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ExternalLibrary subclass: #ODBCLibrary
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ExternalStructure subclass: #ODBCDATE
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ExternalStructure subclass: #ODBCTIME
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ExternalStructure subclass: #ODBCTIMESTAMP
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+"End of package definition"!
+

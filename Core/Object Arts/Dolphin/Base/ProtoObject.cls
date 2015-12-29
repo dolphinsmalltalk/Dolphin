@@ -1,0 +1,210 @@
+"Filed out from Dolphin Smalltalk X6"!
+
+nil subclass: #ProtoObject
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ProtoObject guid: (GUID fromString: '{30771B7B-8BF6-4C81-8D54-7ED3B247A81D}')!
+ProtoObject comment: 'ProtoObject is an abstract class that can be used as a basis for creating a variety of "stub" subclasses.  It supplies the minimum protocol that might be useful for any such stub in order that inspection and debugging may successfully take place.'!
+!ProtoObject categoriesForClass!System-Support! !
+!ProtoObject methodsFor!
+
+~~ comparand
+	"Answer whether the <Object>, comparand,  is NOT identical to the receiver.
+	Implementation Note: This is faster than the obvious '^(self == anObject) not'
+	because of Compiler optimisation of #==."
+
+	^(self == comparand) == false!
+
+== comparand
+	"Answer whether the <Object>, comparand, is the same, identical, 
+	object as the receiver. 
+	
+	The primitive should NOT fail.
+	
+	N.B. This implementation cannot be overridden, and is never, in fact, received 
+	(unless #perform'd), because #== is inlined by the Compiler."
+
+	<primitive: 110>
+	^self primitiveFailed!
+
+allReferences
+	"Answer an Array containing all objects which reference the receiver.
+	The primitive should not fail."
+
+	<primitive: 153>
+	^self primitiveFailed!
+
+basicClass
+	"Answer the class of the receiver. The primitive should not fail."
+
+	<primitive: 111>
+	^self primitiveFailed!
+
+basicPrintOn: aStream
+	"Append a short developer's description of the receiver to aStream. 
+	Should not be overridden by subclasses."
+
+	| name |
+	name := self basicClass name.
+	aStream 
+		nextPutAll: (name first isVowel ifTrue: ['an '] ifFalse: ['a ']);
+		nextPutAll: name!
+
+basicPrintString
+	"Answer a short developer's String description of the receiver. 
+	Should not be overridden by subclasses"
+
+	| aStream |
+	aStream := String writeStream: 16.
+	self basicPrintOn: aStream.
+	^aStream contents!
+
+basicSize
+	"Private - Sames as #size, but should not be overridden by subclasses (except by subclasses
+	whose instances have an immediate representation - e.g. SmallInteger).
+
+	The primitive should not fail. It must be overridden for immediate objects."
+
+	<primitive: 62>
+	^self primitiveFailed!
+
+become: anObject
+	"Swap the instance pointers of the receiver and the argument, anObject. All variables 
+	in the entire system that pointed to the receiver will now point to the argument, and 
+	vice versa.
+
+	Primitive failure reasons:
+		0	-	receiver or argument an object with an immediate representation (e.g. 
+				a SmallInteger), or either is a 'permanent' objects (nil, true, false, etc).
+
+	This method should be used with extreme care, as it has side effects for others referring
+	to the receiver and anObject. In particular never attempt to pass nil, true, false, etc,
+	as the argument, as this will almost certainly cause system failure.
+
+	N.B. Though Dolphin is faithful to the original Smalltalk-80 specification for 
+	this method, and provides a two way switch as described, this is not universally true 
+	for all Smalltalks, so portable code should assume only a one way switch. To better
+	guarantee portability you should use #swappingBecome: which, hopefully, will start
+	to become prevalent on other platforms."
+
+	<primitive: 72>
+	^self primitiveFailed!
+
+doesNotUnderstand: failedMessage
+	"Sent to the receiver by the VM when a message sent to the receiver was not implemented
+	by the receiver or its superclasses (i.e. it has no appropriate behaviour).
+	Signal a <MessageNotUnderstood> exception corresponding to the <failedMessage> argument,
+	message."
+
+	^MessageNotUnderstood receiver: self message: failedMessage
+!
+
+error: signalerText
+	"Raise an <Error> exception reporting the error message contained in the
+	<readableString> argument, signalerText."
+
+	^Error signal: signalerText!
+
+identityHash
+	"Answer the <integer> identity hash value for the receiver. This is
+	currently a 16-bit SmallInteger value, which may be negative.
+	This value is assigned when the object is created, and never changes
+	(i.e. it is temporally invariant). Because the range is limited
+	to 16-bits, very large collections hashed by identity using this value
+	alone are likely to be slow (consider including the identityHash of
+	the objects class e.g. 
+		^((self class identityHash bitAnd: 16r3FFFFFFF) bitShift: 16) 
+			bitOr: self identityHash
+		or: <primitive: 147> which is similar.
+	However, this would not be safe in general, because #become: and #becomeA:
+	might change an object's class, because it is not associated with the
+	identity, but the object itself.
+
+	Although this implementation is temporally invariant while an object remains
+	in memory, a binary filed object is re-incarnated with a different identity,
+	and so identity hash collections must be rebuilt or rehashed on load (the 
+	standard Collections do this already).
+
+	This need not be reimplemented (except by immediate subclasses), because 
+	it is not possible to override #==, indeed reimplementation is jolly unwise.
+	
+	N.B. The primitive does not fail, but will raise a benign invalid memory access 
+	exception if called for immediate subclasses such as SmallInteger."
+	
+	<primitive: 75>
+	^self primitiveFailed!
+
+instVarAt: index
+	"Private - Answer a variable in the receiver. The numbering of the variables begins with 
+	named instance variables, and corresponds to the order in which the instance variables
+	were defined. Indexed variables have indices following those of the named instance
+	variables.
+
+	Primitive failure reasons:
+		0	-	aSmallInteger is not a SmallInteger.
+		1	-	aSmallInteger is out of bounds (not in the range 1..recieiver's size)."
+
+	<primitive: 73>
+	^index isInteger 
+		ifTrue: 
+			[(BoundsError new)
+				receiver: self;
+				signalWith: index]
+		ifFalse: [Error nonIntegerIndex: index]!
+
+isKindOf: candidateClass
+	"Answer whether the receiver is an instance of the argument, candidateClass,
+	or one of its subclasses.
+	The primitive never fails, so the Smalltalk back up code is present for illustrative
+	purposes only. The primitive is very fast, so there is no particular reason to
+	implement isXXXXXX methods instead, BUT in any case is-kind-of tests are not
+	good practice. Tests should be made to see if an object provides a particular
+	protocol (if necessary) rather than testing for a particular class."
+
+	<primitive: 57>
+	^self class includesBehavior: candidateClass!
+
+oneWayBecome: anObject
+	"Make all references to the receiver be references to the argument (i.e. anObject replaces
+	all uses of the receiver, and the receiver's identity and contents are lost). This is the 
+	only form of #become: available in some Smalltalk systems. Can follow a two
+	way #become: for even more mind boggling fun (to maintain one objects identity, but
+	anothers value).
+
+	Primitive failure reasons:
+		0	-	receiver or argument an object with an immediate representation (e.g. 
+				a SmallInteger), or either is a 'permanent' objects (nil, true, false, etc).
+
+	This method should be used with care, but is some what less dangerous than #become:,
+	as it does not affect existing users of anObject. Currently the implementation is not
+	as efficient as #become:."
+
+	<primitive: 154>
+	^self primitiveFailed!
+
+primitiveFailed
+	"Generate an error to the effect that a primitive has failed, including the failure code
+	specified by the primitive."
+
+	| proc |
+	proc := Processor activeProcess.
+	^self error: 'Primitive ', proc topFrame sender method printString, ' failed (', 
+					proc primitiveFailureCode displayString, ')'! !
+!ProtoObject categoriesFor: #~~!comparing!public! !
+!ProtoObject categoriesFor: #==!comparing!public! !
+!ProtoObject categoriesFor: #allReferences!enumerating!public! !
+!ProtoObject categoriesFor: #basicClass!accessing!public! !
+!ProtoObject categoriesFor: #basicPrintOn:!printing!public! !
+!ProtoObject categoriesFor: #basicPrintString!printing!public! !
+!ProtoObject categoriesFor: #basicSize!accessing!private! !
+!ProtoObject categoriesFor: #become:!mutating!public! !
+!ProtoObject categoriesFor: #doesNotUnderstand:!exceptions!public! !
+!ProtoObject categoriesFor: #error:!exceptions!public! !
+!ProtoObject categoriesFor: #identityHash!comparing!public! !
+!ProtoObject categoriesFor: #instVarAt:!accessing!private! !
+!ProtoObject categoriesFor: #isKindOf:!public!testing! !
+!ProtoObject categoriesFor: #oneWayBecome:!mutating!public! !
+!ProtoObject categoriesFor: #primitiveFailed!exceptions!public! !
+

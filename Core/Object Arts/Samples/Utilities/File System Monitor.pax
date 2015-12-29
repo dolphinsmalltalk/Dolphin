@@ -1,0 +1,58 @@
+| package |
+package := Package name: 'File System Monitor'.
+package paxVersion: 1;
+	basicComment: 'Dolphin Smalltalk File System Monitor Sample
+Copyright (c) Object Arts Ltd, 2005.
+
+This utility implements a simple file system monitoring utility that allows one to capture a list of changes occurring in a particular directory, and optionally its sub-directories. Its main purpose is to illustrate the use of the FileSystemWatcher class.
+
+FileSystemMonitor show'.
+
+
+package classNames
+	add: #FileSystemMonitor;
+	add: #FileSystemMonitorSessionManager;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\..\Dolphin\Base\Dolphin';
+	add: '..\..\Dolphin\MVP\Presenters\Boolean\Dolphin Boolean Presenter';
+	add: '..\..\Dolphin\MVP\Views\Common Controls\Dolphin Common Controls';
+	add: '..\..\Dolphin\System\Win32\Dolphin File System Watcher';
+	add: '..\..\Dolphin\MVP\Models\List\Dolphin List Models';
+	add: '..\..\Dolphin\MVP\Presenters\List\Dolphin List Presenter';
+	add: '..\..\Dolphin\MVP\Base\Dolphin MVP Base';
+	add: '..\..\Dolphin\MVP\Presenters\Text\Dolphin Text Presenter';
+	add: '..\..\Dolphin\MVP\Type Converters\Dolphin Type Converters';
+	add: '..\..\Dolphin\MVP\Models\Value\Dolphin Value Models';
+	add: '..\..\Dolphin\ActiveX\Shell\Windows Shell';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+Shell subclass: #FileSystemMonitor
+	instanceVariableNames: 'directoryName notifyAttributes notifyDirectoryName notifyCreateTime notifyFileName notifyLastAccess notifyLastWrite notifySecurity notifySize filters includeSubDirs changeList'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+RuntimeSessionManager subclass: #FileSystemMonitorSessionManager
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+"End of package definition"!
+

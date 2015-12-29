@@ -1,0 +1,61 @@
+| package |
+package := Package name: 'Dolphin Accelerator Presenter'.
+package paxVersion: 1;
+	basicComment: 'Dolphin Smalltalk Accelerator Presenter.
+Copyright (c) Object Arts Ltd, 1997-2002, and CGI Group (Europe) Ltd, 1997.
+
+AcceleratorPresenter is a <valuePresenter> that displays a <valueModel> onto an <integer> key code that represening an accelerator key depression. It is typically used for editing key bindings. The package includes a wrapper for the Windows "Hot Key" common control, which is used as the default view of the presenter.'.
+
+package basicPackageVersion: '6.0'.
+
+
+package classNames
+	add: #AcceleratorPresenter;
+	add: #AccelToHotKey;
+	add: #HotKey;
+	yourself.
+
+package globalNames
+	add: #HotKeyConstants;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\..\..\Base\Dolphin';
+	add: '..\..\Base\Dolphin MVP Base';
+	add: '..\..\Type Converters\Dolphin Type Converters';
+	add: '..\..\Models\Value\Dolphin Value Models';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+ValuePresenter subclass: #AcceleratorPresenter
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+TypeConverter subclass: #AccelToHotKey
+	instanceVariableNames: ''
+	classVariableNames: 'ModifierMap'
+	poolDictionaries: 'HotKeyConstants Win32Constants'
+	classInstanceVariableNames: ''!
+ValueConvertingControlView subclass: #HotKey
+	instanceVariableNames: 'invalidCombinationsRule defaultKeyRule'
+	classVariableNames: ''
+	poolDictionaries: 'HotKeyConstants'
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+"End of package definition"!
+

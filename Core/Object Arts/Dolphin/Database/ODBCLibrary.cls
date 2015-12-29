@@ -1,0 +1,521 @@
+"Filed out from Dolphin Smalltalk X6"!
+
+ExternalLibrary subclass: #ODBCLibrary
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ODBCLibrary guid: (GUID fromString: '{87B4C580-026E-11D3-9FD7-00A0CC3E4A32}')!
+ODBCLibrary comment: 'This is the ExternalLibrary class to represent the Win32 System DLL, ODBC32.DLL. 
+This library contains functions pertaining to the use of Open Database Connectivity 3.0.
+
+Type mapping:
+	SQLSMALLINT	->	sword	(16-bit signed integer)
+	SQLUSMALLINT	->	word	(16-bit unsigned integer)
+	SQLINTEGER	->	sdword	(32-bit signed integer)
+	SQLUINTEGER	->	dword	(32-bit unsigned integer).
+	SQLFLOAT	-> 	double	(64-bit float)
+	SQLDOUBLE	->	double	(64-bit float)
+	
+Note that SQLRETURN is an alias for SQLSMALLINT'!
+!ODBCLibrary categoriesForClass!External-Libraries-ODBC! !
+!ODBCLibrary methodsFor!
+
+getInfo: anInteger for: aDBObject into: buffer 
+	"Private - Get the info attribute of the receiver into buffer and answer the number of bytes copied."
+
+	| len |
+	len := SWORD new.
+	aDBObject dbCheckException: (self 
+				sqlGetInfo: aDBObject asParameter
+				infoType: anInteger
+				infoValuePtr: buffer
+				bufferLength: buffer size
+				stringLengthPtr: len).
+	^len value!
+
+getInfoHandle: infoCode for: aDBObject
+	"Private - Answer an <ExternalHandle> containing the value of the an info attribute 
+	described by infoCode of the <DBConnection> or <DBStatement>, aDBObject."
+
+	| value |
+	value := ExternalHandle new.
+	self getInfo: infoCode for: aDBObject into: value.
+	^value!
+
+sqlAllocHandle: anInteger inputHandle: parentExternalHandle outputHandlePtr: newExternalHandle 
+	<stdcall: sword SQLAllocHandle sword handle handle*>
+	^self invalidCall!
+
+sqlBindCol: anExternalHandle columnNumber: anIntegerCol targetType: anIntegerType targetValuePtr: anExternalAddressBuf bufferLength: anIntegerMax strLenOrInd: anExternalAddressLen 
+	"SQLRETURN SQLBindCol(
+		SQLHSTMT     StatementHandle,
+		SQLUSMALLINT     ColumnNumber,
+		SQLSMALLINT     TargetType,
+		SQLPOINTER     TargetValuePtr,
+		SQLINTEGER     BufferLength,
+		SQLLEN *     StrLen_or_Ind);
+
+        Assign the storage and data type for a column in a result
+        set, including:
+        -   a storage buffer to receive the contents of a column of
+            data (rgbValue, which must be an ExternalAddress
+            allocated from non-Smalltalk memory and passed to this
+            method asParameter).
+        -   the length of the storage buffer
+        -   a storage location to receive the length of the data
+            put in the storage buffer (pcbValue, which must also be
+            an ExternalAddress pointing at 4 bytes of non-Smalltalk
+            memory passed asParameter)
+        -   data type conversion
+
+    N.B. The DLL retains the buffer addresses, so the buffers must
+         be allocated from fixed memory. If this is not done
+         then the objects will likely move on a garbage collect, and
+         the DLL will then write into some other object!!"
+
+	<stdcall: sword SQLBindCol handle word sword lpvoid sdword lpvoid>
+	^self invalidCall!
+
+sqlBindParameter: anExternalHandle parameterNumber: parmNumInteger inputOutputType: ioInteger valueType: valueInteger parameterType: parmTypeInteger columnSize: sizeInteger decimalDigits: digitsInteger parameterValuePtr: parmBytes bufferLength: bufLenInteger strLenOrIndPtr: anSDWORD 
+	"SQLRETURN SQLBindParameter(
+		SQLHSTMT     StatementHandle,
+		SQLUSMALLINT     ParameterNumber,
+		SQLSMALLINT     InputOutputType,
+		SQLSMALLINT     ValueType,
+		SQLSMALLINT     ParameterType,
+		SQLUINTEGER     ColumnSize,
+		SQLSMALLINT     DecimalDigits,
+		SQLPOINTER     ParameterValuePtr,
+		SQLINTEGER     BufferLength,
+		SQLINTEGER *     StrLen_or_IndPtr);"
+
+	<stdcall: sword SQLBindParameter handle word sword sword sword dword sword lpvoid sdword lpvoid>
+	^self invalidCall!
+
+sqlBrowseConnect: anExternalHandle inConnectionString: aString stringLength1: anIntegerLen outConnectionString: anExternalBuffer bufferLength: anIntegerMax stringLength2Ptr: anIntegerParm 
+	"For enumerating attributes of a data source.
+
+	SQLRETURN SQLBrowseConnect(
+		SQLHDBC     ConnectionHandle,
+		SQLCHAR *     InConnectionString,
+		SQLSMALLINT     StringLength1,
+		SQLCHAR *     OutConnectionString,
+		SQLSMALLINT     BufferLength,
+		SQLSMALLINT *     StringLength2Ptr);"
+
+	<stdcall: sword SQLBrowseConnect handle lpstr sword lpstr sword SWORD*>
+	^self invalidCall!
+
+sqlCancel: anExternalHandle 
+	"RETCODE SQL_API SQLCancel(
+		HSTMT       hstmt);
+
+	Request cancellation of processing for the specified statement.
+	N.B. Successful completion does not indicate that the
+	request has been satisfied, merely that it was accepted.
+	See ODBC API help"
+
+	<stdcall: sword SQLCancel handle>
+	^self invalidCall!
+
+sqlCloseCursor: anExternalHandle 
+	<stdcall: sword SQLCloseCursor handle>
+	^self invalidCall!
+
+sqlColAttribute: anExternalHandle columnNumber: columnInteger fieldIdentifier: idInteger characterAttributePtr: bytes bufferLength: sizeInteger stringLengthPtr: anSWORD numericAttributePtr: anExternalAddress 
+	<stdcall: sword SQLColAttribute handle word word lpvoid sword SWORD* lpvoid>
+	^self invalidCall!
+
+sqlColumns: anExternalHandleSTMT catalogName: aStringParmQual nameLength1: anIntegerQualLen schemaName: aStringParmOwner nameLength2: anIntegerOwnerLen tableName: aStringParmName nameLength3: anIntegerNameLen columnName: aStringParmType nameLength4: anIntegerTypeLen 
+	"SQLRETURN SQLColumns(
+		SQLHSTMT     StatementHandle,
+		SQLCHAR *     CatalogName,
+		SQLSMALLINT     NameLength1,
+		SQLCHAR *     SchemaName,
+		SQLSMALLINT     NameLength2,
+		SQLCHAR *     TableName,
+		SQLSMALLINT     NameLength3,
+		SQLCHAR *     ColumnName,
+		SQLSMALLINT     NameLength4);"
+
+	<stdcall: sword SQLColumns handle lpstr sword lpstr sword lpstr sword lpstr sword>
+	^self invalidCall!
+
+sqlConnect: anExternalHandle serverName: dsnString nameLength1: dsnInteger userName: uidString nameLength2: uidIInteger authentication: authString nameLength3: authInteger 
+	"Load driver and establish connection to a data source.
+
+	SQLRETURN SQLConnect(
+		SQLHDBC ConnectionHandle,
+		SQLCHAR * ServerName,
+		SQLSMALLINT NameLength1,
+		SQLCHAR * UserName,
+		SQLSMALLINT NameLength2,
+		SQLCHAR * Authentication,
+		SQLSMALLINT NameLength3);"
+
+	<stdcall: sword SQLConnect handle lpstr sword lpstr sword lpstr sword>
+	^self invalidCall!
+
+sqlDataSources: anExternalHandle direction: anIntegerConstant serverName: anExternalBuffer bufferLength1: anIntegerMax nameLength1Ptr: anIntegerParmLen description: anExternalBufferParm bufferLength2: anIntegerParmDMax nameLength2Ptr: anIntegerParmDLen 
+	"SQLRETURN SQLDataSources(
+		SQLHENV     EnvironmentHandle,
+		SQLUSMALLINT     Direction,
+		SQLCHAR *     ServerName,
+		SQLSMALLINT     BufferLength1,
+		SQLSMALLINT *     NameLength1Ptr,
+		SQLCHAR *     Description,
+		SQLSMALLINT     BufferLength2,
+		SQLSMALLINT *     NameLength2Ptr);
+
+	    Enumerates data source names.
+	    Max length of szDSN (cbDSNMax) need not be longer than
+	    SQL_MAX_DSN_LENGTH+1)."
+
+	<stdcall: sword SQLDataSources handle word lpstr sword SWORD* lpstr sword SWORD*>
+	^self invalidCall!
+
+sqlDescribeCol: anExternalHandle columnNumber: columnInteger columnName: aString bufferLength: sizeInteger nameLengthPtr: maxSWORD dataTypePtr: typeSWORD columnSizePtr: precisionDWORD decimalDigitsPtr: scaleSWORD nullablePtr: nullableSWORD 
+	"SQLRETURN SQLDescribeCol(
+		SQLHSTMT     StatementHandle,
+		SQLSMALLINT     ColumnNumber,
+		SQLCHAR *     ColumnName,
+		SQLSMALLINT     BufferLength,
+		SQLSMALLINT *     NameLengthPtr,
+		SQLSMALLINT *     DataTypePtr,
+		SQLUINTEGER *     ColumnSizePtr,
+		SQLSMALLINT *     DecimalDigitsPtr,
+		SQLSMALLINT *     NullablePtr);"
+
+	<stdcall: sword SQLDescribeCol handle sword lpstr sword SWORD* SWORD* DWORD* SWORD* SWORD*>
+	^self invalidCall!
+
+sqlDisconnect: anExternalHandle 
+	<stdcall: sword SQLDisconnect handle>
+	^self invalidCall!
+
+sqlDriverConnect: anExternalHandle windowHandle: aWinHandle inConnectionString: aStringConn stringLength1: anIntegerConn outConnectionString: aStringConnOut bufferLength: anIntegerConnOut stringLength2Ptr: anExternalShort driverCompletion: anIntegerOption 
+	"Load driver and establish connection to a data source.
+
+	SQLRETURN SQLDriverConnect(
+		SQLHDBC     ConnectionHandle,
+		SQLHWND     WindowHandle,
+		SQLCHAR *     InConnectionString,
+		SQLSMALLINT     StringLength1,
+		SQLCHAR *     OutConnectionString,
+		SQLSMALLINT     BufferLength,
+		SQLSMALLINT *     StringLength2Ptr,
+		SQLUSMALLINT     DriverCompletion);"
+
+	<stdcall: sword SQLDriverConnect handle handle lpstr sword lpstr sword SWORD* word>
+	^self invalidCall!
+
+sqlEndTran: anExternalHandleEnv handle: anExternalHandleDBC completionType: anInteger 
+	"SQLRETURN SQLEndTran(
+		SQLSMALLINT     HandleType,
+		SQLHANDLE     Handle,
+		SQLSMALLINT     CompletionType);"
+
+	<stdcall: sword SQLEndTran sword handle sword>
+	^self invalidCall!
+
+sqlError: anExternalHandleENV hdbc: anExternalHandleDBC hstmt: anExternalHandleSTMT szSqlState: anSQLStateParm pfNativeError: anIntegerParmNErr szErrorMsg: anExternalBufferErrMsg cbErrorMsgMax: anInteger pcbErrorMsg: anIntegerParmLen 
+	"RETCODE SQL_API SQLError(
+		HENV        henv,
+		HDBC        hdbc,
+		HSTMT       hstmt,
+		UCHAR  FAR *szSqlState,
+		SDWORD FAR *pfNativeError,
+		UCHAR  FAR *szErrorMsg,
+		SWORD       cbErrorMsgMax,
+		SWORD  FAR *pcbErrorMsg);
+
+	Get error or status information"
+
+	<stdcall: sword SQLError handle handle handle lpvoid lpvoid lpvoid sword lpvoid>
+	#todo.	"This API has been deprecated - replace with SQLGetDiagRec"
+	^self invalidCall!
+
+sqlExecDirect: anExternalHandle statementText: aString textLength: anInteger 
+	"SQLRETURN SQLExecDirect(
+		SQLHSTMT StatementHandle,
+		SQLCHAR * StatementText,
+		SQLINTEGER TextLength);"
+
+	<stdcall: sword SQLExecDirect handle lpstr sdword>
+	^self invalidCall!
+
+sqlExecute: anExternalHandle 
+	"Execute a preprepared SQL statement on the specified handle
+	
+		SQLRETURN SQLExecute(HSTMT hstmt);"
+
+	<stdcall: sword SQLExecute handle>
+	^self invalidCall!
+
+sqlFetchScroll: anExternalHandle fetchOrientation: orientationInteger fetchOffset: offsetInteger 
+	<stdcall: sword SQLFetchScroll handle word sdword>
+	^self invalidCall!
+
+sqlForeignKeys: anExternalHandle pkCatalogName: aStringPkQual nameLength1: anIntegerPkQual pkSchemaName: aStringPkOwn nameLength2: anIntegerPkOwn pkTableName: aStringPkName nameLength3: anIntegerPkName fkCatalogName: aStringFkQual nameLength4: anIntegerFkQual fkSchemaName: aStringFkOwn nameLength5: anIntegerFkOwn fkTableName: aStringFkName nameLength6: anIntegerFkName 
+	"SQLRETURN SQLForeignKeys(
+		SQLHSTMT     StatementHandle,
+		SQLCHAR *     PKCatalogName,
+		SQLSMALLINT     NameLength1,
+		SQLCHAR *     PKSchemaName,
+		SQLSMALLINT     NameLength2,
+		SQLCHAR *     PKTableName,
+		SQLSMALLINT     NameLength3,
+		SQLCHAR *     FKCatalogName,
+		SQLSMALLINT     NameLength4,
+		SQLCHAR *     FKSchemaName,
+		SQLSMALLINT     NameLength5,
+		SQLCHAR *     FKTableName,
+		SQLSMALLINT     NameLength6);"
+
+	<stdcall: sword SQLForeignKeys handle lpstr sword lpstr sword lpstr sword lpstr sword lpstr sword lpstr sword>
+	^self invalidCall!
+
+sqlFreeHandle: anInteger handle: anExternalHandle 
+	<stdcall: sword SQLFreeHandle sword handle>
+	^self invalidCall!
+
+sqlFreeStmt: anExternalHandle option: anInteger 
+	<stdcall: sword SQLFreeStmt handle word>
+	^self invalidCall!
+
+sqlGetConnectAttr: anExternalHandle attribute: idInteger valuePtr: anIntegerOrStringOrBytes bufferLength: lengthInteger stringLengthPtr: anSDWORD 
+	<stdcall: sword SQLGetConnectOption handle sdword lpvoid sdword sdword*>
+	^self invalidCall!
+
+sqlGetData: anExternalHandleSTMT columnNumber: anIntegerPar targetType: anIntegerCType targetValuePtr: anExternalBuffer bufferLength: anIntegerMax strLenOrIndPtr: anSDWORD 
+	"SQLRETURN SQLGetData(
+		SQLHSTMT     StatementHandle,
+		SQLUSMALLINT     ColumnNumber,
+		SQLSMALLINT     TargetType,
+		SQLPOINTER     TargetValuePtr,
+		SQLINTEGER     BufferLength,
+		SQLINTEGER *     StrLen_or_IndPtr);"
+
+	<stdcall: sword SQLGetData handle word sword lpvoid sdword SDWORD*>
+	^self invalidCall!
+
+sqlGetFunctions: anExternalHandle functionId: anInteger supportedPtr: aWORD 
+	"Request confirmation that a particular function is implemented
+	by the driver.
+
+		SQLRETURN SQLGetFunctions(
+			SQLHDBC     ConnectionHandle,
+			SQLUSMALLINT     FunctionId,
+			SQLUSMALLINT *     SupportedPtr);"
+
+	<stdcall: sword SQLGetFunctions handle word WORD*>
+	^self invalidCall!
+
+sqlGetInfo: anExternalHandle infoType: anIntegerType infoValuePtr: bytes bufferLength: anIntegerMax stringLengthPtr: anSWORD 
+	"Request specific information about a data source depending on
+	fInfoType.
+
+		SQLRETURN SQLGetInfo(
+			SQLHDBC     ConnectionHandle,
+			SQLUSMALLINT     InfoType,
+			SQLPOINTER     InfoValuePtr,
+			SQLSMALLINT     BufferLength,
+			SQLSMALLINT *     StringLengthPtr);"
+
+	<stdcall: sword SQLGetInfo handle word lpvoid sword SWORD*>
+	^self invalidCall!
+
+sqlGetStmtAttr: anExternalHandle attribute: optionCode valuePtr: anIntegerOrStringOrBytes bufferLength: lengthInteger stringLengthPtr: anSDWORD 
+	<stdcall: sword SQLGetStmtOption handle sdword lpvoid sdword sdword*>
+	^self invalidCall!
+
+sqlNumResultCols: anExternalHandle pccol: anSWORD 
+	"Return the number of columns in the result set for the statement.
+
+		SQLRETURN SQLNumResultCols(
+			SQLHSTMT StatementHandle,
+			SQLSMALLINT * ColumnCountPtr);"
+
+	<stdcall: sword SQLNumResultCols handle sword*>
+	^self invalidCall!
+
+sqlPrepare: anExternalHandle statementText: aString textLength: anInteger 
+	"SQLRETURN SQLPrepare(
+		SQLHSTMT     StatementHandle,
+		SQLCHAR *     StatementText,
+		SQLINTEGER     TextLength);"
+
+	<stdcall: sword SQLPrepare handle lpstr sdword>
+	^self invalidCall!
+
+sqlPrimaryKeys: anExternalHandle catalogName: aStringQual nameLength1: anIntegerQual schemaName: aStringOwn nameLength2: anIntegerOwn tableName: aStringName nameLength3: anIntegerName 
+	"SQLRETURN SQLPrimaryKeys(
+		SQLHSTMT     StatementHandle,
+		SQLCHAR *     CatalogName,
+		SQLSMALLINT     NameLength1,
+		SQLCHAR *     SchemaName,
+		SQLSMALLINT     NameLength2,
+		SQLCHAR *     TableName,
+		SQLSMALLINT     NameLength3);"
+
+	<stdcall: sword SQLPrimaryKeys handle lpstr sword lpstr sword lpstr sword>
+	^self invalidCall!
+
+sqlProcedures: anExternalHandle catalogName: aStringParmPQ nameLength1: anIntegerPQ schemaName: aStringParmPO nameLength1: anIntegerPO procName: aStringParmPN nameLength3: anIntegerPN 
+	"SQLRETURN SQLProcedures(
+		SQLHSTMT     StatementHandle,
+		SQLCHAR *     CatalogName,
+		SQLSMALLINT     NameLength1,
+		SQLCHAR *     SchemaName,
+		SQLSMALLINT     NameLength2,
+		SQLCHAR *     ProcName,
+		SQLSMALLINT     NameLength3);"
+
+	<stdcall: sword SQLProcedures handle lpstr sword lpstr sword lpstr sword>
+	^self invalidCall!
+
+sqlRowCount: anExternalHandle rowCountPtr: anSDWORD 
+	"Return the number of rows affected by an UPDATE, INSERT or
+	DELETE statement associated with the specified hstmt.
+
+	SQLRETURN SQLRowCount(
+		SQLHSTMT StatementHandle,
+		SQLINTEGER * RowCountPtr)"
+
+	<stdcall: sword SQLRowCount handle sdword*>
+	^self invalidCall!
+
+sqlSetConnectAttr: anExternalHandle attribute: idInteger valuePtr: bytes stringLength: lengthInteger 
+	<stdcall: sword SQLSetConnectAttr handle sdword lpvoid sdword>
+	^self invalidCall!
+
+sqlSetEnvAttr: anExternalHandle attribute: anInteger valuePtr: anExternalAddress stringLength: lengthInteger 
+	<stdcall: sword SQLSetEnvAttr handle sdword lpvoid sdword>
+	^self invalidCall!
+
+sqlSetPos: anExternalHandle rowNumber: anIntegerRow operation: anIntegerOption lockType: aBoolLock 
+	"SQLRETURN SQLSetPos(
+		SQLHSTMT     StatementHandle,
+		SQLUSMALLINT     RowNumber,
+		SQLUSMALLINT     Operation,
+		SQLUSMALLINT     LockType);"
+
+	<stdcall: sword SQLSetPos handle word word word>
+	^self invalidCall!
+
+sqlSetStmtAttr: anExternalHandle attribute: anInteger valuePtr: anExternalAddress stringLength: lengthInteger 
+	<stdcall: sword SQLSetStmtAttr handle sdword lpvoid sdword>
+	^self invalidCall!
+
+sqlSpecialColumns: anExternalHandle identifierType: anInteger catalogName: aStringQual nameLength1: anIntegerQual schemaName: aStringOwn nameLength2: anIntegerOwn tableName: aStringName nameLength3: anIntegerName scope: anIntegerScope nullable: anIntegerNullable 
+	"SQLRETURN SQLSpecialColumns(
+		SQLHSTMT     StatementHandle,
+		SQLSMALLINT     IdentifierType,
+		SQLCHAR *     CatalogName,
+		SQLSMALLINT     NameLength1,
+		SQLCHAR *     SchemaName,
+		SQLSMALLINT     NameLength2,
+		SQLCHAR *     TableName,
+		SQLSMALLINT     NameLength3,
+		SQLSMALLINT     Scope,
+		SQLSMALLINT     Nullable);"
+
+	<stdcall: sword SQLSpecialColumns handle sword lpstr sword lpstr sword lpstr sword sword sword>
+	^self invalidCall!
+
+sqlStatistics: anExternalHandle catalogName: aStringQual nameLength1: anIntegerQual schemaName: aStringOwn nameLength2: anIntegerOwn tableName: aStringName nameLength3: anIntegerName unique: anIntegerScope reserved: anIntegerNullable 
+	"SQLRETURN SQLStatistics(
+		SQLHSTMT     StatementHandle,
+		SQLCHAR *     CatalogName,
+		SQLSMALLINT     NameLength1,
+		SQLCHAR *     SchemaName,
+		SQLSMALLINT     NameLength2,
+		SQLCHAR *     TableName,
+		SQLSMALLINT     NameLength3,
+		SQLUSMALLINT     Unique,
+		SQLUSMALLINT     Reserved);"
+
+	<stdcall: sword SQLStatistics handle lpstr sword lpstr sword lpstr sword word word>
+	^self invalidCall!
+
+sqlTables: anExternalHandleSTMT
+    szTableQualifier:   aStringParmQual
+    cbTableQualifier:   anIntegerQualLen
+    szTableOwner:       aStringParmOwner
+    cbTableOwner:       anIntegerOwnerLen
+    szTableName:        aStringParmName
+    cbTableName:        anIntegerNameLen
+    szTableType:        aStringParmType
+    cbTableType:        anIntegerTypeLen
+
+	"RETCODE SQL_API SQLTables(
+		HSTMT       hstmt,
+		UCHAR  FAR *szTableQualifier,
+		SWORD       cbTableQualifier,
+		UCHAR  FAR *szTableOwner,
+		SWORD       cbTableOwner,
+		UCHAR  FAR *szTableName,
+		SWORD       cbTableName,
+		UCHAR  FAR *szTableType,
+		SWORD       cbTableType);"
+
+    <stdcall: sword SQLTables handle lpvoid sword lpvoid sword lpvoid sword lpvoid sword>
+    ^self invalidCall! !
+!ODBCLibrary categoriesFor: #getInfo:for:into:!accessing!private! !
+!ODBCLibrary categoriesFor: #getInfoHandle:for:!accessing!private! !
+!ODBCLibrary categoriesFor: #sqlAllocHandle:inputHandle:outputHandlePtr:!public!win32 functions-odbc library! !
+!ODBCLibrary categoriesFor: #sqlBindCol:columnNumber:targetType:targetValuePtr:bufferLength:strLenOrInd:!public!win32 functions-odbc library! !
+!ODBCLibrary categoriesFor: #sqlBindParameter:parameterNumber:inputOutputType:valueType:parameterType:columnSize:decimalDigits:parameterValuePtr:bufferLength:strLenOrIndPtr:!public!win32 functions-odbc library! !
+!ODBCLibrary categoriesFor: #sqlBrowseConnect:inConnectionString:stringLength1:outConnectionString:bufferLength:stringLength2Ptr:!public!win32 functions-odbc library! !
+!ODBCLibrary categoriesFor: #sqlCancel:!public!win32 functions-odbc library! !
+!ODBCLibrary categoriesFor: #sqlCloseCursor:!public!win32 functions-odbc library! !
+!ODBCLibrary categoriesFor: #sqlColAttribute:columnNumber:fieldIdentifier:characterAttributePtr:bufferLength:stringLengthPtr:numericAttributePtr:!public!win32 functions-odbc library! !
+!ODBCLibrary categoriesFor: #sqlColumns:catalogName:nameLength1:schemaName:nameLength2:tableName:nameLength3:columnName:nameLength4:!public!win32 functions-odbc library! !
+!ODBCLibrary categoriesFor: #sqlConnect:serverName:nameLength1:userName:nameLength2:authentication:nameLength3:!public!win32 functions-odbc library! !
+!ODBCLibrary categoriesFor: #sqlDataSources:direction:serverName:bufferLength1:nameLength1Ptr:description:bufferLength2:nameLength2Ptr:!public!win32 functions-odbc library! !
+!ODBCLibrary categoriesFor: #sqlDescribeCol:columnNumber:columnName:bufferLength:nameLengthPtr:dataTypePtr:columnSizePtr:decimalDigitsPtr:nullablePtr:!public!win32 functions-odbc library! !
+!ODBCLibrary categoriesFor: #sqlDisconnect:!public!win32 functions-odbc library! !
+!ODBCLibrary categoriesFor: #sqlDriverConnect:windowHandle:inConnectionString:stringLength1:outConnectionString:bufferLength:stringLength2Ptr:driverCompletion:!public!win32 functions-odbc library! !
+!ODBCLibrary categoriesFor: #sqlEndTran:handle:completionType:!public!win32 functions-odbc library! !
+!ODBCLibrary categoriesFor: #sqlError:hdbc:hstmt:szSqlState:pfNativeError:szErrorMsg:cbErrorMsgMax:pcbErrorMsg:!public!win32 functions-odbc library! !
+!ODBCLibrary categoriesFor: #sqlExecDirect:statementText:textLength:!public!win32 functions-odbc library! !
+!ODBCLibrary categoriesFor: #sqlExecute:!public!win32 functions-odbc library! !
+!ODBCLibrary categoriesFor: #sqlFetchScroll:fetchOrientation:fetchOffset:!public!win32 functions-odbc library! !
+!ODBCLibrary categoriesFor: #sqlForeignKeys:pkCatalogName:nameLength1:pkSchemaName:nameLength2:pkTableName:nameLength3:fkCatalogName:nameLength4:fkSchemaName:nameLength5:fkTableName:nameLength6:!public!win32 functions-odbc library! !
+!ODBCLibrary categoriesFor: #sqlFreeHandle:handle:!public!win32 functions-odbc library! !
+!ODBCLibrary categoriesFor: #sqlFreeStmt:option:!public!win32 functions-odbc library! !
+!ODBCLibrary categoriesFor: #sqlGetConnectAttr:attribute:valuePtr:bufferLength:stringLengthPtr:!public!win32 functions-odbc library! !
+!ODBCLibrary categoriesFor: #sqlGetData:columnNumber:targetType:targetValuePtr:bufferLength:strLenOrIndPtr:!public!win32 functions-odbc library! !
+!ODBCLibrary categoriesFor: #sqlGetFunctions:functionId:supportedPtr:!public!win32 functions-odbc library! !
+!ODBCLibrary categoriesFor: #sqlGetInfo:infoType:infoValuePtr:bufferLength:stringLengthPtr:!public!win32 functions-odbc library! !
+!ODBCLibrary categoriesFor: #sqlGetStmtAttr:attribute:valuePtr:bufferLength:stringLengthPtr:!public!win32 functions-odbc library! !
+!ODBCLibrary categoriesFor: #sqlNumResultCols:pccol:!public!win32 functions-odbc library! !
+!ODBCLibrary categoriesFor: #sqlPrepare:statementText:textLength:!public!win32 functions-odbc library! !
+!ODBCLibrary categoriesFor: #sqlPrimaryKeys:catalogName:nameLength1:schemaName:nameLength2:tableName:nameLength3:!public!win32 functions-odbc library! !
+!ODBCLibrary categoriesFor: #sqlProcedures:catalogName:nameLength1:schemaName:nameLength1:procName:nameLength3:!public!win32 functions-odbc library! !
+!ODBCLibrary categoriesFor: #sqlRowCount:rowCountPtr:!public!win32 functions-odbc library! !
+!ODBCLibrary categoriesFor: #sqlSetConnectAttr:attribute:valuePtr:stringLength:!public!win32 functions-odbc library! !
+!ODBCLibrary categoriesFor: #sqlSetEnvAttr:attribute:valuePtr:stringLength:!public!win32 functions-odbc library! !
+!ODBCLibrary categoriesFor: #sqlSetPos:rowNumber:operation:lockType:!public!win32 functions-odbc library! !
+!ODBCLibrary categoriesFor: #sqlSetStmtAttr:attribute:valuePtr:stringLength:!public!win32 functions-odbc library! !
+!ODBCLibrary categoriesFor: #sqlSpecialColumns:identifierType:catalogName:nameLength1:schemaName:nameLength2:tableName:nameLength3:scope:nullable:!public!win32 functions-odbc library! !
+!ODBCLibrary categoriesFor: #sqlStatistics:catalogName:nameLength1:schemaName:nameLength2:tableName:nameLength3:unique:reserved:!public!win32 functions-odbc library! !
+!ODBCLibrary categoriesFor: #sqlTables:szTableQualifier:cbTableQualifier:szTableOwner:cbTableOwner:szTableName:cbTableName:szTableType:cbTableType:!public!win32 functions-odbc library! !
+
+!ODBCLibrary class methodsFor!
+
+fileName
+	"Answer the host system file name of the external library which the 
+	receiver represents"
+
+	^'ODBC32'!
+
+onStartup2
+	"Private - Ensure that old external resources are cleared so that they will be re-created."
+
+	DBResultSet onStartup.
+! !
+!ODBCLibrary class categoriesFor: #fileName!constants!public! !
+!ODBCLibrary class categoriesFor: #onStartup2!event handling!private! !
+

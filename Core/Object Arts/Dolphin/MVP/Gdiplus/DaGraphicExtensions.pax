@@ -1,0 +1,219 @@
+| package |
+package := Package name: 'DaGraphicExtensions'.
+package paxVersion: 0;
+	basicComment: ''.
+
+package basicPackageVersion: '5.0'.
+
+
+package classNames
+	add: #DaRotatedRectangle;
+	yourself.
+
+package methodNames
+	add: #Canvas -> #plgBlt:pPoints:rectangle:mask:moPoint:;
+	add: #GDILibrary -> #plgBlt:lpPoints:hdcSrc:nXSrc:nYSrc:nWidth:nHeight:hbmBitmap:xMsk:yMsk:;
+	add: #GdiplusImage -> #freeAngleRotate:crop:;
+	add: #GdiplusImage -> #freeRotate:withRectangle:;
+	add: #GdiplusImage -> #freeRotateAndCrop:withRectangle:;
+	add: #Point -> #daRotateAround:by:roundedTo:;
+	add: #Point -> #daRotateAroundOrigin:;
+	add: #Point -> #daRotateAroundOrigin:roundedTo:;
+	add: #Rectangle -> #daRotateAroundOrigin:;
+	add: #Rectangle -> #daRotateAroundOrigin:roundedTo:;
+	add: 'GdiplusImage class' -> #exampleGdipIFreeRotateBefore;
+	add: 'GdiplusImage class' -> #exampleGdipIFreeRotateCrop;
+	add: 'GdiplusImage class' -> #exampleGdipIFreeRotateNoCrop;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package allResourceNames: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\..\Base\Dolphin';
+	add: '..\Base\Dolphin MVP Base';
+	add: 'Gdiplus';
+	add: '..\..\Lagoon\Lagoon Image Stripper';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+Rectangle subclass: #DaRotatedRectangle
+	instanceVariableNames: 'theta precision pPoints boundingBox imageRectangle'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+!Canvas methodsFor!
+
+plgBlt: aCanvasOrHandle pPoints: anArrayOfThreePoints rectangle: aRectangle mask: maskDC moPoint: aPoint
+	"Blits a rectangular region from aCanvasOrHandle to the receiver
+	Answer true if the operation succeeds"
+
+	^GDILibrary default 
+		plgBlt: aCanvasOrHandle asParameter
+		lpPoints: anArrayOfThreePoints
+		hdcSrc: self asParameter
+		nXSrc: aRectangle origin x
+		nYSrc: aRectangle origin y
+		nWidth: aRectangle width
+		nHeight: aRectangle height
+		hbmBitmap: maskDC asParameter
+		xMsk: aPoint x
+		yMsk: aPoint y! !
+!Canvas categoriesFor: #plgBlt:pPoints:rectangle:mask:moPoint:!drawing!public! !
+
+!GDILibrary methodsFor!
+
+plgBlt: hdc lpPoints: points hdcSrc: hdcSrc nXSrc: sx nYSrc: sy nWidth: w nHeight: h hbmBitmap: bitmask xMsk: xMask yMsk: yMask
+	"The PlgBlt function performs a bit-block transfer of the bits of color data from the specified rectangle in the source device 
+	context to the specified parallelogram in the destination device context. If the given bitmask handle identifies a valid monochrome
+	bitmap, the function uses this bitmap to mask the bits of color data from the source rectangle. 
+
+		BOOL PlgBlt(
+			  HDC hdcDest,          // handle to destination DC
+			  CONST POINT *lpPoint, // destination vertices
+			  HDC hdcSrc,           // handle to source DC
+			  int nXSrc,            // x-coord of source upper-left corner
+			  int nYSrc,            // y-coord of source upper-left corner
+			  int nWidth,           // width of source rectangle
+			  int nHeight,          // height of source rectangle
+			  HBITMAP hbmMask,      // handle to bitmask
+			  int xMask,            // x-coord of bitmask upper-left corner
+			  int yMask             // y-coord of bitmask upper-left corner
+			);"
+
+	<stdcall: bool PlgBlt handle lpvoid handle sdword sdword sdword sdword handle sdword sdword>
+	^self invalidCall! !
+!GDILibrary categoriesFor: #plgBlt:lpPoints:hdcSrc:nXSrc:nYSrc:nWidth:nHeight:hbmBitmap:xMsk:yMsk:!public!win32 functions-bitmap! !
+
+!GdiplusImage methodsFor!
+
+freeAngleRotate: fDegrees crop: aBool
+	"answer the image rotated any number of degrees or partial degrees.
+If not cropped, the image returned will be larger than the original and 
+will include waste triangles along each edge.  If cropped, these triangles
+will be removed and the largest useful rectangular image will be returned"
+
+	| rRect rDegrees |
+	#DaAdded.
+	fDegrees < 0 ifTrue: [rDegrees := 360 + fDegrees] ifFalse: [rDegrees := fDegrees].
+	rRect := DaRotatedRectangle 
+				fromRectangle: (Rectangle origin: 0 @ 0 corner: self extent)
+				aroundCenter: rDegrees
+				roundedTo: 1.0.
+	aBool 
+		ifTrue: [^self freeRotateAndCrop: rDegrees withRectangle: rRect]
+		ifFalse: [^self freeRotate: rDegrees withRectangle: rRect]!
+
+freeRotate: aFloat withRectangle: rRect
+	| graphics bitmap |
+	#DaAdded.
+	bitmap := self class extent: rRect boundingBox extent rounded.
+	bitmap graphics drawImage: self points: rRect pointsAsParameter.
+	^bitmap!
+
+freeRotateAndCrop: aFloat withRectangle: rRect
+	| bitmap cBitmap |
+	#DaAdded.
+	bitmap := self freeRotate: aFloat withRectangle: rRect.
+	cBitmap := self class extent: rRect croppedImageRectangle extent rounded.
+	cBitmap graphics 
+		drawImage: bitmap
+		at: 0 @ 0
+		extent: rRect croppedImageRectangle extent
+		from: rRect croppedImageRectangle origin
+		extent: rRect croppedImageRectangle extent.
+	^cBitmap! !
+!GdiplusImage categoriesFor: #freeAngleRotate:crop:!operations!public! !
+!GdiplusImage categoriesFor: #freeRotate:withRectangle:!operations!public! !
+!GdiplusImage categoriesFor: #freeRotateAndCrop:withRectangle:!operations!public! !
+
+!GdiplusImage class methodsFor!
+
+exampleGdipIFreeRotateBefore
+	"
+		self exampleGdipIFreeRotateBefore showExample
+	"
+
+	^GdiplusBitmap fromFile: self fileResource pafSeattleNightJpg!
+
+exampleGdipIFreeRotateCrop
+	"
+		self exampleGdipIFreeRotateCrop showExample
+	"
+
+	| image |
+	image := GdiplusBitmap fromFile: self fileResource pafSeattleNightJpg.
+	^image freeAngleRotate: 3.35 crop: true!
+
+exampleGdipIFreeRotateNoCrop
+	"
+		self showExample: self exampleGdipIFreeRotateNoCrop viewMode: #scaleToFit
+	"
+
+	| image |
+	image := GdiplusBitmap fromFile: self fileResource pafSeattleNightJpg.
+	^image freeAngleRotate: 3.35 crop: false! !
+!GdiplusImage class categoriesFor: #exampleGdipIFreeRotateBefore!examples!public!sunit! !
+!GdiplusImage class categoriesFor: #exampleGdipIFreeRotateCrop!examples!public!sunit! !
+!GdiplusImage class categoriesFor: #exampleGdipIFreeRotateNoCrop!examples!public!sunit! !
+
+!Point methodsFor!
+
+daRotateAround: oPoint by: fDegrees roundedTo: rFloat
+	"To rotate a point around a target point, we first displace the point
+	by the delta between the target point and the origin, then rotate
+	around the origin, then displace the result point back"
+
+	| tPoint trPoint |
+	tPoint := self - oPoint.
+	trPoint := tPoint daRotateAroundOrigin: fDegrees roundedTo: rFloat.
+	^trPoint + oPoint!
+
+daRotateAroundOrigin: aFloat
+	| cosine sine newX newY |
+	cosine := aFloat degreesToRadians cos.
+	sine := aFloat degreesToRadians sin.
+	newX := self x * cosine - (self y * sine).
+	newY := self x * sine + (self y * cosine).
+	^newX @ newY!
+
+daRotateAroundOrigin: aFloat  roundedTo: rFloat
+	| cosine sine newX newY |
+	cosine := (aFloat degreesToRadians) cos.
+	sine := (aFloat degreesToRadians) sin.
+	newX := ((self x * cosine) - (self y * sine)) roundTo: rFloat.
+	newY := ((self x * sine) + (self y * cosine)) roundTo: rFloat.
+	^newX @ newY! !
+!Point categoriesFor: #daRotateAround:by:roundedTo:!public!rotation! !
+!Point categoriesFor: #daRotateAroundOrigin:!public!rotation! !
+!Point categoriesFor: #daRotateAroundOrigin:roundedTo:!public!rotation! !
+
+!Rectangle methodsFor!
+
+daRotateAroundOrigin: aFloat
+	^Rectangle origin: (self origin daRotateAroundOrigin: aFloat)
+		corner: (self corner daRotateAroundOrigin: aFloat)!
+
+daRotateAroundOrigin: aFloat roundedTo: rFloat
+	^Rectangle origin: (self origin daRotateAroundOrigin: aFloat roundedTo: rFloat)
+		corner: (self corner daRotateAroundOrigin: aFloat roundedTo: rFloat)! !
+!Rectangle categoriesFor: #daRotateAroundOrigin:!public!rotation! !
+!Rectangle categoriesFor: #daRotateAroundOrigin:roundedTo:!public!rotation! !
+
+"End of package definition"!
+

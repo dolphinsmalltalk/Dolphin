@@ -1,0 +1,39 @@
+"Filed out from Dolphin Smalltalk X6"!
+
+ObjectRegistry subclass: #WeakRegistry
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+WeakRegistry guid: (GUID fromString: '{87B4C67F-026E-11D3-9FD7-00A0CC3E4A32}')!
+WeakRegistry comment: 'WeakRegistry comment: ''WeakRegistry is the class of <ObjectRegistry>s which maintain only a weak reference to registered objects. Thus registration in a WeakRegistry will not prevent the registrant from being garbage collected, which makes it useful where a unique identifier is needed for an object only for as long as it is still referred to from elsewhere in the image. An example usage is the register of extant <ExternalCallback> objects.
+
+The superclass instance variable ''''registry'''' is initialized to an <WeakArray> in instances of this class. The slots of the array are populated either with registered objects, or with the corpse object (i.e. the DeadObject singleton instance). When a new object is registered the first slot currently occuppied by a corpse is used, unless there are no ''''dead'''' entries, in which case the weak array is resized to increase its capacity. The integer key associated with a registered object is its index in the array.
+'!
+!WeakRegistry categoriesForClass!System-Support! !
+!WeakRegistry methodsFor!
+
+addAnsweringIndex: anObject
+	"Register the argument, anObject, answering a unique SmallInteger id which can be used
+	subsequently to retrieve that object."
+
+	^registry addAnsweringIndex: anObject!
+
+initialize: anInteger
+	"Private - Initialize the receiver with the specified initial capacity."
+
+	registry := WeakArray new: anInteger.
+	registry replaceFrom: 1 to: anInteger withObject: DeadObject current!
+
+removeAtIndex: anInteger
+	"Remove, and answer, the registered object with id anInteger in the receiver. 
+	Raise an error if there is no element indexed by anInteger."
+
+	| object |
+	object := registry basicAt: anInteger.
+	registry basicAt: anInteger put: DeadObject current.
+	^object! !
+!WeakRegistry categoriesFor: #addAnsweringIndex:!adding!public! !
+!WeakRegistry categoriesFor: #initialize:!initializing!private! !
+!WeakRegistry categoriesFor: #removeAtIndex:!public!removing! !
+

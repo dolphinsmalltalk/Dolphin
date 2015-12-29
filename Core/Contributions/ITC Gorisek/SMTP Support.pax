@@ -1,0 +1,112 @@
+| package |
+package := Package name: 'SMTP Support'.
+package paxVersion: 1;
+	basicComment: ''.
+
+package basicPackageVersion: 'r 454 rc 9'.
+
+
+package classNames
+	add: #EMailAttachment;
+	add: #EmailBase64Decoder;
+	add: #EmailBase64Encoder;
+	add: #EMailBasicMessage;
+	add: #EMailHeader;
+	add: #EMailMessage;
+	add: #EmailMIMEDecoder;
+	add: #EmailMIMEEncoder;
+	add: #EmailMIMETypes;
+	add: #EMailObject;
+	add: #EmailPOP3Reader;
+	add: #EmailQuotedPrintableDecoder;
+	add: #EmailSMTPConnector;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: 'Dialect Abstraction Layer';
+	add: '..\..\Object Arts\Dolphin\Base\Dolphin';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+Object subclass: #EMailMessage
+	instanceVariableNames: 'header message attachments'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Object subclass: #EmailMIMEDecoder
+	instanceVariableNames: 'encodeType'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Object subclass: #EmailMIMEEncoder
+	instanceVariableNames: 'encodeType'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Object subclass: #EmailMIMETypes
+	instanceVariableNames: 'mimes encodings'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: 'singelton'!
+Object subclass: #EMailObject
+	instanceVariableNames: 'content contentType contentEncoding contentDisposition contentId boundary'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Object subclass: #EmailPOP3Reader
+	instanceVariableNames: 'status username password socket serverID host port numberOfMessages'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Object subclass: #EmailSMTPConnector
+	instanceVariableNames: 'smtpServer status socket serverID host port'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+EmailMIMEDecoder subclass: #EmailBase64Decoder
+	instanceVariableNames: 'codes'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: 'singelton'!
+EmailMIMEDecoder subclass: #EmailQuotedPrintableDecoder
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: 'singelton'!
+EmailMIMEEncoder subclass: #EmailBase64Encoder
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+EMailObject subclass: #EMailAttachment
+	instanceVariableNames: 'subAttachments'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+EMailObject subclass: #EMailBasicMessage
+	instanceVariableNames: 'textContent htmlContent attachments'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+EMailObject subclass: #EMailHeader
+	instanceVariableNames: 'subject addressFrom addressTo addressCC addressBCC messageID mimeVersion received sendDate references mailer organization replyTo priority'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+"End of package definition"!
+

@@ -1,0 +1,814 @@
+| package |
+package := Package name: 'dhbNumerics'.
+package paxVersion: 1;
+	basicComment: ''.
+
+
+package classNames
+	add: #DhbAbstractDataServer;
+	add: #DhbAsymptoticChiSquareDistribution;
+	add: #DhbBetaDistribution;
+	add: #DhbBisectionZeroFinder;
+	add: #DhbBulirschStoerInterpolator;
+	add: #DhbCauchyDistribution;
+	add: #DhbChiSquareDistribution;
+	add: #DhbChromosomeManager;
+	add: #DhbCluster;
+	add: #DhbClusterFinder;
+	add: #DhbCongruentialRandomNumberGenerator;
+	add: #DhbContinuedFraction;
+	add: #DhbCovarianceAccumulator;
+	add: #DhbCovarianceCluster;
+	add: #DhbDecimalFloatingNumber;
+	add: #DhbErfApproximation;
+	add: #DhbEstimatedPolynomial;
+	add: #DhbEuclideanCluster;
+	add: #DhbExponentialDistribution;
+	add: #DhbFastStatisticalMoments;
+	add: #DhbFisherSnedecorDistribution;
+	add: #DhbFisherTippettDistribution;
+	add: #DhbFixedStatisticalMoments;
+	add: #DhbFloatingPointMachine;
+	add: #DhbFunctionalIterator;
+	add: #DhbFunctionOptimizer;
+	add: #DhbGammaDistribution;
+	add: #DhbGeneticOptimizer;
+	add: #DhbHillClimbingOptimizer;
+	add: #DhbHistogram;
+	add: #DhbHistogrammedDistribution;
+	add: #DhbIncompleteBetaFractionTermServer;
+	add: #DhbIncompleteBetaFunction;
+	add: #DhbIncompleteBetaFunctionFraction;
+	add: #DhbIncompleteGammaFractionTermServer;
+	add: #DhbIncompleteGammaFunction;
+	add: #DhbIncompleteGammaSeriesTermServer;
+	add: #DhbInfiniteSeries;
+	add: #DhbIterativeProcess;
+	add: #DhbJacobiTransformation;
+	add: #DhbLagrangeInterpolator;
+	add: #DhbLanczosFormula;
+	add: #DhbLaplaceDistribution;
+	add: #DhbLargestEigenValueFinder;
+	add: #DhbLeastSquareFit;
+	add: #DhbLinearEquationSystem;
+	add: #DhbLinearRegression;
+	add: #DhbLogNormalDistribution;
+	add: #DhbLUPDecomposition;
+	add: #DhbMahalanobisCenter;
+	add: #DhbMatrix;
+	add: #DhbMaximizingPoint;
+	add: #DhbMaximumLikekihoodHistogramFit;
+	add: #DhbMemoryBasedDataServer;
+	add: #DhbMinimizingPoint;
+	add: #DhbMitchellMooreGenerator;
+	add: #DhbMultiVariableGeneralOptimizer;
+	add: #DhbNevilleInterpolator;
+	add: #DhbNewtonInterpolator;
+	add: #DhbNewtonZeroFinder;
+	add: #DhbNormalDistribution;
+	add: #DhbNumericalMethodsTestCase;
+	add: #DhbOneVariableFunctionOptimizer;
+	add: #DhbOptimizingBracketFinder;
+	add: #DhbPolynomial;
+	add: #DhbPolynomialLeastSquareFit;
+	add: #DhbProbabilityDensity;
+	add: #DhbProbabilityDensityWithUnknownDistribution;
+	add: #DhbProbabilityDistributionFunction;
+	add: #DhbProjectedOneVariableFunction;
+	add: #DhbRombergIntegrator;
+	add: #DhbScaledProbabilityDensityFunction;
+	add: #DhbSeriesTermServer;
+	add: #DhbSimplexOptimizer;
+	add: #DhbSimpsonIntegrator;
+	add: #DhbSplineInterpolator;
+	add: #DhbStatisticalMoments;
+	add: #DhbStudentDistribution;
+	add: #DhbSymmetricMatrix;
+	add: #DhbTrapezeIntegrator;
+	add: #DhbTriangularDistribution;
+	add: #DhbUniformDistribution;
+	add: #DhbVector;
+	add: #DhbVectorAccumulator;
+	add: #DhbVectorChromosomeManager;
+	add: #DhbVectorProjectedFunction;
+	add: #DhbWeibullDistribution;
+	add: #DhbWeightedPoint;
+	add: #PointSeries;
+	yourself.
+
+package methodNames
+	add: #Collection -> #asVector;
+	add: #Integer -> #gamma;
+	add: #Integer -> #random;
+	add: #Number -> #addPolynomial:;
+	add: #Number -> #asLimitedPrecisionReal;
+	add: #Number -> #beta:;
+	add: #Number -> #dividingPolynomial:;
+	add: #Number -> #equalsTo:;
+	add: #Number -> #errorFunction;
+	add: #Number -> #gamma;
+	add: #Number -> #logBeta:;
+	add: #Number -> #logGamma;
+	add: #Number -> #productWithMatrix:;
+	add: #Number -> #productWithVector:;
+	add: #Number -> #random;
+	add: #Number -> #relativelyEqualsTo:upTo:;
+	add: #Number -> #subtractToPolynomial:;
+	add: #Number -> #timesPolynomial:;
+	add: #Point -> #extentFromBottomLeft:;
+	add: #Point -> #extentFromBottomRight:;
+	add: #Point -> #extentFromCenter:;
+	add: #Point -> #extentFromTopLeft:;
+	add: #Point -> #extentFromTopRight:;
+	add: #Rectangle -> #positiveRectangle;
+	add: #SequenceableCollection -> #replaceElementsFrom:to:withArray:startingAt:;
+	add: 'Number class' -> #random;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\..\ITC Gorisek\Dialect Abstraction Layer';
+	add: '..\..\Object Arts\Dolphin\Base\Dolphin';
+	add: '..\SUnit\SUnit';
+	yourself).
+
+package setManualPrerequisites: #(
+	'Dialect Abstraction Layer').
+
+package!
+
+"Class Definitions"!
+
+Object subclass: #DhbAbstractDataServer
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Object subclass: #DhbChromosomeManager
+	instanceVariableNames: 'population populationSize rateOfMutation rateOfCrossover'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Object subclass: #DhbCluster
+	instanceVariableNames: 'accumulator previousSampleSize'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Object subclass: #DhbCongruentialRandomNumberGenerator
+	instanceVariableNames: 'constant modulus multiplicator seed'
+	classVariableNames: 'UniqueInstance'
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Object subclass: #DhbDecimalFloatingNumber
+	instanceVariableNames: 'mantissa exponent'
+	classVariableNames: 'Digits'
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Object subclass: #DhbErfApproximation
+	instanceVariableNames: 'constant series norm'
+	classVariableNames: 'UniqueInstance'
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Object subclass: #DhbFloatingPointMachine
+	instanceVariableNames: 'defaultNumericalPrecision radix machinePrecision negativeMachinePrecision smallestNumber largestNumber smallNumber largestExponentArgument'
+	classVariableNames: 'UniqueInstance'
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Object subclass: #DhbHistogram
+	instanceVariableNames: 'minimum binWidth overflow underflow moments contents freeExtent cacheSize desiredNumberOfBins'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Object subclass: #DhbIncompleteBetaFunction
+	instanceVariableNames: 'alpha1 alpha2 fraction inverseFraction logNorm'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Object subclass: #DhbIncompleteGammaFunction
+	instanceVariableNames: 'alpha alphaLogGamma series fraction'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Object subclass: #DhbIterativeProcess
+	instanceVariableNames: 'precision desiredPrecision maximumIterations result iterations'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Object subclass: #DhbLagrangeInterpolator
+	instanceVariableNames: 'pointCollection'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Object subclass: #DhbLanczosFormula
+	instanceVariableNames: 'coefficients sqrt2Pi'
+	classVariableNames: 'UniqueInstance'
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Object subclass: #DhbLinearEquationSystem
+	instanceVariableNames: 'rows solutions'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Object subclass: #DhbLinearRegression
+	instanceVariableNames: 'sum1 sumX sumY sumXX sumYY sumXY slope intercept correlationCoefficient'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Object subclass: #DhbLUPDecomposition
+	instanceVariableNames: 'rows permutation parity'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Object subclass: #DhbMahalanobisCenter
+	instanceVariableNames: 'center inverseCovariance accumulator'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Object subclass: #DhbMatrix
+	instanceVariableNames: 'rows lupDecomposition'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Object subclass: #DhbMinimizingPoint
+	instanceVariableNames: 'value position'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Object subclass: #DhbMitchellMooreGenerator
+	instanceVariableNames: 'randoms lowIndex highIndex'
+	classVariableNames: 'UniqueInstance'
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Object subclass: #DhbPolynomial
+	instanceVariableNames: 'coefficients'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Object subclass: #DhbPolynomialLeastSquareFit
+	instanceVariableNames: 'pointCollection degreePlusOne'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Object subclass: #DhbProbabilityDensity
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Object subclass: #DhbProbabilityDistributionFunction
+	instanceVariableNames: 'probabilityDensity'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Object subclass: #DhbProjectedOneVariableFunction
+	instanceVariableNames: 'index function argument'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Object subclass: #DhbScaledProbabilityDensityFunction
+	instanceVariableNames: 'probabilityDensityFunction count binWidth'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Object subclass: #DhbSeriesTermServer
+	instanceVariableNames: 'x lastTerm'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Object subclass: #DhbStatisticalMoments
+	instanceVariableNames: 'moments'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Object subclass: #DhbVectorAccumulator
+	instanceVariableNames: 'count average'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Object subclass: #DhbWeightedPoint
+	instanceVariableNames: 'xValue yValue weight error'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Object subclass: #PointSeries
+	instanceVariableNames: 'points'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Array variableSubclass: #DhbVector
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DhbAbstractDataServer subclass: #DhbMemoryBasedDataServer
+	instanceVariableNames: 'data position'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DhbChromosomeManager subclass: #DhbVectorChromosomeManager
+	instanceVariableNames: 'origin range'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DhbCluster subclass: #DhbCovarianceCluster
+	instanceVariableNames: 'center'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DhbCluster subclass: #DhbEuclideanCluster
+	instanceVariableNames: 'center'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DhbIterativeProcess subclass: #DhbClusterFinder
+	instanceVariableNames: 'dataServer dataSetSize minimumRelativeClusterSize'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DhbIterativeProcess subclass: #DhbFunctionalIterator
+	instanceVariableNames: 'functionBlock relativePrecision'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DhbIterativeProcess subclass: #DhbIncompleteBetaFunctionFraction
+	instanceVariableNames: 'x q1 q2 q3 numerator denominator alpha1 alpha2'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DhbIterativeProcess subclass: #DhbInfiniteSeries
+	instanceVariableNames: 'termServer'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DhbIterativeProcess subclass: #DhbJacobiTransformation
+	instanceVariableNames: 'lowerRows transform'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DhbIterativeProcess subclass: #DhbLargestEigenValueFinder
+	instanceVariableNames: 'matrix eigenvector transposeEigenvector'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DhbIterativeProcess subclass: #DhbLeastSquareFit
+	instanceVariableNames: 'dataHolder errorMatrix chiSquare equations constants degreeOfFreedom'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DhbFunctionalIterator subclass: #DhbBisectionZeroFinder
+	instanceVariableNames: 'positiveX negativeX'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DhbFunctionalIterator subclass: #DhbFunctionOptimizer
+	instanceVariableNames: 'optimizingPointClass bestPoints'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DhbFunctionalIterator subclass: #DhbNewtonZeroFinder
+	instanceVariableNames: 'derivativeBlock'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DhbFunctionalIterator subclass: #DhbTrapezeIntegrator
+	instanceVariableNames: 'from to sum step'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DhbFunctionOptimizer subclass: #DhbGeneticOptimizer
+	instanceVariableNames: 'chromosomeManager'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DhbFunctionOptimizer subclass: #DhbHillClimbingOptimizer
+	instanceVariableNames: 'unidimensionalFinder'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DhbFunctionOptimizer subclass: #DhbMultiVariableGeneralOptimizer
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DhbFunctionOptimizer subclass: #DhbOneVariableFunctionOptimizer
+	instanceVariableNames: ''
+	classVariableNames: 'GoldenSection'
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DhbFunctionOptimizer subclass: #DhbSimplexOptimizer
+	instanceVariableNames: 'worstVector'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DhbOneVariableFunctionOptimizer subclass: #DhbOptimizingBracketFinder
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DhbTrapezeIntegrator subclass: #DhbRombergIntegrator
+	instanceVariableNames: 'order points interpolator'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DhbTrapezeIntegrator subclass: #DhbSimpsonIntegrator
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DhbInfiniteSeries subclass: #DhbContinuedFraction
+	instanceVariableNames: 'numerator denominator'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DhbLeastSquareFit subclass: #DhbMaximumLikekihoodHistogramFit
+	instanceVariableNames: 'count countVariance'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DhbLagrangeInterpolator subclass: #DhbNevilleInterpolator
+	instanceVariableNames: 'leftErrors rightErrors'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DhbLagrangeInterpolator subclass: #DhbNewtonInterpolator
+	instanceVariableNames: 'coefficients'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DhbNevilleInterpolator subclass: #DhbBulirschStoerInterpolator
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DhbNewtonInterpolator subclass: #DhbSplineInterpolator
+	instanceVariableNames: 'startPointDerivative endPointDerivative'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DhbMatrix subclass: #DhbSymmetricMatrix
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DhbMinimizingPoint subclass: #DhbMaximizingPoint
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DhbPolynomial subclass: #DhbEstimatedPolynomial
+	instanceVariableNames: 'errorMatrix'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DhbProbabilityDensity subclass: #DhbAsymptoticChiSquareDistribution
+	instanceVariableNames: 'degreeOfFreedom reducedDOF normalDistribution'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DhbProbabilityDensity subclass: #DhbBetaDistribution
+	instanceVariableNames: 'alpha1 alpha2 gamma1 gamma2 logNorm incompleteBetaFunction'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DhbProbabilityDensity subclass: #DhbCauchyDistribution
+	instanceVariableNames: 'mu beta'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DhbProbabilityDensity subclass: #DhbExponentialDistribution
+	instanceVariableNames: 'beta'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DhbProbabilityDensity subclass: #DhbFisherSnedecorDistribution
+	instanceVariableNames: 'dof1 dof2 norm chiSquareDistribution1 chiSquareDistribution2 incompleteBetaFunction'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DhbProbabilityDensity subclass: #DhbFisherTippettDistribution
+	instanceVariableNames: 'alpha beta'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DhbProbabilityDensity subclass: #DhbGammaDistribution
+	instanceVariableNames: 'alpha beta norm randomCoefficients incompleteGammaFunction'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DhbProbabilityDensity subclass: #DhbHistogrammedDistribution
+	instanceVariableNames: 'histogram'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DhbProbabilityDensity subclass: #DhbLaplaceDistribution
+	instanceVariableNames: 'mu beta'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DhbProbabilityDensity subclass: #DhbNormalDistribution
+	instanceVariableNames: 'mu sigma nextRandom'
+	classVariableNames: 'NextRandom'
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DhbProbabilityDensity subclass: #DhbProbabilityDensityWithUnknownDistribution
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DhbProbabilityDensity subclass: #DhbStudentDistribution
+	instanceVariableNames: 'degreeOfFreedom norm chiSquareDistribution incompleteBetaFunction'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DhbProbabilityDensity subclass: #DhbTriangularDistribution
+	instanceVariableNames: 'lowLimit highLimit peak'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DhbProbabilityDensity subclass: #DhbUniformDistribution
+	instanceVariableNames: 'lowLimit highLimit'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DhbProbabilityDensity subclass: #DhbWeibullDistribution
+	instanceVariableNames: 'alpha beta norm'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DhbGammaDistribution subclass: #DhbChiSquareDistribution
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DhbProbabilityDensityWithUnknownDistribution subclass: #DhbLogNormalDistribution
+	instanceVariableNames: 'normalDistribution'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DhbProjectedOneVariableFunction subclass: #DhbVectorProjectedFunction
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DhbSeriesTermServer subclass: #DhbIncompleteBetaFractionTermServer
+	instanceVariableNames: 'alpha1 alpha2'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DhbSeriesTermServer subclass: #DhbIncompleteGammaFractionTermServer
+	instanceVariableNames: 'alpha'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DhbSeriesTermServer subclass: #DhbIncompleteGammaSeriesTermServer
+	instanceVariableNames: 'alpha sum'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DhbStatisticalMoments subclass: #DhbFastStatisticalMoments
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DhbStatisticalMoments subclass: #DhbFixedStatisticalMoments
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DhbVectorAccumulator subclass: #DhbCovarianceAccumulator
+	instanceVariableNames: 'covariance'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+TestCase subclass: #DhbNumericalMethodsTestCase
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+!Collection methodsFor!
+
+asVector
+	"Convert the receiver to a vector. 
+	(c) Copyrights Didier BESSET, 1999, all rights reserved. 
+	Initial code: 11/2/99"
+
+	| aVector index |
+	aVector := DhbVector new: self size.
+	index := 0.
+	self do: [:each | aVector at: (index := index + 1) put: each].
+	^aVector! !
+!Collection categoriesFor: #asVector!converting!public! !
+
+!Integer methodsFor!
+
+gamma
+		"Compute the Gamma function for the receiver.
+		 (c) Copyrights Didier BESSET, 1999, all rights reserved.
+		 Initial code: 11/2/99 "
+	self > 0
+		ifFalse:[ ^self error: 'Attempt to compute the Gamma function of a non-positive integer'].
+	^( self - 1) factorial!
+
+random
+		"Answer a random integer between 0 and the receiver.
+		 (c) Copyrights Didier BESSET, 1999, all rights reserved.
+		 Initial code: 15/2/99 "
+	^DhbMitchellMooreGenerator new integerValue: self! !
+!Integer categoriesFor: #gamma!information!public! !
+!Integer categoriesFor: #random!information!public! !
+
+!Number methodsFor!
+
+addPolynomial: aPolynomial
+		"(c) Copyrights Didier BESSET, 1999, all rights reserved.
+		 Initial code: 19/4/99 "
+	^aPolynomial addNumber: self!
+
+asLimitedPrecisionReal
+	"Convert the receiver to an instance of
+	some subclass of LimitedPrecisionReal.
+	This method defines what the default is."
+
+	^self asFloat!
+
+beta: aNumber
+		"Computes the beta function of the receiver and aNumber
+		 (c) Copyrights Didier BESSET, 1999, all rights reserved.
+		 Initial code: 1/3/99 "
+	^( self logBeta: aNumber) exp!
+
+dividingPolynomial: aPolynomial
+		"(c) Copyrights Didier BESSET, 1999, all rights reserved.
+		 Initial code: 17/4/99 "
+	^aPolynomial timesNumber: (1 / self)!
+
+equalsTo: aNumber
+		"
+		 (c) Copyrights Didier BESSET, 1999, all rights reserved.
+		 Initial code: 21/4/99 "
+	^self relativelyEqualsTo: aNumber upTo: DhbFloatingPointMachine new defaultNumericalPrecision!
+
+errorFunction
+		"Answer the error function for the receiver.
+		 (c) Copyrights Didier BESSET, 1999, all rights reserved.
+		 Initial code: 11/2/99 "
+	^DhbErfApproximation new value: self!
+
+gamma
+	"Compute the Gamma function for the receiver. 
+	(c) Copyrights Didier BESSET, 1999, all rights reserved. 
+	Initial code: 11/2/99"
+
+	^self > 1
+		ifTrue: [^DhbLanczosFormula new gamma: self]
+		ifFalse: [self < 0
+				ifTrue: [Float pi / ((Float pi * self) sin * (1 - self) gamma)]
+				ifFalse: [(DhbLanczosFormula new gamma: self + 1)
+						/ self]]!
+
+logBeta: aNumber
+		"Computes the logarithm of the beta function of the receiver and aNumber
+		 (c) Copyrights Didier BESSET, 1999, all rights reserved.
+		 Initial code: 1/3/99 "
+	^self logGamma + aNumber logGamma - ( self + aNumber) logGamma!
+
+logGamma
+		"Computes the log of the Gamma function (for positive numbers only)
+		 (c) Copyrights Didier BESSET, 1999, all rights reserved.
+		 Initial code: 1/3/99 "
+	^self > 1
+		ifTrue: [ DhbLanczosFormula new logGamma: self]
+		ifFalse:[ self > 0
+						ifTrue: [ ( DhbLanczosFormula new logGamma: ( self + 1) ) - self ln ]
+						ifFalse: [ ^self error: 'Argument for the log gamma function must be positive']
+					]!
+
+productWithMatrix: aMatrix
+		"Answer a new matrix, product of aMatrix with the receiver.
+		 (c) Copyrights Didier BESSET, 1999, all rights reserved.
+		 Initial code: 11/2/99 "
+	^aMatrix class rows: ( aMatrix rowsCollect: [ :each | each * self])!
+
+productWithVector: aVector
+		"Answers a new vector product of the receiver with aVector.
+		 (c) Copyrights Didier BESSET, 1999, all rights reserved.
+		 Initial code: 11/2/99 "
+	^aVector collect: [ :each | each * self]!
+
+random
+		"Answers a random number distributed between 0 and the receiver.
+		 (c) Copyrights Didier BESSET, 1999, all rights reserved.
+		 Initial code: 17/2/99 "
+	^self class random * self!
+
+relativelyEqualsTo: aNumber upTo: aSmallNumber
+		"
+		 (c) Copyrights Didier BESSET, 1999, all rights reserved.
+		 Initial code: 21/4/99 "
+	| norm |
+	norm := self abs max: aNumber abs.
+	^norm <= DhbFloatingPointMachine new defaultNumericalPrecision
+		or: [ (self - aNumber) abs < ( aSmallNumber * norm)]!
+
+subtractToPolynomial: aPolynomial
+		"(c) Copyrights Didier BESSET, 1999, all rights reserved.
+		 Initial code: 19/4/99 "
+	^aPolynomial addNumber: self negated!
+
+timesPolynomial: aPolynomial
+		"(c) Copyrights Didier BESSET, 1999, all rights reserved.
+		 Initial code: 17/4/99 "
+	^aPolynomial timesNumber: self! !
+!Number categoriesFor: #addPolynomial:!operation!public! !
+!Number categoriesFor: #asLimitedPrecisionReal!converting!public! !
+!Number categoriesFor: #beta:!information!public! !
+!Number categoriesFor: #dividingPolynomial:!operation!public! !
+!Number categoriesFor: #equalsTo:!information!public! !
+!Number categoriesFor: #errorFunction!information!public! !
+!Number categoriesFor: #gamma!information!public! !
+!Number categoriesFor: #logBeta:!information!public! !
+!Number categoriesFor: #logGamma!information!public! !
+!Number categoriesFor: #productWithMatrix:!operation!public! !
+!Number categoriesFor: #productWithVector:!operation!public! !
+!Number categoriesFor: #random!information!public! !
+!Number categoriesFor: #relativelyEqualsTo:upTo:!information!public! !
+!Number categoriesFor: #subtractToPolynomial:!operation!public! !
+!Number categoriesFor: #timesPolynomial:!operation!public! !
+
+!Number class methodsFor!
+
+random
+		"Answers a random number between 0 and the receiver
+		 (c) Copyrights Didier BESSET, 1999, all rights reserved.
+		 Initial code: 17/2/99 "
+	^DhbMitchellMooreGenerator new floatValue! !
+!Number class categoriesFor: #random!information!public! !
+
+!Point methodsFor!
+
+extentFromBottomLeft: aPoint
+		"(c) Copyrights Didier BESSET, 1998, all rights reserved
+		 Initial code: 21/4/98 "
+	^Rectangle origin: ( self - ( 0 @ ( aPoint isInteger ifTrue: [ aPoint]
+														 ifFalse:[ aPoint y])))
+			   extent: aPoint!
+
+extentFromBottomRight: aPoint
+		"(c) Copyrights Didier BESSET, 1998, all rights reserved
+		 Initial code: 21/4/98 "
+	^Rectangle origin: ( self - aPoint) extent: aPoint!
+
+extentFromCenter: aPoint
+		"(c) Copyrights Didier BESSET, 1998, all rights reserved
+		 Initial code: 21/4/98 "
+	^Rectangle origin: ( self - ( aPoint // 2)) extent: aPoint!
+
+extentFromTopLeft: aPoint
+		"(c) Copyrights Didier BESSET, 1998, all rights reserved
+		 Initial code: 21/4/98 "
+	^Rectangle origin: self extent: aPoint!
+
+extentFromTopRight: aPoint
+		"(c) Copyrights Didier BESSET, 1998, all rights reserved
+		 Initial code: 21/4/98 "
+	^Rectangle origin: ( self - ( ( aPoint isInteger ifTrue: [ aPoint]
+													 ifFalse:[ aPoint x]) @ 0))
+			   extent: aPoint! !
+!Point categoriesFor: #extentFromBottomLeft:!dhb!public! !
+!Point categoriesFor: #extentFromBottomRight:!dhb!public! !
+!Point categoriesFor: #extentFromCenter:!dhb!public! !
+!Point categoriesFor: #extentFromTopLeft:!dhb!public! !
+!Point categoriesFor: #extentFromTopRight:!dhb!public! !
+
+!Rectangle methodsFor!
+
+positiveRectangle
+		"(c) Copyrights Didier BESSET, 1998, all rights reserved
+		 Initial code: 21/4/98 "
+	^( origin min: corner) corner: ( origin max: corner)! !
+!Rectangle categoriesFor: #positiveRectangle!dhb!public! !
+
+!SequenceableCollection methodsFor!
+
+replaceElementsFrom: start to: stop withArray: replacementElements startingAt: repStart
+	"DHB"
+	^self 
+		replaceFrom: start
+		to: stop
+		with: replacementElements
+		startingAt: repStart; 
+		yourself! !
+!SequenceableCollection categoriesFor: #replaceElementsFrom:to:withArray:startingAt:!public!replacing! !
+
+"End of package definition"!
+

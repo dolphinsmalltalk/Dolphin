@@ -1,0 +1,1458 @@
+"Filed out from Dolphin Smalltalk X6.2"!
+
+ContainerView subclass: #ShellView
+	instanceVariableNames: 'menuBar acceleratorTable combinedAcceleratorTable lastFocus defaultButton largeIcon smallIcon maxExtent minExtent flashes svFlags _svReserved2'
+	classVariableNames: 'CreateHookBlock DefaultButtonIndex DefaultExtentBlock DialogMessageMap TransientMask'
+	poolDictionaries: 'ButtonConstants'
+	classInstanceVariableNames: ''!
+ShellView guid: (GUID fromString: '{87B4C71A-026E-11D3-9FD7-00A0CC3E4A32}')!
+ShellView comment: 'ShellView implements the <topView> protocol for top-level windows whose parent is the desktop. ShellView is also a <topPresenter> so that it is able to stand in as a <Shell> when there is no associated presenter.
+
+Instance Variables:
+	menuBar			<MenuBar> or nil, that is the menu bar for the window.
+	acceleratorTable	<AcceleratorTable> or nil, that is the local accelerator table.
+	combinedAcceleratorTable	<AcceleratorTable> that is the cached actual accelerator table.
+	lastFocus			<view> or nil, which is the last view within the local hierarchy to have focus.
+	defaultButton		<PushButton> or nil, which is the default button within the window
+	largeIcon			<Icon> or nil, which is a specific large icon to use.
+	smallIcon			<Icon> or nil, which is a specific small icon to use.
+	maxExtent		<Point> or nil, specifying the maximum extent when resizing.
+	minExtent			<Point> or nil, specifying the minimum extent when resizing.
+	flashes			<integer>. Temporary used to count down the number of flashes.
+	svFlags			<integer>. Various flags
+
+Class Variables:
+	DialogMessageMap		<LookupTable> of Windows messages to <selector>s
+	TransientMask			<integer>
+	CreateHookBlock		<nil>/<dyadicValuable>
+	DefaultButtonIndex		<integer>
+	DefaultExtentBlock		<BlockClosure>
+
+
+
+'!
+!ShellView categoriesForClass!MVP-Views! !
+!ShellView methodsFor!
+
+acceleratorTable
+	"Answer the AcceleratorTable if any defined by user."
+
+	^acceleratorTable!
+
+acceleratorTable: accelerators
+	"Set the receiver's accelerator table inst var."
+
+	acceleratorTable := accelerators.
+	self releaseAccelerators
+!
+
+activateLastPopup
+	| popup |
+	popup := self getLastActivePopup.
+	^popup notNil and: 
+			[popup isForeground not 
+				and: [popup isEnabled and: 
+							[popup beForeground.
+							true]]]!
+
+addCommandHistory: aCommand
+	"Private - Provided for protocol compatiblity with Shell presenters.
+	ShellViews do not support command history so do nothing."!
+
+allAdditionalAccelerators
+	^#()!
+
+basicMenu: aMenuBarOrNil
+	"Private - Set the menu bar for this window to aMenuBarOrNil."
+
+	UserLibrary default
+		setMenu: self asParameter hMenu: aMenuBarOrNil asParameter!
+
+buildCombinedAcceleratorTable
+	combinedAcceleratorTable := acceleratorTable  
+				ifNil: [AcceleratorTable new]
+				ifNotNil: [acceleratorTable copy].
+	menuBar ifNotNil: [menuBar registerAcceleratorKeyIn: combinedAcceleratorTable].
+	self presenter allAdditionalAccelerators do: 
+			[:each | 
+			(CommandDescription command: each first)
+				acceleratorKeyString: each last;
+				registerAcceleratorKeyIn: combinedAcceleratorTable]!
+
+buttonRemoved: aPushButton
+	"Private - Informs the receiver that aPushButton has been removed from the child hierachy.
+	We check to see if this was cached as the default button and clear this if necessary"
+
+	self defaultButtonId = aPushButton id ifTrue: [self resetDefaultButton]!
+
+caption
+	"Answers the caption for the receiver"
+
+	^self text!
+
+caption: aString
+	"Set the caption for the receiver. Usually sent by a Presenter
+	that wishes to display a caption in it's associated view"
+
+	self text: aString.
+	self trigger: #captionChanged!
+
+close
+	"Asks the receiver to close itself, answering whether it is closed."
+
+	self sendMessage: WM_CLOSE wParam: 0 lParam: 0.
+	^self isOpen not!
+
+combinedAcceleratorTable
+	"Private - Answer the <AcceleratorTable> which combines the user set acceleratorTable and
+	those accelerator keys registered in the current menu bar. This is the table sent to
+	windows."
+
+	combinedAcceleratorTable isNil ifTrue: [self buildCombinedAcceleratorTable].
+	^combinedAcceleratorTable!
+
+commandPolicyClass
+	"Answers the class of <commandPolicy> to use for routing commands originating
+	in the receiver or one of its sub-presenters."
+
+	^CommandPolicy defaultClass!
+
+commandPolicyWithSource: sourceView
+	"Answers a <CommandPolicy> object for routing commands originating
+	from the <View>, source. 
+	This can be overridden by subclasses which wish to use a different routing policy, 
+	although to substitute a specialized <commandPolicy> one should override 
+	#commandPolicyClass."
+
+	^self commandPolicyClass
+		commandSource: sourceView!
+
+commandSource
+	"Answer the <View> starting point for command routing if a UI
+	command  is received by the receiver. ShellViews will typically only receive
+	command from the menubar or toolbar, and these should be routed as if sourced
+	from the <View> with focus, or the receiver if no sub-view has the focus."
+
+	| shell source |
+	shell := self topShell view.
+	source := shell isForeground 
+			ifTrue: [self class focus]
+			ifFalse: [shell lastFocus].
+	source isNil ifTrue: [source := self].
+	^source!
+
+createAt: position extent: extentPoint 
+	"Private - Create the ShellView window after first giving the class side precreateHookBlock
+	a chance to adjust the receiver. Answer the realized receiver."
+
+	self class createHookBlock value: self value: [super createAt: position extent: extentPoint]!
+
+defaultButtonId
+	"Private - Answer the id of the default PushButton for the receiver or nil
+	if there is none"
+
+	^defaultButton!
+
+defaultButtonId: anInteger
+	"Private - Set the default PushButton for the receiver from the id.
+	Implementation Note: #getItem:ifAbsent: would return a View whether one 
+	is registered or not, but it may not be of the correct PushButton class."
+
+	(defaultButton := anInteger) isNull ifTrue: [
+		"Windows confusingly attempts to maintain a default default button 
+		in dialogs if none is set (IDOK), so do the same."
+		self resetDefaultButton]!
+
+defaultExtent
+	"Answer the default size of the receiver"
+
+	^View desktop extent // 1.5!
+
+defaultExtentWithin: aParentView
+	"Private - Answer the default extent of the receiver within aParentView."
+
+	^aParentView defaultExtentOf: self!
+
+defaultPositionWithin: aParentView forExtent: aPoint 
+	"Private - Answer the default position of the receiver within aParentView given its intended extent aPoint.
+	This is used only on creation."
+
+	| testWindow defaultPosition |
+	self assert: [aParentView notNil].
+	self isInitiallyCentered ifTrue: [^self centerExtent: aPoint within: aParentView].
+
+
+	"If not creating on the desktop, create at the origin of the parent's client area"
+	aParentView parentView notNil ifTrue: [^0 @ 0].
+	(testWindow := ShellView new)
+		parentView: aParentView;
+		createAt: CW_USEDEFAULT @ CW_USEDEFAULT extent: aPoint.
+	defaultPosition := testWindow position.
+	testWindow destroy.
+	^defaultPosition!
+
+defaultShowStyle
+	^self isMaximized ifTrue: [SW_SHOWMAXIMIZED] ifFalse: [SW_SHOWNORMAL]!
+
+defaultWindowStyle
+	"Private - Answer the default basic window creation style"
+
+	^##(WS_THICKFRAME | WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX | WS_MAXIMIZEBOX)!
+
+dispatchUser: userId wParam: wParam lParam: lParam
+	"Private - Dispatch the WM_USER+userId message which was sent to the receiver.
+	To be overridden by subclasses which implement WM_USER+N messages in an appropriate 
+	manner (e.g. by a secondary message map, or, if few in number, by conditional tests)"
+
+	^self 
+		dispatchUser: userId 
+		wParam: wParam 
+		lParam: lParam 
+		map: DialogMessageMap!
+
+dmGetDefId: message wParam: wParam lParam: lParam
+	"Private - Default handler for a DM_GETDEFID message sent to request the id of any default
+	push button in the receiver.
+	Implementation Note: As we are trying to simulate the useful keyboard interface behaviour
+	of Dialogs in normal shells, we must implement this message for the benefit of IsDialogMessage()."
+
+	| buttonId |
+	buttonId := self defaultButtonId.
+	^buttonId notNull 
+		ifTrue: [DWORD new lowWord: buttonId; highWord: DC_HASDEFID; yourself]
+		ifFalse: [0]
+!
+
+dmSetDefId: message wParam: wParam lParam: lParam 
+	"Private - Default handler for a DM_SETDEFID message sent to request that the id of any default
+	push button be changed in the receiver.
+	Implementation Note: As we are trying to simulate the useful keyboard interface behaviour
+	of Dialogs in normal shells, we must implement this message for the benefit of IsDialogMessage().
+	Note also that we expect to execute the default processing too (which is essential for dialogs)."
+
+	| def |
+	def := self defaultButtonId.
+	def isNull ifFalse: [self setButtonId: def style: BS_PUSHBUTTON].
+	self defaultButtonId: wParam.
+	"We must set the cached default button before sending #beDefaultButtonStyle as
+	that would otherwise cause a recursive invocation of this method."
+	def := self defaultButtonId.
+	def isNull ifFalse: [self setButtonId: def style: BS_DEFPUSHBUTTON].
+	^0!
+
+drawMenuBar
+	"Draw the receiver's menu bar, either when initially set or after it has been updated.
+	Answer whether the request succeeded."
+
+	^UserLibrary default drawMenuBar: self asParameter!
+
+ensureSubViewVisible: aSubView 
+	"Terminate the recursion so that where shells are embedded in a card container (e.g. in the
+	Idea Space) they don't cause the tab to change just because a sub-tab inside the shell has
+	changed to make a sub-card visible."
+
+	"Do nothing"
+
+	!
+
+exit
+	"Asks the receiver to close itself, answering whether it is closed."
+
+	^self close
+!
+
+filerProxy
+	| savedFocus savedAccels proxy |
+	savedFocus := lastFocus.
+	savedAccels := combinedAcceleratorTable.
+	lastFocus := combinedAcceleratorTable := nil.
+	proxy := super filerProxy.
+	lastFocus := savedFocus.
+	combinedAcceleratorTable := savedAccels.
+	^proxy!
+
+flash: anInteger
+	"Flash the receiver in a manner so as to attract the user's attention, anInteger times."
+
+	self flash: anInteger flags: FLASHW_ALL!
+
+flash: flashCountInteger flags: flagsInteger
+	"Flash the receiver the number of times specified by the <integer> argument, flashCountInteger,
+	configured by the FLASHWINFO flags in the <integer>, flagsInteger.
+	Answer a <boolean> indicating whether the window caption was drawn as active before the call."
+
+	^OSVERSIONINFO current isWinV5OrLater
+		ifTrue: [ | params |
+			params := FLASHWINFO new.
+			params
+				hwnd: self asParameter;
+				uCount: flashCountInteger;
+				dwFlags: flagsInteger.
+			(UserLibrary default flashWindowEx: params) ~= 0]
+		ifFalse: [
+			"Flashing the tray alone is not supported"
+			flagsInteger == FLASHW_STOP 
+				ifTrue: [flashes := 0]
+				ifFalse: [
+					"Doesn't really matter if this is process safe - the only side effect will be a bit more or a bit less flashing"
+					flashes <= 0 ifTrue: [self forkFlasher].
+					flashes := flashCountInteger]]
+!
+
+forkFlasher
+	"Private - Start a flasher process for this shell."
+
+	| hWnd lib |
+	hWnd := self asParameter.
+	lib := UserLibrary default.
+	[	
+		[(flashes := flashes - 1) >= 0] whileTrue: [
+			lib flashWindow: hWnd bInvert: true.
+			Processor sleep: 525]
+	] forkAt: Processor userBackgroundPriority
+
+	
+
+!
+
+getDefId
+	"Private - Answer the ID of any default push button in the receiver, or 0 if none."
+
+	| lresult |
+	lresult := self sendMessage: DM_GETDEFID.
+	^lresult highWord = DC_HASDEFID
+		ifTrue: [lresult lowWord]
+		ifFalse: [0]!
+
+getLastActivePopup
+	"Private - Answers the last popup window that had activation, or nil
+	if there is no popup."
+
+	| hWnd |
+	hWnd := UserLibrary default getLastActivePopup: self asParameter.
+	^(hWnd notNil and: [hWnd ~= handle]) ifTrue: [View fromHandle: hWnd]!
+
+hasCaption
+	"Answers true if the receiver has a caption bar. i.e. it has the WS_CAPTION style"
+
+	^self baseStyleAllMask: WS_CAPTION!
+
+hasCaption: aBoolean 
+	"Sets the receiver to have a caption bar if aBoolean is true. This is the WS_CAPTION style.
+	Note that removing the caption will also remove the window frame entirely if #isResizable is
+	false."
+
+	(self 
+		baseStyleMask: WS_CAPTION
+		set: aBoolean
+		recreateIfChanged: false) ifTrue: [self frameChanged]!
+
+hasMaximize
+	"Answers true if the receiver has a maximize button. i.e. it has the WS_MAXIMIZEBOX style"
+
+	^self baseStyleAllMask: WS_MAXIMIZEBOX!
+
+hasMaximize: aBoolean 
+	"Sets the receiver to have a maximize box if aBoolean is true. This is the WS_MAXIMIZEBOX
+	style. Note than on a themed XP system the button is not added/removed, just
+	enabled/disabled."
+
+	(self 
+		baseStyleMask: WS_MAXIMIZEBOX
+		set: aBoolean
+		recreateIfChanged: false) ifTrue: [self frameChanged]!
+
+hasMenu
+	"Private - Answer true if the receiver has a visible menu bar."
+
+	^self isTopView and: [self menuBar notNil]!
+
+hasMinimize
+	"Answers true if the receiver has a minimize button. i.e. it has the WS_MINIMIZEBOX style"
+
+	^self baseStyleAllMask: WS_MINIMIZEBOX!
+
+hasMinimize: aBoolean 
+	"Sets the receiver to have a minimize box if aBoolean is true. This is the WS_MINIMIZEBOX
+	style. Note than on a themed XP system the button is not added/removed, just
+	enabled/disabled."
+
+	(self 
+		baseStyleMask: WS_MINIMIZEBOX
+		set: aBoolean
+		recreateIfChanged: false) ifTrue: [self frameChanged]!
+
+hasSysMenu
+	"Answers true if the receiver has a system menu, i.e. it has the WS_SYSMENU style"
+
+	^self baseStyleAllMask: WS_SYSMENU!
+
+hasSysMenu: aBoolean 
+	"Sets the receiver to have a system menu if aBoolean is true. This is the WS_SYSMENU style.
+	Note than removing the system menu also removes the minimize/maximize and close buttons."
+
+	(self 
+		baseStyleMask: WS_SYSMENU
+		set: aBoolean
+		recreateIfChanged: false) ifTrue: [self frameChanged]!
+
+hasTaskbarIcon
+	^(self exStyleAllMask: WS_EX_NOACTIVATE) not!
+
+hasTaskbarIcon: aBoolean 
+	"Set whether or not the receiver is activated and appears in the task bar on creation (i.e. it 
+	set/remove the WS_EX_NOACTIVATE style)."
+
+	self exStyleMask: WS_EX_NOACTIVATE set: aBoolean not!
+
+hasVisibleStyle: aBoolean 
+	"Set or clear the receiever's WS_VISIBLE style flag.
+	Answer whether the receiver's window was previously visible."
+
+	^self showWithStyle: (aBoolean ifTrue: [SW_SHOWNA] ifFalse: [SW_HIDE])!
+
+initialize
+	"Private - Initialise the receiver. Register with SessionManager events."
+
+	super initialize. 
+	self parentView: self class desktop.
+	flashes := 0.
+!
+
+invalidateUserInterface
+	"Invalidates the user interface of the receiver indicating that it needs
+	to be requeried using #validateUserInterface (usually at idle time)"
+
+	flags := flags maskClear: UIValidMask.
+	SessionManager inputState prod!
+
+isInitiallyCentered
+	"Private - Answer whether the receiver should be centered within its parent when created."
+
+	^flags anyMask: CreateCenteredMask!
+
+isInitiallyCentered: aBoolean
+	"Set or reset whether the receiver will be centered within its parent on creation."
+
+	flags := flags mask: CreateCenteredMask set: aBoolean!
+
+isLayeredWindow
+	"Answers true if the receiver is a layered window. 
+	i.e. it has the WS_EX_LAYERED style"
+
+	^self exStyleAllMask: WS_EX_LAYERED!
+
+isLayeredWindow: aBoolean 
+	"Sets the receiver to be a tool window if aBoolean is true.
+	This is the WS_EX_LAYERED style"
+
+	self 
+		exStyleMask: WS_EX_LAYERED
+		set: aBoolean
+		recreateIfChanged: false!
+
+isMaximized
+	"Answer whether the receiver is currently maximized."
+
+	^UserLibrary default isZoomed: self asParameter!
+
+isMinimized
+	"Answer whether the receiver is currently minimized."
+
+	^flags anyMask: MinimizedMask!
+
+isMinimized: aBoolean
+	"Private - Set or reset the receiver's isMinimized flag"
+
+	flags := flags mask: MinimizedMask set: aBoolean!
+
+isPersistentlyDisabled
+	"Private - Answer whether the receiver is disabled in a way that should be persisted.
+	So, for example, if the receiver has been disabled by a non-Dolphin dialog window
+	that cannot itself be persisted, it does not make sense to persist the disabled state either.
+	Implementation Note: In the case of ShellView's, they are considered persistently
+	disabled iff disabled by a popup which is itself persistent."
+
+	^self isEnabled not and: 
+			[| popup |
+			(popup := self getLastActivePopup) notNil and: [popup isPersistentView]]!
+
+isPersistentView
+	"Answer whether the receiver has persistent state which can and should
+	be persistent in the image (i.e. top-level windows which answer true
+	to this will be sent #state and #state: messages by the 
+	SessionManager before the image is saved, and on session startup, respectively)."
+
+	^self isDolphinWindow and: [self svFlags noMask: TransientMask]!
+
+isPersistentView: aBoolean 
+	"Set whether the receiver has persistent state which can and should be persisted in the
+	image. This is ignored for non-Dolphin windows, which are never persisted."
+
+	svFlags := self svFlags mask: TransientMask set: aBoolean not!
+
+isStateRestoring: aBoolean 
+	"Private - Set a flag to indicate that state of the receiver is being restored according 
+	to aBoolean. Used to disable some notification during this period when sibling views 
+	may not yet be valid. 
+	Implementation Note: If leaving the restoration state then mark the UI for revalidation
+	at idle time, also sending DM_SETDEFID during state restoral causes a GPF in User.EXE 
+	on Win95/98, we must now act on any deferred attempt to set the default button"
+
+	super isStateRestoring: aBoolean.
+	aBoolean ifTrue: [^self].
+	self setDefId: defaultButton.
+	self invalidateUserInterface!
+
+isToolWindow
+	"Answers true if the receiver is a tool window. A tool window has a title bar that is shorter than 
+	a normal title bar, and the window title is drawn using a smaller font. 
+	i.e. it has the WS_EX_TOOLWINDOW style"
+
+	^self exStyleAllMask: WS_EX_TOOLWINDOW!
+
+isToolWindow: aBoolean 
+	"Sets the receiver to be a tool window if aBoolean is true.
+	This is the WS_EX_TOOLWINDOW style"
+
+	(self 
+		exStyleMask: WS_EX_TOOLWINDOW
+		set: aBoolean
+		recreateIfChanged: false) ifTrue: [self frameChanged]!
+
+isUserInterfaceValid
+	"Answer true if the user interface of the receiver is currently valid"
+
+	^flags allMask: UIValidMask.!
+
+keyboardCommands
+	"Answer a collection of <CommandDescription>s for all the commands in the receiver and its
+	subviews which have a keyboard binding."
+
+	^self combinedAcceleratorTable ifNil: [super keyboardCommands] ifNotNil: [:accel | accel commands]!
+
+largeIcon
+	"Answer the receiver's large (and possibly small if there isn't one already) icon."
+
+	^largeIcon!
+
+largeIcon: anIcon
+	"Set the receiver's large (and possibly small if there isn't one already) icon
+	to anIcon."
+
+	largeIcon := anIcon.
+	self updateIcons!
+
+lastFocus
+	"Private - Answer the view that last had focus within the receiver"
+
+	^lastFocus!
+
+lastFocus: aView
+	"Private - Remember that the view with focus is aView"
+
+	lastFocus := aView!
+
+maxExtent
+	"Answers the maximum extent for the receiver or nil if there is no constraint"
+
+	^maxExtent!
+
+maxExtent: aPointOrNil 
+	"Set the maximum extent for the receiver to aPointOrNil. If nil
+	this implies no constraint"
+
+	maxExtent := aPointOrNil.
+	maxExtent isNil ifTrue: [^self].
+	minExtent notNil ifTrue: [maxExtent := maxExtent max: minExtent].
+	self extent: (maxExtent min: self extent)!
+
+menuBar
+	"Answers the menu bar for the receiver"
+
+	^menuBar
+!
+
+menuBar: aMenuBarOrNil 
+	"Set the menu bar for this window to aMenuBarOrNil"
+
+	aMenuBarOrNil notNil 
+		ifTrue: 
+			[menuBar := aMenuBarOrNil.
+			self updateMenuBar]
+		ifFalse: 
+			[self
+				releaseMenu;
+				releaseAccelerators.
+			menuBar := nil].
+	self invalidateLayout!
+
+minExtent
+	"Answers the minimum extent for the receiver or nil if there is no constraint"
+
+	^minExtent!
+
+minExtent: aPointOrNil 
+	"Set the minimum extent for the receiver to aPointOrNil. If nil
+	this implies no constraint"
+
+	minExtent := aPointOrNil.
+	maxExtent isNil ifTrue: [^self].
+	minExtent notNil ifTrue: [minExtent := maxExtent min: minExtent].
+	self extent: (maxExtent min: self extent)!
+
+minimize
+	"Show the receiver in a minimized state"
+
+	self showWithStyle: SW_MINIMIZE!
+
+onAboutToDisplaySystemMenu: hMenu
+	"The system menu with <integer> handle, hMenu, is about to be displayed.
+	This is our opportunity to update it, e.g. to add our own items.
+	Note: A single system menu is shared across all ShellViews open in
+	the application, and any changes made will therefore be inherited by
+	all other shell's system menus."
+
+"	| menu cmd |
+	menu := Menu fromHandle: hMenu.
+	cmd := CommandDescription command: #minimizeAll.
+	cmd description: 'Minimize All'.
+	menu addItem: (CommandMenuItem commandDescription: cmd)."
+	self presenter trigger: #aboutToDisplaySystemMenu: with: hMenu.
+	^0!
+
+onCloseRequested
+	"Answer whether if it is ok to close the receiver."
+
+	"The default is to trigger an event off our presenter to enquire of its observers whether
+	the close is permisible. Those observers which wish to block the close must set the value of
+	the passed boolean <value> to false."
+
+	self queryClose 
+		ifTrue: 
+			[self
+				update;
+				destroy.
+			^true].
+	^false!
+
+onCreated: anEvent 
+	"Handler for view creation. We set the view icons here rather than #onCreated as
+	the latter will not be received because it is delivered by WS_PARENTNOTIFY."
+
+	self updateIcons.
+	self lastFocus: nil.
+	^super onCreated: anEvent!
+
+onDrawMenuItem: aDRAWITEMSTRUCT 
+	| menu |
+	(menuBar isNil or: [(menu := menuBar menuFromHandle: aDRAWITEMSTRUCT hwndItem) isNil]) 
+		ifTrue: [^super onDrawMenuItem: aDRAWITEMSTRUCT].
+	menu onDrawItem: aDRAWITEMSTRUCT.
+	^TRUE!
+
+onGetCursor: aSymbol
+	"The named area of the window associated with the receiver has been hit.
+	Answer the appropriate mouse cursor, or nil to accept the default."
+
+	^aSymbol == #error 
+		ifTrue: 
+			["Display the wait cursor, if no popup"
+
+			(self getLastActivePopup isNil and: [self isEnabled not]) 
+				ifTrue: [Cursor wait]]
+		ifFalse: [super onGetCursor: aSymbol]!
+
+onIdleEntered
+	"There are no messages in the input queue and the input state is
+	about to go idle. Perform any idle processing. Received only by top level
+	windows"
+
+	self isUserInterfaceValid ifFalse: [
+		self presenter validateUserInterface ].
+	^true!
+
+onPositionChanged: aPositionEvent 
+	"Default handler for window position change (move or resize).
+	Implementation Note: The superclass implementation considers that any
+	position change invalidates the layout, but moving a top-level window
+	does not, so we override to invalidate only on resize. This is also a suitable
+	time to revalidate too."
+
+	aPositionEvent isClientAreaChanged ifTrue: [self invalidateLayoutDeeply].
+	"We can't rely on revalidating in paint, as repainting may not be needed when the shell is shrunk"
+	self validateLayout.
+	self presenter trigger: #positionChanged: with: aPositionEvent!
+
+onPostSaveImage
+	"Triggered by the SessionManager after saving the image.
+	Remove the state property of the window that was saved by #onPreSaveImage"
+
+	self removePropertyAt: #state ifAbsent: [].
+!
+
+onPreSaveImage
+	"Triggered by the SessionManager prior to saving the image.
+	Save the state of the window as a property so it can be restored on
+	image startup. We only need to do this if the receiver is a true top
+	level View"
+
+	self isTopView ifTrue: [self propertyAt: #state put: self state]!
+
+onSettingChanged: aWindowsEvent 
+	SessionManager current onSettingChanged: aWindowsEvent.
+	self presenter trigger: #settingChanged: with: aWindowsEvent.
+	(aWindowsEvent wParam = SPI_SETICONTITLELOGFONT and: [font isNil]) ifTrue: [self fontChanged].
+	^aWindowsEvent lResult!
+
+onSubViewRemoved: aView 
+	(self lastFocus notNil and: [self lastFocus allParents includes: aView]) 
+		ifTrue: [self lastFocus: self].
+	super onSubViewRemoved: aView!
+
+onViewActivated: anEvent 
+	"Default handler for window activation. Reset focus to the last view
+	that had it within the receiver, unless that view has been closed, in which
+	case focus is reset to its initial state in the receiver when newly opened.
+	Implementation Note: We must maintain focus whenever activated, otherwise
+	we may run into the Windows bug whereby a call to IsDialogMessage() goes
+	into an infinite loop. We also need focus to keep keyboard menu shortcut keys
+	operational."
+
+	self isEnabled 
+		ifTrue: 
+			[| focus |
+			((focus := self lastFocus) isNil or: [focus isOpen not]) 
+				ifTrue: [self presenter setInitialFocus]
+				ifFalse: [focus setFocus]].
+	[self trigger: #viewActivated] postToMessageQueue.
+	^0!
+
+onViewDeactivated: anEvent
+	"Handler for de-activation. Remember the last focus within the receiver
+	so that it can be restored on re-activation"
+
+	| focus |
+	focus := self class focus.
+	(focus notNil 
+		and: [UserLibrary default isChild: self asParameter hWnd: focus asParameter]) 
+			ifTrue: [self lastFocus: focus].
+	self trigger: #viewDeactivated.
+	^0!
+
+onViewMinimized: aSizeEvent
+	"Default handler for window minimize. Trigger a #viewMinimized event off the presenter.
+	Accept the default processing."
+
+	self presenter trigger: #viewMinimized.
+	^self defaultWindowProcessing: aSizeEvent!
+
+onViewNcActivated: anEvent 
+	"Default handler for window frame activation
+
+	BE CAREFUL overriding this method. See comment in ShellView>>wmNcActivate:wparam:lParam:
+	"
+
+	^nil!
+
+onViewNcDeactivated: anEvent 
+	"Default handler for window frame deactivation.
+
+	BE CAREFUL overriding this method. See comment in ShellView>>wmNcActivate:wparam:lParam:
+	"
+
+	^nil!
+
+onViewRestored: aSizeEvent
+	"Default handler for window restored. Trigger a #viewRestored event off the presenter.
+	Accept the default processing."
+
+	self presenter trigger: #viewRestored.
+	^self defaultWindowProcessing: aSizeEvent!
+
+parentView: aView 
+	"Private - Sets the parent of the receiver to aView. Can only be used when the
+	receiver is not yet realized since Windows has a bug when reparenting"
+
+	creationParent := aView.
+	creationStyle at: 1 put: (self baseStyle mask: WS_CHILD set: aView ~~ self class desktop)!
+
+performCommand: aCommand
+	"Perform the <Command> argument, assumed to have been initiated from the receiver
+	or one of its sub-views, and answer the result. Can be overridden by subclasses that wish, 
+	for example, to add some generic undo/redo ability for all commands.
+	Note that as of Dolphin 5 the shell can be disabled for the duration of the command
+	if the <Command> is marked as modal, which can be done statically by setting
+	the #isModalCommand flag on the <CommandDescription>, or dynamically
+	by setting the flag on the <CommandQuery>."
+
+	^aCommand isModalCommand 
+		ifTrue: 
+			[self disable.
+			[aCommand value] ensure: [self enable]]
+		ifFalse: [aCommand value]!
+
+preTranslateKeyboardInput: aMSG 
+	"Answer whether the receiver would like to consume the argument aMSG, which is a keyboard
+	message."
+
+	"Implementation Note: VK_ESCAPE is not passed to IsDialogMessage()) because this would be
+	interpreted as a request to close the window, not desirable for normal shell views."
+
+	^self isTopView and: 
+			[(self translateAccelerator: aMSG) or: 
+			["... and dialog messages excluding the ESCape key (which cancels dialogs)"
+			| vKey |
+			vKey := aMSG wParam.
+			"Do not pass ESC as don't want shell to close"
+			(vKey ~= VK_ESCAPE and: 
+					["Do not pass VK_RETURN if no default button either"
+					vKey ~= VK_RETURN or: [self defaultButtonId notNull]]) 
+						and: [self isDialogMessage: aMSG]]]!
+
+preTranslateMouseInput: aMSG
+	"Answer whether the receiver would like to consume the argument aMSG."
+
+	^(self isTopView and: [self isDialogMessage: aMSG]) or: [super preTranslateMouseInput: aMSG]!
+
+queryClose
+	"The view is about to be closed. Query whether this acceptable and answer true if it is, false if it is not"
+
+	| okValue |
+	okValue := self -> true.
+	self presenter trigger: #closeRequested: with: okValue.
+	^okValue value!
+
+releaseAccelerators
+	"Private - Unrealize self created accelerators."
+
+	combinedAcceleratorTable isNil ifTrue: [^self].
+	combinedAcceleratorTable free.
+	combinedAcceleratorTable := nil!
+
+releaseMenu
+	"Private - Release the menu."
+
+	self basicMenu: nil
+!
+
+resetDefaultButton
+	"Private - No default button has been explicitly specified for the receiver, so attempt
+	to reproduce the Windows behaviour, which is to fall back on IDOK if there is such a button."
+
+	defaultButton := IDOK.
+	self findItemHandle: defaultButton ifAbsent: [defaultButton := 0]!
+
+resolutionScaledBy: scale
+	"Private - The receiver is being loaded and it has been determined that the pixel resolution
+	has changed since the point at which the view was saved. Scale any internal pixels by <Point>
+	scale. "
+
+	super resolutionScaledBy: scale.
+	minExtent notNil ifTrue: [
+		minExtent := (minExtent*scale) truncated ].
+	maxExtent notNil ifTrue: [
+		maxExtent := (maxExtent*scale) truncated ]
+
+!
+
+restorePlacement: aWINDOWPLACEMENT resolution: aPointResolution 
+	"Private - Restore the placement for the receiver to aWINDOWPLACEMENT which was
+	measured at a screen resolution of aPointResolution. If the current resolution is different
+	then the placement rectangle will have to be scaled appropriately. 
+	Subclasses can override this message to compensate for a resolution change
+	in any other ways required."
+
+	| rect |
+	rect := aWINDOWPLACEMENT rcNormalPosition asRectangle.
+	aPointResolution = View desktop resolution 
+		ifFalse: 
+			["Resolution is now different so recompute the placement"
+			| scale |
+			scale := View desktop resolution / aPointResolution.
+			rect := (rect scaleBy: scale) truncated.
+			self resolutionScaledBy: scale].
+
+	"If the receiver wants to use a preferred extent, then use that.
+	Otherwise, choose a default extent."
+	self usePreferredExtent 
+		ifTrue: 
+			[| extent |
+			extent := self preferredExtent notNil 
+						ifTrue: [self preferredExtent]
+						ifFalse: [self defaultExtentWithin: creationParent].
+			rect extent: extent].
+	rect position: (self defaultPositionWithin: creationParent forExtent: rect extent).
+	aWINDOWPLACEMENT rcNormalPosition: rect asParameter.
+	self placement: aWINDOWPLACEMENT!
+
+setButtonId: id style: style 
+	"Private - Set the style of the child of the receiver with <integer> identifier, id, to the 
+	specified <integer> push button style (i.e. default or normal). Assumes that the controls
+	with that id is actually a push button. If there is no such child, then ignored."
+
+	| hWndButton |
+	hWndButton := self findItemHandle: id ifAbsent: [^self].
+	UserLibrary default 
+		sendMessage: hWndButton
+		msg: BM_SETSTYLE
+		wParam: style
+		lParam: 1	"force redraw"!
+
+setDefaultButton: button state: setDefault 
+	"Private - Set aPushButton as being the default button within the receiver according 
+	to aBoolean.
+	Implementation Note: In order to provide a suitable implementation of DM_GETDEFID even
+	for non-dialog shells, we hang on to the default button id."
+
+	| id isDefault |
+	id := button id.
+
+	"Workaround a Win16 bug whereby an untrappable GPF occurs in User.EXE if DM_SETDEFID is sent to the
+	 default dialog proc. while the window is being restored, but presumably before it has reached some stable state."
+	self isStateRestoring 
+		ifTrue: 
+			[defaultButton := setDefault ifTrue: [id] ifFalse: [0].
+			^self].
+	isDefault := id = self getDefId.
+	setDefault 
+		ifTrue: 
+			["We MUST not send #setDefId: if already the default, as infinite recursion may result."
+			isDefault ifFalse: [self setDefId: id]]
+		ifFalse: [isDefault ifTrue: [self setDefId: 0]]!
+
+setDefId: anInteger
+	"Private - Set the ID of any default push button in the receiver, or 0 if none."
+
+	^self sendMessage: DM_SETDEFID wParam: anInteger!
+
+setInitialFocus
+	"Set the initial keyboard focus to the first view in the tab sequence.
+	Can be overidden by subclasses that find this behaviour 
+	does not meed their needs.
+	Received when the receiver's view is first opened if it is its own presenter,
+	and by default from the Shell presenter."
+
+	self validateUserInterface; tabFirst!
+
+showMaximized
+	"Show the receiver in a maximised state"
+
+	self showWithStyle: SW_SHOWMAXIMIZED!
+
+showMinimized
+	"Show the receiver in a minimized state without activating"
+
+	self showWithStyle: SW_SHOWMINIMIZED!
+
+showMinimizedNoActivate
+	"Show the receiver in a minimized state without activating"
+
+	self showWithStyle: SW_SHOWMINNOACTIVE!
+
+showShell
+	"Private - Show the receiver within a shell"
+
+	self create show!
+
+smallIcon
+	"Answer the receiver's small icon"
+
+	^smallIcon!
+
+smallIcon: anIcon
+	"Set the receiver's small icon to anIcon."
+
+	smallIcon := anIcon.
+	self updateIcons
+!
+
+state
+	"Private - Answer a MessageSequence which, when replayed, will restore the receiver 
+	to its current state"
+
+	^super state
+		add: (MessageSend receiver: self selector: #updateMenuBar);
+		yourself!
+
+svFlags
+	^svFlags ifNil: [0]!
+
+topShell
+	"Answer the eventual top shell located in the parent chain of the receiver."
+
+	^self isTopView ifTrue: [self presenter] ifFalse: [super topShell]!
+
+translateAccelerator: aMSG 
+	"Private - Inform Windows of the accelerator table associated with self. This in turn
+	sends a WM_COMMAND if any of our accelerator keys matches."
+
+	| hAccel |
+	hAccel := self combinedAcceleratorTable asParameter.
+	^hAccel ~= 0 and: 
+			[(UserLibrary default 
+				translateAccelerator: self asParameter
+				haccl: combinedAcceleratorTable asParameter
+				lpmsg: aMSG) ~~ false]	"useful on image restart of debugged process"!
+
+updateCaption
+	"The receiver has changed in such a way that the caption may need to be refreshed.
+	Overidden in subclasses that need to provide a dynamic caption that changes
+	according to the state of the receiver"
+
+	!
+
+updateIcons
+	"Private - Update the large and small icons of the receiver"
+
+	| actualLargeIcon |
+	actualLargeIcon := largeIcon notNil 
+		ifTrue: [ largeIcon ]
+		ifFalse: [ self icon ].
+	self sendMessage: WM_SETICON wParam: 1 lParam: actualLargeIcon asParameter.
+	smallIcon notNil ifTrue: [
+		self sendMessage: WM_SETICON wParam: 0 lParam: smallIcon asParameter ]!
+
+updateMenuBar
+	self releaseAccelerators.
+	self
+		basicMenu: menuBar;
+		drawMenuBar!
+
+validateUserInterface
+	"Validates the user interface for the receiver. Usually performed at idle time
+	when the  UI has been flagged as being invalid"
+
+	flags := flags maskSet: UIValidMask.
+	super validateUserInterface
+
+	!
+
+winFinalize
+	"Private - Handler for view final view destruction. This is sent on receipt of WM_NCDESTROY,
+	and is expected to be the last communication from Windows. There is nothing
+	more we can do to save the patient. No event is triggered."
+
+	| wasStateRestoring |
+	wasStateRestoring := self isStateRestoring.
+	[ 	"Prevent reaction to resize of frame that occurs when menu removed"
+		self isStateRestoring: true.
+		self releaseMenu] ensure: [self isStateRestoring: wasStateRestoring].
+	self releaseAccelerators.
+	^super winFinalize!
+
+wmActivate: message wParam: wParam lParam: lParam 
+	"Private - Sent when the receiver is being activated or deactivated. 
+	This message is sent first to the Shell being deactivated, and
+	the to the Shell being activated. 
+  
+		wParam lowWord				activation flag (WA_INACTIVE/WA_ACTIVE/WA_CLICKACTIVE)
+		wParam highWord asBoolean	specifies whether or not receiver is iconic
+		lParam					handle of other frame window (being activated/deactivated)."
+
+	| event |
+	event := WindowsEvent 
+				handle: handle
+				message: message
+				wParam: wParam
+				lParam: lParam.
+	^wParam lowWord == WA_INACTIVE 
+		ifTrue: [self presenter onViewDeactivated: event]
+		ifFalse: [self presenter onViewActivated: event	"send onActivate for WA_ACTIVE and WA_CLICKACTIVE"]!
+
+wmGetMinMaxInfo: message wParam: wParam lParam: lParam 
+	| minmax |
+	minmax := MINMAXINFO fromAddress: lParam.
+	self minExtent ifNotNil: [:min | minmax ptMinTrackSize: min asParameter].
+	self maxExtent ifNotNil: [:max | minmax ptMaxTrackSize: max asParameter].
+	^0!
+
+wmInitMenu: message wParam: wParam lParam: lParam
+	"Private - The receiver's menu bar is about to be activated.
+	N.B. This is sent only for the top-level menu bar itself, not for sub-menus,
+	for which a WM_INITMENUPOPUP is sent."
+
+	| focusWindow |
+	((focusWindow := self class focus) notNil and: [menuBar notNil])
+		ifTrue: [
+			menuBar queryAllFromView: focusWindow.
+			"Redraw the menu bar in case any items were covertly deleted since last activated"
+			self drawMenuBar].
+
+	^0 "prevent further processing"!
+
+wmInitMenuPopup: message wParam: wParam lParam: lParam
+	"Private - A sub-menu from the receiver's menu bar is about to be popped.
+	Direct the popup menu indicated, which should be connected to menuBar,
+	to update its items current state for our view."
+
+	| popup focusWindow |
+	lParam highWord ~= 0 ifTrue: [^self onAboutToDisplaySystemMenu: wParam].
+	(menuBar isNil or: [(popup := menuBar menuFromHandle: wParam) isNil])
+		ifTrue: [^super wmInitMenuPopup: message wParam: wParam lParam: lParam].
+
+	"Starting with the focus window, query the command route for the menu and its items,
+	 and enable/disable as appropriate. The menu may also be dynamically updated by
+	 the command target, which is sent a #onAboutToDisplayMenu: event"
+	(focusWindow := self class focus) isNil ifTrue: [focusWindow := self].
+	popup queryAllFromView: focusWindow.
+	^0!
+
+wmNcActivate: message wParam: wParam lParam: lParam 
+	"Private - Sent when the receiver frame is being activated or deactivated.
+
+	wParam 
+		TRUE if activation, FALSE otherwise 
+	lParam 
+		handle of update region in non-client area but only available if the window is not under the 
+		control of a visual style. -1 indicates that no paint is required.
+
+	Be careful, don't put a breakpoint in this methods (or called methods) or cause a walkback. Any sort of change of NC activation
+	here will go recursive and result in an image collapse. Also don't write to the Transcript either, since this causes a window frame flash
+	which will again go recursive.
+
+	NOTE: I considered wrapping the presenter calls to trap and ignore errors in an exception block but, as yet, haven't deemed this necessary.
+	"
+
+	| event |
+	event := WindowsEvent 
+				handle: handle
+				message: message
+				wParam: wParam
+				lParam: lParam.
+	^wParam = 0 
+		ifTrue: [self presenter onViewNcDeactivated: event]
+		ifFalse: [self presenter onViewNcActivated: event]!
+
+wmSetCursor: message wParam: wParam lParam: lParam
+	"Private - Handle the Win32 WM_SETCURSOR message. 
+	Note the special handling for HTERROR on mouse clicks - this is to bring a modal
+	dialog to the foreground if its disabled parent is clicked over. To quote from an MSDN
+	article 'This works around the Windows bug where clicking on the owner of a modal dialog 
+	box doesn't activate the dialog box instead.'
+	We also display the wait cursor for disabled shells that have no active popup. This lets the
+	user know the window is disabled without requiring the application programmer to explicitly 
+	set and maintain the global wait cursor."
+
+	lParam lowPartSigned == HTERROR 
+		ifTrue: 
+			[| msg |
+			msg := lParam highWord.
+			(msg == WM_LBUTTONDOWN or: [msg == WM_RBUTTONDOWN]) 
+				ifTrue: [self activateLastPopup ifTrue: [^true	"suppress default processing (no bell)"]]].
+	^super 
+		wmSetCursor: message
+		wParam: wParam
+		lParam: lParam!
+
+wmSettingChange: message wParam: wParam lParam: lParam 
+	"Private - Handle the Win32 WM_SETTINGCHANGE message."
+
+	^self presenter onSettingChanged: (WindowsEvent 
+				handle: handle
+				message: message
+				wParam: wParam
+				lParam: lParam)!
+
+wmSize: message wParam: wParam lParam: lParam 
+	"Private - Default handler for a WM_SIZE (window resized) message."
+
+	"While we're restoring state it's not a good idea to propagate this event"
+
+	self isStateRestoring ifTrue: [^self].
+	(wParam == SIZE_MINIMIZED or: [wParam == SIZE_RESTORED]) 
+		ifTrue: 
+			[| event |
+			#todo.	"Work out how we can do this from #wmPositionChanged:etc instead"
+			event := SizeEvent 
+						handle: handle
+						message: message
+						wParam: wParam
+						lParam: lParam.
+			wParam == SIZE_MINIMIZED 
+				ifTrue: 
+					[self isMinimized: true.
+					^self presenter onViewMinimized: event].
+			(wParam == SIZE_RESTORED and: [self isMinimized]) 
+				ifTrue: 
+					[self isMinimized: false.
+					^self presenter onViewRestored: event]].
+	^nil!
+
+wmWindowPosChanged: message wParam: wParam lParam: lParam
+	"Private - The position of the receiver is about to change in some manner.
+	The superclass doesn't invoke default window processing in order to suppress
+	the old WM_SIZE and WM_MOVE events which mostly aren't needed by Dolphin 3.0,
+	however ShellViews want to know when they are minimzed and restored, and the easiest
+	way to tell is by examing the flag passed with a WM_SIZE. If we can work out how
+	to determine this from the SWP_xxx flags (as the default window proc. is doing) then 
+	we can get rid of WM_SIZE altogether."
+
+	super wmWindowPosChanged: message wParam: wParam lParam: lParam.
+	^nil	"Accept default processing"
+! !
+!ShellView categoriesFor: #acceleratorTable!accelerator!public! !
+!ShellView categoriesFor: #acceleratorTable:!accelerator!public! !
+!ShellView categoriesFor: #activateLastPopup!helpers!private! !
+!ShellView categoriesFor: #addCommandHistory:!accessing!private! !
+!ShellView categoriesFor: #allAdditionalAccelerators!accessing!public! !
+!ShellView categoriesFor: #basicMenu:!menus!private! !
+!ShellView categoriesFor: #buildCombinedAcceleratorTable!private!realizing/unrealizing! !
+!ShellView categoriesFor: #buttonRemoved:!default button!private! !
+!ShellView categoriesFor: #caption!accessing!public! !
+!ShellView categoriesFor: #caption:!accessing!public! !
+!ShellView categoriesFor: #close!public!realizing/unrealizing! !
+!ShellView categoriesFor: #combinedAcceleratorTable!accelerator!accessing!private! !
+!ShellView categoriesFor: #commandPolicyClass!commands!constants!public! !
+!ShellView categoriesFor: #commandPolicyWithSource:!commands!public! !
+!ShellView categoriesFor: #commandSource!accessing!public! !
+!ShellView categoriesFor: #createAt:extent:!public!realizing/unrealizing! !
+!ShellView categoriesFor: #defaultButtonId!accessing!default button!private! !
+!ShellView categoriesFor: #defaultButtonId:!accessing!default button!private! !
+!ShellView categoriesFor: #defaultExtent!constants!public! !
+!ShellView categoriesFor: #defaultExtentWithin:!geometry!private! !
+!ShellView categoriesFor: #defaultPositionWithin:forExtent:!geometry!private! !
+!ShellView categoriesFor: #defaultShowStyle!constants!private! !
+!ShellView categoriesFor: #defaultWindowStyle!constants!private! !
+!ShellView categoriesFor: #dispatchUser:wParam:lParam:!dispatching!private! !
+!ShellView categoriesFor: #dmGetDefId:wParam:lParam:!default button!event handling-win32!private! !
+!ShellView categoriesFor: #dmSetDefId:wParam:lParam:!default button!event handling-win32!private! !
+!ShellView categoriesFor: #drawMenuBar!menus!public! !
+!ShellView categoriesFor: #ensureSubViewVisible:!public!sub views! !
+!ShellView categoriesFor: #exit!commands!public! !
+!ShellView categoriesFor: #filerProxy!binary filing!private! !
+!ShellView categoriesFor: #flash:!operations!public! !
+!ShellView categoriesFor: #flash:flags:!operations!public! !
+!ShellView categoriesFor: #forkFlasher!helpers!private! !
+!ShellView categoriesFor: #getDefId!default button!private! !
+!ShellView categoriesFor: #getLastActivePopup!hierarchy!private! !
+!ShellView categoriesFor: #hasCaption!accessing-styles!public! !
+!ShellView categoriesFor: #hasCaption:!accessing-styles!public! !
+!ShellView categoriesFor: #hasMaximize!accessing-styles!public! !
+!ShellView categoriesFor: #hasMaximize:!accessing-styles!public! !
+!ShellView categoriesFor: #hasMenu!accessing!private! !
+!ShellView categoriesFor: #hasMinimize!accessing-styles!public! !
+!ShellView categoriesFor: #hasMinimize:!accessing-styles!public! !
+!ShellView categoriesFor: #hasSysMenu!accessing-styles!public! !
+!ShellView categoriesFor: #hasSysMenu:!accessing-styles!public! !
+!ShellView categoriesFor: #hasTaskbarIcon!accessing-styles!public! !
+!ShellView categoriesFor: #hasTaskbarIcon:!accessing-styles!public! !
+!ShellView categoriesFor: #hasVisibleStyle:!public!testing! !
+!ShellView categoriesFor: #initialize!initializing!private! !
+!ShellView categoriesFor: #invalidateUserInterface!accessing!public! !
+!ShellView categoriesFor: #isInitiallyCentered!dispatching!private! !
+!ShellView categoriesFor: #isInitiallyCentered:!accessing!public! !
+!ShellView categoriesFor: #isLayeredWindow!accessing!public! !
+!ShellView categoriesFor: #isLayeredWindow:!accessing!public! !
+!ShellView categoriesFor: #isMaximized!public!testing! !
+!ShellView categoriesFor: #isMinimized!public!testing! !
+!ShellView categoriesFor: #isMinimized:!private!testing! !
+!ShellView categoriesFor: #isPersistentlyDisabled!private!testing! !
+!ShellView categoriesFor: #isPersistentView!public!testing! !
+!ShellView categoriesFor: #isPersistentView:!public!testing! !
+!ShellView categoriesFor: #isStateRestoring:!accessing!private! !
+!ShellView categoriesFor: #isToolWindow!accessing!public! !
+!ShellView categoriesFor: #isToolWindow:!accessing!public! !
+!ShellView categoriesFor: #isUserInterfaceValid!public!testing! !
+!ShellView categoriesFor: #keyboardCommands!accessing!public! !
+!ShellView categoriesFor: #largeIcon!accessing!public! !
+!ShellView categoriesFor: #largeIcon:!accessing!public! !
+!ShellView categoriesFor: #lastFocus!accessing!private! !
+!ShellView categoriesFor: #lastFocus:!accessing!private! !
+!ShellView categoriesFor: #maxExtent!accessing!public! !
+!ShellView categoriesFor: #maxExtent:!accessing!public! !
+!ShellView categoriesFor: #menuBar!menus!public! !
+!ShellView categoriesFor: #menuBar:!menus!public! !
+!ShellView categoriesFor: #minExtent!accessing!public! !
+!ShellView categoriesFor: #minExtent:!accessing!public! !
+!ShellView categoriesFor: #minimize!operations!public! !
+!ShellView categoriesFor: #onAboutToDisplaySystemMenu:!event handling!public! !
+!ShellView categoriesFor: #onCloseRequested!event handling!public! !
+!ShellView categoriesFor: #onCreated:!event handling!public! !
+!ShellView categoriesFor: #onDrawMenuItem:!event handling-win32!public! !
+!ShellView categoriesFor: #onGetCursor:!event handling!public! !
+!ShellView categoriesFor: #onIdleEntered!event handling!public! !
+!ShellView categoriesFor: #onPositionChanged:!event handling!public! !
+!ShellView categoriesFor: #onPostSaveImage!event handling!public! !
+!ShellView categoriesFor: #onPreSaveImage!event handling!public! !
+!ShellView categoriesFor: #onSettingChanged:!event handling-win32!public! !
+!ShellView categoriesFor: #onSubViewRemoved:!event handling!public! !
+!ShellView categoriesFor: #onViewActivated:!event handling!public! !
+!ShellView categoriesFor: #onViewDeactivated:!event handling!public! !
+!ShellView categoriesFor: #onViewMinimized:!event handling!public! !
+!ShellView categoriesFor: #onViewNcActivated:!event handling!public! !
+!ShellView categoriesFor: #onViewNcDeactivated:!event handling!public! !
+!ShellView categoriesFor: #onViewRestored:!event handling!public! !
+!ShellView categoriesFor: #parentView:!hierarchy!private! !
+!ShellView categoriesFor: #performCommand:!commands!public! !
+!ShellView categoriesFor: #preTranslateKeyboardInput:!dispatching!public! !
+!ShellView categoriesFor: #preTranslateMouseInput:!dispatching!public! !
+!ShellView categoriesFor: #queryClose!event handling!public! !
+!ShellView categoriesFor: #releaseAccelerators!private!realizing/unrealizing! !
+!ShellView categoriesFor: #releaseMenu!private!realizing/unrealizing! !
+!ShellView categoriesFor: #resetDefaultButton!accessing!default button!private! !
+!ShellView categoriesFor: #resolutionScaledBy:!geometry!private! !
+!ShellView categoriesFor: #restorePlacement:resolution:!geometry!private! !
+!ShellView categoriesFor: #setButtonId:style:!accessing!default button!private! !
+!ShellView categoriesFor: #setDefaultButton:state:!accessing!default button!private! !
+!ShellView categoriesFor: #setDefId:!default button!private! !
+!ShellView categoriesFor: #setInitialFocus!operations!public! !
+!ShellView categoriesFor: #showMaximized!operations!public! !
+!ShellView categoriesFor: #showMinimized!operations!public! !
+!ShellView categoriesFor: #showMinimizedNoActivate!operations!public! !
+!ShellView categoriesFor: #showShell!operations!private! !
+!ShellView categoriesFor: #smallIcon!accessing!public! !
+!ShellView categoriesFor: #smallIcon:!accessing!public! !
+!ShellView categoriesFor: #state!accessing!private! !
+!ShellView categoriesFor: #svFlags!accessing!private! !
+!ShellView categoriesFor: #topShell!hierarchy!public! !
+!ShellView categoriesFor: #translateAccelerator:!accelerator!private! !
+!ShellView categoriesFor: #updateCaption!public!updating! !
+!ShellView categoriesFor: #updateIcons!accessing!private! !
+!ShellView categoriesFor: #updateMenuBar!menus!public! !
+!ShellView categoriesFor: #validateUserInterface!operations!public! !
+!ShellView categoriesFor: #winFinalize!event handling!private! !
+!ShellView categoriesFor: #wmActivate:wParam:lParam:!event handling-win32!private! !
+!ShellView categoriesFor: #wmGetMinMaxInfo:wParam:lParam:!event handling-win32!private! !
+!ShellView categoriesFor: #wmInitMenu:wParam:lParam:!event handling-win32!private! !
+!ShellView categoriesFor: #wmInitMenuPopup:wParam:lParam:!event handling-win32!private! !
+!ShellView categoriesFor: #wmNcActivate:wParam:lParam:!event handling-win32!private! !
+!ShellView categoriesFor: #wmSetCursor:wParam:lParam:!event handling-win32!private! !
+!ShellView categoriesFor: #wmSettingChange:wParam:lParam:!event handling-win32!private! !
+!ShellView categoriesFor: #wmSize:wParam:lParam:!event handling!event handling-win32!private! !
+!ShellView categoriesFor: #wmWindowPosChanged:wParam:lParam:!event handling-win32!private! !
+
+ShellView methodProtocol: #topPresenter attributes: #(#readOnly) selectors: #(#caption #caption: #commandPolicyWithSource: #ensureVisible #invalidateUserInterface #onAboutToDisplayMenu: #onAboutToDisplaySystemMenu: #onActionPerformed #onCloseRequested #onIdleEntered #onInputMaskRequired: #onKeyPressed: #onKeyReleased: #onKeyTyped: #onKillFocus #onLeftButtonDoubleClicked: #onLeftButtonPressed: #onLeftButtonReleased: #onMouseMoved: #onPositionChanged: #onPositionChanging: #onRightButtonDoubleClicked: #onRightButtonPressed: #onRightButtonReleased: #onSetFocus #onTipTextRequired: #onViewActivated: #onViewClosed #onViewDeactivated: #onViewMinimized: #onViewOpened #onViewRestored: #parentPresenter #performAction #performCommand: #setFocus #show #topShell #updateCaption #view)!
+ShellView methodProtocol: #topView attributes: #(#readOnly) selectors: #(#acceleratorTable #acceleratorTable: #beActive #beForeground #beNotTopMost #bePopupFor: #beTopMost #buttonRemoved: #caption #caption: #exit #flash: #frameWidths #hasCaption #hasCaption: #hasMaximize #hasMaximize: #hasMinimize #hasMinimize: #hasSysMenu #hasSysMenu: #isActive #isForeground #isInitiallyCentered: #isMinimized #isResizable #isResizable: #isToolWindow #isToolWindow: #largeIcon #largeIcon: #maxExtent #menuBar #menuBar: #minExtent #onAboutToDisplaySystemMenu: #onCloseRequested #onViewMinimized: #onViewRestored: #showMaximized #showMinimized #smallIcon #smallIcon:)!
+
+!ShellView class methodsFor!
+
+asSessionManagerClass
+	^DefaultShellSessionManager!
+
+createHookBlock
+	CreateHookBlock isNil ifTrue: [^[:shellView :createBlock | createBlock value]].
+	^CreateHookBlock!
+
+createHookBlock: aDyadicBlock 
+	"Private - Set aDyadicBlock to be used to hook and wrap the actual window creation process.
+	The first argument is the ShellView that is about to be realized whilst the second is a
+	monadic valuable that will actually perform the creation"
+
+	"NOTE: This hook mecahnism was introduced the allow the View Composer to tempiorarily change styles for
+	the views that it loads. It maybe useful for other purposes too"
+
+	CreateHookBlock := aDyadicBlock!
+
+defaultExtentBlock
+	DefaultExtentBlock isNil 
+		ifTrue: 
+			[#todo.	"This should be using the default size as calculated by windows."
+			DefaultExtentBlock := [:shellView | View desktop workArea extent // ((4 / 3) @ (11 / 8))]].
+	^DefaultExtentBlock!
+
+defaultExtentBlock: aBlockClosure 
+	DefaultExtentBlock := aBlockClosure!
+
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^##(self) defaultIcon!
+
+initialize
+	"Private - Initialize the receiver's class variables.
+		ShellView initialize
+	"
+
+	DefaultButtonIndex := 20.	"self indexOfInstVar: 'defaultButton'"
+	DialogMessageMap := (LookupTable new)
+				at: DM_GETDEFID - WM_USER put: #dmGetDefId:wParam:lParam:;
+				at: DM_SETDEFID - WM_USER put: #dmSetDefId:wParam:lParam:;
+				shrink;
+				isImmutable: true;
+				yourself.
+	TransientMask := 1!
+
+installNew
+	^(self asSessionManagerClass basicNew mainShellClass: self) install!
+
+shutdownOnExit
+	"Answer whether a runtime session should be shutdown when an instance of the receiver is closed."
+
+	"Implementation Note: For backwards compatibility, this is currently false, although this
+	does mean most applications will need to override for their main shell window."
+
+	^false!
+
+stbConvertFromVersion0: anArray 
+	"Private - Perform an STB conversion from a version 0 <View> to version 1.
+	i.e. insert largeIcon/smallIcon inst vars in 	ShellView and subclasses."
+
+	| newArray array |
+	array := super stbConvertFromVersion0: anArray.
+	newArray := Array new: array size + 2.
+	newArray 
+		replaceFrom: 1
+		to: 18
+		with: array
+		startingAt: 1.
+	19 to: array size do: [:i | newArray at: i + 2 put: (array at: i)].
+	^newArray!
+
+stbConvertFromVersion4: anArray 
+	"Private - Perform an STB conversion from a version 4 (or earlier) <View> to version 5,
+	i.e. insert maxExtent/minExtent inst vars in ShellView and subclasses."
+
+	| newArray array |
+	array := super stbConvertFromVersion4: anArray.
+	newArray := Array new: array size + 2.
+	newArray 
+		replaceFrom: 1
+		to: 20
+		with: array
+		startingAt: 1.
+	21 to: array size do: [:i | newArray at: i + 2 put: (array at: i)].
+	^newArray!
+
+stbConvertFromVersion8: anArray 
+	"Private - Perform an STB conversion from a version 8 (or earlier) <View> to version 9,
+	i.e. convert defaultButton inst. var. of <ShellView> and subclasses to integer id."
+
+	| array |
+	array := super stbConvertFromVersion8: anArray.
+	"The defaultButtonId does not need to be persisted, as <PushButton>s remember and reset on creation"
+	array at: DefaultButtonIndex put: 0.
+	^array!
+
+stbConvertFromVersion9: anArray 
+	"Private - Perform an STB conversion from a version 9 (or earlier) <ShellView> to version 10,
+	i.e. append 'flashes' and a couple of dummy instance variables."
+
+	| newSize array |
+	array := super stbConvertFromVersion9: anArray.
+	newSize := array size + 3.	"3 instance variables were added"
+	^(Array new: newSize)
+		replaceFrom: 1
+			to: 24
+			with: array
+			startingAt: 1;
+		at: 25 put: 0;
+		replaceFrom: 28
+			to: newSize
+			with: array
+			startingAt: 25;
+		yourself! !
+!ShellView class categoriesFor: #asSessionManagerClass!converting!public!VM and session managerment! !
+!ShellView class categoriesFor: #createHookBlock!accessing!public! !
+!ShellView class categoriesFor: #createHookBlock:!accessing!public! !
+!ShellView class categoriesFor: #defaultExtentBlock!accessing!geometry!private! !
+!ShellView class categoriesFor: #defaultExtentBlock:!accessing!geometry!private! !
+!ShellView class categoriesFor: #icon!constants!public! !
+!ShellView class categoriesFor: #initialize!initializing!private! !
+!ShellView class categoriesFor: #installNew!public! !
+!ShellView class categoriesFor: #shutdownOnExit!public!testing! !
+!ShellView class categoriesFor: #stbConvertFromVersion0:!binary filing!private! !
+!ShellView class categoriesFor: #stbConvertFromVersion4:!binary filing!private! !
+!ShellView class categoriesFor: #stbConvertFromVersion8:!binary filing!private! !
+!ShellView class categoriesFor: #stbConvertFromVersion9:!binary filing!private! !
+

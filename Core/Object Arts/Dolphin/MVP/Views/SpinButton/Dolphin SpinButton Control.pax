@@ -1,0 +1,102 @@
+| package |
+package := Package name: 'Dolphin SpinButton Control'.
+package paxVersion: 1;
+	basicComment: 'Dolphin Smalltalk SpinButton Common Control.
+Copyright (c) Object Arts Ltd 2005.
+
+This package contains an MVP View wrapper for the Windows "Up-Down" common control. Please see the SpinButton class comment for further details.
+
+Note that this package replaces the default <IntegerPrompter> view with one that uses a SpinButton. If you wish to retain this enhanced IntegerPrompter in your deployed applications you may need to make this package a manual prerequisite, although this will not be necessary if you are using SpinButtons elsewhere in your own views or dialogs.'.
+
+package basicPackageVersion: '6.1'.
+
+
+package classNames
+	add: #NMUPDOWN;
+	add: #SpinButton;
+	add: #UDACCEL;
+	yourself.
+
+package methodNames
+	add: 'IntegerPrompter class' -> #defaultView;
+	add: 'IntegerPrompter class' -> #resource_Spinner_view;
+	add: 'NumberPresenter class' -> #resource_Spin_button;
+	yourself.
+
+package globalNames
+	add: #UpDownControlConstants;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\..\..\Base\Dolphin';
+	add: '..\..\Presenters\Prompters\Dolphin Integer Prompter';
+	add: '..\..\Base\Dolphin MVP Base';
+	add: '..\..\Presenters\Number\Dolphin Number Presenter';
+	add: '..\..\Presenters\Text\Dolphin Text Presenter';
+	add: '..\..\Type Converters\Dolphin Type Converters';
+	add: '..\..\Models\Value\Dolphin Value Models';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+Win32Structure subclass: #UDACCEL
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+NMHDR subclass: #NMUPDOWN
+	instanceVariableNames: 'allow'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ValueConvertingControlView subclass: #SpinButton
+	instanceVariableNames: ''
+	classVariableNames: 'AlignmentMap AlignmentMask UdnMap'
+	poolDictionaries: 'UpDownControlConstants'
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+!IntegerPrompter class methodsFor!
+
+defaultView
+	^'Spinner view'!
+
+resource_Spinner_view
+	"Answer the literal data from which the 'Spinner view' resource can be reconstituted.
+	DO NOT EDIT OR RECATEGORIZE THIS METHOD.
+
+	If you wish to modify this resource evaluate:
+	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Spinner_view)
+	"
+
+	^#(#'!!STL' 3 788558 10 ##(Smalltalk.STBViewProxy)  8 ##(Smalltalk.DialogView)  98 30 0 0 98 2 26214401 131073 416 0 524550 ##(Smalltalk.ColorRef)  8 4278190080 0 167 0 0 0 416 852230 ##(Smalltalk.FramingLayout)  234 240 98 8 410 8 ##(Smalltalk.StaticText)  98 16 0 416 98 2 8 1140850944 1 592 721990 2 ##(Smalltalk.ValueHolder)  0 0 1114118 ##(Smalltalk.NeverSearchPolicy)  8 '' 0 0 7 0 0 0 592 0 8 4294903625 852486 ##(Smalltalk.NullConverter)  0 0 16 983302 ##(Smalltalk.MessageSequence)  202 208 98 2 721670 ##(Smalltalk.MessageSend)  8 #createAt:extent: 98 2 328198 ##(Smalltalk.Point)  41 31 930 231 81 592 866 8 #text: 98 1 8 'Enter number:' 592 983302 ##(Smalltalk.WINDOWPLACEMENT)  8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 20 0 0 0 15 0 0 0 135 0 0 0 55 0 0 0] 98 0 930 193 193 0 27 1181766 2 ##(Smalltalk.FramingConstraints)  1180678 ##(Smalltalk.FramingCalculation)  8 #fixedParentLeft 21 1154 8 #fixedViewLeft 231 1154 8 #fixedParentTop 1 1154 8 #fixedViewTop 81 410 8 ##(Smalltalk.TextEdit)  98 16 0 416 98 2 8 1140924544 1025 1296 0 482 512 0 7 0 0 0 1296 0 8 4294903807 852742 ##(Smalltalk.IntegerToText)  0 8 '' 0 1 802 202 208 98 4 866 896 98 2 930 291 31 930 121 41 1296 866 992 98 1 8 '0' 1296 866 8 #selectionRange: 98 1 525062 ##(Smalltalk.Interval)  3 1 3 1296 866 8 #isTextModified: 98 1 32 1296 1042 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 145 0 0 0 15 0 0 0 205 0 0 0 35 0 0 0] 98 0 1104 0 27 1122 1154 8 #fixedPreviousRight 21 1200 121 1232 1 1264 41 410 8 ##(Smalltalk.ReferenceView)  98 14 0 416 98 2 8 1140850688 131073 1840 0 0 0 7 0 0 0 1840 1180166 ##(Smalltalk.ResourceIdentifier)  8 ##(Smalltalk.Presenter)  8 #resource_OK_Cancel_button_block 0 802 202 208 98 1 866 896 98 2 930 21 147 930 439 53 1840 1042 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 10 0 0 0 73 0 0 0 229 0 0 0 99 0 0 0] 98 0 1104 0 27 1122 1168 1 1154 8 #fixedParentRight 1 1154 8 #fixedViewBottom -51 1154 8 #fixedParentBottom 1 410 8 ##(Smalltalk.SpinButton)  98 15 0 416 98 2 8 1140916276 1 2256 674 0 0 1376774 ##(Smalltalk.PluggableSearchPolicy)  459270 ##(Smalltalk.Message)  8 #= 98 0 2386 8 #hash 98 0 1 482 512 0 7 0 0 0 2256 0 8 4294905169 770 0 0 802 202 208 98 3 866 896 98 2 930 411 31 930 29 41 2256 866 8 #setRange: 98 1 1666 3 201 3 2256 866 8 #udmSetAccel: 98 1 918854 1 ##(Smalltalk.StructureArray)  8 #[0 0 0 0 1 0 0 0 2 0 0 0 5 0 0 0 5 0 0 0 20 0 0 0] 7 8 ##(Smalltalk.UDACCEL)  0 17 2256 1042 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 205 0 0 0 15 0 0 0 219 0 0 0 35 0 0 0] 98 0 1104 0 27 1122 1808 1 1200 29 1154 8 #fixedPreviousTop 1 1154 8 #fixedPreviousBottom 1 234 256 98 6 1296 8 'reply' 592 8 'prompt' 2256 8 'spinner' 590342 ##(Smalltalk.Rectangle)  930 21 31 930 21 21 0 0 0 0 30063 0 0 0 0 1 0 0 590598 ##(Smalltalk.Semaphore)  0 0 1 0 8 2010572111 802 202 208 98 3 866 896 98 2 930 2799 21 930 491 283 416 866 992 98 1 8 'Please respond:' 416 866 8 #updateMenuBar 2128 416 1042 8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 119 5 0 0 10 0 0 0 108 6 0 0 151 0 0 0] 98 4 592 1296 2256 1840 1104 0 27 )! !
+!IntegerPrompter class categoriesFor: #defaultView!constants!public! !
+!IntegerPrompter class categoriesFor: #resource_Spinner_view!public!resources-views! !
+
+!NumberPresenter class methodsFor!
+
+resource_Spin_button
+	"Answer the literal data from which the 'Spin button' resource can be reconstituted.
+	DO NOT EDIT OR RECATEGORIZE THIS METHOD.
+
+	If you wish to modify this resource evaluate:
+	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Spin_button)
+	"
+
+	^#(#'!!STL' 3 788558 10 ##(STBViewProxy)  8 ##(SpinButton)  98 15 0 0 98 2 8 1140916240 1 416 721990 2 ##(ValueHolder)  0 0 1376774 ##(PluggableSearchPolicy)  459270 ##(Message)  8 #= 98 0 562 8 #hash 98 0 1 524550 ##(ColorRef)  8 4278190080 0 7 0 0 0 416 0 8 4294906895 852486 ##(NullConverter)  0 0 983302 ##(MessageSequence)  202 208 98 3 721670 ##(MessageSend)  8 #createAt:extent: 98 2 328198 ##(Point)  11 11 898 51 51 416 834 8 #setRange: 98 1 525062 ##(Interval)  3 201 3 416 834 8 #udmSetAccel: 98 1 918854 1 ##(StructureArray)  8 #[0 0 0 0 1 0 0 0 2 0 0 0 5 0 0 0 5 0 0 0 20 0 0 0] 7 8 ##(UDACCEL)  0 17 416 983302 ##(WINDOWPLACEMENT)  8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 5 0 0 0 5 0 0 0 30 0 0 0 30 0 0 0] 98 0 898 193 193 0 27 )! !
+!NumberPresenter class categoriesFor: #resource_Spin_button!public!resources-views! !
+
+"End of package definition"!
+

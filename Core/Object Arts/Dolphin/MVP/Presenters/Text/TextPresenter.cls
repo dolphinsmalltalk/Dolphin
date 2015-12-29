@@ -1,0 +1,196 @@
+"Filed out from Dolphin Smalltalk X6.2"!
+
+ValuePresenter subclass: #TextPresenter
+	instanceVariableNames: 'findDetails'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+TextPresenter guid: (GUID fromString: '{87B4C6D2-026E-11D3-9FD7-00A0CC3E4A32}')!
+TextPresenter comment: 'TextPresenter is a <valuePresenter> that displays a <valueModel> onto a <readableString> value. A TextPresenter can be connected to any <valueView> capable of displaying <readableString> values. Often, this will be a <TextEdit> although alternative views may be chosen with the installation of an appropriate <typeConverter>.'!
+!TextPresenter categoriesForClass!MVP-Presenters!MVP-Resources-Text fields! !
+!TextPresenter methodsFor!
+
+clear
+	"Remove all contents in the receiver's view"
+
+	self value: ''!
+
+dragOver: session
+	"The drag operation described by the <DragDropSession>, session,
+	has moved to a new position over the receiver's window. Use the session 
+	to provide feedback to the user about allowable operations etc.
+	Implementation Note: Override this message to suggest a default drop action of 
+	pasting in the String at the drop position."
+	
+	session operation: ((session isFormatAvailable: #String) ifTrue: [session intendedOperation]).
+	"Superclass triggers event to allow observers to override."
+	super dragOver: session!
+
+drop: session
+	"The drag operation described by the <DragDropSession>, session, has culminated
+	in a drop over the receiver.
+	Implementation Note: Override this message to implement default action of 
+	pasting in the String or Chunk at the drop position. However any observers of the
+	#drop: trigger of the receiver get first crack - they should set the suggested target to 
+	nil in order to pre-empt the default action."
+
+	| targetPos answer |
+	answer := super drop: session.
+	targetPos := session suggestedTarget.
+	targetPos isNil ifFalse: [
+		self view caretPosition: targetPos.
+		session dragObjects do: [:each | | text |
+			text := each format: #String.
+			self replaceSelection: text]].
+	^answer!
+
+findDetails
+	"Answers the findDetails instance variable. The Array has four elements:
+	(findWhatString, isForwardsBoolean, isCaseSensitiveBoolean, isWholeWordBoolean)."
+
+	^findDetails!
+
+findDetails: aFindDetails 
+	"Sets the findDetails instance variable to the argument."
+
+	"Nasty, but for backwards compatibility - will be removed in a future release"
+
+	(aFindDetails isKindOf: Array) 
+		ifTrue: 
+			[| array sender |
+			sender := Processor activeProcess topFrame sender.
+			Notification 
+				signal: ('Deprecated usage of TextPresenter>>findDetails: from <1p> (Argument is no longer an Array)' 
+						expandMacrosWith: sender method).
+			array := aFindDetails.
+			findDetails := (FindDetails new)
+						findWhat: array first;
+						isForwards: array second;
+						isCaseSensitive: array third;
+						isWholeWord: array fourth;
+						yourself.
+			^self].
+	findDetails := aFindDetails!
+
+hasSelection
+	"Answer true if the receiver has a current selection"
+
+	^self view hasSelection!
+
+isModified
+	"Answer whether the text in the receiver's model has been modified."
+
+	^self view isModified!
+
+isModified: aBoolean
+	"Set/reset the receiver's dirty flag."
+
+	self view isModified: aBoolean!
+
+isReadOnly
+	^self view isReadOnly!
+
+isReadOnly: aBoolean 
+	self view isReadOnly: aBoolean!
+
+replaceSelection: aString
+	"Replace the current selected range of text with aString"
+	
+	^self view replaceSelection: aString!
+
+selectionRange
+	"Answers an interval identifying the selected range of text"
+	
+	^self view selectionRange!
+
+selectionRange: anInterval
+	"Sets anInterval to be the selected range of text"
+	
+	^self view selectionRange: anInterval
+! !
+!TextPresenter categoriesFor: #clear!operations!public! !
+!TextPresenter categoriesFor: #dragOver:!drag & drop!public! !
+!TextPresenter categoriesFor: #drop:!drag & drop!public! !
+!TextPresenter categoriesFor: #findDetails!accessing!public! !
+!TextPresenter categoriesFor: #findDetails:!public!searching! !
+!TextPresenter categoriesFor: #hasSelection!public!selection! !
+!TextPresenter categoriesFor: #isModified!public!testing! !
+!TextPresenter categoriesFor: #isModified:!modes!public! !
+!TextPresenter categoriesFor: #isReadOnly!public!testing! !
+!TextPresenter categoriesFor: #isReadOnly:!accessing!public! !
+!TextPresenter categoriesFor: #replaceSelection:!operations!public! !
+!TextPresenter categoriesFor: #selectionRange!public!selection! !
+!TextPresenter categoriesFor: #selectionRange:!public!selection! !
+
+TextPresenter methodProtocol: #textPresenter attributes: #() selectors: #(#clear #findDetails #findDetails: #hasSelection #isModified #isModified: #replaceSelection: #selectionRange #selectionRange:)!
+
+!TextPresenter class methodsFor!
+
+defaultModel
+	"Answer a default model to be assigned to the receiver when it
+	is initialized."
+
+	^String new asValue!
+
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^##(self) defaultIcon!
+
+resource_Default_view
+	"Answer the literal data from which the 'Default view' resource can be reconstituted.
+	DO NOT EDIT OR RECATEGORIZE THIS METHOD.
+
+	If you wish to modify this resource evaluate:
+	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Default_view)
+	"
+
+	^#(#'!!STL' 3 788558 10 ##(Smalltalk.STBViewProxy)  8 ##(Smalltalk.TextEdit)  98 16 0 0 98 2 8 1140916352 1025 416 0 524550 ##(Smalltalk.ColorRef)  8 4278190080 0 7 0 0 0 416 0 8 4294904635 852486 ##(Smalltalk.NullConverter)  0 0 1 983302 ##(Smalltalk.MessageSequence)  202 208 98 3 721670 ##(Smalltalk.MessageSend)  8 #createAt:extent: 98 2 328198 ##(Smalltalk.Point)  2799 21 722 241 39 416 658 8 #selectionRange: 98 1 525062 ##(Smalltalk.Interval)  3 1 3 416 658 8 #isTextModified: 98 1 32 416 983302 ##(Smalltalk.WINDOWPLACEMENT)  8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 119 5 0 0 10 0 0 0 239 5 0 0 29 0 0 0] 98 0 722 193 193 0 27 )!
+
+resource_Multiline_text
+	"Answer the literal data from which the 'Multiline text' resource can be reconstituted.
+	DO NOT EDIT OR RECATEGORIZE THIS METHOD.
+
+	If you wish to modify this resource evaluate:
+	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Multiline_text)
+	"
+
+	^#(#'!!STL' 3 788558 10 ##(Smalltalk.STBViewProxy)  8 ##(Smalltalk.MultilineTextEdit)  98 16 0 0 98 2 8 1143017796 1025 416 0 524550 ##(Smalltalk.ColorRef)  8 4278190080 0 7 0 0 0 416 0 8 4294904635 852486 ##(Smalltalk.NullConverter)  0 0 9 983302 ##(Smalltalk.MessageSequence)  202 208 98 3 721670 ##(Smalltalk.MessageSend)  8 #createAt:extent: 98 2 328198 ##(Smalltalk.Point)  2799 21 722 401 161 416 658 8 #selectionRange: 98 1 525062 ##(Smalltalk.Interval)  3 1 3 416 658 8 #isTextModified: 98 1 32 416 983302 ##(Smalltalk.WINDOWPLACEMENT)  8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 119 5 0 0 10 0 0 0 63 6 0 0 90 0 0 0] 98 0 722 193 193 0 27 )!
+
+resource_Password_text
+	"Answer the literal data from which the 'Password text' resource can be reconstituted.
+	DO NOT EDIT OR RECATEGORIZE THIS METHOD.
+
+	If you wish to modify this resource evaluate:
+	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Password_text)
+	"
+
+	^#(#'!!STL' 3 788558 10 ##(Smalltalk.STBViewProxy)  8 ##(Smalltalk.TextEdit)  98 16 0 0 98 2 8 1140916384 1025 416 0 524550 ##(Smalltalk.ColorRef)  8 4278190080 0 7 0 0 0 416 0 8 4294904635 852486 ##(Smalltalk.NullConverter)  0 0 1 983302 ##(Smalltalk.MessageSequence)  202 208 98 3 721670 ##(Smalltalk.MessageSend)  8 #createAt:extent: 98 2 328198 ##(Smalltalk.Point)  2799 21 722 241 39 416 658 8 #selectionRange: 98 1 525062 ##(Smalltalk.Interval)  3 1 3 416 658 8 #isTextModified: 98 1 32 416 983302 ##(Smalltalk.WINDOWPLACEMENT)  8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 119 5 0 0 10 0 0 0 239 5 0 0 29 0 0 0] 98 0 722 193 193 0 27 )!
+
+resource_Path_text
+	"Answer the literal data from which the 'Path text' resource can be reconstituted.
+	DO NOT EDIT OR RECATEGORIZE THIS METHOD.
+
+	If you wish to modify this resource evaluate:
+	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Path_text)
+	"
+
+	^#(#'!!STL' 3 788558 10 ##(Smalltalk.STBViewProxy)  8 ##(Smalltalk.StaticPath)  98 17 0 0 98 2 8 1140850944 1 416 0 0 0 7 0 0 0 416 0 8 4294904617 852486 ##(Smalltalk.NullConverter)  0 0 0 8 'c:\Program Files\Dolphin Smalltalk' 983302 ##(Smalltalk.MessageSequence)  202 208 98 2 721670 ##(Smalltalk.MessageSend)  8 #createAt:extent: 98 2 328198 ##(Smalltalk.Point)  2799 21 690 241 39 416 626 8 #text: 98 1 544 416 983302 ##(Smalltalk.WINDOWPLACEMENT)  8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 119 5 0 0 10 0 0 0 239 5 0 0 29 0 0 0] 98 0 690 193 193 0 27 )!
+
+resource_Static_text
+	"Answer the literal data from which the 'Static text' resource can be reconstituted.
+	DO NOT EDIT OR RECATEGORIZE THIS METHOD.
+
+	If you wish to modify this resource evaluate:
+	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Static_text)
+	"
+
+	^#(#'!!STL' 3 788558 10 ##(Smalltalk.STBViewProxy)  8 ##(Smalltalk.StaticText)  98 16 0 0 98 2 8 1140850944 65 416 0 0 0 7 0 0 0 416 0 8 4294904577 852486 ##(Smalltalk.NullConverter)  0 0 0 983302 ##(Smalltalk.MessageSequence)  202 208 98 2 721670 ##(Smalltalk.MessageSend)  8 #createAt:extent: 98 2 328198 ##(Smalltalk.Point)  3359 21 674 241 39 416 610 8 #text: 98 1 8 'Static Text' 416 983302 ##(Smalltalk.WINDOWPLACEMENT)  8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 143 6 0 0 10 0 0 0 7 7 0 0 29 0 0 0] 98 0 674 193 193 0 27 )! !
+!TextPresenter class categoriesFor: #defaultModel!models!public! !
+!TextPresenter class categoriesFor: #icon!constants!public! !
+!TextPresenter class categoriesFor: #resource_Default_view!public!resources-views! !
+!TextPresenter class categoriesFor: #resource_Multiline_text!public!resources-views! !
+!TextPresenter class categoriesFor: #resource_Password_text!public!resources-views! !
+!TextPresenter class categoriesFor: #resource_Path_text!public!resources-views! !
+!TextPresenter class categoriesFor: #resource_Static_text!public!resources-views! !
+

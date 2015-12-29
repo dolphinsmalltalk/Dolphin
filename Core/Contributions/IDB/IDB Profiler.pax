@@ -1,0 +1,212 @@
+| package |
+package := Package name: 'IDB Profiler'.
+package paxVersion: 1;
+	basicComment: 'Sampling Stack Profiler
+Version 6a - May 2005
+For Version 6 of Dolphin Smalltalk
+
+(C) 2005 Ian Bartholomew
+ian@idb.me.uk
+Public Domain Freeware
+'.
+
+package basicPackageVersion: 'IDB$PACKAGE$VERSION 6a'.
+
+package basicScriptAt: #preuninstall put: 'Profiler reset.
+ProfilerSampleSetManager reset'.
+
+package classNames
+	add: #ProfileBrowser;
+	add: #Profiler;
+	add: #ProfilerClassListPresenter;
+	add: #ProfilerFrame;
+	add: #ProfilerListItem;
+	add: #ProfilerListsPresenter;
+	add: #ProfilerPresenter;
+	add: #ProfilerSample;
+	add: #ProfilerSampleSet;
+	add: #ProfilerSampleSetManager;
+	add: #ProfilerSamplesPresenter;
+	add: #ProfilerSelectorListPresenter;
+	add: #ProfilerSetupDialog;
+	add: #ProfilerTallyTreePresenter;
+	add: #ProfilerTimeTreePresenter;
+	add: #ProfilerTreeNode;
+	add: #ProfilerTreesPresenter;
+	yourself.
+
+package methodNames
+	add: #ClassDescription -> #profilerIconIndex;
+	add: #CompiledMethod -> #profilerIconIndex;
+	add: #Number -> #asPercentageOf:;
+	add: #Process -> #stackDepthFrom:;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\Object Arts\Dolphin\IDE\Base\Development System';
+	add: '..\Object Arts\Dolphin\Base\Dolphin';
+	add: '..\Object Arts\Dolphin\MVP\Presenters\Boolean\Dolphin Boolean Presenter';
+	add: '..\Object Arts\Dolphin\MVP\Views\Cards\Dolphin Card Containers';
+	add: '..\Object Arts\Dolphin\MVP\Views\Common Controls\Dolphin Common Controls';
+	add: '..\Object Arts\Dolphin\MVP\Views\Control Bars\Dolphin Control Bars';
+	add: '..\Object Arts\Dolphin\MVP\Models\List\Dolphin List Models';
+	add: '..\Object Arts\Dolphin\MVP\Presenters\List\Dolphin List Presenter';
+	add: '..\Object Arts\Dolphin\MVP\Base\Dolphin MVP Base';
+	add: '..\Object Arts\Dolphin\MVP\Presenters\Number\Dolphin Number Presenter';
+	add: '..\Object Arts\Dolphin\MVP\Dialogs\Progress\Dolphin Progress Dialog';
+	add: '..\Object Arts\Dolphin\MVP\Views\Scintilla\Dolphin Scintilla View';
+	add: '..\Object Arts\Dolphin\MVP\Views\Scrollbars\Dolphin Scrollbars';
+	add: '..\Object Arts\Dolphin\MVP\Presenters\Text\Dolphin Text Presenter';
+	add: '..\Object Arts\Dolphin\MVP\Models\Tree\Dolphin Tree Models';
+	add: '..\Object Arts\Dolphin\MVP\Presenters\Tree\Dolphin Tree Presenter';
+	add: '..\Object Arts\Dolphin\MVP\Type Converters\Dolphin Type Converters';
+	add: '..\Object Arts\Dolphin\MVP\Models\Value\Dolphin Value Models';
+	add: 'IDB Common';
+	add: '..\Object Arts\Dolphin\ActiveX\Shell\Windows Shell';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+Object subclass: #Profiler
+	instanceVariableNames: 'samplingInterval isSampling mutex'
+	classVariableNames: 'Default'
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Object subclass: #ProfilerFrame
+	instanceVariableNames: 'compiledCode methodClass receiverClass selector ip isBlock'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Object subclass: #ProfilerListItem
+	instanceVariableNames: 'object tallyAll tallyActive timeAll timeActive'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Object subclass: #ProfilerSample
+	instanceVariableNames: 'root leaf elapsedTime'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Object subclass: #ProfilerSampleSet
+	instanceVariableNames: 'name root isActive samples samplingCount samplingTimeStamp samplesElapsedTime samplesClasses samplesSelectors'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Object subclass: #ProfilerSampleSetManager
+	instanceVariableNames: 'sampleSets'
+	classVariableNames: 'Default'
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Presenter subclass: #ProfilerPresenter
+	instanceVariableNames: 'percentageFilter dolphinFilter selectorFilter'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Presenter subclass: #ProfilerSamplesPresenter
+	instanceVariableNames: 'selectorFilter filterTarget index frame'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ProfilerPresenter subclass: #ProfilerListsPresenter
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ProfilerPresenter subclass: #ProfilerTreesPresenter
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ProfilerListsPresenter subclass: #ProfilerClassListPresenter
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ProfilerListsPresenter subclass: #ProfilerSelectorListPresenter
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ProfilerTreesPresenter subclass: #ProfilerTallyTreePresenter
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ProfilerTreesPresenter subclass: #ProfilerTimeTreePresenter
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Dialog subclass: #ProfilerSetupDialog
+	instanceVariableNames: ''
+	classVariableNames: 'IsCollect IsOn ProfiledBlock ProfiledText ProfilingInterval SampleSetName SamplingInterval'
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+IdbToolShell subclass: #ProfileBrowser
+	instanceVariableNames: 'filterPercentSymbol filterDolphin filterSelector'
+	classVariableNames: 'ShowCounts'
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+TreeNode subclass: #ProfilerTreeNode
+	instanceVariableNames: 'tally time classes selectors'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+!ClassDescription methodsFor!
+
+profilerIconIndex
+	"Answer the icon idex for the receiver"
+
+	#idbAdded.
+	^self icon imageIndex! !
+!ClassDescription categoriesFor: #profilerIconIndex!accessing!idb goodies!public! !
+
+!CompiledMethod methodsFor!
+
+profilerIconIndex
+	"Answer the icon idex for the receiver's class"
+
+	#idbAdded.
+	^self methodClass icon imageIndex! !
+!CompiledMethod categoriesFor: #profilerIconIndex!accessing!idb goodies!public! !
+
+!Number methodsFor!
+
+asPercentageOf: aNumber 
+	"Answer the receiver as a percentage"
+
+	#idbAdded.
+	^(self / aNumber * 100.0) rounded! !
+!Number categoriesFor: #asPercentageOf:!converting!idb goodies!public! !
+
+!Process methodsFor!
+
+stackDepthFrom: aStackFrame 
+	"Answer the number of frames on the stack below aStackFrame"
+
+	| frame i |
+	#idbAdded.
+	frame := aStackFrame.
+	i := 0.
+	[frame notNil and: [frame method selector notNil]] whileTrue: 
+			[frame := frame sender.
+			i := i + 1].
+	^i! !
+!Process categoriesFor: #stackDepthFrom:!accessing!idb goodies!public! !
+
+"End of package definition"!
+

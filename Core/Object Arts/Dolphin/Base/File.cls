@@ -1,0 +1,1324 @@
+"Filed out from Dolphin Smalltalk X6"!
+
+Object subclass: #File
+	instanceVariableNames: 'handle spec flags shareFlags'
+	classVariableNames: 'CheckModes NoCheckModes OpenFlagsMask ShareModes'
+	poolDictionaries: 'CRTConstants Win32Constants Win32Errors'
+	classInstanceVariableNames: ''!
+File guid: (GUID fromString: '{87B4C48A-026E-11D3-9FD7-00A0CC3E4A32}')!
+File comment: ''!
+!File categoriesForClass!System-Support! !
+!File methodsFor!
+
+accessFlags
+	"Private - Answer the Win32 access mode flags."
+
+	^flags bitAnd: OpenFlagsMask bitInvert
+!
+
+asParameter
+	"Answer the external representation of the receiver."
+
+	^handle!
+
+atEnd
+	"Answer a Boolean indicating whether we are at the file's end
+	or signal a FileException if the operation fails."
+
+	^self position = (self size - 1)
+!
+
+basicFree
+	"Private - Close the file and nil the handle.
+	Signal a FileException if the operation fails."
+
+	| fh |
+	fh := handle.
+	handle := nil.
+	(KernelLibrary default closeHandle: fh) ifFalse: [self signalOsError: false]!
+
+checkBoundsOf: aStringOrByteArray startingAt: startIndex for: bytesToTransferInteger
+	"Private - Signal a FileException if the bounds of the transfer are out of range."
+
+	bytesToTransferInteger == 0 ifFalse: [
+		(startIndex < 1 or: [startIndex > aStringOrByteArray basicSize])
+			ifTrue: [self error: 'Invalid array index'].
+		startIndex + bytesToTransferInteger - 1 > aStringOrByteArray basicSize
+			ifTrue: [self error: 'Buffer too small']]!
+
+close
+	"Close the file. The file can be reopened (depending on the access mode).
+	Signal a FileException if an error occurs."
+
+	self free; beUnfinalizable!
+
+creationTime
+	"Answer a <FILETIME> identifying the point in time at which some data was
+	last written to the file associated with the receiver."
+
+	| answer |
+	answer := FILETIME new.
+	self 
+		getTimes: answer
+		atime: nil
+		mtime: nil.
+	^answer!
+
+delete
+	"Private - Close the receiver and delete the associated file.
+	Useful for finishing with temporary files."
+
+	self free.
+	self class delete: spec!
+
+flags: anInteger
+	"Private - Save away the Win32 access and open flags."
+
+	flags := anInteger!
+
+flush
+	"Force write modifications to disk (where possible).
+	Signal a FileException if the operation fails."
+
+	(KernelLibrary default flushFileBuffers: handle) ifFalse: [self signalOsError: false]!
+
+free
+	"Private - Close the file if it is not already closed.
+	Signal a FileException if the operation fails."
+
+	handle notNull
+		ifTrue: [self basicFree]!
+
+getTimes: ctime atime: atime mtime: mtime
+	"Private - Get the receiver's time of creation, last access, and last modification, 
+	all answered through the FILETIME arguments (which are treated as value holders
+	and updated directly)."
+
+	(KernelLibrary default getFileTime: self asParameter
+		lpCreationTime: ctime
+		lpLastAccessTime: atime
+		lpLastWriteTime: mtime) ifFalse: [KernelLibrary default systemError]!
+
+handle
+	"Answer the file handle."
+
+	^handle!
+
+isReadable
+	"Answer true if the file is readable."
+
+	^flags anyMask: GENERIC_READ!
+
+isWriteable
+	"Answer whether the receiver can be written to."
+
+	^flags anyMask: GENERIC_WRITE!
+
+lastAccessTime
+	"Answer a <FILETIME> identifying the point in time at which some data was
+	last written to the file associated with the receiver."
+
+	| answer |
+	answer := FILETIME new.
+	self 
+		getTimes: nil
+		atime: answer
+		mtime: nil.
+	^answer!
+
+lastWriteTime
+	"Answer a <FILETIME> identifying the point in time at which some data was
+	last written to the file associated with the receiver."
+
+	| answer |
+	answer := FILETIME new.
+	self 
+		getTimes: nil
+		atime: nil
+		mtime: answer.
+	^answer!
+
+name
+	"Answer the receiver's filename."
+
+	^spec
+!
+
+open
+	"Open, or reopen, the file described by the receiver with the receiver's
+	access and sharing modes.
+	 If the operation fails then a resumable FileException is signalled. If
+	the exception is handled and resumed, then a further attempt is made
+	to open the file. This allows for easy implementation of '	retry' style
+	functionality."
+
+	| fh |
+	
+	[fh := KernelLibrary default 
+				createFile: spec
+				dwDesiredAccess: self accessFlags
+				dwSharedMode: shareFlags
+				lpSecurityAttributes: self securityAttributes
+				dwCreationDistribution: self openFlags
+				dwFlagsAndAttributes: FILE_ATTRIBUTE_NORMAL
+				hTemplateFile: nil.
+	fh asSignedInteger == -1] 
+			whileTrue: [self signalOsError: true].
+	handle := fh.
+	self beFinalizable!
+
+open: aStringFileName flags: flagsInteger share: shareFlagsInteger
+	"Private - Open the file described by aString using the specified
+	Win32 access and open flags (bitOr'd together), and share flags"
+	
+	self
+		free;
+		spec: aStringFileName;
+		flags: flagsInteger;
+		shareFlags: shareFlagsInteger;
+		open!
+
+open: aString mode: modeSymbol check: aBoolean share: shareSymbol
+	"Open a file for read and/or write access. The mode symbol, modeSymbol, determines
+	what file opening mode to use when opening the file. modeSymbol can be one of
+	the three ANSI (posix based) modes:
+
+		#create	- 	open an existing file, or create a new file, for read/write,
+					positioned at the beginning
+		#append	- 	open an existing file, or create a new file, for read/write
+					and position to the end
+		#truncate	-	open an existing file truncating existing contents, or
+					create a new file, for read/write.
+
+	Or one of two additional modes:
+
+		#read	-	open an existing file, or create a new file, for read-only access
+		#open	-	open an existing file, or create a new file, for read/write access
+
+	Although some of these modes are similar, and are sometimes synonyms, there may be subtle
+	differences depending on the value of the check flag. The check flag, aBoolean,
+	determines whether or not errors are reported according to the following rules:
+
+		If mode = #create and the file exists
+			If check = true raise an error, else use the existing file
+		If mode = #append and the file does not exist
+			If check = true raise an error, else create a new file
+		If mode = #truncate and the file does not exist
+			If check = true raise an error, else create a new file
+		If mode = #read and the file does not exist
+			If check = true raise an error, else create a new file (for read only)
+		If mode = #open and the file does not exist
+			If check = true raise an error, else create a new file (for read/write)
+
+	The shareSymbol can be one of:
+		#exclusive
+		#read
+		#write
+		#readWrite"
+
+	self open: aString
+			flags: ((aBoolean ifTrue: [CheckModes] ifFalse: [NoCheckModes]) at: modeSymbol)
+			share: (ShareModes at: shareSymbol).
+	modeSymbol == #append
+		ifTrue: [self setToEnd]!
+
+openFlags
+	"Private - Answer the Win32 creation mode flags."
+
+	^flags bitAnd: OpenFlagsMask!
+
+position
+	"Answer the absolute Integer position of the reciver's file pointer
+	or signal a FileException if the operation fails."
+
+	^self seek: 0 sense: FILE_CURRENT
+!
+
+position: anInteger 
+	"Move the receiver's file pointer to the <integer> argument,
+	which is a zero-based offset from the start of the file. 
+	Answer the <integer> offset achieved or signal a <FileException> 
+	if the operation fails."
+
+	^self seek: anInteger sense: FILE_BEGIN!
+
+printOn: aStream
+	"Append the ASCII representation of the receiver to aStream."
+
+	aStream
+		basicPrint: self;
+		nextPut: $(;
+		print: spec; space;
+		print: handle;
+		nextPut: $)!
+
+read: aByteObject
+	"Read into aStringOrByteArray a maximum of aByteObject size bytes
+	from the file.
+	Answer the number of bytes or signal a FileException if the operation fails."
+
+	^self
+		read: aByteObject
+		count: aByteObject basicSize
+!
+
+read: anAddress count: bytesToReadInteger 
+	"Read a maximum of bytesToReadInteger bytes into anAddress from the file.
+
+	It is not an error to read zero bytes.
+	Answer the number of bytes read or signal a FileException if the operaion fails."
+
+	| bytesRead |
+	bytesToReadInteger == 0 ifTrue: [^0].
+	bytesRead := ByteArray newFixed: 4.
+	^(KernelLibrary default 
+		readFile: handle
+		lpBuffer: anAddress
+		nNumberOfBytesToRead: bytesToReadInteger
+		lpNumberOfBytesRead: bytesRead
+		lpOverlapped: nil) 
+			ifTrue: [bytesRead dwordAtOffset: 0]
+			ifFalse: [self signalOsError: false]!
+
+read: aStringOrByteArray startingAt: startIndex count: bytesToReadInteger
+	"Read a maximum of bytesToReadInteger bytes from the file starting with aStringOrByteArray at: startIndex.
+
+	It is not an error to read zero bytes.
+	It is an error if aStringOrByteArray is shorter than startIndex + bytesToReadInteger - 1.
+	Answer the number of bytes read or signal a FileException if the operaion fails."
+
+	^self
+		checkBoundsOf: aStringOrByteArray
+		startingAt: startIndex
+		for: bytesToReadInteger;
+
+		read: aStringOrByteArray yourAddress + startIndex - 1
+		count: bytesToReadInteger.
+
+!
+
+readByte
+	"Answer the Integer value of the next byte from the file or nil if the receiver
+	is positioned past the current EOF.
+	Signal a FileException if an error occurs."
+
+	| buffer |
+	buffer := ByteArray new: 1.
+	^(self read: buffer count: 1) == 0
+		ifTrue: [nil]
+		ifFalse: [buffer at: 1]
+
+!
+
+readCharacter
+	"Answer the next Character from the file or nil if the receiver
+	is positioned past the current EOF.
+	Signal a FileException if an error occurs."
+
+	| string |
+	string := String new: 1.
+	^(self read: string count: 1) == 0
+		ifTrue: [nil]
+		ifFalse: [string at: 1]!
+
+readWriteStream
+	"Answer a FileStream on the receiver initially configured to read/write text."
+
+	^FileStream on: self!
+
+reset
+	"Move the receiver's file pointer to the begining of the file.
+	Signal a FileException if the operation fails."
+
+	self position: 0
+!
+
+securityAttributes
+	"Answer the <SECURITY_ATTRIBUTES> to be used when opening the file,
+	or nil if the default security attributes are to be used.
+	N.B. Must be nil (or NULL) on Win9X machines as only supported on NT."
+
+	^nil!
+
+seek: offsetInteger sense: senseFlag 
+	"Move the receiver's file pointer to position anInteger
+	relative to the postition indicated by senseFlag.
+
+	senseFlag
+		must be one of (FILE_BEGIN, FILE_CURRENT, FILE_END).
+
+	Answer the absolute integer position achieved or
+	signal a FileException if the operation fails."
+
+	| result high |
+	high := DWORDBytes fromInteger: (offsetInteger bitShift: -32).
+	result := KernelLibrary default 
+				setFilePointer: handle
+				lDistanceToMove: (16rFFFFFFFF bitAnd: offsetInteger)
+				lpDistanceToMoveHigh: high
+				dwMoveMethod: senseFlag.
+	"N.B. If you step through this in the debugger you may get a false error because the 
+	SetFilePointer API relies on the GetLastError() code to differentiate between
+	 a legitimate file pointer low-word value and an error. As you step in the debugger 
+	the error code will be altered by other API calls, and so it may no longer be zero
+	when tested."
+	^(16rFFFFFFFF = result and: [KernelLibrary default getLastError ~~ 0]) 
+		ifTrue: [self signalOsError: false]
+		ifFalse: [(high asSignedInteger bitShift: 32) bitOr: result]
+!
+
+setHandle: anExternalHandle flags: anInteger 
+	"Private - Set the handle inst var to aHandle."
+
+	handle := anExternalHandle.
+	flags := anInteger!
+
+setToEnd
+	"Move the receiver's file pointer to the end of the file.
+	Answer the absolute integer position achieved or
+	signal a FileException if the operation fails."
+
+	^self seek: 0 sense: FILE_END
+!
+
+shareFlags: anInteger
+	"Private - Save away the Win32 sharing mode."
+
+	shareFlags := anInteger!
+
+signalOsError: aBoolean 
+	"Private - Signal a FileException on this file with the current OS error.
+	The <boolean> argument indicates whether the exception should be 
+	resumable or not."
+
+	^FileException signalOn: self resumable: aBoolean!
+
+size
+	"Answer the size of the file in bytes or
+	signal a FileException if the operation fails."
+
+	| result |
+	result := KernelLibrary default getFileSize: handle lpFileSizeHigh: nil.
+	^16rFFFFFFFF = result ifFalse: [result] ifTrue: [self signalOsError: false]!
+
+size: anInteger 
+	"Set the size of the file to the <integer> argument number of bytes
+	(can be used to truncate or extend a file)."
+
+	self position: anInteger.
+	(KernelLibrary default setEndOfFile: handle) ifFalse: [self signalOsError: false]!
+
+spec: aString
+	"Private - Set the file path to the <readableString> argument."
+
+	spec := aString!
+
+write: aStringOrByteArray
+	"Write all of aStringOrByteArray to the file.
+	Answer the number of bytes written or signal a FileException if the operation fails."
+
+	^self
+		write: aStringOrByteArray
+		count: aStringOrByteArray basicSize.!
+
+write: aStringOrByteArrayOrAddress count: bytesToWriteInteger 
+	"Write bytesToWriteInteger bytes from aStringOrByteArrayOrAddress to the file.
+
+	It is not an error to write zero bytes.
+	Answer the number of bytes written or signal a FileException if the operaion fails."
+
+	| bytesWritten |
+	bytesToWriteInteger == 0 ifTrue: [^0].
+	bytesWritten := ByteArray newFixed: 4.
+	^(KernelLibrary default 
+		writeFile: handle
+		lpBuffer: aStringOrByteArrayOrAddress
+		nNumberOfBytesToWrite: bytesToWriteInteger
+		lpNumberOfBytesWritten: bytesWritten
+		lpOverlapped: nil) 
+			ifTrue: [bytesWritten dwordAtOffset: 0]
+			ifFalse: [self signalOsError: false]!
+
+write: aStringOrByteArray startingAt: startIndex count: bytesToWriteInteger
+	"Write bytesToWriteInteger bytes to the file starting with aStringOrByteArray at: startIndex.
+
+	It is not an error to write zero bytes.
+	It is an error if aStringOrByteArray is shorter than startIndex + bytesToWriteInteger - 1.
+	Answer the number of bytes written or signal a FileException if the operation fails."
+
+	^self
+		checkBoundsOf: aStringOrByteArray
+		startingAt: startIndex
+		for: bytesToWriteInteger;
+
+		write: (ExternalAddress fromInteger: aStringOrByteArray yourAddress + startIndex - 1)
+		count: bytesToWriteInteger.
+!
+
+writeByte: anIntegerOrCharacter
+	"Write the given byte to the file.
+	Answer 1 or signal a FileException if the operation fails."
+
+	^self write: (ByteArray with: anIntegerOrCharacter asInteger) count: 1! !
+!File categoriesFor: #accessFlags!accessing!private! !
+!File categoriesFor: #asParameter!converting!public! !
+!File categoriesFor: #atEnd!public!testing! !
+!File categoriesFor: #basicFree!private!realizing/unrealizing! !
+!File categoriesFor: #checkBoundsOf:startingAt:for:!helpers!private! !
+!File categoriesFor: #close!operations!public! !
+!File categoriesFor: #creationTime!accessing!public! !
+!File categoriesFor: #delete!operations!private! !
+!File categoriesFor: #flags:!accessing!private! !
+!File categoriesFor: #flush!operations!public! !
+!File categoriesFor: #free!private!realizing/unrealizing! !
+!File categoriesFor: #getTimes:atime:mtime:!accessing!private! !
+!File categoriesFor: #handle!accessing!public! !
+!File categoriesFor: #isReadable!public!testing! !
+!File categoriesFor: #isWriteable!public!testing! !
+!File categoriesFor: #lastAccessTime!accessing!public! !
+!File categoriesFor: #lastWriteTime!accessing!public! !
+!File categoriesFor: #name!accessing!public! !
+!File categoriesFor: #open!operations!public! !
+!File categoriesFor: #open:flags:share:!operations!private! !
+!File categoriesFor: #open:mode:check:share:!operations!public! !
+!File categoriesFor: #openFlags!accessing!private! !
+!File categoriesFor: #position!positioning!public! !
+!File categoriesFor: #position:!positioning!public! !
+!File categoriesFor: #printOn:!printing!public! !
+!File categoriesFor: #read:!operations!public! !
+!File categoriesFor: #read:count:!operations!public! !
+!File categoriesFor: #read:startingAt:count:!operations!public! !
+!File categoriesFor: #readByte!operations!public! !
+!File categoriesFor: #readCharacter!operations!public! !
+!File categoriesFor: #readWriteStream!public!streaming! !
+!File categoriesFor: #reset!positioning!public! !
+!File categoriesFor: #securityAttributes!accessing!public! !
+!File categoriesFor: #seek:sense:!positioning!public! !
+!File categoriesFor: #setHandle:flags:!initializing!private! !
+!File categoriesFor: #setToEnd!positioning!public! !
+!File categoriesFor: #shareFlags:!accessing!private! !
+!File categoriesFor: #signalOsError:!exceptions!private! !
+!File categoriesFor: #size!accessing!public! !
+!File categoriesFor: #size:!operations!public! !
+!File categoriesFor: #spec:!accessing!private! !
+!File categoriesFor: #write:!operations!public! !
+!File categoriesFor: #write:count:!operations!public! !
+!File categoriesFor: #write:startingAt:count:!operations!public! !
+!File categoriesFor: #writeByte:!operations!public! !
+
+File methodProtocol: #'streamable File' attributes: #(#readOnly) selectors: #(#close #flush #isReadable #isWriteable #position: #read:count: #reset #size #write:count:)!
+
+!File class methodsFor!
+
+appendPathDelimiter: aString 
+	"Answer a <readableString> that is the argument with a path separator appended to create the correct syntax for
+	a path. If aString already ends in a path separator then the answer is equivalent."
+
+	(aString notEmpty 
+		and: [self pathDelimiters identityIncludes: aString last]) 
+			ifTrue: [^aString].
+	^aString copyWith: self pathDelimiter!
+
+attributes: aFileNameString
+	^KernelLibrary default getFileAttributes: aFileNameString!
+
+change: aPathnameString extension: anExtensionString
+ 	"Changes the extension of aPathnameString to anExtensionString.
+	Answers the new filename"
+
+	| components |
+	components := self splitPath: aPathnameString.
+	components at: 4 put: anExtensionString.
+	^self makePath: components!
+
+commonPrefixOf: path1 and: path2
+	"Answer the <readableString> common prefix shared between the two paths.
+	This will be empty if the paths share no common prefix."
+
+	| prefix len |
+	prefix := File pathBuffer.
+	len := ShlwapiLibrary default 
+			pathCommonPrefix: path1 
+			pszFile2: path2
+			achPath: prefix.
+	^prefix copyFrom: 1 to: len!
+
+composePath: aPathString stem: aStemString extension: anExtensionString
+	"Composes a full pathname from its components. The path or extension components 
+	can be nil if necessary. The path can include the drive letter."
+
+	^self makePath: (Array with: nil with: aPathString with: aStemString with: anExtensionString)
+	!
+
+composePath: path subPath: subpath
+	"Composes a full pathname from path and subpath components."
+
+	| fullName |
+	fullName := self pathBuffer.
+	^ShlwapiLibrary default pathCombine: fullName lpszDir: path lpszFile: subpath!
+
+composeShortStem: aStemString extension: anExtensionString 
+	"Answer a String which is a file name abbreviated from aStemString and anExtensionString.
+	Lower case vowels are dropped from the right of aStemString until it is less than
+	or equal to 8 characters.
+	If still longer than 8 chars, then other lowercase letters are dropped from the
+	right of the stem until it is less than or equal to 8 characters."
+
+	| stemResult extResult |
+	stemResult := self shortenComponent: aStemString max: 8.
+	extResult := self shortenComponent: anExtensionString max: 3.
+	^self composeStem: stemResult extension: extResult!
+
+composeStem: aStemString extension: anExtensionString
+	"Composes a full pathname from aStemString and anExtensionString components.
+	Implementation Note: This could be implemented in terms of #composePath:stem:extension:,
+	which ultimately is implemented in terms of #makePath:, however it is a very frequently
+	used method so an optimized version which takes advantage of private knowledge of
+	how file names are constructed is warranted. Note that the dot separator may be
+	specified in the extension, or not."
+
+	^anExtensionString first == $.
+		ifTrue: [aStemString, anExtensionString]
+		ifFalse: [aStemString, '.', anExtensionString]!
+
+copy: oldFileNameString to: newFileNameString
+	"Copy the file specified by oldFileNameString to newFileNameString.
+	Signal a HostSystemError if the copy fails."
+
+	(KernelLibrary default copyFile: oldFileNameString lpNewFileName: newFileNameString bfailIfExists: false)
+		ifFalse: [KernelLibrary default systemError: Processor activeProcess lastError]!
+
+createDirectory: path
+	"Create a directory with the specified path.
+	Answer whether the directory was actually created, or already existed.
+	Raise a Win32Error if the call fails for any other reason than that the
+	directory already exists."
+
+	| kernel |
+	kernel := KernelLibrary default. 
+	^(kernel createDirectory: path lpSecurityAttributes: nil)
+		or: [ | err |
+			err := kernel getLastError.
+			err = ERROR_ALREADY_EXISTS
+				ifFalse: [^kernel systemError: err].
+			false "already existed"]!
+
+createDirectoryPath: path 
+	"Create a directory tree with the specified path - i.e. this will create a nested set of directories
+	to any depth. Answer true if the final directory 	was actually created, or false if it already existed. 
+	Raise a Win32Error if the call fails for any other reason than that the directory already exists.
+	Implementation Note: This may attempt more directory creation operations than are necessary,
+	(e.g. to create the root directory if a drive is specified) but such requests are ignored."
+
+	| delims pos created len |
+	created := false.
+	len := path size.
+	delims := self pathDelimiters.
+	(path beginsWith: '\\') 
+		ifTrue: 
+			[pos := 3.
+			2 timesRepeat: 
+					["Skip UNC machine name and share"
+
+					pos := path indexOfAnyOf: delims startingAt: pos.
+					pos == 0 ifTrue: [^Win32Error signalWith: ERROR_INVALID_NAME].
+					pos := pos + 1]]
+		ifFalse: [pos := 1].
+	[pos <= len] whileTrue: 
+			[| end |
+			end := path indexOfAnyOf: delims startingAt: pos.
+			end == 0 ifTrue: [end := len + 1].
+			end == 1 
+				ifFalse: 
+					[| part |
+					(part := path copyFrom: 1 to: end - 1) last == $: 
+						ifFalse: 
+							["Don't attempt to create the drive!!"
+
+							created := self createDirectory: part]].
+			pos := end + 1].
+	^created!
+
+default: aPathnameString extension: anExtensionString
+ 	"Defaults the extension of aPathnameString to anExtensionString if there is no current extension.
+	Answers the new filename"
+
+	| components |
+	components := self splitPath: aPathnameString.
+	components last isEmpty ifTrue: [components at: 4 put: anExtensionString].
+	^self makePath: components!
+
+delete: aFileNameString
+	"Deletes the file whose name is specified by aFileNameString.
+	Signal a Win32Error if the operation fails."
+
+	(KernelLibrary default deleteFile: aFileNameString) 
+		ifFalse: [KernelLibrary default systemError]!
+
+deleteDirectory: aString
+	"Recursively delete all files and folders within the specified directory, and
+	remove the directory itself."
+
+	self 
+		forAll: '*.*'
+		in: aString
+		do: 
+			[:each | 
+			each isDirectory 
+				ifTrue: 
+					[| filename |
+					filename := each fileName.
+					(filename = '.' or: [filename = '..']) 
+						ifFalse: [self deleteDirectory: each path]]
+				ifFalse: [self delete: each path]].
+	^self removeDirectory: aString!
+
+exists: aFileNameString
+	"Answer true if there is a file whose specification is given by aFileName."
+
+	^(self attributes: aFileNameString) ~= -1!
+
+extensionDelimiter
+	"Answers the character that delimits a filename from its extension"
+
+	^ $.!
+
+find: fileSpec
+	"Answer a collection of WIN32_FIND_DATA structs for each file matching the 
+	wildcarded path string, fileSpec. e.g:
+
+		| list |
+		list := ListPresenter show.
+		list list: ((File find: '*.*') collect: [:s | s fileName])
+	"
+
+	| answer |
+	answer := OrderedCollection new.
+	self for: fileSpec do: [:s | answer add: s copy].
+	^answer!
+
+for: aString do: operation
+	"For each file/directory matching the wildcarded path string argument, aString, 
+	evaluate the monadic valuable, operation, with a WIN32_FIND_DATA describing 
+	the file/directory as the argument."
+
+	^self 
+		for: aString
+		in: (File splitPathFrom: aString)
+		do: operation!
+
+for: matchString in: dirString do: operation 
+	"For each file/directory matching the wildcarded string argument, matchString, 
+	in the directory named, dirString, evaluate the monadic valuable, operation, with 
+	a WIN32_FIND_DATA describing the file/directory as the argument."
+
+	| lib handle findStruct |
+	lib := KernelLibrary default.
+	findStruct := WIN32_FIND_DATA new.
+	findStruct directory: dirString.
+	handle := lib findFirstFile: (File composePath: dirString subPath: matchString)
+				lpFindFileData: findStruct.
+	handle = INVALID_HANDLE_VALUE 
+		ifTrue: 
+			[| err |
+			err := lib getLastError.
+			^(err == ERROR_FILE_NOT_FOUND or: [err == ERROR_ACCESS_DENIED]) 
+				ifTrue: [self]
+				ifFalse: [lib systemError: err]].
+	
+	[| error |
+	
+	[operation value: findStruct.
+	lib findNextFile: handle lpFindFileData: findStruct] 
+			whileTrue.
+	error := lib getLastError.
+	error = ERROR_NO_MORE_FILES ifFalse: [^lib systemError: error]] 
+			ensure: [lib findClose: handle]!
+
+forAll: matchString in: dirString do: operation
+	"For each file or directory matching the wildcarded path string, fileSpec, 
+	in and below the directory identified by the <readableString>, dir, evaluate 
+	the <monadicValuable>, operation, with a WIN32_FIND_DATA describing 
+	the file/directory as the argument."
+
+	self 
+		for: matchString
+		in: dirString
+		do: [:each | operation value: each].
+	self forDirectoriesIn: dirString
+		do: 
+			[:each | 
+			self 
+				forAll: matchString
+				in: each path
+				do: operation]!
+
+forAllDirectories: matchString in: pathString do: operation 
+	"For each directory whose name matches the wildcarded <readableString> argument,
+	matchString, in the directory identified by the <readableString> argument, pathString,
+	(and recursively below that), evaluate the monadic valuable, operation, with a 
+	WIN32_FIND_DATA describing the directory as the argument."
+
+	"Implementation Note: The tree traversal is pre-order, depth-first."
+
+	self 
+		forDirectories: matchString
+		in: pathString
+		do: 
+			[:each | 
+			operation value: each.
+			self 
+				forAllDirectories: matchString
+				in: each path
+				do: operation]!
+
+forAllDirectoriesIn: aString do: operation
+	"For each directory in the directory identified by the <readableString> argument,
+	and recursively below that, evaluate the monadic valuable, operation, with a 
+	WIN32_FIND_DATA describing the directory as the argument.
+	Implementation Note: The tree traversal is pre-order, depth-first."
+
+	^self 
+		forAllDirectories: '*.*'
+		in: aString
+		do: operation!
+
+forDirectories: matchString in: dirString do: operation
+	"For each directory in the directory identified by the <readableString> argument, 
+	dir, evaluate the monadic valuable, operation, with a WIN32_FIND_DATA describing the 
+	directory as the argument."
+
+	self 
+		for: matchString
+		in: dirString
+		do: 
+			[:each | 
+			(each isDirectory and: 
+					[| fileName |
+					fileName := each fileName.
+					fileName ~= '.' and: [fileName ~= '..']]) 
+				ifTrue: [operation value: each]]!
+
+forDirectoriesIn: aString do: operation
+	"For each directory in the directory identified by the <readableString> argument 
+	evaluate the monadic valuable, operation, with a WIN32_FIND_DATA describing the 
+	directory as the argument."
+
+	^self 
+		forDirectories: '*.*'
+		in: aString
+		do: operation!
+
+fromHandle: aHandle 
+	"Answer a new instance of the receiver on the specified file handle.
+	The instance will not automatically close the handle before it is GC'd (it assumes
+	it does not own it)."
+
+	^(super new)
+		setHandle: aHandle asExternalHandle flags: ##(GENERIC_READ | GENERIC_WRITE);
+		yourself!
+
+fullPathOf: aPathnameString
+	"Answers the full path of aPathnameString"
+
+	| fullpath |
+	fullpath := String new: self maxPath.
+	((KernelLibrary default getFullPathName: aPathnameString 
+		nBufferLength: fullpath size lpBuffer: fullpath lpFilePart: nil)==0) ifTrue: [
+			KernelLibrary default systemError].
+	^fullpath trimNulls!
+
+fullPathOf: aPathnameString relativeTo: aBasePathString
+	"Answers the full path of aPathnameString. If this is a truly relative
+	path then it is formed as relative to aBasePathString"
+
+	| actualPath |
+	actualPath := (self isRelativePath: aPathnameString) 
+		ifTrue: [self composePath: aBasePathString subPath: aPathnameString]
+		ifFalse: [aPathnameString].
+	^self fullPathOf: actualPath
+!
+
+initialize
+	"Initialize the Class Variables of the receiver:
+		File initialize
+
+		OpenFlagsMask		Mask to extract the open mode flags.
+		ShareModes		Map between portable share mode symbols and Win32 flag values.
+		CheckModes	 	Map between portable access mode symbols and Win32 flag values 
+						with error checking.
+		NoCheckModes		Ditto, without error checking."
+
+	OpenFlagsMask := 2r111.
+	ShareModes := ##(
+		IdentityDictionary new
+			at: #read			put: FILE_SHARE_READ;
+			at: #write		put: FILE_SHARE_WRITE;
+			at: #readWrite		put: FILE_SHARE_READ | FILE_SHARE_WRITE;
+			at: #exclusive		put: 0;
+			shrink;
+			yourself).
+	
+	CheckModes := ##(
+		IdentityDictionary new
+			at: #read			put: OPEN_EXISTING | GENERIC_READ;
+			at: #create		put: CREATE_NEW | GENERIC_READ | GENERIC_WRITE;
+			"open will only ever open an existing file"
+			at: #open			put: OPEN_EXISTING | GENERIC_READ | GENERIC_WRITE;
+			at: #append		put: OPEN_EXISTING | GENERIC_READ | GENERIC_WRITE;
+			at: #truncate		put: TRUNCATE_EXISTING | GENERIC_READ | GENERIC_WRITE;
+			shrink;
+			yourself).
+
+	NoCheckModes := ##(
+		IdentityDictionary new
+			"No check read is a bit of a nonsense, but ..."
+			at: #read			put: OPEN_ALWAYS | GENERIC_READ;
+			at: #create		put: OPEN_ALWAYS | GENERIC_READ | GENERIC_WRITE;
+			at: #open			put: OPEN_ALWAYS | GENERIC_READ | GENERIC_WRITE;
+			at: #append		put: OPEN_ALWAYS | GENERIC_READ | GENERIC_WRITE;
+			at: #truncate		put: CREATE_ALWAYS | GENERIC_READ | GENERIC_WRITE;
+			shrink;
+			yourself)!
+
+isDirectory: aString
+	"Answer true if there is a directory whose path is given by aString."
+
+	| attribs |
+	attribs := self attributes: aString.
+	^attribs ~= -1 and: [attribs allMask: FILE_ATTRIBUTE_DIRECTORY]!
+
+isRelativePath: aFileNameString
+	"Answers true if aFileNameString is a relative path with no absolute components"
+
+	^ShlwapiLibrary default pathIsRelative: aFileNameString
+!
+
+isRootPath: aString
+	"Answer whether the <String> argument is a root path, e.g. 'c:\'"
+
+	^ShlwapiLibrary default pathIsRoot: aString!
+
+isWriteable: aString 
+	"Answer whether the file at the specified path is writeable. If there is no such file, then
+	the answer will be true. If there file exists then the answer is based on file's attributes
+	- i.e. whether or not it has the read-only flag set. Note that file permissions are not
+	taken into account, so even if the answer is true a subsequent attempt to open the file for
+	writing may fail."
+
+	| attributes |
+	attributes := KernelLibrary default getFileAttributes: aString.
+	^(attributes ~= -1 and: [attributes allMask: FILE_ATTRIBUTE_READONLY]) not!
+
+isWriteable: aFileNameString set: aBoolean
+	"Set the writeable state of aFileNameString to aBoolean. Answers true if the
+	operation succeeds"
+
+	| mode |
+	mode := aBoolean ifTrue: [ _S_IWRITE ] ifFalse: [ _S_IREAD ].
+	^(CRTLibrary default _chmod: aFileNameString pmode: mode)=0!
+
+lastWriteTime: aString 
+	"Answer a <FILETIME> representing the time when the file with the specified filename was
+	last modified, or nil if no such file exists."
+
+	| file |
+	(self exists: aString) ifFalse: [^nil].
+	file := File 
+				open: aString
+				mode: #read
+				check: true
+				share: #read.
+	^[file lastWriteTime] ensure: [file close]!
+
+locateFilename: aFilenameString in: searchPath 
+	"Answers the full pathname of aFilenameString searched for in the ordered collection
+	of paths provided in searchPath. If aFilenameString includes a directory then it is
+	answered. Otherwise the file is searched for in the directories in searchPath. If the
+	file is not found in any of these directories then aFilenameString is answered"
+
+	(self splitPathFrom: aFilenameString) isEmpty 
+		ifTrue: 
+			[searchPath do: 
+					[:each | 
+					| fullpath |
+					fullpath := self composePath: each subPath: aFilenameString.
+					(self exists: fullpath) ifTrue: [^fullpath]]].
+	^aFilenameString!
+
+makePath: anArray
+	"Private - Composes a full pathname from its path, stem and extension components.
+	The path and extension components can be nil or the empty string if the path
+	does not have either of these components. The stem must be a non-empty String."
+
+	| path |
+	path := self pathBuffer.
+	CRTLibrary default 
+		_makepath: path 
+			drive: (anArray at: 1) 
+			dir: (anArray at: 2) 
+			fname: (anArray at: 3) 
+			ext: (anArray at: 4).
+	^path trimNulls!
+
+maxPath
+	"Answers the maximum number of characters in a file pathname"
+
+	^_MAX_PATH!
+
+new
+	"Answer a new initialized instance of the receiver."
+
+	^(super new)
+		setHandle: nil flags: 0;
+		yourself!
+
+open: aString
+	"Open the file described by aString for exclusive read/write access.
+	Answer the the new instance or signal a FileException if the operation fails."
+
+	^self open: aString mode: #open!
+
+open: aString mode: aSymbol
+	"Open a file for exclusive read/write access. The mode symbol, aSymbol, determines what file
+	opening mode to use when opening the file. Errors will be reported if an attempt is made to
+	open a file which does not or does not exist, depending on the access mode (see
+	open:mode:check:share: for the rules)."
+
+	^self open: aString mode: aSymbol check: true!
+
+open: aString mode: aSymbol check: aBoolean
+	"Open a file for exclusive read/write access. The mode symbol, aSymbol, determines what file
+	opening mode to use when opening the file. The check flag, aBoolean, determines whether or
+	not errors are reported (see open:mode:check:share: for the rules)"
+
+	"This method provides for ANSI (Posix) style file opening and is potentially
+	more portable than those methods which require Win32 flags."
+
+	^self open: aString mode: aSymbol check: aBoolean share: #exclusive!
+
+open: aString mode: modeSymbol check: aBoolean share: shareSymbol
+	"Open a file for read/write access. The mode symbol, modeSymbol, determines what file
+	opening mode to use when opening the file. The check flag, aBoolean, determines whether or
+	not errors are reported. See instance method for further details."
+
+	^self new open: aString mode: modeSymbol check: aBoolean share: shareSymbol!
+
+path: aPathnameString extension: anExtensionString
+ 	"Answer a full pathname with the specified extension, whether or not aPathnameString already
+	has an extension."
+
+	| components |
+	components := self splitPath: aPathnameString.
+	components at: 4 put: anExtensionString.
+	^self makePath: components!
+
+pathBuffer
+	"Answer a buffer of sufficient size to contain a full path."
+
+	^String new: self maxPath!
+
+pathDelimiter
+	"Answers the character that delimits a path (or parts thereof)"
+
+	^ $\!
+
+pathDelimiters
+	"Answers the characters that can be used to delimits a path (or parts thereof).	
+	Windows tends to accept the Unix delimiter, a forward slash, as well as its own
+	back slash."
+
+	^'/\'!
+
+relativePathOf: aPathString to: aBasePathString 
+	"Answers the relative path of aPathString relative to aBasePathString.
+	Note that if the last component of aBasePathString is to be considered a directory
+	then there must be a trailing slash, otherwise the last component is ignored (it is
+	treated as if it were a file name)."
+
+	| relPath |
+	relPath := self pathBuffer.
+	relPath := (ShlwapiLibrary default 
+		pathRelativePathTo: relPath
+		pszFrom: aBasePathString
+		dwAttrFrom: 0
+		pszTo: aPathString
+		dwAttrTo: 0) 
+			ifTrue: 
+				[relPath trimNulls]
+			ifFalse: [aPathString].
+	^(relPath beginsWith: '.\') ifTrue: [relPath allButFirst: 2] ifFalse: [relPath]!
+
+removeDirectory: aString
+	(KernelLibrary default removeDirectory: aString) 
+		ifFalse: [KernelLibrary default systemError]!
+
+removeExtension: aPathnameString 
+	"Answer a String which is fileName with the extension component removed."
+
+	| answer |
+	answer := aPathnameString copy.
+	ShlwapiLibrary default pathRemoveExtension: answer.
+	^answer trimNulls!
+
+removePathDelimiter: aString
+	"Answer a <readableString> that is the argument with a path separator at its end, if any, removed."
+
+	^(aString notEmpty 
+		and: [self pathDelimiters identityIncludes: aString last]) 
+			ifTrue: [aString allButLast]
+			ifFalse: [aString]!
+
+rename: oldFileNameString to: newFileNameString
+	"Rename the file specified in oldFileNameString to newFileNameString.
+	Signal a HostSystemError if the operation fails."
+
+	(KernelLibrary default moveFile: oldFileNameString lpNewFileName: newFileNameString)
+		ifFalse: [ KernelLibrary default systemError ]!
+
+replacePath: filePath with: newPath
+	"Replace the path component of the full path name, filePath, with the new path name,
+	newPath, i.e. only the stem and extension remain intact."
+
+	| oldPathComponents |
+	oldPathComponents := self splitPath: filePath.
+	oldPathComponents 
+		at: 1 put: nil;			"new path can include drive letter"
+		at: 2 put: newPath.
+	^self makePath: oldPathComponents!
+
+shortenComponent: aString max: anInteger 
+	| abbreviated |
+	abbreviated := aString.
+	abbreviated size > anInteger ifTrue: [abbreviated := abbreviated select: [:c | c isAlphaNumeric]].
+	abbreviated size > anInteger 
+		ifTrue: 
+			[| len |
+			len := abbreviated size.
+			abbreviated := abbreviated reverse.
+			abbreviated := abbreviated select: 
+							[:c | 
+							| useChar |
+							(c isVowel and: [c isLowercase and: [len > anInteger]]) 
+								ifTrue: 
+									[useChar := false.
+									len := len - 1]
+								ifFalse: [useChar := true].
+							useChar].
+			abbreviated := abbreviated reverse].
+	abbreviated size > anInteger 
+		ifTrue: 
+			[| len |
+			len := abbreviated size.
+			abbreviated := abbreviated reverse.
+			abbreviated := abbreviated select: 
+							[:c | 
+							| useChar |
+							(c isLowerCase and: [len > anInteger]) 
+								ifTrue: 
+									[useChar := false.
+									len := len - 1]
+								ifFalse: [useChar := true].
+							useChar].
+			abbreviated := abbreviated reverse].
+	abbreviated size > anInteger ifTrue: [abbreviated := abbreviated leftString: anInteger].
+	^abbreviated!
+
+shortPathOf: aPathnameString
+	"Answers the short path version of aPathnameString"
+
+	| shortpath |
+	shortpath := String new: self maxPath.
+	((KernelLibrary default getShortPathName: aPathnameString 
+		lpszShortPath: shortpath cchBuffer: shortpath size)==0) ifTrue: [
+			KernelLibrary default systemError].
+	^shortpath trimNulls!
+
+splitExtensionFrom: aString
+	"Splits aPathname string and answers the extension portion.
+	Answers the empty string if there is no extension."
+
+	^(self splitPath: aString) at: 4
+!
+
+splitFilenameFrom: aString
+	"Splits aPathname string and answers the file name portion (including extension). Answers an
+	empty string if there is no file stem."
+
+	| splits |
+	splits := self splitPath: aString.
+	splits
+		at: 1 put: nil;
+		at: 2 put: nil.
+	^self makePath: splits!
+
+splitPath: aString 
+	"Private - Splits aPathname string into its path, stem and extension components and answers 
+	a four element Array of these.
+	Note: We use the C-runtime library to implement this, hence either backward or forward
+	slashes (i.e. $\ or $/) are acceptable as pathname delimiters."
+
+	"Prevent GPF for common error case of nil argument"
+
+	| drive dir fname ext |
+	aString isNil ifTrue: [^self error: 'nil path'].
+	drive := String new: _MAX_DRIVE.
+	dir := String new: _MAX_DIR.
+	fname := String new: _MAX_FNAME.
+	ext := String new: _MAX_EXT.	"may be more than 3 chars now"
+	CRTLibrary default 
+		_splitpath: aString
+		drive: drive
+		dir: dir
+		fname: fname
+		ext: ext.
+	"CRT function includes leading period on extension, which we don't"
+	ext := ext trimNulls.
+	(ext notEmpty and: [ext first == $.]) ifTrue: [ext := ext copyFrom: 2].
+	^Array 
+		with: drive trimNulls
+		with: dir trimNulls
+		with: fname trimNulls
+		with: ext!
+
+splitPathFrom: aPathnameString 
+	"Splits aPathname string and answers the path portion (including the drive letter, if any).
+	Answers an  empty <String> if there is no path."
+
+	"Implementation Note: We use the CRT library _splitpath() function because the Win32
+	API call, PathRemoveFileSpec() does not treat $/ as a path delimiter (only backslash).
+	Also this is carefully implemented to minimise allocations and maximise speed."
+
+	| drive dir |
+	aPathnameString isNil 
+		ifTrue: 
+			["Passing a null pointer to _splitpath() will cause an unfriendly GPF"
+			self error: 'nil path'].
+	drive := String new: _MAX_DRIVE + aPathnameString size.
+	dir := String new: aPathnameString size.
+	^(CRTLibrary default)
+		_splitpath: aPathnameString
+			drive: drive
+			dir: dir
+			fname: nil
+			ext: nil;
+		strcat: drive strSource: dir!
+
+splitStemFrom: aString 
+	"Answers the file stem component of the path <String> argument, or an empty string if there
+	is none."
+
+	^(self splitPath: aString) at: 3!
+
+temporary
+	"Open a temporary file with a unique name generated by the system, for
+	exclusive read/write access."
+
+	^self open: self temporaryFilename!
+
+temporaryFilename
+	"Answer a new unique temporary filename in the logged on user's temp directory (see
+	#tempPath). Note that this must create the file in order to ensure uniqueness. You are
+	responsible for deleting the file when you have finished with it."
+	
+	^self temporaryFilenameWithPrefix: ''
+	!
+
+temporaryFilenameWithPrefix: prefixString 
+	"Answer a temporary filename built from prefixString in the user's temporary files
+	directory. Note that this will create the temp file in order to guarantee uniqueness. You
+	are responsible for deleting the file when it is no longer required. Signals a Win32Error if
+	the operation fails."
+
+	| returnBuf |
+	returnBuf := self pathBuffer.
+	(KernelLibrary default 
+		getTempFileName: self tempPath
+		lpPrefixString: prefixString
+		uUnique: 0
+		lpTempFileName: returnBuf) == 0 
+		ifTrue: [^KernelLibrary default systemError].
+	^returnBuf trimNulls!
+
+tempPath
+	"Answer the path of the directory designated for temporary files on the host system."
+
+	| buf len |
+	buf := self pathBuffer.
+	len := KernelLibrary default getTempPath: buf size lpBuffer: buf.
+	^buf resize: len!
+
+workingDirectory
+	"Answer the current working directory."
+
+	| buffer dir |
+	buffer := self pathBuffer.
+	dir := CRTLibrary default _getcwd: buffer maxlen: buffer size.
+	^dir last = $\
+		ifTrue: [dir]
+		ifFalse: [dir copyWith: $\]! !
+!File class categoriesFor: #appendPathDelimiter:!filename manipulation!public!testing! !
+!File class categoriesFor: #attributes:!file operations!public! !
+!File class categoriesFor: #change:extension:!filename manipulation!public! !
+!File class categoriesFor: #commonPrefixOf:and:!filename manipulation!public! !
+!File class categoriesFor: #composePath:stem:extension:!filename manipulation!public! !
+!File class categoriesFor: #composePath:subPath:!filename manipulation!public! !
+!File class categoriesFor: #composeShortStem:extension:!filename manipulation!public! !
+!File class categoriesFor: #composeStem:extension:!filename manipulation!public! !
+!File class categoriesFor: #copy:to:!file operations!public! !
+!File class categoriesFor: #createDirectory:!file operations!public! !
+!File class categoriesFor: #createDirectoryPath:!file operations!public! !
+!File class categoriesFor: #default:extension:!filename manipulation!public! !
+!File class categoriesFor: #delete:!file operations!public! !
+!File class categoriesFor: #deleteDirectory:!file operations!public! !
+!File class categoriesFor: #exists:!file operations!public! !
+!File class categoriesFor: #extensionDelimiter!constants!public! !
+!File class categoriesFor: #find:!public!searching! !
+!File class categoriesFor: #for:do:!enumerating!public! !
+!File class categoriesFor: #for:in:do:!enumerating!public! !
+!File class categoriesFor: #forAll:in:do:!enumerating!public! !
+!File class categoriesFor: #forAllDirectories:in:do:!enumerating!public! !
+!File class categoriesFor: #forAllDirectoriesIn:do:!enumerating!public! !
+!File class categoriesFor: #forDirectories:in:do:!enumerating!public! !
+!File class categoriesFor: #forDirectoriesIn:do:!enumerating!public! !
+!File class categoriesFor: #fromHandle:!instance creation!public! !
+!File class categoriesFor: #fullPathOf:!filename manipulation!public! !
+!File class categoriesFor: #fullPathOf:relativeTo:!filename manipulation!public! !
+!File class categoriesFor: #initialize!development!initializing!public! !
+!File class categoriesFor: #isDirectory:!public!testing! !
+!File class categoriesFor: #isRelativePath:!filename manipulation!public!testing! !
+!File class categoriesFor: #isRootPath:!filename manipulation!public! !
+!File class categoriesFor: #isWriteable:!public!testing! !
+!File class categoriesFor: #isWriteable:set:!file operations!public! !
+!File class categoriesFor: #lastWriteTime:!enquiries!public! !
+!File class categoriesFor: #locateFilename:in:!filename manipulation!public! !
+!File class categoriesFor: #makePath:!filename manipulation!private! !
+!File class categoriesFor: #maxPath!constants!public! !
+!File class categoriesFor: #new!instance creation!public! !
+!File class categoriesFor: #open:!instance creation!public! !
+!File class categoriesFor: #open:mode:!instance creation!public! !
+!File class categoriesFor: #open:mode:check:!instance creation!public! !
+!File class categoriesFor: #open:mode:check:share:!instance creation!public! !
+!File class categoriesFor: #path:extension:!filename manipulation!public! !
+!File class categoriesFor: #pathBuffer!helpers!public! !
+!File class categoriesFor: #pathDelimiter!constants!public! !
+!File class categoriesFor: #pathDelimiters!constants!public! !
+!File class categoriesFor: #relativePathOf:to:!filename manipulation!public! !
+!File class categoriesFor: #removeDirectory:!file operations!public! !
+!File class categoriesFor: #removeExtension:!filename manipulation!public! !
+!File class categoriesFor: #removePathDelimiter:!filename manipulation!public!testing! !
+!File class categoriesFor: #rename:to:!file operations!public! !
+!File class categoriesFor: #replacePath:with:!filename manipulation!public! !
+!File class categoriesFor: #shortenComponent:max:!helpers!private! !
+!File class categoriesFor: #shortPathOf:!filename manipulation!public! !
+!File class categoriesFor: #splitExtensionFrom:!filename manipulation!public! !
+!File class categoriesFor: #splitFilenameFrom:!filename manipulation!public! !
+!File class categoriesFor: #splitPath:!filename manipulation!private! !
+!File class categoriesFor: #splitPathFrom:!filename manipulation!public! !
+!File class categoriesFor: #splitStemFrom:!filename manipulation!public! !
+!File class categoriesFor: #temporary!instance creation!public! !
+!File class categoriesFor: #temporaryFilename!filename manipulation!public! !
+!File class categoriesFor: #temporaryFilenameWithPrefix:!filename manipulation!public! !
+!File class categoriesFor: #tempPath!filename manipulation!public! !
+!File class categoriesFor: #workingDirectory!filename manipulation!public! !
+

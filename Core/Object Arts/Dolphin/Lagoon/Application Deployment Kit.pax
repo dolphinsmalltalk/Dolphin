@@ -1,0 +1,133 @@
+| package |
+package := Package name: 'Application Deployment Kit'.
+package paxVersion: 1;
+	basicComment: 'Dolphin Smalltalk Application Deployment Kit. 
+Copyright (c) Object Arts Ltd, 1998-2006.
+
+This package enables applications to be deployed to executable files using the Lagoon deployment wizard.
+
+For documentation evaluate:
+	SmalltalkSystem help: ''deployingapplications''
+'.
+
+package basicPackageVersion: '6.2'.
+
+
+package classNames
+	add: #ApplicationDeploymentWizard;
+	yourself.
+
+package methodNames
+	add: #ImageStripper -> #defaultSessionManagerClass;
+	add: #ImageStripper -> #editCustomOptions;
+	add: #PackageSelector -> #deploy;
+	add: 'ImageStripper class' -> #publishedAspectsOfInstances;
+	add: 'VersionResource class' -> #publishedAspectsOfInstances;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\IDE\Base\Development System';
+	add: '..\Base\Dolphin';
+	add: '..\MVP\Presenters\Boolean\Dolphin Boolean Presenter';
+	add: '..\MVP\Views\Cards\Dolphin Card Containers';
+	add: '..\MVP\Presenters\Choice\Dolphin Choice Presenter';
+	add: '..\MVP\Views\Common Controls\Dolphin Common Controls';
+	add: '..\MVP\Dialogs\Common\Dolphin Common Dialogs';
+	add: '..\MVP\Views\Control Bars\Dolphin Control Bars';
+	add: '..\MVP\Presenters\Image\Dolphin Image Presenter';
+	add: '..\MVP\Models\List\Dolphin List Models';
+	add: '..\MVP\Presenters\List\Dolphin List Presenter';
+	add: '..\MVP\Base\Dolphin MVP Base';
+	add: '..\IDE\Professional\Dolphin Professional Tools';
+	add: '..\MVP\Presenters\Text\Dolphin Rich Text Presenter';
+	add: '..\MVP\Presenters\Text\Dolphin Text Presenter';
+	add: '..\MVP\Type Converters\Dolphin Type Converters';
+	add: '..\MVP\Models\Value\Dolphin Value Models';
+	add: 'Lagoon Image Stripper';
+	add: '..\ActiveX\Components\Picture\OLE Picture';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+ValueDialog subclass: #ApplicationDeploymentWizard
+	instanceVariableNames: 'imageStripperClass executableName executablePath1 executablePath2 rootPackage runtimeSessionManagerClass stripRedundantMethods stripDeprecatedMethods stripShouldNotImplement stripRedundantPackages stripRedundantClasses preserveAspectSetters stripDuplicateStrings stripDuplicateBytecodes stripClassInfo retainInstVarNames stripClassGuids stripClassBuilder stripEmptyMethodDictionaries stripRedundantResources compileExternalStructures writeLogFile preStripScriptWorkspace preStripScriptErrors logFileName logReferencesToClasses stepsView isToGo stripSubclassResponsibility'
+	classVariableNames: 'SaveImageOnDeploy'
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+!ImageStripper methodsFor!
+
+defaultSessionManagerClass
+	"Answer the default class of SessionManager to be installed into the 
+	deployed image."
+
+	^RuntimeSessionManager!
+
+editCustomOptions
+	"Open a <PublishedAspectInspector> on the version resource."
+
+	| inspector |
+	inspector := (Smalltalk at: #PublishedAspectInspector) shellOn: self.
+	inspector topShell caption: self class name , ' Properties'! !
+!ImageStripper categoriesFor: #defaultSessionManagerClass!constants!public! !
+!ImageStripper categoriesFor: #editCustomOptions!commands!public! !
+
+!ImageStripper class methodsFor!
+
+publishedAspectsOfInstances
+	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
+
+	| aspects |
+	aspects := super publishedAspectsOfInstances.
+	#(#stripClassGuids #stripDuplicateStrings #preserveAspectSetters #retainInstVarNames #stripRedundantClasses #stripClassInfo #stripClassBuilder #stripRedundantMethods #stripDeprecatedMethods #stripShouldNotImplement #stripSubclassResponsibility #stripRedundantResources #stripRedundantPackages #compileExternalStructures #stripEmptyMethodDictionaries #writeLogFile #stripDuplicateBytecodes #logReferencesToClasses #isToGo #includeManifestResource #isUnattended) 
+		do: [:each | aspects add: (Aspect boolean: each)].
+	aspects
+		add: (Aspect choice: #runtimeSessionManagerClass
+					from: (SessionManager allSubclasses select: [:e | e isRuntime]));
+		add: ((Aspect fileSave: #executableName)
+					isNullable: false;
+					yourself);
+		add: (Aspect multilineString: #preStripScript);
+		add: (Aspect name: #versionResource);
+		add: (Aspect fileOpen: #stubFilePath);
+		yourself.
+	^aspects! !
+!ImageStripper class categoriesFor: #publishedAspectsOfInstances!constants!development!must strip!public! !
+
+!PackageSelector methodsFor!
+
+deploy
+	"Open a new Application Deployment Wizard on the image stripper of the current package."
+
+	ApplicationDeploymentWizard showModalOn: (self singlePackage aspectValue: #imageStripper).
+! !
+!PackageSelector categoriesFor: #deploy!commands!public! !
+
+!VersionResource class methodsFor!
+
+publishedAspectsOfInstances
+	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
+
+	^(super publishedAspectsOfInstances)
+		add: (Aspect string: #fileVersion);
+		add: (Aspect string: #productVersion);
+		add: (Aspect name: #stringTables);
+		add: (Aspect name: #translations);
+		yourself! !
+!VersionResource class categoriesFor: #publishedAspectsOfInstances!constants!development!public! !
+
+"End of package definition"!
+

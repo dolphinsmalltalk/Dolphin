@@ -1,0 +1,170 @@
+"Filed out from Dolphin Smalltalk X6"!
+
+Object subclass: #STBFiler
+	instanceVariableNames: 'stream context version'
+	classVariableNames: ''
+	poolDictionaries: 'STBPrefixConstants'
+	classInstanceVariableNames: ''!
+STBFiler guid: (GUID fromString: '{87B4C4C1-026E-11D3-9FD7-00A0CC3E4A32}')!
+STBFiler comment: ''!
+!STBFiler categoriesForClass!System-Binary storage! !
+!STBFiler methodsFor!
+
+atEnd
+	"Answer true if the receiver is positioned at end of its stream."
+
+	^stream atEnd
+
+!
+
+context
+	"Answers the context for objects read by the receiver"
+
+	^context!
+
+context: anObject
+	"Sets the context for objects read by the receiver to anObject. This may be,
+	for example, the parent window of a window being read."
+
+	context := anObject!
+
+initialize
+	version isNil ifTrue: [version := self class version].
+	self reset.
+	^self!
+
+position: anInteger
+	"Position the receiver's stream to anInteger, read/write a header at this
+	place and prepare it for a new input or output session."
+
+	stream position: anInteger.
+	self reset.!
+
+register: anObject 
+	"Register an object has having been seen before in the STB stream. Answer the unique object reference."
+
+	^self subclassResponsibility!
+
+reset
+	"Private - Reset the instance. We pre-register objects that must never be recreated - note
+	that if the 'fixed' list of pre-registered objects is changed, then the STB version must be
+	changed and the old versions handled appropriately."
+
+	self
+		register: true;
+		register: false;
+		register: Smalltalk;
+		register: Processor.
+	version > 0 ifFalse: [^self].
+	self class fixedClasses do: [:each | self register: each].
+	self setRefOffset: 24!
+
+setRefOffset: anInteger
+	^self subclassResponsibility!
+
+stream
+	"Answer the stream to which the receiver is attached."
+
+	^stream!
+
+stream: aStream
+	"Set stream to aStream."
+
+	stream := aStream!
+
+version
+	^version!
+
+version: anInteger
+	version := anInteger! !
+!STBFiler categoriesFor: #atEnd!public!testing! !
+!STBFiler categoriesFor: #context!accessing!public! !
+!STBFiler categoriesFor: #context:!accessing!public! !
+!STBFiler categoriesFor: #initialize!initializing!private! !
+!STBFiler categoriesFor: #position:!operations!public! !
+!STBFiler categoriesFor: #register:!helpers!public! !
+!STBFiler categoriesFor: #reset!initializing!private! !
+!STBFiler categoriesFor: #setRefOffset:!initializing!private! !
+!STBFiler categoriesFor: #stream!accessing!public! !
+!STBFiler categoriesFor: #stream:!accessing!public! !
+!STBFiler categoriesFor: #version!accessing!public! !
+!STBFiler categoriesFor: #version:!accessing!public! !
+
+!STBFiler class methodsFor!
+
+errorInconsistentSTB: anObject 
+	"Private - Signal an STBError indicating that the stream being
+	read contains inconsistent STB data."
+
+	STBError signal: ('<2s> input stream is inconsistent (object <1p> referenced but not yet defined)' 
+				expandMacrosWith: anObject
+				with: self signature)!
+
+errorNotSTB
+	"Private - Signal an STBError indicating that the stream being
+	read is not in Smalltalk Binary (STB) format."
+
+	STBError signal: ('Input stream not in <1s> format' expandMacrosWith: self signature)!
+
+errorUnrecognisedClass: aClass version: version 
+	"Private - Signal an STBError indicating that the STB data contains
+	instances of aClass of version that we don't know how to convert."
+
+	STBError 
+		signal: self signature , ' contains a version ' , version displayString , ' instance of ' 
+				, aClass name , ' and is unable to convert it.'!
+
+errorVersion: anInteger 
+	"Private - Signal an STBError indicating that the stream being
+	read has been written in a different version of STB."
+
+	^STBError 
+		signal: ('Input stream is an incompatible <2s> format (version <1d>)' expandMacrosWith: anInteger
+				with: self signature)!
+
+fixedClasses
+	"Answer a <sequencedReadableCollection> of the classes that are pre-registered in every STB
+	file. These make it possible to binary file the classes STBClassProxy and String. Also these
+	clases are almost always needed, so we can save space pre-registering them so that they
+	don't need to be written into the filer."
+
+	"Note that pre-registering classes does not inflate the size of the binary file, it just
+	pre-allocates a range of indices for fixed uses. Changing the order of these (or deleting
+	registrations) will break existing binary files. Lastly a consequence of pre-registering
+	these classes is that normal STB versioning will have no effect - the #stbVersion is only
+	checked when a class is first read from the file. In order to version these classes it is
+	necessary to increment the global STB version number."
+
+	^#(##(String) ##(Array) ##(ByteArray) ##(LargeInteger) ##(STBClassProxy) ##(STBMetaclassProxy) ##(Symbol) ##(STBCollectionProxy) ##(OrderedCollection) ##(STBIdentityDictionaryProxy) ##(LookupTable) ##(IdentityDictionary))!
+
+on: aStream
+	"Answer a new instance attached to the binary stream aStream."
+
+	^self new
+		stream: aStream;
+		initialize!
+
+signature
+	"Private - Answer the signature that identifies the data as
+	being in Smalltalk Binary (STB) format."
+
+	^##('!!STB ' asByteArray)
+!
+
+version
+	"Private - Answer the version number of the format produced by the receiver.
+		Version 1 - Preregisters certain commonly occurring classes
+		Version 2 - Delegates save/load to class, format changed for certain pre-registered classes.
+		Version 3 - Only writes basicSize for objects of variable classes."
+
+	^3
+! !
+!STBFiler class categoriesFor: #errorInconsistentSTB:!exceptions!private! !
+!STBFiler class categoriesFor: #errorNotSTB!exceptions!private! !
+!STBFiler class categoriesFor: #errorUnrecognisedClass:version:!exceptions!private! !
+!STBFiler class categoriesFor: #errorVersion:!exceptions!private! !
+!STBFiler class categoriesFor: #fixedClasses!constants!public! !
+!STBFiler class categoriesFor: #on:!instance creation!public! !
+!STBFiler class categoriesFor: #signature!constants!private! !
+!STBFiler class categoriesFor: #version!constants!private! !
+

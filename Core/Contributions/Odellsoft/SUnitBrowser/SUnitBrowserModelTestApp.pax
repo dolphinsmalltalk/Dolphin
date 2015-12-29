@@ -1,0 +1,96 @@
+| package |
+package := Package name: 'SUnitBrowserModelTestApp'.
+package paxVersion: 1;
+	basicComment: 'SUnit Browser for Dolphin Smalltalk 4.0/5.0 - Version 3.1.5RC1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+Friday, November 22, 2002
+Copyright (c) 2000-2002 by Jeffrey L. Odell
+
+See SUnitBrowser Package for details'.
+
+package basicPackageVersion: '3.1.5 RC1'.
+
+
+package classNames
+	add: #SUnitBrowserAbsTC;
+	add: #SUnitBrowserDummyUI;
+	add: #SUnitBrowserModelAbsTC;
+	add: #SUnitBrowserModelResourceTC;
+	add: #SUnitBrowserModelShowErrorsTC;
+	add: #SUnitBrowserModelSUnitTestsTC;
+	add: #SUnitBrowserModelTC;
+	add: #SUnitBrowserResultTC;
+	add: #SUnitResourceTC;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\..\Object Arts\Dolphin\Base\Dolphin';
+	add: '..\..\Camp Smalltalk\SUnit\SUnit';
+	add: 'SUnitBrowserModelApp';
+	add: '..\..\Camp Smalltalk\SUnit\SUnitTests';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+Object subclass: #SUnitBrowserDummyUI
+	instanceVariableNames: 'callbacks'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+TestCase subclass: #SUnitBrowserAbsTC
+	instanceVariableNames: 'suite'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+TestCase subclass: #SUnitResourceTC
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+SUnitBrowserAbsTC subclass: #SUnitBrowserModelAbsTC
+	instanceVariableNames: 'model'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+SUnitBrowserAbsTC subclass: #SUnitBrowserResultTC
+	instanceVariableNames: 'result'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+SUnitBrowserModelAbsTC subclass: #SUnitBrowserModelResourceTC
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+SUnitBrowserModelAbsTC subclass: #SUnitBrowserModelSUnitTestsTC
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+SUnitBrowserModelSUnitTestsTC subclass: #SUnitBrowserModelShowErrorsTC
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+SUnitBrowserModelSUnitTestsTC subclass: #SUnitBrowserModelTC
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+"End of package definition"!
+

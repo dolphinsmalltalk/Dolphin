@@ -1,0 +1,40 @@
+| package |
+package := Package name: 'MetaProg SUnit Extensions Tests'.
+package paxVersion: 0;
+	basicComment: ''.
+
+
+package classNames
+	add: #ResumableTestFailureTestCase;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package allResourceNames: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\..\Camp Smalltalk\SUnit\SUnit';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+TestCase subclass: #ResumableTestFailureTestCase
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+"End of package definition"!
+

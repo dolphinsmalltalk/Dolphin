@@ -1,0 +1,262 @@
+| package |
+package := Package name: 'Dolphin Metafiles'.
+package paxVersion: 1;
+	basicComment: 'Dolphin Smalltalk Image class wrapper for Windows Enhanced Metafiles.
+Copyright (c) Object Arts Ltd. 2010.'.
+
+package basicPackageVersion: '6.1'.
+
+
+package classNames
+	add: #ENHMETAHEADER;
+	add: #ENHMETARECORD;
+	add: #Metafile;
+	yourself.
+
+package methodNames
+	add: #Clipboard -> #getMetafile;
+	add: #Clipboard -> #getMetafileIfNone:;
+	add: #GDILibrary -> #closeEnhMetaFile:;
+	add: #GDILibrary -> #copyEnhMetaFile:lpszFile:;
+	add: #GDILibrary -> #createEnhMetaFile:lpFileName:lpRect:lpDescription:;
+	add: #GDILibrary -> #deleteEnhMetaFile:;
+	add: #GDILibrary -> #enumEnhMetaFile:hemf:lpEnhMetaFunc:lpData:lpRect:;
+	add: #GDILibrary -> #getEnhMetaFile:;
+	add: #GDILibrary -> #getEnhMetaFileBits:cbBuffer:lpbBuffer:;
+	add: #GDILibrary -> #getEnhMetaFileDescription:cchBuffer:lpszDescription:;
+	add: #GDILibrary -> #getEnhMetaFileHeader:cbBuffer:lpemnh:;
+	add: #GDILibrary -> #getEnhMetaFilePaletteEntries:cbEntries:lppe:;
+	add: #GDILibrary -> #playEnhMetaFile:hemf:lpRect:;
+	add: #GDILibrary -> #playEnhMetaFileRecord:lpHandletable:lpEnhMetaRecord:nHandles:;
+	add: #GDILibrary -> #setEnhMetaFileBits:lpData:;
+	yourself.
+
+package globalNames
+	add: #EnhancedMetafileRecordTypes;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\..\Base\Dolphin';
+	add: '..\Base\Dolphin MVP Base';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+ExternalStructure subclass: #ENHMETARECORD
+	instanceVariableNames: ''
+	classVariableNames: 'RecordTypes'
+	poolDictionaries: 'EnhancedMetafileRecordTypes'
+	classInstanceVariableNames: ''!
+ENHMETARECORD subclass: #ENHMETAHEADER
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Image subclass: #Metafile
+	instanceVariableNames: 'header'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+!Clipboard methodsFor!
+
+getMetafile
+	"Answer a <Metafile> copied from the clipboard Enhanced Metafile on the clipboard, or raise an 
+	exception if no metafile is available."
+
+	^self getMetafileIfNone: [self errorFormatNotAvailable: #Metafile]!
+
+getMetafileIfNone: exceptionHandler 
+	"Answer a Metafile representing the Enhanced Metafile currently on the clipboard, or if none
+	the result of evaluating the <niladicValuable> exceptionHandler. Note that because the
+	clipboard retains ownership of the metafile, we must immediately copy it."
+
+	^self apply: 
+			[| hemf |
+			hemf := UserLibrary default getClipboardData: CF_ENHMETAFILE.
+			hemf isNull ifTrue: [exceptionHandler value] ifFalse: [(Metafile fromHandle: hemf) copy]]! !
+!Clipboard categoriesFor: #getMetafile!accessing!public! !
+!Clipboard categoriesFor: #getMetafileIfNone:!accessing!public! !
+
+!GDILibrary methodsFor!
+
+closeEnhMetaFile: hdc
+	"Invoke the CloseEnhMetaFile() function of the module wrapped by the receiver.
+	Helpstring: Closes an enhanced-metafile device context and returns a handle to the metafile.
+
+		HENHMETAFILE __stdcall CloseEnhMetaFile(
+			HDC HDC);"
+
+	<stdcall: handle CloseEnhMetaFile handle>
+	^self invalidCall!
+
+copyEnhMetaFile: hemf lpszFile: lpszFile
+	"Invoke the CopyEnhMetaFile() function of the module wrapped by the receiver.
+	Helpstring: Copies contents of enhanced-format metafile to specified file.
+
+		HENHMETAFILE __stdcall CopyEnhMetaFile(
+			HENHMETAFILE hemf,
+			LPCSTR lpszFile);"
+
+	<stdcall: handle CopyEnhMetaFileA handle lpstr>
+	^self invalidCall!
+
+createEnhMetaFile: hdc lpFileName: lpFileName lpRect: lpRect lpDescription: lpDescription
+	"Invoke the CreateEnhMetaFile() function of the module wrapped by the receiver.
+	Helpstring: Creates device context for enhanced-format metafile.
+
+		HDC __stdcall CreateEnhMetaFile(
+			HDC HDC,
+			LPCSTR lpFileName,
+			int* lpRect,
+			LPCSTR lpDescription);"
+
+	<stdcall: handle CreateEnhMetaFileA handle lpstr sdword* lpstr>
+	^self invalidCall!
+
+deleteEnhMetaFile: hemf
+	"Invoke the DeleteEnhMetaFile() function of the module wrapped by the receiver.
+	Helpstring: Deletes an enhanced-format metafile or metafile handle.
+
+		BOOL __stdcall DeleteEnhMetaFile(
+			HENHMETAFILE hemf);"
+
+	<stdcall: bool DeleteEnhMetaFile handle>
+	^self invalidCall!
+
+enumEnhMetaFile: hdc hemf: hemf lpEnhMetaFunc: lpEnhMetaFunc lpData: lpData lpRect: lpRect
+	"Invoke the EnumEnhMetaFile() function of the module wrapped by the receiver.
+	Helpstring: Enumerates the records within an enhanced-format metafile by retrieving each record and passing it to the specified callback function
+
+		BOOL __stdcall EnumEnhMetaFile(
+			HDC HDC,
+			HENHMETAFILE hemf,
+			CALLBACK lpEnhMetaFunc,
+			LPVOID lpData,
+			RECT* lpRect);"
+
+	<stdcall: bool EnumEnhMetaFile handle handle void* void* RECT*>
+	^self invalidCall!
+
+getEnhMetaFile: lpszMetaFile
+	"Invoke the GetEnhMetaFile() function of the module wrapped by the receiver.
+	Helpstring: Creates handle for given file-based enhanced-format metafile
+
+		HENHMETAFILE __stdcall GetEnhMetaFile(
+			LPCSTR lpszMetaFile);"
+
+	<stdcall: handle GetEnhMetaFileA lpstr>
+	^self invalidCall!
+
+getEnhMetaFileBits: hemf cbBuffer: cbBuffer lpbBuffer: lpbBuffer
+	"Invoke the GetEnhMetaFileBits() function of the module wrapped by the receiver.
+	Helpstring: Copies contents of specified enhanced-format metafile into buffer
+
+		UINT __stdcall GetEnhMetaFileBits(
+			HENHMETAFILE hemf,
+			UINT cbBuffer,
+			BYTE* lpbBuffer);"
+
+	<stdcall: dword GetEnhMetaFileBits handle dword byte*>
+	^self invalidCall!
+
+getEnhMetaFileDescription: hemf cchBuffer: cchBuffer lpszDescription: lpszDescription
+	"Invoke the GetEnhMetaFileDescription() function of the module wrapped by the receiver.
+	Helpstring: Copies optional text description from an enhanced-format metafile to a specified buffer.
+
+		UINT __stdcall GetEnhMetaFileDescription(
+			HENHMETAFILE hemf,
+			UINT cchBuffer,
+			LPSTR lpszDescription);"
+
+	<stdcall: dword GetEnhMetaFileDescriptionA handle dword lpstr>
+	^self invalidCall!
+
+getEnhMetaFileHeader: hemf cbBuffer: cbBuffer lpemnh: lpemnh
+	"Invoke the GetEnhMetaFileHeader() function of the module wrapped by the receiver.
+	Helpstring: Retrieves the record containing the header for the specified enhanced-format metafile.
+
+		UINT __stdcall GetEnhMetaFileHeader(
+			HENHMETAFILE hemf,
+			UINT cbBuffer,
+			ENHMETAHEADER* lpemnh);"
+
+	<stdcall: dword GetEnhMetaFileHeader handle dword ENHMETAHEADER*>
+	^self invalidCall!
+
+getEnhMetaFilePaletteEntries: hemf cbEntries: cbEntries lppe: lppe
+	"Invoke the GetEnhMetaFilePaletteEntries() function of the module wrapped by the receiver.
+	Helpstring: Rretrieves optional palette entries from the specified enhanced metafile.
+
+		UINT __stdcall GetEnhMetaFilePaletteEntries(
+			HENHMETAFILE hemf,
+			UINT cbEntries,
+			PALETTEENTRY* lppe);"
+
+	<stdcall: dword GetEnhMetaFilePaletteEntries handle dword PALETTEENTRY*>
+	^self invalidCall!
+
+playEnhMetaFile: hdc hemf: hemf lpRect: lpRect
+	"Invoke the PlayEnhMetaFile() function of the module wrapped by the receiver.
+	Helpstring: Displays the picture in specified enhanced-format metafile.
+
+		BOOL __stdcall PlayEnhMetaFile(
+			HDC HDC,
+			HENHMETAFILE hemf,
+			int* lpRect);"
+
+	<stdcall: bool PlayEnhMetaFile handle handle sdword*>
+	^self invalidCall!
+
+playEnhMetaFileRecord: hdc lpHandletable: lpHandletable lpEnhMetaRecord: lpEnhMetaRecord nHandles: nHandles
+	"Invoke the PlayEnhMetaFileRecord() function of the module wrapped by the receiver.
+	Helpstring: Plays an enhanced-metafile record by executing the graphics device interface (GDI) functions identified by the record.
+
+		BOOL __stdcall PlayEnhMetaFileRecord(
+			HDC HDC,
+			HANDLETABLE* lpHandletable,
+			ENHMETARECORD* lpEnhMetaRecord,
+			UINT nHandles);"
+
+	<stdcall: bool PlayEnhMetaFileRecord handle HandleArray* ENHMETARECORD* dword>
+	^self invalidCall!
+
+setEnhMetaFileBits: cbBuffer lpData: lpData
+	"Invoke the SetEnhMetaFileBits() function of the module wrapped by the receiver.
+	Helpstring: Creates memory-based enhanced-format metafile from supplied data.
+
+		HENHMETAFILE __stdcall SetEnhMetaFileBits(
+			UINT cbBuffer,
+			BYTE* lpData);"
+
+	<stdcall: handle SetEnhMetaFileBits dword byte*>
+	^self invalidCall! !
+!GDILibrary categoriesFor: #closeEnhMetaFile:!public!win32 functions-metafile! !
+!GDILibrary categoriesFor: #copyEnhMetaFile:lpszFile:!public!win32 functions-metafile! !
+!GDILibrary categoriesFor: #createEnhMetaFile:lpFileName:lpRect:lpDescription:!public!win32 functions-metafile! !
+!GDILibrary categoriesFor: #deleteEnhMetaFile:!public!win32 functions-metafile! !
+!GDILibrary categoriesFor: #enumEnhMetaFile:hemf:lpEnhMetaFunc:lpData:lpRect:!public!win32 functions-metafile! !
+!GDILibrary categoriesFor: #getEnhMetaFile:!public!win32 functions-metafile! !
+!GDILibrary categoriesFor: #getEnhMetaFileBits:cbBuffer:lpbBuffer:!public!win32 functions-metafile! !
+!GDILibrary categoriesFor: #getEnhMetaFileDescription:cchBuffer:lpszDescription:!public!win32 functions-metafile! !
+!GDILibrary categoriesFor: #getEnhMetaFileHeader:cbBuffer:lpemnh:!public!win32 functions-metafile! !
+!GDILibrary categoriesFor: #getEnhMetaFilePaletteEntries:cbEntries:lppe:!public!win32 functions-metafile! !
+!GDILibrary categoriesFor: #playEnhMetaFile:hemf:lpRect:!public!win32 functions-metafile! !
+!GDILibrary categoriesFor: #playEnhMetaFileRecord:lpHandletable:lpEnhMetaRecord:nHandles:!public!win32 functions-metafile! !
+!GDILibrary categoriesFor: #setEnhMetaFileBits:lpData:!public!win32 functions-metafile! !
+
+"End of package definition"!
+

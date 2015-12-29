@@ -1,0 +1,129 @@
+| package |
+package := Package name: 'Dolphin Value Models'.
+package paxVersion: 1;
+	basicComment: 'Dolphin Smalltalk MVP framework Value Models.
+Copyright (c) Object Arts Ltd. 1997-2001. Portions Copyright (c) CGI Group (Europe) Ltd. 1997.'.
+
+package basicPackageVersion: '6.2'.
+
+
+package classNames
+	add: #AspectBuffer;
+	add: #CompositeValueAdaptor;
+	add: #ValueAdaptor;
+	add: #ValueAspectAdaptor;
+	add: #ValueBuffer;
+	add: #ValueConverter;
+	add: #ValueHolder;
+	add: #ValueKeyedAdaptor;
+	add: #ValueModel;
+	add: #ValueModelAspectAdaptor;
+	yourself.
+
+package methodNames
+	add: #Object -> #aspectAdaptorClass;
+	add: #Object -> #aspectValue:;
+	add: #Object -> #aspectValue:triggers:;
+	add: #Object -> #asValue;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\..\..\Base\Dolphin';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+Model subclass: #AspectBuffer
+	instanceVariableNames: 'subject subjectCopy aspects gate isValidBlock'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Model subclass: #ValueModel
+	instanceVariableNames: 'settingValue comparisonPolicy'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ValueModel subclass: #ValueAdaptor
+	instanceVariableNames: 'subject'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ValueModel subclass: #ValueConverter
+	instanceVariableNames: 'subject typeConverter'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ValueModel subclass: #ValueHolder
+	instanceVariableNames: 'value'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ValueAdaptor subclass: #CompositeValueAdaptor
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ValueAdaptor subclass: #ValueAspectAdaptor
+	instanceVariableNames: 'aspect putSelector getSelector'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ValueAdaptor subclass: #ValueKeyedAdaptor
+	instanceVariableNames: 'key putSelector getSelector'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ValueAspectAdaptor subclass: #ValueModelAspectAdaptor
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ValueHolder subclass: #ValueBuffer
+	instanceVariableNames: 'subject modified gate'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+!Object methodsFor!
+
+aspectAdaptorClass
+	^ValueAspectAdaptor!
+
+aspectValue: anAspectSymbol 
+	"Answer a ValueAspectAdapter capable of treating anAspectSymbol of the receiver
+	as a ValueModel"
+
+	^self aspectAdaptorClass subject: self aspect: anAspectSymbol!
+
+aspectValue: anAspectSymbol triggers: anEventSymbol 
+	"Answer a ValueAspectAdapter capable of treating anAspectSymbol of the receiver
+	as a ValueModel. It is assumed that the receiver will trigger anEventSymbol whenever
+	the aspect is changed."
+
+	^(self aspectValue: anAspectSymbol) aspectTriggers: anEventSymbol!
+
+asValue
+	"Answer the receiver as a ValueModel. 
+	In the general case create an answer a ValueHolder onto the receiver"
+
+	^ValueHolder with: self! !
+!Object categoriesFor: #aspectAdaptorClass!constants!private! !
+!Object categoriesFor: #aspectValue:!converting!public! !
+!Object categoriesFor: #aspectValue:triggers:!converting!public! !
+!Object categoriesFor: #asValue!converting!public! !
+
+"End of package definition"!
+

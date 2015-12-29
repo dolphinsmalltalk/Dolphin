@@ -1,0 +1,299 @@
+| package |
+package := Package name: 'SUnitBrowserModelApp'.
+package paxVersion: 1;
+	basicComment: 'SUnit Browser for Dolphin Smalltalk 4.0/5.0 - Version 3.1.5RC1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+Friday, November 22, 2002
+Copyright (c) 2000-2002 by Jeffrey L. Odell
+
+See SUnitBrowser Package for details'.
+
+package basicPackageVersion: '3.1.5 RC1'.
+
+package basicScriptAt: #postinstall put: 'SUnitBrowserModel initializeDefaultConfiguration.
+SUnitResourceBrowserModel initializeDefaultConfiguration'.
+package basicScriptAt: #preuninstall put: 'SUnitBrowserModel releaseDefaultConfiguration.
+SUnitResourceBrowserModel releaseDefaultConfiguration!!'.
+
+package classNames
+	add: #SUnitAbsModel;
+	add: #SUnitBrowserAbsConfig;
+	add: #SUnitBrowserAbsUIState;
+	add: #SUnitBrowserConfig;
+	add: #SUnitBrowserModel;
+	add: #SUnitBrowserResult;
+	add: #SUnitBrowserUIState;
+	add: #SUnitResourceBrowserConfig;
+	add: #SUnitResourceBrowserModel;
+	add: #SUnitResourceBrowserUIState;
+	yourself.
+
+package methodNames
+	add: #Collection -> #sunitbRemoveAll:;
+	add: #String -> #sunitbAsProperNouns;
+	add: #TestCase -> #allTests;
+	add: #TestCase -> #canBrowse;
+	add: #TestCase -> #canDebug;
+	add: #TestCase -> #displayName;
+	add: #TestCase -> #hasTests;
+	add: #TestCase -> #isSameAs:;
+	add: #TestCase -> #isTestSuite;
+	add: #TestCase -> #name;
+	add: #TestCase -> #numberOfTests;
+	add: #TestCase -> #signature;
+	add: #TestCase -> #step;
+	add: #TestResource -> #canBrowse;
+	add: #TestResource -> #displayName;
+	add: #TestSuite -> #allTests;
+	add: #TestSuite -> #buildSuite;
+	add: #TestSuite -> #canBrowse;
+	add: #TestSuite -> #canDebug;
+	add: #TestSuite -> #displayName;
+	add: #TestSuite -> #hasTests;
+	add: #TestSuite -> #isTestSuite;
+	add: #TestSuite -> #numberOfTests;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\..\..\Object Arts\Dolphin\Base\Dolphin';
+	add: '..\..\..\Object Arts\SUnit\OA SUnit Extensions';
+	add: '..\..\Camp Smalltalk\SUnit\SUnit';
+	yourself).
+
+package setManualPrerequisites: #(
+	'OA SUnit Extensions').
+
+package!
+
+"Class Definitions"!
+
+Object subclass: #SUnitAbsModel
+	instanceVariableNames: 'configuration listItems selectedItems builder browser state'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: 'defaultConfiguration'!
+Object subclass: #SUnitBrowserAbsConfig
+	instanceVariableNames: 'properties'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Object subclass: #SUnitBrowserAbsUIState
+	instanceVariableNames: 'model'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Object subclass: #SUnitBrowserResult
+	instanceVariableNames: 'testResult model failures errors passed'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+SUnitAbsModel subclass: #SUnitBrowserModel
+	instanceVariableNames: 'suiteBuilder suite testResult numberOfTests'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+SUnitAbsModel subclass: #SUnitResourceBrowserModel
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+SUnitBrowserAbsConfig subclass: #SUnitBrowserConfig
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+SUnitBrowserAbsConfig subclass: #SUnitResourceBrowserConfig
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+SUnitBrowserAbsUIState subclass: #SUnitBrowserUIState
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+SUnitBrowserAbsUIState subclass: #SUnitResourceBrowserUIState
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+!Collection methodsFor!
+
+sunitbRemoveAll: aCollection
+
+	^aCollection do: [:element |
+		self
+			remove: element
+			ifAbsent: []]! !
+!Collection categoriesFor: #sunitbRemoveAll:!public!sunit browser model! !
+
+!String methodsFor!
+
+sunitbAsProperNouns
+"answer the string capitalized, with spaces in front of existing Upper Case letters" 
+
+
+	| stream last |
+
+	stream := WriteStream on: String new.
+
+	self do: [:each |
+		last isNil
+			ifTrue: [stream nextPut: each asUppercase]
+			ifFalse: [
+				each isUppercase
+					ifTrue: [
+						last isLowercase
+							ifTrue: [stream nextPut: $ ].
+						stream nextPut: each asUppercase]
+					ifFalse: [stream nextPut: each]].
+		last := each].
+
+	^stream contents! !
+!String categoriesFor: #sunitbAsProperNouns!public!sunit browser model! !
+
+!TestCase methodsFor!
+
+allTests
+
+	^Array with: self!
+
+canBrowse
+
+	^true!
+
+canDebug
+
+	^true!
+
+displayName
+
+	| name |
+
+	name :=
+		self selector
+			copyFrom: 5
+			to: self selector size.
+
+	^name sunitbAsProperNouns!
+
+hasTests
+
+	^false!
+
+isSameAs: aTestCase
+
+	^(aTestCase class = self class) and: [aTestCase selector = self selector]!
+
+isTestSuite
+
+	^false!
+
+name
+
+	^self printString!
+
+numberOfTests
+
+	^1!
+
+signature
+	
+	^self class name, '>>', self selector!
+
+step
+
+	self debugAsFailure! !
+!TestCase categoriesFor: #allTests!public!sunit browser model! !
+!TestCase categoriesFor: #canBrowse!public!sunit browser model! !
+!TestCase categoriesFor: #canDebug!public!sunit browser model! !
+!TestCase categoriesFor: #displayName!public!sunit browser model! !
+!TestCase categoriesFor: #hasTests!public!sunit browser model! !
+!TestCase categoriesFor: #isSameAs:!public!sunit browser model! !
+!TestCase categoriesFor: #isTestSuite!public!sunit browser model! !
+!TestCase categoriesFor: #name!public!sunit browser model! !
+!TestCase categoriesFor: #numberOfTests!public!sunit browser model! !
+!TestCase categoriesFor: #signature!Accessing!public! !
+!TestCase categoriesFor: #step!public!sunit browser model! !
+
+!TestResource methodsFor!
+
+canBrowse
+
+	^true!
+
+displayName
+
+	^self name sunitbAsProperNouns! !
+!TestResource categoriesFor: #canBrowse!public!sunit browser model! !
+!TestResource categoriesFor: #displayName!public!sunit browser model! !
+
+!TestSuite methodsFor!
+
+allTests
+
+	| aCollection |
+
+	aCollection := OrderedCollection new.
+	self tests do: [:each | aCollection addAll: each allTests].
+
+	^aCollection!
+
+buildSuite
+	| copy |
+	copy := self class named: self name.
+	copy addTests: self allTests.
+	^copy!
+
+canBrowse
+
+	^false!
+
+canDebug
+	#oaModified.	"Allow debugging of test suites as well as cases"
+	^true!
+
+displayName
+
+	^self name sunitbAsProperNouns!
+
+hasTests
+
+	^self tests notNil and: [self tests notEmpty]!
+
+isTestSuite
+
+	^true!
+
+numberOfTests
+
+	^self hasTests
+		ifTrue: [
+			self tests
+				inject: 0
+				into: [:total :each | total + each numberOfTests]]
+		ifFalse: [0]! !
+!TestSuite categoriesFor: #allTests!public!sunit browser model! !
+!TestSuite categoriesFor: #buildSuite!public!sunit browser model! !
+!TestSuite categoriesFor: #canBrowse!public!sunit browser model! !
+!TestSuite categoriesFor: #canDebug!public!sunit browser model! !
+!TestSuite categoriesFor: #displayName!public!sunit browser model! !
+!TestSuite categoriesFor: #hasTests!public!sunit browser model! !
+!TestSuite categoriesFor: #isTestSuite!public!sunit browser model! !
+!TestSuite categoriesFor: #numberOfTests!public!sunit browser model! !
+
+"End of package definition"!
+

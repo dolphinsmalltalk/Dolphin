@@ -1,0 +1,72 @@
+| package |
+package := Package name: 'Dolphin IDE Extension Example'.
+package paxVersion: 1;
+	basicComment: 'Dolphin Smalltalk IDE Extension Sample. 
+Copyright (c) Object Arts Ltd, 2002.
+
+This package demonstrates how to extend the standard IDE tools by the dynamic, programmatic, addition of commands to menus, without editing the view resources.
+
+Two extensions are implemented:
+1) A command is added to the Class Browser class comment workspace''s context menu to emit a standard format class comment.
+2) A command is added to the help menu of all tools that generates and displays an HTML page  listing all accelerator key bindings for the tool.
+
+These extensions can be turned on and off independently as options under ''Object Arts IDE Extensions'' in ''User Preferences''.
+'.
+
+
+package classNames
+	add: #OAIDEExtensions;
+	yourself.
+
+package methodNames
+	add: #ClassCommentPlugin -> #emitClassLayoutDescription;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\..\Dolphin\IDE\Base\Development System';
+	add: '..\..\Dolphin\Base\Dolphin';
+	add: '..\..\Dolphin\MVP\Presenters\Prompters\Dolphin Choice Prompter';
+	add: '..\..\Dolphin\MVP\Base\Dolphin MVP Base';
+	add: '..\..\Dolphin\ActiveX\Components\SHDocVw\Internet Explorer';
+	add: '..\..\Dolphin\ActiveX\Persist\OLE Persistence Base';
+	add: '..\..\Dolphin\ActiveX\Structured Storage\OLE Structured Storage';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+Object subclass: #OAIDEExtensions
+	instanceVariableNames: 'flags'
+	classVariableNames: 'ClassCommentTemplateMask Current KeyHelpMask'
+	poolDictionaries: 'SHDocVwConstants'
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+!ClassCommentPlugin methodsFor!
+
+emitClassLayoutDescription
+	"Emits a description of the instance variables for the context class at the
+	insertion point in the receiver."
+
+	| desc |
+	[desc := OAIDEExtensions current instVarDescriptionsFor: self browser selectedClass] 
+		on: OperationAborted
+		do: [:ex | ]
+		on: Error
+		do: [:ex | MessageBox errorMsg: ex description].
+	desc isNil ifFalse: [textPresenter replaceSelection: desc]! !
+!ClassCommentPlugin categoriesFor: #emitClassLayoutDescription!commands!development!public! !
+
+"End of package definition"!
+

@@ -1,0 +1,276 @@
+| package |
+package := Package name: 'Dolphin Common Controls'.
+package paxVersion: 1;
+	basicComment: 'Dolphin Smalltalk Common Controls.
+Copyright (c) Object Arts Ltd, 1997-2003. Portions Copyright (c) CGI Group (Europe) Ltd, 1996.
+
+This package contains MVP View wrappers for the standard Windows common controls (e.g. the Enhanced List View, Tab View, and Tree View). The other less commonly used common controls are separately packaged.'.
+
+package basicPackageVersion: '6.2'.
+
+
+package classNames
+	add: #CCHITTESTINFO;
+	add: #CCITEM;
+	add: #IconicListAbstract;
+	add: #ListView;
+	add: #ListViewColumn;
+	add: #LVBKIMAGE;
+	add: #LVCOLUMN;
+	add: #LVFINDINFO;
+	add: #LVHITTESTINFO;
+	add: #LVITEM;
+	add: #NMCUSTOMDRAW;
+	add: #NMITEMACTIVATE;
+	add: #NMKEYDOWN;
+	add: #NMLISTVIEW;
+	add: #NMLVCUSTOMDRAW;
+	add: #NMLVDISPINFO;
+	add: #NMLVFINDITEM;
+	add: #NMLVGETINFOTIPA;
+	add: #NMLVODSTATECHANGE;
+	add: #NMTREEVIEW;
+	add: #NMTVCUSTOMDRAW;
+	add: #NMTVDISPINFO;
+	add: #NMTVGETINFOTIPA;
+	add: #TabView;
+	add: #TabViewXP;
+	add: #TCHITTESTINFO;
+	add: #TCITEM;
+	add: #TreeView;
+	add: #TVHITTESTINFO;
+	add: #TVINSERTSTRUCT;
+	add: #TVITEM;
+	yourself.
+
+package methodNames
+	add: 'FolderPresenter class' -> #resource_Default_view;
+	add: 'ListPresenter class' -> #resource_Enhanced_list_view;
+	add: 'ListPresenter class' -> #resource_Tab_view;
+	yourself.
+
+package globalNames
+	add: #ListViewConstants;
+	add: #TabViewConstants;
+	add: #TreeViewConstants;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\..\..\Base\Dolphin';
+	add: '..\..\Presenters\Folder\Dolphin Folder Presenter';
+	add: '..\..\Models\List\Dolphin List Models';
+	add: '..\..\Presenters\List\Dolphin List Presenter';
+	add: '..\..\Base\Dolphin MVP Base';
+	add: '..\..\Models\Tree\Dolphin Tree Models';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+Object subclass: #ListViewColumn
+	instanceVariableNames: 'text width alignment getTextBlock getSortValueBlock getContentsBlock name parent getImageBlock flags getInfoTipBlock customDrawBlock'
+	classVariableNames: 'AutoResizeMask SortInvertedMask'
+	poolDictionaries: 'ListViewConstants'
+	classInstanceVariableNames: ''!
+Win32Structure subclass: #CCHITTESTINFO
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: 'CommCtrlConstants'
+	classInstanceVariableNames: ''!
+Win32Structure subclass: #CCITEM
+	instanceVariableNames: 'text'
+	classVariableNames: ''
+	poolDictionaries: 'CommCtrlConstants'
+	classInstanceVariableNames: ''!
+Win32Structure subclass: #LVBKIMAGE
+	instanceVariableNames: 'buf'
+	classVariableNames: ''
+	poolDictionaries: 'ListViewConstants'
+	classInstanceVariableNames: ''!
+Win32Structure subclass: #LVCOLUMN
+	instanceVariableNames: 'text'
+	classVariableNames: 'AlignmentMap'
+	poolDictionaries: 'ListViewConstants'
+	classInstanceVariableNames: ''!
+Win32Structure subclass: #LVFINDINFO
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: 'ListViewConstants'
+	classInstanceVariableNames: ''!
+Win32Structure subclass: #TVINSERTSTRUCT
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+CCHITTESTINFO subclass: #LVHITTESTINFO
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: 'ListViewConstants'
+	classInstanceVariableNames: ''!
+CCHITTESTINFO subclass: #TCHITTESTINFO
+	instanceVariableNames: 'iItem'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+CCHITTESTINFO subclass: #TVHITTESTINFO
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+CCITEM subclass: #LVITEM
+	instanceVariableNames: ''
+	classVariableNames: 'CallbackPrototype'
+	poolDictionaries: 'ListViewConstants'
+	classInstanceVariableNames: ''!
+CCITEM subclass: #TCITEM
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: 'TabViewConstants'
+	classInstanceVariableNames: ''!
+CCITEM subclass: #TVITEM
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: 'TreeViewConstants'
+	classInstanceVariableNames: ''!
+NMHDR subclass: #NMCUSTOMDRAW
+	instanceVariableNames: 'item view canvas font'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+NMHDR subclass: #NMITEMACTIVATE
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+NMHDR subclass: #NMKEYDOWN
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+NMHDR subclass: #NMLISTVIEW
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+NMHDR subclass: #NMLVDISPINFO
+	instanceVariableNames: 'item'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+NMHDR subclass: #NMLVFINDITEM
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+NMHDR subclass: #NMLVGETINFOTIPA
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+NMHDR subclass: #NMLVODSTATECHANGE
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+NMHDR subclass: #NMTREEVIEW
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+NMHDR subclass: #NMTVDISPINFO
+	instanceVariableNames: 'item'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+NMHDR subclass: #NMTVGETINFOTIPA
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+NMCUSTOMDRAW subclass: #NMLVCUSTOMDRAW
+	instanceVariableNames: 'column'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+NMCUSTOMDRAW subclass: #NMTVCUSTOMDRAW
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ListControlView subclass: #IconicListAbstract
+	instanceVariableNames: 'getImageBlock imageManager stateImageManager getInfoTipBlock customDrawBlock largeIconExtent thumbnailsImageManager'
+	classVariableNames: 'ViewModes'
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+IconicListAbstract subclass: #ListView
+	instanceVariableNames: 'lastClickedColIndex columns viewMode lastSelIndices iconSpacing lvStyle thumbnailExtent moreParams'
+	classVariableNames: 'LvModes LvnMap RevertSelMessage UnknownItem'
+	poolDictionaries: 'ListViewConstants'
+	classInstanceVariableNames: ''!
+IconicListAbstract subclass: #TabView
+	instanceVariableNames: 'viewMode'
+	classVariableNames: 'OrientationMask TabOrientations TcnMap'
+	poolDictionaries: 'TabViewConstants'
+	classInstanceVariableNames: ''!
+IconicListAbstract subclass: #TreeView
+	instanceVariableNames: 'handleObjectMap indentSeparation viewMode tvFlags _unused'
+	classVariableNames: 'DisableExpandAllMask NonVirtualMask TvnMap UpdateModeMask UpdateModes'
+	poolDictionaries: 'TreeViewConstants'
+	classInstanceVariableNames: ''!
+TabView subclass: #TabViewXP
+	instanceVariableNames: 'theme lastSelection _tvxReserved1 _tvxReserved2 _tvxReserved3'
+	classVariableNames: ''
+	poolDictionaries: 'ThemeConstants'
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+!FolderPresenter class methodsFor!
+
+resource_Default_view
+	"Answer the literal data from which the 'Default view' resource can be reconstituted.
+	DO NOT EDIT OR RECATEGORIZE THIS METHOD.
+
+	If you wish to modify this resource evaluate:
+	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Default_view)
+	"
+
+	^#(#'!!STL' 3 788558 10 ##(Smalltalk.STBViewProxy)  8 ##(Smalltalk.ListView)  98 30 0 0 98 2 8 1409372236 1025 416 590662 2 ##(Smalltalk.ListModel)  202 208 98 0 0 1310726 ##(Smalltalk.IdentitySearchPolicy)  524550 ##(Smalltalk.ColorRef)  8 4278190080 0 5 0 0 0 416 0 8 4294903801 8 ##(Smalltalk.BasicListAbstract)  8 ##(Smalltalk.IconicListAbstract)  1049670 1 ##(Smalltalk.IconImageManager)  0 0 0 328198 ##(Smalltalk.Point)  65 65 0 0 202 208 98 1 920646 5 ##(Smalltalk.ListViewColumn)  8 'Column 1' 201 8 #left 656 8 ##(Smalltalk.SortedCollection)  0 0 416 0 1 0 0 8 #largeIcons 544 0 131169 0 0 983302 ##(Smalltalk.MessageSequence)  202 208 98 2 721670 ##(Smalltalk.MessageSend)  8 #createAt:extent: 98 2 722 2799 21 722 491 311 416 946 8 #text: 98 1 8 'Column 1' 416 983302 ##(Smalltalk.WINDOWPLACEMENT)  8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 119 5 0 0 10 0 0 0 108 6 0 0 165 0 0 0] 98 0 722 193 193 0 27 )! !
+!FolderPresenter class categoriesFor: #resource_Default_view!public!resources-views! !
+
+!ListPresenter class methodsFor!
+
+resource_Enhanced_list_view
+	"Answer the literal data from which the 'Enhanced list view' resource can be reconstituted.
+	DO NOT EDIT OR RECATEGORIZE THIS METHOD.
+
+	If you wish to modify this resource evaluate:
+	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Enhanced_list_view)
+	"
+
+	^#(#'!!STL' 3 788558 10 ##(Smalltalk.STBViewProxy)  8 ##(Smalltalk.ListView)  98 30 0 0 98 2 8 1409355853 1025 416 590662 2 ##(Smalltalk.ListModel)  202 208 98 0 0 1310726 ##(Smalltalk.IdentitySearchPolicy)  524550 ##(Smalltalk.ColorRef)  8 4278190080 0 5 0 0 0 416 0 8 4294903801 459270 ##(Smalltalk.Message)  8 #displayString 98 0 8 ##(Smalltalk.IconicListAbstract)  1049670 1 ##(Smalltalk.IconImageManager)  0 0 0 0 0 0 202 208 98 1 920646 5 ##(Smalltalk.ListViewColumn)  8 'Column 1' 201 8 #left 658 688 704 8 ##(Smalltalk.SortedCollection)  0 0 416 0 1 0 0 8 #report 544 0 131169 0 0 983302 ##(Smalltalk.MessageSequence)  202 208 98 2 721670 ##(Smalltalk.MessageSend)  8 #createAt:extent: 98 2 328198 ##(Smalltalk.Point)  2799 21 1042 491 311 416 978 8 #text: 98 1 8 'Column 1' 416 983302 ##(Smalltalk.WINDOWPLACEMENT)  8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 119 5 0 0 10 0 0 0 108 6 0 0 165 0 0 0] 98 0 1042 193 193 0 27 )!
+
+resource_Tab_view
+	"Answer the literal data from which the 'Tab view' resource can be reconstituted.
+	DO NOT EDIT OR RECATEGORIZE THIS METHOD.
+
+	If you wish to modify this resource evaluate:
+	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Tab_view)
+	"
+
+	^#(#'!!STL' 3 788558 10 ##(Smalltalk.STBViewProxy)  8 ##(Smalltalk.TabView)  98 23 0 0 98 2 8 1409352192 1 416 590662 2 ##(Smalltalk.ListModel)  202 208 98 0 0 1310726 ##(Smalltalk.IdentitySearchPolicy)  721158 ##(Smalltalk.SystemColor)  31 0 5 0 0 0 416 0 8 4294903589 459270 ##(Smalltalk.Message)  8 #displayString 98 0 8 ##(Smalltalk.IconicListAbstract)  1049670 1 ##(Smalltalk.IconImageManager)  0 0 0 0 0 8 #noIcons 983302 ##(Smalltalk.MessageSequence)  202 208 98 2 721670 ##(Smalltalk.MessageSend)  8 #createAt:extent: 98 2 328198 ##(Smalltalk.Point)  2799 21 898 701 61 416 834 8 #tcmSetExtendedStyle:dwExStyle: 98 2 -1 1 416 983302 ##(Smalltalk.WINDOWPLACEMENT)  8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 119 5 0 0 10 0 0 0 213 6 0 0 40 0 0 0] 98 0 898 193 193 0 27 )! !
+!ListPresenter class categoriesFor: #resource_Enhanced_list_view!public!resources-views! !
+!ListPresenter class categoriesFor: #resource_Tab_view!public!resources-views! !
+
+"End of package definition"!
+
