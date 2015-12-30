@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #RBAbstractClass
 	instanceVariableNames: 'name newMethods instanceVariableNames model superclass subclasses removedMethods realClass'
@@ -229,7 +229,7 @@ instanceVariableNames
 	^self privateInstanceVariableNames copy!
 
 instanceVariableNames: aCollectionOfStrings 
-	instanceVariableNames := aCollectionOfStrings asOrderedCollection!
+	instanceVariableNames := OrderedCollection withAll: aCollectionOfStrings!
 
 isAbstract
 	(self whichMethodsReferToSymbol: #subclassResponsibility) notEmpty ifTrue: [^true].
