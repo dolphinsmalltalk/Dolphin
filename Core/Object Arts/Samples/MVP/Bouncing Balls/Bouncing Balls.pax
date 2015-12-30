@@ -15,6 +15,7 @@ The sample demonstrates the use of double buffering to provide non-flickering an
 
 package classNames
 	add: #Ball;
+	add: #BouncingBallSessionManager;
 	add: #BouncingBallView;
 	yourself.
 
@@ -36,6 +37,11 @@ package!
 
 Object subclass: #Ball
 	instanceVariableNames: 'position velocity icon'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+RuntimeSessionManager subclass: #BouncingBallSessionManager
+	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
