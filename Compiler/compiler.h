@@ -52,7 +52,7 @@ class ATL_NO_VTABLE Compiler : public Lexer,
 {
 public:
 
-DECLARE_REGISTRY(Compiler, "Dolphin.Compiler.6", "Dolphin.Compiler", IDR_COMPILER, THREADFLAGS_APARTMENT)
+DECLARE_REGISTRY(Compiler, "Dolphin.Compiler.7", "Dolphin.Compiler", IDR_COMPILER, THREADFLAGS_APARTMENT)
 
 DECLARE_NOT_AGGREGATABLE(Compiler)
 
