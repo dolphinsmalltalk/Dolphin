@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 SmalltalkToolShell subclass: #StsAdminShell
 	instanceVariableNames: 'localRepositoryPathPresenter localRepositoryDeveloperPresenter remoteRepositoryUrlPresenter remoteRepositoryUsernamePresenter remoteRepositoryPasswordPresenter recentLocalFileHandler recentRemoteUrlHandler localStatusPresenter remoteStatusPresenter'
@@ -430,14 +430,14 @@ versionSnapshotPackagesList: packageList
 	| countClasses totalClasses |
 	totalClasses := packageList inject: 0 into: [:sum :each | sum + each classes size].
 	countClasses := 0.
-	ProgressDialog showModal: 'Timer view'
+	ProgressDialog showModal: "'Timer view'" 'No cancel view'
 		while: 
 			[:progress | 
 			| percent |
-			progress isCancelRequestOnly: true.
+			"progress isCancelRequestOnly: true."
 			packageList do: 
 					[:each | 
-					progress cancelRequested 
+					"progress cancelRequested " false 
 						ifFalse: 
 							[progress text: 'Versioning ' , each name.
 							self versionSnapshotPackage: each.
