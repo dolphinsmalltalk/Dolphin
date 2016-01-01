@@ -22,13 +22,13 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ConsoleToGo", "ConsoleToGo\
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Console", "ConsoleStub\Console.vcxproj", "{F6BBF41C-E4E0-4514-BA19-E248DE206820}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DolphinSureCrypto", "..\Object Arts\Dolphin\DolphinSure\DolphinSureCrypto\DolphinSureCrypto.vcxproj", "{6D089C23-9091-47DB-B092-93D387425DC0}"
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "VMLib", "VMLib\VMLib.vcxproj", "{BC5D162D-46BC-42CF-85DB-CB715EE8517E}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GUIToGo", "ToGoStub\GuiToGo.vcxproj", "{12B536BA-143E-4F38-BD96-77B35467DB13}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ToGoLib", "ToGoLib\ToGoLib.vcxproj", "{50AB410B-7D13-43FF-B426-FB02CA3FEF86}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DolphinSureCrypto", "DolphinSureCrypto\DolphinSureCrypto.vcxproj", "{6D089C23-9091-47DB-B092-93D387425DC0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -90,12 +90,6 @@ Global
 		{F6BBF41C-E4E0-4514-BA19-E248DE206820}.Release|Win32.ActiveCfg = Release|Win32
 		{F6BBF41C-E4E0-4514-BA19-E248DE206820}.Release|Win32.Build.0 = Release|Win32
 		{F6BBF41C-E4E0-4514-BA19-E248DE206820}.VM Debug|Win32.ActiveCfg = VM Debug|Win32
-		{6D089C23-9091-47DB-B092-93D387425DC0}.Debug|Win32.ActiveCfg = Debug|Win32
-		{6D089C23-9091-47DB-B092-93D387425DC0}.Debug|Win32.Build.0 = Debug|Win32
-		{6D089C23-9091-47DB-B092-93D387425DC0}.Release|Win32.ActiveCfg = Release|Win32
-		{6D089C23-9091-47DB-B092-93D387425DC0}.Release|Win32.Build.0 = Release|Win32
-		{6D089C23-9091-47DB-B092-93D387425DC0}.VM Debug|Win32.ActiveCfg = Debug|Win32
-		{6D089C23-9091-47DB-B092-93D387425DC0}.VM Debug|Win32.Build.0 = Debug|Win32
 		{BC5D162D-46BC-42CF-85DB-CB715EE8517E}.Debug|Win32.ActiveCfg = Debug|Win32
 		{BC5D162D-46BC-42CF-85DB-CB715EE8517E}.Debug|Win32.Build.0 = Debug|Win32
 		{BC5D162D-46BC-42CF-85DB-CB715EE8517E}.Release|Win32.ActiveCfg = Release|Win32
@@ -114,6 +108,12 @@ Global
 		{50AB410B-7D13-43FF-B426-FB02CA3FEF86}.Release|Win32.Build.0 = Release|Win32
 		{50AB410B-7D13-43FF-B426-FB02CA3FEF86}.VM Debug|Win32.ActiveCfg = Debug|Win32
 		{50AB410B-7D13-43FF-B426-FB02CA3FEF86}.VM Debug|Win32.Build.0 = Debug|Win32
+		{6D089C23-9091-47DB-B092-93D387425DC0}.Debug|Win32.ActiveCfg = Debug|Win32
+		{6D089C23-9091-47DB-B092-93D387425DC0}.Debug|Win32.Build.0 = Debug|Win32
+		{6D089C23-9091-47DB-B092-93D387425DC0}.Release|Win32.ActiveCfg = Release|Win32
+		{6D089C23-9091-47DB-B092-93D387425DC0}.Release|Win32.Build.0 = Release|Win32
+		{6D089C23-9091-47DB-B092-93D387425DC0}.VM Debug|Win32.ActiveCfg = Debug|Win32
+		{6D089C23-9091-47DB-B092-93D387425DC0}.VM Debug|Win32.Build.0 = Debug|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
