@@ -657,11 +657,19 @@ queryCommand: aCommandQuery
 		ifTrue: 
 			[aCommandQuery isEnabled: ((self respondsTo: #saveBinaryPackage) and: [self hasSinglePackage]).
 			^true].
-	(#(#savePackages #removePackage #sourceControlMenu #inspectIt) identityIncludes: selector) 
+	(#(#removePackage #sourceControlMenu #inspectIt) identityIncludes: selector) 
 		ifTrue: 
 			[aCommandQuery isEnabled: self hasPackages.
 			^true].
-	(#(#savePackageChanges #resetChangeFlags) identityIncludes: selector) 
+	selector == #savePackages
+		ifTrue: 
+			[aCommandQuery isEnabled: (self hasPackages and: [self packages allSatisfy: [:each | self isSaveablePackage: each]]).
+			^true].
+	selector == #savePackageChanges
+		ifTrue: 
+			[aCommandQuery isEnabled: (self hasChangedPackages and: [self packages allSatisfy: [:each | self isSaveablePackage: each]]).
+			^true].
+	selector == #resetChangeFlags
 		ifTrue: 
 			[aCommandQuery isEnabled: self hasChangedPackages.
 			^true].
