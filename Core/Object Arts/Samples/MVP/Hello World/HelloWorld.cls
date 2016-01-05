@@ -1,16 +1,14 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ShellView subclass: #HelloWorld
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
 HelloWorld guid: (GUID fromString: '{87B4C720-026E-11D3-9FD7-00A0CC3E4A32}')!
-HelloWorld comment: 'A sample illustrating just about the simplest of all applications;a window displaying the text "Hello from Dolphin" within an elliptical border. To demonstrate this evaluate the following:
+HelloWorld comment: 'A sample illustrating just about the simplest of all applications;a window displaying the text "Hello World" within an elliptical border. To demonstrate this evaluate the following:
 
-HelloWorld show.
-
-The walkback that results from clicking within the window''s client area is intentional and part of the Application Deployment Kit tutorial.'!
+HelloWorld show.'!
 !HelloWorld categoriesForClass!MVP-Views!Samples! !
 !HelloWorld methodsFor!
 
@@ -19,22 +17,12 @@ defaultExtent
 	set the size of a view when it is created. Thereafter preferredExtent is
 	used when the desired size of a view is requested."
 
-	^##(260 @ 180)!
+	^##(400 @ 400)!
 
 minExtent
-	"Answers the minimum extent for the receiver or nil if there is no constraint.
-	This only applies for	views being resized directly by the UI. It is not considered
-	during layout by a LayoutManager."
+	"Answers the minimum extent for the receiver, in this case 3/4 of the original default size"
 
-	^self defaultExtent // 2!
-
-onLeftButtonPressed: aMouseEvent
-	"Default handler for a left button down mouse event.
-	Accept the default window processing."
-
-	super onLeftButtonPressed: aMouseEvent.
-	self thisIsADeliberateError
-!
+	^self defaultExtent * 3 // 4!
 
 onPaintRequired: aPaintEvent 
 	"A portion of the receiver window has been exposed and needs repainting.
@@ -42,16 +30,32 @@ onPaintRequired: aPaintEvent
 	Within #onPaintRequired: you MUST ask for a Canvas from aPaintEvent 
 	(not the receiver window) to paint the contents on."
 
-	| canvas rect |
+	| canvas rect  textFont  textExtent  textToShow |
 	canvas := aPaintEvent canvas.
-	rect := self clientRectangle.
+
+	"We're going to draw an ellipse inside a rectangle that is inset
+	10 pixels from the edge of the window."
+	rect := self clientRectangle insetBy: 10.
+
+	"Get a font and assign to the canvas. Then we can ask the canvas how big the
+	text will be when displayed."
+	textFont := Font name: 'Arial' pointSize: 32.
+	canvas font: textFont.
+	textToShow := 'Hello World'.
+	textExtent := canvas textExtent: textToShow.
+
+	"Draw the ellipse with a grey background and red border"
 	canvas
-		pen: Pen red;
-		brush: Color darkBlue brush;
-		ellipse: rect;
+		pen: (Pen red width: 4);
+		brush: Color gray brush;
+		ellipse: rect.
+
+	"Now draw the text in white. We still have the correct font set from before
+	but we must tell it where it's positioned in order to centre it."
+	canvas
 		forecolor: Color white;
 		backgroundMode: TRANSPARENT;
-		text: 'Hello from Dolphin' at: rect center - (60 @ 10)!
+		text: textToShow at: rect center - (textExtent // 2)!
 
 onPositionChanged: aPositionEvent
 	"Handle a window position change event (move or resize).
@@ -63,16 +67,10 @@ onPositionChanged: aPositionEvent
 	^super onPositionChanged: aPositionEvent! !
 !HelloWorld categoriesFor: #defaultExtent!constants!private! !
 !HelloWorld categoriesFor: #minExtent!accessing!public! !
-!HelloWorld categoriesFor: #onLeftButtonPressed:!event handling!public! !
 !HelloWorld categoriesFor: #onPaintRequired:!event handling!public! !
 !HelloWorld categoriesFor: #onPositionChanged:!event handling!public! !
 
 !HelloWorld class methodsFor!
-
-icon
-	"Answers an Icon that can be used to represent this class"
-
-	^Icon window!
 
 initialize
 	"Private - Initialize the receiver. Install as a sample application into the
@@ -106,7 +104,6 @@ uninitialize
 
 	Smalltalk developmentSystem 
 		removeSystemFolderIconNamed: self samplesFolderDescription! !
-!HelloWorld class categoriesFor: #icon!constants!public! !
 !HelloWorld class categoriesFor: #initialize!development!initializing!private! !
 !HelloWorld class categoriesFor: #samplesFolderDescription!accessing!private! !
 !HelloWorld class categoriesFor: #show!instance creation!public! !
