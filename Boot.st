@@ -70,8 +70,11 @@ ExternalStructure allSubclasses do: [:e | e byteSize]!
 "Unlock VM"
 VMLibrary default unlockVM: 0 expireAfter: 0 flags: 0!
 
-SourceManager default basicCompressSources: 0 asValue!
+SourceManager default basicCompressSources: 0 asValue.
 SessionManager current saveImage!
+
+"Remove rogue .img file"
+File delete: (File default: SessionManager current imagePath extension: 'img')!
 
 SessionManager current quit!
 

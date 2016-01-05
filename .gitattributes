@@ -1,0 +1,6 @@
+* text=auto
+
+# SML and CHG files are text but the image keeps index pointers into them. To avoid apparent source
+# corruption we must avoid these indices changing by always forcing use of CRLF line endings.
+*.sml eol=crlf 
+*.chg eol=crlf

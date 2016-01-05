@@ -3,7 +3,7 @@ package := Package name: 'Source Tracking System Administrator'.
 package paxVersion: 1;
 	basicComment: ''.
 
-package basicPackageVersion: '6.2.1'.
+package basicPackageVersion: '7.0.0'.
 
 
 package classNames

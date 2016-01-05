@@ -430,20 +430,17 @@ versionSnapshotPackagesList: packageList
 	| countClasses totalClasses |
 	totalClasses := packageList inject: 0 into: [:sum :each | sum + each classes size].
 	countClasses := 0.
-	ProgressDialog showModal: "'Timer view'" 'No cancel view'
+	ProgressDialog showModal: 'No cancel view'
 		while: 
 			[:progress | 
 			| percent |
-			"progress isCancelRequestOnly: true."
 			packageList do: 
-					[:each | 
-					"progress cancelRequested " false 
-						ifFalse: 
-							[progress text: 'Versioning ' , each name.
-							self versionSnapshotPackage: each.
-							countClasses := countClasses + each classes size.
-							percent := countClasses * 100 // totalClasses.
-							progress value: percent]]].! !
+				[:each | 
+				progress text: 'Versioning ' , each name.
+				self versionSnapshotPackage: each.
+				countClasses := countClasses + each classes size.
+				percent := countClasses * 100 // totalClasses.
+				progress value: percent]].! !
 !StsAdminShell categoriesFor: #allOpenStsTools!private! !
 !StsAdminShell categoriesFor: #allStsToolClasses!private! !
 !StsAdminShell categoriesFor: #backup!commands!public! !
