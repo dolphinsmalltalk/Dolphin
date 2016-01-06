@@ -2,15 +2,19 @@
 package := Package name: 'IDB Common'.
 package paxVersion: 1;
 	basicComment: 'Common classes and methods for IDB Goodies
-Version 6b - October 2005
-For Version 6 of Dolphin Smalltalk
+Version 7c - January 2016
+For Version 7 of Dolphin Smalltalk
 
 (C) 2006 Ian Bartholomew
 ian@idb.me.uk
 Public Domain Freeware
 
+7c - January 2016
+	- Fixup to access resources under D7 (not compatible wth D6)
+
 6b - October 2005
 	- removed #idbHelp
+
 '.
 
 package basicPackageVersion: 'IDB$PACKAGE$VERSION 6b jgf.1'.
@@ -35,10 +39,10 @@ package globalAliases: (Set new
 	yourself).
 
 package setPrerequisites: (IdentitySet new
-	add: '..\Object Arts\Dolphin\IDE\Base\Development System';
-	add: '..\Object Arts\Dolphin\Base\Dolphin';
-	add: '..\Object Arts\Dolphin\MVP\Base\Dolphin MVP Base';
-	add: '..\Object Arts\Dolphin\ActiveX\Shell\Windows Shell';
+	add: '..\..\Object Arts\Dolphin\IDE\Base\Development System';
+	add: '..\..\Object Arts\Dolphin\Base\Dolphin';
+	add: '..\..\Object Arts\Dolphin\MVP\Base\Dolphin MVP Base';
+	add: '..\..\Object Arts\Dolphin\ActiveX\Shell\Windows Shell';
 	yourself).
 
 package!
@@ -80,19 +84,19 @@ idbDocumentationFolder
 	"Answers the folder where all the idb goodies files are located"
 
 	#idbAdded.
-	^FileLocator imageRelative localFileSpecFor: 'Idb\Documentation'!
+	^FileLocator imageRelative localFileSpecFor: 'Core\Contributions\Idb\Documentation'!
 
 idbPackageFolder
 	"Answers the folder where all the idb goodies files are located"
 
 	#idbAdded.
-	^FileLocator imageRelative localFileSpecFor: 'Idb'!
+	^FileLocator imageRelative localFileSpecFor: 'Core\Contributions\Idb'!
 
 idbResourcesFolder
 	"Answers the folder where all the idb goodies files are located"
 
 	#idbAdded.
-	^FileLocator imageRelative localFileSpecFor: 'Idb\Resources'! !
+	^FileLocator imageRelative localFileSpecFor: 'Core\Contributions\Idb\Resources'! !
 !SessionManager categoriesFor: #idbDocumentationFolder!accessing!idb goodies!public! !
 !SessionManager categoriesFor: #idbPackageFolder!accessing!idb goodies!public! !
 !SessionManager categoriesFor: #idbResourcesFolder!accessing!idb goodies!public! !

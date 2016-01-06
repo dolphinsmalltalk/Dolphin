@@ -49,26 +49,27 @@ package globalAliases: (Set new
 	yourself).
 
 package setPrerequisites: (IdentitySet new
-	add: '..\Object Arts\Dolphin\IDE\Base\Development System';
-	add: '..\Object Arts\Dolphin\Base\Dolphin';
-	add: '..\Object Arts\Dolphin\MVP\Presenters\Boolean\Dolphin Boolean Presenter';
-	add: '..\Object Arts\Dolphin\MVP\Views\Cards\Dolphin Card Containers';
-	add: '..\Object Arts\Dolphin\MVP\Views\Common Controls\Dolphin Common Controls';
-	add: '..\Object Arts\Dolphin\MVP\Views\Control Bars\Dolphin Control Bars';
-	add: '..\Object Arts\Dolphin\MVP\Models\List\Dolphin List Models';
-	add: '..\Object Arts\Dolphin\MVP\Presenters\List\Dolphin List Presenter';
-	add: '..\Object Arts\Dolphin\MVP\Base\Dolphin MVP Base';
-	add: '..\Object Arts\Dolphin\MVP\Presenters\Number\Dolphin Number Presenter';
-	add: '..\Object Arts\Dolphin\MVP\Dialogs\Progress\Dolphin Progress Dialog';
-	add: '..\Object Arts\Dolphin\MVP\Views\Scintilla\Dolphin Scintilla View';
-	add: '..\Object Arts\Dolphin\MVP\Views\Scrollbars\Dolphin Scrollbars';
-	add: '..\Object Arts\Dolphin\MVP\Presenters\Text\Dolphin Text Presenter';
-	add: '..\Object Arts\Dolphin\MVP\Models\Tree\Dolphin Tree Models';
-	add: '..\Object Arts\Dolphin\MVP\Presenters\Tree\Dolphin Tree Presenter';
-	add: '..\Object Arts\Dolphin\MVP\Type Converters\Dolphin Type Converters';
-	add: '..\Object Arts\Dolphin\MVP\Models\Value\Dolphin Value Models';
+	add: '..\..\Object Arts\Dolphin\IDE\Base\Development System';
+	add: '..\..\Object Arts\Dolphin\Base\Dolphin';
+	add: '..\..\Object Arts\Dolphin\MVP\Presenters\Boolean\Dolphin Boolean Presenter';
+	add: '..\..\Object Arts\Dolphin\MVP\Views\Cards\Dolphin Card Containers';
+	add: '..\..\Object Arts\Dolphin\MVP\Views\Common Controls\Dolphin Common Controls';
+	add: '..\..\Object Arts\Dolphin\MVP\Views\Control Bars\Dolphin Control Bars';
+	add: '..\..\Object Arts\Dolphin\MVP\Models\List\Dolphin List Models';
+	add: '..\..\Object Arts\Dolphin\MVP\Presenters\List\Dolphin List Presenter';
+	add: '..\..\Object Arts\Dolphin\MVP\Base\Dolphin MVP Base';
+	add: '..\..\Object Arts\Dolphin\MVP\Presenters\Number\Dolphin Number Presenter';
+	add: '..\..\Object Arts\Dolphin\MVP\Dialogs\Progress\Dolphin Progress Dialog';
+	add: '..\..\Object Arts\Dolphin\MVP\Views\Scintilla\Dolphin Scintilla View';
+	add: '..\..\Object Arts\Dolphin\MVP\Views\Scrollbars\Dolphin Scrollbars';
+	add: '..\..\Object Arts\Dolphin\MVP\Presenters\Text\Dolphin Text Presenter';
+	add: '..\..\Object Arts\Dolphin\MVP\Models\Tree\Dolphin Tree Models';
+	add: '..\..\Object Arts\Dolphin\MVP\Presenters\Tree\Dolphin Tree Presenter';
+	add: '..\..\Object Arts\Dolphin\MVP\Type Converters\Dolphin Type Converters';
+	add: '..\..\Object Arts\Dolphin\MVP\Models\Value\Dolphin Value Models';
 	add: 'IDB Common';
-	add: '..\Object Arts\Dolphin\ActiveX\Shell\Windows Shell';
+	add: '..\..\Object Arts\Dolphin\IDE\Base\Internal Bitmaps and Icons';
+	add: '..\..\Object Arts\Dolphin\ActiveX\Shell\Windows Shell';
 	yourself).
 
 package!

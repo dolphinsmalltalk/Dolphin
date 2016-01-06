@@ -128,6 +128,13 @@ contents
 	"Ian's bits"
 	contents
 		add: #('Core\Contributions\IDB\IDB Method History.pax' #plain #imageBased);
+		add: #('Core\Contributions\IDB\IDB Common.pax' #plain #imageBased);
+		add: #('Core\Contributions\IDB\IDB Chunk Browser.pax' #plain #imageBased);
+		add: #('Core\Contributions\IDB\IDB Profiler.pax' #plain #imageBased);
+		add: #('Core\Contributions\IDB\IDB File Browser.pax' #plain #imageBased);
+		add: #('Core\Contributions\IDB\IDB DeviceIndependentBitmap.pax' #plain #imageBased);
+		add: #('Core\Contributions\IDB\IDB Image Library.pax' #plain #imageBased);
+		add: #('Core\Contributions\IDB\IDB MultipleFileOpenDialog.pax' #plain #imageBased);
 		yourself.
 
 	"Solutions Software components"

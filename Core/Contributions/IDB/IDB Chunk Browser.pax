@@ -2,12 +2,15 @@
 package := Package name: 'IDB Chunk Browser'.
 package paxVersion: 1;
 	basicComment: 'Chunk Browser
-Version 6b - October 2005
-For Version 6 of Dolphin Smalltalk
+Version 7c - January 2016
+For Version 7 of Dolphin Smalltalk
 
 (C) 2006 Ian Bartholomew
 ian@idb.me.uk
 Public Domain Freeware
+
+7c - January 2016
+	- Fixup to access resources under D7 (not compatible wth D6)
 
 6b - October 2005
 	- removed Help menu and added About menu
@@ -48,22 +51,23 @@ package globalAliases: (Set new
 	yourself).
 
 package setPrerequisites: (IdentitySet new
-	add: '..\Object Arts\Dolphin\IDE\Base\Development System';
-	add: '..\Object Arts\Dolphin\Base\Dolphin';
-	add: '..\Object Arts\Dolphin\MVP\Views\Common Controls\Dolphin Common Controls';
-	add: '..\Object Arts\Dolphin\MVP\Dialogs\Common\Dolphin Common Dialogs';
-	add: '..\Object Arts\Dolphin\MVP\Views\Control Bars\Dolphin Control Bars';
-	add: '..\Object Arts\Dolphin\MVP\Presenters\Difference\Dolphin Differences Presenter';
-	add: '..\Object Arts\Dolphin\MVP\Models\List\Dolphin List Models';
-	add: '..\Object Arts\Dolphin\MVP\Presenters\List\Dolphin List Presenter';
-	add: '..\Object Arts\Dolphin\MVP\Base\Dolphin MVP Base';
-	add: '..\Object Arts\Dolphin\MVP\Views\Scintilla\Dolphin Scintilla View';
-	add: '..\Object Arts\Dolphin\MVP\Presenters\Text\Dolphin Text Presenter';
-	add: '..\Object Arts\Dolphin\MVP\Type Converters\Dolphin Type Converters';
-	add: '..\Object Arts\Dolphin\MVP\Models\Value\Dolphin Value Models';
+	add: '..\..\Object Arts\Dolphin\IDE\Base\Development System';
+	add: '..\..\Object Arts\Dolphin\Base\Dolphin';
+	add: '..\..\Object Arts\Dolphin\MVP\Views\Common Controls\Dolphin Common Controls';
+	add: '..\..\Object Arts\Dolphin\MVP\Dialogs\Common\Dolphin Common Dialogs';
+	add: '..\..\Object Arts\Dolphin\MVP\Views\Control Bars\Dolphin Control Bars';
+	add: '..\..\Object Arts\Dolphin\MVP\Presenters\Difference\Dolphin Differences Presenter';
+	add: '..\..\Object Arts\Dolphin\MVP\Models\List\Dolphin List Models';
+	add: '..\..\Object Arts\Dolphin\MVP\Presenters\List\Dolphin List Presenter';
+	add: '..\..\Object Arts\Dolphin\MVP\Base\Dolphin MVP Base';
+	add: '..\..\Object Arts\Dolphin\MVP\Views\Scintilla\Dolphin Scintilla View';
+	add: '..\..\Object Arts\Dolphin\MVP\Presenters\Text\Dolphin Text Presenter';
+	add: '..\..\Object Arts\Dolphin\MVP\Type Converters\Dolphin Type Converters';
+	add: '..\..\Object Arts\Dolphin\MVP\Models\Value\Dolphin Value Models';
 	add: 'IDB Common';
 	add: 'IDB Method History';
-	add: '..\Object Arts\Dolphin\System\Compiler\Smalltalk Parser';
+	add: '..\..\Object Arts\Dolphin\IDE\Base\Internal Bitmaps and Icons';
+	add: '..\..\Object Arts\Dolphin\System\Compiler\Smalltalk Parser';
 	yourself).
 
 package!

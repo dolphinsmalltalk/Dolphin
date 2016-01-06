@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 IdbToolShell subclass: #ProfileBrowser
 	instanceVariableNames: 'filterPercentSymbol filterDolphin filterSelector'
@@ -277,9 +277,11 @@ displayOn: aStream
 	aStream nextPutAll: 'Profile Browser'!
 
 icon
-	"Answers an Icon that can be used to represent this class"
 
-	^##(self) instanceClass defaultIcon!
+	"Generated from:
+	self createIconMethod: #icon ofSize: 48@48 fromFile: 'C:\Users\bower\Documents\Dolphin\Core\Contributions\IDB\Resources\IDB Profiler.png'.
+	"
+	^InternalIcon fromBytes: #[137 80 78 71 13 10 26 10 0 0 0 13 73 72 68 82 0 0 0 48 0 0 0 48 8 6 0 0 0 87 2 249 135 0 0 0 1 115 82 71 66 0 174 206 28 233 0 0 0 4 103 65 77 65 0 0 177 143 11 252 97 5 0 0 0 9 112 72 89 115 0 0 14 195 0 0 14 195 1 199 111 168 100 0 0 0 241 73 68 65 84 104 67 237 214 49 10 194 48 20 198 241 30 160 23 16 113 213 251 184 58 185 121 2 39 29 196 193 81 7 189 128 75 79 225 224 232 160 32 57 135 55 40 70 108 51 84 120 241 37 69 243 18 250 5 254 203 107 180 249 209 34 102 189 99 174 83 14 0 233 0 144 14 0 233 0 144 14 0 223 54 183 149 110 46 106 143 79 193 1 123 181 53 71 175 23 181 199 39 0 124 179 1 70 197 160 186 246 110 125 93 126 124 230 91 209 0 218 62 25 0 124 139 14 48 59 79 205 45 181 46 159 37 185 167 89 116 0 223 27 39 3 176 253 170 36 3 248 213 156 11 0 0 152 57 23 0 0 48 115 46 0 146 1 216 254 243 36 3 248 247 65 1 224 2 160 229 156 171 59 128 131 218 153 175 174 87 168 57 151 51 32 214 156 1 147 211 184 122 204 161 162 206 64 229 12 88 92 230 90 61 238 193 162 206 64 213 157 87 40 214 0 144 14 0 233 0 144 46 27 22 125 242 66 26 229 250 5 214 19 14 167 60 4 103 168 0 0 0 0 73 69 78 68 174 66 96 130]!
 
 publishedAspects
 	^(super publishedAspects)

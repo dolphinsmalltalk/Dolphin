@@ -67,21 +67,22 @@ package globalAliases: (Set new
 	yourself).
 
 package setPrerequisites: (IdentitySet new
-	add: '..\Object Arts\Dolphin\Base\Dolphin';
-	add: '..\Object Arts\Dolphin\MVP\Dialogs\Common\Dolphin Common Dialogs';
-	add: '..\Object Arts\Dolphin\MVP\Views\Control Bars\Dolphin Control Bars';
-	add: '..\Object Arts\Dolphin\MVP\Models\List\Dolphin List Models';
-	add: '..\Object Arts\Dolphin\MVP\Presenters\List\Dolphin List Presenter';
-	add: '..\Object Arts\Dolphin\MVP\Base\Dolphin MVP Base';
-	add: '..\Object Arts\Dolphin\MVP\Presenters\Number\Dolphin Number Presenter';
-	add: '..\Object Arts\Dolphin\MVP\Presenters\Prompters\Dolphin Prompter';
-	add: '..\Object Arts\Dolphin\MVP\Views\Scrollbars\Dolphin Scrollbars';
-	add: '..\Object Arts\Dolphin\MVP\Presenters\Text\Dolphin Text Presenter';
-	add: '..\Object Arts\Dolphin\MVP\Type Converters\Dolphin Type Converters';
+	add: '..\..\Object Arts\Dolphin\Base\Dolphin';
+	add: '..\..\Object Arts\Dolphin\MVP\Dialogs\Common\Dolphin Common Dialogs';
+	add: '..\..\Object Arts\Dolphin\MVP\Views\Control Bars\Dolphin Control Bars';
+	add: '..\..\Object Arts\Dolphin\MVP\Models\List\Dolphin List Models';
+	add: '..\..\Object Arts\Dolphin\MVP\Presenters\List\Dolphin List Presenter';
+	add: '..\..\Object Arts\Dolphin\MVP\Base\Dolphin MVP Base';
+	add: '..\..\Object Arts\Dolphin\MVP\Presenters\Number\Dolphin Number Presenter';
+	add: '..\..\Object Arts\Dolphin\MVP\Presenters\Prompters\Dolphin Prompter';
+	add: '..\..\Object Arts\Dolphin\MVP\Views\Scrollbars\Dolphin Scrollbars';
+	add: '..\..\Object Arts\Dolphin\MVP\Presenters\Text\Dolphin Text Presenter';
+	add: '..\..\Object Arts\Dolphin\MVP\Type Converters\Dolphin Type Converters';
 	add: 'IDB Common';
 	add: 'IDB DeviceIndependentBitmap';
 	add: 'IDB MultipleFileOpenDialog';
-	add: '..\Object Arts\Dolphin\ActiveX\Shell\Windows Shell';
+	add: '..\..\Object Arts\Dolphin\IDE\Base\Internal Bitmaps and Icons';
+	add: '..\..\Object Arts\Dolphin\ActiveX\Shell\Windows Shell';
 	yourself).
 
 package!
