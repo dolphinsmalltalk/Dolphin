@@ -1,6 +1,6 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk X6.1"!
 
-Win32Structure subclass: #DEVNAMES
+ExternalStructure subclass: #DEVNAMES
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
@@ -8,10 +8,27 @@ Win32Structure subclass: #DEVNAMES
 DEVNAMES guid: (GUID fromString: '{776A9E91-190A-4EA6-969C-92BC7B280AD9}')!
 DEVNAMES comment: 'See [DolphinImageFolder]/Idb/Documentation for details
 
-(C) 2005 Ian Bartholomew
+(C) 2006 Ian Bartholomew
 ian@idb.me.uk
 Public Domain Freeware'!
-!DEVNAMES categoriesForClass!External-Data-Structured-Win32!IDB Goodies! !
+!DEVNAMES categoriesForClass!IDB Goodies! !
+!DEVNAMES methodsFor!
+
+deviceName
+	#JamesFoster.
+	^String fromAddress: bytes yourAddress + self wDeviceOffset!
+
+driverName
+	#JamesFoster.
+	^String fromAddress: bytes yourAddress + self wDriverOffset!
+
+outputName
+	#JamesFoster.
+	^String fromAddress: bytes yourAddress + self wOutputOffset! !
+!DEVNAMES categoriesFor: #deviceName!accessing!public! !
+!DEVNAMES categoriesFor: #driverName!accessing!public! !
+!DEVNAMES categoriesFor: #outputName!accessing!public! !
+
 !DEVNAMES class methodsFor!
 
 defineFields

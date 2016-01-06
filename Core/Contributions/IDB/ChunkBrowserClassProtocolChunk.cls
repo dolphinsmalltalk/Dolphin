@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk X6.1"!
 
 ChunkBrowserExpressionChunk subclass: #ChunkBrowserClassProtocolChunk
 	instanceVariableNames: 'attributes selectors'
@@ -8,7 +8,7 @@ ChunkBrowserExpressionChunk subclass: #ChunkBrowserClassProtocolChunk
 ChunkBrowserClassProtocolChunk guid: (GUID fromString: '{C8986897-7417-46B9-A404-28A5AB21EA14}')!
 ChunkBrowserClassProtocolChunk comment: 'See [DolphinImageFolder]/Idb/Documentation for details
 
-(C) 2005 Ian Bartholomew
+(C) 2006 Ian Bartholomew
 ian@idb.me.uk
 Public Domain Freeware'!
 !ChunkBrowserClassProtocolChunk categoriesForClass!IDB Goodies! !
@@ -17,7 +17,7 @@ Public Domain Freeware'!
 browseTarget
 	^self identity1AsClass!
 
-initialize: aString 
+initialize: aString
 	"Abc methodProtocol: aSymbol attributes: anArrayOfSymbols selectors: anArrayOfSymbols
 	Abc class methodProtocol: aSymbol attributes: anArrayOfSymbols selectors: anArrayOfSymbols"
 
@@ -28,20 +28,19 @@ initialize: aString
 	target2 := aString indexOfSubCollection: 'attributes:'.
 	target3 := aString indexOfSubCollection: 'selectors:'.
 	identity2 := ((aString copyFrom: target1 to: target2 - 1) copyWithoutAll: '#''') trimBlanks.
-	attributes := ((aString copyFrom: target2 + 'attributes:' size to: target3 - 1) 
-				copyWithoutAll: '#()') trimBlanks 
-				subStrings collect: [:each | each asSymbol].
-	selectors := ((aString copyFrom: target3 + 'selectors:' size to: aString size) 
-				copyWithoutAll: '#()') trimBlanks 
-				subStrings collect: [:each | each asSymbol]!
+	attributes := ((aString copyFrom: target2 + 'attributes:' size to: target3 - 1)
+		copyWithoutAll: '#()') trimBlanks subStrings collect: [:each | each asSymbol].
+	selectors := ((aString copyFrom: target3 + 'selectors:' size to: aString size)
+		copyWithoutAll: '#()') trimBlanks subStrings collect: [:each | each asSymbol]!
 
 isMatch
-	^self identity1AsClass 
-		ifNotNil: 
-			[(MethodProtocol exists: identity2) and: 
+	^self identity1AsClass
+		ifNotNil:
+			[(MethodProtocol exists: identity2)
+				and:
 					[| protocol |
 					protocol := MethodProtocol name: identity2.
-					(protocol selectors symmetricDifference: selectors) isEmpty 
+					(protocol selectors symmetricDifference: selectors) isEmpty
 						and: [(protocol attributes symmetricDifference: attributes) isEmpty]]]! !
 !ChunkBrowserClassProtocolChunk categoriesFor: #browseTarget!operations!public! !
 !ChunkBrowserClassProtocolChunk categoriesFor: #initialize:!initializing!public! !
@@ -52,14 +51,15 @@ isMatch
 chunkType
 	^#'Class Protocol'!
 
-isChunkClassFor: aString 
+isChunkClassFor: aString
 	"Abc methodProtocol: aSymbol attributes: anArrayOfSymbols selectors: anArrayOfSymbols
 	Abc class methodProtocol: aSymbol attributes: anArrayOfSymbols selectors: anArrayOfSymbols"
 
 	| firstSpaceIndex |
-	(firstSpaceIndex := aString indexOf: Character space) = 0 ifTrue: [^false].
-	^#(' methodProtocol: #' ' class methodProtocol: #') 
-		anySatisfy: [:each | (aString indexOfSubCollection: each) = firstSpaceIndex]! !
+	^(firstSpaceIndex := aString indexOf: Character space) ~= 0
+		and:
+			[#(' methodProtocol: #' ' class methodProtocol: #')
+				anySatisfy: [:each | (aString indexOfSubCollection: each) = firstSpaceIndex]]! !
 !ChunkBrowserClassProtocolChunk class categoriesFor: #chunkType!constants!public! !
 !ChunkBrowserClassProtocolChunk class categoriesFor: #isChunkClassFor:!public!testing! !
 

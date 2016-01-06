@@ -1,32 +1,53 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk X6.1"!
 
 ChunkBrowserChunk subclass: #ChunkBrowserSeriesStartChunk
-	instanceVariableNames: 'owningClass'
+	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ChunkBrowserSeriesStartChunk guid: (GUID fromString: '{24F42E2C-7A1F-4252-BDFE-4584ED820429}')!
 ChunkBrowserSeriesStartChunk comment: 'See [DolphinImageFolder]/Idb/Documentation for details
 
-(C) 2005 Ian Bartholomew
+(C) 2006 Ian Bartholomew
 ian@idb.me.uk
 Public Domain Freeware'!
 !ChunkBrowserSeriesStartChunk categoriesForClass!IDB Goodies! !
 !ChunkBrowserSeriesStartChunk methodsFor!
 
-initialize: aString 
+browseTarget
+	self shouldNotImplement!
+
+initialize: aString
 	super initialize: aString.
 	identity1 := self classNameFromRawText!
 
-isChunkSeriesStart
+isMatch
+	self shouldNotImplement!
+
+isSeriesStart
 	^true!
 
-seriesChunk: aString 
-	| chunk |
-	chunk := self seriesChunkClass fromText: aString.
-	chunk initializeFrom: self.
-	^chunk! !
+restore
+	self shouldNotImplement!
+
+seriesClass
+	self subclassResponsibility!
+
+seriesInstanceFor: aString
+	^(self seriesClass newFor: aString)
+		initializeFromSeriesStart: self;
+		yourself! !
+!ChunkBrowserSeriesStartChunk categoriesFor: #browseTarget!operations!public! !
 !ChunkBrowserSeriesStartChunk categoriesFor: #initialize:!initializing!public! !
-!ChunkBrowserSeriesStartChunk categoriesFor: #isChunkSeriesStart!public!testing! !
-!ChunkBrowserSeriesStartChunk categoriesFor: #seriesChunk:!initializing!public! !
+!ChunkBrowserSeriesStartChunk categoriesFor: #isMatch!public!testing! !
+!ChunkBrowserSeriesStartChunk categoriesFor: #isSeriesStart!public!testing! !
+!ChunkBrowserSeriesStartChunk categoriesFor: #restore!operations!public! !
+!ChunkBrowserSeriesStartChunk categoriesFor: #seriesClass!constants!public! !
+!ChunkBrowserSeriesStartChunk categoriesFor: #seriesInstanceFor:!initializing!public! !
+
+!ChunkBrowserSeriesStartChunk class methodsFor!
+
+chunkType
+	self shouldNotImplement! !
+!ChunkBrowserSeriesStartChunk class categoriesFor: #chunkType!constants!public! !
 

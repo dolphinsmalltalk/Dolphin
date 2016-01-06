@@ -2,26 +2,24 @@
 package := Package name: 'IDB Method History'.
 package paxVersion: 1;
 	basicComment: 'Extracts and presents class/method history from the change log
-Version 6c - January 2008
+Version 6b - October 2005
 For Version 6 of Dolphin Smalltalk
 
-(C) 2006-2008 Ian Bartholomew
+(C) 2005 Ian Bartholomew
 ian@idb.me.uk
 Public Domain Freeware
 
-6c - January 2008
-	- Updated for 6.1
-	- Removed DiffBrowser class (now uses Dolphins)
 6b - October 2005
 	- extensive rewrite'.
 
-package basicPackageVersion: 'IDB$PACKAGE$VERSION 6c'.
+package basicPackageVersion: 'IDB$PACKAGE$VERSION 6b'.
 
 
 package classNames
 	add: #ChunkFileMethodScanner;
 	add: #ClassHistoryBrowser;
-	add: #HistoryBrowserAbstract;
+	add: #DiffBrowser;
+	add: #HistoryBrowser;
 	add: #MethodHistoryBrowser;
 	add: #SelectorParser;
 	yourself.
@@ -45,19 +43,20 @@ package globalAliases: (Set new
 	yourself).
 
 package setPrerequisites: (IdentitySet new
-	add: '..\..\Object Arts\Dolphin\IDE\Base\Development System';
-	add: '..\..\Object Arts\Dolphin\Base\Dolphin';
-	add: '..\..\Object Arts\Dolphin\MVP\Views\Common Controls\Dolphin Common Controls';
-	add: '..\..\Object Arts\Dolphin\MVP\Presenters\Difference\Dolphin Differences Presenter';
-	add: '..\..\Object Arts\Dolphin\MVP\Models\List\Dolphin List Models';
-	add: '..\..\Object Arts\Dolphin\MVP\Presenters\List\Dolphin List Presenter';
-	add: '..\..\Object Arts\Dolphin\MVP\Base\Dolphin MVP Base';
-	add: '..\..\Object Arts\Dolphin\MVP\Presenters\Number\Dolphin Number Presenter';
-	add: '..\..\Object Arts\Dolphin\MVP\Views\Scintilla\Dolphin Scintilla View';
-	add: '..\..\Object Arts\Dolphin\MVP\Views\Slider\Dolphin Slider Control';
-	add: '..\..\Object Arts\Dolphin\MVP\Presenters\Text\Dolphin Text Presenter';
-	add: '..\..\Object Arts\Dolphin\MVP\Type Converters\Dolphin Type Converters';
-	add: '..\..\Object Arts\Dolphin\MVP\Models\Value\Dolphin Value Models';
+	add: '..\Object Arts\Dolphin\IDE\Base\Development System';
+	add: '..\Object Arts\Dolphin\Base\Dolphin';
+	add: '..\Object Arts\Dolphin\MVP\Views\Common Controls\Dolphin Common Controls';
+	add: '..\Object Arts\Dolphin\MVP\Dialogs\Common\Dolphin Common Dialogs';
+	add: '..\Object Arts\Dolphin\MVP\Presenters\Difference\Dolphin Differences Presenter';
+	add: '..\Object Arts\Dolphin\MVP\Models\List\Dolphin List Models';
+	add: '..\Object Arts\Dolphin\MVP\Presenters\List\Dolphin List Presenter';
+	add: '..\Object Arts\Dolphin\MVP\Base\Dolphin MVP Base';
+	add: '..\Object Arts\Dolphin\MVP\Presenters\Number\Dolphin Number Presenter';
+	add: '..\Object Arts\Dolphin\MVP\Views\Scintilla\Dolphin Scintilla View';
+	add: '..\Object Arts\Dolphin\MVP\Views\Slider\Dolphin Slider Control';
+	add: '..\Object Arts\Dolphin\MVP\Presenters\Text\Dolphin Text Presenter';
+	add: '..\Object Arts\Dolphin\MVP\Type Converters\Dolphin Type Converters';
+	add: '..\Object Arts\Dolphin\MVP\Models\Value\Dolphin Value Models';
 	yourself).
 
 package!
@@ -74,18 +73,23 @@ Object subclass: #SelectorParser
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-SmalltalkToolShell subclass: #HistoryBrowserAbstract
-	instanceVariableNames: 'class'
+SmalltalkToolShell subclass: #DiffBrowser
+	instanceVariableNames: 'diffsPresenter'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-HistoryBrowserAbstract subclass: #ClassHistoryBrowser
-	instanceVariableNames: 'list'
+SmalltalkToolShell subclass: #HistoryBrowser
+	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-HistoryBrowserAbstract subclass: #MethodHistoryBrowser
-	instanceVariableNames: 'history selector debugger selection slider source'
+HistoryBrowser subclass: #ClassHistoryBrowser
+	instanceVariableNames: 'class list'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+HistoryBrowser subclass: #MethodHistoryBrowser
+	instanceVariableNames: 'history class selector debugger selection slider source'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -116,10 +120,10 @@ canBrowseMethodHistory
 canBrowseMethodHistoryForClass
 	#idbAdded.
 	^self hasClassSelected! !
-!ClassBrowserAbstract categoriesFor: #browseMethodHistory!accessing!commands!idb goodies!public! !
+!ClassBrowserAbstract categoriesFor: #browseMethodHistory!accessing!commands!idb goodies!private! !
 !ClassBrowserAbstract categoriesFor: #browseMethodHistoryForClass!commands!idb goodies!public! !
-!ClassBrowserAbstract categoriesFor: #canBrowseMethodHistory!idb goodies!public!testing! !
-!ClassBrowserAbstract categoriesFor: #canBrowseMethodHistoryForClass!idb goodies!public!testing! !
+!ClassBrowserAbstract categoriesFor: #canBrowseMethodHistory!idb goodies!private!testing! !
+!ClassBrowserAbstract categoriesFor: #canBrowseMethodHistoryForClass!idb goodies!private!testing! !
 
 !Debugger methodsFor!
 
@@ -135,38 +139,37 @@ browseMethodHistory
 canBrowseMethodHistory
 	#idbAdded.
 	^self hasEditableMethodSelected! !
-!Debugger categoriesFor: #browseMethodHistory!commands!idb goodies!public! !
-!Debugger categoriesFor: #canBrowseMethodHistory!accessing!idb goodies!public!testing! !
+!Debugger categoriesFor: #browseMethodHistory!commands!idb goodies!private! !
+!Debugger categoriesFor: #canBrowseMethodHistory!accessing!idb goodies!private!testing! !
 
 !MethodBrowserShell methodsFor!
 
 browseMethodHistory
 	#idbAdded.
-	MethodHistoryBrowser
-		showOnClass: self selectedMethod methodClass
+	MethodHistoryBrowser showOnClass: self selectedMethod methodClass
 		selector: self selectedMethod selector!
 
 canBrowseMethodHistory
 	#idbAdded.
 	^self browser hasMethodSelected! !
-!MethodBrowserShell categoriesFor: #browseMethodHistory!accessing!commands!idb goodies!public! !
-!MethodBrowserShell categoriesFor: #canBrowseMethodHistory!accessing!idb goodies!public!testing! !
+!MethodBrowserShell categoriesFor: #browseMethodHistory!accessing!commands!idb goodies!private! !
+!MethodBrowserShell categoriesFor: #canBrowseMethodHistory!accessing!idb goodies!private!testing! !
 
 !SmalltalkToolShell methodsFor!
 
-queryMethodHistoryCommand: aCommandQuery
+queryMethodHistoryCommand: aCommandQuery 
 	| selector |
 	selector := aCommandQuery commandSymbol.
-	selector == #browseMethodHistory
-		ifTrue:
+	selector == #browseMethodHistory 
+		ifTrue: 
 			[aCommandQuery isEnabled: self canBrowseMethodHistory.
 			^true].
-	selector == #browseMethodHistoryForClass
-		ifTrue:
+	selector == #browseMethodHistoryForClass 
+		ifTrue: 
 			[aCommandQuery isEnabled: self canBrowseMethodHistoryForClass.
 			^true].
 	^false! !
-!SmalltalkToolShell categoriesFor: #queryMethodHistoryCommand:!commands!idb goodies!public! !
+!SmalltalkToolShell categoriesFor: #queryMethodHistoryCommand:!commands!private! !
 
 "End of package definition"!
 

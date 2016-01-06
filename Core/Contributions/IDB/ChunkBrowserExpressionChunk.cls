@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk X6.1"!
 
 ChunkBrowserChunk subclass: #ChunkBrowserExpressionChunk
 	instanceVariableNames: ''
@@ -8,7 +8,7 @@ ChunkBrowserChunk subclass: #ChunkBrowserExpressionChunk
 ChunkBrowserExpressionChunk guid: (GUID fromString: '{0F9C053E-F249-49B6-9DA5-FCECE45BE89F}')!
 ChunkBrowserExpressionChunk comment: 'See [DolphinImageFolder]/Idb/Documentation for details
 
-(C) 2005 Ian Bartholomew
+(C) 2006 Ian Bartholomew
 ian@idb.me.uk
 Public Domain Freeware'!
 !ChunkBrowserExpressionChunk categoriesForClass!IDB Goodies! !
@@ -19,10 +19,13 @@ restore
 
 	^self restoreAndLog: false!
 
-restoreAndLog: aBoolean 
+restoreAndLog: aBoolean
+	"Answers nil or the error information"
+
 	| answer |
-	[Compiler evaluate: self rawText logged: aBoolean] on: CompilerNotification
-		do: 
+	[Compiler evaluate: self rawText logged: aBoolean]
+		on: CompilerNotification
+		do:
 			[:e | 
 			answer := index -> e errorMessage.
 			e resume].
