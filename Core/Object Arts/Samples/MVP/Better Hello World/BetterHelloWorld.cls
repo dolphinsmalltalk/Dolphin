@@ -6,7 +6,7 @@ Shell subclass: #BetterHelloWorld
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 BetterHelloWorld guid: (GUID fromString: '{00E258DA-1B1A-42C4-89C3-E3ED1983A682}')!
-BetterHelloWorld comment: ''!
+BetterHelloWorld comment: 'This is the presenter for the Better Hello World example package. The full sample shows an MVP "triad" of elements consisting of a ValueModel, a composite ShellView (drawn with the ViewComposer) and this presenter class that ties all the pieces together. See the package comment for more details and links to tutorial videos that explain how this example was put together.'!
 !BetterHelloWorld categoriesForClass!Unclassified! !
 !BetterHelloWorld methodsFor!
 
@@ -29,6 +29,9 @@ model: aModel
 
 defaultModel
 	^'Hello World' asValue!
+
+icon
+^InternalIcon textTile: 'Hi' color: Color red!
 
 initialize
 	"
@@ -59,6 +62,7 @@ resource_Editable_view
 uninitialize
 	Smalltalk developmentSystem removeSystemFolderIconNamed: 'Better Hello World'! !
 !BetterHelloWorld class categoriesFor: #defaultModel!public! !
+!BetterHelloWorld class categoriesFor: #icon!constants!public! !
 !BetterHelloWorld class categoriesFor: #initialize!public! !
 !BetterHelloWorld class categoriesFor: #resource_Default_view!public!resources-views! !
 !BetterHelloWorld class categoriesFor: #resource_Editable_view!public!resources-views! !
