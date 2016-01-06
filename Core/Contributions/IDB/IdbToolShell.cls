@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk X6.1"!
 
 IdbShell subclass: #IdbToolShell
 	instanceVariableNames: ''
@@ -8,13 +8,13 @@ IdbShell subclass: #IdbToolShell
 IdbToolShell guid: (GUID fromString: '{D5A39E13-1A86-4F66-B67F-C7875188C304}')!
 IdbToolShell comment: 'See [DolphinImageFolder]/Idb/Documentation for details
 
-(C) 2005 Ian Bartholomew
+(C) 2006 Ian Bartholomew
 ian@idb.me.uk
 Public Domain Freeware'!
 !IdbToolShell categoriesForClass!IDB Goodies! !
 !IdbToolShell methodsFor!
 
-addToCommandRoute: route 
+addToCommandRoute: route
 	super addToCommandRoute: route.
 	route appendTarget: Smalltalk developmentSystem! !
 !IdbToolShell categoriesFor: #addToCommandRoute:!commands!public! !
@@ -22,16 +22,16 @@ addToCommandRoute: route
 !IdbToolShell class methodsFor!
 
 initializeAfterLoad
-	self == ##(self) 
-		ifFalse: 
+	self == ##(self)
+		ifFalse:
 			[(Smalltalk developmentSystem)
 				addAdditionalToolsFolderIcon: self toolsFolderIcon;
 				registerTool: self].
 	super initializeAfterLoad!
 
 uninitializeBeforeRemove
-	self == ##(self) 
-		ifFalse: 
+	self == ##(self)
+		ifFalse:
 			[(Smalltalk developmentSystem)
 				removeSystemFolderIcon: self toolsFolderIcon;
 				unregisterTool: self].

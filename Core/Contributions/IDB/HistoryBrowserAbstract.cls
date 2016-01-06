@@ -11,7 +11,7 @@ HistoryBrowserAbstract comment: 'See [DolphinImageFolder]/Idb/Documentation for 
 (C) 2006-2008 Ian Bartholomew
 ian@idb.me.uk
 Public Domain Freeware'!
-!HistoryBrowserAbstract categoriesForClass!Unclassified! !
+!HistoryBrowserAbstract categoriesForClass!IDB Goodies! !
 !HistoryBrowserAbstract methodsFor!
 
 idbAbout

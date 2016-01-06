@@ -8,25 +8,78 @@ Win32Structure subclass: #PAGESETUPDLG
 PAGESETUPDLG guid: (GUID fromString: '{C96162D4-5DD4-43D1-A305-E90D67357D91}')!
 PAGESETUPDLG comment: 'See [DolphinImageFolder]/Idb/Documentation for details
 
-(C) 2005 Ian Bartholomew
+(C) 2006 Ian Bartholomew
 ian@idb.me.uk
 Public Domain Freeware'!
 !PAGESETUPDLG categoriesForClass!IDB Goodies! !
 !PAGESETUPDLG methodsFor!
 
-dwSize: anObject 
+defaultFlag
+	#JamesFoster.
+	^self devNamesDo: [:devNames | devNames wDefault]!
+
+deviceNameFromDevMode
+	#JamesFoster.
+	^self devModeDo: [:devMode | devMode deviceName]!
+
+deviceNameFromDevNames
+	#JamesFoster.
+	^self devNamesDo: [:devMode | devMode deviceName]!
+
+devModeDo: aBlock
+	| hDevMode pDevMode |
+	#JamesFoster.
+	hDevMode := self hDevMode.
+	(pDevMode := KernelLibrary default globalLock: hDevMode) ifNil: [^nil].
+	^[aBlock value: (DEVMODE fromAddress: pDevMode)]
+		ensure: [KernelLibrary default globalUnlock: hDevMode]!
+
+devNamesDo: aBlock
+	| hDevNames pDevNames |
+	#JamesFoster.
+	hDevNames := self hDevNames.
+	(pDevNames := KernelLibrary default globalLock: hDevNames) ifNil: [^self].
+	^[aBlock value: (DEVNAMES fromAddress: pDevNames)]
+		ensure: [KernelLibrary default globalUnlock: hDevNames]!
+
+driverName
+	#JamesFoster.
+	^self devNamesDo: [:devMode | devMode driverName]!
+
+dwSize: anObject
 	"Set the receiver's dwSize field to the value of anObject."
 
 	bytes dwordAtOffset: 0 put: anObject!
 
-ownerView: aView 
+orientation
+	#JamesFoster.
+	^self devModeDo: [:devMode | devMode dmOrientation]!
+
+outputName
+	#JamesFoster.
+	^self devNamesDo: [:devNames | devNames outputName]!
+
+ownerView: aView
 	"Set the parent window for the dialog to aView."
 
 	| hWnd |
 	hWnd := aView asParameter.
-	hWnd isNull ifFalse: [self hwndOwner: hWnd]! !
+	hWnd isNull ifFalse: [self hwndOwner: hWnd]!
+
+paperSize
+	#JamesFoster.
+	^self devModeDo: [:devMode | devMode dmPaperSize]! !
+!PAGESETUPDLG categoriesFor: #defaultFlag!accessing!public! !
+!PAGESETUPDLG categoriesFor: #deviceNameFromDevMode!accessing!public! !
+!PAGESETUPDLG categoriesFor: #deviceNameFromDevNames!accessing!public! !
+!PAGESETUPDLG categoriesFor: #devModeDo:!helpers!public! !
+!PAGESETUPDLG categoriesFor: #devNamesDo:!helpers!public! !
+!PAGESETUPDLG categoriesFor: #driverName!accessing!public! !
 !PAGESETUPDLG categoriesFor: #dwSize:!**compiled accessors**!public! !
+!PAGESETUPDLG categoriesFor: #orientation!accessing!public! !
+!PAGESETUPDLG categoriesFor: #outputName!accessing!public! !
 !PAGESETUPDLG categoriesFor: #ownerView:!accessing!public! !
+!PAGESETUPDLG categoriesFor: #paperSize!accessing!public! !
 
 !PAGESETUPDLG class methodsFor!
 
@@ -62,7 +115,7 @@ defineFields
 		defineField: #rtMinMargin type: (StructureField type: RECT);
 		defineField: #rtMargin type: (StructureField type: RECT);
 		defineField: #hInstance type: DWORDField filler;
-		defineField: #lCustData type: INT_PTRField filler;
+		defineField: #lCustData type: DWORDField filler;
 		defineField: #lpfnPageSetupHook type: (PointerField type: ExternalAddress) beFiller;
 		defineField: #lpfnPagePaintHook type: (PointerField type: ExternalAddress) beFiller;
 		defineField: #lpPageSetupTemplateName type: (PointerField type: String) beFiller;

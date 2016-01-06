@@ -8,19 +8,19 @@ Model subclass: #ChunkBrowserFilter
 ChunkBrowserFilter guid: (GUID fromString: '{CCA89E53-EEE3-495A-915F-463F69C7009A}')!
 ChunkBrowserFilter comment: 'See [DolphinImageFolder]/Idb/Documentation for details
 
-(C) 2005 Ian Bartholomew
+(C) 2006 Ian Bartholomew
 ian@idb.me.uk
 Public Domain Freeware'!
 !ChunkBrowserFilter categoriesForClass!IDB Goodies! !
 !ChunkBrowserFilter methodsFor!
 
 chunkSelectAll
-	selectedChunkTypes := #(#'Class Category' #'Class Comment' #'Class Define' #'Class Delete' #'Class GUID' #'Class Protocol' #'Method Category' #'Method Define' #'Method Delete' #System #Other) 
-				asSet!
+	selectedChunkTypes := #(#'Class Category' #'Class Comment' #'Class Define' #'Class Delete' #'Class GUID' #'Class Protocol' #'Method Category' #'Method Define' #'Method Delete' #System #Other)
+		asSet!
 
 chunkSelectDefault
 	selectedChunkTypes := Set new.
-	ChunkBrowser chunkTypeSelection 
+	ChunkBrowser chunkTypeSelection
 		keysAndValuesDo: [:key :value | value ifTrue: [selectedChunkTypes add: key]]!
 
 chunkSelectNone
@@ -31,22 +31,21 @@ initialize
 	self chunkSelectDefault.
 	selectedComparisonTypes := #(#Match #Differ #Missing) asSet.
 	restrictionRange := restrictionClass := nil.
-	restrictingMostRecent := false.
-	restrictingPicked := false!
+	restrictingMostRecent := restrictingPicked := false!
 
-isChunkTypeSelected: aSymbol 
+isChunkTypeSelected: aSymbol
 	^selectedChunkTypes includes: aSymbol!
 
 isCompareNeeded
 	^selectedComparisonTypes size ~= 3!
 
-isComparisonTypeSelected: aSymbol 
+isComparisonTypeSelected: aSymbol
 	^selectedComparisonTypes includes: aSymbol!
 
-isInRestrictionClass: aSymbol 
+isInRestrictionClass: aSymbol
 	^self isRestrictingClass not or: [restrictionClass == aSymbol]!
 
-isInRestrictionRange: anInteger 
+isInRestrictionRange: anInteger
 	^self isRestrictingRange not or: [restrictionRange includes: anInteger]!
 
 isRestrictingClass
@@ -61,10 +60,10 @@ isRestrictingPicked
 isRestrictingRange
 	^restrictionRange notNil!
 
-restrictionClass: aSymbolOrNil 
+restrictionClass: aSymbolOrNil
 	restrictionClass := aSymbolOrNil!
 
-restrictionRange: aRangeOrNil 
+restrictionRange: aRangeOrNil
 	restrictionRange := aRangeOrNil!
 
 restrictionRangeFirst
@@ -76,13 +75,13 @@ restrictionRangeLast
 restrictionRangeSize
 	^restrictionRange size!
 
-toggleChunkType: aSymbol 
-	(self isChunkTypeSelected: aSymbol) 
+toggleChunkType: aSymbol
+	(self isChunkTypeSelected: aSymbol)
 		ifTrue: [selectedChunkTypes remove: aSymbol]
 		ifFalse: [selectedChunkTypes add: aSymbol]!
 
-toggleComparisonType: aSymbol 
-	(self isComparisonTypeSelected: aSymbol) 
+toggleComparisonType: aSymbol
+	(self isComparisonTypeSelected: aSymbol)
 		ifTrue: [selectedComparisonTypes remove: aSymbol]
 		ifFalse: [selectedComparisonTypes add: aSymbol]!
 

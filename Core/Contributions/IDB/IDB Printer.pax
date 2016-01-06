@@ -2,45 +2,60 @@
 package := Package name: 'IDB Printer'.
 package paxVersion: 1;
 	basicComment: 'Printing
-Version 6a - May 2005
+Version 6b - November 2005
 For Version 6 of Dolphin Smalltalk
 
-(C) 2005 Ian Bartholomew
+(C) 2006 Ian Bartholomew
 ian@idb.me.uk
 Public Domain Freeware
+
+6b - November 2005
+	- Added methods contributed by James Foster.  Thanks.
 '.
 
-package basicPackageVersion: 'IDB$PACKAGE$VERSION 6a'.
+package basicPackageVersion: 'IDB$PACKAGE$VERSION 6b JGF.1'.
 
+package basicScriptAt: #preinstall put: 'Win32Constants
+	at: ''PHYSICALWIDTH'' put: 110;
+	at: ''PHYSICALHEIGHT'' put: 111;
+	at: ''PHYSICALOFFSETX'' put: 112;
+	at: ''PHYSICALOFFSETY'' put: 113
+'.
 
 package classNames
 	add: #DEVNAMES;
-	add: #IdeBrowserPrinterExtension;
-	add: #IdePrinter;
-	add: #IdePrinterExtensions;
 	add: #PAGESETUPDLG;
 	add: #Printer;
+	add: #PrintPreviewShell;
 	yourself.
 
 package methodNames
-	add: #ClassBrowserAbstract -> #canPrint;
-	add: #ClassBrowserAbstract -> #print;
+	add: #Bitmap -> #canvasCompatibleWith:;
 	add: #ComDlgLibrary -> #pageSetupDlg:;
+	add: #DEVMODE -> #deviceName;
 	add: #FORMATRANGE -> #cpMax;
 	add: #FORMATRANGE -> #cpMin;
-	add: #MethodBrowserShell -> #canPrint;
-	add: #MethodBrowserShell -> #print;
-	add: #MultilineTextEdit -> #printOn:margins:selectionRange:pageRange:titleBlock:;
-	add: #Notepad -> #filePageSetup;
-	add: #Notepad -> #filePrint;
-	add: #RichTextEdit -> #printOn:margins:selectionRange:pageRange:titleBlock:;
-	add: #ScintillaView -> #printOn:margins:selectionRange:pageRange:titleBlock:;
-	add: #Shell -> #pageSetup;
-	add: #Shell -> #print:;
-	add: #SmalltalkWorkspaceDocument -> #canPrint;
-	add: #SmalltalkWorkspaceDocument -> #print;
-	add: #WordPad -> #filePageSetup;
-	add: #WordPad -> #filePrint;
+	add: #FORMATRANGE -> #hdcTarget;
+	add: #KernelLibrary -> #getProfileString:keyName:default:returnedString:size:;
+	add: #MultilineTextEdit -> #printDocumentTo:;
+	add: #MultilineTextEdit -> #printPreviewDocumentTo:for:;
+	add: #PRINTDLG -> #deviceNameFromDevMode;
+	add: #PRINTDLG -> #deviceNameFromDevNames;
+	add: #PRINTDLG -> #devModeDo:;
+	add: #PRINTDLG -> #devNamesDo:;
+	add: #PRINTDLG -> #driverName;
+	add: #PRINTDLG -> #outputName;
+	add: #PRINTDLGEX -> #deviceNameFromDevMode;
+	add: #PRINTDLGEX -> #deviceNameFromDevNames;
+	add: #PRINTDLGEX -> #devModeDo:;
+	add: #PRINTDLGEX -> #devNamesDo:;
+	add: #PRINTDLGEX -> #driverName;
+	add: #PRINTDLGEX -> #outputName;
+	add: #RichTextEdit -> #printDocumentTo:;
+	add: #RichTextEdit -> #printPreviewDocumentTo:for:;
+	add: #ScintillaView -> #printDocumentTo:;
+	add: #ScintillaView -> #printPreviewDocumentTo:for:;
+	add: 'PrinterCanvas class' -> #forPrinterNamed:;
 	yourself.
 
 package globalNames
@@ -54,17 +69,19 @@ package globalAliases: (Set new
 	yourself).
 
 package setPrerequisites: (IdentitySet new
-	add: '..\Object Arts\Dolphin\IDE\Base\Development System';
 	add: '..\Object Arts\Dolphin\Base\Dolphin';
+	add: '..\Object Arts\Dolphin\MVP\Presenters\Prompters\Dolphin Choice Prompter';
 	add: '..\Object Arts\Dolphin\MVP\Dialogs\Common\Dolphin Common Dialogs';
 	add: '..\Object Arts\Dolphin\MVP\Dialogs\Common\Dolphin Common Print Dialog';
+	add: '..\Object Arts\Dolphin\MVP\Presenters\Image\Dolphin Image Presenter';
 	add: '..\Object Arts\Dolphin\MVP\Base\Dolphin MVP Base';
+	add: '..\Object Arts\Dolphin\MVP\Presenters\Prompters\Dolphin Prompter';
 	add: '..\Object Arts\Dolphin\MVP\Presenters\Text\Dolphin Rich Text Presenter';
 	add: '..\Object Arts\Dolphin\MVP\Views\Scintilla\Dolphin Scintilla View';
+	add: '..\Object Arts\Dolphin\MVP\Views\Scrollbars\Dolphin Scrollbars';
 	add: '..\Object Arts\Dolphin\MVP\Presenters\Text\Dolphin Text Presenter';
-	add: 'IDB IDE Extensions';
-	add: '..\Object Arts\Samples\MVP\Notepad\Notepad';
-	add: '..\Object Arts\Samples\MVP\Wordpad\Wordpad';
+	add: '..\Object Arts\Dolphin\MVP\Type Converters\Dolphin Type Converters';
+	add: '..\Object Arts\Dolphin\MVP\Models\Value\Dolphin Value Models';
 	yourself).
 
 package!
@@ -72,11 +89,11 @@ package!
 "Class Definitions"!
 
 Object subclass: #Printer
-	instanceVariableNames: 'hDevNames hDevMode rtMargin margins selectionRange pageRange titleBlock'
-	classVariableNames: 'Default'
-	poolDictionaries: 'PrintingConstants ScintillaConstants Win32Constants'
+	instanceVariableNames: 'hDevNames hDevMode rtMargin margins selectionRange pageRange pageRangeLimits titleBlock printerCanvas'
+	classVariableNames: ''
+	poolDictionaries: 'PrintingConstants Win32Constants'
 	classInstanceVariableNames: ''!
-Win32Structure subclass: #DEVNAMES
+ExternalStructure subclass: #DEVNAMES
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
@@ -86,18 +103,8 @@ Win32Structure subclass: #PAGESETUPDLG
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-IdeExtensions subclass: #IdePrinterExtensions
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-IdePrinterExtensions subclass: #IdeBrowserPrinterExtension
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-Printer subclass: #IdePrinter
-	instanceVariableNames: ''
+Shell subclass: #PrintPreviewShell
+	instanceVariableNames: 'image documentView printer currentPage bitmap lastPage'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -107,21 +114,22 @@ Printer subclass: #IdePrinter
 
 "Loose Methods"!
 
-!ClassBrowserAbstract methodsFor!
+!Bitmap methodsFor!
 
-canPrint
-	#idbAdded.
-	^#('source' 'definition' 'comment') includes: self currentCard view name!
+canvasCompatibleWith: aPrinterCanvas
+	"Private - Answer a Canvas to access the bitmap"
 
-print
 	#idbAdded.
-	super print: self currentCard view referee! !
-!ClassBrowserAbstract categoriesFor: #canPrint!idb goodies!printing!public!testing! !
-!ClassBrowserAbstract categoriesFor: #print!idb goodies!printing!public! !
+	hdc
+		ifNil:
+			[hdc := GDILibrary default createCompatibleDC: aPrinterCanvas handle.
+			GDILibrary default selectObject: hdc hgdiobj: self asParameter].
+	^Canvas withNonOwnedDC: hdc! !
+!Bitmap categoriesFor: #canvasCompatibleWith:!idb goodies!printing!public! !
 
 !ComDlgLibrary methodsFor!
 
-pageSetupDlg: aWinPAGESETUPDLG 
+pageSetupDlg: aWinPAGESETUPDLG
 	"Private - Displays a Page Setup dialog box.
 
 		BOOL PageSetupDlg(
@@ -133,6 +141,14 @@ pageSetupDlg: aWinPAGESETUPDLG
 	^self invalidCall! !
 !ComDlgLibrary categoriesFor: #pageSetupDlg:!idb goodies!primitives!public!win32 functions-common dialog box! !
 
+!DEVMODE methodsFor!
+
+deviceName
+	#idbAdded.
+	#JamesFoster.
+	^String fromAddress: self dmDeviceName yourAddress! !
+!DEVMODE categoriesFor: #deviceName!accessing!idb goodies!public! !
+
 !FORMATRANGE methodsFor!
 
 cpMax
@@ -141,171 +157,389 @@ cpMax
 
 cpMin
 	#idbAdded.
-	^bytes sdwordAtOffset: 40! !
+	^bytes sdwordAtOffset: 40!
+
+hdcTarget
+	#idbAdded.
+	^bytes dwordAtOffset: 4! !
 !FORMATRANGE categoriesFor: #cpMax!accessing!idb goodies!public! !
 !FORMATRANGE categoriesFor: #cpMin!accessing!idb goodies!public! !
+!FORMATRANGE categoriesFor: #hdcTarget!accessing!idb goodies!public! !
 
-!MethodBrowserShell methodsFor!
+!KernelLibrary methodsFor!
 
-canPrint
+getProfileString: appName keyName: keyName default: defaultStr returnedString: retStr size: anInt
+	<stdcall: dword GetProfileStringA lpvoid lpvoid lpvoid lpvoid dword>
 	#idbAdded.
-	^true!
-
-print
-	#idbAdded.
-	super print: browserPresenter sourcePresenter view! !
-!MethodBrowserShell categoriesFor: #canPrint!idb goodies!printing!public!testing! !
-!MethodBrowserShell categoriesFor: #print!idb goodies!printing!public! !
+	#JamesFoster.
+	self invalidCall! !
+!KernelLibrary categoriesFor: #getProfileString:keyName:default:returnedString:size:!idb goodies!public!win32 functions-system information! !
 
 !MultilineTextEdit methodsFor!
 
-printOn: aPrinterCanvas margins: aRectangle selectionRange: selectionIntervalOrNil pageRange: pageIntervalOrNil titleBlock: aBlockOrNil 
+printDocumentTo: aPrinter
 	| richTextEdit |
 	#idbAdded.
 	richTextEdit := (RichTextEdit new)
-				parentView: View desktop;
-				create;
-				yourself.
+		parentView: View desktop;
+		create;
+		yourself.
 	richTextEdit
 		replaceSelection: self text;
-		printOn: aPrinterCanvas
-			margins: aRectangle
-			selectionRange: selectionIntervalOrNil
-			pageRange: pageIntervalOrNil
-			titleBlock: aBlockOrNil! !
-!MultilineTextEdit categoriesFor: #printOn:margins:selectionRange:pageRange:titleBlock:!idb goodies!printing!private! !
+		printDocumentTo: aPrinter!
 
-!Notepad methodsFor!
+printPreviewDocumentTo: aPrinter for: aPrintPreviewShell
+	| richTextEdit |
+	#idbAdded.
+	richTextEdit := (RichTextEdit new)
+		parentView: View desktop;
+		create;
+		yourself.
+	richTextEdit
+		replaceSelection: self text;
+		printPreviewDocumentTo: aPrinter for: aPrintPreviewShell! !
+!MultilineTextEdit categoriesFor: #printDocumentTo:!idb goodies!printing!public! !
+!MultilineTextEdit categoriesFor: #printPreviewDocumentTo:for:!idb goodies!printing!public! !
 
-filePageSetup
-	self pageSetup!
+!PRINTDLG methodsFor!
 
-filePrint
-	self print: documentPresenter view! !
-!Notepad categoriesFor: #filePageSetup!idb goodies!Printing!public! !
-!Notepad categoriesFor: #filePrint!idb goodies!Printing!public! !
+deviceNameFromDevMode
+	#idbAdded.
+	#JamesFoster.
+	^self devModeDo: [:devMode | devMode deviceName]!
+
+deviceNameFromDevNames
+	#idbAdded.
+	#JamesFoster.
+	^self devNamesDo: [:devMode | devMode deviceName]!
+
+devModeDo: aBlock
+	| hDevMode pDevMode |
+	#idbAdded.
+	#JamesFoster.
+	hDevMode := self hDevMode.
+	(pDevMode := KernelLibrary default globalLock: hDevMode) ifNil: [^nil].
+	^[aBlock value: (DEVMODE fromAddress: pDevMode)]
+		ensure: [KernelLibrary default globalUnlock: hDevMode]!
+
+devNamesDo: aBlock
+	| hDevNames pDevNames |
+	#idbAdded.
+	#JamesFoster.
+	hDevNames := self hDevNames.
+	(pDevNames := KernelLibrary default globalLock: hDevNames) ifNil: [^self].
+	^[aBlock value: (DEVNAMES fromAddress: pDevNames)]
+		ensure: [KernelLibrary default globalUnlock: hDevNames]!
+
+driverName
+	#idbAdded.
+	#JamesFoster.
+	^self devNamesDo: [:devMode | devMode driverName]!
+
+outputName
+	#idbAdded.
+	#JamesFoster.
+	^self devNamesDo: [:devNames | devNames outputName]! !
+!PRINTDLG categoriesFor: #deviceNameFromDevMode!accessing!idb goodies!public! !
+!PRINTDLG categoriesFor: #deviceNameFromDevNames!accessing!idb goodies!public! !
+!PRINTDLG categoriesFor: #devModeDo:!accessing!idb goodies!public! !
+!PRINTDLG categoriesFor: #devNamesDo:!accessing!idb goodies!public! !
+!PRINTDLG categoriesFor: #driverName!accessing!idb goodies!public! !
+!PRINTDLG categoriesFor: #outputName!accessing!idb goodies!public! !
+
+!PRINTDLGEX methodsFor!
+
+deviceNameFromDevMode
+	#idbAdded.
+	#JamesFoster.
+	^self devModeDo: [:devMode | devMode deviceName]!
+
+deviceNameFromDevNames
+	#idbAdded.
+	#JamesFoster.
+	^self devNamesDo: [:devMode | devMode deviceName]!
+
+devModeDo: aBlock
+	| hDevMode pDevMode |
+	#idbAdded.
+	#JamesFoster.
+	hDevMode := self hDevMode.
+	(pDevMode := KernelLibrary default globalLock: hDevMode) ifNil: [^nil].
+	^[aBlock value: (DEVMODE fromAddress: pDevMode)]
+		ensure: [KernelLibrary default globalUnlock: hDevMode]!
+
+devNamesDo: aBlock
+	| hDevNames pDevNames |
+	#idbAdded.
+	#JamesFoster.
+	hDevNames := self hDevNames.
+	(pDevNames := KernelLibrary default globalLock: hDevNames) ifNil: [^self].
+	^[aBlock value: (DEVNAMES fromAddress: pDevNames)]
+		ensure: [KernelLibrary default globalUnlock: hDevNames]!
+
+driverName
+	#idbAdded.
+	#JamesFoster.
+	^self devNamesDo: [:devMode | devMode driverName]!
+
+outputName
+	#idbAdded.
+	#JamesFoster.
+	^self devNamesDo: [:devNames | devNames outputName]! !
+!PRINTDLGEX categoriesFor: #deviceNameFromDevMode!accessing!idb goodies!public! !
+!PRINTDLGEX categoriesFor: #deviceNameFromDevNames!accessing!idb goodies!public! !
+!PRINTDLGEX categoriesFor: #devModeDo:!helpers!idb goodies!public! !
+!PRINTDLGEX categoriesFor: #devNamesDo:!helpers!idb goodies!public! !
+!PRINTDLGEX categoriesFor: #driverName!accessing!idb goodies!public! !
+!PRINTDLGEX categoriesFor: #outputName!accessing!idb goodies!public! !
+
+!PrinterCanvas class methodsFor!
+
+forPrinterNamed: aString
+	| hDC |
+	#idbAdded.
+	#JamesFoster.
+	hDC := GDILibrary default
+		createDC: nil
+		lpszDevice: aString asParameter
+		lpszOutput: nil
+		lpInitData: nil.	"lpdvminit: nil."
+	#idbToDo.	"Check GDI call"
+	hDC ifNil: [^nil].
+	^self withOwnedDC: hDC asInteger! !
+!PrinterCanvas class categoriesFor: #forPrinterNamed:!idb goodies!instance creation!public! !
 
 !RichTextEdit methodsFor!
 
-printOn: aPrinterCanvas margins: aRectangle selectionRange: selectionIntervalOrNil pageRange: pageIntervalOrNil titleBlock: aBlockOrNil 
-	| formatRange pageRect renderRect currentPage |
-	#idbAdded.
-	"All measurements in TWIPS"
-	pageRect := Point zero extent: (aPrinterCanvas extent * 1440 / aPrinterCanvas resolution) truncated.
-	renderRect := pageRect origin + (aRectangle topLeft * 1.44) truncated 
-				corner: pageRect corner - (aRectangle bottomRight * 1.44) truncated.
+printDocumentTo: aPrinter
+	"I know the print and printPreview metods could be amalgamated but 
+	there are enough differences to make it messy"
+
+	| formatRange pageRect renderRect page |
+	#idbAdded.	"All measurements in pixels"	"All the documentation implies that the origin in the next statement should be the offset (see printPreview)
+	If you use that then the page is printed too far to the right??"
+	pageRect := (0 @ 0 * 1440 / aPrinter printerCanvas resolution) truncated
+		extent: (aPrinter printerCanvas extent * 1440 / aPrinter printerCanvas resolution) truncated.	"margins are in 0.001 of an inch"
+	renderRect := pageRect origin + (aPrinter margins topLeft * 1.44) truncated
+		corner: pageRect corner - (aPrinter margins bottomRight * 1.44) truncated.
 	formatRange := FORMATRANGE new.
 	formatRange
-		hdc: aPrinterCanvas handle;
-		hdcTarget: aPrinterCanvas handle;
-		rc: (RECT fromRectangle: renderRect);
+		hdc: aPrinter printerCanvas handle;
+		hdcTarget: aPrinter printerCanvas handle;
 		rcPage: (RECT fromRectangle: pageRect);
-		cpMin: (selectionIntervalOrNil ifNil: [0] ifNotNil: [selectionIntervalOrNil start]);
-		cpMax: (selectionIntervalOrNil ifNil: [self textLength] ifNotNil: [selectionIntervalOrNil stop]).
-	currentPage := 1.
-	aPrinterCanvas startDocNamed: 'Dolphin'.
-	[formatRange cpMin < formatRange cpMax] whileTrue: 
-			[formatRange cpMin: (self 
-						sendMessage: EM_FORMATRANGE
-						wParam: 0
-						lParam: formatRange yourAddress).
-			(pageIntervalOrNil isNil or: [pageIntervalOrNil includes: currentPage]) 
-				ifTrue: 
-					[aPrinterCanvas startPage.
-					aBlockOrNil 
-						ifNotNil: 
+		cpMin: (aPrinter selectionRange ifNil: [0] ifNotNil: [:arg | arg start]);
+		cpMax: (aPrinter selectionRange ifNil: [self textLength] ifNotNil: [:arg | arg stop]).
+	page := 1.
+	aPrinter printerCanvas startDocNamed: 'Dolphin'.
+	[formatRange cpMin < formatRange cpMax]
+		whileTrue:
+			["We need to refresh the renderRect every page"
+			formatRange rc: (RECT fromRectangle: renderRect).
+			(aPrinter pageRange isNil or: [aPrinter pageRange includes: page])
+				ifTrue:
+					[aPrinter printerCanvas startPage.	"Insert the title (if needed)"
+					aPrinter titleBlock
+						ifNotNil:
 							[:arg | 
-							arg 
-								value: aPrinterCanvas
-								value: currentPage
-								value: (renderRect left / 1440 * aPrinterCanvas resolution x) truncated
-								value: (renderRect right / 1440 * aPrinterCanvas resolution x) truncated].
-					self 
+							arg
+								value: aPrinter printerCanvas
+								value: page
+								value: (renderRect left / 1440 * aPrinter printerCanvas resolution x) truncated
+								value: (renderRect right / 1440 * aPrinter printerCanvas resolution x) truncated].	"Render it"
+					formatRange
+						cpMin:
+							(self
+								sendMessage: EM_FORMATRANGE
+								wParam: 0
+								lParam: formatRange yourAddress).	"Display it"
+					self
 						sendMessage: EM_DISPLAYBAND
 						wParam: 0
 						lParam: formatRange rc yourAddress.
-					aPrinterCanvas endPage].
-			currentPage := currentPage + 1].
-	self 
+					aPrinter printerCanvas endPage]
+				ifFalse:
+					["No need to render so just format the page and continue"
+					formatRange
+						cpMin:
+							(self
+								sendMessage: EM_FORMATRANGE
+								wParam: 0
+								lParam: formatRange yourAddress)].
+			page := page + 1].
+	self
 		sendMessage: EM_FORMATRANGE
 		wParam: 0
 		lParam: 0.
-	aPrinterCanvas endDoc! !
-!RichTextEdit categoriesFor: #printOn:margins:selectionRange:pageRange:titleBlock:!idb goodies!printing!private! !
+	aPrinter printerCanvas endDoc!
+
+printPreviewDocumentTo: aPrinter for: aPrintPreviewShell
+	"I know the print and printPreview metods could be amalgamated but 
+	there are enough differences to make it messy"
+
+	| formatRange offset pageRect renderRect page bitmap bitmapCanvas |
+	#idbAdded.	"All measurements in pixels"
+	bitmap := Bitmap compatible: aPrinter printerCanvas extent: aPrinter pageSize.
+	bitmapCanvas := (bitmap canvasCompatibleWith: aPrinter printerCanvas)
+		fillRectangle: (0 @ 0 extent: aPrinter pageSize) brush: Brush white;
+		yourself.
+	offset := (aPrinter printerCanvas getDeviceCaps: PHYSICALOFFSETX)
+		@ (aPrinter printerCanvas getDeviceCaps: PHYSICALOFFSETY).
+	pageRect := (offset * 1440 / aPrinter printerCanvas resolution) truncated
+		extent: (aPrinter printerCanvas extent * 1440 / aPrinter printerCanvas resolution) truncated.	"margins are in 0.001 of an inch"
+	renderRect := pageRect origin + (aPrinter margins topLeft * 1.44) truncated
+		corner: pageRect corner - (aPrinter margins bottomRight * 1.44) truncated.
+	formatRange := FORMATRANGE new.
+	formatRange
+		hdc: bitmapCanvas handle;
+		hdcTarget: aPrinter printerCanvas handle;
+		rcPage: (RECT fromRectangle: pageRect);
+		cpMin: (aPrinter selectionRange ifNil: [0] ifNotNil: [:arg | arg start]);
+		cpMax: (aPrinter selectionRange ifNil: [self textLength] ifNotNil: [:arg | arg stop]).
+	page := 1.
+	[formatRange cpMin < formatRange cpMax]
+		whileTrue:
+			["We need to refresh the renderRect every page"
+			formatRange rc: (RECT fromRectangle: renderRect).
+			aPrintPreviewShell currentPage = page
+				ifTrue:
+					["Insert the title (if needed)"
+					aPrinter titleBlock
+						ifNotNil:
+							[:arg | 
+							arg
+								value: bitmapCanvas
+								value: page
+								value: (renderRect left / 1440 * aPrinter printerCanvas resolution x) truncated
+								value: (renderRect right / 1440 * aPrinter printerCanvas resolution x) truncated].	"Render it"
+					formatRange
+						cpMin:
+							(self
+								sendMessage: EM_FORMATRANGE
+								wParam: 0
+								lParam: formatRange yourAddress).	"Display it"
+					self
+						sendMessage: EM_DISPLAYBAND
+						wParam: 0
+						lParam: formatRange rc yourAddress]
+				ifFalse:
+					["No need to render so just format the page and continue"
+					formatRange
+						cpMin:
+							(self
+								sendMessage: EM_FORMATRANGE
+								wParam: 0
+								lParam: formatRange yourAddress)].
+			page := page + 1].
+	self
+		sendMessage: EM_FORMATRANGE
+		wParam: 0
+		lParam: 0.
+	aPrintPreviewShell
+		bitmap: bitmap;
+		lastPage: page - 1! !
+!RichTextEdit categoriesFor: #printDocumentTo:!idb goodies!printing!public! !
+!RichTextEdit categoriesFor: #printPreviewDocumentTo:for:!idb goodies!printing!public! !
 
 !ScintillaView methodsFor!
 
-printOn: aPrinterCanvas margins: aRectangle selectionRange: selectionIntervalOrNil pageRange: pageIntervalOrNil titleBlock: aBlockOrNil 
-	| formatRange pageRect renderRect currentPage |
-	#idbAdded.
-	"All measurements in pixels"
-	pageRect := Point zero extent: aPrinterCanvas extent.
-	renderRect := pageRect origin + (aRectangle topLeft / 1000 * aPrinterCanvas resolution) truncated 
-				corner: pageRect corner - (aRectangle bottomRight / 1000 * aPrinterCanvas resolution) truncated.
+printDocumentTo: aPrinter
+	"I know the print and printPreview metods could be amalgamated but 
+	there are enough differences to make it messy"
+
+	| formatRange pageRect renderRect page |
+	#idbAdded.	"All measurements in pixels"	"All the documentation implies that the origin in the next statement should be the offset (see printPreview)
+	If you use that then the page is printed too far to the right??"
+	pageRect := 0 @ 0 extent: aPrinter printerCanvas extent.	"margins are in 0.001 of an inch"
+	renderRect := pageRect origin
+		+ (aPrinter margins topLeft / 1000 * aPrinter printerCanvas resolution) truncated
+		corner:
+			pageRect corner
+				- (aPrinter margins bottomRight / 1000 * aPrinter printerCanvas resolution) truncated.
 	formatRange := FORMATRANGE new.
 	formatRange
-		hdc: aPrinterCanvas handle;
-		hdcTarget: aPrinterCanvas handle;
+		hdc: aPrinter printerCanvas handle;
+		hdcTarget: aPrinter printerCanvas handle;
 		rc: (RECT fromRectangle: renderRect);
 		rcPage: (RECT fromRectangle: pageRect);
-		cpMin: (selectionIntervalOrNil ifNil: [0] ifNotNil: [selectionIntervalOrNil start]);
-		cpMax: (selectionIntervalOrNil ifNil: [self textLength] ifNotNil: [selectionIntervalOrNil stop]).
+		cpMin: (aPrinter selectionRange ifNil: [0] ifNotNil: [:arg | arg start]);
+		cpMax: (aPrinter selectionRange ifNil: [self textLength] ifNotNil: [:arg | arg stop]).
 	self printColourMode: SC_PRINT_COLOURONWHITE.
-	currentPage := 1.
-	aPrinterCanvas startDocNamed: 'Dolphin'.
-	[formatRange cpMin < formatRange cpMax] whileTrue: 
-			[(pageIntervalOrNil isNil or: [pageIntervalOrNil includes: currentPage]) 
-				ifTrue: 
-					[aPrinterCanvas startPage.
-					aBlockOrNil 
-						ifNotNil: 
+	page := 1.
+	aPrinter printerCanvas startDocNamed: 'Dolphin'.
+	[formatRange cpMin < formatRange cpMax]
+		whileTrue:
+			[(aPrinter pageRange isNil or: [aPrinter pageRange includes: page])
+				ifTrue:
+					[aPrinter printerCanvas startPage.	"Insert the title (if needed)"
+					aPrinter titleBlock
+						ifNotNil:
 							[:arg | 
-							arg 
-								value: aPrinterCanvas
-								value: currentPage
+							arg
+								value: aPrinter printerCanvas
+								value: page
 								value: renderRect left
-								value: renderRect right].
+								value: renderRect right].	"Render it"
 					formatRange cpMin: (self sciFormatRange: true fr: formatRange).
-					aPrinterCanvas endPage]
-				ifFalse: [formatRange cpMin: (self sciFormatRange: false fr: formatRange)].
-			currentPage := currentPage + 1].
+					aPrinter printerCanvas endPage]
+				ifFalse:
+					["No need to render so just format the page and continue"
+					formatRange cpMin: (self sciFormatRange: false fr: formatRange)].
+			page := page + 1].
 	self sciFormatRange: false fr: 0.
-	aPrinterCanvas endDoc! !
-!ScintillaView categoriesFor: #printOn:margins:selectionRange:pageRange:titleBlock:!idb goodies!printing!private! !
+	aPrinter printerCanvas endDoc!
 
-!Shell methodsFor!
+printPreviewDocumentTo: aPrinter for: aPrintPreviewShell
+	"I know the print and printPreview metods could be amalgamated but 
+	there are enough differences to make it messy"
 
-pageSetup
-	#idbAdded.
-	IdePrinter default showPageSetupDialog: true!
-
-print: aView 
-	#idbAdded.
-	IdePrinter default print: aView showDialog: true! !
-!Shell categoriesFor: #pageSetup!idb goodies!printing!public! !
-!Shell categoriesFor: #print:!idb goodies!printing!public! !
-
-!SmalltalkWorkspaceDocument methodsFor!
-
-canPrint
-	#idbAdded.
-	^true!
-
-print
-	#idbAdded.
-	super print: workspacePresenter view! !
-!SmalltalkWorkspaceDocument categoriesFor: #canPrint!idb goodies!printing!public!testing! !
-!SmalltalkWorkspaceDocument categoriesFor: #print!idb goodies!printing!public! !
-
-!WordPad methodsFor!
-
-filePageSetup
-	self pageSetup!
-
-filePrint
-	self print: documentPresenter view! !
-!WordPad categoriesFor: #filePageSetup!idb goodies!Printing!public! !
-!WordPad categoriesFor: #filePrint!idb goodies!Printing!public! !
+	| formatRange offset pageRect renderRect page bitmap bitmapCanvas |
+	#idbAdded.	"All measurements in pixels"
+	bitmap := Bitmap compatible: aPrinter printerCanvas extent: aPrinter pageSize.
+	bitmapCanvas := (bitmap canvasCompatibleWith: aPrinter printerCanvas)
+		fillRectangle: (0 @ 0 extent: aPrinter pageSize) brush: Brush white;
+		yourself.
+	offset := (aPrinter printerCanvas getDeviceCaps: PHYSICALOFFSETX)
+		@ (aPrinter printerCanvas getDeviceCaps: PHYSICALOFFSETY).
+	pageRect := offset extent: aPrinter printerCanvas extent.	"margins are in 0.001 of an inch"
+	renderRect := pageRect origin
+		+ (aPrinter margins topLeft / 1000 * aPrinter printerCanvas resolution) truncated
+		corner:
+			pageRect corner
+				- (aPrinter margins bottomRight / 1000 * aPrinter printerCanvas resolution) truncated.
+	formatRange := FORMATRANGE new.
+	formatRange
+		hdc: bitmapCanvas handle;
+		hdcTarget: aPrinter printerCanvas handle;
+		rc: (RECT fromRectangle: renderRect);
+		rcPage: (RECT fromRectangle: pageRect);
+		cpMin: (aPrinter selectionRange ifNil: [0] ifNotNil: [:arg | arg start]);
+		cpMax: (aPrinter selectionRange ifNil: [self textLength] ifNotNil: [:arg | arg stop]).
+	self printColourMode: SC_PRINT_COLOURONWHITE.
+	page := 1.
+	[formatRange cpMin < formatRange cpMax]
+		whileTrue:
+			[aPrintPreviewShell currentPage = page
+				ifTrue:
+					["Insert the title (if needed)"
+					aPrinter titleBlock
+						ifNotNil:
+							[:arg | 
+							arg
+								value: bitmapCanvas
+								value: page
+								value: renderRect left
+								value: renderRect right].	"Render it"
+					formatRange cpMin: (self sciFormatRange: true fr: formatRange)]
+				ifFalse:
+					["No need to render so just format the page and continue"
+					formatRange cpMin: (self sciFormatRange: false fr: formatRange)].
+			page := page + 1].
+	self sciFormatRange: false fr: 0.
+	aPrintPreviewShell
+		bitmap: bitmap;
+		lastPage: page - 1! !
+!ScintillaView categoriesFor: #printDocumentTo:!idb goodies!printing!public! !
+!ScintillaView categoriesFor: #printPreviewDocumentTo:for:!idb goodies!printing!public! !
 
 "End of package definition"!
 

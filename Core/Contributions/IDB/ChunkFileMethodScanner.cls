@@ -6,9 +6,22 @@ Object subclass: #ChunkFileMethodScanner
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ChunkFileMethodScanner guid: (GUID fromString: '{B8B83C19-E601-4265-B607-2A0B2122144B}')!
-ChunkFileMethodScanner comment: 'See [DolphinImageFolder]/Idb/Documentation for details
+ChunkFileMethodScanner comment: 'Scans the sources and changes file and answers a collection of either...
+- all the method versions for a specified class
+- all the method versions for a specified method in a class
 
-(C) 2006-2008 Ian Bartholomew
+Usage
+ChunkFileMethodScanner forMethodsInClass: aClass
+ChunkFileMethodScanner forMethod: aSymbol inClass: aClass
+
+The answer is a collection of Arrays, one for each method version found.  
+Each entry in the Array contains 3 items
+
+at: 1 = the source of the chunk, either #changes or #sources 
+at: 2 = the selector the method was saved as, a Symbol 
+at: 3 = the method source
+
+(C) 2005 Ian Bartholomew
 ian@idb.me.uk
 Public Domain Freeware'!
 !ChunkFileMethodScanner categoriesForClass!IDB Goodies! !
@@ -84,14 +97,12 @@ scan: aStream for: aString source: aSymbol
 scanChangesFileFor: aString
 	"Scan the changes file for method definition chunks preceded by aString"
 
-	#idbToDo.	"Temporary fix for Dolphin bug.  Do not attempt to read change log if it is less than one buffer in size"
-	SourceManager default changesStream size <= FileStream bufferSize ifTrue: [^OrderedCollection new].
 	^self
 		scan: SourceManager default changesStream
 		for: aString
 		source: #changes!
 
-scanForMethodChunks: aMethodSelector inClass: aClass
+scanForMethodChunks: aMethodSelector inClass: aClass 
 	"Answers a collection of Arrays containing all the method definitions for
 	aClass>>aMethodSelector from both the sources and change files.
 
@@ -100,9 +111,9 @@ scanForMethodChunks: aMethodSelector inClass: aClass
 		at: 2 = selector as Symbol 
 		at: 3 = method source"
 
-	^(self scanForMethodChunksInClass: aClass) select: [:each | aMethodSelector = each second]!
+	^(self scanForMethodChunksInClass: aClass) select: [:each | aMethodSelector = (each at: 2)]!
 
-scanForMethodChunksInClass: aClass
+scanForMethodChunksInClass: aClass 
 	"Answers a collection of Arrays containing all the method definitions, from both the sources
 	and change files, belonging to aClass
 
@@ -112,7 +123,12 @@ scanForMethodChunksInClass: aClass
 		at: 3 = method source"
 
 	| target |
-	target := '!!<1s> methodsFor!!' expandMacrosWith: aClass name.
+	target := (String writeStream)
+				nextPut: $!!;
+				nextPutAll: aClass name;
+				nextPutAll: ' methodsFor!!';
+				cr;
+				contents.
 	^(self scanSourcesFileFor: target) , (self scanChangesFileFor: target)!
 
 scanSourcesFileFor: aString
@@ -136,13 +152,13 @@ forMethod: aMethodSelector inClass: aClass
 	"Answers a collection containing all the method definitions for aClass>>aMethodSelector from
 	both the sources and change files"
 
-	^self new scanForMethodChunks: aMethodSelector inClass: aClass!
+	^super new scanForMethodChunks: aMethodSelector inClass: aClass!
 
 forMethodsInClass: aClass
 	"Answers a collection containing all the method definitions, from both the sources and
 	change files, belonging to aClass"
 
-	^self new scanForMethodChunksInClass: aClass! !
+	^super new scanForMethodChunksInClass: aClass! !
 !ChunkFileMethodScanner class categoriesFor: #forMethod:inClass:!instance creation!public! !
 !ChunkFileMethodScanner class categoriesFor: #forMethodsInClass:!instance creation!public! !
 
