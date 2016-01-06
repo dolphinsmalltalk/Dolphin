@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 InternalBitmap subclass: #InternalIcon
 	instanceVariableNames: ''
@@ -98,11 +98,51 @@ imageManager
 	^IconImageManager current!
 
 new
-	^self withExtent: self defaultExtent! !
+	^self withExtent: self defaultExtent!
+
+textTile: aStringLabel color: aColor 
+	"Answer an instance of the receiver that is a aStringLabel in white superimposed on a square tile of aColor."
+
+	^self 
+		textTile: aStringLabel
+		color: aColor
+		extent: self defaultExtent!
+
+textTile: aStringLabel color: aColor extent: extent 
+	"Answer an instance of the receiver that is a aStringLabel in white superimposed on a square tile of aColor."
+
+	| font |
+	font := Font name: 'Arial' pixelSize: extent y - 2.
+	^self 
+		textTile: aStringLabel
+		font: font
+		color: aColor
+		extent: extent!
+
+textTile: aStringLabel font: aFont color: aColor extent: extent 
+	"Answer an instance of the receiver that is a aStringLabel in white  written in aFont and 
+	superimposed on a square tile of aColor."
+
+	| bitmap |
+	bitmap := GdiplusBitmap extent: extent asPoint.
+	bitmap graphics doWithCanvas: 
+			[:canvas | 
+			| textExtent |
+			canvas font: aFont .
+			textExtent := canvas textExtent: aStringLabel .
+			canvas
+				backcolor: aColor ;
+				erase;
+				forecolor: Color white;
+				text: aStringLabel at: (extent asPoint - textExtent) // 2].
+	^self fromGdiplusBitmap: bitmap! !
 !InternalIcon class categoriesFor: #defaultExtent!private! !
 !InternalIcon class categoriesFor: #filesType!constants!private! !
 !InternalIcon class categoriesFor: #fromFile:!instance creation!public! !
 !InternalIcon class categoriesFor: #fromFile:extent:!instance creation!public! !
 !InternalIcon class categoriesFor: #imageManager!accessing!private! !
 !InternalIcon class categoriesFor: #new!instance creation!public! !
+!InternalIcon class categoriesFor: #textTile:color:!instance creation!public! !
+!InternalIcon class categoriesFor: #textTile:color:extent:!instance creation!public! !
+!InternalIcon class categoriesFor: #textTile:font:color:extent:!instance creation!public! !
 

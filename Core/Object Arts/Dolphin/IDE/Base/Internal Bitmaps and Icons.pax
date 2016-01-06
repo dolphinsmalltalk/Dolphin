@@ -44,6 +44,7 @@ package classNames
 
 package methodNames
 	add: #ClassDescription -> #createIconMethod;
+	add: #ClassDescription -> #createIconMethod:fromIcon:;
 	add: #ClassDescription -> #createIconMethod:OfSize:;
 	add: #ClassDescription -> #createIconMethod:ofSize:fromFile:;
 	add: #Collection -> #printOn:upTo:;
@@ -110,6 +111,18 @@ createIconMethod
 
 	^self createIconMethod: #icon OfSize: 48!
 
+createIconMethod: methodName fromIcon: anInternalIcon 
+	| methodSourceStream |
+	methodSourceStream := String writeStream.
+	methodSourceStream
+		nextPutAll: methodName;
+		cr;
+		nextPutAll: '^'.
+	anInternalIcon printOn: methodSourceStream.
+	
+	self class compile: methodSourceStream contents
+		categories: (Array with: MethodCategory public with: (MethodCategory name: 'constants'))!
+
 createIconMethod: methodName OfSize: pixelSize 
 	| extent imageFileName |
 	extent := pixelSize asPoint.
@@ -155,6 +168,7 @@ to convert to PNG format first?'.
 	self class compile: methodSourceStream contents
 		categories: (Array with: MethodCategory public with: (MethodCategory name: 'constants'))! !
 !ClassDescription categoriesFor: #createIconMethod!development!public! !
+!ClassDescription categoriesFor: #createIconMethod:fromIcon:!public! !
 !ClassDescription categoriesFor: #createIconMethod:OfSize:!public! !
 !ClassDescription categoriesFor: #createIconMethod:ofSize:fromFile:!public! !
 
