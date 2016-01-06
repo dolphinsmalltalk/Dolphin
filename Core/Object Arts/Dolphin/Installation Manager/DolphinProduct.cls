@@ -132,11 +132,11 @@ contents
 		yourself.
 
 	"Solutions Software components"
-	"answer
+	answer
 		add: #('Core\Contributions\Solutions Software\SSW ListView Extensions.pax' #plain #imageBased);
 		add: #('Core\Contributions\Solutions Software\SSW Widget Enhancements.pax' #plain #imageBased);
 		add: #('Core\Contributions\Solutions Software\SSW EditableListView.pax' #plain #imageBased);
-		yourself."
+		yourself.
 		
 	"Hmmm, try and break dependency of Installation Manager on the development system"
 	answer

@@ -89,10 +89,10 @@ contents
 		add: #('Core\Object Arts\Dolphin\ActiveX\Components\VBScript\VBScript Regular Expressions.pax' #plain #imageBased).
 
 	"Solutions Software components"
-	"contents
+	contents
 		add: #('Core\Contributions\Solutions Software\SSW Widget Development.pax' #plain #imageBased);
 		add: #('Core\Contributions\Solutions Software\SSW EditableListView Demo.pax' #plain #imageBased);
-		yourself."
+		yourself.
 		
 
 	^contents!
