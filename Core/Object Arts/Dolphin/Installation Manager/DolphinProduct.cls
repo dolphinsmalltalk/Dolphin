@@ -52,9 +52,16 @@ beCurrent
 boot
 	self loadShrinkAndCompress.
 	self installSystemFolderOptions.
-	self installSplash
+	self installSplash!
 
-!
+bootLog
+
+	| fileStream string |
+	(File exists: 'boot.log') ifFalse: [^nil].
+	fileStream := FileStream read: 'boot.log'.
+	string := fileStream upToEnd.
+	fileStream close.
+	^string!
 
 contents
 	"Answer the list of package contents associated with the receiver. Each content item is a
@@ -314,12 +321,16 @@ printOn: aStream
 productDetails
 	"Answers the product details for the receiver"
 
-	^(VMLibrary default defaultProductDetails)
+	| productDetails |
+	productDetails := VMLibrary default defaultProductDetails.
+	productDetails size < 8 ifTrue: [productDetails := (productDetails , (Array new: 8)) copyFrom: 1 to: 8].
+	^productDetails
 		at: 1 put: self fullName;
 		at: 2 put: self name;
 		at: 3 put: self version;
 		at: 6 put: self shortProductName;
-		at: 7 put: nil;
+		at: 7 put: nil; "Serial Number"
+		at: 8 put: self bootLog;
 		yourself!
 
 productLevel
