@@ -1,0 +1,130 @@
+| package |
+package := Package name: 'SSW Widget Enhancements'.
+package paxVersion: 1;
+	basicComment: '©2006 Solutions Software Limited'.
+
+package basicPackageVersion: '0.001'.
+
+
+package classNames
+	add: #EmulatedCheckBox;
+	add: #FormattedTextEdit;
+	yourself.
+
+package methodNames
+	add: #Canvas -> #erase:;
+	add: #Canvas -> #erase:color:;
+	add: #Date -> #shortString;
+	add: #KeyEvent -> #resendTo:;
+	add: #PointEvent -> #resendTo:;
+	add: 'Color class' -> #grayText;
+	add: 'Color class' -> #highlightText;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\..\Object Arts\Dolphin\Base\Dolphin';
+	add: '..\..\Object Arts\Dolphin\MVP\Base\Dolphin MVP Base';
+	add: '..\..\Object Arts\Dolphin\MVP\Presenters\Text\Dolphin Text Presenter';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+View subclass: #EmulatedCheckBox
+	instanceVariableNames: 'isTransition isChecked hasCursor isThemed'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+TextEdit subclass: #FormattedTextEdit
+	instanceVariableNames: 'isFormatting isErroring format separatorChars placeholderChar'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+!Canvas methodsFor!
+
+erase: aRectangle
+	"Erase the receiver to the current background colour"
+
+	self erase: aRectangle color: self backcolor!
+
+erase: aRectangle color: aColor
+	"Erase the receiver to the current background colour"
+
+	self fillRectangle: aRectangle brush: (Brush color: aColor)! !
+!Canvas categoriesFor: #erase:!drawing!public! !
+!Canvas categoriesFor: #erase:color:!drawing!public! !
+
+!Color class methodsFor!
+
+grayText
+	"Answer the Gray Text system color."
+
+	^self systemColor: COLOR_GRAYTEXT!
+
+highlightText
+	"Answer the Highlight Text system color."
+
+	^self systemColor: COLOR_HIGHLIGHTTEXT! !
+!Color class categoriesFor: #grayText!constants!public! !
+!Color class categoriesFor: #highlightText!constants!public! !
+
+!Date methodsFor!
+
+shortString
+
+	| stream |
+
+	stream := WriteStream on: (String new: 10).
+
+	self printOn: stream longPicture: false.
+
+	^stream contents! !
+!Date categoriesFor: #shortString!printing!public! !
+
+!KeyEvent methodsFor!
+
+resendTo: aView
+
+	"Send this message onto aView"
+
+	aView 
+		sendMessage: message 
+		wParam: wParam 
+		lParam: lParam! !
+!KeyEvent categoriesFor: #resendTo:!public!testing! !
+
+!PointEvent methodsFor!
+
+resendTo: aView
+
+	"Send this message onto aView, translating the position"
+
+	| newPoint newLParam |
+
+	newLParam := DWORD fromInteger: lParam.
+	newPoint := self window mapPoint: self position to: aView.
+	newLParam 
+		lowSWord: newPoint x;
+		highSWord: newPoint y.
+
+	aView 
+		sendMessage: message 
+		wParam: wParam 
+		lParam: newLParam asInteger! !
+!PointEvent categoriesFor: #resendTo:!accessing!private! !
+
+"End of package definition"!
+

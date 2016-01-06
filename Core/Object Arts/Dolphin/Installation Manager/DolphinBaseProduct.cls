@@ -130,6 +130,15 @@ contents
 		add: #('Core\Contributions\IDB\IDB Method History.pax' #plain #imageBased);
 		yourself.
 
+	"Solutions Software components"
+	contents
+		add: #('Core\Contributions\Solutions Software\SSW ListView Extensions.pax' #plain #imageBased);
+		add: #('Core\Contributions\Solutions Software\SSW Widget Enhancements.pax' #plain #imageBased);
+		add: #('Core\Contributions\Solutions Software\SSW EditableListView.pax' #plain #imageBased);
+		add: #('Core\Contributions\Solutions Software\SSW Widget Development.pax' #plain #imageBased);
+		add: #('Core\Contributions\Solutions Software\SSW EditableListView Demo.pax' #plain #imageBased);
+		yourself.
+		
 	^contents!
 
 fullName

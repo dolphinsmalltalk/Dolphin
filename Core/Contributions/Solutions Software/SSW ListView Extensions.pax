@@ -1,0 +1,299 @@
+| package |
+package := Package name: 'SSW ListView Extensions'.
+package paxVersion: 1;
+	basicComment: '©2006 Solutions Software Limited'.
+
+package basicPackageVersion: '0.001'.
+
+
+package classNames
+	add: #HDITEM;
+	add: #HeaderView;
+	yourself.
+
+package methodNames
+	add: #ListView -> #drawGridlines;
+	add: #ListView -> #drawGridlinesOn:;
+	add: #ListView -> #drawHorizontalGridlinesOn:from:to:by:;
+	add: #ListView -> #drawVerticalGridlinesOn:from:to:;
+	add: #ListView -> #fullItemFromPoint:;
+	add: #ListView -> #hasVirtualGridLines;
+	add: #ListView -> #hasVirtualGridLines:;
+	add: #ListView -> #headerControl;
+	add: #ListView -> #headerRect;
+	add: #ListView -> #horzScrollPos;
+	add: #ListView -> #isHorzPaging;
+	add: #ListView -> #isHorzPaging:;
+	add: #ListView -> #lvmGetItemCount;
+	add: #ListView -> #lvmGetSubItemRect:bounding:;
+	add: #ListView -> #lvmGetTopIndex;
+	add: #ListView -> #nmCustomDraw:;
+	add: #ListView -> #onHScroll:;
+	add: #ListView -> #onViewOpened;
+	add: #ListView -> #rowPixelHeight;
+	add: #ListView -> #vertScrollPos;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\..\Object Arts\Dolphin\Base\Dolphin';
+	add: '..\..\Object Arts\Dolphin\MVP\Views\Common Controls\Dolphin Common Controls';
+	add: '..\..\Object Arts\Dolphin\MVP\Base\Dolphin MVP Base';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+CCITEM subclass: #HDITEM
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ControlView subclass: #HeaderView
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+!ListView methodsFor!
+
+drawGridlines
+
+	| canvas |
+
+	canvas := self canvas.
+
+	self drawGridlinesOn: canvas.
+
+	canvas free!
+
+drawGridlinesOn: aCanvas
+
+	| headerHeight first height brush top bottom |
+
+	headerHeight := self headerRect height.
+
+	"Work out start point and spacing"
+	self lvmGetItemCount > 0
+	ifTrue:
+		[| rect |
+		rect := self itemRect: ((self lvmGetTopIndex) + 1).
+		first := rect bottom.
+		height := rect height]
+	ifFalse:
+		[height := self rowPixelHeight.
+		first := headerHeight + height].
+
+	top := first - 1.
+	bottom := self rectangle bottom.
+
+	brush := Color face3d pen.
+	aCanvas pen: brush.
+
+	self drawHorizontalGridlinesOn: aCanvas from: top to: bottom by: height.
+
+	self isHorzPaging ifFalse: 
+		[top := top - height.
+		self drawVerticalGridlinesOn: aCanvas from: top to: bottom].
+
+	brush free!
+
+drawHorizontalGridlinesOn: aCanvas from: top to: bottom by: height
+
+	top to: bottom by: height do:
+		[ :i |
+		aCanvas lineFrom: (0@i) to: (self rectangle width@i)]
+!
+
+drawVerticalGridlinesOn: aCanvas from: top to: bottom
+
+	| left allColumns |
+
+	left := 0 - self horzScrollPos.
+	allColumns := self allColumns.
+
+	self columnOrder do:
+		[ :index || col |
+		col := allColumns at: index.
+		left := left + col width.
+		aCanvas lineFrom: (left@top) to: (left@bottom)]!
+
+fullItemFromPoint: coord
+	"Private - Answer a LVHITTESTINFO populated by the control  for the
+	client coordinate represented by the <POINTL>, coord."
+
+	| struct |
+	struct := LVHITTESTINFO new.
+	struct pt: coord asParameter.
+	self sendMessage: (LVM_HITTEST + 39) "LVM_SUBITEMHITTEST" wParam: 0 lpParam: struct.
+	^struct!
+
+hasVirtualGridLines
+
+	^self propertyAt: #hasVirtualGridLines ifAbsent: [false]!
+
+hasVirtualGridLines: aBoolean
+
+	self propertyAt: #hasVirtualGridLines put: aBoolean!
+
+headerControl
+
+	^self propertyAt: #headerControl ifAbsent:
+		[| hHandle |
+		hHandle := self lvmGetHeader.
+		self propertyAt: #headerControl put:
+			((HeaderView fromHandle: hHandle)
+				subclassWindow: hHandle;
+				yourself)]
+!
+
+headerRect
+
+	| rect |
+
+	rect := RECT new.
+
+	UserLibrary default getWindowRect: self lvmGetHeader lpRect: rect.
+
+	^rect
+!
+
+horzScrollPos
+
+	| struct |
+
+	struct := SCROLLINFO new maskIn: SIF_POS; yourself.
+
+	self view getScrollInfo: struct bar: SB_HORZ.
+
+	^struct pos!
+
+isHorzPaging
+
+	^self propertyAt: #isHorzPaging ifAbsent: [false]!
+
+isHorzPaging: aBoolean
+
+	self propertyAt: #isHorzPaging put: aBoolean!
+
+lvmGetItemCount
+
+	^self sendMessage: LVM_GETITEMCOUNT!
+
+lvmGetSubItemRect: pointIndex bounding: boundingValue
+	"Private - Answer a bounding Rectangle for all or part of a subitem.
+	pointIndex is itemIndex@subitemIndex"
+
+	| rect |
+	rect := RECT new.
+	rect 
+		top: pointIndex y; 
+		left: boundingValue.
+
+	(self sendMessage: "LVM_GETSUBITEMRECT"LVM_HITTEST+38 wParam: pointIndex x lpParam: rect) == 0
+		ifTrue: [^self errorInCommonControlCall: pointIndex x].
+
+	^rect asRectangle!
+
+lvmGetTopIndex
+
+	^self sendMessage: ##(16r1000 "LVM_FIRST" + 39) "LVM_GETTOPINDEX"!
+
+nmCustomDraw: pNMHDR
+
+	"Override to request or trap a post-paint notification"
+
+	| context drawStage res |
+
+	"Only required for drawing gridlines"
+	self hasVirtualGridLines ifFalse: [^super nmCustomDraw: pNMHDR].
+
+	context := self customDrawContextClass fromAddress: pNMHDR.
+	drawStage := context dwDrawStage.
+
+	"Overall postpaint notification? Draw the gridlines"
+	((drawStage allMask: 2 "CDDS_POSTPAINT") and: [drawStage < 65536 "NOT CDDS_ITEM"]) ifTrue:
+		[self drawGridlinesOn: context canvas.
+		^CDRF_DODEFAULT].
+
+	res := super nmCustomDraw: pNMHDR.
+
+	"Request postdraw notification for the above"
+	^((drawStage allMask: CDDS_PREPAINT) and: [drawStage < 65536 "NOT CDDS_ITEM"]) 
+		ifTrue: [res | 16r10 "CDRF_NOTIFYPOSTPAINT"]
+		ifFalse: [res]!
+
+onHScroll: aScrollEvent 
+
+	"Annoyingly, vertical virtual grildines scar on horizontal page scrolling... 
+	have to suppress vertical gridlines when page scrolling..."
+	self hasVirtualGridLines ifTrue:
+		[(aScrollEvent pageLeft or: [aScrollEvent pageRight])
+		ifTrue: 
+			[self isHorzPaging: true]
+		ifFalse: 
+			[(self isHorzPaging and: [aScrollEvent endScroll]) ifTrue: 
+				[self isHorzPaging: false.
+				self drawGridlines]]].
+
+	^super onHScroll: aScrollEvent!
+
+onViewOpened
+
+	"Turn off real gridlines and activate virtual gridlines on XP to handle corruption when scrolling"
+	(self hasGridLines and: [OSVERSIONINFO current isWinXP]) ifTrue:
+		[self 
+			hasGridLines: false;
+			hasVirtualGridLines: true].
+
+	^super onViewOpened!
+
+rowPixelHeight
+
+	"Estimated"
+
+	^(self smallImageExtent y + 1) max: (self actualFont pixelSize + 6)!
+
+vertScrollPos
+
+	| struct |
+
+	struct := SCROLLINFO new maskIn: SIF_POS; yourself.
+
+	self view getScrollInfo: struct bar: SB_VERT.
+
+	^struct pos! !
+!ListView categoriesFor: #drawGridlines!helpers!public! !
+!ListView categoriesFor: #drawGridlinesOn:!helpers!public! !
+!ListView categoriesFor: #drawHorizontalGridlinesOn:from:to:by:!helpers!private! !
+!ListView categoriesFor: #drawVerticalGridlinesOn:from:to:!helpers!private! !
+!ListView categoriesFor: #fullItemFromPoint:!accessing!private! !
+!ListView categoriesFor: #hasVirtualGridLines!accessing!public! !
+!ListView categoriesFor: #hasVirtualGridLines:!accessing!public! !
+!ListView categoriesFor: #headerControl!public!updating! !
+!ListView categoriesFor: #headerRect!public!updating! !
+!ListView categoriesFor: #horzScrollPos!enquiries!public! !
+!ListView categoriesFor: #isHorzPaging!accessing!public! !
+!ListView categoriesFor: #isHorzPaging:!accessing!public! !
+!ListView categoriesFor: #lvmGetItemCount!accessing!public! !
+!ListView categoriesFor: #lvmGetSubItemRect:bounding:!geometry!private! !
+!ListView categoriesFor: #lvmGetTopIndex!accessing!public! !
+!ListView categoriesFor: #nmCustomDraw:!event handling!public! !
+!ListView categoriesFor: #onHScroll:!event handling!public! !
+!ListView categoriesFor: #onViewOpened!event handling!public! !
+!ListView categoriesFor: #rowPixelHeight!helpers!public! !
+!ListView categoriesFor: #vertScrollPos!enquiries!public! !
+
+"End of package definition"!
+
