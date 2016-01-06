@@ -1,0 +1,43 @@
+| package |
+package := Package name: 'Better Hello World'.
+package paxVersion: 1;
+	basicComment: 'The standard “Hello World” sample application that comes pre-loaded the Dolphin Samples folder is not ideal because it doesn’t show how to build Hello World in the normal Dolphin Model-View-Presenter framework. Whilst this makes it quick and easy do to, it’s educational value is limited and some users have found it rather confusing.
+
+This example shows an Hello World Model-View-Presenter component consisting of a ValueModel, a composite ShellView (drawn with the ViewComposer) and a BetterHelloWorld presenter class that ties these pieces together. You can follow a tutorial video at: https://youtu.be/u3I3AYeeIec and then an explanation of what makes MVP a good idea at: https://youtu.be/1LOR2tg8YOg. If you follow the tutorial directly then you''ll need to uninstall this package first.'.
+
+
+package classNames
+	add: #BetterHelloWorld;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\..\..\Dolphin\Base\Dolphin';
+	add: '..\..\..\Dolphin\MVP\Base\Dolphin MVP Base';
+	add: '..\..\..\Dolphin\MVP\Presenters\Text\Dolphin Text Presenter';
+	add: '..\..\..\Dolphin\MVP\Type Converters\Dolphin Type Converters';
+	add: '..\..\..\Dolphin\IDE\Base\Internal Bitmaps and Icons';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+Shell subclass: #BetterHelloWorld
+	instanceVariableNames: 'textToDisplayPresenter'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+"End of package definition"!
+

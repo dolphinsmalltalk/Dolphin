@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 DolphinCoreProduct subclass: #DolphinBaseProduct
 	instanceVariableNames: ''
@@ -67,6 +67,7 @@ contents
 		add: #('Core\Object Arts\Samples\MVP\Etch-a-Sketch\Etch-a-Sketch.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Samples\MVP\Notepad\Notepad.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Samples\MVP\Hello World\Hello World.pax' #plain #imageBased);
+		add: #('Core\Object Arts\Samples\MVP\Better Hello World\Better Hello World.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Samples\ActiveX\EnumRECT\EnumRECT.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Samples\ActiveX\Web Browser\Simple Web Browser.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Samples\MVP\Calculator\Calculator.pax' #plain #imageBased);

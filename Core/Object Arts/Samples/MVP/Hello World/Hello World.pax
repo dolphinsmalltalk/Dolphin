@@ -34,7 +34,7 @@ package!
 ShellView subclass: #HelloWorld
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
 
 "Global Aliases"!
