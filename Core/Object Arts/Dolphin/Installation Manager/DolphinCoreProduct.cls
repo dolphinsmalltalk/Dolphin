@@ -88,6 +88,13 @@ contents
 		add: #('Core\Object Arts\Dolphin\ActiveX\Components\AgentObjects\AgentObjects.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\ActiveX\Components\VBScript\VBScript Regular Expressions.pax' #plain #imageBased).
 
+	"Solutions Software components"
+	"contents
+		add: #('Core\Contributions\Solutions Software\SSW Widget Development.pax' #plain #imageBased);
+		add: #('Core\Contributions\Solutions Software\SSW EditableListView Demo.pax' #plain #imageBased);
+		yourself."
+		
+
 	^contents!
 
 defaultSystemFolderColor

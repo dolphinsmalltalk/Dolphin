@@ -131,6 +131,13 @@ contents
 		add: #('Core\Object Arts\Dolphin\IDE\Base\Development System.pax' #plain #imageBased);
 		yourself.
 
+	"Solutions Software components"
+	"answer
+		add: #('Core\Contributions\Solutions Software\SSW ListView Extensions.pax' #plain #imageBased);
+		add: #('Core\Contributions\Solutions Software\SSW Widget Enhancements.pax' #plain #imageBased);
+		add: #('Core\Contributions\Solutions Software\SSW EditableListView.pax' #plain #imageBased);
+		yourself."
+		
 	"Hmmm, try and break dependency of Installation Manager on the development system"
 	answer
 		add: #('Core\Object Arts\Internal\Installation Manager\Dolphin Products.pax' #plain #imageBased);
