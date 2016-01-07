@@ -53,7 +53,10 @@ productName := SessionManager current argv at: 3 ifAbsent: [ | p |
 	isPrompted := true.
 	p name].
 
-[product := Smalltalk at: productName asSymbol.
+[product := Smalltalk at: productName asSymbol ifAbsent: [ | path |
+	path := SessionManager current argv at: 4.
+	Package manager install: path.
+	Smalltalk at: productName asSymbol].
 SessionManager current saveImage: (File fullPathOf: product shortProductName).
 Notification signal: 'Booting ', product name.
 product boot] on: Error do: [:ex | 
