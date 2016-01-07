@@ -7,3 +7,4 @@ DBOOT.chg
 *.errors
 testsGdiplus
 Repository/
+*.log
