@@ -76,8 +76,9 @@ VMLibrary default unlockVM: 0 expireAfter: 0 flags: 0!
 SourceManager default basicCompressSources: 0 asValue.
 SessionManager current saveImage!
 
-"Remove rogue .img file"
-File delete: (File default: SessionManager current imagePath extension: 'img')!
+"Remove rogue .img and unnecessary .chg files"
+File delete: (File default: SessionManager current imagePath extension: 'img').
+File delete: 'DBOOT.chg'!
 
 SessionManager current quit!
 
