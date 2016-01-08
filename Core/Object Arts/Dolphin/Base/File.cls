@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #File
 	instanceVariableNames: 'handle spec flags shareFlags'
@@ -1256,7 +1256,12 @@ workingDirectory
 	dir := CRTLibrary default _getcwd: buffer maxlen: buffer size.
 	^dir last = $\
 		ifTrue: [dir]
-		ifFalse: [dir copyWith: $\]! !
+		ifFalse: [dir copyWith: $\]!
+
+workingDirectory: aString
+	"Answer the current working directory."
+
+	^CRTLibrary default _chdir: aString! !
 !File class categoriesFor: #appendPathDelimiter:!filename manipulation!public!testing! !
 !File class categoriesFor: #attributes:!file operations!public! !
 !File class categoriesFor: #change:extension:!filename manipulation!public! !
@@ -1321,4 +1326,5 @@ workingDirectory
 !File class categoriesFor: #temporaryFilenameWithPrefix:!filename manipulation!public! !
 !File class categoriesFor: #tempPath!filename manipulation!public! !
 !File class categoriesFor: #workingDirectory!filename manipulation!public! !
+!File class categoriesFor: #workingDirectory:!filename manipulation!public! !
 

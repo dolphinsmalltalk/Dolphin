@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #PackageManager
 	instanceVariableNames: 'packages processEvents packagedGlobals looseMethods events defaultPackage'
@@ -512,6 +512,12 @@ install: aString
 				[self beProcessingEvents.
 				self loadedChanged].
 	^newPackages!
+
+installHere: aString 
+	"Same as #install: except that aString is seen as being relative to the current directory
+	rather than the image base."
+
+	^self install: (File fullPathOf: aString)!
 
 isConnected
 	"Part of the StsManager protocol implemented here for systems which do not have STS
@@ -1225,6 +1231,7 @@ Would you like to re-enable change monitoring (recommended)?')
 !PackageManager categoriesFor: #includesPackageNamed:!public!searching! !
 !PackageManager categoriesFor: #initialize!initializing!private! !
 !PackageManager categoriesFor: #install:!operations!public! !
+!PackageManager categoriesFor: #installHere:!operations!public! !
 !PackageManager categoriesFor: #isConnected!public!source tracking system! !
 !PackageManager categoriesFor: #isLooseMethod:!public!testing! !
 !PackageManager categoriesFor: #isLooseResource:!public!testing! !

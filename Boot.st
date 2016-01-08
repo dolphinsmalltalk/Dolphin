@@ -13,6 +13,12 @@ MemoryManager guid: (GUID fromString: '{703BD0AD-FBFF-4D00-866B-B80387F7B1D7}')!
 
 (Smalltalk associations select: [:each |each isImmutable not and: [each value isKindOf: Class]]) do: [:each | each isImmutable: true]!
 
+"Any classes in the Dolphin package that have been changed need manually reloading"
+SourceManager fileIn.
+PackageManager fileIn.
+Package fileIn.
+File fileIn !
+
 "Install some bare bones packages to get the Installation Management system working"
 Package manager install: 'Core\Object Arts\Dolphin\Registry\Dolphin Registry Access.pax'!
 
