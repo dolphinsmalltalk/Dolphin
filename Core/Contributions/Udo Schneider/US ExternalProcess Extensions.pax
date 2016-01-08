@@ -1,0 +1,191 @@
+| package |
+package := Package name: 'US ExternalProcess Extensions'.
+package paxVersion: 1;
+	basicComment: '$id: US ExternalProcess Extensions 0.011$
+$for: Dolphin Smalltalk X6.1 Beta 2$
+
+(c) $date: 24.07.2009$, $developer: udos@udos-laptop$ <Udo.Schneider@homeaddress.de>
+Public Domain, Freeware
+
+Usage
+	See ExternalPipe class>>example1 and ExternalPipe class>>example2
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+ * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.'.
+
+package basicPackageVersion: '0.011'.
+
+
+package classNames
+	add: #ExternalPipe;
+	add: #ExternalPipeExecuteError;
+	yourself.
+
+package methodNames
+	add: #CRTLibrary -> #convertWinStdHandle:toCRTFileMode:;
+	add: #ExternalProcess -> #showWindow;
+	add: #ExternalProcess -> #showWindow:;
+	add: #ExternalProcess -> #startupFlags:;
+	add: #ExternalProcess -> #stderrPipe;
+	add: #ExternalProcess -> #stderrPipe:;
+	add: #ExternalProcess -> #stderrStream;
+	add: #ExternalProcess -> #stdinPipe;
+	add: #ExternalProcess -> #stdinPipe:;
+	add: #ExternalProcess -> #stdinStream;
+	add: #ExternalProcess -> #stdoutPipe;
+	add: #ExternalProcess -> #stdoutPipe:;
+	add: #ExternalProcess -> #stdoutStream;
+	add: #ExternalProcess -> #waitForInputIdle:;
+	add: #InheritableFile -> #handle:;
+	add: #KernelLibrary -> #createPipe:hWritePipe:lpPipeAttributes:nSize:;
+	add: #UserLibrary -> #waitForInputIdle:milliseconds:;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\..\Object Arts\Dolphin\Base\Dolphin';
+	add: '..\..\Object Arts\Dolphin\MVP\Presenters\Prompters\Dolphin Prompter';
+	add: '..\Burning River\ExternalProcess\ExternalProcess';
+	add: '..\Burning River\InheritableFile\InheritableFile';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+Object subclass: #ExternalPipe
+	instanceVariableNames: 'readHandle writeHandle streams'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Error subclass: #ExternalPipeExecuteError
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+!CRTLibrary methodsFor!
+
+convertWinStdHandle: stdHandle toCRTFileMode: modeString 
+	"Private - Convert the standard Win32 OS file handle to a CRT file stream."
+
+	| fd2 hFile |
+	fd2 := CRTLibrary default _open_osfhandle: stdHandle flags: 0.
+	fd2 < 0 ifTrue: [CRTError signal].
+	hFile := CRTLibrary default _fdopen: fd2 mode: modeString.
+	^hFile! !
+!CRTLibrary categoriesFor: #convertWinStdHandle:toCRTFileMode:!*-not in class package!private! !
+
+!ExternalProcess methodsFor!
+
+showWindow
+	^si wShowWindow!
+
+showWindow: anInteger 
+	^si wShowWindow:  anInteger!
+
+startupFlags: anInteger
+
+si dwFlags: anInteger!
+
+stderrPipe
+	| pipe |
+(stderr isKindOf: ExternalPipe) ifFalse: [
+	pipe := ExternalPipe new.
+	self stderrPipe: pipe.].
+	^pipe!
+
+stderrPipe: aPipe 
+	stderr := aPipe writeStream.
+	si hStdError: aPipe writeHandle!
+
+stderrStream
+^self stderrPipe readStream!
+
+stdinPipe
+	| pipe |
+(stdin  isKindOf: ExternalPipe) ifFalse: [
+
+	pipe := ExternalPipe new.
+	self stdinPipe: pipe.].
+	^pipe!
+
+stdinPipe: aPipe 
+	stdin := aPipe readStream.
+	si hStdInput: aPipe readHandle!
+
+stdinStream
+^self stdinPipe writeStream!
+
+stdoutPipe
+	| pipe |
+(stdout  isKindOf: ExternalPipe) ifFalse: [
+
+	pipe := ExternalPipe new.
+	self stdoutPipe: pipe.].
+	^pipe!
+
+stdoutPipe: aPipe 
+	stdout := aPipe writeStream.
+	si hStdOutput: aPipe writeHandle!
+
+stdoutStream
+^self stdoutPipe readStream!
+
+waitForInputIdle: milliseconds 
+	^UserLibrary default waitForInputIdle: pi hProcess milliseconds: milliseconds! !
+!ExternalProcess categoriesFor: #showWindow!public! !
+!ExternalProcess categoriesFor: #showWindow:!public! !
+!ExternalProcess categoriesFor: #startupFlags:!*-in class package!initialize/release!public! !
+!ExternalProcess categoriesFor: #stderrPipe!*-not in class package!public! !
+!ExternalProcess categoriesFor: #stderrPipe:!*-not in class package!private! !
+!ExternalProcess categoriesFor: #stderrStream!*-not in class package!public! !
+!ExternalProcess categoriesFor: #stdinPipe!*-not in class package!public! !
+!ExternalProcess categoriesFor: #stdinPipe:!*-not in class package!private! !
+!ExternalProcess categoriesFor: #stdinStream!*-not in class package!public! !
+!ExternalProcess categoriesFor: #stdoutPipe!*-not in class package!public! !
+!ExternalProcess categoriesFor: #stdoutPipe:!*-not in class package!private! !
+!ExternalProcess categoriesFor: #stdoutStream!*-not in class package!public! !
+!ExternalProcess categoriesFor: #waitForInputIdle:!public! !
+
+!InheritableFile methodsFor!
+
+handle: aHandle
+handle := aHandle! !
+!InheritableFile categoriesFor: #handle:!public! !
+
+!KernelLibrary methodsFor!
+
+createPipe: hReadPipe hWritePipe: hWritePipe lpPipeAttributes: lpPipeAttributes nSize: nSize <stdcall: bool CreatePipe handle* handle* lpvoid dword> ^self invalidCall 
+! !
+!KernelLibrary categoriesFor: #createPipe:hWritePipe:lpPipeAttributes:nSize:!*-not in class package!public! !
+
+!UserLibrary methodsFor!
+
+waitForInputIdle: hProcess milliseconds: dwMilliseconds 
+	"Waits until the specified process is waiting for user input with no input pending, or until the time-out interval has elapsed.
+
+	DWORD WINAPI WaitForInputIdle(
+		HANDLE hProcess,
+		DWORD dwMilliseconds
+	);"
+	<stdcall: dword WaitForInputIdle handle dword>
+	^self invalidCall
+
+	! !
+!UserLibrary categoriesFor: #waitForInputIdle:milliseconds:!public! !
+
+"End of package definition"!
+

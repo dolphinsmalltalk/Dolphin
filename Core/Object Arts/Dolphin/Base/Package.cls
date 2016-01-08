@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #Package
 	instanceVariableNames: 'name packagePathname comment classNames methodNames globalNames prerequisiteNames events scripts doNotReuse imageStripperBytes aboutBlock packageVersion manualPrerequisites timestamp untracedGlobals'
@@ -2547,13 +2547,14 @@ errorInvalidPAXFile: pathString
 
 	^self error: 'Invalid PAX file: ', pathString!
 
-fromFile: pathname
+fromFile: path
 	"Private - Answer a new instance of the receiver created from the package file at the
 	specified <readableString> path, pathname, or nil if the file does not contain a
-	package."
+	package"
 
-	| answer |
+	| answer pathname |
 
+	pathname := File default: path extension: self sourcePackageExtension.
 	answer := ((File splitExtensionFrom: pathname) sameAs: self sourcePackageExtension) 
 		ifTrue: [self fromPAXFile: pathname]
 		ifFalse: [self fromPACFile: pathname].

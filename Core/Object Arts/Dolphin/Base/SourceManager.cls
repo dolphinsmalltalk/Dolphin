@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #SourceManager
 	instanceVariableNames: 'mutex '
@@ -286,6 +286,16 @@ fileInFrom: aStream
 	with instances of CompileFailedMethod and errors logged to the Transcript."
 
 	(self chunkFilerOn: aStream) fileIn!
+
+fileInHere: aFileName 
+	"File in the chunk format file named, aFileName, into the system but with
+	the working directory set to the location of the file. The original directory
+	is restored on completion."
+
+	| cwd |
+	cwd := File workingDirectory.
+	File workingDirectory: (File splitPathFrom: aFileName).
+	[self fileIn: (File splitFilenameFrom: aFileName)] ensure: [File workingDirectory: cwd]!
 
 fileInPackagedClass: aClass
 	"File in aClass via the package mechanism. The class is filed in from the same directory as the
@@ -678,6 +688,7 @@ truncateChanges
 !SourceManager categoriesFor: #errorNotPackaged:!exceptions!private! !
 !SourceManager categoriesFor: #fileIn:!public!source filing! !
 !SourceManager categoriesFor: #fileInFrom:!private!source filing! !
+!SourceManager categoriesFor: #fileInHere:!public!source filing! !
 !SourceManager categoriesFor: #fileInPackagedClass:!public!source filing! !
 !SourceManager categoriesFor: #fileInPackagedClass:from:!public!source filing! !
 !SourceManager categoriesFor: #fileItIn:!public!source filing! !

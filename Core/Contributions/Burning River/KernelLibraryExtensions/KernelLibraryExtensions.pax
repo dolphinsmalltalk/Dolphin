@@ -1,0 +1,86 @@
+| package |
+package := Package name: 'KernelLibraryExtensions'.
+package paxVersion: 1;
+	basicComment: 'Copyright (c) 2003-2004 Robert Jarvis
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+28-Feb-2003	Changed KernelLibrary>>waitForSingleObject to use the ''overlap''
+		modifier so that Dolphin''s background processes are not suspended.'.
+
+package basicScriptAt: #postinstall put: 'Win32Constants
+	at: ''WAIT_FAILED'' put: -1'.
+package basicScriptAt: #preuninstall put: 'Win32Constants
+	removeKey: ''WAIT_FAILED'' ifAbsent: [ nil ]'.
+
+package methodNames
+	add: #KernelLibrary -> #getLogicalDriveStrings:buffer:;
+	add: #KernelLibrary -> #setFileAttributes:value:;
+	add: #KernelLibrary -> #waitForSingleObject:waitForMilliseconds:;
+	yourself.
+
+package globalNames
+	add: #KernelLibraryExtension;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	add: #KernelLibraryExtension;
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\..\..\Object Arts\Dolphin\Base\Dolphin';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+!KernelLibrary methodsFor!
+
+getLogicalDriveStrings: bufferSize buffer: aBuffer
+	"Fills a buffer with strings which specify valid drives in the system.
+	 DWORD GetLogicalDriveStrings( 
+		DWORD nBufferLength, 	// size of buffer 
+		LPTSTR lpBuffer 		// address of buffer for drive strings 
+		);"
+	<stdcall: dword GetLogicalDriveStringsA dword lpstr> 
+	^self invalidCall!
+
+setFileAttributes: aFileName value: attributes
+	"Set the attributes for the specified file or directory. 
+		BOOL SetFileAttributes(
+			LPCTSTR lpFileName,		// file name
+			DWORD dwFileAttributes		// attributes );"
+
+	<stdcall: bool SetFileAttributesA lpstr dword>
+	^self invalidCall!
+
+waitForSingleObject: hHandle waitForMilliseconds: timeout
+	"Wait for the specified handle to be signalled or the timeout to expire.
+
+	DWORD WaitForSingleObject(
+		HANDLE hHandle,			// handle to object
+		DWORD dwMilliseconds		// time-out interval
+	);"
+
+	<overlap stdcall: dword WaitForSingleObject handle dword>
+	^self invalidCall! !
+!KernelLibrary categoriesFor: #getLogicalDriveStrings:buffer:!public!win32 functions-system information! !
+!KernelLibrary categoriesFor: #setFileAttributes:value:!public! !
+!KernelLibrary categoriesFor: #waitForSingleObject:waitForMilliseconds:!public!win32 functions-handles and objects! !
+
+"End of package definition"!
+
