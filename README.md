@@ -7,4 +7,4 @@ You should clone this repo into a DolphinVM\ subdirectory of Dolphin\Core\.
 
 Load the DolphinVM solution into MSVC 2013 Community Edition or later. This is a C++ set of projects so make sure you install this version of MSVC. Choose the Release profile (Debug will **not** compile) and then Build Solution. The first time you'll get errors but these should disappear after a second Build. A bunch of DLLs and Dolphin.exe will have been copied to the Dolphin\ root folder.
 
-[![Build status](https://ci.appveyor.com/api/projects/status/mamlmxw9rs8k4txq/branch/master?svg=true)](https://ci.appveyor.com/project/dolphinsmalltalk/dolphinvm/branch/master)
+[![Build status](https://ci.appveyor.com/api/projects/status/6ru55e8y9huog899/branch/master?svg=true)](https://ci.appveyor.com/project/dolphinsmalltalk/dolphinvm-nf68c/branch/master)
