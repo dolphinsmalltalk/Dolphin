@@ -1,9 +1,9 @@
-DPRO.*
-DCE.*
-DCORE.*
-DBASE.*
-DBOOT.chg
+*.chg
+*.ERRORS
+*.img7
 *.pac
-*.errors
+*.sml
+!DBOOT.img7
+!DBOOT.sml
 testsGdiplus
 Repository/
