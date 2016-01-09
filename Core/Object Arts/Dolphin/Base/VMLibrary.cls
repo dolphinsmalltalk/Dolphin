@@ -92,7 +92,7 @@ debugDump: msgString
 !
 
 defaultProductDetails
-	"Private - Answers a seven element<Array> describing the default
+	"Private - Answers an eight element<Array> describing the default
 	 version of the development environment as based on the VM version.
 
 	1. <readableString> Product name 
@@ -101,11 +101,12 @@ defaultProductDetails
 	4. <readableString> Version special
 	5. <Integer> Image patch level
 	6 <readableString> Very short name
-	7 <readableString> Serial number"
+	7 <readableString> Serial number
+	8 <readableString> Boot log with GIT information"
 
 	| version |
 	version := self versionInfo.
-	^(Array new: 7)
+	^(Array new: 8)
 		at: 1 put: (version formatVersionString: '%1 %2!!d!!');
 		at: 2 put: (version formatVersionString: '%1');
 		at: 3 put: (Float fromString: (version formatVersionString: '%3!!d!!.%4!!d!!'));
@@ -113,6 +114,7 @@ defaultProductDetails
 		at: 5 put: self basePatchLevel;
 		at: 6 put: 'DX6';
 		at: 7 put: nil; "Serial #"
+		at: 8 put: nil; "boot.log"
 		yourself!
 
 displayDesktopMessage: aString 

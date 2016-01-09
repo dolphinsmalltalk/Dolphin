@@ -430,6 +430,15 @@ binaryClassFilesType
 
 	^#('Binary Class Files (*.stc)' '*.stc')!
 
+bootLog
+	"Show the boot log with GIT information."
+
+	(MessageBox new)
+		caption: 'Dolphin Smalltalk Build Information';
+		icon: self icon;
+		text: (SessionManager current productDetails at: 8);
+		open!
+
 browseAllChangedMethods
 	"Open a method browser on all methods in the system which have been changed (i.e. which
 	have source in the change log and are in classes marked as changed)."
