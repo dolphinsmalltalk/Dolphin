@@ -74,6 +74,17 @@ dolphinNewsgroupUrl
 dolphinWikiUrl
 	^'http://www.object-arts.com/wiki'!
 
+fetchGitInfo
+	| outputPipe process info |
+	process := ExternalProcess new.
+	process commandLine: 'git log -n 1'.
+	outputPipe := process stdoutPipe.
+	process executeSync.
+	[process isTerminated] whileFalse: [].
+	info := outputPipe readStream contents.
+	self gitInfo: info.
+	^info!
+
 free
 	"Free any artifacts of the current session.
 	WARNING: This may disable the development system, so use carefully."
@@ -95,6 +106,16 @@ getInstallationDirectory
 
 			folder := File splitPathFrom: VMLibrary default fileName].
 	^File appendPathDelimiter: folder!
+
+gitInfo
+	"Answer the Git info of the sources from which this image was originally booted"
+
+	^self productDetails at: 8!
+
+gitInfo: aStringOrNil
+	"Set the Git info of the sources from which this image was originally booted"
+
+	^self productDetails at: 8 put: aStringOrNil!
 
 handleOpenArguments
 	"Private - Handle any -open command line arguments"
@@ -388,7 +409,7 @@ primaryStartup
 	self openSources!
 
 productDetails
-	"Private - Answers a five element<Array> describing this version of the development environment
+	"Private - Answers an eight element <Array> describing this version of the development environment
 
 	1. <readableString> Product name 
 	2. <readableString> Short product name
@@ -396,7 +417,8 @@ productDetails
 	4. <readableString> Version special
 	5. <Integer> Image patch level
 	6 <readableString> Very short product name
-	7 <readableString> Serial number"
+	7 <readableString> Serial number
+	8 <readableString> Git info"
 
 	productDetails isNil ifTrue: [
 		productDetails := VMLibrary default defaultProductDetails ].
@@ -663,8 +685,11 @@ versionString
 !DevelopmentSessionManager categoriesFor: #closeAllHelp!operations!public! !
 !DevelopmentSessionManager categoriesFor: #dolphinNewsgroupUrl!public! !
 !DevelopmentSessionManager categoriesFor: #dolphinWikiUrl!public! !
+!DevelopmentSessionManager categoriesFor: #fetchGitInfo!helpers!public! !
 !DevelopmentSessionManager categoriesFor: #free!public!realizing/unrealizing! !
 !DevelopmentSessionManager categoriesFor: #getInstallationDirectory!helpers!private! !
+!DevelopmentSessionManager categoriesFor: #gitInfo!patching!public! !
+!DevelopmentSessionManager categoriesFor: #gitInfo:!patching!public! !
 !DevelopmentSessionManager categoriesFor: #handleOpenArguments!operations-startup!private! !
 !DevelopmentSessionManager categoriesFor: #helpContentsTopic!constants!public! !
 !DevelopmentSessionManager categoriesFor: #helpFirstSplashTopic!constants!public! !

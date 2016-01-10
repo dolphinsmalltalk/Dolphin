@@ -17,7 +17,8 @@ MemoryManager guid: (GUID fromString: '{703BD0AD-FBFF-4D00-866B-B80387F7B1D7}')!
 SourceManager fileIn.
 PackageManager fileIn.
 Package fileIn.
-File fileIn !
+File fileIn.
+VMLibrary fileIn !
 
 "Install some bare bones packages to get the Installation Management system working"
 Package manager install: 'Core\Object Arts\Dolphin\Registry\Dolphin Registry Access.pax'!
@@ -71,7 +72,8 @@ product boot] on: Error do: [:ex |
 
 DevelopmentSessionManager installNew!
 
-SessionManager current defaultResourceLibrary loadFlags: 0!
+SessionManager current defaultResourceLibrary loadFlags: 0.
+SessionManager current fetchGitInfo!
 
 "Ensure all structures have calculated size to avoid recompilation messages later"
 ExternalStructure allSubclasses do: [:e | e byteSize]!
