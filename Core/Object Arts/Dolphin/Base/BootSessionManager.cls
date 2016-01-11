@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 SessionManager subclass: #BootSessionManager
 	instanceVariableNames: 'productDetails'
@@ -94,7 +94,8 @@ productDetails
 	4. <readableString> Version special
 	5. <Integer> Image patch level
 	6 <readableString> Very short product name
-	7 <readableString> Serial number"
+	7 <readableString> Serial number
+	8 <readableString> Boot source info"
 
 	productDetails isNil ifTrue: [productDetails := VMLibrary default defaultProductDetails].
 	^productDetails!

@@ -60,6 +60,16 @@ backupOnImageSave: aBoolean
 
 	backupOnImageSave := aBoolean!
 
+bootInfo
+	"Answer the Git info of the sources from which this image was originally booted"
+
+	^self productDetails at: 8!
+
+bootInfo: aStringOrNil 
+	"Set the Git info of the sources from which this image was originally booted"
+
+	^self productDetails at: 8 put: aStringOrNil!
+
 canPlaySounds
 	^SmalltalkSystemShell playSystemSounds!
 
@@ -73,17 +83,6 @@ dolphinNewsgroupUrl
 
 dolphinWikiUrl
 	^'http://www.object-arts.com/wiki'!
-
-fetchGitInfo
-	| outputPipe process info |
-	process := ExternalProcess new.
-	process commandLine: 'git log -n 1'.
-	outputPipe := process stdoutPipe.
-	process executeSync.
-	[process isTerminated] whileFalse: [].
-	info := outputPipe readStream contents.
-	self gitInfo: info.
-	^info!
 
 free
 	"Free any artifacts of the current session.
@@ -106,16 +105,6 @@ getInstallationDirectory
 
 			folder := File splitPathFrom: VMLibrary default fileName].
 	^File appendPathDelimiter: folder!
-
-gitInfo
-	"Answer the Git info of the sources from which this image was originally booted"
-
-	^self productDetails at: 8!
-
-gitInfo: aStringOrNil
-	"Set the Git info of the sources from which this image was originally booted"
-
-	^self productDetails at: 8 put: aStringOrNil!
 
 handleOpenArguments
 	"Private - Handle any -open command line arguments"
@@ -418,7 +407,7 @@ productDetails
 	5. <Integer> Image patch level
 	6 <readableString> Very short product name
 	7 <readableString> Serial number
-	8 <readableString> Git info"
+	8 <readableString> Boot source version info"
 
 	productDetails isNil ifTrue: [
 		productDetails := VMLibrary default defaultProductDetails ].
@@ -613,6 +602,14 @@ splashShowAtStartup
 splashShowAtStartup: aBoolean 
 	showSplashAtStartup := aBoolean!
 
+stashBootInfo
+	"Stash Git status information into this image's version object. Answers the stashed information or nil"
+
+	| info |
+	info := [self class git: 'describe'] on: ExternalProcessExecuteError do: [:ex | nil].
+	self bootInfo: info.
+	^info!
+
 tertiaryStartup
 	"Perform development system tertiary startup (e.g. ensure 
 	SmalltalkSystemShell is available)."
@@ -681,15 +678,14 @@ versionString
 !DevelopmentSessionManager categoriesFor: #applicationShortName!constants!public! !
 !DevelopmentSessionManager categoriesFor: #backupOnImageSave!accessing!public! !
 !DevelopmentSessionManager categoriesFor: #backupOnImageSave:!accessing!public! !
+!DevelopmentSessionManager categoriesFor: #bootInfo!patching!public! !
+!DevelopmentSessionManager categoriesFor: #bootInfo:!patching!public! !
 !DevelopmentSessionManager categoriesFor: #canPlaySounds!accessing!public! !
 !DevelopmentSessionManager categoriesFor: #closeAllHelp!operations!public! !
 !DevelopmentSessionManager categoriesFor: #dolphinNewsgroupUrl!public! !
 !DevelopmentSessionManager categoriesFor: #dolphinWikiUrl!public! !
-!DevelopmentSessionManager categoriesFor: #fetchGitInfo!helpers!public! !
 !DevelopmentSessionManager categoriesFor: #free!public!realizing/unrealizing! !
 !DevelopmentSessionManager categoriesFor: #getInstallationDirectory!helpers!private! !
-!DevelopmentSessionManager categoriesFor: #gitInfo!patching!public! !
-!DevelopmentSessionManager categoriesFor: #gitInfo:!patching!public! !
 !DevelopmentSessionManager categoriesFor: #handleOpenArguments!operations-startup!private! !
 !DevelopmentSessionManager categoriesFor: #helpContentsTopic!constants!public! !
 !DevelopmentSessionManager categoriesFor: #helpFirstSplashTopic!constants!public! !
@@ -755,6 +751,7 @@ versionString
 !DevelopmentSessionManager categoriesFor: #splashShellClass:!constants!private! !
 !DevelopmentSessionManager categoriesFor: #splashShowAtStartup!accessing!public! !
 !DevelopmentSessionManager categoriesFor: #splashShowAtStartup:!accessing!public! !
+!DevelopmentSessionManager categoriesFor: #stashBootInfo!helpers!public! !
 !DevelopmentSessionManager categoriesFor: #tertiaryStartup!operations-startup!public! !
 !DevelopmentSessionManager categoriesFor: #trace:!operations-logging!public! !
 !DevelopmentSessionManager categoriesFor: #traceLine:!operations-logging!public! !
@@ -764,6 +761,15 @@ versionString
 !DevelopmentSessionManager categoriesFor: #versionString!accessing!public! !
 
 !DevelopmentSessionManager class methodsFor!
+
+git: cmdString 
+	| outputPipe process |
+	process := ExternalProcess new.
+	process commandLine: 'git ' , cmdString.
+	outputPipe := process stdoutPipe.
+	process executeSync.
+	[process isTerminated] whileFalse: [].
+	^outputPipe readStream contents!
 
 icon
 	"Answer an icon for the receiver and its instances."
@@ -775,6 +781,7 @@ imageExtension
 	should be associated with this particular image."
 
 	^'img7'! !
+!DevelopmentSessionManager class categoriesFor: #git:!public! !
 !DevelopmentSessionManager class categoriesFor: #icon!constants!public! !
 !DevelopmentSessionManager class categoriesFor: #imageExtension!constants!public! !
 

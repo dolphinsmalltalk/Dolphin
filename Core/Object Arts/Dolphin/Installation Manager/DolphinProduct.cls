@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #DolphinProduct
 	instanceVariableNames: 'versionMask encryptedClasses'
@@ -320,6 +320,7 @@ productDetails
 		at: 3 put: self version;
 		at: 6 put: self shortProductName;
 		at: 7 put: nil;
+		at: 8 put: nil;
 		yourself!
 
 productLevel

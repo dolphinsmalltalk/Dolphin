@@ -102,7 +102,7 @@ defaultProductDetails
 	5. <Integer> Image patch level
 	6 <readableString> Very short name
 	7 <readableString> Serial number
-	8 <readableString> GIt version information"
+	8 <readableString> Boot source version information"
 
 	| version |
 	version := self versionInfo.
@@ -114,7 +114,7 @@ defaultProductDetails
 		at: 5 put: self basePatchLevel;
 		at: 6 put: 'D7';
 		at: 7 put: nil; "Serial #"
-		at: 8 put: nil; "Git info"
+		at: 8 put: nil; "Boot info"
 		yourself!
 
 displayDesktopMessage: aString 

@@ -73,7 +73,7 @@ product boot] on: Error do: [:ex |
 DevelopmentSessionManager installNew!
 
 SessionManager current defaultResourceLibrary loadFlags: 0.
-SessionManager current fetchGitInfo!
+SessionManager current stashBootInfo!
 
 "Ensure all structures have calculated size to avoid recompilation messages later"
 ExternalStructure allSubclasses do: [:e | e byteSize]!
