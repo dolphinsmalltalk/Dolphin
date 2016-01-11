@@ -607,6 +607,7 @@ stashBootInfo
 
 	| info |
 	info := [self class git: 'describe'] on: ExternalProcessExecuteError do: [:ex | nil].
+	info = '' ifTrue: [info := nil].
 	self bootInfo: info.
 	^info!
 
