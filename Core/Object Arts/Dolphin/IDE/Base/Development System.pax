@@ -564,6 +564,7 @@ package setPrerequisites: (IdentitySet new
 	add: '..\..\MVP\Presenters\Tree\Dolphin Tree Presenter';
 	add: '..\..\MVP\Type Converters\Dolphin Type Converters';
 	add: '..\..\MVP\Models\Value\Dolphin Value Models';
+	add: '..\..\..\..\Contributions\Burning River\ExternalProcess\ExternalProcess';
 	add: 'Internal Bitmaps and Icons';
 	add: '..\..\..\..\Contributions\Refactory\Refactoring Browser\Change Objects\RBChangeObjects';
 	add: '..\..\..\..\Contributions\Refactory\Refactoring Browser\Environments\RBEnvironments';

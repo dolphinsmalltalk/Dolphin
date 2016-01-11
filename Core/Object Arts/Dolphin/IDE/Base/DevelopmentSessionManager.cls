@@ -60,6 +60,16 @@ backupOnImageSave: aBoolean
 
 	backupOnImageSave := aBoolean!
 
+bootInfo
+	"Answer the Git info of the sources from which this image was originally booted"
+
+	^self productDetails at: 8!
+
+bootInfo: aStringOrNil 
+	"Set the Git info of the sources from which this image was originally booted"
+
+	^self productDetails at: 8 put: aStringOrNil!
+
 canPlaySounds
 	^SmalltalkSystemShell playSystemSounds!
 
@@ -388,7 +398,7 @@ primaryStartup
 	self openSources!
 
 productDetails
-	"Private - Answers a five element<Array> describing this version of the development environment
+	"Private - Answers an eight element <Array> describing this version of the development environment
 
 	1. <readableString> Product name 
 	2. <readableString> Short product name
@@ -396,7 +406,8 @@ productDetails
 	4. <readableString> Version special
 	5. <Integer> Image patch level
 	6 <readableString> Very short product name
-	7 <readableString> Serial number"
+	7 <readableString> Serial number
+	8 <readableString> Boot source version info"
 
 	productDetails isNil ifTrue: [
 		productDetails := VMLibrary default defaultProductDetails ].
@@ -591,6 +602,15 @@ splashShowAtStartup
 splashShowAtStartup: aBoolean 
 	showSplashAtStartup := aBoolean!
 
+stashBootInfo
+	"Stash Git status information into this image's version object. Answers the stashed information or nil"
+
+	| info |
+	info := [self class git: 'describe'] on: ExternalProcessExecuteError do: [:ex | nil].
+	info = '' ifTrue: [info := nil].
+	self bootInfo: info.
+	^info!
+
 tertiaryStartup
 	"Perform development system tertiary startup (e.g. ensure 
 	SmalltalkSystemShell is available)."
@@ -659,6 +679,8 @@ versionString
 !DevelopmentSessionManager categoriesFor: #applicationShortName!constants!public! !
 !DevelopmentSessionManager categoriesFor: #backupOnImageSave!accessing!public! !
 !DevelopmentSessionManager categoriesFor: #backupOnImageSave:!accessing!public! !
+!DevelopmentSessionManager categoriesFor: #bootInfo!patching!public! !
+!DevelopmentSessionManager categoriesFor: #bootInfo:!patching!public! !
 !DevelopmentSessionManager categoriesFor: #canPlaySounds!accessing!public! !
 !DevelopmentSessionManager categoriesFor: #closeAllHelp!operations!public! !
 !DevelopmentSessionManager categoriesFor: #dolphinNewsgroupUrl!public! !
@@ -730,6 +752,7 @@ versionString
 !DevelopmentSessionManager categoriesFor: #splashShellClass:!constants!private! !
 !DevelopmentSessionManager categoriesFor: #splashShowAtStartup!accessing!public! !
 !DevelopmentSessionManager categoriesFor: #splashShowAtStartup:!accessing!public! !
+!DevelopmentSessionManager categoriesFor: #stashBootInfo!helpers!public! !
 !DevelopmentSessionManager categoriesFor: #tertiaryStartup!operations-startup!public! !
 !DevelopmentSessionManager categoriesFor: #trace:!operations-logging!public! !
 !DevelopmentSessionManager categoriesFor: #traceLine:!operations-logging!public! !
@@ -739,6 +762,15 @@ versionString
 !DevelopmentSessionManager categoriesFor: #versionString!accessing!public! !
 
 !DevelopmentSessionManager class methodsFor!
+
+git: cmdString 
+	| outputPipe process |
+	process := ExternalProcess new.
+	process commandLine: 'git ' , cmdString.
+	outputPipe := process stdoutPipe.
+	process executeSync.
+	[process isTerminated] whileFalse: [].
+	^outputPipe readStream contents!
 
 icon
 	"Answer an icon for the receiver and its instances."
@@ -750,6 +782,7 @@ imageExtension
 	should be associated with this particular image."
 
 	^'img7'! !
+!DevelopmentSessionManager class categoriesFor: #git:!public! !
 !DevelopmentSessionManager class categoriesFor: #icon!constants!public! !
 !DevelopmentSessionManager class categoriesFor: #imageExtension!constants!public! !
 

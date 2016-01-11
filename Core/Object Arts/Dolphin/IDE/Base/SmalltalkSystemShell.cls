@@ -256,10 +256,12 @@ updateCaption
 	"The receiver has changed in such a way that the caption may need to be refreshed.
 	Do this here"
 
-	| sesh |
+	| sesh txt |
 	sesh := SessionManager current.
-	self caption: ('<1s> - <2s>' expandMacrosWith: sesh applicationName
-				with: (File splitFilenameFrom: sesh imageFileName))!
+	txt := '<1s> - <2s>' expandMacrosWith: sesh applicationName
+				with: (File splitFilenameFrom: sesh imageFileName).
+	SessionManager current bootInfo ifNotNil: [:info | txt := txt , ' - ' , info].
+	self caption: txt!
 
 whatsThis
 	systemFolderPresenter selection whatsThis ! !

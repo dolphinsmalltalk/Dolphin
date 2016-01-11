@@ -94,7 +94,7 @@ dolphins
 	^dolphins!
 
 drawInfoTextOn: graphics 
-	| version copyright fontCopyright brush |
+	| version copyright fontCopyright brush infoString |
 	version := VMLibrary default versionInfo.
 	copyright := version legalCopyright copyReplaceAll: '. ' with: String lineDelimiter.
 	brush := GdiplusSolidBrush color: ARGB white.
@@ -103,12 +103,16 @@ drawInfoTextOn: graphics
 				emSize: 9
 				style: nil
 				unit: UnitPoint.
+	infoString := copyright lines first , ', ' , copyright lines second , '.' , String lineDelimiter 
+				, 'Dolphin ' , SessionManager current versionString 
+				, ' is Open Source under the MIT License.'.
+	SessionManager current bootInfo 
+		ifNotNil: [:bootInfo | infoString := infoString , String lineDelimiter , 'Image boot info: ' , bootInfo].
 	graphics
 		textRenderingHint: TextRenderingHintAntiAlias;
-		drawString: copyright lines first , ', ' , copyright lines second , '.' , String lineDelimiter 
-					, 'Dolphin ', SessionManager current versionString , ' is Open Source under the MIT License.'
+		drawString: infoString
 			font: fontCopyright
-			at: ((48 @ 639) * self baseScale) rounded
+			at: (48 @ 630 * self baseScale) rounded
 			format: GdiplusStringFormat near
 			brush: brush!
 
