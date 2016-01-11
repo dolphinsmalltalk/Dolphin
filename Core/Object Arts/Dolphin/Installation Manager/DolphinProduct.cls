@@ -40,7 +40,10 @@ basicLoad
 			name := File splitStemFrom: each.
 			packageManager packageNamed: name
 				ifNone: 
-					[[packageManager install: prefix, each] on: packageManager prerequisiteNotFoundSignal
+					[[ | path |
+					path := each.
+					(File exists: path) ifFalse: [path := prefix, path].
+					packageManager install: path] on: packageManager prerequisiteNotFoundSignal
 						do: [:ex | ex resume: (File splitPathFrom: each)]]].
 	Smalltalk developmentSystem beNotChanged!
 

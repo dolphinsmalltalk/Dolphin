@@ -8,6 +8,7 @@ prefix := ''.
 count timesRepeat: [
 	(File exists: prefix, 'Dolphin7.exe') ifTrue: [
 		Smalltalk at: #bootPathPrefix put: prefix.
+		prefix notEmpty ifTrue: [Notification signal: 'bootPathPrefix = ', prefix printString].
 		^prefix
 	] ifFalse: [
 		prefix := '..\', prefix.
@@ -19,7 +20,7 @@ self error: 'Dolphin7.exe not found'!
 loaded from there. Fix up the package pathname here."
 | dolphinPackage |
 dolphinPackage := (Package manager packageNamed: 'Dolphin').
-dolphinPackage packagePathname: bootPathPrefix, 'Core\', dolphinPackage packagePathname!
+dolphinPackage packageFileName: bootPathPrefix, 'Core\', dolphinPackage packagePathname!
 
 "MemoryManager guid is corrupted during boot for some reason (that needs looking into)"
 MemoryManager guid: (GUID fromString: '{703BD0AD-FBFF-4D00-866B-B80387F7B1D7}')!
@@ -81,6 +82,8 @@ Notification signal: 'Booting ', product name.
 product boot] on: Error do: [:ex | 
 	"isPrompted==true ifFalse: [SessionManager current quit: -2]."
 	ex pass ] !
+
+Smalltalk removeKey: #bootPathPrefix!
 
 DevelopmentSessionManager installNew!
 
