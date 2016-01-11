@@ -349,9 +349,6 @@ developmentMethods
 	self developmentMethodCategoryNames do: [:name | devMethods addAll: (catClass name: name) contents].
 	^devMethods!
 
-developmentPackageNames
-	^#('Value Edition Tools' 'Standard Edition Tools' 'Development System' 'Dolphin Refactoring Browser' 'ActiveX Automation Development')!
-
 developmentResources
 	"Answer a <collection> of <ResourceIdentifier>s representing any development system resources that
 	are not owned directly by development classes."
@@ -560,7 +557,7 @@ initialTidy
 
 	versionResource := nil.
 	self 
-		finishedWithAll: #(#actualRequiredPackages #buildMessageMap #buildPreservedMessages #buildRootClasses #canDeploy #checkedStubFilePath #closeAllDevelopmentTools #closeChangeLog #buildManifest:description:version: #appendManifestContent: #copyAndUpdateStub:to: #defaultStubFilePath #developmentClasses #developmentMethodCategoryNames #developmentMethods #developmentPackageNames #disableDevelopmentSystem #executableName #executableName: #executablePath #exeFileExtension #ignoreViewReferences: #includeManifestResource #initialize #initialTidy #installRuntimeSessionManager #isResourceUpdatingPossible #isResourceUpdatingRequired #isToGo #logConfiguration #logFileExtension #logFileName #logPreservedClasses #logPreservedMessages #logReferencesToClasses: #logRemainingPackages #manifestResourceId #notifyClassesOfImminentStrip: #notifyClassesOfStrip #notRequiredMethodCategories #openLogFile #prepareToStrip #preStripCheck #preStripScript #preStripScript: #referencesFromObjectsInClasses: #requiredClasses #requiredMethodCategories #requiredPackageNames #resizeStubFile: #retainInstVarNames: #rootClasses: #rootPackage #rootPackage: #runPreStripScript #runtimeSessionManagerClass #runtimeSessionManagerClass: #snapshotType: #stripAndSave #stripAndSaveWithProgress #stripNotRequiredMethodsNotifying: #stripRedundantPackages #stripRedundantPackagesNotifying: #stripShouldNotImplement #stubFile #stubFilePath #updateIconResource: #updateStringTableResource: #updateStubResources: #updateVersionResource: #updateXPManifestResource: #vmReferencedClasses #warnDependentOnDevPackages: #writeLogFile)!
+		finishedWithAll: #(#actualRequiredPackages #buildMessageMap #buildPreservedMessages #buildRootClasses #canDeploy #checkedStubFilePath #closeAllDevelopmentTools #closeChangeLog #buildManifest:description:version: #appendManifestContent: #copyAndUpdateStub:to: #defaultStubFilePath #developmentClasses #developmentMethodCategoryNames #developmentMethods #disableDevelopmentSystem #executableName #executableName: #executablePath #exeFileExtension #ignoreViewReferences: #includeManifestResource #initialize #initialTidy #installRuntimeSessionManager #isResourceUpdatingPossible #isResourceUpdatingRequired #isToGo #logConfiguration #logFileExtension #logFileName #logPreservedClasses #logPreservedMessages #logReferencesToClasses: #logRemainingPackages #manifestResourceId #notifyClassesOfImminentStrip: #notifyClassesOfStrip #notRequiredMethodCategories #openLogFile #prepareToStrip #preStripCheck #preStripScript #preStripScript: #referencesFromObjectsInClasses: #requiredClasses #requiredMethodCategories #requiredPackageNames #resizeStubFile: #retainInstVarNames: #rootClasses: #rootPackage #rootPackage: #runPreStripScript #runtimeSessionManagerClass #runtimeSessionManagerClass: #snapshotType: #stripAndSave #stripAndSaveWithProgress #stripNotRequiredMethodsNotifying: #stripRedundantPackages #stripRedundantPackagesNotifying: #stripShouldNotImplement #stubFile #stubFilePath #updateIconResource: #updateStringTableResource: #updateStubResources: #updateVersionResource: #updateXPManifestResource: #vmReferencedClasses #writeLogFile)!
 
 installRuntimeSessionManager
 	"Private - Install the application <SessionManager>. For an application deployed with its
@@ -2038,25 +2035,6 @@ vmReferencedClasses
 	^VMLibrary default registry 
 		select: [:each | each class isMeta and: [(#('GUID' 'PoolConstantsDictionary') includes: each name asString) not]]!
 
-warnDependentOnDevPackages: aCollectionOfPackages 
-	| stm |
-	stm := String writeStream.
-	stm
-		nextPutAll: 'The application may be dependent upon non-distributable development tools or classes in the following packages:';
-		cr.
-	aCollectionOfPackages do: 
-			[:each | 
-			stm
-				crtab;
-				nextPutAll: each name].
-	stm 
-		nextPutAll: '
-
-You can use the Package Browser''s ''Prerequisites'' pane to track down the source of the dependencies.
-
-Before deploying this application you must check the image stripping log to be sure that all development tools have been removed.'.
-	MessageBox notify: stm contents!
-
 writeLogFile
 	"Answer true if the receiver will write a log file during
 	its stripping process"
@@ -2098,7 +2076,6 @@ writeLogFile: aBoolean
 !ImageStripper categoriesFor: #developmentClasses!configuration!public! !
 !ImageStripper categoriesFor: #developmentMethodCategoryNames!constants!public! !
 !ImageStripper categoriesFor: #developmentMethods!configuration!public! !
-!ImageStripper categoriesFor: #developmentPackageNames!constants!private! !
 !ImageStripper categoriesFor: #developmentResources!configuration!public! !
 !ImageStripper categoriesFor: #disableClassChangeFlagging!operations!private! !
 !ImageStripper categoriesFor: #disableDevelopmentSystem!operations!private! !
@@ -2250,7 +2227,6 @@ writeLogFile: aBoolean
 !ImageStripper categoriesFor: #versionResource!accessing!private! !
 !ImageStripper categoriesFor: #versionResource:!accessing!private! !
 !ImageStripper categoriesFor: #vmReferencedClasses!constants!public! !
-!ImageStripper categoriesFor: #warnDependentOnDevPackages:!operations!public! !
 !ImageStripper categoriesFor: #writeLogFile!accessing!public!testing! !
 !ImageStripper categoriesFor: #writeLogFile:!accessing!development!public! !
 

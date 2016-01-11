@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Model subclass: #BasicImageStripper
 	instanceVariableNames: ''
@@ -539,8 +539,6 @@ stripRedundantPackagesNotifying: notifier
 	self stripRedundantPackages ifFalse: [^0].
 	required := self actualRequiredPackages.
 	pacman := self systemPackageManager.
-	requiredDevPkgs := required select: [:each | self developmentPackageNames includes: each name].
-	requiredDevPkgs notEmpty ifTrue: [self warnDependentOnDevPackages: requiredDevPkgs].
 	redundantPackages := pacman packages difference: required.
 	"Turn off events to prevent repeated tracing of pre-reqs as each of the redundant packages
 	 is uninstalled."
