@@ -174,7 +174,7 @@ isAbstract
 productName
 	"Answer the product name"
 	
-	^'Base' Edition!
+	^'Base Edition'!
 
 shortProductName
 	"Answer the abbreviated product name"

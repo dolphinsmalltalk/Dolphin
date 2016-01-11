@@ -125,54 +125,6 @@ productName
 	
 	^'Professional'!
 
-redistHeaderText
-	"Answer the blah which forms the fixed part of REDIST.TXT"
-
-^'This file details the Redistributable Components of DOLPHIN SMALLTALK
-PROFESSIONAL EDITION (the SOFTWARE PRODUCT) that you are permitted
-to redistribute with your Applications. It also lists the Development System
-Components of the SOFTWARE PRODUCT that you must NOT distribute with
-your applications without express written permission from Object Arts Ltd.
-
-This file is an addendum to the DOLPHIN SMALLTALK License Agreement, and should be 
-read in conjunction with this document in its entirety.  The full text of the License
-Agreement is available in the file "License.rtf" in the installation directory.
-
-Redistributable Components
-==========================
-
-The following files may be redistributed as an integral part of executable applications
-created by you utilising the SOFTWARE PRODUCT:
-
-DOLPHIN.EXE
-DOLPHINVM006.DLL
-DOLPHINCR006.DLL
-DOLPHINDR006.DLL
-DOLPHINSURECRYPTO.DLL
-
-Non-redistributable (Development System) Components
-===================================================
-
-The following files are solely Development System components of the SOFTWARE 
-PRODUCT and you must NOT redistribute them in any form:
-
-GUISTUB.EXE
-GUITOGO.EXE
-CONSOLESTUB.EXE
-CONSOLETOGO.EXE
-
-The following classes are Development System Components of the SOFTWARE
-PRODUCT and you must NOT redistribute them in any form, as either source or 
-object code, either independently or as part of an Application:'.
-!
-
-redistWriteClassesOn: target 
-	self developmentClasses asSortedCollection do: 
-			[:e | 
-			target
-				print: e;
-				cr]!
-
 shortProductName
 	"Answer the abbreviated product name"
 	
@@ -181,7 +133,5 @@ shortProductName
 !DolphinProfessional class categoriesFor: #isAbstract!operations!public!testing! !
 !DolphinProfessional class categoriesFor: #productLevel!constants!private! !
 !DolphinProfessional class categoriesFor: #productName!accessing!public! !
-!DolphinProfessional class categoriesFor: #redistHeaderText!constants!public! !
-!DolphinProfessional class categoriesFor: #redistWriteClassesOn:!public! !
 !DolphinProfessional class categoriesFor: #shortProductName!accessing!public! !
 

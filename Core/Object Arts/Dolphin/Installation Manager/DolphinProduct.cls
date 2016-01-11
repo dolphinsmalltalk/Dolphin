@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #DolphinProduct
 	instanceVariableNames: 'versionMask encryptedClasses'
@@ -484,25 +484,6 @@ fromString: aString
 	sub := stm upToEnd.
 	^(EditionsMap at: sub) version: version!
 
-generateLicenseAddendum
-	"Write the addendum to the License Agreement, REDIST.TXT, which details redistribution rights.
-		ShellLibrary default shellOpen: self generateLicenseAddendum
-	"
-
-	"Assume that one is running an image in the development tree"
-
-	| path target |
-	path := self redistFilename.
-	File createDirectoryPath: (File splitPathFrom: path).
-	target := FileStream write: path.
-	target
-		nextPutAll: self redistHeaderText;
-		cr;
-		cr.
-	self redistWriteClassesOn: target.
-	target close.
-	^path!
-
 icon
 	"Answers an Icon that can be used to represent this class"
 
@@ -596,19 +577,6 @@ productPrefix
 
 	^'Dolphin Smalltalk'!
 
-redistFilename
-	"Answer the full path of Redist.txt"
-
-	^FileLocator imageRelative localFileSpecFor: 'Redist.txt'!
-
-redistHeaderText
-	"Answer the blah which forms the fixed part of REDIST.TXT"
-
-	^self subclassResponsibility!
-
-redistWriteClassesOn: target 
-!
-
 release
 	"Release an instance of the receiver"
 
@@ -637,7 +605,6 @@ versionMask: versionMask
 !DolphinProduct class categoriesFor: #current!accessing!public! !
 !DolphinProduct class categoriesFor: #errorInvalidProductDescription:!exceptions!public! !
 !DolphinProduct class categoriesFor: #fromString:!instance creation!public! !
-!DolphinProduct class categoriesFor: #generateLicenseAddendum!public! !
 !DolphinProduct class categoriesFor: #icon!constants!public! !
 !DolphinProduct class categoriesFor: #initialize!initializing!private! !
 !DolphinProduct class categoriesFor: #isAbstract!operations!public!testing! !
@@ -652,9 +619,6 @@ versionMask: versionMask
 !DolphinProduct class categoriesFor: #productMask!accessing!private! !
 !DolphinProduct class categoriesFor: #productName!accessing!public! !
 !DolphinProduct class categoriesFor: #productPrefix!instance creation!public! !
-!DolphinProduct class categoriesFor: #redistFilename!public! !
-!DolphinProduct class categoriesFor: #redistHeaderText!constants!public! !
-!DolphinProduct class categoriesFor: #redistWriteClassesOn:!public! !
 !DolphinProduct class categoriesFor: #release!operations!public! !
 !DolphinProduct class categoriesFor: #shortProductName!accessing!public! !
 !DolphinProduct class categoriesFor: #version:!instance creation!public! !

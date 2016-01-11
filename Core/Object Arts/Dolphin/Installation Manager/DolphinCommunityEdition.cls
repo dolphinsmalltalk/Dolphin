@@ -49,27 +49,6 @@ productName
 	
 	^'Community Edition'!
 
-redistHeaderText
-	"Answer the blah which forms the fixed part of REDIST.TXT"
-
-^'This file details the Redistributable Components of DOLPHIN SMALLTALK
-COMMUNITY EDITION (the SOFTWARE PRODUCT) that you are permitted
-to redistribute. 
-
-This file is an addendum to the DOLPHIN SMALKLTALK License Agreement, and should be 
-read in conjunction with that document in its entirety.  The full text of the License
-Agreement is available in the file "License.rtf" in the installation directory.
-
-Redistributable Components
-==========================
-
-THERE ARE NO REDISTRIBUTABLE COMPONENTS IN DOLPHIN SMALLTALK
-COMMUNITY EDITION.
-
-This implies that you are NOT allowed to create redistibutable applications with this
-version of the SOFTWARE PRODUCT. If you wish to create redistributable applications
-with DOLPHIN SMALLTALK you must purchase the PROFESSIONAL EDITION.'!
-
 shortProductName
 	"Answer the abbreviated product name"
 	
@@ -77,6 +56,5 @@ shortProductName
 !DolphinCommunityEdition class categoriesFor: #isAbstract!operations!public!testing! !
 !DolphinCommunityEdition class categoriesFor: #productLevel!constants!private! !
 !DolphinCommunityEdition class categoriesFor: #productName!accessing!public! !
-!DolphinCommunityEdition class categoriesFor: #redistHeaderText!constants!public! !
 !DolphinCommunityEdition class categoriesFor: #shortProductName!accessing!public! !
 
