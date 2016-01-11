@@ -81,6 +81,15 @@ contents
 		add: #('Core\Object Arts\Dolphin\ActiveX\Components\CDO\CDO.pax' #plain #imageBased);
 		yourself.
 
+	"Burning River"
+	contents
+		add:  #('Core\Contributions\Burning River\KernelLibraryExtensions\KernelLibraryExtensions.pax' #plain #imageBased);
+		add:  #('Core\Contributions\Burning River\InheritableFile/InheritableFile.pax' #plain #imageBased);
+		add:  #('Core\Contributions\Burning River\ExternalProcess\ExternalProcess.pax' #plain #imageBased).
+
+	"Udo Schneider"
+	contents add:  #('Core\Contributions\Udo Schneider\US ExternalProcess Extensions.pax' #plain #imageBased).
+
 	"Active-X components"
 	contents
 		add: #('Core\Object Arts\Dolphin\ActiveX\Components\XML DOM\XML DOM.pax' #plain #diskBased);

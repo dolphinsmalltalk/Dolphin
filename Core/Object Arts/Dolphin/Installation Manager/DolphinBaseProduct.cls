@@ -97,15 +97,6 @@ contents
 		add: #('Core\Contributions\Odellsoft\SUnitBrowser\SUnitBrowser.pax' #plain #imageBased);
 		yourself.
 
-	"Burning River"
-	contents
-		add:  #('Core\Contributions\Burning River\KernelLibraryExtensions\KernelLibraryExtensions.pax' #plain #imageBased);
-		add:  #('Core\Contributions\Burning River\InheritableFile/InheritableFile.pax' #plain #imageBased);
-		add:  #('Core\Contributions\Burning River\ExternalProcess\ExternalProcess.pax' #plain #imageBased).
-
-	"Udo Schneider"
-	contents add:  #('Core\Contributions\Udo Schneider\US ExternalProcess Extensions.pax' #plain #imageBased).
-
 	"Deprecated pieces"
 	contents
 		add: #('Core\Object Arts\Dolphin\Base\Deprecated\Dolphin Base (Deprecated).pax' #plain #imageBased);
