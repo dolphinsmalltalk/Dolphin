@@ -308,6 +308,58 @@ onQueryWindowsShutdown
 	self saveImage.
 	self quit: 0!
 
+onStartup: args
+	"NOTE: when this method matches that in SessionManager, 
+	this one should be removed. (We override because we can't modify it easily.)"
+
+	"Initialize the receiver immediately following system startup.
+	This is the main system initialization routine, and is responsible
+	for starting the windowing system, the process system, etc.
+	WARNING: If you break the early startup process (especially before prestart.st)
+	then you will not be able to load your image. It is recommended, therefore, that
+	if changing startup code, you should attempt to run up a new copy of the image
+	just saved BEFORE closing down. Walkbacks will work at just about any stage,
+	but other windows will not open if View>>onStartup has not been run."
+
+	| oldBase newBase |
+	state := 0.
+	eventLogHandle := stdioStreams := consoleHandler := nil.
+	oldBase := self imageBase.
+
+	"Save away the Array of startup arguments, passed in by the VM, for later use"
+	startupArgs := args.
+	imagePath := args class == Array ifTrue: [args first] ifFalse: [args].
+	cmdLineFlags := argv := nil.
+
+	[self primaryStartup.
+	state := 1.		"Mewling and puking in the nurse's arms"
+
+	"Before the secondary startup, lets have an opportunity of getting
+	in and fixing and possible problems with the image (only required in Development?)"
+	self preStart.
+	self secondaryStartup.
+	state := 2.		"The whining schoolboy with shining morning face"
+
+	"We are now in a position to claim ownership of the image file, if relevant."
+	self registerRunning.
+
+	"Trigger any user startup processing"
+	[self trigger: #sessionStarted] ensure: [self tertiaryStartup].
+	state := 3	"The Lover sighing like furnace"] 
+			ensure: 
+				["Always attempt to start the main process (must place into state 5)
+		 even if earlier startup failed. This may help recover a damaged
+		 development image if the startup has progressed sufficiently far."
+		self forkMain.
+				state := 4	"Full of strange oaths and bearded like the pard"].
+
+	oldBase ~= (newBase := self imageBase) ifTrue: [self imageMovedFrom: oldBase to: newBase].
+
+	"We must terminate the active process to prevent it from continuing from where it left
+	off when the image was saved and running onExit processing, or whatever it would have
+	done next. We also kill it to prevent any invalid termination running."
+	Processor activeProcess kill!
+
 onUnhandledWarning: aWarning
 	"The unhandled Warning, aWarning, occurred in the active Process.
 	Override the superclass implementation in order to give the user
@@ -722,6 +774,7 @@ versionString
 !DevelopmentSessionManager categoriesFor: #onExit!event handling!public! !
 !DevelopmentSessionManager categoriesFor: #onQueryEndSession:!event handling!public! !
 !DevelopmentSessionManager categoriesFor: #onQueryWindowsShutdown!event handling!public! !
+!DevelopmentSessionManager categoriesFor: #onStartup:!event handling!public! !
 !DevelopmentSessionManager categoriesFor: #onUnhandledWarning:!event handling!public! !
 !DevelopmentSessionManager categoriesFor: #open:!operations-startup!private! !
 !DevelopmentSessionManager categoriesFor: #openPackage:!operations-startup!private! !
