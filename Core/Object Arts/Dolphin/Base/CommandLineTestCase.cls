@@ -10,11 +10,23 @@ CommandLineTestCase comment: ''!
 !CommandLineTestCase categoriesForClass!SUnit! !
 !CommandLineTestCase methodsFor!
 
-test_getopt
+test_getOpt_1
 	"http://www.gnu.org/software/libc/manual/html_node/Example-of-Getopt.html"
 
-	| commandLine |
-	commandLine := CommandLine test: #('Dolphin7.exe' 'DPRO.img7').
-	! !
-!CommandLineTestCase categoriesFor: #test_getopt!public! !
+	| commandLine optionChar |
+	commandLine := CommandLine argv: #('Dolphin7.exe' 'DPRO.img7').
+	optionChar := commandLine getOpt: 'abc:'.
+	self assert: optionChar isNil.	"No options provided"!
+
+test_getOpt_2
+	"http://www.gnu.org/software/libc/manual/html_node/Example-of-Getopt.html"
+
+	| commandLine optionChar |
+	commandLine := CommandLine argv: #('Dolphin7.exe' 'DPRO.img7' '-a' '-b').
+	optionChar := commandLine getOpt: 'abc:'.
+	self 
+		assert: optionChar == $a;
+		yourself.! !
+!CommandLineTestCase categoriesFor: #test_getOpt_1!public! !
+!CommandLineTestCase categoriesFor: #test_getOpt_2!public! !
 
