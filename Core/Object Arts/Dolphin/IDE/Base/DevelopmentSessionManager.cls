@@ -130,6 +130,11 @@ helpTutorialsTopic
 helpWhatsNewTopic
 	^'Whats_New'!
 
+imageMovedFrom: oldBase to: newBase
+
+	Notification signal: 'imageMovedFrom: ' , oldBase printString , ' to: ' , newBase printString.
+!
+
 imageStamp
 	"Answer the TimeStamp at which the image was saved."
 
@@ -694,6 +699,7 @@ versionString
 !DevelopmentSessionManager categoriesFor: #helpRootUrl!constants!public! !
 !DevelopmentSessionManager categoriesFor: #helpTutorialsTopic!constants!public! !
 !DevelopmentSessionManager categoriesFor: #helpWhatsNewTopic!constants!public! !
+!DevelopmentSessionManager categoriesFor: #imageMovedFrom:to:!event handling!public! !
 !DevelopmentSessionManager categoriesFor: #imageStamp!accessing!public! !
 !DevelopmentSessionManager categoriesFor: #imageStamp:!accessing!private! !
 !DevelopmentSessionManager categoriesFor: #imageVersionMinor:!accessing!private! !
