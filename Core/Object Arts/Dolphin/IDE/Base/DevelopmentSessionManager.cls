@@ -132,8 +132,24 @@ helpWhatsNewTopic
 
 imageMovedFrom: oldBase to: newBase
 
-	Notification signal: 'imageMovedFrom: ' , oldBase printString , ' to: ' , newBase printString.
-!
+	| oldPath newPath fullPath alternatePath |
+	(self isSourceVisibleFrom: oldBase) ifFalse: [^self].	"No sense in moving to new base"
+	PackageManager current packages do: [:each | 
+		oldPath := each packagePathname.
+		(File exists: oldPath) ifFalse: [
+			fullPath := File fullPathOf: oldPath relativeTo: oldBase.
+			(File exists: fullPath) ifFalse: [
+				alternatePath := File 
+					change: fullPath 
+					extension: (each isUsingPAX ifTrue: ['pac'] ifFalse: ['pax']).
+				(File exists: alternatePath) ifTrue: [
+					fullPath := alternatePath.
+				].
+			].
+			newPath := File relativePathOf: fullPath to: newBase.
+			each packageFileName: newPath.
+		].
+	]!
 
 imageStamp
 	"Answer the TimeStamp at which the image was saved."
@@ -208,6 +224,16 @@ isOAD
 	"Private - Is this an Object Arts Development image?"
 
 	^(self productDetails at: 6) = 'OAE'!
+
+isSourceVisibleFrom: oldBase
+
+	| samplePackage oldPath fullPath |
+	samplePackage := PackageManager current packageNamed: 'Development System'.
+	oldPath := samplePackage packagePathname.
+	fullPath :=  File fullPathOf: oldPath relativeTo: oldBase.
+	(File exists: fullPath) ifTrue: [^true].
+	fullPath := File change: fullPath extension: (samplePackage isUsingPAX ifTrue: ['pac'] ifFalse: ['pax']).
+	^File exists: fullPath!
 
 keepAlive
 	"The inputState has determined that there are no live windows.
@@ -321,10 +347,10 @@ onStartup: args
 	just saved BEFORE closing down. Walkbacks will work at just about any stage,
 	but other windows will not open if View>>onStartup has not been run."
 
-	| oldBase newBase |
+	| oldPath oldBase newBase |
 	state := 0.
 	eventLogHandle := stdioStreams := consoleHandler := nil.
-	oldBase := self imageBase.
+	oldPath := imagePath.
 
 	"Save away the Array of startup arguments, passed in by the VM, for later use"
 	startupArgs := args.
@@ -353,6 +379,7 @@ onStartup: args
 		self forkMain.
 				state := 4	"Full of strange oaths and bearded like the pard"].
 
+	oldBase := File splitPathFrom: oldPath.
 	oldBase ~= (newBase := self imageBase) ifTrue: [self imageMovedFrom: oldBase to: newBase].
 
 	"We must terminate the active process to prevent it from continuing from where it left
@@ -751,7 +778,7 @@ versionString
 !DevelopmentSessionManager categoriesFor: #helpRootUrl!constants!public! !
 !DevelopmentSessionManager categoriesFor: #helpTutorialsTopic!constants!public! !
 !DevelopmentSessionManager categoriesFor: #helpWhatsNewTopic!constants!public! !
-!DevelopmentSessionManager categoriesFor: #imageMovedFrom:to:!event handling!public! !
+!DevelopmentSessionManager categoriesFor: #imageMovedFrom:to:!event handling!private! !
 !DevelopmentSessionManager categoriesFor: #imageStamp!accessing!public! !
 !DevelopmentSessionManager categoriesFor: #imageStamp:!accessing!private! !
 !DevelopmentSessionManager categoriesFor: #imageVersionMinor:!accessing!private! !
@@ -762,6 +789,7 @@ versionString
 !DevelopmentSessionManager categoriesFor: #isDLL!private!testing! !
 !DevelopmentSessionManager categoriesFor: #isEmbedded!public!testing! !
 !DevelopmentSessionManager categoriesFor: #isOAD!accessing!private!product! !
+!DevelopmentSessionManager categoriesFor: #isSourceVisibleFrom:!event handling!private! !
 !DevelopmentSessionManager categoriesFor: #keepAlive!idling!operations-shutdown!public! !
 !DevelopmentSessionManager categoriesFor: #lastSerialNumberRegistryKeyFor:!accessing!private!product! !
 !DevelopmentSessionManager categoriesFor: #lastSerialNumberRegistryKeyPre61!accessing!private!product! !
