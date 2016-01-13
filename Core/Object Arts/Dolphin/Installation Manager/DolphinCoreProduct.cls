@@ -23,6 +23,7 @@ contents
 	contents := super contents.
 	"Base"
 	contents
+		add: #('Core\Object Arts\Dolphin\Base\Dolphin Base.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\MVP\Views\SysLink\Dolphin SysLink Control.pax' #encrypted #imageBased);
 		add: #('Core\Object Arts\Dolphin\ActiveX\Components\MonthView\Month View.pax' #encrypted #imageBased);
 		add: #('Core\Object Arts\Dolphin\ActiveX\Components\MSMask\Masked Edit.pax' #plain #imageBased);

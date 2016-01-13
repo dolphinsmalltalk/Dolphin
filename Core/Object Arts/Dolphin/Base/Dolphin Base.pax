@@ -1,12 +1,12 @@
 | package |
-package := Package name: 'Command Line'.
+package := Package name: 'Dolphin Base'.
 package paxVersion: 1;
 	basicComment: ''.
 
 
 package classNames
 	add: #CommandLine;
-	add: #CommandLineTestCase;
+	add: #CommandLineTest;
 	yourself.
 
 package binaryGlobalNames: (Set new
@@ -29,7 +29,7 @@ Object subclass: #CommandLine
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-TestCase subclass: #CommandLineTestCase
+TestCase subclass: #CommandLineTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''

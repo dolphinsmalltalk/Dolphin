@@ -1,14 +1,14 @@
 "Filed out from Dolphin Smalltalk 7"!
 
-TestCase subclass: #CommandLineTestCase
+TestCase subclass: #CommandLineTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-CommandLineTestCase guid: (GUID fromString: '{3A8A3BC5-3EF6-46C1-933B-754C6B06457E}')!
-CommandLineTestCase comment: ''!
-!CommandLineTestCase categoriesForClass!SUnit! !
-!CommandLineTestCase methodsFor!
+CommandLineTest guid: (GUID fromString: '{3A8A3BC5-3EF6-46C1-933B-754C6B06457E}')!
+CommandLineTest comment: ''!
+!CommandLineTest categoriesForClass!SUnit! !
+!CommandLineTest methodsFor!
 
 test_getOpt_01
 	"http://www.gnu.org/software/libc/manual/html_node/Example-of-Getopt.html"
@@ -214,20 +214,20 @@ testSlashPrefix
 		assert: (options at: $c) = 'foo';
 		assert: arguments = #('bar');
 		yourself.! !
-!CommandLineTestCase categoriesFor: #test_getOpt_01!public! !
-!CommandLineTestCase categoriesFor: #test_getOpt_02!public! !
-!CommandLineTestCase categoriesFor: #test_getOpt_03!public! !
-!CommandLineTestCase categoriesFor: #test_getOpt_04!public! !
-!CommandLineTestCase categoriesFor: #test_getOpt_05!public! !
-!CommandLineTestCase categoriesFor: #test_getOpt_06!public! !
-!CommandLineTestCase categoriesFor: #test_getOpt_07!public! !
-!CommandLineTestCase categoriesFor: #test_getOpt_08!public! !
-!CommandLineTestCase categoriesFor: #test_getOpt_09!public! !
-!CommandLineTestCase categoriesFor: #test_getOpt_10!public! !
-!CommandLineTestCase categoriesFor: #test_getOpt_11!public! !
-!CommandLineTestCase categoriesFor: #test_getOpt_12!public! !
-!CommandLineTestCase categoriesFor: #test_getOpt_13!public! !
-!CommandLineTestCase categoriesFor: #test_getOpt_14!public! !
-!CommandLineTestCase categoriesFor: #testAccessors!public! !
-!CommandLineTestCase categoriesFor: #testSlashPrefix!public! !
+!CommandLineTest categoriesFor: #test_getOpt_01!public! !
+!CommandLineTest categoriesFor: #test_getOpt_02!public! !
+!CommandLineTest categoriesFor: #test_getOpt_03!public! !
+!CommandLineTest categoriesFor: #test_getOpt_04!public! !
+!CommandLineTest categoriesFor: #test_getOpt_05!public! !
+!CommandLineTest categoriesFor: #test_getOpt_06!public! !
+!CommandLineTest categoriesFor: #test_getOpt_07!public! !
+!CommandLineTest categoriesFor: #test_getOpt_08!public! !
+!CommandLineTest categoriesFor: #test_getOpt_09!public! !
+!CommandLineTest categoriesFor: #test_getOpt_10!public! !
+!CommandLineTest categoriesFor: #test_getOpt_11!public! !
+!CommandLineTest categoriesFor: #test_getOpt_12!public! !
+!CommandLineTest categoriesFor: #test_getOpt_13!public! !
+!CommandLineTest categoriesFor: #test_getOpt_14!public! !
+!CommandLineTest categoriesFor: #testAccessors!public! !
+!CommandLineTest categoriesFor: #testSlashPrefix!public! !
 
