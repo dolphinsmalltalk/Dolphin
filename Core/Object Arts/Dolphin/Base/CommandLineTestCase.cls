@@ -122,6 +122,79 @@ test_getOpt_10
 		assert: commandLine optArg isNil;
 		assert: (commandLine getOpt: 'abc:') isNil;
 		assert: commandLine optInd == 4;
+		yourself.!
+
+test_getOpt_11
+	"http://www.gnu.org/software/libc/manual/html_node/Using-Getopt.html
+	Unexected option"
+
+	| commandLine |
+	commandLine := CommandLine argv: #('Dolphin7.exe' 'DPRO.img7' '-x').
+	self 
+		assert: (commandLine getOpt: 'abc:') == $?;
+		assert: commandLine optOpt = $x;
+		assert: commandLine optArg isNil;
+		assert: (commandLine getOpt: 'abc:') isNil;
+		yourself.!
+
+test_getOpt_12
+	"http://www.gnu.org/software/libc/manual/html_node/Using-Getopt.html
+	Missing required option argument"
+
+	| commandLine |
+	commandLine := CommandLine argv: #('Dolphin7.exe' 'DPRO.img7' '-c').
+	self 
+		assert: (commandLine getOpt: 'abc:') == $?;
+		assert: commandLine optOpt = $c;
+		assert: commandLine optArg isNil;
+		assert: (commandLine getOpt: 'abc:') isNil;
+		yourself.!
+
+test_getOpt_13
+	"http://www.gnu.org/software/libc/manual/html_node/Using-Getopt.html
+	Missing optional option argument"
+
+	| commandLine |
+	commandLine := CommandLine argv: #('Dolphin7.exe' 'DPRO.img7' '-c').
+	self 
+		assert: (commandLine getOpt: 'abc::') == $c;
+		assert: commandLine optOpt isNil;
+		assert: commandLine optArg isEmpty;
+		assert: (commandLine getOpt: 'abc:') isNil;
+		yourself.!
+
+testAccessors
+
+	| commandLine options arguments |
+	commandLine := (CommandLine argv: #('Dolphin7.exe' 'DPRO.img7' '-a' '-b' '-c' 'foo' 'bar'))
+		options: 'abc:';
+		yourself.
+	options := commandLine options.
+	arguments := commandLine arguments.
+	self 
+		assert: options class == Dictionary;
+		assert: options keys asSortedCollection asArray = #($a $b $c);
+		assert: (options at: $a) isNil;
+		assert: (options at: $b) isNil;
+		assert: (options at: $c) = 'foo';
+		assert: arguments = #('bar');
+		yourself.!
+
+testSlashPrefix
+
+	| commandLine options arguments |
+	commandLine := (CommandLine argv: #('Dolphin7.exe' 'DPRO.img7' '/a' '/b' '/c' 'foo' 'bar'))
+		options: 'abc:';
+		yourself.
+	options := commandLine options.
+	arguments := commandLine arguments.
+	self 
+		assert: options class == Dictionary;
+		assert: options keys asSortedCollection asArray = #($a $b $c);
+		assert: (options at: $a) isNil;
+		assert: (options at: $b) isNil;
+		assert: (options at: $c) = 'foo';
+		assert: arguments = #('bar');
 		yourself.! !
 !CommandLineTestCase categoriesFor: #test_getOpt_01!public! !
 !CommandLineTestCase categoriesFor: #test_getOpt_02!public! !
@@ -133,4 +206,9 @@ test_getOpt_10
 !CommandLineTestCase categoriesFor: #test_getOpt_08!public! !
 !CommandLineTestCase categoriesFor: #test_getOpt_09!public! !
 !CommandLineTestCase categoriesFor: #test_getOpt_10!public! !
+!CommandLineTestCase categoriesFor: #test_getOpt_11!public! !
+!CommandLineTestCase categoriesFor: #test_getOpt_12!public! !
+!CommandLineTestCase categoriesFor: #test_getOpt_13!public! !
+!CommandLineTestCase categoriesFor: #testAccessors!public! !
+!CommandLineTestCase categoriesFor: #testSlashPrefix!public! !
 

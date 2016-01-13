@@ -25,7 +25,7 @@ package!
 "Class Definitions"!
 
 Object subclass: #CommandLine
-	instanceVariableNames: 'arguments argv optArg optInd optionPrefixChars options'
+	instanceVariableNames: 'arguments argv optArg optInd optOpt optionPrefixChars options'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
