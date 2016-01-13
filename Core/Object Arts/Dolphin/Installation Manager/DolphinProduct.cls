@@ -30,7 +30,8 @@ basicLoad
 
 	"Inform the development system of it's new product state"
 
-	| packageManager |
+	| packageManager prefix |
+	prefix := Smalltalk at: #bootPathPrefix ifAbsent: [''].
 	self installProductDetails.
 	packageManager := Package manager.
 	self packagePaths do: 
@@ -39,7 +40,10 @@ basicLoad
 			name := File splitStemFrom: each.
 			packageManager packageNamed: name
 				ifNone: 
-					[[packageManager install: each] on: packageManager prerequisiteNotFoundSignal
+					[[ | path |
+					path := each.
+					(File exists: path) ifFalse: [path := prefix, path].
+					packageManager install: path] on: packageManager prerequisiteNotFoundSignal
 						do: [:ex | ex resume: (File splitPathFrom: each)]]].
 	Smalltalk developmentSystem beNotChanged!
 
