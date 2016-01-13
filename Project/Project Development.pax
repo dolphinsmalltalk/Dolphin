@@ -1,0 +1,37 @@
+| package |
+package := Package name: 'Project Development'.
+package paxVersion: 1;
+	basicComment: ''.
+
+
+package classNames
+	add: #Project;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\Core\Object Arts\Dolphin\Installation Manager\Dolphin Products';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+DolphinProfessional subclass: #Project
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+"End of package definition"!
+
