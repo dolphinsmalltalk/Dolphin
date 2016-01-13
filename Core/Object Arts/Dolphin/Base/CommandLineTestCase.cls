@@ -29,6 +29,7 @@ test_getOpt_02
 		assert: (commandLine getOpt: 'abc:') == $b;
 		assert: commandLine optArg isNil;
 		assert: (commandLine getOpt: 'abc:') isNil;
+		assert: commandLine arguments isEmpty;
 		yourself.!
 
 test_getOpt_03
@@ -42,6 +43,7 @@ test_getOpt_03
 		assert: (commandLine getOpt: 'abc:') == $b;
 		assert: commandLine optArg isNil;
 		assert: (commandLine getOpt: 'abc:') isNil;
+		assert: commandLine arguments isEmpty;
 		yourself.!
 
 test_getOpt_04
@@ -53,6 +55,7 @@ test_getOpt_04
 		assert: (commandLine getOpt: 'abc:') == $c;
 		assert: commandLine optArg = 'foo';
 		assert: (commandLine getOpt: 'abc:') isNil;
+		assert: commandLine arguments isEmpty;
 		yourself.!
 
 test_getOpt_05
@@ -64,6 +67,7 @@ test_getOpt_05
 		assert: (commandLine getOpt: 'abc:') == $c;
 		assert: commandLine optArg = 'foo';
 		assert: (commandLine getOpt: 'abc:') isNil;
+		assert: commandLine arguments isEmpty;
 		yourself.!
 
 test_getOpt_06
@@ -73,7 +77,7 @@ test_getOpt_06
 	commandLine := CommandLine argv: #('Dolphin7.exe' 'DPRO.img7' 'arg1').
 	self 
 		assert: (commandLine getOpt: 'abc:') isNil;
-		assert: commandLine optInd == 3;
+		assert: commandLine arguments = #('arg1');
 		yourself.!
 
 test_getOpt_07
@@ -85,7 +89,7 @@ test_getOpt_07
 		assert: (commandLine getOpt: 'abc:') == $a;
 		assert: commandLine optArg isNil;
 		assert: (commandLine getOpt: 'abc:') isNil;
-		assert: commandLine optInd == 4;
+		assert: commandLine arguments = #('arg1');
 		yourself.!
 
 test_getOpt_08
@@ -97,7 +101,7 @@ test_getOpt_08
 		assert: (commandLine getOpt: 'abc:') == $c;
 		assert: commandLine optArg = 'foo';
 		assert: (commandLine getOpt: 'abc:') isNil;
-		assert: commandLine optInd == 5;
+		assert: commandLine arguments = #('arg1');
 		yourself.!
 
 test_getOpt_09
@@ -109,7 +113,7 @@ test_getOpt_09
 		assert: (commandLine getOpt: 'abc:') == $a;
 		assert: commandLine optArg isNil;
 		assert: (commandLine getOpt: 'abc:') isNil;
-		assert: commandLine optInd == 5;
+		assert: commandLine arguments = #('-b');
 		yourself.!
 
 test_getOpt_10
@@ -121,7 +125,7 @@ test_getOpt_10
 		assert: (commandLine getOpt: 'abc:') == $a;
 		assert: commandLine optArg isNil;
 		assert: (commandLine getOpt: 'abc:') isNil;
-		assert: commandLine optInd == 4;
+		assert: commandLine arguments = #('-');
 		yourself.!
 
 test_getOpt_11
@@ -135,6 +139,7 @@ test_getOpt_11
 		assert: commandLine optOpt = $x;
 		assert: commandLine optArg isNil;
 		assert: (commandLine getOpt: 'abc:') isNil;
+		assert: commandLine arguments isEmpty;
 		yourself.!
 
 test_getOpt_12
@@ -148,6 +153,7 @@ test_getOpt_12
 		assert: commandLine optOpt = $c;
 		assert: commandLine optArg isNil;
 		assert: (commandLine getOpt: 'abc:') isNil;
+		assert: commandLine arguments isEmpty;
 		yourself.!
 
 test_getOpt_13
@@ -161,6 +167,18 @@ test_getOpt_13
 		assert: commandLine optOpt isNil;
 		assert: commandLine optArg isEmpty;
 		assert: (commandLine getOpt: 'abc:') isNil;
+		assert: commandLine arguments isEmpty;
+		yourself.!
+
+test_getOpt_14
+	"http://www.gnu.org/software/libc/manual/html_node/Using-Getopt.html
+	Double dash indicates to treat remainder as arguments, not options"
+
+	| commandLine |
+	commandLine := CommandLine argv: #('Dolphin7.exe' 'DPRO.img7' '--' '-a' '-b' '-c').
+	self 
+		assert: (commandLine getOpt: 'abc:') isNil;
+		assert: commandLine arguments = #('-a' '-b' '-c');
 		yourself.!
 
 testAccessors
@@ -209,6 +227,7 @@ testSlashPrefix
 !CommandLineTestCase categoriesFor: #test_getOpt_11!public! !
 !CommandLineTestCase categoriesFor: #test_getOpt_12!public! !
 !CommandLineTestCase categoriesFor: #test_getOpt_13!public! !
+!CommandLineTestCase categoriesFor: #test_getOpt_14!public! !
 !CommandLineTestCase categoriesFor: #testAccessors!public! !
 !CommandLineTestCase categoriesFor: #testSlashPrefix!public! !
 

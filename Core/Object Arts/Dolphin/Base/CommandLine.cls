@@ -1,7 +1,7 @@
 "Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #CommandLine
-	instanceVariableNames: 'arguments argv optArg optInd optOpt optionPrefixChars options'
+	instanceVariableNames: 'arguments argv optArg optIndex optOpt optionPrefixChars options parsingArg parsingArgStream parsingOptionStream parsingRules'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -30,16 +30,17 @@ arguments
 	^arguments!
 
 getOpt: aString
+	"http://www.gnu.org/software/libc/manual/html_node/Using-Getopt.html"
 
 	| option |
 	self options: aString.
-	options size < optInd ifTrue: [^nil].
-	(option := options at: optInd) ifNil: [
-		optInd := optInd + 1.
-		options size < optInd ifTrue: [^nil].
-		option := options at: optInd.
+	options size < optIndex ifTrue: [^nil].
+	(option := options at: optIndex) ifNil: [
+		optIndex := optIndex + 1.
+		options size < optIndex ifTrue: [^nil].
+		option := options at: optIndex.
 	].
-	optInd := optInd + 1.
+	optIndex := optIndex + 1.
 	option key == $? ifTrue: [
 		optArg := nil.
 		optOpt := option value.
@@ -53,119 +54,146 @@ initialize: anArray
 
 	argv := anArray.
 	self assert: [2 <= argv size].
-	optInd := 1.
+	optIndex := 1.
 	optionPrefixChars := '-/'.!
 
 optArg
 
 	^optArg!
 
-optInd
-
-	^optInd + 2!
-
 options
+	"Answers a dictionary where key is the option and value is
+		nil if no argument allowed
+		empty if optional argument missing
+		otherwise value of optional or required argument"
 
 	| dict |
 	dict := Dictionary new.
 	options do: [:each | 
-		(each notNil and: [each key notNil and: [each key ~~ $?]]) ifTrue: [
+		each key ~~ $? ifTrue: [
 			dict at: each key put: each value.
 		].
 	].
 	^dict!
 
 options: aString
+	"http://www.gnu.org/software/libc/manual/html_node/Using-Getopt.html"
 
-	| argStream optionsStream rules |
-	optionsStream := ReadStream on: aString.
-	arguments := OrderedCollection new.
-	options := OrderedCollection new.
-	rules := OrderedCollection new.
-	[optionsStream atEnd] whileFalse: [
-		| argRequired char |
-		argRequired := nil.	"argument not allowed"
-		char := optionsStream next. 
-		 optionsStream peek == $: ifTrue: [
-			argRequired := (optionsStream next; peek) ~~ $:.
-		].
-		rules add: char -> argRequired.
-	].
-	argStream := (ReadStream on: argv) next; next; yourself.
-	[argStream atEnd] whileFalse: [
-		| arg |
-		arg := argStream next.
-		(1 < arg size and: [optionPrefixChars includes: arg first]) ifTrue: [
-			| optionStream |
-			optionStream := (ReadStream on: arg) next; yourself.
-			[optionStream atEnd] whileFalse: [
-				| argRequired char rule |
-				char := optionStream next.
-				(arg size == 2 and: [(arg at: 1) == (arg at: 2)]) ifTrue: [
-					options add: nil.
-					arguments addAll: argStream upToEnd.
-				] ifFalse: [
-					rule := rules detect: [:each | each key == char] ifNone: [nil -> nil].
-					rule key ifNil: [
-						options add: $? -> char.
-					] ifNotNil: [
-						argRequired := rule value.
-						argRequired ifNil: [
-							options add: char -> nil.
-						] ifNotNil: [
-							| optionArg |
-							(optionArg := optionStream upToEnd) isEmpty ifTrue: [
-								argStream atEnd ifFalse: [
-									optionArg := argStream peek.
-									(optionPrefixChars includes: optionArg first) ifTrue: [
-										optionArg := ''.
-									] ifFalse: [
-										argStream next.
-										options add: nil.
-									].
-								].
-							].
-							(argRequired and: [optionArg isEmpty]) ifTrue: [
-								optionArg := char. 
-								char := $?.
-							].
-							options add: char -> optionArg.
-						].
-					].
-				].
-			].
-		] ifFalse: [
-			arguments add: arg.
-		].
-	].
-	arguments := arguments asArray.!
+	parsingRules := self rulesFrom: aString.
+	self parse.!
 
 optOpt
 
-	^optOpt! !
-!CommandLine categoriesFor: #arguments!public! !
-!CommandLine categoriesFor: #getOpt:!public! !
-!CommandLine categoriesFor: #initialize:!public! !
-!CommandLine categoriesFor: #optArg!public! !
-!CommandLine categoriesFor: #optInd!public! !
-!CommandLine categoriesFor: #options!public! !
+	^optOpt!
+
+parse
+
+	arguments := OrderedCollection new.
+	options := OrderedCollection new.
+	parsingArgStream := (ReadStream on: argv) 
+		next; 	"exe"
+		next; 	"img7"
+		yourself.
+	[parsingArgStream atEnd] whileFalse: [	"iterate over the argv array"
+		self parseNextArg.
+	].
+	arguments := arguments asArray.!
+
+parseNextArg
+
+	parsingArg := parsingArgStream next.
+	(1 < parsingArg size and: [optionPrefixChars includes: parsingArg first]) ifFalse: [	"no prefix means treat as an argument rather than as an option"
+		arguments add: parsingArg.
+		^self
+	].
+	parsingOptionStream := (ReadStream on: parsingArg) 
+		next; 	"Prefix character ($/ or $-)"
+		yourself.
+	[parsingOptionStream atEnd] whileFalse: [	"one argv can have multiple options (-ab is equivalent to -a -b)"
+		self parseNextOption.
+	].
+!
+
+parseNextOption
+
+	| argRequired char optionArg rule |
+	char := parsingOptionStream next.
+	(parsingArg size == 2 and: [(parsingArg at: 1) == (parsingArg at: 2)]) ifTrue: [	"-- is a signal to treat everything following as arguments, not options"
+		arguments addAll: parsingArgStream upToEnd.
+		^self
+	].
+	rule := parsingRules 
+		detect: [:each | each key == char] 
+		ifNone: [	"Unrecognized option"
+			options add: $? -> char.
+			^self
+		].
+	argRequired := rule value.
+	argRequired ifNil: [	"simple option without an argument"
+		options add: char -> nil.
+		^self
+	].
+	"option has an optional or required argument"
+	optionArg := parsingOptionStream upToEnd.	"option argument can follow immediately (-xabc)"
+	(optionArg isEmpty and: [parsingArgStream atEnd not]) ifTrue: [	"look for option argument in next argv"
+		optionArg := parsingArgStream peek.
+		(optionPrefixChars includes: optionArg first) ifTrue: [	"next argument begins with prefix character, so another option"
+			optionArg := ''.		"option does not have an argument"
+		] ifFalse: [
+			parsingArgStream next.	"argument associated with option"
+		].
+	].
+	(argRequired and: [optionArg isEmpty]) ifTrue: [	"error if required argument is not present"
+		optionArg := char. 
+		char := $?.
+	].
+	options add: char -> optionArg.	"save option and argument"!
+
+rulesFrom: aString
+	"Answer an array "
+
+	| optionsStream rules |
+	optionsStream := ReadStream on: aString.
+	rules := OrderedCollection new.
+	[optionsStream atEnd] whileFalse: [
+		| argRequired char |
+		argRequired := nil.	"initially assume that argument not allowed"
+		char := optionsStream next. 
+		 optionsStream peek == $: ifTrue: [
+			argRequired := (optionsStream next; peek) ~~ $:.	": means argument is required; :: means argument is optional"
+		].
+		rules add: char -> argRequired.
+	].
+	^rules
+! !
+!CommandLine categoriesFor: #arguments!accessing!public! !
+!CommandLine categoriesFor: #getOpt:!getopt protocol!public! !
+!CommandLine categoriesFor: #initialize:!private! !
+!CommandLine categoriesFor: #optArg!getopt protocol!public! !
+!CommandLine categoriesFor: #options!accessing!public! !
 !CommandLine categoriesFor: #options:!public! !
-!CommandLine categoriesFor: #optOpt!public! !
+!CommandLine categoriesFor: #optOpt!getopt protocol!public! !
+!CommandLine categoriesFor: #parse!private! !
+!CommandLine categoriesFor: #parseNextArg!private! !
+!CommandLine categoriesFor: #parseNextOption!private! !
+!CommandLine categoriesFor: #rulesFrom:!private! !
 
 !CommandLine class methodsFor!
 
 argv: anArray
-	"Constructor used primarily for testing"
+	"Constructor called directly only in testing"
 
 	^super new
 		initialize: anArray;
 		yourself!
 
 new
+	"Generally the #options: constructor should be used"
 
 	^self argv: SessionManager current argv!
 
 options: aString
+	"http://www.gnu.org/software/libc/manual/html_node/Using-Getopt.html"
 
 	^self new
 		options: aString;
