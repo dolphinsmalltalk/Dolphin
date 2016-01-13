@@ -338,6 +338,9 @@ imageFileName
 
 	^File default: self imagePath extension: self imageExtension!
 
+imageMovedFrom: oldBase to: newBase
+	"Private - Available for subclasses to override"!
+
 imagePath
 	"Answer the base file path on which the image, source and changes
 	file names are based. An example might be: c:\Program Files\Dolphin\Dolphin."
@@ -624,8 +627,10 @@ onStartup: args
 	just saved BEFORE closing down. Walkbacks will work at just about any stage,
 	but other windows will not open if View>>onStartup has not been run."
 
+	| oldBase newBase |
 	state := 0.
 	eventLogHandle := stdioStreams := consoleHandler := nil.
+	oldBase := self imageBase.
 
 	"Save away the Array of startup arguments, passed in by the VM, for later use"
 	startupArgs := args.
@@ -653,6 +658,8 @@ onStartup: args
 		 development image if the startup has progressed sufficiently far."
 		self forkMain.
 				state := 4	"Full of strange oaths and bearded like the pard"].
+
+	oldBase ~= (newBase := self imageBase) ifTrue: [self imageMovedFrom: oldBase to: newBase].
 
 	"We must terminate the active process to prevent it from continuing from where it left
 	off when the image was saved and running onExit processing, or whatever it would have
@@ -1085,6 +1092,7 @@ windowsDirectory
 !SessionManager categoriesFor: #imageBase!accessing!public! !
 !SessionManager categoriesFor: #imageExtension!constants!private! !
 !SessionManager categoriesFor: #imageFileName!accessing!public! !
+!SessionManager categoriesFor: #imageMovedFrom:to:!event handling!private! !
 !SessionManager categoriesFor: #imagePath!accessing!public! !
 !SessionManager categoriesFor: #imagePath:!accessing!private! !
 !SessionManager categoriesFor: #imageVersion!accessing!public! !
