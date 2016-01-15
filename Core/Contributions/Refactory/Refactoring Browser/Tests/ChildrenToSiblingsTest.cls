@@ -1,14 +1,12 @@
-"Filed out from Dolphin Smalltalk 2000 release 4.01"!
+"Filed out from Dolphin Smalltalk 7"!
 
 RefactoringTest subclass: #ChildrenToSiblingsTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ChildrenToSiblingsTest comment: ''!
-
 ChildrenToSiblingsTest guid: (GUID fromString: '{CA54E227-44A3-41C9-AAB6-BD11A852BF74}')!
-
+ChildrenToSiblingsTest comment: ''!
 !ChildrenToSiblingsTest categoriesForClass!Refactory-Testing! !
 !ChildrenToSiblingsTest methodsFor!
 

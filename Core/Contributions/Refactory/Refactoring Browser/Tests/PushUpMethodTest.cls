@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 2000 release 5.00"!
+"Filed out from Dolphin Smalltalk 7"!
 
 RefactoringTest subclass: #PushUpMethodTest
 	instanceVariableNames: ''

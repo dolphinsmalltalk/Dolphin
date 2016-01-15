@@ -1,14 +1,12 @@
-"Filed out from Dolphin Smalltalk 2000 release 4.01"!
+"Filed out from Dolphin Smalltalk 7"!
 
 RefactoringTest subclass: #RenameClassVariableTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-RenameClassVariableTest comment: ''!
-
 RenameClassVariableTest guid: (GUID fromString: '{5D45357D-1056-4B27-B1A1-1DF41EE18851}')!
-
+RenameClassVariableTest comment: ''!
 !RenameClassVariableTest categoriesForClass!Refactory-Testing! !
 !RenameClassVariableTest methodsFor!
 

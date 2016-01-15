@@ -1,14 +1,12 @@
-"Filed out from Dolphin Smalltalk 2000 release 4.01"!
+"Filed out from Dolphin Smalltalk 7"!
 
 RefactoringTest subclass: #InlineAllMethodTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-InlineAllMethodTest comment: ''!
-
 InlineAllMethodTest guid: (GUID fromString: '{C022453D-1C4D-4BF0-A604-9ABD6F068965}')!
-
+InlineAllMethodTest comment: ''!
 !InlineAllMethodTest categoriesForClass!Refactory-Testing! !
 !InlineAllMethodTest methodsFor!
 

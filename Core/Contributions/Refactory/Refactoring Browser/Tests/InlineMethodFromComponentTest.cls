@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk XP"!
+"Filed out from Dolphin Smalltalk 7"!
 
 RefactoringTest subclass: #InlineMethodFromComponentTest
 	instanceVariableNames: ''
