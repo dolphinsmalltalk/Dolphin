@@ -1,0 +1,339 @@
+| package |
+package := Package name: 'Dolphin MVP Tests'.
+package paxVersion: 1;
+	basicComment: ''.
+
+
+package classNames
+	add: #AcceleratorTableTest;
+	add: #BorderLayoutTest;
+	add: #BrushTest;
+	add: #CanvasTest;
+	add: #ChoicePresenterTest;
+	add: #ContainerViewTest;
+	add: #FlowLayoutTest;
+	add: #FramingLayoutTest;
+	add: #GridLayoutTest;
+	add: #IconTest;
+	add: #KeyboardTest;
+	add: #LayoutManagerTest;
+	add: #LinkButtonTest;
+	add: #ListBoxTest;
+	add: #ListPresenterTest;
+	add: #ListViewTest;
+	add: #MockScintillaView;
+	add: #MoenTreeViewTest;
+	add: #MoenTreeViewTest2;
+	add: #MultilineTextEditTest;
+	add: #MultipleSelectionListBoxTest;
+	add: #MultipleSelectionListViewTest;
+	add: #MultiSelectListBoxTest;
+	add: #PresenterTest;
+	add: #ProportionalLayoutTest;
+	add: #PushButtonTest;
+	add: #RadioButtonSetPresenterTest;
+	add: #ReferenceViewTest;
+	add: #ResourceIdentifierTest;
+	add: #RichTextEditTest;
+	add: #ScintillaViewTest;
+	add: #ScrollingDecoratorTest;
+	add: #SelectableItemsTest;
+	add: #SelectableListItemsTest;
+	add: #SelectableTreeItemsTest;
+	add: #SliderTest;
+	add: #StaticPathTest;
+	add: #StStyler;
+	add: #StyledContainerTest;
+	add: #TabViewTest;
+	add: #TextEditTest;
+	add: #TreePresenterTest;
+	add: #TreeViewTest;
+	add: #TypeConverterTest;
+	add: #ValueConverterTest;
+	add: #ViewTest;
+	add: #WindowsEventTest;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\IDE\Base\Development System';
+	add: '..\Base\Dolphin';
+	add: '..\Base\Dolphin Base Tests';
+	add: 'Presenters\Boolean\Dolphin Boolean Presenter';
+	add: 'Presenters\Choice\Dolphin Choice Presenter';
+	add: 'Presenters\Color\Dolphin Color Presenter';
+	add: 'Views\Common Controls\Dolphin Common Controls';
+	add: 'Presenters\Date Time\Dolphin Date Time Presenters';
+	add: 'Models\List\Dolphin List Models';
+	add: 'Presenters\List\Dolphin List Presenter';
+	add: '..\System\Filer\Dolphin Literal Filer';
+	add: 'Views\MoenTree\Dolphin MoenTree View';
+	add: 'Deprecated\Dolphin MVP (Deprecated)';
+	add: 'Base\Dolphin MVP Base';
+	add: 'Presenters\Number\Dolphin Number Presenter';
+	add: 'Presenters\Radio\Dolphin Radio Buttons';
+	add: 'Presenters\Text\Dolphin Rich Text Presenter';
+	add: 'Views\Scintilla\Dolphin Scintilla View';
+	add: 'Views\Scrollbars\Dolphin Scrollbars';
+	add: 'Views\Slider\Dolphin Slider Control';
+	add: 'Views\Styled Views\Dolphin Styled Views';
+	add: 'Views\SysLink\Dolphin SysLink Control';
+	add: 'Presenters\Text\Dolphin Text Presenter';
+	add: 'Models\Tree\Dolphin Tree Models';
+	add: 'Presenters\Tree\Dolphin Tree Presenter';
+	add: 'Models\Value\Dolphin Value Models';
+	add: '..\System\Compiler\Smalltalk Parser';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+Object subclass: #MockScintillaView
+	instanceVariableNames: 'lastStyled tokens text currentTextStyles styleIdMap'
+	classVariableNames: ''
+	poolDictionaries: 'ScintillaConstants'
+	classInstanceVariableNames: ''!
+StParseNodeVisitor subclass: #StStyler
+	instanceVariableNames: 'view arrayDepth'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DolphinTest subclass: #AcceleratorTableTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: 'Win32Constants'
+	classInstanceVariableNames: ''!
+DolphinTest subclass: #BrushTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: 'Win32Constants'
+	classInstanceVariableNames: ''!
+DolphinTest subclass: #CanvasTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DolphinTest subclass: #ContainerViewTest
+	instanceVariableNames: 'containerView'
+	classVariableNames: ''
+	poolDictionaries: 'Win32Constants'
+	classInstanceVariableNames: ''!
+DolphinTest subclass: #IconTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DolphinTest subclass: #KeyboardTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: 'Win32Constants'
+	classInstanceVariableNames: ''!
+DolphinTest subclass: #LayoutManagerTest
+	instanceVariableNames: 'shell'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DolphinTest subclass: #MoenTreeViewTest
+	instanceVariableNames: 'treeModel treeView nodeA nodeB nodeC nodeD nodeE nodeF shell scroller useShell'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DolphinTest subclass: #MultipleSelectionListBoxTest
+	instanceVariableNames: 'box'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DolphinTest subclass: #PresenterTest
+	instanceVariableNames: 'presenter'
+	classVariableNames: ''
+	poolDictionaries: 'Win32Constants'
+	classInstanceVariableNames: ''!
+DolphinTest subclass: #PushButtonTest
+	instanceVariableNames: 'shell shellButtonA shellButtonB dialog dialogButtonA dialogButtonB'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DolphinTest subclass: #RadioButtonSetPresenterTest
+	instanceVariableNames: 'radioSet'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DolphinTest subclass: #ResourceIdentifierTest
+	instanceVariableNames: 'tempViewResource'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DolphinTest subclass: #TypeConverterTest
+	instanceVariableNames: 'edit'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DolphinTest subclass: #ValueConverterTest
+	instanceVariableNames: 'converter value startTime newTime changed'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DolphinTest subclass: #ViewTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DolphinTest subclass: #WindowsEventTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ContainerViewTest subclass: #StyledContainerTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+LayoutManagerTest subclass: #BorderLayoutTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+LayoutManagerTest subclass: #FlowLayoutTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+LayoutManagerTest subclass: #FramingLayoutTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+LayoutManagerTest subclass: #GridLayoutTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+LayoutManagerTest subclass: #ProportionalLayoutTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+MultipleSelectionListBoxTest subclass: #MultipleSelectionListViewTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+PresenterTest subclass: #ChoicePresenterTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+PresenterTest subclass: #LinkButtonTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+PresenterTest subclass: #ReferenceViewTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+PresenterTest subclass: #ScrollingDecoratorTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+PresenterTest subclass: #SelectableItemsTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+PresenterTest subclass: #SliderTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+PresenterTest subclass: #StaticPathTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+PresenterTest subclass: #TextEditTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+SelectableItemsTest subclass: #SelectableListItemsTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+SelectableItemsTest subclass: #SelectableTreeItemsTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+SelectableListItemsTest subclass: #ListBoxTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+SelectableListItemsTest subclass: #ListPresenterTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+SelectableListItemsTest subclass: #ListViewTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: 'ListViewConstants'
+	classInstanceVariableNames: ''!
+SelectableListItemsTest subclass: #TabViewTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ListBoxTest subclass: #MultiSelectListBoxTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+SelectableTreeItemsTest subclass: #MoenTreeViewTest2
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+SelectableTreeItemsTest subclass: #TreePresenterTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+SelectableTreeItemsTest subclass: #TreeViewTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+TextEditTest subclass: #MultilineTextEditTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+MultilineTextEditTest subclass: #RichTextEditTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+MultilineTextEditTest subclass: #ScintillaViewTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+"End of package definition"!
+

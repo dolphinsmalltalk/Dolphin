@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 IconicListAbstract subclass: #TreeView
 	instanceVariableNames: 'handleObjectMap indentSeparation viewMode tvFlags _unused'
@@ -352,6 +352,16 @@ getItemState: itemHandle
 		mask: ##(TVIF_CHILDREN | TVIF_STATE).
 	self tvmGetItem: tvItem.
 	^tvItem!
+
+getItemText: itemHandle
+	| tvItem textBuf |
+	tvItem := TVITEM new.
+	tvItem hItem: itemHandle.
+	textBuf := String new: 128.
+	tvItem text: textBuf.
+	tvItem cchTextMax: textBuf size.
+	self tvmGetItem: tvItem.
+	^tvItem pszText!
 
 getSingleSelection
 	"Private - Answer the 'index' (or in the case of the receiver, the handle) of the selected object in 
@@ -1170,6 +1180,7 @@ wmKeyDown: message wParam: wParam lParam: lParam
 !TreeView categoriesFor: #forecolor:!accessing!public! !
 !TreeView categoriesFor: #getIndent!accessing!private! !
 !TreeView categoriesFor: #getItemState:!helpers!private! !
+!TreeView categoriesFor: #getItemText:!accessing!private! !
 !TreeView categoriesFor: #getSingleSelection!private!selection! !
 !TreeView categoriesFor: #handleFromObject:ifAbsent:!accessing!private! !
 !TreeView categoriesFor: #hasButtons!accessing-styles!public! !
