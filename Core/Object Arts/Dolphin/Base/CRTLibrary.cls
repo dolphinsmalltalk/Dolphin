@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 PermanentLibrary subclass: #CRTLibrary
 	instanceVariableNames: 'decimalSeparator'
@@ -703,6 +703,10 @@ tan: aFloat
 	<cdecl: double tan double>
 	^self invalidCall!
 
+thread_chmod: aFilenameString pmode: aModeInteger
+	<overlap cdecl: sdword _chmod lpstr sdword>
+	^self invalidCall!
+
 thread_errno
 	<overlap cdecl: sdword _errno>
 	^self invalidCall!
@@ -811,6 +815,7 @@ wcscspn: aUnicodeString strCharSet: strCharSet
 !CRTLibrary categoriesFor: #strpbrk:strCharSet:!CRT functions-string manipulation!public! !
 !CRTLibrary categoriesFor: #synchronizeLocale!CRT functions-localization!private! !
 !CRTLibrary categoriesFor: #tan:!CRT functions-floating point support!public! !
+!CRTLibrary categoriesFor: #thread_chmod:pmode:!public!unit tests! !
 !CRTLibrary categoriesFor: #thread_errno!CRT functions-process and environment control!public! !
 !CRTLibrary categoriesFor: #ungetc:stream:!CRT functions-stream I/O!public! !
 !CRTLibrary categoriesFor: #wcscspn:strCharSet:!CRT functions-string manipulation!public! !
