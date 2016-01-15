@@ -1,0 +1,83 @@
+| package |
+package := Package name: 'ActiveX Tests'.
+package paxVersion: 1;
+	basicComment: ''.
+
+
+package classNames
+	add: #ADODBTest;
+	add: #AXEventSinkTest;
+	add: #AXTypeLibraryAnalyzerTest;
+	add: #COMInterfaceTest;
+	add: #IDispatchTest;
+	add: #TestTypelib;
+	add: #XmlFormatterTest;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: 'Automation\ActiveX Automation';
+	add: 'Connection Points\ActiveX Connection Points';
+	add: 'Components\ADO\ADODB';
+	add: '..\Database\Database Tests';
+	add: '..\Base\Dolphin';
+	add: '..\Base\Dolphin Base Tests';
+	add: 'COM\OLE COM';
+	add: 'Components\Font\OLE Font';
+	add: '..\..\..\Contributions\Camp Smalltalk\SUnit\SUnit';
+	add: 'Components\XML DOM\XML DOM';
+	add: '..\..\Samples\MVP\XmlPad\XmlPad';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+DolphinTest subclass: #AXEventSinkTest
+	instanceVariableNames: 'sink object received'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DolphinTest subclass: #AXTypeLibraryAnalyzerTest
+	instanceVariableNames: 'analyzer'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DolphinTest subclass: #COMInterfaceTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DolphinTest subclass: #IDispatchTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DolphinTest subclass: #XmlFormatterTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DBTest subclass: #ADODBTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+TestResource subclass: #TestTypelib
+	instanceVariableNames: 'analyzer'
+	classVariableNames: ''
+	poolDictionaries: 'Win32Constants'
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+"End of package definition"!
+
