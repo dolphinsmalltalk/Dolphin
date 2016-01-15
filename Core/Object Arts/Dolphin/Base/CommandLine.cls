@@ -116,20 +116,19 @@ parseNextArg
 
 parseNextOption
 
-	| argRequired char optionArg rule |
+	| char optionArg rule |
 	char := parsingOptionStream next.
 	(parsingArg size == 2 and: [(parsingArg at: 1) == (parsingArg at: 2)]) ifTrue: [	"-- is a signal to treat everything following as arguments, not options"
 		arguments addAll: parsingArgStream upToEnd.
 		^self
 	].
 	rule := parsingRules 
-		detect: [:each | each key == char] 
+		detect: [:each | each name == char] 
 		ifNone: [	"Unrecognized option"
 			options add: $? -> char.
 			^self
 		].
-	argRequired := rule value.
-	argRequired ifNil: [	"simple option without an argument"
+	rule isArgumentAllowed ifFalse: [	"simple option without an argument"
 		options add: char -> nil.
 		^self
 	].
@@ -143,7 +142,7 @@ parseNextOption
 			parsingArgStream next.	"argument associated with option"
 		].
 	].
-	(argRequired and: [optionArg isEmpty]) ifTrue: [	"error if required argument is not present"
+	(rule isArgumentRequired and: [optionArg isEmpty]) ifTrue: [	"error if required argument is not present"
 		optionArg := char. 
 		char := $?.
 	].
@@ -156,13 +155,7 @@ rulesFrom: aString
 	optionsStream := ReadStream on: aString.
 	rules := OrderedCollection new.
 	[optionsStream atEnd] whileFalse: [
-		| argRequired char |
-		argRequired := nil.	"initially assume that argument not allowed"
-		char := optionsStream next. 
-		 optionsStream peek == $: ifTrue: [
-			argRequired := (optionsStream next; peek) ~~ $:.	": means argument is required; :: means argument is optional"
-		].
-		rules add: char -> argRequired.
+		rules add: (CommandLineOption fromStream: optionsStream).
 	].
 	^rules
 ! !
@@ -190,12 +183,12 @@ argv: anArray
 new
 	"Generally the #options: constructor should be used"
 
-	^self argv: SessionManager current argv!
+	^self options: ''		"By default no options, only arguments"!
 
 options: aString
 	"http://www.gnu.org/software/libc/manual/html_node/Using-Getopt.html"
 
-	^self new
+	^(self argv: SessionManager current argv)
 		options: aString;
 		yourself! !
 !CommandLine class categoriesFor: #argv:!public! !

@@ -6,6 +6,7 @@ package paxVersion: 1;
 
 package classNames
 	add: #CommandLine;
+	add: #CommandLineOption;
 	add: #CommandLineTest;
 	yourself.
 
@@ -26,6 +27,11 @@ package!
 
 Object subclass: #CommandLine
 	instanceVariableNames: 'arguments argv optArg optIndex optOpt optionPrefixChars options parsingArg parsingArgStream parsingOptionStream parsingRules'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Object subclass: #CommandLineOption
+	instanceVariableNames: 'name isArgumentAllowed isArgumentRequired value'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
