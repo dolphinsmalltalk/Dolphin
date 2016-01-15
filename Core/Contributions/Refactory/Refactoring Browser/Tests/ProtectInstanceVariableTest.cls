@@ -1,14 +1,12 @@
-"Filed out from Dolphin Smalltalk 2000 release 4.01"!
+"Filed out from Dolphin Smalltalk 7"!
 
 RefactoringTest subclass: #ProtectInstanceVariableTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ProtectInstanceVariableTest comment: ''!
-
 ProtectInstanceVariableTest guid: (GUID fromString: '{4FADB9C6-ABDE-452C-90B8-BC1B80B72555}')!
-
+ProtectInstanceVariableTest comment: ''!
 !ProtectInstanceVariableTest categoriesForClass!Refactory-Testing! !
 !ProtectInstanceVariableTest methodsFor!
 

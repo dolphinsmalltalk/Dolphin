@@ -1,14 +1,12 @@
-"Filed out from Dolphin Smalltalk 2000 release 4.01"!
+"Filed out from Dolphin Smalltalk 7"!
 
 RefactoringTest subclass: #PullUpClassVariableTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-PullUpClassVariableTest comment: ''!
-
 PullUpClassVariableTest guid: (GUID fromString: '{714D19BA-E40B-447B-B1D3-72E8D1F543EA}')!
-
+PullUpClassVariableTest comment: ''!
 !PullUpClassVariableTest categoriesForClass!Refactory-Testing! !
 !PullUpClassVariableTest methodsFor!
 
