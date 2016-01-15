@@ -376,7 +376,7 @@ Compiler::StaticType Compiler::FindNameAsStatic(const Str& name, Oop& literal, b
 				char szCaption[256];
 				::LoadString(GetResLibHandle(), IDR_COMPILER, szCaption, sizeof(szCaption)-1);
 				int answer = ::MessageBox(NULL, msg, szCaption, MB_YESNOCANCEL|MB_ICONQUESTION|MB_TASKMODAL);
-				delete msg;
+				delete[] msg;
 				
 				switch(answer)
 				{
