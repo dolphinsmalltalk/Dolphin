@@ -1,0 +1,1894 @@
+"Filed out from Dolphin Smalltalk 7"!
+
+DolphinTest subclass: #AbstractParserErrorTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: 'SmalltalkParseErrorCodes'
+	classInstanceVariableNames: ''!
+AbstractParserErrorTest guid: (GUID fromString: '{5F42CBDC-9AB6-40B0-826D-B9CB9DD30C78}')!
+AbstractParserErrorTest comment: ''!
+!AbstractParserErrorTest categoriesForClass!Unclassified! !
+!AbstractParserErrorTest methodsFor!
+
+buildNestedBlocks: nesting 
+	| source |
+	source := String writeStream.
+	source nextPutAll: '| t0 | t0 := 1. '.
+	"We'll need to skip a few levels, or there will be too many temps"
+	1 to: nesting
+		do: 
+			[:each | 
+			source
+				nextPutAll: '[|t';
+				display: each;
+				nextPutAll: '| t';
+				display: each;
+				nextPutAll: ' := ';
+				display: each;
+				nextPutAll: '. t0 := t';
+				display: each;
+				nextPutAll: ' := '].
+	"Note that the optimized block itself is not counted in the depth"
+	source
+		display: nesting + 1;
+		nextPutAll: ' ifNotNil: [:t';
+		display: nesting + 1;
+		nextPutAll: ' | t0*'.
+	1 to: nesting
+		do: 
+			[:each | 
+			"Must assign to each temp, otherwise it will just be copied"
+			source
+				nextPutAll: '(t';
+				print: each;
+				nextPutAll: ':= ';
+				nextPut: $t;
+				print: each;
+				nextPutAll: '*1)';
+				nextPut: $*].
+	source
+		nextPut: $t;
+		display: nesting + 1;
+		nextPutAll: ']'.
+	nesting timesRepeat: [source nextPutAll: '] value'].
+	^source contents!
+
+buildNestedBlocks2: nesting 
+	| source |
+	source := String writeStream.
+	source
+		nextPutAll: '| t0 | t0 := ';
+		display: 3 factorial;
+		nextPutAll: '. '.
+	"We'll need to skip a few levels, or there will be too many temps"
+	2 to: 3
+		do: 
+			[:each | 
+			source
+				nextPutAll: 't0 := ["';
+				display: each;
+				nextPutAll: '" '].
+	4 to: nesting
+		do: 
+			[:each | 
+			source
+				nextPutAll: '[|t';
+				display: each;
+				nextPutAll: '| t';
+				display: each;
+				nextPutAll: ' := ';
+				display: each;
+				nextPutAll: '. t0 := t';
+				display: each;
+				nextPutAll: ' := '].
+	"Note that the optimized block itself is not counted in the depth"
+	source
+		display: nesting + 1;
+		nextPutAll: ' ifNotNil: [:t';
+		display: nesting + 1;
+		nextPutAll: ' | t0*'.
+	(4 to: nesting) do: 
+			[:each | 
+			"Must assign to each temp, otherwise it will just be copied"
+			source
+				nextPutAll: '(t';
+				print: each;
+				nextPutAll: ':= ';
+				nextPut: $t;
+				print: each;
+				nextPutAll: '*1)';
+				nextPut: $*].
+	source
+		nextPut: $t;
+		display: nesting + 1;
+		nextPutAll: ']'.
+	nesting - 1 timesRepeat: [source nextPutAll: '] value'].
+	^source contents!
+
+checkCompileError: ex range: anInterval code: anInteger message: msgFormat line: lineInteger source: aString 
+	^ex errorCode = anInteger and: 
+			[ex range = anInterval and: 
+					[(lineInteger < 0 or: [ex line < 0 or: [ex line = lineInteger]]) and: 
+							[| msgString |
+							msgString := msgFormat 
+										expandMacrosWithArguments: (Array with: (aString copyFrom: ex range start to: ex range stop)) 
+												, ex extras.
+							ex errorMessage = msgString]]]!
+
+compilationErrorClass
+	^self subclassResponsibility!
+
+compilationWarningClass
+	^self subclassResponsibility!
+
+compileMethod: aString in: aClass 
+	^Compiler 
+		compile: aString
+		in: aClass
+		flags: 0!
+
+errorFormats
+	^Compiler notificationClass errorFormats!
+
+evaluateExpression: aString 
+	^Compiler evaluate: aString!
+
+getTestMethod: aSymbol 
+	| oldMethod result method |
+	oldMethod := DolphinCompilerTestMethods compiledMethodAt: aSymbol.
+	self shouldnt: [result := self compileMethod: oldMethod getSource in: DolphinCompilerTestMethods]
+		raise: Compiler errorClass.
+	method := result method.
+	method selector: aSymbol.
+	method
+		sourceDescriptor: oldMethod sourceDescriptor;
+		isPrivate: oldMethod isPrivate;
+		isImmutable: true.	"The method has not actually changed, so it is inappropriate to issue a #methodUpdated: event"
+	^method!
+
+isValidExpression: aString 
+	[self parseExpression: aString] on: self compilationErrorClass do: [:ex | self traceException: ex source: aString. ^false].
+	^true!
+
+lexicalError: aString range: anInterval line: aSmallInteger code: anInteger 
+	self 
+		parseExprError: aString
+		range: anInterval
+		line: aSmallInteger
+		code: anInteger
+		message: (self errorFormats at: anInteger)!
+
+maxLiterals
+	^VMConstants.MaxLiterals!
+
+parseError: each 
+	self parserClass parseExpression: each first onError: [:string :pos | ^self assert: pos = each last].
+	self error: 'Parser didn''t fail'!
+
+parseExprError: aString range: anInterval line: lineInteger code: anInteger 
+	self 
+		parseExprError: aString
+		range: anInterval
+		line: lineInteger
+		code: anInteger
+		message: (self errorFormats at: anInteger)!
+
+parseExprError: aString range: anInterval line: lineInteger code: anInteger message: msgString 
+	self 
+		should: [[self parseExpression: aString] on: self compilationWarningClass do: [:ex | ex resume]]
+		raise: self compilationErrorClass
+		matching: 
+			[:ex | 
+			self traceException: ex source: aString.
+			self 
+				checkCompileError: ex
+				range: anInterval
+				code: anInteger
+				message: msgString
+				line: lineInteger
+				source: aString]!
+
+parseExpression: aString 
+	^self parseExpression: aString in: self class!
+
+parseExpression: aString in: anObject 
+	^self subclassResponsibility!
+
+parseMethod: aString in: aClass 
+	^self subclassResponsibility!
+
+parseMethod: aString notificationClass: notificationClass in: aClass range: anInterval code: anInteger message: msgFormat 
+	| result |
+	self 
+		should: [result := self parseMethod: aString in: aClass]
+		raise: notificationClass
+		matching: 
+			[:ex | 
+			"Useful for debugging to know what the notification actually was"
+			self traceException: ex source: aString.
+			self 
+				checkCompileError: ex
+				range: anInterval
+				code: anInteger
+				message: msgFormat
+				line: -1
+				source: aString]!
+
+parseMethodError: aString code: anInteger range: anInterval 
+	^self 
+		parseMethodError: aString
+		in: self class
+		range: anInterval
+		code: anInteger!
+
+parseMethodError: aString in: aClass range: anInterval code: anInteger 
+	self 
+		parseMethod: aString
+		notificationClass: CompilerErrorNotification
+		in: aClass
+		range: anInterval
+		code: anInteger
+		message: (self errorFormats at: anInteger)!
+
+parseMethodError: aString in: aClass range: anInterval code: anInteger message: msgString 
+	self 
+		parseMethod: aString
+		notificationClass: self compilationErrorClass
+		in: aClass
+		range: anInterval
+		code: anInteger
+		message: msgString!
+
+parseMethodInfo: aString in: aClass range: anInterval code: anInteger 
+	self 
+		parseMethod: aString
+		notificationClass: CompilerInfoNotification
+		in: aClass
+		range: anInterval
+		code: anInteger
+		message: (self errorFormats at: anInteger)!
+
+parseMethodInfo: aSymbol rangeBlock: aMonadicValuable code: anInteger 
+	| text method range |
+	method := DolphinCompilerTestMethods compiledMethodAt: aSymbol.
+	text := method getSource.
+	range := aMonadicValuable value: text.
+	self 
+		parseMethodInfo: text
+		in: method methodClass
+		range: range
+		code: anInteger!
+
+parseMethodWarning: aString in: aClass range: anInterval code: anInteger 
+	self 
+		parseMethod: aString
+		notificationClass: CompilerWarningNotification
+		in: aClass
+		range: anInterval
+		code: anInteger
+		message: (self errorFormats at: anInteger)!
+
+parseMethodWarning: source in: aClass range: anInterval code: code extra: each 
+	^self 
+		parseMethod: source
+		notificationClass: CompilerWarningNotification
+		in: aClass
+		range: anInterval
+		code: code
+		message: ((self errorFormats at: code) expandMacrosWith: each)!
+
+parseMethodWarning: aString range: anInterval code: anInteger 
+	^self 
+		parseMethodWarning: aString
+		in: self class
+		range: anInterval
+		code: anInteger!
+
+parseMethodWarning: aSymbol rangeBlock: aMonadicValuable code: anInteger 
+	| text method range |
+	method := DolphinCompilerTestMethods compiledMethodAt: aSymbol.
+	text := method getSource.
+	range := aMonadicValuable value: text.
+	self 
+		parseMethodWarning: text
+		in: method methodClass
+		range: range
+		code: anInteger!
+
+restrictedSelectors
+	^##(#(#== #and: #or: #ifTrue: #ifTrue:ifFalse: #ifFalse: #ifFalse:ifTrue: #timesRepeat: #to:do: #to:by:do: #yourself #basicAt: #basicAt:put: #basicNew: #basicClass #basicSize #ifNil: #ifNotNil: #ifNil:ifNotNil: #ifNotNil:ifNil:) 
+		asIdentitySet)!
+
+testByteArraysInLiteralArrays
+	"#980"
+
+	| compiled text |
+	text := '#(1 2 #[-1 255])'.
+	self should: [compiled := self parseExpression: text] raise: self compilationErrorClass.
+	text := '#(#[1 256] 1 2)'.
+	self should: [compiled := self parseExpression: text] raise: self compilationErrorClass!
+
+testCompileTimeExpressions
+	#(' ##( ' ' ##(1 ') do: 
+			[:each | 
+			self 
+				parseExprError: each
+				range: (2 to: each size)
+				line: 1
+				code: CErrStaticExprNotClosed]!
+
+testErrorsAssignBlockArgument
+	| text i |
+	text := '[:a | 
+			a := 100]'.
+	i := text lastIndexOf: $a.
+	self 
+		parseExprError: text
+		range: (i to: text size - 1)
+		line: 2
+		code: CErrAssignmentToArgument!
+
+testErrorsAssignClass
+	| source |
+	source := ' Object := nil '.
+	self 
+		parseExprError: source
+		range: (2 to: source size - 1)
+		line: 1
+		code: CErrAssignConstant.
+
+	"Make sure can assign to other globals, even if they are aliasing classes"
+	
+	[Smalltalk at: #CompilerTestGlobal put: Object.
+	self shouldnt: [self evaluateExpression: 'CompilerTestGlobal := 1']
+		raise: Compiler notificationClass.
+	self assert: (Smalltalk at: #CompilerTestGlobal) = 1.
+	self shouldnt: [self evaluateExpression: 'CompilerTestGlobal := ''2''']
+		raise: Compiler notificationClass.
+	self assert: (Smalltalk at: #CompilerTestGlobal) = '2'] 
+			ensure: [Smalltalk removeKey: #CompilerTestGlobal ifAbsent: []]!
+
+testErrorsAssignConstant
+	| source |
+	source := 'x CErrAssignConstant := 100'.
+	self 
+		parseMethodError: source
+		in: self class
+		range: (3 to: source size)
+		code: CErrAssignConstant
+		message: ((self errorFormats at: CErrAssignConstant) expandMacrosWith: 'CErrAssignConstant'
+				with: 'CErrAssignConstant')!
+
+testErrorsAssignMethodArgument
+	| source start |
+	source := 'x: abc abc := 1'.
+	start := source lastIndexOf: $a.
+	self 
+		parseMethodError: source
+		code: CErrAssignmentToArgument
+		range: (start to: source size).
+	source := 'x: abc abc + 1. abc := 1'.
+	start := source lastIndexOf: $a.
+	self 
+		parseMethodError: source
+		code: CErrAssignmentToArgument
+		range: (start to: source size)!
+
+testErrorsBadCascade
+	| source mark |
+	source := 'self parserClass; 1;'.
+	mark := source indexOf: $1.
+	self 
+		parseExprError: source
+		range: (mark to: mark)
+		line: 1
+		code: CErrExpectMessage.
+	source := 'self parserClass; 12;'.
+	mark := source indexOf: $1.
+	self 
+		parseExprError: source
+		range: (mark to: mark + 1)
+		line: 1
+		code: CErrExpectMessage.
+	source := 'self parserClass ; '.
+	mark := source size.
+	self 
+		parseExprError: source
+		range: (mark + 1 to: mark)
+		line: 1
+		code: CErrExpectMessage!
+
+testErrorsBadContext
+	"This error is untested because it is difficult to produce - the compiler will only raise it if the #allInstVarNames implementation
+	on the class returns an invalid array - this would require building a special class for this purpose, and I don't think it is worth it."!
+
+testErrorsBadExtCallTypes
+	"keyword, but unrecognised"
+
+	| source mark |
+	source := 'blah <blah: void blah>'.
+	mark := source indexOf: $<.
+	self 
+		parseMethodError: source
+		code: CErrBadPrimCallType
+		range: (mark + 1 to: mark + 5).
+	"A misspelled prefix"
+	source := 'blah <overlaped cdecl: void blah>'.
+	mark := source indexOf: $<.
+	self 
+		parseMethodError: source
+		code: CErrBadPrimCallType
+		range: (mark + 1 to: mark + 9).
+	"Not a keyword"
+	source := 'blah <12 void blah>'.
+	mark := source indexOf: $<.
+	self 
+		parseMethodError: source
+		code: CErrBadPrimCallType
+		range: (mark + 1 to: mark + 2)!
+
+testErrorsBadMessagePattern
+	| source mark |
+	source := '1.0'.
+	self 
+		parseMethodError: source
+		code: CErrBadSelector
+		range: (1 to: source size).
+	source := ': a'.
+	self 
+		parseMethodError: source
+		code: CErrBadSelector
+		range: (1 to: 1).
+	source := ':: a'.
+	self 
+		parseMethodError: source
+		code: CErrBadSelector
+		range: (1 to: 1).
+	source := 'a: a : size'.
+	mark := source lastIndexOf: $:.
+	self 
+		parseMethodError: source
+		code: CErrInvalExprStart
+		range: (mark to: mark).
+	""
+	source := 'a:: a size'.
+	mark := source lastIndexOf: $:.
+	self 
+		parseMethodError: source
+		code: CErrExpectVariable
+		range: (mark to: mark)!
+
+testErrorsBadSuper
+	"#1334"
+
+	| source mark |
+	source := 'super'.
+	self 
+		parseExprError: source
+		range: (source size + 1 to: source size)
+		line: 1
+		code: CErrExpectMessage.
+	source := '(super)'.
+	self 
+		parseExprError: source
+		range: (source size to: source size)
+		line: 1
+		code: CErrExpectMessage.
+	source := '(super) class'.
+	mark := source indexOf: $).
+	self 
+		parseExprError: source
+		range: (mark to: mark)
+		line: 1
+		code: CErrExpectMessage.
+	source := 'super; class'.
+	mark := source indexOf: $;.
+	self 
+		parseExprError: source
+		range: (mark to: mark)
+		line: 1
+		code: CErrExpectMessage!
+
+testErrorsBlockArgNameMissing
+	| source mark |
+	source := '[: ] '.
+	mark := source indexOf: $].
+	self 
+		parseExprError: source
+		range: (mark to: mark)
+		line: 1
+		code: CErrExpectVariable.
+	source := '[: | a |] '.
+	mark := source indexOf: $|.
+	self 
+		parseExprError: source
+		range: (mark to: mark)
+		line: 1
+		code: CErrExpectVariable.
+	source := '[: 12 ] '.
+	mark := source indexOf: $1.
+	self 
+		parseExprError: source
+		range: (mark to: mark + 1)
+		line: 1
+		code: CErrExpectVariable!
+
+testErrorsBlockNestingTooDeep
+	"This test is not really valid - exploits bug in the compiler such that it reduces the literal limit permanently for
+	external library calls (only up to 256 literals can be ref'd from the descriptor."
+
+	"Small test of the test first"
+
+	| mark expected nesting source maxNest |
+	nesting := 10.
+	source := self buildNestedBlocks: nesting.
+	expected := (nesting + 1) factorial.
+	self assert: (self evaluateExpression: source) = expected.
+	"Now 2 under max"
+	maxNest := VMConstants.MaxBlockNesting.
+	nesting := maxNest - 2.
+	source := self buildNestedBlocks: nesting.
+	expected := (nesting + 1) factorial.
+	self assert: (self evaluateExpression: source) = expected.
+	"Now 1 under max"
+	nesting := maxNest - 1.
+	source := self buildNestedBlocks: nesting.
+	expected := (nesting + 1) factorial.
+	self assert: (self evaluateExpression: source) = expected.
+	"max nesting"
+	maxNest := VMConstants.MaxBlockNesting.
+	nesting := maxNest.
+	source := self buildNestedBlocks: nesting.
+	expected := (nesting + 1) factorial.
+	self assert: (self evaluateExpression: source) = expected.
+	"1 over max - should fail"
+	nesting := maxNest + 1.
+	source := self buildNestedBlocks: nesting.
+	mark := (source indexOfSubCollection: nesting displayString) - 3.
+	self 
+		parseExprError: source
+		range: (mark to: (source 
+						nextIndexOf: $]
+						from: mark
+						to: source size) + 1)
+		line: 1
+		code: CErrBlockNestingTooDeep!
+
+testErrorsBlockNotClosed
+	"Test zero arg form now accepted by D6 compiler"
+
+	"Each expression must have one trailing character for the test to work"
+
+	#(' [ ' ' [)' '[1+2 ' '1 ifTrue: [ 1+2 ' '1 ifNotNil: [:x | x * 2 ' '1+2. [:a | ' '([:a |)' '##([1+2)') 
+		do: 
+			[:each | 
+			self 
+				parseExprError: each
+				range: ((each indexOf: $[) to: each size - 1)
+				line: 1
+				code: CErrBlockNotClosed]!
+
+testErrorsBlockTempsNotClosed
+	"Unterminated statement"
+
+	"Non-binary appears before close block temps"
+
+	| source mark |
+	source := '[:a ]'.
+	self 
+		parseExprError: source
+		range: (1 to: 3)
+		line: 1
+		code: CErrBlockArgListNotClosed.
+	source := '[:a 1]'.
+	self 
+		parseExprError: source
+		range: (1 to: 3)
+		line: 1
+		code: CErrBlockArgListNotClosed.
+	source := '[:arg1 :arg2 1]'.
+	mark := source indexOf: $2.
+	self 
+		parseExprError: source
+		range: ((source indexOf: $[) to: mark)
+		line: 1
+		code: CErrBlockArgListNotClosed.
+	"Binary symbol appears before close block temps"
+	source := '[:a >]'.
+	self 
+		parseExprError: source
+		range: (1 to: 3)
+		line: 1
+		code: CErrBlockArgListNotClosed.
+	"eof occurs before close block temps (or block)"
+	source := ' [:a'.
+	self 
+		parseExprError: source
+		range: (2 to: source size)
+		line: 1
+		code: CErrBlockArgListNotClosed.
+	source := ' [:a '.
+	self 
+		parseExprError: ' [:a '
+		range: (2 to: 4)
+		line: 1
+		code: CErrBlockArgListNotClosed!
+
+testErrorsExpectMessage
+	| source |
+	source := 'super 1'.
+	self 
+		parseExprError: source
+		range: (source size to: source size)
+		line: 1
+		code: CErrExpectMessage!
+
+testErrorsExpectVariableName
+	| source mark |
+	source := 'blah:'.
+	self 
+		parseMethodError: source
+		code: CErrExpectVariable
+		range: (source size + 1 to: source size).
+	source := 'blah: 1'.
+	self 
+		parseMethodError: source
+		code: CErrExpectVariable
+		range: (source size to: source size).
+	source := 'blah: : '.
+	mark := source lastIndexOf: $:.
+	self 
+		parseMethodError: source
+		code: CErrExpectVariable
+		range: (mark to: mark).
+	source := '>>1.0'.
+	self 
+		parseMethodError: source
+		code: CErrExpectVariable
+		range: (3 to: source size)!
+
+testErrorsExtArgCountMismatch
+	| source mark |
+	source := 'blah <cdecl: void blah sdword> ^self invalidCall'.
+	mark := source indexOfSubCollection: 'sdword>'.
+	self 
+		parseMethodError: source
+		code: CErrTooManyArgTypes
+		range: (mark to: (source lastIndexOf: $>) - 1).
+	source := 'blah: x _: y _: z <cdecl: void blah dword lpstr>'.
+	mark := source indexOfSubCollection: 'dword'.
+	self 
+		parseMethodError: source
+		code: CErrInsufficientArgTypes
+		range: (mark to: (source lastIndexOf: $>) - 1).
+	source := 'blah: x <cdecl: void blah>'.
+	mark := source indexOf: $>.
+	self 
+		parseMethodError: source
+		code: CErrInsufficientArgTypes
+		range: (mark to: (source lastIndexOf: $>) - 1)!
+
+testErrorsExtTypeIndirections
+	#(#('blah %<cdecl: <1s> blah%>' 'lppvoid*') #('blah %<cdecl: <1s> blah%>' 'lppvoid**') #('blah %<cdecl: <1s> blah%>' 'lpvoid**') #('blah %<cdecl: sdword blah <1s>%>' 'LPVOID**') #('blah %<cdecl: sdword blah DWORD** ExternalAddress* <1s>%>' 'ExternalAddress**') #('blah %<cdecl: sdword blah BSTR* <1s>%>' 'BSTR**') #('blah: a _: b _: c _d: d %<cdecl: sdword blah GUID** REFGUID* GUID* <1s>%>' 'REFGUID**')) 
+		do: 
+			[:each | 
+			| mark source |
+			source := each first expandMacrosWith: each second.
+			mark := source indexOfSubCollection: each second.
+			self 
+				parseMethodError: source
+				code: CErrNotIndirectable
+				range: (mark to: mark + each second size - 1)].
+	#(#('blah %<cdecl: dword<1s> blah%>' '***') #('blah %<cdecl: DWORD<1s> blah%>' '***')) do: 
+			[:each | 
+			| mark source |
+			source := each first expandMacrosWith: each second.
+			mark := source indexOfSubCollection: each second.
+			self 
+				parseMethodError: source
+				code: CErrBadExtTypeQualifier
+				range: (mark to: mark + each second size - 1)]!
+
+testErrorsExtTypes
+	"identifier, but unrecognised so looks up as a class name"
+
+	"Non-global (bad form)"
+
+	| source mark |
+	source := 'blah <cdecl: voide blah>'.
+	mark := source indexOf: $v.
+	self 
+		parseMethodError: source
+		code: CErrUndefinedClass
+		range: (mark to: mark + 4).
+	"Non-global (mispelling)"
+	source := 'blah <cdecl: SDWRD blah>'.
+	mark := source indexOf: $S.
+	self 
+		parseMethodError: source
+		code: CErrUndefinedClass
+		range: (mark to: mark + 4).
+	"Fixed pointer class with zero inst. vars (must be at least one)"
+	source := 'blah <cdecl: Object blah>'.
+	mark := source indexOf: $O.
+	self 
+		parseMethodError: source
+		code: CErrInvalidStructArg
+		range: (mark to: mark + 5).
+	"Indexable pointer class with zero inst. vars (must be at least one)"
+	source := 'blah: x _: y <cdecl: void blah ByteArray Array>'.
+	mark := source lastIndexOf: $A.
+	self 
+		parseMethodError: source
+		code: CErrInvalidStructArg
+		range: (mark to: mark + 4).
+	"Non-class global"
+	source := 'blah: x _: y <cdecl: void blah Win32Constants>'.
+	mark := source lastIndexOf: $W.
+	self 
+		parseMethodError: source
+		code: CErrInvalidStructArg
+		range: (mark to: mark + 14 - 1).
+
+	"Not an identifier"
+	source := 'blah <cdecl: 12 blah>'.
+	mark := source indexOf: $1.
+	self 
+		parseMethodError: source
+		code: CErrExpectExtType
+		range: (mark to: mark + 1).
+	source := 'blah: x <cdecl: sdword blah void>'.
+	mark := source lastIndexOf: $v.
+	self 
+		parseMethodError: source
+		code: CErrArgTypeCannotBeVoid
+		range: (mark to: mark + 3).
+	source := 'blah: x <cdecl: & blah dword>'.
+	mark := source lastIndexOf: $&.
+	self 
+		parseMethodError: source
+		code: CErrExpectExtType
+		range: (mark to: mark).
+	source := 'blah: x _: y <cdecl: DWORD func * handle>'.
+	mark := source indexOf: $*.
+	self 
+		parseMethodError: source
+		code: CErrExpectExtType
+		range: (mark to: mark).
+	source := 'blah: x _: y <cdecl: DWORD func 1 handle>'.
+	mark := source indexOf: $1.
+	self 
+		parseMethodError: source
+		code: CErrExpectExtType
+		range: (mark to: mark).
+
+	"parser will only read binary selectors of up to two characters, and therefore '***' is treated as two tokens"
+	source := 'blah: x _: y <cdecl: DWORD blah dword*** handle>'.
+	mark := source indexOf: $*.
+	self 
+		parseMethodError: source
+		code: CErrBadExtTypeQualifier
+		range: (mark to: mark + 2).
+	source := 'blah: x _: y <cdecl: DWORD& blah dword* handle>'.
+	mark := source indexOf: $&.
+	self 
+		parseMethodError: source
+		code: CErrBadExtTypeQualifier
+		range: (mark to: mark).
+	source := 'blah: x _: y <cdecl: DWORD blah dword& handle>'.
+	mark := source indexOf: $&.
+	self 
+		parseMethodError: source
+		code: CErrBadExtTypeQualifier
+		range: (mark to: mark)!
+
+testErrorsIfNotNil
+	"Test zero arg form now accepted by D6 compiler"
+
+	| source |
+	source := '1 ifNotNil: [:x :y |]'.
+	self 
+		parseExprError: source
+		range: ((source indexOf: $[) to: (source indexOf: $|))
+		line: 1
+		code: CErrTooManyIfNotNilBlockArgs!
+
+testErrorsIllegalByteArrays
+	#(#('#[1 1234 4]' 5 8) #('#[1 1.0]' 5 7) #('#[1 a]' 5 5) #('#[1 10000000000 2]' 5 15)) do: 
+			[:each | 
+			self 
+				parseExprError: each first
+				range: (each second to: each third)
+				line: 1
+				code: CErrBadValueInByteArray
+				message: ('illegal value ''<1s>'' in byte array' 
+						expandMacrosWith: (each first copyFrom: each second to: each third))].
+	self 
+		lexicalError: '#[1 2'
+		range: (1 to: 5)
+		line: 1
+		code: CErrByteArrayNotClosed!
+
+testErrorsIncorrectNumberOfNotNilBlockArgs
+	| source |
+	source := '1 ifNotNil: [:x :y | x + y]'.
+	self 
+		parseExprError: source
+		range: ((source indexOf: $[) to: (source indexOf: $|))
+		line: 1
+		code: CErrTooManyIfNotNilBlockArgs.
+	source := '1 ifNil: [2] ifNotNil: [:x :y | x + y]'.
+	self 
+		parseExprError: source
+		range: ((source lastIndexOf: $[) to: (source indexOf: $|))
+		line: 1
+		code: CErrTooManyIfNotNilBlockArgs.
+	source := '1 ifNotNil: [:x :y | x + y] ifNil: [2]'.
+	self 
+		parseExprError: source
+		range: ((source indexOf: $[) to: (source indexOf: $|))
+		line: 1
+		code: CErrTooManyIfNotNilBlockArgs!
+
+testErrorsInvalidExpressionStart
+	| source |
+	source := ' := '.
+	self 
+		parseExprError: source
+		range: (2 to: 3)
+		line: 1
+		code: CErrInvalExprStart.
+	source := '1 - - 1'.
+	self 
+		parseExprError: source
+		range: (5 to: 5)
+		line: 1
+		code: CErrInvalExprStart!
+
+testErrorsLexical
+	"Non-ascii char"
+
+	"eof when expecting character const"
+	| text start badChar |
+	self 
+		parseExprError: '$'
+		range: (1 to: 1)
+		line: 1
+		code: LErrExpectChar
+		message: 'character expected'.
+	"VW binding char"
+	text := '"A VW binding"
+		{Smalltalk.Object}'.
+	badChar := ${.
+	start := text indexOf: badChar.
+	self 
+		parseExprError: text
+		range: (start to: start)
+		line: 2
+		code: LErrBadChar
+		message: ((self errorFormats at: LErrBadChar) expandMacrosWith: badChar).
+	"VW binding char in const expression"
+	self 
+		parseExprError: ('#(<1s>)' expandMacrosWith: badChar)
+		range: (3 to: 3)
+		line: 1
+		code: LErrBadChar
+		message: ((self errorFormats at: LErrBadChar) expandMacrosWith: badChar).
+	"Bad token in array"
+	text := '
+		"Newline in ...
+		... comment" #(() 1 a ''a'' 1.0 :)'.
+	start := text indexOf: $:.
+	self 
+		parseExprError: text
+		range: (start to: start)
+		line: 3
+		code: CErrBadTokenInArray
+		message: 'illegal text '':'' in literal array'.
+	"Unclosed comment"
+	self 
+		lexicalError: '"blah blah ...'
+		range: (1 to: 14)
+		line: 1
+		code: LErrCommentNotClosed.
+	"Unclosed string"
+	self 
+		lexicalError: '''blah blah ...'
+		range: (1 to: 14)
+		line: 1
+		code: LErrStringNotClosed.
+	"Unclosed array"
+	self 
+		lexicalError: '#(() 1 a ''a'' 1.0 &'
+		range: (1 to: 18)
+		line: 1
+		code: CErrArrayNotClosed.
+	"Deliberately have a couple of newlines in the array to check line counting works when newlines appear in literal arrays"
+	text := '#(() -
+		1
+		 (a ''a'' 1.0 &'.
+	start := text lastIndexOf: $(.
+	self 
+		lexicalError: text
+		range: (start to: text size)
+		line: 3
+		code: CErrArrayNotClosed.
+	"Invalid symbol"
+	self 
+		lexicalError: '1 + #23'
+		range: (5 to: 6)
+		line: 1
+		code: LErrExpectConst.
+	(Array with: (Character value: 128)) 
+		, ((Character byteCharacterSet select: [:each | each isLetter]) 
+				difference: 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz') 
+			do: 
+				[:each | 
+				self 
+					parseExprError: '#(' , each asString
+					range: (3 to: 3)
+					line: 1
+					code: LErrBadChar
+					message: ((self errorFormats at: LErrBadChar) expandMacrosWith: each)]!
+
+testErrorsLiteralArray
+	| text start mark |
+	text := '#('.
+	self 
+		parseExprError: text
+		range: (1 to: text size)
+		line: 1
+		code: CErrArrayNotClosed.
+	text := '#(:='.
+	mark := text indexOf: $:.
+	self 
+		parseExprError: text
+		range: (mark to: mark + 1)
+		line: 1
+		code: CErrBadTokenInArray.
+	text := '
+		"Newline in ...
+		... comment" #(() 1 a ''a'' 1.0 :)'.
+	mark := text indexOf: $:.
+	self 
+		parseExprError: text
+		range: (mark to: mark)
+		line: 3
+		code: CErrBadTokenInArray.
+	self 
+		parseExprError: '#(() 1 a ''a'' 1.0 &'
+		range: (1 to: 18)
+		line: 1
+		code: CErrArrayNotClosed.
+	"Deliberately have a couple of newlines in the array to check line counting works when newlines appear in literal arrays"
+	text := '#(() -
+		1
+		 (a ''a'' 1.0 &'.
+	start := text lastIndexOf: $(.
+	self 
+		parseExprError: text
+		range: (start to: text size)
+		line: 3
+		code: CErrArrayNotClosed!
+
+testErrorsLiteralByteArray
+	self 
+		parseExprError: '#[1 1234 4]'
+		range: (5 to: 8)
+		line: 1
+		code: CErrBadValueInByteArray.
+	self 
+		parseExprError: '#[1 1.0]'
+		range: (5 to: 7)
+		line: 1
+		code: CErrBadValueInByteArray.
+	self 
+		parseExprError: '#[1 a]'
+		range: (5 to: 5)
+		line: 1
+		code: CErrBadValueInByteArray.
+	#(' #[ ' ' #[1 2 ' ' #[1 ') do: 
+			[:each | 
+			self 
+				parseExprError: each
+				range: ((each indexOf: $#) to: each size - 1)
+				line: 1
+				code: CErrByteArrayNotClosed]!
+
+testErrorsNegateNonNumber
+	| source mark |
+	source := '1 + -a'.
+	mark := source lastIndexOf: $-.
+	self 
+		parseExprError: source
+		range: (mark to: mark)
+		line: 1
+		code: CErrInvalExprStart.
+	source := '1 + -:='.
+	mark := source lastIndexOf: $-.
+	self 
+		parseExprError: source
+		range: (mark to: mark)
+		line: 1
+		code: CErrInvalExprStart!
+
+testErrorsNonsenseAtEndOfExpression
+	^self subclassResponsibility!
+
+testErrorsNonsenseAtEndOfMethod
+	^self subclassResponsibility!
+
+testErrorsOptimizedExpressionNotClosed
+	"Not terminated at eof"
+
+	| source |
+	source := ' ##(1 + 2'.
+	self 
+		parseExprError: source
+		range: (2 to: source size)
+		line: 1
+		code: CErrStaticExprNotClosed!
+
+testErrorsPrimitives
+	| source mark |
+	source := 'blah <primitive: a>'.
+	mark := source lastIndexOf: $a.
+	self 
+		parseMethodError: source
+		code: CErrExpectPrimIdx
+		range: (mark to: mark).
+	source := 'blah <primitive:>'.
+	mark := source lastIndexOf: $>.
+	self 
+		parseMethodError: source
+		code: CErrExpectPrimIdx
+		range: (mark to: mark).
+	source := 'blah <primitive: 1.0>'.
+	mark := source lastIndexOf: $1.
+	self 
+		parseMethodError: source
+		code: CErrExpectPrimIdx
+		range: (mark to: mark + 2).
+	source := 'blah <primitive: 1'.
+	self 
+		parseMethodError: source
+		code: CErrExpectCloseTag
+		range: (source size + 1 to: source size).
+	source := ' blah <primitive: 1<'.
+	mark := source lastIndexOf: $<.
+	self 
+		parseMethodError: source
+		code: CErrExpectCloseTag
+		range: (mark to: mark).
+	source := 'blah <primitive: 1 a'.
+	mark := source lastIndexOf: $a.
+	self 
+		parseMethodError: source
+		code: CErrExpectCloseTag
+		range: (mark to: mark).
+	source := 'blah <stdcall: void a '.
+	mark := source lastIndexOf: $a.
+	self 
+		parseMethodError: source
+		code: CErrExpectCloseTag
+		range: (source size + 1 to: source size).
+	source := 'blah <primitive: 256>'.
+	mark := source lastIndexOf: $2.
+	self 
+		parseMethodError: source
+		code: CErrBadPrimIdx
+		range: (mark to: mark + 2).
+	source := 'blah <primitive: ' , ((SmalltalkParser classPool at: 'MaxPrimIndex') + 1) displayString 
+				, '>'.
+	mark := source lastIndexOf: $:.
+	self 
+		parseMethodError: source
+		code: CErrBadPrimIdx
+		range: (mark + 2 to: mark + 4).
+	source := 'blah <blah: void blah>'.
+	mark := source indexOf: $<.
+	self 
+		parseMethodError: source
+		code: CErrBadPrimCallType
+		range: (mark + 1 to: mark + 5).
+	source := 'blah <overlaped cdecl: void blah>'.
+	mark := source indexOf: $<.
+	self 
+		parseMethodError: source
+		code: CErrBadPrimCallType
+		range: (mark + 1 to: mark + 9)!
+
+testErrorsPrimitivesCloseTagRecovery
+	| source ast |
+	source := 'blah <primitive: 10 ^self invalidCall'.
+	ast := [SmalltalkParser parseMethod: source] on: SmalltalkParser errorClass do: [:ex | ex resume].
+	self assert: ast formattedCode = 'blah
+	<primitive: 10>
+	^self invalidCall'!
+
+testErrorsRedefiningPseudo
+	#('self' 'super' 'thisContext') do: 
+			[:each | 
+			| source |
+			source := '|<1s> | ' expandMacrosWith: each.
+			self 
+				parseExprError: source
+				range: (2 to: 2 + each size - 1)
+				line: 1
+				code: CErrRedefiningPseudoVar.
+			"#2201."
+			#('[:<1s> | ]' '1 ifNotNil: [:<1s> | ]' '1 to: 2 do: [:<1s> |]' '1 to: 2 by: 1 do: [:<1s> |]') do: 
+					[:eachExpr | 
+					| start |
+					source := eachExpr expandMacrosWith: each.
+					start := source lastIndexOf: $:.
+					self 
+						parseExprError: source
+						range: (start + 1 to: start + each size)
+						line: 1
+						code: CErrRedefiningPseudoVar]]!
+
+testErrorsRedefiningSpecialLiterals
+	#('nil' 'true' 'false') do: 
+			[:each | 
+			| source |
+			source := '|<1s> | ' expandMacrosWith: each.
+			self 
+				parseExprError: source
+				range: (1 to: 1)
+				line: 1
+				code: CErrTempListNotClosed.
+			"#2201."
+			#('[:<1s> | ]' '1 ifNotNil: [:<1s> | ]' '1 to: 2 do: [:<1s> |]' '1 to: 2 by: 1 do: [:<1s> |]') do: 
+					[:eachExpr | 
+					| start |
+					source := eachExpr expandMacrosWith: each.
+					start := source lastIndexOf: $:.
+					self 
+						parseExprError: source
+						range: (start + 1 to: start + each size)
+						line: 1
+						code: CErrExpectVariable]]!
+
+testErrorsStringNotClosed
+	#(#(' ''' 2 2) #('''' 1 1) #('''a' 1 2) #(' ''a' 2 3) #(' ''blah blah ...' 2 15)) do: 
+			[:each | 
+			self 
+				lexicalError: each first
+				range: (each second to: each third)
+				line: 1
+				code: LErrStringNotClosed]!
+
+testErrorsSupersendFromObject
+	"Test that super send in root class is detected as an error"
+
+	| source mark |
+	source := 'blah ^super blah'.
+	mark := source indexOf: $^.
+	(Array with: Object with: ProtoObject) do: 
+			[:each | 
+			self 
+				parseMethodError: source
+				in: each
+				range: (mark + 1 to: mark + 5)
+				code: CErrUndeclared
+				message: 'undeclared ''super''']!
+
+testErrorsTempsNotClosed
+	| source mark |
+	source := 'blah | 1+2 ^3'.
+	mark := source indexOf: $|.
+	self 
+		parseMethodError: source
+		code: CErrTempListNotClosed
+		range: (mark to: mark + 1).
+	source := 'blah |'.
+	mark := source indexOf: $|.
+	self 
+		parseMethodError: source
+		code: CErrTempListNotClosed
+		range: (mark to: mark).
+	source := 'blah | '.
+	mark := source indexOf: $|.
+	self 
+		parseMethodError: source
+		code: CErrTempListNotClosed
+		range: (mark to: mark + 1).
+	source := 'blah | a b'.
+	mark := source indexOf: $|.
+	self 
+		parseMethodError: source
+		code: CErrTempListNotClosed
+		range: (mark to: source size).
+	source := '[:a | | b ]'.
+	mark := source lastIndexOf: $|.
+	self 
+		parseExprError: source
+		range: (mark to: source size - 1)
+		line: 1
+		code: CErrTempListNotClosed.
+	source := '[:a | |]'.
+	mark := source lastIndexOf: $|.
+	self 
+		parseExprError: source
+		range: (mark to: source size - 1)
+		line: 1
+		code: CErrTempListNotClosed.
+	source := '[:a ||'.
+	mark := source lastIndexOf: $|.
+	self 
+		parseExprError: source
+		range: (mark to: source size)
+		line: 1
+		code: CErrTempListNotClosed.
+	source := '[:a ||]'.
+	mark := source lastIndexOf: $|.
+	self 
+		parseExprError: source
+		range: (mark to: source size - 1)
+		line: 1
+		code: CErrTempListNotClosed!
+
+testErrorsTooManyArgs
+	"This is testing for too many args in a message send, not in a method signature. That error
+	is shared with CErrTooManyTemps, since the space available is shared."
+
+	| source max last |
+	source := String writeStream.
+	source
+		cr;
+		nextPutAll: ' self '.
+	max := VMConstants.MaxMessageArgs.
+	1 to: max + 1
+		do: 
+			[:i | 
+			source
+				nextPutAll: 'x: ';
+				print: i;
+				space].
+	source
+		nextPut: $.;
+		cr;
+		nextPutAll: '1+2';
+		cr.
+	source := source contents.
+	last := (max + 1) displayString.
+	self 
+		parseExprError: source
+		range: ((source indexOfSubCollection: 'self') 
+				to: (source indexOfSubCollection: last) + last size - 1)
+		line: 2
+		code: CErrTooManyArgs!
+
+testErrorsTooManyTemps
+	| source mark |
+	source := String writeStream.
+	source nextPutAll: '| '.
+	1 to: VMConstants.MaxTemps + 1
+		do: 
+			[:i | 
+			source
+				nextPut: $a;
+				print: i;
+				space].
+	source nextPut: $|.
+	source := source contents.
+	mark := source lastIndexOf: $a.
+	self 
+		parseExprError: source
+		range: (mark to: mark + 3)
+		line: 1
+		code: CErrTooManyTemps!
+
+testErrorsTooManyTempsInOptimizedBlock
+	| source mark |
+	source := String writeStream.
+	source nextPutAll: '| '.
+	1 to: VMConstants.MaxTemps - 1
+		do: 
+			[:i | 
+			source
+				nextPut: $a;
+				print: i;
+				space].
+	source nextPut: $|.
+	source
+		cr;
+		nextPutAll: '1 ifNotNil: [:x | | z | z := x]'.
+	source := source contents.
+	mark := source indexOf: $z.
+	self 
+		parseExprError: source
+		range: (mark to: mark)
+		line: 2
+		code: CErrTooManyTemps!
+
+testErrorsUnclosedParenthesis
+	| source mark |
+	source := '1 + (5*6'.
+	mark := source indexOf: $(.
+	self 
+		parseExprError: source
+		range: (mark to: source size)
+		line: 1
+		code: CErrParenNotClosed.
+	source := '1 + (5*6.'.
+	mark := source indexOf: $(.
+	self 
+		parseExprError: source
+		range: (mark to: source size - 1)
+		line: 1
+		code: CErrParenNotClosed.
+	source := '(1 + (5*6).'.
+	mark := source indexOf: $(.
+	self 
+		parseExprError: source
+		range: (mark to: source size - 1)
+		line: 1
+		code: CErrParenNotClosed!
+
+testErrorsUnspportedCallConv
+	| source mark |
+	source := 'blah <fastcall: void blah>'.
+	mark := source indexOf: $<.
+	self 
+		parseMethodError: source
+		code: CErrUnsupportedCallConv
+		range: (mark + 1 to: mark + 9).
+	source := 'blah <overlap thiscall: void blah>'.
+	mark := source indexOf: $t.
+	self 
+		parseMethodError: source
+		code: CErrUnsupportedCallConv
+		range: (mark to: mark + 8)!
+
+testErrorsUnterminatedStatement
+	"Unterminated statement"
+
+	self 
+		parseMethodError: 'blah 1+2 ^3'
+		code: CErrUnterminatedStatement
+		range: (6 to: 8)!
+
+testErrorsVirtualCalls
+	| source mark idx |
+	source := 'blah <virtual cdecl: void blah>'.
+	mark := source lastIndexOf: $b.
+	self 
+		parseMethodError: source
+		code: CErrExpectVfn
+		range: (mark to: mark + 3).
+	source := 'blah <virtual cdecl: void -1>'.
+	mark := source lastIndexOf: $-.
+	self 
+		parseMethodError: source
+		code: CErrBadVfn
+		range: (mark to: mark + 1).
+	source := 'blah <virtual cdecl: void 0>'.
+	mark := source lastIndexOf: $0.
+	self 
+		parseMethodError: source
+		code: CErrBadVfn
+		range: (mark to: mark).
+	idx := ((SmalltalkParser bindingFor: 'MaxVfn') value + 1) displayString.
+	source := 'blah <virtual cdecl: void ' , idx , '>'.
+	mark := source lastIndexOf: $ .
+	self 
+		parseMethodError: source
+		code: CErrBadVfn
+		range: (mark + 1 to: mark + idx size)!
+
+testErrorsZeroArgOptimisedBlock
+	"Test expects zero args."
+
+	#('1 ifNil: [:x |]' 'true ifTrue: [:x |]' 'false ifFalse: [:x |]') do: 
+			[:source | 
+			self 
+				parseExprError: source
+				range: ((source indexOf: $[) to: (source indexOf: $|))
+				line: 1
+				code: CErrIncorrectBlockArgCount].
+	#('1 whileTrue' '2 whileFalse' '3 repeat''[:a | ] whileTrue' '[:b | ] whileFalse' '[:c | ] repeat') 
+		do: [:each | ]!
+
+testOverriddenBlockArgumentError
+	| source |
+	source := '[:a | | a | a := 2. [a]'.
+	self 
+		parseExprError: source
+		range: (9 to: 9)
+		line: 1
+		code: CErrRedefiningArg!
+
+testOverriddenBlockArgumentWarning
+	| method block block3 block2 |
+	method := self getTestMethod: #testOverriddenBlockArgumentWarning.
+	self assert: method tempCount = 0.
+	self deny: method needsContext.
+	block := method value: DolphinCompilerTestMethods new withArguments: #().
+	block2 := block value: 1.
+	self assert: block2 tempCount = 1.
+	self assert: block2 argumentCount = 0.
+	self assert: block2 stackTempCount = 1.
+	block3 := block2 value.
+	self assert: block3 tempCount = 1.
+	self assert: block3 argumentCount = 0.
+	self assert: block3 size = 1.
+	self assert: (block3 at: 1) = 2.
+	self assert: block3 value = 2!
+
+testOverriddenMethodArgumentError
+	| source start |
+	source := 'x: a 
+	| a array |
+	a := 2.
+	array := Array with: a with: nil.
+	^a = 2 
+		ifTrue: 
+			[| a |
+			a := 3.
+			[a]]'.
+	start := source indexOfSubCollection: '| a'.
+	self 
+		parseMethodError: source
+		code: CErrRedefiningArg
+		range: (start + 2 to: start + 2)!
+
+testOverriddenMethodArgumentWarning
+	| block2 method block1 |
+	method := self getTestMethod: #testOverriddenMethodArgumentWarning:.
+	self assert: method tempCount = 1.
+	self deny: method needsContext.
+	block1 := method value: DolphinCompilerTestMethods new withArguments: #(1).
+	block2 := block1 value.
+	self assert: block2 tempCount = 1.
+	self assert: block2 argumentCount = 0.
+	self assert: block2 size = 1.
+	self assert: (block2 at: 1) = 2.
+	self assert: block2 value = 2!
+
+testRestrictedSelectors
+	self restrictedSelectors do: 
+			[:each | 
+			| source argc |
+			source := String writeStream.
+			argc := each argumentCount.
+			argc = 0 
+				ifTrue: [source nextPutAll: each]
+				ifFalse: 
+					[each isInfix 
+						ifTrue: 
+							[self assert: argc = 1.
+							source
+								nextPutAll: each;
+								space;
+								nextPutAll: 'operand']
+						ifFalse: 
+							[| i |
+							i := 1.
+							(each subStrings: $:) do: 
+									[:eachKeyword | 
+									source
+										nextPutAll: eachKeyword;
+										nextPut: $:;
+										nextPutAll: ' operand';
+										display: i]
+								separatedBy: 
+									[source space.
+									i := i + 1]]].
+			source
+				crtab;
+				nextPutAll: '^1 + 2'.
+			source := source contents.
+			self 
+				parseMethodWarning: source
+				in: self class
+				range: (1 to: (source indexOf: Character cr) - 1)
+				code: CWarnRestrictedSelector
+				extra: each]!
+
+testUnoptimizedLoopsNonMonadicArg
+	"An error is actually generated in the case where the block arg of a #to:[by:]do: is not
+	monadic, because this is simpler given the compiler's single-pass design. If the code
+	generation were a separate pass, then it could produce unomptimized code and a warning."
+
+	#('1 to: 2' '1 to: 2 by: 1') do: 
+			[:each | 
+			"Non-block literal - in this case a SmallInteger"
+			| source mark |
+			source := 'x <1s> do: [1]' expandMacrosWith: each.
+			mark := source indexOf: $[.
+			self 
+				parseMethodError: source
+				code: CErrIncorrectBlockArgCount
+				range: (mark to: mark + 2).
+			source := 'x | tmp | tmp := [:e | e]. <1s> do: tmp ' expandMacrosWith: each.
+			self 
+				parseMethodWarning: source
+				range: (source size - 3 to: source size - 1)
+				code: CWarnExpectMonadicBlockArg.
+
+			"Too many args"
+			source := 'x <1s> do: [:x :y | x + y]' expandMacrosWith: each.
+			self 
+				parseMethodError: source
+				code: CErrIncorrectBlockArgCount
+				range: ((source indexOf: $[) to: (source indexOf: $|)).
+			self]!
+
+testWarningRedefiningArg
+	#(#testWarningRedefiningArgInOptimizedBlock: #testWarningRedefiningMethodArgInBlock: #testWarningRedefiningBlockArgInBlock) 
+		do: 
+			[:each | 
+			self 
+				parseMethodWarning: each
+				rangeBlock: 
+					[:source | 
+					| start |
+					start := (source findString: '| a |') + 2.
+					start to: start]
+				code: CWarnRedefiningArg]!
+
+testWarningRedefiningStatic
+	#(#testWarningRedefiningStaticAsArg: #testWarningRedefiningStaticAsTemp #testWarningRedefiningStaticAsBlockArg #testWarningRedefiningStaticAsBlockTemp) 
+		do: 
+			[:each | 
+			self 
+				parseMethodWarning: each
+				rangeBlock: 
+					[:source | 
+					| start |
+					start := source findString: 'Object'.
+					start to: start + 5]
+				code: CWarnRedefiningStatic]!
+
+testWarningRedefiningTemp
+	| source start range |
+	source := 'x | a | a := 1. [|a | a := 2. a] value. a'.
+	start := (source findString: '|a') + 1.
+	range := start to: start.
+	self 
+		parseMethodWarning: source
+		in: self class
+		range: range
+		code: CWarnRedefiningTemp!
+
+testWarningSelfSendNotImplemented
+	| source range |
+	source := 'x ^self blah'.
+	range := (source findString: 'self') to: source size.
+	self 
+		parseMethodWarning: source
+		in: self class
+		range: range
+		code: CWarnMsgUnimplemented.
+	self 
+		parseMethodWarning: source
+		in: self class class
+		range: range
+		code: CWarnMsgUnimplemented.
+
+	"Now compile some sends which are implemented"
+
+	"Self referential - shouldn't get a warning"
+	self shouldnt: [self parseMethod: 'blah ^self blah' in: self class]
+		raise: self compilationWarningClass.
+
+	"Pre-existing method that we know will exist"
+	self shouldnt: [self parseMethod: 'x ^self isAbstract' in: self class class]
+		raise: self compilationWarningClass!
+
+testWarningSupersendNotImplemented
+	| source range |
+	source := 'blah ^super blah'.
+	range := (source findString: 'super') to: source size.
+	self 
+		parseMethodWarning: source
+		in: self class
+		range: range
+		code: CWarnMsgUnimplemented.
+	self 
+		parseMethodWarning: source
+		in: self class class
+		range: range
+		code: CWarnMsgUnimplemented.
+	"Now compile some supersends which are implemented"
+	self shouldnt: 
+			[| result |
+			result := self parseMethod: 'run ^super run' in: self class]
+		raise: self compilationWarningClass.
+	self shouldnt: 
+			[| result |
+			result := self parseMethod: 'isAbstract ^super isAbstract' in: self class class]
+		raise: self compilationWarningClass.
+	"Finally a class side supersend that is a send to the instance side"
+	self shouldnt: 
+			[| result |
+			result := self parseMethod: 'class ^super class' in: self class class]
+		raise: self compilationWarningClass!
+
+testWarningUnoptimizedConditionNonNiladicArg
+	| source |
+	#(#and: #or: #ifTrue: #ifFalse: #ifNil:) do: 
+			[:each | 
+			"Non-block literal - in this case a SmallInteger"
+			| stem format |
+			stem := 'x [1] '.
+			format := stem , '<1s> 1 '.
+			source := format expandMacrosWith: each.
+			self 
+				parseMethodWarning: source
+				range: (source size - 1 to: source size - 1)
+				code: CWarnExpectNiladicBlockArg.
+			"Variable ref"
+			stem := 'x | a | a := [false]. [1] '.
+			format := stem , '<1s> a'.
+			source := format expandMacrosWith: each.
+			self 
+				parseMethodWarning: source
+				range: (source size to: source size)
+				code: CWarnExpectNiladicBlockArg.
+
+			"Because of the single-pass way in which the compiler works, this is currently an error. 
+			It could more easily be made a warning if the code generation phase was separate."
+			stem := 'x [1] '.
+			format := stem , '<1s> [:a|]'.
+			source := format expandMacrosWith: each.
+			self 
+				parseMethodError: source
+				code: CErrIncorrectBlockArgCount
+				range: ((source lastIndexOf: $[) to: (source lastIndexOf: $|)).
+			self]!
+
+testWarningUnoptimizedIfNil
+	#('x 1 ifNil: 1' 'x | a | a := []. 1 ifNil: a' 'x 1 ifNil: 1 ifNotNil: []' 'x | a | a := [:x|]. 1 ifNil: a ifNotNil: []') 
+		do: 
+			[:each | 
+			| start keyword end |
+			keyword := 'ifNil:'.
+			start := (each findString: keyword) + keyword size + 1.
+			end := (each 
+						nextIndexOf: Character space
+						from: start
+						to: each size) - 1.
+			end <= 0 ifTrue: [end := each size].
+			self 
+				parseMethodWarning: each
+				range: (start to: end)
+				code: CWarnExpectNiladicBlockArg].
+	"These cases should really be warnings, but generate errors because it is too difficult in a
+	single pass compiler to detect the unoptimised case in advance when it is the second arg
+	that is not a literal block."
+	#('x 1 ifNotNil: [] ifNil: 1' 'x | a | a := [:x|]. 1 ifNotNil: [] ifNil: a' 'x 1 ifNil: [] ifNotNil: 1' 'x | a | a := []. 1 ifNil: [] ifNotNil: a') 
+		do: 
+			[:each | 
+			| start end |
+			start := (each lastIndexOf: $:) + 2.
+			end := (each 
+						nextIndexOf: Character space
+						from: start
+						to: each size) - 1.
+			end <= 0 ifTrue: [end := each size].
+			self 
+				parseMethodError: each
+				code: CErrExpectLiteralBlock
+				range: (start to: end).
+			self]!
+
+testWarningUnoptimizedIfNotNilNonMonadicArg
+	| start keyword end mark |
+	#('x 1 ifNotNil: 1' 'x | a | a := [:x|]. 1 ifNotNil: a' 'x 1 ifNotNil: 1 ifNil: []' 'x | a | a := [:x|]. 1 ifNotNil: a ifNil: []') 
+		do: 
+			[:each | 
+			keyword := 'ifNotNil:'.
+			start := (each findString: keyword) + keyword size + 1.
+			end := (each 
+						nextIndexOf: Character space
+						from: start
+						to: each size) - 1.
+			end <= 0 ifTrue: [end := each size].
+			self 
+				parseMethodWarning: each
+				range: (start to: end)
+				code: CWarnExpectMonadicOrNiladicBlockArg].
+	"These cases should really be warnings, but generate errors because it is too difficult in a
+	single pass compiler to detect the unoptimised case in advance when it is the second arg
+	that is not a literal block."
+	#('x 1 ifNil: [] ifNotNil: 1' 'x | a | a := [:x|]. 1 ifNil: [] ifNotNil: a' 'x 1 ifNotNil: [] ifNil: 1' 'x | a | a := []. 1 ifNotNil: [] ifNil: a') 
+		do: 
+			[:each | 
+			| mark |
+			mark := (each lastIndexOf: $:) + 2.
+			self 
+				parseMethodError: each
+				code: CErrExpectLiteralBlock
+				range: (mark to: mark).
+			self]!
+
+testWarningUnoptimizedLoopsNonNiladicArg
+	| source |
+	#(#whileTrue: #whileFalse:) do: 
+			[:each | 
+			"Non-block literal - in this case a SmallInteger"
+			| stem format |
+			stem := 'x [1] '.
+			format := stem , '<1s> 1 '.
+			source := format expandMacrosWith: each.
+			self 
+				parseMethodWarning: source
+				range: (source size - 1 to: source size - 1)
+				code: CWarnExpectNiladicBlockArg.
+			"Variable ref"
+			stem := 'x | a | a := [false]. [1] '.
+			format := stem , '<1s> a'.
+			source := format expandMacrosWith: each.
+			self 
+				parseMethodWarning: source
+				range: (source size to: source size)
+				code: CWarnExpectNiladicBlockArg.
+
+			"Because of the single-pass way in which the compiler works, this is currently an error. 
+			It could more easily be made a warning if the code generation phase was separate."
+			format := stem , '<1s> [:a|]'.
+			source := format expandMacrosWith: each.
+			self 
+				parseMethodError: source
+				code: CErrIncorrectBlockArgCount
+				range: ((source lastIndexOf: $[) to: (source lastIndexOf: $|)).
+			self]!
+
+testWarningUnoptimizedLoopsNonNiladicReceiver
+	| source |
+	#('whileTrue' 'whileFalse' 'repeat' 'whileTrue: []' 'whileFalse: []') do: 
+			[:each | 
+			| stem |
+			stem := 'x 1 '.
+			source := stem , each.
+			self 
+				parseMethodWarning: source
+				in: Object
+				range: (stem size + 1 to: stem size + each subStrings first size)
+				code: CWarnExpectNiladicBlockReceiver.
+			"Variable as receiver - the expression is valid, but can't be optimized"
+			stem := 'x | a | a := [true]. a '.
+			source := stem , each.
+			self 
+				parseMethodWarning: source
+				in: Object
+				range: (stem size + 1 to: stem size + each subStrings first size)
+				code: CWarnExpectNiladicBlockReceiver.
+			"Monadic literal block instead of niladic"
+			stem := 'x [:a | a] '.
+			source := stem , each.
+			self 
+				parseMethodWarning: source
+				in: Object
+				range: (stem size + 1 to: stem size + each subStrings first size)
+				code: CWarnExpectNiladicBlockReceiver]!
+
+testWarningUnreferencedTemp
+	#(#testWarningUnreferencedTempBlock #testWarningUnreferencedTempMethod #testWarningUnreferencedTempOptimizedBlock) 
+		do: 
+			[:each | 
+			self 
+				parseMethodWarning: each
+				rangeBlock: 
+					[:source | 
+					| start |
+					start := source lastIndexOf: $a.
+					start to: start]
+				code: CWarnUnreferencedTemp]!
+
+traceException: ex source: aString 
+	Transcript
+		print: ex errorCode;
+		nextPutAll: ': ';
+		print: ex range;
+		space;
+		display: ex description;
+		nextPutAll: ': ';
+		print: (aString copyFrom: ex range start to: ex range stop);
+		cr! !
+!AbstractParserErrorTest categoriesFor: #buildNestedBlocks:!helpers!private! !
+!AbstractParserErrorTest categoriesFor: #buildNestedBlocks2:!helpers!private! !
+!AbstractParserErrorTest categoriesFor: #checkCompileError:range:code:message:line:source:!helpers!private! !
+!AbstractParserErrorTest categoriesFor: #compilationErrorClass!constants!private! !
+!AbstractParserErrorTest categoriesFor: #compilationWarningClass!constants!private! !
+!AbstractParserErrorTest categoriesFor: #compileMethod:in:!private!unit tests! !
+!AbstractParserErrorTest categoriesFor: #errorFormats!private!unit tests! !
+!AbstractParserErrorTest categoriesFor: #evaluateExpression:!helpers!private! !
+!AbstractParserErrorTest categoriesFor: #getTestMethod:!helpers!private! !
+!AbstractParserErrorTest categoriesFor: #isValidExpression:!private!unit tests! !
+!AbstractParserErrorTest categoriesFor: #lexicalError:range:line:code:!private!unit tests! !
+!AbstractParserErrorTest categoriesFor: #maxLiterals!constants!private! !
+!AbstractParserErrorTest categoriesFor: #parseError:!helpers!private! !
+!AbstractParserErrorTest categoriesFor: #parseExprError:range:line:code:!helpers!private! !
+!AbstractParserErrorTest categoriesFor: #parseExprError:range:line:code:message:!helpers!private! !
+!AbstractParserErrorTest categoriesFor: #parseExpression:!helpers!private! !
+!AbstractParserErrorTest categoriesFor: #parseExpression:in:!parsing!private! !
+!AbstractParserErrorTest categoriesFor: #parseMethod:in:!private!unit tests! !
+!AbstractParserErrorTest categoriesFor: #parseMethod:notificationClass:in:range:code:message:!helpers!private! !
+!AbstractParserErrorTest categoriesFor: #parseMethodError:code:range:!helpers!private! !
+!AbstractParserErrorTest categoriesFor: #parseMethodError:in:range:code:!helpers!private! !
+!AbstractParserErrorTest categoriesFor: #parseMethodError:in:range:code:message:!helpers!private! !
+!AbstractParserErrorTest categoriesFor: #parseMethodInfo:in:range:code:!helpers!private! !
+!AbstractParserErrorTest categoriesFor: #parseMethodInfo:rangeBlock:code:!helpers!private! !
+!AbstractParserErrorTest categoriesFor: #parseMethodWarning:in:range:code:!helpers!private! !
+!AbstractParserErrorTest categoriesFor: #parseMethodWarning:in:range:code:extra:!public!unit tests! !
+!AbstractParserErrorTest categoriesFor: #parseMethodWarning:range:code:!accessing!public! !
+!AbstractParserErrorTest categoriesFor: #parseMethodWarning:rangeBlock:code:!helpers!private! !
+!AbstractParserErrorTest categoriesFor: #restrictedSelectors!constants!private! !
+!AbstractParserErrorTest categoriesFor: #testByteArraysInLiteralArrays!public!unit tests! !
+!AbstractParserErrorTest categoriesFor: #testCompileTimeExpressions!public!unit tests! !
+!AbstractParserErrorTest categoriesFor: #testErrorsAssignBlockArgument!exceptions!public!unit tests! !
+!AbstractParserErrorTest categoriesFor: #testErrorsAssignClass!exceptions!public!unit tests! !
+!AbstractParserErrorTest categoriesFor: #testErrorsAssignConstant!exceptions!public!unit tests! !
+!AbstractParserErrorTest categoriesFor: #testErrorsAssignMethodArgument!public!unit tests! !
+!AbstractParserErrorTest categoriesFor: #testErrorsBadCascade!public!unit tests! !
+!AbstractParserErrorTest categoriesFor: #testErrorsBadContext!public!unit tests! !
+!AbstractParserErrorTest categoriesFor: #testErrorsBadExtCallTypes!public!unit tests! !
+!AbstractParserErrorTest categoriesFor: #testErrorsBadMessagePattern!exceptions!public!unit tests! !
+!AbstractParserErrorTest categoriesFor: #testErrorsBadSuper!public!unit tests! !
+!AbstractParserErrorTest categoriesFor: #testErrorsBlockArgNameMissing!exceptions!public!unit tests! !
+!AbstractParserErrorTest categoriesFor: #testErrorsBlockNestingTooDeep!public!unit tests! !
+!AbstractParserErrorTest categoriesFor: #testErrorsBlockNotClosed!public!unit tests! !
+!AbstractParserErrorTest categoriesFor: #testErrorsBlockTempsNotClosed!public!unit tests! !
+!AbstractParserErrorTest categoriesFor: #testErrorsExpectMessage!exceptions!public!unit tests! !
+!AbstractParserErrorTest categoriesFor: #testErrorsExpectVariableName!public!unit tests! !
+!AbstractParserErrorTest categoriesFor: #testErrorsExtArgCountMismatch!public!unit tests! !
+!AbstractParserErrorTest categoriesFor: #testErrorsExtTypeIndirections!public!unit tests! !
+!AbstractParserErrorTest categoriesFor: #testErrorsExtTypes!public!unit tests! !
+!AbstractParserErrorTest categoriesFor: #testErrorsIfNotNil!public!unit tests! !
+!AbstractParserErrorTest categoriesFor: #testErrorsIllegalByteArrays!exceptions!public!unit tests! !
+!AbstractParserErrorTest categoriesFor: #testErrorsIncorrectNumberOfNotNilBlockArgs!public!unit tests! !
+!AbstractParserErrorTest categoriesFor: #testErrorsInvalidExpressionStart!exceptions!public!unit tests! !
+!AbstractParserErrorTest categoriesFor: #testErrorsLexical!exceptions!public!unit tests! !
+!AbstractParserErrorTest categoriesFor: #testErrorsLiteralArray!public!unit tests! !
+!AbstractParserErrorTest categoriesFor: #testErrorsLiteralByteArray!public!unit tests! !
+!AbstractParserErrorTest categoriesFor: #testErrorsNegateNonNumber!public!unit tests! !
+!AbstractParserErrorTest categoriesFor: #testErrorsNonsenseAtEndOfExpression!public!unit tests! !
+!AbstractParserErrorTest categoriesFor: #testErrorsNonsenseAtEndOfMethod!public!unit tests! !
+!AbstractParserErrorTest categoriesFor: #testErrorsOptimizedExpressionNotClosed!public!unit tests! !
+!AbstractParserErrorTest categoriesFor: #testErrorsPrimitives!exceptions!public!unit tests! !
+!AbstractParserErrorTest categoriesFor: #testErrorsPrimitivesCloseTagRecovery!public!unit tests! !
+!AbstractParserErrorTest categoriesFor: #testErrorsRedefiningPseudo!exceptions!public!unit tests! !
+!AbstractParserErrorTest categoriesFor: #testErrorsRedefiningSpecialLiterals!exceptions!public!unit tests! !
+!AbstractParserErrorTest categoriesFor: #testErrorsStringNotClosed!exceptions!public!unit tests! !
+!AbstractParserErrorTest categoriesFor: #testErrorsSupersendFromObject!exceptions!public!unit tests! !
+!AbstractParserErrorTest categoriesFor: #testErrorsTempsNotClosed!exceptions!public!unit tests! !
+!AbstractParserErrorTest categoriesFor: #testErrorsTooManyArgs!public!unit tests! !
+!AbstractParserErrorTest categoriesFor: #testErrorsTooManyTemps!public!unit tests! !
+!AbstractParserErrorTest categoriesFor: #testErrorsTooManyTempsInOptimizedBlock!public!unit tests! !
+!AbstractParserErrorTest categoriesFor: #testErrorsUnclosedParenthesis!public!unit tests! !
+!AbstractParserErrorTest categoriesFor: #testErrorsUnspportedCallConv!public!unit tests! !
+!AbstractParserErrorTest categoriesFor: #testErrorsUnterminatedStatement!public!unit tests! !
+!AbstractParserErrorTest categoriesFor: #testErrorsVirtualCalls!public!unit tests! !
+!AbstractParserErrorTest categoriesFor: #testErrorsZeroArgOptimisedBlock!public!unit tests! !
+!AbstractParserErrorTest categoriesFor: #testOverriddenBlockArgumentError!public!unit tests! !
+!AbstractParserErrorTest categoriesFor: #testOverriddenBlockArgumentWarning!public!unit tests! !
+!AbstractParserErrorTest categoriesFor: #testOverriddenMethodArgumentError!public!unit tests! !
+!AbstractParserErrorTest categoriesFor: #testOverriddenMethodArgumentWarning!public!unit tests! !
+!AbstractParserErrorTest categoriesFor: #testRestrictedSelectors!public!unit tests! !
+!AbstractParserErrorTest categoriesFor: #testUnoptimizedLoopsNonMonadicArg!public!unit tests! !
+!AbstractParserErrorTest categoriesFor: #testWarningRedefiningArg!public!unit tests! !
+!AbstractParserErrorTest categoriesFor: #testWarningRedefiningStatic!public!unit tests! !
+!AbstractParserErrorTest categoriesFor: #testWarningRedefiningTemp!public!unit tests! !
+!AbstractParserErrorTest categoriesFor: #testWarningSelfSendNotImplemented!exceptions!public!unit tests! !
+!AbstractParserErrorTest categoriesFor: #testWarningSupersendNotImplemented!exceptions!public!unit tests! !
+!AbstractParserErrorTest categoriesFor: #testWarningUnoptimizedConditionNonNiladicArg!public!unit tests! !
+!AbstractParserErrorTest categoriesFor: #testWarningUnoptimizedIfNil!public!unit tests! !
+!AbstractParserErrorTest categoriesFor: #testWarningUnoptimizedIfNotNilNonMonadicArg!public!unit tests! !
+!AbstractParserErrorTest categoriesFor: #testWarningUnoptimizedLoopsNonNiladicArg!public!unit tests! !
+!AbstractParserErrorTest categoriesFor: #testWarningUnoptimizedLoopsNonNiladicReceiver!public!unit tests! !
+!AbstractParserErrorTest categoriesFor: #testWarningUnreferencedTemp!public!unit tests! !
+!AbstractParserErrorTest categoriesFor: #traceException:source:!helpers!private! !
+
+!AbstractParserErrorTest class methodsFor!
+
+isAbstract
+	"Override to true if a TestCase subclass is Abstract and should not have
+	TestCase instances built from it"
+
+	^self == ##(self)! !
+!AbstractParserErrorTest class categoriesFor: #isAbstract!public!Testing! !
+

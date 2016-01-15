@@ -1,0 +1,36 @@
+"Filed out from Dolphin Smalltalk 7"!
+
+DolphinTest subclass: #AddMethodChangeTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+AddMethodChangeTest guid: (GUID fromString: '{08457A65-10D4-409D-93DF-440BCE0FAC93}')!
+AddMethodChangeTest comment: ''!
+!AddMethodChangeTest categoriesForClass!Unclassified! !
+!AddMethodChangeTest methodsFor!
+
+changeClass
+	^AddMethodChange!
+
+testPrintOn
+	| change |
+	change := self changeClass 
+				compile: 'isAbstract ^false'
+				in: AddMethodChangeTest class
+				classified: 'testing'.
+	self assert: change printString readStream nextLine 
+				= '!!AddMethodChangeTest class methodsFor: ''testing''!!'.
+	#'1593'.
+	change protocols: #().
+	self assert: change protocol isNil.
+	self 
+		assert: change printString readStream nextLine = '!!AddMethodChangeTest class methodsFor: ''''!!'! !
+!AddMethodChangeTest categoriesFor: #changeClass!public!unit tests! !
+!AddMethodChangeTest categoriesFor: #testPrintOn!public!unit tests! !
+
+!AddMethodChangeTest class methodsFor!
+
+isAbstract ^false! !
+!AddMethodChangeTest class categoriesFor: #isAbstract!public!testing! !
+

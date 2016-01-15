@@ -1,0 +1,176 @@
+| package |
+package := Package name: 'Dolphin IDE Tests'.
+package paxVersion: 1;
+	basicComment: ''.
+
+
+package classNames
+	add: #AddMethodChangeTest;
+	add: #ClassBrowserAbstractTest;
+	add: #ClassBrowserTest;
+	add: #ClassHierarchySelectorTest;
+	add: #ClassListSelectorTest;
+	add: #ClassSelectorTest;
+	add: #ClosedCommandDescriptionIssueDialog;
+	add: #CodeMentorTest;
+	add: #DebuggerTest;
+	add: #IdeaSpaceShellTest;
+	add: #MethodWorkspaceTest;
+	add: #PackageBrowserTest;
+	add: #PackagedClassSelectorTest;
+	add: #PackageFolderTest;
+	add: #PackageManagerTest;
+	add: #PackageSelectorTest;
+	add: #PublishedAspectInspectorTest;
+	add: #ResourceBrowserTest;
+	add: #SmalltalkStylerTest;
+	add: #SmalltalkSystemShellTest;
+	add: #SystemBrowserTest;
+	add: #ViewComposerTest;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: 'Base\Development System';
+	add: '..\Base\Dolphin';
+	add: '..\Base\Dolphin Base Tests';
+	add: '..\MVP\Presenters\Boolean\Dolphin Boolean Presenter';
+	add: '..\MVP\Views\Common Controls\Dolphin Common Controls';
+	add: '..\MVP\Base\Dolphin MVP Base';
+	add: '..\MVP\Dolphin MVP Tests';
+	add: 'Professional\Dolphin Professional Tools';
+	add: 'Professional\Dolphin Refactoring Browser';
+	add: '..\MVP\Presenters\Text\Dolphin Text Presenter';
+	add: '..\MVP\Presenters\Tree\Dolphin Tree Presenter';
+	add: '..\..\..\Contributions\Refactory\Refactoring Browser\Change Objects\RBChangeObjects';
+	add: '..\..\..\Contributions\Refactory\Refactoring Browser\Environments\RBEnvironments';
+	add: '..\..\..\Contributions\Camp Smalltalk\SUnit\SUnit';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+Dialog subclass: #ClosedCommandDescriptionIssueDialog
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DolphinTest subclass: #AddMethodChangeTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DolphinTest subclass: #ClassBrowserAbstractTest
+	instanceVariableNames: 'browser methodsPresenter packageA'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DolphinTest subclass: #CodeMentorTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DolphinTest subclass: #DebuggerTest
+	instanceVariableNames: 'process savedShowWalkbacks'
+	classVariableNames: ''
+	poolDictionaries: 'OpcodePool'
+	classInstanceVariableNames: ''!
+DolphinTest subclass: #IdeaSpaceShellTest
+	instanceVariableNames: 'ideaShell'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DolphinTest subclass: #PackageBrowserTest
+	instanceVariableNames: 'packageA packageB packageC dolphinTestA dolphinTestB dolphinTestC shell cardsPresenter classesPresenter methodsPresenter globalsPresenter resourcesPresenter dependencyPresenters methodAA methodAB methodAC methodBA methodBB methodCA resourceAA resourceAB resourceAC resourceBA resourceBB resourceCA resourceCC'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DolphinTest subclass: #PackageManagerTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DolphinTest subclass: #PublishedAspectInspectorTest
+	instanceVariableNames: 'inspector treePresenter displayPresenter'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DolphinTest subclass: #ResourceBrowserTest
+	instanceVariableNames: 'resourceBrowser testClass'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DolphinTest subclass: #SmalltalkStylerTest
+	instanceVariableNames: 'mock scintilla'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DolphinTest subclass: #SmalltalkSystemShellTest
+	instanceVariableNames: 'systemShell'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DolphinTest subclass: #ViewComposerTest
+	instanceVariableNames: 'vc testClass'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ClassBrowserAbstractTest subclass: #ClassBrowserTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ClassBrowserAbstractTest subclass: #SystemBrowserTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+FolderTest subclass: #PackageFolderTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+PresenterTest subclass: #MethodWorkspaceTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+SelectableItemsTest subclass: #ClassSelectorTest
+	instanceVariableNames: 'packageA packageB packageC dolphinTestA dolphinTestB dolphinTestC dolphinTestD dolphinTestE dolphinTestF dolphinTestG dolphinTestH dolphinTestI'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+SelectableItemsTest subclass: #PackageSelectorTest
+	instanceVariableNames: 'packageA'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ClassSelectorTest subclass: #ClassHierarchySelectorTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ClassSelectorTest subclass: #ClassListSelectorTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ClassSelectorTest subclass: #PackagedClassSelectorTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+"End of package definition"!
+
