@@ -102,6 +102,10 @@ parse
 parseNextArg
 
 	parsingArg := parsingArgStream next.
+	(parsingArg size == 2 and: [(parsingArg at: 1) == (parsingArg at: 2)]) ifTrue: [	"-- is a signal to treat everything following as arguments, not options"
+		arguments addAll: parsingArgStream upToEnd.
+		^self
+	].
 	(1 < parsingArg size and: [optionPrefixChars includes: parsingArg first]) ifFalse: [	"no prefix means treat as an argument rather than as an option"
 		arguments add: parsingArg.
 		^self
@@ -118,10 +122,6 @@ parseNextOption
 
 	| char optionArg rule |
 	char := parsingOptionStream next.
-	(parsingArg size == 2 and: [(parsingArg at: 1) == (parsingArg at: 2)]) ifTrue: [	"-- is a signal to treat everything following as arguments, not options"
-		arguments addAll: parsingArgStream upToEnd.
-		^self
-	].
 	rule := parsingRules 
 		detect: [:each | each name == char] 
 		ifNone: [	"Unrecognized option"
