@@ -971,12 +971,18 @@ initializeOldSourcePackage
 		ifFalse: [self error: 'Unable to load package (Legacy package importer is not loaded)']	"Initialize old style (pre D6) binary resources"!
 
 isBaseImagePackage
-	"Answer true if the receiver is a basic component of Dolphin. In general this is a hint that
-	you don't need to version the package into an external repository such as STS."
+	"Answer true if the receiver is a basic component of Dolphin "
 
-	" Not a terribly sophisticated in implementation - if the package reside under Core\ then it is a system package"
+	#deprecated.
 
-	^self packagePathname beginsWith: 'Core\' ignoreCase: true!
+	^self isBasePackage!
+
+isBasePackage
+	"Answer true if the receiver is a basic component of Dolphin. This is usually an indication that
+	it was present at the time the image was booted and may be used as a hint that
+	you may not need to version the package into an external repository such as STS."
+
+	^self class manager basePackages includes: self!
 
 isChanged
 	"Answer true if the receiver or any of it's contents have been changed since
@@ -1495,6 +1501,13 @@ privateUninstall
 		uninstallGlobals;
 		uninstallClasses;
 		uninstallMethods!
+
+rebaseTo: basePathName 
+	"Rebase this package relative to the give base image directory"
+
+	self packagePathname: (File 
+				relativePathOf: (File fullPathOf: self packagePathname relativeTo: basePathName)
+				to: SessionManager current imagePath)!
 
 remainingClasses
 	"Answer a Set of the classes that are still present (i.e. ignore missing classes)"
@@ -2398,6 +2411,7 @@ If you experience subsequent problems please contact the package supplier for an
 !Package categoriesFor: #initializeGlobals!initializing!private! !
 !Package categoriesFor: #initializeOldSourcePackage!private!source filing-pax! !
 !Package categoriesFor: #isBaseImagePackage!public! !
+!Package categoriesFor: #isBasePackage!public! !
 !Package categoriesFor: #isChanged!development!public!source filing!testing! !
 !Package categoriesFor: #isChanged:!public!source filing! !
 !Package categoriesFor: #isDefaultPackage!public!testing! !
@@ -2449,6 +2463,7 @@ If you experience subsequent problems please contact the package supplier for an
 !Package categoriesFor: #printBinaryStoreBytesOf:!helpers!private! !
 !Package categoriesFor: #printOn:!printing!public! !
 !Package categoriesFor: #privateUninstall!private!removing! !
+!Package categoriesFor: #rebaseTo:!public!testing! !
 !Package categoriesFor: #remainingClasses!accessing!public! !
 !Package categoriesFor: #removeClass:!public!removing! !
 !Package categoriesFor: #removeGlobalNamed:!public!removing! !

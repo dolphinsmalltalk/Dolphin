@@ -67,6 +67,7 @@ contents
 	"Some loaded by boot part 2 script"
 	answer
 		add: #('Core\Object Arts\Dolphin\Base\Dolphin.pax' #plain #imageBased);
+		add: #('Core\Object Arts\Dolphin\Base\Dolphin Base.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\System\Filer\Dolphin Literal Filer.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\Registry\Dolphin Registry Access.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\System\Base64\Dolphin Base64.pax' #plain #imageBased);

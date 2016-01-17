@@ -18,7 +18,8 @@ SourceManager fileIn.
 PackageManager fileIn.
 Package fileIn.
 File fileIn.
-VMLibrary fileIn !
+VMLibrary fileIn.
+SessionManager fileIn !
 
 "Install some bare bones packages to get the Installation Management system working"
 Package manager install: 'Core\Object Arts\Dolphin\Registry\Dolphin Registry Access.pax'!
@@ -27,6 +28,7 @@ Package manager install: 'Core\Object Arts\Dolphin\Registry\Dolphin Registry Acc
 Package manager install: 'Core\Object Arts\Dolphin\System\Base64\Dolphin Base64.pax'!
 
 "We'll need MVP bits in order to be able to display the choice prompter for the image version to boot"
+Package manager 	install: 'Core\Object Arts\Dolphin\Base\Dolphin Base.pax'!
 Package manager 	install: 'Core\Object Arts\Dolphin\MVP\Models\Value\Dolphin Value Models.pax'!
 Package manager 	install: 'Core\Object Arts\Dolphin\MVP\Type Converters\Dolphin Type Converters.pax'!
 Package manager 	install: 'Core\Object Arts\Dolphin\MVP\Base\Dolphin MVP Base.pax'!
@@ -77,6 +79,9 @@ SessionManager current stashBootInfo!
 
 "Ensure all structures have calculated size to avoid recompilation messages later"
 ExternalStructure allSubclasses do: [:e | e byteSize]!
+
+"Mark all the booted packages as base"
+Package manager markAllPackagesAsBase!
 
 "Unlock VM"
 VMLibrary default unlockVM: 0 expireAfter: 0 flags: 0!

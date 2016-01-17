@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 SessionManager subclass: #GUISessionManager
 	instanceVariableNames: 'savedWindows'
@@ -44,6 +44,21 @@ clearWindowState
 	"Private - Clear the state of the top-level windows."
 
 	savedWindows := nil!
+
+commandLineParser
+	"
+	-h - headless (embedded) mode
+	-q - quiet startup (no splash)
+	"
+
+	^(CommandLine argv: self argvLegacyOptionsRemoved)
+		options: 'hq';
+		yourself!
+
+isEmbedding
+	"Answer whether the session was started with the headless flag."
+
+	^self commandLineParser options includesKey: $h!
 
 onSettingChanged: aWindowsEvent 
 	SystemMetrics current onSettingChanged: aWindowsEvent!
@@ -112,9 +127,11 @@ startUI
 tertiaryStartup
 	"Perform GUI  system tertiary startup"
 
-	| splashShown |
 	"Pop-up the splash screen before the windows are restored"
-	splashShown := (self cmdLineFlags includes: 'nosplash') not and: [self showSplash].
+	| splashShown silenceSplash |
+	silenceSplash := (self cmdLineFlags includes: 'nosplash') 
+				or: [self commandLineParser options includesKey: $q].
+	splashShown := silenceSplash not and: [self showSplash].
 	super tertiaryStartup.
 	splashShown ifFalse: [self trigger: #sessionReady]!
 
@@ -147,6 +164,8 @@ windowSystemStartup
 !GUISessionManager categoriesFor: #basicTertiaryStartup!operations-startup!public! !
 !GUISessionManager categoriesFor: #clearSessionState!operations!public! !
 !GUISessionManager categoriesFor: #clearWindowState!operations-saving!private! !
+!GUISessionManager categoriesFor: #commandLineParser!helpers!private! !
+!GUISessionManager categoriesFor: #isEmbedding!public!testing! !
 !GUISessionManager categoriesFor: #onSettingChanged:!event handling!private! !
 !GUISessionManager categoriesFor: #openConsoleStreams!operations!private! !
 !GUISessionManager categoriesFor: #resourceManager!accessing!public! !
