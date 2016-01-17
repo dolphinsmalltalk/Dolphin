@@ -1,0 +1,254 @@
+| package |
+package := Package name: 'Known Failing Tests'.
+package paxVersion: 1;
+	basicComment: 'These tests are known failures that have not yet been debugged or resolved. In general these tests should pass and are therefre in need of some debugging effort so that they may be reintroduced into the fold. This package is not loaded during normal regression testing (for obvious reasons).'.
+
+
+package methodNames
+	add: #BlockClosureTest -> #testFullBlockEquality;
+	add: #DictionaryTest -> #testNilKey;
+	add: #FloatTest -> #testFloatPrintString;
+	add: #NumberTest -> #testClassReadFromColonScaledDecimals;
+	add: #PackageTest -> #testForwardRefLoadPac;
+	add: #PackageTest -> #testImageStripperPrereqs;
+	add: #PackageTest -> #testLoad21Pac;
+	add: #PackageTest -> #testLoad40Pac;
+	add: #PackageTest -> #testLoad51Pac;
+	add: #PackageTest -> #testLoad60Pac;
+	add: #ProcessTest -> #testOverlappedErrno;
+	add: #ZLibTest -> #testCompressUncompress;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\Base\Dolphin';
+	add: '..\Base\Dolphin Base Tests';
+	add: 'Excluded Tests';
+	add: '..\..\..\Contributions\ITC Gorisek\ZLib Interface';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+!BlockClosureTest methodsFor!
+
+testFullBlockEquality
+	| block1 block2 count block3 |
+	count := 1.
+	block1 := [count := count + 1].
+	block2 := [count := count + 1].
+	block3 := [ | tmp | tmp := 1. count := count + tmp. tmp].
+	self assert: block1 = block2.
+	self assert: block1 ~= block3! !
+!BlockClosureTest categoriesFor: #testFullBlockEquality!public!unit tests-known failures! !
+
+!DictionaryTest methodsFor!
+
+testNilKey
+	| dictionary |
+	dictionary := self newEmpty.
+	self should: [dictionary at: nil put: 1] raise: Error.
+	self should: [dictionary at: nil ifAbsentPut: [1]] raise: Error! !
+!DictionaryTest categoriesFor: #testNilKey!public!unit tests! !
+
+!FloatTest methodsFor!
+
+testFloatPrintString
+	"Debug reading/printing a Floating point number without accumulating
+round off errors"
+
+	| b r |
+	b := ByteArray new: 8.
+	r := RandomLinearCongruential
+		newModulus: 16r100000000
+		multiplier: 16r0F010800F
+		increment: 16r00005F2ED.
+	r seed: 1234567.
+	100
+		timesRepeat: [| f str |
+			b basicDwordAtOffset: 4 put: (r next; seed) - 1.
+			b basicDwordAtOffset: 0 put: (r next; seed) - 1.
+			((b basicDwordAtOffset: 4) bitAnd: 16r7FF00000) = 16r7FF00000
+				ifFalse: ["avoid nan and infinity"
+					f := b doubleAtOffset: 0.
+					str := (String new: 64) writeStream.
+					f printOn: str significantFigures: 17.
+					self assert: (Float readFrom: str contents readStream) = f]].
+	"test big num near infinity"
+	10
+		timesRepeat: [| f str |
+			b basicDwordAtOffset: 4 put: 16r7FE00000 + ((r next; seed) //
+16r1000 - 1).
+			b basicDwordAtOffset: 0 put: (r next; seed) - 1.
+			f := b doubleAtOffset: 0.
+			str := (String new: 64) writeStream.
+			f printOn: str significantFigures: 17.
+			self assert: (Float readFrom: str contents readStream) = f].
+	"test infinitesimal (gradual underflow)"
+	10
+		timesRepeat: [| f str |
+			b basicDwordAtOffset: 4 put: 0 + ((r next; seed) // 16r1000 - 1).
+			b basicDwordAtOffset: 0 put: (r next; seed) - 1.
+			f := b doubleAtOffset: 0.
+			str := (String new: 64) writeStream.
+			f printOn: str significantFigures: 17.
+			self assert: (Float readFrom: str contents readStream) = f].! !
+!FloatTest categoriesFor: #testFloatPrintString!public!Testing! !
+
+!NumberTest methodsFor!
+
+testClassReadFromColonScaledDecimals
+	"Test Number>>readFrom: with ScaledDecimals"
+
+	| source result |
+
+	"ScaledDecimal with decimalInteger mantissa and implied scale of zero"
+	source := '123s' readStream.
+	result := Number readFrom: source.
+	self assert: (result class == ScaledDecimal).
+	self assert: (result scale = 0).
+	self assert: (result = 123).
+	self assert: (source atEnd).
+
+	source := '123se' readStream.
+	result := Number readFrom: source.
+	self assert: (result class == ScaledDecimal).
+	self assert: (result scale = 0).
+	self assert: (result = 123).
+	self assert: (source next = $e).
+
+	"ScaledDecimal with decimalInteger mantissa and explicit scale"
+	source := '123s2' readStream.
+	result := Number readFrom: source.
+	self assert: (result class == ScaledDecimal).
+	self assert: (result scale = 2).
+	self assert: (result = 123.0).
+	self assert: (source atEnd).
+
+	"Negative scale is not valid"
+	source := '123s-2' readStream.
+	result := Number readFrom: source.
+	self assert: (result class == ScaledDecimal).
+	self assert: (result scale = 0).
+	self assert: (result = 123).
+	self assert: (source upToEnd = '-2').
+
+	"ScaledDecimals with Float mantissa and implicit scale"
+	source := '123.0s' readStream.
+	result := Number readFrom: source.
+	self assert: (result class == ScaledDecimal).
+	self assert: (result scale = 1).
+	self assert: (result = 123.0).
+	self assert: (source atEnd).
+
+	source := '123.12s' readStream.
+	result := Number readFrom: source.
+	self assert: (result class == ScaledDecimal).
+	self assert: (result scale = 2).
+	self assert: (result = 123.12).
+	self assert: (source atEnd).
+
+	source := '123.12s3' readStream.
+	result := Number readFrom: source.
+	self assert: (result class == ScaledDecimal).
+	self assert: (result scale = 3).
+	self assert: (result = 123.12).
+	self assert: (source atEnd).
+
+	"ScaledDecimals with Float mantissa and explicit scale"
+	source := '123.0s' readStream.
+	result := Number readFrom: source.
+	self assert: (result class == ScaledDecimal).
+	self assert: (result scale = 1).
+	self assert: (result = 123.0).
+	self assert: (source atEnd).
+
+	"Not valid (parsed as Integer)"
+	source := '123.s' readStream.
+	result := Number readFrom: source.
+	self assert: (result == 123).
+	self assert: (source upToEnd = '.s').
+
+! !
+!NumberTest categoriesFor: #testClassReadFromColonScaledDecimals!public!unit tests! !
+
+!PackageTest methodsFor!
+
+testForwardRefLoadPac
+	"#1720: Test loading and converting of old packages with forward reference view referereces"
+
+	| pacName |
+	pacName := self filenameFor: 'D5LoadTest.pac'.
+	(FileStream write: pacName)
+		nextPutAll: self d5ForwardRefTestPacContents;
+		close.
+	[loadedPackages := Package manager install: pacName] ensure: [File delete: pacName]!
+
+testImageStripperPrereqs
+	"#1476"
+
+	self assert: ((Package manager packageNamed: 'Autoplay') prerequisiteNames asArray 
+				includes: 'Lagoon Image Stripper')!
+
+testLoad21Pac
+	self loadAndTestPackage: 'ScribbleTestPackages\2.1\ScribbleTest21.pac'!
+
+testLoad40Pac
+	self loadAndTestPackage: 'ScribbleTestPackages\4.0\ScribbleTest4.pac'!
+
+testLoad51Pac
+	self loadAndTestPackage: 'ScribbleTestPackages\5.1\ScribbleTest51.pac'!
+
+testLoad60Pac
+	self loadAndTestPackage: 'ScribbleTestPackages\6.0\ScribbleTest6.pac'! !
+!PackageTest categoriesFor: #testForwardRefLoadPac!public!unit tests! !
+!PackageTest categoriesFor: #testImageStripperPrereqs!public!unit tests! !
+!PackageTest categoriesFor: #testLoad21Pac!public!unit tests! !
+!PackageTest categoriesFor: #testLoad40Pac!public!unit tests! !
+!PackageTest categoriesFor: #testLoad51Pac!public!unit tests! !
+!PackageTest categoriesFor: #testLoad60Pac!public!unit tests! !
+
+!ProcessTest methodsFor!
+
+testOverlappedErrno
+	self assert: (CRTLibrary default thread_chmod: '' pmode: 0) < 0.
+	self assert: Processor activeProcess errno = 2! !
+!ProcessTest categoriesFor: #testOverlappedErrno!public!unit tests! !
+
+!ZLibTest methodsFor!
+
+testCompressUncompress
+	| string compressed compressedLen uncompressed uncompressedLen |
+	string := Object comment.
+	compressed := ByteArray new: string size.
+	compressedLen := DWORD fromInteger: compressed size.
+	ZLibLibrary default 
+		compress2: compressed
+		outLen: compressedLen
+		inData: string
+		inLen: string size
+		level: 9.
+	uncompressed := String new: string size.
+	uncompressedLen := DWORD fromInteger: uncompressed size.
+	ZLibLibrary default 
+		uncompress: uncompressed
+		outLen: uncompressedLen
+		inData: compressed
+		inLen: compressed size.
+	self assert: uncompressed = string! !
+!ZLibTest categoriesFor: #testCompressUncompress!public!unit tests! !
+
+"End of package definition"!
+

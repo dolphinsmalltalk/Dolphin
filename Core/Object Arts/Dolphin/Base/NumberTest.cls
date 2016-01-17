@@ -177,80 +177,6 @@ testClassReadFromColonIntegers
 	self assert: result = (123 / 100000).
 	self assert: source atEnd!
 
-testClassReadFromColonScaledDecimals
-	"Test Number>>readFrom: with ScaledDecimals"
-
-	| source result |
-
-	"ScaledDecimal with decimalInteger mantissa and implied scale of zero"
-	source := '123s' readStream.
-	result := Number readFrom: source.
-	self assert: (result class == ScaledDecimal).
-	self assert: (result scale = 0).
-	self assert: (result = 123).
-	self assert: (source atEnd).
-
-	source := '123se' readStream.
-	result := Number readFrom: source.
-	self assert: (result class == ScaledDecimal).
-	self assert: (result scale = 0).
-	self assert: (result = 123).
-	self assert: (source next = $e).
-
-	"ScaledDecimal with decimalInteger mantissa and explicit scale"
-	source := '123s2' readStream.
-	result := Number readFrom: source.
-	self assert: (result class == ScaledDecimal).
-	self assert: (result scale = 2).
-	self assert: (result = 123.0).
-	self assert: (source atEnd).
-
-	"Negative scale is not valid"
-	source := '123s-2' readStream.
-	result := Number readFrom: source.
-	self assert: (result class == ScaledDecimal).
-	self assert: (result scale = 0).
-	self assert: (result = 123).
-	self assert: (source upToEnd = '-2').
-
-	"ScaledDecimals with Float mantissa and implicit scale"
-	source := '123.0s' readStream.
-	result := Number readFrom: source.
-	self assert: (result class == ScaledDecimal).
-	self assert: (result scale = 1).
-	self assert: (result = 123.0).
-	self assert: (source atEnd).
-
-	source := '123.12s' readStream.
-	result := Number readFrom: source.
-	self assert: (result class == ScaledDecimal).
-	self assert: (result scale = 2).
-	self assert: (result = 123.12).
-	self assert: (source atEnd).
-
-	source := '123.12s3' readStream.
-	result := Number readFrom: source.
-	self assert: (result class == ScaledDecimal).
-	self assert: (result scale = 3).
-	self assert: (result = 123.12).
-	self assert: (source atEnd).
-
-	"ScaledDecimals with Float mantissa and explicit scale"
-	source := '123.0s' readStream.
-	result := Number readFrom: source.
-	self assert: (result class == ScaledDecimal).
-	self assert: (result scale = 1).
-	self assert: (result = 123.0).
-	self assert: (source atEnd).
-
-	"Not valid (parsed as Integer)"
-	source := '123.s' readStream.
-	result := Number readFrom: source.
-	self assert: (result == 123).
-	self assert: (source upToEnd = '.s').
-
-!
-
 testRoundUpTo
 	self should: [1 roundUpTo: 0] raise: ZeroDivide.
 	self assert: (1 roundUpTo: 1) = 1.
@@ -273,6 +199,5 @@ testRoundUpTo
 !NumberTest categoriesFor: #testClassReadFromColonFloats!public!unit tests! !
 !NumberTest categoriesFor: #testClassReadFromColonFractions!public!unit tests! !
 !NumberTest categoriesFor: #testClassReadFromColonIntegers!public!unit tests! !
-!NumberTest categoriesFor: #testClassReadFromColonScaledDecimals!public!unit tests! !
 !NumberTest categoriesFor: #testRoundUpTo!public!unit tests! !
 

@@ -1,0 +1,69 @@
+| package |
+package := Package name: 'Excluded Tests'.
+package paxVersion: 1;
+	basicComment: 'Tests in this package are excluded from running in the general case. This may be because they crash the image or because they leave it in an inconsistent state (maybe they add methods or other packages that need removing). 
+
+You should NOT LOAD this package unless you are trying to resurrect these tests and are intending to fix the issues.
+'.
+
+
+package classNames
+	add: #ClassBuilderTests;
+	add: #PackageTest;
+	yourself.
+
+package methodNames
+	add: #IntegerTest -> #testIndexedAccess;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\IDE\Base\Development System';
+	add: '..\Base\Dolphin';
+	add: '..\Base\Dolphin Base Tests';
+	add: '..\..\Samples\MVP\Scribble\Scribble';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+DolphinTest subclass: #ClassBuilderTests
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DolphinTest subclass: #PackageTest
+	instanceVariableNames: 'loadedPackages'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+!IntegerTest methodsFor!
+
+testIndexedAccess
+	"WARNING THIS TEST HANGS THE IMAGE when run for SmallInteger"
+
+	| int |
+	int := self canonicalInstance.
+	self should: [int at: 1 put: 0] raise: Error.
+	SessionManager current productVersion >= 6.0 
+		ifTrue: 
+			["These bugs only corrected in D6 and later"
+			self should: [int size] raise: Error.
+			self should: [int at: 1] raise: Error].
+! !
+!IntegerTest categoriesFor: #testIndexedAccess!public!unit tests! !
+
+"End of package definition"!
+

@@ -16,7 +16,6 @@ package classNames
 	add: #ByteArrayTest;
 	add: #CaseInsensitiveSearchPolicyTest;
 	add: #ClassBuilderTestClasses;
-	add: #ClassBuilderTests;
 	add: #CollectionCombinator;
 	add: #DateTest;
 	add: #DefaultSortAlgorithmTest;
@@ -64,7 +63,6 @@ package classNames
 	add: #NumberTest;
 	add: #ObjectTest;
 	add: #OrderedCollectionTest;
-	add: #PackageTest;
 	add: #PluggableEnvironmentTest;
 	add: #Point3DTest;
 	add: #PointTest;
@@ -132,11 +130,9 @@ package setPrerequisites: (IdentitySet new
 	add: '..\DolphinSure\DolphinSure';
 	add: '..\ActiveX\COM\OLE COM';
 	add: '..\..\..\Contributions\Refactory\Refactoring Browser\Tests\RBTests';
-	add: '..\..\Samples\MVP\Scribble\Scribble';
 	add: '..\System\Compiler\Smalltalk Parser';
 	add: '..\..\..\Contributions\Camp Smalltalk\SUnit\SUnit';
 	add: '..\ActiveX\Shell\Windows Shell';
-	add: '..\..\..\Contributions\ITC Gorisek\ZLib Interface';
 	yourself).
 
 package!
@@ -169,11 +165,6 @@ DolphinTest subclass: #BlockClosureTest
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 DolphinTest subclass: #BooleanTest
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-DolphinTest subclass: #ClassBuilderTests
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
@@ -285,11 +276,6 @@ DolphinTest subclass: #NumberTest
 	classInstanceVariableNames: ''!
 DolphinTest subclass: #ObjectTest
 	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-DolphinTest subclass: #PackageTest
-	instanceVariableNames: 'loadedPackages'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!

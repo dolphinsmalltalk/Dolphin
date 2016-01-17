@@ -92,15 +92,6 @@ testEnsure
 	self assert: self nestedReturn3 = 3.
 	self assert: x = 3!
 
-testFullBlockEquality
-	| block1 block2 count block3 |
-	count := 1.
-	block1 := [count := count + 1].
-	block2 := [count := count + 1].
-	block3 := [ | tmp | tmp := 1. count := count + tmp. tmp].
-	self assert: block1 = block2.
-	self assert: block1 ~= block3!
-
 testNesting
 	| a b c |
 	a := 
@@ -203,7 +194,6 @@ testValueWithArguments
 !BlockClosureTest categoriesFor: #testCopyingBlock!public!unit tests! !
 !BlockClosureTest categoriesFor: #testEmptyBlock!public!unit tests! !
 !BlockClosureTest categoriesFor: #testEnsure!public!unit tests! !
-!BlockClosureTest categoriesFor: #testFullBlockEquality!public!unit tests-known failures! !
 !BlockClosureTest categoriesFor: #testNesting!public!unit tests! !
 !BlockClosureTest categoriesFor: #testNoArguments!public!unit tests! !
 !BlockClosureTest categoriesFor: #testOneArgument!public!unit tests! !

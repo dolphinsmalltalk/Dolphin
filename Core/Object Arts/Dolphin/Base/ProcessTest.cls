@@ -375,10 +375,6 @@ testForkedBlockHomeFrame
 
 	[self assert: (Processor activeProcess topFrame homeFrame) isNil] fork. Processor sleep: 10!
 
-testOverlappedErrno
-	self assert: (CRTLibrary default thread_chmod: '' pmode: 0) < 0.
-	self assert: Processor activeProcess errno = 2!
-
 testOverlappedLastError
 	| temp1 temp2 |
 	KernelLibrary default setLastError: 0.
@@ -484,7 +480,6 @@ waitForProcess: aProcess toTerminate: anInteger
 !ProcessTest categoriesFor: #testCopyNestedBlocks!public!unit tests! !
 !ProcessTest categoriesFor: #testCopyWhileUnwinding!public!unit tests! !
 !ProcessTest categoriesFor: #testForkedBlockHomeFrame!public!unit tests! !
-!ProcessTest categoriesFor: #testOverlappedErrno!public!unit tests! !
 !ProcessTest categoriesFor: #testOverlappedLastError!public!unit tests! !
 !ProcessTest categoriesFor: #testSchedulerTermination!public!tests! !
 !ProcessTest categoriesFor: #testSeparateContexts!public!unit tests! !

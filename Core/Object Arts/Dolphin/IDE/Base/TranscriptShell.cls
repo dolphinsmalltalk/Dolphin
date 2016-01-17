@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Shell subclass: #TranscriptShell
 	instanceVariableNames: 'outputWindow buffer bufferProtect'
@@ -430,7 +430,7 @@ initialize
 		self initialize
 	"
 
-	FlashOnOutput := true.		"By default, flash when output occurs to a Transcript which is not the active window"
+	FlashOnOutput := false.		"By default, don't flash when output occurs to a Transcript which is not the active window"
 	Transcript := DeafObject current!
 
 onStartup
