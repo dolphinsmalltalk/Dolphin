@@ -23,6 +23,24 @@ initializeFromStream: aStream
 	].
 !
 
+initializeOptionAllowingArgumentNamed: aString
+
+	name :=aString.
+	isArgumentAllowed := true.
+	isArgumentRequired := false.!
+
+initializeOptionNamed: aString
+
+	name :=aString.
+	isArgumentAllowed := false.
+	isArgumentRequired := false.!
+
+initializeOptionRequiringArgumentNamed: aString
+
+	name :=aString.
+	isArgumentAllowed := true.
+	isArgumentRequired := true.!
+
 isArgumentAllowed
 	^isArgumentAllowed!
 
@@ -47,6 +65,9 @@ value
 value: anObject
 	value := anObject! !
 !CommandLineOption categoriesFor: #initializeFromStream:!private! !
+!CommandLineOption categoriesFor: #initializeOptionAllowingArgumentNamed:!private! !
+!CommandLineOption categoriesFor: #initializeOptionNamed:!private! !
+!CommandLineOption categoriesFor: #initializeOptionRequiringArgumentNamed:!private! !
 !CommandLineOption categoriesFor: #isArgumentAllowed!accessing!public! !
 !CommandLineOption categoriesFor: #isArgumentAllowed:!accessing!public! !
 !CommandLineOption categoriesFor: #isArgumentRequired!accessing!public! !
@@ -58,10 +79,31 @@ value: anObject
 
 !CommandLineOption class methodsFor!
 
+allowingArgumentNamed: aString
+
+	^self new
+		initializeOptionAllowingArgumentNamed: aString;
+		yourself!
+
 fromStream: aStream
 
 	^self new
 		initializeFromStream: aStream;
+		yourself!
+
+named: aString
+
+	^self new
+		initializeOptionNamed: aString;
+		yourself!
+
+requiringArgumentNamed: aString
+
+	^self new
+		initializeOptionRequiringArgumentNamed: aString;
 		yourself! !
+!CommandLineOption class categoriesFor: #allowingArgumentNamed:!public! !
 !CommandLineOption class categoriesFor: #fromStream:!public! !
+!CommandLineOption class categoriesFor: #named:!public! !
+!CommandLineOption class categoriesFor: #requiringArgumentNamed:!public! !
 

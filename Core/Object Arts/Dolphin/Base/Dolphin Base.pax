@@ -26,7 +26,7 @@ package!
 "Class Definitions"!
 
 Object subclass: #CommandLine
-	instanceVariableNames: 'arguments argv optArg optIndex optOpt optionPrefixChars options parsingArg parsingArgStream parsingOptionStream parsingRules'
+	instanceVariableNames: 'arguments argv optArg optIndex optOpt optionPrefixChars options rules parsingArg parsingArgStream parsingOptionStream parsingRules'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!

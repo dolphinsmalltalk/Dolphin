@@ -1,7 +1,7 @@
 "Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #CommandLine
-	instanceVariableNames: 'arguments argv optArg optIndex optOpt optionPrefixChars options parsingArg parsingArgStream parsingOptionStream parsingRules'
+	instanceVariableNames: 'arguments argv optArg optIndex optOpt optionPrefixChars options rules parsingArg parsingArgStream parsingOptionStream parsingRules'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -25,8 +25,17 @@ arguments := commandLine arguments. "#(''bar'')"'!
 !CommandLine categoriesForClass!Kernel-Objects! !
 !CommandLine methodsFor!
 
+addRulesFrom: aString
+
+	| optionsStream |
+	optionsStream := ReadStream on: aString.
+	[optionsStream atEnd] whileFalse: [
+		parsingRules add: (CommandLineOption fromStream: optionsStream).
+	].!
+
 arguments
 
+	arguments ifNil: [self parse].
 	^arguments!
 
 getOpt: aString
@@ -34,6 +43,7 @@ getOpt: aString
 
 	| option |
 	self options: aString.
+	options ifNil: [self parse].
 	options size < optIndex ifTrue: [^nil].
 	(option := options at: optIndex) ifNil: [
 		optIndex := optIndex + 1.
@@ -55,7 +65,8 @@ initialize: anArray
 	argv := anArray.
 	self assert: [2 <= argv size].
 	optIndex := 1.
-	optionPrefixChars := '-/'.!
+	optionPrefixChars := '-/'.
+	parsingRules := OrderedCollection new.!
 
 optArg
 
@@ -68,6 +79,7 @@ options
 		otherwise value of optional or required argument"
 
 	| dict |
+	options ifNil: [self parse].
 	dict := Dictionary new.
 	options do: [:each | 
 		each key ~~ $? ifTrue: [
@@ -79,8 +91,8 @@ options
 options: aString
 	"http://www.gnu.org/software/libc/manual/html_node/Using-Getopt.html"
 
-	parsingRules := self rulesFrom: aString.
-	self parse.!
+	self addRulesFrom: aString.
+!
 
 optOpt
 
@@ -146,19 +158,8 @@ parseNextOption
 		optionArg := char. 
 		char := $?.
 	].
-	options add: char -> optionArg.	"save option and argument"!
-
-rulesFrom: aString
-	"Answer an array "
-
-	| optionsStream rules |
-	optionsStream := ReadStream on: aString.
-	rules := OrderedCollection new.
-	[optionsStream atEnd] whileFalse: [
-		rules add: (CommandLineOption fromStream: optionsStream).
-	].
-	^rules
-! !
+	options add: char -> optionArg.	"save option and argument"! !
+!CommandLine categoriesFor: #addRulesFrom:!private! !
 !CommandLine categoriesFor: #arguments!accessing!public! !
 !CommandLine categoriesFor: #getOpt:!getopt protocol!public! !
 !CommandLine categoriesFor: #initialize:!private! !
@@ -169,7 +170,6 @@ rulesFrom: aString
 !CommandLine categoriesFor: #parse!private! !
 !CommandLine categoriesFor: #parseNextArg!private! !
 !CommandLine categoriesFor: #parseNextOption!private! !
-!CommandLine categoriesFor: #rulesFrom:!private! !
 
 !CommandLine class methodsFor!
 
