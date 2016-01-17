@@ -6,7 +6,6 @@ package paxVersion: 1;
 
 package classNames
 	add: #CommandLine;
-	add: #CommandLineTest;
 	yourself.
 
 package binaryGlobalNames: (Set new
@@ -17,7 +16,6 @@ package globalAliases: (Set new
 
 package setPrerequisites: (IdentitySet new
 	add: 'Dolphin';
-	add: '..\..\..\Contributions\Camp Smalltalk\SUnit\SUnit';
 	yourself).
 
 package!
@@ -26,11 +24,6 @@ package!
 
 Object subclass: #CommandLine
 	instanceVariableNames: 'arguments argv optArg optIndex optOpt optionPrefixChars options parsingArg parsingArgStream parsingOptionStream parsingRules'
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-TestCase subclass: #CommandLineTest
-	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!

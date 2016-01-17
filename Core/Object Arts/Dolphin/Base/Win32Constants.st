@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Smalltalk at: #Win32Constants put: (PoolConstantsDictionary named: #Win32Constants)!
 Win32Constants at: 'ABOVE_NORMAL_PRIORITY_CLASS' put: 16r8000!
@@ -57,6 +57,7 @@ Win32Constants at: 'CBM_INIT' put: 16r4!
 Win32Constants at: 'CF_BITMAP' put: 16r2!
 Win32Constants at: 'CF_DIB' put: 16r8!
 Win32Constants at: 'CF_ENHMETAFILE' put: 16rE!
+Win32Constants at: 'CF_HDROP' put: 16rF!
 Win32Constants at: 'CF_PALETTE' put: 16r9!
 Win32Constants at: 'CF_TEXT' put: 16r1!
 Win32Constants at: 'CF_UNICODETEXT' put: 16rD!

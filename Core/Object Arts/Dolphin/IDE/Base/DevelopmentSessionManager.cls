@@ -78,11 +78,25 @@ closeAllHelp
 
 	HTMLHelpLibrary htmlHelpCloseAll!
 
+commandLineParser
+	"
+	-d path - Rebase Dolphin core packages to supplied path
+	-f fileInFile - file in an ST chunk file
+	-h - headless (embedded) mode
+	-i imageFile - initialize a new image
+	-q - quiet startup (no splash)
+	-x - immediately exit
+	"
+
+	^(CommandLine argv: self argvLegacyOptionsRemoved)
+		options: 'd:f:hi:qx';
+		yourself!
+
 dolphinNewsgroupUrl
 	^'http://groups.google.com/group/comp.lang.smalltalk.dolphin'!
 
 dolphinWikiUrl
-	^'http://www.object-arts.com/wiki'!
+	^'https://github.com/dolphinsmalltalk/Dolphin/wiki'!
 
 free
 	"Free any artifacts of the current session.
@@ -105,12 +119,6 @@ getInstallationDirectory
 
 			folder := File splitPathFrom: VMLibrary default fileName].
 	^File appendPathDelimiter: folder!
-
-handleOpenArguments
-	"Private - Handle any -open command line arguments"
-
-	(self cmdLineFlags select: [:each | each beginsWith: 'open']) do: [:each |
-		self open: (each rightString: each size-'open' size) ]!
 
 helpContentsTopic
 	^'Welcome_to_Dolphin'!
@@ -193,7 +201,7 @@ isDLL
 isEmbedded
 	"Answer whether the session is running, or should be started, in 'embedded' 
 	mode (i.e. headless). In the case of a development session we only want to
-	do this if the /Embedding flag was specifically used, since in other cases we
+	do this if the headless flag was specifically used, since in other cases we
 	want to display the UI regardless in order that the development tools are
 	available for debugging, etc."
 
@@ -211,7 +219,7 @@ keepAlive
 	saved down. Even this may not work if insufficient Session startup was achieved
 	before the error occurred."
 
-	self isEmbedded ifTrue: [super keepAlive] ifFalse: [self mainShellClass onNoVisibleWindows]!
+	self isEmbedded ifFalse: [self mainShellClass onNoVisibleWindows]!
 
 lastSerialNumberRegistryKeyFor: aDolphinProduct
 	"Private - Answers the <readableString> registry key of this serial number for this product"
@@ -255,9 +263,7 @@ logError: anException
 						]]!
 
 main
-	"Handle any open requests from the command line."
-
-	self handleOpenArguments!
+!
 
 mainShellClass
 	"Answer the class of the application's main window (a <Shell> presenter)."
@@ -332,15 +338,18 @@ open: filename
 	self perform: openMsg with: filename 
 !
 
-openPackage: filename
+openPackage: filename 
 	"Private - Opens a file identified by the <readableString> filename as a package file"
 
 	| package name devsys |
 	devsys := Smalltalk developmentSystem.
 	name := File splitStemFrom: filename.
 	package := devsys packageManager packageNamed: name
-				ifNone: [devsys packageManager install: filename].
-	package browse!
+				ifNone: 
+					[| loaded |
+					loaded := devsys packageManager install: filename.
+					loaded notEmpty ifTrue: [package := loaded last]].
+	package notNil ifTrue: [package browse]!
 
 openSources
 	"Private - Open the source files with names derived from the current image path."
@@ -396,6 +405,34 @@ primaryStartup
 	self basicPrimaryStartup.
 	"We must initialize the source manager fairly early on so that we can use the change log."
 	self openSources!
+
+processCommandLine
+	"Private - 
+	-d path - Rebase Dolphin core packages to supplied path
+	-f fileInFile - file in an ST chunk file
+	-i imageFile - initialize a new image
+	-x - immediately exit
+	"
+
+	| commandLine options arguments |
+	commandLine := self commandLineParser.
+	options := commandLine options.
+	arguments := commandLine arguments.
+	"File in a given file"
+	options at: $f ifPresent: [:fileInFile | SourceManager default fileIn: fileInFile].
+	"Clone a new image to the given path"
+	options at: $i
+		ifPresent: [:newImageFile | newImageFile notNil ifTrue: [self saveImage: newImageFile]].
+	"Rebase the Dolphin boot packages to live in a (presumably shared) location relative to the installation directory"
+	options at: $d
+		ifPresent: 
+			[:rebasePath | 
+			Package manager rebaseBasePackagesTo: (rebasePath ifNil: ['.']).
+			self saveImage].
+	"Open a source file (CLS, ST, PAX, PAC, SML) in the appropriate tool"
+	arguments do: [:openFile | openFile notNil ifTrue: [self open: openFile]].
+	"Immediately exit the image following startup activities"
+	options at: $x ifPresent: [:val | self quit]!
 
 productDetails
 	"Private - Answers an eight element <Array> describing this version of the development environment
@@ -619,8 +656,8 @@ tertiaryStartup
 
 	"Flush any output accumulated in the transcript buffer during startup."
 	TranscriptShell current flush.
-
-	self mainShellClass onStartup.!
+	self mainShellClass onStartup.
+	self processCommandLine!
 
 trace: aString
 	"Append aString to the trace stream."
@@ -683,11 +720,11 @@ versionString
 !DevelopmentSessionManager categoriesFor: #bootInfo:!patching!public! !
 !DevelopmentSessionManager categoriesFor: #canPlaySounds!accessing!public! !
 !DevelopmentSessionManager categoriesFor: #closeAllHelp!operations!public! !
+!DevelopmentSessionManager categoriesFor: #commandLineParser!helpers!private! !
 !DevelopmentSessionManager categoriesFor: #dolphinNewsgroupUrl!public! !
 !DevelopmentSessionManager categoriesFor: #dolphinWikiUrl!public! !
 !DevelopmentSessionManager categoriesFor: #free!public!realizing/unrealizing! !
 !DevelopmentSessionManager categoriesFor: #getInstallationDirectory!helpers!private! !
-!DevelopmentSessionManager categoriesFor: #handleOpenArguments!operations-startup!private! !
 !DevelopmentSessionManager categoriesFor: #helpContentsTopic!constants!public! !
 !DevelopmentSessionManager categoriesFor: #helpFirstSplashTopic!constants!public! !
 !DevelopmentSessionManager categoriesFor: #helpGuidedTourTopic!public! !
@@ -728,6 +765,7 @@ versionString
 !DevelopmentSessionManager categoriesFor: #popupHelpFile!constants!public! !
 !DevelopmentSessionManager categoriesFor: #preStart!operations-startup!private! !
 !DevelopmentSessionManager categoriesFor: #primaryStartup!operations-startup!private! !
+!DevelopmentSessionManager categoriesFor: #processCommandLine!helpers!private! !
 !DevelopmentSessionManager categoriesFor: #productDetails!accessing!private!product! !
 !DevelopmentSessionManager categoriesFor: #productDetails:!accessing!private!product! !
 !DevelopmentSessionManager categoriesFor: #productMajorVersion!accessing!product!public! !

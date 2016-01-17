@@ -1,7 +1,7 @@
 "Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #PackageManager
-	instanceVariableNames: 'packages processEvents packagedGlobals looseMethods events defaultPackage'
+	instanceVariableNames: 'packages processEvents packagedGlobals looseMethods events defaultPackage basePackages'
 	classVariableNames: 'Current DuplicatePackageSignal PackageNotFoundSignal PrerequisiteNotFoundSignal SystemPackage'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -239,6 +239,10 @@ allSourceObjects
 	self packages 
 		do: [:eachPackage | eachPackage allSourceObjectsDo: [:each | answer addLast: each]].
 	^answer!
+
+basePackages
+	^basePackages ifNil: [basePackages := IdentitySet new].
+!
 
 basicAddPackage: aPackage
 	self packages at: aPackage name put: aPackage!
@@ -674,6 +678,12 @@ looseResourceIdentifiers
 	self packages do: [:p | answer addAll: p resourceIdentifiers].
 	^answer!
 
+markAllPackagesAsBase
+	"Marks all the currently loaded packages as part of the base system. This should normally
+	only be called at the end of the image boot."
+
+	self basePackages addAll: self packages!
+
 memberOf: aPackage updatedAt: aNiladicValuable 
 	"Private - Inform the <Package> argument that it has been changed and needs to reset its
 	prerequisites, but not that its membership has changed. The <niladicValuable> argunment is
@@ -1053,6 +1063,17 @@ packages
 prerequisiteNotFoundSignal
 	^PrerequisiteNotFoundSignal!
 
+rebaseBasePackagesTo: basePathname
+	"Rebase the base image packages so they are relative to basePathname. This may be used
+	when an image has been saved to a new directory and one wishes to continue to reference the
+	old core packages (usually held under the installatin directory). Note that basePathname
+	(if not an absolute path) is treated as being relative to the installation directory NOT the
+	image directory or working directory). Hence, a typical rebase can be performed using '.' as
+	basePathname"
+
+	self basePackages do: [:each | each  rebaseTo: basePathname ].
+	self resetPrerequisites!
+
 release
 	"Private - Remove any event registrations the receiver has made 
 	(this is not strictly necessary as the registrations are weak, but it hastens 
@@ -1202,6 +1223,7 @@ Would you like to re-enable change monitoring (recommended)?')
 !PackageManager categoriesFor: #allPackagedClasses!accessing!private! !
 !PackageManager categoriesFor: #allPackagedGlobalNames!accessing!private! !
 !PackageManager categoriesFor: #allSourceObjects!public!source filing! !
+!PackageManager categoriesFor: #basePackages!accessing!public! !
 !PackageManager categoriesFor: #basicAddPackage:!adding!private! !
 !PackageManager categoriesFor: #basicInstall:!operations!private! !
 !PackageManager categoriesFor: #basicRemovePackage:!private!removing! !
@@ -1245,6 +1267,7 @@ Would you like to re-enable change monitoring (recommended)?')
 !PackageManager categoriesFor: #looseMethods!accessing!public! !
 !PackageManager categoriesFor: #looseMethodUpdated:!helpers!private! !
 !PackageManager categoriesFor: #looseResourceIdentifiers!accessing!private! !
+!PackageManager categoriesFor: #markAllPackagesAsBase!operations!public! !
 !PackageManager categoriesFor: #memberOf:updatedAt:!events!private! !
 !PackageManager categoriesFor: #membershipChanged:!events!private! !
 !PackageManager categoriesFor: #membershipChanged:at:!events!private! !
@@ -1280,6 +1303,7 @@ Would you like to re-enable change monitoring (recommended)?')
 !PackageManager categoriesFor: #packageOfResourceIdentifierOrItsClass:!public!searching! !
 !PackageManager categoriesFor: #packages!accessing!public! !
 !PackageManager categoriesFor: #prerequisiteNotFoundSignal!constants!public! !
+!PackageManager categoriesFor: #rebaseBasePackagesTo:!public!removing! !
 !PackageManager categoriesFor: #release!initializing!private! !
 !PackageManager categoriesFor: #removePackage:!public!removing! !
 !PackageManager categoriesFor: #renamePackage:to:!public!removing! !
@@ -1377,7 +1401,7 @@ systemPackageName
 	"Private - Answer the String name of the Package which owns all
 	the system objects."
 
-	^'Object Arts\Dolphin\Base\Dolphin'!
+	^'Core\Object Arts\Dolphin\Base\Dolphin'!
 
 uninitialize
 	"Private - Uninitialize the receiver as it is about to be removed from the system."

@@ -89,6 +89,15 @@ argv
 						collect: [:offset | String fromAddress: (pArray dwordAtOffset: offset)]].
 	^argv!
 
+argvLegacyOptionsRemoved
+	"Private - Answer the argv arguments vertor with the old style legacy options removed"
+
+	^self argv reject: 
+			[:each | 
+			| opt |
+			opt := each allButFirst asLowercase.
+			opt = 'nosplash' or: [opt = 'embedding']]!
+
 backupOnImageSave
 	"Answer whether the image should be backed up (i.e. the old .img file is renamed to .bak when the new .img
 	file is successfully written). Note that this will slow down the operation quite a bit, as the OS has to do a lot
@@ -344,10 +353,10 @@ imagePath
 
 	^imagePath!
 
-imagePath: aPathString
+imagePath: aPathString 
 	"Private - used only after loading an image to set up path to the image and sources."
 
-	imagePath := File removeExtension: aPathString!
+	imagePath := File removeExtension: (File fullPathOf: aPathString)!
 
 imageVersion
 	"Answer a String in the form N.N.N.N which specifies the version number of the image."
@@ -443,13 +452,13 @@ isEmbedded
 	^self isDLL or: [self isEmbedding]!
 
 isEmbedding
-	"Answer whether the session was started with the /Embedded flag."
+	"Answer whether the session was started with a headless flag"
 
 	^self cmdLineFlags includes: 'Embedding'!
 
 isHeadless
 	"Private - Answer whether the session is _currently_ headless. This is most likely if the
-	image was started with the /Embedded flag, and no visible windows have subsequently been
+	image was started a headkess-h flag, and no visible windows have subsequently been
 	opened."
 
 	^self inputState hasVisibleWindows not!
@@ -1053,6 +1062,7 @@ windowsDirectory
 !SessionManager categoriesFor: #applicationShortName!constants!public! !
 !SessionManager categoriesFor: #argc!accessing!public! !
 !SessionManager categoriesFor: #argv!accessing!public! !
+!SessionManager categoriesFor: #argvLegacyOptionsRemoved!accessing!private! !
 !SessionManager categoriesFor: #backupOnImageSave!public!testing! !
 !SessionManager categoriesFor: #basicPrimaryStartup!operations-startup!public! !
 !SessionManager categoriesFor: #basicSecondaryStartup!operations-startup!public! !
@@ -1210,10 +1220,11 @@ imageExtension
 initialize
 	"Private - Initialize the class variables of the receiver."
 
-	PreStartFile := 'prestart.st'.
-	Current := BootSessionManager basicNew. "For boot reasons, do not initialize"
-	Current imagePath: '.\Dolphin'
-!
+	Current 
+		ifNil: 
+			[PreStartFile := 'prestart.st'.
+			Current := BootSessionManager basicNew.	"For boot reasons, do not initialize"
+			Current imagePath: '.\Dolphin']!
 
 inputState
 	"Answer the InputState of the current session manager."
