@@ -1430,14 +1430,14 @@ testWriteAccessor
 !CompilerTest categoriesFor: #testSpecialLiteralsAsUnarySelectors!public! !
 !CompilerTest categoriesFor: #testSymbolScanning!public!unit tests! !
 !CompilerTest categoriesFor: #testTempPairing!public!unit tests! !
-!CompilerTest categoriesFor: #testTextMapExhaustive!public! !
+!CompilerTest categoriesFor: #testTextMapExhaustive!public!unit tests-long running! !
 !CompilerTest categoriesFor: #testTimesRepeat!public!unit tests! !
 !CompilerTest categoriesFor: #testTimesRepeatResult!public!unit tests! !
 !CompilerTest categoriesFor: #testToByDo!public!unit tests! !
 !CompilerTest categoriesFor: #testToByDoWithFloatSteps!public!unit tests! !
 !CompilerTest categoriesFor: #testWhileFalse!public!unit tests! !
 !CompilerTest categoriesFor: #testWhileTrue!public!unit tests! !
-!CompilerTest categoriesFor: #testWriteAccessor!public!unit tests! !
+!CompilerTest categoriesFor: #testWriteAccessor!public!unit tests!unit tests-known failures! !
 
 !CompilerTest class methodsFor!
 

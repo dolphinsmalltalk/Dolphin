@@ -15,7 +15,6 @@ package classNames
 	add: #FramingLayoutTest;
 	add: #GridLayoutTest;
 	add: #IconTest;
-	add: #KeyboardTest;
 	add: #LayoutManagerTest;
 	add: #LinkButtonTest;
 	add: #ListBoxTest;
@@ -128,11 +127,6 @@ DolphinTest subclass: #IconTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-DolphinTest subclass: #KeyboardTest
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
 DolphinTest subclass: #LayoutManagerTest
 	instanceVariableNames: 'shell'

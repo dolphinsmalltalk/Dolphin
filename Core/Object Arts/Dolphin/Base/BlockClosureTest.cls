@@ -203,7 +203,7 @@ testValueWithArguments
 !BlockClosureTest categoriesFor: #testCopyingBlock!public!unit tests! !
 !BlockClosureTest categoriesFor: #testEmptyBlock!public!unit tests! !
 !BlockClosureTest categoriesFor: #testEnsure!public!unit tests! !
-!BlockClosureTest categoriesFor: #testFullBlockEquality!public! !
+!BlockClosureTest categoriesFor: #testFullBlockEquality!public!unit tests-known failures! !
 !BlockClosureTest categoriesFor: #testNesting!public!unit tests! !
 !BlockClosureTest categoriesFor: #testNoArguments!public!unit tests! !
 !BlockClosureTest categoriesFor: #testOneArgument!public!unit tests! !

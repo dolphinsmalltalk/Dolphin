@@ -14,7 +14,7 @@ layoutManagerClass
 	^self subclassResponsibility!
 
 setUp
-	shell := View desktop addSubView: ShellView new.
+	shell := ShellView show.
 	shell
 		caption: self class name asPhrase;
 		backcolor: Color face3d;

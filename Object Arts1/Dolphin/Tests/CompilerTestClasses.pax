@@ -1,0 +1,37 @@
+| package |
+package := Package name: 'CompilerTestClasses'.
+package paxVersion: 1;
+	basicComment: ''.
+
+
+package classNames
+	add: #CompilerTestClass;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\..\..\Core\Object Arts\Dolphin\Base\Dolphin';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+Object subclass: #CompilerTestClass
+	instanceVariableNames: 'iv1 iv2 iv3 iv4 iv5 iv6 iv7 iv8 iv9 iv10 iv11 iv12 iv13 iv14 iv15 iv16 iv17 iv18 iv19 iv20 iv21 iv22 iv23 iv24 iv25 iv26 iv27 iv28 iv29 iv30 iv31 iv32 iv33'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+"End of package definition"!
+

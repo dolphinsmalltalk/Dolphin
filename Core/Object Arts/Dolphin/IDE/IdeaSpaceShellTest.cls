@@ -33,7 +33,7 @@ newViewComposerCard
 
 newWorkspaceCard
 	^(ideaShell newEmbeddedCardOfClass: SmalltalkWorkspaceDocument)
-		filename: (FileLocator imageRelative localFileSpecFor: 'postfix.st');
+		filename: (FileLocator installRelative localFileSpecFor: 'Boot.st');
 		fileLoad;
 		yourself!
 
