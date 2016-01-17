@@ -248,13 +248,6 @@ testRem
 
 	self assert: (7 rem: 2) == 1.
 	self assert: (-7 rem: 2) == -1.
-!
-
-testSubtract
-
-	"Coercion to float"
-	self assert: 5 - 2.6 = 2.4.
-
 ! !
 !SmallIntegerTest categoriesFor: #canonicalInstance!public!unit tests! !
 !SmallIntegerTest categoriesFor: #testAbs!public!unit tests! !
@@ -285,5 +278,4 @@ testSubtract
 !SmallIntegerTest categoriesFor: #testQuo!public!unit tests! !
 !SmallIntegerTest categoriesFor: #testReciprocal!public!unit tests! !
 !SmallIntegerTest categoriesFor: #testRem!public!unit tests! !
-!SmallIntegerTest categoriesFor: #testSubtract!public!unit tests! !
 

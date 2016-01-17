@@ -108,6 +108,13 @@ package classNames
 	add: #ZLibTest;
 	yourself.
 
+package methodNames
+	add: #SmalltalkSystem -> #regressionTestsLogFilename;
+	add: #SmalltalkSystem -> #regressionTestSuite;
+	add: #SmalltalkSystem -> #runRegressionTests;
+	add: #SmalltalkSystem -> #runRegressionTests:logTo:;
+	yourself.
+
 package binaryGlobalNames: (Set new
 	yourself).
 
@@ -649,6 +656,41 @@ DolphinTestClassResource subclass: #MustBeBooleanTestClasses
 
 
 "Loose Methods"!
+
+!SmalltalkSystem methodsFor!
+
+regressionTestsLogFilename
+	^File default: SessionManager current imagePath extension: 'testlog'!
+
+regressionTestSuite
+	| suite |
+	suite := TestSuite new.
+	suite addTests: DolphinTest buildSuite allTests.
+	^suite!
+
+runRegressionTests
+	^self runRegressionTests: self regressionTestSuite logTo: self regressionTestsLogFilename!
+
+runRegressionTests: aTestSuite logTo: aFilenameStringOrNil 
+	| results timeMs logStream |
+	timeMs := Time millisecondsToRun: [results := aTestSuite run].
+	aFilenameStringOrNil notNil 
+		ifTrue: 
+			[logStream := FileStream write: aFilenameStringOrNil.
+			logStream
+				nextPutAll: (results hasPassed ifTrue: ['PASSED'] ifFalse: ['FAILED']);
+				cr;
+				nextPutAll: results printString;
+				nextPutAll: ' in ';
+				display: timeMs // 1000;
+				nextPutAll: 'secs';
+				cr;
+				close].
+	^results! !
+!SmalltalkSystem categoriesFor: #regressionTestsLogFilename!public!tests! !
+!SmalltalkSystem categoriesFor: #regressionTestSuite!private!tests! !
+!SmalltalkSystem categoriesFor: #runRegressionTests!public!tests! !
+!SmalltalkSystem categoriesFor: #runRegressionTests:logTo:!public!tests! !
 
 "End of package definition"!
 

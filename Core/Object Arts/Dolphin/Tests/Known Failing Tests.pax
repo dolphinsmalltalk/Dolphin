@@ -16,6 +16,7 @@ package methodNames
 	add: #PackageTest -> #testLoad51Pac;
 	add: #PackageTest -> #testLoad60Pac;
 	add: #ProcessTest -> #testOverlappedErrno;
+	add: #SmallIntegerTest -> #testSubtract;
 	add: #ZLibTest -> #testCompressUncompress;
 	yourself.
 
@@ -226,6 +227,14 @@ testOverlappedErrno
 	self assert: (CRTLibrary default thread_chmod: '' pmode: 0) < 0.
 	self assert: Processor activeProcess errno = 2! !
 !ProcessTest categoriesFor: #testOverlappedErrno!public!unit tests! !
+
+!SmallIntegerTest methodsFor!
+
+testSubtract
+	"Coercion to float"
+
+	self assert: 5 - 2.6 = 2.4! !
+!SmallIntegerTest categoriesFor: #testSubtract!public!unit tests! !
 
 !ZLibTest methodsFor!
 
