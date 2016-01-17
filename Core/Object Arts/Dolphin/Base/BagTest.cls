@@ -17,6 +17,10 @@ testDeepCopy
 			[| copy any |
 			copy := bag deepCopy.
 			any := copy detect: [:each | true].
-			self assert: (copy includes: any)]! !
+			self assert: (copy includes: any)]!
+
+testFailure
+	self assert: false! !
 !BagTest categoriesFor: #testDeepCopy!public! !
+!BagTest categoriesFor: #testFailure!public! !
 
