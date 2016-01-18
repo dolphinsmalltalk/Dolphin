@@ -43,7 +43,6 @@ package classNames
 	add: #FileTest;
 	add: #FILETIMETest;
 	add: #FLOATArrayTest;
-	add: #FloatTest;
 	add: #FolderTest;
 	add: #GenericExternalArrayTest;
 	add: #GUIDTest;
@@ -250,11 +249,6 @@ DolphinTest subclass: #FILETIMETest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-DolphinTest subclass: #FloatTest
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: 'CRTConstants'
 	classInstanceVariableNames: ''!
 DolphinTest subclass: #FolderTest
 	instanceVariableNames: 'c windows system root oa'
@@ -702,9 +696,11 @@ runRegressionTests: aTestSuite logTo: aFilenameStringOrNil
 						cr;
 						nextPutAll: 'ERRORS:';
 						cr.
-					results errors do: [:each | (logStream
-								nextPutAll: each;
-								printString) cr]].
+					results errors do: 
+							[:each | 
+							logStream
+								nextPutAll: each printString;
+								cr]].
 			logStream close].
 	^results! !
 !SmalltalkSystem categoriesFor: #regressionTestsLogFilename!public!tests! !

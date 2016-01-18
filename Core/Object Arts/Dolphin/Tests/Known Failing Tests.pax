@@ -4,10 +4,13 @@ package paxVersion: 1;
 	basicComment: 'These tests are known failures that have not yet been debugged or resolved. In general these tests should pass and are therefre in need of some debugging effort so that they may be reintroduced into the fold. This package is not loaded during normal regression testing (for obvious reasons).'.
 
 
+package classNames
+	add: #FloatTest;
+	yourself.
+
 package methodNames
 	add: #BlockClosureTest -> #testFullBlockEquality;
 	add: #DictionaryTest -> #testNilKey;
-	add: #FloatTest -> #testFloatPrintString;
 	add: #NumberTest -> #testClassReadFromColonScaledDecimals;
 	add: #PackageTest -> #testForwardRefLoadPac;
 	add: #PackageTest -> #testImageStripperPrereqs;
@@ -37,6 +40,11 @@ package!
 
 "Class Definitions"!
 
+DolphinTest subclass: #FloatTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: 'CRTConstants'
+	classInstanceVariableNames: ''!
 
 "Global Aliases"!
 
@@ -63,50 +71,6 @@ testNilKey
 	self should: [dictionary at: nil put: 1] raise: Error.
 	self should: [dictionary at: nil ifAbsentPut: [1]] raise: Error! !
 !DictionaryTest categoriesFor: #testNilKey!public!unit tests! !
-
-!FloatTest methodsFor!
-
-testFloatPrintString
-	"Debug reading/printing a Floating point number without accumulating
-round off errors"
-
-	| b r |
-	b := ByteArray new: 8.
-	r := RandomLinearCongruential
-		newModulus: 16r100000000
-		multiplier: 16r0F010800F
-		increment: 16r00005F2ED.
-	r seed: 1234567.
-	100
-		timesRepeat: [| f str |
-			b basicDwordAtOffset: 4 put: (r next; seed) - 1.
-			b basicDwordAtOffset: 0 put: (r next; seed) - 1.
-			((b basicDwordAtOffset: 4) bitAnd: 16r7FF00000) = 16r7FF00000
-				ifFalse: ["avoid nan and infinity"
-					f := b doubleAtOffset: 0.
-					str := (String new: 64) writeStream.
-					f printOn: str significantFigures: 17.
-					self assert: (Float readFrom: str contents readStream) = f]].
-	"test big num near infinity"
-	10
-		timesRepeat: [| f str |
-			b basicDwordAtOffset: 4 put: 16r7FE00000 + ((r next; seed) //
-16r1000 - 1).
-			b basicDwordAtOffset: 0 put: (r next; seed) - 1.
-			f := b doubleAtOffset: 0.
-			str := (String new: 64) writeStream.
-			f printOn: str significantFigures: 17.
-			self assert: (Float readFrom: str contents readStream) = f].
-	"test infinitesimal (gradual underflow)"
-	10
-		timesRepeat: [| f str |
-			b basicDwordAtOffset: 4 put: 0 + ((r next; seed) // 16r1000 - 1).
-			b basicDwordAtOffset: 0 put: (r next; seed) - 1.
-			f := b doubleAtOffset: 0.
-			str := (String new: 64) writeStream.
-			f printOn: str significantFigures: 17.
-			self assert: (Float readFrom: str contents readStream) = f].! !
-!FloatTest categoriesFor: #testFloatPrintString!public!Testing! !
 
 !NumberTest methodsFor!
 

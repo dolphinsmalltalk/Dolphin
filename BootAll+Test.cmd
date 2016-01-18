@@ -1,3 +1,4 @@
 CALL BootCore
 CALL BootDCE
-CALL BootDPRO+Test
+CALL BootDPRO
+CALL TestDPRO
