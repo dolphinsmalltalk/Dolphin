@@ -17,6 +17,7 @@ package classNames
 	add: #CaseInsensitiveSearchPolicyTest;
 	add: #ClassBuilderTestClasses;
 	add: #CollectionCombinator;
+	add: #CommandLineTest;
 	add: #DateTest;
 	add: #DefaultSortAlgorithmTest;
 	add: #DictionaryTest;
@@ -128,6 +129,7 @@ package setPrerequisites: (IdentitySet new
 	add: '..\IDE\Base\Development System';
 	add: 'Dolphin';
 	add: 'Dolphin Additional Sort Algorithms';
+	add: 'Dolphin Base';
 	add: '..\System\Base64\Dolphin Base64';
 	add: '..\System\Win32\Dolphin File System Watcher';
 	add: '..\System\Filer\Dolphin Literal Filer';
@@ -148,6 +150,11 @@ package!
 
 Object subclass: #CollectionCombinator
 	instanceVariableNames: 'resultProcessingBlock collectionOfArrays buffer'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+TestCase subclass: #CommandLineTest
+	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
