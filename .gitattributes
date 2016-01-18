@@ -4,3 +4,9 @@
 # corruption we must avoid these indices changing by always forcing use of CRLF line endings.
 *.sml eol=crlf 
 *.chg eol=crlf
+
+# If files are downloaded using git on Mac or Linux, then saving a package from Windows
+# will create a number of false-positive changes (files that differ only in line endings).
+*.pac eol=crlf
+*.pax eol=crlf
+*.st  eol=crlf
