@@ -6,6 +6,8 @@ package paxVersion: 1;
 
 package classNames
 	add: #CommandLine;
+	add: #CommandLineError;
+	add: #CommandLineOption;
 	yourself.
 
 package binaryGlobalNames: (Set new
@@ -23,7 +25,17 @@ package!
 "Class Definitions"!
 
 Object subclass: #CommandLine
-	instanceVariableNames: 'arguments argv optArg optIndex optOpt optionPrefixChars options parsingArg parsingArgStream parsingOptionStream parsingRules'
+	instanceVariableNames: 'arguments argv optArg optIndex optOpt optionPrefixChars options parsingArg parsingArgStream parsingErrors parsingOptionStream parsingRules'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Object subclass: #CommandLineOption
+	instanceVariableNames: 'name isArgumentAllowed isArgumentRequired'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Notification subclass: #CommandLineError
+	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
