@@ -1,4 +1,0 @@
-CALL BootCore
-CALL BootDCE
-CALL BootDPRO
-CALL TestDPRO
