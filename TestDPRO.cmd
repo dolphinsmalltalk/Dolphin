@@ -10,4 +10,5 @@ IF %ERRORLEVEL% NEQ 0 (
 
 TYPE DPRO.testlog
 ECHO Finished regression tests
+EXIT -1
 
