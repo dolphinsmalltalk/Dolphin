@@ -1,12 +1,12 @@
 "Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #CommandLineOption
-	instanceVariableNames: 'name isArgumentAllowed isArgumentRequired value'
+	instanceVariableNames: 'name isArgumentAllowed isArgumentRequired'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 CommandLineOption guid: (GUID fromString: '{24FED4FA-6D57-4F07-B973-B1CD9591567A}')!
-CommandLineOption comment: ''!
+CommandLineOption comment: 'This class is used internally by instances of CommandLine to encapsulate option rules.'!
 !CommandLineOption categoriesForClass!Kernel-Objects! !
 !CommandLineOption methodsFor!
 
@@ -53,17 +53,15 @@ isArgumentRequired
 isArgumentRequired: anObject
 	^isArgumentRequired := anObject!
 
+isLongOption
+
+	^name isString!
+
 name
 	^name!
 
 name: anObject
-	name := anObject!
-
-value
-	^value!
-
-value: anObject
-	value := anObject! !
+	name := anObject! !
 !CommandLineOption categoriesFor: #initializeFromStream:!private! !
 !CommandLineOption categoriesFor: #initializeOptionAllowingArgumentNamed:!private! !
 !CommandLineOption categoriesFor: #initializeOptionNamed:!private! !
@@ -72,10 +70,9 @@ value: anObject
 !CommandLineOption categoriesFor: #isArgumentAllowed:!accessing!public! !
 !CommandLineOption categoriesFor: #isArgumentRequired!accessing!public! !
 !CommandLineOption categoriesFor: #isArgumentRequired:!accessing!public! !
+!CommandLineOption categoriesFor: #isLongOption!public! !
 !CommandLineOption categoriesFor: #name!accessing!public! !
 !CommandLineOption categoriesFor: #name:!accessing!public! !
-!CommandLineOption categoriesFor: #value!accessing!public! !
-!CommandLineOption categoriesFor: #value:!accessing!public! !
 
 !CommandLineOption class methodsFor!
 

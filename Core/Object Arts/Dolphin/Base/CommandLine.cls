@@ -1,16 +1,16 @@
 "Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #CommandLine
-	instanceVariableNames: 'arguments argv optArg optIndex optOpt optionPrefixChars options rules parsingArg parsingArgStream parsingOptionStream parsingRules'
+	instanceVariableNames: 'arguments argv optArg optIndex optOpt optionPrefixChars options parsingArg parsingArgStream parsingErrors parsingOptionStream parsingRules'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 CommandLine guid: (GUID fromString: '{4E9D5C42-1049-4F31-862C-CB56225AA08A}')!
 CommandLine comment: 'Instances of CommandLine can be used to parse command line options and arguments. 
 
-The implementation is guided by and modeled on getopt() in Unix (http://www.gnu.org/software/libc/manual/html_node/Using-Getopt.html), but also has a simpler API. 
+The basic implementation is guided by and modeled on getopt() in Unix (http://www.gnu.org/software/libc/manual/html_node/Using-Getopt.html), but also has a simpler API. 
 
-The description of the options is similar to getopt(), basically a string of characters that are allowed options with a $: following those that require an arguments.
+The description of the short (single-character) options is similar to getopt(), basically a string of characters that are allowed options with a $: following those that require an arguments.
 
 From a CMD shell in the Dolphin directory, launch the development image with the following:
 
@@ -21,9 +21,50 @@ Then, in a workspace evalute the following:
 | commandLine options arguments |
 commandLine := CommandLine options: ''abc:''.
 options := commandLine options.	"a Dictionary($c -> ''foo'' $a -> nil $b -> nil)"
-arguments := commandLine arguments. "#(''bar'')"'!
+arguments := commandLine arguments. "#(''bar'')"
+
+
+Also, long options are supported with the ''--'' prefix. Instead of using the #options: message, each long option needs to be added with one of the following:
+	#addOptionAllowingArgumentNamed: 		"adds an option with an optional argument"
+	#addOptionNamed: 					"adds an option with no argument"
+	#addOptionRequiringArgumentNamed: 	"adds an option with a required argument"
+
+Calls to #arguments or #options will now signal a CommandLineError (actually a Notification) if there is a unrecognized or ambiguous option or if a required argument is missing.
+
+From a CMD shell in the Dolphin directory, launch the development image with the following:
+
+C:\Dolphin>Dolphin7 DPRO.img7 --noArg --reg=arg1 --eq=arg2 --optA --optB arg3 arg4
+
+Then, in a workspace evalute the following:
+
+| commandLine options arguments |
+commandLine := CommandLine new
+	addOptionNamed: ''noArg'';
+	addOptionRequiringArgumentNamed: ''reg'';		"Note that equals sign is allowed"
+	addOptionRequiringArgumentNamed: ''equal'';	"Note that abbreviated option is allowed"
+	addOptionAllowingArgumentNamed: ''optA'';
+	addOptionAllowingArgumentNamed: ''optB'';
+	yourself.
+options := commandLine options.	"a Dictionary(''noArg'' -> nil ''reg'' -> ''arg1'' ''equal'' -> ''arg2'' ''optA'' -> nil ''optB'' -> ''arg3'')"
+arguments := commandLine arguments. "#(''arg4'')"
+'!
 !CommandLine categoriesForClass!Kernel-Objects! !
 !CommandLine methodsFor!
+
+addOptionAllowingArgumentNamed: aString
+
+	parsingRules add: (CommandLineOption allowingArgumentNamed: aString).
+!
+
+addOptionNamed: aString
+
+	parsingRules add: (CommandLineOption named: aString).
+!
+
+addOptionRequiringArgumentNamed: aString
+
+	parsingRules add: (CommandLineOption requiringArgumentNamed: aString).
+!
 
 addRulesFrom: aString
 
@@ -36,7 +77,15 @@ addRulesFrom: aString
 arguments
 
 	arguments ifNil: [self parse].
+	self checkForErrors.
 	^arguments!
+
+checkForErrors
+
+	| string |
+	(string := parsingErrors contents) isEmpty ifTrue: [^self].
+	CommandLineError signal: string.
+!
 
 getOpt: aString
 	"http://www.gnu.org/software/libc/manual/html_node/Using-Getopt.html"
@@ -80,6 +129,7 @@ options
 
 	| dict |
 	options ifNil: [self parse].
+	self checkForErrors.
 	dict := Dictionary new.
 	options do: [:each | 
 		each key ~~ $? ifTrue: [
@@ -102,6 +152,7 @@ parse
 
 	arguments := OrderedCollection new.
 	options := OrderedCollection new.
+	parsingErrors := WriteStream on: String new.
 	parsingArgStream := (ReadStream on: argv) 
 		next; 	"exe"
 		next; 	"img7"
@@ -111,15 +162,74 @@ parse
 	].
 	arguments := arguments asArray.!
 
+parseLongOption: aString
+
+	| argument key rule |
+	(aString includes: $=) ifFalse: [	"option does not have argument with it"
+		key := aString.
+	] ifTrue: [		"option=value format"
+		| pieces |
+		pieces := aString subStrings: $=.
+		key := pieces at: 1.
+		argument := pieces at: 2.
+	].
+	rule := parsingRules 
+		detect: [:each | each name = key]
+		ifNone: [
+			| rules |
+			rules := parsingRules select: [:each | each isLongOption and: [each name beginsWith: key]].
+			rules size == 1 ifTrue: [
+				rules first.
+			] ifFalse: [
+				rules isEmpty ifTrue: [
+					parsingErrors nextPutAll: 'Unrecognized option ' , key printString; cr.
+				] ifFalse: [
+					parsingErrors nextPutAll: 'Ambiguous option ' , key printString; cr.
+				].
+				^self
+			].
+		].
+	rule isArgumentAllowed ifFalse: [
+		argument ifNil: [
+			options add: rule name -> nil.
+		] ifNotNil: [
+			parsingErrors nextPutAll: 'Option ' , rule name printString , ' has unexpected argument of ' , argument printString; cr.
+		].
+		^self
+	].
+	argument ifNil: [
+		argument := parsingArgStream atEnd 
+			ifTrue: [nil] 
+			ifFalse: [
+				| peek |
+				peek := parsingArgStream peek.
+				(optionPrefixChars includes: peek first) 
+					ifTrue: [nil]
+					ifFalse: [parsingArgStream next].
+			].
+		
+	].
+	(rule isArgumentRequired and: [argument isNil]) ifTrue: [
+		options add: $? -> key.
+		parsingErrors nextPutAll: 'Missing required argument for option ' , key printString; cr.
+	] ifFalse: [
+		options add: rule name -> argument.
+	].
+!
+
 parseNextArg
 
 	parsingArg := parsingArgStream next.
-	(parsingArg size == 2 and: [(parsingArg at: 1) == (parsingArg at: 2)]) ifTrue: [	"-- is a signal to treat everything following as arguments, not options"
+	(parsingArg size == 2 and: [(parsingArg at: 1) == (parsingArg at: 2)]) ifTrue: [	"-- by itself is a signal to treat everything following as arguments, not options"
 		arguments addAll: parsingArgStream upToEnd.
 		^self
 	].
 	(1 < parsingArg size and: [optionPrefixChars includes: parsingArg first]) ifFalse: [	"no prefix means treat as an argument rather than as an option"
 		arguments add: parsingArg.
+		^self
+	].
+	(2 < parsingArg size and: [(parsingArg at: 1) == (parsingArg at: 2)]) ifTrue: [	"-- is lead-in to long argument"
+		self parseLongOption: (parsingArg copyFrom: 3 to: parsingArg size).
 		^self
 	].
 	parsingOptionStream := (ReadStream on: parsingArg) 
@@ -138,6 +248,7 @@ parseNextOption
 		detect: [:each | each name == char] 
 		ifNone: [	"Unrecognized option"
 			options add: $? -> char.
+			parsingErrors nextPutAll: 'Unrecognized option: ' , char printString; cr.
 			^self
 		].
 	rule isArgumentAllowed ifFalse: [	"simple option without an argument"
@@ -155,12 +266,17 @@ parseNextOption
 		].
 	].
 	(rule isArgumentRequired and: [optionArg isEmpty]) ifTrue: [	"error if required argument is not present"
+		parsingErrors nextPutAll: 'Missing required argument for option ' , char printString; cr.
 		optionArg := char. 
 		char := $?.
 	].
 	options add: char -> optionArg.	"save option and argument"! !
+!CommandLine categoriesFor: #addOptionAllowingArgumentNamed:!public! !
+!CommandLine categoriesFor: #addOptionNamed:!public! !
+!CommandLine categoriesFor: #addOptionRequiringArgumentNamed:!public! !
 !CommandLine categoriesFor: #addRulesFrom:!private! !
 !CommandLine categoriesFor: #arguments!accessing!public! !
+!CommandLine categoriesFor: #checkForErrors!private! !
 !CommandLine categoriesFor: #getOpt:!getopt protocol!public! !
 !CommandLine categoriesFor: #initialize:!private! !
 !CommandLine categoriesFor: #optArg!getopt protocol!public! !
@@ -168,6 +284,7 @@ parseNextOption
 !CommandLine categoriesFor: #options:!public! !
 !CommandLine categoriesFor: #optOpt!getopt protocol!public! !
 !CommandLine categoriesFor: #parse!private! !
+!CommandLine categoriesFor: #parseLongOption:!private! !
 !CommandLine categoriesFor: #parseNextArg!private! !
 !CommandLine categoriesFor: #parseNextOption!private! !
 
