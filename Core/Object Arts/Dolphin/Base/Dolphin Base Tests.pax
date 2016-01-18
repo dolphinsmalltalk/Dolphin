@@ -666,7 +666,7 @@ regressionTestsLogFilename
 regressionTestSuite
 	| suite |
 	suite := TestSuite new.
-	suite addTests: DolphinTest buildSuite allTests.
+	suite addTests: TestCase buildSuite allTests.
 	^suite!
 
 runRegressionTests
