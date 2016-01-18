@@ -1,4 +1,4 @@
-"20:51:47, 08 December 2015: Compressing sources...."!
+"2:28:10 PM, Monday, January 18, 2016: Compressing sources...."!
 
 Object comment:
 'Object is the abstract root of the standard Smalltalk class hierarchy. It has no instance variables (indeed it must not have any), but provides behavior common to all objects.
@@ -245,6 +245,22 @@ asParameter
 
 	^self!
 
+aspectAdaptorClass
+	^ValueAspectAdaptor!
+
+aspectValue: anAspectSymbol 
+	"Answer a ValueAspectAdapter capable of treating anAspectSymbol of the receiver
+	as a ValueModel"
+
+	^self aspectAdaptorClass subject: self aspect: anAspectSymbol!
+
+aspectValue: anAspectSymbol triggers: anEventSymbol 
+	"Answer a ValueAspectAdapter capable of treating anAspectSymbol of the receiver
+	as a ValueModel. It is assumed that the receiver will trigger anEventSymbol whenever
+	the aspect is changed."
+
+	^(self aspectValue: anAspectSymbol) aspectTriggers: anEventSymbol!
+
 assert: aBlock
 	"Evaluates aBlock and signals an error if the result is not true. The default action is to bring up a
 	resumable walkback."
@@ -258,6 +274,12 @@ asUIntPtr
 	used as a return value)."
 
 	^self!
+
+asValue
+	"Answer the receiver as a ValueModel. 
+	In the general case create an answer a ValueHolder onto the receiver"
+
+	^ValueHolder with: self!
 
 at: index
 	"Answer the receiver's indexed instance variable at the argument index.
@@ -1952,6 +1974,112 @@ writeInto: subjectObject value: valueObject
 	to valueObject."
 
 	^self subclassResponsibility! !
+
+Base64Codec comment:
+'Base64Codec is a simple but fast implementation of the widely used Base64 binary-to-ASCII text encoding scheme. For further details of Base64 see RFC 3548 (http://www.faqs.org/rfcs/rfc3548.html). Note that the implementation of Base64 provided by this class is compatible with MIME in that it splits encoded output into lines of 76 characters separated by a CR/LF pair. 
+
+At present this class has no public instance protocol. There are class side methods to encode (#encodeFrom:onto:) and decode (#decodeFrom:onto:) the complete contents of one stream onto another. In future it is anticipated that the class will be enhanced so that it can be used as a codec in a hypothetical encoding stream that allows for more flexible usage, and this will almost certainly mean that the instance side protocol is changed. It is also anticipated that the class will permit more control over the output in future, e.g. control over the maximum line length to support different standards, whether or not the encoded data is padded to a multiple of four characters, whether or not invalid characters in the encoded data are ignored, etc.
+
+Class Variables:
+	DecodingTable		<Array>
+	EncodingTable		<String>
+
+'!
+!Base64Codec class methodsFor!
+
+decodeFrom: aGettableStream onto: aPuttableStream 
+	"Decode the complete set of future sequence values from the <gettableStream> argument,
+	assumed to be a text stream containing Base64 encoded data, onto the <puttableStream>
+	argument, assumed to be a byte stream."
+
+	self new decodeFrom: aGettableStream onto: aPuttableStream!
+
+encodeFrom: aGettableStream onto: aPuttableStream 
+	"Encode the complete set of future sequence values from the <gettableStream> argument,
+	assumed to be a byte stream, onto the <puttableStream> argument, assumed to be a text
+	stream, using Base64 encoding."
+
+	self new encodeFrom: aGettableStream onto: aPuttableStream!
+
+initialize
+	EncodingTable := 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/'.
+	DecodingTable := ByteArray new: 256 withAll: 255.
+	EncodingTable keysAndValuesDo: [:i :each | DecodingTable at: each asInteger + 1 put: i - 1].
+	DecodingTable at: $= asInteger + 1 put: EncodingTable size!
+
+new
+	^(super new)
+		initialize;
+		yourself! !
+
+!Base64Codec methodsFor!
+
+decodeFrom: aGettableStream onto: aPuttableStream 
+	[aGettableStream atEnd] whileFalse: 
+			[| t1 t2 |
+			(t1 := self nextBase64From: aGettableStream) ifNil: [^self].
+			(t2 := self nextBase64From: aGettableStream) ifNil: [^self].
+			aPuttableStream nextPut: (t1 bitShift: 2) + (t2 bitShift: -4).
+			(t1 := self nextBase64From: aGettableStream) ifNil: [^self].
+			aPuttableStream nextPut: ((t2 bitAnd: 16rF) bitShift: 4) + (t1 bitShift: -2).
+			(t2 := self nextBase64From: aGettableStream) ifNil: [^self].
+			aPuttableStream nextPut: ((t1 bitAnd: 16r3) bitShift: 6) + t2]!
+
+encodeFrom: aGettableStream onto: aPuttableStream 
+	| count |
+	count := 0.
+	[aGettableStream atEnd] whileFalse: 
+			[| value |
+			count == quadsPerLine 
+				ifTrue: 
+					[aPuttableStream cr.
+					count := 0].
+			value := aGettableStream next.
+			aPuttableStream nextPut: (EncodingTable at: ((value bitAnd: 2r11111100) bitShift: -2) + 1).
+			aGettableStream atEnd 
+				ifTrue: 
+					["Emit a further character for the remaining two bits, and then two padding characters"
+					aPuttableStream nextPut: (EncodingTable at: ((value bitShift: 4) bitAnd: 2r110000) + 1).
+					isPadded 
+						ifTrue: 
+							[aPuttableStream
+								nextPut: $=;
+								nextPut: $=].
+					^self].
+			value := ((value bitAnd: 2r11) bitShift: 8) + aGettableStream next.
+			aPuttableStream nextPut: (EncodingTable at: ((value bitAnd: 2r1111110000) bitShift: -4) + 1).
+			aGettableStream atEnd 
+				ifTrue: 
+					["Emit a further character for the remaining four bits, and then a padding character."
+					aPuttableStream nextPut: (EncodingTable at: ((value bitShift: 2) bitAnd: 2r111100) + 1).
+					isPadded ifTrue: [aPuttableStream nextPut: $=].
+					^self].
+			value := ((value bitAnd: 16rF) bitShift: 8) + aGettableStream next.
+			aPuttableStream nextPut: (EncodingTable at: ((value bitAnd: 2r111111000000) bitShift: -6) + 1).
+			aPuttableStream nextPut: (EncodingTable at: (value bitAnd: 2r111111) + 1).
+			count := count + 1].
+	^0!
+
+initialize
+	self lineLength: 76.
+	isPadded := true!
+
+lineLength: anInteger 
+	"Private - Set the maximum length of lines emitted by the receiver to be the <integer>
+	argument, which must be a multiple of four."
+
+	anInteger \\ 4 = 0 ifFalse: [^self error: 'line length must be a multiple of four'].
+	quadsPerLine := anInteger / 4!
+
+nextBase64From: aGettableStream 
+	[aGettableStream atEnd] whileFalse: 
+			[| value |
+			#todo.	"Invalid characters are currently ignored, but should (optionally)
+				be treated as an error - see RFC 3548. This is right for MIME though."
+			(value := DecodingTable at: aGettableStream next asInteger + 1) < 64 
+				ifTrue: [^value]
+				ifFalse: [value == 64 ifTrue: [^nil]]].
+	^nil! !
 
 Behavior comment:
 'Class Behavior is the abstract class which defines the minimum state necessary for objects that have instances, providing the basic information about those instances to the Compiler and the VM.
@@ -7198,6 +7326,188 @@ union: comperand
 	^(Set withAll: self)
 		addAll: comperand;
 		yourself
+! !
+
+CommandLine comment:
+'Instances of CommandLine can be used to parse command line options and arguments. 
+
+The implementation is guided by and modeled on getopt() in Unix (http://www.gnu.org/software/libc/manual/html_node/Using-Getopt.html), but also has a simpler API. 
+
+The description of the options is similar to getopt(), basically a string of characters that are allowed options with a $: following those that require an arguments.
+
+From a CMD shell in the Dolphin directory, launch the development image with the following:
+
+C:\Dolphin>Dolphin7 DPRO.img7 -a -b -c foo bar
+
+Then, in a workspace evalute the following:
+
+| commandLine options arguments |
+commandLine := CommandLine options: ''abc:''.
+options := commandLine options.	"a Dictionary($c -> ''foo'' $a -> nil $b -> nil)"
+arguments := commandLine arguments. "#(''bar'')"'!
+!CommandLine class methodsFor!
+
+argv: anArray
+	"Constructor called directly only in testing"
+
+	^super new
+		initialize: anArray;
+		yourself!
+
+new
+	"Generally the #options: constructor should be used"
+
+	^self argv: SessionManager current argv!
+
+options: aString
+	"http://www.gnu.org/software/libc/manual/html_node/Using-Getopt.html"
+
+	^self new
+		options: aString;
+		yourself! !
+
+!CommandLine methodsFor!
+
+arguments
+
+	^arguments!
+
+getOpt: aString
+	"http://www.gnu.org/software/libc/manual/html_node/Using-Getopt.html"
+
+	| option |
+	self options: aString.
+	options size < optIndex ifTrue: [^nil].
+	(option := options at: optIndex) ifNil: [
+		optIndex := optIndex + 1.
+		options size < optIndex ifTrue: [^nil].
+		option := options at: optIndex.
+	].
+	optIndex := optIndex + 1.
+	option key == $? ifTrue: [
+		optArg := nil.
+		optOpt := option value.
+	] ifFalse: [
+		optArg := option value.
+		optOpt := nil.
+	].
+	^option key!
+
+initialize: anArray
+
+	argv := anArray.
+	self assert: [2 <= argv size].
+	optIndex := 1.
+	optionPrefixChars := '-/'.!
+
+optArg
+
+	^optArg!
+
+options
+	"Answers a dictionary where key is the option and value is
+		nil if no argument allowed
+		empty if optional argument missing
+		otherwise value of optional or required argument"
+
+	| dict |
+	dict := Dictionary new.
+	options do: [:each | 
+		each key ~~ $? ifTrue: [
+			dict at: each key put: each value.
+		].
+	].
+	^dict!
+
+options: aString
+	"http://www.gnu.org/software/libc/manual/html_node/Using-Getopt.html"
+
+	parsingRules := self rulesFrom: aString.
+	self parse.!
+
+optOpt
+
+	^optOpt!
+
+parse
+
+	arguments := OrderedCollection new.
+	options := OrderedCollection new.
+	parsingArgStream := (ReadStream on: argv) 
+		next; 	"exe"
+		next; 	"img7"
+		yourself.
+	[parsingArgStream atEnd] whileFalse: [	"iterate over the argv array"
+		self parseNextArg.
+	].
+	arguments := arguments asArray.!
+
+parseNextArg
+
+	parsingArg := parsingArgStream next.
+	(1 < parsingArg size and: [optionPrefixChars includes: parsingArg first]) ifFalse: [	"no prefix means treat as an argument rather than as an option"
+		arguments add: parsingArg.
+		^self
+	].
+	parsingOptionStream := (ReadStream on: parsingArg) 
+		next; 	"Prefix character ($/ or $-)"
+		yourself.
+	[parsingOptionStream atEnd] whileFalse: [	"one argv can have multiple options (-ab is equivalent to -a -b)"
+		self parseNextOption.
+	].
+!
+
+parseNextOption
+
+	| argRequired char optionArg rule |
+	char := parsingOptionStream next.
+	(parsingArg size == 2 and: [(parsingArg at: 1) == (parsingArg at: 2)]) ifTrue: [	"-- is a signal to treat everything following as arguments, not options"
+		arguments addAll: parsingArgStream upToEnd.
+		^self
+	].
+	rule := parsingRules 
+		detect: [:each | each key == char] 
+		ifNone: [	"Unrecognized option"
+			options add: $? -> char.
+			^self
+		].
+	argRequired := rule value.
+	argRequired ifNil: [	"simple option without an argument"
+		options add: char -> nil.
+		^self
+	].
+	"option has an optional or required argument"
+	optionArg := parsingOptionStream upToEnd.	"option argument can follow immediately (-xabc)"
+	(optionArg isEmpty and: [parsingArgStream atEnd not]) ifTrue: [	"look for option argument in next argv"
+		optionArg := parsingArgStream peek.
+		(optionPrefixChars includes: optionArg first) ifTrue: [	"next argument begins with prefix character, so another option"
+			optionArg := ''.		"option does not have an argument"
+		] ifFalse: [
+			parsingArgStream next.	"argument associated with option"
+		].
+	].
+	(argRequired and: [optionArg isEmpty]) ifTrue: [	"error if required argument is not present"
+		optionArg := char. 
+		char := $?.
+	].
+	options add: char -> optionArg.	"save option and argument"!
+
+rulesFrom: aString
+	"Answer an array "
+
+	| optionsStream rules |
+	optionsStream := ReadStream on: aString.
+	rules := OrderedCollection new.
+	[optionsStream atEnd] whileFalse: [
+		| argRequired char |
+		argRequired := nil.	"initially assume that argument not allowed"
+		char := optionsStream next. 
+		 optionsStream peek == $: ifTrue: [
+			argRequired := (optionsStream next; peek) ~~ $:.	": means argument is required; :: means argument is optional"
+		].
+		rules add: char -> argRequired.
+	].
+	^rules
 ! !
 
 CompilationResult comment:
@@ -13100,7 +13410,12 @@ workingDirectory
 	dir := CRTLibrary default _getcwd: buffer maxlen: buffer size.
 	^dir last = $\
 		ifTrue: [dir]
-		ifFalse: [dir copyWith: $\]! !
+		ifFalse: [dir copyWith: $\]!
+
+workingDirectory: aString
+	"Answer the current working directory."
+
+	^CRTLibrary default _chdir: aString! !
 
 !File methodsFor!
 
@@ -17885,13 +18200,14 @@ errorInvalidPAXFile: pathString
 
 	^self error: 'Invalid PAX file: ', pathString!
 
-fromFile: pathname
+fromFile: path
 	"Private - Answer a new instance of the receiver created from the package file at the
 	specified <readableString> path, pathname, or nil if the file does not contain a
-	package."
+	package"
 
-	| answer |
+	| answer pathname |
 
+	pathname := File default: path extension: self sourcePackageExtension.
 	answer := ((File splitExtensionFrom: pathname) sameAs: self sourcePackageExtension) 
 		ifTrue: [self fromPAXFile: pathname]
 		ifFalse: [self fromPACFile: pathname].
@@ -19168,12 +19484,18 @@ initializeOldSourcePackage
 		ifFalse: [self error: 'Unable to load package (Legacy package importer is not loaded)']	"Initialize old style (pre D6) binary resources"!
 
 isBaseImagePackage
-	"Answer true if the receiver is a basic component of Dolphin. In general this is a hint that
-	you don't need to version the package into an external repository such as STS."
+	"Answer true if the receiver is a basic component of Dolphin "
 
-	" Not a terribly sophisticated in implementation - if the package reside under Core\ then it is a system package"
+	#deprecated.
 
-	^self packagePathname beginsWith: 'Core\' ignoreCase: true!
+	^self isBasePackage!
+
+isBasePackage
+	"Answer true if the receiver is a basic component of Dolphin. This is usually an indication that
+	it was present at the time the image was booted and may be used as a hint that
+	you may not need to version the package into an external repository such as STS."
+
+	^self class manager basePackages includes: self!
 
 isChanged
 	"Answer true if the receiver or any of it's contents have been changed since
@@ -19692,6 +20014,13 @@ privateUninstall
 		uninstallGlobals;
 		uninstallClasses;
 		uninstallMethods!
+
+rebaseTo: basePathName 
+	"Rebase this package relative to the give base image directory"
+
+	self packagePathname: (File 
+				relativePathOf: (File fullPathOf: self packagePathname relativeTo: basePathName)
+				to: SessionManager current imagePath)!
 
 remainingClasses
 	"Answer a Set of the classes that are still present (i.e. ignore missing classes)"
@@ -20599,7 +20928,7 @@ systemPackageName
 	"Private - Answer the String name of the Package which owns all
 	the system objects."
 
-	^'Object Arts\Dolphin\Base\Dolphin'!
+	^'Core\Object Arts\Dolphin\Base\Dolphin'!
 
 uninitialize
 	"Private - Uninitialize the receiver as it is about to be removed from the system."
@@ -20805,6 +21134,10 @@ allSourceObjects
 	self packages 
 		do: [:eachPackage | eachPackage allSourceObjectsDo: [:each | answer addLast: each]].
 	^answer!
+
+basePackages
+	^basePackages ifNil: [basePackages := IdentitySet new].
+!
 
 basicAddPackage: aPackage
 	self packages at: aPackage name put: aPackage!
@@ -21079,6 +21412,12 @@ install: aString
 				self loadedChanged].
 	^newPackages!
 
+installHere: aString 
+	"Same as #install: except that aString is seen as being relative to the current directory
+	rather than the image base."
+
+	^self install: (File fullPathOf: aString)!
+
 isConnected
 	"Part of the StsManager protocol implemented here for systems which do not have STS
 	installed. Answer nil to indicate that we are not connected to a repository"
@@ -21233,6 +21572,12 @@ looseResourceIdentifiers
 	answer := Set new: 25.
 	self packages do: [:p | answer addAll: p resourceIdentifiers].
 	^answer!
+
+markAllPackagesAsBase
+	"Marks all the currently loaded packages as part of the base system. This should normally
+	only be called at the end of the image boot."
+
+	self basePackages addAll: self packages!
 
 memberOf: aPackage updatedAt: aNiladicValuable 
 	"Private - Inform the <Package> argument that it has been changed and needs to reset its
@@ -21612,6 +21957,17 @@ packages
 
 prerequisiteNotFoundSignal
 	^PrerequisiteNotFoundSignal!
+
+rebaseBasePackagesTo: basePathname
+	"Rebase the base image packages so they are relative to basePathname. This may be used
+	when an image has been saved to a new directory and one wishes to continue to reference the
+	old core packages (usually held under the installatin directory). Note that basePathname
+	(if not an absolute path) is treated as being relative to the installation directory NOT the
+	image directory or working directory). Hence, a typical rebase can be performed using '.' as
+	basePathname"
+
+	self basePackages do: [:each | each  rebaseTo: basePathname ].
+	self resetPrerequisites!
 
 release
 	"Private - Remove any event registrations the receiver has made 
@@ -23089,6 +23445,118 @@ width: aNumber
 
 	corner := (origin x + aNumber) @ corner y! !
 
+RegQueryInfo comment:
+''!
+!RegQueryInfo methodsFor!
+
+keyClass
+	"Answer the value of the receiver's instance variable keyClass.
+	This method was automatically generated, but may be modified."
+
+	^keyClass!
+
+keyClass: anObject
+	"Set the value of the receiver's instance variable keyClass to anObject.
+	This method was automatically generated, but may be modified."
+
+	keyClass := anObject!
+
+lastWriteTime
+	"Answer the value of the receiver's instance variable lastWriteTime.
+	This method was automatically generated, but may be modified."
+
+	^lastWriteTime!
+
+lastWriteTime: anObject
+	"Set the value of the receiver's instance variable lastWriteTime to anObject.
+	This method was automatically generated, but may be modified."
+
+	lastWriteTime := anObject!
+
+maxClassNameLen
+	"Answer the value of the receiver's instance variable maxClassNameLen.
+	This method was automatically generated, but may be modified."
+
+	^maxClassNameLen!
+
+maxClassNameLen: anObject
+	"Set the value of the receiver's instance variable maxClassNameLen to anObject.
+	This method was automatically generated, but may be modified."
+
+	maxClassNameLen := anObject!
+
+maxSubKeyLen
+	"Answer the value of the receiver's instance variable maxSubKeyLen.
+	This method was automatically generated, but may be modified."
+
+	^maxSubKeyLen!
+
+maxSubKeyLen: anObject
+	"Set the value of the receiver's instance variable maxSubKeyLen to anObject.
+	This method was automatically generated, but may be modified."
+
+	maxSubKeyLen := anObject!
+
+maxValueLen
+	"Answer the value of the receiver's instance variable maxValueLen.
+	This method was automatically generated, but may be modified."
+
+	^maxValueLen!
+
+maxValueLen: anObject
+	"Set the value of the receiver's instance variable maxValueLen to anObject.
+	This method was automatically generated, but may be modified."
+
+	maxValueLen := anObject!
+
+maxValueNameLen
+	"Answer the value of the receiver's instance variable maxValueNameLen.
+	This method was automatically generated, but may be modified."
+
+	^maxValueNameLen!
+
+maxValueNameLen: anObject
+	"Set the value of the receiver's instance variable maxValueNameLen to anObject.
+	This method was automatically generated, but may be modified."
+
+	maxValueNameLen := anObject!
+
+securityDescriptorLen
+	"Answer the value of the receiver's instance variable securityDescriptorLen.
+	This method was automatically generated, but may be modified."
+
+	^securityDescriptorLen!
+
+securityDescriptorLen: anObject
+	"Set the value of the receiver's instance variable securityDescriptorLen to anObject.
+	This method was automatically generated, but may be modified."
+
+	securityDescriptorLen := anObject!
+
+subKeyCount
+	"Answer the value of the receiver's instance variable subKeyCount.
+	This method was automatically generated, but may be modified."
+
+	^subKeyCount!
+
+subKeyCount: anObject
+	"Set the value of the receiver's instance variable subKeyCount to anObject.
+	This method was automatically generated, but may be modified."
+
+	subKeyCount := anObject!
+
+valueCount
+	"Answer the value of the receiver's instance variable valueCount.
+	This method was automatically generated, but may be modified."
+
+	^valueCount!
+
+valueCount: anObject
+	"Set the value of the receiver's instance variable valueCount to anObject.
+	This method was automatically generated, but may be modified."
+
+	valueCount := anObject! !
+
 ResourceIdentifier comment:
 ''!
 !ResourceIdentifier class methodsFor!
@@ -23516,10 +23984,11 @@ imageExtension
 initialize
 	"Private - Initialize the class variables of the receiver."
 
-	PreStartFile := 'prestart.st'.
-	Current := BootSessionManager basicNew. "For boot reasons, do not initialize"
-	Current imagePath: '.\Dolphin'
-!
+	Current 
+		ifNil: 
+			[PreStartFile := 'prestart.st'.
+			Current := BootSessionManager basicNew.	"For boot reasons, do not initialize"
+			Current imagePath: '.\Dolphin']!
 
 inputState
 	"Answer the InputState of the current session manager."
@@ -23616,6 +24085,15 @@ argv
 			argv := (0 to: (lib argc - 1) * VMConstants.IntPtrSize by: VMConstants.IntPtrSize) 
 						collect: [:offset | String fromAddress: (pArray dwordAtOffset: offset)]].
 	^argv!
+
+argvLegacyOptionsRemoved
+	"Private - Answer the argv arguments vertor with the old style legacy options removed"
+
+	^self argv reject: 
+			[:each | 
+			| opt |
+			opt := each allButFirst asLowercase.
+			opt = 'nosplash' or: [opt = 'embedding']]!
 
 backupOnImageSave
 	"Answer whether the image should be backed up (i.e. the old .img file is renamed to .bak when the new .img
@@ -23872,10 +24350,10 @@ imagePath
 
 	^imagePath!
 
-imagePath: aPathString
+imagePath: aPathString 
 	"Private - used only after loading an image to set up path to the image and sources."
 
-	imagePath := File removeExtension: aPathString!
+	imagePath := File removeExtension: (File fullPathOf: aPathString)!
 
 imageVersion
 	"Answer a String in the form N.N.N.N which specifies the version number of the image."
@@ -23971,13 +24449,13 @@ isEmbedded
 	^self isDLL or: [self isEmbedding]!
 
 isEmbedding
-	"Answer whether the session was started with the /Embedded flag."
+	"Answer whether the session was started with a headless flag"
 
 	^self cmdLineFlags includes: 'Embedding'!
 
 isHeadless
 	"Private - Answer whether the session is _currently_ headless. This is most likely if the
-	image was started with the /Embedded flag, and no visible windows have subsequently been
+	image was started a headkess-h flag, and no visible windows have subsequently been
 	opened."
 
 	^self inputState hasVisibleWindows not!
@@ -25752,6 +26230,16 @@ fileInFrom: aStream
 
 	(self chunkFilerOn: aStream) fileIn!
 
+fileInHere: aFileName 
+	"File in the chunk format file named, aFileName, into the system but with
+	the working directory set to the location of the file. The original directory
+	is restored on completion."
+
+	| cwd |
+	cwd := File workingDirectory.
+	File workingDirectory: (File splitPathFrom: aFileName).
+	[self fileIn: (File splitFilenameFrom: aFileName)] ensure: [File workingDirectory: cwd]!
+
 fileInPackagedClass: aClass
 	"File in aClass via the package mechanism. The class is filed in from the same directory as the
 	package which contains it. Following this call the class and its methods are marked as unchanged."
@@ -27244,6 +27732,105 @@ upToEnd
 	remainder := self contentsSpecies writeStream: 128.
 	[self atEnd] whileFalse: [remainder nextPut: self next].
 	^remainder contents! !
+
+TypeConverter comment:
+'A <TypeConverter> is capable of converting one type of object into another and vice versa. Very often a TypeConverter forms part of a <ValueConverter> model that sits between a subject value and some client of that value. The subject value is referred to as the ''left'' value and the value the client sees is the ''right'' value. In a typical usage (within the MVP framework) the ''left'' type is the type of the Model value, and the right type is the display value (usually a String).
+
+TypeConverter is itself an abstract class and concrete subclasses must be created to provide specific type convertions. Subclasses should implement #leftToRight: and #rightToLeft: methods to perform the conversions. These methods are, however, private. The public interface for conversion is as defined in the <typeConverter> method protocol.
+
+In order that these seletor names hold a common meaning all subclasses should follow the naming convention LefttypeToRighttype (e.g. NumberToString). 
+
+TypeConverters support the notion of an undefined or null value for both left and right value types. The ''null'' value for one side is mapped to the ''null'' value for the other side and vice versa, without going through the normal conversion process. For example text converters will map nil from the left subject value to the empty string display value.
+
+Instance Variables:
+	leftNullValue	<Object> or nil, to which the right null value is mapped by a right to left conversion.
+	rightNullValue 	<Object> or nil, to which the left null value is mapped by a left to right conversion.
+
+
+
+'!
+!TypeConverter class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^##(self) defaultIcon!
+
+new
+	"Answer a new instance of the receiver. Instances require initialization"
+
+	^super new initialize! !
+
+!TypeConverter methodsFor!
+
+convertFromLeftToRight: anObject 
+	"Converts the <Object> argument, which is assumed to be of the receivers left type
+	(possibly its null value) to an <Object> of the receiver's right type (possibly its null
+	value), and answers the resulting right value."
+
+	(self isLeftNullValue: anObject) ifTrue: [^self rightNullValue].
+	^self leftToRight: anObject!
+
+convertFromRightToLeft: anObject 
+	"Converts anObject, which is assumed to be of the receivers right type to an object
+	of the receivers left type. If anObject is an exceptional value it will be converted to the 
+	receiver's equivalent for the right hand side. Answers the result of the conversion."
+
+	(self isRightNullValue: anObject) ifTrue: [^self leftNullValue].
+	^self rightToLeft: anObject!
+
+inverted
+	"Answers a type converter that reverses the direction of the receiver's conversion. 
+	In this case answers an instance of InvertingConverter that wraps the receiver"
+
+	^InvertingConverter inverting: self
+!
+
+isLeftNullValue: anObject 
+	"Private - Answers whether the argument can be considered the 'null' value 
+	for the left hand side value type."
+
+	^anObject = self leftNullValue!
+
+isRightNullValue: anObject 
+	"Private - Answers whether the argument can be considered the 'null' value 
+	for the left hand side value type."
+
+	^anObject = self rightNullValue!
+
+leftNullValue
+	"Answer the 'null' value of the left type."
+
+	^leftNullValue!
+
+leftNullValue: anObject 
+	"Set the 'null' value of the left type to the argument."
+
+	leftNullValue := anObject!
+
+leftToRight: anObject
+	"Private - Converts the <Object> argument, which is assumed to be of the receivers left 
+	type to an <Object> of the receiver's right type. Answers the result of the conversion. 
+	Must be overridden by subclasses to perform specific conversions."
+
+	^self subclassResponsibility!
+
+rightNullValue
+	"Answer the 'null' value of the right type."
+
+	^rightNullValue!
+
+rightNullValue: anObject 
+	"Set the 'null' value of the right type to the argument."
+
+	rightNullValue := anObject!
+
+rightToLeft: anObject
+	"Private - Converts the <Object> argument, which is assumed to be of the receivers right 
+	type to an <Object> of the receivers left type. Answers the result of the conversion. 
+	Must be overridden by subclasses to perform specific conversions"
+
+	^self subclassResponsibility! !
 
 UndefinedObject comment:
 'UndefinedObject is the singleton class of the distinguished object, <nil>.
@@ -33906,6 +34493,12 @@ fromAddress: anAddress length: anInteger
 		from: 1 to: anInteger startingAt: 1
 !
 
+fromBase64String: aString 
+	| stream |
+	stream := self writeStream: (aString size * 0.75) truncated.
+	Base64Codec decodeFrom: aString readStream onto: stream.
+	^stream contents!
+
 fromHexString: aString
 	"Answer a new instance of the receiver instantiated from the contents of the hexadecimal <String> argument."
 
@@ -33977,6 +34570,17 @@ asString
 	| size |
 	size := self basicSize.
 	^(String new: size) replaceFrom: 1 to: size with: self startingAt: 1!
+
+base64StoreOn: puttableStream 
+	puttableStream
+		nextPut: $(;
+		print: self class;
+		space;
+		nextPutAll: #fromBase64String:;
+		space;
+		nextPut: $'.
+	self printBase64On: puttableStream.
+	puttableStream nextPutAll: ''')'!
 
 basicDwordAtOffset: anInteger
 	"Answer the unsigned 4 byte integer at offset (i.e. zero relative) 
@@ -34272,6 +34876,11 @@ notNull
 	"Answer whether the receiver is not Null (i.e. not equal to 0)"
 
 	^self isNull == false!
+
+printBase64On: aStream 
+	"Append a base64 string representation of the receiver to the <puttableStream> argument."
+
+	Base64Codec encodeFrom: self readStream onto: aStream!
 
 printHexOn: aStream
 	"Append a hex string representation of the receiver to the <puttableStream> argument."
@@ -39727,6 +40336,872 @@ removeKey: key ifAbsent: exceptionHandler
 
 	^super removeKey: key asString ifAbsent: exceptionHandler! !
 
+RegKeyAbstract comment:
+''!
+!RegKeyAbstract class methodsFor!
+
+branchClass
+	"Answer the class of object to use for branches of the registry tree."
+
+	^RegKey!
+
+classesRoot
+	"Answer a new instance of the receiver, rooted in HKEY_CLASSES_ROOT.
+	Read/Write should be sufficient for registering new classes."
+
+	^self classesRoot: self defaultMode!
+
+classesRoot: mode
+	"Answer a new instance of the receiver, rooted in HKEY_CLASSES_ROOT,
+	with the access rights specified by the <Symbol>, mode."
+
+	^self fromPredefinedKey: 'HKEY_CLASSES_ROOT' mode: mode!
+
+configRoot
+	"Answer a new instance of the receiver, rooted in HKEY_CURRENT_CONFIG"
+
+	^self fromPredefinedKey: 'HKEY_CURRENT_CONFIG' mode: #read!
+
+defaultMode
+	"Answer the default security access rights requested on registry keys."
+
+	^#readWrite!
+
+fromPredefinedKey: key
+	"Answer a new instance of the receiver, rooted in the specified root, predefined key."
+
+	^self fromPredefinedKey: key mode: self defaultMode!
+
+fromPredefinedKey: key mode: mode
+	"Answer a new instance of the receiver, rooted in the specified root, predefined key."
+
+	^self fromPredefinedKey: key 
+		sam: (AccessModes at: mode)!
+
+fromPredefinedKey: key sam: samDesired
+	"Private - Answer a new instance of the receiver, rooted in the specified root, predefined key."
+
+	| answer |
+	answer := self branchClass new.
+	^answer 
+		name: key
+		parentPath: nil
+		rootKey: answer
+		sam: samDesired;
+		handle: (WinRegConstants at: key);
+		yourself!
+
+icon
+	"Answers an Icon that can be used to represent this class.
+	Use the one from the real Windows Registry Editor for fun."
+
+	^##(self) defaultIcon!
+
+initialize
+	"Private - Initialize the receiver's class variables.
+		RegKeyAbstract initialize
+	"
+
+	AccessModes := ##((IdentityDictionary new)
+				at: #read put: KEY_READ;
+				at: #all put: KEY_ALL_ACCESS;
+				at: #readWrite put: KEY_READ | KEY_WRITE;
+				at: #write put: KEY_WRITE;
+				at: #execute put: KEY_EXECUTE;
+				shrink;
+				yourself).
+	ValueTypes := ##((IdentityDictionary new)
+				at: #dword put: REG_DWORD;
+				at: #binary put: REG_BINARY;
+				at: #string put: REG_SZ;
+				at: #none put: REG_NONE;
+				at: #qword put: REG_QWORD;
+				at: #stringArray put: REG_MULTI_SZ;
+				at: #expandString put: REG_EXPAND_SZ;
+				shrink;
+				yourself)!
+
+localMachineRoot
+	"Answer a new instance of the receiver, rooted in HKEY_LOCAL_MACHINE"
+
+	^self localMachineRoot: self defaultMode!
+
+localMachineRoot: mode
+	"Answer a new instance of the receiver, rooted in HKEY_LOCAL_MACHINE"
+
+	^self fromPredefinedKey: 'HKEY_LOCAL_MACHINE' mode: mode!
+
+myComputer
+	"Answer a new instance of the receiver, rooted in this computers
+	registry."
+
+	^Error notYetImplemented!
+
+name: keyString parentPath: rootKeyString rootKey: aRegKey sam: samDesired
+	"Private - Answer a new instance of the receiver initialized
+	with the arguments."
+
+	^self new
+		name: keyString
+		parentPath: rootKeyString
+		rootKey: aRegKey
+		sam: samDesired!
+
+new
+	"Answer a new initialized instance of the receiver."
+
+	^(self basicNew: 0) initialize!
+
+roots
+	"Answer an array of the predefined registry roots."
+
+	^Array 
+		with: self classesRoot
+		with: self userRoot
+		with: self localMachineRoot
+		with: self usersRoot
+		with: self configRoot!
+
+userRoot
+	"Answer a new instance of the receiver, rooted in HKEY_CURRENT_USER.
+	Should almost always have write access to this key."
+
+	^self fromPredefinedKey: 'HKEY_CURRENT_USER' mode: self defaultMode!
+
+usersRoot
+	"Answer a new instance of the receiver, rooted in HKEY_USERS"
+
+	^self usersRoot: #read!
+
+usersRoot: mode
+	"Answer a new instance of the receiver, rooted in HKEY_USERS"
+
+	^self fromPredefinedKey: 'HKEY_USERS' mode: mode! !
+
+!RegKeyAbstract methodsFor!
+
+= comperand
+	"Answer whether the receiver is considered equivalent to the argument."
+
+	#todo "Generating the full path is a bit expensive, so maybe break down and compare root handle, path from root, and name - same applies to #hash".
+	^self species == comperand species and: [
+		self fullPath = comperand fullPath]!
+
+add: anAssociation
+	"Add anAssociation to the receiver. Answer anAssociation. As we are only
+	simulating a <Dictionary>, we do not actually store <Association>s, therefore we must 
+	reimplement this in terms of #at:put:."
+
+	self at: anAssociation key put: anAssociation value.
+	^anAssociation!
+
+asParameter
+	"Answer the receiver in a form suitable for passing to an external function
+	primitive method (see ExternalLibrary and subclasses)."
+
+	self realize.
+	^handle!
+
+associationAt: key ifAbsent: exceptionHandler
+	"Answer a new <association> between the key and value of
+	the receiver at the argument, key.  If key is not found, answer the
+	result of evaluating the <niladicValuable>, exceptionHandler."
+
+	^self at: key ifAbsent: [^exceptionHandler value]!
+
+associationsDo: operation
+	"Evaluate the monadic valuable, operation, for each of the receiver's 
+	key/value associations.
+	Implemenation Note: We must override because the receiver does not 
+	actually contain Associations."
+
+	self keysAndValuesDo: [:k :v | 
+		operation value: (self associationClass key: k value: v)]!
+
+at: key ifAbsent: exceptionHandler
+	"Answer the value named by the <readableString> argument, key. If the
+	key is is not found answer the result of evaluating the <niladicValuable>, 
+	exceptionHandler.
+	May also raise a Win32Error exception if registry access fails for some
+	reason."
+
+	^self subclassResponsibility!
+
+at: key put: anObject
+	"Store the argument anObject with the <readableString> external key, key,
+	in the receiver. Answer anObject"
+
+	^self subclassResponsibility!
+
+basicFree
+	"Private - Release external resources held by the receiver.
+	The receiver is invalid after this call.
+	N.B. Any errors closing the handle are ignored."
+
+	^self registryLibrary regCloseKey: handle!
+
+basicRealize
+	"Private - Open the receiver's associated registry key."
+
+	| dwErr |
+	handle := ExternalHandle new.
+	dwErr := self registryLibrary
+		regOpenKeyEx: self rootKey asParameter
+			lpSubKey: self pathFromRoot
+			ulOptions: 0
+			samDesired: self sam
+			phkResult: handle.
+	^dwErr = ERROR_SUCCESS 
+		ifTrue: [handle]
+		ifFalse: [
+			dwErr == ERROR_FILE_NOT_FOUND 
+				ifTrue: [self errorNotFound: self]
+				ifFalse: [self registryLibrary systemError: dwErr]]!
+
+createKey: subPath
+	"Create or open a registry key under the receiver with the specified
+	<string> relative path from here (note that this implies that more than one level can
+	be created at once, and this is indeed the case!!). Answers the new key."
+
+	| subKey |
+	subKey := self privateCreateKey: subPath.
+	subKey free.
+	^subKey!
+
+displayOn: aStream
+	"Append a short textual description of the receiver to aStream."
+
+	aStream display: name!
+
+do: operation
+	"Evaluate monadic value argument, operation, for each of the element of the 
+	receiver. Answer the receiver."
+
+	self keysAndValuesDo: [:k :v | operation value: v]!
+
+fileOutOn: stream
+	"File out the receiver in the regedit text representation to the <puttableStream> argument, stream."
+
+	^self subclassResponsibility!
+
+free
+	"Release external resources held by the receiver.
+	The receiver is still valid after this call."
+
+	self isRoot ifFalse: [
+		self basicFree. 
+		handle := nil]!
+
+fullPath
+	"Answer the full path to the receiver."
+
+	^self isRoot
+		ifTrue: [name]
+		ifFalse: [rootKey name, '\', self pathFromRoot]!
+
+handle
+	"Answer the value of the receiver's instance variable handle.
+	This method was automatically generated, but may be modified."
+
+	^handle!
+
+handle: aRegistryKeyHandle
+	"Private - Set the receiver's handle to the specified registry
+	key handle (either one of the predefined HKEY_XX constants,
+	or a handle returned from RegOpenKeyEx())"
+
+	handle := aRegistryKeyHandle!
+
+hash
+	"Answer the positive <integer> hash value for the receiver."
+
+	^self fullPath hash!
+
+includesKey: key
+	"Answer whether the receiver has a key equal to the <readableString> 
+	argument, key."
+
+	^self subclassResponsibility!
+
+isRoot
+	"Answer whether the receiver is a root key."
+
+	^handle = rootKey handle!
+
+key
+	"Answer the lookup key of the receiver."
+
+	^self name!
+
+key: newName
+	"Set the lookup key of the receiver to the <readableString>, newName."
+
+	#todo "Implement registry key renaming".
+	^Error notYetImplemented!
+
+keyInfo
+	"Answer the value of the receiver's instance variable info."
+
+	keyInfo isNil ifTrue: [keyInfo := self queryKeyInfo].
+	^keyInfo!
+
+keysAndValuesDo: operation 
+	"Evaluate the <dyadicValuable>, operation, for each key/value pair in the receiver."
+
+	^self subclassResponsibility!
+
+keysDo: operation
+	"Evaluate the <monadicValuable>, operation, for each of the receiver's sub-keys."
+
+	^self subclassResponsibility!
+
+mode: modeSymbol
+	"Set the access mode required of the receiver, e.g. #readWrite, or #read."
+
+	self sam: (AccessModes at: modeSymbol)
+!
+
+name
+	"Answer the value of the receiver's instance variable name.
+	This method was automatically generated, but may be modified."
+
+	^name!
+
+name: keyString parentPath: rootKeyString rootKey: aRegKey sam: samDesired
+	"Private - Initialize the receiver's identity instance variables."
+
+	name := keyString.
+	parentPath := rootKeyString.
+	rootKey := aRegKey.
+	sam := samDesired!
+
+newSubKey: aString sam: anInteger 
+	| path splits |
+	path := self pathFromRoot.
+	splits := self splitPath: (path isEmpty ifTrue: [aString] ifFalse: [(path copyWith: $\) , aString]).
+	^self subKeyClass 
+		name: (splits at: 2)
+		parentPath: (splits at: 1)
+		rootKey: self rootKey
+		sam: anInteger!
+
+objectFromValue: bytes type: type size: size 
+	"Private - Instantiate an appropriate object to represent the registry value with the
+	specified type, content, and size."
+
+	type == REG_SZ 
+		ifTrue: 
+			[^bytes 
+				copy: String
+				from: 1
+				to: (size - 1 max: 0)].
+	type == REG_DWORD ifTrue: [^bytes sdwordAtOffset: 0].
+	type == REG_BINARY ifTrue: [^bytes copyFrom: 1 to: size].
+	type == REG_MULTI_SZ 
+		ifTrue: 
+			["Array of null-terminated strings that are terminated by two null characters."
+			| stream strings len |
+			stream := bytes readStream.
+			strings := OrderedCollection new.
+			len := size - 1.	"Allow for extra null"
+			[stream position >= len] whileFalse: [strings add: (stream upTo: 0) asString].
+			^strings asArray].
+	type == REG_NONE ifTrue: [^nil].
+	type == REG_EXPAND_SZ 
+		ifTrue: 
+			[^KernelLibrary default expandEnvironmentStrings: (bytes 
+						copy: String
+						from: 1
+						to: (size - 1 max: 0))].
+	type == REG_QWORD ifTrue: [^bytes sqwordAtOffset: 0].
+	Notification signal: 'Unrecognised registry value type treated as binary: ' , type printString.
+	^bytes copyFrom: 1 to: size!
+
+parentKey
+	"Answer the parent key of the receiver, or nil if at a root."
+
+	| path splits |
+	self isRoot ifTrue: [^nil].
+	path := self parentPath.
+	path isEmpty ifTrue: [^self rootKey].
+	splits := self splitPath: path.
+	^self subKeyClass 
+		name: (splits at: 2)
+		parentPath: (splits at: 1)
+		rootKey: self rootKey
+		sam: self sam!
+
+parentPath
+	"Answer the value of the receiver's instance variable parentPath.
+	This method was automatically generated, but may be modified."
+
+	^parentPath!
+
+pathFromRoot
+	"Answer the full path to the receiver from the root key (N.B. doesn't include the hive such
+	as HKEY_CLASSES_ROOT)."
+
+	^self isRoot 
+		ifTrue: ['']
+		ifFalse: [parentPath isEmpty ifTrue: [name] ifFalse: [(parentPath copyWith: $\) , name]]!
+
+printOn: aStream
+	"Append a short textual description of the receiver to aStream."
+
+	aStream 
+		basicPrint: self; 
+		nextPut: $(;
+		nextPutAll: (handle isNil ifTrue: ['NULL'] ifFalse: [handle asInteger printStringRadix: 16]);
+		nextPutAll: ' - ';
+		print: self fullPath;
+		nextPut: $)!
+
+privateCreateKey: aString 
+	"Private - Create or open a registry key under the receiver with the specified relative path
+	from here (note that this implies that more than one level can be created at once, and this
+	is indeed the case!!). Answers the new key. N.B. The new key is still open at this time, and
+	MUST be freed."
+
+	| subKey dwErr rights |
+	subKey := ExternalHandle new.
+	rights := self sam.
+	dwErr := self registryLibrary 
+				regCreateKeyEx: self asParameter
+				lpSubKey: aString
+				reserved: nil
+				lpClass: ''
+				dwOptions: REG_OPTION_NON_VOLATILE
+				samDesired: self sam
+				lpSecurityAttributes: nil
+				phkResult: subKey
+				lpdwDisposition: nil.
+	dwErr == ERROR_SUCCESS ifFalse: [^Win32Error signalWith: dwErr].
+	keyInfo := nil.	"keyInfo invalidated"
+	self free.
+	^(self newSubKey: aString sam: rights)
+		handle: subKey;
+		yourself!
+
+queryKeyInfo
+	"Answer a bunch of information about the receiver."
+
+	| "classString cbClass" cSubKeys cbMaxSubKeyLen "cbMaxClassLen" cValues cbMaxValueNameLen
+	cbMaxValueLen "cbSecurityDescriptor" ftLastWriteTime dwErr prevHandle |
+
+	"classString := String new: 256.
+	cbClass := DWORDBytes fromInteger: classString basicSize."
+
+	cSubKeys := DWORDBytes new.
+	cbMaxSubKeyLen := DWORDBytes new.
+	"cbMaxClassLen := DWORDBytes new."
+	cbMaxSubKeyLen := DWORDBytes new.
+	cbMaxSubKeyLen := DWORDBytes new.
+	cValues := DWORDBytes new.
+	cbMaxValueNameLen := DWORDBytes new.
+	cbMaxValueLen := DWORDBytes new.
+	"cbSecurityDescriptor := DWORDBytes new."
+	ftLastWriteTime := FILETIME new.
+
+	prevHandle := self handle.
+
+	dwErr := ERROR_SUCCESS.
+	[dwErr := self registryLibrary regQueryInfoKey: self asParameter
+		lpClass: nil"classString"
+		lpcbClass: nil"cbClass "
+		lpReserved: nil
+		lpcSubKeys: cSubKeys
+		lpcbMaxSubKeyLen: cbMaxSubKeyLen
+		lpcbMaxClassLen: nil"cbMaxClassLen"
+		lpcValues: cValues
+		lpcbMaxValueNameLen: cbMaxValueNameLen
+		lpcbMaxValueLen: cbMaxValueLen
+		lpcbSecurityDescriptor: nil"cbSecurityDescriptor"
+		lpftLastWriteTime: ftLastWriteTime]
+	on: Win32Error do: [:e |
+		e tag = ERROR_ACCESS_DENIED 
+			ifTrue: [e notify]
+			ifFalse: [e pass]]
+	on: NotFoundError do: [:e | e notify].
+
+	dwErr = ERROR_SUCCESS
+		ifFalse: [^self registryLibrary systemError: dwErr].
+
+	"We avoid keeping the key open just to query the info ..."
+	prevHandle isNil ifTrue: [self free].
+
+	"Why on earth isn't all this in a structure?"
+	^RegQueryInfo new
+		"keyClass: (classString copyFrom: 1 to: cbClass asInteger);"
+		subKeyCount: cSubKeys asInteger;
+		maxSubKeyLen: cbMaxSubKeyLen asInteger;
+		"maxClassNameLen: cbMaxClassLen asInteger;"
+		valueCount: cValues asInteger;
+		maxValueNameLen: cbMaxValueNameLen asInteger;
+		maxValueLen: cbMaxValueLen asInteger;
+		"securityDescriptorLen: cbSecurityDescriptor asInteger;"
+		lastWriteTime: ftLastWriteTime!
+
+realize
+	"Realize (create) the external resource associated with the receiver,
+	but only if not already realized."
+
+	handle isNil ifTrue: [self basicRealize]!
+
+registryLibrary
+	"Private - Answer the host system shared DLL used
+	to access the registry."
+
+	^AdvApiLibrary default!
+
+removeKey: key ifAbsent: exceptionHandler
+	"Remove the key (and its associated value), from the receiver. If key is
+	not in the receiver, answer the result of evaluating the <niladicValuable>,
+	exceptionHandler. Otherwise, answer the value named by key."
+
+	^self subclassResponsibility!
+
+removeSubKey: aString ifAbsent: exceptionHandler
+	"Remove the specified sub-key of the receiver.
+	N.B. This behaves differently between NT and 95: On the former this fails
+	if the key has sub-keys, on the latter all the sub-keys are deleted too."
+
+	| dwErr |
+	dwErr := self registryLibrary
+		regDeleteKey: self asParameter
+		lpSubKey: aString.
+	self free.
+	^dwErr = ERROR_SUCCESS
+		ifTrue: [aString]
+		ifFalse: [
+			dwErr = ERROR_FILE_NOT_FOUND
+				ifTrue: [exceptionHandler value]
+				ifFalse: [self registryLibrary systemError: dwErr]]!
+
+removeSubTree: aString ifAbsent: exceptionHandler
+	"Recursively remove the specified sub-tree of the receiver."
+
+	| subKey |
+	aString isNil ifTrue: [^exceptionHandler value].
+	subKey := self at: aString ifAbsent: [^exceptionHandler value].
+	subKey keys do: [:s | subKey removeSubTree: s ifAbsent: []].
+	self removeSubKey: aString ifAbsent: exceptionHandler.
+	^subKey!
+
+removeSubValue: aString ifAbsent: exceptionHandler
+	"Remove the specified sub-value of the receiver."
+
+	| dwErr |
+	dwErr := self registryLibrary
+		regDeleteValue: self asParameter
+		lpValueName: aString.
+	self free.
+	^dwErr = ERROR_SUCCESS
+		ifTrue: [aString]
+		ifFalse: [
+			dwErr = ERROR_FILE_NOT_FOUND
+				ifTrue: [exceptionHandler value]
+				ifFalse: [self registryLibrary systemError: dwErr]]!
+
+resize: anInteger
+	"Private - Resize the receiver to have a capacity suitable for accomodating
+	at least anInteger elements. Answer the receiver (resized). The receiver is
+	rehashed regardless of whether it is already of the correct capacity (this
+	is important).
+
+	The Registry is an external dictionary, and it isn't really our business to be
+	maintaining its internal structure!!"
+
+	^self
+!
+
+rootHandle
+	"Answer the handle of the receiver's registry hive."
+
+	^rootKey handle!
+
+rootKey
+	"Answer the value of the receiver's instance variable rootKey.
+	This method was automatically generated, but may be modified."
+
+	^rootKey!
+
+sam
+	"Answer an <Integer> representing the receiver's access right flags."
+
+	^sam!
+
+sam: anInteger
+	"Set the security access mode to the argument. This controls what security rights
+	are requested when opening the key. If the user does not have significant priviledges
+	for the requested rights, then an error will be raised when an attempt is made to
+	use the receiver."
+
+	sam = anInteger ifFalse: [
+		"SAM is being changed, need to reopen"
+		sam := anInteger.
+		self free]!
+
+shrink
+	"Rebuild the collection with the optimal size for its current number of elements.
+	The Registry is an external dictionary, and it isn't really our business to be
+	maintaining its internal structure!!"
+
+	^self!
+
+size
+	"Answer the number of elements in the receiver."
+
+	^self subclassResponsibility!
+
+species
+	"Answer the class of object to be used when copying the receiver. 
+	We override to answer <Dictionary>, since any collection of registry keys
+	constructed by select:/collect: &c is no longer directly related to the actual
+	registry hierarchy."
+
+	^Dictionary!
+
+splitPath: path 
+	| stem lastSlash superPath |
+	lastSlash := path lastIndexOf: $\.
+	lastSlash == 0 
+		ifTrue: 
+			[superPath := ''.
+			stem := path]
+		ifFalse: 
+			[superPath := path leftString: lastSlash - 1.
+			stem := path rightString: path size - lastSlash].
+	^Array with: superPath with: stem!
+
+subKeyClass
+	"Private - Answer the class of association to be used for holding
+	key-value pairs in the receiver. Must respond to the Association protocol."
+	
+	^RegKey!
+
+subKeyNamesDo: operation
+	"Private - Evaluate the monadic valuable, operation, for each of the receiver's sub-keys."
+
+	| maxSize i lib keyName dwErr cbName hKey |
+	hKey := self asParameter.	"ensure realized at start so not closed by queryKeyInfo"
+	maxSize := self keyInfo maxSubKeyLen+1.
+	i := 0.
+	keyName := String new: maxSize.
+	cbName := DWORDBytes new.
+	lib := self registryLibrary.
+	[
+		[cbName value: maxSize+1.
+		(dwErr := lib
+	        		regEnumKeyEx: hKey
+			dwIndex: i
+			lpName: keyName
+			lpcbName: cbName
+			lpReserved: nil
+			lpClass: nil
+			lpcbClass: nil
+			lpftLastWriteTime: nil) = 16rEA] whileTrue: [
+				maxSize := maxSize bitShift: 1.
+				keyName resize: maxSize].
+		dwErr = ERROR_SUCCESS]
+        whileTrue: [
+		operation value: (keyName copyFrom: 1 to: cbName asInteger).
+		i := i + 1].
+	self free.
+	dwErr = ERROR_NO_MORE_ITEMS 
+		ifFalse: [^self registryLibrary systemError: dwErr].!
+
+subKeys
+	"Answer the collection of sub-keys under the receiver (a RegKey)."
+
+	^self subclassResponsibility!
+
+subValueClass
+	"Private - Answer the class of association to be used for holding
+	key-value pairs in the receiver. Must respond to the Association protocol."
+	
+	^RegKeyValues!
+
+subValueNamesAndValuesDo: operation
+	"Evaluate the dyadic valuable, operation, for each of the receiver's
+	sub-values, passing its name and an object corresponding to the
+	registry entry as the first and second arguments respectively."
+
+	|  valueName i lib cbValueName dwErr maxNameSize maxDataSize info data cbData type hKey |
+	i := 0.
+	hKey := self asParameter.
+	info := self keyInfo.
+	maxNameSize := info maxValueNameLen.
+	maxDataSize := info maxValueLen.
+	valueName := String new: maxNameSize.					"Strings automatically include space for null-term"
+	data := ByteArray new: maxDataSize.
+	cbValueName := DWORDBytes new.
+	cbData := DWORDBytes new.
+	type := DWORDBytes new.
+	lib := self registryLibrary.
+	[
+		cbValueName value: maxNameSize +1.					"must include Null terminator"
+		cbData value: maxDataSize.
+		dwErr := (lib
+				regEnumValue: hKey
+				dwIndex: i
+				lpValueName: valueName
+				lpcbValueName: cbValueName
+				lpReserved: nil 
+				lpType: type 
+				lpData: data 
+				lpcbData: cbData).
+		dwErr = ERROR_SUCCESS]
+        whileTrue: [
+		operation 
+			value: (valueName copyFrom: 1 to: cbValueName asInteger)
+			value: (self objectFromValue: data type: type asInteger size: cbData asInteger).
+		i := i + 1].
+	self free.
+	dwErr = ERROR_NO_MORE_ITEMS
+		ifFalse: [lib systemError: dwErr]!
+
+subValueNamesDo: operation
+	"Evaluate the monadic valuable, operation, for each of the receiver's
+	value names."
+
+	|  valueName i lib cbValueName dwErr maxSize hKey |
+	i := 0.
+	hKey := self asParameter.
+	maxSize := self keyInfo maxValueNameLen.
+	valueName := String new: maxSize.					"Strings automatically include space for null-term"
+	cbValueName := DWORDBytes new.	
+	lib := self registryLibrary.
+	[
+		cbValueName value: maxSize +1.					"must include Null terminator"
+		dwErr := (lib
+				regEnumValue: hKey
+				dwIndex: i
+				lpValueName: valueName
+				lpcbValueName: cbValueName
+				lpReserved: nil 
+				lpType: nil 
+				lpData: nil 
+				lpcbData: nil).
+		dwErr = ERROR_SUCCESS]
+        whileTrue: [
+		operation value: (valueName copyFrom: 1 to: cbValueName asInteger).
+		i := i + 1].
+	self free.
+	dwErr = ERROR_NO_MORE_ITEMS
+		ifFalse: [lib systemError: dwErr].
+!
+
+subValues
+	"Answer the collection of sub-values under the receiver (a RegKeyValues)."
+
+	^self subclassResponsibility!
+
+value
+	"Answer the default value for the receiver, or nil if none."
+
+	^self valueAt: '' ifAbsent: []!
+
+value: aValue
+	"Set the default value of the receiver to the registry compatible 
+	<Object>, aValue."
+
+	self valueAt: '' put: aValue!
+
+valueAt: key
+	"Answer the registry value subordinate to the receiver named by the 
+	<readableString> argument, key.  If the named value is not found,
+	then raise a NotFoundError. May also raise a Win32Error exception if 
+	registry access fails for some other reason."
+
+	^self valueAt: key ifAbsent: [self errorNotFound: key]!
+
+valueAt: key ifAbsent: exceptionHandler 
+	"Answer the value named by the argument, key.  If keyString is not found,
+	answer the result of evaluating the niladic valuable, exceptionHandler.
+	May raise a Win32Error exception if registry access fails for some
+	reason."
+
+	| size type valueBuf dwErr hKey |
+	type := DWORDBytes new.
+	hKey := self asParameter.
+	size := self keyInfo maxValueLen.
+	valueBuf := ByteArray newFixed: size.
+	size := DWORDBytes fromInteger: size.
+	dwErr := self registryLibrary 
+				regQueryValueEx: hKey
+				lpValueName: key
+				lpReserved: nil
+				lpType: type
+				lpData: valueBuf
+				lpcbData: size.
+	self free.
+	^dwErr = ERROR_SUCCESS 
+		ifTrue: 
+			[self 
+				objectFromValue: valueBuf
+				type: type asInteger
+				size: size asInteger]
+		ifFalse: 
+			[dwErr = ERROR_FILE_NOT_FOUND 
+				ifTrue: [exceptionHandler value]
+				ifFalse: [self registryLibrary systemError: dwErr]]!
+
+valueAt: aString put: anObject 
+	"Set the value in the receiver with the <readableString> name, aString, to the <Object>,
+	anObject."
+
+	| assoc |
+	assoc := self valueFromObject: anObject.
+	self 
+		valueAt: aString
+		put: assoc value
+		type: assoc key.
+	^anObject!
+
+valueAt: aString put: anObject type: aSymbol 
+	| size result info |
+	(aString isNil and: [aSymbol == #none]) 
+		ifTrue: 
+			[self removeSubValue: aString ifAbsent: [].
+			^anObject].
+	size := anObject byteSize.
+	result := AdvApiLibrary default 
+				regSetValueEx: self asParameter
+				lpValueName: aString
+				reserved: 0
+				dwType: (ValueTypes at: aSymbol)
+				lpData: anObject
+				cbData: size.
+	result == ERROR_SUCCESS ifFalse: [^Win32Error signalWith: result].
+	info := self keyInfo.
+	size > info maxValueLen ifTrue: [info maxValueLen: size].
+	^anObject!
+
+valueFromObject: value 
+	"Private - This is nasty, but we don't want to modify the base classes to support a
+	conversion function..."
+
+	value isNil ifTrue: [^#none -> #[]].
+	value isInteger 
+		ifTrue: 
+			[(value between: ##(-2 ** 31) and: ##(2 ** 31 - 1)) 
+				ifTrue: [^#dword -> (DWORD fromInteger: value)]
+				ifFalse: 
+					[(value between: ##(-2 ** 63) and: ##(2 ** 63 - 1)) ifTrue: [^#qword -> (QWORD fromInteger: value)]]].
+	(value isKindOf: String) ifTrue: [^#string -> value].
+	(value isKindOf: Array) 
+		ifTrue: 
+			["Assume its an array of strings"
+			| stream |
+			stream := String writeStream.
+			value do: 
+					[:each | 
+					stream
+						display: each;
+						nextPut: Character null].
+			^#stringArray -> stream contents].
+	^#binary -> value asByteArray! !
+
 SystemDictionary comment:
 'Class of the root of the system. SystemDictionary''s single instance (Smalltalk) 
 provides associative access to all global objects in the system.'!
@@ -41160,6 +42635,258 @@ species
 	which is less than useful."
 
 	^IdentityDictionary! !
+
+RegKey comment:
+'RegKey is the class of objects which represent individual keys in the Windows Registration Database. The keys may themselves have sub-keys which are in turn represented by instances of RegKey. A RegKey is also a dictionary of registry values represented in Dolphin by instances of <RegKeyValues>.
+
+RegKey implements the <abstractDictionary> protocol as operations against its sub-keys. In order to operate on the values under the key one must first acquire an instance of RegKeyValues using the #subValues message.'!
+!RegKey class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class.
+	Use the one from the real Windows Registry Editor for fun."
+
+	^##(self) defaultIcon! !
+
+!RegKey methodsFor!
+
+at: key ifAbsent: exceptionHandler
+	"Answer the value named by the <readableString> argument, key.  If the key is not found,
+	answer the result of evaluating the niladic valuable, exceptionHandler.
+	May also raise a Win32Error exception if registry access fails for some reason."
+
+	^(self includesKey: key)
+		ifTrue: [self privateAt: key]
+		ifFalse: [exceptionHandler value]!
+
+at: key put: anObject
+	"Store the argument anObject with the <readableString> 
+	external key, key, in the receiver. Answer anObject.
+	For a registry key, this translates to setting the default value
+	of the subKey named, key, to anObject.
+	Implementation Note: If anObject is nil, then any existing
+	default value for the key must be removed (see #valueAt:put:)."
+
+	| subKey |
+	subKey := self privateCreateKey: key.
+	subKey valueAt: nil put: anObject.
+	subKey free.
+	^anObject!
+
+fileOutOn: aStream
+	"File out the receiver in the regedit text representation to the <puttableStream> argument."
+
+	aStream
+		nextPut: $[;
+		nextPutAll: self fullPath;
+		nextPut: $];
+		cr.
+	self subValues fileOutOn: aStream.
+	aStream cr.
+	self do: [:sk | sk fileOutOn: aStream]!
+
+includesKey: keyString
+	"Answer whether the receiver has a key equal to the argument, key"
+
+	| subKey dwErr lib |
+	subKey := ExternalHandle new.
+	lib := self registryLibrary.
+	dwErr := lib
+		regOpenKeyEx: self asParameter
+			lpSubKey: keyString
+			ulOptions: 0
+			samDesired: KEY_READ
+			phkResult: subKey.
+	lib regCloseKey: subKey.
+	self free.
+	^dwErr = ERROR_SUCCESS!
+
+keysAndValuesDo: operation
+	"Evaluate the <dyadicValuable>, operation, for each key/value pair in the receiver."
+
+	^self keysDo: [:k | operation value: k value: (self privateAt: k)]!
+
+keysDo: operation
+	"Evaluate the monadic valuable, operation, for each of the receiver's sub-keys."
+
+	^self subKeyNamesDo: operation!
+
+privateAt: aString 
+	"Private - Answer the named sub-key of the receiver without error checking.
+	The new key inherits the same access rights."
+
+	^self newSubKey: aString sam: self sam!
+
+removeKey: key ifAbsent: exceptionHandler
+	"Remove the key (and its associated value), from the receiver. If key is
+	not in the receiver, answer the result of evaluating the niladic valuable,
+	exceptionHandler. Otherwise, answer the value named by key.
+	N.B. At present we delete the entire sub-tree below the specified
+	key, which Windows 95 does anyway."
+
+	^self removeSubTree: key ifAbsent: exceptionHandler!
+
+size
+	"Answer the number of elements in the receiver.
+	If insufficient access is available to determine the key info, then fill 
+	it is filled out with sensible null values."
+
+	^self keyInfo subKeyCount!
+
+subKeys
+	"Answer an <abstractDictionary> of sub-keys in the receiver (a RegKey)."
+
+	^self!
+
+subValues
+	"Answer an <abstractDictionary> of sub-keys in the receiver (a RegKeyValues)."
+
+	^(self subValueClass
+		name: self name
+		parentPath: self parentPath
+		rootKey: self rootKey
+		sam: self sam)
+			handle: self handle;
+			yourself
+	! !
+
+RegKeyValues comment:
+'RegKeyValues is the class of objects which represent the dictionary of named values under a particular key in  the Windows Registration Database.
+
+RegKeyValues implements the <abstractDictionary> protocol mapping value names to keys and the registry values to dictionary values.'!
+!RegKeyValues class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class.
+	Use the one from the real Windows Registry Editor for fun."
+
+	^##(self) defaultIcon! !
+
+!RegKeyValues methodsFor!
+
+associationAt: key ifAbsent: exceptionHandler
+	"Answer a new <association> between the key and value of
+	the receiver at the argument, key.  If key is not found, answer the
+	result of evaluating the <niladicValuable>, exceptionHandler."
+
+	^self associationClass
+		key: key
+		value: (self at: key ifAbsent: [^exceptionHandler value])!
+
+at: key ifAbsent: exceptionHandler
+	"Answer the value named by the argument, key.  If keyString is not found,
+	answer the result of evaluating the niladic valuable, exceptionHandler.
+	May also raise a Win32Error exception if registry access fails for some
+	reason."
+
+	^self valueAt: key ifAbsent: exceptionHandler!
+
+at: key put: anObject
+	"Store the argument anObject with the external key, aKey,
+	in the receiver. Answer anObject"
+
+	^self valueAt: key put: anObject!
+
+changeKey: key to: newKey
+	"Private - Change the key of the element of the receiver with key, key, to
+	newKey (e.g. rename a  registry value). Answer the value of the element
+	whose key was changed."
+
+	| assoc |
+	assoc := self associationAt: key.
+	assoc key: newKey.
+	self add: assoc.
+	self removeKey: key.
+	^assoc!
+
+fileOutOn: stream 
+	"File out the receiver in the regedit text representation to the <puttableStream> argument, stream."
+
+	self keysAndValuesDo: 
+			[:k :v | 
+			| wrapAt |
+			wrapAt := stream position + 76.
+			k isEmpty 
+				ifTrue: [stream nextPut: $@]
+				ifFalse: 
+					[stream
+						nextPut: $";
+						nextPutAll: k;
+						nextPut: $"].
+			stream nextPut: $=.
+			v isInteger 
+				ifTrue: 
+					[stream
+						nextPutAll: 'dword:';
+						nextPutAll: ('%08x' sprintfWith: v)]
+				ifFalse: 
+					[(v isKindOf: String) 
+						ifTrue: 
+							[stream
+								nextPut: $";
+								nextPutAll: v;
+								nextPut: $"]
+						ifFalse: 
+							[stream nextPutAll: 'hex:'.
+							v do: 
+									[:b | 
+									stream position > wrapAt 
+										ifTrue: 
+											[stream
+												nextPut: $\;
+												cr;
+												space;
+												space.
+											wrapAt := stream position + 74].
+									stream nextPutAll: ('%02x' sprintfWith: b)]
+								separatedBy: [stream nextPut: $,]]].
+			stream cr]!
+
+includesKey: keyString
+	"Answer whether the receiver has a key equal to the argument, key"
+
+	self at: keyString ifAbsent: [^false].
+	^true!
+
+keysAndValuesDo: operation
+	"Evaluate the monadic valuable, operation, for each of the receiver's names and values."
+
+	^self subValueNamesAndValuesDo: operation!
+
+keysDo: operation
+	"Evaluate the monadic valuable, operation, for each of the receiver's sub-keys."
+
+	^super subValueNamesDo: operation!
+
+removeKey: key ifAbsent: exceptionHandler
+	"Remove the key (and its associated value), from the receiver. If key is
+	not in the receiver, answer the result of evaluating the niladic valuable,
+	exceptionHandler. Otherwise, answer the value named by key.
+	N.B. At present we use the delete the entire sub-tree below the specified
+	key, which Windows 95 does anyway."
+
+	^self removeSubValue: key ifAbsent: exceptionHandler!
+
+size
+	"Answer the number of elements in the receiver."
+
+	^self keyInfo valueCount!
+
+subKeys
+	"Answer an <abstractDictionary> of sub-keys in the receiver (a RegKey)."
+
+	^(self subKeyClass
+		name: self name
+		parentPath: self pathFromRoot
+		rootKey: self rootKey
+		sam: self sam)
+			handle: self handle;
+			yourself!
+
+subValues
+	"Answer an <abstractDictionary> of sub-keys in the receiver (a RegKeyValues)."
+
+	^self! !
 
 SharedIdentitySet comment:
 ''!
@@ -47680,7 +49407,7 @@ debugDump: msgString
 !
 
 defaultProductDetails
-	"Private - Answers a seven element<Array> describing the default
+	"Private - Answers an eight element<Array> describing the default
 	 version of the development environment as based on the VM version.
 
 	1. <readableString> Product name 
@@ -47689,18 +49416,20 @@ defaultProductDetails
 	4. <readableString> Version special
 	5. <Integer> Image patch level
 	6 <readableString> Very short name
-	7 <readableString> Serial number"
+	7 <readableString> Serial number
+	8 <readableString> Boot source version information"
 
 	| version |
 	version := self versionInfo.
-	^(Array new: 7)
+	^(Array new: 8)
 		at: 1 put: (version formatVersionString: '%1 %2!!d!!');
 		at: 2 put: (version formatVersionString: '%1');
 		at: 3 put: (Float fromString: (version formatVersionString: '%3!!d!!.%4!!d!!'));
 		at: 4 put: version specialBuild;
 		at: 5 put: self basePatchLevel;
-		at: 6 put: 'DX6';
+		at: 6 put: 'D7';
 		at: 7 put: nil; "Serial #"
+		at: 8 put: nil; "Boot info"
 		yourself!
 
 displayDesktopMessage: aString 
@@ -47971,6 +49700,15 @@ stringFromAddress: pointer
 	addr := pointer isInteger ifTrue: [pointer asExternalAddress] ifFalse: [pointer].
 	len := addr indexOf: 0.
 	^addr copyStringFrom: 1 to: len - 1!
+
+unlockVM: productId expireAfter: months flags: flags
+	"Private - Attempts to unlock the image. Registers the given <Integer> productId within the image
+	and extends the expiry period by <Integer> months. If months is zero then the expiry period is
+	extended indefinitely. The <integer>, flags, specifies various flags. At present the only flag is
+	16r1, meaning that the image is to be machine locked (i.e. a fixed rather than floating license)."
+
+	<primitive: 93>
+	^self error: 'Unable to unlock image - please contact Dolphin Support'!
 
 unregisterObject: anObject 
 	| i |
@@ -60222,6 +61960,793 @@ size
 
 	^list size! !
 
+AspectBuffer comment:
+'An AspectBuffer is used to buffer changes to the aspects of a subject object. These changes are held in a copy of the subject until the buffer receives an #apply message. A client of the buffer can request an aspect for the subject using #aspectValue: and it will receive an appropriate <ValueAspectAdapter>. Only the aspects that have been explicitly requested and then modified will be updated back to the subject when #apply is received.  
+ 
+In order to be correctly used with an AspectBuffer, a subject object must be able to be sensibly duplicated using #copy. The advantage of keeping a complete copy of the subject within the buffer is that the validity of any changes made to it can be tested using #isValid before the changes are applied back. By default the validation check is made by sending #isValid to the subject copy. This default can be modified  by changing the isValidBlock in the buffer.
+
+Instance Variables:
+	subject		<Object> which is the subject whose aspects are being buffered.
+	subjectCopy	<Object> copy of the subject.
+	aspects		<IdentityDictionary> mapping put selectors of changed aspects to their values.
+	gate		<ValueHolder> which when set true apply changes back to the subject.
+	isValidBlock	<monadicValuable> to determine of the subject copy is valid before applying changes.
+
+'!
+!AspectBuffer class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^##(self) defaultIcon!
+
+new
+	"Private - Use #subject:"
+
+	self shouldNotImplement!
+
+subject: aSubjectModel
+	"Answer an instance of the receiver that buffers the aspects of aSubjectModel"
+
+	^super new subject: aSubjectModel
+! !
+
+!AspectBuffer methodsFor!
+
+apply
+	"Apply the aspects held by the receiver in the model copy back to the 
+	original model"
+
+	aspects do: [:each | 
+		self subject perform: each putSelector with: each value ]
+!
+
+aspectValue: anAspectSymbol
+	"Answer a ValueAspectAdapter for anAspectSymbol of our copied model. 
+	If a request for this aspect has already been registered then the same
+	adapter model is answered. Otherwise a new one is created and registered
+	in our aspects dictionary"
+
+	^aspects at: anAspectSymbol ifAbsentPut: [
+			ValueAspectAdaptor subject: subjectCopy aspect: anAspectSymbol]!
+
+doesNotUnderstand: aMessage
+	"The receiver has not understood aMessage. Most likely this is because it was intended for
+	the buffered copy of the subject so we forward to this."
+
+	^aMessage forwardTo: subjectCopy!
+
+gate
+	"Answer the gate value model that controls when (and if) changes will be 
+	flushed back to the original model."
+
+	^gate!
+
+gate: aValueModelGate
+	"Set the gate model to be aValueModelGate. Changes will be flushed back to 
+	the original model when the value of aValueModelGate is set
+	to true."
+
+	gate := aValueModelGate.
+	gate when: #valueChanged send: #onGateChanged to: self.!
+
+initialize
+	"Private - Initialize the receiver"
+
+	gate := false asValue.
+	aspects := IdentityDictionary new.
+	isValidBlock := [:x | x isValid]!
+
+isValid
+	"Answer true if the updates to the model copy are valid.
+	Evaluate the isValidBlock to check validity of the copy"
+
+	^self isValidBlock value: subjectCopy!
+
+isValidBlock
+	"Answer the validation block for the receiver"
+
+	^isValidBlock!
+
+isValidBlock: aOneArgBlock
+	"Sets the validation block to aOneArgBlock which will be passed the subject copy
+	as its parameter. The block should answer true if the copy can be considered to be
+	valid such that it's changes can be applied back to the actual subject"
+
+	isValidBlock := aOneArgBlock!
+
+notifyChanged
+	"Notify observers that all aspects of the receiver have changed."
+
+	aspects do: [:each | each notifyChanged]!
+
+onGateChanged
+	"Private - Received when the gate has been triggered. 
+	Use this to either flush changes back to the subject if required"
+
+	self gate value ifTrue: [ self apply ]!
+
+revert
+	"Revert the aspects held by the receiver to their values from the original subject"
+
+	subjectCopy := self subject copy.
+	aspects do: [:each | 
+		each subject: subjectCopy.
+		each notifyChanged ].
+!
+
+subject
+	"Answer the subject model of the receiver"
+
+	^subject
+
+	!
+
+subject: aSubjectModel
+	"Attach the receiver to aSubjectModel. The model must respond intelligently to #copy
+	since copy of it is made here to be used as the buffer for future updates"
+
+	subject := aSubjectModel.
+	subjectCopy := aSubjectModel copy.
+	aspects := IdentityDictionary new.
+
+	!
+
+value
+	"Answer the copy of the subject model"
+
+	^subjectCopy! !
+
+ValueModel comment:
+'ValueModel is an abstract class whose subclasses provide the capability to adapt the protocol of a subject object to a simple <value> protocol. The intention is to allow general purpose objects, such as <views>, to interact with more specific objects, by providing an adapted layer between them. A client of a <valueModel> can set the value of the subject using a #value: message and similarly the value can be retrieved by sending #value:. 
+
+An additional benefit is that <valueModel>s trigger a #value change notification whenever  the value is modified. This allows <valueModel>s to share data with several observers following the standard Observer pattern.  All <valueModel>s hold a <ComparisonPolicy> which determines when to trigger an update notification that the value has changed. By default, a change is notified when an attempt is made to set the value to a new one which is not equal to the existing value. 
+ 
+The most commonly used subclass of ValueModel is ValueHolder whose instances wrap a subject object and use this as the value. 
+
+Instance Variables:
+	comparisonPolicy	<ComparisonPolicy> for determining whether a new value is different from the existing value
+'!
+!ValueModel class methodsFor!
+
+comparisonPolicy: aComparisonPolicy
+	"Answer a new instance of the receiver with the specified comparison
+	policy and a 'nil' initial value."
+
+	^(self new)
+		comparisonPolicy: aComparisonPolicy;
+		yourself!
+
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^##(self) defaultIcon!
+
+stbConvertFrom: anSTBClassFormat
+	"Convert from earlier version models.
+	2: Added 'settingValue' instance variable."
+
+	^[:data | | newInst offset |
+		newInst := self basicNew.
+		(anSTBClassFormat version=0) ifTrue: [offset := 2].
+		(anSTBClassFormat version=1) ifTrue: [offset := 1].
+		data keysAndValuesDo: [:i :v | newInst instVarAt: i+offset put: v].
+		newInst]!
+
+stbVersion
+	"Answer the current binary filer version number for instances of the receiver."
+
+	^2! !
+
+!ValueModel methodsFor!
+
+aspectAdaptorClass
+	^ValueModelAspectAdaptor!
+
+asValue
+	"Answer the receiver as a ValueModel"
+
+	^self!
+
+canGet
+	"Private - Answer whether the receiver can be read using #value."
+
+	^true!
+
+canSet
+	"Private - Answer whether the receiver can be set using #value:."
+
+	^true!
+
+comparisonPolicy
+	"Answer the ComparisonPolicy for the receiver. This is used
+	to determine whether a value has actually been changed and
+	therefore whether dependents should be informed of the event"
+
+	^comparisonPolicy!
+
+comparisonPolicy: aComparisonPolicy
+	"Sets the comparison policy to be used by the receiver.
+	This is used to determine whether a value has actually been 
+	changed and therefore whether dependents should be informed 
+	of the event"
+
+	comparisonPolicy := aComparisonPolicy!
+
+defaultComparisonPolicy
+	"Private - Answer the default comparison policy to use for the receiver.
+	By default we don't want to trigger change notifications if the values are equal"
+
+	^SearchPolicy equality!
+
+initialize
+	"Private - Initialize the receiver with a default comparison policy that
+	always considers new values as different from existing ones"
+
+	super initialize.
+	self comparisonPolicy: self defaultComparisonPolicy.
+	settingValue := false.!
+
+notifyChanged
+	"Private - The receiver's value has changed. Notify observers appropriately"
+
+	settingValue ifFalse: [ self trigger: #valueChanged ]
+!
+
+printOn: aStream
+	"Append the ASCII representation of the receiver to aStream as a developer would wish to see it."
+
+	super printOn: aStream.
+	aStream nextPut: $(.
+	aStream print: self value.
+	aStream nextPut: $).!
+
+setValue: newValue
+	"Private - Set the value of the receiver to be the <Object> newValue
+	without notifying dependents of the change."
+
+	^self subclassResponsibility!
+
+value
+	"Answer the <Object> value of the receiver."
+
+	^self subclassResponsibility!
+
+value: anObject 
+	"Assigns the value for the receiver and notify dependents if it
+	has changed according to our comparisonPolicy"
+
+	(self comparisonPolicy compare: self value with: anObject) ifTrue: [^self].
+	
+	[settingValue := true.
+	self setValue: anObject] ensure: [settingValue := false].
+	self notifyChanged! !
+
+ValueAdaptor comment:
+'An abstract class whose subclasses allow some part of a subject object (typically an aspect or keyed element) to be treated a <valueModel>.
+
+Instance Variables
+	subject	<Object> whose content will be adapted to be accessed as a <value>'!
+!ValueAdaptor class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^##(self) defaultIcon!
+
+subject: anObject 
+	^(self new)
+		subject: anObject;
+		yourself! !
+
+!ValueAdaptor methodsFor!
+
+displayOn: aStream 
+	"Subclasses must reimplement in order to avoid an infinite recursion in #printOn:"
+
+	^self subclassResponsibility!
+
+printOn: aStream 
+	"Append a short textual description of the receiver to, aStream."
+
+	aStream
+		basicPrint: self;
+		nextPut: $(; display: self; nextPut: $)
+!
+
+subject
+	"Private - Answers the subject model for the receiver"
+
+	^subject
+!
+
+subject: anObject
+	"Private - Sets the subject object"
+
+	subject := anObject.
+! !
+
+ValueConverter comment:
+'A ValueConverter sits between a subject <valueModel> and some <value> client of this. It supports the <valueModel> protocol such that when the client attempts to get the subject value it is converted into another type of object that is more palatable to the client. Similarly when the client tries to put a value back into the subject the type can again be converted, this time to suit the subject''s needs.
+
+An assumption is made that the subject will be a <valueModel> and will therefore trigger its own #value events when it is updated. A ValueConverter simply forwards this event to any of its own clients.
+
+Instance Variables:
+	subject		<valueModel> subject.
+	typeConverter	<typeConverter> for mapping the subject value to another type.
+
+'!
+!ValueConverter class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^##(self) defaultIcon!
+
+new
+	"Private - An instance of this class requires parameters, use: #subject:typeConverter"
+
+	^self shouldNotImplement!
+
+subject: aValueModel typeConverter: aTypeConverter
+	"Answers an instance of the receiver that is a converter of the value of aValueModel
+	using aTypeConverter for the conversion process"
+
+	^super new subject: aValueModel; typeConverter: aTypeConverter; yourself! !
+
+!ValueConverter methodsFor!
+
+format
+	"Answers the format of the current type converter. 
+	Not all type converters support different formats and where they do, the format
+	descriptors are specific to the converter chosen"
+
+	^self typeConverter format!
+
+format: anObject 
+	"Sets the format of the current type converter to be aFormatDescriptor. 
+	Not all type converters support different formats and where they do, the format
+	descriptors are specific to the converter chosen"
+
+	self typeConverter format: anObject!
+
+setValue: aClientObject 
+	"Private - Sets aClientObject back into the subjects's value after first converting it
+	using the associated type converter."
+
+	self subject 
+		value: (self typeConverter convertFromRightToLeft: aClientObject)!
+
+subject
+	"Private - Answers the subject model for the receiver"
+
+	^subject!
+
+subject: anObject
+	"Private - Sets the subject object that is being interfaced
+	to by the receiver and whose value needs converting. If
+	the object is nil, then disconnect from any pre-existing
+	subject."
+
+	anObject isNil 
+		ifTrue: [subject isNil ifFalse: [subject removeEventsTriggeredFor: self]]
+		ifFalse: 
+			[anObject 
+				when: #valueChanged
+				send: #trigger:
+				to: self
+				with: #valueChanged].
+	subject := anObject!
+
+typeConverter
+	"Answers the <TypeConverter> being used by the receiver"
+
+	^typeConverter!
+
+typeConverter: aTypeConverter 
+	"Sets the <TypeConverter> being used by the receiver."
+
+	typeConverter := aTypeConverter!
+
+value
+	"Answer the <Object> value of the receiver."
+
+	^self typeConverter convertFromLeftToRight: self subject value! !
+
+ValueHolder comment:
+'A ValueHolder wraps an object and notifies its dependants when that object is replaced. Since ValueHolders are commonly used, there is a short cut available for creating them. Sending #asValue to any object will answer that object wrapped inside a ValueHolder. 
+
+Instance Variables:
+	value	<Object> which is the value held by the receiver.
+
+'!
+!ValueHolder class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^##(self) defaultIcon!
+
+with: anObject
+	"Answers an instance of the receiver holding anObject as its value"
+
+	^(self new) setValue: anObject; yourself! !
+
+!ValueHolder methodsFor!
+
+setValue: anObject
+	"Private - Assigns the value for the receiver without notifying 
+	dependents of the change"
+	
+	value := anObject!
+
+value
+	"Answers the value of the receiver"
+	
+	^value! !
+
+CompositeValueAdaptor comment:
+'CompositeValueAdaptor is a <valueModel> that provides access to the individual aspects of a composite object through ValueAspectAdaptors, but which treats changes through those aspect adaptors as changes to the whole composite object, i.e. any change to one of its individual aspect causes a CompositeValueAdaptor to trigger a #valueChanged event. This is a useful when implementing a <ValuePresenter> for a composite object that is considered immutable by its clients.'!
+!CompositeValueAdaptor methodsFor!
+
+aspectValue: aSymbol 
+	"Answer a <ValueAspectAdapter> that provides access to the named aspect of our subject model.
+	The aspect adaptor is monitored for any changes that are made through it."
+
+	^(ValueAspectAdaptor subject: subject aspect: aSymbol)
+		when: #valueChanged
+			send: #onAspectChanged
+			to: self;
+		yourself!
+
+displayOn: aStream 
+	"Append a short textual description of the receiver to, aStream, such as would be appropriate for display to an end-user."
+
+	subject displayOn: aStream!
+
+onAspectChanged
+	"Private - An individual aspect of the receiver's subject has been changed through one of
+	the <ValueAspectAdaptor>s provided by the receiver. Inform observers of the change to the
+	subject."
+
+	self trigger: #valueChanged!
+
+setValue: anObject
+	"Private - Assigns the value for the receiver without notifying 
+	dependents of the change"
+	
+	subject := anObject!
+
+value
+	"Answers the <Object> value of the receiver, obtained
+	by sending a message to the receiver's subject."
+
+	^subject! !
+
+ValueAspectAdaptor comment:
+'A ValueAspectAdaptor is capable of adapting an aspect of a subject object and treating this as a <value>. An aspect is considered to be an attribute of an object that can be fetched and set using a pair of accessor methods (aspect and aspect: say). 
+
+ValueAspectAdaptors are typically used in two situations. The first is to adapt an aspect of a model to the generic <value> protocol of #value, #value: messages. This is a common requirement of <dialogPresenter>s which need to present multiple aspects of a model within their sub-presenters. The second is to allow aspects of a domain class which does  not generate change notifications to be used in situations that require them.  
+
+Instance Variables:
+	aspect		<Symbol> identifying the aspect
+	putSelector	<Symbol> message selector used to set the aspect
+	getSelector	<Symbol> message selector used to get the aspect
+'!
+!ValueAspectAdaptor class methodsFor!
+
+new
+	"Private - An instance of this class requires parameters"
+
+	^self shouldNotImplement!
+
+subject: anObject aspect: aSymbol
+	"Answers an instance of the receiver that is an interface onto
+	an aspect of anObject identified by aSymbol"
+
+	^(super new) subject: anObject aspect: aSymbol; yourself! !
+
+!ValueAspectAdaptor methodsFor!
+
+= comperand
+	"Answer whether the receiver is considered equal to the <Object>, comperand."
+
+	^self == comperand or: [
+		self species == comperand species
+			and: [self aspect == comperand aspect 
+				and: [self subject == comperand subject]]]!
+
+aspect
+	"Private - Answers the aspect of the subject that the receiver is to treat as a value"
+
+	^aspect
+!
+
+aspectTriggers: aSymbol
+	"Inform the receiver that we expect the subject to trigger aSymbol whenever the aspect is changed."
+
+	subject when: aSymbol send: #notifyChanged to: self
+!
+
+canGet
+	"Private - Answer whether the receiver can be read using #value."
+
+	^self subject respondsTo: self getSelector!
+
+canSet
+	"Private - Answer whether the receiver can be set using #value:."
+
+	^self subject respondsTo: self putSelector!
+
+displayOn: aStream 
+	"Append a short textual description of the receiver to, aStream"
+
+	aStream
+		display: subject;
+		nextPut: $[;
+		print: self aspect;
+		nextPut: $]!
+
+getSelector
+	"Private - Answers the selector used for getting the aspect value from the subject"
+
+	^getSelector
+!
+
+getValue
+	^self subject perform: self getSelector!
+
+hash
+	"Answer the <Integer> hash value for the receiver."
+
+	^(self aspect hash bitShift: 1) bitXor: self subject hash!
+
+putSelector
+	"Private - Answers the selector used for setting the aspect value into the subject"
+
+	^putSelector
+!
+
+setValue: anObject
+	"Private - Assigns the value for the receiver without notifying 
+	dependents of the change"
+	
+	self subject perform: self putSelector with: anObject.!
+
+subject: anObject aspect: aSymbol 
+	"Private - Sets the subject object and its aspect that is being interfaced
+	to by the receiver"
+
+	self subject: anObject.
+	aspect := aSymbol.
+	getSelector := aspect.
+	putSelector := (aspect , ':') asSymbol!
+
+value
+	"Answers the <Object> value of the receiver, obtained
+	by sending a message to the receiver's subject."
+
+	^self getValue! !
+
+ValueKeyedAdaptor comment:
+'A ValueKeyedAdaptor is capable of adapting a keyed element of a subject object (typically a Collection) and treating this as a <value>. A keyed element one which can be accessed from the subject object using #at: and #at:put:.
+
+Instance Variables:
+	key		<Object> used as the key to access an element of the subject
+	putSelector	<selector> message used to set the aspect
+	getSelector	<selector> message used to get the aspect
+'!
+!ValueKeyedAdaptor class methodsFor!
+
+new
+	"Private - An instance of this class requires parameters"
+
+	^self shouldNotImplement!
+
+subject: anObject key: aKey
+	"Answers an instance of the receiver that is an interface onto
+	an element of anObject identified by aKey"
+
+	^(super new) subject: anObject key: aKey; yourself! !
+
+!ValueKeyedAdaptor methodsFor!
+
+= comperand
+	"Answer whether the receiver is considered equal to the <Object>, comperand.
+	In order to be so the comperand must be of the same species, equal key, and
+	identical subject."
+
+	^self == comperand 
+		or: [self species == comperand species 
+			and: [self key = comperand key 
+				and: [self subject == comperand subject]]]!
+
+canGet
+	"Private - Answer whether the receiver can be read using #value."
+
+	^self subject respondsTo: self getSelector!
+
+canSet
+	"Private - Answer whether the receiver can be set using #value:."
+
+	^self subject respondsTo: self putSelector!
+
+displayOn: aStream 
+	"Append a short textual description of the receiver to, aStream"
+
+	aStream
+		display: subject;
+		nextPut: $[;
+		print: self key;
+		nextPut: $]!
+
+getSelector
+	"Private - Answers the selector used for getting the indexed value from the subject"
+
+	^getSelector!
+
+hash
+	"Answer the <Integer> hash value for the receiver."
+
+	^(self key hash bitShift: 1) bitXor: self subject hash!
+
+key
+	"Private - Answers the key used to access the element of the subject that
+	the receiver is to treat as a value"
+
+	^key!
+
+objectRefName
+	"Private - Answer name to use when the value of the receiver is dragged as an #ObjectRef"
+
+	^self value basicPrintString , self key displayString 
+		copyWithout: Character space!
+
+putSelector
+	"Private - Answers the selector used for setting the aspect value into the subject"
+
+	^putSelector
+!
+
+setValue: anObject
+	"Private - Assigns the value for the receiver without notifying 
+	dependents of the change"
+	
+	self subject perform: self putSelector with: self key with: anObject.!
+
+subject: anObject key: aKey
+	"Private - Sets the subject object and the key being used to access an element of it"
+
+	super subject: anObject.
+	key := aKey.
+	getSelector := #at:.
+	putSelector := #at:put:.
+
+!
+
+value
+	"Answers the <Object> value of the receiver, obtained by
+	sending a message to the receiver's subject with the key."
+	
+	^self subject perform: self getSelector with: self key! !
+
+ValueModelAspectAdaptor comment:
+''!
+!ValueModelAspectAdaptor methodsFor!
+
+notifyChanged
+	super notifyChanged.
+	"Notify the ValueModel representing the composite that it has changed."
+	settingValue ifFalse: [subject notifyChanged]!
+
+subject
+	^subject value!
+
+subject: anObject
+	"Private - Sets the subject object that is being interfaced
+	to by the receiver and whose value needs converting. If
+	the object is nil, then disconnect from any pre-existing
+	subject."
+
+	anObject isNil 
+		ifTrue: [subject isNil ifFalse: [subject removeEventsTriggeredFor: self]]
+		ifFalse: 
+			[anObject 
+				when: #valueChanged
+				send: #trigger:
+				to: self
+				with: #valueChanged].
+	subject := anObject! !
+
+ValueBuffer comment:
+'A ValueBuffer can be used to buffer changes to a subject <valueModel>. It presents the same <value> protocol as its subject but, when the value is changed, the change is not immediately passed to the subject. This only happens when the ValueBuffer receives an #apply message to indicate that any changes should flushed.
+
+It is important to note that, in order to be used with a ValueBuffer
+
+Instance Variables:
+	subject		<valueModel> being buffered.
+	modified		<boolean> indicating whether the subject has been modified.
+	gate		<valueModel> which, when set true will apply changes back to the subject.
+
+
+'!
+!ValueBuffer class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^##(self) defaultIcon!
+
+new
+	"Private - Use #subject:"
+
+	^self shouldNotImplement!
+
+subject: aSubjectValueModel 
+	"Answer an instance of the receiver that buffers the value of aSubjectValueModel."
+
+	^super new subject: aSubjectValueModel! !
+
+!ValueBuffer methodsFor!
+
+apply
+	"Apply any buffered changes back to the subject."
+
+	modified 
+		ifTrue: 
+			[subject value: self value.
+			modified := false]!
+
+gate
+	"Answer the gate value model that controls when (and if) changes will be flushed back to the
+	original model."
+
+	^gate!
+
+gate: aValueModelGate
+	"Set the gate model to be aValueModelGate. Changes will be flushed back to the original
+	model when the value of aValueModelGate is set to true."
+
+	gate := aValueModelGate.
+	gate when: #valueChanged send: #onGateChanged to: self.!
+
+isValid
+	"Answer true if the updates to the model are valid. Provided for protocol compatibility with
+	AspectBuffer"
+
+	^true!
+
+onGateChanged
+	"Private - Received when the gate has been triggered. Use this to either flush changes back
+	to the subject if required"
+
+	self gate value ifTrue: [self apply]!
+
+setValue: anObject 
+	"Private - Assigns the value for the receiver without notifying dependents of the change.
+	The value is saved in the buffer and not directed to the subject (yet)."
+
+	super setValue: anObject.
+	modified := true!
+
+subject
+	"Answers the actual subject model"
+
+	^subject!
+
+subject: aSubjectValueModel 
+	"Private - Initializes the receiver on aSubjectValueModel"
+
+	gate := false asValue.
+	subject := aSubjectValueModel.
+	modified := false!
+
+value
+	"Answers the value of the receiver. If the value has been modified then answer the buffered
+	value otherwise answer that of the subject"
+
+	^modified ifTrue: [super value] ifFalse: [subject value]! !
+
 PermanentRegistry comment:
 'PermanentRegistry is a specialized class of <ObjectRegistry>s which maintain a strong reference to registered objects, preventing them from being garbage collected. They are useful where the objects may only be referenced ''externally'' (e.g. COM server objects).
 
@@ -64635,6 +67160,231 @@ writePage
 		write: collection count: readLimit.
 	self beClean! !
 
+AbstractToTextConverter comment:
+'AbstractToTextConverter is the abstract superclass all of <typeConverter>s dedicated to transformations to and from text. Hence it also conforms to the <textTypeConverter> protocol. It has subclasses specialized for common types of object such as <Number>s and <Boolean>s. 
+
+'!
+!AbstractToTextConverter methodsFor!
+
+initialize
+	"Private - Initialize the receiver"
+
+	rightNullValue := String empty! !
+
+EvaluationConverter comment:
+'Left to right: Converts from Smalltalk evaluation strings to the objects they evaluate to.
+Right to left: Converts from an object to its #storeString, which is often (but not always) able to evaluate back to an equivalent object.'!
+!EvaluationConverter methodsFor!
+
+leftToRight: aStringOrNil 
+	"Answer the result of evaluating aStringOrNil with the compiler"
+
+	^aStringOrNil notNil ifTrue: [Compiler evaluate: aStringOrNil logged: false]!
+
+rightToLeft: anObject 
+	"Private - Answers the #storeString of anObject, which can often be converted back to an equal object by evaluating it."
+
+	^anObject storeString! !
+
+InvertingConverter comment:
+'An InvertingConverter is a <typeConverter> used to wrap another converter to reverse the direction of conversion. Normally an InvertingConverter is not instantiated explicitly but by using the #inverted method of TypeConverter.
+
+Example:
+
+ NumberToText new inverted
+
+will yield an instance of InvertingConverter that wraps a NumberToText conversion. This is then the equivalent of TextToNumber.
+
+Instance Variables:
+
+	wrapped	<typeConverter> being inverted.
+
+'!
+!InvertingConverter class methodsFor!
+
+inverting: aTypeConverter
+	"Create an instance of the receiver that wraps aTypeConverter to effectively
+	reverse its direction of conversion"
+
+	^super new wrappedConverter: aTypeConverter; yourself!
+
+new
+	"Use #inverting:"
+
+	self shouldNotImplement! !
+
+!InvertingConverter methodsFor!
+
+convertFromLeftToRight: anObject
+	"Converts anObject, to another type by applying the reverse of our
+	wrappedConverter's left to right transformation"
+	
+	^self wrappedConverter convertFromRightToLeft: anObject!
+
+convertFromRightToLeft: anObject
+	"Converts anObject, to another type by applying the reverse of our
+	wrappedConverter's right to left transformation"
+	
+	^self wrappedConverter convertFromLeftToRight: anObject!
+
+inverted
+	"Answers a type converter that reverses the direction of the receiver's conversion. 
+	Since the receiver is already inverting its wrappedConverter we can merely answer that."
+
+	^self wrappedConverter
+!
+
+wrappedConverter
+	"Private - Answer the type converter that is being wrapped (and therefore inverted) by
+	the receiver"
+
+	^wrappedConverter
+!
+
+wrappedConverter: aTypeConverter
+	"Private - Set the type converter that is being wrapped (and therefore inverted) by
+	the receiver to aTypeConverter"
+
+	wrappedConverter := aTypeConverter
+! !
+
+MappingConverter comment:
+'<MappingConverter> is a <TypeConverter> that can be used to convert between values from fixed sets where there is a one-to-one correspondence between a value of the left type and a value of right type.
+
+Instance Variables:
+	leftToRightMap		<LookupTable> whose keys are the left type values and values are the right type values.
+	rightToLeftMap		<LookupTable> inversion of leftToRightMap.
+
+'!
+!MappingConverter class methodsFor!
+
+leftToRight: aLookupTable
+	"Answer a new instance of the receiver that converts the keys of the <LookupTable>
+	argument to the values, and vice versa."
+
+	^self new 
+		leftToRightMap: aLookupTable;
+		yourself!
+
+rightToLeft: aLookupTable
+	"Answer a new instance of the receiver that converts the keys of the <LookupTable>
+	argument to the values, and vice versa."
+
+	^self new 
+		rightToLeftMap: aLookupTable;
+		yourself! !
+
+!MappingConverter methodsFor!
+
+leftToRight: anObject 
+	"Private - Converts the <Object> argument, which is assumed to be of the receivers left 
+	type to an <Object> of the receiver's right type. Answers the result of the conversion."
+
+	^leftToRightMap at: anObject!
+
+leftToRightMap: aLookupTable 
+	leftToRightMap := aLookupTable.
+	rightToLeftMap := aLookupTable copyEmpty.
+	leftToRightMap 
+		keysAndValuesDo: [:eachKey :eachValue | rightToLeftMap at: eachValue put: eachKey]!
+
+rightToLeft: anObject 
+	"Private - Converts the <Object> argument, which is assumed to be of the receivers right 
+	type to an <Object> of the receivers left type. Answers the result of the conversion."
+
+	^rightToLeftMap at: anObject!
+
+rightToLeftMap: aLookupTable
+	rightToLeftMap := aLookupTable.
+	leftToRightMap := aLookupTable copyEmpty.
+	rightToLeftMap 
+		keysAndValuesDo: [:eachKey :eachValue | leftToRightMap at: eachValue put: eachKey]! !
+
+NullConverter comment:
+'NullConverter is a <typeConverter> which applies no transformation to the subject object or result in either direction.'!
+!NullConverter methodsFor!
+
+leftToRight: anObject
+	"Private - For a NullConverter this does nothing"
+	
+	^anObject!
+
+rightToLeft: anObject
+	"Private - For a NullConverter this does nothing"
+	
+	^anObject! !
+
+PluggableTypeConverter comment:
+'<PluggableTypeConverter> is a generic <TypeConverter> that supports configurable conversions.
+
+Instance Variables:
+	leftToRightBlock		<monadicValuable> which, when evaluated against left value, yields right value
+	rightToLeftBlock		<monadicValuable> which, when evaluated against right value, yields left value
+
+'!
+!PluggableTypeConverter class methodsFor!
+
+leftToRight: leftMonadicValuable rightToLeft: rightMonadicValuable 
+	"Answer a new instance of the receiver that converts between values 
+	in the left domain to values in the the right domain by evaluating the 
+	<monadicValuable>, leftMonadicValuable, and which converts in the 
+	reverse direction by evaluating the <monadicValuable>, rightMonadicValuable."
+
+	^(super new)
+		setLeftToRightBlock: leftMonadicValuable rightToLeftBlock: rightMonadicValuable;
+		yourself!
+
+new
+	^self leftToRight: [:left | left] rightToLeft: [:right | right]! !
+
+!PluggableTypeConverter methodsFor!
+
+leftToRight: anObject
+	"Private - Converts the <Object> argument, which is assumed to be of the receivers left 
+	type to an <Object> of the receiver's right type. Answers the result of the conversion."
+
+	^leftToRightBlock value: anObject!
+
+leftToRightBlock
+	^leftToRightBlock!
+
+leftToRightBlock: anObject
+	leftToRightBlock := anObject!
+
+rightToLeft: anObject
+	"Private - Converts the <Object> argument, which is assumed to be of the receivers right 
+	type to an <Object> of the receivers left type. Answers the result of the conversion."
+
+	^rightToLeftBlock value: anObject!
+
+rightToLeftBlock
+	^rightToLeftBlock!
+
+rightToLeftBlock: anObject
+	rightToLeftBlock := anObject!
+
+setLeftToRightBlock: leftMonadicValuable rightToLeftBlock: rightMonadicValuable
+	leftToRightBlock := leftMonadicValuable.
+	rightToLeftBlock := rightMonadicValuable! !
+
+(Package manager packageNamed: 'Dolphin Value Models') comment:
+'Dolphin Smalltalk MVP framework Value Models.
+Copyright (c) Object Arts Ltd. 1997-2001. Portions Copyright (c) CGI Group (Europe) Ltd. 1997.'!
+(Package manager packageNamed: 'Dolphin Registry Access') comment:
+'Dolphin Smalltalk Windows Registry Access.
+Copyright (c) Object Arts Ltd, 1998-2002.
+
+This package implements collection classes that provide access to the Windows registration database as if it were a collection of nested dictionaries. Note that the structure is more complicated than a standard Smalltalk Dictionary in that the each registry key entry can have both sub-keys, and sub-values. To map this structure to a Smalltalk <abstractDictionary> the registry key entries are represented as instances of the <RegKey> class. Registry sub-key names are treated as the <readableString> "keys" of a <RegKey>, and the registry sub-keys themselves are treated as the ><RegKey>''s "values", with these in turn being represented by instances of <RegKey>. A separate <abstractDictionary> representation of the sub-values of a registry key is accessed by sending the #subValues message to a <RegKey>, yielding an instance of <RegKeyValues>. The "keys" of a <RegKeyValues> are the <readableString> value names, and the values are <Strings>, <Integer>s, and <ByteArray>s representing the actual values.'!
 (Package manager packageNamed: 'Dolphin') comment:
 'Dolphin Smalltalk Base System.
 Copyright (c) Object Arts Ltd. 1997-2016'!
+(Package manager packageNamed: 'Dolphin Type Converters') comment:
+'Dolphin Smalltalk MVP framework Type Converters.
+Copyright (c) Object Arts Ltd. 1997-2001. Portions Copyright (c) CGI Group (Europe) Ltd. 1997.'!
+(Package manager packageNamed: 'Dolphin Base64') comment:
+'Dolphin Smalltalk Base64 Codec
+Copyright (c) Object Arts Ltd, 2004.
+
+This package contains a simple but fast implementation of the widely used Base64 binary-to-ASCII text encoding scheme. For further details of Base64 see RFC 3548 (http://www.faqs.org/rfcs/rfc3548.html). Note that the implementation of Base64 is compatible with MIME in that it splits encoded output into lines of 76 characters separated by a CR/LF pair.
+
+The package also extends ByteArray to add methods to store instances in Base64 encoded text form, and to restore instances from that form.'!

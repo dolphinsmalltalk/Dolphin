@@ -1,5 +1,9 @@
 "Boot a workable Dolphin from the boot image"
 
+"Any classes in the Dolphin package that have been changed need manually reloading"
+"SessionManager fileIn."
+!
+
 "We'll need MVP bits in order to be able to display the choice prompter for the image version to boot"
 Package manager 	install: 'Core\Object Arts\Dolphin\MVP\Base\Dolphin MVP Base.pax'!
 Package manager 	install: 'Core\Object Arts\Dolphin\Installation Manager\Dolphin Products.pax'!
