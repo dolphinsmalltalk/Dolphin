@@ -696,7 +696,7 @@ runRegressionTests: aTestSuite logTo: aFilenameStringOrNil
 							logStream
 								nextPutAll: each printString;
 								cr]].
-			logStream errors notEmpty 
+			results errors notEmpty 
 				ifTrue: 
 					[logStream
 						cr;
