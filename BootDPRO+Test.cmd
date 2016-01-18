@@ -7,7 +7,7 @@ IF %ERRORLEVEL% NEQ 0 (
 )
 
 ECHO Running regression tests
-START /Wait Dolphin7 DPRO.img7 -f TestDPRO.st -q
+START /Wait Dolphin7 DPRO.img7 -f TestDPRO.st
 
 IF %ERRORLEVEL% NEQ 0 (
   TYPE DPRO.testlog
