@@ -1,0 +1,64 @@
+| package |
+package := Package name: 'Dolphin Sockets Tests'.
+package paxVersion: 1;
+	basicComment: ''.
+
+
+package classNames
+	add: #AbstractSocketTest;
+	add: #InternetAddressTest;
+	add: #Socket2Test;
+	add: #SocketErrorTest;
+	add: #SocketTest;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\Base\Dolphin';
+	add: '..\Base\Dolphin Base Tests';
+	add: 'Dolphin Sockets';
+	add: 'Sockets Connection';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+DolphinTest subclass: #AbstractSocketTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DolphinTest subclass: #InternetAddressTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DolphinTest subclass: #SocketErrorTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: 'WinSocketErrors'
+	classInstanceVariableNames: ''!
+AbstractSocketTest subclass: #Socket2Test
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+AbstractSocketTest subclass: #SocketTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+"End of package definition"!
+

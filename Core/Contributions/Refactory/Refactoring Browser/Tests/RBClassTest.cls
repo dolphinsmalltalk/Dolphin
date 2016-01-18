@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk XP 2002 release 5.05"!
+"Filed out from Dolphin Smalltalk 7"!
 
 RefactoringBrowserTest subclass: #RBClassTest
 	instanceVariableNames: 'objectClass newClass messageNodeClass'

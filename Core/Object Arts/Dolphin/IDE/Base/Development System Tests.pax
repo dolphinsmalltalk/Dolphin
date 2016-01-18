@@ -1,0 +1,161 @@
+| package |
+package := Package name: 'Development System Tests'.
+package paxVersion: 1;
+	basicComment: ''.
+
+
+package classNames
+	add: #AbstractParserErrorTest;
+	add: #ClosedCommandDescriptionTest;
+	add: #CompiledMethodTest;
+	add: #CompilerErrorTest;
+	add: #CompilerTest;
+	add: #CompilerTestClasses;
+	add: #DolphinCompilerTestMethods;
+	add: #DolphinCompilerTestMethodsSubclass;
+	add: #KeyedAspectTest;
+	add: #PackageEnvironmentTest;
+	add: #ProductReleaseTest;
+	add: #RegKeyTest;
+	add: #RewriteTestCase;
+	add: #SmalltalkParserErrorTest;
+	add: #SmalltalkParserTest;
+	add: #SmalltalkSystemTest;
+	add: #VersionResourceTest;
+	add: #VMTest;
+	add: #XMLDOMNodeTest;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\..\ActiveX\Automation\ActiveX Automation';
+	add: '..\Community Edition\ActiveX Automation Development';
+	add: '..\..\..\Samples\MVP\Animal Game\Animals';
+	add: 'Development System';
+	add: '..\..\Base\Dolphin';
+	add: '..\..\Base\Dolphin Base Tests';
+	add: '..\Dolphin IDE Tests';
+	add: '..\..\Registry\Dolphin Registry Access';
+	add: '..\..\Lagoon\Lagoon Image Stripper';
+	add: '..\..\..\..\Contributions\Refactory\Refactoring Browser\Change Objects\RBChangeObjects';
+	add: '..\..\..\..\Contributions\Refactory\Refactoring Browser\Environments\RBEnvironments';
+	add: '..\..\..\..\Contributions\Refactory\Refactoring Browser\Parser\RBParser';
+	add: '..\..\..\..\Contributions\Refactory\Refactoring Browser\SmallLint\RBSmallLint';
+	add: '..\..\..\..\Contributions\Refactory\Refactoring Browser\Tests\RBTests';
+	add: '..\..\System\Compiler\Smalltalk Parser';
+	add: '..\..\..\..\Contributions\Camp Smalltalk\SUnit\SUnit';
+	add: '..\..\ActiveX\Components\XML DOM\XML DOM';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+Object subclass: #DolphinCompilerTestMethods
+	instanceVariableNames: 'iv1 iv2'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DolphinCompilerTestMethods subclass: #DolphinCompilerTestMethodsSubclass
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+TestCase subclass: #ClosedCommandDescriptionTest
+	instanceVariableNames: 'dialog'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+TestCase subclass: #RewriteTestCase
+	instanceVariableNames: 'env'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DolphinTest subclass: #AbstractParserErrorTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: 'SmalltalkParseErrorCodes'
+	classInstanceVariableNames: ''!
+DolphinTest subclass: #CompiledMethodTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DolphinTest subclass: #CompilerTest
+	instanceVariableNames: 'defaultCompileFlags'
+	classVariableNames: ''
+	poolDictionaries: 'CompilerFlags OpcodePool SmalltalkParseErrorCodes'
+	classInstanceVariableNames: ''!
+DolphinTest subclass: #KeyedAspectTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DolphinTest subclass: #ProductReleaseTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DolphinTest subclass: #RegKeyTest
+	instanceVariableNames: 'testKey'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DolphinTest subclass: #SmalltalkParserTest
+	instanceVariableNames: 'currentSelector classSearches rewrites'
+	classVariableNames: ''
+	poolDictionaries: 'ExtCallArgTypes SmalltalkParseErrorCodes'
+	classInstanceVariableNames: ''!
+DolphinTest subclass: #SmalltalkSystemTest
+	instanceVariableNames: 'devsys'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DolphinTest subclass: #VersionResourceTest
+	instanceVariableNames: 'updatePath sourceModule sourceSize sourceBytes'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DolphinTest subclass: #VMTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DolphinTest subclass: #XMLDOMNodeTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+AbstractParserErrorTest subclass: #CompilerErrorTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: 'CompilerFlags'
+	classInstanceVariableNames: ''!
+AbstractParserErrorTest subclass: #SmalltalkParserErrorTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: 'SmalltalkParseErrorCodes'
+	classInstanceVariableNames: ''!
+BrowserEnvironmentTest subclass: #PackageEnvironmentTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DolphinTestClassResource subclass: #CompilerTestClasses
+	instanceVariableNames: 'testClass'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+"End of package definition"!
+

@@ -1,14 +1,12 @@
-"Filed out from Dolphin Smalltalk 2000 release 4.01"!
+"Filed out from Dolphin Smalltalk 7"!
 
 RefactoringTest subclass: #InlineTemporaryTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-InlineTemporaryTest comment: ''!
-
 InlineTemporaryTest guid: (GUID fromString: '{241FC5F5-5254-43D6-A840-DCD08C4E6B21}')!
-
+InlineTemporaryTest comment: ''!
 !InlineTemporaryTest categoriesForClass!Refactory-Testing! !
 !InlineTemporaryTest methodsFor!
 

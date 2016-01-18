@@ -1,0 +1,27 @@
+| package |
+package := Package name: 'Long Running Tests'.
+package paxVersion: 1;
+	basicComment: 'These tests take rather a long time to run (but do pass eventually). This package is not loaded during normal regression testing to allow the test pass to complete in a reasonable time.'.
+
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+"End of package definition"!
+

@@ -1,0 +1,45 @@
+| package |
+package := Package name: 'Database Tests'.
+package paxVersion: 1;
+	basicComment: ''.
+
+
+package classNames
+	add: #DBConnectionTest;
+	add: #DBTest;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: 'Database Connection Base';
+	add: '..\Base\Dolphin';
+	add: '..\Base\Dolphin Base Tests';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+DolphinTest subclass: #DBTest
+	instanceVariableNames: 'connection'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DBTest subclass: #DBConnectionTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: 'ODBCConstants ODBCTypes'
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+"End of package definition"!
+

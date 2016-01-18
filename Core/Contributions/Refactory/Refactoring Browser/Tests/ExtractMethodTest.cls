@@ -1,14 +1,12 @@
-"Filed out from Dolphin Smalltalk 2000 release 4.01"!
+"Filed out from Dolphin Smalltalk 7"!
 
 RefactoringTest subclass: #ExtractMethodTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ExtractMethodTest comment: ''!
-
 ExtractMethodTest guid: (GUID fromString: '{E6D6D232-8068-4ED9-97F4-59B812529DAF}')!
-
+ExtractMethodTest comment: ''!
 !ExtractMethodTest categoriesForClass!Refactory-Testing! !
 !ExtractMethodTest methodsFor!
 

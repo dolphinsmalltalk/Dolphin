@@ -1,14 +1,12 @@
-"Filed out from Dolphin Smalltalk 2000 release 4.01"!
+"Filed out from Dolphin Smalltalk 7"!
 
 RefactoringTest subclass: #InlineParameterTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-InlineParameterTest comment: ''!
-
 InlineParameterTest guid: (GUID fromString: '{6A76EC20-1CB3-4E28-84E7-947775648E57}')!
-
+InlineParameterTest comment: ''!
 !InlineParameterTest categoriesForClass!Refactory-Testing! !
 !InlineParameterTest methodsFor!
 

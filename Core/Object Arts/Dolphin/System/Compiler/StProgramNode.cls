@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #StProgramNode
 	instanceVariableNames: 'parent comments'
@@ -307,6 +307,9 @@ sourceInterval
 start
 	self subclassResponsibility!
 
+startWithoutParentheses
+	^self start!
+
 statementCharacter
 	^$.!
 
@@ -412,6 +415,7 @@ whoDefines: aName
 !StProgramNode categoriesFor: #source!accessing!public! !
 !StProgramNode categoriesFor: #sourceInterval!accessing!public! !
 !StProgramNode categoriesFor: #start!accessing!public! !
+!StProgramNode categoriesFor: #startWithoutParentheses!accessing!public! !
 !StProgramNode categoriesFor: #statementCharacter!meta variable/accessing!public! !
 !StProgramNode categoriesFor: #statementComments!accessing!public! !
 !StProgramNode categoriesFor: #statementNode!public!querying! !

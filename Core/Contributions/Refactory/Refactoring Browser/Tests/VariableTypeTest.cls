@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk XP 2002 release 6.00"!
+"Filed out from Dolphin Smalltalk 7"!
 
 RefactoringBrowserTest subclass: #VariableTypeTest
 	instanceVariableNames: ''

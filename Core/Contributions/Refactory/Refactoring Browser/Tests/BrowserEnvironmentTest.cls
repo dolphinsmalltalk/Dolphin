@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk XP"!
+"Filed out from Dolphin Smalltalk 7"!
 
 RefactoringBrowserTest subclass: #BrowserEnvironmentTest
 	instanceVariableNames: 'browser universalEnvironment'

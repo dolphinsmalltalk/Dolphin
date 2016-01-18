@@ -1,14 +1,12 @@
-"Filed out from Dolphin Smalltalk 2000 release 4.01"!
+"Filed out from Dolphin Smalltalk 7"!
 
 RefactoringBrowserTest subclass: #RBNamespaceTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-RBNamespaceTest comment: ''!
-
 RBNamespaceTest guid: (GUID fromString: '{79170E4B-F3F8-4B46-8093-DAC62F866CBA}')!
-
+RBNamespaceTest comment: ''!
 !RBNamespaceTest categoriesForClass!Refactory-Testing! !
 !RBNamespaceTest methodsFor!
 

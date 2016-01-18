@@ -1,14 +1,12 @@
-"Filed out from Dolphin Smalltalk 2000 release 4.01"!
+"Filed out from Dolphin Smalltalk 7"!
 
 RefactoringTest subclass: #CreateAccessorsForVariableTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-CreateAccessorsForVariableTest comment: ''!
-
 CreateAccessorsForVariableTest guid: (GUID fromString: '{CF036663-3BE7-40E4-9E4F-C090FF6ABB4B}')!
-
+CreateAccessorsForVariableTest comment: ''!
 !CreateAccessorsForVariableTest categoriesForClass!Refactory-Testing! !
 !CreateAccessorsForVariableTest methodsFor!
 

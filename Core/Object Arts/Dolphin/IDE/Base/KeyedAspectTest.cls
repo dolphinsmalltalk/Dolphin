@@ -1,0 +1,81 @@
+"Filed out from Dolphin Smalltalk 7"!
+
+DolphinTest subclass: #KeyedAspectTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+KeyedAspectTest guid: (GUID fromString: '{D76395C9-F61A-49DC-B5B1-87A2ADF2020F}')!
+KeyedAspectTest comment: ''!
+!KeyedAspectTest categoriesForClass!Unclassified! !
+!KeyedAspectTest methodsFor!
+
+collectionKeyedAspectsTest: subject 
+	| aspects batchSize |
+	batchSize := subject publishedKeyedAspectsBatchSize.
+	aspects := subject publishedKeyedAspects.
+	self assert: aspects size = (batchSize + 1).
+	0 to: 1
+		do: 
+			[:i | 
+			| nextBatch |
+			1 to: batchSize
+				do: 
+					[:each | 
+					| aspect |
+					aspect := aspects at: each.
+					self assert: aspect name = aspect key.
+					self assert: each + (i * batchSize) = aspect key.
+					self assert: (aspect accessorFor: subject) value = (subject at: each + (i * batchSize))].
+			nextBatch := aspects at: batchSize + 1.
+			self assert: (nextBatch isKindOf: KeyedAspectBatch).
+			self assert: nextBatch key = (batchSize * (i + 1) + 1).
+			self assert: nextBatch keys asArray = subject keys asArray.
+			self assert: nextBatch batchSize = batchSize.
+			"Expand out - should allow full expansion"
+			aspects := (nextBatch accessorFor: subject) getBatchAccessors 
+						collect: [:each | each aspectDescriptor]].
+	self assert: aspects size == 1.
+	self assert: (aspects first accessorFor: subject) value = (subject at: aspects first key)!
+
+dictionaryKeyedAspectsTest: dictClass
+	"Expand out - should allow full expansion"
+
+	| subject batchSize |
+	subject := dictClass new.
+	batchSize := subject publishedKeyedAspectsBatchSize.
+	1 to: batchSize * 2 + 1 do: [:i | subject at: i put: i displayString].
+	self collectionKeyedAspectsTest: subject!
+
+sequenceableCollectionKeyedAspectsTest: seqCollClass
+	"Expand out - should allow full expansion"
+
+	| subject batchSize |
+	subject := seqCollClass new.
+	batchSize := subject publishedKeyedAspectsBatchSize.
+	subject := seqCollClass withAll: (1 to: batchSize * 2 + 1).
+	self collectionKeyedAspectsTest: subject!
+
+testArrayPublishedKeyedAspects
+	self sequenceableCollectionKeyedAspectsTest: Array!
+
+testDictionaryPublishedKeyedAspects
+	self dictionaryKeyedAspectsTest: Dictionary!
+
+testDWORDArrayPublishedKeyedAspects
+	self sequenceableCollectionKeyedAspectsTest: DWORDArray!
+
+testLookupTablePublishedKeyedAspects
+	self dictionaryKeyedAspectsTest: LookupTable!
+
+testOrderedCollectionPublishedKeyedAspects
+	self sequenceableCollectionKeyedAspectsTest: OrderedCollection! !
+!KeyedAspectTest categoriesFor: #collectionKeyedAspectsTest:!helpers!private! !
+!KeyedAspectTest categoriesFor: #dictionaryKeyedAspectsTest:!helpers!private! !
+!KeyedAspectTest categoriesFor: #sequenceableCollectionKeyedAspectsTest:!helpers!private! !
+!KeyedAspectTest categoriesFor: #testArrayPublishedKeyedAspects!public!unit tests! !
+!KeyedAspectTest categoriesFor: #testDictionaryPublishedKeyedAspects!public!unit tests! !
+!KeyedAspectTest categoriesFor: #testDWORDArrayPublishedKeyedAspects!public!unit tests! !
+!KeyedAspectTest categoriesFor: #testLookupTablePublishedKeyedAspects!public!unit tests! !
+!KeyedAspectTest categoriesFor: #testOrderedCollectionPublishedKeyedAspects!public!unit tests! !
+

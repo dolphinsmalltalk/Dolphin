@@ -1,14 +1,12 @@
-"Filed out from Dolphin Smalltalk 2000 release 5.00"!
+"Filed out from Dolphin Smalltalk 7"!
 
 RefactoringBrowserTest subclass: #RefactoringTest
 	instanceVariableNames: 'manager changeSet model'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-RefactoringTest comment: ''!
-
 RefactoringTest guid: (GUID fromString: '{BAB50AE8-D54A-4645-9A41-EA07018CEDF6}')!
-
+RefactoringTest comment: ''!
 !RefactoringTest categoriesForClass!Refactory-Testing! !
 !RefactoringTest methodsFor!
 
@@ -135,8 +133,8 @@ testPrintRefactoringManager
 !RefactoringTest categoriesFor: #setupSelfArgumentNameFor:toReturn:!public!set up! !
 !RefactoringTest categoriesFor: #setupVariableToMoveToFor:toReturn:!public!set up! !
 !RefactoringTest categoriesFor: #setupVariableTypesFor:toReturn:!public!set up! !
-!RefactoringTest categoriesFor: #shouldFail:!*-unclassified!private! !
-!RefactoringTest categoriesFor: #shouldWarn:!*-unclassified!private! !
+!RefactoringTest categoriesFor: #shouldFail:!private! !
+!RefactoringTest categoriesFor: #shouldWarn:!private! !
 !RefactoringTest categoriesFor: #tearDown!public!set up! !
 !RefactoringTest categoriesFor: #testConditions!public!tests! !
 !RefactoringTest categoriesFor: #testPrintRefactoringManager!public!tests! !

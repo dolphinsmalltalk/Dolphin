@@ -1,0 +1,32 @@
+"Filed out from Dolphin Smalltalk 7"!
+
+DolphinTest subclass: #TrueTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+TrueTest guid: (GUID fromString: '{E918B165-E08C-4CB2-8369-A5FFFF502ADB}')!
+TrueTest comment: ''!
+!TrueTest categoriesForClass!Tests-Kernel-Objects! !
+!TrueTest methodsFor!
+
+testAND
+	self assert: (true & true) = true.
+	self assert: (true & false) = false!
+
+testNew
+	self should: [True new] raise: Error!
+
+testNot
+	self should: [false not = true]!
+
+testPrintOn
+	| stream |
+	stream := String writeStream.
+	true printOn: stream.
+	self assert: stream contents = 'true'! !
+!TrueTest categoriesFor: #testAND!public!testing! !
+!TrueTest categoriesFor: #testNew!public!testing! !
+!TrueTest categoriesFor: #testNot!public!testing! !
+!TrueTest categoriesFor: #testPrintOn!public!testing! !
+

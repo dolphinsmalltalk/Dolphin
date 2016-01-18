@@ -572,6 +572,16 @@ forgetLastClickedColumn
 	self setColumnIcon: nil atIndex: lastClickedColIndex.
 	lastClickedColIndex := nil!
 
+getItemText: anInteger 
+	| item textBuf |
+	item := LVITEM new.
+	item iItem: anInteger-1.
+	textBuf := String new: 128.
+	item text: textBuf.
+	item bytes sdwordAtOffset: 24 put: textBuf size.
+	self lvmGetItem: item.
+	^item pszText!
+
 getMultipleSelections
 	"Private - Answer an <Array> of the <integer> the indices of the selected items in the
 	receiver in ascending order. The array will be empty if there is no selection."
@@ -2168,6 +2178,7 @@ wantCustomDrawItemNotifications: pNMHDR
 !ListView categoriesFor: #findItem:startingAt:wrap:!private!searching! !
 !ListView categoriesFor: #forecolor:!accessing!public! !
 !ListView categoriesFor: #forgetLastClickedColumn!event handling-win32!private! !
+!ListView categoriesFor: #getItemText:!accessing!private! !
 !ListView categoriesFor: #getMultipleSelections!private!selection! !
 !ListView categoriesFor: #getSingleSelection!private!selection! !
 !ListView categoriesFor: #getThumbnailOf:!private! !

@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 View subclass: #Splitter
 	instanceVariableNames: ''
@@ -70,7 +70,7 @@ defaultExtent
 
 	"^SystemMetrics current sizingFrameExtent+1"
 
-	^5!
+	^5 asPoint!
 
 defaultProportion
 	"Private - Answer the default proportion to be assumed by the receiver when associated with

@@ -1,0 +1,55 @@
+"Filed out from Dolphin Smalltalk 7"!
+
+DolphinTest subclass: #EventMessageSendTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+EventMessageSendTest guid: (GUID fromString: '{D55436FD-A2DC-4D79-A1C1-C8B5351A6EF1}')!
+EventMessageSendTest comment: ''!
+!EventMessageSendTest categoriesForClass!Tests-Kernel-Objects! !
+!EventMessageSendTest methodsFor!
+
+testNoArguments
+	| m |
+	m := EventMessageSend receiver: true selector: #yourself.
+	self should: [m value]!
+
+testOneArgument
+	| m |
+	m := EventMessageSend 
+				receiver: Array
+				selector: #with:
+				argument: 1.
+	MemoryManager current collectGarbage.
+	self should: [m value = #(1)]!
+
+testOneArgumentWithGC
+	| m |
+	m := EventMessageSend 
+				receiver: OrderedCollection new
+				selector: #addAll:
+				arguments: (Array with: Object new).
+	MemoryManager current collectGarbage.
+	self should: [m value] raise: MessageNotUnderstood!
+
+testReceiverWithGC
+	| m |
+	m := EventMessageSend receiver: Object new selector: #yourself.
+	MemoryManager current collectGarbage.
+	self assert: m value = DeadObject current!
+
+testTwoArguments
+	| m |
+	m := EventMessageSend 
+				receiver: Array
+				selector: #with:with:
+				arguments: #(1 2).
+	MemoryManager current collectGarbage.
+	self should: [m value = #(1 2)]! !
+!EventMessageSendTest categoriesFor: #testNoArguments!public!testing! !
+!EventMessageSendTest categoriesFor: #testOneArgument!public!testing! !
+!EventMessageSendTest categoriesFor: #testOneArgumentWithGC!public!testing! !
+!EventMessageSendTest categoriesFor: #testReceiverWithGC!public!testing! !
+!EventMessageSendTest categoriesFor: #testTwoArguments!public!testing! !
+
