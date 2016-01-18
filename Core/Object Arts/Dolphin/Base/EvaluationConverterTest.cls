@@ -25,7 +25,6 @@ testWithArrays
 	self checkWith: 'Array with: 4 with: 5 with: 6'!
 
 testWithDates
-	self checkWith: 'Date fromString: ''12 August 1958'''.
 	self checkWith: 'Date today'!
 
 testWithTimes
