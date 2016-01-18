@@ -1,4 +1,5 @@
 [ | results |
+Processor sleep: 2000.
 
 "Load in the tests appropriate for DPRO and run them,"
 Package manager install: 'Core\Object Arts\Dolphin\Base\Dolphin Base Tests.pax'.
