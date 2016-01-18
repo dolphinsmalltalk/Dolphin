@@ -684,8 +684,28 @@ runRegressionTests: aTestSuite logTo: aFilenameStringOrNil
 				nextPutAll: ' in ';
 				display: timeMs // 1000;
 				nextPutAll: 'secs';
-				cr;
-				close].
+				cr.
+			results failures notEmpty 
+				ifTrue: 
+					[logStream
+						cr;
+						nextPutAll: 'FAILURES:';
+						cr.
+					results failures do: 
+							[:each | 
+							logStream
+								nextPutAll: each printString;
+								cr]].
+			logStream errors notEmpty 
+				ifTrue: 
+					[logStream
+						cr;
+						nextPutAll: 'ERRORS:';
+						cr.
+					results errors do: [:each | (logStream
+								nextPutAll: each;
+								printString) cr]].
+			logStream close].
 	^results! !
 !SmalltalkSystem categoriesFor: #regressionTestsLogFilename!public!tests! !
 !SmalltalkSystem categoriesFor: #regressionTestSuite!private!tests! !
