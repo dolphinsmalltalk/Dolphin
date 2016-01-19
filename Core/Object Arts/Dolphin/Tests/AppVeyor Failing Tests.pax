@@ -1,0 +1,780 @@
+| package |
+package := Package name: 'AppVeyor Failing Tests'.
+package paxVersion: 1;
+	basicComment: 'Not sure why but these tests are known failures that occur running under AppVeyor but are fine when run in a normal image.'.
+
+
+package methodNames
+	add: #ExtractMethodTest -> #testExtractMethodAtEndOfMethodThatNeedsReturn;
+	add: #ExtractMethodTest -> #testExtractMethodThatMovesTemporaryVariable;
+	add: #ExtractMethodTest -> #testExtractMethodThatNeedsArgument;
+	add: #ExtractMethodTest -> #testExtractMethodThatNeedsTemporaryVariable;
+	add: #ExtractMethodToComponentTest -> #testExtractMethodAtEndOfMethodThatNeedsReturn;
+	add: #ExtractMethodToComponentTest -> #testMoveWithoutSelfReference;
+	add: #FormatterTest -> #testBlock;
+	add: #FormatterTest -> #testBlockArguments;
+	add: #FormatterTest -> #testCascadeKeywordMessages;
+	add: #FormatterTest -> #testCascadeMessages;
+	add: #FormatterTest -> #testIndent;
+	add: #FormatterTest -> #testLongSelectors;
+	add: #FormatterTest -> #testMethod;
+	add: #FormatterTest -> #testMethodComment;
+	add: #FormatterTest -> #testPeriodTerminators;
+	add: #FormatterTest -> #testSequence;
+	add: #InlineMethodFromComponentTest -> #testInlineComponentIntoCascadedMessage;
+	add: #InlineMethodFromComponentTest -> #testInlineComponentMethodMax;
+	add: #InlineMethodFromComponentTest -> #testInlineEmptyComponentMethod;
+	add: #InlineMethodTest -> #testInlineMethod;
+	add: #InlineMethodTest -> #testInlineMethod1;
+	add: #InlineMethodTest -> #testInlineMethod2;
+	add: #InlineMethodTest -> #testInlineMethod4;
+	add: #InlineMethodTest -> #testInlineMethod5;
+	add: #InlineMethodTest -> #testOverriden;
+	add: #InlineTemporaryTest -> #testInlineTemporary;
+	add: #MoveVariableDefinitionTest -> #testMoveDefinition;
+	add: #MoveVariableDefinitionTest -> #testMoveDefinitionIntoBlockThatIsAReceiverOfACascadedMessage;
+	add: #MoveVariableDefinitionTest -> #testNonExistantName;
+	add: #RenameTemporaryTest -> #testRenameTemporary;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\Base\Dolphin';
+	add: '..\..\..\Contributions\Refactory\Refactoring Browser\Formatters\RBFormatters';
+	add: '..\..\..\Contributions\Refactory\Refactoring Browser\Parser\RBParser';
+	add: '..\..\..\Contributions\Refactory\Refactoring Browser\Refactorings\RBRefactorings';
+	add: '..\..\..\Contributions\Refactory\Refactoring Browser\Tests\RBTestMethods';
+	add: '..\..\..\Contributions\Refactory\Refactoring Browser\Tests\RBTests';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+!ExtractMethodTest methodsFor!
+
+testExtractMethodAtEndOfMethodThatNeedsReturn
+	| refactoring class |
+	refactoring := ExtractMethodRefactoring 
+				extract: (self convertInterval: (52 to: 182)
+						for: (LintRuleTest sourceCodeAt: #openEditor))
+				from: #openEditor
+				in: LintRuleTest.
+	self setupMethodNameFor: refactoring toReturn: #foo:.
+	self executeRefactoring: refactoring.
+	class := refactoring model classNamed: #LintRuleTest.
+	self 
+		assert: (class parseTreeFor: #openEditor) = (RBParser 
+						parseMethod: 'openEditor
+	| rules |
+	rules := self failedRules.
+	^self foo: rules').
+	self 
+		assert: (class parseTreeFor: #foo:) = (RBParser 
+						parseMethod: 'foo: rules
+	rules isEmpty ifTrue: [^self].
+	rules size == 1 ifTrue: [^rules first viewResults].
+	SmalllintResultEditor openOn: self label: name')!
+
+testExtractMethodThatMovesTemporaryVariable
+	| refactoring class |
+	refactoring := ExtractMethodRefactoring 
+				extract: (self convertInterval: (22 to: 280)
+						for: (TransformationRuleTest sourceCodeAt: #superSends))
+				from: #superSends
+				in: TransformationRuleTest.
+	self setupMethodNameFor: refactoring toReturn: #foo.
+	self executeRefactoring: refactoring.
+	class := refactoring model classNamed: #TransformationRuleTest.
+	self 
+		assert: (class parseTreeFor: #superSends) = (RBParser 
+						parseMethod: 'superSends
+	| rule |
+	rule := self foo.
+	self rewriteUsing: rule').
+	self 
+		assert: (class parseTreeFor: #foo) = (RBParser 
+						parseMethod: 'foo | rule | 	rule := ParseTreeRewriter new.
+	rule addSearch: ''super `@message: ``@args''
+				-> (
+					[:aNode | 
+					(class withAllSubclasses
+						detect: [:each | each includesSelector: aNode selector]
+						ifNone: [nil]) isNil]
+							-> ''self `@message: ``@args'').
+		^rule')!
+
+testExtractMethodThatNeedsArgument
+	| refactoring class |
+	refactoring := ExtractMethodRefactoring 
+				extract: (self convertInterval: (145 to: 343)
+						for: (TransformationRuleTest sourceCodeAt: #checkMethod:))
+				from: #checkMethod:
+				in: TransformationRuleTest.
+	self setupMethodNameFor: refactoring toReturn: #foo:.
+	self executeRefactoring: refactoring.
+	class := refactoring model classNamed: #TransformationRuleTest.
+	self 
+		assert: (class parseTreeFor: #checkMethod:) = (RBParser 
+						parseMethod: 'checkMethod: aSmalllintContext 
+	class := aSmalllintContext selectedClass.
+	(rewriteRule executeTree: aSmalllintContext parseTree) ifTrue: 
+			[self foo: aSmalllintContext]').
+	self 
+		assert: (class parseTreeFor: #foo:) = (RBParser 
+						parseMethod: 'foo: aSmalllintContext (RecursiveSelfRule executeTree: rewriteRule tree initialAnswer: false)
+				ifFalse: 
+					[builder compile: rewriteRule tree printString
+						in: class
+						classified: aSmalllintContext protocols]')!
+
+testExtractMethodThatNeedsTemporaryVariable
+	| refactoring class |
+	refactoring := ExtractMethodRefactoring 
+				extract: (self convertInterval: (78 to: 197)
+						for: (LintRuleTest sourceCodeAt: #displayName))
+				from: #displayName
+				in: LintRuleTest.
+	self setupMethodNameFor: refactoring toReturn: #foo:.
+	self executeRefactoring: refactoring.
+	class := refactoring model classNamed: #LintRuleTest.
+	self 
+		assert: (class parseTreeFor: #displayName) = (RBParser 
+						parseMethod: 'displayName
+	| nameStream |
+	nameStream := WriteStream on: (String new: 64).
+	self foo: nameStream.
+	^nameStream contents').
+	self 
+		assert: (class parseTreeFor: #foo:) = (RBParser 
+						parseMethod: 'foo: nameStream 	nameStream nextPutAll: self name;
+		nextPutAll: '' (''.
+	self problemCount printOn: nameStream.
+	nameStream nextPut: $).')! !
+!ExtractMethodTest categoriesFor: #testExtractMethodAtEndOfMethodThatNeedsReturn!public!tests! !
+!ExtractMethodTest categoriesFor: #testExtractMethodThatMovesTemporaryVariable!public!tests! !
+!ExtractMethodTest categoriesFor: #testExtractMethodThatNeedsArgument!public!tests! !
+!ExtractMethodTest categoriesFor: #testExtractMethodThatNeedsTemporaryVariable!public!tests! !
+
+!ExtractMethodToComponentTest methodsFor!
+
+testExtractMethodAtEndOfMethodThatNeedsReturn
+	| refactoring class selectorsSize |
+	refactoring := ExtractMethodToComponentRefactoring 
+				extract: (self convertInterval: (52 to: 182)
+						for: (LintRuleTest sourceCodeAt: #openEditor))
+				from: #openEditor
+				in: LintRuleTest.
+	self setupMethodNameFor: refactoring toReturn: #foo:.
+	self setupSelfArgumentNameFor: refactoring toReturn: 'asdf'.
+	self setupVariableToMoveToFor: refactoring toReturn: 'rules'.
+	self setupVariableTypesFor: refactoring
+		toReturn: (Array with: (refactoring model classNamed: #Collection)).
+	class := refactoring model classNamed: #LintRuleTest.
+	selectorsSize := class selectors size.
+	self proceedThroughWarning: [self executeRefactoring: refactoring].
+	self 
+		assert: (class parseTreeFor: #openEditor) = (RBParser 
+						parseMethod: 'openEditor
+								| rules |
+								rules := self failedRules.
+								^rules foo: self').
+	self 
+		assert: ((refactoring model classNamed: #Collection) parseTreeFor: #foo:) 
+				= (RBParser 
+						parseMethod: 'foo: asdf
+								self isEmpty ifTrue: [^asdf].
+								self size == 1 ifTrue: [^self first viewResults].
+								SmalllintResultEditor openOn: asdf label: asdf name.
+								^asdf').
+	self assert: class selectors size = selectorsSize!
+
+testMoveWithoutSelfReference
+	| refactoring class selectorsSize |
+	refactoring := ExtractMethodToComponentRefactoring 
+				extract: (self convertInterval: (118 to: 285)
+						for: (RBReadBeforeWrittenTester sourceCodeAt: #copyDictionary:))
+				from: #copyDictionary:
+				in: RBReadBeforeWrittenTester.
+	self setupMethodNameFor: refactoring toReturn: #copyWithAssociations.
+	self setupVariableToMoveToFor: refactoring toReturn: 'aDictionary'.
+	self setupVariableTypesFor: refactoring
+		toReturn: (Array with: (refactoring model classNamed: #Dictionary)).
+	class := refactoring model classNamed: #RBReadBeforeWrittenTester.
+	selectorsSize := class selectors size.
+	self executeRefactoring: refactoring.
+	self 
+		assert: (class parseTreeFor: #copyDictionary:) = (RBParser 
+						parseMethod: 'copyDictionary: aDictionary ^aDictionary copyWithAssociations').
+	self 
+		assert: ((refactoring model classNamed: #Dictionary) 
+				parseTreeFor: #copyWithAssociations) = (RBParser 
+							parseMethod: 'copyWithAssociations 
+							| newDictionary |
+							newDictionary := Dictionary new: self size.
+							self
+								keysAndValuesDo: [:key :value | newDictionary at: key put: value].
+							^newDictionary').
+	self assert: class selectors size = selectorsSize! !
+!ExtractMethodToComponentTest categoriesFor: #testExtractMethodAtEndOfMethodThatNeedsReturn!public!tests! !
+!ExtractMethodToComponentTest categoriesFor: #testMoveWithoutSelfReference!public!tests! !
+
+!FormatterTest methodsFor!
+
+testBlock
+	self 
+		runTestForPairs: #(#('[]') #('[x := 3 + 4]') #('[x foo.
+b := y + z]') #('[| x y |
+x := y]') #('[:x :y | x := y]') #('[:x :y | 
+x := y.
+y := z]')).
+	RBFormatter1 lineUpBlockBrackets: true.
+	self 
+		runTestForPairs: #(#('[x := 3 + 4]') #('[
+x foo.
+b := y + z
+]') #('[
+| x y |
+x := y
+]') #('[:x :y | x := y]') #('[
+:x :y | 
+x := y.
+y := z
+]')).!
+
+testBlockArguments
+	RBFormatter1 indentString: (String with: Character tab).
+	RBFormatter1 numberOfArgumentsForMultiLine: 2.
+	self 
+		runTestForPairs: #(('self
+	at: 1
+	put:
+		[self foo: 2.
+		z := q]') ( 'self
+	at: 1
+	put: [self foo]'))!
+
+testCascadeKeywordMessages
+	RBFormatter1 indentString: '	'.
+	RBFormatter1 numberOfArgumentsForMultiLine: 2.
+	self 
+		runTestForPairs: #(#('self foo;
+	at: 3
+		put: 4;
+	baz;
+	yourself') #('self bar;
+	with: 1
+		with: 2
+		with: 3'))!
+
+testCascadeMessages
+	RBFormatter1 indentString: '	'.
+	self 
+		runTestForPairs: #(#('self foo;
+	bar;
+	baz;
+	yourself') #('self at: 1;
+	bar;
+	+ 3') #('(self at: 1) bar;
+	foo') #('self at: 1 bar;
+	baz')).
+	RBFormatter1 newLineBeforeFirstCascade: true.
+	self runTestForPairs: #(#('self
+	foo;
+	bar;
+	baz;
+	yourself'))!
+
+testIndent
+	| result tree method |
+	method := 
+'test
+	^self size'. 
+
+	tree := RBParser parseMethod: method.
+	RBFormatter1 indentString: (String with: Character tab).
+	result := RBFormatter1 new format: tree.
+	self assert: result = method!
+
+testLongSelectors
+	RBFormatter1 numberOfArgumentsForMultiLine: 2.
+	RBFormatter1 indentString: '	'.
+	self runMethodTestFor: 'test
+	self
+		with: #zlogar
+		with: 3'.
+	RBFormatter1 numberOfArgumentsForMultiLine: 0.
+	self runMethodTestFor: 'test
+	self
+		new'.
+	RBFormatter1 newLineBeforeFirstKeyword: false.
+	self runMethodTestFor: 'test
+	self with: #zlogar
+		with: 3'.
+	RBFormatter1 indentsForKeywords: 2.
+	self runMethodTestFor: 'test
+	self with: #zlogar
+			with: 3'.!
+
+testMethod
+	RBFormatter1 methodSignatureOnMultipleLines: true.
+	#(#('test
+^self size') #('+ anInteger
+^self + anInteger') #('at: anInteger
+^5') #('at: anInteger
+| x |
+^x + 1') #('foo
+<primitive: 1>
+^self error') #('foo: x
+bar: y
+baz: z
+^self')) 
+		do: 
+			[:each | 
+			| result tree |
+			tree := RBParser parseMethod: each first.
+			result := RBFormatter1 format: tree.
+			self assert: result = each last]!
+
+testMethodComment
+	RBFormatter1 indentString: (String with: Character tab).
+	RBFormatter1 newLinesAfterMethodComment: 2.
+	#(#('test
+	"Test Comment"
+
+	^self size') #('test
+	self foo.	"Comment 1"
+	self bar	"Comment 2"')) 
+		do: 
+			[:each | 
+			| result tree |
+			tree := RBParser parseMethod: each first.
+			result := RBFormatter1 format: tree.
+			self assert: result = each last]!
+
+testPeriodTerminators
+	RBConfigurableFormatter indentString: (String with: Character tab).
+	RBConfigurableFormatter numberOfArgumentsForMultiLine: 2.
+	RBConfigurableFormatter periodsAsTerminators: true.
+	self 
+		runTestForPairs: #(#('self foo.
+self
+	at: 1
+	put:
+		[self foo: 2.
+		z := q.].') #('self yourself.
+^self
+	at: 1
+	put: [self foo.].')).
+	RBConfigurableFormatter
+		periodsAsTerminators: false;
+		periodsAtEndOfBlock: true.
+	self 
+		runTestForPairs: #(#('self foo.
+self
+	at: 1
+	put:
+		[self foo: 2.
+		z := q.]') #('self yourself.
+^self
+	at: 1
+	put: [self foo.]')).
+	RBConfigurableFormatter
+		periodsAsTerminators: false;
+		periodsAtEndOfMethod: true.
+	self 
+		runTestForPairs: #(#('self foo.
+self
+	at: 1
+	put:
+		[self foo: 2.
+		z := q].') #('self yourself.
+^self
+	at: 1
+	put: [self foo].'))!
+
+testSequence
+	self 
+		runTestForPairs: #(#('self foo.
+self at: 1.
+x := 3 + 4') #('| x y |
+x := y + 3.
+^x'))! !
+!FormatterTest categoriesFor: #testBlock!public!tests! !
+!FormatterTest categoriesFor: #testBlockArguments!public!tests! !
+!FormatterTest categoriesFor: #testCascadeKeywordMessages!public!tests! !
+!FormatterTest categoriesFor: #testCascadeMessages!public!tests! !
+!FormatterTest categoriesFor: #testIndent!public!tests! !
+!FormatterTest categoriesFor: #testLongSelectors!public!tests! !
+!FormatterTest categoriesFor: #testMethod!public!tests! !
+!FormatterTest categoriesFor: #testMethodComment!public!tests! !
+!FormatterTest categoriesFor: #testPeriodTerminators!public! !
+!FormatterTest categoriesFor: #testSequence!public!tests! !
+
+!InlineMethodFromComponentTest methodsFor!
+
+testInlineComponentIntoCascadedMessage
+	| refactoring |
+	self proceedThroughWarning: 
+			[refactoring := InlineMethodFromComponentRefactoring 
+						inline: (self convertInterval: (35 to: 79)
+								for: (RefactoryTestDataApp sourceCodeAt: #inlineComponent))
+						inMethod: #inlineComponent
+						forClass: RefactoryTestDataApp.
+			(refactoring model classNamed: #Behavior) 
+				compile: 'hasImmediateInstances ^self format = 0'
+				classified: #(#accessing).
+			self setupInlineExpressionFor: refactoring toReturn: false.
+			#rbFix.	"We don't want a prompt to choose between Behaviour and SmallInteger class"
+			refactoring options at: #implementorToInline
+				put: [:ref :imps | (imps select: [:each | each name == #Behavior]) first].
+			self executeRefactoring: refactoring].
+	self 
+		assert: ((refactoring model classNamed: #RefactoryTestDataApp) 
+				parseTreeFor: #inlineComponent) = (RBParser 
+							parseMethod: 'inlineComponent
+	| a aBehavior |
+	a := 5.
+	aBehavior := a class.
+	aBehavior superclass.
+	aBehavior format = 0.
+	^aBehavior yourself')!
+
+testInlineComponentMethodMax
+	| refactoring |
+	self proceedThroughWarning: 
+			[| class |
+			refactoring := InlineMethodFromComponentRefactoring 
+						inline: (self convertInterval: (47 to: 58)
+								for: (RefactoryTestDataApp sourceCodeAt: #inlineMax))
+						inMethod: #inlineMax
+						forClass: RefactoryTestDataApp.
+			self setupInlineExpressionFor: refactoring toReturn: true.
+			class := refactoring model classNamed: #Magnitude.
+			class 
+				compile: 'max: aMagnitude 
+					"Answer the receiver or the argument, whichever has the greater magnitude."
+
+					self > aMagnitude
+						ifTrue: [^self]
+						ifFalse: [^aMagnitude]'
+				classified: #(#accessing).
+			self setupImplementorToInlineFor: refactoring toReturn: class.
+			self executeRefactoring: refactoring].
+	self 
+		assert: ((refactoring model classNamed: #RefactoryTestDataApp) 
+				parseTreeFor: #inlineMax) = (RBParser 
+							parseMethod: 'inlineMax
+								| x y q |
+								x := 5.
+								y := 10.
+								q := x + 1 > y
+									ifTrue: [x + 1]
+									ifFalse: [y].
+								^q')!
+
+testInlineEmptyComponentMethod
+	| refactoring |
+	self proceedThroughWarning: 
+			[refactoring := InlineMethodFromComponentRefactoring 
+						inline: (self convertInterval: (35 to: 91)
+								for: (RefactoryTestDataApp sourceCodeAt: #inlineComponent))
+						inMethod: #inlineComponent
+						forClass: RefactoryTestDataApp.
+			self setupInlineExpressionFor: refactoring toReturn: false.
+			#rbFix.	"We don't want a prompt to choose between Object and any other #yourself implementor"
+			refactoring options at: #implementorToInline
+				put: [:ref :imps | (imps select: [:each | each name == #Object]) first].
+			self executeRefactoring: refactoring].
+	self 
+		assert: ((refactoring model classNamed: #RefactoryTestDataApp) 
+				parseTreeFor: #inlineComponent) = (RBParser 
+							parseMethod: 'inlineComponent
+	| a anObject |
+	a := 5.
+	anObject := a class.
+	anObject superclass.
+	anObject hasImmediateInstances.
+	^anObject')! !
+!InlineMethodFromComponentTest categoriesFor: #testInlineComponentIntoCascadedMessage!public!tests! !
+!InlineMethodFromComponentTest categoriesFor: #testInlineComponentMethodMax!public!tests! !
+!InlineMethodFromComponentTest categoriesFor: #testInlineEmptyComponentMethod!public!tests! !
+
+!InlineMethodTest methodsFor!
+
+testInlineMethod
+	| refactoring |
+	refactoring := InlineMethodRefactoring 
+				inline: (self convertInterval: (455 to: 504)
+						for: (BasicLintRuleTest class 
+								sourceCodeAt: #sentNotImplementedInApplication))
+				inMethod: #sentNotImplementedInApplication
+				forClass: BasicLintRuleTest class.
+	self executeRefactoring: refactoring.
+	self 
+		assert: ((refactoring model metaclassNamed: #BasicLintRuleTest) 
+				parseTreeFor: #sentNotImplementedInApplication) = (RBParser 
+							parseMethod: 'sentNotImplementedInApplication
+									| detector |
+									detector := self new.
+									detector name: ''Messages sent but not implemented in application''.
+									detector methodBlock: 
+											[:context :result | 
+											| message class block |
+											message := context messages 
+														detect: [:each | (context isItem: each in: context application) not]
+														ifNone: [nil].
+											class := context selectedClass.
+											block := 
+													[:each | 
+													| app methodApp root |
+													app := context application.
+													((class canUnderstand: each) 
+														ifTrue: 
+															[root := app rootApplication.
+															methodApp := ((class whichClassIncludesSelector: each) 
+																		compiledMethodAt: each) application 
+																		rootApplication.
+															methodApp == root or: [root isBasedOn: methodApp]]
+														ifFalse: [false]) not].
+											message isNil 
+												ifTrue: [message := context selfMessages detect: block ifNone: [nil]].
+											message isNil 
+												ifTrue: 
+													[class := class superclass.
+													class isNil 
+														ifTrue: 
+															[context superMessages isEmpty 
+																ifFalse: [message := context superMessages asArray first]]
+														ifFalse: [message := context superMessages detect: block ifNone: [nil]]].
+											message notNil 
+												ifTrue: 
+													[result addSearchString: message.
+													result addClass: context selectedClass selector: context selector]].
+									^detector')!
+
+testInlineMethod1
+	| refactoring |
+	refactoring := InlineMethodRefactoring 
+				inline: (self convertInterval: (39 to: 84)
+						for: (RefactoryTestDataApp sourceCodeAt: #caller))
+				inMethod: #caller
+				forClass: RefactoryTestDataApp.
+	self setupInlineExpressionFor: refactoring toReturn: false.
+	self executeRefactoring: refactoring.
+	self 
+		assert: ((refactoring model classNamed: #RefactoryTestDataApp) 
+				parseTreeFor: #caller) = (RBParser 
+							parseMethod: 'caller 
+									| anObject anObject1 | 
+									anObject := 5.
+									anObject1 := anObject + 1.
+									Transcript
+										show: anObject1 printString;
+										cr.
+									^anObject')!
+
+testInlineMethod2
+	| refactoring |
+	refactoring := InlineMethodRefactoring 
+				inline: (self convertInterval: (40 to: 120)
+						for: (RefactoryTestDataApp sourceCodeAt: #caller1))
+				inMethod: #caller1
+				forClass: RefactoryTestDataApp.
+	self setupInlineExpressionFor: refactoring toReturn: false.
+	self executeRefactoring: refactoring.
+	self 
+		assert: ((refactoring model classNamed: #RefactoryTestDataApp) 
+				parseTreeFor: #caller1) = (RBParser 
+							parseMethod: 'caller1 
+								| anObject each1 anObject1 | 
+								anObject := 5.
+								anObject1 := anObject + 1.
+								each1 := anObject1 printString.
+								Transcript
+									show: each1;
+									cr.
+								[:each | each printString. ^anObject] value: each1')!
+
+testInlineMethod4
+	| refactoring |
+	refactoring := InlineMethodRefactoring 
+				inline: (self convertInterval: (31 to: 112)
+						for: (RefactoryTestDataApp sourceCodeAt: #inlineJunk))
+				inMethod: #inlineJunk
+				forClass: RefactoryTestDataApp.
+	self setupInlineExpressionFor: refactoring toReturn: false.
+	self executeRefactoring: refactoring.
+	self 
+		assert: ((refactoring model classNamed: #RefactoryTestDataApp) 
+				parseTreeFor: #inlineJunk) = (RBParser 
+							parseMethod: 'inlineJunk
+										| asdf bar1 baz1 asdf1 |
+										bar1 := 
+												[:each | 
+												| temp |
+												temp := each.
+												temp , temp] value: self.
+										baz1 := bar1 + bar1.
+										asdf1 := baz1 + bar1.
+										asdf := asdf1.
+										^asdf foo: 
+												[:bar | 
+												| baz |
+												baz := bar.
+												baz * baz]')!
+
+testInlineMethod5
+	| refactoring |
+	refactoring := InlineMethodRefactoring 
+				inline: (self convertInterval: (53 to: 64)
+						for: (RefactoryTestDataApp sourceCodeAt: #inlineLast))
+				inMethod: #inlineLast
+				forClass: RefactoryTestDataApp.
+	self executeRefactoring: refactoring.
+	self 
+		assert: ((refactoring model classNamed: #RefactoryTestDataApp) 
+				parseTreeFor: #inlineLast) = (RBParser 
+							parseMethod: 'inlineLast
+									5 = 3 ifTrue: [^self caller] ifFalse: [^	(1 to: 10) inject: 1 into: [:sum :each | sum * (self foo: each)]]')!
+
+testOverriden
+	self shouldWarn: (InlineMethodRefactoring 
+				inline: (self convertInterval: (15 to: 26)
+						for: (LintRuleTest sourceCodeAt: #failedRules))
+				inMethod: #failedRules
+				forClass: LintRuleTest)! !
+!InlineMethodTest categoriesFor: #testInlineMethod!public!tests! !
+!InlineMethodTest categoriesFor: #testInlineMethod1!public!tests! !
+!InlineMethodTest categoriesFor: #testInlineMethod2!public!tests! !
+!InlineMethodTest categoriesFor: #testInlineMethod4!public!tests! !
+!InlineMethodTest categoriesFor: #testInlineMethod5!public!tests! !
+!InlineMethodTest categoriesFor: #testOverriden!failure tests!public! !
+
+!InlineTemporaryTest methodsFor!
+
+testInlineTemporary
+	| refactoring |
+	refactoring := InlineTemporaryRefactoring 
+				inline: (self convertInterval: (24 to: 72)
+						for: (RefactoryTestDataApp sourceCodeAt: #inlineMethod))
+				from: #inlineMethod
+				in: RefactoryTestDataApp.
+	self executeRefactoring: refactoring.
+	self 
+		assert: ((refactoring model classNamed: #RefactoryTestDataApp) 
+				parseTreeFor: #inlineMethod) = (RBParser 
+							parseMethod: 'inlineMethod
+										^self
+													foo;
+													inlineMethod;
+													bar')! !
+!InlineTemporaryTest categoriesFor: #testInlineTemporary!public!tests! !
+
+!MoveVariableDefinitionTest methodsFor!
+
+testMoveDefinition
+	| refactoring |
+	refactoring := MoveVariableDefinitionRefactoring 
+				bindTight: (self convertInterval: (19 to: 22)
+						for: (RefactoryTestDataApp sourceCodeAt: #moveDefinition))
+				in: RefactoryTestDataApp
+				selector: #moveDefinition.
+	self executeRefactoring: refactoring.
+	self 
+		assert: ((refactoring model classNamed: #RefactoryTestDataApp) 
+				parseTreeFor: #moveDefinition) = (RBParser 
+							parseMethod: 'moveDefinition
+								^(self collect: 
+										[:each | 
+										| temp |
+										temp := each printString.
+										temp , temp]) 
+									select: 
+										[:each | 
+										| temp |
+										temp := each size.
+										temp odd]')!
+
+testMoveDefinitionIntoBlockThatIsAReceiverOfACascadedMessage
+	| refactoring |
+	refactoring := MoveVariableDefinitionRefactoring 
+				bindTight: (self convertInterval: (48 to: 58)
+						for: (RefactoryTestDataApp sourceCodeAt: #referencesConditionFor:))
+				in: RefactoryTestDataApp
+				selector: #referencesConditionFor:.
+	self executeRefactoring: refactoring.
+	self 
+		assert: ((refactoring model classNamed: #RefactoryTestDataApp) 
+				parseTreeFor: #referencesConditionFor:) = (RBParser 
+							parseMethod: 'referencesConditionFor: aClass 
+								| environment  |
+								^(RBCondition withBlock: 
+										[| association |association := Smalltalk associationAt: aClass name
+													ifAbsent: [self refactoringError: ''Could not find class''].
+										environment := (self environment referencesTo: association) 
+													| (self environment referencesTo: aClass name).
+										environment isEmpty])
+									errorMacro: aClass , '' is referenced.<n>Browse references?'';
+									errorBlock: [environment openEditor];
+									yourself')!
+
+testNonExistantName
+	| aRefactoring |
+	self
+		shouldFail: (MoveVariableDefinitionRefactoring 
+					bindTight: (1 to: 10)
+					in: LintRuleTest
+					selector: #name1);
+		shouldFail: (MoveVariableDefinitionRefactoring 
+					bindTight: (self convertInterval: (44 to: 54)
+							for: (LintRuleTest sourceCodeAt: #displayName))
+					in: LintRuleTest
+					selector: #displayName).
+	"This isn't a test of a non-existant name, but of a move that is already as tightly bound as possible"
+	aRefactoring := MoveVariableDefinitionRefactoring 
+				bindTight: (self convertInterval: (16 to: 25)
+						for: (LintRuleTest sourceCodeAt: #displayName))
+				in: LintRuleTest
+				selector: #displayName.
+	self proceedThroughWarning: 
+			[self should: [self executeRefactoring: aRefactoring] raise: Refactoring abortSignal]! !
+!MoveVariableDefinitionTest categoriesFor: #testMoveDefinition!public!tests! !
+!MoveVariableDefinitionTest categoriesFor: #testMoveDefinitionIntoBlockThatIsAReceiverOfACascadedMessage!public!tests! !
+!MoveVariableDefinitionTest categoriesFor: #testNonExistantName!public!tests! !
+
+!RenameTemporaryTest methodsFor!
+
+testRenameTemporary
+	| refactoring |
+	refactoring := RenameTemporaryRefactoring 
+				renameTemporaryFrom: (self convertInterval: (15 to: 19)
+						for: (LintRuleTest sourceCodeAt: #openEditor))
+				to: 'asdf'
+				in: LintRuleTest
+				selector: #openEditor.
+	self executeRefactoring: refactoring.
+	self 
+		assert: ((refactoring model classNamed: #LintRuleTest) 
+				parseTreeFor: #openEditor) = (RBParser 
+							parseMethod: 'openEditor
+								| asdf |
+								asdf := self failedRules.
+								asdf isEmpty ifTrue: [^self].
+								asdf size == 1 ifTrue: [^asdf first viewResults].
+								SmalllintResultEditor openOn: self label: name')! !
+!RenameTemporaryTest categoriesFor: #testRenameTemporary!public!tests! !
+
+"End of package definition"!
+
