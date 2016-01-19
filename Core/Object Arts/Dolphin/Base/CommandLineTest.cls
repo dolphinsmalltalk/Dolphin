@@ -29,7 +29,7 @@ test_getOpt_02
 		assert: (commandLine getOpt: 'abc:') == $b;
 		assert: commandLine optArg isNil;
 		assert: (commandLine getOpt: 'abc:') isNil;
-		assert: commandLine arguments isEmpty;
+		assert: commandLine arguments = #('DPRO.img7');
 		yourself.!
 
 test_getOpt_03
@@ -43,7 +43,7 @@ test_getOpt_03
 		assert: (commandLine getOpt: 'abc:') == $b;
 		assert: commandLine optArg isNil;
 		assert: (commandLine getOpt: 'abc:') isNil;
-		assert: commandLine arguments isEmpty;
+		assert: commandLine arguments = #('DPRO.img7');
 		yourself.!
 
 test_getOpt_04
@@ -55,7 +55,7 @@ test_getOpt_04
 		assert: (commandLine getOpt: 'abc:') == $c;
 		assert: commandLine optArg = 'foo';
 		assert: (commandLine getOpt: 'abc:') isNil;
-		assert: commandLine arguments isEmpty;
+		assert: commandLine arguments = #('DPRO.img7');
 		yourself.!
 
 test_getOpt_05
@@ -67,7 +67,7 @@ test_getOpt_05
 		assert: (commandLine getOpt: 'abc:') == $c;
 		assert: commandLine optArg = 'foo';
 		assert: (commandLine getOpt: 'abc:') isNil;
-		assert: commandLine arguments isEmpty;
+		assert: commandLine arguments = #('DPRO.img7');
 		yourself.!
 
 test_getOpt_06
@@ -77,7 +77,7 @@ test_getOpt_06
 	commandLine := CommandLine argv: #('Dolphin7.exe' 'DPRO.img7' 'arg1').
 	self 
 		assert: (commandLine getOpt: 'abc:') isNil;
-		assert: commandLine arguments = #('arg1');
+		assert: commandLine arguments = #('DPRO.img7' 'arg1');
 		yourself.!
 
 test_getOpt_07
@@ -89,7 +89,7 @@ test_getOpt_07
 		assert: (commandLine getOpt: 'abc:') == $a;
 		assert: commandLine optArg isNil;
 		assert: (commandLine getOpt: 'abc:') isNil;
-		assert: commandLine arguments = #('arg1');
+		assert: commandLine arguments = #('DPRO.img7' 'arg1');
 		yourself.!
 
 test_getOpt_08
@@ -101,7 +101,7 @@ test_getOpt_08
 		assert: (commandLine getOpt: 'abc:') == $c;
 		assert: commandLine optArg = 'foo';
 		assert: (commandLine getOpt: 'abc:') isNil;
-		assert: commandLine arguments = #('arg1');
+		assert: commandLine arguments = #('DPRO.img7' 'arg1');
 		yourself.!
 
 test_getOpt_09
@@ -113,7 +113,7 @@ test_getOpt_09
 		assert: (commandLine getOpt: 'abc:') == $a;
 		assert: commandLine optArg isNil;
 		assert: (commandLine getOpt: 'abc:') isNil;
-		assert: commandLine arguments = #('-b');
+		assert: commandLine arguments = #('DPRO.img7' '-b');
 		yourself.!
 
 test_getOpt_10
@@ -125,7 +125,7 @@ test_getOpt_10
 		assert: (commandLine getOpt: 'abc:') == $a;
 		assert: commandLine optArg isNil;
 		assert: (commandLine getOpt: 'abc:') isNil;
-		assert: commandLine arguments = #('-');
+		assert: commandLine arguments = #('DPRO.img7' '-');
 		yourself.!
 
 test_getOpt_11
@@ -167,7 +167,7 @@ test_getOpt_13
 		assert: commandLine optOpt isNil;
 		assert: commandLine optArg isEmpty;
 		assert: (commandLine getOpt: 'abc:') isNil;
-		assert: commandLine arguments isEmpty;
+		assert: commandLine arguments = #('DPRO.img7');
 		yourself.!
 
 test_getOpt_14
@@ -178,7 +178,7 @@ test_getOpt_14
 	commandLine := CommandLine argv: #('Dolphin7.exe' 'DPRO.img7' '--' '-a' '-b' '-c').
 	self 
 		assert: (commandLine getOpt: 'abc:') isNil;
-		assert: commandLine arguments = #('-a' '-b' '-c');
+		assert: commandLine arguments = #('DPRO.img7' '-a' '-b' '-c');
 		yourself.!
 
 testAccessors
@@ -195,7 +195,7 @@ testAccessors
 		assert: (options at: $a) isNil;
 		assert: (options at: $b) isNil;
 		assert: (options at: $c) = 'foo';
-		assert: arguments = #('bar');
+		assert: arguments = #('DPRO.img7' 'bar');
 		yourself.!
 
 testLongAmbiguousOption
@@ -225,7 +225,7 @@ testLongEquals
 		assert: options class == Dictionary;
 		assert: options keys asSortedCollection asArray = #('foo');
 		assert: (options at: 'foo') = 'bar';
-		assert: arguments isEmpty;
+		assert: arguments = #('DPRO.img7');
 		yourself.!
 
 testLongMissingRequiredArgument
@@ -254,7 +254,7 @@ testLongNoArgument
 		assert: options class == Dictionary;
 		assert: options keys asSortedCollection asArray = #('foo');
 		assert: (options at: 'foo') isNil;
-		assert: arguments = #('bar');
+		assert: arguments = #('DPRO.img7' 'bar');
 		yourself.!
 
 testLongOptionalArgumentAbsent
@@ -271,7 +271,7 @@ testLongOptionalArgumentAbsent
 		assert: options keys asSortedCollection asArray = #('bar' 'foo');
 		assert: (options at: 'bar') isNil;
 		assert: (options at: 'foo') isNil;
-		assert: arguments isEmpty;
+		assert: arguments = #('DPRO.img7');
 		yourself.!
 
 testLongOptionalArgumentPresent
@@ -286,7 +286,7 @@ testLongOptionalArgumentPresent
 		assert: options class == Dictionary;
 		assert: options keys asSortedCollection asArray = #('foo');
 		assert: (options at: 'foo') = 'bar';
-		assert: arguments isEmpty;
+		assert: arguments = #('DPRO.img7');
 		yourself.!
 
 testLongRequiredArgumentPresent
@@ -301,7 +301,7 @@ testLongRequiredArgumentPresent
 		assert: options class == Dictionary;
 		assert: options keys asSortedCollection asArray = #('foo');
 		assert: (options at: 'foo') = 'bar';
-		assert: arguments isEmpty;
+		assert: arguments = #('DPRO.img7');
 		yourself.!
 
 testLongUnexpectedArgument
@@ -358,7 +358,7 @@ testPartialLong
 		assert: options class == Dictionary;
 		assert: options keys asSortedCollection asArray = #('foo');
 		assert: (options at: 'foo') = 'bar';
-		assert: arguments isEmpty;
+		assert: arguments = #('DPRO.img7');
 		yourself.!
 
 testSlashPrefix
@@ -375,7 +375,7 @@ testSlashPrefix
 		assert: (options at: $a) isNil;
 		assert: (options at: $b) isNil;
 		assert: (options at: $c) = 'foo';
-		assert: arguments = #('bar');
+		assert: arguments = #('DPRO.img7' 'bar');
 		yourself.!
 
 testUnrecognizedOption
