@@ -1,0 +1,37 @@
+| package |
+package := Package name: 'Wine'.
+package paxVersion: 1;
+	basicComment: ''.
+
+
+package classNames
+	add: #NTLibrary;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: 'Dolphin';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+ExternalLibrary subclass: #NTLibrary
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+"End of package definition"!
+
