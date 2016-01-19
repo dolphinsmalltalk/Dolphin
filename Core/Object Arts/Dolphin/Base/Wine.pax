@@ -8,6 +8,10 @@ package classNames
 	add: #NTLibrary;
 	yourself.
 
+package methodNames
+	add: #ResourceIdentifier -> #editViewUsing:;
+	yourself.
+
 package binaryGlobalNames: (Set new
 	yourself).
 
@@ -16,6 +20,7 @@ package globalAliases: (Set new
 
 package setPrerequisites: (IdentitySet new
 	add: 'Dolphin';
+	add: '..\MVP\Base\Dolphin MVP Base';
 	yourself).
 
 package!
@@ -32,6 +37,16 @@ ExternalLibrary subclass: #NTLibrary
 
 
 "Loose Methods"!
+
+!ResourceIdentifier methodsFor!
+
+editViewUsing: aMonadicBlock 
+	| view |
+	view := self loadWithContext: View desktop.
+	aMonadicBlock value: view.
+	self assign: view literalStoreArray.
+	view destroy! !
+!ResourceIdentifier categoriesFor: #editViewUsing:!operations!public! !
 
 "End of package definition"!
 

@@ -25,7 +25,7 @@ wineGetVersion
 	"static const char * (CDECL *pwine_get_version)(void);"
 
 	<stdcall: lpstr wine_get_version>
-	^nil! !
+	^nil	"instead of reporting an error"! !
 !NTLibrary categoriesFor: #ntGetTickCount!public! !
 !NTLibrary categoriesFor: #wineGetVersion!public! !
 
