@@ -4,6 +4,10 @@ package paxVersion: 1;
 	basicComment: 'These tests take rather a long time to run (but do pass eventually). This package is not loaded during normal regression testing to allow the test pass to complete in a reasonable time.'.
 
 
+package methodNames
+	add: #CompilerTest -> #testTextMapExhaustive;
+	yourself.
+
 package binaryGlobalNames: (Set new
 	yourself).
 
@@ -11,6 +15,7 @@ package globalAliases: (Set new
 	yourself).
 
 package setPrerequisites: (IdentitySet new
+	add: '..\IDE\Base\Development System Tests';
 	yourself).
 
 package!
@@ -22,6 +27,34 @@ package!
 
 
 "Loose Methods"!
+
+!CompilerTest methodsFor!
+
+testTextMapExhaustive
+	"Check that the release and debug text maps match for every method in the system .... with a
+	couple of exceptions... ahem"
+
+	self knownTextMapIssues not methodsDo: 
+			[:each | 
+			| debugTextMap debugMethod info textMap result |
+			result := self getDebugInfoFor: each debug: true.
+			debugMethod := result method.
+			"If fails then the method failed to compile"
+			self assert: debugMethod notNil.
+			info := each debugInfo.
+			textMap := info textMap.
+			debugTextMap := result textMap.
+			"The text maps should contain exactly the same number of entries, and the text range for each entry should be the same"
+			textMap with: debugTextMap do: [:a :b | self assert: a value = b value].
+			debugTextMap do: 
+					[:assoc | 
+					| byte ip |
+					ip := assoc key.
+					ip == 0 
+						ifFalse: 
+							[byte := debugMethod byteCodes at: ip.
+							self assert: byte ~= 0]]]! !
+!CompilerTest categoriesFor: #testTextMapExhaustive!public!unit tests-long running! !
 
 "End of package definition"!
 

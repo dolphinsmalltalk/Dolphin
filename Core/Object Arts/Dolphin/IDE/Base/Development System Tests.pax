@@ -6,7 +6,6 @@ package paxVersion: 1;
 
 package classNames
 	add: #AbstractParserErrorTest;
-	add: #ClosedCommandDescriptionTest;
 	add: #CompiledMethodTest;
 	add: #CompilerErrorTest;
 	add: #CompilerTest;
@@ -39,7 +38,6 @@ package setPrerequisites: (IdentitySet new
 	add: 'Development System';
 	add: '..\..\Base\Dolphin';
 	add: '..\..\Base\Dolphin Base Tests';
-	add: '..\Dolphin IDE Tests';
 	add: '..\..\Registry\Dolphin Registry Access';
 	add: '..\..\Lagoon\Lagoon Image Stripper';
 	add: '..\..\..\..\Contributions\Refactory\Refactoring Browser\Change Objects\RBChangeObjects';
@@ -63,11 +61,6 @@ Object subclass: #DolphinCompilerTestMethods
 	classInstanceVariableNames: ''!
 DolphinCompilerTestMethods subclass: #DolphinCompilerTestMethodsSubclass
 	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-TestCase subclass: #ClosedCommandDescriptionTest
-	instanceVariableNames: 'dialog'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!

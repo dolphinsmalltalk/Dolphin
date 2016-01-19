@@ -14,6 +14,9 @@ package methodNames
 	add: #NumberTest -> #testClassReadFromColonScaledDecimals;
 	add: #ProcessTest -> #testOverlappedErrno;
 	add: #SmallIntegerTest -> #testSubtract;
+	add: #VMTest -> #testImmutableNextPutAll;
+	add: #VMTest -> #testImmutableReplacePrimitives;
+	add: #VMTest -> #testLoopsInterruptible;
 	add: #ZLibTest -> #testCompressUncompress;
 	yourself.
 
@@ -24,6 +27,7 @@ package globalAliases: (Set new
 	yourself).
 
 package setPrerequisites: (IdentitySet new
+	add: '..\IDE\Base\Development System Tests';
 	add: '..\Base\Dolphin';
 	add: '..\Base\Dolphin Base Tests';
 	add: '..\System\Win32\Dolphin Memory-Mapped Files';
@@ -235,6 +239,78 @@ testSubtract
 
 	self assert: 5 - 2.6 = 2.4! !
 !SmallIntegerTest categoriesFor: #testSubtract!public!unit tests! !
+
+!VMTest methodsFor!
+
+testImmutableNextPutAll
+	#(#[1 2 3] 'abc' #(1 2 3)) do: 
+			[:s | 
+			| strm |
+			self assertImmutableAtPut: s.
+			strm := WriteStream on: s.
+			self should: [strm nextPutAll: (s copyFrom: 2 to: 3)] raise: Processor constWriteSignal]!
+
+testImmutableReplacePrimitives
+	#(#[1 2 3] 'abc' #(1 2 3)) do: 
+			[:s | 
+			self assertImmutableAtPut: s.
+			self should: 
+					[s 
+						replaceFrom: 1
+						to: 2
+						with: (s copyFrom: 2 to: 3)]
+				raise: Processor constWriteSignal]!
+
+testLoopsInterruptible
+	"#2167: Need to test all the optimisable loop types:
+		#timesRepeat:
+		#whileTrue[:]
+		#whileFalse[:]
+		#to:[by:]do:
+		#repeat		(hmmm, tricky, need some way to break the loop)
+	The loops must not contain any true mesage sends, only bytecodes"
+
+	"#timesRepeat:"
+
+	self assertLoopInterruptible: [3000000 timesRepeat: [1 + 2]].
+	"#whileFalse"
+	self assertLoopInterruptible: 
+			[| i |
+			i := 0.
+			
+			[i := i + 1.
+			i > 5000000] whileFalse].
+	"#whileTrue"
+	self assertLoopInterruptible: 
+			[| i |
+			i := 0.
+			
+			[i := i + 1.
+			i <= 5000000] whileTrue].
+	"#whileFalse:"
+	self assertLoopInterruptible: 
+			[| i |
+			i := 0.
+			[i >= 5000000] whileFalse: [i := i + 1]].
+	"#whileTrue:"
+	self assertLoopInterruptible: 
+			[| i |
+			i := 0.
+			[i < 5000000] whileTrue: [i := i + 1]].
+	"#to:do:"
+	self assertLoopInterruptible: [1 to: 5000000 do: [:i | i + 1]].
+	"#to:by:do:"
+	self assertLoopInterruptible: 
+			[1 to: 10000000
+				by: 2
+				do: [:i | i + 1]].
+	self assertLoopInterruptible: 
+			[5000000 to: 1
+				by: -1
+				do: [:i | i + 1]]! !
+!VMTest categoriesFor: #testImmutableNextPutAll!public!unit tests! !
+!VMTest categoriesFor: #testImmutableReplacePrimitives!public!unit tests! !
+!VMTest categoriesFor: #testLoopsInterruptible!public!unit tests! !
 
 !ZLibTest methodsFor!
 
