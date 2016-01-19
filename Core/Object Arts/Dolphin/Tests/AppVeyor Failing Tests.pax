@@ -11,6 +11,8 @@ package methodNames
 	add: #ExtractMethodTest -> #testExtractMethodThatNeedsTemporaryVariable;
 	add: #ExtractMethodToComponentTest -> #testExtractMethodAtEndOfMethodThatNeedsReturn;
 	add: #ExtractMethodToComponentTest -> #testMoveWithoutSelfReference;
+	add: #ExtractToTemporaryTest -> #testExtractToTemporaryForLastStatementInBlock;
+	add: #ExtractToTemporaryTest -> #testExtractToTemporaryInsideBlock;
 	add: #FormatterTest -> #testBlock;
 	add: #FormatterTest -> #testBlockArguments;
 	add: #FormatterTest -> #testCascadeKeywordMessages;
@@ -29,6 +31,7 @@ package methodNames
 	add: #InlineMethodTest -> #testInlineMethod2;
 	add: #InlineMethodTest -> #testInlineMethod4;
 	add: #InlineMethodTest -> #testInlineMethod5;
+	add: #InlineMethodTest -> #testInlineRecursiveCascadedMethod;
 	add: #InlineMethodTest -> #testOverriden;
 	add: #InlineTemporaryTest -> #testInlineTemporary;
 	add: #MoveVariableDefinitionTest -> #testMoveDefinition;
@@ -229,6 +232,45 @@ testMoveWithoutSelfReference
 	self assert: class selectors size = selectorsSize! !
 !ExtractMethodToComponentTest categoriesFor: #testExtractMethodAtEndOfMethodThatNeedsReturn!public!tests! !
 !ExtractMethodToComponentTest categoriesFor: #testMoveWithoutSelfReference!public!tests! !
+
+!ExtractToTemporaryTest methodsFor!
+
+testExtractToTemporaryForLastStatementInBlock
+	| refactoring |
+	refactoring := ExtractToTemporaryRefactoring 
+				extract: (self convertInterval: (52 to: 73)
+						for: (RefactoryTestDataApp sourceCodeAt: #caller2))
+				to: 'temp'
+				from: #caller2
+				in: RefactoryTestDataApp.
+	self executeRefactoring: refactoring.
+	self 
+		assert: ((refactoring model classNamed: #RefactoryTestDataApp) 
+				parseTreeFor: #caller2) = (RBParser 
+							parseMethod: 'caller2
+	^(1 to: 10) inject: 1 into: [:sum :each | | temp | temp := sum * (self foo: each). temp]')!
+
+testExtractToTemporaryInsideBlock
+	| refactoring |
+	refactoring := ExtractToTemporaryRefactoring 
+				extract: (self convertInterval: (133 to: 141)
+						for: (RefactoryTestDataApp sourceCodeAt: #noMoveDefinition))
+				to: 'asdf'
+				from: #noMoveDefinition
+				in: RefactoryTestDataApp.
+	self executeRefactoring: refactoring.
+	self 
+		assert: ((refactoring model classNamed: #RefactoryTestDataApp) 
+				parseTreeFor: #noMoveDefinition) = (RBParser 
+							parseMethod: 'noMoveDefinition
+	| temp |
+	^(self collect: 
+			[:each | 
+			temp := each printString.
+			temp , temp]) 
+		select: [:each | | asdf | asdf := each size. temp := asdf + temp]')! !
+!ExtractToTemporaryTest categoriesFor: #testExtractToTemporaryForLastStatementInBlock!public!tests! !
+!ExtractToTemporaryTest categoriesFor: #testExtractToTemporaryInsideBlock!public!tests! !
 
 !FormatterTest methodsFor!
 
@@ -649,6 +691,24 @@ testInlineMethod5
 							parseMethod: 'inlineLast
 									5 = 3 ifTrue: [^self caller] ifFalse: [^	(1 to: 10) inject: 1 into: [:sum :each | sum * (self foo: each)]]')!
 
+testInlineRecursiveCascadedMethod
+	| refactoring |
+	refactoring := InlineMethodRefactoring 
+				inline: (self convertInterval: (33 to: 62)
+						for: (RefactoryTestDataApp sourceCodeAt: #inlineMethod))
+				inMethod: #inlineMethod
+				forClass: RefactoryTestDataApp.
+	self executeRefactoring: refactoring.
+	self 
+		assert: ((refactoring model classNamed: #RefactoryTestDataApp) 
+				parseTreeFor: #inlineMethod) = (RBParser 
+							parseMethod: 'inlineMethod
+									| temp temp1 |
+									self foo.
+									temp1 := self foo; inlineMethod; bar.
+									temp := self bar.
+									^temp')!
+
 testOverriden
 	self shouldWarn: (InlineMethodRefactoring 
 				inline: (self convertInterval: (15 to: 26)
@@ -660,6 +720,7 @@ testOverriden
 !InlineMethodTest categoriesFor: #testInlineMethod2!public!tests! !
 !InlineMethodTest categoriesFor: #testInlineMethod4!public!tests! !
 !InlineMethodTest categoriesFor: #testInlineMethod5!public!tests! !
+!InlineMethodTest categoriesFor: #testInlineRecursiveCascadedMethod!public!tests! !
 !InlineMethodTest categoriesFor: #testOverriden!failure tests!public! !
 
 !InlineTemporaryTest methodsFor!

@@ -83,24 +83,6 @@ testInlineMethodForSuperSendThatAlsoSendsSuper
 				forClass: (model classNamed: #RenameInstanceVariableChange).
 	self shouldFail: refactoring!
 
-testInlineRecursiveCascadedMethod
-	| refactoring |
-	refactoring := InlineMethodRefactoring 
-				inline: (self convertInterval: (33 to: 62)
-						for: (RefactoryTestDataApp sourceCodeAt: #inlineMethod))
-				inMethod: #inlineMethod
-				forClass: RefactoryTestDataApp.
-	self executeRefactoring: refactoring.
-	self 
-		assert: ((refactoring model classNamed: #RefactoryTestDataApp) 
-				parseTreeFor: #inlineMethod) = (RBParser 
-							parseMethod: 'inlineMethod
-									| temp temp1 |
-									self foo.
-									temp1 := self foo; inlineMethod; bar.
-									temp := self bar.
-									^temp')!
-
 testModelInlineRecursiveMethod
 	| refactoring class |
 	class := model classNamed: #Object.
@@ -138,7 +120,6 @@ testReturn
 !InlineMethodTest categoriesFor: #testInlineMethod3!public!tests! !
 !InlineMethodTest categoriesFor: #testInlineMethodForSuperSend!public!tests! !
 !InlineMethodTest categoriesFor: #testInlineMethodForSuperSendThatAlsoSendsSuper!failure tests!public! !
-!InlineMethodTest categoriesFor: #testInlineRecursiveCascadedMethod!public!tests! !
 !InlineMethodTest categoriesFor: #testModelInlineRecursiveMethod!public!tests! !
 !InlineMethodTest categoriesFor: #testNonExistantSelector!failure tests!public! !
 !InlineMethodTest categoriesFor: #testPrimitive!failure tests!public! !
