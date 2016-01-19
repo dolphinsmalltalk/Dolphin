@@ -417,7 +417,7 @@ processCommandLine
 	| commandLine options arguments |
 	commandLine := self commandLineParser.
 	options := commandLine options.
-	arguments := commandLine arguments.
+	arguments := commandLine arguments copyFrom: 2. "leave off image name"
 	"File in a given file"
 	options at: $f ifPresent: [:fileInFile | SourceManager default fileIn: fileInFile].
 	"Clone a new image to the given path"
