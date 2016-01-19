@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Shell subclass: #TestRunner
 	instanceVariableNames: 'result lastPass'
@@ -116,6 +116,9 @@ refreshTests
 
 !
 
+result
+	^result!
+
 runAllTests
 	self runSuite: self allTestSuite!
 
@@ -173,6 +176,7 @@ updateWindow
 !TestRunner categoriesFor: #formatTime:!helpers!public! !
 !TestRunner categoriesFor: #onViewOpened!Actions!public! !
 !TestRunner categoriesFor: #refreshTests!Actions!public! !
+!TestRunner categoriesFor: #result!public! !
 !TestRunner categoriesFor: #runAllTests!Actions!public! !
 !TestRunner categoriesFor: #runSuite:!Actions!public! !
 !TestRunner categoriesFor: #runTests!Actions!public! !

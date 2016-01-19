@@ -221,11 +221,39 @@ tearDown
 	loadedPackages notNil ifTrue: [loadedPackages do: [:each | Package manager basicUninstall: each]].
 	DolphinTestPackages reset!
 
+testForwardRefLoadPac
+	"#1720: Test loading and converting of old packages with forward reference view referereces"
+
+	| pacName |
+	pacName := self filenameFor: 'D5LoadTest.pac'.
+	(FileStream write: pacName)
+		nextPutAll: self d5ForwardRefTestPacContents;
+		close.
+	[loadedPackages := Package manager install: pacName] ensure: [File delete: pacName]!
+
+testImageStripperPrereqs
+	"#1476"
+
+	self assert: ((Package manager packageNamed: 'Autoplay') prerequisiteNames asArray 
+				includes: 'Lagoon Image Stripper')!
+
+testLoad21Pac
+	self loadAndTestPackage: 'ScribbleTestPackages\2.1\ScribbleTest21.pac'!
+
+testLoad40Pac
+	self loadAndTestPackage: 'ScribbleTestPackages\4.0\ScribbleTest4.pac'!
+
 testLoad40Pax
 	self loadAndTestPackage: 'ScribbleTestPackages\4.0\ScribbleTest4.pax'!
 
+testLoad51Pac
+	self loadAndTestPackage: 'ScribbleTestPackages\5.1\ScribbleTest51.pac'!
+
 testLoad51Pax
 	self loadAndTestPackage: 'ScribbleTestPackages\5.1\ScribbleTest51.pax'!
+
+testLoad60Pac
+	self loadAndTestPackage: 'ScribbleTestPackages\6.0\ScribbleTest6.pac'!
 
 testLoad60Pax
 	self loadAndTestPackage: 'ScribbleTestPackages\6.0\ScribbleTest6.pax'!
@@ -347,8 +375,14 @@ testTimestampInitialized
 !PackageTest categoriesFor: #loadAndTestPackage:!private!unit tests! !
 !PackageTest categoriesFor: #setUp!private!unit tests! !
 !PackageTest categoriesFor: #tearDown!private!unit tests! !
+!PackageTest categoriesFor: #testForwardRefLoadPac!public!unit tests! !
+!PackageTest categoriesFor: #testImageStripperPrereqs!public!unit tests! !
+!PackageTest categoriesFor: #testLoad21Pac!public!unit tests! !
+!PackageTest categoriesFor: #testLoad40Pac!public!unit tests! !
 !PackageTest categoriesFor: #testLoad40Pax!public!unit tests! !
+!PackageTest categoriesFor: #testLoad51Pac!public!unit tests! !
 !PackageTest categoriesFor: #testLoad51Pax!public!unit tests! !
+!PackageTest categoriesFor: #testLoad60Pac!public!unit tests! !
 !PackageTest categoriesFor: #testLoad60Pax!public!unit tests! !
 !PackageTest categoriesFor: #testPackages!public!unit tests! !
 !PackageTest categoriesFor: #testPacTimestampUpdate!public!unit tests! !

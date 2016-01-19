@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 TestResource subclass: #GdiplusFileResource
 	instanceVariableNames: ''
@@ -5381,8 +5381,7 @@ setUp
 
 tearDown
 	super tearDown.
-	(File exists: self fileLocator basePath) 
-		ifTrue: [File deleteDirectory: self fileLocator basePath]!
+	(File exists: self fileLocator basePath) ifTrue: [[File deleteDirectory: self fileLocator basePath] on: Error do: [:ex | ]]!
 
 winXP32x32icoBytes
 	^ByteArray 
