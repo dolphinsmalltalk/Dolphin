@@ -291,51 +291,6 @@ testCopy
 	(shared at: #copyProcess) resume.
 	self assert: (shared at: #state) == 2!
 
-testCopyExceptionHandlers
-	| shared |
-	shared := IdentityDictionary with: #state -> 1.
-	shared at: #sourceProcess put: Processor activeProcess.
-	shared at: #state
-		put: (
-			[shared at: #copyProcess put: (shared at: #sourceProcess) copy.
-			Processor activeProcess == (shared at: #sourceProcess) 
-				ifTrue: 
-					[self assert: (shared at: #copyProcess) state == #suspended.
-					self assertStack: (shared at: #copyProcess) topFrame sender
-						copiedCorrectlyFrom: (shared at: #sourceProcess) topFrame sender].
-			HRESULTError signalWith: -1] 
-					on: HRESULTError
-					do: [:ex | ex return: Processor activeProcess identityHash]).
-	Trace
-		display: Processor activeProcess id;
-		display: ': 1,  copyProcess = ';
-		print: (shared at: #copyProcess);
-		cr.
-	Trace
-		display: Processor activeProcess id printString , ': 2 ' , String lineDelimiter;
-		flush.
-	self assert: (shared at: #state) == Processor activeProcess identityHash.
-	(shared at: #copyProcess) == Processor activeProcess ifTrue: [Processor terminateActive].
-	Trace
-		display: Processor activeProcess id printString , ': 3' , String lineDelimiter;
-		flush.
-	self assert: (shared at: #copyProcess) isSuspended.
-	Trace
-		display: Processor activeProcess id printString , ': 4 ' , String lineDelimiter;
-		flush.
-	(shared at: #copyProcess) resume.
-	Trace
-		display: Processor activeProcess id printString , ': 5 ' , String lineDelimiter;
-		flush.
-	self waitForProcess: (shared at: #copyProcess) toTerminate: 50.
-	Trace
-		display: Processor activeProcess id printString , ': 6 ' , String lineDelimiter;
-		flush.
-	self assert: (shared at: #state) == (shared at: #copyProcess) identityHash.
-	Trace
-		display: Processor activeProcess id printString , ': 7 ' , String lineDelimiter;
-		flush!
-
 testCopyNestedBlocks
 	| sem sourceProcess copyProcess |
 	sem := Semaphore new.
@@ -476,7 +431,6 @@ waitForProcess: aProcess toTerminate: anInteger
 !ProcessTest categoriesFor: #forkNested:!helpers!private! !
 !ProcessTest categoriesFor: #forkWaiterOn:sharing:!helpers!private! !
 !ProcessTest categoriesFor: #testCopy!public!unit tests! !
-!ProcessTest categoriesFor: #testCopyExceptionHandlers!public!unit tests! !
 !ProcessTest categoriesFor: #testCopyNestedBlocks!public!unit tests! !
 !ProcessTest categoriesFor: #testCopyWhileUnwinding!public!unit tests! !
 !ProcessTest categoriesFor: #testForkedBlockHomeFrame!public!unit tests! !

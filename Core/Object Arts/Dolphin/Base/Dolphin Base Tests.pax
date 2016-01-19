@@ -44,6 +44,7 @@ package classNames
 	add: #FileTest;
 	add: #FILETIMETest;
 	add: #FLOATArrayTest;
+	add: #FloatTest;
 	add: #FolderTest;
 	add: #GenericExternalArrayTest;
 	add: #GUIDTest;
@@ -124,7 +125,6 @@ package globalAliases: (Set new
 package setPrerequisites: (IdentitySet new
 	add: '..\ActiveX\Automation\ActiveX Automation';
 	add: '..\..\Samples\ActiveX\Random\COM Random Stream';
-	add: '..\System\Trace\Debug Trace Stream';
 	add: '..\IDE\Base\Development System';
 	add: 'Dolphin';
 	add: 'Dolphin Additional Sort Algorithms';
@@ -140,6 +140,7 @@ package setPrerequisites: (IdentitySet new
 	add: '..\..\..\Contributions\Refactory\Refactoring Browser\Tests\RBTests';
 	add: '..\System\Compiler\Smalltalk Parser';
 	add: '..\..\..\Contributions\Camp Smalltalk\SUnit\SUnit';
+	add: '..\..\..\Contributions\Camp Smalltalk\SUnit\SUnitUI';
 	add: '..\ActiveX\Shell\Windows Shell';
 	yourself).
 
@@ -256,6 +257,11 @@ DolphinTest subclass: #FILETIMETest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DolphinTest subclass: #FloatTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: 'CRTConstants'
 	classInstanceVariableNames: ''!
 DolphinTest subclass: #FolderTest
 	instanceVariableNames: 'c windows system root oa'
@@ -666,7 +672,7 @@ regressionTestsLogFilename
 regressionTestSuite
 	| suite |
 	suite := TestSuite new.
-	suite addTests: DolphinTest buildSuite allTests.
+	suite addTests: TestCase buildSuite allTests.
 	^suite!
 
 runRegressionTests
@@ -674,7 +680,11 @@ runRegressionTests
 
 runRegressionTests: aTestSuite logTo: aFilenameStringOrNil 
 	| results timeMs logStream |
-	timeMs := Time millisecondsToRun: [results := aTestSuite run].
+	timeMs := Time millisecondsToRun: 
+					[| runner |
+					runner := TestRunner show.
+					runner runSuite: aTestSuite.
+					results := runner result].
 	aFilenameStringOrNil notNil 
 		ifTrue: 
 			[logStream := FileStream write: aFilenameStringOrNil.

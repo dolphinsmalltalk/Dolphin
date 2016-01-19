@@ -1,9 +1,6 @@
-[ | results |
-
-Processor sleep: 1000.
-
 "Load in the tests appropriate for DPRO and run them,"
-Package manager install: 'Core\Object Arts\Dolphin\Base\Dolphin Base Tests.pax'.
+SourceManager default fileIn: 'RegressionTestsLoad.st'!
 
+[| results |
 results := SmalltalkSystem current runRegressionTests.
 SessionManager current quit: results failureCount+results errorCount] postToInputQueue !

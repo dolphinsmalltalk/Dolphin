@@ -33,100 +33,6 @@ testBadInterval
 					inMethod: #testMethod
 					forClass: RefactoryTestDataApp)!
 
-testInlineMethod
-	| refactoring |
-	refactoring := InlineMethodRefactoring 
-				inline: (self convertInterval: (455 to: 504)
-						for: (BasicLintRuleTest class 
-								sourceCodeAt: #sentNotImplementedInApplication))
-				inMethod: #sentNotImplementedInApplication
-				forClass: BasicLintRuleTest class.
-	self executeRefactoring: refactoring.
-	self 
-		assert: ((refactoring model metaclassNamed: #BasicLintRuleTest) 
-				parseTreeFor: #sentNotImplementedInApplication) = (RBParser 
-							parseMethod: 'sentNotImplementedInApplication
-									| detector |
-									detector := self new.
-									detector name: ''Messages sent but not implemented in application''.
-									detector methodBlock: 
-											[:context :result | 
-											| message class block |
-											message := context messages 
-														detect: [:each | (context isItem: each in: context application) not]
-														ifNone: [nil].
-											class := context selectedClass.
-											block := 
-													[:each | 
-													| app methodApp root |
-													app := context application.
-													((class canUnderstand: each) 
-														ifTrue: 
-															[root := app rootApplication.
-															methodApp := ((class whichClassIncludesSelector: each) 
-																		compiledMethodAt: each) application 
-																		rootApplication.
-															methodApp == root or: [root isBasedOn: methodApp]]
-														ifFalse: [false]) not].
-											message isNil 
-												ifTrue: [message := context selfMessages detect: block ifNone: [nil]].
-											message isNil 
-												ifTrue: 
-													[class := class superclass.
-													class isNil 
-														ifTrue: 
-															[context superMessages isEmpty 
-																ifFalse: [message := context superMessages asArray first]]
-														ifFalse: [message := context superMessages detect: block ifNone: [nil]]].
-											message notNil 
-												ifTrue: 
-													[result addSearchString: message.
-													result addClass: context selectedClass selector: context selector]].
-									^detector')!
-
-testInlineMethod1
-	| refactoring |
-	refactoring := InlineMethodRefactoring 
-				inline: (self convertInterval: (39 to: 84)
-						for: (RefactoryTestDataApp sourceCodeAt: #caller))
-				inMethod: #caller
-				forClass: RefactoryTestDataApp.
-	self setupInlineExpressionFor: refactoring toReturn: false.
-	self executeRefactoring: refactoring.
-	self 
-		assert: ((refactoring model classNamed: #RefactoryTestDataApp) 
-				parseTreeFor: #caller) = (RBParser 
-							parseMethod: 'caller 
-									| anObject anObject1 | 
-									anObject := 5.
-									anObject1 := anObject + 1.
-									Transcript
-										show: anObject1 printString;
-										cr.
-									^anObject')!
-
-testInlineMethod2
-	| refactoring |
-	refactoring := InlineMethodRefactoring 
-				inline: (self convertInterval: (40 to: 120)
-						for: (RefactoryTestDataApp sourceCodeAt: #caller1))
-				inMethod: #caller1
-				forClass: RefactoryTestDataApp.
-	self setupInlineExpressionFor: refactoring toReturn: false.
-	self executeRefactoring: refactoring.
-	self 
-		assert: ((refactoring model classNamed: #RefactoryTestDataApp) 
-				parseTreeFor: #caller1) = (RBParser 
-							parseMethod: 'caller1 
-								| anObject each1 anObject1 | 
-								anObject := 5.
-								anObject1 := anObject + 1.
-								each1 := anObject1 printString.
-								Transcript
-									show: each1;
-									cr.
-								[:each | each printString. ^anObject] value: each1')!
-
 testInlineMethod3
 	| refactoring |
 	refactoring := InlineMethodRefactoring 
@@ -141,48 +47,6 @@ testInlineMethod3
 				parseTreeFor: #caller2) = (RBParser 
 							parseMethod: 'caller2
 								^(1 to: 10) inject: 1 into: [:sum :each | sum * ((1 to: 10) inject: each into: [:sum1 :each1 | sum1 + each1])]	')!
-
-testInlineMethod4
-	| refactoring |
-	refactoring := InlineMethodRefactoring 
-				inline: (self convertInterval: (31 to: 112)
-						for: (RefactoryTestDataApp sourceCodeAt: #inlineJunk))
-				inMethod: #inlineJunk
-				forClass: RefactoryTestDataApp.
-	self setupInlineExpressionFor: refactoring toReturn: false.
-	self executeRefactoring: refactoring.
-	self 
-		assert: ((refactoring model classNamed: #RefactoryTestDataApp) 
-				parseTreeFor: #inlineJunk) = (RBParser 
-							parseMethod: 'inlineJunk
-										| asdf bar1 baz1 asdf1 |
-										bar1 := 
-												[:each | 
-												| temp |
-												temp := each.
-												temp , temp] value: self.
-										baz1 := bar1 + bar1.
-										asdf1 := baz1 + bar1.
-										asdf := asdf1.
-										^asdf foo: 
-												[:bar | 
-												| baz |
-												baz := bar.
-												baz * baz]')!
-
-testInlineMethod5
-	| refactoring |
-	refactoring := InlineMethodRefactoring 
-				inline: (self convertInterval: (53 to: 64)
-						for: (RefactoryTestDataApp sourceCodeAt: #inlineLast))
-				inMethod: #inlineLast
-				forClass: RefactoryTestDataApp.
-	self executeRefactoring: refactoring.
-	self 
-		assert: ((refactoring model classNamed: #RefactoryTestDataApp) 
-				parseTreeFor: #inlineLast) = (RBParser 
-							parseMethod: 'inlineLast
-									5 = 3 ifTrue: [^self caller] ifFalse: [^	(1 to: 10) inject: 1 into: [:sum :each | sum * (self foo: each)]]')!
 
 testInlineMethodForSuperSend
 	| refactoring |
@@ -219,24 +83,6 @@ testInlineMethodForSuperSendThatAlsoSendsSuper
 				forClass: (model classNamed: #RenameInstanceVariableChange).
 	self shouldFail: refactoring!
 
-testInlineRecursiveCascadedMethod
-	| refactoring |
-	refactoring := InlineMethodRefactoring 
-				inline: (self convertInterval: (33 to: 62)
-						for: (RefactoryTestDataApp sourceCodeAt: #inlineMethod))
-				inMethod: #inlineMethod
-				forClass: RefactoryTestDataApp.
-	self executeRefactoring: refactoring.
-	self 
-		assert: ((refactoring model classNamed: #RefactoryTestDataApp) 
-				parseTreeFor: #inlineMethod) = (RBParser 
-							parseMethod: 'inlineMethod
-									| temp temp1 |
-									self foo.
-									temp1 := self foo; inlineMethod; bar.
-									temp := self bar.
-									^temp')!
-
 testModelInlineRecursiveMethod
 	| refactoring class |
 	class := model classNamed: #Object.
@@ -257,13 +103,6 @@ testNonExistantSelector
 				inMethod: #checkClass1:
 				forClass: RefactoryTestDataApp)!
 
-testOverriden
-	self shouldWarn: (InlineMethodRefactoring 
-				inline: (self convertInterval: (15 to: 26)
-						for: (LintRuleTest sourceCodeAt: #failedRules))
-				inMethod: #failedRules
-				forClass: LintRuleTest)!
-
 testPrimitive
 	self shouldFail: (InlineMethodRefactoring 
 				inline: (self convertInterval: (14 to: 23)
@@ -278,18 +117,11 @@ testReturn
 				inMethod: #utilityMethods
 				forClass: BasicLintRuleTest class)! !
 !InlineMethodTest categoriesFor: #testBadInterval!failure tests!public! !
-!InlineMethodTest categoriesFor: #testInlineMethod!public!tests! !
-!InlineMethodTest categoriesFor: #testInlineMethod1!public!tests! !
-!InlineMethodTest categoriesFor: #testInlineMethod2!public!tests! !
 !InlineMethodTest categoriesFor: #testInlineMethod3!public!tests! !
-!InlineMethodTest categoriesFor: #testInlineMethod4!public!tests! !
-!InlineMethodTest categoriesFor: #testInlineMethod5!public!tests! !
 !InlineMethodTest categoriesFor: #testInlineMethodForSuperSend!public!tests! !
 !InlineMethodTest categoriesFor: #testInlineMethodForSuperSendThatAlsoSendsSuper!failure tests!public! !
-!InlineMethodTest categoriesFor: #testInlineRecursiveCascadedMethod!public!tests! !
 !InlineMethodTest categoriesFor: #testModelInlineRecursiveMethod!public!tests! !
 !InlineMethodTest categoriesFor: #testNonExistantSelector!failure tests!public! !
-!InlineMethodTest categoriesFor: #testOverriden!failure tests!public! !
 !InlineMethodTest categoriesFor: #testPrimitive!failure tests!public! !
 !InlineMethodTest categoriesFor: #testReturn!failure tests!public! !
 

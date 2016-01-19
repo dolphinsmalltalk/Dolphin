@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 GdiplusBase subclass: #GdiplusImage
 	instanceVariableNames: ''
@@ -1531,9 +1531,9 @@ exampleGdipIPropertyItem
 	"
 
 	| image title propItem |
-	image := GdiplusImage fromFile: 'Resources/Dolphin0.jpg'
+	image := GdiplusImage fromFile: 'Resources/LagoonSideBar.jpg'
 				usingLocator: FileLocator installRelative.
-	title := 'Dolphin Splash'.
+	title := 'Lagoon Sidebar'.
 	(propItem := GpPropertyItem new)
 		id: PropertyTagImageTitle;
 		length: title size;

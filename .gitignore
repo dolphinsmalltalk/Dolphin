@@ -5,6 +5,5 @@
 *.sml
 !DBOOT.img7
 !DBOOT.sml
-testsGdiplus
 Repository/
 *.testlog
