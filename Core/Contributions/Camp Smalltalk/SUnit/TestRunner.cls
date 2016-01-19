@@ -103,8 +103,7 @@ onViewOpened
 	super onViewOpened.
 	self caption: 'SUnit Camp Smalltalk ', TestCase version, ' TestRunner'.
 	(self view viewNamed: 'scriptModel') 
-		list: TestCase allSubclasses;
-		selection: ExampleSetTest.
+		list: TestCase allSubclasses.
 	!
 
 refreshTests
@@ -176,7 +175,7 @@ updateWindow
 !TestRunner categoriesFor: #formatTime:!helpers!public! !
 !TestRunner categoriesFor: #onViewOpened!Actions!public! !
 !TestRunner categoriesFor: #refreshTests!Actions!public! !
-!TestRunner categoriesFor: #result!public! !
+!TestRunner categoriesFor: #result!Accessing!public! !
 !TestRunner categoriesFor: #runAllTests!Actions!public! !
 !TestRunner categoriesFor: #runSuite:!Actions!public! !
 !TestRunner categoriesFor: #runTests!Actions!public! !

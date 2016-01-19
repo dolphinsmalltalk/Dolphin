@@ -2808,7 +2808,7 @@ uvffpbTv8znr0Uqd7/19/wBx/9k='!
 
 fileLocator
 	^FolderRelativeFileLocator 
-		basePath: (FileLocator imageRelative localFileSpecFor: 'testsGdiplus\')!
+		basePath: (FileLocator imageRelative localFileSpecFor: 'Resources\Tests\GdiplusTestImages\')!
 
 fish32x32pngBytes
 	^ByteArray 
