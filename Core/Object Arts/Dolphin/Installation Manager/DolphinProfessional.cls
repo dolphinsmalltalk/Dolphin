@@ -38,7 +38,7 @@ contents
 		add: #('Core\Object Arts\Dolphin\Lagoon\Lagoon Image Stripper.pax' #encrypted #imageBased);
 		add: #('Core\Object Arts\Dolphin\Lagoon\Application Deployment Kit.pax' #encrypted #imageBased);
 		add: #('Core\Object Arts\Dolphin\Lagoon\ActiveX DLL Server Kit.pax' #encrypted #imageBased);
-		addAll: #(#('Core\Object Arts\Dolphin\System\Win32\Dolphin File System Watcher.pax' #encrypted #imageBased) #('Core\Object Arts\Dolphin\System\Win32\Dolphin Memory-Mapped Files.pax' #encrypted #imageBased) #('Core\Object Arts\Dolphin\System\Win32\Dolphin MMF Tests.pax' #encrypted #imageBased) #('Core\Object Arts\Dolphin\System\Win32\Dolphin Overlapped IO.pax' #encrypted #imageBased));
+		addAll: #(#('Core\Object Arts\Dolphin\System\Win32\Dolphin File System Watcher.pax' #encrypted #imageBased) #('Core\Object Arts\Dolphin\System\Win32\Dolphin Memory-Mapped Files.pax' #encrypted #imageBased) #('Core\Object Arts\Dolphin\System\Win32\Dolphin Overlapped IO.pax' #encrypted #imageBased));
 		add: #('Core\Object Arts\Dolphin\ActiveX\Property Bags\ActiveX Property Bags.pax' #encrypted #imageBased);
 		addAll: #(#('Core\Object Arts\Dolphin\MVP\Metafiles\Dolphin Metafile Records.pax' #encrypted #imageBased) #('Core\Object Arts\Dolphin\MVP\Metafiles\Dolphin Metafiles.pax' #encrypted #imageBased));
 		yourself.
