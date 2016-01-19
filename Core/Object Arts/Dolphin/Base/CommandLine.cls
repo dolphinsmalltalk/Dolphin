@@ -112,7 +112,6 @@ getOpt: aString
 initialize: anArray
 
 	argv := anArray.
-	self assert: [2 <= argv size].
 	optIndex := 1.
 	optionPrefixChars := '-/'.
 	parsingRules := OrderedCollection new.!
@@ -155,7 +154,6 @@ parse
 	parsingErrors := WriteStream on: String new.
 	parsingArgStream := (ReadStream on: argv) 
 		next; 	"exe"
-		next; 	"img7"
 		yourself.
 	[parsingArgStream atEnd] whileFalse: [	"iterate over the argv array"
 		self parseNextArg.

@@ -32,9 +32,9 @@ isUnavailable
 
 setUp
 	super setUp.
-	a :=self createPackage: 'Object Arts\Dolphin\Tests\A'.
-	b :=self createPackage: 'Object Arts\Dolphin\Tests\X\B'.
-	c :=self createPackage: 'Object Arts\Dolphin\Tests\X\C'.
+	a :=self createPackage: 'Resources\Tests\PackageTests\A'.
+	b :=self createPackage: 'Resources\Tests\PackageTests\X\B'.
+	c :=self createPackage: 'Resources\Tests\PackageTests\X\C'.
 
 !
 

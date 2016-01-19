@@ -35,7 +35,6 @@ contents
 	contents
 		add: #('Core\Contributions\Camp Smalltalk\SUnit\SUnitPreload.pax' #plain #imageBased);
 		add: #('Core\Contributions\Camp Smalltalk\SUnit\SUnit.pax' #plain #imageBased);
-		add: #('Core\Contributions\Camp Smalltalk\SUnit\SUnitTests.pax' #plain #imageBased);
 		add: #('Core\Contributions\Camp Smalltalk\SUnit\SUnitUI.pax' #plain #imageBased);
 		yourself.
 
@@ -49,7 +48,6 @@ contents
 	"GDI+"
 	contents
 		add: #('Core\Object Arts\Dolphin\MVP\Gdiplus\Samples\Gdiplus ImageView Sample.pax' #plain #imageBased);
-		add: #('Core\Object Arts\Dolphin\MVP\Gdiplus\Tests\Gdiplus Tests.pax' #plain #imageBased);
 		yourself.
 
 	"Add-ons"
@@ -110,7 +108,6 @@ contents
 		add: #('Core\Object Arts\Dolphin\Database\Database Connection.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\Database\Database Connection (Deprecated).pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\System\Continuations\Dolphin Continuations.pax' #plain #imageBased);
-		add: #('Core\Object Arts\Dolphin\System\Continuations\Continuation Tests.pax' #plain #imageBased);
 		add: #('Core\Contributions\Refactory\Refactoring Browser\Refactorings\RBReferenceFinder.pax' #plain #imageBased);
 		yourself.
 

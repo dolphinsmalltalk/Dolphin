@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Shell subclass: #TestRunner
 	instanceVariableNames: 'result lastPass'
@@ -103,8 +103,7 @@ onViewOpened
 	super onViewOpened.
 	self caption: 'SUnit Camp Smalltalk ', TestCase version, ' TestRunner'.
 	(self view viewNamed: 'scriptModel') 
-		list: TestCase allSubclasses;
-		selection: ExampleSetTest.
+		list: TestCase allSubclasses.
 	!
 
 refreshTests
@@ -115,6 +114,9 @@ refreshTests
 	self displayReset.
 
 !
+
+result
+	^result!
 
 runAllTests
 	self runSuite: self allTestSuite!
@@ -173,6 +175,7 @@ updateWindow
 !TestRunner categoriesFor: #formatTime:!helpers!public! !
 !TestRunner categoriesFor: #onViewOpened!Actions!public! !
 !TestRunner categoriesFor: #refreshTests!Actions!public! !
+!TestRunner categoriesFor: #result!Accessing!public! !
 !TestRunner categoriesFor: #runAllTests!Actions!public! !
 !TestRunner categoriesFor: #runSuite:!Actions!public! !
 !TestRunner categoriesFor: #runTests!Actions!public! !
