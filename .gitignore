@@ -7,3 +7,4 @@
 !DBOOT.sml
 Repository/
 *.testlog
+!DPRO.*
