@@ -1,3 +1,4 @@
+@ECHO ON
 git clone -q --branch=master https://github.com/dolphinsmalltalk/Dolphin.git Dolphin
 
 copy ..\..\Dolphin7.exe Dolphin
