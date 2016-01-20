@@ -6,14 +6,43 @@ package paxVersion: 1;
 
 package methodNames
 	add: #BlockClosureTest -> #testFullBlockEquality;
+	add: #ContainerViewTest -> #test1PixBorderPaint;
+	add: #ContainerViewTest -> #test1PixBorderPrint;
+	add: #ContainerViewTest -> #testBordersPrintAndPaintIdentical;
+	add: #DebuggerTest -> #testNoShowWalkbacks;
+	add: #DebuggerTest -> #testRemapIPSmokeTest;
 	add: #DictionaryTest -> #testNilKey;
 	add: #EvaluationConverterTest -> #testWithDates;
 	add: #GdiplusBitmapTest -> #testAsByteArray;
+	add: #LinkButtonTest -> #testClickLinkFiresCommand;
+	add: #LinkButtonTest -> #testQueryCommandEnablement;
+	add: #ListViewTest -> #testChangeViewMode;
+	add: #ListViewTest -> #testColumnWidth;
+	add: #ListViewTest -> #testNilRow;
+	add: #ListViewTest -> #testProgrammaticSelectionVisible;
+	add: #ListViewTest -> #testSelectionRemainsVisibleOnSort;
 	add: #MemoryMappedFileTest -> #testDoubleArray;
 	add: #MemoryMappedFileTest -> #testMaximumSize;
+	add: #MethodWorkspaceTest -> #testSelectedOrNearestNode;
 	add: #NumberTest -> #testClassReadFromColonScaledDecimals;
+	add: #PackageFolderTest -> #testForPackage;
+	add: #PackageSelectorTest -> #testPackageCreationDoesntAlterSelection;
+	add: #PackageSelectorTest -> #testPackageRemovalDoesntAlterSelection;
 	add: #ProcessTest -> #testOverlappedErrno;
+	add: #PublishedAspectInspectorTest -> #testAspectChanged;
+	add: #ScintillaViewTest -> #testLanguages;
+	add: #SelectableTreeItemsTest -> #testSelection;
 	add: #SmallIntegerTest -> #testSubtract;
+	add: #StyledContainerTest -> #test1PixBorderPaint;
+	add: #StyledContainerTest -> #test1PixBorderPrint;
+	add: #StyledContainerTest -> #test1PixDottedBorderPaint;
+	add: #StyledContainerTest -> #test1PixDottedBorderPrint;
+	add: #StyledContainerTest -> #testBordersPrintAndPaintIdentical;
+	add: #TextEditTest -> #testPositionOfChar;
+	add: #ViewComposerTest -> #testResizeDoesNotMove;
+	add: #VMTest -> #testImmutableNextPutAll;
+	add: #VMTest -> #testImmutableReplacePrimitives;
+	add: #VMTest -> #testLoopsInterruptible;
 	add: #ZLibTest -> #testCompressUncompress;
 	yourself.
 
@@ -24,12 +53,22 @@ package globalAliases: (Set new
 	yourself).
 
 package setPrerequisites: (IdentitySet new
+	add: '..\IDE\Base\Development System';
+	add: '..\IDE\Base\Development System Tests';
 	add: '..\Base\Dolphin';
 	add: '..\Base\Dolphin Base Tests';
+	add: '..\MVP\Views\Common Controls\Dolphin Common Controls';
+	add: '..\IDE\Dolphin IDE Tests';
+	add: '..\MVP\Models\List\Dolphin List Models';
 	add: '..\System\Win32\Dolphin Memory-Mapped Files';
 	add: '..\System\Win32\Dolphin MMF Tests';
+	add: '..\MVP\Base\Dolphin MVP Base';
+	add: '..\MVP\Dolphin MVP Tests';
+	add: '..\MVP\Views\Scintilla\Dolphin Scintilla View';
+	add: '..\MVP\Views\Styled Views\Dolphin Styled Views';
 	add: '..\MVP\Gdiplus\Gdiplus';
 	add: '..\MVP\Gdiplus\Tests\Gdiplus Tests';
+	add: '..\..\..\Contributions\Refactory\Refactoring Browser\Environments\RBEnvironments';
 	add: '..\..\..\Contributions\ITC Gorisek\ZLib Interface';
 	yourself).
 
@@ -54,6 +93,129 @@ testFullBlockEquality
 	self assert: block1 = block2.
 	self assert: block1 ~= block3! !
 !BlockClosureTest categoriesFor: #testFullBlockEquality!public!unit tests-known failures! !
+
+!ContainerViewTest methodsFor!
+
+test1PixBorderPaint
+	"Tests the validity of WM_PAINT of a 1 pixel border"
+
+	| paintBitmap |
+	containerView hasBorder: false.
+	self waitForScreenUpdate.
+	paintBitmap := self bitmapOfPaintView: containerView.
+	self 
+		checkRectangle: (self borderRectangleOf: containerView)
+		inBitmap: paintBitmap
+		color: self backgroundColor.
+	self 
+		checkRectangle: ((self borderRectangleOf: containerView) insetBy: 1 asPoint)
+		inBitmap: paintBitmap
+		color: self backgroundColor.
+	containerView hasBorder: true.
+	self waitForScreenUpdate.
+	paintBitmap := self bitmapOfPaintView: containerView.
+	self 
+		checkRectangle: (self borderRectangleOf: containerView)
+		inBitmap: paintBitmap
+		color: self borderColor.
+	self 
+		checkRectangle: ((self borderRectangleOf: containerView) insetBy: 1 asPoint)
+		inBitmap: paintBitmap
+		color: self backgroundColor!
+
+test1PixBorderPrint
+	"Tests the validity of WM_PRINT of a 1 pixel border"
+
+	| printBitmap |
+	containerView hasBorder: false.
+	self waitForScreenUpdate.
+	printBitmap := self bitmapOfPrintView: containerView.
+	self 
+		checkRectangle: (self borderRectangleOf: containerView)
+		inBitmap: printBitmap
+		color: self backgroundColor.
+	self 
+		checkRectangle: ((self borderRectangleOf: containerView) insetBy: 1 asPoint)
+		inBitmap: printBitmap
+		color: self backgroundColor.
+	containerView hasBorder: true.
+	self waitForScreenUpdate.
+	printBitmap := self bitmapOfPrintView: containerView.
+	self 
+		checkRectangle: (self borderRectangleOf: containerView)
+		inBitmap: printBitmap
+		color: self borderColor.
+	self 
+		checkRectangle: ((self borderRectangleOf: containerView) insetBy: 1 asPoint)
+		inBitmap: printBitmap
+		color: self backgroundColor!
+
+testBordersPrintAndPaintIdentical
+	"Checks that the WM_PRINT image (used by the VC) and the WM_PAINT image (shown on the
+	display) are the same. This uses the rather slow Bitmap>>pixelData method so best keep the
+	actual view size fairly small."
+
+	"Test not bordered"
+
+	| paintPixels printPixels paintPixelsBordered printPixelsBordered |
+	containerView hasBorder: false.
+	self waitForScreenUpdate.
+	paintPixels := (self bitmapOfPaintView: containerView) pixelData.
+	printPixels := (self bitmapOfPrintView: containerView) pixelData.
+	self assert: paintPixels = printPixels.
+
+	"Test bordered"
+	containerView hasBorder: true.
+	self waitForScreenUpdate.
+	paintPixelsBordered := (self bitmapOfPaintView: containerView) pixelData.
+	printPixelsBordered := (self bitmapOfPrintView: containerView) pixelData.
+	self assert: paintPixelsBordered = printPixelsBordered.
+	self deny: paintPixels = paintPixelsBordered! !
+!ContainerViewTest categoriesFor: #test1PixBorderPaint!public! !
+!ContainerViewTest categoriesFor: #test1PixBorderPrint!public! !
+!ContainerViewTest categoriesFor: #testBordersPrintAndPaintIdentical!public! !
+
+!DebuggerTest methodsFor!
+
+testNoShowWalkbacks
+	Transcript clear.
+	process := 
+			[(ResourceIdentifier class: ContainerView name: 'Default view') loadWithContext: DeafObject current] 
+					fork.
+	Processor sleep: 1000.
+	self assert: process state = #debug.
+	self 
+		assert: (Transcript contents beginsWith: 'Forcibly unhooked failed window create of a ContainerView')!
+
+testRemapIPSmokeTest
+	| frame instructions debugMethod debugInstructions info debugInfo textMap ip segment offset debugTextMap |
+	CompiledCode initializeInfoCache.
+	frame := StackFrame new.
+	CompiledCode allSubinstances do: 
+			[:each | 
+			instructions := each byteCodeSegments.
+			debugMethod := each asDebugMethod.
+			debugInstructions := debugMethod byteCodeSegments.
+			info := each debugInfo.
+			debugInfo := debugMethod debugInfo.
+			ip := 1.
+			textMap := info textMap.
+			debugTextMap := debugInfo textMap.
+			textMap with: debugTextMap do: [:a :b | self assert: a value = b value].
+			debugTextMap do: 
+					[:assoc | 
+					| byte |
+					byte := debugMethod byteCodes at: assoc key.
+					self assert: byte ~= 0]
+			"			instructions do: 
+					[:bytes | 
+					segment := frame findIP: ip inTextMap: textMap.
+					self deny: segment = 0.
+					offset := ip - (textMap at: segment) key.
+					self assert: offset >= 0.
+					ip := ip + bytes size]"]! !
+!DebuggerTest categoriesFor: #testNoShowWalkbacks!public!unit tests! !
+!DebuggerTest categoriesFor: #testRemapIPSmokeTest!public! !
 
 !DictionaryTest methodsFor!
 
@@ -82,6 +244,147 @@ testAsByteArray
 	"difference is in the first 100 bytes ... what is the problem?"
 	self assert: b1 = b2! !
 !GdiplusBitmapTest categoriesFor: #testAsByteArray!public!unit tests! !
+
+!LinkButtonTest methodsFor!
+
+testClickLinkFiresCommand
+	| text |
+	presenter text: 'Test'.
+	self assert: presenter text = '<a>Test</a>'.
+	self assert: presenter commandDescription description = 'Test'.
+	"This command will cause the shell to be hidden when fired"
+	presenter command: #hide.
+	self assert: presenter isWindowVisible.
+	self leftClickAt: 10 @ 10.
+	self assert: presenter isWindowVisible not.
+	presenter topView show.
+	"Now try clicking over an area of the text that is not part of the link"
+	text := 'Click <a>here</a> to hide me'.
+	presenter text: text.
+	self assert: presenter text = text.
+	self assert: presenter commandDescription description = 'Click here to hide me'.
+	SessionManager inputState pumpMessages.
+	self assert: presenter isWindowVisible.
+	self leftClickAt: 10 @ 10.
+	self assert: presenter isWindowVisible!
+
+testQueryCommandEnablement
+	presenter text: 'Test'.
+	self assert: presenter text = '<a>Test</a>'.
+	self assert: presenter commandDescription description = 'Test'.
+	"This command will cause the shell to be hidden when fired"
+	presenter command: #test.
+	self assert: presenter isWindowVisible.
+	presenter validateUserInterface.
+	self assert: presenter isEnabled not.
+	presenter command: #hide.
+	presenter
+		invalidateUserInterface;
+		validateUserInterface.
+	self assert: presenter isEnabled! !
+!LinkButtonTest categoriesFor: #testClickLinkFiresCommand!public!unit tests! !
+!LinkButtonTest categoriesFor: #testQueryCommandEnablement!public!unit tests! !
+
+!ListViewTest methodsFor!
+
+testChangeViewMode
+	"#1510"
+
+	| column |
+	self assert: presenter isVirtual.
+	self assert: presenter viewMode == #report.
+	column := presenter primaryColumn.
+	presenter getTextBlock: [:each | each first].
+	column getTextBlock: [:each | each second].
+	presenter model list: #(#('1' '2') #('11' '22')).
+	2 timesRepeat: 
+			[presenter model keysAndValuesDo: 
+					[:i :each | 
+					| text |
+					text := presenter getItemText: i.
+					self assert: text = each second].
+			presenter viewMode: #smallIcons.
+			presenter model keysAndValuesDo: 
+					[:i :each | 
+					| text |
+					text := presenter getItemText: i.
+					self assert: text = each first].
+			presenter viewMode: #report.
+			"Switch to non-virtual"
+			presenter isVirtual: false.
+			presenter refreshContents]!
+
+testColumnWidth
+	"#1452, #1456"
+
+	| column primary before after width |
+	primary := presenter view primaryColumn.
+	before := primary width.
+	width := presenter view width - before + 50.
+	column := ListViewColumn text: 'Blah' width: width.
+	self assert: column width = width.
+	width := width - 20.
+	column width: width.
+	self assert: column width = width.
+	presenter view update.
+	self assert: presenter view isLayoutValid.
+	presenter view addColumn: column.
+	self deny: presenter view isLayoutValid.
+	presenter view validateLayout.
+	self assert: presenter view isLayoutValid.
+	after := primary width.
+	self assert: after < before.
+	self assert: column width = 80.
+	column width: 100.
+	self deny: presenter view isLayoutValid.
+	presenter view validateLayout.
+	self assert: presenter view isLayoutValid.
+	self assert: primary width < after.
+	self assert: column width = 100!
+
+testNilRow
+	"#2157"
+
+	| m c item txt |
+	m := ListModel on: #(nil) , (1 to: 5).
+	presenter model: m.
+	c := presenter view columnAtIndex: 1.
+	txt := 'this is nil'.
+	c getTextBlock: [:it | it ifNil: [txt]].
+	item := self getItem: 1.
+	self assert: item pszText = txt.
+	self assert: item iImage = (nil icon imageIndex - 1)!
+
+testProgrammaticSelectionVisible
+	"#1381"
+
+	"Note that the last selection is the one with the caret, and therefore it is that which should be visible"
+
+	| view |
+	view := presenter view.
+	view list: (0 to: 100) asOrderedCollection.
+	#(#(100) #(50 100) #(100 50) #(1)) do: 
+			[:each | 
+			view selections: each.
+			self assertCaretVisible]!
+
+testSelectionRemainsVisibleOnSort
+	"#1381"
+
+	| view |
+	view := presenter view.
+	view list: (0 to: 100) asOrderedCollection.
+	view selections: self sortSelections.
+	self assertCaretVisible.
+	view columnClicked: 1.
+	self assertCaretVisible.
+	view columnClicked: 1.
+	self assertCaretVisible! !
+!ListViewTest categoriesFor: #testChangeViewMode!public!unit tests! !
+!ListViewTest categoriesFor: #testColumnWidth!public!unit tests! !
+!ListViewTest categoriesFor: #testNilRow!public!unit tests! !
+!ListViewTest categoriesFor: #testProgrammaticSelectionVisible!public!unit tests! !
+!ListViewTest categoriesFor: #testSelectionRemainsVisibleOnSort!public!unit tests! !
 
 !MemoryMappedFileTest methodsFor!
 
@@ -143,6 +446,32 @@ testMaximumSize
 	File delete: fname! !
 !MemoryMappedFileTest categoriesFor: #testDoubleArray!public! !
 !MemoryMappedFileTest categoriesFor: #testMaximumSize!public! !
+
+!MethodWorkspaceTest methodsFor!
+
+testSelectedOrNearestNode
+	| env workspace node |
+	env := BrowserEnvironment new forClass: MethodWorkspace selectors: #(#selectedOrNearestNode).
+	presenter methods: env.
+	presenter method: env allMethods first.
+	self waitForInputIdle.
+	workspace := presenter sourcePresenter.
+	workspace selectionRange: (1 to: 0).
+	node := workspace selectedOrNearestNode.
+	self assert: node isMethod.
+	workspace selectionRange: (1 to: 1).
+	node := workspace selectedOrNearestNode.
+	self assert: node isMethod.
+	workspace selectionRange: (2 to: 1).
+	node := workspace selectedOrNearestNode.
+	self assert: node isMethod.
+	workspace selectionRange: (22 to: 21).
+	node := workspace selectedOrNearestNode.
+	self assert: node isMethod.
+	workspace selectionRange: (221 to: 220).
+	node := workspace selectedOrNearestNode.
+	node halt! !
+!MethodWorkspaceTest categoriesFor: #testSelectedOrNearestNode!public! !
 
 !NumberTest methodsFor!
 
@@ -221,12 +550,189 @@ testClassReadFromColonScaledDecimals
 ! !
 !NumberTest categoriesFor: #testClassReadFromColonScaledDecimals!public!unit tests! !
 
+!PackageFolderTest methodsFor!
+
+testForPackage
+	| dolphin |
+	dolphin := self folderClass forPackage: (Package manager packageNamed: 'Dolphin').
+	self assert: dolphin name = 'Base'.
+	self assert: dolphin folderName = '$\Object Arts\Dolphin\Base\'.
+	! !
+!PackageFolderTest categoriesFor: #testForPackage!public!unit tests! !
+
+!PackageSelectorTest methodsFor!
+
+testPackageCreationDoesntAlterSelection
+	| selections |
+	presenter selections: (Array with: self class owningPackage).
+	selections := presenter selections.
+	self assert: (selections size = 1 and: [selections first = self class owningPackage]).
+	self 
+		shouldnt: [packageA := self createPackage: 'Object Arts\Dolphin\Tests\A']
+		triggerAnyOf: #(#selectionChanged #selectionChanging)
+		against: presenter.
+	self assert: presenter selections = selections!
+
+testPackageRemovalDoesntAlterSelection
+	| selections newSelections |
+	packageA := self createPackage: 'Object Arts\Dolphin\Tests\A'.
+	presenter selections: (Array with: self class owningPackage).
+	selections := presenter selections.
+	self assert: (selections size = 1 and: [selections first = self class owningPackage]).
+	self 
+		shouldnt: [self removePackage: packageA]
+		triggerAnyOf: #(#selectionChanged #selectionChanging)
+		against: presenter.
+	packageA := nil.
+	newSelections := presenter selections.
+	self assert: newSelections = selections! !
+!PackageSelectorTest categoriesFor: #testPackageCreationDoesntAlterSelection!public! !
+!PackageSelectorTest categoriesFor: #testPackageRemovalDoesntAlterSelection!public! !
+
 !ProcessTest methodsFor!
 
 testOverlappedErrno
 	self assert: (CRTLibrary default thread_chmod: '' pmode: 0) < 0.
 	self assert: Processor activeProcess errno = 2! !
 !ProcessTest categoriesFor: #testOverlappedErrno!public!unit tests! !
+
+!PublishedAspectInspectorTest methodsFor!
+
+testAspectChanged
+	| inspectee accessors tvItem hItem |
+	inspectee := Association new.
+	self createInspectorOn: inspectee.
+	self assert: treePresenter view itemCount == 3.
+	self repaint.
+	accessors := treePresenter model childrenOf: treePresenter model roots first.
+	self assert: (self getAccessorKeyText: accessors first) = 'key'.
+	self assert: (self getAccessorValueText: accessors first) = 'nil'.
+	self assert: (self getAccessorKeyText: accessors last) = 'value'.
+	self assert: (self getAccessorValueText: accessors last) = 'nil'.
+	"Set key to a scalar"
+	inspectee key: 1.
+	inspector aspectChanged: #key of: inspectee.
+	self repaint.
+	accessors := treePresenter model childrenOf: treePresenter model roots first.
+	self assert: (self getAccessorKeyText: accessors first) = 'key'.
+	self assert: (self getAccessorValueText: accessors first) = '1'.
+	self assert: (self getAccessorKeyText: accessors last) = 'value'.
+	self assert: (self getAccessorValueText: accessors last) = 'nil'.
+	self assert: treePresenter view itemCount == 3.
+	"Set back to nil"
+	inspectee key: nil.
+	inspector aspectChanged: #key of: inspectee.
+	self repaint.
+	accessors := treePresenter model childrenOf: treePresenter model roots first.
+	self assert: (self getAccessorKeyText: accessors first) = 'key'.
+	self assert: (self getAccessorValueText: accessors first) = 'nil'.
+	self assert: (self getAccessorKeyText: accessors last) = 'value'.
+	self assert: (self getAccessorValueText: accessors last) = 'nil'.
+	self assert: treePresenter view itemCount == 3.
+	"Now set to something with sub-aspects"
+	inspectee key: (1 to: 2).
+	inspector aspectChanged: #key of: inspectee.
+	accessors := treePresenter model childrenOf: treePresenter model roots first.
+	hItem := treePresenter view handleFromObject: accessors first.
+	self assert: (treePresenter view getItemText: hItem) = 'key'.
+	self assert: (self getAccessorKeyText: accessors last) = 'value'.
+	self assert: (self getAccessorValueText: accessors last) = 'nil'.
+	self isUsingListTreeView 
+		ifFalse: 
+			[tvItem := treePresenter view getItemState: hItem.
+			self assert: treePresenter view itemCount == 3.
+			self assert: tvItem cChildren > 0].
+	treePresenter expand: accessors first.
+	self repaint.
+	self assert: treePresenter view itemCount == 6.
+	"Set back to nil"
+	inspectee key: nil.
+	inspector aspectChanged: #key of: inspectee.
+	self repaint.
+	accessors := treePresenter model childrenOf: treePresenter model roots first.
+	self assert: (self getAccessorKeyText: accessors first) = 'key'.
+	self assert: (self getAccessorValueText: accessors first) = 'nil'.
+	self assert: (self getAccessorKeyText: accessors last) = 'value'.
+	self assert: (self getAccessorValueText: accessors last) = 'nil'.
+	self assert: treePresenter view itemCount == 3.
+	self repaint.
+	"Now nil the root"
+	inspectee oneWayBecome: nil.
+	inspector aspectChanged: #yourself.
+	self assert: treePresenter view itemCount == 1.
+	self repaint! !
+!PublishedAspectInspectorTest categoriesFor: #testAspectChanged!public!unit tests! !
+
+!ScintillaViewTest methodsFor!
+
+testLanguages
+	| lingos |
+	lingos := ScintillaView classPool at: 'Lexers'.
+	lingos do: [:each | each notNil ifTrue: [presenter view lexer: each]]! !
+!ScintillaViewTest categoriesFor: #testLanguages!public!unit tests! !
+
+!SelectableTreeItemsTest methodsFor!
+
+testSelection
+	"Test selection"
+
+	| objects |
+	objects := self objectsToTest.
+	self addAllObjects: objects.
+	objects do: 
+			[:each | 
+			self 
+				should: [presenter selection: each]
+				trigger: #selectionChanged
+				butNot: #selectionChanging:
+				against: presenter.
+			self assert: presenter selection == each].
+	self 
+		should: [presenter resetSelection]
+		trigger: #selectionChanged
+		butNot: #selectionChanging:
+		against: presenter.
+
+	"remove should not upset selection"
+	presenter selection: objects first.
+	self 
+		shouldnt: [self treeModel remove: objects last]
+		triggerAnyOf: #(#selectionChanged #selectionChanging:)
+		against: presenter.
+	self assert: presenter selection == objects first.
+
+	"add should not upset selection"
+	self 
+		shouldnt: [self treeModel add: objects last asChildOf: objects last superclass]
+		triggerAnyOf: #(#selectionChanged #selectionChanging:)
+		against: presenter.
+	self assert: presenter selection == objects first.
+
+	"remove of selected object should trigger #selectionChanged and leave the parent of the selection selected"
+	(Array with: objects last) do: 
+			[:each | 
+			presenter selection: each.
+			self 
+				should: [self treeModel remove: each]
+				trigger: #selectionChanged
+				butNot: #selectionChanging:
+				against: presenter.
+			self assert: presenter selection = each superclass].
+
+	"No selection tests"
+	objects do: [:each | self treeModel add: each asChildOf: each superclass].
+	objects do: 
+			[:each | 
+			presenter selection: each.
+			self 
+				should: [presenter resetSelection]
+				trigger: #selectionChanged
+				butNot: #selectionChanging:
+				against: presenter.
+			self assert: presenter selectionOrNil isNil.
+			self should: [presenter selection] raise: Error].
+	self treeModel removeAll! !
+!SelectableTreeItemsTest categoriesFor: #testSelection!public!unit tests! !
 
 !SmallIntegerTest methodsFor!
 
@@ -235,6 +741,214 @@ testSubtract
 
 	self assert: 5 - 2.6 = 2.4! !
 !SmallIntegerTest categoriesFor: #testSubtract!public!unit tests! !
+
+!StyledContainerTest methodsFor!
+
+test1PixBorderPaint
+	"Tests the validity of WM_PAINT of a 1 pixel border"
+
+	super test1PixBorderPaint!
+
+test1PixBorderPrint
+	"Tests the validity of WM_PRINT of a 1 pixel border"
+
+	super test1PixBorderPrint!
+
+test1PixDottedBorderPaint
+	"Tests the validity of WM_PAINT of a 1 pixel styled dotted border"
+
+	| bitmap rect |
+	containerView hasBorder: true.
+	containerView styledPen: (StyledPen 
+				color: self styledBorderColor
+				width: 1
+				style: #dotted).
+	containerView parentView backcolor: self parentBackcolor.
+	self waitForScreenUpdate.
+	bitmap := self bitmapOfPaintView: containerView.
+	rect := self borderRectangleOf: containerView.
+	self 
+		checkPoints: (Array 
+				with: rect topRight
+				with: rect bottomLeft
+				with: rect topLeft)
+		inBitmap: bitmap
+		color: self styledBorderColor.
+	self 
+		checkPoints: (Array with: rect bottomRight)
+		inBitmap: bitmap
+		color: self parentBackcolor.
+	self 
+		checkRectangle: ((self borderRectangleOf: containerView) insetBy: 1 asPoint)
+		inBitmap: bitmap
+		color: self backgroundColor!
+
+test1PixDottedBorderPrint
+	"Tests the validity of WM_PRINT of a 1 pixel styled dotted border"
+
+	| bitmap rect |
+	containerView hasBorder: true.
+	containerView styledPen: (StyledPen 
+				color: self styledBorderColor
+				width: 1
+				style: #dotted).
+	containerView parentView backcolor: self parentBackcolor.
+	self waitForScreenUpdate.
+	bitmap := self bitmapOfPrintView: containerView.
+	rect := self borderRectangleOf: containerView.
+	self 
+		checkPoints: (Array with: rect topRight with: rect bottomLeft)
+		inBitmap: bitmap
+		color: self styledBorderColor.
+
+	"Not sure why this test is failing .. appears to work okay in VC"
+	self 
+		checkPoints: (Array with: rect topLeft with: rect bottomRight)
+		inBitmap: bitmap
+		color: self parentBackcolor.
+	self 
+		checkRectangle: ((self borderRectangleOf: containerView) insetBy: 1 asPoint)
+		inBitmap: bitmap
+		color: self backgroundColor!
+
+testBordersPrintAndPaintIdentical
+	"Checks that the WM_PRINT image (used by the VC) and the WM_PAINT image (shown on the
+	display) are the same. This uses the rather slow Bitmap>>pixelData method so best keep the
+	actual view size fairly small."
+
+	super testBordersPrintAndPaintIdentical! !
+!StyledContainerTest categoriesFor: #test1PixBorderPaint!public! !
+!StyledContainerTest categoriesFor: #test1PixBorderPrint!public! !
+!StyledContainerTest categoriesFor: #test1PixDottedBorderPaint!public! !
+!StyledContainerTest categoriesFor: #test1PixDottedBorderPrint!public! !
+!StyledContainerTest categoriesFor: #testBordersPrintAndPaintIdentical!public! !
+
+!TextEditTest methodsFor!
+
+testPositionOfChar
+	| text canvas leading lineHeight metrics |
+	text := self text.
+	canvas := presenter view canvas.
+	canvas font: presenter view actualFont.
+	metrics := canvas textMetrics.
+	leading := metrics tmExternalLeading.
+	lineHeight := metrics tmHeight.	"+ metrics tmInternalLeading"
+	presenter text: text.
+	1 to: text size
+		do: 
+			[:i | 
+			| line lineText startOfLine point extent |
+			line := presenter view lineFromPosition: i.
+			lineText := presenter view plainTextAtLine: line.
+			startOfLine := presenter view positionAtLine: line.
+			i - startOfLine > lineText size 
+				ifTrue: [self assert: (String lineDelimiter includes: (text at: i))]
+				ifFalse: 
+					[| pos |
+					extent := canvas textExtent: (lineText copyFrom: 1 to: i - startOfLine).
+					point := extent x @ ((line - 1) * lineHeight) + self margins.
+					pos := presenter view positionOfChar: i.
+					self assert: pos = point]].
+	canvas free! !
+!TextEditTest categoriesFor: #testPositionOfChar!public!unit tests! !
+
+!ViewComposerTest methodsFor!
+
+testResizeDoesNotMove
+	| static shell pos corner grabber extent |
+	vc newShellView.
+	shell := vc composingView.
+	static := vc 
+				pasteResource: self getStaticTextResource
+				context: shell
+				position: 0 @ 0.
+	pos := ##(10 @ 10).
+	static position: pos.
+	self assert: static position = pos.
+	extent := static extent.
+	corner := static screenRectangle corner - vc hidingOffset + vc defaultComposingPosition.
+	"Deferred actions are used by the grabbers - need to run these, or the grabber won't be hit"
+	SessionManager inputState pumpMessages.
+	grabber := vc grabberHitBy: corner.
+	self assert: grabber aspect == #bottomRight.
+	grabber endTrackingAt: corner + (21 @ 23).
+	"It shouldn't have moved"
+	self assert: static position = pos.
+	self deny: static extent = extent.
+	self assert: (vc constrainPoint: static extent) = static extent! !
+!ViewComposerTest categoriesFor: #testResizeDoesNotMove!public!unit tests! !
+
+!VMTest methodsFor!
+
+testImmutableNextPutAll
+	#(#[1 2 3] 'abc' #(1 2 3)) do: 
+			[:s | 
+			| strm |
+			self assertImmutableAtPut: s.
+			strm := WriteStream on: s.
+			self should: [strm nextPutAll: (s copyFrom: 2 to: 3)] raise: Processor constWriteSignal]!
+
+testImmutableReplacePrimitives
+	#(#[1 2 3] 'abc' #(1 2 3)) do: 
+			[:s | 
+			self assertImmutableAtPut: s.
+			self should: 
+					[s 
+						replaceFrom: 1
+						to: 2
+						with: (s copyFrom: 2 to: 3)]
+				raise: Processor constWriteSignal]!
+
+testLoopsInterruptible
+	"#2167: Need to test all the optimisable loop types:
+		#timesRepeat:
+		#whileTrue[:]
+		#whileFalse[:]
+		#to:[by:]do:
+		#repeat		(hmmm, tricky, need some way to break the loop)
+	The loops must not contain any true mesage sends, only bytecodes"
+
+	"#timesRepeat:"
+
+	self assertLoopInterruptible: [3000000 timesRepeat: [1 + 2]].
+	"#whileFalse"
+	self assertLoopInterruptible: 
+			[| i |
+			i := 0.
+			
+			[i := i + 1.
+			i > 5000000] whileFalse].
+	"#whileTrue"
+	self assertLoopInterruptible: 
+			[| i |
+			i := 0.
+			
+			[i := i + 1.
+			i <= 5000000] whileTrue].
+	"#whileFalse:"
+	self assertLoopInterruptible: 
+			[| i |
+			i := 0.
+			[i >= 5000000] whileFalse: [i := i + 1]].
+	"#whileTrue:"
+	self assertLoopInterruptible: 
+			[| i |
+			i := 0.
+			[i < 5000000] whileTrue: [i := i + 1]].
+	"#to:do:"
+	self assertLoopInterruptible: [1 to: 5000000 do: [:i | i + 1]].
+	"#to:by:do:"
+	self assertLoopInterruptible: 
+			[1 to: 10000000
+				by: 2
+				do: [:i | i + 1]].
+	self assertLoopInterruptible: 
+			[5000000 to: 1
+				by: -1
+				do: [:i | i + 1]]! !
+!VMTest categoriesFor: #testImmutableNextPutAll!public!unit tests! !
+!VMTest categoriesFor: #testImmutableReplacePrimitives!public!unit tests! !
+!VMTest categoriesFor: #testLoopsInterruptible!public!unit tests! !
 
 !ZLibTest methodsFor!
 

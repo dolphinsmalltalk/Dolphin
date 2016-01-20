@@ -7,6 +7,8 @@
 
 # If files are downloaded using git on Mac or Linux, then saving a package from Windows
 # will create a number of false-positive changes (files that differ only in line endings).
+
 *.pac eol=crlf
 *.pax eol=crlf
 *.st  eol=crlf
+*.cls eol=crlf 

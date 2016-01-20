@@ -39,6 +39,41 @@ testBadName
 				from: #testMethod
 				in: RefactoryTestDataApp)!
 
+testExtractToTemporaryForLastStatementInBlock
+	| refactoring |
+	refactoring := ExtractToTemporaryRefactoring 
+				extract: (self convertInterval: (52 to: 73)
+						for: (RefactoryTestDataApp sourceCodeAt: #caller2))
+				to: 'temp'
+				from: #caller2
+				in: RefactoryTestDataApp.
+	self executeRefactoring: refactoring.
+	self 
+		assert: ((refactoring model classNamed: #RefactoryTestDataApp) 
+				parseTreeFor: #caller2) = (RBParser 
+							parseMethod: 'caller2
+	^(1 to: 10) inject: 1 into: [:sum :each | | temp | temp := sum * (self foo: each). temp]')!
+
+testExtractToTemporaryInsideBlock
+	| refactoring |
+	refactoring := ExtractToTemporaryRefactoring 
+				extract: (self convertInterval: (133 to: 141)
+						for: (RefactoryTestDataApp sourceCodeAt: #noMoveDefinition))
+				to: 'asdf'
+				from: #noMoveDefinition
+				in: RefactoryTestDataApp.
+	self executeRefactoring: refactoring.
+	self 
+		assert: ((refactoring model classNamed: #RefactoryTestDataApp) 
+				parseTreeFor: #noMoveDefinition) = (RBParser 
+							parseMethod: 'noMoveDefinition
+	| temp |
+	^(self collect: 
+			[:each | 
+			temp := each printString.
+			temp , temp]) 
+		select: [:each | | asdf | asdf := each size. temp := asdf + temp]')!
+
 testNonExistantSelector
 	self shouldFail: (ExtractToTemporaryRefactoring 
 				extract: (14 to: 23)
@@ -47,5 +82,7 @@ testNonExistantSelector
 				in: RefactoryTestDataApp)! !
 !ExtractToTemporaryTest categoriesFor: #testBadInterval!failure tests!public! !
 !ExtractToTemporaryTest categoriesFor: #testBadName!failure tests!public! !
+!ExtractToTemporaryTest categoriesFor: #testExtractToTemporaryForLastStatementInBlock!public!tests! !
+!ExtractToTemporaryTest categoriesFor: #testExtractToTemporaryInsideBlock!public!tests! !
 !ExtractToTemporaryTest categoriesFor: #testNonExistantSelector!failure tests!public! !
 

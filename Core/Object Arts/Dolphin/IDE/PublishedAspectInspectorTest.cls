@@ -171,70 +171,6 @@ testAddRemoveCollectionElement
 	self assert: treePresenter view itemCount == 1.
 	self repaint!
 
-testAspectChanged
-	| inspectee accessors tvItem hItem |
-	inspectee := Association new.
-	self createInspectorOn: inspectee.
-	self assert: treePresenter view itemCount == 3.
-	self repaint.
-	accessors := treePresenter model childrenOf: treePresenter model roots first.
-	self assert: (self getAccessorKeyText: accessors first) = 'key'.
-	self assert: (self getAccessorValueText: accessors first) = 'nil'.
-	self assert: (self getAccessorKeyText: accessors last) = 'value'.
-	self assert: (self getAccessorValueText: accessors last) = 'nil'.
-	"Set key to a scalar"
-	inspectee key: 1.
-	inspector aspectChanged: #key of: inspectee.
-	self repaint.
-	accessors := treePresenter model childrenOf: treePresenter model roots first.
-	self assert: (self getAccessorKeyText: accessors first) = 'key'.
-	self assert: (self getAccessorValueText: accessors first) = '1'.
-	self assert: (self getAccessorKeyText: accessors last) = 'value'.
-	self assert: (self getAccessorValueText: accessors last) = 'nil'.
-	self assert: treePresenter view itemCount == 3.
-	"Set back to nil"
-	inspectee key: nil.
-	inspector aspectChanged: #key of: inspectee.
-	self repaint.
-	accessors := treePresenter model childrenOf: treePresenter model roots first.
-	self assert: (self getAccessorKeyText: accessors first) = 'key'.
-	self assert: (self getAccessorValueText: accessors first) = 'nil'.
-	self assert: (self getAccessorKeyText: accessors last) = 'value'.
-	self assert: (self getAccessorValueText: accessors last) = 'nil'.
-	self assert: treePresenter view itemCount == 3.
-	"Now set to something with sub-aspects"
-	inspectee key: (1 to: 2).
-	inspector aspectChanged: #key of: inspectee.
-	accessors := treePresenter model childrenOf: treePresenter model roots first.
-	hItem := treePresenter view handleFromObject: accessors first.
-	self assert: (treePresenter view getItemText: hItem) = 'key'.
-	self assert: (self getAccessorKeyText: accessors last) = 'value'.
-	self assert: (self getAccessorValueText: accessors last) = 'nil'.
-	self isUsingListTreeView 
-		ifFalse: 
-			[tvItem := treePresenter view getItemState: hItem.
-			self assert: treePresenter view itemCount == 3.
-			self assert: tvItem cChildren > 0].
-	treePresenter expand: accessors first.
-	self repaint.
-	self assert: treePresenter view itemCount == 6.
-	"Set back to nil"
-	inspectee key: nil.
-	inspector aspectChanged: #key of: inspectee.
-	self repaint.
-	accessors := treePresenter model childrenOf: treePresenter model roots first.
-	self assert: (self getAccessorKeyText: accessors first) = 'key'.
-	self assert: (self getAccessorValueText: accessors first) = 'nil'.
-	self assert: (self getAccessorKeyText: accessors last) = 'value'.
-	self assert: (self getAccessorValueText: accessors last) = 'nil'.
-	self assert: treePresenter view itemCount == 3.
-	self repaint.
-	"Now nil the root"
-	inspectee oneWayBecome: nil.
-	inspector aspectChanged: #yourself.
-	self assert: treePresenter view itemCount == 1.
-	self repaint!
-
 testContextMenuEdit
 	| inspectee |
 	inspectee := View new.
@@ -696,7 +632,6 @@ testSetToNil
 !PublishedAspectInspectorTest categoriesFor: #seqCollMoveUpTest:!helpers!private! !
 !PublishedAspectInspectorTest categoriesFor: #tearDown!public!running! !
 !PublishedAspectInspectorTest categoriesFor: #testAddRemoveCollectionElement!public!unit tests! !
-!PublishedAspectInspectorTest categoriesFor: #testAspectChanged!public!unit tests! !
 !PublishedAspectInspectorTest categoriesFor: #testContextMenuEdit!public!unit tests! !
 !PublishedAspectInspectorTest categoriesFor: #testCopyAndPasteMenu!public!unit tests! !
 !PublishedAspectInspectorTest categoriesFor: #testImmutableAspect!public!unit tests! !

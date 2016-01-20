@@ -25,19 +25,9 @@ specialAssert: aBoolean
 testCompilationFailures
 	| failed |
 	failed := (MethodCategory name: '*-compilation failures') contents.
-	self assert: failed isEmpty!
-
-testOAPrivate
-	| privateSymbol |
-	"Use concatenation to avoid creating a legitimate reference to the symbol"
-	privateSymbol := ('oa' , 'Private') asSymbol.
-	self specialAssert: (SmalltalkSystem current referencesTo: privateSymbol) isEmpty.
-	self checkNoClass: #DolphinProduct.
-	self checkNoClass: #DolphinProfessional.
-! !
+	self assert: failed isEmpty! !
 !ProductReleaseTest categoriesFor: #checkNoClass:!public!unit tests! !
 !ProductReleaseTest categoriesFor: #isReleased!private!unit tests! !
 !ProductReleaseTest categoriesFor: #specialAssert:!private!unit tests! !
 !ProductReleaseTest categoriesFor: #testCompilationFailures!private!unit tests! !
-!ProductReleaseTest categoriesFor: #testOAPrivate!private!unit tests! !
 

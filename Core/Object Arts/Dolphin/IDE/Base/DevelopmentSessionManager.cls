@@ -417,7 +417,9 @@ processCommandLine
 	| commandLine options arguments |
 	commandLine := self commandLineParser.
 	options := commandLine options.
-	arguments := commandLine arguments allButFirst. "leave off image name"
+	arguments := commandLine arguments.
+	arguments notEmpty 		"If no image name is provided then the default is Dolphin.img7"
+		ifTrue: [arguments := arguments allButFirst]. "leave off image name"
 	"Clone a new image to the given path"
 	options at: $i
 		ifPresent: [:newImageFile | newImageFile notNil ifTrue: [self saveImage: newImageFile]].
