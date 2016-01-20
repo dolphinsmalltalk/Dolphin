@@ -205,29 +205,6 @@ testPasteToArena
 	self assert: vc primarySelection parentView == View desktop.
 	vc viewCloseNoPrompt!
 
-testResizeDoesNotMove
-	| static shell pos corner grabber extent |
-	vc newShellView.
-	shell := vc composingView.
-	static := vc 
-				pasteResource: self getStaticTextResource
-				context: shell
-				position: 0 @ 0.
-	pos := ##(10 @ 10).
-	static position: pos.
-	self assert: static position = pos.
-	extent := static extent.
-	corner := static screenRectangle corner - vc hidingOffset + vc defaultComposingPosition.
-	"Deferred actions are used by the grabbers - need to run these, or the grabber won't be hit"
-	SessionManager inputState pumpMessages.
-	grabber := vc grabberHitBy: corner.
-	self assert: grabber aspect == #bottomRight.
-	grabber endTrackingAt: corner + (21 @ 23).
-	"It shouldn't have moved"
-	self assert: static position = pos.
-	self deny: static extent = extent.
-	self assert: (vc constrainPoint: static extent) = static extent!
-
 testWidenSelection
 	| chb classTree |
 	vc openOn: (ResourceIdentifier class: ClassBrowserShell name: 'Default view').
@@ -278,7 +255,6 @@ testZOrderPreservedByMutate
 !ViewComposerTest categoriesFor: #testIgnoreShellPreferredExtent!public!unit tests! !
 !ViewComposerTest categoriesFor: #testNoDragResourceOverInUseArena!public!unit tests! !
 !ViewComposerTest categoriesFor: #testPasteToArena!public!unit tests! !
-!ViewComposerTest categoriesFor: #testResizeDoesNotMove!public!unit tests! !
 !ViewComposerTest categoriesFor: #testWidenSelection!public!unit tests! !
 !ViewComposerTest categoriesFor: #testZOrderPreservedByMutate!public!unit tests! !
 

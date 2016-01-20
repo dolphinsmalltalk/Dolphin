@@ -19,16 +19,6 @@ tearDown
 	process isNil ifFalse: [process terminate].
 	Debugger showWalkbacks: savedShowWalkbacks!
 
-testNoShowWalkbacks
-	Transcript clear.
-	process := 
-			[(ResourceIdentifier class: ContainerView name: 'Default view') loadWithContext: DeafObject current] 
-					fork.
-	Processor sleep: 1000.
-	self assert: process state = #debug.
-	self 
-		assert: (Transcript contents beginsWith: 'Forcibly unhooked failed window create of a ContainerView')!
-
 testRemapIPOfSendSelf
 	"#1309"
 
@@ -60,38 +50,8 @@ testRemapIPOfSendSelf
 				to: debugInfo) = startIP."
 	"Test remapping of the instruction in the middle of the block"
 	byte := debugMethod byteCodes at: startIP + 3.
-	self assert: (byte = Pop or: [byte = PopPushSelf])!
-
-testRemapIPSmokeTest
-	| frame instructions debugMethod debugInstructions info debugInfo textMap ip segment offset debugTextMap |
-	CompiledCode initializeInfoCache.
-	frame := StackFrame new.
-	CompiledCode allSubinstances do: 
-			[:each | 
-			instructions := each byteCodeSegments.
-			debugMethod := each asDebugMethod.
-			debugInstructions := debugMethod byteCodeSegments.
-			info := each debugInfo.
-			debugInfo := debugMethod debugInfo.
-			ip := 1.
-			textMap := info textMap.
-			debugTextMap := debugInfo textMap.
-			textMap with: debugTextMap do: [:a :b | self assert: a value = b value].
-			debugTextMap do: 
-					[:assoc | 
-					| byte |
-					byte := debugMethod byteCodes at: assoc key.
-					self assert: byte ~= 0]
-			"			instructions do: 
-					[:bytes | 
-					segment := frame findIP: ip inTextMap: textMap.
-					self deny: segment = 0.
-					offset := ip - (textMap at: segment) key.
-					self assert: offset >= 0.
-					ip := ip + bytes size]"]! !
+	self assert: (byte = Pop or: [byte = PopPushSelf])! !
 !DebuggerTest categoriesFor: #setUp!private!unit tests! !
 !DebuggerTest categoriesFor: #tearDown!private!unit tests! !
-!DebuggerTest categoriesFor: #testNoShowWalkbacks!public!unit tests! !
 !DebuggerTest categoriesFor: #testRemapIPOfSendSelf!public!unit tests! !
-!DebuggerTest categoriesFor: #testRemapIPSmokeTest!public! !
 

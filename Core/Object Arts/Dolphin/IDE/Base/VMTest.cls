@@ -297,25 +297,6 @@ testImmutableNextPut
 			strm := WriteStream on: s.
 			self should: [strm nextPut: s last] raise: Processor constWriteSignal]!
 
-testImmutableNextPutAll
-	#(#[1 2 3] 'abc' #(1 2 3)) do: 
-			[:s | 
-			| strm |
-			self assertImmutableAtPut: s.
-			strm := WriteStream on: s.
-			self should: [strm nextPutAll: (s copyFrom: 2 to: 3)] raise: Processor constWriteSignal]!
-
-testImmutableReplacePrimitives
-	#(#[1 2 3] 'abc' #(1 2 3)) do: 
-			[:s | 
-			self assertImmutableAtPut: s.
-			self should: 
-					[s 
-						replaceFrom: 1
-						to: 2
-						with: (s copyFrom: 2 to: 3)]
-				raise: Processor constWriteSignal]!
-
 testImmutableStringCompare
 	| s1 s2 |
 	s1 := 'abc'.
@@ -334,54 +315,6 @@ testImmutableWriteAccessors
 	"Note that the primitive write accessor will fail and fall back on executing the method bytecodes, which will fail sending #errorInstVarAt:put:"
 	class instVarNames 
 		do: [:each | self should: [inst perform: (each , ':') asSymbol with: each] raise: Processor constWriteSignal]!
-
-testLoopsInterruptible
-	"#2167: Need to test all the optimisable loop types:
-		#timesRepeat:
-		#whileTrue[:]
-		#whileFalse[:]
-		#to:[by:]do:
-		#repeat		(hmmm, tricky, need some way to break the loop)
-	The loops must not contain any true mesage sends, only bytecodes"
-
-	"#timesRepeat:"
-
-	self assertLoopInterruptible: [3000000 timesRepeat: [1 + 2]].
-	"#whileFalse"
-	self assertLoopInterruptible: 
-			[| i |
-			i := 0.
-			
-			[i := i + 1.
-			i > 5000000] whileFalse].
-	"#whileTrue"
-	self assertLoopInterruptible: 
-			[| i |
-			i := 0.
-			
-			[i := i + 1.
-			i <= 5000000] whileTrue].
-	"#whileFalse:"
-	self assertLoopInterruptible: 
-			[| i |
-			i := 0.
-			[i >= 5000000] whileFalse: [i := i + 1]].
-	"#whileTrue:"
-	self assertLoopInterruptible: 
-			[| i |
-			i := 0.
-			[i < 5000000] whileTrue: [i := i + 1]].
-	"#to:do:"
-	self assertLoopInterruptible: [1 to: 5000000 do: [:i | i + 1]].
-	"#to:by:do:"
-	self assertLoopInterruptible: 
-			[1 to: 10000000
-				by: 2
-				do: [:i | i + 1]].
-	self assertLoopInterruptible: 
-			[5000000 to: 1
-				by: -1
-				do: [:i | i + 1]]!
 
 testMakeLargeUnsigned
 	| bytes |
@@ -771,11 +704,8 @@ testSignedFromUnsigned
 !VMTest categoriesFor: #testImmutableBufferAtPuts!public!unit tests! !
 !VMTest categoriesFor: #testImmutableInstVarAtPut!public!unit tests! !
 !VMTest categoriesFor: #testImmutableNextPut!public!unit tests! !
-!VMTest categoriesFor: #testImmutableNextPutAll!public!unit tests! !
-!VMTest categoriesFor: #testImmutableReplacePrimitives!public!unit tests! !
 !VMTest categoriesFor: #testImmutableStringCompare!public!unit tests! !
 !VMTest categoriesFor: #testImmutableWriteAccessors!public!unit tests! !
-!VMTest categoriesFor: #testLoopsInterruptible!public!unit tests! !
 !VMTest categoriesFor: #testMakeLargeUnsigned!public!unit tests! !
 !VMTest categoriesFor: #testMustBeBoolean!public!unit tests! !
 !VMTest categoriesFor: #testOverlappedCallsSuspendAndTerminate!public!unit tests! !

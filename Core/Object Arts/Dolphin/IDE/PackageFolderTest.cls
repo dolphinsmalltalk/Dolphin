@@ -14,15 +14,7 @@ folderClass
 	^PackageFolder!
 
 rootFolder
-	^'$'!
-
-testForPackage
-	| dolphin |
-	dolphin := self folderClass forPackage: (Package manager packageNamed: 'Dolphin').
-	self assert: dolphin name = 'Base'.
-	self assert: dolphin folderName = '$\Object Arts\Dolphin\Base\'.
-	! !
+	^'$'! !
 !PackageFolderTest categoriesFor: #folderClass!constants!private! !
 !PackageFolderTest categoriesFor: #rootFolder!public!unit tests! !
-!PackageFolderTest categoriesFor: #testForPackage!public!unit tests! !
 
