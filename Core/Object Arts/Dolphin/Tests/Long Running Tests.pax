@@ -6,6 +6,7 @@ package paxVersion: 1;
 
 package methodNames
 	add: #CompilerTest -> #testTextMapExhaustive;
+	add: #SortAlgorithmTest -> #testExtremeSortBlocks;
 	yourself.
 
 package binaryGlobalNames: (Set new
@@ -16,6 +17,7 @@ package globalAliases: (Set new
 
 package setPrerequisites: (IdentitySet new
 	add: '..\IDE\Base\Development System Tests';
+	add: '..\Base\Dolphin Base Tests';
 	yourself).
 
 package!
@@ -55,6 +57,16 @@ testTextMapExhaustive
 							[byte := debugMethod byteCodes at: ip.
 							self assert: byte ~= 0]]]! !
 !CompilerTest categoriesFor: #testTextMapExhaustive!public!unit tests-long running! !
+
+!SortAlgorithmTest methodsFor!
+
+testExtremeSortBlocks
+
+	"This is a worst case ..."
+	self sort: (1 to: 10000) sortBlock: [:a :b | true].
+
+	self sort: (1 to: 10000) sortBlock: [:a :b | false]! !
+!SortAlgorithmTest categoriesFor: #testExtremeSortBlocks!public!unit tests! !
 
 "End of package definition"!
 

@@ -64,33 +64,6 @@ setColumns: cols
 sortSelections
 	^#(50)!
 
-testChangeViewMode
-	"#1510"
-
-	| column |
-	self assert: presenter isVirtual.
-	self assert: presenter viewMode == #report.
-	column := presenter primaryColumn.
-	presenter getTextBlock: [:each | each first].
-	column getTextBlock: [:each | each second].
-	presenter model list: #(#('1' '2') #('11' '22')).
-	2 timesRepeat: 
-			[presenter model keysAndValuesDo: 
-					[:i :each | 
-					| text |
-					text := presenter getItemText: i.
-					self assert: text = each second].
-			presenter viewMode: #smallIcons.
-			presenter model keysAndValuesDo: 
-					[:i :each | 
-					| text |
-					text := presenter getItemText: i.
-					self assert: text = each first].
-			presenter viewMode: #report.
-			"Switch to non-virtual"
-			presenter isVirtual: false.
-			presenter refreshContents]!
-
 testColumnsList
 	"Remove the first column"
 
@@ -142,34 +115,6 @@ testColumnsList
 	"Remove them all"
 	self setColumns: #()!
 
-testColumnWidth
-	"#1452, #1456"
-
-	| column primary before after width |
-	primary := presenter view primaryColumn.
-	before := primary width.
-	width := presenter view width - before + 50.
-	column := ListViewColumn text: 'Blah' width: width.
-	self assert: column width = width.
-	width := width - 20.
-	column width: width.
-	self assert: column width = width.
-	presenter view update.
-	self assert: presenter view isLayoutValid.
-	presenter view addColumn: column.
-	self deny: presenter view isLayoutValid.
-	presenter view validateLayout.
-	self assert: presenter view isLayoutValid.
-	after := primary width.
-	self assert: after < before.
-	self assert: column width = 80.
-	column width: 100.
-	self deny: presenter view isLayoutValid.
-	presenter view validateLayout.
-	self assert: presenter view isLayoutValid.
-	self assert: primary width < after.
-	self assert: column width = 100!
-
 testLastSelectionCacheUpdatedOnRemove
 	"#717"
 	| objects |
@@ -180,45 +125,6 @@ testLastSelectionCacheUpdatedOnRemove
 	self assert: (presenter instVarNamed: 'lastSelIndices') = #(2).
 	presenter model removeAtIndex: 1.
 	self assert: (presenter instVarNamed: 'lastSelIndices') = #(1)!
-
-testNilRow
-	"#2157"
-
-	| m c item txt |
-	m := ListModel on: #(nil) , (1 to: 5).
-	presenter model: m.
-	c := presenter view columnAtIndex: 1.
-	txt := 'this is nil'.
-	c getTextBlock: [:it | it ifNil: [txt]].
-	item := self getItem: 1.
-	self assert: item pszText = txt.
-	self assert: item iImage = (nil icon imageIndex - 1)!
-
-testProgrammaticSelectionVisible
-	"#1381"
-
-	"Note that the last selection is the one with the caret, and therefore it is that which should be visible"
-
-	| view |
-	view := presenter view.
-	view list: (0 to: 100) asOrderedCollection.
-	#(#(100) #(50 100) #(100 50) #(1)) do: 
-			[:each | 
-			view selections: each.
-			self assertCaretVisible]!
-
-testSelectionRemainsVisibleOnSort
-	"#1381"
-
-	| view |
-	view := presenter view.
-	view list: (0 to: 100) asOrderedCollection.
-	view selections: self sortSelections.
-	self assertCaretVisible.
-	view columnClicked: 1.
-	self assertCaretVisible.
-	view columnClicked: 1.
-	self assertCaretVisible!
 
 testSetTextBlockDoesNotAffectSelection
 	2 timesRepeat: 
@@ -253,13 +159,8 @@ testSetTextImageDoesNotAffectSelection
 !ListViewTest categoriesFor: #getItem:!private!unit tests! !
 !ListViewTest categoriesFor: #setColumns:!private!unit tests! !
 !ListViewTest categoriesFor: #sortSelections!public!unit tests! !
-!ListViewTest categoriesFor: #testChangeViewMode!public!unit tests! !
 !ListViewTest categoriesFor: #testColumnsList!public!unit tests! !
-!ListViewTest categoriesFor: #testColumnWidth!public!unit tests! !
 !ListViewTest categoriesFor: #testLastSelectionCacheUpdatedOnRemove!public!unit tests! !
-!ListViewTest categoriesFor: #testNilRow!public!unit tests! !
-!ListViewTest categoriesFor: #testProgrammaticSelectionVisible!public!unit tests! !
-!ListViewTest categoriesFor: #testSelectionRemainsVisibleOnSort!public!unit tests! !
 !ListViewTest categoriesFor: #testSetTextBlockDoesNotAffectSelection!public!unit tests! !
 !ListViewTest categoriesFor: #testSetTextImageDoesNotAffectSelection!public!unit tests! !
 

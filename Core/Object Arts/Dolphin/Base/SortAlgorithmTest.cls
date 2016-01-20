@@ -213,13 +213,6 @@ testDefault
 				yourself.
 	self assertSorted: sorted!
 
-testExtremeSortBlocks
-
-	"This is a worst case ..."
-	self sort: (1 to: 10000) sortBlock: [:a :b | true].
-
-	self sort: (1 to: 10000) sortBlock: [:a :b | false]!
-
 testIncludes
 	"Thanks to John Brant for these tests which were posted to the newsgroup as 
 	part of a thread about using a binary-search to implement #includes:"
@@ -287,7 +280,6 @@ testSortIntegers
 !SortAlgorithmTest categoriesFor: #sortMagnitudes:!private!unit tests! !
 !SortAlgorithmTest categoriesFor: #testAdd!public!unit tests! !
 !SortAlgorithmTest categoriesFor: #testDefault!public!testing! !
-!SortAlgorithmTest categoriesFor: #testExtremeSortBlocks!public!unit tests! !
 !SortAlgorithmTest categoriesFor: #testIncludes!public!unit tests! !
 !SortAlgorithmTest categoriesFor: #testPartialSort!public!testing! !
 !SortAlgorithmTest categoriesFor: #testRandomSort!public!unit tests! !
