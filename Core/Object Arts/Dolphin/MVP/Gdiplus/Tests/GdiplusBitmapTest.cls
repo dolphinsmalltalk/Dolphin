@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 GdiplusImageTests subclass: #GdiplusBitmapTest
 	instanceVariableNames: ''
@@ -13,15 +13,6 @@ GdiplusBitmapTest comment: ''!
 setUp
 	super setUp.
 	model := GdiplusBitmap fromFile: self fileResource pafFish32x32png!
-
-testAsByteArray
-	| b1 b2 |
-	model := GdiplusBitmap fromFile: self fileResource pafRgb0000FF_100x100bmp.
-	b1 := model asByteArray: 'image/bmp'.
-	b2 := self fileResource rgb0000FF_100x100bmpBytes.
-	self assert: b1 size = b2 size.
-	"difference is in the first 100 bytes ... what is the problem?"
-	self assert: b1 = b2!
 
 testAsByteArrayRoundTripBmp
 	| bytes bitmap |
@@ -86,7 +77,6 @@ testPixelAfterSave
 			image := GdiplusBitmap fromFile: toFile.
 			self assert: (image pixelAt: 1 @ 1) = (ARGB fromArray: #(0 0 0 0)) = supported]! !
 !GdiplusBitmapTest categoriesFor: #setUp!public!setup! !
-!GdiplusBitmapTest categoriesFor: #testAsByteArray!public!unit tests! !
 !GdiplusBitmapTest categoriesFor: #testAsByteArrayRoundTripBmp!public!unit tests! !
 !GdiplusBitmapTest categoriesFor: #testFromBitmap!public!unit tests! !
 !GdiplusBitmapTest categoriesFor: #testFromFile!public!unit tests! !

@@ -77,9 +77,9 @@ package globalAliases: (Set new
 	yourself).
 
 package setPrerequisites: (IdentitySet new
-	add: '..\..\..\Object Arts\Dolphin\Base\Dolphin';
-	add: '..\..\..\Object Arts\Dolphin\MVP\Presenters\List\Dolphin List Presenter';
-	add: '..\..\..\Object Arts\Dolphin\MVP\Dialogs\Progress\Dolphin Progress Dialog';
+	add: '..\..\..\..\Object Arts\Dolphin\Base\Dolphin';
+	add: '..\..\..\..\Object Arts\Dolphin\MVP\Presenters\List\Dolphin List Presenter';
+	add: '..\..\..\..\Object Arts\Dolphin\MVP\Dialogs\Progress\Dolphin Progress Dialog';
 	add: '..\Environments\RBEnvironments';
 	add: '..\Formatters\RBFormatters';
 	add: '..\Parser\RBParser';
@@ -87,7 +87,7 @@ package setPrerequisites: (IdentitySet new
 	add: '..\Refactorings\RBReferenceFinder';
 	add: '..\SmallLint\RBSmallLint';
 	add: 'RBTestMethods';
-	add: '..\..\..\Object Arts\Dolphin\System\Compiler\Smalltalk Parser';
+	add: '..\..\..\..\Object Arts\Dolphin\System\Compiler\Smalltalk Parser';
 	add: '..\..\..\Camp Smalltalk\SUnit\SUnit';
 	yourself).
 

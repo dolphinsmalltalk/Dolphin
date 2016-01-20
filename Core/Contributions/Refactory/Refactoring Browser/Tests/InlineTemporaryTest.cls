@@ -10,23 +10,6 @@ InlineTemporaryTest comment: ''!
 !InlineTemporaryTest categoriesForClass!Refactory-Testing! !
 !InlineTemporaryTest methodsFor!
 
-testInlineTemporary
-	| refactoring |
-	refactoring := InlineTemporaryRefactoring 
-				inline: (self convertInterval: (24 to: 72)
-						for: (RefactoryTestDataApp sourceCodeAt: #inlineMethod))
-				from: #inlineMethod
-				in: RefactoryTestDataApp.
-	self executeRefactoring: refactoring.
-	self 
-		assert: ((refactoring model classNamed: #RefactoryTestDataApp) 
-				parseTreeFor: #inlineMethod) = (RBParser 
-							parseMethod: 'inlineMethod
-										^self
-													foo;
-													inlineMethod;
-													bar')!
-
 testInlineTemporaryBadInterval
 	self shouldFail: (InlineTemporaryRefactoring 
 				inline: (self convertInterval: (29 to: 100)
@@ -47,7 +30,6 @@ testInlineTemporaryReadBeforeWritten
 						for: (RefactoryTestDataApp sourceCodeAt: #inlineTemporary))
 				from: #inlineTemporary
 				in: RefactoryTestDataApp)! !
-!InlineTemporaryTest categoriesFor: #testInlineTemporary!public!tests! !
 !InlineTemporaryTest categoriesFor: #testInlineTemporaryBadInterval!public!tests! !
 !InlineTemporaryTest categoriesFor: #testInlineTemporaryMutlipleAssignment!public!tests! !
 !InlineTemporaryTest categoriesFor: #testInlineTemporaryReadBeforeWritten!public!tests! !

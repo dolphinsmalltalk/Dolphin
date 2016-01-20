@@ -22,7 +22,6 @@ package setPrerequisites: (IdentitySet new
 	add: '..\..\..\Object Arts\Dolphin\MVP\Base\Dolphin MVP Base';
 	add: '..\..\..\Object Arts\Dolphin\MVP\Type Converters\Dolphin Type Converters';
 	add: 'SUnit';
-	add: 'SUnitTests';
 	yourself).
 
 package!

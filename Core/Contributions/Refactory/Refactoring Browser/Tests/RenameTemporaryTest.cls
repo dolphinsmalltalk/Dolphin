@@ -62,28 +62,8 @@ testModelBadName
 					renameTemporaryFrom: (20 to: 24)
 					to: 'temp1'
 					in: class
-					selector: #aMethod:)!
-
-testRenameTemporary
-	| refactoring |
-	refactoring := RenameTemporaryRefactoring 
-				renameTemporaryFrom: (self convertInterval: (15 to: 19)
-						for: (LintRuleTest sourceCodeAt: #openEditor))
-				to: 'asdf'
-				in: LintRuleTest
-				selector: #openEditor.
-	self executeRefactoring: refactoring.
-	self 
-		assert: ((refactoring model classNamed: #LintRuleTest) 
-				parseTreeFor: #openEditor) = (RBParser 
-							parseMethod: 'openEditor
-								| asdf |
-								asdf := self failedRules.
-								asdf isEmpty ifTrue: [^self].
-								asdf size == 1 ifTrue: [^asdf first viewResults].
-								SmalllintResultEditor openOn: self label: name')! !
+					selector: #aMethod:)! !
 !RenameTemporaryTest categoriesFor: #testBadInterval!failure tests!public! !
 !RenameTemporaryTest categoriesFor: #testBadName!failure tests!public! !
 !RenameTemporaryTest categoriesFor: #testModelBadName!failure tests!public! !
-!RenameTemporaryTest categoriesFor: #testRenameTemporary!public!tests! !
 
