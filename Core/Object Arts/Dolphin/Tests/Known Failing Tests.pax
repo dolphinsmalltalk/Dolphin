@@ -12,6 +12,7 @@ package methodNames
 	add: #DebuggerTest -> #testNoShowWalkbacks;
 	add: #DebuggerTest -> #testRemapIPSmokeTest;
 	add: #DictionaryTest -> #testNilKey;
+	add: #EvaluationConverterTest -> #testWithDates;
 	add: #GdiplusBitmapTest -> #testAsByteArray;
 	add: #LinkButtonTest -> #testClickLinkFiresCommand;
 	add: #LinkButtonTest -> #testQueryCommandEnablement;
@@ -224,6 +225,13 @@ testNilKey
 	self should: [dictionary at: nil put: 1] raise: Error.
 	self should: [dictionary at: nil ifAbsentPut: [1]] raise: Error! !
 !DictionaryTest categoriesFor: #testNilKey!public!unit tests! !
+
+!EvaluationConverterTest methodsFor!
+
+testWithDates
+	self checkWith: 'Date fromString: ''12 August 1958'''.
+	self checkWith: 'Date today'! !
+!EvaluationConverterTest categoriesFor: #testWithDates!public! !
 
 !GdiplusBitmapTest methodsFor!
 
