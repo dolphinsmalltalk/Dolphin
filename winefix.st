@@ -1,4 +1,4 @@
-"File in to make Dolphin 6.0x, 6.1x images compatible with Wine"!
+"File in to make Dolphin 7 images compatible with Wine"!
 
 "** WF1 ** Test for isWine in NTLibrary"!
 SourceManager default fileIn: 'Core\Object Arts\Dolphin\Base\NTLibrary.cls'!
@@ -41,27 +41,8 @@ asRGBUsingNoPalette
 	^self asRGBUsingPalette: self defaultPalette! !
 !IndexedColor categoriesFor: #asRGBUsingPalette:!converting!public!wine fix! !
 
-"** WF4 ** ListView watermark in system folder causes problems"!
-!SmalltalkSystemShell methodsFor!
+"** WF4 ** ListView watermark no longer used in system folder"!
 
-onViewCreated
-	"Private - The receiver's has been created (that is the CreateWindow() API call has returned), but may
-	not yet be connected to the receiver (if the view-presenter pair is being instantiated, then
-	the connection will not have been made, but if the view is being restored from saved state
-	in the image then the presenter will be connected). This is an appropriate point for
-	subclasses to apply any dynamic view configuration that must be performed every time the
-	view is created. Typically this might involve customising some feature of the view that it
-	does not itself save, perhaps because a feature of the underlying control does not have full
-	support in the wrapper class. Note that one should normally override #onViewAvailable to
-	restore user configuration settings, since the views will normally save and restore all
-	relevant settings across an image save."
-
-	NTLibrary isWine ifFalse: [
-		#wineFix.
-		[self setListViewWatermark] postToMessageQueue].
-	self registerHotKey.
-	^super onViewCreated! !
-!SmalltalkSystemShell categoriesFor: #onViewCreated!event handling!private!wine fix! !
 
 "** WF5 ** Wine does not support the ComCtrlLibrary>>loadIconWithScaleDown:.. method which is normally availble under Vista
 and later. Hence we don't allow this to be called even if the Windows version indicates Vista is available"!
@@ -274,6 +255,11 @@ NTLibrary isMacOSX ifTrue: [
 	]!
 
 "Reset UI"!
-SmalltalkSystem current panic !
+"SmalltalkSystem current panic"
+[View destroyAll] on: Error do: [:x | x notify].
+CompiledCode initializeInfoCache.
+SessionManager current mainShellClass reset !
 
-
+"Compress and save"
+SourceManager default compressSources.
+SessionManager current saveImage !
