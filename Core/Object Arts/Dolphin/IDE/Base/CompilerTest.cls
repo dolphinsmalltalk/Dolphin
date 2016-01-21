@@ -1150,31 +1150,6 @@ testTempPairing
 	self assert: pairs isEmpty.
 	self assert: (method value: nil withArguments: #()) = (16 - 8)!
 
-testTextMapExhaustive
-	"Check that the release and debug text maps match for every method in the system .... with a
-	couple of exceptions... ahem"
-
-	self knownTextMapIssues not methodsDo: 
-			[:each | 
-			| debugTextMap debugMethod info textMap result |
-			result := self getDebugInfoFor: each debug: true.
-			debugMethod := result method.
-			"If fails then the method failed to compile"
-			self assert: debugMethod notNil.
-			info := each debugInfo.
-			textMap := info textMap.
-			debugTextMap := result textMap.
-			"The text maps should contain exactly the same number of entries, and the text range for each entry should be the same"
-			textMap with: debugTextMap do: [:a :b | self assert: a value = b value].
-			debugTextMap do: 
-					[:assoc | 
-					| byte ip |
-					ip := assoc key.
-					ip == 0 
-						ifFalse: 
-							[byte := debugMethod byteCodes at: ip.
-							self assert: byte ~= 0]]]!
-
 testTimesRepeat
 	"This is erroneous, but compiler does not detect that, just looks for literal zero arg block, which is OK I think"
 
@@ -1430,7 +1405,6 @@ testWriteAccessor
 !CompilerTest categoriesFor: #testSpecialLiteralsAsUnarySelectors!public! !
 !CompilerTest categoriesFor: #testSymbolScanning!public!unit tests! !
 !CompilerTest categoriesFor: #testTempPairing!public!unit tests! !
-!CompilerTest categoriesFor: #testTextMapExhaustive!public!unit tests-long running! !
 !CompilerTest categoriesFor: #testTimesRepeat!public!unit tests! !
 !CompilerTest categoriesFor: #testTimesRepeatResult!public!unit tests! !
 !CompilerTest categoriesFor: #testToByDo!public!unit tests! !

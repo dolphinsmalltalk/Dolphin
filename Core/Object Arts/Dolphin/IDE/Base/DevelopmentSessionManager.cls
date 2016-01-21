@@ -89,7 +89,7 @@ commandLineParser
 	"
 
 	^(CommandLine argv: self argvLegacyOptionsRemoved)
-		options: 'd:f:hi:qx';
+		options: 'd::f:hi:qx';
 		yourself!
 
 dolphinNewsgroupUrl
@@ -417,10 +417,9 @@ processCommandLine
 	| commandLine options arguments |
 	commandLine := self commandLineParser.
 	options := commandLine options.
-	arguments := commandLine arguments allButFirst. "leave off image name"
-
-	"File in a given file"
-	options at: $f ifPresent: [:fileInFile | SourceManager default fileIn: fileInFile].
+	arguments := commandLine arguments.
+	arguments notEmpty 		"If no image name is provided then the default is Dolphin.img7"
+		ifTrue: [arguments := arguments allButFirst]. "leave off image name"
 	"Clone a new image to the given path"
 	options at: $i
 		ifPresent: [:newImageFile | newImageFile notNil ifTrue: [self saveImage: newImageFile]].
@@ -430,6 +429,8 @@ processCommandLine
 			[:rebasePath | 
 			Package manager rebaseBasePackagesTo: (rebasePath ifNil: ['.']).
 			self saveImage].
+	"File in a given file"
+	options at: $f ifPresent: [:fileInFile | SourceManager default fileIn: fileInFile].
 	"Open a source file (CLS, ST, PAX, PAC, SML) in the appropriate tool"
 	arguments do: [:openFile | openFile notNil ifTrue: [self open: openFile]].
 	"Immediately exit the image following startup activities"

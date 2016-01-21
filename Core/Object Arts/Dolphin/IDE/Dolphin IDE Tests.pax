@@ -12,6 +12,7 @@ package classNames
 	add: #ClassListSelectorTest;
 	add: #ClassSelectorTest;
 	add: #ClosedCommandDescriptionIssueDialog;
+	add: #ClosedCommandDescriptionTest;
 	add: #CodeMentorTest;
 	add: #DebuggerTest;
 	add: #IdeaSpaceShellTest;
@@ -58,6 +59,11 @@ package!
 
 Dialog subclass: #ClosedCommandDescriptionIssueDialog
 	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+TestCase subclass: #ClosedCommandDescriptionTest
+	instanceVariableNames: 'dialog'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!

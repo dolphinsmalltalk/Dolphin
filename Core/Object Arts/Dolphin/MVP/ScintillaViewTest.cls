@@ -24,11 +24,6 @@ initializePresenter
 margins
 	^0 @ 0!
 
-testLanguages
-	| lingos |
-	lingos := ScintillaView classPool at: 'Lexers'.
-	lingos do: [:each | each notNil ifTrue: [presenter view lexer: each]]!
-
 testTokensFromTo
 	| tokens expected styler |
 	presenter textStyles: SmalltalkWorkspace textStyles.
@@ -45,6 +40,5 @@ testTokensFromTo
 !ScintillaViewTest categoriesFor: #classToTest!helpers!private! !
 !ScintillaViewTest categoriesFor: #initializePresenter!public!Running! !
 !ScintillaViewTest categoriesFor: #margins!private!unit tests! !
-!ScintillaViewTest categoriesFor: #testLanguages!public!unit tests! !
 !ScintillaViewTest categoriesFor: #testTokensFromTo!public!unit tests! !
 

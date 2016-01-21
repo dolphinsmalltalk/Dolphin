@@ -1505,7 +1505,7 @@ privateUninstall
 rebaseTo: basePathName 
 	"Rebase this package relative to the give base image directory"
 
-	self packagePathname: (File 
+	self packageFileName: (File 
 				relativePathOf: (File fullPathOf: self packagePathname relativeTo: basePathName)
 				to: SessionManager current imagePath)!
 
