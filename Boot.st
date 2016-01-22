@@ -1,3 +1,8 @@
+"Check for update to DBOOT itself"
+(SessionManager current argv at: 3 ifAbsent: [nil]) = 'UpdateBoot' ifTrue: [
+	SourceManager default fileIn: 'Core\Object Arts\Dolphin\Base\Boot\Boot.st'.
+]!
+
 "Boot a workable Dolphin from the boot image"
 
 "Install some bare bones packages to get the Installation Management system working"
@@ -23,6 +28,10 @@ SourceManager default fileIn: 'Core\Object Arts\Dolphin\MVP\Base\BITMAP_Struct.c
 BITMAP initializeAfterLoad!
 SourceManager default fileIn: 'Core\Object Arts\Dolphin\MVP\Base\DIBSECTION_Struct.cls'!
 DIBSECTION initializeAfterLoad!
+
+"Set Dolphin package version and about operation"
+Object owningPackage 
+	packageVersion: VMLibrary default versionString!
 
 "If required, prompt to boot the desired end product"
 | productName product isPrompted |
