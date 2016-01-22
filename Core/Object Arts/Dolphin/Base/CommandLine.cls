@@ -275,12 +275,9 @@ parseNextOption
 	].
 	options add: rule -> optionArg.	"save option and argument"!
 
-valueBlocks
-
+processOptions
 	options ifNil: [self parse].
-	options do: [:each | 
-		each key ifNotNil: [:rule | rule value: each value].
-	].! !
+	options do: [:each | each key ifNotNil: [:rule | rule value: each value]]! !
 !CommandLine categoriesFor: #addOption:!public! !
 !CommandLine categoriesFor: #addOption:whenPresentDo:!public! !
 !CommandLine categoriesFor: #addOptionAllowingArgument:!public! !
@@ -300,7 +297,7 @@ valueBlocks
 !CommandLine categoriesFor: #parseLongOption:!private! !
 !CommandLine categoriesFor: #parseNextArg!private! !
 !CommandLine categoriesFor: #parseNextOption!private! !
-!CommandLine categoriesFor: #valueBlocks!public! !
+!CommandLine categoriesFor: #processOptions!public! !
 
 !CommandLine class methodsFor!
 
