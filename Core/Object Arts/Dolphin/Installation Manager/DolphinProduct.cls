@@ -315,7 +315,10 @@ printOn: aStream
 productDetails
 	"Answers the product details for the receiver"
 
-	^(VMLibrary default defaultProductDetails)
+	| array |
+	array := VMLibrary default defaultProductDetails.
+	8 < array size ifTrue: [array := (array , (Array new: 8)) copyFrom: 1 to: 8].
+	^array
 		at: 1 put: self fullName;
 		at: 2 put: self name;
 		at: 3 put: self version;

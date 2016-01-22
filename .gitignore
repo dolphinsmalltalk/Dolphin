@@ -1,5 +1,6 @@
 *.chg
 *.ERRORS
+*.img
 *.img7
 *.pac
 *.sml
