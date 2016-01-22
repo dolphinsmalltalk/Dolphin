@@ -21,10 +21,10 @@ test_getOpt_01
 test_getOpt_02
 	"http://www.gnu.org/software/libc/manual/html_node/Example-of-Getopt.html"
 
-	| commandLine |
+	| commandLine x |
 	commandLine := CommandLine argv: #('Dolphin7.exe' 'DPRO.img7' '-a' '-b').
 	self 
-		assert: (commandLine getOpt: 'abc:') == $a;
+		assert: (x := commandLine getOpt: 'abc:') == $a;
 		assert: commandLine optArg isNil;
 		assert: (commandLine getOpt: 'abc:') == $b;
 		assert: commandLine optArg isNil;
@@ -146,10 +146,10 @@ test_getOpt_12
 	"http://www.gnu.org/software/libc/manual/html_node/Using-Getopt.html
 	Missing required option argument"
 
-	| commandLine |
+	| commandLine x |
 	commandLine := CommandLine argv: #('Dolphin7.exe' 'DPRO.img7' '-c').
 	self 
-		assert: (commandLine getOpt: 'abc:') == $?;
+		assert: (x := commandLine getOpt: 'abc:') == $?;
 		assert: commandLine optOpt = $c;
 		assert: commandLine optArg isNil;
 		assert: (commandLine getOpt: 'abc:') isNil;
@@ -165,7 +165,7 @@ test_getOpt_13
 	self 
 		assert: (commandLine getOpt: 'abc::') == $c;
 		assert: commandLine optOpt isNil;
-		assert: commandLine optArg isEmpty;
+		assert: commandLine optArg isNil;
 		assert: (commandLine getOpt: 'abc:') isNil;
 		assert: commandLine arguments = #('DPRO.img7');
 		yourself.!
@@ -197,6 +197,45 @@ testAccessors
 		assert: (options at: $c) = 'foo';
 		assert: arguments = #('DPRO.img7' 'bar');
 		yourself.!
+
+testBlockNoArgument
+
+	| foundFoo |
+	foundFoo := false.
+	(CommandLine argv: #('Dolphin7.exe' 'DPRO.img7' '--foo' 'bar'))
+		addOptionNamed: 'foo' whenPresentDo: [foundFoo := true];
+		valueBlocks.
+	self assert: foundFoo.
+!
+
+testBlockOptionalArgumentAbsent
+
+	| fooValue barValue |
+	(CommandLine argv: #('Dolphin7.exe' 'DPRO.img7' '--foo' '--bar'))
+		addOptionAllowingArgumentNamed: 'foo' whenPresentDo: [:value | fooValue := value];
+		addOptionAllowingArgumentNamed: 'bar' whenPresentDo: [:value | barValue := value];
+		valueBlocks.
+	self
+		assert: fooValue isNil;
+		assert: barValue isNil;
+		yourself.!
+
+testBlockOptionalArgumentPresent
+
+	| fooValue |
+	(CommandLine argv: #('Dolphin7.exe' 'DPRO.img7' '--foo' 'bar'))
+		addOptionAllowingArgumentNamed: 'foo' whenPresentDo: [:value | fooValue := value];
+		valueBlocks.
+	self assert: fooValue = 'bar'.!
+
+testBlockRequiredArgumentPresent
+
+	| fooValue |
+	(CommandLine argv: #('Dolphin7.exe' 'DPRO.img7' '--foo' 'bar'))
+		addOptionRequiringArgumentNamed: 'foo' whenPresentDo: [:value | fooValue := value];
+		valueBlocks.
+	self assert: fooValue = 'bar'.
+!
 
 testLongAmbiguousOption
 
@@ -361,6 +400,72 @@ testPartialLong
 		assert: arguments = #('DPRO.img7');
 		yourself.!
 
+testRepeatBlockOptionalArgumentAbsent
+
+	| fooCount barCount |
+	fooCount := 0.
+	barCount := 0.
+	(CommandLine argv: #('Dolphin7.exe' 'DPRO.img7' '--foo' '--bar' '--foo'))
+		addOptionAllowingArgumentNamed: 'foo' whenPresentDo: [:value | fooCount := fooCount + 1];
+		addOptionAllowingArgumentNamed: 'bar' whenPresentDo: [:value | barCount := barCount + 1];
+		valueBlocks.
+	self
+		assert: fooCount = 2;
+		assert: barCount = 1;
+		yourself.!
+
+testRepeatBlockOptionalArgumentPresent
+
+	| fooValue |
+	fooValue := ''.
+	(CommandLine argv: #('Dolphin7.exe' 'DPRO.img7' '--foo' 'bar' '--foo' 'BAR'))
+		addOptionAllowingArgumentNamed: 'foo' whenPresentDo: [:value | fooValue := fooValue , value];
+		valueBlocks.
+	self assert: fooValue = 'barBAR'.!
+
+testRepeatShortBlockNoArgument
+
+	| fooCount |
+	fooCount := 0.
+	(CommandLine argv: #('Dolphin7.exe' 'DPRO.img7' '-f' 'bar' '-f'))
+		addOptionNamed: $f whenPresentDo: [fooCount := fooCount + 1];
+		valueBlocks.
+	self assert: fooCount = 2.
+!
+
+testShortBlockNoArgument
+
+	| foundFoo |
+	foundFoo := false.
+	(CommandLine argv: #('Dolphin7.exe' 'DPRO.img7' '-f' 'bar'))
+		addOptionNamed: $f whenPresentDo: [foundFoo := true];
+		valueBlocks.
+	self assert: foundFoo.
+!
+
+testShortBlockOptionalArgumentAbsent
+
+	| fooValue barValue |
+	fooValue := Object new.
+	barValue := Object new.
+	(CommandLine argv: #('Dolphin7.exe' 'DPRO.img7' '-f' '-b'))
+		addOptionAllowingArgumentNamed: $f whenPresentDo: [:value | fooValue := value];
+		addOptionAllowingArgumentNamed: $b whenPresentDo: [:value | barValue := value];
+		valueBlocks.
+	self
+		assert: fooValue isNil;
+		assert: barValue isNil;
+		yourself.!
+
+testShortBlockRequiredArgumentPresent
+
+	| fooValue |
+	(CommandLine argv: #('Dolphin7.exe' 'DPRO.img7' '-f' 'bar'))
+		addOptionRequiringArgumentNamed: $f whenPresentDo: [:value | fooValue := value];
+		valueBlocks.
+	self assert: fooValue = 'bar'.
+!
+
 testSlashPrefix
 
 	| commandLine options arguments |
@@ -406,6 +511,10 @@ testUnrecognizedOption
 !CommandLineTest categoriesFor: #test_getOpt_13!getopt protocol!public! !
 !CommandLineTest categoriesFor: #test_getOpt_14!getopt protocol!public! !
 !CommandLineTest categoriesFor: #testAccessors!public! !
+!CommandLineTest categoriesFor: #testBlockNoArgument!block!public! !
+!CommandLineTest categoriesFor: #testBlockOptionalArgumentAbsent!block!public! !
+!CommandLineTest categoriesFor: #testBlockOptionalArgumentPresent!block!public! !
+!CommandLineTest categoriesFor: #testBlockRequiredArgumentPresent!block!public! !
 !CommandLineTest categoriesFor: #testLongAmbiguousOption!errors!public! !
 !CommandLineTest categoriesFor: #testLongEquals!long tests!public! !
 !CommandLineTest categoriesFor: #testLongMissingRequiredArgument!errors!public! !
@@ -417,6 +526,12 @@ testUnrecognizedOption
 !CommandLineTest categoriesFor: #testLongUnexpectedOption!errors!public! !
 !CommandLineTest categoriesFor: #testMissingRequiredArgument!errors!public! !
 !CommandLineTest categoriesFor: #testPartialLong!long tests!public! !
+!CommandLineTest categoriesFor: #testRepeatBlockOptionalArgumentAbsent!block!public! !
+!CommandLineTest categoriesFor: #testRepeatBlockOptionalArgumentPresent!block!public! !
+!CommandLineTest categoriesFor: #testRepeatShortBlockNoArgument!block!public! !
+!CommandLineTest categoriesFor: #testShortBlockNoArgument!block!public! !
+!CommandLineTest categoriesFor: #testShortBlockOptionalArgumentAbsent!block!public! !
+!CommandLineTest categoriesFor: #testShortBlockRequiredArgumentPresent!block!public! !
 !CommandLineTest categoriesFor: #testSlashPrefix!public! !
 !CommandLineTest categoriesFor: #testUnrecognizedOption!errors!public! !
 
