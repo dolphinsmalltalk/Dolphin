@@ -386,6 +386,15 @@ stringFromAddress: pointer
 	len := addr indexOf: 0.
 	^addr copyStringFrom: 1 to: len - 1!
 
+unlockVM: productId expireAfter: months flags: flags
+	"Private - Attempts to unlock the image. Registers the given <Integer> productId within the image
+	and extends the expiry period by <Integer> months. If months is zero then the expiry period is
+	extended indefinitely. The <integer>, flags, specifies various flags. At present the only flag is
+	16r1, meaning that the image is to be machine locked (i.e. a fixed rather than floating license)."
+
+	<primitive: 93>
+	^self error: 'Unable to unlock image - please contact Dolphin Support'!
+
 unregisterObject: anObject 
 	| i |
 	i := self registry identityIndexOf: anObject.
@@ -451,6 +460,7 @@ versionFormatString
 !VMLibrary categoriesFor: #signedFromUnsigned:!helpers!private! !
 !VMLibrary categoriesFor: #specialSelectors!accessing-registry!private! !
 !VMLibrary categoriesFor: #stringFromAddress:!helpers!private! !
+!VMLibrary categoriesFor: #unlockVM:expireAfter:flags:!locking!private! !
 !VMLibrary categoriesFor: #unregisterObject:!accessing-registry!private! !
 !VMLibrary categoriesFor: #unsignedFromSigned:!helpers!private! !
 !VMLibrary categoriesFor: #versionFormatString!constants!private! !
