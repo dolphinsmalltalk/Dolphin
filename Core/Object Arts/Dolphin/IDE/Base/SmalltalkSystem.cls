@@ -1814,6 +1814,17 @@ globalVariableNamed: key
 
 	^self environment associationAt: key asSymbol!
 
+hardResetGUI
+	"Forcibly close all views to clean up if necessary"
+
+	[View destroyAll] on: Error do: [:x | x notify].
+	"CompiledExpressions maintain a reference to any pools in scope when they were compiled, e.g.
+	workspace pools, and if these have been debugged through then they may well be ref'd from
+	the debug info cache. The pools may have dead workspace variables that reference old views,
+	preventing them from being GC'd."
+	CompiledCode initializeInfoCache.
+	self sessionManager mainShellClass reset!
+
 hasRedoableOperations
 	^self changeManager hasRedoableOperations!
 
@@ -2592,18 +2603,7 @@ If so, all windows will be destroyed and a new System Folder will be opened.
 
 You should do this only if you believe you may have hidden or partially composed windows in your image that are preventing some objects from otherwise being garbage collected.') 
 			ifFalse: [^self].
-	self panicWithoutPrompt!
-
-panicWithoutPrompt
-	"Forcibly close all views to clean up if necessary"
-
-	[View destroyAll] on: Error do: [:x | x notify].
-	"CompiledExpressions maintain a reference to any pools in scope when they were compiled, e.g.
-	workspace pools, and if these have been debugged through then they may well be ref'd from
-	the debug info cache. The pools may have dead workspace variables that reference old views,
-	preventing them from being GC'd."
-	CompiledCode initializeInfoCache.
-	self sessionManager mainShellClass reset!
+	self hardResetGUI!
 
 patchLevel
 	"Answer the current patch level of this image"
@@ -4071,6 +4071,7 @@ wrapText: aString toWidth: max indent: colInteger tabWidth: tabInteger
 !SmalltalkSystem categoriesFor: #formatterClass!accessing!public! !
 !SmalltalkSystem categoriesFor: #formatterClass:!accessing!public! !
 !SmalltalkSystem categoriesFor: #globalVariableNamed:!accessing!private! !
+!SmalltalkSystem categoriesFor: #hardResetGUI!commands!public! !
 !SmalltalkSystem categoriesFor: #hasRedoableOperations!public!testing! !
 !SmalltalkSystem categoriesFor: #hasUndoableOperations!public!testing! !
 !SmalltalkSystem categoriesFor: #helpContents!commands!operations!public! !
@@ -4164,7 +4165,6 @@ wrapText: aString toWidth: max indent: colInteger tabWidth: tabInteger
 !SmalltalkSystem categoriesFor: #packageManager!accessing!private! !
 !SmalltalkSystem categoriesFor: #packageOpenFileDialogTypes!constants!private! !
 !SmalltalkSystem categoriesFor: #panic!commands!public! !
-!SmalltalkSystem categoriesFor: #panicWithoutPrompt!commands!public! !
 !SmalltalkSystem categoriesFor: #patchLevel!patching!public! !
 !SmalltalkSystem categoriesFor: #patchLevel:!patching!private! !
 !SmalltalkSystem categoriesFor: #paxFileDialogType!constants!private! !
