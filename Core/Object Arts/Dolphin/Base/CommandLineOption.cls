@@ -1,7 +1,7 @@
 "Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #CommandLineOption
-	instanceVariableNames: 'name isArgumentAllowed isArgumentRequired'
+	instanceVariableNames: 'name isArgumentAllowed isArgumentRequired block'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -29,17 +29,40 @@ initializeOptionAllowingArgumentNamed: aString
 	isArgumentAllowed := true.
 	isArgumentRequired := false.!
 
+initializeOptionAllowingArgumentNamed: aString block: aBlock
+
+	name :=aString.
+	isArgumentAllowed := true.
+	isArgumentRequired := false.
+	block := aBlock.
+!
+
 initializeOptionNamed: aString
 
 	name :=aString.
 	isArgumentAllowed := false.
 	isArgumentRequired := false.!
 
+initializeOptionNamed: aString block: aBlock
+
+	name :=aString.
+	isArgumentAllowed := false.
+	isArgumentRequired := false.
+	block := aBlock.
+!
+
 initializeOptionRequiringArgumentNamed: aString
 
 	name :=aString.
 	isArgumentAllowed := true.
 	isArgumentRequired := true.!
+
+initializeOptionRequiringArgumentNamed: aString block: aBlock
+
+	name :=aString.
+	isArgumentAllowed := true.
+	isArgumentRequired := true.
+	block := aBlock.!
 
 isArgumentAllowed
 	^isArgumentAllowed!
@@ -61,11 +84,22 @@ name
 	^name!
 
 name: anObject
-	name := anObject! !
+	name := anObject!
+
+value: anObject
+
+	block ifNil: [^self].
+	isArgumentAllowed
+		ifTrue: [block value: anObject]
+		ifFalse: [block value].
+! !
 !CommandLineOption categoriesFor: #initializeFromStream:!private! !
 !CommandLineOption categoriesFor: #initializeOptionAllowingArgumentNamed:!private! !
+!CommandLineOption categoriesFor: #initializeOptionAllowingArgumentNamed:block:!private! !
 !CommandLineOption categoriesFor: #initializeOptionNamed:!private! !
+!CommandLineOption categoriesFor: #initializeOptionNamed:block:!private! !
 !CommandLineOption categoriesFor: #initializeOptionRequiringArgumentNamed:!private! !
+!CommandLineOption categoriesFor: #initializeOptionRequiringArgumentNamed:block:!private! !
 !CommandLineOption categoriesFor: #isArgumentAllowed!accessing!public! !
 !CommandLineOption categoriesFor: #isArgumentAllowed:!accessing!public! !
 !CommandLineOption categoriesFor: #isArgumentRequired!accessing!public! !
@@ -73,6 +107,7 @@ name: anObject
 !CommandLineOption categoriesFor: #isLongOption!public! !
 !CommandLineOption categoriesFor: #name!accessing!public! !
 !CommandLineOption categoriesFor: #name:!accessing!public! !
+!CommandLineOption categoriesFor: #value:!public! !
 
 !CommandLineOption class methodsFor!
 
@@ -80,6 +115,12 @@ allowingArgumentNamed: aString
 
 	^self new
 		initializeOptionAllowingArgumentNamed: aString;
+		yourself!
+
+allowingArgumentNamed: aString block: aBlock
+
+	^self new
+		initializeOptionAllowingArgumentNamed: aString block: aBlock;
 		yourself!
 
 fromStream: aStream
@@ -94,13 +135,28 @@ named: aString
 		initializeOptionNamed: aString;
 		yourself!
 
+named: aString block: aBlock
+
+	^self new
+		initializeOptionNamed: aString block: aBlock;
+		yourself!
+
 requiringArgumentNamed: aString
 
 	^self new
 		initializeOptionRequiringArgumentNamed: aString;
+		yourself!
+
+requiringArgumentNamed: aString block: aBlock
+
+	^self new
+		initializeOptionRequiringArgumentNamed: aString block: aBlock;
 		yourself! !
 !CommandLineOption class categoriesFor: #allowingArgumentNamed:!public! !
+!CommandLineOption class categoriesFor: #allowingArgumentNamed:block:!public! !
 !CommandLineOption class categoriesFor: #fromStream:!public! !
 !CommandLineOption class categoriesFor: #named:!public! !
+!CommandLineOption class categoriesFor: #named:block:!public! !
 !CommandLineOption class categoriesFor: #requiringArgumentNamed:!public! !
+!CommandLineOption class categoriesFor: #requiringArgumentNamed:block:!public! !
 
