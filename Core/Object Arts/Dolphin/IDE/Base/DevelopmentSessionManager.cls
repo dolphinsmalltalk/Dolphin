@@ -417,21 +417,23 @@ processCommandLine
 	"
 
 	| commandLine arguments |
-	commandLine := self commandLineParser
-		"-h and -q are already defined"
-		addOptionAllowingArgumentNamed: $d whenPresentDo: [:rebasePath | 
-			Package manager rebaseBasePackagesTo: (rebasePath ifNil: ['.']).
-			self saveImage];
-		addOptionRequiringArgumentNamed: $f whenPresentDo: [:fileInFile | SourceManager default fileIn: fileInFile];
-		addOptionAllowingArgumentNamed: $i whenPresentDo: [:newImageFile | self saveImage: (newImageFile ifNil: ['Dolphin'])];
-		addOptionNamed: $x whenPresentDo: [self quit];
-		valueBlocks;
-		yourself.
+	commandLine := (self commandLineParser)
+				addOptionAllowingArgument: $d
+					whenPresentDo: 
+						[:rebasePath | 
+						Package manager rebaseBasePackagesTo: (rebasePath ifNil: ['.']).
+						self saveImage];
+				addOptionRequiringArgument: $f
+					whenPresentDo: [:fileInFile | SourceManager default fileIn: fileInFile];
+				addOptionAllowingArgument: $i
+					whenPresentDo: [:newImageFile | self saveImage: (newImageFile ifNil: ['Dolphin'])];
+				addOption: $x whenPresentDo: [self quit];
+				processOptions;
+				yourself.
+	"-h and -q are already defined"
 	(arguments := commandLine arguments) isEmpty ifTrue: [^self].
 	"Open a source file (CLS, ST, PAX, PAC, SML) in the appropriate tool"
-	arguments allButFirst 		 "leave off image name"
-		do: [:openFile |self open: openFile].
-!
+	arguments allButFirst do: [:openFile | self open: openFile]	"leave off image name"!
 
 productDetails
 	"Private - Answers an eight element <Array> describing this version of the development environment

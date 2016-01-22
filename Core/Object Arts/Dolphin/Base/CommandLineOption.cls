@@ -23,46 +23,38 @@ initializeFromStream: aStream
 	].
 !
 
-initializeOptionAllowingArgumentNamed: aString
-
-	name :=aString.
-	isArgumentAllowed := true.
-	isArgumentRequired := false.!
-
-initializeOptionAllowingArgumentNamed: aString block: aBlock
-
-	name :=aString.
-	isArgumentAllowed := true.
-	isArgumentRequired := false.
-	block := aBlock.
-!
-
-initializeOptionNamed: aString
-
-	name :=aString.
+initializeOption: aString 
+	name := aString.
 	isArgumentAllowed := false.
-	isArgumentRequired := false.!
+	isArgumentRequired := false!
 
-initializeOptionNamed: aString block: aBlock
-
-	name :=aString.
+initializeOption: aString block: aBlock 
+	name := aString.
 	isArgumentAllowed := false.
 	isArgumentRequired := false.
-	block := aBlock.
-!
+	block := aBlock!
 
-initializeOptionRequiringArgumentNamed: aString
-
-	name :=aString.
+initializeOptionAllowingArgument: aString 
+	name := aString.
 	isArgumentAllowed := true.
-	isArgumentRequired := true.!
+	isArgumentRequired := false!
 
-initializeOptionRequiringArgumentNamed: aString block: aBlock
+initializeOptionAllowingArgument: aString block: aBlock 
+	name := aString.
+	isArgumentAllowed := true.
+	isArgumentRequired := false.
+	block := aBlock!
 
-	name :=aString.
+initializeOptionRequiringArgument: aString 
+	name := aString.
+	isArgumentAllowed := true.
+	isArgumentRequired := true!
+
+initializeOptionRequiringArgument: aString block: aBlock 
+	name := aString.
 	isArgumentAllowed := true.
 	isArgumentRequired := true.
-	block := aBlock.!
+	block := aBlock!
 
 isArgumentAllowed
 	^isArgumentAllowed!
@@ -94,12 +86,12 @@ value: anObject
 		ifFalse: [block value].
 ! !
 !CommandLineOption categoriesFor: #initializeFromStream:!private! !
-!CommandLineOption categoriesFor: #initializeOptionAllowingArgumentNamed:!private! !
-!CommandLineOption categoriesFor: #initializeOptionAllowingArgumentNamed:block:!private! !
-!CommandLineOption categoriesFor: #initializeOptionNamed:!private! !
-!CommandLineOption categoriesFor: #initializeOptionNamed:block:!private! !
-!CommandLineOption categoriesFor: #initializeOptionRequiringArgumentNamed:!private! !
-!CommandLineOption categoriesFor: #initializeOptionRequiringArgumentNamed:block:!private! !
+!CommandLineOption categoriesFor: #initializeOption:!private! !
+!CommandLineOption categoriesFor: #initializeOption:block:!private! !
+!CommandLineOption categoriesFor: #initializeOptionAllowingArgument:!private! !
+!CommandLineOption categoriesFor: #initializeOptionAllowingArgument:block:!private! !
+!CommandLineOption categoriesFor: #initializeOptionRequiringArgument:!private! !
+!CommandLineOption categoriesFor: #initializeOptionRequiringArgument:block:!private! !
 !CommandLineOption categoriesFor: #isArgumentAllowed!accessing!public! !
 !CommandLineOption categoriesFor: #isArgumentAllowed:!accessing!public! !
 !CommandLineOption categoriesFor: #isArgumentRequired!accessing!public! !
@@ -111,16 +103,14 @@ value: anObject
 
 !CommandLineOption class methodsFor!
 
-allowingArgumentNamed: aString
-
-	^self new
-		initializeOptionAllowingArgumentNamed: aString;
+allowingArgument: aString 
+	^(self new)
+		initializeOptionAllowingArgument: aString;
 		yourself!
 
-allowingArgumentNamed: aString block: aBlock
-
-	^self new
-		initializeOptionAllowingArgumentNamed: aString block: aBlock;
+allowingArgument: aString block: aBlock 
+	^(self new)
+		initializeOptionAllowingArgument: aString block: aBlock;
 		yourself!
 
 fromStream: aStream
@@ -129,34 +119,30 @@ fromStream: aStream
 		initializeFromStream: aStream;
 		yourself!
 
-named: aString
-
-	^self new
-		initializeOptionNamed: aString;
+named: aString 
+	^(self new)
+		initializeOption: aString;
 		yourself!
 
-named: aString block: aBlock
-
-	^self new
-		initializeOptionNamed: aString block: aBlock;
+named: aString block: aBlock 
+	^(self new)
+		initializeOption: aString block: aBlock;
 		yourself!
 
-requiringArgumentNamed: aString
-
-	^self new
-		initializeOptionRequiringArgumentNamed: aString;
+requiringArgument: aString 
+	^(self new)
+		initializeOptionRequiringArgument: aString;
 		yourself!
 
-requiringArgumentNamed: aString block: aBlock
-
-	^self new
-		initializeOptionRequiringArgumentNamed: aString block: aBlock;
+requiringArgument: aString block: aBlock 
+	^(self new)
+		initializeOptionRequiringArgument: aString block: aBlock;
 		yourself! !
-!CommandLineOption class categoriesFor: #allowingArgumentNamed:!public! !
-!CommandLineOption class categoriesFor: #allowingArgumentNamed:block:!public! !
+!CommandLineOption class categoriesFor: #allowingArgument:!public! !
+!CommandLineOption class categoriesFor: #allowingArgument:block:!public! !
 !CommandLineOption class categoriesFor: #fromStream:!public! !
 !CommandLineOption class categoriesFor: #named:!public! !
 !CommandLineOption class categoriesFor: #named:block:!public! !
-!CommandLineOption class categoriesFor: #requiringArgumentNamed:!public! !
-!CommandLineOption class categoriesFor: #requiringArgumentNamed:block:!public! !
+!CommandLineOption class categoriesFor: #requiringArgument:!public! !
+!CommandLineOption class categoriesFor: #requiringArgument:block:!public! !
 

@@ -51,35 +51,23 @@ arguments := commandLine arguments. "#(''arg4'')"
 !CommandLine categoriesForClass!Kernel-Objects! !
 !CommandLine methodsFor!
 
-addOptionAllowingArgumentNamed: aString
+addOption: aString 
+	parsingRules add: (CommandLineOption named: aString)!
 
-	parsingRules add: (CommandLineOption allowingArgumentNamed: aString).
-!
+addOption: aString whenPresentDo: aBlock 
+	parsingRules add: (CommandLineOption named: aString block: aBlock)!
 
-addOptionAllowingArgumentNamed: aString  whenPresentDo: aBlock
+addOptionAllowingArgument: aString 
+	parsingRules add: (CommandLineOption allowingArgument: aString)!
 
-	parsingRules add: (CommandLineOption allowingArgumentNamed: aString block: aBlock).
-!
+addOptionAllowingArgument: aString whenPresentDo: aBlock 
+	parsingRules add: (CommandLineOption allowingArgument: aString block: aBlock)!
 
-addOptionNamed: aString
+addOptionRequiringArgument: aString 
+	parsingRules add: (CommandLineOption requiringArgument: aString)!
 
-	parsingRules add: (CommandLineOption named: aString).
-!
-
-addOptionNamed: aString whenPresentDo: aBlock
-
-	parsingRules add: (CommandLineOption named: aString block: aBlock).
-!
-
-addOptionRequiringArgumentNamed: aString
-
-	parsingRules add: (CommandLineOption requiringArgumentNamed: aString).
-!
-
-addOptionRequiringArgumentNamed: aString  whenPresentDo: aBlock
-
-	parsingRules add: (CommandLineOption requiringArgumentNamed: aString block: aBlock).
-!
+addOptionRequiringArgument: aString whenPresentDo: aBlock 
+	parsingRules add: (CommandLineOption requiringArgument: aString block: aBlock)!
 
 addRulesFrom: aString
 
@@ -287,18 +275,15 @@ parseNextOption
 	].
 	options add: rule -> optionArg.	"save option and argument"!
 
-valueBlocks
-
+processOptions
 	options ifNil: [self parse].
-	options do: [:each | 
-		each key ifNotNil: [:rule | rule value: each value].
-	].! !
-!CommandLine categoriesFor: #addOptionAllowingArgumentNamed:!public! !
-!CommandLine categoriesFor: #addOptionAllowingArgumentNamed:whenPresentDo:!public! !
-!CommandLine categoriesFor: #addOptionNamed:!public! !
-!CommandLine categoriesFor: #addOptionNamed:whenPresentDo:!public! !
-!CommandLine categoriesFor: #addOptionRequiringArgumentNamed:!public! !
-!CommandLine categoriesFor: #addOptionRequiringArgumentNamed:whenPresentDo:!public! !
+	options do: [:each | each key ifNotNil: [:rule | rule value: each value]]! !
+!CommandLine categoriesFor: #addOption:!public! !
+!CommandLine categoriesFor: #addOption:whenPresentDo:!public! !
+!CommandLine categoriesFor: #addOptionAllowingArgument:!public! !
+!CommandLine categoriesFor: #addOptionAllowingArgument:whenPresentDo:!public! !
+!CommandLine categoriesFor: #addOptionRequiringArgument:!public! !
+!CommandLine categoriesFor: #addOptionRequiringArgument:whenPresentDo:!public! !
 !CommandLine categoriesFor: #addRulesFrom:!private! !
 !CommandLine categoriesFor: #arguments!accessing!public! !
 !CommandLine categoriesFor: #checkForErrors!private! !
@@ -312,7 +297,7 @@ valueBlocks
 !CommandLine categoriesFor: #parseLongOption:!private! !
 !CommandLine categoriesFor: #parseNextArg!private! !
 !CommandLine categoriesFor: #parseNextOption!private! !
-!CommandLine categoriesFor: #valueBlocks!public! !
+!CommandLine categoriesFor: #processOptions!public! !
 
 !CommandLine class methodsFor!
 
