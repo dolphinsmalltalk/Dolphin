@@ -51,20 +51,23 @@ arguments := commandLine arguments. "#(''arg4'')"
 !CommandLine categoriesForClass!Kernel-Objects! !
 !CommandLine methodsFor!
 
-addOptionAllowingArgumentNamed: aString
+addOption: aString 
+	parsingRules add: (CommandLineOption named: aString)!
 
-	parsingRules add: (CommandLineOption allowingArgumentNamed: aString).
-!
+addOption: aString whenPresentDo: aBlock 
+	parsingRules add: (CommandLineOption named: aString block: aBlock)!
 
-addOptionNamed: aString
+addOptionAllowingArgument: aString 
+	parsingRules add: (CommandLineOption allowingArgument: aString)!
 
-	parsingRules add: (CommandLineOption named: aString).
-!
+addOptionAllowingArgument: aString whenPresentDo: aBlock 
+	parsingRules add: (CommandLineOption allowingArgument: aString block: aBlock)!
 
-addOptionRequiringArgumentNamed: aString
+addOptionRequiringArgument: aString 
+	parsingRules add: (CommandLineOption requiringArgument: aString)!
 
-	parsingRules add: (CommandLineOption requiringArgumentNamed: aString).
-!
+addOptionRequiringArgument: aString whenPresentDo: aBlock 
+	parsingRules add: (CommandLineOption requiringArgument: aString block: aBlock)!
 
 addRulesFrom: aString
 
@@ -100,14 +103,14 @@ getOpt: aString
 		option := options at: optIndex.
 	].
 	optIndex := optIndex + 1.
-	option key == $? ifTrue: [
+	option key ifNil: [
 		optArg := nil.
 		optOpt := option value.
-	] ifFalse: [
-		optArg := option value.
-		optOpt := nil.
+		^$?
 	].
-	^option key!
+	optArg := option value.
+	optOpt := nil.
+	^option key name!
 
 initialize: anArray
 
@@ -131,8 +134,8 @@ options
 	self checkForErrors.
 	dict := Dictionary new.
 	options do: [:each | 
-		each key ~~ $? ifTrue: [
-			dict at: each key put: each value.
+		each key ifNotNil: [
+			dict at: each key name put: each value.
 		].
 	].
 	^dict!
@@ -158,7 +161,8 @@ parse
 	[parsingArgStream atEnd] whileFalse: [	"iterate over the argv array"
 		self parseNextArg.
 	].
-	arguments := arguments asArray.!
+	arguments := arguments asArray.
+!
 
 parseLongOption: aString
 
@@ -189,7 +193,7 @@ parseLongOption: aString
 		].
 	rule isArgumentAllowed ifFalse: [
 		argument ifNil: [
-			options add: rule name -> nil.
+			options add: rule -> nil.
 		] ifNotNil: [
 			parsingErrors nextPutAll: 'Option ' , rule name printString , ' has unexpected argument of ' , argument printString; cr.
 		].
@@ -208,10 +212,10 @@ parseLongOption: aString
 		
 	].
 	(rule isArgumentRequired and: [argument isNil]) ifTrue: [
-		options add: $? -> key.
+		options add: nil -> key.
 		parsingErrors nextPutAll: 'Missing required argument for option ' , key printString; cr.
 	] ifFalse: [
-		options add: rule name -> argument.
+		options add: rule -> argument.
 	].
 !
 
@@ -245,33 +249,41 @@ parseNextOption
 	rule := parsingRules 
 		detect: [:each | each name == char] 
 		ifNone: [	"Unrecognized option"
-			options add: $? -> char.
+			options add: nil -> char.
 			parsingErrors nextPutAll: 'Unrecognized option: ' , char printString; cr.
 			^self
 		].
 	rule isArgumentAllowed ifFalse: [	"simple option without an argument"
-		options add: char -> nil.
+		options add: rule -> nil.
 		^self
 	].
 	"option has an optional or required argument"
 	optionArg := parsingOptionStream upToEnd.	"option argument can follow immediately (-xabc)"
-	(optionArg isEmpty and: [parsingArgStream atEnd not]) ifTrue: [	"look for option argument in next argv"
+	optionArg isEmpty ifTrue: [optionArg := nil].
+	(optionArg isNil and: [parsingArgStream atEnd not]) ifTrue: [	"look for option argument in next argv"
 		optionArg := parsingArgStream peek.
 		(optionPrefixChars includes: optionArg first) ifTrue: [	"next argument begins with prefix character, so another option"
-			optionArg := ''.		"option does not have an argument"
+			optionArg := nil.		"option does not have an argument"
 		] ifFalse: [
 			parsingArgStream next.	"argument associated with option"
 		].
 	].
-	(rule isArgumentRequired and: [optionArg isEmpty]) ifTrue: [	"error if required argument is not present"
+	(rule isArgumentRequired and: [optionArg isNil]) ifTrue: [	"error if required argument is not present"
 		parsingErrors nextPutAll: 'Missing required argument for option ' , char printString; cr.
 		optionArg := char. 
-		char := $?.
+		rule := nil.
 	].
-	options add: char -> optionArg.	"save option and argument"! !
-!CommandLine categoriesFor: #addOptionAllowingArgumentNamed:!public! !
-!CommandLine categoriesFor: #addOptionNamed:!public! !
-!CommandLine categoriesFor: #addOptionRequiringArgumentNamed:!public! !
+	options add: rule -> optionArg.	"save option and argument"!
+
+processOptions
+	options ifNil: [self parse].
+	options do: [:each | each key ifNotNil: [:rule | rule value: each value]]! !
+!CommandLine categoriesFor: #addOption:!public! !
+!CommandLine categoriesFor: #addOption:whenPresentDo:!public! !
+!CommandLine categoriesFor: #addOptionAllowingArgument:!public! !
+!CommandLine categoriesFor: #addOptionAllowingArgument:whenPresentDo:!public! !
+!CommandLine categoriesFor: #addOptionRequiringArgument:!public! !
+!CommandLine categoriesFor: #addOptionRequiringArgument:whenPresentDo:!public! !
 !CommandLine categoriesFor: #addRulesFrom:!private! !
 !CommandLine categoriesFor: #arguments!accessing!public! !
 !CommandLine categoriesFor: #checkForErrors!private! !
@@ -285,6 +297,7 @@ parseNextOption
 !CommandLine categoriesFor: #parseLongOption:!private! !
 !CommandLine categoriesFor: #parseNextArg!private! !
 !CommandLine categoriesFor: #parseNextOption!private! !
+!CommandLine categoriesFor: #processOptions!public! !
 
 !CommandLine class methodsFor!
 

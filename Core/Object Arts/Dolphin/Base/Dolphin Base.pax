@@ -30,7 +30,7 @@ Object subclass: #CommandLine
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Object subclass: #CommandLineOption
-	instanceVariableNames: 'name isArgumentAllowed isArgumentRequired'
+	instanceVariableNames: 'name isArgumentAllowed isArgumentRequired block'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
