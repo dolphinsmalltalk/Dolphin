@@ -1,4 +1,4 @@
-"3:33:35 PM, Friday, January 22, 2016: Compressing sources...."!
+"4:25:36 PM, Friday, January 22, 2016: Compressing sources...."!
 
 Object comment:
 'Object is the abstract root of the standard Smalltalk class hierarchy. It has no instance variables (indeed it must not have any), but provides behavior common to all objects.
