@@ -89,7 +89,7 @@ commandLineParser
 	"
 
 	^(CommandLine argv: self argvLegacyOptionsRemoved)
-		options: 'd::f:hi:qx';
+		options: 'hq';	"Options with arguments described elsewhere"
 		yourself!
 
 dolphinNewsgroupUrl
@@ -407,34 +407,33 @@ primaryStartup
 	self openSources!
 
 processCommandLine
-	"Private - 
+	"private
 	-d path - Rebase Dolphin core packages to supplied path
 	-f fileInFile - file in an ST chunk file
+	-h - headless (embedded) mode
 	-i imageFile - initialize a new image
+	-q - quiet startup (no splash)
 	-x - immediately exit
 	"
 
-	| commandLine options arguments |
-	commandLine := self commandLineParser.
-	options := commandLine options.
-	arguments := commandLine arguments.
-	arguments notEmpty 		"If no image name is provided then the default is Dolphin.img7"
-		ifTrue: [arguments := arguments allButFirst]. "leave off image name"
-	"Clone a new image to the given path"
-	options at: $i
-		ifPresent: [:newImageFile | newImageFile notNil ifTrue: [self saveImage: newImageFile]].
-	"Rebase the Dolphin boot packages to live in a (presumably shared) location relative to the installation directory"
-	options at: $d
-		ifPresent: 
-			[:rebasePath | 
-			Package manager rebaseBasePackagesTo: (rebasePath ifNil: ['.']).
-			self saveImage].
-	"File in a given file"
-	options at: $f ifPresent: [:fileInFile | SourceManager default fileIn: fileInFile].
+	| commandLine arguments |
+	commandLine := (self commandLineParser)
+				addOptionAllowingArgument: $d
+					whenPresentDo: 
+						[:rebasePath | 
+						Package manager rebaseBasePackagesTo: (rebasePath ifNil: ['.']).
+						self saveImage];
+				addOptionRequiringArgument: $f
+					whenPresentDo: [:fileInFile | SourceManager default fileIn: fileInFile];
+				addOptionAllowingArgument: $i
+					whenPresentDo: [:newImageFile | self saveImage: (newImageFile ifNil: ['Dolphin'])];
+				addOption: $x whenPresentDo: [self quit];
+				processOptions;
+				yourself.
+	"-h and -q are already defined"
+	(arguments := commandLine arguments) isEmpty ifTrue: [^self].
 	"Open a source file (CLS, ST, PAX, PAC, SML) in the appropriate tool"
-	arguments do: [:openFile | openFile notNil ifTrue: [self open: openFile]].
-	"Immediately exit the image following startup activities"
-	options at: $x ifPresent: [:val | self quit]!
+	arguments allButFirst do: [:openFile | self open: openFile]	"leave off image name"!
 
 productDetails
 	"Private - Answers an eight element <Array> describing this version of the development environment
