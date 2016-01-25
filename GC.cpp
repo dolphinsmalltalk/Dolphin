@@ -615,7 +615,8 @@ void ObjectMemory::addVMRefs()
 
 		//TRACESTREAM << nFree << " free slots found in OT, " << cFreeList << " on the free list (" << nFree-cFreeList << ")" <<endl;
 
-		Interpreter::ReincrementVMReferences();
+//	unresolved external symbol (JGFoster)
+//		Interpreter::ReincrementVMReferences();
 
 		int refCountTooSmall = 0;
 		const unsigned loopEnd = m_nOTSize;

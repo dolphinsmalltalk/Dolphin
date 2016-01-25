@@ -933,7 +933,7 @@ inline void* ObjectMemory::FixedSizePool::allocate()
 	Link* pChunk = m_pFreeChunks;
 	m_pFreeChunks = pChunk->next;
 	
-	#if defined(_DEBUG) && defined(
+	#if defined(_DEBUG) //	&& defined(		// JGFoster
 		if (_crtDbgFlag & _CRTDBG_CHECK_ALWAYS_DF)
 			HARDASSERT(isValid());
 	#endif

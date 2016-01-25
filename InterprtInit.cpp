@@ -22,6 +22,12 @@ Interpreter initialization
 
 #pragma code_seg(INIT_SEG)
 
+#if defined(_DEBUG) || defined(_AFX)		// added by JGFoster
+	Oop*	Interpreter::m_pVMRefs;
+	int		Interpreter::m_nFreeVMRef;
+	int		Interpreter::m_nMaxVMRefs;
+#endif
+
 void Interpreter::initializeVMReferences()
 {
 	//CreateVMReferences();

@@ -50,7 +50,8 @@ STDMETHODIMP_(void) CDolphinSmalltalk::AddReference(
         /* [in] */ Oop objectPointer)
 {
 #ifdef _DEBUG
-	Interpreter::AddVMReference(objectPointer);
+//	Interpreter::AddVMReference(objectPointer);	// JGFoster
+	ObjectMemory::countUp(objectPointer);
 #else
 	ObjectMemory::countUp(objectPointer);
 #endif
@@ -60,7 +61,8 @@ STDMETHODIMP_(void) CDolphinSmalltalk::RemoveReference(
         /* [in] */ Oop objectPointer)
 {
 #ifdef _DEBUG
-	Interpreter::RemoveVMReference(objectPointer);
+//	Interpreter::RemoveVMReference(objectPointer);	// JGFoster
+	ObjectMemory::countDown(objectPointer);
 #else
 	ObjectMemory::countDown(objectPointer);
 #endif
