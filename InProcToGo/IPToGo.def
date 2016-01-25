@@ -28,9 +28,9 @@ uncompress
 
 ; CRT functions imported by the image
 
-	__argc DATA
-	__argv DATA
-	_iob DATA
+;	__argc DATA		//	removed by JGFoster to get things to build !?
+;	__argv DATA
+;	_iob DATA
 	__iscsym
 	__iscsymf
 	_chdir
