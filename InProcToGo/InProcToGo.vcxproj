@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
-    <ProjectConfiguration Include="Debug|Win32">
-      <Configuration>Debug</Configuration>
+    <ProjectConfiguration Include="VM Debug|Win32">
+      <Configuration>VM Debug</Configuration>
       <Platform>Win32</Platform>
     </ProjectConfiguration>
     <ProjectConfiguration Include="Release|Win32">
@@ -21,7 +21,7 @@
     <UseOfMfc>false</UseOfMfc>
     <WholeProgramOptimization>true</WholeProgramOptimization>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <PlatformToolset>v120</PlatformToolset>
     <UseOfMfc>false</UseOfMfc>
@@ -34,7 +34,7 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
   </ImportGroup>
-  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
   </ImportGroup>
@@ -49,7 +49,7 @@
     <LinkIncremental>false</LinkIncremental>
     <TargetName>IPDolphinToGo</TargetName>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">
     <OutDir>$(SolutionDir)$(Configuration)\</OutDir>
     <IntDir>$(Configuration)\</IntDir>
     <IgnoreImportLibrary>true</IgnoreImportLibrary>
@@ -110,7 +110,7 @@
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
     </Link>
   </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">
     <CustomBuildStep>
       <Message>Copying binary to image folder</Message>
       <Command>copy "$(TargetPath)" "$(SolutionDir)..\..\$(TargetFileName)"
@@ -171,37 +171,37 @@
     <ClCompile Include="..\axhost.cpp" />
     <ClCompile Include="..\InProcStart.cpp">
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">..;..\zlib;.</AdditionalIncludeDirectories>
-      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">..;..\zlib;.</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">..;..\zlib;.</AdditionalIncludeDirectories>
     </ClCompile>
     <ClCompile Include="..\InProcStub\CoWait.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
       </PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">
       </PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="..\wingui.cpp" />
     <ClCompile Include="dlldatax.c">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
       </PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">
       </PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="InProcPlugHole.cpp">
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">..;..\zlib;.</AdditionalIncludeDirectories>
-      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">..;..\zlib;.</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">..;..\zlib;.</AdditionalIncludeDirectories>
     </ClCompile>
     <ClCompile Include="InProcStub.cpp">
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">..;..\zlib;.</AdditionalIncludeDirectories>
-      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">..;..\zlib;.</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">..;..\zlib;.</AdditionalIncludeDirectories>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="InProcStub_p.c">
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NDEBUG;_CTYPE_DISABLE_MACROS;WIN32;_WINDOWS;WIN32_LEAN_AND_MEAN;WIN32_EXTRA_LEAN;STRICT;TO_GO;TIMEDEXPIRY;_MERGE_PROXYSTUB;_WIN32_WINNT=0x0400</PreprocessorDefinitions>
-      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NDEBUG;_CTYPE_DISABLE_MACROS;WIN32;_WINDOWS;WIN32_LEAN_AND_MEAN;WIN32_EXTRA_LEAN;STRICT;TO_GO;TIMEDEXPIRY;_MERGE_PROXYSTUB;_WIN32_WINNT=0x0400</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">NDEBUG;_CTYPE_DISABLE_MACROS;WIN32;_WINDOWS;WIN32_LEAN_AND_MEAN;WIN32_EXTRA_LEAN;STRICT;TO_GO;TIMEDEXPIRY;_MERGE_PROXYSTUB;_WIN32_WINNT=0x0400</PreprocessorDefinitions>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
       </PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">
       </PrecompiledHeader>
     </ClCompile>
   </ItemGroup>
@@ -218,17 +218,17 @@
   <ItemGroup>
     <ResourceCompile Include="IPToGo.rc">
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(OUTDIR)</AdditionalIncludeDirectories>
-      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(OUTDIR)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">$(OUTDIR)</AdditionalIncludeDirectories>
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
     <Midl Include="InProcStub.idl">
       <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">/no_robust %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">/no_robust %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">/no_robust %(AdditionalOptions)</AdditionalOptions>
       <HeaderFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\InProcStub.h</HeaderFileName>
-      <HeaderFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\InProcStub.h</HeaderFileName>
+      <HeaderFileName Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">.\InProcStub.h</HeaderFileName>
       <InterfaceIdentifierFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">InProcStub_i.c</InterfaceIdentifierFileName>
-      <InterfaceIdentifierFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">InProcStub_i.c</InterfaceIdentifierFileName>
+      <InterfaceIdentifierFileName Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">InProcStub_i.c</InterfaceIdentifierFileName>
     </Midl>
   </ItemGroup>
   <ItemGroup>

@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
-    <ProjectConfiguration Include="Debug|Win32">
-      <Configuration>Debug</Configuration>
+    <ProjectConfiguration Include="VM Debug|Win32">
+      <Configuration>VM Debug</Configuration>
       <Platform>Win32</Platform>
     </ProjectConfiguration>
     <ProjectConfiguration Include="Release|Win32">
@@ -22,7 +22,7 @@
     <UseOfMfc>false</UseOfMfc>
     <WholeProgramOptimization>true</WholeProgramOptimization>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <PlatformToolset>v120</PlatformToolset>
     <UseOfMfc>false</UseOfMfc>
@@ -35,7 +35,7 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
   </ImportGroup>
-  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
   </ImportGroup>
@@ -50,7 +50,7 @@
     <LinkIncremental>false</LinkIncremental>
     <TargetName>DolphinVM7</TargetName>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">
     <OutDir>$(SolutionDir)$(Configuration)\</OutDir>
     <IntDir>$(Configuration)\</IntDir>
     <IgnoreImportLibrary>true</IgnoreImportLibrary>
@@ -121,7 +121,7 @@
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
     </Link>
   </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">
     <CustomBuildStep>
       <Message>Copying binary to image folder</Message>
       <Command>copy "$(TargetPath)" "$(SolutionDir)..\..\$(TargetFileName)"
@@ -193,21 +193,21 @@
       <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">MinSpace</Optimization>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
       </PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">
       </PrecompiledHeader>
       <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Level3</WarningLevel>
-      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Level3</WarningLevel>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">Level3</WarningLevel>
     </ClCompile>
     <ClCompile Include="DolphinSmalltalk_p.c">
       <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">MinSpace</Optimization>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">_WIN32_WINNT=0x0500;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">_WIN32_WINNT=0x0500;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">_WIN32_WINNT=0x0500;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
       </PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">
       </PrecompiledHeader>
       <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Level3</WarningLevel>
-      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Level3</WarningLevel>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">Level3</WarningLevel>
     </ClCompile>
     <ClCompile Include="SaveImage.cpp" />
     <ClCompile Include="SnapshotPrim.cpp" />
@@ -216,32 +216,32 @@
       <InlineFunctionExpansion Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">OnlyExplicitInline</InlineFunctionExpansion>
       <ExceptionHandling Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
       </ExceptionHandling>
-      <ExceptionHandling Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      <ExceptionHandling Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">
       </ExceptionHandling>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="wingui.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Use</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Use</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">Use</PrecompiledHeader>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Midl Include="ActiveXHost.idl">
       <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">/no_robust %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">/no_robust %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">/no_robust %(AdditionalOptions)</AdditionalOptions>
       <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">3</WarningLevel>
-      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">3</WarningLevel>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">3</WarningLevel>
       <TargetEnvironment Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Win32</TargetEnvironment>
-      <TargetEnvironment Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Win32</TargetEnvironment>
+      <TargetEnvironment Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">Win32</TargetEnvironment>
       <TypeLibraryName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">ActiveXHost.tlb</TypeLibraryName>
-      <TypeLibraryName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">ActiveXHost.tlb</TypeLibraryName>
+      <TypeLibraryName Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">ActiveXHost.tlb</TypeLibraryName>
       <HeaderFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">ActiveXHost.h</HeaderFileName>
-      <HeaderFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">ActiveXHost.h</HeaderFileName>
+      <HeaderFileName Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">ActiveXHost.h</HeaderFileName>
       <DllDataFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">axdlldata.c</DllDataFileName>
-      <DllDataFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">axdlldata.c</DllDataFileName>
+      <DllDataFileName Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">axdlldata.c</DllDataFileName>
       <ProxyFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">ActiveXHost_p.c</ProxyFileName>
-      <ProxyFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">ActiveXHost_p.c</ProxyFileName>
+      <ProxyFileName Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">ActiveXHost_p.c</ProxyFileName>
     </Midl>
   </ItemGroup>
   <ItemGroup>
@@ -251,10 +251,10 @@
     <CustomBuild Include="Res\MESSAGES.MC">
       <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">mc "%(FullPath)"
 </Command>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">mc "%(FullPath)"
+      <Command Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">mc "%(FullPath)"
 </Command>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ProjectDir)%(Filename).rc;$(ProjectDir)%(Filename).h;%(Outputs)</Outputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectDir)%(Filename).rc;$(ProjectDir)%(Filename).h;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">$(ProjectDir)%(Filename).rc;$(ProjectDir)%(Filename).h;%(Outputs)</Outputs>
     </CustomBuild>
     <None Include="Res\vsplit.cur" />
     <None Include="VM.def" />
@@ -267,7 +267,7 @@
   <ItemGroup>
     <ResourceCompile Include="vm.rc">
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(OUTDIR)</AdditionalIncludeDirectories>
-      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(OUTDIR)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">$(OUTDIR)</AdditionalIncludeDirectories>
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>

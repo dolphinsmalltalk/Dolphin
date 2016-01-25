@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
-    <ProjectConfiguration Include="Debug|Win32">
-      <Configuration>Debug</Configuration>
+    <ProjectConfiguration Include="VM Debug|Win32">
+      <Configuration>VM Debug</Configuration>
       <Platform>Win32</Platform>
     </ProjectConfiguration>
     <ProjectConfiguration Include="Release|Win32">
@@ -21,7 +21,7 @@
     <PlatformToolset>v120</PlatformToolset>
     <UseOfMfc>false</UseOfMfc>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'" Label="Configuration">
     <ConfigurationType>Utility</ConfigurationType>
     <PlatformToolset>v120</PlatformToolset>
     <UseOfMfc>false</UseOfMfc>
@@ -33,7 +33,7 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
   </ImportGroup>
-  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
   </ImportGroup>
@@ -45,7 +45,7 @@
     <OutDir>$(SolutionDir)$(Configuration)\</OutDir>
     <IntDir>$(Configuration)\</IntDir>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">
     <OutDir>$(SolutionDir)$(Configuration)\</OutDir>
     <IntDir>$(Configuration)\</IntDir>
   </PropertyGroup>
@@ -56,7 +56,7 @@
       <ValidateAllParameters>false</ValidateAllParameters>
     </Midl>
   </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">
     <Midl>
       <SuppressStartupBanner>false</SuppressStartupBanner>
       <DllDataFileName>$(ProjectDir)/dlldata.c</DllDataFileName>
@@ -66,25 +66,25 @@
   <ItemGroup>
     <Midl Include="Compiler\Compiler.idl">
       <TargetEnvironment Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Win32</TargetEnvironment>
-      <TargetEnvironment Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Win32</TargetEnvironment>
+      <TargetEnvironment Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">Win32</TargetEnvironment>
       <GenerateStublessProxies Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</GenerateStublessProxies>
-      <GenerateStublessProxies Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</GenerateStublessProxies>
+      <GenerateStublessProxies Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">true</GenerateStublessProxies>
       <TypeLibraryName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Compiler.tlb</TypeLibraryName>
-      <TypeLibraryName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Compiler.tlb</TypeLibraryName>
+      <TypeLibraryName Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">Compiler.tlb</TypeLibraryName>
       <HeaderFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Compiler_i.h</HeaderFileName>
-      <HeaderFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Compiler_i.h</HeaderFileName>
+      <HeaderFileName Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">Compiler_i.h</HeaderFileName>
     </Midl>
     <Midl Include="DolphinSmalltalk.idl">
       <TargetEnvironment Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Win32</TargetEnvironment>
-      <TargetEnvironment Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Win32</TargetEnvironment>
+      <TargetEnvironment Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">Win32</TargetEnvironment>
       <GenerateStublessProxies Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</GenerateStublessProxies>
-      <GenerateStublessProxies Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</GenerateStublessProxies>
+      <GenerateStublessProxies Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">true</GenerateStublessProxies>
       <TypeLibraryName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">DolphinSmalltalk.tlb</TypeLibraryName>
-      <TypeLibraryName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">DolphinSmalltalk.tlb</TypeLibraryName>
+      <TypeLibraryName Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">DolphinSmalltalk.tlb</TypeLibraryName>
       <HeaderFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">DolphinSmalltalk_i.h</HeaderFileName>
-      <HeaderFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">DolphinSmalltalk_i.h</HeaderFileName>
+      <HeaderFileName Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">DolphinSmalltalk_i.h</HeaderFileName>
       <ValidateAllParameters Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ValidateAllParameters>
-      <ValidateAllParameters Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ValidateAllParameters>
+      <ValidateAllParameters Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">false</ValidateAllParameters>
     </Midl>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

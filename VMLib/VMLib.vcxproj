@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
-    <ProjectConfiguration Include="Debug|Win32">
-      <Configuration>Debug</Configuration>
+    <ProjectConfiguration Include="VM Debug|Win32">
+      <Configuration>VM Debug</Configuration>
       <Platform>Win32</Platform>
     </ProjectConfiguration>
     <ProjectConfiguration Include="Release|Win32">
@@ -21,7 +21,7 @@
     <CharacterSet>MultiByte</CharacterSet>
     <WholeProgramOptimization>true</WholeProgramOptimization>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <PlatformToolset>v120</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
@@ -33,7 +33,7 @@
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
-  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
@@ -44,7 +44,7 @@
     <OutDir>$(SolutionDir)$(Configuration)\</OutDir>
     <IntDir>$(Configuration)\</IntDir>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">
     <OutDir>$(SolutionDir)$(Configuration)\</OutDir>
     <IntDir>$(Configuration)\</IntDir>
   </PropertyGroup>
@@ -71,7 +71,7 @@
       <CompileAs>Default</CompileAs>
     </ClCompile>
   </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
       <InlineFunctionExpansion>Disabled</InlineFunctionExpansion>
@@ -104,7 +104,7 @@
     <ClCompile Include="..\decode.cpp" />
     <ClCompile Include="..\dolphin.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="..\DolphinIF.cpp" />
     <ClCompile Include="..\Expire.cpp" />
@@ -121,14 +121,14 @@
     <ClCompile Include="..\InterlockedOps.c">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
       </PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">
       </PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="..\Interprt.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Use</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Use</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">Use</PrecompiledHeader>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">ist.h</PrecompiledHeaderFile>
-      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">ist.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">ist.h</PrecompiledHeaderFile>
     </ClCompile>
     <ClCompile Include="..\InterprtInit.cpp" />
     <ClCompile Include="..\largeintprim.cpp" />
@@ -144,17 +144,17 @@
     <ClCompile Include="..\RaiseThreadException.c">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
       </PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">
       </PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="..\realloc.cpp" />
     <ClCompile Include="..\sampler.cpp" />
     <ClCompile Include="..\SBHEAP.C">
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">_CRTBLD;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">_CRTBLD;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">_CRTBLD;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
       </PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">
       </PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="..\SearchPrim.cpp" />
@@ -165,92 +165,92 @@
     <ClCompile Include="..\TraceStream.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
       </PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">
       </PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="..\zct.cpp" />
     <ClCompile Include="..\zlib\adler32.c">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
       </PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">
       </PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="..\zlib\compress.c">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
       </PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">
       </PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="..\zlib\crc32.c">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
       </PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">
       </PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="..\zlib\deflate.c">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
       </PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">
       </PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="..\zlib\gzio.c">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
       </PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">
       </PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="..\zlib\infblock.c">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
       </PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">
       </PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="..\zlib\infcodes.c">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
       </PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">
       </PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="..\zlib\inffast.c">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
       </PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">
       </PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="..\zlib\inflate.c">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
       </PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">
       </PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="..\zlib\inftrees.c">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
       </PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">
       </PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="..\zlib\infutil.c">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
       </PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">
       </PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="..\zlib\trees.c">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
       </PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">
       </PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="..\zlib\uncompr.c">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
       </PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">
       </PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="..\zlib\zutil.c">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
       </PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">
       </PrecompiledHeader>
     </ClCompile>
   </ItemGroup>
@@ -258,121 +258,121 @@
     <CustomBuild Include="..\byteasm.asm">
       <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
       </Message>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      <Message Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">
       </Message>
       <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">ml /nologo /Zd /coff /c /Fo  "$(IntDir)%(Filename).obj" "%(FullPath)"
 </Command>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">ml /nologo /Zd /coff /c /Fo  "$(IntDir)%(Filename).obj" "%(FullPath)"
+      <Command Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">ml /nologo /Zd /coff /c /Fo  "$(IntDir)%(Filename).obj" "%(FullPath)"
 </Command>
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(SolutionDir)istasm.inc;%(AdditionalInputs)</AdditionalInputs>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(SolutionDir)istasm.inc;%(AdditionalInputs)</AdditionalInputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">$(SolutionDir)istasm.inc;%(AdditionalInputs)</AdditionalInputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)%(Filename).obj;%(Outputs)</Outputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)%(Filename).obj;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">$(IntDir)%(Filename).obj;%(Outputs)</Outputs>
     </CustomBuild>
     <CustomBuild Include="..\constobj.asm">
       <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
       </Message>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      <Message Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">
       </Message>
       <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">ml /nologo /Zd /coff /c /Fo  "$(IntDir)%(Filename).obj" "%(FullPath)"
 </Command>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">ml /nologo /Zd /coff /c /Fo  "$(IntDir)%(Filename).obj" "%(FullPath)"
+      <Command Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">ml /nologo /Zd /coff /c /Fo  "$(IntDir)%(Filename).obj" "%(FullPath)"
 </Command>
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(SolutionDir)istasm.inc;%(AdditionalInputs)</AdditionalInputs>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(SolutionDir)istasm.inc;%(AdditionalInputs)</AdditionalInputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">$(SolutionDir)istasm.inc;%(AdditionalInputs)</AdditionalInputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)%(Filename).obj;%(Outputs)</Outputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)%(Filename).obj;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">$(IntDir)%(Filename).obj;%(Outputs)</Outputs>
     </CustomBuild>
     <CustomBuild Include="..\ExternalBytes.asm">
       <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
       </Message>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      <Message Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">
       </Message>
       <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">ml /nologo /Zd /coff /c /Fo  "$(IntDir)%(Filename).obj" "%(FullPath)"
 </Command>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">ml /nologo /Zd /coff /c /Fo  "$(IntDir)%(Filename).obj" "%(FullPath)"
+      <Command Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">ml /nologo /Zd /coff /c /Fo  "$(IntDir)%(Filename).obj" "%(FullPath)"
 </Command>
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(SolutionDir)istasm.inc;%(AdditionalInputs)</AdditionalInputs>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(SolutionDir)istasm.inc;%(AdditionalInputs)</AdditionalInputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">$(SolutionDir)istasm.inc;%(AdditionalInputs)</AdditionalInputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)%(Filename).obj;%(Outputs)</Outputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)%(Filename).obj;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">$(IntDir)%(Filename).obj;%(Outputs)</Outputs>
     </CustomBuild>
     <CustomBuild Include="..\ExternalCall.asm">
       <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
       </Message>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      <Message Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">
       </Message>
       <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">ml /nologo /Zd /coff /c /Fo  "$(IntDir)%(Filename).obj" "%(FullPath)"
 </Command>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">ml /nologo /Zd /coff /c /Fo  "$(IntDir)%(Filename).obj" "%(FullPath)"
+      <Command Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">ml /nologo /Zd /coff /c /Fo  "$(IntDir)%(Filename).obj" "%(FullPath)"
 </Command>
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(SolutionDir)istasm.inc;%(AdditionalInputs)</AdditionalInputs>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(SolutionDir)istasm.inc;%(AdditionalInputs)</AdditionalInputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">$(SolutionDir)istasm.inc;%(AdditionalInputs)</AdditionalInputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)%(Filename).obj;%(Outputs)</Outputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)%(Filename).obj;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">$(IntDir)%(Filename).obj;%(Outputs)</Outputs>
     </CustomBuild>
     <CustomBuild Include="..\flotprimasm.asm">
       <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
       </Message>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      <Message Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">
       </Message>
       <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">ml /nologo /Zd /coff /c /Fo  "$(IntDir)%(Filename).obj" "%(FullPath)"
 </Command>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">ml /nologo /Zd /coff /c /Fo  "$(IntDir)%(Filename).obj" "%(FullPath)"
+      <Command Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">ml /nologo /Zd /coff /c /Fo  "$(IntDir)%(Filename).obj" "%(FullPath)"
 </Command>
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(SolutionDir)istasm.inc;%(AdditionalInputs)</AdditionalInputs>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(SolutionDir)istasm.inc;%(AdditionalInputs)</AdditionalInputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">$(SolutionDir)istasm.inc;%(AdditionalInputs)</AdditionalInputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)%(Filename).obj;%(Outputs)</Outputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)%(Filename).obj;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">$(IntDir)%(Filename).obj;%(Outputs)</Outputs>
     </CustomBuild>
     <None Include="..\Interprt.inl" />
     <None Include="..\InterprtPrim.inl" />
     <None Include="..\InterprtProc.inl" />
     <CustomBuild Include="..\istasm.inc">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">true</ExcludedFromBuild>
       <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
       </Message>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      <Message Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">
       </Message>
       <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">ml /nologo /coff /c /Fo  "$(IntDir)%(Filename).obj" "%(FullPath)"
 </Command>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">ml /nologo /coff /c /Fo  "$(IntDir)%(Filename).obj" "%(FullPath)"
+      <Command Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">ml /nologo /coff /c /Fo  "$(IntDir)%(Filename).obj" "%(FullPath)"
 </Command>
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(SolutionDir)istasm.inc;%(AdditionalInputs)</AdditionalInputs>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(SolutionDir)istasm.inc;%(AdditionalInputs)</AdditionalInputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">$(SolutionDir)istasm.inc;%(AdditionalInputs)</AdditionalInputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)%(Filename).obj;%(Outputs)</Outputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)%(Filename).obj;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">$(IntDir)%(Filename).obj;%(Outputs)</Outputs>
     </CustomBuild>
     <None Include="..\ObjMemPriv.inl" />
     <None Include="..\ote.inl" />
     <CustomBuild Include="..\primasm.asm">
       <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
       </Message>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      <Message Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">
       </Message>
       <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">ml /nologo /Zd /coff /c /Fo  "$(IntDir)%(Filename).obj" "%(FullPath)"
 </Command>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">ml /nologo /Zd /coff /c /Fo  "$(IntDir)%(Filename).obj" "%(FullPath)"
+      <Command Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">ml /nologo /Zd /coff /c /Fo  "$(IntDir)%(Filename).obj" "%(FullPath)"
 </Command>
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(SolutionDir)istasm.inc;%(AdditionalInputs)</AdditionalInputs>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(SolutionDir)istasm.inc;%(AdditionalInputs)</AdditionalInputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">$(SolutionDir)istasm.inc;%(AdditionalInputs)</AdditionalInputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)%(Filename).obj;%(Outputs)</Outputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)%(Filename).obj;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">$(IntDir)%(Filename).obj;%(Outputs)</Outputs>
     </CustomBuild>
     <CustomBuild Include="..\SmallIntPrim.asm">
       <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
       </Message>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      <Message Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">
       </Message>
       <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">ml /nologo /Zd /coff /c /Fo  "$(IntDir)%(Filename).obj" "%(FullPath)"
 </Command>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">ml /nologo /Zd /coff /c /Fo  "$(IntDir)%(Filename).obj" "%(FullPath)"
+      <Command Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">ml /nologo /Zd /coff /c /Fo  "$(IntDir)%(Filename).obj" "%(FullPath)"
 </Command>
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(SolutionDir)istasm.inc;%(AdditionalInputs)</AdditionalInputs>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(SolutionDir)istasm.inc;%(AdditionalInputs)</AdditionalInputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">$(SolutionDir)istasm.inc;%(AdditionalInputs)</AdditionalInputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)%(Filename).obj;%(Outputs)</Outputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)%(Filename).obj;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">$(IntDir)%(Filename).obj;%(Outputs)</Outputs>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
