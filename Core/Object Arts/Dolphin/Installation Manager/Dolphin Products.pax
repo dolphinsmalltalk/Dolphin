@@ -14,10 +14,6 @@ package classNames
 	add: #DolphinProfessional;
 	yourself.
 
-package methodNames
-	add: #VMLibrary -> #unlockVM:expireAfter:flags:;
-	yourself.
-
 package binaryGlobalNames: (Set new
 	yourself).
 
@@ -63,18 +59,6 @@ DolphinBaseProduct subclass: #DolphinProfessional
 
 
 "Loose Methods"!
-
-!VMLibrary methodsFor!
-
-unlockVM: productId expireAfter: months flags: flags
-	"Private - Attempts to unlock the image. Registers the given <Integer> productId within the image
-	and extends the expiry period by <Integer> months. If months is zero then the expiry period is
-	extended indefinitely. The <integer>, flags, specifies various flags. At present the only flag is
-	16r1, meaning that the image is to be machine locked (i.e. a fixed rather than floating license)."
-
-	<primitive: 93>
-	^self error: 'Unable to unlock image - please contact Dolphin Support'! !
-!VMLibrary categoriesFor: #unlockVM:expireAfter:flags:!locking!private! !
 
 "End of package definition"!
 

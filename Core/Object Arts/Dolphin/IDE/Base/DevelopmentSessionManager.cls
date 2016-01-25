@@ -130,7 +130,7 @@ helpGuidedTourTopic
 	^'Guided_Tour'!
 
 helpRootUrl
-	^FileLocator installRelative localFileSpecFor: 'EducationCentre6.chm::/'!
+	^FileLocator installRelative localFileSpecFor: 'EducationCentre7.chm::/'!
 
 helpTutorialsTopic
 	^'Tutorials'!
@@ -384,7 +384,7 @@ playStartupSound
 			[(Sound fromFile: 'Resources\Startup.wav' usingLocator: FileLocator installRelative) woof]!
 
 popupHelpFile
-	^FileLocator installRelative localFileSpecFor: 'EducationCentrePopups6.hlp'!
+	^FileLocator installRelative localFileSpecFor: 'EducationCentrePopups7.hlp'!
 
 preStart
 	"Private - Sent before the secondary level startup code has a chance to run.

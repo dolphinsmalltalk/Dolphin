@@ -1,4 +1,4 @@
-"20:51:47, 08 December 2015: Compressing sources...."!
+"7:58:50 PM, Saturday, January 23, 2016: Compressing sources...."!
 
 Object comment:
 'Object is the abstract root of the standard Smalltalk class hierarchy. It has no instance variables (indeed it must not have any), but provides behavior common to all objects.
@@ -13100,7 +13100,12 @@ workingDirectory
 	dir := CRTLibrary default _getcwd: buffer maxlen: buffer size.
 	^dir last = $\
 		ifTrue: [dir]
-		ifFalse: [dir copyWith: $\]! !
+		ifFalse: [dir copyWith: $\]!
+
+workingDirectory: aString
+	"Answer the current working directory."
+
+	^CRTLibrary default _chdir: aString! !
 
 !File methodsFor!
 
@@ -17885,13 +17890,14 @@ errorInvalidPAXFile: pathString
 
 	^self error: 'Invalid PAX file: ', pathString!
 
-fromFile: pathname
+fromFile: path
 	"Private - Answer a new instance of the receiver created from the package file at the
 	specified <readableString> path, pathname, or nil if the file does not contain a
-	package."
+	package"
 
-	| answer |
+	| answer pathname |
 
+	pathname := File default: path extension: self sourcePackageExtension.
 	answer := ((File splitExtensionFrom: pathname) sameAs: self sourcePackageExtension) 
 		ifTrue: [self fromPAXFile: pathname]
 		ifFalse: [self fromPACFile: pathname].
@@ -19168,12 +19174,18 @@ initializeOldSourcePackage
 		ifFalse: [self error: 'Unable to load package (Legacy package importer is not loaded)']	"Initialize old style (pre D6) binary resources"!
 
 isBaseImagePackage
-	"Answer true if the receiver is a basic component of Dolphin. In general this is a hint that
-	you don't need to version the package into an external repository such as STS."
+	"Answer true if the receiver is a basic component of Dolphin "
 
-	" Not a terribly sophisticated in implementation - if the package reside under Core\ then it is a system package"
+	#deprecated.
 
-	^self packagePathname beginsWith: 'Core\' ignoreCase: true!
+	^self isBasePackage!
+
+isBasePackage
+	"Answer true if the receiver is a basic component of Dolphin. This is usually an indication that
+	it was present at the time the image was booted and may be used as a hint that
+	you may not need to version the package into an external repository such as STS."
+
+	^self class manager basePackages includes: self!
 
 isChanged
 	"Answer true if the receiver or any of it's contents have been changed since
@@ -19692,6 +19704,13 @@ privateUninstall
 		uninstallGlobals;
 		uninstallClasses;
 		uninstallMethods!
+
+rebaseTo: basePathName 
+	"Rebase this package relative to the give base image directory"
+
+	self packageFileName: (File 
+				relativePathOf: (File fullPathOf: self packagePathname relativeTo: basePathName)
+				to: SessionManager current imagePath)!
 
 remainingClasses
 	"Answer a Set of the classes that are still present (i.e. ignore missing classes)"
@@ -20599,7 +20618,7 @@ systemPackageName
 	"Private - Answer the String name of the Package which owns all
 	the system objects."
 
-	^'Object Arts\Dolphin\Base\Dolphin'!
+	^'Core\Object Arts\Dolphin\Base\Dolphin'!
 
 uninitialize
 	"Private - Uninitialize the receiver as it is about to be removed from the system."
@@ -20805,6 +20824,10 @@ allSourceObjects
 	self packages 
 		do: [:eachPackage | eachPackage allSourceObjectsDo: [:each | answer addLast: each]].
 	^answer!
+
+basePackages
+	^basePackages ifNil: [basePackages := IdentitySet new].
+!
 
 basicAddPackage: aPackage
 	self packages at: aPackage name put: aPackage!
@@ -21079,6 +21102,12 @@ install: aString
 				self loadedChanged].
 	^newPackages!
 
+installHere: aString 
+	"Same as #install: except that aString is seen as being relative to the current directory
+	rather than the image base."
+
+	^self install: (File fullPathOf: aString)!
+
 isConnected
 	"Part of the StsManager protocol implemented here for systems which do not have STS
 	installed. Answer nil to indicate that we are not connected to a repository"
@@ -21233,6 +21262,12 @@ looseResourceIdentifiers
 	answer := Set new: 25.
 	self packages do: [:p | answer addAll: p resourceIdentifiers].
 	^answer!
+
+markAllPackagesAsBase
+	"Marks all the currently loaded packages as part of the base system. This should normally
+	only be called at the end of the image boot."
+
+	self basePackages addAll: self packages!
 
 memberOf: aPackage updatedAt: aNiladicValuable 
 	"Private - Inform the <Package> argument that it has been changed and needs to reset its
@@ -21612,6 +21647,17 @@ packages
 
 prerequisiteNotFoundSignal
 	^PrerequisiteNotFoundSignal!
+
+rebaseBasePackagesTo: basePathname
+	"Rebase the base image packages so they are relative to basePathname. This may be used
+	when an image has been saved to a new directory and one wishes to continue to reference the
+	old core packages (usually held under the installatin directory). Note that basePathname
+	(if not an absolute path) is treated as being relative to the installation directory NOT the
+	image directory or working directory). Hence, a typical rebase can be performed using '.' as
+	basePathname"
+
+	self basePackages do: [:each | each  rebaseTo: basePathname ].
+	self resetPrerequisites!
 
 release
 	"Private - Remove any event registrations the receiver has made 
@@ -23516,10 +23562,11 @@ imageExtension
 initialize
 	"Private - Initialize the class variables of the receiver."
 
-	PreStartFile := 'prestart.st'.
-	Current := BootSessionManager basicNew. "For boot reasons, do not initialize"
-	Current imagePath: '.\Dolphin'
-!
+	Current 
+		ifNil: 
+			[PreStartFile := 'prestart.st'.
+			Current := BootSessionManager basicNew.	"For boot reasons, do not initialize"
+			Current imagePath: '.\Dolphin']!
 
 inputState
 	"Answer the InputState of the current session manager."
@@ -23616,6 +23663,15 @@ argv
 			argv := (0 to: (lib argc - 1) * VMConstants.IntPtrSize by: VMConstants.IntPtrSize) 
 						collect: [:offset | String fromAddress: (pArray dwordAtOffset: offset)]].
 	^argv!
+
+argvLegacyOptionsRemoved
+	"Private - Answer the argv arguments vertor with the old style legacy options removed"
+
+	^self argv reject: 
+			[:each | 
+			| opt |
+			opt := each allButFirst asLowercase.
+			opt = 'nosplash' or: [opt = 'embedding']]!
 
 backupOnImageSave
 	"Answer whether the image should be backed up (i.e. the old .img file is renamed to .bak when the new .img
@@ -23872,10 +23928,10 @@ imagePath
 
 	^imagePath!
 
-imagePath: aPathString
+imagePath: aPathString 
 	"Private - used only after loading an image to set up path to the image and sources."
 
-	imagePath := File removeExtension: aPathString!
+	imagePath := File removeExtension: (File fullPathOf: aPathString)!
 
 imageVersion
 	"Answer a String in the form N.N.N.N which specifies the version number of the image."
@@ -23971,13 +24027,13 @@ isEmbedded
 	^self isDLL or: [self isEmbedding]!
 
 isEmbedding
-	"Answer whether the session was started with the /Embedded flag."
+	"Answer whether the session was started with a headless flag"
 
 	^self cmdLineFlags includes: 'Embedding'!
 
 isHeadless
 	"Private - Answer whether the session is _currently_ headless. This is most likely if the
-	image was started with the /Embedded flag, and no visible windows have subsequently been
+	image was started a headkess-h flag, and no visible windows have subsequently been
 	opened."
 
 	^self inputState hasVisibleWindows not!
@@ -25751,6 +25807,16 @@ fileInFrom: aStream
 	with instances of CompileFailedMethod and errors logged to the Transcript."
 
 	(self chunkFilerOn: aStream) fileIn!
+
+fileInHere: aFileName 
+	"File in the chunk format file named, aFileName, into the system but with
+	the working directory set to the location of the file. The original directory
+	is restored on completion."
+
+	| cwd |
+	cwd := File workingDirectory.
+	File workingDirectory: (File splitPathFrom: aFileName).
+	[self fileIn: (File splitFilenameFrom: aFileName)] ensure: [File workingDirectory: cwd]!
 
 fileInPackagedClass: aClass
 	"File in aClass via the package mechanism. The class is filed in from the same directory as the
@@ -47680,7 +47746,7 @@ debugDump: msgString
 !
 
 defaultProductDetails
-	"Private - Answers a seven element<Array> describing the default
+	"Private - Answers an eight element<Array> describing the default
 	 version of the development environment as based on the VM version.
 
 	1. <readableString> Product name 
@@ -47689,18 +47755,20 @@ defaultProductDetails
 	4. <readableString> Version special
 	5. <Integer> Image patch level
 	6 <readableString> Very short name
-	7 <readableString> Serial number"
+	7 <readableString> Serial number
+	8 <readableString> Boot source version information"
 
 	| version |
 	version := self versionInfo.
-	^(Array new: 7)
+	^(Array new: 8)
 		at: 1 put: (version formatVersionString: '%1 %2!!d!!');
 		at: 2 put: (version formatVersionString: '%1');
 		at: 3 put: (Float fromString: (version formatVersionString: '%3!!d!!.%4!!d!!'));
 		at: 4 put: version specialBuild;
 		at: 5 put: self basePatchLevel;
-		at: 6 put: 'DX6';
+		at: 6 put: 'D7';
 		at: 7 put: nil; "Serial #"
+		at: 8 put: nil; "Boot info"
 		yourself!
 
 displayDesktopMessage: aString 
@@ -47971,6 +48039,15 @@ stringFromAddress: pointer
 	addr := pointer isInteger ifTrue: [pointer asExternalAddress] ifFalse: [pointer].
 	len := addr indexOf: 0.
 	^addr copyStringFrom: 1 to: len - 1!
+
+unlockVM: productId expireAfter: months flags: flags
+	"Private - Attempts to unlock the image. Registers the given <Integer> productId within the image
+	and extends the expiry period by <Integer> months. If months is zero then the expiry period is
+	extended indefinitely. The <integer>, flags, specifies various flags. At present the only flag is
+	16r1, meaning that the image is to be machine locked (i.e. a fixed rather than floating license)."
+
+	<primitive: 93>
+	^self error: 'Unable to unlock image - please contact Dolphin Support'!
 
 unregisterObject: anObject 
 	| i |

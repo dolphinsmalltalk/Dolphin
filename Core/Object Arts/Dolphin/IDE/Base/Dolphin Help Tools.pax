@@ -1,0 +1,147 @@
+| package |
+package := Package name: 'Dolphin Help Tools'.
+package paxVersion: 1;
+	basicComment: 'This package contains tools to aid in the creation of images for Dolphin documentation and help. The classes HelpImagesCreationTest and WebImagesCreationTest are test suites that, when run, will launch the IDE tools and save out PNG images of the various windows and components. The images are then ready to be referenced by the system documentation files. When a new version of Dolphin is created it is simply necessary to run these test suites for all the documentation images to be refreshed with the new appearence.'.
+
+
+package classNames
+	add: #HelpImagesCreationTest;
+	add: #WebImagesCreationTest;
+	yourself.
+
+package methodNames
+	add: #View -> #saveHelpImageNamed:;
+	add: #View -> #saveHelpImageRect:named:;
+	add: #View -> #saveImageRect:scale:ToFile:;
+	add: #View -> #saveImageRect:ToFile:;
+	add: #View -> #saveWebImageNamed:;
+	add: #View -> #saveWebImageNamed:scale:;
+	add: #View -> #saveWebImageRect:scale:named:;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\..\Lagoon\Application Deployment Kit';
+	add: '..\..\..\Samples\Sockets\Chat\Chat';
+	add: '..\..\Database\Database Connection Base';
+	add: 'Development System';
+	add: '..\..\Base\Dolphin';
+	add: '..\..\MVP\Views\Cards\Dolphin Card Containers';
+	add: '..\..\MVP\Views\Common Controls\Dolphin Common Controls';
+	add: '..\Community Edition\Dolphin Community Edition Tools';
+	add: '..\..\MVP\Base\Dolphin MVP Base';
+	add: '..\..\Installation Manager\Dolphin Products';
+	add: '..\Professional\Dolphin Professional Tools';
+	add: '..\..\MVP\Gdiplus\Gdiplus';
+	add: '..\..\..\Samples\MVP\Hello World\Hello World';
+	add: '..\..\..\Samples\MVP\Personal Money\PersonalMoney';
+	add: '..\..\..\Samples\MVP\Playground\Playground';
+	add: '..\..\..\..\Contributions\Refactory\Refactoring Browser\Environments\RBEnvironments';
+	add: '..\..\..\..\Contributions\Camp Smalltalk\SUnit\SUnit';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+TestCase subclass: #HelpImagesCreationTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+HelpImagesCreationTest subclass: #WebImagesCreationTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+!View methodsFor!
+
+saveHelpImageNamed: filename 
+	^self saveImageRect: nil
+		ToFile: (FileLocator imageRelative localFileSpecFor: ('Help\Images\' , filename) , '.png')!
+
+saveHelpImageRect: aRectangle named: filename 
+	^self 
+		saveImageRect: aRectangle
+		scale: 1
+		ToFile: (FileLocator imageRelative localFileSpecFor: 'Help\Images\' , filename , '.png')!
+
+saveImageRect: aRectangle scale: scale ToFile: filename 
+	| image crop rect thumbnail split thumbFilename shadowDepth |
+	shadowDepth := 10 @ 10.
+	image := GdiplusBitmap fromView: self.
+	rect := aRectangle notNil 
+				ifTrue: [aRectangle]
+				ifFalse: [Rectangle origin: Point zero extent: self extent].
+	crop := GdiplusBitmap extent: rect extent + (shadowDepth * 2).
+	(crop graphics)
+		clear: Color white asARGB;
+		drawDropShadowRectangle: (Point zero extent: rect extent)
+			offset: shadowDepth
+			alpha: 128;
+		drawImage: image
+			at: 1 @ 1
+			extent: rect extent
+			from: rect topLeft
+			extent: rect extent;
+		drawRectangle: (rect translatedBy: 1 @ 1) pen: (GdiplusPen color: Color gray asARGB).
+	image := crop.
+	"Ensure the directory exists or the save will fail"
+	File createDirectoryPath: (File splitPathFrom: filename).
+	image saveToFile: filename.
+
+	"Now resave the thumbnail"
+	scale = 1 ifTrue: [^self].
+	image := GdiplusImage fromFile: filename.
+	thumbnail := image thumbnailScaledBy: scale.
+	split := File splitPath: filename.
+	split at: 3 put: (split at: 3) , 'Thumb'.
+	thumbFilename := File makePath: split.
+	thumbnail saveToFile: thumbFilename.
+	MemoryManager current collectGarbage!
+
+saveImageRect: aRectangle ToFile: filename 
+	^self 
+		saveImageRect: aRectangle
+		scale: 1
+		ToFile: filename!
+
+saveWebImageNamed: filename 
+	^self 
+		saveWebImageRect: nil
+		scale: 1
+		named: filename!
+
+saveWebImageNamed: filename scale: scale
+	^self 
+		saveWebImageRect: nil
+		scale: scale
+		named: filename!
+
+saveWebImageRect: aRectangle scale: scale named: filename 
+	^self 
+		saveImageRect: aRectangle
+		scale: scale
+		ToFile: (FileLocator imageRelative 
+				localFileSpecFor: '..\Object Arts Website\Object Arts Graphics\' , filename , '.png')! !
+!View categoriesFor: #saveHelpImageNamed:!public! !
+!View categoriesFor: #saveHelpImageRect:named:!public! !
+!View categoriesFor: #saveImageRect:scale:ToFile:!public! !
+!View categoriesFor: #saveImageRect:ToFile:!public! !
+!View categoriesFor: #saveWebImageNamed:!public! !
+!View categoriesFor: #saveWebImageNamed:scale:!public! !
+!View categoriesFor: #saveWebImageRect:scale:named:!public! !
+
+"End of package definition"!
+

@@ -1,5 +1,6 @@
 *.chg
 *.ERRORS
+*.img
 *.img7
 *.pac
 *.sml
@@ -8,3 +9,5 @@
 Repository/
 Releases/
 *.testlog
+*.~html
+*.adu
