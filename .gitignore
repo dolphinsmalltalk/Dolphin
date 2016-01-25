@@ -8,3 +8,5 @@
 Repository/
 Releases/
 *.testlog
+*.~html
+*.adu
