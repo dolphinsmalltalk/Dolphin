@@ -40,9 +40,9 @@
 #include "STInteger.h"
 
 #ifdef _DEBUG
-	#define MASK_DWORD(op) ((op) & 0xFFFF)	/* avoid error when converting to smaller type */
+	#define MASK_DWORD(op) ((op) & 0xFFFFFFFF)	/* avoid error when converting to smaller type */
 #else
-	#define MASK_DWORD
+	#define MASK_DWORD(op) (op)
 #endif
 // This cast sequence can allow the compiler to generate more efficient code (avoids the need for an arithmetic shift)
 #define /*LONG*/ HighSLimb(/*LONGLONG*/ op) (((LARGE_INTEGER*)&op)->HighPart)

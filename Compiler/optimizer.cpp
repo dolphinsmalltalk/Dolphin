@@ -1676,7 +1676,7 @@ void Compiler::FixupJump(int pos)
 #if defined(_DEBUG)
 	#define MASK_BYTE(op) ((op) & 0xFF)
 #else
-	#define MASK_BYTE(op)
+	#define MASK_BYTE(op) (op)
 #endif
 			// Unconditional jump
 			_ASSERTE(!WantOptimize() || !isInNearJumpRange(distance,2));	// Why not optimized?
