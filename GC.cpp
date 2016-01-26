@@ -34,7 +34,7 @@ extern VMPointers _Pointers;
 
 #ifdef _DEBUG
 	#define VERBOSEGC
-	static bool ignoreRefCountErrors = false;
+	static bool ignoreRefCountErrors = true;	// JGFoster edited to get past error
 #endif
 
 #ifdef VERBOSEGC
@@ -615,8 +615,7 @@ void ObjectMemory::addVMRefs()
 
 		//TRACESTREAM << nFree << " free slots found in OT, " << cFreeList << " on the free list (" << nFree-cFreeList << ")" <<endl;
 
-//	unresolved external symbol (JGFoster)
-//		Interpreter::ReincrementVMReferences();
+		Interpreter::ReincrementVMReferences();
 
 		int refCountTooSmall = 0;
 		const unsigned loopEnd = m_nOTSize;
