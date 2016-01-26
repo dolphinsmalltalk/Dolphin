@@ -1673,14 +1673,19 @@ void Compiler::FixupJump(int pos)
 	case LongJumpIfNil:
 	case LongJumpIfNotNil:
 		{
+#if defined(_DEBUG)
+	#define MASK_BYTE(op) ((op) & 0xFF)
+#else
+	#define MASK_BYTE(op)
+#endif
 			// Unconditional jump
 			_ASSERTE(!WantOptimize() || !isInNearJumpRange(distance,2));	// Why not optimized?
 			_ASSERTE(isInLongJumpRange(distance));
 			int offset = distance - 3;				// IP inc'd for instruction, and extension bytes
 			_ASSERTE(offset >= -32768 && offset <= 32767);
 			_ASSERTE(pos+distance < GetCodeSize());
-			m_bytecodes[pos+1].byte = BYTE(offset);
-			m_bytecodes[pos+2].byte = BYTE(offset >> 8);
+			m_bytecodes[pos+1].byte = BYTE(MASK_BYTE(offset));
+			m_bytecodes[pos + 2].byte = BYTE(MASK_BYTE(offset >> 8));
 		}
 		break;
 		
@@ -1690,8 +1695,8 @@ void Compiler::FixupJump(int pos)
 			int offset = distance - BlockCopyInstructionLength;				// IP inc'd for instruction, and extension bytes
 			_ASSERTE(offset >= -32768 && offset <= 32767);
 			_ASSERTE(pos+distance < GetCodeSize());
-			m_bytecodes[pos+5].byte = BYTE(offset);
-			m_bytecodes[pos+6].byte = BYTE(offset >> 8);
+			m_bytecodes[pos + 5].byte = BYTE(MASK_BYTE(offset));
+			m_bytecodes[pos + 6].byte = BYTE(MASK_BYTE(offset >> 8));
 		}
 		break;
 		

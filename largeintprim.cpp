@@ -40,7 +40,7 @@
 #include "STInteger.h"
 
 #ifdef _DEBUG
-	#define MASK_DWORD(op) (op & 0xFFFF)	/* avoid error when converting to smaller type */
+	#define MASK_DWORD(op) ((op) & 0xFFFF)	/* avoid error when converting to smaller type */
 #else
 	#define MASK_DWORD
 #endif
