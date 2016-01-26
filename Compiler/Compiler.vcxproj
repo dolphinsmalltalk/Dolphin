@@ -58,10 +58,10 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <CustomBuildStep>
-      <Message>Copying binary to image folder: "$(TargetPath)" -&gt; "$(SolutionDir)..\..\$(TargetFileName)"</Message>
+      <Message>Copying "$(TargetPath)" to "$(SolutionDir)..\..\$(TargetFileName)"</Message>
       <Command>copy "$(TargetPath)" "$(SolutionDir)..\..\$(TargetFileName)"</Command>
-      <Inputs>$(TargetPath);%(Inputs)</Inputs>
-      <Outputs>$(SolutionDir)..\..\$(TargetFileName);%(Outputs)</Outputs>
+      <Inputs>$(TargetPath)</Inputs>
+      <Outputs>$(SolutionDir)..\..\$(TargetFileName)</Outputs>
     </CustomBuildStep>
     <Midl>
       <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -195,7 +195,6 @@
     <ClInclude Include="compiler.h" />
     <ClInclude Include="lexer.h" />
     <ClInclude Include="LexicalScope.h" />
-    <ClInclude Include="rc_compiler.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="str.h" />
   </ItemGroup>

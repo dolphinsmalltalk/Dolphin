@@ -56,10 +56,11 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <CustomBuildStep>
-      <Message>Copying binary to image folder</Message>
+      <Message>Copying "$(TargetPath)" to "$(SolutionDir)..\..\$(TargetFileName)"</Message>
       <Command>copy "$(TargetPath)" "$(SolutionDir)..\..\$(TargetFileName)"
 </Command>
-      <Outputs>$(SolutionDir)..\..\$(TargetFileName);%(Outputs)</Outputs>
+      <Outputs>$(SolutionDir)..\..\$(TargetFileName)</Outputs>
+      <Inputs>$(TargetPath)</Inputs>
     </CustomBuildStep>
     <Midl>
       <PreprocessorDefinitions>NDEBUG;TO_GO;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -194,7 +195,6 @@
     <ClInclude Include="..\InterpRegisters.h" />
     <ClInclude Include="..\Interprt.h" />
     <ClInclude Include="..\ist.h" />
-    <ClInclude Include="..\MethodHeader.h" />
     <ClInclude Include="..\Objmem.h" />
     <ClInclude Include="..\oopq.h" />
     <ClInclude Include="..\ote.h" />
