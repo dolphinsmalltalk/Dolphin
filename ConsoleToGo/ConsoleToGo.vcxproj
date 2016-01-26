@@ -223,7 +223,6 @@
     <ClInclude Include="..\STObject.h" />
     <ClInclude Include="..\STPoint.h" />
     <ClInclude Include="..\STProcess.h" />
-    <ClInclude Include="..\str.h" />
     <ClInclude Include="..\STStackFrame.h" />
     <ClInclude Include="..\STStream.h" />
     <ClInclude Include="..\STString.h" />

@@ -194,7 +194,6 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\Res\flipper.ico" />
-    <Image Include="Res\flipper.ico" />
     <Image Include="Res\Imagedoc.ico" />
     <Image Include="Res\Package.ico" />
     <Image Include="Res\SourcePackage.ico" />

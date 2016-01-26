@@ -247,7 +247,6 @@
     <ClInclude Include="..\InterpRegisters.h" />
     <ClInclude Include="..\Interprt.h" />
     <ClInclude Include="..\ist.h" />
-    <ClInclude Include="..\MethodHeader.h" />
     <ClInclude Include="..\Objmem.h" />
     <ClInclude Include="..\oopq.h" />
     <ClInclude Include="..\ote.h" />

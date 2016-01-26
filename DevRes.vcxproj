@@ -167,7 +167,6 @@
     <Image Include="Res\AspectInspector.ico" />
     <Image Include="Res\Bag.ico" />
     <Image Include="Res\BasicInspector.ico" />
-    <Image Include="Res\BasicListAbstract.ico" />
     <Image Include="Res\BatchAspectAccessor.ico" />
     <Image Include="Res\Behavior.ico" />
     <Image Include="Res\BinaryPackage.ico" />
