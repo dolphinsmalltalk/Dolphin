@@ -7,7 +7,7 @@
 	Interpreter methods to maintain VM reference table
 
 ******************************************************************************/
-							
+
 #include "Ist.h"
 #include "Interprt.h"
 
@@ -23,6 +23,8 @@
 // with a serial search on dereferencing. This would be better replaced with
 // a hash table implementation using the identity hash of the object
 TODO("Replace with hash table implementation")
+
+#ifdef _DEBUG		// JGFoster
 
 Oop* Interpreter::m_pVMRefs = 0;
 int Interpreter::m_nMaxVMRefs = 0;
@@ -97,7 +99,7 @@ void Interpreter::RemoveVMReference(OTE* pOTE)
 ///////////////////////////////////////////////////////////////////////////////
 //
 
-#ifdef _DEBUG
+//	#ifdef _DEBUG		// JGFoster
 	//========================
 	//ReincrementVMReferences
 	//========================
