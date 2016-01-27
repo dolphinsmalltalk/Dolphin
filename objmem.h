@@ -140,9 +140,6 @@ public:
 	static PointersOTE* __fastcall shallowCopy(PointersOTE* ote);
 
 	// Pointer Swapping
-	#ifdef _AFX
-		static void swapPointersOfAnd(OTE* firstPointer, OTE* secondPointer);
-	#endif
 	static void __fastcall oneWayBecome(OTE* firstPointer, OTE* secondPointer);
 
 	// GC support
@@ -495,42 +492,6 @@ private:
 	static HRESULT __stdcall LoadObject(OTE* ote, ibinstream& imageFile, const ImageHeader*, size_t&);
 	static void __stdcall FixupObject(OTE* ote, MWORD* oldLocation, const ImageHeader*);
 	static void __stdcall PostLoadFix();
-
-	// Error handling (neater with exceptions, but ...)
-
-	#ifdef _AFX
-
-		struct GNUImageHeader
-		{
-			DWORD		version;			// Version of GNU which wrote the image
-			DWORD		nDataSize;			// Size of object data IN DWORDS
-			DWORD		nTableSize;			// Number of object table entries written
-			DWORD		nGlobalPointers;	// Number of "global" pointers
-			OTE*		BasePointer;		// Base address of OT when saved (used to fixup)
-		};
-
-		// Temporary functions for loading GNU Smalltalk image
-		static bool LoadGNUImage(FILE* imageFile, GNUImageHeader&);
-		static bool loadGNUOTEntry(MWORD i, FILE* imageFile);
-		static bool loadGNUObjectTable(FILE* imageFile, MWORD oldSlotsUsed);
-		static bool loadGNUGlobalPointers(FILE* imageFile, MWORD nGlobalPointers);
-		static bool loadGNUNormalObjects(FILE* imageFile, MWORD objectDataSize, MWORD oldSlotsUsed);
-		static size_t loadGNUObject(OTE& ote, FILE* imageFile);
-		static bool loadGNUSpecialObjects(FILE* imageFile);
-		static void fixupGNUObject(OTE& ote, unsigned byteSize);
-		static void fixupGNUPointerOfObject(MWORD i, OTE* objectPointer);
-		static void fixupGNUCompiledMethod(OTE* objectPointer);
-		static void FixupGNUContext(OTE* contextPointer);
-		static void FixupGNUClass(BehaviorOTE* classPointer);
-		// These methods are for transferring the current chain of suspended
-		// contexts to the process stack
-		static void transferContextFramesOf(Oop processPointer);
-		static Oop* transferFramesOf(Oop contextPointer, Oop* sp);
-		static Oop* transferContextToStack(Oop contextPointer, Oop* sp);
-
-		// Oop to address conversions
-		static OTE* pointerFromGNUOffset(MWORD offset);
-	#endif
 
 public:			// Public Data
 

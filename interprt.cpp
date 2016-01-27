@@ -194,7 +194,7 @@ HRESULT Interpreter::initializeAfterLoad()
 	//CreateVMReferences();
 	initializeVMReferences();
 
-	#if defined(_DEBUG) || defined(_AFX)
+	#if defined(_DEBUG)
 		//ObjectMemory::checkReferences();	// If this fails, the saved image has a ref. count problem
 	#endif
 
@@ -214,18 +214,12 @@ HRESULT Interpreter::initializeAfterLoad()
 	// on the pendingReturns Semaphore when the image was saved.
 	m_nCallbacksPending = countPendingCallbacks();
 
-#ifndef _AFX
 	hr = InitializeSampler();
 	if (FAILED(hr))
 		return hr;
-#endif
 
 	// Initialize the image. This must be performed after the above
 	// creation of the active context.
-
-	#ifdef _AFX
-		initializeForAfx();
-	#endif
 
 	::SetLastError(0);
 
@@ -240,9 +234,7 @@ void Interpreter::ShutDown()
 	// Nulling out the handle means that any further attempts to queue APCs, etc, will fail
 	HANDLE hThread = LPVOID(::OAInterlockedExchange(LPLONG(&m_hThread), 0));
 
-#ifndef _AFX
 	TerminateSampler();
-#endif
 
 	GuiShutdown();
 
@@ -258,9 +250,8 @@ void Interpreter::ShutDown()
 	}
 	
 	terminateTimer();
-	#ifndef _AFX
-		OverlappedCall::Uninitialize();
-	#endif
+	OverlappedCall::Uninitialize();
+
 	// Close the duplicated main thread handle
 	::CloseHandle(hThread);
 	::DeleteCriticalSection(&m_csAsyncProtect);
@@ -282,20 +273,6 @@ inline void Interpreter::initializeCaches()
 
 	flushCaches();
 }
-
-#ifdef _AFX
-	// Clear down any contexts back to the one which returns to Nil
-	// While we have C callback mechanism, its easier to just remove
-	// old stack entirely. We'll need to do better later though, and will
-	// have to disallow saving of the image in a recursive callback from
-	// C, as otherwise we'll have knowhere to return to. Perhaps we should
-	// drop the whole idea, and just restart afresh each time?
-	void Interpreter::unwindStack()
-	{
-		ASSERT(!newProcessWaiting());
-		m_registers.FetchContextRegisters();
-	}
-#endif
 
 #ifdef NDEBUG
 	#pragma auto_inline(on)
@@ -358,15 +335,6 @@ void Interpreter::exitSmalltalk(int exitCode)
 
 		DumpPrimitiveCounts(false);
 		DumpBytecodeCounts(false);
-	}
-	#endif
-
-	#ifdef _AFX
-	{
-		CWinApp* pApp = AfxGetApp();
-		ASSERT(pApp);
-		pApp->ExitInstance();
-		AfxWinTerm();
 	}
 	#endif
 
@@ -475,9 +443,7 @@ void Interpreter::queueGPF(Oop oopInterrupt, LPEXCEPTION_POINTERS pExInfo)
 	queueInterrupt(oopInterrupt, Oop(oteBytes));
 	m_bStepping = false;						// We do not want to break now
 
-#ifndef _AFX
 	ResetInputPollCounter();
-#endif
 }
 
 #pragma code_seg(DEBUG_SEG)
@@ -520,7 +486,7 @@ int Interpreter::interpreterExceptionFilter(LPEXCEPTION_POINTERS pExInfo)
 		case EXCEPTION_ACCESS_VIOLATION:
 #if !defined(NO_GPF_TRAP)
 			action = memoryExceptionFilter(pExRec);
-#if !defined(_AFX)
+
 			if (action == EXCEPTION_CONTINUE_SEARCH)
 			{
 				void* pExceptionAddr = reinterpret_cast<void*>(pExRec->ExceptionInformation[1]);
@@ -551,7 +517,6 @@ int Interpreter::interpreterExceptionFilter(LPEXCEPTION_POINTERS pExInfo)
 				// else
 				//		continue search for next handler, if any
 			}
-#endif
 #endif
 			break;
 

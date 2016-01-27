@@ -322,7 +322,7 @@ void Interpreter::signalSemaphore(SemaphoreOTE* aSemaphore)
 		{
 			// There are no processes waiting on the semaphore - record the excess signal
 			SMALLINTEGER excessSignals = ObjectMemoryIntegerValueOf(sem->m_excessSignals) + 1;
-			#if defined(_DEBUG) && !defined(_AFX)
+			#if defined(_DEBUG)
 			{
 				if ((excessSignals % 1000) == 0)
 					DebugDump("signalSemaphore: Very large excess signal count %d", excessSignals);
@@ -1408,9 +1408,7 @@ BOOL __fastcall Interpreter::primitiveSingleStep(CompiledMethod&, unsigned argum
 		return primitiveFailure(11);
 
 	// We must kill the sampling timer to prevent it upsetting results
-#ifndef _AFX
 	CancelSampleTimer();
-#endif
 	m_nInputPollCounter = -steps;
 
 	ProcessListOTE* oteList = proc->SuspendingList();
@@ -1714,14 +1712,12 @@ BOOL __fastcall Interpreter::primitiveSampleInterval()
 	Oop oldInterval = ObjectMemoryIntegerObjectOf(m_nInputPollInterval);
 	SMALLINTEGER newInterval = ObjectMemoryIntegerValueOf(argPointer);
 
-#ifndef _AFX
 	if (newInterval < 0)
 		CancelSampleTimer();
 	else
 		SetSampleTimer(newInterval);
 
 	ResetInputPollCounter();
-#endif
 
 	// And ensure pressed bit of async key state is reset
 	::GetAsyncKeyState(VK_CANCEL);

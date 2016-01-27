@@ -49,13 +49,8 @@
 	//#pragma warning ( disable : 4244 4514 4201 )
 	// 4705 statement has no effect
 
-	#ifdef _AFX
-		#include <afxwin.h>         // MFC core and standard components
-		#include <afxext.h>         // MFC extensions
-	#else
-		#include <windows.h>
-		#include <winver.h>
-	#endif
+	#include <windows.h>
+	#include <winver.h>
 	#include <mmsystem.h>
 
 	#pragma warning(pop)
@@ -70,51 +65,35 @@
 	extern tracestream thinDump;
 	#define TRACESTREAM thinDump
 
-	#ifndef _AFX
-		// Defines for thin (non MFC) version
-
-		#ifdef _DEBUG
-			#define _CRTDBG_MAP_ALLOC
-			#define DEBUG_ONLY
-			#define TRACE				::trace
-			#define VERIFY				_ASSERTE
-		#else
-			#include <crtdbg.h>
-			#define DEBUG_ONLY(f)      ((void)0)
-			inline void __cdecl DolphinTrace(LPCTSTR, ...)  {}
-			#define TRACE				1 ? ((void)0) : ::trace
-			#define VERIFY
-		#endif
-		
-		#include <crtdbg.h>
-
-		#ifdef DEBUG
-			#define ASSUME		_ASSERTE
-		#else
-			// VC6 optimization
-			#define ASSUME(e)    (__assume(e))
-		#endif
-
-		#define ASSERT_VALID(pOb)  ((void)0)
-		#define AfxCheckMemory()
-
-		#ifdef _M_IX86
-			#define	DEBUGBREAK()			{ _asm int 3 }
-		#else
-			#define DEBUGBREAK()			DebugBreak()
-		#endif
-
-
+	#ifdef _DEBUG
+		#define _CRTDBG_MAP_ALLOC
+		#define DEBUG_ONLY
+		#define TRACE				::trace
+		#define VERIFY				_ASSERTE
 	#else
-		// Defines for MFC version
+		#include <crtdbg.h>
+		#define DEBUG_ONLY(f)      ((void)0)
+		inline void __cdecl DolphinTrace(LPCTSTR, ...)  {}
+		#define TRACE				1 ? ((void)0) : ::trace
+		#define VERIFY
+	#endif
+		
+	#include <crtdbg.h>
 
-		#if defined(_DEBUG)
-			#define NEW DEBUG_NEW
-		#else
-			#define NEW new
-		#endif
+	#ifdef DEBUG
+		#define ASSUME		_ASSERTE
+	#else
+		// VC6 optimization
+		#define ASSUME(e)    (__assume(e))
+	#endif
 
-		#define DEBUGBREAK()	AfxDebugBreak()
+	#define ASSERT_VALID(pOb)  ((void)0)
+	#define AfxCheckMemory()
+
+	#ifdef _M_IX86
+		#define	DEBUGBREAK()			{ _asm int 3 }
+	#else
+		#define DEBUGBREAK()			DebugBreak()
 	#endif
 
 	#ifdef DEBUG

@@ -54,14 +54,12 @@ public:
 		{
 			// Its empty
 			m_nHead = m_nTail = 0;
-	#ifndef _AFX
 			if (bShrink)
 			{
 				m_nSize = m_nGrowthGranularity;
 				m_pBuffer = reinterpret_cast<T*>(ObjectMemory::resize(
 						reinterpret_cast<PointersOTE*>(m_bufferArray), m_nSize, false)->m_fields);
 			}
-	#endif
 		}
 		else
 		{

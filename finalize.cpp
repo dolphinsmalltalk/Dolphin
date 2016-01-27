@@ -26,27 +26,23 @@ OopQueue<Oop> Interpreter::m_qBereavements;
 
 ///////////////////////////////////////////////////////////////////////////////
 
-#ifdef _AFX
-	// Finalization not available in the boot system
-#else
-	// Entry point from the normal count down mechanism - not used from GC as that queues many objects
-	// which could generate a large number of async. signals to the same semaphore
-	void ObjectMemory::finalize(OTE* ote)
+// Entry point from the normal count down mechanism - not used from GC as that queues many objects
+// which could generate a large number of async. signals to the same semaphore
+void ObjectMemory::finalize(OTE* ote)
+{
+	#if defined(_DEBUG)
 	{
-		#if defined(_DEBUG)
+		if (abs(Interpreter::executionTrace) > 1)
 		{
-			if (abs(Interpreter::executionTrace) > 1)
-			{
-				tracelock lock(TRACESTREAM);
-				TRACESTREAM << "Finalizing " << ote << "\n";
-			}
+			tracelock lock(TRACESTREAM);
+			TRACESTREAM << "Finalizing " << ote << "\n";
 		}
-		#endif
-		
-		MemoryManager* memMan = memoryManager();
-		Interpreter::queueForFinalization(ote, (unsigned)integerValueOf(memMan->m_hospiceHighWater));
 	}
-#endif
+	#endif
+		
+	MemoryManager* memMan = memoryManager();
+	Interpreter::queueForFinalization(ote, (unsigned)integerValueOf(memMan->m_hospiceHighWater));
+}
 
 void Interpreter::scheduleFinalization()
 {

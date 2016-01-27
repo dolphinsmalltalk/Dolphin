@@ -24,12 +24,6 @@ Smalltalk lexical analyser
 #include "..\compiler_i.h"
 #endif
 
-#ifdef _AFX
-#define GetResLibHandle AfxGetInstanceHandle
-#else
-extern HMODULE __stdcall GetResLibHandle();
-#endif
-
 static const char COMMENTDELIM = '"';
 static const char STRINGDELIM = '\'';
 static const char CHARLITERAL = '$';
