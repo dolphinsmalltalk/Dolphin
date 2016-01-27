@@ -144,8 +144,8 @@ private:
 	int RemoveInstruction(int pos);
 	int GenByte(BYTE value, BYTE flags, LexicalScope* pScope);
 	int GenData(BYTE value);
-	int GenInstruction(BYTE basic, BYTE offset=0);
-	int GenInstructionExtended(BYTE basic, BYTE extension);
+	int GenInstruction(BYTE basic, int offset=0);
+	int GenInstructionExtended(BYTE basic, int extension);
 	int GenLongInstruction(BYTE basic, WORD extension);
 	void UngenInstruction(int pos);
 	void UngenData(int pos);
@@ -471,11 +471,11 @@ inline void Compiler::UngenData(int pos)
 
 // Insert an instruction at the code pointer, returning the position at which
 // the instruction was inserted.
-inline int Compiler::GenInstruction(BYTE basic, BYTE offset)
+inline int Compiler::GenInstruction(BYTE basic, int offset)
 {
-	_ASSERTE(offset == 0 || (basic+offset) < FirstDoubleByteInstruction);
+	_ASSERTE((offset == 0) || ((0 <= offset) && (offset <= 0xFF) && ((basic+offset) < FirstDoubleByteInstruction)));
 	_ASSERTE(m_pCurrentScope != NULL);
-	return GenByte(basic + offset, BYTECODE::IsOpCode, m_pCurrentScope);
+	return GenByte(basic + (offset & 0xFF), BYTECODE::IsOpCode, m_pCurrentScope);
 }
 
 inline int Compiler::GenNop()
