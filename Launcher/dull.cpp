@@ -26,7 +26,7 @@ HRESULT __stdcall ErrorUnableToCreateVM(HRESULT hr)
 
 static const char* FindImageNameArg()
 {
-	LPCSTR szImage = "Dolphin.img7";
+	LPCSTR szImage = "DPRO.img7";
 	static char achImageName[_MAX_PATH];
 
 	for (int i=1;i<__argc;i++)

@@ -46,7 +46,7 @@ BEGIN
             VALUE "FileVersion", "2016.7.0.0"
             VALUE "InternalName", "Dolphin"
             VALUE "LegalCopyright", "Copyright © Object Arts 1997-2016. STS © David Gorisek 2000-2016"
-            VALUE "OriginalFilename", "Dolphin.exe"
+            VALUE "OriginalFilename", "Dolphin7.exe"
             VALUE "ProductName", "Dolphin Smalltalk"
             VALUE "ProductVersion", "2016.7.0.0"
         END
