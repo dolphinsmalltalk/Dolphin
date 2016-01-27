@@ -1,16 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
-    <ProjectConfiguration Include="Debug|Win32">
-      <Configuration>Debug</Configuration>
+    <ProjectConfiguration Include="VM Debug|Win32">
+      <Configuration>VM Debug</Configuration>
       <Platform>Win32</Platform>
     </ProjectConfiguration>
     <ProjectConfiguration Include="Release|Win32">
       <Configuration>Release</Configuration>
-      <Platform>Win32</Platform>
-    </ProjectConfiguration>
-    <ProjectConfiguration Include="VM Debug|Win32">
-      <Configuration>VM Debug</Configuration>
       <Platform>Win32</Platform>
     </ProjectConfiguration>
   </ItemGroup>
@@ -19,47 +15,32 @@
     <RootNamespace>InProcToGo</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'" Label="Configuration">
-    <ConfigurationType>DynamicLibrary</ConfigurationType>
-    <PlatformToolset>v120</PlatformToolset>
-    <UseOfMfc>false</UseOfMfc>
-  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <PlatformToolset>v120</PlatformToolset>
     <UseOfMfc>false</UseOfMfc>
     <WholeProgramOptimization>true</WholeProgramOptimization>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <PlatformToolset>v120</PlatformToolset>
     <UseOfMfc>false</UseOfMfc>
+    <WholeProgramOptimization>false</WholeProgramOptimization>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
-  </ImportGroup>
-  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'" Label="PropertySheets">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
   </ImportGroup>
-  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
     <_ProjectFileVersion>12.0.30501.0</_ProjectFileVersion>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <OutDir>$(SolutionDir)$(Configuration)\</OutDir>
-    <IntDir>$(Configuration)\</IntDir>
-    <IgnoreImportLibrary>true</IgnoreImportLibrary>
-    <LinkIncremental>true</LinkIncremental>
-    <TargetName>IPDolphinToGo</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <OutDir>$(SolutionDir)$(Configuration)\</OutDir>
@@ -73,61 +54,15 @@
     <IntDir>$(Configuration)\</IntDir>
     <IgnoreImportLibrary>true</IgnoreImportLibrary>
     <LinkIncremental>true</LinkIncremental>
+    <TargetName>IPDolphinToGo</TargetName>
   </PropertyGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <CustomBuildStep>
-      <Command>copy "$(TargetPath)" "$(SolutionDir)..\..\$(TargetName).dll"
-</Command>
-      <Outputs>$(SolutionDir)..\..\$(TargetFileName);%(Outputs)</Outputs>
-    </CustomBuildStep>
-    <Midl>
-      <AdditionalOptions>/no_robust %(AdditionalOptions)</AdditionalOptions>
-      <PreprocessorDefinitions>TO_GO;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <GenerateStublessProxies>true</GenerateStublessProxies>
-      <TypeLibraryName>.\Debug/InProcToGo.tlb</TypeLibraryName>
-      <ValidateAllParameters>false</ValidateAllParameters>
-    </Midl>
-    <ClCompile>
-      <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(SolutionDir);$(SolutionDir)zlib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_DEBUG;WIN32;_WINDOWS;WIN32_LEAN_AND_MEAN;WIN32_EXTRA_LEAN;STRICT;TO_GO;TIMEDEXPIRY;_WIN32_WINNT=0x0500;_MERGE_PROXYSTUB;ZEXPORT=__stdcall;ZEXPORTVA=__cdecl;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <ExceptionHandling>Sync</ExceptionHandling>
-      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
-      <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
-      <ForceConformanceInForLoopScope>true</ForceConformanceInForLoopScope>
-      <PrecompiledHeader>Use</PrecompiledHeader>
-      <PrecompiledHeaderFile>ist.h</PrecompiledHeaderFile>
-      <BrowseInformation />
-      <WarningLevel>Level3</WarningLevel>
-      <SuppressStartupBanner>true</SuppressStartupBanner>
-      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
-      <CompileAs>Default</CompileAs>
-    </ClCompile>
-    <ResourceCompile>
-      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <Culture>0x0809</Culture>
-    </ResourceCompile>
-    <Link>
-      <AdditionalOptions>/MACHINE:I386 %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalDependencies>$(SolutionDir)$(Configuration)\ToGoLib.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>$(OutDir)IPDolphinToGo.dll</OutputFile>
-      <SuppressStartupBanner>true</SuppressStartupBanner>
-      <IgnoreSpecificDefaultLibraries>rpcndr.lib;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
-      <ModuleDefinitionFile>.\IPToGo.def</ModuleDefinitionFile>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
-      <SubSystem>Windows</SubSystem>
-      <RandomizedBaseAddress>false</RandomizedBaseAddress>
-      <DataExecutionPrevention />
-      <ImportLibrary>.\Debug/IPDolphinToGo.lib</ImportLibrary>
-      <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
-    </Link>
-  </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <CustomBuildStep>
-      <Message>Copying binary to image folder</Message>
+      <Message>Copying "$(TargetPath)" to "$(SolutionDir)..\..\$(TargetFileName)"</Message>
       <Command>copy "$(TargetPath)" "$(SolutionDir)..\..\$(TargetFileName)"
 </Command>
-      <Outputs>$(SolutionDir)..\..\$(TargetFileName);%(Outputs)</Outputs>
+      <Outputs>$(SolutionDir)..\..\$(TargetFileName)</Outputs>
+      <Inputs>$(TargetPath)</Inputs>
     </CustomBuildStep>
     <Midl>
       <PreprocessorDefinitions>NDEBUG;TO_GO;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -178,35 +113,42 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">
     <CustomBuildStep>
-      <Command>copy "$(TargetPath)" $(SolutionDir)..\..\$(TargetName).dll
+      <Message>Copying "$(TargetPath)" to "$(SolutionDir)..\..\$(TargetFileName)"</Message>
+      <Command>copy "$(TargetPath)" "$(SolutionDir)..\..\$(TargetFileName)"
 </Command>
-      <Outputs>$(SolutionDir)..\..\$(TargetName).dll;%(Outputs)</Outputs>
+      <Outputs>$(SolutionDir)..\..\$(TargetFileName)</Outputs>
+      <Inputs>$(TargetPath)</Inputs>
     </CustomBuildStep>
     <Midl>
-      <AdditionalOptions>/no_robust %(AdditionalOptions)</AdditionalOptions>
-      <PreprocessorDefinitions>TO_GO;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NDEBUG;TO_GO;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <GenerateStublessProxies>true</GenerateStublessProxies>
-      <TypeLibraryName>.\Debug/InProcToGo.tlb</TypeLibraryName>
-      <ValidateAllParameters>false</ValidateAllParameters>
+      <TypeLibraryName>.\Release/InProcToGo.tlb</TypeLibraryName>
     </Midl>
     <ClCompile>
-      <Optimization>Disabled</Optimization>
+      <InlineFunctionExpansion>Disabled</InlineFunctionExpansion>
       <AdditionalIncludeDirectories>$(SolutionDir);$(SolutionDir)zlib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_DEBUG;WIN32;_WINDOWS;WIN32_LEAN_AND_MEAN;WIN32_EXTRA_LEAN;STRICT;TO_GO;TIMEDEXPIRY;_WIN32_WINNT=0x0400;_MERGE_PROXYSTUB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <ExceptionHandling />
+      <PreprocessorDefinitions>DEBUG;_DEBUG;WIN32;_WINDOWS;WIN32_LEAN_AND_MEAN;WIN32_EXTRA_LEAN;STRICT;TO_GO;TIMEDEXPIRY;_WIN32_WINNT=0x0500;_MERGE_PROXYSTUB;ZEXPORT=__stdcall;ZEXPORTVA=__cdecl;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <BufferSecurityCheck>false</BufferSecurityCheck>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
       <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
       <ForceConformanceInForLoopScope>true</ForceConformanceInForLoopScope>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>ist.h</PrecompiledHeaderFile>
-      <BrowseInformation />
+      <BrowseInformation>
+      </BrowseInformation>
       <WarningLevel>Level3</WarningLevel>
       <SuppressStartupBanner>true</SuppressStartupBanner>
-      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <CallingConvention>FastCall</CallingConvention>
       <CompileAs>Default</CompileAs>
+      <Optimization>Disabled</Optimization>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <SmallerTypeCheck>true</SmallerTypeCheck>
     </ClCompile>
     <ResourceCompile>
-      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <Culture>0x0809</Culture>
     </ResourceCompile>
     <Link>
@@ -214,26 +156,26 @@
       <AdditionalDependencies>$(SolutionDir)$(Configuration)\ToGoLib.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)IPDolphinToGo.dll</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
-      <IgnoreSpecificDefaultLibraries>rpcndr.lib;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <IgnoreSpecificDefaultLibraries>rpcndr</IgnoreSpecificDefaultLibraries>
       <ModuleDefinitionFile>.\IPToGo.def</ModuleDefinitionFile>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
-      <ProgramDatabaseFile>..\..\InProcToGo.pdb</ProgramDatabaseFile>
       <SubSystem>Windows</SubSystem>
+      <OptimizeReferences>false</OptimizeReferences>
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
-      <DataExecutionPrevention />
-      <ImportLibrary>.\Debug/IPDolphinToGo.lib</ImportLibrary>
+      <DataExecutionPrevention>
+      </DataExecutionPrevention>
+      <ImportLibrary>.\Release/IPDolphinToGo.lib</ImportLibrary>
+      <ImageHasSafeExceptionHandlers>
+      </ImageHasSafeExceptionHandlers>
+      <EnableCOMDATFolding>false</EnableCOMDATFolding>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\axhost.cpp" />
     <ClCompile Include="..\InProcStart.cpp">
-      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">..;..\zlib;.</AdditionalIncludeDirectories>
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">..;..\zlib;.</AdditionalIncludeDirectories>
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">..;..\zlib;.</AdditionalIncludeDirectories>
     </ClCompile>
     <ClCompile Include="..\InProcStub\CoWait.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-      </PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
       </PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">
@@ -241,34 +183,26 @@
     </ClCompile>
     <ClCompile Include="..\wingui.cpp" />
     <ClCompile Include="dlldatax.c">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-      </PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
       </PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">
       </PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="InProcPlugHole.cpp">
-      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">..;..\zlib;.</AdditionalIncludeDirectories>
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">..;..\zlib;.</AdditionalIncludeDirectories>
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">..;..\zlib;.</AdditionalIncludeDirectories>
     </ClCompile>
     <ClCompile Include="InProcStub.cpp">
-      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">..;..\zlib;.</AdditionalIncludeDirectories>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">..;..\zlib;.</AdditionalIncludeDirectories>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">..;..\zlib;.</AdditionalIncludeDirectories>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="InProcStub_p.c">
-      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">_DEBUG;_MERGE_PROXYSTUB;WIN32;_WINDOWS;WIN32_LEAN_AND_MEAN;WIN32_EXTRA_LEAN;STRICT;TO_GO;TIMEDEXPIRY;_WIN32_WINNT=0x0400</PreprocessorDefinitions>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-      </PrecompiledHeader>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NDEBUG;_CTYPE_DISABLE_MACROS;WIN32;_WINDOWS;WIN32_LEAN_AND_MEAN;WIN32_EXTRA_LEAN;STRICT;TO_GO;TIMEDEXPIRY;_MERGE_PROXYSTUB;_WIN32_WINNT=0x0400</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">NDEBUG;_CTYPE_DISABLE_MACROS;WIN32;_WINDOWS;WIN32_LEAN_AND_MEAN;WIN32_EXTRA_LEAN;STRICT;TO_GO;TIMEDEXPIRY;_MERGE_PROXYSTUB;_WIN32_WINNT=0x0400</PreprocessorDefinitions>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
       </PrecompiledHeader>
-      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">_DEBUG;_MERGE_PROXYSTUB;WIN32;_WINDOWS;WIN32_LEAN_AND_MEAN;WIN32_EXTRA_LEAN;STRICT;TO_GO;TIMEDEXPIRY;_WIN32_WINNT=0x0400</PreprocessorDefinitions>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">
       </PrecompiledHeader>
     </ClCompile>
@@ -285,32 +219,21 @@
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="IPToGo.rc">
-      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(OUTDIR)</AdditionalIncludeDirectories>
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(OUTDIR)</AdditionalIncludeDirectories>
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">$(OUTDIR)</AdditionalIncludeDirectories>
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
     <Midl Include="InProcStub.idl">
-      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">/no_robust %(AdditionalOptions)</AdditionalOptions>
-      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <TargetEnvironment Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Win32</TargetEnvironment>
-      <TypeLibraryName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\InProcStub.tlb</TypeLibraryName>
-      <HeaderFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\InProcStub.h</HeaderFileName>
-      <InterfaceIdentifierFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">InProcStub_i.c</InterfaceIdentifierFileName>
       <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">/no_robust %(AdditionalOptions)</AdditionalOptions>
-      <HeaderFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\InProcStub.h</HeaderFileName>
-      <InterfaceIdentifierFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">InProcStub_i.c</InterfaceIdentifierFileName>
       <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">/no_robust %(AdditionalOptions)</AdditionalOptions>
-      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <TargetEnvironment Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">Win32</TargetEnvironment>
-      <TypeLibraryName Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">.\InProcStub.tlb</TypeLibraryName>
+      <HeaderFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\InProcStub.h</HeaderFileName>
       <HeaderFileName Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">.\InProcStub.h</HeaderFileName>
+      <InterfaceIdentifierFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">InProcStub_i.c</InterfaceIdentifierFileName>
       <InterfaceIdentifierFileName Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">InProcStub_i.c</InterfaceIdentifierFileName>
     </Midl>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\..\..\Program Files\Microsoft Visual Studio\VC98\Include\BASETSD.H" />
     <ClInclude Include="..\ActiveXHost.h" />
     <ClInclude Include="..\bytecdes.h" />
     <ClInclude Include="..\Compiler_i.h" />
@@ -324,7 +247,6 @@
     <ClInclude Include="..\InterpRegisters.h" />
     <ClInclude Include="..\Interprt.h" />
     <ClInclude Include="..\ist.h" />
-    <ClInclude Include="..\MethodHeader.h" />
     <ClInclude Include="..\Objmem.h" />
     <ClInclude Include="..\oopq.h" />
     <ClInclude Include="..\ote.h" />

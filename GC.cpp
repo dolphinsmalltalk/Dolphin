@@ -34,7 +34,7 @@ extern VMPointers _Pointers;
 
 #ifdef _DEBUG
 	#define VERBOSEGC
-	static bool ignoreRefCountErrors = false;
+	static bool ignoreRefCountErrors = true;	// JGFoster edited to get past error
 #endif
 
 #ifdef VERBOSEGC
@@ -64,7 +64,6 @@ inline MWORD lastStrongPointerOf(OTE* ote)
 {
 	HARDASSERT(ote->isPointers());
 
-#if !defined(_AFX)
 	// TODO: Check code generated here, may be slower than previously
 	if (ote->flagsAllMask(WeaknessMask))
 	{
@@ -72,7 +71,6 @@ inline MWORD lastStrongPointerOf(OTE* ote)
 		return ObjectHeaderSize + behavior->fixedFields();
 	}
 	else
-#endif
 		return ote->getWordSize();
 }
 
@@ -157,17 +155,14 @@ void ObjectMemory::reclaimInaccessibleObjects(DWORD gcFlags)
 	Oop corpse = corpsePointer();
 	HARDASSERT(!isIntegerObject(corpse));
 
-	#ifndef _AFX
-		if (corpse == Oop(_Pointers.Nil))
-		{
-			tracelock lock(TRACESTREAM);
-			TRACESTREAM << "GC: WARNING, attempted GC before Corpse registered." << endl;
-			return;	// Refuse to garbage collect if the corpse is invalid
-		}
-	#else
-		// This check is disabled for MFC version, because that does not support
-		// weak references anyway
-	#endif
+
+	if (corpse == Oop(_Pointers.Nil))
+	{
+		tracelock lock(TRACESTREAM);
+		TRACESTREAM << "GC: WARNING, attempted GC before Corpse registered." << endl;
+		return;	// Refuse to garbage collect if the corpse is invalid
+	}
+
 	
 	#ifdef _DEBUG
 		checkReferences();
@@ -218,7 +213,6 @@ void ObjectMemory::reclaimInaccessibleObjects(DWORD gcFlags)
 				}
 				pUnmarked[nUnmarked++] = ote;
 
-#ifndef _AFX
 				// If the object is finalizable, rescue it by visiting all objects accessible from it
 				if (oteFlags & OTE::FinalizeMask)
 				{
@@ -227,12 +221,10 @@ void ObjectMemory::reclaimInaccessibleObjects(DWORD gcFlags)
 					// or indirectly, that we don't prevent it ever being finalized.
 					ote->setMark(oldMark.m_mark);
 				}
-#endif
 			}
 		}
 	}
 
-#if !defined(_AFX)
 	// Another scan to nil out weak references. This has to be a separate scan from the finalization
 	// candidate scan so that we don't end up nilling out weak references to objects that are accessible
 	// from finalizable objects
@@ -247,9 +239,6 @@ void ObjectMemory::reclaimInaccessibleObjects(DWORD gcFlags)
 			// in case they need to take appropriate action.
 			if ((oteFlags & WeaknessMask) == WeaknessMask)
 			{
-				#ifdef _AFX
-					HARDASSERT(FALSE);
-				#endif
 				HARDASSERT((oteFlags & OTE::WeakMask) == OTE::WeakMask);
 				// Yeehaa, let's add some Corpses
 				SMALLINTEGER losses = 0;
@@ -310,7 +299,6 @@ void ObjectMemory::reclaimInaccessibleObjects(DWORD gcFlags)
 			}
 		}
 	}
-#endif	// !defined(_AFX)
 
 	#ifdef _DEBUG
 	{
@@ -335,7 +323,7 @@ void ObjectMemory::reclaimInaccessibleObjects(DWORD gcFlags)
 		{
 			// Object still unmarked, so either deallocate it OR queue it for finalization
 			HARDASSERT(!ote->hasCurrentMark());
-#ifndef _AFX
+
 			// We found a dying object, finalize it if necessary
 			if (oteFlags & OTE::FinalizeMask)
 			{
@@ -352,7 +340,6 @@ void ObjectMemory::reclaimInaccessibleObjects(DWORD gcFlags)
 				queuedForFinalize++;
 			}
 			else
-#endif // _AFX
 			{
 				// It doesn't want finalizing, so we can free it
 				// Countdown all refs from objects which are to be
@@ -440,7 +427,7 @@ void ObjectMemory::reclaimInaccessibleObjects(DWORD gcFlags)
 		checkReferences();
 	#endif
 
-#if defined(VERBOSEGC) && !defined(_AFX)
+#if defined(VERBOSEGC)
 	{
 		tracelock lock(TRACESTREAM);
 		TRACESTREAM << "GC: Completed, " << deletions << " objects reclaimed, "

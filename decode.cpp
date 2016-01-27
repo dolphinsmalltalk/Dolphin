@@ -772,7 +772,7 @@ void Interpreter::StackTraceOn(ostream& dc, StackFrame* pFrame, unsigned depth)
 	dc << (depth == 0 ? "<...more...>" : "<Bottom of stack>") << endl;
 }
 
-#if defined(_DEBUG) || defined(_AFX)
+#if defined(_DEBUG)
 
 void Interpreter::WarningWithStackTraceBody(const char* warningCaption, StackFrame* pFrame)
 {
@@ -810,7 +810,7 @@ void Interpreter::WarningWithStackTrace(const char* warningCaption, StackFrame* 
 
 /////////////////////////////////////////////////////////////////////////////
 
-#if defined(_DEBUG) || defined(_AFX)
+#if defined(_DEBUG)
 
 // This is thoroughly nasty, but I don't care because it only required for debugging when C++ walkback might
 // be used.
@@ -1651,8 +1651,9 @@ void DumpMethod(OTE* oteMethod)
 	DumpMethod(static_cast<CompiledMethod*>(oteMethod->m_location));
 }
 
-extern "C" unsigned byteCodeCounters[];
-extern "C" unsigned byteCodePairs[];
+//	error LNK2001: unresolved external symbols	// JGFoster
+//	extern "C" unsigned byteCodeCounters[];
+//	extern "C" unsigned byteCodePairs[];
 
 void DumpBytecodeCounts(bool bClear)
 {
@@ -1660,8 +1661,8 @@ void DumpBytecodeCounts(bool bClear)
 	TRACESTREAM << endl << "Bytecode invocation counts" << endl << "-----------------------------" << endl;
 	for (int i=0;i<256;i++)
 	{
-		TRACESTREAM << dec << i << ": " << byteCodeCounters[i] << endl;
-		if (bClear) byteCodeCounters[i] = 0;
+		TRACESTREAM << dec << i << ": " << "byteCodeCounters is an unresolved external" /* byteCodeCounters[i] */ << endl;
+//		if (bClear) byteCodeCounters[i] = 0;
 	}
 	TRACESTREAM << "-----------------------------" << endl << endl;
 
@@ -1670,8 +1671,8 @@ void DumpBytecodeCounts(bool bClear)
 	{
 		for (int j=0;j<256;j++)
 		{
-			TRACESTREAM << byteCodePairs[i*256+j] << ' ';
-			if (bClear) byteCodePairs[i*256+j] = 0;
+			TRACESTREAM << "byteCodePairs is an unresolved external" /* byteCodePairs[i*256+j] */ << ' ';
+//			if (bClear) byteCodePairs[i*256+j] = 0;
 		}
 		TRACESTREAM << endl;
 	}
@@ -1679,15 +1680,16 @@ void DumpBytecodeCounts(bool bClear)
 
 }
 
-extern "C" unsigned primitiveCounters[];
+//	error LNK2001: unresolved external symbols	// JGFoster
+//	extern "C" unsigned primitiveCounters[];
 
 void DumpPrimitiveCounts(bool bClear)
 {
 	TRACESTREAM << endl << "Primitive invocation counts" << endl << "-----------------------------" << endl;
 	for (int i=0;i<=PRIMITIVE_MAX;i++)
 	{
-		TRACESTREAM << dec << i << ": " << primitiveCounters[i] << endl;
-		if (bClear) primitiveCounters[i] = 0;
+		TRACESTREAM << dec << i << ": " << "primitiveCounters is an unresolved external" /* primitiveCounters[i] */ << endl;
+//		if (bClear) primitiveCounters[i] = 0;
 	}
 
 	TRACESTREAM << "-----------------------------" << endl << endl;

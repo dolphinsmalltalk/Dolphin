@@ -15,14 +15,6 @@ static IDolphin* piVM=NULL;
 
 IDolphin* GetVM()
 {
-#ifdef _AFX
-	if (!piVM)
-	{
-		CComObject<CDolphinSmalltalk>* pDolphin;
-		HRESULT hr = CComObject<CDolphinSmalltalk>::CreateInstance(&pDolphin);
-		piVM = pDolphin;
-	}
-#endif
 	return piVM;
 }
 
@@ -32,9 +24,6 @@ STDMETHODIMP CDolphinSmalltalk::Initialise(HINSTANCE hInstance,
 									  LPCSTR fileName, LPVOID imageData, UINT imageSize,
 									DWORD dwFlags)
 {
-#ifdef _AFX
-	return E_NOTIMPL;
-#else
 	HRESULT APIENTRY VMInit(LPCSTR szImageName, LPVOID, UINT, DWORD);
 
 	if (hInstance == NULL || imageData == NULL || imageSize == 0)
@@ -50,14 +39,10 @@ STDMETHODIMP CDolphinSmalltalk::Initialise(HINSTANCE hInstance,
 	Unlock();
 
 	return hr;
-#endif
 }
 
 STDMETHODIMP CDolphinSmalltalk::Run(IUnknown* punkOuter)
 {
-#ifdef _AFX
-	return E_NOTIMPL;
-#else
 	extern int APIENTRY VMRun(DWORD);
 
 	piVM = this;
@@ -69,7 +54,6 @@ STDMETHODIMP CDolphinSmalltalk::Run(IUnknown* punkOuter)
 	Unlock();
 
 	return hr;
-#endif
 }
 
 STDMETHODIMP CDolphinSmalltalk::GetVersionInfo(LPVOID pvi)

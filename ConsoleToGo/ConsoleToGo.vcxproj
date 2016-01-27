@@ -1,16 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
-    <ProjectConfiguration Include="Debug|Win32">
-      <Configuration>Debug</Configuration>
+    <ProjectConfiguration Include="VM Debug|Win32">
+      <Configuration>VM Debug</Configuration>
       <Platform>Win32</Platform>
     </ProjectConfiguration>
     <ProjectConfiguration Include="Release|Win32">
       <Configuration>Release</Configuration>
-      <Platform>Win32</Platform>
-    </ProjectConfiguration>
-    <ProjectConfiguration Include="VM Debug|Win32">
-      <Configuration>VM Debug</Configuration>
       <Platform>Win32</Platform>
     </ProjectConfiguration>
   </ItemGroup>
@@ -19,36 +15,26 @@
     <RootNamespace>ConsoleToGo</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
-    <PlatformToolset>v120</PlatformToolset>
-    <UseOfMfc>false</UseOfMfc>
-    <WholeProgramOptimization>true</WholeProgramOptimization>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
-    <PlatformToolset>v120</PlatformToolset>
-    <UseOfMfc>false</UseOfMfc>
-    <WholeProgramOptimization>true</WholeProgramOptimization>
-  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <PlatformToolset>v120</PlatformToolset>
     <UseOfMfc>false</UseOfMfc>
     <WholeProgramOptimization>true</WholeProgramOptimization>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <PlatformToolset>v120</PlatformToolset>
+    <UseOfMfc>false</UseOfMfc>
+    <WholeProgramOptimization>false</WholeProgramOptimization>
+  </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
   </ImportGroup>
-  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'" Label="PropertySheets">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
-  </ImportGroup>
-  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
-  </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
   </ImportGroup>
@@ -62,21 +48,19 @@
     <IgnoreImportLibrary>true</IgnoreImportLibrary>
     <LinkIncremental>false</LinkIncremental>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <OutDir>$(SolutionDir)$(Configuration)\</OutDir>
-    <IntDir>$(Configuration)\</IntDir>
-  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">
     <OutDir>$(SolutionDir)$(Configuration)\</OutDir>
     <IntDir>$(Configuration)\</IntDir>
+    <IgnoreImportLibrary>true</IgnoreImportLibrary>
     <LinkIncremental>true</LinkIncremental>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <CustomBuildStep>
-      <Message>Copying binary to image folder</Message>
+      <Message>Copying "$(TargetPath)" to "$(SolutionDir)..\..\$(TargetFileName)"</Message>
       <Command>copy "$(TargetPath)" "$(SolutionDir)..\..\$(TargetFileName)"
 </Command>
-      <Outputs>$(SolutionDir)..\..\$(TargetFileName);%(Outputs)</Outputs>
+      <Outputs>$(SolutionDir)..\..\$(TargetFileName)</Outputs>
+      <Inputs>$(TargetPath)</Inputs>
     </CustomBuildStep>
     <Midl>
       <PreprocessorDefinitions>NDEBUG;TO_GO;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -124,87 +108,46 @@
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
     </Link>
   </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <CustomBuildStep>
-      <Command>copy "$(TargetPath)" $(SolutionDir)..\..\$(TargetFileName)
-</Command>
-      <Outputs>$(SolutionDir)..\..\$(TargetFileName);%(Outputs)</Outputs>
-    </CustomBuildStep>
-    <Midl>
-      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <TargetEnvironment>Win32</TargetEnvironment>
-      <GenerateStublessProxies>true</GenerateStublessProxies>
-      <TypeLibraryName>.\Debug/ConsoleToGo.tlb</TypeLibraryName>
-    </Midl>
-    <ClCompile>
-      <Optimization>Disabled</Optimization>
-      <WholeProgramOptimization>false</WholeProgramOptimization>
-      <AdditionalIncludeDirectories>$(SolutionDir);$(SolutionDir)zlib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_CONSOLE;STRICT;TO_GO;TIMEDEXPIRY;_DEBUG;WIN32;_WINDOWS;WIN32_LEAN_AND_MEAN;WIN32_EXTRA_LEAN;ZEXPORT=__stdcall;ZEXPORTVA=__cdecl;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <MinimalRebuild>true</MinimalRebuild>
-      <ExceptionHandling />
-      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
-      <SmallerTypeCheck>true</SmallerTypeCheck>
-      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
-      <BufferSecurityCheck>true</BufferSecurityCheck>
-      <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
-      <ForceConformanceInForLoopScope>true</ForceConformanceInForLoopScope>
-      <PrecompiledHeader>Use</PrecompiledHeader>
-      <PrecompiledHeaderFile>ist.h</PrecompiledHeaderFile>
-      <BrowseInformation />
-      <WarningLevel>Level3</WarningLevel>
-      <SuppressStartupBanner>true</SuppressStartupBanner>
-      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
-      <CompileAs>Default</CompileAs>
-    </ClCompile>
-    <ResourceCompile>
-      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <Culture>0x0809</Culture>
-    </ResourceCompile>
-    <Link>
-      <AdditionalOptions>/MACHINE:I386 %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalDependencies>$(SolutionDir)$(Configuration)\ToGoLib.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <ShowProgress>LinkVerbose</ShowProgress>
-      <SuppressStartupBanner>true</SuppressStartupBanner>
-      <ModuleDefinitionFile>.\ConsoleToGo.def</ModuleDefinitionFile>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
-      <SubSystem>Console</SubSystem>
-      <LinkTimeCodeGeneration />
-      <RandomizedBaseAddress>false</RandomizedBaseAddress>
-      <DataExecutionPrevention />
-      <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
-    </Link>
-  </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">
     <CustomBuildStep>
-      <Command>copy "$(TargetPath)" $(SolutionDir)..\$(TargetFileName)
+      <Message>Copying "$(TargetPath)" to "$(SolutionDir)..\..\$(TargetFileName)"</Message>
+      <Command>copy "$(TargetPath)" "$(SolutionDir)..\..\$(TargetFileName)"
 </Command>
-      <Outputs>$(SolutionDir)$(TargetName).dll;%(Outputs)</Outputs>
+      <Outputs>$(SolutionDir)..\..\$(TargetFileName)</Outputs>
+      <Inputs>$(TargetPath)</Inputs>
     </CustomBuildStep>
     <Midl>
-      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NDEBUG;TO_GO;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <TargetEnvironment>Win32</TargetEnvironment>
       <GenerateStublessProxies>true</GenerateStublessProxies>
-      <TypeLibraryName>.\Debug/ConsoleToGo.tlb</TypeLibraryName>
+      <TypeLibraryName>.\Release/ConsoleToGo.tlb</TypeLibraryName>
     </Midl>
     <ClCompile>
-      <Optimization>Disabled</Optimization>
+      <InlineFunctionExpansion>Disabled</InlineFunctionExpansion>
       <AdditionalIncludeDirectories>$(SolutionDir);$(SolutionDir)zlib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_CONSOLE;STRICT;TO_GO;TIMEDEXPIRY;_DEBUG;WIN32;_WINDOWS;WIN32_LEAN_AND_MEAN;WIN32_EXTRA_LEAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <ExceptionHandling />
+      <PreprocessorDefinitions>DEBUG;_DEBUG;_CONSOLE;STRICT;TO_GO;TIMEDEXPIRY;_CTYPE_DISABLE_MACROS;WIN32;_WINDOWS;WIN32_LEAN_AND_MEAN;WIN32_EXTRA_LEAN;ZEXPORT=__stdcall;ZEXPORTVA=__cdecl;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <StringPooling>true</StringPooling>
+      <ExceptionHandling>
+      </ExceptionHandling>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <BufferSecurityCheck>false</BufferSecurityCheck>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
       <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
       <ForceConformanceInForLoopScope>true</ForceConformanceInForLoopScope>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>ist.h</PrecompiledHeaderFile>
-      <BrowseInformation />
+      <BrowseInformation>true</BrowseInformation>
       <WarningLevel>Level3</WarningLevel>
       <SuppressStartupBanner>true</SuppressStartupBanner>
-      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <CallingConvention>FastCall</CallingConvention>
       <CompileAs>Default</CompileAs>
+      <Optimization>Disabled</Optimization>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <SmallerTypeCheck>true</SmallerTypeCheck>
     </ClCompile>
     <ResourceCompile>
-      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <Culture>0x0809</Culture>
     </ResourceCompile>
     <Link>
@@ -212,17 +155,23 @@
       <AdditionalDependencies>$(SolutionDir)$(Configuration)\ToGoLib.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <ModuleDefinitionFile>.\ConsoleToGo.def</ModuleDefinitionFile>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
       <SubSystem>Console</SubSystem>
+      <OptimizeReferences>false</OptimizeReferences>
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
-      <DataExecutionPrevention />
+      <DataExecutionPrevention>
+      </DataExecutionPrevention>
+      <ImageHasSafeExceptionHandlers>
+      </ImageHasSafeExceptionHandlers>
+      <EnableCOMDATFolding>false</EnableCOMDATFolding>
+      <IgnoreSpecificDefaultLibraries>
+      </IgnoreSpecificDefaultLibraries>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\ConsoleStub\wincons.cpp" />
     <ClCompile Include="..\startApp.cpp" />
     <ClCompile Include="Console.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">Create</PrecompiledHeader>
     </ClCompile>
@@ -247,7 +196,6 @@
     <ClInclude Include="..\InterpRegisters.h" />
     <ClInclude Include="..\Interprt.h" />
     <ClInclude Include="..\ist.h" />
-    <ClInclude Include="..\MethodHeader.h" />
     <ClInclude Include="..\Objmem.h" />
     <ClInclude Include="..\oopq.h" />
     <ClInclude Include="..\ote.h" />
@@ -275,7 +223,6 @@
     <ClInclude Include="..\STObject.h" />
     <ClInclude Include="..\STPoint.h" />
     <ClInclude Include="..\STProcess.h" />
-    <ClInclude Include="..\str.h" />
     <ClInclude Include="..\STStackFrame.h" />
     <ClInclude Include="..\STStream.h" />
     <ClInclude Include="..\STString.h" />

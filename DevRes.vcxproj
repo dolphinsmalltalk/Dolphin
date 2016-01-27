@@ -1,12 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
-    <ProjectConfiguration Include="Release|Win32">
-      <Configuration>Release</Configuration>
-      <Platform>Win32</Platform>
-    </ProjectConfiguration>
     <ProjectConfiguration Include="VM Debug|Win32">
       <Configuration>VM Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
       <Platform>Win32</Platform>
     </ProjectConfiguration>
   </ItemGroup>
@@ -15,12 +15,12 @@
     <RootNamespace>DevRes</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'" Label="Configuration">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <PlatformToolset>v120</PlatformToolset>
     <UseOfMfc>false</UseOfMfc>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <PlatformToolset>v120</PlatformToolset>
     <UseOfMfc>false</UseOfMfc>
@@ -28,11 +28,11 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
   </ImportGroup>
-  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'" Label="PropertySheets">
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
   </ImportGroup>
-  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
   </ImportGroup>
@@ -51,15 +51,16 @@
     <OutDir>$(SolutionDir)$(Configuration)\</OutDir>
     <IntDir>$(Configuration)\</IntDir>
     <IgnoreImportLibrary>true</IgnoreImportLibrary>
-    <LinkIncremental>false</LinkIncremental>
+    <LinkIncremental>true</LinkIncremental>
     <TargetName>DolphinDR7</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <CustomBuildStep>
-      <Message>Copying binary to image folder</Message>
+      <Message>Copying "$(TargetPath)" to "$(SolutionDir)..\..\$(TargetFileName)"</Message>
       <Command>copy "$(TargetPath)" "$(SolutionDir)..\..\$(TargetFileName)"
 </Command>
-      <Outputs>$(SolutionDir)..\..\$(TargetFileName);%(Outputs)</Outputs>
+      <Outputs>$(SolutionDir)..\..\$(TargetFileName)</Outputs>
+      <Inputs>$(TargetPath)</Inputs>
     </CustomBuildStep>
     <Midl>
       <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -101,9 +102,11 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">
     <CustomBuildStep>
-      <Command>copy "$(TargetPath)" $(SolutionDir)..\..\$(TargetName).dll
+      <Message>Copying "$(TargetPath)" to "$(SolutionDir)..\..\$(TargetFileName)"</Message>
+      <Command>copy "$(TargetPath)" "$(SolutionDir)..\..\$(TargetFileName)"
 </Command>
-      <Outputs>$(SolutionDir)..\..\$(TargetFileName);%(Outputs)</Outputs>
+      <Outputs>$(SolutionDir)..\..\$(TargetFileName)</Outputs>
+      <Inputs>$(TargetPath)</Inputs>
     </CustomBuildStep>
     <Midl>
       <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -113,16 +116,19 @@
     </Midl>
     <ClCompile>
       <AdditionalOptions>/LD  %(AdditionalOptions)</AdditionalOptions>
-      <Optimization>MinSpace</Optimization>
-      <InlineFunctionExpansion>Default</InlineFunctionExpansion>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Optimization>Disabled</Optimization>
+      <InlineFunctionExpansion>Disabled</InlineFunctionExpansion>
+      <PreprocessorDefinitions>DEBUG;_DEBUG;WIN32;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
-      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
       <ForceConformanceInForLoopScope>true</ForceConformanceInForLoopScope>
       <WarningLevel>Level3</WarningLevel>
       <SuppressStartupBanner>true</SuppressStartupBanner>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <SmallerTypeCheck>true</SmallerTypeCheck>
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -132,13 +138,18 @@
       <AdditionalOptions>/MACHINE:I386 %(AdditionalOptions)</AdditionalOptions>
       <OutputFile>$(TargetPath)</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
-      <IgnoreAllDefaultLibraries>true</IgnoreAllDefaultLibraries>
       <SubSystem>Windows</SubSystem>
-      <OptimizeReferences>true</OptimizeReferences>
+      <OptimizeReferences>false</OptimizeReferences>
+      <EnableCOMDATFolding>false</EnableCOMDATFolding>
       <EntryPointSymbol>DllMain</EntryPointSymbol>
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
-      <DataExecutionPrevention />
+      <DataExecutionPrevention>
+      </DataExecutionPrevention>
       <ImportLibrary>.\WinDLL/DolphinDR006.lib</ImportLibrary>
+      <ImageHasSafeExceptionHandlers />
+      <AdditionalDependencies>msvcrtd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <IgnoreSpecificDefaultLibraries>
+      </IgnoreSpecificDefaultLibraries>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -150,14 +161,12 @@
   <ItemGroup>
     <Image Include="Res\AbstractCardContainer.ico" />
     <Image Include="Res\AcceleratorPresenter.ico" />
-    <Image Include="Res\Adk.ico" />
     <Image Include="Res\Aibo.ico" />
     <Image Include="Res\ApplicationDeploymentWizard.ico" />
     <Image Include="Res\AspectBuffer.ico" />
     <Image Include="Res\AspectInspector.ico" />
     <Image Include="Res\Bag.ico" />
     <Image Include="Res\BasicInspector.ico" />
-    <Image Include="Res\BasicListAbstract.ico" />
     <Image Include="Res\BatchAspectAccessor.ico" />
     <Image Include="Res\Behavior.ico" />
     <Image Include="Res\BinaryPackage.ico" />

@@ -781,22 +781,6 @@ int ObjectMemory::OopsUsed()
 #endif
 
 ///////////////////////////////////////////////////////////////////////////////
-// Pointer swapping
-
-#ifdef _AFX
-	// Swap the object table entries excluding the count and hash value
-	// hash value is associated with object reference, not the object itself, and
-	// must not change, as otherwise hash tables will be cocked up
-	void ObjectMemory::swapPointersOfAnd(OTE* first, OTE* second)
-	{
-		OTE  temp	= *first;
-		memcpy(first, second, sizeof(OTE)-(sizeof(hash_t)+sizeof(count_t)));
-		memcpy(second, &temp, sizeof(OTE)-(sizeof(hash_t)+sizeof(count_t)));
-	}
-#endif
-
-
-///////////////////////////////////////////////////////////////////////////////
 #pragma code_seg(MEM_SEG)
 
 int ObjectMemory::gpFaultExceptionFilter(LPEXCEPTION_RECORD pExRec)
@@ -846,9 +830,8 @@ int ObjectMemory::gpFaultExceptionFilter(LPEXCEPTION_RECORD pExRec)
 #ifdef _DEBUG
 				Interpreter::DumpOTEPoolStats();
 #endif
-#ifndef _AFX
+
 				Interpreter::NotifyOTOverflow();
-#endif
 				action = EXCEPTION_CONTINUE_EXECUTION;
 			}
 			else

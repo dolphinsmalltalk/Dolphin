@@ -196,7 +196,6 @@ void OverlappedCall::OnCompact()
 	// our instances which might have stored down process Oops (i.e. any
 	// active or pending termination/completion).
 
-#ifndef _AFX
 	#if TRACING == 1
 	{
 		tracelock lock(::thinDump);
@@ -207,7 +206,6 @@ void OverlappedCall::OnCompact()
 		//CMonitorLock lock(s_listMonitor);
 		CompactCallsOnList(s_activeList);
 	}
-#endif
 }
 
 void OverlappedCall::CompactCallsOnList(OverlappedCallList& list)

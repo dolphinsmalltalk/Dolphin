@@ -236,30 +236,6 @@ HRESULT ObjectMemory::InitializeImage()
 	_Pointers.MsgWndHandle->beSticky();
 	ProtectConstSpace(dwOldProtect);
 
-	#if defined(_AFX)
-		const unsigned loopEnd = m_nOTSize;
-		int freed;
-		do
-		{
-			freed = 0;
-			for (unsigned i=OTBase; i < loopEnd; i++)
-			{
-				OTE* ote = &m_pOT[i];
-				if (ote->m_flags.m_count == 0 && !ote->isFree())
-				{
-					// Shouldn't be zero count objects around that are not in the Zct
-					TRACESTREAM << ote << " (Oop " << LPVOID(ote) << "/" << i << ") had zero refs" << endl;
-
-					//BOOL save = Interpreter::executionTrace;
-					//Interpreter::executionTrace = 1;
-					recursiveFree(ote);
-					//freed++;
-					//Interpreter::executionTrace = save;
-				}
-			} 
-		} while(freed > 0);
-	#endif
-
 	return S_OK;
 }
 

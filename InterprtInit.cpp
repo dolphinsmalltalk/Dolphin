@@ -29,7 +29,7 @@ void Interpreter::initializeVMReferences()
 
 	ObjectMemory::ProtectConstSpace(PAGE_READWRITE);
 	// We must obviously re-establish pointers every time
-#if defined(_DEBUG) || defined(_AFX)
+#if defined(_DEBUG)
 	if (_Pointers.VMReferences == reinterpret_cast<ArrayOTE*>(Pointers.Nil))
 	{
 		ArrayOTE* newArray = Array::New(VMREFSINITIAL);

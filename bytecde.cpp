@@ -29,7 +29,7 @@
 #include "STContext.h"
 #include "STBlockClosure.h"
 
-#if defined(_AFX) || defined(_DEBUG)
+#if defined(_DEBUG)
 	#include "STClassDesc.h"
 #endif
 
@@ -84,7 +84,6 @@ inline unsigned __fastcall Interpreter::cacheHash(Oop classPointer, Oop messageS
 
 #pragma code_seg(INTERP_SEG)
 
-#ifndef _AFX
 inline void Interpreter::ResetInputPollCounter()
 {
 	// Note that we set to 2, because the sampler interrupt must fire twice before we consider the count down
@@ -94,14 +93,11 @@ inline void Interpreter::ResetInputPollCounter()
 	// **** N.B. If this is changed, then the same named macro in byteasm.asm must also be changed ***
 	m_nInputPollCounter = 2;
 }
-#endif
 
 inline BOOL Interpreter::sampleInput()
 {	
 	// Prevent further sampling by resetting the poll counter
-#ifndef _AFX
 	ResetInputPollCounter();
-#endif
 
 	if ((SDWORD)m_nInputPollInterval > 0)
 	{
@@ -139,9 +135,7 @@ inline BOOL Interpreter::sampleInput()
 		else
 		{
 			// No input found, reset for next sampling
-#ifndef _AFX
 			ResetInputPollCounter();
-#endif
 		}
 	}
 
@@ -359,7 +353,7 @@ void __fastcall Interpreter::createActualMessage(const unsigned argCount)
 
 MethodOTE* __fastcall Interpreter::messageNotUnderstood(BehaviorOTE* classPointer, const unsigned argCount)
 {
-	#if defined(_AFX) || defined(_DEBUG)
+	#if defined(_DEBUG)
 	{
 		ostringstream dc;
 		dc << classPointer << " does not understand " << m_oopMessageSelector << endl << ends;
@@ -695,12 +689,7 @@ BlockOTE* __fastcall Interpreter::blockCopy(DWORD ext)
 		m_registers.m_stackPointer = sp;
 	}
 
-#ifdef _AFX
-	// Force for boot part 1
-	if (true)
-#else
 	if (extension.needsSelf)
-#endif
 	{
 		pBlock->m_receiver = frame->receiver();
 		ObjectMemory::countUp(pBlock->m_receiver);

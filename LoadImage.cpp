@@ -15,10 +15,7 @@
 #include <io.h>
 #include <fcntl.h>
 #include "binstream.h"
-#ifndef _AFX
-	//#include "zfbinstream.h"
-	#include "zbinstream.h"
-#endif
+#include "zbinstream.h"
 #include "objmem.h"
 #include "ObjMemPriv.inl"
 #include "interprt.h"
@@ -72,14 +69,6 @@ HRESULT ObjectMemory::LoadImage(const char* szImageName, LPVOID imageData, UINT 
 
 	HRESULT hr;
 
-#ifdef _AFX
-	GNUImageHeader header;
-	FILE* imageFile = fopen(szImageName, "rb");
-	::fseek(imageFile, sizeof(ISTHDRTYPE), SEEK_SET);
- 	::fread(reinterpret_cast<BYTE*>(&header), sizeof(header), 1, imageFile);
-	hr = LoadGNUImage(imageFile, header) ? S_OK : E_FAIL;
-	fclose(imageFile);
-#else
 	ASSERT(imageSize > sizeof(ImageHeader));
 
 	BYTE* pImageBytes = static_cast<BYTE*>(imageData);
@@ -106,14 +95,13 @@ HRESULT ObjectMemory::LoadImage(const char* szImageName, LPVOID imageData, UINT 
 		imbinstream stream(pImageBytes + offset, imageSize - offset);
 		hr = LoadImage(stream, pHeader);
 	}
-#endif
 
 #ifdef PROFILE_IMAGELOADSAVE
 	DWORD msToRun = GetTickCount() - dwStartTicks;
 	TRACESTREAM << " done (" << (SUCCEEDED(hr) ? "Succeeded" : "Failed") << "), binstreams time=" << long(msToRun) << "mS" << endl;
 #endif
 
-#if defined(TIMEDEXPIRY) && !defined(_AFX)
+#if defined(TIMEDEXPIRY)
 	// Thin (development only) version does not expire 
 	if (SUCCEEDED(hr))
 	{

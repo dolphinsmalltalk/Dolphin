@@ -31,18 +31,4 @@ class ArrayedCollection : public SequenceableCollection
 {
 };
 
-#ifdef _AFX
-	#pragma warning (disable : 4200)
-	class SortedCollection : public SequenceableCollection
-	{
-	public:
-		Oop m_firstIndex;
-		Oop m_lastIndex;
-		Oop m_sortBlock;
-		Oop	m_elements[];
-
-		enum {FirstIndexIndex=Collection::FixedSize, LastIndexIndex, SortBlockIndex, FixedSize};
-	};
-#endif
-
 #endif	// EOF

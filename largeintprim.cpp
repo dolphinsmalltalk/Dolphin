@@ -39,10 +39,15 @@
 // Smalltalk classes
 #include "STInteger.h"
 
+#ifdef _DEBUG
+	#define MASK_DWORD(op) ((op) & 0xFFFFFFFF)	/* avoid error when converting to smaller type */
+#else
+	#define MASK_DWORD(op) (op)
+#endif
 // This cast sequence can allow the compiler to generate more efficient code (avoids the need for an arithmetic shift)
 #define /*LONG*/ HighSLimb(/*LONGLONG*/ op) (((LARGE_INTEGER*)&op)->HighPart)
 #define /*LONG*/ HighULimb(/*LONGLONG*/ op) (((ULARGE_INTEGER*)&op)->HighPart)
-#define /*DWORD*/ LowLimb(/*LONGLONG*/ op) (static_cast<DWORD>(op))
+#define /*DWORD*/ LowLimb(/*LONGLONG*/ op) (static_cast<DWORD>(MASK_DWORD(op)))
 
 // Forward references
 Oop __stdcall liNormalize(LargeIntegerOTE* oteLI);

@@ -289,16 +289,6 @@ extern primitiveLargeIntegerAsFloat:near32
 PRIMASYNCCALL EQU ?primitiveAsyncDLL32Call@Interpreter@@CIHAAVCompiledMethod@@I@Z
 extern PRIMASYNCCALL:near32
 
-IFDEF _AFX
-	extern ?primitiveCompileIn@Interpreter@@CIHXZ:near32
-	extern ?primitiveCompileForEvaluation@Interpreter@@CIHXZ:near32
-	extern ?primitiveStringReplace@Interpreter@@CIHXZ:near32
-	extern ?primitiveInspect@Interpreter@@CIHXZ	:near32
-	extern ?primitiveError@Interpreter@@CIHXZ:near32
-	extern ?primitiveFileIO@Interpreter@@CIHAAVCompiledMethod@@I@Z:near32
-ENDIF
-
-
 IFDEF _DEBUG
 	extern ?primitiveExecutionTrace@Interpreter@@CIHXZ:near32
 	extern ?checkReferences@ObjectMemory@@SAXXZ:near32
@@ -462,14 +452,7 @@ DWORD		primitiveResize								; case 101	Was Cursor>>beCursor
 DWORD		primitiveChangeBehavior						; case 102	Was DisplayScreen>>beDisplay
 DWORD		primitiveAddressOf							; case 103	Was CharacterScanner>>scanCharactersFrom:to:in:rightX:stopConditions:di_SPlaying:
 DWORD		primitiveReturnFromCallback					; case 104	Was BitBlt drawLoopX:Y:
-IFDEF _AFX
-	DWORD		primitiveStringReplace					; case 105	ByteArray primReplaceFrom:to:with:startingAt:
-														;			ByteArray replaceFrom:to:with:withString:startingAt:
-														;			String replaceFrom:to:withByteArray:startingAt:
-														;			String primReplaceFrom:to:with:startingAt:
-ELSE
-	DWORD		primitiveSingleStep						; case 105
-ENDIF
+DWORD		primitiveSingleStep							; case 105
 DWORD		primitiveHashBytes							; case 106	Not used in Smalltalk-80
 DWORD		primitiveUnwindCallback						; case 107	ProcessorScheduler>>primUnwindCallback
 DWORD		primitiveHookWindowCreate					; case 108	Not used in Smalltalk-80
@@ -478,11 +461,7 @@ DWORD		primitiveEquivalent							; case 110	Character =, Object ==
 DWORD		primitiveClass								; case 111	Object class
 DWORD		primitiveCoreLeft							; case 112	Was SystemDictionary>>coreLeft - This is now the basic, non-compacting, incremental, garbage collect
 DWORD		PRIMQUIT									; case 113	SystemDictionary>>quitPrimitive
-IFDEF _AFX
-	DWORD		?primitiveInspect@Interpreter@@CIHXZ	; case 114	SystemDictionary>>exitToDebugger
-ELSE
-	DWORD		primitivePerformWithArgsAt				; case 114
-ENDIF
+DWORD		primitivePerformWithArgsAt					; case 114	SystemDictionary>>exitToDebugger
 DWORD		primitiveOopsLeft							; case 115	SystemDictionary>>oopsLeft - Use this for a compacting garbage collect
 DWORD		primitivePerformMethod						; case 116	This was primitiveSignalAtOopsLeftWordsLeft (low memory signal)
 DWORD		primitiveValueWithArgsAt					; case 117	Not used in Smalltalk-80
@@ -564,78 +543,6 @@ DWORD		unusedPrimitive								; case 189
 DWORD		unusedPrimitive								; case 190
 DWORD		unusedPrimitive								; case 191
 DWORD		unusedPrimitive								; case 192
-IFDEF _AFX
-DWORD		unusedPrimitive								; case 193
-DWORD		unusedPrimitive								; case 194
-DWORD		unusedPrimitive								; case 195
-DWORD		unusedPrimitive								; case 196
-DWORD		unusedPrimitive								; case 197
-DWORD		unusedPrimitive								; case 198
-DWORD		unusedPrimitive								; case 199
-DWORD		unusedPrimitive								; case 200
-DWORD		unusedPrimitive								; case 201
-DWORD		unusedPrimitive								; case 202
-DWORD		unusedPrimitive								; case 203
-DWORD		unusedPrimitive								; case 204
-DWORD		unusedPrimitive								; case 205
-DWORD		unusedPrimitive								; case 206
-DWORD		unusedPrimitive								; case 207
-DWORD		unusedPrimitive								; case 208
-DWORD		unusedPrimitive								; case 209
-DWORD		unusedPrimitive								; case 210
-DWORD		unusedPrimitive								; case 211
-DWORD		unusedPrimitive								; case 212
-DWORD		unusedPrimitive								; case 213
-DWORD		unusedPrimitive								; case 214
-DWORD		unusedPrimitive								; case 215
-DWORD		unusedPrimitive								; case 216
-DWORD		unusedPrimitive								; case 217
-DWORD		unusedPrimitive								; case 218
-DWORD		unusedPrimitive								; case 219
-DWORD		unusedPrimitive								; case 220
-DWORD		unusedPrimitive								; case 221
-DWORD		unusedPrimitive								; case 222
-DWORD		unusedPrimitive								; case 223
-DWORD		unusedPrimitive								; case 224
-DWORD		unusedPrimitive								; case 225
-DWORD		unusedPrimitive								; case 226
-DWORD		unusedPrimitive								; case 227
-DWORD		unusedPrimitive								; case 228
-DWORD		unusedPrimitive								; case 229
-DWORD		unusedPrimitive								; case 230
-DWORD		unusedPrimitive								; case 231
-DWORD		unusedPrimitive								; case 232
-DWORD		unusedPrimitive								; case 233
-DWORD		unusedPrimitive								; case 234
-DWORD		unusedPrimitive								; case 235
-DWORD		unusedPrimitive								; case 236
-DWORD		unusedPrimitive								; case 237
-DWORD		unusedPrimitive								; case 238
-DWORD		unusedPrimitive								; case 239
-DWORD		unusedPrimitive								; case 240
-DWORD		unusedPrimitive								; case 241
-DWORD		unusedPrimitive								; case 242
-DWORD		unusedPrimitive								; case 243
-DWORD		unusedPrimitive								; case 244
-DWORD		unusedPrimitive								; case 245
-DWORD		unusedPrimitive								; case 246
-DWORD		unusedPrimitive								; case 248
-DWORD		unusedPrimitive								; case 247
-DWORD		unusedPrimitive								; case 249
-DWORD		primitiveCompileIn							; case 250
-DWORD		primitiveCompileForEvaluation				; case 251
-DWORD		unusedPrimitive								; case 252
-
-IFDEF _DEBUG
-	DWORD		primitiveExecutionTrace					; case 253
-ELSE
-	DWORD		unusedPrimitive							; case 253
-ENDIF
-
-DWORD		primitiveFileIO								; case 254
-DWORD		primitiveError								; case 255
-
-ENDIF	; End of _AFX
 
 IFDEF _DEBUG
 	_primitiveCounters DD	256 DUP (0)
@@ -2098,9 +2005,6 @@ hashStringRepeat:
 	add     eax, ebx					; (hashVal<<4) += char
 	test	eax, 0f0000000h				; Carry into top nibble ?
 	jz      hashStringNoCarry			; No carry into top nibble
-	
-	; This bit would be a lot easier if we changed the hash function in GNU
-	; think about it
 
 	; 6 instructions, 13 bytes, 6 cycles
 	bswap	eax								; Reverse ordering to put top byte in al
@@ -3170,34 +3074,10 @@ BEGINPRIMITIVE primitiveStringNextIndex
 	CallSimplePrim <PRIMSTRINGNEXTINDEX>
 ENDPRIMITIVE primitiveStringNextIndex
 
-IFDEF _AFX
-	BEGINPRIMITIVE primitiveStringReplace
-		CallSimplePrim <?primitiveStringReplace@Interpreter@@CIHXZ>
-	ENDPRIMITIVE primitiveStringReplace
-
-	BEGINPRIMITIVE primitiveError
-			CallContextPrim <?primitiveError@Interpreter@@CIHXZ>
-	ENDPRIMITIVE primitiveError
-			
-	BEGINPRIMITIVE primitiveFileIO
-		CallSimplePrim <?primitiveFileIO@Interpreter@@CIHAAVCompiledMethod@@I@Z>
-	ENDPRIMITIVE primitiveFileIO
-ENDIF
-
 IFDEF _DEBUG
 	BEGINPRIMITIVE primitiveExecutionTrace
 		CallSimplePrim <?primitiveExecutionTrace@Interpreter@@CIHXZ>
 	ENDPRIMITIVE primitiveExecutionTrace
-ENDIF
-
-IFDEF _AFX
-	BEGINPRIMITIVE primitiveCompileIn
-		CallContextPrim <?primitiveCompileIn@Interpreter@@CIHXZ>
-	ENDPRIMITIVE primitiveCompileIn
-
-	BEGINPRIMITIVE primitiveCompileForEvaluation
-		CallContextPrim <?primitiveCompileForEvaluation@Interpreter@@CIHXZ>
-	ENDPRIMITIVE primitiveCompileForEvaluation
 ENDIF
 
 BEGINPRIMITIVE primitiveResize

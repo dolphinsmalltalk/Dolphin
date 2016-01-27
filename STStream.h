@@ -47,22 +47,4 @@ public:
 
 typedef TOTE<WriteStream> WriteStreamOTE;
 
-#ifdef _AFX
-	class ReadWriteStream : public WriteStream
-	{
-	public:
-	};
-
-	class FileStream : public ReadWriteStream
-	{
-	public:
-		Oop m_file;
-		Oop m_flags;				// In the old FileStream this is the name instance var.
-		Oop m_pageBase;				// not present in old FileStream.
-		Oop m_logicalFileSize;		// not present in old FileStream.
-
-		enum { FileIndex=ReadWriteStream::FixedSize, FlagsIndex, PageBaseIndex, LogicalFileSizeIndex, FixedSize };
-	};
-#endif
-
 #endif	// EOF

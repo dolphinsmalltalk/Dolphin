@@ -158,36 +158,7 @@ bool ObjectMemory::ExpiryImminent()
 
 void ObjectMemory::InitializeImageStamp(void)
 {
-#ifdef _AFX
-	// Prepare the image for release.
-	imageStamp.wLastSaveDate = 0;
-	imageStamp.dwSavesRemaining = 0xFFFFF000;	
-
-	WORD today=todayAsDATEWORD();
-
-	imageStamp.wImageBootDate = today;
-
-	// Set the ZeroDate to be the beginning of this month (this == 0) for jan97.
-	#if defined(FIXED_ZERO_DATE)
-		ObjectMemory::imageStamp.wZeroDate = FIXED_ZERO_DATE;
-	#else
-		WORD mm=MM_FROM_DATEWORD(today);
-		WORD yyyy=YYYY_FROM_DATEWORD(today);
-		ObjectMemory::imageStamp.wZeroDate = DDMMYYYY_AS_DATEWORD(1, mm, yyyy);
-	#endif
-
-	#ifdef FIXED_EXPIRY
-		imageStamp.wExpiryDate = FIXED_EXPIRY;
-	#else
-		imageStamp.wExpiryDate = 0;
-	#endif
-
-	// We don't want it to be expired until it is loaded for the first time from the post
-	// boot part 2 image
-	imageStamp.bIsExpired = false;
-#else
 	memset(&imageStamp, 0, sizeof(ImageStamp));
-#endif
 }
 
 

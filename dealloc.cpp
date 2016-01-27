@@ -149,14 +149,12 @@ OTE* __fastcall ObjectMemory::recursiveFree(OTE* rootOTE)
 	HARDASSERT(!rootOTE->isFree());
 	HARDASSERT(rootOTE->m_flags.m_count == 0);
 
-#ifndef _AFX
 	if (rootOTE->isFinalizable())
 	{
 		finalize(rootOTE);
 		rootOTE->beUnfinalizable();
 	}
 	else
-#endif
 	{
 		// Deal with the class first, as this is now held in the OTE
 		recursiveCountDown(reinterpret_cast<POTE>(rootOTE->m_oteClass));

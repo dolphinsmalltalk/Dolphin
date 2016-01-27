@@ -18,11 +18,6 @@
 #include "rc_vm.h"
 #include "InterprtPrim.inl"
 
-#ifdef _AFX
-	#include "DolphinBoot/IstApp.h"
-	#include "DolphinBoot/errordlg.h"
-#endif
-
 // Smalltalk classes
 #include "STBehavior.h"
 #include "STArray.h"
