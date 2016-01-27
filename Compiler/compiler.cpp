@@ -524,12 +524,13 @@ int Compiler::GenByte(BYTE value, BYTE flags, LexicalScope* pScope)
 
 // Insert an extended instruction at the code pointer, returning the position at which
 // the instruction was inserted.
-inline int Compiler::GenInstructionExtended(BYTE basic, BYTE extension)
+inline int Compiler::GenInstructionExtended(BYTE basic, int extension)
 {
 	// Generate an extended instruction.
 	//
+	_ASSERTE(extension <= 0xFF);
 	int pos=GenInstruction(basic);
-	GenData(extension);
+	GenData(extension & 0xFF);
 	return pos;
 }
 
@@ -712,21 +713,16 @@ void Compiler::GenPushVariable(const Str& strName, const TEXTRANGE& range)
 	}
 }
 
-// Disable warning about truncation of longs to bytes
-#pragma warning(disable:4244)
-
 void Compiler::GenInteger(long val, const TEXTRANGE& range)
 {
 	// Generates code to push a small integer constant.
 	//_ASSERTE(CanBeSmallInteger(val));
-	if (val >=-1 && val<=2)
-		GenInstruction(ShortPushZero + val);
+	if (val >= -1 && val <= 2)
+		GenInstruction((ShortPushZero + val) & 0xFF);
 	else if (val >= -128 && val <= 127)
-		GenInstructionExtended(PushImmediate, val);
+		GenInstructionExtended(PushImmediate, (int) val);
 	else if (val >= -32768 && val <= 32767)
-	{
-		GenLongInstruction(LongPushImmediate, val);
-	}
+		GenLongInstruction(LongPushImmediate, val & 0xFFFF);
 	else
 		GenLiteralConstant(m_piVM->NewSignedInteger(val), range);
 }
@@ -2933,7 +2929,7 @@ POTE Compiler::ParseByteArray()
 					NextToken();
 					break;
 				}
-				elems[elemcount++]=intVal;
+				elems[elemcount++] = intVal & 0xFF;
 				NextToken();
 			}
 			break;
@@ -2947,7 +2943,7 @@ POTE Compiler::ParseByteArray()
 					if (nVal < 0 || nVal > 255)
 						CompileError(CErrBadValueInByteArray);
 					else
-						elems[elemcount++]=ThisTokenInteger();
+						elems[elemcount++] = ThisTokenInteger() & 0xFF;
 					NextToken();
 					break;
 				}
