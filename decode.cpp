@@ -772,7 +772,7 @@ void Interpreter::StackTraceOn(ostream& dc, StackFrame* pFrame, unsigned depth)
 	dc << (depth == 0 ? "<...more...>" : "<Bottom of stack>") << endl;
 }
 
-#if defined(_DEBUG) || defined(_AFX)
+#if defined(_DEBUG)
 
 void Interpreter::WarningWithStackTraceBody(const char* warningCaption, StackFrame* pFrame)
 {
@@ -810,7 +810,7 @@ void Interpreter::WarningWithStackTrace(const char* warningCaption, StackFrame* 
 
 /////////////////////////////////////////////////////////////////////////////
 
-#if defined(_DEBUG) || defined(_AFX)
+#if defined(_DEBUG)
 
 // This is thoroughly nasty, but I don't care because it only required for debugging when C++ walkback might
 // be used.
