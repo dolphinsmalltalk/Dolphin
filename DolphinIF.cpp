@@ -31,7 +31,7 @@ Interface to the Dolphin interpreter for use from external DLLs
 #include "STCharacter.h"
 #include "STFloat.h"
 
-#if 1// def _AFX
+#if 1
 	// Boot version combines compiler into VM
 	#define _DOLPHINAPI(x) x __stdcall
 #else

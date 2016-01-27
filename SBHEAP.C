@@ -11,10 +11,9 @@
 *       Core code for small-block heap.
 *
 *******************************************************************************/
-#ifndef _AFX
+
 #include "segdefs.h"
 #pragma code_seg(MEM_SEG)
-#endif
 
 #undef _CRTBLD
 #include <stddef.h>

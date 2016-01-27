@@ -21,9 +21,7 @@
 #include <io.h>
 #include <fcntl.h>
 #include "binstream.h"
-#ifndef _AFX
-	#include "zfbinstream.h"
-#endif
+#include "zfbinstream.h"
 #include "objmem.h"
 #include "ObjMemPriv.inl"
 #include "interprt.h"
@@ -68,33 +66,10 @@ int __stdcall ObjectMemory::SaveImageFile(const char* szFileName, bool bBackup, 
 	//	ZeroPointer = general save error
 	//	OnePointer = image has expired
 
-	WORD today = todayAsDATEWORD();
-
 	if (!szFileName)
 		return 2;
-
 	
 	int nRet = 3;
-
-#if !defined(OAD) && !defined(_AFX)
-	// Deliberately obfuscate the expiry code a bit to deter those attempting to reverse engineer
-	// What we do here is to set a flag we test later on. Note that we still open the file, but
-	// as a backup, which we then don't complete.
-	if (imageStamp.dwSavesRemaining == 0)
-	{
-		// Can't save an expired image.
-		TRACE("Image has expired\n");
-		nRet = 1;
-
-		// We must use a backup in this case
-		bBackup = true;
-	}
-	else
-	{
-		imageStamp.wLastSaveDate = today;
-		imageStamp.dwSavesRemaining--;
-	}
-#endif
 
 	const char* saveName;
 	char bak[_MAX_PATH];
@@ -158,10 +133,6 @@ int __stdcall ObjectMemory::SaveImageFile(const char* szFileName, bool bBackup, 
 	// User may have modified max table size
 	header.nMaxTableSize	= m_nOTMax;
 
-#ifdef _AFX
-	imageStamp.wImageBootDate = today;
-#endif
-
 	// Create a special Context to hold information about the image and
 	// save it into the image. We'll call this the imageStamp.
 	// When we find this Context on a subsequent image-load, we will be
@@ -192,7 +163,6 @@ int __stdcall ObjectMemory::SaveImageFile(const char* szFileName, bool bBackup, 
 	bool bSaved;
 	{
 		BYTE buf[dwAllocationGranularity];
-#ifndef _AFX
 		if (header.flags.bIsCompressed)
 		{
 			zfbinstream stream;
@@ -203,7 +173,6 @@ int __stdcall ObjectMemory::SaveImageFile(const char* szFileName, bool bBackup, 
 			bSaved = SaveImage(stream, &header, nRet);
 		}
 		else
-#endif
 		{
 			fbinstream stream;
 			// We don't need thread synchronisation
@@ -216,11 +185,9 @@ int __stdcall ObjectMemory::SaveImageFile(const char* szFileName, bool bBackup, 
 			::_close(fd);
 		}
 
-	#ifndef _AFX
 		// Explicitly free the special MethodContext used for the image stamp
 		oteStamp->decRefs();
 		deallocate(reinterpret_cast<OTE*>(oteStamp));
-	#endif
 
 	#ifdef PROFILE_IMAGELOADSAVE
 		DWORD msToRun = GetTickCount() - dwStartTicks;

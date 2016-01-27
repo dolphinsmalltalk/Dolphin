@@ -195,21 +195,16 @@ static long __stdcall unhandledExceptionFilter(EXCEPTION_POINTERS *pExceptionInf
 	return lpTopFilter ? lpTopFilter(pExceptionInfo) : EXCEPTION_CONTINUE_SEARCH;
 }
 
-#ifndef _AFX
-
 static HRESULT DolphinInit(LPCSTR szFileName, LPVOID imageData, UINT imageSize, bool isDevSys)
 {
 	// Find the fileName of the image to load by the VM
 	strncpy_s(achImagePath, szFileName, _MAX_PATH);
 	return Interpreter::initialize(achImagePath, imageData, imageSize, isDevSys);
 }
-#endif
 
 static bool DolphinRun(DWORD dwArg)
 {
-#ifndef _AFX
 	Interpreter::sendStartup(achImagePath, dwArg);
-#endif
 
 	// Start the interpreter (should not return here)
 	__try
@@ -253,7 +248,6 @@ static int vmmainFilter(LPEXCEPTION_POINTERS pEx, EXCEPTION_RECORD& exRec)
 
 #pragma code_seg(INIT_SEG)
 
-#ifndef _AFX
 HRESULT APIENTRY VMInit(LPCSTR szImageName,
 					LPVOID imageData, UINT imageSize,
 					DWORD flags)
@@ -294,4 +288,3 @@ int APIENTRY VMRun(DWORD dwArg)
 
 	return exitCode;
 }
-#endif

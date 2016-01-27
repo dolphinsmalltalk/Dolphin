@@ -65,9 +65,6 @@ extern "C" Oop __stdcall PrimCompileForClass(Oop compilerOop, const char* szSour
 	if (piCompiler == NULL)
 		return Oop(GetVM()->NilPointer());
 
-#ifdef _AFX
-	flags |= Boot;
-#endif
 	return (Oop)piCompiler->CompileForClass(GetVM(), compilerOop, szSource, (POTE)aClass, FLAGS(flags), notifier);
 }
 
@@ -77,9 +74,6 @@ extern "C" Oop __stdcall PrimCompileForEval(Oop compilerOop, const char* szSourc
 	if (piCompiler == NULL)
 		return Oop(GetVM()->NilPointer());
 
-#ifdef _AFX
-	flags |= Boot;
-#endif
 	return (Oop)piCompiler->CompileForEval(GetVM(), compilerOop, szSource, (POTE)aClass, (POTE)aWorkspacePool, FLAGS(flags), notifier);
 }
 

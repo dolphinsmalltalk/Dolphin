@@ -26,9 +26,7 @@ Interpreter interface functions that can be thrown away eventually (or perhaps n
 
 const char* SZREGKEYBASE = "Software\\Object Arts\\Dolphin Smalltalk 6.0";
 
-#ifndef _AFX
-	#include <winreg.h>
-#endif
+#include <winreg.h>
 
 // Smalltalk classes
 #include "STByteArray.h"
@@ -549,9 +547,7 @@ LRESULT CALLBACK Interpreter::DolphinWndProc(HWND hWnd, UINT uMsg, WPARAM wParam
 			_asm int 3;
 	#endif
 
-#ifndef _AFX
 	ResetInputPollCounter();
-#endif
 
 	LRESULT lResult;
 

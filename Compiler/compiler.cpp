@@ -34,7 +34,7 @@ void __cdecl DolphinTrace(LPCTSTR format, ...)
 }
 #endif
 
-#elif !defined(USE_VM_DLL) && !defined(_AFX)
+#elif !defined(USE_VM_DLL)
 #undef NDEBUG
 #include <assert.h>
 #undef _ASSERTE

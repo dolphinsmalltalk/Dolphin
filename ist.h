@@ -78,10 +78,6 @@ typedef MWORD		Oop;
 class ObjectMemory;
 class Interpreter;
 
-#if defined(_DEBUG) && defined(_AFX)
-	#define PROFILING
-#endif
-
 /*
  * Macros to round numbers (borrowed from CRT)
  *
@@ -99,18 +95,10 @@ class Interpreter;
 #define _ROUND(n,r) \
         ( ( ((n)/(r)) + (((n)%(r))?1:0) ) * (r))
 
-#ifndef _AFX
-	HMODULE __stdcall GetResLibHandle();
-	HINSTANCE GetApplicationInstance();
-	void DolphinExitInstance();
-	HMODULE GetModuleContaining(LPCVOID);
-#else
-	#ifdef _AFX
-		#define GetResLibHandle AfxGetInstanceHandle
-		#define GetApplicationInstance AfxGetInstanceHandle
-		#define DolphinMessageBox AfxMessageBox
-	#endif
-#endif
+HMODULE __stdcall GetResLibHandle();
+HINSTANCE GetApplicationInstance();
+void DolphinExitInstance();
+HMODULE GetModuleContaining(LPCVOID);
 
 #include "CritSect.h"
 extern CMonitor traceMonitor;

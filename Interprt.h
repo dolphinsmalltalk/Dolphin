@@ -92,22 +92,8 @@ public:
 	enum { INITIALVMREFERENCES = 16 };
 	static void CreateVMReferences();
 
-	#ifdef _AFX
-		static CString basicPrint(Oop anObject);
-		static CString printString(Oop anObject);
-		// Interface support
-		static CString printStringBody(Oop anObject, SymbolOTE* printSelector);
-		static SMALLUNSIGNED	IndexedSizeOf(Oop anObject);
-		static SMALLUNSIGNED	InstVarCountOf(Oop anObject);
-		static void FileItIn(const char* text);
-		static void SaveImage();
-		//static void SaveImageAs(const char* szFileName);
-		static CString CompileClassified(Oop aBehavior, const char* methodText, const char* category);
-		static Oop Evaluate(Oop receiver, const char* szText, BOOL bLogged);
-	#endif
-
 public:
-	#if defined(_AFX) || defined(_DEBUG)
+	#if defined(_DEBUG)
 		static void AddVMReference(Oop);
 		static void AddVMReference(OTE*);
 		static void RemoveVMReference(Oop);
@@ -170,7 +156,7 @@ public:
 	//static DWORD __fastcall VirtualCallback(SMALLINTEGER id, COMThunk** thisPtr);
 
 	// CompiledMethod bytecode decoding (in decode.cpp)
-	#if defined(_DEBUG) || defined(_AFX)
+	#if defined(_DEBUG)
 		static string activeMethod();
 		static void decodeMethod(CompiledMethod*, ostream* pstream=NULL);
 		static void decodeMethodAt(CompiledMethod*, unsigned ip, ostream&);
@@ -268,10 +254,6 @@ public:
 		static unsigned primitiveIndexOf(Oop methodPointer);
 	#endif
 
-	#ifdef _AFX
-		static BOOL TranscriptOutputString(const char* text);
-	#endif
-
 	// Garbage collection and Finalization/Bereavement Queue management
 	static void syncGC(DWORD gcFlags);
 	static void asyncGC(DWORD gcFlags);
@@ -339,10 +321,6 @@ private:
 	static void initializeVMReferences();
 
 	static void GuiShutdown();
-
-	#ifdef _AFX
-		static void initializeForAfx();
-	#endif
 
 	// Timer init and shutdown
 	static HRESULT initializeTimer();
@@ -415,11 +393,6 @@ private:
 	static OTE* __fastcall dequeueForFinalization();
 	static OTE* dequeueBereaved(VariantObject* out);
 	static void scheduleFinalization();
-
-	// Temporary
-	#ifdef _AFX
-		static void walkBack(const char* msg);
-	#endif
 
 	#ifdef INLINEMEMFNS
 		static BOOL success();
@@ -498,17 +471,15 @@ private:
 
 	static BOOL isAFloat(Oop objectPointer);
 
-#ifndef _AFX
-	private:
-		static HANDLE	m_hSampleTimer;
+private:
+	static HANDLE	m_hSampleTimer;
 
-		static HRESULT InitializeSampler();
-		static void TerminateSampler();
-		static HRESULT SetSampleTimer(SMALLINTEGER newInterval);
-		static void CancelSampleTimer();
-		static VOID CALLBACK SamplerProc(PVOID lpParam, BOOLEAN TimerOrWaitFired);
-		static void ResetInputPollCounter();
-#endif
+	static HRESULT InitializeSampler();
+	static void TerminateSampler();
+	static HRESULT SetSampleTimer(SMALLINTEGER newInterval);
+	static void CancelSampleTimer();
+	static VOID CALLBACK SamplerProc(PVOID lpParam, BOOLEAN TimerOrWaitFired);
+	static void ResetInputPollCounter();
 
 public:
 	///////////////////////////////////////////////////////////////////////////
@@ -703,15 +674,6 @@ private:
 	static BOOL __fastcall primitiveTerminateProcess();
 	static BOOL __fastcall primitiveMillisecondClockValue();
 
-	#ifdef _AFX
-		// Primitives for MFC front-ended version
-		enum { ioOpen, ioClose, ioReadChar, ioWriteChar, ioSeek, ioPosition, ioAtEnd, ioOpenPipe, ioSize, ioDelete, ioRename, ioUpTo, ioNextChunkPut, ioFlush };
-		static BOOL __fastcall primitiveFileIO(CompiledMethod& method, unsigned argumentCount);
-		TODO("Remove this temp. primitive")
-		static BOOL __fastcall primitiveError();
-		static BOOL __fastcall primitiveInspect();
-	#endif
-
 	#ifdef _DEBUG
 		static BOOL __fastcall primitiveExecutionTrace();
 	#endif
@@ -721,13 +683,6 @@ private:
 
 	// Dispatcher Primitives
 	static BOOL __fastcall primitiveHookWindowCreate();
-
-	// Compiler primitives
-#ifdef _AFX
-	static BOOL __fastcall primitiveCompileIn();
-	static BOOL __fastcall primitiveCompileIn2();
-	static BOOL __fastcall primitiveCompileForEvaluation();
-#endif
 
 	// System Primitives
 	static BOOL __fastcall primitiveEquivalent();
@@ -909,7 +864,7 @@ private:
 	static SHAREDLONG	m_nInputPollCounter;			// When this goes to zero, its time to poll for input
 	static LONG			m_nInputPollInterval;			// Poll counter reset to this after each message queue poll
 
-	#if defined(_DEBUG) || defined(_AFX)
+	#if defined(_DEBUG)
 		// List of VM referenced objects (generic mechanism for avoiding GC problems with
 		// objects ref'd only from the VM)
 		static Oop*	m_pVMRefs;

@@ -18,7 +18,7 @@ Smalltalk compiler bytecode optimizer.
 #ifdef _DEBUG
 static int compilationTrace = 1;
 
-#elif !defined(USE_VM_DLL) && !defined(_AFX)
+#elif !defined(USE_VM_DLL)
 #undef NDEBUG
 #include <assert.h>
 #undef _ASSERTE

@@ -38,7 +38,7 @@ public:
 	enum { NameIndex = ClassDescription::FixedSize, ClassPoolIndex,
 			SharedPoolsIndex, CommentIndex, ClassCategoriesIndex, GUIDIndex, FixedSize };
 
-#if defined(_AFX) || defined(_DEBUG)
+#if defined(_DEBUG)
 	const char* getName()
 	{
 		return m_name->m_location->m_characters;

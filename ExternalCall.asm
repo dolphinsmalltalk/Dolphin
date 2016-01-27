@@ -1081,10 +1081,8 @@ ExtCallArgLPSTR:
 	test	[ARG].m_flags, MASK m_pointer				; Pointer object?
 	jnz		tryNil										; Yes, nil passes as null, but other Pointer objects invalid
 
-IFNDEF _AFX
 	test	[ARG].m_flags, MASK m_weakOrZ				; It is a null terminated class?
 	jz		preCallFail									; No, only null terminated objects can be passed as #lpstr
-ENDIF
 
 	mov		ARG, [ARG].m_location
 	ASSUME	ARG:PTR ByteArray							; No, its bytes
