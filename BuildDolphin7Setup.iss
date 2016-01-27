@@ -24,7 +24,6 @@ SetupIconFile=Resources\Dolphin.ico
 UninstallDisplayName=Dolphin Smalltalk 7
 UninstallDisplayIcon={app}\Dolphin7.exe
 AllowUNCPath=False
-WizardImageBackColor=$00C08000
 
 [Languages]
 Name: "english"; MessagesFile: "compiler:Default.isl"
@@ -43,8 +42,7 @@ Source: "DolphinVM7.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "DPRO.chg"; DestDir: "{userdocs}\Dolphin Smalltalk 7"; Flags: ignoreversion
 Source: "DPRO.img7"; DestDir: "{userdocs}\Dolphin Smalltalk 7"; Flags: ignoreversion
 Source: "DPRO.sml"; DestDir: "{userdocs}\Dolphin Smalltalk 7"; Flags: ignoreversion
-Source: "EducationCentre6.chm"; DestDir: "{app}"; Flags: ignoreversion
-Source: "EducationCentrePopups6.hlp"; DestDir: "{app}"; Flags: ignoreversion
+Source: "EducationCentre7.chm"; DestDir: "{app}"; Flags: ignoreversion
 Source: "GUIStub.exe"; DestDir: "{app}"; Flags: ignoreversion
 Source: "GUIToGo.exe"; DestDir: "{app}"; Flags: ignoreversion
 Source: "IPDolphin.dll"; DestDir: "{app}"; Flags: ignoreversion
