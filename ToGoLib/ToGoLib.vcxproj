@@ -385,13 +385,9 @@
     <ClInclude Include="..\DolphinSmalltalk.h" />
     <ClInclude Include="..\DolphinX.h" />
     <ClInclude Include="..\environ.h" />
-    <ClInclude Include="..\errordlg.h" />
     <ClInclude Include="..\InterpRegisters.h" />
     <ClInclude Include="..\interprt.h" />
     <ClInclude Include="..\ist.h" />
-    <ClInclude Include="..\istapp.h" />
-    <ClInclude Include="..\lexer.h" />
-    <ClInclude Include="..\MethodHeader.h" />
     <ClInclude Include="..\objmem.h" />
     <ClInclude Include="..\oopq.h" />
     <ClInclude Include="..\ote.h" />
