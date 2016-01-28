@@ -272,9 +272,7 @@
     <ClInclude Include="..\zlib\zfstream.h" />
     <ClInclude Include="..\zlib\zlib.h" />
     <ClInclude Include="..\zlib\zutil.h" />
-    <ClInclude Include="rc_togostub.h" />
     <ClInclude Include="resource.h" />
-    <ClInclude Include="stub.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\Res\DownArrow.ico" />
