@@ -644,7 +644,7 @@ stashBootInfo
 	"Stash Git status information into this image's version object. Answers the stashed information or nil"
 
 	| info |
-	info := [self class git: 'describe'] on: ExternalProcessExecuteError do: [:ex | nil].
+	info := [self class git: 'describe --tags'] on: ExternalProcessExecuteError do: [:ex | nil].
 	info = '' ifTrue: [info := nil].
 	self bootInfo: info.
 	^info!
