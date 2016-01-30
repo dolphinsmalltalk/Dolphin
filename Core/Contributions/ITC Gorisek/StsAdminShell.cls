@@ -490,7 +490,7 @@ versionSnapshotPackagesList: packageList
 !StsAdminShell class methodsFor!
 
 displayOn: aStream 
-	aStream nextPutAll: 'Souce Tracking Administrator'!
+	aStream nextPutAll: 'Source Tracking Administrator'!
 
 icon
 	"Answers an Icon that can be used to represent this class"
