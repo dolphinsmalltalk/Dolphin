@@ -14,10 +14,13 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DevRes", "DevRes.vcxproj", 
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "InProcStub", "InProcStub\InProcStub.vcxproj", "{CD85B8FA-6C9E-45C0-AFC8-0A79A7E5D0F7}"
 	ProjectSection(ProjectDependencies) = postProject
-		{241D4E3E-44C0-40B7-BE1B-5249916FE631} = {241D4E3E-44C0-40B7-BE1B-5249916FE631}
+		{BC5D162D-46BC-42CF-85DB-CB715EE8517E} = {BC5D162D-46BC-42CF-85DB-CB715EE8517E}
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "InProcToGo", "InProcToGo\InProcToGo.vcxproj", "{90C32F90-C0B1-46FE-BACE-FB6566EB6F3C}"
+	ProjectSection(ProjectDependencies) = postProject
+		{382ABBF3-B32D-4D77-B303-346AA146921C} = {382ABBF3-B32D-4D77-B303-346AA146921C}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GUIStub", "GUIStub\Stub.vcxproj", "{47007458-C534-493F-9A4C-936E5E0C91C8}"
 	ProjectSection(ProjectDependencies) = postProject

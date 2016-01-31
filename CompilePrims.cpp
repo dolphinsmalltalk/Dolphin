@@ -8,7 +8,6 @@
 
 #pragma code_seg(XIF_SEG)
 
-//#include "stdafx.h"
 #include "Compiler_i.h"
 #include "DolphinSmalltalk_i.h"
 
