@@ -18,6 +18,12 @@ DebugDump
 DisplayDesktopMessage
 RemoveDesktopMessage
 RegisterAsEventSource
+argc
+argv
+StdIn
+StdOut
+StdErr
+_snprintf
 
 CompileForClass=_PrimCompileForClass@20
 CompileForEval=_PrimCompileForEval@24

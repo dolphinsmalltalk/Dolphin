@@ -8,7 +8,11 @@ AnswerDWORD=?AnswerDWORD@@YGKK@Z
 AnswerQWORD=?AnswerQWORD@@YG?AUQWORD@@KK@Z
 AnswerDQWORD=?AnswerDQWORD@@YG?AUDQWORD@@KKKK@Z
 Dump
-
+argc
+argv
+StdIn
+StdOut
+StdErr
 CompileForClass=_PrimCompileForClass@20
 CompileForEval=_PrimCompileForEval@24
 
@@ -17,9 +21,6 @@ uncompress
 
 ; CRT functions imported by the image
 
-	__argc DATA
-	__argv DATA
-	_iob DATA
 	__iscsym
 	__iscsymf
 	_chdir
@@ -49,11 +50,6 @@ uncompress
 	_rotl
 	_rotr
 	_setmode
-	_snprintf
-	_snprintf
-	_snprintf
-	_snprintf
-	_snprintf
 	_snprintf
 	_spawnvp
 	_splitpath

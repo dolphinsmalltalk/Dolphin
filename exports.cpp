@@ -81,7 +81,50 @@ DQWORD __stdcall AnswerDQWORD(DWORD dw1, DWORD dw2, DWORD dw3, DWORD dw4)
 	return DQWORD(dw1, dw2, dw3, dw4);
 }
 
+///////////////////////////////////////////////////////////////////////////////
+// As of VS2015 a number of CRT functions/variables that used to be exported 
+// from the C-runtime DLL are now inlined in some way. Although in some cases 
+// there are alternate exports for these, the names are convoluted and they are 
+// not documented for public use. To avoid having a dependency in the image 
+// that may break in future, we export these from the VM
 
+// __argc and __argv are now macros that invoke an internal function
+extern "C" int __cdecl argc()
+{
+	return __argc;
+}
+
+extern "C" char** __cdecl argv()
+{
+	return __argv;
+}
+
+// _snprintf is now inlined. We force a non-inline copy to export from the .def file
+void* reifySnprintf = &_snprintf;
+
+// The old stdio _iob stuff is no longer supported in a compatible way. Rather than introduce
+// an image side dependency on the undocumented _acrt_iob_func export, we add some simple
+// exports to return each of the standard I/O streams
+
+extern "C" FILE* __cdecl StdIn()
+{
+	return stdin;
+}
+
+extern "C" FILE* __cdecl StdOut()
+{
+	return stdout;
+}
+
+extern "C" FILE* __cdecl StdErr()
+{
+	return stderr;
+}
+
+
+
+// End of CRT exports
+///////////////////////////////////////////////////////////////////////////////
 
 #include <atlbase.h>
 
