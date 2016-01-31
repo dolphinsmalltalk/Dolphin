@@ -33,7 +33,7 @@ public:
 	static StringOTE* NewLiteral(const char* szValue);
 };
 
-inline StringOTE* String::New(const char* value)
+inline StringOTE* String::New(LPCSTR value)
 {
 	unsigned len = strlen(value);
 	return NewWithLen(value, len);

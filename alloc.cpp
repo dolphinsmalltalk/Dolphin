@@ -16,10 +16,6 @@
 #include "ObjMemPriv.inl"
 #include "Interprt.h"
 
-#define _CRTBLD
-#include <winheap.h>
-#undef _CRTBLD
-
 #ifdef DOWNLOADABLE
 #include "downloadableresource.h"
 #else

@@ -145,14 +145,9 @@ extern int     __cdecl _heap_init(_In_ int _Mtflag);
 
 extern void    __cdecl _heap_term(void);
 
-_Check_return_ _Ret_opt_bytecap_(_Size) extern _CRTIMP void *  __cdecl _malloc_base(_In_ size_t _Size);
-
-extern _CRTIMP void    __cdecl _free_base(_Inout_opt_ void * _Memory);
-_Check_return_ _Ret_opt_bytecap_(_NewSize) extern void *  __cdecl _realloc_base(_In_opt_ void * _Memory, _In_ size_t _NewSize);
 _Check_return_ _Ret_opt_bytecap_x_(_Count*_Size) extern void *  __cdecl _recalloc_base(_In_opt_ void * _Memory, _In_ size_t _Count, _In_ size_t _Size);
 
 _Check_return_ _Ret_opt_bytecap_(_NewSize) extern void *  __cdecl _expand_base(_In_opt_ void * _Memory, _In_ size_t _NewSize);
-_Check_return_ _Ret_opt_bytecap_x_(_Count*_Size) extern void *  __cdecl _calloc_base(_In_ size_t _Count, _In_ size_t _Size);
 
 _Check_return_ extern size_t  __cdecl _msize_base(_In_ void * _Memory);
 _Check_return_ extern size_t  __cdecl _aligned_msize_base(_In_ void * _Memory, _In_ size_t _Alignment, _In_ size_t _Offset);

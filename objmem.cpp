@@ -250,7 +250,7 @@ ArrayOTE* __fastcall ObjectMemory::subinstancesOf(BehaviorOTE* classPointer)
 
 // Disable warning about exception handling (we compile with exception handling disabled)
 #pragma warning (disable:4530)
-#include <hash_map>
+#include <unordered_map>
 
 template <class T> inline size_t hash_value(TOTE<T>* ote)
 {
@@ -291,14 +291,6 @@ public:
 		return ((size_t)hash_value(_Keyval));
 		}
 
-//	size_t operator()(const _Kty& _Keyval) const
-//		{	// hash _Keyval to size_t value by pseudorandomizing transform
-//		ldiv_t _Qrem = ldiv((size_t)_Keyval, 127773);
-//		_Qrem.rem = 16807 * _Qrem.rem - 2836 * _Qrem.quot;
-//		if (_Qrem.rem < 0)
-//			_Qrem.rem += 2147483647;
-//		return ((size_t)_Qrem.rem); }
-
 	bool operator()(const _Kty& _Keyval1, const _Kty& _Keyval2) const
 		{	// test if _Keyval1 ordered before _Keyval2
 		return (comp(_Keyval1, _Keyval2));
@@ -307,7 +299,7 @@ public:
 protected:
 	_Pr comp;	// the comparator object
 	};
-typedef stdext::hash_map<BehaviorOTE*,InstStats, hash_compare2<BehaviorOTE*> > ClassCountMap;
+typedef unordered_map<BehaviorOTE*,InstStats, hash_compare2<BehaviorOTE*> > ClassCountMap;
 
 static int storageSize(OTE* ote)
 {

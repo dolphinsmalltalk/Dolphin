@@ -15,7 +15,6 @@
 #include "rc_vm.h"
 #include "interprt.h"
 #include "VMExcept.h"
-#include "RegKey.h"
 
 void CrashDump(EXCEPTION_POINTERS *pExceptionInfo, const char* achImagePath);
 
