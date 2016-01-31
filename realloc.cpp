@@ -15,10 +15,6 @@
 #include "interprt.h"
 #include "ObjMemPriv.inl"
 
-#define _CRTBLD
-#include <winheap.h>
-#undef _CRTBLD
-
 // Smalltalk classes
 #include "STBehavior.h"		// Need to look at class flags, and fixed fields
 #include "STVirtualObject.h"

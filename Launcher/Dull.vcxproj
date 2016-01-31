@@ -191,7 +191,6 @@
     <ClInclude Include="..\startvm.h" />
     <ClInclude Include="ImageFileMapping.h" />
     <ClInclude Include="resource.h" />
-    <ClInclude Include="StdAfx.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\Res\flipper.ico" />
