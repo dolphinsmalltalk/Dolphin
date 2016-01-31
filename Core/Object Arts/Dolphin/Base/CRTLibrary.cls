@@ -204,20 +204,6 @@ _setmode: fd mode: modeFlag
 	<cdecl: sdword _setmode sdword sdword>
 	^self invalidCall!
 
-_snprintf: buffer count: maxbuf format: format with: arg
-	"Private - Write data formatted by the format string into the buffer.
-	see _snprintf:count:format:with:with:with: for further information."
-
-	<cdecl: sdword _snprintf lpvoid intptr lpstr lpvoid>
-	^self invalidCall!
-
-_snprintf: buffer count: maxbuf format: format with: arg1 with: arg2
-	"Private - Write data formatted by the format string into the buffer.
-	see _snprintf:count:format:with:with:with: for further information."
-
-	<cdecl: sdword _snprintf lpvoid intptr lpstr lpvoid lpvoid>
-	^self invalidCall!
-
 _spawnvp: mode cmdname: aString argv: argv
 	"Spawn a new process.
 
@@ -291,17 +277,6 @@ acos: aFloat
 	<cdecl: double acos double>
 	^self invalidCall!
 
-argc
-	"Answer the number of arguments passed to the host executable at startup"
-
-	^(self getProcAddress: '__argc') sdwordAtOffset: 0!
-
-argv
-	"Answer the array of strings which constitute the command line arguments, 
-	starting with the host executable's full path."
-
-	^((self getProcAddress: '__argv') dwordAtOffset: 0) asExternalAddress!
-
 asin: aFloat
 	"Answer the arcsine of the argument, aFloat.
 
@@ -346,27 +321,6 @@ close
 	"The C-runtime library cannot be closed."
 
 	^false!
-
-connectDescriptor: fdInteger toWinStdHandle: stdHandleInteger mode: modeString
-	"Private - Connect the CRT FILE with the descriptor/index, fdInteger, to the standard Win32 OS file
-	handle identified by the constant, stdHandleInteger. Answer the handle of the CRT file stream.
-	This is necessary to correctly associate CRT stdin/stdout streams with the correct OS file handles after 
-	allocating a console in a GUI app. See MSDN article Q105305."
-
-	| fd2 hFile |
-	fd2 := CRTLibrary default
-				_open_osfhandle: (KernelLibrary default getStdHandle: stdHandleInteger)
-				flags: 0.
-	fd2 < 0 ifTrue: [CRTError signal].
-	hFile := CRTLibrary default _fdopen: fd2 mode: modeString.
-	"It seems a bit of a hack to overwrite the CRT structure in this way, but this is what the code in the MSDN
-	 article does (a structure assignment)"
-	CRTLibrary default 
-		memcpy: (self getStdHandle: fdInteger) asInteger 
-		src: hFile asInteger 
-		count: self sizeofFILE.
-	^hFile
-!
 
 cos: aFloat
 	"Answer the cosine of the argument, aFloat.
@@ -451,6 +405,14 @@ fread: buffer size: size count: count stream: aFILE
 	<overlap cdecl: sdword fread lpvoid intptr intptr handle>
 	^self invalidCall!
 
+freopen: pathString mode: modeString stream: anExternalHandle
+	"Reassigns a file pointer
+		FILE *freopen(const char* path, int handle, const char *mode );"
+
+	<cdecl: handle freopen char* char* handle>
+	^self invalidCall
+!
+
 frexp: x expptr: expptr
 
 	<cdecl: double frexp double sdword*>
@@ -479,13 +441,6 @@ getenv: varname
 	<cdecl: lpstr getenv lpstr>
 	^self invalidCall
 !
-
-getStdHandle: fdInteger
-	"Private - Answer the CRT stream (FILE*) handle of the standard file stream with the specified index
-	(0 = stdin, 1 = stdout, 2 = stderr)."
-
-	^((CRTLibrary default getProcAddress: '_iob') asInteger
-		+ (fdInteger * self sizeofFILE)) asExternalHandle!
 
 initialize
 	"Private - Initialize and answer the receiver."
@@ -611,12 +566,6 @@ sin: aFloat
 
 	<cdecl: double sin double>
 	^self invalidCall!
-
-sizeofFILE
-	"Private - Answer the size, in bytes, of the CRT FILE structure."
-
-	^32
-!
 
 sqrt: aFloat
 	"Answer the square root of the argument, aFloat."
@@ -747,8 +696,6 @@ wcscspn: aUnicodeString strCharSet: strCharSet
 !CRTLibrary categoriesFor: #_rotl:shift:!CRT functions-bit manipulation!public! !
 !CRTLibrary categoriesFor: #_rotr:shift:!CRT functions-bit manipulation!public! !
 !CRTLibrary categoriesFor: #_setmode:mode:!CRT functions-file handling!public! !
-!CRTLibrary categoriesFor: #_snprintf:count:format:with:!CRT functions-stream I/O!private! !
-!CRTLibrary categoriesFor: #_snprintf:count:format:with:with:!CRT functions-stream I/O!private! !
 !CRTLibrary categoriesFor: #_spawnvp:cmdname:argv:!CRT functions-process and environment control!public! !
 !CRTLibrary categoriesFor: #_splitpath:drive:dir:fname:ext:!CRT functions-file handling!public! !
 !CRTLibrary categoriesFor: #_stricmp:string2:!CRT functions-string manipulation!public! !
@@ -756,15 +703,12 @@ wcscspn: aUnicodeString strCharSet: strCharSet
 !CRTLibrary categoriesFor: #_strnicmp:string2:count:!CRT functions-string manipulation!public! !
 !CRTLibrary categoriesFor: #_strrev:!CRT functions-string manipulation!public! !
 !CRTLibrary categoriesFor: #acos:!CRT functions-floating point support!public! !
-!CRTLibrary categoriesFor: #argc!accessing!public! !
-!CRTLibrary categoriesFor: #argv!accessing!public! !
 !CRTLibrary categoriesFor: #asin:!CRT functions-floating point support!public! !
 !CRTLibrary categoriesFor: #atan:!CRT functions-floating point support!public! !
 !CRTLibrary categoriesFor: #atan:x:!CRT functions-floating point support!public! !
-!CRTLibrary categoriesFor: #atoi:!CRT functions-floating point support!public! !
+!CRTLibrary categoriesFor: #atoi:!CRT functions-data conversion!public! !
 !CRTLibrary categoriesFor: #ceil:!CRT functions-floating point support!public! !
 !CRTLibrary categoriesFor: #close!public!realizing/unrealizing! !
-!CRTLibrary categoriesFor: #connectDescriptor:toWinStdHandle:mode:!helpers!public! !
 !CRTLibrary categoriesFor: #cos:!CRT functions-floating point support!public! !
 !CRTLibrary categoriesFor: #decimalSeparator!enquiries!private! !
 !CRTLibrary categoriesFor: #errno!CRT functions-process and environment control!public! !
@@ -779,12 +723,12 @@ wcscspn: aUnicodeString strCharSet: strCharSet
 !CRTLibrary categoriesFor: #fopen:mode:!CRT functions-stream I/O!public! !
 !CRTLibrary categoriesFor: #fputc:stream:!CRT functions-stream I/O!public! !
 !CRTLibrary categoriesFor: #fread:size:count:stream:!CRT functions-stream I/O!public! !
+!CRTLibrary categoriesFor: #freopen:mode:stream:!CRT functions-stream I/O!public! !
 !CRTLibrary categoriesFor: #frexp:expptr:!CRT functions-floating point support!public! !
 !CRTLibrary categoriesFor: #fseek:offset:origin:!CRT functions-stream I/O!public! !
 !CRTLibrary categoriesFor: #ftell:!CRT functions-stream I/O!public! !
 !CRTLibrary categoriesFor: #fwrite:size:count:stream:!CRT functions-stream I/O!public! !
 !CRTLibrary categoriesFor: #getenv:!CRT functions-process and environment control!public! !
-!CRTLibrary categoriesFor: #getStdHandle:!helpers!private! !
 !CRTLibrary categoriesFor: #initialize!initializing!private! !
 !CRTLibrary categoriesFor: #iswcntrl:!CRT functions-character classification!public! !
 !CRTLibrary categoriesFor: #iswprint:!CRT functions-character classification!public! !
@@ -803,7 +747,6 @@ wcscspn: aUnicodeString strCharSet: strCharSet
 !CRTLibrary categoriesFor: #rewind:!CRT functions-stream I/O!public! !
 !CRTLibrary categoriesFor: #setlocale:locale:!CRT functions-localization!public! !
 !CRTLibrary categoriesFor: #sin:!CRT functions-floating point support!public! !
-!CRTLibrary categoriesFor: #sizeofFILE!constants!private! !
 !CRTLibrary categoriesFor: #sqrt:!CRT functions-floating point support!public! !
 !CRTLibrary categoriesFor: #srand:!CRT functions-floating point support!public! !
 !CRTLibrary categoriesFor: #strcat:strSource:!CRT functions-string manipulation!public! !
@@ -815,7 +758,7 @@ wcscspn: aUnicodeString strCharSet: strCharSet
 !CRTLibrary categoriesFor: #strpbrk:strCharSet:!CRT functions-string manipulation!public! !
 !CRTLibrary categoriesFor: #synchronizeLocale!CRT functions-localization!private! !
 !CRTLibrary categoriesFor: #tan:!CRT functions-floating point support!public! !
-!CRTLibrary categoriesFor: #thread_chmod:pmode:!public!unit tests! !
+!CRTLibrary categoriesFor: #thread_chmod:pmode:!CRT functions-file handling!public! !
 !CRTLibrary categoriesFor: #thread_errno!CRT functions-process and environment control!public! !
 !CRTLibrary categoriesFor: #ungetc:stream:!CRT functions-stream I/O!public! !
 !CRTLibrary categoriesFor: #wcscspn:strCharSet:!CRT functions-string manipulation!public! !

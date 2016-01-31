@@ -23,6 +23,20 @@ Class Variables:
 !VMLibrary categoriesForClass!External-Libraries! !
 !VMLibrary methodsFor!
 
+_snprintf: buffer count: maxbuf format: format with: arg
+	"Private - Write data formatted by the format string into the buffer.
+	see _snprintf:count:format:with:with:with: for further information."
+
+	<cdecl: sdword _snprintf lpvoid intptr lpstr lpvoid>
+	^self invalidCall!
+
+_snprintf: buffer count: maxbuf format: format with: arg1 with: arg2
+	"Private - Write data formatted by the format string into the buffer.
+	see _snprintf:count:format:with:with:with: for further information."
+
+	<cdecl: sdword _snprintf lpvoid intptr lpstr lpvoid lpvoid>
+	^self invalidCall!
+
 addressFromInteger: anInteger
 	"Private - Answer a new ExternalAddress instantiated from the argument.
 	Implementation Note: AnswerDWORD() is a simple function which returns its 32-bit argument.
@@ -37,6 +51,19 @@ applicationHandle
 	"Answer the handle of the Dolphin application instance."
 
 	^Registry at: 123!
+
+argc
+	"Private - Answer the number of arguments passed to the host executable at startup"
+
+	<cdecl: sdword argc>
+	^self invalidCall!
+
+argv
+	"Private - Answer a pointer to the array of strings which constitute the command line arguments, 
+	starting with the host executable's full path."
+
+	<cdecl: StructureArray* argv>
+	^self invalidCall!
 
 basePatchLevel
 	"Private - Answer the base patch level of this image. We can assume that the image already
@@ -372,6 +399,24 @@ specialSelectors
 
 	^self registry copyFrom: specialSelectorStart to: specialSelectorStart+31!
 
+stderr
+	"Private - Answer the handle of the CRT stdio standard error stream"
+
+	<cdecl: handle StdErr>
+	^self invalidCall!
+
+stdin
+	"Private - Answer the handle of the CRT stdio standard input stream"
+
+	<cdecl: handle StdIn>
+	^self invalidCall!
+
+stdout
+	"Private - Answer the handle of the CRT stdio standard output stream"
+
+	<cdecl: handle StdOut>
+	^self invalidCall!
+
 stringFromAddress: pointer 
 	"Private - Answer a new String instantiated from the null-terminated String pointed 
 	at by the argument.
@@ -419,8 +464,12 @@ versionFormatString
 	"Private - Answer a String containing the version format used by the receiver."
 
 	^'%3!!d!!.%4!!d!!%5!!d!!'! !
+!VMLibrary categoriesFor: #_snprintf:count:format:with:!helpers!private! !
+!VMLibrary categoriesFor: #_snprintf:count:format:with:with:!helpers!private! !
 !VMLibrary categoriesFor: #addressFromInteger:!helpers!private! !
 !VMLibrary categoriesFor: #applicationHandle!accessing-handles!public! !
+!VMLibrary categoriesFor: #argc!accessing!private! !
+!VMLibrary categoriesFor: #argv!accessing!private! !
 !VMLibrary categoriesFor: #basePatchLevel!constants!patching!private! !
 !VMLibrary categoriesFor: #bytecodeVersion!accessing-version!public! !
 !VMLibrary categoriesFor: #compilerFileName!accessing!private! !
@@ -459,6 +508,9 @@ versionFormatString
 !VMLibrary categoriesFor: #shortName!accessing!public! !
 !VMLibrary categoriesFor: #signedFromUnsigned:!helpers!private! !
 !VMLibrary categoriesFor: #specialSelectors!accessing-registry!private! !
+!VMLibrary categoriesFor: #stderr!accessing-handles!private! !
+!VMLibrary categoriesFor: #stdin!accessing-handles!private! !
+!VMLibrary categoriesFor: #stdout!accessing-handles!private! !
 !VMLibrary categoriesFor: #stringFromAddress:!helpers!private! !
 !VMLibrary categoriesFor: #unlockVM:expireAfter:flags:!locking!private! !
 !VMLibrary categoriesFor: #unregisterObject:!accessing-registry!private! !
