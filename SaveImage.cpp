@@ -267,9 +267,9 @@ bool __stdcall ObjectMemory::SaveObjects(obinstream& imageFile, const ImageHeade
 			if (ote->heapSpace() == OTEFlags::VirtualSpace)
 			{
 				VirtualObject* vObj = reinterpret_cast<VirtualObject*>(obj);
-				VirtualObjectHeader* pHeader = vObj->getHeader();
+				VirtualObjectHeader* pObjHeader = vObj->getHeader();
 
-				imageFile.write(pHeader, sizeof(VirtualObjectHeader));
+				imageFile.write(pObjHeader, sizeof(VirtualObjectHeader));
 				dwDataSize += sizeof(VirtualObjectHeader);
 			}
 
