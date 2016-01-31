@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ArrayedCollection variableByteSubclass: #String
 	instanceVariableNames: ''
@@ -816,7 +816,7 @@ sprintfWith: arg1
 	Note: This is much faster than formatWith:."
 
 	| n crt buf size |
-	crt := CRTLibrary default.
+	crt := VMLibrary default.
 	size := self size + 64.
 	
 	[buf := String new: size.
@@ -839,7 +839,7 @@ sprintfWith: arg1 with: arg2
 	Note: This is much faster than formatWith:with:."
 
 	| written lib buf size |
-	lib := CRTLibrary default.
+	lib :=  VMLibrary default.
 	size := self size + 128.
 	
 	[buf := String new: size.

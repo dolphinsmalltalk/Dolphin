@@ -63,28 +63,6 @@ isEmbedding
 onSettingChanged: aWindowsEvent 
 	SystemMetrics current onSettingChanged: aWindowsEvent!
 
-openConsoleStreams
-	"Private - Open the standard console I/O streams. Note that the actual
-	C-runtime library stdin/stdout/stderr streams will be correctly set up so
-	that it is possible to use the CRT stdio functions such as puts(), printf(), etc."
-
-	| crt |
-	stdioStreams isNil ifFalse: [^self].
-	crt := CRTLibrary default.
-	stdioStreams := Array 
-				with: (StdioFileStream fromHandle: (crt 
-								connectDescriptor: 0
-								toWinStdHandle: STD_INPUT_HANDLE
-								mode: 'rt'))
-				with: (StdioFileStream fromHandle: (crt 
-								connectDescriptor: 1
-								toWinStdHandle: STD_OUTPUT_HANDLE
-								mode: 'wt'))
-				with: (StdioFileStream fromHandle: (crt 
-								connectDescriptor: 2
-								toWinStdHandle: STD_ERROR_HANDLE
-								mode: 'wt'))!
-
 resourceManager
 	"Answer the resource manager to use to locate resources"
 
@@ -167,7 +145,6 @@ windowSystemStartup
 !GUISessionManager categoriesFor: #commandLineParser!helpers!private! !
 !GUISessionManager categoriesFor: #isEmbedding!public!testing! !
 !GUISessionManager categoriesFor: #onSettingChanged:!event handling!private! !
-!GUISessionManager categoriesFor: #openConsoleStreams!operations!private! !
 !GUISessionManager categoriesFor: #resourceManager!accessing!public! !
 !GUISessionManager categoriesFor: #restoreWindowState!operations-startup!private! !
 !GUISessionManager categoriesFor: #saveSessionState!operations!public! !

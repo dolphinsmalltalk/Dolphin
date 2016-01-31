@@ -41,38 +41,6 @@ onPreSaveImage
 	self class environment at: #Delay ifPresent: [:d | d onPreSaveImage]
 !
 
-onUnhandledNotification: aNotification
-	"The unhandled Notification, aNotification, occurred in the active Process.
-	Display the notification description on the Transcript (or other trace device)."
-
-	aNotification toTrace.
-	^nil!
-
-openConsoleStreams
-	"Private - Open the standard console I/O streams. Note that the actual
-	C-runtime library stdin/stdout/stderr streams will be correctly set up so
-	that it is possible to use the CRT stdio functions such as puts(), printf(), etc.
-	Implementation Note: A boot session is run by the GUI stub and therefore
-	the CRT streams will not have been initialized."
-
-	stdioStreams isNil 
-		ifTrue: 
-			[| crt |
-			crt := CRTLibrary default.
-			stdioStreams := Array 
-						with: (StdioFileStream fromHandle: (crt 
-										connectDescriptor: 0
-										toWinStdHandle: STD_INPUT_HANDLE
-										mode: 'rt'))
-						with: (StdioFileStream fromHandle: (crt 
-										connectDescriptor: 1
-										toWinStdHandle: STD_OUTPUT_HANDLE
-										mode: 'wt'))
-						with: (StdioFileStream fromHandle: (crt 
-										connectDescriptor: 2
-										toWinStdHandle: STD_ERROR_HANDLE
-										mode: 'wt'))]!
-
 openSources
 	"Private - Open the source files with names derived from the current image path."
 
@@ -215,8 +183,6 @@ unhandledException: anException
 !BootSessionManager categoriesFor: #keepAlive!idling!public! !
 !BootSessionManager categoriesFor: #main!operations-startup!public! !
 !BootSessionManager categoriesFor: #onPreSaveImage!public! !
-!BootSessionManager categoriesFor: #onUnhandledNotification:!event handling!public! !
-!BootSessionManager categoriesFor: #openConsoleStreams!operations!private! !
 !BootSessionManager categoriesFor: #openSources!operations-source files!private! !
 !BootSessionManager categoriesFor: #primaryStartup!operations-startup!private! !
 !BootSessionManager categoriesFor: #productDetails!accessing!private!product! !
