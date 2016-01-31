@@ -1,4 +1,4 @@
-"7:58:50 PM, Saturday, January 23, 2016: Compressing sources...."!
+"17:23:15, 31 January 2016: Compressing sources...."!
 
 Object comment:
 'Object is the abstract root of the standard Smalltalk class hierarchy. It has no instance variables (indeed it must not have any), but provides behavior common to all objects.
@@ -23657,11 +23657,12 @@ argv
 
 	argv isNil 
 		ifTrue: 
-			[| lib pArray |
-			lib := CRTLibrary default.
-			pArray := lib argv.
-			argv := (0 to: (lib argc - 1) * VMConstants.IntPtrSize by: VMConstants.IntPtrSize) 
-						collect: [:offset | String fromAddress: (pArray dwordAtOffset: offset)]].
+			[| lib |
+			lib := VMLibrary default.
+			argv := (lib argv)
+						elementClass: LPSTR;
+						basicLength: lib argc;
+						asArray].
 	^argv!
 
 argvLegacyOptionsRemoved
@@ -24284,9 +24285,28 @@ openConsole
 	^wasOpen!
 
 openConsoleStreams
-	"Private - Open the standard console I/O streams."
+	"Private - Open the standard console I/O streams. Note that the actual
+	C-runtime library stdin/stdout/stderr streams will be correctly set up so
+	that it is possible to use the CRT stdio functions such as puts(), printf(), etc."
 
-	^self subclassResponsibility!
+	| crt vm |
+	stdioStreams isNil ifFalse: [^self].
+	crt := CRTLibrary default.
+	vm := VMLibrary default.
+	stdioStreams := (Array 
+				with: (crt 
+						freopen: 'CONIN$'
+						mode: 'rt'
+						stream: vm stdin)
+				with: (crt 
+						freopen: 'CONOUT$'
+						mode: 'wt'
+						stream: vm stdout)
+				with: (crt 
+						freopen: 'CONOUT$'
+						mode: 'wt'
+						stream: vm stderr)) 
+					collect: [:each | StdioFileStream fromHandle: each]!
 
 openEventLog
 	"Private - Open the NT event log for writing, and answer a handle onto it that can be passed to the
@@ -35744,7 +35764,7 @@ sprintfWith: arg1
 	Note: This is much faster than formatWith:."
 
 	| n crt buf size |
-	crt := CRTLibrary default.
+	crt := VMLibrary default.
 	size := self size + 64.
 	
 	[buf := String new: size.
@@ -35767,7 +35787,7 @@ sprintfWith: arg1 with: arg2
 	Note: This is much faster than formatWith:with:."
 
 	| written lib buf size |
-	lib := CRTLibrary default.
+	lib :=  VMLibrary default.
 	size := self size + 128.
 	
 	[buf := String new: size.
@@ -44412,20 +44432,6 @@ _setmode: fd mode: modeFlag
 	<cdecl: sdword _setmode sdword sdword>
 	^self invalidCall!
 
-_snprintf: buffer count: maxbuf format: format with: arg
-	"Private - Write data formatted by the format string into the buffer.
-	see _snprintf:count:format:with:with:with: for further information."
-
-	<cdecl: sdword _snprintf lpvoid intptr lpstr lpvoid>
-	^self invalidCall!
-
-_snprintf: buffer count: maxbuf format: format with: arg1 with: arg2
-	"Private - Write data formatted by the format string into the buffer.
-	see _snprintf:count:format:with:with:with: for further information."
-
-	<cdecl: sdword _snprintf lpvoid intptr lpstr lpvoid lpvoid>
-	^self invalidCall!
-
 _spawnvp: mode cmdname: aString argv: argv
 	"Spawn a new process.
 
@@ -44499,17 +44505,6 @@ acos: aFloat
 	<cdecl: double acos double>
 	^self invalidCall!
 
-argc
-	"Answer the number of arguments passed to the host executable at startup"
-
-	^(self getProcAddress: '__argc') sdwordAtOffset: 0!
-
-argv
-	"Answer the array of strings which constitute the command line arguments, 
-	starting with the host executable's full path."
-
-	^((self getProcAddress: '__argv') dwordAtOffset: 0) asExternalAddress!
-
 asin: aFloat
 	"Answer the arcsine of the argument, aFloat.
 
@@ -44554,27 +44549,6 @@ close
 	"The C-runtime library cannot be closed."
 
 	^false!
-
-connectDescriptor: fdInteger toWinStdHandle: stdHandleInteger mode: modeString
-	"Private - Connect the CRT FILE with the descriptor/index, fdInteger, to the standard Win32 OS file
-	handle identified by the constant, stdHandleInteger. Answer the handle of the CRT file stream.
-	This is necessary to correctly associate CRT stdin/stdout streams with the correct OS file handles after 
-	allocating a console in a GUI app. See MSDN article Q105305."
-
-	| fd2 hFile |
-	fd2 := CRTLibrary default
-				_open_osfhandle: (KernelLibrary default getStdHandle: stdHandleInteger)
-				flags: 0.
-	fd2 < 0 ifTrue: [CRTError signal].
-	hFile := CRTLibrary default _fdopen: fd2 mode: modeString.
-	"It seems a bit of a hack to overwrite the CRT structure in this way, but this is what the code in the MSDN
-	 article does (a structure assignment)"
-	CRTLibrary default 
-		memcpy: (self getStdHandle: fdInteger) asInteger 
-		src: hFile asInteger 
-		count: self sizeofFILE.
-	^hFile
-!
 
 cos: aFloat
 	"Answer the cosine of the argument, aFloat.
@@ -44659,6 +44633,14 @@ fread: buffer size: size count: count stream: aFILE
 	<overlap cdecl: sdword fread lpvoid intptr intptr handle>
 	^self invalidCall!
 
+freopen: pathString mode: modeString stream: anExternalHandle
+	"Reassigns a file pointer
+		FILE *freopen(const char* path, int handle, const char *mode );"
+
+	<cdecl: handle freopen char* char* handle>
+	^self invalidCall
+!
+
 frexp: x expptr: expptr
 
 	<cdecl: double frexp double sdword*>
@@ -44687,13 +44669,6 @@ getenv: varname
 	<cdecl: lpstr getenv lpstr>
 	^self invalidCall
 !
-
-getStdHandle: fdInteger
-	"Private - Answer the CRT stream (FILE*) handle of the standard file stream with the specified index
-	(0 = stdin, 1 = stdout, 2 = stderr)."
-
-	^((CRTLibrary default getProcAddress: '_iob') asInteger
-		+ (fdInteger * self sizeofFILE)) asExternalHandle!
 
 initialize
 	"Private - Initialize and answer the receiver."
@@ -44820,12 +44795,6 @@ sin: aFloat
 	<cdecl: double sin double>
 	^self invalidCall!
 
-sizeofFILE
-	"Private - Answer the size, in bytes, of the CRT FILE structure."
-
-	^32
-!
-
 sqrt: aFloat
 	"Answer the square root of the argument, aFloat."
 
@@ -44909,6 +44878,10 @@ tan: aFloat
 	"Answer the Tangent of the argument, aFloat."
 
 	<cdecl: double tan double>
+	^self invalidCall!
+
+thread_chmod: aFilenameString pmode: aModeInteger
+	<overlap cdecl: sdword _chmod lpstr sdword>
 	^self invalidCall!
 
 thread_errno
@@ -47677,6 +47650,20 @@ registryKeys
 
 !VMLibrary methodsFor!
 
+_snprintf: buffer count: maxbuf format: format with: arg
+	"Private - Write data formatted by the format string into the buffer.
+	see _snprintf:count:format:with:with:with: for further information."
+
+	<cdecl: sdword _snprintf lpvoid intptr lpstr lpvoid>
+	^self invalidCall!
+
+_snprintf: buffer count: maxbuf format: format with: arg1 with: arg2
+	"Private - Write data formatted by the format string into the buffer.
+	see _snprintf:count:format:with:with:with: for further information."
+
+	<cdecl: sdword _snprintf lpvoid intptr lpstr lpvoid lpvoid>
+	^self invalidCall!
+
 addressFromInteger: anInteger
 	"Private - Answer a new ExternalAddress instantiated from the argument.
 	Implementation Note: AnswerDWORD() is a simple function which returns its 32-bit argument.
@@ -47691,6 +47678,19 @@ applicationHandle
 	"Answer the handle of the Dolphin application instance."
 
 	^Registry at: 123!
+
+argc
+	"Private - Answer the number of arguments passed to the host executable at startup"
+
+	<cdecl: sdword argc>
+	^self invalidCall!
+
+argv
+	"Private - Answer a pointer to the array of strings which constitute the command line arguments, 
+	starting with the host executable's full path."
+
+	<cdecl: StructureArray* argv>
+	^self invalidCall!
 
 basePatchLevel
 	"Private - Answer the base patch level of this image. We can assume that the image already
@@ -48025,6 +48025,24 @@ specialSelectors
 	"
 
 	^self registry copyFrom: specialSelectorStart to: specialSelectorStart+31!
+
+stderr
+	"Private - Answer the handle of the CRT stdio standard error stream"
+
+	<cdecl: handle StdErr>
+	^self invalidCall!
+
+stdin
+	"Private - Answer the handle of the CRT stdio standard input stream"
+
+	<cdecl: handle StdIn>
+	^self invalidCall!
+
+stdout
+	"Private - Answer the handle of the CRT stdio standard output stream"
+
+	<cdecl: handle StdOut>
+	^self invalidCall!
 
 stringFromAddress: pointer 
 	"Private - Answer a new String instantiated from the null-terminated String pointed 
@@ -60742,38 +60760,6 @@ onPreSaveImage
 	self class environment at: #Delay ifPresent: [:d | d onPreSaveImage]
 !
 
-onUnhandledNotification: aNotification
-	"The unhandled Notification, aNotification, occurred in the active Process.
-	Display the notification description on the Transcript (or other trace device)."
-
-	aNotification toTrace.
-	^nil!
-
-openConsoleStreams
-	"Private - Open the standard console I/O streams. Note that the actual
-	C-runtime library stdin/stdout/stderr streams will be correctly set up so
-	that it is possible to use the CRT stdio functions such as puts(), printf(), etc.
-	Implementation Note: A boot session is run by the GUI stub and therefore
-	the CRT streams will not have been initialized."
-
-	stdioStreams isNil 
-		ifTrue: 
-			[| crt |
-			crt := CRTLibrary default.
-			stdioStreams := Array 
-						with: (StdioFileStream fromHandle: (crt 
-										connectDescriptor: 0
-										toWinStdHandle: STD_INPUT_HANDLE
-										mode: 'rt'))
-						with: (StdioFileStream fromHandle: (crt 
-										connectDescriptor: 1
-										toWinStdHandle: STD_OUTPUT_HANDLE
-										mode: 'wt'))
-						with: (StdioFileStream fromHandle: (crt 
-										connectDescriptor: 2
-										toWinStdHandle: STD_ERROR_HANDLE
-										mode: 'wt'))]!
-
 openSources
 	"Private - Open the source files with names derived from the current image path."
 
@@ -60795,7 +60781,8 @@ productDetails
 	4. <readableString> Version special
 	5. <Integer> Image patch level
 	6 <readableString> Very short product name
-	7 <readableString> Serial number"
+	7 <readableString> Serial number
+	8 <readableString> Boot source info"
 
 	productDetails isNil ifTrue: [productDetails := VMLibrary default defaultProductDetails].
 	^productDetails!
@@ -61010,14 +60997,16 @@ onCloseConsole
 openConsoleStreams
 	"Private - Open the standard console I/O streams.
 	In this case we attach to pre-existing C run-time library stdio streams, as they
-	will be correctly set up."
+	will have been correctly set up by CRT library initialization."
 
-	stdioStreams isNil ifTrue: [ | crt |
-		crt := CRTLibrary default.
-		stdioStreams := Array new: 3.
-		0 to: 2 do: [:i | stdioStreams at: i+1 put: (StdioFileStream fromHandle: (crt getStdHandle: i))]].
-
-	"Note that all the above streams should be in text/translating mode"!
+	| vm |
+	stdioStreams isNil ifFalse: [^self].
+	"Note that all the stdio streams should be in text/translating mode"
+	vm := VMLibrary default.
+	stdioStreams := (Array 
+				with: vm stdin
+				with: vm stdout
+				with: vm stderr) collect: [:each | StdioFileStream fromHandle: each]!
 
 startUI
 	"Start up the input loop/message loop (instruct InputState appropriate depending on whether
