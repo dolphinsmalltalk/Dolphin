@@ -1,1 +1,4 @@
 * text=crlf
+
+*.st  eol=crlf
+*.cls eol=crlf
