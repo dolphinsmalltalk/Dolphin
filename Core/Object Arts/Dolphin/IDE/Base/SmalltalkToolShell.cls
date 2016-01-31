@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Shell subclass: #SmalltalkToolShell
 	instanceVariableNames: 'searchPresenter fontSizePresenter'
@@ -166,7 +166,7 @@ inspectSystemOptions
 	"Open a <PropertyInspector> on the system options."
 
 	^(self model inspectSystemOptions)
-		selection: self class;
+		selectionOrNil: self class;
 		yourself!
 
 isIdeaSpaceCard
