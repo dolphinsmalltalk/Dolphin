@@ -264,7 +264,7 @@
       </Message>
       <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">ml /nologo /Zd /coff /c /Fo  "$(IntDir)%(Filename).obj" "%(FullPath)"
 </Command>
-      <Command Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">ml /nologo /Zd /coff /c /Fo  "$(IntDir)%(Filename).obj" "%(FullPath)"
+      <Command Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">ml /nologo /Zd /D_DEBUG /coff /c /Fl /Fo  "$(IntDir)%(Filename).obj" "%(FullPath)"
 </Command>
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(SolutionDir)istasm.inc;%(AdditionalInputs)</AdditionalInputs>
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">$(SolutionDir)istasm.inc;%(AdditionalInputs)</AdditionalInputs>
@@ -278,7 +278,7 @@
       </Message>
       <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">ml /nologo /Zd /coff /c /Fo  "$(IntDir)%(Filename).obj" "%(FullPath)"
 </Command>
-      <Command Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">ml /nologo /Zd /coff /c /Fo  "$(IntDir)%(Filename).obj" "%(FullPath)"
+      <Command Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">ml /nologo /Zd /D_DEBUG /coff /c /Fo  "$(IntDir)%(Filename).obj" "%(FullPath)"
 </Command>
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(SolutionDir)istasm.inc;%(AdditionalInputs)</AdditionalInputs>
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">$(SolutionDir)istasm.inc;%(AdditionalInputs)</AdditionalInputs>
@@ -292,7 +292,7 @@
       </Message>
       <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">ml /nologo /Zd /coff /c /Fo  "$(IntDir)%(Filename).obj" "%(FullPath)"
 </Command>
-      <Command Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">ml /nologo /Zd /coff /c /Fo  "$(IntDir)%(Filename).obj" "%(FullPath)"
+      <Command Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">ml /nologo /Zd /D_DEBUG /coff /c /Fo  "$(IntDir)%(Filename).obj" "%(FullPath)"
 </Command>
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(SolutionDir)istasm.inc;%(AdditionalInputs)</AdditionalInputs>
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">$(SolutionDir)istasm.inc;%(AdditionalInputs)</AdditionalInputs>
@@ -306,7 +306,7 @@
       </Message>
       <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">ml /nologo /Zd /coff /c /Fo  "$(IntDir)%(Filename).obj" "%(FullPath)"
 </Command>
-      <Command Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">ml /nologo /Zd /coff /c /Fo  "$(IntDir)%(Filename).obj" "%(FullPath)"
+      <Command Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">ml /nologo /Zd /D_DEBUG /coff /c /Fo  "$(IntDir)%(Filename).obj" "%(FullPath)"
 </Command>
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(SolutionDir)istasm.inc;%(AdditionalInputs)</AdditionalInputs>
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">$(SolutionDir)istasm.inc;%(AdditionalInputs)</AdditionalInputs>
@@ -320,7 +320,7 @@
       </Message>
       <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">ml /nologo /Zd /coff /c /Fo  "$(IntDir)%(Filename).obj" "%(FullPath)"
 </Command>
-      <Command Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">ml /nologo /Zd /coff /c /Fo  "$(IntDir)%(Filename).obj" "%(FullPath)"
+      <Command Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">ml /nologo /Zd /D_DEBUG /coff /c /Fo  "$(IntDir)%(Filename).obj" "%(FullPath)"
 </Command>
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(SolutionDir)istasm.inc;%(AdditionalInputs)</AdditionalInputs>
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">$(SolutionDir)istasm.inc;%(AdditionalInputs)</AdditionalInputs>
@@ -355,7 +355,7 @@
       </Message>
       <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">ml /nologo /Zd /coff /c /Fo  "$(IntDir)%(Filename).obj" "%(FullPath)"
 </Command>
-      <Command Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">ml /nologo /Zd /coff /c /Fo  "$(IntDir)%(Filename).obj" "%(FullPath)"
+      <Command Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">ml /nologo /Zd /D_DEBUG /coff /c /Fo  "$(IntDir)%(Filename).obj" "%(FullPath)"
 </Command>
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(SolutionDir)istasm.inc;%(AdditionalInputs)</AdditionalInputs>
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">$(SolutionDir)istasm.inc;%(AdditionalInputs)</AdditionalInputs>
@@ -369,7 +369,7 @@
       </Message>
       <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">ml /nologo /Zd /coff /c /Fo  "$(IntDir)%(Filename).obj" "%(FullPath)"
 </Command>
-      <Command Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">ml /nologo /Zd /coff /c /Fo  "$(IntDir)%(Filename).obj" "%(FullPath)"
+      <Command Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">ml /nologo /Zd /D_DEBUG /coff /c /Fo  "$(IntDir)%(Filename).obj" "%(FullPath)"
 </Command>
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(SolutionDir)istasm.inc;%(AdditionalInputs)</AdditionalInputs>
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">$(SolutionDir)istasm.inc;%(AdditionalInputs)</AdditionalInputs>
