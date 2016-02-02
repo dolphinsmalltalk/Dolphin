@@ -101,15 +101,6 @@ HRESULT ObjectMemory::LoadImage(const char* szImageName, LPVOID imageData, UINT 
 	TRACESTREAM << " done (" << (SUCCEEDED(hr) ? "Succeeded" : "Failed") << "), binstreams time=" << long(msToRun) << "mS" << endl;
 #endif
 
-#if defined(TIMEDEXPIRY)
-	// Thin (development only) version does not expire 
-	if (SUCCEEDED(hr))
-	{
-		// We have loaded the image successfully.
-		hr = ExpireIfNecessary(szImageName, !isDevSys);
-	}
-#endif
-
 	return hr;
 }
 
@@ -425,9 +416,6 @@ void ObjectMemory::FixupObject(OTE* ote, MWORD* oldLocation, const ImageHeader* 
 			ASSERT(ote->isBytes());
 
 			Context* pContext = static_cast<Context*>(ote->m_location);
-#ifdef TIMEDEXPIRY
-			LoadedImageStamp(pContext);
-#endif
 			ASSERT(ote->heapSpace() == OTEFlags::PoolSpace || ote->heapSpace() == OTEFlags::NormalSpace);
 
 			// Can't deallocate now - must leave for collection later - maybe could go in the Zct though.

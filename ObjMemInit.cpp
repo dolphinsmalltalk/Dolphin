@@ -51,30 +51,6 @@ static HRESULT getSystemInfo()
 	return S_OK;
 }
 
-#ifdef TIMEDEXPIRY
-DWORD ObjectMemory::GetMachineId()
-{
-	char windir[_MAX_PATH+1];
-	UINT ret = GetWindowsDirectory(windir, _MAX_PATH);
-	char drive[_MAX_DRIVE];
-	if (ret == 0)
-		strcpy(drive, "c:");
-	else
-	{
-		*drive = 0;
-		_splitpath_s(windir, drive, _MAX_DRIVE, NULL, 0, NULL, 0, NULL, 0);
-		if (*drive == 0)
-			strcpy(drive, "c:");
-	}
-
-	strcat(drive, "\\");
-
-	DWORD dwSerialNo = 0xDEADBEEF, dummy;
-	GetVolumeInformation(drive, NULL, 0, &dwSerialNo, &dummy, &dummy, NULL, 0);
-	return dwSerialNo;
-}
-#endif
-
 void ObjectMemory::FixedSizePool::Initialize()
 {
 	m_pFreePages = NULL;
@@ -175,12 +151,6 @@ HRESULT ObjectMemory::Initialize()
 
  	for (int j=0;j<NumPools;j++)
 		m_pools[j].setSize(j*PoolGranularity+MinObjectSize);
-
-#ifdef TIMEDEXPIRY
-	// Assume default values for the imageStamp. These may
-	// be updated during image load.
-	ObjectMemory::InitializeImageStamp();
-#endif
 
 	// Ensure we can write to const space in order to initialie it
 	m_pConstObjs = &_Pointers;
