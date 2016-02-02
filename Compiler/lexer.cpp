@@ -40,7 +40,7 @@ Lexer::Lexer()
 
 Lexer::~Lexer()
 {
-	delete m_token;
+	delete[] m_token;
 }
 
 void Lexer::CompileError(int code, Oop extra)
