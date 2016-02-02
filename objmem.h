@@ -237,17 +237,6 @@ public:
 	static WORD __stdcall todayAsDATEWORD();
 	static void __stdcall LoadedImageStamp(Context* imageStampContext);
 
-#ifdef TIMEDEXPIRY
-	static bool HasMachineLockedLicense();
-	static bool IsWrongMachine(bool bIsExe);
-	static DWORD __stdcall GetMachineId();
-	static HRESULT __stdcall ExpireIfNecessary(const char* fileName, bool bIsExe);
-	static bool Expire(const char* szFileName);
-	static bool ExpiryImminent();
-	static bool UnlockImage(DWORD dwSerialNo, WORD dwMonthsExt, BOOL bMachineLocked);
-	static bool ClockSetBack();
-#endif
-
 	static int gpFaultExceptionFilter(LPEXCEPTION_RECORD pExRec);
 
 	static MemoryManager* memoryManager();

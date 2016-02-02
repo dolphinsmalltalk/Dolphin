@@ -45,20 +45,6 @@
 //////////////////////////////////////////////////////////////////////////////
 // Image Save Methods
 
-bool ObjectMemory::Expire(const char* szFileName)
-{
-	imageStamp.bIsExpired = true;
-	imageStamp.dwSavesRemaining = 1;
-
-	// Note that if we are running a deployed executable image, then this
-	// save will fail because obviously the file cannot be opened while it 
-	// is in use, and in consequence false will be returned, causing the
-	// whole image load to fail, and hence the deployed executable will also
-	// have expired
-
-	return SaveImageFile(szFileName, false, false)==0;
-}
-
 int __stdcall ObjectMemory::SaveImageFile(const char* szFileName, bool bBackup, int nCompressionLevel)
 {
 	// Answer:
