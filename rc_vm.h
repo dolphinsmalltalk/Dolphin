@@ -25,9 +25,6 @@
 #define IDP_UNKNOWNIMAGEERROR           527
 #define IDP_FAILTOHOOK                  528
 #define IDP_CLOCKSETBACK                529
-#define IDP_PERMEXPIRED                 530
-#define IDP_WRONGMACHINE                531
-#define IDP_NEARLYEXPIRED               532
 #define IDS_INVALIDPROGID               768
 #define IDS_CANTCREATECONTROL           769
 #define IDS_CANTCREATEIE                770

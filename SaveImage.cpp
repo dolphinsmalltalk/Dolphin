@@ -50,7 +50,6 @@ int __stdcall ObjectMemory::SaveImageFile(const char* szFileName, bool bBackup, 
 	// Answer:
 	//	NULL = success
 	//	ZeroPointer = general save error
-	//	OnePointer = image has expired
 
 	if (!szFileName)
 		return 2;
