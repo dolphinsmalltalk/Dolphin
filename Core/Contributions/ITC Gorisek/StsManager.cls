@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #StsManager
 	instanceVariableNames: 'repositoryPath db methodDictOIDs developer ignoreCompilerEventsFlag globalTransaction classEditions packageEditions currentServerURL loginData'
@@ -2442,7 +2442,7 @@ defaultRepositoryPath
 	^path copyFrom: 1 to: path size - 1!
 
 extendedClassNames
-	^#(#ClassBrowserAbstract #MethodBrowser #Debugger #PackageBrowserShell)!
+	^#(#ClassBrowserAbstract #MethodBrowser #Debugger #PackageBrowserShell #PackageSelector #ClassSelector)!
 
 initialize
 	self registerCommandQueryHandlers!

@@ -100,19 +100,21 @@ package methodNames
 	add: #ClassBrowserAbstract -> #browseClassEditions;
 	add: #ClassBrowserAbstract -> #compareClass;
 	add: #ClassBrowserAbstract -> #queryStsCommand:;
+	add: #ClassSelector -> #browseClassEditions;
+	add: #ClassSelector -> #compareClass;
+	add: #ClassSelector -> #queryStsCommand:;
 	add: #Debugger -> #browseMethodEditions;
 	add: #Debugger -> #queryStsCommand:;
 	add: #Dialog -> #sourceControl;
 	add: #MethodBrowser -> #browseMethodEditions;
 	add: #MethodBrowser -> #queryStsCommand:;
 	add: #Package -> #odbSerialize:;
-	add: #PackageBrowserShell -> #browseClassEditions;
 	add: #PackageBrowserShell -> #browseLooseMethodEditions;
-	add: #PackageBrowserShell -> #browsePackageEditions;
-	add: #PackageBrowserShell -> #compareClass;
-	add: #PackageBrowserShell -> #compareWithAnotherEdition;
 	add: #PackageBrowserShell -> #queryStsCommand:;
-	add: #PackageBrowserShell -> #versionPackage;
+	add: #PackageSelector -> #browsePackageEditions;
+	add: #PackageSelector -> #compareWithAnotherEdition;
+	add: #PackageSelector -> #queryStsCommand:;
+	add: #PackageSelector -> #versionPackage;
 	add: #SmalltalkSystem -> #sourceTrackingToolsFolder;
 	add: #SmalltalkToolShell -> #importPackageFromFile;
 	add: #SmalltalkToolShell -> #loadPackageFromRepository;
@@ -503,6 +505,29 @@ queryStsCommand: aCommandQuery
 !ClassBrowserAbstract categoriesFor: #compareClass!commands!operations!options!public!source tracking system! !
 !ClassBrowserAbstract categoriesFor: #queryStsCommand:!commands!private! !
 
+!ClassSelector methodsFor!
+
+browseClassEditions
+	self sourceControl browseClassEditions: self selection name
+!
+
+compareClass
+	| class |
+	(class := self selectionOrNil) notNil 
+		ifTrue: [Package manager sourceControl compareRepositoryEditionWithClass: class]!
+
+queryStsCommand: aCommandQuery 
+	| selector |
+	selector := aCommandQuery commandSymbol.
+	(#(#browseClassEditions #compareClass) identityIncludes: selector) 
+		ifTrue: 
+			[aCommandQuery isEnabled: (self hasSelection and: [self sourceControl isConnected]).
+			^true].
+	^false! !
+!ClassSelector categoriesFor: #browseClassEditions!commands!public!source tracking system! !
+!ClassSelector categoriesFor: #compareClass!commands!public!source tracking system! !
+!ClassSelector categoriesFor: #queryStsCommand:!commands!private! !
+
 !Debugger methodsFor!
 
 browseMethodEditions
@@ -551,26 +576,9 @@ odbSerialize: serializer
 
 !PackageBrowserShell methodsFor!
 
-browseClassEditions
-	self sourceControl browseClassEditions: self selectedClass name
-!
-
 browseLooseMethodEditions
 	self sourceControl browseMethodEditions: self selectedMethod selector
 		class: self selectedMethod methodClass!
-
-browsePackageEditions
-	self packages isEmpty ifTrue: [^self].
-	self sourceControl browsePackageEditions: self packages first name!
-
-compareClass
-	| class |
-	(class := self selectedClass) notNil 
-		ifTrue: [self sourceControl compareRepositoryEditionWithClass: class]!
-
-compareWithAnotherEdition
-	self packages isEmpty ifTrue: [^self].
-	self sourceControl compareRepositoryEditionWithPackage: self packages first!
 
 queryStsCommand: aCommandQuery 
 	| selector |
@@ -579,26 +587,36 @@ queryStsCommand: aCommandQuery
 		ifTrue: 
 			[aCommandQuery isEnabled: (self hasMethodSelected and: [self sourceControl isConnected]).
 			^true].
-	(#(#browseAvailableMethods #browseClassEditions #compareClass) identityIncludes: selector) 
-		ifTrue: 
-			[aCommandQuery isEnabled: (self hasClassSelected and: [self sourceControl isConnected]).
-			^true].
+	^false! !
+!PackageBrowserShell categoriesFor: #browseLooseMethodEditions!commands!public!source tracking system! !
+!PackageBrowserShell categoriesFor: #queryStsCommand:!commands!private! !
+
+!PackageSelector methodsFor!
+
+browsePackageEditions
+	self packages isEmpty ifTrue: [^self].
+	self sourceControl browsePackageEditions: self packages first name!
+
+compareWithAnotherEdition
+	self packages isEmpty ifTrue: [^self].
+	self sourceControl compareRepositoryEditionWithPackage: self packages first!
+
+queryStsCommand: aCommandQuery 
+	| selector |
+	selector := aCommandQuery commandSymbol.
 	(#(#versionPackage #browsePackageEditions #compareWithAnotherEdition) identityIncludes: selector) 
 		ifTrue: 
-			[aCommandQuery isEnabled: (self hasPackageSelected and: [self sourceControl isConnected]).
+			[aCommandQuery isEnabled: (self hasSelection and: [self sourceControl isConnected]).
 			^true].
 	^false!
 
 versionPackage
 	self packages isEmpty ifTrue: [^self].
 	self sourceControl versionPackage: self packages first! !
-!PackageBrowserShell categoriesFor: #browseClassEditions!commands!public!source tracking system! !
-!PackageBrowserShell categoriesFor: #browseLooseMethodEditions!commands!public!source tracking system! !
-!PackageBrowserShell categoriesFor: #browsePackageEditions!commands!public! !
-!PackageBrowserShell categoriesFor: #compareClass!commands!public!source tracking system! !
-!PackageBrowserShell categoriesFor: #compareWithAnotherEdition!commands!public! !
-!PackageBrowserShell categoriesFor: #queryStsCommand:!commands!private! !
-!PackageBrowserShell categoriesFor: #versionPackage!event handling!public! !
+!PackageSelector categoriesFor: #browsePackageEditions!commands!public! !
+!PackageSelector categoriesFor: #compareWithAnotherEdition!commands!public! !
+!PackageSelector categoriesFor: #queryStsCommand:!commands!private! !
+!PackageSelector categoriesFor: #versionPackage!public! !
 
 !SmalltalkSystem methodsFor!
 

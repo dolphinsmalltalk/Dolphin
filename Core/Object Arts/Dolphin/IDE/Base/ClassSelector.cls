@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 SelectableItemsPresenter subclass: #ClassSelector
 	instanceVariableNames: 'flags classesPresenter searchEnvironment'
@@ -826,6 +826,9 @@ showPresenter: viewName
 	self selection show: viewName
 	!
 
+sourceControl
+	^Package manager sourceControl!
+
 systemModel
 	"Private - Answer the development system model."
 
@@ -902,6 +905,7 @@ testBrowserClass
 !ClassSelector categoriesFor: #selectionEnvironment!accessing!private! !
 !ClassSelector categoriesFor: #setInitialFocus!operations!public! !
 !ClassSelector categoriesFor: #showPresenter:!commands!public! !
+!ClassSelector categoriesFor: #sourceControl!accessing!private! !
 !ClassSelector categoriesFor: #systemModel!commands!private! !
 !ClassSelector categoriesFor: #testBrowserClass!constants!private! !
 
