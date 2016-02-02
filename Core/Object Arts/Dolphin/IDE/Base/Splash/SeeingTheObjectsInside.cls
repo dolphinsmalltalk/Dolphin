@@ -224,7 +224,7 @@ onDestroyed
 
 onLeftButtonPressed: aMouseEvent 
 	self render.
-	self class splashPlayTheGame ifFalse: [self dismiss].
+	self class splashPlayTheGame ifFalse: [^self dismiss].
 	(self isActionPoint: aMouseEvent position) 
 		ifTrue: 
 			[Cursor arrow makeCurrent.

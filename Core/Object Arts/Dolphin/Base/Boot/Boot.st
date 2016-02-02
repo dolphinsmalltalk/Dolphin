@@ -10,6 +10,7 @@ version := (version subStrings: $.) last asNumber.
 [
 	version := (1001 + version) printString copyFrom: 2.
 	path := 'Core\Object Arts\Dolphin\Base\Boot\Boot' , version , '.st'.
+	Notification signal: 'Looking for update file ', path.
 	File exists: path.	"Is there a new update?"
 ] whileTrue: [
 	Notification signal: 'Installing update ' , version printString.

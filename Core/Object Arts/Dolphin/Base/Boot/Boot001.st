@@ -1,11 +1,5 @@
 "Basic cleanup"
 
-"DBOOT was created in the Core folder and had the raw Dolphin package
-loaded from there. Fix up the package pathname here."
-| dolphinPackage |
-dolphinPackage := (Package manager packageNamed: 'Dolphin').
-dolphinPackage packagePathname: 'Core\', dolphinPackage packagePathname!
-
 "MemoryManager guid is corrupted during boot for some reason (that needs looking into)"
 MemoryManager guid: (GUID fromString: '{703BD0AD-FBFF-4D00-866B-B80387F7B1D7}')!
 

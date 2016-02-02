@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 SessionManager subclass: #ConsoleSessionManager
 	instanceVariableNames: ''
@@ -76,14 +76,16 @@ onCloseConsole
 openConsoleStreams
 	"Private - Open the standard console I/O streams.
 	In this case we attach to pre-existing C run-time library stdio streams, as they
-	will be correctly set up."
+	will have been correctly set up by CRT library initialization."
 
-	stdioStreams isNil ifTrue: [ | crt |
-		crt := CRTLibrary default.
-		stdioStreams := Array new: 3.
-		0 to: 2 do: [:i | stdioStreams at: i+1 put: (StdioFileStream fromHandle: (crt getStdHandle: i))]].
-
-	"Note that all the above streams should be in text/translating mode"!
+	| vm |
+	stdioStreams isNil ifFalse: [^self].
+	"Note that all the stdio streams should be in text/translating mode"
+	vm := VMLibrary default.
+	stdioStreams := (Array 
+				with: vm stdin
+				with: vm stdout
+				with: vm stderr) collect: [:each | StdioFileStream fromHandle: each]!
 
 startUI
 	"Start up the input loop/message loop (instruct InputState appropriate depending on whether

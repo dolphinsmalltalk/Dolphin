@@ -82,11 +82,12 @@ argv
 
 	argv isNil 
 		ifTrue: 
-			[| lib pArray |
-			lib := CRTLibrary default.
-			pArray := lib argv.
-			argv := (0 to: (lib argc - 1) * VMConstants.IntPtrSize by: VMConstants.IntPtrSize) 
-						collect: [:offset | String fromAddress: (pArray dwordAtOffset: offset)]].
+			[| lib |
+			lib := VMLibrary default.
+			argv := (lib argv)
+						elementClass: LPSTR;
+						basicLength: lib argc;
+						asArray].
 	^argv!
 
 argvLegacyOptionsRemoved
@@ -709,9 +710,28 @@ openConsole
 	^wasOpen!
 
 openConsoleStreams
-	"Private - Open the standard console I/O streams."
+	"Private - Open the standard console I/O streams. Note that the actual
+	C-runtime library stdin/stdout/stderr streams will be correctly set up so
+	that it is possible to use the CRT stdio functions such as puts(), printf(), etc."
 
-	^self subclassResponsibility!
+	| crt vm |
+	stdioStreams isNil ifFalse: [^self].
+	crt := CRTLibrary default.
+	vm := VMLibrary default.
+	stdioStreams := (Array 
+				with: (crt 
+						freopen: 'CONIN$'
+						mode: 'rt'
+						stream: vm stdin)
+				with: (crt 
+						freopen: 'CONOUT$'
+						mode: 'wt'
+						stream: vm stdout)
+				with: (crt 
+						freopen: 'CONOUT$'
+						mode: 'wt'
+						stream: vm stderr)) 
+					collect: [:each | StdioFileStream fromHandle: each]!
 
 openEventLog
 	"Private - Open the NT event log for writing, and answer a handle onto it that can be passed to the

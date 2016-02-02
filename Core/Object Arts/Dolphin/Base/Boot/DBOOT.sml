@@ -1,4 +1,4 @@
-"20:51:47, 08 December 2015: Compressing sources...."!
+"16:52:04, 31 January 2016: Compressing sources...."!
 
 Object comment:
 'Object is the abstract root of the standard Smalltalk class hierarchy. It has no instance variables (indeed it must not have any), but provides behavior common to all objects.
@@ -13100,7 +13100,12 @@ workingDirectory
 	dir := CRTLibrary default _getcwd: buffer maxlen: buffer size.
 	^dir last = $\
 		ifTrue: [dir]
-		ifFalse: [dir copyWith: $\]! !
+		ifFalse: [dir copyWith: $\]!
+
+workingDirectory: aString
+	"Answer the current working directory."
+
+	^CRTLibrary default _chdir: aString! !
 
 !File methodsFor!
 
@@ -17885,13 +17890,14 @@ errorInvalidPAXFile: pathString
 
 	^self error: 'Invalid PAX file: ', pathString!
 
-fromFile: pathname
+fromFile: path
 	"Private - Answer a new instance of the receiver created from the package file at the
 	specified <readableString> path, pathname, or nil if the file does not contain a
-	package."
+	package"
 
-	| answer |
+	| answer pathname |
 
+	pathname := File default: path extension: self sourcePackageExtension.
 	answer := ((File splitExtensionFrom: pathname) sameAs: self sourcePackageExtension) 
 		ifTrue: [self fromPAXFile: pathname]
 		ifFalse: [self fromPACFile: pathname].
@@ -19168,12 +19174,18 @@ initializeOldSourcePackage
 		ifFalse: [self error: 'Unable to load package (Legacy package importer is not loaded)']	"Initialize old style (pre D6) binary resources"!
 
 isBaseImagePackage
-	"Answer true if the receiver is a basic component of Dolphin. In general this is a hint that
-	you don't need to version the package into an external repository such as STS."
+	"Answer true if the receiver is a basic component of Dolphin "
 
-	" Not a terribly sophisticated in implementation - if the package reside under Core\ then it is a system package"
+	#deprecated.
 
-	^self packagePathname beginsWith: 'Core\' ignoreCase: true!
+	^self isBasePackage!
+
+isBasePackage
+	"Answer true if the receiver is a basic component of Dolphin. This is usually an indication that
+	it was present at the time the image was booted and may be used as a hint that
+	you may not need to version the package into an external repository such as STS."
+
+	^self class manager basePackages includes: self!
 
 isChanged
 	"Answer true if the receiver or any of it's contents have been changed since
@@ -19692,6 +19704,13 @@ privateUninstall
 		uninstallGlobals;
 		uninstallClasses;
 		uninstallMethods!
+
+rebaseTo: basePathName 
+	"Rebase this package relative to the give base image directory"
+
+	self packageFileName: (File 
+				relativePathOf: (File fullPathOf: self packagePathname relativeTo: basePathName)
+				to: SessionManager current imagePath)!
 
 remainingClasses
 	"Answer a Set of the classes that are still present (i.e. ignore missing classes)"
@@ -20599,7 +20618,7 @@ systemPackageName
 	"Private - Answer the String name of the Package which owns all
 	the system objects."
 
-	^'Object Arts\Dolphin\Base\Dolphin'!
+	^'Core\Object Arts\Dolphin\Base\Dolphin'!
 
 uninitialize
 	"Private - Uninitialize the receiver as it is about to be removed from the system."
@@ -20805,6 +20824,10 @@ allSourceObjects
 	self packages 
 		do: [:eachPackage | eachPackage allSourceObjectsDo: [:each | answer addLast: each]].
 	^answer!
+
+basePackages
+	^basePackages ifNil: [basePackages := IdentitySet new].
+!
 
 basicAddPackage: aPackage
 	self packages at: aPackage name put: aPackage!
@@ -21079,6 +21102,12 @@ install: aString
 				self loadedChanged].
 	^newPackages!
 
+installHere: aString 
+	"Same as #install: except that aString is seen as being relative to the current directory
+	rather than the image base."
+
+	^self install: (File fullPathOf: aString)!
+
 isConnected
 	"Part of the StsManager protocol implemented here for systems which do not have STS
 	installed. Answer nil to indicate that we are not connected to a repository"
@@ -21233,6 +21262,12 @@ looseResourceIdentifiers
 	answer := Set new: 25.
 	self packages do: [:p | answer addAll: p resourceIdentifiers].
 	^answer!
+
+markAllPackagesAsBase
+	"Marks all the currently loaded packages as part of the base system. This should normally
+	only be called at the end of the image boot."
+
+	self basePackages addAll: self packages!
 
 memberOf: aPackage updatedAt: aNiladicValuable 
 	"Private - Inform the <Package> argument that it has been changed and needs to reset its
@@ -21612,6 +21647,17 @@ packages
 
 prerequisiteNotFoundSignal
 	^PrerequisiteNotFoundSignal!
+
+rebaseBasePackagesTo: basePathname
+	"Rebase the base image packages so they are relative to basePathname. This may be used
+	when an image has been saved to a new directory and one wishes to continue to reference the
+	old core packages (usually held under the installatin directory). Note that basePathname
+	(if not an absolute path) is treated as being relative to the installation directory NOT the
+	image directory or working directory). Hence, a typical rebase can be performed using '.' as
+	basePathname"
+
+	self basePackages do: [:each | each  rebaseTo: basePathname ].
+	self resetPrerequisites!
 
 release
 	"Private - Remove any event registrations the receiver has made 
@@ -23516,10 +23562,11 @@ imageExtension
 initialize
 	"Private - Initialize the class variables of the receiver."
 
-	PreStartFile := 'prestart.st'.
-	Current := BootSessionManager basicNew. "For boot reasons, do not initialize"
-	Current imagePath: '.\Dolphin'
-!
+	Current 
+		ifNil: 
+			[PreStartFile := 'prestart.st'.
+			Current := BootSessionManager basicNew.	"For boot reasons, do not initialize"
+			Current imagePath: '.\Dolphin']!
 
 inputState
 	"Answer the InputState of the current session manager."
@@ -23610,12 +23657,22 @@ argv
 
 	argv isNil 
 		ifTrue: 
-			[| lib pArray |
-			lib := CRTLibrary default.
-			pArray := lib argv.
-			argv := (0 to: (lib argc - 1) * VMConstants.IntPtrSize by: VMConstants.IntPtrSize) 
-						collect: [:offset | String fromAddress: (pArray dwordAtOffset: offset)]].
+			[| lib |
+			lib := VMLibrary default.
+			argv := (lib argv)
+						elementClass: LPSTR;
+						basicLength: lib argc;
+						asArray].
 	^argv!
+
+argvLegacyOptionsRemoved
+	"Private - Answer the argv arguments vertor with the old style legacy options removed"
+
+	^self argv reject: 
+			[:each | 
+			| opt |
+			opt := each allButFirst asLowercase.
+			opt = 'nosplash' or: [opt = 'embedding']]!
 
 backupOnImageSave
 	"Answer whether the image should be backed up (i.e. the old .img file is renamed to .bak when the new .img
@@ -23872,10 +23929,10 @@ imagePath
 
 	^imagePath!
 
-imagePath: aPathString
+imagePath: aPathString 
 	"Private - used only after loading an image to set up path to the image and sources."
 
-	imagePath := File removeExtension: aPathString!
+	imagePath := File removeExtension: (File fullPathOf: aPathString)!
 
 imageVersion
 	"Answer a String in the form N.N.N.N which specifies the version number of the image."
@@ -23971,13 +24028,13 @@ isEmbedded
 	^self isDLL or: [self isEmbedding]!
 
 isEmbedding
-	"Answer whether the session was started with the /Embedded flag."
+	"Answer whether the session was started with a headless flag"
 
 	^self cmdLineFlags includes: 'Embedding'!
 
 isHeadless
 	"Private - Answer whether the session is _currently_ headless. This is most likely if the
-	image was started with the /Embedded flag, and no visible windows have subsequently been
+	image was started a headkess-h flag, and no visible windows have subsequently been
 	opened."
 
 	^self inputState hasVisibleWindows not!
@@ -24228,9 +24285,28 @@ openConsole
 	^wasOpen!
 
 openConsoleStreams
-	"Private - Open the standard console I/O streams."
+	"Private - Open the standard console I/O streams. Note that the actual
+	C-runtime library stdin/stdout/stderr streams will be correctly set up so
+	that it is possible to use the CRT stdio functions such as puts(), printf(), etc."
 
-	^self subclassResponsibility!
+	| crt vm |
+	stdioStreams isNil ifFalse: [^self].
+	crt := CRTLibrary default.
+	vm := VMLibrary default.
+	stdioStreams := (Array 
+				with: (crt 
+						freopen: 'CONIN$'
+						mode: 'rt'
+						stream: vm stdin)
+				with: (crt 
+						freopen: 'CONOUT$'
+						mode: 'wt'
+						stream: vm stdout)
+				with: (crt 
+						freopen: 'CONOUT$'
+						mode: 'wt'
+						stream: vm stderr)) 
+					collect: [:each | StdioFileStream fromHandle: each]!
 
 openEventLog
 	"Private - Open the NT event log for writing, and answer a handle onto it that can be passed to the
@@ -25751,6 +25827,16 @@ fileInFrom: aStream
 	with instances of CompileFailedMethod and errors logged to the Transcript."
 
 	(self chunkFilerOn: aStream) fileIn!
+
+fileInHere: aFileName 
+	"File in the chunk format file named, aFileName, into the system but with
+	the working directory set to the location of the file. The original directory
+	is restored on completion."
+
+	| cwd |
+	cwd := File workingDirectory.
+	File workingDirectory: (File splitPathFrom: aFileName).
+	[self fileIn: (File splitFilenameFrom: aFileName)] ensure: [File workingDirectory: cwd]!
 
 fileInPackagedClass: aClass
 	"File in aClass via the package mechanism. The class is filed in from the same directory as the
@@ -35678,7 +35764,7 @@ sprintfWith: arg1
 	Note: This is much faster than formatWith:."
 
 	| n crt buf size |
-	crt := CRTLibrary default.
+	crt := VMLibrary default.
 	size := self size + 64.
 	
 	[buf := String new: size.
@@ -35701,7 +35787,7 @@ sprintfWith: arg1 with: arg2
 	Note: This is much faster than formatWith:with:."
 
 	| written lib buf size |
-	lib := CRTLibrary default.
+	lib :=  VMLibrary default.
 	size := self size + 128.
 	
 	[buf := String new: size.
@@ -44346,20 +44432,6 @@ _setmode: fd mode: modeFlag
 	<cdecl: sdword _setmode sdword sdword>
 	^self invalidCall!
 
-_snprintf: buffer count: maxbuf format: format with: arg
-	"Private - Write data formatted by the format string into the buffer.
-	see _snprintf:count:format:with:with:with: for further information."
-
-	<cdecl: sdword _snprintf lpvoid intptr lpstr lpvoid>
-	^self invalidCall!
-
-_snprintf: buffer count: maxbuf format: format with: arg1 with: arg2
-	"Private - Write data formatted by the format string into the buffer.
-	see _snprintf:count:format:with:with:with: for further information."
-
-	<cdecl: sdword _snprintf lpvoid intptr lpstr lpvoid lpvoid>
-	^self invalidCall!
-
 _spawnvp: mode cmdname: aString argv: argv
 	"Spawn a new process.
 
@@ -44433,17 +44505,6 @@ acos: aFloat
 	<cdecl: double acos double>
 	^self invalidCall!
 
-argc
-	"Answer the number of arguments passed to the host executable at startup"
-
-	^(self getProcAddress: '__argc') sdwordAtOffset: 0!
-
-argv
-	"Answer the array of strings which constitute the command line arguments, 
-	starting with the host executable's full path."
-
-	^((self getProcAddress: '__argv') dwordAtOffset: 0) asExternalAddress!
-
 asin: aFloat
 	"Answer the arcsine of the argument, aFloat.
 
@@ -44488,27 +44549,6 @@ close
 	"The C-runtime library cannot be closed."
 
 	^false!
-
-connectDescriptor: fdInteger toWinStdHandle: stdHandleInteger mode: modeString
-	"Private - Connect the CRT FILE with the descriptor/index, fdInteger, to the standard Win32 OS file
-	handle identified by the constant, stdHandleInteger. Answer the handle of the CRT file stream.
-	This is necessary to correctly associate CRT stdin/stdout streams with the correct OS file handles after 
-	allocating a console in a GUI app. See MSDN article Q105305."
-
-	| fd2 hFile |
-	fd2 := CRTLibrary default
-				_open_osfhandle: (KernelLibrary default getStdHandle: stdHandleInteger)
-				flags: 0.
-	fd2 < 0 ifTrue: [CRTError signal].
-	hFile := CRTLibrary default _fdopen: fd2 mode: modeString.
-	"It seems a bit of a hack to overwrite the CRT structure in this way, but this is what the code in the MSDN
-	 article does (a structure assignment)"
-	CRTLibrary default 
-		memcpy: (self getStdHandle: fdInteger) asInteger 
-		src: hFile asInteger 
-		count: self sizeofFILE.
-	^hFile
-!
 
 cos: aFloat
 	"Answer the cosine of the argument, aFloat.
@@ -44593,6 +44633,14 @@ fread: buffer size: size count: count stream: aFILE
 	<overlap cdecl: sdword fread lpvoid intptr intptr handle>
 	^self invalidCall!
 
+freopen: pathString mode: modeString stream: anExternalHandle
+	"Reassigns a file pointer
+		FILE *freopen(const char* path, int handle, const char *mode );"
+
+	<cdecl: handle freopen char* char* handle>
+	^self invalidCall
+!
+
 frexp: x expptr: expptr
 
 	<cdecl: double frexp double sdword*>
@@ -44621,13 +44669,6 @@ getenv: varname
 	<cdecl: lpstr getenv lpstr>
 	^self invalidCall
 !
-
-getStdHandle: fdInteger
-	"Private - Answer the CRT stream (FILE*) handle of the standard file stream with the specified index
-	(0 = stdin, 1 = stdout, 2 = stderr)."
-
-	^((CRTLibrary default getProcAddress: '_iob') asInteger
-		+ (fdInteger * self sizeofFILE)) asExternalHandle!
 
 initialize
 	"Private - Initialize and answer the receiver."
@@ -44754,12 +44795,6 @@ sin: aFloat
 	<cdecl: double sin double>
 	^self invalidCall!
 
-sizeofFILE
-	"Private - Answer the size, in bytes, of the CRT FILE structure."
-
-	^32
-!
-
 sqrt: aFloat
 	"Answer the square root of the argument, aFloat."
 
@@ -44843,6 +44878,10 @@ tan: aFloat
 	"Answer the Tangent of the argument, aFloat."
 
 	<cdecl: double tan double>
+	^self invalidCall!
+
+thread_chmod: aFilenameString pmode: aModeInteger
+	<overlap cdecl: sdword _chmod lpstr sdword>
 	^self invalidCall!
 
 thread_errno
@@ -47611,6 +47650,20 @@ registryKeys
 
 !VMLibrary methodsFor!
 
+_snprintf: buffer count: maxbuf format: format with: arg
+	"Private - Write data formatted by the format string into the buffer.
+	see _snprintf:count:format:with:with:with: for further information."
+
+	<cdecl: sdword _snprintf lpvoid intptr lpstr lpvoid>
+	^self invalidCall!
+
+_snprintf: buffer count: maxbuf format: format with: arg1 with: arg2
+	"Private - Write data formatted by the format string into the buffer.
+	see _snprintf:count:format:with:with:with: for further information."
+
+	<cdecl: sdword _snprintf lpvoid intptr lpstr lpvoid lpvoid>
+	^self invalidCall!
+
 addressFromInteger: anInteger
 	"Private - Answer a new ExternalAddress instantiated from the argument.
 	Implementation Note: AnswerDWORD() is a simple function which returns its 32-bit argument.
@@ -47625,6 +47678,19 @@ applicationHandle
 	"Answer the handle of the Dolphin application instance."
 
 	^Registry at: 123!
+
+argc
+	"Private - Answer the number of arguments passed to the host executable at startup"
+
+	<cdecl: sdword argc>
+	^self invalidCall!
+
+argv
+	"Private - Answer a pointer to the array of strings which constitute the command line arguments, 
+	starting with the host executable's full path."
+
+	<cdecl: StructureArray* argv>
+	^self invalidCall!
 
 basePatchLevel
 	"Private - Answer the base patch level of this image. We can assume that the image already
@@ -47680,7 +47746,7 @@ debugDump: msgString
 !
 
 defaultProductDetails
-	"Private - Answers a seven element<Array> describing the default
+	"Private - Answers an eight element<Array> describing the default
 	 version of the development environment as based on the VM version.
 
 	1. <readableString> Product name 
@@ -47689,18 +47755,20 @@ defaultProductDetails
 	4. <readableString> Version special
 	5. <Integer> Image patch level
 	6 <readableString> Very short name
-	7 <readableString> Serial number"
+	7 <readableString> Serial number
+	8 <readableString> Boot source version information"
 
 	| version |
 	version := self versionInfo.
-	^(Array new: 7)
+	^(Array new: 8)
 		at: 1 put: (version formatVersionString: '%1 %2!!d!!');
 		at: 2 put: (version formatVersionString: '%1');
 		at: 3 put: (Float fromString: (version formatVersionString: '%3!!d!!.%4!!d!!'));
 		at: 4 put: version specialBuild;
 		at: 5 put: self basePatchLevel;
-		at: 6 put: 'DX6';
+		at: 6 put: 'D7';
 		at: 7 put: nil; "Serial #"
+		at: 8 put: nil; "Boot info"
 		yourself!
 
 displayDesktopMessage: aString 
@@ -47958,6 +48026,24 @@ specialSelectors
 
 	^self registry copyFrom: specialSelectorStart to: specialSelectorStart+31!
 
+stderr
+	"Private - Answer the handle of the CRT stdio standard error stream"
+
+	<cdecl: handle StdErr>
+	^self invalidCall!
+
+stdin
+	"Private - Answer the handle of the CRT stdio standard input stream"
+
+	<cdecl: handle StdIn>
+	^self invalidCall!
+
+stdout
+	"Private - Answer the handle of the CRT stdio standard output stream"
+
+	<cdecl: handle StdOut>
+	^self invalidCall!
+
 stringFromAddress: pointer 
 	"Private - Answer a new String instantiated from the null-terminated String pointed 
 	at by the argument.
@@ -47971,6 +48057,15 @@ stringFromAddress: pointer
 	addr := pointer isInteger ifTrue: [pointer asExternalAddress] ifFalse: [pointer].
 	len := addr indexOf: 0.
 	^addr copyStringFrom: 1 to: len - 1!
+
+unlockVM: productId expireAfter: months flags: flags
+	"Private - Attempts to unlock the image. Registers the given <Integer> productId within the image
+	and extends the expiry period by <Integer> months. If months is zero then the expiry period is
+	extended indefinitely. The <integer>, flags, specifies various flags. At present the only flag is
+	16r1, meaning that the image is to be machine locked (i.e. a fixed rather than floating license)."
+
+	<primitive: 93>
+	^self error: 'Unable to unlock image - please contact Dolphin Support'!
 
 unregisterObject: anObject 
 	| i |
@@ -60665,38 +60760,6 @@ onPreSaveImage
 	self class environment at: #Delay ifPresent: [:d | d onPreSaveImage]
 !
 
-onUnhandledNotification: aNotification
-	"The unhandled Notification, aNotification, occurred in the active Process.
-	Display the notification description on the Transcript (or other trace device)."
-
-	aNotification toTrace.
-	^nil!
-
-openConsoleStreams
-	"Private - Open the standard console I/O streams. Note that the actual
-	C-runtime library stdin/stdout/stderr streams will be correctly set up so
-	that it is possible to use the CRT stdio functions such as puts(), printf(), etc.
-	Implementation Note: A boot session is run by the GUI stub and therefore
-	the CRT streams will not have been initialized."
-
-	stdioStreams isNil 
-		ifTrue: 
-			[| crt |
-			crt := CRTLibrary default.
-			stdioStreams := Array 
-						with: (StdioFileStream fromHandle: (crt 
-										connectDescriptor: 0
-										toWinStdHandle: STD_INPUT_HANDLE
-										mode: 'rt'))
-						with: (StdioFileStream fromHandle: (crt 
-										connectDescriptor: 1
-										toWinStdHandle: STD_OUTPUT_HANDLE
-										mode: 'wt'))
-						with: (StdioFileStream fromHandle: (crt 
-										connectDescriptor: 2
-										toWinStdHandle: STD_ERROR_HANDLE
-										mode: 'wt'))]!
-
 openSources
 	"Private - Open the source files with names derived from the current image path."
 
@@ -60718,7 +60781,8 @@ productDetails
 	4. <readableString> Version special
 	5. <Integer> Image patch level
 	6 <readableString> Very short product name
-	7 <readableString> Serial number"
+	7 <readableString> Serial number
+	8 <readableString> Boot source info"
 
 	productDetails isNil ifTrue: [productDetails := VMLibrary default defaultProductDetails].
 	^productDetails!
@@ -60933,14 +60997,16 @@ onCloseConsole
 openConsoleStreams
 	"Private - Open the standard console I/O streams.
 	In this case we attach to pre-existing C run-time library stdio streams, as they
-	will be correctly set up."
+	will have been correctly set up by CRT library initialization."
 
-	stdioStreams isNil ifTrue: [ | crt |
-		crt := CRTLibrary default.
-		stdioStreams := Array new: 3.
-		0 to: 2 do: [:i | stdioStreams at: i+1 put: (StdioFileStream fromHandle: (crt getStdHandle: i))]].
-
-	"Note that all the above streams should be in text/translating mode"!
+	| vm |
+	stdioStreams isNil ifFalse: [^self].
+	"Note that all the stdio streams should be in text/translating mode"
+	vm := VMLibrary default.
+	stdioStreams := (Array 
+				with: vm stdin
+				with: vm stdout
+				with: vm stderr) collect: [:each | StdioFileStream fromHandle: each]!
 
 startUI
 	"Start up the input loop/message loop (instruct InputState appropriate depending on whether
