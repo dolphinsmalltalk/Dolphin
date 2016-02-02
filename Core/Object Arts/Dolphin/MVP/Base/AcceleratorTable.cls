@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 GraphicsTool subclass: #AcceleratorTable
 	instanceVariableNames: 'commands'
@@ -115,27 +115,27 @@ icon
 
 	^Keyboard icon!
 
-initialize
-	"Private - Initialize the receiver's class variables.
+initialize 
+        "Private - Initialize the receiver's class variables. 
 
-	Evaluate me to initialize:
-		AcceleratorTable initialize
-	"
+        Evaluate me to initialize: 
+                AcceleratorTable initialize 
+        " 
 
-	KeyNamesToModifiers := LookupTable new.
-	NamesOfModifiers := (Array 
-				with: VK_CONTROL -> FCONTROL
-				with: VK_SHIFT -> FSHIFT
-				with: VK_MENU -> FALT) collect: 
-						[:a | 
-						| keyName |
-						keyName := Keyboard keyNameFromVKey: a key.
-						KeyNamesToModifiers at: keyName asUppercase put: a value.
-						a value -> (self accelPartFromString: keyName)].
-	NamesOfModifiers isImmutable: true.
-	KeyNamesToModifiers
-		shrink;
-		isImmutable: true!
+        KeyNamesToModifiers := LookupTable new. 
+        NamesOfModifiers := (Array 
+                                with: 'CTRL' -> FCONTROL 
+                                with: 'SHIFT' -> FSHIFT 
+                                with: 'ALT' ->FALT) collect: 
+                                                [:a | 
+                                                | keyName | 
+                                                keyName := a key. 
+                                                KeyNamesToModifiers at: keyName put: a value. 
+                                                a value -> (self accelPartFromString: keyName)]. 
+        NamesOfModifiers isImmutable: true. 
+        KeyNamesToModifiers 
+                shrink; 
+                isImmutable: true !
 
 keyCode: virtualKey modifiers: modifierMask
 	"Answer an accelerator key code (an <integer> packed with a virtual key code
