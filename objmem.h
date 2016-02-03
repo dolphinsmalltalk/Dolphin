@@ -992,7 +992,7 @@ inline void ObjectMemory::OTEPool::deallocate(OTE* ote)
 		{
 			Class* cl = ote->m_oteClass->m_location;
 			String* st = cl->m_name->m_location;
-			TRACE("OTEPool(%x): WARNING deallocated old %s (%x)\n", this, st->m_characters, ote);
+			TRACE("OTEPool(%p): WARNING deallocated old %s (%p)\n", this, st->m_characters, ote);
 		}
 		else
 			m_nAllocated--;

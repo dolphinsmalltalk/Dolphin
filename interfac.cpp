@@ -530,7 +530,7 @@ inline LRESULT Interpreter::lResultFromOop(Oop objectPointer, HWND hWnd, UINT uM
 		return lResult;
 	}
 
-	trace("DolphinWndProc: Non-LRESULT value returned for MSG(hwnd:%x, msg:%u, wParam:%x, lParam:%x)\n",
+	trace("DolphinWndProc: Non-LRESULT value returned for MSG(hwnd:%p, msg:%u, wParam:%x, lParam:%x)\n",
 				hWnd, uMsg, wParam, lParam);
 
 	ote->countDown();
@@ -673,7 +673,7 @@ inline DWORD __stdcall Interpreter::GenericCallbackMain(SMALLINTEGER id, BYTE* l
 		#ifdef _DEBUG
 		{
 			char buf[128];
-			wsprintf(buf, "WARNING: Unwinding GenericCallback(%d, %x)\n", id, lpArgs);
+			wsprintf(buf, "WARNING: Unwinding GenericCallback(%d, %p)\n", id, lpArgs);
 			WarningWithStackTrace(buf);
 		}
 		#endif
