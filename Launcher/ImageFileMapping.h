@@ -10,7 +10,7 @@ class ImageFileMapping
 	DWORD  m_dwSize;
 
 public:
-	ImageFileMapping() : m_hFile(0), m_hMapping(0), m_pData(NULL) {}
+	ImageFileMapping() : m_hFile(0), m_hMapping(0), m_pData(NULL), m_dwSize(0) {}
 	~ImageFileMapping() { Close(); }
 
 	int Open(LPCSTR imageFileName);

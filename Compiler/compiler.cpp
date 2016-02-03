@@ -81,18 +81,29 @@ Compiler::LibCallType Compiler::callTypes[DolphinX::NumCallConventions] =
 
 ///////////////////////
 
-Compiler::Compiler() : m_piVM(NULL),
+Compiler::Compiler() :
+		m_allScopes(NULL),
+		m_bytecodes(NULL),
+		m_class(0),
 		m_codePointer(0),
-		m_literalLimit(LITERALLIMIT),
-		m_sharedPools(NULL),
-		m_notifier(0), m_class(0),
-		m_compilerObject(0), 
-		m_selector(), 
-		m_ok(true), 
+		m_compiledMethodClass(NULL),
+		m_compilerObject(0),
+		m_context(0),
+		m_flags(Default),
+		m_instVars(NULL),
 		m_instVarsInitialized(false),
-		m_sendType(SendOther), 
+		m_literalFrame(NULL),
+		m_literalLimit(LITERALLIMIT),
+		m_notifier(0),
+		m_ok(true),
+		m_oopWorkspacePools(NULL),
+		m_pCurrentScope(NULL),
+		m_piVM(NULL),
 		m_primitiveIndex(0),
-		m_pCurrentScope(NULL)
+		m_selector(),
+		m_sendType(SendOther),
+		m_sharedPools(NULL),
+		m_textMaps(NULL)
 {
 	m_bytecodes.reserve(128);
 }
