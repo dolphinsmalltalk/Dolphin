@@ -194,6 +194,7 @@ bool ObjectMemory::UnlockImage(DWORD dwSerialNo, WORD monthsExt, BOOL bIsMachine
 	}
 	else
 	{
+#pragma warning(push)
 #pragma warning(disable:4244) // Conversion from int to unsigned short, possible loss of data
 		// Extend the expiryDate monthsExt months forward from the wZeroDate.
 		WORD mm = MM_FROM_DATEWORD(ObjectMemory::imageStamp.wZeroDate);
@@ -209,12 +210,13 @@ bool ObjectMemory::UnlockImage(DWORD dwSerialNo, WORD monthsExt, BOOL bIsMachine
 		imageStamp.wExpiryDate = DDMMYYYY_AS_DATEWORD(1, mm, yyyy);
 		WORD today = todayAsDATEWORD();
 		imageStamp.bIsExpired = today >= imageStamp.wExpiryDate;
-#pragma warning(default:4244) // Conversion from int to unsigned short, possible loss of data
+#pragma warning(pop) // Conversion from int to unsigned short, possible loss of data
 	}
 
+#pragma warning(push)
 #pragma warning(disable:4800)
 	imageStamp.bIsMachineLocked = bIsMachineLocked;
-#pragma warning(default:4800)
+#pragma warning(pop)
 
 	// Do we want to save the image here?
 	//imageStamp.dwSavesRemaining += 1;

@@ -121,9 +121,10 @@ Oop __stdcall Interpreter::callback(SymbolOTE* selector, unsigned argCount TRACE
 	jmp_buf callbackContext;
 	Oop prevCallbackContext = currentCallbackContext;
 
+#pragma warning(push)
 #pragma warning(disable:4611)	// interaction between '_setjmp' and C++ object destruction is non-portable
 	int nExitCode = setjmp(callbackContext);
-#pragma warning(default:4611)
+#pragma warning(pop)
 	
 	switch(nExitCode)
 	{

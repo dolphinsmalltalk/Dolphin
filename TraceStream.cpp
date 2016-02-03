@@ -12,7 +12,6 @@
 #pragma warning(disable:4530)
 #include <iostream>
 #include <iomanip>
-#pragma warning(default:4530)
 #pragma warning(pop)
 
 std::ostream& operator<<(std::ostream& stream, const SYSTEMTIME& st)

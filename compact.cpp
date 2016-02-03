@@ -96,9 +96,10 @@ size_t ObjectMemory::compact()
 	size_t moved = 0;
 	OTE* last = m_pOT + m_nOTSize - 1;
 	OTE* first = m_pOT;
-#pragma warning (disable : 4127)
+#pragma warning(push)
+#pragma warning(disable : 4127)
 	while(true)
-#pragma warning (default : 4127)
+#pragma warning(pop)
 	{
 		// Look for a tail ender
 		while (last > first && last->isFree())
