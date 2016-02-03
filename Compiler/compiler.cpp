@@ -1944,7 +1944,7 @@ int Compiler::ParseUnaryContinuation(int exprMark, int textPosition)
 	MaybePatchLiteralMessage();
 	while (m_ok && (ThisToken()==NameConst)) 
 	{
-		int specialCase=false;
+		bool isSpecialCase=false;
 		continuationPointer = m_codePointer;
 
 		Str strToken = ThisTokenText();
@@ -1952,25 +1952,25 @@ int Compiler::ParseUnaryContinuation(int exprMark, int textPosition)
 		if (strToken == "whileTrue")
 		{
 			if (ParseWhileLoop(true, exprMark))
-				specialCase=true;
+				isSpecialCase=true;
 		}
 		else if (strToken == "whileFalse") 
 		{
 			if (ParseWhileLoop(false, exprMark))
-				specialCase=true;
+				isSpecialCase=true;
 		}
 		else if (strToken == "repeat")
 		{
 			if (ParseRepeatLoop(exprMark))
-				specialCase=true;
+				isSpecialCase=true;
 		}
 		else if (strToken == "yourself" && !(m_flags & SendYourself))
 		{
 			// We don't send yourself, since it is a Nop
-			specialCase=true;
+			isSpecialCase=true;
 		}
 		
-		if (!specialCase)
+		if (!isSpecialCase)
 		{
 			int sendIP = GenMessage(ThisTokenText(), 0, textPosition);
 			AddTextMap(sendIP, textPosition, ThisTokenRange().m_stop);
