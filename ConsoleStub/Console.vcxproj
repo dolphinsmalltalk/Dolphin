@@ -98,7 +98,7 @@
       <OutputFile>$(OutDir)$(ProjectName)Stub.exe</OutputFile>
       <Version>6.0</Version>
       <SuppressStartupBanner>true</SuppressStartupBanner>
-      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Console</SubSystem>
       <LargeAddressAware>false</LargeAddressAware>
       <TerminalServerAware>false</TerminalServerAware>
