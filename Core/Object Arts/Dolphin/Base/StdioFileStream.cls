@@ -1,7 +1,7 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 SequencedStream subclass: #StdioFileStream
-	instanceVariableNames: 'stream isText name'
+	instanceVariableNames: 'stream isText name oldFd'
 	classVariableNames: ''
 	poolDictionaries: 'CRTConstants'
 	classInstanceVariableNames: ''!
@@ -28,6 +28,31 @@ atEnd
 
 	^(CRTLibrary default feof: stream) ~~ 0 or: [self peek isNil]!
 
+attach: anExternalHandle toFd: fdInteger mode: aSymbol text: aBoolean 
+	"Private - Attach the stdio descriptor identified by fdInteger (usually one of 0=stdin,
+	1=stdout, or 2-stderr) to the specified OS file, and open a stdio stream onto it in the
+	specified read/write and text/binary modes (usual Smalltalk FileStream conventions for the
+	interpretation of the mode and text parameters applies)."
+
+	| newFd crt |
+	crt := CRTLibrary default.
+	"1: Preserve the existing file descriptor (fd) for later restoration by dup'ing it"
+	oldFd := crt _dup: fdInteger.
+	oldFd < 0 ifTrue: [CRTError signal].
+	"2: Attach an fd to the provided OS file handle"
+	newFd := crt _open_osfhandle: anExternalHandle flags: 0.
+	newFd < 0 ifTrue: [CRTError signal].
+	"3: Redirect target fd to the OS file"
+	(crt _dup2: newFd handle2: fdInteger) < 0 ifTrue: [CRTError signal].
+	"4: Dispose of the fd created in step 2 and dup'd in step 3 so we don't leak it and the duplicate OS handle it contains"
+	(crt _close: newFd) < 0 ifTrue: [CRTError signal].
+	"5: Finally open a stdio stream onto the target fd"
+	stream := crt _fdopen: fdInteger
+				mode: (aSymbol == #read ifTrue: ['r'] ifFalse: ['w']) , (aBoolean ifTrue: ['t'] ifFalse: ['b']).
+	stream isNil ifTrue: [CRTError signal].
+	isText := aBoolean.
+	self beFinalizable!
+
 basicPrint: anObject 
 	anObject basicPrintOn: self!
 
@@ -35,10 +60,19 @@ close
 	"Relinquish any external resources associated with the receiver, and put the
 	receiver into a 'closed' state. Answer the receiver."
 
+	| stdFd |
 	stream isNull ifTrue: [^self].
 	self beUnfinalizable.
+	stdFd := self fileno.
 	CRTLibrary default fclose: stream.
-	stream := nil!
+	stream := nil.
+	oldFd isNil 
+		ifFalse: 
+			["Restore original stdio stream from saved descriptor"
+			(CRTLibrary default)
+				_dup2: oldFd handle2: stdFd;
+				_close: oldFd.
+			oldFd := nil]!
 
 contents
 	"Answer a <String> or <ByteArray> containing the complete contents of the file
@@ -324,6 +358,7 @@ tab: anInteger
 	anInteger timesRepeat: [self tab]! !
 !StdioFileStream categoriesFor: #asParameter!converting!public! !
 !StdioFileStream categoriesFor: #atEnd!public!testing! !
+!StdioFileStream categoriesFor: #attach:toFd:mode:text:!initializing!private! !
 !StdioFileStream categoriesFor: #basicPrint:!printing!private! !
 !StdioFileStream categoriesFor: #close!operations!public! !
 !StdioFileStream categoriesFor: #contents!accessing!public! !
@@ -370,6 +405,31 @@ StdioFileStream methodProtocol: #readFileStream attributes: #(#ansi #readOnly) s
 StdioFileStream methodProtocol: #writeFileStream attributes: #(#ansi #readOnly) selectors: #(#close #contents #cr #externalType #flush #isBinary #isEmpty #isText #nextPut: #nextPutAll: #position #position: #reset #setToEnd #space #tab)!
 
 !StdioFileStream class methodsFor!
+
+attach: anExternalHandle toFd: fdInteger mode: modeSymbol 
+	"Answer a new instance of the receiver representing a text stdio stream with the file
+	descriptor, fdInteger, attached to the OS file handle, anExternalHandle, The <symbol>
+	argument identifies the manner in which the file is opened, #read for a read-only stream
+	(e.g. stdin), or any other mode integer for a writable stream."
+
+	^self 
+		attach: anExternalHandle
+		toFd: fdInteger
+		mode: modeSymbol
+		text: true!
+
+attach: anExternalHandle toFd: fdInteger mode: modeSymbol text: aBoolean 
+	"Answer a new instance of the receiver representing a stdio stream with the file descriptor,
+	fdInteger, attached to the OS file handle, anExternalHandle, The <symbol> argument
+	identifies the manner in which the file is opened, #read for a read-only stream (e.g.
+	stdin), or any other mode integer for a writable stream. If aBoolean is true, then the
+	stream is in text translation mode, if false it is in binary mode."
+
+	^self basicNew 
+		attach: anExternalHandle
+		toFd: fdInteger
+		mode: modeSymbol
+		text: aBoolean!
 
 fromHandle: anExternalHandle
 	"Answer a new instance of the receiver on the specified stdio FILE pointer,
@@ -490,6 +550,8 @@ write: aString text: aBoolean
 		mode: #truncate
 		check: false
 		text: aBoolean! !
+!StdioFileStream class categoriesFor: #attach:toFd:mode:!instance creation!public! !
+!StdioFileStream class categoriesFor: #attach:toFd:mode:text:!instance creation!public! !
 !StdioFileStream class categoriesFor: #fromHandle:!instance creation!public! !
 !StdioFileStream class categoriesFor: #read:!instance creation!public! !
 !StdioFileStream class categoriesFor: #read:text:!instance creation!public! !

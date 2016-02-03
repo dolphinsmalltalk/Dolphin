@@ -710,28 +710,26 @@ openConsole
 	^wasOpen!
 
 openConsoleStreams
-	"Private - Open the standard console I/O streams. Note that the actual
-	C-runtime library stdin/stdout/stderr streams will be correctly set up so
-	that it is possible to use the CRT stdio functions such as puts(), printf(), etc."
+	"Private - Open the standard console I/O streams. Note that the actual C-runtime library
+	stdin/stdout/stderr streams will be correctly set up so that it is possible to use the CRT
+	stdio functions such as puts(), printf(), etc."
 
-	| crt vm |
+	| kernel |
 	stdioStreams isNil ifFalse: [^self].
-	crt := CRTLibrary default.
-	vm := VMLibrary default.
-	stdioStreams := (Array 
-				with: (crt 
-						freopen: 'CONIN$'
-						mode: 'rt'
-						stream: vm stdin)
-				with: (crt 
-						freopen: 'CONOUT$'
-						mode: 'wt'
-						stream: vm stdout)
-				with: (crt 
-						freopen: 'CONOUT$'
-						mode: 'wt'
-						stream: vm stderr)) 
-					collect: [:each | StdioFileStream fromHandle: each]!
+	kernel := KernelLibrary default.
+	stdioStreams := Array 
+				with: (StdioFileStream 
+						attach: (kernel getStdHandle: STD_INPUT_HANDLE)
+						toFd: 0
+						mode: #read)
+				with: (StdioFileStream 
+						attach: (kernel getStdHandle: STD_OUTPUT_HANDLE)
+						toFd: 1
+						mode: #append)
+				with: (StdioFileStream 
+						attach: (kernel getStdHandle: STD_ERROR_HANDLE)
+						toFd: 2
+						mode: #append)!
 
 openEventLog
 	"Private - Open the NT event log for writing, and answer a handle onto it that can be passed to the

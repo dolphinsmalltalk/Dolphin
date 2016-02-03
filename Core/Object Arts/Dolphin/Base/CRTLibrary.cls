@@ -54,6 +54,12 @@ _clearfp
 	<cdecl: dword _clearfp>
 	^self invalidCall!
 
+_close: anInteger 
+	"Close the file associated with the descriptor, anInteger, and release the descriptor."
+
+	<cdecl: sdword _close sdword>
+	^self invalidCall!
+
 _controlfp: newInteger mask: maskInteger
 	"Get and set the floating-point control word.
 
@@ -62,21 +68,21 @@ _controlfp: newInteger mask: maskInteger
 	<cdecl: dword _controlfp dword dword>
 	^self invalidCall!
 
-_dup: anInteger
-	"Duplicate a file handle
-		int_dup( int handle );"
+_dup: anInteger 
+	"Create and answer a duplicate file descriptor for the open file with descriptor, anInteger.
+	Note that the underlying file handle is also duplicated."
 
 	<cdecl: sdword _dup sdword>
-	^self invalidCall
-!
+	^self invalidCall!
 
-_dup2: anInteger handle2: anInteger2
-	"Duplicate a file handle
-		int _dup2(int handle1, int handle2);"
+_dup2: anInteger handle2: anInteger2 
+	"Reassign a file descriptor by copying a duplicate of the file descriptor, anInteger, over
+	the file descriptor, anInteger2. Note that the underlying file handle of the first
+	descriptor is duplicated, and any open file associated with the target file descriptor is
+	closed."
 
 	<cdecl: sdword _dup2 sdword sdword>
-	^self invalidCall
-!
+	^self invalidCall!
 
 _ecvt: aFloat count: anInteger dec: decInteger sign: signInteger
 	"Answer a String representation of the argument, aFloat, with anInteger significant figures.
@@ -674,6 +680,7 @@ wcscspn: aUnicodeString strCharSet: strCharSet
 !CRTLibrary categoriesFor: #_chdir:!CRT functions-file handling!public! !
 !CRTLibrary categoriesFor: #_chmod:pmode:!CRT functions-file handling!public! !
 !CRTLibrary categoriesFor: #_clearfp!CRT functions-floating point support!public! !
+!CRTLibrary categoriesFor: #_close:!CRT functions-low level I/O!public! !
 !CRTLibrary categoriesFor: #_controlfp:mask:!CRT functions-floating point support!public! !
 !CRTLibrary categoriesFor: #_dup:!CRT functions-low level I/O!public! !
 !CRTLibrary categoriesFor: #_dup2:handle2:!CRT functions-low level I/O!public! !
