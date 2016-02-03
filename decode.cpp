@@ -40,7 +40,7 @@ class UnknownOTE : public OTE {};
 typedef TOTE<VariantCharObject> VariantCharOTE;
 
 // Helper to dump characters to the tracestream
-// Unprintable charactesr are printed in hex
+// Unprintable characters are printed in hex
 ostream& operator<<(ostream& stream, const VariantCharOTE* oteChars)
 {
 //    stream.lock();
@@ -50,7 +50,7 @@ ostream& operator<<(ostream& stream, const VariantCharOTE* oteChars)
 	unsigned end = min(len, 80);
 	for(unsigned i=0; i<end; i++)
 	{
-		char ch = string->m_characters[i];
+		unsigned char ch = (unsigned char) string->m_characters[i];
 		//if (ch = '\0') break;
 		if (ch < 32 || ch > 127)
 		{
