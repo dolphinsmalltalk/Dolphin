@@ -42,7 +42,12 @@ inline void* ObjectMemory::reallocChunk(void* pChunk, MWORD newChunkSize)
 	#ifdef PRIVATE_HEAP
 		return ::HeapReAlloc(m_hHeap, 0, pChunk, newChunkSize);
 	#else
-		return realloc(pChunk, newChunkSize);
+		void *oldPointer = pChunk;
+		void *newPointer = realloc(pChunk, newChunkSize);
+		_ASSERT(newPointer);
+		if (NULL == newPointer)
+			free(oldPointer);
+		return newPointer;
 	#endif
 }
 

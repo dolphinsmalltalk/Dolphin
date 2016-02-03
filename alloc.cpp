@@ -429,7 +429,11 @@ void ObjectMemory::FixedSizePool::morePages()
 	// Put the allocation (64k) into the allocation list so we can free it later
 	{
 		m_nAllocations++;
+		void ** oldPointer = m_pAllocations;
 		m_pAllocations = static_cast<void**>(realloc(m_pAllocations, m_nAllocations*sizeof(void*)));
+		_ASSERT(m_pAllocations);
+		if (NULL == m_pAllocations)
+			free(oldPointer);
 		m_pAllocations[m_nAllocations-1] = pStart;
 	}
 
@@ -511,7 +515,11 @@ void ObjectMemory::FixedSizePool::moreChunks()
 
 	#ifdef _DEBUG
 		m_nPages++;
+		void **oldPointer = m_pages;
 		m_pages = static_cast<void**>(realloc(m_pages, m_nPages*sizeof(void*)));
+		_ASSERT(m_pages);
+		if (NULL == m_pages)
+			free(oldPointer);
 		m_pages[m_nPages-1] = pStart;
 	#endif
 }
@@ -542,7 +550,12 @@ inline void* ObjectMemory::reallocChunk(void* pChunk, MWORD newChunkSize)
 	#ifdef PRIVATE_HEAP
 		return ::HeapReAlloc(m_hHeap, HEAP_NO_SERIALIZE, pChunk, newChunkSize);
 	#else
-		return realloc(pChunk, newChunkSize);
+		void *oldPointer = pChunk;
+		void *newPointer = realloc(pChunk, newChunkSize);
+		_ASSERT(newPointer);
+		if (NULL == newPointer)
+			free(oldPointer);
+		return newPointer;
 	#endif
 }
 
