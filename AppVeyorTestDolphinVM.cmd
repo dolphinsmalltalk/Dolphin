@@ -15,4 +15,4 @@ DIR DBOOT*, DPRO*
 CALL TestDPRO
 set errorCode=%ERRORLEVEL%
 DIR DPRO*
-EXIT errorCode
+EXIT %errorCode%
