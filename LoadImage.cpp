@@ -412,10 +412,6 @@ void ObjectMemory::FixupObject(OTE* ote, MWORD* oldLocation, const ImageHeader* 
 		// Look for the special image stamp object
 		else if (classPointer == _Pointers.ClassContext)
 		{
-			// Check for the special MethodContext which contains the image stamp.
-			ASSERT(ote->isBytes());
-
-			Context* pContext = static_cast<Context*>(ote->m_location);
 			ASSERT(ote->heapSpace() == OTEFlags::PoolSpace || ote->heapSpace() == OTEFlags::NormalSpace);
 
 			// Can't deallocate now - must leave for collection later - maybe could go in the Zct though.

@@ -42,21 +42,6 @@ class MemoryManager;
 class Array;
 class Context;
 
-struct ImageStamp
-{
-	DWORD dwSerialNo;			// The unique serial number
-	DWORD dwSavesRemaining;		// Number of image saves permitted before the image is considered expired.
-	WORD wImageBootDate;
-	WORD wLastSaveDate;
-	WORD wZeroDate;				// date which extensions are relative to
-	WORD wExpiryDate;			// date when the image will expire, as a DATEWORD
-	WORD wExtensions;			// number of extensions to date.
-	
-	// Flags
-	bool bIsExpired:1;			// has the image passed it's use-by-date ?
-	bool bIsMachineLocked:1;	// Machine locked license only
-};
-
 class ibinstream;
 class obinstream;
 
@@ -233,9 +218,7 @@ public:
 	static int __stdcall SaveImageFile(const char* fileName, bool bBackup, int nCompressionLevel);
 	static HRESULT __stdcall LoadImage(const char* szImageName, LPVOID imageData, UINT imageSize, bool bIsDevSys);
 
-	static void InitializeImageStamp(void);
 	static WORD __stdcall todayAsDATEWORD();
-	static void __stdcall LoadedImageStamp(Context* imageStampContext);
 
 	static int gpFaultExceptionFilter(LPEXCEPTION_RECORD pExRec);
 
@@ -490,8 +473,6 @@ public:			// Public Data
 	//static DWORD dwAllocationGranularity;		Ditto
 
 	enum { dwOopsPerPage = dwPageSize/sizeof(Oop) };
-
-	static ImageStamp imageStamp;
 
 	static DWORD m_imageVersionMajor;	// MS part of image version number
 	static DWORD m_imageVersionMinor;	// LS part of image version number

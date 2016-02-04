@@ -118,31 +118,6 @@ int __stdcall ObjectMemory::SaveImageFile(const char* szFileName, bool bBackup, 
 	// User may have modified max table size
 	header.nMaxTableSize	= m_nOTMax;
 
-	// Create a special Context to hold information about the image and
-	// save it into the image. We'll call this the imageStamp.
-	// When we find this Context on a subsequent image-load, we will be
-	// able to extract this information.
-	
-	PointersOTE* oteStamp = ObjectMemory::newPointerObject(
-		_Pointers.ClassContext, 
-		Context::FixedSize + sizeof(ImageStamp)/4+1);
-	oteStamp->beBytes();
-
-	Context* pContext = reinterpret_cast<Context*>(oteStamp->m_location);
-	pContext->m_frame = Oop(oteStamp);
-	// Add artificial ref. count
-	oteStamp->m_flags.m_count = 1;
-
-	// Transfer the information from ObjectMemory into the ImageStamp.
-	ImageStamp* stamp = reinterpret_cast<ImageStamp*>(&(pContext->m_tempFrame));
-	memcpy(stamp, &ObjectMemory::imageStamp, sizeof(ImageStamp));
-
-	// We must do this after allocating the image stamp so that the OT size is correct
-	unsigned i = lastOTEntry();
-	// Find the last used entry
-	ASSERT(i > NumPermanent);
-	header.nTableSize = i+1;
-
 	::_write(fd, &header, sizeof(ImageHeader));
 	
 	bool bSaved;
@@ -169,10 +144,6 @@ int __stdcall ObjectMemory::SaveImageFile(const char* szFileName, bool bBackup, 
 			stream.close();
 			::_close(fd);
 		}
-
-		// Explicitly free the special MethodContext used for the image stamp
-		oteStamp->decRefs();
-		deallocate(reinterpret_cast<OTE*>(oteStamp));
 
 	#ifdef PROFILE_IMAGELOADSAVE
 		DWORD msToRun = GetTickCount() - dwStartTicks;
