@@ -1,7 +1,6 @@
 ECHO Clone Dolphin image environment
 git clone -q --branch=master https://github.com/dolphinsmalltalk/Dolphin.git Dolphin
 
-
 ECHO Copy executables
 copy ..\..\Dolphin7.exe Dolphin
 copy ..\..\DolphinVM7.dll Dolphin
@@ -12,4 +11,8 @@ copy ..\..\DolphinSureCrypto.dll Dolphin
 ECHO Boot and test image
 cd Dolphin
 Dolphin7 DBOOT.img7 DolphinProfessional
+DIR DBOOT*, DPRO*
 CALL TestDPRO
+set errorCode=%ERRORLEVEL%
+DIR DPRO*
+EXIT errorCode
