@@ -118,6 +118,12 @@ int __stdcall ObjectMemory::SaveImageFile(const char* szFileName, bool bBackup, 
 	// User may have modified max table size
 	header.nMaxTableSize	= m_nOTMax;
 
+	// Set the OT size
+	unsigned i = lastOTEntry();
+	// Find the last used entry
+	ASSERT(i > NumPermanent);
+	header.nTableSize = i + 1;
+
 	::_write(fd, &header, sizeof(ImageHeader));
 	
 	bool bSaved;
