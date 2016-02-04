@@ -98,7 +98,7 @@
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
       <DataExecutionPrevention />
       <ImportLibrary>.\WinDLL/DolphinDR006.lib</ImportLibrary>
-      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
       <ProgramDatabaseFile />
     </Link>
   </ItemDefinitionGroup>

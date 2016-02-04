@@ -109,7 +109,7 @@
       <DataExecutionPrevention />
       <ImportLibrary>.\Release/IPDolphinToGo.lib</ImportLibrary>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
-      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
       <ProgramDatabaseFile />
     </Link>
   </ItemDefinitionGroup>
