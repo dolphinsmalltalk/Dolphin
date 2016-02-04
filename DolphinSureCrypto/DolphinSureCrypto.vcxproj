@@ -91,7 +91,7 @@
       <DataExecutionPrevention />
       <ImportLibrary>.\Release/DolphinSureCrypto.lib</ImportLibrary>
       <TargetMachine>MachineX86</TargetMachine>
-      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
       <ProgramDatabaseFile />
     </Link>
   </ItemDefinitionGroup>
