@@ -123,14 +123,14 @@ public:
 		return static_cast<T*>(this);
 	}
 
-	void LinkAfter(T* priorLink)
+	void LinkAfter(T* prevArg)
 	{
 		T* pThis = static_cast<T*>(this);
-		this->next = priorLink->next;
+		this->next = prevArg->next;
 		if (this->next)
 			this->next->prev = pThis;
-		this->prev = prev;
-		priorLink->next = pThis;
+		this->prev = prevArg;
+		prevArg->next = pThis;
 	}
 };
 
