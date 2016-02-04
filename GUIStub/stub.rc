@@ -48,7 +48,9 @@ BEGIN
             VALUE "LegalCopyright", "Portions Copyright © Object Arts 1997-2016."
             VALUE "OriginalFilename", "GUIStub.exe"
             VALUE "ProductName", "A Dolphin  Application"
-            VALUE "ProductVersion", "1, 0, 0, 1"
+#include "Version.h"
+            VALUE "ProductVersion", GIT_TAG
+            VALUE "WARNING", "Please edit this as a text file rather than with the resource editor to preserve GIT_TAG"
         END
     END
     BLOCK "VarFileInfo"

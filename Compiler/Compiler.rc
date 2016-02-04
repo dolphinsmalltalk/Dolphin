@@ -13,13 +13,11 @@
 #undef APSTUDIO_READONLY_SYMBOLS
 
 /////////////////////////////////////////////////////////////////////////////
-// English (U.S.) resources
+// English (United States) resources
 
 #if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
-#ifdef _WIN32
 LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
 #pragma code_page(1252)
-#endif //_WIN32
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -50,8 +48,10 @@ BEGIN
             VALUE "LegalCopyright", "Copyright © Object Arts 1997-2016"
             VALUE "OriginalFilename", "DolphinCR7.DLL"
             VALUE "ProductName", "Dolphin Smalltalk 7"
-            VALUE "ProductVersion", "2017, 7, 0, 0"
-        END
+#include "Version.h"
+            VALUE "ProductVersion", GIT_TAG
+            VALUE "WARNING", "Please edit this as a text file rather than with the resource editor to preserve GIT_TAG"
+		END
     END
     BLOCK "VarFileInfo"
     BEGIN
@@ -59,18 +59,16 @@ BEGIN
     END
 END
 
-#endif    // English (U.S.) resources
+#endif    // English (United States) resources
 /////////////////////////////////////////////////////////////////////////////
 
 
 /////////////////////////////////////////////////////////////////////////////
-// English (U.K.) resources
+// English (United Kingdom) resources
 
 #if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENG)
-#ifdef _WIN32
 LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_UK
 #pragma code_page(1252)
-#endif //_WIN32
 
 #ifdef APSTUDIO_INVOKED
 /////////////////////////////////////////////////////////////////////////////
@@ -85,8 +83,8 @@ END
 
 2 TEXTINCLUDE 
 BEGIN
-    "#include ""winres.h""\r\n"
-    "\0"
+	"#include ""winres.h""\r\n"
+	"\0"
 END
 
 3 TEXTINCLUDE 
@@ -103,14 +101,14 @@ END
 // String Table
 //
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
     IDR_COMPILER            "Dolphin Compiler"
     IDS_P_NOTACLASS         "not a class (%s)"
     IDP_AUTO_DEFINE_GLOBAL  "Define '%s' as a global variable?"
 END
 
-#endif    // English (U.K.) resources
+#endif    // English (United Kingdom) resources
 /////////////////////////////////////////////////////////////////////////////
 
 

@@ -51,7 +51,9 @@ BEGIN
             VALUE "LegalTrademarks", ""
             VALUE "OriginalFilename", "ConsoleToGo.exe"
             VALUE "ProductName", "A Dolphin ToGo Console Application"
-            VALUE "ProductVersion", "1, 0, 0, 1"
+#include "Version.h"
+            VALUE "ProductVersion", GIT_TAG
+            VALUE "WARNING", "Please edit this as a text file rather than with the resource editor to preserve GIT_TAG"
         END
     END
     BLOCK "VarFileInfo"
