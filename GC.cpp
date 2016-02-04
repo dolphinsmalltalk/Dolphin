@@ -209,11 +209,7 @@ void ObjectMemory::reclaimInaccessibleObjects(DWORD gcFlags)
 						nMaxUnmarked = 512;
 					else
 						nMaxUnmarked = nMaxUnmarked << 1;
-					OTE** oldPointer = pUnmarked;
 					pUnmarked = static_cast<OTE**>(realloc(pUnmarked, nMaxUnmarked*sizeof(OTE*)));
-					_ASSERT(pUnmarked);
-					if (NULL == pUnmarked)
-						free(oldPointer);
 				}
 				pUnmarked[nUnmarked++] = ote;
 

@@ -2926,11 +2926,7 @@ POTE Compiler::ParseByteArray()
 		{
 			_ASSERTE(maxelemcount > 0);
 			maxelemcount *= 2;
-			BYTE *oldPointer = elems;
 			elems = (BYTE*)realloc(elems, maxelemcount*sizeof(BYTE));
-			_ASSERT(elems);
-			if (NULL == elems)
-				free(oldPointer);
 		}
 		
 		switch(ThisToken()) 
