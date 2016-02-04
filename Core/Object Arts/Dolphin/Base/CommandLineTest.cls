@@ -14,7 +14,6 @@ test_getOpt_01
 	"http://www.gnu.org/software/libc/manual/html_node/Example-of-Getopt.html"
 
 	| commandLine optionChar |
-	1 / 0. 
 	commandLine := CommandLine argv: #('Dolphin7.exe' 'DPRO.img7').
 	optionChar := commandLine getOpt: 'abc:'.
 	self assert: optionChar isNil.	"No options provided"!
