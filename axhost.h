@@ -21,10 +21,14 @@
 #include <atlbase.h>
 
 // Disable "conditional expression is constant coming from ATL header files
+#pragma warning(push)
 #pragma warning(disable:4127)
 #define _ATLWIN_IMPL
+// disable "\mshtml.h(37492): warning BK4504: file contains too many references; ignoring further references from this source"
+#pragma component(browser, off, references)
 #include <atlwin.h>
-#pragma warning(default:4127)
+#pragma component(browser, on, references)
+#pragma warning(pop)
 
 #undef ATLAPI
 #define ATLAPI extern "C" HRESULT __stdcall

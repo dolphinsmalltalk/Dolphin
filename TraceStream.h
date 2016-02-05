@@ -4,7 +4,6 @@
 #pragma warning(disable:4530)
 #include <ostream>
 #include <streambuf>
-#pragma warning(default:4530)
 #pragma warning(pop)
 #include "CritSect.h"
 

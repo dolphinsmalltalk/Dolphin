@@ -33,14 +33,22 @@ static const char LITERAL = '#';
 
 Lexer::Lexer()
 {
+	m_base = 0;
+	m_buffer = "";
+	m_cc = '\0';
 	m_cp = NULL;
+	m_integer = 0;
+	m_lastTokenRange = { 0, 0 };
+	m_lineno = 0;
+	m_thisTokenRange = { 0, 0 };
 	m_token = NULL;
-	m_lineno=0;
+	m_tokenType = None;
+	tp = NULL;
 }
 
 Lexer::~Lexer()
 {
-	delete m_token;
+	delete[] m_token;
 }
 
 void Lexer::CompileError(int code, Oop extra)
