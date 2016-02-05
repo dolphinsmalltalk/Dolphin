@@ -53,6 +53,7 @@
     <IgnoreImportLibrary>true</IgnoreImportLibrary>
     <LinkIncremental>true</LinkIncremental>
     <TargetName>DolphinDR7</TargetName>
+    <PreBuildEventUseInBuild />
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <CustomBuildStep>
@@ -86,7 +87,7 @@
     <ResourceCompile>
       <PreprocessorDefinitions>NDEBUG</PreprocessorDefinitions>
       <Culture>0x0809</Culture>
-      <AdditionalIncludeDirectories>$(IntDir)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Link>
       <AdditionalOptions>/MACHINE:I386 %(AdditionalOptions)</AdditionalOptions>
@@ -104,7 +105,8 @@
       <ProgramDatabaseFile />
     </Link>
     <PreBuildEvent>
-      <Command>getVersion.cmd "$(IntDir)"</Command>
+      <Command>
+      </Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">
@@ -141,7 +143,7 @@
     <ResourceCompile>
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <Culture>0x0809</Culture>
-      <AdditionalIncludeDirectories>$(IntDir)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Link>
       <AdditionalOptions>/MACHINE:I386 %(AdditionalOptions)</AdditionalOptions>
@@ -164,7 +166,8 @@
       <MapExports>true</MapExports>
     </Link>
     <PreBuildEvent>
-      <Command>getVersion.cmd "$(IntDir)"</Command>
+      <Command>
+      </Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -485,6 +488,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="rc_devrs.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="VMLib\VMLib.vcxproj">
+      <Project>{bc5d162d-46bc-42cf-85db-cb715ee8517e}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

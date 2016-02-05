@@ -70,6 +70,9 @@
       <CallingConvention>FastCall</CallingConvention>
       <CompileAs>Default</CompileAs>
     </ClCompile>
+    <PreBuildEvent>
+      <Command>$(SolutionDir)getVersion.cmd "$(SolutionDir)"</Command>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">
     <ClCompile>
@@ -93,6 +96,9 @@
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <SmallerTypeCheck>true</SmallerTypeCheck>
     </ClCompile>
+    <PreBuildEvent>
+      <Command>$(SolutionDir)getVersion.cmd "$(SolutionDir)"</Command>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\alloc.cpp" />
@@ -421,6 +427,7 @@
     <ClInclude Include="..\STVirtualObject.h" />
     <ClInclude Include="..\thrdcall.h" />
     <ClInclude Include="..\TraceStream.h" />
+    <ClInclude Include="..\Version.h" />
     <ClInclude Include="..\VMExcept.h" />
     <ClInclude Include="..\VMPointers.h" />
     <ClInclude Include="..\zfbinstream.h" />
