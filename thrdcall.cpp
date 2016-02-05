@@ -108,9 +108,6 @@ void OverlappedCall::Initialize()
 {
 	HARDASSERT(::GetCurrentThreadId() == Interpreter::MainThreadId());
 
-	extern bool isWindowsNT();
-	bIsNT = isWindowsNT();
-
 	CRegKey rkOverlap;
 	if (OpenDolphinKey(rkOverlap, "Overlapped")==ERROR_SUCCESS)
 	{
