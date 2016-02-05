@@ -108,7 +108,7 @@ public:
 	bool attach(int fd, const char* szMode)
 	{
 		close();
-		m_bOwner = false;
+		m_bOwner = true;
 		m_fp = _fdopen(fd, szMode);
 		return m_fp != NULL;
 	}
@@ -140,8 +140,8 @@ public:
 			if (m_bOwner)
 			{
 				fclose(m_fp);
-				m_fp = NULL;
 			}
+			m_fp = NULL;
 		}
 		return *this;
 	}
