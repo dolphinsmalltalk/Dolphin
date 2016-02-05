@@ -45,26 +45,11 @@
 //////////////////////////////////////////////////////////////////////////////
 // Image Save Methods
 
-bool ObjectMemory::Expire(const char* szFileName)
-{
-	imageStamp.bIsExpired = true;
-	imageStamp.dwSavesRemaining = 1;
-
-	// Note that if we are running a deployed executable image, then this
-	// save will fail because obviously the file cannot be opened while it 
-	// is in use, and in consequence false will be returned, causing the
-	// whole image load to fail, and hence the deployed executable will also
-	// have expired
-
-	return SaveImageFile(szFileName, false, false)==0;
-}
-
 int __stdcall ObjectMemory::SaveImageFile(const char* szFileName, bool bBackup, int nCompressionLevel)
 {
 	// Answer:
 	//	NULL = success
 	//	ZeroPointer = general save error
-	//	OnePointer = image has expired
 
 	if (!szFileName)
 		return 2;
@@ -133,30 +118,11 @@ int __stdcall ObjectMemory::SaveImageFile(const char* szFileName, bool bBackup, 
 	// User may have modified max table size
 	header.nMaxTableSize	= m_nOTMax;
 
-	// Create a special Context to hold information about the image and
-	// save it into the image. We'll call this the imageStamp.
-	// When we find this Context on a subsequent image-load, we will be
-	// able to extract this information.
-	
-	PointersOTE* oteStamp = ObjectMemory::newPointerObject(
-		_Pointers.ClassContext, 
-		Context::FixedSize + sizeof(ImageStamp)/4+1);
-	oteStamp->beBytes();
-
-	Context* pContext = reinterpret_cast<Context*>(oteStamp->m_location);
-	pContext->m_frame = Oop(oteStamp);
-	// Add artificial ref. count
-	oteStamp->m_flags.m_count = 1;
-
-	// Transfer the information from ObjectMemory into the ImageStamp.
-	ImageStamp* stamp = reinterpret_cast<ImageStamp*>(&(pContext->m_tempFrame));
-	memcpy(stamp, &ObjectMemory::imageStamp, sizeof(ImageStamp));
-
-	// We must do this after allocating the image stamp so that the OT size is correct
+	// Set the OT size
 	unsigned i = lastOTEntry();
 	// Find the last used entry
 	ASSERT(i > NumPermanent);
-	header.nTableSize = i+1;
+	header.nTableSize = i + 1;
 
 	::_write(fd, &header, sizeof(ImageHeader));
 	
@@ -182,10 +148,6 @@ int __stdcall ObjectMemory::SaveImageFile(const char* szFileName, bool bBackup, 
 
 			bSaved = SaveImage(stream, &header, nRet);
 		}
-
-		// Explicitly free the special MethodContext used for the image stamp
-		oteStamp->decRefs();
-		deallocate(reinterpret_cast<OTE*>(oteStamp));
 
 	#ifdef PROFILE_IMAGELOADSAVE
 		DWORD msToRun = GetTickCount() - dwStartTicks;
