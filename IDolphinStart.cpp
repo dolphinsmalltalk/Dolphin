@@ -59,5 +59,5 @@ STDMETHODIMP CDolphinSmalltalk::Run(IUnknown* punkOuter)
 STDMETHODIMP CDolphinSmalltalk::GetVersionInfo(LPVOID pvi)
 {
 	extern BOOL __stdcall GetVersionInfo(VS_FIXEDFILEINFO* lpInfoOut);
-	return ::GetVersionInfo(static_cast<VS_FIXEDFILEINFO*>(pvi));
+	return ::GetVersionInfo(static_cast<VS_FIXEDFILEINFO*>(pvi)) ? S_OK : E_FAIL;
 }

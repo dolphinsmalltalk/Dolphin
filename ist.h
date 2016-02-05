@@ -52,9 +52,8 @@
 #include <iomanip>
 #include <fstream>
 #include <sstream>
-#pragma warning(default:4530)
-using namespace std;
 #pragma warning(pop)
+using namespace std;
 
 #include "Environ.h"
 //#include "version.h"

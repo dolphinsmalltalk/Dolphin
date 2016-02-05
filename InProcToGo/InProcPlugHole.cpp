@@ -171,14 +171,14 @@ DWORD CInProcPlugHole::WaitForPeerToTerminate()
 		if (SUCCEEDED(hr))
 		{
 			::GetExitCodeThread(m_hDolphinThread, &dwExitCode);
-			TRACE("%#x: Dolphin thread %x exited with code %d\n", GetCurrentThreadId(), m_hDolphinThread, dwExitCode);
+			TRACE("%#x: Dolphin thread %p exited with code %d\n", GetCurrentThreadId(), m_hDolphinThread, dwExitCode);
 
 			// Note that we can't release the last ref to the peer, because it is held
 			// by the image, which has now completely shut down
 		}
 		else
 		{
-			trace("%#x: Dolphin thread %x failed to exit (%#x)\n", GetCurrentThreadId(), m_hDolphinThread, hr);
+			trace("%#x: Dolphin thread %p failed to exit (%#x)\n", GetCurrentThreadId(), m_hDolphinThread, hr);
 		}
 
 		::CloseHandle(m_hDolphinThread);

@@ -500,7 +500,7 @@ void Process::PostLoadFix(ProcessOTE* oteThis)
 		int size = (pFrame->m_sp-1) - reinterpret_cast<DWORD>(this) + sizeof(Oop);
 		if (size > 0 && unsigned(size) < oteThis->getSize())
 		{
-			TRACE("WARNING: Resizing process %x from %u to %u\n", oteThis, oteThis->getSize(), size);
+			TRACE("WARNING: Resizing process %p from %u to %u\n", oteThis, oteThis->getSize(), size);
 			oteThis->setSize(size);
 		}
 	}
