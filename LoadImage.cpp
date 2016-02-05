@@ -101,15 +101,6 @@ HRESULT ObjectMemory::LoadImage(const char* szImageName, LPVOID imageData, UINT 
 	TRACESTREAM << " done (" << (SUCCEEDED(hr) ? "Succeeded" : "Failed") << "), binstreams time=" << long(msToRun) << "mS" << endl;
 #endif
 
-#if defined(TIMEDEXPIRY)
-	// Thin (development only) version does not expire 
-	if (SUCCEEDED(hr))
-	{
-		// We have loaded the image successfully.
-		hr = ExpireIfNecessary(szImageName, !isDevSys);
-	}
-#endif
-
 	return hr;
 }
 
@@ -366,7 +357,6 @@ void ObjectMemory::FixupObject(OTE* ote, MWORD* oldLocation, const ImageHeader* 
 #ifdef _DEBUG
 	{
 		PointersOTE* oteObj = reinterpret_cast<PointersOTE*>(ote);
-		VariantObject* obj = oteObj->m_location;
 		if (ote->isPointers() && (oteObj->getSize()%2 == 1 ||
 				classPointer == _Pointers.ClassByteArray ||
 				classPointer == _Pointers.ClassString ||
@@ -421,13 +411,6 @@ void ObjectMemory::FixupObject(OTE* ote, MWORD* oldLocation, const ImageHeader* 
 		// Look for the special image stamp object
 		else if (classPointer == _Pointers.ClassContext)
 		{
-			// Check for the special MethodContext which contains the image stamp.
-			ASSERT(ote->isBytes());
-
-			Context* pContext = static_cast<Context*>(ote->m_location);
-#ifdef TIMEDEXPIRY
-			LoadedImageStamp(pContext);
-#endif
 			ASSERT(ote->heapSpace() == OTEFlags::PoolSpace || ote->heapSpace() == OTEFlags::NormalSpace);
 
 			// Can't deallocate now - must leave for collection later - maybe could go in the Zct though.

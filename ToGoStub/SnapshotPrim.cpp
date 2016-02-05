@@ -27,11 +27,3 @@ BOOL __fastcall Interpreter::primitiveSnapshot(CompiledMethod& , unsigned argCou
 {
 	return FALSE;
 }
-
-bool ObjectMemory::Expire(const char* szFileName)
-{
-	// Apps cannot save the image
-	return false;
-}
-
-

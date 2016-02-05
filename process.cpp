@@ -1647,33 +1647,6 @@ BOOL __fastcall Interpreter::primitiveProcessPriority()
 // more than just the input semaphore, and is independent of receiver.
 BOOL __fastcall Interpreter::primitiveInputSemaphore(CompiledMethod&, unsigned argCount)
 {
-#if !defined(OAD) && defined(TIMEDEXPIRY)
-	if (argCount == 3)
-	{
-		BOOL  bIsMachineLocked = ObjectMemoryIntegerValueOf(stackTop());
-		DWORD dwMonthsExt = ObjectMemoryIntegerValueOf(stackValue(1));
-		if (dwMonthsExt > 0xFFFF)
-			return primitiveFailure(0);
-
-		Oop oopSerialNo = stackValue(2);
-		DWORD dwSerialNo;
-		if (ObjectMemoryIsIntegerObject(oopSerialNo))
-			dwSerialNo = ObjectMemoryIntegerValueOf(oopSerialNo);
-		else
-		{
-			LargeIntegerOTE* oteLI = reinterpret_cast<LargeIntegerOTE*>(oopSerialNo);
-			LargeInteger* l32i = oteLI->m_location;
-			dwSerialNo = l32i->m_digits[0];
-		}
-
-		bool bSucceeded = ObjectMemory::UnlockImage(dwSerialNo, (WORD)dwMonthsExt, bIsMachineLocked);
-		if (bSucceeded)
-			pop(3);
-		return bSucceeded;
-	}
-	else
-#endif
-	{
 		Oop argPointer = stackValue(1);
 		SMALLUNSIGNED which = ObjectMemoryIntegerValueOf(argPointer);
 		if (which <= 0 || which > NumPointers)
@@ -1692,7 +1665,6 @@ BOOL __fastcall Interpreter::primitiveInputSemaphore(CompiledMethod&, unsigned a
 
 		pop(2);						// pop the args, neither ref. counted any more
 		return primitiveSuccess();
-	}
 }
 
 

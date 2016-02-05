@@ -55,8 +55,6 @@ OTE* 	ObjectMemory::m_pOT;					// The Object Table itself
 OTE*	ObjectMemory::m_pFreePointerList;		// Head of list of free Object Table Entries
 OTEFlags ObjectMemory::m_spaceOTEBits[OTEFlags::NumSpaces];
 
-ImageStamp ObjectMemory::imageStamp;
-
 DWORD ObjectMemory::m_imageVersionMajor;
 DWORD ObjectMemory::m_imageVersionMinor;
 
@@ -763,8 +761,8 @@ int ObjectMemory::OopsUsed()
 	void ObjectMemory::OTEPool::registerNew(OTE* ote, BehaviorOTE* classPointer) 
 	{
 		m_nAllocated++;
-		Behavior* cl = classPointer->m_location;
 		#ifdef VERBOSE_MEMSTATS
+			Behavior* cl = classPointer->m_location;
 			TRACESTREAM << "OTEPool(" << this << "): Allocated new " 
 				<< cl << ", " << LPVOID(ote) << ", total "
 				<< m_nAllocated << ", free " << m_nFree << endl;
