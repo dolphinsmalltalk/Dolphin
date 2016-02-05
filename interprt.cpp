@@ -349,9 +349,10 @@ void Interpreter::exitSmalltalk(int exitCode)
 
 void Interpreter::interpret()
 {
+#pragma warning(push)
 #pragma warning(disable:4127)
 	while(true)
-#pragma warning(default:4127)
+#pragma warning(pop)
 	{
 		// Using Win32 structured exception handling here NOT C++
 		DWORD dwCode;
