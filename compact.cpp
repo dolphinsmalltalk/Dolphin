@@ -32,7 +32,7 @@ unsigned __stdcall ObjectMemory::lastOTEntry()
 	const OTE* pOT = m_pOT;
 	while (pOT[i].isFree())
 	{
-		ASSERT(0 < i);
+		ASSERT(i > 0);
 		i--;
 	}
 

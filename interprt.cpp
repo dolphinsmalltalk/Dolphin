@@ -157,12 +157,11 @@ HRESULT Interpreter::initializeBeforeLoad()
 	wndClass.lpszClassName = VMWNDCLASS;
 	m_atomVMWndClass = RegisterClass(&wndClass);
 
-	extern bool isWindows2000OrLater();
-
-	bool hasMsgWnds = isWindows2000OrLater();
-	m_hWndVM = CreateWindow(VMWNDCLASS, "", hasMsgWnds?WS_CHILD:0, 0, 0, 0, 0, 
-							hasMsgWnds?HWND_MESSAGE:NULL, 
-							NULL, wndClass.hInstance, NULL);
+	m_hWndVM = CreateWindow(VMWNDCLASS, "", WS_CHILD, 0, 0, 0, 0, HWND_MESSAGE, NULL, wndClass.hInstance, NULL);
+	if (m_hWndVM == NULL)	// early OSs did not support message-only windows
+	{
+		m_hWndVM = CreateWindow(VMWNDCLASS, "", 0, 0, 0, 0, 0, NULL, NULL, wndClass.hInstance, NULL);
+	}
 	if (m_hWndVM == NULL)
 	{
 		LPSTR errText = GetLastErrorText();
