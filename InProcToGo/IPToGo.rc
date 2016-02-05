@@ -185,9 +185,6 @@ STRINGTABLE
 BEGIN
     IDP_FAILTOHOOK          "Unable to hook window creation events (%1!d!).%nPlease wait a few moments and try again."
     IDP_CLOCKSETBACK        "This application was created on a future date (%1!d!/%2!d!/%3!d!).\n\nHas the clock been set back?"
-    IDP_PERMEXPIRED         "Sorry, but this application's license has permanently expired."
-    IDP_WRONGMACHINE        "Sorry, but this application is not licensed for use on this machine."
-    IDP_NEARLYEXPIRED       "This application was deployed from an evaluation copy of Dolphin Smalltalk which will permanently expire on %1!d!/%2!d!/%3!d!."
 END
 
 STRINGTABLE

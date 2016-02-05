@@ -27,14 +27,6 @@
 
 BOOL __fastcall Interpreter::primitiveMakePoint(CompiledMethod&, unsigned argCount)
 {
-#ifdef TIMEDEXPIRY
-	if (argCount == 0)
-	{
-		stackTop() = Integer::NewUnsigned32WithRef(ObjectMemory::GetMachineId());
-	}
-	else
-#endif
-	{
 		Oop oopReceiver = stackValue(argCount);
 		if (!ObjectMemory::isBehavior(oopReceiver))
 			return primitiveFailure(0);
@@ -66,7 +58,6 @@ BOOL __fastcall Interpreter::primitiveMakePoint(CompiledMethod&, unsigned argCou
 			obj->m_fields[i] = oopArg;
 		}
 		replaceStackTopWithNew(oteObj);
-	}
 
 	return TRUE;
 }

@@ -33,31 +33,7 @@ HINSTANCE hApplicationInstance;
 
 static LPTOP_LEVEL_EXCEPTION_FILTER lpTopFilter;
 
-static OSVERSIONINFO osvi = {0};
-
 /////////////////////////////////////////////////////////////////////////////
-
-OSVERSIONINFO* GetOSVersionInfo()
-{
-	return &osvi;
-}
-
-bool isWindowsNT()
-{
-	return osvi.dwPlatformId == VER_PLATFORM_WIN32_NT;
-}
-
-bool isWindows2000OrLater()
-{
-	return isWindowsNT() &&
-			osvi.dwMajorVersion >= 5;
-}
-
-bool isWindowsXPOrLater()
-{
-	return isWindowsNT() &&
-			osvi.dwMajorVersion >= 5 && osvi.dwMinorVersion >= 1;
-}
 
 HMODULE GetVMModule()
 {
@@ -109,23 +85,8 @@ HRESULT InitApplication()
 	return S_OK;
 }
 
-void CacheOSVersionInfo()
-{
-	// Cache version information about host OS
-	osvi.dwOSVersionInfoSize = sizeof(OSVERSIONINFO);
-	::GetVersionEx(&osvi);
-}
-
 static inline void DolphinInitInstance()
 {
-	CacheOSVersionInfo();
-
-	// This is done in the image, so I don't think we need it any more. If we do, then it will need 
-	// to be factored out of this function which is common to console and GUI apps, as it is part of
-	// the shared VM library code linked in to the dev VM and all To Go stubs
-//	if (isWindowsXPOrLater())
-//		InitCommonControls();
-
 	// Ensure that Dolphin has a message queue, or the box will not appear
 	MSG dummy;
 	::PeekMessage(&dummy, 0, 0, 0, PM_NOREMOVE|PM_NOYIELD);

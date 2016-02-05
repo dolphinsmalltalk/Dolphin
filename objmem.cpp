@@ -55,8 +55,6 @@ OTE* 	ObjectMemory::m_pOT;					// The Object Table itself
 OTE*	ObjectMemory::m_pFreePointerList;		// Head of list of free Object Table Entries
 OTEFlags ObjectMemory::m_spaceOTEBits[OTEFlags::NumSpaces];
 
-ImageStamp ObjectMemory::imageStamp;
-
 DWORD ObjectMemory::m_imageVersionMajor;
 DWORD ObjectMemory::m_imageVersionMinor;
 
