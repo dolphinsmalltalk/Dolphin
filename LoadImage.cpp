@@ -271,8 +271,7 @@ HRESULT ObjectMemory::LoadObjects(ibinstream& imageFile, const ImageHeader* pHea
 	// needs to be expanded (at which point we commit more pages)
 
 #ifdef _DEBUG
-		// -1 is for the timestamp object which is free'd immediately
-		ASSERT(numObjects+m_nFreeOTEs-1 == m_nOTSize);
+		ASSERT(numObjects+m_nFreeOTEs == m_nOTSize);
 		ASSERT(m_nFreeOTEs = CountFreeOTEs());
 		TRACESTREAM << dec << numObjects << ", " << m_nFreeOTEs << " free" << endl;
 #endif
