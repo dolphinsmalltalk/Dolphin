@@ -128,7 +128,7 @@ void __stdcall FatalException(const EXCEPTION_RECORD& exRec)
 
 #include "vmexcept.h"
 
-__declspec(noreturn) void __stdcall DolphinExit(int exitCode)
+void __stdcall DolphinExit(int exitCode)
 {
 	RaiseFatalError(IDP_EXIT, 1, exitCode);
 }

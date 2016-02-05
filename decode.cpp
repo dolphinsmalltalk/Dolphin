@@ -1651,9 +1651,8 @@ void DumpMethod(OTE* oteMethod)
 	DumpMethod(static_cast<CompiledMethod*>(oteMethod->m_location));
 }
 
-//	error LNK2001: unresolved external symbols	// JGFoster
-//	extern "C" unsigned byteCodeCounters[];
-//	extern "C" unsigned byteCodePairs[];
+extern "C" unsigned byteCodeCounters[];
+extern "C" unsigned byteCodePairs[];
 
 void DumpBytecodeCounts(bool bClear)
 {
@@ -1661,8 +1660,8 @@ void DumpBytecodeCounts(bool bClear)
 	TRACESTREAM << endl << "Bytecode invocation counts" << endl << "-----------------------------" << endl;
 	for (int i=0;i<256;i++)
 	{
-		TRACESTREAM << dec << i << ": " << "byteCodeCounters is an unresolved external" /* byteCodeCounters[i] */ << endl;
-//		if (bClear) byteCodeCounters[i] = 0;
+		TRACESTREAM << dec << i << ": " << byteCodeCounters[i] << endl;
+		if (bClear) byteCodeCounters[i] = 0;
 	}
 	TRACESTREAM << "-----------------------------" << endl << endl;
 
@@ -1671,8 +1670,8 @@ void DumpBytecodeCounts(bool bClear)
 	{
 		for (int j=0;j<256;j++)
 		{
-			TRACESTREAM << "byteCodePairs is an unresolved external" /* byteCodePairs[i*256+j] */ << ' ';
-//			if (bClear) byteCodePairs[i*256+j] = 0;
+			TRACESTREAM << byteCodePairs[i*256+j] << ' ';
+			if (bClear) byteCodePairs[i*256+j] = 0;
 		}
 		TRACESTREAM << endl;
 	}

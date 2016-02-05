@@ -221,7 +221,6 @@ BOOL __fastcall Interpreter::primitiveStackAtPut(CompiledMethod& , unsigned argC
 
 
 // Don't care what effect on stack is!!
-__declspec(noreturn) 
 void __fastcall Interpreter::primitiveQuit(CompiledMethod&,unsigned)
 {
 	Oop argPointer = stackTop();

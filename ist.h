@@ -111,9 +111,9 @@ void __cdecl trace(const char* szFormat, ...);
 void __cdecl DebugCrashDump(LPCTSTR szFormat, ...);
 void __cdecl DebugDump(LPCTSTR szFormat, ...);
 HRESULT __cdecl ReportError(int nPrompt, ...);
-__declspec(noreturn) void __cdecl RaiseFatalError(int nCode, int nArgs, ...);
+void __cdecl RaiseFatalError(int nCode, int nArgs, ...);
 __declspec(noreturn) void __stdcall FatalException(const EXCEPTION_RECORD& exRec);
-__declspec(noreturn) void __stdcall DolphinExit(int nExitCode);
+void __stdcall DolphinExit(int nExitCode);
 
 BOOL __stdcall GetVersionInfo(VS_FIXEDFILEINFO* lpInfoOut);
 HMODULE GetModuleContaining(LPCVOID pFunc);
