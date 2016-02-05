@@ -76,9 +76,7 @@ BEGIN
             VALUE "LegalCopyright", "Portions Copyright © Object Arts 2002-2016."
             VALUE "OriginalFilename", "IPDolphin.DLL"
             VALUE "ProductName", "A Dolphin COM Component"
-#include "Version.h"
-            VALUE "ProductVersion", GIT_TAG
-            VALUE "WARNING", "Please edit this as a text file rather than with the resource editor to preserve GIT_TAG"
+            VALUE "ProductVersion", "1, 0, 0, 1"
         END
     END
     BLOCK "VarFileInfo"
