@@ -688,8 +688,7 @@ private:
 	static BOOL __fastcall primitiveEquivalent();
 	static BOOL __fastcall primitiveClass();
 	static BOOL __fastcall primitiveCoreLeft(CompiledMethod& , unsigned argCount);
-	__declspec(noreturn) 
-		static void __fastcall primitiveQuit(CompiledMethod&, unsigned argumentCount);
+	static void __fastcall primitiveQuit(CompiledMethod&, unsigned argumentCount);
 	static BOOL __fastcall primitiveOopsLeft();
 	static BOOL __fastcall primitiveInheritsFrom();
 	static BOOL __fastcall primitiveShallowCopy();
