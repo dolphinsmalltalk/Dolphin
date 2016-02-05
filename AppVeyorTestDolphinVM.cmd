@@ -10,5 +10,5 @@ copy ..\..\DolphinSureCrypto.dll Dolphin
 
 ECHO Boot and test image
 cd Dolphin
-Dolphin7 DBOOT.img7 DolphinProfessional
+CALL BootDPRO
 CALL TestDPRO
