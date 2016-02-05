@@ -5,12 +5,9 @@ WinRel
 WinDebug
 WinDLLDebug
 ActiveXHost.h
-ActiveXHost_i.c
-DolphinSmalltalk_i.c
-DolphinSmalltalk_p.c
-DolphinSmalltalk_i.h
-Compiler_i.c
-Compiler_i.h
+*_i.c
+*_i.h
+*_p.c
 dlldata.c
 Messages.h
 Messages.rc
@@ -25,4 +22,5 @@ UpgradeLog.htm
 *.sdf
 *.aps
 *.opensdf
+*.VC.opendb
 

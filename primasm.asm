@@ -291,7 +291,7 @@ extern PRIMASYNCCALL:near32
 
 IFDEF _DEBUG
 	extern ?primitiveExecutionTrace@Interpreter@@CIHXZ:near32
-	extern ?checkReferences@ObjectMemory@@SAXXZ:near32
+	extern ?checkReferences@ObjectMemory@@SIXXZ:near32
 ENDIF
 
 ; Other C++ method imports

@@ -500,7 +500,7 @@ STDMETHODIMP CDolphinAxHost::CreateControlLicEx(LPCOLESTR lpszTricsData, HWND hW
 				{
 					// Build error report HTML text
 					char szErrorMsg[128];
-					::LoadString(GetResLibHandle(), WORD(lpszHTMLText), szErrorMsg, sizeof(szErrorMsg)-1);
+					::LoadString(GetResLibHandle(), LOWORD(lpszHTMLText), szErrorMsg, sizeof(szErrorMsg)-1);
 					char szErrorFormat[128];
 					::LoadString(GetResLibHandle(), IDS_AXSITEERRORFMT, szErrorFormat, sizeof(szErrorFormat)-1);
 					char szOsErrMsg[256] = "";
