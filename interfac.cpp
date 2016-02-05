@@ -425,7 +425,7 @@ StringOTE* __fastcall String::NewFromWide(LPCWSTR wsz)
 	{
 		int nCopied = ::WideCharToMultiByte(CP_ACP, 0, wsz, -1, string->m_characters, len, NULL, NULL);
 		UNREFERENCED_PARAMETER(nCopied);
-		ASSERT(nCopied = len);
+		ASSERT(nCopied == len);
 	}
 	else
 		string->m_characters[0] = 0;
