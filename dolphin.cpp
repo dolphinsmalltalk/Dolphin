@@ -133,21 +133,6 @@ static inline void DolphinInitInstance()
 	InitializeVtbl();
 }
 
-// Answer a fully pathed image file name in the buffer, buf, using whatever the user specified.
-// The defaulting is such that either the user specified name is used, or dolphin.im in the current
-// directory, or dolphin.im in the installation directory
-static const char* getImagePath(char* buf, const char* pzImageFileName)
-{
-	// Expand the fileName to produce a full path name.
-	// This will not unfortunately convert from a short to long path name but
-	// is useful if the user fired off the command line and so didn't include
-	// the full path with the file name
-	char* filePart;
-	::GetFullPathName(pzImageFileName, _MAX_PATH, buf, &filePart);
-
-	return buf;
-}
-
 #pragma code_seg()
 
 // The purpose of this structure exception filter is to ignore any "extra" unwind/exits 
