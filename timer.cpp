@@ -211,8 +211,6 @@ BOOL __fastcall Interpreter::primitiveSignalAtTick(CompiledMethod&, unsigned arg
 		{
 			ASSERT(m_oteNewProcess->m_oteClass ==Pointers.ClassProcess);
 			ProcessOTE* activeProcess = scheduler()->m_activeProcess;
-			Process* newProc = m_oteNewProcess->m_location;
-			Process* oldProc = activeProcess->m_location;
 
 			TRACESTREAM << "signalAtTick: Caused process switch to " << m_oteNewProcess
 				<< endl << "\t\tfrom " << activeProcess << endl

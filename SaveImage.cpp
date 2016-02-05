@@ -181,8 +181,6 @@ int __stdcall ObjectMemory::SaveImageFile(const char* szFileName, bool bBackup, 
 			stream.setbuf(buf, sizeof(buf));
 
 			bSaved = SaveImage(stream, &header, nRet);
-			stream.close();
-			::_close(fd);
 		}
 
 		// Explicitly free the special MethodContext used for the image stamp
