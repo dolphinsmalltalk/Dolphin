@@ -357,7 +357,6 @@ void ObjectMemory::FixupObject(OTE* ote, MWORD* oldLocation, const ImageHeader* 
 #ifdef _DEBUG
 	{
 		PointersOTE* oteObj = reinterpret_cast<PointersOTE*>(ote);
-		VariantObject* obj = oteObj->m_location;
 		if (ote->isPointers() && (oteObj->getSize()%2 == 1 ||
 				classPointer == _Pointers.ClassByteArray ||
 				classPointer == _Pointers.ClassString ||

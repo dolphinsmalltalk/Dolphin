@@ -761,8 +761,8 @@ int ObjectMemory::OopsUsed()
 	void ObjectMemory::OTEPool::registerNew(OTE* ote, BehaviorOTE* classPointer) 
 	{
 		m_nAllocated++;
-		Behavior* cl = classPointer->m_location;
 		#ifdef VERBOSE_MEMSTATS
+			Behavior* cl = classPointer->m_location;
 			TRACESTREAM << "OTEPool(" << this << "): Allocated new " 
 				<< cl << ", " << LPVOID(ote) << ", total "
 				<< m_nAllocated << ", free " << m_nFree << endl;

@@ -147,8 +147,6 @@ int __stdcall ObjectMemory::SaveImageFile(const char* szFileName, bool bBackup, 
 			stream.setbuf(buf, sizeof(buf));
 
 			bSaved = SaveImage(stream, &header, nRet);
-			stream.close();
-			::_close(fd);
 		}
 
 	#ifdef PROFILE_IMAGELOADSAVE

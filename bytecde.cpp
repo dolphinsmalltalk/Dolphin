@@ -807,7 +807,7 @@ MethodOTE* __fastcall Interpreter::lookupMethod(BehaviorOTE* classPointer, Symbo
 		{
 			if (AtCache[i].pElements != 0) 
 			{
-				OTE* oteArray = AtCache[i].oteArray;
+//				OTE* oteArray = AtCache[i].oteArray;
 //				TRACESTREAM << "AtCache[" << i << "] = " << oteArray << endl;
 				used++;
 			}
