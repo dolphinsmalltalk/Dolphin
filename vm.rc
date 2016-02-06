@@ -209,7 +209,6 @@ END
 STRINGTABLE
 BEGIN
     IDP_FAILTOHOOK          "Unable to hook window creation events (%1!d!).%nPlease wait a few moments and try again."
-    IDP_CLOCKSETBACK        "This Dolphin Smalltalk image was last saved on a future date (%1!d!/%2!d!/%3!d!). %n%nHas the clock been set back?"
 END
 
 STRINGTABLE

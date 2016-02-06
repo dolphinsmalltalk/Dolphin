@@ -584,6 +584,14 @@ int Interpreter::interpreterExceptionFilter(LPEXCEPTION_POINTERS pExInfo)
 			}
 			break;
 
+		case SE_VMCRTFAULT:
+			if (isInPrimitive())
+			{
+				queueGPF(VMI_CRTFAULT, pExInfo);
+				activateNewMethod(m_registers.m_oopNewMethod->m_location);
+				action = EXCEPTION_EXECUTE_HANDLER;
+			}
+			break;
 		case SE_VMEXIT:
 			break;
 

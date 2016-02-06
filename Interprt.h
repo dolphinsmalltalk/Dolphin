@@ -285,7 +285,8 @@ public:
 						VMI_FPSTACK = ObjectMemoryIntegerObjectOf(16),
 						VMI_NOMEMORY = ObjectMemoryIntegerObjectOf(17),
 						VMI_HOSPICECRISIS = ObjectMemoryIntegerObjectOf(18),
-						VMI_BEREAVEDCRISIS = ObjectMemoryIntegerObjectOf(19)
+						VMI_BEREAVEDCRISIS = ObjectMemoryIntegerObjectOf(19),
+						VMI_CRTFAULT = ObjectMemoryIntegerObjectOf(20)
 						};
 
 	static bool __fastcall disableInterrupts(bool bDisable);

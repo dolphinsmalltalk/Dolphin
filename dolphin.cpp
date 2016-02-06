@@ -191,6 +191,20 @@ static int vmmainFilter(LPEXCEPTION_POINTERS pEx, EXCEPTION_RECORD& exRec)
 	return action;
 }
 
+static void __cdecl invalidParameterHandler(
+	wchar_t const* expression,
+	wchar_t const* function,
+	wchar_t const* file,
+	unsigned int line,
+	uintptr_t pReservered
+	)
+{
+	TRACE("CRT parameter fault in '%ls' of %ls, %ls(%u)", expression, function, file, line);
+	ULONG_PTR args[1];
+	args[0] = FAST_FAIL_INVALID_ARG;
+	::RaiseException(SE_VMCRTFAULT, 0, 1, (CONST ULONG_PTR*)args);
+}
+
 #pragma code_seg(INIT_SEG)
 
 HRESULT APIENTRY VMInit(LPCSTR szImageName,
@@ -213,6 +227,7 @@ int APIENTRY VMRun(DWORD dwArg)
 	EXCEPTION_RECORD exRec = { 0 };
 
 	lpTopFilter = SetUnhandledExceptionFilter(unhandledExceptionFilter);
+	_invalid_parameter_handler outerInvalidParamHandler = _set_invalid_parameter_handler(invalidParameterHandler);
 
 	__try
 	{
@@ -222,6 +237,7 @@ int APIENTRY VMRun(DWORD dwArg)
 	{
 		SetUnhandledExceptionFilter(lpTopFilter);
 		lpTopFilter = NULL;
+		_set_invalid_parameter_handler(outerInvalidParamHandler);
 
 		if (exRec.ExceptionCode == SE_VMEXIT)
 			exitCode = exRec.ExceptionInformation[0];
