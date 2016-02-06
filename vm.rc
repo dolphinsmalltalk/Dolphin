@@ -160,7 +160,9 @@ BEGIN
             VALUE "OriginalFilename", "DolphinVM7.DLL"
             VALUE "PrivateBuild", "11192015"
             VALUE "ProductName", "Dolphin Smalltalk 7"
-            VALUE "ProductVersion", "2016.7.0.0"
+#include "Version.h"
+            VALUE "ProductVersion", GIT_TAG
+            VALUE "WARNING", "Please edit this as a text file rather than with the resource editor to preserve GIT_TAG"
         END
     END
     BLOCK "VarFileInfo"
