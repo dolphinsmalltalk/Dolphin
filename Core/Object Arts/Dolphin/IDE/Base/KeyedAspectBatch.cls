@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 KeyedAspect subclass: #KeyedAspectBatch
 	instanceVariableNames: 'batchSize keys accessorClass'
@@ -21,6 +21,10 @@ batchSize
 keys
 	^keys!
 
+readFrom: anObject
+
+	^'next ', batchSize printString, ' items'!
+
 setKeys: aSequencedReadableCollection batchSize: anInteger accessorClass: aClass 
 	keys := aSequencedReadableCollection.
 	batchSize := anInteger.
@@ -28,6 +32,7 @@ setKeys: aSequencedReadableCollection batchSize: anInteger accessorClass: aClass
 !KeyedAspectBatch categoriesFor: #accessorClass!constants!public! !
 !KeyedAspectBatch categoriesFor: #batchSize!accessing!public! !
 !KeyedAspectBatch categoriesFor: #keys!accessing!public! !
+!KeyedAspectBatch categoriesFor: #readFrom:!public! !
 !KeyedAspectBatch categoriesFor: #setKeys:batchSize:accessorClass:!private! !
 
 !KeyedAspectBatch class methodsFor!
