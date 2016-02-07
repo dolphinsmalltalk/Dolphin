@@ -1,0 +1,59 @@
+| package |
+package := Package name: 'Tutorial Player'.
+package paxVersion: 1;
+	basicComment: ''.
+
+
+package classNames
+	add: #AbstractTutorial;
+	add: #Lesson;
+	add: #TutorialPlayer;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\..\IDE\Base\Development System';
+	add: '..\..\Base\Dolphin';
+	add: '..\..\MVP\Base\Dolphin MVP Base';
+	add: '..\..\MVP\Views\Scintilla\Dolphin Scintilla View';
+	add: '..\..\MVP\Views\SysLink\Dolphin SysLink Control';
+	add: '..\..\MVP\Presenters\Text\Dolphin Text Presenter';
+	add: '..\..\MVP\Type Converters\Dolphin Type Converters';
+	add: '..\..\MVP\Models\Value\Dolphin Value Models';
+	add: '..\..\MVP\Gdiplus\Gdiplus';
+	add: '..\..\MVP\Gdiplus\Gdiplus ImageView';
+	add: '..\..\IDE\Base\Internal Bitmaps and Icons';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+Object subclass: #AbstractTutorial
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Object subclass: #Lesson
+	instanceVariableNames: 'title contents'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Shell subclass: #TutorialPlayer
+	instanceVariableNames: 'tutorialPosition tutorial title workspace'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+"End of package definition"!
+

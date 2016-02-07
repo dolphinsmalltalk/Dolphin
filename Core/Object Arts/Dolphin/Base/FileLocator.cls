@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #FileLocator
 	instanceVariableNames: ''
@@ -104,14 +104,24 @@ imageRelative
 
 	^ImageRelativeFileLocator current!
 
+imageRelative: aFilenameString
+	^self imageRelative localFileSpecFor: aFilenameString
+!
+
 installRelative
 	"Answers an instance of the receiver that can be used to locate external files
 	relative to the current installation directory."
 
 	^InstallRelativeFileLocator current
+!
+
+installRelative: aFilenameString
+	^self installRelative localFileSpecFor: aFilenameString
 ! !
 !FileLocator class categoriesFor: #absolute!accessing!public! !
 !FileLocator class categoriesFor: #default!accessing!public! !
 !FileLocator class categoriesFor: #imageRelative!accessing!public! !
+!FileLocator class categoriesFor: #imageRelative:!accessing!public! !
 !FileLocator class categoriesFor: #installRelative!accessing!public! !
+!FileLocator class categoriesFor: #installRelative:!accessing!public! !
 
