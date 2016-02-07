@@ -117,7 +117,7 @@ DolphinTest subclass: #VersionResourceTest
 DolphinTest subclass: #VMTest
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	poolDictionaries: 'CRTConstants'
 	classInstanceVariableNames: ''!
 DolphinTest subclass: #XMLDOMNodeTest
 	instanceVariableNames: ''

@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Error subclass: #CRTError
 	instanceVariableNames: ''
@@ -6,8 +6,8 @@ Error subclass: #CRTError
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 CRTError guid: (GUID fromString: '{259AE719-09C3-4401-A9BE-6F089698B6F7}')!
-CRTError comment: ''!
-!CRTError categoriesForClass!Unclassified! !
+CRTError comment: 'Exception to represent C-runtime library errors.'!
+!CRTError categoriesForClass!System-Exception Handling! !
 !CRTError methodsFor!
 
 _descriptionArguments
@@ -15,9 +15,8 @@ _descriptionArguments
 
 	^Array 
 		with: self errno
-		with: self messageText 
-		with: self strerror
-!
+		with: self messageText
+		with: self strerror!
 
 _descriptionFormat
 	"Answer the Win32 format String to be used to format the description for the receiver."
@@ -30,19 +29,16 @@ errno
 	^self tag!
 
 initialize
-	"Private - Initialize the receiver's instance variables.
-	Set the details to be the last error code reported
-	by a system library (i.e. that retried by KernelLibrary>>getLastError)."
+	"Private - Initialize the receiver's instance variables. Set the tag to be the last error
+	code reported by a C runtime function library (i.e. that returned by CRTLibrary>>errno)."
 
-	self tag: CRTLibrary default errno
-!
+	self tag: CRTLibrary default errno!
 
 messageText
-	"Answer the <readableString> message text supplied when the receiver was signalled,
-	or nil if none was provided."
+	"Answer the <readableString> message text supplied when the receiver was signalled, or, if
+	none was specified, the standard error message text for the errno stored in the tag."
 
-	(messageText isNil or: [messageText isEmpty])
-		ifTrue: [messageText := self strerror].
+	(messageText isNil or: [messageText isEmpty]) ifTrue: [messageText := self strerror].
 	^messageText!
 
 strerror

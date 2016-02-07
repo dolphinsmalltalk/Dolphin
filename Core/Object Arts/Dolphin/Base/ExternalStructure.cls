@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #ExternalStructure
 	instanceVariableNames: 'bytes '
@@ -55,7 +55,10 @@ alignment
 asByteArray
 	"Answer the raw contents of the receiver as a byte array."
 
-	^self copyFrom: 1 to: self byteSize!
+	^self 
+		copy: ByteArray
+		from: 1
+		to: self byteSize!
 
 asObject
 	"Answer the <Object> value represented by the receiver."
@@ -259,12 +262,11 @@ initialize: anInteger
 	bytes := self bufferClass newFixed: anInteger.
 	self initialize!
 
-initializeAtAddress: anAddress
+initializeAtAddress: anAddress 
 	"Private - Initialize the receiver to be a reference to an ExternalStructure
 	of the receiver's type at the specified address. Any modifications to the 
 	receiver will be reflected back into the structure/object at anAddress."
 
-	self class ensureDefined.
 	bytes := anAddress asExternalAddress.
 	self initializePointer!
 
@@ -761,7 +763,10 @@ fromAddress: anAddress
 	an ExternalStructure from a PointerField, since such pointers
 	are commonly Null."
 
-	^anAddress isNull ifFalse: [self basicNew initializeAtAddress: anAddress]!
+	^anAddress isNull 
+		ifFalse: 
+			[self ensureDefined.
+			self basicNew initializeAtAddress: anAddress]!
 
 fromBytes: aByteObject
 	"Answer a new instance of the receiver with contents copied from aByteObject"
@@ -1108,7 +1113,16 @@ unregister
 	"Unregister the receiver as a Record class for its guid."
 
 	(_guid notNil and: [RecordClasses notNil]) ifTrue: [
-		RecordClasses removeKey: _guid ifAbsent: []]! !
+		RecordClasses removeKey: _guid ifAbsent: []]!
+
+withBytes: aByteObject 
+	"Answer a new instance of the receiver with the arguments as its contents"
+
+	self ensureDefined.
+	^(self basicNew)
+		bytes: aByteObject;
+		initialize;
+		yourself! !
 !ExternalStructure class categoriesFor: #alignment!constants!public! !
 !ExternalStructure class categoriesFor: #atAddress:!instance creation!public! !
 !ExternalStructure class categoriesFor: #autoGenCategories!constants!development!private! !
@@ -1179,6 +1193,7 @@ unregister
 !ExternalStructure class categoriesFor: #understoodSelectors!methods-accessing!public! !
 !ExternalStructure class categoriesFor: #uninitializeBeforeRemove!class hierarchy-removing!public! !
 !ExternalStructure class categoriesFor: #unregister!public!removing! !
+!ExternalStructure class categoriesFor: #withBytes:!instance creation!public! !
 
 ExternalStructure class methodProtocol: #'externalStructure class' attributes: #(#readOnly) selectors: #(#alignment #byteSize #clear: #compileDefinition #elementSize #fromAddress: #fromBytes: #init: #newBuffer)!
 
