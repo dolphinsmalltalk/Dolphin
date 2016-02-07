@@ -1676,7 +1676,9 @@ defaultAdditionalAccelerators
 	"Note: The Ctrl+L and Ctrl+Shift+L shortcuts for cut and delete line respectively are no
 	longer defined here because they are default Scintilla key bindings."
 
-	^#(#(#toggleWordWrap 'Ctrl+R') #(#duplicateSelection 'Ctrl+J') #(#completeWord 'Ctrl+.') #(#selectNext 'F8') #(#selectPrev 'Shift+F8'))!
+	^#(#(#evaluateIt 'Ctrl+E') #(#displayIt 'Ctrl+D') #(#inspectIt 'Ctrl+I') 
+		#(#toggleWordWrap 'Ctrl+R') #(#duplicateSelection 'Ctrl+J') #(#completeWord 'Ctrl+.') 
+			#(#selectNext 'F8') #(#selectPrev 'Shift+F8'))!
 
 defaultBackcolor
 	"Answer the default background to use for instances of the receiver"

@@ -43,6 +43,7 @@ package classNames
 	yourself.
 
 package methodNames
+	add: #ClassDescription -> #createBadgeMethod;
 	add: #ClassDescription -> #createIconMethod;
 	add: #ClassDescription -> #createIconMethod:fromIcon:;
 	add: #ClassDescription -> #createIconMethod:OfSize:;
@@ -96,7 +97,7 @@ GdiplusFromBytesInitializer subclass: #GdiplusImageFromBytesInitializer
 InternalBitmap subclass: #InternalIcon
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	poolDictionaries: 'GdiplusConstants'
 	classInstanceVariableNames: ''!
 
 "Global Aliases"!
@@ -105,6 +106,11 @@ InternalBitmap subclass: #InternalIcon
 "Loose Methods"!
 
 !ClassDescription methodsFor!
+
+createBadgeMethod
+	"Prompts the user for an image or icon file and builds and compiles a #badge method from it for this class"
+
+	^self createIconMethod: #badge OfSize: 96!
 
 createIconMethod
 	"Prompts the user for an image or icon file and builds and compiles an #icon method from it for this class"
@@ -167,6 +173,7 @@ to convert to PNG format first?'.
 	internalIcon printOn: methodSourceStream.
 	self class compile: methodSourceStream contents
 		categories: (Array with: MethodCategory public with: (MethodCategory name: 'constants'))! !
+!ClassDescription categoriesFor: #createBadgeMethod!development!public! !
 !ClassDescription categoriesFor: #createIconMethod!development!public! !
 !ClassDescription categoriesFor: #createIconMethod:fromIcon:!public! !
 !ClassDescription categoriesFor: #createIconMethod:OfSize:!public! !
