@@ -11,7 +11,7 @@ ScintillaLibrary comment: 'ExternalLibrary class to wrap the Scintilla DLL (SciL
 !ScintillaLibrary methodsFor!
 
 directFunction: sciThis msg: msg wParam: wParam lParam: lParam 
-	<stdcall: sdword Scintilla_DirectFunction dword dword dword dword>
+	<stdcall: sdword '_Scintilla_DirectFunction@16' dword dword dword dword>
 	^self invalidCall!
 
 versionFormatString
