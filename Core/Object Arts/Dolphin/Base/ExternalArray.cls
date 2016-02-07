@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ExternalStructure subclass: #ExternalArray
 	instanceVariableNames: 'length'
@@ -30,11 +30,6 @@ asArray
 	"Answer an <Array> containing the constituent elements of the receiver."
 
 	^self collect: [:each | each]!
-
-asByteArray
-	"Answer a ByteArray containing the constituent elements of the receiver."
-
-	^self copy: ByteArray from: 1 to: self byteSize!
 
 asOrderedCollection
 	"Answer an <OrderedCollection> whose elements are those of the receiver
@@ -111,6 +106,19 @@ collect: transformer
 		to: size
 		keysAndValuesDo: [:i :each | answer at: i put: (transformer value: each)].
 	^answer!
+
+copyFrom: start to: stop 
+	"Answer an object of the same species as the receiver
+	containing a copy of the elements of the receiver starting at index start, 
+	until index stop, inclusive."
+
+	| len |
+	len := stop - start + 1.
+	^(self copyLikeOfSize: len) 
+		replaceFrom: 1
+		to: len
+		with: self
+		startingAt: start!
 
 copyLikeOfSize: anInteger
 	"Private - Answer a new collection of the same species as the receiver but with
@@ -375,7 +383,6 @@ uncheckedFrom: startInteger to: stopInteger keysAndValuesDo: operation
 	startInteger to: stopInteger do: [:i | operation value: i value: (self uncheckedAt: i)]! !
 !ExternalArray categoriesFor: #appendToStream:!double dispatch!public! !
 !ExternalArray categoriesFor: #asArray!converting!public! !
-!ExternalArray categoriesFor: #asByteArray!converting!public! !
 !ExternalArray categoriesFor: #asOrderedCollection!converting!public! !
 !ExternalArray categoriesFor: #at:!accessing!public! !
 !ExternalArray categoriesFor: #at:ifAbsent:!accessing!public! !
@@ -384,6 +391,7 @@ uncheckedFrom: startInteger to: stopInteger keysAndValuesDo: operation
 !ExternalArray categoriesFor: #binarySearchFor:using:!public!searching! !
 !ExternalArray categoriesFor: #byteSize!accessing!public! !
 !ExternalArray categoriesFor: #collect:!enumerating!public! !
+!ExternalArray categoriesFor: #copyFrom:to:!copying!public! !
 !ExternalArray categoriesFor: #copyLikeOfSize:!copying!private! !
 !ExternalArray categoriesFor: #detect:!public!searching! !
 !ExternalArray categoriesFor: #detect:ifNone:!public!searching! !

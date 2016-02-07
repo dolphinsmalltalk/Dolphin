@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 GenericExternalArray subclass: #StructureArray
 	instanceVariableNames: 'elementSpacing'
@@ -37,19 +37,6 @@ basicFree
 	self size timesRepeat: 
 			[elemClass clear: addr asExternalAddress.
 			addr := addr + spacing]!
-
-copyFrom: start to: stop 
-	"Private - Answer an object of the same species as the receiver
-	containing a copy of the elements of the receiver starting at index start, 
-	until index stop, inclusive."
-
-	| len |
-	len := stop - start + 1.
-	^(self species length: len elementClass: elementClass) 
-		replaceFrom: 1
-		to: len
-		with: self
-		startingAt: start!
 
 elementClass: elemClass 
 	"Private - Set the class to be used for accessing elements of the receiver.
@@ -131,7 +118,6 @@ with: otherCollection do: operation
 		addr := addr + spacing]! !
 !StructureArray categoriesFor: #alignment!constants!public! !
 !StructureArray categoriesFor: #basicFree!private!realizing/unrealizing! !
-!StructureArray categoriesFor: #copyFrom:to:!copying!private! !
 !StructureArray categoriesFor: #elementClass:!accessing!private! !
 !StructureArray categoriesFor: #initialize!initializing!private! !
 !StructureArray categoriesFor: #initializePointer!initializing!private! !

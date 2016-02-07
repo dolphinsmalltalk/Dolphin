@@ -3,7 +3,7 @@
 DolphinTest subclass: #VMTest
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	poolDictionaries: 'CRTConstants'
 	classInstanceVariableNames: ''!
 VMTest guid: (GUID fromString: '{D03F75A2-8C1C-4559-8177-EFF37D37A6E8}')!
 VMTest comment: 'Test the VM primitives and other VM related operations.
@@ -163,6 +163,15 @@ testBSTRArg
 			self assert: instr data = 'Some data'.
 			self assert: instr target = 'ATarget'.
 			instr free]!
+
+testCRTFault
+	"Tests that the VM sends an interrupt when the CRT is passed an invalid parameter and calls
+	the invalid parameter handler (issue #59). On an unfixed V2015 VM this will just crash."
+
+	self 
+		should: [CRTLibrary default _close: -1]
+		raise: CRTError
+		matching: [:err | err errno = EBADF]!
 
 testDwordAtOffsetPut
 	| bytes dword max |
@@ -696,6 +705,7 @@ testSignedFromUnsigned
 !VMTest categoriesFor: #isGPF:reading:address:!helpers!private! !
 !VMTest categoriesFor: #suspendAndTerminate!helpers!public! !
 !VMTest categoriesFor: #testBSTRArg!public!unit tests! !
+!VMTest categoriesFor: #testCRTFault!public!unit tests! !
 !VMTest categoriesFor: #testDwordAtOffsetPut!public!unit tests! !
 !VMTest categoriesFor: #testEvaluationOrder!public!unit tests! !
 !VMTest categoriesFor: #testGPFTrap!public!unit tests! !
