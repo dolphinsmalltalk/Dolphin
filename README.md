@@ -1,5 +1,7 @@
 # Dolphin
 
+[![Build status](https://ci.appveyor.com/api/projects/status/scael64ohx3l6io9/branch/master?svg=true)](https://ci.appveyor.com/project/dolphinsmalltalk/dolphin-db22v/branch/master)
+
 This repository contains the necessary files to build the [Dolphin Smalltalk](object-arts.com) Core Images from a pre-built boot image. 
 
 Note: if you are just looking to install Dolphin and get going as quickly as possible you may prefer to start with the release build and [Setup Installer](http://object-arts.com/downloads.html) and follow the directions [here](http://object-arts.com/gettingstarted.html). However, if you’d really like to know how Dolphin is put together then the sources are available here on GitHub in two repositories:
@@ -23,6 +25,4 @@ Follow these instructions to create the product images and launch Dolphin Smallt
 You should see Dolphin Professional 7 launch successfully. We’ll leave it as an exercise for the reader to work out how to dismiss the splash screen. You can now continue with the Dolphin [Getting Started](http://object-arts.com/gettingstarted.html) introduction if you wish.
 
 ![Dolphin System Folder](https://raw.githubusercontent.com/dolphinsmalltalk/Dolphin/master/Help/Images/SystemFolder.png)
-
-[![Build status](https://ci.appveyor.com/api/projects/status/scael64ohx3l6io9/branch/master?svg=true)](https://ci.appveyor.com/project/dolphinsmalltalk/dolphin-db22v/branch/master)
 

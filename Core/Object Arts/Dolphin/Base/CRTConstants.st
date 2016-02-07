@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Smalltalk at: #CRTConstants put: (PoolConstantsDictionary named: #CRTConstants)!
 CRTConstants at: '_EM_DENORMAL' put: 16r80000!
@@ -18,6 +18,8 @@ CRTConstants at: '_O_TEXT' put: 16r4000!
 CRTConstants at: '_S_IEXEC' put: 16r40!
 CRTConstants at: '_S_IREAD' put: 16r100!
 CRTConstants at: '_S_IWRITE' put: 16r80!
+CRTConstants at: 'EBADF' put: 16r9!
+CRTConstants at: 'EINVAL' put: 16r16!
 CRTConstants at: 'RAND_MAX' put: 16r7FFF!
 CRTConstants at: 'SEEK_CUR' put: 16r1!
 CRTConstants at: 'SEEK_END' put: 16r2!

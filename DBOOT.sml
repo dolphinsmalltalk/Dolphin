@@ -1,4 +1,4 @@
-"21:41:30, 03 February 2016: Compressing sources...."!
+"23:59:29, 06 February 2016: Compressing sources...."!
 
 Object comment:
 'Object is the abstract root of the standard Smalltalk class hierarchy. It has no instance variables (indeed it must not have any), but provides behavior common to all objects.
@@ -11576,7 +11576,10 @@ fromAddress: anAddress
 	an ExternalStructure from a PointerField, since such pointers
 	are commonly Null."
 
-	^anAddress isNull ifFalse: [self basicNew initializeAtAddress: anAddress]!
+	^anAddress isNull 
+		ifFalse: 
+			[self ensureDefined.
+			self basicNew initializeAtAddress: anAddress]!
 
 fromBytes: aByteObject
 	"Answer a new instance of the receiver with contents copied from aByteObject"
@@ -11923,7 +11926,16 @@ unregister
 	"Unregister the receiver as a Record class for its guid."
 
 	(_guid notNil and: [RecordClasses notNil]) ifTrue: [
-		RecordClasses removeKey: _guid ifAbsent: []]! !
+		RecordClasses removeKey: _guid ifAbsent: []]!
+
+withBytes: aByteObject 
+	"Answer a new instance of the receiver with the arguments as its contents"
+
+	self ensureDefined.
+	^(self basicNew)
+		bytes: aByteObject;
+		initialize;
+		yourself! !
 
 !ExternalStructure methodsFor!
 
@@ -11972,7 +11984,10 @@ alignment
 asByteArray
 	"Answer the raw contents of the receiver as a byte array."
 
-	^self copyFrom: 1 to: self byteSize!
+	^self 
+		copy: ByteArray
+		from: 1
+		to: self byteSize!
 
 asObject
 	"Answer the <Object> value represented by the receiver."
@@ -12176,12 +12191,11 @@ initialize: anInteger
 	bytes := self bufferClass newFixed: anInteger.
 	self initialize!
 
-initializeAtAddress: anAddress
+initializeAtAddress: anAddress 
 	"Private - Initialize the receiver to be a reference to an ExternalStructure
 	of the receiver's type at the specified address. Any modifications to the 
 	receiver will be reflected back into the structure/object at anAddress."
 
-	self class ensureDefined.
 	bytes := anAddress asExternalAddress.
 	self initializePointer!
 
@@ -21887,7 +21901,7 @@ Instance Variables:
 	pendingReturns	<Semaphore> on which out-of-order callback exit attempts wait their turn to exit.
 	comStubs		<PermanentRegistry> of currently registered COM server stub object. Used to map virtual callbacks to their destination object.
 	_reserved		nil. Reserved for future use.
-	pendingTerminations	<Sempahore> on which processes being terminated wait until any outstanding overlapped calls have been terminated.
+	pendingTerminations	<Semaphore> on which processes being terminated wait until any outstanding overlapped calls have been terminated.
 		
 Class Variables:
 	InterruptSelectors	<Array> of <Symbol> selectors for each of the interrupt numbers sent by the VM.'!
@@ -21902,7 +21916,8 @@ initialize
 	self initializeInterruptSelectors!
 
 initializeInterruptSelectors
-	InterruptSelectors := #(#terminate: #stackOverflow: #unusedInterrupt: #unusedInterrupt: #gpFault: #idlePanic: #interruptWith: #onStartup: #kill: #fpException: #userBreak: #zeroDivide: #otOverflow: #constWrite: #win32Fault: #fpStackFault: #noMemory: #hospiceOverflow: #bereavedOverflow: #unusedInterrupt:) copy!
+	InterruptSelectors := #(#terminate: #stackOverflow: #unusedInterrupt: #unusedInterrupt: #gpFault: #idlePanic: #interruptWith: #onStartup: #kill: #fpException: #userBreak: #zeroDivide: #otOverflow: #constWrite: #win32Fault: #fpStackFault: #noMemory: #hospiceOverflow: #bereavedOverflow: #crtFault:) 
+				copy!
 
 interruptSelectors
 	^InterruptSelectors!
@@ -21913,7 +21928,7 @@ new
 
 	^self shouldNotImplement!
 
-newPriorities: highestPriority activeProcess: aProcess
+newPriorities: highestPriority activeProcess: aProcess 
 	"Private - Create Processor during boot."
 
 	^self basicNew setHighestPriority: highestPriority activeProcess: aProcess! !
@@ -21930,22 +21945,21 @@ activeProcess
 
 	^activeProcess!
 
-bereavedOverflow: interruptArg
-	"Private - The VM has detected that the bereavement queue has reached
-	its high water mark. Inform the memory manager."
+bereavedOverflow: interruptArg 
+	"Private - The VM has detected that the bereavement queue has reached its high water mark.
+	Inform the memory manager."
 
 	MemoryManager current bereavedOverflow: interruptArg.
-	self enableInterrupts.
-	!
+	self enableInterrupts!
 
-callback: cookie evaluate: aNiladicBlock
+callback: cookie evaluate: aNiladicBlock 
 	"Private - Evaluate aNiladicBlock and return the result to the VM. Should any
 	attempt be made to make a far return over this context, then ensure that the
 	VM stack for the callback is unwound."
 
 	^self callback: cookie return: (aNiladicBlock ifCurtailed: [self unwindCallback: cookie])!
 
-callback: receiver perform: aSymbol cookie: cookie
+callback: receiver perform: aSymbol cookie: cookie 
 	"Private - Entry point from the VM. Suspend whatever the receiver is doing and send the 
 	Object, receiver, the unary message whose selector is aSymbol. Return the result to the 
 	VM. The receiver will then resume its previously active context.
@@ -21953,10 +21967,10 @@ callback: receiver perform: aSymbol cookie: cookie
 	in an outer context) and unwind the VM stack too.
 	WARNING: Do not remove or modify this method."
 
-	^self callback: cookie return: 
-		([receiver perform: aSymbol] ifCurtailed: [self unwindCallback: cookie])!
+	^self callback: cookie
+		return: ([receiver perform: aSymbol] ifCurtailed: [self unwindCallback: cookie])!
 
-callback: receiver perform: aSymbol with: arg cookie: cookie
+callback: receiver perform: aSymbol with: arg cookie: cookie 
 	"Private - Entry point from the VM. Suspend whatever the receiver is doing and send the 
 	Object, receiver, the binary message whose selector is aSymbol with the argument, arg. 
 	Return the result to the VM.  The receiver will then resume its previously active context.
@@ -21964,10 +21978,10 @@ callback: receiver perform: aSymbol with: arg cookie: cookie
 	in an outer context) and unwind the VM stack too.
 	WARNING: Do not remove or modify this method."
 
-	^self callback: cookie return: 
-		([receiver perform: aSymbol with: arg] ifCurtailed: [self unwindCallback: cookie])!
+	^self callback: cookie
+		return: ([receiver perform: aSymbol with: arg] ifCurtailed: [self unwindCallback: cookie])!
 
-callback: receiver perform: aSymbol with: arg1 with: arg2 cookie: cookie
+callback: receiver perform: aSymbol with: arg1 with: arg2 cookie: cookie 
 	"Private - Entry point from the VM. Suspend whatever the receiver is doing and send the 
 	Object, the keyword message whose selector is aSymbol with the arguments, arg1 and arg2.
 	Return the result to the VM.  The receiver will then resume its previously active context.
@@ -21975,11 +21989,15 @@ callback: receiver perform: aSymbol with: arg1 with: arg2 cookie: cookie
 	in an outer context) and unwind the VM stack too.
 	WARNING: Do not remove or modify this method."
 
-	^self callback: cookie return: 
-		([receiver perform: aSymbol with: arg1 with: arg2] 
-			ifCurtailed: [self unwindCallback: cookie])!
+	^self callback: cookie
+		return: (
+			[receiver 
+				perform: aSymbol
+				with: arg1
+				with: arg2] 
+					ifCurtailed: [self unwindCallback: cookie])!
 
-callback: receiver perform: aSymbol with: arg1 with: arg2 with: arg3 cookie: cookie
+callback: receiver perform: aSymbol with: arg1 with: arg2 with: arg3 cookie: cookie 
 	"Private - Entry point from the VM. Suspend whatever the receiver is doing and send the 
 	Object, the keyword message whose selector is aSymbol with the arguments, arg1, arg2 and arg3.
 	Return the result to the VM.  The receiver will then resume its previously active context.
@@ -21987,11 +22005,16 @@ callback: receiver perform: aSymbol with: arg1 with: arg2 with: arg3 cookie: coo
 	in an outer context) and unwind the VM stack too.
 	WARNING: Do not remove or modify this method."
 
-	^self callback: cookie return: 
-		([receiver perform: aSymbol with: arg1 with: arg2 with: arg3] 
-			ifCurtailed: [self unwindCallback: cookie])!
+	^self callback: cookie
+		return: (
+			[receiver 
+				perform: aSymbol
+				with: arg1
+				with: arg2
+				with: arg3] 
+					ifCurtailed: [self unwindCallback: cookie])!
 
-callback: receiver perform: aSymbol withArguments: anArray cookie: cookie
+callback: receiver perform: aSymbol withArguments: anArray cookie: cookie 
 	"Private - Entry point from the VM. Suspend whatever the receiver is doing and send the 
 	Object, receiver, the keyword message whose selector is aSymbol with the arguments contained
 	in anArray. Return the result to the VM. The receiver will resume from its active context
@@ -22000,11 +22023,11 @@ callback: receiver perform: aSymbol withArguments: anArray cookie: cookie
 	in an outer context) and unwind the VM stack too.
 	WARNING: Do not remove or modify this method."
 
-	^self callback: cookie return: (
-		[receiver perform: aSymbol withArguments: anArray]
-			ifCurtailed: [self unwindCallback: cookie])!
+	^self callback: cookie
+		return: ([receiver perform: aSymbol withArguments: anArray] 
+				ifCurtailed: [self unwindCallback: cookie])!
 
-callback: cookie return: result
+callback: cookie return: result 
 	"Private - Return the <Object>, result, to the VM as the result of the callback identified by the 
 	<integer>, cookie, which the VM passed in when it originated the callback,
 	restoring the current active process to the context it was executing before the callback occurred.
@@ -22017,9 +22040,9 @@ callback: cookie return: result
 	thread. It works quite satifactorily unless a Process with an active callback lower down the VM
 	stack than the pending callbacks becomes indefinitely blocked - the result is a deadlock."
 
-	[(self primReturn: result callback: cookie) isNil] whileTrue: [
-		"There is a more recent callback which has still not returned, so we must wait..."
-		pendingReturns wait].
+	[(self primReturn: result callback: cookie) isNil] whileTrue: 
+			["There is a more recent callback which has still not returned, so we must wait..."
+			pendingReturns wait].
 	^result	"Will not get this far unless in restarted image"!
 
 callback: anInteger withArgumentsAt: anAddress cookie: cookie 
@@ -22031,7 +22054,7 @@ callback: anInteger withArgumentsAt: anAddress cookie: cookie
 		return: ([(ExternalCallback callback: anInteger withArgumentsAt: anAddress) asUIntPtr] 
 				ifCurtailed: [self unwindCallback: cookie])!
 
-cannotReturn: anObject
+cannotReturn: anObject 
 	"Private - Sent when the VM is unable to return anObject from the current active block
 	because it's home method has already returned, or is homed in another process. This happens 
 	when a block which contains a ^-return is stored into a variable, and is evaluated at some point
@@ -22042,7 +22065,8 @@ cannotReturn: anObject
 	stack frame) then it is advisable to Kill the offending process, as further walkbacks
 	will occur if it is terminated normally."
 
-	^self error: 'Cannot return ', anObject basicPrintString, ' to expired context or across Processes'!
+	^self 
+		error: 'Cannot return ' , anObject basicPrintString , ' to expired context or across Processes'!
 
 constWrite: exceptionRecordBytes 
 	"Private - The VM generated a GP Fault interrupt. The argument is the relevant 
@@ -22056,31 +22080,41 @@ constWrite: exceptionRecordBytes
 constWriteSignal
 	^ConstWriteSignal!
 
-enableAsyncEvents: aBoolean
-	"Private - Enable/disable asynchronous interrupts and semaphore signals.
-	This does not prevent process switches due to synchronous process synchronisation,
-	but it does prevent a process from being pre-empted due to asynchronous events.
-	N.B. Do not rely on disabling async events as a means of process synchronisation
-	because this facility may not be available in a future pre-emptive multi-threaded VM."
+crtFault: aByteArray 
+	"Private - The VM generated a CRT Fault interrupt. The argument is the relevant exception
+	record, the first argument of which is the fault code. An example of where this is fired is
+	when an invalid parameter is passed to any CRT function, e.g. attempting to close an invalid
+	file descriptor as follows: 
+		CRTLibrary default _close: -1
+	"
+
+	self enableInterrupts.
+	"The C runtime library will have set the errno, so we can just signal a CRTError and let it
+	pick up the code"
+	^CRTError signal!
+
+enableAsyncEvents: aBoolean 
+	"Private - Enable/disable asynchronous interrupts and semaphore signals. This does not
+	prevent process switches due to synchronous process synchronisation, but it does prevent a
+	process from being pre-empted due to asynchronous events. N.B. Do not rely on disabling
+	async events as a means of process synchronisation because this facility may not be
+	available in a future pre-emptive multi-threaded VM."
 
 	<primitive: 95>
 	^self primitiveFailed!
 
 enableInterrupts
-	"Private - Enable asynchronous interrupts and semaphore signals, and yield
-	the processor in case a process switch would have occurred while async. events
-	were disasbled.
-	N.B. This is similar to #enableAsyncEvents:, but yields the processor if
-	necessary. It is intended to be used from interrupt handlers: Since the VM
-	dispatches interrupts even if it means pre-empting a higher priority process,
-	we must allow that higher priority process to be rescheduled when re-enabling
-	async. events. Where async. events are turned off to disable process switching
-	in critical sections, the basic, #enableAsyncEvents:, message should be sent,
-	since the normal process scheduling will not have been disrupted. Generally
-	speaking this message need only be used in an interrupt handler."
+	"Private - Enable asynchronous interrupts and semaphore signals, and yield the processor in
+	case a process switch would have occurred while async. events were disasbled.
+	N.B. This is similar to #enableAsyncEvents:, but yields the processor if necessary. It is
+	intended to be used from interrupt handlers: Since the VM dispatches interrupts even if it
+	means pre-empting a higher priority process, we must allow that higher priority process to
+	be rescheduled when re-enabling async. events. Where async. events are turned off to disable
+	process switching in critical sections, the basic, #enableAsyncEvents:, message should be
+	sent, since the normal process scheduling will not have been disrupted. Generally speaking
+	this message need only be used in an interrupt handler."
 
-	(self enableAsyncEvents: true)
-		ifFalse: [self yield]!
+	(self enableAsyncEvents: true) ifFalse: [self yield]!
 
 forkMain
 	"Private - Start a new main process."
@@ -22097,25 +22131,25 @@ forkMainIfMain
 	wasMain ifTrue: [self forkMain].
 	^wasMain!
 
-fpException: ieeeExceptionBytes
+fpException: ieeeExceptionBytes 
 	"Private - The active process has caused an IEEE floating point exception, whose details
 	are the argument. Raise a matching Smalltalk exception."
 
 	| ieeeRecord |
 	self enableInterrupts.
 	ieeeRecord := _FPIEEE_RECORD fromBytes: ieeeExceptionBytes.
-	ieeeRecord isZeroDivide
+	ieeeRecord isZeroDivide 
 		ifTrue: [ZeroDivide dividend: ieeeRecord operand1 value]
 		ifFalse: [FloatingPointException signalWith: ieeeRecord]!
 
-fpStackFault: exceptionRecordBytes
-	"Private - The VM generated an interrupt because it detected a floating point stack
-	over or underflow. The argument is the relevant Win32 EXCEPTION_RECORD.
-	Note that the VM will have reinitialized the floating point stack to avoid repeated
-	FP stack check errors. FP stack check errors are an indication of a serious bug
-	in some floating point code, the prime suspect being the reported module, 
-	however it is worth bearing in mind that said module might be an innocent victim
-	of the mess left by some previous user of the FP stack."
+fpStackFault: exceptionRecordBytes 
+	"Private - The VM generated an interrupt because it detected a floating point stack over or
+	underflow. The argument is the relevant Win32 EXCEPTION_RECORD.
+	Note that the VM will have reinitialized the floating point stack to avoid repeated FP
+	stack check errors. FP stack check errors are an indication of a serious bug in some
+	floating point code, the prime suspect being the reported module, however it is worth
+	bearing in mind that said module might be an innocent victim of the mess left by some
+	previous user of the FP stack."
 
 	| exceptionRecord |
 	Float reset.
@@ -22128,7 +22162,7 @@ genericInterrupt
 
 	^7!
 
-gpFault: exceptionRecordBytes
+gpFault: exceptionRecordBytes 
 	"Private - The VM generated a GP Fault interrupt. The argument is the relevant 
 	EXCEPTION_RECORD.
 	Notes: 
@@ -22145,15 +22179,14 @@ gpFault: exceptionRecordBytes
 	self enableInterrupts.
 	exceptionRecord := EXCEPTION_RECORD fromBytes: exceptionRecordBytes.
 	GPFault signalWith: exceptionRecord
-"
+	"
 ExternalAddress new dwordAtOffset:0
 "!
 
 highestPriority
 	"Answer the highest priority level available"
 
-	^processLists size
-!
+	^processLists size!
 
 highIOPriority
 	"Answer the priority for critical I/O processes (e.g. network I/O)"
@@ -22161,17 +22194,17 @@ highIOPriority
 	^9!
 
 hospiceOverflow: interruptArg 
-	"Private - The VM has detected that the finalization queue has reached
-	its high water mark. Inform the memory manager."
+	"Private - The VM has detected that the finalization queue has reached its high water mark.
+	Inform the memory manager."
 
 	"N.B. We don't enable interrupts, as we don't want to affect thread scheduling immediately."
 
 	MemoryManager current hospiceOverflow: interruptArg!
 
-idlePanic: interruptArg
-	"Private - The processor has determined that there are no processes ready to run - i.e.
-	it is in a state of 'idle panic'. The argument is the interrupt enable/disable status.
-	We take the remedial action of starting another idle process."
+idlePanic: interruptArg 
+	"Private - The processor has determined that there are no processes ready to run - i.e. it
+	is in a state of 'idle panic'. The argument is the interrupt enable/disable status. We take
+	the remedial action of starting another idle process."
 
 	SessionManager inputState idlePanic.
 	self enableInterrupts!
@@ -22179,18 +22212,17 @@ idlePanic: interruptArg
 idleProcess
 	"Private - Answer the current idle process."
 
-	^self systemProcessOwner idler
-!
+	^self systemProcessOwner idler!
 
-interruptWith: aBlock
-	"Private - Another process queued the argument aBlock for evaluation as an interrupt
-	block in the context of the receiver, so evaluate it. The queuer of the block will
-	not get an answer. The block is evaluated with async events disabled."
+interruptWith: aBlock 
+	"Private - Another process queued the argument aBlock for evaluation as an interrupt block
+	in the context of the receiver, so evaluate it. The queuer of the block will not get an
+	answer. The block is evaluated with async events disabled."
 
 	aBlock value.
 	self enableInterrupts!
 
-iret: frameOffset list: suspendingList
+iret: frameOffset list: suspendingList 
 	"Private - Return to the active process'  frame, at the specified 
 	offset from the process base, on completion of an interrupt, restoring 
 	the <List>|<Semaphore>, suspendingList, which is nil if the process 
@@ -22213,7 +22245,7 @@ isActiveMain
 
 	^activeProcess isMain!
 
-kill: interruptArg
+kill: interruptArg 
 	"Private - The active process has been sent a kill interrupt, terminate it without running
 	its unwind blocks."
 
@@ -22221,27 +22253,26 @@ kill: interruptArg
 	activeProcess kill!
 
 killInterrupt
-	"Private - Answer the interrupt number of the Kill interrupt. The kill interrupt is used to terminate
-	a Process with extreme prejudice (i.e. without giving it a change to run its unwind blocks)."
+	"Private - Answer the interrupt number of the Kill interrupt. The kill interrupt is used to
+	terminate a Process with extreme prejudice (i.e. without giving it a change to run its
+	unwind blocks)."
 
 	^9!
 
 lowIOPriority
 	"Answer the priority for normal I/O processes (e.g. keyboard/mouse input)."
 
-	^8
-!
+	^8!
 
 mainProcess
 	"Private - Answer the current User Interface (Main) process"
 
-	^self systemProcessOwner main
-!
+	^self systemProcessOwner main!
 
-noMemory: interruptArg
-	"Private - The VM was unable to allocate or commit some virtual memory.
-	In some cases this is not fatal, and Dolphin can continue. In other cases
-	the VM will have no choice but to call FatalAppExit()."
+noMemory: interruptArg 
+	"Private - The VM was unable to allocate or commit some virtual memory. In some cases this
+	is not fatal, and Dolphin can continue. In other cases the VM will have no choice but to
+	call FatalAppExit()."
 
 	self enableInterrupts.
 	OutOfMemoryError signal!
@@ -22251,14 +22282,14 @@ onStartup: args
 	N.B. DO NOT REMOVE THIS METHOD OR YOUR SYSTEM WILL NOT START."
 
 	"Any overlapped calls waiting for threads to terminate are wasting their time."
+
 	pendingTerminations := Semaphore new.
 
 	"Pass control to the SessionManager to start up as it wishes"
 	SessionManager current onStartup: args!
 
-otOverflow: anInteger
-	"Private - The VM has allocated more memory for object headers. Inform the
-	memory manager."
+otOverflow: anInteger 
+	"Private - The VM has allocated more memory for object headers. Inform the memory manager."
 
 	MemoryManager current otOverflow: anInteger.
 	"This interrupt is only ever sent to the active process, therefore no need to reschedule"
@@ -22267,7 +22298,7 @@ otOverflow: anInteger
 pendingTerminations
 	^pendingTerminations!
 
-primReturn: anObject callback: cookie
+primReturn: anObject callback: cookie 
 	"Private - Return the <Object>, result, to the VM as the result of the callback identified by the 
 	<integer>, cookie, which the VM passed in when it originated the callback.
 	Restore the current active process to the context it was executing before the callback occurred.
@@ -22280,10 +22311,9 @@ primReturn: anObject callback: cookie
 	then answer self so that the process continues, effectively ignoring the callback return request."
 
 	<primitive: 104>
-	^activeProcess isInCallback
-		ifFalse: [self]!
+	^activeProcess isInCallback ifFalse: [self]!
 
-primUnwindCallback: cookie
+primUnwindCallback: cookie 
 	"Private - Unwind (i.e. abnormally terminate) the callback identified by the <integer>, cookie, 
 	The context is unaffected (i.e. we continue to run in our caller).
 	Note that this is achieved by raising a Win32 structured exception, and therefore any intervening
@@ -22296,8 +22326,7 @@ primUnwindCallback: cookie
 	wait its turn. In the former case, answer self to ignore the unwind request and continue."
 
 	<primitive: 107>
-	^activeProcess isInCallback
-		ifFalse: [self]!
+	^activeProcess isInCallback ifFalse: [self]!
 
 primUnwindInterrupt
 	"Private - Unwind (i.e. abnormally terminate) the most recent interrupt for the current active 
@@ -22308,12 +22337,12 @@ primUnwindInterrupt
 	<primitive: 150>
 	^self primitiveFailed!
 
-processesAt: anInteger
+processesAt: anInteger 
 	"Answer the number of processes at the specified priority level."
 
 	^(processLists at: anInteger) size!
 
-returnValue: anObject toFrame: frameAddress
+returnValue: anObject toFrame: frameAddress 
 	"Private - Return anObject to the active process'  frame at the specified 
 	address (a SmallInteger - the actual address is frameAddress*2).
 	The primitive does not fail.
@@ -22324,16 +22353,16 @@ returnValue: anObject toFrame: frameAddress
 	<primitive: 78>
 	^self!
 
-setHighestPriority: priority activeProcess: aProcess
+setHighestPriority: priority activeProcess: aProcess 
 	"Private - Construct the process lists, and set the active process to aProcess.
 	Used only during bootstrap to generate the singleton instance of the
 	ProcessorScheduler class - Processor"
 
-	processLists := (1 to: priority) collect: [ :i | LinkedList new ].
+	processLists := (1 to: priority) collect: [:i | LinkedList new].
 	activeProcess := aProcess.
 	pendingReturns := Semaphore new!
 
-signal: aSemaphore afterMilliseconds: anInteger
+signal: aSemaphore afterMilliseconds: anInteger 
 	"Private - Request that the VM signal aSemaphore as soon as possible after the
 	the specified millisecond delay. Cancel any existing request if aSemaphore is 
 	not actuall a Semaphore (typically nil). If anInteger <= 0, then the Semaphore
@@ -22347,12 +22376,12 @@ signal: aSemaphore afterMilliseconds: anInteger
 	<primitive: 100>
 	^self primitiveFailed!
 
-sleep: anInteger
+sleep: anInteger 
 	"Delay the current active process for at least anInteger milliseconds."
 
 	(Delay forMilliseconds: anInteger) wait!
 
-stackOverflow: interruptArg
+stackOverflow: interruptArg 
 	"Private - The active process overflowed its maximum stack. This is most commonly caused by 
 	failing to terminate a recursion. The default maximum stack should be sufficient for a 
 	depth of several thousand message sends, but can be increased if necessary."
@@ -22365,14 +22394,12 @@ suspendActive
 	by the scheduler (it will not be waiting on any of the Processor's lists), and will not 
 	therefore be able to run until it is #resume'd."
 
-	activeProcess suspend
-!
+	activeProcess suspend!
 
 systemBackgroundPriority
 	"Answer the priority for background processes (idle time)"
 
-	^2
-!
+	^2!
 
 systemBasePriority
 	"Answer the lowest possible priority."
@@ -22385,7 +22412,7 @@ systemProcessOwner
 
 	^SessionManager inputState!
 
-terminate: interruptArg
+terminate: interruptArg 
 	"Private - The current active process has been sent a terminate interrupt, terminate it."
 
 	self enableInterrupts.
@@ -22405,22 +22432,20 @@ terminateInterrupt
 timingPriority
 	"Answer the priority for timing process. This must be the highest possible priority."
 
-	^10
-!
+	^10!
 
 unregisterCOMStubs
 	"Private - Unregister all COM object stubs."
 
 	comStubs := nil!
 
-unusedInterrupt: interruptArg
-	"Private - The current active process has been sent an unknown interrupt, 
-	raise an error."
+unusedInterrupt: interruptArg 
+	"Private - The current active process has been sent an unknown interrupt, raise an error."
 
 	self enableInterrupts.
-	self error: 'Unknown interrupt with ', interruptArg printString!
+	self error: 'Unknown interrupt with ' , interruptArg printString!
 
-unwindCallback: cookie
+unwindCallback: cookie 
 	"Private - Unwind (i.e. abnormally terminate) the most recent callback of the current
 	active process, passing the VM back the <SmallInteger> cookie which it passed in as one
 	of the arguments to the entry point through which it originally called in to Smalltalk.
@@ -22445,10 +22470,10 @@ userBackgroundPriority
 
 	^3!
 
-userBreak: interruptArg
-	"Private - The user pressed the interrupt key combination (e.g. CTRL+BREAK)
-	to interrupt the active process.	Forward to the SessionManager as the
-	response will depend on the application requirements."
+userBreak: interruptArg 
+	"Private - The user pressed the interrupt key combination (e.g. CTRL+BREAK) to interrupt the
+	active process. Forward to the SessionManager as the response will depend on the application
+	requirements."
 
 	self enableInterrupts.
 	SessionManager current onUserBreak!
@@ -22467,18 +22492,17 @@ userInterruptPriority
 userSchedulingPriority
 	"Answer the priority for normal user interation"
 
-	^5
-!
+	^5!
 
-vmi: frameOffset list: suspendingList no: interruptNumber with: arg
-	"Private - The VM has delivered the <integer> interrupt, interruptNumber, 
-	which was queued with the <Object> argument, arg. At the time the interrupt occurred
-	the process' active stack frame was at the <integer> offset, frameOffset, from the process
-	base, and the process' suspendingList was the <Semaphore> suspendingList (nil if not waiting).
-	N.B. The VM ensures that the current active process is the process for which the interrupt
-	is intended, which may mean that a Semaphore wait is interrupted (this will be resumed on
-	return from the interrupt, so there are no ill effects), or a suspended Process may be
-	temporarily resumed.
+vmi: frameOffset list: suspendingList no: interruptNumber with: arg 
+	"Private - The VM has delivered the <integer> interrupt, interruptNumber, which was queued
+	with the <Object> argument, arg. At the time the interrupt occurred the process' active
+	stack frame was at the <integer> offset, frameOffset, from the process base, and the
+	process' suspendingList was the <Semaphore> suspendingList (nil if not waiting). N.B. The VM
+	ensures that the current active process is the process for which the interrupt is intended,
+	which may mean that a Semaphore wait is interrupted (this will be resumed on return from the
+	interrupt, so there are no ill effects), or a suspended Process may be temporarily resumed.
+
 	Implementation Notes:
 	-	The frame is passed in as an offset, rather than a real address, because
 		the process base address may not be the same on reloading a saved image, and it is possible
@@ -22489,11 +22513,11 @@ vmi: frameOffset list: suspendingList no: interruptNumber with: arg
 		effects), or a suspended Process may be temporarily resumed.
 	-	Async. process switches are disabled on entry to this method."
 
-	[self perform: (InterruptSelectors basicAt: interruptNumber) with: arg]
+	[self perform: (InterruptSelectors basicAt: interruptNumber) with: arg] 
 		ifCurtailed: [self primUnwindInterrupt].
 	self iret: frameOffset list: suspendingList!
 
-win32Fault: exceptionRecordBytes
+win32Fault: exceptionRecordBytes 
 	"Private - The VM generated an unhandled Win32 Exception interrupt. The argument is the relevant 
 	EXCEPTION_RECORD."
 
@@ -22512,21 +22536,17 @@ yield
 	to occur (e.g. the timing process)."
 
 	<primitive: 156>
+	self sleep: 0
 
-	"Sleeping, for whatever duration, yields the processor."
-	self sleep: 0!
+	"Sleeping, for whatever duration, yields the processor."!
 
-zeroDivide: interruptArg
+zeroDivide: interruptArg 
 	"Private - The VM generated a Integer Divide by Zero interrupt. This will happen if any attempt is
 	made to divide by zero, either in the execution of Dolphin code, in a Dolphin primitive, OR in
 	an external library function."
 
 	self enableInterrupts.
-	ZeroDivide dividend: interruptArg
-
-"
-1/0
-"! !
+	ZeroDivide dividend: interruptArg! !
 
 PropertyManager comment:
 ''!
@@ -42175,7 +42195,7 @@ originalError: anError
 	originalError := anError! !
 
 CRTError comment:
-''!
+'Exception to represent C-runtime library errors.'!
 !CRTError methodsFor!
 
 _descriptionArguments
@@ -42183,9 +42203,8 @@ _descriptionArguments
 
 	^Array 
 		with: self errno
-		with: self messageText 
-		with: self strerror
-!
+		with: self messageText
+		with: self strerror!
 
 _descriptionFormat
 	"Answer the Win32 format String to be used to format the description for the receiver."
@@ -42198,19 +42217,16 @@ errno
 	^self tag!
 
 initialize
-	"Private - Initialize the receiver's instance variables.
-	Set the details to be the last error code reported
-	by a system library (i.e. that retried by KernelLibrary>>getLastError)."
+	"Private - Initialize the receiver's instance variables. Set the tag to be the last error
+	code reported by a C runtime function library (i.e. that returned by CRTLibrary>>errno)."
 
-	self tag: CRTLibrary default errno
-!
+	self tag: CRTLibrary default errno!
 
 messageText
-	"Answer the <readableString> message text supplied when the receiver was signalled,
-	or nil if none was provided."
+	"Answer the <readableString> message text supplied when the receiver was signalled, or, if
+	none was specified, the standard error message text for the errno stored in the tag."
 
-	(messageText isNil or: [messageText isEmpty])
-		ifTrue: [messageText := self strerror].
+	(messageText isNil or: [messageText isEmpty]) ifTrue: [messageText := self strerror].
 	^messageText!
 
 strerror
@@ -48643,6 +48659,19 @@ collect: transformer
 		keysAndValuesDo: [:i :each | answer at: i put: (transformer value: each)].
 	^answer!
 
+copyFrom: start to: stop 
+	"Answer an object of the same species as the receiver
+	containing a copy of the elements of the receiver starting at index start, 
+	until index stop, inclusive."
+
+	| len |
+	len := stop - start + 1.
+	^(self copyLikeOfSize: len) 
+		replaceFrom: 1
+		to: len
+		with: self
+		startingAt: start!
+
 copyLikeOfSize: anInteger
 	"Private - Answer a new collection of the same species as the receiver but with
 	anInteger nil elements - i.e. not just with sufficient capacity for, but actually holding, 
@@ -50656,7 +50685,9 @@ value
 	^UnicodeString fromAddress: super value! !
 
 EXCEPTION_RECORD comment:
-''!
+'EXCEPTION_RECORD is an ExternalStructure class to represent the Win32 EXCEPTION_RECORD structure.
+
+EXCEPTION_RECORD is the parameter block passed to structured exception handlers.'!
 !EXCEPTION_RECORD class methodsFor!
 
 defineFields
@@ -50676,12 +50707,11 @@ defineFields
 	self
 		defineField: #ExceptionCode type: DWORDField readOnly;
 		defineField: #ExceptionFlags type: DWORDField readOnly beUncompiled;
-		defineField: #ExceptionRecord type: DWORDField filler;
+		defineField: #ExceptionRecord type: LPVOIDField filler;
 		defineField: #ExceptionAddress type: LPVOIDField readOnly;
 		defineField: #NumberParameters type: DWORDField readOnly;
 		defineField: #ExceptionInformation
-			type: (ArrayField type: ByteArray length: EXCEPTION_MAXIMUM_PARAMETERS * VMConstants.IntPtrSize) 
-					beFiller! !
+			type: (ArrayField type: UINT_PTRArray length: EXCEPTION_MAXIMUM_PARAMETERS) beReadOnly! !
 
 !EXCEPTION_RECORD methodsFor!
 
@@ -50695,15 +50725,15 @@ ExceptionCode
 
 	^bytes dwordAtOffset: 0!
 
+ExceptionInformation
+	"Answer the receiver's ExceptionInformation field as a Smalltalk object."
+
+	^UINT_PTRArray fromAddress: bytes yourAddress + ##(self offsetOf: #ExceptionInformation) length: 15!
+
 information
 	"Answer the receiver's ExceptionInformation as an <Array> of <Integer>."
 
-	info isNil 
-		ifTrue: 
-			[| cParms |
-			cParms := self NumberParameters.
-			info := (0 to: (cParms - 1) * VMConstants.IntPtrSize by: VMConstants.IntPtrSize) 
-						collect: [:offset | bytes uintPtrAtOffset: offset + 20]].
+	info isNil ifTrue: [info := self ExceptionInformation copyFrom: 1 to: self NumberParameters].
 	^info!
 
 moduleFileName

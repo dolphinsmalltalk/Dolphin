@@ -1836,15 +1836,6 @@ helpContents
 
 	self openHelpTopic: self sessionManager helpContentsTopic!
 
-helpFirstSplash
-	"Open the First Splash page in the Education Centre"
-
-	^self openLocalHelpUrl: (File 
-				composePath: self sessionManager helpRootUrl
-				stem: self sessionManager helpFirstSplashTopic
-				extension: 'htm')
-		style: 'Splash'!
-
 helpGuidedTour
 	"Open the Guided Tour page in the Education Centre"
 
@@ -4075,7 +4066,6 @@ wrapText: aString toWidth: max indent: colInteger tabWidth: tabInteger
 !SmalltalkSystem categoriesFor: #hasRedoableOperations!public!testing! !
 !SmalltalkSystem categoriesFor: #hasUndoableOperations!public!testing! !
 !SmalltalkSystem categoriesFor: #helpContents!commands!operations!public! !
-!SmalltalkSystem categoriesFor: #helpFirstSplash!commands!operations!public! !
 !SmalltalkSystem categoriesFor: #helpGuidedTour!commands!operations!public! !
 !SmalltalkSystem categoriesFor: #helpTutorials!commands!operations!public! !
 !SmalltalkSystem categoriesFor: #helpWhatsNew!commands!operations!public! !

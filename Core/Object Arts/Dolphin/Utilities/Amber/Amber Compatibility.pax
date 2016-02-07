@@ -1,0 +1,64 @@
+| package |
+package := Package name: 'Amber Compatibility'.
+package paxVersion: 1;
+	basicComment: ''.
+
+
+package methodNames
+	add: #Class -> #subclass:instanceVariableNames:package:;
+	add: #ClassDescription -> #commentStamp;
+	add: #SystemDictionary -> #createPackage:;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\..\IDE\Base\Development System';
+	add: '..\..\Base\Dolphin';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+!Class methodsFor!
+
+subclass: aClassSymbol instanceVariableNames: instVarString package: packageName 
+	"For compatibility withe Amber fileIn format"
+	^(self 
+		subclass: aClassSymbol
+		instanceVariableNames: instVarString
+		classVariableNames: ''
+		poolDictionaries: '')
+		owningPackage: (Package manager packageNamed: packageName);
+		yourself! !
+!Class categoriesFor: #subclass:instanceVariableNames:package:!public! !
+
+!ClassDescription methodsFor!
+
+commentStamp
+	"Answer a chunk reader which will add a comment to the receiver. Supplied for 
+	compatibility with the Amber fileout format"
+
+	^SingleChunkReader do: [:chunk | self comment: chunk]! !
+!ClassDescription categoriesFor: #commentStamp!public! !
+
+!SystemDictionary methodsFor!
+
+createPackage: packageName 
+	^Package manager packageNamed: packageName
+		ifNone: [Package manager newPackage: (FileLocator imageRelative: packageName)]! !
+!SystemDictionary categoriesFor: #createPackage:!public!searching! !
+
+"End of package definition"!
+

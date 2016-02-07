@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Win32Structure subclass: #EXCEPTION_RECORD
 	instanceVariableNames: 'info'
@@ -6,7 +6,9 @@ Win32Structure subclass: #EXCEPTION_RECORD
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 EXCEPTION_RECORD guid: (GUID fromString: '{87B4C5F0-026E-11D3-9FD7-00A0CC3E4A32}')!
-EXCEPTION_RECORD comment: ''!
+EXCEPTION_RECORD comment: 'EXCEPTION_RECORD is an ExternalStructure class to represent the Win32 EXCEPTION_RECORD structure.
+
+EXCEPTION_RECORD is the parameter block passed to structured exception handlers.'!
 !EXCEPTION_RECORD categoriesForClass!External-Data-Structured-Win32! !
 !EXCEPTION_RECORD methodsFor!
 
@@ -20,15 +22,15 @@ ExceptionCode
 
 	^bytes dwordAtOffset: 0!
 
+ExceptionInformation
+	"Answer the receiver's ExceptionInformation field as a Smalltalk object."
+
+	^UINT_PTRArray fromAddress: bytes yourAddress + ##(self offsetOf: #ExceptionInformation) length: 15!
+
 information
 	"Answer the receiver's ExceptionInformation as an <Array> of <Integer>."
 
-	info isNil 
-		ifTrue: 
-			[| cParms |
-			cParms := self NumberParameters.
-			info := (0 to: (cParms - 1) * VMConstants.IntPtrSize by: VMConstants.IntPtrSize) 
-						collect: [:offset | bytes uintPtrAtOffset: offset + 20]].
+	info isNil ifTrue: [info := self ExceptionInformation copyFrom: 1 to: self NumberParameters].
 	^info!
 
 moduleFileName
@@ -42,6 +44,7 @@ NumberParameters
 	^bytes dwordAtOffset: ##(self offsetOf: #NumberParameters)! !
 !EXCEPTION_RECORD categoriesFor: #ExceptionAddress!**compiled accessors**!public! !
 !EXCEPTION_RECORD categoriesFor: #ExceptionCode!**compiled accessors**!public! !
+!EXCEPTION_RECORD categoriesFor: #ExceptionInformation!**compiled accessors**!public! !
 !EXCEPTION_RECORD categoriesFor: #information!accessing!public! !
 !EXCEPTION_RECORD categoriesFor: #moduleFileName!accessing!public! !
 !EXCEPTION_RECORD categoriesFor: #NumberParameters!**compiled accessors**!public! !
@@ -65,11 +68,10 @@ defineFields
 	self
 		defineField: #ExceptionCode type: DWORDField readOnly;
 		defineField: #ExceptionFlags type: DWORDField readOnly beUncompiled;
-		defineField: #ExceptionRecord type: DWORDField filler;
+		defineField: #ExceptionRecord type: LPVOIDField filler;
 		defineField: #ExceptionAddress type: LPVOIDField readOnly;
 		defineField: #NumberParameters type: DWORDField readOnly;
 		defineField: #ExceptionInformation
-			type: (ArrayField type: ByteArray length: EXCEPTION_MAXIMUM_PARAMETERS * VMConstants.IntPtrSize) 
-					beFiller! !
+			type: (ArrayField type: UINT_PTRArray length: EXCEPTION_MAXIMUM_PARAMETERS) beReadOnly! !
 !EXCEPTION_RECORD class categoriesFor: #defineFields!initializing!public! !
 

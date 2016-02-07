@@ -3,7 +3,7 @@
 InternalBitmap subclass: #InternalIcon
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	poolDictionaries: 'GdiplusConstants'
 	classInstanceVariableNames: ''!
 InternalIcon guid: (GUID fromString: '{7446A3C1-E3AE-45B8-BCA2-BBD493A5C7D3}')!
 InternalIcon comment: 'An InternalIcon is capable of holding it''s image bytes internally in the Smalltalk image. Thus it is no longer necessary to refer to external files outside the image to make use of Icon resources. This has several advantages, including the ability to version InternalIcon resources into STS as part of a Smalltalk method and the fact that fewer external files need to be distributed with an application.
@@ -74,8 +74,31 @@ imageType
 
 !InternalIcon class methodsFor!
 
+badgeTile: anIconBadge color: aColor 
+	"Answer an instance of the receiver that is anIconBadge superimposed on a square tile of
+	aColor."
+
+	^self badgeTile: anIconBadge color: aColor extent: self defaultTileExtent!
+
+badgeTile: anIconBadge color: aColor extent: extent 
+	"Answer an instance of the receiver that is anIconBadge superimposed on a square tile of
+	aColor."
+
+	| bitmap |
+	bitmap := GdiplusBitmap extent: extent asPoint.
+	(bitmap graphics)
+		clear: aColor asARGB;
+		interpolationMode: InterpolationModeHighQualityBicubic;
+		drawImage: anIconBadge bitmap
+			at: Point zero
+			extent: bitmap extent.
+	^self fromGdiplusBitmap: bitmap!
+
 defaultExtent
 	^48 @ 48!
+
+defaultTileExtent
+	^128 @ 128!
 
 filesType
 	"Private - Answer a two element array suitable for adding to the FileDialog
@@ -106,7 +129,7 @@ textTile: aStringLabel color: aColor
 	^self 
 		textTile: aStringLabel
 		color: aColor
-		extent: self defaultExtent!
+		extent: self defaultTileExtent!
 
 textTile: aStringLabel color: aColor extent: extent 
 	"Answer an instance of the receiver that is a aStringLabel in white superimposed on a square tile of aColor."
@@ -136,7 +159,10 @@ textTile: aStringLabel font: aFont color: aColor extent: extent
 				forecolor: Color white;
 				text: aStringLabel at: (extent asPoint - textExtent) // 2].
 	^self fromGdiplusBitmap: bitmap! !
+!InternalIcon class categoriesFor: #badgeTile:color:!instance creation!public! !
+!InternalIcon class categoriesFor: #badgeTile:color:extent:!instance creation!public! !
 !InternalIcon class categoriesFor: #defaultExtent!private! !
+!InternalIcon class categoriesFor: #defaultTileExtent!private! !
 !InternalIcon class categoriesFor: #filesType!constants!private! !
 !InternalIcon class categoriesFor: #fromFile:!instance creation!public! !
 !InternalIcon class categoriesFor: #fromFile:extent:!instance creation!public! !
