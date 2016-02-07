@@ -511,14 +511,14 @@ contents:
 
 1 max: 3.
 
-Array with: ''hello'' with: 2 with: Smalltalk.
+Array with: ''hello'' with: 2 with: ''Smalltalk''.
 
 "The message is with:with:with: implemented on class Array. Note you can also write"
 
 Array
 	with: ''Hi there!!''
 	with: 2
-	with: Smalltalk.
+	with: ''Smalltalk''.
 	
 ProfStef perform: ''next''.'
 !
