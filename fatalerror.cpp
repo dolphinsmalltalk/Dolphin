@@ -69,7 +69,7 @@ LPSTR __stdcall GetErrorText(DWORD win32ErrorCode)
 void __stdcall vtrace(const char* szFormat, va_list args)
 {
 	char buf[1024];
-	::vsprintf(buf, szFormat, args);
+	::vsprintf_s(buf, sizeof(buf), szFormat, args);
 	::OutputDebugString(buf);
 }
 

@@ -28,7 +28,7 @@ void __cdecl DolphinTrace(LPCTSTR format, ...)
 	char buf[1024];
 	va_list args;
 	va_start(args, format);
-	/*w*/vsprintf(buf, format, args);
+	/*w*/vsprintf_s(buf, sizeof(buf), format, args);
 	va_end(args);
 	OutputDebugString(buf);
 }

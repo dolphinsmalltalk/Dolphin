@@ -13,6 +13,7 @@
 #include "interprt.h"
 #include "VMExcept.h"
 #include "RegKey.h"
+#include <Strsafe.h>
 
 static const DWORD DefaultStackDepth = 300;
 static const DWORD DefaultWalkbackDepth = static_cast<DWORD>(-1);
@@ -239,7 +240,7 @@ void __cdecl DebugCrashDump(LPCTSTR szFormat, ...)
 
 	va_list args;
 	va_start(args, szFormat);
-	::wvsprintf(buf, szFormat, args);
+	::StringCbVPrintf(buf, sizeof(buf), szFormat, args);
 	va_end(args);
 
 	DWORD dwArgs[1];
@@ -289,7 +290,7 @@ void __stdcall DebugDump(LPCTSTR szFormat, ...)
 
 	va_list args;
 	va_start(args, szFormat);
-	::wvsprintf(buf, szFormat, args);
+	::StringCbVPrintf(buf, sizeof(buf), szFormat, args);
 	va_end(args);
 
 	tracelock lock(TRACESTREAM);
