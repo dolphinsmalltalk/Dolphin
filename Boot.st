@@ -3,6 +3,10 @@
 	SourceManager default fileIn: 'Core\Object Arts\Dolphin\Base\Boot\Boot.st'.
 ]!
 
+"Items to move to DBOOT eventually"
+SourceManager default fileIn: 'Core\Object Arts\Dolphin\Base\SessionManager.cls'!
+SourceManager default fileIn: 'Core\Object Arts\Dolphin\Base\VersionInfo.cls'!
+
 "Boot a workable Dolphin from the boot image"
 
 "Install some bare bones packages to get the Installation Management system working"

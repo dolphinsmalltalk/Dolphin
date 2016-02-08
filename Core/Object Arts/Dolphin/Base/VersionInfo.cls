@@ -120,9 +120,8 @@ productName
 	^self at: 'ProductName'!
 
 productVersionString
-	"Answer a String in the form N.N.N.N which specifies the version number of the product."
 
-	^self fixedInfo productVersionString!
+	^self at: 'ProductVersion'!
 
 queryValue: name into: buf
 	"Private - Get the language/code-page id from the version info block."
