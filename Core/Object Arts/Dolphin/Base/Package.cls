@@ -1425,7 +1425,7 @@ packageVersion: aString
 !
 
 path
-	"Private - Answer the full path to the directory holding the receivers files."
+	"Answer the full path to the directory holding the receivers files."
 
 	^File splitPathFrom: self packageFileName!
 
@@ -2455,7 +2455,7 @@ If you experience subsequent problems please contact the package supplier for an
 !Package categoriesFor: #packagePathname:!accessing!private! !
 !Package categoriesFor: #packageVersion!accessing!public! !
 !Package categoriesFor: #packageVersion:!accessing!public! !
-!Package categoriesFor: #path!accessing!private! !
+!Package categoriesFor: #path!accessing!public! !
 !Package categoriesFor: #paxVersion!accessing!private! !
 !Package categoriesFor: #paxVersion:!accessing!private! !
 !Package categoriesFor: #prerequisiteNames!accessing!private! !
