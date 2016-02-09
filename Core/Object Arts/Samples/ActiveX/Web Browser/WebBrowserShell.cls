@@ -80,6 +80,7 @@ homePage
 initialize
 	"Private - Initialize the receiver's instance variables."
 
+	NTLibrary isWine ifTrue: [self error: 'Internet Explorer ActiveX component not available in Wine'].
 	super initialize.
 	commandStates := Array with: false with: false!
 

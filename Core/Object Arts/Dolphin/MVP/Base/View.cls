@@ -422,6 +422,11 @@ beForeground
 beNotThemed
 	"Turns off any visual theme for the receiver. Only effective on Windows XP and above"
 
+	NTLibrary isWine ifTrue: [
+		"Wine currently errors on this, so ignore"
+		#wineFix.
+		^self].
+
 	ThemeLibrary default 
 		setWindowTheme: self handle
 		pszSubAppName: '' asUnicodeString
@@ -4401,7 +4406,7 @@ zOrderTop
 !View categoriesFor: #beCentered!operations!public! !
 !View categoriesFor: #beDefaultThemed!modes!public! !
 !View categoriesFor: #beForeground!operations!public! !
-!View categoriesFor: #beNotThemed!modes!public! !
+!View categoriesFor: #beNotThemed!modes!wine fix!public! !
 !View categoriesFor: #beNotTopMost!operations!public! !
 !View categoriesFor: #bePopupFor:!operations!public! !
 !View categoriesFor: #beTopMost!operations!public! !

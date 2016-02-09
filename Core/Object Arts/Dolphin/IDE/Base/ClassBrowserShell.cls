@@ -143,6 +143,13 @@ initialize
 		addSystemFolderIcon: self toolsFolderIcon;
 		registerTool: self!
 
+plugins
+	"CodeMentorPlugin requires IE component"
+
+	^NTLibrary isWine 
+		ifTrue: [super plugins reject: [:each | each name == #CodeMentorPlugin]]
+		ifFalse: [super plugins]!
+
 resource_Default_view
 	"Answer the literal data from which the 'Default view' resource can be reconstituted.
 	DO NOT EDIT OR RECATEGORIZE THIS METHOD.
@@ -167,6 +174,7 @@ uninitialize
 !ClassBrowserShell class categoriesFor: #displayOn:!displaying!public! !
 !ClassBrowserShell class categoriesFor: #icon!constants!public! !
 !ClassBrowserShell class categoriesFor: #initialize!initializing!private! !
+!ClassBrowserShell class categoriesFor: #plugins!accessing!wine fix!public! !
 !ClassBrowserShell class categoriesFor: #resource_Default_view!public!resources-views! !
 !ClassBrowserShell class categoriesFor: #toolsFolderHelpId!public! !
 !ClassBrowserShell class categoriesFor: #uninitialize!class hierarchy-removing!private! !

@@ -203,9 +203,15 @@ imageFromRow: item
 	As of Dolphin 3.0 the image block is permitted to be nil for the common case
 	where the columns does not have images."
 
+	NTLibrary isWine ifTrue: [
+		#wineFix.
+		"WF10: Wine ListViews seem to expect image indices to always be set in ListView>>onDisplayDetailsRequired:, 
+		even if we don't want images to appear. Normally, we answer nil here if no image is required. 
+		In Wine we must answer an image index of 0"
+		getImageBlock ifNil: [^0]].
+
 	^getImageBlock isNil ifFalse: [
-		getImageBlock value: (self contentFromRow: item)]
-!
+		getImageBlock value: (self contentFromRow: item)]!
 
 index
 	"Answer the one based index of the receiver in its parent"
@@ -428,7 +434,7 @@ width: anInteger
 !ListViewColumn categoriesFor: #getTextBlock!adapters!public! !
 !ListViewColumn categoriesFor: #getTextBlock:!adapters!public! !
 !ListViewColumn categoriesFor: #headerIcon:!helpers!private! !
-!ListViewColumn categoriesFor: #imageFromRow:!adapters!private! !
+!ListViewColumn categoriesFor: #imageFromRow:!adapters!private!wine fix! !
 !ListViewColumn categoriesFor: #index!accessing!public! !
 !ListViewColumn categoriesFor: #infoTipFromRow:withPrefix:!adapters!private! !
 !ListViewColumn categoriesFor: #initialize!initializing!private! !

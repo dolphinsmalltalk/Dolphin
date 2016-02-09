@@ -803,6 +803,13 @@ imageFromRow: item
 	where the list does not have images."
 
 	self viewMode == #thumbnails ifTrue: [^self getThumbnailOf: item].
+
+	NTLibrary isWine ifTrue: [
+		#wineFix.
+		"WF10: Wine ListViews seem to expect image indices to always be set in ListView>>onDisplayDetailsRequired:, 
+		even if we don't want images to appear. Normally, we answer nil here if no image is required. 
+		In Wine we must answer an image index of 0"
+		getImageBlock ifNil: [^0]].
 	^self getImageBlock isNil ifFalse: [getImageBlock value: item]!
 
 indentFromRow: item
@@ -1817,7 +1824,11 @@ selectIndex: anInteger set: aBoolean
 
 	| anLvItem mask |
 	anLvItem := LVITEM new.
-	mask := ##(LVIS_SELECTED | LVIS_FOCUSED).
+	mask := ##(LVIS_SELECTED|LVIS_FOCUSED).
+	NTLibrary isWine ifTrue: [
+				#wineFix.
+				mask := mask maskClear: LVIS_FOCUSED
+		].
 	anLvItem stateMask: mask.
 	aBoolean ifTrue: [anLvItem dwState: mask].
 	self lvmSetItem: anInteger - 1 state: anLvItem!
@@ -2209,7 +2220,7 @@ wantCustomDrawItemNotifications: pNMHDR
 !ListView categoriesFor: #hideDropHighlight!drag & drop!private! !
 !ListView categoriesFor: #iconSpacing!accessing!public! !
 !ListView categoriesFor: #iconSpacing:!accessing!public! !
-!ListView categoriesFor: #imageFromRow:!adapters!private! !
+!ListView categoriesFor: #imageFromRow:!adapters!private!wine fix! !
 !ListView categoriesFor: #indentFromRow:!adapters!private! !
 !ListView categoriesFor: #infoTipFromRow:withPrefix:!adapters!private! !
 !ListView categoriesFor: #initialize!initializing!private! !
@@ -2324,7 +2335,7 @@ wantCustomDrawItemNotifications: pNMHDR
 !ListView categoriesFor: #revertSelection!helpers!private!selection! !
 !ListView categoriesFor: #selectAll!public!selection! !
 !ListView categoriesFor: #selectedCount!private!selection! !
-!ListView categoriesFor: #selectIndex:set:!private!selection! !
+!ListView categoriesFor: #selectIndex:set:!private!wine fix!selection! !
 !ListView categoriesFor: #selectionByIndex:ifAbsent:!public!selection! !
 !ListView categoriesFor: #selectionFromPoint:!event handling!private! !
 !ListView categoriesFor: #selections:ifAbsent:!public!selection! !

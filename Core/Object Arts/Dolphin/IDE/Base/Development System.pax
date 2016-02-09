@@ -263,6 +263,7 @@ package methodNames
 	add: #ResourceIdentifier -> #assign:;
 	add: #ResourceIdentifier -> #assignLiteralResourceData:;
 	add: #ResourceIdentifier -> #edit;
+	add: #ResourceIdentifier -> #editViewUsing:;
 	add: #ResourceIdentifier -> #prompt;
 	add: #ResourceIdentifier -> #publishedAspects;
 	add: #ResourceIdentifier -> #reassign;
@@ -3862,9 +3863,15 @@ assignLiteralResourceData: aLiteralArray
 edit
     	"Invoke a suitable editor on the resource identified by the receiver."
     
-	ViewComposer openOn: self
-    	!
+	ViewComposer openOn: self!
 
+editViewUsing: aMonadicBlock 
+	| view |
+	view := self loadWithContext: View desktop.
+	aMonadicBlock value: view.
+	self assign: view literalStoreArray.
+	view destroy!
+	
 prompt
 	"Prompt for and answer a new ResourceIdentifier using the receiver to give the default settings."
 
@@ -3890,6 +3897,7 @@ reassign
 !ResourceIdentifier categoriesFor: #assign:!accessing!public! !
 !ResourceIdentifier categoriesFor: #assignLiteralResourceData:!accessing!private! !
 !ResourceIdentifier categoriesFor: #edit!development!operations!public! !
+!ResourceIdentifier categoriesFor: #editViewUsing:!operations!public! !
 !ResourceIdentifier categoriesFor: #prompt!development!operations!public! !
 !ResourceIdentifier categoriesFor: #publishedAspects!constants!development!public! !
 !ResourceIdentifier categoriesFor: #reassign!public! !

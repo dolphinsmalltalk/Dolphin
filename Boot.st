@@ -3,6 +3,12 @@
 	SourceManager default fileIn: 'Core\Object Arts\Dolphin\Base\Boot\Boot.st'.
 ]!
 
+"Additions to Dolphin"
+Package manager 	install: 'Core\Object Arts\Dolphin\Base\Dolphin Base.pax'!
+
+"This relies on NTLibrary which is in Dolphin Base"
+SourceManager default fileIn: 'Core\Object Arts\Dolphin\Base\MessageBox.cls'!
+
 "Boot a workable Dolphin from the boot image"
 
 "Install some bare bones packages to get the Installation Management system working"
@@ -12,7 +18,6 @@ Package manager install: 'Core\Object Arts\Dolphin\Registry\Dolphin Registry Acc
 Package manager install: 'Core\Object Arts\Dolphin\System\Base64\Dolphin Base64.pax'!
 
 "We'll need MVP bits in order to be able to display the choice prompter for the image version to boot"
-Package manager 	install: 'Core\Object Arts\Dolphin\Base\Dolphin Base.pax'!
 Package manager 	install: 'Core\Object Arts\Dolphin\MVP\Models\Value\Dolphin Value Models.pax'!
 Package manager 	install: 'Core\Object Arts\Dolphin\MVP\Type Converters\Dolphin Type Converters.pax'!
 Package manager 	install: 'Core\Object Arts\Dolphin\MVP\Base\Dolphin MVP Base.pax'!

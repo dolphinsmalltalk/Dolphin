@@ -1066,6 +1066,10 @@ setAlignment: anInteger
 
 setMarginWidths: anArray 
 	| margins |
+	NTLibrary isWine 
+		ifTrue: 
+			[ #wineFix.
+			^self].
 	margins := (DWORD new)
 				highWord: anArray first;
 				lowWord: anArray last.
@@ -1387,7 +1391,7 @@ wmSetFocus: message wParam: wParam lParam: lParam
 !TextEdit categoriesFor: #selectionStart:length:!public!selection! !
 !TextEdit categoriesFor: #selectLine:!public!selection! !
 !TextEdit categoriesFor: #setAlignment:!modes!private! !
-!TextEdit categoriesFor: #setMarginWidths:!accessing!private! !
+!TextEdit categoriesFor: #setMarginWidths:!accessing!private!wine fix! !
 !TextEdit categoriesFor: #setReadOnly:!modes!private! !
 !TextEdit categoriesFor: #state!accessing!private! !
 !TextEdit categoriesFor: #suggestedFindText!helpers!private! !

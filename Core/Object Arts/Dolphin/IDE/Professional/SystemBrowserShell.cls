@@ -184,6 +184,13 @@ initialize
 		addSystemFolderIcon: self toolsFolderIcon;
 		registerTool: self!
 
+plugins
+	"CodeMentorPlugin requires IE component"
+
+	^NTLibrary isWine 
+		ifTrue: [super plugins reject: [:each | each name == #CodeMentorPlugin]]
+		ifFalse: [super plugins]!
+
 publishedAspects
 	"Answer a <LookupTable> of the <Aspect>s published by the receiver."
 
@@ -220,6 +227,7 @@ uninitialize
 !SystemBrowserShell class categoriesFor: #displayOn:!displaying!public! !
 !SystemBrowserShell class categoriesFor: #icon!constants!public! !
 !SystemBrowserShell class categoriesFor: #initialize!initializing!private! !
+!SystemBrowserShell class categoriesFor: #plugins!accessing!wine fix!public! !
 !SystemBrowserShell class categoriesFor: #publishedAspects!development!public! !
 !SystemBrowserShell class categoriesFor: #resource_Default_view!public!resources-views! !
 !SystemBrowserShell class categoriesFor: #toolsFolderHelpId!constants!public! !

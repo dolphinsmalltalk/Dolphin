@@ -256,7 +256,8 @@ valueWithHandle: operation forExtent: aPoint
 					[(self loadFromFile: self fileSpec extent: aPoint) ifNotNil: [:hIcon | ^operation value: hIcon]]
 				ifFalse: 
 					[(hModule == 0 
-						and: [aPoint ~= SystemMetrics current largeIconExtent and: [OSVERSIONINFO current isWinVista]]) 
+						and: [aPoint ~= SystemMetrics current largeIconExtent and: [#wineFix. 
+							OSVERSIONINFO current isWinVista & NTLibrary isWine not ]]) 
 							ifTrue: 
 								[(self 
 									load: ident
@@ -284,7 +285,7 @@ valueWithHandle: operation forExtent: aPoint
 !Icon categoriesFor: #includesFrame:!public!searching! !
 !Icon categoriesFor: #load:fromInstance:extent:!private!realizing/unrealizing! !
 !Icon categoriesFor: #loadFromInstance:!private!realizing/unrealizing! !
-!Icon categoriesFor: #valueWithHandle:forExtent:!helpers!private! !
+!Icon categoriesFor: #valueWithHandle:forExtent:!helpers!private!wine fix! !
 
 !Icon class methodsFor!
 
