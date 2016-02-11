@@ -196,6 +196,7 @@ void CInProcPlugHole::SetImageInfo(LPCSTR szImagePath, LPVOID imageData, DWORD i
 
 void CInProcPlugHole::UpdateImagePathForCLSID(REFCLSID rclsid)
 {
+	USES_CONVERSION;
 	_ASSERTE(rclsid != CLSID_NULL);
 
 	// Find a suitable image if one has not already been specified and a CLSID is available 
@@ -208,7 +209,6 @@ void CInProcPlugHole::UpdateImagePathForCLSID(REFCLSID rclsid)
 		HRESULT hr = StringFromCLSID(rclsid, &wszCLSID);
 		if (SUCCEEDED(hr))
 		{
-			USES_CONVERSION;
 
 			LPCSTR szCLSID = W2A(wszCLSID);
 			char szKey[5+1+38+1+5+1] = "CLSID\\";

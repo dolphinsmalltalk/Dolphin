@@ -106,6 +106,7 @@ public:
 
 HRESULT CDolphinAxHost::CreateNormalizedObject(LPCOLESTR lpszTricsData, REFIID riid, void** ppvObj, NormalizedObjectType& otCreated, LPCOLESTR& lpszHTMLText, BSTR bstrLicKey)
 {
+	USES_CONVERSION;
 	ATLASSERT(ppvObj);
 	if (ppvObj == NULL)
 		return E_POINTER;
@@ -121,7 +122,6 @@ HRESULT CDolphinAxHost::CreateNormalizedObject(LPCOLESTR lpszTricsData, REFIID r
 		return S_OK;
 
 	// Is it HTML ?
-	USES_CONVERSION;
 	if ((lpszTricsData[0] == OLECHAR('M') || lpszTricsData[0] == OLECHAR('m')) &&
 		(lpszTricsData[1] == OLECHAR('S') || lpszTricsData[1] == OLECHAR('s')) &&
 		(lpszTricsData[2] == OLECHAR('H') || lpszTricsData[2] == OLECHAR('h')) &&
@@ -333,6 +333,7 @@ STDMETHODIMP CDolphinAxHost::OnPosRectChange(LPCRECT /*lprcPosRect*/)
 // creation from the window title)
 LRESULT CALLBACK CDolphinAxHost::WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
+	USES_CONVERSION;
 	switch(uMsg)
 	{
 	case WM_CREATE:
@@ -342,7 +343,6 @@ LRESULT CALLBACK CDolphinAxHost::WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam,
 
 			IAxWinHostWindowLic* pAxWindow = NULL;
 
-			USES_CONVERSION;
 			CComPtr<IUnknown> spUnk;
 			HRESULT hRet = CreateHost(hWnd, &spUnk);
 			if(FAILED(hRet))
@@ -425,6 +425,7 @@ HRESULT CDolphinAxHost::CreateHost(HWND hWnd, IUnknown** ppUnkContainer)
 
 STDMETHODIMP CDolphinAxHost::CreateControlLicEx(LPCOLESTR lpszTricsData, HWND hWnd, IStream* pStream, IUnknown** ppUnk, REFIID iidAdvise, IUnknown* punkSink, BSTR bstrLic)
 {
+	USES_CONVERSION;
 	ATLASSERT(ppUnk != NULL);
 	if (ppUnk == NULL)
 		return E_POINTER;
@@ -442,7 +443,6 @@ STDMETHODIMP CDolphinAxHost::CreateControlLicEx(LPCOLESTR lpszTricsData, HWND hW
 
 	if (::IsWindow(hWnd))
 	{
-		USES_CONVERSION;
 		if (m_hWnd != hWnd) // Don't need to subclass the window if we already own it
 		{
 			SubclassWindow(hWnd);
@@ -491,7 +491,6 @@ STDMETHODIMP CDolphinAxHost::CreateControlLicEx(LPCOLESTR lpszTricsData, HWND hW
 
 			CComPtr<IUnknown> spUnk(*ppUnk);
 			// Is it just plain HTML?
-			USES_CONVERSION;
 			if (otCreated == otMSHTML)
 			{
 				// Just HTML: load the HTML data into the document
