@@ -12,6 +12,7 @@ Smalltalk compiler.
 #include "Compiler.h"
 #include <locale.h>
 #include "..\Compiler_i.h"
+#include <Strsafe.h>
 
 // Disable warnings about using SEH
 #pragma warning ( disable : 4509 )
@@ -25,10 +26,10 @@ static int compilationTrace = 0;
 #ifdef USE_VM_DLL
 void __cdecl DolphinTrace(LPCTSTR format, ...) 
 {
-	char buf[1024];
+	TCHAR buf[1024];
 	va_list args;
 	va_start(args, format);
-	/*w*/vsprintf(buf, format, args);
+	::StringCbVPrintf(buf, sizeof(buf), format, args);
 	va_end(args);
 	OutputDebugString(buf);
 }
