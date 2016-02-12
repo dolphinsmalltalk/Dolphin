@@ -4,6 +4,9 @@
 *.img7
 *.pac
 *.sml
+*.exe
+*.dll
+!SciLexer.dll
 !DBOOT.img7
 !DBOOT.sml
 Repository/
