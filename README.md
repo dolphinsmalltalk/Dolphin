@@ -19,3 +19,7 @@ Note: if you are just looking to install Dolphin and get going as quickly as pos
 * Load the DolphinVM solution into Visual Studio. Choose the **Release** profile (**Debug** will compile but will run slowly) and then _Build Solution_. A bunch of DLLs and `Dolphin7.exe` will have been copied to the `\Dolphin` root folder.
 
 Now go to the Dolphin [Getting Started](http://www.object-arts.com/gettingstarted.html) page and follow the instructions there to build the image file with your new VM. You can then launch Dolphin and continue with the tutorials.
+
+## Releasing the VM
+
+If sufficient changes have been made to the VM such that a new release is warranted, you should push a new tag of the form _v.7.x.y.z_ (eg: **v7.0.2.1**). When the tag is eventually pushed to the GitHub master branch this will cause AppVeyor to build and generate a new [Release](https://github.com/dolphinsmalltalk/DolphinVM/releases). Each release consists of the full set of VM binaries wrapped up as a zip called `DolphinVM.zip`. The VM binaries are not (now) included in the Dolphin repository but can be fetched by executing the `FetchVM.CMD` script from the image directory. Whenever, a new VM is released the version tag should be edited into `FetchVM.ps1` to make sure that the images will be booted with the new version.
