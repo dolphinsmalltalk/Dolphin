@@ -1,0 +1,63 @@
+| package |
+package := Package name: 'Plimbole'.
+package paxVersion: 1;
+	basicComment: ''.
+
+package imageStripperBytes: (ByteArray fromBase64String: 'IVNUQiAzIEYPDQAEAAAASW1hZ2VTdHJpcHBlcgAAAABSAAAACAAAAFBsaW1ib2xlUgAAADoAAABD
+b3JlXE9iamVjdCBBcnRzXFNhbXBsZXNcTVZQXEdlbmVyYXRpdmUgTXVzaWNcUGxpbWJvbGUuZXhl
+mgAAAFIAAAAIAAAAUGxpbWJvbGVSAAAADQAAAFBsaW1ib2xlU2hlbGzvvyUAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==').
+
+package classNames
+	add: #Plimbole;
+	add: #PlimboleCell;
+	add: #PlimboleShell;
+	add: #PlimboleView;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\..\..\Dolphin\Base\Dolphin';
+	add: '..\..\..\Dolphin\MVP\Views\Control Bars\Dolphin Control Bars';
+	add: '..\..\..\Dolphin\MVP\Models\List\Dolphin List Models';
+	add: '..\..\..\Dolphin\MVP\Base\Dolphin MVP Base';
+	add: 'Midi';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+Object subclass: #PlimboleCell
+	instanceVariableNames: 'location velocity plimbole'
+	classVariableNames: ''
+	poolDictionaries: 'Win32Constants'
+	classInstanceVariableNames: ''!
+Presenter subclass: #Plimbole
+	instanceVariableNames: 'midiOutChannel stepProcess recurse voiceX voiceY scaleIndex noteDuration gridExtent tempo palette'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Shell subclass: #PlimboleShell
+	instanceVariableNames: 'plimbolePresenter'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+View subclass: #PlimboleView
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+"End of package definition"!
+

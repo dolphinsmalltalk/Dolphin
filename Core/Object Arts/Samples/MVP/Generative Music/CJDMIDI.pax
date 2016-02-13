@@ -1,0 +1,119 @@
+| package |
+package := Package name: 'CJDMIDI'.
+package paxVersion: 1;
+	basicComment: '"cdemers - 9/3/2004"
+MIDI Output classes.
+
+ex: 
+
+mo := MIDIOut new.
+mo openDeviceID: 0.
+mo voice: 30.
+mo keyDown: 50 velocity: 100.
+(Delay forMilliseconds: 500) wait.
+mo keyUp: 50.
+CJDMIDIKeyboardPresenter showOn: mo.
+mo close.
+
+"Love me Tender"
+C F E F G D G F E D E F'.
+
+
+package classNames
+	add: #CJDMIDIKeyboardPresenter;
+	add: #MIDIOut;
+	yourself.
+
+package methodNames
+	add: #WinMMLibrary -> #midiOutCloseHmo:;
+	add: #WinMMLibrary -> #midiOutGetNumDevs;
+	add: #WinMMLibrary -> #midiOutOpenLphmo:uDeviceID:dwCallback:dwCallbackInstance:dwFlags:;
+	add: #WinMMLibrary -> #midiOutShortMsgHmo:dwMsg:;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\..\..\Dolphin\Base\Dolphin';
+	add: '..\..\..\Dolphin\MVP\Presenters\Choice\Dolphin Choice Presenter';
+	add: '..\..\..\Dolphin\MVP\Base\Dolphin MVP Base';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+Object subclass: #MIDIOut
+	instanceVariableNames: 'handle voice'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Presenter subclass: #CJDMIDIKeyboardPresenter
+	instanceVariableNames: 'voiceListPresenter keysPresenter firstKeyNum keyArray keyDict lastMouseKeyDown'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+!WinMMLibrary methodsFor!
+
+midiOutCloseHmo: hmo
+
+	"cdemers - 9/3/2004"
+	"Private Declare Function midiOutClose Lib 'winmm.dll' (ByVal hMidiOut As Long) As Long"
+"MMRESULT midiOutClose(
+  HMIDIOUT hmo  
+);"
+	<stdcall: dword midiOutClose dword >
+	^self invalidCall
+!
+
+midiOutGetNumDevs
+
+	"cdemers - 9/3/2004"
+	"UINT midiOutGetNumDevs(VOID); "
+	<stdcall: dword midiOutGetNumDevs>
+	^self invalidCall
+!
+
+midiOutOpenLphmo: midiOutHandle uDeviceID: uDeviceID dwCallback: dwCallback dwCallbackInstance: dwCallbackInstance dwFlags: dwFlags
+
+	"cdemers - 9/3/2004"
+"Private Declare Function midiOutOpen Lib 'winmm.dll' (lphMidiOut As Long, ByVal uDeviceID As Long, ByVal dwCallback As Long, ByVal dwInstance As Long, ByVal dwFlags As Long) As Long"
+"MMRESULT midiOutOpen(
+  LPHMIDIOUT lphmo,              
+  UINT_PTR   uDeviceID,          
+  DWORD_PTR  dwCallback,         
+  DWORD_PTR  dwCallbackInstance, 
+  DWORD      dwFlags             
+);"
+	
+	<stdcall: dword midiOutOpen dword* dword dword dword dword>
+	^self invalidCall
+!
+
+midiOutShortMsgHmo: hmo dwMsg: dwMsg
+
+	"cdemers - 9/3/2004"
+	"Private Declare Function midiOutShortMsg Lib 'winmm.dll' (ByVal hMidiOut As Long, ByVal dwMsg As Long) As Long"
+	"MMRESULT midiOutShortMsg(
+		  HMIDIOUT hmo,  
+		  DWORD dwMsg);"
+	<stdcall: dword midiOutShortMsg dword dword >
+	^self invalidCall
+! !
+!WinMMLibrary categoriesFor: #midiOutCloseHmo:!public! !
+!WinMMLibrary categoriesFor: #midiOutGetNumDevs!public! !
+!WinMMLibrary categoriesFor: #midiOutOpenLphmo:uDeviceID:dwCallback:dwCallbackInstance:dwFlags:!public! !
+!WinMMLibrary categoriesFor: #midiOutShortMsgHmo:dwMsg:!public! !
+
+"End of package definition"!
+

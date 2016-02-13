@@ -1,0 +1,47 @@
+| package |
+package := Package name: 'Midi'.
+package paxVersion: 1;
+	basicComment: ''.
+
+
+package classNames
+	add: #MIDIOut;
+	add: #MidiOutChannel;
+	yourself.
+
+package globalNames
+	add: #MidiConstants;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\..\..\Dolphin\Base\Dolphin';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+Object subclass: #MIDIOut
+	instanceVariableNames: 'handle'
+	classVariableNames: ''
+	poolDictionaries: 'MidiConstants'
+	classInstanceVariableNames: ''!
+Object subclass: #MidiOutChannel
+	instanceVariableNames: 'midiout noteProcess octaveShift'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+"End of package definition"!
+
