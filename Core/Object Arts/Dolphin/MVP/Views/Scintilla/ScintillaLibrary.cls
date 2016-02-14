@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ExternalLibrary subclass: #ScintillaLibrary
 	instanceVariableNames: ''
@@ -11,7 +11,11 @@ ScintillaLibrary comment: 'ExternalLibrary class to wrap the Scintilla DLL (SciL
 !ScintillaLibrary methodsFor!
 
 directFunction: sciThis msg: msg wParam: wParam lParam: lParam 
-	<stdcall: sdword '_Scintilla_DirectFunction@16' dword dword dword dword>
+	<stdcall: sdword '_Scintilla_DirectFunction@16' handle dword dword dword>
+	^self invalidCall!
+
+directFunction: sciThis msg: msg wParam: wParam lpParam: lpParam 
+	<stdcall: sdword '_Scintilla_DirectFunction@16' handle dword dword void*>
 	^self invalidCall!
 
 versionFormatString
@@ -26,6 +30,7 @@ versionFormatString
 
 	^'%2!!d!!.%3!!d!!.%4!!d!!.%5!!d!!'! !
 !ScintillaLibrary categoriesFor: #directFunction:msg:wParam:lParam:!operations!private! !
+!ScintillaLibrary categoriesFor: #directFunction:msg:wParam:lpParam:!operations!private! !
 !ScintillaLibrary categoriesFor: #versionFormatString!constants!private! !
 
 !ScintillaLibrary class methodsFor!

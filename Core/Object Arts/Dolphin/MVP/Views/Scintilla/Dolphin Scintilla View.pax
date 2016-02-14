@@ -106,7 +106,7 @@ Object subclass: #ScintillaAttribute
 	instanceVariableNames: 'id'
 	classVariableNames: ''
 	poolDictionaries: 'ScintillaConstants'
-	classInstanceVariableNames: 'attributes'!
+	classInstanceVariableNames: 'applyMap'!
 Object subclass: #ScintillaIndicator
 	instanceVariableNames: 'styleName range tag'
 	classVariableNames: ''
@@ -156,19 +156,19 @@ ScintillaAttribute subclass: #QueryableScintillaAttribute
 	instanceVariableNames: 'view'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: 'getMessages'!
+	classInstanceVariableNames: 'queryMap'!
 ScintillaAttribute subclass: #ScintillaMarkerDefinition
-	instanceVariableNames: 'code forecolor backcolor view name'
+	instanceVariableNames: 'code forecolor backcolor view name alpha selectionBackcolor reserved1 reserved2 reserved3 reserved4'
 	classVariableNames: 'FolderNames'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ScintillaAttribute subclass: #ScintillaTextStyle
-	instanceVariableNames: 'forecolor backcolor flags faceName pointSize characterSet case name description _reserved1 _reserved2'
-	classVariableNames: 'BoldMask EolFilledMask HotspotMask InvisibleMask ItalicMask PredefinedStyleNames ReadOnlyMask UnderlinedMask'
+	instanceVariableNames: 'forecolor backcolor flags faceName centiPointSize characterSet case name description weight _reserved1'
+	classVariableNames: 'EolFilledMask HotspotMask InvisibleMask ItalicMask PredefinedStyleNames ReadOnlyMask UnderlinedMask'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 QueryableScintillaAttribute subclass: #ScintillaIndicatorStyle
-	instanceVariableNames: 'forecolor style under name alphaPercent'
+	instanceVariableNames: 'forecolor style under name alpha hoverStyle hoverForecolor flags foreAlpha reserved'
 	classVariableNames: 'StyleNames'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -183,8 +183,8 @@ ScintillaStyler subclass: #NullScintillaStyler
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 MultilineTextEdit subclass: #ScintillaView
-	instanceVariableNames: 'this currentTextStyles styleIdMap styler markerDefinitions markers wordChars styleMask modificationEventMask autoCStops autoCFillups whitespaceBackcolor whitespaceForecolor selectionBackcolor selectionForecolor indicators callTipTabWidth _unused34 callTipHighlightColor braceChars whitespaces scFlags allTextStyles foldMarginColor foldMarginHiColor foldMarkerStyle foldFlags extraStyleBits keyBindings indicatorStyles secondarySelectionForecolor secondarySelectionBackcolor annotationStyles _unused50'
-	classVariableNames: 'AnnotationModes AnnotationStylesOffset BackgroundDwellEvents BraceHilightingMask CaretStyles CodePages DefaultCallTipTabWidth DefaultKeyBindings DefaultTextStyles FoldingMask FoldMarkerStyles IndentationGuideStyles Lexers MarginStylesOffset ScnMap Whitespaces WrapIndentModes'
+	instanceVariableNames: 'this currentTextStyles styleIdMap styler markerDefinitions markers wordChars styleMask modificationEventMask autoCStops autoCFillups whitespaceBackcolor whitespaceForecolor selectionBackcolor selectionForecolor indicators callTipTabWidth punctuation callTipHighlightColor braceChars whitespaces scFlags allTextStyles foldMarginColor foldMarginHiColor foldMarkerStyle foldFlags extraStyleBits keyBindings indicatorStyles secondarySelectionForecolor secondarySelectionBackcolor annotationStyles _unused50'
+	classVariableNames: 'AnnotationStylesOffset BackgroundDwellEvents BraceHilightingMask CodePages DefaultCallTipTabWidth DefaultKeyBindings DefaultTextStyles FoldingMask Lexers MarginStylesOffset ScnMap'
 	poolDictionaries: 'ScintillaConstants Win32Constants'
 	classInstanceVariableNames: ''!
 

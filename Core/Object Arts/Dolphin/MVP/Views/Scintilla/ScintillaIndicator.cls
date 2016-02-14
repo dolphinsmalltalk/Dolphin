@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #ScintillaIndicator
 	instanceVariableNames: 'styleName range tag'
@@ -76,21 +76,8 @@ styleName: aSymbolOrInteger range: anInterval tag: anObject
 		setStyleName: aSymbolOrInteger
 			range: anInterval
 			tag: anObject;
-		yourself!
-
-type: anInteger range: anInterval 
-	#deprecated.
-	^self styleName: anInteger range: anInterval!
-
-type: anInteger range: anInterval tag: anObject 
-	#deprecated.
-	^self 
-		styleName: anInteger
-		range: anInterval
-		tag: anObject! !
+		yourself! !
 !ScintillaIndicator class categoriesFor: #icon!constants!development!public! !
 !ScintillaIndicator class categoriesFor: #styleName:range:!instance creation!public! !
 !ScintillaIndicator class categoriesFor: #styleName:range:tag:!instance creation!public! !
-!ScintillaIndicator class categoriesFor: #type:range:!instance creation!public! !
-!ScintillaIndicator class categoriesFor: #type:range:tag:!instance creation!public! !
 

@@ -1,7 +1,7 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ScintillaAttribute subclass: #ScintillaMarkerDefinition
-	instanceVariableNames: 'code forecolor backcolor view name'
+	instanceVariableNames: 'code forecolor backcolor view name alpha selectionBackcolor reserved1 reserved2 reserved3 reserved4'
 	classVariableNames: 'FolderNames'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -12,51 +12,102 @@ Markers can be displayed in any margins configured for the view to mark particul
 
 Instance Variables:
 	code		<integer>. Marker glyph code from the SC_MARK_XXX enumeration
-	forecolor	<Color>. Foreground colour of the marker glyph.
-	backcolor	<Color>. Background colour of the marker glyph.
+	forecolor	<integer>. Foreground colour value of the marker glyph.
+	backcolor	<integer>. Background colour value of the marker glyph.
 	view		<ScintillaView>. View in which this marker type is defined.
 	name	<Symbol>. Symbolic name of the marker type, e.g. #folder for a fold point marker, or some application defined name
+	alpha	<Integer>. 0..255 opacity
+	selectionBackcolor <integer> highlight background colour of selected marker
 
 '!
 !ScintillaMarkerDefinition categoriesForClass!MVP-Views-Support! !
 !ScintillaMarkerDefinition methodsFor!
 
+alpha
+	^alpha!
+
+alpha: anInteger 
+	alpha := anInteger isNil 
+				ifFalse: 
+					[anInteger = SC_ALPHA_NOALPHA 
+						ifFalse: 
+							[(anInteger between: SC_ALPHA_TRANSPARENT and: SC_ALPHA_OPAQUE) 
+								ifTrue: [anInteger]
+								ifFalse: [self error: 'Invalid alpha value ' , anInteger displayString]]].
+	self updateViewAttribute: #alpha!
+
+alphaValue
+	"Private - Answer the integer alpha value to be passed to Scintilla"
+
+	^self alpha ifNil: [SC_ALPHA_NOALPHA]!
+
 backcolor
+	^self basicBackcolor ifNotNil: [:rgbVal | RGB fromInteger: rgbVal]!
+
+backcolor: aColorOrNil 
+	self basicBackcolor: (aColorOrNil ifNotNil: [aColorOrNil asParameter]).
+	self updateViewAttribute: #backcolor!
+
+basicBackcolor
 	^backcolor!
 
-backcolor: aColor 
-	backcolor := aColor.
-	self updateViewAttribute: #backcolor!
+basicBackcolor: aColorOrNil 
+	backcolor := aColorOrNil!
+
+basicForecolor
+	^forecolor!
+
+basicForecolor: aColorOrNil 
+	forecolor := aColorOrNil!
 
 basicId
 	^id ifNil: [name ifNotNil: [id := FolderNames at: name ifAbsent: []]]!
 
+basicSelectionBackcolor
+	^selectionBackcolor!
+
+basicSelectionBackcolor: aColor 
+	selectionBackcolor := aColor isNil 
+				ifFalse: 
+					[| rgb |
+					rgb := aColor asRGB.
+					rgb = ##(RGB red) asRGB ifFalse: [aColor asParameter]]!
+
+basicsSelectionBackcolor
+	^Error notYetImplemented!
+
 code
 	^code!
 
-code: anInteger 
-	code := anInteger.
-	self updateViewAttribute: #code!
+code: anIntegerOrNil 
+	code := anIntegerOrNil!
 
 forecolor
-	^forecolor!
+	^self basicForecolor ifNotNil: [:rgbVal | Color fromInteger: rgbVal]!
 
-forecolor: aColor 
-	forecolor := aColor.
+forecolor: aColorOrNil 
+	self basicForecolor: (aColorOrNil ifNotNil: [aColorOrNil asParameter]).
 	self updateViewAttribute: #forecolor!
 
 glyphName
-	^code < SC_MARK_CHARACTER 
-		ifTrue: [self class glyphNames at: code + 1]
-		ifFalse: [(Character codePoint: code - SC_MARK_CHARACTER) asSymbol]!
+	^self code 
+		ifNil: [#circle]
+		ifNotNil: 
+			[:c | 
+			c < SC_MARK_CHARACTER 
+				ifTrue: [self class glyphNames at: c + 1]
+				ifFalse: [(Character codePoint: c - SC_MARK_CHARACTER) asSymbol]]!
 
 glyphName: aSymbol 
-	self code: (self class glyphNames indexOf: aSymbol
-				ifAbsent: 
-					[(aSymbol size = 1 and: [aSymbol first isPrintable and: [aSymbol first isWhitespace not]]) 
-						ifTrue: [aSymbol first codePoint + SC_MARK_CHARACTER + 1]
-						ifFalse: [^self error: 'Invalid glyph  ' , aSymbol printString]]) 
-					- 1!
+	self code: (aSymbol isNil 
+				ifFalse: 
+					[(self class glyphNames indexOf: aSymbol
+						ifAbsent: 
+							[(aSymbol size = 1 and: [aSymbol first isPrintable and: [aSymbol first isWhitespace not]]) 
+								ifTrue: [aSymbol first codePoint + SC_MARK_CHARACTER + 1]
+								ifFalse: [^self error: 'Invalid glyph  ' , aSymbol printString]]) 
+							- 1]).
+	self updateViewAttribute: #glyphName!
 
 name
 	^name ifNil: [self id]!
@@ -74,14 +125,15 @@ newForLine: anInteger
 
 printableAttributes
 	^(super printableAttributes)
-		remove: #code;
 		add: #glyphName;
 		yourself!
 
-setCode: anInteger forecolor: foreColor backcolor: backColor 
-	code := anInteger.
-	forecolor := foreColor.
-	backcolor := backColor!
+selectionBackcolor
+	^self basicSelectionBackcolor ifNotNil: [:intVal | Color fromInteger: intVal]!
+
+selectionBackcolor: aColor 
+	self basicSelectionBackcolor: aColor.
+	self updateViewAttribute: #selectionBackcolor!
 
 storeableAttributes
 	^(Array with: #name) , super storeableAttributes!
@@ -91,20 +143,31 @@ view
 
 view: aScintillaView 
 	view := aScintillaView! !
+!ScintillaMarkerDefinition categoriesFor: #alpha!accessing!public! !
+!ScintillaMarkerDefinition categoriesFor: #alpha:!accessing!public! !
+!ScintillaMarkerDefinition categoriesFor: #alphaValue!accessing!private! !
 !ScintillaMarkerDefinition categoriesFor: #backcolor!accessing!public! !
 !ScintillaMarkerDefinition categoriesFor: #backcolor:!accessing!public! !
+!ScintillaMarkerDefinition categoriesFor: #basicBackcolor!accessing!private! !
+!ScintillaMarkerDefinition categoriesFor: #basicBackcolor:!accessing!private! !
+!ScintillaMarkerDefinition categoriesFor: #basicForecolor!accessing!private! !
+!ScintillaMarkerDefinition categoriesFor: #basicForecolor:!accessing!private! !
 !ScintillaMarkerDefinition categoriesFor: #basicId!accessing!private! !
+!ScintillaMarkerDefinition categoriesFor: #basicSelectionBackcolor!accessing!private! !
+!ScintillaMarkerDefinition categoriesFor: #basicSelectionBackcolor:!accessing!private! !
+!ScintillaMarkerDefinition categoriesFor: #basicsSelectionBackcolor!accessing!public! !
 !ScintillaMarkerDefinition categoriesFor: #code!accessing!private! !
 !ScintillaMarkerDefinition categoriesFor: #code:!accessing!private! !
-!ScintillaMarkerDefinition categoriesFor: #forecolor!accessing!public! !
-!ScintillaMarkerDefinition categoriesFor: #forecolor:!accessing!public! !
+!ScintillaMarkerDefinition categoriesFor: #forecolor!accessing!colors!public! !
+!ScintillaMarkerDefinition categoriesFor: #forecolor:!accessing!colors!public! !
 !ScintillaMarkerDefinition categoriesFor: #glyphName!accessing!public! !
 !ScintillaMarkerDefinition categoriesFor: #glyphName:!accessing!public! !
 !ScintillaMarkerDefinition categoriesFor: #name!accessing!public! !
 !ScintillaMarkerDefinition categoriesFor: #name:!accessing!public! !
 !ScintillaMarkerDefinition categoriesFor: #newForLine:!adding!public! !
 !ScintillaMarkerDefinition categoriesFor: #printableAttributes!development!helpers!printing!private! !
-!ScintillaMarkerDefinition categoriesFor: #setCode:forecolor:backcolor:!initializing!private! !
+!ScintillaMarkerDefinition categoriesFor: #selectionBackcolor!accessing!colors!public! !
+!ScintillaMarkerDefinition categoriesFor: #selectionBackcolor:!accessing!colors!public! !
 !ScintillaMarkerDefinition categoriesFor: #storeableAttributes!development!printing!private! !
 !ScintillaMarkerDefinition categoriesFor: #view!accessing!private! !
 !ScintillaMarkerDefinition categoriesFor: #view:!accessing!private! !
@@ -274,13 +337,6 @@ circleTree
 					yourself);
 		yourself!
 
-code: anInteger forecolor: foreColor backcolor: backColor 
-	^(self basicNew)
-		setCode: anInteger
-			forecolor: foreColor
-			backcolor: backColor;
-		yourself!
-
 folderIds
 	^FolderNames values!
 
@@ -296,9 +352,9 @@ glyphNames
 
 	^##(| names |
 	names := #(#circle #roundRect #arrow #smallRect #shortArrow).
-	"An invisiable marker, potentially useful for tracking lines since markers move with them"
-	names := names, #(#empty).
-	names := names, #(#arrowDown #minus #plus).
+	"An invisible marker, potentially useful for tracking lines since markers move with them"
+	names := names , #(#empty).
+	names := names , #(#arrowDown #minus #plus).
 	"Shapes for fold margin"
 	names := names 
 				, #(#verticalLine #leftCorner #teeJunction #boxPlus #boxPlusConnected #boxMinus #boxMinusConnected #leftCornerCurve #teeJunctionCurve #circlePlus #circlePlusConnected #circleMinus #circleMinusConnected).
@@ -310,10 +366,12 @@ glyphNames
 	names := names , #(#fullRect).
 	"?"
 	names := names , #(#leftRect).
-
-	names := names, #(available).
+	names := names , #(#available).
 	"Draws an underline across the text"
-	names := names, #(underline).
+	names := names , #(#underline).
+	"RGBA image - not fully supported"
+	names := names , #(#rgbaImage).
+	names := names , #(#bookmark).
 	names)
 !
 
@@ -322,10 +380,16 @@ initialize
 	self initialize
 	"
 
-	attributes := (IdentityDictionary new)
-				at: #backcolor put: SCI_MARKERSETBACK;
-				at: #forecolor put: SCI_MARKERSETFORE;
-				at: #code put: SCI_MARKERDEFINE;
+	"Maps from a symbolic attribute name to a 3-element tuple, being the selector to access the
+	value, the default value if nil, and the Scintilla control message to send."
+
+	applyMap := (IdentityDictionary new)
+				at: #backcolor put: #(#basicBackcolor ##(Color white asParameter) ##(SCI_MARKERSETBACK));
+				at: #forecolor put: #(#basicForecolor ##(Color black asParameter) ##(SCI_MARKERSETFORE));
+				at: #glyphName put: #(#code 0 ##(SCI_MARKERDEFINE));
+				at: #alpha put: #(#alpha ##(SC_ALPHA_NOALPHA) ##(SCI_MARKERSETALPHA));
+				at: #selectionBackcolor
+					put: #(#basicSelectionBackcolor ##(Color red asParameter) ##(SCI_MARKERSETBACKSELECTED));
 				shrink;
 				isImmutable: true;
 				yourself.
@@ -340,12 +404,6 @@ initialize
 				shrink;
 				isImmutable: true;
 				yourself!
-
-new
-	^self 
-		code: 0
-		forecolor: Color black
-		backcolor: Color white!
 
 plusMinus
 	"Answer a set of marker definitions for fold margin markers in the 'Plus/Minus' style. This
@@ -403,6 +461,23 @@ plusMinus
 					yourself);
 		yourself!
 
+stbConvertFrom: anSTBClassFormat 
+	^
+	[:vars | 
+	| instance |
+	instance := self new.
+	vars keysAndValuesDo: [:eachKey :eachValue | instance instVarAt: eachKey put: eachValue].
+	"Nil out some inst vars that have default value in old instances"
+	instance code: (instance code isZero ifFalse: [instance code]).
+	instance basicForecolor: (instance basicForecolor = Color black 
+				ifFalse: [instance basicForecolor asParameter]).
+	instance basicBackcolor: (instance basicBackcolor = Color white 
+				ifFalse: [instance basicForecolor asParameter]).
+	instance]!
+
+stbVersion
+	^1!
+
 visibleCharacterGlyphs
 	^(Character byteCharacterSet 
 		select: [:each | each isPrintable and: [each isWhitespace not]]) asArray 
@@ -410,12 +485,12 @@ visibleCharacterGlyphs
 !ScintillaMarkerDefinition class categoriesFor: #arrows!constants!public! !
 !ScintillaMarkerDefinition class categoriesFor: #boxTree!constants!public! !
 !ScintillaMarkerDefinition class categoriesFor: #circleTree!constants!public! !
-!ScintillaMarkerDefinition class categoriesFor: #code:forecolor:backcolor:!instance creation!public! !
 !ScintillaMarkerDefinition class categoriesFor: #folderIds!constants!public! !
 !ScintillaMarkerDefinition class categoriesFor: #foldMarkerNames!constants!public! !
 !ScintillaMarkerDefinition class categoriesFor: #glyphNames!constants!public! !
 !ScintillaMarkerDefinition class categoriesFor: #initialize!initializing!public! !
-!ScintillaMarkerDefinition class categoriesFor: #new!instance creation!public! !
 !ScintillaMarkerDefinition class categoriesFor: #plusMinus!constants!public! !
+!ScintillaMarkerDefinition class categoriesFor: #stbConvertFrom:!binary filing!private! !
+!ScintillaMarkerDefinition class categoriesFor: #stbVersion!binary filing!public! !
 !ScintillaMarkerDefinition class categoriesFor: #visibleCharacterGlyphs!constants!development!public! !
 

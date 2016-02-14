@@ -4002,10 +4002,13 @@ publishedAspectsOfInstances
 
 	^(super publishedAspectsOfInstances)
 		add: (Aspect color: #forecolor);
-		add: (Aspect choice: #styleName from: StyleNames);
+		add: (Aspect color: #hoverForecolor);
+		add: (Aspect choice: #styleName from: self styleNames);
+		add: (Aspect choice: #hoverStyleName from: self styleNames);
 		add: (Aspect boolean: #isUnderText);
 		add: (Aspect name: #name);
-		add: (Aspect integer: #alphaPercent);
+		add: (Aspect integer: #alpha);
+		add: (Aspect integer: #foreAlpha);
 		yourself! !
 !ScintillaIndicatorStyle class categoriesFor: #publishedAspectsOfInstances!constants!development!public! !
 
@@ -4044,6 +4047,8 @@ publishedAspectsOfInstances
 		add: (Aspect choice: #glyphName from: self glyphNames , self visibleCharacterGlyphs);
 		add: (Aspect color: #forecolor);
 		add: (Aspect color: #backcolor);
+		add: (Aspect integer: #alpha);
+		add: (Aspect color: #selectionBackcolor);
 		yourself! !
 !ScintillaMarkerDefinition class categoriesFor: #publishedAspectsOfInstances!constants!development!public! !
 
@@ -4086,6 +4091,7 @@ publishedAspectsOfInstances
 					from: self caseNames
 					andNil: nil);
 		add: (Aspect name: #name);
+		add: (Aspect number: #weight);
 		yourself! !
 !ScintillaTextStyle class categoriesFor: #newInstanceAspect:class:!adapters!development!private! !
 !ScintillaTextStyle class categoriesFor: #publishedAspectsOfInstances!constants!development!public! !
@@ -4134,12 +4140,13 @@ publishedAspectsOfInstances
 		add: (Aspect choice: #whitespaceVisibility from: self whitespaceVisibilityLevels);
 		add: (Aspect dictionary: #braceChars) beImmutable;
 		add: (Aspect choice: #lexer from: (Lexers copyWithout: nil) asSortedCollection);
-		add: (Aspect choice: #foldMarkerStyle from: (Array with: nil) , FoldMarkerStyles asSortedCollection);
-		add: (Aspect choice: #caretStyle from: CaretStyles asSortedCollection);
+		add: (Aspect choice: #foldMarkerStyle
+					from: (Array with: nil) , self foldMarkerStyles asSortedCollection);
+		add: (Aspect choice: #caretStyle from: self caretStyles asSortedCollection);
 		add: (Aspect choice: #indentationGuides
-					from: (Array with: nil) , IndentationGuideStyles asSortedCollection);
-		add: (Aspect choice: #annotationMode from: AnnotationModes);
-		add: (Aspect choice: #wrapIndentMode from: WrapIndentModes);
+					from: (Array with: nil) , self indentationGuideStyles asSortedCollection);
+		add: (Aspect choice: #annotationMode from: self annotationModes);
+		add: (Aspect choice: #wrapIndentMode from: self wrapIndentModes);
 		add: (Aspect choice: #fontQuality from: self fontQualities);
 		add: (Aspect choice: #multiPasteMode from: self multiPasteModes);
 		add: (Aspect integer: #whitespaceMarkerSize);

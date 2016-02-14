@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 RefactoringTool subclass: #CodeRefactoringTool
 	instanceVariableNames: ''
@@ -622,9 +622,7 @@ removeTempDecl: aStVariableNode
 	scintilla := presenter view.
 	((scintilla characterAt: range start - 1) isWhitespace 
 		and: [(scintilla characterAt: range stop + 1) isWhitespace]) ifTrue: [range stop: range stop + 1].
-	scintilla
-		targetRange: range;
-		replaceTarget: ''!
+	scintilla clearRange: range!
 
 renameClass: aStVariableNode 
 	| class model |

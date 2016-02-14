@@ -1,8 +1,8 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ScintillaAttribute subclass: #ScintillaTextStyle
-	instanceVariableNames: 'forecolor backcolor flags faceName pointSize characterSet case name description _reserved1 _reserved2'
-	classVariableNames: 'BoldMask EolFilledMask HotspotMask InvisibleMask ItalicMask PredefinedStyleNames ReadOnlyMask UnderlinedMask'
+	instanceVariableNames: 'forecolor backcolor flags faceName centiPointSize characterSet case name description weight _reserved1'
+	classVariableNames: 'EolFilledMask HotspotMask InvisibleMask ItalicMask PredefinedStyleNames ReadOnlyMask UnderlinedMask'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ScintillaTextStyle guid: (GUID fromString: '{441D5422-DB7D-4872-A16D-D6CA9D88E0B8}')!
@@ -80,8 +80,13 @@ caseName
 	^self case ifNotNil: [:enum | self class caseNames at: enum+1]!
 
 caseName: aSymbolOrNil 
-	self 
-		case: (aSymbolOrNil isNil ifFalse: [(self class caseNames indexOf: aSymbolOrNil) - 1])!
+	self case: (aSymbolOrNil ifNotNil: [(self class caseNames indexOf: aSymbolOrNil) - 1])!
+
+centiPointSize
+	^centiPointSize!
+
+centiPointSize: aNumberOrNil 
+	centiPointSize := aNumberOrNil!
 
 characterSet
 	^characterSet!
@@ -93,8 +98,9 @@ characterSet: anIntegerOrNil
 clearFont
 	"Clear all font settings so that these are inherited."
 
-	faceName := pointSize := characterSet := nil.
-	flags := flags maskClear: ItalicMask | BoldMask | UnderlinedMask!
+	faceName := centiPointSize := characterSet := nil.
+	flags := flags maskClear: ItalicMask | UnderlinedMask.
+	weight := nil!
 
 description
 	^description ifNil: [self name ifNotNil: [:string | string asPhrase]]!
@@ -160,14 +166,15 @@ isBackcolorExtendedToEndOfLine: aBooleanOrNil
 isBold
 	"Answer true if the receiver's font is bold, false if regular weight, or nil if not specified."
 
-	^self getThreeStateFlag: BoldMask!
+	^self weight ifNotNil: [:w | w >= SC_WEIGHT_BOLD]!
 
 isBold: aBooleanOrNil 
 	"Set the receiver's three state flag that specifies whether the associated font
 	is bold. If the argument is nil, then this style has no effect on the default
 	font."
 
-	self setThreeStateFlag: BoldMask value: aBooleanOrNil!
+	self 
+		weight: (aBooleanOrNil ifNotNil: [:bold | bold ifTrue: [SC_WEIGHT_BOLD] ifFalse: [SC_WEIGHT_NORMAL]])!
 
 isChangeable
 	^self isReadOnly ifNotNil: [:readOnly | readOnly not]!
@@ -244,9 +251,9 @@ mergeFont: aFont
 	"Initialize any font settings that are currently unspecified from the <Font> argument."
 
 	faceName ifNil: [faceName := aFont name].
-	pointSize ifNil: [pointSize := aFont pointSize].
+	centiPointSize ifNil: [self pointSize: aFont pointSize].
 	self isItalic ifNil: [self setThreeStateFlag: ItalicMask value: aFont isItalic].
-	self isBold ifNil: [self setThreeStateFlag: BoldMask value: aFont isBold].
+	self isBold ifNil: [self isBold: aFont isBold].
 	self isUnderlined ifNil: [self setThreeStateFlag: UnderlinedMask value: aFont isUnderlined].
 	characterSet ifNil: [characterSet := aFont characterSet]!
 
@@ -260,15 +267,22 @@ name: anObject
 				ifFalse: [anObject  isEmpty ifFalse: [anObject asSymbol]]!
 
 pointSize
-	^pointSize!
+	^centiPointSize 
+		ifNotNil: 
+			[:cp | 
+			"Try and provide an integer, if the pointSize is whole"
+			| points fraction |
+			points := cp / 100.0.
+			fraction := points asApproximateFraction.
+			fraction isInteger ifTrue: [fraction] ifFalse: [points]]!
 
-pointSize: anIntegerOrNil 
-	pointSize := anIntegerOrNil!
+pointSize: aNumberOrNil 
+	centiPointSize := aNumberOrNil ifNotNil: [:i | (i * 100) rounded]!
 
 restyleFont: aFont 
 	self pointSize ifNotNil: [:points | aFont pointSize: points].
 	self isItalic ifNotNil: [:isItalic | aFont isItalic: isItalic].
-	self isBold ifNotNil: [:isBold | aFont isBold: isBold].
+	self weight ifNotNil: [:w | aFont weight: w].
 	self isUnderlined ifNotNil: [:isUnderlined | aFont isUnderlined: isUnderlined].
 	self characterSet ifNotNil: [:set | aFont characterSet: set]!
 
@@ -286,7 +300,19 @@ storeableAttributes
 	| attribs |
 	attribs := super storeableAttributes.
 	name ifNotNil: [attribs := (Array with: #name) , attribs].
-	^attribs! !
+	^attribs!
+
+view
+	^nil!
+
+view: aScintillaView 
+	!
+
+weight
+	^weight!
+
+weight: anInteger 
+	weight := anInteger! !
 !ScintillaTextStyle categoriesFor: #=!comparing!public! !
 !ScintillaTextStyle categoriesFor: #backcolor!accessing!public! !
 !ScintillaTextStyle categoriesFor: #backcolor:!accessing!public! !
@@ -295,6 +321,8 @@ storeableAttributes
 !ScintillaTextStyle categoriesFor: #case:!accessing!public! !
 !ScintillaTextStyle categoriesFor: #caseName!accessing!public! !
 !ScintillaTextStyle categoriesFor: #caseName:!accessing!public! !
+!ScintillaTextStyle categoriesFor: #centiPointSize!accessing!public! !
+!ScintillaTextStyle categoriesFor: #centiPointSize:!accessing!public! !
 !ScintillaTextStyle categoriesFor: #characterSet!accessing!public! !
 !ScintillaTextStyle categoriesFor: #characterSet:!accessing!public! !
 !ScintillaTextStyle categoriesFor: #clearFont!accessing!public! !
@@ -335,11 +363,15 @@ storeableAttributes
 !ScintillaTextStyle categoriesFor: #restyleFont:!accessing!public! !
 !ScintillaTextStyle categoriesFor: #setThreeStateFlag:value:!helpers!private! !
 !ScintillaTextStyle categoriesFor: #storeableAttributes!development!printing!private! !
+!ScintillaTextStyle categoriesFor: #view!accessing!private! !
+!ScintillaTextStyle categoriesFor: #view:!accessing!private! !
+!ScintillaTextStyle categoriesFor: #weight!accessing!public! !
+!ScintillaTextStyle categoriesFor: #weight:!accessing!public! !
 
 !ScintillaTextStyle class methodsFor!
 
 caseNames
-	^#(#mixed #upper #lower)!
+	^#(#mixed #upper #lower #camel)!
 
 icon
 	^Font icon!
@@ -349,27 +381,28 @@ initialize
 		self initialize
 	"
 
-	BoldMask := 2r11.
 	ItalicMask := 2r1100.
 	UnderlinedMask := 2r110000.
 	EolFilledMask := 2r11000000.
 	ReadOnlyMask := 2r1100000000.
 	HotspotMask := 2r110000000000.
 	InvisibleMask := 2r11000000000000.
-	attributes := (IdentityDictionary new)
-				at: #forecolor put: SCI_STYLESETFORE;
-				at: #backcolor put: SCI_STYLESETBACK;
-				at: #fontName put: SCI_STYLESETFONT;
-				at: #isBold put: SCI_STYLESETBOLD;
-				at: #isItalic put: SCI_STYLESETITALIC;
-				at: #isUnderlined put: SCI_STYLESETUNDERLINE;
-				at: #case put: SCI_STYLESETCASE;
-				at: #characterSet put: SCI_STYLESETCHARACTERSET;
-				at: #pointSize put: SCI_STYLESETSIZE;
-				at: #isBackcolorExtendedToEndOfLine put: SCI_STYLESETEOLFILLED;
-				at: #isChangeable put: SCI_STYLESETCHANGEABLE;
-				at: #isHotspot put: SCI_STYLESETHOTSPOT;
-				at: #isVisible put: SCI_STYLESETVISIBLE;
+	applyMap := (IdentityDictionary new)
+				at: #forecolor put: #(#forecolor ##(Color black) ##(SCI_STYLESETFORE));
+				at: #backcolor put: #(#backcolor ##(Color white) ##(SCI_STYLESETBACK));
+				at: #fontName put: #(#fontName nil ##(SCI_STYLESETFONT));
+				at: #isBold put: #(#isBold false ##(SCI_STYLESETBOLD));
+				at: #isItalic put: #(#isItalic false ##(SCI_STYLESETITALIC));
+				at: #isUnderlined put: #(#isUnderlined false ##(SCI_STYLESETUNDERLINE));
+				at: #case put: #(#case ##(SC_CASE_MIXED) ##(SCI_STYLESETCASE));
+				at: #characterSet put: #(#characterSet ##(SC_CHARSET_DEFAULT) ##(SCI_STYLESETCHARACTERSET));
+				at: #pointSize put: #(#centiPointSize nil ##(SCI_STYLESETSIZEFRACTIONAL));
+				at: #isBackcolorExtendedToEndOfLine
+					put: #(#isBackcolorExtendedToEndOfLine false ##(SCI_STYLESETEOLFILLED));
+				at: #isChangeable put: #(#isChangeable true ##(SCI_STYLESETCHANGEABLE));
+				at: #isHotspot put: #(#isHotspot false ##(SCI_STYLESETHOTSPOT));
+				at: #isVisible put: #(#isVisible true ##(SCI_STYLESETVISIBLE));
+				at: #weight put: #(#weight ##(SC_WEIGHT_NORMAL) ##(SCI_STYLESETWEIGHT));
 				shrink;
 				isImmutable: true;
 				yourself.
@@ -408,11 +441,28 @@ new
 normal
 	^(self name: #normal)
 		description: 'Default text style';
-		yourself! !
+		yourself!
+
+stbConvertFrom: anSTBClassFormat 
+	^
+	[:vars | 
+	| instance |
+	instance := self new.
+	vars keysAndValuesDo: [:eachKey :eachValue | instance instVarAt: eachKey put: eachValue].
+	"Scintilla now supports fractional point size, so convert old instance pointSize stored in the same inst var"
+	instance pointSize: instance centiPointSize.
+	"Weight is now stored as an integer value, rather than just a bold flag (BoldMask as 2r11)."
+	instance isBold: (instance getThreeStateFlag: 2r11).
+	instance]!
+
+stbVersion
+	^1! !
 !ScintillaTextStyle class categoriesFor: #caseNames!constants!public! !
 !ScintillaTextStyle class categoriesFor: #icon!constants!public! !
 !ScintillaTextStyle class categoriesFor: #initialize!initializing!public! !
 !ScintillaTextStyle class categoriesFor: #name:!instance creation!public! !
 !ScintillaTextStyle class categoriesFor: #new!instance creation!public! !
 !ScintillaTextStyle class categoriesFor: #normal!instance creation!public! !
+!ScintillaTextStyle class categoriesFor: #stbConvertFrom:!binary filing!private! !
+!ScintillaTextStyle class categoriesFor: #stbVersion!binary filing!public! !
 

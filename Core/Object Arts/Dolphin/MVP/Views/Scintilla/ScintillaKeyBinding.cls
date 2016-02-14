@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #ScintillaKeyBinding
 	instanceVariableNames: 'acceleratorKey message'
@@ -174,6 +174,8 @@ initializeCommands
 				at: SCI_LINEUPRECTEXTEND put: #extendRectangleUp;
 				at: SCI_LOWERCASE put: #convertToLowercase;
 				at: SCI_MOVECARETINSIDEVIEW put: #moveCaretInsideView;
+				at: SCI_MOVESELECTEDLINESDOWN put: #moveSelectedLinesDown;
+				at: SCI_MOVESELECTEDLINESUP put: #moveSelectedLinesUp;
 				at: SCI_NEWLINE put: #newLine;
 				at: SCI_PAGEDOWN put: #movePageDown;
 				at: SCI_PAGEDOWNEXTEND put: #extendPageDown;
@@ -187,9 +189,12 @@ initializeCommands
 				at: SCI_PARAUPEXTEND put: #extendParaUp;
 				at: SCI_PASTE put: #pasteClipboard;
 				at: SCI_REDO put: #redo;
+				at: SCI_SCROLLTOEND put: #scrollToEnd;
+				at: SCI_SCROLLTOSTART put: #scrollToStart;
 				at: SCI_SEARCHANCHOR put: #sciSearchAnchor;
 				at: SCI_SELECTALL put: #basicSelectAll;
 				at: SCI_SETSAVEPOINT put: #sciSetSavePoint;
+				at: SCI_SETZOOM put: #resetZoom;
 				at: SCI_STARTRECORD put: #startRecording;
 				at: SCI_STOPRECORD put: #stopRecording;
 				at: SCI_STUTTEREDPAGEDOWN put: #moveStutteredPageDown;
@@ -202,10 +207,13 @@ initializeCommands
 				at: SCI_UNDO put: #basicUndo;
 				at: SCI_UPPERCASE put: #convertToUppercase;
 				at: SCI_VCHOME put: #moveToVcHome;
+				at: SCI_VCHOMEDISPLAY put: #moveToVcStartOfDisplayLine;
+				at: SCI_VCHOMEDISPLAYEXTEND put: #extendToStartOfVcDisplayLine;
 				at: SCI_VCHOMEEXTEND put: #extendToVcHome;
 				at: SCI_VCHOMERECTEXTEND put: #extendRectangleToVcHome;
 				at: SCI_VCHOMEWRAP put: #moveToWrappedVcHome;
 				at: SCI_VCHOMEWRAPEXTEND put: #extendToWrappedVcHome;
+				at: SCI_VERTICALCENTRECARET put: #centerCurrentLine;
 				at: SCI_WORDLEFT put: #moveToStartOfWord;
 				at: SCI_WORDLEFTEND put: #moveToEndOfPreviousWord;
 				at: SCI_WORDLEFTENDEXTEND put: #extendToEndOfPreviousWord;
@@ -220,8 +228,6 @@ initializeCommands
 				at: SCI_WORDRIGHTEXTEND put: #extendToEndOfWord;
 				at: SCI_ZOOMIN put: #zoomIn;
 				at: SCI_ZOOMOUT put: #zoomOut;
-				at: SCI_SETZOOM put: #resetZoom;
-				at: SCI_VERTICALCENTRECARET put: #centerCurrentLine;
 				at: SCI_NULL put: #yourself;
 				shrink;
 				isImmutable: true;

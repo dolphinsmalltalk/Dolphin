@@ -1,7 +1,7 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 QueryableScintillaAttribute subclass: #ScintillaIndicatorStyle
-	instanceVariableNames: 'forecolor style under name alphaPercent'
+	instanceVariableNames: 'forecolor style under name alpha hoverStyle hoverForecolor flags foreAlpha reserved'
 	classVariableNames: 'StyleNames'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -39,9 +39,22 @@ Instance Variables:
 	style		<integer> from the INDIC_xxxx enumeration. These relate to the named styles listed above.
 	under	<boolean>. Determines whether the indicator is drawn under or over the text when two phase drawing is enabled.
 	name	<symbol> uniquely naming a container indicator, or <integer> id of the lexer indicator
+	alpha	<integer> 0..255 opacity (for indicatory styles for which this is relevant)
+	hoverStyle	<integer> Hover style code
+	
 '!
 !ScintillaIndicatorStyle categoriesForClass!MVP-Views-Support! !
 !ScintillaIndicatorStyle methodsFor!
+
+alpha
+	"Answer the alpha value for the transparency of the background of box indicator styles"
+	^alpha!
+
+alpha: anInteger 
+	alpha := anInteger isNil 
+				ifFalse: 
+					[self getAlpha: anInteger default: 30	"Magic number from the Scintilla code - no const for this"].
+	self updateViewAttribute: #alpha!
 
 alphaPercent
 	"Answer an <integer> representing the percentage alpha (transparency) for the indicator.
@@ -49,8 +62,8 @@ alphaPercent
 	represents completely transparent, 100 completely opaque. Note that this is currently only
 	relevant for the #roundBox indicator style."
 
-
-	^alphaPercent ifNil: [30]!
+	#deprecated.
+	^self alpha ifNil: [30] ifNotNil: [:a | a * 100 // SC_ALPHA_OPAQUE]!
 
 alphaPercent: anInteger 
 	"Set the percentage alpha (transparency) for the indicator to the <integer> argument. Note
@@ -58,29 +71,105 @@ alphaPercent: anInteger
 	completely transparent, 100 completely opaque. Note that this is currently only relevant for
 	the #roundBox indicator style."
 
-	alphaPercent := anInteger.
-	self updateViewAttribute: #alphaPercent!
+	#deprecated.
+	self alpha: SC_ALPHA_OPAQUE * anInteger // 100!
+
+applyMapDo: aMonadicValuable 
+	"Private - Apply the indicator style settings to the view by evaluating the specified valuable for each setting.
+	The hover styles must be applied after the normal style as (unfortunately) setting the
+	normal style resets the hover style."
+
+	| setLast map |
+	setLast := #(#hoverForecolor #hoverStyleName).
+	map := self applyMap.
+	map 
+		keysAndValuesDo: [:eachKey :eachValue | (setLast includes: eachKey) ifFalse: [aMonadicValuable value: eachValue]].
+	setLast do: [:each | aMonadicValuable value: (map at: each)]!
+
+basicForecolor
+	^forecolor!
+
+basicForecolor: aColorOrNil 
+	forecolor := aColorOrNil!
+
+basicHoverForecolor
+	^hoverForecolor!
 
 basicId
 	^id ifNil: [name isInteger ifTrue: [id := name]]!
 
-forecolor
-	^forecolor ifNotNil: [:color | color isInteger ifTrue: [Color fromInteger: color] ifFalse: [color]]!
+checkIndicatorStyle: anInteger 
+	(anInteger isNil or: [anInteger between: INDIC_PLAIN and: INDIC_MAX]) 
+		ifFalse: [self error: 'Invalid indicator style']!
 
-forecolor: aColor 
-	forecolor := aColor asParameter."isInteger ifTrue: [Color fromInteger: aColor] ifFalse: [aColor]."
-	self updateViewAttribute: #forecolor!
+flags
+	^flags!
+
+flags: anInteger 
+	flags := anInteger!
+
+foreAlpha
+	"Answer the alpha value for the transparency of the foreground of box indicator styles"
+
+	^foreAlpha!
+
+foreAlpha: anInteger 
+	foreAlpha := anInteger isNil 
+				ifFalse: 
+					["Magic number for default value is from the Scintilla code - no const for this"
+					self getAlpha: anInteger default: 50].
+	self updateViewAttribute: #foreAlpha!
+
+forecolor
+	^self basicForecolor ifNotNil: [:rgbVal | Color fromInteger: rgbVal]!
+
+forecolor: aColorOrNil 
+	self basicForecolor: (aColorOrNil isNil ifFalse: [aColorOrNil asParameter]).
+	self updateViewAttribute: #forecolor.
+	self hoverForecolor isNil ifFalse: [self updateViewAttribute: #hoverForecolor]!
+
+getAlpha: anInteger default: defaultInteger 
+	^anInteger = defaultInteger 
+		ifFalse: 
+			[(anInteger between: SC_ALPHA_TRANSPARENT and: SC_ALPHA_OPAQUE) 
+				ifTrue: [anInteger]
+				ifFalse: [self error: 'Invalid alpha value ' , anInteger displayString]]!
+
+hoverForecolor
+	"Answer the foreground <Color> used for the indicator when hovering."
+
+	^self basicHoverForecolor ifNotNil: [:rgbVal | Color fromInteger: rgbVal]!
+
+hoverForecolor: aColorOrNil 
+	hoverForecolor := aColorOrNil ifNotNil: [aColorOrNil asRGB asParameter].
+	self updateViewAttribute: #hoverForecolor!
+
+hoverStyle
+	^hoverStyle!
+
+hoverStyle: anInteger 
+	self checkIndicatorStyle: anInteger.
+	hoverStyle := anInteger = self style ifFalse: [anInteger].
+!
+
+hoverStyleName
+	"Answer the symbolic name of the indicator style used either an indicator of this style is
+	hovered over, or when the caret is within the text range of the indicator."
+
+	^self hoverStyle ifNotNil: [:s | self class styleNames at: s + 1]!
+
+hoverStyleName: aSymbol 
+	self hoverStyle: (self styleFromName: aSymbol).
+	self updateViewAttribute: #hoverStyleName!
 
 initialize
-	style := INDIC_PLAIN.
-	forecolor := 0.
-	under := false.
-	alphaPercent := 30!
+	under := false!
 
 isUnderText
 	^under!
 
 isUnderText: aBoolean 
+self halt.
 	under := aBoolean asBoolean.
 	self updateViewAttribute: #isUnderText!
 
@@ -93,41 +182,60 @@ name: anObject
 				ifTrue: [id := anObject]
 				ifFalse: [anObject isEmpty ifFalse: [anObject asSymbol]]!
 
-printableAttributes
-	^(super printableAttributes)
-		remove: #style;
-		add: #styleName;
-		yourself!
-
 style
 	^style!
 
 style: anInteger 
-	(anInteger between: INDIC_PLAIN and: INDIC_ROUNDBOX) 
-		ifFalse: [^self error: 'Invalid indicator style'].
+	self checkIndicatorStyle: anInteger.
 	style := anInteger.
-	self updateViewAttribute: #style!
+!
+
+styleFromName: aSymbolOrNil 
+	^aSymbolOrNil isNil 
+		ifFalse: 
+			[(self class styleNames indexOf: aSymbolOrNil
+				ifAbsent: [self error: 'Unrecognised style name: ' , aSymbolOrNil]) - 1]!
 
 styleName
-	^StyleNames at: self style + 1!
+	^self style ifNotNil: [:s | self class styleNames at: s + 1]!
 
 styleName: aSymbol 
-	self 
-		style: (StyleNames indexOf: aSymbol
-				ifAbsent: [^self error: 'Unrecognised style name: ' , aSymbol]) - 1! !
+	self style: (self styleFromName: aSymbol).
+	self updateViewAttribute: #styleName.
+	"If the style is set, the control, rather annoyingly, overwrites the hover style, so we need
+	to set that again too (if set)."
+	hoverStyle isNil ifFalse: [self updateViewAttribute: #hoverStyleName]! !
+!ScintillaIndicatorStyle categoriesFor: #alpha!accessing!public! !
+!ScintillaIndicatorStyle categoriesFor: #alpha:!accessing!public! !
 !ScintillaIndicatorStyle categoriesFor: #alphaPercent!accessing!public! !
 !ScintillaIndicatorStyle categoriesFor: #alphaPercent:!accessing!public! !
+!ScintillaIndicatorStyle categoriesFor: #applyMapDo:!helpers!private! !
+!ScintillaIndicatorStyle categoriesFor: #basicForecolor!accessing!private! !
+!ScintillaIndicatorStyle categoriesFor: #basicForecolor:!accessing!private! !
+!ScintillaIndicatorStyle categoriesFor: #basicHoverForecolor!accessing!private! !
 !ScintillaIndicatorStyle categoriesFor: #basicId!accessing!private! !
-!ScintillaIndicatorStyle categoriesFor: #forecolor!accessing!public! !
-!ScintillaIndicatorStyle categoriesFor: #forecolor:!accessing!public! !
+!ScintillaIndicatorStyle categoriesFor: #checkIndicatorStyle:!helpers!private! !
+!ScintillaIndicatorStyle categoriesFor: #flags!accessing!private! !
+!ScintillaIndicatorStyle categoriesFor: #flags:!accessing!private! !
+!ScintillaIndicatorStyle categoriesFor: #foreAlpha!accessing!public! !
+!ScintillaIndicatorStyle categoriesFor: #foreAlpha:!accessing!public! !
+!ScintillaIndicatorStyle categoriesFor: #forecolor!accessing!colors!public! !
+!ScintillaIndicatorStyle categoriesFor: #forecolor:!accessing!colors!public! !
+!ScintillaIndicatorStyle categoriesFor: #getAlpha:default:!helpers!private! !
+!ScintillaIndicatorStyle categoriesFor: #hoverForecolor!accessing!colors!public! !
+!ScintillaIndicatorStyle categoriesFor: #hoverForecolor:!accessing!colors!public! !
+!ScintillaIndicatorStyle categoriesFor: #hoverStyle!accessing!private! !
+!ScintillaIndicatorStyle categoriesFor: #hoverStyle:!accessing!private! !
+!ScintillaIndicatorStyle categoriesFor: #hoverStyleName!accessing!public! !
+!ScintillaIndicatorStyle categoriesFor: #hoverStyleName:!accessing!public! !
 !ScintillaIndicatorStyle categoriesFor: #initialize!private! !
 !ScintillaIndicatorStyle categoriesFor: #isUnderText!public!testing! !
 !ScintillaIndicatorStyle categoriesFor: #isUnderText:!accessing!public! !
 !ScintillaIndicatorStyle categoriesFor: #name!accessing!public! !
 !ScintillaIndicatorStyle categoriesFor: #name:!accessing!public! !
-!ScintillaIndicatorStyle categoriesFor: #printableAttributes!development!helpers!printing!private! !
-!ScintillaIndicatorStyle categoriesFor: #style!accessing!public! !
-!ScintillaIndicatorStyle categoriesFor: #style:!accessing!public! !
+!ScintillaIndicatorStyle categoriesFor: #style!accessing!private! !
+!ScintillaIndicatorStyle categoriesFor: #style:!accessing!private! !
+!ScintillaIndicatorStyle categoriesFor: #styleFromName:!helpers!private! !
 !ScintillaIndicatorStyle categoriesFor: #styleName!accessing!public! !
 !ScintillaIndicatorStyle categoriesFor: #styleName:!accessing!public! !
 
@@ -138,20 +246,29 @@ initialize
 		self initialize
 	"
 
-	StyleNames := #(#underline #squiggle #tt #hatch #strikeOut #hidden #box #roundBox).
-	getMessages := (IdentityDictionary new)
+	queryMap := (IdentityDictionary new)
 				at: #forecolor: put: SCI_INDICGETFORE;
 				at: #style: put: SCI_INDICGETSTYLE;
+				at: #hoverStyle: put: SCI_INDICGETHOVERSTYLE;
 				at: #isUnderText: put: SCI_INDICGETUNDER;
-				at: #alphaPercent put: SCI_INDICGETALPHA;
+				at: #alpha: put: SCI_INDICGETALPHA;
+				at: #hoverForecolor: put: SCI_INDICGETHOVERFORE;
+				at: #hoverForecolor: put: SCI_INDICGETHOVERFORE;
+				at: #flags: put: SCI_INDICGETFLAGS;
+				at: #foreAlpha: put: SCI_INDICSETOUTLINEALPHA;
 				shrink;
 				isImmutable: true;
 				yourself.
-	attributes := (IdentityDictionary new)
-				at: #forecolor put: SCI_INDICSETFORE;
-				at: #style put: SCI_INDICSETSTYLE;
-				at: #isUnderText put: SCI_INDICSETUNDER;
-				at: #alphaPercent put: SCI_INDICSETALPHA;
+	applyMap := (IdentityDictionary new)
+				at: #forecolor put: #(#basicForecolor ##(Color black asParameter) ##(SCI_INDICSETFORE));
+				at: #styleName put: #(#style nil ##(SCI_INDICSETSTYLE));
+				at: #hoverStyleName put: #(#hoverStyle ##(INDIC_SQUIGGLE) ##(SCI_INDICSETHOVERSTYLE));
+				at: #isUnderText put: #(#isUnderText false ##(SCI_INDICSETUNDER));
+				at: #alpha put: #(#alpha 30 ##(SCI_INDICSETALPHA));
+				at: #hoverForecolor
+					put: #(#basicHoverForecolor ##(Color black asParameter) ##(SCI_INDICSETHOVERFORE));
+				at: #flags put: #(#flags 0 ##(SCI_INDICSETFLAGS));
+				at: #foreAlpha put: #(#foreAlpha 50 ##(SCI_INDICSETOUTLINEALPHA));
 				shrink;
 				isImmutable: true;
 				yourself!
@@ -170,9 +287,13 @@ stbConvertFrom: anSTBClassFormat
 	instance]!
 
 stbVersion
-	^1! !
+	^2!
+
+styleNames
+	^#(#underline #squiggle #tt #hatch #strikeOut #hidden #box #roundBox #container #dash #dots #squiggleLow #dotBox #squigglePixmap #compositionThick #compositionThin #fullBox #textFore)! !
 !ScintillaIndicatorStyle class categoriesFor: #initialize!initializing!public! !
 !ScintillaIndicatorStyle class categoriesFor: #new!public! !
 !ScintillaIndicatorStyle class categoriesFor: #stbConvertFrom:!binary filing!private! !
 !ScintillaIndicatorStyle class categoriesFor: #stbVersion!binary filing!public! !
+!ScintillaIndicatorStyle class categoriesFor: #styleNames!initializing!public! !
 
