@@ -1,0 +1,74 @@
+| package |
+package := Package name: 'Scintilla View Generator'.
+package paxVersion: 1;
+	basicComment: 'Tool to regenerate ScintillaView when upgrading to a new version of Scintilla.
+
+You will need to download the Scintilla source matching the binary version of Scintilla (downloadable as part of the Scite editor package). Extract the source from the zip, and copy the Scintilla.iface file to the scintilla view package folder, overwriting the existing one. This should be checked in for documentary purposes.
+
+It is suggested that you run the generator in preview mode, which is the default. The ScintillaView is an integral part of the Dolphin IDE, so if the regeneration fails, or introduces issues, Dolphin may crash or become unusable. In preview mode the generator will open a "Rewrite Changes Browser" showing all of the added, modified, and removed methods. These may be perused to identify unexpected changes, or to look for opportunities to add higher-level wrappers for new features.'.
+
+
+package classNames
+	add: #ScintillaDef;
+	add: #ScintillaEventDef;
+	add: #ScintillaFunctionDef;
+	add: #ScintillaTypeRef;
+	add: #ScintillaViewGenerator;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\..\Base\Dolphin';
+	add: '..\..\MVP\Dialogs\Common\Dolphin Common Dialogs';
+	add: '..\..\MVP\Base\Dolphin MVP Base';
+	add: 'Dolphin Refactoring Browser';
+	add: '..\..\MVP\Presenters\Text\Dolphin Rich Text Presenter';
+	add: '..\..\MVP\Views\Scintilla\Dolphin Scintilla View';
+	add: '..\..\MVP\Presenters\Text\Dolphin Text Presenter';
+	add: '..\..\..\..\Contributions\Refactory\Refactoring Browser\Change Objects\RBChangeObjects';
+	add: '..\..\..\..\Contributions\Refactory\Refactoring Browser\Refactorings\RBRefactorings';
+	add: '..\..\System\Compiler\Smalltalk Parser';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+Object subclass: #ScintillaDef
+	instanceVariableNames: 'id name isDeprecated comment selector constName'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Object subclass: #ScintillaTypeRef
+	instanceVariableNames: 'name objectClass byRef toMessage fromMessage default'
+	classVariableNames: 'TypeMap'
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Object subclass: #ScintillaViewGenerator
+	instanceVariableNames: 'events commentQueue lexerConstantPrefixes previewChanges commands parsingDeprecated namespace constantsPool generatedSelectors'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ScintillaDef subclass: #ScintillaEventDef
+	instanceVariableNames: 'args'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ScintillaDef subclass: #ScintillaFunctionDef
+	instanceVariableNames: 'funcType returnType wParamType wParamName lParamType lParamName'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+"End of package definition"!
+
