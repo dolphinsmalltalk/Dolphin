@@ -35,7 +35,6 @@ package classNames
 	add: #ProcessMonitor;
 	add: #ProfessionalSmalltalkSystem;
 	add: #ResourceListPlugin;
-	add: #ScintillaIfaceParser;
 	add: #SystemBrowserShell;
 	add: #UnitTestPlugin;
 	yourself.
@@ -102,7 +101,6 @@ package setPrerequisites: (IdentitySet new
 	add: '..\..\ActiveX\Components\MSMask\Masked Edit';
 	add: '..\..\ActiveX\Components\MonthView\Month View';
 	add: '..\..\ActiveX\COM\OLE COM';
-	add: '..\..\System\Compiler\Smalltalk Parser';
 	add: '..\..\..\..\Contributions\Camp Smalltalk\SUnit\SUnit';
 	add: '..\..\ActiveX\Shell\Windows Shell';
 	add: '..\..\ActiveX\Components\XML DOM\XML DOM';
@@ -112,11 +110,6 @@ package!
 
 "Class Definitions"!
 
-Object subclass: #ScintillaIfaceParser
-	instanceVariableNames: 'events commentQueue lexerConstantPrefix classification isTestRun commands category parsingDeprecated'
-	classVariableNames: 'Commands IgnoredMessages RenamedMessages TypeMap'
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
 InstructionInterpreter subclass: #Disassembler
 	instanceVariableNames: 'stream'
 	classVariableNames: ''
