@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 PermanentLibrary subclass: #UserLibrary
 	instanceVariableNames: ''
@@ -780,14 +780,14 @@ sendMessage: aWindowHandle msg: msg wParam: wParam lpParam: lParam
 	"As sendMessage:msg:wParam:lParam, but implicit conversion of lParam
 	to pointer."
 
-	<stdcall: sdword SendMessageA handle dword dword lpvoid>
+	<stdcall: intptr SendMessageA handle dword uintptr lpvoid>
 	^self invalidCall !
 
 sendMessage: aWindowHandle msg: msg wpParam: wParam lpParam: lParam
 	"As sendMessage:msg:wParam:lParam, but implicit conversion of lParam
 	and wParam to pointers."
 
-	<stdcall: sdword SendMessageA handle dword lpvoid lpvoid>
+	<stdcall: intptr SendMessageA handle dword lpvoid lpvoid>
 	^self invalidCall !
 
 setActiveWindow: aHandle

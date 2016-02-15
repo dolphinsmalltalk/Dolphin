@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 NMHDR subclass: #SCNotification
 	instanceVariableNames: ''
@@ -11,6 +11,11 @@ SCNotification comment: '<SCNotification> is an <ExternalStructure> class to wra
 Note that the ''text'' field is not null terminated (the number of characters is specified by the ''length'' field), and is only valid for SCN_MODIFIED notifications where the SC_MOD_DELETETEXT or SC_MOD_INSERTTEXT ''modificationType'' is specified.'!
 !SCNotification categoriesForClass!ScintillaLib-Structs! !
 !SCNotification methodsFor!
+
+annotationLinesAdded
+	"Answer the receiver's annotationLinesAdded field as a Smalltalk object."
+
+	^bytes intPtrAtOffset: ##(self offsetOf: #annotationLinesAdded)!
 
 ch
 	"Answer the receiver's ch field as a Smalltalk object."
@@ -40,39 +45,82 @@ getValidFields
 	"From the Scintilla docs:
 
 	struct SCNotification {
-		NMHDR	nmhdr;
-		int position;	// SCN_STYLENEEDED, SCN_MODIFIED, SCN_DWELLSTART, SCN_DWELLEND
-		int ch;		// SCN_CHARADDED, SCN_KEY
-		int modifiers;	// SCN_KEY
-		int modificationType;// SCN_MODIFIED
-		const char *text;	// SCN_MODIFIED
-		int length;		// SCN_MODIFIED
-		int linesAdded;	// SCN_MODIFIED
-		int message;	// SCN_MACRORECORD
-		uptr_t wParam;	// SCN_MACRORECORD
-		sptr_t lParam;	// SCN_MACRORECORD
-		int line;		// SCN_MODIFIED
-		int foldLevelNow;	// SCN_MODIFIED
-		int foldLevelPrev;	// SCN_MODIFIED
-		int margin;	// SCN_MARGINCLICK
-		int listType;	// SCN_USERLISTSELECTION
-		int x;		// SCN_DWELLSTART, SCN_DWELLEND
-		int y;		// SCN_DWELLSTART, SCN_DWELLEND
+		struct Sci_NotifyHeader nmhdr;
+		Sci_Position position;
+		/* SCN_STYLENEEDED, SCN_DOUBLECLICK, SCN_MODIFIED, SCN_MARGINCLICK, */
+		/* SCN_NEEDSHOWN, SCN_DWELLSTART, SCN_DWELLEND, SCN_CALLTIPCLICK, */
+		/* SCN_HOTSPOTCLICK, SCN_HOTSPOTDOUBLECLICK, SCN_HOTSPOTRELEASECLICK, */
+		/* SCN_INDICATORCLICK, SCN_INDICATORRELEASE, */
+		/* SCN_USERLISTSELECTION, SCN_AUTOCSELECTION */
+
+		int ch;
+		/* SCN_CHARADDED, SCN_KEY, SCN_AUTOCCOMPLETE, SCN_AUTOCSELECTION, */
+		/* SCN_USERLISTSELECTION */
+		int modifiers;
+		/* SCN_KEY, SCN_DOUBLECLICK, SCN_HOTSPOTCLICK, SCN_HOTSPOTDOUBLECLICK, */
+		/* SCN_HOTSPOTRELEASECLICK, SCN_INDICATORCLICK, SCN_INDICATORRELEASE, */
+
+		int modificationType;	/* SCN_MODIFIED */
+		const char *text;
+		/* SCN_MODIFIED, SCN_USERLISTSELECTION, SCN_AUTOCSELECTION, SCN_URIDROPPED */
+
+		Sci_Position length;		/* SCN_MODIFIED */
+		Sci_Position linesAdded;	/* SCN_MODIFIED */
+		int message;	/* SCN_MACRORECORD */
+		uptr_t wParam;	/* SCN_MACRORECORD */
+		sptr_t lParam;	/* SCN_MACRORECORD */
+		Sci_Position line;		/* SCN_MODIFIED */
+		int foldLevelNow;	/* SCN_MODIFIED */
+		int foldLevelPrev;	/* SCN_MODIFIED */
+		int margin;		/* SCN_MARGINCLICK */
+		int listType;	/* SCN_USERLISTSELECTION */
+		int x;			/* SCN_DWELLSTART, SCN_DWELLEND */
+		int y;		/* SCN_DWELLSTART, SCN_DWELLEND */
+		int token;		/* SCN_MODIFIED with SC_MOD_CONTAINER */
+		int annotationLinesAdded;	/* SCN_MODIFIED with SC_MOD_CHANGEANNOTATION */
+		int updated;	/* SCN_UPDATEUI */
+		int listCompletionMethod;
+		/* SCN_AUTOCSELECTION, SCN_AUTOCCOMPLETED, SCN_USERLISTSELECTION */
 	};
 	"
 
 	^#(#code) 
-		, (##((IdentityDictionary new)
+		, (##(| positionOnly positionXY positionModifiers listSelection |
+			positionOnly := #(#scPosition).
+			positionXY := #(#scPosition #x #y).
+			positionModifiers := #(#scPosition #modifiers).
+			listSelection := #(#scPosition #ch #text #listCompletionMethod).
+			(IdentityDictionary new)
+				at: SCN_AUTOCCANCELLED put: #();
+				at: SCN_AUTOCCHARDELETED put: #();
+				at: SCN_AUTOCCOMPLETED put: listSelection;
+				at: SCN_AUTOCSELECTION put: listSelection;
+				at: SCN_CALLTIPCLICK put: positionOnly;
 				at: SCN_CHARADDED put: #(#ch);
-				at: SCN_DWELLEND put: #(#scPosition #x #y);
-				at: SCN_DWELLSTART put: #(#scPosition #x #y);
+				at: SCN_DOUBLECLICK put: #(#scPosition #modifiers #scLine);
+				at: SCN_DWELLEND put: positionXY;
+				at: SCN_DWELLSTART put: positionXY;
+				at: SCN_FOCUSIN put: #();
+				at: SCN_FOCUSOUT put: #();
+				at: SCN_HOTSPOTCLICK put: positionModifiers;
+				at: SCN_HOTSPOTDOUBLECLICK put: positionModifiers;
+				at: SCN_HOTSPOTRELEASECLICK put: positionModifiers;
+				at: SCN_INDICATORCLICK put: positionModifiers;
+				at: SCN_INDICATORRELEASE put: positionModifiers;
 				at: SCN_KEY put: #(#ch #modifiers);
 				at: SCN_MACRORECORD put: #(#message #wParam #lParam);
-				at: SCN_MARGINCLICK put: #(#margin #scPosition);
+				at: SCN_MARGINCLICK put: #(#scPosition #modifiers #margin);
 				at: SCN_MODIFIED
-					put: #(#scPosition #text #length #linesAdded #scLine #foldLevelNow #foldLevelPrev);
-				at: SCN_STYLENEEDED put: #(#scPosition);
-				at: SCN_USERLISTSELECTION put: #(#listType);
+					put: #(#scPosition #modificationType #text #length #linesAdded #scLine #foldLevelNow #foldLevelPrev);
+				at: SCN_MODIFYATTEMPTRO put: #();
+				at: SCN_NEEDSHOWN put: positionOnly;
+				at: SCN_PAINTED put: #();
+				at: SCN_SAVEPOINTLEFT put: #();
+				at: SCN_SAVEPOINTREACHED put: #();
+				at: SCN_STYLENEEDED put: positionOnly;
+				at: SCN_UPDATEUI put: #(#updated);
+				at: SCN_URIDROPPED put: #(#text);
+				at: SCN_USERLISTSELECTION put: #(#scPosition #ch #text #listType #listCompletionMethod);
 				shrink) at: self code ifAbsent: [#()])!
 
 isAltKeyDown
@@ -90,7 +138,7 @@ isShiftDown
 length
 	"Answer the receiver's length field as a Smalltalk object."
 
-	^bytes sdwordAtOffset: ##(self offsetOf: #length)!
+	^bytes intPtrAtOffset: ##(self offsetOf: #length)!
 
 line
 	"Answer the one-based <integer> line number associated with the notification."
@@ -100,7 +148,12 @@ line
 linesAdded
 	"Answer the receiver's linesAdded field as a Smalltalk object."
 
-	^bytes sdwordAtOffset: ##(self offsetOf: #linesAdded)!
+	^bytes intPtrAtOffset: ##(self offsetOf: #linesAdded)!
+
+listCompletionMethod
+	"Answer the receiver's listCompletionMethod field as a Smalltalk object."
+
+	^bytes sdwordAtOffset: ##(self offsetOf: #listCompletionMethod)!
 
 listType
 	"Answer the receiver's listType field as a Smalltalk object."
@@ -143,12 +196,12 @@ position
 scLine
 	"Answer the receiver's scLine field as a Smalltalk object."
 
-	^bytes sdwordAtOffset: ##(self offsetOf: #scLine)!
+	^bytes intPtrAtOffset: ##(self offsetOf: #scLine)!
 
 scPosition
 	"Answer the receiver's scPosition field as a Smalltalk object."
 
-	^bytes sdwordAtOffset: ##(self offsetOf: #scPosition)!
+	^bytes intPtrAtOffset: ##(self offsetOf: #scPosition)!
 
 text
 	"Answer the receiver's text field as a Smalltalk object."
@@ -159,6 +212,16 @@ text: anObject
 	"Set the receiver's text field to the value of anObject."
 
 	bytes uintPtrAtOffset: ##(self offsetOf: #text) put: anObject yourAddress!
+
+token
+	"Answer the receiver's token field as a Smalltalk object."
+
+	^bytes sdwordAtOffset: ##(self offsetOf: #token)!
+
+updated
+	"Answer the receiver's updated field as a Smalltalk object."
+
+	^bytes sdwordAtOffset: ##(self offsetOf: #updated)!
 
 wParam
 	"Answer the receiver's wParam field as a Smalltalk object."
@@ -174,6 +237,7 @@ y
 	"Answer the receiver's y field as a Smalltalk object."
 
 	^bytes sdwordAtOffset: ##(self offsetOf: #y)! !
+!SCNotification categoriesFor: #annotationLinesAdded!**compiled accessors**!public! !
 !SCNotification categoriesFor: #ch!**compiled accessors**!public! !
 !SCNotification categoriesFor: #character!accessing!public! !
 !SCNotification categoriesFor: #foldLevelNow!**compiled accessors**!public! !
@@ -184,6 +248,7 @@ y
 !SCNotification categoriesFor: #length!**compiled accessors**!public! !
 !SCNotification categoriesFor: #line!accessing!public! !
 !SCNotification categoriesFor: #linesAdded!**compiled accessors**!public! !
+!SCNotification categoriesFor: #listCompletionMethod!**compiled accessors**!public! !
 !SCNotification categoriesFor: #listType!**compiled accessors**!public! !
 !SCNotification categoriesFor: #lParam!**compiled accessors**!public! !
 !SCNotification categoriesFor: #margin!**compiled accessors**!public! !
@@ -196,6 +261,8 @@ y
 !SCNotification categoriesFor: #scPosition!**compiled accessors**!public! !
 !SCNotification categoriesFor: #text!**compiled accessors**!public! !
 !SCNotification categoriesFor: #text:!**compiled accessors**!public! !
+!SCNotification categoriesFor: #token!**compiled accessors**!public! !
+!SCNotification categoriesFor: #updated!**compiled accessors**!public! !
 !SCNotification categoriesFor: #wParam!**compiled accessors**!public! !
 !SCNotification categoriesFor: #x!**compiled accessors**!public! !
 !SCNotification categoriesFor: #y!**compiled accessors**!public! !
@@ -209,22 +276,26 @@ defineFields
 
 	super defineFields.
 	self
-		defineField: #scPosition type: SDWORDField readOnly;
+		defineField: #scPosition type: INT_PTRField readOnly;
 		defineField: #ch type: SDWORDField readOnly;
 		defineField: #modifiers type: SDWORDField readOnly;
 		defineField: #modificationType type: SDWORDField readOnly;
 		defineField: #text type: (PointerField type: String);
-		defineField: #length type: SDWORDField readOnly;
-		defineField: #linesAdded type: SDWORDField readOnly;
+		defineField: #length type: INT_PTRField readOnly;
+		defineField: #linesAdded type: INT_PTRField readOnly;
 		defineField: #message type: SDWORDField readOnly;
 		defineField: #wParam type: UINT_PTRField readOnly;
 		defineField: #lParam type: INT_PTRField readOnly;
-		defineField: #scLine type: SDWORDField readOnly;
+		defineField: #scLine type: INT_PTRField readOnly;
 		defineField: #foldLevelNow type: SDWORDField readOnly;
 		defineField: #foldLevelPrev type: SDWORDField readOnly;
 		defineField: #margin type: SDWORDField readOnly;
 		defineField: #listType type: SDWORDField readOnly;
 		defineField: #x type: SDWORDField readOnly;
-		defineField: #y type: SDWORDField readOnly! !
+		defineField: #y type: SDWORDField readOnly;
+		defineField: #token type: SDWORDField readOnly;
+		defineField: #annotationLinesAdded type: INT_PTRField readOnly;
+		defineField: #updated type: SDWORDField readOnly;
+		defineField: #listCompletionMethod type: SDWORDField readOnly! !
 !SCNotification class categoriesFor: #defineFields!initializing!public! !
 
