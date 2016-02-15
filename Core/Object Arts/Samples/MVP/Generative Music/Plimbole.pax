@@ -26,6 +26,9 @@ package setPrerequisites: (IdentitySet new
 	add: '..\..\..\Dolphin\MVP\Views\Control Bars\Dolphin Control Bars';
 	add: '..\..\..\Dolphin\MVP\Models\List\Dolphin List Models';
 	add: '..\..\..\Dolphin\MVP\Base\Dolphin MVP Base';
+	add: '..\..\..\Dolphin\MVP\Views\Tooltips\Dolphin Tooltips';
+	add: '..\..\..\Dolphin\MVP\Gdiplus\Gdiplus';
+	add: '..\..\..\Dolphin\IDE\Base\Internal Bitmaps and Icons';
 	add: 'Midi';
 	yourself).
 
@@ -39,7 +42,7 @@ Object subclass: #PlimboleCell
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
 Presenter subclass: #Plimbole
-	instanceVariableNames: 'midiOutChannel stepProcess recurse voiceX voiceY scaleIndex noteDuration gridExtent tempo palette'
+	instanceVariableNames: 'midiOutChannel stepProcess recurse tenorVoice altoVoice scaleIndex noteDuration gridExtent tempo palette'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!

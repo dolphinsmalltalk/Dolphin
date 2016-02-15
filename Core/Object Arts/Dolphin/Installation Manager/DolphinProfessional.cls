@@ -59,6 +59,8 @@ contents
 		add: #('Core\Object Arts\Samples\Lagoon\Protected Product\Protected Notepad.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Samples\Utilities\File System Monitor.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Samples\Lagoon\Autoplay\Autoplay.pax' #plain #imageBased);
+		add: #('Core\Object Arts\Samples\MVP\Generative Music\Midi.pax' #plain #imageBased);
+		add: #('Core\Object Arts\Samples\MVP\Generative Music\Plimbole.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Samples\DolphinSure Example Authority\DolphinSure Example Authority.pax' #plain #imageBased).
 	"add: #('Core\Object Arts\Samples\Code Mentor Partner\Code Mentor Partner.pax' #plain #imageBased);"
 

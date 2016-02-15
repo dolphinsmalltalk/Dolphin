@@ -20,37 +20,13 @@ defaultVelocity
 	^127!
 
 defaultVoice
-	^#AcousticGrandPiano!
+	^#AcousticGrand!
 
 free
 	midiout notNil 
 		ifTrue: 
 			[self midiout close.
 			midiout := nil]!
-
-generalMidiMap
-	^##((LookupTable new)
-		at: #AcousticGrandPiano put: 1;
-		at: #Xylophone put: 14;
-		at: #TubularBells put: 15;
-		at: #NylonGuitar put: 25;
-		at: #DistortGuitar put: 31;
-		at: #SlapBass1 put: 37;
-		at: #SynthStrings1 put: 51;
-		at: #ChoirAahs put: 53;
-		at: #VoiceOohs put: 54;
-		at: #SynthVoice put: 55;
-		at: #Flute put: 74;
-		at: #PanFlute put: 76;
-		at: #Ocarina put: 80;
-		at: #Charang put: 85;
-		at: #PolySynthPad put: 91;
-		at: #HaloPad put: 95;
-		at: #TinkleBell put: 113;
-		at: #SteelDrums put: 115;
-		at: #SynthDrum put: 199;
-		at: #BirdTweet put: 124;
-		yourself)!
 
 initialize
 	super initialize.
@@ -68,7 +44,7 @@ mapNoteToValue: aSymbol
 	^(self midiNoteMap at: noteOnly) + (octave * 12) !
 
 mapVoiceToValue: aVoiceSymbol 
-	^(self generalMidiMap at: aVoiceSymbol)-1!
+	^(self class generalMidiMap indexOf: aVoiceSymbol)-1!
 
 midiNoteMap
 	^##((LookupTable new)
@@ -153,7 +129,6 @@ voice: voice channel: channel
 !MidiOutChannel categoriesFor: #defaultVelocity!private! !
 !MidiOutChannel categoriesFor: #defaultVoice!private! !
 !MidiOutChannel categoriesFor: #free!private! !
-!MidiOutChannel categoriesFor: #generalMidiMap!private! !
 !MidiOutChannel categoriesFor: #initialize!private! !
 !MidiOutChannel categoriesFor: #mapNoteToValue:!helpers!private! !
 !MidiOutChannel categoriesFor: #mapVoiceToValue:!private! !
@@ -169,7 +144,11 @@ voice: voice channel: channel
 
 !MidiOutChannel class methodsFor!
 
+generalMidiMap
+	^#(#AcousticGrand #BrightAcoustic #ElectricGrand #'Honky-tonk' #ElectricPianoI #ElectricPiano2 #Harpsichord #Clav #Celesta #Glockenspiel #MusicBox #Vibraphone #Marimba #Xylophone #TubularBells #Dulcimer #DrawbarOrgan #PercussiveOrgan #RockOrgan #ChurchOrgan #ReedOrgan #Accordian #Harmonica #TangoAccordian #AcousticGuitarNylon #AcousticGuitarSteel #ElectricGuitarJazz #ElectricGuitarClean #ElectricGuitarMuted #OverdrivenGuitar #DistortionGuitar #GuitarHarmonics #AcousticBass #ElectricBassFinger #ElectricBassPick #FretlessBass #SlapBass1 #SlapBass2 #SynthBass1 #SynthBass2 #Violin #Viola #Cello #Contrabass #TremoloStrings #PizzicatoStrings #OrchestralStrings #Timpani #StringEnsemble1 #StringEnsemble2 #SynthStrings1 #SynthStrings2 #ChoirAahs #VoiceOohs #SynthVoice #OrchestraHit #Trumpet #Trombone #Tuba #MutedTrumpet #FrenchHorn #BrassSection #SynthBrass1 #SynthBrass2 #SopranoSaxophone #AltoSaxophone #TenorSaxophone #BaritoneSaxophone #Oboe #EnglishHorn #Bassoon #Clarinet #Piccolo #Flute #Recorder #PanFlute #BlownBottle #Shakuhachi #Whistle #Ocarina #Lead1Square #Lead2Sawtooth #Lead3Calliope #Lead4Chiff #Lead5Charang #Lead6Voice #Lead7Fifths #Lead8BassAndLead #Pad1NewAge #Pad2Warm #Pad3Polysynth #Pad4Choir #Pad5Bowed #Pad6Metallic #Pad7Halo #Pad8Wweep #FX1Rain #FX2Soundtrack #FX3Crystal #FX4Atmosphere #FX5Brightness #FX6Goblins #FX7Echoes #FX8SciFi #Sitar #Banjo #Shamisen #Koto #Kalimba #Bagpipe #Fiddle #Shanai #TinkleBell #Agogo #SteelDrums #Woodblock #TaikoDrum #MelodicTom #SynthDrum #ReverseCymbal #GuitarFretNoise #BreathingNoise #Seashore #BirdTweet #TelephoneRing #Helicopter #Applause #Gunshot)!
+
 new
 	^super new initialize! !
+!MidiOutChannel class categoriesFor: #generalMidiMap!public! !
 !MidiOutChannel class categoriesFor: #new!instance creation!public! !
 
