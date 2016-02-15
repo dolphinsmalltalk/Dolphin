@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Color subclass: #IndexedColor
 	instanceVariableNames: 'index'
@@ -115,7 +115,9 @@ setIndex: anInteger
 !IndexedColor class methodsFor!
 
 initialize
-	"Initialise the map of standard colour names to indices."
+	"Initialise the map of standard colour names to indices.
+		self initialize.
+	"
 
 	ColorsByName := IdentityDictionary new.
 	ColorsByIndex := IdentityDictionary new.
@@ -124,10 +126,15 @@ initialize
 			[:each | 
 			| color |
 			color := self basicNew setIndex: each second.
+			color isImmutable: true.
 			ColorsByName at: each first put: color.
 			ColorsByIndex at: each second put: color].
-	ColorsByName shrink.
-	ColorsByIndex shrink!
+	ColorsByName
+		shrink;
+		isImmutable: true.
+	ColorsByIndex
+		shrink;
+		isImmutable: true!
 
 stbReadFrom: anSTBInFiler format: anSTBClassConversion 
 	"Read an instance of the receiver from the binary filer, aSTBInFiler."

@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 QueryableScintillaAttribute subclass: #ScintillaMargin
 	instanceVariableNames: 'width type isSensitive mask cursorType'
@@ -25,15 +25,15 @@ Instance Variables:
 !ScintillaMargin methodsFor!
 
 basicCursorType
+	"Private - The Scintilla cursor type to be used in the margin, or nil if the default reverse
+	arrow is to be used."
+
+	^cursorType!
+
+basicCursorType: anIntegerOrNil 
 	"Private - The Scintilla cursor type to be used in the margin."
 
-	^cursorType ifNil: [SC_CURSORARROW]!
-
-basicCursorType: anInteger 
-	"Private - The Scintilla cursor type to be used in the margin."
-
-	cursorType := anInteger.
-	self updateViewAttribute: #basicCursorType!
+	cursorType := anIntegerOrNil!
 
 basicType
 	"Private - The Scintilla margin type. From the Scintilla documentation: 'The margin [type]
@@ -47,35 +47,26 @@ basicType
 
 	^type!
 
-basicType: anInteger 
-	type := anInteger.
-	self updateViewAttribute: #basicType!
+basicType: anIntegerOrNil 
+	type := anIntegerOrNil!
 
 cursorType
 	"The symbolic name of the Scintilla cursor type."
 
-	^CursorTypes at: self basicCursorType!
+	^self basicCursorType ifNotNil: [:t | CursorTypes at: t]!
 
 cursorType: aSymbol 
 	"Set the margin's cursor to be that named."
 
-	self basicCursorType: (CursorTypes keyAtValue: aSymbol ifAbsent: [])!
+	self basicCursorType: (aSymbol isNil 
+				ifFalse: [CursorTypes keyAtValue: aSymbol ifAbsent: [self error: 'Invalid cursor type' , aSymbol]]).
+	self updateViewAttribute: #cursorType!
 
 isFolders
 	^mask allMask: SC_MASK_FOLDERS!
 
 isFolders: aBoolean 
 	self mask: (self mask mask: SC_MASK_FOLDERS set: aBoolean)!
-
-isNumbers
-	"Answer whether this margin will display line numbers (i.e. its type is SC_MARGIN_NUMBER)."
-
-	#deprecated.
-	^self basicType == SC_MARGIN_NUMBER!
-
-isNumbers: aBoolean 
-	#deprecated.
-	self basicType: SC_MARGIN_NUMBER!
 
 isSensitive
 	"Answer whether this margin is sensitive to mouse clicks."
@@ -116,21 +107,16 @@ mask: anInteger
 	mask := anInteger.
 	self updateViewAttribute: #mask!
 
-printableAttributes
-	^(super printableAttributes)
-		remove: #basicType;
-		add: #type;
-		yourself!
-
 type
-	"The symbolic name of the Scintilla margin type."
+	"The symbolic name of the Scintilla margin type, or nil if none is set (in which case it defaults to a symbol margin)."
 
-	^MarginTypes at: self basicType + 1!
+	^self basicType ifNotNil: [:t | MarginTypes at: t + 1]!
 
 type: aSymbol 
 	"Set the margin type by name."
 
-	self basicType: (MarginTypes keyAtValue: aSymbol) - 1!
+	self basicType: (aSymbol ifNotNil: [(MarginTypes keyAtValue: aSymbol) - 1]).
+	self updateViewAttribute: #type!
 
 width
 	"Answer the <integer> pixel width of this margin."
@@ -150,13 +136,10 @@ width: anInteger
 !ScintillaMargin categoriesFor: #cursorType:!accessing!public! !
 !ScintillaMargin categoriesFor: #isFolders!accessing!public! !
 !ScintillaMargin categoriesFor: #isFolders:!accessing!public! !
-!ScintillaMargin categoriesFor: #isNumbers!accessing!public! !
-!ScintillaMargin categoriesFor: #isNumbers:!accessing!public! !
 !ScintillaMargin categoriesFor: #isSensitive!public!testing! !
 !ScintillaMargin categoriesFor: #isSensitive:!accessing!public! !
 !ScintillaMargin categoriesFor: #mask!accessing!public! !
 !ScintillaMargin categoriesFor: #mask:!accessing!public! !
-!ScintillaMargin categoriesFor: #printableAttributes!development!helpers!printing!private! !
 !ScintillaMargin categoriesFor: #type!accessing!public! !
 !ScintillaMargin categoriesFor: #type:!accessing!public! !
 !ScintillaMargin categoriesFor: #width!accessing!public! !
@@ -169,7 +152,7 @@ initialize
 		self initialize
 	"
 
-	getMessages := (IdentityDictionary new)
+	queryMap := (IdentityDictionary new)
 				at: #isSensitive: put: SCI_GETMARGINSENSITIVEN;
 				at: #mask: put: SCI_GETMARGINMASKN;
 				at: #basicType: put: SCI_GETMARGINTYPEN;
@@ -178,20 +161,21 @@ initialize
 				shrink;
 				isImmutable: true;
 				yourself.
-	attributes := (IdentityDictionary new)
-				at: #isSensitive put: SCI_SETMARGINSENSITIVEN;
-				at: #mask put: SCI_SETMARGINMASKN;
-				at: #basicType put: SCI_SETMARGINTYPEN;
-				at: #width put: SCI_SETMARGINWIDTHN;
-				at: #basicCursorType put: SCI_SETMARGINCURSORN;
+	applyMap := (IdentityDictionary new)
+				at: #isSensitive put: #(#isSensitive false ##(SCI_SETMARGINSENSITIVEN));
+				at: #mask put: #(#mask 0 ##(SCI_SETMARGINMASKN));
+				at: #type put: #(#basicType ##(SC_MARGIN_SYMBOL) ##(SCI_SETMARGINTYPEN));
+				at: #width put: #(#width nil ##(SCI_SETMARGINWIDTHN));
+				at: #cursorType put: #(#basicCursorType ##(SC_CURSORREVERSEARROW) ##(SCI_SETMARGINCURSORN));
 				shrink;
 				isImmutable: true;
 				yourself.
 	MarginTypes := #(#symbol #lineNumber #symbolBackground #symbolForeground #text #rightJustifiedText).
 	CursorTypes := (LookupTable new)
-				at: 2 put: #arrow;
-				at: 7 put: #reverseArrow;
-				at: 4 put: #wait;
+				at: SC_CURSORARROW put: #arrow;
+				at: SC_CURSORREVERSEARROW put: #reverseArrow;
+				at: SC_CURSORWAIT put: #wait;
+				at: SC_CURSORNORMAL put: #normal;
 				shrink;
 				isImmutable: true;
 				yourself!
