@@ -173,7 +173,7 @@ allSourceObjectsDo: operation
 	self classesDo: operation.
 	self sourceGlobalVariables do: [:each | operation value: each value].
 	"Note that the package itself is always enumerated last - this is important"
-	(self isSystemPackage not or: [SessionManager current isOAD]) ifTrue: [operation value: self]!
+	operation value: self!
 
 basicAddClass: aClass 
 	"Private - Add aClass to the list of classes owned by the receiver. A class can only be owned by

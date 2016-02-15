@@ -20,6 +20,34 @@ keepAlive
 
 	^self!
 
+logError: anException 
+	"Append details about the unhandled exception, anException, to the session error log.
+	Ignored for runtime systems, but it is suggested that subclasses perform some appropriate
+	form of error logging. The VM crash dump is one such facility (it doesn't cause a crash and
+	can be used for generating a VM walkback to the crash dump file at any time)"
+
+	"Write to the crash dump log - this always works"
+
+	| stderrBad |
+	super logError: anException.
+	stderrBad := false.
+	
+	[| target |
+	target := self stderr.
+	target
+		next: 40 put: $-;
+		nextPutAll: 'Unhandled exception - '.
+	anException printTraceOn: target.
+	target
+		next: 40 put: $-;
+		cr;
+		cr;
+		flush.
+	"In case the session is attended, pause briefly so the user can see the error"
+	Processor sleep: 10000] 
+			on: Error
+			do: [:e | ]!
+
 main
 	self stdout 
 		nextPutAll: 'Dolphin Smalltalk Boot'; cr; 
@@ -79,6 +107,35 @@ productVersion
 	
 	^VMLibrary default defaultProductDetails at: 3
 !
+
+reloadSystemPackage
+	| srcMgr basePackage baseClasses imageDir obsoleteMethodFilter |
+	basePackage := PackageManager systemPackage.
+	imageDir := self imageBase.
+	srcMgr := SourceManager default.
+	"First load the constants pools to ensure all constants ref'd in new code are defined"
+	Notification signal: 'Reloading BCL constants pools...'.
+	basePackage sourceGlobalVariables 
+		collect: [:each | srcMgr fileIn: (File relativePathOf: each value fileOutName to: imageDir)].
+	Notification signal: 'Reloading BCL class definitions...'.
+	srcMgr fileIn: (File relativePathOf: basePackage classDefinitionsFileName to: imageDir).
+	"Then reload all base package classes in breadth-first order"
+	Notification signal: 'Reloading BCL classes...'.
+	baseClasses := basePackage classesInHierarchyOrder.
+	baseClasses do: 
+			[:each | 
+			each == BootSessionManager 
+				ifFalse: [srcMgr fileIn: (File relativePathOf: each fileOutName to: imageDir)]].
+	Notification signal: 'Deleting obsolete boot image methods...'.
+	obsoleteMethodFilter := [:each | each hasChanged not].
+	baseClasses do: 
+			[:each | 
+			(((each selectMethods: obsoleteMethodFilter) asSortedCollection)
+				addAll: (each class selectMethods: obsoleteMethodFilter);
+				yourself) do: 
+						[:m | 
+						Notification signal: 'Removing obsolete boot image method ' , m printString.
+						m methodClass removeSelector: m selector]]!
 
 saveImageDefault
 	"Save an image of the current session to the default persistant store (whatever that is)."
@@ -164,30 +221,39 @@ trace: aString
 		ifTrue: [super trace: aString]
 		ifFalse: [self stderr nextPutAll: aString; flush]!
 
-unhandledException: anException 
-	"Private - Pop-up a walkback with details from the argument, anException."
+unhandledException: anException
+	"Private - The unhandled Exception, anException, occurred in the active Process.
+	Depending on the user response and the resumability of the exception, either 
+	resume or terminate the process.
+	Note: The exception response protocol (#resume, #pass, #outer, #exit, etc)
+	can only be sent to an Exception inside a handler block (i.e. the second
+	argument to BlockClosure>>on:do:)."
 
-	"Attempt to log the error, but don't allow it to become recursive (#logError: does not
-	raise an exception if it fails)"
-	| title topFrame |
 	self logError: anException.
-	title := [anException description] on: Error do: [:e | anException class name].
-	topFrame := anException raisingFrame.
+	"Note that unlike a GUI session (which is event driven), we kill the entire session in the event
+	  of an unhandled Error. If you are writing a multi-threaded, headless, server then you may 
+	  want to override this behaviour to just #terminate the faulting <Process>."
+	anException isUserResumable ifFalse: [
+		self quit: -1].
+	^anException!
 
-	"In a development session, we'll be wanting a walkback..."
-	topFrame process 
-		walkback: title
-		topFrame: topFrame
-		resumable: anException isResumable! !
+updateBootImage
+	"Update the boot image with any changes made since it was last created."
+
+	"The only thing done currently is to reload the BCL."
+
+	self reloadSystemPackage! !
 !BootSessionManager categoriesFor: #basicTertiaryStartup!operations-startup!public! !
 !BootSessionManager categoriesFor: #keepAlive!idling!public! !
+!BootSessionManager categoriesFor: #logError:!operations-logging!public! !
 !BootSessionManager categoriesFor: #main!operations-startup!public! !
-!BootSessionManager categoriesFor: #onPreSaveImage!public! !
+!BootSessionManager categoriesFor: #onPreSaveImage!event handling!public! !
 !BootSessionManager categoriesFor: #openSources!operations-source files!private! !
 !BootSessionManager categoriesFor: #primaryStartup!operations-startup!private! !
 !BootSessionManager categoriesFor: #productDetails!accessing!private!product! !
 !BootSessionManager categoriesFor: #productDetails:!accessing!private!product! !
 !BootSessionManager categoriesFor: #productVersion!accessing!product!public! !
+!BootSessionManager categoriesFor: #reloadSystemPackage!operations-startup!public! !
 !BootSessionManager categoriesFor: #saveImageDefault!operations-saving!public! !
 !BootSessionManager categoriesFor: #saveImageTo:!operations-saving!private! !
 !BootSessionManager categoriesFor: #shellClosed:!operations-startup!private! !
@@ -197,6 +263,7 @@ unhandledException: anException
 !BootSessionManager categoriesFor: #startUI!operations-startup!public! !
 !BootSessionManager categoriesFor: #trace:!operations-logging!public! !
 !BootSessionManager categoriesFor: #unhandledException:!exceptions!private! !
+!BootSessionManager categoriesFor: #updateBootImage!operations-startup!public! !
 
 !BootSessionManager class methodsFor!
 
