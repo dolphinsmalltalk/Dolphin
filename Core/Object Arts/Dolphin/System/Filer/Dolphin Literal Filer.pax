@@ -78,7 +78,7 @@ literalPrintOn: aWriteStream
 	aWriteStream
 		nextPutAll: '##(Smalltalk.';
 		display: self name;
-		nextPutAll: ') '! !
+		nextPutAll: ')'! !
 !Class categoriesFor: #literalPrintOn:!public! !
 
 !Number methodsFor!
