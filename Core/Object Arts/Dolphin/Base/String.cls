@@ -46,6 +46,18 @@ _collate: comparand
 "	^CRTLibrary default _stricmp: self string2: comparand."
 !
 
+_indexOfAnyInString: aString startingAt: anInteger 
+	| span |
+	span := aString strcspn: self start: anInteger.
+	^span + anInteger > aString size 
+		ifTrue: [0]
+		ifFalse: 
+			["CRT function will stop if it hits a null embedded in the string, so we must fall back
+			on slower superclass implementation in that case."
+			^(aString basicAt: span + anInteger) == 0 
+				ifTrue: [super _indexOfAnyInString: aString startingAt: anInteger]
+				ifFalse: [span + anInteger]]!
+
 _sameAsString: aString 
 	"Private - Answer whether the receiver collates the same as argument, aString."
 
@@ -529,21 +541,13 @@ includes: aCharacter
 
 	^self identityIncludes: aCharacter!
 
-indexOfAnyOf: characters startingAt: start 
-	"Answer the one-based integer index of the first encountered element of the receiver which 
-	is equal to one of the characters in the <readableString>, characters, starting from the one-based
-	<integer> index, start, in the receiver. If no occurrences are found, then answer 0."
+indexOfAnyOf: aCollectionOfCharacters startingAt: anInteger 
+	"Answer the one-based integer index of the first encountered element of the receiver which
+	is equal to one of the characters in the argument, aCollectionOfCharacters, starting from
+	the one-based <integer> index, start, in the receiver. If no occurrences are found, then
+	answer 0."
 
-	| span |
-	span := self strcspn: characters start: start.
-	^span + start > self size 
-		ifTrue: [0]
-		ifFalse: 
-			["CRT function will stop if it hits a null embedded in the string, so we must fall back
-			on slower superclass implementation in that case."
-			^(self basicAt: span + start) == 0 
-				ifTrue: [super indexOfAnyOf: characters startingAt: start]
-				ifFalse: [span + start]]!
+	^aCollectionOfCharacters _indexOfAnyInString: self startingAt: anInteger!
 
 indexOfSubCollection: targetSequence startingAt: start 
 	"Answer the <integer> index of the next occurrence within the 
@@ -879,15 +883,42 @@ subStrings
 			word notEmpty ifTrue: [answer add: word]].
 	^answer asArray!
 
-subStrings: separator
+subStrings: separatorOrSeparators 
 	"Answer an array containing the substrings of the receiver separated by occurrences
 	of the <Character> or <readableString> argument, separator.
 	Repeated separators produce empty strings in the array (cf. #subStrings).
 	The separators are removed."
 
-	#todo "This does not comply with the current ANSI definition, which requires an Array of separators,
-		each of which may individually be used as a separator".
-	^separator _separateSubStringsIn: self!
+	#todo.	"This does not comply with the current ANSI definition, which expects that the
+		argument is a <sequencedReadableCollection> of separators, any one of which may
+		separate each token. For historical reasons the Dolphin implementation accepts also
+		accepts a single character as the separator, and furthermore when passed a <String>
+		it will use the entire string as a multi-character separator. A workaround is to
+		convert the separator string to an array of <Character>."
+	^separatorOrSeparators _separateSubStringsIn: self!
+
+subStringsAnsi: separators 
+	"Answer an array containing the substrings of the receiver separated by occurrences
+	of any of the <Character>s in the <collection> argument, separators.
+	Repeated separators produce empty strings in the array (cf. #subStrings).
+	The separators are removed."
+
+	| start answer size end |
+	size := self size.
+	size == 0 ifTrue: [^Array new].
+	end := self indexOfAnyOf: separators startingAt: 1.
+	end == 0 ifTrue: [^Array with: self].
+	answer := Array writeStream: 5.
+	start := 1.
+	
+	[answer nextPut: (self copyFrom: start to: end - 1).
+	start := end + 1.
+	end := self indexOfAnyOf: separators startingAt: start.
+	end == 0] 
+			whileFalse.
+	"Copy any remaining chars after the last separator"
+	start <= size ifTrue: [answer nextPut: (self copyFrom: start to: size)].
+	^answer contents!
 
 trimBlanks
 	"Answer a copy of the receiver with leading and trailing white space removed."
@@ -981,6 +1012,7 @@ withNormalizedLineDelimiters
 	^target contents! !
 !String categoriesFor: #_beginsString:!comparing!double dispatch!private! !
 !String categoriesFor: #_collate:!comparing!private! !
+!String categoriesFor: #_indexOfAnyInString:startingAt:!double dispatch!private!searching! !
 !String categoriesFor: #_sameAsString:!comparing!private! !
 !String categoriesFor: #_separateSubStringsIn:!double dispatch!private! !
 !String categoriesFor: #<!comparing!public! !
@@ -1056,6 +1088,7 @@ withNormalizedLineDelimiters
 !String categoriesFor: #strcspn:start:!private!searching! !
 !String categoriesFor: #subStrings!copying!public! !
 !String categoriesFor: #subStrings:!copying!public! !
+!String categoriesFor: #subStringsAnsi:!copying!public! !
 !String categoriesFor: #trimBlanks!copying!public! !
 !String categoriesFor: #trimNulls!copying!public! !
 !String categoriesFor: #trueCompare:!comparing!private! !
