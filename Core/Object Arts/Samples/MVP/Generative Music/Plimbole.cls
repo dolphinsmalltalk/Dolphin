@@ -132,7 +132,9 @@ play
 	self setVoices.
 	stepProcess := [
 			[self step.
-			(Delay forMilliseconds: self beatTime) wait] repeat] forkAt: Processor highestPriority!
+			(Delay forMilliseconds: self beatTime) wait] repeat] 
+				forkAt: Processor highestPriority.
+	self trigger: #playStarted!
 
 playCellNote: cell 
 	"See's if a cell has collided wth a boundary and play it's note if necessary"
@@ -263,7 +265,7 @@ signature: aString
 	version := Integer readFrom: stream.
 	(#(10 20) includes: version) ifFalse: [self error: 'Wrong version'].
 	stream next = $_ ifFalse: [self error: 'Wrong format'].
-	scaleIndex := (Integer readFrom: stream) + 1.
+	scaleIndex := Integer readFrom: stream.
 	stream next = $_ ifFalse: [self error: 'Wrong format'].
 	tempo := Integer readFrom: stream.
 	stream next = $_ ifFalse: [self error: 'Wrong format'].
@@ -317,7 +319,8 @@ stop
 	stepProcess notNil 
 		ifTrue: 
 			[stepProcess terminate.
-			stepProcess := nil]!
+			stepProcess := nil.
+			self trigger: #playStopped]!
 
 tempo
 	^tempo!

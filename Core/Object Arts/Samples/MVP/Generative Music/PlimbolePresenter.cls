@@ -62,6 +62,9 @@ fasterTempo
 	self plimbole tempo: (self plimbole tempo * 1.05) rounded.
 	self showHintBubble: 'Tempo ' , self plimbole tempo displayString!
 
+favourites
+	^#('20_1_142_653643411513833522422360460231241473742140132580750302371051_9_D_1B' '20_1_150_350570331151532312733553622270121663612260763221_9_3A_3A' '20_1_150_030621270423452562860760662170_9_13_11' '20_1_150_462641243830303420581052733570151312322633560251631562253320_9_7_8' '20_1_150_420243641252561462323630461242423640471142110711772173413740763111320631270712562121773253612170_9_2A_33' '20_2_150_153310051302731833572580732742611511411311120130140150273373473573762752_9_19_1E')!
+
 initialize	
 	super initialize.
 	palette := self class defaultPalette.!
@@ -201,6 +204,13 @@ queryCommand: aCommandQuery
 			^true].
 	^super queryCommand: aCommandQuery!
 
+randomFavourite
+	| random |
+	random := (Random new)
+				next;
+				next.
+	self plimbole signature: (self favourites at: (self favourites size * random) truncated + 1)!
+
 showHintBubble: aString 
 	"Display a useful hint to the user about any command effect"
 	| hintBubble |
@@ -226,6 +236,7 @@ slowerTempo
 !PlimbolePresenter categoriesFor: #clearAll!constants!public! !
 !PlimbolePresenter categoriesFor: #copyToClipboard!public! !
 !PlimbolePresenter categoriesFor: #fasterTempo!commands!public! !
+!PlimbolePresenter categoriesFor: #favourites!constants!public! !
 !PlimbolePresenter categoriesFor: #initialize!accessing!initializing!private! !
 !PlimbolePresenter categoriesFor: #isPlaying!public! !
 !PlimbolePresenter categoriesFor: #nextAltoVoice!commands!public! !
@@ -243,6 +254,7 @@ slowerTempo
 !PlimbolePresenter categoriesFor: #previousAltoVoice!commands!public! !
 !PlimbolePresenter categoriesFor: #previousTenorVoice!commands!public! !
 !PlimbolePresenter categoriesFor: #queryCommand:!private! !
+!PlimbolePresenter categoriesFor: #randomFavourite!commands!public! !
 !PlimbolePresenter categoriesFor: #showHintBubble:!private! !
 !PlimbolePresenter categoriesFor: #slowerTempo!commands!public! !
 
