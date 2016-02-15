@@ -1,16 +1,29 @@
 | package |
 package := Package name: 'Plimbole'.
 package paxVersion: 1;
-	basicComment: ''.
+	basicComment: 'Plimbole is a Generative Music Sequencer based on Otomata (http://www.earslap.com/page/otomata.html). It uses the same cellular automata logic as Otomata but adds a few features that, hopefully, make the results more compelling. Things like different grid sizes and the ability to play through MIDI with separate voices for the tenor (low) and alto (high) parts.
+
+In order to get started, just click in the central grid area and place cells. Each cell has a direction that it is travelling in and, as it collides with the boundary walls, it will create a note. The pitch of the note will be dependent on which part of the boundary is hit; pitches increase from left to right and from top to bottom. Clicking again on a cell will alter the starting direction by 90 degrees. Start the "music" with the Play button and the cells are stepped in their current directions. Cells that hit each other are rotated a quarter turn and those that hit the boundaries bounce back after having generated their notes. You can stop the player at any time and add more cells, or you can just add them while it is running. 
+
+Not everything you create will sound great. But sometimes you''ll come across some rather nice patterns. Apart from just changing the cells, try altering the scale used and make sure you play with the tenor and alto voices to see if that produces a better effect. You can also change the grid size from its default 9x9.
+
+When you find something that sounds cool, you can copy the set up (let''s call it a piece) to the clipboard and share it with others or just save it for later. The piece descriptions are compatible with the original Otomata link format so you can play pieces from there in Plimbole and vice-versa. For example, here''s one from Otomata page:
+
+http://www.earslap.com/projectslab/otomata/?q=10_0_150_030621270423452562860760662170. Try copying this (you actually only need the bit after ?q=) and clicking on the import button in Plimbole. But just to show you how you can liven things up, here is the same piece but with different tenor and alto voices (Marimba and ElectrcGuitaMuted respectively):
+
+20_0_150_030621270423452562860760662170_9_A_12
+
+Have fun!!'.
 
 package imageStripperBytes: (ByteArray fromBase64String: 'IVNUQiAzIEYPDQAEAAAASW1hZ2VTdHJpcHBlcgAAAABSAAAACAAAAFBsaW1ib2xlUgAAADoAAABD
 b3JlXE9iamVjdCBBcnRzXFNhbXBsZXNcTVZQXEdlbmVyYXRpdmUgTXVzaWNcUGxpbWJvbGUuZXhl
-mgAAAFIAAAAIAAAAUGxpbWJvbGVSAAAADQAAAFBsaW1ib2xlU2hlbGzvvyUAAAAAAAAAAAAAAAAA
+mgAAAFIAAAAIAAAAUGxpbWJvbGVSAAAADQAAAFBsaW1ib2xlU2hlbGzvtyUAAAAAAAAAAAAAAAAA
 AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==').
 
 package classNames
 	add: #Plimbole;
 	add: #PlimboleCell;
+	add: #PlimbolePresenter;
 	add: #PlimboleShell;
 	add: #PlimboleView;
 	yourself.
@@ -24,7 +37,6 @@ package globalAliases: (Set new
 package setPrerequisites: (IdentitySet new
 	add: '..\..\..\Dolphin\Base\Dolphin';
 	add: '..\..\..\Dolphin\MVP\Views\Control Bars\Dolphin Control Bars';
-	add: '..\..\..\Dolphin\MVP\Models\List\Dolphin List Models';
 	add: '..\..\..\Dolphin\MVP\Base\Dolphin MVP Base';
 	add: '..\..\..\Dolphin\MVP\Views\Tooltips\Dolphin Tooltips';
 	add: '..\..\..\Dolphin\MVP\Gdiplus\Gdiplus';
@@ -37,12 +49,17 @@ package!
 "Class Definitions"!
 
 Object subclass: #PlimboleCell
-	instanceVariableNames: 'location velocity plimbole'
+	instanceVariableNames: 'location velocity plimbole palette'
 	classVariableNames: ''
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
-Presenter subclass: #Plimbole
-	instanceVariableNames: 'midiOutChannel stepProcess recurse tenorVoice altoVoice scaleIndex noteDuration gridExtent tempo palette'
+Model subclass: #Plimbole
+	instanceVariableNames: 'cells midiOutChannel stepProcess recurse tenorVoice altoVoice scaleIndex noteDuration gridExtent tempo'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Presenter subclass: #PlimbolePresenter
+	instanceVariableNames: 'palette'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!

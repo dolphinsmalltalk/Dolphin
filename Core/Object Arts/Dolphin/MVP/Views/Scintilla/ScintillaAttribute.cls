@@ -1,10 +1,10 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #ScintillaAttribute
 	instanceVariableNames: 'id'
 	classVariableNames: ''
 	poolDictionaries: 'ScintillaConstants'
-	classInstanceVariableNames: 'attributes'!
+	classInstanceVariableNames: 'applyMap'!
 ScintillaAttribute guid: (GUID fromString: '{B73F94FE-0BB9-4C23-AEE5-E77B3CF408AF}')!
 ScintillaAttribute comment: 'ScintillaAttribute is the abstract superclass of objects that wrap various attributes of <ScintillaView>s. It provides a generic mechanism for setting the attribute value into the underlying control.
 
@@ -12,7 +12,7 @@ Instance Variables:
 	id		<integer>. Identifier of the attribute instance.
 
 Class Instance Variables:
-	setMessages	<IdentityDictionary>
+	applyMap	<IdentityDictionary> mapping from the get selector on the subclass to the windows message used to set the property of the associated Scintilla control.
 
 
 
@@ -23,18 +23,24 @@ Class Instance Variables:
 = aScintillaAttribute 
 	^self class == aScintillaAttribute and: [self name = aScintillaAttribute name]!
 
+applyMap
+	^self class applyMap!
+
+applyMapDo: aMonadicValuable 
+	^self applyMap do: aMonadicValuable!
+
 applyToView: aScintillaView 
 	self view: aScintillaView.
-	self attributes 
-		ifNotNil: 
-			[:map | 
-			map keysAndValuesDo: 
-					[:eachGetter :eachSetMessage | 
-					(self perform: eachGetter) 
-						ifNotNil: 
-							[:value | 
-							aScintillaView 
-								sendMessage: eachSetMessage
+	self applyMapDo: 
+			[:tuple | 
+			"Don't send the value to the control if unspecified (nil), or if has the default value"
+			(self perform: tuple first) 
+				ifNotNil: 
+					[:value | 
+					value = tuple second 
+						ifFalse: 
+							[aScintillaView 
+								sendMessage: tuple last
 								wParam: self asParameter
 								lParam: value asUIntPtr]]]!
 
@@ -44,9 +50,6 @@ applyToView: aScintillaView at: anInteger
 
 asParameter
 	^self basicId!
-
-attributes
-	^self class attributes!
 
 basicId
 	^id!
@@ -67,7 +70,7 @@ name
 	^self id!
 
 printableAttributes
-	^self attributes keys!
+	^self applyMap keys!
 
 printAttributesOn: aStream 
 	self printableAttributes do: 
@@ -94,7 +97,7 @@ printOn: aStream
 	aStream nextPut: $)!
 
 storeableAttributes
-	^(Array with: #basicId) , self class attributes keys asArray!
+	^(Array with: #basicId) , self applyMap keys asArray!
 
 storeOn: aStream 
 	"Append to the <puttableStream> argument an expression which when evaluated will answer a
@@ -126,21 +129,27 @@ updateViewAttribute: aSymbol
 	self view 
 		ifNotNil: 
 			[:scintilla | 
+			| tuple lParam |
+			tuple := self applyMap at: aSymbol.
+			"If the attribute is nil (unspecified) then set the value back to the default value from the tuple"
+			lParam := (self perform: tuple first) ifNil: [tuple second] ifNotNil: [:value | value asUIntPtr].
 			scintilla 
-				sendMessage: (self attributes at: aSymbol)
+				sendMessage: tuple last
 				wParam: self asParameter
-				lParam: (self perform: aSymbol) asUIntPtr]!
+				lParam: lParam].
+	^self!
 
 view
-	^nil!
+	^self subclassResponsibility!
 
 view: aScintillaView 
-	^self! !
+	self subclassResponsibility! !
 !ScintillaAttribute categoriesFor: #=!comparing!public! !
+!ScintillaAttribute categoriesFor: #applyMap!constants!private! !
+!ScintillaAttribute categoriesFor: #applyMapDo:!helpers!private! !
 !ScintillaAttribute categoriesFor: #applyToView:!helpers!private! !
 !ScintillaAttribute categoriesFor: #applyToView:at:!helpers!private! !
 !ScintillaAttribute categoriesFor: #asParameter!converting!public! !
-!ScintillaAttribute categoriesFor: #attributes!constants!private! !
 !ScintillaAttribute categoriesFor: #basicId!accessing!private! !
 !ScintillaAttribute categoriesFor: #basicId:!accessing!private! !
 !ScintillaAttribute categoriesFor: #hash!comparing!public! !
@@ -158,15 +167,15 @@ view: aScintillaView
 
 !ScintillaAttribute class methodsFor!
 
-attributes
-	^attributes!
+applyMap
+	^applyMap!
 
 icon
 	^ScintillaView icon!
 
 sortByIdBlock
 	^[:a :b | a basicId ifNil: [true] ifNotNil: [:aId | b basicId ifNil: [false] ifNotNil: [:bId | aId <= bId]]]! !
-!ScintillaAttribute class categoriesFor: #attributes!constants!private! !
+!ScintillaAttribute class categoriesFor: #applyMap!constants!private! !
 !ScintillaAttribute class categoriesFor: #icon!constants!development!public! !
 !ScintillaAttribute class categoriesFor: #sortByIdBlock!constants!public! !
 

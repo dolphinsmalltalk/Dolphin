@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #Collection
 	instanceVariableNames: ''
@@ -12,6 +12,31 @@ Collection comment: ''!
 
 _beginsString: aString
 	^aString basicBeginsWith: self!
+
+_indexOfAnyInString: aString startingAt: anInteger 
+	aString from: anInteger keysAndValuesDo: [:i :elem | (self includes: elem) ifTrue: [^i]].
+	^0!
+
+_separateSubStringsIn: aReadableString 
+	"Private - Answer an Array containing the substrings in aReadableString separated
+	by the elements of the receiver (which must be Characters)."
+
+	| start answer size end |
+	size := aReadableString size.
+	size == 0 ifTrue: [^Array new].
+	end := aReadableString indexOfAnyOf: self startingAt: 1.
+	end == 0 ifTrue: [^Array with: aReadableString].
+	answer := Array writeStream: 5.
+	start := 1.
+	
+	[answer nextPut: (aReadableString copyFrom: start to: end - 1).
+	start := end + 1.
+	end := aReadableString indexOfAnyOf: self startingAt: start.
+	end == 0] 
+			whileFalse.
+	"Copy any remaining chars after the last separator"
+	start <= size ifTrue: [answer nextPut: (aReadableString copyFrom: start to: size)].
+	^answer contents!
 
 add: newElement
 	"Include the <Object> argument, newElement, as one of the receiver's 
@@ -546,6 +571,8 @@ union: comperand
 		yourself
 ! !
 !Collection categoriesFor: #_beginsString:!comparing!double dispatch!private! !
+!Collection categoriesFor: #_indexOfAnyInString:startingAt:!double dispatch!private!searching! !
+!Collection categoriesFor: #_separateSubStringsIn:!double dispatch!private! !
 !Collection categoriesFor: #add:!adding!public! !
 !Collection categoriesFor: #addAll:!adding!public! !
 !Collection categoriesFor: #allSatisfy:!enumerating!public! !

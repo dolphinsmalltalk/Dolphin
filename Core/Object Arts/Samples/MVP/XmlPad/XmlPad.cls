@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 TextDocument subclass: #XmlPad
 	instanceVariableNames: 'viewOptions'
@@ -124,7 +124,7 @@ reformatXml
 	"Replace the text using the Scintilla target feature (this is like an invisible selection).
 	If we just set the text, then it would not be undoable."
 	(self scintilla)
-		targetRange: (1 to: self scintilla textLength);
+		targetAll;
 		replaceTarget: reformatted!
 
 restoreBooleanOptions: anArrayOfPairs 

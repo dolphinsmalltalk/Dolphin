@@ -426,35 +426,91 @@ testIncludesAnyOf
 	self assert: (searchee includesAnyOf: (self newCollection: 'b')).!
 
 testIndexOfAnyOfStartingAt
-	| searchee db bd de a d abc offset |
+	| searchee db bd de a d abc offset aa |
 	db := self newCollection: 'db'.
 	a := self newCollection: 'a'.
 	d := self newCollection: 'd'.
 	abc := self newCollection: 'abc'.
 	searchee := self newCollection: ''.
-	self assert: (searchee indexOfAnyOf: searchee startingAt: 1) = 0.
-	self assert: (searchee indexOfAnyOf: a startingAt: 1) = 0.
-	self assert: (searchee indexOfAnyOf: db startingAt: 1) = 0.
+	self 
+		verifyIndexOfAnyOf: searchee
+		startingAt: 1
+		in: searchee
+		is: 0.
+	self 
+		verifyIndexOfAnyOf: a
+		startingAt: 1
+		in: searchee
+		is: 0.
+	self 
+		verifyIndexOfAnyOf: db
+		startingAt: 1
+		in: searchee
+		is: 0.
 	searchee := abc.
-	self assert: (searchee indexOfAnyOf: db startingAt: 1) = 2.
-	self assert: (searchee indexOfAnyOf: db startingAt: 2) = 2.
-	self assert: (searchee indexOfAnyOf: db startingAt: 3) = 0.
+	self 
+		verifyIndexOfAnyOf: db
+		startingAt: 1
+		in: searchee
+		is: 2.
+	self 
+		verifyIndexOfAnyOf: db
+		startingAt: 2
+		in: searchee
+		is: 2.
+	self 
+		verifyIndexOfAnyOf: db
+		startingAt: 3
+		in: searchee
+		is: 0.
 	bd := self newCollection: 'bd'.
-	self assert: (searchee indexOfAnyOf: bd startingAt: 1) = 2.
+	self 
+		verifyIndexOfAnyOf: bd
+		startingAt: 1
+		in: searchee
+		is: 2.
 	de := self newCollection: 'de'.
-	self assert: (searchee indexOfAnyOf: de startingAt: 1) = 0.
+	self 
+		verifyIndexOfAnyOf: de
+		startingAt: 1
+		in: searchee
+		is: 0.
 	searchee := self newCollection: (String new: 1).
 	searchee isSymbol 
 		ifFalse: 
-			[self assert: (searchee indexOfAnyOf: searchee startingAt: 1) = 1.
-			self assert: (searchee indexOfAnyOf: a startingAt: 1) = 0.
-			self assert: (searchee indexOfAnyOf: db startingAt: 1) = 0].
+			[self 
+				verifyIndexOfAnyOf: searchee
+				startingAt: 1
+				in: searchee
+				is: 1.
+			self 
+				verifyIndexOfAnyOf: a
+				startingAt: 1
+				in: searchee
+				is: 0.
+			self 
+				verifyIndexOfAnyOf: db
+				startingAt: 1
+				in: searchee
+				is: 0].
 	searchee := abc , (self newCollection: (String new: 1)).
 	offset := searchee first == Character null ifTrue: [1] ifFalse: [0].
-
-	self assert: (searchee indexOfAnyOf: db startingAt: 1) = (2+offset).
-	self assert: (searchee indexOfAnyOf: a startingAt: 1) = (1+offset).
-	self assert: (searchee indexOfAnyOf: de startingAt: 1) = 0!
+	aa := 1.
+	self 
+		verifyIndexOfAnyOf: db
+		startingAt: aa
+		in: searchee
+		is: 2 + offset.
+	self 
+		verifyIndexOfAnyOf: a
+		startingAt: aa
+		in: searchee
+		is: 1 + offset.
+	self 
+		verifyIndexOfAnyOf: de
+		startingAt: aa
+		in: searchee
+		is: 0!
 
 testLast
 	self should: [(self newCollection: #()) last] raise: BoundsError.
@@ -516,7 +572,11 @@ testReplaceFromToWithStartingAt
 !
 
 unsortedCollectionClass
-	^self collectionClass! !
+	^self collectionClass!
+
+verifyIndexOfAnyOf: searchFor startingAt: startInteger in: searchee is: foundInteger 
+	self assert: (searchee indexOfAnyOf: searchFor startingAt: startInteger) = foundInteger.
+	self assert: (searchee indexOfAnyOf: searchFor asArray startingAt: startInteger) = foundInteger! !
 !SequenceableCollectionTest categoriesFor: #assimilate:!public!unit tests! !
 !SequenceableCollectionTest categoriesFor: #assimilateElements:!helpers!private! !
 !SequenceableCollectionTest categoriesFor: #byteArrayForSequence:!helpers!private! !
@@ -541,6 +601,7 @@ unsortedCollectionClass
 !SequenceableCollectionTest categoriesFor: #testLastColon!public!unit tests! !
 !SequenceableCollectionTest categoriesFor: #testReplaceFromToWithStartingAt!public!unit tests! !
 !SequenceableCollectionTest categoriesFor: #unsortedCollectionClass!public!unit tests! !
+!SequenceableCollectionTest categoriesFor: #verifyIndexOfAnyOf:startingAt:in:is:!private!unit tests! !
 
 !SequenceableCollectionTest class methodsFor!
 

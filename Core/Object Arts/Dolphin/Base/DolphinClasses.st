@@ -241,7 +241,7 @@ Object subclass: #Package
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Object subclass: #PackageManager
-	instanceVariableNames: 'packages processEvents packagedGlobals looseMethods events defaultPackage'
+	instanceVariableNames: 'packages processEvents packagedGlobals looseMethods events defaultPackage basePackages'
 	classVariableNames: 'Current DuplicatePackageSignal PackageNotFoundSignal PrerequisiteNotFoundSignal SystemPackage'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -1646,7 +1646,7 @@ SequencedStream subclass: #PositionableStream
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 SequencedStream subclass: #StdioFileStream
-	instanceVariableNames: 'stream isText name'
+	instanceVariableNames: 'stream isText name oldFd'
 	classVariableNames: ''
 	poolDictionaries: 'CRTConstants'
 	classInstanceVariableNames: ''!

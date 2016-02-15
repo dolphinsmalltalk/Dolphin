@@ -516,7 +516,7 @@ Win32Constants at: 'ODS_GRAYED' put: 16r2!
 Win32Constants at: 'ODS_SELECTED' put: 16r1!
 Win32Constants at: 'ODT_BUTTON' put: 16r4!
 Win32Constants at: 'ODT_COMBOBOX' put: 16r3!
-Win32Constants at: 'ODT_LISTBOX ' put: 16r2!
+Win32Constants at: 'ODT_LISTBOX' put: 16r2!
 Win32Constants at: 'ODT_MENU' put: 16r1!
 Win32Constants at: 'ODT_STATIC' put: 16r5!
 Win32Constants at: 'OEM_FIXED_FONT' put: 16rA!

@@ -1478,14 +1478,13 @@ workspacePool: aPoolDictionaryOrNil
 	workspacePool := aPoolDictionaryOrNil!
 
 wrapLinesInRange: anInterval indent: anInteger 
-	| original scintilla justified |
+	| scintilla justified |
 	scintilla := self view.
-	original := scintilla plainTextRange: anInterval.
+	scintilla targetRange: anInterval.
 	justified := self systemModel 
-				wrapText: original
+				wrapText: scintilla targetText
 				indent: anInteger
 				tabWidth: scintilla tabWidth.
-	scintilla targetRange: anInterval.
 	scintilla replaceTarget: justified! !
 !SmalltalkWorkspace categoriesFor: #allDefinedVariablesDo:!autocompletion!enumerating!private! !
 !SmalltalkWorkspace categoriesFor: #allPools!accessing!private! !
