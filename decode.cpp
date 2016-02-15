@@ -1679,16 +1679,15 @@ void DumpBytecodeCounts(bool bClear)
 
 }
 
-//	error LNK2001: unresolved external symbols	// JGFoster
-//	extern "C" unsigned primitiveCounters[];
+extern "C" unsigned primitiveCounters[];
 
 void DumpPrimitiveCounts(bool bClear)
 {
 	TRACESTREAM << endl << "Primitive invocation counts" << endl << "-----------------------------" << endl;
 	for (int i=0;i<=PRIMITIVE_MAX;i++)
 	{
-		TRACESTREAM << dec << i << ": " << "primitiveCounters is an unresolved external" /* primitiveCounters[i] */ << endl;
-//		if (bClear) primitiveCounters[i] = 0;
+		TRACESTREAM << dec << i << ": " << primitiveCounters[i] << endl;
+		if (bClear) primitiveCounters[i] = 0;
 	}
 
 	TRACESTREAM << "-----------------------------" << endl << endl;
