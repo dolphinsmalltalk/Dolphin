@@ -16,17 +16,21 @@ cellExtent
 connectModel
 	"Private - Connect the receiver to its model, wiring events, etc."
 
-	self model 
-		when: #updated
-		send: #invalidate
-		to: self!
+	self model notNil 
+		ifTrue: 
+			[self model 
+				when: #updated
+				send: #invalidate
+				to: self]!
 
 onPaintRequired: aPaintEvent 
 	"Private - Handler for paint event. Show the scribble"
 
 	| canvas |
-	canvas := aPaintEvent canvas.
-	self model cells do: [:each | each drawOn: canvas inView: self]!
+	self model notNil 
+		ifTrue: 
+			[canvas := aPaintEvent canvas.
+			self model cells do: [:each | each drawOn: canvas inView: self]]!
 
 onPositionChanged: aPositionEvent 
 	"Private - Handle a window position change event (move or resize)."
@@ -40,11 +44,7 @@ onPositionChanged: aPositionEvent
 
 !PlimboleView class methodsFor!
 
-defaultModel
-	^Plimbole new!
-
 icon
 	^PlimbolePresenter icon! !
-!PlimboleView class categoriesFor: #defaultModel!public! !
 !PlimboleView class categoriesFor: #icon!public! !
 

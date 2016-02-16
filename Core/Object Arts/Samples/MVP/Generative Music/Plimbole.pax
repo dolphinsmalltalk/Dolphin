@@ -54,8 +54,8 @@ Object subclass: #PlimboleCell
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
 Model subclass: #Plimbole
-	instanceVariableNames: 'cells midiOutChannel stepProcess recurse tenorVoice altoVoice scaleIndex noteDuration gridExtent tempo'
-	classVariableNames: ''
+	instanceVariableNames: 'cells recurse tenorVoice altoVoice tenorChannel altoChannel scaleIndex noteDuration gridExtent'
+	classVariableNames: 'MidiChannel StepProcess Tempo'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Presenter subclass: #PlimbolePresenter
