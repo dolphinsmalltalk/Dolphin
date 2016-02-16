@@ -1,0 +1,62 @@
+| package |
+package := Package name: 'Lights Out Game'.
+package paxVersion: 1;
+	basicComment: ''.
+
+package imageStripperBytes: (ByteArray fromBase64String: 'IVNUQiAzIEYPDQAEAAAASW1hZ2VTdHJpcHBlcgAAAABSAAAADwAAAExpZ2h0cyBPdXQgR2FtZVIA
+AABAAAAAQ29yZVxPYmplY3QgQXJ0c1xTYW1wbGVzXE1WUFxMaWdodHMgT3V0IEdhbWVcTGlnaHRz
+IE91dCBHYW1lLmV4ZZoAAABSAAAADwAAAExpZ2h0cyBPdXQgR2FtZVIAAAANAAAATGlnaHRzT3V0
+R2FtZe+/JQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA').
+
+package classNames
+	add: #LightsOutBoard;
+	add: #LightsOutCell;
+	add: #LightsOutCellView;
+	add: #LightsOutGame;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\..\..\Dolphin\Base\Dolphin';
+	add: '..\..\..\Dolphin\MVP\Base\Dolphin MVP Base';
+	add: '..\..\..\Dolphin\MVP\Models\Value\Dolphin Value Models';
+	add: '..\..\..\Dolphin\IDE\Base\Internal Bitmaps and Icons';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+Model subclass: #LightsOutBoard
+	instanceVariableNames: 'cells'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Presenter subclass: #LightsOutCell
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Shell subclass: #LightsOutGame
+	instanceVariableNames: 'cellPresenters'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+View subclass: #LightsOutCellView
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+"End of package definition"!
+

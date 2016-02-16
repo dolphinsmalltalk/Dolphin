@@ -1,4 +1,4 @@
-"23:59:29, 06 February 2016: Compressing sources...."!
+"12:38:45, 15 February 2016: Compressing sources...."!
 
 Object comment:
 'Object is the abstract root of the standard Smalltalk class hierarchy. It has no instance variables (indeed it must not have any), but provides behavior common to all objects.
@@ -44211,6 +44211,52 @@ mciSendString: commandString lpszReturnString: returnString cchReturn: retsize h
 
 	<stdcall: dword mciSendStringA lpvoid lpvoid dword handle>
 	^self invalidCall!
+
+midiOutCloseHmo: hmo
+
+	"cdemers - 9/3/2004"
+	"Private Declare Function midiOutClose Lib 'winmm.dll' (ByVal hMidiOut As Long) As Long"
+"MMRESULT midiOutClose(
+  HMIDIOUT hmo  
+);"
+	<stdcall: dword midiOutClose dword >
+	^self invalidCall
+!
+
+midiOutGetNumDevs
+
+	"cdemers - 9/3/2004"
+	"UINT midiOutGetNumDevs(VOID); "
+	<stdcall: dword midiOutGetNumDevs>
+	^self invalidCall
+!
+
+midiOutOpenLphmo: midiOutHandle uDeviceID: uDeviceID dwCallback: dwCallback dwCallbackInstance: dwCallbackInstance dwFlags: dwFlags
+
+	"cdemers - 9/3/2004"
+"Private Declare Function midiOutOpen Lib 'winmm.dll' (lphMidiOut As Long, ByVal uDeviceID As Long, ByVal dwCallback As Long, ByVal dwInstance As Long, ByVal dwFlags As Long) As Long"
+"MMRESULT midiOutOpen(
+  LPHMIDIOUT lphmo,              
+  UINT_PTR   uDeviceID,          
+  DWORD_PTR  dwCallback,         
+  DWORD_PTR  dwCallbackInstance, 
+  DWORD      dwFlags             
+);"
+	
+	<stdcall: dword midiOutOpen dword* dword dword dword dword>
+	^self invalidCall
+!
+
+midiOutShortMsgHmo: hmo dwMsg: dwMsg
+
+	"cdemers - 9/3/2004"
+	"Private Declare Function midiOutShortMsg Lib 'winmm.dll' (ByVal hMidiOut As Long, ByVal dwMsg As Long) As Long"
+	"MMRESULT midiOutShortMsg(
+		  HMIDIOUT hmo,  
+		  DWORD dwMsg);"
+	<stdcall: dword midiOutShortMsg dword dword >
+	^self invalidCall
+!
 
 playSound: aString hmod: anExternalHandle fdwSound: anInteger
 	"Plays a sound specified by the given filename, resource, or system event. 
