@@ -124,7 +124,17 @@ onLeftButtonPressed: aMouseEvent
 				ifFalse: 
 					[existingCell rotate.
 					self plimbole update]]
-		ifNil: [self plimbole addCell: (PlimboleCell location: loc direction: 0)]!
+		ifNil: 
+			[| cell |
+			cell := PlimboleCell location: loc direction: 0.
+			cell palette: self palette.
+			self plimbole addCell: cell]!
+
+onPaletteChanged
+	| pal |
+	pal := self palette.
+	self view backcolor: pal first.
+	self plimbole cells do: [:each | each palette: pal]!
 
 onPlayStarted
 	self plimbole setVoices!
@@ -148,15 +158,19 @@ onViewOpened
 palette
 	^palette!
 
-palette: anArrayOfColors
-	palette := anArrayOfColors.
-	self view backcolor: (RGB fromHTMLSpec:  palette last)!
+palette: anArrayOfColors 
+	palette = anArrayOfColors 
+		ifFalse: 
+			[palette := anArrayOfColors.
+			self onPaletteChanged]!
 
 pasteClipboard
 	"Paste the contents of the clipboard (if possible) as new piece"
 
-	[self plimbole signature: Clipboard current getText] on: Error
-		do: [:ex | self showHintBubble: 'The Clipboard doesn''t have a piece to Paste.']!
+	
+	[self plimbole signature: Clipboard current getText.
+	self onPaletteChanged] on: Error
+			do: [:ex | self showHintBubble: 'The Clipboard doesn''t have a piece to Paste.']!
 
 play
 	self plimbole play!
@@ -256,6 +270,7 @@ slowerTempo
 !PlimbolePresenter categoriesFor: #nextTenorVoice!commands!public! !
 !PlimbolePresenter categoriesFor: #onLeftButtonDoubleClicked:!event handling!private! !
 !PlimbolePresenter categoriesFor: #onLeftButtonPressed:!event handling!private! !
+!PlimbolePresenter categoriesFor: #onPaletteChanged!private! !
 !PlimbolePresenter categoriesFor: #onPlayStarted!private! !
 !PlimbolePresenter categoriesFor: #onViewClosed!event handling!private! !
 !PlimbolePresenter categoriesFor: #onViewOpened!event handling!private! !
@@ -277,7 +292,7 @@ defaultModel
 	^Plimbole new!
 
 defaultPalette
-	^#('#5D4131' '#7CC1A9' '#ED7829' '#EEA83D' '#FCEBB9' )!
+	^PlimboleShell palettes first!
 
 icon
 	^Plimbole icon!

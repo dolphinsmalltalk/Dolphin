@@ -55,7 +55,7 @@ Object subclass: #PlimboleCell
 	classInstanceVariableNames: ''!
 Model subclass: #Plimbole
 	instanceVariableNames: 'cells recurse tenorVoice altoVoice tenorChannel altoChannel scaleIndex noteDuration gridExtent'
-	classVariableNames: 'MidiChannel StepProcess Tempo'
+	classVariableNames: 'MidiChannel Registry StepProcess Tempo'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Presenter subclass: #PlimbolePresenter
@@ -65,7 +65,7 @@ Presenter subclass: #PlimbolePresenter
 	classInstanceVariableNames: ''!
 Shell subclass: #PlimboleShell
 	instanceVariableNames: 'plimbolePresenter'
-	classVariableNames: ''
+	classVariableNames: 'Palettes'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 View subclass: #PlimboleView

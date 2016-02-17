@@ -2,7 +2,7 @@
 
 Shell subclass: #PlimboleShell
 	instanceVariableNames: 'plimbolePresenter'
-	classVariableNames: ''
+	classVariableNames: 'Palettes'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 PlimboleShell guid: (GUID fromString: '{460ACFFF-A9A4-4A8B-872D-2B0674D4CFD1}')!
@@ -23,13 +23,13 @@ addToCommandRoute: route
 	plimbolePresenter addToCommandRoute: route.
 	^super addToCommandRoute: route!
 
-chooseRandomPaletteColor
-	| index random palette |
-	random := Random new.
-	random next.
-	palette := plimbolePresenter palette allButLast.
-	index := (random next * palette size) truncated + 1.
-	self view backcolor: (RGB fromHTMLSpec: (palette at: index))!
+chooseRandomPalette
+	| palette index |
+	index := Plimbole registry size.
+	index = 1 ifTrue: [self class resetPalettes].
+	index := (index - 1) % self class palettes size + 1.
+	plimbolePresenter palette: (palette := self class palettes at: index).
+	self view backcolor: palette last!
 
 createComponents
 	super createComponents.
@@ -54,15 +54,28 @@ onViewOpened
 		when: #playStopped
 			send: #onPlayStopped
 			to: self.
-	self chooseRandomPaletteColor! !
+	self chooseRandomPalette!
+
+queryCommand: aCommandQuery 
+	"Fills in details about the current state of the receiver into aCommandQuery"
+
+	| cmd |
+	cmd := aCommandQuery commandSymbol.
+	cmd == #addPartner 
+		ifTrue: 
+			[aCommandQuery
+				isEnabled: Plimbole registry size<self class maxPlimboles.
+			^true].
+	^super queryCommand: aCommandQuery! !
 !PlimboleShell categoriesFor: #addPartner!commands!public! !
 !PlimboleShell categoriesFor: #addToCommandRoute:!private! !
-!PlimboleShell categoriesFor: #chooseRandomPaletteColor!private! !
+!PlimboleShell categoriesFor: #chooseRandomPalette!private! !
 !PlimboleShell categoriesFor: #createComponents!initializing!private! !
 !PlimboleShell categoriesFor: #model:!event handling!private! !
 !PlimboleShell categoriesFor: #onPlayStarted!private! !
 !PlimboleShell categoriesFor: #onPlayStopped!private! !
 !PlimboleShell categoriesFor: #onViewOpened!private! !
+!PlimboleShell categoriesFor: #queryCommand:!private! !
 
 !PlimboleShell class methodsFor!
 
@@ -87,6 +100,36 @@ initialize
 		addSamplesFolderIconFor: self
 		description: self displayString!
 
+loadPalettes
+	| lines palettes |
+	lines := self palettesString lines.
+	palettes := lines collect: 
+					[:each | 
+					| palette |
+					palette := (each subStrings: $#) allButFirst.
+					palette := palette collect: [:each | RGB fromHTMLSpec: '#' , each]].
+	^palettes!
+
+maxPlimboles
+	"We don't want to run out of MIDI channels and, anyway, this is quite enough."
+
+	^6!
+
+palettes
+	^Palettes ifNil: [Palettes := self loadPalettes randomizeUsing: Random new ]!
+
+palettesString
+	^'#FFFCD6#9DC400#8A9E70#40034D#FE3F2D
+#D8E1E8#ABABAB#A3B3C0#587DA7#FFA549
+#FFE1AE#F9B32A#FD7150#FA4228#336E7B
+#F3C9BF#FE8A71#D9BBAE#0C545C#FE6860
+#D1D5D8#F1C40F#E74C3C#1ABC9C#3498DB
+#FCEBB6#F07818#F0A830#78C0A8#5E412F'!
+
+resetPalettes
+	Palettes := nil
+!
+
 resource_Default_view
 	"Answer the literal data from which the 'Default view' resource can be reconstituted.
 	DO NOT EDIT OR RECATEGORIZE THIS METHOD.
@@ -109,6 +152,11 @@ uninitialize
 !PlimboleShell class categoriesFor: #displayOn:!displaying!public! !
 !PlimboleShell class categoriesFor: #icon!constants!public! !
 !PlimboleShell class categoriesFor: #initialize!development!initializing!private! !
+!PlimboleShell class categoriesFor: #loadPalettes!operations!private! !
+!PlimboleShell class categoriesFor: #maxPlimboles!constants!public! !
+!PlimboleShell class categoriesFor: #palettes!operations!private! !
+!PlimboleShell class categoriesFor: #palettesString!constants!private! !
+!PlimboleShell class categoriesFor: #resetPalettes!operations!private! !
 !PlimboleShell class categoriesFor: #resource_Default_view!public!resources-views! !
 !PlimboleShell class categoriesFor: #uninitialize!development!initializing!private! !
 

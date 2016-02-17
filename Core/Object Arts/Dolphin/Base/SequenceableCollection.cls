@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Collection subclass: #SequenceableCollection
 	instanceVariableNames: ''
@@ -875,6 +875,13 @@ prevIndexOfSubCollection: aSequenceableCollection startingAt: anInteger ifAbsent
 		ifFalse: [index]
 !
 
+randomizeUsing: aRandom 
+	| order |
+	3 timesRepeat: [aRandom next].
+	order := self collect: [:each | aRandom next -> each].
+	order := order asSortedCollection: [:a :b | a key <= b key].
+	^order collect: [:each | each value]!
+
 readStream
 	"Answer a ReadStream on the receiver."
 
@@ -1173,6 +1180,7 @@ writeStream
 !SequenceableCollection categoriesFor: #prevIndexOf:from:to:!public!searching! !
 !SequenceableCollection categoriesFor: #prevIndexOfSubCollection:startingAt:!public!searching! !
 !SequenceableCollection categoriesFor: #prevIndexOfSubCollection:startingAt:ifAbsent:!public!searching! !
+!SequenceableCollection categoriesFor: #randomizeUsing:!operations!public! !
 !SequenceableCollection categoriesFor: #readStream!public!streaming! !
 !SequenceableCollection categoriesFor: #remove:ifAbsent:!public!removing! !
 !SequenceableCollection categoriesFor: #replaceBytesOf:from:to:startingAt:!double dispatch!primitives!private! !
