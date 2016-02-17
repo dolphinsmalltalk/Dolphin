@@ -8708,7 +8708,7 @@ scnAutoCSelection: pSCNotification
 	self presenter trigger: #autoComplete:startingAt:accept:
 		withArguments: (Array 
 				with: struct text
-				with: struct lParam + 1
+				with: struct scPosition + 1
 				with: accept).
 	accept value ifFalse: [self cancelAutoCompletion].
 	^0!
@@ -8746,7 +8746,7 @@ scnCharAdded: pSCNotification
 
 scnDoubleClick: pSCNotification 
 	"Private - Default handler for an SCN_DOUBLECLICK event.
-	No fields of the notification structure are set."
+	'position' 'modifiers' and 'line' fields of the notification structure are set."
 
 	"Implementation Note: This notification is ignored since it is redundant."
 
@@ -8760,7 +8760,9 @@ scnDwellEnd: pSCNotification
 		such as key press indicates the dwell is over.'
 	"
 
-	self presenter trigger: #hoverEnd: with: (SCNotification fromAddress: pSCNotification) point.
+	| scn |
+	scn := SCNotification fromAddress: pSCNotification.
+	self presenter trigger: #hoverEnd: with: scn point.
 	^0!
 
 scnDwellStart: pSCNotification 
@@ -8770,7 +8772,9 @@ scnDwellStart: pSCNotification
 		'...generated when the user hold the mouse still in one spot for the dwell period.'
 	"
 
-	self presenter trigger: #hoverStart: with: (SCNotification fromAddress: pSCNotification) point.
+	| scn |
+	scn := SCNotification fromAddress: pSCNotification.
+	self presenter trigger: #hoverStart: with: scn point.
 	^0!
 
 scnFocusIn: pSCNotification 
@@ -9010,7 +9014,7 @@ scnStyleNeeded: pSCNotification
 	^0!
 
 scnUpdateUI: pSCNotification
-	"Private - Respond to SCN_UPDATEUI notification. No fields of the notification structure are set.
+	"Private - Respond to SCN_UPDATEUI notification. The 'updated' field of notification structure is set.
 
 	From the Scintilla docs: 
 		'Either the text or styling of the document has changed or the selection range has changed.

@@ -11,11 +11,11 @@ ScintillaLibrary comment: 'ExternalLibrary class to wrap the Scintilla DLL (SciL
 !ScintillaLibrary methodsFor!
 
 directFunction: sciThis msg: msg wParam: wParam lParam: lParam 
-	<stdcall: sdword '_Scintilla_DirectFunction@16' handle dword dword dword>
+	<stdcall: intptr '_Scintilla_DirectFunction@16' handle dword uintptr uintptr>
 	^self invalidCall!
 
 directFunction: sciThis msg: msg wParam: wParam lpParam: lpParam 
-	<stdcall: sdword '_Scintilla_DirectFunction@16' handle dword dword void*>
+	<stdcall: intptr '_Scintilla_DirectFunction@16' handle dword uintptr void*>
 	^self invalidCall!
 
 versionFormatString
