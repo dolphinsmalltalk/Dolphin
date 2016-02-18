@@ -8,13 +8,12 @@ Model subclass: #Plimbole
 Plimbole guid: (GUID fromString: '{F27F7FF6-A16B-433C-BF1B-D38B3DB9EC3C}')!
 Plimbole comment: 'This is the Model class for the Plimbole Generative Music Sequencer. Plimbole has been designed to embrace the MVP design rules such that the main functionality is based in the model and is independent of the UI. To demostrate this you can create a Plimbole instance, load it with a piece and then start it playing:
 
-plimbole := Plimbole new.
+plimbole := Plimbole new register.
 plimbole signature: ''20_0_150_030621270423452562860760662170_9_A_12''.
 plimbole play.
 
-Make sure that you stop it and release any references to the object or it will hold the midi channel open.
-plimbole stop.
-plimbole := nil.'!
+Make sure that you stop it and unregister any references to the object or it will hold the midi channel open.
+plimbole stop unregister.'!
 !Plimbole categoriesForClass!MVP-Models! !
 !Plimbole methodsFor!
 
@@ -229,7 +228,7 @@ signature
 	stream
 		display: self signatureVersion;
 		nextPut: $_;
-		display: self scaleIndex;
+		display: self scaleIndex-1;
 		nextPut: $_;
 		display: self tempo;
 		nextPut: $_.
@@ -276,7 +275,7 @@ signature: aString
 	version := Integer readFrom: stream.
 	(#(10 20) includes: version) ifFalse: [self error: 'Wrong version'].
 	stream next = $_ ifFalse: [self error: 'Wrong format'].
-	scaleIndex := Integer readFrom: stream.
+	scaleIndex := (Integer readFrom: stream)+1.
 	stream next = $_ ifFalse: [self error: 'Wrong format'].
 	tempo := Integer readFrom: stream.
 	stream next = $_ ifFalse: [self error: 'Wrong format'].
