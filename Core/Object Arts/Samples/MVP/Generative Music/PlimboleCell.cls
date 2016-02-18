@@ -21,7 +21,7 @@ arrowImage
 	^image!
 
 color
-	^RGB fromHTMLSpec: (self palette at: self directionIndex + 1)!
+	^self palette at: self directionIndex + 2!
 
 direction
 	^self velocity degrees truncated!
@@ -59,6 +59,10 @@ location: aPoint
 
 palette
 	^palette ifNil: [palette := PlimbolePresenter defaultPalette]!
+
+palette: anArrayOfColors
+	palette := anArrayOfColors
+!
 
 printOn: aStream 
 	self basicPrintOn: aStream.
@@ -103,6 +107,7 @@ y
 !PlimboleCell categoriesFor: #location!accessing!public! !
 !PlimboleCell categoriesFor: #location:!accessing!public! !
 !PlimboleCell categoriesFor: #palette!accessing!private! !
+!PlimboleCell categoriesFor: #palette:!accessing!private! !
 !PlimboleCell categoriesFor: #printOn:!printing!public! !
 !PlimboleCell categoriesFor: #reverse!operations!public! !
 !PlimboleCell categoriesFor: #rotate!operations!public! !

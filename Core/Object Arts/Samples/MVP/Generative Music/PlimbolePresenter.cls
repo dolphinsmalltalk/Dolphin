@@ -44,9 +44,7 @@ bePentatonicScale
 clearAll
 	"Clear all the cells but leave everythinng else"
 
-	(self plimbole)
-		stop;
-		clearCells!
+	self plimbole clearCells!
 
 copyToClipboard
 	"Copy the current piece signature to the clipboard for sharing/later pasting"
@@ -71,6 +69,11 @@ initialize
 
 isPlaying
 	^self plimbole isPlaying!
+
+model: aModel
+	self model ifNotNil: [:m | m unregister].
+	super model: aModel.
+	aModel register!
 
 nextAltoVoice
 	"Cycles to the next alto voice chosen from the available alto voices"
@@ -121,31 +124,53 @@ onLeftButtonPressed: aMouseEvent
 				ifFalse: 
 					[existingCell rotate.
 					self plimbole update]]
-		ifNil: [self plimbole addCell: (PlimboleCell location: loc direction: 0)]!
+		ifNil: 
+			[| cell |
+			cell := PlimboleCell location: loc direction: 0.
+			cell palette: self palette.
+			self plimbole addCell: cell]!
+
+onPaletteChanged
+	| pal |
+	pal := self palette.
+	self view backcolor: pal first.
+	self plimbole cells do: [:each | each palette: pal]!
+
+onPlayStarted
+	self plimbole setVoices!
 
 onViewClosed
 	"The view has been closed. Stop any playimg and free up the MIDI channel."
 
 	super onViewClosed.
-	self plimbole stop.
-	self plimbole midiOutChannel free!
+	self plimbole unregister.
+!
 
 onViewOpened
 	super onViewOpened.
-	self palette: palette!
+	self palette: palette.
+	Plimbole 
+		when: #playStarted
+		send: #onPlayStarted
+		to: self.
+	self isPlaying ifTrue: [self onPlayStarted]!
 
 palette
 	^palette!
 
-palette: anArrayOfColors
-	palette := anArrayOfColors.
-	self view backcolor: (RGB fromHTMLSpec:  palette last)!
+palette: anArrayOfColors 
+	palette = anArrayOfColors 
+		ifFalse: 
+			[palette := anArrayOfColors.
+			self onPaletteChanged]!
 
 pasteClipboard
 	"Paste the contents of the clipboard (if possible) as new piece"
 
-	[self plimbole signature: Clipboard current getText] on: Error
-		do: [:ex | self showHintBubble: 'The Clipboard doesn''t have a piece to Paste.']!
+	
+	[self plimbole signature: Clipboard current getText.
+	self onPaletteChanged] on: Error
+			do: [:ex | self showHintBubble: 'The Clipboard doesn''t have a piece to Paste.']!
 
 play
 	self plimbole play!
@@ -239,11 +264,14 @@ slowerTempo
 !PlimbolePresenter categoriesFor: #favourites!constants!public! !
 !PlimbolePresenter categoriesFor: #initialize!accessing!initializing!private! !
 !PlimbolePresenter categoriesFor: #isPlaying!public! !
+!PlimbolePresenter categoriesFor: #model:!event handling!private! !
 !PlimbolePresenter categoriesFor: #nextAltoVoice!commands!public! !
 !PlimbolePresenter categoriesFor: #nextGridExtent!commands!public! !
 !PlimbolePresenter categoriesFor: #nextTenorVoice!commands!public! !
 !PlimbolePresenter categoriesFor: #onLeftButtonDoubleClicked:!event handling!private! !
 !PlimbolePresenter categoriesFor: #onLeftButtonPressed:!event handling!private! !
+!PlimbolePresenter categoriesFor: #onPaletteChanged!private! !
+!PlimbolePresenter categoriesFor: #onPlayStarted!private! !
 !PlimbolePresenter categoriesFor: #onViewClosed!event handling!private! !
 !PlimbolePresenter categoriesFor: #onViewOpened!event handling!private! !
 !PlimbolePresenter categoriesFor: #palette!public! !
@@ -264,7 +292,7 @@ defaultModel
 	^Plimbole new!
 
 defaultPalette
-	^#('#5D4131' '#7CC1A9' '#ED7829' '#EEA83D' '#FCEBB9' )!
+	^PlimboleShell palettes first!
 
 icon
 	^Plimbole icon!
@@ -277,7 +305,7 @@ resource_Default_view
 	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Default_view)
 	"
 
-	^#(#'!!STL' 3 788558 10 ##(Smalltalk.STBViewProxy)  8 ##(Smalltalk.PlimboleView)  98 12 0 0 98 2 8 1140850688 1 416 527174 1 ##(Smalltalk.Plimbole)  0 202 208 98 0 0 0 0 0 0 3 327734 ##(Smalltalk.Float)  8 0 0 0 0 0 0 248 63 328198 ##(Smalltalk.Point)  19 19 301 524550 ##(Smalltalk.ColorRef)  8 4278190080 0 7 0 0 0 416 983302 ##(Smalltalk.MessageSequence)  202 208 98 1 721670 ##(Smalltalk.MessageSend)  8 #createAt:extent: 98 2 594 4935 21 594 201 201 416 983302 ##(Smalltalk.WINDOWPLACEMENT)  8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 163 9 0 0 10 0 0 0 7 10 0 0 110 0 0 0] 98 0 594 193 193 0 27 )! !
+	^#(#'!!STL' 3 788558 10 ##(Smalltalk.STBViewProxy) 8 ##(Smalltalk.PlimboleView) 98 12 0 0 98 2 8 1140850688 1 416 0 524550 ##(Smalltalk.ColorRef) 8 4278190080 0 7 0 0 0 416 983302 ##(Smalltalk.MessageSequence) 202 208 98 1 721670 ##(Smalltalk.MessageSend) 8 #createAt:extent: 98 2 328198 ##(Smalltalk.Point) 4935 21 674 201 201 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 163 9 0 0 10 0 0 0 7 10 0 0 110 0 0 0] 98 0 674 193 193 0 27 )! !
 !PlimbolePresenter class categoriesFor: #defaultModel!public! !
 !PlimbolePresenter class categoriesFor: #defaultPalette!constants!private! !
 !PlimbolePresenter class categoriesFor: #icon!constants!public! !
