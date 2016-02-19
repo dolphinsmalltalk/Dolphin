@@ -138,7 +138,10 @@
     </ClCompile>
     <ClCompile Include="..\InterprtInit.cpp" />
     <ClCompile Include="..\largeintprim.cpp" />
-    <ClCompile Include="..\LoadImage.cpp" />
+    <ClCompile Include="..\LoadImage.cpp">
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">$(SolutionDir)zlib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(SolutionDir)zlib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
     <ClCompile Include="..\MemPrim.cpp" />
     <ClCompile Include="..\objmem.cpp" />
     <ClCompile Include="..\ObjMemInit.cpp" />
