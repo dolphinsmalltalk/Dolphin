@@ -9,18 +9,16 @@
 //
 #include "winres.h"
 #include "..\rc_stub.h"
-
+#include "Version.h"
 /////////////////////////////////////////////////////////////////////////////
 #undef APSTUDIO_READONLY_SYMBOLS
 
 /////////////////////////////////////////////////////////////////////////////
-// English (U.K.) resources
+// English (United Kingdom) resources
 
 #if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENG)
-#ifdef _WIN32
 LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_UK
 #pragma code_page(1252)
-#endif //_WIN32
 
 #ifdef APSTUDIO_INVOKED
 /////////////////////////////////////////////////////////////////////////////
@@ -35,8 +33,9 @@ END
 
 2 TEXTINCLUDE 
 BEGIN
-    "#include ""winres.h""\0"
-    "#include ""..\\rc_stub.h""\0"
+    "#include ""winres.h""\r\n"
+    "#include ""..\\rc_stub.h""\r\n"
+    "#include ""Version.h""\0"
 END
 
 3 TEXTINCLUDE 
@@ -47,7 +46,7 @@ END
 
 #endif    // APSTUDIO_INVOKED
 
-#endif    // English (U.K.) resources
+#endif    // English (United Kingdom) resources
 /////////////////////////////////////////////////////////////////////////////
 
 

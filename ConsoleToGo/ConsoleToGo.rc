@@ -10,17 +10,16 @@
 #include "winres.h"
 #include "..\rc_vm.h"
 #include "..\rc_stub.h"
+#include "Version.h"
 /////////////////////////////////////////////////////////////////////////////
 #undef APSTUDIO_READONLY_SYMBOLS
 
 /////////////////////////////////////////////////////////////////////////////
-// English (U.S.) resources
+// English (United States) resources
 
 #if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
-#ifdef _WIN32
 LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
 #pragma code_page(1252)
-#endif //_WIN32
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -48,7 +47,6 @@ BEGIN
             VALUE "FileDescription", "Dolphin ToGo Console Application"
             VALUE "FileVersion", "1, 0, 0, 1"
             VALUE "LegalCopyright", "Copyright © Object Arts 1997-2016."
-            VALUE "LegalTrademarks", ""
             VALUE "OriginalFilename", "ConsoleToGo.exe"
             VALUE "ProductName", "A Dolphin ToGo Console Application"
             VALUE "ProductVersion", "1, 0, 0, 1"
@@ -60,18 +58,16 @@ BEGIN
     END
 END
 
-#endif    // English (U.S.) resources
+#endif    // English (United States) resources
 /////////////////////////////////////////////////////////////////////////////
 
 
 /////////////////////////////////////////////////////////////////////////////
-// English (U.K.) resources
+// English (United Kingdom) resources
 
 #if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENG)
-#ifdef _WIN32
 LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_UK
 #pragma code_page(1252)
-#endif //_WIN32
 
 #ifdef APSTUDIO_INVOKED
 /////////////////////////////////////////////////////////////////////////////
@@ -88,7 +84,8 @@ END
 BEGIN
     "#include ""winres.h""\r\n"
     "#include ""..\\rc_vm.h""\r\n"
-    "#include ""..\\rc_stub.h""\0"
+    "#include ""..\\rc_stub.h""\r\n"
+    "#include ""Version.h""\0"
 END
 
 3 TEXTINCLUDE 
@@ -105,18 +102,18 @@ END
 // String Table
 //
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
     IDS_APPNAME             "A Dolphin Smalltalk Console Application"
 END
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
     IDP_INVALIDIMAGETYPE    "Executable file '%1' is corrupt"
     IDP_OPENIMAGEFAILURE    "Fail to load executable '%1'"
 END
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
     IDP_RECURSIVEDNU        "Recursive message not understood (#%2). See crash dump."
     IDP_STACKOVERFLOW       "Unrecoverable stack overflow (%1!u!, %2!x!, %3!x!, %4!u!). See crash dump."
@@ -135,17 +132,17 @@ BEGIN
     IDP_UNKNOWNIMAGEERROR   "An unknown error occurred while loading the executable"
 END
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
     IDP_FAILTOHOOK          "Unable to hook window creation events (%1!d!).%nPlease wait a few moments and try again."
 END
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
     IDS_APP_SHORT_NAME      "Dolphin"
 END
 
-#endif    // English (U.K.) resources
+#endif    // English (United Kingdom) resources
 /////////////////////////////////////////////////////////////////////////////
 
 

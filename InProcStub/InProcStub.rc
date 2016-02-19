@@ -9,7 +9,7 @@
 //
 #include "winres.h"
 #include "..\rc_stub.h"
-
+#include "Version.h"
 /////////////////////////////////////////////////////////////////////////////
 #undef APSTUDIO_READONLY_SYMBOLS
 
@@ -35,7 +35,7 @@ END
 BEGIN
     "#include ""winres.h""\r\n"
     "#include ""..\\rc_stub.h""\r\n"
-    "\0"
+    "#include ""Version.h""\0"
 END
 
 3 TEXTINCLUDE 

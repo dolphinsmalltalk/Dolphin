@@ -10,7 +10,7 @@
 #include "winres.h"
 #include "..\rc_stub.h"
 #include "..\rc_vm.h"
-
+#include "Version.h"
 /////////////////////////////////////////////////////////////////////////////
 #undef APSTUDIO_READONLY_SYMBOLS
 
@@ -56,7 +56,9 @@ END
 //
 
 HSPLIT                  CURSOR                  "..\\res\\hsplit.cur"
+
 VSPLIT                  CURSOR                  "..\\res\\vsplit.cur"
+
 #endif    // Neutral (Default) resources
 /////////////////////////////////////////////////////////////////////////////
 
@@ -92,7 +94,7 @@ BEGIN
         BEGIN
             VALUE "Comments", "Powered by Dolphin Smalltalk"
             VALUE "FileDescription", "Dolphin ToGo In-Proc COM Server Stub"
-			VALUE "FileVersion", "1, 0, 0, 1"
+            VALUE "FileVersion", "1, 0, 0, 1"
             VALUE "InternalName", "IPDolphin To Go"
             VALUE "LegalCopyright", "Portions Copyright © Object Arts 1997-2016"
             VALUE "OriginalFilename", "IPDolphinToGo.DLL"
@@ -134,7 +136,7 @@ BEGIN
     "#include ""winres.h""\r\n"
     "#include ""..\\rc_stub.h""\r\n"
     "#include ""..\\rc_vm.h""\r\n"
-    "\0"
+    "#include ""Version.h""\0"
 END
 
 3 TEXTINCLUDE 

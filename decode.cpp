@@ -1530,7 +1530,7 @@ void Interpreter::decodeMethodAt(CompiledMethod* meth, unsigned ip, ostream& str
 
 #include <strstream>
 
-string printString(OTE* pote)
+template <typename T> string printString(TOTE<T> pote)
 {
 	std::ostrstream stream;
 	stream << pote << ends;

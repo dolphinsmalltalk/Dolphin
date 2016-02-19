@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <!-- Version header with git tag -->
+  <PropertyGroup>
+    <VersionHeader>$(IntDir)Version.h</VersionHeader>
+  </PropertyGroup>
+  <Target Name="GenerateVersionHeader" BeforeTargets="BeforeResourceCompile">
+    <Exec Command='git describe --tag > "$(IntDir)version.txt"' Outputs="$(IntDir)version.txt" />
+    <ReadLinesFromFile File="$(IntDir)version.txt">
+      <Output TaskParameter="Lines" PropertyName="GitTag"/>
+    </ReadLinesFromFile>
+    <Delete Files="$(IntDir)version.txt"/>
+    <Message Importance="Normal" Text="Generating version.h for tag $(GitTag)..." />
+    <WriteLinesToFile Overwrite="true" File="$(VersionHeader)" Encoding="Ascii" Lines='
+// this file generated on $([System.DateTime]::Now)
+#if defined(_DEBUG)
+  #define GIT_TAG "$(GitTag) (Debug)"
+#else
+  #define GIT_TAG "$(GitTag)"
+#endif' />
+  </Target>
+  <Target Name='CleanVersionHeader' AfterTargets='AfterClean'>
+    <Delete Files='$(VersionHeader)'/>
+  </Target>
+  <ItemDefinitionGroup>
+    <ResourceCompile>
+      <AdditionalIncludeDirectories>$(IntDir);$(SolutionDir);$(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <TargetEnvironment>Win32</TargetEnvironment>
+      <GenerateStublessProxies>true</GenerateStublessProxies>
+    </Midl>
+    <ClCompile>
+      <AdditionalIncludeDirectories>$(SolutionDir)</AdditionalIncludeDirectories>
+      <StringPooling>true</StringPooling>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
+      <ForceConformanceInForLoopScope>true</ForceConformanceInForLoopScope>
+      <BrowseInformation>true</BrowseInformation>
+      <WarningLevel>Level3</WarningLevel>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <ProgramDatabaseFile />
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+</Project>
