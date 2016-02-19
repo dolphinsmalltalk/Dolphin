@@ -1091,7 +1091,7 @@ ProcessOTE* ProcessList::remove(ProcessOTE* aLink)
 		prevLink->m_location->BasicSetNext(nextLink);
 
 	// Nil out the nextLink pointer of the removed link (ref. count remains same overall)
-	nextLink = nil;
+	currLink->m_location->BasicClearNext();
 	
 	// May have removed last link in list
 	if (aLink == m_lastLink)
