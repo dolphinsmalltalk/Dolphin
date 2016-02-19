@@ -45,6 +45,8 @@ ostream& operator<<(ostream& stream, const VariantCharOTE* oteChars)
 {
 //    stream.lock();
 
+	ASSERT(oteChars->isBytes());
+
 	unsigned len=oteChars->bytesSize();
 	VariantCharObject* string = oteChars->m_location;
 	unsigned end = min(len, 80);
@@ -77,13 +79,35 @@ ostream& operator<<(ostream& st, const CompiledMethod& method)
 ostream& operator<<(ostream& st, const MethodOTE* ote)
 {
 	if (ote->isNil()) return st << "nil";
-	return st << *ote->m_location;
+	BehaviorOTE* oteClass = ote->m_oteClass;
+	if (oteClass == Pointers.ClassCompiledExpression)
+	{
+		st << "a CompiledExpression";
+	}
+	else if (oteClass == Pointers.ClassCompiledMethod)
+	{
+		st << *ote->m_location;
+	}
+	else
+	{
+		st << "**Non-method: " << reinterpret_cast<const OTE*>(ote) << "**";
+	}
+	return st;
 }
 
 ostream& operator<<(ostream& st, const StringOTE* ote)
 {
 	if (ote->isNil()) return st << "nil";
-	return st << "'" << reinterpret_cast<const VariantCharOTE*>(ote) << "'";
+	if (!ObjectMemory::isKindOf(Oop(ote), Pointers.ClassString))
+	{
+		// Expected a Symbol Oop, but got something else
+		st << "**Non-String: " << reinterpret_cast<const OTE*>(ote) << "**";
+	}
+	else
+	{
+		st << "'" << reinterpret_cast<const VariantCharOTE*>(ote) << "'";
+	}
+	return st;
 }
 
 //inline ostream& operator<<(ostream& st, const Symbol& symbol)
@@ -115,7 +139,7 @@ ostream& operator<<(ostream& stream, const SymbolOTE* ote)
 
 	if (!ObjectMemory::isKindOf(Oop(ote), Pointers.ClassSymbol))
 		// Expected a Symbol Oop, but got something else
-		return stream << "???" << reinterpret_cast<const OTE*>(ote);
+		return stream << "**Non-symbol**" << reinterpret_cast<const OTE*>(ote);
 	else
 		// Dump without a # prefix
 		return stream << reinterpret_cast<const VariantCharOTE*>(ote);
@@ -127,7 +151,7 @@ ostream& operator<<(ostream& stream, const BehaviorOTE* ote)
 
 	if (!ObjectMemory::isBehavior(Oop(ote)))
 		// Expected a class Oop, but got something else
-		return stream << "???" << reinterpret_cast<const OTE*>(ote);
+		return stream << "**Non-behaviour**" << reinterpret_cast<const OTE*>(ote);
 	else
 		return ote->isMetaclass() ?
 			stream << *static_cast<MetaClass*>(ote->m_location) :
@@ -1529,12 +1553,10 @@ void Interpreter::decodeMethodAt(CompiledMethod* meth, unsigned ip, ostream& str
 #endif
 
 #include <strstream>
-
-template <typename T> string printString(TOTE<T> pote)
+ 
+void DumpObject(const POTE pote)
 {
-	std::ostrstream stream;
-	stream << pote << ends;
-	return stream.str();
+	TRACESTREAM << pote << endl;
 }
 
 #ifdef _DEBUG
