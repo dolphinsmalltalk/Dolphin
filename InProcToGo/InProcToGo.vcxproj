@@ -175,7 +175,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\axhost.cpp" />
-    <ClCompile Include="..\InProcStart.cpp" />
+    <ClCompile Include="..\InProcStart.cpp">
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <ClCompile Include="..\InProcStub\CoWait.cpp">
       <PrecompiledHeader />
@@ -185,7 +187,7 @@
       <PrecompiledHeader />
     </ClCompile>
     <ClCompile Include="InProcPlugHole.cpp" />
-    <ClCompile Include="InProcStub.cpp" />
+    <ClCompile Include="InProcStub.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="InProcStub_p.c">
