@@ -1619,16 +1619,14 @@ methodsFor: categoryName
 methodsFor: name stamp: aString 
 	"Answer a chunk reader to read and compile method chunks for the receiver
 	to be classified into the method category with the specified <readableString> name.
-	The stamp is ignored. This method is for compatibility with the Squeak fileout format."
+	The stamp is ignored. This method is for compatibility with the Pharo fileout format."
 
 	| useName |
 	useName := name copyReplacing: (self environment at: #Category) separator withObject: $/.
 	^ChunkReader 
 		do: 
 			[:chunkString | 
-			| methodString |
-			methodString := chunkString copyReplaceAll: '_' with: ':='.
-			self compile: methodString classified: useName]
+			self compile: chunkString classified: useName]
 		inContext: self
 		atEnd: []!
 
