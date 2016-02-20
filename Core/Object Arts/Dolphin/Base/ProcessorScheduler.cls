@@ -720,6 +720,10 @@ initialize
 	self initializeInterruptSelectors!
 
 initializeInterruptSelectors
+	"Private - Initialize the mapping between VM interrupt numbers and the corresponding messages sent to self when those interrupts arrive.
+	Note that we have to store a copy of the literal array (which is marked immutable by the compiler) because the debugger adds/removes
+	some interrupt selectors when it is installed/uninstalled."
+
 	InterruptSelectors := #(#terminate: #stackOverflow: #unusedInterrupt: #unusedInterrupt: #gpFault: #idlePanic: #interruptWith: #onStartup: #kill: #fpException: #userBreak: #zeroDivide: #otOverflow: #constWrite: #win32Fault: #fpStackFault: #noMemory: #hospiceOverflow: #bereavedOverflow: #crtFault:) 
 				copy!
 
