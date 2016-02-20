@@ -1341,7 +1341,6 @@ extCallArgQWORD:
 		; Now we need to check that the high dword is zero
 		cmp		[ARG].m_digits[SIZEOF QWORD], 0
 		jnz		preCallFail									; Top dword not 0, so can't be 64-bit
-	@@:
 
 	pushIt:
 		ASSUME	ARG:PTR QWORDBytes

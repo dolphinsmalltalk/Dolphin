@@ -9,6 +9,7 @@
 //
 #include "winres.h"
 #include "..\rc_stub.h"
+#include "Version.h"
 /////////////////////////////////////////////////////////////////////////////
 #undef APSTUDIO_READONLY_SYMBOLS
 
@@ -48,7 +49,6 @@ BEGIN
             VALUE "LegalCopyright", "Copyright © Object Arts 1997-2016. STS © David Gorisek 2000-2016"
             VALUE "OriginalFilename", "Dolphin7.exe"
             VALUE "ProductName", "Dolphin Smalltalk"
-#include "Version.h"
             VALUE "ProductVersion", GIT_TAG
             VALUE "WARNING", "Please edit this as a text file rather than with the resource editor to preserve GIT_TAG"
         END
@@ -79,12 +79,14 @@ LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_UK
 // remains consistent on all systems.
 !APPLICATION            ICON                    "..\\Res\\Flipper.ico"
 
+
 /////////////////////////////////////////////////////////////////////////////
 //
 // RT_MANIFEST
 //
 
 IDR_MANIFEST            RT_MANIFEST             "..\\res\\dolphin.exe.manifest"
+
 
 #ifdef APSTUDIO_INVOKED
 /////////////////////////////////////////////////////////////////////////////
@@ -100,7 +102,8 @@ END
 2 TEXTINCLUDE 
 BEGIN
     "#include ""winres.h""\r\n"
-    "#include ""..\\rc_stub.h""\0"
+    "#include ""..\\rc_stub.h""\r\n"
+    "#include ""Version.h""\0"
 END
 
 3 TEXTINCLUDE 

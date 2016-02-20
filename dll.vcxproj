@@ -61,8 +61,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <CustomBuildStep>
       <Message>Copying "$(TargetPath)" to "$(SolutionDir)..\..\$(TargetFileName)"</Message>
-      <Command>copy "$(TargetPath)" "$(SolutionDir)..\..\$(TargetFileName)"
-</Command>
+      <Command>copy "$(TargetPath)" "$(SolutionDir)..\..\$(TargetFileName)"</Command>
       <Outputs>$(SolutionDir)..\..\$(TargetFileName)</Outputs>
       <Inputs>$(TargetPath)</Inputs>
     </CustomBuildStep>
@@ -78,7 +77,6 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <WholeProgramOptimization>true</WholeProgramOptimization>
-      <AdditionalIncludeDirectories>$(SolutionDir);$(SolutionDir)zlib</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>VM;VMDLL;NDEBUG;_CTYPE_DISABLE_MACROS;WIN32;_WINDOWS;WIN32_LEAN_AND_MEAN;WIN32_EXTRA_LEAN;STRICT;_MERGE_PROXYSTUB;_ATL_NO_MP_HEAP;ZEXPORT=__stdcall;ZEXPORTVA=__cdecl;_HAS_EXCEPTIONS=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <ExceptionHandling />
@@ -101,7 +99,6 @@
     <ResourceCompile>
       <PreprocessorDefinitions>NDEBUG</PreprocessorDefinitions>
       <Culture>0x0809</Culture>
-      <AdditionalIncludeDirectories>$(SolutionDir)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Link>
       <AdditionalOptions>/MACHINE:I386  %(AdditionalOptions)</AdditionalOptions>
@@ -123,15 +120,12 @@
       <FullProgramDatabaseFile>true</FullProgramDatabaseFile>
     </Link>
     <PreBuildEvent>
-      <Command>
-      </Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">
     <CustomBuildStep>
       <Message>Copying "$(TargetPath)" to "$(SolutionDir)..\..\$(TargetFileName)"</Message>
-      <Command>copy "$(TargetPath)" "$(SolutionDir)..\..\$(TargetFileName)"
-</Command>
+      <Command>copy "$(TargetPath)" "$(SolutionDir)..\..\$(TargetFileName)"</Command>
       <Outputs>$(SolutionDir)..\..\$(TargetFileName)</Outputs>
       <Inputs>$(TargetPath)</Inputs>
     </CustomBuildStep>
@@ -143,7 +137,6 @@
     <ClCompile>
       <AdditionalOptions>/LD  %(AdditionalOptions)</AdditionalOptions>
       <InlineFunctionExpansion>Disabled</InlineFunctionExpansion>
-      <AdditionalIncludeDirectories>$(SolutionDir);$(SolutionDir)zlib</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>DEBUG;_DEBUG;VM;VMDLL;_CTYPE_DISABLE_MACROS;WIN32;_WINDOWS;WIN32_LEAN_AND_MEAN;WIN32_EXTRA_LEAN;STRICT;_MERGE_PROXYSTUB;_ATL_NO_MP_HEAP;ZEXPORT=__stdcall;ZEXPORTVA=__cdecl;_HAS_EXCEPTIONS=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ExceptionHandling>
       </ExceptionHandling>
@@ -170,7 +163,6 @@
     <ResourceCompile>
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <Culture>0x0809</Culture>
-      <AdditionalIncludeDirectories>$(SolutionDir)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Link>
       <AdditionalOptions>/MACHINE:I386  %(AdditionalOptions)</AdditionalOptions>
@@ -222,7 +214,10 @@
       <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Level3</WarningLevel>
       <WarningLevel Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">Level3</WarningLevel>
     </ClCompile>
-    <ClCompile Include="SaveImage.cpp" />
+    <ClCompile Include="SaveImage.cpp">
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">$(SolutionDir)zlib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(SolutionDir)zlib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
     <ClCompile Include="SnapshotPrim.cpp" />
     <ClCompile Include="VMDLL.cpp">
       <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">MinSpace</Optimization>
@@ -292,5 +287,6 @@
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
+    <Import Project="$(SolutionDir)dolphin.targets" />
   </ImportGroup>
 </Project>

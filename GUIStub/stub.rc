@@ -9,7 +9,7 @@
 //
 #include "winres.h"
 #include "..\rc_stub.h"
-
+#include "Version.h"
 /////////////////////////////////////////////////////////////////////////////
 #undef APSTUDIO_READONLY_SYMBOLS
 
@@ -77,6 +77,7 @@ LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_UK
 // remains consistent on all systems.
 !APPLICATION            ICON                    "..\\Res\\ExeStub.ico"
 
+
 #ifdef APSTUDIO_INVOKED
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -92,7 +93,7 @@ END
 BEGIN
     "#include ""winres.h""\r\n"
     "#include ""..\\rc_stub.h""\r\n"
-    "\0"
+    "#include ""Version.h""\0"
 END
 
 3 TEXTINCLUDE 

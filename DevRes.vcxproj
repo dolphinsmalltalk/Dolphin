@@ -28,6 +28,7 @@
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
+    <Import Project="$(SolutionDir)dolphin.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -64,31 +65,9 @@
       <Outputs>$(SolutionDir)..\..\$(TargetFileName)</Outputs>
       <Inputs>$(TargetPath)</Inputs>
     </CustomBuildStep>
-    <Midl>
-      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <TargetEnvironment>Win32</TargetEnvironment>
-      <GenerateStublessProxies>true</GenerateStublessProxies>
-      <TypeLibraryName>.\WinDLL/DevRes.tlb</TypeLibraryName>
-    </Midl>
-    <ClCompile>
-      <AdditionalOptions>/LD  %(AdditionalOptions)</AdditionalOptions>
-      <Optimization>MinSpace</Optimization>
-      <InlineFunctionExpansion>Default</InlineFunctionExpansion>
-      <FavorSizeOrSpeed>Size</FavorSizeOrSpeed>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <StringPooling>true</StringPooling>
-      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
-      <FunctionLevelLinking>true</FunctionLevelLinking>
-      <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
-      <ForceConformanceInForLoopScope>true</ForceConformanceInForLoopScope>
-      <WarningLevel>Level3</WarningLevel>
-      <SuppressStartupBanner>true</SuppressStartupBanner>
-      <AdditionalIncludeDirectories>$(SolutionDir)</AdditionalIncludeDirectories>
-    </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>NDEBUG</PreprocessorDefinitions>
       <Culture>0x0809</Culture>
-      <AdditionalIncludeDirectories>$(SolutionDir)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Link>
       <AdditionalOptions>/MACHINE:I386 %(AdditionalOptions)</AdditionalOptions>
@@ -105,45 +84,17 @@
       <AdditionalDependencies />
       <IgnoreAllDefaultLibraries>true</IgnoreAllDefaultLibraries>
     </Link>
-    <PreBuildEvent>
-      <Command>
-      </Command>
-    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">
     <CustomBuildStep>
       <Message>Copying "$(TargetPath)" to "$(SolutionDir)..\..\$(TargetFileName)"</Message>
-      <Command>copy "$(TargetPath)" "$(SolutionDir)..\..\$(TargetFileName)"
-</Command>
+      <Command>copy "$(TargetPath)" "$(SolutionDir)..\..\$(TargetFileName)"</Command>
       <Outputs>$(SolutionDir)..\..\$(TargetFileName)</Outputs>
       <Inputs>$(TargetPath)</Inputs>
     </CustomBuildStep>
-    <Midl>
-      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <TargetEnvironment>Win32</TargetEnvironment>
-      <GenerateStublessProxies>true</GenerateStublessProxies>
-      <TypeLibraryName>.\WinDLL/DevRes.tlb</TypeLibraryName>
-    </Midl>
-    <ClCompile>
-      <AdditionalOptions>/LD  %(AdditionalOptions)</AdditionalOptions>
-      <Optimization>Disabled</Optimization>
-      <InlineFunctionExpansion>Disabled</InlineFunctionExpansion>
-      <PreprocessorDefinitions>DEBUG;_DEBUG;WIN32;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <StringPooling>true</StringPooling>
-      <FunctionLevelLinking>true</FunctionLevelLinking>
-      <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
-      <ForceConformanceInForLoopScope>true</ForceConformanceInForLoopScope>
-      <WarningLevel>Level3</WarningLevel>
-      <SuppressStartupBanner>true</SuppressStartupBanner>
-      <MinimalRebuild>true</MinimalRebuild>
-      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
-      <SmallerTypeCheck>true</SmallerTypeCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)</AdditionalIncludeDirectories>
-    </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <Culture>0x0809</Culture>
-      <AdditionalIncludeDirectories>$(SolutionDir)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Link>
       <AdditionalOptions>/MACHINE:I386 /NOENTRY %(AdditionalOptions)</AdditionalOptions>
@@ -488,12 +439,8 @@
   <ItemGroup>
     <ClInclude Include="rc_devrs.h" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="VMLib\VMLib.vcxproj">
-      <Project>{bc5d162d-46bc-42cf-85db-cb715ee8517e}</Project>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
+    <Import Project="$(SolutionDir)dolphin.targets" />
   </ImportGroup>
 </Project>

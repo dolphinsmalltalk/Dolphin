@@ -14,13 +14,10 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DevRes", "DevRes.vcxproj", 
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "InProcStub", "InProcStub\InProcStub.vcxproj", "{CD85B8FA-6C9E-45C0-AFC8-0A79A7E5D0F7}"
 	ProjectSection(ProjectDependencies) = postProject
-		{BC5D162D-46BC-42CF-85DB-CB715EE8517E} = {BC5D162D-46BC-42CF-85DB-CB715EE8517E}
+		{241D4E3E-44C0-40B7-BE1B-5249916FE631} = {241D4E3E-44C0-40B7-BE1B-5249916FE631}
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "InProcToGo", "InProcToGo\InProcToGo.vcxproj", "{90C32F90-C0B1-46FE-BACE-FB6566EB6F3C}"
-	ProjectSection(ProjectDependencies) = postProject
-		{382ABBF3-B32D-4D77-B303-346AA146921C} = {382ABBF3-B32D-4D77-B303-346AA146921C}
-	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GUIStub", "GUIStub\Stub.vcxproj", "{47007458-C534-493F-9A4C-936E5E0C91C8}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -40,9 +37,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "VMLib", "VMLib\VMLib.vcxpro
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GUIToGo", "ToGoStub\GuiToGo.vcxproj", "{12B536BA-143E-4F38-BD96-77B35467DB13}"
-	ProjectSection(ProjectDependencies) = postProject
-		{382ABBF3-B32D-4D77-B303-346AA146921C} = {382ABBF3-B32D-4D77-B303-346AA146921C}
-	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ToGoLib", "ToGoLib\ToGoLib.vcxproj", "{50AB410B-7D13-43FF-B426-FB02CA3FEF86}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -52,6 +46,11 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DolphinSureCrypto", "DolphinSureCrypto\DolphinSureCrypto.vcxproj", "{6D089C23-9091-47DB-B092-93D387425DC0}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Stubs", "Stubs", "{F6CB1D3C-CC39-4BCA-AC1A-DF0D1CA27580}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{89BB403F-881C-4B73-BA44-50A545697C93}"
+	ProjectSection(SolutionItems) = preProject
+		dolphin.props = dolphin.props
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

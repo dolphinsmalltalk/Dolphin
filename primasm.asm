@@ -1758,7 +1758,7 @@ BEGINPRIMITIVE primitiveInstVarAtPut
 	xchg	ecx, [eax].m_elements[edx*OOPSIZE]	; Exchange Oop of overwritten value with new value
 	ASSUME	eax:NOTHING
 	CountDownOopIn <c>							; Count down overwritten value
-@@:
+
 	; count down destroys eax, ecx, and edx
 	mov		ecx, [_SP-OOPSIZE*2]				; Reload receiver
 	mov		eax, [_SP]							; Reload new value into eax

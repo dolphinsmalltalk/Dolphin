@@ -29,6 +29,7 @@
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
+    <Import Project="$(SolutionDir)dolphin.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -75,7 +76,6 @@
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
       <FavorSizeOrSpeed>Size</FavorSizeOrSpeed>
       <OmitFramePointers>true</OmitFramePointers>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir);$(SolutionDir)zlib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>NDEBUG;WIN32;_WINDOWS;WIN32_LEAN_AND_MEAN;WIN32_EXTRA_LEAN;USE_VM_DLL;_WIN32_WINNT=0x0400;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
@@ -127,7 +127,6 @@
     <ClCompile>
       <Optimization>Disabled</Optimization>
       <InlineFunctionExpansion>Disabled</InlineFunctionExpansion>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir);$(SolutionDir)zlib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>DEBUG;_DEBUG;WIN32;_WINDOWS;WIN32_LEAN_AND_MEAN;WIN32_EXTRA_LEAN;USE_VM_DLL;_WIN32_WINNT=0x0400;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -174,49 +173,30 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\DolphinSmalltalk_i.c">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-      </PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">
-      </PrecompiledHeader>
+      <PrecompiledHeader />
     </ClCompile>
     <ClCompile Include="..\fatalerror.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-      </PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">
-      </PrecompiledHeader>
+      <PrecompiledHeader />
     </ClCompile>
     <ClCompile Include="..\ImageFileResource.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-      </PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">
-      </PrecompiledHeader>
+      <PrecompiledHeader />
     </ClCompile>
     <ClCompile Include="..\InProcStart.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-      </PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">
-      </PrecompiledHeader>
+      <PrecompiledHeader />
+      <AdditionalIncludeDirectories>$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <ClCompile Include="..\Launcher\ImageFileMapping.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-      </PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">
-      </PrecompiledHeader>
+      <PrecompiledHeader />
     </ClCompile>
     <ClCompile Include="..\Launcher\startvm.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-      </PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">
-      </PrecompiledHeader>
-      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)%(Filename)1.obj</ObjectFileName>
-      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">$(IntDir)%(Filename)1.obj</ObjectFileName>
+      <PrecompiledHeader />
+      <ObjectFileName>$(IntDir)%(Filename)1.obj</ObjectFileName>
     </ClCompile>
     <ClCompile Include="CoWait.cpp" />
     <ClCompile Include="InProcPlugHole.cpp" />
     <ClCompile Include="InProcStub.cpp" />
     <ClCompile Include="StdAfx.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -224,21 +204,14 @@
   </ItemGroup>
   <ItemGroup>
     <Midl Include="InProcStub.idl">
-      <TargetEnvironment Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Win32</TargetEnvironment>
-      <TargetEnvironment Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">Win32</TargetEnvironment>
-      <TypeLibraryName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\InProcStub.tlb</TypeLibraryName>
-      <TypeLibraryName Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">.\InProcStub.tlb</TypeLibraryName>
-      <HeaderFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">InProcStub.h</HeaderFileName>
-      <HeaderFileName Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">InProcStub.h</HeaderFileName>
-      <InterfaceIdentifierFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">InProcStub_i.c</InterfaceIdentifierFileName>
-      <InterfaceIdentifierFileName Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">InProcStub_i.c</InterfaceIdentifierFileName>
+      <TargetEnvironment>Win32</TargetEnvironment>
+      <TypeLibraryName>.\InProcStub.tlb</TypeLibraryName>
+      <HeaderFileName>InProcStub.h</HeaderFileName>
+      <InterfaceIdentifierFileName>InProcStub_i.c</InterfaceIdentifierFileName>
     </Midl>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="InProcStub.rc">
-      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(OUTDIR)</AdditionalIncludeDirectories>
-      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">$(OUTDIR)</AdditionalIncludeDirectories>
-    </ResourceCompile>
+    <ResourceCompile Include="InProcStub.rc" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\regkey.h" />
@@ -250,5 +223,6 @@
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
+    <Import Project="$(SolutionDir)dolphin.targets" />
   </ImportGroup>
 </Project>

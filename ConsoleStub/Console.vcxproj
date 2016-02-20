@@ -73,20 +73,13 @@
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
       <FavorSizeOrSpeed>Size</FavorSizeOrSpeed>
       <OmitFramePointers>true</OmitFramePointers>
-      <AdditionalIncludeDirectories>$(SolutionDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_CONSOLE;NDEBUG;STRICT;WIN32;USE_VM_DLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <BufferSecurityCheck>false</BufferSecurityCheck>
-      <FunctionLevelLinking>true</FunctionLevelLinking>
-      <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
-      <ForceConformanceInForLoopScope>true</ForceConformanceInForLoopScope>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>ist.h</PrecompiledHeaderFile>
       <BrowseInformation>true</BrowseInformation>
       <WarningLevel>Level3</WarningLevel>
-      <SuppressStartupBanner>true</SuppressStartupBanner>
-      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <CallingConvention>StdCall</CallingConvention>
       <CompileAs>Default</CompileAs>
     </ClCompile>
@@ -98,8 +91,6 @@
       <AdditionalOptions>/MACHINE:I386 %(AdditionalOptions)</AdditionalOptions>
       <OutputFile>$(OutDir)$(ProjectName)Stub.exe</OutputFile>
       <Version>6.0</Version>
-      <SuppressStartupBanner>true</SuppressStartupBanner>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Console</SubSystem>
       <LargeAddressAware>false</LargeAddressAware>
       <TerminalServerAware>false</TerminalServerAware>
@@ -108,7 +99,6 @@
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
       <DataExecutionPrevention />
       <TargetMachine>MachineX86</TargetMachine>
-      <ProgramDatabaseFile />
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">
@@ -125,19 +115,15 @@
     <ClCompile>
       <Optimization>Disabled</Optimization>
       <InlineFunctionExpansion>Disabled</InlineFunctionExpansion>
-      <AdditionalIncludeDirectories>$(SolutionDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>DEBUG;_DEBUG;_CONSOLE;STRICT;WIN32;USE_VM_DLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <BufferSecurityCheck>false</BufferSecurityCheck>
       <FunctionLevelLinking>true</FunctionLevelLinking>
-      <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
-      <ForceConformanceInForLoopScope>true</ForceConformanceInForLoopScope>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>ist.h</PrecompiledHeaderFile>
       <BrowseInformation>true</BrowseInformation>
       <WarningLevel>Level3</WarningLevel>
-      <SuppressStartupBanner>true</SuppressStartupBanner>
       <CallingConvention>StdCall</CallingConvention>
       <CompileAs>Default</CompileAs>
       <MinimalRebuild>true</MinimalRebuild>
@@ -194,5 +180,6 @@
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
+    <Import Project="$(SolutionDir)dolphin.targets"/>
   </ImportGroup>
 </Project>

@@ -30,6 +30,7 @@
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
+    <Import Project="$(SolutionDir)dolphin.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -74,12 +75,9 @@
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
       <FavorSizeOrSpeed>Size</FavorSizeOrSpeed>
       <OmitFramePointers>true</OmitFramePointers>
-      <AdditionalIncludeDirectories>$(SolutionDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>USE_VM_DLL;_CTYPE_DISABLE_MACROS;NDEBUG;STRICT;WIN32;WIN32_LEAN_AND_MEAN;WIN32_EXTRA_LEAN;_WINDOWS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
-      <FunctionLevelLinking>true</FunctionLevelLinking>
-      <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
       <ForceConformanceInForLoopScope>true</ForceConformanceInForLoopScope>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>ist.h</PrecompiledHeaderFile>
@@ -92,6 +90,7 @@
     <ResourceCompile>
       <PreprocessorDefinitions>NDEBUG;STUB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <Culture>0x0809</Culture>
+      <AdditionalIncludeDirectories>$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Link>
       <AdditionalOptions>/MACHINE:I386 %(AdditionalOptions)</AdditionalOptions>
@@ -121,7 +120,6 @@
     </Midl>
     <ClCompile>
       <InlineFunctionExpansion>Disabled</InlineFunctionExpansion>
-      <AdditionalIncludeDirectories>$(SolutionDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>DEBUG;_DEBUG;USE_VM_DLL;_CTYPE_DISABLE_MACROS;STRICT;WIN32;WIN32_LEAN_AND_MEAN;WIN32_EXTRA_LEAN;_WINDOWS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -190,5 +188,6 @@
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
+    <Import Project="$(SolutionDir)dolphin.targets" />
   </ImportGroup>
 </Project>
