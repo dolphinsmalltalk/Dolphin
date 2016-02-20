@@ -7,8 +7,7 @@
   Simple binary streams (to avoid pulling in a lot of CRT stream code)
 
 ******************************************************************************/
-#ifndef _ZFBINSTREAM_H_
-#define _ZFBINSTREAM_H_
+#pragma once
 
 #include "binstream.h"
 #include "zlib.h"
@@ -104,5 +103,3 @@ public:
 		return gzwrite(m_fp, const_cast<void* const>(pbIn), cBytes) == int(cBytes);
 	}
 };
-
-#endif

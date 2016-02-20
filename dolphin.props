@@ -28,6 +28,7 @@
       <NoLogo>False</NoLogo>
       <EnableAssemblyGeneratedCodeListing>true</EnableAssemblyGeneratedCodeListing>
       <AssembledCodeListingFile>$(IntDir)%(Filename).lst</AssembledCodeListingFile>
+      <AdditionalDependencies>$(SolutionDir)istasm.inc</AdditionalDependencies>
     </MASM>
   </ItemDefinitionGroup>
   <!-- Debug specific -->

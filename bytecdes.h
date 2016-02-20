@@ -4,9 +4,7 @@ bytecdes.h
 ==========
 Dolphin Instruction Set
 */
-
-#ifndef _IST_BYTECDES_H_
-#define _IST_BYTECDES_H_
+#pragma once
 
 ///////////////////////
 // Instruction Set
@@ -283,5 +281,3 @@ inline int lengthOfByteCode(BYTE opCode)
 						opCode == BlockCopy ? BlockCopyInstructionSize : 4;
 
 }
-
-#endif

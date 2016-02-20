@@ -9,53 +9,61 @@
 	Behavior level only
 
 ******************************************************************************/
-
-#ifndef _STCLASSDESC_H_
-#define _STCLASSDESC_H_
+#pragma once
 
 #include "STBehavior.h"
 
-class ClassDescription : public Behavior
+// Declare forward references
+namespace ST 
+{ 
+	class Class;
+	class MetaClass;
+}
+typedef TOTE<ST::Class> ClassOTE;
+typedef TOTE<ST::MetaClass> MetaClassOTE;
+
+namespace ST
 {
+	class ClassDescription : public Behavior
+	{
 	public:
-	StringOTE*	m_instanceVariables;
-	POTE		m_methodsCatalogue;
-	POTE		m_protocols;
+		StringOTE*	m_instanceVariables;
+		POTE		m_methodsCatalogue;
+		POTE		m_protocols;
 
-	enum {  InstanceVariablesIndex = Behavior::FixedSize, MethodsCatalogueIndex, ProtocolsIndex, FixedSize };
-};
+		enum { InstanceVariablesIndex = Behavior::FixedSize, MethodsCatalogueIndex, ProtocolsIndex, FixedSize };
+	};
 
-class Class : public ClassDescription 
-{
-public:
-	StringOTE*	m_name;
-	POTE		m_classPool;	/* dictionary of varName, storage */
-	POTE		m_sharedPools;
-	POTE		m_comment;
-	POTE		m_classCategories;
-	POTE		m_guid;
+	class Class : public ClassDescription
+	{
+	public:
+		StringOTE*	m_name;
+		POTE		m_classPool;	/* dictionary of varName, storage */
+		POTE		m_sharedPools;
+		POTE		m_comment;
+		POTE		m_classCategories;
+		POTE		m_guid;
 
-	enum { NameIndex = ClassDescription::FixedSize, ClassPoolIndex,
-			SharedPoolsIndex, CommentIndex, ClassCategoriesIndex, GUIDIndex, FixedSize };
+		enum {
+			NameIndex = ClassDescription::FixedSize, ClassPoolIndex,
+			SharedPoolsIndex, CommentIndex, ClassCategoriesIndex, GUIDIndex, FixedSize
+		};
 
 #if defined(_DEBUG)
-	const char* getName()
-	{
-		return m_name->m_location->m_characters;
-	}
+		const char* getName()
+		{
+			return m_name->m_location->m_characters;
+		}
 #endif
-};
+	};
 
-typedef TOTE<Class> ClassOTE;
+	class MetaClass : public ClassDescription
+	{
+	public:
+		ClassOTE*	m_instanceClass;
 
-class MetaClass : public ClassDescription
-{
-public:
-	ClassOTE*	m_instanceClass;
+		enum { InstanceClassIndex = ClassDescription::FixedSize, FixedSize };
+	};
+}
 
-	enum { InstanceClassIndex = ClassDescription::FixedSize, FixedSize };
-};
-
-extern ostream& operator<<(ostream& stream, const Class& cl);
-
-#endif	// EOF
+extern ostream& operator<<(ostream& stream, const ST::Class& cl);

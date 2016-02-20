@@ -18,32 +18,30 @@ INCLUDE IstAsm.Inc
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; Imports
 
-NewExternalStructurePointer EQU ?NewPointer@ExternalStructure@@SIPAV?$TOTE@X@@PAV?$TOTE@VBehavior@@@@PAX@Z
+NewExternalStructurePointer EQU ?NewPointer@ExternalStructure@ST@@SIPAV?$TOTE@X@@PAV?$TOTE@VBehavior@ST@@@@PAX@Z
 extern NewExternalStructurePointer:near32
-NewExternalStructure EQU ?New@ExternalStructure@@SIPAV?$TOTE@X@@PAV?$TOTE@VBehavior@@@@PAX@Z
+NewExternalStructure EQU ?New@ExternalStructure@ST@@SIPAV?$TOTE@X@@PAV?$TOTE@VBehavior@ST@@@@PAX@Z
 extern NewExternalStructure:near32
 extern NewUnsigned:near32
 extern NewSigned:near32
-NewStringWithLen EQU ?NewWithLen@String@@SIPAV?$TOTE@VString@@@@PBDI@Z
+NewStringWithLen EQU ?NewWithLen@String@ST@@SIPAV?$TOTE@VString@ST@@@@PBDI@Z
 extern NewStringWithLen:near32
-NewStringFromWide EQU ?NewFromWide@String@@SIPAV?$TOTE@VString@@@@PB_W@Z
+NewStringFromWide EQU ?NewFromWide@String@ST@@SIPAV?$TOTE@VString@ST@@@@PB_W@Z
 extern NewStringFromWide:near32
 
-NewBSTR			EQU ?NewBSTR@@YIPAV?$TOTE@VExternalAddress@@@@PBD@Z
+NewBSTR			EQU ?NewBSTR@@YIPAV?$TOTE@VExternalAddress@ST@@@@PBD@Z
 extern NewBSTR:near32
 
-NewBSTRFromWide	EQU ?NewBSTR@@YIPAV?$TOTE@VExternalAddress@@@@PB_W@Z
+NewBSTRFromWide	EQU ?NewBSTR@@YIPAV?$TOTE@VExternalAddress@ST@@@@PB_W@Z
 extern NewBSTRFromWide:near32
 
-NewGUID EQU ?NewGUID@@YIPAV?$TOTE@VVariantByteObject@@@@PAU_GUID@@@Z
+NewGUID EQU ?NewGUID@@YIPAV?$TOTE@VVariantByteObject@ST@@@@PAU_GUID@@@Z
 extern NewGUID:near32
 
-NewSigned64 EQU ?NewSigned64@Integer@@SGI_J@Z
+NewSigned64 EQU ?NewSigned64@Integer@ST@@SGI_J@Z
 extern NewSigned64:near32
-NewUnsigned64 EQU ?NewUnsigned64@Integer@@SGI_K@Z
+NewUnsigned64 EQU ?NewUnsigned64@Integer@ST@@SGI_K@Z
 extern NewUnsigned64:near32
-NewDWORD EQU ?NewDWORD@Interpreter@@SIPAV?$TOTE@VVariantByteObject@@@@KPAV?$TOTE@VBehavior@@@@@Z
-extern NewDWORD:near32
 SysFreeString EQU _SysFreeString@4
 extern SysFreeString:near32
 SysAllocString EQU _SysAllocString@4
@@ -138,7 +136,7 @@ ASSERTEQU	%RESULT, <eax>				; We rely on this convention when answering the resu
 ;;
 primitiveVirtualCall PROC
 	ASSUME	edx:DWORD
-	ASSUME	ecx:PTR CompiledMethod
+	ASSUME	ecx:PTR CompiledCodeObj
 
 	; We must save down IP, as we're going to overwrite it, and because it may
 	; be required if a callback into Smalltalk results
@@ -223,13 +221,13 @@ primitiveVirtualCall ENDP
 @asyncDLL32Call@16:
 asyncDLL32Call PROC STDCALL PUBLIC USES edi esi ebx,
 	pOverlapped:DWORD,
-	callContext:PTR InterpreterRegisters
+	callContext:PTR InterpRegisters
 
-	ASSUME	ecx:PTR CompiledMethod
+	ASSUME	ecx:PTR CompiledCodeObj
 	ASSUME	edx:DWORD
 
 	mov		eax, callContext									; Load pointer to context from stack top
-	ASSUME	eax:PTR InterpreterRegisters
+	ASSUME	eax:PTR InterpRegisters
 
 	push	pOverlapped										; ARG6: Overlapped? (yes)
 	push	eax												; ARG5: Pointer to thread context already atop of stack
@@ -310,7 +308,7 @@ getProcAddress ENDP
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; A fastcall function (ecx is pMethod, edx is argCount)
 primitiveDLL32Call PROC
-	ASSUME	ecx:PTR CompiledMethod
+	ASSUME	ecx:PTR CompiledCodeObj
 	ASSUME	edx:DWORD
 
 	; We must save down IP/SP, as we're going to overwrite IP, and because they may
@@ -386,7 +384,7 @@ _AnswerResult MACRO
 	mov		edx, argCount
 	ASSUME	edx:DWORD
 	mov		ecx, callContext
-	ASSUME	ecx:PTR InterpreterRegisters
+	ASSUME	ecx:PTR InterpRegisters
 
 	shl		edx, 2
 	
@@ -456,8 +454,8 @@ callExternalFunction PROC NEAR STDCALL,
 	pProc:PTR DWORD, 
 	argCount:DWORD, 
 	argTypes:PTR CallDescriptor, 
-	method:PTR CompiledMethod,
-	callContext:PTR InterpreterRegisters,
+	method:PTR CompiledCodeObj,
+	callContext:PTR InterpRegisters,
 	pOverlapped:DWORD
 
 	
@@ -468,7 +466,7 @@ callExternalFunction PROC NEAR STDCALL,
 	mov		eax, callContext
 	mov		DESCRIPTOR, argTypes					; N.B. DESTROY VALUE OF _BP SO MUST RELOAD
 	ASSUME	DESCRIPTOR:PTR CallDescriptor			; Use _IP to point at arg type in descriptor
-	mov		eax, (InterpreterRegisters PTR[eax]).m_pActiveFrame
+	mov		eax, (InterpRegisters PTR[eax]).m_pActiveFrame
 	mov		returnStructure, 0
 	mov		activeFrame, eax
 
@@ -489,7 +487,7 @@ retStruct:
 	
 	; N.B. Before we need the INDEX, we'll use it as a temp
 	mov		edx, [method]							; Load the method (NOT Interpreter::m_pMethod)
-	ASSUME	edx:PTR CompiledMethod
+	ASSUME	edx:PTR CompiledCodeObj
 
 	mov		edx, [edx].m_aLiterals[ecx*OOPSIZE]		; Load literal from frame
 	ASSUME	edx:PTR OTE								; Now we have the ExternalStructure class in ecx
@@ -545,7 +543,7 @@ performCall:
 
 	;; If not overlapped, must test for unwind
 	mov		TEMP, callContext			; Get the current interpreter context
-	mov		TEMP, (InterpreterRegisters PTR[TEMP]).m_pActiveFrame
+	mov		TEMP, (InterpRegisters PTR[TEMP]).m_pActiveFrame
 	cmp		TEMP, activeFrame			; Is it still the active frame
 	jne		unwindExit					; If not an unwind has been requested as this process had an error
 
@@ -562,7 +560,7 @@ returnSwitch:
 
 unwindExit:
 	mov		eax, callContext
-	ASSUME	eax:PTR InterpreterRegisters
+	ASSUME	eax:PTR InterpRegisters
 
 	; Reload interpreter context registers - we must load them all (they'll have changed)
 	mov		_SP, [eax].m_stackPointer
@@ -1458,7 +1456,7 @@ ExtCallArgSTRUCT:
 	mov		TEMPB, [DESCRIPTOR].m_args[INDEX-1]				; Get index of 'type' in literal frame
 
 	mov		TEMP2, [method]									; Load the method (NOT Interpreter::m_pMethod)
-	ASSUME	TEMP2:PTR CompiledMethod
+	ASSUME	TEMP2:PTR CompiledCodeObj
 
 	mov		TEMP, [TEMP2].m_aLiterals[TEMP*OOPSIZE]			; Load literal from frame
 	ASSUME	TEMP2:Oop										; TEMP2 is now the class of object expected OR the size
@@ -1626,7 +1624,7 @@ preCallFail:
 
 	lea		INDEX, [INDEX*2+(16*2)+1]			; failureCode = SmallInteger(16+INDEX)
 	mov		edx, callContext
-	ASSUME	edx:PTR InterpreterRegisters
+	ASSUME	edx:PTR InterpRegisters
 
 	xor		eax, eax							; Clear EAX in order to fail the primitive
 	
@@ -1719,7 +1717,7 @@ extCallRetHRESULT:
 	mov		ecx, RESULT
 	call	NewSigned
 	mov		edx, callContext
-	ASSUME	edx:PTR InterpreterRegisters
+	ASSUME	edx:PTR InterpRegisters
 	test	al, 1								; Is the result a SmallInteger?
 
 	mov		ecx, [edx].m_pActiveProcess
@@ -1786,7 +1784,7 @@ extCallRetHANDLE:
 	
 	mov		edx, [Pointers.ClassExternalHandle]
 	mov		ecx, RESULT
-	call	NewDWORD
+	call	NEWDWORD
 
 	AnswerObjectResult
 
@@ -1857,7 +1855,7 @@ extCallRetLPPVOID:
 extCallRetReserved:
 extCallRetVOID:									; Returning void just leaves receiver on stack
 	mov		ecx, callContext
-	ASSUME	ecx:PTR InterpreterRegisters
+	ASSUME	ecx:PTR InterpRegisters
 
 	;; Need to pop the arguments, so reload the argument count
 	mov		edx, argCount
@@ -1932,7 +1930,7 @@ extCallRetLP:
 	mov		TEMPB, [DESCRIPTOR].m_returnParm	; Get return parm literal frame index into ECX
 	mov		edx, RESULT							; Load return value for use as pointer parm
 	mov		eax, [method]						; Load the method (NOT Interpreter::m_pMethod)
-	ASSUME	eax:PTR CompiledMethod
+	ASSUME	eax:PTR CompiledCodeObj
 	mov		ecx, [eax].m_aLiterals[TEMP*OOPSIZE]; Load literal from frame
 	call	NewExternalStructurePointer
 	AnswerObjectResult
@@ -1941,7 +1939,7 @@ extCallRetSTRUCT4:
 	push	RESULT								; Push result on stack, so can pass address to NewExternalStructure
 	mov		TEMPB, [DESCRIPTOR].m_returnParm	; Get return parm literal frame index into ECX
 	mov		eax, [method]						; Load the method (NOT Interpreter::m_pMethod)
-	ASSUME	eax:PTR CompiledMethod
+	ASSUME	eax:PTR CompiledCodeObj
 	mov		ecx, [eax].m_aLiterals[TEMP*OOPSIZE]; Load literal from frame
 	mov		edx, esp							; Load return value for use as pointer parm
 	call	NewExternalStructure
@@ -1953,7 +1951,7 @@ extCallRetSTRUCT8:
 	push	eax
 	mov		TEMPB, [DESCRIPTOR].m_returnParm	; Get return parm literal frame index into ECX
 	mov		eax, [method]						; Load the method (NOT Interpreter::m_pMethod)
-	ASSUME	eax:PTR CompiledMethod
+	ASSUME	eax:PTR CompiledCodeObj
 	mov		ecx, [eax].m_aLiterals[TEMP*OOPSIZE]; Load literal from frame
 	mov		edx, esp							; Load return value for use as pointer parm
 	call	NewExternalStructure
@@ -1965,7 +1963,7 @@ extCallRetSTRUCT:
 	mov		edx, RESULT							; Load return value for use as pointer parm
 												; This should be the same value as 'returnStructure'
 	mov		eax, [method]						; Load the method (NOT Interpreter::m_pMethod)
-	ASSUME	eax:PTR CompiledMethod
+	ASSUME	eax:PTR CompiledCodeObj
 	mov		ecx, [eax].m_aLiterals[TEMP*OOPSIZE]; Load literal from frame
 	call	NewExternalStructure
 	AnswerObjectResult

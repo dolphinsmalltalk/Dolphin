@@ -9,9 +9,7 @@
 	As of 3.10 VM, class moved to OTE
 
 ******************************************************************************/
-
-#ifndef _ST_STOBJECT_H
-#define _ST_STOBJECT_H
+#pragma once
 
 enum { ObjectFixedSize = 0 };
 enum { ObjectHeaderSize = 0 };
@@ -22,30 +20,31 @@ typedef void* POBJECT;
 // Turn off warning about zero length arrays
 #pragma warning ( disable : 4200)
 
-// Not real Smalltalk classes
-class VariantByteObject //: public Object
+namespace ST
 {
-public:
-	BYTE m_fields[];
-};
+	// Not real Smalltalk classes
+	class VariantByteObject //: public Object
+	{
+	public:
+		BYTE m_fields[];
+	};
 
-class VariantCharObject //: public Object
-{
-public:
-	char m_characters[];
-};
+	class VariantCharObject //: public Object
+	{
+	public:
+		char m_characters[];
+	};
 
-// Useful for accessing an object by index
-class VariantObject //: public Object
-{
-public:
-	Oop				m_fields[];
-};
+	// Useful for accessing an object by index
+	class VariantObject //: public Object
+	{
+	public:
+		Oop				m_fields[];
+	};
+}
 
 #if defined (VM)
 	#include "ote.h"
-	typedef TOTE<VariantByteObject> BytesOTE;
-	typedef TOTE<VariantObject> PointersOTE;
+	typedef TOTE<ST::VariantByteObject> BytesOTE;
+	typedef TOTE<ST::VariantObject> PointersOTE;
 #endif
-
-#endif	// EOF

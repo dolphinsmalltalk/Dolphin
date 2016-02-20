@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="utf-8"?> 
+<AutoVisualizer xmlns="http://schemas.microsoft.com/vstudio/debugger/natvis/2010">
+  <!-- Classes and metaclasses -->
+  <Type Name="ST::MetaClass">
+    <DisplayString>{m_instanceClass,na} class</DisplayString>
+  </Type>
+  <Type Name="ST::Class">
+    <DisplayString>{m_name->m_location->m_characters,nasb}</DisplayString>
+  </Type>
+  <Type Name="TOTE&lt;ST::Class&gt;">
+    <DisplayString Condition="(Oop)this == Pointers.Nil">nil</DisplayString>
+    <DisplayString>{m_location,na}</DisplayString>
+    <Expand>
+      <ExpandedItem>m_location</ExpandedItem>
+    </Expand>
+  </Type>
+  <!-- MetaClassOTE is not used in VM
+  <Type Name="TOTE&lt;ST::MetaClass&gt;">
+    <DisplayString>{m_location->m_instanceClass,na} class</DisplayString>
+  </Type>-->
+  <Type Name="TOTE&lt;ST::Behavior&gt;">
+    <DisplayString Condition="(Oop)this == Pointers.Nil">nil</DisplayString>
+    <DisplayString Condition="m_oteClass == Pointers.ClassMetaclass">{(ST::MetaClass*)m_location,na}</DisplayString>
+    <DisplayString>{(ST::Class*)m_location,na}</DisplayString>
+  </Type>
+  <!--Strings and Symbols-->
+  <Type Name="ST::String">
+    <DisplayString Condition="(Oop)this == Pointers.Nil">nil</DisplayString>
+    <DisplayString>{m_characters,s}</DisplayString>
+    <!--<StringView>{m_characters,sb}</StringView>-->
+    <Expand></Expand>
+  </Type>
+  <Type Name="TOTE&lt;ST::String&gt;">
+    <DisplayString Condition="(Oop)this == Pointers.Nil">nil</DisplayString>
+    <DisplayString>{m_location,na}</DisplayString>
+    <Expand>
+      <ExpandedItem>m_location</ExpandedItem>
+    </Expand>
+  </Type>
+  <Type Name="TOTE&lt;ST::Symbol&gt;">
+    <DisplayString Condition="(Oop)this == Pointers.Nil">nil</DisplayString>
+    <DisplayString>{m_location,na}</DisplayString>
+    <Expand>
+      <ExpandedItem>m_location</ExpandedItem>
+    </Expand>
+  </Type>
+  <Type Name="ST::Symbol">
+    <DisplayString>#{m_characters,nasb}</DisplayString>
+    <Expand></Expand>
+  </Type>
+  <!--Processes and Semaphores-->
+  <Type Name="TOTE&lt;ST::ProcessList&gt;">
+    <DisplayString Condition="(Oop)this == Pointers.Nil">nil</DisplayString>
+    <DisplayString>{m_location,na}</DisplayString>
+  </Type>
+  <Type Name="TOTE&lt;ST::Process&gt;">
+    <DisplayString Condition="(Oop)this == Pointers.Nil">nil</DisplayString>
+    <DisplayString>{m_location,na}</DisplayString>
+    <Expand>
+      <ExpandedItem>m_location</ExpandedItem>
+    </Expand>
+  </Type>
+  <Type Name="ST::Process">
+    <DisplayString Condition="(Oop)m_myList != Pointers.Nil">a Process({((StringOTE*)m_name),na}, Priority={m_priority>>1}, Callbacks={m_callbackDepth&gt;&gt;1}, waiting)</DisplayString>
+    <DisplayString>a Process({((StringOTE*)m_name),na}, Priority={m_priority>>1}, Callbacks={m_callbackDepth&gt;&gt;1})</DisplayString>
+    <Expand>
+      <!--<Item Name="myList">m_location-&gt;m_myList</Item>-->
+      <Item Name="primitiveFailureCode">(OTE*)m_primitiveFailureCode,na</Item>
+      <Item Name="primitiveFailureData">(OTE*)m_primitiveFailureData,na</Item>
+      <Item Name="fpeMask">(OTE*)m_fpeMask,na</Item>
+      <Item Name="exceptionEnvironment">(OTE*)m_exceptionEnvironment,na</Item>
+      <LinkedListItems>
+        <HeadPointer>(ST::StackFrame*)(m_suspendedFrame-1)</HeadPointer>
+        <NextPointer>(ST::StackFrame*)(m_caller-1)</NextPointer>
+        <ValueNode>this</ValueNode>
+      </LinkedListItems>
+      <!--primitiveFailureCode primitiveFailureData fpeMask threadSync thread exceptionEnvironment _alreadyPrinted debugger -->
+    </Expand>
+  </Type>
+  <Type Name="TOTE&lt;ST::Semaphore&gt;">
+    <DisplayString Condition="(Oop)this == Pointers.Nil">nil</DisplayString>
+    <DisplayString>{m_location,na}</DisplayString>
+    <Expand>
+      <ExpandedItem>m_location</ExpandedItem>
+    </Expand>
+  </Type>
+  <Type Name="ST::Semaphore">
+    <DisplayString>a Semaphore(signals={m_excessSignals&gt;&gt;1}, waiting: {m_firstLink})</DisplayString>
+    <Expand>
+      <LinkedListItems>
+        <HeadPointer>(TOTE&lt;ST::Process&gt;*)m_firstLink</HeadPointer>
+        <NextPointer>(TOTE&lt;ST::Process&gt;*)m_location-&gt;m_nextLink</NextPointer>
+        <ValueNode>this</ValueNode>
+      </LinkedListItems>
+    </Expand>
+  </Type>
+  <Type Name="ST::StackFrame">
+    <!-- Omit the calling frame since the debugger will expand the list and show this as the address of each element anyway -->
+    <DisplayString Condition="(m_environment&amp;1)==0 &amp;&amp; ((TOTE&lt;void&gt;*)m_environment)->m_oteClass==Pointers.ClassBlockClosure">{{{(TOTE&lt;ST::BlockClosure&gt;*)m_environment,na}, ip {m_ip&gt;&gt;1}, sp {m_sp-1,x}, bp {m_bp-1,x}}</DisplayString>
+    <DisplayString>{{{m_method,na} &#64; {m_ip&gt;&gt;1}, sp {m_sp-1,x}, bp {m_bp-1,x}}}</DisplayString>
+    <Expand>
+      <ExpandedItem Condition="(m_environment&amp;1)==0 &amp;&amp; ((TOTE&lt;void&gt;*)m_environment)->m_oteClass==Pointers.ClassBlockClosure">(TOTE&lt;ST::BlockClosure&gt;*)m_environment</ExpandedItem>
+      <ExpandedItem Condition="(m_environment&amp;1)==0 &amp;&amp; ((TOTE&lt;void&gt;*)m_environment)->m_oteClass!=Pointers.ClassBlockClosure">(TOTE&lt;void&gt;*)m_environment</ExpandedItem>
+      <!--<Item Name="method" Condition="(m_environment&amp;1)==0 &amp;&amp; ((TOTE&lt;void&gt;*)m_environment)->m_oteClass!=Pointers.ClassBlockClosure">m_method</Item>-->
+      <Item Name="method" Condition="(m_environment&amp;1)==1 || ((TOTE&lt;void&gt;*)m_environment)->m_oteClass!=Pointers.ClassBlockClosure">m_method</Item>
+    </Expand>
+  </Type>
+  <!-- CompiledCode -->
+  <Type Name="TOTE&lt;ST::CompiledMethod&gt;">
+    <DisplayString Condition="(Oop)this == Pointers.Nil">nil</DisplayString>
+    <DisplayString>{m_location,na}</DisplayString>
+    <Expand>
+      <ExpandedItem>m_location</ExpandedItem>
+      <ArrayItems>
+        <Size>((m_size&amp;0x7FFFFFFF) - sizeof(CompiledMethod))&gt;&gt;2</Size>
+        <ValuePointer>(OTE**)&amp;(m_location-&gt;m_aLiterals)</ValuePointer>
+      </ArrayItems>
+    </Expand>
+  </Type>
+  <Type Name="ST::CompiledMethod">
+    <DisplayString>{m_methodClass}&gt;&gt;{m_selector->m_location->m_characters,nasb}</DisplayString>
+    <Expand>
+      <Item Name="Header">m_header</Item>
+      <Item Name="Bytecodes">(OTE*)m_byteCodes</Item>
+    </Expand>
+  </Type>
+  <Type Name="ST::STMethodHeader">
+    <DisplayString>{{isPrivate={isPrivate==1}, envTemps={(int)envTempCount}, stackTemps={(int)stackTempCount}, args={(int)argumentCount}, primitive={(int)primitiveIndex}}}</DisplayString>
+    <Expand></Expand>
+  </Type>
+  <Type Name="TOTE&lt;ST::BlockClosure&gt;">
+    <DisplayString Condition="(Oop)this == Pointers.Nil">nil</DisplayString>
+    <DisplayString>{m_location,na}</DisplayString>
+    <Expand>
+      <ExpandedItem>m_location</ExpandedItem>
+      <ArrayItems>
+        <Size>((m_size&amp;0x7FFFFFFF) - sizeof(ST::BlockClosure))&gt;&gt;2</Size>
+        <ValuePointer>(OTE**)&amp;(m_location-&gt;m_copiedValues)</ValuePointer>
+      </ArrayItems>
+    </Expand>
+  </Type>
+  <Type Name="ST::BlockClosure">
+    <DisplayString>[] @ {m_initialIP&gt;&gt;1} in {m_method}</DisplayString>
+    <Expand>
+      <Item Name="outer" Condition="m_outer != Pointers.Nil">(OTE*)m_outer</Item>
+      <Item Name="method">(OTE*)m_method</Item>
+      <Item Name="initialIP">(OTE*)m_initialIP,na</Item>
+      <Item Name="info">m_info</Item>
+      <Item Name="receiver">(TOTE&lt;void&gt;*)m_receiver</Item>
+    </Expand>
+  </Type>
+  <Type Name="ST::BlockInfo">
+    <DisplayString>{{args={(int)argumentCount}, stackTemps={(int)stackTempsCount}, envTemps={(int)envTempsCount}}}</DisplayString>
+  </Type>
+  <Type Name="TOTE&lt;ST::VariableBinding&gt;">
+    <DisplayString Condition="(Oop)this == Pointers.Nil">nil</DisplayString>
+    <DisplayString>{m_location,na}</DisplayString>
+    <Expand>
+      <Item Name="key">m_location-&gt;m_key</Item>
+      <Item Name="value">(OTE*)(m_location-&gt;m_value)</Item>
+    </Expand>
+  </Type>
+  <Type Name="ST::VariableBinding">
+    <DisplayString>{(TOTE&lt;void&gt;*)m_key} -&gt; {(TOTE&lt;void&gt;*)m_value}</DisplayString>
+  </Type>
+
+  <!-- Arrays -->
+  <Type Name="TOTE&lt;ST::Array&gt;">
+    <DisplayString Condition="(Oop)this == Pointers.Nil">nil</DisplayString>
+    <DisplayString>an Array[{(m_size &amp; 0x7FFFFFF)&gt;&gt;2}]</DisplayString>
+    <Expand>
+      <ArrayItems>
+        <Size>(m_size &amp; 0x7FFFFFF)&gt;&gt;2</Size>
+        <ValuePointer>(OTE**)(m_location->m_elements)</ValuePointer>
+      </ArrayItems>
+    </Expand>
+  </Type>
+  <!-- FFI types -->
+  <Type Name="ST::ExternalHandle">
+    <DisplayString>an ExternalHandle({(DWORD)m_handle,x})</DisplayString>
+  </Type>
+  <Type Name="TOTE&lt;ST::ExternalHandle&gt;">
+    <DisplayString Condition="(Oop)this == Pointers.Nil">nil</DisplayString>
+    <DisplayString>{m_location,nax}</DisplayString>
+  </Type>
+  <!-- Generic OTEs -->
+  <Type Name="OTE">
+    <DisplayString>{(TOTE&lt;void&gt;*)this</DisplayString>
+  </Type>
+  <Type Name="TOTE&lt;void&gt;">
+      <!-- SmallInteger -->
+    <DisplayString Condition="((Oop)this) &amp; 1 == 1">{(int)(((Oop)this)>>1),na}</DisplayString>
+    <DisplayString Condition="m_flags.m_free==1">**Freed Object**</DisplayString>
+    <!-- Pseudo vars -->
+    <DisplayString Condition="(Oop)this == Pointers.Nil">nil</DisplayString>
+    <DisplayString Condition="(Oop)this == Pointers.True">true</DisplayString>
+    <DisplayString Condition="(Oop)this == Pointers.False">false</DisplayString>
+    <!-- Common types with debug visualization -->
+    <DisplayString Condition="m_oteClass == Pointers.ClassSymbol">{(TOTE&lt;ST::Symbol&gt;*)this,na}</DisplayString>
+    <DisplayString Condition="m_oteClass == Pointers.ClassString">{(TOTE&lt;ST::String&gt;*)this,na}</DisplayString>
+    <DisplayString Condition="m_oteClass == Pointers.ClassCompiledMethod">{(TOTE&lt;ST::CompiledMethod&gt;*)this,na}</DisplayString>
+    <DisplayString Condition="m_oteClass == Pointers.ClassBlockClosure">{(TOTE&lt;ST::BlockClosure&gt;*)this,na}</DisplayString>
+    <DisplayString Condition="m_oteClass == Pointers.ClassVariableBinding">{(TOTE&lt;ST::VariableBinding&gt;*)this,na}</DisplayString>
+    <DisplayString Condition="m_oteClass == Pointers.ClassMetaclass">{(TOTE&lt;ST::Behavior&gt;*)this,na}</DisplayString>
+    <DisplayString Condition="m_oteClass->m_oteClass == Pointers.ClassMetaclass">{(TOTE&lt;ST::Class&gt;*)this,na}</DisplayString>
+    <DisplayString>a {m_oteClass,na}</DisplayString>
+    <Expand>
+      <ExpandedItem Condition="m_oteClass == Pointers.ClassBlockClosure">(ST::BlockClosure*)m_location</ExpandedItem>
+      <ExpandedItem Condition="m_oteClass == Pointers.ClassCompiledMethod">(ST::CompiledMethod*)m_location</ExpandedItem>
+      <Item Name="flags">m_flags</Item>
+      <Item Name="byteSize(+null)" Condition="m_flags.m_pointer==0 &amp;&amp; m_flags.m_weakOrZ==1">(m_size&amp;0x7FFFFFFF)+1</Item>
+      <Item Name="byteSize" Condition="m_flags.m_pointer==0 &amp;&amp; m_flags.m_weakOrZ==0">m_size&amp;0x7FFFFFFF</Item>
+      <Item Name="wordSize" Condition="m_flags.m_pointer==1">(m_size&amp;0x7FFFFFFF)&gt;&gt;2</Item>
+      <ArrayItems Condition="m_oteClass == Pointers.ClassBlockClosure">
+        <Size>((m_size&amp;0x7FFFFFFF) - sizeof(ST::BlockClosure))&gt;&gt;2</Size>
+        <ValuePointer>(OTE**)&amp;(((ST::BlockClosure*)m_location)-&gt;m_copiedValues)</ValuePointer>
+      </ArrayItems>
+      <ArrayItems Condition="m_flags.m_pointer==1">
+        <Size>(m_size&amp;0x7FFFFFFF)&gt;&gt;2</Size>
+        <ValuePointer>(OTE**)&amp;(((ST::VariantObject*)m_location)->m_fields)</ValuePointer>
+      </ArrayItems>
+      <ArrayItems Condition="m_flags.m_pointer==0">
+        <Size>(m_size&amp;0x7FFFFFFF)</Size>
+        <ValuePointer>((ST::VariantByteObject*)m_location)->m_fields,x</ValuePointer>
+      </ArrayItems>
+    </Expand>
+  </Type>
+  <Type Name="OTEFlags">
+    <DisplayString>{{space={(int)m_space}, weak/nullterm={m_weakOrZ==1}, finalizable={m_finalize==1}}}</DisplayString>
+    <Expand></Expand>
+  </Type>
+  </AutoVisualizer>

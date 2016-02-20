@@ -53,6 +53,11 @@ inline void Process::NewOverlapSemaphore()
 	ObjectMemory::storePointerWithValue(*reinterpret_cast<Oop*>(&m_waitOverlap), reinterpret_cast<OTE*>(Semaphore::New()));
 }
 
+inline void Process::SetThread(void* handle)
+{
+	ObjectMemory::storePointerWithUnrefCntdValue(m_thread, Oop(handle) + 1);
+}
+
 ///////////////////////////////////////////////////////////////////////////////
 // List management
 ///////////////////////////////////////////////////////////////////////////////

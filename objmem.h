@@ -8,16 +8,18 @@
 	(see the "Blue Book" specification)
 
 ******************************************************************************/
-#ifndef _IST_OBJMEM_H_
-#define _IST_OBJMEM_H_
+#pragma once
 
 #include "Ist.h"
 #include <stdio.h>
 #include "STObject.h"
 #include "STVirtualObject.h"
+#include "STArray.h"
+#include "STString.h"
+#include "STMemoryManager.h"
 #include "ImageHeader.h"
-class Array;
-typedef TOTE<Array> ArrayOTE;
+
+using namespace ST;
 
 #define PRIVATE_HEAP
 //#undef PRIVATE_HEAP
@@ -38,10 +40,6 @@ typedef TOTE<Array> ArrayOTE;
 
 #define PoolGranularity 8
 
-class MemoryManager;
-class Array;
-class Context;
-
 class ibinstream;
 class obinstream;
 
@@ -52,7 +50,6 @@ class obinstream;
 
 class ObjectMemory
 {
-	friend class Character;
 public:
 
 	// Public interface for use of Interpreter
@@ -79,10 +76,6 @@ public:
 	static MWORD fetchWordOfObject(MWORD fieldIndex, Oop objectPointer);
 	static MWORD storeWordOfObjectWithValue(MWORD fieldIndex, Oop objectPointer, MWORD valueWord);
 
-	// Byte Access
-	//static BYTE fetchByteOfObject(MWORD byteIndex, Oop objectPointer);
-	//static BYTE storeByteOfObjectWithValue(MWORD byteIndex, Oop objectPointer, BYTE valueWord);
-
 	// Formerly Private reference count management
 	static void  __fastcall countUp(Oop objectPointer);
 	static void __fastcall countDown(Oop rootObjectPointer);
@@ -97,9 +90,6 @@ public:
 
 	// Use CRT Small block heap OR pool if size <= this threshold
 	enum { MaxSmallObjectSize = 0x3f8 };
-	// PoolGranularity is #defined in order to make use of conditional compilation
-	//static MWORD MaxSizeOfPoolObject;
-	//static int	 NumPools;
 	enum { PoolObjectSizeLimit = 144 };
 	enum { MinObjectSize = /*sizeof(Object)+*/PoolGranularity };
 	enum { MaxPools = (PoolObjectSizeLimit-MinObjectSize)/PoolGranularity + 1 };
@@ -159,14 +149,10 @@ public:
 	static bool isPointers(Oop objectPointer);	// faster than Interpreter::isPointers()
 	static bool isBytes(Oop objectPointer);
 	
-	// All these routines fail form SmallIntegers (hence the OTE argument)
+	// All these routines fail for SmallIntegers (hence the OTE argument)
 	static bool __fastcall isAMetaclass(const OTE* ote);
 	static bool __fastcall isBehavior(Oop objectPointer);
 	static bool isAContext(const OTE* ote);
-
-	// These now defined as macros to improve performance of debug version
-	//static bool isIntegerValue(SMALLINTEGER valueWord);
-	//static bool isPositiveIntegerValue(DWORD valueWord);
 
 	// This is a very simple routine which can work entirely in registers (hence fastcall)
 	static bool __fastcall inheritsFrom(const BehaviorOTE* behaviorPointer, const BehaviorOTE* classPointer);
@@ -208,6 +194,7 @@ public:
 	static void addRefsFrom(OTE* ote);
 	static void checkPools();
 	static void checkStackRefs();
+	static bool isValidOop(Oop);
 #endif
 
 #ifdef MEMSTATS
@@ -217,8 +204,6 @@ public:
 
 	static int __stdcall SaveImageFile(const char* fileName, bool bBackup, int nCompressionLevel);
 	static HRESULT __stdcall LoadImage(const char* szImageName, LPVOID imageData, UINT imageSize, bool bIsDevSys);
-
-	static WORD __stdcall todayAsDATEWORD();
 
 	static int gpFaultExceptionFilter(LPEXCEPTION_RECORD pExRec);
 
@@ -283,11 +268,6 @@ public:
 	};
 
 	friend class OTEPool;
-
-private:
-	// Critical section management to protect object memory with multiple threads
-	//static void EnterCritSection();
-	//static void ExitCritSection();
 
 private:
 	///////////////////////////////////////////////////////////////////////////
@@ -459,18 +439,12 @@ private:
 	static OTE* __fastcall FixupPointer(OTE* pSavedPointer, OTE* pSavedBase);
 	static HRESULT __stdcall LoadPointers(ibinstream& imageFile, const ImageHeader*, size_t&);
 	static HRESULT __stdcall LoadObjectTable(ibinstream& imageFile, const ImageHeader*);
-	//static bool __stdcall LoadPermanentObjects(ibinstream& imageFile, const ImageHeader*);
 	static HRESULT __stdcall LoadObjects(ibinstream& imageFile, const ImageHeader*, size_t&);
 	static HRESULT __stdcall LoadObject(OTE* ote, ibinstream& imageFile, const ImageHeader*, size_t&);
 	static void __stdcall FixupObject(OTE* ote, MWORD* oldLocation, const ImageHeader*);
 	static void __stdcall PostLoadFix();
 
 public:			// Public Data
-
-	// N.B. Must pack on 4 byte boundary
-	//static DWORD dwPageSize;		We know we're running on Intel, so can hard code page size like CRT library
-	//static DWORD dwOopsPerPage;
-	//static DWORD dwAllocationGranularity;		Ditto
 
 	enum { dwOopsPerPage = dwPageSize/sizeof(Oop) };
 
@@ -505,10 +479,6 @@ private:
 	static OTE*		m_pFreePointerList;				// Head of list of free Object Table Entries
 
 private:
-	// Critical section to protect the async queues
-//	static CRITICAL_SECTION m_csAsyncProtect;
-//	int		m_nInCritSection;							// Used in assertion checks
-
 	static FixedSizePool	m_pools[MaxPools];
 };
 
@@ -519,7 +489,6 @@ MWORD* __stdcall AllocateVirtualSpace(MWORD maxBytes, MWORD initialBytes);
 
 
 // Globally accessible pointers, but please don't write to them!
-#include "VMPointers.h"
 #define NumPointers (sizeof(_Pointers)/sizeof(Oop) - ObjectHeaderSize)
 
 /******************************************************************************
@@ -537,6 +506,13 @@ MWORD* __stdcall AllocateVirtualSpace(MWORD maxBytes, MWORD initialBytes);
 #define ObjectMemoryIsIntegerValue		isIntegerValue
 #define ObjectMemoryIsPositiveIntegerValue		isPositiveIntegerValue
 
+#ifdef _DEBUG
+inline bool ObjectMemory::isValidOop(Oop objectPointer)
+{
+	return isIntegerObject(objectPointer) || (objectPointer & (sizeof(OTE)-1)) == 0 &&
+		objectPointer >= reinterpret_cast<Oop>(m_pOT) && objectPointer < reinterpret_cast<Oop>(m_pOT + m_nOTSize);
+}
+#endif
 
 // Make it a macro to speed up debug version a bit
 // All of these macros refer to their args only once, so shouldn't be any
@@ -579,18 +555,6 @@ inline bool ObjectMemory::isPermanent(OTE* ote)
 	ASSERT(!isIntegerObject(ote));
 	return ote < pointerFromIndex(NumPermanent);
 }
-
-/*inline bool ObjectMemory::isIntegerValue(SMALLINTEGER valueWord)
-{
-	return valueWord >= MinSmallInteger && valueWord <= MaxSmallInteger;
-	//return !(abs(valueWord) < 0x40000000);	wrong, neg can be one larger
-}
-
-inline bool ObjectMemory::isPositiveIntegerValue(DWORD valueWord)
-{
-	return valueWord <= MaxSmallInteger;
-}
-*/
 
 inline bool ObjectMemory::isPointers(Oop objectPointer)
 {
@@ -1057,4 +1021,17 @@ inline bool ObjectMemory::IsConstObj(void* ptr)
 {
 	return ptr >= m_pConstObjs && ptr < static_cast<BYTE*>(m_pConstObjs)+dwPageSize;
 }
-#endif
+
+///////////////////////////////////////////////////////////////////////////////
+// ST::Array allocators
+
+inline ArrayOTE* ST::Array::New(unsigned size)
+{
+	return reinterpret_cast<ArrayOTE*>(ObjectMemory::newPointerObject(Pointers.ClassArray, size));
+}
+
+inline ArrayOTE* ST::Array::NewUninitialized(unsigned size)
+{
+	return reinterpret_cast<ArrayOTE*>(ObjectMemory::newUninitializedPointerObject(Pointers.ClassArray, size));
+}
+

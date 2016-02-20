@@ -21,28 +21,30 @@
 ******************************************************************************/
 #pragma once
 
-#ifndef _VMPointers_H_
-#define _VMPointers_H_
-
 #if defined(VM)
-class String;
-typedef TOTE<String> StringOTE;
-class Symbol;
-typedef TOTE<Symbol> SymbolOTE;
-class Semaphore;
-typedef TOTE<Semaphore> SemaphoreOTE;
-class ProcessorScheduler;
-typedef TOTE<ProcessorScheduler> SchedulerOTE;
-class Array;
-typedef TOTE<Array> ArrayOTE;
-class BlockClosure;
-typedef TOTE<BlockClosure> BlockOTE;
-class ExternalHandle;
-typedef TOTE<ExternalHandle> HandleOTE;
-class MemoryManager;
-typedef TOTE<MemoryManager> MemManOTE;
-class VariableBinding;
-typedef TOTE<VariableBinding> VariableBindingOTE;
+namespace ST
+{
+	class String;
+	class Symbol;
+	class Semaphore;
+	class ProcessorScheduler;
+	class Array;
+	class BlockClosure;
+	class ExternalHandle;
+	class Behavior;
+	class MemoryManager;
+	class VariableBinding;
+}
+typedef TOTE<ST::String> StringOTE;
+typedef TOTE<ST::Symbol> SymbolOTE;
+typedef TOTE<ST::Semaphore> SemaphoreOTE;
+typedef TOTE<ST::ProcessorScheduler> SchedulerOTE;
+typedef TOTE<ST::Array> ArrayOTE;
+typedef TOTE<ST::BlockClosure> BlockOTE;
+typedef TOTE<ST::ExternalHandle> HandleOTE;
+typedef TOTE<ST::Behavior> BehaviorOTE;
+typedef TOTE<ST::MemoryManager> MemManOTE;
+typedef TOTE<ST::VariableBinding> VariableBindingOTE;
 #else
 typedef void OTE;
 typedef OTE StringOTE;
@@ -211,5 +213,3 @@ struct VMPointers //: public Object
 // Globally accessible pointers, but please don't write to them!
 extern /*const*/ VMPointers Pointers;
 extern VMPointers _Pointers;
-
-#endif

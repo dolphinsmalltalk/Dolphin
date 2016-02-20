@@ -50,6 +50,22 @@ CRITICAL_SECTION Interpreter::m_csAsyncProtect;
 // Process/Semaphore Primitives and Helpers
 ///////////////////////////////////////////////////////////////////////////////
 
+inline bool ST::Process::IsReady() const
+{
+	return !m_myList->isNil() && !ObjectMemory::isKindOf(m_myList, Pointers.ClassSemaphore);
+}
+
+inline void ST::Process::BasicClearNext()
+{
+	m_nextLink = reinterpret_cast<ProcessOTE*>(Pointers.Nil);
+}
+
+inline void ST::Process::ClearSuspendedFrame()
+{
+	HARDASSERT(isIntegerObject(m_suspendedFrame) || m_suspendedFrame == (Oop)Pointers.Nil);
+	m_suspendedFrame = reinterpret_cast<Oop>(Pointers.Nil);
+}
+
 void InterpreterRegisters::FetchContextRegisters()
 {
 	HARDASSERT(!m_pActiveProcess->IsWaiting());

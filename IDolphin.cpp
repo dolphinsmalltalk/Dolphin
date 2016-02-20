@@ -268,13 +268,3 @@ STDMETHODIMP_(BOOL) CDolphinSmalltalk::IsImmutable(
 {
 	return isIntegerObject(oop) || (reinterpret_cast<OTE*>(oop)->isImmutable());
 }
-
-//STDMETHODIMP_(void) CDolphinSmalltalk::AddReferenceSource(IReferenceSource* piRefSource)
-//{
-//	Interpreter::AddReferenceSource(piRefSource);
-//}
-//
-//STDMETHODIMP_(void) CDolphinSmalltalk::RemoveReferenceSource(IReferenceSource* piRefSource)
-//{
-//	Interpreter::RemoveReferenceSource(piRefSource);
-//}

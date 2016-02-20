@@ -175,13 +175,13 @@ extern primitiveHighBit:near32
 extern primitiveLowBit:near32
 
 ; Imports from LargeIntPrim.CPP
-liBitInvert EQU ?liBitInvert@@YGPAV?$TOTE@VLargeInteger@@@@PAV1@@Z
+liBitInvert EQU ?liBitInvert@@YGPAV?$TOTE@VLargeInteger@ST@@@@PAV1@@Z
 extern liBitInvert:near32
 
-liNegate  EQU ?liNegate@@YGIPAV?$TOTE@VLargeInteger@@@@@Z
+liNegate  EQU ?liNegate@@YGIPAV?$TOTE@VLargeInteger@ST@@@@@Z
 extern liNegate:near32
 
-liNormalize  EQU ?liNormalize@@YGIPAV?$TOTE@VLargeInteger@@@@@Z
+liNormalize  EQU ?liNormalize@@YGIPAV?$TOTE@VLargeInteger@ST@@@@@Z
 extern liNormalize:near32
 
 normalizeIntermediateResult EQU ?normalizeIntermediateResult@@YGII@Z
@@ -204,55 +204,55 @@ extern PRIMITIVENEXTPUTALL:near32
 extern ?primitiveAtEnd@Interpreter@@CIHXZ:near32
 
 extern ?primitiveValueWithArgs@Interpreter@@CIHXZ:near32
-extern ?primitivePerform@Interpreter@@CIHAAVCompiledMethod@@I@Z:near32
+extern ?primitivePerform@Interpreter@@CIHAAVCompiledMethod@ST@@I@Z:near32
 extern ?primitivePerformWithArgs@Interpreter@@CIHXZ:near32
-extern ?primitivePerformMethod@Interpreter@@CIHAAVCompiledMethod@@I@Z:near32
-extern ?primitivePerformWithArgsAt@Interpreter@@CIHAAVCompiledMethod@@I@Z:near32
-extern ?primitiveValueWithArgsAt@Interpreter@@CIHAAVCompiledMethod@@I@Z:near32
+extern ?primitivePerformMethod@Interpreter@@CIHAAVCompiledMethod@ST@@I@Z:near32
+extern ?primitivePerformWithArgsAt@Interpreter@@CIHAAVCompiledMethod@ST@@I@Z:near32
+extern ?primitiveValueWithArgsAt@Interpreter@@CIHAAVCompiledMethod@ST@@I@Z:near32
 extern ?primitiveVariantValue@Interpreter@@CIHXZ:near32
 
-PRIMUNWINDINTERRUPT EQU ?primitiveUnwindInterrupt@Interpreter@@CIHAAVCompiledMethod@@I@Z
+PRIMUNWINDINTERRUPT EQU ?primitiveUnwindInterrupt@Interpreter@@CIHAAVCompiledMethod@ST@@I@Z
 extern PRIMUNWINDINTERRUPT:near32
 
-RESUSPENDACTIVEON EQU ?ResuspendActiveOn@Interpreter@@SIPAV?$TOTE@VProcessList@@@@PAV2@@Z
+RESUSPENDACTIVEON EQU ?ResuspendActiveOn@Interpreter@@SIPAV?$TOTE@VProcessList@ST@@@@PAV2@@Z
 extern RESUSPENDACTIVEON:near32
 
 RESCHEDULE EQU ?Reschedule@Interpreter@@SGHXZ
 extern RESCHEDULE:near32
 
-PRIMITIVESIGNAL EQU ?primitiveSignal@Interpreter@@CIHAAVCompiledMethod@@I@Z
+PRIMITIVESIGNAL EQU ?primitiveSignal@Interpreter@@CIHAAVCompiledMethod@ST@@I@Z
 extern PRIMITIVESIGNAL:near32
 
 extern ?primitiveSetSignals@Interpreter@@CIHXZ:near32
-PRIMSIGNALATTICK EQU ?primitiveSignalAtTick@Interpreter@@CIHAAVCompiledMethod@@I@Z
+PRIMSIGNALATTICK EQU ?primitiveSignalAtTick@Interpreter@@CIHAAVCompiledMethod@ST@@I@Z
 extern PRIMSIGNALATTICK:near32
-PRIMITIVEINPUTSEMAPHORE EQU ?primitiveInputSemaphore@Interpreter@@CIHAAVCompiledMethod@@I@Z
+PRIMITIVEINPUTSEMAPHORE EQU ?primitiveInputSemaphore@Interpreter@@CIHAAVCompiledMethod@ST@@I@Z
 extern PRIMITIVEINPUTSEMAPHORE:near32
 extern ?primitiveSampleInterval@Interpreter@@CIHXZ:near32
 
-PRIMITIVEWAIT EQU ?primitiveWait@Interpreter@@CIHAAVCompiledMethod@@I@Z
+PRIMITIVEWAIT EQU ?primitiveWait@Interpreter@@CIHAAVCompiledMethod@ST@@I@Z
 extern PRIMITIVEWAIT:near32
 
 primitiveFlushCache EQU ?primitiveFlushCache@Interpreter@@CIHXZ
 extern primitiveFlushCache:near32
 
-PRIMITIVERESUME EQU ?primitiveResume@Interpreter@@CIHAAVCompiledMethod@@I@Z
+PRIMITIVERESUME EQU ?primitiveResume@Interpreter@@CIHAAVCompiledMethod@ST@@I@Z
 extern PRIMITIVERESUME:near32
 
-PRIMITIVESINGLESTEP EQU ?primitiveSingleStep@Interpreter@@CIHAAVCompiledMethod@@I@Z
+PRIMITIVESINGLESTEP EQU ?primitiveSingleStep@Interpreter@@CIHAAVCompiledMethod@ST@@I@Z
 extern PRIMITIVESINGLESTEP:near32
 
 extern ?primitiveSuspend@Interpreter@@CIHXZ	:near32
 extern ?primitiveTerminateProcess@Interpreter@@CIHXZ	:near32
 extern ?primitiveProcessPriority@Interpreter@@CIHXZ:near32
 extern ?primitiveNewVirtual@Interpreter@@CIHXZ:near32
-PRIMSNAPSHOT EQU ?primitiveSnapshot@Interpreter@@CIHAAVCompiledMethod@@I@Z
+PRIMSNAPSHOT EQU ?primitiveSnapshot@Interpreter@@CIHAAVCompiledMethod@ST@@I@Z
 extern PRIMSNAPSHOT:near32
 extern ?primitiveReplaceBytes@Interpreter@@CIHXZ:near32
 extern ?primitiveIndirectReplaceBytes@Interpreter@@CIHXZ:near32
-PRIMCORELEFT EQU ?primitiveCoreLeft@Interpreter@@CIHAAVCompiledMethod@@I@Z
+PRIMCORELEFT EQU ?primitiveCoreLeft@Interpreter@@CIHAAVCompiledMethod@ST@@I@Z
 extern PRIMCORELEFT:near32
-PRIMQUIT EQU ?primitiveQuit@Interpreter@@CIXAAVCompiledMethod@@I@Z
+PRIMQUIT EQU ?primitiveQuit@Interpreter@@CIXAAVCompiledMethod@ST@@I@Z
 extern PRIMQUIT:near32
 extern ?primitiveOopsLeft@Interpreter@@CIHXZ:near32
 extern ?primitiveResize@Interpreter@@CIHXZ:near32
@@ -266,7 +266,7 @@ extern ?primitiveDeQBereavement@Interpreter@@CIHXZ:near32
 extern ?primitiveHookWindowCreate@Interpreter@@CIHXZ:near32
 extern ?primitiveSmallIntegerPrintString@Interpreter@@CIHXZ:near32
 
-PRIMMAKEPOINT EQU ?primitiveMakePoint@Interpreter@@CIHAAVCompiledMethod@@I@Z
+PRIMMAKEPOINT EQU ?primitiveMakePoint@Interpreter@@CIHAAVCompiledMethod@ST@@I@Z
 extern PRIMMAKEPOINT:near32
 
 extern ?primitiveLargeIntegerDivide@Interpreter@@CIHXZ:near32
@@ -286,7 +286,7 @@ extern ?primitiveLargeIntegerEqual@Interpreter@@CIHXZ:near32
 primitiveLargeIntegerAsFloat EQU ?primitiveLargeIntegerAsFloat@Interpreter@@CIHXZ
 extern primitiveLargeIntegerAsFloat:near32
 
-PRIMASYNCCALL EQU ?primitiveAsyncDLL32Call@Interpreter@@CIHAAVCompiledMethod@@I@Z
+PRIMASYNCCALL EQU ?primitiveAsyncDLL32Call@Interpreter@@CIHAAVCompiledMethod@ST@@I@Z
 extern PRIMASYNCCALL:near32
 
 IFDEF _DEBUG
@@ -295,26 +295,26 @@ IFDEF _DEBUG
 ENDIF
 
 ; Other C++ method imports
-NEWPOINTEROBJECT		EQU	?newPointerObject@ObjectMemory@@SIPAV?$TOTE@VVariantObject@@@@PAV?$TOTE@VBehavior@@@@I@Z
+NEWPOINTEROBJECT		EQU	?newPointerObject@ObjectMemory@@SIPAV?$TOTE@VVariantObject@ST@@@@PAV?$TOTE@VBehavior@ST@@@@I@Z
 extern NEWPOINTEROBJECT:near32
-NEWBYTEOBJECT			EQU	?newByteObject@ObjectMemory@@SIPAV?$TOTE@VVariantByteObject@@@@PAV?$TOTE@VBehavior@@@@I@Z
+NEWBYTEOBJECT			EQU	?newByteObject@ObjectMemory@@SIPAV?$TOTE@VVariantByteObject@ST@@@@PAV?$TOTE@VBehavior@ST@@@@I@Z
 extern NEWBYTEOBJECT:near32
-ALLOCATEBYTESNOZERO		EQU	?newUninitializedByteObject@ObjectMemory@@SIPAV?$TOTE@VVariantByteObject@@@@PAV?$TOTE@VBehavior@@@@I@Z
+ALLOCATEBYTESNOZERO		EQU	?newUninitializedByteObject@ObjectMemory@@SIPAV?$TOTE@VVariantByteObject@ST@@@@PAV?$TOTE@VBehavior@ST@@@@I@Z
 extern ALLOCATEBYTESNOZERO:near32
 
 DQFORFINALIZATION EQU ?dequeueForFinalization@Interpreter@@CIPAV?$TOTE@X@@XZ
 extern DQFORFINALIZATION:near32
 
-INSTANCESOF EQU ?instancesOf@ObjectMemory@@SIPAV?$TOTE@VArray@@@@PAV?$TOTE@VBehavior@@@@@Z
+INSTANCESOF EQU ?instancesOf@ObjectMemory@@SIPAV?$TOTE@VArray@ST@@@@PAV?$TOTE@VBehavior@ST@@@@@Z
 extern INSTANCESOF:near32
-SUBINSTANCESOF EQU ?subinstancesOf@ObjectMemory@@SIPAV?$TOTE@VArray@@@@PAV?$TOTE@VBehavior@@@@@Z
+SUBINSTANCESOF EQU ?subinstancesOf@ObjectMemory@@SIPAV?$TOTE@VArray@ST@@@@PAV?$TOTE@VBehavior@ST@@@@@Z
 extern SUBINSTANCESOF:near32
-REFERENCESTO EQU ?referencesTo@ObjectMemory@@SGPAV?$TOTE@VArray@@@@I@Z 
+REFERENCESTO EQU ?referencesTo@ObjectMemory@@SGPAV?$TOTE@VArray@ST@@@@I@Z 
 extern REFERENCESTO:near32
-INSTANCECOUNTS EQU ?instanceCounts@ObjectMemory@@SIPAV?$TOTE@VArray@@@@PAV2@@Z
+INSTANCECOUNTS EQU ?instanceCounts@ObjectMemory@@SIPAV?$TOTE@VArray@ST@@@@PAV2@@Z
 extern INSTANCECOUNTS:near32
 
-QUEUEINTERRUPT EQU ?queueInterrupt@Interpreter@@SGXPAV?$TOTE@VProcess@@@@II@Z
+QUEUEINTERRUPT EQU ?queueInterrupt@Interpreter@@SGXPAV?$TOTE@VProcess@ST@@@@II@Z
 extern QUEUEINTERRUPT:near32
 ONEWAYBECOME EQU ?oneWayBecome@ObjectMemory@@SIXPAV?$TOTE@X@@0@Z
 extern ONEWAYBECOME:near32
@@ -327,7 +327,7 @@ extern OOPSUSED:near32
 YIELD EQU ?yield@Interpreter@@CIHXZ
 extern YIELD:near32												; See process.cpp
 
-LOOKUPMETHOD EQU ?lookupMethod@Interpreter@@SIPAV?$TOTE@VCompiledMethod@@@@PAV?$TOTE@VBehavior@@@@PAV?$TOTE@VSymbol@@@@@Z
+LOOKUPMETHOD EQU ?lookupMethod@Interpreter@@SIPAV?$TOTE@VCompiledMethod@ST@@@@PAV?$TOTE@VBehavior@ST@@@@PAV?$TOTE@VSymbol@ST@@@@@Z
 extern LOOKUPMETHOD:near32
 
 PRIMSTRINGSEARCH EQU ?primitiveStringSearch@Interpreter@@CIHXZ
@@ -339,7 +339,7 @@ extern PRIMSTRINGNEXTINDEX:near32
 DISABLEINTERRUPTS EQU ?disableInterrupts@Interpreter@@SI_N_N@Z
 extern DISABLEINTERRUPTS:near32
 
-PRIMSTACKATPUT EQU ?primitiveStackAtPut@Interpreter@@CIHAAVCompiledMethod@@I@Z
+PRIMSTACKATPUT EQU ?primitiveStackAtPut@Interpreter@@CIHAAVCompiledMethod@ST@@I@Z
 extern PRIMSTACKATPUT:near32
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -2302,7 +2302,7 @@ ENDPRIMITIVE primitiveValueOnUnwind
 
 IF 0
 ;; Under construction
-?primitivePerform@Interpreter@@CIHAAVCompiledMethod@@I@Z:
+?primitivePerform@Interpreter@@CIHAAVCompiledMethod@ST@@I@Z:
 	mov		eax, [MESSAGE]							; Load current message selector (#perform:???) ...
 	push	eax										; ... and save in case need to restore
 	lea		eax, [edx*4]
@@ -2855,10 +2855,10 @@ ENDPRIMITIVE primitiveBytesIsNull
 
 ;; Macro for operations for which the result is the receiver if the operand is zero
 LIARITHMPRIMR MACRO Op 
-	li&Op&Single EQU ?li&Op&Single@@YGIPAV?$TOTE@VLargeInteger@@@@H@Z
+	li&Op&Single EQU ?li&Op&Single@@YGIPAV?$TOTE@VLargeInteger@ST@@@@H@Z
 	extern li&Op&Single:near32
 
-	li&Op EQU ?li&Op&@@YGIPAV?$TOTE@VLargeInteger@@@@0@Z
+	li&Op EQU ?li&Op&@@YGIPAV?$TOTE@VLargeInteger@ST@@@@0@Z
 	extern li&Op&:near32
 
 	BEGINPRIMITIVE primitiveLargeInteger&Op
@@ -2905,10 +2905,10 @@ ENDM
 
 ;; Macro for operations for which the result is zero if the operand is zero
 LIARITHMPRIMZ MACRO Op 
-	li&Op&Single EQU ?li&Op&Single@@YGIPAV?$TOTE@VLargeInteger@@@@H@Z
+	li&Op&Single EQU ?li&Op&Single@@YGIPAV?$TOTE@VLargeInteger@ST@@@@H@Z
 	extern li&Op&Single:near32
 
-	li&Op EQU ?li&Op&@@YGIPAV?$TOTE@VLargeInteger@@@@0@Z
+	li&Op EQU ?li&Op&@@YGIPAV?$TOTE@VLargeInteger@ST@@@@0@Z
 	extern li&Op&:near32
 
 	BEGINPRIMITIVE primitiveLargeInteger&Op
@@ -3199,7 +3199,7 @@ BEGINPRIMITIVE primitiveValueWithArgs
 ENDPRIMITIVE primitiveValueWithArgs
 
 BEGINPRIMITIVE primitivePerform
-	CallContextPrim <?primitivePerform@Interpreter@@CIHAAVCompiledMethod@@I@Z>
+	CallContextPrim <?primitivePerform@Interpreter@@CIHAAVCompiledMethod@ST@@I@Z>
 ENDPRIMITIVE primitivePerform
 
 BEGINPRIMITIVE primitivePerformWithArgs
@@ -3207,15 +3207,15 @@ BEGINPRIMITIVE primitivePerformWithArgs
 ENDPRIMITIVE primitivePerformWithArgs
 
 BEGINPRIMITIVE primitivePerformWithArgsAt
-	CallContextPrim <?primitivePerformWithArgsAt@Interpreter@@CIHAAVCompiledMethod@@I@Z>
+	CallContextPrim <?primitivePerformWithArgsAt@Interpreter@@CIHAAVCompiledMethod@ST@@I@Z>
 ENDPRIMITIVE primitivePerformWithArgsAt
 
 BEGINPRIMITIVE primitivePerformMethod
-	CallContextPrim <?primitivePerformMethod@Interpreter@@CIHAAVCompiledMethod@@I@Z>
+	CallContextPrim <?primitivePerformMethod@Interpreter@@CIHAAVCompiledMethod@ST@@I@Z>
 ENDPRIMITIVE primitivePerformMethod
 
 BEGINPRIMITIVE primitiveValueWithArgsAt
-	CallContextPrim <?primitiveValueWithArgsAt@Interpreter@@CIHAAVCompiledMethod@@I@Z>
+	CallContextPrim <?primitiveValueWithArgsAt@Interpreter@@CIHAAVCompiledMethod@ST@@I@Z>
 ENDPRIMITIVE primitiveValueWithArgsAt
 
 BEGINPRIMITIVE primitiveSignal

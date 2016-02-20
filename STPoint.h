@@ -11,19 +11,18 @@
 	a representation in the assembler modules (so see istasm.inc)
 
 ******************************************************************************/
-
-#ifndef _IST_STPOINT_H_
-#define _IST_STPOINT_H_
+#pragma once
 
 #include "STMagnitude.h"
 
-class Point : public ArithmeticValue
+namespace ST
 {
-public:
-	Oop	m_x;
-	Oop	m_y;
+	class Point : public ArithmeticValue
+	{
+	public:
+		Oop	m_x;
+		Oop	m_y;
 
-	enum { XIndex=ArithmeticValue::FixedSize, YIndex, FixedSize };
-};
-
-#endif	//EOF
+		enum { XIndex = ArithmeticValue::FixedSize, YIndex, FixedSize };
+	};
+}

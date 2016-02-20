@@ -12,51 +12,51 @@
 	a representation in the assembler modules (so see istasm.inc)
 
 ******************************************************************************/
-
-#ifndef _IST_STContext_H_
-#define _IST_STContext_H_
+#pragma once
 
 #include "ote.h"
 #include "STObject.h"
-#include "VMPointers.h"
+#include "STBlockClosure.h"
 
 // Turn off warning about zero length arrays
 #pragma warning ( disable : 4200)
 
-class Context;
-typedef TOTE<Context> ContextOTE;
+// Declare forward references
+namespace ST { class Context;  }
+typedef TOTE<ST::Context> ContextOTE;
 
-class Context //: public Object
+namespace ST
 {
-public:
-	// Outer environment, or SmallInteger frame pointer if a method env.
-	union
+	class Context //: public Object
 	{
-		Oop			m_frame;
-		OTE*		m_outer;
+	public:
+		// Outer environment, or SmallInteger frame pointer if a method env.
+		union
+		{
+			Oop			m_frame;
+			OTE*		m_outer;
+		};
+		BlockOTE*		m_block;
+		Oop				m_tempFrame[];			// Environment temps only - args always in Process stack
+
+		BOOL isBlockContext() const;
+
+
+	public:
+		// The environment pool must contain fixed size objects, so choose a suitable maximum number of
+		// temps permissible; very uncommonly exceed even 1 environment (shared) temporaries
+		// In fact quite often there are none since the Context is required just to support a ^-return
+		enum { MaxEnvironmentTemps = 1 };
+
+		enum { OuterIndex = ObjectFixedSize, BlockIndex, FixedSize };
+		enum { TempFrameStart = FixedSize };
+
+		static ContextOTE* __fastcall New(unsigned tempCount, Oop oopOuter);
 	};
-	BlockOTE*		m_block;
-	Oop				m_tempFrame[];			// Environment temps only - args always in Process stack
 
-	BOOL isBlockContext() const;
-
-	
-public:
-	// The environment pool must contain fixed size objects, so choose a suitable maximum number of
-	// temps permissible; very uncommonly exceed even 1 environment (shared) temporaries
-	// In fact quite often there are none since the Context is required just to support a ^-return
-	enum { MaxEnvironmentTemps = 1 };		
-
-	enum { OuterIndex=ObjectFixedSize, BlockIndex, FixedSize };
-	enum { TempFrameStart = FixedSize };
-
-	static ContextOTE* __fastcall New(unsigned tempCount, Oop oopOuter);
-};
-
-///////////////////////////////////////////////////////////////////////////////
-inline BOOL Context::isBlockContext() const	
-{
-	return !isIntegerObject(m_frame);
+	///////////////////////////////////////////////////////////////////////////////
+	inline BOOL Context::isBlockContext() const
+	{
+		return !isIntegerObject(m_frame);
+	}
 }
-
-#endif

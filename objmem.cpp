@@ -58,11 +58,6 @@ OTEFlags ObjectMemory::m_spaceOTEBits[OTEFlags::NumSpaces];
 DWORD ObjectMemory::m_imageVersionMajor;
 DWORD ObjectMemory::m_imageVersionMinor;
 
-// Constants calculated on system startup, and used for virtual allocations
-//DWORD ObjectMemory::dwPageSize				= 4 * 1024;
-//DWORD ObjectMemory::dwOopsPerPage 			= dwPageSize/sizeof(Oop);
-//DWORD ObjectMemory::dwAllocationGranularity	= 64 * 1024;
-
 // The number of OT pages to be allocated each time an OT overflow occurs
 // Higher numbers could waste more space, but will reduce the frequency of the overflows
 // It is important that the result be exactly divisible by the OTE size (hence 16, because 16*4096%16==0)

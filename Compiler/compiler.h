@@ -4,9 +4,7 @@ Compiler.h
 ==========
 Smalltalk compiler
 */
-
-#ifndef _IST_COMPILER_H_
-#define _IST_COMPILER_H_
+#pragma once
 
 ///////////////////////
 #include "..\Compiler_i.h"
@@ -543,6 +541,4 @@ inline POTE Compiler::InternSymbol(const Str& str) const
 {
 	return InternSymbol(str.c_str());
 }
-
-#endif
 

@@ -7,35 +7,26 @@
 	Specification of the Smalltalk Interpreter Registers
 
 ******************************************************************************/
+#pragma once
 
-#ifndef _IST_INTERPREGISTERS_H_
-#define _IST_INTERPREGISTERS_H_
-
-
-// Forward references
-class Process;
-class CompiledMethod;
-struct StackFrame;
-
-#include "STString.h"
 #include "STMethod.h"
-
-class Process;
-typedef TOTE<Process> ProcessOTE;
+#include "STProcess.h"
+#include "STMethod.h"
+#include "STContext.h"
 
 // N.B. Must be kept in sync with istasm.inc
 struct InterpreterRegisters
 {
-	Process*		m_pActiveProcess;
-	CompiledMethod* m_pMethod;
-	BYTE*			m_instructionPointer;
-	StackFrame*		m_pActiveFrame;
-	Oop*			m_stackPointer;
-	Oop*			m_basePointer;
+	ST::Process*		m_pActiveProcess;
+	ST::CompiledMethod* m_pMethod;
+	BYTE*				m_instructionPointer;
+	StackFrame*			m_pActiveFrame;
+	Oop*				m_stackPointer;
+	Oop*				m_basePointer;
 
 	// These are the only Oops the VM refererences without ref. counting them (for performance)
-	MethodOTE*		m_oopNewMethod;
-	ProcessOTE*		m_oteActiveProcess;
+	MethodOTE*			m_oopNewMethod;
+	ProcessOTE*			m_oteActiveProcess;
 
 public:
 	Process* activeProcess()		{ return m_pActiveProcess; }
@@ -62,5 +53,11 @@ public:
 	void DecStackRefs();
 };
 
+inline void InterpreterRegisters::ResizeProcess()
+{
+	HARDASSERT(m_pActiveProcess != NULL);
+	MWORD words = m_stackPointer - reinterpret_cast<const Oop*>(activeProcess()) + 1;
+	m_oteActiveProcess->setSize(words*sizeof(MWORD));
+}
+
 typedef __declspec(align(16)) struct InterpreterRegisters InterpreterRegisters16;
-#endif	//EOF

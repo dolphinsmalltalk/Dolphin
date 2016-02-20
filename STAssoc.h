@@ -11,21 +11,20 @@
 	a representation in the assembler modules (so see istasm.inc)
 
 ******************************************************************************/
-
-#ifndef _IST_STAssoc_H_
-#define _IST_STAssoc_H_
+#pragma once
 
 #include "STObject.h"
 
-class VariableBinding // : public Object
+namespace ST
 {
-public:
-	Oop m_key;
-	Oop m_value;
+	class VariableBinding // : public Object
+	{
+	public:
+		StringOTE* m_key;
+		Oop m_value;
 
-	enum { KeyIndex=ObjectFixedSize, ValueIndex, FixedSize };
-};
+		enum { KeyIndex = ObjectFixedSize, ValueIndex, FixedSize };
+	};
+}
 
-typedef TOTE<VariableBinding> VariableBindingOTE;
-
-#endif	//EOF
+typedef TOTE<ST::VariableBinding> VariableBindingOTE;

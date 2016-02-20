@@ -204,17 +204,6 @@ library DolphinVM
 		void DecodeMethod([in]POTE methodPointer, [in]void* pstream);
 	};
 
-	//[
-	//	object,
-	//	uuid(06B74288-F62B-4CDB-8AF2-AC216EB2668E),
-	//	pointer_default(unique)
-	//]
-	//interface IReferenceSource
-	//{
-	//	void AddReferences();
-	//	void RemoveReferences();
-	//};
-
 	[
 		object,
 		uuid(8C881CBA-5050-4F72-BCB4-C46F67593DC9),

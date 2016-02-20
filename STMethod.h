@@ -11,34 +11,34 @@
 	a representation in the assembler modules (so see istasm.inc)
 
 ******************************************************************************/
-
-#ifndef _IST_STMETHOD_H_
-#define _IST_STMETHOD_H_
+#pragma once
 
 #include "STObject.h"
-#include "STMethodHeader.h"
 
 // Turn off warning about zero length arrays
 #pragma warning ( disable : 4200)
 
-class CompiledMethod //: public Object
+namespace ST
 {
-public:
-	STMethodHeader	m_header;		// Must look like a small integer
-	BehaviorOTE*	m_methodClass;
-	SymbolOTE*		m_selector;
-	Oop				m_source;
-	Oop				m_byteCodes;	// ByteArray of byte codes
-	Oop				m_aLiterals[];
+	#include "STMethodHeader.h"
 
-	enum { HeaderIndex=ObjectFixedSize, MethodClassIndex, SelectorIndex, SourceIndex, ByteCodesIndex, FixedSize };
-	enum { LiteralStart=FixedSize };
-};
+	class CompiledMethod //: public Object
+	{
+	public:
+		STMethodHeader	m_header;		// Must look like a small integer
+		BehaviorOTE*	m_methodClass;
+		SymbolOTE*		m_selector;
+		Oop				m_source;
+		Oop				m_byteCodes;	// ByteArray of byte codes
+		Oop				m_aLiterals[];
 
-typedef TOTE<CompiledMethod> MethodOTE;
+		enum { HeaderIndex = ObjectFixedSize, MethodClassIndex, SelectorIndex, SourceIndex, ByteCodesIndex, FixedSize };
+		enum { LiteralStart = FixedSize };
+	};
+}
+
+typedef TOTE<ST::CompiledMethod> MethodOTE;
 
 // Debug dumpers
 ostream& operator<<(ostream& st, const MethodOTE*);
-ostream& operator<<(ostream& st, const CompiledMethod&);
-
-#endif
+ostream& operator<<(ostream& st, const ST::CompiledMethod&);

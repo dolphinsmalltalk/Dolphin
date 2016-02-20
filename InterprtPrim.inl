@@ -8,13 +8,34 @@
 
 ******************************************************************************/
 
-#ifndef _IST_INTERPRT_H_
-	#error You'll need to include interprt.h
-#endif
-
 #include "STProcess.h"	// In order to be able to set primitive failure code
 
 #define primitiveSuccess() TRUE
+
+inline void ST::Process::SetPrimitiveFailureCode(SMALLINTEGER code)
+{
+	m_primitiveFailureCode = integerObjectOf(code);
+}
+
+inline void ST::Process::SetPrimitiveFailureData(Oop failureData)
+{
+	ObjectMemory::countDown(m_primitiveFailureData);
+	ObjectMemory::countUp(failureData);
+	m_primitiveFailureData = failureData;
+}
+
+inline void ST::Process::SetPrimitiveFailureData(OTE* failureData)
+{
+	ObjectMemory::countDown(m_primitiveFailureData);
+	failureData->countUp();
+	m_primitiveFailureData = reinterpret_cast<Oop>(failureData);
+}
+
+inline void ST::Process::SetPrimitiveFailureData(SMALLINTEGER failureData)
+{
+	ObjectMemory::countDown(m_primitiveFailureData);
+	m_primitiveFailureData = integerObjectOf(failureData);
+}
 
 inline BOOL Interpreter::primitiveFailure(int failureCode)
 {

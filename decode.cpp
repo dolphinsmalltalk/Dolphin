@@ -100,7 +100,7 @@ ostream& operator<<(ostream& st, const StringOTE* ote)
 	if (ote->isNil()) return st << "nil";
 	if (!ObjectMemory::isKindOf(Oop(ote), Pointers.ClassString))
 	{
-		// Expected a Symbol Oop, but got something else
+		// Expected a String Oop, but got something else
 		st << "**Non-String: " << reinterpret_cast<const OTE*>(ote) << "**";
 	}
 	else
@@ -122,15 +122,7 @@ inline ostream& operator<<(ostream& stream, const Class& cl)
 
 ostream& operator<<(ostream& stream, const MetaClass& meta)
 {
-	ClassOTE* instanceClass = meta.m_instanceClass;
-	if (!instanceClass->isNil())
-		stream << *meta.m_instanceClass->m_location;
-	else
-	{
-		// GNU incorrectly used Nil as root of metaclass recursion
-		stream << " root";
-	}
-	return stream << " class";
+	return stream << meta.m_instanceClass << " class";
 }
 
 ostream& operator<<(ostream& stream, const SymbolOTE* ote)
@@ -139,7 +131,7 @@ ostream& operator<<(ostream& stream, const SymbolOTE* ote)
 
 	if (!ObjectMemory::isKindOf(Oop(ote), Pointers.ClassSymbol))
 		// Expected a Symbol Oop, but got something else
-		return stream << "**Non-symbol**" << reinterpret_cast<const OTE*>(ote);
+		return stream << "**Non-symbol: " << reinterpret_cast<const OTE*>(ote) <<"**";
 	else
 		// Dump without a # prefix
 		return stream << reinterpret_cast<const VariantCharOTE*>(ote);
@@ -151,7 +143,7 @@ ostream& operator<<(ostream& stream, const BehaviorOTE* ote)
 
 	if (!ObjectMemory::isBehavior(Oop(ote)))
 		// Expected a class Oop, but got something else
-		return stream << "**Non-behaviour**" << reinterpret_cast<const OTE*>(ote);
+		return stream << "**Non-behaviour: " << reinterpret_cast<const OTE*>(ote) <<"**";
 	else
 		return ote->isMetaclass() ?
 			stream << *static_cast<MetaClass*>(ote->m_location) :
@@ -197,7 +189,7 @@ ostream& operator<<(ostream& st, const VariableBindingOTE* ote)
 {
 	if (ote->isNil()) return st << "nil";
 	VariableBinding* var = ote->m_location;
-	return st << reinterpret_cast<const OTE*>(var->m_key) << " -> " << reinterpret_cast<const OTE*>(var->m_value);
+	return st << var->m_key << " -> " << reinterpret_cast<const OTE*>(var->m_value);
 }
 
 ostream& operator<<(ostream& st, const ProcessOTE* ote)
@@ -1552,8 +1544,25 @@ void Interpreter::decodeMethodAt(CompiledMethod* meth, unsigned ip, ostream& str
 
 #endif
 
-#include <strstream>
- 
+#include <sstream>
+
+
+const char* printString(const POTE oop)
+{
+	// Nasty static buffer used only for debugging so the string hangs around long enough for the
+	// debugger to display it properly (returning a local string by value used to work, but now
+	// seems to be destroyed before the debugger displays it).
+	// The standard debugger visualization of a std::string is way too long anyway, including
+	// many internal details, and a completely unecessary char by char dump, so we want to
+	// return a const char*
+	static string lastPrinted;
+
+	std::stringstream st;
+	st << oop;
+	lastPrinted = st.str();
+	return lastPrinted.c_str();
+}
+
 void DumpObject(const POTE pote)
 {
 	TRACESTREAM << pote << endl;
@@ -1656,11 +1665,13 @@ extern "C" __declspec(dllexport) int __stdcall ExecutionTrace(int execTrace)
 	return existing;
 }
 
-string Interpreter::activeMethod()
+const char* Interpreter::activeMethod()
 {
-	std::ostrstream stream;
-	stream << *Interpreter::m_registers.m_pMethod << ends;
-	return stream.str();
+	static string lastPrinted;
+	std::stringstream stream;
+	stream << *Interpreter::m_registers.m_pMethod;
+	lastPrinted = stream.str();
+	return lastPrinted.c_str();
 }
 
 void DumpMethod(CompiledMethod* method)

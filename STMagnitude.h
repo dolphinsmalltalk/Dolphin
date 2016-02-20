@@ -11,24 +11,23 @@
 	a representation in the assembler modules (so see istasm.inc)
 
 ******************************************************************************/
-
-#ifndef _IST_STMAGNITUDE_H_
-#define _IST_STMAGNITUDE_H_
+#pragma once
 
 #include "STObject.h"
 
-class Magnitude //: public Object
+namespace ST
 {
-public:
-	enum { FixedSize = 0 };
-};
+	class Magnitude //: public Object
+	{
+	public:
+		enum { FixedSize = 0 };
+	};
 
-class ArithmeticValue  : public Magnitude
-{
-};
+	class ArithmeticValue : public Magnitude
+	{
+	};
 
-class Number : public ArithmeticValue
-{
-};
-
-#endif
+	class Number : public ArithmeticValue
+	{
+	};
+}

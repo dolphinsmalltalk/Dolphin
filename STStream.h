@@ -12,39 +12,37 @@
 	a representation in the assembler modules (so see istasm.inc)
 
 ******************************************************************************/
-
-#ifndef _IST_STSTREAM_H_
-#define _IST_STSTREAM_H_
+#pragma once
 
 #include "STObject.h"
 
-class Stream // : public Object
+namespace ST
 {
-public:
+	class Stream // : public Object
+	{
+	public:
 
-	enum { FixedSize = 0 };
-};
+		enum { FixedSize = 0 };
+	};
 
-class PositionableStream : public Stream
-{
-public:
-	OTE* m_array;
-	Oop m_index;
-	Oop m_readLimit;
+	class PositionableStream : public Stream
+	{
+	public:
+		OTE* m_array;
+		Oop m_index;
+		Oop m_readLimit;
 
-	enum { StreamArrayIndex= Stream::FixedSize, StreamIndexIndex , StreamReadLimitIndex, FixedSize };
-};
+		enum { StreamArrayIndex = Stream::FixedSize, StreamIndexIndex, StreamReadLimitIndex, FixedSize };
+	};
 
-typedef TOTE<PositionableStream> PosStreamOTE;
+	typedef TOTE<PositionableStream> PosStreamOTE;
 
-class WriteStream : public PositionableStream
-{
-public:
-	Oop m_writeLimit;
+	class WriteStream : public PositionableStream
+	{
+	public:
+		Oop m_writeLimit;
 
-	enum { StreamWriteLimitIndex=PositionableStream::FixedSize, FixedSize };
-};
-
+		enum { StreamWriteLimitIndex = PositionableStream::FixedSize, FixedSize };
+	};
+}
 typedef TOTE<WriteStream> WriteStreamOTE;
-
-#endif	// EOF

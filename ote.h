@@ -11,17 +11,19 @@
 	a representation in the assembler modules (so see istasm.inc)
 
 ******************************************************************************/
-
-#ifndef _IST_OTE_H
-#define _IST_OTE_H
+#pragma once
 
 #define COUNTBITS	(sizeof(BYTE)*8)
 #define SPACEBITS	3
 
-//class Object;
 template <class T> class TOTE;
-class Behavior;
-typedef TOTE<Behavior> BehaviorOTE;
+
+// Declare forward references
+namespace ST
+{
+	class Behavior;
+}
+typedef TOTE<ST::Behavior> BehaviorOTE;
 
 typedef	BYTE count_t;
 typedef WORD hash_t;						// Identity hash value, assigned on object creation
@@ -173,6 +175,3 @@ template <class T> TOTE<T>* NilOutPointer(TOTE<T>*& ote)
 	ote->countDown();
 	return ote = reinterpret_cast<TOTE<T>*>(Pointers.Nil);
 }
-
-
-#endif	// EOF
