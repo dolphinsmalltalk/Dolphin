@@ -76,7 +76,7 @@ BEGIN
             VALUE "LegalCopyright", "Copyright © Object Arts 1997-2016"
             VALUE "OriginalFilename", "DolphinSureCrypto.dll"
             VALUE "ProductName", "Dolphin Smalltalk"
-            VALUE "ProductVersion", "v7.0.2.1-3-ge873caa"
+            VALUE "ProductVersion", GIT_TAG
             VALUE "WARNING", "Please edit this as a text file rather than with the resource editor to preserve GIT_TAG"
         END
     END
