@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object variableSubclass: #BlockClosure
 	instanceVariableNames: 'outer method initialIP info receiver '
@@ -191,6 +191,35 @@ critical
 	| oldState |
 	oldState := Processor enableAsyncEvents: false.
 	[self value] ensure: [Processor enableAsyncEvents: oldState]!
+
+cull: arg1 
+	^self argumentCount = 0 ifTrue: [self value] ifFalse: [self value: arg1]!
+
+cull: arg1 cull: arg2 
+	^self argumentCount < 2 ifTrue: [self cull: arg1] ifFalse: [self value: arg1 value: arg2]!
+
+cull: arg1 cull: arg2 cull: arg3 
+	^self argumentCount < 3 
+		ifTrue: [self cull: arg1 cull: arg2]
+		ifFalse: 
+			[self 
+				value: arg1
+				value: arg2
+				value: arg3]!
+
+cull: arg1 cull: arg2 cull: arg3 cull: arg4 
+	^self argumentCount < 4 
+		ifTrue: 
+			[self 
+				cull: arg1
+				cull: arg2
+				cull: arg3]
+		ifFalse: 
+			[self 
+				value: arg1
+				value: arg2
+				value: arg3
+				value: arg4]!
 
 deferredValue
 	"Answer a <niladicValuable> that begins evaluating the receiver asynchronously,
@@ -699,6 +728,10 @@ whileTrue: iterationBlock
 !BlockClosure categoriesFor: #at:put:!accessing!public! !
 !BlockClosure categoriesFor: #atPriority:!evaluating!public! !
 !BlockClosure categoriesFor: #critical!private!scheduling! !
+!BlockClosure categoriesFor: #cull:!evaluating!public! !
+!BlockClosure categoriesFor: #cull:cull:!evaluating!public! !
+!BlockClosure categoriesFor: #cull:cull:cull:!evaluating!public! !
+!BlockClosure categoriesFor: #cull:cull:cull:cull:!evaluating!public! !
 !BlockClosure categoriesFor: #deferredValue!evaluating!public! !
 !BlockClosure categoriesFor: #deferredValueAt:!evaluating!public! !
 !BlockClosure categoriesFor: #ensure:!debugger-step through!not restartable!public!unwinding! !

@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Message subclass: #MessageSendAbstract
 	instanceVariableNames: ''
@@ -17,6 +17,35 @@ Athough Message Sends are complete in themselves, they also respond to the valua
 	Since we override #= we also override hash."
 
 	^super = aMessageSend and: [self receiver == aMessageSend receiver]!
+
+cull: arg 
+	^selector numArgs = 0 ifTrue: [self value] ifFalse: [self value: arg]!
+
+cull: arg1 cull: arg2 
+	^selector numArgs < 2 ifTrue: [self cull: arg1] ifFalse: [self value: arg1 value: arg2]!
+
+cull: arg1 cull: arg2 cull: arg3 
+	^selector numArgs < 3 
+		ifTrue: [self cull: arg1 cull: arg2]
+		ifFalse: 
+			[self 
+				value: arg1
+				value: arg2
+				value: arg3]!
+
+cull: arg1 cull: arg2 cull: arg3 cull: arg4 
+	^selector numArgs < 4 
+		ifTrue: 
+			[self 
+				cull: arg1
+				cull: arg2
+				cull: arg3]
+		ifFalse: 
+			[self 
+				value: arg1
+				value: arg2
+				value: arg3
+				value: arg4]!
 
 deferredValue
 	"Answer a <niladicValuable> that begins evaluating the receiver asynchronously,
@@ -96,6 +125,16 @@ value: arg1 value: arg2
 
 	^self valueWithArguments: (Array with: arg1 with: arg2)!
 
+value: arg1 value: arg2 value: arg3
+	"Answer the result of sending the receiver with three arguments"
+
+	^self valueWithArguments: (Array with: arg1 with: arg2 with: arg3)!
+
+value: arg1 value: arg2 value: arg3 value: arg4
+	"Answer the result of sending the receiver with four arguments"
+
+	^self valueWithArguments: (Array with: arg1 with: arg2 with: arg3 with: arg4)!
+
 valueWithArguments: triggerArguments
 	"Executes the receiver with the specified <Array> of arguments. If insufficient arguments are
 	supplied then these are substituted with arguments supplied at the time the event handler was
@@ -104,6 +143,10 @@ valueWithArguments: triggerArguments
 
 	^self forwardTo: self receiver withArguments: triggerArguments! !
 !MessageSendAbstract categoriesFor: #=!comparing!public! !
+!MessageSendAbstract categoriesFor: #cull:!evaluating!public! !
+!MessageSendAbstract categoriesFor: #cull:cull:!evaluating!public! !
+!MessageSendAbstract categoriesFor: #cull:cull:cull:!evaluating!public! !
+!MessageSendAbstract categoriesFor: #cull:cull:cull:cull:!evaluating!public! !
 !MessageSendAbstract categoriesFor: #deferredValue!evaluating!public! !
 !MessageSendAbstract categoriesFor: #deferredValueAt:!evaluating!public! !
 !MessageSendAbstract categoriesFor: #forwardTo:!operations!public! !
@@ -114,6 +157,8 @@ valueWithArguments: triggerArguments
 !MessageSendAbstract categoriesFor: #value!evaluating!public! !
 !MessageSendAbstract categoriesFor: #value:!evaluating!public! !
 !MessageSendAbstract categoriesFor: #value:value:!evaluating!public! !
+!MessageSendAbstract categoriesFor: #value:value:value:!evaluating!public! !
+!MessageSendAbstract categoriesFor: #value:value:value:value:!evaluating!public! !
 !MessageSendAbstract categoriesFor: #valueWithArguments:!evaluating!public! !
 
 !MessageSendAbstract class methodsFor!
