@@ -14,7 +14,7 @@ Note: if you are just looking to install Dolphin and get going as quickly as pos
 
 Follow these instructions to create the product images and launch Dolphin Smalltalk for the first time.
 
-* First clone the Dolphin repository (this one) into a suitable working directory on your machine, let's call it `\Dolphin`. Any version of Windows from XP onwards should be suitable but most validation has been done under Windows 10.
+* First clone the Dolphin repository (this one) into a suitable working directory on your machine, let's call it `\Dolphin`. Any version of Windows from Vista onwards should be suitable but most validation has been done under Windows 10.
 
 * Next you will need to build or fetch the VM binaries. For convenience a batch file, `FetchVM.CMD` is supplied and, providing you have PowerShell scripting enabled, you can just double-click this to pull the correct version of the VM down from GitHub. Alternatively, you can right click on the `FetchVM.ps1` file and choose _Run with PowerShell_, which does not require scripting to be explicitly enabled in Windows. If you supply a parameter to either of these script files you can choose to fetch an alternative VM version to the default (not usually recommended). Remember, you can also choose to build the VM from source if you wish.
 
