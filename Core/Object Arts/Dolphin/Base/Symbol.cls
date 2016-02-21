@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 String variableByteSubclass: #Symbol
 	instanceVariableNames: ''
@@ -37,6 +37,17 @@ argumentCount
 	((ch := self at: 1) isLetter or: [ch == $_]) ifFalse: [
 		argCount := argCount max: 1].
 	^argCount!
+
+asBlock
+	"Answer a block capable of sending the receiver to an object"
+
+	| arity |
+	arity := self numArgs + 1.
+	arity = 1 ifTrue: [^[:r | r perform: self]].
+	arity = 2 ifTrue: [^[:r :a | r perform: self with: a]].
+	arity = 3 ifTrue: [^[:r :a :b | r perform: self with: a with: b]].
+	arity = 4 ifTrue: [^[:r :a :b :c| r perform: self with: a with: b with: c]].
+	self error: 'Too many arguments'!
 
 asString
 	"Answer a new <readableString> containing the characters of 
@@ -162,6 +173,7 @@ stbSaveOn: anSTBOutFiler
 	anSTBOutFiler stream nextPutAll: self asByteArray! !
 !Symbol categoriesFor: #=!comparing!public! !
 !Symbol categoriesFor: #argumentCount!accessing!public! !
+!Symbol categoriesFor: #asBlock!converting!public! !
 !Symbol categoriesFor: #asString!converting!public! !
 !Symbol categoriesFor: #asSymbol!converting!public! !
 !Symbol categoriesFor: #deepCopy!copying!public! !

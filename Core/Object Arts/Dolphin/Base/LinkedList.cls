@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 SequencedGrowableCollection subclass: #LinkedList
 	instanceVariableNames: 'firstLink lastLink '
@@ -116,6 +116,12 @@ removeAll
 
 	firstLink := lastLink := nil!
 
+removeAllSuchThat: aBlock 
+	"Evaluate aBlock for each element and remove all that elements from the receiver for that
+	aBlock evaluates to true. For LinkedLists, it's safe to use do:."
+
+	self do: [:each | (aBlock value: each) ifTrue: [self remove: each]]!
+
 removeAtIndex: index
 	"Remove, and answer, the element of the receiver at the specified 
 	<integer> index, by shuffling elements which succeed it down one slot.
@@ -189,6 +195,7 @@ size
 !LinkedList categoriesFor: #isEmpty!public!testing! !
 !LinkedList categoriesFor: #remove:ifAbsent:!public!removing! !
 !LinkedList categoriesFor: #removeAll!public!removing! !
+!LinkedList categoriesFor: #removeAllSuchThat:!public!removing! !
 !LinkedList categoriesFor: #removeAtIndex:!public!removing! !
 !LinkedList categoriesFor: #removeFirstIfAbsent:!public!removing! !
 !LinkedList categoriesFor: #removeLastIfAbsent:!public!removing! !

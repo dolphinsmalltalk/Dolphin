@@ -21,13 +21,15 @@ contents
 
 	| contents |
 	contents := super contents.
+
 	"Base"
 	contents
 		add: #('Core\Object Arts\Dolphin\MVP\Views\SysLink\Dolphin SysLink Control.pax' #encrypted #imageBased);
 		add: #('Core\Object Arts\Dolphin\ActiveX\Components\MonthView\Month View.pax' #encrypted #imageBased);
 		add: #('Core\Object Arts\Dolphin\ActiveX\Components\MSMask\Masked Edit.pax' #plain #imageBased);
 		add: #('Core\Contributions\Refactory\Refactoring Browser\Formatters\RBFormatters.pax' #plain #imageBased);
-
+		add: #('Core\Object Arts\Dolphin\System\Announcements\Dolphin Announcements.pax' #plain #imageBased);
+		
 		"##(self paxesUnder: 'Core\Object Arts\Dolphin\MVP\Presenters\Prompters' encrypted: false) asArray"
 		addAll: #(#('Core\Object Arts\Dolphin\MVP\Presenters\Prompters\Dolphin Choice Prompter.pax' #plain #imageBased) #('Core\Object Arts\Dolphin\MVP\Presenters\Prompters\Dolphin In-place Text Editor.pax' #plain #imageBased) #('Core\Object Arts\Dolphin\MVP\Presenters\Prompters\Dolphin Integer Prompter.pax' #plain #imageBased) #('Core\Object Arts\Dolphin\MVP\Presenters\Prompters\Dolphin Key-Value Prompter.pax' #plain #imageBased) #('Core\Object Arts\Dolphin\MVP\Presenters\Prompters\Dolphin Prompter.pax' #plain #imageBased));
 

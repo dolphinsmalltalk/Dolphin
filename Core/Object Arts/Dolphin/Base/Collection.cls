@@ -510,6 +510,13 @@ removeAll: oldElements
 	oldElements do: [:each | self remove: each].
 	^oldElements!
 
+removeAllSuchThat: aBlock 
+	"Evaluate aBlock for each element and remove all that elements from the receiver for that
+	aBlock evaluates to true. Use a copy to enumerate collections whose order changes when an
+	element is removed (i.e. Sets)."
+
+	self copy do: [:each | (aBlock value: each) ifTrue: [self remove: each]]!
+
 select: discriminator
 	"Evaluate the <monadicValuable> argument, discriminator, for each of the receiver's elements.
 	Answer a new <collection> like the receiver containing only those elements for which 
@@ -625,6 +632,7 @@ union: comperand
 !Collection categoriesFor: #remove:!public!removing! !
 !Collection categoriesFor: #remove:ifAbsent:!public!removing! !
 !Collection categoriesFor: #removeAll:!public!removing! !
+!Collection categoriesFor: #removeAllSuchThat:!public!removing! !
 !Collection categoriesFor: #select:!enumerating!public! !
 !Collection categoriesFor: #select:thenCollect:!enumerating!public! !
 !Collection categoriesFor: #size!accessing!public! !

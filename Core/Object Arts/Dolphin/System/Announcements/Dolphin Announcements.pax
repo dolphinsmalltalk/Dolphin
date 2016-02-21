@@ -1,0 +1,148 @@
+| package |
+package := Package name: 'Dolphin Announcements'.
+package paxVersion: 1;
+	basicComment: ''.
+
+
+package classNames
+	add: #Announcement;
+	add: #AnnouncementSet;
+	add: #AnnouncementSubscription;
+	add: #Announcer;
+	add: #SubscriptionRegistry;
+	add: #WeakAnnouncementSubscription;
+	add: #WeakMessageSend;
+	add: #WeakSubscriptionBuilder;
+	yourself.
+
+package methodNames
+	add: #BlockClosure -> #announcementSubscriber;
+	add: #BlockClosure -> #asWeakMessageSend;
+	add: #MessageSend -> #asWeakMessageSend;
+	add: #MessageSendAbstract -> #announcementSubscriber;
+	add: #Symbol -> #asAnnouncement;
+	add: #Symbol -> #handlesAnnouncement:;
+	add: 'SequenceableCollection class' -> #new:streamContents:;
+	add: 'SequenceableCollection class' -> #streamContents:;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\..\Base\Dolphin';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+Object subclass: #Announcement
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Object subclass: #AnnouncementSubscription
+	instanceVariableNames: 'announcer announcementClass subscriber action'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Object subclass: #Announcer
+	instanceVariableNames: 'registry'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Object subclass: #SubscriptionRegistry
+	instanceVariableNames: 'subscriptions monitor'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Object subclass: #WeakSubscriptionBuilder
+	instanceVariableNames: 'announcer'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+WeakArray variableSubclass: #WeakAnnouncementSubscription
+	instanceVariableNames: 'announcer announcementClass action'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Set variableSubclass: #AnnouncementSet
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+EventMessageSend variableSubclass: #WeakMessageSend
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+!BlockClosure methodsFor!
+
+announcementSubscriber
+	^self!
+
+asWeakMessageSend
+	self receiver notNil ifTrue: [self error: 'Only clean blocks can be weak'].
+	^self! !
+!BlockClosure categoriesFor: #announcementSubscriber!public! !
+!BlockClosure categoriesFor: #asWeakMessageSend!public! !
+
+!MessageSend methodsFor!
+
+asWeakMessageSend
+
+	^ WeakMessageSend
+		receiver: receiver
+		selector: selector
+		arguments: args copy! !
+!MessageSend categoriesFor: #asWeakMessageSend!commands!public! !
+
+!MessageSendAbstract methodsFor!
+
+announcementSubscriber
+	^self receiver! !
+!MessageSendAbstract categoriesFor: #announcementSubscriber!public! !
+
+!SequenceableCollection class methodsFor!
+
+new: newSize streamContents: blockWithArg 
+	| stream |
+	stream := self writeStream.
+	blockWithArg value: stream.
+	^stream contents!
+
+streamContents: monadicBlock
+
+	^ self new: 100 streamContents: monadicBlock! !
+!SequenceableCollection class categoriesFor: #new:streamContents:!public! !
+!SequenceableCollection class categoriesFor: #streamContents:!public! !
+
+!Symbol methodsFor!
+
+asAnnouncement
+	^self!
+
+handlesAnnouncement: anAnnouncement 
+	"Anything else than the announcement identifier (in the case of symbol i.e. #foo for ... on: #foo send: #bar to: nil) will not 
+	be handled."
+
+	"Announcer new 
+		on: #FOO send: #bar to: nil;
+		announce: #FOO should raise DNU bar"
+
+	^anAnnouncement == self! !
+!Symbol categoriesFor: #asAnnouncement!converting!public! !
+!Symbol categoriesFor: #handlesAnnouncement:!converting!public! !
+
+"End of package definition"!
+

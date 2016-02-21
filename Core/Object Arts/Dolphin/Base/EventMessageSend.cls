@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 MessageSendAbstract variableSubclass: #EventMessageSend
 	instanceVariableNames: 'expectedArgCount'
@@ -11,6 +11,12 @@ EventMessageSend comment: 'An EventMessageSend is a fully closed <Message>, incl
 When evaluate with extra arguments, an EventMessageSend merges its own argument with those supplied at evaluation time with the latter taking precedence from the left. For example if the message requires two arguments, and one is supplied at evaluation time, then the first argument sent will be that one, and the second the second of the arguments stored in the EventMessageSend itself.'!
 !EventMessageSend categoriesForClass!System-Support! !
 !EventMessageSend methodsFor!
+
+asMessageSend
+	^MessageSend 
+		receiver: self receiver
+		selector: selector
+		arguments: (Array withAll: self arguments)!
 
 forwardTo: anObject withArguments: triggerArguments
 	"Private - Send the receiver Message to the <Object>, anObject, with the <Array> of arguments, anArray.	
@@ -70,6 +76,7 @@ value
 	receiver's arguments, and answers the result."
 
 	^self forwardTo: self receiver withArguments: #()! !
+!EventMessageSend categoriesFor: #asMessageSend!public! !
 !EventMessageSend categoriesFor: #forwardTo:withArguments:!evaluating!private! !
 !EventMessageSend categoriesFor: #mergeArguments:!evaluating!private! !
 !EventMessageSend categoriesFor: #postCopy!copying!public! !
