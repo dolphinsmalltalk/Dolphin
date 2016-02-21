@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #Message
 	instanceVariableNames: 'selector args '
@@ -73,6 +73,9 @@ messages
 
 	^Array with: self selector!
 
+numArgs
+	^self argumentCount!
+
 printOn: target 
 	"Append a short textual description of the receiver to the <puttableStream>, 
 	target, in the form a developer might want to see it (attempt an evaluable
@@ -140,6 +143,7 @@ valueWithArguments: argArray
 !Message categoriesFor: #forwardTo:withArguments:!operations!private! !
 !Message categoriesFor: #hash!comparing!public! !
 !Message categoriesFor: #messages!enquiries!public! !
+!Message categoriesFor: #numArgs!accessing!public! !
 !Message categoriesFor: #printOn:!printing!public! !
 !Message categoriesFor: #selector!accessing!public! !
 !Message categoriesFor: #selector:!accessing!public! !

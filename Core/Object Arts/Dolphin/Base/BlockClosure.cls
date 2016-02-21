@@ -129,6 +129,9 @@ argumentCount: anInteger
 	info := (info bitAnd: ##((16rFF << 7) bitInvert)) 
 				bitOr: ((anInteger bitAnd: 16rFF) bitShift: 7)!
 
+asBlock
+	^self!
+
 at: index
 	"Answer the receiver's indexed instance variable at the argument index.
 	As basicAt:, but may be reimplemented.
@@ -393,6 +396,9 @@ newProcessWithArguments: anArray
 	from anArray, then terminate"
 
 	^[self valueWithArguments: anArray] newProcess!
+
+numArgs
+	^self argumentCount!
 
 on: selector do: action
 	"Try to evaluate the receiver, and should an exception occur which is matched
@@ -724,6 +730,7 @@ whileTrue: iterationBlock
 !BlockClosure categoriesFor: #=!comparing!public! !
 !BlockClosure categoriesFor: #argumentCount!accessing!public! !
 !BlockClosure categoriesFor: #argumentCount:!accessing!private! !
+!BlockClosure categoriesFor: #asBlock!accessing!converting!public! !
 !BlockClosure categoriesFor: #at:!accessing!public! !
 !BlockClosure categoriesFor: #at:put:!accessing!public! !
 !BlockClosure categoriesFor: #atPriority:!evaluating!public! !
@@ -753,6 +760,7 @@ whileTrue: iterationBlock
 !BlockClosure categoriesFor: #millisecondsToRepeat:!development!public! !
 !BlockClosure categoriesFor: #newProcess!public!scheduling! !
 !BlockClosure categoriesFor: #newProcessWithArguments:!public!scheduling! !
+!BlockClosure categoriesFor: #numArgs!accessing!public! !
 !BlockClosure categoriesFor: #on:do:!debugger-step through!exceptions!public! !
 !BlockClosure categoriesFor: #on:do:on:do:!exceptions!public! !
 !BlockClosure categoriesFor: #on:do:on:do:on:do:!exceptions!public! !

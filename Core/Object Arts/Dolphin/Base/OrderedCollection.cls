@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 SequencedGrowableCollection variableSubclass: #OrderedCollection
 	instanceVariableNames: 'firstIndex lastIndex '
@@ -253,6 +253,24 @@ removeAll
 	firstIndex := 1.
 	lastIndex := 0!
 
+removeAllSuchThat: aBlock 
+	"Remove each element of the receiver for which aBlock evaluates to true. The method in
+	Collection is O(N^2), this is O(N)."
+
+	| n |
+	n := firstIndex.
+	firstIndex to: lastIndex
+		do: 
+			[:index | 
+			| elem |
+			elem := self basicAt: index.
+			(aBlock value: elem) 
+				ifFalse: 
+					[self basicAt: n put: elem.
+					n := n + 1]].
+	n to: lastIndex do: [:i | self basicAt: i put: nil].
+	lastIndex := n - 1!
+
 removeAtIndex: index
 	"Remove, and answer, the element of the receiver at the specified 
 	<integer> index, by shuffling elements which succeed it down one slot.
@@ -356,6 +374,7 @@ uncheckedFrom: startInteger to: stopInteger keysAndValuesDo: aDyadicValuable
 !OrderedCollection categoriesFor: #nextIdentityIndexOf:from:to:!public!searching! !
 !OrderedCollection categoriesFor: #nextIndexOf:from:to:!public!searching! !
 !OrderedCollection categoriesFor: #removeAll!public!removing! !
+!OrderedCollection categoriesFor: #removeAllSuchThat:!accessing!public! !
 !OrderedCollection categoriesFor: #removeAtIndex:!public!removing! !
 !OrderedCollection categoriesFor: #resize:!mutating!private! !
 !OrderedCollection categoriesFor: #reverseDo:!enumerating!public! !

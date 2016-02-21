@@ -1,0 +1,69 @@
+| package |
+package := Package name: 'Dolphin Announcement Tests'.
+package paxVersion: 1;
+	basicComment: ''.
+
+
+package classNames
+	add: #AnnouncementMockA;
+	add: #AnnouncementMockB;
+	add: #AnnouncementMockC;
+	add: #AnnouncementSetTest;
+	add: #AnnouncerTest;
+	add: #WeakAnnouncerTest;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\..\Base\Dolphin';
+	add: 'Dolphin Announcements';
+	add: '..\..\..\..\Contributions\Camp Smalltalk\SUnit\SUnit';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+Announcement subclass: #AnnouncementMockA
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Announcement subclass: #AnnouncementMockB
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+AnnouncementMockB subclass: #AnnouncementMockC
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+TestCase subclass: #AnnouncementSetTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+TestCase subclass: #AnnouncerTest
+	instanceVariableNames: 'announcer'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+AnnouncerTest subclass: #WeakAnnouncerTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+"End of package definition"!
+
