@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Image subclass: #Icon
 	instanceVariableNames: ''
@@ -255,13 +255,21 @@ valueWithHandle: operation forExtent: aPoint
 				ifTrue: 
 					[(self loadFromFile: self fileSpec extent: aPoint) ifNotNil: [:hIcon | ^operation value: hIcon]]
 				ifFalse: 
-					[(hModule == 0 
-						and: [aPoint ~= SystemMetrics current largeIconExtent and: [OSVERSIONINFO current isWinVista]]) 
-							ifTrue: 
-								[(self 
-									load: ident
-									fromInstance: hModule
-									extent: aPoint) ifNotNil: [:hIcon | ^operation value: hIcon]]]].
+					[(hModule == 0 and: 
+							["Wine does not support the
+							 ComCtrlLibrary>>loadIconWithScaleDown:..
+							 method which is normally availble under
+							 Vista and later. Hence we don't allow this
+							 to be called even if the Windows version
+							 indicates Vista is available."
+							aPoint ~= SystemMetrics current largeIconExtent and: 
+									[#wineFix.
+									OSVERSIONINFO current isWinVista & NTLibrary isWine not]]) 
+						ifTrue: 
+							[(self 
+								load: ident
+								fromInstance: hModule
+								extent: aPoint) ifNotNil: [:hIcon | ^operation value: hIcon]]]].
 	^operation value: self asParameter! !
 !Icon categoriesFor: #addToImageList:mask:!double dispatch!private! !
 !Icon categoriesFor: #asAlphaBitmap:!converting!public! !
@@ -284,7 +292,7 @@ valueWithHandle: operation forExtent: aPoint
 !Icon categoriesFor: #includesFrame:!public!searching! !
 !Icon categoriesFor: #load:fromInstance:extent:!private!realizing/unrealizing! !
 !Icon categoriesFor: #loadFromInstance:!private!realizing/unrealizing! !
-!Icon categoriesFor: #valueWithHandle:forExtent:!helpers!private! !
+!Icon categoriesFor: #valueWithHandle:forExtent:!helpers!private!wine fix! !
 
 !Icon class methodsFor!
 
