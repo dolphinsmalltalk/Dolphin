@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 FileDialog subclass: #FileSaveDialog
 	instanceVariableNames: ''
@@ -14,8 +14,14 @@ commonDialogSelector
 	"Private - Answer the selector to use to get the result."
 
 	^#getSaveFileName:
+!
+
+overwritePrompt
+
+	self style: self style | OFN_OVERWRITEPROMPT.
 ! !
 !FileSaveDialog categoriesFor: #commonDialogSelector!constants!private! !
+!FileSaveDialog categoriesFor: #overwritePrompt!public! !
 
 !FileSaveDialog class methodsFor!
 
