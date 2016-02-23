@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #ResourceIdentifier
 	instanceVariableNames: 'owningClass selector'
@@ -41,6 +41,14 @@ editExpression
 	"Private - Answer a String that can be evaluated to edit an emitted resource"
 
 	^'ViewComposer openOn: (ResourceIdentifier class: self selector: <1p>)' expandMacrosWith: self selector!
+
+editViewUsing: aMonadicBlock 
+	"Use dynamic lookup to avoid boot ordering problems."
+	| view | 
+	view := self loadWithContext: (Smalltalk at: #View) desktop.
+	aMonadicBlock value: view.
+	self assign: view literalStoreArray.
+	view destroy!
 
 emit: aResourceArray asStringOn: aWriteStream 
 	aWriteStream nextPutAll: '#('.
@@ -192,6 +200,7 @@ storeOn: aStream
 !ResourceIdentifier categoriesFor: #compiledMethod!accessing!public! !
 !ResourceIdentifier categoriesFor: #copy!copying!public! !
 !ResourceIdentifier categoriesFor: #editExpression!helpers!private! !
+!ResourceIdentifier categoriesFor: #editViewUsing:!operations!public! !
 !ResourceIdentifier categoriesFor: #emit:asStringOn:!helpers!private! !
 !ResourceIdentifier categoriesFor: #emitMethodHeaderFor:on:!accessing!private! !
 !ResourceIdentifier categoriesFor: #exists!public!testing! !

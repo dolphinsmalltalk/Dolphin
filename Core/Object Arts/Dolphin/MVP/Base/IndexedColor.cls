@@ -50,9 +50,22 @@ asParameter
 
 asRGB
 	"Answer the receiver as an RGB using the default palette."
+	#wineFix.
+	NTLibrary isWine ifTrue: [
+		"Wine doesn't yet implement GDILibrary>>getPaletteEntries:"
+		^self asRGBUsingNoPalette].
+	^self asRGBUsingPalette: self defaultPalette!
 
-	^self asRGBUsingPalette: self defaultPalette
-!
+asRGBUsingNoPalette
+	"Answer the receiver as an RGB  when no palette is available ."
+
+	| colorNameMap stdColorName |
+	#wineFix.
+	colorNameMap := LookupTable new.
+	#(#(#black 16r1000000) #(#darkRed 16r1000001) #(#darkGreen 16r1000002) #(#brown 16r1000003) #(#darkBlue 16r1000004) #(#darkMagenta 16r1000005) #(#darkCyan 16r1000006) #(#gray 16r1000007) #(#darkGray 16r100000C) #(#red 16r100000D) #(#green 16r100000E) #(#yellow 16r100000F) #(#blue 16r1000010) #(#magenta 16r1000011) #(#cyan 16r1000012) #(#white 16r1000013)) 
+		do: [:each | colorNameMap at: each second put: each first].
+	stdColorName := colorNameMap at: index.
+	^RGB stdColor: stdColorName!
 
 asRGBUsingPalette: anExternalHandle 
 	"Answer the <RGB> equivalent of the receiver as mapped in the palette with the specified
@@ -105,7 +118,8 @@ setIndex: anInteger
 !IndexedColor categoriesFor: #=!comparing!public! !
 !IndexedColor categoriesFor: #asIndexedColor!converting!public! !
 !IndexedColor categoriesFor: #asParameter!converting!public! !
-!IndexedColor categoriesFor: #asRGB!converting!public! !
+!IndexedColor categoriesFor: #asRGB!converting!public!wine fix! !
+!IndexedColor categoriesFor: #asRGBUsingNoPalette!converting!public!wine fix! !
 !IndexedColor categoriesFor: #asRGBUsingPalette:!converting!public! !
 !IndexedColor categoriesFor: #hash!comparing!public! !
 !IndexedColor categoriesFor: #index!accessing!public! !

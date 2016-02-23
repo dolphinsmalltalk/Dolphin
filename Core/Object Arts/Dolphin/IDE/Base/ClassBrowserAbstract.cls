@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 SmalltalkToolShell subclass: #ClassBrowserAbstract
 	instanceVariableNames: 'classesPresenter categoriesPresenter methodBrowserPresenter definitionPresenter modePresenter flags history variablesPresenter protocolsPresenter filterPresenter packageModel statusModel versionModel cardsPresenter loadedPlugins methodCategories'
@@ -2829,6 +2829,12 @@ plugins
 	"Answer the plugins installed by instances of the receiver"
 
 	plugins isNil ifTrue: [self plugins: self defaultPluginsCollection].
+	NTLibrary isWine 
+		ifTrue: 
+			["Under Wine we must remove the CodeMentor plugin since it relies in the
+			 Internet Explorer control which is not available."
+			#wineFix.
+			plugins := plugins reject: [:each | each name == #CodeMentorPlugin]].
 	^plugins!
 
 plugins: anOrderedCollection 
@@ -2897,7 +2903,7 @@ wordWrapSource: aBoolean
 !ClassBrowserAbstract class categoriesFor: #initialize!initializing!private! !
 !ClassBrowserAbstract class categoriesFor: #looseMethodColor!accessing!options!public! !
 !ClassBrowserAbstract class categoriesFor: #looseMethodColor:!accessing!options!public! !
-!ClassBrowserAbstract class categoriesFor: #plugins!accessing!public! !
+!ClassBrowserAbstract class categoriesFor: #plugins!accessing!public!wine fix! !
 !ClassBrowserAbstract class categoriesFor: #plugins:!accessing!public! !
 !ClassBrowserAbstract class categoriesFor: #publishedAspects!development!public! !
 !ClassBrowserAbstract class categoriesFor: #removePlugin:!initializing!private! !

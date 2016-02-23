@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 DragDropSession subclass: #InternalDragDropSession
 	instanceVariableNames: 'lastImageKey imageList oldCursor dragButton operationDescriptions'
@@ -138,6 +138,23 @@ giveFeedback
 	(imageKey := self imageKey) ~~ lastImageKey 
 		ifTrue: 
 			[| dragIm |
+			NTLibrary isWine 
+				ifTrue: 
+					[| cursorSelector |
+					#wineFix.
+					"Wine doesn't appear to support setting drag cursors
+					from image lists. Until available we fall back to using the
+					old (non-specific) drag and drop cursors"
+					cursorSelector := ##((LookupTable new)
+								at: #none put: #ddNone;
+								at: #move put: #ddMove;
+								at: #copy put: #ddCopy;
+								at: #copyScroll put: #ddCopyScroll;
+								at: #moveScroll put: #ddMoveScroll;
+								at: #linkScroll put: #ddLinkScroll;
+								yourself) at: self imageKey.
+					(Cursor perform: cursorSelector) makeCurrent.
+					lastImageKey := imageKey].
 			dragIm := dragImages at: imageKey.
 			imageList 
 				setDragCursorImage: dragIm key
@@ -245,7 +262,7 @@ startTrackingAt: aPoint
 !InternalDragDropSession categoriesFor: #dropTargetUnder:!helpers!private!tracking! !
 !InternalDragDropSession categoriesFor: #endTrackingAt:!public!tracking! !
 !InternalDragDropSession categoriesFor: #getExtendedOperation!operations!private! !
-!InternalDragDropSession categoriesFor: #giveFeedback!operations!private! !
+!InternalDragDropSession categoriesFor: #giveFeedback!operations!private!wine fix! !
 !InternalDragDropSession categoriesFor: #hideDragImage!operations!public! !
 !InternalDragDropSession categoriesFor: #isExtendedDrag!public!testing! !
 !InternalDragDropSession categoriesFor: #operationDescriptions!accessing!public! !
