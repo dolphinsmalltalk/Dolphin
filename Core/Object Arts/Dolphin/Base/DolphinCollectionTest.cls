@@ -25,6 +25,11 @@ testFold
 		do: 
 			[:i | 
 			result := (1 to: i) fold: [:product :each | product * each].
-			self assert: result = i factorial]! !
+			self assert: result = i factorial]!
+
+testIsNilOrEmpty
+	self assert: #() isNilOrEmpty.
+	self deny: #(nil) isNilOrEmpty.! !
 !DolphinCollectionTest categoriesFor: #testFold!public!unit tests! !
+!DolphinCollectionTest categoriesFor: #testIsNilOrEmpty!public!testing / testing! !
 
