@@ -48,7 +48,7 @@ namespace ST
 		BehaviorOTE*			m_superclass;
 		MethodDictOTE*			m_methodDictionary;
 		InstanceSpecification	m_instanceSpec;
-		POTE					m_subclasses;
+		ArrayOTE*				m_subclasses;
 
 	public:
 		unsigned fixedFields() const { return (*reinterpret_cast<const DWORD*>(&m_instanceSpec) >> 1) & 0xFF; }

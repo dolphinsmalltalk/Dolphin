@@ -268,15 +268,15 @@ InstanceSpecFlags		RECORD	m_nullTerminated:1,
 SHAPEMASK		EQU		(NOT MASK m_indirect)
 
 ;; Structure for Instance Shape Specification of Classes
-InstanceSpecification		STRUCT 2t
+InstanceSpec		STRUCT 2t
 	flags			InstanceSpecFlags	<>
 	m_extraSpec		WORD				?
-InstanceSpecification		ENDS
+InstanceSpec		ENDS
 
 Behavior		STRUCT 2t
 	m_superclass		Oop		?
 	m_methodDictionary	Oop		?
-	m_instanceSpec		InstanceSpecification		<>
+	m_instanceSpec		InstanceSpec		<>
 	m_subclasses		Oop		?
 Behavior		ENDS
 

@@ -32,7 +32,7 @@ typedef std::valarray<POTE> POTEARRAY;
 									// practice this limit would not be reached because the byte code limit would
 									// be reached first.
 #define ARGLIMIT			255		// maximum number of arguments (VM limit)
-#define	ENVTEMPLIMIT		63
+#define	ENVTEMPLIMIT		63		// (2^6)-1. Note that actual limit is 62, since value of 1 indicates that a context with 0 slots is required for a far ^-return 
 
 #define GENERATEDTEMPSTART " "
 #define TEMPSDELIMITER '|'

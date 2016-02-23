@@ -251,7 +251,6 @@
     <ClInclude Include="..\STMethod.h" />
     <ClInclude Include="..\STMethodContext.h" />
     <ClInclude Include="..\STObject.h" />
-    <ClInclude Include="..\STPoint.h" />
     <ClInclude Include="..\STProcess.h" />
     <ClInclude Include="..\STStackFrame.h" />
     <ClInclude Include="..\STStream.h" />

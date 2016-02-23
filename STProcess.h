@@ -24,12 +24,12 @@ class OverlappedCall;
 namespace ST
 {
 	class Process;
-	class ProcessList;
+	class LinkedList;
 	class Semaphore;
 	class ProcessorScheduler;
 }
 typedef TOTE<ST::Process> ProcessOTE;
-typedef TOTE<ST::ProcessList> ProcessListOTE;
+typedef TOTE<ST::LinkedList> LinkedListOTE;
 typedef TOTE<ST::Semaphore> SemaphoreOTE;
 typedef TOTE<ST::ProcessorScheduler> SchedulerOTE;
 
@@ -43,7 +43,7 @@ namespace ST
 		ProcessOTE*		m_nextLink;
 		Oop				m_suspendedFrame;
 		Oop				m_priority;
-		ProcessListOTE*	m_myList;
+		LinkedListOTE*	m_myList;
 		Oop				m_callbackDepth;
 		Oop				m_primitiveFailureCode;
 		Oop				m_primitiveFailureData;
@@ -104,11 +104,11 @@ namespace ST
 
 		Oop Name() const { return reinterpret_cast<Oop>(m_name); }
 		bool IsWaiting() const { return !m_myList->isNil(); }
-		bool IsWaitingOn(const ProcessListOTE* oteList) const { return m_myList == oteList; }
+		bool IsWaitingOn(const LinkedListOTE* oteList) const { return m_myList == oteList; }
 		bool IsReady() const;
-		ProcessListOTE* SuspendingList() const { return m_myList; }
+		LinkedListOTE* SuspendingList() const { return m_myList; }
 		ProcessOTE* Next() const { return m_nextLink; }
-		void SetSuspendingList(ProcessListOTE* oteList)
+		void SetSuspendingList(LinkedListOTE* oteList)
 		{
 			HARDASSERT(m_myList->isNil());
 			oteList->countUp();
@@ -179,7 +179,7 @@ namespace ST
 		void PostLoadFix(ProcessOTE* oteThis);
 	};
 
-	class ProcessList : public SequenceableCollection
+	class LinkedList : public SequenceableCollection
 	{
 	public:
 		ProcessOTE* m_firstLink;
@@ -192,11 +192,11 @@ namespace ST
 		ProcessOTE* remove(ProcessOTE* aLink);
 	};
 
-	class Semaphore : public ProcessList
+	class Semaphore : public LinkedList
 	{
 	public:
 		Oop m_excessSignals;
-		enum { ExcessSignalsIndex = ProcessList::FixedSize };
+		enum { ExcessSignalsIndex = LinkedList::FixedSize };
 
 		DWORD Wait(SemaphoreOTE* oteThis, ProcessOTE* oteProcess, int nTimeout);
 

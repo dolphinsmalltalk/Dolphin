@@ -214,7 +214,7 @@ extern ?primitiveVariantValue@Interpreter@@CIHXZ:near32
 PRIMUNWINDINTERRUPT EQU ?primitiveUnwindInterrupt@Interpreter@@CIHAAVCompiledMethod@ST@@I@Z
 extern PRIMUNWINDINTERRUPT:near32
 
-RESUSPENDACTIVEON EQU ?ResuspendActiveOn@Interpreter@@SIPAV?$TOTE@VProcessList@ST@@@@PAV2@@Z
+RESUSPENDACTIVEON EQU ?ResuspendActiveOn@Interpreter@@SIPAV?$TOTE@VLinkedList@ST@@@@PAV2@@Z
 extern RESUSPENDACTIVEON:near32
 
 RESCHEDULE EQU ?Reschedule@Interpreter@@SGHXZ

@@ -30,7 +30,7 @@ typedef struct STMethodHeader
 {
 	BYTE isInt 				: 1;	// MUST be 1 (to avoid treatment as object)
 	BYTE isPrivate			: 1;
-	BYTE envTempCount		: 6;
+	BYTE envTempCount		: 6;	// Note that this is actually count+1
 	BYTE stackTempCount;
 	BYTE argumentCount;
 	BYTE primitiveIndex;

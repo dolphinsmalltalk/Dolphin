@@ -4105,7 +4105,7 @@ BEGINPRIMITIVE primitiveActivateMethod
 
 		shr		ecx, 2									; Access the actual env temp count
 		lea		edx, [_SP+1]							; 2: Calc SmallInteger frame pointer into EAX...
-		dec		ecx
+		dec		ecx										; Count is one greater than number of slots required (to flag need for Context for far ^-return)
 
 		call	NEWCONTEXT								
 		ASSUME	eax:PTR OTE								; EAX is the Oop of the new Context

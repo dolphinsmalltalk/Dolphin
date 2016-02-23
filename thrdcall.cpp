@@ -575,7 +575,7 @@ bool OverlappedCall::Initiate(CompiledMethod* pMethod, unsigned argCount)
 	// spot that an overlapped call completion is pending. However it does create
 	// a ref. count issue since the Semaphore may be the only ref. to the process, and
 	// the process is probably the only ref. to the Semaphore.
-	Interpreter::QueueProcessOn(m_oteProcess, reinterpret_cast<ProcessListOTE*>(proc->OverlapSemaphore()));
+	Interpreter::QueueProcessOn(m_oteProcess, reinterpret_cast<LinkedListOTE*>(proc->OverlapSemaphore()));
 
 	// OK to start the async. operation now
 	// We don't use Suspend/Resume because if thread is not suspended yet 

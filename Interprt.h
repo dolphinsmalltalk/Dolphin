@@ -390,14 +390,14 @@ public:
 	static BOOL FastYield();
 	static void sleep(ProcessOTE* aProcess);
 	static int SuspendProcess(ProcessOTE* oteProc);
-	static void QueueProcessOn(ProcessOTE* oteProc, ProcessListOTE* oteList);
+	static void QueueProcessOn(ProcessOTE* oteProc, LinkedListOTE* oteList);
 	static BOOL __stdcall Reschedule();
 
 	// Return the active process to a list on which it was previously
 	// suspended - this may (if the list is a Semaphore) actually
 	// leave the process in a runnable condition.
-	static ProcessListOTE* __fastcall ResuspendActiveOn(ProcessListOTE* oteList);
-	static ProcessListOTE* ResuspendProcessOn(ProcessOTE* oteProcess, ProcessListOTE* oteList);
+	static LinkedListOTE* __fastcall ResuspendActiveOn(LinkedListOTE* oteList);
+	static LinkedListOTE* ResuspendProcessOn(ProcessOTE* oteProcess, LinkedListOTE* oteList);
 
 	static ProcessOTE* schedule();
 	static ProcessOTE* resume(ProcessOTE* aProcess);
@@ -423,7 +423,7 @@ private:
 	static StackFrame* firstFrame();
 
 	static ProcessOTE* wakeHighestPriority();
-	static ProcessOTE* resumeFirst(ProcessList* list);
+	static ProcessOTE* resumeFirst(LinkedList* list);
 	static ProcessOTE* resumeFirst(Semaphore* sem);
 	static BOOL __fastcall yield();
 	static BOOL	__fastcall FireAsyncEvents();
