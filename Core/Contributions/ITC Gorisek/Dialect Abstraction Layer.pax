@@ -40,7 +40,6 @@ package methodNames
 	add: #ByteArray -> #itcAsInteger;
 	add: #Character -> #itcAsInteger;
 	add: #Collection -> #conform:;
-	add: #Collection -> #isNilOrEmpty;
 	add: #Collection -> #itcGetAbsSum;
 	add: #Collection -> #itcGetMax;
 	add: #Collection -> #itcGetMin;
@@ -96,7 +95,6 @@ package methodNames
 	add: #Object -> #isBlockClosure;
 	add: #Object -> #isDictionaryOrLookupTable;
 	add: #Object -> #isFileStream;
-	add: #Object -> #isNilOrEmpty;
 	add: #Object -> #isNilOrZero;
 	add: #Object -> #itcAsInteger;
 	add: #Object -> #itcAsNumberOrZero;
@@ -176,7 +174,6 @@ package methodNames
 	add: #UndefinedObject -> #+~;
 	add: #UndefinedObject -> #add:withDelimiter:;
 	add: #UndefinedObject -> #asString;
-	add: #UndefinedObject -> #isNilOrEmpty;
 	add: 'Exception class' -> #signalWithMessage:;
 	add: 'FileStream class' -> #delete:;
 	add: 'ScaledDecimal class' -> #numerator:denominator:scale:;
@@ -399,9 +396,6 @@ conform: discriminator
 	self do: [:e | (discriminator value: e) ifFalse: [^false]].
 	^true!
 
-isNilOrEmpty
-	^self isEmpty!
-
 itcGetAbsSum
 	| sum |
 	sum := 0.
@@ -435,7 +429,6 @@ itcGetSumOrNil
 		do: [:each | each isNil ifFalse: [sum isNil ifTrue: [sum := each] ifFalse: [sum := sum + each]]].
 	^sum! !
 !Collection categoriesFor: #conform:!enumerating!public! !
-!Collection categoriesFor: #isNilOrEmpty!public! !
 !Collection categoriesFor: #itcGetAbsSum!enumerating!public! !
 !Collection categoriesFor: #itcGetMax!enumerating!public! !
 !Collection categoriesFor: #itcGetMin!enumerating!public! !
@@ -859,9 +852,6 @@ isDictionaryOrLookupTable
 isFileStream
 	^false!
 
-isNilOrEmpty
-	^false!
-
 isNilOrZero
 	^self isNil or: [self = 0]!
 
@@ -911,7 +901,6 @@ sestej: selectors
 !Object categoriesFor: #isBlockClosure!constants!public! !
 !Object categoriesFor: #isDictionaryOrLookupTable!public!testing! !
 !Object categoriesFor: #isFileStream!public!testing! !
-!Object categoriesFor: #isNilOrEmpty!public! !
 !Object categoriesFor: #isNilOrZero!public! !
 !Object categoriesFor: #itcAsInteger!comparing!public! !
 !Object categoriesFor: #itcAsNumberOrZero!comparing!public! !
@@ -1822,15 +1811,11 @@ add: aString withDelimiter: delimiter
 	^aString isNilOrEmpty ifFalse: [aString] ifTrue: ['']!
 
 asString
-	^''!
-
-isNilOrEmpty
-	^true! !
+	^''! !
 !UndefinedObject categoriesFor: #-~!public! !
 !UndefinedObject categoriesFor: #+~!public! !
 !UndefinedObject categoriesFor: #add:withDelimiter:!control flow!public! !
 !UndefinedObject categoriesFor: #asString!public! !
-!UndefinedObject categoriesFor: #isNilOrEmpty!public! !
 
 "End of package definition"!
 

@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 nil subclass: #Object
 	instanceVariableNames: ''
@@ -916,6 +916,9 @@ isNil
 
 	^false!
 
+isNilOrEmpty
+	^false!
+
 isNumber
 	"Coerces numbers to true and everything else to false. Number 
 	overrides with ^true"
@@ -1589,6 +1592,7 @@ yourself
 !Object categoriesFor: #isLiteral!private!testing! !
 !Object categoriesFor: #isMemberOf:!public!testing! !
 !Object categoriesFor: #isNil!public!testing! !
+!Object categoriesFor: #isNilOrEmpty!public! !
 !Object categoriesFor: #isNumber!public!testing! !
 !Object categoriesFor: #isString!public!testing! !
 !Object categoriesFor: #isSymbol!public!RefactoringBrowser! !

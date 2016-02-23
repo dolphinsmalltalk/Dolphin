@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #UndefinedObject
 	instanceVariableNames: ''
@@ -94,6 +94,9 @@ isNil
 
 	^true
 !
+
+isNilOrEmpty
+	^true!
 
 isNull
 	"Private - Answer whether the receiver is 'Null'. A Dolphin object is Null
@@ -199,6 +202,7 @@ yourAddress
 !UndefinedObject categoriesFor: #includesBehavior:!class hierarchy-testing!public! !
 !UndefinedObject categoriesFor: #isLiteral!public!testing! !
 !UndefinedObject categoriesFor: #isNil!public!testing! !
+!UndefinedObject categoriesFor: #isNilOrEmpty!public! !
 !UndefinedObject categoriesFor: #isNull!private!testing! !
 !UndefinedObject categoriesFor: #name!accessing!public! !
 !UndefinedObject categoriesFor: #newClassBuilder:instanceVariableNames:classVariableNames:poolDictionaries:!class hierarchy-adding!private! !
