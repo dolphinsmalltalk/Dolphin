@@ -62,6 +62,9 @@ testIfNilAndIfNotNil
 	self assert: (evaluated not).
 	!
 
+testIsNilOrEmpty
+	self deny: Object new isNilOrEmpty!
+
 testObjectEventRegistry
 	self assert: _EventsRegister countElements = _EventsRegister size!
 
@@ -281,6 +284,7 @@ testZeroArgEvent
 !ObjectTest categoriesFor: #testDeepCopy!public!unit tests! !
 !ObjectTest categoriesFor: #testEventCollectionWeakness!public!unit tests! !
 !ObjectTest categoriesFor: #testIfNilAndIfNotNil!public!unit tests! !
+!ObjectTest categoriesFor: #testIsNilOrEmpty!public!testing / testing! !
 !ObjectTest categoriesFor: #testObjectEventRegistry!public!unit tests! !
 !ObjectTest categoriesFor: #testOneArgEvent!public!unit tests! !
 !ObjectTest categoriesFor: #testRemoveEventsTriggeredFor!public!unit tests! !
