@@ -7,9 +7,7 @@
 	Dolphin Smalltalk precompiled header file
 
 ******************************************************************************/
-
-#ifndef _IST_IST_H_
-#define _IST_IST_H_
+#pragma once
 
 // Prevent executable bloat caused by aligning all sections on 4k boundaries.
 // Note that this doesn't actually prevent the exe/dll loading on Win9X, but
@@ -123,6 +121,4 @@ HMODULE GetModuleContaining(LPCVOID pFunc);
 
 #ifdef _CONSOLE
 #define _ATL_NO_COM_SUPPORT
-#endif
-
 #endif

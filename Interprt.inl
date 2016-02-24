@@ -7,8 +7,9 @@
 	Public inlines for the interpreter bodules
 
 ******************************************************************************/
+#pragma once
 
-#ifndef _IST_INTERPRT_H_
+#ifndef CHECKREFERENCES
 	#error You'll need to include interprt.h
 #endif
 
@@ -282,3 +283,17 @@ inline void Interpreter::queueForBereavementOf(OTE* ote, Oop argPointer)
 	m_qBereavements.Push(reinterpret_cast<Oop>(ote));
 	m_qBereavements.Push(argPointer);
 }
+
+///////////////////////////////////////////////////////////////////////////////
+// FFI support
+
+inline AddressOTE* ST::ExternalAddress::New(void* ptr)
+{
+	return reinterpret_cast<AddressOTE*>(Interpreter::NewDWORD(DWORD(ptr), Pointers.ClassExternalAddress));
+}
+
+inline HandleOTE* ST::ExternalHandle::New(HANDLE hValue)
+{
+	return reinterpret_cast<HandleOTE*>(Interpreter::NewDWORD(DWORD(hValue), Pointers.ClassExternalHandle));
+}
+

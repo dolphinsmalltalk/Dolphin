@@ -1,7 +1,5 @@
 // DolphinSmalltalk.h : Declaration of the CDolphinSmalltalk
-
-#ifndef __DOLPHINSMALLTALK_H_
-#define __DOLPHINSMALLTALK_H_
+#pragma once
 
 #include "DolphinSmalltalk_i.h"
 #include "rc_vm.h"
@@ -158,11 +156,6 @@ public:
 
 	STDMETHOD_(BOOL, IsImmutable)( 
             /* [in] */ Oop oop);
-
-	//STDMETHOD_(void, AddReferenceSource)(
-	//		/* [in] */ IReferenceSource*);
-	//STDMETHOD_(void, RemoveReferenceSource)(
-	//		/* [in] */ IReferenceSource*);
 };
 
 #ifdef VMDLL
@@ -182,5 +175,3 @@ inline void CDolphinSmalltalk::Unlock()
 	_pAtlModule->Unlock();
 #endif
 }
-
-#endif //__DOLPHINSMALLTALK_H_

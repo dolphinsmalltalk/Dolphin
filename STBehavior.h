@@ -12,9 +12,7 @@
 	a representation in the assembler modules (so see istasm.inc)
 
 ******************************************************************************/
-
-#ifndef _IST_STBEHAVIOR_H_
-#define _IST_STBEHAVIOR_H_
+#pragma once
 
 #include "STObject.h"
 
@@ -33,33 +31,38 @@ public:
 	WORD m_extraSpec;				// High word for class specific purposes (e.g. structure byte size)
 };
 
-class Behavior;
-typedef TOTE<Behavior> BehaviorOTE;
-
-class MethodDictionary;
-typedef TOTE<MethodDictionary> MethodDictOTE;
-
-class Behavior //: public Object
+// Declare forward references
+namespace ST
 {
-public:
-	BehaviorOTE*			m_superclass;
-	MethodDictOTE*			m_methodDictionary;
-	InstanceSpecification	m_instanceSpec;
-	POTE					m_subclasses;
+	class Behavior;
+	class MethodDictionary;
+}
+typedef TOTE<ST::Behavior> BehaviorOTE;
+typedef TOTE<ST::MethodDictionary> MethodDictOTE;
 
-public:
-	unsigned fixedFields() const	{ return (*reinterpret_cast<const DWORD*>(&m_instanceSpec) >> 1) & 0xFF; }
-	BOOL isPointers() const			{ return m_instanceSpec.m_pointers; }
-	BOOL isBytes() const			{ return !m_instanceSpec.m_pointers; }
-	BOOL isIndexable() const 		{ return m_instanceSpec.m_indexable; }
-	BOOL isMourner() const			{ return m_instanceSpec.m_mourner; }
-	WORD extraSpec() const			{ return m_instanceSpec.m_extraSpec; }
-	BOOL isIndirect() const			{ return m_instanceSpec.m_indirect; }
+namespace ST
+{
+	class Behavior //: public Object
+	{
+	public:
+		BehaviorOTE*			m_superclass;
+		MethodDictOTE*			m_methodDictionary;
+		InstanceSpecification	m_instanceSpec;
+		ArrayOTE*				m_subclasses;
 
-	enum { SuperclassIndex=ObjectFixedSize, MethodDictionaryIndex, InstanceSpecificationIndex,
-			SubClassesIndex, FixedSize };
-};
+	public:
+		unsigned fixedFields() const { return (*reinterpret_cast<const DWORD*>(&m_instanceSpec) >> 1) & 0xFF; }
+		BOOL isPointers() const { return m_instanceSpec.m_pointers; }
+		BOOL isBytes() const { return !m_instanceSpec.m_pointers; }
+		BOOL isIndexable() const { return m_instanceSpec.m_indexable; }
+		BOOL isMourner() const { return m_instanceSpec.m_mourner; }
+		WORD extraSpec() const { return m_instanceSpec.m_extraSpec; }
+		BOOL isIndirect() const { return m_instanceSpec.m_indirect; }
 
+		enum {
+			SuperclassIndex = ObjectFixedSize, MethodDictionaryIndex, InstanceSpecificationIndex,
+			SubClassesIndex, FixedSize
+		};
+	};
+}
 extern ostream& operator<<(ostream& stream, const BehaviorOTE*);
-
-#endif	// EOF

@@ -7,21 +7,20 @@
 	Specification of the Smalltalk Interpreter
 
 ******************************************************************************/
-
-#ifndef _IST_INTERPRT_H_
-#define _IST_INTERPRT_H_
+#pragma once
 
 ///////////////////////////////////
 #include "ObjMem.h"
 #include "OopQ.h"
 #include <fpieee.h>
+#include "STExternal.h"
+#include "STBehavior.h"
 #include "InterpRegisters.h"
 
 #include "DolphinX.h"
 #include "bytecdes.h"
 
-//#include "STBlockClosure.h"
-#include "STProcess.h"
+using namespace ST;
 
 ///////////////////////////////////
 
@@ -49,17 +48,6 @@
 // This is where the stack overflow handling is carried out
 
 extern "C" void __cdecl byteCodeLoop();	// See byteasm.asm
-
-// To avoid creating compilation dependency we don't include
-// headers for these here
-class ProcessorScheduler;
-class Process;
-class CompiledMethod;
-struct StackFrame;
-class ProcessList;
-class Semaphore;
-class CallbackDescriptor;
-class ExternalDescriptor;
 
 typedef volatile LONG SHAREDLONG;
 
@@ -90,7 +78,6 @@ public:
 	// to keep the ref. count on our behalf
 	//
 	enum { INITIALVMREFERENCES = 16 };
-	static void CreateVMReferences();
 
 public:
 	#if defined(_DEBUG)
@@ -109,7 +96,6 @@ public:
 
 	static void StackTraceOn(ostream& dc, StackFrame* pFrame=NULL, unsigned depth=10);
 	static void DumpStack(ostream&, unsigned);
-	static void ErrorDump(const char* szErrLog, LPCTSTR warningCaption, StackFrame* pFrame=NULL, unsigned nDepth=-1);
 	static void DumpContext(EXCEPTION_POINTERS *pExceptionInfo, ostream& logStream);
 	static void DumpContext(ostream& logStream);
 	
@@ -117,9 +103,6 @@ public:
 		static void DumpOTEPoolStats();
 		static void ReincrementVMReferences();
 	#endif
-
-	//static void AddReferenceSource(IReferenceSource*);
-	//static void RemoveReferenceSource(IReferenceSource*);
 
 	// Snapshotting
 	//static BOOL SaveImageFile(const char* szFileName=0);
@@ -129,11 +112,8 @@ public:
 	
 	// Private helpers
 	
-	static OTE* NewExternalBuffer(BehaviorOTE* classPointer, BYTE* pContents);
 	static BytesOTE* __fastcall NewDWORD(DWORD dwValue, BehaviorOTE* classPointer);
 
-	static LRESULT PluginSend(int sendType, int instance, void* info);
-	
 	// Users of callback(), or any routine which invokes it (basically, anything which sends
 	// a message into Smalltalk for evaluation), needs to be prepared to catch the SE code
 	// for callback unwinds, and do the appropriate thing. If not caught at every callback
@@ -157,15 +137,12 @@ public:
 
 	// CompiledMethod bytecode decoding (in decode.cpp)
 	#if defined(_DEBUG)
-		static string activeMethod();
+		static const char* activeMethod();
 		static void decodeMethod(CompiledMethod*, ostream* pstream=NULL);
 		static void decodeMethodAt(CompiledMethod*, unsigned ip, ostream&);
-		static void decodeMethodAtIP(CompiledMethod*, unsigned ip, ostream&);
 	#endif
 
 	// Contexts
-	static BYTE* instructionPointerOfActiveFrame();
-
 	static StackFrame* activeFrame();
 	static void __fastcall resizeActiveProcess();
 
@@ -250,9 +227,6 @@ public:
 	static void __fastcall createActualMessage(const unsigned argCount);
 
 	//Misc
-	#ifndef _M_IX86
-		static unsigned primitiveIndexOf(Oop methodPointer);
-	#endif
 
 	// Garbage collection and Finalization/Bereavement Queue management
 	static void syncGC(DWORD gcFlags);
@@ -358,12 +332,8 @@ private:
 	static void __fastcall returnValueTo(Oop resultPointer, Oop contextPointer);
 	static void __fastcall returnValueToCaller(Oop resultPointer, Oop contextPointer);
 	static void __fastcall nonLocalReturnValueTo(Oop resultPointer, Oop contextPointer);
-	static void __fastcall pushResultFor(Oop resultPointer, StackFrame& newContext);
 	static void __fastcall invalidReturn(Oop resultPointer);
 
-	static Oop returnFromContext(Oop context);
-	static Oop __fastcall CopyStackFrame(Oop contextPointer);
-	static void __fastcall PushActiveContext();
 	static BlockOTE* __fastcall blockCopy(DWORD ext);
 
 public:
@@ -392,7 +362,7 @@ private:
 
 	// Primitive helpers
 	static OTE* __fastcall dequeueForFinalization();
-	static OTE* dequeueBereaved(VariantObject* out);
+	static OTE* dequeueBereaved(ST::VariantObject* out);
 	static void scheduleFinalization();
 
 	#ifdef INLINEMEMFNS
@@ -408,9 +378,6 @@ private:
 	// This one is used when in sync with byte code execution
 	static void signalSemaphore(SemaphoreOTE* semaphorePointer);
 
-	// Private - Helper for signalling semaphores (ignores the state of the interrupt queue)
-	static void synchronousSignal(SemaphoreOTE* aSemaphore);
-
 public:
 	static void GrabAsyncProtect();
 	static void RelinquishAsyncProtect();
@@ -418,20 +385,19 @@ public:
 	static bool QueueAPC(PAPCFUNC pfnAPC, DWORD dwClosure);
 	static void BeginAPC();
 	static BOOL SetWakeupEvent();
-	static void Wakeup();
 	static void NotifyOTOverflow();
 
 	static BOOL FastYield();
 	static void sleep(ProcessOTE* aProcess);
 	static int SuspendProcess(ProcessOTE* oteProc);
-	static void QueueProcessOn(ProcessOTE* oteProc, ProcessListOTE* oteList);
+	static void QueueProcessOn(ProcessOTE* oteProc, LinkedListOTE* oteList);
 	static BOOL __stdcall Reschedule();
 
 	// Return the active process to a list on which it was previously
 	// suspended - this may (if the list is a Semaphore) actually
 	// leave the process in a runnable condition.
-	static ProcessListOTE* __fastcall ResuspendActiveOn(ProcessListOTE* oteList);
-	static ProcessListOTE* ResuspendProcessOn(ProcessOTE* oteProcess, ProcessListOTE* oteList);
+	static LinkedListOTE* __fastcall ResuspendActiveOn(LinkedListOTE* oteList);
+	static LinkedListOTE* ResuspendProcessOn(ProcessOTE* oteProcess, LinkedListOTE* oteList);
 
 	static ProcessOTE* schedule();
 	static ProcessOTE* resume(ProcessOTE* aProcess);
@@ -457,7 +423,7 @@ private:
 	static StackFrame* firstFrame();
 
 	static ProcessOTE* wakeHighestPriority();
-	static ProcessOTE* resumeFirst(ProcessList* list);
+	static ProcessOTE* resumeFirst(LinkedList* list);
 	static ProcessOTE* resumeFirst(Semaphore* sem);
 	static BOOL __fastcall yield();
 	static BOOL	__fastcall FireAsyncEvents();
@@ -718,26 +684,11 @@ private:
 	static void pushArgsAt(CallbackDescriptor* descriptor, unsigned argCount, BYTE* lpParms);
 	static unsigned pushArgsAt(const ExternalDescriptor* descriptor, BYTE* lpParms);
 	
-	struct TemplateClone
-	{
-		OTE*	clone;
-		OTE*	contents;
-	};
-	static TemplateClone __fastcall cloneTemplate(OTE* ote);
-	static unsigned __fastcall pushNewFromTemplate(OTE* ote, BYTE* lpObj);
-
 	static int __cdecl IEEEFPHandler(_FPIEEE_RECORD *pIEEEFPException);
 
 	static void failTrace();
 
 public:
-	// SmallInteger constants
-	// Use macros instead for speed
-	//static const Oop MinusOnePointer;
-	//static const Oop ZeroPointer;
-	//static const Oop OnePointer;
-	//static const Oop TwoPointer;
-
 	#ifdef _DEBUG
 		// Execution trace
 		static int executionTrace;
@@ -792,7 +743,6 @@ private:
 	static void flushCaches();
 	static void flushAtCaches();
 	static void initializeCaches();
-	//static unsigned __fastcall cacheHash(Oop classPointer, Oop messageSelector);
 	static void purgeObjectFromCaches(OTE*);
 	
 	enum { FIXEDVMREFERENCES };
@@ -881,5 +831,3 @@ ostream& operator<<(ostream& stream, const CONTEXT* pCtx);
 ///////////////////////////////////
 
 #include "Interprt.inl"
-
-#endif

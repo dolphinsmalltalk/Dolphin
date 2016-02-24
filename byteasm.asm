@@ -70,9 +70,10 @@ ENDIF
 
 ; Byte code dispatch loop
 public _byteCodeLoop									; Main entry point from C++
-EXECUTENEWMETHOD EQU ?executeNewMethod@Interpreter@@CIXPAV?$TOTE@VCompiledMethod@@@@I@Z
+EXECUTENEWMETHOD EQU ?executeNewMethod@Interpreter@@CIXPAV?$TOTE@VCompiledMethod@ST@@@@I@Z
 public EXECUTENEWMETHOD
-public ?activateNewMethod@Interpreter@@SIXPAVCompiledMethod@@@Z
+ACTIVATENEWMETHOD EQU ?activateNewMethod@Interpreter@@SIXPAVCompiledMethod@ST@@@Z
+public ACTIVATENEWMETHOD
 
 public primitiveReturnSelf
 public primitiveReturnTrue
@@ -107,10 +108,10 @@ ENDIF
 SENDVMINTERRUPT EQU ?sendVMInterrupt@Interpreter@@CIXII@Z
 extern SENDVMINTERRUPT:near32
 
-FINDNEWMETHODNOCACHE EQU ?findNewMethodInClassNoCache@Interpreter@@CGPAV?$TOTE@VCompiledMethod@@@@PAV?$TOTE@VBehavior@@@@I@Z ; STDCALL, OTE return and arg
+FINDNEWMETHODNOCACHE EQU ?findNewMethodInClassNoCache@Interpreter@@CGPAV?$TOTE@VCompiledMethod@ST@@@@PAV?$TOTE@VBehavior@ST@@@@I@Z ; STDCALL, OTE return and arg
 extern FINDNEWMETHODNOCACHE:near32
 
-BLOCKCOPY EQU ?blockCopy@Interpreter@@CIPAV?$TOTE@VBlockClosure@@@@K@Z
+BLOCKCOPY EQU ?blockCopy@Interpreter@@CIPAV?$TOTE@VBlockClosure@ST@@@@K@Z
 extern BLOCKCOPY:near32											; See bytecde.cpp
 
 INPUTPOLLCOUNTER		EQU		?m_nInputPollCounter@Interpreter@@0JC
@@ -138,9 +139,9 @@ ENDM
 NONLOCALRETURN EQU ?nonLocalReturnValueTo@Interpreter@@CIXII@Z		; See bytecde.cpp
 extern NONLOCALRETURN:near32
 
-NEWCONTEXT EQU ?New@Context@@SIPAV?$TOTE@VContext@@@@II@Z
+NEWCONTEXT EQU ?New@Context@ST@@SIPAV?$TOTE@VContext@ST@@@@II@Z
 extern NEWCONTEXT:near32		; See bytecde.cpp
-NEWBLOCK EQU ?New@BlockClosure@@SIPAV?$TOTE@VBlockClosure@@@@I@Z
+NEWBLOCK EQU ?New@BlockClosure@ST@@SIPAV?$TOTE@VBlockClosure@ST@@@@I@Z
 extern NEWBLOCK:near32		; See bytecde.cpp
 
 ;; Special selector primitive response routines
@@ -156,7 +157,7 @@ IFDEF _DEBUG
 	extern DEBUGMETHODACTIVATED:near32
 	DEBUGRETURNTOMETHOD EQU ?debugReturnToMethod@Interpreter@@SIXPAI@Z
 	extern DEBUGRETURNTOMETHOD:near32
-	INHERITSFROM EQU ?inheritsFrom@ObjectMemory@@SI_NPBV?$TOTE@VBehavior@@@@0@Z
+	INHERITSFROM EQU ?inheritsFrom@ObjectMemory@@SI_NPBV?$TOTE@VBehavior@ST@@@@0@Z
 	extern	INHERITSFROM:near32
 
 	ATCACHEHITS EQU ?AtCacheHits@@3KA
@@ -924,7 +925,7 @@ ENDBYTECODE shortPushOuterTemp
 LoadLiteralAt MACRO offset
 	ASSERTNEQU eax, &offset
 	mov		eax, [pMethod]												;; Load pointer to current method
-	mov     eax, (CompiledMethod PTR[eax]).m_aLiterals[offset]			;; Load Oop from literal frame
+	mov     eax, (CompiledCodeObj PTR[eax]).m_aLiterals[offset]			;; Load Oop from literal frame
 ENDM
 
 LoadLiteral MACRO index
@@ -948,7 +949,7 @@ ENDM
 
 BEGINBYTECODE shortPushConstant
 	mov		eax, [pMethod]												;; Load pointer to current method
-	mov     eax, (CompiledMethod PTR[eax]).m_aLiterals[(ecx*OOPSIZE) - (FIRSTSHORTPUSHCONST*OOPSIZE)]			;; Load Oop from literal frame
+	mov     eax, (CompiledCodeObj PTR[eax]).m_aLiterals[(ecx*OOPSIZE) - (FIRSTSHORTPUSHCONST*OOPSIZE)]			;; Load Oop from literal frame
 	PushAndDispatch <a>
 ENDBYTECODE shortPushConstant
 
@@ -967,7 +968,7 @@ PushStatic MACRO index
 		PushAndDispatch <a>									;; Push eax onto the stack
 	ELSE
 		mov		eax, [pMethod]							;; Load pointer to current method
-		ASSUME	eax:PTR CompiledMethod
+		ASSUME	eax:PTR CompiledCodeObj
 		xor		ecx, ecx
 
 		add     _SP, OOPSIZE							;; We're going to push, so prepare _SP 
@@ -1000,7 +1001,7 @@ BEGINBYTECODE shortPushStatic
 	;PushStaticN ecx-FIRSTSHORTPUSHSTATIC
 
 	mov		eax, [pMethod]							;; Load pointer to current method
-	ASSUME	eax:PTR CompiledMethod
+	ASSUME	eax:PTR CompiledCodeObj
 
 	add     _SP, OOPSIZE							;; We're going to push, so prepare _SP 
 	mov     eax, [eax].m_aLiterals[(ecx*OOPSIZE)-(FIRSTSHORTPUSHSTATIC*OOPSIZE)]	;; Load Oop from literal frame
@@ -1112,7 +1113,7 @@ BEGINBYTECODE pushConstant
 	ELSE
 
 		mov		eax, [pMethod]							;; Load pointer to current method
-		ASSUME	eax:PTR CompiledMethod
+		ASSUME	eax:PTR CompiledCodeObj
 		xor		ecx, ecx
 
 		mov		cl, [_IP]								;; Load literal index
@@ -1136,7 +1137,7 @@ BEGINBYTECODE pushStatic
 		PushStatic <ecx>
 	ELSE
 		mov		eax, [pMethod]							;; Load pointer to current method
-		ASSUME	eax:PTR CompiledMethod
+		ASSUME	eax:PTR CompiledCodeObj
 		xor		ecx, ecx
 
 		mov		cl, [_IP]								;; Load literal index
@@ -1264,7 +1265,7 @@ BEGINBYTECODE sendSelfNoArgs
 
 	; ecx-offset is the literal index
 	mov		edx, [pMethod]							; Load current method
-	ASSUME	edx:PTR CompiledMethod
+	ASSUME	edx:PTR CompiledCodeObj
 
 	PushOop <a>										; push receiver
 	
@@ -1500,7 +1501,7 @@ BEGINPROC shortReturn
 	mov		[_SP], ecx								; Push on the result
 
 	mov		eax, [eax].m_location					; Get pointer to new Method into EAX
-	ASSUME	eax:PTR CompiledMethod
+	ASSUME	eax:PTR CompiledCodeObj
 
 	;; Now we set up _IP (_IP) and _BP (_BP) - _SP adjusted above
 	sar		_IP, 1									; Convert SmallInteger _IP index
@@ -1518,7 +1519,7 @@ BEGINPROC shortReturn
 		ASSUME	eax:PTR OTE
 		mov		eax, [eax].m_location				; Load the address of the start of the byte code array
 	.ELSE
-		add		eax, CompiledMethod.m_byteCodes		; Bytes packed in SmallInteger
+		add		eax, CompiledCodeObj.m_byteCodes	; Bytes packed in SmallInteger
 	.ENDIF
 
 	dec		_BP										; Remove SmallInteger flag from BP
@@ -1978,14 +1979,14 @@ ENDBYTECODE storeOuterTemp
 
 StoreStaticAndDispatch MACRO
 	mov		edx, [pMethod]						; Load Oop of current method
-	ASSUME	edx:PTR CompiledMethod
+	ASSUME	edx:PTR CompiledCodeObj
 	CountUpOopIn <a>								; Storing into a heap object, so must count up
 	;; Load literal Oop of binding
 	mov     edx, [edx].m_aLiterals[ecx*OOPSIZE]	
 	ASSUME	edx:PTR OTE
 	
 	mov		edx, [edx].m_location		; Load pointer to binding
-	ASSUME	edx:PTR VariableBinding
+	ASSUME	edx:PTR VariableBindingObj
 	mov		ecx, [edx].m_value			; Load existing value
 	mov		[edx].m_value, eax			; Store new value
 	
@@ -3427,7 +3428,7 @@ ShortSendXArgsN MACRO x, index
 	LOCAL sendToSmallInteger
 
 	mov		edx, [pMethod]							; Load current method
-	ASSUME	edx:PTR CompiledMethod
+	ASSUME	edx:PTR CompiledCodeObj
 	LoadStackValueInto <x>,<eax>					;; Load receiver into EAX (under arg)
 
 	push DWORD	x									; N arguments
@@ -3458,7 +3459,7 @@ ShortSendXArgs MACRO x, offset
 
 	; ecx-offset is the literal index
 	mov		edx, [pMethod]							; Load current method
-	ASSUME	edx:PTR CompiledMethod
+	ASSUME	edx:PTR CompiledCodeObj
 	LoadStackValueInto <x>,<eax>					;; Load receiver into EAX (under arg(s))
 	
 	test	al, 1									; Test for immediate receiver (used later)
@@ -3496,7 +3497,7 @@ BEGINBYTECODE shortSendSelfNoArgs
 
 	; ecx-offset is the literal index
 	mov		edx, [pMethod]							; Load current method
-	ASSUME	edx:PTR CompiledMethod
+	ASSUME	edx:PTR CompiledCodeObj
 
 	PushOop <a>										; push receiver
 	
@@ -3536,7 +3537,7 @@ ASSUME edx:NOTHING
 SendLiteralECXinEAXwithEDXArgs MACRO
 	LOCAL sendToSmallInteger
 
-	ASSUME	eax:Ptr CompiledMethod
+	ASSUME	eax:PTR CompiledCodeObj
 	ASSUME	ecx:DWORD
 	ASSUME	edx:DWORD
 
@@ -3584,7 +3585,7 @@ BEGINBYTECODE sendTempNoArgs
 	xor		edx, edx
 	mov		dl, [_IP]								; Get next byte code
 	mov		eax, [pMethod]							; Load Oop of current method
-	ASSUME	eax:PTR CompiledMethod
+	ASSUME	eax:PTR CompiledCodeObj
 	mov		ecx, edx								; 
 	and		edx, 01Fh								; bottom 5 bits are literal index
 	shr		ecx, 5									; ecx now contains temp index (3 bits)
@@ -3851,7 +3852,7 @@ ENDBYTECODE shortSpecialSendAtPut
 BEGINBYTECODE longSend
 	xor		ecx, ecx
 	mov		eax, [pMethod]					; Load pointer to current method
-	ASSUME	eax:PTR CompiledMethod
+	ASSUME	eax:PTR CompiledCodeObj
 
 	mov		cl, BYTE PTR[_IP+1]
 
@@ -3910,7 +3911,7 @@ ENDM
 MExecNewMethod MACRO
 	LOCAL activateMethod
 	
-	ASSUME	ecx:PTR CompiledMethod
+	ASSUME	ecx:PTR CompiledCodeObj
 	ASSUME	edx:DWORD
 	ASSUME	eax:DWORD
 
@@ -3938,7 +3939,7 @@ MExecNewMethod MACRO
 	ASSUME	ecx:PTR OTE
 
 	mov		ecx, [ecx].m_location
-	ASSUME	ecx:PTR CompiledMethod
+	ASSUME	ecx:PTR CompiledCodeObj
 
 	;; Active method after primitive failure
 	call primitiveActivateMethod
@@ -4004,7 +4005,7 @@ BEGINPROC findMethodCacheMiss
 	call	FINDNEWMETHODNOCACHE
 	mov		[NEWMETHOD], eax
 	mov		ecx, (OTE PTR[eax]).m_location			; Load address of new method object into ecx
-	ASSUME	ecx:PTR CompiledMethod
+	ASSUME	ecx:PTR CompiledCodeObj
 	xor		eax, eax
 	mov		al, [ecx].m_header.primitiveIndex
 	LoadSPRegister									; Restore stack pointer (in case of DNU)
@@ -4033,14 +4034,14 @@ BEGINPRIMITIVE primitiveActivateMethod
 
 	;; Work out _IP index before overwriting old method pointer
 	mov		eax, [pMethod]
-	ASSUME	eax:PTR CompiledMethod
+	ASSUME	eax:PTR CompiledCodeObj
 
 	mov		edx, ecx								; Get pointer to new method into edx
-	ASSUME	edx:PTR CompiledMethod
+	ASSUME	edx:PTR CompiledCodeObj
 	mov		[pMethod], ecx							; Save down pointer to new method
 
 	.IF ((BYTE PTR([eax].m_byteCodes) & 1))
-		add		eax, CompiledMethod.m_byteCodes
+		add		eax, CompiledCodeObj.m_byteCodes
 	.ELSE
 		mov		eax, [eax].m_byteCodes
 		ASSUME	eax:PTR OTE
@@ -4049,8 +4050,8 @@ BEGINPRIMITIVE primitiveActivateMethod
 	ASSUME	eax:NOTHING
 	sub		_IP, eax
 	IFDEF _DEBUG
-		.IF (_IP > 4096)
-			int	3									;; Probably a bug - _IP index very large
+		.IF (_IP > 16384)
+			int	3									;; Probably a bug - unusual to have a method with more than 16k bytecodes
 		.ENDIF
 	ENDIF
 	; At this point _IP is the offset into the byte codes
@@ -4104,7 +4105,7 @@ BEGINPRIMITIVE primitiveActivateMethod
 
 		shr		ecx, 2									; Access the actual env temp count
 		lea		edx, [_SP+1]							; 2: Calc SmallInteger frame pointer into EAX...
-		dec		ecx
+		dec		ecx										; Count is one greater than number of slots required (to flag need for Context for far ^-return)
 
 		call	NEWCONTEXT								
 		ASSUME	eax:PTR OTE								; EAX is the Oop of the new Context
@@ -4116,14 +4117,14 @@ BEGINPRIMITIVE primitiveActivateMethod
 		ASSUME	eax:NOTHING								; Context Oop no longer needed
 
 		pop		edx
-		ASSUME	edx:PTR CompiledMethod
+		ASSUME	edx:PTR CompiledCodeObj
 	.ENDIF
 
 	ASSUME eax:NOTHING
 	ASSUME ecx:NOTHING
 	ASSUME _SP:PStackFrame
 	ASSUME _BP:PTR Oop
-	ASSUME edx:PTR CompiledMethod
+	ASSUME edx:PTR CompiledCodeObj
 
 	lea		eax, [_BP+1]						; Make SmallInteger pointer to base in EAX
 	mov		[BASEPOINTER], _BP					; Save down BP into interpreter register
@@ -4206,7 +4207,7 @@ BEGINPRIMITIVE primitiveReturnNil
 ENDPRIMITIVE primitiveReturnNil
 
 BEGINPRIMITIVE primitiveReturnLiteralZero
-	ASSUME	ecx:PTR CompiledMethod				; ECX points at the new method (still)	
+	ASSUME	ecx:PTR CompiledCodeObj				; ECX points at the new method (still)	
 	ASSUME	edx:DWORD
 	ASSUME	_SP:PTR Oop
 	mov		eax, [STEPPING]
@@ -4224,7 +4225,7 @@ localPrimitiveFailure0:
 ENDPRIMITIVE primitiveReturnLiteralZero
 
 BEGINPRIMITIVE primitiveReturnStaticZero
-	ASSUME	ecx:PTR CompiledMethod				; ECX points at the new method (still)	
+	ASSUME	ecx:PTR CompiledCodeObj				; ECX points at the new method (still)	
 	ASSUME	edx:DWORD
 	ASSUME	_SP:PTR Oop
 	mov		eax, [STEPPING]
@@ -4257,7 +4258,7 @@ BEGINPRIMITIVE primitiveReturnInstVar
 	;	4 ReturnStackTop
 
 	; ECX points at the new method (still)	
-	ASSUME	ecx:PTR CompiledMethod
+	ASSUME	ecx:PTR CompiledCodeObj
 	ASSUME	edx:NOTHING				; Don't need the argument count
 
 	; We need a mini interpreter now to extract the inst var index from the byte codes
@@ -4306,7 +4307,7 @@ BEGINPRIMITIVE primitiveSetInstVar
 	; net effect on its ref. count (similar code to pop & store)
 
 	; ECX points at the new method (still)	
-	ASSUME	ecx:PTR CompiledMethod
+	ASSUME	ecx:PTR CompiledCodeObj
 
 	; We need a mini interpreter now to extract the inst var index from the byte codes
 	
@@ -4383,7 +4384,7 @@ ENDBYTECODE Supersend
 ; No align as dropped into from above
 BEGINPROCNOALIGN sendLiteralSelectorToSuper			; EDX = argCount, ECX = literal index
 	mov		eax, [pMethod]							; Load Oop of current method
-	ASSUME	eax:PTR CompiledMethod
+	ASSUME	eax:PTR CompiledCodeObj
 	mov     ecx, [eax].m_aLiterals[ecx*OOPSIZE]		; Load selector Oop into ecx
 	mov		[MESSAGE], ecx							; Save down message selector
 	mov		ecx, [eax].m_methodClass				; Load class Oop from the method
@@ -4422,7 +4423,7 @@ BEGINPROC EXECUTENEWMETHOD
 
 	mov		[NEWMETHOD], ecx						; Save Oop of new method
 	mov		ecx, [ecx].m_location					; Load address of CompiledMethod into ECX
-	ASSUME	ecx:PTR CompiledMethod
+	ASSUME	ecx:PTR CompiledCodeObj
 
 	; Entered from C++, must save then set up _SP/_IP for assembler primitives
 	; Load primitive index (0..255), top 3 bytes of EAX still 0
@@ -4455,7 +4456,7 @@ BEGINPROC EXECUTENEWMETHOD
 	ret
 ENDPROC EXECUTENEWMETHOD
 
-BEGINPROC ?activateNewMethod@Interpreter@@SIXPAVCompiledMethod@@@Z
+BEGINPROC ACTIVATENEWMETHOD
 	; See execPrimitive above.
 	; Entered from C++, must save then set up _SP/_IP/_BP for assembler code
 	push	_SP									; Mustn't destroy for C++ caller
@@ -4479,7 +4480,7 @@ BEGINPROC ?activateNewMethod@Interpreter@@SIXPAVCompiledMethod@@@Z
 	pop		_IP
 	pop		_SP
 	ret
-ENDPROC ?activateNewMethod@Interpreter@@SIXPAVCompiledMethod@@@Z
+ENDPROC ACTIVATENEWMETHOD
 
 ; Send the 0 argument selector #value.
 ; Optimise for zero arg blocks to bypass message lookup.
@@ -4732,7 +4733,7 @@ BEGINPROC activateBlock
 
 	sar		_IP, 1									; u - Convert initial IP to real integer value
 	mov		ecx, [ecx].m_location					; v - Get pointer to method
-	ASSUME	ecx:PTR CompiledMethod
+	ASSUME	ecx:PTR CompiledCodeObj
 
 	mov		[pMethod], ecx
 
@@ -4883,7 +4884,7 @@ ENDBYTECODE exLongSupersend
 
 BEGINRARECODE exLongSend
 	mov		eax, [pMethod]					; Load pointer to current method
-	ASSUME	eax: PTR CompiledMethod
+	ASSUME	eax: PTR CompiledCodeObj
 
 	mov		cx, WORD PTR[_IP+1]
 

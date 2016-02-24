@@ -5,9 +5,7 @@ Str.h
 A simple String class (again)
 Now mapped onto the Standard Template Library string class (BSM, Sep 2002)
 */
-
-#ifndef _IST_STR_H_
-#define _IST_STR_H_
+#pragma once
 
 #include <string>
 typedef std::string Str;
@@ -52,5 +50,3 @@ struct TEXTRANGE
 
 	int span() const { return m_stop - m_start + 1; }
 };
-
-#endif

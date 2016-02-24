@@ -158,7 +158,7 @@
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
       <DataExecutionPrevention>
       </DataExecutionPrevention>
-      <ShowProgress>LinkVerbose</ShowProgress>
+      <ShowProgress>LinkVerboseREF</ShowProgress>
       <EnableCOMDATFolding>false</EnableCOMDATFolding>
       <ImageHasSafeExceptionHandlers />
       <AdditionalDependencies>msvcrtd.lib;%(AdditionalDependencies)</AdditionalDependencies>

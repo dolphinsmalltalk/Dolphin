@@ -11,24 +11,23 @@
 	a representation in the assembler modules (so see istasm.inc)
 
 ******************************************************************************/
-
-#ifndef _IST_STCOLLECTION_H_
-#define _IST_STCOLLECTION_H_
+#pragma once
 
 #include "STObject.h"
 
-class Collection //: public Object
+namespace ST
 {
-public:
-	enum { FixedSize = 0 };		// FixedSize does not include Header
-};
+	class Collection //: public Object
+	{
+	public:
+		enum { FixedSize = 0 };		// FixedSize does not include Header
+	};
 
-class SequenceableCollection : public Collection
-{
-};
+	class SequenceableCollection : public Collection
+	{
+	};
 
-class ArrayedCollection : public SequenceableCollection
-{
-};
-
-#endif	// EOF
+	class ArrayedCollection : public SequenceableCollection
+	{
+	};
+}

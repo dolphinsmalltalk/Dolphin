@@ -1933,6 +1933,11 @@ POTE Compiler::NewMethod()
 	
 	if (bNeedsContext)
 	{
+		// There is a sublety in the envTempCount, which is that it is the number of required slots in the context+1
+		// A value >= 0 indicates the need for a context. A value of 1, that no env temp slots are required, but
+		// the context is needed to support a far return. Therefore we add 1 to flag that a context is needed
+		// to avoid having to spend a whole bit on a flag, but this means the maximum number of env temps is 
+		// actually (2^6)-2==62
 		_ASSERTE(numEnvTemps < ENVTEMPLIMIT);
 		hdr.envTempCount = numEnvTemps + 1;
 	}

@@ -190,11 +190,10 @@ HRESULT Interpreter::initializeAfterLoad()
 	if (FAILED(hr))
 		return hr;
 
-	//CreateVMReferences();
 	initializeVMReferences();
 
 	#if defined(_DEBUG)
-		//ObjectMemory::checkReferences();	// If this fails, the saved image has a ref. count problem
+		ObjectMemory::checkReferences();	// If this fails, the saved image has a ref. count problem
 	#endif
 
 	initializeCaches();

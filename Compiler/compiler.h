@@ -4,9 +4,7 @@ Compiler.h
 ==========
 Smalltalk compiler
 */
-
-#ifndef _IST_COMPILER_H_
-#define _IST_COMPILER_H_
+#pragma once
 
 ///////////////////////
 #include "..\Compiler_i.h"
@@ -34,7 +32,7 @@ typedef std::valarray<POTE> POTEARRAY;
 									// practice this limit would not be reached because the byte code limit would
 									// be reached first.
 #define ARGLIMIT			255		// maximum number of arguments (VM limit)
-#define	ENVTEMPLIMIT		63
+#define	ENVTEMPLIMIT		63		// (2^6)-1. Note that actual limit is 62, since value of 1 indicates that a context with 0 slots is required for a far ^-return 
 
 #define GENERATEDTEMPSTART " "
 #define TEMPSDELIMITER '|'
@@ -543,6 +541,4 @@ inline POTE Compiler::InternSymbol(const Str& str) const
 {
 	return InternSymbol(str.c_str());
 }
-
-#endif
 

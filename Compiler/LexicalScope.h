@@ -3,9 +3,7 @@
 LexicalScope.h
 ==========
 */
-
-#ifndef _IST_LEXICALSCOPE_H_
-#define _IST_LEXICALSCOPE_H_
+#pragma once
 
 #include "Str.h"
 #include <vector>
@@ -568,6 +566,4 @@ inline int TempVarRef::GetEstimatedDistance() const
 	// unlinked.
 	return GetActualScope()->GetDepth() - GetDecl()->GetScope()->GetDepth();
 }
-
-#endif
 

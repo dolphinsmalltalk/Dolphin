@@ -13,10 +13,6 @@
 	a representation in the assembler modules (so see istasm.inc)
 
 ******************************************************************************/
-
-#ifndef _IST_STMethodContext_H_
-#define _IST_STMethodContext_H_
+#pragma once
 
 #include "STContext.h"
-
-#endif

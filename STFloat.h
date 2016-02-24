@@ -11,28 +11,29 @@
 	a representation in the assembler modules (so see istasm.inc)
 
 ******************************************************************************/
-
-#ifndef _IST_STFLOAT_H_
-#define _IST_STFLOAT_H_
+#pragma once
 
 #include "STMagnitude.h"
 
 #pragma pack(push,4)
 
-class Float;
-typedef TOTE<Float> FloatOTE;
+// Declare forward references
+namespace ST { class Float; }
+typedef TOTE<ST::Float> FloatOTE;
+
+namespace ST
+{
+	// Float is a variable Byte subclass of Number, though it is always 8 bytes long
+	class Float : public Number
+	{
+	public:
+		double m_fValue;
+
+		static FloatOTE* __stdcall New();
+		static FloatOTE* __stdcall New(double fValue);
+	};
+}
+
 ostream& operator<<(ostream& st, const FloatOTE* oteFloat);
 
-// Float is a variable Byte subclass of Number, though it is always 8 bytes long
-class Float : public Number
-{
-public:
-	double m_fValue;
-
-	static FloatOTE* __stdcall New();
-	static FloatOTE* __stdcall New(double fValue);
-};
-
 #pragma pack(pop)
-
-#endif

@@ -11,33 +11,33 @@
 	a representation in the assembler modules (so see istasm.inc)
 
 ******************************************************************************/
-
-#ifndef _IST_STCHARACTER_H_
-#define _IST_STCHARACTER_H_
+#pragma once
 
 #include "STMagnitude.h"
 
-class Character;
-typedef TOTE<Character> CharOTE;
-ostream& operator<<(ostream& st, const CharOTE* oteCh);
+namespace ST { class Character; }
+typedef TOTE<ST::Character> CharOTE;
 
-class Character : public Magnitude
+namespace ST
 {
-public:
-	Oop m_asciiValue;		// Small integer value
-	enum { CharacterValueIndex=Magnitude::FixedSize, FixedSize };
+	class Character : public Magnitude
+	{
+	public:
+		Oop m_asciiValue;		// Small integer value
+		enum { CharacterValueIndex = Magnitude::FixedSize, FixedSize };
 
-	static CharOTE* New(unsigned char value);
-};
+		static CharOTE* New(unsigned char value);
+	};
 
-// Characters are not reference counted - very important that param is unsigned in order to calculate offset of
-// character object in OTE correctly (otherwise chars > 127 will probably offset off the front of the OTE).
-inline CharOTE* Character::New(unsigned char value)
-{
-	// Characters will later become immediate
-	CharOTE* character = reinterpret_cast<CharOTE*>(ObjectMemory::PointerFromIndex(ObjectMemory::FirstCharacterIdx+value));
-	//ASSERT(fetchClassOf(character) == Pointers.ClassCharacter);
-	return character;
+	// Characters are not reference counted - very important that param is unsigned in order to calculate offset of
+	// character object in OTE correctly (otherwise chars > 127 will probably offset off the front of the OTE).
+	inline CharOTE* Character::New(unsigned char value)
+	{
+		// Characters will later become immediate
+		CharOTE* character = reinterpret_cast<CharOTE*>(ObjectMemory::PointerFromIndex(ObjectMemory::FirstCharacterIdx + value));
+		//ASSERT(fetchClassOf(character) == Pointers.ClassCharacter);
+		return character;
+	}
 }
 
-#endif	// EOF
+ostream& operator<<(ostream& st, const CharOTE* oteCh);

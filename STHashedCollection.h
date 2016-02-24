@@ -15,36 +15,34 @@
 	of MethodDictionary
 
 ******************************************************************************/
-
-#ifndef _IST_STHASHEDCOLLECTION_H_
-#define _IST_STHASHEDCOLLECTION_H_
+#pragma once
 
 #include "STCollection.h"
 
-
-class SetBase : public Collection
+namespace ST
 {
-public:
-	Oop m_tally;
+	class SetBase : public Collection
+	{
+	public:
+		Oop m_tally;
 
-	enum { TallyIndex=Collection::FixedSize, FixedSize };
-};
+		enum { TallyIndex = Collection::FixedSize, FixedSize };
+	};
 
-class Set : public SetBase
-{
-public:
-	Oop	m_elements[];
-};
+	class Set : public SetBase
+	{
+	public:
+		Oop	m_elements[];
+	};
 
-class MethodDictionary : public SetBase
-{
-public:
-	ArrayOTE*	m_methods;			// Offset 1 (MethodArrayIndex) - External Array of values (see inherited m_elements)
-	SymbolOTE*	m_selectors[];		// Offset 2 (SelectorStart) - Internal array of keys
+	class MethodDictionary : public SetBase
+	{
+	public:
+		ArrayOTE*	m_methods;			// Offset 1 (MethodArrayIndex) - External Array of values (see inherited m_elements)
+		SymbolOTE*	m_selectors[];		// Offset 2 (SelectorStart) - Internal array of keys
 
-	enum { MethodArrayIndex=SetBase::FixedSize, FixedSize };
-};
+		enum { MethodArrayIndex = SetBase::FixedSize, FixedSize };
+	};
+}
 
 typedef TOTE<MethodDictionary> MethodDictOTE;
-
-#endif	// EOF

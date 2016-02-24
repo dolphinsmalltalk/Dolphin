@@ -7,9 +7,7 @@
 	Ring Buffer for Oops
 
 ******************************************************************************/
-
-#ifndef _IST_OOPQ_H
-#define _IST_OOPQ_H
+#pragma once
 
 #include "ote.h"
 #include "ObjMem.h"
@@ -159,5 +157,3 @@ private:
 	MWORD		m_nSize;				// Current queue size
 	MWORD 		m_nGrowthGranularity;	// The number of pointers by which to grow on overflow
 };
-
-#endif

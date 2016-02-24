@@ -7,8 +7,7 @@
 	Portable environment definitions for Dolphin Smalltalk
 
 ******************************************************************************/
-#ifndef _ST_ENVIRON_H_
-#define _ST_ENVIRON_H_
+#pragma once
 
 #define TODO(s)
 #include <malloc.h>
@@ -120,5 +119,3 @@
 #endif
 
 #pragma warning (disable : 4201)
-
-#endif

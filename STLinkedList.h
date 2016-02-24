@@ -12,30 +12,29 @@
 	a representation in the assembler modules (so see istasm.inc)
 
 ******************************************************************************/
-
-#ifndef _IST_STLINKEDLIST_H_
-#define _IST_STLINKEDLIST_H_
+#pragma once
 
 #include "STCollection.h"
 
-class LinkedList : public SequenceableCollection
+namespace ST
 {
-public:
-	OTE* m_firstLink;
-	OTE* m_lastLink;
-	enum { FirstLinkIndex=SequenceableCollection::FixedSize, LastLinkIndex, FixedSize };
+	class LinkedList : public SequenceableCollection
+	{
+	public:
+		OTE* m_firstLink;
+		OTE* m_lastLink;
+		enum { FirstLinkIndex = SequenceableCollection::FixedSize, LastLinkIndex, FixedSize };
 
-	bool isEmpty();
-	void addLast(OTE* aLink);
-	OTE* removeFirst();
-	OTE* remove(OTE* aLink);
-};
+		bool isEmpty();
+		void addLast(OTE* aLink);
+		OTE* removeFirst();
+		OTE* remove(OTE* aLink);
+	};
 
-class Link : public Object
-{
-public:
-	OTE* m_nextLink;
-	enum { NextLinkIndex=ObjectFixedSize, FixedSize };
-};
-
-#endif	// EOF
+	class Link : public Object
+	{
+	public:
+		OTE* m_nextLink;
+		enum { NextLinkIndex = ObjectFixedSize, FixedSize };
+	};
+}

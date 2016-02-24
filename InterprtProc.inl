@@ -11,10 +11,6 @@
 
 ******************************************************************************/
 
-#ifndef _IST_INTERPRT_H_
-	#error You'll need to include interprt.h
-#endif
-
 // Smalltalk classes
 #include "STProcess.h"
 #include "STMethod.h"

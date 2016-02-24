@@ -11,9 +11,7 @@
 	a representation in the assembler modules (so see istasm.inc)
 
 ******************************************************************************/
-
-#ifndef _STMETHODHEADER_H_
-#define _STMETHODHEADER_H_
+#pragma once
 
 typedef enum { 
 	PRIMITIVE_ACTIVATE_METHOD = 0,
@@ -32,11 +30,8 @@ typedef struct STMethodHeader
 {
 	BYTE isInt 				: 1;	// MUST be 1 (to avoid treatment as object)
 	BYTE isPrivate			: 1;
-	BYTE envTempCount		: 6;
+	BYTE envTempCount		: 6;	// Note that this is actually count+1
 	BYTE stackTempCount;
 	BYTE argumentCount;
 	BYTE primitiveIndex;
 } STMethodHeader;
-
-
-#endif

@@ -268,15 +268,15 @@ InstanceSpecFlags		RECORD	m_nullTerminated:1,
 SHAPEMASK		EQU		(NOT MASK m_indirect)
 
 ;; Structure for Instance Shape Specification of Classes
-InstanceSpecification		STRUCT 2t
+InstanceSpec		STRUCT 2t
 	flags			InstanceSpecFlags	<>
 	m_extraSpec		WORD				?
-InstanceSpecification		ENDS
+InstanceSpec		ENDS
 
 Behavior		STRUCT 2t
 	m_superclass		Oop		?
 	m_methodDictionary	Oop		?
-	m_instanceSpec		InstanceSpecification		<>
+	m_instanceSpec		InstanceSpec		<>
 	m_subclasses		Oop		?
 Behavior		ENDS
 
@@ -330,16 +330,16 @@ MethodHeader STRUCT 2t
 	primitiveIndex		BYTE		?
 MethodHeader ENDS
 
-CompiledMethod STRUCT 2t
+CompiledCodeObj STRUCT 2t
 	m_header		MethodHeader	<>
 	m_methodClass	Oop				?
 	m_selector		Oop				?
 	m_source		Oop				?
 	m_byteCodes		Oop				?
 	m_aLiterals		Oop				0t DUP (?)
-CompiledMethod ENDS
+CompiledCodeObj ENDS
 
-PCompiledMethod TYPEDEF PTR CompiledMethod
+PCompiledCode TYPEDEF PTR CompiledCodeObj
 
 
 Process	STRUCT 2t
@@ -429,10 +429,10 @@ LargeInteger		STRUCT 2t
 	m_digits		DWORD			0t DUP (?)
 LargeInteger		ENDS
 
-VariableBinding STRUCT 2t
+VariableBindingObj STRUCT 2t
 	m_key			Oop			?
 	m_value			Oop			?
-VariableBinding ENDS
+VariableBindingObj ENDS
 
 ; N.B. This must be kept up to date with the structure in Interprt.h
 MethodCacheEntry STRUCT
@@ -461,17 +461,17 @@ EXTERN ZCTHIGHWATER:near32
 
 ASYNCPENDING			EQU		?m_bAsyncPending@Interpreter@@0JC
 EXTERN ASYNCPENDING:DWORD
-NEWDWORD				EQU		?NewDWORD@Interpreter@@SIPAV?$TOTE@VVariantByteObject@@@@KPAV?$TOTE@VBehavior@@@@@Z
+NEWDWORD				EQU		?NewDWORD@Interpreter@@SIPAV?$TOTE@VVariantByteObject@ST@@@@KPAV?$TOTE@VBehavior@ST@@@@@Z
 extern NEWDWORD:near32
-LINEWSIGNED				EQU		?liNewSigned@LargeInteger@@SIPAV?$TOTE@VLargeInteger@@@@J@Z
+LINEWSIGNED				EQU		?liNewSigned@LargeInteger@ST@@SIPAV?$TOTE@VLargeInteger@ST@@@@J@Z
 extern LINEWSIGNED:near32
 NEWSIGNED				EQU		NewSigned
-NEWFLOATOBJ				EQU		?New@Float@@SGPAV?$TOTE@VFloat@@@@XZ
+NEWFLOATOBJ				EQU		?New@Float@ST@@SGPAV?$TOTE@VFloat@ST@@@@XZ
 extern NEWFLOATOBJ:near32
-NEWFLOAT8				EQU		?New@Float@@SGPAV?$TOTE@VFloat@@@@N@Z
+NEWFLOAT8				EQU		?New@Float@ST@@SGPAV?$TOTE@VFloat@ST@@@@N@Z
 extern NEWFLOAT8:near32
 
-LINEWUNSIGNED32 EQU ?liNewUnsigned@LargeInteger@@SIPAV?$TOTE@VLargeInteger@@@@K@Z
+LINEWUNSIGNED32 EQU ?liNewUnsigned@LargeInteger@ST@@SIPAV?$TOTE@VLargeInteger@ST@@@@K@Z
 extern LINEWUNSIGNED32:near32
 
 oteNil					EQU		Pointers.Nil
@@ -482,9 +482,9 @@ oteFalse				EQU		Pointers.False
 
 PBYTE TYPEDEF PTR BYTE
 
-InterpreterRegisters STRUCT 2t
+InterpRegisters STRUCT 2t
 	m_pActiveProcess		PProcess		?
-	m_pMethod				PCompiledMethod ?
+	m_pMethod				PCompiledCode ?
 	m_instructionPointer	PBYTE ?
 	m_pActiveFrame			PStackFrame ?
 	m_stackPointer			DWORD ?
@@ -492,12 +492,12 @@ InterpreterRegisters STRUCT 2t
 
 	m_oopNewMethod			DWORD ?
 	m_oopActiveProcess		POTE  ?
-InterpreterRegisters ENDS
+InterpRegisters ENDS
 
 INTERPCONTEXT			EQU ?m_registers@Interpreter@@0UInterpreterRegisters@@A
-extern INTERPCONTEXT:InterpreterRegisters
+extern INTERPCONTEXT:InterpRegisters
 
-MESSAGE					EQU		?m_oopMessageSelector@Interpreter@@0PAV?$TOTE@VSymbol@@@@A
+MESSAGE					EQU		?m_oopMessageSelector@Interpreter@@0PAV?$TOTE@VSymbol@ST@@@@A
 extern MESSAGE:PTR OTE
 NEWMETHOD				EQU		INTERPCONTEXT.m_oopNewMethod
 
@@ -843,7 +843,7 @@ ENDM
 
 GetIPOffsetUsing MACRO tempRegister
 	mov		tempRegister, [pMethod]
-	add		tempRegister, CompiledMethod.m_byteCodes
+	add		tempRegister, CompiledCodeObj.m_byteCodes
 	.IF (!(BYTE PTR[tempRegister] & 1))
 		mov		tempRegister, [tempRegister]
 		mov		tempRegister, (OTE PTR[tempRegister]).m_location	;; Include the object header

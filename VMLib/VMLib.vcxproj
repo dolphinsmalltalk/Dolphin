@@ -213,7 +213,6 @@
     <None Include="..\InterprtProc.inl" />
     <None Include="..\istasm.inc" />
     <None Include="..\ObjMemPriv.inl" />
-    <None Include="..\ote.inl" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\axhost.h" />
@@ -252,7 +251,6 @@
     <ClInclude Include="..\STMethod.h" />
     <ClInclude Include="..\STMethodContext.h" />
     <ClInclude Include="..\STObject.h" />
-    <ClInclude Include="..\STPoint.h" />
     <ClInclude Include="..\STProcess.h" />
     <ClInclude Include="..\STStackFrame.h" />
     <ClInclude Include="..\STStream.h" />
@@ -264,6 +262,13 @@
     <ClInclude Include="..\VMExcept.h" />
     <ClInclude Include="..\VMPointers.h" />
     <ClInclude Include="..\zfbinstream.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Natvis Include="Dolphin.natvis">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <SubType>Designer</SubType>
+    </Natvis>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

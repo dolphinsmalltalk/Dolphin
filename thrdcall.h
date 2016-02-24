@@ -7,7 +7,8 @@
 	External threaded calls.
 
 ******************************************************************************/
-							
+#pragma once
+
 #include "Ist.h"
 #include "Interprt.h"
 

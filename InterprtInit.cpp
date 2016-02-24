@@ -24,7 +24,6 @@ Interpreter initialization
 
 void Interpreter::initializeVMReferences()
 {
-	//CreateVMReferences();
 	ASSERT(IS_ERROR(EXCEPTION_ACCESS_VIOLATION));
 
 	ObjectMemory::ProtectConstSpace(PAGE_READWRITE);

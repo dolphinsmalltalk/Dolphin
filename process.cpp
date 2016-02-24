@@ -50,6 +50,22 @@ CRITICAL_SECTION Interpreter::m_csAsyncProtect;
 // Process/Semaphore Primitives and Helpers
 ///////////////////////////////////////////////////////////////////////////////
 
+inline bool ST::Process::IsReady() const
+{
+	return !m_myList->isNil() && !ObjectMemory::isKindOf(m_myList, Pointers.ClassSemaphore);
+}
+
+inline void ST::Process::BasicClearNext()
+{
+	m_nextLink = reinterpret_cast<ProcessOTE*>(Pointers.Nil);
+}
+
+inline void ST::Process::ClearSuspendedFrame()
+{
+	HARDASSERT(isIntegerObject(m_suspendedFrame) || m_suspendedFrame == (Oop)Pointers.Nil);
+	m_suspendedFrame = reinterpret_cast<Oop>(Pointers.Nil);
+}
+
 void InterpreterRegisters::FetchContextRegisters()
 {
 	HARDASSERT(!m_pActiveProcess->IsWaiting());
@@ -235,7 +251,7 @@ void Interpreter::queueInterrupt(Oop nInterrupt, Oop argPointer)
 // Helpers for manipulating linked lists of processes
 ///////////////////////////////////////////////////////////////////////////////
 
-inline ProcessOTE* Interpreter::resumeFirst(ProcessList* list)
+inline ProcessOTE* Interpreter::resumeFirst(LinkedList* list)
 {
 	// There are processes waiting on the semaphore - wake the first
 	ProcessOTE* sleepingProcess = reinterpret_cast<ProcessOTE*>(list->removeFirst());
@@ -254,7 +270,7 @@ inline ProcessOTE* Interpreter::resumeFirst(ProcessList* list)
 ProcessOTE* Interpreter::resumeFirst(Semaphore* sem)
 {
 	HARDASSERT(sem->m_excessSignals == ZeroPointer);
-	ProcessOTE* oteProc = resumeFirst(static_cast<ProcessList*>(sem));
+	ProcessOTE* oteProc = resumeFirst(static_cast<LinkedList*>(sem));
 	if (oteProc)
 	{
 		// We've successfully acquired the Sempahore, so we may
@@ -365,7 +381,7 @@ ProcessOTE* Interpreter::wakeHighestPriority()
 	unsigned highestPriority = oteLists->pointersSize();
 	Array* processLists = oteLists->m_location;
 	unsigned index = highestPriority;
-	ProcessList* pProcessList;
+	LinkedList* pProcessList;
 	do 
 	{
 		if (!index)
@@ -383,7 +399,7 @@ ProcessOTE* Interpreter::wakeHighestPriority()
 			return scheduler->m_activeProcess;
 		}
 		OTE* oteList = reinterpret_cast<OTE*>(processLists->m_elements[--index]);
-		pProcessList = static_cast<ProcessList*>(oteList->m_location);
+		pProcessList = static_cast<LinkedList*>(oteList->m_location);
 	} while (pProcessList->isEmpty());
 	return reinterpret_cast<ProcessOTE*>(pProcessList->removeFirst());
 }
@@ -473,7 +489,7 @@ void Interpreter::sendVMInterrupt(ProcessOTE* interruptedProcess, Oop nInterrupt
 		// If the process has terminated (or is pending termination), we mustn't deliver 
 		// any more interrupts to it
 		if (interruptedProc->SuspendedFrame() == Oop(Pointers.Nil) ||
-				interruptedProc->IsWaitingOn(reinterpret_cast<ProcessListOTE*>(scheduler()->m_pendingTerms)))
+				interruptedProc->IsWaitingOn(reinterpret_cast<LinkedListOTE*>(scheduler()->m_pendingTerms)))
 		{
 			TRACESTREAM << "Ignored interrupt " << ObjectMemoryIntegerValueOf(nInterrupt) << " to terminated process " << interruptedProcess << endl;
 			return;
@@ -497,7 +513,7 @@ void Interpreter::sendVMInterrupt(ProcessOTE* interruptedProcess, Oop nInterrupt
 			// Scenario 4: Interrupted process other than active, no switch pending
 			sleep(activeProcess);
 
-		ProcessListOTE* oteList = interruptedProc->SuspendingList();
+		LinkedListOTE* oteList = interruptedProc->SuspendingList();
 		// Now we need to remove the interrupted process from any suspendingList and remember that list
 		if (!oteList->isNil())
 		{
@@ -523,7 +539,7 @@ void Interpreter::sendVMInterrupt(ProcessOTE* interruptedProcess, Oop nInterrupt
 
 			// The process is waiting on a list (i.e. its not just suspended)
 			// so we'll remove it from that list, and 
-			ProcessList* suspendingList = oteList->m_location;
+			LinkedList* suspendingList = oteList->m_location;
 			// The removed link has an artificially raised ref. count to prevent
 			// it going away should it be needed (removeLinkFromList can return nil)
 			(suspendingList->remove(interruptedProcess))->countDown();
@@ -560,7 +576,7 @@ void Interpreter::sendVMInterrupt(ProcessOTE* interruptedProcess, Oop nInterrupt
 		m_registers.StoreSuspendedFrame();
 
 		Process* interruptedProc = interruptedProcess->m_location;
-		ProcessListOTE* oteList = interruptedProc->SuspendingList();
+		LinkedListOTE* oteList = interruptedProc->SuspendingList();
 
 		oopListArg = reinterpret_cast<Oop>(oteList);
 
@@ -570,7 +586,7 @@ void Interpreter::sendVMInterrupt(ProcessOTE* interruptedProcess, Oop nInterrupt
 			// list pushed onto the stack as argument
 			oteList->countUp();
 
-			ProcessList* suspendingList = oteList->m_location;
+			LinkedList* suspendingList = oteList->m_location;
 			// The removed link has an artificially raised ref. count to prevent
 			// it going away should it be needed (removeLinkFromList can return nil)
 			(suspendingList->remove(interruptedProcess))->countDown();
@@ -825,10 +841,10 @@ BOOL Interpreter::CheckProcessSwitch()
 	
 	unsigned highestPriority = oteLists->pointersSize();
 	unsigned index = highestPriority;
-	ProcessList* pProcessList;
+	LinkedList* pProcessList;
 	do 
 	{
-		ProcessListOTE* oteProcessList = reinterpret_cast<ProcessListOTE*>(processLists->m_elements[--index]);
+		LinkedListOTE* oteProcessList = reinterpret_cast<LinkedListOTE*>(processLists->m_elements[--index]);
 		pProcessList = oteProcessList->m_location;
 	} while (pProcessList->isEmpty() && index);
 	return index+1;
@@ -847,12 +863,12 @@ void Interpreter::sleep(ProcessOTE* aProcess)
 	HARDASSERT(processor->m_processLists->m_oteClass == Pointers.ClassArray);
 	Array* processLists = processor->m_processLists->m_location;
 
-	ProcessListOTE* oteList = reinterpret_cast<ProcessListOTE*>(processLists->m_elements[process->Priority()-1]);
+	LinkedListOTE* oteList = reinterpret_cast<LinkedListOTE*>(processLists->m_elements[process->Priority()-1]);
 	QueueProcessOn(aProcess, oteList);
 }
 
 
-void Interpreter::QueueProcessOn(ProcessOTE* oteProcess, ProcessListOTE* oteList)
+void Interpreter::QueueProcessOn(ProcessOTE* oteProcess, LinkedListOTE* oteList)
 {
 	Process* process = oteProcess->m_location;
 	
@@ -860,7 +876,7 @@ void Interpreter::QueueProcessOn(ProcessOTE* oteProcess, ProcessListOTE* oteList
 	HARDASSERT(!process->IsWaiting());
 	HARDASSERT(process->Next()->isNil());
 
-	ProcessList* processList = oteList->m_location;
+	LinkedList* processList = oteList->m_location;
 	processList->addLast(oteProcess);
 	// Process has back pointer to list (and therefore inc's its ref. count)
 	process->SetSuspendingList(oteList);
@@ -873,15 +889,15 @@ void Interpreter::QueueProcessOn(ProcessOTE* oteProcess, ProcessListOTE* oteList
 // normally ready to run, when the interrupt returns it will get replaced on ready list. 
 // However if it is the only available process, then it will be immediately taken back off 
 // that list to continue execution.
-ProcessListOTE* __fastcall Interpreter::ResuspendActiveOn(ProcessListOTE* oteList)
+LinkedListOTE* __fastcall Interpreter::ResuspendActiveOn(LinkedListOTE* oteList)
 {
 	ProcessOTE* oteActive = actualActiveProcessPointer();
-	ProcessListOTE* list = ResuspendProcessOn(oteActive, oteList);
+	LinkedListOTE* list = ResuspendProcessOn(oteActive, oteList);
 	CHECKREFERENCES
 	return list;
 }
 
-ProcessListOTE* Interpreter::ResuspendProcessOn(ProcessOTE* oteProcess, ProcessListOTE* oteList)
+LinkedListOTE* Interpreter::ResuspendProcessOn(ProcessOTE* oteProcess, LinkedListOTE* oteList)
 {
 	HARDASSERT(!oteList->isNil());
 	// Nasty, but...
@@ -1008,14 +1024,14 @@ ProcessOTE* Interpreter::resume(ProcessOTE* aProcess)
 #endif
 
 ///////////////////////////////////////////////////////////////////////////////
-// ProcessList accessing routines
+// LinkedList accessing routines
 
 // N.B. On return ref. count of return object will be one too high - this
 // is to prevent it being prematurely deleted if the only object
 // referencing it was aLinkedList - so callers must be careful to reduce
 // the reference count at the appropriate time (or leave the object to 
 // be garbage collected - when we implement that)
-inline ProcessOTE* ProcessList::removeFirst()
+inline ProcessOTE* LinkedList::removeFirst()
 {
 	HARDASSERT(!isEmpty());
 	ProcessOTE* removedLink = m_firstLink;
@@ -1045,7 +1061,7 @@ inline ProcessOTE* ProcessList::removeFirst()
 
 
 // Add link to end of list
-inline void ProcessList::addLast(ProcessOTE* aLink)
+inline void LinkedList::addLast(ProcessOTE* aLink)
 {
 	if (isEmpty())
 	{
@@ -1064,7 +1080,7 @@ inline void ProcessList::addLast(ProcessOTE* aLink)
 }
 
 // Ref. count of removed (and returned) link will be one too high
-ProcessOTE* ProcessList::remove(ProcessOTE* aLink)
+ProcessOTE* LinkedList::remove(ProcessOTE* aLink)
 {
 	ProcessOTE* currLink = m_firstLink;
 	ProcessOTE* nil = reinterpret_cast<ProcessOTE*>(Pointers.Nil);
@@ -1107,7 +1123,7 @@ ProcessOTE* ProcessList::remove(ProcessOTE* aLink)
 	return aLink;
 }
 
-inline bool ProcessList::isEmpty()
+inline bool LinkedList::isEmpty()
 {
 	return m_firstLink->isNil();
 }
@@ -1260,8 +1276,8 @@ BOOL Interpreter::FastYield()
 	
 	HARDASSERT(activePriority >= 1 && activePriority <= static_cast<SMALLINTEGER>(oteLists->pointersSize()));
 
-	ProcessListOTE* oteList = reinterpret_cast<ProcessListOTE*>(processLists->m_elements[activePriority-1]);
-	ProcessList* processList = oteList->m_location;
+	LinkedListOTE* oteList = reinterpret_cast<LinkedListOTE*>(processLists->m_elements[activePriority-1]);
+	LinkedList* processList = oteList->m_location;
 	if (!processList->isEmpty())
 	{
 		// There is another process ready to run at the same priority - so give
@@ -1318,7 +1334,7 @@ DWORD Semaphore::Wait(SemaphoreOTE* oteThis, ProcessOTE* oteProcess, int timeout
 	{
 		if (timeout == INFINITE)
 		{
-			Interpreter::QueueProcessOn(oteProcess, reinterpret_cast<ProcessListOTE*>(oteThis));
+			Interpreter::QueueProcessOn(oteProcess, reinterpret_cast<LinkedListOTE*>(oteThis));
 			if (Interpreter::schedule() == oteProcess)
 				TRACESTREAM << "WARNING: Interrupted wait of " << oteProcess << " on " << oteThis << endl;
 			// Semaphore not available yet, so if interrupted in the meantime the
@@ -1354,8 +1370,8 @@ BOOL __fastcall Interpreter::primitiveResume(CompiledMethod&, unsigned argumentC
 	if (proc->IsWaiting())
 		return primitiveFailure(0);
 
-	ProcessListOTE* oteList;
-	if (argumentCount == 0 || (oteList = reinterpret_cast<ProcessListOTE*>(stackTop()))->isNil())
+	LinkedListOTE* oteList;
+	if (argumentCount == 0 || (oteList = reinterpret_cast<LinkedListOTE*>(stackTop()))->isNil())
 	{
 		if (!resume(receiverProcess))
 			return primitiveFailure(1);
@@ -1411,7 +1427,7 @@ BOOL __fastcall Interpreter::primitiveSingleStep(CompiledMethod&, unsigned argum
 	CancelSampleTimer();
 	m_nInputPollCounter = -steps;
 
-	ProcessListOTE* oteList = proc->SuspendingList();
+	LinkedListOTE* oteList = proc->SuspendingList();
 	
 	// We have to be able to single step processes which are either suspended
 	// or waiting on on a queue (i.e. Schedulable processes in a Ready state)
@@ -1423,7 +1439,7 @@ BOOL __fastcall Interpreter::primitiveSingleStep(CompiledMethod&, unsigned argum
 
 		// The process is waiting on a list (i.e. its not just suspended)
 		// so we'll remove it from that list, and 
-		ProcessList* suspendingList = oteList->m_location;
+		LinkedList* suspendingList = oteList->m_location;
 		// The removed link has an artificially raised ref. count to prevent
 		// it going away should it be needed (removeLinkFromList can return nil)
 		(suspendingList->remove(receiverProcess))->countDown();
@@ -1486,14 +1502,14 @@ int Interpreter::SuspendProcess(ProcessOTE* processPointer)
 		// The receiver is not (now) the activeProcess, remove from Processor or Semaphore list
 		if (process->IsWaiting())
 		{
-			if (process->IsWaitingOn(reinterpret_cast<ProcessListOTE*>(scheduler()->m_pendingTerms)))
+			if (process->IsWaitingOn(reinterpret_cast<LinkedListOTE*>(scheduler()->m_pendingTerms)))
 				return 2;	// Process is pending termination
 
 			// N.B. In a runtime system we do not check the type of process.m_myList, 
-			// but just assume it is a kind of ProcessList, if it isn't (which could
+			// but just assume it is a kind of LinkedList, if it isn't (which could
 			// only occur if the user has fiddled with it in an inspector) then it's
 			// just too bad, and a crash will almost certainly result!
-			ProcessList* suspendingList = process->SuspendingList()->m_location;
+			LinkedList* suspendingList = process->SuspendingList()->m_location;
 		
 			// The removed link has an artificially raised ref. count to prevent
 			// it going away should it be needed
@@ -1629,7 +1645,7 @@ BOOL __fastcall Interpreter::primitiveProcessPriority()
 		// it in the correct list, and reschedule
 		if (process->IsReady())
 		{
-			ProcessList* suspendingList = process->SuspendingList()->m_location;
+			LinkedList* suspendingList = process->SuspendingList()->m_location;
 			// The removed link has an artificially raised ref. count to prevent
 			// it going away should it be needed (removeLinkFromList can return nil)
 			(suspendingList->remove(receiverPointer))->countDown();
@@ -1720,7 +1736,7 @@ bool Interpreter::TerminateOverlapped(ProcessOTE* oteProc)
 		// Need to ensure process remains around at least until the thread terminates
 		// Note that we don't actually 'suspend' the process, but put it on a Semaphore
 		// like terminations pending list
-		ProcessListOTE* otePending = reinterpret_cast<ProcessListOTE*>(scheduler()->m_pendingTerms);
+		LinkedListOTE* otePending = reinterpret_cast<LinkedListOTE*>(scheduler()->m_pendingTerms);
 
 		if (!proc->IsWaitingOn(otePending))
 		{

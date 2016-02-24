@@ -55,7 +55,7 @@ public NewSigned
 public NewUnsigned
 public arithmeticBitShift
 
-LINEWARRAY2 EQU ?liNewArray2@@YIPAV?$TOTE@VArray@@@@II@Z
+LINEWARRAY2 EQU ?liNewArray2@@YIPAV?$TOTE@VArray@ST@@@@II@Z
 extern LINEWARRAY2:near32
 
 extern primitiveFailure0:near32

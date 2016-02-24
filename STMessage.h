@@ -11,34 +11,34 @@
 	a representation in the assembler modules (so see istasm.inc)
 
 ******************************************************************************/
-
-#ifndef _IST_STMessage_H_
-#define _IST_STMessage_H_
+#pragma once
 
 #include "STObject.h"
 
-class Message;
-typedef TOTE<Message> MessageOTE;
+// Declare forward references
+namespace ST { class Message; }
+typedef TOTE<ST::Message> MessageOTE;
 
-class Message // : public Object
+namespace ST
 {
-public:
-	SymbolOTE*	m_selector;
-	ArrayOTE*	m_args;
-
-	enum { MessageSelectorIndex=ObjectFixedSize, MessageArgumentsIndex, FixedSize };
-
-	static MessageOTE* New()
+	class Message // : public Object
 	{
-		return reinterpret_cast<MessageOTE*>(ObjectMemory::newPointerObject(Pointers.ClassMessage, FixedSize));
-	}
+	public:
+		SymbolOTE*	m_selector;
+		ArrayOTE*	m_args;
 
-	static MessageOTE* NewUninitialized()
-	{
-		return reinterpret_cast<MessageOTE*>(ObjectMemory::newUninitializedPointerObject(Pointers.ClassMessage, FixedSize));
-	}
-};
+		enum { MessageSelectorIndex = ObjectFixedSize, MessageArgumentsIndex, FixedSize };
+
+		static MessageOTE* New()
+		{
+			return reinterpret_cast<MessageOTE*>(ObjectMemory::newPointerObject(Pointers.ClassMessage, FixedSize));
+		}
+
+		static MessageOTE* NewUninitialized()
+		{
+			return reinterpret_cast<MessageOTE*>(ObjectMemory::newUninitializedPointerObject(Pointers.ClassMessage, FixedSize));
+		}
+	};
+}
 
 ostream& operator<<(ostream& st, const MessageOTE* oteMsg);
-
-#endif	//EOF

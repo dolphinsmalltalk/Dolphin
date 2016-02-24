@@ -668,6 +668,25 @@ void ObjectMemory::addVMRefs()
 				// Never modify the ref. count of a sticky object - let the GC collect these
 				ote->beSticky();
 			}
+
+			if (!ote->isFree())
+			{
+				// Perform some basic checks that the object is valid
+
+				// Is the class pointer valid?
+				HARDASSERT(isBehavior(Oop(ote->m_oteClass)));
+
+				// Are the remaining pointers valid Oops
+				if (ote->isPointers())
+				{
+					VariantObject* obj = reinterpret_cast<PointersOTE*>(ote)->m_location;
+					int size = ote->pointersSize();
+					for (int i = 0; i < size; i++)
+					{
+						HARDASSERT(isValidOop(obj->m_fields[i]));
+					}
+				}
+			}
 		}
 
 		// Now remove refs from the current active process that we added before checking refs

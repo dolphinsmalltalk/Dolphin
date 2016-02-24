@@ -4,9 +4,7 @@ Lexer.h
 =======
 The Smalltalk lexical analyser
 */
-
-#ifndef _IST_LEX_H_
-#define _IST_LEX_H_
+#pragma once
 
 ///////////////////////
 #include "Str.h"
@@ -356,5 +354,3 @@ inline bool Lexer::isspace(char c)
 {
 	return c == 0x20 || (c >= 0x09 && c <= 0x0D);
 }
-
-#endif
