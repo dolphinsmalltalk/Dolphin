@@ -2275,7 +2275,7 @@ alternateInspectorClass
 	^StructureInspector!
 
 publishedAspects
-    "Answer a &lt;LookupTable&gt; of the &lt;Aspect&gt;s published by instances of the receiver."
+	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
 
     | aspects |
     aspects := super publishedAspects.
