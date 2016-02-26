@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 View subclass: #MoenTreeView
 	instanceVariableNames: 'anchorNode getTextBlock getImageBlock mtvFlags leading imageManager calculatedExtent parentSpacing selection linePen iconExtent maxTextExtent dtFlags margin textInset theme _mtvReserved1 _mtvReserved2'
@@ -1802,14 +1802,6 @@ wmSetFocus: message wParam: wParam lParam: lParam
 	^super wmSetFocus: message wParam: wParam lParam: lParam
 !
 
-wmThemeChanged: message wParam: wParam lParam: lParam 
-	"Private - Default handler for a WM_THEMECHANGED message from Windows."
-
-	self
-		freeTheme;
-		openTheme.
-	^0!
-
 zip: aMoenTreeNode 
 	"Private - Reassemble the contours of the <MoenTreeNode> argument 
 	and its parent chain to accomodate a change in the argument's subtree."
@@ -1980,7 +1972,6 @@ zip: aMoenTreeNode
 !MoenTreeView categoriesFor: #wmKillFocus:wParam:lParam:!event handling-win32!private! !
 !MoenTreeView categoriesFor: #wmNcCalcSize:wParam:lParam:!event handling-win32!private! !
 !MoenTreeView categoriesFor: #wmSetFocus:wParam:lParam:!event handling-win32!private! !
-!MoenTreeView categoriesFor: #wmThemeChanged:wParam:lParam:!event handling-win32!private! !
 !MoenTreeView categoriesFor: #zip:!private!tree layout! !
 
 MoenTreeView methodProtocol: #selectableItems attributes: #(#readOnly) selectors: #(#hasSelection #onSelectionChanged #onSelectionChanging: #resetSelection #selection #selection: #selection:ifAbsent: #selectionIfNone: #selectionOrNil #selectionOrNil:)!

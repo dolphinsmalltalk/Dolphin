@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ListControlView subclass: #IconicListAbstract
 	instanceVariableNames: 'getImageBlock imageManager stateImageManager getInfoTipBlock customDrawBlock largeIconExtent thumbnailsImageManager'
@@ -47,15 +47,6 @@ basicItemFromPoint: aPoint
 	argument, or nil if none."
 
 	^self subclassResponsibility!
-
-beDefaultThemed
-	OSVERSIONINFO current isWinVista 
-		ifTrue: 
-			[ThemeLibrary default 
-				setWindowTheme: self handle
-				pszSubAppName: 'explorer' asUnicodeString
-				pszSubIdList: nil]
-		ifFalse: [super beDefaultThemed]!
 
 beLargeIcons
 	"Set the receiver's image extent to that for large icons."
@@ -714,7 +705,6 @@ wmDestroy: message wParam: wParam lParam: lParam
 !IconicListAbstract categoriesFor: #attachEditControl:!private! !
 !IconicListAbstract categoriesFor: #basicEditItemLabel:!operations!private! !
 !IconicListAbstract categoriesFor: #basicItemFromPoint:!enquiries!private! !
-!IconicListAbstract categoriesFor: #beDefaultThemed!modes!public! !
 !IconicListAbstract categoriesFor: #beLargeIcons!modes!public! !
 !IconicListAbstract categoriesFor: #beSmallIcons!modes!public! !
 !IconicListAbstract categoriesFor: #canEditLabels!accessing-styles!public!testing! !

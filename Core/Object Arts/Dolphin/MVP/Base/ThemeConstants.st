@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Smalltalk at: #ThemeConstants put: (PoolConstantsDictionary named: #ThemeConstants)!
 ThemeConstants at: 'ABS_DOWNDISABLED' put: 16r8!
@@ -145,6 +145,9 @@ ThemeConstants at: 'GFST_NONE' put: 16r0!
 ThemeConstants at: 'GFST_SIZE' put: 16r1!
 ThemeConstants at: 'GLPS_CLOSED' put: 16r1!
 ThemeConstants at: 'GLPS_OPENED' put: 16r2!
+ThemeConstants at: 'GP_BORDER' put: 16r1!
+ThemeConstants at: 'GP_LINEHORZ' put: 16r2!
+ThemeConstants at: 'GP_LINEVERT' put: 16r3!
 ThemeConstants at: 'GT_FONTGLYPH' put: 16r2!
 ThemeConstants at: 'GT_IMAGEGLYPH' put: 16r1!
 ThemeConstants at: 'GT_NONE' put: 16r0!
@@ -283,11 +286,14 @@ ThemeConstants at: 'RBS_UNCHECKEDDISABLED' put: 16r4!
 ThemeConstants at: 'RBS_UNCHECKEDHOT' put: 16r2!
 ThemeConstants at: 'RBS_UNCHECKEDNORMAL' put: 16r1!
 ThemeConstants at: 'RBS_UNCHECKEDPRESSED' put: 16r3!
+ThemeConstants at: 'RP_BACKGROUND' put: 16r7!
 ThemeConstants at: 'RP_BAND' put: 16r3!
 ThemeConstants at: 'RP_CHEVRON' put: 16r4!
 ThemeConstants at: 'RP_CHEVRONVERT' put: 16r5!
 ThemeConstants at: 'RP_GRIPPER' put: 16r1!
 ThemeConstants at: 'RP_GRIPPERVERT' put: 16r2!
+ThemeConstants at: 'RP_SPLITERVERT' put: 16r8!
+ThemeConstants at: 'RP_SPLITTER' put: 16r7!
 ThemeConstants at: 'SBP_ARROWBTN' put: 16r1!
 ThemeConstants at: 'SBP_GRIPPERHORZ' put: 16r8!
 ThemeConstants at: 'SBP_GRIPPERVERT' put: 16r9!
@@ -309,6 +315,8 @@ ThemeConstants at: 'SCRBS_PRESSED' put: 16r3!
 ThemeConstants at: 'SP_GRIPPER' put: 16r3!
 ThemeConstants at: 'SP_GRIPPERPANE' put: 16r2!
 ThemeConstants at: 'SP_PANE' put: 16r1!
+ThemeConstants at: 'SPLITS_NORMAL' put: 16r1!
+ThemeConstants at: 'SPLITSV_NORMAL' put: 16r1!
 ThemeConstants at: 'SPLS_HOT' put: 16r2!
 ThemeConstants at: 'SPLS_NORMAL' put: 16r1!
 ThemeConstants at: 'SPLS_PRESSED' put: 16r3!
