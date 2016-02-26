@@ -107,7 +107,8 @@ buildNestedBlocks2: nesting
 
 checkCompileError: ex range: anInterval code: anInteger message: msgFormat line: lineInteger source: aString 
 	^ex errorCode = anInteger and: 
-			[ex range = anInterval and: 
+			[((anInterval stop isNil and: [ex range start = anInterval start]) or: [ex range = anInterval]) 
+				and: 
 					[(lineInteger < 0 or: [ex line < 0 or: [ex line = lineInteger]]) and: 
 							[| msgString |
 							msgString := msgFormat 
@@ -547,10 +548,7 @@ testErrorsBlockNestingTooDeep
 	mark := (source indexOfSubCollection: nesting displayString) - 3.
 	self 
 		parseExprError: source
-		range: (mark to: (source 
-						nextIndexOf: $]
-						from: mark
-						to: source size) + 1)
+		range: (mark to: nil)
 		line: 1
 		code: CErrBlockNestingTooDeep!
 
