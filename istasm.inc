@@ -850,7 +850,7 @@ GetIPOffsetUsing MACRO tempRegister
 	.ENDIF
 	sub		_IP, tempRegister								;; Convert _IP to offset into object
 	IFDEF _DEBUG
-		.IF (_IP > 4096)
+		.IF (_IP > 8192)
 			int	3											;; Probably a bug - _IP index very large
 		.ENDIF
 	ENDIF

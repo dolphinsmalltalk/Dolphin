@@ -5,6 +5,9 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "VM", "dll.vcxproj", "{382ABBF3-B32D-4D77-B303-346AA146921C}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Launcher", "Launcher\Dull.vcxproj", "{A8454911-DE25-451D-AC38-1B6B058C050D}"
+	ProjectSection(ProjectDependencies) = postProject
+		{35EB6247-4F53-4605-AA04-A9310AB3235B} = {35EB6247-4F53-4605-AA04-A9310AB3235B}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Compiler", "Compiler\Compiler.vcxproj", "{35EB6247-4F53-4605-AA04-A9310AB3235B}"
 EndProject
@@ -50,6 +53,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{89BB403F-881C-4B73-BA44-50A545697C93}"
 	ProjectSection(SolutionItems) = preProject
 		dolphin.props = dolphin.props
+		dolphin.targets = dolphin.targets
 	EndProjectSection
 EndProject
 Global

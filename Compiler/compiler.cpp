@@ -283,7 +283,7 @@ Str Compiler::GetClassName()
 ///////////////////////////////////
 
 
-inline bool Compiler::FindNameAsSpecialMessage(const Str& name, int& index) const
+inline int Compiler::FindNameAsSpecialMessage(const Str& name) const
 {
 	// Returns true and an appropriate (index) if (name) is a
 	// special message
@@ -298,11 +298,10 @@ inline bool Compiler::FindNameAsSpecialMessage(const Str& name, int& index) cons
 		const char* psz = (const char*)FetchBytesOf(stringPointer);
 		if (name == psz)
 		{
-			index = i;
-			return true;
+			return i;
 		}
 	}
-	return false;
+	return -1;
 }
 
 inline int Compiler::FindNameAsInstanceVariable(const Str& name) const
@@ -536,13 +535,10 @@ int Compiler::GenByte(BYTE value, BYTE flags, LexicalScope* pScope)
 
 // Insert an extended instruction at the code pointer, returning the position at which
 // the instruction was inserted.
-inline int Compiler::GenInstructionExtended(BYTE basic, int extension)
+inline int Compiler::GenInstructionExtended(BYTE basic, BYTE extension)
 {
-	// Generate an extended instruction.
-	//
-	_ASSERTE(extension <= 0xFF);
 	int pos=GenInstruction(basic);
-	GenData(extension & 0xFF);
+	GenData(extension);
 	return pos;
 }
 
@@ -630,7 +626,7 @@ int Compiler::GenPushTemp(TempVarRef* pTemp)
 	return GenTempRefInstruction(LongPushOuterTemp, pTemp);
 }
 
-inline int Compiler::GenPushInstVar(int index)
+inline int Compiler::GenPushInstVar(BYTE index)
 {
 	m_pCurrentScope->MarkNeedsSelf();
 
@@ -718,23 +714,27 @@ void Compiler::GenPushVariable(const Str& strName, const TEXTRANGE& range)
 		{
 			int index = FindNameAsInstanceVariable(strName);
 			if (index >= 0)
-				GenPushInstVar(index);
+			{
+				// Only 255 inst vars recognised, so index should not be > 255
+				_ASSERTE(index < 256);
+				GenPushInstVar(static_cast<BYTE>(index));
+			}
 			else 
 				GenPushStaticVariable(strName, range);
 		}
 	}
 }
 
-void Compiler::GenInteger(long val, const TEXTRANGE& range)
+void Compiler::GenInteger(int val, const TEXTRANGE& range)
 {
 	// Generates code to push a small integer constant.
 	//_ASSERTE(CanBeSmallInteger(val));
 	if (val >= -1 && val <= 2)
-		GenInstruction((ShortPushZero + val) & 0xFF);
+		GenInstruction(ShortPushZero + val);
 	else if (val >= -128 && val <= 127)
-		GenInstructionExtended(PushImmediate, (int) val);
+		GenInstructionExtended(PushImmediate, static_cast<BYTE>(val));
 	else if (val >= -32768 && val <= 32767)
-		GenLongInstruction(LongPushImmediate, val & 0xFFFF);
+		GenLongInstruction(LongPushImmediate, static_cast<WORD>(val));
 	else
 		GenLiteralConstant(m_piVM->NewSignedInteger(val), range);
 }
@@ -946,18 +946,21 @@ void Compiler::GenConstant(int index)
 {
 	if (m_ok)
 	{
+		// Index should be >=0 if no error detected
+		_ASSERTE(index >= 0);
+
 		// Generate the push
 		if (index < NumShortPushConsts)		// In range of short instructions ?
 			GenInstruction(ShortPushConst, index);
 		else if (index < 256)				// In range of single extended instructions ?
 		{
-			GenInstructionExtended(PushConst, index);
+			GenInstructionExtended(PushConst, static_cast<BYTE>(index));
 		}
 		else
 		{
-			// Double extended Long version is required
+			// Too many literals detected when adding to frame, so index should be in range
 			_ASSERTE(index < 65536);
-			GenLongInstruction(LongPushConst, index);
+			GenLongInstruction(LongPushConst, static_cast<WORD>(index));
 		}
 	}
 }		
@@ -967,18 +970,21 @@ void Compiler::GenStatic(int index)
 {
 	if (m_ok)
 	{
+		// Index should be >=0 if no error detected
+		_ASSERT(index >= 0);
+
 		// Generate the push
 		if (index < NumShortPushStatics)	// In range of short instructions ?
 			GenInstruction(ShortPushStatic, index);
 		else if (index < 256)				// In range of single extended instructions ?
 		{
-			GenInstructionExtended(PushStatic, index);
+			GenInstructionExtended(PushStatic, static_cast<BYTE>(index));
 		}
 		else
 		{
-			// Double extended Long version is required
+			// Too many literals detected when adding to frame, so index should be in range
 			_ASSERTE(index < 65536);
-			GenLongInstruction(LongPushStatic, index);
+			GenLongInstruction(LongPushStatic, static_cast<WORD>(index));
 		}
 	}
 }		
@@ -996,10 +1002,11 @@ int Compiler::GenMessage(const Str& pattern, int argCount, int messageStart)
 	if (m_sendType != SendSuper)
 	{
 		// Look for special or maths messages
-		int index;
-		if (FindNameAsSpecialMessage(pattern, index))
+		int index = FindNameAsSpecialMessage(pattern);
+		if (index >= 0)
 		{
-			return GenInstruction(ShortSpecialSend, index);
+			_ASSERTE(index < NumSpecialSelectors);
+			return GenInstruction(ShortSpecialSend, static_cast<BYTE>(index));
 		}
 	}
 	
@@ -1008,7 +1015,7 @@ int Compiler::GenMessage(const Str& pattern, int argCount, int messageStart)
 	POTE oteSelector = InternSymbol(pattern);
 	//_ASSERTE(m_piVM->IsImmutable(reinterpret_cast<Oop>(oteSelector)));
 	TEXTRANGE errRange = TEXTRANGE(messageStart, argCount == 0 ? ThisTokenRange().m_stop : LastTokenRange().m_stop);
-	const int symbolIndex=AddToFrame(reinterpret_cast<Oop>(oteSelector), errRange);
+	int symbolIndex=AddToFrame(reinterpret_cast<Oop>(oteSelector), errRange);
 	if (symbolIndex < 0)
 		return 0;
 
@@ -1035,19 +1042,19 @@ int Compiler::GenMessage(const Str& pattern, int argCount, int messageStart)
 		case 0:
 			if (symbolIndex < NumShortSendsWithNoArgs)
 			{
-				return GenInstruction(ShortSendWithNoArgs, symbolIndex);
+				return GenInstruction(ShortSendWithNoArgs, static_cast<BYTE>(symbolIndex));
 			}
 			break;
 		case 1:
 			if (symbolIndex < NumShortSendsWith1Arg)
 			{
-				return GenInstruction(ShortSendWith1Arg, symbolIndex);
+				return GenInstruction(ShortSendWith1Arg, static_cast<BYTE>(symbolIndex));
 			}
 			break;
 		case 2:
 			if (symbolIndex < NumShortSendsWith2Args)
 			{
-				return GenInstruction(ShortSendWith2Args, symbolIndex);
+				return GenInstruction(ShortSendWith2Args, static_cast<BYTE>(symbolIndex));
 			}
 			break;
 		default:
@@ -1061,29 +1068,35 @@ int Compiler::GenMessage(const Str& pattern, int argCount, int messageStart)
 	if (symbolIndex <= SendXMaxLiteral && argCount <= SendXMaxArgs)
 	{
 		// Single extended send (2 bytes) will do
-		BYTE part2 = (argCount << SendXLiteralBits) | (symbolIndex & SendXMaxLiteral);
+		BYTE part2 = static_cast<BYTE>((argCount << SendXLiteralBits) | (symbolIndex & SendXMaxLiteral));
 		BYTE code = m_sendType == SendSuper ? Supersend : Send;
 		sendIP = GenInstructionExtended(code, part2);
 	}
 	else if (symbolIndex <= Send2XMaxLiteral && argCount <= Send2XMaxArgs)
 	{
 		BYTE code = m_sendType == SendSuper ? LongSupersend : LongSend;
-		sendIP = GenInstructionExtended(code, argCount);
-		GenData(symbolIndex);
+		sendIP = GenInstructionExtended(code, static_cast<BYTE>(argCount));
+		GenData(static_cast<BYTE>(symbolIndex));
 	}
 	else
 	{
 		// Need an extended send (3 or 4 bytes)
 		if (argCount > Send3XMaxArgs)
+		{
 			CompileError(errRange, CErrTooManyArgs);
+			argCount = Send3XMaxArgs;
+		}
 
 		// Note that this test should never fire, since the literal limit will prevent the symbolIndex
 		// ever exceeding the max literals supported by a send.
 		if (symbolIndex > Send3XMaxLiteral)
+		{
 			CompileError(errRange, CErrTooManyLiterals);
+			symbolIndex = Send3XMaxLiteral;
+		}
 
 		BYTE code = m_sendType == SendSuper ? ExLongSupersend : ExLongSend;
-		sendIP = GenInstructionExtended(code, argCount);
+		sendIP = GenInstructionExtended(code, static_cast<BYTE>(argCount));
 		GenData(symbolIndex & 0xFF);
 		GenData(symbolIndex >> 8);
 	}
@@ -1142,7 +1155,7 @@ int Compiler::GenJump(BYTE basic, int location)
 	return pos;
 }
 
-int Compiler::GenStoreInstVar(int index)
+int Compiler::GenStoreInstVar(BYTE index)
 {
 	m_pCurrentScope->MarkNeedsSelf();
 	return GenInstructionExtended(StoreInstVar, index);
@@ -1166,15 +1179,17 @@ int Compiler::GenStore(const Str& name, const TEXTRANGE& range, int assignmentEn
 		int index = FindNameAsInstanceVariable(name);
 		if (index >= 0)
 		{
-			storeIP = GenStoreInstVar(index);
+			// Maximum of 255 inst vars recognised
+			_ASSERTE(index < 256);
+			storeIP = GenStoreInstVar(static_cast<BYTE>(index));
 		}
 		else 
-			storeIP = GenStaticStore(name, StoreStatic, range, assignmentEnd);
+			storeIP = GenStaticStore(name, range, assignmentEnd);
 	}
 	return storeIP;
 }
 
-int Compiler::GenStaticStore(const Str& name, int opCode, const TEXTRANGE& range, int assignmentEnd)
+int Compiler::GenStaticStore(const Str& name, const TEXTRANGE& range, int assignmentEnd)
 {
 	Oop objectPointer;
 	int storeIP = 0;
@@ -1186,7 +1201,13 @@ int Compiler::GenStaticStore(const Str& name, int opCode, const TEXTRANGE& range
 		break;
 
 	case STATICVARIABLE:
-		storeIP = GenInstructionExtended(opCode, AddToFrame(objectPointer, range));
+		{
+			int index = AddToFrame(objectPointer, range);
+			_ASSERTE(index >= 0 && index < 65536);
+			storeIP = index < 255 
+							? GenInstructionExtended(StoreStatic, static_cast<BYTE>(index)) 
+							: GenLongInstruction(LongStoreStatic, static_cast<WORD>(index));
+		}
 		break;
 
 	case STATICNOTFOUND:
@@ -1205,20 +1226,12 @@ int Compiler::GenStaticStore(const Str& name, int opCode, const TEXTRANGE& range
 void Compiler::GenPopAndStoreTemp(TempVarRef* pRef)
 {
 	int depth = m_pCurrentScope->GetDepth();
-	int pos = GenInstructionExtended(LongStoreOuterTemp, depth);
+	_ASSERTE(depth >= 0 && depth < 256);
+	int pos = GenInstructionExtended(LongStoreOuterTemp, static_cast<BYTE>(depth));
 	m_bytecodes[pos].pVarRef = pRef;
 	// Placeholder for index, not yet known
 	GenData(0);
 	GenPopStack();
-}
-
-void Compiler::GenPopAndStoreInstVar(int index)
-{
-	m_pCurrentScope->MarkNeedsSelf();
-	if (index < NumShortPopStoreInstVars)
-		GenInstruction(ShortPopStoreInstVar, index);
-	else
-		GenInstructionExtended(PopStoreInstVar, index);
 }
 
 POTE Compiler::ParseMethod()
@@ -1623,9 +1636,12 @@ void Compiler::ParseTerm(int textPosition)
 		break;
 
 	case CharConst:
-		_ASSERTE(ThisTokenInteger()<256);
-		GenInstructionExtended(PushChar, ThisTokenInteger());
-		NextToken();
+		{
+			long codePoint = ThisTokenInteger();
+			_ASSERTE(codePoint < 256);	// Shouldn't happen because lexer should not have created the token
+			GenInstructionExtended(PushChar, static_cast<BYTE>(codePoint));
+			NextToken();
+		}
 		break;
 
 	case SymbolConst:
@@ -2941,7 +2957,7 @@ POTE Compiler::ParseByteArray()
 					NextToken();
 					break;
 				}
-				elems[elemcount++] = intVal & 0xFF;
+				elems[elemcount++] = static_cast<BYTE>(intVal);
 				NextToken();
 			}
 			break;
@@ -2955,7 +2971,7 @@ POTE Compiler::ParseByteArray()
 					if (nVal < 0 || nVal > 255)
 						CompileError(CErrBadValueInByteArray);
 					else
-						elems[elemcount++] = ThisTokenInteger() & 0xFF;
+						elems[elemcount++] = static_cast<BYTE>(ThisTokenInteger());
 					NextToken();
 					break;
 				}
@@ -3102,6 +3118,9 @@ void Compiler::GetInstVars()
 		//
 		STVarObject& array=*(STVarObject*)GetObj(arrayPointer);
 		const int len=FetchWordLengthOf(arrayPointer);
+		// Too many inst vars?
+		if (len > 255)
+			CompileError(CompileTextRange(), CErrBadContext);
 		// We know how many inst vars there are in advance of compilation, and this
 		// array does not, therefore, need to be dynamic
 		m_instVars.resize(len);
@@ -3380,8 +3399,8 @@ STDMETHODIMP_(POTE) Compiler::CompileForClass(IUnknown* piVM, Oop compilerOop, c
 	if (!m_piVM->IsBehavior(Oop(aClass)) || szSource == NULL)
 		return Nil();
 
-	POTE resultPointer;
-	char* prevLocale;
+	POTE resultPointer = Nil();
+	char* prevLocale = NULL;
 	int crtFlag;
 	__try
 	{
@@ -3423,7 +3442,6 @@ STDMETHODIMP_(POTE) Compiler::CompileForClass(IUnknown* piVM, Oop compilerOop, c
 				<< compilerOop << ',' << szSource << ',' << aClass << ','
 				<< std::hex << flags << ',' << notifier << ')' << std::endl;
 #endif
-			resultPointer = Nil();
 		}
 	}
 	__finally
@@ -3451,11 +3469,11 @@ STDMETHODIMP_(POTE) Compiler::CompileForEval(IUnknown* piVM, Oop compilerOop, co
 	if (!m_piVM->IsBehavior(Oop(aClass)) || szSource == NULL)
 		return Nil();
 	
-	POTE resultPointer;
+	POTE resultPointer = Nil();
 	
 	CHECKREFERENCES
 		
-	char* prevLocale;
+	char* prevLocale = NULL;
 	__try
 	{
 #ifdef USE_VM_DLL
@@ -3493,7 +3511,6 @@ STDMETHODIMP_(POTE) Compiler::CompileForEval(IUnknown* piVM, Oop compilerOop, co
 				<< compilerOop << ',' << szSource << ',' << aClass << ','
 				<< aWorkspacePool << std::hex << flags << ',' << notifier << ')' << std::endl;
 #endif
-			resultPointer = Nil();
 		}
 	}
 	__finally
@@ -3659,22 +3676,28 @@ void Compiler::PopScope(int textStop)
 {
 	_ASSERTE(m_pCurrentScope != NULL);
 	m_pCurrentScope->SetTextStop(textStop);
-	if (m_pCurrentScope->GetDepth() > MAXBLOCKNESTING)
-		CompileError(m_pCurrentScope->GetTextRange(), CErrBlockNestingTooDeep);
 	m_pCurrentScope = m_pCurrentScope->GetOuter();
 }
 
-void Compiler::PushNewScope(int textStart)
+void Compiler::PushNewScope(int textStart, bool bOptimized)
 {
-	LexicalScope* pNewScope = new LexicalScope(m_pCurrentScope, textStart=-1?ThisTokenRange().m_start:textStart);
+	int start = textStart < 0 ? ThisTokenRange().m_start : textStart;
+	LexicalScope* pNewScope = new LexicalScope(m_pCurrentScope, start, bOptimized);
 	m_allScopes.push_back(pNewScope);
 	m_pCurrentScope = pNewScope;
+	if (m_pCurrentScope->GetDepth() > MAXBLOCKNESTING)
+	{
+		// Note that the error range is just the first char of the scope (block), which is
+		// not terribly satisfactory, but at this stage we don't know where the block ends
+		// and encountering this error in practice is extremely unlikely (who writes
+		// methods with 255 nested blocks?)
+		CompileError(TEXTRANGE(start, start), CErrBlockNestingTooDeep);
+	}
 }
 
 void Compiler::PushOptimizedScope(int textStart)
 {
-	PushNewScope(textStart);
-	m_pCurrentScope->BeOptimizedBlock();
+	PushNewScope(textStart, true);
 }
 
 inline BYTE MakeOuterTempRef(int blockDepth, int index)
@@ -3687,7 +3710,8 @@ inline BYTE MakeOuterTempRef(int blockDepth, int index)
 int Compiler::GenTempRefInstruction(int instruction, TempVarRef* pRef)
 {
 	int scopeDepth = pRef->GetEstimatedDistance();
-	int pos = GenInstructionExtended(instruction, scopeDepth);
+	_ASSERTE(scopeDepth >= 0 && scopeDepth < 256);
+	int pos = GenInstructionExtended(instruction, static_cast<BYTE>(scopeDepth));
 	// Placeholder for index (not yet known)
 	GenData(0);
 	m_bytecodes[pos].pVarRef = pRef;
@@ -3698,6 +3722,7 @@ int Compiler::GenTempRefInstruction(int instruction, TempVarRef* pRef)
 int Compiler::GenPushCopiedValue(TempVarDecl* pDecl)
 {
 	int index = pDecl->GetIndex();
+	_ASSERTE(index >= 0);
 	int bytesGenerated = 0;
 
 	switch(pDecl->GetVarType())
@@ -3712,12 +3737,12 @@ int Compiler::GenPushCopiedValue(TempVarDecl* pDecl)
 	case tvtCopied:	// This is the type of a stack variable that has been copied
 		if (index < NumShortPushTemps)
 		{
-			GenInstruction(ShortPushTemp, index);
+			GenInstruction(ShortPushTemp, static_cast<BYTE>(index));
 			bytesGenerated = 1;
 		}
 		else
 		{
-			GenInstructionExtended(PushTemp, index);
+			GenInstructionExtended(PushTemp, static_cast<BYTE>(index));
 			bytesGenerated = 2;
 		}
 		break;
