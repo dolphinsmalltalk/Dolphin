@@ -136,12 +136,6 @@ BOOL __fastcall Interpreter::primitiveReplaceBytes()
 		// Only works for byte objects
 		ASSERT(receiverPointer->isBytes());
 		VariantByteObject* receiverBytes = receiverPointer->m_location;
-		#ifdef _DEBUG
-		{
-			Behavior* behavior = receiverPointer->m_oteClass->m_location;
-			ASSERT(!behavior->isIndirect());
-		}
-		#endif
 
 		BYTE* pFrom = receiverBytes->m_fields;
 
