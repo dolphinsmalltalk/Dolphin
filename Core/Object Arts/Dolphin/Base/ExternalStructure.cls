@@ -356,20 +356,27 @@ printCyclicRefOn: aStream
 	aStream nextPutAll: '...'!
 
 printFieldsOn: aStream limit: anInteger 
+	| sep |
 	self isNull 
-		ifTrue: [aStream nextPutAll: 'NULL']
-		ifFalse: 
-			[self getValidFields do: 
-					[:field | 
-					aStream position > anInteger 
-						ifTrue: 
-							[aStream nextPutAll: '... etc ...'.
-							^self].
+		ifTrue: 
+			[aStream nextPutAll: 'NULL'.
+			^self].
+	sep := [sep := [aStream space]].
+	self getValidFields do: 
+			[:each | 
+			| field |
+			aStream position > anInteger 
+				ifTrue: 
+					[aStream nextPutAll: '... etc ...'.
+					^self].
+			field := self template at: each.
+			field isReadable 
+				ifTrue: 
+					[sep value.
 					aStream
-						display: field;
+						display: each;
 						nextPutAll: '=';
-						print: (self getField: field)]
-				separatedBy: [aStream space]]!
+						print: (self getField: each)]]!
 
 printOn: aStream 
 	"Append a textual representation of the receiver to aStream.
