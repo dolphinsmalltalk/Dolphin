@@ -108,7 +108,12 @@
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="..\DolphinIF.cpp" />
-    <ClCompile Include="..\exports.cpp" />
+    <ClCompile Include="..\exports.cpp">
+      <CallingConvention Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">StdCall</CallingConvention>
+      <CallingConvention Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">StdCall</CallingConvention>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
     <ClCompile Include="..\extcall.cpp" />
     <ClCompile Include="..\fatalerror.cpp" />
     <ClCompile Include="..\finalize.cpp" />
