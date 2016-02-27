@@ -130,7 +130,8 @@ reloadSystemPackage
 	obsoleteMethodFilter := [:each | each hasChanged not].
 	baseClasses do: 
 			[:each | 
-			(((each selectMethods: obsoleteMethodFilter) asSortedCollection)
+			(((each selectMethods: obsoleteMethodFilter) 
+				asSortedCollection: [:a :b | a printString <= b printString])
 				addAll: (each class selectMethods: obsoleteMethodFilter);
 				yourself) do: 
 						[:m | 
