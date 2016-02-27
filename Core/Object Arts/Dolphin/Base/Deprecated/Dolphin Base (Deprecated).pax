@@ -29,8 +29,14 @@ package methodNames
 	add: #Integer -> #highSWord;
 	add: #Integer -> #lowSWord;
 	add: #Object -> #asDword;
+	add: #OSVERSIONINFO -> #isNT;
 	add: #OSVERSIONINFO -> #isNT4;
+	add: #OSVERSIONINFO -> #isWin2K;
+	add: #OSVERSIONINFO -> #isWin2K3;
+	add: #OSVERSIONINFO -> #isWin2K3OrLater;
+	add: #OSVERSIONINFO -> #isWin95;
 	add: #OSVERSIONINFO -> #isWin98;
+	add: #OSVERSIONINFO -> #isWin9X;
 	add: #OSVERSIONINFO -> #isWinMe;
 	add: #Package -> #script:;
 	add: #Package -> #script:put:;
@@ -221,12 +227,50 @@ asDword
 
 !OSVERSIONINFO methodsFor!
 
+isNT
+	"Answer whether the host OS is NT (4 or 2000).
+		OSVERSIONINFO current isNT
+	"
+
+	#deprecated.	"Non-NT systems are no longer supported, so this enquiry is pointless now."
+	^true!
+
 isNT4
 	"Answer whether the host OS is NT4.
 		OSVERSIONINFO current isNT
 	"
 
 	"NT4 is no longer supported"
+	#deprecated.
+	^false!
+
+isWin2K
+	"Answer whether the host OS is Windows 2000.
+		OSVERSIONINFO current isWin2K
+	"
+
+	#deprecated.	"Windows 2000 is no longer supported."
+	^false!
+
+isWin2K3
+	"Answer whether the host OS is Windows Server 2003 specifically."
+
+	#deprecated.	"Server 2003 is no longer supported."
+	^false!
+
+isWin2K3OrLater
+	"Answer whether the host OS is Windows Server 2003, or some later version."
+
+	#deprecated. "Always true since Windows versions earlier than Vista are no longer supported."
+	^true!
+
+isWin95
+	"Answer whether the host OS is Windows 95.
+		OSVERSIONINFO current isWin95
+	"
+
+	"Dolphin no longer supports the pre-NT Windows OSs"
+
 	#deprecated.
 	^false!
 
@@ -239,6 +283,14 @@ isWin98
 	#deprecated.
 	^false!
 
+isWin9X
+	"Answer whether the host OS is Windows 95/98 or ME."
+
+	"Dolphin no longer supports the pre-NT Windows OSs"
+
+	#deprecated.
+	^false!
+
 isWinMe
 	"Answer whether the host OS is Windows Me.
 		OSVERSIONINFO current isWinMe
@@ -248,8 +300,14 @@ isWinMe
 
 	#deprecated.
 	^false! !
+!OSVERSIONINFO categoriesFor: #isNT!public!testing! !
 !OSVERSIONINFO categoriesFor: #isNT4!public!testing! !
+!OSVERSIONINFO categoriesFor: #isWin2K!public!testing! !
+!OSVERSIONINFO categoriesFor: #isWin2K3!public!testing! !
+!OSVERSIONINFO categoriesFor: #isWin2K3OrLater!public!testing! !
+!OSVERSIONINFO categoriesFor: #isWin95!public!testing! !
 !OSVERSIONINFO categoriesFor: #isWin98!public!testing! !
+!OSVERSIONINFO categoriesFor: #isWin9X!public!testing! !
 !OSVERSIONINFO categoriesFor: #isWinMe!public!testing! !
 
 !Package methodsFor!

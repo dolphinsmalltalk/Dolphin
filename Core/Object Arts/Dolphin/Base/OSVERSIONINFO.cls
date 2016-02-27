@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Win32Structure subclass: #OSVERSIONINFO
 	instanceVariableNames: 'osName'
@@ -59,47 +59,6 @@ dwSize: anObject
 
 hasThemes
 	^self isWinXPOrLater!
-
-isNT
-	"Answer whether the host OS is NT (4 or 2000).
-		OSVERSIONINFO current isNT
-	"
-
-	^self dwPlatformId == VER_PLATFORM_WIN32_NT!
-
-isWin2K
-	"Answer whether the host OS is Windows 2000.
-		OSVERSIONINFO current isWin2K
-	"
-
-	^self osName == #win2k!
-
-isWin2K3
-	"Answer whether the host OS is Windows Server 2003 specifically."
-
-	^self osName = #win2k3!
-
-isWin2K3OrLater
-	"Answer whether the host OS is Windows Server 2003, or some later version."
-
-	^self dwPlatformId == VER_PLATFORM_WIN32_NT 
-		and: [self dwMajorVersion > 5 or: [self dwMajorVersion == 5 and: [self dwMinorVersion >= 2]]]!
-
-isWin95
-	"Answer whether the host OS is Windows 95.
-		OSVERSIONINFO current isWin95
-	"
-
-	"Dolphin no longer supports the pre-NT Windows OSs"
-
-	^false!
-
-isWin9X
-	"Answer whether the host OS is Windows 95/98 or ME."
-
-	"Dolphin no longer supports the pre-NT Windows OSs"
-
-	^false!
 
 isWinV5
 	#deprecated.	"Use isWinV5OrLater, or test for specific versions"
@@ -177,12 +136,6 @@ wSuiteMask
 !OSVERSIONINFO categoriesFor: #dwPlatformId!**compiled accessors**!public! !
 !OSVERSIONINFO categoriesFor: #dwSize:!**compiled accessors**!public! !
 !OSVERSIONINFO categoriesFor: #hasThemes!accessing!private! !
-!OSVERSIONINFO categoriesFor: #isNT!public!testing! !
-!OSVERSIONINFO categoriesFor: #isWin2K!public!testing! !
-!OSVERSIONINFO categoriesFor: #isWin2K3!public!testing! !
-!OSVERSIONINFO categoriesFor: #isWin2K3OrLater!public!testing! !
-!OSVERSIONINFO categoriesFor: #isWin95!public!testing! !
-!OSVERSIONINFO categoriesFor: #isWin9X!public!testing! !
 !OSVERSIONINFO categoriesFor: #isWinV5!public!testing! !
 !OSVERSIONINFO categoriesFor: #isWinV5OrLater!public!testing! !
 !OSVERSIONINFO categoriesFor: #isWinV6OrLater!public!testing! !
