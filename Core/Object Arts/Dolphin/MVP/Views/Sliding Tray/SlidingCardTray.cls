@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 CardContainer subclass: #SlidingCardTray
 	instanceVariableNames: 'theme slider pinSize pinInteractor _sctReserved1 _sctReserved2'
@@ -367,15 +367,7 @@ wmPrint: message wParam: wParam lParam: lParam
 				wParam: wParam
 				lParam: lParam.
 	(lParam allMask: PRF_NONCLIENT) ifTrue: [self paintEdgesOn: (Canvas withNonOwnedDC: wParam)].
-	^result!
-
-wmThemeChanged: message wParam: wParam lParam: lParam 
-	"Private - Default handler for a WM_THEMECHANGED message from Windows."
-
-	self
-		freeTheme;
-		openTheme.
-	^0! !
+	^result! !
 !SlidingCardTray categoriesFor: #calcClientRectangleFromRectangle:!event handling-win32!private! !
 !SlidingCardTray categoriesFor: #calculateExtent:!geometry!private! !
 !SlidingCardTray categoriesFor: #captionGeometryChanged!event handling!private! !
@@ -421,7 +413,6 @@ wmThemeChanged: message wParam: wParam lParam: lParam
 !SlidingCardTray categoriesFor: #wmNcHitTest:wParam:lParam:!event handling-win32!private! !
 !SlidingCardTray categoriesFor: #wmNcPaint:wParam:lParam:!event handling-win32!private! !
 !SlidingCardTray categoriesFor: #wmPrint:wParam:lParam:!event handling-win32!private! !
-!SlidingCardTray categoriesFor: #wmThemeChanged:wParam:lParam:!event handling-win32!private! !
 
 !SlidingCardTray class methodsFor!
 

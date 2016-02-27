@@ -412,7 +412,8 @@ beDefaultThemed
 	ThemeLibrary default 
 		setWindowTheme: self handle
 		pszSubAppName: (self themeSubAppName ifNotNil: [:name | name asUnicodeString])
-		pszSubIdList: nil!
+		pszSubIdList: nil.
+	self openTheme!
 
 beForeground
 	"Make the receiver the foreground window."
@@ -427,6 +428,7 @@ beNotThemed
 		#wineFix.
 		^self].
 
+	self freeTheme.
 	ThemeLibrary default 
 		setWindowTheme: self handle
 		pszSubAppName: '' asUnicodeString
@@ -1322,6 +1324,11 @@ frameWidths
 	"Answer the widths of the frames (if any) configured for the receiver."
 
 	^self class frameWidths: self baseStyle!
+
+freeTheme
+	"Private - Override point to free any theme related resources"
+
+	!
 
 getDC
 	"Answer a device context to enable drawing on the receiver."
@@ -2600,6 +2607,11 @@ onZOrderChanged
 	housekeeping regarding the new Zorder."
 
 !
+
+openTheme
+	"Private - Override point to allocate any theme related resources and query theme metrics"
+
+	!
 
 parentPresenter
 	"Answer the presenter that can be considered the parent of the receiver.
@@ -4239,6 +4251,10 @@ wmSysKeyUp: message wParam: wParam lParam: lParam
 wmThemeChanged: message wParam: wParam lParam: lParam 
 	"Private - Default handler for a WM_THEMECHANGED message from Windows."
 
+	self
+		freeTheme;
+		openTheme.
+	"Let the control see the theme change event too, otherwise it will not change style"
 	^nil!
 
 wmTimer: message wParam: wParam lParam: lParam
@@ -4508,6 +4524,7 @@ zOrderTop
 !View categoriesFor: #forecolorChanged!private!updating! !
 !View categoriesFor: #frameChanged!helpers!private! !
 !View categoriesFor: #frameWidths!accessing!public! !
+!View categoriesFor: #freeTheme!helpers!private! !
 !View categoriesFor: #getDC!accessing!public! !
 !View categoriesFor: #getEvents!events!private! !
 !View categoriesFor: #getFileLocator!accessing!private! !
@@ -4688,6 +4705,7 @@ zOrderTop
 !View categoriesFor: #onXButtonPressed:!event handling!public! !
 !View categoriesFor: #onXButtonReleased:!event handling!public! !
 !View categoriesFor: #onZOrderChanged!event handling!public! !
+!View categoriesFor: #openTheme!helpers!private! !
 !View categoriesFor: #parentPresenter!presenter!public! !
 !View categoriesFor: #parentView!hierarchy!public! !
 !View categoriesFor: #parentView:!hierarchy!private! !

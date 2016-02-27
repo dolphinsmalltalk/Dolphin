@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 TabView subclass: #TabViewXP
 	instanceVariableNames: 'theme lastSelection _tvxReserved1 _tvxReserved2 _tvxReserved3'
@@ -13,14 +13,6 @@ TabViewXP is needed because the themed control implementation provided by Micros
 '!
 !TabViewXP categoriesForClass!MVP-Views! !
 !TabViewXP methodsFor!
-
-beDefaultThemed
-	super beDefaultThemed.
-	self openTheme!
-
-beNotThemed
-	self freeTheme.
-	super beNotThemed!
 
 calcClientRectangleFromRectangle: aRectangle 
 	"Private - Given a window rectangle represented by the <Rectangle> argument, answer the
@@ -383,17 +375,7 @@ wmPrintClient: message wParam: wParam lParam: lParam
 						handle: handle
 						wParam: 0
 						hdc: wParam
-						paintStruct: nil)]!
-
-wmThemeChanged: message wParam: wParam lParam: lParam 
-	"Private - Default handler for a WM_THEMECHANGED message from Windows."
-
-	self
-		freeTheme;
-		openTheme.
-	^0! !
-!TabViewXP categoriesFor: #beDefaultThemed!modes!public! !
-!TabViewXP categoriesFor: #beNotThemed!modes!public! !
+						paintStruct: nil)]! !
 !TabViewXP categoriesFor: #calcClientRectangleFromRectangle:!geometry!private! !
 !TabViewXP categoriesFor: #createVerticalFont!event handling!private! !
 !TabViewXP categoriesFor: #freeTheme!helpers!private! !
@@ -417,5 +399,4 @@ wmThemeChanged: message wParam: wParam lParam: lParam
 !TabViewXP categoriesFor: #themeHandle!accessing!private! !
 !TabViewXP categoriesFor: #wmPaint:wParam:lParam:!event handling-win32!private! !
 !TabViewXP categoriesFor: #wmPrintClient:wParam:lParam:!event handling-win32!private! !
-!TabViewXP categoriesFor: #wmThemeChanged:wParam:lParam:!event handling-win32!private! !
 
