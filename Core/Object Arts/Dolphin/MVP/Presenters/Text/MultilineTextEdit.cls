@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 TextEdit subclass: #MultilineTextEdit
 	instanceVariableNames: ''
@@ -181,9 +181,7 @@ lineLength: anIntegerLineNumber
 maxTextLimit
 	"Private - Answer the absolute maximum amount of text that the receiver can ever hold."
 
-	^OSVERSIONINFO current isNT
-		ifTrue: [16rFFFFFFFF]
-		ifFalse: [16rFFFF]!
+	^16rFFFFFFFF!
 
 queryCommand: aCommandQuery 
 	"Private - Enters details about a potential command for the receiver into the 

@@ -739,10 +739,7 @@ openEventLog
 	"Private - Open the NT event log for writing, and answer a handle onto it that can be passed to the
 	ReportEvent() API."
 
-	OSVERSIONINFO current isNT 
-		ifTrue: 
-			[eventLogHandle := VMLibrary default 
-						registerEventSource: self eventLogSource].
+	eventLogHandle := VMLibrary default registerEventSource: self eventLogSource.
 	^eventLogHandle!
 
 openLibraries
@@ -1131,6 +1128,7 @@ windowsDirectory
 !SessionManager categoriesFor: #installationDirectory!constants!private! !
 !SessionManager categoriesFor: #isBinaryLooseMethodInstallationAllowed!private!testing! !
 !SessionManager categoriesFor: #isConsoleApplication!public!testing! !
+!SessionManager categoriesFor: #isDebug!public! !
 !SessionManager categoriesFor: #isDLL!private!testing! !
 !SessionManager categoriesFor: #isEmbedded!public!testing! !
 !SessionManager categoriesFor: #isEmbedding!public!testing! !

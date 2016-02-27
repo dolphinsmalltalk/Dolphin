@@ -534,7 +534,7 @@ messageBox: anExternalHandle text: textString caption: captionString style: styl
 			be passed as a Unicode string even though we are calling the ANSI version of
 			the MessageBoxIndirect() function!!. This is obviously a Windows bug which we
 			need to work around."
-			(iconId isInteger not and: [osver isNT]) ifTrue: [iconId := iconId asUnicodeString].
+			iconId isInteger not ifTrue: [iconId := iconId asUnicodeString].
 			struct lpszIcon: iconId asUIntPtr.
 			hInstance notNil ifTrue: [struct hInstance: hInstance asParameter]].
 	struct dwStyle: dwStyle.

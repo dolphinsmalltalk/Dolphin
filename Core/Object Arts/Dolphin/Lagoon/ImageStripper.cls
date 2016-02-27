@@ -571,7 +571,9 @@ isConsoleApplication
 isResourceUpdatingPossible
 	"Private - Resource updating APIs only available on NT platforms, not Win95/98"
 
-	^OSVERSIONINFO current isNT!
+	"Since we no longer support Win95/98, this is always true."
+
+	^true!
 
 isResourceUpdatingRequired
 	"Answer whether this <ImageStripper> would like to update any resources in the executable stub."

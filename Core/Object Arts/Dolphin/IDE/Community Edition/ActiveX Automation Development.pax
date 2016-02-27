@@ -3873,14 +3873,11 @@ example2
 	croot := cdrive rootFolder.
 
 	"And then from there by locating the system folder"
-	windir := OSVERSIONINFO current isNT 
-				ifTrue: [croot subFolders item: 'winnt']
-				ifFalse: [croot subFolders item: 'windows'].
+	windir := croot subFolders item: 'windows'.
 	systemdir := windir subFolders item: 'system32'.
 
 	"A better way to get the system folder is:"
-	systemdir := fs 
-				getSpecialFolder: ((Smalltalk at: #ScriptingConstants) at: 'SystemFolder').
+	systemdir := fs getSpecialFolder: ((Smalltalk at: #ScriptingConstants) at: 'SystemFolder').
 
 	"Display the contents of the system folder (files only) in a list box (might take a while)"
 	ListPresenter show list: systemdir files contents!
