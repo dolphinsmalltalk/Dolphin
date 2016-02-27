@@ -121,9 +121,32 @@ extern "C" FILE* __cdecl StdErr()
 	return stderr;
 }
 
-
-
 // End of CRT exports
+///////////////////////////////////////////////////////////////////////////////
+
+///////////////////////////////////////////////////////////////////////////////
+// Version Helper functions
+
+#include <VersionHelpers.h>
+
+void* reifyIsWindowsVersionOrGreater = &IsWindowsVersionOrGreater;
+// Don't bother with the XP functions as we don't support Windows versions prior to Vista any more
+void* reifyIsWindowsXPOrGreater = &IsWindowsXPOrGreater;
+void* reifyIsWindowsXPSP1OrGreater = &IsWindowsXPSP1OrGreater;
+void* reifyIsWindowsXPSP2OrGreater = &IsWindowsXPSP2OrGreater;
+void* reifyIsWindowsXPSP3OrGreater = &IsWindowsXPSP3OrGreater;
+void* reifyIsWindowsVistaOrGreater = &IsWindowsVistaOrGreater;
+void* reifyIsWindowsVistaSP1OrGreater = &IsWindowsVistaSP1OrGreater;
+void* reifyIsWindowsVistaSP2OrGreater = &IsWindowsVistaSP2OrGreater;
+void* reifyIsWindows7OrGreater = &IsWindows7OrGreater;
+void* reifyIsWindows7SP1OrGreater = &IsWindows7SP1OrGreater;
+void* reifyIsWindows8OrGreater = &IsWindows8OrGreater;
+void* reifyIsWindows8Point1OrGreater = &IsWindows8Point1OrGreater;
+void* reifyIsWindowsThresholdOrGreater = &IsWindowsThresholdOrGreater;
+void* reifyIsWindows10OrGreater = &IsWindows10OrGreater;
+void* reifyIsWindowsServer= &IsWindowsServer;
+
+// End of Version Helpers
 ///////////////////////////////////////////////////////////////////////////////
 
 #include <atlbase.h>
