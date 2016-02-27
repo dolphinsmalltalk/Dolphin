@@ -212,7 +212,7 @@ public:
 	//////////////////////////////////////////////
 	// Accessing
 
-	int	GetEstimatedDistance() const;
+	int GetEstimatedDistance() const;
 	int GetActualDistance() const;
 
 	TempVarDecl* GetActualDecl() const
@@ -324,10 +324,10 @@ private:
 	const LexicalScope& operator=(const LexicalScope&);
 
 public:
-	LexicalScope(LexicalScope* pOuter, int nStart) : m_pOuter(pOuter), 
+	LexicalScope(LexicalScope* pOuter, int nStart, bool bOptimized) : m_pOuter(pOuter), 
 				m_nArgs(0), m_nStackSize(0), m_nSharedTemps(0),
 				m_initialIP(-1), m_finalIP(-1),
-				m_bIsEmptyBlock(false), m_bIsOptimizedBlock(false), m_bHasFarReturn(false), 
+				m_bIsEmptyBlock(false), m_bIsOptimizedBlock(bOptimized), m_bHasFarReturn(false),
 				m_bRefersToSelf(false),	m_bRefsOuterTemps(false),
 				m_textRange(nStart, -1), m_oteBlockLiteral(NULL)
 	{

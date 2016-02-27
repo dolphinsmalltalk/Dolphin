@@ -121,7 +121,7 @@ private:
 	POTE InternSymbol(const Str&) const;
 
 	// Lookup
-	bool FindNameAsSpecialMessage(const Str&, int& index) const;
+	int FindNameAsSpecialMessage(const Str&) const;
 	bool IsPseudoVariable(const Str&) const;
 	int FindNameAsInstanceVariable(const Str&) const;
 	TempVarRef* AddTempRef(const Str& strName, VarRefType refType, const TEXTRANGE& refRange, int expressionEnd);
@@ -135,15 +135,14 @@ private:
 	int GetCodeSize() const;
 	int AddToFrameUnconditional(Oop object, const TEXTRANGE&);
 	int AddToFrame(Oop object, const TEXTRANGE&);
-	int AddConstantsToFrame(Oop object);
 	int AddStringToFrame(POTE string, const TEXTRANGE&);
 	BYTECODES::iterator InsertByte(int pos, BYTE value, BYTE flags, LexicalScope* pScope);
 	void RemoveByte(int pos);
 	int RemoveInstruction(int pos);
 	int GenByte(BYTE value, BYTE flags, LexicalScope* pScope);
 	int GenData(BYTE value);
-	int GenInstruction(BYTE basic, int offset=0);
-	int GenInstructionExtended(BYTE basic, int extension);
+	int GenInstruction(BYTE basic, BYTE offset=0);
+	int GenInstructionExtended(BYTE basic, BYTE extension);
 	int GenLongInstruction(BYTE basic, WORD extension);
 	void UngenInstruction(int pos);
 	void UngenData(int pos);
@@ -152,7 +151,7 @@ private:
 	int GenDup();
 	int GenPopStack();
 	
-	void GenInteger(long val, const TEXTRANGE&);
+	void GenInteger(int val, const TEXTRANGE&);
 	Oop GenNumber(const char* textvalue, const TEXTRANGE&);
 	void GenNumber(Oop, const TEXTRANGE&);
 	void GenConstant(int index);
@@ -171,16 +170,15 @@ private:
 	void GenPushSelf();
 	void GenPushVariable(const Str&, const TEXTRANGE&);
 	int GenPushTemp(TempVarRef*);
-	int GenPushInstVar(int index);
+	int GenPushInstVar(BYTE index);
 	void GenPushStaticVariable(const Str&, const TEXTRANGE&);
 
 	void GenPopAndStoreTemp(TempVarRef*);
-	void GenPopAndStoreInstVar(int index);
 
 	int GenStore(const Str&, const TEXTRANGE&, int assignedExpressionStop);
 	int GenStoreTemp(TempVarRef*);
-	int GenStoreInstVar(int index);
-	int GenStaticStore(const Str&, int, const TEXTRANGE&, int assignedExpressionStop);
+	int GenStoreInstVar(BYTE index);
+	int GenStaticStore(const Str&, const TEXTRANGE&, int assignedExpressionStop);
 
 	int GenReturn(BYTE retOp);
 	int GenFarReturn();
@@ -295,7 +293,7 @@ private:
 	TempVarRef* AddOptimizedTemp(const Str& name, const TEXTRANGE& range=TEXTRANGE());
 	void RenameTemporary(int temporary, const char* newName, const TEXTRANGE& range);
 	void CheckTemporaryName(const Str&, const TEXTRANGE&, bool isArg);
-	void PushNewScope(int textStart=-1);
+	void PushNewScope(int textStart, bool bOptimized=false);
 	void PushOptimizedScope(int textStart=-1);
 	void PopScope(int textStop);
 	void PopOptimizedScope(int textStop);
@@ -469,11 +467,11 @@ inline void Compiler::UngenData(int pos)
 
 // Insert an instruction at the code pointer, returning the position at which
 // the instruction was inserted.
-inline int Compiler::GenInstruction(BYTE basic, int offset)
+inline int Compiler::GenInstruction(BYTE basic, BYTE offset)
 {
-	_ASSERTE((offset == 0) || ((0 <= offset) && (offset <= 0xFF) && ((basic+offset) < FirstDoubleByteInstruction)));
+	_ASSERTE(offset == 0 || ((int)basic+offset) < FirstDoubleByteInstruction);
 	_ASSERTE(m_pCurrentScope != NULL);
-	return GenByte(basic + (offset & 0xFF), BYTECODE::IsOpCode, m_pCurrentScope);
+	return GenByte(basic + offset, BYTECODE::IsOpCode, m_pCurrentScope);
 }
 
 inline int Compiler::GenNop()

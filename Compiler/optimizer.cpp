@@ -2213,7 +2213,8 @@ void Compiler::FixupTempRef(BYTECODES::iterator it)
 
 	case tvtShared:
 		{
-			unsigned outer = pVarRef->GetActualDistance();
+			int outer = pVarRef->GetActualDistance();
+			_ASSERTE(outer >= 0 && outer < 256);
 			TempVarDecl* pDecl = pVarRef->GetDecl();
 			_ASSERTE(pDecl == pVarRef->GetActualDecl());
 			if (outer > 0)
