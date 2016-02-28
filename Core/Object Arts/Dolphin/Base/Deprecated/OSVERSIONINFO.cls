@@ -21,16 +21,18 @@ calculateOsName
 	major := self dwMajorVersion.
 	minor := self dwMinorVersion.
 	type := self wProductType.
-	major > 5 
+	major <= 5 
 		ifTrue: 
-			["Vista or later"
-			minor > 0 
-				ifTrue: 
-					[^type == VER_NT_WORKSTATION ifTrue: [#win7] ifFalse: [#win2k8r2].
-					^type == VER_NT_WORKSTATION ifTrue: [#winVista] ifFalse: [#win2k8]]].
-	minor > 1 ifTrue: [^#win2k3].
-	minor > 0 ifTrue: [#winXP].
-	^#win2k!
+			[minor = 0 ifTrue: [^#win2k].
+			minor = 1 ifTrue: [^#winXP].
+			^#win2k3].
+	major = 6 
+		ifTrue: 
+			[minor = 0 ifTrue: [^type == VER_NT_WORKSTATION ifTrue: [#winVista] ifFalse: [#win2k8]].
+			minor = 1 ifTrue: [^type == VER_NT_WORKSTATION ifTrue: [#win7] ifFalse: [#win2k8r2]].
+			minor = 2 ifTrue: [^#win8].
+			^#win81].
+	^#win10!
 
 dwBuildNumber
 	"Answer the receiver's dwBuildNumber field as a Smalltalk object."
@@ -73,7 +75,6 @@ isNT4
 	"
 
 	"NT4 is no longer supported"
-	#deprecated.
 	^false!
 
 isWin2K
@@ -129,7 +130,6 @@ isWinMe
 	^false!
 
 isWinV5
-	#deprecated.	"Use isWinV5OrLater, or test for specific versions"
 	^#(#win2k #winXP #win98 #winMe) identityIncludes: self osName!
 
 isWinV5OrLater

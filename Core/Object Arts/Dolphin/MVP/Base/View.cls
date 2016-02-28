@@ -3448,6 +3448,8 @@ textLength
 	^UserLibrary default getWindowTextLength: self asParameter!
 
 themeSubAppName
+	"Answer the theme class name to use for the view, or nil to use the default."
+
 	^nil!
 
 toolTipWindow

@@ -16,15 +16,15 @@ Instance Variables:
 	scrollThumbExtent	<Point>. Size of a scrollbar thumb (dependent on scrollbar width/height).
 	sizingFrameExtent	<Point>. Width/height of the overlapped window resizing edge.
 	dialogFrameExtent	<Point>. Width/height of the dialog window edge.
-	borderExtent			<Point>. Width/height of the a window border (normally 1x1).
-	nonClientMetrics		<NONCLIENTMETRICS>. Various non-client measurements.
+	borderExtent		<Point>. Width/height of the a window border (normally 1x1).
+	nonClientMetrics	<NONCLIENTMETRICS>. Various non-client measurements.
 	menuFont			<Font>. The font used to paint menus.
-	edgeExtent			<Point>. Width/height of a 3d window edge (normally 2x2).
+	edgeExtent		<Point>. Width/height of a 3d window edge (normally 2x2).
 	hasFlatMenus		<Boolean>. Whether or not the system menus are flat (XP-look) or have 3d appearance (classic Windows)
 	iconTitleFont		<Font>. The font used to paint icon titles on the desktop - the nearest thing to a default desktop font.
 
 Class Variables:
-	Current				<SystemMetrics>. Singleton instance.
+	Current			<SystemMetrics>. Singleton instance.
 
 '!
 !SystemMetrics categoriesForClass!Unclassified! !
