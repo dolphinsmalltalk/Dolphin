@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 TextDocument subclass: #Notepad
 	instanceVariableNames: ''
@@ -118,8 +118,7 @@ icon
 	"Answers an Icon that can be used to represent this class.
 	Use the one from the real Windows Notepad for fun."
 
-	^Icon fromId: (OSVERSIONINFO current isWinXPOrLater ifTrue: [2] ifFalse: [1])
-		in: self resourceLib!
+	^Icon fromId: (VMLibrary default isWindowsXPOrGreater ifTrue: [2] ifFalse: [1]) in: self resourceLib!
 
 initialize
 	"Private - Initialize the receiver's class variables

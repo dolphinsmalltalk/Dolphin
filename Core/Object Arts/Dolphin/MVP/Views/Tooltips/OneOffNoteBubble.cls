@@ -73,25 +73,18 @@ previouslyViewedNotes
 	self previouslyViewedNotes
 	"
 
-	"Win95 cannot have binary default values"
-
-	| entryValue entryName |
-	entryName := OSVERSIONINFO current isWin95 ifTrue: ['Win95'] ifFalse: [''].
-	[entryValue := (RegKey userRoot at: self oneOffNotesRegistryKey) valueAt: entryName] 
-		on: NotFoundError
-		do: [:x | ^Set new].
+	| entryValue |
+	entryValue := [(RegKey userRoot at: self oneOffNotesRegistryKey) valueAt: ''] on: NotFoundError
+				do: [:x | ^Set new].
 	entryValue isEmpty ifTrue: [^Set new].
 	^Object fromBinaryStoreBytes: entryValue!
 
 previouslyViewedNotes: aSet 
 	"Set the previously views notes to aSet of <Symbols>"
 
-	"Win95 cannot have binary default values"
-
-	| regKey oneOffNotesKey |
-	oneOffNotesKey := OSVERSIONINFO current isWin95 ifTrue: ['Win95'] ifFalse: [''].
+	| regKey |
 	regKey := RegKey userRoot createKey: self oneOffNotesRegistryKey.
-	regKey valueAt: oneOffNotesKey put: aSet binaryStoreBytes!
+	regKey valueAt: '' put: aSet binaryStoreBytes!
 
 removePreviouslyViewedNote: aSymbol 
 	self previouslyViewedNotes: ((self previouslyViewedNotes)

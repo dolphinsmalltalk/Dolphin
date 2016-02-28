@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #ExternalLibrary
 	instanceVariableNames: 'handle '
@@ -402,13 +402,12 @@ load: aString flags: anInteger
 	"Private - Open the external library with the external file name, aString,
 	and answer the handle."
 
-	| hLibrary klib flags |
-	flags := OSVERSIONINFO current isNT ifTrue: [anInteger] ifFalse: [0].
+	| hLibrary klib |
 	klib := KernelLibrary default.
 	hLibrary := klib 
 				loadLibraryEx: aString
 				hFile: nil
-				dwFlags: flags.
+				dwFlags: anInteger.
 	^hLibrary ifNil: [Win32Error signal: aString printString]!
 
 moduleFileName: aLibOrHandle

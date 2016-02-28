@@ -206,7 +206,7 @@ calculateExtent: aLayoutContext
 	versions this was always the case, since XP the bug only applies in vertical mode."
 	buttonWidth := self buttonSize x.
 	verticalBugs := self isVertical.
-	dropDownBug := verticalBugs or: [OSVERSIONINFO current isWinXPOrLater not].
+	dropDownBug := verticalBugs or: [VMLibrary default isWindowsXPOrGreater not].
 	items do: 
 			[:each | 
 			(verticalBugs and: [each isDivider]) ifTrue: [size y: size y - buttonWidth].

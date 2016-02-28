@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #TipOfTheDay
 	instanceVariableNames: ''
@@ -25,7 +25,7 @@ Class Variables:
 !TipOfTheDay methodsFor!
 
 isWinHelpAvailable
-	OSVERSIONINFO current isWinVista ifFalse: [^true].
+	VMLibrary default isWindowsVistaOrGreater ifFalse: [^true].
 	File for: (File composePath: SessionManager current windowsDirectory subPath: 'WinHlp32.exe')
 		do: [:each | each fileSize > 200000 ifTrue: [^true]].
 	^false!

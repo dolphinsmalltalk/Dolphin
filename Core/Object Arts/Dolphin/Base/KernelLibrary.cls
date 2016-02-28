@@ -893,15 +893,6 @@ getUserDefaultLCID
 	<stdcall: dword GetUserDefaultLCID>
 	^self invalidCall!
 
-getVersionEx: anOSVERSIONINFO
-	"Populate the argument with extended OS version information. Answers whether the request succeeded.
-		BOOL GetVersionEx(
-			LPOSVERSIONINFO lpVersionInformation 
-		);"
-
-	<stdcall: bool GetVersionExA OSVERSIONINFO* >
-	^self invalidCall!
-
 getVolumeInformation: lpRootPathName
 	lpVolumeNameBuffer: lpVolumeNameBuffer
 	nVolumeNameSize: nVolumeNameSize
@@ -1682,7 +1673,6 @@ zeroMemory: pvDest length: cBytes
 !KernelLibrary categoriesFor: #getTimeFormat:dwFlags:lpTime:lpFormat:lpTimeStr:cchBuf:!public!win32 functions-natural language support! !
 !KernelLibrary categoriesFor: #getTimeZoneInformation:!public!win32 functions-date and time! !
 !KernelLibrary categoriesFor: #getUserDefaultLCID!public!win32 functions-natural language support! !
-!KernelLibrary categoriesFor: #getVersionEx:!public!win32 functions-system information! !
 !KernelLibrary categoriesFor: #getVolumeInformation:lpVolumeNameBuffer:nVolumeNameSize:lpVolumeSerialNumber:lpMaximumComponentLength:lpFileSystemFlags:lpFileSystemNameBuffer:nFileSystemNameSize:!public!win32 functions-file system! !
 !KernelLibrary categoriesFor: #getWindowsDirectory:uSize:!public!win32 functions-system information! !
 !KernelLibrary categoriesFor: #globalAlloc:dwBytes:!public!win32 functions-memory management! !
@@ -1751,7 +1741,7 @@ clear
 	instances of the receiver from previous runs. etc."
 
 	super clear.
-	OSVERSIONINFO clear
+	Smalltalk at: #OSVERSIONINFO ifPresent: [:osver | osver clear]
 !
 
 fileName

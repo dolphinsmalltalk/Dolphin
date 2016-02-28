@@ -2829,13 +2829,11 @@ plugins
 	"Answer the plugins installed by instances of the receiver"
 
 	plugins isNil ifTrue: [self plugins: self defaultPluginsCollection].
-	NTLibrary isWine 
-		ifTrue: 
-			["Under Wine we must remove the CodeMentor plugin since it relies in the
-			 Internet Explorer control which is not available."
-			#wineFix.
-			plugins := plugins reject: [:each | each name == #CodeMentorPlugin]].
-	^plugins!
+	^SystemMetrics current hasInternetExplorerControl 
+		ifTrue: [plugins]
+		ifFalse: 
+			["The CodeMentor plugin relies on the Internet Explorer control>"
+			plugins reject: [:each | each name == #CodeMentorPlugin]]!
 
 plugins: anOrderedCollection 
 	"Sets the plugins installed by instances of the receiver"
