@@ -109,7 +109,7 @@ productVersion
 !
 
 reloadSystemPackage
-	| srcMgr basePackage baseClasses imageDir obsoleteMethodFilter |
+	| srcMgr basePackage baseClasses imageDir obsoleteMethodFilter missingClasses |
 	basePackage := PackageManager systemPackage.
 	imageDir := self imageBase.
 	srcMgr := SourceManager default.
@@ -118,17 +118,29 @@ reloadSystemPackage
 	basePackage sourceGlobalVariables 
 		collect: [:each | srcMgr fileIn: (File relativePathOf: each value fileOutName to: imageDir)].
 	Notification signal: 'Reloading BCL class definitions...'.
+	"First tag all the existing classes so we can spot the dead ones later."
 	srcMgr fileIn: (File relativePathOf: basePackage classDefinitionsFileName to: imageDir).
 	"Then reload all base package classes in breadth-first order"
 	Notification signal: 'Reloading BCL classes...'.
 	baseClasses := basePackage classesInHierarchyOrder.
+	missingClasses := OrderedCollection new.
 	baseClasses do: 
 			[:each | 
 			each == BootSessionManager 
-				ifFalse: [srcMgr fileIn: (File relativePathOf: each fileOutName to: imageDir)]].
+				ifFalse: 
+					[| relativePath |
+					relativePath := File relativePathOf: each fileOutName to: imageDir.
+					(File exists: relativePath) 
+						ifTrue: [srcMgr fileIn: relativePath]
+						ifFalse: [missingClasses add: each]]].
+	missingClasses reverseDo: 
+			[:each | 
+			Notification signal: 'Removing obsolete boot class ' , each printString , '...'.
+			each removeFromSystem.
+			basePackage basicRemoveClass: each].
 	Notification signal: 'Deleting obsolete boot image methods...'.
 	obsoleteMethodFilter := [:each | each hasChanged not].
-	baseClasses do: 
+	(baseClasses difference: missingClasses) do: 
 			[:each | 
 			(((each selectMethods: obsoleteMethodFilter) 
 				asSortedCollection: [:a :b | a printString <= b printString])
