@@ -1,8 +1,7 @@
 //{{NO_DEPENDENCIES}}
 // Microsoft Visual C++ generated include file.
-// Used by dull.rc
+// Used by Dull.rc
 //
-#define IDR_MANIFEST                    1
 #define IDP_FAILEDTOMARSHALOUTER        5
 #define IDP_FAILEDTOUNMARSHALOUTER      6
 #define IDP_FAILTOSTARTTHREAD           7

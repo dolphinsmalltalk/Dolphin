@@ -53,6 +53,12 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
+    <GenerateManifest>true</GenerateManifest>
+    <EmbedManifest>true</EmbedManifest>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">
+    <GenerateManifest>true</GenerateManifest>
+    <EmbedManifest>true</EmbedManifest>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <CustomBuildStep>
@@ -103,11 +109,16 @@
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
       <DataExecutionPrevention />
       <ProgramDatabaseFile />
+      <Version>$(DolphinVersion)</Version>
     </Link>
     <PreBuildEvent>
       <Command>
       </Command>
     </PreBuildEvent>
+    <Manifest>
+      <!-- Ensure that link generate manifest generation merges the project specific manifest, otherwise it is just overwritten -->
+      <InputResourceManifests>$(TargetPath);#1</InputResourceManifests>
+    </Manifest>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">
     <CustomBuildStep>
@@ -165,11 +176,16 @@
       <IgnoreSpecificDefaultLibraries>
       </IgnoreSpecificDefaultLibraries>
       <MapExports>true</MapExports>
+      <AssemblyDebug>true</AssemblyDebug>
+      <Version>$(DolphinVersion)</Version>
     </Link>
     <PreBuildEvent>
       <Command>
       </Command>
     </PreBuildEvent>
+    <Manifest>
+      <InputResourceManifests>$(TargetPath);#1</InputResourceManifests>
+    </Manifest>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\fatalerror.cpp">
@@ -196,9 +212,6 @@
     <Image Include="..\Res\flipper.ico" />
   </ItemGroup>
   <ItemGroup>
-    <Manifest Include="..\Res\Dolphin.exe.manifest" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\DevRes.vcxproj">
       <Project>{fab6154d-5e54-4967-b55d-f5aee5dc18f0}</Project>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
@@ -213,7 +226,12 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\getVersion.cmd" />
+    <Manifest Include="..\Res\Dolphin.exe.manifest">
+      <FileType>Manifest</FileType>
+      <!-- At the time this manifest is built, the .exe won't contain any manifest resource to merge with -->
+      <InputResourceManifests>
+      </InputResourceManifests>
+    </Manifest>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

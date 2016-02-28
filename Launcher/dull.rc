@@ -14,56 +14,6 @@
 #undef APSTUDIO_READONLY_SYMBOLS
 
 /////////////////////////////////////////////////////////////////////////////
-// English (United States) resources
-
-#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
-LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
-#pragma code_page(1252)
-
-/////////////////////////////////////////////////////////////////////////////
-//
-// Version
-//
-
-VS_VERSION_INFO VERSIONINFO
- FILEVERSION 2016,7,0,0
- PRODUCTVERSION 2016,7,0,0
- FILEFLAGSMASK 0x3fL
-#ifdef _DEBUG
- FILEFLAGS 0x23L
-#else
- FILEFLAGS 0x22L
-#endif
- FILEOS 0x4L
- FILETYPE 0x1L
- FILESUBTYPE 0x0L
-BEGIN
-    BLOCK "StringFileInfo"
-    BEGIN
-        BLOCK "040904e4"
-        BEGIN
-            VALUE "CompanyName", "Object Arts Ltd."
-            VALUE "FileDescription", "Dolphin Smalltalk Launcher"
-            VALUE "FileVersion", "2016.7.0.0"
-            VALUE "InternalName", "Dolphin"
-            VALUE "LegalCopyright", "Copyright © Object Arts 1997-2016. STS © David Gorisek 2000-2016"
-            VALUE "OriginalFilename", "Dolphin7.exe"
-            VALUE "ProductName", "Dolphin Smalltalk"
-            VALUE "ProductVersion", GIT_TAG
-            VALUE "WARNING", "Please edit this as a text file rather than with the resource editor to preserve GIT_TAG"
-        END
-    END
-    BLOCK "VarFileInfo"
-    BEGIN
-        VALUE "Translation", 0x409, 1252
-    END
-END
-
-#endif    // English (United States) resources
-/////////////////////////////////////////////////////////////////////////////
-
-
-/////////////////////////////////////////////////////////////////////////////
 // English (United Kingdom) resources
 
 #if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENG)
@@ -78,14 +28,6 @@ LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_UK
 // Icon with lowest ID value placed first to ensure application icon
 // remains consistent on all systems.
 !APPLICATION            ICON                    "..\\Res\\Flipper.ico"
-
-
-/////////////////////////////////////////////////////////////////////////////
-//
-// RT_MANIFEST
-//
-
-IDR_MANIFEST            RT_MANIFEST             "..\\res\\dolphin.exe.manifest"
 
 
 #ifdef APSTUDIO_INVOKED
@@ -108,8 +50,7 @@ END
 
 3 TEXTINCLUDE 
 BEGIN
-    "\r\n"
-    "\0"
+    "#include ""dull.rc2""\0"
 END
 
 #endif    // APSTUDIO_INVOKED
@@ -151,8 +92,7 @@ END
 //
 // Generated from the TEXTINCLUDE 3 resource.
 //
-
-
+#include "dull.rc2"
 /////////////////////////////////////////////////////////////////////////////
 #endif    // not APSTUDIO_INVOKED
 

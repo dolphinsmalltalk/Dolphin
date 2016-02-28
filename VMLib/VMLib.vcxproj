@@ -263,7 +263,6 @@
     <ClInclude Include="..\STVirtualObject.h" />
     <ClInclude Include="..\thrdcall.h" />
     <ClInclude Include="..\TraceStream.h" />
-    <ClInclude Include="..\Version.h" />
     <ClInclude Include="..\VMExcept.h" />
     <ClInclude Include="..\VMPointers.h" />
     <ClInclude Include="..\zfbinstream.h" />

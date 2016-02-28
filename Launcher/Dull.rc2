@@ -1,0 +1,60 @@
+//
+// DULL.RC2 - resources Microsoft Visual C++ does not edit directly
+//
+
+#ifdef APSTUDIO_INVOKED
+#error this file is not editable by Microsoft Visual C++
+#endif //APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+// Add manually edited resources here...
+
+/////////////////////////////////////////////////////////////////////////////
+// English (United States) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+#pragma code_page(1252)
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+VS_VERSION_INFO VERSIONINFO
+  FILEVERSION DOLPHIN_VERINFO_VERSION
+  PRODUCTVERSION DOLPHIN_VERINFO_VERSION
+  FILEFLAGSMASK 0x3fL
+#ifdef _DEBUG
+  FILEFLAGS 0x23L
+#else
+  FILEFLAGS 0x22L
+#endif
+  FILEOS 0x4L
+  FILETYPE 0x1L
+  FILESUBTYPE 0x0L
+BEGIN
+BLOCK "StringFileInfo"
+	BEGIN
+		BLOCK "040904e4"
+		BEGIN
+			VALUE "CompanyName", "Object Arts Ltd."
+			VALUE "FileDescription", "Dolphin Smalltalk Launcher"
+			VALUE "FileVersion", DOLPHIN_ASSEMBLY_VERSION
+			VALUE "InternalName", "Dolphin"
+			VALUE "LegalCopyright", "Copyright © Object Arts 1997-2016. STS © David Gorisek 2000-2016"
+			VALUE "OriginalFilename", "Dolphin7.exe"
+			VALUE "ProductName", "Dolphin Smalltalk"
+			VALUE "ProductVersion", GIT_TAG
+		END
+	END
+	BLOCK "VarFileInfo"
+	BEGIN
+		VALUE "Translation", 0x409, 1252
+	END
+END
+
+#endif    // English (United States) resources
+
+/////////////////////////////////////////////////////////////////////////////
