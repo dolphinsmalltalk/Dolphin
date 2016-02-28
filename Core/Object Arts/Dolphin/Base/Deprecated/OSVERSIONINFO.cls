@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Win32Structure subclass: #OSVERSIONINFO
 	instanceVariableNames: 'osName'
@@ -8,9 +8,9 @@ Win32Structure subclass: #OSVERSIONINFO
 OSVERSIONINFO guid: (GUID fromString: '{87B4C604-026E-11D3-9FD7-00A0CC3E4A32}')!
 OSVERSIONINFO comment: 'OSVERSIONINFO is an ExternalStructure class to represent the Win32 OSVERSIONINFOEX structure.
 
-OSVERSIONINFO is used to retrieve version information about the host OS on which an application is running. It is used in conjunction with .
+OSVERSIONINFO is used to retrieve version information about the host OS on which an application is running.
 
-This class adds various tests for common Windows variants (e.g. #isWin2k) and also an #osName method which answers a symbolic name for the host OS.
+Please note that the Windows API GetVersionEx is now deprecated, and consequently this entire class is deprecated. The Win32 Version Helper functions should be used instead. These are all accessible through VMLibrary. However, rather than test for a specific OS version in class library methods, it is preferable to define a capability enquiry with an appropriate intention revealing name, e.g. see those in SystemMetrics.
 '!
 !OSVERSIONINFO categoriesForClass!External-Data-Structured-Win32! !
 !OSVERSIONINFO methodsFor!
@@ -67,6 +67,15 @@ isNT
 
 	^self dwPlatformId == VER_PLATFORM_WIN32_NT!
 
+isNT4
+	"Answer whether the host OS is NT4.
+		OSVERSIONINFO current isNT
+	"
+
+	"NT4 is no longer supported"
+	#deprecated.
+	^false!
+
 isWin2K
 	"Answer whether the host OS is Windows 2000.
 		OSVERSIONINFO current isWin2K
@@ -94,8 +103,26 @@ isWin95
 
 	^false!
 
+isWin98
+	"Answer whether the host OS is Windows 98.
+		OSVERSIONINFO current isWin98
+	"
+
+	"Dolphin no longer supports the pre-NT Windows OSs"
+
+	^false!
+
 isWin9X
 	"Answer whether the host OS is Windows 95/98 or ME."
+
+	"Dolphin no longer supports the pre-NT Windows OSs"
+
+	^false!
+
+isWinMe
+	"Answer whether the host OS is Windows Me.
+		OSVERSIONINFO current isWinMe
+	"
 
 	"Dolphin no longer supports the pre-NT Windows OSs"
 
@@ -178,11 +205,14 @@ wSuiteMask
 !OSVERSIONINFO categoriesFor: #dwSize:!**compiled accessors**!public! !
 !OSVERSIONINFO categoriesFor: #hasThemes!accessing!private! !
 !OSVERSIONINFO categoriesFor: #isNT!public!testing! !
+!OSVERSIONINFO categoriesFor: #isNT4!public!testing! !
 !OSVERSIONINFO categoriesFor: #isWin2K!public!testing! !
 !OSVERSIONINFO categoriesFor: #isWin2K3!public!testing! !
 !OSVERSIONINFO categoriesFor: #isWin2K3OrLater!public!testing! !
 !OSVERSIONINFO categoriesFor: #isWin95!public!testing! !
+!OSVERSIONINFO categoriesFor: #isWin98!public!testing! !
 !OSVERSIONINFO categoriesFor: #isWin9X!public!testing! !
+!OSVERSIONINFO categoriesFor: #isWinMe!public!testing! !
 !OSVERSIONINFO categoriesFor: #isWinV5!public!testing! !
 !OSVERSIONINFO categoriesFor: #isWinV5OrLater!public!testing! !
 !OSVERSIONINFO categoriesFor: #isWinV6OrLater!public!testing! !

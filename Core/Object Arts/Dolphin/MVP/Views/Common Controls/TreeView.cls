@@ -216,7 +216,7 @@ basicResetSelection
 		lParam: 0!
 
 beDefaultThemed
-	OSVERSIONINFO current isWinVista ifTrue: [self hasHotTracking: true].
+	SystemMetrics current hasTreeViewHotTracking ifTrue: [self hasHotTracking: true].
 	super beDefaultThemed!
 
 beNoIcons
@@ -543,7 +543,7 @@ itemRect: itemHandle textOnly: aBoolean
 	^(self tvmGetItemRect: itemHandle textOnly: aBoolean) asObject!
 
 minimumIndent
-	^OSVERSIONINFO current isWinXPOrLater ifTrue: [16] ifFalse: [8]!
+	^SystemMetrics current minimumTreeViewIndent!
 
 nmDeleteItem: pNMHDR 
 	"Private - Default handler for the TVN_DELETEITEM notification message.

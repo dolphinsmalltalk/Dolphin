@@ -509,8 +509,7 @@ messageBeep: anInteger
 	^self invalidCall!
 
 messageBox: anExternalHandle text: textString caption: captionString style: styleInteger icon: iconIdentifier instance: hInstance 
-	| iconId struct wasDisabled hWnd response isTaskModal osver dwStyle |
-	osver := OSVERSIONINFO current.
+	| iconId struct wasDisabled hWnd response isTaskModal dwStyle |
 	isTaskModal := styleInteger allMask: MB_TASKMODAL.
 	hWnd := isTaskModal 
 				ifTrue: [0]
@@ -525,7 +524,7 @@ messageBox: anExternalHandle text: textString caption: captionString style: styl
 	iconId isNil 
 		ifTrue: 
 			["Vista no longer supports MB_ICONQUESTION, so set it as a user icon instead."
-			(osver isWinV6OrLater and: [styleInteger allMask: MB_ICONQUESTION]) 
+			(VMLibrary default isWindowsVistaOrGreater and: [styleInteger allMask: MB_ICONQUESTION]) 
 				ifTrue: 
 					[struct lpszIcon: IDI_QUESTION.
 					dwStyle := (dwStyle maskClear: MB_ICONMASK) maskSet: MB_USERICON]]

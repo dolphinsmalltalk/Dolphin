@@ -12,6 +12,7 @@ package basicPackageVersion: '6.1'.
 
 package classNames
 	add: #MethodContext;
+	add: #OSVERSIONINFO;
 	add: #STBSymbolProxy;
 	yourself.
 
@@ -28,10 +29,8 @@ package methodNames
 	add: #Integer -> #digitSize;
 	add: #Integer -> #highSWord;
 	add: #Integer -> #lowSWord;
+	add: #KernelLibrary -> #getVersionEx:;
 	add: #Object -> #asDword;
-	add: #OSVERSIONINFO -> #isNT4;
-	add: #OSVERSIONINFO -> #isWin98;
-	add: #OSVERSIONINFO -> #isWinMe;
 	add: #Package -> #script:;
 	add: #Package -> #script:put:;
 	add: #SourceManager -> #nextChunkFrom:;
@@ -62,6 +61,11 @@ package!
 Object variableSubclass: #MethodContext
 	instanceVariableNames: 'frame method receiver'
 	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Win32Structure subclass: #OSVERSIONINFO
+	instanceVariableNames: 'osName'
+	classVariableNames: 'Current'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 STBProxy subclass: #STBSymbolProxy
@@ -207,6 +211,19 @@ lowSWord
 !Integer categoriesFor: #highSWord!bit manipulation!public! !
 !Integer categoriesFor: #lowSWord!bit manipulation!public! !
 
+!KernelLibrary methodsFor!
+
+getVersionEx: anOSVERSIONINFO 
+	"Populate the argument with extended OS version information. Answers whether the request succeeded.
+		BOOL GetVersionEx(
+			LPOSVERSIONINFO lpVersionInformation 
+		);"
+
+	<stdcall: bool GetVersionExA OSVERSIONINFO*>
+	#deprecated.	"Deprecated by Microsoft, see https://msdn.microsoft.com/en-us/library/windows/desktop/ms724451(v=vs.140).aspx"
+	^self invalidCall! !
+!KernelLibrary categoriesFor: #getVersionEx:!public!win32 functions-system information! !
+
 !Object methodsFor!
 
 asDword
@@ -218,39 +235,6 @@ asDword
 	#deprecated.
 	^self! !
 !Object categoriesFor: #asDword!converting!private! !
-
-!OSVERSIONINFO methodsFor!
-
-isNT4
-	"Answer whether the host OS is NT4.
-		OSVERSIONINFO current isNT
-	"
-
-	"NT4 is no longer supported"
-	#deprecated.
-	^false!
-
-isWin98
-	"Answer whether the host OS is Windows 98.
-		OSVERSIONINFO current isWin98
-	"
-
-	"Dolphin no longer supports the pre-NT Windows OSs"
-	#deprecated.
-	^false!
-
-isWinMe
-	"Answer whether the host OS is Windows Me.
-		OSVERSIONINFO current isWinMe
-	"
-
-	"Dolphin no longer supports the pre-NT Windows OSs"
-
-	#deprecated.
-	^false! !
-!OSVERSIONINFO categoriesFor: #isNT4!public!testing! !
-!OSVERSIONINFO categoriesFor: #isWin98!public!testing! !
-!OSVERSIONINFO categoriesFor: #isWinMe!public!testing! !
 
 !Package methodsFor!
 

@@ -302,7 +302,7 @@ isWindowsVersionOrGreater: wMajorVersion wMinorVersion: wMinorVersion wServicePa
 	<stdcall: bool IsWindowsVersionOrGreater word word word>
 	^self invalidCall!
 
-IsWindowsVistaOrGreater
+isWindowsVistaOrGreater
 	<stdcall: bool IsWindowsVistaOrGreater>
 	^self invalidCall!
 
@@ -316,10 +316,6 @@ isWindowsVistaSP2OrGreater
 
 isWindowsXPOrGreater
 	<stdcall: bool IsWindowsXPOrGreater>
-	^self invalidCall!
-
-isWinVistaOrLater
-	<stdcall: bool IsWindowsVistaOrGreater>
 	^self invalidCall!
 
 kernelHandle
@@ -550,11 +546,10 @@ versionFormatString
 !VMLibrary categoriesFor: #isWindowsServer!public!win32 functions-version helpers! !
 !VMLibrary categoriesFor: #isWindowsThresholdOrGreater!public!win32 functions-version helpers! !
 !VMLibrary categoriesFor: #isWindowsVersionOrGreater:wMinorVersion:wServicePackMajor:!public!win32 functions-version helpers! !
-!VMLibrary categoriesFor: #IsWindowsVistaOrGreater!public!win32 functions-version helpers! !
+!VMLibrary categoriesFor: #isWindowsVistaOrGreater!public!win32 functions-version helpers! !
 !VMLibrary categoriesFor: #isWindowsVistaSP1OrGreater!public!win32 functions-version helpers! !
 !VMLibrary categoriesFor: #isWindowsVistaSP2OrGreater!public!win32 functions-version helpers! !
 !VMLibrary categoriesFor: #isWindowsXPOrGreater!public!win32 functions-version helpers! !
-!VMLibrary categoriesFor: #isWinVistaOrLater!public!win32 functions-version helpers! !
 !VMLibrary categoriesFor: #kernelHandle!accessing-handles!private! !
 !VMLibrary categoriesFor: #largeSignedFromUnsigned:!helpers!private! !
 !VMLibrary categoriesFor: #largeUnsignedFromSigned:!helpers!private! !

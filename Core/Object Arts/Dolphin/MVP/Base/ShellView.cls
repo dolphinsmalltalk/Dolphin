@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ContainerView subclass: #ShellView
 	instanceVariableNames: 'menuBar acceleratorTable combinedAcceleratorTable lastFocus defaultButton largeIcon smallIcon maxExtent minExtent flashes svFlags _svReserved2'
@@ -276,28 +276,28 @@ flash: anInteger
 
 	self flash: anInteger flags: FLASHW_ALL!
 
-flash: flashCountInteger flags: flagsInteger
+flash: flashCountInteger flags: flagsInteger 
 	"Flash the receiver the number of times specified by the <integer> argument, flashCountInteger,
 	configured by the FLASHWINFO flags in the <integer>, flagsInteger.
 	Answer a <boolean> indicating whether the window caption was drawn as active before the call."
 
-	^OSVERSIONINFO current isWinV5OrLater
-		ifTrue: [ | params |
+	^SystemMetrics current hasFlashWindow 
+		ifTrue: 
+			[| params |
 			params := FLASHWINFO new.
 			params
 				hwnd: self asParameter;
 				uCount: flashCountInteger;
 				dwFlags: flagsInteger.
 			(UserLibrary default flashWindowEx: params) ~= 0]
-		ifFalse: [
-			"Flashing the tray alone is not supported"
+		ifFalse: 
+			["Flashing the tray alone is not supported"
 			flagsInteger == FLASHW_STOP 
 				ifTrue: [flashes := 0]
-				ifFalse: [
-					"Doesn't really matter if this is process safe - the only side effect will be a bit more or a bit less flashing"
+				ifFalse: 
+					["Doesn't really matter if this is process safe - the only side effect will be a bit more or a bit less flashing"
 					flashes <= 0 ifTrue: [self forkFlasher].
-					flashes := flashCountInteger]]
-!
+					flashes := flashCountInteger]]!
 
 forkFlasher
 	"Private - Start a flasher process for this shell."

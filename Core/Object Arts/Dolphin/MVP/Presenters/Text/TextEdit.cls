@@ -1066,11 +1066,7 @@ setAlignment: anInteger
 
 setMarginWidths: anArray 
 	| margins |
-	NTLibrary isWine 
-		ifTrue: 
-			["Wine doesn't yet implement EM_SETMARGINS "
-			#wineFix.
-			^self].
+	SystemMetrics current hasTextBoxMargins ifFalse: [^self].
 	margins := (DWORD new)
 				highWord: anArray first;
 				lowWord: anArray last.

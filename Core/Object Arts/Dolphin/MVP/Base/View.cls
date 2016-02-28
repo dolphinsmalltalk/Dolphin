@@ -409,11 +409,13 @@ beCentered
 beDefaultThemed
 	"Restores the default visual theme for the receiver. Only effective on Windows XP and above"
 
-	ThemeLibrary default 
-		setWindowTheme: self handle
-		pszSubAppName: (self themeSubAppName ifNotNil: [:name | name asUnicodeString])
-		pszSubIdList: nil.
-	self openTheme!
+	SystemMetrics current hasThemes 
+		ifTrue: 
+			[ThemeLibrary default 
+				setWindowTheme: self handle
+				pszSubAppName: (self themeSubAppName ifNotNil: [:name | name asUnicodeString])
+				pszSubIdList: nil.
+			self openTheme]!
 
 beForeground
 	"Make the receiver the foreground window."
@@ -423,16 +425,13 @@ beForeground
 beNotThemed
 	"Turns off any visual theme for the receiver. Only effective on Windows XP and above"
 
-	NTLibrary isWine ifTrue: [
-		"Wine currently errors on this, so ignore"
-		#wineFix.
-		^self].
-
-	self freeTheme.
-	ThemeLibrary default 
-		setWindowTheme: self handle
-		pszSubAppName: '' asUnicodeString
-		pszSubIdList: '' asUnicodeString!
+	SystemMetrics current hasThemes 
+		ifTrue: 
+			[self freeTheme.
+			ThemeLibrary default 
+				setWindowTheme: self handle
+				pszSubAppName: '' asUnicodeString
+				pszSubIdList: '' asUnicodeString]!
 
 beNotTopMost
 	"Places the receiver above all non-topmost windows (that is, behind all topmost windows).

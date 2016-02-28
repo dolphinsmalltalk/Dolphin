@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ExternalLibrary subclass: #ThemeLibrary
 	instanceVariableNames: ''
@@ -1059,10 +1059,8 @@ fileName
 !
 
 new
-	| osVersion |
-	osVersion := OSVERSIONINFO current.
-	^(osVersion isWinXPOrLater 
-		ifTrue: [osVersion isWinV6OrLater ifTrue: [VistaThemeLibrary] ifFalse: [self]]
+	^(SystemMetrics current hasThemes 
+		ifTrue: [SystemMetrics current hasEnhancedThemes ifTrue: [VistaThemeLibrary] ifFalse: [self]]
 		ifFalse: [MockThemeLibrary]) basicNew!
 
 onStartup2

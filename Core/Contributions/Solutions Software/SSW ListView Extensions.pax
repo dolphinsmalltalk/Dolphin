@@ -250,13 +250,13 @@ onHScroll: aScrollEvent
 	^super onHScroll: aScrollEvent!
 
 onViewOpened
-
 	"Turn off real gridlines and activate virtual gridlines on XP to handle corruption when scrolling"
-	(self hasGridLines and: [OSVERSIONINFO current isWinXP]) ifTrue:
-		[self 
-			hasGridLines: false;
-			hasVirtualGridLines: true].
 
+	(self hasGridLines and: [SystemMetrics current hasListViewGridLineScrollScarringBug]) 
+		ifTrue: 
+			[self
+				hasGridLines: false;
+				hasVirtualGridLines: true].
 	^super onViewOpened!
 
 rowPixelHeight

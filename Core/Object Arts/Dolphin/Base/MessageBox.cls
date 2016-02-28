@@ -267,21 +267,16 @@ result
 	"Answer a portable symbolic constant describing the button that was pressed by the user
 	to close the receiver."
 
-	Smalltalk at: #NTLibrary
-		ifPresent: 
-			[:ntl | 
-			"Use this dynamic lookup to avoid compilation issues during boot"
-			ntl isWine 
+	KernelLibrary isWine 
+		ifTrue: 
+			[#wineFix.
+			"Suppressible message boxes under Wine have a bug where they ignore the
+			buttonStyles #yesNo and #yesNoCancel and will always answer #ok or #cancel
+			instead. Here we map the return button ids to the correct values"
+			(self buttonStyle == #yesNo or: [self buttonStyle == #yesNoCancel]) 
 				ifTrue: 
-					[#wineFix.
-					"Suppressible message boxes under Wine have a bug where they
-					ignore the buttonStyles #yesNo and #yesNoCancel and will
-					always answer #ok or #cancel instead. Here we map the return
-					button ids to the correct values"
-					(self buttonStyle == #yesNo or: [self buttonStyle == #yesNoCancel]) 
-						ifTrue: 
-							[button = IDOK ifTrue: [button := IDYES].
-							button = IDCANCEL ifTrue: [button := IDNO]]]].
+					[button = IDOK ifTrue: [button := IDYES].
+					button = IDCANCEL ifTrue: [button := IDNO]]].
 	^ButtonMap at: button!
 
 retryCancel

@@ -74,8 +74,7 @@ continueTrackingAt: aPoint from: lastPoint
 defaultDragColorDepth
 	"Private - Answer the color depth to use for drag icon images. Only XP can handle >24 bit depths"
 
-	^WinImageList defaultColorDepth 
-		min: (OSVERSIONINFO current isWinXPOrLater ifTrue: [32] ifFalse: [8])!
+	^WinImageList defaultColorDepth min: SystemMetrics current dragImageColorDepth!
 
 doDragDropAt: aPoint button: buttonSymbol 
 	"Initiate a drag and drop operation at the screen coordinates, aPoint, active while the mouse button
@@ -131,6 +130,18 @@ getExtendedOperation
 			self promptForDropOperation].
 	^operation!
 
+giveCursorFeedback
+	| cursorSelector |
+	cursorSelector := ##((LookupTable new)
+				at: #none put: #ddNone;
+				at: #move put: #ddMove;
+				at: #copy put: #ddCopy;
+				at: #copyScroll put: #ddCopyScroll;
+				at: #moveScroll put: #ddMoveScroll;
+				at: #linkScroll put: #ddLinkScroll;
+				yourself) at: self imageKey.
+	(Cursor perform: cursorSelector) makeCurrent!
+
 giveFeedback
 	"Private - Set the drag cursor to indicate the effect of a drop on the current target."
 
@@ -138,28 +149,17 @@ giveFeedback
 	(imageKey := self imageKey) ~~ lastImageKey 
 		ifTrue: 
 			[| dragIm |
-			NTLibrary isWine 
+			SystemMetrics current hasImageListDragCursors 
+				ifFalse: 
+					["Fall back to using the old (non-specific) drag and drop
+					 cursors"
+					self giveCursorFeedback]
 				ifTrue: 
-					[| cursorSelector |
-					#wineFix.
-					"Wine doesn't appear to support setting drag cursors
-					from image lists. Until available we fall back to using the
-					old (non-specific) drag and drop cursors"
-					cursorSelector := ##((LookupTable new)
-								at: #none put: #ddNone;
-								at: #move put: #ddMove;
-								at: #copy put: #ddCopy;
-								at: #copyScroll put: #ddCopyScroll;
-								at: #moveScroll put: #ddMoveScroll;
-								at: #linkScroll put: #ddLinkScroll;
-								yourself) at: self imageKey.
-					(Cursor perform: cursorSelector) makeCurrent.
-					lastImageKey := imageKey].
-			dragIm := dragImages at: imageKey.
-			imageList 
-				setDragCursorImage: dragIm key
-				hotSpotX: dragIm value x
-				hotSpotY: dragIm value y.
+					[dragIm := dragImages at: imageKey.
+					imageList 
+						setDragCursorImage: dragIm key
+						hotSpotX: dragIm value x
+						hotSpotY: dragIm value y].
 			lastImageKey := imageKey].
 	imageList dragMoveTo: self dragPoint!
 
@@ -262,6 +262,7 @@ startTrackingAt: aPoint
 !InternalDragDropSession categoriesFor: #dropTargetUnder:!helpers!private!tracking! !
 !InternalDragDropSession categoriesFor: #endTrackingAt:!public!tracking! !
 !InternalDragDropSession categoriesFor: #getExtendedOperation!operations!private! !
+!InternalDragDropSession categoriesFor: #giveCursorFeedback!operations!private!wine fix! !
 !InternalDragDropSession categoriesFor: #giveFeedback!operations!private!wine fix! !
 !InternalDragDropSession categoriesFor: #hideDragImage!operations!public! !
 !InternalDragDropSession categoriesFor: #isExtendedDrag!public!testing! !

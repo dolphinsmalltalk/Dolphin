@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #SystemMetrics
 	instanceVariableNames: 'menuCheckExtent smallIconExtent largeIconExtent dragHysteresis scrollThumbExtent sizingFrameExtent dialogFrameExtent borderExtent nonClientMetrics menuFont edgeExtent hasFlatMenus iconTitleFont hasSmoothScrollingLists'
@@ -51,6 +51,9 @@ dragHysteresis
 	dragHysteresis isNil ifTrue: [dragHysteresis := self getMetric: SM_CXDRAG pair: SM_CYDRAG].
 	^dragHysteresis!
 
+dragImageColorDepth
+	^VMLibrary default isWindowsXPOrGreater ifTrue: [32] ifFalse: [8]!
+
 edgeExtent
 	"Answer the dimensions of 3d window borders."
 
@@ -96,14 +99,91 @@ getSysParamStruct: anInteger type: anExternalStructureClass
 		type: anExternalStructureClass
 		ifError: [UserLibrary default systemError]!
 
+hasButtonNotes
+	"Answer whether the host supports 'notes' for link buttons."
+
+	^VMLibrary default isWindowsVistaOrGreater!
+
+hasDesktopComposition
+	"Answer whether the host supports off-screen desktop composition,"
+
+	^VMLibrary default isWindowsVistaOrGreater!
+
+hasEnhancedThemes
+	"Answer whether the host supports enhanced desktop themes (Vista and later)."
+
+	^VMLibrary default isWindowsVistaOrGreater!
+
+hasFlashWindow
+	"Answer whether the host supports the FlashWindowEx API."
+
+	^VMLibrary default isWindowsXPOrGreater!
+
 hasFlatMenus
+	"Answer whether the host menu style is 'flat'"
+
 	hasFlatMenus isNil ifTrue: [hasFlatMenus := self getSysParamBool: SPI_GETFLATMENU].
 	^hasFlatMenus!
 
+hasGdiPalettes
+	"Answer whether the host supports GDI palettes."
+
+	"Wine doesn't yet implement GDILibrary>>getPaletteEntries:"
+
+	#wineFix.
+	^KernelLibrary isWine not!
+
+hasIconScaleDown
+	"Answer whether the host supports scaling down of larger icons when the requested size is
+	not available (as opposed to scaling up)."
+
+	"Wine does not support the ComMCtrlLibrary>>loadIconWithScaleDown:.. method which is normally
+	availble under Vista and later. Hence we don't allow this to be called even if the Windows
+	version indicates Vista is available."
+
+	^VMLibrary default isWindowsVistaOrGreater and: [KernelLibrary isWine not]!
+
+hasImageListDragCursors
+	"Answer whether the host supports using image lists for drag cursors."
+
+	"Wine doesn't appear to support setting drag cursors from image lists."
+
+	#wineFix.
+	^KernelLibrary isWine not!
+
+hasInternetExplorerControl
+	"Answer whether the host provides an Internet Explorer control."
+
+	#wineFix.
+	^KernelLibrary isWine not!
+
+hasLinkButtons
+	"Answer whether the host supports link buttons (i.e. push buttons with the BS_COMMANDLINK
+	style)."
+
+	^VMLibrary default isWindowsVistaOrGreater!
+
+hasListViewGridLineScrollScarringBug
+	"Answer whether the host has MS bug 813791: 'Gridlines for list-view control are not drawn
+	correctly using the LVS_EX_GRIDLINES style' "
+
+	^(VMLibrary default isWindowsXPOrGreater and: [VMLibrary default isWindowsVistaOrGreater not]) 
+		and: [self hasSmoothScrollingLists]!
+
+hasMenuBitmaps
+	"Answer whether the host support direct setting of menu bitmaps through the menu item info
+	structure. If false they have to be provided through a callback."
+
+	^VMLibrary default isWindowsVistaOrGreater!
+
 hasMenuImages
-	^OSVERSIONINFO current isWinV5OrLater!
+	"Answer whether the host support images on menus,"
+
+	^VMLibrary default isWindowsXPOrGreater!
 
 hasSmoothScrollingLists
+	"Answer wehterh the host support smooth (as opposed to jump) scrolling of lists."
+
 	hasSmoothScrollingLists isNil 
 		ifTrue: 
 			[| bool |
@@ -114,6 +194,27 @@ hasSmoothScrollingLists
 						pvParam: bool
 						fWinIni: 0) ifTrue: [bool value asBoolean] ifFalse: [false]].
 	^hasSmoothScrollingLists!
+
+hasTextBoxMargins
+	"Answer whether the host supports GDI palettes."
+
+	"Wine doesn't yet implement EM_SETMARGINS "
+
+	#wineFix.
+	^KernelLibrary isWine not!
+
+hasThemes
+	"Answer whether the host support desktop themes (XP and later)."
+
+	^VMLibrary default isWindowsXPOrGreater and: 
+			["Wine currently errors on theme APIs, so bypass"
+			#wineFix.
+			KernelLibrary isWine not]!
+
+hasTreeViewHotTracking
+	"Does the host support hot tracking in tree views?"
+
+	^VMLibrary default isWindowsVistaOrGreater!
 
 iconTitleFont
 	"Answer a <Font> which is that used for icon titles on the desktop."
@@ -184,6 +285,9 @@ menuImageTextGap
 menuWidth
 	^self nonClientMetrics iMenuWidth!
 
+minimumTreeViewIndent
+	^VMLibrary default isWindowsXPOrGreater ifTrue: [16] ifFalse: [8]!
+
 mouseHoverTime
 	^(self 
 		getSysParam: SPI_GETMOUSEHOVERTIME
@@ -247,7 +351,9 @@ smallIconExtent
 	^smallIconExtent!
 
 supportsAlphaBlending
-	^OSVERSIONINFO current isWinV5OrLater!
+	"Answer whether the host supports alpha blending."
+
+	^VMLibrary default isWindowsXPOrGreater!
 
 virtualScreenExtent
 	"Answer the extent of the virtual screen, i.e. including desktops on all monitors"
@@ -267,6 +373,7 @@ virtualScreenRectangle
 !SystemMetrics categoriesFor: #cursorExtent!constants!public! !
 !SystemMetrics categoriesFor: #dialogFrameExtent!constants!public! !
 !SystemMetrics categoriesFor: #dragHysteresis!constants!public! !
+!SystemMetrics categoriesFor: #dragImageColorDepth!accessing!private! !
 !SystemMetrics categoriesFor: #edgeExtent!accessing!public! !
 !SystemMetrics categoriesFor: #getIconTitleFont!geometry!private! !
 !SystemMetrics categoriesFor: #getMetric:!helpers!private! !
@@ -275,11 +382,25 @@ virtualScreenRectangle
 !SystemMetrics categoriesFor: #getSysParamBool:!helpers!private! !
 !SystemMetrics categoriesFor: #getSysParamDword:!helpers!private! !
 !SystemMetrics categoriesFor: #getSysParamStruct:type:!helpers!private! !
-!SystemMetrics categoriesFor: #hasFlatMenus!accessing!public! !
-!SystemMetrics categoriesFor: #hasMenuImages!accessing!public! !
-!SystemMetrics categoriesFor: #hasSmoothScrollingLists!accessing!public! !
+!SystemMetrics categoriesFor: #hasButtonNotes!capability enquiries!public! !
+!SystemMetrics categoriesFor: #hasDesktopComposition!capability enquiries!public! !
+!SystemMetrics categoriesFor: #hasEnhancedThemes!capability enquiries!public! !
+!SystemMetrics categoriesFor: #hasFlashWindow!capability enquiries!public! !
+!SystemMetrics categoriesFor: #hasFlatMenus!capability enquiries!public! !
+!SystemMetrics categoriesFor: #hasGdiPalettes!capability enquiries!public! !
+!SystemMetrics categoriesFor: #hasIconScaleDown!capability enquiries!public! !
+!SystemMetrics categoriesFor: #hasImageListDragCursors!capability enquiries!public! !
+!SystemMetrics categoriesFor: #hasInternetExplorerControl!capability enquiries!public! !
+!SystemMetrics categoriesFor: #hasLinkButtons!capability enquiries!public! !
+!SystemMetrics categoriesFor: #hasListViewGridLineScrollScarringBug!capability enquiries!public! !
+!SystemMetrics categoriesFor: #hasMenuBitmaps!capability enquiries!public! !
+!SystemMetrics categoriesFor: #hasMenuImages!capability enquiries!public! !
+!SystemMetrics categoriesFor: #hasSmoothScrollingLists!capability enquiries!public! !
+!SystemMetrics categoriesFor: #hasTextBoxMargins!capability enquiries!public! !
+!SystemMetrics categoriesFor: #hasThemes!capability enquiries!public! !
+!SystemMetrics categoriesFor: #hasTreeViewHotTracking!capability enquiries!public! !
 !SystemMetrics categoriesFor: #iconTitleFont!geometry!public! !
-!SystemMetrics categoriesFor: #isSlowMachine!constants!public! !
+!SystemMetrics categoriesFor: #isSlowMachine!public!testing! !
 !SystemMetrics categoriesFor: #largeIconExtent!constants!public! !
 !SystemMetrics categoriesFor: #menuBarColor!constants!public! !
 !SystemMetrics categoriesFor: #menuBarHeight!constants!public! !
@@ -290,6 +411,7 @@ virtualScreenRectangle
 !SystemMetrics categoriesFor: #menuImageExtent!accessing!public! !
 !SystemMetrics categoriesFor: #menuImageTextGap!constants!public! !
 !SystemMetrics categoriesFor: #menuWidth!constants!public! !
+!SystemMetrics categoriesFor: #minimumTreeViewIndent!constants!public! !
 !SystemMetrics categoriesFor: #mouseHoverTime!constants!public! !
 !SystemMetrics categoriesFor: #nonClientMetrics!constants!public! !
 !SystemMetrics categoriesFor: #onSettingChanged:!event handling-win32!private! !
@@ -299,7 +421,7 @@ virtualScreenRectangle
 !SystemMetrics categoriesFor: #setSysParamBool:value:!helpers!private! !
 !SystemMetrics categoriesFor: #sizingFrameExtent!constants!public! !
 !SystemMetrics categoriesFor: #smallIconExtent!constants!public! !
-!SystemMetrics categoriesFor: #supportsAlphaBlending!accessing!public! !
+!SystemMetrics categoriesFor: #supportsAlphaBlending!capability enquiries!public! !
 !SystemMetrics categoriesFor: #virtualScreenExtent!constants!public! !
 !SystemMetrics categoriesFor: #virtualScreenOrigin!constants!public! !
 !SystemMetrics categoriesFor: #virtualScreenRectangle!constants!public! !
