@@ -270,6 +270,58 @@ isSlowMachine
 	VMLibrary default isSlowMachine
 "!
 
+isWindows10OrGreater
+	<stdcall: bool IsWindows10OrGreater>
+	^self invalidCall!
+
+isWindows7OrGreater
+	<stdcall: bool IsWindows7OrGreater>
+	^self invalidCall!
+
+isWindows7SP1OrGreater
+	<stdcall: bool IsWindows7SP1OrGreater>
+	^self invalidCall!
+
+isWindows8OrGreater
+	<stdcall: bool IsWindows8OrGreater>
+	^self invalidCall!
+
+isWindows8Point1OrGreater
+	<stdcall: bool IsWindows8Point1OrGreater>
+	^self invalidCall!
+
+isWindowsServer
+	<stdcall: bool IsWindowsServer>
+	^self invalidCall!
+
+isWindowsThresholdOrGreater
+	<stdcall: bool IsWindowsThresholdOrGreater>
+	^self invalidCall!
+
+isWindowsVersionOrGreater: wMajorVersion wMinorVersion: wMinorVersion wServicePackMajor: wServicePackMajor
+	<stdcall: bool IsWindowsVersionOrGreater word word word>
+	^self invalidCall!
+
+IsWindowsVistaOrGreater
+	<stdcall: bool IsWindowsVistaOrGreater>
+	^self invalidCall!
+
+isWindowsVistaSP1OrGreater
+	<stdcall: bool IsWindowsVistaSP1OrGreater>
+	^self invalidCall!
+
+isWindowsVistaSP2OrGreater
+	<stdcall: bool IsWindowsVistaSP2OrGreater>
+	^self invalidCall!
+
+isWindowsXPOrGreater
+	<stdcall: bool IsWindowsXPOrGreater>
+	^self invalidCall!
+
+isWinVistaOrLater
+	<stdcall: bool IsWindowsVistaOrGreater>
+	^self invalidCall!
+
 kernelHandle
 	"Private - Answer the handle of the KernelLibrary. This cannot be obtained in the normal way
 	because there is a bit of a chicken and egg problem."
@@ -490,6 +542,19 @@ versionFormatString
 !VMLibrary categoriesFor: #highBit:!arithmetic!public! !
 !VMLibrary categoriesFor: #indexOfSpecialSelector:ifAbsent:!accessing-registry!private! !
 !VMLibrary categoriesFor: #isSlowMachine!environment!public! !
+!VMLibrary categoriesFor: #isWindows10OrGreater!public!win32 functions-version helpers! !
+!VMLibrary categoriesFor: #isWindows7OrGreater!public!win32 functions-version helpers! !
+!VMLibrary categoriesFor: #isWindows7SP1OrGreater!public!win32 functions-version helpers! !
+!VMLibrary categoriesFor: #isWindows8OrGreater!public!win32 functions-version helpers! !
+!VMLibrary categoriesFor: #isWindows8Point1OrGreater!public!win32 functions-version helpers! !
+!VMLibrary categoriesFor: #isWindowsServer!public!win32 functions-version helpers! !
+!VMLibrary categoriesFor: #isWindowsThresholdOrGreater!public!win32 functions-version helpers! !
+!VMLibrary categoriesFor: #isWindowsVersionOrGreater:wMinorVersion:wServicePackMajor:!public!win32 functions-version helpers! !
+!VMLibrary categoriesFor: #IsWindowsVistaOrGreater!public!win32 functions-version helpers! !
+!VMLibrary categoriesFor: #isWindowsVistaSP1OrGreater!public!win32 functions-version helpers! !
+!VMLibrary categoriesFor: #isWindowsVistaSP2OrGreater!public!win32 functions-version helpers! !
+!VMLibrary categoriesFor: #isWindowsXPOrGreater!public!win32 functions-version helpers! !
+!VMLibrary categoriesFor: #isWinVistaOrLater!public!win32 functions-version helpers! !
 !VMLibrary categoriesFor: #kernelHandle!accessing-handles!private! !
 !VMLibrary categoriesFor: #largeSignedFromUnsigned:!helpers!private! !
 !VMLibrary categoriesFor: #largeUnsignedFromSigned:!helpers!private! !
