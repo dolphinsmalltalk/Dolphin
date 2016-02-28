@@ -4,20 +4,32 @@
   <PropertyGroup>
     <VersionHeader>$(IntDir)Version.h</VersionHeader>
   </PropertyGroup>
+  
   <Target Name="GenerateVersionHeader" BeforeTargets="BeforeResourceCompile">
     <Exec Command='git describe --tag > "$(IntDir)version.txt"' Outputs="$(IntDir)version.txt" />
     <ReadLinesFromFile File="$(IntDir)version.txt">
       <Output TaskParameter="Lines" PropertyName="GitTag"/>
     </ReadLinesFromFile>
+    <PropertyGroup>
+	  <DolphinVersion>$([System.Datetime]::Now.Year).$(GitTag.SubString(1, $([MSBuild]::Subtract($(GitTag.IndexOf('-')), 1))))</DolphinVersion>
+    </PropertyGroup>
+	<Message Importance="Normal" Text="Building Dolphin version $(DolphinVersion)" />
     <Delete Files="$(IntDir)version.txt"/>
     <Message Importance="Normal" Text="Generating version.h for tag $(GitTag)..." />
-    <WriteLinesToFile Overwrite="true" File="$(VersionHeader)" Encoding="Ascii" Lines='
+    <WriteLinesToFile Overwrite="true" File="$(VersionHeader)" Encoding="Ascii" Lines="
 // this file generated on $([System.DateTime]::Now)
+#define DOLPHIN_ASSEMBLY_VERSION &quot;$(DolphinVersion)&quot;
+#define DOLPHIN_VERINFO_VERSION $(DolphinVersion.Replace('.',','))
 #if defined(_DEBUG)
-  #define GIT_TAG "$(GitTag) (Debug)"
+  #define GIT_TAG &quot;$(GitTag) (Debug)&quot;
 #else
-  #define GIT_TAG "$(GitTag)"
-#endif' />
+  #define GIT_TAG &quot;$(GitTag)&quot;
+#endif" />
+	<ItemGroup>
+		<Manifest>
+		  <AssemblyIdentity>ObjectArts.DolphinSmalltalk.Dolphin, version=$(DolphinVersion), processorArchitecture=x86, type=win32</AssemblyIdentity>
+		</Manifest>
+	</ItemGroup>
   </Target>
   <Target Name='CleanVersionHeader' AfterTargets='AfterClean'>
     <Delete Files='$(VersionHeader)'/>
@@ -45,5 +57,7 @@
       <ProgramDatabaseFile />
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
+  	<Manifest>
+	</Manifest>
   </ItemDefinitionGroup>
 </Project>
