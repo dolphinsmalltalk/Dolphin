@@ -667,7 +667,7 @@ stateImageManager: anImageManager
 	self applyImageLists!
 
 themeSubAppName
-	^OSVERSIONINFO current isWinVista ifTrue: ['explorer'] ifFalse: [super themeSubAppName]!
+	^SystemMetrics current hasEnhancedThemes ifTrue: ['explorer'] ifFalse: [super themeSubAppName]!
 
 viewMode
 	"Answer the symbolic name of the receiver's current view mode."

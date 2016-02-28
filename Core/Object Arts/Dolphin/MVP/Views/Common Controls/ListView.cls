@@ -804,7 +804,7 @@ imageFromRow: item
 
 	self viewMode == #thumbnails ifTrue: [^self getThumbnailOf: item].
 
-	NTLibrary isWine ifTrue: [
+	KernelLibrary isWine ifTrue: [
 		#wineFix.
 		"Wine ListViews seem to expect image indices to always be set in ListView>>onDisplayDetailsRequired:, 
 		even if we don't want images to appear. Normally, we answer nil here if no image is required. 
@@ -1705,16 +1705,10 @@ onVScroll: aScrollEvent
 	control are not drawn correctly using the LVS_EX_GRIDLINES style' This is relevant when
 	running on XP only, with smooth scrolling enabled."
 
-	#todo.	"This bug does not actually seem to be present on Win2K3, so work out which version
-		of the common controls library is at fault."
-	"Workaround control bug whereby the gridlines scar or are not drawn when scrolling on WinXP.
-	This is not entirely satisfactory but will not flicker because the control is double-buffered."
-	(aScrollEvent endScroll and: 
-			[self hasGridLines 
-				and: [OSVERSIONINFO current isWinXP and: [SystemMetrics current hasSmoothScrollingLists]]]) 
-		ifTrue: [self invalidate].
-	^super onVScroll: aScrollEvent
-!
+	(aScrollEvent endScroll 
+		and: [self hasGridLines and: [SystemMetrics current hasListViewGridLineScrollScarringBug]]) 
+			ifTrue: [self invalidate].
+	^super onVScroll: aScrollEvent!
 
 primaryColumn
 	"Private - Answer the primary column for the report view mode"
@@ -1825,7 +1819,7 @@ selectIndex: anInteger set: aBoolean
 	| anLvItem mask |
 	anLvItem := LVITEM new.
 	mask := ##(LVIS_SELECTED | LVIS_FOCUSED).
-	NTLibrary isWine 
+	KernelLibrary isWine 
 		ifTrue: 
 			["Having autoSelectPackages option turned on in System Browser gives
 			unpleasant scrolling effect when many multiple packages are selected. This

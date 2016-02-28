@@ -1255,11 +1255,6 @@ Win32Structure subclass: #MSGBOXPARAMS
 	classVariableNames: ''
 	poolDictionaries: 'MessageBoxConstants'
 	classInstanceVariableNames: ''!
-Win32Structure subclass: #OSVERSIONINFO
-	instanceVariableNames: 'osName'
-	classVariableNames: 'Current'
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
 Win32Structure subclass: #PROCESS_INFORMATION
 	instanceVariableNames: ''
 	classVariableNames: ''

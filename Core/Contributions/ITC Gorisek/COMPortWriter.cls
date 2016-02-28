@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #COMPortWriter
 	instanceVariableNames: 'handle'
@@ -95,7 +95,7 @@ setBaudRate: baudRate parity: parity dataBits: dataBits
 
 setBaudRate: baudRate parity: parity dataBits: dataBits stopBits: stopBits 
 	| dcb result |
-	OSVERSIONINFO current dwMajorVersion > 5 
+	VMLibrary default isWindowsVistaOrGreater 
 		ifTrue: 
 			["the code below does not work on Windows 7, do nothing here until this is fixed"
 

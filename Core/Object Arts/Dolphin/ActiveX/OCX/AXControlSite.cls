@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ControlView subclass: #AXControlSite
 	instanceVariableNames: 'progId dispControl host sink hostFlags propertyMap ambientDispatch unkControl licenseKey _reserved1 _reserved2'
@@ -917,7 +917,7 @@ chooseControl: defaultProgId
 	answering the <readableString> progId of that chosen, or nil if none was chosen (the user pressed
 	cancel)."
 
-	| prompter controlReg choices choicePresenter |
+	| prompter controlReg choices choicePresenter imageManager |
 	choices := ICatInformation controls.
 	controlReg := defaultProgId isNil 
 				ifFalse: 
@@ -932,15 +932,11 @@ chooseControl: defaultProgId
 		newCaption: 'Other Active-X control...';
 		newPrompt: 'Please enter a Prog Id:';
 		newBlock: [:aString | COMObjectRegistration clsid: (CLSID fromString: aString)].
-	OSVERSIONINFO current isNT 
-		ifTrue: 
-			["Only display the toolbox images on NT because danger of exhausting resources on Win9x"
-			| imageManager |
-			imageManager := ImageManager new.
-			imageManager maskcolor: Color face3d.
-			prompter
-				getImageBlock: [:objreg | imageManager addImage: objreg toolboxImage];
-				imageManager: imageManager].
+	imageManager := ImageManager new.
+	imageManager maskcolor: Color face3d.
+	prompter
+		getImageBlock: [:objreg | imageManager addImage: objreg toolboxImage];
+		imageManager: imageManager.
 	choicePresenter := prompter presenterNamed: 'choices'.
 	choicePresenter viewModel searchPolicy: SearchPolicy equality.
 	^prompter showModal ifNotNil: [:choice | choice clsid displayString]!

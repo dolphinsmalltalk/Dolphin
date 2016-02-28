@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 View subclass: #EmulatedCheckBox
 	instanceVariableNames: 'isTransition isChecked hasCursor isThemed'
@@ -139,7 +139,7 @@ isThemed
 
 	^isThemed ifNil:
 		[isThemed := 
-			OSVERSIONINFO current isWinXP 
+			SystemMetrics current hasThemes
 			and: [ThemeLibrary default isThemeActive 
 			and: [ThemeLibrary default isAppThemed]]]
 !

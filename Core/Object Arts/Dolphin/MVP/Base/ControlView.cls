@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 View subclass: #ControlView
 	instanceVariableNames: 'forecolor oldWndProc'
@@ -478,9 +478,7 @@ initializeNotificationMap
 maxTextLimit
 	"Answer the absolute maximum amount of text that the receiver can ever hold."
 
-	^OSVERSIONINFO current isNT
-		ifTrue: [16r7FFFFFFE]
-		ifFalse: [16r7FFE]!
+	^16r7FFFFFFE!
 
 winClassName
 	"Private - Answer the name of the Windows window class to use when realizing the receiver."

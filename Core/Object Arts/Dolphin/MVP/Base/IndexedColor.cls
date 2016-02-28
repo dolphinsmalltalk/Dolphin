@@ -2,7 +2,7 @@
 
 Color subclass: #IndexedColor
 	instanceVariableNames: 'index'
-	classVariableNames: 'ColorsByIndex ColorsByName'
+	classVariableNames: 'ColorNames ColorsByIndex ColorsByName'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 IndexedColor guid: (GUID fromString: '{87B4C53A-026E-11D3-9FD7-00A0CC3E4A32}')!
@@ -50,22 +50,16 @@ asParameter
 
 asRGB
 	"Answer the receiver as an RGB using the default palette."
-	#wineFix.
-	NTLibrary isWine ifTrue: [
-		"Wine doesn't yet implement GDILibrary>>getPaletteEntries:"
-		^self asRGBUsingNoPalette].
-	^self asRGBUsingPalette: self defaultPalette!
+
+	^SystemMetrics current hasGdiPalettes 
+		ifTrue: [self asRGBUsingPalette: self defaultPalette]
+		ifFalse: [self asRGBUsingNoPalette]!
 
 asRGBUsingNoPalette
 	"Answer the receiver as an RGB  when no palette is available ."
 
-	| colorNameMap stdColorName |
 	#wineFix.
-	colorNameMap := LookupTable new.
-	#(#(#black 16r1000000) #(#darkRed 16r1000001) #(#darkGreen 16r1000002) #(#brown 16r1000003) #(#darkBlue 16r1000004) #(#darkMagenta 16r1000005) #(#darkCyan 16r1000006) #(#gray 16r1000007) #(#darkGray 16r100000C) #(#red 16r100000D) #(#green 16r100000E) #(#yellow 16r100000F) #(#blue 16r1000010) #(#magenta 16r1000011) #(#cyan 16r1000012) #(#white 16r1000013)) 
-		do: [:each | colorNameMap at: each second put: each first].
-	stdColorName := colorNameMap at: index.
-	^RGB stdColor: stdColorName!
+	^RGB stdColor: (ColorNames at: self index)!
 
 asRGBUsingPalette: anExternalHandle 
 	"Answer the <RGB> equivalent of the receiver as mapped in the palette with the specified
@@ -95,7 +89,7 @@ printOn: aStream
 	"Put an ASCII representation of receiver onto aStream."
 
 	aStream nextPut: $(.
-	(ColorsByName keyAtEqualValue: self ifAbsent: []) 
+	(ColorNames at: self index ifAbsent: []) 
 		ifNil: 
 			[aStream
 				display: self class;
@@ -135,14 +129,19 @@ initialize
 
 	ColorsByName := IdentityDictionary new.
 	ColorsByIndex := IdentityDictionary new.
+	ColorNames := IdentityDictionary new.
 	#(#(#black 16r1000000) #(#darkRed 16r1000001) #(#darkGreen 16r1000002) #(#brown 16r1000003) #(#darkBlue 16r1000004) #(#darkMagenta 16r1000005) #(#darkCyan 16r1000006) #(#gray 16r1000007) #(#darkGray 16r100000C) #(#red 16r100000D) #(#green 16r100000E) #(#yellow 16r100000F) #(#blue 16r1000010) #(#magenta 16r1000011) #(#cyan 16r1000012) #(#white 16r1000013)) 
 		do: 
 			[:each | 
 			| color |
+			ColorNames at: each second put: each first.
 			color := self basicNew setIndex: each second.
 			color isImmutable: true.
 			ColorsByName at: each first put: color.
 			ColorsByIndex at: each second put: color].
+	ColorNames
+		shrink;
+		isImmutable: true.
 	ColorsByName
 		shrink;
 		isImmutable: true.

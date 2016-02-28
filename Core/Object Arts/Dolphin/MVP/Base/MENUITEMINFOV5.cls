@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 MENUITEMINFOA subclass: #MENUITEMINFOV5
 	instanceVariableNames: 'bitmap'
@@ -25,9 +25,6 @@ commandMenuItem: aCommandMenuItem
 		wID: aCommandMenuItem id;
 		fMask: mask!
 
-hasBitmapCallbackBug
-	^OSVERSIONINFO current isWinVista and: [OSVERSIONINFO current dwBuildNumber < 5480]!
-
 hbmpItem: anObject 
 	"Set the receiver's hbmpItem field to the value of anObject."
 
@@ -50,10 +47,10 @@ menuItem: aMenuItem text: aStringOrNil state: aString
 		fMask: mask!
 
 setImage: aCommandMenuItem 
-	^(aCommandMenuItem image isNil or: [self hasBitmapCallbackBug]) 
+	^aCommandMenuItem image isNil 
 		ifTrue: [0]
 		ifFalse: 
-			[self hbmpItem: (OSVERSIONINFO current isWinV6OrLater 
+			[self hbmpItem: (SystemMetrics current hasMenuBitmaps 
 						ifTrue: 
 							["Note that the menu doesn't take ownership
 							 of the bitmap. We are responsible for
@@ -91,7 +88,6 @@ type: flagsInteger text: aString id: idInteger
 		wID: idInteger;
 		fMask: ##(MIIM_FTYPE | MIIM_STRING | MIIM_ID)! !
 !MENUITEMINFOV5 categoriesFor: #commandMenuItem:!initializing!private! !
-!MENUITEMINFOV5 categoriesFor: #hasBitmapCallbackBug!private!testing! !
 !MENUITEMINFOV5 categoriesFor: #hbmpItem:!**compiled accessors**!public! !
 !MENUITEMINFOV5 categoriesFor: #menuItem:text:state:!accessing!private! !
 !MENUITEMINFOV5 categoriesFor: #setImage:!helpers!private! !

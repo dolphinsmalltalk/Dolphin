@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 CommandButton subclass: #PushButton
 	instanceVariableNames: 'image isDefault note _reserved1 _reserved2'
@@ -30,7 +30,7 @@ baseCreationStyle
 	base := self baseStyle.
 	"Command Link style is only supported on Vista. If not on Vista (or later) downgrade to a
 	normal push button"
-	((base allMask: BS_COMMANDLINK) and: [OSVERSIONINFO current isWinV6OrLater not]) 
+	((base allMask: BS_COMMANDLINK) and: [SystemMetrics current hasLinkButtons not]) 
 		ifTrue: [base := base maskClear: BS_COMMANDLINK].
 	^base!
 
@@ -212,7 +212,7 @@ setDefault: aBoolean
 	self topShell view setDefaultButton: self state: aBoolean!
 
 setNote
-	(self style = #link and: [OSVERSIONINFO current isWinV6OrLater]) ifFalse: [^self].
+	(self style = #link and: [SystemMetrics current hasButtonNotes]) ifFalse: [^self].
 	(self 
 		sendMessage: BCM_SETNOTE
 		wParam: 0

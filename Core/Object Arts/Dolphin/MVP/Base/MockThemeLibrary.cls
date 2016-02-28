@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ThemeLibrary subclass: #MockThemeLibrary
 	instanceVariableNames: ''
@@ -692,10 +692,4 @@ setWindowTheme: hwnd pszSubAppName: pszSubAppName pszSubIdList: pszSubIdList
 !MockThemeLibrary categoriesFor: #openThemeData:pszClassList:!public!win32 functions-visual styles! !
 !MockThemeLibrary categoriesFor: #setThemeAppProperties:!public!win32 functions-visual styles! !
 !MockThemeLibrary categoriesFor: #setWindowTheme:pszSubAppName:pszSubIdList:!public!win32 functions-visual styles! !
-
-!MockThemeLibrary class methodsFor!
-
-new
-	^OSVERSIONINFO current hasThemes ifTrue: [self basicNew] ifFalse: [MockThemeLibrary basicNew]! !
-!MockThemeLibrary class categoriesFor: #new!instance creation!public! !
 

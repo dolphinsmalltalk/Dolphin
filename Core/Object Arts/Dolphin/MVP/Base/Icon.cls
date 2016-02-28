@@ -255,21 +255,13 @@ valueWithHandle: operation forExtent: aPoint
 				ifTrue: 
 					[(self loadFromFile: self fileSpec extent: aPoint) ifNotNil: [:hIcon | ^operation value: hIcon]]
 				ifFalse: 
-					[(hModule == 0 and: 
-							["Wine does not support the
-							 ComCtrlLibrary>>loadIconWithScaleDown:..
-							 method which is normally availble under
-							 Vista and later. Hence we don't allow this
-							 to be called even if the Windows version
-							 indicates Vista is available."
-							aPoint ~= SystemMetrics current largeIconExtent and: 
-									[#wineFix.
-									OSVERSIONINFO current isWinVista & NTLibrary isWine not]]) 
-						ifTrue: 
-							[(self 
-								load: ident
-								fromInstance: hModule
-								extent: aPoint) ifNotNil: [:hIcon | ^operation value: hIcon]]]].
+					[(hModule == 0 
+						and: [aPoint ~= SystemMetrics current largeIconExtent and: [SystemMetrics current hasIconScaleDown]]) 
+							ifTrue: 
+								[(self 
+									load: ident
+									fromInstance: hModule
+									extent: aPoint) ifNotNil: [:hIcon | ^operation value: hIcon]]]].
 	^operation value: self asParameter! !
 !Icon categoriesFor: #addToImageList:mask:!double dispatch!private! !
 !Icon categoriesFor: #asAlphaBitmap:!converting!public! !

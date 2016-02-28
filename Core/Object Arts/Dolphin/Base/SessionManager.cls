@@ -739,10 +739,7 @@ openEventLog
 	"Private - Open the NT event log for writing, and answer a handle onto it that can be passed to the
 	ReportEvent() API."
 
-	OSVERSIONINFO current isNT 
-		ifTrue: 
-			[eventLogHandle := VMLibrary default 
-						registerEventSource: self eventLogSource].
+	eventLogHandle := VMLibrary default registerEventSource: self eventLogSource.
 	^eventLogHandle!
 
 openLibraries
@@ -1067,16 +1064,11 @@ windowsDirectory
 	that under Terminal Server this will be the shared Windows directory, not the per-user
 	Windows directory. See MSDN KB281316  for further information."
 
-	^OSVERSIONINFO current dwMajorVersion >= 5 
-		ifTrue: 
-			[| path len |
-			path := File pathBuffer.
-			len := KernelLibrary default getSystemWindowsDirectory: path uSize: path size.
-			len == 0 ifTrue: [^KernelLibrary default systemError].
-			path leftString: len]
-		ifFalse: 
-			["The system call returns the path sans a delimiter, so we must maintain that behaviour"
-			File removePathDelimiter: (File splitPathFrom: (File removePathDelimiter: self systemDirectory))]! !
+	| path len |
+	path := File pathBuffer.
+	len := KernelLibrary default getSystemWindowsDirectory: path uSize: path size.
+	len == 0 ifTrue: [^KernelLibrary default systemError].
+	^path leftString: len! !
 !SessionManager categoriesFor: #allocConsole!operations!private! !
 !SessionManager categoriesFor: #allowDuplicate!operations-startup!public! !
 !SessionManager categoriesFor: #appIdString!constants!public! !
@@ -1131,6 +1123,7 @@ windowsDirectory
 !SessionManager categoriesFor: #installationDirectory!constants!private! !
 !SessionManager categoriesFor: #isBinaryLooseMethodInstallationAllowed!private!testing! !
 !SessionManager categoriesFor: #isConsoleApplication!public!testing! !
+!SessionManager categoriesFor: #isDebug!public! !
 !SessionManager categoriesFor: #isDLL!private!testing! !
 !SessionManager categoriesFor: #isEmbedded!public!testing! !
 !SessionManager categoriesFor: #isEmbedding!public!testing! !
