@@ -48,7 +48,7 @@
     <OutDir>$(SolutionDir)$(Configuration)\</OutDir>
     <IntDir>$(Configuration)\</IntDir>
     <IgnoreImportLibrary>true</IgnoreImportLibrary>
-    <LinkIncremental>true</LinkIncremental>
+    <LinkIncremental>false</LinkIncremental>
     <TargetName>Dolphin7</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -229,8 +229,7 @@
     <Manifest Include="..\Res\Dolphin.exe.manifest">
       <FileType>Manifest</FileType>
       <!-- At the time this manifest is built, the .exe won't contain any manifest resource to merge with -->
-      <InputResourceManifests>
-      </InputResourceManifests>
+      <InputResourceManifests />
     </Manifest>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
