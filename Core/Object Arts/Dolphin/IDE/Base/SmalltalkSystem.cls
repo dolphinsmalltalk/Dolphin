@@ -1,7 +1,7 @@
 "Filed out from Dolphin Smalltalk 7"!
 
 Model subclass: #SmalltalkSystem
-	instanceVariableNames: 'workspaceClass defaultInspectorClass defaultBrowserClass systemFolder packageBrowserClass debuggerClass viewComposerClass protocolBrowserClass workspaceShellClass resourceBrowserClass tipOfTheDayClass changedIcon hierarchyBrowserClass preferAlternateInspectors formatterClass classChooserClass resourceIdentifierDialogClass findDetails methodWorkspaceClass allSelectors argumentClasses methodExplorerClass aboutBoxClass toolBackgroundColor testBrowserClass defaultPublishedAspectsLiteralsMap'
+	instanceVariableNames: 'workspaceClass defaultInspectorClass defaultBrowserClass systemFolder packageBrowserClass debuggerClass viewComposerClass protocolBrowserClass workspaceShellClass resourceBrowserClass changedIcon hierarchyBrowserClass preferAlternateInspectors formatterClass classChooserClass resourceIdentifierDialogClass findDetails methodWorkspaceClass allSelectors argumentClasses methodExplorerClass aboutBoxClass toolBackgroundColor testBrowserClass defaultPublishedAspectsLiteralsMap'
 	classVariableNames: 'Current FileDrops RegisteredTools'
 	poolDictionaries: 'CompilerFlags SmalltalkParseErrorCodes'
 	classInstanceVariableNames: ''!
@@ -2781,11 +2781,6 @@ preferAlternateInspectors
 preferAlternateInspectors: aBoolean
 	preferAlternateInspectors := aBoolean!
 
-previousTipOfTheDay
-	"Show the previous tip of the day in sequence"
-
-	self tipOfTheDayClass showPreviousTip!
-
 printSignatureForKeywordsAndArgs: keywordsAndArgs on: aWriteStream 
 	| args |
 	args := keywordsAndArgs value.
@@ -3006,10 +3001,6 @@ queryCommand: aCommandQuery
 		ifTrue: 
 			[aCommandQuery isEnabled: true.
 			^true].
-	cmd == #tipOfTheDay 
-		ifTrue: 
-			[aCommandQuery isEnabled: self tipOfTheDayClass notNil.
-			^true].
 	cmd == #undoChange 
 		ifTrue: 
 			[| description |
@@ -3037,12 +3028,6 @@ queryCommand: aCommandQuery
 	cmd == #clearChangeHistory 
 		ifTrue: 
 			[aCommandQuery isEnabled: (self hasUndoableOperations or: [self hasRedoableOperations]).
-			^true].
-	cmd == #toggleShowTipsAtStartup 
-		ifTrue: 
-			[aCommandQuery
-				isChecked: SmalltalkSystemShell showTipsAtStartup;
-				isEnabled: self tipOfTheDayClass notNil.
 			^true].
 	#browseHierarchy == cmd 
 		ifTrue: 
@@ -3681,22 +3666,6 @@ testBrowserClass
 		ifTrue: [testBrowserClass := self environment at: #SUnitBrowser ifAbsent: []].
 	^testBrowserClass!
 
-tipOfTheDay
-	"Show the next tip of the day in sequence"
-
-	self tipOfTheDayClass showNextTip!
-
-tipOfTheDayClass
-	"Answer the class to use for the tip of the day"
-
-	tipOfTheDayClass isNil ifTrue: [tipOfTheDayClass := self environment at: #TipOfTheDay].
-	^tipOfTheDayClass!
-
-tipOfTheDayClass: toolClass
-	"Set the class for showing the tip of the day"
-
-	tipOfTheDayClass := toolClass!
-
 toolBackgroundColor
 	"Answer the background used in some of the system tools"
 
@@ -4167,7 +4136,6 @@ wrapText: aString toWidth: max indent: colInteger tabWidth: tabInteger
 !SmalltalkSystem categoriesFor: #populateWindowMenu:withShells:ofClasses:!operations!private! !
 !SmalltalkSystem categoriesFor: #preferAlternateInspectors!accessing!public! !
 !SmalltalkSystem categoriesFor: #preferAlternateInspectors:!accessing!public! !
-!SmalltalkSystem categoriesFor: #previousTipOfTheDay!commands!public! !
 !SmalltalkSystem categoriesFor: #printSignatureForKeywordsAndArgs:on:!autocompletion!helpers!private! !
 !SmalltalkSystem categoriesFor: #privatePrefix!constants!private! !
 !SmalltalkSystem categoriesFor: #privatizeMethod:!operations!private! !
@@ -4249,9 +4217,6 @@ wrapText: aString toWidth: max indent: colInteger tabWidth: tabInteger
 !SmalltalkSystem categoriesFor: #systemFolderNamed:!accessing!private! !
 !SmalltalkSystem categoriesFor: #systemOptions!commands!public! !
 !SmalltalkSystem categoriesFor: #testBrowserClass!options!public! !
-!SmalltalkSystem categoriesFor: #tipOfTheDay!commands!public! !
-!SmalltalkSystem categoriesFor: #tipOfTheDayClass!commands!public! !
-!SmalltalkSystem categoriesFor: #tipOfTheDayClass:!options!public! !
 !SmalltalkSystem categoriesFor: #toolBackgroundColor!accessing!public! !
 !SmalltalkSystem categoriesFor: #toolBackgroundColor:!accessing!public! !
 !SmalltalkSystem categoriesFor: #typeForArgumentClass:!helpers!private! !
@@ -4317,7 +4282,7 @@ publishedAspectsOfInstances
 
 	| aspects |
 	aspects := super publishedAspectsOfInstances.
-	#(#hierarchyBrowserClass #protocolBrowserClass #debuggerClass #methodExplorerClass #packageBrowserClass #resourceBrowserClass #tipOfTheDayClass #viewComposerClass #workspaceClass #workspaceShellClass #classChooserClass #resourceIdentifierDialogClass #defaultInspectorClass #testBrowserClass) 
+	#(#hierarchyBrowserClass #protocolBrowserClass #debuggerClass #methodExplorerClass #packageBrowserClass #resourceBrowserClass #viewComposerClass #workspaceClass #workspaceShellClass #classChooserClass #resourceIdentifierDialogClass #defaultInspectorClass #testBrowserClass) 
 		do: [:each | aspects add: (Aspect name: each)].
 	#(#autoFormatMethodSource #backupOnImageSave #preferAlternateInspectors #splashShowAtStartup #splashPlayTheGame) 
 		do: [:each | aspects add: (Aspect boolean: each)].
