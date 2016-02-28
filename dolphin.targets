@@ -6,7 +6,7 @@
   </PropertyGroup>
   
   <Target Name="GenerateVersionHeader" BeforeTargets="BeforeResourceCompile">
-    <Exec Command='git describe --tag > "$(IntDir)version.txt"' Outputs="$(IntDir)version.txt" />
+    <Exec Command='git describe --tag --long > "$(IntDir)version.txt"' Outputs="$(IntDir)version.txt" />
     <ReadLinesFromFile File="$(IntDir)version.txt">
       <Output TaskParameter="Lines" PropertyName="GitTag"/>
     </ReadLinesFromFile>
