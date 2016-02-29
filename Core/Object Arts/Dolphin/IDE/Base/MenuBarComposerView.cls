@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 MenuComposerView subclass: #MenuBarComposerView
 	instanceVariableNames: ''
@@ -15,11 +15,6 @@ borderInset
 	the border."
 
 	^0 @ 0 corner: 0 @ SystemMetrics current borderExtent y!
-
-defaultDividerWidth
-	"Private - Answer the width of divider menu items in pixels."
-
-	^2 * self horizontalSpacer!
 
 drawTextFlags
 	^super drawTextFlags bitOr: DT_CENTER!
@@ -40,20 +35,20 @@ itemRect: itemIndex
 
 	| space height |
 	space := self horizontalSpacer * 2.
-	height := self height - self borderInset corner y.
+	height := self itemHeight - self borderInset corner y.
 	^(1 to: itemIndex) inject: (self borderInset origin extent: Point zero)
 		into: 
-			[:past :index | 
+			[:sum :index | 
 			| width item |
 			item := self itemAtIndex: index.
 			width := self widthOfItemText: item.
 			item image isNil ifFalse: [width := width + self imageExtent x].
-			past topRight extent: (space + width) @ height]!
+			sum topRight extent: (space + width) @ height]!
 
 menuColor
 	^SystemMetrics current menuBarColor!
 
-originForSubmenu: itemIndex
+originForSubmenu: itemIndex 
 	"Private - Answer the position in the receivers parent view for
 	which aMenuItems submenu should be opened at."
 
@@ -99,21 +94,19 @@ paintSeparatorOn: canvas in: aRectangle
 		lineFrom: position + (1 @ 0) to: position + (1 @ cy);
 		pen: oldPen!
 
-refreshContents
-	"The model held by the associated presenter has been replaced"
+updateGeometry
+	"Private - The contents of the receivers menu has changed. This could cause the view to resize, etc."
 
-	super refreshContents.
-	self model notNil ifTrue: [self extent: 5000 @ self itemHeight]! !
+	self extent: 5000 @ self itemHeight! !
 !MenuBarComposerView categoriesFor: #borderInset!constants!private! !
-!MenuBarComposerView categoriesFor: #defaultDividerWidth!constants!private! !
 !MenuBarComposerView categoriesFor: #drawTextFlags!painting!private! !
 !MenuBarComposerView categoriesFor: #insertBefore:position:!private!testing! !
 !MenuBarComposerView categoriesFor: #itemHeight!constants!private! !
-!MenuBarComposerView categoriesFor: #itemRect:!accessing!public! !
+!MenuBarComposerView categoriesFor: #itemRect:!accessing!private! !
 !MenuBarComposerView categoriesFor: #menuColor!private!tracking! !
 !MenuBarComposerView categoriesFor: #originForSubmenu:!accessing!private! !
 !MenuBarComposerView categoriesFor: #paintEdgeOn:!painting!private! !
 !MenuBarComposerView categoriesFor: #paintItem:on:in:!painting!private! !
 !MenuBarComposerView categoriesFor: #paintSeparatorOn:in:!painting!private! !
-!MenuBarComposerView categoriesFor: #refreshContents!public!updating! !
+!MenuBarComposerView categoriesFor: #updateGeometry!private!updating! !
 

@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 View subclass: #MenuComposerView
 	instanceVariableNames: 'selectionIndex conflictingAccelerators conflictingMnemonics'
@@ -67,7 +67,7 @@ drawArrowOn: aCanvas in: aRectangle
 		in: aRectangle!
 
 drawBulletOn: aCanvas in: aRectangle 
-	"Draw the menu bullet (radio-button) glyph on the specified <Canvas> within the specified
+	"Private - Draw the menu bullet (radio-button) glyph on the specified <Canvas> within the specified
 	<Rectangle."
 
 	self 
@@ -76,7 +76,7 @@ drawBulletOn: aCanvas in: aRectangle
 		in: aRectangle!
 
 drawCheckOn: aCanvas in: aRectangle 
-	"Draw the menu checkmark glyph on the specified <Canvas> within the specified <Rectangle."
+	"Private - Draw the menu checkmark glyph on the specified <Canvas> within the specified <Rectangle."
 
 	self 
 		drawGlyph: DFCS_MENUCHECK
@@ -141,17 +141,12 @@ horizontalSpacer
 	"Private - Answer a number of pixels used as a unit for separation between
 	horizontal elements."
 
-	^50!
+	^7!
 
 imageExtent
 	"Private - Answer the width and height of menu item images."
 
 	^SystemMetrics current menuImageExtent!
-
-imageWidth
-	"Private - Answer the width of menu item images."
-
-	^10!
 
 indexOfItem: menuItem
 	"Private - Answer the index of menuItem in the receivers model."
@@ -267,22 +262,19 @@ paint: aMenuItem on: aCanvas in: aRectangle
 	aMenuItem isDivider 
 		ifTrue: [self paintSeparatorOn: aCanvas in: aRectangle]
 		ifFalse: 
-			[| menuFont |
+			[| oldFont |
 			
 			[aMenuItem isDefault 
 				ifTrue: 
-					[menuFont := self menuFont copy.
+					[| menuFont |
+					menuFont := self menuFont copy.
 					menuFont isBold: true.
-					menuFont := aCanvas font: menuFont].
+					oldFont := aCanvas font: menuFont].
 			self 
 				paintItem: aMenuItem
 				on: aCanvas
 				in: aRectangle] 
-					ensure: 
-						[menuFont notNil 
-							ifTrue: 
-								[menuFont := aCanvas font: menuFont.
-								menuFont free]]]!
+					ensure: [oldFont notNil ifTrue: [(aCanvas font: oldFont) free]]]!
 
 paintEdgeOn: aCanvas 
 	"Private - Paint a suitable border for the receiver."
@@ -399,14 +391,8 @@ paintSmudgeFor: string on: aCanvas in: aRectangle
 refreshContents
 	"The model held by the associated presenter has been replaced"
 
-	super refreshContents.
-	self menu notNil ifTrue: [self updateMenu].!
-
-selectedItemRect
-	"Private - Answer the <Rectangle> of the selected menu item relative to the
-	receivers origin."
-
-	^self itemRect: selectionIndex!
+	self menu notNil ifTrue: [self updateGeometry].
+	self invalidateRect: nil erase: false!
 
 selectionByIndex
 	"Answer the index of the item currently selected or 0 if there
@@ -437,11 +423,11 @@ setHighlightColors: canvas
 		pen: txtHighlight pen;
 		brush: txtHighlight brush!
 
-updateMenu
-	"The contents of the receivers menu has changed. This could cause the
-	view to resize, etc."
+updateGeometry
+	"Private - The contents of the receivers menu has changed. This could cause the view to
+	resize, etc."
 
-	self invalidateRect: nil erase: false!
+	^self subclassResponsibility!
 
 widthOfItemAccelerator: aMenuItem 
 	| string tabIndex menuFont size canvas |
@@ -505,15 +491,14 @@ wmSysChar: message wParam: wParam lParam: lParam
 !MenuComposerView categoriesFor: #createDragImage:!private!tracking! !
 !MenuComposerView categoriesFor: #defaultWindowStyle!constants!private! !
 !MenuComposerView categoriesFor: #drawArrowOn:in:!painting!private! !
-!MenuComposerView categoriesFor: #drawBulletOn:in:!painting!public! !
-!MenuComposerView categoriesFor: #drawCheckOn:in:!painting!public! !
+!MenuComposerView categoriesFor: #drawBulletOn:in:!painting!private! !
+!MenuComposerView categoriesFor: #drawCheckOn:in:!painting!private! !
 !MenuComposerView categoriesFor: #drawGlyph:on:in:!painting!private! !
 !MenuComposerView categoriesFor: #drawTextFlags!painting!private! !
 !MenuComposerView categoriesFor: #generateMnemonicConflicts!operations!private! !
 !MenuComposerView categoriesFor: #hasSelection!public!testing! !
 !MenuComposerView categoriesFor: #horizontalSpacer!constants!private! !
 !MenuComposerView categoriesFor: #imageExtent!constants!private! !
-!MenuComposerView categoriesFor: #imageWidth!constants!private! !
 !MenuComposerView categoriesFor: #indexOfItem:!private!searching! !
 !MenuComposerView categoriesFor: #initialize!initializing!private! !
 !MenuComposerView categoriesFor: #initializeCanvas:!painting!private! !
@@ -541,12 +526,11 @@ wmSysChar: message wParam: wParam lParam: lParam
 !MenuComposerView categoriesFor: #paintSmudge:on:!painting!private! !
 !MenuComposerView categoriesFor: #paintSmudgeFor:on:in:!painting!private! !
 !MenuComposerView categoriesFor: #refreshContents!public!updating! !
-!MenuComposerView categoriesFor: #selectedItemRect!accessing!private! !
 !MenuComposerView categoriesFor: #selectionByIndex!public!selection! !
 !MenuComposerView categoriesFor: #selectionByIndex:!public!selection! !
 !MenuComposerView categoriesFor: #selectionOrNil!public!selection! !
 !MenuComposerView categoriesFor: #setHighlightColors:!painting!private! !
-!MenuComposerView categoriesFor: #updateMenu!public!updating! !
+!MenuComposerView categoriesFor: #updateGeometry!private!updating! !
 !MenuComposerView categoriesFor: #widthOfItemAccelerator:!accessing!private! !
 !MenuComposerView categoriesFor: #widthOfItemText:!accessing!private! !
 !MenuComposerView categoriesFor: #wmSysChar:wParam:lParam:!event handling-win32!private! !
