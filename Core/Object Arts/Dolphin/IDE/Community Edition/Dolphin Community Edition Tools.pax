@@ -28,7 +28,6 @@ package classNames
 	add: #PoolDictionariesShell;
 	add: #ProtocolBrowserShell;
 	add: #SourceBrowser;
-	add: #TipOfTheDay;
 	add: #UserPreferencesShell;
 	yourself.
 
@@ -37,8 +36,6 @@ package methodNames
 	add: #DolphinProduct -> #serialNumberClass;
 	add: #SmalltalkSystem -> #inspectPoolDictionaries;
 	add: #SmalltalkSystem -> #inspectSystemOptions;
-	add: #SmalltalkSystem -> #tipOfTheDayAtStartup;
-	add: #SmalltalkSystem -> #toggleShowTipsAtStartup;
 	add: 'ITEMIDLIST class' -> #publishedAspectsOfInstances;
 	add: 'Toolbar class' -> #resource_Protocol_tools;
 	yourself.
@@ -77,11 +74,6 @@ package!
 
 "Class Definitions"!
 
-Object subclass: #TipOfTheDay
-	instanceVariableNames: ''
-	classVariableNames: 'NextTipIndex ShowTipsAtStartup'
-	poolDictionaries: 'Win32Constants'
-	classInstanceVariableNames: ''!
 SmalltalkSystem subclass: #CommunityEditionSmalltalkSystem
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -166,21 +158,9 @@ inspectPoolDictionaries
 inspectSystemOptions
 	"Open a TwoLevelInspector on the system options."
 
-	^UserPreferencesShell showOn: self systemOptions!
-
-tipOfTheDayAtStartup
-	"Private - Show the tip of the day on startup if requested"
-
-	SmalltalkSystemShell showTipsAtStartup ifTrue: [self tipOfTheDay]!
-
-toggleShowTipsAtStartup
-	"Private - Toggle whether the tip of the day is displayed at startup"
-
-	SmalltalkSystemShell showTipsAtStartup: SmalltalkSystemShell showTipsAtStartup not! !
+	^UserPreferencesShell showOn: self systemOptions! !
 !SmalltalkSystem categoriesFor: #inspectPoolDictionaries!initializing!public! !
 !SmalltalkSystem categoriesFor: #inspectSystemOptions!commands!public! !
-!SmalltalkSystem categoriesFor: #tipOfTheDayAtStartup!commands!public! !
-!SmalltalkSystem categoriesFor: #toggleShowTipsAtStartup!commands!public! !
 
 !Toolbar class methodsFor!
 
