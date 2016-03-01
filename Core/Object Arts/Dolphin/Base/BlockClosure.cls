@@ -902,8 +902,7 @@ stbConvertFrom: anSTBClassFormat
 			[ver < 2 
 				ifTrue: [self error: 'Unable to convert interim block format']
 				ifFalse: 
-					[Sound bell.
-					newBlock := self basicNew: data size - self instSize.
+					[newBlock := self basicNew: data size - self instSize.
 					1 to: data size do: [:i | newBlock instVarAt: i put: (data at: i)]]].
 	upgrading ifTrue: [newBlock := self attemptToUpgradeBlock: newBlock data: data].
 	newBlock]!
