@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Win32Structure subclass: #NONCLIENTMETRICS
 	instanceVariableNames: ''
@@ -32,6 +32,11 @@ iMenuWidth
 
 	^bytes sdwordAtOffset: ##(self offsetOf: #iMenuWidth)!
 
+iPaddedBorderWidth
+	"Answer the receiver's iPaddedBorderWidth field as a Smalltalk object."
+
+	^bytes sdwordAtOffset: ##(self offsetOf: #iPaddedBorderWidth)!
+
 iScrollHeight
 	"Answer the receiver's iScrollHeight field as a Smalltalk object."
 
@@ -50,6 +55,7 @@ lfMenuFont
 !NONCLIENTMETRICS categoriesFor: #iCaptionHeight!**compiled accessors**!public! !
 !NONCLIENTMETRICS categoriesFor: #iMenuHeight!**compiled accessors**!public! !
 !NONCLIENTMETRICS categoriesFor: #iMenuWidth!**compiled accessors**!public! !
+!NONCLIENTMETRICS categoriesFor: #iPaddedBorderWidth!**compiled accessors**!public! !
 !NONCLIENTMETRICS categoriesFor: #iScrollHeight!**compiled accessors**!public! !
 !NONCLIENTMETRICS categoriesFor: #iScrollWidth!**compiled accessors**!public! !
 !NONCLIENTMETRICS categoriesFor: #lfMenuFont!**compiled accessors**!public! !
@@ -77,9 +83,10 @@ defineFields
 		LOGFONT	lfMenuFont; 
 		LOGFONT	lfStatusFont; 
 		LOGFONT	lfMessageFont; 
+		int		iPaddedBorderWidth;
 	 NONCLIENTMETRICS, FAR* LPNONCLIENTMETRICS; "
 
-	self 
+	self
 		defineField: #dwSize type: DWORDField writeOnly beOverride;
 		defineField: #iBorderWidth type: SDWORDField uncompiled;
 		defineField: #iScrollWidth type: SDWORDField readOnly;
@@ -94,6 +101,7 @@ defineFields
 		defineField: #iMenuHeight type: SDWORDField readOnly;
 		defineField: #lfMenuFont type: (StructureField type: LOGFONT) beReadOnly;
 		defineField: #lfStatusFont type: (StructureField type: LOGFONT) beUncompiled;
-		defineField: #lfMessageFont type: (StructureField type: LOGFONT) beUncompiled! !
+		defineField: #lfMessageFont type: (StructureField type: LOGFONT) beUncompiled;
+		defineField: #iPaddedBorderWidth type: SDWORDField readOnly! !
 !NONCLIENTMETRICS class categoriesFor: #defineFields!initializing!public! !
 

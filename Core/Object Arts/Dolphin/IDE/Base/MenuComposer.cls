@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ValueDialog subclass: #MenuComposer
 	instanceVariableNames: 'arena menuViews conflictingAccelerators'
@@ -169,13 +169,12 @@ initialize
 !
 
 menu
-	"Answer the top level menu which the receiver is editing. If nil then
-	we create a suitable base menu here."
+	"Answer the top level menu which the receiver is editing. If nil then we create a suitable
+	base menu here."
 
 	| menu |
 	menu := self value.
-	menu isNil ifTrue: [
-		self value: (menu := self class menuClass new) ].
+	menu isNil ifTrue: [self value: (menu := self class menuClass new)].
 	^menu!
 
 menuClass
@@ -249,8 +248,8 @@ newMenu
 	self ensureMinimumMenuContents: item.
 	^item!
 
-onItemFrom: aMenuComposerView at: anInteger droppedBefore: beforeBoolean copy: copyBoolean
-	"Private - Try and move the source item to the curent selection point."
+onItemFrom: aMenuComposerView at: anInteger droppedBefore: beforeBoolean copy: copyBoolean 
+	"Private - Try and move the source item to the current selection point."
 
 	| destView destMenu destIndex sourceView sourceMenu sourceItem updateSourceView |
 	destView := self selectionView.
@@ -266,12 +265,9 @@ onItemFrom: aMenuComposerView at: anInteger droppedBefore: beforeBoolean copy: c
 					[Sound warningBeep.
 					^self]].
 	self closeSubmenuViewsOf: destView.
-	sourceView := menuViews detect: [:menuView | menuView menu == sourceMenu]
-				ifNone: [].
+	sourceView := menuViews detect: [:menuView | menuView menu == sourceMenu] ifNone: [].
 	updateSourceView := sourceView notNil and: [copyBoolean not].
-	copyBoolean 
-		ifTrue: [sourceItem := sourceItem copy]
-		ifFalse: [sourceMenu removeItemAt: anInteger].
+	copyBoolean ifTrue: [sourceItem := sourceItem copy] ifFalse: [sourceMenu removeItemAt: anInteger].
 	self ensureMinimumMenuContents: sourceMenu.
 	sourceMenu == destMenu 
 		ifTrue: [anInteger < destIndex ifTrue: [destIndex := destIndex - 1]]
@@ -292,17 +288,17 @@ onItemFrom: aMenuComposerView at: anInteger droppedBefore: beforeBoolean copy: c
 	self generateAcceleratorConflicts.
 	menuViews inject: nil
 		into: 
-			[:last :this | 
+			[:last :each | 
 			last notNil 
 				ifTrue: 
-					[this position: (last originForSubmenu: last selectionByIndex).
-					this updateMenu.
-					this]
+					[each position: (last originForSubmenu: last selectionByIndex).
+					each refreshContents.
+					each]
 				ifFalse: 
-					[(this == destView or: [updateSourceView and: [this == sourceView]]) 
+					[(each == destView or: [updateSourceView and: [each == sourceView]]) 
 						ifTrue: 
-							[this updateMenu.
-							this]]].
+							[each refreshContents.
+							each]]].
 	self openSelectedSubmenuOf: destView!
 
 onItemIn: aView selectedAtIndex: index 
@@ -491,7 +487,7 @@ untitledPrefix
 update: aMenuComposerView do: operation 
 	self closeSubmenuViewsOf: aMenuComposerView.
 	operation value.
-	aMenuComposerView updateMenu.
+	aMenuComposerView refreshContents.
 	self openSelectedSubmenuOf: aMenuComposerView! !
 !MenuComposer categoriesFor: #addCommand!commands!public! !
 !MenuComposer categoriesFor: #addItem:!adding!private! !

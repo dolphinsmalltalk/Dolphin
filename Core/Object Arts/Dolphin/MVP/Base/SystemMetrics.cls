@@ -266,8 +266,7 @@ menuFont
 menuHeight
 	"Answer the height of a menu item as currently configured."
 
-	#todo.	"How do we get this properly? It is not the same as the menu bar height, and appears to be a fixed size related to the font."
-	^self menuCheckExtent y + 4!
+	^self getMetric: SM_CYMENUSIZE!
 
 menuImageExtent
 	"Answer a <Point>, being the width and height of the images displayed on menus."
@@ -280,7 +279,13 @@ menuImageTextGap
 	"The gap between the text in a menu item and the image. It doesn't seem to be possible to
 	determine this from system metrics."
 
-	^4!
+	^16!
+
+menuTextAcceleratorGap
+	"The gap between the text in a menu item and the accelerator. It doesn't seem to be possible to
+	determine this from system metrics."
+
+	^32!
 
 menuWidth
 	^self nonClientMetrics iMenuWidth!
@@ -316,6 +321,9 @@ onSettingChanged: aWindowsEvent
 	code = SPI_SETFLATMENU ifTrue: [hasFlatMenus := nil].
 	code = SPI_SETLISTBOXSMOOTHSCROLLING ifTrue: [hasSmoothScrollingLists := nil].
 	smallIconExtent := largeIconExtent := dragHysteresis := scrollThumbExtent := sizingFrameExtent := dialogFrameExtent := borderExtent := edgeExtent := nil!
+
+paddedBorderThickness
+	^self nonClientMetrics iPaddedBorderWidth!
 
 scrollbarHeight
 	"Answer the height, in pixels, of a horizontal scroll bar."
@@ -374,7 +382,7 @@ virtualScreenRectangle
 !SystemMetrics categoriesFor: #dialogFrameExtent!constants!public! !
 !SystemMetrics categoriesFor: #dragHysteresis!constants!public! !
 !SystemMetrics categoriesFor: #dragImageColorDepth!accessing!private! !
-!SystemMetrics categoriesFor: #edgeExtent!accessing!public! !
+!SystemMetrics categoriesFor: #edgeExtent!constants!public! !
 !SystemMetrics categoriesFor: #getIconTitleFont!geometry!private! !
 !SystemMetrics categoriesFor: #getMetric:!helpers!private! !
 !SystemMetrics categoriesFor: #getMetric:pair:!helpers!private! !
@@ -410,11 +418,13 @@ virtualScreenRectangle
 !SystemMetrics categoriesFor: #menuHeight!constants!public! !
 !SystemMetrics categoriesFor: #menuImageExtent!accessing!public! !
 !SystemMetrics categoriesFor: #menuImageTextGap!constants!public! !
+!SystemMetrics categoriesFor: #menuTextAcceleratorGap!constants!public! !
 !SystemMetrics categoriesFor: #menuWidth!constants!public! !
 !SystemMetrics categoriesFor: #minimumTreeViewIndent!constants!public! !
 !SystemMetrics categoriesFor: #mouseHoverTime!constants!public! !
 !SystemMetrics categoriesFor: #nonClientMetrics!constants!public! !
 !SystemMetrics categoriesFor: #onSettingChanged:!event handling-win32!private! !
+!SystemMetrics categoriesFor: #paddedBorderThickness!constants!public! !
 !SystemMetrics categoriesFor: #scrollbarHeight!constants!public! !
 !SystemMetrics categoriesFor: #scrollbarWidth!constants!public! !
 !SystemMetrics categoriesFor: #scrollThumbExtent!constants!public! !

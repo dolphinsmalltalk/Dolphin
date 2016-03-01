@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 MenuComposerView subclass: #ContextMenuComposerView
 	instanceVariableNames: 'itemWidth acceleratorOffset submenuOffset textOffset'
@@ -26,9 +26,6 @@ borderInset
 	extent := SystemMetrics current borderExtent + SystemMetrics current edgeExtent.
 	^extent corner: extent!
 
-dividerHeight
-	^SystemMetrics current menuDividerHeight!
-
 insertBefore: index position: localPoint
 	"Private - Answer whether an insertion at the <Point>, localPoint, should 
 	place the new object before or after the item with the specified <integer> index."
@@ -43,26 +40,22 @@ itemHeight
 itemRect: anInteger 
 	"Private - Answer the <Rectangle> of the menu item relative to the receiver's origin."
 
-	| y menu itemHeight dividerHeight item |
+	| y menu dividerHeight item itemHeight |
 	menu := self menu.
+	dividerHeight := SystemMetrics current menuDividerHeight.
 	itemHeight := self itemHeight.
-	dividerHeight := self dividerHeight.
 	y := (1 to: anInteger - 1) inject: 0
-				into: 
-					[:past :index | 
-					| each |
-					each := menu itemAt: index.
-					past + (each isDivider ifTrue: [dividerHeight] ifFalse: [itemHeight])].
+				into: [:sum :index | sum + ((menu itemAt: index) isDivider ifTrue: [dividerHeight] ifFalse: [itemHeight])].
 	item := menu itemAt: anInteger.
 	^0 @ y + self borderInset origin 
 		extent: itemWidth @ (item isDivider ifTrue: [dividerHeight] ifFalse: [itemHeight])!
 
 menuColor
-	^Color systemColor: COLOR_MENU!
+	^Color menu!
 
 originForSubmenu: itemIndex 
-	"Private - Answer the position in the receivers parent view at
-	which aMenuItems submenu should be opened."
+	"Private - Answer the position in the receivers parent view at which a MenuItem's submenu
+	should be opened."
 
 	^self position + (self itemRect: itemIndex) topRight - self borderInset origin!
 
@@ -91,9 +84,11 @@ paintEdgeOn: aCanvas
 				grfFlags: BF_RECT]!
 
 paintItem: aMenuItem on: aCanvas in: aRectangle 
-	| aPoint offset |
+	| aPoint offset border imageWidth |
 	aPoint := aRectangle origin.
-	offset := self menu hasSharedImageColumn ifTrue: [0] ifFalse: [self imageExtent x].
+	border := SystemMetrics current paddedBorderThickness.
+	imageWidth := self imageExtent x.
+	offset := border + (self menu hasSharedImageColumn ifTrue: [0] ifFalse: [imageWidth]).
 	self 
 		paintItemImage: aMenuItem
 		on: aCanvas
@@ -105,12 +100,12 @@ paintItem: aMenuItem on: aCanvas in: aRectangle
 	self 
 		paintItemAccelerator: aMenuItem
 		on: aCanvas
-		in: (aRectangle insetOriginBy: acceleratorOffset @ 1).
+		in: (aRectangle insetOriginBy: acceleratorOffset @ 1 cornerBy: (imageWidth + border) @ 0).
 	aMenuItem size = 0 
 		ifFalse: [self drawArrowOn: aCanvas in: (aRectangle insetOriginBy: submenuOffset @ 0)]!
 
 paintItemAccelerator: aMenuItem on: aCanvas in: aRectangle 
-	"Private - Paint the accelerator key at origin."
+	"Private - Paint the accelerator key in the specified Rectangle."
 
 	| keyCode text |
 	keyCode := aMenuItem acceleratorKey.
@@ -122,15 +117,17 @@ paintItemAccelerator: aMenuItem on: aCanvas in: aRectangle
 	aCanvas 
 		formatText: text
 		in: aRectangle
-		flags: self drawTextFlags!
+		flags: self drawTextFlags | DT_RIGHT!
 
 paintSeparatorOn: aCanvas in: aRectangle 
-	"Private - Paint a separator on origin."
+	"Private - Paint a separator in the specified Rectangle."
 
+	| offset |
+	offset := textOffset - SystemMetrics current paddedBorderThickness.
 	UserLibrary default 
 		drawEdge: aCanvas asParameter
 		qrc: (RECT 
-				left: aRectangle left + 1
+				left: aRectangle left + offset
 				top: aRectangle centerY
 				right: aRectangle right - 1
 				bottom: aRectangle bottom)
@@ -138,16 +135,18 @@ paintSeparatorOn: aCanvas in: aRectangle
 		grfFlags: BF_TOP!
 
 updateGeometry
-	| menu items menuButtonWidth |
+	"Private - The contents of the receivers menu has changed. This could cause the view to resize, etc."
+
+	| last menu items imageWidth metrics |
 	menu := self menu.
 	items := menu items.
-	menuButtonWidth := self imageExtent x.
-	textOffset := menuButtonWidth + SystemMetrics current menuImageTextGap.
+	imageWidth := self imageExtent x.
+	metrics := SystemMetrics current.
+	textOffset := imageWidth + metrics menuImageTextGap.
 	menu hasSharedImageColumn 
 		ifFalse: 
-			[(items anySatisfy: [:each | each image notNil]) 
-				ifTrue: [textOffset := textOffset + menuButtonWidth]].
-	acceleratorOffset := textOffset + self horizontalSpacer 
+			[(items anySatisfy: [:each | each image notNil]) ifTrue: [textOffset := textOffset + imageWidth]].
+	acceleratorOffset := textOffset + metrics menuTextAcceleratorGap 
 				+ (items inject: 0 into: [:max :each | max max: (self widthOfItemText: each)]).
 	submenuOffset := acceleratorOffset 
 				+ (items inject: 0 into: [:max :each | max max: (self widthOfItemAccelerator: each)]).
@@ -155,27 +154,18 @@ updateGeometry
 	the width of the check mark column to the right hand side. This makes for better symmetry
 	when the checkmark column is present, but is a cosmetic bug when the checkmark column is
 	disabled. Partly because of that we don't support the no-checkmark mode."
-	itemWidth := submenuOffset + menuButtonWidth!
-
-updateMenu
-	"The contents of the receivers menu has changed. This could cause the view to resize, etc."
-
-	| last |
-	super updateMenu.
-	self updateGeometry.
+	itemWidth := submenuOffset + imageWidth + (metrics edgeExtent x * 2).
 	last := self itemRect: self menu size.
 	self extent: last bottomRight + self borderInset corner! !
 !ContextMenuComposerView categoriesFor: #borderInset!constants!private! !
-!ContextMenuComposerView categoriesFor: #dividerHeight!accessing!private! !
 !ContextMenuComposerView categoriesFor: #insertBefore:position:!private!testing! !
 !ContextMenuComposerView categoriesFor: #itemHeight!constants!private! !
 !ContextMenuComposerView categoriesFor: #itemRect:!accessing!private! !
 !ContextMenuComposerView categoriesFor: #menuColor!private!tracking! !
-!ContextMenuComposerView categoriesFor: #originForSubmenu:!accessing!public! !
+!ContextMenuComposerView categoriesFor: #originForSubmenu:!accessing!private! !
 !ContextMenuComposerView categoriesFor: #paintEdgeOn:!painting!private! !
 !ContextMenuComposerView categoriesFor: #paintItem:on:in:!painting!private! !
 !ContextMenuComposerView categoriesFor: #paintItemAccelerator:on:in:!painting!private! !
 !ContextMenuComposerView categoriesFor: #paintSeparatorOn:in:!painting!private! !
 !ContextMenuComposerView categoriesFor: #updateGeometry!private!updating! !
-!ContextMenuComposerView categoriesFor: #updateMenu!public!updating! !
 
