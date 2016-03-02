@@ -36,8 +36,7 @@ addItem: menuItem view: menuView index: index
 	destinationMenu := menuView menu.
 	self update: menuView
 		do: 
-			[
-			destinationMenu insertItem: menuItem at: index.
+			[destinationMenu insertItem: menuItem at: index.
 			self generateMnemonicConflicts: menuView.
 			self generateAcceleratorConflicts]!
 
@@ -155,11 +154,11 @@ generateMnemonicConflicts: menuView
 	menuView generateMnemonicConflicts!
 
 hasClipboard
-	"Private - Answer true if there is an item on the clipboard"
+	"Private - Answer true if there is a menu item on the clipboard"
 
-	| class |
-	class := Clipboard current getObjectClassIfNone: [^false].
-	^(class includesBehavior: Menu) or: [class includesBehavior: MenuItem]!
+	^(Clipboard current getObjectClassIfNone: []) 
+		ifNil: [false]
+		ifNotNil: [:class | (class includesBehavior: Menu) or: [class includesBehavior: MenuItem]]!
 
 initialize
 	"Private - Initialize the state of the receiver."
@@ -309,30 +308,28 @@ onItemIn: aView selectedAtIndex: index
 	Note that we minimize the invalidating of the menu view to include only the
 	old and new selection rectangles."
 
-	| currentView |
+	| currentView oldIndex |
 	currentView := self selectionView.
-	(currentView ~~ aView or: [currentView selectionByIndex ~= index]) 
-		ifTrue: 
-			[| oldIndex |
-			self closeSubmenuViewsOf: aView.
-			oldIndex := aView selectionByIndex.
-			aView selectionByIndex: index.
-			oldIndex == 0 ifFalse: [aView invalidateRect: (aView itemRect: oldIndex) erase: false].
-			aView invalidateRect: (aView itemRect: index) erase: false.
-			self openSelectedSubmenuOf: aView]!
+	(currentView ~~ aView or: [currentView selectionByIndex ~= index]) ifFalse: [^self].
+	self closeSubmenuViewsOf: aView.
+	oldIndex := aView selectionByIndex.
+	aView selectionByIndex: index.
+	oldIndex == 0 ifFalse: [aView invalidateRect: (aView itemRect: oldIndex) erase: false].
+	aView invalidateRect: (aView itemRect: index) erase: false.
+	self openSelectedSubmenuOf: aView!
 
-onMenuClicked: aMouseEvent
-	| index menu |
-	menu := aMouseEvent window.
-	index := menu itemAt: aMouseEvent position.
-	index == 0 ifTrue: [^0].
-	self arena onItemIn: menu selectedAtIndex: index.
-	menu setFocus.
-	self arena 
-		beginDrag: aMouseEvent
-		of: index
-		in: menu
-!
+onMenuClicked: aMouseEvent 
+	| index |
+	index := self trackMouse: aMouseEvent.
+	index isZero 
+		ifFalse: 
+			[self arena 
+				beginDrag: aMouseEvent
+				of: index
+				in: aMouseEvent window]!
+
+onMenuTrack: aMouseEvent 
+	self trackMouse: aMouseEvent!
 
 onViewOpened
 	"Private - The receiver's view has been connected.
@@ -357,7 +354,7 @@ onViewOpened
 	menuView := self openMenu: self menu at: self topMenuInset.
 	self onItemIn: menuView selectedAtIndex: 1!
 
-openMenu: aMenu at: position
+openMenu: aMenu at: position 
 	"Private - Create a new view onto aMenu an open it to the
 	receivers view at position. Answer menuView."
 
@@ -367,10 +364,13 @@ openMenu: aMenu at: position
 	menuView := aMenu composerViewClass new.
 	menuViews addLast: menuView.
 	self arena addSubView: menuView.
-	menuView 
+	menuView
 		when: #leftButtonPressed:
-		send: #onMenuClicked:
-		to: self.
+			send: #onMenuClicked:
+			to: self;
+		when: #mouseMoved:
+			send: #onMenuTrack:
+			to: self.
 	menuView
 		position: position;
 		model: aMenu asValue.
@@ -479,6 +479,16 @@ topMenuInset
 
 	^10@10!
 
+trackMouse: aMouseEvent 
+	| menu index |
+	menu := aMouseEvent window.
+	index := menu itemAt: aMouseEvent position.
+	index == 0 
+		ifFalse: 
+			[self arena onItemIn: menu selectedAtIndex: index.
+			menu setFocus].
+	^index!
+
 untitledPrefix
 	"Private - Answer the prefix to be used for as yet untitled menus and items."
 
@@ -520,6 +530,7 @@ update: aMenuComposerView do: operation
 !MenuComposer categoriesFor: #onItemFrom:at:droppedBefore:copy:!drag & drop!event handling!private! !
 !MenuComposer categoriesFor: #onItemIn:selectedAtIndex:!event handling!private! !
 !MenuComposer categoriesFor: #onMenuClicked:!event handling!private! !
+!MenuComposer categoriesFor: #onMenuTrack:!event handling!private! !
 !MenuComposer categoriesFor: #onViewOpened!adding!private! !
 !MenuComposer categoriesFor: #openMenu:at:!operations!private! !
 !MenuComposer categoriesFor: #openSelectedSubmenuOf:!operations!private! !
@@ -531,6 +542,7 @@ update: aMenuComposerView do: operation
 !MenuComposer categoriesFor: #selectionView!private!selection! !
 !MenuComposer categoriesFor: #stripUntitled:!operations!private! !
 !MenuComposer categoriesFor: #topMenuInset!constants!private! !
+!MenuComposer categoriesFor: #trackMouse:!helpers!private! !
 !MenuComposer categoriesFor: #untitledPrefix!constants!private! !
 !MenuComposer categoriesFor: #update:do:!operations!private! !
 
