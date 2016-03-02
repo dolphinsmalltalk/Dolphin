@@ -213,7 +213,6 @@
     <ClInclude Include="..\STMethod.h" />
     <ClInclude Include="..\STMethodContext.h" />
     <ClInclude Include="..\STObject.h" />
-    <ClInclude Include="..\STPoint.h" />
     <ClInclude Include="..\STProcess.h" />
     <ClInclude Include="..\STStackFrame.h" />
     <ClInclude Include="..\STStream.h" />
@@ -237,6 +236,6 @@
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
-    <Import Project="$(SolutionDir)dolphin.targets"/>
+    <Import Project="$(SolutionDir)dolphin.targets" />
   </ImportGroup>
 </Project>
