@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk XP 2002 release 5.05"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Refactoring subclass: #ExpandReferencedPoolsRefactoring
 	instanceVariableNames: 'pools fromClass parseTree toClasses'
@@ -43,7 +43,13 @@ forMethod: aParseTree fromClass: aClass toClasses: classCollection
 	toClasses := classCollection collect: [:each | self model classFor: each]!
 
 hasPoolsToMove
-	^pools notEmpty!
+	^pools anySatisfy: 
+			[:eachPoolName | 
+			toClasses anySatisfy: 
+					[:eachClass | 
+					| nonMetaClass |
+					nonMetaClass := eachClass nonMetaclass.
+					(nonMetaClass definesPoolDictionary: eachPoolName) not]]!
 
 movePool: aSymbol toClass: aClass 
 	| nonMetaClass |
