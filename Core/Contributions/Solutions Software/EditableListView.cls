@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ListView subclass: #EditableListView
 	instanceVariableNames: 'activeColumn multSelectStack _spare0 rowForecolor rowBackcolor rowHeight smallImageExtent hasVirtualGridlines'
@@ -712,7 +712,7 @@ rowForecolor: anObject
 
 rowHeight
 
-	^rowHeight!
+	^rowHeight ifNil: [1]!
 
 rowHeight: anObject
 	rowHeight := anObject!
