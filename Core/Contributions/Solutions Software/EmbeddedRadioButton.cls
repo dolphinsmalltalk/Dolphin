@@ -1,14 +1,14 @@
 "Filed out from Dolphin Smalltalk 7"!
 
-CheckBox subclass: #EmbeddedCheckBox
+RadioButton subclass: #EmbeddedRadioButton
 	instanceVariableNames: 'textExtent text'
 	classVariableNames: ''
 	poolDictionaries: 'ThemeConstants'
 	classInstanceVariableNames: ''!
-EmbeddedCheckBox guid: (GUID fromString: '{611F80AE-2E05-4E6F-B0C8-A0ADBD00FF31}')!
-EmbeddedCheckBox comment: ''!
-!EmbeddedCheckBox categoriesForClass!MVP-Views! !
-!EmbeddedCheckBox methodsFor!
+EmbeddedRadioButton guid: (GUID fromString: '{326BF942-1142-4A1D-A365-F4B0DDA88FFE}')!
+EmbeddedRadioButton comment: ''!
+!EmbeddedRadioButton categoriesForClass!MVP-Views! !
+!EmbeddedRadioButton methodsFor!
 
 buttonExtent
 
@@ -17,7 +17,7 @@ buttonExtent
 	self isThemed ifFalse: [^(UserLibrary default getSystemMetrics: SM_CXMENUCHECK)@(UserLibrary default getSystemMetrics: SM_CYMENUCHECK)].
 
 	size := SIZE new.
-	ThemeLibrary default getThemePartSize: self theme hdc: self canvas asParameter iPartId: BP_CHECKBOX iStateId: CBS_UNCHECKEDNORMAL prc: nil eSize: TS_DRAW psz: size.
+	ThemeLibrary default getThemePartSize: self theme hdc: self canvas asParameter iPartId: BP_RADIOBUTTON iStateId: RBS_UNCHECKEDNORMAL prc: nil eSize: TS_DRAW psz: size.
 	^size asObject!
 
 createEmbeddedIn: aView
@@ -37,12 +37,12 @@ createEmbeddedIn: aView
 display: aValue in: aRectangle on: aCanvas forecolor: fColor backcolor: bColor editable: aBoolean hot: hBoolean
 
 	| buttonOffset textOffset |
-
+	
 	self hasText 
 		ifTrue: [self textExtent: (aCanvas textExtent: self text)]
 		ifFalse: [self textExtent: 0@0].
 
-	buttonOffset := (self displayOffset + (((aRectangle width - self totalExtent x) @ (aRectangle height - self buttonExtent y)) // 2) rounded) max: 0@0.
+	buttonOffset := self displayOffset + (((aRectangle width - self totalExtent x) @ (aRectangle height - self buttonExtent y)) // 2) rounded.
 	textOffset := self textOffset + ((buttonOffset x + self buttonExtent x) @ ((aRectangle height - self textExtent y) // 2)) rounded.
 
 	self isThemed
@@ -61,7 +61,7 @@ drawNonThemed: aValue in: aRectangle on: aCanvas buttonOffset: buttonOffset text
 
 	| uState textPos |
 
-	uState := DFCS_BUTTONCHECK.
+	uState := DFCS_BUTTONRADIO.
 
 	self isEnabled
 		ifTrue: [aValue ifTrue: [uState := uState | DFCS_CHECKED]]
@@ -83,12 +83,12 @@ drawThemed: aValue in: aRectangle on: aCanvas buttonOffset: buttonOffset textOff
 
 	| iState textRect |
 
-	iState := aValue ifTrue: [CBS_CHECKEDNORMAL] ifFalse: [CBS_UNCHECKEDNORMAL].
+	iState := aValue ifTrue: [RBS_CHECKEDNORMAL] ifFalse: [RBS_UNCHECKEDNORMAL].
 
 	ThemeLibrary default 
 		drawThemeBackground: self theme 
 		hdc: aCanvas asParameter 
-		iPartId: BP_CHECKBOX
+		iPartId: BP_RADIOBUTTON
 		iStateId: iState
 		pRect: ((aRectangle origin + buttonOffset) extent: self buttonExtent) asParameter 
 		pClipRect: aRectangle asParameter.
@@ -99,7 +99,7 @@ drawThemed: aValue in: aRectangle on: aCanvas buttonOffset: buttonOffset textOff
 		ThemeLibrary default 
 			drawThemeText: self theme 
 			hdc: aCanvas asParameter 
-			iPartId: BP_CHECKBOX
+			iPartId: BP_RADIOBUTTON
 			iStateId: iState
 			pszText: self text asUnicodeString 
 			iCharCount: -1 dwTextFlags: 0 dwTextFlags2: 0 
@@ -158,7 +158,7 @@ showIn: aRectangle
 
 	| offset |
 
-	offset := (aRectangle extent - self totalExtent) // 2.
+	offset := ((aRectangle extent - self totalExtent) // 2) rounded.
 
 	self
 		rectangle: (aRectangle insetBy: offset);
@@ -174,7 +174,7 @@ stbSaveOn: anSTBOutFiler
 		ifFalse: [super stbSaveOn: anSTBOutFiler]!
 
 text
-	^text!
+	^text ifNil: ['']!
 
 text: aString
 	text := aString.
@@ -202,45 +202,27 @@ totalExtent
 
 	^(self buttonExtent x + self textOffset x + self textExtent x)@(self buttonExtent y max: self textExtent y).
 ! !
-!EmbeddedCheckBox categoriesFor: #buttonExtent!accessing!public! !
-!EmbeddedCheckBox categoriesFor: #createEmbeddedIn:!initialize/release!public! !
-!EmbeddedCheckBox categoriesFor: #display:in:on:forecolor:backcolor:editable:hot:!displaying!public! !
-!EmbeddedCheckBox categoriesFor: #displayOffset!accessing!public! !
-!EmbeddedCheckBox categoriesFor: #displayOnFormats!accessing!public! !
-!EmbeddedCheckBox categoriesFor: #drawNonThemed:in:on:buttonOffset:textOffset:!displaying!private! !
-!EmbeddedCheckBox categoriesFor: #drawThemed:in:on:buttonOffset:textOffset:!displaying!private! !
-!EmbeddedCheckBox categoriesFor: #hasEmbeddedHotTracking!public!testing! !
-!EmbeddedCheckBox categoriesFor: #hasText!public!testing! !
-!EmbeddedCheckBox categoriesFor: #isDisplayOwnerDrawn!public!testing! !
-!EmbeddedCheckBox categoriesFor: #onCursoredLeft!event handling!public! !
-!EmbeddedCheckBox categoriesFor: #onKillFocus!event handling!public! !
-!EmbeddedCheckBox categoriesFor: #onRequestDeactivate!event handling!public! !
-!EmbeddedCheckBox categoriesFor: #preTranslateKeyboardInput:!event handling!public! !
-!EmbeddedCheckBox categoriesFor: #showIn:!operations!public! !
-!EmbeddedCheckBox categoriesFor: #stbSaveOn:!binary filing!public! !
-!EmbeddedCheckBox categoriesFor: #text!accessing!public! !
-!EmbeddedCheckBox categoriesFor: #text:!accessing!public! !
-!EmbeddedCheckBox categoriesFor: #textExtent!accessing!public! !
-!EmbeddedCheckBox categoriesFor: #textExtent:!accessing!public! !
-!EmbeddedCheckBox categoriesFor: #textOffset!accessing!public! !
-!EmbeddedCheckBox categoriesFor: #themePartName!accessing!public! !
-!EmbeddedCheckBox categoriesFor: #totalExtent!accessing!public! !
-
-!EmbeddedCheckBox class methodsFor!
-
-stbConvertFrom: anSTBClassFormat
-
-	^[:data || newInstance |
-	newInstance := self basicNew.
-	1 to: 12 do: [:i | newInstance instVarAt: i put: (data at: i)].
-	newInstance baseStyle: newInstance defaultStyle first; extendedStyle: newInstance defaultStyle last.
-	newInstance]!
-
-stbVersion
-
-	"Reimplemented in ControlView hierarchy"
-
-	^20! !
-!EmbeddedCheckBox class categoriesFor: #stbConvertFrom:!binary filing!public! !
-!EmbeddedCheckBox class categoriesFor: #stbVersion!binary filing!public! !
+!EmbeddedRadioButton categoriesFor: #buttonExtent!accessing!public! !
+!EmbeddedRadioButton categoriesFor: #createEmbeddedIn:!initialize/release!public! !
+!EmbeddedRadioButton categoriesFor: #display:in:on:forecolor:backcolor:editable:hot:!displaying!public! !
+!EmbeddedRadioButton categoriesFor: #displayOffset!accessing!public! !
+!EmbeddedRadioButton categoriesFor: #displayOnFormats!accessing!public! !
+!EmbeddedRadioButton categoriesFor: #drawNonThemed:in:on:buttonOffset:textOffset:!displaying!private! !
+!EmbeddedRadioButton categoriesFor: #drawThemed:in:on:buttonOffset:textOffset:!displaying!private! !
+!EmbeddedRadioButton categoriesFor: #hasEmbeddedHotTracking!public!testing! !
+!EmbeddedRadioButton categoriesFor: #hasText!public!testing! !
+!EmbeddedRadioButton categoriesFor: #isDisplayOwnerDrawn!public!testing! !
+!EmbeddedRadioButton categoriesFor: #onCursoredLeft!event handling!public! !
+!EmbeddedRadioButton categoriesFor: #onKillFocus!event handling!public! !
+!EmbeddedRadioButton categoriesFor: #onRequestDeactivate!event handling!public! !
+!EmbeddedRadioButton categoriesFor: #preTranslateKeyboardInput:!event handling!public! !
+!EmbeddedRadioButton categoriesFor: #showIn:!operations!public! !
+!EmbeddedRadioButton categoriesFor: #stbSaveOn:!binary filing!public! !
+!EmbeddedRadioButton categoriesFor: #text!accessing!public! !
+!EmbeddedRadioButton categoriesFor: #text:!accessing!public! !
+!EmbeddedRadioButton categoriesFor: #textExtent!accessing!public! !
+!EmbeddedRadioButton categoriesFor: #textExtent:!accessing!public! !
+!EmbeddedRadioButton categoriesFor: #textOffset!accessing!public! !
+!EmbeddedRadioButton categoriesFor: #themePartName!accessing!public! !
+!EmbeddedRadioButton categoriesFor: #totalExtent!accessing!public! !
 

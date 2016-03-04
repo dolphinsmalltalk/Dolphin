@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 TextEdit subclass: #EmbeddedTextEdit
 	instanceVariableNames: 'offset'
@@ -39,19 +39,7 @@ createEmbeddedIn: aView
 
 defaultOffset
 
-	"Works for several fonts (set an explicit offset if not)"
-
-	| x y |
-
-	(self parentView primaryColumn editor == self)
-		ifTrue: [x := -1]
-		ifFalse: [x := 3].
-
-	y := (10 - (self actualFont pointSize)) max: 0.
-	self parentView isMultiline ifTrue:
-		[y := (((self actualFont pixelSize + 2) * (self parentView rowHeight - 1)) + 1) //2].
-
-	^x@y!
+	^self parentView defaultOffsetForEditor: self!
 
 defaultWindowExStyle
 	"Private - Answer the default extended window creation style.
@@ -64,16 +52,16 @@ defaultWindowStyle
 
 	^(super defaultWindowStyle) | ES_AUTOHSCROLL!
 
-display: aString in: aRectangle on: aCanvas forecolor: fColor backcolor: bColor 
+display: aString in: aRectangle on: aCanvas forecolor: fColor backcolor: bColor editable: aBoolean hot: hBoolean
 
-	| text |
+	| text displayOffset |
 
 	text := aString ifNil: [''].
-	offset := self actualOffset.
+	displayOffset := self actualOffset + (3@0).
 	
 	aCanvas 
 		forecolor: fColor;
-		formatText: text in: ((aRectangle origin + offset) extent: (aRectangle extent - offset))!
+		formatText: text in: ((aRectangle origin + displayOffset) extent: (aRectangle extent - displayOffset))!
 
 displayOnFormats
 
@@ -84,6 +72,10 @@ editRectFor: aRectangle
 	"Private - Return the rectangle to use for the editor within the grid cell aRectangle"
 
 	^(aRectangle topLeft + self actualOffset) extent: (aRectangle extent - (self actualOffset + (0@1)))!
+
+hasEmbeddedHotTracking
+
+	^false!
 
 isDisplayOwnerDrawn
 
@@ -151,7 +143,7 @@ show
 
 showIn: aRectangle
 
-	self 
+	self
 		rectangle: (self editRectFor: aRectangle);
 		show!
 
@@ -170,9 +162,10 @@ stbSaveOn: anSTBOutFiler
 !EmbeddedTextEdit categoriesFor: #defaultOffset!accessing!public! !
 !EmbeddedTextEdit categoriesFor: #defaultWindowExStyle!constants!private! !
 !EmbeddedTextEdit categoriesFor: #defaultWindowStyle!constants!private! !
-!EmbeddedTextEdit categoriesFor: #display:in:on:forecolor:backcolor:!displaying!public! !
+!EmbeddedTextEdit categoriesFor: #display:in:on:forecolor:backcolor:editable:hot:!displaying!public! !
 !EmbeddedTextEdit categoriesFor: #displayOnFormats!binary filing!public! !
 !EmbeddedTextEdit categoriesFor: #editRectFor:!displaying!private! !
+!EmbeddedTextEdit categoriesFor: #hasEmbeddedHotTracking!public!testing! !
 !EmbeddedTextEdit categoriesFor: #isDisplayOwnerDrawn!public!testing! !
 !EmbeddedTextEdit categoriesFor: #offset!accessing!public! !
 !EmbeddedTextEdit categoriesFor: #offset:!accessing!public! !

@@ -1,7 +1,8 @@
 | package |
 package := Package name: 'SSW ListView Extensions'.
 package paxVersion: 1;
-	basicComment: '©2006 Solutions Software Limited'.
+	basicComment: '© Solutions Software/John Aspinall 2016
+Provided under the same licence terms as Dolphin Smalltalk 7'.
 
 package basicPackageVersion: '0.001'.
 
@@ -21,16 +22,19 @@ package methodNames
 	add: #ListView -> #hasVirtualGridLines:;
 	add: #ListView -> #headerControl;
 	add: #ListView -> #headerRect;
+	add: #ListView -> #hideToolTipWindow;
 	add: #ListView -> #horzScrollPos;
 	add: #ListView -> #isHorzPaging;
 	add: #ListView -> #isHorzPaging:;
 	add: #ListView -> #lvmGetItemCount;
-	add: #ListView -> #lvmGetSubItemRect:bounding:;
+	add: #ListView -> #lvmGetToolTips;
 	add: #ListView -> #lvmGetTopIndex;
 	add: #ListView -> #nmCustomDraw:;
 	add: #ListView -> #onHScroll:;
 	add: #ListView -> #onViewOpened;
 	add: #ListView -> #rowPixelHeight;
+	add: #ListView -> #smallImageExtent;
+	add: #ListView -> #themePartName;
 	add: #ListView -> #vertScrollPos;
 	yourself.
 
@@ -169,6 +173,10 @@ headerRect
 	^rect
 !
 
+hideToolTipWindow
+
+	self lvmGetToolTips ifNotNil: [ :hwnd | UserLibrary default showWindow: hwnd nCmdShow: SW_HIDE]!
+
 horzScrollPos
 
 	| struct |
@@ -191,20 +199,9 @@ lvmGetItemCount
 
 	^self sendMessage: LVM_GETITEMCOUNT!
 
-lvmGetSubItemRect: pointIndex bounding: boundingValue
-	"Private - Answer a bounding Rectangle for all or part of a subitem.
-	pointIndex is itemIndex@subitemIndex"
+lvmGetToolTips
 
-	| rect |
-	rect := RECT new.
-	rect 
-		top: pointIndex y; 
-		left: boundingValue.
-
-	(self sendMessage: "LVM_GETSUBITEMRECT"LVM_HITTEST+38 wParam: pointIndex x lpParam: rect) == 0
-		ifTrue: [^self errorInCommonControlCall: pointIndex x].
-
-	^rect asRectangle!
+	^self sendMessage: LVM_GETTOOLTIPS!
 
 lvmGetTopIndex
 
@@ -263,7 +260,15 @@ rowPixelHeight
 
 	"Estimated"
 
-	^(self smallImageExtent y + 1) max: (self actualFont pixelSize + 6)!
+	^(self smallImageExtent y + 1) max: (self actualFont pixelSize + 9)!
+
+smallImageExtent
+
+	^Icon smallExtent!
+
+themePartName
+
+	^#LISTVIEW!
 
 vertScrollPos
 
@@ -283,16 +288,19 @@ vertScrollPos
 !ListView categoriesFor: #hasVirtualGridLines:!accessing!public! !
 !ListView categoriesFor: #headerControl!public!updating! !
 !ListView categoriesFor: #headerRect!public!updating! !
+!ListView categoriesFor: #hideToolTipWindow!operations!public! !
 !ListView categoriesFor: #horzScrollPos!enquiries!public! !
 !ListView categoriesFor: #isHorzPaging!accessing!public! !
 !ListView categoriesFor: #isHorzPaging:!accessing!public! !
 !ListView categoriesFor: #lvmGetItemCount!accessing!public! !
-!ListView categoriesFor: #lvmGetSubItemRect:bounding:!geometry!private! !
+!ListView categoriesFor: #lvmGetToolTips!accessing!public! !
 !ListView categoriesFor: #lvmGetTopIndex!accessing!public! !
 !ListView categoriesFor: #nmCustomDraw:!event handling!public! !
 !ListView categoriesFor: #onHScroll:!event handling!public! !
 !ListView categoriesFor: #onViewOpened!event handling!public! !
 !ListView categoriesFor: #rowPixelHeight!helpers!public! !
+!ListView categoriesFor: #smallImageExtent!accessing!private! !
+!ListView categoriesFor: #themePartName!constants!public! !
 !ListView categoriesFor: #vertScrollPos!enquiries!public! !
 
 "End of package definition"!

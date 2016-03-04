@@ -1,7 +1,8 @@
 | package |
 package := Package name: 'SSW Widget Development'.
 package paxVersion: 1;
-	basicComment: '©2006 Solutions Software Limited'.
+	basicComment: '© Solutions Software/John Aspinall 2016
+Provided under the same licence terms as Dolphin Smalltalk 7'.
 
 
 package methodNames
@@ -9,6 +10,8 @@ package methodNames
 	add: 'EditableListViewColumn class' -> #publishedAspectsOfInstances;
 	add: 'EmbeddedTextEdit class' -> #publishedAspectsOfInstances;
 	add: 'FormattedTextEdit class' -> #publishedAspectsOfInstances;
+	add: 'OwnerDrawnButton class' -> #publishedAspectsOfInstances;
+	add: 'TextAndImageButton class' -> #publishedAspectsOfInstances;
 	yourself.
 
 package binaryGlobalNames: (Set new
@@ -60,13 +63,16 @@ publishedAspectsOfInstances
 					'EmbeddedFormattedTextEdit newForDate'
 					'EmbeddedMultilineTextEdit new'
 					'EmbeddedCheckBox new'
-					'EmbeddedComboBox new'));
+					'EmbeddedRadioButton new'
+					'EmbeddedComboBox new'
+					'EmbeddedPushButton new'));
     		add: (Aspect block: #setContentsBlock);
     		add: (Aspect block: #preDrawBlock);
 		add: (Aspect block: #getSortContentsBlock);
 		add: (Aspect block: #isEditableBlock);
 		add: (Aspect color: #forecolor);
 		add: (Aspect color: #backcolor);
+		add: (Aspect string: #infoTip);
     		yourself
 ! !
 !EditableListViewColumn class categoriesFor: #publishedAspectsOfInstances!public! !
@@ -92,6 +98,27 @@ publishedAspectsOfInstances
     		add: (Aspect set: #placeholderChar);
     		yourself! !
 !FormattedTextEdit class categoriesFor: #publishedAspectsOfInstances!constants!development!public! !
+
+!OwnerDrawnButton class methodsFor!
+
+publishedAspectsOfInstances
+	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
+
+	^super publishedAspectsOfInstances
+		add: (Aspect dictionary: #transitionDurations);
+		yourself! !
+!OwnerDrawnButton class categoriesFor: #publishedAspectsOfInstances!development!public! !
+
+!TextAndImageButton class methodsFor!
+
+publishedAspectsOfInstances
+	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
+
+	^super publishedAspectsOfInstances
+		add: (Aspect name: #imageExtent);
+		add: (Aspect menu: #dropDownMenu);
+		yourself! !
+!TextAndImageButton class categoriesFor: #publishedAspectsOfInstances!development!public! !
 
 "End of package definition"!
 
