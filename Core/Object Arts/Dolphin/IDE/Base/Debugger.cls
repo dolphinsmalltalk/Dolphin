@@ -1,7 +1,7 @@
 "Filed out from Dolphin Smalltalk 7"!
 
 SmalltalkToolShell subclass: #Debugger
-	instanceVariableNames: 'process topFrame temp tempCount depth flags breakWhen stackPresenter sourcePresenter tempsPresenter inspectorPresenter breakAction suspendingList _method refactoringTool'
+	instanceVariableNames: 'process topFrame temp tempCount depth flags breakWhen stackPresenter sourcePresenter tempsPresenter inspectorPresenter breakAction suspendingList _method refactoringTool debugState'
 	classVariableNames: 'AnimateMask AnimatePause DefaultStackDepth DisassemblyMask EnableDynamicMenus MainMask RestartOnMethodSave ResumableMask RunMask ShowWalkbacks SkipTable StackDepthIncrement'
 	poolDictionaries: 'CompilerFlags OpcodePool'
 	classInstanceVariableNames: ''!
@@ -209,11 +209,31 @@ break: interruptFrame
 	self suspend
 	"N.B. There must be no further code after this point"!
 
-breakFrame: aStackFrame 
-	"Private - Set the frame on which to break."
+breakAfter: frame 
+	self debugState: 'Step through'.
+	self breakFrame: frame.
+	self makeDebugFrame: frame sender.
+	self runDebuggedProcess!
 
+breakFrame: aStackFrame 
 	self makeDebugFrame: aStackFrame.
-	self breakWhen: [:iFrame | iFrame index <= aStackFrame index]!
+	self breakWhen: 
+			[:iFrame | 
+			(self shouldSkipOutOf: iFrame method) 
+				ifTrue: 
+					[self breakAfter: iFrame.
+					false]
+				ifFalse: [iFrame index <= aStackFrame index]]!
+
+breakFrameOrMethod: aStackFrame 
+	self makeDebugFrame: aStackFrame.
+	self breakWhen: 
+			[:iFrame | 
+			(self shouldSkipOutOf: iFrame method) 
+				ifTrue: 
+					[self breakAfter: iFrame.
+					false]
+				ifFalse: [iFrame index <= aStackFrame index or: [iFrame method = aStackFrame method]]]!
 
 breakWhen: discriminator 
 	"Private - Set the break decision test to the monadic valuable, discriminator. The argument
@@ -420,7 +440,11 @@ createSchematicWiring
 			to: self;
 		when: #methodRemoved:
 			send: #onMethodRemoved:
-			to: self!
+			to: self.
+	self methodSpyManager 
+		when: #methodSpiesCompiledIn:
+		send: #onMethodSpiesCompiledIn:
+		to: self!
 
 cursorIPRange
 	"Private - Answer the IP range which includes the current cursor position in the source
@@ -450,6 +474,7 @@ debugState: aString
 	"Private - Set the subcaption for the debugger which displays something about the state of
 	the debugger."
 
+	debugState := aString.
 	self caption: process name printString, ' [', aString, ']'!
 
 defaultHelpId
@@ -695,6 +720,9 @@ markMethodAsUnbound: oldMethod
 			(eachMethod selector == selector and: [eachMethod methodClass == methodClass]) 
 				ifTrue: [list refreshAtIndex: eachIndex]]!
 
+methodSpyManager
+	^MethodSpyManager current!
+
 moreFrames
 	"Private - Increase the number of stack frames displayed in the call stack."
 
@@ -829,6 +857,29 @@ onHalt: aStackFrame
 onMethodRemoved: aCompiledMethod 
 	self markMethodAsUnbound: aCompiledMethod!
 
+onMethodSpiesCompiledIn: aCompiledMethod
+
+	"Check for a relevant change in spies originated here, and restart if necessary"
+
+	| myMethod |
+
+	"Crude test for origin of spy change
+	(self isOpen and: [(self view class focus ifNil: [^self]) topView = self view]) ifFalse: [^self]."
+
+	myMethod := self selectedMethod.
+	myMethod isNil ifTrue: [^self].
+
+	"Only restart if the current method is affected"
+	(myMethod methodClass = aCompiledMethod methodClass 
+		and: [myMethod selector = aCompiledMethod selector])
+			ifTrue: [self restartMethod]!
+
+onMethodSpyIn: aStackFrame 
+	"A method spy has been encountered in aStackFrame.
+	Treat this as a break if we are stepping"
+
+	debugState = 'Step Into' ifTrue: [self onHalt: aStackFrame]!
+
 onMethodUpdated: aCompilationResult 
 	"Private - The development system has updated or removed a <CompiledMethod>. Refresh any
 	relevant stack frames to indicate that they are now unbound if they use the old method."
@@ -934,7 +985,10 @@ onViewClosed
 	triggered by the devlopment system"
 
 	super onViewClosed.
-	self model removeEventsTriggeredFor: self!
+	self model removeEventsTriggeredFor: self.
+
+	"Unattach from the spy manager"
+	self methodSpyManager removeEventsTriggeredFor: self!
 
 onWalkback: titleString topFrame: aStackFrame resumable: aBoolean 
 	"Private - Bring up a walkback window on the receiver with the specified title and with
@@ -1087,6 +1141,10 @@ queryCommand: aCommandQuery
 	(#(#definitionsMenu #referencesMenu) identityIncludes: selector) 
 		ifTrue: 
 			[aCommandQuery isEnabled: true.
+			^true].
+	selector == #stepThrough 
+		ifTrue: 
+			[aCommandQuery isEnabled: runnable.
 			^true].
 	^(self queryFrameCommand: aCommandQuery) or: [super queryCommand: aCommandQuery]!
 
@@ -1576,6 +1634,9 @@ setVariablesList: anOrderedCollection
 	tempsPresenter list: anOrderedCollection.
 	tempsPresenter selectionByIndex: newSelection!
 
+shouldSkipOutOf: aMethod 
+	^aMethod methodClass == MethodSpy and: [aMethod selector == #handle]!
+
 showNextStatement
 	self frame = topFrame 
 		ifTrue: [self setSourceSelection]
@@ -1644,6 +1705,18 @@ stepOver
 	self breakFrame: frame.
 	self makeDebugFrame: frame sender.
 	self resume!
+
+stepThrough
+	| frame |
+	self debugState: 'Step through'.
+	frame := self frame.
+	frame isBlockFrame 
+		ifTrue: 
+			[self 
+				breakFrameOrMethod: (self frames detect: [:each | each ~~ frame and: [each method = frame method]])]
+		ifFalse: [self breakFrameOrMethod: frame].
+	self makeDebugFrame: frame sender.
+	self runDebuggedProcess!
 
 stubTextFor: aMessage inClass: aClass 
 	| source body |
@@ -1865,7 +1938,9 @@ variableAtIndex: anInteger put: anObject
 !Debugger categoriesFor: #beRunning!modes!private! !
 !Debugger categoriesFor: #blockedRestartWarning:!operations!private! !
 !Debugger categoriesFor: #break:!operations!private! !
+!Debugger categoriesFor: #breakAfter:!commands!private! !
 !Debugger categoriesFor: #breakFrame:!commands!private! !
+!Debugger categoriesFor: #breakFrameOrMethod:!commands!private! !
 !Debugger categoriesFor: #breakWhen:!accessing!private! !
 !Debugger categoriesFor: #browseDefinitions!commands!private! !
 !Debugger categoriesFor: #browseDefinitionsMatching:in:!private! !
@@ -1918,6 +1993,7 @@ variableAtIndex: anInteger put: anObject
 !Debugger categoriesFor: #mainView!accessing!private! !
 !Debugger categoriesFor: #makeDebugFrame:!helpers!private! !
 !Debugger categoriesFor: #markMethodAsUnbound:!helpers!private! !
+!Debugger categoriesFor: #methodSpyManager!accessing!public! !
 !Debugger categoriesFor: #moreFrames!commands!private! !
 !Debugger categoriesFor: #nameForArgument:!helpers!private! !
 !Debugger categoriesFor: #nilVariable!commands!private! !
@@ -1929,6 +2005,8 @@ variableAtIndex: anInteger put: anObject
 !Debugger categoriesFor: #onFrameSelectionChanging:!event handling!private! !
 !Debugger categoriesFor: #onHalt:!event handling!private! !
 !Debugger categoriesFor: #onMethodRemoved:!event handling!private! !
+!Debugger categoriesFor: #onMethodSpiesCompiledIn:!event handling!public! !
+!Debugger categoriesFor: #onMethodSpyIn:!event handling!private! !
 !Debugger categoriesFor: #onMethodUpdated:!event handling!private! !
 !Debugger categoriesFor: #onPromptToSaveChanges:!event handling!private! !
 !Debugger categoriesFor: #onStep:!event handling!private! !
@@ -1973,6 +2051,7 @@ variableAtIndex: anInteger put: anObject
 !Debugger categoriesFor: #setSelectedVariableTo:!commands!private! !
 !Debugger categoriesFor: #setSourceSelection!private!updating! !
 !Debugger categoriesFor: #setVariablesList:!private!updating! !
+!Debugger categoriesFor: #shouldSkipOutOf:!private!testing! !
 !Debugger categoriesFor: #showNextStatement!commands!private! !
 !Debugger categoriesFor: #skipMaskFor:!helpers!private! !
 !Debugger categoriesFor: #source!accessing!private! !
@@ -1982,6 +2061,7 @@ variableAtIndex: anInteger put: anObject
 !Debugger categoriesFor: #stepInto!commands!private! !
 !Debugger categoriesFor: #stepOut!commands!private! !
 !Debugger categoriesFor: #stepOver!commands!private! !
+!Debugger categoriesFor: #stepThrough!commands!private! !
 !Debugger categoriesFor: #stubTextFor:inClass:!helpers!private! !
 !Debugger categoriesFor: #suspend!operations!private! !
 !Debugger categoriesFor: #suspendProcess!operations!private! !
@@ -2090,9 +2170,16 @@ initializeSkipTable
 	self
 		skipSelector: #valueWithArguments:
 			of: EventMessageSend
-			type: 1.
-	"skipSelector: #at:ifAbsent: of: SharedLookupTable type: 0"
-	DebuggerMethodCategory initialize!
+			type: 1;
+		skipSelector: #handle
+			of: MethodSpy
+			type: 2;
+		skipSelector: #spy
+			of: Process
+			type: 2.
+	DebuggerMethodCategory initialize
+
+	"skipSelector: #at:ifAbsent: of: SharedLookupTable type: 0"!
 
 interrupts
 	^#(#(3 #debugBreak:) #(4 #singleStep:))!

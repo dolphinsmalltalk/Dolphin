@@ -285,15 +285,6 @@ spiedMethod: anSSWSpyMethod
 
 !SpyMethod class methodsFor!
 
-deprecatedIcon
-	"Private - Answers an Icon that can be used to represent a public instance of this class"
-
-	^self icon!
-
-icon
-
-	^SSWDevelopmentIconLibrary default spiedMethod!
-
 new: anInteger
 
 	"© 2002 Solutions Software
@@ -302,20 +293,6 @@ new: anInteger
 
 	^(super new: anInteger)
 		initSelector;
-		yourself!
-
-privateIcon
-	"Private - Answers an Icon that can be used to represent a private instance of this class"
-
-	^SSWDevelopmentIconLibrary default spiedMethodPrivate!
-
-publicIcon
-	"Private - Answers an Icon that can be used to represent a public instance of this class"
-
-	^self icon! !
-!SpyMethod class categoriesFor: #deprecatedIcon!constants!development!private! !
-!SpyMethod class categoriesFor: #icon!public! !
+		yourself! !
 !SpyMethod class categoriesFor: #new:!public! !
-!SpyMethod class categoriesFor: #privateIcon!constants!development!private! !
-!SpyMethod class categoriesFor: #publicIcon!constants!development!private! !
 

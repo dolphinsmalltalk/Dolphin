@@ -368,10 +368,6 @@ toggleLocallyEnabled
 
 !MethodSpy class methodsFor!
 
-icon
-
-	^SSWDevelopmentIconLibrary default methodSpy!
-
 new
 
 	"© 2002 Solutions Software"
@@ -401,7 +397,6 @@ publishedAspectsOfInstances
 simpleHaltSource
 
 	^'self halt.'! !
-!MethodSpy class categoriesFor: #icon!constants!development!instance creation!public! !
 !MethodSpy class categoriesFor: #new!instance creation!public! !
 !MethodSpy class categoriesFor: #newInstanceAspect:class:!constants!development!instance creation!public! !
 !MethodSpy class categoriesFor: #newSimpleHalt!instance creation!public! !

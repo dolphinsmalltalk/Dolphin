@@ -173,6 +173,15 @@ formattedCode
 formatterClass
 	^self class formatterClass!
 
+identityIndexOfNode: aNode 
+	| index |
+	index := 1.
+	self nodesDo: 
+			[:node | 
+			node == aNode ifTrue: [^index].
+			index := index + 1].
+	^nil!
+
 intersectsInterval: anInterval 
 	^(anInterval first between: self start and: self stop) 
 		or: [self start between: anInterval first and: anInterval last]!
@@ -256,6 +265,15 @@ methodNode
 
 newSource
 	^self formattedCode!
+
+nodeAtIndex: anInteger 
+	| index |
+	index := 1.
+	self nodesDo: 
+			[:node | 
+			index = anInteger ifTrue: [^node].
+			index := index + 1].
+	^nil!
 
 nodesDo: aBlock 
 	aBlock value: self.
@@ -378,6 +396,7 @@ whoDefines: aName
 !StProgramNode categoriesFor: #evaluatedFirst:!public!testing! !
 !StProgramNode categoriesFor: #formattedCode!accessing!public! !
 !StProgramNode categoriesFor: #formatterClass!accessing!public! !
+!StProgramNode categoriesFor: #identityIndexOfNode:!accessing!public! !
 !StProgramNode categoriesFor: #intersectsInterval:!public!testing! !
 !StProgramNode categoriesFor: #isAssignment!public!testing! !
 !StProgramNode categoriesFor: #isBlock!public!testing! !
@@ -402,6 +421,7 @@ whoDefines: aName
 !StProgramNode categoriesFor: #methodComments!accessing!public! !
 !StProgramNode categoriesFor: #methodNode!accessing!public! !
 !StProgramNode categoriesFor: #newSource!accessing!public! !
+!StProgramNode categoriesFor: #nodeAtIndex:!accessing!public! !
 !StProgramNode categoriesFor: #nodesDo:!iterating!public! !
 !StProgramNode categoriesFor: #outer!public! !
 !StProgramNode categoriesFor: #parent!accessing!public! !

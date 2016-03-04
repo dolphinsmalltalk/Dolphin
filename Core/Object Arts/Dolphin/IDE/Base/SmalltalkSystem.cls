@@ -2386,6 +2386,11 @@ onMethodRemoved: aCompiledMethod
 	self packageManager onMethodRemoved: aCompiledMethod.
 	self trigger: #methodRemoved: with: aCompiledMethod!
 
+onMethodTransparentlyUpdated: aCompilationResult 
+	"Transparent change therefore do not notify the package manager"
+
+	self trigger: #methodUpdated: with: aCompilationResult!
+
 onMethodUpdated: aCompilationResult 
 	"The method aCompiledMethod has been added to the system.
 	Inform interested parties"
@@ -4097,6 +4102,7 @@ wrapText: aString toWidth: max indent: colInteger tabWidth: tabInteger
 !SmalltalkSystem categoriesFor: #onMethodAdded:!event handling!public! !
 !SmalltalkSystem categoriesFor: #onMethodCategorized:!event handling!public! !
 !SmalltalkSystem categoriesFor: #onMethodRemoved:!event handling!public! !
+!SmalltalkSystem categoriesFor: #onMethodTransparentlyUpdated:!event handling!public! !
 !SmalltalkSystem categoriesFor: #onMethodUpdated:!event handling!public! !
 !SmalltalkSystem categoriesFor: #onProtocolRemoved:!event handling!operations!protocols!public! !
 !SmalltalkSystem categoriesFor: #onProtocolUpdated:!event handling!operations!protocols!public! !

@@ -189,13 +189,26 @@ package methodNames
 	add: #CompiledCode -> #disassembly;
 	add: #CompiledCode -> #hasCompilationIssues;
 	add: #CompiledCode -> #indexOfIP:;
+	add: #CompiledCode -> #isSpy;
+	add: #CompiledCode -> #primByteCodes;
+	add: #CompiledCode -> #primByteCodes:;
 	add: #CompiledCode -> #stylerClass;
 	add: #CompiledExpression -> #asDebugMethod;
 	add: #CompiledExpression -> #stylerClass;
 	add: #CompiledMethod -> #asDebugMethod;
+	add: #CompiledMethod -> #asSpyMethodWithSpies:;
+	add: #CompiledMethod -> #beSpiedOnBy:;
+	add: #CompiledMethod -> #beSpiedOnByAll:;
 	add: #CompiledMethod -> #browse;
+	add: #CompiledMethod -> #methodSpies;
+	add: #CompiledMethod -> #methodSpyManager;
+	add: #CompiledMethod -> #primByteCodes;
+	add: #CompiledMethod -> #recompileWithSpy:;
 	add: #CompiledMethod -> #searchForInTool:;
+	add: #CompiledMethod -> #sourceWithSpies:;
+	add: #CompiledMethod -> #spiedMethod;
 	add: #CompiledMethod -> #stylerClass;
+	add: #CompiledMethod -> #testSourceWithSpies:;
 	add: #CompileFailedMethod -> #asDebugMethod;
 	add: #DateTimeCommonControl -> #publishedAspects;
 	add: #Dictionary -> #alternateInspectorClass;
@@ -255,6 +268,7 @@ package methodNames
 	add: #Process -> #halt:;
 	add: #Process -> #primStep:;
 	add: #Process -> #showWalkback:callStack:debuggable:resumable:;
+	add: #Process -> #spy;
 	add: #Process -> #step;
 	add: #Process -> #step:;
 	add: #Process -> #walkback:topFrame:resumable:;
@@ -289,11 +303,15 @@ package methodNames
 	add: #StackFrame -> #findIP:inTextMap:;
 	add: #StackFrame -> #makeDebug;
 	add: #StackFrame -> #stackWorkspace;
+	add: #StAssignmentNode -> #isSpyable;
 	add: #StLiteralToken -> #textStyle;
+	add: #StMessageNode -> #isSpyable;
 	add: #StNumberLiteralToken -> #textStyle;
 	add: #StProgramNode -> #debugPrintString;
+	add: #StProgramNode -> #isSpyable;
 	add: #StProgramNode -> #postComments;
 	add: #StProgramNode -> #preComments;
+	add: #StReturnNode -> #isSpyable;
 	add: #String -> #aspectDisplayOn:;
 	add: #String -> #debugPrintString;
 	add: #String -> #literalTextStyle;
@@ -477,6 +495,7 @@ package methodNames
 	add: 'Toolbar class' -> #resource_Class_browser_tools;
 	add: 'Toolbar class' -> #resource_Debugger_tools;
 	add: 'Toolbar class' -> #resource_Image_tools;
+	add: 'Toolbar class' -> #resource_MethodSpy_tools;
 	add: 'Toolbar class' -> #resource_Resource_tools;
 	add: 'Toolbar class' -> #resource_Search_tools;
 	add: 'Toolbar class' -> #resource_Smalltalk_tools;
@@ -579,7 +598,6 @@ package setPrerequisites: (IdentitySet new
 	add: '..\..\..\..\Contributions\Refactory\Refactoring Browser\Parser\RBParser';
 	add: 'Splash\Seeing the Objects Inside';
 	add: '..\..\System\Compiler\Smalltalk Parser';
-	add: '..\..\..\..\..\Solutions Software\Tools\SSW Development Resources';
 	add: '..\..\ActiveX\Components\VBScript\VBScript Regular Expressions';
 	add: '..\..\ActiveX\Shell\Windows Shell';
 	yourself).
@@ -964,7 +982,7 @@ SmalltalkToolShell subclass: #ClassBrowserAbstract
 	poolDictionaries: ''
 	classInstanceVariableNames: 'defaultShowInheritedMethods defaultFilterObjectMethods plugins'!
 SmalltalkToolShell subclass: #Debugger
-	instanceVariableNames: 'process topFrame temp tempCount depth flags breakWhen stackPresenter sourcePresenter tempsPresenter inspectorPresenter breakAction suspendingList _method refactoringTool'
+	instanceVariableNames: 'process topFrame temp tempCount depth flags breakWhen stackPresenter sourcePresenter tempsPresenter inspectorPresenter breakAction suspendingList _method refactoringTool debugState'
 	classVariableNames: 'AnimateMask AnimatePause DefaultStackDepth DisassemblyMask EnableDynamicMenus MainMask RestartOnMethodSave ResumableMask RunMask ShowWalkbacks SkipTable StackDepthIncrement'
 	poolDictionaries: 'CompilerFlags OpcodePool'
 	classInstanceVariableNames: ''!
@@ -1928,6 +1946,18 @@ hasCompilationIssues
 indexOfIP: ip 
 	^self byteCodeDispatcherClass indexOfIP: ip in: self!
 
+isSpy
+"B"
+	^false!
+
+primByteCodes
+
+	^byteCodes!
+
+primByteCodes: anObject
+
+	byteCodes := anObject!
+
 stylerClass
 	^self subclassResponsibility! !
 !CompiledCode categoriesFor: #alternateInspectorClass!constants!development!private! !
@@ -1936,6 +1966,9 @@ stylerClass
 !CompiledCode categoriesFor: #disassembly!development!private! !
 !CompiledCode categoriesFor: #hasCompilationIssues!public!searching! !
 !CompiledCode categoriesFor: #indexOfIP:!enquiries!private! !
+!CompiledCode categoriesFor: #isSpy!public!testing! !
+!CompiledCode categoriesFor: #primByteCodes!accessing!public! !
+!CompiledCode categoriesFor: #primByteCodes:!accessing!public! !
 !CompiledCode categoriesFor: #stylerClass!constants!public! !
 
 !CompiledCode class methodsFor!
@@ -1990,20 +2023,149 @@ asDebugMethod
     		isPrivate: self isPrivate.
     	^debugMethod!
 
+asSpyMethodWithSpies: aCollection 
+	| spyMethod |
+	spyMethod := SpyMethod new: self size.
+	(1 to: self size) do: [:index | spyMethod at: index put: (self at: index)].
+	^spyMethod
+		header: self header;
+		primByteCodes: self primByteCodes;
+		selector: self selector;
+		sourceDescriptor: self sourceDescriptor;
+		methodClass: self methodClass;
+		methodSpies: aCollection;
+		infiltrateWithSpies;
+		yourself!
+
+beSpiedOnBy: aMethodSpy
+
+	| methodSpies |
+
+	methodSpies := self methodSpies copy.
+	methodSpies add: aMethodSpy.
+
+	^self beSpiedOnByAll: methodSpies!
+
+beSpiedOnByAll: methodSpies
+
+	| spiedSource compResult spyMethod |
+
+	"Test for compilation errors"
+	self methodClass compilerClass compile: (self testSourceWithSpies: methodSpies) in: self methodClass flags: 0.
+
+	"Get the real source and retest (should not fail)"
+	spiedSource := self sourceWithSpies: methodSpies.
+	spiedSource isNil ifTrue: [CompilerErrorNotification signal: 'Invalid spy source'].
+
+	compResult := self methodClass compilerClass compile: spiedSource in: self methodClass flags: 0.
+	spyMethod := compResult method.
+	spyMethod isNil ifTrue: [CompilerErrorNotification signal: 'Invalid spy source'].
+
+	spyMethod become: (spyMethod asSpyMethodWithSpies: methodSpies).
+	spyMethod 
+		contactSpies;
+		sourceDescriptor: self sourceDescriptor;
+		spiedMethod: self spiedMethod.
+
+	compResult 
+		method: spyMethod;
+		oldMethod: (self methodClass methodDictionary at: self selector).
+	self methodClass methodDictionary at: self selector put: spyMethod.
+	self methodSpyManager spiesCompiledIn: compResult!
+
 browse
     	"Open a suitable browser onto the receiver."
     
     	^Smalltalk developmentSystem browseMethod: self!
 
+methodSpies
+
+	^SortedCollection new!
+
+methodSpyManager
+	^MethodSpyManager current!
+
+primByteCodes
+
+	^byteCodes!
+
+recompileWithSpy: aMethodSpy
+
+	self beSpiedOnBy: aMethodSpy!
+
 searchForInTool: aSmalltalkToolShell 
 	aSmalltalkToolShell searchForMethod: self!
 
+sourceWithSpies: aCollection
+
+	| sourceRead sourceWrite spies spyCount |
+
+	sourceRead := ReadStream on: self getSource.
+	sourceWrite := WriteStream on: (String new: sourceRead size).
+	spies := ReadStream on: aCollection.
+	spyCount := 0.
+
+	[spies atEnd] whileFalse:
+		[| nextSpy nextSource |
+		nextSpy := spies next.
+		spyCount := spyCount + 1.
+		[sourceRead position < (nextSpy methodSourcePosition - 1)] whileTrue: 
+			[sourceWrite nextPut: sourceRead next].
+		nextSource := nextSpy spySourceAt: sourceWrite position spyCount: spyCount.
+		nextSource isNil ifTrue: [^nil].
+		sourceWrite nextPutAll: nextSource].
+
+	sourceWrite nextPutAll: sourceRead upToEnd.
+
+	^sourceWrite contents!
+
+spiedMethod
+
+	^self!
+
 stylerClass
-	^Smalltalk developmentSystem methodStylerClass! !
+	^Smalltalk developmentSystem methodStylerClass!
+
+testSourceWithSpies: aCollection
+
+	"Return a 'test' version of the receiver's source, 
+	with the source of each spy directly in the body of the method.
+	This allows us to test for compilation errors, 
+	unlike sourceWithSpies: which only includes a call to the spy source"
+
+	| sourceRead sourceWrite spies |
+
+	sourceRead := ReadStream on: self getSource.
+	sourceWrite := WriteStream on: (String new: sourceRead size).
+	spies := ReadStream on: aCollection.
+
+	[spies atEnd] whileFalse:
+		[| nextSpy |
+		nextSpy := spies next.
+		[sourceRead position < (nextSpy methodSourcePosition - 1)] whileTrue: 
+			[sourceWrite nextPut: sourceRead next].
+		sourceWrite 
+			nextPut: $[;
+			nextPutAll: nextSpy spySourceForTest;
+			nextPutAll: '].'].
+
+	sourceWrite nextPutAll: sourceRead upToEnd.
+
+	^sourceWrite contents! !
 !CompiledMethod categoriesFor: #asDebugMethod!development!private! !
+!CompiledMethod categoriesFor: #asSpyMethodWithSpies:!compiling!public! !
+!CompiledMethod categoriesFor: #beSpiedOnBy:!compiling!public! !
+!CompiledMethod categoriesFor: #beSpiedOnByAll:!compiling!public! !
 !CompiledMethod categoriesFor: #browse!development!public! !
+!CompiledMethod categoriesFor: #methodSpies!accessing!public! !
+!CompiledMethod categoriesFor: #methodSpyManager!accessing!public! !
+!CompiledMethod categoriesFor: #primByteCodes!accessing!public! !
+!CompiledMethod categoriesFor: #recompileWithSpy:!compiling!public! !
 !CompiledMethod categoriesFor: #searchForInTool:!public! !
+!CompiledMethod categoriesFor: #sourceWithSpies:!accessing!public! !
+!CompiledMethod categoriesFor: #spiedMethod!accessing!public! !
 !CompiledMethod categoriesFor: #stylerClass!constants!public! !
+!CompiledMethod categoriesFor: #testSourceWithSpies:!accessing!public! !
 
 !CompiledMethod class methodsFor!
 
@@ -3544,6 +3706,13 @@ showWalkback: titleString callStack: stackTraceString debuggable: debuggableBool
 		ifTrue: [#debug]
 		ifFalse: [response == #ignore ifTrue: [#resume] ifFalse: [#terminate]]!
 
+spy
+
+    	" 'Spy' on the receiver - if it is being debugged, bring up the debugger on the sending frame	
+	If not being debugged, do nothing"
+    
+    	debugger notNil ifTrue: [debugger onMethodSpyIn: self topFrame sender]!
+
 step
     	"Private - Resume the receiver for a single step (method/block activation), at 
     	which point the receiver will receive a debug step interrupt. If the receiver
@@ -3627,6 +3796,7 @@ walkback: aString topFrame: aStackFrame resumable: aBoolean
 !Process categoriesFor: #halt:!development!private! !
 !Process categoriesFor: #primStep:!development!private!states-changing! !
 !Process categoriesFor: #showWalkback:callStack:debuggable:resumable:!development!private! !
+!Process categoriesFor: #spy!public! !
 !Process categoriesFor: #step!development!private!states-changing! !
 !Process categoriesFor: #step:!development!private!states-changing! !
 !Process categoriesFor: #walkback:topFrame:resumable:!development!private! !
@@ -4599,6 +4769,12 @@ publishedAspectsOfInstances
 		yourself! !
 !StackFrame class categoriesFor: #publishedAspectsOfInstances!constants!development!public! !
 
+!StAssignmentNode methodsFor!
+
+isSpyable
+	^true! !
+!StAssignmentNode categoriesFor: #isSpyable!public!testing! !
+
 !StaticBitmap class methodsFor!
 
 publishedAspectsOfInstances
@@ -4703,6 +4879,12 @@ textStyle
 	^self value literalTextStyle! !
 !StLiteralToken categoriesFor: #textStyle!public!visitor/double dispatching! !
 
+!StMessageNode methodsFor!
+
+isSpyable
+	^true! !
+!StMessageNode categoriesFor: #isSpyable!public!testing! !
+
 !StNumberLiteralToken methodsFor!
 
 textStyle
@@ -4720,6 +4902,9 @@ debugPrintString
 
 	^self basicPrintString
 !
+
+isSpyable
+	^false!
 
 postComments
 	"Answer the set of comments associated with the receiver that are after the token"
@@ -4743,8 +4928,16 @@ preComments
 			start := self start.
 			all select: [:each | each stop < start]]! !
 !StProgramNode categoriesFor: #debugPrintString!development!printing!public! !
+!StProgramNode categoriesFor: #isSpyable!public!testing! !
 !StProgramNode categoriesFor: #postComments!accessing!public! !
 !StProgramNode categoriesFor: #preComments!accessing!public! !
+
+!StReturnNode methodsFor!
+
+isSpyable
+
+	^true! !
+!StReturnNode categoriesFor: #isSpyable!public!testing! !
 
 !String methodsFor!
 
@@ -5044,6 +5237,16 @@ resource_Image_tools
 
 	^#(#'!!STL' 3 788558 10 ##(Smalltalk.STBViewProxy)  8 ##(Smalltalk.Toolbar)  98 25 0 0 98 2 8 1409289036 131137 416 0 524550 ##(Smalltalk.ColorRef)  8 4278190080 0 517 0 0 0 416 498 528 8 4294905967 234 256 98 0 234 256 98 2 16697 1115910 ##(Smalltalk.ToolbarIconButton)  16697 0 416 1 1180998 4 ##(Smalltalk.CommandDescription)  8 #saveImage 8 'Save Image' 1 1 263494 3 ##(Smalltalk.Icon)  0 16 1572870 ##(Smalltalk.ImageRelativeFileLocator)  8 'Snapshot.ico' 2032142 ##(Smalltalk.STBExternalResourceLibraryProxy)  8 'dolphindr7.dll' 0 395334 3 ##(Smalltalk.Bitmap)  0 16 0 0 0 0 3 328198 ##(Smalltalk.Point)  33 33 1 98 2 656 1050118 ##(Smalltalk.ToolbarSeparator)  0 0 416 3 0 1 234 240 98 2 880 1 0 1 0 898 33 33 898 45 45 0 0 983302 ##(Smalltalk.MessageSequence)  202 208 98 2 721670 ##(Smalltalk.MessageSend)  8 #createAt:extent: 98 2 898 3839 21 898 61 51 416 1106 8 #updateSizePosted 592 416 983302 ##(Smalltalk.WINDOWPLACEMENT)  8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 127 7 0 0 10 0 0 0 157 7 0 0 35 0 0 0] 98 0 898 193 193 0 27 )!
 
+resource_MethodSpy_tools
+	"Answer the literal data from which the 'MethodSpy tools' resource can be reconstituted.
+	DO NOT EDIT OR RECATEGORIZE THIS METHOD.
+
+	If you wish to modify this resource evaluate:
+	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_MethodSpy_tools)
+	"
+
+	^#(#'!!STL' 3 788558 10 ##(Smalltalk.STBViewProxy)  8 ##(Smalltalk.Toolbar)  98 25 0 0 98 2 8 1140853516 131137 416 0 524550 ##(Smalltalk.ColorRef)  8 4278190080 0 517 0 263174 ##(Smalltalk.Font)  0 16 459014 ##(Smalltalk.LOGFONT)  8 #[243 255 255 255 0 0 0 0 0 0 0 0 0 0 0 0 144 1 0 0 0 0 0 0 3 2 1 34 65 114 105 97 108 0 135 4 120 197 87 1 0 0 204 53 87 1 5 0 20 59 0 0 0 0 15 1 5 86 135 1] 328198 ##(Smalltalk.Point)  193 193 0 416 498 528 8 4294902771 234 256 98 0 234 256 98 6 8895 853766 ##(Smalltalk.ToolbarButton)  8895 0 416 5 1180998 4 ##(Smalltalk.CommandDescription)  8 #toggleEnabled 8 'Enable/Disable' 1 1 0 395334 3 ##(Smalltalk.Bitmap)  0 16 1114638 ##(Smalltalk.STBSingletonProxy)  8 ##(Smalltalk.ImageRelativeFileLocator)  8 #current 8 'Tools.bmp' 2032142 ##(Smalltalk.STBExternalResourceLibraryProxy)  8 'dolphindr006.dll' 0 0 7 626 1857 33 65 8897 754 8897 0 416 1 786 8 #resetSpy 8 'Reset Spy' 1 1 0 864 39 8899 1246982 ##(Smalltalk.ToolbarSystemButton)  8899 0 416 1 786 8 #removeSpy 8 'Remove Spy' 1 1 0 1 11 98 5 768 1024 1050118 ##(Smalltalk.ToolbarSeparator)  0 0 416 3 0 1 1104 1186 0 0 416 3 0 1 234 240 98 4 1 117 864 1 0 1 0 626 33 33 626 45 45 0 0 983302 ##(Smalltalk.MessageSequence)  202 208 98 2 721670 ##(Smalltalk.MessageSend)  8 #createAt:extent: 98 2 626 11 11 626 181 51 416 1362 8 #updateSize 704 416 983302 ##(Smalltalk.WINDOWPLACEMENT)  8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 5 0 0 0 5 0 0 0 95 0 0 0 30 0 0 0] 98 0 626 193 193 0 27 )!
+
 resource_Resource_tools
 	"Answer the literal data from which the 'Resource tools' resource can be reconstituted.
 	DO NOT EDIT OR RECATEGORIZE THIS METHOD.
@@ -5139,6 +5342,7 @@ resource_Workspace_tools
 !Toolbar class categoriesFor: #resource_Class_browser_tools!public!resources-views! !
 !Toolbar class categoriesFor: #resource_Debugger_tools!public!resources-views! !
 !Toolbar class categoriesFor: #resource_Image_tools!public!resources-views! !
+!Toolbar class categoriesFor: #resource_MethodSpy_tools!public!resources-views! !
 !Toolbar class categoriesFor: #resource_Resource_tools!public!resources-views! !
 !Toolbar class categoriesFor: #resource_Search_tools!public!resources-views! !
 !Toolbar class categoriesFor: #resource_Smalltalk_tools!public!resources-views! !

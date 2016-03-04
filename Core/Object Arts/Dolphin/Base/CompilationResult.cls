@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #CompilationResult
 	instanceVariableNames: 'method _reserved rawTextMap rawTempsMap textMap tempsMap oldMethod package '
@@ -90,7 +90,10 @@ textMap
 	"Answer the map of ip's to source code ranges if such was requested (if not, then nil)."
 
 	textMap isNil ifTrue: [self buildTextMap].
-	^textMap! !
+	^textMap!
+
+textMap: anOrderedCollectionOfAssociation 
+	textMap := anOrderedCollectionOfAssociation! !
 !CompilationResult categoriesFor: #buildTempsMap!development!private! !
 !CompilationResult categoriesFor: #buildTextMap!development!private! !
 !CompilationResult categoriesFor: #fireSystemUpdateEvent!helpers!private! !
@@ -106,4 +109,5 @@ textMap
 !CompilationResult categoriesFor: #tempsAtIp:!accessing!development!private! !
 !CompilationResult categoriesFor: #tempsMap!accessing!development!public! !
 !CompilationResult categoriesFor: #textMap!accessing!development!public! !
+!CompilationResult categoriesFor: #textMap:!public! !
 
