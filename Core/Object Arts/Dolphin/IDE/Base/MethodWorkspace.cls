@@ -1,7 +1,7 @@
 "Filed out from Dolphin Smalltalk 7"!
 
 SmalltalkWorkspace subclass: #MethodWorkspace
-	instanceVariableNames: 'methodAST refactoringTool'
+	instanceVariableNames: 'methodAST refactoringTool lastPlainText unmodifiedParseTree'
 	classVariableNames: 'AutoParseDwell AutoParseMask IsAutoParseEnabled'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -32,6 +32,15 @@ accept
 	whether the user has edited the method signature."
 
 	parentPresenter saveNewMethod: self source!
+
+additionalAccelerators
+
+	^OrderedCollection new
+		add: #(#insertBreak 'Pause');
+		add: #(#insertOrEditSpy 'F9');
+		add: #(#removeSpy 'Shift+F9');
+		add: #(#removeAllSpies 'Ctrl+F9');
+		yourself!
 
 addToCommandRoute: route 
 	"Update the <OrderedCollection>, path, with the receiver's contribution to the command path
@@ -164,7 +173,21 @@ createSchematicWiring
 	self
 		when: #textChanged
 			send: #onTextChanged
-			to: self!
+			to: self.
+	self methodSpyManager 
+		when: #methodSpyChangedIn: send: #onMethodSpyChangedIn: to: self;
+		when: #methodSpyChanged send: #onMethodSpyChanged to: self!
+
+currentSpy
+
+	| currentSpyNode |
+
+	currentSpyNode := self spyInsertNode.
+	currentSpyNode isNil ifTrue: [^nil].
+
+	^self selectedMethod methodSpies detect: [ :each | each methodSourceInterval start = currentSpyNode start] ifNone: 
+		[self selectedMethod methodSpies detect: 
+			[ :each | each methodSourceInterval includes: currentSpyNode start] ifNone: [nil]]!
 
 defaultStylerClass
 	^SmalltalkMethodStyler!
@@ -179,9 +202,112 @@ hasErrors
 
 	^self parseTree isNil or: [super hasErrors]!
 
+highlightCompilationErrors: anInteger 
+
+	| method |
+
+	super highlightCompilationErrors: anInteger.
+
+	method := self selectedMethod.
+
+	(method notNil and: [self isModified not and: [method isSpy]]) ifTrue: [self highlightMethodSpies: anInteger in: method]!
+
+highlightCurrentSpy
+
+	"© 2002 Solutions Software
+
+	Highlight the range of the current spy. Return the spy"
+
+	| spy |
+
+	spy := self currentSpy.
+
+	self view selectionRange: spy methodSourceInterval.
+
+	^spy!
+
+highlightMethodSpies: anInteger in: method
+
+	self view indicators: 
+		(self view indicators 
+			addAll:
+				(method methodSpies collect: 
+					[:each | 
+					each scintillaIndicator: anInteger]);
+			yourself)!
+
+highlightSpyInsertPositionRange
+
+	"Highlight and return the spy insert position range
+	The highlighted range may be different (but equivalent) to the returned range 
+	if auto-code formatting is in use"
+
+	| parseTree highlightNode targetNode start source end range |
+
+	parseTree := self unmodifiedParseTree.
+	highlightNode := self spyInsertNodeIn: parseTree.
+	highlightNode isNil ifTrue: [^nil].
+
+	(self selectedMethod isSpy not and: [MethodBrowser autoFormat])
+	ifTrue:
+		[| normalParseTree |
+		normalParseTree := self selectedMethod parseTree.
+		targetNode := normalParseTree nodeAtIndex: (parseTree identityIndexOfNode: highlightNode).
+		source := parseTree formattedCode]
+	ifFalse:
+		[targetNode := highlightNode.
+		source := parseTree source].
+
+	start := highlightNode start.
+	end := source indexOfAnyOf: ':; ' startingAt: start.
+	end = 0 ifTrue: [end := source size].
+
+	range := start to: end.
+	self view selectionRange: range.
+	^targetNode start to: (targetNode start + (range size - 1))!
+
 initialize
 	super initialize.
 	self isAutoParseEnabled: self class isAutoParseEnabled!
+
+insertBreak
+	| oldRange positionRange |
+	(self isCurrentlyAtSpy and: [self currentSpy isSimpleHalt]) ifTrue: [^self silentlyRemoveSpy].
+	(self querySpyCommandSymbol: #insertBreak) 
+		ifFalse: 
+			[Sound beep.
+			^self].
+	oldRange := self selectionRange.
+	positionRange := self highlightSpyInsertPositionRange.
+	self safeRecompile: 
+			[self selectedMethod beSpiedOnBy: ((MethodSpy newSimpleHalt)
+						method: self selectedMethod;
+						methodSourceInterval: positionRange;
+						yourself)].
+	self selectionRange: oldRange!
+
+insertOrEditSpy
+
+	"© 2002 Solutions Software"
+
+	^(self querySpyCommandSymbol: #insertSpy)
+		ifTrue: [self quickInsertSpy]
+		ifFalse: [(self querySpyCommandSymbol: #inspectSpy) ifTrue: [self inspectSpy]]!
+
+insertSpy
+	"Create and inspect a Spy. It will be inserted into the method if accepted in the Inspector"
+
+	| positionRange |
+	positionRange := self highlightSpyInsertPositionRange.
+	((MethodSpy new)
+		method: self selectedMethod;
+		spySource: '"spy source"';
+		methodSourceInterval: positionRange;
+		yourself) inspect!
+
+inspectSpy
+
+	self highlightCurrentSpy inspect!
 
 isAutoParseEnabled
 	^flags allMask: AutoParseMask!
@@ -189,8 +315,16 @@ isAutoParseEnabled
 isAutoParseEnabled: aBoolean 
 	flags := flags mask: AutoParseMask set: aBoolean!
 
+isCurrentlyAtSpy
+
+	^self selectedMethod notNil and: [self selectedMethod isSpy and: [self currentSpy notNil]]!
+
 isEditable
 	^super isEditable and: [parentPresenter hasEditableMethodSelected]!
+
+isSpyEnabled
+
+	^self currentSpy isLocallyEnabled!
 
 isTempVariable: anStVariableNode 
 	"Private - Answer whether the specified variable node represents one of the temporaries in
@@ -209,6 +343,9 @@ method
 	Notification deprecated.
 	^self selectedMethod!
 
+methodSpyManager
+	^MethodSpyManager current!
+
 nodeForRange: anInterval 
 	^self parseTree 
 		ifNotNil: 
@@ -224,6 +361,14 @@ onAboutToDisplayMenu: aMenu
 	super onAboutToDisplayMenu: aMenu.
 	refactoringTool notNil ifTrue: [^refactoringTool onAboutToDisplayMenu: aMenu]!
 
+onMethodSpyChanged
+
+	self isModified not ifTrue: [self autoParse]!
+
+onMethodSpyChangedIn: aCompiledMethod
+
+	aCompiledMethod = self selectedMethod ifTrue: [self onMethodSpyChanged]!
+
 onTextChanged
 	"The text in the receiver's view has been changed. Clear cached information."
 
@@ -233,6 +378,16 @@ onTimerTick: anInteger
 	anInteger == 1000 ifFalse: [^super onTimerTick: anInteger].
 	self killParseTimer.
 	self isAutoParseEnabled ifTrue: [self autoParse]!
+
+onViewOpened
+
+	super onViewOpened.
+
+	self view contextMenu
+		addSeparator;
+		addItem: self spySubmenu.
+
+	self setIndicatorsForSpies!
 
 parseContext
 	^parentPresenter parseContext!
@@ -284,7 +439,47 @@ queryCommand: aCommandQuery
 				ifFalse: [aCommandQuery isEnabled: true].
 			aCommandQuery text: (aCommandQuery commandDescription menuText expandMacrosWith: text).
 			^true].
+	#methodSpies == selector 
+		ifTrue: 
+			[aCommandQuery isEnabled: (self view isModified not and: [self view isReadOnly not]).
+			^true].
+	(#(#insertSpy #inspectSpy #toggleSpy #resetSpy #removeSpy #removeAllSpies) includes: selector) 
+		ifTrue: 
+			[aCommandQuery isEnabled: (self querySpyCommandSymbol: selector).
+			(selector = #toggleSpy and: [aCommandQuery isEnabled]) 
+				ifTrue: [aCommandQuery isChecked: self isSpyEnabled].
+			^true].
 	^super queryCommand: aCommandQuery!
+
+querySpyCommandSymbol: aSymbol
+
+	"© 2002 Solutions Software"
+
+	(self isModified or: [self selectedMethod isNil]) ifTrue: [^false].
+
+	aSymbol == #removeAllSpies ifTrue: [^self selectedMethod isSpy].
+
+	^self isCurrentlyAtSpy
+	ifTrue: 	
+		[aSymbol ~= #insertSpy and: [aSymbol ~= #insertBreak]]
+	ifFalse:
+		[(aSymbol == #insertSpy or: [aSymbol == #insertBreak])
+			ifTrue: [self selectedMethod notNil and: [self spyInsertNode notNil]]
+			ifFalse: [false]]!
+
+quickInsertSpy
+	"Create and insert a Method Spy, obtaining the code from a dialog"
+
+	| positionRange spySource |
+	positionRange := self highlightSpyInsertPositionRange.
+	spySource := Prompter prompt: 'Enter Spy code' caption: 'Insert Spy'.
+	(spySource isNil or: [spySource isEmpty]) 
+		ifFalse: 
+			[self methodSpyManager compileSpy: ((MethodSpy new)
+						method: self selectedMethod;
+						spySource: spySource;
+						methodSourceInterval: positionRange;
+						yourself)]!
 
 reformatAccept
 	self reformattedSource ifNotNil: [:aString | parentPresenter saveNewMethod: aString]!
@@ -313,6 +508,19 @@ reformattedSource
 			self showError: ex offset: 0.
 			nil]!
 
+removeAllSpies
+
+	(MessageBox confirm: 'Remove all Spies from this method?') ifFalse: [^self].
+
+	self selectedMethod removeAllSpies!
+
+removeSpy
+
+	self highlightCurrentSpy.
+	(MessageBox confirm: 'Remove this Method Spy?') ifFalse: [^self].
+
+	self silentlyRemoveSpy!
+
 repositionAtSourceLine: anInteger 
 	anInteger <= view lineCount ifFalse: [^self].
 	self caretPosition: (view positionAtLine: anInteger).
@@ -323,6 +531,19 @@ resetParseTimer
 	self
 		killParseTimer;
 		setParseTimer!
+
+resetSpy
+
+	self highlightCurrentSpy reset!
+
+safeRecompile: aBlock
+
+	"Evaluate aBlock, trapping and notifying any compilation errors"
+
+	[aBlock value] on: CompilerErrorNotification do:
+		[ :exc |
+		MessageBox warning: ('Failed to compile: ', exc description).
+		exc return]!
 
 selectedErrorRange
 	^self selectedNode sourceInterval!
@@ -363,8 +584,25 @@ selfClass
 		ifNil: [self parseContext ifNil: [UndefinedObject]]
 		ifNotNil: [:context | context basicClass]!
 
+setIndicatorsForSpies
+
+	| currentStyles |
+
+	currentStyles := self view indicatorStyles.
+
+	(currentStyles anySatisfy: [ :each | each name = #SpyEnabled]) ifFalse: 
+		[self view indicatorStyles:
+			(currentStyles
+				add: (ScintillaIndicatorStyle new name: #SpyEnabled; styleName: #roundBox; forecolor: 16r0000FF);
+				add: (ScintillaIndicatorDefinition new name: #SpyDisabled; styleName: #roundBox; forecolor: 16r777777);
+				yourself)]!
+
 setParseTimer
 	self view setTimer: 1000 interval: self class autoParseDwell!
+
+silentlyRemoveSpy
+
+	self methodSpyManager removeSpy: self currentSpy!
 
 source
 	^self plainText!
@@ -373,6 +611,49 @@ source: aString
 	self
 		text: aString;
 		isModified: true!
+
+spyInsertNode
+
+	^self spyInsertNodeIn: self unmodifiedParseTree!
+
+spyInsertNodeIn: parseTree
+
+	| targetPos targetNodes targetNode |
+
+	parseTree isNil ifTrue: [^nil].
+
+	targetPos := self selectionRange start.
+
+	targetNodes := OrderedCollection new.
+	parseTree nodesDo: [ :each | each isSpyable ifTrue: [targetNodes add: each]]. 
+	targetNodes isEmpty ifTrue: [^nil].
+
+	targetPos <= parseTree body start
+	ifTrue:
+		[targetNode := targetNodes first]
+	ifFalse: 
+		[targetNode := 
+			(targetNodes asSortedCollection: [ :n1 :n2 | n1 sourceInterval size <= n2 sourceInterval size])
+				detect: [ :each | each sourceInterval includes: targetPos] 
+				ifNone: 
+					[(targetNodes asSortedCollection: [ :n1 :n2 | n1 start <= n2 start])
+						detect: [ :each | each start >= targetPos] 
+						ifNone: [nil]]].
+
+	^targetNode!
+
+spySubmenu 
+
+	^Menu fromStrings: 
+		#(	'Method Spies'
+			'Insert Spy...//insertSpy'
+			'Edit Spy...//editSpy'
+			'Enabled//toggleSpy'
+			'Inspect Spy//inspectSpy'
+			'Reset Spy//resetSpy'
+			'Remove Spy//removeSpy'
+			'-'
+			'Remove All Spies//removeAllSpies')!
 
 targetOfMessage: aStMessageNode 
 	| receiver |
@@ -400,6 +681,21 @@ targetOfMessage: aStMessageNode
 				ifNotNil: [:binding | binding value ifNotNil: [:value | ^value basicClass]]]
 		ifFalse: [receiver isLiteralNode ifTrue: [^aStMessageNode receiver value basicClass]].
 	^nil!
+
+text: aString
+
+	super text: aString.
+
+	self selectedMethod ifNotNil: [ :meth | meth isSpy ifTrue: [self autoParse]]!
+
+toggleSpy
+
+	self currentSpy toggleLocallyEnabled.
+	self methodSpyManager spyChangedIn: self selectedMethod!
+
+unmodifiedParseTree
+
+	^self selectedMethod parseTree!
 
 variableClassification: anStVariableNode 
 	| class |
@@ -429,6 +725,7 @@ widenSourceSelection
 			whileTrue: [node := node parent].
 	self selectionRange: node sourceInterval! !
 !MethodWorkspace categoriesFor: #accept!commands!public! !
+!MethodWorkspace categoriesFor: #additionalAccelerators!accessing!private! !
 !MethodWorkspace categoriesFor: #addToCommandRoute:!commands!public! !
 !MethodWorkspace categoriesFor: #allDefinedVariablesDo:!autocompletion!enumerating!private! !
 !MethodWorkspace categoriesFor: #autoParse!helpers!private! !
@@ -442,30 +739,51 @@ widenSourceSelection
 !MethodWorkspace categoriesFor: #contextBindingFor:!private!refactoring! !
 !MethodWorkspace categoriesFor: #createComponents!initializing!public! !
 !MethodWorkspace categoriesFor: #createSchematicWiring!initializing!public! !
+!MethodWorkspace categoriesFor: #currentSpy!helpers:spies!public! !
 !MethodWorkspace categoriesFor: #defaultStylerClass!constants!private! !
 !MethodWorkspace categoriesFor: #evaluationContext!accessing!public! !
 !MethodWorkspace categoriesFor: #hasErrors!public!testing! !
+!MethodWorkspace categoriesFor: #highlightCompilationErrors:!helpers!public! !
+!MethodWorkspace categoriesFor: #highlightCurrentSpy!helpers:spies!public! !
+!MethodWorkspace categoriesFor: #highlightMethodSpies:in:!helpers!public! !
+!MethodWorkspace categoriesFor: #highlightSpyInsertPositionRange!helpers:spies!public! !
 !MethodWorkspace categoriesFor: #initialize!initializing!private! !
+!MethodWorkspace categoriesFor: #insertBreak!commands:spies!public! !
+!MethodWorkspace categoriesFor: #insertOrEditSpy!commands:spies!public! !
+!MethodWorkspace categoriesFor: #insertSpy!commands:spies!public! !
+!MethodWorkspace categoriesFor: #inspectSpy!commands:spies!public! !
 !MethodWorkspace categoriesFor: #isAutoParseEnabled!accessing!public! !
 !MethodWorkspace categoriesFor: #isAutoParseEnabled:!accessing!public! !
+!MethodWorkspace categoriesFor: #isCurrentlyAtSpy!private!testing! !
 !MethodWorkspace categoriesFor: #isEditable!private!testing! !
+!MethodWorkspace categoriesFor: #isSpyEnabled!private!testing! !
 !MethodWorkspace categoriesFor: #isTempVariable:!private!refactoring! !
 !MethodWorkspace categoriesFor: #killParseTimer!helpers!private! !
 !MethodWorkspace categoriesFor: #lineFromPosition:!enquiries!public! !
 !MethodWorkspace categoriesFor: #method!accessing!private! !
+!MethodWorkspace categoriesFor: #methodSpyManager!accessing!private! !
 !MethodWorkspace categoriesFor: #nodeForRange:!helpers!private! !
 !MethodWorkspace categoriesFor: #onAboutToDisplayMenu:!event handling!public! !
+!MethodWorkspace categoriesFor: #onMethodSpyChanged!event handling!private! !
+!MethodWorkspace categoriesFor: #onMethodSpyChangedIn:!event handling!public! !
 !MethodWorkspace categoriesFor: #onTextChanged!event handling!public! !
 !MethodWorkspace categoriesFor: #onTimerTick:!event handling!public! !
+!MethodWorkspace categoriesFor: #onViewOpened!event handling!public! !
 !MethodWorkspace categoriesFor: #parseContext!accessing!private! !
 !MethodWorkspace categoriesFor: #parseTree!accessing!private! !
 !MethodWorkspace categoriesFor: #promptToSaveChanges!helpers!public! !
 !MethodWorkspace categoriesFor: #queryCommand:!commands!private! !
+!MethodWorkspace categoriesFor: #querySpyCommandSymbol:!commands:spies!public! !
+!MethodWorkspace categoriesFor: #quickInsertSpy!commands:spies!public! !
 !MethodWorkspace categoriesFor: #reformatAccept!commands!public! !
 !MethodWorkspace categoriesFor: #reformatSource!commands!public! !
 !MethodWorkspace categoriesFor: #reformattedSource!helpers!private! !
+!MethodWorkspace categoriesFor: #removeAllSpies!commands:spies!public! !
+!MethodWorkspace categoriesFor: #removeSpy!commands:spies!public! !
 !MethodWorkspace categoriesFor: #repositionAtSourceLine:!operations!public! !
 !MethodWorkspace categoriesFor: #resetParseTimer!helpers!private! !
+!MethodWorkspace categoriesFor: #resetSpy!commands:spies!public! !
+!MethodWorkspace categoriesFor: #safeRecompile:!helpers!public! !
 !MethodWorkspace categoriesFor: #selectedErrorRange!accessing!private!refactoring! !
 !MethodWorkspace categoriesFor: #selectedMessage!accessing!private! !
 !MethodWorkspace categoriesFor: #selectedMessageNode!accessing!private!refactoring! !
@@ -473,10 +791,18 @@ widenSourceSelection
 !MethodWorkspace categoriesFor: #selectedNode!accessing!public! !
 !MethodWorkspace categoriesFor: #selectorFromNode:!commands!private! !
 !MethodWorkspace categoriesFor: #selfClass!autocompletion!private! !
+!MethodWorkspace categoriesFor: #setIndicatorsForSpies!helpers!public! !
 !MethodWorkspace categoriesFor: #setParseTimer!helpers!private! !
+!MethodWorkspace categoriesFor: #silentlyRemoveSpy!helpers:spies!public! !
 !MethodWorkspace categoriesFor: #source!accessing!public! !
 !MethodWorkspace categoriesFor: #source:!accessing!public! !
+!MethodWorkspace categoriesFor: #spyInsertNode!helpers:spies!public! !
+!MethodWorkspace categoriesFor: #spyInsertNodeIn:!helpers:spies!public! !
+!MethodWorkspace categoriesFor: #spySubmenu!accessing!public! !
 !MethodWorkspace categoriesFor: #targetOfMessage:!commands!private!refactoring! !
+!MethodWorkspace categoriesFor: #text:!accessing!public! !
+!MethodWorkspace categoriesFor: #toggleSpy!commands:spies!public! !
+!MethodWorkspace categoriesFor: #unmodifiedParseTree!accessing!private! !
 !MethodWorkspace categoriesFor: #variableClassification:!helpers!private! !
 !MethodWorkspace categoriesFor: #widenSourceSelection!commands!public! !
 

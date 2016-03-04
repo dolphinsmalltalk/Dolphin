@@ -75,6 +75,9 @@ package classNames
 	add: #MethodProtocolEnvironment;
 	add: #MethodSearch;
 	add: #MethodSourceSearch;
+	add: #MethodSpy;
+	add: #MethodSpyManager;
+	add: #MethodSpyPresenter;
 	add: #MethodWorkspace;
 	add: #PackageBrowserShell;
 	add: #PackageDependencyPresenter;
@@ -101,6 +104,7 @@ package classNames
 	add: #SmalltalkExpressionStyler;
 	add: #SmalltalkMethodStyler;
 	add: #SmalltalkSearchPresenter;
+	add: #SmalltalkSpyParser;
 	add: #SmalltalkStyler;
 	add: #SmalltalkStylingScanner;
 	add: #SmalltalkSystem;
@@ -111,6 +115,9 @@ package classNames
 	add: #SmalltalkWorkspace;
 	add: #SmalltalkWorkspaceDocument;
 	add: #SpecialReferencesCategory;
+	add: #SpiedMethodsCategory;
+	add: #SpyMethod;
+	add: #SpyMethodNode;
 	add: #STBDebugger;
 	add: #StLexicalScope;
 	add: #StNumberStylingToken;
@@ -569,8 +576,10 @@ package setPrerequisites: (IdentitySet new
 	add: '..\..\..\..\Contributions\Refactory\Refactoring Browser\Change Objects\RBChangeObjects';
 	add: '..\..\..\..\Contributions\Refactory\Refactoring Browser\Environments\RBEnvironments';
 	add: '..\..\..\..\Contributions\Refactory\Refactoring Browser\Formatters\RBFormatters';
+	add: '..\..\..\..\Contributions\Refactory\Refactoring Browser\Parser\RBParser';
 	add: 'Splash\Seeing the Objects Inside';
 	add: '..\..\System\Compiler\Smalltalk Parser';
+	add: '..\..\..\..\..\Solutions Software\Tools\SSW Development Resources';
 	add: '..\..\ActiveX\Components\VBScript\VBScript Regular Expressions';
 	add: '..\..\ActiveX\Shell\Windows Shell';
 	yourself).
@@ -592,6 +601,11 @@ Object subclass: #MethodCategorizationPolicy
 Object subclass: #MethodSearch
 	instanceVariableNames: 'findDetails regexp literal'
 	classVariableNames: 'IgnoreCaseMask'
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Object subclass: #MethodSpy
+	instanceVariableNames: 'spySource methodSourceInterval spySourceInterval activations isLocallyEnabled method context'
+	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Object subclass: #SmalltalkSystemIcon
@@ -699,6 +713,11 @@ VirtualMethodCategory subclass: #ReferencesCategory
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+VirtualMethodCategory subclass: #SpiedMethodsCategory
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
 VirtualMethodCategory subclass: #UnclassifiedMethodsCategory
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -719,6 +738,11 @@ ChunkReader subclass: #SingleChunkReader
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+CompiledMethod variableSubclass: #SpyMethod
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
 Error subclass: #InvalidInstallationError
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -734,6 +758,11 @@ MethodSearch subclass: #MethodSourceSearch
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+Model subclass: #MethodSpyManager
+	instanceVariableNames: 'areSpiesEnabled'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: 'current'!
 Model subclass: #SmalltalkSystem
 	instanceVariableNames: 'workspaceClass defaultInspectorClass defaultBrowserClass systemFolder packageBrowserClass debuggerClass viewComposerClass protocolBrowserClass workspaceShellClass resourceBrowserClass changedIcon hierarchyBrowserClass preferAlternateInspectors formatterClass classChooserClass resourceIdentifierDialogClass findDetails methodWorkspaceClass allSelectors argumentClasses methodExplorerClass aboutBoxClass toolBackgroundColor testBrowserClass defaultPublishedAspectsLiteralsMap'
 	classVariableNames: 'Current FileDrops RegisteredTools'
@@ -787,6 +816,11 @@ KeyedAspectBatchAccessor subclass: #AnonymousKeyedAspectBatchAccessor
 Presenter subclass: #ClassBrowserPlugin
 	instanceVariableNames: ''
 	classVariableNames: 'DefaultPlugins'
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Presenter subclass: #MethodSpyPresenter
+	instanceVariableNames: 'spySourcePresenter'
+	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Presenter subclass: #PackageDependencyPresenter
@@ -980,7 +1014,7 @@ MethodBrowserShell subclass: #MethodExplorerShell
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 SmalltalkWorkspace subclass: #MethodWorkspace
-	instanceVariableNames: 'methodAST refactoringTool'
+	instanceVariableNames: 'methodAST refactoringTool lastPlainText unmodifiedParseTree'
 	classVariableNames: 'AutoParseDwell AutoParseMask IsAutoParseEnabled'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -1079,6 +1113,11 @@ GUISessionManager subclass: #DevelopmentSessionManager
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+SmalltalkParser subclass: #SmalltalkSpyParser
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
 SmalltalkScanner subclass: #SmalltalkStylingScanner
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -1108,6 +1147,11 @@ StParseNodeVisitor subclass: #StSemanticAnalyser
 	instanceVariableNames: 'methodNode scopeStack methodClass instVars scopeDepth evaluationContext evaluationPools literals stringLiterals addToFrame specialSelectors tempDecls isStub inStaticExpression'
 	classVariableNames: 'OptimizedMessages RestrictedSelectors'
 	poolDictionaries: 'SmalltalkParseErrorCodes'
+	classInstanceVariableNames: ''!
+StMethodNode subclass: #SpyMethodNode
+	instanceVariableNames: 'methodSpies'
+	classVariableNames: ''
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 StNumberLiteralToken subclass: #StNumberStylingToken
 	instanceVariableNames: 'numberClass'

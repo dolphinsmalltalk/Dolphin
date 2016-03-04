@@ -1,0 +1,374 @@
+| package |
+package := Package name: 'SSW Method Spies'.
+package paxVersion: 1;
+	basicComment: 'Development Environment enhancements:
+ - Method Spies (intelligent break-points)
+ - Step-Into-Block debugger enhancemment
+
+©2006 Solutions Software Limited'.
+
+package basicScriptAt: #postinstall put: 'SmalltalkSystem current debuggerClass: SSWDebugger'.
+package basicScriptAt: #preuninstall put: 'SmalltalkSystem current debuggerClass: Debugger'.
+
+package classNames
+	add: #SSWDebugger;
+	yourself.
+
+package methodNames
+	add: #CompilationResult -> #textMap:;
+	add: #CompiledCode -> #isSpy;
+	add: #CompiledCode -> #primByteCodes;
+	add: #CompiledCode -> #primByteCodes:;
+	add: #CompiledMethod -> #asSpyMethodWithSpies:;
+	add: #CompiledMethod -> #beSpiedOnBy:;
+	add: #CompiledMethod -> #beSpiedOnByAll:;
+	add: #CompiledMethod -> #methodSpies;
+	add: #CompiledMethod -> #methodSpyManager;
+	add: #CompiledMethod -> #primByteCodes;
+	add: #CompiledMethod -> #recompileWithSpy:;
+	add: #CompiledMethod -> #sourceWithSpies:;
+	add: #CompiledMethod -> #spiedMethod;
+	add: #CompiledMethod -> #testSourceWithSpies:;
+	add: #Process -> #spy;
+	add: #SmalltalkSystem -> #onMethodTransparentlyUpdated:;
+	add: #SSWDevelopmentIconLibrary -> #methodSpy;
+	add: #SSWDevelopmentIconLibrary -> #spiedMethod;
+	add: #SSWDevelopmentIconLibrary -> #spiedMethodPrivate;
+	add: #SSWDevelopmentIconLibrary -> #stepIntoBlock;
+	add: #StAssignmentNode -> #isSpyable;
+	add: #StMessageNode -> #isSpyable;
+	add: #StProgramNode -> #identityIndexOfNode:;
+	add: #StProgramNode -> #isSpyable;
+	add: #StProgramNode -> #nodeAtIndex:;
+	add: #StReturnNode -> #isSpyable;
+	add: 'MethodWorkspace class' -> #superNew;
+	add: 'SSWDevelopmentIconLibrary class' -> #methodSpy;
+	add: 'SSWDevelopmentIconLibrary class' -> #spiedMethod;
+	add: 'SSWDevelopmentIconLibrary class' -> #spiedMethodPrivate;
+	add: 'SSWDevelopmentIconLibrary class' -> #stepIntoBlock;
+	add: 'Toolbar class' -> #resource_MethodSpy_tools;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\..\Core\Object Arts\Dolphin\IDE\Base\Development System';
+	add: '..\..\Core\Object Arts\Dolphin\Base\Dolphin';
+	add: '..\..\Core\Object Arts\Dolphin\MVP\Views\Common Controls\Dolphin Common Controls';
+	add: '..\..\Core\Object Arts\Dolphin\MVP\Views\Control Bars\Dolphin Control Bars';
+	add: '..\..\Core\Object Arts\Dolphin\MVP\Models\List\Dolphin List Models';
+	add: '..\..\Core\Object Arts\Dolphin\MVP\Presenters\List\Dolphin List Presenter';
+	add: '..\..\Core\Object Arts\Dolphin\MVP\Base\Dolphin MVP Base';
+	add: '..\..\Core\Object Arts\Dolphin\System\Compiler\Smalltalk Parser';
+	add: 'SSW Development Resources';
+	add: '..\..\Core\Object Arts\Dolphin\ActiveX\Shell\Windows Shell';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+Debugger subclass: #SSWDebugger
+	instanceVariableNames: 'debugState'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+!CompilationResult methodsFor!
+
+textMap: anOrderedCollectionOfAssociation 
+	textMap := anOrderedCollectionOfAssociation! !
+!CompilationResult categoriesFor: #textMap:!public! !
+
+!CompiledCode methodsFor!
+
+isSpy
+"B"
+	^false!
+
+primByteCodes
+
+	^byteCodes!
+
+primByteCodes: anObject
+
+	byteCodes := anObject! !
+!CompiledCode categoriesFor: #isSpy!public!testing! !
+!CompiledCode categoriesFor: #primByteCodes!accessing!public! !
+!CompiledCode categoriesFor: #primByteCodes:!accessing!public! !
+
+!CompiledMethod methodsFor!
+
+asSpyMethodWithSpies: aCollection 
+	| spyMethod |
+	spyMethod := SpyMethod new: self size.
+	(1 to: self size) do: [:index | spyMethod at: index put: (self at: index)].
+	^spyMethod
+		header: self header;
+		primByteCodes: self primByteCodes;
+		selector: self selector;
+		sourceDescriptor: self sourceDescriptor;
+		methodClass: self methodClass;
+		methodSpies: aCollection;
+		infiltrateWithSpies;
+		yourself!
+
+beSpiedOnBy: aMethodSpy
+
+	| methodSpies |
+
+	methodSpies := self methodSpies copy.
+	methodSpies add: aMethodSpy.
+
+	^self beSpiedOnByAll: methodSpies!
+
+beSpiedOnByAll: methodSpies
+
+	| spiedSource compResult spyMethod |
+
+	"Test for compilation errors"
+	self methodClass compilerClass compile: (self testSourceWithSpies: methodSpies) in: self methodClass flags: 0.
+
+	"Get the real source and retest (should not fail)"
+	spiedSource := self sourceWithSpies: methodSpies.
+	spiedSource isNil ifTrue: [CompilerErrorNotification signal: 'Invalid spy source'].
+
+	compResult := self methodClass compilerClass compile: spiedSource in: self methodClass flags: 0.
+	spyMethod := compResult method.
+	spyMethod isNil ifTrue: [CompilerErrorNotification signal: 'Invalid spy source'].
+
+	spyMethod become: (spyMethod asSpyMethodWithSpies: methodSpies).
+	spyMethod 
+		contactSpies;
+		sourceDescriptor: self sourceDescriptor;
+		spiedMethod: self spiedMethod.
+
+	compResult 
+		method: spyMethod;
+		oldMethod: (self methodClass methodDictionary at: self selector).
+	self methodClass methodDictionary at: self selector put: spyMethod.
+	self methodSpyManager spiesCompiledIn: compResult!
+
+methodSpies
+
+	^SortedCollection new!
+
+methodSpyManager
+	^MethodSpyManager current!
+
+primByteCodes
+
+	^byteCodes!
+
+recompileWithSpy: aMethodSpy
+
+	self beSpiedOnBy: aMethodSpy!
+
+sourceWithSpies: aCollection
+
+	| sourceRead sourceWrite spies spyCount |
+
+	sourceRead := ReadStream on: self getSource.
+	sourceWrite := WriteStream on: (String new: sourceRead size).
+	spies := ReadStream on: aCollection.
+	spyCount := 0.
+
+	[spies atEnd] whileFalse:
+		[| nextSpy nextSource |
+		nextSpy := spies next.
+		spyCount := spyCount + 1.
+		[sourceRead position < (nextSpy methodSourcePosition - 1)] whileTrue: 
+			[sourceWrite nextPut: sourceRead next].
+		nextSource := nextSpy spySourceAt: sourceWrite position spyCount: spyCount.
+		nextSource isNil ifTrue: [^nil].
+		sourceWrite nextPutAll: nextSource].
+
+	sourceWrite nextPutAll: sourceRead upToEnd.
+
+	^sourceWrite contents!
+
+spiedMethod
+
+	^self!
+
+testSourceWithSpies: aCollection
+
+	"Return a 'test' version of the receiver's source, 
+	with the source of each spy directly in the body of the method.
+	This allows us to test for compilation errors, 
+	unlike sourceWithSpies: which only includes a call to the spy source"
+
+	| sourceRead sourceWrite spies |
+
+	sourceRead := ReadStream on: self getSource.
+	sourceWrite := WriteStream on: (String new: sourceRead size).
+	spies := ReadStream on: aCollection.
+
+	[spies atEnd] whileFalse:
+		[| nextSpy |
+		nextSpy := spies next.
+		[sourceRead position < (nextSpy methodSourcePosition - 1)] whileTrue: 
+			[sourceWrite nextPut: sourceRead next].
+		sourceWrite 
+			nextPut: $[;
+			nextPutAll: nextSpy spySourceForTest;
+			nextPutAll: '].'].
+
+	sourceWrite nextPutAll: sourceRead upToEnd.
+
+	^sourceWrite contents! !
+!CompiledMethod categoriesFor: #asSpyMethodWithSpies:!compiling!public! !
+!CompiledMethod categoriesFor: #beSpiedOnBy:!compiling!public! !
+!CompiledMethod categoriesFor: #beSpiedOnByAll:!compiling!public! !
+!CompiledMethod categoriesFor: #methodSpies!accessing!public! !
+!CompiledMethod categoriesFor: #methodSpyManager!accessing!public! !
+!CompiledMethod categoriesFor: #primByteCodes!accessing!public! !
+!CompiledMethod categoriesFor: #recompileWithSpy:!compiling!public! !
+!CompiledMethod categoriesFor: #sourceWithSpies:!accessing!public! !
+!CompiledMethod categoriesFor: #spiedMethod!accessing!public! !
+!CompiledMethod categoriesFor: #testSourceWithSpies:!accessing!public! !
+
+!MethodWorkspace class methodsFor!
+
+superNew
+
+	^super new! !
+!MethodWorkspace class categoriesFor: #superNew!public! !
+
+!Process methodsFor!
+
+spy
+
+    	" 'Spy' on the receiver - if it is being debugged, bring up the debugger on the sending frame	
+	If not being debugged, do nothing"
+    
+    	debugger notNil ifTrue: [debugger onMethodSpyIn: self topFrame sender]! !
+!Process categoriesFor: #spy!public! !
+
+!SmalltalkSystem methodsFor!
+
+onMethodTransparentlyUpdated: aCompilationResult 
+	
+	"Transparent change therefore do not notify the package manager"
+
+	self trigger: #methodUpdated: with: aCompilationResult! !
+!SmalltalkSystem categoriesFor: #onMethodTransparentlyUpdated:!event handling!public! !
+
+!SSWDevelopmentIconLibrary methodsFor!
+
+methodSpy
+
+	^self iconNamed: #methodSpy!
+
+spiedMethod
+
+	^self iconNamed: #spiedMethod!
+
+spiedMethodPrivate
+
+	^self iconNamed: #spiedMethodPrivate!
+
+stepIntoBlock
+
+	^self iconNamed: #stepIntoBlock! !
+!SSWDevelopmentIconLibrary categoriesFor: #methodSpy!public!resources! !
+!SSWDevelopmentIconLibrary categoriesFor: #spiedMethod!public!resources! !
+!SSWDevelopmentIconLibrary categoriesFor: #spiedMethodPrivate!public!resources! !
+!SSWDevelopmentIconLibrary categoriesFor: #stepIntoBlock!public!resources! !
+
+!SSWDevelopmentIconLibrary class methodsFor!
+
+methodSpy
+
+	^#[0 0 1 0 1 0 16 16 0 0 1 0 32 0 104 4 0 0 22 0 0 0 40 0 0 0 16 0 0 0 32 0 0 0 1 0 32 0 0 0 0 0 64 4 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 0 0 0 255 0 0 0 255 0 0 0 255 0 0 0 255 216 233 236 0 216 233 236 0 216 233 236 0 0 0 0 255 0 0 0 255 0 0 0 255 0 0 0 255 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 0 0 0 255 0 0 0 255 128 128 128 255 128 128 128 255 0 0 0 255 0 0 0 255 216 233 236 0 0 0 0 255 0 0 0 255 128 128 128 255 128 128 128 255 0 0 0 255 0 0 0 255 216 233 236 0 216 233 236 0 216 233 236 0 0 0 0 255 255 255 255 255 128 128 128 255 128 128 128 255 128 128 128 255 0 0 0 255 216 233 236 0 0 0 0 255 255 255 255 255 128 128 128 255 128 128 128 255 128 128 128 255 0 0 0 255 216 233 236 0 216 233 236 0 216 233 236 0 0 0 0 255 128 128 128 255 255 255 255 255 128 128 128 255 128 128 128 255 0 0 0 255 0 0 0 255 0 0 0 255 128 128 128 255 255 255 255 255 128 128 128 255 128 128 128 255 0 0 0 255 216 233 236 0 216 233 236 0 216 233 236 0 0 0 0 255 0 0 0 255 0 0 0 255 0 0 0 255 0 0 0 255 0 0 0 255 0 0 0 255 0 0 0 255 0 0 0 255 0 0 0 255 0 0 0 255 0 0 0 255 0 0 0 255 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 0 0 0 255 0 0 0 255 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 0 0 0 255 0 0 0 255 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 0 0 0 255 0 0 0 255 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 0 0 0 255 0 0 0 255 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 0 0 0 255 0 0 0 255 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 0 0 0 255 0 0 0 255 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 ]!
+
+spiedMethod
+
+	^#[0 0 1 0 1 0 16 16 0 0 1 0 32 0 104 4 0 0 22 0 0 0 40 0 0 0 16 0 0 0 32 0 0 0 1 0 32 0 0 0 0 0 64 4 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 11 78 17 8 6 42 9 42 7 51 10 69 6 48 10 66 7 47 10 37 10 71 15 7 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 10 93 17 1 4 49 8 76 10 89 16 198 23 130 32 245 30 144 39 253 28 141 37 252 18 118 26 236 5 64 10 174 4 39 7 53 9 80 15 1 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 9 95 16 1 4 66 10 128 22 136 32 250 31 155 41 253 20 156 31 254 14 155 26 254 15 155 27 253 25 156 36 253 31 151 41 253 13 111 21 234 2 29 4 84 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 0 0 0 255 0 0 0 255 0 0 0 255 0 0 0 255 2 150 15 254 16 153 27 254 76 171 84 254 0 0 0 255 0 0 0 255 0 0 0 255 0 0 0 255 9 108 17 231 3 37 6 43 216 233 236 0 216 233 236 0 0 0 0 255 0 0 0 255 128 128 128 255 128 128 128 255 0 0 0 255 0 0 0 255 58 167 68 254 0 0 0 255 0 0 0 255 128 128 128 255 128 128 128 255 0 0 0 255 0 0 0 255 2 57 7 157 8 84 14 2 216 233 236 0 0 0 0 255 255 255 255 255 128 128 128 255 128 128 128 255 128 128 128 255 0 0 0 255 65 171 75 254 0 0 0 255 255 255 255 255 128 128 128 255 128 128 128 255 128 128 128 255 0 0 0 255 8 107 16 226 7 72 12 19 216 233 236 0 0 0 0 255 128 128 128 255 255 255 255 255 128 128 128 255 128 128 128 255 0 0 0 255 0 0 0 255 0 0 0 255 128 128 128 255 255 255 255 255 128 128 128 255 128 128 128 255 0 0 0 255 13 131 22 245 5 46 8 39 216 233 236 0 0 0 0 255 0 0 0 255 0 0 0 255 0 0 0 255 0 0 0 255 0 0 0 255 0 0 0 255 0 0 0 255 0 0 0 255 0 0 0 255 0 0 0 255 0 0 0 255 0 0 0 255 17 139 26 247 10 64 14 37 216 233 236 0 216 233 236 0 0 0 0 255 0 0 0 255 60 186 69 253 69 184 78 254 67 183 76 254 100 186 107 254 254 254 254 254 209 228 210 254 62 181 72 254 71 183 80 254 0 0 0 255 0 0 0 255 20 128 28 228 18 89 23 15 216 233 236 0 216 233 236 0 26 118 33 17 0 0 0 255 0 0 0 255 90 201 98 254 62 194 72 254 88 190 96 254 254 254 254 254 204 227 206 254 52 190 63 254 72 196 82 254 102 203 109 254 0 0 0 255 0 0 0 255 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 28 124 35 115 0 0 0 255 0 0 0 255 120 212 126 254 106 198 112 254 168 213 171 254 148 205 152 254 99 204 107 254 138 217 143 254 153 219 158 254 47 155 55 238 0 0 0 255 0 0 0 255 216 233 236 0 216 233 236 0 216 233 236 0 66 153 73 3 38 133 45 163 161 215 165 253 218 242 219 254 193 234 196 254 179 230 183 254 183 231 186 254 204 237 206 254 215 240 217 254 93 177 99 243 36 103 42 78 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 91 163 96 3 47 129 54 106 125 186 130 224 210 233 212 253 234 245 235 253 228 242 229 253 184 220 186 249 72 151 79 187 68 136 74 48 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 107 163 111 11 79 139 84 58 81 144 86 90 74 124 78 82 88 143 93 37 118 168 121 2 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 216 233 236 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 255 255 0 0 ]!
+
+spiedMethodPrivate
+
+	^#[0 0 1 0 1 0 16 16 0 0 1 0 32 0 104 4 0 0 22 0 0 0 40 0 0 0 16 0 0 0 32 0 0 0 1 0 32 0 0 0 0 0 64 4 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 35 35 124 2 44 44 91 26 37 37 83 77 31 31 89 107 32 32 86 108 39 39 78 82 50 50 79 38 42 42 103 7 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 38 38 113 7 35 35 78 104 20 19 132 217 25 25 177 249 29 29 195 254 28 28 190 254 21 21 163 247 21 21 103 213 46 46 53 117 53 53 80 22 0 0 0 0 0 0 0 0 0 0 0 0 216 233 236 0 216 233 236 0 33 32 127 5 27 27 96 147 23 23 190 252 32 32 209 254 22 22 211 254 15 15 211 254 17 17 211 254 27 26 211 254 32 32 205 254 17 17 159 246 38 38 61 152 53 53 80 19 216 233 236 0 0 0 0 0 216 233 236 0 0 0 0 255 0 0 0 255 0 0 0 255 0 0 0 255 3 3 209 255 1 1 210 255 1 1 211 255 0 0 0 255 0 0 0 255 0 0 0 255 0 0 0 255 14 14 157 245 48 48 54 108 43 43 105 5 0 0 0 0 0 0 0 255 0 0 0 255 128 128 128 255 128 128 128 255 0 0 0 255 0 0 0 255 16 16 214 255 0 0 0 255 0 0 0 255 128 128 128 255 128 128 128 255 0 0 0 255 0 0 0 255 24 24 101 204 53 53 83 28 0 0 0 0 0 0 0 255 255 255 255 255 128 128 128 255 128 128 128 255 128 128 128 255 0 0 0 255 38 38 214 255 0 0 0 255 255 255 255 255 128 128 128 255 128 128 128 255 128 128 128 255 0 0 0 255 23 23 160 242 48 48 84 64 0 0 0 0 0 0 0 255 128 128 128 255 255 255 255 255 128 128 128 255 128 128 128 255 0 0 0 255 0 0 0 255 0 0 0 255 128 128 128 255 255 255 255 255 128 128 128 255 128 128 128 255 0 0 0 255 34 34 189 251 45 45 92 86 0 0 0 0 0 0 0 255 0 0 0 255 0 0 0 255 0 0 0 255 0 0 0 255 0 0 0 255 0 0 0 255 0 0 0 255 0 0 0 255 0 0 0 255 0 0 0 255 0 0 0 255 0 0 0 255 49 49 197 252 49 49 97 80 0 0 0 0 216 233 236 0 0 0 0 255 0 0 0 255 111 111 237 254 119 119 227 255 120 120 223 255 120 120 223 255 122 122 223 255 121 121 223 255 120 120 223 255 122 122 223 255 0 0 0 255 0 0 0 255 56 56 182 241 57 57 94 46 0 0 0 0 216 233 236 0 65 65 167 19 0 0 0 255 0 0 0 255 144 144 244 255 129 129 242 255 123 123 242 255 121 121 242 255 122 122 242 255 125 125 242 255 134 134 243 255 150 150 244 255 0 0 0 255 0 0 0 255 66 66 118 10 0 0 0 0 216 233 236 0 216 233 236 0 67 67 174 118 0 0 0 255 0 0 0 255 168 168 247 255 150 150 246 255 143 143 246 255 145 145 246 255 156 156 247 255 178 178 248 255 184 184 247 255 89 89 206 245 0 0 0 255 0 0 0 255 0 0 0 0 216 233 236 0 216 233 236 0 106 106 198 4 77 77 187 166 182 182 240 254 229 229 251 255 214 214 250 255 205 205 250 255 207 207 250 255 220 220 251 255 226 226 250 255 125 125 217 246 61 61 110 100 99 99 165 2 216 233 236 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 126 126 202 3 83 83 176 109 147 147 219 225 218 218 245 254 237 237 250 255 233 233 249 255 195 195 238 251 103 103 186 196 82 82 133 61 117 117 174 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 136 136 192 12 98 98 161 61 111 111 171 94 107 107 165 87 106 106 157 43 130 130 173 5 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 255 255 0 0 240 15 0 0 224 7 0 0 0 1 0 0 0 1 0 0 0 1 0 0 0 1 0 0 0 1 0 0 0 1 0 0 0 1 0 0 0 1 0 0 0 1 0 0 0 1 0 0 224 7 0 0 248 31 0 0 255 255 0 0 ]!
+
+stepIntoBlock
+
+	^#[0 0 1 0 1 0 16 16 0 0 1 0 32 0 104 4 0 0 22 0 0 0 40 0 0 0 16 0 0 0 32 0 0 0 1 0 32 0 0 0 0 0 64 4 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 39 39 39 2 39 39 39 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 38 38 38 2 0 0 0 0 0 0 0 0 50 50 50 28 50 50 50 28 50 50 50 28 50 50 50 28 50 50 50 28 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 50 50 50 28 50 50 50 28 50 50 50 28 50 50 50 28 50 50 50 28 18 18 18 20 6 6 6 212 6 6 6 212 6 6 6 212 6 6 6 212 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 6 6 6 212 6 6 6 212 6 6 6 212 6 6 6 212 18 18 18 20 18 18 18 20 6 6 6 212 23 23 23 169 43 43 43 47 43 43 43 47 0 0 0 0 0 0 0 0 40 40 40 5 45 45 45 7 0 0 0 0 0 0 0 0 43 43 43 47 43 43 43 47 23 23 23 169 6 6 6 212 18 18 18 20 18 18 18 20 6 6 6 212 23 23 23 169 0 0 0 0 0 0 0 0 0 0 0 0 29 29 29 13 28 28 28 116 46 46 46 112 52 52 52 21 0 0 0 0 0 0 0 0 0 0 0 0 23 23 23 169 6 6 6 212 18 18 18 20 18 18 18 20 6 6 6 212 23 23 23 169 0 0 0 0 0 0 0 0 29 29 29 15 23 23 23 137 2 2 2 246 9 9 9 235 45 45 45 128 52 52 52 23 0 0 0 0 0 0 0 0 23 23 23 169 6 6 6 212 18 18 18 20 18 18 18 20 6 6 6 212 23 23 23 169 0 0 0 0 30 30 30 7 17 17 17 128 2 2 2 244 0 0 0 254 0 0 0 253 8 8 8 230 39 39 39 103 41 41 41 7 0 0 0 0 23 23 23 169 6 6 6 212 18 18 18 20 18 18 18 20 6 6 6 212 23 23 23 169 0 0 0 0 30 30 30 3 14 14 14 37 13 13 13 66 4 4 4 216 19 19 19 190 31 31 31 64 26 26 26 27 35 35 35 1 0 0 0 0 23 23 23 169 6 6 6 212 18 18 18 20 18 18 18 20 6 6 6 212 23 23 23 169 0 0 0 0 0 0 0 0 0 0 0 0 12 12 12 20 5 5 5 207 25 25 25 175 48 48 48 18 0 0 0 0 0 0 0 0 0 0 0 0 23 23 23 169 6 6 6 212 18 18 18 20 18 18 18 20 6 6 6 212 23 23 23 169 43 43 43 47 43 43 43 47 0 0 0 0 13 13 13 20 5 5 5 207 25 25 25 175 48 48 48 18 0 0 0 0 43 43 43 47 43 43 43 47 23 23 23 169 6 6 6 212 18 18 18 20 18 18 18 20 6 6 6 212 6 6 6 212 6 6 6 212 6 6 6 212 0 0 0 0 14 14 14 20 5 5 5 207 25 25 25 175 49 49 49 18 0 0 0 0 6 6 6 212 6 6 6 212 6 6 6 212 6 6 6 212 18 18 18 20 50 50 50 28 50 50 50 28 50 50 50 28 50 50 50 28 50 50 50 28 0 0 0 0 18 18 18 20 5 5 5 207 25 25 25 175 49 49 49 18 0 0 0 0 50 50 50 28 50 50 50 28 50 50 50 28 50 50 50 28 50 50 50 28 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 18 18 18 20 5 5 5 207 25 25 25 175 49 49 49 18 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 23 23 23 1 46 46 46 16 50 50 50 28 50 50 50 29 49 49 49 29 43 43 43 47 6 6 6 212 25 25 25 175 49 49 49 18 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 20 20 20 19 13 13 13 175 13 13 13 215 14 14 14 216 14 14 14 216 12 12 12 219 3 3 3 246 23 23 23 169 44 44 44 15 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 17 17 17 10 8 8 8 98 10 10 10 121 10 10 10 121 10 10 10 121 10 10 10 121 10 10 10 121 22 22 22 67 33 33 33 4 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 207 251 0 0 7 224 0 0 7 224 0 0 6 96 0 0 28 56 0 0 24 24 0 0 16 8 0 0 16 8 0 0 28 56 0 0 4 32 0 0 4 32 0 0 4 32 0 0 252 63 0 0 128 63 0 0 128 63 0 0 128 63 0 0]! !
+!SSWDevelopmentIconLibrary class categoriesFor: #methodSpy!private!resources! !
+!SSWDevelopmentIconLibrary class categoriesFor: #spiedMethod!private!resources! !
+!SSWDevelopmentIconLibrary class categoriesFor: #spiedMethodPrivate!private!resources! !
+!SSWDevelopmentIconLibrary class categoriesFor: #stepIntoBlock!private!resources! !
+
+!StAssignmentNode methodsFor!
+
+isSpyable
+
+	^true! !
+!StAssignmentNode categoriesFor: #isSpyable!public!testing! !
+
+!StMessageNode methodsFor!
+
+isSpyable
+
+	^true! !
+!StMessageNode categoriesFor: #isSpyable!public!testing! !
+
+!StProgramNode methodsFor!
+
+identityIndexOfNode: aNode
+
+	| index |
+
+	index := 1.
+
+	self nodesDo: [ :node | node == aNode ifTrue: [^index]. index := index + 1].
+
+	^nil!
+
+isSpyable
+
+	^false!
+
+nodeAtIndex: anInteger
+
+	| index |
+
+	index := 1.
+
+	self nodesDo: [ :node | index = anInteger ifTrue: [^node]. index := index + 1].
+
+	^nil! !
+!StProgramNode categoriesFor: #identityIndexOfNode:!accessing!public! !
+!StProgramNode categoriesFor: #isSpyable!public!testing! !
+!StProgramNode categoriesFor: #nodeAtIndex:!accessing!public! !
+
+!StReturnNode methodsFor!
+
+isSpyable
+
+	^true! !
+!StReturnNode categoriesFor: #isSpyable!public!testing! !
+
+!Toolbar class methodsFor!
+
+resource_MethodSpy_tools
+	"Answer the literal data from which the 'MethodSpy tools' resource can be reconstituted.
+	DO NOT EDIT OR RECATEGORIZE THIS METHOD.
+
+	If you wish to modify this resource evaluate:
+	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_MethodSpy_tools)
+	"
+
+	^#(#'!!STL' 3 788558 10 ##(Smalltalk.STBViewProxy)  8 ##(Smalltalk.Toolbar)  98 25 0 0 98 2 8 1140853516 131137 416 0 524550 ##(Smalltalk.ColorRef)  8 4278190080 0 517 0 263174 ##(Smalltalk.Font)  0 16 459014 ##(Smalltalk.LOGFONT)  8 #[243 255 255 255 0 0 0 0 0 0 0 0 0 0 0 0 144 1 0 0 0 0 0 0 3 2 1 34 65 114 105 97 108 0 135 4 120 197 87 1 0 0 204 53 87 1 5 0 20 59 0 0 0 0 15 1 5 86 135 1] 328198 ##(Smalltalk.Point)  193 193 0 416 498 528 8 4294902771 234 256 98 0 234 256 98 6 8895 853766 ##(Smalltalk.ToolbarButton)  8895 0 416 5 1180998 4 ##(Smalltalk.CommandDescription)  8 #toggleEnabled 8 'Enable/Disable' 1 1 0 395334 3 ##(Smalltalk.Bitmap)  0 16 1114638 ##(Smalltalk.STBSingletonProxy)  8 ##(Smalltalk.ImageRelativeFileLocator)  8 #current 8 'Tools.bmp' 2032142 ##(Smalltalk.STBExternalResourceLibraryProxy)  8 'dolphindr006.dll' 0 0 7 626 1857 33 65 8897 754 8897 0 416 1 786 8 #resetSpy 8 'Reset Spy' 1 1 0 864 39 8899 1246982 ##(Smalltalk.ToolbarSystemButton)  8899 0 416 1 786 8 #removeSpy 8 'Remove Spy' 1 1 0 1 11 98 5 768 1024 1050118 ##(Smalltalk.ToolbarSeparator)  0 0 416 3 0 1 1104 1186 0 0 416 3 0 1 234 240 98 4 1 117 864 1 0 1 0 626 33 33 626 45 45 0 0 983302 ##(Smalltalk.MessageSequence)  202 208 98 2 721670 ##(Smalltalk.MessageSend)  8 #createAt:extent: 98 2 626 11 11 626 181 51 416 1362 8 #updateSize 704 416 983302 ##(Smalltalk.WINDOWPLACEMENT)  8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 5 0 0 0 5 0 0 0 95 0 0 0 30 0 0 0] 98 0 626 193 193 0 27 )! !
+!Toolbar class categoriesFor: #resource_MethodSpy_tools!public!resources-views! !
+
+"End of package definition"!
+
