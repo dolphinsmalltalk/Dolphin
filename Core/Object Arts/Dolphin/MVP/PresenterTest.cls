@@ -27,7 +27,7 @@ leftClickAt: aPoint
 	evaluating the expression from the debugger. This suggests there is some timing related
 	issue."
 
-	| lParam coord input desktopArea |
+	| lParam |
 	self waitForInputIdle.
 	lParam := aPoint x << 16 | aPoint y.
 	presenter view 
