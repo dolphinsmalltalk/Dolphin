@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ListViewColumn subclass: #EditableListViewColumn
 	instanceVariableNames: 'isEditable setContentsBlock editor forecolor backcolor preDrawBlock getSortContentsBlock isEditableBlock cachedWidth cachedIndex'
@@ -40,7 +40,7 @@ createEditorIn: aView
 
 customDrawIcon: aContext
 
-	| image imageRect canvas colBackcolor origin |
+	| image imageRect canvas origin |
 
 	image := self imageFromRow: aContext item.
 	image isNil ifTrue: [^self].
@@ -49,20 +49,18 @@ customDrawIcon: aContext
 		lvmGetSubItemRect: (aContext dwItemSpec@aContext iSubItem) 
 		bounding: LVIR_ICON.
 
+	imageRect := imageRect expandedBy: (self parent columnImagePadding * 2)@0.
+
 	canvas := aContext canvas.
 
-	(self parent backcolor ifNil: [Color default]) isDefault
-		ifTrue: [colBackcolor := Color window]
-		ifFalse: [colBackcolor := self parent backcolor].
-
-	canvas 
-		erase: (imageRect origin extent: imageRect extent - (0@1))
-		color: colBackcolor.
+	self displayBackcolor ifNotNil: 
+		[ :col |
+		(self parent isDisplayContextSelectedOrHot: aContext) ifFalse: [canvas erase: imageRect color: col]].
 
 	image isInteger
 	ifTrue:
 		["Regular ListView image index behavior"
-		origin := imageRect origin + ((imageRect extent - Icon smallExtent) // 2).
+		origin := imageRect origin + ((imageRect extent - Icon smallExtent) // 2) + (self parent columnImagePadding@0).
 		(self parent imageManager imageListWithExtent: Icon smallExtent) 
 			draw: image
 			on: canvas
@@ -70,7 +68,7 @@ customDrawIcon: aContext
 			flags: 0]
 	ifFalse:
 		["Actual Icon"
-		origin := imageRect origin + ((imageRect extent - image extent) // 2).
+		origin := imageRect origin + ((imageRect extent - image extent) // 2) + (self parent columnImagePadding@0).
 		image drawOn: canvas at: origin extent: image extent].
 
 	canvas free!
@@ -80,7 +78,7 @@ displayBackcolor
 	^self parent rowBackcolor ifNil: 
 		[self backcolor ifNil: 
 			[(self parent backcolor ifNil: [Color default]) isDefault
-				ifTrue: [Color window]
+				ifTrue: [nil]
 				ifFalse: [self parent backcolor]]]!
 
 displayForecolor
@@ -90,7 +88,7 @@ displayForecolor
 		[self parent rowForecolor ifNil: 
 			[self forecolor ifNil: 
 				[self parent forecolor ifNil:
-					[Color windowText]]]]
+					[nil]]]]
 	ifFalse: 
 		[Color grayText]!
 
@@ -119,16 +117,15 @@ getSortContentsBlock: anObject
 
 hasColumnImage
 
-	^self parent hasColumnImages and: [self hasImageBlock and: [self ~~ self parent primaryColumn]]!
+	^(self parent hasColumnImages and: [self hasImageBlock]) or: [self parent primaryColumn == self and: [self parent hasImageBlock]]!
 
 hasEditor
 
 	^self editor notNil!
 
-hasImage
+hasHotTracking
 
-	^(self parent hasColumnImages and: [self hasImageBlock])
-		or: [self parent primaryColumn == self and: [self parent hasImageBlock]]!
+	^self hasEditor and: [self editor hasEmbeddedHotTracking]!
 
 hasImageBlock
 
@@ -151,6 +148,39 @@ imageFromRow: anObject
 	^self parent hasColumnImages
 		ifTrue: [super imageFromRow: anObject]
 		ifFalse: [self parent imageFromRow: anObject]!
+
+infoTip
+
+	^self getInfoTipBlock ifNotNil: [ :blk | [blk value: nil] on: MessageNotUnderstood do: [ :exc | exc return: nil]]!
+
+infoTip: aString
+
+	^aString isEmpty
+		ifTrue: [self getInfoTipBlock: nil]
+		ifFalse: [self getInfoTipBlock: (Compiler evaluate: ('[ :item | <1p>]' expandMacrosWith: aString))]!
+
+infoTipPrefixTextFor: anItem on: aCanvasHandle
+
+	"Calculate and return the prefix string argument for a 2-arg getInfoTipBlock (i.e. the receiver's text if too large for its width, or the empty string otherwise).
+	Needed since custom drawn columns don't produce standard ListView tooltip notifications"
+
+	| string size |
+
+	"Only appropriate for text columns"
+	(self hasEditor not or: [self editor isKindOf: TextEdit]) ifFalse: [^''].
+
+	string := self textFromRow: anItem.
+	size := POINTL new.
+
+	(GDILibrary default 
+		getTextExtentPoint32: aCanvasHandle
+		lpString: string
+		cbString: string size
+		lpSize: size asParameter) ifFalse: ["Absorb the error" ^''].
+
+	^size asPoint x > self width
+		ifTrue: [string]
+		ifFalse: ['']!
 
 initialize
 	"Private - Initialize the state of the receiever."
@@ -197,7 +227,8 @@ ownerDraw: aContext
 			self parent postDraw: aContext columnIndex: self index. "Implicit canvas free"
 			^true].
 
-	aContext forecolor: self displayForecolor; backcolor: self displayBackcolor.
+	self displayForecolor ifNotNil: [ :col | aContext forecolor: col].
+	self displayBackcolor ifNotNil: [ :col | aContext backcolor: col].
 	self hasPreDrawBlock ifTrue: [self preDrawBlock value: aContext].
 
 	hasColumnImage := self hasColumnImage.
@@ -213,36 +244,40 @@ ownerDraw: aContext
 				lvmGetSubItemRect: (aContext dwItemSpec@aContext iSubItem) 
 				bounding: LVIR_LABEL.
 
-	hasColumnImage ifTrue: [itemRect left: ((itemRect left + self parent smallImageExtent x) min: itemRect right)].
+	hasColumnImage ifTrue: 
+		[itemRect left: ((itemRect left + self parent columnImageSpacing) min: itemRect right).
+		"Take off default icon spacing added to primary columnn (we're displaying this ourselves)"
+		self == self parent primaryColumn ifTrue: [itemRect left: (itemRect left - self parent smallImageExtent x)]].
 
-	"Handle selection background color"
-	aContext view hasFullRowSelect 
-	ifTrue:
-		[(self parent isSelected: aContext item)
-		ifTrue: 
+	"Handle custom colors vs. selection/hot highlighting"
+	(self parent isDisplayContextSelectedOrHot: aContext)
+	ifTrue: 
+		[self parent shouldOwnerDrawSelectionHighlight ifTrue:
 			[self parent hasFocus
 			ifTrue: 
-				[bcolor := Color highlight.
-				fcolor := Color highlightText]
-			ifFalse: 
-				[self parent showsSelAlways
-					ifTrue: [bcolor := Color face3d]
-					ifFalse: [bcolor := aContext backcolor]]]
-		ifFalse: 
-			[bcolor := self displayBackcolor]]
+				[fcolor := Color highlightText.
+				bcolor := Color highlight]
+			ifFalse:
+				[fcolor := Color windowText.
+				bcolor := Color face3d]]]
 	ifFalse:
-		[bcolor := aContext backcolor].
+		[fcolor := self displayForecolor.
+		bcolor := self displayBackcolor].
 
-	brush := Brush color: bcolor.
-	canvas fillRectangle: itemRect brush: brush.
-	brush free.
+	bcolor isNil ifFalse: 
+		[brush := Brush color: bcolor.
+		"Inset is to match what ListView does with its own drawn cells"
+		canvas fillRectangle: (itemRect insetCornerBy: 2@0) brush: brush.
+		brush free].
 
 	self editor 
-		display: (self getContentsBlock value: aContext item) 
+		display: (self getContentsBlock ifNotNil: [ :gcb | gcb value: aContext item]) 
 		in: itemRect 
 		on: canvas
-		forecolor: (fcolor ifNil: [self displayForecolor])
-		backcolor: bcolor.
+		forecolor: fcolor
+		backcolor: bcolor
+		editable: (self isEditableWith: aContext item)
+		hot: (self parent hotItemAndColumn ifNil: [false] ifNotNil: [ :pt | (self parent columnAtIndex: pt y) == self and: [pt x == aContext itemHandle]]).
 
 	hasColumnImage ifTrue: [self customDrawIcon: aContext].
 
@@ -287,7 +322,7 @@ setContentsBlock: anObject
 
 setEditorValueFrom: anObject
 
-	self editor embeddedValue: (self getContentsBlock value: anObject)!
+	self editor embeddedValue: (self getContentsBlock ifNotNil: [ :gcb | gcb value: anObject])!
 
 showIn: anEditableListView
 
@@ -324,11 +359,14 @@ updateValueIn: anObject
 !EditableListViewColumn categoriesFor: #getSortContentsBlock:!accessing!private! !
 !EditableListViewColumn categoriesFor: #hasColumnImage!public!testing! !
 !EditableListViewColumn categoriesFor: #hasEditor!public!testing! !
-!EditableListViewColumn categoriesFor: #hasImage!public!testing! !
+!EditableListViewColumn categoriesFor: #hasHotTracking!public!testing! !
 !EditableListViewColumn categoriesFor: #hasImageBlock!public!testing! !
 !EditableListViewColumn categoriesFor: #hasPreDrawBlock!accessing!public! !
 !EditableListViewColumn categoriesFor: #hide!operations!public! !
 !EditableListViewColumn categoriesFor: #imageFromRow:!public!testing! !
+!EditableListViewColumn categoriesFor: #infoTip!accessing!public! !
+!EditableListViewColumn categoriesFor: #infoTip:!accessing!public! !
+!EditableListViewColumn categoriesFor: #infoTipPrefixTextFor:on:!accessing!public! !
 !EditableListViewColumn categoriesFor: #initialize!initialize/release!private! !
 !EditableListViewColumn categoriesFor: #isEditable!accessing!public! !
 !EditableListViewColumn categoriesFor: #isEditable:!accessing!public! !
