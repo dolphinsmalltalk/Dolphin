@@ -1,17 +1,15 @@
 | package |
 package := Package name: 'SSW EditableListView Demo'.
 package paxVersion: 1;
-	basicComment: '©2006 Solutions Software Limited
-
-http://www.solutionsoft.co.uk/widgets/editablelistview
-
+	basicComment: '© Solutions Software/John Aspinall 2016
+Provided under the same licence terms as Dolphin Smalltalk 7
 
 EditableListViewDemo show'.
 
 
 package classNames
 	add: #EditableListViewDemo;
-	add: #ELVDemoPerson;
+	add: #PVRRecording;
 	yourself.
 
 package binaryGlobalNames: (Set new
@@ -22,15 +20,19 @@ package globalAliases: (Set new
 
 package setPrerequisites: (IdentitySet new
 	add: '..\..\Object Arts\Dolphin\Base\Dolphin';
+	add: '..\..\Object Arts\Dolphin\MVP\Presenters\Boolean\Dolphin Boolean Presenter';
 	add: '..\..\Object Arts\Dolphin\MVP\Views\Common Controls\Dolphin Common Controls';
 	add: '..\..\Object Arts\Dolphin\MVP\Presenters\Date Time\Dolphin Date Time Presenters';
 	add: '..\..\Object Arts\Dolphin\MVP\Models\List\Dolphin List Models';
 	add: '..\..\Object Arts\Dolphin\MVP\Presenters\List\Dolphin List Presenter';
 	add: '..\..\Object Arts\Dolphin\MVP\Base\Dolphin MVP Base';
+	add: '..\..\Object Arts\Dolphin\MVP\Presenters\Number\Dolphin Number Presenter';
+	add: '..\..\Object Arts\Dolphin\MVP\Views\SpinButton\Dolphin SpinButton Control';
 	add: '..\..\Object Arts\Dolphin\MVP\Type Converters\Dolphin Type Converters';
 	add: '..\..\Object Arts\Dolphin\MVP\Models\Value\Dolphin Value Models';
 	add: 'SSW EditableListView';
 	add: 'SSW Widget Development';
+	add: '..\..\Object Arts\Samples\MVP\Video Library\Video Library';
 	yourself).
 
 package setManualPrerequisites: #(
@@ -40,13 +42,13 @@ package!
 
 "Class Definitions"!
 
-Object subclass: #ELVDemoPerson
-	instanceVariableNames: 'name dateOfBirth gender isMarried address'
+Shell subclass: #EditableListViewDemo
+	instanceVariableNames: 'listPresenter rowHeightPresenter hasRowImagePresenter hasColumnImagesPresenter'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-Shell subclass: #EditableListViewDemo
-	instanceVariableNames: 'listPresenter'
+VideoRecording subclass: #PVRRecording
+	instanceVariableNames: 'episodeTitle description channel isViewed rating'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!

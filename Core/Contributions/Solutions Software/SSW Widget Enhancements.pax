@@ -1,22 +1,56 @@
 | package |
 package := Package name: 'SSW Widget Enhancements'.
 package paxVersion: 1;
-	basicComment: '©2006 Solutions Software Limited'.
+	basicComment: '© Solutions Software/John Aspinall 2016
+Provided under the same licence terms as Dolphin Smalltalk 7'.
 
 package basicPackageVersion: '0.001'.
 
 
 package classNames
-	add: #EmulatedCheckBox;
+	add: #EmulatedPushButton;
 	add: #FormattedTextEdit;
+	add: #IconWithExtent;
+	add: #OwnerDrawnButton;
+	add: #TextAndImageButton;
 	yourself.
 
 package methodNames
 	add: #Canvas -> #erase:;
 	add: #Canvas -> #erase:color:;
+	add: #Canvas -> #prefixText:at:;
+	add: #Canvas -> #prefixTextDisabled:at:;
+	add: #Canvas -> #prefixTextTransparent:at:;
+	add: #ControlView -> #freeTheme;
+	add: #ControlView -> #hasTheme;
+	add: #ControlView -> #onViewDestroyed;
+	add: #ControlView -> #openTheme;
+	add: #ControlView -> #theme;
+	add: #ControlView -> #themePartName;
 	add: #Date -> #shortString;
+	add: #GDILibrary -> #getClipRgn:hrgn:;
+	add: #Icon -> #asSmallIcon;
+	add: #Icon -> #withExtent:;
 	add: #KeyEvent -> #resendTo:;
+	add: #NMTTDISPINFOA -> #lpszText;
+	add: #NMTTDISPINFOW -> #lpszText;
 	add: #PointEvent -> #resendTo:;
+	add: #PushButton -> #themePartName;
+	add: #PushButton -> #tipText;
+	add: #PushButton -> #tipText:;
+	add: #PushButton -> #ttnGetDispInfo:;
+	add: #PushButton -> #wmNotify:wParam:lParam:;
+	add: #View -> #addToolTipWithHandle:;
+	add: #View -> #getUICuesState;
+	add: #View -> #requestTrackMouseLeave;
+	add: #View -> #setUICuesState:;
+	add: #View -> #shouldShowFocusRect;
+	add: #View -> #shouldShowFocusRect:;
+	add: #View -> #shouldShowKeyboardAccelerators;
+	add: #VistaThemeLibrary -> #endBufferedAnimation:fUpdateTarget:;
+	add: #VistaThemeLibrary -> #getThemeTransitionDuration:iPartId:iStateIdFrom:iStateIdTo:iPropId:pdwDuration:;
+	add: #WinImageList -> #draw:on:at:extent:backcolor:forecolor:flags:;
+	add: 'Color class' -> #buttonShadow;
 	add: 'Color class' -> #grayText;
 	add: 'Color class' -> #highlightText;
 	yourself.
@@ -29,16 +63,33 @@ package globalAliases: (Set new
 
 package setPrerequisites: (IdentitySet new
 	add: '..\..\Object Arts\Dolphin\Base\Dolphin';
+	add: '..\..\Object Arts\Dolphin\MVP\Views\Common Controls\Dolphin Common Controls';
 	add: '..\..\Object Arts\Dolphin\MVP\Base\Dolphin MVP Base';
 	add: '..\..\Object Arts\Dolphin\MVP\Presenters\Text\Dolphin Text Presenter';
+	add: '..\..\Object Arts\Dolphin\MVP\Views\Tooltips\Dolphin Tooltips';
 	yourself).
 
 package!
 
 "Class Definitions"!
 
-View subclass: #EmulatedCheckBox
-	instanceVariableNames: 'isTransition isChecked hasCursor isThemed'
+Icon subclass: #IconWithExtent
+	instanceVariableNames: 'extent'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+PushButton subclass: #OwnerDrawnButton
+	instanceVariableNames: 'displayState transitionDurations shouldShowKeyboardCues animationEndTime setFocusTime'
+	classVariableNames: ''
+	poolDictionaries: 'ThemeConstants'
+	classInstanceVariableNames: ''!
+OwnerDrawnButton subclass: #TextAndImageButton
+	instanceVariableNames: 'imageExtent imageManager imageIndex dropDownMenu isMenuOpen'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+TextAndImageButton subclass: #EmulatedPushButton
+	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -63,11 +114,47 @@ erase: aRectangle
 erase: aRectangle color: aColor
 	"Erase the receiver to the current background colour"
 
-	self fillRectangle: aRectangle brush: (Brush color: aColor)! !
+	self fillRectangle: aRectangle brush: (Brush color: aColor)!
+
+prefixText: aString at: aPoint
+
+	^UserLibrary default 
+		drawState: self asParameter
+		hbr: nil 
+		lpOutputFunc: 0 
+		lData: aString asDword 
+		wData: 0 
+		x: aPoint x y: aPoint y 
+		cx: self extent x cy: self extent y
+		fuFlags: DST_PREFIXTEXT!
+
+prefixTextDisabled: aString at: aPoint
+
+	^UserLibrary default 
+		drawState: self asParameter
+		hbr: nil 
+		lpOutputFunc: 0 
+		lData: aString asDword
+		wData: 0 
+		x: aPoint x y: aPoint y 
+		cx: self extent x cy: self extent y
+		fuFlags: DST_PREFIXTEXT | DSS_DISABLED!
+
+prefixTextTransparent: aString at: aPoint
+
+	self setBkMode: TRANSPARENT.
+	self prefixText: aString at: aPoint! !
 !Canvas categoriesFor: #erase:!drawing!public! !
 !Canvas categoriesFor: #erase:color:!drawing!public! !
+!Canvas categoriesFor: #prefixText:at:!drawing!public! !
+!Canvas categoriesFor: #prefixTextDisabled:at:!drawing!public! !
+!Canvas categoriesFor: #prefixTextTransparent:at:!drawing!public! !
 
 !Color class methodsFor!
+
+buttonShadow
+
+	^self systemColor: 16 "COLOR_BTNSHADOW"!
 
 grayText
 	"Answer the Gray Text system color."
@@ -78,8 +165,52 @@ highlightText
 	"Answer the Highlight Text system color."
 
 	^self systemColor: COLOR_HIGHLIGHTTEXT! !
+!Color class categoriesFor: #buttonShadow!constants!public! !
 !Color class categoriesFor: #grayText!constants!public! !
 !Color class categoriesFor: #highlightText!constants!public! !
+
+!ControlView methodsFor!
+
+freeTheme
+
+	self hasTheme ifTrue:
+		[ThemeLibrary default closeThemeData: self theme.
+		self removePropertyAt: #themeHandle]!
+
+hasTheme
+
+	^(self propertyAt: #themeHandle ifAbsent: [nil]) notNull!
+
+onViewDestroyed
+
+	self hasTheme ifTrue: [self freeTheme].
+
+	super onViewDestroyed!
+
+openTheme
+
+	^self themePartName ifNotNil: [ :themePartName | self propertyAt: #themeHandle put: (ThemeLibrary default openThemeData: self asParameter pszClassList: themePartName asUnicodeString)]!
+
+theme
+
+	| theme |
+
+	theme := self propertyAt: #themeHandle ifAbsent: [nil].
+	^theme isNull 
+		ifTrue: [self openTheme. self propertyAt: #themeHandle ifAbsent: [nil]]
+		ifFalse: [theme]!
+
+themePartName
+
+	"Subclasses should override to enable theme support"
+
+	^nil! !
+!ControlView categoriesFor: #freeTheme!helpers!public! !
+!ControlView categoriesFor: #hasTheme!public!testing! !
+!ControlView categoriesFor: #onViewDestroyed!public!realizing/unrealizing! !
+!ControlView categoriesFor: #openTheme!helpers!public! !
+!ControlView categoriesFor: #theme!accessing!public! !
+!ControlView categoriesFor: #themePartName!constants!public! !
 
 !Date methodsFor!
 
@@ -94,6 +225,36 @@ shortString
 	^stream contents! !
 !Date categoriesFor: #shortString!printing!public! !
 
+!GDILibrary methodsFor!
+
+getClipRgn: hdc hrgn: hRegion
+	"The SelectClipRgn function selects a region as the current clipping region
+	for the specified device context. 
+
+	int GetClipRgn(
+		HDC hdc		// handle of device context 
+		HRGN hrgn		// handle of region   
+	);"
+	<stdcall: sdword GetClipRgn handle handle>
+	^self invalidCall! !
+!GDILibrary categoriesFor: #getClipRgn:hrgn:!public!win32 functions-clipping! !
+
+!Icon methodsFor!
+
+asSmallIcon
+
+	^self withExtent: 16@16!
+
+withExtent: aPoint
+
+	^IconWithExtent new
+		fileLocator: self fileLocator;
+		identifier: self identifier;
+		extent: aPoint;
+		yourself! !
+!Icon categoriesFor: #asSmallIcon!converting!public! !
+!Icon categoriesFor: #withExtent:!converting!public! !
+
 !KeyEvent methodsFor!
 
 resendTo: aView
@@ -105,6 +266,20 @@ resendTo: aView
 		wParam: wParam 
 		lParam: lParam! !
 !KeyEvent categoriesFor: #resendTo:!public!testing! !
+
+!NMTTDISPINFOA methodsFor!
+
+lpszText
+
+	^bytes uintPtrAtOffset: ##(self offsetOf: #lpszText)! !
+!NMTTDISPINFOA categoriesFor: #lpszText!**compiled accessors**!public! !
+
+!NMTTDISPINFOW methodsFor!
+
+lpszText
+
+	^bytes uintPtrAtOffset: ##(self offsetOf: #lpszText)! !
+!NMTTDISPINFOW categoriesFor: #lpszText!**compiled accessors**!public! !
 
 !PointEvent methodsFor!
 
@@ -125,6 +300,170 @@ resendTo: aView
 		wParam: wParam 
 		lParam: newLParam asInteger! !
 !PointEvent categoriesFor: #resendTo:!accessing!private! !
+
+!PushButton methodsFor!
+
+themePartName
+
+	^#BUTTON!
+
+tipText
+
+	^self propertyAt: #tipText ifAbsent: [nil]!
+
+tipText: aString
+
+	aString isNil
+		ifTrue: [self removePropertyAt: #tipText ifAbsent: []; removePropertyAt: #tipTextBuffer ifAbsent: []]
+		ifFalse: [self propertyAt: #tipText put: aString]!
+
+ttnGetDispInfo: anNMTTDISPINFO 
+	"Private - Generic handler for the TTN_GETDISPINFO(A/W) notification message."
+
+	^(anNMTTDISPINFO idIsHandle and: [anNMTTDISPINFO idFrom = self handle asInteger and: [self tipText notNil]]) 
+	ifTrue: 
+		[anNMTTDISPINFO text: self tipText. 
+		"Note that we must keep a reference to the text string to prevent its premature death"
+		anNMTTDISPINFO lpszText ifNotNil: [ :text | self propertyAt: #tipTextBuffer put: text].
+		0]
+	ifFalse: 
+		[super ttnGetDispInfo: anNMTTDISPINFO]!
+
+wmNotify: message wParam: wParam lParam: lParam
+	"Private - Redirects WM_NOTIFY messages to the appropriate control as a notify message.
+	Overridden here to handle notifications from the receiver's tool tip control which 
+	does not itself have an associated View so cannot receive the redirected message.
+	In any case it is more convenient to direct the notification to the receiver's
+	#ttnNeedText: handler."
+
+	| pnmhdr code |
+	pnmhdr := lParam asExternalAddress.
+	code := pnmhdr sdwordAtOffset: 8.
+	(code == TTN_GETDISPINFOW or: [code == TTN_GETDISPINFOA]) ifTrue: [^self nmNotify: pnmhdr].
+	^super wmNotify: message wParam: wParam lParam: lParam! !
+!PushButton categoriesFor: #themePartName!constants!public! !
+!PushButton categoriesFor: #tipText!accessing!public! !
+!PushButton categoriesFor: #tipText:!accessing!public! !
+!PushButton categoriesFor: #ttnGetDispInfo:!event handling-win32!private! !
+!PushButton categoriesFor: #wmNotify:wParam:lParam:!event handling-win32!private! !
+
+!View methodsFor!
+
+addToolTipWithHandle: toolTipHandle
+
+	"Add the specified tool tip to this view (typically but not necessarily a Button).
+	The receiver will need to override wmNotify:wParam:lParam: to intercept requests for tip text (see PushButton extension in this package).
+	Borrowed from cdemers 2/26/2003, based on code from Steve Waring and mm_aa."
+
+	| toolInfo |
+
+	(toolInfo := TOOLINFOA new)
+		uFlags: 17; "TTF_IDISHWND | TTF_SUBCLASS"
+		hwnd: self handle;
+		uId: self handle;
+		textCallback.
+	UserLibrary default 
+		sendMessage: toolTipHandle
+		msg: 1028	"TTM_ADDTOOL"
+		wParam: 0
+		lParam: toolInfo yourAddress.	
+	"cdemers - 2/26/2003 Allow multiline."
+	UserLibrary default 
+		sendMessage: toolTipHandle
+		msg: 1048	"TTM_SETMAXTIPWIDTH"
+		wParam: 0
+		lParam: 500.
+	UserLibrary default 
+		sendMessage: toolTipHandle
+		msg: (WM_USER + 3) "TTM_SETDELAYTIME"
+		wParam: 2 "TTDT_AUTOPOP"
+		lParam: 20000 "Default seems to be 5000 (5 secs) - this is a bit more reasonable".
+
+	^toolTipHandle!
+
+getUICuesState
+
+	^self sendMessage: 16r0129 "WM_QUERYUISTATE" wParam: 0 lParam: 0!
+
+requestTrackMouseLeave
+	| tme |
+	tme := TRACKMOUSEEVENT new.
+	tme dwFlags: TME_LEAVE.
+	tme hwndTrack: self asParameter.
+	^(UserLibrary default trackMouseEvent: tme) ifTrue: [tme] ifFalse: [nil]!
+
+setUICuesState: anInteger
+
+	^self sendMessage: 16r0127 "WM_CHANGEUISTATE" wParam: anInteger lParam: 0!
+
+shouldShowFocusRect
+
+	^self getUICuesState noMask: 1 "UISF_HIDEFOCUS"!
+
+shouldShowFocusRect: aBoolean
+
+	self setUICuesState: (##(1 "UISF_HIDEFOCUS" bitShift: 16) bitOr: (aBoolean ifTrue: [2 "UIS_CLEAR"] ifFalse: [1 "UIS_SET"]))!
+
+shouldShowKeyboardAccelerators
+
+	^self getUICuesState noMask: 2 "UISF_HIDEACCEL"! !
+!View categoriesFor: #addToolTipWithHandle:!operations!public! !
+!View categoriesFor: #getUICuesState!accessing!private! !
+!View categoriesFor: #requestTrackMouseLeave!helpers!public! !
+!View categoriesFor: #setUICuesState:!accessing!private! !
+!View categoriesFor: #shouldShowFocusRect!public!testing! !
+!View categoriesFor: #shouldShowFocusRect:!public!testing! !
+!View categoriesFor: #shouldShowKeyboardAccelerators!public!testing! !
+
+!VistaThemeLibrary methodsFor!
+
+endBufferedAnimation: hBufferedPaint fUpdateTarget: fUpdateTarget
+	"Invoke the EndBufferedAnimation() function of the module wrapped by the receiver.
+	Helpstring: Ends a buffered animation operation.
+
+		HRESULT __stdcall EndBufferedAnimation(
+			[in]HANDLE hBufferedPaint,
+			[in]BOOL fUpdateTarget);"
+
+	<stdcall: hresult EndBufferedAnimation handle bool>
+	^self invalidCall!
+
+getThemeTransitionDuration: htheme iPartId: iPartId iStateIdFrom: iStateIdFrom iStateIdTo: iStateIdTo iPropId: iPropId pdwDuration: pdwDuration
+
+	"Gets the duration for the specified transition.
+	HRESULT GetThemeTransitionDuration(
+		HTHEME hTheme,
+		int    iPartId,
+		int    iStateIdFrom,
+		int    iStateIdTo,
+		int    iPropId,
+	_Out_ DWORD  *pdwDuration
+	);"
+
+	<stdcall: hresult GetThemeTransitionDuration handle sdword sdword sdword sdword sdword*>
+	^self invalidCall! !
+!VistaThemeLibrary categoriesFor: #endBufferedAnimation:fUpdateTarget:!public! !
+!VistaThemeLibrary categoriesFor: #getThemeTransitionDuration:iPartId:iStateIdFrom:iStateIdTo:iPropId:pdwDuration:!public! !
+
+!WinImageList methodsFor!
+
+draw: imageIndexInteger on: aCanvas at: aPoint extent: exPoint backcolor: backColor forecolor: foreColor flags: flagsInteger 
+	"Draw the image at one-based <integer> index, imageIndexInteger, in the receiver onto the
+	<Canvas>, aCanvas, at the <Point> position, aPoint, using the foreground and background
+	<Color>s foreColor and backColor respectively, with <integer> style flags, flagsInteger."
+
+	^CommCtrlLibrary default 
+		imageList_DrawEx: self asParameter
+		i: imageIndexInteger - 1
+		hdcDst: aCanvas asParameter
+		x: aPoint x
+		y: aPoint y
+		dx: exPoint x
+		dy: exPoint y
+		rgbBk: (backColor isNil ifTrue: [CLR_NONE] ifFalse: [backColor asParameter])
+		rgbFg: (foreColor isNil ifTrue: [CLR_DEFAULT] ifFalse: [foreColor asParameter])
+		fStyle: flagsInteger! !
+!WinImageList categoriesFor: #draw:on:at:extent:backcolor:forecolor:flags:!drawing-bitmaps!public! !
 
 "End of package definition"!
 

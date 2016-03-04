@@ -1146,6 +1146,22 @@ lvmGetStringWidth: aString
 		ifTrue: [self errorInCommonControlCall]
 		ifFalse: [width]!
 
+lvmGetSubItemRect: pointIndex bounding: boundingValue 
+	"Private - Answer a bounding Rectangle for all or part of a subitem. pointIndex is
+	itemIndex@subitemIndex."
+
+	| rect |
+	rect := RECT new.
+	rect
+		top: pointIndex y;
+		left: boundingValue.
+	(self 
+		sendMessage: LVM_GETSUBITEMRECT
+		wParam: pointIndex x
+		lpParam: rect) == 0 
+		ifTrue: [^self errorInCommonControlCall: pointIndex x].
+	^rect asRectangle!
+
 lvmGetSubItemRectX: pointIndex bounding: boundingValue 
 	"Private - Answer a bounding Rectangle for all or part of a subitem. pointIndex is
 	itemIndex@subitemIndex.
@@ -2266,6 +2282,7 @@ wantCustomDrawItemNotifications: pNMHDR
 !ListView categoriesFor: #lvmGetNextItem:flags:!accessing!private! !
 !ListView categoriesFor: #lvmGetOrigin!accessing!private! !
 !ListView categoriesFor: #lvmGetStringWidth:!accessing!private! !
+!ListView categoriesFor: #lvmGetSubItemRect:bounding:!geometry!private! !
 !ListView categoriesFor: #lvmGetSubItemRectX:bounding:!geometry!private! !
 !ListView categoriesFor: #lvmGetView!accessing-styles!private! !
 !ListView categoriesFor: #lvmGetViewRect!geometry!private! !
