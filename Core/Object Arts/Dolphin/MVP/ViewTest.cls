@@ -15,7 +15,6 @@ allResourceIdentifiers
 	| badList list |
 	badList := self badResourceIdentifiers.
 	list := ResourceIdentifier allResourceIdentifiers.
-	list := list reject: [:each | each owningClass == Dialog or: [each owningClass inheritsFrom: Dialog]].
 	list := list reject: [:each | badList includes: each printString].
 	^list!
 
