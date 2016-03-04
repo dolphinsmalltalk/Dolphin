@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 FormattedTextEdit subclass: #EmbeddedFormattedTextEdit
 	instanceVariableNames: 'offset'
@@ -39,19 +39,7 @@ createEmbeddedIn: aView
 
 defaultOffset
 
-	"Works for several fonts (set an explicit offset if not)"
-	
-	| x y |
-
-	(self parentView primaryColumn editor == self)
-		ifTrue: [x := -1]
-		ifFalse: [x := 3].
-
-	y := (10 - (self actualFont pointSize)) max: 0.
-	self parentView isMultiline ifTrue:
-		[y := (((self actualFont pixelSize + 2) * (self parentView rowHeight - 1)) + 1) //2].
-
-	^x@y!
+	^self parentView defaultOffsetForEditor: self!
 
 defaultWindowExStyle
 	"Private - Answer the default extended window creation style.
@@ -64,12 +52,12 @@ defaultWindowStyle
 
 	^(super defaultWindowStyle) | ES_AUTOHSCROLL!
 
-display: anObject in: aRectangle on: aCanvas forecolor: fColor backcolor: bColor 
+display: anObject in: aRectangle on: aCanvas forecolor: fColor backcolor: bColor editable: aBoolean hot: hBoolean
 
 	| text actualOffset |
 
 	text := self typeconverter convertFromLeftToRight: anObject.
-	actualOffset := self actualOffset + (2@0).
+	actualOffset := self actualOffset + (3@0).
 	
 	aCanvas 
 		forecolor: fColor;
@@ -84,6 +72,10 @@ editRectFor: aRectangle
 	"Private - Return the rectangle to use for the editor within the grid cell aRectangle"
 
 	^(aRectangle topLeft + self actualOffset) extent: (aRectangle extent - (self actualOffset + (0@1)))!
+
+hasEmbeddedHotTracking
+
+	^false!
 
 isDisplayOwnerDrawn
 
@@ -172,9 +164,10 @@ stbSaveOn: anSTBOutFiler
 !EmbeddedFormattedTextEdit categoriesFor: #defaultOffset!accessing!public! !
 !EmbeddedFormattedTextEdit categoriesFor: #defaultWindowExStyle!constants!private! !
 !EmbeddedFormattedTextEdit categoriesFor: #defaultWindowStyle!constants!private! !
-!EmbeddedFormattedTextEdit categoriesFor: #display:in:on:forecolor:backcolor:!displaying!public! !
+!EmbeddedFormattedTextEdit categoriesFor: #display:in:on:forecolor:backcolor:editable:hot:!displaying!public! !
 !EmbeddedFormattedTextEdit categoriesFor: #displayOnFormats!binary filing!public! !
 !EmbeddedFormattedTextEdit categoriesFor: #editRectFor:!displaying!private! !
+!EmbeddedFormattedTextEdit categoriesFor: #hasEmbeddedHotTracking!public!testing! !
 !EmbeddedFormattedTextEdit categoriesFor: #isDisplayOwnerDrawn!public!testing! !
 !EmbeddedFormattedTextEdit categoriesFor: #offset!accessing!public! !
 !EmbeddedFormattedTextEdit categoriesFor: #offset:!accessing!public! !

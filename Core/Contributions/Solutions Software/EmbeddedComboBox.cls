@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ComboBox subclass: #EmbeddedComboBox
 	instanceVariableNames: 'choiceModel cellRect'
@@ -60,7 +60,7 @@ defaultWindowStyle
 
 	^(super defaultWindowStyle) | 128 "ES_AUTOHSCROLL"!
 
-display: anObject in: aRectangle on: aCanvas forecolor: fColor backcolor: bColor 
+display: anObject in: aRectangle on: aCanvas forecolor: fColor backcolor: bColor editable: aBoolean hot: hBoolean
 
 	| text actualOffset |
 
@@ -81,9 +81,13 @@ embeddedValue
 
 embeddedValue: anObject
 
-	self selection: anObject.
+	self selectionOrNil: anObject.
 	self choiceModel setValue: anObject.
 	lastSelIndices := #()!
+
+hasEmbeddedHotTracking
+
+	^false!
 
 isDisplayOwnerDrawn
 
@@ -104,7 +108,7 @@ offsetX
 offsetY
 
 	^self parentView isMultiline
-		ifTrue: [(((self actualFont pixelSize) * (self parentView rowHeight - 1)) + 2) //2]
+		ifTrue: [((self parentView rowPixelHeight - (self actualFont pixelSize + 12)) / 2) rounded]
 		ifFalse: [0]!
 
 onCursoredLeft
@@ -122,7 +126,8 @@ onFullyCreated
 
 onKillFocus
 
-	self parentView hideActiveEditor.
+	"Need to specify the editor to avoid killing the focus on any new editor(something to do with combo box vs its entry field?)" 
+	self parentView hideActiveEditor: self.
 
 	^super onKillFocus!
 
@@ -141,7 +146,6 @@ preTranslateKeyboardInput: aMSG
 			[Keyboard default isShiftDown
 				ifTrue: [action := MessageSend receiver: self parentView selector: #fieldExitPrevTabbed: arguments: #(true)]
 				ifFalse: [action := MessageSend receiver: self parentView selector: #fieldExitNextTabbed: arguments: #(true)]].
-
 		action notNil ifTrue:
 			[SessionManager inputState queueDeferredAction: action.
 			^true]].
@@ -176,10 +180,11 @@ stbSaveOn: anSTBOutFiler
 !EmbeddedComboBox categoriesFor: #createEmbeddedIn:!initialize/release!public! !
 !EmbeddedComboBox categoriesFor: #defaultWindowExStyle!constants!private! !
 !EmbeddedComboBox categoriesFor: #defaultWindowStyle!constants!private! !
-!EmbeddedComboBox categoriesFor: #display:in:on:forecolor:backcolor:!displaying!public! !
+!EmbeddedComboBox categoriesFor: #display:in:on:forecolor:backcolor:editable:hot:!displaying!public! !
 !EmbeddedComboBox categoriesFor: #displayOnFormats!binary filing!public! !
 !EmbeddedComboBox categoriesFor: #embeddedValue!accessing!public! !
 !EmbeddedComboBox categoriesFor: #embeddedValue:!accessing!public! !
+!EmbeddedComboBox categoriesFor: #hasEmbeddedHotTracking!public!testing! !
 !EmbeddedComboBox categoriesFor: #isDisplayOwnerDrawn!public!testing! !
 !EmbeddedComboBox categoriesFor: #listModel:!public!testing! !
 !EmbeddedComboBox categoriesFor: #model:!accessing!public! !

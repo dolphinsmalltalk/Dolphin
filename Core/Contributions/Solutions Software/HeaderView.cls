@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ControlView subclass: #HeaderView
 	instanceVariableNames: ''
@@ -150,5 +150,5 @@ setSortIconForColumn: aListViewColumn
 
 winClassName
 	^'BUTTON'! !
-!HeaderView class categoriesFor: #winClassName!public! !
+!HeaderView class categoriesFor: #winClassName!constants!public! !
 
