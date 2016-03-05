@@ -53,6 +53,7 @@ testSelectionModeChange
 		against: presenter.
 	presenter selection: objects second.
 	self assert: presenter view selectionsByIndex = #(2).
+	self should: [presenter view getMultipleSelections] raise: Error.
 	self 
 		should: [presenter view isMultiSelect: true]
 		trigger: #selectionChanged
