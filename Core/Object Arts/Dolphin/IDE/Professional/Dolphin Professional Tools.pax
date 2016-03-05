@@ -55,8 +55,6 @@ package methodNames
 	add: #SmalltalkWorkspaceDocument -> #browseSources;
 	add: #SmalltalkWorkspaceDocument -> #dragToolToIdeaSpace;
 	add: 'LinkButton class' -> #publishedAspectsOfInstances;
-	add: 'MaskedEdit class' -> #publishedAspectsOfInstances;
-	add: 'MonthView class' -> #publishedAspectsOfInstances;
 	add: 'SlideyInneyOuteyThing class' -> #example1;
 	add: 'SlideyInneyOuteyThing class' -> #publishedAspectsOfInstances;
 	add: 'SmalltalkToolShell class' -> #addToNewIdeaSpace:;
@@ -98,8 +96,6 @@ package setPrerequisites: (IdentitySet new
 	add: '..\..\MVP\Models\Tree\Dolphin Tree Models';
 	add: '..\..\MVP\Type Converters\Dolphin Type Converters';
 	add: '..\..\MVP\Models\Value\Dolphin Value Models';
-	add: '..\..\ActiveX\Components\MSMask\Masked Edit';
-	add: '..\..\ActiveX\Components\MonthView\Month View';
 	add: '..\..\ActiveX\COM\OLE COM';
 	add: '..\..\..\..\Contributions\Camp Smalltalk\SUnit\SUnit';
 	add: '..\..\ActiveX\Shell\Windows Shell';
@@ -215,35 +211,6 @@ publishedAspectsOfInstances
 		yourself.
 	^answer! !
 !LinkButton class categoriesFor: #publishedAspectsOfInstances!constants!development!public! !
-
-!MaskedEdit class methodsFor!
-
-publishedAspectsOfInstances
-	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
-
-	| aspects |
-	aspects := super publishedAspectsOfInstances.
-	#(#firesControlEvents #isDesignMode #progId #isDefault #licenseKey) 
-		do: [:a | aspects removeKey: a ifAbsent: []].
-	aspects add: (Aspect string: #value) beImmutable.
-	^aspects! !
-!MaskedEdit class categoriesFor: #publishedAspectsOfInstances!constants!development!public! !
-
-!MonthView class methodsFor!
-
-publishedAspectsOfInstances
-	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
-
-	| aspects |
-	aspects := super publishedAspectsOfInstances.
-	#(#firesControlEvents #isDesignMode #progId #isDefault #licenseKey #value) 
-		do: [:a | aspects removeKey: a ifAbsent: []].
-	^aspects
-		add: (Aspect color: #monthBackColor);
-		add: (Aspect integer: #monthColumns);
-		add: (Aspect integer: #monthRows);
-		yourself! !
-!MonthView class categoriesFor: #publishedAspectsOfInstances!constants!development!public! !
 
 !PackageSelector methodsFor!
 

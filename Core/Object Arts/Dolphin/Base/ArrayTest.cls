@@ -13,6 +13,13 @@ ArrayTest comment: ''!
 collectionClass
 	^Array!
 
+testCyclicRefPrinting
+
+	| array |
+	array := Array new: 1.
+	array at: 1 put: array.
+	self assert: array debugPrintString = '#(... a cyclic ref to an Array...)'!
+
 testIsLiteral
 	| example1 |
 	example1 := #(1 2 3 4 5) copy.
@@ -44,6 +51,7 @@ testNonLiteralStoreOn
 	self deny: rehydrated isLiteral.
 	self assert: rehydrated = array! !
 !ArrayTest categoriesFor: #collectionClass!helpers!private! !
+!ArrayTest categoriesFor: #testCyclicRefPrinting!public! !
 !ArrayTest categoriesFor: #testIsLiteral!public!unit tests! !
 !ArrayTest categoriesFor: #testLiteralStoreOn!public!unit tests! !
 !ArrayTest categoriesFor: #testNonLiteralStoreOn!public!unit tests! !
