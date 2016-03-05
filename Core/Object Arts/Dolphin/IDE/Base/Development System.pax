@@ -38,7 +38,6 @@ package classNames
 	add: #CommandMenuItemDialog;
 	add: #CompiledMethodInspector;
 	add: #CompiledMethodSearchPolicy;
-	add: #ContextMenuComposerView;
 	add: #CreateSubclassDialog;
 	add: #Debugger;
 	add: #DebuggerMethodCategory;
@@ -60,12 +59,13 @@ package classNames
 	add: #KeyedAspectBatch;
 	add: #KeyedAspectBatchAccessor;
 	add: #MenuBarComposer;
-	add: #MenuBarComposerView;
+	add: #MenuBarPainter;
 	add: #MenuComposer;
 	add: #MenuComposerArena;
 	add: #MenuComposerView;
 	add: #MenuDialog;
 	add: #MenuItemDialog;
+	add: #MenuPainter;
 	add: #MessageNodeCollector;
 	add: #MethodBrowser;
 	add: #MethodBrowserShell;
@@ -89,6 +89,7 @@ package classNames
 	add: #PackedReferencesCategory;
 	add: #PluggableEnvironment;
 	add: #PluggableVirtualMethodCategory;
+	add: #PopupMenuPainter;
 	add: #PropertyInspector;
 	add: #PublishedAspectInspector;
 	add: #ReferencesCategory;
@@ -212,9 +213,9 @@ package methodNames
 	add: #LayoutManager -> #arrangementAspect;
 	add: #ListControlView -> #visualObjectAtPoint:;
 	add: #LPVOIDField -> #newAspect:class:;
-	add: #Menu -> #composerViewClass;
 	add: #Menu -> #edit;
-	add: #MenuBar -> #composerViewClass;
+	add: #Menu -> #painterClass;
+	add: #MenuBar -> #painterClass;
 	add: #MethodProtocol -> #icon;
 	add: #MoenTreeView -> #visualObjectAtPoint:;
 	add: #MSG -> #printOn:;
@@ -587,6 +588,11 @@ Object subclass: #Grabber
 	classVariableNames: 'Cursors'
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
+Object subclass: #MenuPainter
+	instanceVariableNames: 'menu conflictingMnemonics conflictingAccelerators'
+	classVariableNames: ''
+	poolDictionaries: 'Win32Constants'
+	classInstanceVariableNames: ''!
 Object subclass: #MethodCategorizationPolicy
 	instanceVariableNames: ''
 	classVariableNames: 'Default'
@@ -729,6 +735,16 @@ Error subclass: #InvalidInstallationError
 	classInstanceVariableNames: ''!
 Folder subclass: #PackageFolder
 	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+MenuPainter subclass: #MenuBarPainter
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+MenuPainter subclass: #PopupMenuPainter
+	instanceVariableNames: 'itemWidth textOffset submenuOffset acceleratorOffset'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -1118,14 +1134,14 @@ StNumberLiteralToken subclass: #StNumberStylingToken
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 View subclass: #MenuComposerView
-	instanceVariableNames: 'selectionIndex conflictingAccelerators conflictingMnemonics'
+	instanceVariableNames: 'selectionIndex painter'
 	classVariableNames: ''
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
 ContainerView subclass: #MenuComposerArena
 	instanceVariableNames: 'dragImageList dragPoint dragMenuIndex dragSource _unused'
 	classVariableNames: ''
-	poolDictionaries: ''
+	poolDictionaries: 'CommCtrlConstants'
 	classInstanceVariableNames: ''!
 ShellView subclass: #DebuggerShellView
 	instanceVariableNames: ''
@@ -1144,16 +1160,6 @@ ImageViewAbstract subclass: #ImageListView
 	classInstanceVariableNames: ''!
 ImageView subclass: #ViewComposerArena
 	instanceVariableNames: 'composer'
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-MenuComposerView subclass: #ContextMenuComposerView
-	instanceVariableNames: 'itemWidth acceleratorOffset submenuOffset textOffset'
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-MenuComposerView subclass: #MenuBarComposerView
-	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -2804,17 +2810,18 @@ newAspect: aSymbol class: aspectClass
 
 !Menu methodsFor!
 
-composerViewClass
-    	"Private - Answer the class of view used for displaying the receiver."
-    
-    	^ContextMenuComposerView!
-
 edit
     	"Private - Edit the receiver in a dialog box."
     
-    	(MenuDialog createOn: self) showModal! !
-!Menu categoriesFor: #composerViewClass!constants!development!private! !
+    	(MenuDialog createOn: self) showModal!
+
+painterClass
+	"Private - Answer the class of painter used for rendering the receiver in a
+	MenuComposerView."
+
+	^PopupMenuPainter! !
 !Menu categoriesFor: #edit!constants!development!private! !
+!Menu categoriesFor: #painterClass!constants!development!private! !
 
 !Menu class methodsFor!
 
@@ -2838,11 +2845,12 @@ publishedAspectsOfInstances
 
 !MenuBar methodsFor!
 
-composerViewClass
-    	"Private - Answer the class of view used for displaying the receiver."
-    
-    	^MenuBarComposerView! !
-!MenuBar categoriesFor: #composerViewClass!constants!development!private! !
+painterClass
+	"Private - Answer the class of painter used for rendering the receiver in a
+	MenuComposerView."
+
+	^MenuBarPainter! !
+!MenuBar categoriesFor: #painterClass!constants!development!private! !
 
 !MenuBar class methodsFor!
 

@@ -1,9 +1,9 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ContainerView subclass: #MenuComposerArena
 	instanceVariableNames: 'dragImageList dragPoint dragMenuIndex dragSource _unused'
 	classVariableNames: ''
-	poolDictionaries: ''
+	poolDictionaries: 'CommCtrlConstants'
 	classInstanceVariableNames: ''!
 MenuComposerArena guid: (GUID fromString: '{14BE7036-54A3-4888-9A4A-B0166FD82776}')!
 MenuComposerArena comment: 'MenuComposerArena is used by the <MenuComposer> to contain the menus being edited. It''s main function is to support the drag and drop of menu items between the menu views, which are dynamically opened and closed.'!
@@ -56,17 +56,22 @@ continueTrackingAt: aPoint from: aPreviousPoint
 createDragImageList
 	| bitmap hotspot |
 	dragMenuIndex := dragSource selectionByIndex.
-	bitmap := dragSource createDragImage: dragMenuIndex.
-	dragImageList := WinImageList newExtent: bitmap extent masked: true.
-	dragImageList addImage: bitmap.
 	hotspot := dragPoint - dragSource position - (dragSource itemRect: dragMenuIndex) origin.
+	bitmap := dragSource createDragImage: dragMenuIndex.
+	"We must use a device-dependent image list or the text/background may be lost when the icon
+	(if any) is painted, depending on the display driver."
+	dragImageList := WinImageList 
+				newExtent: bitmap extent
+				depth: ILC_COLORDB
+				masked: false.
+	dragImageList addImage: bitmap.
 	bitmap free.
 	dragImageList 
 		beginDragImage: 0
 		hotSpotX: hotspot x
 		hotSpotY: hotspot y!
 
-endTrackingAt: aPoint
+endTrackingAt: aPoint 
 	"Private - End position tracking for the new position of the receiver.
 	Part of the <MouseTracker> target protocol."
 
@@ -83,7 +88,10 @@ endTrackingAt: aPoint
 						withArguments: (Array 
 								with: dragSource
 								with: dragMenuIndex
-								with: (view insertBefore: index position: localPoint)
+								with: (view 
+										insertBefore: index
+										position: localPoint
+										canvas: self canvas)
 								with: Keyboard default isCtrlDown).
 					^self]]] 
 			ensure: [dragMenuIndex := nil]!
@@ -115,7 +123,7 @@ startTrackingAt: aPoint
 	dragSource := self subViewFromPoint: aPoint.
 	dragPoint := aPoint.
 	self createDragImageList.
-	dragImageList dragEnter: self at: dragPoint.
+	dragImageList dragEnter: self at: aPoint.
 	^aPoint! !
 !MenuComposerArena categoriesFor: #beginDrag:of:in:!helpers!private! !
 !MenuComposerArena categoriesFor: #cancelTrackingAt:!private!tracking! !
