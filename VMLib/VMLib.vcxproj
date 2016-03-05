@@ -58,7 +58,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <OmitFramePointers>true</OmitFramePointers>
-      <PreprocessorDefinitions>VM;_CTYPE_DISABLE_MACROS;WIN32;_WINDOWS;WIN32_LEAN_AND_MEAN;WIN32_EXTRA_LEAN;STRICT;_MERGE_PROXYSTUB;_ATL_NO_MP_HEAP;ZEXPORT=__stdcall;ZEXPORTVA=__cdecl;_CRT_SECURE_NO_WARNINGS;_HAS_EXCEPTIONS=0;</PreprocessorDefinitions>
+      <PreprocessorDefinitions>VM;_CTYPE_DISABLE_MACROS;WIN32;_WINDOWS;WIN32_LEAN_AND_MEAN;WIN32_EXTRA_LEAN;STRICT;_MERGE_PROXYSTUB;_ATL_NO_MP_HEAP;ZEXPORT=__stdcall;ZEXPORTVA=__cdecl;_CRT_SECURE_NO_WARNINGS;_HAS_EXCEPTIONS=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <ExceptionHandling />
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
@@ -78,7 +78,7 @@
     <ClCompile>
       <Optimization>Disabled</Optimization>
       <InlineFunctionExpansion>Disabled</InlineFunctionExpansion>
-      <PreprocessorDefinitions>DEBUG;_DEBUG;VM;_CTYPE_DISABLE_MACROS;WIN32;_WINDOWS;WIN32_LEAN_AND_MEAN;WIN32_EXTRA_LEAN;STRICT;_MERGE_PROXYSTUB;_ATL_NO_MP_HEAP;ZEXPORT=__stdcall;ZEXPORTVA=__cdecl;_CRT_SECURE_NO_WARNINGS;_HAS_EXCEPTIONS=0;</PreprocessorDefinitions>
+      <PreprocessorDefinitions>DEBUG;_DEBUG;VM;_CTYPE_DISABLE_MACROS;WIN32;_WINDOWS;WIN32_LEAN_AND_MEAN;WIN32_EXTRA_LEAN;STRICT;_MERGE_PROXYSTUB;_ATL_NO_MP_HEAP;ZEXPORT=__stdcall;ZEXPORTVA=__cdecl;_CRT_SECURE_NO_WARNINGS;_HAS_EXCEPTIONS=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <ExceptionHandling>
       </ExceptionHandling>
