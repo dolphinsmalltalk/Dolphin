@@ -74,8 +74,9 @@ testAtIfAbsentPutModifyingCollection
 testCyclicRefPrinting
 	| dictionary |
 	dictionary := self newEmpty.
+	(dictionary class == PoolConstantsDictionary) ifTrue: [^self].
 	dictionary at: dictionary put: dictionary.
-	self assert: dictionary debugPrintString = 'a Dictionary(... a cyclic ref to a Dictionary... -> ... a cyclic ref to a Dictionary...)'!
+	self assert: 0 < (dictionary debugPrintString indexOfSubCollection: '... a cyclic ref to ' startingAt: 1)!
 
 testDeepCopy
 	"#2066"
