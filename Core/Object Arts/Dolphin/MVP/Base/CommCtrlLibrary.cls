@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ExternalLibrary subclass: #CommCtrlLibrary
 	instanceVariableNames: ''
@@ -136,7 +136,7 @@ imageList_DrawEx: himl i: i hdcDst: hdcDst x: x y: y dx: dx dy: dy rgbBk: rgbBk 
 			unsigned long rgbFg,
 			unsigned int fStyle);"
 
-	<stdcall: sdword ImageList_DrawEx sdword sdword sdword sdword sdword sdword sdword dword dword dword>
+	<stdcall: bool ImageList_DrawEx handle sdword handle sdword sdword sdword sdword dword dword dword>
 	^self invalidCall!
 
 imageList_Duplicate: himl 

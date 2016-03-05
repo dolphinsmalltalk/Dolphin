@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 MultilineTextEdit subclass: #EmbeddedMultilineTextEdit
 	instanceVariableNames: 'column'
@@ -38,33 +38,42 @@ defaultWindowStyle
 	^super defaultWindowStyle | WS_VSCROLL | ES_AUTOVSCROLL
 !
 
-display: aString in: aRectangle on: aCanvas forecolor: fColor backcolor: bColor 
+display: aString in: aRectangle on: aCanvas forecolor: fColor backcolor: bColor editable: aBoolean hot: hBoolean
 
-	| text textHeight offset |
+	| myRect formatRect text displayRect |
 
 	text := aString ifNil: [''].
-	textHeight := (aCanvas textExtent: 'X') y * ((text occurrencesOfSubCollection: String lineDelimiter) + 1).
-	textHeight < aRectangle height 
-		ifTrue: [offset := (aRectangle height - textHeight) //2]
-		ifFalse: [offset := 0].
+
+	"Get the actual dimensions of the text as formatted in aRectangle"
+	myRect := aRectangle insetBy: self horzDisplayOffset@0.
+	formatRect := myRect asParameter.
+	UserLibrary default 
+		drawTextEx: aCanvas asParameter
+		lpchText: text
+		cchText: text size
+		lprc: formatRect
+		dwDTFormat: (DT_WORDBREAK | DT_LEFT | DT_CALCRECT)
+		lpDTParams: nil.
+	formatRect := formatRect asRectangle.
+
+	"Show the text centered"
+	formatRect height < myRect height
+		ifTrue: [displayRect := myRect translatedBy: 0@((aRectangle height - formatRect height) // 2)]
+		ifFalse: [displayRect := myRect insetBy: 0@(self parentView defaultOffsetForEditor: self) y].
 
 	aCanvas 
 		forecolor: fColor;
-		formatText: text in: ((aRectangle origin + (self horzOffset@offset)) extent: (aRectangle extent - (self horzOffset@offset)))!
+		formatText: text in: displayRect!
 
 displayOnFormats
 
 	^#(#class)!
 
-hasColumnImage
+hasEmbeddedHotTracking
 
-	| isPrimary |
+	^false!
 
-	isPrimary := self parentView primaryColumn editor == self.
-
-	^(isPrimary not and: [self parentView hasColumnImages and: [self column hasImageBlock]])!
-
-horzOffset
+horzDisplayOffset
 
 	^3!
 
@@ -124,9 +133,9 @@ show
 showIn: aRectangle
 
 	self
-		position: (aRectangle topLeft+(self horzOffset@0));
+		position: aRectangle topLeft;
 		height: (aRectangle height - 1);
-		width: (aRectangle width - self horzOffset);
+		width: (aRectangle width - 1);
 		show!
 
 stbSaveOn: anSTBOutFiler
@@ -142,10 +151,10 @@ stbSaveOn: anSTBOutFiler
 !EmbeddedMultilineTextEdit categoriesFor: #createEmbeddedIn:!initialize/release!public! !
 !EmbeddedMultilineTextEdit categoriesFor: #defaultWindowExStyle!constants!private! !
 !EmbeddedMultilineTextEdit categoriesFor: #defaultWindowStyle!constants!private! !
-!EmbeddedMultilineTextEdit categoriesFor: #display:in:on:forecolor:backcolor:!displaying!public! !
+!EmbeddedMultilineTextEdit categoriesFor: #display:in:on:forecolor:backcolor:editable:hot:!displaying!public! !
 !EmbeddedMultilineTextEdit categoriesFor: #displayOnFormats!binary filing!public! !
-!EmbeddedMultilineTextEdit categoriesFor: #hasColumnImage!public!testing! !
-!EmbeddedMultilineTextEdit categoriesFor: #horzOffset!constants!public! !
+!EmbeddedMultilineTextEdit categoriesFor: #hasEmbeddedHotTracking!public!testing! !
+!EmbeddedMultilineTextEdit categoriesFor: #horzDisplayOffset!accessing!public! !
 !EmbeddedMultilineTextEdit categoriesFor: #isDisplayOwnerDrawn!public!testing! !
 !EmbeddedMultilineTextEdit categoriesFor: #onCursoredLeft!event handling!public! !
 !EmbeddedMultilineTextEdit categoriesFor: #onKillFocus!event handling!public! !
