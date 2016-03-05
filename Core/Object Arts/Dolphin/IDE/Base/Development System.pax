@@ -1686,7 +1686,7 @@ debugPrintString
 	| stream printed |
 	stream := String writeStream: 32.
 	printed := Processor activeProcess _alreadyPrinted.
-	(printed includes: self) ifTrue: [^self printCyclicRefOn: stream].
+	(printed includes: self) ifTrue: [self printCyclicRefOn: stream. ^stream contents].
 	printed add: self.
 	
 	[| tooMany |
@@ -2112,7 +2112,7 @@ debugPrintString
 	| stream printed |
 	stream := String writeStream: 32.
 	printed := Processor activeProcess _alreadyPrinted.
-	(printed includes: self) ifTrue: [^self printCyclicRefOn: stream].
+	(printed includes: self) ifTrue: [self printCyclicRefOn: stream. ^stream contents].
 	printed add: self.
 	
 	[| tooMany |

@@ -71,6 +71,12 @@ testAtIfAbsentPutModifyingCollection
 	test keysDo: [:each | keys addLast: each].
 	self assert: keys asSortedCollection asArray = #('a' 'b' 'c')!
 
+testCyclicRefPrinting
+	| dictionary |
+	dictionary := self newEmpty.
+	dictionary at: dictionary put: dictionary.
+	self assert: dictionary debugPrintString = 'a Dictionary(... a cyclic ref to a Dictionary... -> ... a cyclic ref to a Dictionary...)'!
+
 testDeepCopy
 	"#2066"
 
@@ -105,6 +111,7 @@ testRemoveKey
 !DictionaryTest categoriesFor: #testAtIfAbsent!public!unit tests! !
 !DictionaryTest categoriesFor: #testAtIfAbsentPut!public!unit tests! !
 !DictionaryTest categoriesFor: #testAtIfAbsentPutModifyingCollection!public!unit tests! !
+!DictionaryTest categoriesFor: #testCyclicRefPrinting!public! !
 !DictionaryTest categoriesFor: #testDeepCopy!public!unit tests! !
 !DictionaryTest categoriesFor: #testIncludesKey!public!unit tests! !
 !DictionaryTest categoriesFor: #testRemoveKey!public!unit tests! !
