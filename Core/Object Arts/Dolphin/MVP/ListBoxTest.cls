@@ -52,11 +52,13 @@ testSelectionModeChange
 		trigger: #selectionChanged
 		against: presenter.
 	presenter selection: objects second.
+	self assert: presenter view selectionsByIndex = #(2).
 	self 
 		should: [presenter view isMultiSelect: true]
 		trigger: #selectionChanged
 		against: presenter.
-! !
+	"#115: Changing list box selection mode fails if there are selections"
+	self assert: presenter view selectionsByIndex = #(2)! !
 !ListBoxTest categoriesFor: #classToTest!helpers!private! !
 !ListBoxTest categoriesFor: #testLastSelectionCacheUpdatedOnRemove!public!unit tests! !
 !ListBoxTest categoriesFor: #testSelectionModeChange!public!unit tests! !
