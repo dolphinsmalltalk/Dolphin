@@ -250,17 +250,17 @@ baseStyle: styleBitsToAdd maskedBy: styleBitMask recreateIfChanged: aBoolean
 	newBaseStyle := baseStyle maskClear: styleBitMask.
 	newBaseStyle := newBaseStyle maskSet: (styleBitsToAdd bitAnd: styleBitMask).
 	newBaseStyle = baseStyle ifTrue: [^false].
-	self baseStyle: newBaseStyle.
-	self isOpen ifFalse: [^true].
-	"Window is open, so need to recreate or set style long"
 	aBoolean 
-		ifTrue: [self recreate]
+		ifTrue: [self recreateAround: [self baseStyle: newBaseStyle]]
 		ifFalse: 
 			[| winStyle newWinStyle |
-			winStyle := self getWindowStyle.
-			newWinStyle := winStyle maskClear: styleBitMask.
-			newWinStyle := newWinStyle maskSet: (styleBitsToAdd bitAnd: styleBitMask).
-			self setWindowStyle: newWinStyle].
+			self baseStyle: newBaseStyle.
+			self isOpen 
+				ifTrue: 
+					[winStyle := self getWindowStyle.
+					newWinStyle := winStyle maskClear: styleBitMask.
+					newWinStyle := newWinStyle maskSet: (styleBitsToAdd bitAnd: styleBitMask).
+					self setWindowStyle: newWinStyle]].
 	^true!
 
 baseStyleAllMask: anInteger
@@ -1160,8 +1160,11 @@ exStyle: styleBitsInteger maskedBy: styleMaskInteger recreateIfChanged: aBoolean
 	newExStyle := newExStyle maskSet: (styleBitsInteger bitAnd: styleMaskInteger).
 	newExStyle = exStyle ifTrue: [^false].
 	Array with: self baseStyle with: newExStyle.
-	self extendedStyle: newExStyle.
-	self isOpen ifTrue: [aBoolean ifTrue: [self recreate] ifFalse: [self setWindowExStyle: newExStyle]].
+	aBoolean 
+		ifTrue: [self recreateAround: [self extendedStyle: newExStyle]]
+		ifFalse: 
+			[self extendedStyle: newExStyle.
+			self isOpen ifTrue: [self setWindowExStyle: newExStyle]].
 	^true!
 
 exStyleAllMask: anInteger
@@ -2835,8 +2838,14 @@ recreate
 	"Recreate the receiver if it is currently open. Useful for applying styles that are only
 	available as pre-creation options"
 
+	self recreateAround: []!
+
+recreateAround: aNiladicValuable 
 	| prevSibling existingPresenter state savedEvents |
-	self isOpen ifFalse: [^self].
+	self isOpen 
+		ifFalse: 
+			[aNiladicValuable value.
+			^self].
 	existingPresenter := presenter.
 	presenter := self.
 	"Remember the z order position so it can be restored"
@@ -2846,6 +2855,7 @@ recreate
 	state := ViewState recordStateOf: self forRecreate: true.
 	savedEvents := self getEvents.
 	self basicDestroy.
+	aNiladicValuable value.
 	state restore.
 	"Restore z-order position"
 	self zOrderAfter: prevSibling.
@@ -4735,6 +4745,7 @@ zOrderTop
 !View categoriesFor: #queryContextMenu!menus!public! !
 !View categoriesFor: #queryMouseTracking!enquiries!private! !
 !View categoriesFor: #recreate!public!realizing/unrealizing! !
+!View categoriesFor: #recreateAround:!private!realizing/unrealizing! !
 !View categoriesFor: #rectangle!geometry!public! !
 !View categoriesFor: #rectangle:!geometry!public! !
 !View categoriesFor: #refreshContents!public!updating! !
