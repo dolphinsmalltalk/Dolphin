@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 AXValueConvertingControlSite subclass: #MaskedEdit
 	instanceVariableNames: 'meFlags'
@@ -352,7 +352,18 @@ initialize
 
 	HadErrorsMask := 1.
 	TextModifiedMask := 2.
-	ModifiedMask := 3.! !
+	ModifiedMask := 3.!
+
+publishedAspectsOfInstances
+	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
+
+	| aspects |
+	aspects := super publishedAspectsOfInstances.
+	#(#firesControlEvents #isDesignMode #progId #isDefault #licenseKey) 
+		do: [:a | aspects removeKey: a ifAbsent: []].
+	aspects add: ((Smalltalk at: #Aspect) string: #value) beImmutable.
+	^aspects! !
 !MaskedEdit class categoriesFor: #icon!constants!public! !
 !MaskedEdit class categoriesFor: #initialize!initializing!private! !
+!MaskedEdit class categoriesFor: #publishedAspectsOfInstances!constants!development!public! !
 
