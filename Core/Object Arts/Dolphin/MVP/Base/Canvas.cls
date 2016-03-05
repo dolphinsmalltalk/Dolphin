@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #Canvas
 	instanceVariableNames: 'handle source owned pen brush font saved saveIds'
@@ -350,6 +350,11 @@ fonts: aString do: operation
 				lParam: 0.
 	callback free.
 	^answer!
+
+forecolor
+	"Get the receiver's colour for drawing text."
+
+	^ColorRef fromInteger: (GDILibrary default getTextColor: self asParameter)!
 
 forecolor: colour
 	"Set the receiver's colour for drawing text."
@@ -1032,6 +1037,7 @@ windowScaling
 !Canvas categoriesFor: #font:!accessing!public!tools! !
 !Canvas categoriesFor: #fontNames!enquiries!public! !
 !Canvas categoriesFor: #fonts:do:!enumerating!public! !
+!Canvas categoriesFor: #forecolor!modes!public! !
 !Canvas categoriesFor: #forecolor:!modes!public! !
 !Canvas categoriesFor: #formatText:in:!drawing!public! !
 !Canvas categoriesFor: #formatText:in:flags:!drawing!public! !

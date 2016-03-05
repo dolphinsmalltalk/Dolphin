@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 PermanentLibrary subclass: #GDILibrary
 	instanceVariableNames: ''
@@ -547,6 +547,16 @@ getStockObject: fnObject
 			int fnObject);"
 
 	<stdcall: handle GetStockObject sdword>
+	^self invalidCall!
+
+getTextColor: hdc 
+	"The GetTextColor function retrieves the current text color for the specified device context.
+
+	COLORREF GetTextColor(
+		HDC hdc			// handle of device context  
+	);"
+
+	<stdcall: dword GetTextColor handle>
 	^self invalidCall!
 
 getTextExtentPoint32: hdc lpString: lpString cbString: cbString lpSize: lpSize
@@ -1182,6 +1192,7 @@ textOut: hdc nXStart: nXStart nYStart: nYStart lpString: lpString cbString: cbSt
 !GDILibrary categoriesFor: #getPixel:xPos:yPos:!public!win32 functions-device context! !
 !GDILibrary categoriesFor: #getROP2:!**auto generated**!public!win32 functions-device context! !
 !GDILibrary categoriesFor: #getStockObject:!**auto generated**!public!win32 functions-device context! !
+!GDILibrary categoriesFor: #getTextColor:!public!win32 functions-font and text! !
 !GDILibrary categoriesFor: #getTextExtentPoint32:lpString:cbString:lpSize:!**auto generated**!public!win32 functions-font and text! !
 !GDILibrary categoriesFor: #getTextMetrics:lptm:!public!win32 functions-font and text! !
 !GDILibrary categoriesFor: #getViewportExtEx:lpSize:!public!win32 functions-transformations! !
