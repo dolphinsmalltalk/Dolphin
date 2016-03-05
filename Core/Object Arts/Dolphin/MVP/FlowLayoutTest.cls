@@ -34,9 +34,13 @@ testVerticalCentreing
 	self assert: static position y = (edit position y + ((edit extent y - static extent y) // 2))!
 
 testWrap
-	| layout children |
+	| layout children cx hGap cy vGap |
 	layout := shell layoutManager.
 	shell backcolor: Color white.
+	cx := 200.
+	cy := 200.
+	hGap := 10.
+	vGap := 5.
 	"#1646"
 	layout
 		horizontalGap: 10;
@@ -45,32 +49,36 @@ testWrap
 					[:each | 
 					| child |
 					child := shell addSubView: ColorView new.
+					child extent: cx @ cy.
 					child model value: (Color perform: each).
 					child].
-	shell extent: (shell calcRectangleFromClientRectangle: (0 @ 0 extent: 430 @ 415)) extent.
+	shell 
+		extent: (shell 
+				calcRectangleFromClientRectangle: (0 @ 0 extent: (cx * 4 + (hGap * 3)) @ (cy * 2 + (vGap * 3)))) 
+					extent.
 	shell update.
-	1 to: 4 do: [:i | self assert: (children at: i) position = (((i - 1) * 110) @ 0)].
+	1 to: 4 do: [:i | self assert: (children at: i) position = (((i - 1) * (cx + hGap)) @ 0)].
 	"Shrink down by one pel will be enough to force last color onto new line, But shrinking to
 	just enough space to 3 should make no difference)"
-	#(1 109) do: 
+	(Array with: 1 with: cx + hGap - 1) do: 
 			[:each | 
 			shell extent: shell extent - (each @ 0).
 			shell update.
-			1 to: 3 do: [:i | self assert: (children at: i) position = (((i - 1) * 110) @ 0)].
-			self assert: (children at: 4) position = (0 @ 105)].
+			1 to: 3 do: [:i | self assert: (children at: i) position = (((i - 1) * (cx + hGap)) @ 0)].
+			self assert: (children at: 4) position = (0 @ (cy + vGap))].
 	"Repeat for 2 blocks"
-	#(1 109) do: 
+	(Array with: 1 with: cx + hGap - 1) do: 
 			[:each | 
 			shell extent: shell extent - (each @ 0).
 			shell update.
-			1 to: 2 do: [:i | self assert: (children at: i) position = (((i - 1) * 110) @ 0)].
-			3 to: 4 do: [:i | self assert: (children at: i) position = (((i - 3) * 110) @ 105)]].
+			1 to: 2 do: [:i | self assert: (children at: i) position = (((i - 1) * (cx + hGap)) @ 0)].
+			3 to: 4 do: [:i | self assert: (children at: i) position = (((i - 3) * (cx + hGap)) @ (cy + vGap))]].
 	"And 1 block"
-	#(1 109) do: 
+	(Array with: 1 with: cx + hGap) do: 
 			[:each | 
 			shell extent: shell extent - (each @ 0).
 			shell update.
-			1 to: 4 do: [:i | self assert: (children at: i) position = (0 @ ((i - 1) * 105))]]! !
+			1 to: 4 do: [:i | self assert: (children at: i) position = (0 @ ((i - 1) * (cy + vGap)))]]! !
 !FlowLayoutTest categoriesFor: #layoutManagerClass!private!unit tests! !
 !FlowLayoutTest categoriesFor: #testVerticalCentreing!public!unit tests! !
 !FlowLayoutTest categoriesFor: #testWrap!public!unit tests! !
