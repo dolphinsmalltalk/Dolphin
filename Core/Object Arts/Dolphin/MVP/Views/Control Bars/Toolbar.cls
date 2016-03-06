@@ -493,10 +493,10 @@ onEraseRequired: aColorEvent
 	| back fore rect canvas |
 	back := self basicActualBackcolor.
 	back isNone ifTrue: [^true].
-	fore := self basicActualForeolor .
+	fore := self basicActualForeolor.
 	rect := self clientRectangle.
 	canvas := aColorEvent canvas.
-	fore isNil 
+	fore isNone 
 		ifTrue: 
 			[^canvas fillRectangle: rect color: (back isDefault ifTrue: [self defaultBackcolor] ifFalse: [back])].
 	canvas 

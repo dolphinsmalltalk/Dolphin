@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Color subclass: #ColorRef
 	instanceVariableNames: 'code'
@@ -51,7 +51,8 @@ asParameter
 asRGB
 	"Answer the <RGB> colour equivalent to the receiver."
 
-	^self becomeA: RGB!
+	code > 16rFFFFFF ifTrue: [self errorNotARealColor].
+	^RGB fromInteger: code!
 
 brush
 	"Answer a Brush configured for solid painting of the receiver's color."
@@ -65,7 +66,7 @@ code
 
 errorNotARealColor
 	"Private - Raise an error to the effect that the receiver does not represent a real colour
-	value, and cannot therefore be converted to type of <Color>."
+	value, and cannot therefore be converted to another type of <Color>."
 
 	^self error: 'Cannot convert to another type of Color'!
 
