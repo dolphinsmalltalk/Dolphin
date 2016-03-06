@@ -11,7 +11,6 @@ package methodNames
 	add: #ContainerViewTest -> #testBordersPrintAndPaintIdentical;
 	add: #DebuggerTest -> #testNoShowWalkbacks;
 	add: #DebuggerTest -> #testRemapIPSmokeTest;
-	add: #DictionaryTest -> #testNilKey;
 	add: #EvaluationConverterTest -> #testWithDates;
 	add: #GdiplusBitmapTest -> #testAsByteArray;
 	add: #LinkButtonTest -> #testClickLinkFiresCommand;
@@ -214,15 +213,6 @@ testRemapIPSmokeTest
 					ip := ip + bytes size]"]! !
 !DebuggerTest categoriesFor: #testNoShowWalkbacks!public!unit tests! !
 !DebuggerTest categoriesFor: #testRemapIPSmokeTest!public! !
-
-!DictionaryTest methodsFor!
-
-testNilKey
-	| dictionary |
-	dictionary := self newEmpty.
-	self should: [dictionary at: nil put: 1] raise: Error.
-	self should: [dictionary at: nil ifAbsentPut: [1]] raise: Error! !
-!DictionaryTest categoriesFor: #testNilKey!public!unit tests! !
 
 !EvaluationConverterTest methodsFor!
 
