@@ -107,14 +107,14 @@ BOOL __fastcall Interpreter::primitiveReplaceBytes()
 		else
 		{
 			// We can test that we're not going to write off the end of the argument
-			int length = argPointer->bytesSize();
+			int length = argPointer->bytesSizeForUpdate();
 
 			// We can only be in here if stop>=start, so => stop-start >= 0
 			// therefore if startAt >= 1 then => stopAt >= 1, for similar
 			// reasons (since stopAt >= startAt) we don't need to test 
 			// that startAt <= length
 			if (stop > length)
-				return primitiveFailure(4);		// Bounds error
+				return primitiveFailure(4);		// Bounds error (or object is immutable so size < 0)
 
 			VariantByteObject* argBytes = reinterpret_cast<BytesOTE*>(argPointer)->m_location;
 			pTo = argBytes->m_fields;
