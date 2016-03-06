@@ -12,25 +12,35 @@ SUnitBrowser openOnTestCase: self'!
 !VMTest categoriesForClass!Unclassified! !
 !VMTest methodsFor!
 
-assertImmutableAtPut: s 
-	self assert: s isImmutable.
-	self should: [s at: 0 put: $x] raise: BoundsError.
-	self should: [s at: s size + 1 put: $x] raise: BoundsError.
-	1 to: s size do: [:each | self should: [s at: each put: $x] raise: Processor constWriteSignal]!
+assertImmutableAtPut: anObject 
+	self assert: anObject isImmutable.
+	self should: [anObject at: 0 put: $x] raise: BoundsError.
+	self should: [anObject at: anObject size + 1 put: $x] raise: BoundsError.
+	1 to: anObject size
+		do: [:each | self should: [anObject at: each put: $x] raise: Processor constWriteSignal]!
 
-assertImmutableBasicAtPut: s 
-	self assert: s isImmutable.
-	self should: [s basicAt: 0 put: $x] raise: BoundsError.
-	self should: [s basicAt: s size + 1 put: $x] raise: BoundsError.
-	1 to: s size do: [:each | self should: [s basicAt: each put: $x] raise: Processor constWriteSignal]!
+assertImmutableBasicAtPut: anObject 
+	self assert: anObject isImmutable.
+	self should: [anObject basicAt: 0 put: $x] raise: BoundsError.
+	self should: [anObject basicAt: anObject size + 1 put: $x] raise: BoundsError.
+	1 to: anObject size
+		do: [:each | self should: [anObject basicAt: each put: $x] raise: Processor constWriteSignal]!
 
-assertImmutableInstVarAtPut: s 
+assertImmutableInstVarAtPut: anObject 
 	| size |
-	self assert: s isImmutable.
-	self should: [s instVarAt: 0 put: $x] raise: BoundsError.
-	size := s class instSize + s basicSize.
-	self should: [s instVarAt: size + 1 put: $x] raise: BoundsError.
-	1 to: size do: [:each | self should: [s instVarAt: each put: $x] raise: Processor constWriteSignal]!
+	self assert: anObject isImmutable.
+	self should: [anObject instVarAt: 0 put: $x] raise: BoundsError.
+	size := anObject class instSize + anObject basicSize.
+	self should: [anObject instVarAt: size + 1 put: $x] raise: BoundsError.
+	1 to: size
+		do: [:each | self should: [anObject instVarAt: each put: $x] raise: Processor constWriteSignal]!
+
+assertImmutableResize: anObject 
+	self assert: anObject isImmutable.
+	"Should get an error on any resize attempt, whether doesn't change size, grows or shrinks"
+	self should: [anObject resize: anObject size] raise: Processor constWriteSignal.
+	self should: [anObject resize: anObject size + 1] raise: Processor constWriteSignal.
+	self should: [anObject resize: anObject size - 1] raise: Processor constWriteSignal!
 
 assertLoopInterruptible: aBlock 
 	| intervals execTime last sampleInterval go |
@@ -324,6 +334,9 @@ testImmutableReplacePrimitives
 						to: 2
 						with: (s copyFrom: 2 to: 3)]
 				raise: Processor constWriteSignal]!
+
+testImmutableResize
+	#(#(1 2 3) #[1 2 3] 'abcd') do: [:each | self assertImmutableResize: each]!
 
 testImmutableStringCompare
 	| s1 s2 |
@@ -718,6 +731,7 @@ testSignedFromUnsigned
 !VMTest categoriesFor: #assertImmutableAtPut:!private!unit tests! !
 !VMTest categoriesFor: #assertImmutableBasicAtPut:!private!unit tests! !
 !VMTest categoriesFor: #assertImmutableInstVarAtPut:!private!unit tests! !
+!VMTest categoriesFor: #assertImmutableResize:!private!unit tests! !
 !VMTest categoriesFor: #assertLoopInterruptible:!private!unit tests! !
 !VMTest categoriesFor: #earlyTermination:!helpers!public! !
 !VMTest categoriesFor: #getCPUTime!helpers!private! !
@@ -735,6 +749,7 @@ testSignedFromUnsigned
 !VMTest categoriesFor: #testImmutableNextPut!public!unit tests! !
 !VMTest categoriesFor: #testImmutableNextPutAll!public!unit tests! !
 !VMTest categoriesFor: #testImmutableReplacePrimitives!public!unit tests! !
+!VMTest categoriesFor: #testImmutableResize!public!unit tests! !
 !VMTest categoriesFor: #testImmutableStringCompare!public!unit tests! !
 !VMTest categoriesFor: #testImmutableWriteAccessors!public!unit tests! !
 !VMTest categoriesFor: #testMakeLargeUnsigned!public!unit tests! !
