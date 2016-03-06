@@ -306,6 +306,25 @@ testImmutableNextPut
 			strm := WriteStream on: s.
 			self should: [strm nextPut: s last] raise: Processor constWriteSignal]!
 
+testImmutableNextPutAll
+	#(#[1 2 3] 'abc' #(1 2 3)) do: 
+			[:s | 
+			| strm |
+			self assertImmutableAtPut: s.
+			strm := WriteStream on: s.
+			self should: [strm nextPutAll: (s copyFrom: 2 to: 3)] raise: Processor constWriteSignal]!
+
+testImmutableReplacePrimitives
+	#(#[1 2 3] 'abc' #(1 2 3)) do: 
+			[:s | 
+			self assertImmutableAtPut: s.
+			self should: 
+					[s 
+						replaceFrom: 1
+						to: 2
+						with: (s copyFrom: 2 to: 3)]
+				raise: Processor constWriteSignal]!
+
 testImmutableStringCompare
 	| s1 s2 |
 	s1 := 'abc'.
@@ -714,6 +733,8 @@ testSignedFromUnsigned
 !VMTest categoriesFor: #testImmutableBufferAtPuts!public!unit tests! !
 !VMTest categoriesFor: #testImmutableInstVarAtPut!public!unit tests! !
 !VMTest categoriesFor: #testImmutableNextPut!public!unit tests! !
+!VMTest categoriesFor: #testImmutableNextPutAll!public!unit tests! !
+!VMTest categoriesFor: #testImmutableReplacePrimitives!public!unit tests! !
 !VMTest categoriesFor: #testImmutableStringCompare!public!unit tests! !
 !VMTest categoriesFor: #testImmutableWriteAccessors!public!unit tests! !
 !VMTest categoriesFor: #testMakeLargeUnsigned!public!unit tests! !
