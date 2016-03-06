@@ -70,6 +70,9 @@ public:
 		return getSize() + isNullTerminated();
 	}
 
+	// The required size for this variable pointer object to accommodate the specified number of indexable fields
+	__forceinline MWORD pointerSizeFor(MWORD pointersRequested) { ASSERT(isPointers()); return pointersRequested + m_oteClass->m_location->fixedFields(); }
+
 	__forceinline BOOL isSticky() const						{ return m_flags.m_count == MAXCOUNT; }
 	__forceinline void beSticky()							{ m_flags.m_count = MAXCOUNT; }
 

@@ -46,35 +46,6 @@ inline void* ObjectMemory::reallocChunk(void* pChunk, MWORD newChunkSize)
 	#endif
 }
 
-/////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-inline MWORD ObjectMemory::sizeOfObjectFor(OTE* ote, MWORD pointersRequested)
-{
-	// MUST be a variable pointer object
-	ASSERT(!ObjectMemoryIsIntegerObject(ote));
-	ASSERT(ote->isPointers());
-
-	const BehaviorOTE* classPointer = ote->m_oteClass;
-	const Behavior* behavior = classPointer->m_location;
-	MWORD fixedFields = behavior->fixedFields();
-
-	// Add fixed fields of class, so newSize is now VM word length excluding header
-	// Some objects may size with a granularity greater than one pointer, so we
-	// must ask the object what size it would like to be for the new requested size,
-	// and we also need to take into account the fixed fields of the object
-	MWORD actualPointers = pointersRequested + fixedFields;
-/*	if (ote->m_flags.m_space == VirtualSpace)
-	{
-		const MWORD headerOops = ObjectHeaderSize+(sizeof(VirtualObjectHeader)/sizeof(MWORD));
-		return 	_ROUND2(actualPointers+headerOops, dwOopsPerPage) - headerOops;
-	}
-	else
-*/		return actualPointers;
-}	
-
-
-
 ///////////////////////////////////////////////////////////////////////////////
 // Use with care. Neither initialises new space, or cleans up old pointers
 // which are sized away!!  Although this is a public function, since sometimes
@@ -276,30 +247,30 @@ VariantObject* ObjectMemory::resize(PointersOTE* ote, MWORD newPointers, bool bR
 }
 
 
-POBJECT ObjectMemory::resize(OTE* ote, MWORD newSize)
-{
-	ASSERT(!ote->isImmutable());
-
-	POBJECT pNewBody;
-	if (ote->isPointers())
-	{
-		// Add fixed fields of class, so newSize is now VM word length excluding header
-		// Some objects may size with a granularity greater than one pointer, so we
-		// must ask the object what size it would like to be for the new requested size.
-		// This is all down by the sizeOfObjectFor() method
-
-		bool bCountDownRemoved = reinterpret_cast<OTE*>(Interpreter::actualActiveProcessPointer()) != ote;
-		pNewBody = resize(reinterpret_cast<PointersOTE*>(ote), 
-							sizeOfObjectFor(ote, newSize),
-							bCountDownRemoved);
-	}
-	else
-	{
-		pNewBody = resize(reinterpret_cast<BytesOTE*>(ote), newSize);
-	}
-
-	// The AtCaches could have been invalidated by the change of size of the object
-	Interpreter::purgeObjectFromCaches(ote);
-	return pNewBody;
-}
+//POBJECT ObjectMemory::resize(OTE* ote, MWORD newSize)
+//{
+//	ASSERT(!ote->isImmutable());
+//
+//	POBJECT pNewBody;
+//	if (ote->isPointers())
+//	{
+//		// Add fixed fields of class, so newSize is now VM word length excluding header
+//		// Some objects may size with a granularity greater than one pointer, so we
+//		// must ask the object what size it would like to be for the new requested size.
+//		// This is all down by the sizeOfObjectFor() method
+//
+//		bool bCountDownRemoved = reinterpret_cast<OTE*>(Interpreter::actualActiveProcessPointer()) != ote;
+//		pNewBody = resize(reinterpret_cast<PointersOTE*>(ote), 
+//							sizeOfObjectFor(ote, newSize),
+//							bCountDownRemoved);
+//	}
+//	else
+//	{
+//		pNewBody = resize(reinterpret_cast<BytesOTE*>(ote), newSize);
+//	}
+//
+//	// The AtCaches could have been invalidated by the change of size of the object
+//	Interpreter::purgeObjectFromCaches(ote);
+//	return pNewBody;
+//}
 

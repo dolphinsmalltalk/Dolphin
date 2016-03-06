@@ -106,7 +106,6 @@ public:
 	static POBJECT resizeVirtual(OTE* ote, MWORD byteSize /*ditto*/);
 
 	// More useful (and safe) entry points from Interpreter
-	static POBJECT resize(OTE* ote, MWORD newSize);
 	static VariantObject* resize(PointersOTE* objectPointer, MWORD newPointers, bool bRefCount);
 	static VariantByteObject* resize(BytesOTE* objectPointer, MWORD newBytes);
 
@@ -349,9 +348,6 @@ private:
 
 	// Object Table entry access routines
 	static OTE& ot(Oop objectPointer);
-
-	// Sizing helpers
-	static MWORD sizeOfObjectFor(OTE* ote, MWORD pointersRequested);
 
 	static OTE* headOfFreePointerListPut(OTE* ote);
 	static OTE* toFreePointerListAdd(OTE* ote);

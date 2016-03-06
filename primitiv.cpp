@@ -86,19 +86,63 @@ BOOL __fastcall Interpreter::primitiveResize()
 	if (ObjectMemoryIsIntegerObject(oopReceiver))
 		return primitiveFailure(1);
 	OTE* oteReceiver = reinterpret_cast<OTE*>(oopReceiver);
-	if (oteReceiver->isImmutable())
-		return primitiveFailure(1);
 
-	BehaviorOTE* receiversClass = oteReceiver->m_oteClass;
-	Behavior* behavior = receiversClass->m_location;
-	if (behavior->isIndexable())
+	if (oteReceiver->isPointers())
 	{
-		pop(1);		// Arg must be a SmallInteger to get here, so just adjust SP
-		ObjectMemory::resize(oteReceiver, newSize);
-		return primitiveSuccess();
+		Behavior* behavior = oteReceiver->m_oteClass->m_location;
+		if (!behavior->isIndexable())
+			return primitiveFailure(1);
+
+		MWORD newPointerSize = newSize + behavior->fixedFields();
+
+		int currentPointerSize = oteReceiver->pointersSizeForUpdate();
+		if (currentPointerSize == (int)newPointerSize)
+		{
+			// No change, succeed
+			pop(1);
+			return primitiveSuccess();
+		}
+
+		if (currentPointerSize < 0)
+		{
+			// Immutable
+			return primitiveFailure(2);
+		}
+			
+		// Changing size of mutable pointer object
+		pop(1);
+		bool bCountDownRemoved = reinterpret_cast<OTE*>(Interpreter::actualActiveProcessPointer()) != oteReceiver;
+		VariantObject* pNew = ObjectMemory::resize(reinterpret_cast<PointersOTE*>(oteReceiver),
+			newPointerSize,
+			bCountDownRemoved);
+		ASSERT(pNew != NULL);
 	}
 	else
-		return primitiveFailure(1);
+	{
+		int currentByteSize = oteReceiver->bytesSizeForUpdate();
+		if (currentByteSize == (int)newSize)
+		{
+			// No change, succeed
+			pop(1);
+			return primitiveSuccess();
+		}
+		
+		if (currentByteSize < 0)
+		{
+			// Immutable
+			return primitiveFailure(2);
+		}
+
+		// Changing size of mutable byte object
+		pop(1);
+		VariantByteObject* pNew = ObjectMemory::resize(reinterpret_cast<BytesOTE*>(oteReceiver), newSize);
+		ASSERT(pNew != NULL);
+	}
+
+	// Object size has changed, invalidating any AtCache entry
+	purgeObjectFromCaches(oteReceiver);
+
+	return primitiveSuccess();
 }
 
 #pragma code_seg(PRIM_SEG)
