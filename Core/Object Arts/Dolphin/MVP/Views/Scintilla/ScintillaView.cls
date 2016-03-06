@@ -2,7 +2,7 @@
 
 MultilineTextEdit subclass: #ScintillaView
 	instanceVariableNames: 'this currentTextStyles styleIdMap styler markerDefinitions markers wordChars styleMask modificationEventMask autoCStops autoCFillups whitespaceBackcolor whitespaceForecolor selectionBackcolor selectionForecolor indicators callTipTabWidth punctuation callTipHighlightColor braceChars whitespaces scFlags allTextStyles foldMarginColor foldMarginHiColor foldMarkerStyle foldFlags extraStyleBits keyBindings indicatorStyles secondarySelectionForecolor secondarySelectionBackcolor annotationStyles _unused50'
-	classVariableNames: 'AnnotationStylesOffset BackgroundDwellEvents BraceHilightingMask CodePages DefaultCallTipTabWidth DefaultKeyBindings DefaultTextStyles FoldingMask Lexers MarginStylesOffset ScnMap'
+	classVariableNames: 'AnnotationStylesOffset BackgroundDwellEvents BraceHilightingMask CodePages DefaultCallTipTabWidth DefaultKeyBindings DefaultTextStyles FoldingMask MarginStylesOffset ScnMap'
 	poolDictionaries: 'ScintillaConstants Win32Constants'
 	classInstanceVariableNames: ''!
 ScintillaView guid: (GUID fromString: '{47A3310B-B7E4-4AA9-B6E6-640AD9FE7A3A}')!
@@ -3625,7 +3625,9 @@ lexer
 
 	| id |
 	id := self sciGetLexer.
-	^id == SCLEX_AUTOMATIC ifTrue: [#automatic] ifFalse: [Lexers at: id + 1 ifAbsent: []]!
+	^id == SCLEX_AUTOMATIC 
+		ifTrue: [#automatic]
+		ifFalse: [self class lexerLanguages at: id + 1 ifAbsent: []]!
 
 lexer: aString 
 	"Set the lexer used in the receiver to be that named by the <Symbol> argument. #container is
@@ -11636,7 +11638,6 @@ initialize
 				shrink;
 				isImmutable: true;
 				yourself.
-	self initializeLexerLanguages.
 	BraceHilightingMask := 1.
 	FoldingMask := 2.
 	BackgroundDwellEvents := 4.
@@ -11665,19 +11666,6 @@ initialize
 	MarginStylesOffset := 256.
 	AnnotationStylesOffset := 512.
 !
-
-initializeLexerLanguages
-	"Private - The set of lexers tends to increase quite rapidly over time (though some also get
-	dropped, hence the empty slots in the array), this is from 2.23. Note that a Smalltalk lexer
-	was added around 1.63, however we do not use this. Dolphin's Smalltalk lexer is implemented
-	in the image and container based lexing is used. This is slower, but much more powerful.
-
-	self initializeLexerLanguages
-
-	"
-
-	Lexers := #(#container #text #python #cpp #hypertext #xml #perl #sql #vb #props #errorlist #makefile #batch nil #latex #lua #diff #conf #pascal #ave #ada #lisp #ruby #eiffel #eiffelkw #tcl #nncrontab #bullant #vbscript nil nil #baan #matlab #scriptol #asm #cppnocase #fortran #f77 #css #pov #lout #escript #ps #nsis #mmixal nil nil #lot #yaml #tex #metapost #powerbasic #forth #erlang #octave #mssql #verilog #kix #gui4cli #specman #au3 #apdl #bash #asn1 #vhdl #caml #blitzbasic #purebasic #haskell #phpscript #tads3 #rebol #smalltalk #flagship #csound #freebasic #inno #opal #spice #d #cmake #gap #'PL/M' nil #abaqus #asy #r nil #powershell nil #po nil nil nil nil #powerpro #nimrod #sml #markdown #txt2tags #a68k #automatic).
-	self assert: [Lexers size = (SCLEX_A68K + 2)]!
 
 initializeNotificationMap
 	ScnMap := (Array new: 31)
@@ -11716,6 +11704,15 @@ initializeNotificationMap
 
 layoutCachingModes
 	^#(#none #caret #page #document)!
+
+lexerLanguages
+	"Answer the names of all known languages with a lexers built into SciLexer.dll
+	The set of lexers tends to increase quite rapidly over time (though some also get
+	dropped, hence the empty slots in the array), this is from 2.23. Note that a Smalltalk lexer
+	was added around 1.63, however we do not use this. Dolphin's Smalltalk lexer is implemented
+	in the image and container based lexing is used. This is slower, but much more powerful."
+
+	^#(#container #text #python #cpp #hypertext #xml #perl #sql #vb #props #errorlist #makefile #batch nil #latex #lua #diff #conf #pascal #ave #ada #lisp #ruby #eiffel #eiffelkw #tcl #nncrontab #bullant #vbscript nil nil #baan #matlab #scriptol #asm #cppnocase #fortran #f77 #css #pov #lout #escript #ps #nsis #mmixal nil nil #lot #yaml #tex #metapost #powerbasic #forth #erlang #octave #mssql #verilog #kix #gui4cli #specman #au3 #apdl #bash #asn1 #vhdl #caml #blitzbasic #purebasic #haskell #phpscript #tads3 #rebol #smalltalk #flagship #csound #freebasic #inno #opal #spice #d #cmake #gap #'PL/M' nil #abaqus #asy #r nil #powershell nil #po nil nil nil nil #powerpro #nimrod nil #markdown #txt2tags #a68k #automatic)!
 
 lineEndings
 	"Answer the symbolic names of the end-of-line modes supported by Scintilla. These correspond
@@ -12096,9 +12093,9 @@ xmlTextStyles
 !ScintillaView class categoriesFor: #immutableCopyOfCollection:!helpers!private! !
 !ScintillaView class categoriesFor: #indentationGuideStyles!constants!private! !
 !ScintillaView class categoriesFor: #initialize!development!initializing!private! !
-!ScintillaView class categoriesFor: #initializeLexerLanguages!development!initializing!private! !
 !ScintillaView class categoriesFor: #initializeNotificationMap!**auto generated**!must not strip!public!scintilla interface! !
 !ScintillaView class categoriesFor: #layoutCachingModes!constants!public! !
+!ScintillaView class categoriesFor: #lexerLanguages!constants!public! !
 !ScintillaView class categoriesFor: #lineEndings!constants!public! !
 !ScintillaView class categoriesFor: #multiPasteModes!constants!public! !
 !ScintillaView class categoriesFor: #selectionModes!constants!public! !

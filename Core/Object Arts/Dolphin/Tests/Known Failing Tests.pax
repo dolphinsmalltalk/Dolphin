@@ -29,7 +29,6 @@ package methodNames
 	add: #PackageSelectorTest -> #testPackageRemovalDoesntAlterSelection;
 	add: #ProcessTest -> #testOverlappedErrno;
 	add: #PublishedAspectInspectorTest -> #testAspectChanged;
-	add: #ScintillaViewTest -> #testLanguages;
 	add: #SelectableTreeItemsTest -> #testSelection;
 	add: #SmallIntegerTest -> #testSubtract;
 	add: #StyledContainerTest -> #test1PixBorderPaint;
@@ -650,14 +649,6 @@ testAspectChanged
 	self assert: treePresenter view itemCount == 1.
 	self repaint! !
 !PublishedAspectInspectorTest categoriesFor: #testAspectChanged!public!unit tests! !
-
-!ScintillaViewTest methodsFor!
-
-testLanguages
-	| lingos |
-	lingos := ScintillaView classPool at: 'Lexers'.
-	lingos do: [:each | each notNil ifTrue: [presenter view lexer: each]]! !
-!ScintillaViewTest categoriesFor: #testLanguages!public!unit tests! !
 
 !SelectableTreeItemsTest methodsFor!
 
