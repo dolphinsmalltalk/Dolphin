@@ -142,6 +142,7 @@ package setPrerequisites: (IdentitySet new
 	add: '..\..\..\Contributions\Camp Smalltalk\SUnit\SUnit';
 	add: '..\..\..\Contributions\Camp Smalltalk\SUnit\SUnitUI';
 	add: '..\ActiveX\Shell\Windows Shell';
+	add: '..\..\..\Contributions\ITC Gorisek\ZLib Interface';
 	yourself).
 
 package!
