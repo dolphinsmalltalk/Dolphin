@@ -25,7 +25,6 @@ package methodNames
 	add: #ProcessTest -> #testOverlappedErrno;
 	add: #PublishedAspectInspectorTest -> #testAspectChanged;
 	add: #SelectableTreeItemsTest -> #testSelection;
-	add: #SmallIntegerTest -> #testSubtract;
 	add: #StyledContainerTest -> #test1PixBorderPaint;
 	add: #StyledContainerTest -> #test1PixBorderPrint;
 	add: #StyledContainerTest -> #test1PixDottedBorderPaint;
@@ -604,14 +603,6 @@ testSelection
 			self should: [presenter selection] raise: Error].
 	self treeModel removeAll! !
 !SelectableTreeItemsTest categoriesFor: #testSelection!public!unit tests! !
-
-!SmallIntegerTest methodsFor!
-
-testSubtract
-	"Coercion to float"
-
-	self assert: 5 - 2.6 = 2.4! !
-!SmallIntegerTest categoriesFor: #testSubtract!public!unit tests! !
 
 !StyledContainerTest methodsFor!
 
