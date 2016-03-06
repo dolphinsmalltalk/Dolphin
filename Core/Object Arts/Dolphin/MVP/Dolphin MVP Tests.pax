@@ -10,6 +10,7 @@ package classNames
 	add: #BrushTest;
 	add: #CanvasTest;
 	add: #ChoicePresenterTest;
+	add: #ColorTest;
 	add: #ContainerViewTest;
 	add: #FlowLayoutTest;
 	add: #FramingLayoutTest;
@@ -113,6 +114,11 @@ DolphinTest subclass: #BrushTest
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
 DolphinTest subclass: #CanvasTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DolphinTest subclass: #ColorTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
