@@ -1,7 +1,9 @@
 | package |
 package := Package name: 'Known Failing Tests'.
 package paxVersion: 1;
-	basicComment: 'These tests are known failures that have not yet been debugged or resolved. In general these tests should pass and are therefre in need of some debugging effort so that they may be reintroduced into the fold. This package is not loaded during normal regression testing (for obvious reasons).'.
+	basicComment: 'These tests are known failures that have not yet been debugged or resolved. In general these tests should pass and are therefre in need of some debugging effort so that they may be reintroduced into the fold. This package is not loaded during normal regression testing (for obvious reasons).
+
+Tests should not be added to this package without creating a Github issue, as otherwise there is nothing to track the failure and ensure it gets fixed.'.
 
 
 package methodNames
@@ -15,9 +17,7 @@ package methodNames
 	add: #GdiplusBitmapTest -> #testAsByteArray;
 	add: #LinkButtonTest -> #testGetSetText;
 	add: #ListViewTest -> #testColumnWidth;
-	add: #MethodWorkspaceTest -> #testSelectedOrNearestNode;
 	add: #NumberTest -> #testClassReadFromColonScaledDecimals;
-	add: #PackageFolderTest -> #testForPackage;
 	add: #PackageSelectorTest -> #testPackageCreationDoesntAlterSelection;
 	add: #PackageSelectorTest -> #testPackageRemovalDoesntAlterSelection;
 	add: #ProcessTest -> #testOverlappedErrno;
@@ -41,20 +41,16 @@ package globalAliases: (Set new
 	yourself).
 
 package setPrerequisites: (IdentitySet new
-	add: '..\IDE\Base\Development System';
 	add: '..\IDE\Base\Development System Tests';
 	add: '..\Base\Dolphin';
 	add: '..\Base\Dolphin Base Tests';
 	add: '..\MVP\Views\Common Controls\Dolphin Common Controls';
 	add: '..\IDE\Dolphin IDE Tests';
-	add: '..\System\Win32\Dolphin Memory-Mapped Files';
-	add: '..\System\Win32\Dolphin MMF Tests';
 	add: '..\MVP\Base\Dolphin MVP Base';
 	add: '..\MVP\Dolphin MVP Tests';
 	add: '..\MVP\Views\Styled Views\Dolphin Styled Views';
 	add: '..\MVP\Gdiplus\Gdiplus';
 	add: '..\MVP\Gdiplus\Tests\Gdiplus Tests';
-	add: '..\..\..\Contributions\Refactory\Refactoring Browser\Environments\RBEnvironments';
 	add: '..\..\..\Contributions\ITC Gorisek\ZLib Interface';
 	yourself).
 
@@ -210,15 +206,6 @@ testWithDates
 	self checkWith: 'Date today'! !
 !EvaluationConverterTest categoriesFor: #testWithDates!public! !
 
-!LinkButtonTest methodsFor!
-
-testGetSetText
-	presenter text: 'Test'.
-	"SysLink control seems to have a bug, and returns the length of the text plus the null
-	terminator in response to WM_GETTEXTLENGTH (the null is supposed to be excluded)"
-	self assert: presenter text = '<a>Test</a>'! !
-!LinkButtonTest categoriesFor: #testGetSetText!public!unit tests! !
-
 !GdiplusBitmapTest methodsFor!
 
 testAsByteArray
@@ -230,6 +217,15 @@ testAsByteArray
 	"difference is in the first 100 bytes ... what is the problem?"
 	self assert: b1 = b2! !
 !GdiplusBitmapTest categoriesFor: #testAsByteArray!public!unit tests! !
+
+!LinkButtonTest methodsFor!
+
+testGetSetText
+	presenter text: 'Test'.
+	"SysLink control seems to have a bug, and returns the length of the text plus the null
+	terminator in response to WM_GETTEXTLENGTH (the null is supposed to be excluded)"
+	self assert: presenter text = '<a>Test</a>'! !
+!LinkButtonTest categoriesFor: #testGetSetText!public!unit tests! !
 
 !ListViewTest methodsFor!
 
@@ -261,32 +257,6 @@ testColumnWidth
 	self assert: primary width < after.
 	self assert: column width = 100! !
 !ListViewTest categoriesFor: #testColumnWidth!public!unit tests! !
-
-!MethodWorkspaceTest methodsFor!
-
-testSelectedOrNearestNode
-	| env workspace node |
-	env := BrowserEnvironment new forClass: MethodWorkspace selectors: #(#selectedOrNearestNode).
-	presenter methods: env.
-	presenter method: env allMethods first.
-	self waitForInputIdle.
-	workspace := presenter sourcePresenter.
-	workspace selectionRange: (1 to: 0).
-	node := workspace selectedOrNearestNode.
-	self assert: node isMethod.
-	workspace selectionRange: (1 to: 1).
-	node := workspace selectedOrNearestNode.
-	self assert: node isMethod.
-	workspace selectionRange: (2 to: 1).
-	node := workspace selectedOrNearestNode.
-	self assert: node isMethod.
-	workspace selectionRange: (22 to: 21).
-	node := workspace selectedOrNearestNode.
-	self assert: node isMethod.
-	workspace selectionRange: (221 to: 220).
-	node := workspace selectedOrNearestNode.
-	node halt! !
-!MethodWorkspaceTest categoriesFor: #testSelectedOrNearestNode!public! !
 
 !NumberTest methodsFor!
 
@@ -365,16 +335,6 @@ testClassReadFromColonScaledDecimals
 ! !
 !NumberTest categoriesFor: #testClassReadFromColonScaledDecimals!public!unit tests! !
 
-!PackageFolderTest methodsFor!
-
-testForPackage
-	| dolphin |
-	dolphin := self folderClass forPackage: (Package manager packageNamed: 'Dolphin').
-	self assert: dolphin name = 'Base'.
-	self assert: dolphin folderName = '$\Object Arts\Dolphin\Base\'.
-	! !
-!PackageFolderTest categoriesFor: #testForPackage!public!unit tests! !
-
 !PackageSelectorTest methodsFor!
 
 testPackageCreationDoesntAlterSelection
@@ -383,14 +343,14 @@ testPackageCreationDoesntAlterSelection
 	selections := presenter selections.
 	self assert: (selections size = 1 and: [selections first = self class owningPackage]).
 	self 
-		shouldnt: [packageA := self createPackage: 'Object Arts\Dolphin\Tests\A']
+		shouldnt: [packageA := self createPackage: 'Core\Object Arts\Dolphin\Tests\A']
 		triggerAnyOf: #(#selectionChanged #selectionChanging)
 		against: presenter.
 	self assert: presenter selections = selections!
 
 testPackageRemovalDoesntAlterSelection
 	| selections newSelections |
-	packageA := self createPackage: 'Object Arts\Dolphin\Tests\A'.
+	packageA := self createPackage: 'Core\Object Arts\Dolphin\Tests\A'.
 	presenter selections: (Array with: self class owningPackage).
 	selections := presenter selections.
 	self assert: (selections size = 1 and: [selections first = self class owningPackage]).
