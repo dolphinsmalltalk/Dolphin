@@ -40,8 +40,6 @@ package methodNames
 	add: #StyledContainerTest -> #testBordersPrintAndPaintIdentical;
 	add: #TextEditTest -> #testPositionOfChar;
 	add: #ViewComposerTest -> #testResizeDoesNotMove;
-	add: #VMTest -> #testImmutableNextPutAll;
-	add: #VMTest -> #testImmutableReplacePrimitives;
 	add: #VMTest -> #testLoopsInterruptible;
 	add: #ZLibTest -> #testCompressUncompress;
 	yourself.
@@ -880,25 +878,6 @@ testResizeDoesNotMove
 
 !VMTest methodsFor!
 
-testImmutableNextPutAll
-	#(#[1 2 3] 'abc' #(1 2 3)) do: 
-			[:s | 
-			| strm |
-			self assertImmutableAtPut: s.
-			strm := WriteStream on: s.
-			self should: [strm nextPutAll: (s copyFrom: 2 to: 3)] raise: Processor constWriteSignal]!
-
-testImmutableReplacePrimitives
-	#(#[1 2 3] 'abc' #(1 2 3)) do: 
-			[:s | 
-			self assertImmutableAtPut: s.
-			self should: 
-					[s 
-						replaceFrom: 1
-						to: 2
-						with: (s copyFrom: 2 to: 3)]
-				raise: Processor constWriteSignal]!
-
 testLoopsInterruptible
 	"#2167: Need to test all the optimisable loop types:
 		#timesRepeat:
@@ -946,8 +925,6 @@ testLoopsInterruptible
 			[5000000 to: 1
 				by: -1
 				do: [:i | i + 1]]! !
-!VMTest categoriesFor: #testImmutableNextPutAll!public!unit tests! !
-!VMTest categoriesFor: #testImmutableReplacePrimitives!public!unit tests! !
 !VMTest categoriesFor: #testLoopsInterruptible!public!unit tests! !
 
 !ZLibTest methodsFor!

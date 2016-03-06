@@ -103,9 +103,6 @@ test64BitSeek
 			self assert: pointer = (dist + 1).
 			pointer := f seek: dist negated sense: FILE_CURRENT.
 			self assert: pointer = 1].
-	OSVERSIONINFO current isWin9X ifTrue: [
-		self should: [f seek: (2 raisedToInteger: 32) sense: FILE_BEGIN] raise: FileException.
-		^self].
 	32 to: 62
 		do: 
 			[:i | 

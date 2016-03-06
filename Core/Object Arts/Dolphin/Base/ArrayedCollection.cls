@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 SequenceableCollection subclass: #ArrayedCollection
 	instanceVariableNames: ''
@@ -98,7 +98,7 @@ replaceIdentity: anObject with: newElement
 	self at: index put: newElement.
 	^index!
 
-resize: anInteger
+resize: anInteger 
 	"Override back to the primitive implementation for indexable objects (see Object>>resize:)"
 
 	<primitive: 101>
