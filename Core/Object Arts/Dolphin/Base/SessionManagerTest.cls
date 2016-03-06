@@ -14,19 +14,12 @@ testSystemDirectory
 	"#1422"
 
 	| sys32 |
-	sys32 := (#(#winNT #win2k) includes: OSVERSIONINFO current osName) 
-				ifTrue: ['C:\WINNT\SYSTEM32']
-				ifFalse: 
-					[OSVERSIONINFO current isWin9X 
-						ifTrue: ['C:\WINDOWS\System']
-						ifFalse: ['C:\WINDOWS\System32']].
+	sys32 := 'C:\WINDOWS\System32'.
 	self assert: (SessionManager current systemDirectory sameAs: sys32)!
 
 testWindowsDirectory
 	| windows |
-	windows := (#(#winNT #win2k) includes: OSVERSIONINFO current osName) 
-				ifTrue: ['C:\WINNT']
-				ifFalse: ['C:\WINDOWS'].
+	windows := 'C:\WINDOWS'.
 	self assert: (SessionManager current windowsDirectory sameAs: windows)! !
 !SessionManagerTest categoriesFor: #testSystemDirectory!public!unit tests! !
 !SessionManagerTest categoriesFor: #testWindowsDirectory!public!unit tests! !
