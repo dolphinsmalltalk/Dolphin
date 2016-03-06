@@ -14,11 +14,7 @@ package methodNames
 	add: #EvaluationConverterTest -> #testWithDates;
 	add: #GdiplusBitmapTest -> #testAsByteArray;
 	add: #LinkButtonTest -> #testGetSetText;
-	add: #ListViewTest -> #testChangeViewMode;
 	add: #ListViewTest -> #testColumnWidth;
-	add: #ListViewTest -> #testNilRow;
-	add: #ListViewTest -> #testProgrammaticSelectionVisible;
-	add: #ListViewTest -> #testSelectionRemainsVisibleOnSort;
 	add: #MemoryMappedFileTest -> #testDoubleArray;
 	add: #MemoryMappedFileTest -> #testMaximumSize;
 	add: #MethodWorkspaceTest -> #testSelectedOrNearestNode;
@@ -54,12 +50,10 @@ package setPrerequisites: (IdentitySet new
 	add: '..\Base\Dolphin Base Tests';
 	add: '..\MVP\Views\Common Controls\Dolphin Common Controls';
 	add: '..\IDE\Dolphin IDE Tests';
-	add: '..\MVP\Models\List\Dolphin List Models';
 	add: '..\System\Win32\Dolphin Memory-Mapped Files';
 	add: '..\System\Win32\Dolphin MMF Tests';
 	add: '..\MVP\Base\Dolphin MVP Base';
 	add: '..\MVP\Dolphin MVP Tests';
-	add: '..\MVP\Views\Scintilla\Dolphin Scintilla View';
 	add: '..\MVP\Views\Styled Views\Dolphin Styled Views';
 	add: '..\MVP\Gdiplus\Gdiplus';
 	add: '..\MVP\Gdiplus\Tests\Gdiplus Tests';
@@ -242,33 +236,6 @@ testAsByteArray
 
 !ListViewTest methodsFor!
 
-testChangeViewMode
-	"#1510"
-
-	| column |
-	self assert: presenter isVirtual.
-	self assert: presenter viewMode == #report.
-	column := presenter primaryColumn.
-	presenter getTextBlock: [:each | each first].
-	column getTextBlock: [:each | each second].
-	presenter model list: #(#('1' '2') #('11' '22')).
-	2 timesRepeat: 
-			[presenter model keysAndValuesDo: 
-					[:i :each | 
-					| text |
-					text := presenter getItemText: i.
-					self assert: text = each second].
-			presenter viewMode: #smallIcons.
-			presenter model keysAndValuesDo: 
-					[:i :each | 
-					| text |
-					text := presenter getItemText: i.
-					self assert: text = each first].
-			presenter viewMode: #report.
-			"Switch to non-virtual"
-			presenter isVirtual: false.
-			presenter refreshContents]!
-
 testColumnWidth
 	"#1452, #1456"
 
@@ -295,51 +262,8 @@ testColumnWidth
 	presenter view validateLayout.
 	self assert: presenter view isLayoutValid.
 	self assert: primary width < after.
-	self assert: column width = 100!
-
-testNilRow
-	"#2157"
-
-	| m c item txt |
-	m := ListModel on: #(nil) , (1 to: 5).
-	presenter model: m.
-	c := presenter view columnAtIndex: 1.
-	txt := 'this is nil'.
-	c getTextBlock: [:it | it ifNil: [txt]].
-	item := self getItem: 1.
-	self assert: item pszText = txt.
-	self assert: item iImage = (nil icon imageIndex - 1)!
-
-testProgrammaticSelectionVisible
-	"#1381"
-
-	"Note that the last selection is the one with the caret, and therefore it is that which should be visible"
-
-	| view |
-	view := presenter view.
-	view list: (0 to: 100) asOrderedCollection.
-	#(#(100) #(50 100) #(100 50) #(1)) do: 
-			[:each | 
-			view selections: each.
-			self assertCaretVisible]!
-
-testSelectionRemainsVisibleOnSort
-	"#1381"
-
-	| view |
-	view := presenter view.
-	view list: (0 to: 100) asOrderedCollection.
-	view selections: self sortSelections.
-	self assertCaretVisible.
-	view columnClicked: 1.
-	self assertCaretVisible.
-	view columnClicked: 1.
-	self assertCaretVisible! !
-!ListViewTest categoriesFor: #testChangeViewMode!public!unit tests! !
+	self assert: column width = 100! !
 !ListViewTest categoriesFor: #testColumnWidth!public!unit tests! !
-!ListViewTest categoriesFor: #testNilRow!public!unit tests! !
-!ListViewTest categoriesFor: #testProgrammaticSelectionVisible!public!unit tests! !
-!ListViewTest categoriesFor: #testSelectionRemainsVisibleOnSort!public!unit tests! !
 
 !MemoryMappedFileTest methodsFor!
 
