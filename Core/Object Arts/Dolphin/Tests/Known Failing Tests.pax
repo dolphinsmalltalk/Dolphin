@@ -20,7 +20,6 @@ package methodNames
 	add: #NumberTest -> #testClassReadFromColonScaledDecimals;
 	add: #PackageSelectorTest -> #testPackageCreationDoesntAlterSelection;
 	add: #PackageSelectorTest -> #testPackageRemovalDoesntAlterSelection;
-	add: #ProcessTest -> #testOverlappedErrno;
 	add: #PublishedAspectInspectorTest -> #testAspectChanged;
 	add: #SelectableTreeItemsTest -> #testSelection;
 	add: #StyledContainerTest -> #test1PixBorderPaint;
@@ -363,13 +362,6 @@ testPackageRemovalDoesntAlterSelection
 	self assert: newSelections = selections! !
 !PackageSelectorTest categoriesFor: #testPackageCreationDoesntAlterSelection!public! !
 !PackageSelectorTest categoriesFor: #testPackageRemovalDoesntAlterSelection!public! !
-
-!ProcessTest methodsFor!
-
-testOverlappedErrno
-	self assert: (CRTLibrary default thread_chmod: '' pmode: 0) < 0.
-	self assert: Processor activeProcess errno = 2! !
-!ProcessTest categoriesFor: #testOverlappedErrno!public!unit tests! !
 
 !PublishedAspectInspectorTest methodsFor!
 
