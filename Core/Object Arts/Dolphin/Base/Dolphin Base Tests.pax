@@ -125,6 +125,7 @@ package globalAliases: (Set new
 package setPrerequisites: (IdentitySet new
 	add: '..\ActiveX\Automation\ActiveX Automation';
 	add: '..\..\Samples\ActiveX\Random\COM Random Stream';
+	add: '..\System\Trace\Debug Trace Stream';
 	add: '..\IDE\Base\Development System';
 	add: 'Dolphin';
 	add: 'Dolphin Additional Sort Algorithms';
