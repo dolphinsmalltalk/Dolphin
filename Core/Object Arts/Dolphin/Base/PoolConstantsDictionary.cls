@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 LookupTable variableSubclass: #PoolConstantsDictionary
 	instanceVariableNames: 'name '
@@ -136,13 +136,14 @@ isChanged: aBoolean
 isValidKey: aString 
 	| initial |
 	initial := true.
-	^aString allSatisfy: 
-			[:each | 
-			initial 
-				ifTrue: 
-					[initial := false.
-					each == $_ or: [each isLetter]]
-				ifFalse: [each == $_ or: [each isAlphaNumeric]]]!
+	^aString notEmpty and: 
+			[aString allSatisfy: 
+					[:each | 
+					initial 
+						ifTrue: 
+							[initial := false.
+							each == $_ or: [each isLetter]]
+						ifFalse: [each == $_ or: [each isAlphaNumeric]]]]!
 
 keyString: anObject 
 	| answer |

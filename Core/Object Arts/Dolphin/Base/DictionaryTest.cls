@@ -100,6 +100,12 @@ testIncludesKey
 
 !
 
+testNilKey
+	| dictionary |
+	dictionary := self newEmpty.
+	self should: [dictionary at: nil put: 1] raise: Error.
+	self should: [dictionary at: nil ifAbsentPut: [1]] raise: Error!
+
 testRemoveKey
 	| dictionary |
 	dictionary := self newDictionary.
@@ -115,5 +121,6 @@ testRemoveKey
 !DictionaryTest categoriesFor: #testCyclicRefPrinting!public! !
 !DictionaryTest categoriesFor: #testDeepCopy!public!unit tests! !
 !DictionaryTest categoriesFor: #testIncludesKey!public!unit tests! !
+!DictionaryTest categoriesFor: #testNilKey!public!unit tests! !
 !DictionaryTest categoriesFor: #testRemoveKey!public!unit tests! !
 

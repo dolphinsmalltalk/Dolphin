@@ -7,7 +7,7 @@ package paxVersion: 1;
 This package contains the basic/essential Dolphin Smalltalk development system tools and support, for example the Class, Method and Package browsers. 
 '.
 
-package basicPackageVersion: '6.2'.
+package basicPackageVersion: '2016.7.0.4'.
 
 
 package classNames
@@ -4166,7 +4166,7 @@ publishedAspectsOfInstances
 					addEvaluationFrom: (Array with: ScintillaMarkerDefinition name , ' new')) beImmutable;
 		add: (Aspect choice: #whitespaceVisibility from: self whitespaceVisibilityLevels);
 		add: (Aspect dictionary: #braceChars) beImmutable;
-		add: (Aspect choice: #lexer from: (Lexers copyWithout: nil) asSortedCollection);
+		add: (Aspect choice: #lexer from: (self lexerLanguages copyWithout: nil) asSortedCollection);
 		add: (Aspect choice: #foldMarkerStyle
 					from: (Array with: nil) , self foldMarkerStyles asSortedCollection);
 		add: (Aspect choice: #caretStyle from: self caretStyles asSortedCollection);

@@ -69,6 +69,7 @@ package setPrerequisites: (IdentitySet new
 	add: 'Presenters\Color\Dolphin Color Presenter';
 	add: 'Views\Common Controls\Dolphin Common Controls';
 	add: 'Presenters\Date Time\Dolphin Date Time Presenters';
+	add: 'Models\List\Dolphin List Models';
 	add: 'Presenters\List\Dolphin List Presenter';
 	add: '..\System\Filer\Dolphin Literal Filer';
 	add: 'Views\MoenTree\Dolphin MoenTree View';
