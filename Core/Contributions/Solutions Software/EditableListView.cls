@@ -797,7 +797,7 @@ rowForecolor: anObject
 
 rowHeight
 
-	^rowHeight!
+	^rowHeight ifNil: [1]!
 
 rowHeight: anObject
 	rowHeight := anObject.
