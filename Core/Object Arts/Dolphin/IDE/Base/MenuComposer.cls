@@ -37,7 +37,6 @@ addItem: menuItem view: menuView index: index
 	self update: menuView
 		do: 
 			[destinationMenu insertItem: menuItem at: index.
-			self generateMnemonicConflicts: menuView.
 			self generateAcceleratorConflicts]!
 
 addMenu
@@ -147,11 +146,6 @@ generateAcceleratorConflicts: menuView
 			acceleratorKey := item acceleratorKey.
 			(conflictingAccelerators includes: acceleratorKey) ifTrue: [conflicts add: item]].
 	menuView conflictingAccelerators: conflicts!
-
-generateMnemonicConflicts: menuView
-	"Private - Generate the set of menu items with conflicting mnemonic keys local to menuView."
-
-	menuView generateMnemonicConflicts!
 
 hasClipboard
 	"Private - Answer true if there is a menu item on the clipboard"
@@ -282,8 +276,6 @@ onItemFrom: aMenuComposerView at: anInteger droppedBefore: beforeBoolean copy: c
 		ifFalse: 
 			[destMenu insertItem: sourceItem at: destIndex + 1.
 			destView selectionByIndex: destIndex + 1].
-	updateSourceView ifTrue: [self generateMnemonicConflicts: sourceView].
-	self generateMnemonicConflicts: destView.
 	self generateAcceleratorConflicts.
 	menuViews inject: nil
 		into: 
@@ -361,7 +353,7 @@ openMenu: aMenu at: position
 	self dragCoordinator hideDragCursor.
 	^
 	[| menuView |
-	menuView := aMenu composerViewClass new.
+	menuView := MenuComposerView new.
 	menuViews addLast: menuView.
 	self arena addSubView: menuView.
 	menuView
@@ -374,7 +366,6 @@ openMenu: aMenu at: position
 	menuView
 		position: position;
 		model: aMenu asValue.
-	self generateMnemonicConflicts: menuView.
 	self generateAcceleratorConflicts: menuView.
 	menuView zOrderTop.
 	menuView] 
@@ -407,10 +398,7 @@ properties
 	| menuView |
 	self selection edit.
 	menuView := self selectionView.
-	self update: menuView
-		do: 
-			[self generateMnemonicConflicts: menuView.
-			self generateAcceleratorConflicts]!
+	self update: menuView do: [self generateAcceleratorConflicts]!
 
 queryCommand: query 
 	"Private - Enters details about a potential command for the receiver into the 
@@ -446,7 +434,6 @@ removeItemView: menuView index: index
 			aMenu := menuView menu.
 			aMenu removeItemAt: index.
 			self ensureMinimumMenuContents: aMenu.
-			self generateMnemonicConflicts: menuView.
 			self generateAcceleratorConflicts.
 			menuView selectionByIndex: (index min: aMenu size)]!
 
@@ -516,7 +503,6 @@ update: aMenuComposerView do: operation
 !MenuComposer categoriesFor: #ensureMinimumMenuContents:!helpers!private! !
 !MenuComposer categoriesFor: #generateAcceleratorConflicts!helpers!private! !
 !MenuComposer categoriesFor: #generateAcceleratorConflicts:!helpers!private! !
-!MenuComposer categoriesFor: #generateMnemonicConflicts:!helpers!private! !
 !MenuComposer categoriesFor: #hasClipboard!private!testing! !
 !MenuComposer categoriesFor: #initialize!initializing!private! !
 !MenuComposer categoriesFor: #menu!accessing!public! !

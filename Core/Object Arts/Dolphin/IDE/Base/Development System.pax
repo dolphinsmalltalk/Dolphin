@@ -38,7 +38,6 @@ package classNames
 	add: #CommandMenuItemDialog;
 	add: #CompiledMethodInspector;
 	add: #CompiledMethodSearchPolicy;
-	add: #ContextMenuComposerView;
 	add: #CreateSubclassDialog;
 	add: #Debugger;
 	add: #DebuggerMethodCategory;
@@ -48,6 +47,7 @@ package classNames
 	add: #DolphinMoveClassChange;
 	add: #FlipperInspector;
 	add: #Grabber;
+	add: #ImageListView;
 	add: #IndexedInstVarBatchAccessor;
 	add: #InspectorAbstract;
 	add: #InspectorShell;
@@ -59,12 +59,13 @@ package classNames
 	add: #KeyedAspectBatch;
 	add: #KeyedAspectBatchAccessor;
 	add: #MenuBarComposer;
-	add: #MenuBarComposerView;
+	add: #MenuBarPainter;
 	add: #MenuComposer;
 	add: #MenuComposerArena;
 	add: #MenuComposerView;
 	add: #MenuDialog;
 	add: #MenuItemDialog;
+	add: #MenuPainter;
 	add: #MessageNodeCollector;
 	add: #MethodBrowser;
 	add: #MethodBrowserShell;
@@ -88,6 +89,7 @@ package classNames
 	add: #PackedReferencesCategory;
 	add: #PluggableEnvironment;
 	add: #PluggableVirtualMethodCategory;
+	add: #PopupMenuPainter;
 	add: #PropertyInspector;
 	add: #PublishedAspectInspector;
 	add: #ReferencesCategory;
@@ -211,9 +213,9 @@ package methodNames
 	add: #LayoutManager -> #arrangementAspect;
 	add: #ListControlView -> #visualObjectAtPoint:;
 	add: #LPVOIDField -> #newAspect:class:;
-	add: #Menu -> #composerViewClass;
 	add: #Menu -> #edit;
-	add: #MenuBar -> #composerViewClass;
+	add: #Menu -> #painterClass;
+	add: #MenuBar -> #painterClass;
 	add: #MethodProtocol -> #icon;
 	add: #MoenTreeView -> #visualObjectAtPoint:;
 	add: #MSG -> #printOn:;
@@ -365,6 +367,7 @@ package methodNames
 	add: 'Icon class' -> #newInstanceAspect:class:;
 	add: 'IconicListAbstract class' -> #publishedAspectsOfInstances;
 	add: 'IconicListAbstract class' -> #publishedEventsOfInstances;
+	add: 'ImagePresenter class' -> #resource_ImageList_view;
 	add: 'ImageViewAbstract class' -> #publishedAspectsOfInstances;
 	add: 'InputState class' -> #publishedEventsOfInstances;
 	add: 'InternalIcon class' -> #choose;
@@ -502,6 +505,7 @@ package methodNames
 	add: 'View class' -> #publishedEventsOfInstances;
 	add: 'VS_FIXEDFILEINFO class' -> #publishedAspectsOfInstances;
 	add: 'WeakSet class' -> #publishedEventsOfInstances;
+	add: 'WinImageList class' -> #newInstanceAspect:class:;
 	yourself.
 
 package globalNames
@@ -582,6 +586,11 @@ package!
 Object subclass: #Grabber
 	instanceVariableNames: 'rectangle aspect constrain view composer'
 	classVariableNames: 'Cursors'
+	poolDictionaries: 'Win32Constants'
+	classInstanceVariableNames: ''!
+Object subclass: #MenuPainter
+	instanceVariableNames: 'menu conflictingMnemonics conflictingAccelerators'
+	classVariableNames: ''
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
 Object subclass: #MethodCategorizationPolicy
@@ -726,6 +735,16 @@ Error subclass: #InvalidInstallationError
 	classInstanceVariableNames: ''!
 Folder subclass: #PackageFolder
 	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+MenuPainter subclass: #MenuBarPainter
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+MenuPainter subclass: #PopupMenuPainter
+	instanceVariableNames: 'itemWidth textOffset submenuOffset acceleratorOffset'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -1115,14 +1134,14 @@ StNumberLiteralToken subclass: #StNumberStylingToken
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 View subclass: #MenuComposerView
-	instanceVariableNames: 'selectionIndex conflictingAccelerators conflictingMnemonics'
+	instanceVariableNames: 'selectionIndex painter'
 	classVariableNames: ''
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
 ContainerView subclass: #MenuComposerArena
 	instanceVariableNames: 'dragImageList dragPoint dragMenuIndex dragSource _unused'
 	classVariableNames: ''
-	poolDictionaries: ''
+	poolDictionaries: 'CommCtrlConstants'
 	classInstanceVariableNames: ''!
 ShellView subclass: #DebuggerShellView
 	instanceVariableNames: ''
@@ -1134,18 +1153,13 @@ DialogView subclass: #WalkbackDialog
 	classVariableNames: 'CallStackId Commands IconId'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+ImageViewAbstract subclass: #ImageListView
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
 ImageView subclass: #ViewComposerArena
 	instanceVariableNames: 'composer'
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-MenuComposerView subclass: #ContextMenuComposerView
-	instanceVariableNames: 'itemWidth acceleratorOffset submenuOffset textOffset'
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-MenuComposerView subclass: #MenuBarComposerView
-	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -2539,6 +2553,19 @@ publishedEventsOfInstances
 !IconicListAbstract class categoriesFor: #publishedAspectsOfInstances!constants!development!public! !
 !IconicListAbstract class categoriesFor: #publishedEventsOfInstances!development!events!public! !
 
+!ImagePresenter class methodsFor!
+
+resource_ImageList_view
+	"Answer the literal data from which the 'ImageList view' resource can be reconstituted.
+	DO NOT EDIT OR RECATEGORIZE THIS METHOD.
+
+	If you wish to modify this resource evaluate:
+	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_ImageList_view)
+	"
+
+	^#(#'!!STL' 3 788558 10 ##(Smalltalk.STBViewProxy) 8 ##(Smalltalk.ImageListView) 98 21 0 0 98 2 8 1140850944 1 416 721990 2 ##(Smalltalk.ValueHolder) 0 32 1310726 ##(Smalltalk.EqualitySearchPolicy) 0 524550 ##(Smalltalk.ColorRef) 8 4278190080 0 7 0 0 0 416 0 0 852486 ##(Smalltalk.NullConverter) 0 0 0 0 8 #normal 1 0 8 #none 983302 ##(Smalltalk.MessageSequence) 202 208 98 1 721670 ##(Smalltalk.MessageSend) 8 #createAt:extent: 98 2 328198 ##(Smalltalk.Point) 3839 21 802 225 201 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 127 7 0 0 10 0 0 0 239 7 0 0 110 0 0 0] 98 0 802 193 193 0 27 )! !
+!ImagePresenter class categoriesFor: #resource_ImageList_view!public!resources-views! !
+
 !ImageViewAbstract class methodsFor!
 
 publishedAspectsOfInstances
@@ -2783,17 +2810,18 @@ newAspect: aSymbol class: aspectClass
 
 !Menu methodsFor!
 
-composerViewClass
-    	"Private - Answer the class of view used for displaying the receiver."
-    
-    	^ContextMenuComposerView!
-
 edit
     	"Private - Edit the receiver in a dialog box."
     
-    	(MenuDialog createOn: self) showModal! !
-!Menu categoriesFor: #composerViewClass!constants!development!private! !
+    	(MenuDialog createOn: self) showModal!
+
+painterClass
+	"Private - Answer the class of painter used for rendering the receiver in a
+	MenuComposerView."
+
+	^PopupMenuPainter! !
 !Menu categoriesFor: #edit!constants!development!private! !
+!Menu categoriesFor: #painterClass!constants!development!private! !
 
 !Menu class methodsFor!
 
@@ -2817,11 +2845,12 @@ publishedAspectsOfInstances
 
 !MenuBar methodsFor!
 
-composerViewClass
-    	"Private - Answer the class of view used for displaying the receiver."
-    
-    	^MenuBarComposerView! !
-!MenuBar categoriesFor: #composerViewClass!constants!development!private! !
+painterClass
+	"Private - Answer the class of painter used for rendering the receiver in a
+	MenuComposerView."
+
+	^MenuBarPainter! !
+!MenuBar categoriesFor: #painterClass!constants!development!private! !
 
 !MenuBar class methodsFor!
 
@@ -5564,6 +5593,15 @@ publishedEventsOfInstances
     		yourself.
     ! !
 !WeakSet class categoriesFor: #publishedEventsOfInstances!development!events!public! !
+
+!WinImageList class methodsFor!
+
+newInstanceAspect: aSymbol class: aspectClass 
+	"Private - Answer a new <Aspect> of the class, aspectClass, and with name, aSymbol, 
+    	which is appropriate for representing aspects of the receiver's type."
+
+	^aspectClass imageList: aSymbol! !
+!WinImageList class categoriesFor: #newInstanceAspect:class:!adapters!development!private! !
 
 "End of package definition"!
 

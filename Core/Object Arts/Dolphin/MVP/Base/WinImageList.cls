@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 GraphicsTool subclass: #WinImageList
 	instanceVariableNames: 'extent initialSize growBy createFlags'
@@ -131,10 +131,10 @@ createHandle
 		cGrow: growBy!
 
 depth
-	"Answer the color depth (number of bits per pixel) of the receiver.
-	At this level, this information is not cached."
+	"Answer the color depth (number of bits per pixel) of the receiver. This can be 0, for the
+	default (whatever that may be), or ILC_COLORDB for a device-dependent image list."
 
-	^self getInfo depth!
+	^createFlags bitAnd: ILC_COLORDB!
 
 dragEnter: aView at: aPoint 
 	"The drag for which the receiver is supplying images has entered the specified
@@ -364,6 +364,16 @@ newExtent: aPoint depth: bppInteger initialSize: sizeInteger growBy: growthInteg
 			masked: aBoolean;
 		yourself!
 
+newExtent: aPoint depth: anInteger masked: aBoolean 
+	"Answer a new instance with the given parameters."
+
+	^self 
+		newExtent: aPoint
+		depth: anInteger
+		initialSize: self defaultInitialSize
+		growBy: self defaultGrowthGranularity
+		masked: aBoolean!
+
 newExtent: aPoint initialSize: anInteger masked: aBoolean
 	"Answer a new instance with the given parameters."
 
@@ -389,6 +399,7 @@ newExtent: aPoint masked: aBoolean
 !WinImageList class categoriesFor: #icon!constants!public! !
 !WinImageList class categoriesFor: #newExtent:!instance creation!public! !
 !WinImageList class categoriesFor: #newExtent:depth:initialSize:growBy:masked:!instance creation!public! !
+!WinImageList class categoriesFor: #newExtent:depth:masked:!instance creation!public! !
 !WinImageList class categoriesFor: #newExtent:initialSize:masked:!instance creation!public! !
 !WinImageList class categoriesFor: #newExtent:masked:!instance creation!public! !
 

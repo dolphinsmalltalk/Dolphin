@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 AttributeDescriptor subclass: #Aspect
 	instanceVariableNames: 'name presenterBlock editBlock immediateActionBlock category isPresenterBlockReadOnly'
@@ -558,6 +558,15 @@ icon: anIconAspectSymbol
 		bePresenterBlockReadOnly;
 		yourself!
 
+imageList: anImageListAspectSymbol 
+	^self name: anImageListAspectSymbol
+		presenterBlock: 
+			[:p :m | 
+			ImagePresenter 
+				create: 'ImageList view'
+				in: p
+				on: m]!
+
 inspector: anAspectSymbol
 	"Answer an instance of the receiver for anAspectSymbol.
 	The aspect is editable using an appropriate inspector"
@@ -793,6 +802,7 @@ time: aSymbol
 !Aspect class categoriesFor: #font:!instance creation!public! !
 !Aspect class categoriesFor: #hotkey:!instance creation!public! !
 !Aspect class categoriesFor: #icon:!instance creation!public! !
+!Aspect class categoriesFor: #imageList:!instance creation!public! !
 !Aspect class categoriesFor: #inspector:!instance creation!public! !
 !Aspect class categoriesFor: #integer:!instance creation!public! !
 !Aspect class categoriesFor: #key:!instance creation!public! !

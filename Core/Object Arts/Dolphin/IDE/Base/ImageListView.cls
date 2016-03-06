@@ -1,0 +1,38 @@
+"Filed out from Dolphin Smalltalk 7"!
+
+ImageViewAbstract subclass: #ImageListView
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ImageListView guid: (GUID fromString: '{3089FD81-D572-4492-A0AC-037B8AD4125E}')!
+ImageListView comment: 'ImageListView is debugging aid for displaying the entire content of an image list, e.g. in an inspector open on an image list.
+'!
+!ImageListView categoriesForClass!MVP-Views! !
+!ImageListView methodsFor!
+
+paintImageOn: aCanvas 
+	"Private - Paint the images in the image list at natural extent (i.e. the image mode is
+	ignored), using a flow layout. No edge is drawn."
+
+	| displayRect cx imageSize cy rows origin count perRow |
+	(image isNil or: [image handle isNull]) ifTrue: [^nil].
+	displayRect := self displayRectangle.
+	count := image getImageCount.
+	imageSize := image extent.
+	cx := imageSize x.
+	cy := imageSize y.
+	perRow := displayRect extent x // cx max: 1.
+	rows := (count / perRow) ceiling.
+	aCanvas fillRectangle: displayRect color: (image backcolor ifNil: [self actualBackcolor]).
+	origin := displayRect origin.
+	0 to: count - 1
+		do: 
+			[:i | 
+			image 
+				draw: i + 1
+				on: aCanvas
+				at: origin + ((i \\ perRow * cx) @ (i // perRow * cy))].
+	^displayRect origin: origin extent: (perRow * cx) @ (rows * cy)! !
+!ImageListView categoriesFor: #paintImageOn:!drawing!event handling!private! !
+
