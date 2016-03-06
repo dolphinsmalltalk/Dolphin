@@ -15,7 +15,6 @@ package methodNames
 	add: #DebuggerTest -> #testRemapIPSmokeTest;
 	add: #EvaluationConverterTest -> #testWithDates;
 	add: #GdiplusBitmapTest -> #testAsByteArray;
-	add: #LinkButtonTest -> #testGetSetText;
 	add: #ListViewTest -> #testColumnWidth;
 	add: #NumberTest -> #testClassReadFromColonScaledDecimals;
 	add: #PackageSelectorTest -> #testPackageCreationDoesntAlterSelection;
@@ -212,15 +211,6 @@ testAsByteArray
 	"difference is in the first 100 bytes ... what is the problem?"
 	self assert: b1 = b2! !
 !GdiplusBitmapTest categoriesFor: #testAsByteArray!public!unit tests! !
-
-!LinkButtonTest methodsFor!
-
-testGetSetText
-	presenter text: 'Test'.
-	"SysLink control seems to have a bug, and returns the length of the text plus the null
-	terminator in response to WM_GETTEXTLENGTH (the null is supposed to be excluded)"
-	self assert: presenter text = '<a>Test</a>'! !
-!LinkButtonTest categoriesFor: #testGetSetText!public!unit tests! !
 
 !ListViewTest methodsFor!
 

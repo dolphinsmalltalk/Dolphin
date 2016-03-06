@@ -32,6 +32,12 @@ testClickLinkFiresCommand
 	self leftClickAt: 10 @ 10.
 	self assert: presenter isWindowVisible!
 
+testGetSetText
+	presenter text: 'Test'.
+	"SysLink control seems to have a bug, and returns the length of the text plus the null
+	terminator in response to WM_GETTEXTLENGTH (the null is supposed to be excluded)"
+	self assert: presenter text = '<a>Test</a>'!
+
 testQueryCommandEnablement
 	presenter text: 'Test'.
 	self assert: presenter commandDescription description = 'Test'.
@@ -47,5 +53,6 @@ testQueryCommandEnablement
 	self assert: presenter isEnabled! !
 !LinkButtonTest categoriesFor: #classToTest!helpers!private! !
 !LinkButtonTest categoriesFor: #testClickLinkFiresCommand!public!unit tests! !
+!LinkButtonTest categoriesFor: #testGetSetText!public!unit tests! !
 !LinkButtonTest categoriesFor: #testQueryCommandEnablement!public!unit tests! !
 
