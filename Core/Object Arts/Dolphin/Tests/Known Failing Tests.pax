@@ -28,7 +28,6 @@ package methodNames
 	add: #StyledContainerTest -> #testBordersPrintAndPaintIdentical;
 	add: #ViewComposerTest -> #testResizeDoesNotMove;
 	add: #VMTest -> #testLoopsInterruptible;
-	add: #ZLibTest -> #testCompressUncompress;
 	yourself.
 
 package binaryGlobalNames: (Set new
@@ -48,7 +47,6 @@ package setPrerequisites: (IdentitySet new
 	add: '..\MVP\Views\Styled Views\Dolphin Styled Views';
 	add: '..\MVP\Gdiplus\Gdiplus';
 	add: '..\MVP\Gdiplus\Tests\Gdiplus Tests';
-	add: '..\..\..\Contributions\ITC Gorisek\ZLib Interface';
 	yourself).
 
 package!
@@ -581,29 +579,6 @@ testLoopsInterruptible
 				by: -1
 				do: [:i | i + 1]]! !
 !VMTest categoriesFor: #testLoopsInterruptible!public!unit tests! !
-
-!ZLibTest methodsFor!
-
-testCompressUncompress
-	| string compressed compressedLen uncompressed uncompressedLen |
-	string := Object comment.
-	compressed := ByteArray new: string size.
-	compressedLen := DWORD fromInteger: compressed size.
-	ZLibLibrary default 
-		compress2: compressed
-		outLen: compressedLen
-		inData: string
-		inLen: string size
-		level: 9.
-	uncompressed := String new: string size.
-	uncompressedLen := DWORD fromInteger: uncompressed size.
-	ZLibLibrary default 
-		uncompress: uncompressed
-		outLen: uncompressedLen
-		inData: compressed
-		inLen: compressed size.
-	self assert: uncompressed = string! !
-!ZLibTest categoriesFor: #testCompressUncompress!public!unit tests! !
 
 "End of package definition"!
 

@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ExternalLibrary subclass: #ZLibLibrary
 	instanceVariableNames: ''
@@ -23,10 +23,15 @@ uncompress: outData outLen: outLen inData: inData inLen: inLen
 !ZLibLibrary class methodsFor!
 
 fileName
-	"Answer the host system file name of the external library which the 
-	receiver represents"
+	"Answer the host system file name for the external library the 
+	receiver represents."
 
-	^'ZLIB_DLL'
-! !
+	^File splitStemFrom: (self default fileName)!
+
+open
+	"Answer a new instance of the receiver to represent the CRT DLL."
+
+	^(self fromHandle: VMLibrary default handle) initialize! !
 !ZLibLibrary class categoriesFor: #fileName!constants!public! !
+!ZLibLibrary class categoriesFor: #open!instance creation!public! !
 
