@@ -1106,7 +1106,7 @@ loadPAC: stream
 
 	"File in the definitions of the package's members (pools, classes, methods, globals, resources, etc)"
 	filer fileIn.
-	self paxVersion < 1 ifTrue: [self initializeOldSourcePackage].
+	self paxVersion < 1 ifTrue: [self initializeLegacyResources].
 	self initializeGlobals.
 	self fileInScript: #postinstall!
 

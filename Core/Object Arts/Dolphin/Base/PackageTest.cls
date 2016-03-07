@@ -231,12 +231,6 @@ testForwardRefLoadPac
 		close.
 	[loadedPackages := Package manager install: pacName] ensure: [File delete: pacName]!
 
-testImageStripperPrereqs
-	"#1476"
-
-	self assert: ((Package manager packageNamed: 'Autoplay') prerequisiteNames asArray 
-				includes: 'Lagoon Image Stripper')!
-
 testLoad21Pac
 	self loadAndTestPackage: 'ScribbleTestPackages\2.1\ScribbleTest21.pac'!
 
@@ -376,7 +370,6 @@ testTimestampInitialized
 !PackageTest categoriesFor: #setUp!private!unit tests! !
 !PackageTest categoriesFor: #tearDown!private!unit tests! !
 !PackageTest categoriesFor: #testForwardRefLoadPac!public!unit tests! !
-!PackageTest categoriesFor: #testImageStripperPrereqs!public!unit tests! !
 !PackageTest categoriesFor: #testLoad21Pac!public!unit tests! !
 !PackageTest categoriesFor: #testLoad40Pac!public!unit tests! !
 !PackageTest categoriesFor: #testLoad40Pax!public!unit tests! !
