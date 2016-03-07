@@ -106,7 +106,6 @@ package classNames
 	add: #VARIANTTest;
 	add: #WORDArrayTest;
 	add: #WriteStreamTest;
-	add: #ZLibTest;
 	yourself.
 
 package methodNames
@@ -143,7 +142,6 @@ package setPrerequisites: (IdentitySet new
 	add: '..\..\..\Contributions\Camp Smalltalk\SUnit\SUnit';
 	add: '..\..\..\Contributions\Camp Smalltalk\SUnit\SUnitUI';
 	add: '..\ActiveX\Shell\Windows Shell';
-	add: '..\..\..\Contributions\ITC Gorisek\ZLib Interface';
 	yourself).
 
 package!
@@ -399,11 +397,6 @@ DolphinTest subclass: #VARIANTTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'AXAutomationConstants'
-	classInstanceVariableNames: ''!
-DolphinTest subclass: #ZLibTest
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 DictionaryTest subclass: #LookupTableTest
 	instanceVariableNames: ''
