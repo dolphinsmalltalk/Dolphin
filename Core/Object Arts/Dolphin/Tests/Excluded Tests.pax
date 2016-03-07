@@ -9,7 +9,6 @@ You should NOT LOAD this package unless you are trying to resurrect these tests 
 
 package classNames
 	add: #ClassBuilderTests;
-	add: #PackageTest;
 	yourself.
 
 package binaryGlobalNames: (Set new
@@ -22,7 +21,6 @@ package setPrerequisites: (IdentitySet new
 	add: '..\IDE\Base\Development System';
 	add: '..\Base\Dolphin';
 	add: '..\Base\Dolphin Base Tests';
-	add: '..\..\Samples\MVP\Scribble\Scribble';
 	yourself).
 
 package!
@@ -31,11 +29,6 @@ package!
 
 DolphinTest subclass: #ClassBuilderTests
 	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-DolphinTest subclass: #PackageTest
-	instanceVariableNames: 'loadedPackages'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!

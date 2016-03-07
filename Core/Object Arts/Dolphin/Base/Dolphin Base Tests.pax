@@ -64,6 +64,7 @@ package classNames
 	add: #NumberTest;
 	add: #ObjectTest;
 	add: #OrderedCollectionTest;
+	add: #PackageTest;
 	add: #PluggableEnvironmentTest;
 	add: #Point3DTest;
 	add: #PointTest;
@@ -290,6 +291,11 @@ DolphinTest subclass: #NumberTest
 	classInstanceVariableNames: ''!
 DolphinTest subclass: #ObjectTest
 	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DolphinTest subclass: #PackageTest
+	instanceVariableNames: 'loadedPackages'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!

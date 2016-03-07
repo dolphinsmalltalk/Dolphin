@@ -18,6 +18,7 @@ package methodNames
 	add: #NumberTest -> #testClassReadFromColonScaledDecimals;
 	add: #PackageSelectorTest -> #testPackageCreationDoesntAlterSelection;
 	add: #PackageSelectorTest -> #testPackageRemovalDoesntAlterSelection;
+	add: #PackageTest -> #testImageStripperPrereqs;
 	add: #SelectableTreeItemsTest -> #testSelection;
 	add: #StyledContainerTest -> #test1PixBorderPaint;
 	add: #StyledContainerTest -> #test1PixBorderPrint;
@@ -335,6 +336,15 @@ testPackageRemovalDoesntAlterSelection
 	self assert: newSelections = selections! !
 !PackageSelectorTest categoriesFor: #testPackageCreationDoesntAlterSelection!public! !
 !PackageSelectorTest categoriesFor: #testPackageRemovalDoesntAlterSelection!public! !
+
+!PackageTest methodsFor!
+
+testImageStripperPrereqs
+	"#1476"
+
+	self assert: ((Package manager packageNamed: 'Autoplay') prerequisiteNames asArray 
+				includes: 'Lagoon Image Stripper')! !
+!PackageTest categoriesFor: #testImageStripperPrereqs!public!unit tests! !
 
 !SelectableTreeItemsTest methodsFor!
 
