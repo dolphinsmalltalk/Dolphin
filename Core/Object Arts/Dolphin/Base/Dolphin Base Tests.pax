@@ -16,6 +16,7 @@ package classNames
 	add: #ByteArrayTest;
 	add: #CaseInsensitiveSearchPolicyTest;
 	add: #ClassBuilderTestClasses;
+	add: #ClassBuilderTests;
 	add: #CollectionCombinator;
 	add: #CommandLineTest;
 	add: #DateTest;
@@ -181,6 +182,11 @@ DolphinTest subclass: #BlockClosureTest
 	classInstanceVariableNames: ''!
 DolphinTest subclass: #BooleanTest
 	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DolphinTest subclass: #ClassBuilderTests
+	instanceVariableNames: 'wasOAD'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!

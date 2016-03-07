@@ -7,10 +7,6 @@ You should NOT LOAD this package unless you are trying to resurrect these tests 
 '.
 
 
-package classNames
-	add: #ClassBuilderTests;
-	yourself.
-
 package binaryGlobalNames: (Set new
 	yourself).
 
@@ -18,20 +14,12 @@ package globalAliases: (Set new
 	yourself).
 
 package setPrerequisites: (IdentitySet new
-	add: '..\IDE\Base\Development System';
-	add: '..\Base\Dolphin';
-	add: '..\Base\Dolphin Base Tests';
 	yourself).
 
 package!
 
 "Class Definitions"!
 
-DolphinTest subclass: #ClassBuilderTests
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
 
 "Global Aliases"!
 
