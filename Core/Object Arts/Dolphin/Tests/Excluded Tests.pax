@@ -12,11 +12,6 @@ package classNames
 	add: #PackageTest;
 	yourself.
 
-package methodNames
-	add: #IntegerTest -> #testIndexedAccess;
-	add: #ProcessTest -> #testCopyExceptionHandlers;
-	yourself.
-
 package binaryGlobalNames: (Set new
 	yourself).
 
@@ -24,7 +19,6 @@ package globalAliases: (Set new
 	yourself).
 
 package setPrerequisites: (IdentitySet new
-	add: '..\System\Trace\Debug Trace Stream';
 	add: '..\IDE\Base\Development System';
 	add: '..\Base\Dolphin';
 	add: '..\Base\Dolphin Base Tests';
@@ -50,70 +44,6 @@ DolphinTest subclass: #PackageTest
 
 
 "Loose Methods"!
-
-!IntegerTest methodsFor!
-
-testIndexedAccess
-	"WARNING THIS TEST HANGS THE IMAGE when run for SmallInteger"
-
-	| int |
-	int := self canonicalInstance.
-	self should: [int at: 1 put: 0] raise: Error.
-	SessionManager current productVersion >= 6.0 
-		ifTrue: 
-			["These bugs only corrected in D6 and later"
-			self should: [int size] raise: Error.
-			self should: [int at: 1] raise: Error].
-! !
-!IntegerTest categoriesFor: #testIndexedAccess!public!unit tests! !
-
-!ProcessTest methodsFor!
-
-testCopyExceptionHandlers
-	| shared |
-	shared := IdentityDictionary with: #state -> 1.
-	shared at: #sourceProcess put: Processor activeProcess.
-	shared at: #state
-		put: (
-			[shared at: #copyProcess put: (shared at: #sourceProcess) copy.
-			Processor activeProcess == (shared at: #sourceProcess) 
-				ifTrue: 
-					[self assert: (shared at: #copyProcess) state == #suspended.
-					self assertStack: (shared at: #copyProcess) topFrame sender
-						copiedCorrectlyFrom: (shared at: #sourceProcess) topFrame sender].
-			HRESULTError signalWith: -1] 
-					on: HRESULTError
-					do: [:ex | ex return: Processor activeProcess identityHash]).
-	Trace
-		display: Processor activeProcess id;
-		display: ': 1,  copyProcess = ';
-		print: (shared at: #copyProcess);
-		cr.
-	Trace
-		display: Processor activeProcess id printString , ': 2 ' , String lineDelimiter;
-		flush.
-	self assert: (shared at: #state) == Processor activeProcess identityHash.
-	(shared at: #copyProcess) == Processor activeProcess ifTrue: [Processor terminateActive].
-	Trace
-		display: Processor activeProcess id printString , ': 3' , String lineDelimiter;
-		flush.
-	self assert: (shared at: #copyProcess) isSuspended.
-	Trace
-		display: Processor activeProcess id printString , ': 4 ' , String lineDelimiter;
-		flush.
-	(shared at: #copyProcess) resume.
-	Trace
-		display: Processor activeProcess id printString , ': 5 ' , String lineDelimiter;
-		flush.
-	self waitForProcess: (shared at: #copyProcess) toTerminate: 50.
-	Trace
-		display: Processor activeProcess id printString , ': 6 ' , String lineDelimiter;
-		flush.
-	self assert: (shared at: #state) == (shared at: #copyProcess) identityHash.
-	Trace
-		display: Processor activeProcess id printString , ': 7 ' , String lineDelimiter;
-		flush! !
-!ProcessTest categoriesFor: #testCopyExceptionHandlers!public!unit tests! !
 
 "End of package definition"!
 
