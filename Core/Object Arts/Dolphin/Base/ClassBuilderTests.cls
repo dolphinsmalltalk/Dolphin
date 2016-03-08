@@ -47,8 +47,8 @@ setUp
 tearDown
 	"make sure we're up to date here"
 
-	self makeCleanClasses.
-	SmalltalkSystem current isOAD: wasOAD!
+	SmalltalkSystem current isOAD: wasOAD.
+	^super tearDown!
 
 testMoveVariable
 	"test moving an iVar up, sideways and down"
@@ -207,4 +207,10 @@ testUnderscoreWarning
 !ClassBuilderTests categoriesFor: #testReshapeClassWithJugglingInstVars!public!Running! !
 !ClassBuilderTests categoriesFor: #testReshapeSubClass!public!Running! !
 !ClassBuilderTests categoriesFor: #testUnderscoreWarning!public!Running! !
+
+!ClassBuilderTests class methodsFor!
+
+resources
+	^Array with: ClassBuilderTestClasses! !
+!ClassBuilderTests class categoriesFor: #resources!Accessing!public! !
 
