@@ -1418,6 +1418,10 @@ testWriteAccessor
 buildSuiteFromSelectors
 	^self hasFullClosures 
 		ifTrue: [super buildSuiteFromSelectors]
-		ifFalse: [self buildSuiteFromMethods: #()]! !
+		ifFalse: [self buildSuiteFromMethods: #()]!
+
+resources
+	^Array with: CompilerTestClasses! !
 !CompilerTest class categoriesFor: #buildSuiteFromSelectors!Building Suites!public! !
+!CompilerTest class categoriesFor: #resources!Accessing!public! !
 

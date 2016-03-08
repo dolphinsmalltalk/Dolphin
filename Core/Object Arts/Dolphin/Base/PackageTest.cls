@@ -11,15 +11,16 @@ PackageTest comment: ''!
 !PackageTest methodsFor!
 
 checkNoTestPackageContents
-	| scribbleTestClass scribbleTest scribbleTestResourceMethod scribbleTestDefaultViewId scribbleTestViewId |
+	| scribbleTestClass scribbleTest scribbleTestResourceMethod scribbleTestDefaultViewId scribbleTestViewId scribbleClass |
 	scribbleTestClass := Smalltalk at: #ScribbleTest ifAbsent: [].
 	self assert: scribbleTestClass isNil.
-	self assert: (Scribble compiledMethodAt: #looseA ifAbsent: []) isNil.
-	self assert: (Scribble compiledMethodAt: #looseC ifAbsent: []) isNil.
-	self assert: (Scribble class compiledMethodAt: #resource_Scribble_test ifAbsent: []) isNil!
+	scribbleClass := Smalltalk at: #Scribble.
+	self assert: (scribbleClass compiledMethodAt: #looseA ifAbsent: []) isNil.
+	self assert: (scribbleClass compiledMethodAt: #looseC ifAbsent: []) isNil.
+	self assert: (scribbleClass class compiledMethodAt: #resource_Scribble_test ifAbsent: []) isNil!
 
 checkTestPackageContents
-	| scribbleTestPackage scribbleTestClass scribbleTest scribbleTestResourceMethod scribbleTestDefaultViewId scribbleTestViewId |
+	| scribbleTestPackage scribbleTestClass scribbleTest scribbleTestResourceMethod scribbleTestDefaultViewId scribbleTestViewId scribbleClass |
 	scribbleTestPackage := loadedPackages first.
 	self assert: (scribbleTestPackage name beginsWith: 'ScribbleTest').
 	scribbleTestClass := Smalltalk at: #ScribbleTest.
@@ -28,16 +29,17 @@ checkTestPackageContents
 	scribbleTestResourceMethod := scribbleTestClass class 
 				compiledMethodAt: #resource_Default_scribble_test_view.
 	self assert: scribbleTestResourceMethod owningPackage = scribbleTestPackage.
-	self assert: (Scribble compiledMethodAt: #looseA) owningPackage = scribbleTestPackage.
-	self assert: (Scribble compiledMethodAt: #looseC) owningPackage = scribbleTestPackage.
-	self assert: (Scribble class compiledMethodAt: #resource_Scribble_test) owningPackage 
+	scribbleClass := Smalltalk at: #Scribble.
+	self assert: (scribbleClass compiledMethodAt: #looseA) owningPackage = scribbleTestPackage.
+	self assert: (scribbleClass compiledMethodAt: #looseC) owningPackage = scribbleTestPackage.
+	self assert: (scribbleClass class compiledMethodAt: #resource_Scribble_test) owningPackage 
 				= scribbleTestPackage.
 	self assert: scribbleTestPackage resourceIdentifiers size = 2.
 	scribbleTestDefaultViewId := ResourceIdentifier class: scribbleTestClass
 				name: 'Default scribble test view'.
 	self assert: (scribbleTestPackage resourceIdentifiers includes: scribbleTestDefaultViewId).
 	self assert: scribbleTestDefaultViewId owningPackage = scribbleTestPackage.
-	scribbleTestViewId := ResourceIdentifier class: Scribble name: 'Scribble test'.
+	scribbleTestViewId := ResourceIdentifier class: scribbleClass name: 'Scribble test'.
 	self assert: (scribbleTestPackage resourceIdentifiers includes: scribbleTestViewId).
 	self assert: scribbleTestViewId owningPackage = scribbleTestPackage.
 	
