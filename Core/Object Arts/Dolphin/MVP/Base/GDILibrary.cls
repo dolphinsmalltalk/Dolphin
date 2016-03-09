@@ -459,10 +459,10 @@ getDIBits: hdc hbm: hbm uStartScan: uStartScan cScanLines: cScanLines lpvBits: l
 			UINT uStartScan,
 			UINT cScanLines,
 			LPVOID lpvBits,
-			LPVOID lpbi,
+			BITMAPINFO* lpbi,
 			UINT uUsage);"
 
-	<stdcall: sdword GetDIBits handle handle dword dword void* void* dword>
+	<stdcall: sdword GetDIBits handle handle dword dword void* BITMAPINFO* dword>
 	^self invalidCall!
 
 getMapMode: hdc

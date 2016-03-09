@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Win32Structure subclass: #BITMAPINFO
 	instanceVariableNames: ''
@@ -59,6 +59,10 @@ colors
 
 	^self bmiColors!
 
+initialize: anInteger 
+	super initialize: anInteger.
+	self bmiHeader dwSize: BITMAPINFOHEADER byteSize!
+
 numQuads
 	"Private - Answer the number of <RGBQUAD>s in the receiver's colour table."
 
@@ -69,6 +73,7 @@ numQuads
 !BITMAPINFO categoriesFor: #bmiHeader:!**compiled accessors**!public! !
 !BITMAPINFO categoriesFor: #byteSize!accessing!public! !
 !BITMAPINFO categoriesFor: #colors!accessing!public! !
+!BITMAPINFO categoriesFor: #initialize:!initializing!private! !
 !BITMAPINFO categoriesFor: #numQuads!accessing!private! !
 
 !BITMAPINFO class methodsFor!

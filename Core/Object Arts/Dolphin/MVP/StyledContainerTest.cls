@@ -1,6 +1,6 @@
 "Filed out from Dolphin Smalltalk 7"!
 
-ContainerViewTest subclass: #StyledContainerTest
+AbstractContainerViewTest subclass: #StyledContainerTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
@@ -17,26 +17,8 @@ parentBackcolor
 	^Color green!
 
 styledBorderColor
-	^Color blue!
-
-testBorderedNcRectangle
-	"Check that applying a border correctly changes the NC and Client rectagle calcs"
-	
-	super testBorderedNcRectangle!
-
-testNcCalcSize
-	"Border off - simple text"
-
-	super testNcCalcSize!
-
-testNonBorderedNcRectangle
-	"Check that applying a border correctly changes the NC and Client rectagle calcs"
-
-	super testNonBorderedNcRectangle! !
+	^Color blue! !
 !StyledContainerTest categoriesFor: #containerClass!private! !
 !StyledContainerTest categoriesFor: #parentBackcolor!private! !
 !StyledContainerTest categoriesFor: #styledBorderColor!private! !
-!StyledContainerTest categoriesFor: #testBorderedNcRectangle!public! !
-!StyledContainerTest categoriesFor: #testNcCalcSize!public! !
-!StyledContainerTest categoriesFor: #testNonBorderedNcRectangle!public! !
 
