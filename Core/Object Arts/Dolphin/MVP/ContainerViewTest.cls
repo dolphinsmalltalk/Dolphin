@@ -15,6 +15,24 @@ backgroundColor
 
 	^Color red!
 
+bitmapOfPaintView: aContainerView 
+	| answer ncCanvas extent |
+	extent := aContainerView extent.
+	answer := Bitmap displayCompatibleWithExtent: extent.
+	aContainerView update.
+	ncCanvas := aContainerView nonClientCanvas.
+	
+	[answer canvas 
+		bitBlt: ncCanvas
+		rectangle: (0 @ 0 extent: extent)
+		to: 0 @ 0
+		rop: SRCCOPY] 
+			ensure: [ncCanvas free].
+	^answer!
+
+bitmapOfPrintView: aContainerView 
+	^Bitmap fromView: aContainerView!
+
 borderColor
 	"Private - Answer the standard border color. This may have to be changed depending on the Windows theme settings"
 
@@ -96,12 +114,88 @@ setUp
 tearDown	
 	containerView topView destroy!
 
+test1PixBorderPaint
+	"Tests the validity of WM_PAINT of a 1 pixel border"
+
+	| paintBitmap |
+	containerView hasBorder: false.
+	self waitForScreenUpdate.
+	paintBitmap := self bitmapOfPaintView: containerView.
+	self 
+		checkRectangle: (self borderRectangleOf: containerView)
+		inBitmap: paintBitmap
+		color: self backgroundColor.
+	self 
+		checkRectangle: ((self borderRectangleOf: containerView) insetBy: 1 asPoint)
+		inBitmap: paintBitmap
+		color: self backgroundColor.
+	containerView hasBorder: true.
+	self waitForScreenUpdate.
+	paintBitmap := self bitmapOfPaintView: containerView.
+	self 
+		checkRectangle: (self borderRectangleOf: containerView)
+		inBitmap: paintBitmap
+		color: self borderColor.
+	self 
+		checkRectangle: ((self borderRectangleOf: containerView) insetBy: 1 asPoint)
+		inBitmap: paintBitmap
+		color: self backgroundColor!
+
+test1PixBorderPrint
+	"Tests the validity of WM_PRINT of a 1 pixel border"
+
+	| printBitmap |
+	containerView hasBorder: false.
+	self waitForScreenUpdate.
+	printBitmap := self bitmapOfPrintView: containerView.
+	self 
+		checkRectangle: (self borderRectangleOf: containerView)
+		inBitmap: printBitmap
+		color: self backgroundColor.
+	self 
+		checkRectangle: ((self borderRectangleOf: containerView) insetBy: 1 asPoint)
+		inBitmap: printBitmap
+		color: self backgroundColor.
+	containerView hasBorder: true.
+	self waitForScreenUpdate.
+	printBitmap := self bitmapOfPrintView: containerView.
+	self 
+		checkRectangle: (self borderRectangleOf: containerView)
+		inBitmap: printBitmap
+		color: self borderColor.
+	self 
+		checkRectangle: ((self borderRectangleOf: containerView) insetBy: 1 asPoint)
+		inBitmap: printBitmap
+		color: self backgroundColor!
+
 testBorderedNcRectangle
 	"Check that applying a border correctly changes the NC and Client rectagle calcs"
 	
 	containerView hasBorder: true.
 	self assert: containerView hasBorder.
 	self checkBorderedNcRectangle:1.!
+
+testBordersPrintAndPaintIdentical
+	"Checks that the WM_PRINT image (used by the VC) and the WM_PAINT image (shown on the
+	display) are the same. This uses the rather slow Bitmap>>pixelData method so best keep the
+	actual view size fairly small."
+
+	"Test not bordered"
+
+	| paintPixels printPixels paintPixelsBordered printPixelsBordered |
+	containerView hasBorder: false.
+	self waitForScreenUpdate.
+	paintPixels := (self bitmapOfPaintView: containerView) pixelData.
+	printPixels := (self bitmapOfPrintView: containerView) pixelData.
+	self assert: paintPixels = printPixels.
+
+	"Test bordered"
+	containerView hasBorder: true.
+	self waitForScreenUpdate.
+	paintPixelsBordered := (self bitmapOfPaintView: containerView) pixelData.
+	printPixelsBordered := (self bitmapOfPrintView: containerView) pixelData.
+	self assert: paintPixelsBordered = printPixelsBordered.
+	self deny: paintPixels = paintPixelsBordered!
 
 testNcCalcSize
 	"Border off - simple text"
@@ -176,10 +270,12 @@ testNonBorderedNcRectangle
 
 waitForScreenUpdate
 	containerView topView update.
-	5 timesRepeat: 
+	"5 timesRepeat: 
 			[SessionManager current inputState pumpMessages.
-			Processor sleep: 100]! !
+			Processor sleep: 100]"! !
 !ContainerViewTest categoriesFor: #backgroundColor!private! !
+!ContainerViewTest categoriesFor: #bitmapOfPaintView:!helpers!private! !
+!ContainerViewTest categoriesFor: #bitmapOfPrintView:!helpers!private! !
 !ContainerViewTest categoriesFor: #borderColor!private! !
 !ContainerViewTest categoriesFor: #borderRectangleOf:!private! !
 !ContainerViewTest categoriesFor: #checkBorderedNcRectangle:!private! !
@@ -190,7 +286,10 @@ waitForScreenUpdate
 !ContainerViewTest categoriesFor: #initialParentRect!private!Running! !
 !ContainerViewTest categoriesFor: #setUp!public!Running! !
 !ContainerViewTest categoriesFor: #tearDown!public!Running! !
+!ContainerViewTest categoriesFor: #test1PixBorderPaint!public! !
+!ContainerViewTest categoriesFor: #test1PixBorderPrint!public! !
 !ContainerViewTest categoriesFor: #testBorderedNcRectangle!public! !
+!ContainerViewTest categoriesFor: #testBordersPrintAndPaintIdentical!public! !
 !ContainerViewTest categoriesFor: #testNcCalcSize!public! !
 !ContainerViewTest categoriesFor: #testNonBorderedNcRectangle!public! !
 !ContainerViewTest categoriesFor: #waitForScreenUpdate!private! !

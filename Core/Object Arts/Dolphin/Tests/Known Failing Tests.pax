@@ -8,9 +8,6 @@ Tests should not be added to this package without creating a Github issue, as ot
 
 package methodNames
 	add: #BlockClosureTest -> #testFullBlockEquality;
-	add: #ContainerViewTest -> #test1PixBorderPaint;
-	add: #ContainerViewTest -> #test1PixBorderPrint;
-	add: #ContainerViewTest -> #testBordersPrintAndPaintIdentical;
 	add: #DebuggerTest -> #testRemapIPSmokeTest;
 	add: #GdiplusBitmapTest -> #testAsByteArray;
 	add: #ListViewTest -> #testColumnWidth;
@@ -23,7 +20,6 @@ package methodNames
 	add: #StyledContainerTest -> #test1PixBorderPrint;
 	add: #StyledContainerTest -> #test1PixDottedBorderPaint;
 	add: #StyledContainerTest -> #test1PixDottedBorderPrint;
-	add: #StyledContainerTest -> #testBordersPrintAndPaintIdentical;
 	add: #ViewComposerTest -> #testResizeDoesNotMove;
 	add: #VMTest -> #testLoopsInterruptible;
 	yourself.
@@ -67,87 +63,6 @@ testFullBlockEquality
 	self assert: block1 = block2.
 	self assert: block1 ~= block3! !
 !BlockClosureTest categoriesFor: #testFullBlockEquality!public!unit tests-known failures! !
-
-!ContainerViewTest methodsFor!
-
-test1PixBorderPaint
-	"Tests the validity of WM_PAINT of a 1 pixel border"
-
-	| paintBitmap |
-	containerView hasBorder: false.
-	self waitForScreenUpdate.
-	paintBitmap := self bitmapOfPaintView: containerView.
-	self 
-		checkRectangle: (self borderRectangleOf: containerView)
-		inBitmap: paintBitmap
-		color: self backgroundColor.
-	self 
-		checkRectangle: ((self borderRectangleOf: containerView) insetBy: 1 asPoint)
-		inBitmap: paintBitmap
-		color: self backgroundColor.
-	containerView hasBorder: true.
-	self waitForScreenUpdate.
-	paintBitmap := self bitmapOfPaintView: containerView.
-	self 
-		checkRectangle: (self borderRectangleOf: containerView)
-		inBitmap: paintBitmap
-		color: self borderColor.
-	self 
-		checkRectangle: ((self borderRectangleOf: containerView) insetBy: 1 asPoint)
-		inBitmap: paintBitmap
-		color: self backgroundColor!
-
-test1PixBorderPrint
-	"Tests the validity of WM_PRINT of a 1 pixel border"
-
-	| printBitmap |
-	containerView hasBorder: false.
-	self waitForScreenUpdate.
-	printBitmap := self bitmapOfPrintView: containerView.
-	self 
-		checkRectangle: (self borderRectangleOf: containerView)
-		inBitmap: printBitmap
-		color: self backgroundColor.
-	self 
-		checkRectangle: ((self borderRectangleOf: containerView) insetBy: 1 asPoint)
-		inBitmap: printBitmap
-		color: self backgroundColor.
-	containerView hasBorder: true.
-	self waitForScreenUpdate.
-	printBitmap := self bitmapOfPrintView: containerView.
-	self 
-		checkRectangle: (self borderRectangleOf: containerView)
-		inBitmap: printBitmap
-		color: self borderColor.
-	self 
-		checkRectangle: ((self borderRectangleOf: containerView) insetBy: 1 asPoint)
-		inBitmap: printBitmap
-		color: self backgroundColor!
-
-testBordersPrintAndPaintIdentical
-	"Checks that the WM_PRINT image (used by the VC) and the WM_PAINT image (shown on the
-	display) are the same. This uses the rather slow Bitmap>>pixelData method so best keep the
-	actual view size fairly small."
-
-	"Test not bordered"
-
-	| paintPixels printPixels paintPixelsBordered printPixelsBordered |
-	containerView hasBorder: false.
-	self waitForScreenUpdate.
-	paintPixels := (self bitmapOfPaintView: containerView) pixelData.
-	printPixels := (self bitmapOfPrintView: containerView) pixelData.
-	self assert: paintPixels = printPixels.
-
-	"Test bordered"
-	containerView hasBorder: true.
-	self waitForScreenUpdate.
-	paintPixelsBordered := (self bitmapOfPaintView: containerView) pixelData.
-	printPixelsBordered := (self bitmapOfPrintView: containerView) pixelData.
-	self assert: paintPixelsBordered = printPixelsBordered.
-	self deny: paintPixels = paintPixelsBordered! !
-!ContainerViewTest categoriesFor: #test1PixBorderPaint!public! !
-!ContainerViewTest categoriesFor: #test1PixBorderPrint!public! !
-!ContainerViewTest categoriesFor: #testBordersPrintAndPaintIdentical!public! !
 
 !DebuggerTest methodsFor!
 
@@ -468,19 +383,11 @@ test1PixDottedBorderPrint
 	self 
 		checkRectangle: ((self borderRectangleOf: containerView) insetBy: 1 asPoint)
 		inBitmap: bitmap
-		color: self backgroundColor!
-
-testBordersPrintAndPaintIdentical
-	"Checks that the WM_PRINT image (used by the VC) and the WM_PAINT image (shown on the
-	display) are the same. This uses the rather slow Bitmap>>pixelData method so best keep the
-	actual view size fairly small."
-
-	super testBordersPrintAndPaintIdentical! !
+		color: self backgroundColor! !
 !StyledContainerTest categoriesFor: #test1PixBorderPaint!public! !
 !StyledContainerTest categoriesFor: #test1PixBorderPrint!public! !
 !StyledContainerTest categoriesFor: #test1PixDottedBorderPaint!public! !
 !StyledContainerTest categoriesFor: #test1PixDottedBorderPrint!public! !
-!StyledContainerTest categoriesFor: #testBordersPrintAndPaintIdentical!public! !
 
 !ViewComposerTest methodsFor!
 
