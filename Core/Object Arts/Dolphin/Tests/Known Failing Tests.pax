@@ -8,6 +8,7 @@ Tests should not be added to this package without creating a Github issue, as ot
 
 package methodNames
 	add: #BlockClosureTest -> #testFullBlockEquality;
+	add: #CompilerTest -> #testOptimizedLoopReadBeforeWritten;
 	add: #DebuggerTest -> #testRemapIPSmokeTest;
 	add: #GdiplusBitmapTest -> #testAsByteArray;
 	add: #ListViewTest -> #testColumnWidth;
@@ -60,6 +61,25 @@ testFullBlockEquality
 	self assert: block1 = block2.
 	self assert: block1 ~= block3! !
 !BlockClosureTest categoriesFor: #testFullBlockEquality!public!unit tests-known failures! !
+
+!CompilerTest methodsFor!
+
+testOptimizedLoopReadBeforeWritten
+	| expected expr actual |
+	expected := OrderedCollection new.
+	(1 to: 5) do: 
+			[:i | 
+			| a |
+			expected add: a displayString , i displayString.
+			a := i].
+	expr := (self 
+				compileExpression: '| r | r := OrderedCollection new. 1 to: 5 do: [:i | | a | r add: a displayString, i displayString. a := i]. r') 
+					method.
+	actual := expr value.
+	"Results of actual block evaluation in a loop and optimized loop should be the same - any
+	read-before-written locals must be reinitialized to zero on each iteration"
+	self assert: actual = expected! !
+!CompilerTest categoriesFor: #testOptimizedLoopReadBeforeWritten!public!unit tests! !
 
 !DebuggerTest methodsFor!
 
