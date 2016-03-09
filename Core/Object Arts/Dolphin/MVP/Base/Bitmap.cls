@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Image subclass: #Bitmap
 	instanceVariableNames: 'hdc flags extent'
@@ -75,6 +75,39 @@ alphaBlendOn: aCanvas at: dstOrigin extent: dstExtent from: srcOrigin extent: sr
 
 asBitmap
 	^self!
+
+asByteArray
+	"Answer a <ByteArray> representing the bits of the receiver in top-down 32bpp RGB form. Each
+	DWORD in the ByteArray represents the red, green and blue values for a pixel. The value for
+	blue is in the least significant byte, followed by the green and red bytes, with the high order
+	byte of each DWORD being unused."
+
+	| bmi canvas ret height bits byteSize size width |
+	canvas := Canvas withOwnedDC: (GDILibrary default createCompatibleDC: nil).
+	self freeDC.
+	size := self extent.
+	height := size y.
+	width := size x.
+	byteSize := 4 * width * height.
+	bmi := BITMAPINFO new.
+	(bmi bmiHeader)
+		biWidth: width;
+		biHeight: -1 * height;
+		biPlanes: 1;
+		biBitCount: 32;
+		biCompression: BI_RGB;
+		biSizeImage: byteSize.
+	bits := ByteArray newFixed: byteSize.
+	ret := GDILibrary default 
+				getDIBits: canvas asParameter
+				hbm: self asParameter
+				uStartScan: 0
+				cScanLines: height
+				lpvBits: bits
+				lpbi: bmi
+				uUsage: DIB_RGB_COLORS.
+	(ret isZero or: [ret ~= height]) ifTrue: [Win32Error signal].
+	^bits!
 
 asSharedCopy
 	"Looks to see if an identical copy of the receiver has already be stored in the SharedBitmaps
@@ -481,6 +514,7 @@ stbFixup: anSTBInFiler at: newObjectIndex
 !Bitmap categoriesFor: #alphaBlendOn:at:extent:from:extent:!drawing-bitmaps!public! !
 !Bitmap categoriesFor: #alphaBlendOn:at:extent:from:extent:blend:!drawing-bitmaps!public! !
 !Bitmap categoriesFor: #asBitmap!public! !
+!Bitmap categoriesFor: #asByteArray!converting!public! !
 !Bitmap categoriesFor: #asSharedCopy!converting!public! !
 !Bitmap categoriesFor: #baseLoadFlags!constants!public! !
 !Bitmap categoriesFor: #basicFree!private!realizing/unrealizing! !
