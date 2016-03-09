@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ArithmeticValue subclass: #Number
 	instanceVariableNames: ''
@@ -462,7 +462,7 @@ readSmalltalkRealFrom: aStream initialInteger: anInteger
 	<gettableStream>, aStream. The <integer>, integerPart, has already been read from the stream
 	and we are currently positioned immediately after the decimal point."
 
-	| nextChar precision fractionalPart start mantissa |
+	| nextChar precision fractionalPart start mantissa specifiedPrecision |
 	start := aStream position.
 	"Attempt to read positive fractional part"
 	(fractionalPart := self readIntegerFrom: aStream radix: 10) isNil 
@@ -471,7 +471,7 @@ readSmalltalkRealFrom: aStream initialInteger: anInteger
 			 onto the stream"
 			aStream pop.
 			^anInteger].
-	precision := aStream position - start.
+	precision := specifiedPrecision := aStream position - start.
 
 	"So as to not accumulate round off errors the mantissa is kept in integer form."
 	fractionalPart = 0 
@@ -508,7 +508,7 @@ readSmalltalkRealFrom: aStream initialInteger: anInteger
 					^self 
 						readScaledDecimalFrom: aStream
 						mantissa: mantissa / (10 raisedToInteger: precision)
-						precision: precision]].
+						precision: specifiedPrecision]].
 
 	"Normal Float, such as 2.5 (perhaps with trailing exponent character)"
 	^precision = 0 
