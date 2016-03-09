@@ -16,8 +16,6 @@ package methodNames
 	add: #PackageSelectorTest -> #testPackageRemovalDoesntAlterSelection;
 	add: #PackageTest -> #testImageStripperPrereqs;
 	add: #SelectableTreeItemsTest -> #testSelection;
-	add: #StyledContainerTest -> #test1PixBorderPaint;
-	add: #StyledContainerTest -> #test1PixBorderPrint;
 	add: #StyledContainerTest -> #test1PixDottedBorderPaint;
 	add: #StyledContainerTest -> #test1PixDottedBorderPrint;
 	add: #ViewComposerTest -> #testResizeDoesNotMove;
@@ -318,16 +316,6 @@ testSelection
 
 !StyledContainerTest methodsFor!
 
-test1PixBorderPaint
-	"Tests the validity of WM_PAINT of a 1 pixel border"
-
-	super test1PixBorderPaint!
-
-test1PixBorderPrint
-	"Tests the validity of WM_PRINT of a 1 pixel border"
-
-	super test1PixBorderPrint!
-
 test1PixDottedBorderPaint
 	"Tests the validity of WM_PAINT of a 1 pixel styled dotted border"
 
@@ -384,8 +372,6 @@ test1PixDottedBorderPrint
 		checkRectangle: ((self borderRectangleOf: containerView) insetBy: 1 asPoint)
 		inBitmap: bitmap
 		color: self backgroundColor! !
-!StyledContainerTest categoriesFor: #test1PixBorderPaint!public! !
-!StyledContainerTest categoriesFor: #test1PixBorderPrint!public! !
 !StyledContainerTest categoriesFor: #test1PixDottedBorderPaint!public! !
 !StyledContainerTest categoriesFor: #test1PixDottedBorderPrint!public! !
 

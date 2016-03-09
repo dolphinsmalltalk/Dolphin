@@ -5,6 +5,7 @@ package paxVersion: 1;
 
 
 package classNames
+	add: #AbstractContainerViewTest;
 	add: #AcceleratorTableTest;
 	add: #BorderLayoutTest;
 	add: #BrushTest;
@@ -104,6 +105,11 @@ StParseNodeVisitor subclass: #StStyler
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+DolphinTest subclass: #AbstractContainerViewTest
+	instanceVariableNames: 'containerView'
+	classVariableNames: ''
+	poolDictionaries: 'Win32Constants'
+	classInstanceVariableNames: ''!
 DolphinTest subclass: #AcceleratorTableTest
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -123,11 +129,6 @@ DolphinTest subclass: #ColorTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-DolphinTest subclass: #ContainerViewTest
-	instanceVariableNames: 'containerView'
-	classVariableNames: ''
-	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
 DolphinTest subclass: #IconTest
 	instanceVariableNames: ''
@@ -189,7 +190,12 @@ DolphinTest subclass: #WindowsEventTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ContainerViewTest subclass: #StyledContainerTest
+AbstractContainerViewTest subclass: #ContainerViewTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: 'Win32Constants'
+	classInstanceVariableNames: ''!
+AbstractContainerViewTest subclass: #StyledContainerTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''

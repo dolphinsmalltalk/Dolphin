@@ -1,6 +1,6 @@
 "Filed out from Dolphin Smalltalk 7"!
 
-ContainerViewTest subclass: #StyledContainerTest
+AbstractContainerViewTest subclass: #StyledContainerTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
