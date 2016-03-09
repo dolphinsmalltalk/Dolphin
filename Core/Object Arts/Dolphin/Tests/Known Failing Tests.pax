@@ -12,7 +12,6 @@ package methodNames
 	add: #ContainerViewTest -> #test1PixBorderPrint;
 	add: #ContainerViewTest -> #testBordersPrintAndPaintIdentical;
 	add: #DebuggerTest -> #testRemapIPSmokeTest;
-	add: #EvaluationConverterTest -> #testWithDates;
 	add: #GdiplusBitmapTest -> #testAsByteArray;
 	add: #ListViewTest -> #testColumnWidth;
 	add: #NumberTest -> #testClassReadFromColonScaledDecimals;
@@ -180,13 +179,6 @@ testRemapIPSmokeTest
 					self assert: offset >= 0.
 					ip := ip + bytes size]"]! !
 !DebuggerTest categoriesFor: #testRemapIPSmokeTest!public! !
-
-!EvaluationConverterTest methodsFor!
-
-testWithDates
-	self checkWith: 'Date fromString: ''12 August 1958'''.
-	self checkWith: 'Date today'! !
-!EvaluationConverterTest categoriesFor: #testWithDates!public! !
 
 !GdiplusBitmapTest methodsFor!
 
