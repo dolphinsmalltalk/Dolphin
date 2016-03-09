@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ScintillaStyler subclass: #SmalltalkStyler
 	instanceVariableNames: 'arrayDepth view last inTag stack'
@@ -361,9 +361,7 @@ stylingStartBefore: startInteger in: aScintillaView
 		ifTrue: 
 			[| styleMask |
 			styleMask := aScintillaView styleMaskAt: start.
-			inTag := (aScintillaView styleNamed: #tag) 
-						ifNil: [false]
-						ifNotNil: [:style | style id = (styleMask bitAnd: aScintillaView maxStyle)].
+			inTag := (aScintillaView styleNamed: #tag) ifNil: [false] ifNotNil: [:style | style id = styleMask].
 			start]
 		ifFalse: 
 			["If the start token is inside a literal array, we must start styling from

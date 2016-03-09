@@ -819,8 +819,8 @@ Presenter subclass: #SmalltalkSearchPresenter
 	poolDictionaries: 'ScintillaConstants'
 	classInstanceVariableNames: ''!
 Presenter subclass: #SmalltalkWorkspace
-	instanceVariableNames: 'evaluationContext errorModel findDetails workspacePool evaluationPools compilationErrors textStyles searchEnvironment modifiedModel flags'
-	classVariableNames: 'Abbreviations AnnotationMode AutoCompleteDwell AutoCompleteMask DefaultBackcolor DefaultCaretColor DefaultFont DefaultTabWidth IsAutoCompletionCaseInsensitive IsAutoCompletionEnabled IsAutoCompletionSpaceAdded IsAutoCompletionTruncating KeywordCompletions MaxAutoCompletionListSize StandardUnaryReturnTypes TextStyles VariableTipsMask WordWrap WrapIndentMode'
+	instanceVariableNames: 'evaluationContext errorModel findDetails workspacePool evaluationPools compilationErrors textStyles searchEnvironment modifiedModel flags indicatorStyles'
+	classVariableNames: 'Abbreviations AnnotationMode AutoCompleteDwell AutoCompleteMask DefaultBackcolor DefaultCaretColor DefaultFont DefaultTabWidth IndicatorStyles IsAutoCompletionCaseInsensitive IsAutoCompletionEnabled IsAutoCompletionSpaceAdded IsAutoCompletionTruncating KeywordCompletions MaxAutoCompletionListSize StandardUnaryReturnTypes TextStyles VariableTipsMask WordWrap WrapIndentMode'
 	poolDictionaries: 'CompilerFlags ScintillaConstants'
 	classInstanceVariableNames: 'additionalAccelerators commandQueryHandlers'!
 Presenter subclass: #TwinLevelInspector
@@ -4128,7 +4128,7 @@ publishedAspectsOfInstances
 publishedAspects
 	"Answer a <LookupTable> of the <Aspect>s published by the receiver."
 
-	| createPresenter |
+	| createPresenter indicStyles |
 	createPresenter := 
 			[:p :m | 
 			(ScintillaStylesCollectionPresenter 
@@ -4141,6 +4141,7 @@ publishedAspects
 							yourself);
 				normalStyle: (self styleNamed: #normal);
 				yourself].
+	indicStyles := indicatorStyles keys asSortedCollection.
 	^(super publishedAspects)
 		add: (Aspect name: #textStyles presenterBlock: createPresenter) beImmutable;
 		add: (Aspect name: #annotationStyles presenterBlock: createPresenter) beImmutable;

@@ -169,7 +169,6 @@ isUnderText
 	^under!
 
 isUnderText: aBoolean 
-self halt.
 	under := aBoolean asBoolean.
 	self updateViewAttribute: #isUnderText!
 

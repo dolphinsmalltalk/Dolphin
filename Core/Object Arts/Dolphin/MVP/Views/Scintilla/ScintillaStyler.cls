@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #ScintillaStyler
 	instanceVariableNames: ''
@@ -65,10 +65,9 @@ stylingStartBefore: startInteger in: aScintillaView
 	token so that we may kick off the lexer from its start state. We are more interested in
 	speed than elegance here."
 
-	| prev mask |
+	| prev |
 	startInteger <= 1 ifTrue: [^1].
 	prev := startInteger - 1.
-	mask := aScintillaView maxStyle.
 	(aScintillaView styleNamed: #whitespace) 
 		ifNil: 
 			["No whitespace style, so must look for whitespace characters in the #normal style"
@@ -76,22 +75,20 @@ stylingStartBefore: startInteger in: aScintillaView
 			white := aScintillaView whitespaces.
 			
 			[prev > 0 and: 
-					[((aScintillaView styleMaskAt: prev) bitAnd: mask) == 0 
+					[(aScintillaView styleMaskAt: prev) == 0 
 						and: [white identityIncludes: (aScintillaView characterAt: prev)]]] 
 					whileTrue: [prev := prev - 1].
 			
 			[prev == 0 or: 
-					[((aScintillaView styleMaskAt: prev) bitAnd: mask) == 0 
+					[(aScintillaView styleMaskAt: prev) == 0 
 						and: [white identityIncludes: (aScintillaView characterAt: prev)]]] 
 					whileFalse: [prev := prev - 1]]
 		ifNotNil: 
 			[:style | 
 			| id |
 			id := style id.
-			[prev > 0 and: [((aScintillaView styleMaskAt: prev) bitAnd: mask) == id]] 
-				whileTrue: [prev := prev - 1].
-			[prev == 0 or: [((aScintillaView styleMaskAt: prev) bitAnd: mask) == id]] 
-				whileFalse: [prev := prev - 1]].
+			[prev > 0 and: [(aScintillaView styleMaskAt: prev) == id]] whileTrue: [prev := prev - 1].
+			[prev == 0 or: [(aScintillaView styleMaskAt: prev) == id]] whileFalse: [prev := prev - 1]].
 	^prev + 1! !
 !ScintillaStyler categoriesFor: #blockSize!constants!private! !
 !ScintillaStyler categoriesFor: #colorText:in:startingAt:!operations!private! !

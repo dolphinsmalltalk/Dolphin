@@ -1,7 +1,7 @@
 "Filed out from Dolphin Smalltalk 7"!
 
 MultilineTextEdit subclass: #ScintillaView
-	instanceVariableNames: 'this currentTextStyles styleIdMap styler markerDefinitions markers wordChars styleMask modificationEventMask autoCStops autoCFillups whitespaceBackcolor whitespaceForecolor selectionBackcolor selectionForecolor indicators callTipTabWidth punctuation callTipHighlightColor braceChars whitespaces scFlags allTextStyles foldMarginColor foldMarginHiColor foldMarkerStyle foldFlags extraStyleBits keyBindings indicatorStyles secondarySelectionForecolor secondarySelectionBackcolor annotationStyles _unused50'
+	instanceVariableNames: 'this currentTextStyles styleIdMap styler markerDefinitions markers wordChars _unused24 modificationEventMask autoCStops autoCFillups whitespaceBackcolor whitespaceForecolor selectionBackcolor selectionForecolor indicators callTipTabWidth punctuation callTipHighlightColor braceChars whitespaces scFlags allTextStyles foldMarginColor foldMarginHiColor foldMarkerStyle foldFlags _unused44 keyBindings indicatorStyles secondarySelectionForecolor secondarySelectionBackcolor annotationStyles _unused50'
 	classVariableNames: 'AnnotationStylesOffset BackgroundDwellEvents BraceHilightingMask CodePages DefaultCallTipTabWidth DefaultKeyBindings DefaultTextStyles FoldingMask MarginStylesOffset ScnMap'
 	poolDictionaries: 'ScintillaConstants Win32Constants'
 	classInstanceVariableNames: ''!
@@ -547,10 +547,10 @@ autoCompletionSeparator: aCharacter
 autoCompletionSortMode
 	"Answer the <Character> used as the separator between entries in an auto-completion list <String>."
 
-	^self autoCompletionSortModes at: self sciAutoCGetOrder + 1!
+	^self class autoCompletionSortModes at: self sciAutoCGetOrder + 1!
 
 autoCompletionSortMode: aSymbol 
-	^self sciAutoCSetOrder: (self autoCompletionSortModes indexOf: aSymbol) - 1!
+	^self sciAutoCSetOrder: (self class autoCompletionSortModes indexOf: aSymbol) - 1!
 
 backcolorChanged
 	"Private - Note we don't supersend, because we don't need to invalidate on changing colours
@@ -776,7 +776,7 @@ buildAnnotationStyles: aCollection
 					self assert: [id > offset].
 					allocatedStyles add: id]].
 	"Note that we always leave the first allocation style with the same setup as the normal text style style"
-	availableStyles := ((offset + 1 to: offset + self maxStyle - 1) difference: allocatedStyles) 
+	availableStyles := ((offset + 1 to: offset + 255 - 1) difference: allocatedStyles) 
 				readStream.
 	newStylesByName := IdentityDictionary new: count.
 	aCollection do: 
@@ -1446,7 +1446,7 @@ decodeStyledText: aByteArray
 	[stream atEnd] whileFalse: 
 			[| char style |
 			char := stream next.
-			style := stream next bitAnd: self maxStyle.
+			style := stream next.
 			(style == wsStyle and: [wsStyle ~~ 0 or: [ws identityIncludes: char]]) 
 				ifTrue: [lastStyle := nil]
 				ifFalse: 
@@ -2271,26 +2271,6 @@ extraDescent: extraDescentInteger
 				wParam: extraDescentInteger
 				lParam: 0]!
 
-extraStyleBits
-	"Style-byte indicators should no longer be used."
-
-	#deprecated.
-	^extraStyleBits!
-
-extraStyleBits: anInteger 
-	"Style-byte indicators should no longer be used. Lexers/stylers can use indicators from the
-	reserved range, 0..7, for marking regions of text independently of other styling
-	information."
-
-	#deprecated.
-	(anInteger between: 0 and: 8 - self styleBits) 
-		ifFalse: [self error: 'Invalid number of extra style bits'].
-	extraStyleBits := anInteger.
-	self hideExtraIndicators!
-
-extraStyleMask
-	^16r700 >> extraStyleBits bitAnd: 16rFF!
-
 find: aFindDetails range: anInterval 
 	"Private - Find the first occurrence of aString in the text of the receiver within the range rangeInterval."
 
@@ -2623,19 +2603,6 @@ hasVisibleLineEndings: visibleBoolean
 				wParam: visibleBoolean asParameter
 				lParam: 0]!
 
-hideExtraIndicators
-	| indics |
-	this ifNil: [^self].
-	indics := 8 - self styleBits.	"Make any indicators coinciding with the extra style bits invisible."
-	indics - extraStyleBits to: indics - 1
-		do: 
-			[:each | 
-			ScintillaLibrary default 
-				directFunction: this
-				msg: SCI_INDICSETSTYLE
-				wParam: each
-				lParam: INDIC_HIDDEN]!
-
 hideIndicators
 	"Private - Reconfigure all indicator styles to hidden apart from the default 3 pre-configured styles."
 
@@ -2872,20 +2839,17 @@ initialize
 	super initialize.
 	markerDefinitions := self defaultMarkerDefinitions.
 	markers := IdentitySet new.
-	styleMask := 31.
 	allTextStyles := IdentityDictionary new.
 	styles := self class defaultTextStyles.
 	self setCurrentTextStyles: styles.
 	selectionBackcolor := Color gray.
-	scFlags := 0.
-	extraStyleBits := 0!
+	scFlags := 0!
 
 initializeControl
 	"Private - Prime the Scintilla control with any settings stored in instance variables that
 	differ from the defaults."
 
 	self sciSetModEventMask: self modificationEventMask.
-	self sciGetStyleBits = self styleBits ifFalse: [self sciSetStyleBits: self styleBits].
 	"Not necessary.
 		self sciUsePopup: false asParameter."
 	self setCallTipTabWidth.
@@ -3926,11 +3890,11 @@ maxCompletionListWidth: characterCountInteger
 				lParam: 0]!
 
 maxStyle
-	"Answer the maximum usable style index. From Scintilla 1.75 all 8-bits can now be used for
-	style bits with 0 for indicators, so this is normally 255. Styles are numbered from zero, so
-	the limit on the number of styles is maxStyle+1"
+	"Answer the maximum usable style index. From Scintilla 3.43 all 8-bits are always used for
+	styles, so this is always 255."
 
-	^styleMask!
+	#deprecated.
+	^255!
 
 modificationEventMask
 	"Answer the <integer> notification event mask that controls the SCN_MODIFIED notifications that 
@@ -4693,10 +4657,8 @@ removeSelections
 removeStylingFrom: startInteger to: stopInteger 
 	"Remove any styling from the specified range of text."
 
-	"ensure: [self sciSetLayoutCache: mode]"
-
-	self sciStartStyling: startInteger - 1 mask: self restyleMask.
-	self styleNext: (stopInteger - startInteger) + 1 mask: 0!
+	self sciStartStyling: startInteger - 1 mask: 16rFF.
+	self styleNext: stopInteger - startInteger + 1 mask: 0!
 
 replaceTarget: aString 
 	"Replace the receiver's current target range with the plain text represented by the <String>
@@ -4733,9 +4695,6 @@ restyleFrom: startInteger to: stopInteger
 
 	true ifTrue: [self startStylingFrom: startInteger].
 	self sciColourise: startInteger - 1 end: stopInteger - 1!
-
-restyleMask
-	^styleMask bitOr: self extraStyleMask!
 
 rotateSelection
 	"Set the main selection to the next selection."
@@ -6533,30 +6492,6 @@ sciGetSelectionStart
 				wParam: 0
 				lParam: 0]!
 
-sciGetStyleBits
-	"Private - Retrieve number of bits in style bytes used to hold the lexical state."
-
-	^this isNil 
-		ifTrue: [0]
-		ifFalse: 
-			[ScintillaLibrary default 
-				directFunction: this
-				msg: SCI_GETSTYLEBITS
-				wParam: 0
-				lParam: 0]!
-
-sciGetStyleBitsNeeded
-	"Private - Retrieve the number of bits the current lexer needs for styling."
-
-	^this isNil 
-		ifTrue: [0]
-		ifFalse: 
-			[ScintillaLibrary default 
-				directFunction: this
-				msg: SCI_GETSTYLEBITSNEEDED
-				wParam: 0
-				lParam: 0]!
-
 sciGetStyledText: trTEXTRANGE 
 	"Private - Retrieve a buffer of cells. Returns the number of bytes in the buffer not
 	including terminating NULs."
@@ -8306,19 +8241,6 @@ sciSetSelFore: useSettingBoolean fore: foreRGB
 				wParam: useSettingBoolean asParameter
 				lParam: foreRGB asParameter]!
 
-sciSetStyleBits: bitsInteger 
-	"Private - Divide each styling byte into lexical class bits (default: 5) and indicator bits
-	(default: 3). If a lexer requires more than 32 lexical states, then this is used to expand
-	the possible states."
-
-	this isNil 
-		ifFalse: 
-			[ScintillaLibrary default 
-				directFunction: this
-				msg: SCI_SETSTYLEBITS
-				wParam: bitsInteger
-				lParam: 0]!
-
 sciSetStylingEx: lengthInteger styles: stylesString 
 	"Private - Set the styles for a segment of the document."
 
@@ -9400,10 +9322,10 @@ setCurrentTextStyles: aCollection
 	count := aCollection size.
 	allocatedStyles := OrderedCollection new: count.
 	aCollection do: [:each | each basicId ifNotNil: [:id | allocatedStyles add: id]].
-	availableStyles := ((1 to: STYLE_DEFAULT - 1) , (STYLE_LASTPREDEFINED + 1 to: self maxStyle) 
+	availableStyles := ((1 to: STYLE_DEFAULT - 1) , (STYLE_LASTPREDEFINED + 1 to: 255) 
 				difference: allocatedStyles) readStream.
 	newStylesByName := IdentityDictionary new: count.
-	newStylesById := Array new: (STYLE_LASTPREDEFINED max: self maxStyle) + 1.
+	newStylesById := Array new: (STYLE_LASTPREDEFINED max: 255) + 1.
 	aCollection do: 
 			[:each | 
 			each basicId isNil ifTrue: [each basicId: availableStyles next].
@@ -9483,7 +9405,7 @@ setIndicatorStyles: aCollection
 			[:each | 
 			each basicId isNil 
 				ifTrue: 
-					[availableStyles atEnd ifTrue: [^self error: 'Too many styles'].
+					[availableStyles atEnd ifTrue: [self error: 'Too many styles'].
 					each basicId: availableStyles next].
 			newStylesByName at: each name put: each].
 	indicatorStyles := newStylesByName.
@@ -9671,7 +9593,7 @@ startRecording
 startStylingFrom: anInteger 
 	"Set the current styling position to the one-based <integer> index argument."
 
-	self sciStartStyling: anInteger - 1 mask: self restyleMask!
+	self sciStartStyling: anInteger - 1 mask: 16rFF!
 
 state
 	"Private - Answer a <MessageSequence> which, when replayed, will restore the receiver 
@@ -9736,23 +9658,13 @@ styleAt: anInteger
 	^self styleWithId: (self styleIdAt: anInteger)!
 
 styleBits
-	"Answer the number of bits available for text styles. See #styleBits for further
-	information."
+	"Answer the number of bits available for text styles. This is now always 8."
 
-	^styleMask highBit!
+	#deprecated.
+	^8!
 
 styleBits: anInteger 
-	"Set the number of bits available for text styles. Originally this defaulted to 5 giving a
-	total of 32 user configurable styles, allowing 3 bits for indicators. With the advent of
-	modern indicators (which are stored separately from styles) all 8 bits are available for
-	styles."
-
-	(anInteger between: 1 and: 8) ifFalse: [self error: 'Invalid number of style bits'].
-	self styleBits = anInteger ifTrue: [^self].
-	styleMask := (1 << anInteger) - 1.
-	self sciSetStyleBits: anInteger.
-	"Changing the number of style bits necessitates recreating the control, else the text pane will just go black"
-	self recreate!
+	#deprecated	"This is ignored by Scintilla now, which no longer supports style byte indicators"!
 
 styledTextFrom: startInteger to: stopInteger 
 	"Private - Answer a <ByteArray> containing pairs of bytes that represent the character and
@@ -9774,7 +9686,7 @@ styledTextFrom: startInteger to: stopInteger
 	^bytes!
 
 styleIdAt: anInteger 
-	^(self styleMaskAt: anInteger) bitAnd: styleMask!
+	^self styleMaskAt: anInteger!
 
 styleMaskAt: anInteger 
 	"Inlined to minimize overhead when scanning text for the start of a style."
@@ -10132,7 +10044,14 @@ updateIndicators
 
 updateIndicatorStyles
 	self hideIndicators.
-	indicatorStyles ifNotNil: [:indics | indics do: [:each | each applyToView: self at: each basicId]]!
+	indicatorStyles ifNil: [^self].
+	indicatorStyles do: [:each | each applyToView: self at: each basicId].
+	(indicatorStyles at: #braceHighlight ifAbsent: []) 
+		ifNil: [self sciBraceHighlightIndicator: false indicator: 0]
+		ifNotNil: [:indic | self sciBraceHighlightIndicator: true indicator: indic basicId].
+	(indicatorStyles at: #braceMismatch ifAbsent: []) 
+		ifNil: [self sciBraceBadLightIndicator: false indicator: 0]
+		ifNotNil: [:indic | self sciBraceBadLightIndicator: true indicator: indic basicId]!
 
 updateKeyBindings
 	"Private - Update the control with the key bindings configured for the receiver, replacing
@@ -10309,20 +10228,22 @@ wmKeyDown: message wParam: wParam lParam: lParam
 	Note also that we must accept VK_RETURN if it is being used to dismiss an auto completetion
 	box."
 
-	(wParam == VK_RETURN and: [self wantReturn not & self isAutoCompletionActive not]) 
+	(wParam == VK_RETURN and: [self wantReturn not and: [self isAutoCompletionActive not]]) 
 		ifTrue: 
-			[| shell defId |
+			[| shell |
 			shell := self topShell view.
-			defId := shell getItemHandle: shell defaultButtonId
-						ifAbsent: 
-							[^super 
-								wmKeyDown: message
-								wParam: wParam
-								lParam: lParam].
-			shell 
-				sendMessage: WM_COMMAND
-				wParam: BN_CLICKED << 16 | shell defaultButtonId
-				lParam: defId.
+			(shell getItemHandle: shell defaultButtonId ifAbsent: []) 
+				ifNil: 
+					[^super 
+						wmKeyDown: message
+						wParam: wParam
+						lParam: lParam]
+				ifNotNil: 
+					[:defId | 
+					shell 
+						sendMessage: WM_COMMAND
+						wParam: BN_CLICKED << 16 | shell defaultButtonId
+						lParam: defId].
 			^0	"Suppress default processing"].
 	^super 
 		wmKeyDown: message
@@ -10670,9 +10591,6 @@ zoomOut
 !ScintillaView categoriesFor: #extraAscent:!**auto generated**!accessing!public!scintilla interface! !
 !ScintillaView categoriesFor: #extraDescent!**auto generated**!accessing!public!scintilla interface! !
 !ScintillaView categoriesFor: #extraDescent:!**auto generated**!accessing!public!scintilla interface! !
-!ScintillaView categoriesFor: #extraStyleBits!accessing!public!style definition! !
-!ScintillaView categoriesFor: #extraStyleBits:!accessing!public!style definition! !
-!ScintillaView categoriesFor: #extraStyleMask!accessing!private! !
 !ScintillaView categoriesFor: #find:range:!private!searching & replacing! !
 !ScintillaView categoriesFor: #find:range:flags:!public!searching & replacing! !
 !ScintillaView categoriesFor: #findAutoCompletionEntry:!**auto generated**!autocompletion!public!scintilla interface! !
@@ -10713,7 +10631,6 @@ zoomOut
 !ScintillaView categoriesFor: #hasLineNumbers:!accessing!commands!margins!public! !
 !ScintillaView categoriesFor: #hasVisibleLineEndings!**auto generated**!accessing!line endings!public!scintilla interface!testing! !
 !ScintillaView categoriesFor: #hasVisibleLineEndings:!**auto generated**!accessing!line endings!public!scintilla interface!testing! !
-!ScintillaView categoriesFor: #hideExtraIndicators!helpers!private! !
 !ScintillaView categoriesFor: #hideIndicators!helpers!indicators!private! !
 !ScintillaView categoriesFor: #hideSelection:!**auto generated**!public!scintilla interface!selection! !
 !ScintillaView categoriesFor: #highlightBracesAt:and:!brace highlighting!public! !
@@ -10928,7 +10845,6 @@ zoomOut
 !ScintillaView categoriesFor: #resetZoom!commands!public!zooming! !
 !ScintillaView categoriesFor: #restyleAll!public!styling! !
 !ScintillaView categoriesFor: #restyleFrom:to:!public!styling! !
-!ScintillaView categoriesFor: #restyleMask!accessing!constants!private!styling! !
 !ScintillaView categoriesFor: #rotateSelection!**auto generated**!commands!public!scintilla interface!selection! !
 !ScintillaView categoriesFor: #sciAddRefDocument:!**auto generated**!multiple views!private!scintilla interface! !
 !ScintillaView categoriesFor: #sciAddSelection:anchor:!**auto generated**!private!scintilla interface!selection! !
@@ -11078,8 +10994,6 @@ zoomOut
 !ScintillaView categoriesFor: #sciGetSelectionNEnd:!**auto generated**!accessing!private!scintilla interface!selection! !
 !ScintillaView categoriesFor: #sciGetSelectionNStart:!**auto generated**!accessing!private!scintilla interface!selection! !
 !ScintillaView categoriesFor: #sciGetSelectionStart!**auto generated**!accessing!private!scintilla interface!selection! !
-!ScintillaView categoriesFor: #sciGetStyleBits!**auto generated**!accessing!private!scintilla interface!style definition! !
-!ScintillaView categoriesFor: #sciGetStyleBitsNeeded!**auto generated**!enquiries!lexer!private!scintilla interface! !
 !ScintillaView categoriesFor: #sciGetStyledText:!**auto generated**!accessing!private!scintilla interface!text retrieval & modification! !
 !ScintillaView categoriesFor: #sciGetStyleFromSubStyle:!**auto generated**!private!scintilla interface!style definition! !
 !ScintillaView categoriesFor: #sciGetSubStyleBases!**auto generated**!private!scintilla interface!style definition! !
@@ -11226,7 +11140,6 @@ zoomOut
 !ScintillaView categoriesFor: #sciSetSelectionNEnd:pos:!**auto generated**!private!scintilla interface!selection! !
 !ScintillaView categoriesFor: #sciSetSelectionNStart:pos:!**auto generated**!private!scintilla interface!selection! !
 !ScintillaView categoriesFor: #sciSetSelFore:fore:!**auto generated**!accessing!caret, selection, and hotspot styles!private!scintilla interface! !
-!ScintillaView categoriesFor: #sciSetStyleBits:!**auto generated**!accessing!private!scintilla interface!style definition! !
 !ScintillaView categoriesFor: #sciSetStylingEx:styles:!**auto generated**!accessing!private!scintilla interface!styling! !
 !ScintillaView categoriesFor: #sciSetTargetRange:end:!**auto generated**!private!scintilla interface!selection! !
 !ScintillaView categoriesFor: #sciSetTechnology:!**auto generated**!accessing!private!scintilla interface! !
