@@ -547,10 +547,10 @@ autoCompletionSeparator: aCharacter
 autoCompletionSortMode
 	"Answer the <Character> used as the separator between entries in an auto-completion list <String>."
 
-	^self autoCompletionSortModes at: self sciAutoCGetOrder + 1!
+	^self class autoCompletionSortModes at: self sciAutoCGetOrder + 1!
 
 autoCompletionSortMode: aSymbol 
-	^self sciAutoCSetOrder: (self autoCompletionSortModes indexOf: aSymbol) - 1!
+	^self sciAutoCSetOrder: (self class autoCompletionSortModes indexOf: aSymbol) - 1!
 
 backcolorChanged
 	"Private - Note we don't supersend, because we don't need to invalidate on changing colours
@@ -9483,7 +9483,7 @@ setIndicatorStyles: aCollection
 			[:each | 
 			each basicId isNil 
 				ifTrue: 
-					[availableStyles atEnd ifTrue: [^self error: 'Too many styles'].
+					[availableStyles atEnd ifTrue: [self error: 'Too many styles'].
 					each basicId: availableStyles next].
 			newStylesByName at: each name put: each].
 	indicatorStyles := newStylesByName.
@@ -10132,7 +10132,14 @@ updateIndicators
 
 updateIndicatorStyles
 	self hideIndicators.
-	indicatorStyles ifNotNil: [:indics | indics do: [:each | each applyToView: self at: each basicId]]!
+	indicatorStyles ifNil: [^self].
+	indicatorStyles do: [:each | each applyToView: self at: each basicId].
+	(indicatorStyles at: #braceHighlight ifAbsent: []) 
+		ifNil: [self sciBraceHighlightIndicator: false indicator: 0]
+		ifNotNil: [:indic | self sciBraceHighlightIndicator: true indicator: indic basicId].
+	(indicatorStyles at: #braceMismatch ifAbsent: []) 
+		ifNil: [self sciBraceBadLightIndicator: false indicator: 0]
+		ifNotNil: [:indic | self sciBraceBadLightIndicator: true indicator: indic basicId]!
 
 updateKeyBindings
 	"Private - Update the control with the key bindings configured for the receiver, replacing
@@ -10309,20 +10316,22 @@ wmKeyDown: message wParam: wParam lParam: lParam
 	Note also that we must accept VK_RETURN if it is being used to dismiss an auto completetion
 	box."
 
-	(wParam == VK_RETURN and: [self wantReturn not & self isAutoCompletionActive not]) 
+	(wParam == VK_RETURN and: [self wantReturn not and: [self isAutoCompletionActive not]]) 
 		ifTrue: 
-			[| shell defId |
+			[| shell |
 			shell := self topShell view.
-			defId := shell getItemHandle: shell defaultButtonId
-						ifAbsent: 
-							[^super 
-								wmKeyDown: message
-								wParam: wParam
-								lParam: lParam].
-			shell 
-				sendMessage: WM_COMMAND
-				wParam: BN_CLICKED << 16 | shell defaultButtonId
-				lParam: defId.
+			(shell getItemHandle: shell defaultButtonId ifAbsent: []) 
+				ifNil: 
+					[^super 
+						wmKeyDown: message
+						wParam: wParam
+						lParam: lParam]
+				ifNotNil: 
+					[:defId | 
+					shell 
+						sendMessage: WM_COMMAND
+						wParam: BN_CLICKED << 16 | shell defaultButtonId
+						lParam: defId].
 			^0	"Suppress default processing"].
 	^super 
 		wmKeyDown: message
