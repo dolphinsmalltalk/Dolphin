@@ -33,6 +33,7 @@ objectsToTest
 		add: ArithmeticValue;
 		add: Point;
 		add: Number;
+		add: Point3D;
 		yourself!
 
 testAddRemove
@@ -110,6 +111,74 @@ testHierarchyMove
 	"Tidy up"
 	self treeModel removeAll!
 
+testSelection
+	"Test selection"
+
+	| objects |
+	objects := self objectsToTest.
+	self addAllObjects: objects.
+	objects do: 
+			[:each | 
+			self 
+				should: [presenter selection: each]
+				trigger: #selectionChanged
+				butNot: #selectionChanging:
+				against: presenter.
+			self assert: presenter selection == each].
+	self 
+		should: [presenter resetSelection]
+		trigger: #selectionChanged
+		butNot: #selectionChanging:
+		against: presenter.
+
+	"remove should not upset selection"
+	presenter selection: objects first.
+	self 
+		shouldnt: [self treeModel remove: objects last]
+		triggerAnyOf: #(#selectionChanged #selectionChanging:)
+		against: presenter.
+	self assert: presenter selection == objects first.
+
+	"add should not upset selection"
+	self 
+		shouldnt: [self treeModel add: objects last asChildOf: objects last superclass]
+		triggerAnyOf: #(#selectionChanged #selectionChanging:)
+		against: presenter.
+	self assert: presenter selection == objects first.
+	"remove of selected object should trigger #selectionChanged and leave the parent of the selection selected"
+	(Array 
+		with: Number
+		with: Point3D
+		with: Point
+		with: ArithmeticValue) do: 
+				[:each | 
+				presenter selection: each.
+				self 
+					should: [self treeModel remove: each]
+					trigger: #selectionChanged
+					butNot: #selectionChanging:
+					against: presenter.
+				"If the selected object has siblings, the next of those should be selected, if not the parent"
+				presenter selection = each superclass 
+					ifTrue: 
+						["Parent selected, should be no remaining siblings"
+						self assert: (self treeModel childrenOf: presenter selection) isEmpty]
+					ifFalse: [self assert: presenter selection superclass = each superclass]].
+
+	"No selection tests"
+	objects do: [:each | self treeModel add: each asChildOf: each superclass].
+	objects do: 
+			[:each | 
+			presenter selection: each.
+			self 
+				should: [presenter resetSelection]
+				trigger: #selectionChanged
+				butNot: #selectionChanging:
+				against: presenter.
+			self assert: presenter selectionOrNil isNil.
+			self should: [presenter selection] raise: Error].
+	self treeModel removeAll!
+
 testSelectionChangeTriggeredOnRemove
 	self addRoot: #a.
 	self addRoot: #b.
@@ -164,6 +233,7 @@ treeModel
 !SelectableTreeItemsTest categoriesFor: #objectsToTest!helpers!private! !
 !SelectableTreeItemsTest categoriesFor: #testAddRemove!public!unit tests! !
 !SelectableTreeItemsTest categoriesFor: #testHierarchyMove!public!unit tests! !
+!SelectableTreeItemsTest categoriesFor: #testSelection!public!unit tests! !
 !SelectableTreeItemsTest categoriesFor: #testSelectionChangeTriggeredOnRemove!public!unit tests! !
 !SelectableTreeItemsTest categoriesFor: #testSetImageBlockDoesNotAffectSelection!public!unit tests! !
 !SelectableTreeItemsTest categoriesFor: #testSetTextBlockDoesNotAffectSelection!public!unit tests! !

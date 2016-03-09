@@ -1227,9 +1227,8 @@ testRemoveSelection
 	self assert: treeView selection = 'C'.
 	"Remove selected last child"
 	treeModel remove: 'C'.
-	"Selection moves up to parent"
-	self assert: treeView selection = 'ROOT2'.
-	treeView selection: 'A'.
+	"Selection moves to prev sibling"
+	self assert: treeView selection = 'A'.
 	"Remove first child"
 	treeModel remove: 'A'.
 	"Selection moves to parent"

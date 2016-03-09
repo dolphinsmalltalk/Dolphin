@@ -15,7 +15,6 @@ package methodNames
 	add: #PackageSelectorTest -> #testPackageCreationDoesntAlterSelection;
 	add: #PackageSelectorTest -> #testPackageRemovalDoesntAlterSelection;
 	add: #PackageTest -> #testImageStripperPrereqs;
-	add: #SelectableTreeItemsTest -> #testSelection;
 	add: #StyledContainerTest -> #test1PixDottedBorderPaint;
 	add: #StyledContainerTest -> #test1PixDottedBorderPrint;
 	add: #ViewComposerTest -> #testResizeDoesNotMove;
@@ -192,69 +191,6 @@ testImageStripperPrereqs
 	self assert: ((Package manager packageNamed: 'Autoplay') prerequisiteNames asArray 
 				includes: 'Lagoon Image Stripper')! !
 !PackageTest categoriesFor: #testImageStripperPrereqs!public!unit tests! !
-
-!SelectableTreeItemsTest methodsFor!
-
-testSelection
-	"Test selection"
-
-	| objects |
-	objects := self objectsToTest.
-	self addAllObjects: objects.
-	objects do: 
-			[:each | 
-			self 
-				should: [presenter selection: each]
-				trigger: #selectionChanged
-				butNot: #selectionChanging:
-				against: presenter.
-			self assert: presenter selection == each].
-	self 
-		should: [presenter resetSelection]
-		trigger: #selectionChanged
-		butNot: #selectionChanging:
-		against: presenter.
-
-	"remove should not upset selection"
-	presenter selection: objects first.
-	self 
-		shouldnt: [self treeModel remove: objects last]
-		triggerAnyOf: #(#selectionChanged #selectionChanging:)
-		against: presenter.
-	self assert: presenter selection == objects first.
-
-	"add should not upset selection"
-	self 
-		shouldnt: [self treeModel add: objects last asChildOf: objects last superclass]
-		triggerAnyOf: #(#selectionChanged #selectionChanging:)
-		against: presenter.
-	self assert: presenter selection == objects first.
-
-	"remove of selected object should trigger #selectionChanged and leave the parent of the selection selected"
-	(Array with: objects last) do: 
-			[:each | 
-			presenter selection: each.
-			self 
-				should: [self treeModel remove: each]
-				trigger: #selectionChanged
-				butNot: #selectionChanging:
-				against: presenter.
-			self assert: presenter selection = each superclass].
-
-	"No selection tests"
-	objects do: [:each | self treeModel add: each asChildOf: each superclass].
-	objects do: 
-			[:each | 
-			presenter selection: each.
-			self 
-				should: [presenter resetSelection]
-				trigger: #selectionChanged
-				butNot: #selectionChanging:
-				against: presenter.
-			self assert: presenter selectionOrNil isNil.
-			self should: [presenter selection] raise: Error].
-	self treeModel removeAll! !
-!SelectableTreeItemsTest categoriesFor: #testSelection!public!unit tests! !
 
 !StyledContainerTest methodsFor!
 
