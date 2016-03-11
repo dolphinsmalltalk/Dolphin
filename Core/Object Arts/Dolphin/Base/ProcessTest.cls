@@ -327,7 +327,7 @@ testCopyExceptionHandlers
 	Trace
 		display: Processor activeProcess id printString , ': 5 ' , String lineDelimiter;
 		flush.
-	self waitForProcess: (shared at: #copyProcess) toTerminate: 50.
+	self waitForProcess: (shared at: #copyProcess) toTerminate: 500.
 	Trace
 		display: Processor activeProcess id printString , ': 6 ' , String lineDelimiter;
 		flush.
