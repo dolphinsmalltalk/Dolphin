@@ -180,13 +180,13 @@ struct VMPointers //: public Object
 	HandleOTE* WakeupEvent;								// 125 - Handle of Win32 Event object
 	ArrayOTE* VMReferences;								// 126 - Created after loading bootstrap image (i.e. not in the bootstrap image)
 
-	// 127..150											// N.B. If changed then boot image must be modified (see MSTOop.h, etc)
+	// 127..150
 
 	HandleOTE* MsgWndHandle;							// 127
 	BehaviorOTE* ClassIDispatch;						// 128 - POTE of Semaphore currently in use by timer
-	Oop  ImageVersionMajor;								// 129 - MS word of image version
-	Oop	 ImageVersionMinor;								// 130 - LS word of image version
-	Oop _unused131;										// 131
+	Oop ImageVersionMajor;								// 129 - MS word of image version
+	Oop	ImageVersionMinor;								// 130 - LS word of image version
+	Oop InterruptHotKey;								// 131 - HOTKEYF_XXX|VK_XXX value to be used for interrupt key, e.g. Ctrl+Break = VK_CANCEL
 	HandleOTE* CRTHandle;								// 132 - Handle of CRT library linked with the VM.
 	MemManOTE* MemoryManager;							// 133 - Current memory manager object
 

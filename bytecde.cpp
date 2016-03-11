@@ -15,6 +15,8 @@
 #include "Interprt.h"
 #include <winerror.h>
 #include <wtypes.h>
+#include <CommCtrl.h>
+
 #include "rc_vm.h"
 #include "InterprtProc.inl"
 #include "VMExcept.h"
@@ -110,7 +112,7 @@ inline BOOL Interpreter::sampleInput()
 			// running at full tilt it will prevent the idler from signalling
 			// the input semaphore itself.
 			asynchronousSignal(Pointers.InputSemaphore);
-			if (::GetAsyncKeyState(VK_CANCEL) & 0x8001)
+			if (GetUserInterruptRequested())
 			{
 				#ifdef _DEBUG
 					WarningWithStackTrace("User Interrupt:");
@@ -144,6 +146,33 @@ inline BOOL Interpreter::sampleInput()
 
 #pragma code_seg(INTERP_SEG)
 
+bool Interpreter::GetUserInterruptRequested()
+{
+	// Note that we want to call GetAsyncKeyState for each key to clear the state
+	// so we don't want to early out just because one of the required keys has not
+	// been pressed.
+
+	int hotkey = integerValueOf(Pointers.InterruptHotKey);
+	int vk = hotkey & 0xFF;
+	bool interrupt = (::GetAsyncKeyState(vk) & 0x8001) != 0;
+	int modifiers = (hotkey & 0xFF00) >> 8;
+	if (modifiers != 0)
+	{
+		if (modifiers & HOTKEYF_SHIFT)
+		{
+			interrupt &= (::GetAsyncKeyState(VK_SHIFT) & 0x8001) != 0;
+		}
+		if (modifiers & HOTKEYF_CONTROL)
+		{
+			interrupt &= (::GetAsyncKeyState(VK_CONTROL) & 0x8001) != 0;
+		}
+		if (modifiers & HOTKEYF_ALT)
+		{
+			interrupt &= (::GetAsyncKeyState(VK_MENU) & 0x8001) != 0;
+		}
+	}
+	return interrupt;
+}
 BOOL __stdcall Interpreter::BytecodePoll()
 {
 	if (m_nInputPollCounter <= 0 && !m_bStepping)
