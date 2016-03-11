@@ -260,128 +260,8 @@ testPackages
 		with: DolphinTestPackages current b
 		with: DolphinTestPackages current c!
 
-testPacTimestampUpdate
-	| a stamp stream text warned |
-	a := DolphinTestPackages current a.
-	self deny: a isUsingPAX.
-	self deny: a isRenegade.
-	2 timesRepeat: 
-			[stamp := a timestamp.
-			warned := false.
-			self waitForFileSystemClockTick.
-			self assert: ([a save] on: Warning
-						do: 
-							[:ex | 
-							warned := true.
-							false]).
-			self deny: warned.
-			self deny: a isUsingPAX.
-			self deny: a isRenegade.
-			self assert: a timestamp asInteger > stamp asInteger].
-	stream := FileStream read: a packageFileName text: true.
-	text := stream contents.
-	stream close.
-	self deny: a isRenegade.
-	self waitForFileSystemClockTick.
-	stream := FileStream write: a packageFileName text: true.
-	stream nextPutAll: text.
-	stream close.
-	self assert: a isRenegade.
-	self deny: ([a save] on: Warning do: [:ex | false]).
-	self assert: a isRenegade.
-	warned := false.
-	self assert: ([a save] on: Warning
-				do: 
-					[:ex | 
-					warned := true.
-					ex resume]).
-	self assert: warned.
-	self deny: a isRenegade.
-	warned := false.
-	self assert: ([a save] on: Warning
-				do: 
-					[:ex | 
-					warned := true.
-					false]).
-	self deny: warned.
-	"Finally remove and reinstall it"
-	a uninstall.
-	a := (Package manager install: a packageFileName) first.
-	self assert: a name = 'A'.
-	self deny: a isRenegade!
-
-testPaxTimestampUpdate
-	| b stamp stream text warned |
-	b := DolphinTestPackages current b.
-	self deny: b isRenegade.
-	b fileOutAll.
-	self assert: b isUsingPAX.
-	self deny: b isRenegade.
-	2 timesRepeat: 
-			[stamp := b timestamp.
-			warned := false.
-			self waitForFileSystemClockTick.
-			self assert: ([b save] on: Warning
-						do: 
-							[:ex | 
-							warned := true.
-							false]).
-			self deny: warned.
-			self assert: b isUsingPAX.
-			self deny: b isRenegade.
-			self assert: b timestamp asInteger > stamp asInteger].
-	stream := FileStream read: b fileOutName text: true.
-	text := stream contents.
-	stream close.
-	self deny: b isRenegade.
-	self waitForFileSystemClockTick.
-	stream := FileStream write: b fileOutName text: true.
-	stream nextPutAll: text.
-	stream close.
-	self assert: b isRenegade.
-	self deny: ([b save] on: Warning do: [:ex | false]).
-	self assert: b isRenegade.
-	warned := false.
-	self assert: ([b save] on: Warning
-				do: 
-					[:ex | 
-					warned := true.
-					ex resume]).
-	self assert: warned.
-	self deny: b isRenegade.
-	warned := false.
-	self assert: ([b save] on: Warning
-				do: 
-					[:ex | 
-					warned := true.
-					false]).
-	self deny: warned.
-	"Finally remove and reinstall it"
-	b uninstall.
-	b := (Package manager install: b fileOutName) first.
-	self assert: b name = 'B'.
-	self deny: b isRenegade!
-
 testTimestampInitialized
-	self assert: Package new timestamp asInteger = 0!
-
-waitForFileSystemClockTick
-	"Some files systems have larger granularity than 100 nanoseconds.
-	We use the image to guess the actual delay required."
-
-	| x y z |
-	x := (File lastWriteTime: SessionManager current imagePath , '.img7') asInteger.
-	y := x \\ 10000.		"remainder will eventually be non-zero"
-	x := x // 10000.	"adjusted time"
-	z := 0.			"needed delay"
-	[0 < x and: [y == 0 and: [z < 10000]]] whileTrue: [
-		z := z * 10 max: 1.
-		y := x \\ 10.
-		x := x // 10.
-	].
-	z := (z max: 10) min: 2000.	"wait at least 10 ms, but not more than 2 seconds"
-	(Delay forMilliseconds: z) wait.
-! !
+	self assert: Package new timestamp asInteger = 0! !
 !PackageTest categoriesFor: #checkNoTestPackageContents!private!unit tests! !
 !PackageTest categoriesFor: #checkTestPackageContents!private!unit tests! !
 !PackageTest categoriesFor: #d5ForwardRefTestPacContents!private!unit tests! !
@@ -398,10 +278,7 @@ waitForFileSystemClockTick
 !PackageTest categoriesFor: #testLoad60Pac!public!unit tests! !
 !PackageTest categoriesFor: #testLoad60Pax!public!unit tests! !
 !PackageTest categoriesFor: #testPackages!public!unit tests! !
-!PackageTest categoriesFor: #testPacTimestampUpdate!public!unit tests! !
-!PackageTest categoriesFor: #testPaxTimestampUpdate!public!unit tests! !
 !PackageTest categoriesFor: #testTimestampInitialized!public!unit tests! !
-!PackageTest categoriesFor: #waitForFileSystemClockTick!public!unit tests! !
 
 !PackageTest class methodsFor!
 

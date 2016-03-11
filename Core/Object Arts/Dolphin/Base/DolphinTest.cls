@@ -105,7 +105,7 @@ shouldRaiseZeroDivide: aBlock
 !DolphinTest categoriesFor: #isOnline!public!unit tests! !
 !DolphinTest categoriesFor: #methodContextClass!constants!private! !
 !DolphinTest categoriesFor: #runKnownBug:test:!public!unit tests! !
-!DolphinTest categoriesFor: #setUp!public! !
+!DolphinTest categoriesFor: #setUp!public!Running! !
 !DolphinTest categoriesFor: #shouldRaiseZeroDivide:!Accessing!public! !
 
 !DolphinTest class methodsFor!
