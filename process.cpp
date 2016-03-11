@@ -1708,7 +1708,7 @@ BOOL __fastcall Interpreter::primitiveSampleInterval()
 	ResetInputPollCounter();
 
 	// And ensure pressed bit of async key state is reset
-	::GetAsyncKeyState(VK_CANCEL);
+	GetUserInterruptRequested();
 
 	popStack();											// Pop the SmallInteger argument
 	replaceStackTopWith(oldInterval);	// Answer the old interval, and return non-zero to succeed
