@@ -686,7 +686,7 @@ runRegressionTests
 	^self runRegressionTests: self regressionTestSuite logTo: self regressionTestsLogFilename!
 
 runRegressionTests: aTestSuite logTo: aFilenameStringOrNil 
-	| results timeMs logStream |
+	| results timeMs |
 	timeMs := Time millisecondsToRun: 
 					[| runner |
 					runner := TestRunner show.
@@ -694,7 +694,8 @@ runRegressionTests: aTestSuite logTo: aFilenameStringOrNil
 					results := runner result].
 	aFilenameStringOrNil notNil 
 		ifTrue: 
-			[logStream := FileStream write: aFilenameStringOrNil.
+			[| logStream |
+			logStream := FileStream write: aFilenameStringOrNil.
 			logStream
 				nextPutAll: (results hasPassed ifTrue: ['PASSED'] ifFalse: ['FAILED']);
 				cr;

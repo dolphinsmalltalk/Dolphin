@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #ClassBuilder
 	instanceVariableNames: 'currentClass className instanceVariables superclass instanceSpec classVariables sharedPools comment flags categories '
@@ -499,11 +499,10 @@ mutateInSitu
 	"Private - Mutate the class being modified without mutating its instances.
 	In fact, we only need to change the superclass."
 
-	self superclassIsBeingChanged 
-		ifTrue: 
-			[currentClass class setSuperclass: (self class classOf: superclass).
-			currentClass setSuperclass: superclass.
-			self recompilationRequired: true]!
+	self superclassIsBeingChanged ifFalse: [^self].
+	currentClass class setSuperclass: (self class classOf: superclass).
+	currentClass setSuperclass: superclass.
+	self recompilationRequired: true!
 
 mutateToNewClass
 	"Private - Set currentClass to a mutation of itself based on the information
@@ -643,14 +642,13 @@ setSharedPoolsOf: aClass
 	"Private - Set the shared pools of aClass to those described by
 	the receiver's sharedPools inst var."
 
-	sharedPools notNil 
-		ifTrue: 
-			[| oldPoolNameSet newPoolNameSet |
-			oldPoolNameSet := aClass sharedPoolNames.
-			aClass setSharedPoolNames: self sharedPools.
-			newPoolNameSet := aClass sharedPoolNames.
-			(oldPoolNameSet intersection: newPoolNameSet) size = oldPoolNameSet size 
-				ifFalse: [self recompilationRequired: true]]!
+	| oldPoolNameSet newPoolNameSet |
+	sharedPools notNil ifFalse: [^self].
+	oldPoolNameSet := aClass sharedPoolNames.
+	aClass setSharedPoolNames: self sharedPools.
+	newPoolNameSet := aClass sharedPoolNames.
+	(oldPoolNameSet intersection: newPoolNameSet) size = oldPoolNameSet size 
+		ifFalse: [self recompilationRequired: true]!
 
 sharedPools
 	"Private - Answer an Array of proposed pool dictionary names."
@@ -708,7 +706,7 @@ updateVMRegistryWith: aClass
 
 	| name |
 	name := aClass name asSymbol.
-	(VMLibrary registryKeys includesKey: name)
+	(VMLibrary default registryKeys includesKey: name)
 		ifTrue: [VMLibrary default registryAt: name put: aClass]!
 
 validateClass
@@ -924,13 +922,12 @@ validateSuperclassForModify
 	"Private - Ensure that no circularity is introduced into the hierarchy and
 	that the superclass of a metaclass is not changed directly."
 
-	self superclassIsBeingChanged
-		ifTrue: [
-			currentClass isMeta
-				ifTrue: [self error: 'It is invalid to directly change the superclass of a metaclass.'].
-			self validateSuperclassIsSubclassable.
-			(superclass notNil and: [superclass isKindOf: currentClass])
-				ifTrue: [self error: superclass name, ' is a subclass of the class being changed.']].!
+	self superclassIsBeingChanged ifFalse: [^self].
+	currentClass isMeta 
+		ifTrue: [self error: 'It is invalid to directly change the superclass of a metaclass.'].
+	self validateSuperclassIsSubclassable.
+	(superclass notNil and: [superclass isKindOf: currentClass]) 
+		ifTrue: [self error: superclass name , ' is a subclass of the class being changed.']!
 
 validateSuperclassIsSubclassable
 	"Private - Ensure that the superclass is a subclassable object."
@@ -1215,11 +1212,6 @@ new
 
 	^super new initialize!
 
-parser
-	"Private - Answer the parser to use for identifier validation."
-
-	^Compiler!
-
 removeClass: aClass 
 	"Remove aClass."
 
@@ -1248,19 +1240,18 @@ validateClassVarName: aString using: aCollection
 		ifFalse: [self error: 'Proposed class variable ''' , aString , ''' is invalid as a local identifier.'].
 	(aCollection includes: aString) 
 		ifTrue: [self error: 'Proposed class variable ''' , aString , ''' is multiply defined.'].
-	aString first isUppercase 
-		ifFalse: 
-			[aString first == $_ 
-				ifTrue: 
-					[^Smalltalk at: #SmalltalkSystem
-						ifPresent: 
-							[:c | 
-							c current isOAD 
-								ifFalse: 
-									[Warning signal: 'Identifiers beginning with an underscore, such as ' , aString 
-												, ', are reserved for system use']]].
-			Warning 
-				signal: 'Proposed class variable ''' , aString , ''' should start with an uppercase letter.']!
+	aString first isUppercase ifTrue: [^self].
+	aString first == $_ 
+		ifTrue: 
+			[^Smalltalk at: #SmalltalkSystem
+				ifPresent: 
+					[:c | 
+					c current isOAD 
+						ifFalse: 
+							[Warning signal: 'Identifiers beginning with an underscore, such as ' , aString 
+										, ', are reserved for system use']]].
+	Warning 
+		signal: 'Proposed class variable ''' , aString , ''' should start with an uppercase letter.'!
 
 validateClassVars: classVarsArray againstSuperclass: aClass
 	"Private - Ensure that the proposed class variable name list does not
@@ -1387,7 +1378,6 @@ validateSpecAsVariablePointers: spec size: anInteger superclass: proposedSupercl
 !ClassBuilder class categoriesFor: #isValidInitialIdentifierChar:!private!testing! !
 !ClassBuilder class categoriesFor: #moveClass:toSuperclass:!operations!public! !
 !ClassBuilder class categoriesFor: #new!instance creation!public! !
-!ClassBuilder class categoriesFor: #parser!constants!private! !
 !ClassBuilder class categoriesFor: #removeClass:!operations!public! !
 !ClassBuilder class categoriesFor: #removeClass:ignoreInstances:!operations!public! !
 !ClassBuilder class categoriesFor: #renameClass:to:!operations!public! !

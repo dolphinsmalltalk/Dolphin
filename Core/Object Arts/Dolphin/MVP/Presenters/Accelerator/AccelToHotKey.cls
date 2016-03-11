@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 TypeConverter subclass: #AccelToHotKey
 	instanceVariableNames: ''
@@ -45,27 +45,21 @@ rightToLeft: anInteger
 
 !AccelToHotKey class methodsFor!
 
-accelToHotKeyModifiers: accelKeyModMask
+accelToHotKeyModifiers: accelKeyModMask 
 	"Private - Convert an accelerator table modifier mask to the equivalent 
 	hot key mask."
 
-	| hotKeyMask |
-	hotKeyMask := 0.
-	ModifierMap do: [:a |
-		(accelKeyModMask anyMask: a value)
-			ifTrue: [hotKeyMask := hotKeyMask maskSet: a key]].
-	^hotKeyMask!
+	^ModifierMap inject: 0
+		into: 
+			[:hotKeyMask :each | 
+			(accelKeyModMask anyMask: each value) ifTrue: [hotKeyMask maskSet: each key] ifFalse: [hotKeyMask]]!
 
-hotKeyToAccelModifiers: hotKeyModMask
+hotKeyToAccelModifiers: hotKeyModMask 
 	"Private - Convert a hot key modifier mask to the equivalent accelerator table
 	mask."
 
-	| accelMask |
-	accelMask := FVIRTKEY.
-	ModifierMap do: [:a |
-		(hotKeyModMask anyMask: a key)
-			ifTrue: [accelMask := accelMask maskSet: a value]].
-	^accelMask!
+	^ModifierMap inject: FVIRTKEY
+		into: [:accelMask :each | (hotKeyModMask anyMask: each key) ifTrue: [accelMask maskSet: each value] ifFalse: [accelMask]]!
 
 initialize
 	"Private - Initialize the receiver's class variables.
@@ -81,7 +75,7 @@ initialize
 			as not to lose that attribute when translating to/from virtual keys.
 			By copying across this bit to the scan code after conversion from a
 			virtual key code, we get the right scan code."
-"			with: HOTKEYF_EXT -> 16r100")! !
+			with: HOTKEYF_EXT -> 16r100)! !
 !AccelToHotKey class categoriesFor: #accelToHotKeyModifiers:!initializing!private! !
 !AccelToHotKey class categoriesFor: #hotKeyToAccelModifiers:!initializing!private! !
 !AccelToHotKey class categoriesFor: #initialize!development!initializing!private! !
