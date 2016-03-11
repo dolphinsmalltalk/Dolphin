@@ -77,14 +77,6 @@ runKnownBug: aString test: aSymbol
 	#todo.	"Make this controllable by an option or class var"
 	^false!
 
-setUp
-
-	super setUp.
-	(SessionManager inputState)
-		pumpMessages;
-		processDeferredActions.
-!
-
 shouldRaiseZeroDivide: aBlock
 	| raised |
 	Float reset.
@@ -105,7 +97,6 @@ shouldRaiseZeroDivide: aBlock
 !DolphinTest categoriesFor: #isOnline!public!unit tests! !
 !DolphinTest categoriesFor: #methodContextClass!constants!private! !
 !DolphinTest categoriesFor: #runKnownBug:test:!public!unit tests! !
-!DolphinTest categoriesFor: #setUp!public!Running! !
 !DolphinTest categoriesFor: #shouldRaiseZeroDivide:!Accessing!public! !
 
 !DolphinTest class methodsFor!
