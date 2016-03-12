@@ -1032,7 +1032,7 @@ PermanentLibrary subclass: #UserLibrary
 	classInstanceVariableNames: ''!
 PermanentLibrary subclass: #VMLibrary
 	instanceVariableNames: 'wndProc dlgProc genericCallback vtable specialSelectorStart '
-	classVariableNames: 'Registry RegistryKeys'
+	classVariableNames: 'Registry'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ExternalStructure subclass: #_FPIEEE_RECORD
