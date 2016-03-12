@@ -59,6 +59,9 @@ bigStringSort
 	"Now invert it"
 	sorted := self sort: sorted sortBlock: [:a :b | a >= b]!
 
+integerSortSize
+	^2000!
+
 newAscending: anInteger 
 	| s |
 	s := SortedCollection new: anInteger.
@@ -92,15 +95,15 @@ partialSort: source using: algorithm
 sort: aCollection sortBlock: block 
 	| ms sorted comp |
 	comp := 0.
-	ms := Time millisecondsToRun: 
-					[sorted := aCollection 
-								asSortedCollectionUsing: (self algorithmToTest sortBlock: 
+	ms := Time millisecondsToRun: [sorted := aCollection asSortedCollectionUsing: (self algorithmToTest sortBlock: 
 											[:a :b | 
 											comp := comp + 1.
 											block value: a value: b])].
-	aCollection size > 500 
+	aCollection size >= 500 
 		ifTrue: 
 			[Transcript
+				print: self algorithmToTest;
+				nextPutAll: ': ';
 				print: comp;
 				nextPutAll: ' comparisons required to sort collection of ';
 				print: aCollection size;
@@ -213,6 +216,12 @@ testDefault
 				yourself.
 	self assertSorted: sorted!
 
+testExtremeSortBlocks
+	"This is a worst case ..."
+
+	self sort: (1 to: self integerSortSize) sortBlock: [:a :b | true].
+	self sort: (1 to: self integerSortSize) sortBlock: [:a :b | false]!
+
 testIncludes
 	"Thanks to John Brant for these tests which were posted to the newsgroup as 
 	part of a thread about using a binary-search to implement #includes:"
@@ -257,22 +266,21 @@ testRandomSort
 			self sortMagnitudes: collection]!
 
 testSortIntegers
-	| collection |
 	"This collection can blow up a quick sort partitioning algorithm that does not check bounds correctly."
+
+	| collection |
 	collection := #(138 150 55 99 131 119 43 130 149 138 5 109 30 135 44 14 11 131 147 65 104 3 141 93 93 5 19 90 133 78 136 44 11 14 140 3 125 76 23 58 130 26 101 138 39 12 11 64 121 62 80 122 78 48 93 105 22 13 79 151 147 77 149 46 41 53 136 20 66 110 128 96 3 65 128 79 137 9 129 5 135 144 19 62 3 113 6 135 96 59 34 45 61 14 103 125 29 79 48 45 47 139 64 145 23 147 82 81 110 63 64 86 38 59 72 152 132 9 88 107 42 41 53 141 70 61 84 86 137 145 125 147 91 46 146 140 111 56 104 18 87 16 56 120 8 101 109 19 101 60 71 98 76 75 125).
 	self sortMagnitudes: collection.
-
-	collection := (5000 to: 1 by: -1).
+	collection := self integerSortSize to: 1 by: -1.
 	self sortMagnitudes: collection.
-
-	collection := (1 to: 5000).
-	self sortMagnitudes: collection.
-! !
+	collection := 1 to: self integerSortSize.
+	self sortMagnitudes: collection! !
 !SortAlgorithmTest categoriesFor: #add:sortBlock:!helpers!private! !
 !SortAlgorithmTest categoriesFor: #algorithmToTest!private!unit tests! !
 !SortAlgorithmTest categoriesFor: #assertSorted:!helpers!private! !
 !SortAlgorithmTest categoriesFor: #assertSorted:by:!helpers!private! !
 !SortAlgorithmTest categoriesFor: #bigStringSort!private!unit tests! !
+!SortAlgorithmTest categoriesFor: #integerSortSize!constants!private! !
 !SortAlgorithmTest categoriesFor: #newAscending:!private!unit tests! !
 !SortAlgorithmTest categoriesFor: #newDescending:!private!unit tests! !
 !SortAlgorithmTest categoriesFor: #partialSort:using:!private!testing! !
@@ -280,6 +288,7 @@ testSortIntegers
 !SortAlgorithmTest categoriesFor: #sortMagnitudes:!private!unit tests! !
 !SortAlgorithmTest categoriesFor: #testAdd!public!unit tests! !
 !SortAlgorithmTest categoriesFor: #testDefault!public!testing! !
+!SortAlgorithmTest categoriesFor: #testExtremeSortBlocks!public!unit tests! !
 !SortAlgorithmTest categoriesFor: #testIncludes!public!unit tests! !
 !SortAlgorithmTest categoriesFor: #testPartialSort!public!testing! !
 !SortAlgorithmTest categoriesFor: #testRandomSort!public!unit tests! !

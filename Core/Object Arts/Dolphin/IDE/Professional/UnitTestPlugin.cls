@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ClassBrowserPlugin subclass: #UnitTestPlugin
 	instanceVariableNames: 'result icon autoSwitchProcess defectsPresenter modePresenter detailsPresenter'
@@ -113,7 +113,8 @@ displayDefects: aCollection
 displayDetails: aString 
 	"Display aString to indicate additional details about the current mode of operation"
 
-	detailsPresenter value: aString!
+	detailsPresenter value: aString.
+	SessionManager inputState pumpMessages!
 
 displayFail
 	"Indicate that some tests have failed and we have defects"
@@ -263,13 +264,6 @@ onBrowserMethodSelected
 	(self isCurrentCard and: [self browser hasMethodSelected]) 
 		ifTrue: [self browser ensureSourceVisible]!
 
-onShownInBrowser
-	"Private - Event handler indicating that the receiver has been displayed within it's browser. "
-
-
-
-!
-
 onViewOpened
 	super onViewOpened.
 	self installMenuCommands.
@@ -296,17 +290,18 @@ refreshIcon
 	SessionManager inputState pumpMessages!
 
 runIndividualTests
-	self testSuite: (self testClass buildSuiteFromMethods: self currentTestMethodSelectors).
-	self runSuite: self testSuite!
+	| suite |
+	suite := self testClass buildSuiteFromMethods: self currentTestMethodSelectors.
+	self runSuite: suite!
 
 runSuite: aTestSuite 
 	self
 		displayRunning;
 		startAutoSwitchProcess.
 	aTestSuite addDependentToHierachy: self.
-	[result := aTestSuite run] ensure: 
-			[aTestSuite removeDependentFromHierachy: self.
-			self stopAutoSwitchProcess].
+	result := [aTestSuite run] ensure: 
+					[aTestSuite removeDependentFromHierachy: self.
+					self stopAutoSwitchProcess].
 	self updateWindow!
 
 runTests
@@ -328,12 +323,12 @@ testClass
 	^self browser selectedClass correspondingTestCase!
 
 testSuite
-	| suite testMethodSelectors testClass |
+	| testMethodSelectors testClass |
 	testClass := self testClass.
 	testClass ifNil: [^nil].
 	testMethodSelectors := self currentTestMethodSelectors.
 	testMethodSelectors isEmpty ifTrue: [^testClass suite].
-	^testClass buildSuiteFromMethods: testMethodSelectors!
+	^testClass buildSuiteFromConcreteMethods: testMethodSelectors!
 
 testSuiteName
 	"Private - Answer the name of the current test suite (if any). Answer nil if none"
@@ -399,7 +394,6 @@ updateWindow
 !UnitTestPlugin categoriesFor: #isBrowserLookingAtTestClass!private!testing! !
 !UnitTestPlugin categoriesFor: #onBrowserClassSelected!event handling!private! !
 !UnitTestPlugin categoriesFor: #onBrowserMethodSelected!event handling!private! !
-!UnitTestPlugin categoriesFor: #onShownInBrowser!event handling!private! !
 !UnitTestPlugin categoriesFor: #onViewOpened!private! !
 !UnitTestPlugin categoriesFor: #queryCommand:!commands!private! !
 !UnitTestPlugin categoriesFor: #refreshIcon!operations!private! !

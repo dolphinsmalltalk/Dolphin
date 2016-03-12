@@ -50,11 +50,11 @@ displayDefects: aCollection
 	list isEnabled: aCollection isEmpty not.
 !
 
-displayDetails: aString
+displayDetails: aString 
 	| details |
 	details := self view viewNamed: 'details' ifNone: [^self].
 	details value: aString.
-	!
+	SessionManager inputState pumpMessages!
 
 displayFail
 	self displayRed.

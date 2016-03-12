@@ -42,29 +42,6 @@ assertImmutableResize: anObject
 	self should: [anObject resize: anObject size + 1] raise: Processor constWriteSignal.
 	self should: [anObject resize: anObject size - 1] raise: Processor constWriteSignal!
 
-assertLoopInterruptible: aBlock 
-	| intervals execTime last sampleInterval go |
-	go := true.
-	last := Time millisecondClockValue.
-	intervals := OrderedCollection new.
-	sampleInterval := 5.
-	
-	[
-	[Processor sleep: sampleInterval.
-	go and: 
-			[| next |
-			next := Time millisecondClockValue.
-			intervals addLast: next - last.
-			last := next.
-			true]] 
-			whileTrue] 
-			forkAt: Processor userInterruptPriority.
-	execTime := Time millisecondsToRun: aBlock.
-	go := false.
-	self assert: (intervals size > 5 and: [intervals size * 1.25 >= (execTime / sampleInterval) asFloat]).
-	self 
-		assert: (intervals size > 2 and: [intervals allSatisfy: [:each | each < (sampleInterval * 2)]])!
-
 earlyTermination: aBoolean 
 	"N.B. Timing is critical to much of this, so its not going to be possible to debug through it. Its really only to show up
 	problems in the VM, so debugging at the Smalltalk level is not terribly useful anyway."
@@ -127,7 +104,7 @@ getCPUTime
 		lpExitTime: exit
 		lpKernelTime: kernel
 		lpUserTime: user.
-	^(kernel asInteger + user asInteger) / 10000!
+	^(kernel asInteger + user asInteger) // 10000!
 
 isGPF: gpf reading: aBoolean address: anAddress 
 	| address isReading info |
@@ -695,20 +672,6 @@ testPrimitiveStringAt
 	0 to: 255 do: [:i | self should: [(array at: i+1) == (Character value: i)]].
 !
 
-testQuiesceWhenUIBlocked
-	"#969: Dolphin burns 100% CPU when main UI process blocked on Semaphore"
-
-	| totalCPUBefore cpuWhileSleeping sleepTime wait |
-	totalCPUBefore := self getCPUTime.
-	wait := 2000.
-	sleepTime := Time millisecondsToRun: [Processor sleep: wait].
-	cpuWhileSleeping := self getCPUTime - totalCPUBefore.
-	"If the sleep time was significantly longer than requested, then the VM is not waking up the image
-	 properly at the end of the timer"
-	self assert: (sleepTime between: wait * 0.9 and: wait * 1.1).
-	"The VM should quiesce properly, even if events are waiting to be processed, so very little CPU time should have been consumed"
-	self assert: cpuWhileSleeping < (wait * 0.01)!
-
 testSignedFromUnsigned
 	"Test SmallIntegers and 4 & 8 byte LargeIntegers"
 
@@ -732,7 +695,6 @@ testSignedFromUnsigned
 !VMTest categoriesFor: #assertImmutableBasicAtPut:!private!unit tests! !
 !VMTest categoriesFor: #assertImmutableInstVarAtPut:!private!unit tests! !
 !VMTest categoriesFor: #assertImmutableResize:!private!unit tests! !
-!VMTest categoriesFor: #assertLoopInterruptible:!private!unit tests! !
 !VMTest categoriesFor: #earlyTermination:!helpers!public! !
 !VMTest categoriesFor: #getCPUTime!helpers!private! !
 !VMTest categoriesFor: #isGPF:reading:address:!helpers!private! !
@@ -760,7 +722,6 @@ testSignedFromUnsigned
 !VMTest categoriesFor: #testPrimitiveAtPut!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveIsNullBytes!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveStringAt!public!unit tests! !
-!VMTest categoriesFor: #testQuiesceWhenUIBlocked!public!unit tests! !
 !VMTest categoriesFor: #testSignedFromUnsigned!public!unit tests! !
 
 !VMTest class methodsFor!
