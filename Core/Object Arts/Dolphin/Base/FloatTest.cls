@@ -10,6 +10,10 @@ FloatTest comment: ''!
 !FloatTest categoriesForClass!Unclassified! !
 !FloatTest methodsFor!
 
+setUp
+	Float reset.
+	super setUp!
+
 shouldRaiseOverflow: aBlock
 	| raised |
 	Float reset.
@@ -31,6 +35,10 @@ shouldRaiseUnderflow: aBlockClosure
 				matching: [:e | e isUnderflow]] 
 			ensure: [Processor activeProcess fpeMask: oldMask].
 	^answer!
+
+tearDown
+	Float reset.
+	super tearDown!
 
 testAdd
 	self assert: (1.0 + 1.0) = 2.0.
@@ -322,8 +330,10 @@ testZeroDivide
 	self shouldRaiseZeroDivide: [1 / 0.0].
 
 ! !
+!FloatTest categoriesFor: #setUp!private!Running! !
 !FloatTest categoriesFor: #shouldRaiseOverflow:!helpers!private! !
 !FloatTest categoriesFor: #shouldRaiseUnderflow:!helpers!private! !
+!FloatTest categoriesFor: #tearDown!private!Running! !
 !FloatTest categoriesFor: #testAdd!public!unit tests! !
 !FloatTest categoriesFor: #testEqualsColon!public!unit tests! !
 !FloatTest categoriesFor: #testFloatAsTrueFraction!public!Testing! !
