@@ -11,6 +11,12 @@ InsertionSortAlgorithmTest comment: ''!
 !InsertionSortAlgorithmTest methodsFor!
 
 algorithmToTest
-	^InsertionSortAlgorithm! !
+	^InsertionSortAlgorithm!
+
+integerSortSize
+	"Insertion sort is very slow, so be a bit less ambitious"
+
+	^500! !
 !InsertionSortAlgorithmTest categoriesFor: #algorithmToTest!private!unit tests! !
+!InsertionSortAlgorithmTest categoriesFor: #integerSortSize!constants!private! !
 
