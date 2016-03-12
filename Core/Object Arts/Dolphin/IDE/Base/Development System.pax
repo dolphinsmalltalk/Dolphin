@@ -4509,7 +4509,6 @@ debugIpFor: debugMethod
 				ifTrue: [(debugMap at: i) key]
 				ifFalse: 
 					[| debugDispatcher steps |
-					self halt.
 					self assert: [offset < 0].
 					debugDispatcher := debugMethod byteCodeDispatcher.
 					i > 1 

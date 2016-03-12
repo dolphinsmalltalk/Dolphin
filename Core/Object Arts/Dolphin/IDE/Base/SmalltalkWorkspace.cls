@@ -1050,6 +1050,7 @@ publishedAspects
 
 	^(super publishedAspects)
 		add: self class textStylesAspect;
+		add: self class indicatorStylesAspect;
 		yourself!
 
 queryCommand: aCommandQuery 
@@ -1732,25 +1733,26 @@ defaultIndicatorStyles
 	^(OrderedCollection new)
 		add: ((ScintillaIndicatorStyle new)
 					forecolor: Color darkGreen;
-					isUnderText: false;
 					styleName: #hidden;
 					name: #Notification;
 					yourself);
 		add: ((ScintillaIndicatorStyle new)
 					forecolor: Color blue;
-					isUnderText: false;
 					styleName: #squiggle;
 					name: #Warning;
 					yourself);
 		add: ((ScintillaIndicatorStyle new)
 					forecolor: Color red;
-					isUnderText: false;
 					styleName: #squiggle;
 					name: #Error;
 					yourself);
 		add: ((ScintillaIndicatorStyle new)
-					isUnderText: false;
-					foreAlpha: 75;
+					alpha: 40;
+					foreAlpha: 65;
+					forecolor: (RGB 
+								red: 0
+								green: 128
+								blue: 192);
 					styleName: #roundBox;
 					name: #braceHighlight;
 					yourself);

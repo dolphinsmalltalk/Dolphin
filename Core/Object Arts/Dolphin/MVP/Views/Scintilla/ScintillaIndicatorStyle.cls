@@ -109,7 +109,8 @@ flags: anInteger
 	flags := anInteger!
 
 foreAlpha
-	"Answer the alpha value for the transparency of the foreground of box indicator styles"
+	"Answer the alpha value for the transparency of the foreground of box indicator styles, or
+	nil if the default (50) is to be used."
 
 	^foreAlpha!
 
