@@ -7,6 +7,9 @@ package paxVersion: 1;
 package methodNames
 	add: #CompilerTest -> #testTextMapExhaustive;
 	add: #SortAlgorithmTest -> #testExtremeSortBlocks;
+	add: #VMTest -> #assertLoopInterruptible:;
+	add: #VMTest -> #testLoopsInterruptible;
+	add: #VMTest -> #testQuiesceWhenUIBlocked;
 	yourself.
 
 package binaryGlobalNames: (Set new
@@ -17,6 +20,7 @@ package globalAliases: (Set new
 
 package setPrerequisites: (IdentitySet new
 	add: '..\IDE\Base\Development System Tests';
+	add: '..\Base\Dolphin';
 	add: '..\Base\Dolphin Base Tests';
 	yourself).
 
@@ -67,6 +71,97 @@ testExtremeSortBlocks
 
 	self sort: (1 to: 10000) sortBlock: [:a :b | false]! !
 !SortAlgorithmTest categoriesFor: #testExtremeSortBlocks!public!unit tests! !
+
+!VMTest methodsFor!
+
+assertLoopInterruptible: aBlock 
+	| intervals execTime last sampleInterval go |
+	go := true.
+	last := Time millisecondClockValue.
+	intervals := OrderedCollection new.
+	sampleInterval := 3.
+	
+	[
+	[Processor sleep: sampleInterval.
+	go and: 
+			[| next |
+			next := Time millisecondClockValue.
+			intervals addLast: next - last.
+			last := next.
+			true]] 
+			whileTrue] 
+			forkAt: Processor userInterruptPriority.
+	execTime := Time millisecondsToRun: aBlock.
+	go := false.
+	self assert: (intervals size > 5 and: [intervals size * 1.25 >= (execTime / sampleInterval) asFloat]).
+	self 
+		assert: (intervals size > 2 and: [intervals allSatisfy: [:each | each < (sampleInterval * 2)]])!
+
+testLoopsInterruptible
+	"#2167: Need to test all the optimisable loop types:
+		#timesRepeat:
+		#whileTrue[:]
+		#whileFalse[:]
+		#to:[by:]do:
+		#repeat		(hmmm, tricky, need some way to break the loop)
+	The loops must not contain any true mesage sends, only bytecodes"
+
+	"#timesRepeat:"
+
+	self assertLoopInterruptible: [3000000 timesRepeat: [1 + 2]].
+	"#whileFalse"
+	self assertLoopInterruptible: 
+			[| i |
+			i := 0.
+			
+			[i := i + 1.
+			i > 5000000] whileFalse].
+	"#whileTrue"
+	self assertLoopInterruptible: 
+			[| i |
+			i := 0.
+			
+			[i := i + 1.
+			i <= 5000000] whileTrue].
+	"#whileFalse:"
+	self assertLoopInterruptible: 
+			[| i |
+			i := 0.
+			[i >= 5000000] whileFalse: [i := i + 1]].
+	"#whileTrue:"
+	self assertLoopInterruptible: 
+			[| i |
+			i := 0.
+			[i < 5000000] whileTrue: [i := i + 1]].
+	"#to:do:"
+	self assertLoopInterruptible: [1 to: 5000000 do: [:i | i + 1]].
+	"#to:by:do:"
+	self assertLoopInterruptible: 
+			[1 to: 10000000
+				by: 2
+				do: [:i | i + 1]].
+	self assertLoopInterruptible: 
+			[5000000 to: 1
+				by: -1
+				do: [:i | i + 1]]!
+
+testQuiesceWhenUIBlocked
+	"#969: Dolphin burns 100% CPU when main UI process blocked on Semaphore"
+
+	| totalCPUBefore cpuWhileSleeping sleepTime wait |
+	totalCPUBefore := self getCPUTime.
+	"This test needs to measure over a minimum of 2 seconds in order to determine whether Dolphin has quiesced properly"
+	wait := 3000.
+	sleepTime := Time millisecondsToRun: [Processor sleep: wait].
+	cpuWhileSleeping := self getCPUTime - totalCPUBefore.
+	"If the sleep time was significantly longer than requested, then the VM is not waking up the image
+	 properly at the end of the timer"
+	self assert: (sleepTime between: wait * 0.9 and: wait * 1.1).
+	"The VM should quiesce properly, even if events are waiting to be processed, so very little CPU time should have been consumed"
+	self assert: cpuWhileSleeping < (wait * 0.03)! !
+!VMTest categoriesFor: #assertLoopInterruptible:!private!unit tests! !
+!VMTest categoriesFor: #testLoopsInterruptible!public!unit tests! !
+!VMTest categoriesFor: #testQuiesceWhenUIBlocked!public!unit tests! !
 
 "End of package definition"!
 

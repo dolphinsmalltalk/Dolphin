@@ -18,7 +18,6 @@ package methodNames
 	add: #StyledContainerTest -> #test1PixDottedBorderPaint;
 	add: #StyledContainerTest -> #test1PixDottedBorderPrint;
 	add: #ViewComposerTest -> #testResizeDoesNotMove;
-	add: #VMTest -> #testLoopsInterruptible;
 	yourself.
 
 package binaryGlobalNames: (Set new
@@ -278,57 +277,6 @@ testResizeDoesNotMove
 	self deny: static extent = extent.
 	self assert: (vc constrainPoint: static extent) = static extent! !
 !ViewComposerTest categoriesFor: #testResizeDoesNotMove!public!unit tests! !
-
-!VMTest methodsFor!
-
-testLoopsInterruptible
-	"#2167: Need to test all the optimisable loop types:
-		#timesRepeat:
-		#whileTrue[:]
-		#whileFalse[:]
-		#to:[by:]do:
-		#repeat		(hmmm, tricky, need some way to break the loop)
-	The loops must not contain any true mesage sends, only bytecodes"
-
-	"#timesRepeat:"
-
-	self assertLoopInterruptible: [3000000 timesRepeat: [1 + 2]].
-	"#whileFalse"
-	self assertLoopInterruptible: 
-			[| i |
-			i := 0.
-			
-			[i := i + 1.
-			i > 5000000] whileFalse].
-	"#whileTrue"
-	self assertLoopInterruptible: 
-			[| i |
-			i := 0.
-			
-			[i := i + 1.
-			i <= 5000000] whileTrue].
-	"#whileFalse:"
-	self assertLoopInterruptible: 
-			[| i |
-			i := 0.
-			[i >= 5000000] whileFalse: [i := i + 1]].
-	"#whileTrue:"
-	self assertLoopInterruptible: 
-			[| i |
-			i := 0.
-			[i < 5000000] whileTrue: [i := i + 1]].
-	"#to:do:"
-	self assertLoopInterruptible: [1 to: 5000000 do: [:i | i + 1]].
-	"#to:by:do:"
-	self assertLoopInterruptible: 
-			[1 to: 10000000
-				by: 2
-				do: [:i | i + 1]].
-	self assertLoopInterruptible: 
-			[5000000 to: 1
-				by: -1
-				do: [:i | i + 1]]! !
-!VMTest categoriesFor: #testLoopsInterruptible!public!unit tests! !
 
 "End of package definition"!
 
