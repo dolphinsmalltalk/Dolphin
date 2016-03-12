@@ -16,7 +16,10 @@ setUp
 	Debugger showWalkbacks: false!
 
 tearDown
-	process isNil ifFalse: [process terminate].
+	process isNil 
+		ifFalse: 
+			[process terminate.
+			process := nil].
 	Debugger showWalkbacks: savedShowWalkbacks!
 
 testNoShowWalkbacks

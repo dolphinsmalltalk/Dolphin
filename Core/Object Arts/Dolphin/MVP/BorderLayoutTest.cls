@@ -29,7 +29,8 @@ testResourceBrowserPreview
 				ifFalse: [Error icon].
 	toolbox := resourceView viewNamed: 'resourceToolbox'.
 	resources := resourceView viewNamed: 'resources'.
-	self assert: (resources viewNamed: 'resources') extent x = resources extent x! !
+	self assert: (resources viewNamed: 'resources') extent x = resources extent x.
+	resourceView destroy! !
 !BorderLayoutTest categoriesFor: #layoutManagerClass!private!unit tests! !
 !BorderLayoutTest categoriesFor: #testResourceBrowserPreview!public!unit tests! !
 
