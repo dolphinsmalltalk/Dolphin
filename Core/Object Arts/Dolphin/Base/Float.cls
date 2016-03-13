@@ -1,9 +1,9 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Number variableByteSubclass: #Float
 	instanceVariableNames: ''
 	classVariableNames: 'DefaultSigFigs FMax FMin SignificantDifference'
-	poolDictionaries: 'CRTConstants'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Float guid: (GUID fromString: '{87B4C65A-026E-11D3-9FD7-00A0CC3E4A32}')!
 Float comment: 'Float is the class of double precision floating point Numbers (64-bit) in IEEE-754 format. Note that the original Smalltalk-80 definition of Float, was only single precision, but this is considered somewhat outdated. Rather than introduce the complexity of multiple classes to represent floating point numbers, we have chosen to standardise on double precision.
@@ -621,8 +621,7 @@ denormalized
 	"Answer whether the characterized floating point representation allows denormalized
 	values."
 
-	^Processor activeProcess fpeMask allMask: (_EM_DENORMAL bitOr: _EM_UNDERFLOW)
-!
+	^Processor activeProcess fpeMask allMask: (CRTConstants._EM_DENORMAL bitOr: CRTConstants._EM_UNDERFLOW)!
 
 e
 	"Answer a <Float> representing the irrational number, 'e'
@@ -755,13 +754,17 @@ reset
 	every time an exception occurs, so this must be sent after each FloatingPointException."
 
 	CRTLibrary default _clearfp.
-	self setExceptionMask: Processor activeProcess fpeMask!
+	self setExceptionMask: Processor activeProcess fpeMask.
+	self resetPrecision!
+
+resetPrecision
+	CRTLibrary default _controlfp: CRTConstants._PC_64 mask: CRTConstants._MCW_PC!
 
 setExceptionMask: anInteger
 	"Private - Set the current floating point exception mask
 	to anInteger. Answer the previous mask."
 
-	^CRTLibrary default _controlfp: anInteger mask: _MCW_EM!
+	^CRTLibrary default _controlfp: anInteger mask: CRTConstants._MCW_EM!
 
 zero
 	"Answer the receiver's representation of zero."
@@ -786,6 +789,7 @@ zero
 !Float class categoriesFor: #radix!constants!public! !
 !Float class categoriesFor: #readFrom:!instance creation!public! !
 !Float class categoriesFor: #reset!initializing!public! !
+!Float class categoriesFor: #resetPrecision!initializing!private! !
 !Float class categoriesFor: #setExceptionMask:!initializing!private! !
 !Float class categoriesFor: #zero!instance creation!public! !
 
