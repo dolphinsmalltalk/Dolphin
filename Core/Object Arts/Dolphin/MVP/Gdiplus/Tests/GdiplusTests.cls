@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 TestCase subclass: #GdiplusTests
 	instanceVariableNames: 'model'
@@ -54,7 +54,14 @@ getSampleLinearGradientBrush
 		color2: ARGB red!
 
 getSamplePen
-	^GdiplusPen red! !
+	^GdiplusPen red!
+
+tearDown
+	model 
+		ifNotNil: 
+			[model free.
+			model := nil].
+	super tearDown! !
 !GdiplusTests categoriesFor: #assertPersistedValid!asserting!public! !
 !GdiplusTests categoriesFor: #compare:to:!comparing!public! !
 !GdiplusTests categoriesFor: #compare:to:epsilon:!comparing!public! !
@@ -64,6 +71,7 @@ getSamplePen
 !GdiplusTests categoriesFor: #getSampleGDIBitmap!accessing!public! !
 !GdiplusTests categoriesFor: #getSampleLinearGradientBrush!accessing!public! !
 !GdiplusTests categoriesFor: #getSamplePen!accessing!public! !
+!GdiplusTests categoriesFor: #tearDown!public!Running! !
 
 !GdiplusTests class methodsFor!
 

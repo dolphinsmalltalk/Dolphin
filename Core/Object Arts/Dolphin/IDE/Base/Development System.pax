@@ -360,6 +360,7 @@ package methodNames
 	add: 'FramingCalculation class' -> #allCalculations;
 	add: 'FramingConstraints class' -> #publishedAspectsOfInstances;
 	add: 'FramingLayout class' -> #example1;
+	add: 'GdiplusImage class' -> #newInstanceAspect:class:;
 	add: 'GridLayout class' -> #publishedAspectsOfInstances;
 	add: 'GroupBox class' -> #publishedAspectsOfInstances;
 	add: 'HotKey class' -> #publishedAspectsOfInstances;
@@ -569,6 +570,7 @@ package setPrerequisites: (IdentitySet new
 	add: '..\..\MVP\Type Converters\Dolphin Type Converters';
 	add: '..\..\MVP\Models\Value\Dolphin Value Models';
 	add: '..\..\..\..\Contributions\Burning River\ExternalProcess\ExternalProcess';
+	add: '..\..\MVP\Gdiplus\Gdiplus';
 	add: 'Internal Bitmaps and Icons';
 	add: '..\..\..\..\Contributions\Refactory\Refactoring Browser\Change Objects\RBChangeObjects';
 	add: '..\..\..\..\Contributions\Refactory\Refactoring Browser\Environments\RBEnvironments';
@@ -2473,6 +2475,26 @@ example1
 	layout resize: text2 to: (140 @ 40 corner: 290 @ 80).
 	shell show! !
 !FramingLayout class categoriesFor: #example1!examples!public! !
+
+!GdiplusImage class methodsFor!
+
+newInstanceAspect: aSymbol class: aspectClass 
+	"Private - Answer a new <Aspect> of the class, aspectClass, and with name, aSymbol, 
+    	which is appropriate for representing aspects of the receiver's type."
+
+	^(aspectClass name: aSymbol
+		presenterBlock: 
+			[:p :m | 
+			| imagePresenter |
+			imagePresenter := ImagePresenter 
+						create: 'Gdiplus view'
+						in: p
+						on: m.
+			imagePresenter view isWholeBackgroundErased: true.
+			imagePresenter])
+		bePresenterBlockReadOnly;
+		yourself! !
+!GdiplusImage class categoriesFor: #newInstanceAspect:class:!adapters!development!private! !
 
 !GridLayout class methodsFor!
 

@@ -1388,7 +1388,7 @@ ArithmeticValue subclass: #Point
 Number variableByteSubclass: #Float
 	instanceVariableNames: ''
 	classVariableNames: 'DefaultSigFigs FMax FMin SignificantDifference'
-	poolDictionaries: 'CRTConstants'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Number subclass: #Fraction
 	instanceVariableNames: 'numerator denominator '

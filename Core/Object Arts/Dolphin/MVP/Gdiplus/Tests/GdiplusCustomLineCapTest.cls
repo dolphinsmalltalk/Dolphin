@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 GdiplusTests subclass: #GdiplusCustomLineCapTest
 	instanceVariableNames: ''
@@ -14,10 +14,6 @@ setUp
 	super setUp.
 	model := GdiplusCustomLineCap 
 				strokePath: (GdiplusGraphicsPath new addEllipse: (Point zero extent: 200 @ 100))!
-
-tearDown
-	super tearDown.
-	model notNil ifTrue: [model free]!
 
 testBaseCap
 	self assert: model baseCap = 0.
@@ -69,7 +65,6 @@ testWidthScale
 	model widthScale: 2.5.
 	self assert: model widthScale = 2.5! !
 !GdiplusCustomLineCapTest categoriesFor: #setUp!public!setup! !
-!GdiplusCustomLineCapTest categoriesFor: #tearDown!public! !
 !GdiplusCustomLineCapTest categoriesFor: #testBaseCap!public!unit tests! !
 !GdiplusCustomLineCapTest categoriesFor: #testBaseInset!public!unit tests! !
 !GdiplusCustomLineCapTest categoriesFor: #testClone!public!unit tests! !

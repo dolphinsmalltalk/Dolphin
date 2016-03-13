@@ -292,7 +292,8 @@ testCopy
 	self assert: (shared at: #state) == 2!
 
 testCopyExceptionHandlers
-	| shared |
+	| shared waitForCopy |
+	waitForCopy := Semaphore new.
 	shared := IdentityDictionary with: #state -> 1.
 	shared at: #sourceProcess put: Processor activeProcess.
 	shared at: #state
@@ -315,7 +316,14 @@ testCopyExceptionHandlers
 		display: Processor activeProcess id printString , ': 2 ' , String lineDelimiter;
 		flush.
 	self assert: (shared at: #state) == Processor activeProcess identityHash.
-	(shared at: #copyProcess) == Processor activeProcess ifTrue: [Processor terminateActive].
+	"N.B. Don't terminate the copy process, as this will run the unwind handlers, one of which
+	disconnects the TestRunner from update events so it stops refreshing and showing progress.
+	Also don't let if finalize and terminate itself"
+	(shared at: #copyProcess) == Processor activeProcess 
+		ifTrue: 
+			[waitForCopy signal.
+			Processor activeProcess beUnfinalizable.
+			Processor suspendActive].
 	Trace
 		display: Processor activeProcess id printString , ': 3' , String lineDelimiter;
 		flush.
@@ -327,14 +335,14 @@ testCopyExceptionHandlers
 	Trace
 		display: Processor activeProcess id printString , ': 5 ' , String lineDelimiter;
 		flush.
-	self waitForProcess: (shared at: #copyProcess) toTerminate: 500.
+	waitForCopy wait.
 	Trace
 		display: Processor activeProcess id printString , ': 6 ' , String lineDelimiter;
 		flush.
 	self assert: (shared at: #state) == (shared at: #copyProcess) identityHash.
 	Trace
 		display: Processor activeProcess id printString , ': 7 ' , String lineDelimiter;
-		flush!
+		flush.!
 
 testCopyNestedBlocks
 	| sem sourceProcess copyProcess |
@@ -457,15 +465,7 @@ testUnwindFromForeignProcess
 	"This is for illustration only - the BlockCannotReturn cannot 
 	be handled here (it's truncated already)"
 	self shouldnt: [process terminate] raise: Error.
-	self assert: sema excessSignals > 0!
-
-waitForProcess: aProcess toTerminate: anInteger
-	| i |
-	i := 1.
-	[aProcess isTerminated or: [i > anInteger]] whileFalse: 
-			[i := i + 1.
-			Processor sleep: 5].
-	self assert: aProcess isTerminated! !
+	self assert: sema excessSignals > 0! !
 !ProcessTest categoriesFor: #assertBlock:in:isCopyOf:in:visited:!helpers!private! !
 !ProcessTest categoriesFor: #assertBlockFrame:isCopyOf:visited:!helpers!private! !
 !ProcessTest categoriesFor: #assertContext:in:isCopyOf:in:visited:!helpers!private! !
@@ -490,5 +490,4 @@ waitForProcess: aProcess toTerminate: anInteger
 !ProcessTest categoriesFor: #testSeparateContexts!public!unit tests! !
 !ProcessTest categoriesFor: #testUnwindFromActiveProcess!public!tests! !
 !ProcessTest categoriesFor: #testUnwindFromForeignProcess!public!tests! !
-!ProcessTest categoriesFor: #waitForProcess:toTerminate:!helpers!private! !
 
