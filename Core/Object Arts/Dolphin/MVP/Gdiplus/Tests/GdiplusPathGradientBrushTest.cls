@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 GdiplusTests subclass: #GdiplusPathGradientBrushTest
 	instanceVariableNames: ''
@@ -40,10 +40,6 @@ setSampleEllipsePath
 
 setSamplePathEmpty
 	model := GdiplusPathGradientBrush path: GdiplusGraphicsPath new!
-
-tearDown
-	super tearDown.
-	model notNil ifTrue: [model free]!
 
 testBlendColors
 	| colors positions |
@@ -184,7 +180,6 @@ testWrapMode
 !GdiplusPathGradientBrushTest categoriesFor: #setSample3PointsPath!accessing!public! !
 !GdiplusPathGradientBrushTest categoriesFor: #setSampleEllipsePath!accessing!public! !
 !GdiplusPathGradientBrushTest categoriesFor: #setSamplePathEmpty!accessing!public! !
-!GdiplusPathGradientBrushTest categoriesFor: #tearDown!public!setup! !
 !GdiplusPathGradientBrushTest categoriesFor: #testBlendColors!public!unit tests! !
 !GdiplusPathGradientBrushTest categoriesFor: #testBlendFactors!public!unit tests! !
 !GdiplusPathGradientBrushTest categoriesFor: #testBounds!public!unit tests! !

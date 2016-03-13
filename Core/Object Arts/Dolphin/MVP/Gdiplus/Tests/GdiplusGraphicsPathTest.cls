@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 GdiplusTests subclass: #GdiplusGraphicsPathTest
 	instanceVariableNames: 'fillMode'
@@ -24,10 +24,6 @@ setSampleEllipse
 
 setSampleNew
 	model := GdiplusGraphicsPath new!
-
-tearDown
-	super tearDown.
-	model notNil ifTrue: [model free]!
 
 testBounds
 	self setSample3Points.
@@ -58,7 +54,6 @@ testPointCount
 !GdiplusGraphicsPathTest categoriesFor: #setSample3Points!public! !
 !GdiplusGraphicsPathTest categoriesFor: #setSampleEllipse!public! !
 !GdiplusGraphicsPathTest categoriesFor: #setSampleNew!public! !
-!GdiplusGraphicsPathTest categoriesFor: #tearDown!public! !
 !GdiplusGraphicsPathTest categoriesFor: #testBounds!public! !
 !GdiplusGraphicsPathTest categoriesFor: #testConstructor3Points!public! !
 !GdiplusGraphicsPathTest categoriesFor: #testConstructorPoints!public! !
