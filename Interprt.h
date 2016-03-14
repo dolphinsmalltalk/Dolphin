@@ -327,7 +327,7 @@ private:
 	static BOOL __stdcall MsgSendPoll();
 	static BOOL	__stdcall BytecodePoll();
 	static BOOL sampleInput();
-	static bool GetUserInterruptRequested();
+	static bool __stdcall IsUserBreakRequested();
 	
 	static void __fastcall executeNewMethod(MethodOTE* methodOTE, unsigned argCount);
 	static void __fastcall returnValueTo(Oop resultPointer, Oop contextPointer);
