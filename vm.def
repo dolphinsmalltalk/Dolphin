@@ -24,6 +24,7 @@ StdIn
 StdOut
 StdErr
 _snprintf
+IsUserBreakRequested=?IsUserBreakRequested@Interpreter@@CG_NXZ
 
 CompileForClass=_PrimCompileForClass@20
 CompileForEval=_PrimCompileForEval@24
