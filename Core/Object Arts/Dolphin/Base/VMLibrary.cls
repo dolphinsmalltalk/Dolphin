@@ -270,6 +270,14 @@ isSlowMachine
 	VMLibrary default isSlowMachine
 "!
 
+isUserBreakRequested
+	"Private - Answer whether the user has pressed the break key sequence. The key sequence is
+	configurable through the Development System option 'interruptHotKey', the default being
+	set by SmalltalkSystem>>#initialize."
+
+	<cdecl: bool IsUserBreakRequested>
+	^self invalidCall!
+
 isWindows10OrGreater
 	<stdcall: bool IsWindows10OrGreater>
 	^self invalidCall!
@@ -613,6 +621,7 @@ versionFormatString
 !VMLibrary categoriesFor: #highBit:!arithmetic!public! !
 !VMLibrary categoriesFor: #indexOfSpecialSelector:ifAbsent:!accessing-registry!private! !
 !VMLibrary categoriesFor: #isSlowMachine!environment!public! !
+!VMLibrary categoriesFor: #isUserBreakRequested!accessing!helpers!private! !
 !VMLibrary categoriesFor: #isWindows10OrGreater!public!win32 functions-version helpers! !
 !VMLibrary categoriesFor: #isWindows7OrGreater!public!win32 functions-version helpers! !
 !VMLibrary categoriesFor: #isWindows7SP1OrGreater!public!win32 functions-version helpers! !

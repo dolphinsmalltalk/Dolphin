@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #InputState
 	instanceVariableNames: 'inputSemaphore idler idleTimer main windows deferredActions lastWindow wakeupEvent msgWindow'
@@ -100,9 +100,8 @@ ensureMainRunning
 			[main suspendingList == inputSemaphore ifTrue: [^self].
 			main isAlive 
 				ifTrue: 
-					["Check for break key - inlined to avoid dependency on Keyboard class"
-					((UserLibrary default getAsyncKeyState: Win32Constants.VK_CANCEL) anyMask: 16r8001) 
-						ifTrue: [main queueInterrupt: Processor userBreakInterrupt].
+					["Check for user break"
+					VMLibrary default isUserBreakRequested ifTrue: [main queueInterrupt: Processor userBreakInterrupt].
 					^self]].
 	self forkMain!
 

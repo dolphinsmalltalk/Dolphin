@@ -1913,7 +1913,7 @@ initialize
 	self defaultFont: (Font name: 'Trebuchet MS' pointSize: 10).
 
 	"Default break key for interrupting non-responding operations during development."
-	self interruptHotKey: HotKeyConstants.HOTKEYF_CONTROL << 8 | Win32Constants.VK_F12.
+	self interruptHotKey: (AcceleratorTable keyCodeFromString: 'CTRL+F12').
 	self initializeArgumentClasses!
 
 initializeArgumentClasses
