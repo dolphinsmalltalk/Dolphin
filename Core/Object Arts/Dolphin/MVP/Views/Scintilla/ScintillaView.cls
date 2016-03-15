@@ -3529,7 +3529,7 @@ keyBindings
 	"Answer the collection of key bindings currently assigned in the receiver."
 
 	^(keyBindings ifNil: [self defaultKeyBindings]) 
-		asSortedCollection: [:a :b | a commandSymbol <= b commandSymbol]
+		asSortedCollection: self keyBindingsSortBlock
 	" asArray"!
 
 keyBindings: aCollectionOfScintillaKeyBindings 
@@ -3543,6 +3543,12 @@ keyBindings: aCollectionOfScintillaKeyBindings
 					[keyBindings := LookupTable new.
 					set do: [:each | keyBindings at: each acceleratorKey put: each]]].
 	self updateKeyBindings!
+
+keyBindingsSortBlock
+	"By placing sort block in its own method we can more easily reconstruct it (see BlockClosure>>#storeOn:"
+
+	^[:a :b | a commandSymbol <= b commandSymbol]
+!
 
 keyboardCommands
 	^self keyBindings collect: 
@@ -10731,6 +10737,7 @@ zoomOut
 !ScintillaView categoriesFor: #joinTarget!**auto generated**!commands!line wrapping!public!scintilla interface! !
 !ScintillaView categoriesFor: #keyBindings!accessing!key bindings!public! !
 !ScintillaView categoriesFor: #keyBindings:!accessing!key bindings!public! !
+!ScintillaView categoriesFor: #keyBindingsSortBlock!accessing!key bindings!public! !
 !ScintillaView categoriesFor: #keyboardCommands!commands!public! !
 !ScintillaView categoriesFor: #lastLineWithState!enquiries!public!styling! !
 !ScintillaView categoriesFor: #layoutCachingMode!accessing!line wrapping!public! !

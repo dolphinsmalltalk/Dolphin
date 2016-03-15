@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Magnitude subclass: #Character
 	instanceVariableNames: 'asciiValue '
@@ -286,7 +286,11 @@ species
 	Implementation Note: The primitive superclass implementation
 	will fail for immediate classes, so we must override here."
 
-	^Character! !
+	^Character!
+
+storeOn: aStream
+
+	self printOn: aStream! !
 !Character categoriesFor: #_beginsString:!comparing!double dispatch!private! !
 !Character categoriesFor: #_separateSubStringsIn:!double dispatch!private! !
 !Character categoriesFor: #<!comparing!public! !
@@ -329,6 +333,7 @@ species
 !Character categoriesFor: #shallowCopy!copying!public! !
 !Character categoriesFor: #size!accessing!private! !
 !Character categoriesFor: #species!accessing!public! !
+!Character categoriesFor: #storeOn:!printing!public! !
 
 Character methodProtocol: #Character attributes: #(#ansi #readOnly) selectors: #(#asLowercase #asString #asUppercase #codePoint #isAlphaNumeric #isDigit #isLetter #isLowercase #isUppercase)!
 

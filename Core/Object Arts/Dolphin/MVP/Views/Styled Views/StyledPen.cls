@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #StyledPen
 	instanceVariableNames: 'color width dashPattern'
@@ -41,6 +41,10 @@ printOn: aStream
 	self dashPattern printOn: aStream.
 	aStream nextPut: $)!
 
+storeOn: aStream 
+	
+	self printOn: aStream!
+
 width
 	^width!
 
@@ -52,6 +56,7 @@ width: anInteger
 !StyledPen categoriesFor: #dashPattern!public! !
 !StyledPen categoriesFor: #dashPattern:!public! !
 !StyledPen categoriesFor: #printOn:!public! !
+!StyledPen categoriesFor: #storeOn:!printing!public! !
 !StyledPen categoriesFor: #width!accessing!public! !
 !StyledPen categoriesFor: #width:!accessing!public! !
 

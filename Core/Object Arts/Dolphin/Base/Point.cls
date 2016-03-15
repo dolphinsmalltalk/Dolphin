@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ArithmeticValue subclass: #Point
 	instanceVariableNames: 'x y '
@@ -241,6 +241,10 @@ roundTo: aNumber
 
 	^(x roundTo: aNumber) @ (y roundTo: aNumber)!
 
+storeOn: aStream
+
+	self printOn: aStream!
+
 subtractFromPoint: aPoint
 	"Private - Answer the result of subtracting the receiver from the known Point,
 	aPoint, by coercing the less general of it and the receiver. Overridden by 
@@ -319,6 +323,7 @@ y: aNumber
 !Point categoriesFor: #raisedTo:!mathematical!public! !
 !Point categoriesFor: #rounded!public!truncation and round off! !
 !Point categoriesFor: #roundTo:!public!truncation and round off! !
+!Point categoriesFor: #storeOn:!printing!public! !
 !Point categoriesFor: #subtractFromPoint:!double dispatch!private! !
 !Point categoriesFor: #transpose!operations!public! !
 !Point categoriesFor: #truncated!public!truncation and round off! !

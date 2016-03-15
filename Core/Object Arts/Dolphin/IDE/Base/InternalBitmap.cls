@@ -129,7 +129,15 @@ printOn: aStream
 	self asByteArray printOn: aStream upTo: 100000!
 
 setBitmap: aGdiplusBitmap 
-	gdiplusBitmap := aGdiplusBitmap! !
+	gdiplusBitmap := aGdiplusBitmap!
+
+storeOn: aStream 
+	"Append the ASCII representation of the receiver to aStream."
+
+	aStream
+		nextPut: $(;
+		print: self;
+		nextPut: $)! !
 !InternalBitmap categoriesFor: #=!comparing!comparison!public! !
 !InternalBitmap categoriesFor: #addToImageList:mask:!double dispatch!private! !
 !InternalBitmap categoriesFor: #asBitmap!public! !
@@ -151,6 +159,7 @@ setBitmap: aGdiplusBitmap
 !InternalBitmap categoriesFor: #internalize!public! !
 !InternalBitmap categoriesFor: #printOn:!printing!public! !
 !InternalBitmap categoriesFor: #setBitmap:!initializing!private! !
+!InternalBitmap categoriesFor: #storeOn:!printing!public! !
 
 !InternalBitmap class methodsFor!
 

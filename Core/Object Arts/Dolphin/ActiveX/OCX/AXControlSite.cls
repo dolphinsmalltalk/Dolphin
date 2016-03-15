@@ -795,6 +795,29 @@ state
 	sequence list addAll: controlState afterIndex: 1.
 	^sequence!
 
+storeOn: aStream indent: anInteger variables: aDictionary
+
+	| default name |
+	name := self storeNameIn: aDictionary.
+	aStream display: name; cr.
+	anInteger + 1 timesRepeat: [aStream tab].
+	[
+		default := (self class progId: self progId) create; show.
+		aStream
+			nextPutAll: ' progId: ';
+			print: self progId;
+			nextPut: $; ;
+			cr.
+		anInteger + 1 timesRepeat: [aStream tab].
+		aStream nextPutAll: 'create;'.
+		self storeAttributesDifferingFrom: default On: aStream variables: aDictionary indent: anInteger + 1.
+		aStream cr.
+		anInteger + 1 timesRepeat: [aStream tab].
+		aStream nextPutAll: 'yourself.'; cr.
+	] ensure: [
+		default topView close.
+	].!
+
 supportedInterfaces
 	"Answer the set of interface classes supported by the receiver.
 	We need only support the standard property notification sink interface since
@@ -903,6 +926,7 @@ usesAmbientColors
 !AXControlSite categoriesFor: #showHatching!ambient properties!public!testing! !
 !AXControlSite categoriesFor: #sink!accessing!public! !
 !AXControlSite categoriesFor: #state!binary filing!private! !
+!AXControlSite categoriesFor: #storeOn:indent:variables:!printing!public! !
 !AXControlSite categoriesFor: #supportedInterfaces!constants!public! !
 !AXControlSite categoriesFor: #triggeredEvents!events!public! !
 !AXControlSite categoriesFor: #usesAmbientColors!public!testing! !

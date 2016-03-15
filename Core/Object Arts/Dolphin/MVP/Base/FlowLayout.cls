@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 LayoutManager subclass: #FlowLayout
 	instanceVariableNames: 'horizontalGap verticalGap flags'
@@ -157,6 +157,24 @@ resolutionScaledBy: scale
 	horizontalGap := (horizontalGap * scale x) truncated.
 	verticalGap := (verticalGap * scale y) truncated!
 
+storeOn: aStream
+
+	| default |
+	default := self class new.
+	aStream
+		nextPut: $(;
+		nextPutAll: self class name;
+		nextPutAll: ' new'.
+	#(#'horizontalGap' #'verticalGap' #'alignment') do: [:each | 
+		| x |
+		(x := self perform: each) = (default perform: each) ifFalse: [
+			aStream space; nextPutAll: each; nextPutAll: ': '.
+			x storeOn: aStream.
+			aStream nextPut: $;
+		].
+	].
+	aStream space; nextPutAll: 'yourself)'!
+
 verticalAlignment
 	^flags bitAnd: ##(AlignTop | AlignVCenter | AlignBottom)!
 
@@ -180,6 +198,7 @@ verticalGap: anInteger
 !FlowLayout categoriesFor: #preferredLayoutExtentOf:context:!enquiries!public! !
 !FlowLayout categoriesFor: #resize:to:!geometry!public! !
 !FlowLayout categoriesFor: #resolutionScaledBy:!geometry!private! !
+!FlowLayout categoriesFor: #storeOn:!printing!public! !
 !FlowLayout categoriesFor: #verticalAlignment!accessing!private! !
 !FlowLayout categoriesFor: #verticalGap!accessing!public! !
 !FlowLayout categoriesFor: #verticalGap:!accessing!public! !

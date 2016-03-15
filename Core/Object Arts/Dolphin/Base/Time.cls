@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Magnitude subclass: #Time
 	instanceVariableNames: 'milliseconds '
@@ -118,10 +118,16 @@ setMilliseconds: anInteger
 	milliseconds := anInteger!
 
 storeOn: aStream 
+
 	aStream
-		display: self class;
-		nextPutAll: ' fromString: '.
-	self displayString printOn: aStream!
+		nextPut: $(;
+		nextPutAll: self class name;
+		nextPutAll: ' fromMilliseconds: '.
+	milliseconds storeOn: aStream .
+	aStream 
+		nextPutAll: ' "';
+		print: self;
+		nextPutAll: '")'!
 
 subtractTime: aTimeOrDate
 	"Answer a new Time, aTimeOrDate seconds before the receiver."

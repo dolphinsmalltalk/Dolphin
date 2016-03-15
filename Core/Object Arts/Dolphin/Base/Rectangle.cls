@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #Rectangle
 	instanceVariableNames: 'origin corner'
@@ -419,6 +419,15 @@ scaleBy: delta
 
 	^self species vertex: origin * delta vertex: corner * delta!
 
+storeOn: aStream
+
+	aStream 
+		nextPut: $(;
+		print: origin; 
+		nextPutAll: ' corner: '; 
+		print: corner;
+		nextPut: $)!
+
 top
 	"Answer the position of the receiver's top edge."
 
@@ -570,6 +579,7 @@ width: aNumber
 !Rectangle categoriesFor: #rightCenter:!accessing!public! !
 !Rectangle categoriesFor: #rounded!public!truncation and round off! !
 !Rectangle categoriesFor: #scaleBy:!public!transforming! !
+!Rectangle categoriesFor: #storeOn:!printing!public! !
 !Rectangle categoriesFor: #top!accessing!public! !
 !Rectangle categoriesFor: #top:!accessing!public! !
 !Rectangle categoriesFor: #topAlign!accessing!public! !

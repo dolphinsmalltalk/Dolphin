@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #TypeConverter
 	instanceVariableNames: 'leftNullValue rightNullValue'
@@ -91,7 +91,11 @@ rightToLeft: anObject
 	type to an <Object> of the receivers left type. Answers the result of the conversion. 
 	Must be overridden by subclasses to perform specific conversions"
 
-	^self subclassResponsibility! !
+	^self subclassResponsibility!
+
+storeOn: aStream indent: anInteger variables: aDictionary
+
+	self storeAttributesOn: aStream indent: anInteger variables: aDictionary! !
 !TypeConverter categoriesFor: #convertFromLeftToRight:!converting!public! !
 !TypeConverter categoriesFor: #convertFromRightToLeft:!converting!public! !
 !TypeConverter categoriesFor: #inverted!operations!public! !
@@ -103,6 +107,7 @@ rightToLeft: anObject
 !TypeConverter categoriesFor: #rightNullValue!accessing!public! !
 !TypeConverter categoriesFor: #rightNullValue:!accessing!public! !
 !TypeConverter categoriesFor: #rightToLeft:!operations!private! !
+!TypeConverter categoriesFor: #storeOn:indent:variables:!printing!public! !
 
 TypeConverter methodProtocol: #typeConverter attributes: #(#readOnly) selectors: #(#convertFromLeftToRight: #convertFromRightToLeft: #inverted #leftNullValue #leftNullValue: #rightNullValue #rightNullValue:)!
 

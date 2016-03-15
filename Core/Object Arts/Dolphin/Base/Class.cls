@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ClassDescription subclass: #Class
 	instanceVariableNames: 'name classPool sharedPools comment classCategories _guid '
@@ -603,6 +603,13 @@ storeGUID
 	self sourceManager storeGUIDForClass: self
 !
 
+storeOn: aStream
+
+	aStream
+		nextPutAll: '##(';
+		nextPutAll: self name;
+		nextPut: $)!
+
 subclass: aClassSymbol instanceVariableNames: instVarString classVariableNames: classVarString poolDictionaries: poolDictString
 	^(self 
 		newClassBuilder: aClassSymbol
@@ -815,6 +822,7 @@ variableSubclass: aClassSymbol
 !Class categoriesFor: #stbSaveOn:!binary filing!public! !
 !Class categoriesFor: #stbVersion!binary filing!public! !
 !Class categoriesFor: #storeGUID!development!private!source filing-methods! !
+!Class categoriesFor: #storeOn:!printing!public! !
 !Class categoriesFor: #subclass:instanceVariableNames:classVariableNames:poolDictionaries:!class hierarchy-adding!public! !
 !Class categoriesFor: #subclass:instanceVariableNames:classVariableNames:poolDictionaries:category:!class hierarchy-adding!public! !
 !Class categoriesFor: #subclass:instanceVariableNames:classVariableNames:poolDictionaries:classInstanceVariableNames:!class hierarchy-adding!public! !

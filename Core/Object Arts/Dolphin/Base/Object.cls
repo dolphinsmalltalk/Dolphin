@@ -1319,11 +1319,61 @@ stbSaveOn: anSTBOutFiler
 
 	anSTBOutFiler saveObject: self!
 
+storeAttributesDifferingFrom: default On: aStream variables: aDictionary indent: anInteger
+
+	| aspects rejects specialAspects |
+	rejects := #(#'controlDispatch' #'yourself').
+	specialAspects := IdentityDictionary new
+		at: #'commandDescription' 	put: [:anObject | aStream nextPutAll: 'command: '; print: anObject command];
+		at: #'buddy'			 	put: [:anObject | 
+			self isAutoBuddy ifTrue: [
+				aStream nextPutAll: 'isAutoBuddy: true'
+			] ifFalse: [
+				aStream nextPutAll: 'buddy: '; nextPutAll: (aDictionary at: anObject)
+			]
+		];
+		yourself.
+	aspects := self class publishedAspectsOfInstances asSortedCollection.
+	aspects := aspects reject: [:each | rejects includes: each name].
+	aspects do: [:each | | x |
+		(x := self perform: each name) = (default perform: each name) ifFalse: [
+			aStream cr.
+			anInteger timesRepeat: [aStream tab].
+			each isWriteable ifTrue: [
+				aStream display: each name; nextPutAll: ': '.
+				x storeOn: aStream indent: anInteger + 1 variables: aDictionary.
+			] ifFalse: [
+				(specialAspects at: each name ifAbsent: [self halt]) value: x.
+			].
+			aStream nextPut: $;.
+		].
+	]!
+
+storeAttributesOn: aStream indent: anInteger variables: aDictionary
+
+	aStream
+		nextPut: $(;
+		nextPutAll: self class name;
+		nextPutAll: ' new'.
+	self storeAttributesDifferingFrom: self class new On: aStream variables: aDictionary indent: anInteger.
+	aStream cr.
+	anInteger timesRepeat: [aStream tab].
+	aStream nextPutAll: 'yourself)'
+!
+
 storeOn: aStream
 	"Append to the <puttableStream> argument, target, an expression which when 
 	evaluated will answer a collection similar to the receiver."
 
-	self printOn: aStream!
+	aStream nextPutAll: '(Object fromLiteralStoreArray: '.
+	self literalStoreArray storeOn: aStream.
+	aStream nextPut: $)!
+
+storeOn: aStream indent: anInteger variables: aDictionary
+	"Append to the <puttableStream> argument, target, an expression which when 
+	evaluated will answer a collection similar to the receiver."
+
+	self storeOn: aStream!
 
 storeString
 	"Answer a <readableString> which, when compiled and evaluated, results in
@@ -1633,7 +1683,10 @@ yourself
 !Object categoriesFor: #species!accessing!public! !
 !Object categoriesFor: #stbFixup:at:!binary filing!public! !
 !Object categoriesFor: #stbSaveOn:!binary filing!public! !
+!Object categoriesFor: #storeAttributesDifferingFrom:On:variables:indent:!printing!public! !
+!Object categoriesFor: #storeAttributesOn:indent:variables:!printing!public! !
 !Object categoriesFor: #storeOn:!printing!public! !
+!Object categoriesFor: #storeOn:indent:variables:!printing!public! !
 !Object categoriesFor: #storeString!printing!public! !
 !Object categoriesFor: #subclassResponsibility!exceptions!public! !
 !Object categoriesFor: #swappingBecome:!mutating!public! !

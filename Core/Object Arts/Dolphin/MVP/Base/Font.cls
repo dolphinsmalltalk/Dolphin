@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 GraphicsTool subclass: #Font
 	instanceVariableNames: 'logfont resolution'
@@ -228,6 +228,33 @@ resolution: aPoint
 	self pointSize: ptSize] 
 			ifCurtailed: [resolution := oldres]!
 
+storeOn: aStream
+
+	| default isDefault name |
+	name := self name.
+	default := self class name: name.
+	aStream
+		nextPutAll: '((';
+		nextPutAll: self class name;
+		nextPutAll: ' name: ';
+		print: name;
+		nextPut: $);
+		yourself.
+	isDefault := true.
+	#(#'characterSet' #'isBold' #'isItalic' #'isStruckThrough' #'isUnderlined' #'pointSize' #'resolution' #'weight') do: [:each | | x |
+		(x := self perform: each) = (default perform: each) ifFalse: [
+			aStream cr; tab; nextPutAll: each; nextPutAll: ': '.
+			x storeOn: aStream.
+			aStream nextPut: $;.
+			isDefault := false.
+		].
+	].
+	isDefault ifTrue: [
+		aStream nextPut: $)
+	] ifFalse: [
+		aStream cr; tab; nextPutAll: 'yourself)'
+	]!
+
 weight
 	"Answer the receiver's <integer> 'weight' (thickness)."
 
@@ -275,6 +302,7 @@ weight: anInteger
 !Font categoriesFor: #printOn:!development!printing!public! !
 !Font categoriesFor: #resolution!accessing!public! !
 !Font categoriesFor: #resolution:!accessing!public! !
+!Font categoriesFor: #storeOn:!development!printing!public! !
 !Font categoriesFor: #weight!accessing!public! !
 !Font categoriesFor: #weight:!accessing!public! !
 

@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 GraphicsTool subclass: #Image
 	instanceVariableNames: 'fileLocator identifier instanceHandle'
@@ -245,7 +245,14 @@ printOn: aStream
 						space;
 						nextPutAll: #fromId:;
 						space;
-						print: id]]! !
+						print: id]]!
+
+storeOn: aStream
+
+	aStream
+		nextPut: $(;
+		print: self;
+		nextPut: $)! !
 !Image categoriesFor: #=!comparing!public! !
 !Image categoriesFor: #addToImageList:mask:!private!testing! !
 !Image categoriesFor: #asSharedCopy!converting!public! !
@@ -274,6 +281,7 @@ printOn: aStream
 !Image categoriesFor: #loadFromInstance:!private!realizing/unrealizing! !
 !Image categoriesFor: #pixelData!public! !
 !Image categoriesFor: #printOn:!printing!public! !
+!Image categoriesFor: #storeOn:!printing!public! !
 
 Image methodProtocol: #image attributes: #(#readOnly) selectors: #(#drawOn: #drawOn:at: #drawOn:at:extent: #extent)!
 

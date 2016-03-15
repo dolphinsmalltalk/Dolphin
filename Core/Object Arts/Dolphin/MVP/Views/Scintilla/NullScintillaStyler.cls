@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ScintillaStyler subclass: #NullScintillaStyler
 	instanceVariableNames: 'normalStyleName'
@@ -28,11 +28,25 @@ onStyleNeeded: aScintillaView from: startInteger to: stopInteger
 	"Callback from Scintilla requesting that the specified range of text be coloured.
 	In this case we just set to the default style, regardless."
 
-	aScintillaView applyStyle: self normalStyleName toNext: stopInteger - startInteger + 1! !
+	aScintillaView applyStyle: self normalStyleName toNext: stopInteger - startInteger + 1!
+
+storeOn: aStream
+
+	aStream
+		nextPut: $(;
+		nextPutAll: self class name;
+		nextPutAll: ' new'.
+	normalStyleName == #'normal' ifFalse: [
+		aStream nextPutAll: ' normalStyleName: '.
+		normalStyleName storeOn: aStream.
+		aStream nextPutAll: '; yourself'.
+	].
+	aStream nextPut: $)! !
 !NullScintillaStyler categoriesFor: #initialize!initializing!public! !
 !NullScintillaStyler categoriesFor: #normalStyleName!accessing!public! !
 !NullScintillaStyler categoriesFor: #normalStyleName:!accessing!public! !
 !NullScintillaStyler categoriesFor: #onStyleNeeded:from:to:!event handling!public! !
+!NullScintillaStyler categoriesFor: #storeOn:!printing!public! !
 
 !NullScintillaStyler class methodsFor!
 

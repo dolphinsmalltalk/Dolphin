@@ -107,6 +107,32 @@ setSelector: aSymbol arguments: argArray
 	selector := aSymbol.
 	args := argArray!
 
+storeOn: aStream
+
+	self argumentCount == 0 ifTrue: [
+		aStream
+			nextPutAll: '(Message selector: ';
+			print: selector;
+			nextPut: $).
+		^self
+	].
+	aStream
+		nextPut: $(;
+		nextPutAll: self class name;
+		nextPutAll: ' selector: ';
+		print: selector.
+	0 < self argumentCount ifTrue: [
+		1 == self argumentCount ifTrue: [
+			aStream nextPutAll: ' argument: '.
+			(args at: 1) storeOn: aStream.
+		] ifFalse: [
+			aStream nextPutAll: ' arguments: '.
+			args storeOn: aStream.
+		].
+	].
+	aStream nextPut: $).
+!
+
 value: anObject
 	"Answer the result of sending the receiver to the object, anObject.
 	Implementation Note: By implementing this selector from the monadic
@@ -148,6 +174,7 @@ valueWithArguments: argArray
 !Message categoriesFor: #selector!accessing!public! !
 !Message categoriesFor: #selector:!accessing!public! !
 !Message categoriesFor: #setSelector:arguments:!accessing!private! !
+!Message categoriesFor: #storeOn:!printing!public! !
 !Message categoriesFor: #value:!evaluating!public! !
 !Message categoriesFor: #value:value:!evaluating!public! !
 !Message categoriesFor: #valueWithArguments:!evaluating!public! !

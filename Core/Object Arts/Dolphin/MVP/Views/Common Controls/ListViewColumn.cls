@@ -362,6 +362,10 @@ sortBlock: aDyadicValuableOrNil
 	getSortValueBlock := aDyadicValuableOrNil.
 	self update!
 
+storeOn: aStream indent: anInteger variables: aDictionary
+
+	self storeAttributesOn: aStream indent: anInteger variables: aDictionary!
+
 text
 	"Answer the title for this column in the list view header."
 
@@ -456,6 +460,7 @@ width: anInteger
 !ListViewColumn categoriesFor: #rowSortBlock!adapters!private! !
 !ListViewColumn categoriesFor: #sortBlock!adapters!public!sorting! !
 !ListViewColumn categoriesFor: #sortBlock:!adapters!public!sorting! !
+!ListViewColumn categoriesFor: #storeOn:indent:variables:!printing!public! !
 !ListViewColumn categoriesFor: #text!accessing!public! !
 !ListViewColumn categoriesFor: #text:!accessing!public! !
 !ListViewColumn categoriesFor: #textFromRow:!adapters!private! !

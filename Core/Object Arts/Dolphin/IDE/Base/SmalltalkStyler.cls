@@ -324,6 +324,12 @@ resetStylingIn: aScintillaView from: startInteger to: stopInteger
 scannerClass
 	^SmalltalkStylingScanner!
 
+storeOn: aStream
+
+	aStream
+		nextPutAll: self class name;
+		nextPutAll: ' new'!
+
 styleForBar
 	| lastStyle |
 	lastStyle := self lastStyle.
@@ -419,6 +425,7 @@ tokenBefore: anInteger
 !SmalltalkStyler categoriesFor: #prepareToStyleView:!initializing!public! !
 !SmalltalkStyler categoriesFor: #resetStylingIn:from:to:!helpers!private! !
 !SmalltalkStyler categoriesFor: #scannerClass!constants!private! !
+!SmalltalkStyler categoriesFor: #storeOn:!printing!public! !
 !SmalltalkStyler categoriesFor: #styleForBar!helpers!private! !
 !SmalltalkStyler categoriesFor: #styleForToken:!helpers!private! !
 !SmalltalkStyler categoriesFor: #stylingStartBefore:in:!helpers!private! !

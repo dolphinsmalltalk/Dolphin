@@ -85,6 +85,22 @@ scintillaKeyCode
 	codes := AcceleratorTable splitKeyCode: self acceleratorKey.
 	^(self translateVirtualKey: codes first) + ((codes last bitAnd: 16r1C) << 14)!
 
+storeOn: aStream
+
+	aStream
+		nextPut: $(;
+		nextPutAll: self class name;
+		nextPutAll: ' newAcceleratorKey: ';
+		print: acceleratorKey;
+		nextPutAll: ' "';
+		nextPutAll: self acceleratorKeyString;
+		nextPutAll: '" message: ';
+		print: message;
+		nextPutAll: ' "';
+		nextPutAll: self commandSymbol;
+		nextPutAll: '")'
+!
+
 translateVirtualKey: vkInteger 
 	"Private - Translate from a Windows Virtual Key code (VK_xxx) to the corresponding Scintilla
 	key code (SCK_xxx)"
@@ -103,6 +119,7 @@ translateVirtualKey: vkInteger
 !ScintillaKeyBinding categoriesFor: #message:!accessing!private! !
 !ScintillaKeyBinding categoriesFor: #printOn:!printing!public! !
 !ScintillaKeyBinding categoriesFor: #scintillaKeyCode!accessing!private! !
+!ScintillaKeyBinding categoriesFor: #storeOn:!printing!public! !
 !ScintillaKeyBinding categoriesFor: #translateVirtualKey:!helpers!private! !
 
 !ScintillaKeyBinding class methodsFor!

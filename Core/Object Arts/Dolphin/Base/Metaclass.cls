@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ClassDescription subclass: #Metaclass
 	instanceVariableNames: 'instanceClass '
@@ -164,7 +164,15 @@ sharedStaticPools
 stbSaveOn: anSTBOutFiler
 	"Save out a binary representation of the receiver to anSTBOutFiler."
 
-	anSTBOutFiler saveObject: self as: (STBMetaclassProxy forClass: self)! !
+	anSTBOutFiler saveObject: self as: (STBMetaclassProxy forClass: self)!
+
+storeOn: aStream
+
+	aStream
+		nextPutAll: '##(';
+		nextPutAll: self name;
+		nextPutAll: ' class'
+		nextPut: $)! !
 !Metaclass categoriesFor: #addToSuper!class hierarchy-adding!private! !
 !Metaclass categoriesFor: #bindingFor:!compiling!public! !
 !Metaclass categoriesFor: #classPool!class variables!public! !
@@ -185,6 +193,7 @@ stbSaveOn: anSTBOutFiler
 !Metaclass categoriesFor: #setSharedPoolNames:!pool variables!private! !
 !Metaclass categoriesFor: #sharedStaticPools!pool variables!public! !
 !Metaclass categoriesFor: #stbSaveOn:!binary filing!public! !
+!Metaclass categoriesFor: #storeOn:!printing!public! !
 
 !Metaclass class methodsFor!
 

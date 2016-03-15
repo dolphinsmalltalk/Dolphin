@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #Boolean
 	instanceVariableNames: ''
@@ -154,6 +154,10 @@ shallowCopy
 
 	^self!
 
+storeOn: aStream
+
+	self printOn: aStream!
+
 xor: operand
 	"Answer whether either the receiver or the <boolean> argument, operand,
 	is true, but not both.
@@ -180,6 +184,7 @@ xor: operand
 !Boolean categoriesFor: #not!logical operations!public! !
 !Boolean categoriesFor: #or:!control flow!public! !
 !Boolean categoriesFor: #shallowCopy!copying!public! !
+!Boolean categoriesFor: #storeOn:!printing!public! !
 !Boolean categoriesFor: #xor:!logical operations!public! !
 
 Boolean methodProtocol: #boolean attributes: #(#ansi #readOnly) selectors: #(#& #| #and: #eqv: #ifFalse: #ifFalse:ifTrue: #ifTrue: #ifTrue:ifFalse: #not #or: #xor:)!

@@ -75,7 +75,7 @@ implicitInsets: aLayoutContext
 		ifFalse: [0 @ self headerHeight corner: 0 @ 0]!
 
 isPinHot
-	^pinInteractor isHot!
+	^pinInteractor ifNil: [false] ifNotNil: [:value | value isHot]!
 
 isPinned
 	^slider notNil and: [slider isPinned]!
@@ -417,6 +417,17 @@ wmPrint: message wParam: wParam lParam: lParam
 !SlidingCardTray class methodsFor!
 
 initialize
-	PinImageList := nil! !
+	PinImageList := nil!
+
+resource_Default_view
+	"Answer the literal data from which the 'Default view' resource can be reconstituted.
+	DO NOT EDIT OR RECATEGORIZE THIS METHOD.
+
+	If you wish to modify this resource evaluate:
+	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Default_view)
+	"
+
+	^#(#'!!STL' 3 788558 10 ##(Smalltalk.STBViewProxy) 8 ##(Smalltalk.SlidingCardTray) 98 22 0 0 98 2 8 1140850688 131073 416 0 524550 ##(Smalltalk.ColorRef) 8 4278190080 0 5 0 0 0 416 655878 ##(Smalltalk.CardLayout) 202 208 98 0 0 234 256 592 0 410 8 ##(Smalltalk.TabViewXP) 98 28 0 416 98 2 8 1140916736 1 624 590662 2 ##(Smalltalk.ListModel) 202 208 592 0 1310726 ##(Smalltalk.IdentitySearchPolicy) 0 0 1 0 0 0 624 0 8 4294904999 787814 3 ##(Smalltalk.BlockClosure) 0 0 918822 ##(Smalltalk.CompiledMethod) 2 3 8 ##(Smalltalk.ListControlView) 8 #defaultGetTextBlock 479764963 8 #[30 105 226 0 106] 8 #displayString 816 7 257 0 802 0 0 834 2 3 8 ##(Smalltalk.IconicListAbstract) 8 #defaultGetImageBlock 486253571 8 #[30 105 226 0 106] 8 #iconImageIndex 928 7 257 0 1049926 1 ##(Smalltalk.IconImageManager) 0 0 0 0 0 8 #noIcons 0 0 0 0 0 983302 ##(Smalltalk.MessageSequence) 202 208 98 2 721670 ##(Smalltalk.MessageSend) 8 #createAt:extent: 98 2 328198 ##(Smalltalk.Point) 1 1 1202 701 61 624 1138 8 #tcmSetExtendedStyle:dwExStyle: 98 2 -1 1 624 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 94 1 0 0 30 0 0 0] 98 0 1202 193 193 0 27 0 0 1202 33 33 0 0 0 1074 202 208 98 1 1138 1168 98 2 1202 1 1 1202 701 501 416 1298 8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 94 1 0 0 250 0 0 0] 98 1 624 1360 0 27 )! !
 !SlidingCardTray class categoriesFor: #initialize!public! !
+!SlidingCardTray class categoriesFor: #resource_Default_view!public!resources-views! !
 

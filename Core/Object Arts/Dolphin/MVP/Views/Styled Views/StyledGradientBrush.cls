@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #StyledGradientBrush
 	instanceVariableNames: 'startColor endColor startPoint endPoint'
@@ -77,7 +77,11 @@ startPoint
 	^startPoint!
 
 startPoint: aPoint 
-	startPoint := aPoint! !
+	startPoint := aPoint!
+
+storeOn: aStream 
+	
+	self printOn: aStream! !
 !StyledGradientBrush categoriesFor: #asBackgroundGdiplusBrushFor:!converting!public! !
 !StyledGradientBrush categoriesFor: #endColor!accessing!public! !
 !StyledGradientBrush categoriesFor: #endColor:!accessing!public! !
@@ -91,6 +95,7 @@ startPoint: aPoint
 !StyledGradientBrush categoriesFor: #startColorARGB!converting!public! !
 !StyledGradientBrush categoriesFor: #startPoint!accessing!public! !
 !StyledGradientBrush categoriesFor: #startPoint:!accessing!public! !
+!StyledGradientBrush categoriesFor: #storeOn:!printing!public! !
 
 !StyledGradientBrush class methodsFor!
 

@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ContainerView subclass: #SlideyInneyOuteyThing
 	instanceVariableNames: 'tabs tray trayExtent animationDuration tickCounter siotFlags _siotReserved1 _siotReserved2'
@@ -462,6 +462,33 @@ startAutoHideTimer
 	tickCounter := 0.
 	self setTimer: AW_HIDE interval: self autoHideTimerInterval!
 
+storeSubviewsA: aList on: aStream variables: aDictionary
+	"Override to do nothing since subviews are created automatically"!
+
+storeSubviewsB: aList on: aStream variables: aDictionary
+
+	| myName variableName childName |
+	myName := aDictionary at: self.
+	aList do: [:each | 
+		childName := self nameOf: each.
+		variableName := aDictionary at: each.
+		aStream
+			nextPutAll: variableName;
+			nextPutAll: ' := ';
+			nextPutAll: (childName ifNil: [''] ifNotNil: ['(']);
+			nextPutAll: myName;
+			nextPutAll: ' subViews detect: [:each | each isKindOf: ';
+			nextPutAll: each class name;
+			nextPutAll: ']'.
+		(self nameOf: each) ifNotNil: [:aString | 
+			aStream
+				nextPutAll: ') name: ';
+				print: aString;
+				nextPutAll: '; yourself'
+		].
+		aStream nextPut: $.; cr
+	]!
+
 tabs
 	^tabs!
 
@@ -571,6 +598,8 @@ wmPrint: message wParam: wParam lParam: lParam
 !SlideyInneyOuteyThing categoriesFor: #showShell!operations!private! !
 !SlideyInneyOuteyThing categoriesFor: #showTray!commands!public! !
 !SlideyInneyOuteyThing categoriesFor: #startAutoHideTimer!private! !
+!SlideyInneyOuteyThing categoriesFor: #storeSubviewsA:on:variables:!printing!public! !
+!SlideyInneyOuteyThing categoriesFor: #storeSubviewsB:on:variables:!printing!public! !
 !SlideyInneyOuteyThing categoriesFor: #tabs!public! !
 !SlideyInneyOuteyThing categoriesFor: #tray!public! !
 !SlideyInneyOuteyThing categoriesFor: #trayAnimationType!constants!private! !

@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 LayoutManager subclass: #FramingLayout
 	instanceVariableNames: 'framings'
@@ -108,7 +108,28 @@ resolutionScaledBy: aPoint
 	has changed since the point at which the view was saved. Scale any internal pixels by <Point>
 	scale."
 
-	framings do: [:each | each resolutionScaledBy: aPoint]! !
+	framings do: [:each | each resolutionScaledBy: aPoint]!
+
+storeOn: aStream indent: anInteger variables: aDictionary
+
+	aStream
+		nextPutAll: self class name;
+		nextPutAll: ' new'
+"
+	framings keysAndValuesDo: [:eachKey :eachValue | 
+		aStream cr.
+		anInteger timesRepeat: [aStream tab].
+		aStream
+			nextPutAll: 'arrangementOf: ';
+			nextPutAll: (aDictionary at: eachKey);
+			nextPutAll: ' put: '.
+		eachValue storeOn: aStream indent: anInteger + 1 variables: aDictionary.
+		aStream nextPut: $;
+	].
+	aStream cr.
+	anInteger timesRepeat: [aStream tab].
+	aStream nextPutAll: 'yourself)'
+"! !
 !FramingLayout categoriesFor: #arrangementOf:!accessing!public! !
 !FramingLayout categoriesFor: #arrangementOf:put:!accessing!public! !
 !FramingLayout categoriesFor: #initialize!initializing!private! !
@@ -118,4 +139,5 @@ resolutionScaledBy: aPoint
 !FramingLayout categoriesFor: #reposition:to:!geometry!private! !
 !FramingLayout categoriesFor: #resize:to:!geometry!public! !
 !FramingLayout categoriesFor: #resolutionScaledBy:!geometry!private! !
+!FramingLayout categoriesFor: #storeOn:indent:variables:!printing!public! !
 

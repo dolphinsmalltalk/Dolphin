@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 AbstractToTextConverter subclass: #BooleanToText
 	instanceVariableNames: 'format'
@@ -61,7 +61,20 @@ rightToLeft: aString
 	^self errorInvalidFormat
 
 
-	! !
+	!
+
+storeOn: aStream
+
+	aStream
+		nextPut: $(;
+		nextPutAll: self class name;
+		nextPutAll: ' new'.
+	self actualFormat ifNotNil: [
+		aStream nextPutAll: ' format: '.
+		format storeOn: aStream.
+		aStream nextPutAll: '; yourself'.
+	].
+	aStream nextPut: $)! !
 !BooleanToText categoriesFor: #actualFormat!accessing!private! !
 !BooleanToText categoriesFor: #defaultFormat!constants!private! !
 !BooleanToText categoriesFor: #errorInvalidFormat!exceptions!private! !
@@ -69,4 +82,5 @@ rightToLeft: aString
 !BooleanToText categoriesFor: #format:!accessing!public! !
 !BooleanToText categoriesFor: #leftToRight:!operations!private! !
 !BooleanToText categoriesFor: #rightToLeft:!operations!private! !
+!BooleanToText categoriesFor: #storeOn:!printing!public! !
 
