@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #CommandDescription
 	instanceVariableNames: 'command description acceleratorKey flags image'
@@ -110,6 +110,22 @@ displayOn: aStream
 
 	self description displayOn: aStream!
 
+fromStrings
+	"If the receiver can be reproduced by a String sent to #'fromString:' on the class side, then return it; else, return nil.
+		'<title>/[keyString]/<command>'
+	Menu Item with title as the text. This may include an & preceeding an Alt
+	mnemonic. KeyString, if included, represents an accelerator key attached to this
+	menu item, this is of the form [Ctrl+][Shift+]<key>, where key is a single character
+	or a special key such as: Ins, Home, Del, etc. Command is processed if
+	the menu item is chosen."
+
+	flags == 0 ifFalse: [^nil].
+	image ifNotNil: [^nil].
+	(command isKindOf: Symbol) ifFalse: [^nil].
+	(description includes: $/) ifTrue: [^nil].
+	^description , '/' , (AcceleratorTable keyStringFromCode: self acceleratorKey) , '/' , command
+!
+
 hasAcceleratorKey
 	"Answer whether the receiver defines an accelerator key."
 
@@ -198,6 +214,52 @@ registerAcceleratorKeyIn: accelerators
 
 	acceleratorKey == 0 ifFalse: [accelerators addCommand: self]!
 
+storeOn: aStream indent: anInteger variables: aDictionary
+
+	| closeFlag |
+	(closeFlag := self hasAcceleratorKey or: [self isModalCommand]) ifTrue: [aStream nextPut: $(].
+	aStream
+		nextPut: $(;
+		nextPutAll: self class name;
+		cr.
+	anInteger timesRepeat: [aStream tab].
+	aStream nextPutAll: 'command: '.
+	command storeOn: aStream.
+	aStream cr.
+	anInteger timesRepeat: [aStream tab].
+	aStream 
+		nextPutAll: 'description: ';
+		print: description.
+	image ifNotNil: [
+		aStream cr.
+		anInteger timesRepeat: [aStream tab].
+		aStream nextPutAll: 'image: ('.
+		image storeOn: aStream.
+		aStream nextPut: $)
+	].
+	aStream nextPut: $).
+	self isModalCommand ifTrue: [
+		aStream cr.
+		anInteger timesRepeat: [aStream tab].
+		aStream nextPutAll: 'isModalCommand: true;'
+	].
+	self hasAcceleratorKey ifTrue: [
+		aStream cr.
+		anInteger timesRepeat: [aStream tab].
+		aStream 
+			nextPutAll: 'acceleratorKey: ';
+			print: acceleratorKey;
+			nextPutAll:  ' "';
+			nextPutAll: (AcceleratorTable keyStringFromCode: acceleratorKey);
+			nextPutAll: '";'.
+	].
+	closeFlag ifTrue: [
+		aStream cr.
+		anInteger timesRepeat: [aStream tab].
+		aStream nextPutAll: 'yourself)'
+	].
+!
+
 toolTipText
 	"Answer a <readableString> suitable for displaying in a Tool-tip control."
 
@@ -215,6 +277,7 @@ toolTipText
 !CommandDescription categoriesFor: #description!accessing!public! !
 !CommandDescription categoriesFor: #description:!accessing!public! !
 !CommandDescription categoriesFor: #displayOn:!printing!public! !
+!CommandDescription categoriesFor: #fromStrings!development!printing!public! !
 !CommandDescription categoriesFor: #hasAcceleratorKey!public!testing! !
 !CommandDescription categoriesFor: #id!accessing!public! !
 !CommandDescription categoriesFor: #image!accessing!public! !
@@ -228,6 +291,7 @@ toolTipText
 !CommandDescription categoriesFor: #printOn:!development!printing!public! !
 !CommandDescription categoriesFor: #queryCommand:!commands!private! !
 !CommandDescription categoriesFor: #registerAcceleratorKeyIn:!operations!private! !
+!CommandDescription categoriesFor: #storeOn:indent:variables:!development!printing!public! !
 !CommandDescription categoriesFor: #toolTipText!accessing!public! !
 
 CommandDescription methodProtocol: #commandTarget attributes: #(#readOnly) selectors: #(#queryCommand:)!

@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 OrderedCollection variableSubclass: #SortedCollection
 	instanceVariableNames: 'algorithm '
@@ -271,7 +271,22 @@ stbSaveOn: anSTBOutFiler
 
 	super stbSaveOn: anSTBOutFiler
 
-	! !
+	!
+
+storeOn: aStream indent: anInteger variables: aDictionary
+	"Append to the <puttableStream> argument, target, an expression which when 
+	evaluated will answer a collection similar to the receiver."
+
+	(algorithm isKindOf: DefaultSortAlgorithm) ifTrue: [
+		^super storeOn: aStream indent: anInteger variables: aDictionary.
+	].
+	aStream
+		nextPutAll: '((';
+		nextPutAll: self class name;
+		nextPutAll: ' sortBlock: '.
+	algorithm sortBlock storeOn: aStream.
+	aStream nextPut: $).
+	self storeValuesOn: aStream indent: anInteger variables: aDictionary! !
 !SortedCollection categoriesFor: #,!copying!public! !
 !SortedCollection categoriesFor: #add:!adding!public! !
 !SortedCollection categoriesFor: #add:afterIndex:!adding!public! !
@@ -301,6 +316,7 @@ stbSaveOn: anSTBOutFiler
 !SortedCollection categoriesFor: #sortBlock:!accessing!public! !
 !SortedCollection categoriesFor: #sortFrom:to:!algorithms!private! !
 !SortedCollection categoriesFor: #stbSaveOn:!binary filing!public! !
+!SortedCollection categoriesFor: #storeOn:indent:variables:!printing!public! !
 
 SortedCollection methodProtocol: #SortedCollection attributes: #(#ansi #readOnly) selectors: #(#, #add: #addAll: #after: #allSatisfy: #anySatisfy: #asArray #asBag #asByteArray #asOrderedCollection #asSet #asSortedCollection #asSortedCollection: #at: #at:ifAbsent: #before: #collect: #copyFrom:to: #copyReplaceAll:with: #copyReplaceFrom:to:with: #copyReplaceFrom:to:withObject: #copyReplacing:withObject: #copyWith: #copyWithout: #detect: #detect:ifNone: #do: #do:separatedBy: #findFirst: #findLast: #first #from:to:do: #from:to:keysAndValuesDo: #includes: #indexOf: #indexOf:ifAbsent: #indexOfSubCollection:startingAt: #indexOfSubCollection:startingAt:ifAbsent: #inject:into: #isEmpty #keysAndValuesDo: #last #notEmpty #occurrencesOf: #rehash #reject: #remove: #remove:ifAbsent: #removeAll: #removeAtIndex: #removeFirst #removeLast #reverse #reverseDo: #select: #size #sortBlock #sortBlock: #with:do:)!
 

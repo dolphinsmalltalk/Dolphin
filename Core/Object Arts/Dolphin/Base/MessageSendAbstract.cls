@@ -99,6 +99,28 @@ receiver: anObject
 
 	^self subclassResponsibility!
 
+storeOn: aStream
+
+	aStream
+		nextPut: $(;
+		nextPutAll: self class name;
+		nextPutAll: ' receiver: '.
+	self receiver storeOn: aStream.
+	aStream 
+		nextPutAll: ' selector: ';
+		print: selector.
+	0 < self argumentCount ifTrue: [
+		1 == self argumentCount ifTrue: [
+			aStream nextPutAll: ' argument: '.
+			(args at: 1) storeOn: aStream.
+		] ifFalse: [
+			aStream nextPutAll: ' arguments: '.
+			args storeOn: aStream.
+		].
+	].
+	aStream nextPut: $).
+!
+
 value
 	"Evaluates the receiver send the message identified by the 
 	receiver's selector to the receiver's receiver, with the 
@@ -154,6 +176,7 @@ valueWithArguments: triggerArguments
 !MessageSendAbstract categoriesFor: #printOn:!printing!public! !
 !MessageSendAbstract categoriesFor: #receiver!accessing!public! !
 !MessageSendAbstract categoriesFor: #receiver:!accessing!public! !
+!MessageSendAbstract categoriesFor: #storeOn:!printing!public! !
 !MessageSendAbstract categoriesFor: #value!evaluating!public! !
 !MessageSendAbstract categoriesFor: #value:!evaluating!public! !
 !MessageSendAbstract categoriesFor: #value:value:!evaluating!public! !

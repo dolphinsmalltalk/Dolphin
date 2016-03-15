@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 MenuItem subclass: #DividerMenuItem
 	instanceVariableNames: ''
@@ -46,6 +46,16 @@ displayOn: aStream
 
 	aStream display: '|'!
 
+fromStrings
+	"If the receiver can be reproduced by a String sent to #'fromString:' on the class side, then return it; else, return nil."
+
+	| styleName |
+	styleName := self styleName.
+	styleName == #'separator' 	ifTrue: [^'-'].
+	styleName == #'break' 	ifTrue: [^'|'].
+	styleName == #'barBreak'	ifTrue: [^'||'].
+	self error: 'Unrecognized DividerMenuItem'!
+
 id
 	"Answers the menu item identifier for the receiver"
 
@@ -65,6 +75,15 @@ queryAlong: aCommandPolicy
 	"Answer an enabled <CommandQuery> as dividers must always be enabled."
 
 	^CommandQuery new beEnabled!
+
+storeOn: aStream indent: anInteger variables: aDictionary
+
+	| styleName |
+	styleName := self styleName.
+	styleName == #'separator' 	ifTrue: [aStream nextPutAll: 'DividerMenuItem separator'.	^self].
+	styleName == #'break' 	ifTrue: [aStream nextPutAll: 'DividerMenuItem break'.		^self].
+	styleName == #'barBreak' 	ifTrue: [aStream nextPutAll: 'DividerMenuItem barBreak'.	^self].
+	self error: 'Unrecognized DividerMenuItem'!
 
 styleName
 	"Answer a Symbol description of the style of the reciver"
@@ -86,10 +105,12 @@ text
 !DividerMenuItem categoriesFor: #command!accessing!private! !
 !DividerMenuItem categoriesFor: #commandDescription!accessing!private! !
 !DividerMenuItem categoriesFor: #displayOn:!displaying!public! !
+!DividerMenuItem categoriesFor: #fromStrings!printing!public! !
 !DividerMenuItem categoriesFor: #id!accessing!public! !
 !DividerMenuItem categoriesFor: #isDivider!public!testing! !
 !DividerMenuItem categoriesFor: #populateItemInfo:!private!realizing/unrealizing! !
 !DividerMenuItem categoriesFor: #queryAlong:!operations!public! !
+!DividerMenuItem categoriesFor: #storeOn:indent:variables:!printing!public! !
 !DividerMenuItem categoriesFor: #styleName!accessing!public! !
 !DividerMenuItem categoriesFor: #styleName:!accessing!private! !
 !DividerMenuItem categoriesFor: #text!accessing!private! !

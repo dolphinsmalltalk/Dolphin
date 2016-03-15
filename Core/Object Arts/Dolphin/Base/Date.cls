@@ -277,12 +277,14 @@ storeOn: aStream
 
 	"Use a format which is locale invariant."
 
-	aStream
-		display: self class;
-		space;
-		display: #fromDays:;
-		space;
-		display: self asDays!
+	aStream 
+		nextPut: $(;
+		nextPutAll: self class name;
+		nextPutAll: ' fromDays: ';
+		print: days;
+		nextPutAll: ' "';
+		print: self;
+		nextPutAll: '")'!
 
 subtractDate: aDate
 	"Answer the difference in days between the receiver and aData, as an Integer"

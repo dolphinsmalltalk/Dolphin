@@ -3282,6 +3282,108 @@ stbSaveOn: anSTBOutFiler
 
 	anSTBOutFiler saveObject: self as: self filerProxy!
 
+storeNameIn: aDictionary
+
+	| name |
+	(name := self parentView nameOf: self) ifNil: [
+		name := self class name , ((aDictionary keys select: [:each | each class == self class]) size + 1) printString.
+		name at: 1 put: (name at: 1) asLowercase.
+	] ifNotNil: [ 
+		| i x |
+		i := 0.
+		name at: 1 put: (name at: 1) asLowercase.
+		[0 < (i := name indexOf: Character space)] whileTrue: [
+			name := (name copyFrom: 1 to: i - 1) , (name copyFrom: i + 1 to: i + 1) asUppercase , (name copyFrom: i + 2 to: name size).
+		].
+		x := name.
+		[aDictionary includes: x] whileTrue: [
+			i := i + 1.
+			x := name , i printString.
+		].
+		name := x.
+	].
+	^aDictionary at: self put: name!
+
+storeOn: aStream
+
+	| codeStream variables names |
+	variables := IdentityDictionary new.
+	codeStream := WriteStream on: String new.
+	self storeOn: codeStream indent: 0 variables: variables. 
+	aStream 
+		nextPut: $";
+		nextPutAll: self class name;
+		nextPut: $";
+		cr; nextPutAll: '| '.
+	names := variables asSortedCollection.
+	names do: [:each | aStream nextPutAll: each; space].
+	aStream nextPut: $|; cr.
+	names do: [:each | 
+		aStream 
+			display: each;
+			nextPutAll: ' := ';
+			nextPutAll: (variables keyAtValue: each) class name; 
+			nextPutAll: ' new.';
+			cr.
+	].
+	aStream 
+		nextPutAll: (variables at: self);
+		nextPutAll: ' show.';
+		cr; nextPutAll: codeStream contents;
+		nextPutAll: (variables at: self)
+!
+
+storeOn: aStream indent: anInteger variables: aDictionary
+
+	| arrangement default name subViews stream |
+	stream := WriteStream on: String new.
+	subViews := OrderedCollection new.
+	self subViewsDo: [:each | 
+		each storeOn: stream indent: anInteger variables: aDictionary.
+		subViews add: each.
+	].
+	name := self storeNameIn: aDictionary.
+	aStream display: name.
+	[
+		(default := self class show) ifNil: [self error: 'Why no default?'].
+		self storeAttributesDifferingFrom: default On: aStream variables: aDictionary indent: 1.
+	] ensure: [
+		default ifNotNil: [default topShell close].
+	].
+	((self parentView isKindOf: ContainerView) and: [(arrangement := self arrangement) isKindOf: FramingConstraints]) ifTrue: [
+		aStream cr.
+		anInteger + 1 timesRepeat: [aStream tab].
+		aStream nextPutAll: ' arrangement: '.
+		arrangement storeOn: aStream indent: anInteger + 1 variables: aDictionary.
+		aStream nextPut: $;
+	].
+	self storeSubviewsA: subViews on: aStream variables: aDictionary.
+	aStream 
+		cr; tab; 
+		nextPutAll: 'yourself.';
+		cr.
+	self storeSubviewsB: subViews on: aStream variables: aDictionary.
+	aStream nextPutAll: stream contents!
+
+storeSubviewsA: aList on: aStream variables: aDictionary
+
+	aList do: [:each | 
+		aStream 
+			cr; tab; 
+			nextPutAll: 'addSubView: ';
+			nextPutAll: (aDictionary at: each).
+		(self nameOf: each) ifNotNil: [:aString | 
+			aStream
+				nextPutAll: ' name: ';
+				print: aString
+		].
+		aStream nextPut: $;
+	].
+!
+
+storeSubviewsB: aList on: aStream variables: aDictionary
+	"See SlideyInneyOuteyThing for override"!
+
 styles
 	"Answer a two element Array containing the creation style bits for the receiver.
 	See the comment under #style:"
@@ -4791,6 +4893,11 @@ zOrderTop
 !View categoriesFor: #state!accessing!private! !
 !View categoriesFor: #state:!accessing!private! !
 !View categoriesFor: #stbSaveOn:!binary filing!public! !
+!View categoriesFor: #storeNameIn:!printing!public! !
+!View categoriesFor: #storeOn:!printing!public! !
+!View categoriesFor: #storeOn:indent:variables:!printing!public! !
+!View categoriesFor: #storeSubviewsA:on:variables:!printing!public! !
+!View categoriesFor: #storeSubviewsB:on:variables:!printing!public! !
 !View categoriesFor: #styles!accessing-styles!public! !
 !View categoriesFor: #styles:!accessing-styles!private! !
 !View categoriesFor: #subclassWindow!operations!private! !

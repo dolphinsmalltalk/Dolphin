@@ -240,6 +240,21 @@ find: aString ifAbsent: exceptionHandler
 flags: anInteger 
 	flags := anInteger!
 
+fromStrings
+	"If the receiver can be reproduced an Array sent to #'fromStrings:' on the class side, then return it; else, return nil."
+
+	| itemList |
+	name ifNotNil: [^nil].
+	flags == 0 ifFalse: [^nil].
+	image ifNotNil: [^nil].
+	itemList := OrderedCollection with: text.
+	items do: [:each | 
+		each fromStrings 
+			ifNil: [^nil] 
+			ifNotNil: [:anObject | itemList add: anObject].
+	].
+	^itemList asArray!
+
 fromStrings: menuArray 
 	"Private - Convert menuArray into a series of MenuItems.
 	menuArray is an array of strings. 
@@ -635,6 +650,64 @@ size
 
 	^items size!
 
+storeOn: aStream indent: anInteger variables: aDictionary
+
+	| newLine |
+	self fromStrings ifNotNil: [:anArray |
+		aStream
+			nextPut: $(;
+			nextPutAll: self class name;
+			nextPutAll: ' fromStrings: '.
+		anArray storeOn: aStream indent: anInteger variables: aDictionary.
+		aStream nextPut: $).
+		^self
+	].
+
+	newLine := WriteStream on: String new.
+	newLine cr.
+	anInteger timesRepeat: [newLine tab].
+	newLine := newLine contents.
+	aStream
+		nextPut: $(;
+		nextPutAll: self class name;
+		nextPutAll: ' new'.
+	#(#'text' #'name' #'image' #'hasSharedImageColumn' #'isAutoDismiss' #'isModeless') do: [:each |
+		(self perform: each) ifNotNil: [:value | 
+			value ~~ false ifTrue: [
+				aStream
+					nextPutAll: newLine;
+					nextPutAll: each;
+					nextPutAll: ': '.
+				value storeOn: aStream.
+				aStream nextPut: $;
+			].
+		]
+	].
+	aStream nextPutAll: newLine.
+	items isEmpty ifTrue: [
+		aStream nextPutAll: 'items: #();'.
+	] ifFalse: [
+		aStream
+			nextPutAll: 'items: ((Array new: ';
+			print: items size;
+			nextPut: $).
+		1 to: items size do: [:i | 
+			aStream
+				nextPutAll: newLine; tab;
+				nextPutAll: 'at: ';
+				print: i;
+				nextPutAll: ' put: '.
+			(items at: i) storeOn: aStream indent: anInteger + 2 variables: aDictionary.
+			aStream nextPut: $;
+		].
+		aStream
+			nextPutAll: newLine; tab;
+			nextPutAll: 'yourself);'
+	].
+	aStream
+		nextPutAll: newLine;
+		nextPutAll: 'yourself)'.!
+
 styleFlags
 	"Private - Answer the MENUITEMINFO style flags of the receiver (see
 	Win32 SDK docs for fType field)."
@@ -694,6 +767,7 @@ updateItem: indexInteger id: idInteger text: newText
 !Menu categoriesFor: #find:!accessing!public! !
 !Menu categoriesFor: #find:ifAbsent:!accessing!public! !
 !Menu categoriesFor: #flags:!accessing!private! !
+!Menu categoriesFor: #fromStrings!printing!public! !
 !Menu categoriesFor: #fromStrings:!converting!private! !
 !Menu categoriesFor: #hasSharedImageColumn!public!testing! !
 !Menu categoriesFor: #hasSharedImageColumn:!accessing!public! !
@@ -745,6 +819,7 @@ updateItem: indexInteger id: idInteger text: newText
 !Menu categoriesFor: #setItem:info:!accessing!private! !
 !Menu categoriesFor: #showIn:position:!drawing!public! !
 !Menu categoriesFor: #size!accessing!public! !
+!Menu categoriesFor: #storeOn:indent:variables:!printing!public! !
 !Menu categoriesFor: #styleFlags!private!realizing/unrealizing! !
 !Menu categoriesFor: #text!accessing!public! !
 !Menu categoriesFor: #text:!accessing!public! !

@@ -121,7 +121,36 @@ sortUsing: aSortAlgorithm
 	aSortAlgorithm 
 		sort: self
 		from: 1
-		to: self size! !
+		to: self size!
+
+storeOn: aStream indent: anInteger variables: aDictionary
+	"Append to the <puttableStream> argument, target, an expression which when 
+	evaluated will answer a collection similar to the receiver."
+
+	(self allSatisfy: [:each | each isImmutable]) ifTrue: [
+		aStream print: self.
+		^self.
+	].
+	aStream
+		nextPutAll: '((';
+		nextPutAll: self class name;
+		nextPutAll: ' new: ';
+		print: self size;
+		nextPut: $).
+	1 to: self size do: [:i | 
+		aStream cr.
+		anInteger timesRepeat: [aStream tab].
+		aStream 
+			nextPutAll: 'at: ';
+			print: i;
+			nextPutAll: ' put: '.
+		(self at: i) storeOn: aStream indent: anInteger + 1 variables: aDictionary.
+		aStream nextPut: $;.
+	].
+	aStream cr.
+	anInteger timesRepeat: [aStream tab].
+	aStream nextPutAll: 'yourself)'
+! !
 !ArrayedCollection categoriesFor: #add:!adding!public! !
 !ArrayedCollection categoriesFor: #at:!accessing!public! !
 !ArrayedCollection categoriesFor: #at:put:!accessing!public! !
@@ -135,6 +164,7 @@ sortUsing: aSortAlgorithm
 !ArrayedCollection categoriesFor: #resize:!mutating!public! !
 !ArrayedCollection categoriesFor: #size!accessing!public! !
 !ArrayedCollection categoriesFor: #sortUsing:!public!sorting! !
+!ArrayedCollection categoriesFor: #storeOn:indent:variables:!printing!public! !
 
 !ArrayedCollection class methodsFor!
 

@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ToolbarButton subclass: #ToolbarIconButton
 	instanceVariableNames: ''
@@ -65,6 +65,15 @@ stbFixup: anSTBInFiler at: newObjectIndex
 
 	!
 
+storeOn: aStream indent: anInteger variables: aDictionary
+
+	aStream
+		nextPut: $(;
+		nextPutAll: self class name;
+		nextPutAll: ' commandDescription: '.
+	commandDescription storeOn: aStream indent: anInteger variables: aDictionary.
+	aStream nextPut: $)!
+
 toolbar: aToolbar 
 	"Private - Set the toolbar in which the receiver exists to aToolbar."
 
@@ -84,6 +93,7 @@ update
 !ToolbarIconButton categoriesFor: #onStartup!private! !
 !ToolbarIconButton categoriesFor: #renderBitmap!private! !
 !ToolbarIconButton categoriesFor: #stbFixup:at:!binary filing!public! !
+!ToolbarIconButton categoriesFor: #storeOn:indent:variables:!printing!public! !
 !ToolbarIconButton categoriesFor: #toolbar:!accessing!private! !
 !ToolbarIconButton categoriesFor: #update!accessing!private! !
 

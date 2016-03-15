@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 LayoutManager subclass: #GridLayout
 	instanceVariableNames: 'rows columns horizontalGap verticalGap'
@@ -140,6 +140,23 @@ rows: anInteger
 
 	rows := anInteger!
 
+storeOn: aStream
+
+	| default |
+	default := GridLayout new.
+	aStream
+		nextPut: $(;
+		nextPutAll: self class name;
+		nextPutAll: ' new'.
+	#(#'rows' #'columns' #'horizontalGap' #'verticalGap') do: [:each | | x |
+		(x := self perform: each) = (default perform: each) ifFalse: [
+			aStream space; nextPutAll: each; nextPutAll: ': '.
+			x storeOn: aStream.
+			aStream nextPut: $;.
+		].
+	].
+	aStream space; nextPutAll: 'yourself)'!
+
 verticalGap
 	"Answer the vertical gap between items laid out by the receiver."
 
@@ -159,6 +176,7 @@ verticalGap: anInteger
 !GridLayout categoriesFor: #resolutionScaledBy:!geometry!private! !
 !GridLayout categoriesFor: #rows!accessing!public! !
 !GridLayout categoriesFor: #rows:!accessing!public! !
+!GridLayout categoriesFor: #storeOn:!printing!public! !
 !GridLayout categoriesFor: #verticalGap!accessing!public! !
 !GridLayout categoriesFor: #verticalGap:!accessing!public! !
 

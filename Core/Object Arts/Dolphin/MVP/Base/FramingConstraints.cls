@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #FramingConstraints
 	instanceVariableNames: 'leftFraming leftOffset rightFraming rightOffset topFraming topOffset bottomFraming bottomOffset'
@@ -219,6 +219,10 @@ rightOffset
 rightOffset: aNumber 
 	rightOffset := aNumber!
 
+storeOn: aStream indent: anInteger variables: aDictionary
+
+	self storeAttributesOn: aStream indent: anInteger variables: aDictionary!
+
 topFraming
 	"Answer the <Symbol> name of the framing calculation used to calculate the receiver's top edge."
 
@@ -302,6 +306,7 @@ updateFor: aView rectangle: aRectangle layoutContext: aLayoutContext
 !FramingConstraints categoriesFor: #rightFraming:!accessing!public! !
 !FramingConstraints categoriesFor: #rightOffset!accessing!public! !
 !FramingConstraints categoriesFor: #rightOffset:!accessing!public! !
+!FramingConstraints categoriesFor: #storeOn:indent:variables:!printing!public! !
 !FramingConstraints categoriesFor: #topFraming!accessing!public! !
 !FramingConstraints categoriesFor: #topFraming:!accessing!public! !
 !FramingConstraints categoriesFor: #topOffset!accessing!public! !

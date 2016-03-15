@@ -155,7 +155,11 @@ red
 saturation
 	"Answer the saturation of the receiver."
 
-	^self asRGB hls at: 3! !
+	^self asRGB hls at: 3!
+
+storeOn: aStream
+
+	self printOn: aStream! !
 !Color categoriesFor: #alpha!accessing!public! !
 !Color categoriesFor: #asColorRef!converting!public! !
 !Color categoriesFor: #asDword!converting!public! !
@@ -181,6 +185,7 @@ saturation
 !Color categoriesFor: #penClass!constants!private! !
 !Color categoriesFor: #red!accessing!public! !
 !Color categoriesFor: #saturation!accessing!public! !
+!Color categoriesFor: #storeOn:!printing!public! !
 
 Color methodProtocol: #color attributes: #(#readOnly) selectors: #(#asParameter #asRGB #brush #pen)!
 

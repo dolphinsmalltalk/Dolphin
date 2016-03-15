@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 GraphicsTool subclass: #Pen
 	instanceVariableNames: 'logPen'
@@ -42,6 +42,19 @@ logPen: aLOGPEN
 	logPen := aLOGPEN.
 	self free!
 
+storeOn: aStream
+
+	aStream
+		nextPutAll: '((';
+		nextPutAll: self class name;
+		nextPutAll: ' withStyleName: ';
+		print: self styleName;
+		nextPutAll: ') width: ';
+		print: self width;
+		nextPutAll: '; color: '.
+	self color storeOn: aStream.
+	aStream nextPutAll: '; yourself)'!
+
 style
 	^logPen style!
 
@@ -77,6 +90,7 @@ width: anInteger
 !Pen categoriesFor: #createHandle!private!realizing/unrealizing! !
 !Pen categoriesFor: #handle:!accessing!private! !
 !Pen categoriesFor: #logPen:!accessing!private! !
+!Pen categoriesFor: #storeOn:!printing!public! !
 !Pen categoriesFor: #style!accessing!private! !
 !Pen categoriesFor: #style:!accessing!private! !
 !Pen categoriesFor: #styleName!accessing!public! !

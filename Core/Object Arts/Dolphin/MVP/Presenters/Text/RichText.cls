@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #RichText
 	instanceVariableNames: 'rtf'
@@ -101,7 +101,16 @@ setTextInto: aView
 	the receiver. The receiver is assumed to be rich text, so sends the #richText
 	message back to aView."
 	
-	aView richText: self! !
+	aView richText: self!
+
+storeOn: aStream
+
+	aStream 
+		nextPut: $(;
+		nextPutAll: self class name;
+		nextPutAll: ' fromRtf: '.
+	rtf storeOn: aStream.
+	aStream nextPut: $)! !
 !RichText categoriesFor: #=!comparing!public! !
 !RichText categoriesFor: #asParameter!converting!public! !
 !RichText categoriesFor: #asRichText!converting!public! !
@@ -117,6 +126,7 @@ setTextInto: aView
 !RichText categoriesFor: #rtf!accessing!private! !
 !RichText categoriesFor: #rtf:!accessing!private! !
 !RichText categoriesFor: #setTextInto:!double dispatch!private! !
+!RichText categoriesFor: #storeOn:!printing!public! !
 
 RichText methodProtocol: #richString attributes: #(#readOnly) selectors: #(#setTextInto:)!
 

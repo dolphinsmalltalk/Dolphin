@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 LayoutManager subclass: #BorderLayout
 	instanceVariableNames: 'horizontalGap verticalGap north south east west center'
@@ -254,6 +254,50 @@ south: aView
 
 	south := aView!
 
+storeOn: aStream indent: anInteger variables: aDictionary
+
+	| hasOverrides |
+	hasOverrides := false.
+	aStream
+		nextPut: $(;
+		nextPutAll: self class name;
+		nextPutAll: ' new'.
+	#(
+		#(#'horizontalGap' 0)
+		#(#'verticalGap' 0)
+		#(#'north' nil)
+		#(#'south' nil)
+		#(#'east' nil)
+		#(#'west' nil)
+		#(#'center' nil)
+	) do: [:each | | selector default actual |
+		selector := each at: 1.
+		default := each at: 2.
+		actual := self perform: selector.
+		actual ~= default ifTrue: [
+			aStream cr.
+			anInteger timesRepeat: [aStream tab].
+			aStream
+				nextPutAll: selector;
+				nextPutAll: ': '.
+			(aDictionary at: actual ifAbsent: [nil]) ifNotNil: [:variableName | 
+				aStream nextPutAll: variableName.
+			] ifNil: [
+				actual storeOn: aStream.
+			].
+			aStream nextPut: $;.
+			hasOverrides := true.
+		].
+	].
+	hasOverrides ifFalse: [
+		aStream nextPut: $)
+	] ifTrue: [
+		aStream cr.
+		anInteger timesRepeat: [aStream tab].
+		aStream nextPutAll: 'yourself)'
+	]
+!
+
 verticalGap
 	"Answer the vertical gap between items laid out by the receiver."
 
@@ -302,6 +346,7 @@ widthForEdge: aView ofHeight: anInteger inContext: aLayoutContext
 !BorderLayout categoriesFor: #resolutionScaledBy:!geometry!private! !
 !BorderLayout categoriesFor: #south!accessing!public! !
 !BorderLayout categoriesFor: #south:!accessing!public! !
+!BorderLayout categoriesFor: #storeOn:indent:variables:!printing!public! !
 !BorderLayout categoriesFor: #verticalGap!accessing!public! !
 !BorderLayout categoriesFor: #verticalGap:!accessing!public! !
 !BorderLayout categoriesFor: #west!accessing!public! !

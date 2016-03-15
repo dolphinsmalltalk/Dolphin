@@ -549,6 +549,33 @@ stackTempCount: anInteger
 	info := (info bitAnd: ##((16rFF << 15) bitInvert)) 
 				bitOr: ((anInteger bitAnd: 16rFF) bitShift: 15)!
 
+storeOn: aStream
+	"Append, to aStream, a <String> whose characters can recreate the receiver."
+
+	| m block class selector string |
+	m := self method.
+	(m notNil and: [m isExpression]) ifTrue: [	"We can print the source"
+		aStream 
+			nextPut: $(;
+			nextPutAll: m getSource;
+			nextPut: $).
+		^self].
+	m ifNil: [^super storeOn: aStream].
+	class := m methodClass.
+	selector := m selector.
+	(class isKindOf: Class) ifTrue: [
+		string := class name , ' new ' , selector.
+		block := class new perform: selector.
+	] ifFalse: [
+		string := class instanceClass name , ' ' , selector.
+		block := class instanceClass perform: selector.
+	].
+	block = self ifTrue: [
+		aStream nextPutAll: string.
+	] ifFalse: [
+		super storeOn: aStream.
+	]!
+
 tempCount
 	"Answer the total <integer> number of temps used by the receiver. 
 	This includes all arguments, stack temps, copied values, and environment 
@@ -778,6 +805,7 @@ whileTrue: iterationBlock
 !BlockClosure categoriesFor: #repeat!evaluating!public! !
 !BlockClosure categoriesFor: #stackTempCount!accessing!private! !
 !BlockClosure categoriesFor: #stackTempCount:!accessing!development!private! !
+!BlockClosure categoriesFor: #storeOn:!development!printing!public! !
 !BlockClosure categoriesFor: #tempCount!accessing!public! !
 !BlockClosure categoriesFor: #value!evaluating!public! !
 !BlockClosure categoriesFor: #value:!evaluating!public! !

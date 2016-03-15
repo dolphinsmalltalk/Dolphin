@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ToolbarButton subclass: #ToolbarSystemButton
 	instanceVariableNames: ''
@@ -18,9 +18,23 @@ imageIndexIn: aToolbar
 	"Private - Adds the receiver's bitmap to aToolbar.
 	Answer the index of the bitmap from aToolbar's registered bitmaps."
 
-	^aToolbar addSystemBitmap: self bitmap index: self bitmapIndex! !
+	^aToolbar addSystemBitmap: self bitmap index: self bitmapIndex!
+
+storeOn: aStream indent: anInteger variables: aDictionary
+
+	| selector |
+	selector := commandDescription command.
+	(self class class canUnderstand: selector) ifTrue: [
+		aStream
+			nextPutAll: self class name;
+			space;
+			nextPutAll: selector.
+	] ifFalse: [
+		super storeOn: aStream indent: anInteger variables: aDictionary.
+	].! !
 !ToolbarSystemButton categoriesFor: #bitmap:!accessing!public! !
 !ToolbarSystemButton categoriesFor: #imageIndexIn:!operations!private! !
+!ToolbarSystemButton categoriesFor: #storeOn:indent:variables:!public! !
 
 !ToolbarSystemButton class methodsFor!
 

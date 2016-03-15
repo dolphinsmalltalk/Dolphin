@@ -344,6 +344,32 @@ stbSaveOn: anSTBOutFiler
 
 	anSTBOutFiler saveObject: self as: (STBCollectionProxy forCollection: self)!
 
+storeOn: aStream indent: anInteger variables: aDictionary
+	"Append to the <puttableStream> argument, target, an expression which when 
+	evaluated will answer a collection similar to the receiver."
+
+	aStream
+		nextPutAll: '(';
+		nextPutAll: self class name;
+		nextPutAll: ' new'.
+	self storeValuesOn: aStream indent: anInteger variables: aDictionary!
+
+storeValuesOn: aStream indent: anInteger variables: aDictionary
+	"Append to the <puttableStream> argument, target, an expression which when 
+	evaluated will answer a collection similar to the receiver."
+
+	self do: [:each | 
+		aStream cr.
+		anInteger timesRepeat: [aStream tab].
+		aStream  nextPutAll: 'add: '.
+		each storeOn: aStream indent: anInteger + 1 variables: aDictionary.
+		aStream nextPut: $;.
+	].
+	aStream cr.
+	anInteger timesRepeat: [aStream tab].
+	aStream nextPutAll: 'yourself)'
+!
+
 uncheckedFrom: startInteger to: stopInteger keysAndValuesDo: aDyadicValuable 
 	"Private - Evaluate the <dyadicValuable> argument for each element of the receiver
 	between the specified <integer> indices, inclusive, with the element and its index as
@@ -383,6 +409,8 @@ uncheckedFrom: startInteger to: stopInteger keysAndValuesDo: aDyadicValuable
 !OrderedCollection categoriesFor: #size!accessing!public! !
 !OrderedCollection categoriesFor: #sortUsing:!public!sorting! !
 !OrderedCollection categoriesFor: #stbSaveOn:!binary filing!public! !
+!OrderedCollection categoriesFor: #storeOn:indent:variables:!printing!public! !
+!OrderedCollection categoriesFor: #storeValuesOn:indent:variables:!printing!public! !
 !OrderedCollection categoriesFor: #uncheckedFrom:to:keysAndValuesDo:!enumerating!private! !
 
 !OrderedCollection class methodsFor!

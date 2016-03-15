@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ToolbarItem subclass: #ToolbarSeparator
 	instanceVariableNames: 'width'
@@ -45,6 +45,21 @@ isDivider
 
 	^true!
 
+storeOn: aStream
+
+	width == 0 ifTrue: [
+		aStream 
+			nextPutAll: self class name;
+			nextPutAll: ' new'.
+	] ifFalse: [
+		aStream
+			nextPut: $(;
+			nextPutAll: self class name;
+			nextPutAll: ' width: ';
+			print: width;
+			nextPut: $)
+	].!
+
 textIndexIn: aToolbar
 	"Private - Answer the index of the String label for the receiver in aToolbar.
 	Answer -1 as separators do not have a text label."
@@ -65,6 +80,7 @@ width: pixelWidth
 !ToolbarSeparator categoriesFor: #imageIndexIn:!operations!private! !
 !ToolbarSeparator categoriesFor: #initialize!initializing!private! !
 !ToolbarSeparator categoriesFor: #isDivider!public!testing! !
+!ToolbarSeparator categoriesFor: #storeOn:!printing!public! !
 !ToolbarSeparator categoriesFor: #textIndexIn:!operations!private! !
 !ToolbarSeparator categoriesFor: #width!accessing!public! !
 !ToolbarSeparator categoriesFor: #width:!accessing!public! !

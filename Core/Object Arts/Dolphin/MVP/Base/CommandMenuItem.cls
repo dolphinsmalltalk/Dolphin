@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 MenuItem subclass: #CommandMenuItem
 	instanceVariableNames: 'commandDescription image _reserved'
@@ -81,6 +81,20 @@ displayOn: aStream
 	user would want to see"
 
 	aStream display: self description!
+
+fromStrings
+	"If the receiver can be reproduced by a String sent to #'fromString:' on the class side, then return it; else, return nil.
+		'<title>/[keyString]/<command>'
+	Menu Item with title as the text. This may include an & preceeding an Alt
+	mnemonic. KeyString, if included, represents an accelerator key attached to this
+	menu item, this is of the form [Ctrl+][Shift+]<key>, where key is a single character
+	or a special key such as: Ins, Home, Del, etc. Command is processed if
+	the menu item is chosen."
+
+	flags == 0 ifFalse: [^nil].
+	image ifNotNil: [^nil].
+	^commandDescription fromStrings
+!
 
 id
 	"Answers the menu item identifier for the receiver. This is the command
@@ -170,6 +184,22 @@ stbSaveOn: anSTBOutFiler
 	anSTBOutFiler override: image with: nil.
 	super stbSaveOn: anSTBOutFiler!
 
+storeOn: aStream indent: anInteger variables: aDictionary
+
+	flags == 0 ifFalse: [aStream nextPut: $(].
+	aStream 
+		nextPut: $(;
+		nextPutAll: self class name;
+		nextPutAll: ' commandDescription: '.
+	commandDescription storeOn: aStream indent: anInteger variables: aDictionary.
+	flags == 0 ifFalse: [
+		aStream 
+			nextPutAll: ') flags: ';
+			print: flags;
+			nextPutAll: '; yourself'
+	].
+	aStream nextPut: $)!
+
 text
 	"Answer the menu text (i.e. the text that appears in the menu) for the receiver."
 
@@ -186,6 +216,7 @@ text
 !CommandMenuItem categoriesFor: #description!accessing!public! !
 !CommandMenuItem categoriesFor: #description:!accessing!public! !
 !CommandMenuItem categoriesFor: #displayOn:!displaying!public! !
+!CommandMenuItem categoriesFor: #fromStrings!printing!public! !
 !CommandMenuItem categoriesFor: #id!accessing!public! !
 !CommandMenuItem categoriesFor: #image!accessing!public! !
 !CommandMenuItem categoriesFor: #image:!accessing!public! !
@@ -201,6 +232,7 @@ text
 !CommandMenuItem categoriesFor: #queryAlong:!operations!public! !
 !CommandMenuItem categoriesFor: #registerAcceleratorKeyIn:!menus!public! !
 !CommandMenuItem categoriesFor: #stbSaveOn:!binary filing!public! !
+!CommandMenuItem categoriesFor: #storeOn:indent:variables:!printing!public! !
 !CommandMenuItem categoriesFor: #text!accessing!public! !
 
 CommandMenuItem methodProtocol: #commandSource attributes: #(#readOnly) selectors: #(#commandDescription)!

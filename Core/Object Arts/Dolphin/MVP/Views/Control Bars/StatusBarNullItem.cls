@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 StatusBarItemAbstract subclass: #StatusBarNullItem
 	instanceVariableNames: ''
@@ -14,6 +14,14 @@ StatusBarNullItem comment: 'StatusBarNullItem is a class of status bar items tha
 drawItem: aCanvas bounding: boundingRectangle 
 	"Private - A request to draw the receiver. As we are just a placeholder, we do nothing."
 
-	! !
+	!
+
+storeOn: aStream indent: anInteger variables: aDictionary
+
+	aStream
+		nextPut: $(;
+		nextPutAll: self class name;
+		nextPutAll: ' separator: 0)'! !
 !StatusBarNullItem categoriesFor: #drawItem:bounding:!drawing!private! !
+!StatusBarNullItem categoriesFor: #storeOn:indent:variables:!printing!public! !
 

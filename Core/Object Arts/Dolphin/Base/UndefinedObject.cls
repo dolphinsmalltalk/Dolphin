@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #UndefinedObject
 	instanceVariableNames: ''
@@ -145,6 +145,10 @@ shallowCopy
 
 	^self!
 
+storeOn: aStream
+
+	self printOn: aStream!
+
 subclass: aClassSymbol instanceVariableNames: instVarString classVariableNames: classVarString poolDictionaries: poolDictString
 	^(self 
 		newClassBuilder: aClassSymbol
@@ -207,6 +211,7 @@ yourAddress
 !UndefinedObject categoriesFor: #printOn:!printing!public! !
 !UndefinedObject categoriesFor: #printString!printing!public! !
 !UndefinedObject categoriesFor: #shallowCopy!copying!public! !
+!UndefinedObject categoriesFor: #storeOn:!printing!public! !
 !UndefinedObject categoriesFor: #subclass:instanceVariableNames:classVariableNames:poolDictionaries:!class hierarchy-adding!public! !
 !UndefinedObject categoriesFor: #subclass:instanceVariableNames:classVariableNames:poolDictionaries:category:!class hierarchy-adding!public! !
 !UndefinedObject categoriesFor: #subclass:instanceVariableNames:classVariableNames:poolDictionaries:classInstanceVariableNames:!class hierarchy-adding!public! !

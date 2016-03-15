@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 StatusBarItemAbstract subclass: #StatusBarItem
 	instanceVariableNames: 'getTextBlock getImageBlock reserved1'
@@ -133,7 +133,29 @@ printOn: aStream
 		basicPrint: self;
 		nextPut: $(;
 		print: (self parentView notNil ifTrue: [self name]);
-		nextPut: $)! !
+		nextPut: $)!
+
+storeOn: aStream indent: anInteger variables: aDictionary
+
+	| default |
+	default := self class new
+		parentView: View desktop;
+		yourself.
+	aStream
+		nextPut: $(;
+		nextPutAll: self class name;
+		nextPutAll: ' new';
+		cr.
+	anInteger timesRepeat: [aStream tab].
+	aStream 
+		nextPutAll: 'parentView: ';
+		nextPutAll: (aDictionary at: parentView);
+		nextPut: $;.
+	self storeAttributesDifferingFrom: default On: aStream variables: aDictionary indent: anInteger.
+	aStream cr.
+	anInteger timesRepeat: [aStream tab].
+	aStream nextPutAll: 'yourself)'
+! !
 !StatusBarItem categoriesFor: #defaultGetImageBlock!adapters!constants!private! !
 !StatusBarItem categoriesFor: #defaultGetTextBlock!adapters!constants!private! !
 !StatusBarItem categoriesFor: #drawImageOn:in:!drawing!private! !
@@ -147,6 +169,7 @@ printOn: aStream
 !StatusBarItem categoriesFor: #imageManager!accessing!public! !
 !StatusBarItem categoriesFor: #initialize!initializing!private! !
 !StatusBarItem categoriesFor: #printOn:!development!printing!public! !
+!StatusBarItem categoriesFor: #storeOn:indent:variables:!development!printing!public! !
 
 !StatusBarItem class methodsFor!
 

@@ -242,6 +242,10 @@ sqrt
 	
 	^self asFloat sqrt!
 
+storeOn: aStream
+
+	self printOn: aStream!
+
 tan
 	"Answer a <Float> which is the tangent of the receiver, 
 	which is treated as an angle in radians."
@@ -314,6 +318,7 @@ to: stop do: operation
 !Number categoriesFor: #raisedTo:!mathematical!public! !
 !Number categoriesFor: #sin!mathematical!public! !
 !Number categoriesFor: #sqrt!mathematical!public! !
+!Number categoriesFor: #storeOn:!printing!public! !
 !Number categoriesFor: #tan!mathematical!public! !
 !Number categoriesFor: #to:!enumerating!public! !
 !Number categoriesFor: #to:by:!enumerating!public! !

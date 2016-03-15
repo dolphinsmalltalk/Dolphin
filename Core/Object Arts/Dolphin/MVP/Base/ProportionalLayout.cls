@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 LinearLayout subclass: #ProportionalLayout
 	instanceVariableNames: 'proportions isVertical'
@@ -197,6 +197,25 @@ reposition: aView to: aPoint
 	prevView basicInvalidateLayout.
 	nextView basicInvalidateLayout!
 
+storeOn: aStream indent: anInteger variables: aDictionary
+
+	aStream 
+		nextPut: $(;
+		nextPutAll: self class name;
+		nextPutAll: ' new';
+		cr; tab; tab; nextPutAll: 'isVertical: '.
+	self isVertical storeOn: aStream.
+	aStream nextPut: $;.
+	proportions keysAndValuesDo: [:eachKey :eachValue | 
+		aStream cr; tab; tab; 
+			nextPutAll: 'arrangementOf: ';
+			nextPutAll: (aDictionary at: eachKey);
+			nextPutAll: ' put: '.
+		eachValue storeOn: aStream.
+		aStream nextPut: $;.
+	].
+	aStream cr; tab; tab; nextPutAll: 'yourself)'!
+
 totalProportionsOf: viewCollection
 	"Private - Answer the sum of all the views proportions."
 
@@ -215,5 +234,6 @@ totalProportionsOf: viewCollection
 !ProportionalLayout categoriesFor: #proportions!accessing!private! !
 !ProportionalLayout categoriesFor: #removeSubView:!public!removing! !
 !ProportionalLayout categoriesFor: #reposition:to:!operations!private! !
+!ProportionalLayout categoriesFor: #storeOn:indent:variables:!printing!public! !
 !ProportionalLayout categoriesFor: #totalProportionsOf:!helpers!private! !
 

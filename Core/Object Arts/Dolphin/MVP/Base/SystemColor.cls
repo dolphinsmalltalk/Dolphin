@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Color subclass: #SystemColor
 	instanceVariableNames: 'id'
@@ -59,13 +59,19 @@ printOn: aStream
 		nextPut: $(;
 		display: self class;
 		display: ' fromId: ';
+		display: id;
+		nextPutAll: ' "';
 		display: self idName;
-		nextPut: $)!
+		nextPutAll: '")'!
 
 setId: anInteger
 	"Private - Set the system id of the receiver"
 
-	id := anInteger! !
+	id := anInteger!
+
+storeOn: aStream
+
+	self printOn: aStream! !
 !SystemColor categoriesFor: #=!comparing!public! !
 !SystemColor categoriesFor: #asIndexedColor!converting!public! !
 !SystemColor categoriesFor: #asParameter!converting!public! !
@@ -76,6 +82,7 @@ setId: anInteger
 !SystemColor categoriesFor: #idName!accessing!development!private! !
 !SystemColor categoriesFor: #printOn:!development!printing!public! !
 !SystemColor categoriesFor: #setId:!accessing!private! !
+!SystemColor categoriesFor: #storeOn:!development!printing!public! !
 
 !SystemColor class methodsFor!
 

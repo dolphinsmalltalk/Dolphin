@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Color subclass: #PluggableColor
 	instanceVariableNames: 'valuable'
@@ -26,11 +26,22 @@ asRGB
 	^valuable value asRGB!
 
 setValuable: aNiladicValuable 
-	valuable := aNiladicValuable! !
+	valuable := aNiladicValuable!
+
+storeOn: aStream indent: anInteger variables: aDictionary
+	"Put an ASCII representation of receiver onto aStream."
+
+	aStream
+		nextPut: $(;
+		display: self class;
+		nextPutAll: ' with: '.
+	valuable storeOn: aStream indent: anInteger variables: aDictionary.
+	aStream nextPut: $)! !
 !PluggableColor categoriesFor: #asIndexedColor!converting!public! !
 !PluggableColor categoriesFor: #asParameter!converting!public! !
 !PluggableColor categoriesFor: #asRGB!converting!public! !
 !PluggableColor categoriesFor: #setValuable:!initializing!private! !
+!PluggableColor categoriesFor: #storeOn:indent:variables:!development!printing!public! !
 
 !PluggableColor class methodsFor!
 

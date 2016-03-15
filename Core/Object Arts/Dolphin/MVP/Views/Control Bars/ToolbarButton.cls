@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ToolbarItem subclass: #ToolbarButton
 	instanceVariableNames: 'bitmap bitmapIndex'
@@ -210,6 +210,62 @@ stateMask: stateMask
 
 	self toolbar tbSetState: self commandId state: stateMask!
 
+storeOn: aStream indent: anInteger variables: aDictionary
+
+	| bitmapName indexName prefix |
+	bitmap == IDB_STD_SMALL_COLOR 	ifTrue: [bitmapName := 'Standard'	. prefix := 'STD_'	] ifFalse: [
+	bitmap == IDB_VIEW_SMALL_COLOR	ifTrue: [bitmapName := 'View'		. prefix := 'VIEW_'	] ifFalse: [
+	bitmap == IDB_HIST_SMALL_COLOR	ifTrue: [bitmapName := 'History'	. prefix := 'HIST_'	]]].
+	prefix ifNotNil: [
+		ToolbarConstants keysAndValuesDo: [:eachKey :eachValue | 
+			(eachValue == bitmapIndex and: [eachKey beginsWith: prefix]) ifTrue: [indexName := eachKey].
+		].
+		aStream
+			nextPut: $(;
+			nextPutAll: self class name;
+			cr.
+		anInteger timesRepeat: [aStream tab].
+		aStream
+			nextPutAll: 'bitmap: ';
+			print: bitmap;
+			nextPutAll: ' "';
+			nextPutAll: bitmapName;
+			nextPut: $";
+			cr.
+		anInteger timesRepeat: [aStream tab].
+		aStream
+			nextPutAll: 'index: ';
+			print: bitmapIndex;
+			nextPutAll: ' "';
+			nextPutAll: indexName;
+			nextPut: $";
+			cr.
+		anInteger timesRepeat: [aStream tab].
+		aStream
+			nextPutAll: 'commandDescription: '.
+		commandDescription storeOn: aStream indent: anInteger + 1 variables: aDictionary.
+		aStream nextPut: $).
+		^self
+	].
+	aStream
+		nextPut: $(;
+		nextPutAll: self class name;
+		cr.
+	anInteger timesRepeat: [aStream tab].
+	aStream nextPutAll: 'bitmap: '.
+	bitmap storeOn: aStream indent: anInteger + 1 variables: aDictionary.
+	aStream cr.
+	anInteger timesRepeat: [aStream tab].
+	aStream 
+		nextPutAll: 'index: ';
+		print: bitmapIndex;
+		cr.
+	anInteger timesRepeat: [aStream tab].
+	aStream nextPutAll: 'commandDescription: '.
+	commandDescription storeOn: aStream indent: anInteger + 1 variables: aDictionary.
+	aStream nextPut: $).
+!
+
 text
 	"Answers a short String description of the receiver's command. Uses the String
 	representation of the command itself if no explicit description has been
@@ -279,6 +335,7 @@ validateUserInterface: route
 !ToolbarButton categoriesFor: #rectangle!accessing!public! !
 !ToolbarButton categoriesFor: #screenRectangle!accessing!public! !
 !ToolbarButton categoriesFor: #stateMask:!public!state! !
+!ToolbarButton categoriesFor: #storeOn:indent:variables:!printing!public! !
 !ToolbarButton categoriesFor: #text!accessing!public! !
 !ToolbarButton categoriesFor: #text:!accessing!public! !
 !ToolbarButton categoriesFor: #textIndexIn:!operations!private! !
