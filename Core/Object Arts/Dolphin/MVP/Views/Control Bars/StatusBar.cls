@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ControlBarAbstract subclass: #StatusBar
 	instanceVariableNames: 'parts leftOverSeparator layoutManager'
@@ -326,7 +326,7 @@ setText: aStatusBarItem
 	aStatusOwnerDraw."
 
 	| index text |
-	index := self indexOfItem: aStatusBarItem.
+	(index := self indexOfItem: aStatusBarItem) == 0 ifTrue: [^self].
 	text := aStatusBarItem getText.
 	(self 
 		sendMessage: SB_SETTEXT

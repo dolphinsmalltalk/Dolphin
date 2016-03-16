@@ -75,7 +75,7 @@ implicitInsets: aLayoutContext
 		ifFalse: [0 @ self headerHeight corner: 0 @ 0]!
 
 isPinHot
-	^pinInteractor isHot!
+	^pinInteractor ifNil: [false] ifNotNil: [:value | value isHot]!
 
 isPinned
 	^slider notNil and: [slider isPinned]!
