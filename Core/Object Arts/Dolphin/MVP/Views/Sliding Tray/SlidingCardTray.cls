@@ -167,15 +167,16 @@ openTheme
 				ifTrue: 
 					[ThemeLibrary default openThemeData: self asParameter pszClassList: 'EXPLORERBAR' asUnicodeString].
 	pinSize := SystemMetrics current smallIconExtent asParameter.
-	theme isNull ifFalse: [
-	ThemeLibrary default 
-		getThemePartSize: theme
-		hdc: nil
-		iPartId: EBP_HEADERPIN
-		iStateId: EBHP_NORMAL
-		prc: nil
-		eSize: TS_TRUE
-		psz: pinSize].
+	theme isNull 
+		ifFalse: 
+			[ThemeLibrary default 
+				getThemePartSize: theme
+				hdc: nil
+				iPartId: EBP_HEADERPIN
+				iStateId: EBHP_NORMAL
+				prc: nil
+				eSize: TS_TRUE
+				psz: pinSize].
 	pinSize := pinSize asObject!
 
 paintClassicBackgroundOn: aCanvas 
