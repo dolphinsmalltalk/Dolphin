@@ -899,7 +899,9 @@ storeForViewAttributesOn: aStream variables: aDictionary
 		nextPut: $)!
 
 storeForViewOn: aStream 
-	self subclassResponsibility!
+	"It seems that Object is not an abstract class and making it so causes PushUpMethodTest>>#testPushUpWithMethodThatCannotBePushedDown to fail."
+
+	self error: 'subclassResponsibility'!
 
 storeForViewOn: aStream variables: aDictionary 
 	self storeForViewOn: aStream!
