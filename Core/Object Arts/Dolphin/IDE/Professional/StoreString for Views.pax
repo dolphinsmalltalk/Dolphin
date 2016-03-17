@@ -1,7 +1,7 @@
 | package |
 package := Package name: 'StoreString for Views'.
 package paxVersion: 1;
-	basicComment: ''.
+	basicComment: 'Methods in this package are used to generate a string that can be used to recreate a view. The primary use is to allow for diffs when a view is edited (the literal array in a resource_ method is useless for that purpose).'.
 
 
 package methodNames
@@ -12,7 +12,6 @@ package methodNames
 	add: #BooleanToText -> #storeForViewOn:;
 	add: #BorderLayout -> #storeForViewOn:variables:;
 	add: #Character -> #storeForViewOn:;
-	add: #Class -> #storeForViewOn:;
 	add: #ClassDescription -> #storeForViewOn:;
 	add: #Color -> #storeForViewOn:;
 	add: #CommandDescription -> #fromStrings;
@@ -37,7 +36,6 @@ package methodNames
 	add: #Menu -> #storeForViewOn:variables:;
 	add: #Message -> #storeForViewOn:variables:;
 	add: #MessageSendAbstract -> #storeForViewOn:variables:;
-	add: #Metaclass -> #storeForViewOn:;
 	add: #NullConverter -> #=;
 	add: #NullConverter -> #hash;
 	add: #NullConverter -> #storeForViewOn:variables:;
@@ -79,6 +77,7 @@ package methodNames
 	add: #View -> #storeForViewOn:;
 	add: #View -> #storeForViewOn:variables:;
 	add: #View -> #storeNameIn:;
+	add: #View -> #storeStringForView;
 	add: #View -> #storeSubviewsA:on:variables:;
 	add: #View -> #storeSubviewsB:on:variables:;
 	yourself.
@@ -119,29 +118,39 @@ package!
 !ArrayedCollection methodsFor!
 
 storeForViewOn: aStream variables: aDictionary 
-	"Append to the <puttableStream> argument, target, an expression which when 
-	evaluated will answer a collection similar to the receiver."
-
+	| atput at put |
+	atput := #at:put: keywords.
+	at := atput first.
+	put := atput last.
 	(self allSatisfy: [:each | each isImmediate]) 
 		ifTrue: 
 			[aStream print: self.
 			^self].
 	aStream
 		nextPutAll: '((';
-		nextPutAll: self class name;
-		nextPutAll: ' new: ';
+		display: self class;
+		space;
+		display: #new:;
+		space;
 		print: self size;
 		nextPut: $).
 	1 to: self size
 		do: 
 			[:i | 
 			aStream
-				nextPutAll: ' at: ';
+				space;
+				nextPutAll: at;
+				space;
 				print: i;
-				nextPutAll: ' put: '.
+				space;
+				nextPutAll: put;
+				space.
 			(self at: i) storeForViewOn: aStream variables: aDictionary.
 			aStream nextPut: $;].
-	aStream nextPutAll: ' yourself)'! !
+	aStream
+		space;
+		display: #yourself;
+		nextPut: $)! !
 !ArrayedCollection categoriesFor: #storeForViewOn:variables:!public!store view! !
 
 !AXControlSite methodsFor!
@@ -155,16 +164,22 @@ storeForViewOn: aStream variables: aDictionary
 				create;
 				show.
 	aStream
-		nextPutAll: ' progId: ';
+		space;
+		display: #progId:;
+		space;
 		print: self progId;
 		nextPut: $;;
-		nextPutAll: ' create;'.
+		space;
+		display: #create;
+		nextPut: $;.
 	self 
 		storeForViewAttributesDifferingFrom: default
 		on: aStream
 		variables: aDictionary.
 	aStream
-		nextPutAll: ' yourself.';
+		space;
+		display: #yourself;
+		nextPut: $.;
 		cr] 
 			ensure: [default topView close]! !
 !AXControlSite categoriesFor: #storeForViewOn:variables:!public!store view! !
@@ -172,8 +187,6 @@ storeForViewOn: aStream variables: aDictionary
 !BlockClosure methodsFor!
 
 storeForViewOn: aStream variables: aDictionary 
-	"Append, to aStream, a <String> whose characters can recreate the receiver."
-
 	| m block class selector string |
 	m := self method.
 	(m notNil and: [m isExpression]) 
@@ -190,7 +203,7 @@ storeForViewOn: aStream variables: aDictionary
 			selector := m selector.
 			(class isKindOf: Class) 
 				ifTrue: 
-					[string := class name , ' new ' , selector.
+					[string := class name , ' ' , #new , ' ' , selector.
 					block := class new perform: selector]
 				ifFalse: 
 					[string := class instanceClass name , ' ' , selector.
@@ -199,7 +212,10 @@ storeForViewOn: aStream variables: aDictionary
 				ifTrue: 
 					[aStream nextPutAll: string.
 					^self]].
-	aStream nextPutAll: '(Object fromLiteralStoreArray: #( '.
+	aStream
+		nextPutAll: '(Object ';
+		display: #fromLiteralStoreArray:;
+		nextPutAll: ' #( '.
 	self literalStoreArray do: 
 			[:each | 
 			(each isLiteral and: [each isBehavior not]) 
@@ -223,13 +239,19 @@ storeForViewOn: aStream
 storeForViewOn: aStream 
 	aStream
 		nextPut: $(;
-		nextPutAll: self class name;
-		nextPutAll: ' new'.
+		display: self class;
+		space;
+		display: #new.
 	self actualFormat 
 		ifNotNil: 
-			[aStream nextPutAll: ' format: '.
+			[aStream
+				space;
+				display: #format:;
+				space.
 			format storeForViewOn: aStream.
-			aStream nextPutAll: '; yourself'].
+			aStream
+				nextPutAll: '; ';
+				display: #yourself].
 	aStream nextPut: $)! !
 !BooleanToText categoriesFor: #storeForViewOn:!public!store view! !
 
@@ -240,8 +262,9 @@ storeForViewOn: aStream variables: aDictionary
 	hasOverrides := false.
 	aStream
 		nextPut: $(;
-		nextPutAll: self class name;
-		nextPutAll: ' new'.
+		display: self class;
+		space;
+		display: #new.
 	#(#(#horizontalGap 0) #(#verticalGap 0) #(#north nil) #(#south nil) #(#east nil) #(#west nil) #(#center nil)) 
 		do: 
 			[:each | 
@@ -260,7 +283,12 @@ storeForViewOn: aStream variables: aDictionary
 						ifNil: [actual storeForViewOn: aStream].
 					aStream nextPut: $;.
 					hasOverrides := true]].
-	hasOverrides ifFalse: [aStream nextPut: $)] ifTrue: [aStream nextPutAll: ' yourself)']! !
+	hasOverrides 
+		ifFalse: [aStream nextPut: $)]
+		ifTrue: 
+			[aStream
+				space;
+				display: #'yourself)']! !
 !BorderLayout categoriesFor: #storeForViewOn:variables:!public!store view! !
 
 !Character methodsFor!
@@ -269,20 +297,14 @@ storeForViewOn: aStream
 	self printOn: aStream! !
 !Character categoriesFor: #storeForViewOn:!public!store view! !
 
-!Class methodsFor!
+!ClassDescription methodsFor!
 
 storeForViewOn: aStream 
 	aStream
 		nextPutAll: '##(';
-		nextPutAll: self name;
+		print: self;
 		nextPut: $)! !
-!Class categoriesFor: #storeForViewOn:!public!store view! !
-
-!ClassDescription methodsFor!
-
-storeForViewOn: aStream 
-	self printOn: aStream! !
-!ClassDescription categoriesFor: #storeForViewOn:!printing!public!store view! !
+!ClassDescription categoriesFor: #storeForViewOn:!public!store view! !
 
 !Color methodsFor!
 
@@ -308,33 +330,52 @@ fromStrings
 	^description , '/' , (AcceleratorTable keyStringFromCode: self acceleratorKey) , '/' , command!
 
 storeForViewOn: aStream variables: aDictionary 
-	| closeFlag |
+	| closeFlag cdi |
+	cdi := #command:description:image: keywords.
 	(closeFlag := self hasAcceleratorKey or: [self isModalCommand]) ifTrue: [aStream nextPut: $(].
 	aStream
 		nextPut: $(;
-		nextPutAll: self class name;
-		nextPutAll: ' command: '.
+		display: self class;
+		space;
+		nextPutAll: cdi first;
+		space.
 	command storeForViewOn: aStream variables: aDictionary.
 	aStream
 		space;
-		nextPutAll: 'description: ';
+		nextPutAll: cdi second;
+		space;
 		print: description.
 	image 
 		ifNotNil: 
-			[aStream nextPutAll: ' image: ('.
+			[aStream
+				space;
+				nextPutAll: cdi third;
+				nextPutAll: ' ('.
 			image storeForViewOn: aStream.
 			aStream nextPut: $)].
 	aStream nextPut: $).
-	self isModalCommand ifTrue: [aStream nextPutAll: ' isModalCommand: true;'].
+	self isModalCommand 
+		ifTrue: 
+			[aStream
+				space;
+				display: #isModalCommand:;
+				nextPutAll: ' true;'].
 	self hasAcceleratorKey 
 		ifTrue: 
 			[aStream
-				nextPutAll: ' acceleratorKey: ';
+				space;
+				display: #acceleratorKey:;
+				space;
 				print: acceleratorKey;
 				nextPutAll: ' "';
 				nextPutAll: (AcceleratorTable keyStringFromCode: acceleratorKey);
 				nextPutAll: '";'].
-	closeFlag ifTrue: [aStream nextPutAll: ' yourself)']! !
+	closeFlag 
+		ifTrue: 
+			[aStream
+				space;
+				display: #yourself;
+				nextPut: $)]! !
 !CommandDescription categoriesFor: #fromStrings!public!store view! !
 !CommandDescription categoriesFor: #storeForViewOn:variables:!public!store view! !
 
@@ -357,15 +398,20 @@ storeForViewOn: aStream variables: aDictionary
 	flags == 0 ifFalse: [aStream nextPut: $(].
 	aStream
 		nextPut: $(;
-		nextPutAll: self class name;
-		nextPutAll: ' commandDescription: '.
+		display: self class;
+		space;
+		display: #commandDescription:;
+		space.
 	commandDescription storeForViewOn: aStream variables: aDictionary.
 	flags == 0 
 		ifFalse: 
 			[aStream
-				nextPutAll: ') flags: ';
+				nextPutAll: ') ';
+				display: #flags:;
+				space;
 				print: flags;
-				nextPutAll: '; yourself'].
+				nextPutAll: '; ';
+				display: #yourself].
 	aStream nextPut: $)! !
 !CommandMenuItem categoriesFor: #fromStrings!public!store view! !
 !CommandMenuItem categoriesFor: #storeForViewOn:variables:!public!store view! !
@@ -373,15 +419,12 @@ storeForViewOn: aStream variables: aDictionary
 !Date methodsFor!
 
 storeForViewOn: aStream 
-	"Append to the <puttableStream> argument, target, an expression which when 
-	evaluated will answer a collection similar to the receiver."
-
-	"Use a format which is locale invariant."
-
 	aStream
 		nextPut: $(;
-		nextPutAll: self class name;
-		nextPutAll: ' fromDays: ';
+		display: self class;
+		space;
+		display: #fromDays:;
+		space;
 		print: days;
 		nextPutAll: ' "';
 		print: self;
@@ -400,8 +443,9 @@ storeForViewOn: aStream
 	diffs = #() 
 		ifTrue: 
 			[aStream
-				nextPutAll: self class name;
-				nextPutAll: ' new']
+				display: self class;
+				space;
+				display: #new]
 		ifFalse: [super storeForViewOn: aStream]! !
 !DiffsScintillaStyler categoriesFor: #storeForViewOn:!public!store view! !
 
@@ -418,21 +462,10 @@ fromStrings
 	self error: 'Unrecognized DividerMenuItem'!
 
 storeForViewOn: aStream variables: aDictionary 
-	| styleName |
-	styleName := self styleName.
-	styleName == #separator 
-		ifTrue: 
-			[aStream nextPutAll: 'DividerMenuItem separator'.
-			^self].
-	styleName == #break 
-		ifTrue: 
-			[aStream nextPutAll: 'DividerMenuItem break'.
-			^self].
-	styleName == #barBreak 
-		ifTrue: 
-			[aStream nextPutAll: 'DividerMenuItem barBreak'.
-			^self].
-	self error: 'Unrecognized DividerMenuItem'! !
+	aStream
+		display: self class;
+		space;
+		nextPutAll: self styleName! !
 !DividerMenuItem categoriesFor: #fromStrings!public!store view! !
 !DividerMenuItem categoriesFor: #storeForViewOn:variables:!public!store view! !
 
@@ -443,8 +476,9 @@ storeForViewOn: aStream
 	default := self class new.
 	aStream
 		nextPut: $(;
-		nextPutAll: self class name;
-		nextPutAll: ' new'.
+		display: self class;
+		space;
+		display: #new.
 	#(#horizontalGap #verticalGap #alignment) do: 
 			[:each | 
 			| x |
@@ -458,7 +492,8 @@ storeForViewOn: aStream
 					aStream nextPut: $;]].
 	aStream
 		space;
-		nextPutAll: 'yourself)'! !
+		display: #yourself;
+		nextPut: $)! !
 !FlowLayout categoriesFor: #storeForViewOn:!public!store view! !
 
 !Font methodsFor!
@@ -469,8 +504,10 @@ storeForViewOn: aStream
 	default := self class name: name.
 	aStream
 		nextPutAll: '((';
-		nextPutAll: self class name;
-		nextPutAll: ' name: ';
+		display: self class;
+		space;
+		display: #name:;
+		space;
 		print: name;
 		nextPut: $);
 		yourself.
@@ -495,7 +532,8 @@ storeForViewOn: aStream
 			[aStream
 				cr;
 				tab;
-				nextPutAll: 'yourself)']! !
+				display: #yourself;
+				nextPut: $)]! !
 !Font categoriesFor: #storeForViewOn:!public!store view! !
 
 !FramingConstraints methodsFor!
@@ -508,8 +546,9 @@ storeForViewOn: aStream variables: aDictionary
 
 storeForViewOn: aStream variables: aDictionary 
 	aStream
-		nextPutAll: self class name;
-		nextPutAll: ' new'! !
+		display: self class;
+		space;
+		display: #new! !
 !FramingLayout categoriesFor: #storeForViewOn:variables:!public!store view! !
 
 !GridLayout methodsFor!
@@ -519,8 +558,9 @@ storeForViewOn: aStream
 	default := GridLayout new.
 	aStream
 		nextPut: $(;
-		nextPutAll: self class name;
-		nextPutAll: ' new'.
+		display: self class;
+		space;
+		display: #new.
 	#(#rows #columns #horizontalGap #verticalGap) do: 
 			[:each | 
 			| x |
@@ -534,7 +574,8 @@ storeForViewOn: aStream
 					aStream nextPut: $;]].
 	aStream
 		space;
-		nextPutAll: 'yourself)'! !
+		display: #yourself;
+		nextPut: $)! !
 !GridLayout categoriesFor: #storeForViewOn:!public!store view! !
 
 !Image methodsFor!
@@ -549,8 +590,6 @@ storeForViewOn: aStream
 !InternalBitmap methodsFor!
 
 storeForViewOn: aStream 
-	"Append the ASCII representation of the receiver to aStream."
-
 	aStream
 		nextPut: $(;
 		print: self;
@@ -560,9 +599,6 @@ storeForViewOn: aStream
 !Interval methodsFor!
 
 storeForViewOn: aStream 
-	"Append to the <puttableStream> argument, target, an expression which when 
-	evaluated will answer a collection similar to the receiver."
-
 	self printOn: aStream! !
 !Interval categoriesFor: #storeForViewOn:!public!store view! !
 
@@ -586,20 +622,25 @@ fromStrings
 	^itemList asArray!
 
 storeForViewOn: aStream variables: aDictionary 
+	| atPut |
+	atPut := #at:put: keywords.
 	self fromStrings 
 		ifNotNil: 
 			[:anArray | 
 			aStream
 				nextPut: $(;
-				nextPutAll: self class name;
-				nextPutAll: ' fromStrings: '.
+				display: self class;
+				space;
+				display: #fromStrings:;
+				space.
 			anArray storeForViewOn: aStream variables: aDictionary.
 			aStream nextPut: $).
 			^self].
 	aStream
 		nextPutAll: ' (';
-		nextPutAll: self class name;
-		nextPutAll: ' new'.
+		display: self class;
+		space;
+		display: #new.
 	#(#text #name #image #hasSharedImageColumn #isAutoDismiss #isModeless) do: 
 			[:each | 
 			(self perform: each) 
@@ -618,55 +659,82 @@ storeForViewOn: aStream variables: aDictionary
 		cr;
 		tab.
 	items isEmpty 
-		ifTrue: [aStream nextPutAll: 'items: #();']
+		ifTrue: 
+			[aStream
+				display: #items:;
+				nextPutAll: ' #();']
 		ifFalse: 
 			[aStream
-				nextPutAll: 'items: ((Array new: ';
+				display: #items:;
+				nextPutAll: ' ((Array ';
+				display: #new:;
+				space;
 				print: items size;
 				nextPut: $).
 			1 to: items size
 				do: 
 					[:i | 
 					aStream
-						nextPutAll: ' at: ';
+						space;
+						display: atPut first;
+						space;
 						print: i;
-						nextPutAll: ' put: '.
+						space;
+						display: atPut second;
+						space.
 					(items at: i) storeForViewOn: aStream variables: aDictionary.
 					aStream nextPut: $;].
 			aStream
 				cr;
 				tab;
-				nextPutAll: 'yourself);'].
+				display: #yourself;
+				nextPutAll: ');'].
 	aStream
 		cr;
 		tab;
-		nextPutAll: 'yourself)'! !
+		display: #yourself;
+		nextPut: $)! !
 !Menu categoriesFor: #fromStrings!public!store view! !
 !Menu categoriesFor: #storeForViewOn:variables:!public!store view! !
 
 !Message methodsFor!
 
 storeForViewOn: aStream variables: aDictionary 
+	| selArg selArgs |
+	selArg := #selector:argument: keywords.
+	selArgs := #selector:arguments: keywords.
 	self argumentCount == 0 
 		ifTrue: 
 			[aStream
-				nextPutAll: '(Message selector: ';
+				nextPut: $(;
+				display: self class;
+				space;
+				display: #selector:;
+				space;
 				print: selector;
 				nextPut: $).
 			^self].
 	aStream
 		nextPut: $(;
-		nextPutAll: self class name;
-		nextPutAll: ' selector: ';
+		display: self class;
+		space;
+		nextPutAll: selArg first;
+		space;
 		print: selector.
 	0 < self argumentCount 
 		ifTrue: 
 			[1 == self argumentCount 
 				ifTrue: 
-					[aStream nextPutAll: ' argument: '.
+					[aStream
+						space;
+						nextPutAll: selArg second;
+						space.
 					(args at: 1) storeForViewOn: aStream variables: aDictionary]
 				ifFalse: 
-					[aStream nextPutAll: ' arguments: '.
+					[aStream
+						space;
+						nextPutAll: selArgs second;
+						space.
 					args storeForViewOn: aStream variables: aDictionary]].
 	aStream nextPut: $)! !
 !Message categoriesFor: #storeForViewOn:variables:!public!store view! !
@@ -674,34 +742,39 @@ storeForViewOn: aStream variables: aDictionary
 !MessageSendAbstract methodsFor!
 
 storeForViewOn: aStream variables: aDictionary 
+	| recSel recSelArg recSelArgs |
+	recSel := #receiver:selector: keywords.
+	recSelArg := #receiver:selector:argument: keywords.
+	recSelArgs := #receiver:selector:arguments: keywords.
 	aStream
 		nextPut: $(;
-		nextPutAll: self class name;
-		nextPutAll: ' receiver: '.
+		display: self class;
+		space;
+		nextPutAll: recSel first;
+		space.
 	self receiver storeForViewOn: aStream.
 	aStream
-		nextPutAll: ' selector: ';
+		space;
+		nextPutAll: recSel second;
+		space;
 		print: selector.
 	0 < self argumentCount 
 		ifTrue: 
 			[1 == self argumentCount 
 				ifTrue: 
-					[aStream nextPutAll: ' argument: '.
+					[aStream
+						space;
+						nextPutAll: recSelArg third;
+						space.
 					(args at: 1) storeForViewOn: aStream variables: aDictionary]
 				ifFalse: 
-					[aStream nextPutAll: ' arguments: '.
+					[aStream
+						space;
+						nextPutAll: recSelArgs third;
+						space.
 					args storeForViewOn: aStream variables: aDictionary]].
 	aStream nextPut: $)! !
 !MessageSendAbstract categoriesFor: #storeForViewOn:variables:!public!store view! !
-
-!Metaclass methodsFor!
-
-storeForViewOn: aStream 
-	aStream
-		nextPutAll: '##(';
-		nextPutAll: self name;
-		nextPutAll: ' class' nextPut: $)! !
-!Metaclass categoriesFor: #storeForViewOn:!public!store view! !
 
 !NullConverter methodsFor!
 
@@ -714,7 +787,11 @@ hash
 
 storeForViewOn: aStream variables: aDictionary 
 	(leftNullValue isNil and: [rightNullValue isNil]) 
-		ifTrue: [aStream nextPutAll: 'NullConverter new']
+		ifTrue: 
+			[aStream
+				display: self class;
+				space;
+				display: #new]
 		ifFalse: [super storeForViewOn: aStream variables: aDictionary]! !
 !NullConverter categoriesFor: #=!public!store view! !
 !NullConverter categoriesFor: #hash!public!store view! !
@@ -725,13 +802,19 @@ storeForViewOn: aStream variables: aDictionary
 storeForViewOn: aStream 
 	aStream
 		nextPut: $(;
-		nextPutAll: self class name;
-		nextPutAll: ' new'.
+		display: self class;
+		space;
+		display: #new.
 	normalStyleName == #normal 
 		ifFalse: 
-			[aStream nextPutAll: ' normalStyleName: '.
+			[aStream
+				space;
+				display: #normalStyleName:;
+				space.
 			normalStyleName storeForViewOn: aStream.
-			aStream nextPutAll: '; yourself'].
+			aStream
+				nextPutAll: '; ';
+				display: #yourself].
 	aStream nextPut: $)! !
 !NullScintillaStyler categoriesFor: #storeForViewOn:!public!store view! !
 
@@ -753,7 +836,8 @@ storeForViewAttributesDifferingFrom: default on: aStream variables: aDictionary
 						aStream
 							cr;
 							tab;
-							nextPutAll: 'command: ';
+							display: #command:;
+							space;
 							print: anObject command];
 				at: #buddy
 					put: 
@@ -763,12 +847,14 @@ storeForViewAttributesDifferingFrom: default on: aStream variables: aDictionary
 								[aStream
 									cr;
 									tab;
-									nextPutAll: 'isAutoBuddy: true']
+									display: #isAutoBuddy:;
+									nextPutAll: ' true']
 							ifFalse: 
 								[aStream
 									cr;
 									tab;
-									nextPutAll: 'buddy: ';
+									display: #buddy:;
+									space;
 									nextPutAll: (aDictionary at: anObject)]];
 				yourself.
 	aspects := self class publishedAspectsOfInstances asSortedCollection.
@@ -792,24 +878,22 @@ storeForViewAttributesDifferingFrom: default on: aStream variables: aDictionary
 storeForViewAttributesOn: aStream variables: aDictionary 
 	aStream
 		nextPut: $(;
-		nextPutAll: self class name;
-		nextPutAll: ' new'.
+		display: self class;
+		space;
+		display: #new.
 	self 
 		storeForViewAttributesDifferingFrom: self class new
 		on: aStream
 		variables: aDictionary.
-	aStream nextPutAll: ' yourself)'!
+	aStream
+		space;
+		display: #yourself;
+		nextPut: $)!
 
 storeForViewOn: aStream 
-	"Append to the <puttableStream> argument, target, an expression which when 
-	evaluated will answer a collection similar to the receiver."
-
 	self subclassResponsibility!
 
 storeForViewOn: aStream variables: aDictionary 
-	"Append to the <puttableStream> argument, target, an expression which when 
-	evaluated will answer a collection similar to the receiver."
-
 	self storeForViewOn: aStream!
 
 storeStringForView
@@ -829,13 +913,11 @@ storeStringForView
 !OrderedCollection methodsFor!
 
 storeForViewOn: aStream variables: aDictionary 
-	"Append to the <puttableStream> argument, target, an expression which when 
-	evaluated will answer a collection similar to the receiver."
-
 	aStream
 		nextPutAll: '(';
-		nextPutAll: self class name;
-		nextPutAll: ' new'.
+		display: self class;
+		space;
+		display: #new.
 	self storeForViewValuesOn: aStream variables: aDictionary!
 
 storeForViewValuesOn: aStream variables: aDictionary 
@@ -844,10 +926,16 @@ storeForViewValuesOn: aStream variables: aDictionary
 
 	self do: 
 			[:each | 
-			aStream nextPutAll: ' add: '.
+			aStream
+				space;
+				display: #add:;
+				space.
 			each storeForViewOn: aStream variables: aDictionary.
 			aStream nextPut: $;].
-	aStream nextPutAll: ' yourself)'! !
+	aStream
+		space;
+		display: #yourself;
+		nextPut: $)! !
 !OrderedCollection categoriesFor: #storeForViewOn:variables:!public!store view! !
 !OrderedCollection categoriesFor: #storeForViewValuesOn:variables:!public!store view! !
 
@@ -856,25 +944,34 @@ storeForViewValuesOn: aStream variables: aDictionary
 storeForViewOn: aStream 
 	aStream
 		nextPutAll: '((';
-		nextPutAll: self class name;
-		nextPutAll: ' withStyleName: ';
+		display: self class;
+		space;
+		display: #withStyleName:;
+		space;
 		print: self styleName;
-		nextPutAll: ') width: ';
+		nextPutAll: ') ';
+		display: #width:;
+		space;
 		print: self width;
-		nextPutAll: '; color: '.
+		nextPutAll: '; ';
+		display: #color:;
+		space.
 	self color storeForViewOn: aStream.
-	aStream nextPutAll: '; yourself)'! !
+	aStream
+		nextPutAll: '; ';
+		display: #yourself;
+		nextPut: $)! !
 !Pen categoriesFor: #storeForViewOn:!public!store view! !
 
 !PluggableColor methodsFor!
 
 storeForViewOn: aStream variables: aDictionary 
-	"Put an ASCII representation of receiver onto aStream."
-
 	aStream
 		nextPut: $(;
 		display: self class;
-		nextPutAll: ' with: '.
+		space;
+		display: #with:;
+		space.
 	valuable storeForViewOn: aStream variables: aDictionary.
 	aStream nextPut: $)! !
 !PluggableColor categoriesFor: #storeForViewOn:variables:!public!store view! !
@@ -888,14 +985,17 @@ storeForViewOn: aStream
 !ProportionalLayout methodsFor!
 
 storeForViewOn: aStream variables: aDictionary 
+	| arrPut |
+	arrPut := #arrangementOf:put: keywords.
 	aStream
 		nextPut: $(;
-		nextPutAll: self class name;
-		nextPutAll: ' new';
+		display: self class;
+		space;
+		display: #new;
 		cr;
 		tab;
-		tab;
-		nextPutAll: 'isVertical: '.
+		display: #isVertical:;
+		space.
 	self isVertical storeForViewOn: aStream.
 	aStream nextPut: $;.
 	proportions keysAndValuesDo: 
@@ -903,17 +1003,19 @@ storeForViewOn: aStream variables: aDictionary
 			aStream
 				cr;
 				tab;
-				tab;
-				nextPutAll: 'arrangementOf: ';
+				nextPutAll: arrPut first;
+				space;
 				nextPutAll: (aDictionary at: eachKey);
-				nextPutAll: ' put: '.
+				space;
+				nextPutAll: arrPut second;
+				space.
 			eachValue storeForViewOn: aStream.
 			aStream nextPut: $;].
 	aStream
 		cr;
 		tab;
-		tab;
-		nextPutAll: 'yourself)'! !
+		display: #yourself;
+		nextPut: $)! !
 !ProportionalLayout categoriesFor: #storeForViewOn:variables:!public!store view! !
 
 !Rectangle methodsFor!
@@ -922,7 +1024,9 @@ storeForViewOn: aStream
 	aStream
 		nextPut: $(;
 		print: origin;
-		nextPutAll: ' corner: ';
+		space;
+		display: #corner:;
+		space;
 		print: corner;
 		nextPut: $)! !
 !Rectangle categoriesFor: #storeForViewOn:!public!store view! !
@@ -930,15 +1034,18 @@ storeForViewOn: aStream
 !ResourceIdentifier methodsFor!
 
 storeForViewOn: aStream 
-	"Append to the <puttableStream> argument, target, an expression which when 
-	evaluated will answer a collection similar to the receiver."
-
+	| className |
+	className := #class:name: keywords.
 	aStream
 		nextPut: $(;
 		print: self class;
-		nextPutAll: ' class: ';
+		space;
+		nextPutAll: className first;
+		space;
 		print: self owningClass;
-		nextPutAll: ' name: ';
+		space;
+		nextPutAll: className second;
+		space;
 		print: self name;
 		nextPut: $)! !
 !ResourceIdentifier categoriesFor: #storeForViewOn:!printing!public!store view! !
@@ -948,8 +1055,10 @@ storeForViewOn: aStream
 storeForViewOn: aStream 
 	aStream
 		nextPut: $(;
-		nextPutAll: self class name;
-		nextPutAll: ' fromRtf: '.
+		display: self class;
+		space;
+		display: #fromRtf:;
+		space.
 	rtf storeForViewOn: aStream.
 	aStream nextPut: $)! !
 !RichText categoriesFor: #storeForViewOn:!public!store view! !
@@ -963,14 +1072,20 @@ storeForViewOn: aStream
 !ScintillaKeyBinding methodsFor!
 
 storeForViewOn: aStream 
+	| newMess |
+	newMess := #newAcceleratorKey:message: keywords.
 	aStream
 		nextPut: $(;
-		nextPutAll: self class name;
-		nextPutAll: ' newAcceleratorKey: ';
+		display: self class;
+		space;
+		nextPutAll: newMess first;
+		space;
 		print: acceleratorKey;
 		nextPutAll: ' "';
 		nextPutAll: self acceleratorKeyString;
-		nextPutAll: '" message: ';
+		nextPutAll: '" ';
+		nextPutAll: newMess second;
+		space;
 		print: message;
 		nextPutAll: ' "';
 		nextPutAll: self commandSymbol;
@@ -994,7 +1109,13 @@ storeSubviewsB: aList on: aStream variables: aDictionary
 				nextPutAll: ' := ';
 				nextPutAll: (childName ifNil: [''] ifNotNil: ['(']);
 				nextPutAll: myName;
-				nextPutAll: ' subViews detect: [:each | each isKindOf: ';
+				space;
+				display: #subViews;
+				space;
+				display: #detect:;
+				nextPutAll: ' [:each | each ';
+				display: #isKindOf:;
+				space;
 				nextPutAll: each class name;
 				nextPutAll: ']'.
 			(self nameOf: each) 
@@ -1014,22 +1135,22 @@ storeSubviewsB: aList on: aStream variables: aDictionary
 
 storeForViewOn: aStream 
 	aStream
-		nextPutAll: self class name;
-		nextPutAll: ' new'! !
+		display: self class;
+		space;
+		display: #new! !
 !SmalltalkStyler categoriesFor: #storeForViewOn:!public!store view! !
 
 !SortedCollection methodsFor!
 
 storeForViewOn: aStream variables: aDictionary 
-	"Append to the <puttableStream> argument, target, an expression which when 
-	evaluated will answer a collection similar to the receiver."
-
 	(algorithm isKindOf: DefaultSortAlgorithm) 
 		ifTrue: [^super storeForViewOn: aStream variables: aDictionary].
 	aStream
 		nextPutAll: '((';
-		nextPutAll: self class name;
-		nextPutAll: ' sortBlock: '.
+		display: self class;
+		space;
+		display: #sortBlock:;
+		space.
 	algorithm sortBlock storeForViewOn: aStream variables: aDictionary.
 	aStream nextPut: $).
 	self storeForViewValuesOn: aStream variables: aDictionary! !
@@ -1044,16 +1165,22 @@ storeForViewOn: aStream variables: aDictionary
 				yourself.
 	aStream
 		nextPut: $(;
-		nextPutAll: self class name;
-		nextPutAll: ' new';
-		nextPutAll: ' parentView: ';
+		display: self class;
+		space;
+		display: #new;
+		space;
+		display: #parentView:;
+		space;
 		nextPutAll: (aDictionary at: parentView);
 		nextPut: $;.
 	self 
 		storeForViewAttributesDifferingFrom: default
 		on: aStream
 		variables: aDictionary.
-	aStream nextPutAll: ' yourself)'! !
+	aStream
+		space;
+		display: #yourself;
+		nextPut: $)! !
 !StatusBarItem categoriesFor: #storeForViewOn:variables:!public!store view! !
 
 !StatusBarNullItem methodsFor!
@@ -1061,32 +1188,45 @@ storeForViewOn: aStream variables: aDictionary
 storeForViewOn: aStream variables: aDictionary 
 	aStream
 		nextPut: $(;
-		nextPutAll: self class name;
-		nextPutAll: ' separator: 0)'! !
+		display: self class;
+		space;
+		display: #separator:;
+		nextPutAll: ' 0)'! !
 !StatusBarNullItem categoriesFor: #storeForViewOn:variables:!public!store view! !
 
 !String methodsFor!
 
 storeForViewOn: aStream 
-	"Append to the <puttableStream> argument, target, an expression which when 
-	evaluated will answer a collection similar to the receiver."
-
 	self printOn: aStream! !
 !String categoriesFor: #storeForViewOn:!public!store view! !
 
 !StyledGradientBrush methodsFor!
 
 storeForViewOn: aStream 
+	| fromAtToAt |
+	fromAtToAt := #from:at:to:at: keywords.
 	aStream
 		nextPut: $(;
 		display: self class.
-	aStream nextPutAll: ' from: '.
+	aStream
+		space;
+		nextPutAll: fromAtToAt first;
+		space.
 	self startColor storeForViewOn: aStream.
-	aStream nextPutAll: ' at: '.
+	aStream
+		space;
+		nextPutAll: fromAtToAt second;
+		space.
 	self startPoint storeForViewOn: aStream.
-	aStream nextPutAll: ' to: '.
+	aStream
+		space;
+		nextPutAll: fromAtToAt third;
+		space.
 	self endColor storeForViewOn: aStream.
-	aStream nextPutAll: ' at: '.
+	aStream
+		space;
+		nextPutAll: fromAtToAt fourth;
+		space.
 	self endPoint storeForViewOn: aStream.
 	aStream nextPut: $)! !
 !StyledGradientBrush categoriesFor: #storeForViewOn:!public!store view! !
@@ -1100,12 +1240,12 @@ storeForViewOn: aStream
 !SystemColor methodsFor!
 
 storeForViewOn: aStream 
-	"Put an ASCII representation of receiver onto aStream."
-
 	aStream
 		nextPut: $(;
 		display: self class;
-		display: ' fromId: ';
+		space;
+		display: #fromId:;
+		space;
 		display: id;
 		nextPutAll: ' "';
 		display: self idName;
@@ -1117,8 +1257,10 @@ storeForViewOn: aStream
 storeForViewOn: aStream 
 	aStream
 		nextPut: $(;
-		nextPutAll: self class name;
-		nextPutAll: ' fromMilliseconds: '.
+		display: self class;
+		space;
+		display: #fromMilliseconds:;
+		space.
 	milliseconds storeForViewOn: aStream.
 	aStream
 		nextPutAll: ' "';
@@ -1129,7 +1271,8 @@ storeForViewOn: aStream
 !ToolbarButton methodsFor!
 
 storeForViewOn: aStream variables: aDictionary 
-	| bitmapName indexName prefix |
+	| bitmapName indexName prefix selector |
+	selector := #bitmap:index:commandDescription: keywords.
 	bitmap == IDB_STD_SMALL_COLOR 
 		ifTrue: 
 			[bitmapName := 'Standard'.
@@ -1151,30 +1294,42 @@ storeForViewOn: aStream variables: aDictionary
 					(eachValue == bitmapIndex and: [eachKey beginsWith: prefix]) ifTrue: [indexName := eachKey]].
 			aStream
 				nextPut: $(;
-				nextPutAll: self class name;
-				nextPutAll: ' bitmap: ';
+				display: self class;
+				space;
+				nextPutAll: selector first;
+				space;
 				print: bitmap;
 				nextPutAll: ' "';
 				nextPutAll: bitmapName;
 				nextPut: $";
-				nextPutAll: ' index: ';
+				space;
+				nextPutAll: selector second;
+				space;
 				print: bitmapIndex;
 				nextPutAll: ' "';
 				nextPutAll: indexName;
 				nextPut: $";
-				nextPutAll: ' commandDescription: '.
+				space;
+				nextPutAll: selector third;
+				space.
 			commandDescription storeForViewOn: aStream variables: aDictionary.
 			aStream nextPut: $).
 			^self].
 	aStream
 		nextPut: $(;
-		nextPutAll: self class name;
-		nextPutAll: ' bitmap: '.
+		display: self class;
+		space;
+		nextPutAll: selector first;
+		space.
 	bitmap storeForViewOn: aStream variables: aDictionary.
 	aStream
-		nextPutAll: ' index: ';
+		space;
+		nextPutAll: selector second;
+		space;
 		print: bitmapIndex;
-		nextPutAll: ' commandDescription: '.
+		space;
+		nextPutAll: selector third;
+		space.
 	commandDescription storeForViewOn: aStream variables: aDictionary.
 	aStream nextPut: $)! !
 !ToolbarButton categoriesFor: #storeForViewOn:variables:!public!store view! !
@@ -1184,8 +1339,10 @@ storeForViewOn: aStream variables: aDictionary
 storeForViewOn: aStream variables: aDictionary 
 	aStream
 		nextPut: $(;
-		nextPutAll: self class name;
-		nextPutAll: ' commandDescription: '.
+		display: self class;
+		space;
+		display: #commandDescription:;
+		space.
 	commandDescription storeForViewOn: aStream variables: aDictionary.
 	aStream nextPut: $)! !
 !ToolbarIconButton categoriesFor: #storeForViewOn:variables:!public!store view! !
@@ -1196,13 +1353,16 @@ storeForViewOn: aStream
 	width == 0 
 		ifTrue: 
 			[aStream
-				nextPutAll: self class name;
-				nextPutAll: ' new']
+				display: self class;
+				space;
+				display: #new]
 		ifFalse: 
 			[aStream
 				nextPut: $(;
-				nextPutAll: self class name;
-				nextPutAll: ' width: ';
+				display: self class;
+				space;
+				display: #width:;
+				space;
 				print: width;
 				nextPut: $)]! !
 !ToolbarSeparator categoriesFor: #storeForViewOn:!public!store view! !
@@ -1215,7 +1375,7 @@ storeForViewOn: aStream variables: aDictionary
 	(self class class canUnderstand: selector) 
 		ifTrue: 
 			[aStream
-				nextPutAll: self class name;
+				display: self class;
 				space;
 				nextPutAll: selector]
 		ifFalse: [super storeForViewOn: aStream variables: aDictionary]! !
@@ -1242,7 +1402,7 @@ storeForViewOn: aStream
 	self storeForViewOn: codeStream variables: variables.
 	aStream
 		nextPut: $";
-		nextPutAll: self class name;
+		display: self class;
 		nextPut: $";
 		cr;
 		nextPutAll: '| '.
@@ -1261,11 +1421,15 @@ storeForViewOn: aStream
 				display: each;
 				nextPutAll: ' := ';
 				nextPutAll: (variables keyAtValue: each) class name;
-				nextPutAll: ' new.';
+				space;
+				display: #new;
+				nextPut: $.;
 				cr].
 	aStream
 		nextPutAll: (variables at: self);
-		nextPutAll: ' show.';
+		space;
+		display: #show;
+		nextPut: $.;
 		cr;
 		nextPutAll: codeStream contents;
 		nextPutAll: (variables at: self)!
@@ -1293,7 +1457,9 @@ storeForViewOn: aStream variables: aDictionary
 				[aStream
 					cr;
 					tab;
-					nextPutAll: ' arrangement: '.
+					space;
+					display: #arrangement:;
+					space.
 				arrangement storeForViewOn: aStream variables: aDictionary.
 				aStream nextPut: $;].
 	self 
@@ -1303,7 +1469,8 @@ storeForViewOn: aStream variables: aDictionary
 	aStream
 		cr;
 		tab;
-		nextPutAll: ' yourself.';
+		display: #yourself;
+		nextPut: $.;
 		cr.
 	self 
 		storeSubviewsB: subViews
@@ -1332,19 +1499,32 @@ storeNameIn: aDictionary
 			name := x].
 	^aDictionary at: self put: name asString!
 
+storeStringForView
+	"Answers a string that can be used to recreate the view. The primary use is to allow for diffs when a view is edited (the literal array in a resource_ method is useless for that purpose"
+
+	| stream |
+	stream := String writeStream: 32.
+	self storeForViewOn: stream.
+	^stream contents!
+
 storeSubviewsA: aList on: aStream variables: aDictionary 
+	| selector |
+	selector := #addSubView:name: keywords.
 	aList do: 
 			[:each | 
 			aStream
 				cr;
 				tab;
-				nextPutAll: 'addSubView: ';
+				nextPutAll: selector first;
+				space;
 				nextPutAll: (aDictionary at: each).
 			(self nameOf: each) 
 				ifNotNil: 
 					[:aString | 
 					aStream
-						nextPutAll: ' name: ';
+						space;
+						nextPutAll: selector second;
+						space;
 						print: aString].
 			aStream nextPut: $;]!
 
@@ -1355,6 +1535,7 @@ storeSubviewsB: aList on: aStream variables: aDictionary
 !View categoriesFor: #storeForViewOn:!public!store view! !
 !View categoriesFor: #storeForViewOn:variables:!public!store view! !
 !View categoriesFor: #storeNameIn:!public!store view! !
+!View categoriesFor: #storeStringForView!public!store view! !
 !View categoriesFor: #storeSubviewsA:on:variables:!public!store view! !
 !View categoriesFor: #storeSubviewsB:on:variables:!public!store view! !
 
