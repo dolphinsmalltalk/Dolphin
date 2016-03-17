@@ -31,13 +31,13 @@ package methodNames
 	add: #Image -> #storeForViewOn:;
 	add: #InternalBitmap -> #storeForViewOn:;
 	add: #Interval -> #storeForViewOn:;
+	add: #InvertingConverter -> #=;
 	add: #ListViewColumn -> #storeForViewOn:variables:;
+	add: #MappingConverter -> #=;
 	add: #Menu -> #fromStrings;
 	add: #Menu -> #storeForViewOn:variables:;
 	add: #Message -> #storeForViewOn:variables:;
 	add: #MessageSendAbstract -> #storeForViewOn:variables:;
-	add: #NullConverter -> #=;
-	add: #NullConverter -> #hash;
 	add: #NullConverter -> #storeForViewOn:variables:;
 	add: #NullScintillaStyler -> #storeForViewOn:;
 	add: #Number -> #storeForViewOn:;
@@ -50,6 +50,7 @@ package methodNames
 	add: #OrderedCollection -> #storeForViewValuesOn:variables:;
 	add: #Pen -> #storeForViewOn:;
 	add: #PluggableColor -> #storeForViewOn:variables:;
+	add: #PluggableTypeConverter -> #=;
 	add: #Point -> #storeForViewOn:;
 	add: #ProportionalLayout -> #storeForViewOn:variables:;
 	add: #Rectangle -> #storeForViewOn:;
@@ -72,6 +73,8 @@ package methodNames
 	add: #ToolbarIconButton -> #storeForViewOn:variables:;
 	add: #ToolbarSeparator -> #storeForViewOn:;
 	add: #ToolbarSystemButton -> #storeForViewOn:variables:;
+	add: #TypeConverter -> #=;
+	add: #TypeConverter -> #hash;
 	add: #TypeConverter -> #storeForViewOn:variables:;
 	add: #UndefinedObject -> #storeForViewOn:;
 	add: #View -> #storeForViewOn:;
@@ -602,11 +605,25 @@ storeForViewOn: aStream
 	self printOn: aStream! !
 !Interval categoriesFor: #storeForViewOn:!public!store view! !
 
+!InvertingConverter methodsFor!
+
+= comparand 
+	^super = comparand and: [self wrappedConverter = comparand wrappedConverter]! !
+!InvertingConverter categoriesFor: #=!public!store view! !
+
 !ListViewColumn methodsFor!
 
 storeForViewOn: aStream variables: aDictionary 
 	self storeForViewAttributesOn: aStream variables: aDictionary! !
 !ListViewColumn categoriesFor: #storeForViewOn:variables:!public!store view! !
+
+!MappingConverter methodsFor!
+
+= comparand 
+	^super = comparand and: 
+			[self leftToRightMap = comparand leftToRightMap 
+				and: [self rightToLeftMap = comparand rightToLeftMap]]! !
+!MappingConverter categoriesFor: #=!public!store view! !
 
 !Menu methodsFor!
 
@@ -778,13 +795,6 @@ storeForViewOn: aStream variables: aDictionary
 
 !NullConverter methodsFor!
 
-= comparand 
-	^self class == comparand class and: 
-			[self leftNullValue = comparand leftNullValue and: [self rightNullValue = comparand rightNullValue]]!
-
-hash
-	^leftNullValue hash!
-
 storeForViewOn: aStream variables: aDictionary 
 	(leftNullValue isNil and: [rightNullValue isNil]) 
 		ifTrue: 
@@ -793,8 +803,6 @@ storeForViewOn: aStream variables: aDictionary
 				space;
 				display: #new]
 		ifFalse: [super storeForViewOn: aStream variables: aDictionary]! !
-!NullConverter categoriesFor: #=!public!store view! !
-!NullConverter categoriesFor: #hash!public!store view! !
 !NullConverter categoriesFor: #storeForViewOn:variables:!public!store view! !
 
 !NullScintillaStyler methodsFor!
@@ -862,7 +870,7 @@ storeForViewAttributesDifferingFrom: default on: aStream variables: aDictionary
 	aspects do: 
 			[:each | 
 			| x |
-			(x := self perform: each name) = (default perform: each name) 
+			(x := each readFrom: self) = (each readFrom: default) 
 				ifFalse: 
 					[each isWriteable 
 						ifTrue: 
@@ -975,6 +983,14 @@ storeForViewOn: aStream variables: aDictionary
 	valuable storeForViewOn: aStream variables: aDictionary.
 	aStream nextPut: $)! !
 !PluggableColor categoriesFor: #storeForViewOn:variables:!public!store view! !
+
+!PluggableTypeConverter methodsFor!
+
+= comparand 
+	^super = comparand and: 
+			[self leftToRightBlock = comparand leftToRightBlock 
+				and: [self rightToLeftBlock = comparand rightToLeftBlock]]! !
+!PluggableTypeConverter categoriesFor: #=!public!store view! !
 
 !Point methodsFor!
 
@@ -1383,8 +1399,17 @@ storeForViewOn: aStream variables: aDictionary
 
 !TypeConverter methodsFor!
 
+= comparand 
+	^self class == comparand class and: 
+			[self leftNullValue = comparand leftNullValue and: [self rightNullValue = comparand rightNullValue]]!
+
+hash
+	^leftNullValue hash!
+
 storeForViewOn: aStream variables: aDictionary 
 	self storeForViewAttributesOn: aStream variables: aDictionary! !
+!TypeConverter categoriesFor: #=!public!store view! !
+!TypeConverter categoriesFor: #hash!public!store view! !
 !TypeConverter categoriesFor: #storeForViewOn:variables:!public!store view! !
 
 !UndefinedObject methodsFor!
