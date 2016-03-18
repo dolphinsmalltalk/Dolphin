@@ -2,19 +2,21 @@
 package := Package name: 'Dolphin Scintilla View'.
 package paxVersion: 1;
 	basicComment: 'Dolphin Scintilla Control Wrapper
-Copyright (c) Object Arts Ltd, 2002-2010.
+Copyright (c) Object Arts Ltd, 2002-2016.
 
-**Built against Scintilla version 2.24**
+**Built against Scintilla version 3.6.4**
 
-This package implements a Dolphin <textView>, <ScintillaView>, that wraps the open-source Scintilla programmers'' editor control. ScintillaView provides at least a basic interface (generated from the ''scintilla.iface'' file supplied with the source) to all of Scintilla''s features. It, and the supporting classes in the package, also provide higher level access to the majority of those features such as margins, margin markers, indicators, auto-completion lists, and text styling. Some other powerful features such as call tips may be wrapped at a higher level in a future release.
+This package implements a Dolphin <textView>, <ScintillaView>, that wraps the open-source Scintilla programmers'' editor control. ScintillaView provides at least a basic interface (generated from the ''scintilla.iface'' file supplied with the source) to all of Scintilla''s features. It, and the supporting classes in the package, also provide higher level access to the majority of those features such as annotations, call tips, margins, margin markers, indicators, auto-completion lists, and text styling.
 
-Scintilla is now used as the view for the development system''s workspaces, having completely replaced the use of RichTextEdit and MultilineTextEdit, with which the SmalltalkWorkspace presenter is no longer compatible. This carries many advantages, not the least of which is that syntax colouring of Smalltalk source code now takes place on the fly, not just when code is compiled. 
+Scintilla is used as the view for the development system''s workspaces.
 
-See http://www.scintilla.org for further details of Scintilla, including complete API documentation. Check the package version number to see which version of Scintilla it was built against. New Scintilla releases are often not entirely backwards compatible so we recommend that you stick with version of the Scintilla DLL''s (SciLexer.dll and Scintilla.dll) that match the package.
+See http://www.scintilla.org for further details of Scintilla, including complete API documentation. Check the package version number to see which version of Scintilla it was built against. New Scintilla releases are often not entirely backwards compatible so we recommend that you stick with version of the Scintilla DLL (SciLexer.dll) that matches the package.
 
-The underlying Scintilla control is Copyright 1998-2006 by Neil Hodgson <neilh@scintilla.org>, license terms for Scintilla:
+"License for Scintilla and SciTE
 
-"All Rights Reserved 
+Copyright 1998-2003 by Neil Hodgson <neilh@scintilla.org>
+
+All Rights Reserved 
 
 Permission to use, copy, modify, and distribute this software and its 
 documentation for any purpose and without fee is hereby granted, 
@@ -29,9 +31,9 @@ SPECIAL, INDIRECT OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
 WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, 
 WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER 
 TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE 
-OR PERFORMANCE OF THIS SOFTWARE."'.
+OR PERFORMANCE OF THIS SOFTWARE. "'.
 
-package basicPackageVersion: '6.2'.
+package basicPackageVersion: '3.6.4'.
 
 
 package classNames
