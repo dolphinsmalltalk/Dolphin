@@ -360,7 +360,7 @@ stylingStartBefore: startInteger in: aScintillaView
 	^arrayRange isEmpty 
 		ifTrue: 
 			[| styleMask |
-			styleMask := aScintillaView styleMaskAt: start.
+			styleMask := aScintillaView styleIdAt: start.
 			inTag := (aScintillaView styleNamed: #tag) ifNil: [false] ifNotNil: [:style | style id = styleMask].
 			start]
 		ifFalse: 

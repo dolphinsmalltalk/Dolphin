@@ -432,6 +432,10 @@ Win32Constants at: 'LTGRAY_BRUSH' put: 16r1!
 Win32Constants at: 'LVM_GETHEADER' put: 16r101F!
 Win32Constants at: 'LWA_ALPHA' put: 16r2!
 Win32Constants at: 'LWA_COLORKEY' put: 16r1!
+Win32Constants at: 'MAPVK_VK_TO_VSC' put: 16r0!
+Win32Constants at: 'MAPVK_VSC_TO_VK' put: 16r1!
+Win32Constants at: 'MAPVK_VSC_TO_VK_CHAR' put: 16r2!
+Win32Constants at: 'MAPVK_VSC_TO_VK_EX' put: 16r3!
 Win32Constants at: 'MAX_COMPUTERNAME_LENGTH' put: 16rF!
 Win32Constants at: 'MEM_COMMIT' put: 16r1000!
 Win32Constants at: 'MEM_DECOMMIT' put: 16r4000!

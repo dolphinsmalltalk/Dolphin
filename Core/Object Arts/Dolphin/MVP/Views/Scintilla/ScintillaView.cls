@@ -9686,9 +9686,8 @@ styledTextFrom: startInteger to: stopInteger
 	^bytes!
 
 styleIdAt: anInteger 
-	^self styleMaskAt: anInteger!
+	"Answer the style byte at the specified position."
 
-styleMaskAt: anInteger 
 	"Inlined to minimize overhead when scanning text for the start of a style."
 
 	^this 
@@ -9699,6 +9698,10 @@ styleMaskAt: anInteger
 				msg: SCI_GETSTYLEAT
 				wParam: anInteger - 1
 				lParam: 0]!
+
+styleMaskAt: anInteger 
+	#deprecated.
+	^self styleIdAt: anInteger!
 
 styleNamed: aSymbol 
 	"Answer a <ScintillaTextStyle> being the named style, or nil if the name is not recognised."
@@ -11276,7 +11279,7 @@ zoomOut
 !ScintillaView categoriesFor: #styleBits!constants!public!style definition! !
 !ScintillaView categoriesFor: #styleBits:!accessing!public!style definition! !
 !ScintillaView categoriesFor: #styledTextFrom:to:!public!text retrieval & modification! !
-!ScintillaView categoriesFor: #styleIdAt:!accessing!private!styling! !
+!ScintillaView categoriesFor: #styleIdAt:!accessing!public!styling! !
 !ScintillaView categoriesFor: #styleMaskAt:!accessing!public!styling! !
 !ScintillaView categoriesFor: #styleNamed:!enquiries!public!styling! !
 !ScintillaView categoriesFor: #styleNext:mask:!**auto generated**!public!scintilla interface!styling! !

@@ -40,9 +40,9 @@ acceleratorKeyString
 
 	^AcceleratorTable keyStringFromCode: self acceleratorKey!
 
-acceleratorKeyString: keys
-	"Sets the accelerator key to the key code generated from parsing the <readableString> 
-	accelerator key description, keys. The string is assumed to be in English."
+acceleratorKeyString: keys 
+	"Sets the accelerator key to the key code generated from parsing the <readableString>
+	accelerator key description, keys. The string is assumed to be using UK English key names."
 
 	self acceleratorKey: (AcceleratorTable keyCodeFromString: keys)!
 
