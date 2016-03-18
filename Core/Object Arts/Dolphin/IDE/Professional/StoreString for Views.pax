@@ -83,6 +83,7 @@ package methodNames
 	add: #View -> #storeStringForView;
 	add: #View -> #storeSubviewsA:on:variables:;
 	add: #View -> #storeSubviewsB:on:variables:;
+	add: 'Presenter class' -> #createCodeForResourceIdentifiers;
 	add: 'View class' -> #createCodeForResourceIdentifier:;
 	add: 'View class' -> #createCodeForResourceIdentifiers;
 	yourself.
@@ -1003,6 +1004,16 @@ storeForViewOn: aStream
 	self printOn: aStream! !
 !Point categoriesFor: #storeForViewOn:!public!store view! !
 
+!Presenter class methodsFor!
+
+createCodeForResourceIdentifiers
+	"
+	Presenter createCodeForResourceIdentifiers.
+"
+
+	self resourceIdentifiers do: [:each | View createCodeForResourceIdentifier: each]! !
+!Presenter class categoriesFor: #createCodeForResourceIdentifiers!public!store view! !
+
 !ProportionalLayout methodsFor!
 
 storeForViewOn: aStream variables: aDictionary 
@@ -1506,7 +1517,7 @@ storeForViewOn: aStream variables: aDictionary
 
 storeNameIn: aDictionary 
 	| name |
-	(name := self parentView nameOf: self) 
+	(name := (self parentView ifNotNil: [:value | value nameOf: self])) 
 		ifNil: 
 			[name := self class name 
 						, ((aDictionary keys select: [:each | each class == self class]) size + 1) printString.
@@ -1572,8 +1583,11 @@ createCodeForResourceIdentifier: aResourceIdentifier
 	self createCodeForResourceIdentifiers.
 "
 
-	| expr selector string view |
-	view := Smalltalk developmentSystem loadViewResource: aResourceIdentifier resource
+	| class compiledMethod expr selector string topShell view |
+	compiledMethod := aResourceIdentifier compiledMethod.
+	class := compiledMethod methodClass.
+	
+	[view := Smalltalk developmentSystem loadViewResource: aResourceIdentifier resource
 				inContext: View desktop.
 	string := view storeStringForView.
 	selector := aResourceIdentifier selector.
@@ -1581,15 +1595,18 @@ createCodeForResourceIdentifier: aResourceIdentifier
 				, (selector copyFrom: aResourceIdentifier class selectorPrefix size + 1 to: selector size).
 	string := selector , String lineDelimiter , '"' , aResourceIdentifier printString , '"' 
 				, String lineDelimiter , string.
-	expr := [SmalltalkParser parseMethod: string in: self] on: SmalltalkParser notificationClass
+	expr := [SmalltalkParser parseMethod: string in: class] on: SmalltalkParser notificationClass
 				do: 
 					[:e | 
 					e okToContinue.
 					nil].
 	expr isNil ifTrue: [self error: 'Unable to parse method!!'].
 	string := expr formatterClass new format: expr.
-	self class compile: string
-		categories: (Array with: MethodCategory public with: (MethodCategory name: 'resources-views'))!
+	class 
+		compile: string
+		categories: compiledMethod categories
+		package: compiledMethod owningPackageIfLoose] 
+			ensure: [(topShell := view topShell) == View desktop ifTrue: [view close] ifFalse: [topShell close]]!
 
 createCodeForResourceIdentifiers
 	self resourceIdentifiers do: [:each | self createCodeForResourceIdentifier: each]! !
