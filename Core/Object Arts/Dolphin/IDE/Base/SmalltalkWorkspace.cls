@@ -76,9 +76,21 @@ areVariableTipsEnabled: aBoolean
 	flags := flags mask: VariableTipsMask set: aBoolean!
 
 autoComplete: aSymbol at: posInteger maxItems: maxInteger 
+	aSymbol == #specialCharacter 
+		ifTrue: 
+			[(self maybeExtendingQualifiedNameAt: posInteger) 
+				ifTrue: 
+					[self 
+						showIdentifierCompletionListAt: posInteger
+						maxItems: maxInteger
+						start: (self tokenStartAt: posInteger - 1)].
+			^self].
 	aSymbol == #identifier 
 		ifTrue: 
-			[self showIdentifierCompletionListAt: posInteger maxItems: maxInteger.
+			[self 
+				showIdentifierCompletionListAt: posInteger
+				maxItems: maxInteger
+				start: (self tokenStartAt: posInteger).
 			^self].
 	aSymbol == #literalSymbol 
 		ifTrue: 
@@ -861,6 +873,10 @@ maxAutoCompletionListSize
 maxCompletionListSize
 	^50000!
 
+maybeExtendingQualifiedNameAt: anInteger 
+	^anInteger > 1 
+		and: [(view characterAt: anInteger) == $. and: [(view styleAt: anInteger - 1) name == #identifier]]!
+
 maybeShowCompletionList
 	| styleName last |
 	last := view caretPosition - 1.
@@ -1332,12 +1348,34 @@ showFirstError: anInteger
 					self showError: first offset: anInteger]].
 	^compilationErrors notEmpty!
 
-showIdentifierCompletionListAt: posInteger maxItems: maxInteger 
-	| prefix start choices |
-	start := self tokenStartAt: posInteger.
+showIdentifierCompletionListAt: posInteger maxItems: maxInteger start: start 
 	"Trim blanks in case requesting display of identifier list on whitespace"
+
+	| prefix choices lastDot |
 	prefix := (view plainTextFrom: start to: posInteger) trimBlanks.
-	choices := self identifiersStartingWith: prefix maxItems: maxInteger.
+	lastDot := prefix lastIndexOf: $..
+	lastDot isZero 
+		ifTrue: [choices := self identifiersStartingWith: prefix maxItems: maxInteger]
+		ifFalse: 
+			["Qualified name, find the binding"
+			| qualifier var pool |
+			qualifier := prefix copyFrom: 1 to: lastDot - 1.
+			prefix := prefix copyFrom: lastDot + 1 to: prefix size.
+			choices := #().
+			(self selfClass fullBindingFor: qualifier) 
+				ifNotNil: 
+					[:var | 
+					pool := var value.
+					pool isBehavior ifTrue: [pool := pool classPool].
+					(pool isKindOf: Dictionary) 
+						ifTrue: 
+							[choices := prefix isEmpty 
+										ifTrue: [pool keys]
+										ifFalse: 
+											[| ignoreCase |
+											ignoreCase := self isAutoCompletionCaseInsensitive.
+											pool keys select: [:each | each beginsWith: prefix ignoreCase: ignoreCase]].
+							choices size > maxInteger ifTrue: [choices := #()]]]].
 	self showCompletionList: choices prefixLength: prefix size!
 
 showMessageCompletionListAt: posInteger maxItems: maxInteger 
@@ -1585,6 +1623,7 @@ wrapLinesInRange: anInterval indent: anInteger
 !SmalltalkWorkspace categoriesFor: #killAutocompleteTimer!autocompletion!private! !
 !SmalltalkWorkspace categoriesFor: #maxAutoCompletionListSize!autocompletion!constants!private! !
 !SmalltalkWorkspace categoriesFor: #maxCompletionListSize!autocompletion!constants!private! !
+!SmalltalkWorkspace categoriesFor: #maybeExtendingQualifiedNameAt:!autocompletion!helpers!private! !
 !SmalltalkWorkspace categoriesFor: #maybeShowCompletionList!autocompletion!helpers!private! !
 !SmalltalkWorkspace categoriesFor: #messagesForToken:startingWith:maxItems:!autocompletion!helpers!private! !
 !SmalltalkWorkspace categoriesFor: #modifiedModel!accessing!public! !
@@ -1629,7 +1668,7 @@ wrapLinesInRange: anInterval indent: anInteger
 !SmalltalkWorkspace categoriesFor: #showCompletionListAfterToken:maxItems:!autocompletion!helpers!private! !
 !SmalltalkWorkspace categoriesFor: #showError:offset:!helpers!private! !
 !SmalltalkWorkspace categoriesFor: #showFirstError:!operations!private! !
-!SmalltalkWorkspace categoriesFor: #showIdentifierCompletionListAt:maxItems:!autocompletion!helpers!private! !
+!SmalltalkWorkspace categoriesFor: #showIdentifierCompletionListAt:maxItems:start:!autocompletion!helpers!private! !
 !SmalltalkWorkspace categoriesFor: #showMessageCompletionListAt:maxItems:!autocompletion!helpers!private! !
 !SmalltalkWorkspace categoriesFor: #showResult:at:!helpers!private! !
 !SmalltalkWorkspace categoriesFor: #showSelectorCompletionListAt:maxItems:!autocompletion!helpers!private! !
