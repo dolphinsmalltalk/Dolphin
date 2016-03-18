@@ -15,7 +15,7 @@ _testStoreStringForIdentifier: anIdentifier
 	ViewTest new setTestSelector: #'testStoreString'; _testStoreStringForIdentifier: (ResourceIdentifier class: View name: 'Default view').
 "
 
-	| string view1 view2 x |
+	| array1 array2 stream string view1 view2 x |
 	
 	[Transcript
 		cr;
@@ -23,18 +23,24 @@ _testStoreStringForIdentifier: anIdentifier
 	view1 := Smalltalk developmentSystem loadViewResource: anIdentifier resource inContext: View desktop.
 	
 	[string := view1 storeStringForView.
-	view2 := Compiler evaluate: string] 
+	view2 := Compiler evaluate: string.
+	array1 := anIdentifier resource.
+	stream := WriteStream on: Array new.
+	(STLOutFiler on: stream) nextPut: view2.
+	array2 := stream contents] 
 			on: CompilerNotification , Error
 			do: 
 				[:ex | 
 				Transcript show: ' - FAIL'.
-				self halt]] 
+				self assert: false]] 
 			ensure: 
 				[(SessionManager inputState)
 					pumpMessages;
 					processDeferredActions.
 				(x := view1 topShell) == View desktop ifTrue: [view1 close] ifFalse: [x close].
-				view2 ifNotNil: [(x := view2 topShell) == View desktop ifTrue: [view2 close] ifFalse: [x close]]]!
+				view2 ifNotNil: [(x := view2 topShell) == View desktop ifTrue: [view2 close] ifFalse: [x close]]].
+	self assert: array1 size = array2 size.
+	1 to: array1 size do: [:i | self assert: (array1 at: i) = (array2 at: i)]!
 
 allResourceIdentifiers
 	| badList list |

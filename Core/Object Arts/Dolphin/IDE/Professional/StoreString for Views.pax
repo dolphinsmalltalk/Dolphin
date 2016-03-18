@@ -83,6 +83,8 @@ package methodNames
 	add: #View -> #storeStringForView;
 	add: #View -> #storeSubviewsA:on:variables:;
 	add: #View -> #storeSubviewsB:on:variables:;
+	add: 'View class' -> #createCodeForResourceIdentifier:;
+	add: 'View class' -> #createCodeForResourceIdentifiers;
 	yourself.
 
 package binaryGlobalNames: (Set new
@@ -106,6 +108,7 @@ package setPrerequisites: (IdentitySet new
 	add: '..\..\MVP\Views\Styled Views\Dolphin Styled Views';
 	add: '..\..\MVP\Type Converters\Dolphin Type Converters';
 	add: '..\Base\Internal Bitmaps and Icons';
+	add: '..\..\System\Compiler\Smalltalk Parser';
 	yourself).
 
 package!
@@ -1427,12 +1430,7 @@ storeForViewOn: aStream
 	variables := IdentityDictionary new.
 	codeStream := WriteStream on: String new.
 	self storeForViewOn: codeStream variables: variables.
-	aStream
-		nextPut: $";
-		display: self class;
-		nextPut: $";
-		cr;
-		nextPutAll: '| '.
+	aStream nextPutAll: '| '.
 	names := variables asSortedCollection.
 	names do: 
 			[:each | 
@@ -1459,6 +1457,7 @@ storeForViewOn: aStream
 		nextPut: $.;
 		cr;
 		nextPutAll: codeStream contents;
+		nextPut: $^;
 		nextPutAll: (variables at: self)!
 
 storeForViewOn: aStream variables: aDictionary 
@@ -1565,6 +1564,37 @@ storeSubviewsB: aList on: aStream variables: aDictionary
 !View categoriesFor: #storeStringForView!public!store view! !
 !View categoriesFor: #storeSubviewsA:on:variables:!public!store view! !
 !View categoriesFor: #storeSubviewsB:on:variables:!public!store view! !
+
+!View class methodsFor!
+
+createCodeForResourceIdentifier: aResourceIdentifier 
+	"
+	self createCodeForResourceIdentifiers.
+"
+
+	| expr selector string view |
+	view := Smalltalk developmentSystem loadViewResource: aResourceIdentifier resource
+				inContext: View desktop.
+	string := view storeStringForView.
+	selector := aResourceIdentifier selector.
+	selector := 'code_' 
+				, (selector copyFrom: aResourceIdentifier class selectorPrefix size + 1 to: selector size).
+	string := selector , String lineDelimiter , '"' , aResourceIdentifier printString , '"' 
+				, String lineDelimiter , string.
+	expr := [SmalltalkParser parseMethod: string in: self] on: SmalltalkParser notificationClass
+				do: 
+					[:e | 
+					e okToContinue.
+					nil].
+	expr isNil ifTrue: [self error: 'Unable to parse method!!'].
+	string := expr formatterClass new format: expr.
+	self class compile: string
+		categories: (Array with: MethodCategory public with: (MethodCategory name: 'resources-views'))!
+
+createCodeForResourceIdentifiers
+	self resourceIdentifiers do: [:each | self createCodeForResourceIdentifier: each]! !
+!View class categoriesFor: #createCodeForResourceIdentifier:!public!store view! !
+!View class categoriesFor: #createCodeForResourceIdentifiers!public!store view! !
 
 "End of package definition"!
 
