@@ -75,20 +75,20 @@ stylingStartBefore: startInteger in: aScintillaView
 			white := aScintillaView whitespaces.
 			
 			[prev > 0 and: 
-					[(aScintillaView styleMaskAt: prev) == 0 
+					[(aScintillaView styleIdAt: prev) == 0 
 						and: [white identityIncludes: (aScintillaView characterAt: prev)]]] 
 					whileTrue: [prev := prev - 1].
 			
 			[prev == 0 or: 
-					[(aScintillaView styleMaskAt: prev) == 0 
+					[(aScintillaView styleIdAt: prev) == 0 
 						and: [white identityIncludes: (aScintillaView characterAt: prev)]]] 
 					whileFalse: [prev := prev - 1]]
 		ifNotNil: 
 			[:style | 
 			| id |
 			id := style id.
-			[prev > 0 and: [(aScintillaView styleMaskAt: prev) == id]] whileTrue: [prev := prev - 1].
-			[prev == 0 or: [(aScintillaView styleMaskAt: prev) == id]] whileFalse: [prev := prev - 1]].
+			[prev > 0 and: [(aScintillaView styleIdAt: prev) == id]] whileTrue: [prev := prev - 1].
+			[prev == 0 or: [(aScintillaView styleIdAt: prev) == id]] whileFalse: [prev := prev - 1]].
 	^prev + 1! !
 !ScintillaStyler categoriesFor: #blockSize!constants!private! !
 !ScintillaStyler categoriesFor: #colorText:in:startingAt:!operations!private! !
