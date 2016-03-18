@@ -8466,6 +8466,17 @@ sciStyleClearAll
 				wParam: 0
 				lParam: 0]!
 
+sciStyleResetDefault
+	"Private - Reset the default style to its state at startup"
+
+	this isNil 
+		ifFalse: 
+			[ScintillaLibrary default 
+				directFunction: this
+				msg: SCI_STYLERESETDEFAULT
+				wParam: 0
+				lParam: 0]!
+
 sciTargetAsUTF8
 	"Private - Returns the target converted to UTF8. Return the length in bytes."
 
@@ -9344,6 +9355,7 @@ setDefaultTextStyle
 
 	| defaultStyle |
 	defaultStyle := self buildDefaultStyle.
+	self sciStyleResetDefault.
 	defaultStyle applyToView: self at: STYLE_DEFAULT.
 	self sciStyleClearAll!
 
@@ -11163,6 +11175,7 @@ zoomOut
 !ScintillaView categoriesFor: #sciShowLines:lineEnd:!**auto generated**!folding!private!scintilla interface!scrolling! !
 !ScintillaView categoriesFor: #sciStartStyling:mask:!**auto generated**!private!scintilla interface!styling! !
 !ScintillaView categoriesFor: #sciStyleClearAll!**auto generated**!private!scintilla interface!style definition! !
+!ScintillaView categoriesFor: #sciStyleResetDefault!**auto generated**!private!scintilla interface!style definition! !
 !ScintillaView categoriesFor: #sciTargetAsUTF8!**auto generated**!private!scintilla interface!selection! !
 !ScintillaView categoriesFor: #sciTextHeight:!**auto generated**!enquiries!private!scintilla interface! !
 !ScintillaView categoriesFor: #sciTextWidth:text:!**auto generated**!enquiries!private!scintilla interface! !
