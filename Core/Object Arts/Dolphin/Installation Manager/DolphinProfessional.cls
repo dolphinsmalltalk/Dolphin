@@ -78,10 +78,6 @@ contents
 		add: #('Core\Object Arts\Dolphin\MVP\Presenters\Prompters\Dolphin In-place Text Editor.pax' #encrypted #imageBased);
 		add: #('Core\Object Arts\Dolphin\IDE\Professional\Dolphin Refactoring Browser.pax' #encrypted #imageBased).
 
-	"Dolphin native Refactoring Browser integration"
-	contents
-		add: #('Core\Object Arts\Dolphin\IDE\Professional\StoreString for Views.pax' #plain #imageBased).
-
 	^contents!
 
 fullName

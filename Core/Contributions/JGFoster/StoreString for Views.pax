@@ -95,21 +95,21 @@ package globalAliases: (Set new
 	yourself).
 
 package setPrerequisites: (IdentitySet new
-	add: '..\..\ActiveX\OCX\ActiveX Control Hosting';
-	add: '..\Base\Development System';
-	add: '..\..\Base\Dolphin';
-	add: '..\..\MVP\Presenters\Boolean\Dolphin Boolean Presenter';
-	add: '..\..\MVP\Views\Common Controls\Dolphin Common Controls';
-	add: '..\..\MVP\Views\Control Bars\Dolphin Control Bars';
-	add: '..\..\MVP\Presenters\Difference\Dolphin Differences Presenter';
-	add: '..\..\MVP\Base\Dolphin MVP Base';
-	add: '..\..\MVP\Presenters\Text\Dolphin Rich Text Presenter';
-	add: '..\..\MVP\Views\Scintilla\Dolphin Scintilla View';
-	add: '..\..\MVP\Views\Sliding Tray\Dolphin Slidey-Inney-Outey Thing';
-	add: '..\..\MVP\Views\Styled Views\Dolphin Styled Views';
-	add: '..\..\MVP\Type Converters\Dolphin Type Converters';
-	add: '..\Base\Internal Bitmaps and Icons';
-	add: '..\..\System\Compiler\Smalltalk Parser';
+	add: '..\..\Object Arts\Dolphin\ActiveX\OCX\ActiveX Control Hosting';
+	add: '..\..\Object Arts\Dolphin\IDE\Base\Development System';
+	add: '..\..\Object Arts\Dolphin\Base\Dolphin';
+	add: '..\..\Object Arts\Dolphin\MVP\Presenters\Boolean\Dolphin Boolean Presenter';
+	add: '..\..\Object Arts\Dolphin\MVP\Views\Common Controls\Dolphin Common Controls';
+	add: '..\..\Object Arts\Dolphin\MVP\Views\Control Bars\Dolphin Control Bars';
+	add: '..\..\Object Arts\Dolphin\MVP\Presenters\Difference\Dolphin Differences Presenter';
+	add: '..\..\Object Arts\Dolphin\MVP\Base\Dolphin MVP Base';
+	add: '..\..\Object Arts\Dolphin\MVP\Presenters\Text\Dolphin Rich Text Presenter';
+	add: '..\..\Object Arts\Dolphin\MVP\Views\Scintilla\Dolphin Scintilla View';
+	add: '..\..\Object Arts\Dolphin\MVP\Views\Sliding Tray\Dolphin Slidey-Inney-Outey Thing';
+	add: '..\..\Object Arts\Dolphin\MVP\Views\Styled Views\Dolphin Styled Views';
+	add: '..\..\Object Arts\Dolphin\MVP\Type Converters\Dolphin Type Converters';
+	add: '..\..\Object Arts\Dolphin\IDE\Base\Internal Bitmaps and Icons';
+	add: '..\..\Object Arts\Dolphin\System\Compiler\Smalltalk Parser';
 	yourself).
 
 package!
