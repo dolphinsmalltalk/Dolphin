@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ProfilerListsPresenter subclass: #ProfilerSelectorListPresenter
 	instanceVariableNames: ''
@@ -59,8 +59,19 @@ items
 onSelectionChanged
 	"The selector selection has changed so update the source view accordingly"
 
-	(self presenterNamed: 'workspace') 
-		text: (self hasSelection ifTrue: [self selectedMethod getSource] ifFalse: [String new]).
+	| styler text |
+	self hasSelection 
+		ifTrue: 
+			[| method |
+			method := self selectedMethod.
+			text := method getSource.
+			styler := method stylerClass]
+		ifFalse: 
+			[text := String new.
+			styler := NullScintillaStyler].
+	(self presenterNamed: 'workspace')
+		text: text;
+		stylerClass: styler.
 	self trigger: #onSelectionChanged!
 
 onViewOpened

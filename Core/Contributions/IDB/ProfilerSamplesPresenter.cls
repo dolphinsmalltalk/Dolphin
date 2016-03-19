@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Presenter subclass: #ProfilerSamplesPresenter
 	instanceVariableNames: 'selectorFilter filterTarget index frame'
@@ -108,17 +108,20 @@ model: aProfilerSampleSet
 onFrameSelectionChanged
 	"The frame selection has changed so update the source view accordingly"
 
-	| selection text selectionRange |
+	| selection text selectionRange styler |
 	selection := (self presenterNamed: 'frames') selectionOrNil.
 	selection isNil 
 		ifTrue: 
 			[text := String new.
-			selectionRange := 0 to: 0]
+			selectionRange := 0 to: 0.
+			styler := NullScintillaStyler]
 		ifFalse: 
 			[text := selection coloredSource.
+			styler := selection compiledCode stylerClass.
 			selectionRange := selection selectionRange].
 	(self presenterNamed: 'workspace')
 		text: text;
+		stylerClass: styler;
 		selectionRange: selectionRange!
 
 onSampleIndexChanged
