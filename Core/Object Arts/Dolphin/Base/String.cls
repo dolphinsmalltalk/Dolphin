@@ -755,13 +755,16 @@ replaceBytesOf: aByteObject from: start to: stop startingAt: fromStart
 	stop to: start by: -1 do: [:i | aByteObject at: i put: (self at: i + fromOffset)].
 	^aByteObject!
 
-replaceFrom: start to: stop with: replacementElements startingAt: startAt
-	"Replace the characters of the receiver at the <integer> index positions 
-	start through stop with consecutive characters of the <readableString>
-	replacementElements beginning at <integer> index position startAt. 
-	Answer the receiver."
+replaceFrom: startInteger to: stopInteger with: aReadableString startingAt: startAtInteger 
+	"Replace the characters of the receiver at the <integer> index positions startInteger
+	through stopInteger inclusive with consecutive characters of the <readableString>
+	aReadableString beginning at <integer> index position startAtInteger. Answer the receiver."
 
-	replacementElements replaceBytesOf: self from: start to: stop startingAt: startAt!
+	aReadableString 
+		replaceBytesOf: self
+		from: startInteger
+		to: stopInteger
+		startingAt: startAtInteger!
 
 reverse
 	"Answer a copy of the receiver but with its elements in reverse order.
