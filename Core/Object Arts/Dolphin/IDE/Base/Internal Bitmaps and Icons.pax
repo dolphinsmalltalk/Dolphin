@@ -40,6 +40,7 @@ package classNames
 	add: #GdiplusImageFromBytesInitializer;
 	add: #InternalBitmap;
 	add: #InternalIcon;
+	add: #TextTileIcon;
 	yourself.
 
 package methodNames
@@ -78,6 +79,11 @@ Object subclass: #InternalBitmap
 	instanceVariableNames: 'gdiplusBitmap'
 	classVariableNames: ''
 	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Object subclass: #TextTileIcon
+	instanceVariableNames: 'text font tilecolor'
+	classVariableNames: ''
+	poolDictionaries: 'GdiplusConstants'
 	classInstanceVariableNames: ''!
 GdiplusInitializer subclass: #GdiplusFromBytesInitializer
 	instanceVariableNames: 'bytes'
