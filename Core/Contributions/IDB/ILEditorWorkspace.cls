@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 View subclass: #ILEditorWorkspace
 	instanceVariableNames: 'zoom location zone zoneBrushes'
@@ -134,7 +134,7 @@ initialize
 	self usePreferredExtent: true!
 
 isZoomed
-	^zoom > 1!
+	^zoom notNil and: [zoom > 1]!
 
 locationDescription
 	"Answers a String describing the location for the editor status"

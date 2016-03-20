@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 TypeConverter subclass: #MappingConverter
 	instanceVariableNames: 'leftToRightMap rightToLeftMap'
@@ -22,6 +22,9 @@ leftToRight: anObject
 
 	^leftToRightMap at: anObject!
 
+leftToRightMap
+	^leftToRightMap!
+
 leftToRightMap: aLookupTable 
 	leftToRightMap := aLookupTable.
 	rightToLeftMap := aLookupTable copyEmpty.
@@ -34,14 +37,19 @@ rightToLeft: anObject
 
 	^rightToLeftMap at: anObject!
 
+rightToLeftMap
+	^rightToLeftMap!
+
 rightToLeftMap: aLookupTable
 	rightToLeftMap := aLookupTable.
 	leftToRightMap := aLookupTable copyEmpty.
 	rightToLeftMap 
 		keysAndValuesDo: [:eachKey :eachValue | leftToRightMap at: eachValue put: eachKey]! !
 !MappingConverter categoriesFor: #leftToRight:!operations!private! !
+!MappingConverter categoriesFor: #leftToRightMap!accessing!private! !
 !MappingConverter categoriesFor: #leftToRightMap:!accessing!private! !
 !MappingConverter categoriesFor: #rightToLeft:!operations!private! !
+!MappingConverter categoriesFor: #rightToLeftMap!accessing!private! !
 !MappingConverter categoriesFor: #rightToLeftMap:!accessing!private! !
 
 !MappingConverter class methodsFor!

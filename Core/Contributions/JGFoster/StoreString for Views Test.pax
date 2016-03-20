@@ -1,0 +1,40 @@
+| package |
+package := Package name: 'StoreString for Views Test'.
+package paxVersion: 1;
+	basicComment: ''.
+
+
+package classNames
+	add: #StoreStringForViewsTest;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\..\Object Arts\Dolphin\Base\Dolphin';
+	add: '..\..\Object Arts\Dolphin\Base\Dolphin Base Tests';
+	add: '..\..\Object Arts\Dolphin\System\Filer\Dolphin Literal Filer';
+	add: '..\..\Object Arts\Dolphin\MVP\Base\Dolphin MVP Base';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+DolphinTest subclass: #StoreStringForViewsTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+"End of package definition"!
+
