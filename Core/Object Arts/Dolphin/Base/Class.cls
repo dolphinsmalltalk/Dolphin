@@ -59,8 +59,9 @@ addToSuper
 	"Private - Add the receiver as a subclass of its superclass
 	and do the same for the receiver's metaclass buddy."
 
-	super addToSuper.
-	self class addToSuper!
+	superclass notNil ifTrue: [
+		super addToSuper.
+		self class addToSuper]!
 
 basicClassPool
 	"Private - Answer the receiver's class pool (dictionary of class variables)."
