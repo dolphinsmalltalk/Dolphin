@@ -31,7 +31,7 @@ defaultModel
 	^'Hello World' asValue!
 
 icon
-	^InternalIcon textTile: 'Hi' color: Color red!
+	^TextTileIcon text: 'Hi' font: 'Arial' color: Color red!
 
 initialize
 	"
