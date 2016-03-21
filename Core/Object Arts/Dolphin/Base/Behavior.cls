@@ -78,12 +78,9 @@ addSubclass: aClass
 		subclasses := (subs asSortedCollection add: aClass; yourself) asArray]!
 
 addToSuper
-	"Private - Add the receiver to its superclasses' subclass collection.
-	Root classes will have a superclass of nil - we do not put such
-	classes into a subclass collection."
+	"Private - Add the receiver to its superclasses' subclass collection."
 
-	superclass notNil
-		ifTrue: [superclass addSubclass: self]!
+	superclass addSubclass: self!
 
 allClassVarNames
 	"Answer a <Set> of the <readableString> names of the receiver's and the 

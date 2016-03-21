@@ -27,13 +27,14 @@ Metaclass has the following instance variables:
 !Metaclass methodsFor!
 
 addToSuper
-	"Private - Add the receiver into its superclasses' subclass collection.
-	Root Metaclasses will have a superclass of Class - we do not put such
-	classes into Class's subclass collection."	
+	"Private - Add the receiver as a subclass of its superclass, but not
+	if a root class."
 
-	superclass ~~ Class
-		ifTrue: [super addToSuper]
-!
+	"Implementation Note: Identify Class as the superclass by name, as if the ClassBuilder is
+	currently mutating Class, the Class variable may temporarily be pointing at the old Class
+	object."
+
+	superclass name ~~ #Class ifTrue: [super addToSuper]!
 
 bindingFor: aString 
 	"Answer a variable binding for the named variable in the scope of this class. 

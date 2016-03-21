@@ -488,7 +488,12 @@ mutateClass: oldClass toBeASubclassOf: newSuperclass
 			newClass := self newClassLike: oldClass superclass: newSuperclass.
 			self install: newClass.
 			self mutateAllInstancesOf: oldClass toBeInstancesOf: newClass.
-			oldClass subclasses do: [:cls | self mutateClass: cls toBeASubclassOf: newClass].
+			oldClass == Class 
+				ifTrue: 
+					["In Dolphin Object class et al are not in the subclasses
+					collection of Class, so need special case handling"
+					Smalltalk allRoots do: [:each | self mutateClass: each class toBeASubclassOf: newClass]]
+				ifFalse: [oldClass subclasses do: [:cls | self mutateClass: cls toBeASubclassOf: newClass]].
 			oldClass class removeFromSuper.
 			oldClass removeFromSuper.
 			oldClass become: newClass.
@@ -700,14 +705,13 @@ translateInstance: oldInstance intoANewInstanceOf: newClass via: mappingArray
 				ifTrue: [newInstance instVarAt: i put: (oldInstance instVarAt: index)]].
 	^newInstance!
 
-updateVMRegistryWith: aClass
+updateVMRegistryWith: aClass 
 	"Private - Ensure that if aClass is a VM registered class then the VM's
 	entry is updated to the new class."
 
 	| name |
 	name := aClass name asSymbol.
-	(VMLibrary default registryKeys includesKey: name)
-		ifTrue: [VMLibrary default registryAt: name put: aClass]!
+	(VMLibrary registryKeys includesKey: name) ifTrue: [VMLibrary default registryAt: name put: aClass]!
 
 validateClass
 	"Private - Ensure that currentClass is a valid Behavior."
