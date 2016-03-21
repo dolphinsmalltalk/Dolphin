@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 AXValueConvertingControlSite subclass: #MonthView
 	instanceVariableNames: ''
@@ -75,6 +75,21 @@ usesAmbientColors
 !MonthView class methodsFor!
 
 icon
-	^Icon fromId: 6 in: (ExternalResourceLibrary open: 'MSCOMCT2.OCX')! !
+	^Icon fromId: 6 in: (ExternalResourceLibrary open: 'MSCOMCT2.OCX')!
+
+publishedAspectsOfInstances
+	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
+
+	| aspects aspectClass |
+	aspects := super publishedAspectsOfInstances.
+	#(#firesControlEvents #isDesignMode #progId #isDefault #licenseKey #value) 
+		do: [:a | aspects removeKey: a ifAbsent: []].
+	aspectClass := Smalltalk at: #Aspect.
+	^aspects
+		add: (aspectClass color: #monthBackColor);
+		add: (aspectClass integer: #monthColumns);
+		add: (aspectClass integer: #monthRows);
+		yourself! !
 !MonthView class categoriesFor: #icon!constants!public! !
+!MonthView class categoriesFor: #publishedAspectsOfInstances!constants!development!public! !
 

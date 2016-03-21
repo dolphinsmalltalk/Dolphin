@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 CommandButton subclass: #LinkButton
 	instanceVariableNames: ''
@@ -38,6 +38,15 @@ calculateExtent: aLayoutContext
 
 	"Now adjust required client extent to window extent"
 	^self calcExtentFromClientExtent: extent!
+
+getWindowText
+	"Private - SysLink control seems to have a bug whereby it responds to WM_GETTEXTLENGTH with
+	the buffer size (including null terminator), rather than just the number of characters as
+	all other controls/windows do."
+
+	"Safer to trim the null, rather than allocate smaller buffer, in case the bug gets fixed."
+
+	^super getWindowText trimNulls!
 
 isEnabled: aBoolean 
 	"Implmentation Note: Must disable link before view, otherwise attempting to disable the view fails."
@@ -88,6 +97,7 @@ text: aString
 	super text: text.
 	commandDescription description: (self stripTags: text)! !
 !LinkButton categoriesFor: #calculateExtent:!geometry!private! !
+!LinkButton categoriesFor: #getWindowText!accessing!private! !
 !LinkButton categoriesFor: #isEnabled:!accessing!public! !
 !LinkButton categoriesFor: #nmClick:!event handling-win32!private! !
 !LinkButton categoriesFor: #nmReturn:!event handling-win32!private! !

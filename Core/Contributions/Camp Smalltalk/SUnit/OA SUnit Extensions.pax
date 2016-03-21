@@ -22,6 +22,7 @@ package methodNames
 	add: #TestCase -> #shouldnt:trigger:against:;
 	add: #TestCase -> #shouldnt:triggerAnyOf:against:;
 	add: #TestResult -> #debugCase:;
+	add: 'TestCase class' -> #buildSuiteFromConcreteMethods:;
 	add: 'TestCase class' -> #debugWithResult:;
 	yourself.
 
@@ -32,8 +33,8 @@ package globalAliases: (Set new
 	yourself).
 
 package setPrerequisites: (IdentitySet new
-	add: '..\Dolphin\Base\Dolphin';
-	add: '..\..\Camp Smalltalk\SUnit\SUnit';
+	add: '..\..\..\Object Arts\Dolphin\Base\Dolphin';
+	add: 'SUnit';
 	yourself).
 
 package!
@@ -212,8 +213,19 @@ shouldnt: aZeroArgBlock triggerAnyOf: aCollectionOfSymbols against: anObject
 
 !TestCase class methodsFor!
 
+buildSuiteFromConcreteMethods: testMethodSelectors 
+	^self isAbstract 
+		ifTrue: 
+			[| suite |
+			suite := TestSuite new.
+			suite name: self displayString.
+			self allSubclassesDo: [:each | each isAbstract ifFalse: [suite addTest: (each buildSuiteFromMethods: testMethodSelectors)]].
+			suite]
+		ifFalse: [self buildSuiteFromMethods: testMethodSelectors]!
+
 debugWithResult: aSymbol
 	^(self selector: aSymbol) debugWithResult! !
+!TestCase class categoriesFor: #buildSuiteFromConcreteMethods:!Instance Creation!public! !
 !TestCase class categoriesFor: #debugWithResult:!Instance Creation!public! !
 
 !TestResult methodsFor!

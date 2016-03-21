@@ -16,8 +16,24 @@ setUp
 	Debugger showWalkbacks: false!
 
 tearDown
-	process isNil ifFalse: [process terminate].
+	process isNil 
+		ifFalse: 
+			[process terminate.
+			process := nil].
 	Debugger showWalkbacks: savedShowWalkbacks!
+
+testNoShowWalkbacks
+	| stop start |
+	Transcript clear.
+	process := 
+			[(ResourceIdentifier class: ContainerView name: 'Default view') loadWithContext: DeafObject current] 
+					forkAt: Processor userInterruptPriority.
+	start := Time millisecondClockValue.
+	SessionManager inputState 
+		loopWhile: [Time millisecondClockValue < (start + 5000) and: [process state ~= #debug]].
+	self assert: process state = #debug.
+	self 
+		assert: (Transcript contents beginsWith: 'Forcibly unhooked failed window create of a ContainerView')!
 
 testRemapIPOfSendSelf
 	"#1309"
@@ -53,5 +69,6 @@ testRemapIPOfSendSelf
 	self assert: (byte = Pop or: [byte = PopPushSelf])! !
 !DebuggerTest categoriesFor: #setUp!private!unit tests! !
 !DebuggerTest categoriesFor: #tearDown!private!unit tests! !
+!DebuggerTest categoriesFor: #testNoShowWalkbacks!public!unit tests! !
 !DebuggerTest categoriesFor: #testRemapIPOfSendSelf!public!unit tests! !
 

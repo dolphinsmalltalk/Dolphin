@@ -36,7 +36,7 @@ createPackage
 destroyPackage
 	package notNil 
 		ifTrue: 
-			[Package manager removePackage: package.
+			[package uninstall.
 			package := nil]!
 
 packageName
@@ -54,7 +54,7 @@ tearDown
 !DolphinTestClassResource categoriesFor: #createClass:superclass:instVars:!Init / Release!private! !
 !DolphinTestClassResource categoriesFor: #createClasses!private!unit tests! !
 !DolphinTestClassResource categoriesFor: #createPackage!Init / Release!private! !
-!DolphinTestClassResource categoriesFor: #destroyPackage!private!Running! !
+!DolphinTestClassResource categoriesFor: #destroyPackage!Init / Release!private!Running! !
 !DolphinTestClassResource categoriesFor: #packageName!private!unit tests! !
 !DolphinTestClassResource categoriesFor: #setUp!Init / Release!public! !
 !DolphinTestClassResource categoriesFor: #tearDown!public!Running! !

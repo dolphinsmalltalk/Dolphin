@@ -71,6 +71,13 @@ testAtIfAbsentPutModifyingCollection
 	test keysDo: [:each | keys addLast: each].
 	self assert: keys asSortedCollection asArray = #('a' 'b' 'c')!
 
+testCyclicRefPrinting
+	| dictionary |
+	dictionary := self newEmpty.
+	(dictionary class == PoolConstantsDictionary) ifTrue: [^self].
+	dictionary at: dictionary put: dictionary.
+	self assert: 0 < (dictionary debugPrintString indexOfSubCollection: '... a cyclic ref to ' startingAt: 1)!
+
 testDeepCopy
 	"#2066"
 
@@ -93,6 +100,12 @@ testIncludesKey
 
 !
 
+testNilKey
+	| dictionary |
+	dictionary := self newEmpty.
+	self should: [dictionary at: nil put: 1] raise: Error.
+	self should: [dictionary at: nil ifAbsentPut: [1]] raise: Error!
+
 testRemoveKey
 	| dictionary |
 	dictionary := self newDictionary.
@@ -105,7 +118,9 @@ testRemoveKey
 !DictionaryTest categoriesFor: #testAtIfAbsent!public!unit tests! !
 !DictionaryTest categoriesFor: #testAtIfAbsentPut!public!unit tests! !
 !DictionaryTest categoriesFor: #testAtIfAbsentPutModifyingCollection!public!unit tests! !
+!DictionaryTest categoriesFor: #testCyclicRefPrinting!public! !
 !DictionaryTest categoriesFor: #testDeepCopy!public!unit tests! !
 !DictionaryTest categoriesFor: #testIncludesKey!public!unit tests! !
+!DictionaryTest categoriesFor: #testNilKey!public!unit tests! !
 !DictionaryTest categoriesFor: #testRemoveKey!public!unit tests! !
 

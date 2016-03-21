@@ -1032,7 +1032,7 @@ PermanentLibrary subclass: #UserLibrary
 	classInstanceVariableNames: ''!
 PermanentLibrary subclass: #VMLibrary
 	instanceVariableNames: 'wndProc dlgProc genericCallback vtable specialSelectorStart '
-	classVariableNames: 'Registry RegistryKeys'
+	classVariableNames: 'Registry'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ExternalStructure subclass: #_FPIEEE_RECORD
@@ -1388,7 +1388,7 @@ ArithmeticValue subclass: #Point
 Number variableByteSubclass: #Float
 	instanceVariableNames: ''
 	classVariableNames: 'DefaultSigFigs FMax FMin SignificantDifference'
-	poolDictionaries: 'CRTConstants'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Number subclass: #Fraction
 	instanceVariableNames: 'numerator denominator '

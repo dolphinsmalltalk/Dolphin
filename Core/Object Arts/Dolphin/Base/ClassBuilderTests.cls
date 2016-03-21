@@ -1,7 +1,7 @@
 "Filed out from Dolphin Smalltalk 7"!
 
 DolphinTest subclass: #ClassBuilderTests
-	instanceVariableNames: ''
+	instanceVariableNames: 'wasOAD'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -41,12 +41,14 @@ makeCleanClasses
 
 setUp
 	self makeCleanClasses.
-	SmalltalkSystem current isOAD: false
-!
+	wasOAD := SmalltalkSystem current isOAD.
+	SmalltalkSystem current isOAD: false!
 
-tearDown	"make sure we're up to date here"
-	self makeCleanClasses.
-	SmalltalkSystem current isOAD: SessionManager current isOAD!
+tearDown
+	"make sure we're up to date here"
+
+	SmalltalkSystem current isOAD: wasOAD.
+	^super tearDown!
 
 testMoveVariable
 	"test moving an iVar up, sideways and down"
@@ -63,15 +65,6 @@ testMoveVariable
 	self assert: self classBuilderTestClass instVarNames = #('var1' 'testVar' 'var2').
 	self assert: self classBuilderTestSubclass1 instVarNames = #('var3' 'var4').
 	self assert: self classBuilderTestSubclass2 instVarNames = #('var3' 'var4')!
-
-testRecompileArray
-     self shouldnt: [ ArrayedCollection variableSubclass: #Array
-                                        instanceVariableNames: ''
-                                        classVariableNames: ''
-                                        poolDictionaries: '' 
-                                        category: 'Collections-Arrayed'
-                                   ] raise: Error.
-!
 
 testReshapeClass
 	"see if reshaping classes works"
@@ -206,13 +199,18 @@ testUnderscoreWarning
 !ClassBuilderTests categoriesFor: #classBuilderTestClass!public!unit tests! !
 !ClassBuilderTests categoriesFor: #classBuilderTestSubclass1!public!unit tests! !
 !ClassBuilderTests categoriesFor: #classBuilderTestSubclass2!public!unit tests! !
-!ClassBuilderTests categoriesFor: #makeCleanClasses!public!Running! !
+!ClassBuilderTests categoriesFor: #makeCleanClasses!private!Running! !
 !ClassBuilderTests categoriesFor: #setUp!public!Running! !
 !ClassBuilderTests categoriesFor: #tearDown!public!Running! !
 !ClassBuilderTests categoriesFor: #testMoveVariable!public!Running! !
-!ClassBuilderTests categoriesFor: #testRecompileArray!public!Running! !
 !ClassBuilderTests categoriesFor: #testReshapeClass!public!Running! !
 !ClassBuilderTests categoriesFor: #testReshapeClassWithJugglingInstVars!public!Running! !
 !ClassBuilderTests categoriesFor: #testReshapeSubClass!public!Running! !
 !ClassBuilderTests categoriesFor: #testUnderscoreWarning!public!Running! !
+
+!ClassBuilderTests class methodsFor!
+
+resources
+	^Array with: ClassBuilderTestClasses! !
+!ClassBuilderTests class categoriesFor: #resources!Accessing!public! !
 

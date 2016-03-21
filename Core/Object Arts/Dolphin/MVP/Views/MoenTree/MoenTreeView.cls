@@ -958,7 +958,7 @@ moveSelectionUp
 	(self previousSibling: self selectedNode) 
 		ifNotNil: [:node | self basicSelection: node cause: #keyboard]!
 
-nearestNodeTo: aMoenTreeNode
+nearestNodeTo: aMoenTreeNode 
 	"Private - Answer the 'nearest' node to the <MoenTreeNode> argument in the receiver in the 
 	following order of priority.
 	1) The node's next sibling
@@ -968,12 +968,9 @@ nearestNodeTo: aMoenTreeNode
 	^aMoenTreeNode sibling notNil 
 		ifTrue: [aMoenTreeNode sibling]
 		ifFalse: 
-			["Root nodes are handled differently in that the selection moves to the previous sibling (if any)
-			 rather than the parent, I suppose because there is no parent"
-
-			aMoenTreeNode parent == anchorNode 
-				ifTrue: [self previousSibling: aMoenTreeNode]
-				ifFalse: [aMoenTreeNode parent]]!
+			["If there is no subsequent sibling, move to the previous one, and failing that up to the parent"
+			(self previousSibling: aMoenTreeNode) 
+				ifNil: [aMoenTreeNode parent == anchorNode ifFalse: [aMoenTreeNode parent]]]!
 
 nodeAtPosition: position ifNone: exceptionHandler 
 	"Private - Answer the <MoenTreeNode> whose item rectangle contains the 

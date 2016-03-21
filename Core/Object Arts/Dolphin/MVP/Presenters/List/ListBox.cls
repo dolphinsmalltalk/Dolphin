@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 BasicListAbstract subclass: #ListBox
 	instanceVariableNames: '_reserved'
@@ -187,10 +187,11 @@ getMultipleSelections
 	count := self getSelCount.
 	count <= 0 ifTrue: [^#()].
 	buffer := DWORDArray new: count.
-	self 
+	(self 
 		sendMessage: LB_GETSELITEMS
 		wParam: count
-		lpParam: buffer asParameter.
+		lpParam: buffer asParameter) = LB_ERR 
+		ifTrue: [self errorNotMultiSelect].
 	^buffer collect: [:each | each + 1]!
 
 getSelCount

@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 nil subclass: #Object
 	instanceVariableNames: ''
@@ -1191,7 +1191,7 @@ removePropertyAt: aSymbol ifAbsent: aBlock
 
 	^self propertyManager removePropertyOf: self at: aSymbol ifAbsent: aBlock.!
 
-resize: anInteger
+resize: anInteger 
 	"Resize the receiver to accomodate anInteger indexable instance variables. If anInteger 
 	is greater than the current size of the receiver, then new, safely initialized, elements are 
 	added to the end of the receiver. If anInteger is less that the current size of the receiver, 
@@ -1206,10 +1206,12 @@ resize: anInteger
 
 	Primitive failure reason:
 		0 -	anInteger is not a positive SmallInteger
-		1 -	the receiver is not of an indexable (variable sized) class."
+		1 -	the receiver is not of an indexable (variable sized) class.
+		2 -	the receiver is immutable."
 
 	| answer |
 	<primitive: 101>
+	self isImmutable ifTrue: [Processor constWriteSignal signalWith: self].
 	answer := self class new: anInteger.
 	1 to: anInteger do: [:i | answer at: i put: (self at: i)].
 	self become: answer!

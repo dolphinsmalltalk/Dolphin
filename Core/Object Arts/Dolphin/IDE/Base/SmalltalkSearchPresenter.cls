@@ -154,14 +154,27 @@ rangeToCompleteAt: anInteger
 				ifFalse: [anInteger to: view caretPosition - 1]]!
 
 searchItemsStartingWith: aString maxItems: anInteger 
-	| result classes |
+	| result classes filter |
 	aString first isLowerCase 
 		ifTrue: 
 			[| matchingSymbols |
 			matchingSymbols := self selectorsStartingWith: aString maxItems: anInteger.
 			^matchingSymbols collect: [:each | each displayString]].
+	filter := (aString includes: $>) 
+				ifTrue: 
+					[| classNamePrefix |
+					classNamePrefix := aString upTo: $>.
+					[:each | each name asString = classNamePrefix]]
+				ifFalse: 
+					[(aString includes: Character space) 
+						ifTrue: [[:each | each name beginsWith: aString]]
+						ifFalse: [[:each | each isMetaclass not and: [each name beginsWith: aString]]]].
+	classes := environment classes select: filter.
 	result := OrderedCollection new.
-	classes := environment classes select: [:each | each name first = aString first].
+	classes size > 1 
+		ifTrue: 
+			[classes do: [:eachClass | result add: eachClass name].
+			^result].
 	classes do: 
 			[:eachClass | 
 			result add: eachClass name.

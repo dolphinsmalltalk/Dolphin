@@ -957,6 +957,7 @@ resize: anInteger
 	"Private - Resize the receiver to accomodate anInteger elements.
 	Answer the receiver."
 
+	self isImmutable ifTrue: [Processor constWriteSignal signalWith: self].
 	(self copyEmpty: anInteger)
 		replaceFrom: 1 to: self size with: self startingAt: 1;
 		become: self!

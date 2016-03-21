@@ -52,8 +52,8 @@ testResizeParentRelative
 		rightFraming: #fixedParentRight;
 		topFraming: #fixedParentTop;
 		bottomFraming: #fixedParentBottom.
-	shell extent: (shell calcExtentFromClientExtent: 200 @ 200).
-	self assert: shell clientExtent = (200 @ 200).
+	shell extent: (shell calcExtentFromClientExtent: 300 @ 200).
+	self assert: shell clientExtent = (300 @ 200).
 	shell show.
 	"Resize the button to check that the offset calculations are working correctly"
 	rect := 5 @ 10 extent: shell clientExtent - shell insets origin - shell insets corner.
@@ -69,14 +69,14 @@ testResizeParentRelative
 	self assert: offsets = (Rectangle new insetBy: 5).
 
 	"Now resize the shell"
-	shell extent: (shell calcExtentFromClientExtent: 300 @ 300).
-	self assert: shell clientExtent = (300 @ 300).
+	shell extent: (shell calcExtentFromClientExtent: 400 @ 300).
+	self assert: shell clientExtent = (400 @ 300).
 	rect := (shell clientRectangle insetBy: shell insets) insetBy: 5.
 	self assert: button rectangle = rect.
 	self assert: offsets = (Rectangle new insetBy: 5).
 
 	"Now increase the size of the insets"
-	shell insets: (100 @ 110 corner: 115 @ 105).
+	shell insets: (150 @ 110 corner: 165 @ 105).
 	shell validateLayout.
 	rect := (shell clientRectangle insetBy: shell insets) insetBy: 5.
 	self assert: button rectangle = rect.

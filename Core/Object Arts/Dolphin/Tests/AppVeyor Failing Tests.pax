@@ -4,6 +4,11 @@ package paxVersion: 1;
 	basicComment: 'Not sure why but these tests are known failures that occur running under AppVeyor but are fine when run in a normal image.'.
 
 
+package methodNames
+	add: #ContainerViewTest -> #test1PixBorderPaint;
+	add: #ContainerViewTest -> #testBordersPrintAndPaintIdentical;
+	yourself.
+
 package binaryGlobalNames: (Set new
 	yourself).
 
@@ -11,6 +16,7 @@ package globalAliases: (Set new
 	yourself).
 
 package setPrerequisites: (IdentitySet new
+	add: '..\MVP\Dolphin MVP Tests';
 	yourself).
 
 package!
@@ -22,6 +28,59 @@ package!
 
 
 "Loose Methods"!
+
+!ContainerViewTest methodsFor!
+
+test1PixBorderPaint
+	"Tests the validity of WM_PAINT of a 1 pixel border"
+
+	| paintBitmap |
+	containerView hasBorder: false.
+	self waitForScreenUpdate.
+	paintBitmap := self bitmapOfPaintView: containerView.
+	self 
+		checkRectangle: (self borderRectangleOf: containerView)
+		inBitmap: paintBitmap
+		color: self backgroundColor.
+	self 
+		checkRectangle: ((self borderRectangleOf: containerView) insetBy: 1 asPoint)
+		inBitmap: paintBitmap
+		color: self backgroundColor.
+	containerView hasBorder: true.
+	self waitForScreenUpdate.
+	paintBitmap := self bitmapOfPaintView: containerView.
+	self 
+		checkRectangle: (self borderRectangleOf: containerView)
+		inBitmap: paintBitmap
+		color: self borderColor.
+	self 
+		checkRectangle: ((self borderRectangleOf: containerView) insetBy: 1 asPoint)
+		inBitmap: paintBitmap
+		color: self backgroundColor!
+
+testBordersPrintAndPaintIdentical
+	"Checks that the WM_PRINT image (used by the VC) and the WM_PAINT image (shown on the
+	display) are the same. This uses the rather slow Bitmap>>pixelData method so best keep the
+	actual view size fairly small."
+
+	"Test not bordered"
+
+	| paintPixels printPixels paintPixelsBordered printPixelsBordered |
+	containerView hasBorder: false.
+	self waitForScreenUpdate.
+	paintPixels := (self bitmapOfPaintView: containerView) pixelData.
+	printPixels := (self bitmapOfPrintView: containerView) pixelData.
+	self assert: paintPixels = printPixels.
+
+	"Test bordered"
+	containerView hasBorder: true.
+	self waitForScreenUpdate.
+	paintPixelsBordered := (self bitmapOfPaintView: containerView) pixelData.
+	printPixelsBordered := (self bitmapOfPrintView: containerView) pixelData.
+	self assert: paintPixelsBordered = printPixelsBordered.
+	self deny: paintPixels = paintPixelsBordered! !
+!ContainerViewTest categoriesFor: #test1PixBorderPaint!public! !
+!ContainerViewTest categoriesFor: #testBordersPrintAndPaintIdentical!public! !
 
 "End of package definition"!
 

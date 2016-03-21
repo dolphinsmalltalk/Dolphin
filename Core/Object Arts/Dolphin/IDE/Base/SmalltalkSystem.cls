@@ -1911,6 +1911,9 @@ initialize
 
 	"Font - pick up MS Trebuchet font as the default."
 	self defaultFont: (Font name: 'Trebuchet MS' pointSize: 10).
+
+	"Default break key for interrupting non-responding operations during development."
+	self interruptHotKey: (AcceleratorTable keyCodeFromString: 'CTRL+F12').
 	self initializeArgumentClasses!
 
 initializeArgumentClasses
@@ -2011,6 +2014,19 @@ instVarWriterFilter: aString in: startClass
 	[:each | 
 	(each methodClass includesBehavior: startClass) 
 		and: [[each writesInstVar: aString] on: NotFoundError do: [:e | false]]]!
+
+interruptHotKey
+	"Answer the <integer> HOTKEYF_XXX|VK_XXX code used by the VM as the break/interrupt key,
+	e.g. VK_CANCEL (Ctrl+Break)"
+
+	^VMLibrary default registryAt: #interruptHotKey!
+
+interruptHotKey: anInteger 
+	"Set the HOTKEYF_XXX|VK_XXX code to be used by the VM as the break/interrupt key to the
+	<SmallInteger> argument, which must be a sensible VK value, e.g. VK_CANCEL, or things will
+	go badly."
+
+	VMLibrary default registryAt: #interruptHotKey put: anInteger!
 
 isOAD
 	"Private - Is this an Object Arts Development version"
@@ -4058,6 +4074,8 @@ wrapText: aString toWidth: max indent: colInteger tabWidth: tabInteger
 !SmalltalkSystem categoriesFor: #instVarAccessFilter:in:!helpers!private! !
 !SmalltalkSystem categoriesFor: #instVarReaderFilter:in:!helpers!private! !
 !SmalltalkSystem categoriesFor: #instVarWriterFilter:in:!helpers!private! !
+!SmalltalkSystem categoriesFor: #interruptHotKey!options!public! !
+!SmalltalkSystem categoriesFor: #interruptHotKey:!options!public! !
 !SmalltalkSystem categoriesFor: #isOAD!accessing!private!product! !
 !SmalltalkSystem categoriesFor: #isRegisteredTool:!public!testing! !
 !SmalltalkSystem categoriesFor: #isValidClassVarName:for:!enquiries!helpers!private!refactoring! !
@@ -4298,6 +4316,7 @@ publishedAspectsOfInstances
 					from: (ClassCategory name: 'System-Compiler-Formatters') contents);
 		add: (Aspect integer: #changeHistorySize);
 		add: (Aspect color: #toolBackgroundColor);
+		add: (Aspect hotkey: #interruptHotKey);
 		yourself!
 
 publishedEventsOfInstances

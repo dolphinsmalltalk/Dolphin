@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 GdiplusTests subclass: #GdiplusLinearGradientBrushTest
 	instanceVariableNames: ''
@@ -16,10 +16,6 @@ setSample1
 				point2: 255 @ 0
 				color1: ARGB red
 				color2: ARGB blue!
-
-tearDown
-	super tearDown.
-	model notNil ifTrue: [model free]!
 
 testClone
 	"force realize"
@@ -109,7 +105,6 @@ testPersistentArgument
 	self assert: pen initializer brush == brush
 	"for gc reasons .. the pen must always hold a reference to the brush"! !
 !GdiplusLinearGradientBrushTest categoriesFor: #setSample1!accessing!public! !
-!GdiplusLinearGradientBrushTest categoriesFor: #tearDown!public!setup! !
 !GdiplusLinearGradientBrushTest categoriesFor: #testClone!public!unit tests! !
 !GdiplusLinearGradientBrushTest categoriesFor: #testConstructor1!public!unit tests! !
 !GdiplusLinearGradientBrushTest categoriesFor: #testConstructor2!public!unit tests! !

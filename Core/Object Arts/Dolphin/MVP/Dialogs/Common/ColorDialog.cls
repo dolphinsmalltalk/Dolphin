@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 CommonDialog subclass: #ColorDialog
 	instanceVariableNames: 'validationBlock'
@@ -40,9 +40,12 @@ extractResult: aBoolean
 	color = self defaultColor 
 		ifTrue: [self value: Color default]
 		ifFalse: 
-			[| std |
-			std := color asIndexedColor.
-			self value: (std asRGB = color ifTrue: [std] ifFalse: [color])].
+			[color isNone 
+				ifFalse: 
+					[| std |
+					std := color asIndexedColor.
+					std asRGB = color ifTrue: [color := std] ifFalse: [color]].
+			self value: color].
 	self apply!
 
 initialize
@@ -61,7 +64,7 @@ prepareStruct
 	color := self value isNil ifTrue: [self defaultColor] ifFalse: [self value].
 	(self winStruct)
 		hInstance: VMLibrary default applicationHandle;
-		rgbResult: color asRGB asParameter;
+		rgbResult: color asColorRef asParameter;
 		maskIn: CC_RGBINIT;
 		lpCustColors: customColors!
 

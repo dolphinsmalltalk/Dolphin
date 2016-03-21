@@ -2,7 +2,7 @@
 
 PermanentLibrary subclass: #VMLibrary
 	instanceVariableNames: 'wndProc dlgProc genericCallback vtable specialSelectorStart '
-	classVariableNames: 'Registry RegistryKeys'
+	classVariableNames: 'Registry'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 VMLibrary guid: (GUID fromString: '{87B4C58F-026E-11D3-9FD7-00A0CC3E4A32}')!
@@ -270,6 +270,14 @@ isSlowMachine
 	VMLibrary default isSlowMachine
 "!
 
+isUserBreakRequested
+	"Private - Answer whether the user has pressed the break key sequence. The key sequence is
+	configurable through the Development System option 'interruptHotKey', the default being
+	set by SmalltalkSystem>>#initialize."
+
+	<cdecl: bool IsUserBreakRequested>
+	^self invalidCall!
+
 isWindows10OrGreater
 	<stdcall: bool IsWindows10OrGreater>
 	^self invalidCall!
@@ -376,7 +384,7 @@ onStartup
 	THIS MUST BE DONE FIRST."
 
 	handle := Registry at: 122.
-	specialSelectorStart :=  RegistryKeys at: #arithmeticSelectors.
+	specialSelectorStart := self registryKeys at: #arithmeticSelectors.
 	wndProc := dlgProc := vtable := genericCallback := nil!
 
 primRegistryAt:  anInteger put: anObject
@@ -410,17 +418,92 @@ registry
 
 	^Registry!
 
-registryAt: aSymbol
+registryAt: aSymbol 
 	"Private - Answer the VM registered object with the name, aSymbol."
 
-	^Registry at: (RegistryKeys at: aSymbol)!
+	^Registry at: (self registryKeys at: aSymbol)!
 
-registryAt: aSymbol put: anObject
+registryAt: aSymbol put: anObject 
 	"Private - Register the argument, anObject, as the VM registered object with the name,
 	aSymbol."
 
-	self primRegistryAt: (RegistryKeys at: aSymbol) put: anObject.
+	self primRegistryAt: (self registryKeys at: aSymbol) put: anObject.
 	^anObject!
+
+registryKeys
+	"Private - Answer the map between symbolic names and VM registry indices."
+
+	^##((IdentityDictionary new)
+		at: #Smalltalk put: 9;
+		at: #Processor put: 10;
+		at: #arithmeticSelectors put: 16;
+		at: #commonSelectors put: 31;
+		at: #Metaclass put: 81;
+		at: #Character put: 82;
+		at: #Array put: 83;
+		at: #String put: 84;
+		at: #Symbol put: 85;
+		at: #SmallInteger put: 86;
+		at: #Process put: 87;
+		at: #CompiledMethod put: 88;
+		at: #Context put: 89;
+		at: #BlockClosure put: 90;
+		at: #Message put: 91;
+		at: #ByteArray put: 92;
+		at: #UnicodeString put: 93;
+		at: #CompiledExpression put: 94;
+		at: #ExternalMethod put: 95;
+		at: #Float put: 96;
+		at: #UndefinedObject put: 97;
+		at: #VariableBinding put: 98;
+		at: #Semaphore put: 99;
+		at: #ExternalAddress put: 100;
+		at: #ExternalHandle put: 101;
+		at: #Dispatcher put: 102;
+		at: #LPVOID put: 103;
+		at: #PoolConstantsDictionary put: 105;
+		at: #LargeInteger put: 107;
+		at: #VARIANT put: 108;
+		at: #BSTR put: 109;
+		at: #DATE put: 110;
+		at: #Corpse put: 111;
+		at: #InputSemaphore put: 112;
+		at: #FinalizeSemaphore put: 113;
+		at: #BereavementSemaphore put: 114;
+		at: #FinalizeQueue put: 118;
+		at: #BereavementQueue put: 119;
+		at: #GUID put: 120;
+		at: #KernelHandle put: 121;
+		at: #VMHandle put: 122;
+		at: #DolphinHandle put: 123;
+		at: #IUnknown put: 124;
+		at: #WakeupEvent put: 125;
+		at: #MsgWndHandle put: 127;
+		at: #IDispatch put: 128;
+		at: #ImageVersionMajor put: 129;
+		at: #ImageVersionMinor put: 130;
+		at: #interruptHotKey put: 131;
+		at: #CRTHandle put: 132;
+		at: #MemoryManager put: 133;
+		at: #BYTE put: 134;
+		at: #SBYTE put: 135;
+		at: #WORD put: 136;
+		at: #SWORD put: 137;
+		at: #DWORD put: 138;
+		at: #SDWORD put: 139;
+		at: #FLOAT put: 140;
+		at: #DOUBLE put: 141;
+		at: #VARIANT_BOOL put: 142;
+		at: #CURRENCY put: 143;
+		at: #DECIMAL put: 144;
+		at: #LPBSTR put: 145;
+		at: #ULARGE_INTEGER put: 146;
+		at: #LARGE_INTEGER put: 147;
+		at: #UINT_PTR put: 148;
+		at: #INT_PTR put: 149;
+		isImmutable: true;
+		shrink;
+		yourself)!
 
 removeDesktopMessage: anExternalHandle
 	<stdcall: void RemoveDesktopMessage handle>
@@ -491,9 +574,9 @@ unlockVM: productId expireAfter: months flags: flags
 unregisterObject: anObject 
 	| i |
 	i := self registry identityIndexOf: anObject.
-	i > 0 ifTrue: [
-		Notification signal: 'Unregistering VM ref ', anObject printString.
-		self primRegistryAt: i put: nil]!
+	i > 0 ifFalse: [^self].
+	Notification signal: 'Unregistering VM ref ' , anObject printString.
+	self primRegistryAt: i put: nil!
 
 unsignedFromSigned: anInteger
 	"Private - Answer a 32-bit unsigned integer value instantiated from the signed 32-bit integer
@@ -538,6 +621,7 @@ versionFormatString
 !VMLibrary categoriesFor: #highBit:!arithmetic!public! !
 !VMLibrary categoriesFor: #indexOfSpecialSelector:ifAbsent:!accessing-registry!private! !
 !VMLibrary categoriesFor: #isSlowMachine!environment!public! !
+!VMLibrary categoriesFor: #isUserBreakRequested!accessing!helpers!private! !
 !VMLibrary categoriesFor: #isWindows10OrGreater!public!win32 functions-version helpers! !
 !VMLibrary categoriesFor: #isWindows7OrGreater!public!win32 functions-version helpers! !
 !VMLibrary categoriesFor: #isWindows7SP1OrGreater!public!win32 functions-version helpers! !
@@ -564,6 +648,7 @@ versionFormatString
 !VMLibrary categoriesFor: #registry!accessing!private! !
 !VMLibrary categoriesFor: #registryAt:!accessing-registry!private! !
 !VMLibrary categoriesFor: #registryAt:put:!accessing-registry!private! !
+!VMLibrary categoriesFor: #registryKeys!constants!private! !
 !VMLibrary categoriesFor: #removeDesktopMessage:!operations!private! !
 !VMLibrary categoriesFor: #shortName!accessing!public! !
 !VMLibrary categoriesFor: #signedFromUnsigned:!helpers!private! !
@@ -584,84 +669,6 @@ fileName
 
 	^self shouldNotImplement!
 
-initialize
-	"Private - Initialize the receiver's class variables - see class comment for further details.
-
-		VMLibrary initialize
-	"
-
-	"Registry := DO NOT ASSIGN ME."
-
-	RegistryKeys := (IdentityDictionary new)
-				at: #Smalltalk put: 9;
-				at: #Processor put: 10;
-				at: #arithmeticSelectors put: 16;
-				at: #commonSelectors put: 31;
-				at: #Metaclass put: 81;
-				at: #Character put: 82;
-				at: #Array put: 83;
-				at: #String put: 84;
-				at: #Symbol put: 85;
-				at: #SmallInteger put: 86;
-				at: #Process put: 87;
-				at: #CompiledMethod put: 88;
-				at: #Context put: 89;
-				at: #BlockClosure put: 90;
-				at: #Message put: 91;
-				at: #ByteArray put: 92;
-				at: #UnicodeString put: 93;
-				at: #CompiledExpression put: 94;
-				at: #ExternalMethod put: 95;
-				at: #Float put: 96;
-				at: #UndefinedObject put: 97;
-				at: #VariableBinding put: 98;
-				at: #Semaphore put: 99;
-				at: #ExternalAddress put: 100;
-				at: #ExternalHandle put: 101;
-				at: #Dispatcher put: 102;
-				at: #LPVOID put: 103;
-				at: #PoolConstantsDictionary put: 105;
-				at: #LargeInteger put: 107;
-				at: #VARIANT put: 108;
-				at: #BSTR put: 109;
-				at: #DATE put: 110;
-				at: #Corpse put: 111;
-				at: #InputSemaphore put: 112;
-				at: #FinalizeSemaphore put: 113;
-				at: #BereavementSemaphore put: 114;
-				at: #FinalizeQueue put: 118;
-				at: #BereavementQueue put: 119;
-				at: #GUID put: 120;
-				at: #KernelHandle put: 121;
-				at: #VMHandle put: 122;
-				at: #DolphinHandle put: 123;
-				at: #IUnknown put: 124;
-				at: #WakeupEvent put: 125;
-				at: #MsgWndHandle put: 127;
-				at: #IDispatch put: 128;
-				at: #ImageVersionMajor put: 129;
-				at: #ImageVersionMinor put: 130;
-				at: #CRTHandle put: 132;
-				at: #MemoryManager put: 133;
-				at: #BYTE put: 134;
-				at: #SBYTE put: 135;
-				at: #WORD put: 136;
-				at: #SWORD put: 137;
-				at: #DWORD put: 138;
-				at: #SDWORD put: 139;
-				at: #FLOAT put: 140;
-				at: #DOUBLE put: 141;
-				at: #VARIANT_BOOL put: 142;
-				at: #CURRENCY put: 143;
-				at: #DECIMAL put: 144;
-				at: #LPBSTR put: 145;
-				at: #ULARGE_INTEGER put: 146;
-				at: #LARGE_INTEGER put: 147;
-				at: #UINT_PTR put: 148;
-				at: #INT_PTR put: 149;
-				shrink;
-				yourself!
-
 maxBlockNesting
 	^VMConstants.MaxBlockNesting!
 
@@ -677,18 +684,11 @@ maxTemps
 open
 	"Answer the singleton instance of the receiver (it cannot be re-opened)"
 
-	^default!
-
-registryKeys
-	"Private - Answer the map between symbolic names and VM registry indices."
-
-	^RegistryKeys! !
+	^default! !
 !VMLibrary class categoriesFor: #fileName!constants!public! !
-!VMLibrary class categoriesFor: #initialize!development!initializing!private! !
 !VMLibrary class categoriesFor: #maxBlockNesting!limits!public! !
 !VMLibrary class categoriesFor: #maxLiterals!limits!public! !
 !VMLibrary class categoriesFor: #maxMessageArguments!limits!public! !
 !VMLibrary class categoriesFor: #maxTemps!limits!public! !
 !VMLibrary class categoriesFor: #open!instance creation!public! !
-!VMLibrary class categoriesFor: #registryKeys!constants!private! !
 

@@ -77,7 +77,7 @@ initializeLegacyResources
 			[:each | 
 			| rid |
 			rid := ResourceIdentifier class: (self environment at: each key) name: each value.
-			rid owningPackage == self ifFalse: [rid owningPackage: self]]!
+			rid owningPackage == self ifFalse: [self manager addLooseMethod: rid compiledMethod to: self]]!
 
 loadGlobalsFromFiler: binaryFiler
 	"Private - File in binary definitions of all the globals held by

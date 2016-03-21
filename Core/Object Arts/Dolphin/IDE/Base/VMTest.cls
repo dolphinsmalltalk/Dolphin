@@ -12,48 +12,35 @@ SUnitBrowser openOnTestCase: self'!
 !VMTest categoriesForClass!Unclassified! !
 !VMTest methodsFor!
 
-assertImmutableAtPut: s 
-	self assert: s isImmutable.
-	self should: [s at: 0 put: $x] raise: BoundsError.
-	self should: [s at: s size + 1 put: $x] raise: BoundsError.
-	1 to: s size do: [:each | self should: [s at: each put: $x] raise: Processor constWriteSignal]!
+assertImmutableAtPut: anObject 
+	self assert: anObject isImmutable.
+	self should: [anObject at: 0 put: $x] raise: BoundsError.
+	self should: [anObject at: anObject size + 1 put: $x] raise: BoundsError.
+	1 to: anObject size
+		do: [:each | self should: [anObject at: each put: $x] raise: Processor constWriteSignal]!
 
-assertImmutableBasicAtPut: s 
-	self assert: s isImmutable.
-	self should: [s basicAt: 0 put: $x] raise: BoundsError.
-	self should: [s basicAt: s size + 1 put: $x] raise: BoundsError.
-	1 to: s size do: [:each | self should: [s basicAt: each put: $x] raise: Processor constWriteSignal]!
+assertImmutableBasicAtPut: anObject 
+	self assert: anObject isImmutable.
+	self should: [anObject basicAt: 0 put: $x] raise: BoundsError.
+	self should: [anObject basicAt: anObject size + 1 put: $x] raise: BoundsError.
+	1 to: anObject size
+		do: [:each | self should: [anObject basicAt: each put: $x] raise: Processor constWriteSignal]!
 
-assertImmutableInstVarAtPut: s 
+assertImmutableInstVarAtPut: anObject 
 	| size |
-	self assert: s isImmutable.
-	self should: [s instVarAt: 0 put: $x] raise: BoundsError.
-	size := s class instSize + s basicSize.
-	self should: [s instVarAt: size + 1 put: $x] raise: BoundsError.
-	1 to: size do: [:each | self should: [s instVarAt: each put: $x] raise: Processor constWriteSignal]!
+	self assert: anObject isImmutable.
+	self should: [anObject instVarAt: 0 put: $x] raise: BoundsError.
+	size := anObject class instSize + anObject basicSize.
+	self should: [anObject instVarAt: size + 1 put: $x] raise: BoundsError.
+	1 to: size
+		do: [:each | self should: [anObject instVarAt: each put: $x] raise: Processor constWriteSignal]!
 
-assertLoopInterruptible: aBlock 
-	| intervals execTime last sampleInterval go |
-	go := true.
-	last := Time millisecondClockValue.
-	intervals := OrderedCollection new.
-	sampleInterval := 5.
-	
-	[
-	[Processor sleep: sampleInterval.
-	go and: 
-			[| next |
-			next := Time millisecondClockValue.
-			intervals addLast: next - last.
-			last := next.
-			true]] 
-			whileTrue] 
-			forkAt: Processor userInterruptPriority.
-	execTime := Time millisecondsToRun: aBlock.
-	go := false.
-	self assert: (intervals size > 5 and: [intervals size * 1.25 >= (execTime / sampleInterval) asFloat]).
-	self 
-		assert: (intervals size > 2 and: [intervals allSatisfy: [:each | each < (sampleInterval * 2)]])!
+assertImmutableResize: anObject 
+	self assert: anObject isImmutable.
+	"Should get an error on any resize attempt, whether doesn't change size, grows or shrinks"
+	self should: [anObject resize: anObject size] raise: Processor constWriteSignal.
+	self should: [anObject resize: anObject size + 1] raise: Processor constWriteSignal.
+	self should: [anObject resize: anObject size - 1] raise: Processor constWriteSignal!
 
 earlyTermination: aBoolean 
 	"N.B. Timing is critical to much of this, so its not going to be possible to debug through it. Its really only to show up
@@ -117,7 +104,7 @@ getCPUTime
 		lpExitTime: exit
 		lpKernelTime: kernel
 		lpUserTime: user.
-	^(kernel asInteger + user asInteger) / 10000!
+	^(kernel asInteger + user asInteger) // 10000!
 
 isGPF: gpf reading: aBoolean address: anAddress 
 	| address isReading info |
@@ -305,6 +292,28 @@ testImmutableNextPut
 			self assertImmutableAtPut: s.
 			strm := WriteStream on: s.
 			self should: [strm nextPut: s last] raise: Processor constWriteSignal]!
+
+testImmutableNextPutAll
+	#(#[1 2 3] 'abc' #(1 2 3)) do: 
+			[:s | 
+			| strm |
+			self assertImmutableAtPut: s.
+			strm := WriteStream on: s.
+			self should: [strm nextPutAll: (s copyFrom: 2 to: 3)] raise: Processor constWriteSignal]!
+
+testImmutableReplacePrimitives
+	#(#[1 2 3] 'abc' #(1 2 3)) do: 
+			[:s | 
+			self assertImmutableAtPut: s.
+			self should: 
+					[s 
+						replaceFrom: 1
+						to: 2
+						with: (s copyFrom: 2 to: 3)]
+				raise: Processor constWriteSignal]!
+
+testImmutableResize
+	#(#(1 2 3) #[1 2 3] 'abcd') do: [:each | self assertImmutableResize: each]!
 
 testImmutableStringCompare
 	| s1 s2 |
@@ -663,20 +672,6 @@ testPrimitiveStringAt
 	0 to: 255 do: [:i | self should: [(array at: i+1) == (Character value: i)]].
 !
 
-testQuiesceWhenUIBlocked
-	"#969: Dolphin burns 100% CPU when main UI process blocked on Semaphore"
-
-	| totalCPUBefore cpuWhileSleeping sleepTime wait |
-	totalCPUBefore := self getCPUTime.
-	wait := 2000.
-	sleepTime := Time millisecondsToRun: [Processor sleep: wait].
-	cpuWhileSleeping := self getCPUTime - totalCPUBefore.
-	"If the sleep time was significantly longer than requested, then the VM is not waking up the image
-	 properly at the end of the timer"
-	self assert: (sleepTime between: wait * 0.9 and: wait * 1.1).
-	"The VM should quiesce properly, even if events are waiting to be processed, so very little CPU time should have been consumed"
-	self assert: cpuWhileSleeping < (wait * 0.01)!
-
 testSignedFromUnsigned
 	"Test SmallIntegers and 4 & 8 byte LargeIntegers"
 
@@ -699,7 +694,7 @@ testSignedFromUnsigned
 !VMTest categoriesFor: #assertImmutableAtPut:!private!unit tests! !
 !VMTest categoriesFor: #assertImmutableBasicAtPut:!private!unit tests! !
 !VMTest categoriesFor: #assertImmutableInstVarAtPut:!private!unit tests! !
-!VMTest categoriesFor: #assertLoopInterruptible:!private!unit tests! !
+!VMTest categoriesFor: #assertImmutableResize:!private!unit tests! !
 !VMTest categoriesFor: #earlyTermination:!helpers!public! !
 !VMTest categoriesFor: #getCPUTime!helpers!private! !
 !VMTest categoriesFor: #isGPF:reading:address:!helpers!private! !
@@ -714,6 +709,9 @@ testSignedFromUnsigned
 !VMTest categoriesFor: #testImmutableBufferAtPuts!public!unit tests! !
 !VMTest categoriesFor: #testImmutableInstVarAtPut!public!unit tests! !
 !VMTest categoriesFor: #testImmutableNextPut!public!unit tests! !
+!VMTest categoriesFor: #testImmutableNextPutAll!public!unit tests! !
+!VMTest categoriesFor: #testImmutableReplacePrimitives!public!unit tests! !
+!VMTest categoriesFor: #testImmutableResize!public!unit tests! !
 !VMTest categoriesFor: #testImmutableStringCompare!public!unit tests! !
 !VMTest categoriesFor: #testImmutableWriteAccessors!public!unit tests! !
 !VMTest categoriesFor: #testMakeLargeUnsigned!public!unit tests! !
@@ -724,7 +722,6 @@ testSignedFromUnsigned
 !VMTest categoriesFor: #testPrimitiveAtPut!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveIsNullBytes!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveStringAt!public!unit tests! !
-!VMTest categoriesFor: #testQuiesceWhenUIBlocked!public!unit tests! !
 !VMTest categoriesFor: #testSignedFromUnsigned!public!unit tests! !
 
 !VMTest class methodsFor!

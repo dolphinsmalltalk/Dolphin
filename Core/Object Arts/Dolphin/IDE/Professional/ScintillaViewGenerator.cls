@@ -1447,7 +1447,6 @@ ignoredMessages
 		addAll: #('SCI_STYLESETVISIBLE' 'SCI_STYLEGETVISIBLE');
 		addAll: #('SCI_STYLESETSIZEFRACTIONAL' 'SCI_STYLEGETSIZEFRACTIONAL');
 		addAll: #('SCI_STYLESETWEIGHT' 'SCI_STYLEGETWEIGHT');
-		add: 'SCI_STYLERESETDEFAULT';
 		yourself.
 
 	"SCI_GETLENGTH is ignored because it duplicates SCI_GETTEXTLENGTH"
@@ -1471,118 +1470,14 @@ ignoredMessages
 
 	"Likewise the old messages to set the target start and end separately are no longer needed, as we always set an interval and can use SCI_SETTARGETRANGE"
 	ignoredMessages addAll: #('SCI_SETTARGETSTART' 'SCI_SETTARGETEND').
+
+	"Old style-bits indicators."
+	ignoredMessages addAll: #('SCI_SETSTYLEBITS' 'SCI_GETSTYLEBITS' 'SCI_GETSTYLEBITSNEEDED').
 	ignoredMessages
 		shrink;
 		isImmutable: true;
 		yourself)
-
-	"We use the direct function exported by the DLL, and don't need a wrapper method for SCI_GETDIRECTPOINTER as we need to send it directly."
-	"We don't use direct/unsafe access to the scintilla character buffer."
-	"We don't support background loading"
-
-	"The idFrom field of the notification header is not needed to identify the Scintilla
-	control, as we have an object instance associated with each control instance that receives
-	the notifications directly."
-
-	"Scintilla supports standard Windows focus messages, which are used in the MVP framework already"
-
-	"Margin attributes managed by ScintillaMargin"
-
-	"Indicator attributes managed by ScintillaIndicatorStyle"
-
-	"Indicator attributes managed by ScintillaMarkerDefinition"
-
-	"Annotation attributes are managed by ScintillaAnnotation"
-
-	"Style attributes managed by ScintillaTextStyle, but note that as Scintilla wrapping
-	predates when style definitions were queryable, so we don't use these at all"
-
-	"SCI_GETLENGTH is ignored because it duplicates SCI_GETTEXTLENGTH"
-
-	"Don't make use of document ref. stuff at present."
-	"ignoredMessages add: 'SCI_ADDREFDOCUMENT'."
-
-	"Scintilla's cursor management is not required in Dolphin which has its own mechanisms."
-
-	"We don't need SCI_GETMODEVENTMASK because we store the event mask in an instance variable (for some reason that I no longer know)"
-
-	"We don't need these as they are for the GTK+ platform only"
-
-	"We always set the selection range start and end as a pair."
-
-	"Likewise the old messages to set the target start and end separately are no longer needed, as we always set an interval and can use SCI_SETTARGETRANGE"
-
-	"We use the direct function exported by the DLL, and don't need a wrapper method for SCI_GETDIRECTPOINTER as we need to send it directly."
-	"We don't use direct/unsafe access to the scintilla character buffer."
-	"We don't support background loading"
-
-	"The idFrom field of the notification header is not needed to identify the Scintilla
-	control, as we have an object instance associated with each control instance that receives
-	the notifications directly."
-
-	"Scintilla supports standard Windows focus messages, which are used in the MVP framework already"
-
-	"Margin attributes managed by ScintillaMargin"
-
-	"Indicator attributes managed by ScintillaIndicatorStyle"
-
-	"Indicator attributes managed by ScintillaMarkerDefinition"
-
-	"Annotation attributes are managed by ScintillaAnnotation"
-
-	"Style attributes managed by ScintillaTextStyle, but note that as Scintilla wrapping
-	predates when style definitions were queryable, so we don't use these at all"
-
-	"SCI_GETLENGTH is ignored because it duplicates SCI_GETTEXTLENGTH"
-
-	"Don't make use of document ref. stuff at present."
-	"ignoredMessages add: 'SCI_ADDREFDOCUMENT'."
-
-	"Scintilla's cursor management is not required in Dolphin which has its own mechanisms."
-
-	"We don't need SCI_GETMODEVENTMASK because we store the event mask in an instance variable (for some reason that I no longer know)"
-
-	"We don't need these as they are for the GTK+ platform only"
-
-	"We always set the selection range start and end as a pair."
-
-	"Likewise the old messages to set the target start and end separately are no longer needed, as we always set an interval and can use SCI_SETTARGETRANGE"
-
-	"We use the direct function exported by the DLL, and don't need a wrapper method for SCI_GETDIRECTPOINTER as we need to send it directly."
-	"We don't use direct/unsafe access to the scintilla character buffer."
-	"We don't support background loading"
-
-	"The idFrom field of the notification header is not needed to identify the Scintilla
-	control, as we have an object instance associated with each control instance that receives
-	the notifications directly."
-
-	"Scintilla supports standard Windows focus messages, which are used in the MVP framework already"
-
-	"Margin attributes managed by ScintillaMargin"
-
-	"Indicator attributes managed by ScintillaIndicatorStyle"
-
-	"Indicator attributes managed by ScintillaMarkerDefinition"
-
-	"Annotation attributes are managed by ScintillaAnnotation"
-
-	"Style attributes managed by ScintillaTextStyle, but note that as Scintilla wrapping
-	predates when style definitions were queryable, so we don't use these at all"
-
-	"SCI_GETLENGTH is ignored because it duplicates SCI_GETTEXTLENGTH"
-
-	"Don't make use of document ref. stuff at present."
-	"ignoredMessages add: 'SCI_ADDREFDOCUMENT'."
-
-	"Scintilla's cursor management is not required in Dolphin which has its own mechanisms."
-
-	"We don't need SCI_GETMODEVENTMASK because we store the event mask in an instance variable (for some reason that I no longer know)"
-
-	"We don't need these as they are for the GTK+ platform only"
-
-	"We always set the selection range start and end as a pair."
-
-	"Likewise the old messages to set the target start and end separately are no longer needed, as we always set an interval and can use SCI_SETTARGETRANGE"!
+!
 
 initialize
 	events := OrderedCollection new: 256.

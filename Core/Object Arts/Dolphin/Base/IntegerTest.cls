@@ -38,6 +38,19 @@ testFactorial
 			self assert: factorial = each factorial2p].
 	self should: [-1 factorial] raise: Error!
 
+testIndexedAccess
+	"WARNING THIS TEST HANGS THE IMAGE when run for SmallInteger"
+
+	| int |
+	int := self canonicalInstance.
+	self should: [int at: 1 put: 0] raise: Error.
+	SessionManager current productVersion >= 6.0 
+		ifTrue: 
+			["These bugs only corrected in D6 and later"
+			self should: [int size] raise: Error.
+			self should: [int at: 1] raise: Error].
+!
+
 testIsInteger
 	self assert: self canonicalInstance isInteger!
 
@@ -78,6 +91,7 @@ testTwoComplementRightShift
 !IntegerTest categoriesFor: #canonicalInstance!constants!private! !
 !IntegerTest categoriesFor: #testClassReadFromRadix!public!unit tests! !
 !IntegerTest categoriesFor: #testFactorial!public!unit tests! !
+!IntegerTest categoriesFor: #testIndexedAccess!public!unit tests! !
 !IntegerTest categoriesFor: #testIsInteger!public!unit tests! !
 !IntegerTest categoriesFor: #testNew!public!unit tests! !
 !IntegerTest categoriesFor: #testPrimesUpTo!public!unit tests! !

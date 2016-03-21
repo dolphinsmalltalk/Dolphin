@@ -16,6 +16,7 @@ package classNames
 	add: #ByteArrayTest;
 	add: #CaseInsensitiveSearchPolicyTest;
 	add: #ClassBuilderTestClasses;
+	add: #ClassBuilderTests;
 	add: #CollectionCombinator;
 	add: #CommandLineTest;
 	add: #DateTest;
@@ -64,6 +65,7 @@ package classNames
 	add: #NumberTest;
 	add: #ObjectTest;
 	add: #OrderedCollectionTest;
+	add: #PackageTest;
 	add: #PluggableEnvironmentTest;
 	add: #Point3DTest;
 	add: #PointTest;
@@ -106,7 +108,6 @@ package classNames
 	add: #VARIANTTest;
 	add: #WORDArrayTest;
 	add: #WriteStreamTest;
-	add: #ZLibTest;
 	yourself.
 
 package methodNames
@@ -125,6 +126,7 @@ package globalAliases: (Set new
 package setPrerequisites: (IdentitySet new
 	add: '..\ActiveX\Automation\ActiveX Automation';
 	add: '..\..\Samples\ActiveX\Random\COM Random Stream';
+	add: '..\System\Trace\Debug Trace Stream';
 	add: '..\IDE\Base\Development System';
 	add: 'Dolphin';
 	add: 'Dolphin Additional Sort Algorithms';
@@ -180,6 +182,11 @@ DolphinTest subclass: #BlockClosureTest
 	classInstanceVariableNames: ''!
 DolphinTest subclass: #BooleanTest
 	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DolphinTest subclass: #ClassBuilderTests
+	instanceVariableNames: 'wasOAD'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -293,6 +300,11 @@ DolphinTest subclass: #ObjectTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+DolphinTest subclass: #PackageTest
+	instanceVariableNames: 'loadedPackages'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
 DolphinTest subclass: #Point3DTest
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -397,11 +409,6 @@ DolphinTest subclass: #VARIANTTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'AXAutomationConstants'
-	classInstanceVariableNames: ''!
-DolphinTest subclass: #ZLibTest
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 DictionaryTest subclass: #LookupTableTest
 	instanceVariableNames: ''
@@ -679,7 +686,7 @@ runRegressionTests
 	^self runRegressionTests: self regressionTestSuite logTo: self regressionTestsLogFilename!
 
 runRegressionTests: aTestSuite logTo: aFilenameStringOrNil 
-	| results timeMs logStream |
+	| results timeMs |
 	timeMs := Time millisecondsToRun: 
 					[| runner |
 					runner := TestRunner show.
@@ -687,7 +694,8 @@ runRegressionTests: aTestSuite logTo: aFilenameStringOrNil
 					results := runner result].
 	aFilenameStringOrNil notNil 
 		ifTrue: 
-			[logStream := FileStream write: aFilenameStringOrNil.
+			[| logStream |
+			logStream := FileStream write: aFilenameStringOrNil.
 			logStream
 				nextPutAll: (results hasPassed ifTrue: ['PASSED'] ifFalse: ['FAILED']);
 				cr;

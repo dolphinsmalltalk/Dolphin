@@ -1,0 +1,1617 @@
+| package |
+package := Package name: 'StoreString for Views'.
+package paxVersion: 1;
+	basicComment: 'Methods in this package are used to generate a string that can be used to recreate a view. The primary use is to allow for diffs when a view is edited (the literal array in a resource_ method is useless for that purpose).'.
+
+
+package methodNames
+	add: #ArrayedCollection -> #storeForViewOn:variables:;
+	add: #AXControlSite -> #storeForViewOn:variables:;
+	add: #BlockClosure -> #storeForViewOn:variables:;
+	add: #Boolean -> #storeForViewOn:;
+	add: #BooleanToText -> #storeForViewOn:;
+	add: #BorderLayout -> #storeForViewOn:variables:;
+	add: #Character -> #storeForViewOn:;
+	add: #ClassDescription -> #storeForViewOn:;
+	add: #Color -> #storeForViewOn:;
+	add: #CommandDescription -> #fromStrings;
+	add: #CommandDescription -> #storeForViewOn:variables:;
+	add: #CommandMenuItem -> #fromStrings;
+	add: #CommandMenuItem -> #storeForViewOn:variables:;
+	add: #Date -> #storeForViewOn:;
+	add: #Dictionary -> #storeForViewOn:;
+	add: #DiffsScintillaStyler -> #storeForViewOn:;
+	add: #DividerMenuItem -> #fromStrings;
+	add: #DividerMenuItem -> #storeForViewOn:variables:;
+	add: #FlowLayout -> #storeForViewOn:;
+	add: #Font -> #storeForViewOn:;
+	add: #FramingConstraints -> #storeForViewOn:variables:;
+	add: #FramingLayout -> #storeForViewOn:variables:;
+	add: #GridLayout -> #storeForViewOn:;
+	add: #Image -> #storeForViewOn:;
+	add: #InternalBitmap -> #storeForViewOn:;
+	add: #Interval -> #storeForViewOn:;
+	add: #InvertingConverter -> #=;
+	add: #ListViewColumn -> #storeForViewOn:variables:;
+	add: #MappingConverter -> #=;
+	add: #Menu -> #fromStrings;
+	add: #Menu -> #storeForViewOn:variables:;
+	add: #Message -> #storeForViewOn:variables:;
+	add: #MessageSendAbstract -> #storeForViewOn:variables:;
+	add: #NullConverter -> #storeForViewOn:variables:;
+	add: #NullScintillaStyler -> #storeForViewOn:;
+	add: #Number -> #storeForViewOn:;
+	add: #Object -> #storeForViewAttributesDifferingFrom:on:variables:;
+	add: #Object -> #storeForViewAttributesOn:variables:;
+	add: #Object -> #storeForViewOn:;
+	add: #Object -> #storeForViewOn:variables:;
+	add: #Object -> #storeStringForView;
+	add: #OrderedCollection -> #storeForViewOn:variables:;
+	add: #OrderedCollection -> #storeForViewValuesOn:variables:;
+	add: #Pen -> #storeForViewOn:;
+	add: #PluggableColor -> #storeForViewOn:variables:;
+	add: #PluggableTypeConverter -> #=;
+	add: #Point -> #storeForViewOn:;
+	add: #ProportionalLayout -> #storeForViewOn:variables:;
+	add: #Rectangle -> #storeForViewOn:;
+	add: #ResourceIdentifier -> #storeForViewOn:;
+	add: #RichText -> #storeForViewOn:;
+	add: #ScintillaAttribute -> #storeForViewOn:;
+	add: #ScintillaKeyBinding -> #storeForViewOn:;
+	add: #SlideyInneyOuteyThing -> #storeSubviewsA:on:variables:;
+	add: #SlideyInneyOuteyThing -> #storeSubviewsB:on:variables:;
+	add: #SmalltalkStyler -> #storeForViewOn:;
+	add: #SortedCollection -> #storeForViewOn:variables:;
+	add: #StatusBarItem -> #storeForViewOn:variables:;
+	add: #StatusBarNullItem -> #storeForViewOn:variables:;
+	add: #String -> #storeForViewOn:;
+	add: #StyledGradientBrush -> #storeForViewOn:;
+	add: #StyledPen -> #storeForViewOn:;
+	add: #SystemColor -> #storeForViewOn:;
+	add: #Time -> #storeForViewOn:;
+	add: #ToolbarButton -> #storeForViewOn:variables:;
+	add: #ToolbarIconButton -> #storeForViewOn:variables:;
+	add: #ToolbarSeparator -> #storeForViewOn:;
+	add: #ToolbarSystemButton -> #storeForViewOn:variables:;
+	add: #TypeConverter -> #=;
+	add: #TypeConverter -> #hash;
+	add: #TypeConverter -> #storeForViewOn:variables:;
+	add: #UndefinedObject -> #storeForViewOn:;
+	add: #View -> #storeForViewOn:;
+	add: #View -> #storeForViewOn:variables:;
+	add: #View -> #storeNameIn:;
+	add: #View -> #storeStringForView;
+	add: #View -> #storeSubviewsA:on:variables:;
+	add: #View -> #storeSubviewsB:on:variables:;
+	add: 'Presenter class' -> #createCodeForResourceIdentifiers;
+	add: 'View class' -> #createCodeForResourceIdentifier:;
+	add: 'View class' -> #createCodeForResourceIdentifiers;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\..\Object Arts\Dolphin\ActiveX\OCX\ActiveX Control Hosting';
+	add: '..\..\Object Arts\Dolphin\IDE\Base\Development System';
+	add: '..\..\Object Arts\Dolphin\Base\Dolphin';
+	add: '..\..\Object Arts\Dolphin\MVP\Presenters\Boolean\Dolphin Boolean Presenter';
+	add: '..\..\Object Arts\Dolphin\MVP\Views\Common Controls\Dolphin Common Controls';
+	add: '..\..\Object Arts\Dolphin\MVP\Views\Control Bars\Dolphin Control Bars';
+	add: '..\..\Object Arts\Dolphin\MVP\Presenters\Difference\Dolphin Differences Presenter';
+	add: '..\..\Object Arts\Dolphin\MVP\Base\Dolphin MVP Base';
+	add: '..\..\Object Arts\Dolphin\MVP\Presenters\Text\Dolphin Rich Text Presenter';
+	add: '..\..\Object Arts\Dolphin\MVP\Views\Scintilla\Dolphin Scintilla View';
+	add: '..\..\Object Arts\Dolphin\MVP\Views\Sliding Tray\Dolphin Slidey-Inney-Outey Thing';
+	add: '..\..\Object Arts\Dolphin\MVP\Views\Styled Views\Dolphin Styled Views';
+	add: '..\..\Object Arts\Dolphin\MVP\Type Converters\Dolphin Type Converters';
+	add: '..\..\Object Arts\Dolphin\IDE\Base\Internal Bitmaps and Icons';
+	add: '..\..\Object Arts\Dolphin\System\Compiler\Smalltalk Parser';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+!ArrayedCollection methodsFor!
+
+storeForViewOn: aStream variables: aDictionary 
+	| atput at put |
+	atput := #at:put: keywords.
+	at := atput first.
+	put := atput last.
+	(self allSatisfy: [:each | each isImmediate]) 
+		ifTrue: 
+			[aStream print: self.
+			^self].
+	aStream
+		nextPutAll: '((';
+		display: self class;
+		space;
+		display: #new:;
+		space;
+		print: self size;
+		nextPut: $).
+	1 to: self size
+		do: 
+			[:i | 
+			aStream
+				space;
+				nextPutAll: at;
+				space;
+				print: i;
+				space;
+				nextPutAll: put;
+				space.
+			(self at: i) storeForViewOn: aStream variables: aDictionary.
+			aStream nextPut: $;].
+	aStream
+		space;
+		display: #yourself;
+		nextPut: $)! !
+!ArrayedCollection categoriesFor: #storeForViewOn:variables:!public!store view! !
+
+!AXControlSite methodsFor!
+
+storeForViewOn: aStream variables: aDictionary 
+	| default name |
+	name := self storeNameIn: aDictionary.
+	aStream display: name.
+	
+	[default := (self class progId: self progId)
+				create;
+				show.
+	aStream
+		space;
+		display: #progId:;
+		space;
+		print: self progId;
+		nextPut: $;;
+		space;
+		display: #create;
+		nextPut: $;.
+	self 
+		storeForViewAttributesDifferingFrom: default
+		on: aStream
+		variables: aDictionary.
+	aStream
+		space;
+		display: #yourself;
+		nextPut: $.;
+		cr] 
+			ensure: [default topView close]! !
+!AXControlSite categoriesFor: #storeForViewOn:variables:!public!store view! !
+
+!BlockClosure methodsFor!
+
+storeForViewOn: aStream variables: aDictionary 
+	| m block class selector string |
+	m := self method.
+	(m notNil and: [m isExpression]) 
+		ifTrue: 
+			["We can print the source"
+			aStream
+				nextPut: $(;
+				nextPutAll: m getSource;
+				nextPut: $).
+			^self].
+	m 
+		ifNotNil: 
+			[class := m methodClass.
+			selector := m selector.
+			(class isKindOf: Class) 
+				ifTrue: 
+					[string := class name , ' ' , #new , ' ' , selector.
+					block := class new perform: selector]
+				ifFalse: 
+					[string := class instanceClass name , ' ' , selector.
+					block := class instanceClass perform: selector].
+			block = self 
+				ifTrue: 
+					[aStream nextPutAll: string.
+					^self]].
+	aStream
+		nextPutAll: '(Object ';
+		display: #fromLiteralStoreArray:;
+		nextPutAll: ' #( '.
+	self literalStoreArray do: 
+			[:each | 
+			(each isLiteral and: [each isBehavior not]) 
+				ifTrue: [aStream print: each]
+				ifFalse: 
+					[aStream nextPutAll: '##('.
+					each storeForViewOn: aStream variables: aDictionary.
+					aStream nextPut: $)].
+			aStream space].
+	aStream nextPutAll: '))'! !
+!BlockClosure categoriesFor: #storeForViewOn:variables:!public!store view! !
+
+!Boolean methodsFor!
+
+storeForViewOn: aStream 
+	self printOn: aStream! !
+!Boolean categoriesFor: #storeForViewOn:!public!store view! !
+
+!BooleanToText methodsFor!
+
+storeForViewOn: aStream 
+	aStream
+		nextPut: $(;
+		display: self class;
+		space;
+		display: #new.
+	self actualFormat 
+		ifNotNil: 
+			[aStream
+				space;
+				display: #format:;
+				space.
+			format storeForViewOn: aStream.
+			aStream
+				nextPutAll: '; ';
+				display: #yourself].
+	aStream nextPut: $)! !
+!BooleanToText categoriesFor: #storeForViewOn:!public!store view! !
+
+!BorderLayout methodsFor!
+
+storeForViewOn: aStream variables: aDictionary 
+	| hasOverrides |
+	hasOverrides := false.
+	aStream
+		nextPut: $(;
+		display: self class;
+		space;
+		display: #new.
+	#(#(#horizontalGap 0) #(#verticalGap 0) #(#north nil) #(#south nil) #(#east nil) #(#west nil) #(#center nil)) 
+		do: 
+			[:each | 
+			| selector default actual |
+			selector := each at: 1.
+			default := each at: 2.
+			actual := self perform: selector.
+			actual ~= default 
+				ifTrue: 
+					[aStream
+						space;
+						nextPutAll: selector;
+						nextPutAll: ': '.
+					(aDictionary at: actual ifAbsent: [nil]) 
+						ifNotNil: [:variableName | aStream nextPutAll: variableName]
+						ifNil: [actual storeForViewOn: aStream].
+					aStream nextPut: $;.
+					hasOverrides := true]].
+	hasOverrides 
+		ifFalse: [aStream nextPut: $)]
+		ifTrue: 
+			[aStream
+				space;
+				display: #'yourself)']! !
+!BorderLayout categoriesFor: #storeForViewOn:variables:!public!store view! !
+
+!Character methodsFor!
+
+storeForViewOn: aStream 
+	self printOn: aStream! !
+!Character categoriesFor: #storeForViewOn:!public!store view! !
+
+!ClassDescription methodsFor!
+
+storeForViewOn: aStream 
+	aStream
+		nextPutAll: '##(';
+		print: self;
+		nextPut: $)! !
+!ClassDescription categoriesFor: #storeForViewOn:!public!store view! !
+
+!Color methodsFor!
+
+storeForViewOn: aStream 
+	self printOn: aStream! !
+!Color categoriesFor: #storeForViewOn:!public!store view! !
+
+!CommandDescription methodsFor!
+
+fromStrings
+	"If the receiver can be reproduced by a String sent to #'fromString:' on the class side, then return it; else, return nil.
+		'<title>/[keyString]/<command>'
+	Menu Item with title as the text. This may include an & preceeding an Alt
+	mnemonic. KeyString, if included, represents an accelerator key attached to this
+	menu item, this is of the form [Ctrl+][Shift+]<key>, where key is a single character
+	or a special key such as: Ins, Home, Del, etc. Command is processed if
+	the menu item is chosen."
+
+	flags == 0 ifFalse: [^nil].
+	image ifNotNil: [^nil].
+	(command isKindOf: Symbol) ifFalse: [^nil].
+	(description includes: $/) ifTrue: [^nil].
+	^description , '/' , (AcceleratorTable keyStringFromCode: self acceleratorKey) , '/' , command!
+
+storeForViewOn: aStream variables: aDictionary 
+	| closeFlag cdi |
+	cdi := #command:description:image: keywords.
+	(closeFlag := self hasAcceleratorKey or: [self isModalCommand]) ifTrue: [aStream nextPut: $(].
+	aStream
+		nextPut: $(;
+		display: self class;
+		space;
+		nextPutAll: cdi first;
+		space.
+	command storeForViewOn: aStream variables: aDictionary.
+	aStream
+		space;
+		nextPutAll: cdi second;
+		space;
+		print: description.
+	image 
+		ifNotNil: 
+			[aStream
+				space;
+				nextPutAll: cdi third;
+				nextPutAll: ' ('.
+			image storeForViewOn: aStream.
+			aStream nextPut: $)].
+	aStream nextPut: $).
+	self isModalCommand 
+		ifTrue: 
+			[aStream
+				space;
+				display: #isModalCommand:;
+				nextPutAll: ' true;'].
+	self hasAcceleratorKey 
+		ifTrue: 
+			[aStream
+				space;
+				display: #acceleratorKey:;
+				space;
+				print: acceleratorKey;
+				nextPutAll: ' "';
+				nextPutAll: (AcceleratorTable keyStringFromCode: acceleratorKey);
+				nextPutAll: '";'].
+	closeFlag 
+		ifTrue: 
+			[aStream
+				space;
+				display: #yourself;
+				nextPut: $)]! !
+!CommandDescription categoriesFor: #fromStrings!public!store view! !
+!CommandDescription categoriesFor: #storeForViewOn:variables:!public!store view! !
+
+!CommandMenuItem methodsFor!
+
+fromStrings
+	"If the receiver can be reproduced by a String sent to #'fromString:' on the class side, then return it; else, return nil.
+		'<title>/[keyString]/<command>'
+	Menu Item with title as the text. This may include an & preceeding an Alt
+	mnemonic. KeyString, if included, represents an accelerator key attached to this
+	menu item, this is of the form [Ctrl+][Shift+]<key>, where key is a single character
+	or a special key such as: Ins, Home, Del, etc. Command is processed if
+	the menu item is chosen."
+
+	flags == 0 ifFalse: [^nil].
+	image ifNotNil: [^nil].
+	^commandDescription fromStrings!
+
+storeForViewOn: aStream variables: aDictionary 
+	flags == 0 ifFalse: [aStream nextPut: $(].
+	aStream
+		nextPut: $(;
+		display: self class;
+		space;
+		display: #commandDescription:;
+		space.
+	commandDescription storeForViewOn: aStream variables: aDictionary.
+	flags == 0 
+		ifFalse: 
+			[aStream
+				nextPutAll: ') ';
+				display: #flags:;
+				space;
+				print: flags;
+				nextPutAll: '; ';
+				display: #yourself].
+	aStream nextPut: $)! !
+!CommandMenuItem categoriesFor: #fromStrings!public!store view! !
+!CommandMenuItem categoriesFor: #storeForViewOn:variables:!public!store view! !
+
+!Date methodsFor!
+
+storeForViewOn: aStream 
+	aStream
+		nextPut: $(;
+		display: self class;
+		space;
+		display: #fromDays:;
+		space;
+		print: days;
+		nextPutAll: ' "';
+		print: self;
+		nextPutAll: '")'! !
+!Date categoriesFor: #storeForViewOn:!public!store view! !
+
+!Dictionary methodsFor!
+
+storeForViewOn: aStream 
+	self storeOn: aStream! !
+!Dictionary categoriesFor: #storeForViewOn:!public!store view! !
+
+!DiffsScintillaStyler methodsFor!
+
+storeForViewOn: aStream 
+	diffs = #() 
+		ifTrue: 
+			[aStream
+				display: self class;
+				space;
+				display: #new]
+		ifFalse: [super storeForViewOn: aStream]! !
+!DiffsScintillaStyler categoriesFor: #storeForViewOn:!public!store view! !
+
+!DividerMenuItem methodsFor!
+
+fromStrings
+	"If the receiver can be reproduced by a String sent to #'fromString:' on the class side, then return it; else, return nil."
+
+	| styleName |
+	styleName := self styleName.
+	styleName == #separator ifTrue: [^'-'].
+	styleName == #break ifTrue: [^'|'].
+	styleName == #barBreak ifTrue: [^'||'].
+	self error: 'Unrecognized DividerMenuItem'!
+
+storeForViewOn: aStream variables: aDictionary 
+	aStream
+		display: self class;
+		space;
+		nextPutAll: self styleName! !
+!DividerMenuItem categoriesFor: #fromStrings!public!store view! !
+!DividerMenuItem categoriesFor: #storeForViewOn:variables:!public!store view! !
+
+!FlowLayout methodsFor!
+
+storeForViewOn: aStream 
+	| default |
+	default := self class new.
+	aStream
+		nextPut: $(;
+		display: self class;
+		space;
+		display: #new.
+	#(#horizontalGap #verticalGap #alignment) do: 
+			[:each | 
+			| x |
+			(x := self perform: each) = (default perform: each) 
+				ifFalse: 
+					[aStream
+						space;
+						nextPutAll: each;
+						nextPutAll: ': '.
+					x storeForViewOn: aStream.
+					aStream nextPut: $;]].
+	aStream
+		space;
+		display: #yourself;
+		nextPut: $)! !
+!FlowLayout categoriesFor: #storeForViewOn:!public!store view! !
+
+!Font methodsFor!
+
+storeForViewOn: aStream 
+	| default isDefault name |
+	name := self name.
+	default := self class name: name.
+	aStream
+		nextPutAll: '((';
+		display: self class;
+		space;
+		display: #name:;
+		space;
+		print: name;
+		nextPut: $);
+		yourself.
+	isDefault := true.
+	#(#characterSet #isBold #isItalic #isStruckThrough #isUnderlined #pointSize #resolution #weight) 
+		do: 
+			[:each | 
+			| x |
+			(x := self perform: each) = (default perform: each) 
+				ifFalse: 
+					[aStream
+						cr;
+						tab;
+						nextPutAll: each;
+						nextPutAll: ': '.
+					x storeForViewOn: aStream.
+					aStream nextPut: $;.
+					isDefault := false]].
+	isDefault 
+		ifTrue: [aStream nextPut: $)]
+		ifFalse: 
+			[aStream
+				cr;
+				tab;
+				display: #yourself;
+				nextPut: $)]! !
+!Font categoriesFor: #storeForViewOn:!public!store view! !
+
+!FramingConstraints methodsFor!
+
+storeForViewOn: aStream variables: aDictionary 
+	self storeForViewAttributesOn: aStream variables: aDictionary! !
+!FramingConstraints categoriesFor: #storeForViewOn:variables:!public!store view! !
+
+!FramingLayout methodsFor!
+
+storeForViewOn: aStream variables: aDictionary 
+	aStream
+		display: self class;
+		space;
+		display: #new! !
+!FramingLayout categoriesFor: #storeForViewOn:variables:!public!store view! !
+
+!GridLayout methodsFor!
+
+storeForViewOn: aStream 
+	| default |
+	default := GridLayout new.
+	aStream
+		nextPut: $(;
+		display: self class;
+		space;
+		display: #new.
+	#(#rows #columns #horizontalGap #verticalGap) do: 
+			[:each | 
+			| x |
+			(x := self perform: each) = (default perform: each) 
+				ifFalse: 
+					[aStream
+						space;
+						nextPutAll: each;
+						nextPutAll: ': '.
+					x storeForViewOn: aStream.
+					aStream nextPut: $;]].
+	aStream
+		space;
+		display: #yourself;
+		nextPut: $)! !
+!GridLayout categoriesFor: #storeForViewOn:!public!store view! !
+
+!Image methodsFor!
+
+storeForViewOn: aStream 
+	aStream
+		nextPut: $(;
+		print: self;
+		nextPut: $)! !
+!Image categoriesFor: #storeForViewOn:!public!store view! !
+
+!InternalBitmap methodsFor!
+
+storeForViewOn: aStream 
+	aStream
+		nextPut: $(;
+		print: self;
+		nextPut: $)! !
+!InternalBitmap categoriesFor: #storeForViewOn:!public!store view! !
+
+!Interval methodsFor!
+
+storeForViewOn: aStream 
+	self printOn: aStream! !
+!Interval categoriesFor: #storeForViewOn:!public!store view! !
+
+!InvertingConverter methodsFor!
+
+= comparand 
+	^super = comparand and: [self wrappedConverter = comparand wrappedConverter]! !
+!InvertingConverter categoriesFor: #=!public!store view! !
+
+!ListViewColumn methodsFor!
+
+storeForViewOn: aStream variables: aDictionary 
+	self storeForViewAttributesOn: aStream variables: aDictionary! !
+!ListViewColumn categoriesFor: #storeForViewOn:variables:!public!store view! !
+
+!MappingConverter methodsFor!
+
+= comparand 
+	^super = comparand and: 
+			[self leftToRightMap = comparand leftToRightMap 
+				and: [self rightToLeftMap = comparand rightToLeftMap]]! !
+!MappingConverter categoriesFor: #=!public!store view! !
+
+!Menu methodsFor!
+
+fromStrings
+	"If the receiver can be reproduced an Array sent to #'fromStrings:' on the class side, then return it; else, return nil."
+
+	| itemList |
+	name ifNotNil: [^nil].
+	flags == 0 ifFalse: [^nil].
+	image ifNotNil: [^nil].
+	itemList := OrderedCollection with: text.
+	items do: [:each | each fromStrings ifNil: [^nil] ifNotNil: [:anObject | itemList add: anObject]].
+	^itemList asArray!
+
+storeForViewOn: aStream variables: aDictionary 
+	| atPut |
+	atPut := #at:put: keywords.
+	self fromStrings 
+		ifNotNil: 
+			[:anArray | 
+			aStream
+				nextPut: $(;
+				display: self class;
+				space;
+				display: #fromStrings:;
+				space.
+			anArray storeForViewOn: aStream variables: aDictionary.
+			aStream nextPut: $).
+			^self].
+	aStream
+		nextPutAll: ' (';
+		display: self class;
+		space;
+		display: #new.
+	#(#text #name #image #hasSharedImageColumn #isAutoDismiss #isModeless) do: 
+			[:each | 
+			(self perform: each) 
+				ifNotNil: 
+					[:value | 
+					value ~~ false 
+						ifTrue: 
+							[aStream
+								cr;
+								tab;
+								nextPutAll: each;
+								nextPutAll: ': '.
+							value storeForViewOn: aStream.
+							aStream nextPut: $;]]].
+	aStream
+		cr;
+		tab.
+	items isEmpty 
+		ifTrue: 
+			[aStream
+				display: #items:;
+				nextPutAll: ' #();']
+		ifFalse: 
+			[aStream
+				display: #items:;
+				nextPutAll: ' ((Array ';
+				display: #new:;
+				space;
+				print: items size;
+				nextPut: $).
+			1 to: items size
+				do: 
+					[:i | 
+					aStream
+						space;
+						display: atPut first;
+						space;
+						print: i;
+						space;
+						display: atPut second;
+						space.
+					(items at: i) storeForViewOn: aStream variables: aDictionary.
+					aStream nextPut: $;].
+			aStream
+				cr;
+				tab;
+				display: #yourself;
+				nextPutAll: ');'].
+	aStream
+		cr;
+		tab;
+		display: #yourself;
+		nextPut: $)! !
+!Menu categoriesFor: #fromStrings!public!store view! !
+!Menu categoriesFor: #storeForViewOn:variables:!public!store view! !
+
+!Message methodsFor!
+
+storeForViewOn: aStream variables: aDictionary 
+	| selArg selArgs |
+	selArg := #selector:argument: keywords.
+	selArgs := #selector:arguments: keywords.
+	self argumentCount == 0 
+		ifTrue: 
+			[aStream
+				nextPut: $(;
+				display: self class;
+				space;
+				display: #selector:;
+				space;
+				print: selector;
+				nextPut: $).
+			^self].
+	aStream
+		nextPut: $(;
+		display: self class;
+		space;
+		nextPutAll: selArg first;
+		space;
+		print: selector.
+	0 < self argumentCount 
+		ifTrue: 
+			[1 == self argumentCount 
+				ifTrue: 
+					[aStream
+						space;
+						nextPutAll: selArg second;
+						space.
+					(args at: 1) storeForViewOn: aStream variables: aDictionary]
+				ifFalse: 
+					[aStream
+						space;
+						nextPutAll: selArgs second;
+						space.
+					args storeForViewOn: aStream variables: aDictionary]].
+	aStream nextPut: $)! !
+!Message categoriesFor: #storeForViewOn:variables:!public!store view! !
+
+!MessageSendAbstract methodsFor!
+
+storeForViewOn: aStream variables: aDictionary 
+	| recSel recSelArg recSelArgs |
+	recSel := #receiver:selector: keywords.
+	recSelArg := #receiver:selector:argument: keywords.
+	recSelArgs := #receiver:selector:arguments: keywords.
+	aStream
+		nextPut: $(;
+		display: self class;
+		space;
+		nextPutAll: recSel first;
+		space.
+	self receiver storeForViewOn: aStream.
+	aStream
+		space;
+		nextPutAll: recSel second;
+		space;
+		print: selector.
+	0 < self argumentCount 
+		ifTrue: 
+			[1 == self argumentCount 
+				ifTrue: 
+					[aStream
+						space;
+						nextPutAll: recSelArg third;
+						space.
+					(args at: 1) storeForViewOn: aStream variables: aDictionary]
+				ifFalse: 
+					[aStream
+						space;
+						nextPutAll: recSelArgs third;
+						space.
+					args storeForViewOn: aStream variables: aDictionary]].
+	aStream nextPut: $)! !
+!MessageSendAbstract categoriesFor: #storeForViewOn:variables:!public!store view! !
+
+!NullConverter methodsFor!
+
+storeForViewOn: aStream variables: aDictionary 
+	(leftNullValue isNil and: [rightNullValue isNil]) 
+		ifTrue: 
+			[aStream
+				display: self class;
+				space;
+				display: #new]
+		ifFalse: [super storeForViewOn: aStream variables: aDictionary]! !
+!NullConverter categoriesFor: #storeForViewOn:variables:!public!store view! !
+
+!NullScintillaStyler methodsFor!
+
+storeForViewOn: aStream 
+	aStream
+		nextPut: $(;
+		display: self class;
+		space;
+		display: #new.
+	normalStyleName == #normal 
+		ifFalse: 
+			[aStream
+				space;
+				display: #normalStyleName:;
+				space.
+			normalStyleName storeForViewOn: aStream.
+			aStream
+				nextPutAll: '; ';
+				display: #yourself].
+	aStream nextPut: $)! !
+!NullScintillaStyler categoriesFor: #storeForViewOn:!public!store view! !
+
+!Number methodsFor!
+
+storeForViewOn: aStream 
+	self printOn: aStream! !
+!Number categoriesFor: #storeForViewOn:!public!store view! !
+
+!Object methodsFor!
+
+storeForViewAttributesDifferingFrom: default on: aStream variables: aDictionary 
+	| aspects rejects specialAspects |
+	rejects := #(#controlDispatch #yourself).
+	specialAspects := (IdentityDictionary new)
+				at: #commandDescription
+					put: 
+						[:anObject | 
+						aStream
+							cr;
+							tab;
+							display: #command:;
+							space;
+							print: anObject command];
+				at: #buddy
+					put: 
+						[:anObject | 
+						self isAutoBuddy 
+							ifTrue: 
+								[aStream
+									cr;
+									tab;
+									display: #isAutoBuddy:;
+									nextPutAll: ' true']
+							ifFalse: 
+								[aStream
+									cr;
+									tab;
+									display: #buddy:;
+									space;
+									nextPutAll: (aDictionary at: anObject)]];
+				yourself.
+	aspects := self class publishedAspectsOfInstances asSortedCollection.
+	aspects := aspects reject: [:each | rejects includes: each name].
+	aspects do: 
+			[:each | 
+			| x |
+			(x := each readFrom: self) = (each readFrom: default) 
+				ifFalse: 
+					[each isWriteable 
+						ifTrue: 
+							[aStream
+								cr;
+								tab;
+								display: each name;
+								nextPutAll: ': '.
+							x storeForViewOn: aStream variables: aDictionary]
+						ifFalse: [(specialAspects at: each name ifAbsent: [self halt]) value: x].
+					aStream nextPut: $;]]!
+
+storeForViewAttributesOn: aStream variables: aDictionary 
+	aStream
+		nextPut: $(;
+		display: self class;
+		space;
+		display: #new.
+	self 
+		storeForViewAttributesDifferingFrom: self class new
+		on: aStream
+		variables: aDictionary.
+	aStream
+		space;
+		display: #yourself;
+		nextPut: $)!
+
+storeForViewOn: aStream 
+	"It seems that Object is not an abstract class and making it so causes PushUpMethodTest>>#testPushUpWithMethodThatCannotBePushedDown to fail."
+
+	self error: 'subclassResponsibility'!
+
+storeForViewOn: aStream variables: aDictionary 
+	self storeForViewOn: aStream!
+
+storeStringForView
+	"Answer a <readableString> which, when compiled and evaluated, results in
+	an object similar to the receiver."
+
+	| stream |
+	stream := String writeStream: 32.
+	self storeForViewOn: stream.
+	^stream contents! !
+!Object categoriesFor: #storeForViewAttributesDifferingFrom:on:variables:!public!store view! !
+!Object categoriesFor: #storeForViewAttributesOn:variables:!public!store view! !
+!Object categoriesFor: #storeForViewOn:!public!store view! !
+!Object categoriesFor: #storeForViewOn:variables:!public!store view! !
+!Object categoriesFor: #storeStringForView!public!store view! !
+
+!OrderedCollection methodsFor!
+
+storeForViewOn: aStream variables: aDictionary 
+	aStream
+		nextPutAll: '(';
+		display: self class;
+		space;
+		display: #new.
+	self storeForViewValuesOn: aStream variables: aDictionary!
+
+storeForViewValuesOn: aStream variables: aDictionary 
+	"Append to the <puttableStream> argument, target, an expression which when 
+	evaluated will answer a collection similar to the receiver."
+
+	self do: 
+			[:each | 
+			aStream
+				space;
+				display: #add:;
+				space.
+			each storeForViewOn: aStream variables: aDictionary.
+			aStream nextPut: $;].
+	aStream
+		space;
+		display: #yourself;
+		nextPut: $)! !
+!OrderedCollection categoriesFor: #storeForViewOn:variables:!public!store view! !
+!OrderedCollection categoriesFor: #storeForViewValuesOn:variables:!public!store view! !
+
+!Pen methodsFor!
+
+storeForViewOn: aStream 
+	aStream
+		nextPutAll: '((';
+		display: self class;
+		space;
+		display: #withStyleName:;
+		space;
+		print: self styleName;
+		nextPutAll: ') ';
+		display: #width:;
+		space;
+		print: self width;
+		nextPutAll: '; ';
+		display: #color:;
+		space.
+	self color storeForViewOn: aStream.
+	aStream
+		nextPutAll: '; ';
+		display: #yourself;
+		nextPut: $)! !
+!Pen categoriesFor: #storeForViewOn:!public!store view! !
+
+!PluggableColor methodsFor!
+
+storeForViewOn: aStream variables: aDictionary 
+	aStream
+		nextPut: $(;
+		display: self class;
+		space;
+		display: #with:;
+		space.
+	valuable storeForViewOn: aStream variables: aDictionary.
+	aStream nextPut: $)! !
+!PluggableColor categoriesFor: #storeForViewOn:variables:!public!store view! !
+
+!PluggableTypeConverter methodsFor!
+
+= comparand 
+	^super = comparand and: 
+			[self leftToRightBlock = comparand leftToRightBlock 
+				and: [self rightToLeftBlock = comparand rightToLeftBlock]]! !
+!PluggableTypeConverter categoriesFor: #=!public!store view! !
+
+!Point methodsFor!
+
+storeForViewOn: aStream 
+	self printOn: aStream! !
+!Point categoriesFor: #storeForViewOn:!public!store view! !
+
+!Presenter class methodsFor!
+
+createCodeForResourceIdentifiers
+	"
+	Presenter createCodeForResourceIdentifiers.
+"
+
+	self resourceIdentifiers do: [:each | View createCodeForResourceIdentifier: each]! !
+!Presenter class categoriesFor: #createCodeForResourceIdentifiers!public!store view! !
+
+!ProportionalLayout methodsFor!
+
+storeForViewOn: aStream variables: aDictionary 
+	| arrPut |
+	arrPut := #arrangementOf:put: keywords.
+	aStream
+		nextPut: $(;
+		display: self class;
+		space;
+		display: #new;
+		cr;
+		tab;
+		display: #isVertical:;
+		space.
+	self isVertical storeForViewOn: aStream.
+	aStream nextPut: $;.
+	proportions keysAndValuesDo: 
+			[:eachKey :eachValue | 
+			aStream
+				cr;
+				tab;
+				nextPutAll: arrPut first;
+				space;
+				nextPutAll: (aDictionary at: eachKey);
+				space;
+				nextPutAll: arrPut second;
+				space.
+			eachValue storeForViewOn: aStream.
+			aStream nextPut: $;].
+	aStream
+		cr;
+		tab;
+		display: #yourself;
+		nextPut: $)! !
+!ProportionalLayout categoriesFor: #storeForViewOn:variables:!public!store view! !
+
+!Rectangle methodsFor!
+
+storeForViewOn: aStream 
+	aStream
+		nextPut: $(;
+		print: origin;
+		space;
+		display: #corner:;
+		space;
+		print: corner;
+		nextPut: $)! !
+!Rectangle categoriesFor: #storeForViewOn:!public!store view! !
+
+!ResourceIdentifier methodsFor!
+
+storeForViewOn: aStream 
+	| className |
+	className := #class:name: keywords.
+	aStream
+		nextPut: $(;
+		print: self class;
+		space;
+		nextPutAll: className first;
+		space;
+		print: self owningClass;
+		space;
+		nextPutAll: className second;
+		space;
+		print: self name;
+		nextPut: $)! !
+!ResourceIdentifier categoriesFor: #storeForViewOn:!printing!public!store view! !
+
+!RichText methodsFor!
+
+storeForViewOn: aStream 
+	aStream
+		nextPut: $(;
+		display: self class;
+		space;
+		display: #fromRtf:;
+		space.
+	rtf storeForViewOn: aStream.
+	aStream nextPut: $)! !
+!RichText categoriesFor: #storeForViewOn:!public!store view! !
+
+!ScintillaAttribute methodsFor!
+
+storeForViewOn: aStream 
+	self storeOn: aStream! !
+!ScintillaAttribute categoriesFor: #storeForViewOn:!public!store view! !
+
+!ScintillaKeyBinding methodsFor!
+
+storeForViewOn: aStream 
+	| newMess |
+	newMess := #newAcceleratorKey:message: keywords.
+	aStream
+		nextPut: $(;
+		display: self class;
+		space;
+		nextPutAll: newMess first;
+		space;
+		print: acceleratorKey;
+		nextPutAll: ' "';
+		nextPutAll: self acceleratorKeyString;
+		nextPutAll: '" ';
+		nextPutAll: newMess second;
+		space;
+		print: message;
+		nextPutAll: ' "';
+		nextPutAll: self commandSymbol;
+		nextPutAll: '")'! !
+!ScintillaKeyBinding categoriesFor: #storeForViewOn:!public!store view! !
+
+!SlideyInneyOuteyThing methodsFor!
+
+storeSubviewsA: aList on: aStream variables: aDictionary
+	"Override to do nothing since subviews are created automatically"!
+
+storeSubviewsB: aList on: aStream variables: aDictionary 
+	| myName variableName childName |
+	myName := aDictionary at: self.
+	aList do: 
+			[:each | 
+			childName := self nameOf: each.
+			variableName := aDictionary at: each.
+			aStream
+				nextPutAll: variableName;
+				nextPutAll: ' := ';
+				nextPutAll: (childName ifNil: [''] ifNotNil: ['(']);
+				nextPutAll: myName;
+				space;
+				display: #subViews;
+				space;
+				display: #detect:;
+				nextPutAll: ' [:each | each ';
+				display: #isKindOf:;
+				space;
+				nextPutAll: each class name;
+				nextPutAll: ']'.
+			(self nameOf: each) 
+				ifNotNil: 
+					[:aString | 
+					aStream
+						nextPutAll: ') name: ';
+						print: aString;
+						nextPutAll: '; yourself'].
+			aStream
+				nextPut: $.;
+				cr]! !
+!SlideyInneyOuteyThing categoriesFor: #storeSubviewsA:on:variables:!printing!public! !
+!SlideyInneyOuteyThing categoriesFor: #storeSubviewsB:on:variables:!public!store view! !
+
+!SmalltalkStyler methodsFor!
+
+storeForViewOn: aStream 
+	aStream
+		display: self class;
+		space;
+		display: #new! !
+!SmalltalkStyler categoriesFor: #storeForViewOn:!public!store view! !
+
+!SortedCollection methodsFor!
+
+storeForViewOn: aStream variables: aDictionary 
+	(algorithm isKindOf: DefaultSortAlgorithm) 
+		ifTrue: [^super storeForViewOn: aStream variables: aDictionary].
+	aStream
+		nextPutAll: '((';
+		display: self class;
+		space;
+		display: #sortBlock:;
+		space.
+	algorithm sortBlock storeForViewOn: aStream variables: aDictionary.
+	aStream nextPut: $).
+	self storeForViewValuesOn: aStream variables: aDictionary! !
+!SortedCollection categoriesFor: #storeForViewOn:variables:!printing!public!store view! !
+
+!StatusBarItem methodsFor!
+
+storeForViewOn: aStream variables: aDictionary 
+	| default |
+	default := (self class new)
+				parentView: View desktop;
+				yourself.
+	aStream
+		nextPut: $(;
+		display: self class;
+		space;
+		display: #new;
+		space;
+		display: #parentView:;
+		space;
+		nextPutAll: (aDictionary at: parentView);
+		nextPut: $;.
+	self 
+		storeForViewAttributesDifferingFrom: default
+		on: aStream
+		variables: aDictionary.
+	aStream
+		space;
+		display: #yourself;
+		nextPut: $)! !
+!StatusBarItem categoriesFor: #storeForViewOn:variables:!public!store view! !
+
+!StatusBarNullItem methodsFor!
+
+storeForViewOn: aStream variables: aDictionary 
+	aStream
+		nextPut: $(;
+		display: self class;
+		space;
+		display: #separator:;
+		nextPutAll: ' 0)'! !
+!StatusBarNullItem categoriesFor: #storeForViewOn:variables:!public!store view! !
+
+!String methodsFor!
+
+storeForViewOn: aStream 
+	self printOn: aStream! !
+!String categoriesFor: #storeForViewOn:!public!store view! !
+
+!StyledGradientBrush methodsFor!
+
+storeForViewOn: aStream 
+	| fromAtToAt |
+	fromAtToAt := #from:at:to:at: keywords.
+	aStream
+		nextPut: $(;
+		display: self class.
+	aStream
+		space;
+		nextPutAll: fromAtToAt first;
+		space.
+	self startColor storeForViewOn: aStream.
+	aStream
+		space;
+		nextPutAll: fromAtToAt second;
+		space.
+	self startPoint storeForViewOn: aStream.
+	aStream
+		space;
+		nextPutAll: fromAtToAt third;
+		space.
+	self endColor storeForViewOn: aStream.
+	aStream
+		space;
+		nextPutAll: fromAtToAt fourth;
+		space.
+	self endPoint storeForViewOn: aStream.
+	aStream nextPut: $)! !
+!StyledGradientBrush categoriesFor: #storeForViewOn:!public!store view! !
+
+!StyledPen methodsFor!
+
+storeForViewOn: aStream 
+	self printOn: aStream! !
+!StyledPen categoriesFor: #storeForViewOn:!public!store view! !
+
+!SystemColor methodsFor!
+
+storeForViewOn: aStream 
+	aStream
+		nextPut: $(;
+		display: self class;
+		space;
+		display: #fromId:;
+		space;
+		display: id;
+		nextPutAll: ' "';
+		display: self idName;
+		nextPutAll: '")'! !
+!SystemColor categoriesFor: #storeForViewOn:!public!store view! !
+
+!Time methodsFor!
+
+storeForViewOn: aStream 
+	aStream
+		nextPut: $(;
+		display: self class;
+		space;
+		display: #fromMilliseconds:;
+		space.
+	milliseconds storeForViewOn: aStream.
+	aStream
+		nextPutAll: ' "';
+		print: self;
+		nextPutAll: '")'! !
+!Time categoriesFor: #storeForViewOn:!public!store view! !
+
+!ToolbarButton methodsFor!
+
+storeForViewOn: aStream variables: aDictionary 
+	| bitmapName indexName prefix selector |
+	selector := #bitmap:index:commandDescription: keywords.
+	bitmap == IDB_STD_SMALL_COLOR 
+		ifTrue: 
+			[bitmapName := 'Standard'.
+			prefix := 'STD_']
+		ifFalse: 
+			[bitmap == IDB_VIEW_SMALL_COLOR 
+				ifTrue: 
+					[bitmapName := 'View'.
+					prefix := 'VIEW_']
+				ifFalse: 
+					[bitmap == IDB_HIST_SMALL_COLOR 
+						ifTrue: 
+							[bitmapName := 'History'.
+							prefix := 'HIST_']]].
+	prefix 
+		ifNotNil: 
+			[ToolbarConstants keysAndValuesDo: 
+					[:eachKey :eachValue | 
+					(eachValue == bitmapIndex and: [eachKey beginsWith: prefix]) ifTrue: [indexName := eachKey]].
+			aStream
+				nextPut: $(;
+				display: self class;
+				space;
+				nextPutAll: selector first;
+				space;
+				print: bitmap;
+				nextPutAll: ' "';
+				nextPutAll: bitmapName;
+				nextPut: $";
+				space;
+				nextPutAll: selector second;
+				space;
+				print: bitmapIndex;
+				nextPutAll: ' "';
+				nextPutAll: indexName;
+				nextPut: $";
+				space;
+				nextPutAll: selector third;
+				space.
+			commandDescription storeForViewOn: aStream variables: aDictionary.
+			aStream nextPut: $).
+			^self].
+	aStream
+		nextPut: $(;
+		display: self class;
+		space;
+		nextPutAll: selector first;
+		space.
+	bitmap storeForViewOn: aStream variables: aDictionary.
+	aStream
+		space;
+		nextPutAll: selector second;
+		space;
+		print: bitmapIndex;
+		space;
+		nextPutAll: selector third;
+		space.
+	commandDescription storeForViewOn: aStream variables: aDictionary.
+	aStream nextPut: $)! !
+!ToolbarButton categoriesFor: #storeForViewOn:variables:!public!store view! !
+
+!ToolbarIconButton methodsFor!
+
+storeForViewOn: aStream variables: aDictionary 
+	aStream
+		nextPut: $(;
+		display: self class;
+		space;
+		display: #commandDescription:;
+		space.
+	commandDescription storeForViewOn: aStream variables: aDictionary.
+	aStream nextPut: $)! !
+!ToolbarIconButton categoriesFor: #storeForViewOn:variables:!public!store view! !
+
+!ToolbarSeparator methodsFor!
+
+storeForViewOn: aStream 
+	width == 0 
+		ifTrue: 
+			[aStream
+				display: self class;
+				space;
+				display: #new]
+		ifFalse: 
+			[aStream
+				nextPut: $(;
+				display: self class;
+				space;
+				display: #width:;
+				space;
+				print: width;
+				nextPut: $)]! !
+!ToolbarSeparator categoriesFor: #storeForViewOn:!public!store view! !
+
+!ToolbarSystemButton methodsFor!
+
+storeForViewOn: aStream variables: aDictionary 
+	| selector |
+	selector := commandDescription command.
+	(self class class canUnderstand: selector) 
+		ifTrue: 
+			[aStream
+				display: self class;
+				space;
+				nextPutAll: selector]
+		ifFalse: [super storeForViewOn: aStream variables: aDictionary]! !
+!ToolbarSystemButton categoriesFor: #storeForViewOn:variables:!public!store view! !
+
+!TypeConverter methodsFor!
+
+= comparand 
+	^self class == comparand class and: 
+			[self leftNullValue = comparand leftNullValue and: [self rightNullValue = comparand rightNullValue]]!
+
+hash
+	^leftNullValue hash!
+
+storeForViewOn: aStream variables: aDictionary 
+	self storeForViewAttributesOn: aStream variables: aDictionary! !
+!TypeConverter categoriesFor: #=!public!store view! !
+!TypeConverter categoriesFor: #hash!public!store view! !
+!TypeConverter categoriesFor: #storeForViewOn:variables:!public!store view! !
+
+!UndefinedObject methodsFor!
+
+storeForViewOn: aStream 
+	self printOn: aStream! !
+!UndefinedObject categoriesFor: #storeForViewOn:!public!store view! !
+
+!View methodsFor!
+
+storeForViewOn: aStream 
+	| codeStream variables names |
+	variables := IdentityDictionary new.
+	codeStream := WriteStream on: String new.
+	self storeForViewOn: codeStream variables: variables.
+	aStream nextPutAll: '| '.
+	names := variables asSortedCollection.
+	names do: 
+			[:each | 
+			aStream
+				nextPutAll: each;
+				space].
+	aStream
+		nextPut: $|;
+		cr.
+	names do: 
+			[:each | 
+			aStream
+				display: each;
+				nextPutAll: ' := ';
+				nextPutAll: (variables keyAtValue: each) class name;
+				space;
+				display: #new;
+				nextPut: $.;
+				cr].
+	aStream
+		nextPutAll: (variables at: self);
+		space;
+		display: #show;
+		nextPut: $.;
+		cr;
+		nextPutAll: codeStream contents;
+		nextPut: $^;
+		nextPutAll: (variables at: self)!
+
+storeForViewOn: aStream variables: aDictionary 
+	| arrangement default name subViews stream |
+	stream := WriteStream on: String new.
+	subViews := OrderedCollection new.
+	self subViewsDo: 
+			[:each | 
+			each storeForViewOn: stream variables: aDictionary.
+			subViews add: each].
+	name := self storeNameIn: aDictionary.
+	aStream display: name.
+	
+	[(default := self class show) ifNil: [self error: 'Why no default?'].
+	self 
+		storeForViewAttributesDifferingFrom: default
+		on: aStream
+		variables: aDictionary] 
+			ensure: [default ifNotNil: [default topShell close]].
+	((self parentView isKindOf: ContainerView) 
+		and: [(arrangement := self arrangement) isKindOf: FramingConstraints]) 
+			ifTrue: 
+				[aStream
+					cr;
+					tab;
+					space;
+					display: #arrangement:;
+					space.
+				arrangement storeForViewOn: aStream variables: aDictionary.
+				aStream nextPut: $;].
+	self 
+		storeSubviewsA: subViews
+		on: aStream
+		variables: aDictionary.
+	aStream
+		cr;
+		tab;
+		display: #yourself;
+		nextPut: $.;
+		cr.
+	self 
+		storeSubviewsB: subViews
+		on: aStream
+		variables: aDictionary.
+	aStream nextPutAll: stream contents!
+
+storeNameIn: aDictionary 
+	| name |
+	(name := (self parentView ifNotNil: [:value | value nameOf: self])) 
+		ifNil: 
+			[name := self class name 
+						, ((aDictionary keys select: [:each | each class == self class]) size + 1) printString.
+			name at: 1 put: (name at: 1) asLowercase]
+		ifNotNil: 
+			[| i x |
+			i := 0.
+			name at: 1 put: (name at: 1) asLowercase.
+			[0 < (i := name indexOf: Character space)] whileTrue: 
+					[name := (name copyFrom: 1 to: i - 1) , (name copyFrom: i + 1 to: i + 1) asUppercase 
+								, (name copyFrom: i + 2 to: name size)].
+			x := name.
+			[aDictionary includes: x] whileTrue: 
+					[i := i + 1.
+					x := name , i printString].
+			name := x].
+	^aDictionary at: self put: name asString!
+
+storeStringForView
+	"Answers a string that can be used to recreate the view. The primary use is to allow for diffs when a view is edited (the literal array in a resource_ method is useless for that purpose"
+
+	| stream |
+	stream := String writeStream: 32.
+	self storeForViewOn: stream.
+	^stream contents!
+
+storeSubviewsA: aList on: aStream variables: aDictionary 
+	| selector |
+	selector := #addSubView:name: keywords.
+	aList do: 
+			[:each | 
+			aStream
+				cr;
+				tab;
+				nextPutAll: selector first;
+				space;
+				nextPutAll: (aDictionary at: each).
+			(self nameOf: each) 
+				ifNotNil: 
+					[:aString | 
+					aStream
+						space;
+						nextPutAll: selector second;
+						space;
+						print: aString].
+			aStream nextPut: $;]!
+
+storeSubviewsB: aList on: aStream variables: aDictionary 
+	"See SlideyInneyOuteyThing for override"
+
+	! !
+!View categoriesFor: #storeForViewOn:!public!store view! !
+!View categoriesFor: #storeForViewOn:variables:!public!store view! !
+!View categoriesFor: #storeNameIn:!public!store view! !
+!View categoriesFor: #storeStringForView!public!store view! !
+!View categoriesFor: #storeSubviewsA:on:variables:!public!store view! !
+!View categoriesFor: #storeSubviewsB:on:variables:!public!store view! !
+
+!View class methodsFor!
+
+createCodeForResourceIdentifier: aResourceIdentifier 
+	"
+	self createCodeForResourceIdentifiers.
+"
+
+	| class compiledMethod expr selector string topShell view |
+	compiledMethod := aResourceIdentifier compiledMethod.
+	class := compiledMethod methodClass.
+	
+	[view := Smalltalk developmentSystem loadViewResource: aResourceIdentifier resource
+				inContext: View desktop.
+	string := view storeStringForView.
+	selector := aResourceIdentifier selector.
+	selector := 'code_' 
+				, (selector copyFrom: aResourceIdentifier class selectorPrefix size + 1 to: selector size).
+	string := selector , String lineDelimiter , '"' , aResourceIdentifier printString , '"' 
+				, String lineDelimiter , string.
+	expr := [SmalltalkParser parseMethod: string in: class] on: SmalltalkParser notificationClass
+				do: 
+					[:e | 
+					e okToContinue.
+					nil].
+	expr isNil ifTrue: [self error: 'Unable to parse method!!'].
+	string := expr formatterClass new format: expr.
+	class 
+		compile: string
+		categories: compiledMethod categories
+		package: compiledMethod owningPackageIfLoose] 
+			ensure: [(topShell := view topShell) == View desktop ifTrue: [view close] ifFalse: [topShell close]]!
+
+createCodeForResourceIdentifiers
+	self resourceIdentifiers do: [:each | self createCodeForResourceIdentifier: each]! !
+!View class categoriesFor: #createCodeForResourceIdentifier:!public!store view! !
+!View class categoriesFor: #createCodeForResourceIdentifiers!public!store view! !
+
+"End of package definition"!
+

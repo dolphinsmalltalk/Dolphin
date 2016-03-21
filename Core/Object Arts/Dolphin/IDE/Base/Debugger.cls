@@ -1009,6 +1009,10 @@ parseContext
 parseTree
 	^sourcePresenter parseTree!
 
+performMethodsRefactoring: aMonadicValuable name: aString 
+	self promptToSaveChanges ifFalse: [^self].
+	^sourcePresenter executeRefactoring: aMonadicValuable with: self selectedMethods!
+
 populateImplementMenu: aMenu 
 	"Private - Build the menu which lists the classes into which a stub can be generated for
 	messages which were either not understood, or not implemented directly by the receiver's
@@ -2016,6 +2020,7 @@ variableAtIndex: anInteger put: anObject
 !Debugger categoriesFor: #onWalkback:topFrame:resumable:!event handling!private! !
 !Debugger categoriesFor: #parseContext!accessing!public! !
 !Debugger categoriesFor: #parseTree!commands!private! !
+!Debugger categoriesFor: #performMethodsRefactoring:name:!private!refactoring! !
 !Debugger categoriesFor: #populateImplementMenu:!helpers!private! !
 !Debugger categoriesFor: #populateStackModel!private!updating! !
 !Debugger categoriesFor: #prevIPOfFrame:!accessing!private! !

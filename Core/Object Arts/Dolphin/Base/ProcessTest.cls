@@ -291,6 +291,59 @@ testCopy
 	(shared at: #copyProcess) resume.
 	self assert: (shared at: #state) == 2!
 
+testCopyExceptionHandlers
+	| shared waitForCopy |
+	waitForCopy := Semaphore new.
+	shared := IdentityDictionary with: #state -> 1.
+	shared at: #sourceProcess put: Processor activeProcess.
+	shared at: #state
+		put: (
+			[shared at: #copyProcess put: (shared at: #sourceProcess) copy.
+			Processor activeProcess == (shared at: #sourceProcess) 
+				ifTrue: 
+					[self assert: (shared at: #copyProcess) state == #suspended.
+					self assertStack: (shared at: #copyProcess) topFrame sender
+						copiedCorrectlyFrom: (shared at: #sourceProcess) topFrame sender].
+			HRESULTError signalWith: -1] 
+					on: HRESULTError
+					do: [:ex | ex return: Processor activeProcess identityHash]).
+	Trace
+		display: Processor activeProcess id;
+		display: ': 1,  copyProcess = ';
+		print: (shared at: #copyProcess);
+		cr.
+	Trace
+		display: Processor activeProcess id printString , ': 2 ' , String lineDelimiter;
+		flush.
+	self assert: (shared at: #state) == Processor activeProcess identityHash.
+	"N.B. Don't terminate the copy process, as this will run the unwind handlers, one of which
+	disconnects the TestRunner from update events so it stops refreshing and showing progress.
+	Also don't let if finalize and terminate itself"
+	(shared at: #copyProcess) == Processor activeProcess 
+		ifTrue: 
+			[waitForCopy signal.
+			Processor activeProcess beUnfinalizable.
+			Processor suspendActive].
+	Trace
+		display: Processor activeProcess id printString , ': 3' , String lineDelimiter;
+		flush.
+	self assert: (shared at: #copyProcess) isSuspended.
+	Trace
+		display: Processor activeProcess id printString , ': 4 ' , String lineDelimiter;
+		flush.
+	(shared at: #copyProcess) resume.
+	Trace
+		display: Processor activeProcess id printString , ': 5 ' , String lineDelimiter;
+		flush.
+	waitForCopy wait.
+	Trace
+		display: Processor activeProcess id printString , ': 6 ' , String lineDelimiter;
+		flush.
+	self assert: (shared at: #state) == (shared at: #copyProcess) identityHash.
+	Trace
+		display: Processor activeProcess id printString , ': 7 ' , String lineDelimiter;
+		flush.!
+
 testCopyNestedBlocks
 	| sem sourceProcess copyProcess |
 	sem := Semaphore new.
@@ -329,6 +382,10 @@ testForkedBlockHomeFrame
 	"Bug #52 - access to out-of-proc home frame, e.g. when debugging ProgressDialog operation block"
 
 	[self assert: (Processor activeProcess topFrame homeFrame) isNil] fork. Processor sleep: 10!
+
+testOverlappedErrno
+	self assert: (CRTLibrary default thread_chmod: '' pmode: 0) < 0.
+	self assert: Processor activeProcess errno = 2!
 
 testOverlappedLastError
 	| temp1 temp2 |
@@ -408,15 +465,7 @@ testUnwindFromForeignProcess
 	"This is for illustration only - the BlockCannotReturn cannot 
 	be handled here (it's truncated already)"
 	self shouldnt: [process terminate] raise: Error.
-	self assert: sema excessSignals > 0!
-
-waitForProcess: aProcess toTerminate: anInteger
-	| i |
-	i := 1.
-	[aProcess isTerminated or: [i > anInteger]] whileFalse: 
-			[i := i + 1.
-			Processor sleep: 5].
-	self assert: aProcess isTerminated! !
+	self assert: sema excessSignals > 0! !
 !ProcessTest categoriesFor: #assertBlock:in:isCopyOf:in:visited:!helpers!private! !
 !ProcessTest categoriesFor: #assertBlockFrame:isCopyOf:visited:!helpers!private! !
 !ProcessTest categoriesFor: #assertContext:in:isCopyOf:in:visited:!helpers!private! !
@@ -431,13 +480,14 @@ waitForProcess: aProcess toTerminate: anInteger
 !ProcessTest categoriesFor: #forkNested:!helpers!private! !
 !ProcessTest categoriesFor: #forkWaiterOn:sharing:!helpers!private! !
 !ProcessTest categoriesFor: #testCopy!public!unit tests! !
+!ProcessTest categoriesFor: #testCopyExceptionHandlers!public!unit tests! !
 !ProcessTest categoriesFor: #testCopyNestedBlocks!public!unit tests! !
 !ProcessTest categoriesFor: #testCopyWhileUnwinding!public!unit tests! !
 !ProcessTest categoriesFor: #testForkedBlockHomeFrame!public!unit tests! !
+!ProcessTest categoriesFor: #testOverlappedErrno!public!unit tests! !
 !ProcessTest categoriesFor: #testOverlappedLastError!public!unit tests! !
 !ProcessTest categoriesFor: #testSchedulerTermination!public!tests! !
 !ProcessTest categoriesFor: #testSeparateContexts!public!unit tests! !
 !ProcessTest categoriesFor: #testUnwindFromActiveProcess!public!tests! !
 !ProcessTest categoriesFor: #testUnwindFromForeignProcess!public!tests! !
-!ProcessTest categoriesFor: #waitForProcess:toTerminate:!helpers!private! !
 
