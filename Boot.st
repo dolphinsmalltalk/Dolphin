@@ -6,7 +6,7 @@
 "Boot a workable Dolphin from the boot image"
 
 "Reload the base package constituents to reflect any changes since the boot image was created."
-SourceManager default fileIn: 'Core\Object Arts\Dolphin\Base\BootSessionManager.cls'.
+SourceManager default fileIn: 'Core\Object Arts\Dolphin\Base\BootSessionManager.cls'!
 SessionManager current reloadSystemPackage!
 
 "Install some bare bones packages to get the Installation Management system working"
@@ -69,7 +69,6 @@ ExternalStructure allSubclasses do: [:e | e byteSize]!
 "Mark all the booted packages as base"
 Package manager markAllPackagesAsBase!
 
-SourceManager default compressSources.
 SessionManager current saveImage!
 
 "Remove rogue .img and unnecessary .chg files"
