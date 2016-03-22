@@ -22,6 +22,25 @@ addToImageList: aWinImageList mask: aColorOrNil
 
 	^(self bitmapWithExtent: aWinImageList extent) addToImageList: aWinImageList mask: aColorOrNil!
 
+asAlphaBitmap: aPoint 
+	"Answer a 32-bpp bitmap (i.e. with Alpha channel) that contains the receiver's
+	image rendered at the specified size."
+
+	| bmp |
+	bmp := DIBSection 
+				width: aPoint x
+				height: aPoint y
+				depth: 32.
+	"Use the services of an ImageList to get the correct sized icon automagically, and to
+	provide an alpha channel even if the original icon had no more than a simple mask."
+	(self class imageManager imageListWithExtent: aPoint) 
+		draw: self imageIndex
+		on: bmp canvas
+		at: Point zero
+		flags: CommCtrlConstants.ILD_PRESERVEALPHA.
+	bmp freeDC.
+	^bmp!
+
 asBitmap
 	| bm |
 	bm := DIBSection 
@@ -41,6 +60,18 @@ asIcon
 	index := imageManager addImage: self.
 	imageList := imageManager imageListWithExtent: self extent.
 	^imageList getIcon: index style: 32!
+
+asMenuBitmap
+	"Answer a 32-bpp bitmap (i.e. with alpha channel) containing the receiver's image at system
+	menu image extent. Note that the result will be a shared bitmap which is always the same
+	instance for the same icon."
+
+	^self class imageManager menuBitmapForIcon: self!
+
+asParameter
+	"Create an icon from the image list so we can answer the handle"
+
+	^self asIcon detachHandle!
 
 bitmap
 	^self bitmapWithExtent: self class defaultExtent!
@@ -99,6 +130,9 @@ imageManager
 
 	^IconImageManager current!
 
+imageType
+	^Win32Constants.IMAGE_ICON!
+
 printOn: aStream 
 	"Append the ASCII representation of the receiver to aStream."
 
@@ -124,8 +158,11 @@ tilecolor
 	^tilecolor! !
 !TextTileIcon categoriesFor: #=!comparison!public! !
 !TextTileIcon categoriesFor: #addToImageList:mask:!double dispatch!private! !
+!TextTileIcon categoriesFor: #asAlphaBitmap:!converting!public! !
 !TextTileIcon categoriesFor: #asBitmap!public! !
 !TextTileIcon categoriesFor: #asIcon!public! !
+!TextTileIcon categoriesFor: #asMenuBitmap!converting!public! !
+!TextTileIcon categoriesFor: #asParameter!public! !
 !TextTileIcon categoriesFor: #bitmap!private! !
 !TextTileIcon categoriesFor: #bitmapWithExtent:!private! !
 !TextTileIcon categoriesFor: #drawOn:!drawing-bitmaps!public! !
@@ -137,6 +174,7 @@ tilecolor
 !TextTileIcon categoriesFor: #hotspot!public! !
 !TextTileIcon categoriesFor: #imageIndex!private! !
 !TextTileIcon categoriesFor: #imageManager!image management!private! !
+!TextTileIcon categoriesFor: #imageType!public! !
 !TextTileIcon categoriesFor: #printOn:!printing!public! !
 !TextTileIcon categoriesFor: #setText:font:color:!private! !
 !TextTileIcon categoriesFor: #text!accessing!public! !
@@ -153,6 +191,11 @@ icon
 		font: 'Arial'
 		color: Color blue!
 
+imageManager
+	"Private - Answer an image manager to use for storing icons"
+
+	^IconImageManager current!
+
 new
 	"Private - User #text:font:color:"
 
@@ -166,6 +209,7 @@ text: aStringLabel font: fontName color: aColor
 		yourself! !
 !TextTileIcon class categoriesFor: #defaultExtent!constants!private! !
 !TextTileIcon class categoriesFor: #icon!public! !
+!TextTileIcon class categoriesFor: #imageManager!accessing!private! !
 !TextTileIcon class categoriesFor: #new!instance creation!private! !
 !TextTileIcon class categoriesFor: #text:font:color:!instance creation!public! !
 
