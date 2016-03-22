@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 SmalltalkScanner subclass: #SmalltalkStylingScanner
 	instanceVariableNames: ''
@@ -6,7 +6,9 @@ SmalltalkScanner subclass: #SmalltalkStylingScanner
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 SmalltalkStylingScanner guid: (GUID fromString: '{70EF9A14-3293-4D33-968E-87E0A406B952}')!
-SmalltalkStylingScanner comment: 'SmalltalkStylingScanner is a <SmalltalkScanner> specialized for the purpose of real-time syntax colouring. It differs from its superclass only in that it is tolerant of lexical errors, and returns error tokens rather than raising exceptions. This is appropriate for scanning source text that is being edited, since at any time it may be in an incomplete state.'!
+SmalltalkStylingScanner comment: 'SmalltalkStylingScanner is a <SmalltalkScanner> specialized for the purpose of real-time syntax colouring. It differs from its superclass in two ways:
+- It is tolerant of lexical errors, and returns error tokens rather than raising exceptions. This is appropriate for scanning source text that is being edited, since at any time it may be in an incomplete state.
+- When scanning numbers it does not convert them from a string to a numberical value unless required. This avoids a perf issue should someone enter a number literal that takes a long time to compute, e.g. 1e30000'!
 !SmalltalkStylingScanner categoriesForClass!Unclassified! !
 !SmalltalkStylingScanner methodsFor!
 

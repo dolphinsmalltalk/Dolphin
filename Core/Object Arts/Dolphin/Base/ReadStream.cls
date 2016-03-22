@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 PositionableStream subclass: #ReadStream
 	instanceVariableNames: ''
@@ -55,7 +55,7 @@ nextAvailable
 	being streamed over is known not to contain nils."
 
 	<primitive: 65>
-	^super nextAvailable! !
+	^position >= readLimit ifFalse: [collection at: (position := position + 1)]! !
 !ReadStream categoriesFor: #isReadable!public!testing! !
 !ReadStream categoriesFor: #next!accessing!public! !
 !ReadStream categoriesFor: #next:into:startingAt:!accessing!public! !

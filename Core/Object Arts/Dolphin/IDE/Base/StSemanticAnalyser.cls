@@ -1,8 +1,8 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 StParseNodeVisitor subclass: #StSemanticAnalyser
-	instanceVariableNames: 'methodNode scopeStack methodClass instVars scopeDepth evaluationContext evaluationPools literals stringLiterals addToFrame specialSelectors tempDecls isStub inStaticExpression'
-	classVariableNames: 'OptimizedMessages RestrictedSelectors'
+	instanceVariableNames: 'methodNode scopeStack methodClass instVars scopeDepth evaluationContext evaluationPools literals stringLiterals addToFrame tempDecls isStub inStaticExpression'
+	classVariableNames: 'OptimizedMessages RestrictedSelectors SpecialSelectors'
 	poolDictionaries: 'SmalltalkParseErrorCodes'
 	classInstanceVariableNames: ''!
 StSemanticAnalyser guid: (GUID fromString: '{590E979A-62F2-4B0E-9722-469CFB549990}')!
@@ -89,7 +89,7 @@ acceptVariableNode: aVariableNode
 addMessageToFrame: aMessageNode 
 	| selector |
 	selector := aMessageNode selector.
-	(specialSelectors identityIncludes: selector) ifTrue: [^self].
+	(SpecialSelectors identityIncludes: selector) ifTrue: [^self].
 	literals add: selector.
 	self tooManyLiterals 
 		ifTrue: 
@@ -486,7 +486,6 @@ initialize
 	literals := IdentitySet new.
 	stringLiterals := Set new.
 	addToFrame := [:literal | self addToFrame: literal].
-	specialSelectors := VMLibrary default specialSelectors asIdentitySet.
 	inStaticExpression := false!
 
 isReceiverOfNilTest: aVariableNode 
@@ -775,7 +774,9 @@ initialize
 	OptimizedMessages isImmutable: true.
 	RestrictedSelectors := IdentitySet new.
 	OptimizedMessages do: [:each | RestrictedSelectors addAll: each].
-	RestrictedSelectors isImmutable: true! !
+	RestrictedSelectors isImmutable: true.
+	SpecialSelectors := VMLibrary default specialSelectors asIdentitySet.
+	SpecialSelectors isImmutable: true! !
 !StSemanticAnalyser class categoriesFor: #checkParseTree:for:context:pools:!accessing!public! !
 !StSemanticAnalyser class categoriesFor: #initialize!public! !
 

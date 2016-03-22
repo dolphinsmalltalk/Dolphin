@@ -252,7 +252,7 @@ to: stop
 	"Answer an <interval> from the receiver up to the argument, stop, with an interval of 1 
 	between elements."
 
-	^Interval from: self to: stop!
+	^Interval from: self to: stop by: 1!
 
 to: stop by: step
 	"Answer an <interval> from the receiver up to the argument, stop, with an interval of 

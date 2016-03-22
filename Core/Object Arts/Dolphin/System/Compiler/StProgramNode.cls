@@ -34,6 +34,10 @@ Instance Variables:
 acceptVisitor: aProgramNodeVisitor 
 	self subclassResponsibility!
 
+addComments: intervals 
+	(intervals isNil or: [intervals isEmpty]) 
+		ifFalse: [comments := comments ifNil: [intervals asArray] ifNotNil: [comments , intervals]]!
+
 allArgumentVariableNodesDo: aMonadicValuable 
 	self childrenDo: [:each | each allArgumentVariableNodesDo: aMonadicValuable]!
 
@@ -349,6 +353,7 @@ whoDefines: aName
 		ifTrue: [self]
 		ifFalse: [parent notNil ifTrue: [parent whoDefines: aName] ifFalse: [nil]]! !
 !StProgramNode categoriesFor: #acceptVisitor:!public!visitor! !
+!StProgramNode categoriesFor: #addComments:!accessing!public! !
 !StProgramNode categoriesFor: #allArgumentVariableNodesDo:!enumerating!public! !
 !StProgramNode categoriesFor: #allArgumentVariables!accessing!public! !
 !StProgramNode categoriesFor: #allDefinedVariableNodes!accessing!public! !

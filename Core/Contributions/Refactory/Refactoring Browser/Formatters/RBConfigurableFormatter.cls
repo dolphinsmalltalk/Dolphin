@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk XP"!
+"Filed out from Dolphin Smalltalk 7"!
 
 RBSourceFormatter subclass: #RBConfigurableFormatter
 	instanceVariableNames: 'lookaheadCode originalSource'
@@ -56,7 +56,7 @@ acceptLiteralArrayNode: aRBArrayLiteralNode
 				separatedBy: [self space]]!
 
 acceptLiteralNode: aLiteralNode 
-	self writeString: aLiteralNode token storeString!
+	self writeString: (aLiteralNode token formattedFrom: originalSource).!
 
 acceptMessageNode: aMessageNode 
 	self visitNode: aMessageNode receiver.

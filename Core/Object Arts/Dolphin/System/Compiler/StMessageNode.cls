@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 StValueNode subclass: #StMessageNode
 	instanceVariableNames: 'receiver selector selectorParts arguments'
@@ -56,7 +56,7 @@ bestNodeFor: anInterval
 buildSelector
 	| selectorStream |
 	selectorStream := WriteStream on: (String new: 50).
-	selectorParts do: [:each | selectorStream display: each value].
+	selectorParts do: [:each | selectorStream nextPutAll: each value].
 	^selectorStream contents asSymbol!
 
 childrenDo: aMonadicValuable 

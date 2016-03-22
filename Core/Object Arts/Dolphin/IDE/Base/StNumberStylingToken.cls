@@ -10,9 +10,6 @@ StNumberStylingToken comment: ''!
 !StNumberStylingToken categoriesForClass!Unclassified! !
 !StNumberStylingToken methodsFor!
 
-isNegative
-	^self source first == $-!
-
 numberClass
 	^numberClass ifNil: [self value class]!
 
@@ -22,7 +19,6 @@ numberClass: aClass
 value
 	value isNil ifTrue: [value := [Number readFrom: self source readStream] on: Error do: [0]].
 	^value! !
-!StNumberStylingToken categoriesFor: #isNegative!accessing!public! !
 !StNumberStylingToken categoriesFor: #numberClass!public! !
 !StNumberStylingToken categoriesFor: #numberClass:!accessing!private! !
 !StNumberStylingToken categoriesFor: #value!accessing!public! !
