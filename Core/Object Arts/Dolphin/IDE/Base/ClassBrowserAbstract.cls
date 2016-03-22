@@ -48,9 +48,7 @@ accept
 acceptItCommand
 	"Private - Answer which of the various accept commands applies at this time."
 
-	| card |
-	card := self currentCard view name.
-	card = 'definition' ifTrue: [^#saveDefinition].
+	self isDefinitionCardVisible ifTrue: [^#saveDefinition].
 	^nil!
 
 actualClass
@@ -647,7 +645,11 @@ createSchematicWiring
 			to: self;
 		when: #labelOf:changedTo:
 			send: #onRenameInstVar:to:
-			to: self!
+			to: self.
+	cardsPresenter view 
+		when: #currentCardChanged
+		send: #onBrowserCardChanged
+		to: self!
 
 currentCard
 	"Answer the current card presenter on view in the receiver"
@@ -832,6 +834,9 @@ inspectMethodProtocols
 				ifTrue: [protocolsPresenter list asArray]
 				ifFalse: [prots])!
 
+isDefinitionCardVisible
+	^self currentCard == definitionPresenter view parentView!
+
 isDisplayingCategories
 	"Private - Answer whether the categories pane is currently active."
 
@@ -900,6 +905,9 @@ isShowInheritedMethods
 
 	^flags allMask: ShowInheritedMethodsMask!
 
+isSourceCardVisible
+	^self currentCard view name == 'definition'!
+
 killVisitTimer
 	self view killTimer: 1!
 
@@ -965,10 +973,24 @@ methodProtocols: aCollection
 methodsMatching: aMonadicValuable
 	^self actualClassChainMethods select: aMonadicValuable!
 
+modifiedModel: aValueHolder 
+	(self view viewNamed: 'modified' ifNone: []) ifNotNil: [:item | item model: aValueHolder]!
+
 newMethod
 	"Sets the receiver up for creating a new method"
 
 	methodBrowserPresenter newMethod!
+
+onBrowserCardChanged
+	| currentCardName |
+	currentCardName := self currentCard view name.
+	(currentCardName = 'source' 
+		ifTrue: [methodBrowserPresenter sourcePresenter]
+		ifFalse: [currentCardName = 'definition' ifTrue: [definitionPresenter]]) 
+			ifNotNil: 
+				[:workspace | 
+				workspace updateErrorStatus.
+				self modifiedModel: workspace modifiedModel]!
 
 onCategory: aMethodCategory renameTo: aString accept: aValueHolder 
 	| newCategory newName |
@@ -1052,8 +1074,7 @@ onClassSelected
 	"If we have a plugin as the current card then let it decide whether to show the class definition pane"
 	(self loadedPlugins includes: self currentCard) 
 		ifFalse: 
-			[(self hasMethodSelected not and: [self currentCard name = 'source']) 
-				ifTrue: [self ensureDefinitionVisible]].
+			[(self hasMethodSelected not and: [self isSourceCardVisible]) ifTrue: [self ensureDefinitionVisible]].
 	self trigger: #classSelected!
 
 onClassSelectionChanging: aSelectionChangingEvent
@@ -1618,7 +1639,8 @@ onViewOpened
 	(self view viewNamed: 'version' ifNone: []) 
 		ifNotNil: [:item | item model: methodBrowserPresenter versionModel].
 	modifiedModel := methodBrowserPresenter modifiedModel.
-	(self view viewNamed: 'modified' ifNone: []) ifNotNil: [:item | item model: modifiedModel].
+	self modifiedModel: modifiedModel.
+	"Historically we have only flagged method changes in the caption."
 	modifiedModel 
 		when: #valueChanged
 		send: #updateCaption
@@ -1641,8 +1663,7 @@ onViewOpened
 					send: #onFilterSelectionChanging:
 					to: self].
 	self applyOptions.
-	definitionPresenter ensureVisible.
-!
+	definitionPresenter ensureVisible!
 
 packageForNewMethod
 	"Private - Answer the <Package> into which newly defined methods should be saved, or 
@@ -2595,6 +2616,7 @@ variablesMethodFilter
 !ClassBrowserAbstract categoriesFor: #inspectItCommand!helpers!private! !
 !ClassBrowserAbstract categoriesFor: #inspectMethodCategories!commands!private! !
 !ClassBrowserAbstract categoriesFor: #inspectMethodProtocols!commands!private! !
+!ClassBrowserAbstract categoriesFor: #isDefinitionCardVisible!private!testing! !
 !ClassBrowserAbstract categoriesFor: #isDisplayingCategories!commands!private! !
 !ClassBrowserAbstract categoriesFor: #isDisplayingProtocols!commands!private! !
 !ClassBrowserAbstract categoriesFor: #isDisplayingVariables!commands!private! !
@@ -2607,6 +2629,7 @@ variablesMethodFilter
 !ClassBrowserAbstract categoriesFor: #isMethodVisible:!private!testing! !
 !ClassBrowserAbstract categoriesFor: #isModified!public!testing! !
 !ClassBrowserAbstract categoriesFor: #isShowInheritedMethods!public!refactoring!testing! !
+!ClassBrowserAbstract categoriesFor: #isSourceCardVisible!private!testing! !
 !ClassBrowserAbstract categoriesFor: #killVisitTimer!helpers!private! !
 !ClassBrowserAbstract categoriesFor: #loadedPlugins!accessing!public! !
 !ClassBrowserAbstract categoriesFor: #method!accessing!public! !
@@ -2617,7 +2640,9 @@ variablesMethodFilter
 !ClassBrowserAbstract categoriesFor: #methodProtocols!accessing!private! !
 !ClassBrowserAbstract categoriesFor: #methodProtocols:!accessing!public! !
 !ClassBrowserAbstract categoriesFor: #methodsMatching:!helpers!private! !
+!ClassBrowserAbstract categoriesFor: #modifiedModel:!accessing!public! !
 !ClassBrowserAbstract categoriesFor: #newMethod!commands!public! !
+!ClassBrowserAbstract categoriesFor: #onBrowserCardChanged!event handling!private! !
 !ClassBrowserAbstract categoriesFor: #onCategory:renameTo:accept:!event handling!private! !
 !ClassBrowserAbstract categoriesFor: #onCategorySelected!event handling!private! !
 !ClassBrowserAbstract categoriesFor: #onClassCategorized:!event handling!private! !

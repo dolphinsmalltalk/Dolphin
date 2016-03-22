@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ClassBrowserPlugin subclass: #ResourceListPlugin
 	instanceVariableNames: 'resourcesPresenter flags'
@@ -87,6 +87,7 @@ onBrowserMethodSelected
 onShownInBrowser
 	"Event handler indicating that the receiver has been displayed within it's browser."
 
+	super onShownInBrowser.
 	self showClassResources!
 
 queryCommand: aCommandQuery 

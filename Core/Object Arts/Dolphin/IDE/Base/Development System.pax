@@ -26,6 +26,7 @@ package classNames
 	add: #CategoryTreeModel;
 	add: #ChangedMethodsCategory;
 	add: #ChooseClassDialog;
+	add: #ClassAspectPlugin;
 	add: #ClassBrowserAbstract;
 	add: #ClassBrowserPlugin;
 	add: #ClassBrowserShell;
@@ -828,8 +829,13 @@ Presenter subclass: #TwinLevelInspector
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ClassBrowserPlugin subclass: #ClassCommentPlugin
-	instanceVariableNames: 'textPresenter'
+ClassBrowserPlugin subclass: #ClassAspectPlugin
+	instanceVariableNames: 'textPresenter originalText selectedClass'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ClassAspectPlugin subclass: #ClassCommentPlugin
+	instanceVariableNames: ''
 	classVariableNames: 'TextStyles WordWrap'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!

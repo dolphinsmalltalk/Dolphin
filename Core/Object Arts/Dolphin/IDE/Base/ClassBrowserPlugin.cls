@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Presenter subclass: #ClassBrowserPlugin
 	instanceVariableNames: ''
@@ -28,6 +28,13 @@ destroy
 	self isOpen ifTrue: [self model removePlugin: self].
 	^super destroy!
 
+displayOn: aStream 
+	"Append, to aStream, a String whose characters are a representation of the receiver as a user
+	would want to see it. This will be used as the label for the tab when the receiver is being displayed
+	as a plugin within the Class Browser"
+
+	^self subclassResponsibility!
+
 isCurrentCard
 	"Answer true if the receiver is the current card shown in the browser"
 
@@ -38,6 +45,11 @@ isModified
 
 	^false!
 
+modifiedModel
+	"Most plugins are read-only"
+
+	^false asValue!
+
 onBrowserCardChanged
 	"Private - Event handler for a card being selected in the receiver's browser"
 
@@ -45,7 +57,10 @@ onBrowserCardChanged
 
 onShownInBrowser
 	"Private - Event handler indicating that the receiver has been displayed within it's browser. 
-	Overridden by subclasses to perform just-in-time rendering of the receiver's contents."!
+	Overridden by subclasses to perform just-in-time rendering of the receiver's contents."
+
+	self model modifiedModel: self modifiedModel.
+	self model statusModel value: nil!
 
 onViewOpened
 	super onViewOpened.
@@ -62,8 +77,10 @@ promptToSaveClassChanges: aSelectionChangingEvent
 !ClassBrowserPlugin categoriesFor: #browser!accessing!public! !
 !ClassBrowserPlugin categoriesFor: #createSchematicWiring!initializing!private! !
 !ClassBrowserPlugin categoriesFor: #destroy!public!realizing/unrealizing! !
+!ClassBrowserPlugin categoriesFor: #displayOn:!displaying!public! !
 !ClassBrowserPlugin categoriesFor: #isCurrentCard!event handling!public! !
 !ClassBrowserPlugin categoriesFor: #isModified!public!testing! !
+!ClassBrowserPlugin categoriesFor: #modifiedModel!accessing!public! !
 !ClassBrowserPlugin categoriesFor: #onBrowserCardChanged!event handling!private! !
 !ClassBrowserPlugin categoriesFor: #onShownInBrowser!event handling!private! !
 !ClassBrowserPlugin categoriesFor: #onViewOpened!event handling!private! !

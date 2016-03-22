@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ValueHolder subclass: #ValueBuffer
 	instanceVariableNames: 'subject modified gate'
@@ -41,6 +41,11 @@ gate: aValueModelGate
 	gate := aValueModelGate.
 	gate when: #valueChanged send: #onGateChanged to: self.!
 
+isModified
+	"Answer whether the buffer is holding a modified value that can be applied. If not then the value is that of the subject."
+
+	^modified!
+
 isValid
 	"Answer true if the updates to the model are valid. Provided for protocol compatibility with
 	AspectBuffer"
@@ -80,6 +85,7 @@ value
 !ValueBuffer categoriesFor: #apply!accessing!commands!public! !
 !ValueBuffer categoriesFor: #gate!accessing!public! !
 !ValueBuffer categoriesFor: #gate:!accessing!public! !
+!ValueBuffer categoriesFor: #isModified!public!testing! !
 !ValueBuffer categoriesFor: #isValid!public!testing! !
 !ValueBuffer categoriesFor: #onGateChanged!event handling!private! !
 !ValueBuffer categoriesFor: #setValue:!accessing!private! !

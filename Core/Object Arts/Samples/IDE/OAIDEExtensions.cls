@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #OAIDEExtensions
 	instanceVariableNames: 'flags'
@@ -93,7 +93,7 @@ extendClassCommentMenu: aClassBrowserAbstract
 	plugin := aClassBrowserAbstract loadedPlugins detect: [:each | each isKindOf: ClassCommentPlugin]
 				ifNone: [].
 	plugin isNil ifTrue: [^self].
-	commentWorkspaceMenu := (plugin presenterNamed: 'comment') view contextMenu.
+	commentWorkspaceMenu := (plugin presenterNamed: 'text') view contextMenu.
 	commentWorkspaceMenu
 		addSeparator;
 		addCommandDescription: (ClosedCommandDescription 

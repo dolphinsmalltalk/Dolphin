@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ClassBrowserPlugin subclass: #ClassDiagramPlugin
 	instanceVariableNames: 'classesPresenter'
@@ -88,8 +88,8 @@ onClassSelected
 onShownInBrowser
 	"Event handler indicating that the receiver has been displayed within it's browser. "
 
+	super onShownInBrowser.
 	"For efficiency we defer the creation of the diagram until the receiver becomes the current card"
-
 	self buildClassDiagram! !
 !ClassDiagramPlugin categoriesFor: #buildClassDiagram!operations!private! !
 !ClassDiagramPlugin categoriesFor: #createComponents!initializing!public! !
