@@ -13,7 +13,6 @@ package basicPackageVersion: '2016.7.0.4'.
 package classNames
 	add: #AbstractPublishedAspectInspector;
 	add: #AllMethodsCategory;
-	add: #AMLSourceFiler;
 	add: #AnonymousKeyedAspect;
 	add: #AnonymousKeyedAspectBatchAccessor;
 	add: #Aspect;
@@ -1106,11 +1105,6 @@ SmalltalkScanner subclass: #SmalltalkStylingScanner
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 SmalltalkSystemIcon subclass: #SmalltalkSystemFolder
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-SourceFiler subclass: #AMLSourceFiler
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
