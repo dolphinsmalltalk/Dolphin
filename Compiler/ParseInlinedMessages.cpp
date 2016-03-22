@@ -409,19 +409,19 @@ bool Compiler::ParseIfNotNil(const TEXTRANGE& messageRange, int exprStartPos)
 	const int popAndJumpMark = GenJumpInstruction(LongJumpIfTrue);
 	int argc = ParseIfNotNilBlock();
 
+	// If the ifNotNil: block did not have any arguments, then we do not need the Dup, and we also
+	// need to patch out the corresponding pop.
+	if (!argc)
+	{
+		UngenInstruction(dupMark);
+		UngenInstruction(popAndJumpMark + lengthOfByteCode(LongJumpIfTrue));
+	}
+
 	int ifNilMark;
 
 	// Has an #ifNil: branch?
 	if (strcmp(ThisTokenText(), "ifNil:") == 0)
 	{
-		// If the ifNotNil: block did not have any arguments, then we do not need the Dup, and we also
-		// need to patch out the corresponding pop.
-		if (!argc)
-		{
-			UngenInstruction(dupMark);
-			UngenInstruction(popAndJumpMark+lengthOfByteCode(LongJumpIfTrue));
-		}
-
 		// Generate the jump out instruction (forward jump, so target not yet known)
 		int jumpOutMark = GenJumpInstruction(LongJump);
 
@@ -437,8 +437,23 @@ bool Compiler::ParseIfNotNil(const TEXTRANGE& messageRange, int exprStartPos)
 	}
 	else
 	{
-		// No "else" branch
-		ifNilMark = GenNop();
+		// No "ifNil:" branch 
+		if (!argc)
+		{
+			// Since we've removed the Dup if the ifNotNil: block had no args, we need to ensure there is nil atop the stack
+			// This should normally get optimized away later if the expression value is not used.
+
+			// Generate the jump out instruction
+			int jumpOutMark = GenJumpInstruction(LongJump);
+
+			ifNilMark = GenInstruction(ShortPushNil);
+
+			SetJumpTarget(jumpOutMark, GenNop());
+		}
+		else
+		{
+			ifNilMark = GenNop();
+		}
 	}
 	
 	SetJumpTarget(popAndJumpMark, ifNilMark);
