@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 SourceFiler subclass: #ChunkSourceFiler
 	instanceVariableNames: 'sourceFileIndex '
@@ -77,6 +77,16 @@ emitCommentOfClass: aClass
 
 	self emitChunk: aClass name , ' comment: ' , aClass comment printString!
 
+emitDeclarationForPoolVariable: each ofClass: aClass 
+	stream
+		display: aClass;
+		space;
+		display: (each isImmutable ifTrue: [#constant:] ifFalse: [#variable:]);
+		space;
+		print: each key;
+		nextPut: $!!;
+		cr!
+
 emitFooterForMethodsOf: aClass 
 	"Private - Ends the method definition chunks for aClass onto
 	the source stream."
@@ -107,6 +117,19 @@ emitHeaderForMethodsOf: aClass
 		space;
 		nextPutAll: #methodsFor;
 		nextPut: $!!!
+
+emitInitializerForPoolVariable: aClass ofClass: each 
+	^stream
+		nextPut: $!!;
+		display: aClass;
+		space;
+		display: #initializerFor:;
+		space;
+		print: each key;
+		nextPut: $!!;
+		print: each value;
+		nextPut: $!!;
+		cr!
 
 emitMethod: aCompiledMethod 
 	"Private - File out the source of the single <CompiledMethod>, aCompiledMethod, 
@@ -279,6 +302,14 @@ fileOutPoolDictionary: aPoolDictionary
 					self emitChunk: ')']].
 	self emitChunk: poolName , ' shrink'!
 
+fileOutPoolInitializersOfClass: aClass 
+	aClass classPool associations asSortedCollection do: 
+			[:each | 
+			each value isLiteral 
+				ifTrue: 
+					[self emitDeclarationForPoolVariable: each ofClass: aClass.
+					self emitInitializerForPoolVariable: aClass ofClass: each]]!
+
 fileOutProtocols: aCollection ofBehavior: aClassDescription 
 	"File out the <MethodProtocol>s in the <collection>, aCollection, to source stream,
 	associating them with the <ClassDescription>, aClassDescription."
@@ -301,10 +332,11 @@ fileOutProtocols: aCollection ofBehavior: aClassDescription
 				cr].
 	self cr!
 
-getSourceFromDescriptor: sourceDescriptor
+getSourceFromDescriptor: sourceDescriptor 
 	"Answer the <readableString> source corresponding to the specified <integer> 
 	descriptor, sourceDescriptor, from the receiver's source stream."
 
+	sourceDescriptor isNil ifTrue: [^''].
 	stream position: (self sourcePositionFromDescriptor: sourceDescriptor).
 	^self nextChunk!
 
@@ -388,7 +420,7 @@ storeSource: aString for: aSourceObject
 	self nextChunkPut: aString.
 	sourceFileIndex notNil 
 		ifTrue: 
-			[aSourceObject sourceDescriptor: (self sourceDescriptorForIndex: sourceFileIndex position: position)]!
+			[aSourceObject sourceDescriptor: (aString isEmpty ifFalse: [self sourceDescriptorForIndex: sourceFileIndex position: position])]!
 
 storeSourceString: aString forMethod: aCompiledMethod 
 	"Private - Save the <readableString>, aString, as the source text for the 
@@ -411,9 +443,11 @@ storeSourceString: aString forMethod: aCompiledMethod
 !ChunkSourceFiler categoriesFor: #emitChunk:!private!source filing! !
 !ChunkSourceFiler categoriesFor: #emitComment:!operations-logging!private! !
 !ChunkSourceFiler categoriesFor: #emitCommentOfClass:!private!source filing! !
+!ChunkSourceFiler categoriesFor: #emitDeclarationForPoolVariable:ofClass:!private!source filing! !
 !ChunkSourceFiler categoriesFor: #emitFooterForMethodsOf:!private!source filing! !
 !ChunkSourceFiler categoriesFor: #emitGUIDOfClass:!private!source filing! !
 !ChunkSourceFiler categoriesFor: #emitHeaderForMethodsOf:!private!source filing! !
+!ChunkSourceFiler categoriesFor: #emitInitializerForPoolVariable:ofClass:!private!source filing! !
 !ChunkSourceFiler categoriesFor: #emitMethod:!private!source filing! !
 !ChunkSourceFiler categoriesFor: #emitSetBehaviorFlag:forClass:!private!source filing! !
 !ChunkSourceFiler categoriesFor: #emitString:!private!source filing! !
@@ -423,6 +457,7 @@ storeSourceString: aString forMethod: aCompiledMethod
 !ChunkSourceFiler categoriesFor: #fileOutBinaryGlobal:!public!source filing! !
 !ChunkSourceFiler categoriesFor: #fileOutExpression:!public!source filing! !
 !ChunkSourceFiler categoriesFor: #fileOutPoolDictionary:!public!source filing! !
+!ChunkSourceFiler categoriesFor: #fileOutPoolInitializersOfClass:!accessing!public! !
 !ChunkSourceFiler categoriesFor: #fileOutProtocols:ofBehavior:!public!source filing! !
 !ChunkSourceFiler categoriesFor: #getSourceFromDescriptor:!public!source filing! !
 !ChunkSourceFiler categoriesFor: #logEvaluation:!private!source filing! !

@@ -23,23 +23,22 @@ Instance Variables:
 !Class methodsFor!
 
 addClassVarName: aString 
-	"Add a new class variable to the receiver with the specified <readableString> name.
-	Note: This is a low-level operation and does not recompile affected classes. Generally 
-	speaking any modification to a class should be made through a <ClassBuilder>."
+	"Answer the binding for a new or existing class variable in the receiver with the specified
+	<readableString> name. Note: This is a low-level operation and does not recompile affected
+	classes. Generally speaking any modification to a class should be made through a
+	<ClassBuilder>."
 
-	| varName |
+	| varName var |
 	varName := aString asString.	"Allow symbolic names too"
-	(self withAllSubclasses detect: [:each | (each classPool bindingFor: varName) notNil]
-		ifNone: []) ifNotNil: 
-				[:existingClass | 
-				^self 
-					error: aString , ' is already used as a variable name in class ' , existingClass name].
 	classPool := self classPool.
-	(classPool includesKey: varName) 
-		ifFalse: 
-			[classPool at: varName put: nil.
-			self logDefinition.
-			self environment classUpdated: self]!
+	(classPool bindingFor: varName) ifNotNil: [:existingVar | ^existingVar].
+	(self withAllSubclasses detect: [:each | (each classPool bindingFor: varName) notNil] ifNone: []) 
+		ifNotNil: [:existingClass | ^self error: aString , ' is already used as a variable name in class ' , existingClass name].
+	var := classPool newAssociation: varName value: nil.
+	classPool add: var.
+	self logDefinition.
+	self environment classUpdated: self.
+	^var!
 
 addSharedPool: aPoolDictionary 
 	"Add the argument, aPoolDictionary, as one of the receiver's pool dictionaries. 
@@ -57,7 +56,8 @@ addSharedPool: aPoolDictionary
 
 addToSuper
 	"Private - Add the receiver as a subclass of its superclass
-	and do the same for the receiver's metaclass buddy."
+	and do the same for the receiver's metaclass buddy, but not
+	if a root class."
 
 	superclass notNil ifTrue: [
 		super addToSuper.
@@ -196,6 +196,12 @@ comment: blahBlah
 	self isChanged: true.
 	"No need to clear the class caches in this case"
 	self environment trigger: #classCommented: with: self!
+
+constant: aSymbol 
+	"Define a constant binding in the receiver's class pool with the specified name. If the variable already exists, it is marked as constant.
+	If the variable does not exist, a constant binding is added with initial value nil."
+
+	(self addClassVarName: aSymbol) isImmutable: true!
 
 definitionChunk
 	"Answer a chunk string for the definition of the receiver"
@@ -666,6 +672,12 @@ uninitializeBeforeRemove
 	(self class includesSelector: #uninitialize) ifTrue: [self uninitialize].
 	self removeAllProperties!
 
+variable: aSymbol 
+	"Define a variable binding in the receiver's class pool with the specified name. If the variable already exists, this is a no-op.
+	If the variable does not exist, a new binding is added with initial value nil."
+
+	(self addClassVarName: aSymbol) isImmutable: false!
+
 variableByteSubclass: aClassSymbol instanceVariableNames: instVarString classVariableNames: classVarString poolDictionaries: poolDictString
 	^(self 
 		newClassBuilder: aClassSymbol
@@ -775,6 +787,7 @@ variableSubclass: aClassSymbol
 !Class categoriesFor: #clearGuid!accessing!private! !
 !Class categoriesFor: #comment!accessing!development!public! !
 !Class categoriesFor: #comment:!accessing!development!public! !
+!Class categoriesFor: #constant:!class variables|public! !
 !Class categoriesFor: #definitionChunk!development!public!source filing-class definition! !
 !Class categoriesFor: #fileIn!development!public!source filing! !
 !Class categoriesFor: #fileOut!development!public!source filing! !
@@ -826,6 +839,7 @@ variableSubclass: aClassSymbol
 !Class categoriesFor: #subclass:instanceVariableNames:classVariableNames:poolDictionaries:classInstanceVariableNames:!class hierarchy-adding!public! !
 !Class categoriesFor: #uninitialize!initializing!private! !
 !Class categoriesFor: #uninitializeBeforeRemove!initializing!public! !
+!Class categoriesFor: #variable:!class variables|public! !
 !Class categoriesFor: #variableByteSubclass:instanceVariableNames:classVariableNames:poolDictionaries:!class hierarchy-adding!public! !
 !Class categoriesFor: #variableByteSubclass:instanceVariableNames:classVariableNames:poolDictionaries:category:!class hierarchy-adding!public! !
 !Class categoriesFor: #variableByteSubclass:instanceVariableNames:classVariableNames:poolDictionaries:classInstanceVariableNames:!class hierarchy-adding!public! !
