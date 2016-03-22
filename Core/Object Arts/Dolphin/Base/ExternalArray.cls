@@ -325,18 +325,27 @@ replaceBytesOf: aByteObject from: start to: stop startingAt: fromStart
 
 	^bytes replaceBytesOf: aByteObject from: start to: stop startingAt: fromStart-1*self elementSize+1!
 
-replaceFrom: start to: stop  with: aByteObject startingAt: fromStart
+replaceElementsOf: anIndexableObject from: startInteger to: stopInteger startingAt: startAtInteger 
+	"Private - Replace the indexable instance variables of the variable pointer object,
+	anIndexableObject, between startInteger and stopInteger inclusive with values from the
+	receiver starting from startAtInteger."
+
+	| offset |
+	offset := startAtInteger - startInteger.
+	startInteger to: stopInteger do: [:i | anIndexableObject basicAt: i put: (self at: offset + i)]!
+
+replaceFrom: startInteger to: stopInteger with: aByteObject startingAt: startAtInteger 
 	"Standard method for transfering bytes from one variable
 	byte object to another. See String>>replaceFrom:to:with:startingAt:"
 
 	| elemSize offset |
 	elemSize := self elementSize.
-	offset := start-1 * elemSize.
+	offset := (startInteger - 1) * elemSize.
 	aByteObject 
-		replaceBytesOf: self bytes 
-		from: 1+offset
-		to: stop * elemSize
-		startingAt: fromStart!
+		replaceBytesOf: self bytes
+		from: 1 + offset
+		to: stopInteger * elemSize
+		startingAt: startAtInteger!
 
 select: discriminator
 	"Evaluate the <monadicValuable> argument, discriminator, for each of the receiver's elements.
@@ -416,6 +425,7 @@ uncheckedFrom: startInteger to: stopInteger keysAndValuesDo: operation
 !ExternalArray categoriesFor: #notEmpty!public!testing! !
 !ExternalArray categoriesFor: #printOn:!development!printing!public! !
 !ExternalArray categoriesFor: #replaceBytesOf:from:to:startingAt:!double dispatch!private! !
+!ExternalArray categoriesFor: #replaceElementsOf:from:to:startingAt:!private!replacing! !
 !ExternalArray categoriesFor: #replaceFrom:to:with:startingAt:!public!replacing! !
 !ExternalArray categoriesFor: #select:!enumerating!public! !
 !ExternalArray categoriesFor: #size!accessing!public! !

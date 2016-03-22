@@ -733,19 +733,12 @@ identityHash
 	<primitive: 75>
 	^self primitiveFailed!
 
-ifNil: aBlock
-	"If the receiver is the nil object, then answer the result of evaluating
-	the <niladicValuable>, aBlock, otherwise answer the receiver."
+ifNil: nilBlock 
+	"If the receiver is the nil object, then answer the result of evaluating the
+	<niladicValuable>, nilBlock, otherwise answer the receiver."
 
-	"Implementation Note: This message is normally inlined by the compiler and so
-	is never sent unless #perform'd. The inline form of the bytecodes is:
-
-			dup
-			jmp ifNotNil @notNil
-			pop
-			[...]
-		@notNil
-	"
+	"Implementation Note: This message is normally inlined by the compiler and so is never sent
+	unless #perform'd."
 
 	^self!
 
@@ -753,52 +746,33 @@ ifNil: nilBlock ifNotNil: notNilBlock
 	"If the receiver is the nil object, then answer the result of evaluating the
 	<niladicValuable>, nilBlock, otherwise answer the result of evaluating the <valuable>,
 	notNilBlock. notNilBlock can be a <niladicValuable> or a <monadicValuable>, in which case it
-	is evaluated with the receiver as its argument, "
+	is evaluated with the receiver as its argument."
 
 	"Implementation Note: This message is normally inlined by the compiler and so is never sent
-	unless #perform'd. The inline form of the bytecodes in the normal case where the notNilBlock
-	is monadic is:
+	unless #perform'd."
 
-			dup
-			jmp ifNotNil @notNil
-			pop
-			[...]
-			jmp @exit
-		@notNil
-			pop'n'store 'value'
-			[:value | ...]
-		@exit	
-	"
+	^notNilBlock cull: self!
 
-	^notNilBlock argumentCount = 1 ifTrue: [notNilBlock value: self] ifFalse: [notNilBlock value]!
-
-ifNotNil: aBlock 
+ifNotNil: notNilBlock 
 	"If the receiver is not the nil object, then answer the result of evaluating the valuable
-	argument, aBlock, otherwise answer nil. aBlock can be a <niladicValuable> or a
-	<monadicValuable>, in which case it is evaluated with the receiver as its argument, "
+	argument, notNilBlock, otherwise answer nil. notNilBlock can be a <niladicValuable> or a
+	<monadicValuable>, in which case it is evaluated with the receiver as its argument."
 
 	"Implementation Note: This message is normally inlined by the compiler and so is never sent
-	unless #perform'd. The inline form of the bytecodes is:
+	unless #perform'd."
 
-			dup
-			jmp ifNil @nil
-			pop'n'store 'value'
-			[:value | ...]
-		@nil
-	"
-
-	^aBlock argumentCount = 1 ifTrue: [aBlock value: self] ifFalse: [aBlock value]!
+	^notNilBlock cull: self!
 
 ifNotNil: notNilBlock ifNil: nilBlock 
 	"If the receiver is the nil object, then answer the result of evaluating the
 	<niladicValuable>, nilBlock, otherwise answer the result of evaluating the <valuable>,
 	notNilBlock. notNilBlock can be a <niladicValuable> or a <monadicValuable>, in which case it
-	is evaluated with the receiver as its argument, "
+	is evaluated with the receiver as its argument."
 
 	"Implementation Note: This message is normally inlined by the compiler and so is never sent
 	unless #perform'd."
 
-	^notNilBlock argumentCount = 1 ifTrue: [notNilBlock value: self] ifFalse: [notNilBlock value]!
+	^notNilBlock cull: self!
 
 initialize
 	"Initialise the receiver following instantiation. The default is to do nothing.

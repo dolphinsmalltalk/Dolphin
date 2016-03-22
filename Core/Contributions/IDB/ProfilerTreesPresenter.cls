@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ProfilerPresenter subclass: #ProfilerTreesPresenter
 	instanceVariableNames: ''
@@ -76,21 +76,24 @@ filterSelector: aCompiledCodeOrNil
 onSelectionChanged
 	"The frame selection has changed so update the source view accordingly"
 
-	| sourceText sourceSelectionRange disassemblyText disassemblySelectionLine |
+	| sourceText sourceSelectionRange disassemblyText disassemblySelectionLine styler |
 	self selectedNode 
 		ifNil: 
 			[sourceText := String new.
 			sourceSelectionRange := 0 to: 0.
 			disassemblyText := String new.
-			disassemblySelectionLine := 0]
+			disassemblySelectionLine := 0.
+			styler := NullScintillaStyler]
 		ifNotNil: 
 			[:arg | 
 			sourceText := arg object coloredSource.
 			sourceSelectionRange := arg object selectionRange.
 			disassemblyText := arg object disassemblySource.
-			disassemblySelectionLine := arg object disassemblySelectionLine].
+			disassemblySelectionLine := arg object disassemblySelectionLine.
+			styler := arg object compiledCode stylerClass].
 	(self workspacePresenter)
 		text: sourceText;
+		stylerClass: styler;
 		selectionRange: sourceSelectionRange.
 	(self presenterNamed: 'disassembly') text: disassemblyText.
 	disassemblySelectionLine ~~ 0 

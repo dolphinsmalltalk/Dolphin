@@ -75,6 +75,7 @@ package methodNames
 	add: #ClassDescription -> #definesVariable:;
 	add: #ClassDescription -> #directlyDefinesClassVariable:;
 	add: #ClassDescription -> #directlyDefinesInstanceVariable:;
+	add: #ClassDescription -> #directlyDefinesVariable:;
 	add: #ClassDescription -> #hierarchyDefinesVariable:;
 	add: #ClassSelector -> #abstractClassVariables;
 	add: #ClassSelector -> #abstractInstanceVariables;
@@ -673,6 +674,10 @@ directlyDefinesClassVariable: aString
 directlyDefinesInstanceVariable: aString 
 	^self instVarNames includes: aString!
 
+directlyDefinesVariable: aVariableName 
+	^(self directlyDefinesClassVariable: aVariableName) 
+		or: [self directlyDefinesInstanceVariable: aVariableName]!
+
 hierarchyDefinesVariable: aString 
 	(self definesVariable: aString) ifTrue: [^true].
 	^self allSubclasses anySatisfy: [:each | each directlyDefinesVariable: aString]! !
@@ -681,6 +686,7 @@ hierarchyDefinesVariable: aString
 !ClassDescription categoriesFor: #definesVariable:!public!testing! !
 !ClassDescription categoriesFor: #directlyDefinesClassVariable:!public!testing! !
 !ClassDescription categoriesFor: #directlyDefinesInstanceVariable:!public!testing! !
+!ClassDescription categoriesFor: #directlyDefinesVariable:!public!testing! !
 !ClassDescription categoriesFor: #hierarchyDefinesVariable:!public!testing! !
 
 !ClassSelector methodsFor!

@@ -10,6 +10,13 @@ CompilerTest comment: ''!
 !CompilerTest categoriesForClass!Unclassified! !
 !CompilerTest methodsFor!
 
+assertBlocksOptimized: compiled 
+	| literals |
+	self deny: compiled method needsContext.
+	literals := compiled method literals.
+	self deny: (literals anySatisfy: [:each | each isKindOf: BlockClosure]).
+	self deny: (literals anySatisfy: [:each | StProgramNode optimizedSelectors includes: each])!
+
 checkCompileError: ex range: anInterval code: anInteger message: msgFormat line: lineInteger source: aString 
 	^ex errorCode = anInteger and: [ex range = anInterval]!
 
@@ -481,132 +488,106 @@ testFloatScanning
 		do: [:each | self assert: (self evaluateExpression: ('1.0e<d>' expandMacrosWith: each)) - (10.0 ** each)]"!
 
 testIfNil
-	| compiled expected |
-	compiled := self compileExpression: '1 ifNil: [2]'.
+	| compiled |
+	compiled := self compileExpression: 'key ifNil: [value]' in: Association.
+	self assert: (compiled method value: nil -> 2) = 2.
+	self assert: (compiled method value: 1 -> 2) = 1.
 	self deny: (compiled method literals includes: 'ifNil:' asSymbol).
-	expected := 'Normal, 0 args, 0 literals
-
-	1	Push 1
-	2	Dup
-	3	Jump If Not Nil +2 to 7
-	5	Pop
-	6	Push 2
-	7	Return '.
-	self assert: compiled method disassembly = expected!
+	self assertBlocksOptimized: compiled!
 
 testIfNilifNotNil
-	| compiled expected |
-	compiled := self compileExpression: '1 ifNil: [ | x | x := 2. 1+x] ifNotNil: [:x | 1+x]'.
-	self assert: (compiled method value: nil withArguments: #()) = 2.
-	expected := 'Normal, 0 args, 2 stack temps, 0 literals
-
-	1	Push 1
-	2	Dup
-	3	Jump If Not Nil +7 to 12
-	5	Pop
-	6	Push 2
-	7	Pop Temp[0]
-	8	Push 1
-	9	Push Temp[0]
-	10	Special Send #+
-	11	Return 
-	12	Pop Temp[1]
-	13	Push 1
-	14	Push Temp[1]
-	15	Special Send #+
-	16	Return '.
-	self assert: compiled method disassembly = expected
-
-	"
-DiffBrowser compare: compiled method disassembly with: expecteda DiffBrowser
-"!
+	| compiled |
+	compiled := self compileExpression: 'key ifNil: [value+1] ifNotNil: [:x | 1+x]' in: Association.
+	self assert: (compiled method value: nil -> 1 withArguments: #()) = 2.
+	self assert: (compiled method value: 5 -> nil withArguments: #()) = 6.
+	self assertBlocksOptimized: compiled!
 
 testIfNilifNotNilNoArg
-	| compiled expected |
-	compiled := self compileExpression: '1 ifNil: [3] ifNotNil: [2]'.
-	self assert: (compiled method value: nil withArguments: #()) = 2.
-	expected := 'Normal, 0 args, 0 literals
+	| compiled |
+	compiled := self compileExpression: 'key ifNil: [value] ifNotNil: [key+2]' in: Association.
+	self assert: (compiled method value: nil -> 4 withArguments: #()) = 4.
+	self assert: (compiled method value: 1 -> 4 withArguments: #()) = 3.
+	self assertBlocksOptimized: compiled!
 
-	1	Push 1
-	2	Jump If Not Nil +3 to 7
-	4	Push 3
-	6	Return 
-	7	Push 2
-	8	Return '.
-	self assert: compiled method disassembly = expected
+testIfNilifNotNilNoArgUnused
+	| compiled expected actual |
+	compiled := self compileExpression: 'key ifNil: [value+3] ifNotNil: [value+2]. value'
+				in: Association.
+	self assert: (compiled method value: nil -> 4 withArguments: #()) = 4.
+	self assert: (compiled method value: 1 -> 4 withArguments: #()) = 4.
+	self assertBlocksOptimized: compiled!
 
-	"
-DiffBrowser compare: compiled method disassembly with: expected
-"!
+testIfNilifNotNilUnused
+	| compiled |
+	compiled := self compileExpression: 'key ifNil: [value+1] ifNotNil: [:x | 1+x]. value'
+				in: Association.
+	self assert: (compiled method value: nil -> 1 withArguments: #()) = 1.
+	self assert: (compiled method value: 5 -> 1 withArguments: #()) = 1.
+	self assertBlocksOptimized: compiled!
+
+testIfNilUnused
+	| compiled |
+	compiled := self compileExpression: 'key ifNil: [2]. value' in: Association.
+	self assert: (compiled method value: nil -> 1) = 1.
+	self assert: (compiled method value: 1 -> 2) = 2.
+	self deny: (compiled method literals includes: 'ifNil:' asSymbol).
+	self assertBlocksOptimized: compiled!
 
 testIfNotNil
-	| compiled expected result |
-	compiled := self compileExpression: '1 ifNotNil: [:x | x + 2]'.
-	expected := 'Normal, 0 args, 1 stack temps, 0 literals
-
-	1	Push 1
-	2	Dup
-	3	Jump If Nil +3 to 8
-	5	Store Temp[0]
-	6	Push 2
-	7	Special Send #+
-	8	Return '.
-	result := compiled method disassembly.
-	self assert: result = expected.
-	"
-DiffBrowser compare: result with: expected
-"
-
-	compiled := self compileExpression: '1 ifNotNil: [1+2]'.
-	expected := 'Normal, 0 args, 0 literals
-
-	1	Push 1
-	2	Dup
-	3	Jump If Nil +4 to 9
-	5	Pop
-	6	Push 1
-	7	Push 2
-	8	Special Send #+
-	9	Return '.
-	result := compiled method disassembly.
-	self assert: result = expected
-	"
-DiffBrowser compare: result with: expected
-"!
+	| compiled |
+	compiled := self compileExpression: 'key ifNotNil: [:x | x + 2]' in: Association.
+	self assert: (compiled method value: 1 -> nil) = 3.
+	self assert: (compiled method value: nil -> 1) isNil.
+	self assertBlocksOptimized: compiled!
 
 testIfNotNilifNil
-	| compiled expected |
-	compiled := self compileExpression: '1 ifNotNil: [:x | 2] ifNil: [3]'.
-	expected := 'Normal, 0 args, 1 stack temps, 0 literals
-
-	1	Push 1
-	2	Dup
-	3	Jump If Nil +3 to 8
-	5	Pop Temp[0]
-	6	Push 2
-	7	Return 
-	8	Pop
-	9	Push 3
-	11	Return '.
-	self assert: compiled method disassembly = expected!
+	| compiled |
+	compiled := self compileExpression: 'key ifNotNil: [:x | x + 2] ifNil: [3]' in: Association.
+	self assert: (compiled method value: 5 -> nil) = 7.
+	self assert: (compiled method value: nil -> 5) = 3.
+	self assertBlocksOptimized: compiled!
 
 testIfNotNilifNilNoArg
-	| compiled expected |
-	compiled := self compileExpression: '1 ifNotNil: [2] ifNil: [3]'.
-	expected := 'Normal, 0 args, 0 literals
+	| compiled |
+	compiled := self compileExpression: 'key ifNotNil: [key] ifNil: [value]' in: Association.
+	self assert: (compiled method value: 1 -> 2) = 1.
+	self assert: (compiled method value: nil -> 2) = 2.
+	self assertBlocksOptimized: compiled!
 
-	1	Push 1
-	2	Jump If Nil +2 to 6
-	4	Push 2
-	5	Return 
-	6	Push 3
-	8	Return '.
-	self assert: compiled method disassembly = expected
+testIfNotNilifNilNoArgUnused
+	| compiled |
+	compiled := self compileExpression: 'key ifNotNil: [key+1] ifNil: [value+1]. self' in: Association.
+	self assert: (compiled method value: 1 -> 2) = (1 -> 2).
+	self assert: (compiled method value: nil -> 2) = (nil -> 2).
+	self assertBlocksOptimized: compiled!
 
+testIfNotNilifNilUnused
+	| compiled |
+	compiled := self compileExpression: 'key ifNotNil: [:x | x + 2] ifNil: [3]. value' in: Association.
+	self assert: (compiled method value: 5 -> 8) = 8.
+	self assert: (compiled method value: nil -> 5) = 5.
+	self assertBlocksOptimized: compiled!
 
-	"
-DiffBrowser compare: compiled method disassembly with: expected
-"!
+testIfNotNilNoArg
+	| compiled |
+	compiled := self compileExpression: 'key ifNotNil: [1+2]' in: Association.
+	self assert: (compiled method value: 4 -> nil) = 3.
+	self assert: (compiled method value: nil -> 1) isNil.
+	self assertBlocksOptimized: compiled!
+
+testIfNotNilNoArgUnused
+	| compiled |
+	compiled := self compileExpression: 'key ifNotNil: [key+1]. value' in: Association.
+	self assert: (compiled method value: 1 -> 5) = 5.
+	self assert: (compiled method value: nil -> 10) = 10.
+	self assertBlocksOptimized: compiled!
+
+testIfNotNilUnused
+	| compiled |
+	compiled := self compileExpression: 'key ifNotNil: [:x | x + 2]. value' in: Association.
+	self assert: (compiled method value: 1 -> 10) = 10.
+	self assert: (compiled method value: nil -> 11) = 11.
+	self assertBlocksOptimized: compiled!
 
 testImmutableLiterals
 	| method |
@@ -1345,6 +1326,7 @@ testWriteAccessor
 			self assert: accessor extraIndex = 7.
 			inst perform: selector with: each.
 			self assert: (inst perform: each asSymbol) = each]! !
+!CompilerTest categoriesFor: #assertBlocksOptimized:!helpers!private! !
 !CompilerTest categoriesFor: #checkCompileError:range:code:message:line:source:!helpers!private! !
 !CompilerTest categoriesFor: #compilationErrorClass!constants!private! !
 !CompilerTest categoriesFor: #compilationWarningClass!constants!public! !
@@ -1385,9 +1367,17 @@ testWriteAccessor
 !CompilerTest categoriesFor: #testIfNil!public!unit tests! !
 !CompilerTest categoriesFor: #testIfNilifNotNil!public!unit tests! !
 !CompilerTest categoriesFor: #testIfNilifNotNilNoArg!public!unit tests! !
+!CompilerTest categoriesFor: #testIfNilifNotNilNoArgUnused!public!unit tests! !
+!CompilerTest categoriesFor: #testIfNilifNotNilUnused!public!unit tests! !
+!CompilerTest categoriesFor: #testIfNilUnused!public!unit tests! !
 !CompilerTest categoriesFor: #testIfNotNil!public!unit tests! !
 !CompilerTest categoriesFor: #testIfNotNilifNil!public!unit tests! !
 !CompilerTest categoriesFor: #testIfNotNilifNilNoArg!public!unit tests! !
+!CompilerTest categoriesFor: #testIfNotNilifNilNoArgUnused!public!unit tests! !
+!CompilerTest categoriesFor: #testIfNotNilifNilUnused!public!unit tests! !
+!CompilerTest categoriesFor: #testIfNotNilNoArg!public!unit tests! !
+!CompilerTest categoriesFor: #testIfNotNilNoArgUnused!public!unit tests! !
+!CompilerTest categoriesFor: #testIfNotNilUnused!public! !
 !CompilerTest categoriesFor: #testImmutableLiterals!public!unit tests! !
 !CompilerTest categoriesFor: #testIncrementDecrementOptimisation!public!unit tests! !
 !CompilerTest categoriesFor: #testIncrementPushTempOptimisation!public!unit tests! !

@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 String variableByteSubclass: #UnicodeString
 	instanceVariableNames: ''
@@ -128,24 +128,20 @@ nextIndexOf: anElement from: start to: stop
 	self from: start to: stop keysAndValuesDo: [:i :elem | elem = anElement ifTrue: [^i]].
 	^0!
 
-replaceFrom: start to: stop with: replacementElements startingAt: repStart
-	"Replace the characters of the receiver at index positions start through stop with 
-	consecutive characters of aString beginning at index position startAt. Answer the 
-	receiver."
+replaceFrom: startInteger to: stopInteger with: aReadableString startingAt: startAtInteger 
+	"Replace the characters of the receiver at index positions startInteger through stopInteger
+	inclusive with consecutive characters of the <readableString>, aReadableString, beginning at
+	index position startAtInteger. Answer the receiver."
 
 	| offset |
-	offset := repStart - start.
-	(self == replacementElements and: [repStart < start]) 
+	offset := startAtInteger - startInteger.
+	"Perform overlapping moves backwards, otherwise forwards"
+	(self == aReadableString and: [startAtInteger < startInteger]) 
 		ifTrue: 
-			["Move within same object overlaps, so do backwards"
-
-			stop to: start
+			[stopInteger to: startInteger
 				by: -1
-				do: [:i | self at: i put: (replacementElements at: offset + i)]]
-		ifFalse: 
-			["Non-overlapping moves are done forwards"
-
-			start to: stop do: [:i | self at: i put: (replacementElements at: offset + i)]]!
+				do: [:i | self at: i put: (aReadableString at: offset + i)]]
+		ifFalse: [startInteger to: stopInteger do: [:i | self at: i put: (aReadableString at: offset + i)]]!
 
 resize: anInteger
 	^super resize: anInteger * 2!

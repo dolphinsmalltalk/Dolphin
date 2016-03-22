@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #UndefinedObject
 	instanceVariableNames: ''
@@ -38,29 +38,26 @@ displayOn: aStream
 	"Append a representation of the receiver to aStream as a user would want to see it.
 	The default is to do nothing, since, from the end-user perspective, the receiver is a null."!
 
-ifNil: aBlock 
-	"If the receiver is the nil object, then answer the result of evaluating the
-	<niladicValuable>, aBlock, otherwise answer the receiver."
-
-	"Implementation Note: This message is normally inlined by the compiler and so is never sent
-	unless #perform'd."
-
-	^aBlock value!
-
-ifNil: nilBlock ifNotNil: notNilBlock 
-	"If the receiver is the nil object, then answer the result of evaluating the
-	<niladicValuable>, nilBlock, otherwise answer the result of evaluating the
-	<monadicValuable>, notNilBlock, with the receiver as its argument."
+ifNil: nilBlock 
+	"As the receiver is the nil object, answer the result of evaluating the <niladicValuable>,
+	nilBlock."
 
 	"Implementation Note: This message is normally inlined by the compiler and so is never sent
 	unless #perform'd."
 
 	^nilBlock value!
 
-ifNotNil: aBlock 
-	"If the receiver is not the nil object, then answer the result of evaluating the valuable
-	argument, aBlock, otherwise answer nil. aBlock can be a <niladicValuable> or a
-	<monadicValuable>, in which case it is evaluated with the receiver as its argument, "
+ifNil: nilBlock ifNotNil: notNilBlock 
+	"As the receiver is the nil object, answer the result of evaluating the <niladicValuable>,
+	nilBlock."
+
+	"Implementation Note: This message is normally inlined by the compiler and so is never sent
+	unless #perform'd."
+
+	^nilBlock value!
+
+ifNotNil: notNilBlock 
+	"As the receiver is the nil object, ignore the <valuable> argument and answer nil."
 
 	"Implementation Note: This message is normally inlined by the compiler and so is never sent
 	unless #perform'd."
@@ -68,9 +65,8 @@ ifNotNil: aBlock
 	^self!
 
 ifNotNil: notNilBlock ifNil: nilBlock 
-	"If the receiver is the nil object, then answer the result of evaluating the
-	<niladicValuable>, nilBlock, otherwise answer the result of evaluating the
-	<monadicValuable>, notNilBlock, with the receiver as its argument."
+	"As the receiver is the nil object, answer the result of evaluating the <niladicValuable>,
+	nilBlock."
 
 	"Implementation Note: This message is normally inlined by the compiler and so is never sent
 	unless #perform'd."

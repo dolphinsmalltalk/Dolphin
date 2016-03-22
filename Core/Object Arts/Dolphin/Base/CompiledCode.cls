@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object variableSubclass: #CompiledCode
 	instanceVariableNames: 'header methodClass selector sourceDescriptor byteCodes '
@@ -467,6 +467,21 @@ refersToLiteral: anObject
 		do: [:i | ((self at: i) refersToLiteral: anObject) ifTrue: [^true]].
 	^false!
 
+replaceElementsOf: anIndexableObject from: startInteger to: stopInteger startingAt: startAtInteger 
+	"Private - Replace the indexable instance variables of the variable pointer object,
+	anIndexableObject, between startInteger and stopInteger inclusive with literals from the
+	receiver starting from startAtInteger."
+
+	| offset |
+	offset := startAtInteger - startInteger.
+	(anIndexableObject == self and: [startAtInteger < startInteger]) 
+		ifTrue: 
+			[stopInteger to: startInteger
+				by: -1
+				do: [:i | anIndexableObject basicAt: i put: (self basicAt: offset + i)]]
+		ifFalse: 
+			[startInteger to: stopInteger do: [:i | anIndexableObject basicAt: i put: (self basicAt: offset + i)]]!
+
 selector
 	"Answer the message selector under which the receiver is entered in its class' method
 	dictionary."
@@ -630,6 +645,7 @@ writesInstVar: aString at: anInteger
 !CompiledCode categoriesFor: #readsInstVar:!development!public!testing! !
 !CompiledCode categoriesFor: #readsInstVar:at:!development!public!testing! !
 !CompiledCode categoriesFor: #refersToLiteral:!private!testing! !
+!CompiledCode categoriesFor: #replaceElementsOf:from:to:startingAt:!private!replacing! !
 !CompiledCode categoriesFor: #selector!accessing!public! !
 !CompiledCode categoriesFor: #selector:!accessing!private! !
 !CompiledCode categoriesFor: #sendsSelector:!development!public!testing! !
