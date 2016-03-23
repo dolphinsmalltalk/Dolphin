@@ -89,6 +89,166 @@ earlyTermination: aBoolean
 			self assert: proc isTerminated.
 			self assert: Processor pendingTerminations isEmpty]!
 
+exerciseReplaceElementsOf: targetCollection from: startInteger to: stopInteger with: sourceCollection startingAt: startAtInteger
+	| fieldsBefore fieldsAfter captureFields expected target |
+	captureFields := [:obj | (1 to: obj class instSize) collect: [:i | obj instVarAt: i]].
+	fieldsBefore := captureFields value: targetCollection.
+	target := targetCollection copy.
+	sourceCollection
+		replaceElementsOf: target
+		from: startInteger
+		to: stopInteger
+		startingAt: startAtInteger.
+	"The fixed fields should not have been touched"
+	fieldsAfter := captureFields value: target.
+	self assert: fieldsAfter = fieldsBefore.
+	"Build the expected result using low-level operations to avoid inadvertently using the primitive under test"
+	expected := targetCollection class ofSize: targetCollection size.
+	1 to: startInteger - 1 do: [:i | expected at: i put: (targetCollection at: i)].
+	startInteger to: stopInteger
+		do: [:i | expected at: i put: (sourceCollection at: i - startInteger + startAtInteger)].
+	stopInteger + 1 to: targetCollection size do: [:i | expected at: i put: (targetCollection at: i)].
+	"Did it work?"
+	self assert: target = expected!
+
+exerciseReplaceElementsOf: targetCollection with: sourceCollection
+	| target |
+	targetCollection isImmutable: true.
+
+	"Immutable target"
+	self should: 
+			[sourceCollection
+				replaceElementsOf: targetCollection
+				from: 1
+				to: targetCollection size
+				startingAt: 1]
+		raise: Processor constWriteSignal.
+
+	"Move first of source to first of target"
+	self
+		exerciseReplaceElementsOf: targetCollection
+		from: 1
+		to: 1
+		with: sourceCollection
+		startingAt: 1.
+
+	"Move last of source to first of target"
+	self
+		exerciseReplaceElementsOf: targetCollection
+		from: 1
+		to: 1
+		with: sourceCollection
+		startingAt: sourceCollection size.
+
+	"First over last"
+	self
+		exerciseReplaceElementsOf: targetCollection
+		from: targetCollection size
+		to: targetCollection size
+		with: sourceCollection
+		startingAt: 1.
+
+	"Move two from middle of source to middle of target"
+	self
+		exerciseReplaceElementsOf: targetCollection
+		from: 2
+		to: 3
+		with: sourceCollection
+		startingAt: 3.
+
+	"From 2 to end of source over whole target"
+	self
+		exerciseReplaceElementsOf: targetCollection
+		from: 1
+		to: targetCollection size
+		with: sourceCollection
+		startingAt: 2.
+
+	"Complete overwrite"
+	self
+		exerciseReplaceElementsOf: targetCollection
+		from: 1
+		to: targetCollection size
+		with: sourceCollection
+		startingAt: 1.
+
+	"Move last of target to middle of source"
+	self
+		exerciseReplaceElementsOf: targetCollection
+		from: 2
+		to: 2
+		with: sourceCollection
+		startingAt: sourceCollection size.
+
+	"Last two from source over last two from target"
+	self
+		exerciseReplaceElementsOf: targetCollection
+		from: targetCollection size - 1
+		to: targetCollection size
+		with: sourceCollection
+		startingAt: sourceCollection size - 1.
+
+	"Shuffle down - needs to be done forwards, or will get all 5's"
+	self
+		exerciseReplaceElementsOf: targetCollection
+		from: 1
+		to: targetCollection size - 1
+		with: targetCollection
+		startingAt: 2.
+
+	"Shuffle up - needs to be done in reverse, or will get all 1's"
+	self
+		exerciseReplaceElementsOf: targetCollection
+		from: 2
+		to: targetCollection size
+		with: targetCollection
+		startingAt: 1.
+
+	"No-op move over self"
+	self
+		exerciseReplaceElementsOf: targetCollection
+		from: 1
+		to: targetCollection size
+		with: targetCollection
+		startingAt: 1.
+
+	"StartAt = end, count = 2 (source bounds error)"
+	target := targetCollection copy.
+	self should: 
+			[sourceCollection
+				replaceElementsOf: target
+				from: 1
+				to: 2
+				startingAt: sourceCollection size]
+		raise: BoundsError.
+
+	"Off end of target"
+	target := targetCollection copy.
+	self should: 
+			[sourceCollection
+				replaceElementsOf: target
+				from: 2
+				to: target size + 1
+				startingAt: 1]
+		raise: BoundsError.
+
+	"Overlapping out of bounds"
+	target := targetCollection copy.
+	self should: 
+			[target
+				replaceElementsOf: target
+				from: 1
+				to: 5
+				startingAt: 2]
+		raise: BoundsError.
+	self should: 
+			[target
+				replaceElementsOf: target
+				from: 2
+				to: 6
+				startingAt: 1]
+		raise: BoundsError!
+
 getCPUTime
 	"Answer the total CPU time consumed since Dolphin was started, in milliseconds."
 
@@ -625,6 +785,13 @@ testPrimitiveIsNullBytes
 			bytes := DWORDBytes newFixed: each.
 			self assert: bytes isNull]!
 
+testPrimitiveReplaceElements
+	self exerciseReplaceElementsOf: #($a $b $c $d $e) with: #(1 2 3 4 5 6).
+	self exerciseReplaceElementsOf: #($a $b $c $d $e) with: #(1 2 3 4 5 6) asOrderedCollection.
+	self exerciseReplaceElementsOf: #($a $b $c $d $e) asOrderedCollection with: #(1 2 3 4 5 6).
+	self exerciseReplaceElementsOf: #($a $b $c $d $e) asOrderedCollection
+		with: #(1 2 3 4 5 6) asOrderedCollection!
+
 testPrimitiveStringAt
 	| array |
 	
@@ -696,6 +863,8 @@ testSignedFromUnsigned
 !VMTest categoriesFor: #assertImmutableInstVarAtPut:!private!unit tests! !
 !VMTest categoriesFor: #assertImmutableResize:!private!unit tests! !
 !VMTest categoriesFor: #earlyTermination:!helpers!public! !
+!VMTest categoriesFor: #exerciseReplaceElementsOf:from:to:with:startingAt:!private!unit tests! !
+!VMTest categoriesFor: #exerciseReplaceElementsOf:with:!private!unit tests! !
 !VMTest categoriesFor: #getCPUTime!helpers!private! !
 !VMTest categoriesFor: #isGPF:reading:address:!helpers!private! !
 !VMTest categoriesFor: #suspendAndTerminate!helpers!public! !
@@ -721,6 +890,7 @@ testSignedFromUnsigned
 !VMTest categoriesFor: #testPrimitiveAt!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveAtPut!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveIsNullBytes!public!unit tests! !
+!VMTest categoriesFor: #testPrimitiveReplaceElements!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveStringAt!public!unit tests! !
 !VMTest categoriesFor: #testSignedFromUnsigned!public!unit tests! !
 

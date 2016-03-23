@@ -360,8 +360,11 @@ literals
 
 	| count |
 	count := self literalCount.
-	^(Array new: count)
-		replaceFrom: 1 to: count with: self startingAt: 1!
+	^self
+		replaceElementsOf: (Array new: count)
+		from: 1
+		to: count
+		startingAt: 1!
 
 literalsDetect: discriminator ifNone: exceptionHandler
 	"Evaluate the <monadicValuable> argument, discriminator, for each of the 
@@ -467,20 +470,22 @@ refersToLiteral: anObject
 		do: [:i | ((self at: i) refersToLiteral: anObject) ifTrue: [^true]].
 	^false!
 
-replaceElementsOf: anIndexableObject from: startInteger to: stopInteger startingAt: startAtInteger 
+replaceElementsOf: anIndexableObject from: startInteger to: stopInteger startingAt: startAtInteger
 	"Private - Replace the indexable instance variables of the variable pointer object,
 	anIndexableObject, between startInteger and stopInteger inclusive with literals from the
-	receiver starting from startAtInteger."
+	receiver starting from startAtInteger. Answers anIndexableObject."
 
 	| offset |
+	<primitive: 188>
 	offset := startAtInteger - startInteger.
-	(anIndexableObject == self and: [startAtInteger < startInteger]) 
+	(anIndexableObject == self and: [startAtInteger < startInteger])
 		ifTrue: 
 			[stopInteger to: startInteger
 				by: -1
 				do: [:i | anIndexableObject basicAt: i put: (self basicAt: offset + i)]]
 		ifFalse: 
-			[startInteger to: stopInteger do: [:i | anIndexableObject basicAt: i put: (self basicAt: offset + i)]]!
+			[startInteger to: stopInteger do: [:i | anIndexableObject basicAt: i put: (self basicAt: offset + i)]].
+	^anIndexableObject!
 
 selector
 	"Answer the message selector under which the receiver is entered in its class' method

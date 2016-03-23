@@ -325,14 +325,15 @@ replaceBytesOf: aByteObject from: start to: stop startingAt: fromStart
 
 	^bytes replaceBytesOf: aByteObject from: start to: stop startingAt: fromStart-1*self elementSize+1!
 
-replaceElementsOf: anIndexableObject from: startInteger to: stopInteger startingAt: startAtInteger 
+replaceElementsOf: anIndexableObject from: startInteger to: stopInteger startingAt: startAtInteger
 	"Private - Replace the indexable instance variables of the variable pointer object,
 	anIndexableObject, between startInteger and stopInteger inclusive with values from the
-	receiver starting from startAtInteger."
+	receiver starting from startAtInteger. Answers anIndexableObject."
 
 	| offset |
 	offset := startAtInteger - startInteger.
-	startInteger to: stopInteger do: [:i | anIndexableObject basicAt: i put: (self at: offset + i)]!
+	startInteger to: stopInteger do: [:i | anIndexableObject basicAt: i put: (self at: offset + i)].
+	^anIndexableObject!
 
 replaceFrom: startInteger to: stopInteger with: aByteObject startingAt: startAtInteger 
 	"Standard method for transfering bytes from one variable
