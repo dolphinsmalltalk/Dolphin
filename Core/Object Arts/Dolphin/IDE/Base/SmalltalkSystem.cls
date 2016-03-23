@@ -3825,6 +3825,7 @@ wrapText: aString toWidth: max indent: colInteger tabWidth: tabInteger
 	justified := String writeStream.
 	column := indent.
 	original := aString readStream.
+	original skipSeparators.
 	words := 0.
 	newline := 
 			[justified crtab: tabs.
@@ -3833,11 +3834,7 @@ wrapText: aString toWidth: max indent: colInteger tabWidth: tabInteger
 			words := 0].
 	[original atEnd] whileFalse: 
 			[| word lines |
-			word := String writeStream.
-			original skipWhile: [:each | each isSeparator not and: 
-							[word nextPut: each.
-							true]].
-			word := word contents.
+			word := original nextWord.
 			words > 0 ifTrue: [column + word size > max ifTrue: [newline value] ifFalse: [justified space]].
 			justified nextPutAll: word.
 			column := column + word size + 1.

@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk XP"!
+"Filed out from Dolphin Smalltalk 7"!
 
 StParseNodeVisitor subclass: #RBSourceFormatter
 	instanceVariableNames: 'codeStream lineStart indent'
@@ -113,6 +113,14 @@ space
 
 !RBSourceFormatter class methodsFor!
 
+format: aParseTree 
+	^self format: aParseTree withIndents: 0!
+
+format: aParseTree withIndents: anInteger 
+	^(self new)
+		indent: anInteger;
+		format: aParseTree!
+
 initialize
 	"
 		self initialize
@@ -136,6 +144,8 @@ periodsAtEndOfMethod
 
 periodsAtEndOfMethod: aBoolean 
 	PeriodsAtEndOfMethod := aBoolean! !
+!RBSourceFormatter class categoriesFor: #format:!public!public interface! !
+!RBSourceFormatter class categoriesFor: #format:withIndents:!public!public interface! !
 !RBSourceFormatter class categoriesFor: #initialize!initializing!public! !
 !RBSourceFormatter class categoriesFor: #maxLineLength!public!settings! !
 !RBSourceFormatter class categoriesFor: #maxLineLength:!public!settings! !

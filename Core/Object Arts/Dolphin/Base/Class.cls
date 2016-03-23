@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ClassDescription subclass: #Class
 	instanceVariableNames: 'name classPool sharedPools comment classCategories _guid '
@@ -87,12 +87,8 @@ bindingFor: aString
 	If there is no such variable, then answer nil.
 	Note that in Dolphin pools are inherited."
 
-	classPool isNil 
-		ifFalse: [(classPool bindingFor: aString) ifNotNil: [:classVar | ^classVar]].
-	sharedPools isNil 
-		ifFalse: 
-			[self sharedPools 
-				do: [:each | (each bindingFor: aString) ifNotNil: [:sharedVar | ^sharedVar]]].
+	classPool isNil ifFalse: [(classPool bindingFor: aString) ifNotNil: [:classVar | ^classVar]].
+	self sharedPoolsDo: [:each | (each bindingFor: aString) ifNotNil: [:sharedVar | ^sharedVar]].
 	^superclass bindingFor: aString!
 
 canFileOut
@@ -536,6 +532,15 @@ sharedPoolNames
 	^sharedPools asSet.
 !
 
+sharedPoolsDo: aMonadicValuable 
+	"Evaluate the <monadicValuable> argument for each of the shared pools specified locally for the receiver."
+
+	| environment |
+	sharedPools isNil ifTrue: [^self].
+	environment := self environment.
+	sharedPools 
+		do: [:symbol | (environment at: symbol ifAbsent: []) ifNotNil: [:p | aMonadicValuable value: p]]!
+
 sharedStaticPools
 	"Private - Answer an array of all the non-empty shared pools for the 
 	receiver.
@@ -550,8 +555,7 @@ sharedStaticPools
 			pool := c basicClassPool.
 			(pool notNil and: [pool notEmpty]) ifTrue: [answer add: pool]].
 	"Then the pool variables"
-	self 
-		withAllSuperclassesDo: [:c | c sharedPools do: [:s | s notEmpty ifTrue: [answer add: s]]].
+	self withAllSuperclassesDo: [:c | c sharedPoolsDo: [:p | answer add: p]].
 	^answer asArray!
 
 sourceDescriptor
@@ -808,6 +812,7 @@ variableSubclass: aClassSymbol
 !Class categoriesFor: #setName:!accessing!private! !
 !Class categoriesFor: #setSharedPoolNames:!pool variables!private! !
 !Class categoriesFor: #sharedPoolNames!pool variables!public! !
+!Class categoriesFor: #sharedPoolsDo:!pool variables!public! !
 !Class categoriesFor: #sharedStaticPools!pool variables!private! !
 !Class categoriesFor: #sourceDescriptor!accessing!public!source filing! !
 !Class categoriesFor: #sourceDescriptor:!accessing!private!source filing! !

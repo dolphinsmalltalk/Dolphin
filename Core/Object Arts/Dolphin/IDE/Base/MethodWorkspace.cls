@@ -1,7 +1,7 @@
 "Filed out from Dolphin Smalltalk 7"!
 
 SmalltalkWorkspace subclass: #MethodWorkspace
-	instanceVariableNames: 'methodAST refactoringTool'
+	instanceVariableNames: 'parseTree refactoringTool'
 	classVariableNames: 'AutoParseDwell AutoParseMask IsAutoParseEnabled'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -123,7 +123,7 @@ buildParseTree
 		ifNotNil: 
 			[:method | 
 			method isExpression ifTrue: [^SmalltalkParser parseExpression: method getSource in: methodClass]].
-	^[SmalltalkParser parseMethod: self source in: methodClass] on: Compiler notificationClass
+	^[self parseSourceIn: methodClass] on: Compiler notificationClass
 		do: 
 			[:err | 
 			compilationErrors addLast: err.
@@ -143,7 +143,7 @@ clearParseTree
 	the case where the method has not yet been parsed from the case where the method failed to
 	compile (in which case methodAST will have the value nil)."
 
-	methodAST := DeafObject current.
+	parseTree := DeafObject current.
 	self resetParseTimer!
 
 contextBindingFor: aString 
@@ -173,6 +173,9 @@ evaluationContext
 	"Answers the evaluation context for this workspace."
 
 	^evaluationContext ifNil: [self parseContext ifNotNil: [:class | class instanceClass]]!
+
+formattedCode: anStProgramNode
+	^anStProgramNode formattedCode!
 
 hasErrors
 	"Answer whether there are any errors in the source code (not warnings)"
@@ -237,9 +240,12 @@ onTimerTick: anInteger
 parseContext
 	^parentPresenter parseContext!
 
+parseSourceIn: methodClass 
+	^SmalltalkParser parseMethod: self source in: methodClass!
+
 parseTree
-	methodAST == DeafObject current ifTrue: [methodAST := self buildParseTree].
-	^methodAST!
+	parseTree == DeafObject current ifTrue: [parseTree := self buildParseTree].
+	^parseTree!
 
 promptToSaveChanges
 	^parentPresenter promptToSaveChanges!
@@ -307,7 +313,7 @@ reformattedSource
 	| ast |
 	ast := self parseTree.
 	^(compilationErrors detect: [:each | each severityClass == Error] ifNone: []) 
-		ifNil: [ast formattedCode]
+		ifNil: [self formattedCode: ast]
 		ifNotNil: 
 			[:ex | 
 			self showError: ex offset: 0.
@@ -444,6 +450,7 @@ widenSourceSelection
 !MethodWorkspace categoriesFor: #createSchematicWiring!initializing!public! !
 !MethodWorkspace categoriesFor: #defaultStylerClass!constants!private! !
 !MethodWorkspace categoriesFor: #evaluationContext!accessing!public! !
+!MethodWorkspace categoriesFor: #formattedCode:!helpers!private! !
 !MethodWorkspace categoriesFor: #hasErrors!public!testing! !
 !MethodWorkspace categoriesFor: #initialize!initializing!private! !
 !MethodWorkspace categoriesFor: #isAutoParseEnabled!accessing!public! !
@@ -458,6 +465,7 @@ widenSourceSelection
 !MethodWorkspace categoriesFor: #onTextChanged!event handling!public! !
 !MethodWorkspace categoriesFor: #onTimerTick:!event handling!public! !
 !MethodWorkspace categoriesFor: #parseContext!accessing!private! !
+!MethodWorkspace categoriesFor: #parseSourceIn:!helpers!private! !
 !MethodWorkspace categoriesFor: #parseTree!accessing!private! !
 !MethodWorkspace categoriesFor: #promptToSaveChanges!helpers!public! !
 !MethodWorkspace categoriesFor: #queryCommand:!commands!private! !

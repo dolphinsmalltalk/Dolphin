@@ -627,9 +627,11 @@ findDetails: aFindDetails
 	findDetails := aFindDetails!
 
 firstError
-	^compilationErrors isEmpty 
-		ifFalse: 
-			[compilationErrors detect: [:each | each severityClass == Error] ifNone: [compilationErrors first]]!
+	| ordered |
+	ordered := compilationErrors asSortedCollection: 
+					[:a :b | 
+					a severity > b severity or: [a severity = b severity and: [a position <= b position]]].
+	^ordered isEmpty ifFalse: [ordered first]!
 
 getCompletionSignatureFor: aString at: anInteger 
 	| prev receiverStyle selector |
@@ -938,6 +940,9 @@ messagesForToken: anAssociation startingWith: aString maxItems: anInteger
 
 modifiedModel
 	^modifiedModel!
+
+modifiedModel: aValueModel
+	modifiedModel := aValueModel!
 
 newVariablePool
 	workspacePool := PoolDictionary new!
@@ -1325,7 +1330,7 @@ showCompletionListAfterToken: anAssociation maxItems: anInteger
 				prefixLength: 0.
 			^self]!
 
-showError: aCompilerError offset: anInteger
+showError: aCompilerError offset: anInteger 
 	self errorModel value isNil ifTrue: [aCompilerError beep].
 	self errorModel value: aCompilerError.
 	self selectionRange: aCompilerError range + anInteger!
@@ -1335,17 +1340,13 @@ showFirstError: anInteger
 	which contains errors collected on the last compilation or evaluation. Answer
 	whether there are any errors."
 
-	| errors |
 	self highlightCompilationErrors: anInteger.
-	errors := self errorModel.
-	errors notNil 
-		ifTrue: 
-			[compilationErrors isEmpty 
-				ifTrue: [errors value: nil]
-				ifFalse: 
-					[| first |
-					first := self firstError.
-					self showError: first offset: anInteger]].
+	self errorModel 
+		ifNotNil: 
+			[:errors | 
+			self firstError 
+				ifNil: [errors value: nil]
+				ifNotNil: [:first | self showError: first offset: anInteger]].
 	^compilationErrors notEmpty!
 
 showIdentifierCompletionListAt: posInteger maxItems: maxInteger start: start 
@@ -1508,6 +1509,9 @@ tokenStartAt: anInteger
 		ifTrue: [anInteger]
 		ifFalse: [view tokenStartAt: anInteger]!
 
+updateErrorStatus
+	self errorModel ifNotNil: [:errors | errors value: self firstError]!
+
 validateUserInterface
 	"Validates the user interface for the receiver. Usually performed at idle time when the UI
 	has been flagged as being invalid"
@@ -1627,6 +1631,7 @@ wrapLinesInRange: anInterval indent: anInteger
 !SmalltalkWorkspace categoriesFor: #maybeShowCompletionList!autocompletion!helpers!private! !
 !SmalltalkWorkspace categoriesFor: #messagesForToken:startingWith:maxItems:!autocompletion!helpers!private! !
 !SmalltalkWorkspace categoriesFor: #modifiedModel!accessing!public! !
+!SmalltalkWorkspace categoriesFor: #modifiedModel:!accessing!public! !
 !SmalltalkWorkspace categoriesFor: #newVariablePool!operations!private! !
 !SmalltalkWorkspace categoriesFor: #onAutoComplete:startingAt:accept:!autocompletion!event handling!private! !
 !SmalltalkWorkspace categoriesFor: #onCharAdded:!autocompletion!event handling!private! !
@@ -1689,6 +1694,7 @@ wrapLinesInRange: anInterval indent: anInteger
 !SmalltalkWorkspace categoriesFor: #tokenBefore:!accessing!autocompletion!private! !
 !SmalltalkWorkspace categoriesFor: #tokenRangeAt:!accessing!autocompletion!private! !
 !SmalltalkWorkspace categoriesFor: #tokenStartAt:!accessing!autocompletion!private! !
+!SmalltalkWorkspace categoriesFor: #updateErrorStatus!operations!public! !
 !SmalltalkWorkspace categoriesFor: #validateUserInterface!operations!public! !
 !SmalltalkWorkspace categoriesFor: #workspacePool!accessing!public! !
 !SmalltalkWorkspace categoriesFor: #workspacePool:!accessing!public! !

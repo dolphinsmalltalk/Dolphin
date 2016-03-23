@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ClassDescription subclass: #Metaclass
 	instanceVariableNames: 'instanceClass '
@@ -157,6 +157,11 @@ setSharedPoolNames: aCollection
 	self instanceClass setSharedPoolNames: aCollection
 !
 
+sharedPoolsDo: aMonadicValuable 
+	"Evaluate the <monadicValuable> argument for each of the shared pools specified locally for the receiver."
+
+	self instanceClass sharedPoolsDo: aMonadicValuable!
+
 sharedStaticPools
 	"Answer the receiver's shared pools."
 
@@ -184,6 +189,7 @@ stbSaveOn: anSTBOutFiler
 !Metaclass categoriesFor: #removeClassVarName:!class variables!public! !
 !Metaclass categoriesFor: #removeFromSuper!class hierarchy-removing!private! !
 !Metaclass categoriesFor: #setSharedPoolNames:!pool variables!private! !
+!Metaclass categoriesFor: #sharedPoolsDo:!pool variables!public! !
 !Metaclass categoriesFor: #sharedStaticPools!pool variables!public! !
 !Metaclass categoriesFor: #stbSaveOn:!binary filing!public! !
 

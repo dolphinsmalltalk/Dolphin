@@ -544,7 +544,7 @@ queryCommand: aCommandQuery command: aCommand
 				isEnabled: (self canPerformCodeRefactoring and: 
 							[| node |
 							node := self selectedNode.
-							node notNil and: [self parseTree arguments includes: node]]).
+							node notNil and: [self parseTree methodNode arguments includes: node]]).
 			^true].
 	^self queryRenameCommand: aCommandQuery command: aCommand!
 

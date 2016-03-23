@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk XP"!
+"Filed out from Dolphin Smalltalk 7"!
 
 RBSourceFormatter subclass: #RBFormatter
 	instanceVariableNames: 'firstLineLength'
@@ -72,7 +72,7 @@ acceptLiteralArrayNode: aRBArrayLiteralNode
 	codeStream nextPut: (aRBArrayLiteralNode isForByteArray ifTrue: [$]] ifFalse: [$)])!
 
 acceptLiteralNode: aLiteralNode 
-	aLiteralNode token storeOn: codeStream!
+	aLiteralNode token formatOn: codeStream source: aLiteralNode source!
 
 acceptMessageNode: aMessageNode 
 	| newFormatter code |

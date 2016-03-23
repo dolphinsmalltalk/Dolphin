@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Behavior subclass: #ClassDescription
 	instanceVariableNames: 'instanceVariables methodsCatalogue protocols '
@@ -787,12 +787,20 @@ sharedPoolNames
 	^self instanceClass sharedPoolNames!
 
 sharedPools
-	"Answer a Set of the pools (dictionaries) that are specified locally 
-	in the receiver."
+	"Answer a Set of the pools (dictionaries) that are specified locally in the receiver."
+
+	| pools |
+	pools := Set new.
+	self sharedPoolsDo: [:each | pools add: each].
+	^pools!
+
+sharedPoolsDo: aMonadicValuable 
+	"Evaluate the <monadicValuable> argument for each of the shared pools specified locally for the receiver."
 
 	| environment |
 	environment := self environment.
-	^self sharedPoolNames collect: [:symbol | environment at: symbol ifAbsent: [Dictionary new]]!
+	self sharedPoolNames 
+		do: [:symbol | (environment at: symbol ifAbsent: []) ifNotNil: [:p | aMonadicValuable value: p]]!
 
 sharedVariableString
 	"Answer a String containing the names of the Pools accessable
@@ -939,6 +947,7 @@ whichNonVirtualCategoriesIncludeSelector: aSelector
 !ClassDescription categoriesFor: #setInstanceVariables:!instance variables!private! !
 !ClassDescription categoriesFor: #sharedPoolNames!pool variables!public! !
 !ClassDescription categoriesFor: #sharedPools!pool variables!public! !
+!ClassDescription categoriesFor: #sharedPoolsDo:!pool variables!public! !
 !ClassDescription categoriesFor: #sharedVariableString!accessing!public! !
 !ClassDescription categoriesFor: #sourceManager!accessing!public! !
 !ClassDescription categoriesFor: #stbReadFrom:format:!binary filing!public! !

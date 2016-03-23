@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #Behavior
 	instanceVariableNames: 'superclass methodDictionary instanceSpec subclasses '
@@ -102,7 +102,9 @@ allInstVarNames
 	those specified in the receiver and in all of its superclasses. The array ordering is the order 
 	in which the variables are stored and accessed by the interpreter."
 
-	^(self superclass ifNil: [#()] ifNotNil: [:parent | parent allInstVarNames]) , self instVarNames!
+	^self superclass 
+		ifNil: [self instVarNames]
+		ifNotNil: [:parent | parent allInstVarNames , self instVarNames]!
 
 allSelectors
 	"Answer a <Set> of <Symbol>s, being all the message selectors to which the receiver 

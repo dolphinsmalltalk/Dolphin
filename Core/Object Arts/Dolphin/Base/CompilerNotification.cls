@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Notification subclass: #CompilerNotification
 	instanceVariableNames: 'position ranges line extras methodClass source selector offset'
@@ -147,6 +147,12 @@ selector
 
 	^selector!
 
+severity
+	"Answer an integer severity level; 2 for errors, 1 for warnings, and 0 for info. Useful for
+	sorting compilation issues by severity."
+
+	^self subclassResponsibility!
+
 severityName
 	^self severityClass name!
 
@@ -172,6 +178,7 @@ source
 !CompilerNotification categoriesFor: #range!accessing!public! !
 !CompilerNotification categoriesFor: #ranges!accessing!public! !
 !CompilerNotification categoriesFor: #selector!accessing!public! !
+!CompilerNotification categoriesFor: #severity!constants!public! !
 !CompilerNotification categoriesFor: #severityName!displaying!public! !
 !CompilerNotification categoriesFor: #source!accessing!public! !
 
