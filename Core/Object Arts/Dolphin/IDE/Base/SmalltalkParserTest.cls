@@ -288,7 +288,7 @@ testExternalCalls
 
 	"One simple arg"
 	tree := SmalltalkParser parseMethod: 'blah: x <stdcall: dword blah sdword>'.
-	self assert: tree formattedCode trimBlanks = 'blah: x 
+	self assert: tree formattedCode trimBlanks = 'blah: x
 	<stdcall: dword blah sdword>'.
 	ffiCall := tree tag.
 	self assert: ffiCall returnType typeOrdinal = ExtCallArgDWORD.
@@ -297,13 +297,13 @@ testExternalCalls
 	self assert: ffiCall argumentTypes size = 1.
 	ffiCall argumentTypes with: (Array with: ExtCallArgSDWORD)
 		do: 
-			[:eachArg :eachType | 
+			[:eachArg :eachType |
 			self assert: eachArg typeOrdinal = eachType.
 			self assert: eachArg indirections = 0.
 			self assert: eachArg structClass isNil].
 
 	"Void is not a valid argument type (can only be used for return)"
-	self 
+	self
 		should: [SmalltalkParser parseMethod: 'blah: x <stdcall: void blah void>']
 		raise: SmalltalkParser errorClass
 		matching: [:err | err errorCode = CErrArgTypeCannotBeVoid].
@@ -317,17 +317,17 @@ testExternalCalls
 	src := String writeStream.
 	types := #('lpvoid' 'char' 'byte' 'sbyte' 'word' 'sword' 'dword' 'sdword' 'bool' 'handle' 'double' 'lpstr' 'oop' 'float' 'lppvoid' 'hresult' 'lpwstr' 'qword' 'sqword' 'ote' 'bstr' 'variant' 'date' 'varbool' 'guid').
 	types do: 
-			[:each | 
+			[:each |
 			src
 				nextPutAll: each;
 				nextPutAll: ': ';
-				nextPutAll: each;
-				space].
+				nextPutAll: each]
+		separatedBy: [src space].
 	src
 		crtab;
 		nextPutAll: '<stdcall: void fn'.
 	types do: 
-			[:each | 
+			[:each |
 			src
 				space;
 				nextPutAll: each].
@@ -339,7 +339,7 @@ testExternalCalls
 	self assert: ffiCall argumentTypes size = types size.
 	ffiCall argumentTypes with: (1 to: types size)
 		do: 
-			[:eachArg :eachType | 
+			[:eachArg :eachType |
 			self assert: eachArg typeOrdinal = eachType.
 			self assert: eachArg indirections = 0.
 			self assert: eachArg structClass isNil]!
