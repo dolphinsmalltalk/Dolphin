@@ -1,7 +1,7 @@
 "Filed out from Dolphin Smalltalk 7"!
 
 ClassBrowserPlugin subclass: #ClassAspectPlugin
-	instanceVariableNames: 'textPresenter originalText selectedClass'
+	instanceVariableNames: 'textPresenter originalText currentClass'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -26,14 +26,17 @@ applyOptions
 	self refreshIcon!
 
 aspect
+	"Answer the symbolic name of the aspect of the textual Class aspect that the receiver
+	displays/edits."
+
 	^self subclassResponsibility!
 
 backgroundUpdate
-	"The selected class has been changed, but this plugin is not the current card. Clear any
+	"Private - The selected class has been changed, but this plugin is not the current card. Clear any
 	cached content and perform any background update appropriate for the plugin such as changing
 	the card title text or icon)."
 
-	selectedClass := nil!
+	currentClass := nil!
 
 caption
 	^self subclassResponsibility!
@@ -73,12 +76,12 @@ displayOn: aStream
 
 foregroundUpdate
 	| buffer |
-	selectedClass := self browser selectedClass.
-	buffer := self newAspectBufferOn: selectedClass.
+	currentClass := self browser selectedClass.
+	buffer := self newAspectBufferOn: currentClass.
 	textPresenter
 		clearStatus;
 		model: buffer;
-		evaluationContext: selectedClass;
+		evaluationContext: currentClass;
 		searchEnvironment: self browser searchEnvironment.
 	originalText := buffer value.
 	self refreshIcon!
@@ -109,15 +112,15 @@ onBrowserMethodSelected
 		ifTrue: [self browser ensureSourceVisible]!
 
 onClassUpdated: aClass 
-	"Private - The comment of a class within the receiver has been changed. 
-	Refresh the text pane if it is the selected class."
+	"Private - The Class, aClass, has been updated. If it is the currently displayed class, then update 
+	the receiver."
 
 	"Implementation Note: Because Classes do not trigger change events off themselves, but
 	rather indirection via the system dictionary, we bridge the gap by monitoring class change
 	events, and filtering to just those changes on the current class and then notifying the
 	text model of the change."
 
-	selectedClass 
+	currentClass 
 		ifNotNil: 
 			[:class | 
 			class instanceClass == aClass instanceClass 
@@ -128,10 +131,9 @@ onClassUpdated: aClass
 					buffer isModified ifFalse: [originalText := buffer value]]]!
 
 onShownInBrowser
-	"Private - Event handler indicating that the receiver has been displayed within it's browser. 
-	Overridden by subclasses to perform just-in-time rendering of the receiver's contents."
+	"Private - Event handler indicating that the receiver has been displayed within it's browser."
 
-	selectedClass ifNil: [self foregroundUpdate].
+	currentClass ifNil: [self foregroundUpdate].
 	super onShownInBrowser.
 	"All the plugins are sharing the same error model, so we need to poke our own state into the
 	relevant models when activated."
@@ -173,13 +175,15 @@ refreshIcon
 	self view arrangement: self!
 
 systemUpdateEvent
+	"The symbolic name of the system event to monitor for class changes relevant to this plugin."
+
 	^#classUpdated:!
 
 textPresenterClass
 	^Smalltalk developmentSystem workspaceClass! !
 !ClassAspectPlugin categoriesFor: #accept!commands!public! !
 !ClassAspectPlugin categoriesFor: #applyOptions!options!private! !
-!ClassAspectPlugin categoriesFor: #aspect!helpers!private! !
+!ClassAspectPlugin categoriesFor: #aspect!constants!private! !
 !ClassAspectPlugin categoriesFor: #backgroundUpdate!private!updating! !
 !ClassAspectPlugin categoriesFor: #caption!constants!private! !
 !ClassAspectPlugin categoriesFor: #createComponents!initializing!private! !

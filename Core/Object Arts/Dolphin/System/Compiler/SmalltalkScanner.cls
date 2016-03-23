@@ -182,7 +182,7 @@ on: aStream
 	errorHandler := self.
 	separatorsInLiterals := false.
 	extendedLiterals := true.
-	nameSpaceCharacter := $..	"N.B. Dolphin does not currently support namespaces."
+	nameSpaceCharacter := $..	"N.B. Dolphin support namespaces other than for pools."
 	line := 1!
 
 previousStepPosition

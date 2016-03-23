@@ -15,7 +15,7 @@ severity
 	sorting compilation issues by severity."
 
 	^2! !
-!CompilerErrorNotification categoriesFor: #severity!displaying!public! !
+!CompilerErrorNotification categoriesFor: #severity!constants!public! !
 
 !CompilerErrorNotification class methodsFor!
 

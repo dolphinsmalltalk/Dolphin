@@ -178,7 +178,7 @@ source
 !CompilerNotification categoriesFor: #range!accessing!public! !
 !CompilerNotification categoriesFor: #ranges!accessing!public! !
 !CompilerNotification categoriesFor: #selector!accessing!public! !
-!CompilerNotification categoriesFor: #severity!displaying!public! !
+!CompilerNotification categoriesFor: #severity!constants!public! !
 !CompilerNotification categoriesFor: #severityName!displaying!public! !
 !CompilerNotification categoriesFor: #source!accessing!public! !
 

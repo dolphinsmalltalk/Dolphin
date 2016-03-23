@@ -18,6 +18,6 @@ severity
 
 severityName
 	^#Note! !
-!CompilerInfoNotification categoriesFor: #severity!displaying!public! !
+!CompilerInfoNotification categoriesFor: #severity!constants!public! !
 !CompilerInfoNotification categoriesFor: #severityName!displaying!public! !
 

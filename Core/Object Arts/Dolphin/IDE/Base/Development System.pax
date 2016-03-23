@@ -830,7 +830,7 @@ Presenter subclass: #TwinLevelInspector
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ClassBrowserPlugin subclass: #ClassAspectPlugin
-	instanceVariableNames: 'textPresenter originalText selectedClass'
+	instanceVariableNames: 'textPresenter originalText currentClass'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!

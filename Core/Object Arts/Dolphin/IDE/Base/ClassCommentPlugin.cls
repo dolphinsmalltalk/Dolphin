@@ -6,8 +6,8 @@ ClassAspectPlugin subclass: #ClassCommentPlugin
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ClassCommentPlugin guid: (GUID fromString: '{9BBB729C-F516-492E-B991-7AD0C238A37F}')!
-ClassCommentPlugin comment: 'ClassCommentPlugin is a <classBrowserPlugin>s for displaying/editing class comments.'!
-!ClassCommentPlugin categoriesForClass!Browser-Plugins!MVP-Presenters! !
+ClassCommentPlugin comment: 'ClassCommentPlugin is a <classBrowserPlugin> for displaying/editing class comments.'!
+!ClassCommentPlugin categoriesForClass!Browser-Plugins! !
 !ClassCommentPlugin methodsFor!
 
 applyOptions
@@ -17,6 +17,9 @@ applyOptions
 !
 
 aspect
+	"Answer the symbolic name of the aspect of the textual Class aspect that the receiver
+	displays/edits."
+
 	^#comment!
 
 backgroundUpdate
@@ -45,7 +48,7 @@ setWordWrap
 systemUpdateEvent
 	^#classCommented:! !
 !ClassCommentPlugin categoriesFor: #applyOptions!options!private! !
-!ClassCommentPlugin categoriesFor: #aspect!helpers!private! !
+!ClassCommentPlugin categoriesFor: #aspect!constants!private! !
 !ClassCommentPlugin categoriesFor: #backgroundUpdate!private!updating! !
 !ClassCommentPlugin categoriesFor: #caption!constants!private! !
 !ClassCommentPlugin categoriesFor: #defaultHelpId!constants!public! !

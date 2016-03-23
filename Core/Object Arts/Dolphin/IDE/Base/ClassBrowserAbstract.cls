@@ -672,6 +672,9 @@ customDrawProtocols: aNMLVCUSTOMDRAW
 	protocol isNil ifTrue: [^self].
 	self emphasiseProtocolItem: aNMLVCUSTOMDRAW isRelevant: (self methodProtocols includes: protocol)!
 
+definitionCardName
+	^'definition'!
+
 deleteItCommand
 	| focus |
 	focus := View focus.
@@ -835,7 +838,7 @@ inspectMethodProtocols
 				ifFalse: [prots])!
 
 isDefinitionCardVisible
-	^self currentCard == definitionPresenter view parentView!
+	^self currentCard view name = self definitionCardName!
 
 isDisplayingCategories
 	"Private - Answer whether the categories pane is currently active."
@@ -906,7 +909,7 @@ isShowInheritedMethods
 	^flags allMask: ShowInheritedMethodsMask!
 
 isSourceCardVisible
-	^self currentCard view name == 'definition'!
+	^self currentCard view name = self sourceCardName!
 
 killVisitTimer
 	self view killTimer: 1!
@@ -984,9 +987,9 @@ newMethod
 onBrowserCardChanged
 	| currentCardName |
 	currentCardName := self currentCard view name.
-	(currentCardName = 'source' 
+	(currentCardName = self sourceCardName 
 		ifTrue: [methodBrowserPresenter sourcePresenter]
-		ifFalse: [currentCardName = 'definition' ifTrue: [definitionPresenter]]) 
+		ifFalse: [currentCardName = self definitionCardName ifTrue: [definitionPresenter]]) 
 			ifNotNil: 
 				[:workspace | 
 				workspace updateErrorStatus.
@@ -2296,6 +2299,9 @@ shortCaptionForMethod: aCompiledMethod
 slideyPinNames
 	^#('filtersSlidey')!
 
+sourceCardName
+	^'source'!
+
 statusModel
 	^statusModel!
 
@@ -2593,6 +2599,7 @@ variablesMethodFilter
 !ClassBrowserAbstract categoriesFor: #currentCard!accessing!public! !
 !ClassBrowserAbstract categoriesFor: #customDrawCategoryTree:!helpers!private! !
 !ClassBrowserAbstract categoriesFor: #customDrawProtocols:!helpers!private! !
+!ClassBrowserAbstract categoriesFor: #definitionCardName!constants!private! !
 !ClassBrowserAbstract categoriesFor: #deleteItCommand!helpers!private! !
 !ClassBrowserAbstract categoriesFor: #displayVersionInfoFor:!event handling!private! !
 !ClassBrowserAbstract categoriesFor: #dropMethods:onto:!helpers!private! !
@@ -2738,6 +2745,7 @@ variablesMethodFilter
 !ClassBrowserAbstract categoriesFor: #shortCaption!accessing!public! !
 !ClassBrowserAbstract categoriesFor: #shortCaptionForMethod:!helpers!private! !
 !ClassBrowserAbstract categoriesFor: #slideyPinNames!accessing!private! !
+!ClassBrowserAbstract categoriesFor: #sourceCardName!constants!private! !
 !ClassBrowserAbstract categoriesFor: #statusModel!accessing!private! !
 !ClassBrowserAbstract categoriesFor: #statusText:!accessing!private! !
 !ClassBrowserAbstract categoriesFor: #toggleFilterObjectMethods!commands!public! !
