@@ -40,6 +40,11 @@ In addition any selector in Object with a ''basic'' prefix may be subject to inl
 !Object categoriesForClass!Kernel-Objects! !
 !Object methodsFor!
 
+?? anObject
+	"Answer the receiver if not nil, else the operand."
+
+	^self!
+
 _deepCopy: copiesDictionary 
 	"Private - Answer a 'deep copy' of the receiver, cloning only those parts not already included
 	in the IdentityDictionary argument, copiesDictionary. This method implements the
@@ -1483,6 +1488,7 @@ yourself
 
 	^self
 ! !
+!Object categoriesFor: #??!converting!public! !
 !Object categoriesFor: #_deepCopy:!copying!private! !
 !Object categoriesFor: #_deepenShallowCopy:trail:!copying!private! !
 !Object categoriesFor: #~~!comparing!public! !
