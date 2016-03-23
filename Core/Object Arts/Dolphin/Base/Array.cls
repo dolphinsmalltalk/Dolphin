@@ -47,21 +47,22 @@ refersToLiteral: anObject
 	self do: [:each | (each refersToLiteral: anObject) ifTrue: [^true]].
 	^false!
 
-replaceElementsOf: anIndexableObject from: startInteger to: stopInteger startingAt: startAtInteger 
+replaceElementsOf: anIndexableObject from: startInteger to: stopInteger startingAt: startAtInteger
 	"Private - Replace the indexable instance variables of the variable pointer object,
 	anIndexableObject, between startInteger and stopInteger inclusive with elements of the
-	receiver starting from startAtInteger."
+	receiver starting from startAtInteger. Answers anIndexableObject."
 
 	| offset |
 	<primitive: 188>
 	offset := startAtInteger - startInteger.
-	(anIndexableObject == self and: [startAtInteger < startInteger]) 
+	(anIndexableObject == self and: [startAtInteger < startInteger])
 		ifTrue: 
 			[stopInteger to: startInteger
 				by: -1
 				do: [:i | anIndexableObject basicAt: i put: (self basicAt: offset + i)]]
 		ifFalse: 
-			[startInteger to: stopInteger do: [:i | anIndexableObject basicAt: i put: (self basicAt: offset + i)]]!
+			[startInteger to: stopInteger do: [:i | anIndexableObject basicAt: i put: (self basicAt: offset + i)]].
+	^anIndexableObject!
 
 replaceFrom: startInteger to: stopInteger with: aSequencedReadableCollection startingAt: startAtInteger 
 	"Destructively replace the elements of the receiver between the <integer> arguments

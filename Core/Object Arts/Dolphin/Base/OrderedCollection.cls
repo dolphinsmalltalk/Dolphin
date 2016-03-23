@@ -288,6 +288,18 @@ removeAtIndex: index
 			lastIndex := lastIndex - 1].
 	^element!
 
+replaceElementsOf: anIndexableObject from: startInteger to: stopInteger startingAt: startAtInteger
+	"Private - Replace the indexable instance variables of the variable pointer object,
+	anIndexableObject, between startInteger and stopInteger inclusive with elements of the
+	receiver starting from startAtInteger. Answers anIndexableObject."
+
+	<primitive: 188>
+	^super
+		replaceElementsOf: anIndexableObject
+		from: startInteger
+		to: stopInteger
+		startingAt: startAtInteger!
+
 resize: anInteger
 	"Private - Override back to the basic implementation as our elements are contiguously located.
 	This changes the capacity of the receiver, but has no other effect."
@@ -376,6 +388,7 @@ uncheckedFrom: startInteger to: stopInteger keysAndValuesDo: aDyadicValuable
 !OrderedCollection categoriesFor: #removeAll!public!removing! !
 !OrderedCollection categoriesFor: #removeAllSuchThat:!accessing!public! !
 !OrderedCollection categoriesFor: #removeAtIndex:!public!removing! !
+!OrderedCollection categoriesFor: #replaceElementsOf:from:to:startingAt:!private!replacing! !
 !OrderedCollection categoriesFor: #resize:!mutating!private! !
 !OrderedCollection categoriesFor: #reverseDo:!enumerating!public! !
 !OrderedCollection categoriesFor: #select:!enumerating!public! !

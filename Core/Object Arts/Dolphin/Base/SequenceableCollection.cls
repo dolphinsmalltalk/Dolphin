@@ -126,6 +126,17 @@ approxSize
 
 	^self size!
 
+asArray
+	"Answer an <Array> whose elements are those of the receiver in the same sequence."
+
+	| size |
+	size := self size.
+	^self
+		replaceElementsOf: (Array new: size)
+		from: 1
+		to: size
+		startingAt: 1!
+
 asRunArray
 	"Answer a <RunArray> whose elements are the same as those of the receiver. The order of
 	elements will be the same, and there will be the same number when enumerated, but the
@@ -908,20 +919,21 @@ replaceBytesOf: aByteObject from: start to: stop startingAt: fromStart
 	start to: stop do: [:i | aByteObject at: i put: (self at: i + fromOffset)].
 	^aByteObject!
 
-replaceElementsOf: anIndexableObject from: startInteger to: stopInteger startingAt: startAtInteger 
+replaceElementsOf: anIndexableObject from: startInteger to: stopInteger startingAt: startAtInteger
 	"Private - Replace the indexable instance variables of the variable pointer object,
 	anIndexableObject, between startInteger and stopInteger inclusive with elements of the
-	receiver starting from startAtInteger."
+	receiver starting from startAtInteger. Answers anIndexableObject."
 
 	| offset |
 	offset := startAtInteger - startInteger.
-	(anIndexableObject == self and: [startAtInteger < startInteger]) 
+	(anIndexableObject == self and: [startAtInteger < startInteger])
 		ifTrue: 
 			[stopInteger to: startInteger
 				by: -1
 				do: [:i | anIndexableObject basicAt: i put: (self at: offset + i)]]
 		ifFalse: 
-			[startInteger to: stopInteger do: [:i | anIndexableObject basicAt: i put: (self at: offset + i)]]!
+			[startInteger to: stopInteger do: [:i | anIndexableObject basicAt: i put: (self at: offset + i)]].
+	^anIndexableObject!
 
 replaceFrom: start to: stop with: replacementElements
 	"Destructively replace the elements of the receiver between the <integer> arguments
@@ -1129,6 +1141,7 @@ writeStream
 !SequenceableCollection categoriesFor: #anyOne!accessing!public! !
 !SequenceableCollection categoriesFor: #appendToStream:!double dispatch!private! !
 !SequenceableCollection categoriesFor: #approxSize!accessing!private! !
+!SequenceableCollection categoriesFor: #asArray!converting!public! !
 !SequenceableCollection categoriesFor: #asRunArray!converting!public! !
 !SequenceableCollection categoriesFor: #associations!accessing!public! !
 !SequenceableCollection categoriesFor: #at:!accessing!public!testing! !
