@@ -20,6 +20,11 @@ UndefinedObject implements the following ANSI protocols:
 !UndefinedObject categoriesForClass!Kernel-Objects! !
 !UndefinedObject methodsFor!
 
+?? anObject
+	"Answer the receiver if not nil, else the operand."
+
+	^anObject!
+
 _deepCopy: copiesDictionary
 	^self!
 
@@ -184,6 +189,7 @@ yourAddress
 	Nil is treated like a NULL pointer."
 
 	^0! !
+!UndefinedObject categoriesFor: #??!converting!public! !
 !UndefinedObject categoriesFor: #_deepCopy:!copying!private! !
 !UndefinedObject categoriesFor: #bindingFor:!compiling!public! !
 !UndefinedObject categoriesFor: #deepCopy!copying!public! !

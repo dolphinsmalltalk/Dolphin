@@ -62,6 +62,14 @@ testIfNilAndIfNotNil
 	self assert: (evaluated not).
 	!
 
+testNilCoalesce
+	| obj1 obj2 |
+	obj1 := Object new.
+	obj2 := Object new.
+	self assert: (obj1 ?? obj2) == obj1.
+	obj1 := nil.
+	self assert: (obj1 ?? obj2) == obj2!
+
 testObjectEventRegistry
 	self assert: _EventsRegister countElements = _EventsRegister size!
 
@@ -281,6 +289,7 @@ testZeroArgEvent
 !ObjectTest categoriesFor: #testDeepCopy!public!unit tests! !
 !ObjectTest categoriesFor: #testEventCollectionWeakness!public!unit tests! !
 !ObjectTest categoriesFor: #testIfNilAndIfNotNil!public!unit tests! !
+!ObjectTest categoriesFor: #testNilCoalesce!public!unit tests! !
 !ObjectTest categoriesFor: #testObjectEventRegistry!public!unit tests! !
 !ObjectTest categoriesFor: #testOneArgEvent!public!unit tests! !
 !ObjectTest categoriesFor: #testRemoveEventsTriggeredFor!public!unit tests! !
