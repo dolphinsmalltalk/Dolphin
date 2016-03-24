@@ -247,8 +247,23 @@ BOOL __fastcall Interpreter::primitiveNextPutAll()
 		if (ObjectMemory::fetchClassOf(value) != Pointers.ClassArray)
 			return primitiveFailure(4);	// Attempt to put non-Array
 
-		// Not yet implemented
-		return primitiveFailure(1);
+		ArrayOTE* oteArray = reinterpret_cast<ArrayOTE*>(value);
+		Array* array = oteArray->m_location;
+		MWORD valueSize = oteArray->pointersSize();
+		newIndex = MWORD(index) + valueSize;
+
+		if (newIndex >= (MWORD)limit)			// Beyond write limit
+			return primitiveFailure(2);
+
+		if (static_cast<int>(newIndex) >= oteBuf->pointersSizeForUpdate())
+			return primitiveFailure(3);	// Attempt to write off end of buffer
+
+		Array* buf = static_cast<Array*>(oteBuf->m_location);
+
+		for (MWORD i = 0; i < valueSize; i++)
+		{
+			ObjectMemory::storePointerWithValue(buf->m_elements[index + i], array->m_elements[i]);
+		}
 	}
 	else
 		return primitiveFailure(1);
