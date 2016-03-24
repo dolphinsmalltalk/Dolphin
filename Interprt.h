@@ -588,6 +588,7 @@ private:
 	static BOOL __fastcall primitiveStringReplace();
 	static BOOL __fastcall primitiveReplaceBytes();
 	static BOOL __fastcall primitiveIndirectReplaceBytes();
+	static BOOL __fastcall primitiveReplacePointers();
 
 	static BOOL __fastcall primitiveHashBytes();
 	static BOOL __fastcall primitiveStringCompare();

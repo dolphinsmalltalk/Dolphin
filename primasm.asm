@@ -250,6 +250,7 @@ PRIMSNAPSHOT EQU ?primitiveSnapshot@Interpreter@@CIHAAVCompiledMethod@ST@@I@Z
 extern PRIMSNAPSHOT:near32
 extern ?primitiveReplaceBytes@Interpreter@@CIHXZ:near32
 extern ?primitiveIndirectReplaceBytes@Interpreter@@CIHXZ:near32
+extern ?primitiveReplacePointers@Interpreter@@CIHXZ:near32
 PRIMCORELEFT EQU ?primitiveCoreLeft@Interpreter@@CIHAAVCompiledMethod@ST@@I@Z
 extern PRIMCORELEFT:near32
 PRIMQUIT EQU ?primitiveQuit@Interpreter@@CIXAAVCompiledMethod@ST@@I@Z
@@ -538,7 +539,7 @@ DWORD		primitiveIndirectDWORDAt					; case 184  Will be primitiveIndirectUIntPtr
 DWORD		primitiveIndirectDWORDAtPut					; case 185  Will be primitiveIndirectUIntPtrAtPut
 DWORD		primitiveIndirectSDWORDAt					; case 186  Will be primitiveIndirectIntPtrAt
 DWORD		primitiveIndirectSDWORDAtPut				; case 187  Will be primitiveIndirectIntPtrAtPut
-DWORD		unusedPrimitive								; case 188
+DWORD		primitiveReplacePointers					; case 188
 DWORD		unusedPrimitive								; case 189
 DWORD		unusedPrimitive								; case 190
 DWORD		unusedPrimitive								; case 191
@@ -3083,6 +3084,10 @@ ENDIF
 BEGINPRIMITIVE primitiveResize
 	CallSimplePrim <?primitiveResize@Interpreter@@CIHXZ>
 ENDPRIMITIVE primitiveResize
+
+BEGINPRIMITIVE primitiveReplacePointers
+	CallSimplePrim <?primitiveReplacePointers@Interpreter@@CIHXZ>
+ENDPRIMITIVE primitiveReplacePointers
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; primitiveTruncated()
