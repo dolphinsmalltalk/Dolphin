@@ -42,7 +42,7 @@ testBinaryIncludes
 	self should: [searchee binaryIncludes: Object new] raise: MessageNotUnderstood!
 
 testReplaceFromToWithStartingAt
-	self shouldnt: [super testReplaceFromToWithStartingAt] implement: #at:put:!
+	self shouldnt: [super testReplaceFromToWithStartingAt] implement: #replaceFrom:to:with:startingAt:!
 
 testStrongTalkTests
 !

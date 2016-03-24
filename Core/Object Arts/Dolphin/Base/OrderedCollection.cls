@@ -115,6 +115,19 @@ at: index put: storee
 		ifTrue: [self errorSubscriptBounds: index]
 		ifFalse: [self basicAt: basicIndex put: storee]!
 
+basicReplaceElementsOf: anIndexableObject from: startInteger to: stopInteger startingAt: startAtInteger
+	"Private - Replace the indexable instance variables of the variable pointer object, anIndexableObject, between
+	startInteger and stopInteger inclusive with elements of the receiver starting from startAtInteger. Answers
+	anIndexableObject."
+
+	| offset |
+	<primitive: 188>
+	offset := startAtInteger - startInteger.
+	(anIndexableObject == self and: [startAtInteger < startInteger])
+		ifTrue: [stopInteger to: startInteger by: -1 do: [:i | anIndexableObject basicAt: i put: (self basicAt: offset + i)]]
+		ifFalse: [startInteger to: stopInteger do: [:i | anIndexableObject basicAt: i put: (self basicAt: offset + i)]].
+	^anIndexableObject!
+
 copyWith: newElement
 	"Answer a <sequencedReadableCollection> which is a copy of 
 	the receiver that has newElement added in the correct position
@@ -293,11 +306,28 @@ replaceElementsOf: anIndexableObject from: startInteger to: stopInteger starting
 	anIndexableObject, between startInteger and stopInteger inclusive with elements of the
 	receiver starting from startAtInteger. Answers anIndexableObject."
 
-	<primitive: 188>
-	^super
-		replaceElementsOf: anIndexableObject
+	^self
+		basicReplaceElementsOf: anIndexableObject
 		from: startInteger
 		to: stopInteger
+		startingAt: startAtInteger + firstIndex - 1!
+
+replaceFrom: startInteger to: stopInteger with: aSequencedReadableCollection startingAt: startAtInteger
+	"Destructively replace the elements of the receiver between the <integer> arguments
+	startInteger and stopInteger inclusive with the <Object> elements of the
+	<sequencedReadableCollection> argument, aSequencedReadableCollection, beginning with its
+	element with <integer> index startAtInteger. Answer the receiver. Overlapping moves are
+	correctly handled. Unlike #replaceFrom:to:with:, the size of aSequenceableCollection is not
+	checked directly (X3J20 does not specify that this should be an error), but an error will be
+	raised when an attempt is made to access an out-of-bounds element in replacementElements. It
+	is not an error to specify an empty replacement interval, even if startInteger, stopInteger,
+	and/or startAtInteger are out-of-bounds (this is compatible with the major
+	implementations)."
+
+	aSequencedReadableCollection
+		replaceElementsOf: self
+		from: startInteger + firstIndex - 1
+		to: stopInteger + firstIndex - 1
 		startingAt: startAtInteger!
 
 resize: anInteger
@@ -373,6 +403,7 @@ uncheckedFrom: startInteger to: stopInteger keysAndValuesDo: aDyadicValuable
 !OrderedCollection categoriesFor: #at:!accessing!public! !
 !OrderedCollection categoriesFor: #at:ifAbsent:!accessing!public! !
 !OrderedCollection categoriesFor: #at:put:!accessing!public! !
+!OrderedCollection categoriesFor: #basicReplaceElementsOf:from:to:startingAt:!private!replacing! !
 !OrderedCollection categoriesFor: #copyWith:!copying!public! !
 !OrderedCollection categoriesFor: #copyWithout:!copying!public! !
 !OrderedCollection categoriesFor: #do:!enumerating!public! !
@@ -389,6 +420,7 @@ uncheckedFrom: startInteger to: stopInteger keysAndValuesDo: aDyadicValuable
 !OrderedCollection categoriesFor: #removeAllSuchThat:!accessing!public! !
 !OrderedCollection categoriesFor: #removeAtIndex:!public!removing! !
 !OrderedCollection categoriesFor: #replaceElementsOf:from:to:startingAt:!private!replacing! !
+!OrderedCollection categoriesFor: #replaceFrom:to:with:startingAt:!public!replacing! !
 !OrderedCollection categoriesFor: #resize:!mutating!private! !
 !OrderedCollection categoriesFor: #reverseDo:!enumerating!public! !
 !OrderedCollection categoriesFor: #select:!enumerating!public! !
