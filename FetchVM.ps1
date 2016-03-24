@@ -4,7 +4,7 @@
 
 param 
 (
-    [string]$VMversion="v7.0.8"
+    [string]$VMversion="v7.0.9"
 )
 
 Try 
