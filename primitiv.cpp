@@ -270,3 +270,90 @@ void __fastcall Interpreter::primitiveQuit(CompiledMethod&,unsigned)
 	Oop argPointer = stackTop();
 	exitSmalltalk(ObjectMemoryIntegerValueOf(argPointer));
 }
+
+BOOL __fastcall Interpreter::primitiveReplacePointers()
+{
+	Oop integerPointer = stackTop();
+	if (!ObjectMemoryIsIntegerObject(integerPointer))
+		return primitiveFailure(0);	// startAt is not an integer
+	SMALLINTEGER startAt = ObjectMemoryIntegerValueOf(integerPointer);
+
+	integerPointer = stackValue(1);
+	if (!ObjectMemoryIsIntegerObject(integerPointer))
+		return primitiveFailure(1);	// stop is not an integer
+	SMALLINTEGER stop = ObjectMemoryIntegerValueOf(integerPointer);
+
+	integerPointer = stackValue(2);
+	if (!ObjectMemoryIsIntegerObject(integerPointer))
+		return primitiveFailure(2);	// start is not an integer
+	SMALLINTEGER start = ObjectMemoryIntegerValueOf(integerPointer);
+
+	PointersOTE* argPointer = reinterpret_cast<PointersOTE*>(stackValue(3));
+	if (ObjectMemoryIsIntegerObject(argPointer) || !argPointer->isPointers())
+		return primitiveFailure(3);	// Argument MUST be pointer object
+
+	if (stop >= start)
+	{
+		if (startAt < 1 || start < 1)
+			return primitiveFailure(4);		// Out-of-bounds
+
+		// Empty move if stop before start, is considered valid regardless (strange but true)
+		// this is the convention adopted by most implementations.
+
+		// We can test that we're not going to write off the end of the argument
+		int length = argPointer->pointersSizeForUpdate();
+
+		unsigned toOffset = argPointer->m_oteClass->m_location->fixedFields();
+		
+		// Adjust to zero-based indices into variable fields of target
+		stop = stop - 1 + toOffset;
+		start = start - 1 + toOffset;
+
+		if (stop >= length)
+			return primitiveFailure(4);		// Bounds error (or object is immutable so size < 0)
+
+		VariantObject* arg = reinterpret_cast<PointersOTE*>(argPointer)->m_location;
+		Oop* pTo = arg->m_fields;
+
+		PointersOTE* receiverPointer = reinterpret_cast<PointersOTE*>(stackValue(4));
+
+		int fromSize = receiverPointer->pointersSize();
+		unsigned fromOffset = receiverPointer->m_oteClass->m_location->fixedFields();
+		// Adjust to zero based index into variable fields of source
+		startAt = startAt - 1 + fromOffset;
+
+		int stopAt = startAt + stop - start;
+		if (stopAt >= fromSize)
+			return primitiveFailure(4);
+
+		// Only works for pointer objects
+		ASSERT(receiverPointer->isPointers());
+		VariantObject* receiverObject = receiverPointer->m_location;
+
+		Oop* pFrom = receiverObject->m_fields;
+
+		// Overlapping upwards move? 
+		if (argPointer == receiverPointer && startAt < start)
+		{
+			// Need to do backwards
+			for (int i = stop - start; i >= 0; i--)
+			{
+				ObjectMemory::storePointerWithValue(pTo[start + i], pFrom[startAt + i]);
+			}
+		}
+		else
+		{
+			// Do forwards
+			for (int i = 0; i <= stop - start; i++)
+			{
+				ObjectMemory::storePointerWithValue(pTo[start + i], pFrom[startAt + i]);
+			}
+		}
+	}
+
+	// Answers the argument by moving it down over the receiver
+	stackValue(4) = reinterpret_cast<Oop>(argPointer);
+	pop(4);
+	return TRUE;
+}
+

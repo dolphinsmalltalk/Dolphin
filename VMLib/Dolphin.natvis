@@ -78,7 +78,7 @@
   <Type Name="TOTE&lt;ST::Character&gt;">
     <DisplayString Condition="(Oop)this == Pointers.Nil">nil</DisplayString>
     <DisplayString Condition="m_flags.m_free">**a Freed Character**</DisplayString>
-    <DisplayString>{m_location->m_asciiValue,c}</DisplayString>
+    <DisplayString>{m_location->m_asciiValue>>1,c}</DisplayString>
     <Expand HideRawView="true"></Expand>   
   </Type>
   
