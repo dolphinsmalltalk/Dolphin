@@ -94,10 +94,10 @@ exerciseReplaceElementsOf: targetCollection from: startInteger to: stopInteger w
 	captureFields := [:obj | (1 to: obj class instSize) collect: [:i | obj instVarAt: i]].
 	fieldsBefore := captureFields value: targetCollection.
 	target := targetCollection copy.
-	sourceCollection
-		replaceElementsOf: target
-		from: startInteger
+	target
+		replaceFrom: startInteger
 		to: stopInteger
+		with: sourceCollection
 		startingAt: startAtInteger.
 	"The fixed fields should not have been touched"
 	fieldsAfter := captureFields value: target.
@@ -105,8 +105,7 @@ exerciseReplaceElementsOf: targetCollection from: startInteger to: stopInteger w
 	"Build the expected result using low-level operations to avoid inadvertently using the primitive under test"
 	expected := targetCollection class ofSize: targetCollection size.
 	1 to: startInteger - 1 do: [:i | expected at: i put: (targetCollection at: i)].
-	startInteger to: stopInteger
-		do: [:i | expected at: i put: (sourceCollection at: i - startInteger + startAtInteger)].
+	startInteger to: stopInteger do: [:i | expected at: i put: (sourceCollection at: i - startInteger + startAtInteger)].
 	stopInteger + 1 to: targetCollection size do: [:i | expected at: i put: (targetCollection at: i)].
 	"Did it work?"
 	self assert: target = expected!
@@ -215,20 +214,20 @@ exerciseReplaceElementsOf: targetCollection with: sourceCollection
 	"StartAt = end, count = 2 (source bounds error)"
 	target := targetCollection copy.
 	self should: 
-			[sourceCollection
-				replaceElementsOf: target
-				from: 1
+			[target
+				replaceFrom: 1
 				to: 2
+				with: sourceCollection
 				startingAt: sourceCollection size]
 		raise: BoundsError.
 
 	"Off end of target"
 	target := targetCollection copy.
 	self should: 
-			[sourceCollection
-				replaceElementsOf: target
-				from: 2
+			[target
+				replaceFrom: 2
 				to: target size + 1
+				with: sourceCollection
 				startingAt: 1]
 		raise: BoundsError.
 
@@ -236,16 +235,16 @@ exerciseReplaceElementsOf: targetCollection with: sourceCollection
 	target := targetCollection copy.
 	self should: 
 			[target
-				replaceElementsOf: target
-				from: 1
+				replaceFrom: 1
 				to: 5
+				with: target
 				startingAt: 2]
 		raise: BoundsError.
 	self should: 
 			[target
-				replaceElementsOf: target
-				from: 2
+				replaceFrom: 2
 				to: 6
+				with: target
 				startingAt: 1]
 		raise: BoundsError!
 
@@ -787,10 +786,21 @@ testPrimitiveIsNullBytes
 
 testPrimitiveReplaceElements
 	self exerciseReplaceElementsOf: #($a $b $c $d $e) with: #(1 2 3 4 5 6).
-	self exerciseReplaceElementsOf: #($a $b $c $d $e) with: #(1 2 3 4 5 6) asOrderedCollection.
-	self exerciseReplaceElementsOf: #($a $b $c $d $e) asOrderedCollection with: #(1 2 3 4 5 6).
-	self exerciseReplaceElementsOf: #($a $b $c $d $e) asOrderedCollection
-		with: #(1 2 3 4 5 6) asOrderedCollection!
+	self exerciseReplaceElementsOf: #($a $b $c $d $e) with: #(1 2 3 4 5 6).
+	self exerciseReplaceElementsOf: #($a $b $c $d $e)
+		with: ((#(2 3 4 5 6) asOrderedCollection)
+				addFirst: 1;
+				yourself).
+	self exerciseReplaceElementsOf: ((#(nil $a $b $c $d $e) asOrderedCollection)
+				removeFirst;
+				yourself)
+		with: #(1 2 3 4 5 6).
+	self exerciseReplaceElementsOf: ((#($b $c $d $e) asOrderedCollection)
+				addFirst: $a;
+				yourself)
+		with: ((#(0 1 2 3 4 5 6) asOrderedCollection)
+				removeFirst;
+				yourself)!
 
 testPrimitiveStringAt
 	| array |
