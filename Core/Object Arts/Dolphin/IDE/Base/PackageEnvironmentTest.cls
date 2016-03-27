@@ -10,7 +10,7 @@ PackageEnvironmentTest comment: 'SUnitBrowser openOnTestCase: self'!
 !PackageEnvironmentTest categoriesForClass!Refactory-Testing! !
 !PackageEnvironmentTest methodsFor!
 
-classNamesFor: aPackageEnvironment 
+classNamesFor: aPackageEnvironment
 	"Superclass implementation will fail because PackageEnvironment may contain partial classes
 	and therefore some classes will be in both the environment and its negation."
 
@@ -18,14 +18,13 @@ classNamesFor: aPackageEnvironment
 	classNames := (aPackageEnvironment classNames asSet)
 				addAll: aPackageEnvironment not classNames;
 				yourself.
-	self assert: (classNames equals: BrowserEnvironment new classNames).
+	self assert: classNames = BrowserEnvironment new classNames.
 	"	looseClasses := Set new.
 	aPackageEnvironment packageNames do: [:eachPak | (Package manager packageNamed: eachPak) methods 
 		do: [:each | looseClasses add: each methodClass instanceClass name]].
 	self assert: ((aPackageEnvironment & aPackageEnvironment not) classes symmetricDifference: looseClasses. 
 				difference: looseClasses)."
-	self 
-		assert: (aPackageEnvironment | aPackageEnvironment not) classNames asSortedCollection 
+	self assert: (aPackageEnvironment | aPackageEnvironment not) classNames asSortedCollection
 				= BrowserEnvironment new classNames asSortedCollection!
 
 testPackageEnvironment

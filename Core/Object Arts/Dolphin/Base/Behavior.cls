@@ -733,6 +733,16 @@ recompileAll
 			each class compileAll.
 			each compileAll]!
 
+recompileReferencesToVarNamed: aString
+	"Private - Recompile any of the receiver's methods which appear to reference the named variable."
+
+	self methodDictionary do: 
+			[:m |
+			(m containsSource: aString)
+				ifTrue: 
+					[Notification signal: 'Recompiling ' , m printString.
+					m recompile]]!
+
 removeFromSuper
 	"Private - Remove the receiver from its superclasses' subclass collection.
 	Root classes will have a superclass of nil - we do not put such
@@ -983,20 +993,28 @@ whichMethodsRead: aString at: anInteger
 	^self 
 		selectMethods: [:method | method readsInstVar: aString at: anInteger]!
 
-whichMethodsReferTo: anObject 
+whichMethodsReferTo: anObject
 	"Answer a <Set> of methods in the receiver whose literal frames include the argument, anObject."
 
 	| index |
-	anObject isSymbol 
+	anObject isSymbol
 		ifTrue: 
 			[index := VMLibrary default indexOfSpecialSelector: anObject ifAbsent: [0].
-			index ~= 0 ifTrue: [^self selectMethods: [:each | (each refersToLiteral: anObject) or: [each sendsSpecialSelector: index]]]]
-		ifFalse: 
-			[((anObject isKindOf: VariableBinding) and: [anObject isImmutable]) 
+			index ~= 0
 				ifTrue: 
-					[| value |
+					[^self
+						selectMethods: [:each | (each refersToLiteral: anObject) or: [each sendsSpecialSelector: index]]]]
+		ifFalse: 
+			["In the case of constant bindings the constant value will be in the literal frame, not the variable"
+			((anObject isKindOf: VariableBinding) and: [anObject isImmutable])
+				ifTrue: 
+					[| value constName |
+					constName := anObject key asString.
 					value := anObject value.
-					^self selectMethods: [:each | (each refersToLiteral: value) or: [each refersToLiteral: anObject]]]].
+					^self selectMethods: 
+							[:each |
+							((each refersToLiteral: value) and: [each containsSource: constName])
+								or: [each refersToLiteral: anObject]]]].
 	^self selectMethods: [:each | each refersToLiteral: anObject]!
 
 whichSelectorsAccess: aString
@@ -1139,6 +1157,7 @@ withAllSuperclassesDo: aMonadicValuable
 !Behavior categoriesFor: #primAllSubinstances!instances!private! !
 !Behavior categoriesFor: #recompile:!compiling!development!public! !
 !Behavior categoriesFor: #recompileAll!compiling!development!public! !
+!Behavior categoriesFor: #recompileReferencesToVarNamed:!development!private! !
 !Behavior categoriesFor: #removeFromSuper!class hierarchy-removing!private! !
 !Behavior categoriesFor: #removeFromSystem!class hierarchy-removing!private! !
 !Behavior categoriesFor: #removeSelector:!methods-removing!public! !

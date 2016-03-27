@@ -10,12 +10,20 @@ DictionaryTest comment: ''!
 !DictionaryTest categoriesForClass!Unclassified! !
 !DictionaryTest methodsFor!
 
+assertCommutativelyEqual: aDictionary other: anotherDictionary
+	self assert: aDictionary equals: anotherDictionary.
+	self assert: anotherDictionary equals: aDictionary!
+
 checkValidity: aDictionary 
 	#todo.	"Import the Dictionary>>checkValidity method from StrongTalk"
 	aDictionary	"checkValidity"!
 
 collectionClass
 	^Dictionary!
+
+denyCommutativelyEqual: aDictionary other: anotherDictionary
+	self deny: aDictionary = anotherDictionary.
+	self deny: anotherDictionary = aDictionary!
 
 newDictionary
 	| dictionary |
@@ -91,6 +99,35 @@ testDeepCopy
 	any := copy keys.
 	any do: [:each | self assert: (copy includesKey: each)]!
 
+testEquals
+	| dict1 dict2 |
+	dict1 := self newEmpty.
+	"Identical"
+	self assert: dict1 equals: dict1.
+	dict2 := self newEmpty.
+	"Both empty"
+	self assertCommutativelyEqual: dict1 other: dict2.
+	"Equal key and value (one pair)"
+	dict1 := self newDictionary.
+	dict2 := self newDictionary.
+	self assertCommutativelyEqual: dict1 other: dict2.
+	"Extra {key,value} in one Dictionary - not equal"
+	dict2 at: 'key2' put: 'value2' copy.
+	self denyCommutativelyEqual: dict1 other: dict2.
+	"Equal keys and values (two pairs)"
+	dict1 at: 'key2' put: 'value2' copy.
+	self assertCommutativelyEqual: dict1 other: dict2.
+	"Value differs"
+	dict1 at: 'key3' put: 'value3' copy.
+	dict2 at: 'key3' put: 'value3a' copy.
+	self denyCommutativelyEqual: dict1 other: dict2.
+	"Key differs"
+	dict2 removeKey: 'key3'.
+	dict2 at: 'key4' put: 'value3' copy.
+	self denyCommutativelyEqual: dict1 other: dict2
+
+	"Dictionaries and LookupTables are equal if they have the same elements"!
+
 testIncludesKey
 	| dictionary |
 	dictionary := self newDictionary.
@@ -111,8 +148,10 @@ testRemoveKey
 	dictionary := self newDictionary.
 	self assert: (dictionary removeKey: #key) == 1.
 	self should: [dictionary removeKey: #key] raise: NotFoundError! !
+!DictionaryTest categoriesFor: #assertCommutativelyEqual:other:!helpers!private! !
 !DictionaryTest categoriesFor: #checkValidity:!benchmarking!private! !
 !DictionaryTest categoriesFor: #collectionClass!helpers!private! !
+!DictionaryTest categoriesFor: #denyCommutativelyEqual:other:!helpers!private! !
 !DictionaryTest categoriesFor: #newDictionary!private!unit tests! !
 !DictionaryTest categoriesFor: #newEmpty!helpers!public! !
 !DictionaryTest categoriesFor: #testAtIfAbsent!public!unit tests! !
@@ -120,6 +159,7 @@ testRemoveKey
 !DictionaryTest categoriesFor: #testAtIfAbsentPutModifyingCollection!public!unit tests! !
 !DictionaryTest categoriesFor: #testCyclicRefPrinting!public! !
 !DictionaryTest categoriesFor: #testDeepCopy!public!unit tests! !
+!DictionaryTest categoriesFor: #testEquals!public!unit tests! !
 !DictionaryTest categoriesFor: #testIncludesKey!public!unit tests! !
 !DictionaryTest categoriesFor: #testNilKey!public!unit tests! !
 !DictionaryTest categoriesFor: #testRemoveKey!public!unit tests! !

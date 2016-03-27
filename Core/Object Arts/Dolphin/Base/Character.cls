@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Magnitude subclass: #Character
 	instanceVariableNames: 'asciiValue '
@@ -209,10 +209,10 @@ isLinefeed
 	^asciiValue = 10!
 
 isLiteral
-	"Private - Answer whether the receiver has a literal representation
-	which is directly recognised by the Compiler."
+	"Answer whether the receiver has a literal representation which is directly recognised by
+	the Compiler."
 
-	^true!
+	^asciiValue ~~ 0!
 
 isLowercase
 	"Answer whether the receiver is a lowercase letter."
@@ -315,7 +315,7 @@ species
 !Character categoriesFor: #isImmediate!public!testing! !
 !Character categoriesFor: #isLetter!public!testing! !
 !Character categoriesFor: #isLinefeed!public!testing! !
-!Character categoriesFor: #isLiteral!private!testing! !
+!Character categoriesFor: #isLiteral!public!testing! !
 !Character categoriesFor: #isLowercase!public!testing! !
 !Character categoriesFor: #isLowerCase!public!testing! !
 !Character categoriesFor: #isPrintable!public!testing! !
@@ -391,10 +391,7 @@ icon
 	^##(self) defaultIcon!
 
 initialize
-	CharacterSet isImmutable: true.
-	"Marking binding as constant causes compiler to inline refs"
-	(self bindingFor: 'CharacterSet') isImmutable: true.
-	self class recompileAll!
+	self addClassConstant: 'CharacterSet' value: CharacterSet!
 
 lf
 	"Answer the linefeed <Character>."

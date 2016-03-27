@@ -10,6 +10,10 @@ SetTest comment: ''!
 !SetTest categoriesForClass!Unclassified! !
 !SetTest methodsFor!
 
+assertCommutativelyEqual: aSet other: anotherSet
+	self assert: aSet equals: anotherSet.
+	self assert: anotherSet equals: aSet!
+
 assertIs: copySet shallowCopyOf: sourceSet 
 	self assert: copySet ~~ sourceSet.
 	self assert: copySet size == sourceSet size.
@@ -24,6 +28,10 @@ assertValidSet: aSet
 collectionClass
 	^Set!
 
+denyCommutativelyEqual: aSet other: anotherSet
+	self deny: aSet = anotherSet.
+	self deny: anotherSet = aSet!
+
 elements
 	^#(1 'a' #a)!
 
@@ -31,11 +39,15 @@ newEmpty
 	^self collectionClass new!
 
 newSet
-	| set elements |
-	set := self newEmpty.
+	| elements |
 	elements := self elements.
+	^self newSet: elements!
+
+newSet: elements
+	| set |
+	set := self newEmpty.
 	elements do: 
-			[:each | 
+			[:each |
 			set add: each.
 			self assert: (set includes: each)].
 	^set!
@@ -59,6 +71,38 @@ testDeepCopy
 	copy := set deepCopy.
 	self assertIs: copy deepCopyOf: set.
 	self assertValidSet: copy!
+
+testEquals
+	"Sets and IdentitySets are equal if they have the same elements"
+
+	| set setb |
+	set := self newSet.
+	"Identical"
+	self assert: set equals: set.
+	setb := self newSet.
+	"Equal"
+	self assertCommutativelyEqual: setb other: set.
+	setb := setb asIdentitySet.
+	self assertCommutativelyEqual: setb other: set.
+	"Extra object in one set - not equal"
+	setb add: Object new.
+	self denyCommutativelyEqual: setb other: set.
+	"Same size, but differ by one element"
+	setb remove: self elements last.
+	self denyCommutativelyEqual: setb other: set.
+	"Sets are never equals to arrays"
+	self denyCommutativelyEqual: set other: self elements.
+	"Empty sets"
+	setb := self newEmpty.
+	self assert: setb equals: setb.
+	self denyCommutativelyEqual: setb other: set.
+	"Two empty sets are equal"
+	set := self newEmpty.
+	self assertCommutativelyEqual: set other: setb.
+	"Elements are compared with #=; Integer 1 is equal to Float 1.0"
+	set := self newSet: #(1).
+	setb := self newSet: #(1.0).
+	self assertCommutativelyEqual: set other: setb!
 
 testIncludes
 	| set elements |
@@ -87,14 +131,18 @@ testShallowCopy
 	copy := set shallowCopy.
 	self assertIs: copy shallowCopyOf: set.
 	self assertValidSet: copy! !
+!SetTest categoriesFor: #assertCommutativelyEqual:other:!helpers!private! !
 !SetTest categoriesFor: #assertIs:shallowCopyOf:!private!unit tests! !
 !SetTest categoriesFor: #assertValidSet:!private!unit tests! !
 !SetTest categoriesFor: #collectionClass!helpers!private! !
+!SetTest categoriesFor: #denyCommutativelyEqual:other:!helpers!private! !
 !SetTest categoriesFor: #elements!public!unit tests! !
 !SetTest categoriesFor: #newEmpty!helpers!private! !
 !SetTest categoriesFor: #newSet!private!unit tests! !
+!SetTest categoriesFor: #newSet:!private!unit tests! !
 !SetTest categoriesFor: #testCopy!public!unit tests! !
 !SetTest categoriesFor: #testDeepCopy!public!unit tests! !
+!SetTest categoriesFor: #testEquals!public!unit tests! !
 !SetTest categoriesFor: #testIncludes!public!unit tests! !
 !SetTest categoriesFor: #testNil!public!unit tests! !
 !SetTest categoriesFor: #testRemove!public!unit tests! !

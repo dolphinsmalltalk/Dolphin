@@ -6,6 +6,8 @@ Object subclass: #ClassBuilder
 	poolDictionaries: '_BehaviorMasks'
 	classInstanceVariableNames: ''!
 ClassBuilder guid: (GUID fromString: '{87B4C461-026E-11D3-9FD7-00A0CC3E4A32}')!
+ClassBuilder addClassConstant: 'IgnoreInstsMask' value: 2!
+ClassBuilder addClassConstant: 'RecompileMask' value: 1!
 ClassBuilder comment: ''!
 !ClassBuilder categoriesForClass!System-Support! !
 !ClassBuilder methodsFor!
@@ -1086,13 +1088,15 @@ initialize
 		ClassBuilder initialize
 	"
 
-	Unsubclassable := (Set new)
+	self addClassConstant: 'Unsubclassable'
+		value: ((Set new)
 				add: Character;
 				add: SmallInteger;
 				shrink;
 				isImmutable: true;
-				yourself.
-	FixedLayout := (Set new)
+				yourself).
+	self addClassConstant: 'FixedLayout'
+		value: ((Set new)
 				add: true class;
 				add: false class;
 				add: Array;
@@ -1109,9 +1113,10 @@ initialize
 				add: Object;
 				shrink;
 				isImmutable: true;
-				yourself.
+				yourself).
 	"add: ProtoObject;"
-	FixedInitialLayout := (Set new)
+	self addClassConstant: 'FixedInitialLayout'
+		value: ((Set new)
 				add: Class;
 				add: Metaclass;
 				add: PositionableStream;
@@ -1120,9 +1125,9 @@ initialize
 				add: ProcessorScheduler;
 				shrink;
 				isImmutable: true;
-				yourself.
-	RecompileMask := 1.
-	IgnoreInstsMask := 2!
+				yourself).
+	self addClassConstant: 'RecompileMask' value: 1.
+	self addClassConstant: 'IgnoreInstsMask' value: 2!
 
 instanceSpecIsBytes: anInstanceSpec
 	"Private - Answer whether anInstanceSpec represents a byte subclass."

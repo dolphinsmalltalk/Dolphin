@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #TestCase
 	instanceVariableNames: 'testSelector'
@@ -31,6 +31,19 @@ assert: aBoolean description: aString resumable: resumableBoolean
 			ifTrue: [TestResult resumableFailure]
 			ifFalse: [TestResult failure].
 		exception sunitSignalWith: aString]!
+
+assert: expectedObject equals: actualObject
+	^self assert: expectedObject = actualObject
+		description: (self comparingStringBetween: expectedObject and: actualObject)!
+
+comparingStringBetween: expectedObject and: actualObject
+	^(String writeStream: 100)
+		nextPutAll: 'Expected: ';
+		print: expectedObject;
+		nextPutAll: ' Actual: ';
+		print: actualObject;
+		nextPutAll: '.';
+		contents!
 
 debug
 	self resources do: [:res | res isAvailable ifFalse: [^res signalInitializationError]].
@@ -177,6 +190,8 @@ tearDown! !
 !TestCase categoriesFor: #assert:!Accessing!public! !
 !TestCase categoriesFor: #assert:description:!Accessing!public! !
 !TestCase categoriesFor: #assert:description:resumable:!Accessing!public! !
+!TestCase categoriesFor: #assert:equals:!converting!public! !
+!TestCase categoriesFor: #comparingStringBetween:and:!converting!public! !
 !TestCase categoriesFor: #debug!public!Running! !
 !TestCase categoriesFor: #debugAsFailure!public!Running! !
 !TestCase categoriesFor: #deny:!Accessing!public! !

@@ -6,6 +6,16 @@ Object subclass: #View
 	poolDictionaries: 'Win32Constants Win32Errors'
 	classInstanceVariableNames: ''!
 View guid: (GUID fromString: '{87B4C4CC-026E-11D3-9FD7-00A0CC3E4A32}')!
+View addClassConstant: 'CreateCenteredMask' value: 64!
+View addClassConstant: 'DragSourceMask' value: 4!
+View addClassConstant: 'DropTargetMask' value: 8!
+View addClassConstant: 'LayoutValidMask' value: 1!
+View addClassConstant: 'ManagedMask' value: 2!
+View addClassConstant: 'MinimizedMask' value: 128!
+View addClassConstant: 'NoInheritMenuMask' value: 512!
+View addClassConstant: 'StateRestoringMask' value: 32!
+View addClassConstant: 'UIValidMask' value: 16!
+View addClassConstant: 'UsePreferredExtentMask' value: 256!
 View comment: 'View is an abstract class which is the root of the view hierarchy of classes. Instances of view or its subclasses are used to display Model data in windows. View is part of the Model-View-Presenter or MVP framework:
 
 SmalltalkSystem help: ''Overviews/ModelViewPresenter''.
@@ -5099,16 +5109,6 @@ initialize
 	"
 
 	NextId := 4096.
-	LayoutValidMask := 16r1.
-	ManagedMask := 16r2.
-	DragSourceMask := 16r4.
-	DropTargetMask := 16r8.
-	UIValidMask := 16r10.
-	StateRestoringMask := 16r20.
-	CreateCenteredMask := 16r40.
-	MinimizedMask := 16r80.
-	UsePreferredExtentMask := 16r100.
-	NoInheritMenuMask := 16r200.
 	ViewClosedError := Signal description: 'View closed'.
 	self initializeMessageMap.
 	VMLibrary default primRegistryAt: 54 put: #subclassWindow:!
@@ -5120,6 +5120,8 @@ initializeMessageMap
 	themselves from being stripped.
 		self initializeMessageMap
 	"
+
+	"Note that this is not const, since view packages may add new messages they want to receive"
 
 	MessageMap := (Array new: 1024)
 				at: WM_CREATE + 1 put: #wmCreate:wParam:lParam:;

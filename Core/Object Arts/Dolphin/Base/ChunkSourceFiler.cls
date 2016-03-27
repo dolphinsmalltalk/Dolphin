@@ -23,22 +23,21 @@ emitCategories: aCollection for: aSymbol in: aClass
 	aCollection asSortedCollection do: [:each | self nextChunkPut: each name].
 	self endChunk!
 
-emitCategoriesOfClass: aClass 
+emitCategoriesOfClass: aClass
 	"Private - Emit a chunk to source stream to reclassify the <Class>, aClass, in all its existing 
 	categories."
 
 	| categories |
 	categories := aClass categories.
-	categories notEmpty 
-		ifTrue: 
-			[stream
-				nextPut: $!!;
-				nextPutAll: aClass name;
-				space;
-				nextPutAll: #categoriesForClass;
-				nextPutAll: '!!'.
-			categories asSortedCollection do: [:aCategory | self nextChunkPut: aCategory name].
-			self endChunk]!
+	categories notEmpty ifFalse: [^self].
+	stream
+		nextPut: $!!;
+		display: aClass;
+		space;
+		nextPutAll: #categoriesForClass;
+		nextPut: $!!.
+	categories asSortedCollection do: [:aCategory | self nextChunkPut: aCategory name].
+	self endChunk!
 
 emitCategoriesOfMethod: aCompiledMethod 
 	"Private - Append a chunk to the <puttableStream>, aWriteStream,
@@ -50,42 +49,49 @@ emitCategoriesOfMethod: aCompiledMethod
 		for: aCompiledMethod selector
 		in: aCompiledMethod methodClass!
 
-emitChunk: aString 
-	"Private - Output the specified text with a trailing end of chunk marker 
-	to the argument, aWriteStream."
+emitChunk: aString
+	"Private - Output the specified text with a trailing end of chunk marker to the argument,
+	aWriteStream."
 
 	self
 		nextChunkPut: aString;
 		cr!
 
-emitComment: aString 
-	"Private - Record aString to the change log as a comment. All comments
-	logged are prefixed with a timestamp.
-	N.B. Logging requests should be directed through the SessionManager."
+emitComment: aString
+	"Private - Record aString to the chunk stream as a comment. All comments logged are prefixed
+	with a timestamp. N.B. Logging requests should be directed through the SessionManager."
 
+	stream nextPut: $".
+	self emitString: aString.
 	stream
-		nextPut: $";
-		nextPutAll: aString;
 		nextPut: $";
 		nextPut: $!!;
 		cr;
 		flush!
 
-emitCommentOfClass: aClass 
+emitCommentOfClass: aClass
 	"Private - Emit a chunk which defines the comment for the <Class>, aClass, to the <puttableStream>
 	aWriteStream."
 
-	self emitChunk: aClass name , ' comment: ' , aClass comment printString!
-
-emitDeclarationForPoolVariable: each ofClass: aClass 
 	stream
 		display: aClass;
 		space;
-		display: (each isImmutable ifTrue: [#constant:] ifFalse: [#variable:]);
-		space;
-		print: each key;
-		nextPut: $!!;
+		display: #comment:;
+		space.
+	self
+		nextChunkPut: aClass comment printString;
 		cr!
+
+emitDeclarationForClass: aClass variable: anAssociation
+	stream
+		display: aClass;
+		nextPutAll: (anAssociation isImmutable
+					ifTrue: [' addClassConstant: ']
+					ifFalse: [' addClassVariable: ']);
+		print: anAssociation key;
+		nextPutAll: ' value: '.
+	self nextChunkPut: anAssociation value printString.
+	stream cr!
 
 emitFooterForMethodsOf: aClass 
 	"Private - Ends the method definition chunks for aClass onto
@@ -117,19 +123,6 @@ emitHeaderForMethodsOf: aClass
 		space;
 		nextPutAll: #methodsFor;
 		nextPut: $!!!
-
-emitInitializerForPoolVariable: aClass ofClass: each 
-	^stream
-		nextPut: $!!;
-		display: aClass;
-		space;
-		display: #initializerFor:;
-		space;
-		print: each key;
-		nextPut: $!!;
-		print: each value;
-		nextPut: $!!;
-		cr!
 
 emitMethod: aCompiledMethod 
 	"Private - File out the source of the single <CompiledMethod>, aCompiledMethod, 
@@ -302,14 +295,6 @@ fileOutPoolDictionary: aPoolDictionary
 					self emitChunk: ')']].
 	self emitChunk: poolName , ' shrink'!
 
-fileOutPoolInitializersOfClass: aClass 
-	aClass classPool associations asSortedCollection do: 
-			[:each | 
-			each value isLiteral 
-				ifTrue: 
-					[self emitDeclarationForPoolVariable: each ofClass: aClass.
-					self emitInitializerForPoolVariable: aClass ofClass: each]]!
-
 fileOutProtocols: aCollection ofBehavior: aClassDescription 
 	"File out the <MethodProtocol>s in the <collection>, aCollection, to source stream,
 	associating them with the <ClassDescription>, aClassDescription."
@@ -443,11 +428,10 @@ storeSourceString: aString forMethod: aCompiledMethod
 !ChunkSourceFiler categoriesFor: #emitChunk:!private!source filing! !
 !ChunkSourceFiler categoriesFor: #emitComment:!operations-logging!private! !
 !ChunkSourceFiler categoriesFor: #emitCommentOfClass:!private!source filing! !
-!ChunkSourceFiler categoriesFor: #emitDeclarationForPoolVariable:ofClass:!private!source filing! !
+!ChunkSourceFiler categoriesFor: #emitDeclarationForClass:variable:!private!source filing! !
 !ChunkSourceFiler categoriesFor: #emitFooterForMethodsOf:!private!source filing! !
 !ChunkSourceFiler categoriesFor: #emitGUIDOfClass:!private!source filing! !
 !ChunkSourceFiler categoriesFor: #emitHeaderForMethodsOf:!private!source filing! !
-!ChunkSourceFiler categoriesFor: #emitInitializerForPoolVariable:ofClass:!private!source filing! !
 !ChunkSourceFiler categoriesFor: #emitMethod:!private!source filing! !
 !ChunkSourceFiler categoriesFor: #emitSetBehaviorFlag:forClass:!private!source filing! !
 !ChunkSourceFiler categoriesFor: #emitString:!private!source filing! !
@@ -457,7 +441,6 @@ storeSourceString: aString forMethod: aCompiledMethod
 !ChunkSourceFiler categoriesFor: #fileOutBinaryGlobal:!public!source filing! !
 !ChunkSourceFiler categoriesFor: #fileOutExpression:!public!source filing! !
 !ChunkSourceFiler categoriesFor: #fileOutPoolDictionary:!public!source filing! !
-!ChunkSourceFiler categoriesFor: #fileOutPoolInitializersOfClass:!accessing!public! !
 !ChunkSourceFiler categoriesFor: #fileOutProtocols:ofBehavior:!public!source filing! !
 !ChunkSourceFiler categoriesFor: #getSourceFromDescriptor:!public!source filing! !
 !ChunkSourceFiler categoriesFor: #logEvaluation:!private!source filing! !
