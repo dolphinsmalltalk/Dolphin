@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Number subclass: #Integer
 	instanceVariableNames: ''
@@ -492,6 +492,11 @@ isNull
 
 	^self == 0!
 
+isPowerOfTwo
+	"Return true if the receiver is an integral power of two."
+
+	^self strictlyPositive and: [(self bitAnd: self - 1) = 0]!
+
 isSDWORD
 	"Answer whether the receiver can be represented as a 32-bit two's complement signed integer
 	(i.e. as an SDWORD)."
@@ -762,6 +767,7 @@ truncated
 !Integer categoriesFor: #isBitSet:!bit manipulation!public!testing! !
 !Integer categoriesFor: #isInteger!public!testing! !
 !Integer categoriesFor: #isNull!public!testing! !
+!Integer categoriesFor: #isPowerOfTwo!public!testing! !
 !Integer categoriesFor: #isSDWORD!public!testing! !
 !Integer categoriesFor: #lcm:!factorization!public! !
 !Integer categoriesFor: #lowBit!bit manipulation!public! !
