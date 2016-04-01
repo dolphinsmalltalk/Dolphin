@@ -54,6 +54,14 @@ testIndexedAccess
 testIsInteger
 	self assert: self canonicalInstance isInteger!
 
+testIsPowerOfTwo
+	| powersOfTwo nonPowersOfTwo |
+	powersOfTwo := (0 to: 100) collect: [:each | 2 raisedTo: each].
+	nonPowersOfTwo := (powersOfTwo collect: [:each | each negated])
+				, #(0 3 -3 5 -5 6 -6 7 -7 9 -9 10 -10 100 -100 1000 -1000 12345678 -12345678 1234567890 -1234567890 12345678901234567890 -12345678901234567890).
+	powersOfTwo do: [:each | self assert: each isPowerOfTwo].
+	nonPowersOfTwo do: [:each | self deny: each isPowerOfTwo]!
+
 testNew
 	self should: [self canonicalInstance class new] raise: TestResult error!
 
@@ -93,6 +101,7 @@ testTwoComplementRightShift
 !IntegerTest categoriesFor: #testFactorial!public!unit tests! !
 !IntegerTest categoriesFor: #testIndexedAccess!public!unit tests! !
 !IntegerTest categoriesFor: #testIsInteger!public!unit tests! !
+!IntegerTest categoriesFor: #testIsPowerOfTwo!public! !
 !IntegerTest categoriesFor: #testNew!public!unit tests! !
 !IntegerTest categoriesFor: #testPrimesUpTo!public!unit tests! !
 !IntegerTest categoriesFor: #testSetBit!public!unit tests! !

@@ -878,7 +878,7 @@ isKindOf: candidateClass
 	^self class includesBehavior: candidateClass!
 
 isLiteral
-	"Private - Answer whether or not the receiver has a literal representation (probably its
+	"Answer whether or not the receiver has a literal representation (probably its
 	printString) which is directly recognised by the Compiler"
 
 	^false!
@@ -1568,7 +1568,7 @@ yourself
 !Object categoriesFor: #isIndexable!public!testing! !
 !Object categoriesFor: #isInteger!public!testing! !
 !Object categoriesFor: #isKindOf:!public!testing! !
-!Object categoriesFor: #isLiteral!private!testing! !
+!Object categoriesFor: #isLiteral!public!testing! !
 !Object categoriesFor: #isMemberOf:!public!testing! !
 !Object categoriesFor: #isNil!public!testing! !
 !Object categoriesFor: #isNumber!public!testing! !

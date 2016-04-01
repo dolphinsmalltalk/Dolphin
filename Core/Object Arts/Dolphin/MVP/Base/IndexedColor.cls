@@ -127,27 +127,31 @@ initialize
 		self initialize.
 	"
 
-	ColorsByName := IdentityDictionary new.
-	ColorsByIndex := IdentityDictionary new.
-	ColorNames := IdentityDictionary new.
-	#(#(#black 16r1000000) #(#darkRed 16r1000001) #(#darkGreen 16r1000002) #(#brown 16r1000003) #(#darkBlue 16r1000004) #(#darkMagenta 16r1000005) #(#darkCyan 16r1000006) #(#gray 16r1000007) #(#darkGray 16r100000C) #(#red 16r100000D) #(#green 16r100000E) #(#yellow 16r100000F) #(#blue 16r1000010) #(#magenta 16r1000011) #(#cyan 16r1000012) #(#white 16r1000013)) 
+	| colorsByIndex colorNames colorsByName |
+	colorsByName := IdentityDictionary new.
+	colorsByIndex := IdentityDictionary new.
+	colorNames := IdentityDictionary new.
+	#(#(#black 16r1000000) #(#darkRed 16r1000001) #(#darkGreen 16r1000002) #(#brown 16r1000003) #(#darkBlue 16r1000004) #(#darkMagenta 16r1000005) #(#darkCyan 16r1000006) #(#gray 16r1000007) #(#darkGray 16r100000C) #(#red 16r100000D) #(#green 16r100000E) #(#yellow 16r100000F) #(#blue 16r1000010) #(#magenta 16r1000011) #(#cyan 16r1000012) #(#white 16r1000013))
 		do: 
-			[:each | 
+			[:each |
 			| color |
-			ColorNames at: each second put: each first.
+			colorNames at: each second put: each first.
 			color := self basicNew setIndex: each second.
 			color isImmutable: true.
-			ColorsByName at: each first put: color.
-			ColorsByIndex at: each second put: color].
-	ColorNames
+			colorsByName at: each first put: color.
+			colorsByIndex at: each second put: color].
+	colorNames
 		shrink;
 		isImmutable: true.
-	ColorsByName
+	colorsByName
 		shrink;
 		isImmutable: true.
-	ColorsByIndex
+	colorsByIndex
 		shrink;
-		isImmutable: true!
+		isImmutable: true.
+	self addClassConstant: 'ColorNames' value: colorNames.
+	self addClassConstant: 'ColorsByName' value: colorsByName.
+	self addClassConstant: 'ColorsByIndex' value: colorsByIndex!
 
 stbReadFrom: anSTBInFiler format: anSTBClassConversion 
 	"Read an instance of the receiver from the binary filer, aSTBInFiler."
@@ -168,11 +172,6 @@ stdColor: aSymbol
 
 	^ColorsByName at: aSymbol!
 
-uninitialize
-	"Private -  The receiver is about to be removed from the system, clean up."
-
-	ColorsByIndex := ColorsByName := nil!
-
 withIndex: anInteger 
 	"Answer an instance whose index is anInteger."
 
@@ -184,6 +183,5 @@ withIndex: anInteger
 !IndexedColor class categoriesFor: #initialize!development!initializing!public! !
 !IndexedColor class categoriesFor: #stbReadFrom:format:!binary filing!public! !
 !IndexedColor class categoriesFor: #stdColor:!instance creation!public! !
-!IndexedColor class categoriesFor: #uninitialize!class hierarchy-removing!private! !
 !IndexedColor class categoriesFor: #withIndex:!instance creation!public! !
 

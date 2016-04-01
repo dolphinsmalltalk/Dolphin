@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #SourceFiler
 	instanceVariableNames: 'stream evaluationContext isSourceOnly '
@@ -43,6 +43,15 @@ emitCategoriesOfMethods: methods
 
 	methods do: [:m | self emitCategoriesOfMethod: m]!
 
+emitClassPoolOfClass: aClass
+	"Private - Emit initialization expressions for each of the literal constants in the class pool of aClass."
+
+	| literalConstants |
+	literalConstants := aClass classPool associations
+				select: [:each | each isImmutable and: [each value isLiteral]].
+	literalConstants asSortedCollection
+		do: [:each | self emitDeclarationForClass: aClass variable: each]!
+
 emitComment: aString 
 	"Private - Record aString to the source stream.
 	N.B. Logging requests should be directed through the SessionManager."
@@ -52,6 +61,9 @@ emitComment: aString
 emitCommentOfClass: aClass 
 	"Private - Emit a chunk which defines the comment for the <Class>, aClass, to source stream."
 
+	^self subclassResponsibility!
+
+emitDeclarationForClass: aClass variable: each
 	^self subclassResponsibility!
 
 emitFooterForMethodsOf: aClass 
@@ -125,14 +137,16 @@ fileOutAllMethodsOfBehavior: aClassDescription
 	self isSourceOnly 
 		ifFalse: [self fileOutProtocols: aClassDescription protocols ofBehavior: aClassDescription]!
 
-fileOutAttributesOfClass: aClass 
+fileOutAttributesOfClass: aClass
 	"File-out any attributes of the aClass (e.g. the comment, GUID, etc) not included in the basic
 	aClass definition, onto the source stream."
 
 	self emitGUIDOfClass: aClass.
 	self emitSpecialBehaviourAttributesOfClass: aClass.
+	self emitClassPoolOfClass: aClass.
 	self emitCommentOfClass: aClass.
-	self emitCategoriesOfClass: aClass!
+	self emitCategoriesOfClass: aClass.
+!
 
 fileOutBasicDefinitionOfClass: aClass 
 	"Print a definition of the <Class>, aClass, to the source stream."
@@ -285,8 +299,10 @@ stream
 !SourceFiler categoriesFor: #emitCategoriesOfClass:!private!source filing! !
 !SourceFiler categoriesFor: #emitCategoriesOfMethod:!private!source filing! !
 !SourceFiler categoriesFor: #emitCategoriesOfMethods:!private!source filing! !
+!SourceFiler categoriesFor: #emitClassPoolOfClass:!private!source filing! !
 !SourceFiler categoriesFor: #emitComment:!operations-logging!private! !
 !SourceFiler categoriesFor: #emitCommentOfClass:!private!source filing! !
+!SourceFiler categoriesFor: #emitDeclarationForClass:variable:!private!source filing! !
 !SourceFiler categoriesFor: #emitFooterForMethodsOf:!private!source filing! !
 !SourceFiler categoriesFor: #emitGUIDOfClass:!private!source filing! !
 !SourceFiler categoriesFor: #emitHeaderForMethodsOf:!private!source filing! !

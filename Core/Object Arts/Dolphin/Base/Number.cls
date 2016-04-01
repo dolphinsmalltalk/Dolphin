@@ -517,7 +517,7 @@ readSmalltalkRealFrom: aStream initialInteger: anInteger
 			["Again the fraction does not need to be normalized before conversion"
 			(Fraction numerator: mantissa denominator: (10 raisedToInteger: precision)) asFloat]!
 
-readSmalltalkSyntaxFrom: aStream 
+readSmalltalkSyntaxFrom: aStream
 	"Private - Instantiate a new sub-instance of the receiver from aStream and answer it.
 	If no Number is found at the streams current position then answer nil.
 	Any numbers in the stream are expected to obey Smalltalk syntax 
@@ -532,38 +532,40 @@ readSmalltalkSyntaxFrom: aStream
 
 	| isNegative integerPart answer |
 	isNegative := aStream peekFor: $-.
-	(integerPart := self readIntegerFrom: aStream radix: 10) isNil 
+	(integerPart := self readIntegerFrom: aStream radix: 10) isNil
 		ifTrue: 
 			["There's nothing for you here"
-
 			isNegative ifTrue: [aStream pop].
 			^nil].
 
 	"The type of number is determined by what we find next"
-	answer := aStream atEnd 
+	answer := aStream atEnd
 				ifTrue: [integerPart]
 				ifFalse: 
 					[| nextChar |
 					nextChar := aStream next.
-					answer := nextChar == $. 
-								ifTrue: [self readSmalltalkRealFrom: aStream initialInteger: integerPart]
+					nextChar == $.
+						ifTrue: 
+							[| float |
+							float := self readSmalltalkRealFrom: aStream initialInteger: integerPart.
+							(isNegative and: [float isZero]) ifTrue: [^Float negativeZero] ifFalse: [float]]
+						ifFalse: 
+							[nextChar == $r
+								ifTrue: [self readRadixIntegerFrom: aStream initialInteger: integerPart]
 								ifFalse: 
-									[nextChar == $r 
-										ifTrue: [self readRadixIntegerFrom: aStream initialInteger: integerPart]
+									[nextChar == $s
+										ifTrue: 
+											[self
+												readScaledDecimalFrom: aStream
+												mantissa: integerPart
+												precision: 0]
 										ifFalse: 
-											[nextChar == $s 
-												ifTrue: 
-													[self 
-														readScaledDecimalFrom: aStream
-														mantissa: integerPart
-														precision: 0]
+											[nextChar == $e
+												ifTrue: [self readExponentIntegerFrom: aStream initialInteger: integerPart]
 												ifFalse: 
-													[nextChar == $e 
-														ifTrue: [self readExponentIntegerFrom: aStream initialInteger: integerPart]
-														ifFalse: 
-															[aStream pop.
-															integerPart]]
-											"Also support St-80 format integer of the form 1e5, not valid ANSI syntax though"]]].
+													[aStream pop.
+													integerPart]]
+									"Also support St-80 format integer of the form 1e5, not valid ANSI syntax though"]]].
 	^isNegative ifTrue: [answer negated] ifFalse: [answer]!
 
 zero

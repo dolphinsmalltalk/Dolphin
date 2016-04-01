@@ -11,6 +11,16 @@ CRTConstants at: '_EM_INVALID' put: 16r10!
 CRTConstants at: '_EM_OVERFLOW' put: 16r4!
 CRTConstants at: '_EM_UNDERFLOW' put: 16r2!
 CRTConstants at: '_EM_ZERODIVIDE' put: 16r8!
+CRTConstants at: '_FPCLASS_ND' put: 16r10!
+CRTConstants at: '_FPCLASS_NINF' put: 16r4!
+CRTConstants at: '_FPCLASS_NN' put: 16r8!
+CRTConstants at: '_FPCLASS_NZ' put: 16r20!
+CRTConstants at: '_FPCLASS_PD' put: 16r80!
+CRTConstants at: '_FPCLASS_PINF' put: 16r200!
+CRTConstants at: '_FPCLASS_PN' put: 16r100!
+CRTConstants at: '_FPCLASS_PZ' put: 16r40!
+CRTConstants at: '_FPCLASS_QNAN' put: 16r2!
+CRTConstants at: '_FPCLASS_SNAN' put: 16r1!
 CRTConstants at: '_IC_AFFINE' put: 16r40000!
 CRTConstants at: '_IC_PROJECTIVE' put: 16r0!
 CRTConstants at: '_MAX_DIR' put: 16r100!

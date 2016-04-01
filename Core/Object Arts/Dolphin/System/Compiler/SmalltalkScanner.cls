@@ -6,6 +6,7 @@ Object subclass: #SmalltalkScanner
 	poolDictionaries: 'SmalltalkParseErrorCodes'
 	classInstanceVariableNames: ''!
 SmalltalkScanner guid: (GUID fromString: '{F76F2335-9125-488E-A570-5A759A6E67B7}')!
+SmalltalkScanner addClassConstant: 'ClassificationTable' value: #(nil nil nil nil nil nil nil nil #separator #separator #separator #separator #separator nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil #separator #binary nil nil nil #binary #binary nil #special #special #binary #binary #binary #binary #special #binary #digit #digit #digit #digit #digit #digit #digit #digit #digit #digit #special #special #binary #binary #binary #binary #binary #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #special #binary #special #special #alphabetic nil #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic nil #binary nil #binary nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil)!
 SmalltalkScanner comment: 'SmalltalkScanner is the Smalltalk lexical analyzer. It converts source text to a stream of <StToken>''s.
 
 Note that SmalltalkScanner is based on the RBScanner class written by John Brant and Don Roberts for their Refactoring Browser. It has been extended for Dolphin to incorporate additional error reporting capabilities (such as the line number on which the error occurred), and the ability to parse Dolphin''s FFI call syntax.
@@ -611,18 +612,19 @@ initialize
 	PatternVariableCharacter := $`.
 	self initializeClassificationTable!
 
-initializeChars: aCollectionOfCharacters to: aSymbol 
-	aCollectionOfCharacters do: [:c | ClassificationTable at: c asInteger put: aSymbol]!
-
 initializeClassificationTable
-	ClassificationTable := Array new: 255.
+	| classificationTable |
+	classificationTable := Array new: 255.
 	"#2130 ANSI Smalltalk allows only the English alphabet and underscore as letters in identifiers"
-	self initializeChars: '_ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz' to: #alphabetic.
-	self initializeChars: '01234567890' to: #digit.
-	self initializeChars: '!!%&*+,-/<=>?@\~|' to: #binary.
-	self initializeChars: '().:;[]^' to: #special.
-	self initializeChars: (Character byteCharacterSet select: [:each | each isSeparator]) to: #separator.
-	ClassificationTable isImmutable: true!
+	'_ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'
+		do: [:alpha | classificationTable at: alpha asInteger put: #alphabetic].
+	'01234567890' do: [:digit | classificationTable at: digit asInteger put: #digit].
+	'!!%&*+,-/<=>?@\~|' do: [:binary | classificationTable at: binary asInteger put: #binary].
+	'().:;[]^' do: [:special | classificationTable at: special asInteger put: #special].
+	(Character byteCharacterSet select: [:each | each isSeparator])
+		do: [:separator | classificationTable at: separator asInteger put: #separator].
+	classificationTable isImmutable: true.
+	self addClassConstant: 'ClassificationTable' value: classificationTable!
 
 isSelector: aSymbol 
 	| scanner token |
@@ -677,7 +679,6 @@ on: aStream errorHandler: parseErrorHandler
 patternVariableCharacter
 	^PatternVariableCharacter! !
 !SmalltalkScanner class categoriesFor: #initialize!initializing!public! !
-!SmalltalkScanner class categoriesFor: #initializeChars:to:!initializing!private! !
 !SmalltalkScanner class categoriesFor: #initializeClassificationTable!initializing!private! !
 !SmalltalkScanner class categoriesFor: #isSelector:!public!testing! !
 !SmalltalkScanner class categoriesFor: #isVariable:!public!testing! !

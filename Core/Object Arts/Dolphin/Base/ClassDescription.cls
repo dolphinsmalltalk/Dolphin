@@ -623,6 +623,15 @@ realMethodCategories
 		add: catClass private;
 		yourself!
 
+recompileAllReferencesToVarNamed: aString
+	"Private - Recompile any methods in the receiver's hierarchy which appear to reference the
+	named variable."
+
+	self instanceClass withAllSubclassesDo: 
+			[:each |
+			each recompileReferencesToVarNamed: aString.
+			each class recompileReferencesToVarNamed: aString]!
+
 removeCategory: category
 	"Remove the Category from the receiver. N.B. All the methods belonging to the
 	category are removed even if the method belongs to any other categories.
@@ -926,6 +935,7 @@ whichNonVirtualCategoriesIncludeSelector: aSelector
 !ClassDescription categoriesFor: #protocols!private!protocols! !
 !ClassDescription categoriesFor: #protocols:!private!protocols! !
 !ClassDescription categoriesFor: #realMethodCategories!categories-accessing!public! !
+!ClassDescription categoriesFor: #recompileAllReferencesToVarNamed:!development!private! !
 !ClassDescription categoriesFor: #removeCategory:!categories-removing!public! !
 !ClassDescription categoriesFor: #removeInstVarName:!instance variables!public! !
 !ClassDescription categoriesFor: #removeMethodFromNonVirtualCategories:!development!helpers!private! !

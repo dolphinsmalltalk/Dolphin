@@ -22,24 +22,54 @@ Instance Variables:
 !Class categoriesForClass!Kernel-Classes! !
 !Class methodsFor!
 
-addClassVarName: aString 
-	"Add a new class variable to the receiver with the specified <readableString> name.
-	Note: This is a low-level operation and does not recompile affected classes. Generally 
-	speaking any modification to a class should be made through a <ClassBuilder>."
+addClassConstant: aString value: anObject
+	"Define a constant binding in the receiver's class pool with the specified name. If the
+	variable already exists, it is marked as constant, and if its existing value is different
+	from anObject, then anObject is assigned to the underlying variable and any methods that may
+	reference the constant are recompiled to pick up the new value. If the variable does not
+	exist, a constant binding is added with initial value nil."
 
-	| varName |
-	varName := aString asString.	"Allow symbolic names too"
-	(self withAllSubclasses detect: [:each | (each classPool bindingFor: varName) notNil]
-		ifNone: []) ifNotNil: 
-				[:existingClass | 
-				^self 
-					error: aString , ' is already used as a variable name in class ' , existingClass name].
+	| binding count |
+	count := classPool ifNil: [0] ifNotNil: [classPool size].
+	binding := self addClassVarNamed: aString.
+	(classPool size = count and: [binding isImmutable not or: [binding value ~= anObject]])
+		ifTrue: 
+			["Value of existing class constant changed, or variable made constant"
+			binding isImmutable: false.
+			[binding value: anObject] ensure: [binding isImmutable: true].
+			self recompileAllReferencesToVarNamed: aString]
+		ifFalse: [binding isImmutable: true].
+	^binding!
+
+addClassVariable: aString value: anObject
+	"Define a variable binding in the receiver's class pool with the specified name. If the
+	variable already exists, this is a no-op. If the variable does not exist, a new binding is
+	added with initial value nil."
+
+	^(self addClassVarNamed: aString)
+		isImmutable: false;
+		value: anObject;
+		yourself!
+
+addClassVarNamed: aString
+	"Answer the binding for a new or existing class variable in the receiver with the specified
+	<readableString>. Note: This is a low-level operation and does not recompile affected
+	classes. Generally speaking any modification to a class should be made through a
+	<ClassBuilder>. It is not considered an error to re-add a class variable that already exists
+	in the class, but it is an error to attempt to add a class variable already defined
+	somewhere in the hierarchy below the class. "
+
+	| varName var |
+	varName := aString trimBlanks.	"Allow symbolic names too"
 	classPool := self classPool.
-	(classPool includesKey: varName) 
-		ifFalse: 
-			[classPool at: varName put: nil.
-			self logDefinition.
-			self environment classUpdated: self]!
+	(classPool bindingFor: varName) ifNotNil: [:existingVar | ^existingVar].
+	(self allSubclasses detect: [:each | (each classPool bindingFor: varName) notNil] ifNone: [])
+		ifNotNil: [:existingClass | ^self error: aString , ' is already used as a variable name in class ' , existingClass name].
+	var := classPool newAssociation: varName value: nil.
+	classPool add: var.
+	self logDefinition.
+	self environment classUpdated: self.
+	^var!
 
 addSharedPool: aPoolDictionary 
 	"Add the argument, aPoolDictionary, as one of the receiver's pool dictionaries. 
@@ -57,7 +87,8 @@ addSharedPool: aPoolDictionary
 
 addToSuper
 	"Private - Add the receiver as a subclass of its superclass
-	and do the same for the receiver's metaclass buddy."
+	and do the same for the receiver's metaclass buddy, but not
+	if a root class."
 
 	superclass notNil ifTrue: [
 		super addToSuper.
@@ -753,7 +784,9 @@ variableSubclass: aClassSymbol
 	^subclass
 
 ! !
-!Class categoriesFor: #addClassVarName:!class variables!public! !
+!Class categoriesFor: #addClassConstant:value:!class variables!public! !
+!Class categoriesFor: #addClassVariable:value:!class variables!public! !
+!Class categoriesFor: #addClassVarNamed:!class variables!public! !
 !Class categoriesFor: #addSharedPool:!pool variables!public! !
 !Class categoriesFor: #addToSuper!class hierarchy-adding!private! !
 !Class categoriesFor: #basicClassPool!class variables!private! !

@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Collection variableSubclass: #Set
 	instanceVariableNames: 'tally '
@@ -30,6 +30,14 @@ _deepCopy: anIdentityDictionary
 
 _deepCopyElementsInto: aSet trail: anIdentityDictionary 
 	self do: [:element | aSet uncheckedAdd: (element _deepCopy: anIdentityDictionary)]!
+
+= comperand
+	"Answer whether the receiver is equivalent to the <Object>, comperand."
+
+	comperand == self ifTrue: [^true].
+	(comperand class conformsToProtocol: #Set) ifFalse: [^false].
+	comperand size == self size ifFalse: [^false].
+	^self allSatisfy: [:each | comperand includes: each]!
 
 add: newElement
 	"Include the <Object> newElement as one of the elements of the receiver. 
@@ -150,18 +158,10 @@ elements: anOrderedCollection
 !
 
 equals: comperand
-	"Answer whether the receiver is equivalent to the <Object>, comperand.
-	I often think this ought to be the definition of Set>>=, but for compatibility
-	with other Smalltalks, we'll use the alternative selector.
-	Implementation Note: Do our best to avoid an element-by-element
-	comparison. The algorithm will be slowest where the comperand is
-	equal to the receiver, but not identical."
+	"Answer whether the receiver is equivalent to the <Object>, comperand."
 
-	comperand == self ifTrue: [^true].
-	comperand species == self species ifFalse: [^false].
-	comperand size == self size ifFalse: [^false].
-	self do: [:e | (comperand includes: e) ifFalse: [^false]].
-	^true!
+	#deprecated.
+	^self = comperand!
 
 find: target
 	"Answer the actual element of the receiver which matches (however 'match' is defined)
@@ -353,6 +353,7 @@ uncheckedAdd: newObject
 !Set categoriesFor: #-!public!removing! !
 !Set categoriesFor: #_deepCopy:!copying!private! !
 !Set categoriesFor: #_deepCopyElementsInto:trail:!copying!private! !
+!Set categoriesFor: #=!comparing!public! !
 !Set categoriesFor: #add:!adding!public! !
 !Set categoriesFor: #approxSize!accessing!private! !
 !Set categoriesFor: #asSet!converting!public! !

@@ -6,6 +6,12 @@ MultilineTextEdit subclass: #ScintillaView
 	poolDictionaries: 'ScintillaConstants Win32Constants'
 	classInstanceVariableNames: ''!
 ScintillaView guid: (GUID fromString: '{47A3310B-B7E4-4AA9-B6E6-640AD9FE7A3A}')!
+ScintillaView addClassConstant: 'AnnotationStylesOffset' value: 512!
+ScintillaView addClassConstant: 'BackgroundDwellEvents' value: 4!
+ScintillaView addClassConstant: 'BraceHilightingMask' value: 1!
+ScintillaView addClassConstant: 'DefaultCallTipTabWidth' value: 32!
+ScintillaView addClassConstant: 'FoldingMask' value: 2!
+ScintillaView addClassConstant: 'MarginStylesOffset' value: 256!
 ScintillaView comment: 'ScintillaView is a <valueView> class that wraps the "Scintilla" programmers'' edit control. 
 
 Scintilla is a very powerful control with an extensive range of features. It is inevitably somewhat complex, and you are urged to read the documentation at http://www.scintilla.org/ScintillaDoc.html if you want to use this control in your own applications. In order to expose the full capabilities of Scintilla, this class and its supporting classes are also somewhat complex, but as far as reasonably possible this complexity is hidden from common use cases.
@@ -1204,7 +1210,7 @@ codePage
 
 	^CodePages at: self sciGetCodePage ifAbsent: [#dbcs]!
 
-codePage: aSymbol 
+codePage: aSymbol
 	"Set the code page currently in use to that named by the <Symbol> argument (one of #utf8 or
 	#dbcs)."
 
@@ -11560,41 +11566,44 @@ initialize
 		self initialize
 	"
 
+	| defaultKeyBindings |
 	self initializeNotificationMap.
-	CodePages := (IdentityDictionary new)
+	self addClassConstant: 'CodePages'
+		value: ((IdentityDictionary new)
 				at: SC_CP_DBCS put: #dbcs;
 				at: SC_CP_UTF8 put: #utf8;
 				shrink;
 				isImmutable: true;
-				yourself.
-	BraceHilightingMask := 1.
-	FoldingMask := 2.
-	BackgroundDwellEvents := 4.
-	DefaultTextStyles := (IdentityDictionary new)
+				yourself).
+	self addClassConstant: 'BraceHilightingMask' value: 1.
+	self addClassConstant: 'FoldingMask' value: 2.
+	self addClassConstant: 'BackgroundDwellEvents' value: 4.
+	self addClassConstant: 'DefaultTextStyles'
+		value: ((IdentityDictionary new)
 				at: #container put: (self immutableCopyOfCollection: self defaultTextStyles);
 				at: #xml put: (self immutableCopyOfCollection: self xmlTextStyles);
 				at: #text put: (self immutableCopyOfCollection: self txtTextStyles);
 				at: #smalltalk put: (self immutableCopyOfCollection: self smalltalkTextStyles);
 				shrink;
 				isImmutable: true;
-				yourself.
-	DefaultKeyBindings := LookupTable new.
+				yourself).
+	defaultKeyBindings := LookupTable new.
 	self defaultKeyMap do: 
-			[:each | 
+			[:each |
 			| keyCode |
 			keyCode := AcceleratorTable keyCode: each first asInteger modifiers: each second.
-			DefaultKeyBindings at: keyCode
+			defaultKeyBindings at: keyCode
 				put: ((ScintillaKeyBinding newAcceleratorKey: keyCode message: each last)
 						isImmutable: true;
 						yourself)].
-	DefaultKeyBindings
+	defaultKeyBindings
 		shrink;
 		isImmutable: true.
-	DefaultCallTipTabWidth := 32.
+	self addClassConstant: 'DefaultKeyBindings' value: defaultKeyBindings.
+	self addClassConstant: 'DefaultCallTipTabWidth' value: 32.
 	"Offsets must always be multiples of 256 for implementation reasons"
-	MarginStylesOffset := 256.
-	AnnotationStylesOffset := 512.
-!
+	self addClassConstant: 'MarginStylesOffset' value: 256.
+	self addClassConstant: 'AnnotationStylesOffset' value: 512!
 
 initializeNotificationMap
 	ScnMap := (Array new: 31)

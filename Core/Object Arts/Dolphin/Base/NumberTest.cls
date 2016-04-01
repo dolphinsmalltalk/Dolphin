@@ -51,21 +51,31 @@ testClassReadFromColonFloats
 
 	"Zero exponent"
 	#('0.5e0' '0.5d0' '0.5q0') do: 
-			[:each | 
+			[:each |
 			source := each readStream.
 			result := Number readFrom: source.
 			self assert: result class == Float.
 			self assert: (result equals: 0.5).
 			self assert: source atEnd].
+	"Zeros"
 	source := '0.0' readStream.
 	result := Number readFrom: source.
 	self assert: result class == Float.
 	self assert: result isZero.
 	self assert: source atEnd.
+	source := '-0.0' readStream.
+	result := Number readFrom: source.
+	self assert: result class == Float.
+	self assert: result isZero.
+	self assert: source atEnd.
+	self assert: result sign = -1.
+	self assert: result = Float negativeZero.
+
+	"Simple fraction"
 	source := '0.5' readStream.
 	result := Number readFrom: source.
 	self assert: result class == Float.
-	self assert: (result equals: 0.5).
+	self assert: (result equals: 1 / 2).
 	self assert: source atEnd.
 
 	"Read only integer with trailing full stop"

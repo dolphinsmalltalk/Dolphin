@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Dictionary variableSubclass: #PoolDictionary
 	instanceVariableNames: ''
@@ -84,6 +84,33 @@ includesKey: key
 
 	^super includesKey: key asString!
 
+initializerFor: aString 
+	"Answer a chunk reader to read and evaluate an initializer for the receiver's named variable"
+
+	^ChunkReader 
+		do: 
+			[:chunkString | 
+			(self bindingFor: aString) 
+				ifNil: 
+					[Warning signal: ('Ignoring initializer for undefined variable <1S>.<2S>: <3S>' 
+								expandMacrosWith: self
+								with: aString
+								with: chunkString)]
+				ifNotNil: 
+					[:var | 
+					| value |
+					(Compiler compileExpression: chunkString in: UndefinedObject) 
+						ifNotNil: 
+							[:expr | 
+							value := [expr method value] on: Error
+										do: 
+											[:ex | 
+											ex resignalAsWarning.
+											nil].
+							var whileMutableDo: [var value: value]]]]
+		inContext: self
+		atEnd: []!
+
 isChanged
 	"Answer true if the receiver or any of it's contents have been changed since
 	their changed flag was last reset."
@@ -142,6 +169,7 @@ removeKey: key ifAbsent: exceptionHandler
 !PoolDictionary categoriesFor: #fileOutName!development!public!source filing! !
 !PoolDictionary categoriesFor: #fileOutOn:!development!public! !
 !PoolDictionary categoriesFor: #includesKey:!public!searching! !
+!PoolDictionary categoriesFor: #initializerFor:!public!source filing-sif! !
 !PoolDictionary categoriesFor: #isChanged!development!public!source filing!testing! !
 !PoolDictionary categoriesFor: #isChanged:!development!public!source filing! !
 !PoolDictionary categoriesFor: #name!accessing!public! !

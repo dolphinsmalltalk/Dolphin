@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #StackFrame
 	instanceVariableNames: 'process index'
@@ -6,6 +6,13 @@ Object subclass: #StackFrame
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 StackFrame guid: (GUID fromString: '{87B4C4BE-026E-11D3-9FD7-00A0CC3E4A32}')!
+StackFrame addClassConstant: 'BPOffset' value: 5!
+StackFrame addClassConstant: 'EnvOffset' value: 1!
+StackFrame addClassConstant: 'FrameSize' value: 6!
+StackFrame addClassConstant: 'IPOffset' value: 3!
+StackFrame addClassConstant: 'MethodOffset' value: 0!
+StackFrame addClassConstant: 'ReturnOffset' value: 2!
+StackFrame addClassConstant: 'SPOffset' value: 4!
 StackFrame comment: 'StackFrame encapsulates behaviour of an activation record for use by the development tools (especially the debugger) and other reflective activities. A StackFrame is only valid as a snapshot of <Process> state (e.g. when the process is suspended, as it is when being debugged).
 
 Dolphin''s activation records are not objects, in fact they are just range of slots in the Process stack, so this class is employed to stand in and wrap those records.
@@ -471,29 +478,6 @@ frameClassFor: aProcess at: anInteger
 	env := aProcess at: anInteger + EnvOffset ifAbsent: [^nil].
 	^(env isInteger or: [env isNil]) ifTrue: [self] ifFalse: [env frameClass]!
 
-initialize
-	"Initialize the class variables of the receiver.
-
-		self initialize 
-	"
-
-	"Hmmm, we really need a syntax for declaring constant class variables."
-
-	| pool |
-	pool := self classPool.
-	pool associationsDo: [:each | each isImmutable: false].
-	pool
-		at: 'MethodOffset' put: 0;
-		at: 'EnvOffset' put: 1;
-		at: 'ReturnOffset' put: 2;
-		at: 'IPOffset' put: 3;
-		at: 'SPOffset' put: 4;
-		at: 'BPOffset' put: 5;
-		at: 'FrameSize' put: BPOffset + 1.
-	pool associationsDo: [:each | each isImmutable: true].
-	"The compiler will inline the const refs, making the frame slot accessor methods more efficient"
-	self recompileAll!
-
 process: aProcess index: anInteger
 	"Private - Answer a new instance of the receiver representing the stack frame in aProcess
 	at the specified index in aProcess, or nil if the specified index is out of bounds in the process."
@@ -504,6 +488,5 @@ process: aProcess index: anInteger
 				setProcess: aProcess index: anInteger;
 				yourself]! !
 !StackFrame class categoriesFor: #frameClassFor:at:!instance creation!public! !
-!StackFrame class categoriesFor: #initialize!development!initializing!public! !
 !StackFrame class categoriesFor: #process:index:!instance creation!public! !
 

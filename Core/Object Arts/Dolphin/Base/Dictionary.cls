@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Set variableSubclass: #Dictionary
 	instanceVariableNames: ''
@@ -20,6 +20,17 @@ Conforms to the following ANSI protocols:
 _deepCopyElementsInto: aDictionary trail: anIdentityDictionary 
 	self 
 		associationsDo: [:element | aDictionary uncheckedAdd: (element _deepCopy: anIdentityDictionary)]!
+
+= comperand
+	"Answer whether the receiver is equivalent to the <Object>, comperand. Dictionaries are
+	equal to other dictionary-like objects with the equal keys and values."
+
+	comperand == self ifTrue: [^true].
+	(comperand class conformsToProtocol: #abstractDictionary) ifFalse: [^false].
+	comperand size == self size ifFalse: [^false].
+	self
+		keysAndValuesDo: [:key :value | (comperand at: key ifAbsent: [^false]) = value ifFalse: [^false]].
+	^true!
 
 add: anAssociation
 	"Add anAssociation to the receiver. Answer anAssociation.
@@ -498,6 +509,7 @@ values
 	self do: [:value | answer addLast: value].
 	^answer! !
 !Dictionary categoriesFor: #_deepCopyElementsInto:trail:!copying!private! !
+!Dictionary categoriesFor: #=!comparing!public! !
 !Dictionary categoriesFor: #add:!adding!public! !
 !Dictionary categoriesFor: #asSet!converting!public! !
 !Dictionary categoriesFor: #associationAt:!accessing!public! !

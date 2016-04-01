@@ -65,17 +65,17 @@ environment
 	^Smalltalk
 !
 
-errorModify: key value: value 
+errorModify: key value: value
 	"Private - An attempt was made to modify the value of the constant named, key."
 
-	MessageBox 
-		confirm: ('Would you like to recompile references to <1p><n>to reflect the new value <2d> (currently <3d>)' 
+	MessageBox
+		confirm: ('Would you like to recompile references to <1p><n>to reflect the new value <2d> (currently <3d>)'
 				expandMacrosWith: key
 				with: value
 				with: (self at: key))
 		onYes: 
 			[super at: key put: value.
-			self recompileReferencesTo: key.
+			self recompileReferencesToVarNamed: key.
 			self isChanged: true]
 		onNo: [super at: key put: value]
 		onCancel: 
@@ -182,27 +182,17 @@ preResize: newMe
 
 	name isNil ifFalse: [newMe name: name]!
 
-recompileReferencesTo: keyString 
+recompileReferencesToVarNamed: keyString
 	"Private - Recompile any methods which references the named key, assumed to
 	be a variable name from the receiver."
 
-	Notification 
+	Notification
 		signal: ('Recompiling references to <1p> in <2s>' expandMacrosWith: keyString with: self name).
 	(self environment allClasses select: [:c | c allSharedPools includes: self]) do: 
-			[:c | 
-			self
-				recompileReferencesTo: keyString in: c;
-				recompileReferencesTo: keyString in: c class]!
-
-recompileReferencesTo: keyString in: aBehavior
-	"Private - Recompile any methods which references the named key, assumed to
-	be a variable name from the receiver, in the specified Behavior's method dictionary."
-
-	aBehavior methodDictionary do: [:m | 
-		(m containsSource: keyString) ifTrue: [
-			Notification signal: 'Recompiling ', m printString.
-			m recompile]]
-!
+			[:c |
+			c recompileReferencesToVarNamed: keyString.
+			c class recompileReferencesToVarNamed: keyString.
+			self]!
 
 referencesTo: keyString 
 	"Answer the collection of any methods which references the named key, assumed to
@@ -244,8 +234,7 @@ removeIndex: anInteger
 !PoolConstantsDictionary categoriesFor: #owningPackage!development!public!source filing! !
 !PoolConstantsDictionary categoriesFor: #owningPackage:!accessing!development!public! !
 !PoolConstantsDictionary categoriesFor: #preResize:!adding!private! !
-!PoolConstantsDictionary categoriesFor: #recompileReferencesTo:!development!private! !
-!PoolConstantsDictionary categoriesFor: #recompileReferencesTo:in:!development!private! !
+!PoolConstantsDictionary categoriesFor: #recompileReferencesToVarNamed:!development!private! !
 !PoolConstantsDictionary categoriesFor: #referencesTo:!development!private! !
 !PoolConstantsDictionary categoriesFor: #removeIndex:!development!private!removing! !
 
