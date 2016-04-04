@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 InstructionInterpreter subclass: #Disassembler
 	instanceVariableNames: 'stream'
@@ -120,6 +120,15 @@ duplicateStackTop
 	"Private - Interpret a duplicate stack top instruction."
 
 	stream nextPutAll: 'Dup'!
+
+exLongPushImmediate: extensionByte1 byte2: extensionByte2 byte3: extensionByte3 byte4: extensionByte4
+	self
+		pushImmediateInteger: ((((extensionByte4 >= 128
+				ifTrue: [extensionByte4 - 256]
+				ifFalse: [extensionByte4]) << 8)
+				+ extensionByte3 << 8)
+				+ extensionByte2 << 8)
+				+ extensionByte1 >> 1!
 
 fullDisassembly
 	self reset.
@@ -545,6 +554,7 @@ unused: extensionByte1 with: extensionByte2 with: extensionByte3
 !Disassembler categoriesFor: #disassemble!printing!public! !
 !Disassembler categoriesFor: #disassembleUntil:!printing!public! !
 !Disassembler categoriesFor: #duplicateStackTop!instructions-stack ops!private! !
+!Disassembler categoriesFor: #exLongPushImmediate:byte2:byte3:byte4:!instructions-stack ops!public! !
 !Disassembler categoriesFor: #fullDisassembly!public! !
 !Disassembler categoriesFor: #incPushTemp:temp:!instructions-stack ops!private! !
 !Disassembler categoriesFor: #incrementStackTop!instructions-miscellaneous!private! !
