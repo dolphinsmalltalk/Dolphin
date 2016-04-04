@@ -2,10 +2,11 @@
 
 Magnitude subclass: #Character
 	instanceVariableNames: 'asciiValue '
-	classVariableNames: 'CharacterSet'
+	classVariableNames: 'CharacterSet SpecialChars'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Character guid: (GUID fromString: '{87B4C651-026E-11D3-9FD7-00A0CC3E4A32}')!
+Character addClassConstant: 'SpecialChars' value: #(#null nil nil nil nil nil nil nil #backspace #tab #lf nil #newPage #cr nil nil nil nil nil nil nil nil nil nil nil nil #eof #esc)!
 Character comment: 'Character is the class of objects which serve as the elemental values of Smalltalk Strings. There is a finite set of Characters (256 in the current Dolphin implementation). Characters have a literal syntax which is the $ symbol followed by the normal printed representation of the character.
 
 Note that the ANSI standard does not require that Characters be identity objects, but they are in Dolphin.
@@ -212,7 +213,7 @@ isLiteral
 	"Answer whether the receiver has a literal representation which is directly recognised by
 	the Compiler."
 
-	^asciiValue ~~ 0!
+	^asciiValue > 31 and: [asciiValue ~= 127]!
 
 isLowercase
 	"Answer whether the receiver is a lowercase letter."
@@ -264,10 +265,25 @@ isWhitespace
 	^self isSeparator!
 
 printOn: aStream
-	"Append the ASCII representation of the receiver to aStream as a 
-	developer would want to see it."
+	"Append the ASCII representation of the receiver to aStream as a developer would want to see
+	it."
 
-	aStream nextPut: $$; nextPut: self!
+	self isLiteral
+		ifTrue: 
+			[aStream
+				nextPut: $$;
+				nextPut: self]
+		ifFalse: 
+			[aStream
+				display: self class;
+				space.
+			(SpecialChars at: asciiValue + 1 ifAbsent: [])
+				ifNotNil: [:name | aStream nextPutAll: name]
+				ifNil: 
+					[aStream
+						nextPutAll: #value:;
+						space;
+						display: asciiValue]]!
 
 shallowCopy
 	"Answer the receiver, as Characters have a unique representation for
@@ -391,7 +407,16 @@ icon
 	^##(self) defaultIcon!
 
 initialize
-	self addClassConstant: 'CharacterSet' value: CharacterSet!
+	| specialChars selectors codePoints |
+	self addClassConstant: 'CharacterSet' value: CharacterSet.
+	selectors := #(#backspace #cr #eof #esc #lf #newPage #null #tab).
+	codePoints := selectors collect: [:each | (self perform: each) codePoint].
+	specialChars := Array new: (codePoints inject: 0 into: [:max :each | max max: each]) + 1.
+	codePoints with: selectors do: [:eachCp :eachSel | specialChars at: eachCp + 1 put: eachSel].
+	self addClassConstant: 'SpecialChars'
+		value: (specialChars
+				isImmutable: true;
+				yourself)!
 
 lf
 	"Answer the linefeed <Character>."
