@@ -58,7 +58,6 @@ package classNames
 	yourself.
 
 package methodNames
-	add: #CRTLibrary -> #isalnum:;
 	add: 'TextPresenter class' -> #resource_Scintilla_view;
 	yourself.
 
@@ -196,13 +195,6 @@ ScintillaIndicatorDefinition := ScintillaIndicatorStyle!
 
 
 "Loose Methods"!
-
-!CRTLibrary methodsFor!
-
-isalnum: aCharacter 
-	<cdecl: bool isalnum char>
-	^self invalidCall! !
-!CRTLibrary categoriesFor: #isalnum:!CRT functions-character classification!public! !
 
 !TextPresenter class methodsFor!
 
