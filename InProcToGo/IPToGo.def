@@ -40,17 +40,18 @@ uncompress
 	_chmod
 	_chmod
 	_clearfp
+	_close
 	_controlfp
 	_dup
 	_dup2
 	_ecvt
 	_eof
 	_errno
-	_errno
-	_fcvt
 	_fdopen
 	_filelength
 	_fileno
+	_finite
+	_fpclass
 	_gcvt
 	_getcwd
 	_i64toa
