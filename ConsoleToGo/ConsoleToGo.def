@@ -83,7 +83,6 @@ uncompress
 	ftell
 	fwrite
 	getenv
-	isalnum
 	iswcntrl
 	iswprint
 	iswpunct
