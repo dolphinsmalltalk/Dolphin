@@ -1005,16 +1005,19 @@ whichMethodsReferTo: anObject
 					[^self
 						selectMethods: [:each | (each refersToLiteral: anObject) or: [each sendsSpecialSelector: index]]]]
 		ifFalse: 
-			["In the case of constant bindings the constant value will be in the literal frame, not the variable"
-			((anObject isKindOf: VariableBinding) and: [anObject isImmutable])
+			[(anObject isKindOf: VariableBinding)
 				ifTrue: 
-					[| value constName |
-					constName := anObject key asString.
+					[| value |
 					value := anObject value.
-					^self selectMethods: 
-							[:each |
-							((each refersToLiteral: value) and: [each containsSource: constName])
-								or: [each refersToLiteral: anObject]]]].
+					"In the case of constant bindings the value may be inlined in the byte codes if there is a representation."
+					(anObject isImmutable and: [VMLibrary hasBytecodeRepresentation: value])
+						ifTrue: 
+							[| constName |
+							constName := anObject key asString.
+							^self selectMethods: [:each | (each refersToLiteral: anObject) or: [each containsSource: constName]]]
+						ifFalse: 
+							["For normal const/var bindings, search for both the binding and the current value of the binding"
+							^self selectMethods: [:each | (each refersToLiteral: anObject) or: [each refersToLiteral: value]]]]].
 	^self selectMethods: [:each | each refersToLiteral: anObject]!
 
 whichSelectorsAccess: aString
