@@ -29,16 +29,26 @@ addClassConstant: aString value: anObject
 	reference the constant are recompiled to pick up the new value. If the variable does not
 	exist, a constant binding is added with initial value nil."
 
-	| binding count |
+	| binding count requiresRecompile |
 	count := classPool ifNil: [0] ifNotNil: [classPool size].
 	binding := self addClassVarNamed: aString.
-	(classPool size = count and: [binding isImmutable not or: [binding value ~= anObject]])
-		ifTrue: 
-			["Value of existing class constant changed, or variable made constant"
-			binding isImmutable: false.
-			[binding value: anObject] ensure: [binding isImmutable: true].
-			self recompileAllReferencesToVarNamed: aString]
-		ifFalse: [binding isImmutable: true].
+	"We need to recompile if we are modifying an existing binding and either:
+		- the binding was not constant, and the new constant value is inlineable
+		- the binding was constant, but the value has changed, and either the previous or new value are inlineable"
+	requiresRecompile := classPool size = count and: 
+					[binding isImmutable
+						ifFalse: 
+							["Wasn't constant, recompile if it can be inlined"
+							VMLibrary hasBytecodeRepresentation: anObject]
+						ifTrue: 
+							["Was constant, recompile if changed and was inlined, or can be inlined"
+							| oldValue |
+							oldValue := binding value.
+							oldValue ~~ anObject and: 
+									[(VMLibrary hasBytecodeRepresentation: oldValue) or: [VMLibrary hasBytecodeRepresentation: anObject]]]].
+	binding isImmutable: false.
+	[binding value: anObject] ensure: [binding isImmutable: true].
+	requiresRecompile ifTrue: [self recompileAllReferencesToVarNamed: aString].
 	^binding!
 
 addClassVariable: aString value: anObject

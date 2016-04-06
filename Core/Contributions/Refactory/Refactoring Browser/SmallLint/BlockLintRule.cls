@@ -398,12 +398,10 @@ refersToClass
 			| method nonMeta |
 			method := context compiledMethod.
 			nonMeta := method methodClass instanceBehavior.
-			#rbFix.	"In some versions of Dolphin, class refs in methods are direct to the class object, not the binding, because the binding is constant"
-			((method refersToLiteral: nonMeta)
-				or: [method refersToLiteral: (nonMeta environment bindingFor: nonMeta name)])
-					ifTrue: 
-						[result addClass: method methodClass selector: method selector.
-						result addSearchString: nonMeta name]].
+			(method refersToLiteral: (nonMeta environment bindingFor: nonMeta name))
+				ifTrue: 
+					[result addClass: method methodClass selector: method selector.
+					result addSearchString: nonMeta name]].
 	^detector!
 
 returnsBooleanAndOther
