@@ -8,5 +8,6 @@ Package manager
 	install: 'Core\Object Arts\Dolphin\System\Win32\Dolphin MMF Tests.pax';
 	install: 'Core\Object Arts\Dolphin\IDE\Base\Development System Tests.pax';
 	install: 'Core\Object Arts\Dolphin\MVP\Dolphin MVP Tests.pax';
-	install: 'Core\Object Arts\Dolphin\IDE\Dolphin IDE Tests.pax'.
+	install: 'Core\Object Arts\Dolphin\IDE\Dolphin IDE Tests.pax';
+	install: 'Core\Object Arts\Dolphin\Lagoon\Lagoon Tests.pax'.
 !
