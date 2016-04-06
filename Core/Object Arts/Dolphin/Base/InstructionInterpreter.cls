@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #InstructionInterpreter
 	instanceVariableNames: 'dispatcher'
@@ -57,6 +57,12 @@ dispatcher: aByteCodeDispatcher
 duplicateStackTop
 	"Interpret a Dup instruction."
 !
+
+exLongPushImmediate: extensionByte1 byte2: extensionByte2 byte3: extensionByte3 byte4: anInteger4
+	"Interpret a PushSmallInteger instruction. The SmallInteger is encoded in the extension
+	bytes in little endian order"
+
+	!
 
 exLongSend: extensionByte1 with: extensionByte2 with: extensionByte3 
 	"Interpret an extended long send instruction."
@@ -617,6 +623,7 @@ unused: extensionByte1 with: extensionByte2 with: extensionByte3
 !InstructionInterpreter categoriesFor: #dispatcher!accessing!public! !
 !InstructionInterpreter categoriesFor: #dispatcher:!accessing!public! !
 !InstructionInterpreter categoriesFor: #duplicateStackTop!instructions-stack ops!public! !
+!InstructionInterpreter categoriesFor: #exLongPushImmediate:byte2:byte3:byte4:!instructions-stack ops!public! !
 !InstructionInterpreter categoriesFor: #exLongSend:with:with:!instructions-sending!public! !
 !InstructionInterpreter categoriesFor: #exLongSupersend:with:with:!instructions-sending!public! !
 !InstructionInterpreter categoriesFor: #incPushTemp:temp:!instructions-stack ops!public! !

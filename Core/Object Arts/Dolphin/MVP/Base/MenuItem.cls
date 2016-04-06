@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #MenuItem
 	instanceVariableNames: 'flags'
@@ -6,6 +6,8 @@ Object subclass: #MenuItem
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
 MenuItem guid: (GUID fromString: '{87B4C49D-026E-11D3-9FD7-00A0CC3E4A32}')!
+MenuItem addClassConstant: 'StringSeparator' value: $/!
+MenuItem addClassConstant: 'StylesMask' value: 1048575!
 MenuItem comment: 'MenuItem is an abstract class whose subclasses represent the items held by a <Menu>.
 
 Instance Variables:
@@ -233,13 +235,13 @@ initialize
 	"
 
 	Dividers := ##((LookupTable new)
-			at: '-' put: #separator;
-			at: '|' put: #break;
-			at: '||' put: #barBreak;
-			shrink;
-			yourself).
-	StringSeparator := $/.
-	StylesMask := 16rFFFFF	"Allows a lot of space for more Microsoft flags"!
+				at: '-' put: #separator;
+				at: '|' put: #break;
+				at: '||' put: #barBreak;
+				shrink;
+				yourself).
+	self addClassConstant: 'StringSeparator' value: $/.
+	self addClassConstant: 'StylesMask' value: 16rFFFFF	"Allows a lot of space for more Microsoft flags"!
 
 new
 	"Private - MenuItem is abstract"

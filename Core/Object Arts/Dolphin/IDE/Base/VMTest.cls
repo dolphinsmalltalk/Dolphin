@@ -562,13 +562,20 @@ testOverlappedCallTermination
 	1 to: 10 do: [:i | self earlyTermination: true]!
 
 testPrimitiveAt
-	| array |
-	
 	"First some error cases - accessing non-indexable objects"
-	self should: [Array at: 1] raise: Error matching: [:ex | ex messageText = 'not indexable'].
-	self should: [Array at: 0] raise: Error matching: [:ex | ex messageText = 'not indexable'].
-	self should: [Array at: nil] raise: Error matching: [:ex | ex messageText = 'not indexable'].
-
+	| array |
+	self
+		should: [Array at: 1]
+		raise: Error
+		matching: [:ex | ex messageText = 'not indexable'].
+	self
+		should: [Array at: 0]
+		raise: Error
+		matching: [:ex | ex messageText = 'not indexable'].
+	self
+		should: [Array at: nil]
+		raise: Error
+		matching: [:ex | ex messageText = 'not indexable'].
 	array := Array with: 1.
 	self should: [(array at: 1) == 1].
 	"Some tests are repeated with a new array in case of different behaviour resulting from caching"
@@ -600,99 +607,10 @@ testPrimitiveAt
 	array := Object compiledMethodAt: #addDependent:.
 	self should: [(array at: 1) == #getDependents].
 	self should: [(array at: 1) == #getDependents].
-	self should: [(array at: 2) == WeakArray].
-	self should: [(array at: 3) == #setDependents:].
-	self should: [(array at: 4) == #add:].
-	self should: [array at: 0] raise: BoundsError.
-	self should: [array at: 5] raise: BoundsError.
-	self should: [array at: SmallInteger maximum] raise: BoundsError.
-	self should: [array at: SmallInteger minimum] raise: BoundsError.
-
-	"LargeIntegers"
-	self should: [array at: SmallInteger maximum+1] raise: BoundsError.
-	self should: [array at: (2 raisedToInteger: 31)-1] raise: BoundsError.
-	self should: [array at: (2 raisedToInteger: 31)] raise: BoundsError.
-	self should: [array at: (2 raisedToInteger: 32)-1] raise: BoundsError.
-	self should: [array at: (2 raisedToInteger: 32)] raise: BoundsError.
-	self should: [array at: SmallInteger minimum-1] raise: BoundsError.
-	self should: [array at: (-2 raisedToInteger: 31)] raise: BoundsError.
-
-	"Try accessing with non-integer indices"
-	self should: [array at: $1] raise: Error matching: [:ex | ex messageText = 'Index: $1 is not an integer'].
-	self should: [array at: '1'] raise: Error matching: [:ex | ex messageText = 'Index: ''1'' is not an integer'].
-	self should: [array at: nil] raise: Error matching: [:ex | ex messageText = 'Index: nil is not an integer'].
-	self should: [array at: #[1]] raise: Error matching: [:ex | ex messageText = 'Index: #[1] is not an integer'].
-	self should: [array at: #'1'] raise: Error matching: [:ex | ex messageText = 'Index: #''1'' is not an integer'].
-	self should: [array at: #(1)] raise: Error matching: [:ex | ex messageText = 'Index: #(1) is not an integer'].
-	self should: [array at: #(1)] raise: Error matching: [:ex | ex messageText = 'Index: #(1) is not an integer'].
-
-	array := Array with: 'a' with: 'b'.
-	self should: [(array at: 1) = 'a'].
-	self should: [(array at: 1) = 'a'].
-	self should: [(array at: 2) = 'b'].
-	self should: [array at: 0] raise: BoundsError.
-	self should: [array at: 3] raise: BoundsError.
-
-	array := MourningWeakArray with: 'a' with: 'b'.
-	self should: [(array at: 1) = 'a'].
-	self should: [(array at: 1) = 'a'].
-	self should: [(array at: 2) = 'b'].
-	self should: [array at: 0] raise: BoundsError.
-	self should: [array at: 3] raise: BoundsError.
-
-	array := (-100 to: 100) asArray.
-	-100 to: 100 do: [:i | self should: [(array at: i+100+1) == i]].
-!
-
-testPrimitiveAtPut
-	"First some error cases - accessing non-indexable objects"
-
-	| array |
-	self 
-		should: [Array at: 1 put: nil]
-		raise: Error
-		matching: [:ex | ex messageText = 'not indexable'].
-	self 
-		should: [Array at: 0 put: nil]
-		raise: Error
-		matching: [:ex | ex messageText = 'not indexable'].
-	self 
-		should: [Array at: nil put: nil]
-		raise: Error
-		matching: [:ex | ex messageText = 'not indexable'].
-	array := Array with: 1.
-	self should: [(array at: 1 put: 1) == 1 and: [(array at: 1) == 1]].
-	"One second access, will be in the cache"
-	self should: [(array at: 1 put: '1') = '1' and: [(array at: 1) = '1']].
-
-	"Now attempt some out of bounds accesses"
-	self should: [array at: 0 put: '0'] raise: BoundsError.
-	self should: [array at: 2 put: '2'] raise: BoundsError.
-	array := Array with: 1.
-	self should: [array at: 0 put: '0'] raise: BoundsError.
-	array := Array with: 1.
-	self should: [array at: 2 put: '2'] raise: BoundsError.
-	self should: [array at: SmallInteger maximum put: nil] raise: BoundsError.
-	self should: [array at: SmallInteger minimum put: nil] raise: BoundsError.
-
-	"Repeat for an object with one named instance variable and no #at: override"
-	array := MourningWeakArray with: 1.
-	self should: [(array at: 1) == 1].
-	self should: [(array at: 1) == 1].
-	self should: [array at: 0] raise: BoundsError.
-	self should: [array at: 2] raise: BoundsError.
-	array := Array with: 1.
-	self should: [array at: 0] raise: BoundsError.
-	array := Array with: 1.
-	self should: [array at: 2] raise: BoundsError.
-	self should: [array at: SmallInteger maximum] raise: BoundsError.
-	self should: [array at: SmallInteger minimum] raise: BoundsError.
-
-	"And again for one with a number of named instance variables (a method)"
-	array := Object compiledMethodAt: #addDependent:.
-	self should: [(array at: 1) == #getDependents].
-	self should: [(array at: 1) == #getDependents].
-	self should: [(array at: 2) == WeakArray].
+	self should: 
+			[| lit |
+			lit := array at: 2.
+			lit == WeakArray or: [(lit isKindOf: VariableBinding) and: [lit value == WeakArray]]].
 	self should: [(array at: 3) == #setDependents:].
 	self should: [(array at: 4) == #add:].
 	self should: [array at: 0] raise: BoundsError.
@@ -710,31 +628,31 @@ testPrimitiveAtPut
 	self should: [array at: (-2 raisedToInteger: 31)] raise: BoundsError.
 
 	"Try accessing with non-integer indices"
-	self 
+	self
 		should: [array at: $1]
 		raise: Error
 		matching: [:ex | ex messageText = 'Index: $1 is not an integer'].
-	self 
+	self
 		should: [array at: '1']
 		raise: Error
 		matching: [:ex | ex messageText = 'Index: ''1'' is not an integer'].
-	self 
+	self
 		should: [array at: nil]
 		raise: Error
 		matching: [:ex | ex messageText = 'Index: nil is not an integer'].
-	self 
+	self
 		should: [array at: #[1]]
 		raise: Error
 		matching: [:ex | ex messageText = 'Index: #[1] is not an integer'].
-	self 
+	self
 		should: [array at: #'1']
 		raise: Error
 		matching: [:ex | ex messageText = 'Index: #''1'' is not an integer'].
-	self 
+	self
 		should: [array at: #(1)]
 		raise: Error
 		matching: [:ex | ex messageText = 'Index: #(1) is not an integer'].
-	self 
+	self
 		should: [array at: #(1)]
 		raise: Error
 		matching: [:ex | ex messageText = 'Index: #(1) is not an integer'].
@@ -752,6 +670,37 @@ testPrimitiveAtPut
 	self should: [array at: 3] raise: BoundsError.
 	array := (-100 to: 100) asArray.
 	-100 to: 100 do: [:i | self should: [(array at: i + 100 + 1) == i]]!
+
+testPrimitiveAtPut
+	"First some error cases - accessing non-indexable objects"
+
+	| array |
+	self
+		should: [Array at: 1 put: nil]
+		raise: Error
+		matching: [:ex | ex messageText = 'not indexable'].
+	self
+		should: [Array at: 0 put: nil]
+		raise: Error
+		matching: [:ex | ex messageText = 'not indexable'].
+	self
+		should: [Array at: nil put: nil]
+		raise: Error
+		matching: [:ex | ex messageText = 'not indexable'].
+	array := Array with: 1.
+	self should: [(array at: 1 put: 1) == 1 and: [(array at: 1) == 1]].
+	"One second access, will be in the cache"
+	self should: [(array at: 1 put: '1') = '1' and: [(array at: 1) = '1']].
+
+	"Now attempt some out of bounds accesses"
+	self should: [array at: 0 put: '0'] raise: BoundsError.
+	self should: [array at: 2 put: '2'] raise: BoundsError.
+	array := Array with: 1.
+	self should: [array at: 0 put: '0'] raise: BoundsError.
+	array := Array with: 1.
+	self should: [array at: 2 put: '2'] raise: BoundsError.
+	self should: [array at: SmallInteger maximum put: nil] raise: BoundsError.
+	self should: [array at: SmallInteger minimum put: nil] raise: BoundsError!
 
 testPrimitiveIsNullBytes
 	| addr handle |

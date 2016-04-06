@@ -82,7 +82,7 @@ replaceFrom: startInteger to: stopInteger with: aSequencedReadableCollection sta
 		to: stopInteger
 		startingAt: startAtInteger!
 
-storeOn: aStream 
+storeOn: aStream
 	"Append to the <puttableStream> argument, target, an expression which when 
 	evaluated will answer a collection similar to the receiver."
 
@@ -92,17 +92,14 @@ storeOn: aStream
 
 	aStream nextPutAll: '#('.
 	self do: 
-			[:each | 
-			each isLiteral 
+			[:each |
+			each isLiteral
 				ifTrue: [each storeOn: aStream]
 				ifFalse: 
 					[aStream nextPutAll: '##('.
 					each storeOn: aStream.
 					aStream nextPut: $)]]
-		separatedBy: 
-			[aStream
-				cr;
-				space].
+		separatedBy: [aStream space].
 	aStream nextPut: $)! !
 !Array categoriesFor: #addAnsweringIndex:!adding!public! !
 !Array categoriesFor: #asArray!converting!public! !

@@ -1357,7 +1357,7 @@ Magnitude subclass: #Association
 	classInstanceVariableNames: ''!
 Magnitude subclass: #Character
 	instanceVariableNames: 'asciiValue '
-	classVariableNames: 'CharacterSet'
+	classVariableNames: 'CharacterSet SpecialChars'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Magnitude subclass: #Date

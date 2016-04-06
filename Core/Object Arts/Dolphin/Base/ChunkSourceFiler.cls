@@ -90,7 +90,7 @@ emitDeclarationForClass: aClass variable: anAssociation
 					ifFalse: [' addClassVariable: ']);
 		print: anAssociation key;
 		nextPutAll: ' value: '.
-	self nextChunkPut: anAssociation value printString.
+	self nextChunkPut: anAssociation value storeString.
 	stream cr!
 
 emitFooterForMethodsOf: aClass 

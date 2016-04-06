@@ -674,7 +674,9 @@ traceLine: aString
 		cr!
 
 traceStream
-	^(self isHeadless not and: [Transcript notNil]) ifTrue: [Transcript] ifFalse: [Trace]!
+	^(self isHeadless not and: [Transcript notNil])
+		ifTrue: [Transcript]
+		ifFalse: [stdioStreams isNil ifTrue: [Trace] ifFalse: [self stderr]]!
 
 unhandledException: anException 
 	"Private - Pop-up a walkback with details from the argument, anException."
