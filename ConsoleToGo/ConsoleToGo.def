@@ -53,7 +53,6 @@ uncompress
 	_rotl
 	_rotr
 	_setmode
-	_snprintf
 	_spawnvp
 	_splitpath
 	_stricmp
@@ -78,6 +77,7 @@ uncompress
 	fopen
 	fputc
 	fread
+	freopen
 	frexp
 	fseek
 	ftell
@@ -112,6 +112,10 @@ uncompress
 	tan
 	ungetc
 	wcscspn
+
+; VMLibrary
+
+	_snprintf
 
 ; Version Helper Functions
 IsWindowsVersionOrGreater
