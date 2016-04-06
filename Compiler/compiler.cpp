@@ -345,17 +345,16 @@ TempVarRef* Compiler::AddTempRef(const Str& strName, VarRefType refType, const T
 	return pScope->AddTempRef(pDecl, refType, range);
 }
 
-Compiler::StaticType Compiler::FindNameAsStatic(const Str& name, Oop& literal, bool autoDefine)
+Compiler::StaticType Compiler::FindNameAsStatic(const Str& name, POTE& oteStatic, bool autoDefine)
 {
 	// Finds the given name as a shared global or class variable or pool variable
 	// and if it exists ensures that it is installed in the current literal frame.
 	POTE nil = Nil();
-	literal = reinterpret_cast<Oop>(nil);
+	oteStatic = nil;
 
 	Oop scope = reinterpret_cast<Oop>(m_class == nil ? GetVMPointers().ClassUndefinedObject : m_class);
 	POTE oteBinding = reinterpret_cast<POTE>(m_piVM->PerformWith(scope, GetVMPointers().fullBindingForSymbol, 
 												reinterpret_cast<Oop>(NewString(name))));
-	
 	STVarObject* pools = NULL;
 	// Look in Workspace pools (if any) next
 	if (oteBinding == nil && m_oopWorkspacePools != nil)
@@ -420,26 +419,10 @@ Compiler::StaticType Compiler::FindNameAsStatic(const Str& name, Oop& literal, b
 		}
 	}
 	
-	// Add to literal frame if found/created
 	if (oteBinding != nil)
 	{
-		StaticType sharedType;
-
-		if (m_piVM->IsImmutable(reinterpret_cast<Oop>(oteBinding)))
-		{
-			sharedType = STATICCONSTANT;
-			STVariableBinding& var = *(STVariableBinding*)GetObj(oteBinding);
-			literal = var.value;
-		}
-		else
-		{
-			sharedType = STATICVARIABLE;
-			literal = reinterpret_cast<Oop>(oteBinding);
-		}
-
-		// Must remove this last as in the case of a PoolConstantsDictionary the Association is not state
-		// and this will be the last ref.
-		m_piVM->RemoveReference(reinterpret_cast<Oop>(oteBinding));
+		StaticType sharedType = m_piVM->IsImmutable(reinterpret_cast<Oop>(oteBinding)) ? STATICCONSTANT : STATICVARIABLE;
+		oteStatic = oteBinding;
 		return sharedType;
 	}
 	else
@@ -482,7 +465,6 @@ void Compiler::CheckTemporaryName(const Str& name, const TEXTRANGE& range, bool 
 	if (strspn(name.c_str(), GENERATEDTEMPSTART) != 0)
 		return;
 
-	int i;
 	char* variableType = NULL;
 	if (IsPseudoVariable(name))
 	{
@@ -507,12 +489,17 @@ void Compiler::CheckTemporaryName(const Str& name, const TEXTRANGE& range, bool 
 	{
 		if (pDecl)
 			Warning(range, pDecl->IsArgument() ? CWarnRedefiningArg : CWarnRedefiningTemp);
-//#ifndef _DEBUG
 		else if (FindNameAsInstanceVariable(name) >= 0)
 			Warning(range, CWarnRedefiningInstVar);
-		else if (FindNameAsStatic(name, (Oop&)i))
-			Warning(range, CWarnRedefiningStatic);
-//#endif
+		else
+		{
+			POTE oteStatic;
+			if (FindNameAsStatic(name, oteStatic) > STATICNOTFOUND)
+			{
+				m_piVM->RemoveReference(reinterpret_cast<Oop>(oteStatic));
+				Warning(range, CWarnRedefiningStatic);
+			}
+		}
 	}
 }
 
@@ -638,45 +625,42 @@ inline int Compiler::GenPushInstVar(BYTE index)
 
 inline void Compiler::GenPushStaticVariable(const Str& strName, const TEXTRANGE& range)
 {
-	Oop objectPointer;
-	switch (FindNameAsStatic(strName, objectPointer))
+	POTE oteStatic;
+	switch (FindNameAsStatic(strName, oteStatic))
 	{
 	case STATICCONSTANT:
-		// If possible use an immediate form
-		TODO("Also handle characters")
-
-		if (IsIntegerObject(objectPointer))
-			GenInteger(IntegerValueOf(objectPointer), range);
-		else
-		{
-			const VMPointers& vmPointers = GetVMPointers();
-			if (objectPointer == Oop(vmPointers.False))
-				GenInstruction(ShortPushFalse);
-			else if (objectPointer == Oop(vmPointers.True))
-				GenInstruction(ShortPushTrue);
-			else if (objectPointer == Oop(vmPointers.Nil))
-				GenInstruction(ShortPushNil);
-			else
-			{
-				// Note that we are pushing the value of a variable here, we don't want to mark it immutable
-				GenConstant(AddToFrame(objectPointer, range));
-			}
-		}
+		GenPushStaticConstant(oteStatic, range);
 		break;
 
 	case STATICVARIABLE:
-		//_ASSERTE(ObjectMemory::isKindOf((POTE)objectPointer, GetVMPointers().ClassVariableBinding));
-		GenStatic(AddToFrame(objectPointer, range));
+		//_ASSERTE(ObjectMemory::isKindOf(oteBinding, GetVMPointers().ClassVariableBinding));
+		GenStatic(oteStatic, range);
 		break;
 		
 	case STATICCANCEL:
 		m_ok = false;
-		break;
+		return;
 		
 	case STATICNOTFOUND:
 	default:
 		CompileError(range, CErrUndeclared, (Oop)NewString(strName));
-		break;
+		return;
+	}
+
+	// Must remove this last as in the case of a PoolConstantsDictionary the Association is not state
+	// and this will be the last ref.
+	m_piVM->RemoveReference(reinterpret_cast<Oop>(oteStatic));
+}
+
+void Compiler::GenPushStaticConstant(POTE oteStatic, const TEXTRANGE& range)
+{
+	STVariableBinding& var = *(STVariableBinding*)GetObj(oteStatic);
+	Oop literal = var.value;
+	if (!GenPushImmediate(literal, range))
+	{
+		// If it doesn't have an immediate form, may as well push the variable binding as this is better for ref searches in the IDE
+		// and means we don't need to recompile if the value changes.
+		GenStatic(oteStatic, range);
 	}
 }
 
@@ -735,6 +719,18 @@ void Compiler::GenInteger(int val, const TEXTRANGE& range)
 		GenInstructionExtended(PushImmediate, static_cast<BYTE>(val));
 	else if (val >= -32768 && val <= 32767)
 		GenLongInstruction(LongPushImmediate, static_cast<WORD>(val));
+	else if (IsIntegerValue(val))
+	{
+		// Note that although there is sufficient space in the instruction to represent the full range of
+		// 32-bit integers, we don't bother with those outside the SmallInteger range since those would
+		// then need to be allocated each time, rather than read from a constant in the literal frame.
+
+		GenInstruction(ExLongPushImmediate);
+		GenData(val & 0xFF);
+		GenData((val >> 8) & 0xFF);
+		GenData((val >> 16) & 0xFF);
+		GenData((val >> 24) & 0xFF);
+	}
 	else
 		GenLiteralConstant(m_piVM->NewSignedInteger(val), range);
 }
@@ -868,6 +864,7 @@ int Compiler::AddToFrameUnconditional(Oop object, const TEXTRANGE& errRange)
 	// Returns the index to the object in the literal frame.
 	//
 	_ASSERTE(object);
+	_ASSERTE(!IsIntegerObject(object) || IntegerValueOf(object) < -32768 || IntegerValueOf(object) > 32767 || errRange.span() <= 0);
 	int index=-1;
 	int count = GetLiteralCount();
 	if (count < m_literalLimit)
@@ -941,6 +938,51 @@ void Compiler::GenLiteralConstant(Oop object, const TEXTRANGE& range)
 	GenConstant(AddToFrame(object, range));
 }
 
+bool Compiler::GenPushImmediate(Oop objectPointer, const TEXTRANGE& range)
+{
+	// If possible use an immediate form (SmallIntegers, Characters, nil, true, false)
+
+	if (IsIntegerObject(objectPointer))
+	{
+		GenInteger(IntegerValueOf(objectPointer), range);
+	}
+	else
+	{
+		const VMPointers& vmPointers = GetVMPointers();
+		if (objectPointer == Oop(vmPointers.False))
+			GenInstruction(ShortPushFalse);
+		else if (objectPointer == Oop(vmPointers.True))
+			GenInstruction(ShortPushTrue);
+		else if (objectPointer == Oop(vmPointers.Nil))
+			GenInstruction(ShortPushNil);
+		else if (m_piVM->IsKindOf(objectPointer, GetVMPointers().ClassCharacter))
+		{
+			STVarObject* pChar = GetObj((POTE)objectPointer);
+			Oop asciiValue = pChar->fields[0];
+			_ASSERT(IsIntegerObject(asciiValue));
+			MWORD codePoint = IntegerValueOf(asciiValue);
+			_ASSERTE(codePoint >= 0 && codePoint < 256);
+			GenInstructionExtended(PushChar, static_cast<BYTE>(codePoint));
+		}
+		else
+		{
+			return false;
+		}
+	}
+	return true;
+}
+
+void Compiler::GenPushConstant(Oop objectPointer, const TEXTRANGE& range)
+{
+	if (!GenPushImmediate(objectPointer, range))
+	{
+		// Note that we may be pushing the value of a variable here, we don't want to mark it immutable
+		GenConstant(AddToFrame(objectPointer, range));
+	}
+}
+
+
+
 // Generates code to push a literal constant
 void Compiler::GenConstant(int index)
 {
@@ -966,8 +1008,10 @@ void Compiler::GenConstant(int index)
 }		
 
 // Generates code to push a literal variable.
-void Compiler::GenStatic(int index)
+void Compiler::GenStatic(const POTE oteStatic, const TEXTRANGE& range)
 {
+	int index = AddToFrame(reinterpret_cast<Oop>(oteStatic), range);
+
 	if (m_ok)
 	{
 		// Index should be >=0 if no error detected
@@ -1191,22 +1235,24 @@ int Compiler::GenStore(const Str& name, const TEXTRANGE& range, int assignmentEn
 
 int Compiler::GenStaticStore(const Str& name, const TEXTRANGE& range, int assignmentEnd)
 {
-	Oop objectPointer;
+	POTE oteStatic;
 	int storeIP = 0;
-	switch(FindNameAsStatic(name, objectPointer, true))
+	switch(FindNameAsStatic(name, oteStatic, true))
 	{
 	case STATICCONSTANT:
-		CompileError(TEXTRANGE(range.m_start, assignmentEnd), 
+		m_piVM->RemoveReference(reinterpret_cast<Oop>(oteStatic));
+		CompileError(TEXTRANGE(range.m_start, assignmentEnd),
 						CErrAssignConstant, (Oop)NewString(name));
 		break;
 
 	case STATICVARIABLE:
 		{
-			int index = AddToFrame(objectPointer, range);
+			int index = AddToFrame(reinterpret_cast<Oop>(oteStatic), range);
 			_ASSERTE(index >= 0 && index < 65536);
 			storeIP = index < 255 
 							? GenInstructionExtended(StoreStatic, static_cast<BYTE>(index)) 
 							: GenLongInstruction(LongStoreStatic, static_cast<WORD>(index));
+			m_piVM->RemoveReference(reinterpret_cast<Oop>(oteStatic));
 		}
 		break;
 
@@ -1219,6 +1265,7 @@ int Compiler::GenStaticStore(const Str& name, const TEXTRANGE& range, int assign
 			CompileError(range, CErrUndeclared);
 		break;
 	}
+
 
 	return storeIP;
 }
@@ -1681,12 +1728,7 @@ void Compiler::ParseTerm(int textPosition)
 			Oop literal=ParseConstExpression();
 			if (m_ok)
 			{
-				if (IsIntegerObject(literal))
-					GenInteger(IntegerValueOf(literal), TEXTRANGE(start, LastTokenRange().m_stop));
-				else
-					// Note the result here is some arbitrary object resulting from evaluating the const
-					// expression. We do not want to mark it immutable if it isn't already.
-					GenConstant(AddToFrame(literal, TEXTRANGE(start, LastTokenRange().m_stop)));
+				GenPushConstant(literal, TEXTRANGE(start, LastTokenRange().m_stop));
 			}
 			m_piVM->RemoveReference(literal);
 			NextToken();

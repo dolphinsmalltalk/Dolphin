@@ -127,7 +127,7 @@ private:
 	TempVarRef* AddTempRef(const Str& strName, VarRefType refType, const TEXTRANGE& refRange, int expressionEnd);
 
 	enum StaticType { STATICCANCEL=-1, STATICNOTFOUND, STATICVARIABLE, STATICCONSTANT };
-	StaticType FindNameAsStatic(const Str&, Oop&, bool autoDefine=false);
+	StaticType FindNameAsStatic(const Str&, POTE&, bool autoDefine=false);
 
 	void WarnIfRestrictedSelector(int start);
 
@@ -156,7 +156,7 @@ private:
 	void GenNumber(Oop, const TEXTRANGE&);
 	void GenConstant(int index);
 	void GenLiteralConstant(Oop object, const TEXTRANGE&);
-	void GenStatic(int index);
+	void GenStatic(const POTE oteStatic, const TEXTRANGE&);
 	
 	int GenMessage(const Str& pattern, int argumentCount, int messageStart);
 
@@ -172,6 +172,9 @@ private:
 	int GenPushTemp(TempVarRef*);
 	int GenPushInstVar(BYTE index);
 	void GenPushStaticVariable(const Str&, const TEXTRANGE&);
+	void GenPushStaticConstant(POTE oteBinding, const TEXTRANGE& range);
+	void GenPushConstant(Oop objectPointer, const TEXTRANGE& range);
+	bool GenPushImmediate(Oop objectPointer, const TEXTRANGE& range);
 
 	void GenPopAndStoreTemp(TempVarRef*);
 

@@ -478,7 +478,8 @@ byteCodeTable DD		break										; All push[0] instructions are now odd
 	DWORD		blockCopy
 	DWORD		exLongSend
 	DWORD		exLongSupersend
-	CreateInstructionLabels <invalidByteCode>, <3>
+	DWORD		exLongPushImmediate
+	CreateInstructionLabels <invalidByteCode>, <0>
 
 IFDEF _DEBUG
 _byteCodeCounters DD	256 DUP (0)
@@ -988,25 +989,34 @@ PushStaticN MACRO index
 ENDM
 
 BEGINBYTECODE shortPushStatic
-	; N.B. This is really just...
-	;PushStaticN ecx-FIRSTSHORTPUSHSTATIC
+	IFDEF _DEBUG
+		mov		eax, [pMethod]							;; Load pointer to current method
+		ASSUME	eax:PTR CompiledCodeObj
+		mov     eax, [eax].m_aLiterals[(ecx*OOPSIZE)-(FIRSTSHORTPUSHSTATIC*OOPSIZE)]	;; Load Oop from literal frame
+		ASSUME	eax:NOTHING
+		mov		eax, (OTE PTR[eax]).m_location			;; Load pointer to binding
+		mov		eax, (Object PTR[eax]).fields[OOPSIZE]	;; Load value Oop from binding
 
-	mov		eax, [pMethod]							;; Load pointer to current method
-	ASSUME	eax:PTR CompiledCodeObj
+		PushAndDispatch <a>
+	ELSE
+		mov		eax, [pMethod]							;; Load pointer to current method
+		ASSUME	eax:PTR CompiledCodeObj
 
-	add     _SP, OOPSIZE							;; We're going to push, so prepare _SP 
-	mov     eax, [eax].m_aLiterals[(ecx*OOPSIZE)-(FIRSTSHORTPUSHSTATIC*OOPSIZE)]	;; Load Oop from literal frame
-	ASSUME	eax:NOTHING
+		add     _SP, OOPSIZE							;; We're going to push, so prepare _SP 
+		mov     eax, [eax].m_aLiterals[(ecx*OOPSIZE)-(FIRSTSHORTPUSHSTATIC*OOPSIZE)]	;; Load Oop from literal frame
+		ASSUME	eax:NOTHING
 
-	MPrefetch
-	
-	mov		eax, (OTE PTR[eax]).m_location			;; Load pointer to binding
-	mov		eax, (Object PTR[eax]).fields[OOPSIZE]	;; Load value Oop from binding
+		xor		ecx, ecx
+		mov		eax, (OTE PTR[eax]).m_location			;; Load pointer to binding
+		mov		cl, BYTE PTR[_IP]
+		mov		eax, (Object PTR[eax]).fields[OOPSIZE]	;; Load value Oop from binding
+		inc		_IP
 
-	;; Now Push eax onto the stack
-	mov		[_SP], eax								;; push inst var onto stack
+		;; Now Push eax onto the stack
+		mov		[_SP], eax								;; push inst var onto stack
 
-	DispatchNext
+		jmp		byteCodeTable[ecx*4]					;; Transfer control via jump table (will return to dispatchByte)
+	ENDIF
 ENDBYTECODE shortPushStatic
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -2036,6 +2046,39 @@ BEGINBYTECODE longPushImmediate
 
 	jmp		byteCodeTable[ecx*4]				; Transfer control via jump table
 ENDBYTECODE longPushImmediate
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Push a 31-bit integer (five bytes).
+;;
+BEGINBYTECODE exLongPushImmediate
+	mov		eax, DWORD PTR[_IP]					; Load the SmallInteger encoded in the next 4 bytes of the instruction stream
+	xor		ecx, ecx							; Clear ECX (avoid partial register stall on PPro and later PIIs it would appear)
+
+	add		_SP, OOPSIZE
+	mov		cl, [_IP+4]
+
+	lea		eax, [eax+eax+1]					; Convert to SmallInteger
+	add		_IP, 5								; Advance instruction pointer (over next instruction)
+	
+	mov		[_SP], eax							; push SmallInteger onto stack
+
+	IFDEF _DEBUG
+		.IF ([EXECUTIONTRACE])
+			push	ecx
+			mov		ecx, _IP
+			mov		edx, _SP
+			dec		ecx
+			call	DEBUGEXECTRACE
+			pop		ecx
+		.ENDIF
+		inc		[_byteCodeCounters+ecx*4]
+	ENDIF
+	IFDEF PROFILING
+		inc		[?byteCodeCount@@3IA]
+	ENDIF
+
+	jmp		byteCodeTable[ecx*4]				; Transfer control via jump table
+ENDBYTECODE exLongPushImmediate
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Push Character Instruction (double byte).
@@ -4860,10 +4903,9 @@ ENDBYTECODE longSupersend
 ;; This byte code is very, very, very, rarely used
 
 BEGINRARECODE exLongSupersend
-	xor		ecx, ecx
 	xor		edx, edx
 	mov		dl, BYTE PTR[_IP]				; argCount = first byte code
-	mov		cx, WORD PTR[_IP+1]				; literal index = last byte codes
+	movzx	ecx, WORD PTR[_IP+1]			; literal index = last byte codes
 	add		_IP, 3
 	jmp		sendLiteralSelectorToSuper		; Use code shared with singleExtendedSuperBytecode
 ENDBYTECODE exLongSupersend
@@ -4877,7 +4919,7 @@ BEGINRARECODE exLongSend
 	mov		eax, [pMethod]					; Load pointer to current method
 	ASSUME	eax: PTR CompiledCodeObj
 
-	mov		cx, WORD PTR[_IP+1]
+	movzx	ecx, WORD PTR[_IP+1]
 
 	xor		edx, edx
 	mov		dl, BYTE PTR[_IP]
@@ -4891,14 +4933,14 @@ ENDBYTECODE exLongSend
 
 BEGINRARECODE longStoreStatic
 	mov		eax, [_SP]
-	mov		cx, WORD PTR[_IP]
+	movzx	ecx, WORD PTR[_IP]
 	add		_IP, 2
 	StoreStaticAndDispatch
 ENDBYTECODE longStoreStatic
 
 BEGINRARECODE longPopStoreStatic
 	mov		eax, [_SP]							;; Load stack top into register
-	mov		cx, WORD PTR[_IP]
+	movzx	ecx, WORD PTR[_IP]
 	add		_IP, 2
 	PopStack
 	StoreStaticAndDispatch
@@ -4910,14 +4952,14 @@ ENDBYTECODE longPopStoreStatic
 ;; Extension is the index (0 based)
 
 BEGINRARECODE longPushConstant
-	mov		cx, WORD PTR[_IP]
+	movzx	ecx, WORD PTR[_IP]
 	add		_IP, 2
 	LoadLiteral ecx
 	PushAndDispatch <a>
 ENDBYTECODE longPushConstant
 
 BEGINRARECODE longPushStatic
-	mov		cx, WORD PTR[_IP]
+	movzx	ecx, WORD PTR[_IP]
 	add		_IP, 2
 	LoadStatic ecx
 	PushAndDispatch <a>

@@ -133,7 +133,7 @@ enum {
 	SpecialSendAtPut,
 	SpecialSendValue2,
 	SpecialSendBasicNew,
-	SpecialSendYourself,
+	SpecialSendBasicClass,
 	SpecialSendBasicSize,
 	SpecialSendBasicAt,
 	SpecialSendBasicAtPut,
@@ -224,7 +224,7 @@ enum {
 	BlockCopy = FirstMultiByteInstruction,
 	ExLongSend,
 	ExLongSupersend,
-	_UnusedMultiByte
+	ExLongPushImmediate
 };
 
 
@@ -271,13 +271,14 @@ struct BlockCopyExtension
 	BYTE	copiedValuesCount:7;
 };
 
-enum { BlockCopyInstructionSize = 7 };
+enum { PushSmallIntInstructionSize = 5, BlockCopyInstructionSize = 7 };
 
 inline int lengthOfByteCode(BYTE opCode)
 {
 	return opCode < FirstDoubleByteInstruction ? 1 : 
 				opCode < FirstTripleByteInstruction ? 2 : 
 					opCode <  FirstMultiByteInstruction ? 3 : 
-						opCode == BlockCopy ? BlockCopyInstructionSize : 4;
+						opCode == BlockCopy ? BlockCopyInstructionSize : 
+							opCode == ExLongPushImmediate ? PushSmallIntInstructionSize : 4;
 
 }
