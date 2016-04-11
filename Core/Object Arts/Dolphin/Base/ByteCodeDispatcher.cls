@@ -457,7 +457,7 @@ lengthOfInstruction: anInteger
 	anInteger < FirstMultiByte ifTrue: [^3].
 	^anInteger == BlockCopy
 		ifTrue: [7]
-		ifFalse: [anInteger == ExLongPushImmediate ifTrue: [5] ifFalse: [anInteger == 4]]!
+		ifFalse: [anInteger == ExLongPushImmediate ifTrue: [5] ifFalse: [4]]!
 
 on: aCompiledMethod 
 	"Answer a new instance of the receiver to interpret the <CompiledCode> argument."
