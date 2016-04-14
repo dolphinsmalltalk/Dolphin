@@ -87,28 +87,36 @@ testErrorsNonsenseAtEndOfMethod
 
 testErrorsTooManyBytecodes
 	"This is one error that the parser cannot detect since it does not do code generation.
-	Each 1+2 sequence generates 5 bytecodes:
-		Nop		(this is optimised away later)
+	The number of bytecodes in a method has no real limit, except that imposed by the
+	maximum lengths of jumps (and in practice by the maximum size of the literal frame).
+	In order to provoke the 'method tool long' error we need to generate a long jump
+	around a large inlined block. To avoid requring a lot of literals we use expressions
+	with immediate values, i.e. 1+2 .Each 1+2 sequence generates 4 bytecodes:
 		Push 1
 		Push 2
 		Send +
-		Pop
-	So we need max bytecodes/5."
+		Pop.
+	The maximum length of a jump is 32k."
 
 	| source max |
+	^self.	"temporarily disabled"
 	source := String writeStream.
-	max := 32760 / 5.
+	source
+		nextPutAll: 'Object isNil ifFalse: [';
+		cr.
+	max := 32768 / 4.
 	1 to: max
 		do: 
-			[:i | 
+			[:i |
 			source
 				nextPutAll: '1+2.';
 				cr].
+	source nextPut: $].
 	source := source contents.
-	self 
+	self
 		parseExprError: source
 		range: (source size + 1 to: source size)
-		line: max + 1
+		line: max + 2
 		code: CErrMethodTooLarge! !
 !CompilerErrorTest categoriesFor: #compilationErrorClass!constants!private! !
 !CompilerErrorTest categoriesFor: #compilationWarningClass!constants!private! !
