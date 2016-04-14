@@ -26,38 +26,25 @@ typedef void* POTE;
 cpp_quote("#define POTE_DEFINED")
 cpp_quote("#endif")
 
-//typedef struct ObjectHeader
-//{
-//} ObjectHeader;
-//
-//typedef struct STObject
-//{
-//	ObjectHeader	hdr;
-//} STObject;
-
 typedef struct STVarByteObject
 {
-//	STObject	obj;
 	BYTE		fields[];
 } STVariantByteObject;
 
 typedef struct STVarCharObject
 {
-//	STObject	obj;
 	char		characters[];
 } STVarCharObject;
 
 // Useful for accessing an object by index
 typedef struct STVarObject
 {
-//	STObject	obj;
 	Oop			fields[];
 } STVarObject;
 
 
 typedef struct STVariableBinding
 {
-//	STObject	obj;
 	Oop			key;
 	Oop			value;
 } STVariableBinding;
@@ -78,7 +65,6 @@ typedef struct STInstSpec
 
 typedef struct STBehavior
 {
-//	STObject	obj;
 	POTE		superclass;
 	POTE		methodDictionary;
 	STInstSpec	instSpec;
@@ -114,7 +100,6 @@ typedef struct STMetaclass
 
 typedef struct STCompiledMethod
 {
-//	STObject		obj;
 	STMethodHeader	header;		// Must look like a small integer
 	POTE			methodClass;
 	POTE			selector;
@@ -127,7 +112,6 @@ typedef struct STCompiledMethod
 
 typedef struct STBlockClosure
 {
-//	STObject	obj;
 	POTE		m_outer;
 	POTE		m_method;
 	Oop			m_initialIP;
@@ -142,8 +126,8 @@ typedef struct STBlockClosure
 
 	// uuid(AB93FFD0-2625-11D3-8362-FC91FD000000), // 3.03
 	uuid(744F0DCB-35F6-41B4-96BE-D7F17E1D1455),
-	version(6.2),
-	helpstring("Dolphin Smalltalk VM 6.2")
+	version(7.0),
+	helpstring("Dolphin Smalltalk VM 7.0")
 ]
 library DolphinVM
 {
@@ -209,13 +193,22 @@ library DolphinVM
 		uuid(8C881CBA-5050-4F72-BCB4-C46F67593DC9),
 		pointer_default(unique)
 	]
-	interface IDolphin: IDolphin5
+	interface IDolphin6: IDolphin5
 	{
 		BOOL DisableAsyncGC([in]BOOL bDisable);
 		void MakeImmutable([in]Oop, [in]BOOL bImmutable);
 		BOOL IsImmutable([in]Oop);
 	};
 
+	[
+		object,
+		uuid(57528932-AA27-46C2-B172-B2AFD6FED643),
+		pointer_default(unique)
+	]
+	interface IDolphin : IDolphin6
+	{
+		BSTR DebugPrintString([in]Oop);
+	};
 
 	// Please do not rely on any of the internal representation exposed by these inline
 	// functions, as it may change in future.

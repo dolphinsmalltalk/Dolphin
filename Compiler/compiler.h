@@ -27,7 +27,6 @@ typedef std::valarray<POTE> POTEARRAY;
 
 ///////////////////////
 
-#define CODELIMIT 			32760	// maximum number of bytecodes permitted. Limited by max length of a long jump.
 #define LITERALLIMIT		65536	// maximum number of literals permitted. Limited by the byte code set, but in
 									// practice this limit would not be reached because the byte code limit would
 									// be reached first.
@@ -136,7 +135,7 @@ private:
 	int AddToFrameUnconditional(Oop object, const TEXTRANGE&);
 	int AddToFrame(Oop object, const TEXTRANGE&);
 	int AddStringToFrame(POTE string, const TEXTRANGE&);
-	BYTECODES::iterator InsertByte(int pos, BYTE value, BYTE flags, LexicalScope* pScope);
+	void InsertByte(int pos, BYTE value, BYTE flags, LexicalScope* pScope);
 	void RemoveByte(int pos);
 	int RemoveInstruction(int pos);
 	int GenByte(BYTE value, BYTE flags, LexicalScope* pScope);
@@ -326,6 +325,14 @@ private:
 	void disassemble(std::ostream& stream);
 	void disassembleAt(std::ostream& stream, int ip);
 	void disassemble();
+	Str DebugPrintString(Oop);
+	enum JumpType { Jump, JumpIfTrue, JumpIfFalse, JumpIfNil, JumpIfNotNil };
+	void PrintJumpInstruction(std::ostream& stream, JumpType, SWORD offset, int target);
+	void PrintStaticInstruction(std::ostream& stream, const char* type, int index);
+	void PrintInstVarInstruction(std::ostream& stream, const char* type, int index);
+	void PrintSendInstruction(std::ostream& stream, int index, int argumentCount);
+	void PrintTempInstruction(std::ostream& stream, const char* type, int index, const BYTECODE& bytecode);
+	void PrintPushImmediate(std::ostream& stream, int value, int byteSize);
 #else
 	#define VerifyTextMap __noop
 #endif

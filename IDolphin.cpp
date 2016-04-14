@@ -268,3 +268,12 @@ STDMETHODIMP_(BOOL) CDolphinSmalltalk::IsImmutable(
 {
 	return isIntegerObject(oop) || (reinterpret_cast<OTE*>(oop)->isImmutable());
 }
+
+STDMETHODIMP_(BSTR) CDolphinSmalltalk::DebugPrintString(
+		/* [in] */ Oop oop)
+{
+	USES_CONVERSION;
+
+	std::string str = Interpreter::PrintString(oop);
+	return SysAllocString(A2W(str.c_str()));
+}

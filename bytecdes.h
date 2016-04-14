@@ -202,7 +202,7 @@ enum {
 	LongPushConst = FirstTripleByteInstruction,
 	LongPushStatic,
 	LongStoreStatic,
-	LongPopStoreStatic,
+	_unusedTripleByte237,
 	LongPushImmediate,
 	LongSend,
 	LongSupersend,
@@ -271,7 +271,7 @@ struct BlockCopyExtension
 	BYTE	copiedValuesCount:7;
 };
 
-enum { PushSmallIntInstructionSize = 5, BlockCopyInstructionSize = 7 };
+enum { ExLongPushImmediateInstructionSize = 5, BlockCopyInstructionSize = 7 };
 
 inline int lengthOfByteCode(BYTE opCode)
 {
@@ -279,6 +279,6 @@ inline int lengthOfByteCode(BYTE opCode)
 				opCode < FirstTripleByteInstruction ? 2 : 
 					opCode <  FirstMultiByteInstruction ? 3 : 
 						opCode == BlockCopy ? BlockCopyInstructionSize : 
-							opCode == ExLongPushImmediate ? PushSmallIntInstructionSize : 4;
+							opCode == ExLongPushImmediate ? ExLongPushImmediateInstructionSize : 4;
 
 }

@@ -507,17 +507,11 @@ void Compiler::CheckTemporaryName(const Str& name, const TEXTRANGE& range, bool 
 
 int Compiler::GenByte(BYTE value, BYTE flags, LexicalScope* pScope)
 {
-	if (GetCodeSize() >= CODELIMIT)
-		CompileError(CErrMethodTooLarge);
-	else
-	{
- 		_ASSERTE(m_pCurrentScope != NULL);
-		InsertByte(m_codePointer, value, flags, pScope);
-		_ASSERTE(m_codePointer < GetCodeSize());
-		m_codePointer++;
-	}
-
-	return m_codePointer-1;
+ 	_ASSERTE(m_pCurrentScope != NULL);
+	InsertByte(m_codePointer, value, flags, pScope);
+	int ip = m_codePointer;
+	m_codePointer++;
+	return ip;
 }
 
 // Insert an extended instruction at the code pointer, returning the position at which
@@ -541,7 +535,7 @@ int Compiler::GenLongInstruction(BYTE basic, WORD extension)
 	return pos;
 }
 
-inline void Compiler::UngenInstruction(int pos)
+void Compiler::UngenInstruction(int pos)
 {
 	_ASSERTE(pos < GetCodeSize());
 	BYTECODE& bc = m_bytecodes[pos];
@@ -567,16 +561,20 @@ inline void Compiler::UngenInstruction(int pos)
 // Opens up a space at pos in the code array
 // Adjusts any jumps that occur over the boundary
 
-BYTECODES::iterator Compiler::InsertByte(int pos, BYTE value, BYTE flags, LexicalScope* pScope)
+void Compiler::InsertByte(int pos, BYTE value, BYTE flags, LexicalScope* pScope)
 {
 	const int codeSize = GetCodeSize();
 
-	_ASSERTE(pos >= 0 && pos <= codeSize);
-	BYTECODES::iterator it = m_bytecodes.insert(m_bytecodes.begin()+pos, BYTECODE(value, flags, pScope));
-
-	// New byte may become jump target
-	if (pos < codeSize)
+	if (pos == codeSize)
 	{
+		m_bytecodes.push_back(BYTECODE(value, flags, pScope));
+	}
+	else
+	{
+		_ASSERTE(pos >= 0 && pos < codeSize);
+		m_bytecodes.insert(m_bytecodes.begin()+pos, BYTECODE(value, flags, pScope));
+
+		// New byte may become jump target
 		// Adjust the jumps providing we are not appending to the end of the code.
 		// Note use of <= because we have inserted an addition bytecode
 		for (int i=0; i <= codeSize; i++)
@@ -591,10 +589,8 @@ BYTECODES::iterator Compiler::InsertByte(int pos, BYTE value, BYTE flags, Lexica
 				}
 			}
 		}
-	}
 	
-	// Adjust ip of any TextMaps
-	{
+		// Adjust ip of any TextMaps
 		const TEXTMAPLIST::iterator loopEnd = m_textMaps.end();
 		for (TEXTMAPLIST::iterator it = m_textMaps.begin(); it != loopEnd; it++)
 		{
@@ -603,8 +599,6 @@ BYTECODES::iterator Compiler::InsertByte(int pos, BYTE value, BYTE flags, Lexica
 				textMap.ip++;
 		}
 	}
-	
-	return it;
 }
 
 
@@ -1776,8 +1770,7 @@ void Compiler::ParseContinuation(int exprMark, int textPosition)
 	{
 		TokenType tok = NextToken();
 		int continueTextPosition = ThisTokenRange().m_start;
-		GenPopStack();
-		continuationPointer=GenDup();
+		continuationPointer= GenInstruction(PopDup);
 		switch(tok)
 		{
 		case NameConst:
@@ -1793,9 +1786,15 @@ void Compiler::ParseContinuation(int exprMark, int textPosition)
 	
 	// At this point there will be one extra DuplicateStackTop
 	// instruction in the code stream which can be removed.
-	// an optimization.
-	//
-	UngenInstruction(continuationPointer);
+	if (m_bytecodes[continuationPointer].byte == PopDup)
+	{
+		m_bytecodes[continuationPointer].byte = PopStackTop;
+	}
+	else
+	{
+		_ASSERT(m_bytecodes[continuationPointer].byte == DuplicateStackTop);
+		UngenInstruction(continuationPointer);
+	}
 }
 
 int Compiler::ParseKeyContinuation(int exprMark, int textPosition)
@@ -3777,17 +3776,26 @@ int Compiler::GenPushCopiedValue(TempVarDecl* pDecl)
 	case tvtCopy:	// Copies are pushed back on the stack on block activation
 	case tvtStack:	// A stack variable accessed only from its local scope
 	case tvtCopied:	// This is the type of a stack variable that has been copied
+	{
+		int insertedAt;
 		if (index < NumShortPushTemps)
 		{
-			GenInstruction(ShortPushTemp, static_cast<BYTE>(index));
+			insertedAt = GenInstruction(ShortPushTemp, static_cast<BYTE>(index));
 			bytesGenerated = 1;
 		}
 		else
 		{
-			GenInstructionExtended(PushTemp, static_cast<BYTE>(index));
+			insertedAt = GenInstructionExtended(PushTemp, static_cast<BYTE>(index));
 			bytesGenerated = 2;
 		}
+
+#ifdef _DEBUG
+		// This fake temp ref is only needed for diagnostic purposes (the refs having been processed already)
+		TempVarRef* pVarRef = pDecl->GetScope()->AddTempRef(pDecl, vrtRead, pDecl->GetTextRange());
+		m_bytecodes[insertedAt].pVarRef = pVarRef;
+#endif
 		break;
+	}
 
 	case tvtShared:
 		InternalError( __FILE__, __LINE__, pDecl->GetTextRange(), 

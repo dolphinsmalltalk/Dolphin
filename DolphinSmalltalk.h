@@ -156,6 +156,9 @@ public:
 
 	STDMETHOD_(BOOL, IsImmutable)( 
             /* [in] */ Oop oop);
+
+	STDMETHOD_(BSTR, DebugPrintString)(
+			/* [in] */ Oop oop);
 };
 
 #ifdef VMDLL

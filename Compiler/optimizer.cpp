@@ -969,6 +969,7 @@ int Compiler::CombinePairs2()
 					// messages are sent to a temp
 
 					bytecode1.byte = ShortPopPushTemp + (byte2 - ShortPushTemp);
+					bytecode1.pVarRef = bytecode2.pVarRef;
 					RemoveInstruction(next);
 					count++;
 				}
@@ -980,6 +981,9 @@ int Compiler::CombinePairs2()
 				{
 					// A pair of push self and then pushing a temp is very common, being the prelude
 					// to sending a one (or more) arg message to self
+
+					// Don't lose the var ref (this is useful for debug decoding only at this stage)
+					bytecode1.pVarRef = bytecode2.pVarRef;
 
 					_ASSERTE(len1 == 1);
 					if (bytecode2.byte == PushTemp)
@@ -996,6 +1000,7 @@ int Compiler::CombinePairs2()
 						if (i < NumShortPushSelfAndTemps)
 						{
 							bytecode1.byte = ShortPushSelfAndTemp+i;
+
 							RemoveInstruction(next);
 						}
 						else
@@ -1680,9 +1685,11 @@ void Compiler::FixupJump(int pos)
 #endif
 			// Unconditional jump
 			_ASSERTE(!WantOptimize() || !isInNearJumpRange(distance,2));	// Why not optimized?
-			_ASSERTE(isInLongJumpRange(distance));
 			int offset = distance - 3;				// IP inc'd for instruction, and extension bytes
-			_ASSERTE(offset >= -32768 && offset <= 32767);
+			if (offset < MaxBackwardsLongJump || offset > MaxForwardsLongJump)
+			{
+				CompileError(CErrMethodTooLarge);
+			}
 			_ASSERTE(pos+distance < GetCodeSize());
 			m_bytecodes[pos+1].byte = BYTE(MASK_BYTE(offset));
 			m_bytecodes[pos + 2].byte = BYTE(MASK_BYTE(offset >> 8));
@@ -1693,7 +1700,10 @@ void Compiler::FixupJump(int pos)
 		{
 			// BlockCopy contains an implicit jump
 			int offset = distance - BlockCopyInstructionLength;				// IP inc'd for instruction, and extension bytes
-			_ASSERTE(offset >= -32768 && offset <= 32767);
+			if (offset < MaxBackwardsLongJump || offset > MaxForwardsLongJump)
+			{
+				CompileError(CErrMethodTooLarge);
+			}
 			_ASSERTE(pos+distance < GetCodeSize());
 			m_bytecodes[pos + 5].byte = BYTE(MASK_BYTE(offset));
 			m_bytecodes[pos + 6].byte = BYTE(MASK_BYTE(offset >> 8));
@@ -2006,7 +2016,9 @@ POTE Compiler::NewMethod()
 		OutputDebugString(buf);
 		
 		if (m_ok && compilationTrace > 0)
-			m_piVM->DecodeMethod(method, NULL);
+		{
+			disassemble();
+		}
 		
 	}
 #endif

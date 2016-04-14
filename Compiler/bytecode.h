@@ -58,7 +58,7 @@ struct BYTECODE
 	void makeJump()			{ flags |= IsJump; }
 	void makeJumpTo(int pos)
 	{ 
-		_ASSERTE(pos >= 0 && pos < CODELIMIT); 
+		_ASSERTE(pos >= 0); 
 		target = static_cast<WORD>(pos); 
 		makeJump(); 
 	}
@@ -73,7 +73,7 @@ struct BYTECODE
 		return lengthOfByteCode(byte); 
 	}
 
-	BYTECODE(BYTE b=0, BYTE f=0, LexicalScope* s=NULL) : target(0), jumpsTo(0), byte(b), flags(f), pScope(s) {}
+	BYTECODE(BYTE b=0, BYTE f=0, LexicalScope* s=NULL) : pVarRef(NULL), jumpsTo(0), byte(b), flags(f), pScope(s) {}
 
 	INLINE bool isBreak() const
 	{
@@ -368,7 +368,7 @@ struct BYTECODE
 	inline bool isStore() const
 	{
 		return isShortStoreTemp() || isShortPopStore() || isExtendedStore() || isExtendedPopStore()
-				|| byte == LongStoreStatic || byte == LongPopStoreStatic || byte == LongStoreOuterTemp;
+				|| byte == LongStoreStatic || byte == LongStoreOuterTemp;
 	}
 };
 

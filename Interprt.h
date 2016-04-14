@@ -98,6 +98,7 @@ public:
 	static void DumpStack(ostream&, unsigned);
 	static void DumpContext(EXCEPTION_POINTERS *pExceptionInfo, ostream& logStream);
 	static void DumpContext(ostream& logStream);
+	static std::string PrintString(Oop);
 	
 	#ifdef _DEBUG
 		static void DumpOTEPoolStats();

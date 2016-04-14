@@ -107,7 +107,6 @@
     <ClCompile Include="..\dolphin.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="..\DolphinIF.cpp" />
     <ClCompile Include="..\exports.cpp">
       <CallingConvention Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">StdCall</CallingConvention>
       <CallingConvention Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">StdCall</CallingConvention>

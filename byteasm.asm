@@ -458,7 +458,7 @@ byteCodeTable DD		break										; All push[0] instructions are now odd
 	DWORD		longPushConstant
 	DWORD		longPushStatic
 	DWORD		longStoreStatic
-	DWORD		longPopStoreStatic
+	DWORD		invalidByteCode
 	DWORD		longPushImmediate
 	DWORD		longSend											; 
 	DWORD		longSupersend										; 
@@ -4937,14 +4937,6 @@ BEGINRARECODE longStoreStatic
 	add		_IP, 2
 	StoreStaticAndDispatch
 ENDBYTECODE longStoreStatic
-
-BEGINRARECODE longPopStoreStatic
-	mov		eax, [_SP]							;; Load stack top into register
-	movzx	ecx, WORD PTR[_IP]
-	add		_IP, 2
-	PopStack
-	StoreStaticAndDispatch
-ENDBYTECODE longPopStoreStatic
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Long Push Instructions (triple byte). 

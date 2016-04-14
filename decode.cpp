@@ -84,7 +84,7 @@ ostream& operator<<(ostream& st, const MethodOTE* ote)
 	{
 		st << "a CompiledExpression";
 	}
-	else if (oteClass == Pointers.ClassCompiledMethod)
+	else if (oteClass == Pointers.ClassCompiledMethod || oteClass == Pointers.ClassExternalMethod)
 	{
 		st << *ote->m_location;
 	}
@@ -1397,7 +1397,7 @@ void Interpreter::decodeMethodAt(CompiledMethod* meth, unsigned ip, ostream& str
 	case PushSelfAndTemp:
 		{
 			int extension = int(bp[1]);
-			stream << "Push Self and Temp[" << dec << extension << ']';
+			stream << "Push Self; Push Temp[" << dec << extension << ']';
 		}
 		break;
 
@@ -1436,13 +1436,6 @@ void Interpreter::decodeMethodAt(CompiledMethod* meth, unsigned ip, ostream& str
 		{
 			WORD index = *reinterpret_cast<WORD*>(bp+1);
 			stream << "Long Store Static[" << dec << index << "]: " << reinterpret_cast<OTE*>(literalFrame[index]);
-		}
-		break;
-		
-	case LongPopStoreStatic:
-		{
-			WORD index = *reinterpret_cast<WORD*>(bp+1);
-			stream << "Long Pop And Store Static[" << dec << index << "]: " << reinterpret_cast<OTE*>(literalFrame[index]);
 		}
 		break;
 		
@@ -1547,20 +1540,11 @@ void Interpreter::decodeMethodAt(CompiledMethod* meth, unsigned ip, ostream& str
 #include <sstream>
 
 
-const char* printString(const POTE oop)
+std::string Interpreter::PrintString(Oop oop)
 {
-	// Nasty static buffer used only for debugging so the string hangs around long enough for the
-	// debugger to display it properly (returning a local string by value used to work, but now
-	// seems to be destroyed before the debugger displays it).
-	// The standard debugger visualization of a std::string is way too long anyway, including
-	// many internal details, and a completely unecessary char by char dump, so we want to
-	// return a const char*
-	static string lastPrinted;
-
 	std::stringstream st;
-	st << oop;
-	lastPrinted = st.str();
-	return lastPrinted.c_str();
+	st << reinterpret_cast<POTE>(oop);
+	return st.str();
 }
 
 void DumpObject(const POTE pote)
