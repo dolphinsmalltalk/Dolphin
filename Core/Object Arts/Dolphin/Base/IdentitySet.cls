@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Set variableSubclass: #IdentitySet
 	instanceVariableNames: ''
@@ -31,7 +31,17 @@ findElementOrNil: anObject
 hash: anObject max: anInteger
 	^anInteger < 8192 
 		ifTrue: [anObject identityHash \\ anInteger + 1]
-		ifFalse: [anObject identityHash * (anInteger bitShift: -12) \\ anInteger + 1]! !
+		ifFalse: [anObject identityHash * (anInteger bitShift: -12) \\ anInteger + 1]!
+
+identityIncludes: anObject
+	"Answer whether the <Object> argument is one of the receiver's elements."
+
+	"Implementation Note: Override as a (micro) optimization only. This is the same as
+	#includes: for an IdentitySet, and we don't need to check that the found element is
+	identical."
+
+	^(self basicAt: (self findElementOrNil: anObject)) notNil! !
 !IdentitySet categoriesFor: #findElementOrNil:!private!searching! !
 !IdentitySet categoriesFor: #hash:max:!private!searching! !
+!IdentitySet categoriesFor: #identityIncludes:!public!searching! !
 

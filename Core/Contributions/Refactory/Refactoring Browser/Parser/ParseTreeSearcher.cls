@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk XP"!
+"Filed out from Dolphin Smalltalk 7"!
 
 StParseNodeVisitor subclass: #ParseTreeSearcher
 	instanceVariableNames: 'searches answer argumentSearches context messages'
@@ -113,13 +113,12 @@ matchesTree: aBRProgramNode do: aBlock
 messages
 	messages notNil ifTrue: [^messages].
 	argumentSearches notEmpty ifTrue: [^messages := #()].
-	messages := Set new.
+	messages := IdentitySet new.
 	searches do: 
-			[:each | 
+			[:each |
 			| searchMessages |
 			searchMessages := each sentMessages.
-			RBProgramNode optimizedSelectors 
-				do: [:sel | searchMessages remove: sel ifAbsent: []].
+			RBProgramNode optimizedSelectors do: [:sel | searchMessages remove: sel ifAbsent: []].
 			searchMessages isEmpty ifTrue: [^messages := #()].
 			messages addAll: searchMessages].
 	^messages := messages asArray!

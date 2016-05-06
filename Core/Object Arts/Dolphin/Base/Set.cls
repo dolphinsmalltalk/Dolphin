@@ -1,7 +1,7 @@
 "Filed out from Dolphin Smalltalk 7"!
 
 Collection variableSubclass: #Set
-	instanceVariableNames: 'tally '
+	instanceVariableNames: 'tally'
 	classVariableNames: 'SmallPrimeOffsets'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -54,6 +54,20 @@ add: newElement
 	(self basicAt: index) isNil
 		ifTrue: [self privateAt: index put: newElement].
 	^newElement!
+
+addNewElement: anObject
+	"Include the <Object> newElement as one of the elements of the receiver. 
+	If newElement is nil, then it is not added. Answer true if the object was
+	not already a member of the set, else false."
+
+	| index |
+	anObject isNil ifTrue: [^anObject].
+	index := self findElementOrNil: anObject.
+	^(self basicAt: index)
+		ifNil: 
+			[self privateAt: index put: anObject.
+			true]
+		ifNotNil: [false]!
 
 approxSize
 	"Private - Answer the approximate size of the receiver.
@@ -215,16 +229,17 @@ grow
 hash: anObject max: anInteger
 	^anObject hash \\ anInteger + 1!
 
-identityIncludes: target
-	"Answer whether the <Object> argument, target, is one of the receiver's elements.
-	Implementation Note: If anObject is identical to any object in the Set, then
-	it must also be equal to that object, which means it must have the same hash
-	value as that object, and therefore we can use a hashed lookup to optimize
-	this method over the serial search in the Collection implementation."
+identityIncludes: anObject
+	"Answer whether the <Object> argument is one of the receiver's elements."
+
+	"Implementation Note: If anObject is identical to any object in the Set, then it must also
+	be equal to that object, which means it must have the same hash value as that object, and
+	therefore we can use a hashed lookup to optimize this method over the serial search in the
+	Collection implementation."
 
 	| element |
-	element := self basicAt: (self findElementOrNil: target).
-	^element notNil and: [element == target]!
+	element := self basicAt: (self findElementOrNil: anObject).
+	^element notNil and: [element == anObject]!
 
 includes: target
 	"Answer whether the <Object> argument, target, is one of 
@@ -355,6 +370,7 @@ uncheckedAdd: newObject
 !Set categoriesFor: #_deepCopyElementsInto:trail:!copying!private! !
 !Set categoriesFor: #=!comparing!public! !
 !Set categoriesFor: #add:!adding!public! !
+!Set categoriesFor: #addNewElement:!adding!public! !
 !Set categoriesFor: #approxSize!accessing!private! !
 !Set categoriesFor: #asSet!converting!public! !
 !Set categoriesFor: #at:!accessing!public! !
