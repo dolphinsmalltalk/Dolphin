@@ -1691,6 +1691,9 @@ parseContext
 
 	^self actualClass!
 
+parseTree
+	^methodBrowserPresenter parseTree!
+
 printCaptionForClass: aClass on: aWriteStream 
 	"Private - Answer a suitable caption for the selected method."
 
@@ -2698,7 +2701,8 @@ variablesMethodFilter
 !ClassBrowserAbstract categoriesFor: #packageNames:!accessing!public! !
 !ClassBrowserAbstract categoriesFor: #packages:!accessing!public! !
 !ClassBrowserAbstract categoriesFor: #parseContext!accessing!public! !
-!ClassBrowserAbstract categoriesFor: #printCaptionForClass:on:!private!updating! !
+!ClassBrowserAbstract categoriesFor: #parseTree!accessing!private! !
+!ClassBrowserAbstract categoriesFor: #printCaptionForClass:on:!helpers!private! !
 !ClassBrowserAbstract categoriesFor: #printCaptionForMethod:on:!private!updating! !
 !ClassBrowserAbstract categoriesFor: #printClassTitle:on:!private!updating! !
 !ClassBrowserAbstract categoriesFor: #printShortCaptionForClass:on:!helpers!private! !
