@@ -99,7 +99,6 @@ testErrorsTooManyBytecodes
 	The maximum length of a jump is 32k."
 
 	| source max |
-	^self.	"temporarily disabled"
 	source := String writeStream.
 	source
 		nextPutAll: 'Object isNil ifFalse: [';

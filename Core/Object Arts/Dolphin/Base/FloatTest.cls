@@ -222,59 +222,6 @@ testFloatCharacterization
 		equals: (1 - (Float radix raisedTo: Float precision negated))
 				* (Float radix raisedTo: Float emax + 1)!
 
-testFloatPrintString
-	"Debug reading/printing a Floating point number without accumulating
-round off errors"
-
-	| b r |
-	b := ByteArray new: 8.
-	r := RandomLinearCongruential
-				newModulus: 16r100000000
-				multiplier: 16r0F010800F
-				increment: 16r00005F2ED.
-	r seed: 1234567.
-	100 timesRepeat: 
-			[| f str |
-			b basicDwordAtOffset: 4 put: (r
-						next;
-						seed) - 1.
-			b basicDwordAtOffset: 0 put: (r
-						next;
-						seed) - 1.
-			((b basicDwordAtOffset: 4) bitAnd: 16r7FF00000) = 16r7FF00000
-				ifFalse: 
-					["avoid nan and infinity"
-					f := b doubleAtOffset: 0.
-					str := (String new: 64) writeStream.
-					f printOn: str significantFigures: 17.
-					self assert: (Float readFrom: str contents readStream) equals: f]].
-	"test big num near infinity"
-	10 timesRepeat: 
-			[| f str |
-			b basicDwordAtOffset: 4 put: 16r7FE00000 + ((r
-								next;
-								seed) // 16r1000 - 1).
-			b basicDwordAtOffset: 0 put: (r
-						next;
-						seed) - 1.
-			f := b doubleAtOffset: 0.
-			str := (String new: 64) writeStream.
-			f printOn: str significantFigures: 17.
-			self assert: (Float readFrom: str contents readStream) equals: f].
-	"test infinitesimal (gradual underflow)"
-	10 timesRepeat: 
-			[| f str |
-			b basicDwordAtOffset: 4 put: 0 + ((r
-								next;
-								seed) // 16r1000 - 1).
-			b basicDwordAtOffset: 0 put: (r
-						next;
-						seed) - 1.
-			f := b doubleAtOffset: 0.
-			str := (String new: 64) writeStream.
-			f printOn: str significantFigures: 17.
-			self assert: (Float readFrom: str contents readStream) equals: f]!
-
 testFractionAsFloat
 	"use a random test to be sure that fractions are rounded to nearest float"
 
@@ -544,7 +491,6 @@ ulp: aFloat
 !FloatTest categoriesFor: #testFiniteSignificand!public!unit tests! !
 !FloatTest categoriesFor: #testFloatAsTrueFraction!public!Testing! !
 !FloatTest categoriesFor: #testFloatCharacterization!public!unit tests! !
-!FloatTest categoriesFor: #testFloatPrintString!public!Testing! !
 !FloatTest categoriesFor: #testFractionAsFloat!public!Testing! !
 !FloatTest categoriesFor: #testFractionComparisons!public!unit tests! !
 !FloatTest categoriesFor: #testHash!public!unit tests! !
