@@ -310,20 +310,20 @@ stripClassBuilderNotifying: notifier
 
 	self stripClassBuilder ifTrue: [self removeClassNamed: #ClassBuilder notifying: notifier]!
 
-stripClassInfoNotifying: notifier 
+stripClassInfoNotifying: notifier
 	"Private - Remove all (presumably) redundant class info"
 
-	self stripClassInfo 
+	self stripClassInfo
 		ifTrue: 
 			[| keepInstVars |
 			self startElement: 'RemoveClassMetaInfo'.
 			keepInstVars := self retainInstVarNames.
 			Class allClassesDo: 
-					[:each | 
+					[:each |
 					each
 						basicClassPool: nil;
 						basicSharedPools: nil.
-					keepInstVars ifFalse: [each instanceVariables: nil]].
+					each instanceVariableString: (keepInstVars ifTrue: [each instanceVariableString])].
 			self endTag].
 	self finishedWithAll: #(#stripClassInfo #retainInstVarNames #stripClassInfoNotifying:)!
 

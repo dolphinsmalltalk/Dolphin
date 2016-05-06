@@ -16,12 +16,12 @@ Object subclass: #AttributeDescriptor
 	poolDictionaries: 'AttributeDescriptorFlags'
 	classInstanceVariableNames: ''!
 Object subclass: #Behavior
-	instanceVariableNames: 'superclass methodDictionary instanceSpec subclasses '
+	instanceVariableNames: 'superclass methodDictionary instanceSpec subclasses'
 	classVariableNames: ''
 	poolDictionaries: '_BehaviorMasks'
 	classInstanceVariableNames: ''!
 Object variableSubclass: #BlockClosure
-	instanceVariableNames: 'outer method initialIP info receiver '
+	instanceVariableNames: 'outer method initialIP info receiver'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -51,12 +51,12 @@ Object subclass: #Category
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Object subclass: #ChunkReader
-	instanceVariableNames: 'chunkBlock endAction context '
+	instanceVariableNames: 'chunkBlock endAction context'
 	classVariableNames: 'Null'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Object subclass: #ClassBuilder
-	instanceVariableNames: 'currentClass className instanceVariables superclass instanceSpec classVariables sharedPools comment flags categories '
+	instanceVariableNames: 'currentClass className instanceVariables superclass instanceSpec classVariables sharedPools comment flags categories'
 	classVariableNames: 'FixedInitialLayout FixedLayout IgnoreInstsMask RecompileMask Unsubclassable'
 	poolDictionaries: '_BehaviorMasks'
 	classInstanceVariableNames: ''!
@@ -66,12 +66,12 @@ Object subclass: #Collection
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Object subclass: #CompilationResult
-	instanceVariableNames: 'method _reserved rawTextMap rawTempsMap textMap tempsMap oldMethod package '
+	instanceVariableNames: 'method _reserved rawTextMap rawTempsMap textMap tempsMap oldMethod package'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Object variableSubclass: #CompiledCode
-	instanceVariableNames: 'header methodClass selector sourceDescriptor byteCodes '
+	instanceVariableNames: 'header methodClass selector sourceDescriptor byteCodes'
 	classVariableNames: 'InfoCacheKeys InfoCacheValues PrivateMask'
 	poolDictionaries: 'OpcodePool'
 	classInstanceVariableNames: ''!
@@ -81,7 +81,7 @@ Object subclass: #Compiler
 	poolDictionaries: 'CompilerFlags SmalltalkParseErrorCodes'
 	classInstanceVariableNames: ''!
 Object variableSubclass: #Context
-	instanceVariableNames: 'outer block '
+	instanceVariableNames: 'outer block'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -101,7 +101,7 @@ Object subclass: #DeferredValue
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Object subclass: #Delay
-	instanceVariableNames: 'duration resumptionTime waitSemaphore '
+	instanceVariableNames: 'duration resumptionTime waitSemaphore'
 	classVariableNames: 'AccessProtect Current ImageClock Pending Resolution TimerMax TimingProcess TimingSemaphore'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -136,12 +136,12 @@ Object variableSubclass: #ExternalDescriptor
 	poolDictionaries: 'ExtCallArgTypes'
 	classInstanceVariableNames: ''!
 Object subclass: #ExternalLibrary
-	instanceVariableNames: 'handle '
+	instanceVariableNames: 'handle'
 	classVariableNames: ''
 	poolDictionaries: 'Win32Constants Win32Errors'
 	classInstanceVariableNames: 'default'!
 Object subclass: #ExternalStructure
-	instanceVariableNames: 'bytes '
+	instanceVariableNames: 'bytes'
 	classVariableNames: 'CompiledMask RecordClasses'
 	poolDictionaries: ''
 	classInstanceVariableNames: 'template flags alignment'!
@@ -176,7 +176,7 @@ Object subclass: #Keyboard
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
 Object subclass: #Link
-	instanceVariableNames: 'nextLink '
+	instanceVariableNames: 'nextLink'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -191,12 +191,12 @@ Object subclass: #Magnitude
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Object subclass: #MemoryManager
-	instanceVariableNames: 'finalizer lastRequests hospice hospiceHighWater reserved undertaker bereavements bereaved bereavedHighWater gcInterval lastGCTime lastGCDuration objectHeaderSize '
+	instanceVariableNames: 'finalizer lastRequests hospice hospiceHighWater reserved undertaker bereavements bereaved bereavedHighWater gcInterval lastGCTime lastGCDuration objectHeaderSize'
 	classVariableNames: 'Current GCInterval'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Object subclass: #Message
-	instanceVariableNames: 'selector args '
+	instanceVariableNames: 'selector args'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -211,7 +211,7 @@ Object subclass: #MessageSequenceAbstract
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Object subclass: #MethodProtocol
-	instanceVariableNames: 'name comment selectors flags '
+	instanceVariableNames: 'name comment selectors flags'
 	classVariableNames: 'ANSIMask Protocols ReadOnlyMask StubAddedSignal'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -251,7 +251,7 @@ Object subclass: #PostedActionWindow
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
 Object subclass: #ProcessorScheduler
-	instanceVariableNames: 'processLists activeProcess pendingReturns comStubs _reserved pendingTerminations '
+	instanceVariableNames: 'processLists activeProcess pendingReturns comStubs _reserved pendingTerminations'
 	classVariableNames: 'ConstWriteSignal InterruptSelectors'
 	poolDictionaries: 'Win32Errors'
 	classInstanceVariableNames: ''!
@@ -281,12 +281,12 @@ Object subclass: #SessionManager
 	poolDictionaries: 'Win32Constants Win32Errors'
 	classInstanceVariableNames: ''!
 Object subclass: #SharedQueue
-	instanceVariableNames: 'accessProtect valueAvailable contents '
+	instanceVariableNames: 'accessProtect valueAvailable contents'
 	classVariableNames: 'AbsentCookie'
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
 Object subclass: #Signal
-	instanceVariableNames: 'description resumable '
+	instanceVariableNames: 'description resumable'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -301,12 +301,12 @@ Object subclass: #Sound
 	poolDictionaries: 'MessageBoxConstants Win32Constants'
 	classInstanceVariableNames: ''!
 Object subclass: #SourceFiler
-	instanceVariableNames: 'stream evaluationContext isSourceOnly '
+	instanceVariableNames: 'stream evaluationContext isSourceOnly'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Object subclass: #SourceManager
-	instanceVariableNames: 'mutex '
+	instanceVariableNames: 'mutex'
 	classVariableNames: 'ChangesIndex DefaultInstance SourcesIndex'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -506,17 +506,17 @@ UINT_PTRField subclass: #LPVOIDField
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Behavior subclass: #ClassDescription
-	instanceVariableNames: 'instanceVariables methodsCatalogue protocols '
+	instanceVariableNames: 'instanceVariables methodsCatalogue protocols'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ClassDescription subclass: #Class
-	instanceVariableNames: 'name classPool sharedPools comment classCategories _guid '
+	instanceVariableNames: 'name classPool sharedPools comment classCategories _guid'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ClassDescription subclass: #Metaclass
-	instanceVariableNames: 'instanceClass '
+	instanceVariableNames: 'instanceClass'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -541,7 +541,7 @@ Category subclass: #MethodCategory
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Collection subclass: #Bag
-	instanceVariableNames: 'contents '
+	instanceVariableNames: 'contents'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -551,7 +551,7 @@ Collection subclass: #SequenceableCollection
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Collection variableSubclass: #Set
-	instanceVariableNames: 'tally '
+	instanceVariableNames: 'tally'
 	classVariableNames: 'SmallPrimeOffsets'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -561,7 +561,7 @@ SequenceableCollection subclass: #ArrayedCollection
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 SequenceableCollection subclass: #Interval
-	instanceVariableNames: 'start stop step '
+	instanceVariableNames: 'start stop step'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -581,7 +581,7 @@ ArrayedCollection variableByteSubclass: #ByteArray
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ArrayedCollection subclass: #RunArray
-	instanceVariableNames: 'values runs '
+	instanceVariableNames: 'values runs'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -646,22 +646,22 @@ WeakArray variableSubclass: #MourningWeakArray
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 SequencedGrowableCollection subclass: #LinkedList
-	instanceVariableNames: 'firstLink lastLink '
+	instanceVariableNames: 'firstLink lastLink'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 SequencedGrowableCollection variableSubclass: #OrderedCollection
-	instanceVariableNames: 'firstIndex lastIndex '
+	instanceVariableNames: 'firstIndex lastIndex'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 LinkedList subclass: #Semaphore
-	instanceVariableNames: 'signals '
+	instanceVariableNames: 'signals'
 	classVariableNames: ''
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
 OrderedCollection variableSubclass: #SortedCollection
-	instanceVariableNames: 'algorithm '
+	instanceVariableNames: 'algorithm'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -686,7 +686,7 @@ Set variableSubclass: #SharedSet
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Dictionary variableSubclass: #LookupTable
-	instanceVariableNames: 'values '
+	instanceVariableNames: 'values'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -711,7 +711,7 @@ LookupTable variableSubclass: #PluggableLookupTable
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 LookupTable variableSubclass: #PoolConstantsDictionary
-	instanceVariableNames: 'name '
+	instanceVariableNames: 'name'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -821,7 +821,7 @@ Error subclass: #BoundsError
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Error subclass: #ClassRemovalError
-	instanceVariableNames: 'originalError '
+	instanceVariableNames: 'originalError'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -846,7 +846,7 @@ Error subclass: #InvalidFormat
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Error subclass: #MessageNotUnderstood
-	instanceVariableNames: 'receiver '
+	instanceVariableNames: 'receiver'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -926,7 +926,7 @@ Notification subclass: #HRESULTNotification
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Notification subclass: #MethodCompileFailed
-	instanceVariableNames: 'compilerErrorNotification '
+	instanceVariableNames: 'compilerErrorNotification'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -1031,7 +1031,7 @@ PermanentLibrary subclass: #UserLibrary
 	poolDictionaries: 'MessageBoxConstants'
 	classInstanceVariableNames: ''!
 PermanentLibrary subclass: #VMLibrary
-	instanceVariableNames: 'wndProc dlgProc genericCallback vtable specialSelectorStart '
+	instanceVariableNames: 'wndProc dlgProc genericCallback vtable specialSelectorStart'
 	classVariableNames: 'Registry RegistryKeys'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -1341,7 +1341,7 @@ InstructionInterpreter subclass: #MessageSendCollector
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Link variableSubclass: #Process
-	instanceVariableNames: 'suspendedFrame priority myList callbackDepth primitiveFailureCode primitiveFailureData fpeMask threadSync thread exceptionEnvironment _alreadyPrinted _reserved1 debugger name _reserved2 '
+	instanceVariableNames: 'suspendedFrame priority myList callbackDepth primitiveFailureCode primitiveFailureData fpeMask threadSync thread exceptionEnvironment _alreadyPrinted _reserved1 debugger name _reserved2'
 	classVariableNames: 'DefaultFPEMask DefaultMaxStack DefaultStack'
 	poolDictionaries: 'CRTConstants'
 	classInstanceVariableNames: ''!
@@ -1351,27 +1351,27 @@ Magnitude subclass: #ArithmeticValue
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Magnitude subclass: #Association
-	instanceVariableNames: 'key value '
+	instanceVariableNames: 'key value'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Magnitude subclass: #Character
-	instanceVariableNames: 'asciiValue '
+	instanceVariableNames: 'asciiValue'
 	classVariableNames: 'CharacterSet SpecialChars'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Magnitude subclass: #Date
-	instanceVariableNames: 'days '
+	instanceVariableNames: 'days'
 	classVariableNames: 'DaysInMonth DaysUntilMonth DefaultLongPicture YearPivot'
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
 Magnitude subclass: #Time
-	instanceVariableNames: 'milliseconds '
+	instanceVariableNames: 'milliseconds'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Magnitude subclass: #TimeStamp
-	instanceVariableNames: 'date time '
+	instanceVariableNames: 'date time'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -1381,7 +1381,7 @@ ArithmeticValue subclass: #Number
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ArithmeticValue subclass: #Point
-	instanceVariableNames: 'x y '
+	instanceVariableNames: 'x y'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -1391,7 +1391,7 @@ Number variableByteSubclass: #Float
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Number subclass: #Fraction
-	instanceVariableNames: 'numerator denominator '
+	instanceVariableNames: 'numerator denominator'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -1531,7 +1531,7 @@ SortAlgorithm subclass: #DefaultSortAlgorithm
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 SortAlgorithm subclass: #PluggableSortAlgorithm
-	instanceVariableNames: 'sortBlock '
+	instanceVariableNames: 'sortBlock'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -1541,7 +1541,7 @@ PluggableSortAlgorithm subclass: #IntrosortAlgorithm
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 SourceFiler subclass: #ChunkSourceFiler
-	instanceVariableNames: 'sourceFileIndex '
+	instanceVariableNames: 'sourceFileIndex'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -1611,7 +1611,7 @@ STBCollectionProxy subclass: #STBSortedCollectionProxy
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Stream subclass: #Random
-	instanceVariableNames: 'seed '
+	instanceVariableNames: 'seed'
 	classVariableNames: 'DefaultGeneratorClass'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -1636,7 +1636,7 @@ RandomLinearCongruential subclass: #RandomParkMiller
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 SequencedStream subclass: #PositionableStream
-	instanceVariableNames: 'collection position readLimit '
+	instanceVariableNames: 'collection position readLimit'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -1651,7 +1651,7 @@ PositionableStream subclass: #ReadStream
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 PositionableStream subclass: #WriteStream
-	instanceVariableNames: 'writeLimit '
+	instanceVariableNames: 'writeLimit'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
