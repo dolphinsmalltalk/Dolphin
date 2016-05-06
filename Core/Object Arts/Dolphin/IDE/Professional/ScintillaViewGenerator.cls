@@ -76,8 +76,11 @@ defineAdditionalConstants
 		at: 'STYLE_NORMAL' put: 0!
 
 defineConstantsPool
-	##((Smalltalk at: #ScintillaConstants put: (PoolConstantsDictionary named: #ScintillaConstants))
-		at: 'ANNOTATION_BOXED' put: 2;
+	Smalltalk
+		at: #ScintillaConstants
+			put: (PoolConstantsDictionary named: #ScintillaConstants)
+			at: 'ANNOTATION_BOXED'
+			put: 2;
 		at: 'ANNOTATION_HIDDEN' put: 0;
 		at: 'ANNOTATION_INDENTED' put: 3;
 		at: 'ANNOTATION_STANDARD' put: 1;
@@ -1102,6 +1105,7 @@ defineConstantsPool
 		at: 'SCLEX_HTML' put: 4;
 		at: 'SCLEX_IHEX' put: 118;
 		at: 'SCLEX_INNOSETUP' put: 76;
+		at: 'SCLEX_JSON' put: 120;
 		at: 'SCLEX_KIX' put: 57;
 		at: 'SCLEX_KVIRC' put: 110;
 		at: 'SCLEX_LATEX' put: 14;
@@ -1227,7 +1231,7 @@ defineConstantsPool
 		at: 'VISIBLE_SLOP' put: 1;
 		at: 'VISIBLE_STRICT' put: 4;
 		shrink;
-		yourself)!
+		yourself!
 
 generateCommandMap
 	| stream selector |
@@ -1263,16 +1267,14 @@ generateCommandMap
 
 generateConstantsPool
 	| stream changes source |
-	stream := String writeStream: 4096.
+	stream := String writeStream: 8192.
 	stream
 		nextPutAll: #defineConstantsPool;
 		cr;
-		nextPutAll: '##(';
-		cr;
-		nextPutAll: '(Smalltalk at: #ScintillaConstants put: (PoolConstantsDictionary named: #ScintillaConstants))';
+		nextPutAll: '(Smalltalk at: #ScintillaConstants put: ((PoolConstantsDictionary named: #ScintillaConstants))';
 		cr.
 	self constantsPool associations asSortedCollection do: 
-			[:each | 
+			[:each |
 			stream
 				nextPutAll: 'at: ';
 				print: each key;
@@ -1283,10 +1285,10 @@ generateConstantsPool
 	stream nextPutAll: 'shrink; yourself)'.
 	changes := namespace changes.
 	source := (SmalltalkParser parseMethod: stream contents) formattedCode.
-	((self class includesSelector: #defineConstantsPool) not 
-		or: [source ~= (self class sourceCodeAt: #defineConstantsPool)]) 
+	((self class includesSelector: #defineConstantsPool) not
+		or: [source ~= (self class sourceCodeAt: #defineConstantsPool)])
 			ifTrue: 
-				[changes addChangeFirst: (changes addMethodChangeClass 
+				[changes addChangeFirst: (changes addMethodChangeClass
 							compile: source
 							in: self class
 							categories: (Array with: self autoGenCategory with: (MethodCategory name: 'development')))]!
