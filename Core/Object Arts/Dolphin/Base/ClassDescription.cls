@@ -1,7 +1,7 @@
 "Filed out from Dolphin Smalltalk 7"!
 
 Behavior subclass: #ClassDescription
-	instanceVariableNames: 'instanceVariables methodsCatalogue protocols '
+	instanceVariableNames: 'instanceVariables methodsCatalogue protocols'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -438,53 +438,59 @@ includeSelector: aSelector inCategory: category
 		ifFalse: [catalogue at: category put: (selectors copyWith: aSelector)].
 	self methodsCatalogue: catalogue!
 
-indexOfInstVar: instVarName
+indexOfInstVar: aString
 	"Answer the index of the specified inst. var in the receiver, or
 	if no matching instance variable, raise a NotFoundError."
 
-	^self allInstVarNames indexOf: instVarName ifAbsent: [self errorNotFound: instVarName]!
+	^self indexOfInstVar: aString ifAbsent: [self errorNotFound: aString]!
 
-indexOfInstVar: instVarName ifAbsent: exceptionHandler
-	"Answer the <integer> index of the inst. var of the receiver
-	identified by the <readableString> name, instVarName, or
-	if no matching instance variable, the result of evaluating the
-	<niladicValuable>, exceptionHandler."
+indexOfInstVar: aString ifAbsent: aNiladicValuable
+	"Answer the <integer> index of the inst. var of the receiver identified by the
+	<readableString> name, aString, or if no matching instance variable, the result of
+	evaluating the <niladicValuable>, aNiladicValuable."
 
-	^self allInstVarNames indexOf: instVarName ifAbsent: exceptionHandler!
+	| index |
+	index := self instVarNames indexOf: aString.
+	^index == 0
+		ifTrue: 
+			[superclass
+				ifNil: [aNiladicValuable value]
+				ifNotNil: [superclass indexOfInstVar: aString ifAbsent: aNiladicValuable]]
+		ifFalse: [index + (superclass ifNil: [0] ifNotNil: [superclass instSize])]!
 
 instanceClass
 	"Answer the receiver's singleton instance (the actual class object)."
 
 	^self subclassResponsibility!
 
-instanceVariables: aString 
-	"Private - Set the receiver's instanceVariables inst var."
-
-	instanceVariables := (aString notNil and: [aString notEmpty]) ifTrue: [aString]!
-
 instanceVariableString
-	"Answer a string containing the names of the instance 
-	variables in instances of the receiver, in the order they
-	appear in those instances. The names are separated by spaces."
+	"Answer a string containing the names of the instance variables in instances of the
+	receiver, in the order they appear in those instances. The names are separated by spaces."
 
 	| aStream |
 	instanceVariables isNil ifTrue: [^''].
-	instanceVariables class == String ifTrue: [^instanceVariables].
+	instanceVariables isString ifTrue: [^instanceVariables].
 	aStream := String writeStream: 64.
 	instanceVariables 
 		do: [:instVarName | aStream nextPutAll: instVarName]
 		separatedBy: [aStream space].
 	^aStream contents!
 
+instanceVariableString: aString
+	"Private - Set the receiver's instanceVariables inst var to the <String> argument."
+
+	instanceVariables := (aString notNil and: [aString notEmpty]) ifTrue: [aString]!
+
 instVarNames
 	"Answer a <sequencedReadableCollection> of the receiver's instance variable 
 	names."
 
 	instanceVariables isNil ifTrue: [^#()].
-	"This required for bootstrapping purposes only"
-	instanceVariables class == Array ifTrue: [^instanceVariables].
-	"N.B. This assumes that the names in the instance variable string are separated by exactly one space"
-	^instanceVariables subStrings: Character space!
+	^instanceVariables isString
+		ifTrue: 
+			["N.B. This assumes that the names in the instance variable string are separated by exactly one space"
+			instanceVariables subStrings: Character space]
+		ifFalse: [instanceVariables]!
 
 logDefinition
 	self sourceManager logEvaluate: self definition!
@@ -778,16 +784,11 @@ selectorsInCategory: category
 
 	^self methodsCatalogue at: category ifAbsent: [Array new]!
 
-setInstanceVariables: aCollection 
+setInstanceVariables: aCollection
 	"Private - Set the instance variable string of the receiver to be the list
 	of names in aCollection, separated by spaces."
 
-	instanceVariables := aCollection notEmpty 
-				ifTrue: 
-					[| aStream |
-					aStream := String writeStream: 64.
-					aCollection do: [:i | aStream nextPutAll: i] separatedBy: [aStream space].
-					aStream contents]!
+	instanceVariables := aCollection notEmpty ifTrue: [aCollection asArray]!
 
 sharedPoolNames
 	"Answer a <Set> of <String>s, being the names of the shared pool dictionaries that
@@ -913,8 +914,8 @@ whichNonVirtualCategoriesIncludeSelector: aSelector
 !ClassDescription categoriesFor: #indexOfInstVar:!instance variables!public! !
 !ClassDescription categoriesFor: #indexOfInstVar:ifAbsent:!instance variables!public! !
 !ClassDescription categoriesFor: #instanceClass!accessing!public! !
-!ClassDescription categoriesFor: #instanceVariables:!accessing!private! !
 !ClassDescription categoriesFor: #instanceVariableString!accessing!public! !
+!ClassDescription categoriesFor: #instanceVariableString:!accessing!private! !
 !ClassDescription categoriesFor: #instVarNames!instance variables!public! !
 !ClassDescription categoriesFor: #logDefinition!instance variables!private! !
 !ClassDescription categoriesFor: #logRemoveSelector:!helpers!private! !

@@ -1,7 +1,7 @@
 "Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #ClassBuilder
-	instanceVariableNames: 'currentClass className instanceVariables superclass instanceSpec classVariables sharedPools comment flags categories '
+	instanceVariableNames: 'currentClass className instanceVariables superclass instanceSpec classVariables sharedPools comment flags categories'
 	classVariableNames: 'FixedInitialLayout FixedLayout IgnoreInstsMask RecompileMask Unsubclassable'
 	poolDictionaries: '_BehaviorMasks'
 	classInstanceVariableNames: ''!
@@ -45,20 +45,15 @@ canMutateInSitu
 		the instance variable layout and
 		the class instance variable layout."
 
-	self instanceShapeIsBeingChanged
-		ifTrue: [^false].
-	self superclassIsBeingChanged
-		ifFalse: [^self instanceVariablesAreBeingChanged not].
+	self instanceShapeIsBeingChanged ifTrue: [^false].
+	self superclassIsBeingChanged ifFalse: [^self instanceVariablesAreBeingChanged not].
 
 	"The class is being moved."
-	(self class allInstVarNamesOf: superclass),instanceVariables = currentClass allInstVarNames
+	((self class allInstVarNamesOf: superclass) , self instanceVariables) = currentClass allInstVarNames
 		ifFalse: [^false].
 	(self class classOf: superclass) allInstVarNames = currentClass class superclass allInstVarNames
 		ifFalse: [^false].
-
-	^true.
-
-	!
+	^true!
 
 categories
 	categories isNil ifTrue: [self categoryNames: #('')].
@@ -334,19 +329,6 @@ instanceVariablesAreBeingChanged
 	"Private - Answer whether the instance variable layout is changing."
 
 	^instanceVariables notNil and: [instanceVariables ~= currentClass instVarNames]!
-
-instanceVariableString
-	"Private - Answer the receiver's proposed instance variable list as
-	a space separated String."
-
-	^self instanceVariables isEmpty
-		ifTrue: [nil]
-		ifFalse: [ | aStream |
-			aStream := String writeStream: 32.
-			instanceVariables 
-					do: [:instVarName | aStream nextPutAll: instVarName]
-					separatedBy: [aStream space].
-			aStream contents]!
 
 instanceVariableString: anInstVarNamesString
 	"Set the receiver's proposed instance variable list from aString."
@@ -639,8 +621,7 @@ setInstanceVariablesOf: aClass
 	"Private - Set the instance variable layout of aClass to those described by
 	the receiver's instanceVariables inst var."
 
-	instanceVariables notNil
-		ifTrue: [aClass instanceVariables: self instanceVariableString]!
+	aClass setInstanceVariables: instanceVariables!
 
 setNewClassCategories
 	currentClass classCategories: self categories!
@@ -980,7 +961,6 @@ validateSuperclassIsSubclassable
 !ClassBuilder categoriesFor: #instanceVariables!instance variables!private! !
 !ClassBuilder categoriesFor: #instanceVariables:!instance variables!public! !
 !ClassBuilder categoriesFor: #instanceVariablesAreBeingChanged!private!testing! !
-!ClassBuilder categoriesFor: #instanceVariableString!instance variables!private! !
 !ClassBuilder categoriesFor: #instanceVariableString:!instance variables!public! !
 !ClassBuilder categoriesFor: #isFixedInitialLayout!public!testing! !
 !ClassBuilder categoriesFor: #isFixedLayout!public!testing! !
