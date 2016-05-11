@@ -10,12 +10,13 @@ CompilerTest comment: ''!
 !CompilerTest categoriesForClass!Unclassified! !
 !CompilerTest methodsFor!
 
-assertBlocksOptimized: compiled 
+assertBlocksOptimized: compiled
 	| literals |
 	self deny: compiled method needsContext.
 	literals := compiled method literals.
 	self deny: (literals anySatisfy: [:each | each isKindOf: BlockClosure]).
-	self deny: (literals anySatisfy: [:each | StProgramNode optimizedSelectors includes: each])!
+	self
+		deny: (compiled method messages anySatisfy: [:each | StProgramNode optimizedSelectors includes: each])!
 
 checkCompileError: ex range: anInterval code: anInteger message: msgFormat line: lineInteger source: aString 
 	^ex errorCode = anInteger and: [ex range = anInterval]!
@@ -278,11 +279,10 @@ testCopyingBlocks2
 	self assert: (method value: DolphinCompilerTestMethods new withArguments: #()) = 'abc'!
 
 testDecrementPushTempOptimisation
-	| disasm expr |
+	| disasm expr expected |
 	expr := (self compileExpression: '| j | 5 to: 1  by: -1 do: [:i | j := i]. j') method.
 	disasm := expr disassembly.
-	self assert: disasm 
-				= 'Normal, 0 args, 2 stack temps, 0 literals
+	expected := 'Normal, 0 args, 2 stack temps, <1d> literals
 
 	1	Push 5
 	3	Store Temp[1]
@@ -298,14 +298,15 @@ testDecrementPushTempOptimisation
 	15	Jump If False -9 to 8
 	17	Pop
 	18	Pop; Push Temp[0]
-	19	Return '.
+	19	Return '
+				expandMacrosWith: expr literalCount.
+	self assert: expected equals: disasm.
 	self assert: (expr value: nil) = 1.
-	expr := (self 
-				compileExpression: '| t1 t2 t3 t4 t5 t6 t7 j | t1 := t2 := t3 := t4 := t5 := t6 := t7 := 1. 5 to: 1 by: -1 do: [:i | j := i]. j') 
+	expr := (self
+				compileExpression: '| t1 t2 t3 t4 t5 t6 t7 j | t1 := t2 := t3 := t4 := t5 := t6 := t7 := 1. 5 to: 1 by: -1 do: [:i | j := i]. j')
 					method.
 	disasm := expr disassembly.
-	self assert: disasm 
-				= 'Normal, 0 args, 9 stack temps, 0 literals
+	expected := 'Normal, 0 args, 9 stack temps, <1d> literals
 
 	1	Push 1
 	2	Store Temp[6]
@@ -330,10 +331,12 @@ testDecrementPushTempOptimisation
 	31	Pop
 	32	Pop
 	33	Push Temp[7]
-	34	Return '.
+	34	Return '
+				expandMacrosWith: expr literalCount.
+	self assert: expected equals: disasm.
 	self assert: (expr value: nil) = 1.
 	"Overflow"
-	expr := (self compileExpression: '| i | i := SmallInteger minimum. i class. i := i - 1. i*1') 
+	expr := (self compileExpression: '| i | i := SmallInteger minimum. i class. i := i - 1. i*1')
 				method.
 	self assert: (expr value: nil) = (SmallInteger minimum - 1).
 	"Non-small integer decremented"
@@ -350,25 +353,26 @@ testDecrementTempOptimisation
 	| disasm expr expected |
 	expr := (self compileExpression: '| i | i := 5. [i < 1] whileFalse: [i := i - 1]. i') method.
 	disasm := expr disassembly.
-	self assert: disasm 
-				= 'Normal, 0 args, 1 stack temps, 0 literals
+	expected := 'Normal, 0 args, 1 stack temps, <1d> literals
 
 	1	Push 5
 	3	Pop Temp[0]
 	4	Push Temp[0]
 	5	Push 1
-	6	Special Send #<
+	6	Special Send #%<
 	7	Jump If True +5 to 14
 	9	Decrement Temp[0]
 	12	Jump -10 to 4
 	14	Push Temp[0]
-	15	Return '.
+	15	Return '
+				expandMacrosWith: expr literalCount.
+	self assert: expected equals: disasm.
 	self assert: (expr value: nil) = 0.
-	expr := (self 
-				compileExpression: '| t1 t2 t3 t4 t5 t6 t7 t8 i | t1 := t2 := t3 := t4 := t5 := t6 := t7 := t8 := 1. i := 5. [i < 1] whileFalse: [i := i - 1]. i') 
+	expr := (self
+				compileExpression: '| t1 t2 t3 t4 t5 t6 t7 t8 i | t1 := t2 := t3 := t4 := t5 := t6 := t7 := t8 := 1. i := 5. [i < 1] whileFalse: [i := i - 1]. i')
 					method.
 	disasm := expr disassembly.
-	expected := 'Normal, 0 args, 9 stack temps, 0 literals
+	expected := 'Normal, 0 args, 9 stack temps, <1d> literals
 
 	1	Push 1
 	2	Store Temp[7]
@@ -383,21 +387,22 @@ testDecrementTempOptimisation
 	16	Pop Temp[8]
 	18	Push Temp[8]
 	20	Push 1
-	21	Special Send #<
+	21	Special Send #%<
 	22	Jump If True +5 to 29
 	24	Decrement Temp[8]
 	27	Jump -11 to 18
 	29	Push Temp[8]
-	31	Return '.
+	31	Return '
+				expandMacrosWith: expr literalCount.
 	self assert: disasm = expected.
 	"DiffBrowser  compare: disasm with: expected."
 	self assert: (expr value: nil) = 0.
 	"Overflow"
-	expr := (self compileExpression: '| i | i := SmallInteger minimum. i class. i := i - 1. 5 class. i') 
+	expr := (self compileExpression: '| i | i := SmallInteger minimum. i class. i := i - 1. 5 class. i')
 				method.
 	self assert: (expr value: nil) = (SmallInteger minimum - 1).
 	"Non-small integer decremented"
-	expr := (self compileExpression: '| i | i := 200 factorial. i class. i := i - 1. 5 class. i') 
+	expr := (self compileExpression: '| i | i := 200 factorial. i class. i := i - 1. 5 class. i')
 				method.
 	self assert: (expr value: nil) = (200 factorial - 1).
 	"Non-integer decremented"
@@ -492,7 +497,7 @@ testIfNil
 	compiled := self compileExpression: 'key ifNil: [value]' in: Association.
 	self assert: (compiled method value: nil -> 2) = 2.
 	self assert: (compiled method value: 1 -> 2) = 1.
-	self deny: (compiled method literals includes: 'ifNil:' asSymbol).
+	self deny: (compiled method messages includes: 'ifNil:' asSymbol).
 	self assertBlocksOptimized: compiled!
 
 testIfNilifNotNil
@@ -530,7 +535,7 @@ testIfNilUnused
 	compiled := self compileExpression: 'key ifNil: [2]. value' in: Association.
 	self assert: (compiled method value: nil -> 1) = 1.
 	self assert: (compiled method value: 1 -> 2) = 2.
-	self deny: (compiled method literals includes: 'ifNil:' asSymbol).
+	self deny: (compiled method messages includes: 'ifNil:' asSymbol).
 	self assertBlocksOptimized: compiled!
 
 testIfNotNil
@@ -724,11 +729,10 @@ testIncrementPushTempOptimisation
 	self should: [method value: nil] raise: MessageNotUnderstood!
 
 testIncrementTempOptimisation
-	| disasm method map debugMethod debugMap i |
+	| disasm method map debugMethod debugMap i expected |
 	method := self getTestMethod: #testIncrementTempOptimisation.
 	disasm := method disassembly.
-	self assert: disasm 
-				= 'Normal, 0 args, 1 stack temps, 0 literals
+	expected := 'Normal, 0 args, 1 stack temps, <1d> literals
 
 	1	Push 1
 	2	Pop Temp[0]
@@ -739,7 +743,9 @@ testIncrementTempOptimisation
 	9	Increment Temp[0]
 	12	Jump -11 to 3
 	14	Push Temp[0]
-	15	Return '.
+	15	Return '
+				expandMacrosWith: method literalCount.
+	self assert: expected equals: disasm.
 	self assert: (self evalTestMethod: method) = 6.
 	method := self getTestMethod: #testIncrementTempOptimisationLong.
 	self assert: (method byteCodes at: 24) = IncTemp.
@@ -852,7 +858,7 @@ testNestedWhileTrueAtStartOfCleanBlock
 	| method block |
 	method := self getTestMethod: #testNestedWhileTrueAtStartOfCleanBlock.
 	block := method value: DolphinCompilerTestMethods new withArguments: #().
-	self assert: block == (method literals at: 3).
+	self assert: (method literals identityIncludes: block).
 	"Block should start immediately after a short push const and return stack top"
 	self assert: block initialIP = 3!
 
@@ -889,7 +895,7 @@ testReturnFromOptimizedBlock
 	self assert: compiled needsContext.
 	"Note that the far returns in the optimized ifTrue: blocks can replaced with a normal returns"
 	lowerText := compiled disassembly.
-	upperText := 'Normal, 0 args, 0 env temps, 0 literals, needs context
+	upperText := 'Normal, 0 args, 0 env temps, <1d> literals, needs context
 
 	1	Push 1
 	2	Push 2
@@ -903,7 +909,7 @@ testReturnFromOptimizedBlock
 	16	Pop
 	17	Push 2
 	18	Push 1
-	19	Special Send #<
+	19	Special Send #%<
 	20	Jump If False +18 to 40
 	22	Push 1
 	23	Push 2
@@ -916,7 +922,7 @@ testReturnFromOptimizedBlock
 	36	Special Send #value
 	37	Pop
 	38	Jump -39 to 1
-	40	Return nil'.
+	40	Return nil' expandMacrosWith: compiled literalCount. 
 	self assert: lowerText = upperText
 	"
 DiffBrowser show

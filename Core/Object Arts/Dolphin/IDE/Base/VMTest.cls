@@ -563,6 +563,7 @@ testOverlappedCallTermination
 
 testPrimitiveAt
 	"First some error cases - accessing non-indexable objects"
+
 	| array |
 	self
 		should: [Array at: 1]
@@ -612,9 +613,9 @@ testPrimitiveAt
 			lit := array at: 2.
 			lit == WeakArray or: [(lit isKindOf: VariableBinding) and: [lit value == WeakArray]]].
 	self should: [(array at: 3) == #setDependents:].
-	self should: [(array at: 4) == #add:].
+	self should: [(array at: array size) == #add:].
 	self should: [array at: 0] raise: BoundsError.
-	self should: [array at: 5] raise: BoundsError.
+	self should: [array at: array size + 1] raise: BoundsError.
 	self should: [array at: SmallInteger maximum] raise: BoundsError.
 	self should: [array at: SmallInteger minimum] raise: BoundsError.
 
