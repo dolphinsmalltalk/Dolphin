@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #StParseNodeVisitor
 	instanceVariableNames: ''
@@ -16,9 +16,8 @@ acceptAssignmentNode: anAssignmentNode
 	self visitNode: anAssignmentNode variable.
 	self visitNode: anAssignmentNode value!
 
-acceptBlockNode: aBlockNode 
-	self visitArguments: aBlockNode arguments.
-	self visitNode: aBlockNode body!
+acceptBlockNode: aBlockNode
+	self processBlock: aBlockNode!
 
 acceptCascadeNode: aCascadeNode 
 	aCascadeNode messages do: [:each | self visitNode: each]!
@@ -53,21 +52,27 @@ acceptPrimitiveNode: anStPrimitiveNode
 acceptReturnNode: aReturnNode 
 	self visitNode: aReturnNode value!
 
-acceptSequenceNode: aSequenceNode 
+acceptSequenceNode: aSequenceNode
+	| statements |
 	self visitTempDecls: aSequenceNode temporaries.
-	self tagBeforeTemporaries 
+	self tagBeforeTemporaries
 		ifFalse: 
-			[aSequenceNode parent 
+			[aSequenceNode parent
 				ifNotNil: [:parent | parent isMethod ifTrue: [parent tag ifNotNil: [:tag | self visitNode: tag]]]].
-	aSequenceNode statements do: [:each | self visitNode: each]!
+	statements := aSequenceNode statements.
+	self visitStatements: statements!
 
 acceptVariableNode: aVariableNode!
+
+processBlock: aBlockNode
+	self visitArguments: aBlockNode arguments.
+	self visitNode: aBlockNode body!
 
 tagBeforeTemporaries
 	^false!
 
 visitArgument: each 
-	"Here to allow subclasses to detect arguments or temporaries."
+	"Private - Here to allow subclasses to detect arguments or temporaries."
 
 	^self visitNode: each!
 
@@ -76,6 +81,9 @@ visitArguments: aNodeCollection
 
 visitNode: aNode 
 	^aNode acceptVisitor: self!
+
+visitStatements: aNodeCollection
+	aNodeCollection do: [:each | self visitNode: each]!
 
 visitTempDecls: aNodeCollection 
 	^self visitArguments: aNodeCollection! !
@@ -93,11 +101,13 @@ visitTempDecls: aNodeCollection
 !StParseNodeVisitor categoriesFor: #acceptReturnNode:!public!visitor/double dispatching! !
 !StParseNodeVisitor categoriesFor: #acceptSequenceNode:!public!visitor/double dispatching! !
 !StParseNodeVisitor categoriesFor: #acceptVariableNode:!public!visitor/double dispatching! !
+!StParseNodeVisitor categoriesFor: #processBlock:!private!visitor/double dispatching! !
 !StParseNodeVisitor categoriesFor: #tagBeforeTemporaries!public!testing! !
-!StParseNodeVisitor categoriesFor: #visitArgument:!public!visiting! !
-!StParseNodeVisitor categoriesFor: #visitArguments:!public!visiting! !
-!StParseNodeVisitor categoriesFor: #visitNode:!public!visiting! !
-!StParseNodeVisitor categoriesFor: #visitTempDecls:!public!visiting! !
+!StParseNodeVisitor categoriesFor: #visitArgument:!private!visiting! !
+!StParseNodeVisitor categoriesFor: #visitArguments:!private!visiting! !
+!StParseNodeVisitor categoriesFor: #visitNode:!private!visiting! !
+!StParseNodeVisitor categoriesFor: #visitStatements:!private!visiting! !
+!StParseNodeVisitor categoriesFor: #visitTempDecls:!private!visiting! !
 
 StParseNodeVisitor methodProtocol: #stParseNodeVisitor attributes: #(#readOnly) selectors: #(#acceptAssignmentNode: #acceptBlockNode: #acceptCascadeNode: #acceptExternalArgTypeNode: #acceptExternalCallNode: #acceptLiteralArrayNode: #acceptLiteralNode: #acceptMessageNode: #acceptMethodNode: #acceptOptimizedNode: #acceptPrimitiveNode: #acceptReturnNode: #acceptSequenceNode: #acceptVariableNode:)!
 

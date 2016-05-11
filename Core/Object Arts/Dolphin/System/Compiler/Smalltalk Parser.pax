@@ -33,6 +33,7 @@ package classNames
 	add: #StIdentifierToken;
 	add: #StIllegalCharacterToken;
 	add: #StKeywordToken;
+	add: #StLexicalScope;
 	add: #StLiteralArrayNode;
 	add: #StLiteralArrayToken;
 	add: #StLiteralNode;
@@ -44,6 +45,7 @@ package classNames
 	add: #StNumberLiteralToken;
 	add: #StOptimizedNode;
 	add: #StOptimizedToken;
+	add: #StParseNodeAnalyzer;
 	add: #StParseNodeVisitor;
 	add: #StPrimitiveNode;
 	add: #StProgramNode;
@@ -91,6 +93,11 @@ Object subclass: #SmalltalkScanner
 	classVariableNames: 'ClassificationTable PatternVariableCharacter'
 	poolDictionaries: 'SmalltalkParseErrorCodes'
 	classInstanceVariableNames: ''!
+Object subclass: #StLexicalScope
+	instanceVariableNames: 'node temps argNames flags'
+	classVariableNames: 'EmptyBlockMask FarReturnMask NeedsOuter NeedsSelfMask OptimizedBlockMask'
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
 Object subclass: #StParseNodeVisitor
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -98,13 +105,18 @@ Object subclass: #StParseNodeVisitor
 	classInstanceVariableNames: ''!
 Object subclass: #StProgramNode
 	instanceVariableNames: 'parent comments'
-	classVariableNames: 'FormatterClass'
+	classVariableNames: 'FormatterClass InlinedBlockSelectors OptimizedSelectors'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Object subclass: #StToken
 	instanceVariableNames: 'sourcePointer comments'
 	classVariableNames: ''
 	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+StParseNodeVisitor subclass: #StParseNodeAnalyzer
+	instanceVariableNames: 'methodNode scopeStack methodClass scopeDepth evaluationContext evaluationPools literals literalCount stringLiterals addToFrame tempDecls isStub inStaticExpression'
+	classVariableNames: 'OptimizedMessages RestrictedSelectors SpecialSelectors'
+	poolDictionaries: 'SmalltalkParseErrorCodes'
 	classInstanceVariableNames: ''!
 StProgramNode subclass: #StExternalArgTypeNode
 	instanceVariableNames: 'typeOrdinal structClass indirections start stop'

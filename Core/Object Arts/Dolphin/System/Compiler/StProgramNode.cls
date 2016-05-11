@@ -2,7 +2,7 @@
 
 Object subclass: #StProgramNode
 	instanceVariableNames: 'parent comments'
-	classVariableNames: 'FormatterClass'
+	classVariableNames: 'FormatterClass InlinedBlockSelectors OptimizedSelectors'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 StProgramNode guid: (GUID fromString: '{3E45084E-5DE8-40C0-B448-C53339A17B52}')!
@@ -93,11 +93,6 @@ bestNodeFor: anInterval
 blockVariables
 	^parent isNil ifTrue: [#()] ifFalse: [parent blockVariables]!
 
-canMatchMethod: aCompiledMethod 
-	^self sentMessages allSatisfy: 
-			[:each | 
-			(self class optimizedSelectors identityIncludes: each) or: [aCompiledMethod refersToLiteral: each]]!
-
 cascadeListCharacter
 	^$;!
 
@@ -146,6 +141,9 @@ defines: aName
 
 directlyUses: aNode
 	^true!
+
+displayOn: aStream
+	self basicPrintOn: aStream!
 
 do: aBlock 
 	"Hacked to fit collection protocols"
@@ -365,7 +363,6 @@ whoDefines: aName
 !StProgramNode categoriesFor: #assigns:!public!testing! !
 !StProgramNode categoriesFor: #bestNodeFor:!public!querying! !
 !StProgramNode categoriesFor: #blockVariables!accessing!public! !
-!StProgramNode categoriesFor: #canMatchMethod:!public!testing/matching! !
 !StProgramNode categoriesFor: #cascadeListCharacter!meta variable/accessing!public! !
 !StProgramNode categoriesFor: #children!accessing!public! !
 !StProgramNode categoriesFor: #childrenDo:!accessing!public! !
@@ -377,6 +374,7 @@ whoDefines: aName
 !StProgramNode categoriesFor: #copyCommentsFrom:!copying!public! !
 !StProgramNode categoriesFor: #defines:!public!testing! !
 !StProgramNode categoriesFor: #directlyUses:!public!testing! !
+!StProgramNode categoriesFor: #displayOn:!printing!public! !
 !StProgramNode categoriesFor: #do:!enumerating!public! !
 !StProgramNode categoriesFor: #equalTo:exceptForVariables:!comparing!public! !
 !StProgramNode categoriesFor: #equalTo:withMapping:!comparing!public! !
@@ -441,11 +439,34 @@ formatterClass
 formatterClass: aClass 
 	FormatterClass := aClass!
 
+initialize
+	"Selectors with block arguments or receiver's that are essentially control structures and inlined by the compiler."
+
+	| inlinedBlockSelectors |
+	inlinedBlockSelectors := #(#ifTrue: #ifTrue:ifFalse: #ifFalse: #ifFalse:ifTrue: #whileTrue: #whileTrue #whileFalse: #whileFalse #to:do: #to:by:do: #and: #or: #repeat #ifNil: #ifNotNil: #ifNil:ifNotNil: #ifNotNil:ifNil:).
+	self addClassConstant: 'InlinedBlockSelectors'
+		value: ((inlinedBlockSelectors asIdentitySet)
+				shrink;
+				isImmutable: true;
+				yourself).
+	self addClassConstant: 'OptimizedSelectors'
+		value: ((inlinedBlockSelectors asIdentitySet)
+				add: #yourself;
+				shrink;
+				isImmutable: true;
+				yourself)!
+
+inlinedBlockSelectors
+	"Selectors with block arguments or receiver's that are essentially control structures and inlined by the compiler."
+
+	^InlinedBlockSelectors!
+
 optimizedSelectors
-	^##(#(#== #ifTrue: #ifTrue:ifFalse: #ifFalse: #ifFalse:ifTrue: #whileTrue: #whileTrue #whileFalse: #whileFalse #to:do: #to:by:do: #and: #or: #repeat #ifNil: #ifNotNil: #ifNil:ifNotNil: #ifNotNil:ifNil: #yourself #isNil #notNil) 
-		asIdentitySet)! !
+	^OptimizedSelectors! !
 !StProgramNode class categoriesFor: #defaultFormatterClass!constants!public! !
 !StProgramNode class categoriesFor: #formatterClass!accessing!public! !
 !StProgramNode class categoriesFor: #formatterClass:!accessing!public! !
+!StProgramNode class categoriesFor: #initialize!constants!public! !
+!StProgramNode class categoriesFor: #inlinedBlockSelectors!constants!public! !
 !StProgramNode class categoriesFor: #optimizedSelectors!constants!public! !
 
