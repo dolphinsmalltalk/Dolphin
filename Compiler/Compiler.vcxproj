@@ -197,6 +197,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\bytecdes.h" />
+    <ClInclude Include="..\VMPointers.h" />
     <ClInclude Include="bytecode.h" />
     <ClInclude Include="compiler.h" />
     <ClInclude Include="lexer.h" />

@@ -135,6 +135,7 @@ private:
 	int AddToFrameUnconditional(Oop object, const TEXTRANGE&);
 	int AddToFrame(Oop object, const TEXTRANGE&);
 	int AddStringToFrame(POTE string, const TEXTRANGE&);
+	POTE AddSymbolToFrame(const char*, const TEXTRANGE&);
 	void InsertByte(int pos, BYTE value, BYTE flags, LexicalScope* pScope);
 	void RemoveByte(int pos);
 	int RemoveInstruction(int pos);

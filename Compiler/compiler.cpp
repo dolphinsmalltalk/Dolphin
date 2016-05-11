@@ -2024,6 +2024,7 @@ int Compiler::ParseUnaryContinuation(int exprMark, int textPosition)
 		}
 		else if (strToken == "yourself" && !(m_flags & SendYourself))
 		{
+			AddSymbolToFrame(ThisTokenText(), ThisTokenRange());
 			// We don't send yourself, since it is a Nop
 			isSpecialCase=true;
 		}

@@ -58,6 +58,8 @@ bool Compiler::ParseIfTrue(const TEXTRANGE& messageRange)
 	if (strcmp(ThisTokenText(), "ifFalse:") == 0)
 	{
 		// An else block exists
+		POTE oteSelector = AddSymbolToFrame("ifTrue:ifFalse:", messageRange);
+
 		NextToken();
 
 		ParseZeroArgOptimizedBlock();
@@ -65,6 +67,9 @@ bool Compiler::ParseIfTrue(const TEXTRANGE& messageRange)
 	else
 	{
 		// When #ifFalse: branch is missing, value of expression if condition false is nil
+		
+		POTE oteSelector = AddSymbolToFrame("ifTrue:", messageRange);
+
 		GenInstruction(ShortPushNil);
 	}
 
@@ -96,6 +101,9 @@ bool Compiler::ParseIfFalse(const TEXTRANGE& messageRange)
 	if (strcmp(ThisTokenText(), "ifTrue:") == 0)
 	{
 		// An else block exists
+
+		POTE oteSelector = AddSymbolToFrame("ifFalse:ifTrue:", messageRange);
+
 		NextToken();
 
 		ParseZeroArgOptimizedBlock();
@@ -103,6 +111,8 @@ bool Compiler::ParseIfFalse(const TEXTRANGE& messageRange)
 	else
 	{
 		// When ifTrue: branch is missing, value of expression if condition false is nil
+
+		POTE oteSelector = AddSymbolToFrame("ifFalse:", messageRange);
 
 		// N.B. We used (pre 5.5) to reorder the "blocks" to take advantage of the shorter jump on false
 		// instruction (i.e. we put the empty true block first), but it turns out that this
@@ -131,6 +141,8 @@ bool Compiler::ParseIfFalse(const TEXTRANGE& messageRange)
 
 bool Compiler::ParseAndCondition(const TEXTRANGE& messageRange)
 {
+	POTE oteSelector = AddSymbolToFrame("and:", messageRange);
+
 	// Assume we can reorder blocks to allow us to use the smaller
 	// jump on false instruction.
 	//
@@ -138,7 +150,7 @@ bool Compiler::ParseAndCondition(const TEXTRANGE& messageRange)
 	
 	if (!ThisTokenIsBinary('['))
 	{
-		Warning(CWarnExpectNiladicBlockArg, (Oop)InternSymbol("and:"));
+		Warning(CWarnExpectNiladicBlockArg, (Oop)oteSelector);
 		return false;
 	}
 
@@ -159,9 +171,11 @@ bool Compiler::ParseAndCondition(const TEXTRANGE& messageRange)
 
 bool Compiler::ParseOrCondition(const TEXTRANGE& messageRange)
 {
+	POTE oteSelector = AddSymbolToFrame("or:", messageRange);
+
 	if (!ThisTokenIsBinary('['))
 	{
-		Warning(CWarnExpectNiladicBlockArg, (Oop)InternSymbol("or:"));
+		Warning(CWarnExpectNiladicBlockArg, (Oop)oteSelector);
 		return false;
 	}
 
@@ -260,7 +274,6 @@ int Compiler::ParseIfNotNilBlock()
 	return argc;
 }
 
-
 bool Compiler::ParseIfNilBlock(bool noPop)
 {
 	PushOptimizedScope();
@@ -344,6 +357,8 @@ bool Compiler::ParseIfNil(const TEXTRANGE& messageRange, int exprStartPos)
 
 	if (strcmp(ThisTokenText(), "ifNotNil:") == 0)
 	{
+		POTE oteSelector = AddSymbolToFrame("ifNil:ifNotNil:", messageRange);
+
 		// Generate the jump out instruction (forward jump, so target not yet known)
 		int jumpOutMark = GenJumpInstruction(LongJump);
 
@@ -375,6 +390,8 @@ bool Compiler::ParseIfNil(const TEXTRANGE& messageRange, int exprStartPos)
 	}
 	else
 	{
+		POTE oteSelector = AddSymbolToFrame("ifNil:", messageRange);
+
 		// No "else" branch, but we still need an instruction to jump to
 		ifNotNilMark = GenNop();
 	}
@@ -422,6 +439,8 @@ bool Compiler::ParseIfNotNil(const TEXTRANGE& messageRange, int exprStartPos)
 	// Has an #ifNil: branch?
 	if (strcmp(ThisTokenText(), "ifNil:") == 0)
 	{
+		POTE oteSelector = AddSymbolToFrame("ifNotNil:ifNil:", messageRange);
+
 		// Generate the jump out instruction (forward jump, so target not yet known)
 		int jumpOutMark = GenJumpInstruction(LongJump);
 
@@ -438,6 +457,9 @@ bool Compiler::ParseIfNotNil(const TEXTRANGE& messageRange, int exprStartPos)
 	else
 	{
 		// No "ifNil:" branch 
+
+		POTE oteSelector = AddSymbolToFrame("ifNotNil:", messageRange);
+
 		if (!argc)
 		{
 			// Since we've removed the Dup if the ifNotNil: block had no args, we need to ensure there is nil atop the stack
@@ -536,13 +558,18 @@ bool Compiler::InlineLoopBlock(const int loopmark, const TEXTRANGE& tokenRange)
 
 bool Compiler::ParseRepeatLoop(const int loopmark)
 {
+	// We add a literal symbol to the frame for the message send regardless of 
+	// whether we are able to generate the inlined version so that searching
+	// for references, etc, works as expected.
+	POTE oteSelector = AddSymbolToFrame(ThisTokenText(), ThisTokenRange());
+
 	if (!InlineLoopBlock(loopmark, ThisTokenRange()))
 	{
-		Warning(ThisTokenRange(), CWarnExpectNiladicBlockReceiver, (Oop)InternSymbol("repeat"));
+		Warning(ThisTokenRange(), CWarnExpectNiladicBlockReceiver, (Oop)oteSelector);
 		return false;
 	}
 
-	// Throw away the result of the block
+	// Throw away the result of the block evaluation
 	GenPopStack();
 	
 	// #repeat is very simple we just unconditionally jump back to the start again
@@ -551,55 +578,32 @@ bool Compiler::ParseRepeatLoop(const int loopmark)
 	return true;
 }
 
+POTE Compiler::AddSymbolToFrame(const char* s, const TEXTRANGE& tokenRange)
+{
+	POTE oteSelector = InternSymbol(s);
+	AddToFrame(reinterpret_cast<Oop>(oteSelector), tokenRange);
+	return oteSelector;
+}
+
+
 // Return whether we it was suitable to optimize this loop block
 bool Compiler::ParseWhileLoopBlock(const bool bIsWhileTrue, const int loopmark, 
 								   const TEXTRANGE& tokenRange, const int textStart)
 {
+	POTE oteSelector = AddSymbolToFrame(bIsWhileTrue ? "whileTrue:" : "whileFalse:", tokenRange);
+
 	if (!ThisTokenIsBinary('['))
 	{
-		Warning(CWarnExpectNiladicBlockArg, (Oop)InternSymbol(bIsWhileTrue?"whileTrue:":"whileFalse:"));
+		Warning(CWarnExpectNiladicBlockArg, (Oop)oteSelector);
 		return false;
 	}
 
 	if (!InlineLoopBlock(loopmark, tokenRange))
 	{
-		Warning(tokenRange, CWarnExpectNiladicBlockReceiver, (Oop)InternSymbol(bIsWhileTrue?"whileTrue:":"whileFalse:"));
+		Warning(tokenRange, CWarnExpectNiladicBlockReceiver, (Oop)oteSelector);
 		return false;
 	}
 
-#if 0
-	// Generate a nop to jump to
-	int loophead = loopmark;
-
-	// We're going to add a pop and jump on condition instruction.
-	int popAndJumpOutMark=m_codeSize;
-	
-	// Generate the loop body first as reduces number of jumps executed on average if
-	// we have the conditional jump at the end
-	int currentPos = m_codePointer;
-	_ASSERT(loopmark < currentPos);
-	m_codePointer = loopmark;
-	int jumpMark = GenJumpInstruction(LongJump);
-
-	loophead = m_codePointer;
-
-	PushOptimizedScope();
-
-	// Parse the loop body ...
-	ParseOptimizeBlock();
-
-	PopOptimizedScope();
-
-	//... and ignore its result
-	GenPopStack();
-	NextToken();
-
-	SetJumpTarget(jumpMark, m_codePointer);
-	m_codePointer = currentPos + (m_codePointer - loopmark);
-
-	const int popAndJumpInstruction = bIsWhileTrue ? LongJumpIfTrue : LongJumpIfFalse;
-	int jumpPos = GenJump(popAndJumpInstruction, loophead);
-#else
 	// We've generated (and inlined) the loop condition block already
 	// Now we need to insert conditional jump over the loop body block which should
 	// be taken if the condition is false if a while true loop, or true if a while
@@ -629,7 +633,7 @@ bool Compiler::ParseWhileLoopBlock(const bool bIsWhileTrue, const int loopmark,
 
 	// Unconditionally jump back to the loop condition
 	int jumpPos = GenJump(LongJump, loopmark);
-#endif
+
 	//if (WantTextMap()) m_textMaps[nLoopTextMap].stop = LastTokenRange().m_stop;	// *1*
 
 	// Return Nil
@@ -644,14 +648,16 @@ bool Compiler::ParseWhileLoopBlock(const bool bIsWhileTrue, const int loopmark,
 // Returns whether we were able to optimize this loop
 bool Compiler::ParseWhileLoop(bool bWhileTrue, const int loopmark)
 {
-	// #whileTrue/#whileFalse is very simple - we only need one conditional jump at the end
-	// after the condition block
+	POTE oteSelector = AddSymbolToFrame(ThisTokenText(), ThisTokenRange());
 
 	if (!InlineLoopBlock(loopmark, ThisTokenRange()))
 	{
-		Warning(ThisTokenRange(), CWarnExpectNiladicBlockReceiver, (Oop)InternSymbol(bWhileTrue?"whileTrue":"whileFalse"));
+		Warning(ThisTokenRange(), CWarnExpectNiladicBlockReceiver, (Oop)oteSelector);
 		return false;
 	}
+
+	// #whileTrue/#whileFalse is very simple to inline - we only need one conditional jump at the end
+	// after the condition block
 
 	int jumpPos = GenJump(bWhileTrue ? LongJumpIfTrue : LongJumpIfFalse, loopmark);
 	AddTextMap(jumpPos, ThisTokenRange());
@@ -736,10 +742,12 @@ void Compiler::ParseToByNumberDo(int toPointer, Oop oopNumber, bool bNegativeSte
 // produce optimized form of to:do: message
 bool Compiler::ParseToDoBlock(int exprStart, int toPointer)
 {
+	POTE oteSelector = AddSymbolToFrame("to:do:", TEXTRANGE(toPointer, toPointer + 2));
+
 	// Only optimize if a block is next
 	if (!ThisTokenIsBinary('['))
 	{
-		Warning(CWarnExpectMonadicBlockArg, (Oop)InternSymbol("to:do:"));
+		Warning(CWarnExpectMonadicBlockArg, (Oop)oteSelector);
 		return false;
 	}
 	
@@ -752,10 +760,12 @@ bool Compiler::ParseToByDoBlock(int exprStart, int toPointer, int byPointer)
 {
 	_ASSERTE(toPointer>0 && byPointer>0);
 	
+	POTE oteSelector = AddSymbolToFrame("to:by:do:", TEXTRANGE(toPointer, toPointer+2));
+
 	// Only optimize if a block is next
 	if (!ThisTokenIsBinary('['))
 	{
-		Warning(CWarnExpectMonadicBlockArg, (Oop)InternSymbol("to:by:do:"));
+		Warning(CWarnExpectMonadicBlockArg, (Oop)oteSelector);
 		return false;
 	}
 
@@ -795,9 +805,11 @@ bool Compiler::ParseToByDoBlock(int exprStart, int toPointer, int byPointer)
 // Note that we perform the conditional jump as a backwards jump at the end for optimal performance
 bool Compiler::ParseTimesRepeatLoop(const TEXTRANGE& messageRange)
 {
+	POTE oteSelector = AddSymbolToFrame("timesRepeat:", messageRange);
+
 	if (!ThisTokenIsBinary('['))
 	{
-		Warning(messageRange, CWarnExpectNiladicBlockArg, (Oop)InternSymbol("timesRepeat:"));
+		Warning(messageRange, CWarnExpectNiladicBlockArg, (Oop)oteSelector);
 		return false;
 	}
 	
@@ -862,13 +874,6 @@ bool Compiler::ParseTimesRepeatLoop(const TEXTRANGE& messageRange)
 	
 	return true;
 }
-
-// An optimization of a particular message has failed due
-/*void Compiler::ExpectedBlockArgument(const char* blockType, const char* messageArgument, const char* message)
-{
-	Warning(IDS_W_CANTOPTIMIZEBLOCK, message, blockType, messageArgument);
-}
-*/
 
 // Parse the loop block and ignore its result
 int Compiler::ParseOptimizeBlock(int arguments)
