@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 StProgramNode subclass: #StMethodNode
 	instanceVariableNames: 'selector selectorParts body source arguments tag replacements nodeReplacements'
@@ -76,6 +76,9 @@ childrenDo: aMonadicValuable
 
 defines: aName 
 	^arguments anySatisfy: [:each | each name = aName]!
+
+displayOn: aStream
+	aStream nextPutAll: 'Method'!
 
 equalTo: anObject withMapping: aDictionary 
 	self class = anObject class ifFalse: [^false].
@@ -201,6 +204,7 @@ uses: aNode
 !StMethodNode categoriesFor: #buildSelector!helpers!private! !
 !StMethodNode categoriesFor: #childrenDo:!accessing!public! !
 !StMethodNode categoriesFor: #defines:!public!testing! !
+!StMethodNode categoriesFor: #displayOn:!printing!public! !
 !StMethodNode categoriesFor: #equalTo:withMapping:!comparing!public! !
 !StMethodNode categoriesFor: #hash!comparing!public! !
 !StMethodNode categoriesFor: #isExternalCall!public!testing! !

@@ -19,6 +19,7 @@ package classNames
 	add: #AspectAccessor;
 	add: #AspectEditorDialog;
 	add: #AspectInspector;
+	add: #AstPlugin;
 	add: #BasicInspector;
 	add: #BasicKeyedAspect;
 	add: #BatchAspectAccessor;
@@ -114,7 +115,6 @@ package classNames
 	add: #SmalltalkWorkspaceDocument;
 	add: #SpecialReferencesCategory;
 	add: #STBDebugger;
-	add: #StLexicalScope;
 	add: #StNumberStylingToken;
 	add: #StructureInspector;
 	add: #StSemanticAnalyser;
@@ -284,18 +284,29 @@ package methodNames
 	add: #StackFrame -> #findIP:inTextMap:;
 	add: #StackFrame -> #makeDebug;
 	add: #StackFrame -> #stackWorkspace;
+	add: #StAssignmentNode -> #displayOn:;
+	add: #StBlockNode -> #displayOn:;
+	add: #StCascadeNode -> #displayOn:;
+	add: #StLiteralArrayNode -> #displayOn:;
 	add: #StLiteralToken -> #textStyle;
+	add: #StLiteralValueNode -> #displayOn:;
+	add: #StMessageNode -> #displayOn:;
 	add: #StNumberLiteralToken -> #textStyle;
+	add: #StOptimizedNode -> #displayOn:;
+	add: #StPrimitiveNode -> #displayOn:;
 	add: #StProgramNode -> #debugPrintString;
 	add: #StProgramNode -> #postComments;
 	add: #StProgramNode -> #preComments;
+	add: #StReturnNode -> #displayOn:;
 	add: #String -> #aspectDisplayOn:;
 	add: #String -> #debugPrintString;
 	add: #String -> #literalTextStyle;
 	add: #String -> #newAspect:class:;
 	add: #String -> #publishedAspects;
+	add: #StSequenceNode -> #displayOn:;
 	add: #StToken -> #postComments;
 	add: #StToken -> #preComments;
+	add: #StVariableNode -> #displayOn:;
 	add: #Symbol -> #aspectDisplayOn:;
 	add: #Symbol -> #literalTextStyle;
 	add: #Symbol -> #searchForInTool:;
@@ -609,11 +620,6 @@ Object subclass: #SmalltalkSystemIcon
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-Object subclass: #StLexicalScope
-	instanceVariableNames: 'node temps argNames'
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
 Object subclass: #VisualShellFinder
 	instanceVariableNames: 'mouseTracker foundObject foundCursor notFoundCursor shellClassFilter'
 	classVariableNames: ''
@@ -826,6 +832,11 @@ Presenter subclass: #SmalltalkWorkspace
 	classInstanceVariableNames: 'additionalAccelerators commandQueryHandlers'!
 Presenter subclass: #TwinLevelInspector
 	instanceVariableNames: 'contentsPresenter inspectorPresenter'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ClassBrowserPlugin subclass: #AstPlugin
+	instanceVariableNames: 'astPresenter sourcePresenter'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -1124,9 +1135,9 @@ StParseNodeVisitor subclass: #MessageNodeCollector
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-StParseNodeVisitor subclass: #StSemanticAnalyser
-	instanceVariableNames: 'methodNode scopeStack methodClass instVars scopeDepth evaluationContext evaluationPools literals stringLiterals addToFrame tempDecls isStub inStaticExpression'
-	classVariableNames: 'OptimizedMessages RestrictedSelectors SpecialSelectors'
+StParseNodeAnalyzer subclass: #StSemanticAnalyser
+	instanceVariableNames: ''
+	classVariableNames: ''
 	poolDictionaries: 'SmalltalkParseErrorCodes'
 	classInstanceVariableNames: ''!
 StNumberLiteralToken subclass: #StNumberStylingToken
@@ -4605,6 +4616,12 @@ publishedAspectsOfInstances
 		yourself! !
 !StackFrame class categoriesFor: #publishedAspectsOfInstances!constants!development!public! !
 
+!StAssignmentNode methodsFor!
+
+displayOn: aStream
+	aStream nextPutAll: ':='! !
+!StAssignmentNode categoriesFor: #displayOn:!printing!public! !
+
 !StaticBitmap class methodsFor!
 
 publishedAspectsOfInstances
@@ -4703,17 +4720,65 @@ publishedAspectsOfInstances
     		yourself! !
 !StatusBarItemAbstract class categoriesFor: #publishedAspectsOfInstances!constants!development!public! !
 
+!StBlockNode methodsFor!
+
+displayOn: aStream
+	aStream nextPutAll: '[]'! !
+!StBlockNode categoriesFor: #displayOn:!printing!public! !
+
+!StCascadeNode methodsFor!
+
+displayOn: aStream
+	aStream nextPutAll: 'Cascade'
+! !
+!StCascadeNode categoriesFor: #displayOn:!printing!public! !
+
+!StLiteralArrayNode methodsFor!
+
+displayOn: aStream
+	aStream nextPutAll: '#()'! !
+!StLiteralArrayNode categoriesFor: #displayOn:!printing!public! !
+
 !StLiteralToken methodsFor!
 
 textStyle
 	^self value literalTextStyle! !
 !StLiteralToken categoriesFor: #textStyle!public!visitor/double dispatching! !
 
+!StLiteralValueNode methodsFor!
+
+displayOn: aStream
+	self value printOn: aStream! !
+!StLiteralValueNode categoriesFor: #displayOn:!printing!public! !
+
+!StMessageNode methodsFor!
+
+displayOn: aStream
+	aStream
+		nextPutAll: 'Msg ';
+		print: self selector! !
+!StMessageNode categoriesFor: #displayOn:!development!printing!public! !
+
 !StNumberLiteralToken methodsFor!
 
 textStyle
 	^#literalNumber! !
 !StNumberLiteralToken categoriesFor: #textStyle!public!visitor/double dispatching! !
+
+!StOptimizedNode methodsFor!
+
+displayOn: aStream
+	aStream nextPutAll: '##()'! !
+!StOptimizedNode categoriesFor: #displayOn:!printing!public! !
+
+!StPrimitiveNode methodsFor!
+
+displayOn: aStream
+	aStream
+		nextPutAll: '<Primitive: ';
+		display: self primitiveIndex;
+		nextPut: $>! !
+!StPrimitiveNode categoriesFor: #displayOn:!printing!public! !
 
 !StProgramNode methodsFor!
 
@@ -4751,6 +4816,12 @@ preComments
 !StProgramNode categoriesFor: #debugPrintString!development!printing!public! !
 !StProgramNode categoriesFor: #postComments!accessing!public! !
 !StProgramNode categoriesFor: #preComments!accessing!public! !
+
+!StReturnNode methodsFor!
+
+displayOn: aStream
+	aStream nextPut: $^! !
+!StReturnNode categoriesFor: #displayOn:!printing!public! !
 
 !String methodsFor!
 
@@ -4813,6 +4884,12 @@ newInstanceAspect: aSymbol class: aspectClass
 	^aspectClass string: aSymbol! !
 !StringField class categoriesFor: #newInstanceAspect:class:!adapters!development!private! !
 
+!StSequenceNode methodsFor!
+
+displayOn: aStream
+	aStream nextPutAll: '...'! !
+!StSequenceNode categoriesFor: #displayOn:!printing!public! !
+
 !StToken methodsFor!
 
 postComments
@@ -4838,6 +4915,14 @@ preComments
 			all select: [:each | each stop < start]]! !
 !StToken categoriesFor: #postComments!accessing!public! !
 !StToken categoriesFor: #preComments!accessing!public! !
+
+!StVariableNode methodsFor!
+
+displayOn: aStream
+	aStream
+		nextPutAll: 'Var ';
+		print: self name! !
+!StVariableNode categoriesFor: #displayOn:!development!printing!public! !
 
 !StyledGradientBrush class methodsFor!
 

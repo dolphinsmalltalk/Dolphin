@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 StParseNodeVisitor subclass: #RBReadBeforeWrittenTester
 	instanceVariableNames: 'read checkNewTemps scopeStack'
@@ -13,9 +13,6 @@ RBReadBeforeWrittenTester comment: ''!
 acceptAssignmentNode: anAssignmentNode 
 	self visitNode: anAssignmentNode value.
 	self variableWritten: anAssignmentNode!
-
-acceptBlockNode: aBlockNode 
-	self processBlock: aBlockNode!
 
 acceptMessageNode: aMessageNode 
 	((#(#whileTrue: #whileFalse: #whileTrue #whileFalse) 
@@ -132,7 +129,6 @@ variableWritten: aNode
 			[(self currentScope at: aNode variable name) isNil 
 				ifTrue: [self currentScope at: aNode variable name put: false]]! !
 !RBReadBeforeWrittenTester categoriesFor: #acceptAssignmentNode:!public!visitor/double dispatching! !
-!RBReadBeforeWrittenTester categoriesFor: #acceptBlockNode:!public!visitor/double dispatching! !
 !RBReadBeforeWrittenTester categoriesFor: #acceptMessageNode:!public!visitor/double dispatching! !
 !RBReadBeforeWrittenTester categoriesFor: #acceptSequenceNode:!public!visitor/double dispatching! !
 !RBReadBeforeWrittenTester categoriesFor: #acceptVariableNode:!public!visitor/double dispatching! !
