@@ -6,6 +6,7 @@ StParseNodeVisitor subclass: #StParseNodeAnalyzer
 	poolDictionaries: 'SmalltalkParseErrorCodes'
 	classInstanceVariableNames: ''!
 StParseNodeAnalyzer guid: (GUID fromString: '{3922CAC3-8A81-45A8-ADB3-2795A6E7BC2F}')!
+StParseNodeAnalyzer addClassConstant: 'SpecialSelectors' value: #(#+ #- #< #> #<= #>= #= #~= #* #/ #\\ #bitShift: #// #bitAnd: #bitOr: #== #value #value: #class #size #new #new: #at: #at:put: #value:value: #basicNew: #basicClass #basicSize #basicAt: #basicAt:put: #isNil #notNil)!
 StParseNodeAnalyzer comment: ''!
 !StParseNodeAnalyzer categoriesForClass!System-Compiler! !
 !StParseNodeAnalyzer methodsFor!
@@ -91,7 +92,7 @@ addMessageToFrame: aMessageNode
 	selector := aMessageNode selector.
 	"Special selectors such as #== are not added to the literal frame. These have special
 	bytecodes which can be used to find senders."
-	(SpecialSelectors includes: selector) ifTrue: [^self].
+	(SpecialSelectors identityIncludes: selector) ifTrue: [^self].
 	self addLiteral: aMessageNode value: selector!
 
 addToFrame: aLiteralNode
@@ -735,7 +736,6 @@ initialize
 	RestrictedSelectors := IdentitySet new.
 	OptimizedMessages do: [:each | RestrictedSelectors addAll: each].
 	RestrictedSelectors isImmutable: true.
-	SpecialSelectors := VMLibrary default specialSelectors asIdentitySet.
-	SpecialSelectors isImmutable: true! !
+	self addClassConstant: 'SpecialSelectors' value: VMLibrary default specialSelectors! !
 !StParseNodeAnalyzer class categoriesFor: #initialize!public! !
 
