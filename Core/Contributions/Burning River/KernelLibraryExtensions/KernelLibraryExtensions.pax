@@ -10,7 +10,9 @@ The above copyright notice and this permission notice shall be included in all c
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 28-Feb-2003	Changed KernelLibrary>>waitForSingleObject to use the ''overlap''
-		modifier so that Dolphin''s background processes are not suspended.'.
+		modifier so that Dolphin''s background processes are not suspended.
+28-Jul-2004	Added KernelLibrary>>getExitCodeProcess and
+		KernelLibrary>>getExitCodeThread.''.'.
 
 package basicScriptAt: #postinstall put: 'Win32Constants
 	at: ''WAIT_FAILED'' put: -1'.
@@ -18,6 +20,8 @@ package basicScriptAt: #preuninstall put: 'Win32Constants
 	removeKey: ''WAIT_FAILED'' ifAbsent: [ nil ]'.
 
 package methodNames
+	add: #KernelLibrary -> #getExitCodeProcess:lpExitCode:;
+	add: #KernelLibrary -> #getExitCodeThread:lpExitCode:;
 	add: #KernelLibrary -> #getLogicalDriveStrings:buffer:;
 	add: #KernelLibrary -> #setFileAttributes:value:;
 	add: #KernelLibrary -> #waitForSingleObject:waitForMilliseconds:;
@@ -50,6 +54,28 @@ package!
 
 !KernelLibrary methodsFor!
 
+getExitCodeProcess: hProcess lpExitCode: aDWORD
+	"Populate aDWORD with the exit code of the specified process
+.
+	BOOL GetExitCodeProcess(
+			HANDLE hProcess,
+			LPDWORD lpExitCode
+			);"
+
+	<stdcall: bool GetExitCodeProcess handle DWORD*>
+	^self invalidCall!
+
+getExitCodeThread: hThread lpExitCode: aDWORD
+	"Populate aDWORD with the exit code of the specified thread.
+.
+	BOOL GetExitCodeThread(
+		  HANDLE hThread,
+		  LPDWORD lpExitCode
+		);"
+
+	<stdcall: bool GetExitCodeThread handle DWORD*>
+	^self invalidCall!
+
 getLogicalDriveStrings: bufferSize buffer: aBuffer
 	"Fills a buffer with strings which specify valid drives in the system.
 	 DWORD GetLogicalDriveStrings( 
@@ -78,6 +104,8 @@ waitForSingleObject: hHandle waitForMilliseconds: timeout
 
 	<overlap stdcall: dword WaitForSingleObject handle dword>
 	^self invalidCall! !
+!KernelLibrary categoriesFor: #getExitCodeProcess:lpExitCode:!public! !
+!KernelLibrary categoriesFor: #getExitCodeThread:lpExitCode:!public! !
 !KernelLibrary categoriesFor: #getLogicalDriveStrings:buffer:!public!win32 functions-system information! !
 !KernelLibrary categoriesFor: #setFileAttributes:value:!public! !
 !KernelLibrary categoriesFor: #waitForSingleObject:waitForMilliseconds:!public!win32 functions-handles and objects! !
