@@ -2,10 +2,13 @@
 
 Collection variableSubclass: #Set
 	instanceVariableNames: 'tally'
-	classVariableNames: 'SmallPrimeOffsets'
+	classVariableNames: 'MaxOffsetIndex PrimeSizes SmallPrimeOffsets'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Set guid: (GUID fromString: '{87B4C50B-026E-11D3-9FD7-00A0CC3E4A32}')!
+Set addClassConstant: 'MaxOffsetIndex' value: 2048!
+Set addClassConstant: 'PrimeSizes' value: #(4441 4787 5119 5471 5801 6143 6521 6827 7177 7517 7853 8783 9601 10243 10867 11549 12239 12919 13679 14293 15013 15731 17569 19051 20443 21767 23159 24611 25847 27397 28571 30047 31397 35771 38201 40841 43973 46633 48989 51631 54371 57349 60139 62969 70589 76091 80347 85843 90697 95791 101051 106261 111143 115777 120691 126311 140863 150523 160969 170557 181243 190717 201653 211891 221251 232591 242873 251443 282089 300869 321949 341227 362353 383681 401411 422927 443231 464951 482033 504011 562621 605779 647659 681607 723623 763307 808261 844709 886163 926623 967229 1014617)!
+Set addClassConstant: 'SmallPrimeOffsets' value: #[0 0 0 2 0 0 2 0 0 2 0 4 2 0 0 4 2 0 2 0 0 2 0 4 2 0 4 2 0 0 4 2 0 2 0 0 4 2 0 2 0 4 2 0 6 4 2 0 2 0 0 2 0 0 2 0 12 10 8 6 4 2 0 2 0 4 2 0 0 8 6 4 2 0 0 4 2 0 4 2 0 2 0 4 2 0 4 2 0 0 8 6 4 2 0 0 2 0 0 10 8 6 4 2 0 10 8 6 4 2 0 2 0 0 2 0 4 2 0 0 8 6 4 2 0 4 2 0 4 2 0 4 2 0 0 4 2 0 2 0 0 8 6 4 2 0 12 10 8 6 4 2 0 2 0 0 2 0 12 10 8 6 4 2 0 4 2 0 8 6 4 2 0 0 2 0 4 2 0 6 4 2 0 4 2 0 4 2 0 2 0 4 2 0 6 4 2 0 2 0 6 4 2 0 8 6 4 2 0 0 8 6 4 2 0 0 4 2 0 2 0 4 2 0 6 4 2 0 2 0 0 2 0 10 8 6 4 2 0 6 4 2 0 2 0 6 4 2 0 2 0 4 2 0 10 8 6 4 2 0 0 16 14 12 10 8 6 4 2 0 4 2 0 8 6 4 2 0 4 2 0 4 2 0 0 4 2 0 8 6 4 2 0 4 2 0 4 2 0 0 4 2 0 4 2 0 2 0 0 10 8 6 4 2 0 8 6 4 2 0 0 2 0 4 2 0 4 2 0 0 10 8 6 4 2 0 2 0 4 2 0 6 4 2 0 8 6 4 2 0 6 4 2 0 8 6 4 2 0 6 4 2 0 4 2 0 4 2 0 2 0 6 4 2 0 4 2 0 2 0 6 4 2 0 2 0 12 10 8 6 4 2 0 8 6 4 2 0 10 8 6 4 2 0 0 8 6 4 2 0 0 2 0 0 8 6 4 2 0 12 10 8 6 4 2 0 2 0 0 2 0 12 10 8 6 4 2 0 2 0 0 2 0 18 16 14 12 10 8 6 4 2 0 2 0 6 4 2 0 8 6 4 2 0 6 4 2 0 2 0 4 2 0 4 2 0 12 10 8 6 4 2 0 2 0 4 2 0 4 2 0 6 4 2 0 4 2 0 10 8 6 4 2 0 2 0 4 2 0 0 8 6 4 2 0 0 4 2 0 8 6 4 2 0 0 8 6 4 2 0 0 4 2 0 16 14 12 10 8 6 4 2 0 2 0 0 2 0 4 2 0 4 2 0 6 4 2 0 4 2 0 4 2 0 20 18 16 14 12 10 8 6 4 2 0 0 8 6 4 2 0 6 4 2 0 8 6 4 2 0 4 2 0 4 2 0 6 4 2 0 10 8 6 4 2 0 2 0 4 2 0 4 2 0 0 4 2 0 10 8 6 4 2 0 8 6 4 2 0 16 14 12 10 8 6 4 2 0 0 2 0 4 2 0 0 4 2 0 2 0 0 2 0 10 8 6 4 2 0 0 4 2 0 32 30 28 26 24 22 20 18 16 14 12 10 8 6 4 2 0 4 2 0 4 2 0 6 4 2 0 16 14 12 10 8 6 4 2 0 8 6 4 2 0 12 10 8 6 4 2 0 2 0 0 2 0 4 2 0 6 4 2 0 2 0 0 4 2 0 10 8 6 4 2 0 8 6 4 2 0 0 2 0 0 2 0 4 2 0 10 8 6 4 2 0 10 8 6 4 2 0 6 4 2 0 10 8 6 4 2 0 4 2 0 2 0 4 2 0 6 4 2 0 2 0 6 4 2 0 2 0 12 10 8 6 4 2 0 2 0 4 2 0 0 2 0 4 2 0 0 4 2 0 8 6 4 2 0 18 16 14 12 10 8 6 4 2 0 4 2 0 2 0 0 22 20 18 16 14 12 10 8 6 4 2 0 2 0 0 8 6 4 2 0 10 8 6 4 2 0 0 8 6 4 2 0 6 4 2 0 4 2 0 4 2 0 4 2 0 16 14 12 10 8 6 4 2 0 4 2 0 2 0 0 10 8 6 4 2 0 8 6 4 2 0 10 8 6 4 2 0 6 4 2 0 14 12 10 8 6 4 2 0 12 10 8 6 4 2 0 4 2 0 2 0 0 2 0 0 8 6 4 2 0 10 8 6 4 2 0 4 2 0 4 2 0 16 14 12 10 8 6 4 2 0 0 14 12 10 8 6 4 2 0 0 20 18 16 14 12 10 8 6 4 2 0 4 2 0 6 4 2 0 4 2 0 2 0 0 2 0 6 4 2 0 4 2 0 8 6 4 2 0 0 8 6 4 2 0 12 10 8 6 4 2 0 8 6 4 2 0 4 2 0 10 8 6 4 2 0 0 2 0 0 8 6 4 2 0 10 8 6 4 2 0 0 14 12 10 8 6 4 2 0 0 4 2 0 2 0 0 8 6 4 2 0 6 4 2 0 16 14 12 10 8 6 4 2 0 22 20 18 16 14 12 10 8 6 4 2 0 2 0 4 2 0 6 4 2 0 14 12 10 8 6 4 2 0 0 2 0 6 4 2 0 14 12 10 8 6 4 2 0 0 2 0 6 4 2 0 4 2 0 4 2 0 2 0 10 8 6 4 2 0 0 20 18 16 14 12 10 8 6 4 2 0 4 2 0 0 4 2 0 2 0 4 2 0 12 10 8 6 4 2 0 4 2 0 2 0 0 4 2 0 2 0 4 2 0 10 8 6 4 2 0 4 2 0 4 2 0 12 10 8 6 4 2 0 2 0 4 2 0 10 8 6 4 2 0 6 4 2 0 4 2 0 2 0 24 22 20 18 16 14 12 10 8 6 4 2 0 16 14 12 10 8 6 4 2 0 8 6 4 2 0 6 4 2 0 2 0 4 2 0 0 4 2 0 20 18 16 14 12 10 8 6 4 2 0 10 8 6 4 2 0 0 14 12 10 8 6 4 2 0 6 4 2 0 2 0 10 8 6 4 2 0 12 10 8 6 4 2 0 8 6 4 2 0 0 2 0 6 4 2 0 4 2 0 4 2 0 2 0 0 2 0 4 2 0 6 4 2 0 2 0 0 4 2 0 8 6 4 2 0 0 8 6 4 2 0 6 4 2 0 2 0 12 10 8 6 4 2 0 8 6 4 2 0 10 8 6 4 2 0 0 4 2 0 2 0 0 14 12 10 8 6 4 2 0 12 10 8 6 4 2 0 2 0 4 2 0 6 4 2 0 4 2 0 2 0 16 14 12 10 8 6 4 2 0 6 4 2 0 8 6 4 2 0 4 2 0 4 2 0 6 4 2 0 8 6 4 2 0 10 8 6 4 2 0 12 10 8 6 4 2 0 2 0 4 2 0 4 2 0 0 26 24 22 20 18 16 14 12 10 8 6 4 2 0 0 8 6 4 2 0 6 4 2 0 2 0 12 10 8 6 4 2 0 2 0 6 4 2 0 10 8 6 4 2 0 4 2 0 10 8 6 4 2 0 2 0 4 2 0 18 16 14 12 10 8 6 4 2 0 8 6 4 2 0 0 14 12 10 8 6 4 2 0 24 22 20 18 16 14 12 10 8 6 4 2 0 2 0 0 10 8 6 4 2 0 4 2 0 2 0 10 8 6 4 2 0 4 2 0 6 4 2 0 2 0 6 4 2 0 20 18 16 14 12 10 8 6 4 2 0 0 2 0 0 10 8 6 4 2 0 26 24 22 20 18 16 14 12 10 8 6 4 2 0 0 4 2 0 4 2 0 4 2 0 2 0 4 2 0 0 10 8 6 4 2 0 2 0 10 8 6 4 2 0 0 8 6 4 2 0 0 14 12 10 8 6 4 2 0 0 14 12 10 8 6 4 2 0 4 2 0 18 16 14 12 10 8 6 4 2 0 14 12 10 8 6 4 2 0 6 4 2 0 2 0 0 2 0 0 20 18 16 14 12 10 8 6 4 2 0 6 4 2 0 10 8 6 4 2 0 4 2 0 8 6 4 2 0 0 2 0 4 2 0 0 4 2 0 8 6 4 2 0 0 10 8 6 4 2 0 8 6 4 2 0 0 8 6 4 2 0 12 10 8 6 4 2 0 4 2 0 2 0 4 2 0 6 4 2 0 4 2 0 4 2 0 14 12 10 8 6 4 2 0 10 8 6 4 2 0 0 2 0 12 10 8 6 4 2 0 4 2 0 2 0 6 4 2 0 8 6 4 2 0 6 4 2 0 4 2 0 4 2 0 20 18 16 14 12 10 8 6 4 2 0 4 2 0 0 8 6 4 2 0 12 10 8 6 4 2 0 2 0 4 2 0 16 14 12 10 8 6 4 2 0 0 8 6 4 2 0 12 10 8 6 4 2 0 2 0 0 8 6 4 2 0 12 10 8 6 4 2 0 2 0 6 4 2 0 16 14 12 10 8 6 4 2 0 2 0 4 2 0 0 2 0 4 2 0 0 10 8 6 4 2 0 2 0 18 16 14 12 10 8 6 4 2 0 20 18 16 14 12 10 8 6 4 2 0 10 8 6 4 2 0 0 2 0 4 2 0 4 2 0 0 4 2 0 20 18 16 14 12 10 8 6 4 2 0 0 4 2 0 14 12 10 8 6 4 2 0 4 2 0 10 8 6 4 2 0 0 4 2 ]!
 Set comment: 'Set is a generic collection class which represents an unordered, extensible/contractible, collection, accessible only by value, not by external keys. Element comparison is by equality (i.e. using #hash and #=).'!
 !Set categoriesForClass!Collections-Unordered! !
 !Set methodsFor!
@@ -39,21 +42,20 @@ _deepCopyElementsInto: aSet trail: anIdentityDictionary
 	comperand size == self size ifFalse: [^false].
 	^self allSatisfy: [:each | comperand includes: each]!
 
-add: newElement
-	"Include the <Object> newElement as one of the elements of the receiver. 
-	If newElement is nil, then it is not added. Answer newElement.
-	Note: If newElement is already in the receiver (i.e. has an equal element 
-	already in the receiver), then this operation has no effect. Note further
-	that if an equal element already exists then it is not overwritten, but the
-	answer is still newElement. I tried to persuade the committee that the original
-	element should be answered, but they didn't see the problem."
+add: anObject
+	"Include the <Object> argument as one of the elements of the receiver. If the argument is
+	nil, then it is not added. Answer the argument."
+
+	"Note: If the argument is already in the receiver (i.e. has an equal element already in the
+	receiver), then this operation has no effect. Note further that if an equal element already
+	exists then it is not overwritten, but the answer is still the argument. See also
+	#addNewElement:"
 
 	| index |
-	newElement isNil ifTrue: [^newElement].		"Sets cannot store empty objects"
-	index := self findElementOrNil: newElement.
-	(self basicAt: index) isNil
-		ifTrue: [self privateAt: index put: newElement].
-	^newElement!
+	anObject isNil ifTrue: [^anObject].	"Sets cannot store empty objects"
+	(self basicAt: (index := self findElementOrNil: anObject)) isNil
+		ifTrue: [self privateAt: index put: anObject].
+	^anObject!
 
 addNewElement: anObject
 	"Include the <Object> newElement as one of the elements of the receiver. 
@@ -62,8 +64,7 @@ addNewElement: anObject
 
 	| index |
 	anObject isNil ifTrue: [^false].
-	index := self findElementOrNil: anObject.
-	^(self basicAt: index)
+	^(self basicAt: (index := self findElementOrNil: anObject))
 		ifNil: 
 			[self privateAt: index put: anObject.
 			true]
@@ -221,10 +222,17 @@ fixCollisionsFrom: index
 			hashIndex := self findElementOrNil: element.
 			(self basicAt: hashIndex) isNil ifTrue: [self moveFrom: slotIndex to: hashIndex]]!
 
+fullCheck
+	"Private - Check the load factor in the receiver, and grow if exceeded."
+
+	"Slop calculation should be kept in sync with Set class>>sizeFor:"
+
+	tally * 3 > (self basicSize * 2) ifTrue: [self grow]!
+
 grow
 	"Private - Expand the receiver to a capacity suitable for holding more elements"
 
-	self resize: self size * 2!
+	self resize: (self size - 1) * 2!
 
 hash: anObject max: anInteger
 	^anObject hash \\ anInteger + 1!
@@ -285,11 +293,9 @@ privateAt: index put: newObject
 	'optimal' load factor (and thereby ensures there is always a least one empty slot in the Set, an 
 	invariant required by the search algorithm)."
 
-	| capacity |
 	self basicAt: index put: newObject.
 	tally := tally + 1.
-	capacity := self basicSize.
-	capacity - tally <= (capacity bitShift: -2) ifTrue: [self grow].
+	self fullCheck.
 	^newObject!
 
 rehash
@@ -388,7 +394,8 @@ uncheckedAdd: newObject
 !Set categoriesFor: #find:ifAbsent:!public!searching! !
 !Set categoriesFor: #findElementOrNil:!private!searching! !
 !Set categoriesFor: #fixCollisionsFrom:!private!removing! !
-!Set categoriesFor: #grow!adding!private! !
+!Set categoriesFor: #fullCheck!helpers!private! !
+!Set categoriesFor: #grow!helpers!private! !
 !Set categoriesFor: #hash:max:!private!searching! !
 !Set categoriesFor: #identityIncludes:!public!searching! !
 !Set categoriesFor: #includes:!public!searching! !
@@ -411,31 +418,35 @@ Set methodProtocol: #Set attributes: #(#ansi #readOnly) selectors: #(#add: #addA
 
 !Set class methodsFor!
 
+defaultCapacity
+	^2!
+
 initialize
 	"Private - Initialize the receiver's class variables."
 
-	self initializeSizeTable!
-
-initializeSizeTable
-	"Private - Construct a difference table which can be used to calculate the nearest 
-	larger prime for each odd integer up to a certain limit.  The greater the limit the more
-	table space is used, although as this is a byte array this isn't likely to be a problem.
-	Ultimately the use of a byte array limits the table size since at some point the offset
-	to the next prime will be greater than 255.
-
-		self initializeSizeTable
-	"
-
-	| primes last count max |
-	max := (2**12)+1.	"Max size for which entry will be found in table"
-	primes := Integer primesUpTo: max+255.
+	| primes last count max smallPrimeOffsets largePrimeSizes |
+	"Construct a difference table which can be used to calculate the nearest larger prime for
+	each odd integer up to a certain limit. The greater the limit the more table space is used,
+	although as this is a byte array this isn't likely to be a problem. Ultimately the use of a
+	byte array limits the table size since at some point the offset to the next prime will be
+	greater than 255."
+	max := 2 ** 12 + 1.
+	primes := Integer primesUpTo: max + 255.
 	count := max bitShift: -1.
-	SmallPrimeOffsets := ByteArray new: count.
+	smallPrimeOffsets := ByteArray new: count.
 	last := 1.
-	1 to: count do: [:i | | n p |
-		n := (i bitShift: 1) bitOr: 1.
-		[(p := primes at: last) >= n] whileFalse: [last := last + 1].
-		SmallPrimeOffsets at: i put: p - n]!
+	1 to: count
+		do: 
+			[:i |
+			| n p |
+			n := (i bitShift: 1) bitOr: 1.
+			[(p := primes at: last) >= n] whileFalse: [last := last + 1].
+			smallPrimeOffsets at: i put: p - n].	"Good prime sizes for larger tables"
+	largePrimeSizes := #(1151 1549 2069 2237 2423 2617 2797 2999 3167 3359 3539 3727 3911 4441 4787 5119 5471 5801 6143 6521 6827 7177 7517 7853 8783 9601 10243 10867 11549 12239 12919 13679 14293 15013 15731 17569 19051 20443 21767 23159 24611 25847 27397 28571 30047 31397 35771 38201 40841 43973 46633 48989 51631 54371 57349 60139 62969 70589 76091 80347 85843 90697 95791 101051 106261 111143 115777 120691 126311 140863 150523 160969 170557 181243 190717 201653 211891 221251 232591 242873 251443 282089 300869 321949 341227 362353 383681 401411 422927 443231 464951 482033 504011 562621 605779 647659 681607 723623 763307 808261 844709 886163 926623 967229 1014617)
+				select: [:each | each > (primes at: last)].
+	self addClassConstant: 'SmallPrimeOffsets' value: smallPrimeOffsets.
+	self addClassConstant: 'MaxOffsetIndex' value: count.
+	self addClassConstant: 'PrimeSizes' value: largePrimeSizes!
 
 new
 	"Answer a new instance of the receiver with the default initial capacity.
@@ -444,7 +455,7 @@ new
 	much more fragile (e.g. they will often need to override #new as well as
 	#new:), so avoid the temptation."
 
-	^self new: 2!
+	^self new: self defaultCapacity!
 
 new: count
 	"Answer a new instance of the receiver with an initial capacity of at least 
@@ -457,26 +468,34 @@ sizeFor: anInteger
 	This formula should be kept in step with that in the instance method #privateAt:put:.
 	Try to answer only prime sizes as these give a better hash distribution."
 
-	^anInteger < 2 
+	^anInteger <= 3
 		ifTrue: 
-			["Minimum capacity of Dolphin hashed collection is 2"
-
-			2]
+			["Minimum capacity of Dolphin hashed collection is 5"
+			5]
 		ifFalse: 
-			[| n i |
-			n := anInteger * 100 // 75 bitOr: 1.
+			["Use a load factor of 0.6666~ as this can be calculated without division and is less than (1 - log(2))"
+			| n i |
+			n := anInteger + (anInteger + 1 bitShift: -1) bitOr: 1.
 			i := n bitShift: -1.
-			^i > SmallPrimeOffsets basicSize 
-				ifTrue: 
-					["Larger sizes just left odd"
-
-					n]
+			i <= MaxOffsetIndex
+				ifTrue: [(SmallPrimeOffsets basicAt: i) + n]
 				ifFalse: 
-					["Calculate nearest prime larger than requested size plus 25% slop"
-
-					(SmallPrimeOffsets basicAt: i) + n]]! !
+					["Binary search the blessed prime sizes"
+					| low high |
+					high := PrimeSizes size.
+					n > (PrimeSizes at: high)
+						ifTrue: 
+							["Out of range sizes are just left odd"
+							^n bitOr: 1].
+					low := 1.
+					
+					[i := (high - low) // 2 + low.
+					(PrimeSizes at: i) < n ifTrue: [low := i] ifFalse: [high := i].
+					high - low <= 1]
+							whileFalse.
+					^PrimeSizes at: high]]! !
+!Set class categoriesFor: #defaultCapacity!constants!private! !
 !Set class categoriesFor: #initialize!development!initializing!private! !
-!Set class categoriesFor: #initializeSizeTable!initializing!private! !
 !Set class categoriesFor: #new!instance creation!public! !
 !Set class categoriesFor: #new:!instance creation!public! !
 !Set class categoriesFor: #sizeFor:!instance creation!private! !

@@ -1032,10 +1032,10 @@ browseViewHierarchy: aView
 buildAllSelectors
 	| set classes |
 	classes := Smalltalk allClasses.
-	"On average there seem to be between 9 and 10 unique selectors per class"
-	set := IdentitySet new: classes size * 10.
+	"On average there seem to be between 10 and 11 unique selectors per class"
+	set := IdentitySet new: classes size * 11.
 	classes do: 
-			[:each | 
+			[:each |
 			each methodDictionary keysDo: [:selector | set add: selector].
 			each class methodDictionary keysDo: [:selector | set add: selector]].
 	^set!

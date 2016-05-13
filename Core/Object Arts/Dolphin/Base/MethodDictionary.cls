@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 IdentityDictionary variableSubclass: #MethodDictionary
 	instanceVariableNames: ''
@@ -13,6 +13,15 @@ The primary difference from an ordinary identity dictionary in the current imple
 You should not rely on the implementation details of this class, and nor should you change them or the instance shape.'!
 !MethodDictionary categoriesForClass!Collections-Unordered!Kernel-Support! !
 !MethodDictionary methodsFor!
+
+fullCheck
+	"Private - Check the load factor in the receiver, and grow if exceeded."
+
+	"Slop calculation should be kept in sync with MethodDictionary class>>sizeFor:"
+
+	| capacity |
+	capacity := self basicSize.
+	(capacity - tally bitShift: 2) < capacity ifTrue: [self grow]!
 
 hash: anObject max: anInteger
 	"Implementation Note: This must match the selector hashing implementation used by the VM."
@@ -40,19 +49,23 @@ removeKey: key ifAbsent: exceptionHandler
 			newMe removeIndex: index.
 			self become: newMe.
 			value]! !
+!MethodDictionary categoriesFor: #fullCheck!helpers!private! !
 !MethodDictionary categoriesFor: #hash:max:!private!searching! !
 !MethodDictionary categoriesFor: #removeKey:ifAbsent:!public!removing! !
 
 !MethodDictionary class methodsFor!
 
-sizeFor: capacity
-	"Answer the <integer> size of collection that should be created to hold 
-	the number of elements specified by the <integer> argument, capacity.
-	Implementation Note: Round up to the nearest 	power of 2, as required 
+defaultCapacity
+	^1!
+
+sizeFor: anInteger
+	"Private - Answer the <integer> size of collection that should be created to hold 
+	the number of elements specified by the <integer> argument, capacity."
+
+	"Implementation Note: Round up to the nearest power of 2, as required 
 	by the VM, and avoid any dependency on the superclass sizing scheme."
 
-	^capacity < 2
-		ifTrue: [2]
-		ifFalse: [1 bitShift: (((capacity - 1 * 100 // 75)+1) highBit)]! !
-!MethodDictionary class categoriesFor: #sizeFor:!instance creation!public! !
+	^anInteger < 2 ifTrue: [2] ifFalse: [1 bitShift: ((anInteger - 1) * 100 // 75 + 1) highBit]! !
+!MethodDictionary class categoriesFor: #defaultCapacity!constants!private! !
+!MethodDictionary class categoriesFor: #sizeFor:!instance creation!private! !
 

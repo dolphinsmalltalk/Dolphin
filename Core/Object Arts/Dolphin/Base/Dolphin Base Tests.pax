@@ -60,6 +60,7 @@ package classNames
 	add: #LookupTableTest;
 	add: #MemoryManagerTest;
 	add: #MergesortAlgorithmTest;
+	add: #MethodDictionaryTest;
 	add: #MustBeBooleanTestClasses;
 	add: #NeverSearchPolicyTest;
 	add: #NumberTest;
@@ -356,7 +357,7 @@ DolphinTest subclass: #SessionManagerTest
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 DolphinTest subclass: #SetTest
-	instanceVariableNames: ''
+	instanceVariableNames: 'primes'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -411,6 +412,11 @@ DolphinTest subclass: #VARIANTTest
 	poolDictionaries: 'AXAutomationConstants'
 	classInstanceVariableNames: ''!
 DictionaryTest subclass: #LookupTableTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DictionaryTest subclass: #MethodDictionaryTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
