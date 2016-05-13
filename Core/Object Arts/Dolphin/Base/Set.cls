@@ -61,7 +61,7 @@ addNewElement: anObject
 	not already a member of the set, else false."
 
 	| index |
-	anObject isNil ifTrue: [^anObject].
+	anObject isNil ifTrue: [^false].
 	index := self findElementOrNil: anObject.
 	^(self basicAt: index)
 		ifNil: 
