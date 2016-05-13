@@ -552,7 +552,7 @@ Collection subclass: #SequenceableCollection
 	classInstanceVariableNames: ''!
 Collection variableSubclass: #Set
 	instanceVariableNames: 'tally'
-	classVariableNames: 'SmallPrimeOffsets'
+	classVariableNames: 'MaxOffsetIndex PrimeSizes SmallPrimeOffsets'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 SequenceableCollection subclass: #ArrayedCollection

@@ -153,17 +153,17 @@ at: key ifPresent: operation
 	value := self at: key ifAbsent: [AbsentCookie].
 	^value == AbsentCookie ifFalse: [operation value: value]!
 
-at: key put: newElement 
-	"Store the <Object> argument newElement at the <Object>
-	key, in the receiver. Answer newElement."
+at: keyObject put: valueObject
+	"Store the <Object> argument valueObject at the <Object> keyObject, in the receiver. Answer
+	valueObject."
 
 	| index |
-	key isNil ifTrue: [^self error: 'key cannot be nil'].
-	index := self findKeyOrNil: key.
-	(self basicAt: index) 
-		ifNil: [self privateAt: index put: (self newAssociation: key value: newElement)]
-		ifNotNil: [:element | element value: newElement].
-	^newElement!
+	keyObject isNil ifTrue: [^self error: 'key cannot be nil'].
+	index := self findKeyOrNil: keyObject.
+	(self basicAt: index)
+		ifNil: [self privateAt: index put: (self newAssociation: keyObject value: valueObject)]
+		ifNotNil: [:assoc | assoc value: valueObject].
+	^valueObject!
 
 atAll: keys put: newElement
 	"Replace the elements of the receiver at each of the keys in the <collection> 

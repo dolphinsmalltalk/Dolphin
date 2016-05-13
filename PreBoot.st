@@ -28,3 +28,11 @@ addClassVarNamed: aString
 	classPool add: var.
 	^var! !
 
+!VMLibrary class methodsFor!
+
+hasBytecodeRepresentation: anObject
+	"Private - Answer whether the specified object has a special instruction or instructions that when
+	executed will push an identical object on the on the stack, e.g. nil, true, false,
+	SmallIntegers, Characters."
+
+	^anObject isImmediate or: [anObject isNil or: [anObject == true or: [anObject == false]]]! !
