@@ -114,7 +114,7 @@ Object subclass: #StToken
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 StParseNodeVisitor subclass: #StParseNodeAnalyzer
-	instanceVariableNames: 'methodNode scopeStack methodClass scopeDepth evaluationContext evaluationPools literals literalCount stringLiterals addToFrame tempDecls isStub inStaticExpression'
+	instanceVariableNames: 'methodNode scopeStack methodClass scopeDepth evaluationContext evaluationPools literals literalCount stringLiterals addToFrame tempDecls inStaticExpression'
 	classVariableNames: 'OptimizedMessages RestrictedSelectors SpecialSelectors'
 	poolDictionaries: 'SmalltalkParseErrorCodes'
 	classInstanceVariableNames: ''!

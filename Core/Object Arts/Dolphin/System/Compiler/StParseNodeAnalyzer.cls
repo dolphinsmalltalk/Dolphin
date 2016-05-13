@@ -1,7 +1,7 @@
 "Filed out from Dolphin Smalltalk 7"!
 
 StParseNodeVisitor subclass: #StParseNodeAnalyzer
-	instanceVariableNames: 'methodNode scopeStack methodClass scopeDepth evaluationContext evaluationPools literals literalCount stringLiterals addToFrame tempDecls isStub inStaticExpression'
+	instanceVariableNames: 'methodNode scopeStack methodClass scopeDepth evaluationContext evaluationPools literals literalCount stringLiterals addToFrame tempDecls inStaticExpression'
 	classVariableNames: 'OptimizedMessages RestrictedSelectors SpecialSelectors'
 	poolDictionaries: 'SmalltalkParseErrorCodes'
 	classInstanceVariableNames: ''!
@@ -34,12 +34,13 @@ acceptLiteralNode: aLiteralNode
 acceptMessageNode: aMessageNode
 	"Process a message send (check for wrong argument types for optimized messages, etc)"
 
+	| receiver |
 	super acceptMessageNode: aMessageNode.
 	self addMessageToFrame: aMessageNode.
-	self checkIfStubMessage: aMessageNode.
-	self checkOptimizedMessages: aMessageNode.
-	self checkSupersend: aMessageNode.
 	self checkMessageArgumentCount: aMessageNode.
+	self checkOptimizedMessages: aMessageNode.
+	receiver := aMessageNode receiver.
+	(receiver isVariable and: [receiver name = 'super']) ifTrue: [self checkSupersend: aMessageNode].
 	self checkTryBlock: aMessageNode!
 
 acceptMethodNode: aMethodNode 
@@ -58,23 +59,20 @@ acceptOptimizedNode: anOptimizedNode
 			[inStaticExpression := wasInStaticExpression.
 			addToFrame := outerAddToFrame]!
 
-acceptSequenceNode: aSequenceNode 
+acceptSequenceNode: aSequenceNode
 	| answer scope nodes |
 	answer := super acceptSequenceNode: aSequenceNode.
 	scope := self currentScope.
-	isStub 
-		ifFalse: 
-			[scope unreferencedArguments do: [:each | self signalError: CInfoUnreferencedArg forNode: each]].
 	aSequenceNode temporaries do: 
-			[:each | 
+			[:each |
 			| firstWritten firstRead |
 			nodes := scope refsToTemp: each name.
 			firstWritten := nodes first.
 			firstRead := nodes second.
-			firstWritten 
+			firstWritten
 				ifNil: 
 					["Not Written..."
-					firstRead 
+					firstRead
 						ifNil: [self signalError: CWarnUnreferencedTemp forNode: each]
 						ifNotNil: [self signalError: CWarnReadNotWritten forNode: firstRead]]
 				ifNotNil: 
@@ -85,8 +83,8 @@ acceptSequenceNode: aSequenceNode
 acceptVariableNode: aVariableNode 
 	self varRef: aVariableNode isAssignment: false!
 
-addLiteral: aLiteralNode
-	(literals addNewElement: aLiteralNode value) ifTrue: [self checkLiteralFrameSize: aLiteralNode]!
+addLiteral: aLiteralNode value: anObject
+	(literals addNewElement: anObject) ifTrue: [self checkLiteralFrameSize: aLiteralNode]!
 
 addMessageToFrame: aMessageNode
 	| selector |
@@ -94,7 +92,7 @@ addMessageToFrame: aMessageNode
 	"Special selectors such as #== are not added to the literal frame. These have special
 	bytecodes which can be used to find senders."
 	(SpecialSelectors includes: selector) ifTrue: [^self].
-	self addLiteral: aMessageNode!
+	self addLiteral: aMessageNode value: selector!
 
 addToFrame: aLiteralNode
 	| value |
@@ -103,7 +101,7 @@ addToFrame: aLiteralNode
 	value isString
 		ifTrue: [(value isSymbol not and: [(stringLiterals addNewElement: value) not]) ifTrue: [^self]]
 		ifFalse: [(value == true or: [value == false or: [value isNil]]) ifTrue: [^self]].
-	self addLiteral: aLiteralNode!
+	self addLiteral: aLiteralNode value: value!
 
 addToFrameStatic: aLiteralNode
 	| value |
@@ -112,7 +110,7 @@ addToFrameStatic: aLiteralNode
 	that are referenced in the static expression so that these can be searched on later."
 	(value isSymbol or: [(value isKindOf: Array) or: [value isKindOf: VariableBinding]])
 		ifFalse: [^self].
-	self addLiteral: aLiteralNode!
+	self addLiteral: aLiteralNode value: value!
 
 bindingFor: aStVariableNode
 	| identifier |
@@ -130,12 +128,6 @@ bindingFor: aStVariableNode
 				isImmutable: evaluationContext isImmutable;
 				yourself].
 	^methodClass fullBindingFor: identifier!
-
-checkIfStubMessage: aStMessageNode
-	(aStMessageNode isUnary and: 
-			[#(#subclassResponsibility #shouldNotImplement #notYetImplemented)
-				identityIncludes: aStMessageNode selector])
-		ifTrue: [isStub := true]!
 
 checkIsLiteralBlockHandler: aStProgramNode forMessage: aStMessageNode 
 	aStProgramNode isBlock 
@@ -162,13 +154,9 @@ checkIsLiteralBlockHandler: aStProgramNode forMessage: aStMessageNode
 		forNode: aStProgramNode
 		extra: aStMessageNode selector!
 
-checkLiteralFrameSize: aLiteralNode
+checkLiteralFrameSize: anStProgramNode
 	literals size > VMConstants.MaxLiterals
-		ifTrue: 
-			[self
-				signalError: CErrTooManyLiterals
-				forNode: aLiteralNode
-				extra: aLiteralNode value]!
+		ifTrue: [self signalError: CErrTooManyLiterals forNode: anStProgramNode]!
 
 checkMessage: aStMessageNode hasMonadicBlockArg: aStProgramNode 
 	aStProgramNode isBlock 
@@ -188,42 +176,38 @@ checkMessage: aStMessageNode hasMonadicBlockArg: aStProgramNode
 				extra: aStMessageNode selector].
 	^false!
 
-checkMessage: aStMessageNode hasNiladicBlockArg: aStProgramNode isError: aBoolean 
-	aStProgramNode isBlock 
+checkMessage: aStMessageNode hasNiladicBlockArg: aStProgramNode code: anInteger
+	aStProgramNode isBlock
 		ifTrue: 
-			[aStProgramNode argumentCount = 0 
+			[aStProgramNode argumentCount = 0
 				ifTrue: [^true]
 				ifFalse: 
-					[self 
+					[self
 						signalError: CErrIncorrectBlockArgCount
 						forNode: aStProgramNode
 						range: (aStProgramNode start to: aStProgramNode barOrStop)
 						extras: (Array with: aStMessageNode selector)]]
 		ifFalse: 
-			[| code |
-			code := aBoolean ifTrue: [CErrExpectLiteralBlock] ifFalse: [CWarnExpectNiladicBlockArg].
-			self 
-				signalError: code
+			[self
+				signalError: anInteger
 				forNode: aStProgramNode
 				extra: aStMessageNode selector].
 	^false!
 
-checkMessage: aStMessageNode hasNiladicOrMonadicBlockArg: aStProgramNode isError: aBoolean 
-	aStProgramNode isBlock 
+checkMessage: aStMessageNode hasNiladicOrMonadicBlockArg: aStProgramNode code: anInteger
+	aStProgramNode isBlock
 		ifTrue: 
-			[aStProgramNode argumentCount <= 1 
+			[aStProgramNode argumentCount <= 1
 				ifTrue: [^true]
 				ifFalse: 
-					[self 
+					[self
 						signalError: CErrTooManyIfNotNilBlockArgs
 						forNode: aStProgramNode
 						range: (aStProgramNode start to: aStProgramNode barOrStop)
 						extras: #()]]
 		ifFalse: 
-			[| code |
-			code := aBoolean ifTrue: [CErrExpectLiteralBlock] ifFalse: [CWarnExpectMonadicOrNiladicBlockArg].
-			self 
-				signalError: code
+			[self
+				signalError: anInteger
 				forNode: aStProgramNode
 				extra: aStMessageNode selector].
 	^false!
@@ -256,51 +240,51 @@ checkOptimizedKeywordMessages: aMessageNode
 					[^self
 						checkMessage: aMessageNode
 						hasNiladicBlockArg: arguments first
-						isError: false].
+						code: CWarnExpectNiladicBlockArg].
 			(selector == #whileTrue: or: [selector == #whileFalse:])
 				ifTrue: 
 					[^(self checkMessageHasNiladicBlockReceiver: aMessageNode) and: 
 							[self
 								checkMessage: aMessageNode
 								hasNiladicBlockArg: arguments first
-								isError: false]].
+								code: CWarnExpectNiladicBlockArg]].
 			selector == #ifNotNil:
 				ifTrue: 
 					[^self
 						checkMessage: aMessageNode
 						hasNiladicOrMonadicBlockArg: arguments first
-						isError: false].
+						code: CWarnExpectMonadicOrNiladicBlockArg].
 			^false].
 	(#ifTrue:ifFalse: == selector or: [selector == #ifFalse:ifTrue:])
 		ifTrue: 
 			[^(self
 				checkMessage: aMessageNode
 				hasNiladicBlockArg: arguments first
-				isError: false) and: 
+				code: CWarnExpectNiladicBlockArg) and: 
 						[self
 							checkMessage: aMessageNode
 							hasNiladicBlockArg: arguments second
-							isError: false]].
+							code: CWarnExpectNiladicBlockArg]].
 	selector == #ifNil:ifNotNil:
 		ifTrue: 
 			[^(self
 				checkMessage: aMessageNode
 				hasNiladicBlockArg: arguments first
-				isError: false) and: 
+				code: CWarnExpectNiladicBlockArg) and: 
 						[self
 							checkMessage: aMessageNode
 							hasNiladicOrMonadicBlockArg: arguments second
-							isError: true]].
+							code: CErrExpectLiteralBlock]].
 	selector == #ifNotNil:ifNil:
 		ifTrue: 
 			[^(self
 				checkMessage: aMessageNode
 				hasNiladicOrMonadicBlockArg: arguments first
-				isError: false) and: 
+				code: CWarnExpectMonadicOrNiladicBlockArg) and: 
 						[self
 							checkMessage: aMessageNode
 							hasNiladicBlockArg: arguments second
-							isError: true]].
+							code: CErrExpectLiteralBlock]].
 	selector == #to:do: ifTrue: [^self checkMessage: aMessageNode hasMonadicBlockArg: arguments second].
 	selector = #to:by:do:
 		ifTrue: [^self checkMessage: aMessageNode hasMonadicBlockArg: arguments third].
@@ -318,7 +302,7 @@ checkOptimizedUnaryMessages: aMessageNode
 	^(selector == #whileTrue or: [selector == #whileFalse or: [selector == #repeat]]) 
 		and: [self checkMessageHasNiladicBlockReceiver: aMessageNode]!
 
-checkRedefines: aVariableNode isArg: aBoolean
+checkRedefines: aVariableNode
 	| identifier |
 	identifier := aVariableNode name.
 	(methodClass fullBindingFor: identifier)
@@ -361,17 +345,9 @@ checkRestrictedSelectors: aMethodNode
 		range: (first start to: last stop)
 		extras: (Array with: aMethodNode selector)!
 
-checkSupersend: aMessageNode 
-	| receiver |
-	receiver := aMessageNode receiver.
-	(receiver isVariable and: [receiver name = 'super']) ifFalse: [^self].
-	methodClass superclass isNil ifTrue: [^self signalError: CErrUndeclared forNode: receiver].
-	aMessageNode selector == methodNode selector 
-		ifFalse: 
-			[self 
-				signalError: CInfoSupersendsOther
-				forNode: aMessageNode
-				extra: aMessageNode selector]!
+checkSupersend: aMessageNode
+	methodClass superclass isNil
+		ifTrue: [^self signalError: CErrUndeclared forNode: aMessageNode receiver]!
 
 checkTryBlock: aMessageNode 
 	"Private - Warning if an exception guarded statement (i.e. a block sent #on:do:+) does not
@@ -438,7 +414,7 @@ initialize
 	literals := IdentityDictionary new.
 	stringLiterals := Set new.
 	addToFrame := [:literal | self addToFrame: literal].
-	inStaticExpression := isStub := false.
+	inStaticExpression := false.
 	literalCount := 0!
 
 isInstVar: aString
@@ -484,7 +460,8 @@ pushInstVar: aVariableNode
 pushSelf
 !
 
-pushStatic: aVariableNode!
+pushStatic: aVariableNode variable: aVariableBinding
+	!
 
 pushSuper
 !
@@ -540,7 +517,8 @@ signalError: codeInteger forNode: anStProgramNode range: anInterval extras: anAr
 storeInstVar: aVariableNode
 	!
 
-storeStatic: aVariableNode!
+storeStatic: aVariableNode variable: aVariableBinding
+	!
 
 storeTemp: aVariableNode
 !
@@ -600,8 +578,7 @@ varRef: aVariableNode isAssignment: aBoolean
 									[self
 										signalError: CErrAssignmentToArgument
 										forNode: aVariableNode parent
-										extra: identifier.
-									nil]
+										extra: identifier]
 								ifFalse: [self pushTemp: aVariableNode]]]
 				ifNotNil: 
 					[:nodes |
@@ -619,59 +596,50 @@ varRef: aVariableNode isAssignment: aBoolean
 	(self isInstVar: identifier)
 		ifTrue: 
 			[^aBoolean ifTrue: [self storeInstVar: aVariableNode] ifFalse: [self pushInstVar: aVariableNode]].
-	^(methodClass fullBindingFor: identifier)
-		ifNil: 
-			[(evaluationPools anySatisfy: [:each | each includesKey: identifier])
-				ifTrue: [^aBoolean ifTrue: [self storeStatic: aVariableNode] ifFalse: [self pushStatic: aVariableNode]]
-				ifFalse: [self signalError: CErrUndeclared forNode: aVariableNode]]
+	((methodClass fullBindingFor: identifier) ifNil: [self contextBindingFor: identifier])
+		ifNil: [self signalError: CErrUndeclared forNode: aVariableNode]
 		ifNotNil: 
 			[:var |
+			self addLiteral: aVariableNode value: var.
 			aBoolean
 				ifTrue: 
 					[var isImmutable
 						ifTrue: [self errorAssignConstant: aVariableNode]
-						ifFalse: [self storeStatic: aVariableNode]]
-				ifFalse: 
-					[(var value == true class or: [var value == false class])
-						ifTrue: 
-							[self
-								signalError: CWarnUsesBooleanClass
-								forNode: aVariableNode
-								extra: identifier asLowercase].
-					self pushStatic: aVariableNode]]!
+						ifFalse: [self storeStatic: aVariableNode variable: var]]
+				ifFalse: [self pushStatic: aVariableNode variable: var]]!
 
-visitArguments: aNodeCollection 
+visitArguments: aNodeCollection
 	| count max |
 	aNodeCollection isEmpty ifTrue: [^self].
 	count := self countOuterTemps.
 	max := VMConstants.MaxTemps.
 	aNodeCollection do: 
-			[:each | 
-			self checkRedefines: each isArg: true.
+			[:each |
+			self checkRedefines: each.
 			count := count + 1.
-			count > max 
+			count > max
 				ifTrue: 
-					[self 
+					[self
 						signalError: CErrTooManyTemps
 						forNode: each
 						extra: each name]]!
 
-visitTempDecls: aNodeCollection 
+visitTempDecls: aNodeCollection
 	| max count scope |
 	aNodeCollection isEmpty ifTrue: [^self].
 	scope := self currentScope.
 	max := VMConstants.MaxTemps.
 	count := self countOuterTemps + scope argumentCount.
 	aNodeCollection do: 
-			[:each | 
+			[:each |
 			| identifier |
-			self checkRedefines: each isArg: false.
+			self checkRedefines: each.
 			identifier := each name.
 			scope addTemp: identifier.
 			count := count + 1.
-			count > max 
+			count > max
 				ifTrue: 
-					[self 
+					[self
 						signalError: CErrTooManyTemps
 						forNode: each
 						extra: identifier]]! !
@@ -684,23 +652,22 @@ visitTempDecls: aNodeCollection
 !StParseNodeAnalyzer categoriesFor: #acceptOptimizedNode:!public!visitor/double dispatching! !
 !StParseNodeAnalyzer categoriesFor: #acceptSequenceNode:!public!visitor/double dispatching! !
 !StParseNodeAnalyzer categoriesFor: #acceptVariableNode:!public!visitor/double dispatching! !
-!StParseNodeAnalyzer categoriesFor: #addLiteral:!helpers!private! !
+!StParseNodeAnalyzer categoriesFor: #addLiteral:value:!helpers!private! !
 !StParseNodeAnalyzer categoriesFor: #addMessageToFrame:!helpers!private! !
 !StParseNodeAnalyzer categoriesFor: #addToFrame:!helpers!private! !
 !StParseNodeAnalyzer categoriesFor: #addToFrameStatic:!helpers!private! !
 !StParseNodeAnalyzer categoriesFor: #bindingFor:!helpers!private! !
-!StParseNodeAnalyzer categoriesFor: #checkIfStubMessage:!helpers!private! !
 !StParseNodeAnalyzer categoriesFor: #checkIsLiteralBlockHandler:forMessage:!helpers!private! !
 !StParseNodeAnalyzer categoriesFor: #checkLiteralFrameSize:!helpers!private! !
 !StParseNodeAnalyzer categoriesFor: #checkMessage:hasMonadicBlockArg:!helpers!private! !
-!StParseNodeAnalyzer categoriesFor: #checkMessage:hasNiladicBlockArg:isError:!helpers!private! !
-!StParseNodeAnalyzer categoriesFor: #checkMessage:hasNiladicOrMonadicBlockArg:isError:!helpers!private! !
+!StParseNodeAnalyzer categoriesFor: #checkMessage:hasNiladicBlockArg:code:!helpers!private! !
+!StParseNodeAnalyzer categoriesFor: #checkMessage:hasNiladicOrMonadicBlockArg:code:!helpers!private! !
 !StParseNodeAnalyzer categoriesFor: #checkMessageArgumentCount:!helpers!private! !
 !StParseNodeAnalyzer categoriesFor: #checkMessageHasNiladicBlockReceiver:!helpers!private! !
 !StParseNodeAnalyzer categoriesFor: #checkOptimizedKeywordMessages:!helpers!private! !
 !StParseNodeAnalyzer categoriesFor: #checkOptimizedMessages:!helpers!private! !
 !StParseNodeAnalyzer categoriesFor: #checkOptimizedUnaryMessages:!helpers!private! !
-!StParseNodeAnalyzer categoriesFor: #checkRedefines:isArg:!helpers!private! !
+!StParseNodeAnalyzer categoriesFor: #checkRedefines:!helpers!private! !
 !StParseNodeAnalyzer categoriesFor: #checkRestrictedSelectors:!helpers!private! !
 !StParseNodeAnalyzer categoriesFor: #checkSupersend:!helpers!private! !
 !StParseNodeAnalyzer categoriesFor: #checkTryBlock:!helpers!private! !
@@ -722,7 +689,7 @@ visitTempDecls: aNodeCollection
 !StParseNodeAnalyzer categoriesFor: #pushImmediate:!instructions-stack ops!private! !
 !StParseNodeAnalyzer categoriesFor: #pushInstVar:!instructions-stack ops!private! !
 !StParseNodeAnalyzer categoriesFor: #pushSelf!instructions-stack ops!private! !
-!StParseNodeAnalyzer categoriesFor: #pushStatic:!instructions-stack ops!private! !
+!StParseNodeAnalyzer categoriesFor: #pushStatic:variable:!instructions-stack ops!private! !
 !StParseNodeAnalyzer categoriesFor: #pushSuper!instructions-stack ops!private! !
 !StParseNodeAnalyzer categoriesFor: #pushTemp:!instructions-stack ops!private! !
 !StParseNodeAnalyzer categoriesFor: #removeScope!helpers!private! !
@@ -733,7 +700,7 @@ visitTempDecls: aNodeCollection
 !StParseNodeAnalyzer categoriesFor: #signalError:forNode:extras:!helpers!private! !
 !StParseNodeAnalyzer categoriesFor: #signalError:forNode:range:extras:!helpers!private! !
 !StParseNodeAnalyzer categoriesFor: #storeInstVar:!instructions-stack ops!private! !
-!StParseNodeAnalyzer categoriesFor: #storeStatic:!instructions-stack ops!private! !
+!StParseNodeAnalyzer categoriesFor: #storeStatic:variable:!instructions-stack ops!private! !
 !StParseNodeAnalyzer categoriesFor: #storeTemp:!instructions-stack ops!private! !
 !StParseNodeAnalyzer categoriesFor: #targetOfMessage:!commands!private!refactoring! !
 !StParseNodeAnalyzer categoriesFor: #tempDecls!accessing!private! !

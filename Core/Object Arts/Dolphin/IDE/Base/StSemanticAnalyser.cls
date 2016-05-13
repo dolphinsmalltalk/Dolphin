@@ -1,7 +1,7 @@
 "Filed out from Dolphin Smalltalk 7"!
 
 StParseNodeAnalyzer subclass: #StSemanticAnalyser
-	instanceVariableNames: ''
+	instanceVariableNames: 'isStub'
 	classVariableNames: ''
 	poolDictionaries: 'SmalltalkParseErrorCodes'
 	classInstanceVariableNames: ''!
@@ -10,19 +10,42 @@ StSemanticAnalyser comment: 'StSemanticAnalyser is a <StParseNodeVisitor> that p
 !StSemanticAnalyser categoriesForClass!System-Compiler! !
 !StSemanticAnalyser methodsFor!
 
-acceptMessageNode: aMessageNode 
+acceptMessageNode: aMessageNode
 	"Process a message send (check for unimplemented selectors)"
 
 	super acceptMessageNode: aMessageNode.
+	self checkIfStubMessage: aMessageNode.
 	self checkUnimplemented: aMessageNode.
 	self checkUnimplementedSubclassResponsibility: aMessageNode.
-	self checkHardBreakpoint: aMessageNode.
+	self checkHardBreakpoint: aMessageNode!
 
-!
+acceptSequenceNode: aSequenceNode
+	| answer |
+	answer := super acceptSequenceNode: aSequenceNode.
+	isStub
+		ifFalse: 
+			[self currentScope unreferencedArguments
+				do: [:each | self signalError: CInfoUnreferencedArg forNode: each]].
+	^answer!
 
 checkHardBreakpoint: aStMessageNode 
 	aStMessageNode selector == #halt 
 		ifTrue: [self signalError: CInfoHardBreakpoint forNode: aStMessageNode]!
+
+checkIfStubMessage: aStMessageNode
+	(aStMessageNode isUnary and: 
+			[#(#subclassResponsibility #shouldNotImplement #notYetImplemented)
+				identityIncludes: aStMessageNode selector])
+		ifTrue: [isStub := true]!
+
+checkSupersend: aMessageNode
+	super checkSupersend: aMessageNode.
+	aMessageNode selector == methodNode selector
+		ifFalse: 
+			[self
+				signalError: CInfoSupersendsOther
+				forNode: aMessageNode
+				extra: aMessageNode selector]!
 
 checkUnimplemented: aStMessageNode
 	| selector |
@@ -69,11 +92,28 @@ checkUnimplementedSubclassResponsibility: aStMessageNode
 						extras: (Array 
 								with: methodClass
 								with: selector
-								with: class)]]! !
-!StSemanticAnalyser categoriesFor: #acceptMessageNode:!public! !
+								with: class)]]!
+
+initialize
+	isStub := false.
+	^super initialize!
+
+pushStatic: aVariableNode variable: aVariableBinding
+	(aVariableBinding value == true class or: [aVariableBinding value == false class])
+		ifTrue: 
+			[self
+				signalError: CWarnUsesBooleanClass
+				forNode: aVariableNode
+				extra: aVariableBinding key asLowercase]! !
+!StSemanticAnalyser categoriesFor: #acceptMessageNode:!public!visitor/double dispatching! !
+!StSemanticAnalyser categoriesFor: #acceptSequenceNode:!public!visitor/double dispatching! !
 !StSemanticAnalyser categoriesFor: #checkHardBreakpoint:!helpers!private! !
+!StSemanticAnalyser categoriesFor: #checkIfStubMessage:!helpers!private! !
+!StSemanticAnalyser categoriesFor: #checkSupersend:!helpers!private! !
 !StSemanticAnalyser categoriesFor: #checkUnimplemented:!helpers!private! !
 !StSemanticAnalyser categoriesFor: #checkUnimplementedSubclassResponsibility:!helpers!private! !
+!StSemanticAnalyser categoriesFor: #initialize!initializing!public! !
+!StSemanticAnalyser categoriesFor: #pushStatic:variable:!helpers!instructions-stack ops!private! !
 
 !StSemanticAnalyser class methodsFor!
 
