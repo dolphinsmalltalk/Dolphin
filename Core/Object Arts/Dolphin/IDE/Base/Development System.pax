@@ -1136,7 +1136,7 @@ StParseNodeVisitor subclass: #MessageNodeCollector
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 StParseNodeAnalyzer subclass: #StSemanticAnalyser
-	instanceVariableNames: ''
+	instanceVariableNames: 'isStub'
 	classVariableNames: ''
 	poolDictionaries: 'SmalltalkParseErrorCodes'
 	classInstanceVariableNames: ''!

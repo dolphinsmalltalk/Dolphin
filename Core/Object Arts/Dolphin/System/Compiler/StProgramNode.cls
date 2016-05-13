@@ -6,6 +6,8 @@ Object subclass: #StProgramNode
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 StProgramNode guid: (GUID fromString: '{3E45084E-5DE8-40C0-B448-C53339A17B52}')!
+StProgramNode addClassConstant: 'InlinedBlockSelectors' value: #(#ifTrue: #ifTrue:ifFalse: #ifFalse: #ifFalse:ifTrue: #whileTrue: #whileTrue #whileFalse: #whileFalse #to:do: #to:by:do: #and: #or: #repeat #ifNil: #ifNotNil: #ifNil:ifNotNil: #ifNotNil:ifNil:)!
+StProgramNode addClassConstant: 'OptimizedSelectors' value: #(#ifTrue: #ifTrue:ifFalse: #ifFalse: #ifFalse:ifTrue: #whileTrue: #whileTrue #whileFalse: #whileFalse #to:do: #to:by:do: #and: #or: #repeat #ifNil: #ifNotNil: #ifNil:ifNotNil: #ifNotNil:ifNil: #yourself)!
 StProgramNode comment: 'StProgramNode is an abstract class that represents a parse tree node in a Smalltalk program.
 
 Subclasses must implement the following messages:
@@ -444,17 +446,8 @@ initialize
 
 	| inlinedBlockSelectors |
 	inlinedBlockSelectors := #(#ifTrue: #ifTrue:ifFalse: #ifFalse: #ifFalse:ifTrue: #whileTrue: #whileTrue #whileFalse: #whileFalse #to:do: #to:by:do: #and: #or: #repeat #ifNil: #ifNotNil: #ifNil:ifNotNil: #ifNotNil:ifNil:).
-	self addClassConstant: 'InlinedBlockSelectors'
-		value: ((inlinedBlockSelectors asIdentitySet)
-				shrink;
-				isImmutable: true;
-				yourself).
-	self addClassConstant: 'OptimizedSelectors'
-		value: ((inlinedBlockSelectors asIdentitySet)
-				add: #yourself;
-				shrink;
-				isImmutable: true;
-				yourself)!
+	self addClassConstant: 'InlinedBlockSelectors' value: inlinedBlockSelectors.
+	self addClassConstant: 'OptimizedSelectors' value: (inlinedBlockSelectors copyWith: #yourself)!
 
 inlinedBlockSelectors
 	"Selectors with block arguments or receiver's that are essentially control structures and inlined by the compiler."

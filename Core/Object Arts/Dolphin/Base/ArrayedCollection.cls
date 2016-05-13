@@ -73,7 +73,8 @@ nextIdentityIndexOf: anElement from: start to: stop
 	variables between startIndex and stopIndex inclusive. If there are no such occurrences, answer 0.
 	Override the inherited implementation to make use of the primitive"
 
-	^self basicIdentityIndexOf: anElement from: start to: stop	!
+	<primitive: 59>
+	^super nextIdentityIndexOf: anElement from: start to: stop!
 
 nextIndexOf: anElement from: start to: stop
 	"Answer the index of the next occurrence of anElement in the receiver between 
