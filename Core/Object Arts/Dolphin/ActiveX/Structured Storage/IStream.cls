@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ISequentialStream subclass: #IStream
 	instanceVariableNames: 'name mode'
@@ -372,7 +372,7 @@ space
 	This is part of the implementation of the ANSI standard <puttableStream> protocol, which we
 	choose to implement on IStreams. It is only really a valid operation for text streams."
 
-	self nextPut: Character space!
+	self nextPut: Character.Space!
 
 stat
 	"Answer a STATSTG structure populated with stats for the receiver.
@@ -399,7 +399,7 @@ tab
 	This is part of the implementation of the ANSI standard <puttableStream> protocol, which we
 	choose to implement on IStreams. It is only really a valid operation for text streams."
 
-	self nextPut: Character tab!
+	self nextPut: Character.Tab!
 
 unlockFrom: start to: end 
 	"Relinquish an exclusive lock on the specified range of bytes in the receiver."

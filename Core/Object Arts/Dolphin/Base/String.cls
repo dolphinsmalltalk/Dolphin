@@ -561,7 +561,7 @@ isLiteral
 	"Answer whether the receiver can be represented as a literal (i.e. it has a printed
 	representation which can be directly understood by the compiler)."
 
-	^(self identityIncludes: Character null) not!
+	^(self identityIncludes: Character.Null) not!
 
 isString
 	"Answer whether the receiver is a <String>."
@@ -716,7 +716,7 @@ occurrencesOf: anObject from: startInteger to: endInteger
 			current := next + 1].
 	^occurrences!
 
-printOn: aStream 
+printOn: aStream
 	"Append the receiver as a quoted string to aStream. Internal quotes are doubled to produce a
 	literal String. Null characters are printed as another character to avoid them being treated
 	as null terminators by C api's"
@@ -724,9 +724,9 @@ printOn: aStream
 	aStream nextPut: $'.
 	1 to: self size
 		do: 
-			[:i | 
+			[:i |
 			| ch |
-			(ch := self at: i) == ##(Character null) 
+			(ch := self at: i) == Character.Null
 				ifTrue: [aStream nextPut: NullPrintCharacter]
 				ifFalse: [(aStream nextPut: ch) == $' ifTrue: [aStream nextPut: $']]].
 	aStream nextPut: $'!
@@ -1001,20 +1001,18 @@ unescapePercents
 withNormalizedLineDelimiters
 	"Answer a copy of the receiver with any line terminator convention converted to the windows (CR/LF) convention."
 
-	| target cr lf eol stm |
+	| target eol stm |
 	target := self species writeStream: self size.
 	stm := self readStream.
-	cr := Character cr.
-	lf := Character lf.
 	eol := self species lineDelimiter.
 	stm do: 
-			[:each | 
-			each == lf 
+			[:each |
+			each == Character.Lf
 				ifTrue: [target nextPutAll: eol]
 				ifFalse: 
-					[each == cr 
+					[each == Character.Cr
 						ifTrue: 
-							[stm peekFor: lf.
+							[stm peekFor: Character.Lf.
 							target nextPutAll: eol]
 						ifFalse: [target nextPut: each]]].
 	^target contents! !

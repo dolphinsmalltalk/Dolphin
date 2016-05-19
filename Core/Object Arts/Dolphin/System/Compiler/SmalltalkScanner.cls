@@ -244,7 +244,7 @@ scanBinary: aClass
 	| val |
 	buffer nextPut: currentCharacter.
 	self step.
-	[characterType == #binary and: [currentCharacter ~~ $-]] whileTrue: 
+	[characterType == #binary and: [currentCharacter == $- == false]] whileTrue: 
 			[buffer nextPut: currentCharacter.
 			self step].
 	val := buffer contents.
@@ -361,11 +361,11 @@ scanLiteralString
 	self step.
 	
 	[currentCharacter isNil ifTrue: [^self unterminatedString].
-	currentCharacter == $' and: [self step ~~ $']] 
+	currentCharacter == $' and: [self step == $' == false]]
 			whileFalse: 
 				[buffer nextPut: currentCharacter.
 				self step].
-	^self literalTokenClass 
+	^self literalTokenClass
 		value: buffer contents
 		start: tokenStart
 		stop: self previousStepPosition!
@@ -520,8 +520,8 @@ stripComment
 	[| ch |
 	stream atEnd ifTrue: [^self unterminatedComment: start].
 	ch := stream next.
-	ch isLinefeed ifTrue: [line := line + 1].
-	ch == $"] 
+	ch == Character.Lf ifTrue: [line := line + 1].
+	ch == $"]
 			whileFalse.
 	stop := stream position.
 	self step.
@@ -600,7 +600,7 @@ unterminatedString
 !SmalltalkScanner categoriesFor: #scanToken!accessing!public! !
 !SmalltalkScanner categoriesFor: #separatorsInLiterals:!accessing!private! !
 !SmalltalkScanner categoriesFor: #step!operations!private! !
-!SmalltalkScanner categoriesFor: #stripComment!public!scanning! !
+!SmalltalkScanner categoriesFor: #stripComment!private!scanning! !
 !SmalltalkScanner categoriesFor: #stripSeparators!private!scanning! !
 !SmalltalkScanner categoriesFor: #unterminatedComment:!error handling!private! !
 !SmalltalkScanner categoriesFor: #unterminatedQualifiedRef!error handling!private! !

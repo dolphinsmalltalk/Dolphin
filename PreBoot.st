@@ -36,3 +36,5 @@ hasBytecodeRepresentation: anObject
 	SmallIntegers, Characters."
 
 	^anObject isImmediate or: [anObject isNil or: [anObject == true or: [anObject == false]]]! !
+
+#(('Backspace' 8)  ('Cr' 13) ('Eof' 26) ('Esc' 27) ('Lf' 10) ('NewPage' 12) ('Null' 0) ('Space' 32) ('Tab' 9)  ) do: [:each | Character addClassConstant: each first value: (Character value: each second)]!

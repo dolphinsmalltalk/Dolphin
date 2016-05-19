@@ -497,13 +497,13 @@ parseKeywordPattern
 	args := OrderedCollection new: 2.
 	[currentToken isKeyword] whileTrue: 
 			[| arg |
-			keywords add: currentToken.
+			keywords addLast: currentToken.
 			self step.
 			arg := self parseVariableNode.
-			(self validateArg: arg args: args) ifTrue: [args add: arg]].
+			(self validateArg: arg args: args) ifTrue: [args addLast: arg]].
 	node := self methodNodeClass selectorParts: keywords arguments: args.
 	"Be resilient to the absence of arguments"
-	args isEmpty 
+	args isEmpty
 		ifFalse: 
 			[node addComments: args last comments.
 			args last comments: nil].
@@ -512,17 +512,17 @@ parseKeywordPattern
 parseLiteralArray
 	| stream start stop |
 	start := currentToken start.
-	stream := WriteStream on: (Array new: 5).
+	stream := WriteStream on: (Array new: 30).
 	self step.
-	[self atEnd or: [currentToken isSpecial and: [currentToken value = $)]]] 
+	[self atEnd or: [currentToken isSpecial and: [currentToken value = $)]]]
 		whileFalse: [stream nextPut: self parseLiteralArrayObject].
-	(currentToken isSpecial and: [currentToken value == $)]) 
+	(currentToken isSpecial and: [currentToken value == $)])
 		ifFalse: 
 			[self parserError: CErrArrayNotClosed range: (start to: self errorPosition - 1)
 			"Error ignored, no recovery needed as at EOF"].
 	stop := currentToken stop.
 	self step.
-	^self literalArrayNodeClass 
+	^self literalArrayNodeClass
 		startPosition: start
 		contents: stream contents
 		stopPosition: stop
@@ -545,7 +545,7 @@ parseLiteralArrayObject
 parseLiteralByteArray
 	| stream start stop |
 	start := currentToken start.
-	stream := WriteStream on: (Array new: 5).
+	stream := WriteStream on: (Array new: 30).
 	self step.
 	[self atEnd or: [currentToken isSpecial and: [currentToken value == $]]]] 
 		whileFalse: [stream nextPut: self parseLiteralByteArrayObject].

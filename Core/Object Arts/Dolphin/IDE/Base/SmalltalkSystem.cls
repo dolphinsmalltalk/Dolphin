@@ -3809,13 +3809,13 @@ wrapText: aString indent: colInteger tabWidth: tabInteger
 		indent: colInteger
 		tabWidth: tabInteger!
 
-wrapText: aString toWidth: max indent: colInteger tabWidth: tabInteger 
+wrapText: aString toWidth: max indent: colInteger tabWidth: tabInteger
 	"Left-justify the <String> argument to the specified line length, indenting lines after the
 	first to start at the specified column. Any 'words' which are too long to fit within the
 	available width are permitted to extend past the end of the line."
 
 	| indent justified original column tabs spaces words newline |
-	(aString isEmpty or: [max <= colInteger]) 
+	(aString isEmpty or: [max <= colInteger])
 		ifTrue: 
 			["No wrapping is possible"
 			^aString].
@@ -3842,10 +3842,10 @@ wrapText: aString toWidth: max indent: colInteger tabWidth: tabInteger
 			"Skip whitespace, but preserve any blank lines"
 			lines := 0.
 			original skipWhile: 
-					[:each | 
-					each = Character lf ifTrue: [lines := lines + 1].
+					[:each |
+					each = Character.Lf ifTrue: [lines := lines + 1].
 					each isSeparator].
-			lines > 1 
+			lines > 1
 				ifTrue: 
 					[lines - 1 timesRepeat: [justified cr].
 					newline value]].

@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 STBFiler subclass: #STBOutFiler
 	instanceVariableNames: 'writeMap globals globalNils proxyOverrides refOffset'
@@ -140,7 +140,7 @@ resetStream
 	stream
 		nextPutAll: self class signature;
 		nextPutAll: self class version displayString asByteArray;
-		nextPut: Character space codePoint!
+		nextPut: Character.Space codePoint!
 
 saveObject: aNonImmediateObject
 	"Write anObject to the stream in STB format as normal.
