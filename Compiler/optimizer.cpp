@@ -715,10 +715,26 @@ int Compiler::CombinePairs1()
 			// being ignored. Its possible there should be a PopSendSelf instruction
 			if (byte1 == ShortPushSelf)
 			{
-				if (bytecode2.isShortSendWithNoArgs())
+				if (byte2 == Send)
+				{
+					_ASSERTE(m_bytecodes[next+1].isData());
+					int m = m_bytecodes[next+1].byte;
+					_ASSERTE(SendXLiteralBits == 5);
+					int argCount = m >> SendXLiteralBits;
+					if (argCount == 0)
+					{
+						// Push Self will become the Send Self instruction
+						VERIFY(AdjustTextMapEntry(next, i));
+
+						bytecode1.byte = SendSelfWithNoArgs;
+						bytecode2.makeData();
+						bytecode2.byte = m;
+						RemoveByte(next+1);
+					}
+				}
+				else if (bytecode2.isShortSendWithNoArgs())
 				{
 					_ASSERTE(len1 == 1);
-					// Need to move text map entry back, as the PushSelf becomes the send
 					VERIFY(AdjustTextMapEntry(next, i));
 
 					int n = bytecode2.indexOfShortSendNoArgs();
