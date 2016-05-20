@@ -119,7 +119,7 @@ keywords
 
 	self isEmpty ifTrue: [^#()].
 	^self last == $:
-		ifTrue: [(self subStrings: $:) collect: [:keyword | keyword, ':']]
+		ifTrue: [(self subStrings: $:) collect: [:keyword | keyword copyWith: $:]]
 		ifFalse: [Array with: self]!
 
 numArgs

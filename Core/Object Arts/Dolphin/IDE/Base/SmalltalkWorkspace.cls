@@ -359,13 +359,13 @@ completeWord
 				[self showCompletionListAfterToken: (self tokenBefore: last) maxItems: self maxCompletionListSize].
 	view isAutoCompletionActive not ifTrue: [Sound warningBeep]!
 
-completeWordAt: anInteger with: aString 
+completeWordAt: anInteger with: aString
 	| replaceRange addSpace |
 	replaceRange := self rangeToCompleteAt: anInteger.
 	addSpace := IsAutoCompletionSpaceAdded and: 
 					[| nextChar |
 					nextChar := view characterAt: replaceRange stop + 1.
-					nextChar ~~ Character null and: [nextChar isSeparator not]].
+					nextChar ~~ Character.Null and: [nextChar isSeparator not]].
 	view
 		selectionRange: replaceRange;
 		replaceSelection: (addSpace ifTrue: [aString , ' '] ifFalse: [aString]).
@@ -894,7 +894,7 @@ maybeShowCompletionList
 				| char |
 				char := view characterAt: last.
 				((char == $^ and: [styleName == #specialCharacter]) 
-					or: [char == Character space and: [(view styleIdAt: last) = (view idOfStyleNamed: #whitespace)]]) 
+					or: [char == Character.Space and: [(view styleIdAt: last) = (view idOfStyleNamed: #whitespace)]]) 
 						ifTrue: 
 							[self showCompletionListAfterToken: (self tokenBefore: last) maxItems: self maxAutoCompletionListSize]]!
 
@@ -1434,15 +1434,15 @@ showTipForIdentifier: anStIdentifierToken
 			on: Compiler notificationClass
 			do: [:ex | ]!
 
-showTipForIndicators: aCollectionOfScintillaIndicators 
+showTipForIndicators: aCollectionOfScintillaIndicators
 	| tip last |
 	tip := String writeStream.
 	last := 0.
 	aCollectionOfScintillaIndicators do: 
-			[:each | 
+			[:each |
 			tip nextPutAll: each tag displayString.
 			last := last max: each range stop + 2]
-		separatedBy: [tip nextPut: Character lf].
+		separatedBy: [tip nextPut: Character.Lf].
 	self view showCallTip: tip contents at: last!
 
 startAutocompleteTimer

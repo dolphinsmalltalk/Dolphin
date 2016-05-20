@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 STBFiler subclass: #STBInFiler
 	instanceVariableNames: 'readMap converters classLocator deferredActions flags'
@@ -234,9 +234,9 @@ resetAndValidateStream
 	| char |
 	(self class peekForSignatureIn: stream) ifFalse: [self class errorNotSTB].
 	version := 0.
-	[(char := Character value: stream next) isDigit] 
+	[(char := Character value: stream next) isDigit]
 		whileTrue: [version := version * 10 + char digitValue].
-	char = Character space ifFalse: [self class errorNotSTB].
+	char = Character.Space ifFalse: [self class errorNotSTB].
 	version > self class version ifTrue: [self class errorVersion: version]!
 
 setRefOffset: anInteger

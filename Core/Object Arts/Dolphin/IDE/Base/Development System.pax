@@ -3587,40 +3587,40 @@ step: steps
     
     	SessionManager inputState queueDeferredAction: (MessageSend receiver: self selector: #primStep: argument: steps)!
 
-walkback: aString topFrame: aStackFrame resumable: aBoolean 
+walkback: aString topFrame: aStackFrame resumable: aBoolean
 	"Private - Bring up a walkback window on the receiver with the specified title
 	and with aStackFrame as the top frame of the stack trace"
 
 	| answer traceStream debuggable titleString |
 	Processor enableAsyncEvents: true.
-	titleString := aString 
-				collect: [:each | (each == Character cr or: [each == Character lf]) ifTrue: [$\] ifFalse: [each]].
-	debugger isNil 
+	titleString := aString
+				collect: [:each | (each == Character.Cr or: [each == Character.Lf]) ifTrue: [$\] ifFalse: [each]].
+	debugger isNil
 		ifFalse: 
-			[^debugger 
+			[^debugger
 				onWalkback: titleString
 				topFrame: aStackFrame
 				resumable: aBoolean].
 	traceStream := String writeStream: 512.
 	
-	[self 
+	[self
 		stackFramesFrom: aStackFrame
 		depth: 50
 		do: 
-			[:frame | 
-			frame method selector == #wmPaint:wParam:lParam: 
+			[:frame |
+			frame method selector == #wmPaint:wParam:lParam:
 				ifTrue: [frame receiver validate	"prevent recusive paint walkback"].
 			traceStream
 				display: frame;
-				cr]] 
+				cr]]
 			on: Error
 			do: [:e | e notify].
 
 	"Only show a walkback if the Debugger's global option, #showWalkbacks, is on"
 	debuggable := self canDebug.
-	answer := (debuggable not or: [self debuggerClass showWalkbacks]) 
+	answer := (debuggable not or: [self debuggerClass showWalkbacks])
 				ifTrue: 
-					[self 
+					[self
 						showWalkback: titleString
 						callStack: traceStream contents
 						debuggable: debuggable
@@ -3628,13 +3628,15 @@ walkback: aString topFrame: aStackFrame resumable: aBoolean
 				ifFalse: 
 					[aBoolean ifTrue: [Sound warningBeep] ifFalse: [Sound errorBeep].
 					#debug].
-	answer == #debug 
+	answer == #debug
 		ifTrue: 
-			[[self 
+			[
+			[self
 				debug: titleString
 				topFrame: aStackFrame
-				resumable: aBoolean] postToMessageQueue.
-			self suspendUnconditionally ]
+				resumable: aBoolean]
+					postToMessageQueue.
+			self suspendUnconditionally]
 		ifFalse: [answer == #terminate ifTrue: [self terminate]]
 	"Drop through to resume..."! !
 !Process categoriesFor: #attachDebugger:topFrame:resumable:!development!private! !
@@ -4826,27 +4828,25 @@ displayOn: aStream
 !String methodsFor!
 
 aspectDisplayOn: aStream
-  	"Private - Append a single-line textual representation of the receiver to the <puttableStream>
+	"Private - Append a single-line textual representation of the receiver to the <puttableStream>
   	argument in a form that a user viewing the receiver as the value of a published aspect would 
   	like to see it. Typically we use #displayOn: but some classes of object can use alternate display 
   	formats. In this case we want to keep to a reasonable length and remove line delimiters.
   	N.B. This is a development time only method that supports the PublishedAspectInspector."
-  
-  	| i max size lf cr |
-  	aStream nextPut: $'.
-  	size := self size.
-  	max := size min: Aspect maxDisplayCharacters - 2.
-  	i := 0.
-  	lf := Character lf.
-  	cr := Character cr.
-  	[i < max] whileTrue: 
-  			[| each |
-  			each := self at: (i := i + 1).
-  			(each == cr or: [each == lf]) 
-  				ifTrue: [max := 0]
-  				ifFalse: [aStream nextPut: each]].
-  	i < size ifTrue: [aStream nextPutAll: ' ...'].
-  	aStream nextPut: $'!
+
+	| i max size |
+	aStream nextPut: $'.
+	size := self size.
+	max := size min: Aspect maxDisplayCharacters - 2.
+	i := 0.
+	[i < max] whileTrue: 
+			[| each |
+			each := self at: (i := i + 1).
+			(each == Character.Cr or: [each == Character.Lf])
+				ifTrue: [max := 0]
+				ifFalse: [aStream nextPut: each]].
+	i < size ifTrue: [aStream nextPutAll: ' ...'].
+	aStream nextPut: $'!
 
 debugPrintString
 	^self printString!
