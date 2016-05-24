@@ -82,7 +82,7 @@ void ObjectMemory::compactObject(OTE* ote)
 // Perform a compacting GC
 size_t ObjectMemory::compact()
 {
-	TRACE("OT size %d. Compacting...\n", m_nOTSize);
+	TRACE("Compacting OT, size %d, free %d, ...\n", m_nOTSize, m_pOT + m_nOTSize - m_pFreePointerList);
 	EmptyZct();
 
 	// First perform a normal GC
@@ -149,10 +149,6 @@ size_t ObjectMemory::compact()
 	// Note that this copies VMPointers to cache area
 	ProtectConstSpace(PAGE_READONLY);
 
-	#ifdef _DEBUG
-		m_nFreeOTEs = m_pOT + m_nOTSize - m_pFreePointerList;
-	#endif
-
 	// We must inform the interpreter that it needs to update any cached Oops from the forward pointers
 	// before we rebuild the free list (which will destroy those pointers to the new OTEs)
 	Interpreter::OnCompact();
@@ -160,10 +156,18 @@ size_t ObjectMemory::compact()
 	// The last used slot will be the slot before the first entry in the free list
 	// Using this, round up from the last used slot to the to commit granularity, then uncommit any later slots
 	// 
-	TODO("Free whole pages beyond the start of the free pointer list here as free entries now contiguous")
+	
+	OTE* end = (OTE*)_ROUND2(reinterpret_cast<ULONG_PTR>(m_pFreePointerList + 1), dwAllocationGranularity);
+
+#ifdef _DEBUG
+	m_nFreeOTEs = end - m_pFreePointerList;
+#endif
+
+	SIZE_T bytesToDecommit = reinterpret_cast<ULONG_PTR>(m_pOT + m_nOTSize) - reinterpret_cast<ULONG_PTR>(end);
+	::VirtualFree(end, bytesToDecommit, MEM_DECOMMIT);
+	m_nOTSize = end - m_pOT;
 
 	// Now fix up the free list
-	const OTE* end = m_pOT + m_nOTSize;
 	OTE* cur = m_pFreePointerList;
 	while (cur < end)
 	{
@@ -179,10 +183,7 @@ size_t ObjectMemory::compact()
 
 	HeapCompact();
 
-//	if (m_pFreePointerList == NULL)
-//		_asm int 3;
-
-	//trace("... compacted. OT size %d.\n", m_nOTSize);
+	TRACE("... OT compacted, size %d, free %d.\n", m_nOTSize, end - m_pFreePointerList);
 
 	Interpreter::scheduleFinalization();
 

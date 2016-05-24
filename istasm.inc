@@ -614,11 +614,6 @@ ENDM
 
 
 StoreIPRegister MACRO
-	IFDEF _DEBUG
-		.IF (_IP <= 0100000h)
-			int 3
-		.ENDIF
-	ENDIF
 	mov		[INSTRUCTIONPOINTER], _IP		;; Ditto the instruction pointer
 ENDM
 

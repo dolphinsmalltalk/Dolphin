@@ -564,8 +564,7 @@ HRESULT ObjectMemory::allocateOT(unsigned reserve, unsigned commit)
 	// Calculations based on an OTE size of 16 - rounds up to multiples of 4 for this reason
 	ASSERT(sizeof(OTE) == 16);
 
-	const unsigned reserveGranularity = (dwAllocationGranularity*4)/sizeof(OTE);
-	m_nOTMax = _ROUND2(reserve, reserveGranularity);
+	m_nOTMax = _ROUND2(reserve, dwAllocationGranularity);
 	const unsigned reserveBytes = m_nOTMax * sizeof(OTE);
 	
 	OTE* pOTReserve = reinterpret_cast<OTE*>(::VirtualAlloc(NULL, reserveBytes, MEM_RESERVE, PAGE_NOACCESS));
@@ -573,8 +572,7 @@ HRESULT ObjectMemory::allocateOT(unsigned reserve, unsigned commit)
 		return ReportError(IDP_OTRESERVEFAIL, m_nOTMax);
 
 	// Can use _ROUND2 if dwPageSize is a power of 2
-	const unsigned commitGranularity = (dwPageSize*4)/sizeof(OTE);
-	m_nOTSize = _ROUND2(commit, commitGranularity);
+	m_nOTSize = _ROUND2(commit, dwAllocationGranularity);
 	const unsigned commitBytes = m_nOTSize*sizeof(OTE);
 
 	OTE* pNewOT = reinterpret_cast<OTE*>(::VirtualAlloc(pOTReserve, commitBytes, MEM_COMMIT, PAGE_READWRITE));
@@ -811,7 +809,7 @@ int ObjectMemory::gpFaultExceptionFilter(LPEXCEPTION_RECORD pExRec)
 					pLink++;
 				}
 				m_nOTSize += extraOTEs;
-				TRACE("Successfully committed another OT page, size now %u\n", m_nOTSize);
+				TRACE("Successfully committed more OT space, size now %u\n", m_nOTSize);
 #ifdef _DEBUG
 				Interpreter::DumpOTEPoolStats();
 #endif

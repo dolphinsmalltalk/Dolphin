@@ -209,7 +209,7 @@ public:
 	static MemoryManager* memoryManager();
 
 public:
-	enum { 	OTDefaultSize = 65536, OTDefaultMax = 1024*16384 };	// Allow about 16 million (AWB) objects
+	enum { 	OTDefaultSize = 65536, OTDefaultMax = 1024*24576 };	// Allow about 24 million objects
 	enum { 	registryIndex, FirstBuiltInIdx };
 
 	/***************************************************************************************

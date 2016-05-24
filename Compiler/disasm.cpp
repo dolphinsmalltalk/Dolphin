@@ -592,12 +592,12 @@ void Compiler::disassembleAt(ostream& stream, int ip)
 		break;
 
 	case ExLongSend:
-		PrintSendInstruction(stream, (m_bytecodes[ip + 2].byte << 8) + m_bytecodes[ip + 3].byte, m_bytecodes[ip + 1].byte);
+		PrintSendInstruction(stream, (m_bytecodes[ip + 3].byte << 8) + m_bytecodes[ip + 2].byte, m_bytecodes[ip + 1].byte);
 		break;
 
 	case ExLongSupersend:
 		stream << "Super ";
-		PrintSendInstruction(stream, (m_bytecodes[ip + 2].byte << 8) + m_bytecodes[ip + 3].byte, m_bytecodes[ip + 1].byte);
+		PrintSendInstruction(stream, (m_bytecodes[ip + 3].byte << 8) + m_bytecodes[ip + 2].byte, m_bytecodes[ip + 1].byte);
 		break;
 
 	case ExLongPushImmediate:

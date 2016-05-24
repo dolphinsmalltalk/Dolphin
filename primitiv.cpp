@@ -136,7 +136,7 @@ BOOL __fastcall Interpreter::primitiveResize()
 		// Changing size of mutable byte object
 		pop(1);
 		VariantByteObject* pNew = ObjectMemory::resize(reinterpret_cast<BytesOTE*>(oteReceiver), newSize);
-		ASSERT(pNew != NULL);
+		ASSERT(pNew != NULL || newSize == 0);
 	}
 
 	// Object size has changed, invalidating any AtCache entry
