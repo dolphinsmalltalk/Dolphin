@@ -1,7 +1,7 @@
 "Filed out from Dolphin Smalltalk 7"!
 
 ClassDescription subclass: #Metaclass
-	instanceVariableNames: 'instanceClass '
+	instanceVariableNames: 'instanceClass'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -150,23 +150,6 @@ removeFromSuper
 		ifTrue: [super removeFromSuper]
 !
 
-setSharedPoolNames: aCollection
-	"Private - Set the <Symbol> names of the shared pool dictionaries that
-	are specified locally in the receiver (pools are inherited in Dolphin)."
-
-	self instanceClass setSharedPoolNames: aCollection
-!
-
-sharedPoolsDo: aMonadicValuable 
-	"Evaluate the <monadicValuable> argument for each of the shared pools specified locally for the receiver."
-
-	self instanceClass sharedPoolsDo: aMonadicValuable!
-
-sharedStaticPools
-	"Answer the receiver's shared pools."
-
-	^instanceClass sharedStaticPools!
-
 stbSaveOn: anSTBOutFiler
 	"Save out a binary representation of the receiver to anSTBOutFiler."
 
@@ -188,9 +171,6 @@ stbSaveOn: anSTBOutFiler
 !Metaclass categoriesFor: #printDefinitionOn:!development!private!source filing-class definition! !
 !Metaclass categoriesFor: #removeClassVarName:!class variables!public! !
 !Metaclass categoriesFor: #removeFromSuper!class hierarchy-removing!private! !
-!Metaclass categoriesFor: #setSharedPoolNames:!pool variables!private! !
-!Metaclass categoriesFor: #sharedPoolsDo:!pool variables!public! !
-!Metaclass categoriesFor: #sharedStaticPools!pool variables!public! !
 !Metaclass categoriesFor: #stbSaveOn:!binary filing!public! !
 
 !Metaclass class methodsFor!

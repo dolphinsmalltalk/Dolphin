@@ -16,13 +16,13 @@ compileAccessorsFor: aClass
 			aClass compile: each , ' ^' , each.
 			aClass compile: each , ': x ' , each , ' := x']!
 
-createClass: className superclass: superClass instVars: instanceVariables 
+createClass: className superclass: superClass instVars: instanceVariables pools: aString
 	| class |
-	class := superClass 
+	class := superClass
 				subclass: className
 				instanceVariableNames: instanceVariables
 				classVariableNames: ''
-				poolDictionaries: ''
+				poolDictionaries: aString
 				classInstanceVariableNames: ''.
 	package addClass: class.
 	^class!
@@ -33,6 +33,17 @@ createClasses
 createPackage
 	package := self createPackage: self packageName!
 
+createPool: aSymbol
+	| pool |
+	pool := Smalltalk at: aSymbol put: PoolConstantsDictionary new.
+	pool owningPackage: package.
+	^pool!
+
+createPools
+	"Private - Not required by default"
+
+	!
+
 destroyPackage
 	package notNil 
 		ifTrue: 
@@ -40,21 +51,24 @@ destroyPackage
 			package := nil]!
 
 packageName
-	^'Object Arts\Dolphin\Tests\' , self class name!
+	^'Core\Object Arts\Dolphin\Tests\' , self class name!
 
 setUp
 	super setUp.
 	self createPackage.
+	self createPools.
 	self createClasses!
 
 tearDown
 	super tearDown.
 	self destroyPackage! !
-!DolphinTestClassResource categoriesFor: #compileAccessorsFor:!Init / Release!public! !
-!DolphinTestClassResource categoriesFor: #createClass:superclass:instVars:!Init / Release!private! !
-!DolphinTestClassResource categoriesFor: #createClasses!private!unit tests! !
+!DolphinTestClassResource categoriesFor: #compileAccessorsFor:!Init / Release!private! !
+!DolphinTestClassResource categoriesFor: #createClass:superclass:instVars:pools:!Init / Release!private! !
+!DolphinTestClassResource categoriesFor: #createClasses!Init / Release!private! !
 !DolphinTestClassResource categoriesFor: #createPackage!Init / Release!private! !
-!DolphinTestClassResource categoriesFor: #destroyPackage!Init / Release!private!Running! !
+!DolphinTestClassResource categoriesFor: #createPool:!Init / Release!private! !
+!DolphinTestClassResource categoriesFor: #createPools!Init / Release!private! !
+!DolphinTestClassResource categoriesFor: #destroyPackage!Init / Release!private! !
 !DolphinTestClassResource categoriesFor: #packageName!private!unit tests! !
 !DolphinTestClassResource categoriesFor: #setUp!Init / Release!public! !
 !DolphinTestClassResource categoriesFor: #tearDown!public!Running! !

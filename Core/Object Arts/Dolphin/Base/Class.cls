@@ -1,7 +1,7 @@
 "Filed out from Dolphin Smalltalk 7"!
 
 ClassDescription subclass: #Class
-	instanceVariableNames: 'name classPool sharedPools comment classCategories _guid '
+	instanceVariableNames: 'name classPool sharedPools comment classCategories _guid'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -80,20 +80,6 @@ addClassVarNamed: aString
 	self logDefinition.
 	self environment classUpdated: self.
 	^var!
-
-addSharedPool: aPoolDictionary 
-	"Add the argument, aPoolDictionary, as one of the receiver's pool dictionaries. 
-	It is an error if the dictionary is already one of the pools.
-	Note: This is a low-level operation and does not recompile affected classes. Generally 
-	speaking any modification to a class should be made through a <ClassBuilder>."
-
-	| poolName pools |
-	poolName := aPoolDictionary name.
-	pools := self sharedPoolNames.
-	(pools includes: poolName)
-		ifTrue: [^self error: 'The dictionary is already in my pool'].
-	pools add: poolName.
-	sharedPools := pools.!
 
 addToSuper
 	"Private - Add the receiver as a subclass of its superclass
@@ -465,16 +451,6 @@ removeFromSystem
 	self sourceManager logEvaluate: self name, ' removeFromSystem'.
 	ClassBuilder removeClass: self!
 
-removeSharedPool: aPoolDictionary 
-	"Remove the argument, aPoolDictionary, as one of the receiver's pool dictionaries. 
-	Note: This is a low-level operation and does not recompile affected classes. Generally 
-	speaking any modification to a class should be made through a <ClassBuilder>."
-
-	| poolName |
-	poolName := aPoolDictionary name.
-	self sharedPoolNames remove: poolName.
-	sharedPools isEmpty ifTrue: [sharedPools := nil]!
-
 rename: aString
 	"Private - Change the name of the receiver to aString.
 	N.B. This is the low-level rename operation, and does not rename any references
@@ -558,46 +534,18 @@ setName: aSymbol
 
 	name := aSymbol!
 
-setSharedPoolNames: aCollection 
-	"Private - Set the shared variable pool to include the names in aCollection.
-	N.B. initial conversion to a set removes duplicates."
+setSharedPoolNames: aCollection
+	"Private - Set the shared variable pool to include the names in aCollection, ignoring any duplicates."
 
-	sharedPools := aCollection notEmpty 
-				ifTrue: [aCollection asSet asArray collect: [:poolName | poolName asSymbol]]!
+	sharedPools := aCollection notEmpty
+				ifTrue: [aCollection distinct asArray collect: [:poolName | poolName asSymbol]]!
 
 sharedPoolNames
-	"Answer a Set of the names of the shared pool dictionaries that
-	are specified locally in the receiver."
+	"Answer a <sequencedReadableCollection> of <Symbol>s, being the names of the shared pool
+	dictionaries that are specified locally in the receiver (pools are inherited in Dolphin), in
+	order of precedence."
 
-	sharedPools isNil ifTrue: [^Set new].
-	^sharedPools asSet.
-!
-
-sharedPoolsDo: aMonadicValuable 
-	"Evaluate the <monadicValuable> argument for each of the shared pools specified locally for the receiver."
-
-	| environment |
-	sharedPools isNil ifTrue: [^self].
-	environment := self environment.
-	sharedPools 
-		do: [:symbol | (environment at: symbol ifAbsent: []) ifNotNil: [:p | aMonadicValuable value: p]]!
-
-sharedStaticPools
-	"Private - Answer an array of all the non-empty shared pools for the 
-	receiver.
-	N.B. Sent by compiler, and may be removed in future."
-
-	| answer |
-	answer := OrderedCollection new.
-	"First the class variables"
-	self withAllSuperclassesDo: 
-			[:c | 
-			| pool |
-			pool := c basicClassPool.
-			(pool notNil and: [pool notEmpty]) ifTrue: [answer add: pool]].
-	"Then the pool variables"
-	self withAllSuperclassesDo: [:c | c sharedPoolsDo: [:p | answer add: p]].
-	^answer asArray!
+	^sharedPools ifNil: [#()]!
 
 sourceDescriptor
 	"Answer the source descriptor for the receiver's comment."
@@ -797,7 +745,6 @@ variableSubclass: aClassSymbol
 !Class categoriesFor: #addClassConstant:value:!class variables!public! !
 !Class categoriesFor: #addClassVariable:value:!class variables!public! !
 !Class categoriesFor: #addClassVarNamed:!class variables!public! !
-!Class categoriesFor: #addSharedPool:!pool variables!public! !
 !Class categoriesFor: #addToSuper!class hierarchy-adding!private! !
 !Class categoriesFor: #basicClassPool!class variables!private! !
 !Class categoriesFor: #basicClassPool:!class variables!private! !
@@ -845,7 +792,6 @@ variableSubclass: aClassSymbol
 !Class categoriesFor: #removeFromCategory:!categories-removing!public! !
 !Class categoriesFor: #removeFromSuper!class hierarchy-removing!private! !
 !Class categoriesFor: #removeFromSystem!class hierarchy-removing!private! !
-!Class categoriesFor: #removeSharedPool:!pool variables!public! !
 !Class categoriesFor: #rename:!class hierarchy-accessing!development!private! !
 !Class categoriesFor: #rename:in:!class hierarchy-accessing!private! !
 !Class categoriesFor: #renameClassVar:to:!class variables!private! !
@@ -855,8 +801,6 @@ variableSubclass: aClassSymbol
 !Class categoriesFor: #setName:!accessing!private! !
 !Class categoriesFor: #setSharedPoolNames:!pool variables!private! !
 !Class categoriesFor: #sharedPoolNames!pool variables!public! !
-!Class categoriesFor: #sharedPoolsDo:!pool variables!public! !
-!Class categoriesFor: #sharedStaticPools!pool variables!private! !
 !Class categoriesFor: #sourceDescriptor!accessing!public!source filing! !
 !Class categoriesFor: #sourceDescriptor:!accessing!private!source filing! !
 !Class categoriesFor: #stbConvertFrom:!binary filing!private! !

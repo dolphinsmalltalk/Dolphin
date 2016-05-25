@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #Compiler
 	instanceVariableNames: ''
@@ -409,7 +409,7 @@ textMapOf: aString in: aClass
 uninitialize
 	"Clean up VM references that are only required if the compiler is present."
 
-	#(#notificationCallback: #sharedStaticPools #allInstVarNames #evaluate:for:evaluationPools: #bindingFor:) 
+	#(#notificationCallback: #allInstVarNames #evaluate:for:evaluationPools: #bindingFor:)
 		do: [:each | VMLibrary default unregisterObject: each]!
 
 warningClass

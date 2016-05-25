@@ -11,15 +11,17 @@ MustBeBooleanTestClasses comment: ''!
 !MustBeBooleanTestClasses methodsFor!
 
 createClasses
-	trueClass := self 
+	trueClass := self
 				createClass: #MustBeBooleanTestTrueClass
 				superclass: Object
-				instVars: ''.
+				instVars: ''
+				pools: ''.
 	trueClass compile: 'mustBeBoolean ^true'.
-	falseClass := self 
+	falseClass := self
 				createClass: #MustBeBooleanTestFalseClass
 				superclass: Object
-				instVars: ''.
+				instVars: ''
+				pools: ''.
 	falseClass compile: 'mustBeBoolean ^false'!
 
 falseClass

@@ -650,9 +650,9 @@ sharedPools: anArray
 
 sharedPoolString: aString
 	"Set the receiver's sharedPools from the pool name list aString.
-	Silently drop names duplicated within the list."
+	It is an error for names to be duplicated in the list."
 
-	self sharedPools: aString subStrings asSet!
+	self sharedPools: aString subStrings!
 
 superclass: aClass
 	"Private - Set the target superclass."

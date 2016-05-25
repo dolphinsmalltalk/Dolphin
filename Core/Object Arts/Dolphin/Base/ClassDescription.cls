@@ -48,13 +48,18 @@ addProtocol: protocol
 	protocols add: protName.
 	self allSubclassesDo: [:q | q removeProtocol: protName ifAbsent: []]!
 
-addSharedPool: aPoolDictionary 
-	"Add the specified pool dictionary to the list of those referenced by the receiver. 
-	Note that this is a low-level operation intended for system use. The <ClassBuilder>
-	should be used to modify classes."
+addSharedPool: aPoolDictionary
+	"Add the argument, aPoolDictionary, as one of the pool dictionaries referenced by the
+	receiver, but lower in precedence than any previously added pools. It is an error if the
+	dictionary is already one of the pools.
+	Note: This is a low-level operation and does not recompile affected classes. Generally 
+	speaking any modification to a class should be made through a <ClassBuilder>."
 
-	self instanceClass
-		setSharedPoolNames: (self sharedPoolNames copyWith: aPoolDictionary name)!
+	| poolName pools |
+	poolName := aPoolDictionary name.
+	pools := self sharedPoolNames.
+	(pools includes: poolName) ifTrue: [^self error: 'Pool is already referenced by this class'].
+	self setSharedPoolNames: (pools copyWith: poolName)!
 
 allGetters
 	"Private - Answer a <Set> of the instance variable getter methods in the receiver"
@@ -717,13 +722,12 @@ removeSelectors: aCollection
 	methods do: [:each | self removeMethodFromNonVirtualCategories: each].
 	^methods!
 
-removeSharedPool: aPoolDictionary 
-	"Remove the specified pool dictionary to the list of those referenced by the receiver. 
-	Note that this is a low-level operation intended for system use. The <ClassBuilder>
-	should be used to modify classes."
+removeSharedPool: aPoolDictionary
+	"Remove the argument, aPoolDictionary, as one of the receiver's pool dictionaries. 
+	Note: This is a low-level operation and does not recompile affected classes. Generally 
+	speaking any modification to a class should be made through a <ClassBuilder>."
 
-	self instanceClass
-		setSharedPoolNames: (self sharedPoolNames remove: aPoolDictionary name; yourself)!
+	self setSharedPoolNames: (self sharedPoolNames copyWithout: aPoolDictionary name)!
 
 removeUnsupportedProtocols: superUnsupported selector: removedSelector
 	"Private - Remove any protocols that are no longer supported after the removal
@@ -790,27 +794,19 @@ setInstanceVariables: aCollection
 
 	instanceVariables := aCollection notEmpty ifTrue: [aCollection asArray]!
 
+setSharedPoolNames: aCollection
+	"Private - Set the <Symbol>ic names of the shared pool dictionaries that are declared as
+	referenced locally in the receiver (pools are inherited in Dolphin)."
+
+	self instanceClass setSharedPoolNames: aCollection
+!
+
 sharedPoolNames
-	"Answer a <Set> of <String>s, being the names of the shared pool dictionaries that
-	are specified locally in the receiver (pools are inherited in Dolphin)."
+	"Answer a <sequencedReadableCollection> of <Symbol>s, being the names of the shared pool
+	dictionaries that are specified locally in the receiver (pools are inherited in Dolphin), in
+	order of precedence."
 
 	^self instanceClass sharedPoolNames!
-
-sharedPools
-	"Answer a Set of the pools (dictionaries) that are specified locally in the receiver."
-
-	| pools |
-	pools := Set new.
-	self sharedPoolsDo: [:each | pools add: each].
-	^pools!
-
-sharedPoolsDo: aMonadicValuable 
-	"Evaluate the <monadicValuable> argument for each of the shared pools specified locally for the receiver."
-
-	| environment |
-	environment := self environment.
-	self sharedPoolNames 
-		do: [:symbol | (environment at: symbol ifAbsent: []) ifNotNil: [:p | aMonadicValuable value: p]]!
 
 sharedVariableString
 	"Answer a String containing the names of the Pools accessable
@@ -956,9 +952,8 @@ whichNonVirtualCategoriesIncludeSelector: aSelector
 !ClassDescription categoriesFor: #resourceSelectorsDo:!enumerating!public! !
 !ClassDescription categoriesFor: #selectorsInCategory:!categories-accessing!public! !
 !ClassDescription categoriesFor: #setInstanceVariables:!instance variables!private! !
+!ClassDescription categoriesFor: #setSharedPoolNames:!pool variables!private! !
 !ClassDescription categoriesFor: #sharedPoolNames!pool variables!public! !
-!ClassDescription categoriesFor: #sharedPools!pool variables!public! !
-!ClassDescription categoriesFor: #sharedPoolsDo:!pool variables!public! !
 !ClassDescription categoriesFor: #sharedVariableString!accessing!public! !
 !ClassDescription categoriesFor: #sourceManager!accessing!public! !
 !ClassDescription categoriesFor: #stbReadFrom:format:!binary filing!public! !
