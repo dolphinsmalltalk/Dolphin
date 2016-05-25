@@ -45,7 +45,7 @@
 //////////////////////////////////////////////////////////////////////////////
 // Image Save Methods
 
-int __stdcall ObjectMemory::SaveImageFile(const char* szFileName, bool bBackup, int nCompressionLevel)
+int __stdcall ObjectMemory::SaveImageFile(const char* szFileName, bool bBackup, int nCompressionLevel, unsigned nMaxObjects)
 {
 	// Answer:
 	//	NULL = success
@@ -53,7 +53,17 @@ int __stdcall ObjectMemory::SaveImageFile(const char* szFileName, bool bBackup, 
 
 	if (!szFileName)
 		return 2;
-	
+
+	if (nMaxObjects == 0)
+	{
+		nMaxObjects = m_nOTMax;
+	}
+
+	if (nMaxObjects < m_nOTSize + OTMinHeadroom)
+	{
+		return 4;
+	}
+
 	int nRet = 3;
 
 	const char* saveName;
@@ -91,11 +101,11 @@ int __stdcall ObjectMemory::SaveImageFile(const char* szFileName, bool bBackup, 
 
 	::_write(fd, ISTHDRTYPE, sizeof(ISTHDRTYPE));
 
-	ImageHeader header;
-	memset(&header, 0, sizeof(header));
-
 	VS_FIXEDFILEINFO versionInfo;
 	::GetVersionInfo(&versionInfo);
+
+	ImageHeader header;
+	memset(&header, 0, sizeof(header));
 
 	header.versionMS		= versionInfo.dwProductVersionMS;
 	header.versionLS		= (LOWORD(versionInfo.dwProductVersionLS) << 16) |
@@ -116,7 +126,7 @@ int __stdcall ObjectMemory::SaveImageFile(const char* szFileName, bool bBackup, 
 	header.nNextIdHash		= m_nNextIdHash;
 
 	// User may have modified max table size
-	header.nMaxTableSize	= m_nOTMax;
+	header.nMaxTableSize	= nMaxObjects;
 
 	// Set the OT size
 	unsigned i = lastOTEntry();

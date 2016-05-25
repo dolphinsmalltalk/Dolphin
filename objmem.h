@@ -201,7 +201,7 @@ public:
 	static void CheckPoint();
 #endif
 
-	static int __stdcall SaveImageFile(const char* fileName, bool bBackup, int nCompressionLevel);
+	static int __stdcall SaveImageFile(const char* fileName, bool bBackup, int nCompressionLevel, unsigned nMaxObjects);
 	static HRESULT __stdcall LoadImage(const char* szImageName, LPVOID imageData, UINT imageSize, bool bIsDevSys);
 
 	static int gpFaultExceptionFilter(LPEXCEPTION_RECORD pExRec);
@@ -209,7 +209,7 @@ public:
 	static MemoryManager* memoryManager();
 
 public:
-	enum { 	OTDefaultSize = 65536, OTDefaultMax = 1024*24576 };	// Allow about 24 million objects
+	enum { 	OTMinHeadroom = 16384, OTDefaultSize = 65536, OTDefaultMax = 1024*24576 };	// Allow about 24 million objects
 	enum { 	registryIndex, FirstBuiltInIdx };
 
 	/***************************************************************************************
