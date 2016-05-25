@@ -620,7 +620,8 @@ snapshot: fileName
 		advanceImageVersionMinor;
 		primSnapshot: fileName
 			backup: self backupOnImageSave
-			type: 0!
+			type: 0
+			maxObjects: nil!
 
 splashShellClass
 	"Private - Answer the class of splash shell to display on startup, or nil for no splash."

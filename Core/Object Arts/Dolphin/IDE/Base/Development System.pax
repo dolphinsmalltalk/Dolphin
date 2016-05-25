@@ -210,6 +210,7 @@ package methodNames
 	add: #FramingLayout -> #arrangementAspect;
 	add: #InputState -> #destroyAllWindows;
 	add: #Interval -> #newBatchAccessor;
+	add: #KernelLibrary -> #queryThreadCycleTime:cycleTime:;
 	add: #LayoutManager -> #arrangementAspect;
 	add: #ListControlView -> #visualObjectAtPoint:;
 	add: #LPVOIDField -> #newAspect:class:;
@@ -477,6 +478,7 @@ package methodNames
 	add: 'TextEdit class' -> #applicableTypeConverterCategories;
 	add: 'TextEdit class' -> #publishedAspectsOfInstances;
 	add: 'TextEdit class' -> #publishedEventsOfInstances;
+	add: 'Time class' -> #cpuCyclesToRun:;
 	add: 'Time class' -> #newInstanceAspect:class:;
 	add: 'TimeToText class' -> #publishedAspectsOfInstances;
 	add: 'Toolbar class' -> #publishedAspectsOfInstances;
@@ -2656,6 +2658,13 @@ choose
 newBatchAccessor
 	^IndexedInstVarBatchAccessor subject: self batchSize: self publishedKeyedAspectsBatchSize! !
 !Interval categoriesFor: #newBatchAccessor!public! !
+
+!KernelLibrary methodsFor!
+
+queryThreadCycleTime: anExternalHandle cycleTime: aULARGE_INTEGER
+	<stdcall: bool QueryThreadCycleTime handle qword*>
+	^self invalidCall! !
+!KernelLibrary categoriesFor: #queryThreadCycleTime:cycleTime:!public!win32 functions-performance monitoring! !
 
 !LayoutManager methodsFor!
 
@@ -5051,11 +5060,33 @@ publishedEventsOfInstances
 
 !Time class methodsFor!
 
+cpuCyclesToRun: timedBlock
+	"Answer the number of CPU cycles consumed during the evaluation of timedBlock. This can be
+	used to compare the efficiency of small code sequences, but you should expect some variation
+	depending on GC activity, and the number is only useful for relative comparisons."
+
+	| lib start stop hThread sem |
+	lib := KernelLibrary default.
+	hThread := lib getCurrentThread.
+	start := ULARGE_INTEGER new.
+	stop := ULARGE_INTEGER new.
+	sem := Semaphore new.
+	
+	[
+	[lib queryThreadCycleTime: hThread cycleTime: start.
+	timedBlock value.
+	lib queryThreadCycleTime: hThread cycleTime: stop]
+			ensure: [sem signal]]
+			forkAt: Processor userInterruptPriority.
+	sem wait.
+	^stop value - start value!
+
 newInstanceAspect: aSymbol class: aspectClass 
 	"Private - Answer a new <Aspect> of the class, aspectClass, and with name, aSymbol, 
 	which is appropriate for representing aspects of the receiver's type."
 
 	^aspectClass time: aSymbol! !
+!Time class categoriesFor: #cpuCyclesToRun:!operations!public! !
 !Time class categoriesFor: #newInstanceAspect:class:!adapters!development!private! !
 
 !TimeToText class methodsFor!

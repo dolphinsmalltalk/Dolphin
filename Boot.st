@@ -72,7 +72,16 @@ ExternalStructure allSubclasses do: [:e | e byteSize]!
 "Mark all the booted packages as base"
 Package manager markAllPackagesAsBase!
 
-SessionManager current saveImage!
+"Save the booted image"
+| devsesh |
+SourceManager default flushChanges.
+devsesh := SessionManager current.
+devsesh onPreSaveImage.
+[devsesh primSnapshot: devsesh imageFileName
+	backup: false
+	type: 0
+	maxObjects: 24576*1024
+] ensure: [devsesh onPostSaveImage]!
 
 "Remove rogue .img and unnecessary .chg files"
 File delete: (File default: SessionManager current imagePath extension: 'img').
