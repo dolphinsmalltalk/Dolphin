@@ -1,7 +1,7 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 SequenceableCollection subclass: #Interval
-	instanceVariableNames: 'start stop step '
+	instanceVariableNames: 'start stop step'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
