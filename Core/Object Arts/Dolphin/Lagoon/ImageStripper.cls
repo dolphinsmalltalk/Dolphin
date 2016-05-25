@@ -1470,7 +1470,7 @@ snapshot: anImageFilename
 	"We can now empty the method dictionary as every method still required
 	 is on the stack."
 
-	| sesh type  |
+	| sesh type |
 	type := self snapshotType.
 	self class methodDictionary: MethodDictionary new.
 	Smalltalk clearCachedClasses.
@@ -1483,10 +1483,11 @@ snapshot: anImageFilename
 				compact].
 	sesh := SessionManager current.
 	sesh onPreSaveImage.
-	sesh 
+	sesh
 		primSnapshot: anImageFilename
 		backup: false
-		type: type.
+		type: type
+		maxObjects: nil.
 	sesh onPostSaveImage!
 
 snapshotType
