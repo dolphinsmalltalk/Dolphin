@@ -116,22 +116,25 @@ allSelectors
 	^answer!
 
 allSharedPoolNames
-	"Answer a Set of the names of the pools (dictionaries) that are specified in the receiver 
-	in the receiver and each of its superclasses"
+	"Answer a <sequencedReadableCollection> of <Symbol>s, being the names of all the shared pool
+	dictionaries that are specified that are specified in the receiver and each of its
+	superclasses. The list is ordered with the receiver's own pool references first, and then
+	those of the superclass, and so on up the class hierarchy. Pools only appear where first
+	referenced (i.e. no duplicates)."
 
-	| answer |
-	answer := Set new.
-	self withAllSuperclassesDo: [ :c | answer addAll: c sharedPoolNames ].
-	^answer!
+	^self allSharedPools collect: [:each | each name]!
 
 allSharedPools
-	"Answer a Set of the pools (dictionaries) that are specified in the receiver in the receiver 
-	and each of its superclasses"
+	"Answer a <sequencedReadableCollection> of the pools (dictionaries) that are specified in
+	the receiver and each of its superclasses."
 
-	| answer |
-	answer := Set new.
-	self withAllSuperclassesDo: [:c | answer addAll: c sharedPools].
-	^answer!
+	| pools seen |
+	pools := Array writeStream: 5.
+	seen := IdentitySet new.
+	self withAllSuperclassesDo: 
+			[:c |
+			c sharedPoolsDo: [:each | (seen addNewElement: each) ifTrue: [pools nextPut: each]]].
+	^pools contents!
 
 allSubclasses
 	"Answer a <collection> of the receiver's subclasses in 
@@ -860,18 +863,26 @@ shallowCopy
 
 	^self!
 
-sharedPools
-	"Answer a <Set> of <Symbol>s, being the names of the pools (dictionaries) that are
-	specified locally in the receiver."
-
+sharedPoolNames
 	^self subclassResponsibility!
 
-sharedStaticPools
-	"Private - Answer an <Array> of all the shared pools for the receiver (including those
-	inherited from superclasses). Used by compiler, but may be removed in future."
+sharedPools
+	"Answer a <sequencedReadableCollection> of the pools (dictionaries) that are referenced
+	locally in the receiver."
 
-	^self subclassResponsibility
-!
+	| pools |
+	pools := OrderedCollection new.
+	self sharedPoolsDo: [:each | pools add: each].
+	^pools!
+
+sharedPoolsDo: aMonadicValuable
+	"Evaluate the <monadicValuable> argument for each of the shared pools referenced locally for
+	the receiver in order of precedence."
+
+	| environment |
+	environment := self environment.
+	self sharedPoolNames
+		do: [:symbol | (environment at: symbol ifAbsent: []) ifNotNil: [:p | aMonadicValuable value: p]]!
 
 sourceCodeAt: aSymbol
 	"Answer a <String> that is the source code of the receiver's method with selector, aSymbol.
@@ -1175,8 +1186,9 @@ withAllSuperclassesDo: aMonadicValuable
 !Behavior categoriesFor: #setSpecialBehavior:to:!instance specification-accessing!private! !
 !Behavior categoriesFor: #setSuperclass:!class hierarchy-accessing!private! !
 !Behavior categoriesFor: #shallowCopy!copying!public! !
+!Behavior categoriesFor: #sharedPoolNames!pool variables!public! !
 !Behavior categoriesFor: #sharedPools!pool variables!public! !
-!Behavior categoriesFor: #sharedStaticPools!pool variables!private! !
+!Behavior categoriesFor: #sharedPoolsDo:!pool variables!public! !
 !Behavior categoriesFor: #sourceCodeAt:!development!methods-accessing!public! !
 !Behavior categoriesFor: #storeCategoriesOfMethod:!compiling!private! !
 !Behavior categoriesFor: #subclasses!class hierarchy-accessing!public! !

@@ -145,10 +145,14 @@ copyElementsInto: newMe
 
 copyWithoutDuplicates
 	"Answers a copy of the receiver that contains no duplicate objects. 
-	Implementation Note: Sets are already free of duplicates so a plain
-	copy will do."
+	Implementation Note: Set>>distinct answers self, but we need a copy."
 
 	^self shallowCopy!
+
+distinct
+	"Answer a <collection> like the receiver containing only one occurrence of each element."
+
+	^self!
 
 do: operation 
 	"Evaluate the <monadicValuable> argument, operation, for each of the 
@@ -386,6 +390,7 @@ uncheckedAdd: newObject
 !Set categoriesFor: #collisions!development!public!statistics! !
 !Set categoriesFor: #copyElementsInto:!mutating!private! !
 !Set categoriesFor: #copyWithoutDuplicates!copying!public! !
+!Set categoriesFor: #distinct!public!set operations! !
 !Set categoriesFor: #do:!enumerating!public! !
 !Set categoriesFor: #elements!accessing!private! !
 !Set categoriesFor: #elements:!accessing!private! !

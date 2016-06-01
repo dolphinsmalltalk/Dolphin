@@ -196,11 +196,6 @@ DolphinTest subclass: #DateTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-DolphinTest subclass: #DictionaryTest
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
 DolphinTest subclass: #DolphinCollectionTest
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -346,18 +341,8 @@ DolphinTest subclass: #SemaphoreTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-DolphinTest subclass: #SequenceableCollectionTest
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
 DolphinTest subclass: #SessionManagerTest
 	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-DolphinTest subclass: #SetTest
-	instanceVariableNames: 'primes'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -411,6 +396,21 @@ DolphinTest subclass: #VARIANTTest
 	classVariableNames: ''
 	poolDictionaries: 'AXAutomationConstants'
 	classInstanceVariableNames: ''!
+DolphinCollectionTest subclass: #DictionaryTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DolphinCollectionTest subclass: #SequenceableCollectionTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DolphinCollectionTest subclass: #SetTest
+	instanceVariableNames: 'primes'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
 DictionaryTest subclass: #LookupTableTest
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -427,6 +427,56 @@ DictionaryTest subclass: #PoolConstantsDictionaryTest
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 LookupTableTest subclass: #IdentityDictionaryTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+SequenceableCollectionTest subclass: #ArrayedCollectionTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+SequenceableCollectionTest subclass: #IntervalTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+SequenceableCollectionTest subclass: #SequencedGrowableCollectionTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ArrayedCollectionTest subclass: #ArrayTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ArrayedCollectionTest subclass: #ByteArrayTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ArrayedCollectionTest subclass: #StringTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+StringTest subclass: #SymbolTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+StringTest subclass: #UnicodeStringTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+SequencedGrowableCollectionTest subclass: #OrderedCollectionTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+OrderedCollectionTest subclass: #SortedCollectionTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
@@ -507,56 +557,6 @@ SearchPolicyTest subclass: #IdentitySearchPolicyTest
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 SearchPolicyTest subclass: #NeverSearchPolicyTest
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-SequenceableCollectionTest subclass: #ArrayedCollectionTest
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-SequenceableCollectionTest subclass: #IntervalTest
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-SequenceableCollectionTest subclass: #SequencedGrowableCollectionTest
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-ArrayedCollectionTest subclass: #ArrayTest
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-ArrayedCollectionTest subclass: #ByteArrayTest
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-ArrayedCollectionTest subclass: #StringTest
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-StringTest subclass: #SymbolTest
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-StringTest subclass: #UnicodeStringTest
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-SequencedGrowableCollectionTest subclass: #OrderedCollectionTest
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-OrderedCollectionTest subclass: #SortedCollectionTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
@@ -657,7 +657,7 @@ DolphinTestResource subclass: #DolphinTestPackages
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 DolphinTestClassResource subclass: #ClassBuilderTestClasses
-	instanceVariableNames: 'testClass testSubclass1 testSubclass2'
+	instanceVariableNames: 'testClass testSubclass1 testSubclass2 testPool1 testPool2 testPool3'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!

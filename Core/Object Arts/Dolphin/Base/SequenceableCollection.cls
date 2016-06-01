@@ -479,16 +479,6 @@ copyWithoutAll: oldElements
 		do: [:element | (oldElements includes: element) ifFalse: [aStream nextPut: element]].
 	^aStream contents!
 
-copyWithoutDuplicates
-	"Answers a copy of the receiver that contains no duplicate objects.
-	Uses equality for comparison."
-
-	| set |
-	set := self asSet.
-	^self select: [:each | (set includes: each) 
-		ifTrue: [ set remove:each. true ]
-		ifFalse: [ false ]].!
-
 do: operation 
 	"Evaluate the <monadicValuable> argument, operation, for each of the receiver's elements.
 	Answers the receiver. The elements are enumerated in index order."
@@ -1166,7 +1156,6 @@ writeStream
 !SequenceableCollection categoriesFor: #copyWith:!copying!public! !
 !SequenceableCollection categoriesFor: #copyWithout:!copying!public! !
 !SequenceableCollection categoriesFor: #copyWithoutAll:!copying!public! !
-!SequenceableCollection categoriesFor: #copyWithoutDuplicates!copying!public! !
 !SequenceableCollection categoriesFor: #do:!debugger-step through!enumerating!public! !
 !SequenceableCollection categoriesFor: #endsWith:!comparing!public! !
 !SequenceableCollection categoriesFor: #errorFirstObject:!exceptions!private! !

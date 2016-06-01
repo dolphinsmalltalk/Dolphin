@@ -1,6 +1,6 @@
 "Filed out from Dolphin Smalltalk 7"!
 
-DolphinTest subclass: #DictionaryTest
+DolphinCollectionTest subclass: #DictionaryTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
@@ -25,8 +25,14 @@ denyCommutativelyEqual: aDictionary other: anotherDictionary
 	self deny: aDictionary = anotherDictionary.
 	self deny: anotherDictionary = aDictionary!
 
-makeKey: aCharacter
-	^aCharacter codePoint!
+makeKey: anObject
+	^anObject asInteger!
+
+newCollection: anArray
+	| testSubject |
+	testSubject := self newEmpty.
+	anArray do: [:each | testSubject at: (self makeKey: each) put: (self assimilate: each)].
+	^testSubject!
 
 newDictionary
 	| dictionary |
@@ -168,6 +174,7 @@ testRemoveKey
 !DictionaryTest categoriesFor: #collectionClass!helpers!private! !
 !DictionaryTest categoriesFor: #denyCommutativelyEqual:other:!helpers!private! !
 !DictionaryTest categoriesFor: #makeKey:!helpers!private! !
+!DictionaryTest categoriesFor: #newCollection:!helpers!private! !
 !DictionaryTest categoriesFor: #newDictionary!private!unit tests! !
 !DictionaryTest categoriesFor: #newEmpty!helpers!public! !
 !DictionaryTest categoriesFor: #testAtIfAbsent!public!unit tests! !

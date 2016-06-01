@@ -255,10 +255,7 @@ copyWithoutDuplicates
 	"Answers a copy of the receiver that contains no duplicate objects. 
 	Uses equality for comparison."
 
-	| newCollection |
-	newCollection := self copyEmpty.
-	self asSet do: [ :each | newCollection add: each ].
-	^newCollection!
+	^self distinct!
 
 countElements
 	"Private - Count, and answer, the number of elements in the receiver.
@@ -297,6 +294,13 @@ difference: comperand
 	but not the argument."
 
 	^self reject: [:e | comperand includes: e]!
+
+distinct
+	"Answer a <collection> like the receiver containing only one occurrence of each element."
+
+	| seen |
+	seen := Set new.
+	^self select: [:each | seen addNewElement: each]!
 
 do: operation
 	"Evaluate the <monadicValuable> argument, operation, for each of the 
@@ -607,6 +611,7 @@ union: comperand
 !Collection categoriesFor: #detect:!public!searching! !
 !Collection categoriesFor: #detect:ifNone:!public!searching! !
 !Collection categoriesFor: #difference:!public!set operations! !
+!Collection categoriesFor: #distinct!public!set operations! !
 !Collection categoriesFor: #do:!enumerating!public! !
 !Collection categoriesFor: #do:separatedBy:!enumerating!public! !
 !Collection categoriesFor: #errorEmptyCollection!exceptions!private! !

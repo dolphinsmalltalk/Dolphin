@@ -16,13 +16,13 @@ assimilate: anObject
 collectionClass
 	^Array!
 
-newCollection: anArray 
+newCollection: anArray
 	| start interval |
 	anArray isEmpty ifTrue: [^1 to: 0].
 	start := anArray first asInteger.
 	anArray size = 1 ifTrue: [^start to: start].
-	interval := start to: anArray last asInteger by: anArray second asInteger - start.
-	^interval asArray = (self assimilateElements: anArray) 
+	interval := start to: anArray last asInteger by: (anArray second asInteger - start max: 1).
+	^interval asArray = (self assimilateElements: anArray)
 		ifTrue: [interval]
 		ifFalse: [super newCollection: anArray]!
 

@@ -1,6 +1,6 @@
 "Filed out from Dolphin Smalltalk 7"!
 
-DolphinTest subclass: #SetTest
+DolphinCollectionTest subclass: #SetTest
 	instanceVariableNames: 'primes'
 	classVariableNames: ''
 	poolDictionaries: ''
