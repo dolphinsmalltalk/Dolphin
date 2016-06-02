@@ -103,7 +103,6 @@ Compiler::Compiler() :
 		m_primitiveIndex(0),
 		m_selector(),
 		m_sendType(SendOther),
-		m_sharedPools(NULL),
 		m_textMaps(NULL)
 {
 	m_bytecodes.reserve(128);
@@ -147,9 +146,6 @@ void Compiler::Cleanup()
 	// Tidy up internal allocations
 	m_instVars.resize(0);
 
-	delete m_sharedPools;
-	m_sharedPools = NULL;
-	
 	m_class = 0;
 	m_notifier = 0;
 	m_compilerObject = 0;

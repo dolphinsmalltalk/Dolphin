@@ -59,8 +59,10 @@ public:
 	void ScanName();
 	void ScanQualifiedRef();
 	void ScanLiteral();
+	void ScanLiteralCharacter();
 	void ScanSymbol();
 	void ScanBinary();
+	int ReadHexCodePoint();
 	
 	TokenType ThisToken() const;
 	void SetTokenType(TokenType tok);

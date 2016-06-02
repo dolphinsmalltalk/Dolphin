@@ -390,9 +390,6 @@ private:
 	OOPVECTOR m_literalFrame;					// Literal frame
 	int m_literalLimit;
 
-	// Fixed size array of shared pools (determined from class)
-	POTEARRAY* m_sharedPools;			   		// The shared pools known to this class
-
 	// Fixed size array of instance vars (determined from class)
 	typedef std::valarray<Str> STRINGARRAY;
 	STRINGARRAY m_instVars;

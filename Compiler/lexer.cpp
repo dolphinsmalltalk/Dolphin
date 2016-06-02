@@ -71,25 +71,25 @@ void Lexer::CompileErrorV(const TEXTRANGE& range, int code, ...)
 
 void Lexer::SetText(const char* compiletext, int offset)
 {
-	m_tokenType=None;
+	m_tokenType = None;
 	m_buffer = compiletext;
 	m_cp = m_buffer.c_str();
-	m_token = new char[m_buffer.size()+1];
-	m_lineno=1;
-	m_base=offset;
+	m_token = new char[m_buffer.size() + 1];
+	m_lineno = 1;
+	m_base = offset;
 	AdvanceCharPtr(offset);
 }
 
 bool Lexer::IsAClosingChar(char ch) const
 {
 	// Return true if (ch) can close an expression
-	switch (ch) 
+	switch (ch)
 	{
-	case '.': 
-	case ']': 
-	case ')': 
+	case '.':
+	case ']':
+	case ')':
 	case ';':
-	case '\"': 
+	case '\"':
 	case '\'':
 		return true;
 	}
@@ -101,7 +101,7 @@ bool Lexer::IsAClosingChar(char ch) const
 // required to separate negation from a binary operator
 bool Lexer::isAnsiBinaryChar(char ch)
 {
-	switch(ch)
+	switch (ch)
 	{
 	case '!':
 	case '%':
@@ -129,11 +129,11 @@ bool Lexer::IsASingleBinaryChar(char ch) const
 	// Returns true if (ch) is a single binary characater
 	// that can't be continued.
 	//
-	switch (ch) 
+	switch (ch)
 	{
-	case '[': 
-	case '(': 
-	case ')': 
+	case '[':
+	case '(':
+	case ')':
 	case ']':
 	case '#':
 		return true;
@@ -144,29 +144,28 @@ bool Lexer::IsASingleBinaryChar(char ch) const
 inline void Lexer::SkipBlanks()
 {
 	// Skips blanks in the input stream but emits syntax colouring for newlines
-	char ch=m_cc;
+	char ch = m_cc;
 	while (ch && isspace(ch))
-		ch=NextChar();
+		ch = NextChar();
 }
 
 void Lexer::SkipComments()
 {
 	int commentStart = CharPosition();
-	while (m_cc == COMMENTDELIM) 
+	while (m_cc == COMMENTDELIM)
 	{
 		char ch;
 		do
 		{
 			ch = NextChar();
-		}
-		while (ch && ch != COMMENTDELIM);
-		
+		} while (ch && ch != COMMENTDELIM);
+
 		if (!ch)
 		{
 			// Break out at EOF 
 			CompileError(TEXTRANGE(commentStart, CharPosition()), LErrCommentNotClosed);
 		}
-		
+
 		const char* ep = m_cp;
 		NextChar();
 		SkipBlanks();
@@ -189,8 +188,7 @@ void Lexer::ScanFloat()
 		{
 			*tp++ = ch;
 			ch = NextChar();
-		}
-		while (isdigit(ch));
+		} while (isdigit(ch));
 
 		// Read the exponent, if any
 		if (ch == 'e' || ch == 'd' || ch == 'q')
@@ -207,7 +205,7 @@ void Lexer::ScanFloat()
 						PushBack(ch);
 						return;
 					}
-					
+
 					ch = peek;
 				}
 				else
@@ -230,10 +228,10 @@ void Lexer::ScanFloat()
 int Lexer::DigitValue(char ch) const
 {
 	return ch >= '0' && ch <= '9'
-			? ch - '0'
-			: (ch >= 'A' && ch <= 'Z')
-				? ch - 'A' + 10
-				: -1;
+		? ch - '0'
+		: (ch >= 'A' && ch <= 'Z')
+		? ch - 'A' + 10
+		: -1;
 }
 
 // Note that the first digit has already been placed in the token buffer
@@ -251,7 +249,7 @@ void Lexer::ScanInteger(int radix)
 
 		if (m_tokenType == SmallIntegerConst)
 		{
-			if (m_integer < maxval || (m_integer == maxval && digit <= INT_MAX % radix)) 
+			if (m_integer < maxval || (m_integer == maxval && digit <= INT_MAX % radix))
 			{
 				// we won't overflow, go ahead 
 				m_integer = (m_integer * radix) + digit;
@@ -284,8 +282,7 @@ void Lexer::ScanExponentInteger()
 		do
 		{
 			*tp++ = NextChar();
-		}
-		while (isdigit(PeekAtChar()));
+		} while (isdigit(PeekAtChar()));
 		m_tokenType = LargeIntegerConst;
 	}
 	else
@@ -301,11 +298,11 @@ void Lexer::ScanExponentInteger()
 void Lexer::ScanNumber()
 {
 	PushBack(*--tp);
-	
+
 	ScanInteger(10);
-	
+
 	char ch = PeekAtChar();
-	
+
 	// If they both read the same number of characters or the integer ended
 	// in a radix specifier then we got ourselves an integer but we'll need
 	// to check its in range later.
@@ -313,61 +310,61 @@ void Lexer::ScanNumber()
 	switch (ch)
 	{
 	case 'r':
+	{
+		if (m_tokenType != SmallIntegerConst)
+			return;
+
+		if (m_integer >= 2 && m_integer <= 36)
 		{
-			if (m_tokenType != SmallIntegerConst)
-				return;
-			
-			 if (m_integer >= 2 && m_integer <= 36)
-			 {
-				// Probably a short or long integer with a leading radix.
-				
-				*tp++ = NextChar();
-				char* startSuffix = tp;
-				int radix = m_integer;
-				ScanInteger(radix);
-				if (tp == startSuffix)
-				{
-					m_integer = radix;
-					tp--;
-					PushBack(ch);
-				}
-			 }
+			// Probably a short or long integer with a leading radix.
+
+			*tp++ = NextChar();
+			char* startSuffix = tp;
+			int radix = m_integer;
+			ScanInteger(radix);
+			if (tp == startSuffix)
+			{
+				m_integer = radix;
+				tp--;
+				PushBack(ch);
+			}
 		}
-		break;
-		
+	}
+	break;
+
 	case 's':
 		// A ScaledDecimal
 		*tp++ = NextChar();
-		
+
 		// We must read over the trailing scale (optional)
-		while(isdigit(PeekAtChar()))
+		while (isdigit(PeekAtChar()))
 			*tp++ = NextChar();
-		
+
 		m_tokenType = ScaledDecimalConst;
 		break;
-		
+
 	case '.':
 		// Its probably a floating value but might actually
 		// be the end of statement
 		ScanFloat();
-		
+
 		if (PeekAtChar() == 's')
 		{
 			// Its a scaled decimal - include any trailing digits
 			*tp++ = NextChar();
-			
-			while(isdigit(PeekAtChar()))
+
+			while (isdigit(PeekAtChar()))
 				*tp++ = NextChar();
-			
+
 			m_tokenType = ScaledDecimalConst;
 		}
 		break;
-		
+
 	case 'e':
-		{
-			// Allow old St-80 exponent form, such as 1e6
-			ScanExponentInteger();
-		}
+	{
+		// Allow old St-80 exponent form, such as 1e6
+		ScanExponentInteger();
+	}
 
 	default:
 		break;
@@ -387,18 +384,17 @@ void Lexer::ScanString(int stringStart)
 		}
 		else
 		{
-			if (ch==STRINGDELIM)
+			if (ch == STRINGDELIM)
 			{
 				// Possible termination or double quotes
-				if (PeekAtChar()==STRINGDELIM)
+				if (PeekAtChar() == STRINGDELIM)
 					ch = NextChar();
 				else
 					break;
 			}
 			*tp++ = ch;
 		}
-	}
-	while (ch);
+	} while (ch);
 }
 
 void Lexer::ScanName()
@@ -444,12 +440,12 @@ void Lexer::ScanIdentifierOrKeyword()
 	{
 		// It might be a Keyword terminated with a ':' (but not :=)
 		// in which case we need to include it.
-		if (m_cc == ':' && PeekAtChar() != '=') 
+		if (m_cc == ':' && PeekAtChar() != '=')
 		{
 			*tp++ = m_cc;
 			m_tokenType = NameColon;
 		}
-		else 
+		else
 		{
 			PushBack(m_cc);
 		}
@@ -476,7 +472,7 @@ void Lexer::ScanSymbol()
 		}
 	}
 
-	if (lastColon != NULL && *(tp-1) != ':')
+	if (lastColon != NULL && *(tp - 1) != ':')
 	{
 		m_cp = m_cp - (tp - lastColon);
 		tp = lastColon + 1;
@@ -499,7 +495,7 @@ void Lexer::ScanBinary()
 void Lexer::ScanLiteral()
 {
 	// Literal; remove #
-	tp--;	
+	tp--;
 	NextChar();
 
 	if (isIdentifierFirst(m_cc))
@@ -523,7 +519,7 @@ void Lexer::ScanLiteral()
 
 	else if (m_cc == '(')
 	{
-		m_tokenType=ArrayBegin;
+		m_tokenType = ArrayBegin;
 	}
 
 	else if (m_cc == '[')
@@ -551,25 +547,25 @@ Lexer::TokenType Lexer::NextToken()
 {
 	m_lastTokenRange = m_thisTokenRange;
 	NextChar();
-	
+
 	// Skip blanks and comments
 	SkipBlanks();
 	SkipComments();
-	
+
 	// Start remembering this token
 	int start = CharPosition();
 	m_thisTokenRange.m_start = start;
-	
+
 	tp = m_token;
 	char ch = m_cc;
-	
+
 	*tp++ = ch;
-	
+
 	if (!ch)
 	{
 		// Hit EOF straightaway - so be careful not to write another Null term into the token
 		// as this would involve writing off the end of the token buffer
-		m_tokenType=Eof;
+		m_tokenType = Eof;
 		m_thisTokenRange.m_stop = start;
 		m_thisTokenRange.m_start = start + 1;
 	}
@@ -579,12 +575,12 @@ Lexer::TokenType Lexer::NextToken()
 		{
 			ScanIdentifierOrKeyword();
 		}
-		
+
 		else if (isdigit(ch))
 		{
 			ScanNumber();
 		}
-		
+
 		else if (ch == '-' && isdigit(PeekAtChar()))
 		{
 			Step();
@@ -592,39 +588,32 @@ Lexer::TokenType Lexer::NextToken()
 			if (m_tokenType == SmallIntegerConst)
 				m_integer *= -1;
 		}
-		else if (ch == LITERAL) 
+		else if (ch == LITERAL)
 		{
 			ScanLiteral();
 		}
 
-		else if (ch==STRINGDELIM) 
+		else if (ch == STRINGDELIM)
 		{
 			int stringStart = CharPosition();
 			// String constant; remove quote
 			tp--;
 			ScanString(stringStart);
-			
+
 			m_tokenType = StringConst;
 		}
-		
-		else if (ch==CHARLITERAL) 
-		{		
-			// Character constant
-			m_integer=NextChar();
-			if (!m_integer)
-			{
-				int pos = CharPosition();
-				CompileError(TEXTRANGE(pos,pos), LErrExpectChar);
-			}
-			m_tokenType=CharConst;
+
+		else if (ch == CHARLITERAL)
+		{
+			ScanLiteralCharacter();
 		}
-		
-		else if (ch=='^')
+
+		else if (ch == '^')
 		{
 			m_tokenType = Return;
 		}
-		
-		else if (ch==':')
+
+		else if (ch == ':')
 		{
 			if (PeekAtChar() == '=')
 			{
@@ -634,12 +623,12 @@ Lexer::TokenType Lexer::NextToken()
 			else
 				m_tokenType = Special;
 		}
-		
+
 		else if (ch == ')')
 		{
 			m_tokenType = CloseParen;
 		}
-		
+
 		else if (ch == '.')
 		{
 			m_tokenType = CloseStatement;
@@ -655,12 +644,12 @@ Lexer::TokenType Lexer::NextToken()
 			m_tokenType = Cascade;
 		}
 
-		else if (IsASingleBinaryChar(ch)) 
+		else if (IsASingleBinaryChar(ch))
 		{
 			// Single binary expressions
 			m_tokenType = Binary;
 		}
-		
+
 		else if (isAnsiBinaryChar(ch))
 		{
 			m_tokenType = Binary;
@@ -670,7 +659,7 @@ Lexer::TokenType Lexer::NextToken()
 			int pos = CharPosition();
 			CompileError(TEXTRANGE(pos, pos), LErrBadChar);
 		}
-		
+
 		*tp = '\0';
 	}
 
@@ -678,6 +667,108 @@ Lexer::TokenType Lexer::NextToken()
 	return m_tokenType;
 }
 
+void Lexer::ScanLiteralCharacter()
+{
+	m_tokenType = CharConst;
+	m_integer = 0;
+
+	char ch = Step();
+	if (!ch)
+	{
+		// Hit Eof.
+		int pos = CharPosition();
+		CompileError(TEXTRANGE(pos, pos), LErrExpectChar);
+		return;
+	}
+
+	m_integer = ch;
+
+	if (ch == '\\')
+	{
+		// Dolphin supports an extended C-style escaped character syntax (used in many languages)
+		switch (PeekAtChar())
+		{
+		case '0':
+			Step();
+			m_integer = '\0';
+			break;
+		case 'a':
+			Step();
+			m_integer = '\a';
+			break;
+		case 'b':
+			Step();
+			m_integer = '\b';
+			break;
+		case 'f':
+			Step();
+			m_integer = '\f';
+			break;
+		case 'n':
+			Step();
+			m_integer = '\n';
+			break;
+		case 'r':
+			Step();
+			m_integer = '\r';
+			break;
+		case 't':
+			Step();
+			m_integer = '\t';
+			break;
+		case 'v':
+			Step();
+			m_integer = '\v';
+			break;
+		case 'x':
+			{
+				Step();
+				int codePoint = ReadHexCodePoint();
+				if (codePoint < 0 || codePoint > 255)
+				{
+					m_thisTokenRange.m_stop = CharPosition();
+					int pos = CharPosition();
+					CompileError(LErrExpectChar);
+				}
+				else
+				{
+					m_integer = codePoint;
+				}
+			}
+			break;
+		default:
+			break;
+		}
+	}
+}
+
+inline int Lexer::ReadHexCodePoint()
+{
+	int digit = DigitValue(PeekAtChar());
+	if (digit < 0 || digit >= 16)
+	{
+		Step();
+		return -1;
+	}
+
+	int codePoint = 0;
+
+	do
+	{
+		Step();
+		
+		// Avoid potential overflow for long hex sequence 
+		if (codePoint < 256)
+		{
+			codePoint = (codePoint * 16) + digit;
+		}
+
+		digit = DigitValue(PeekAtChar());
+	} 
+	while (digit >= 0 && digit < 16);
+
+	return codePoint;
+}
 
 ///////////////////////////////////////////////////////////////////////////////
 // This is almost a copy of the CRT strtol() function, but because
@@ -686,13 +777,13 @@ Lexer::TokenType Lexer::NextToken()
 // it as similar as possible to those actually in the CRT.
 ///////////////////////////////////////////////////////////////////////////////
 
-inline long Lexer::strtol (
-    const char *nptr,
-    char **endptr,
-    int ibase
-    )
+inline long Lexer::strtol(
+	const char *nptr,
+	char **endptr,
+	int ibase
+	)
 {
-    return (long) strtoxl(nptr, (const char**)endptr, ibase, 0);
+	return (long)strtoxl(nptr, (const char**)endptr, ibase, 0);
 }
 
 
@@ -744,97 +835,97 @@ inline long Lexer::strtol (
 #define FL_NEG        2       /* negative sign found */
 #define FL_OVERFLOW   4       /* overflow occured */
 #define FL_READDIGIT  8       /* we've read at least one correct digit */
-	
-	
-unsigned long Lexer::strtoxl (
-    const char *nptr,
-    const char **endptr,
-    int ibase,
-    int flags
-    )
+
+
+unsigned long Lexer::strtoxl(
+	const char *nptr,
+	const char **endptr,
+	int ibase,
+	int flags
+	)
 {
-    const char *p;
-    char c;
-    unsigned long number;
-    unsigned digval;
-    unsigned long maxval;
-	
-    p = nptr;                       /* p is our scanning pointer */
-    number = 0;                     /* start with zero */
-	
-    c = *p++;                       /* read char */
-    while ( isspace((int)(unsigned char)c) )
+	const char *p;
+	char c;
+	unsigned long number;
+	unsigned digval;
+	unsigned long maxval;
+
+	p = nptr;                       /* p is our scanning pointer */
+	number = 0;                     /* start with zero */
+
+	c = *p++;                       /* read char */
+	while (isspace((int)(unsigned char)c))
 		c = *p++;               /* skip whitespace */
-	
-    if (c == '-') {
+
+	if (c == '-') {
 		flags |= FL_NEG;        /* remember minus sign */
 		c = *p++;
-    }
-    else if (c == '+')
+	}
+	else if (c == '+')
 		c = *p++;               /* skip sign */
-	
+
 	//////////////////////////////////////////////////
 	// BSM MODIFICATION - We don't want the base
 	// detect capability (specified as base 0)
 	//////////////////////////////////////////////////
-    //if (ibase < 0 || ibase == 1 || ibase > 36) {
-    if (ibase <= 1 || ibase > 36) {
+	//if (ibase < 0 || ibase == 1 || ibase > 36) {
+	if (ibase <= 1 || ibase > 36) {
 		/* bad base! */
 		if (endptr)
 			/* store beginning of string in endptr */
 			*endptr = nptr;
 		return 0L;              /* return 0 */
-    }
-    //else if (ibase == 0) {
-    //        /* determine base free-lance, based on first two chars of
-    //           string */
-    //        if (c != '0')
-    //                ibase = 10;
-    //        else if (*p == 'x' || *p == 'X')
-    //                ibase = 16;
-    //        else
-    //                ibase = 8;
-    //}
-	
+	}
+	//else if (ibase == 0) {
+	//        /* determine base free-lance, based on first two chars of
+	//           string */
+	//        if (c != '0')
+	//                ibase = 10;
+	//        else if (*p == 'x' || *p == 'X')
+	//                ibase = 16;
+	//        else
+	//                ibase = 8;
+	//}
+
 	//////////////////////////////////////////////////
 	// BSM MODIFICATION - We don't accept 0xNNN format
 	//////////////////////////////////////////////////
-    //if (ibase == 16) {
-    //        /* we might have 0x in front of number; remove if there */
-    //        if (c == '0' && (*p == 'x' || *p == 'X')) {
-    //                ++p;
-    //                c = *p++;       /* advance past prefix */
-    //        }
-    //}
-	
-    /* if our number exceeds this, we will overflow on multiply */
-    maxval = ULONG_MAX / ibase;
-	
-	
-    for (;;) {      /* exit in middle of loop */
+	//if (ibase == 16) {
+	//        /* we might have 0x in front of number; remove if there */
+	//        if (c == '0' && (*p == 'x' || *p == 'X')) {
+	//                ++p;
+	//                c = *p++;       /* advance past prefix */
+	//        }
+	//}
+
+	/* if our number exceeds this, we will overflow on multiply */
+	maxval = ULONG_MAX / ibase;
+
+
+	for (;;) {      /* exit in middle of loop */
 		/* convert c to value */
-		if ( isdigit((int)(unsigned char)c) )
+		if (isdigit((int)(unsigned char)c))
 			digval = c - '0';
 		///////////////////////////////////////////////
 		// BSM MODIFICATION - HERE CRT USES isalpha(),
 		// we use isupper() which is true for A-Z only.
 		///////////////////////////////////////////////
-		else if ( isupper((int)(unsigned char)c) )
+		else if (isupper((int)(unsigned char)c))
 			digval = /*toupper(*/c/*)*/ - 'A' + 10;
 		else
 			break;
 		if (digval >= (unsigned)ibase)
 			break;          /* exit loop if bad digit found */
-		
+
 		/* record the fact we have read one digit */
 		flags |= FL_READDIGIT;
-		
+
 		/* we now need to compute number = number * base + digval,
 		but we need to know if overflow occured.  This requires
 		a tricky pre-check. */
-		
+
 		if (number < maxval || (number == maxval &&
-            (unsigned long)digval <= ULONG_MAX % ibase)) {
+			(unsigned long)digval <= ULONG_MAX % ibase)) {
 			/* we won't overflow, go ahead and multiply */
 			number = number * ibase + digval;
 		}
@@ -842,45 +933,45 @@ unsigned long Lexer::strtoxl (
 			/* we would have overflowed -- set the overflow flag */
 			flags |= FL_OVERFLOW;
 		}
-		
+
 		c = *p++;               /* read next digit */
-    }
-	
-    --p;                            /* point to place that stopped scan */
-	
-    if (!(flags & FL_READDIGIT)) {
-	/* no number there; return 0 and point to beginning of
-		string */
+	}
+
+	--p;                            /* point to place that stopped scan */
+
+	if (!(flags & FL_READDIGIT)) {
+		/* no number there; return 0 and point to beginning of
+			string */
 		if (endptr)
 			/* store beginning of string in endptr later on */
 			p = nptr;
 		number = 0L;            /* return 0 */
-    }
-    else if ( (flags & FL_OVERFLOW) ||
-		( !(flags & FL_UNSIGNED) &&
-		( ( (flags & FL_NEG) && (number > -LONG_MIN) ) ||
-		( !(flags & FL_NEG) && (number > LONG_MAX) ) ) ) )
-    {
+	}
+	else if ((flags & FL_OVERFLOW) ||
+		(!(flags & FL_UNSIGNED) &&
+			(((flags & FL_NEG) && (number > -LONG_MIN)) ||
+				(!(flags & FL_NEG) && (number > LONG_MAX)))))
+	{
 		/* overflow or signed overflow occurred */
 		///////////////////////////////////////////////
 		// BSM MODIFICATION - DON'T CARE ABOUT errno
 		///////////////////////////////////////////////
 		//errno = ERANGE;
-		if ( flags & FL_UNSIGNED )
+		if (flags & FL_UNSIGNED)
 			number = ULONG_MAX;
-		else if ( flags & FL_NEG )
+		else if (flags & FL_NEG)
 			number = (unsigned long)(-LONG_MIN);
 		else
 			number = LONG_MAX;
-    }
-	
-    if (endptr != NULL)
+	}
+
+	if (endptr != NULL)
 		/* store pointer to char that stopped the scan */
 		*endptr = p;
-	
-    if (flags & FL_NEG)
+
+	if (flags & FL_NEG)
 		/* negate result if there was a neg sign */
 		number = (unsigned long)(-(long)number);
-	
-    return number;                  /* done. */
+
+	return number;                  /* done. */
 }
