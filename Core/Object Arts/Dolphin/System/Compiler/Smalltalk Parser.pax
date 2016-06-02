@@ -90,7 +90,7 @@ Object subclass: #SmalltalkParser
 	classInstanceVariableNames: ''!
 Object subclass: #SmalltalkScanner
 	instanceVariableNames: 'stream buffer tokenStart currentCharacter characterType classificationTable separatorsInLiterals extendedLiterals comments errorBlock nameSpaceCharacter line errorHandler'
-	classVariableNames: 'ClassificationTable PatternVariableCharacter'
+	classVariableNames: 'ClassificationTable EscapeChars PatternVariableCharacter'
 	poolDictionaries: 'SmalltalkParseErrorCodes'
 	classInstanceVariableNames: ''!
 Object subclass: #StLexicalScope

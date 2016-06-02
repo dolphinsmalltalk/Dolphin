@@ -186,12 +186,12 @@ setToEnd
 space
 	"Store a space character as the next element of the receiver"
 
-	self nextPut: Character.Space!
+	self nextPut: $\x20!
 
 tab
 	"Store a tab character as the next element of the receiver"
 
-	self nextPut: Character.Tab!
+	self nextPut: $\t!
 
 tab: tabCount
 	"Append the specified number of tabs to the receiver."

@@ -372,7 +372,7 @@ space
 	This is part of the implementation of the ANSI standard <puttableStream> protocol, which we
 	choose to implement on IStreams. It is only really a valid operation for text streams."
 
-	self nextPut: Character.Space!
+	self nextPut: $\x20!
 
 stat
 	"Answer a STATSTG structure populated with stats for the receiver.
@@ -399,7 +399,7 @@ tab
 	This is part of the implementation of the ANSI standard <puttableStream> protocol, which we
 	choose to implement on IStreams. It is only really a valid operation for text streams."
 
-	self nextPut: Character.Tab!
+	self nextPut: $\t!
 
 unlockFrom: start to: end 
 	"Relinquish an exclusive lock on the specified range of bytes in the receiver."

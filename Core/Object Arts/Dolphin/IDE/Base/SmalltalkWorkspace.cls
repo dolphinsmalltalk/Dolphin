@@ -365,7 +365,7 @@ completeWordAt: anInteger with: aString
 	addSpace := IsAutoCompletionSpaceAdded and: 
 					[| nextChar |
 					nextChar := view characterAt: replaceRange stop + 1.
-					nextChar ~~ Character.Null and: [nextChar isSeparator not]].
+					nextChar ~~ $\0 and: [nextChar isSeparator not]].
 	view
 		selectionRange: replaceRange;
 		replaceSelection: (addSpace ifTrue: [aString , ' '] ifFalse: [aString]).
@@ -883,18 +883,18 @@ maybeShowCompletionList
 	| styleName last |
 	last := view caretPosition - 1.
 	styleName := (view styleAt: last) name.
-	(self 
+	(self
 		autoComplete: styleName
 		at: last
-		maxItems: self maxAutoCompletionListSize) 
+		maxItems: self maxAutoCompletionListSize)
 			ifNil: 
 				["If a space is typed after certain identifiers e.g. an instance
 				 variable in the debugger, or when certain special characters are
 				 typed, we can show a sensible auto-completion list."
 				| char |
 				char := view characterAt: last.
-				((char == $^ and: [styleName == #specialCharacter]) 
-					or: [char == Character.Space and: [(view styleIdAt: last) = (view idOfStyleNamed: #whitespace)]]) 
+				((char == $^ and: [styleName == #specialCharacter])
+					or: [char == Character space and: [(view styleIdAt: last) = (view idOfStyleNamed: #whitespace)]])
 						ifTrue: 
 							[self showCompletionListAfterToken: (self tokenBefore: last) maxItems: self maxAutoCompletionListSize]]!
 
@@ -1442,7 +1442,7 @@ showTipForIndicators: aCollectionOfScintillaIndicators
 			[:each |
 			tip nextPutAll: each tag displayString.
 			last := last max: each range stop + 2]
-		separatedBy: [tip nextPut: Character.Lf].
+		separatedBy: [tip nextPut: $\n].
 	self view showCallTip: tip contents at: last!
 
 startAutocompleteTimer

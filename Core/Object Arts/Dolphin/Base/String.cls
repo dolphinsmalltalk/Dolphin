@@ -561,7 +561,7 @@ isLiteral
 	"Answer whether the receiver can be represented as a literal (i.e. it has a printed
 	representation which can be directly understood by the compiler)."
 
-	^(self identityIncludes: Character.Null) not!
+	^(self identityIncludes: $\0) not!
 
 isString
 	"Answer whether the receiver is a <String>."
@@ -726,7 +726,7 @@ printOn: aStream
 		do: 
 			[:i |
 			| ch |
-			(ch := self at: i) == Character.Null
+			(ch := self at: i) == $\0
 				ifTrue: [aStream nextPut: NullPrintCharacter]
 				ifFalse: [(aStream nextPut: ch) == $' ifTrue: [aStream nextPut: $']]].
 	aStream nextPut: $'!
@@ -1007,12 +1007,12 @@ withNormalizedLineDelimiters
 	eol := self species lineDelimiter.
 	stm do: 
 			[:each |
-			each == Character.Lf
+			each == $\n
 				ifTrue: [target nextPutAll: eol]
 				ifFalse: 
-					[each == Character.Cr
+					[each == $\r
 						ifTrue: 
-							[stm peekFor: Character.Lf.
+							[stm peekFor: $\n.
 							target nextPutAll: eol]
 						ifFalse: [target nextPut: each]]].
 	^target contents! !

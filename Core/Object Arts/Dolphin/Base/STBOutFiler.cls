@@ -140,7 +140,7 @@ resetStream
 	stream
 		nextPutAll: self class signature;
 		nextPutAll: self class version displayString asByteArray;
-		nextPut: Character.Space codePoint!
+		nextPut: Character space codePoint!
 
 saveObject: aNonImmediateObject
 	"Write anObject to the stream in STB format as normal.
