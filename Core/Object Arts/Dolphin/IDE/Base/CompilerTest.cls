@@ -240,6 +240,26 @@ testByteArraysInLiteralArrays
 						with: #[0 255]
 						with: 2)!
 
+testCharacterScanning
+	| result |
+	0 to: 255
+		do: 
+			[:i |
+			| ch |
+			ch := Character value: i.
+			result := self evaluateExpression: ch printString.
+			self assert: result == ch.
+			result := self evaluateExpression: '$\x' , i asHexString.
+			self assert: result == ch].
+	result := self evaluateExpression: '$\.'.
+	self assert: result == (Character value: 92).
+	result := self evaluateExpression: '$\codePoint'.
+	self assert: result == 92.
+	self
+		should: [self evaluateExpression: '$\xAG']
+		raise: MessageNotUnderstood
+		matching: [:ex | ex tag = (Message selector: #G)]!
+
 testCompileTimeExpressions
 	| result |
 	self shouldnt: [result := self evaluateExpression: '##()'] raise: self compilationErrorClass.
@@ -1360,6 +1380,7 @@ testWriteAccessor
 !CompilerTest categoriesFor: #testBlockTempsMap!public!unit tests! !
 !CompilerTest categoriesFor: #testBlockWithAllTempTypes!public!unit tests! !
 !CompilerTest categoriesFor: #testByteArraysInLiteralArrays!public!unit tests! !
+!CompilerTest categoriesFor: #testCharacterScanning!public!unit tests! !
 !CompilerTest categoriesFor: #testCompileTimeExpressions!public!unit tests! !
 !CompilerTest categoriesFor: #testConstExpressionReferences!public!unit tests! !
 !CompilerTest categoriesFor: #testCopyingBlocks1!public!unit tests! !

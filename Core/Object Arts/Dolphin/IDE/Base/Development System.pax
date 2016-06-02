@@ -3603,7 +3603,7 @@ walkback: aString topFrame: aStackFrame resumable: aBoolean
 	| answer traceStream debuggable titleString |
 	Processor enableAsyncEvents: true.
 	titleString := aString
-				collect: [:each | (each == Character.Cr or: [each == Character.Lf]) ifTrue: [$\] ifFalse: [each]].
+				collect: [:each | (each == $\r or: [each == $\n]) ifTrue: [$\] ifFalse: [each]].
 	debugger isNil
 		ifFalse: 
 			[^debugger
@@ -4851,7 +4851,7 @@ aspectDisplayOn: aStream
 	[i < max] whileTrue: 
 			[| each |
 			each := self at: (i := i + 1).
-			(each == Character.Cr or: [each == Character.Lf])
+			(each == $\r or: [each == $\n])
 				ifTrue: [max := 0]
 				ifFalse: [aStream nextPut: each]].
 	i < size ifTrue: [aStream nextPutAll: ' ...'].

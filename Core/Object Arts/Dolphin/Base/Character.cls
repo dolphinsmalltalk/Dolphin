@@ -2,12 +2,11 @@
 
 Magnitude subclass: #Character
 	instanceVariableNames: 'asciiValue'
-	classVariableNames: 'Backspace CharacterSet Cr Eof Esc Lf NewPage Null Space SpecialChars Tab'
+	classVariableNames: 'CharacterSet EscapeChars'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Character guid: (GUID fromString: '{87B4C651-026E-11D3-9FD7-00A0CC3E4A32}')!
-Character addClassConstant: 'Space' value: $ !
-Character addClassConstant: 'SpecialChars' value: #('Null' nil nil nil nil nil nil nil 'Backspace' 'Tab' 'Lf' nil 'NewPage' 'Cr' nil nil nil nil nil nil nil nil nil nil nil nil 'Eof' 'Esc' nil nil nil nil 'Space')!
+Character addClassConstant: 'EscapeChars' value: #($0 nil nil nil nil nil nil $a $b $t $n $v $f $r)!
 Character comment: 'Character is the class of objects which serve as the elemental values of Smalltalk Strings. There is a finite set of Characters (256 in the current Dolphin implementation). Characters have a literal syntax which is the $ symbol followed by the normal printed representation of the character.
 
 Note that the ANSI standard does not require that Characters be identity objects, but they are in Dolphin.
@@ -208,7 +207,7 @@ isLetter
 isLinefeed
 	"Answer whether the receiver is the line-feed character."
 
-	^self == Lf!
+	^self == $\n!
 
 isLiteral
 	"Answer whether the receiver has a literal representation which is directly recognised by
@@ -269,25 +268,19 @@ printOn: aStream
 	"Append the ASCII representation of the receiver to aStream as a developer would want to see
 	it."
 
-	self isLiteral
-		ifTrue: 
-			[aStream
-				nextPut: $$;
-				nextPut: self]
+	aStream nextPut: $$.
+	(asciiValue > 32 and: [asciiValue ~= 127])
+		ifTrue: [aStream nextPut: self]
 		ifFalse: 
-			[aStream display: self class.
-			(SpecialChars at: asciiValue + 1 ifAbsent: [])
-				ifNotNil: 
-					[:name |
-					aStream
-						nextPut: $.;
-						nextPutAll: name]
+			[aStream nextPut: $\.
+			(EscapeChars at: asciiValue + 1 ifAbsent: [])
+				ifNotNil: [:char | aStream nextPut: char]
 				ifNil: 
-					[aStream
-						space;
-						nextPutAll: #value:;
-						space;
-						display: asciiValue]]!
+					[aStream nextPut: $x.
+					asciiValue
+						printOn: aStream
+						base: 16
+						showRadix: false]]!
 
 shallowCopy
 	"Answer the receiver, as Characters have a unique representation for
@@ -357,7 +350,7 @@ Character methodProtocol: #Character attributes: #(#ansi #readOnly) selectors: #
 backspace
 	"Answer the backspace Character"
 
-	^Backspace
+	^$\b
 !
 
 basicNew
@@ -384,7 +377,7 @@ codePoint: integer
 cr
 	"Answer the carriage return <Character>."
 
-	^Cr!
+	^$\r!
 
 digitValue: anInteger
 	"Answer the Character that corresponds to anInteger.  0-9 map to $0-$9,
@@ -397,13 +390,12 @@ eof
 	"Answer the EOF (Ctrl+Z) character.
 	DOS interprets this character as marking the end of a file."
 
-	^Eof!
+	^$\x1A!
 
 esc
 	"Answer the escape Character"
 
-	^Esc
-!
+	^$\x1B!
 
 icon
 	"Answers an Icon that can be used to represent this class"
@@ -411,30 +403,23 @@ icon
 	^##(self) defaultIcon!
 
 initialize
-	| specialChars consts codePoints |
 	self addClassConstant: 'CharacterSet' value: CharacterSet.
-	self addClassConstant: 'Lf' value: (self value: 10).
-	self addClassConstant: 'Null' value: (self value: 0).
-	self addClassConstant: 'Space' value: (self value: 32).
-	self addClassConstant: 'Tab' value: (self value: 9).
-	self addClassConstant: 'Cr' value: (self value: 13).
-	self addClassConstant: 'Backspace' value: (self value: 8).
-	self addClassConstant: 'Eof' value: (self value: 26).
-	self addClassConstant: 'Esc' value: (self value: 27).
-	self addClassConstant: 'NewPage' value: (self value: 12).
-	consts := self classPool associations select: [:each | each value isKindOf: self].
-	codePoints := consts collect: [:each | each value codePoint].
-	specialChars := Array new: (codePoints inject: 0 into: [:max :each | max max: each]) + 1.
-	codePoints with: consts do: [:eachCp :eachSel | specialChars at: eachCp + 1 put: eachSel key].
-	self addClassConstant: 'SpecialChars'
-		value: (specialChars
-				isImmutable: true;
+	self addClassConstant: 'EscapeChars'
+		value: ((Array new: 14)
+				at: 0 + 1 put: $0;
+				at: 7 + 1 put: $a;
+				at: 8 + 1 put: $b;
+				at: 9 + 1 put: $t;
+				at: 10 + 1 put: $n;
+				at: 11 + 1 put: $v;
+				at: 12 + 1 put: $f;
+				at: 13 + 1 put: $r;
 				yourself)!
 
 lf
 	"Answer the linefeed <Character>."
 
-	^Lf!
+	^$\n!
 
 new
 	"Characters are immediate objects, and cannot be instantiated directly, they
@@ -447,29 +432,28 @@ new
 newPage
 	"Answer the new page Character."
 
-	^NewPage
+	^$\f
 !
 
 nl
 	"Answer the new line <Character> (synonym for lf)"
 
-	^Lf!
+	^$\n!
 
 null
 	"Answer the NULL-terminator character"
 
-	^Null
-!
+	^$\0!
 
 space
 	"Answer the space <Character>."
 
-	^Space!
+	^$\x20!
 
 tab
 	"Answer the tab <Character>."
 
-	^Tab!
+	^$\t!
 
 value: anInteger
 	"Answer the character with ascii value, anInteger. If anInteger is not in the range 0..255, 

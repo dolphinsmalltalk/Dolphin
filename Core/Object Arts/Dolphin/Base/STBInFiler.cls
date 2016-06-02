@@ -236,7 +236,7 @@ resetAndValidateStream
 	version := 0.
 	[(char := Character value: stream next) isDigit]
 		whileTrue: [version := version * 10 + char digitValue].
-	char = Character.Space ifFalse: [self class errorNotSTB].
+	char == Character space ifFalse: [self class errorNotSTB].
 	version > self class version ifTrue: [self class errorVersion: version]!
 
 setRefOffset: anInteger

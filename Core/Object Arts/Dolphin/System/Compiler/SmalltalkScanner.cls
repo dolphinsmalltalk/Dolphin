@@ -2,7 +2,7 @@
 
 Object subclass: #SmalltalkScanner
 	instanceVariableNames: 'stream buffer tokenStart currentCharacter characterType classificationTable separatorsInLiterals extendedLiterals comments errorBlock nameSpaceCharacter line errorHandler'
-	classVariableNames: 'ClassificationTable PatternVariableCharacter'
+	classVariableNames: 'ClassificationTable EscapeChars PatternVariableCharacter'
 	poolDictionaries: 'SmalltalkParseErrorCodes'
 	classInstanceVariableNames: ''!
 SmalltalkScanner guid: (GUID fromString: '{F76F2335-9125-488E-A570-5A759A6E67B7}')!
@@ -191,6 +191,18 @@ previousStepPosition
 		ifTrue: [stream position]
 		ifFalse: [stream position - 1]!
 
+readIntegerOfRadix: anInteger
+	| value |
+	value := nil.
+	[self atEnd] whileFalse: 
+			[| digit |
+			((digit := currentCharacter digitValue) < anInteger and: [digit >= 0])
+				ifTrue: 
+					[self step.
+					value := (value ?? 0) * anInteger + digit]
+				ifFalse: [^value]].
+	^value!
+
 readNumber
 	| number |
 	stream skip: -1.
@@ -347,14 +359,32 @@ scanLiteralArrayToken
 	^token!
 
 scanLiteralCharacter
-	| token |
+	| token stop value |
 	self step.	"$"
 	self atEnd ifTrue: [^self characterExpected].
-	token := self literalTokenClass 
-				value: currentCharacter
-				start: tokenStart
-				stop: stream position.
+	stop := stream position.
+	value := currentCharacter.
 	self step.	"char"
+	"Extended syntax for special characters?"
+	(value == $\ and: [extendedLiterals])
+		ifTrue: 
+			[(EscapeChars at: currentCharacter ifAbsent: [])
+				ifNil: 
+					[currentCharacter == $x
+						ifTrue: 
+							[| codePoint |
+							self step.
+							codePoint := self readIntegerOfRadix: 16.
+							(codePoint isNil or: [codePoint > 255]) ifTrue: [^self characterExpected].
+							value := Character value: codePoint]]
+				ifNotNil: 
+					[:char |
+					value := char.
+					self step]].
+	token := self literalTokenClass
+				value: value
+				start: tokenStart
+				stop: stop.
 	^token!
 
 scanLiteralString
@@ -520,7 +550,7 @@ stripComment
 	[| ch |
 	stream atEnd ifTrue: [^self unterminatedComment: start].
 	ch := stream next.
-	ch == Character.Lf ifTrue: [line := line + 1].
+	ch == $\n ifTrue: [line := line + 1].
 	ch == $"]
 			whileFalse.
 	stop := stream position.
@@ -574,6 +604,7 @@ unterminatedString
 !SmalltalkScanner categoriesFor: #numberTokenClass!public! !
 !SmalltalkScanner categoriesFor: #on:!initializing!private! !
 !SmalltalkScanner categoriesFor: #previousStepPosition!accessing!private! !
+!SmalltalkScanner categoriesFor: #readIntegerOfRadix:!private!scanning! !
 !SmalltalkScanner categoriesFor: #readNumber!private!scanning! !
 !SmalltalkScanner categoriesFor: #recoverFromIllegalCharacter!error handling!private! !
 !SmalltalkScanner categoriesFor: #recoverFromIllegalNumber:!error handling!private! !
@@ -609,8 +640,17 @@ unterminatedString
 !SmalltalkScanner class methodsFor!
 
 initialize
+	| escapeChars |
 	PatternVariableCharacter := $`.
-	self initializeClassificationTable!
+	self initializeClassificationTable.
+	escapeChars := IdentityDictionary new.
+	Character.EscapeChars
+		keysAndValuesDo: [:i :c | c ifNotNil: [escapeChars at: c put: (Character value: i - 1)]].
+	self addClassConstant: 'EscapeChars'
+		value: (escapeChars
+				shrink;
+				isImmutable: true;
+				yourself)!
 
 initializeClassificationTable
 	| classificationTable |

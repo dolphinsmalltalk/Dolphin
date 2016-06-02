@@ -10,6 +10,10 @@ SmalltalkParserTest comment: 'SUnitBrowser openOnTestCase: self'!
 !SmalltalkParserTest categoriesForClass!Refactory-Testing! !
 !SmalltalkParserTest methodsFor!
 
+assertToken: aStToken isChar: aCharacter
+	self assert: aStToken isLiteralToken.
+	self assert: aStToken value == aCharacter!
+
 buildArgumentSearch
 	self 
 		createArgumentSearchWith: 'aNode'
@@ -195,6 +199,35 @@ testBlockRewrites
 				parseMethod: 'method: asdf
 	<primitive: 1>
 	^asdf +  foo + fdsa')!
+
+testCharacterScanning
+	| subject tok |
+	0 to: 255
+		do: 
+			[:i |
+			| char ch |
+			ch := Character value: i.
+			subject := self scannerClass on: ch printString readStream.
+			char := subject next.
+			self assertToken: char isChar: ch.
+			self assert: subject next isEof.
+			subject := self scannerClass on: ('$\x' , i asHexString) readStream.
+			char := subject next.
+			self assertToken: char isChar: ch.
+			self assert: subject next isEof].
+	subject := self scannerClass on: '$\.' readStream.
+	self assertToken: subject next isChar: (Character value: 92).
+	self assert: (subject next isSpecial: $.).
+	subject := self scannerClass on: '$\c' readStream.
+	self assertToken: subject next isChar: (Character value: 92).
+	tok := subject next.
+	self assert: tok isIdentifier.
+	self assert: 'c' equals: tok value.
+	subject := self scannerClass on: '$\xAG' readStream.
+	self assertToken: subject next isChar: (Character value: 16rA).
+	tok := subject next.
+	self assert: tok isIdentifier.
+	self assert: 'G' equals: tok value!
 
 testComparingTrees
 	| class |
@@ -593,6 +626,7 @@ verifySelector: aSelector inClass: aClass
 				compile: source
 				in: aClass))
 ! !
+!SmalltalkParserTest categoriesFor: #assertToken:isChar:!helpers!private! !
 !SmalltalkParserTest categoriesFor: #buildArgumentSearch!accessing!private! !
 !SmalltalkParserTest categoriesFor: #buildMessageSearch!accessing!private! !
 !SmalltalkParserTest categoriesFor: #buildMethodArgumentSearch!accessing!private! !
@@ -617,6 +651,7 @@ verifySelector: aSelector inClass: aClass
 !SmalltalkParserTest categoriesFor: #testAllSearches!public!unit tests! !
 !SmalltalkParserTest categoriesFor: #testBestNodeFor!public!unit tests! !
 !SmalltalkParserTest categoriesFor: #testBlockRewrites!public!unit tests! !
+!SmalltalkParserTest categoriesFor: #testCharacterScanning!public!unit tests! !
 !SmalltalkParserTest categoriesFor: #testComparingTrees!public!unit tests! !
 !SmalltalkParserTest categoriesFor: #testCopy!public!unit tests! !
 !SmalltalkParserTest categoriesFor: #testCreationProtocol!public!unit tests! !

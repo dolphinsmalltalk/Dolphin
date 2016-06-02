@@ -441,7 +441,7 @@ lineOfSourcePosition: position
 	stream := methodNode source readStream.
 	line := 1.
 	[stream atEnd not and: [stream position < position]] 
-		whileTrue: [stream next == Character.Lf ifTrue: [line := line + 1]].
+		whileTrue: [stream next == $\n ifTrue: [line := line + 1]].
 	^line!
 
 newLiteralsCollection

@@ -174,14 +174,14 @@ parseExprError: aString range: anInterval line: lineInteger code: anInteger
 		code: anInteger
 		message: (self errorFormats at: anInteger)!
 
-parseExprError: aString range: anInterval line: lineInteger code: anInteger message: msgString 
-	self 
+parseExprError: aString range: anInterval line: lineInteger code: anInteger message: msgString
+	self
 		should: [[self parseExpression: aString] on: self compilationWarningClass do: [:ex | ex resume]]
 		raise: self compilationErrorClass
 		matching: 
-			[:ex | 
+			[:ex |
 			self traceException: ex source: aString.
-			self 
+			self
 				checkCompileError: ex
 				range: anInterval
 				code: anInteger
@@ -844,29 +844,28 @@ testErrorsInvalidExpressionStart
 		code: CErrInvalExprStart!
 
 testErrorsLexical
-	"Non-ascii char"
-
-	"eof when expecting character const"
 	| text start badChar |
-	self 
-		parseExprError: '$'
-		range: (1 to: 1)
-		line: 1
-		code: LErrExpectChar
-		message: 'character expected'.
+	#('$' '$\x' '$\xG' '$\x100' '$\xFFFFFFFF') do: 
+			[:each |
+			self
+				parseExprError: each
+				range: (1 to: each size)
+				line: 1
+				code: LErrExpectChar
+				message: 'character expected'].
 	"VW binding char"
 	text := '"A VW binding"
 		{Smalltalk.Object}'.
 	badChar := ${.
 	start := text indexOf: badChar.
-	self 
+	self
 		parseExprError: text
 		range: (start to: start)
 		line: 2
 		code: LErrBadChar
 		message: ((self errorFormats at: LErrBadChar) expandMacrosWith: badChar).
 	"VW binding char in const expression"
-	self 
+	self
 		parseExprError: ('#(<1s>)' expandMacrosWith: badChar)
 		range: (3 to: 3)
 		line: 1
@@ -877,26 +876,26 @@ testErrorsLexical
 		"Newline in ...
 		... comment" #(() 1 a ''a'' 1.0 :)'.
 	start := text indexOf: $:.
-	self 
+	self
 		parseExprError: text
 		range: (start to: start)
 		line: 3
 		code: CErrBadTokenInArray
 		message: 'illegal text '':'' in literal array'.
 	"Unclosed comment"
-	self 
+	self
 		lexicalError: '"blah blah ...'
 		range: (1 to: 14)
 		line: 1
 		code: LErrCommentNotClosed.
 	"Unclosed string"
-	self 
+	self
 		lexicalError: '''blah blah ...'
 		range: (1 to: 14)
 		line: 1
 		code: LErrStringNotClosed.
 	"Unclosed array"
-	self 
+	self
 		lexicalError: '#(() 1 a ''a'' 1.0 &'
 		range: (1 to: 18)
 		line: 1
@@ -906,28 +905,27 @@ testErrorsLexical
 		1
 		 (a ''a'' 1.0 &'.
 	start := text lastIndexOf: $(.
-	self 
+	self
 		lexicalError: text
 		range: (start to: text size)
 		line: 3
 		code: CErrArrayNotClosed.
 	"Invalid symbol"
-	self 
+	self
 		lexicalError: '1 + #23'
 		range: (5 to: 6)
 		line: 1
 		code: LErrExpectConst.
-	(Array with: (Character value: 128)) 
-		, ((Character byteCharacterSet select: [:each | each isLetter]) 
-				difference: 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz') 
-			do: 
-				[:each | 
-				self 
-					parseExprError: '#(' , each asString
-					range: (3 to: 3)
-					line: 1
-					code: LErrBadChar
-					message: ((self errorFormats at: LErrBadChar) expandMacrosWith: each)]!
+	(Array with: (Character value: 128)) , ((Character byteCharacterSet select: [:each | each isLetter])
+				difference: 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz')
+		do: 
+			[:each |
+			self
+				parseExprError: '#(' , each asString
+				range: (3 to: 3)
+				line: 1
+				code: LErrBadChar
+				message: ((self errorFormats at: LErrBadChar) expandMacrosWith: each)]!
 
 testErrorsLiteralArray
 	| text start mark |

@@ -1357,7 +1357,7 @@ Magnitude subclass: #Association
 	classInstanceVariableNames: ''!
 Magnitude subclass: #Character
 	instanceVariableNames: 'asciiValue'
-	classVariableNames: 'Backspace CharacterSet Cr Eof Esc Lf NewPage Null Space SpecialChars Tab'
+	classVariableNames: 'CharacterSet EscapeChars'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Magnitude subclass: #Date

@@ -3843,7 +3843,7 @@ wrapText: aString toWidth: max indent: colInteger tabWidth: tabInteger
 			lines := 0.
 			original skipWhile: 
 					[:each |
-					each = Character.Lf ifTrue: [lines := lines + 1].
+					each = $\n ifTrue: [lines := lines + 1].
 					each isSeparator].
 			lines > 1
 				ifTrue: 

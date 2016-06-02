@@ -174,7 +174,7 @@ addAnnotation: aScintillaAnnotation
 			[:existing | 
 			newText := WriteStream with: existing text.
 			"Add the LF separator"
-			newText nextPut: Character.Lf.
+			newText nextPut: $\n.
 			newStyles := WriteStream with: existing styles.
 			"Add a style byte for the LF separator"
 			newStyles nextPut: 0].
@@ -249,7 +249,7 @@ annotateLine: anInteger withAll: aCollectionOfScintillaAnnotation
 			text nextPutAll: each text.
 			self printAnnotationStyleBytes: each on: styleBytes]
 		separatedBy: 
-			[text nextPut: Character.Lf.
+			[text nextPut: $\n.
 			styleBytes nextPut: 0].
 	self 
 		basicAnnotateLine: anInteger
@@ -298,7 +298,7 @@ annotationsFromRawAnnotation: aScintillaAnnotation
 	| line text linesOfText count |
 	line := aScintillaAnnotation line + 1.
 	text := aScintillaAnnotation text.
-	linesOfText := text subStrings: Character.Lf.
+	linesOfText := text subStrings: $\n.
 	count := linesOfText size.
 	^count == 1 
 		ifTrue: 
@@ -855,7 +855,7 @@ buildRawAnnotations: aCollectionOfScintillaAnnotations
 					ifTrue: [firstInLine := false]
 					ifFalse: 
 						["Each line of annotations is separated by a single line feed character"
-						text nextPut: Character.Lf.
+						text nextPut: $\n.
 						"We must provide a style byte for the linefeed as well"
 						styleBytes nextPut: 0].
 				text nextPutAll: eachAnnotation text.
