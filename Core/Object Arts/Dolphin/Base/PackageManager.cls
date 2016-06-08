@@ -510,7 +510,10 @@ install: aString
 	[newPackages do: 
 			[:each | 
 			self addPackage: each.
-			[self basicInstall: each] ifCurtailed: [self basicUninstall: each].
+			[
+				self basicInstall: each.
+				self trigger: #packageInstalled with: each.
+			] ifCurtailed: [self basicUninstall: each].
 			self observePackage: each]] 
 			ensure: 
 				[self beProcessingEvents.
