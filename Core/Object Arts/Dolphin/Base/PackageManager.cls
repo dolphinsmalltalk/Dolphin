@@ -512,7 +512,7 @@ install: aString
 			self addPackage: each.
 			[
 				self basicInstall: each.
-				self trigger: #packageInstalled with: each.
+				self trigger: #packageInstalled: with: each.
 			] ifCurtailed: [self basicUninstall: each].
 			self observePackage: each]] 
 			ensure: 
