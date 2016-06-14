@@ -3363,6 +3363,7 @@ publishedEventsOfInstances
 		add: #resourceRepackaged:from:to:;
 		add: #globalRepackaged:from:to:;
 		add: #aboutToSave:;
+		add: #packageInstalled:;
 		yourself! !
 !PackageManager class categoriesFor: #publishedEventsOfInstances!development!events!public! !
 
