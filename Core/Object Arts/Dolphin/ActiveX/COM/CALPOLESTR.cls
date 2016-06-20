@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 OLECountedArray subclass: #CALPOLESTR
 	instanceVariableNames: ''
@@ -16,9 +16,11 @@ basicFree
 	"Private - Free external resources owned by the receiver.
 	Not only is the array allocated from the task heap, but also each of the individual strings in it."
 
-	| allocator |
+	| allocator pElems |
 	allocator := COMTaskMemory allocator.
-	super elements do: [:a | allocator Free: a].
+	pElems := self pElems.
+	0 to: self length - 1
+		do: [:i | allocator Free: (pElems uintPtrAtOffset: i * VMConstants.IntPtrSize)].
 	super basicFree!
 
 getElements

@@ -987,32 +987,32 @@ buildMethodName: aFUNCDESC defaultOptionals: aBoolean
 		argumentNames: argumentNames
 		indices: indices!
 
-buildPublishedAspects: aLookupTable forObject: anIUnknown 
+buildPublishedAspects: aLookupTable forObject: anIUnknown
 	| ppb |
 	self isRestricted ifTrue: [^self].
-	self superInterface 
+	self superInterface
 		ifNotNil: [:supertype | supertype buildPublishedAspects: aLookupTable forObject: anIUnknown].
 	ppb := anIUnknown queryInterface: IPerPropertyBrowsing.
 	self variables do: 
-			[:each | 
-			each isInspectable 
+			[:each |
+			each isInspectable
 				ifTrue: 
 					[| aspect |
-					aspect := self newAspectForMember: ppb ppb: each.
+					aspect := self newAspectForMember: each ppb: ppb.
 					each isReadOnly ifTrue: [aspect beReadOnly].
 					aLookupTable add: aspect]].
 	self methods do: 
-			[:each | 
-			each isInspectable 
+			[:each |
+			each isInspectable
 				ifTrue: 
 					[| aspect |
 					aspect := aLookupTable at: each name
 								ifAbsentPut: 
-									[(self newAspectForMember: ppb ppb: each)
+									[(self newAspectForMember: each ppb: ppb)
 										beInaccessible;
 										yourself].
-					aspect 
-						flags: (aspect flags maskSet: (each isPropGet 
+					aspect
+						flags: (aspect flags maskSet: (each isPropGet
 										ifTrue: [ReadableMask]
 										ifFalse: 
 											[self assert: [each isPropSet].
@@ -1506,19 +1506,20 @@ isProtocolRequired
 methodCommentDescription
 	^'method of the COM object'!
 
-newAspectForMember: ppb ppb: each 
+newAspectForMember: anAxMemberDesc ppb: anIPerPropertyBrowsing
 	| map name aspect vartype |
-	map := ppb notNil ifTrue: [ppb stringsToValues: each memid].
-	name := each name.
-	vartype := each tdesc vartype.
-	aspect := (map isNil or: [map isEmpty]) 
+	map := anIPerPropertyBrowsing
+				ifNotNil: [anIPerPropertyBrowsing stringsToValues: anAxMemberDesc memid].
+	name := anAxMemberDesc name.
+	vartype := anAxMemberDesc tdesc vartype.
+	aspect := (map isNil or: [map isEmpty])
 				ifTrue: [(VARIANT classForVT: vartype) newInstanceAspect: name class: DispatchAspect]
 				ifFalse: 
-					[DispatchAspect 
+					[DispatchAspect
 						choice: name
 						fromMap: map
 						nullValue: (vartype == VT_BSTR ifTrue: [''])].
-	aspect dispid: each memid.
+	aspect dispid: anAxMemberDesc memid.
 	^aspect!
 
 printArgument: anELEMDESC named: aString on: aPuttableStream 
