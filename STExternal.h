@@ -26,6 +26,14 @@ typedef TOTE<ST::ExternalStructure> StructureOTE;
 typedef TOTE<ST::ExternalAddress> AddressOTE;
 typedef TOTE<ST::ExternalHandle> HandleOTE;
 
+struct COMThunk
+{
+	PROC*	vtbl;
+	DWORD*	argSizes;
+	DWORD	id;
+	DWORD	subId;
+};
+
 namespace ST
 {
 	class ExternalStructure //: public Object

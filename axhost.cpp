@@ -96,8 +96,12 @@ public:
 // IOleClientSite
 	STDMETHOD(ShowObject)();
 
-// IOleInPlaceSite (bug fix overrides)
+// IOleInPlaceSiteEx (bug fix overrides)
 	STDMETHOD(OnPosRectChange)(LPCRECT lprcPosRect);
+
+	STDMETHOD(OnInPlaceActivateEx)(
+		_In_opt_ BOOL* /*pfNoRedraw*/,
+		DWORD dwFlags);
 };
 
 #ifndef IS_INTRESOURCE
@@ -328,6 +332,44 @@ STDMETHODIMP CDolphinAxHost::OnPosRectChange(LPCRECT /*lprcPosRect*/)
 
 	return S_OK;	
 } 
+
+STDMETHODIMP CDolphinAxHost::OnInPlaceActivateEx(
+	_In_opt_ BOOL* pfNoRedraw,
+	DWORD dwFlags)
+{
+	// Base ATL version assumes not called more than once, and leaks if it is
+	if (!m_bInPlaceActive)
+	{
+		ATLASSUME(m_spInPlaceObjectWindowless == NULL);
+
+		m_bInPlaceActive = TRUE;
+		OleLockRunning(m_spOleObject, TRUE, FALSE);
+		HRESULT hr = E_FAIL;
+		if (dwFlags & ACTIVATE_WINDOWLESS)
+		{
+			m_bWindowless = TRUE;
+			hr = m_spOleObject->QueryInterface(__uuidof(IOleInPlaceObjectWindowless), (void**)&m_spInPlaceObjectWindowless);
+		}
+		if (FAILED(hr))
+		{
+			m_bWindowless = FALSE;
+			hr = m_spOleObject->QueryInterface(__uuidof(IOleInPlaceObject), (void**)&m_spInPlaceObjectWindowless);
+		}
+
+		// Base ATL version always calls IOleInPlaceObject::SetObjectRects here, which crashes windowed MFC-based controls as the window will not have 
+		// been created yet. I'm not sure SetObjectRects is every necessary here, but I'm also not sure of the consequences of removing it even for
+		// windowless controls.
+		if (m_spInPlaceObjectWindowless && m_bWindowless)
+		{
+			m_spInPlaceObjectWindowless->SetObjectRects(&m_rcPos, &m_rcPos);
+		}
+	}
+
+	// Base ATL version fails to set the output param. Not sure if this host correctly supports not redrawing on activation though
+	*pfNoRedraw = FALSE;
+
+	return S_OK;
+}
 
 // Copied from AtlAxWindowProc(2). Only the WM_CREATE is different (simplified to remove control
 // creation from the window title)

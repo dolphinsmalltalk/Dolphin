@@ -131,10 +131,26 @@ public:
 	static void subclassWindow(OTE* window, HWND hWnd);
 
 	static DWORD callbackResultFromOop(Oop objectPointer);
+
+	enum
+	{
+		SyncMsg = WM_USER,
+		SyncCallbackMsg,
+		SyncVirtualMsg
+	};
 	static DWORD __stdcall GenericCallbackMain(SMALLINTEGER id, BYTE* lpArgs);
 	static DWORD __stdcall GenericCallback(SMALLINTEGER id, BYTE* lpArgs);
 
-	//static DWORD __fastcall VirtualCallback(SMALLINTEGER id, COMThunk** thisPtr);
+	struct COMThunk
+	{
+		PROC*	vtbl;
+		DWORD*	argSizes;
+		DWORD	id;
+		DWORD	subId;
+	};
+
+	static DWORD __fastcall VirtualCallback(SMALLINTEGER id, COMThunk** thisPtr);
+	static DWORD __fastcall VirtualCallbackMain(SMALLINTEGER id, COMThunk** thisPtr);
 
 	// CompiledMethod bytecode decoding (in decode.cpp)
 	#if defined(_DEBUG)

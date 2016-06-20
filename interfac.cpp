@@ -662,9 +662,9 @@ inline DWORD __stdcall Interpreter::GenericCallbackMain(SMALLINTEGER id, BYTE* l
 		// memoryExceptionFilter to implement stack and OT growth-on-demand
 		pushObject(Pointers.Scheduler);
 		pushSmallInteger(id);
-		// Add sizeof(DWORD) to the stack pointer as it includes the return address for
+		// Add sizeof(DWORD*) to the stack pointer as it includes the return address for
 		// the call which invoked the function
-		pushUnsigned32(reinterpret_cast<DWORD>(reinterpret_cast<DWORD*>(lpArgs)+1));
+		pushUIntPtr(reinterpret_cast<UINT_PTR>(reinterpret_cast<DWORD*>(lpArgs)+1));
 		Oop oopAnswer = callback(Pointers.genericCallbackSelector, 2 TRACEARG(TraceOff));
 		result = callbackResultFromOop(oopAnswer);
 	}
@@ -687,11 +687,14 @@ LRESULT CALLBACK Interpreter::VMWndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPA
 {
 	switch(uMsg)
 	{
-	case WM_USER:
+	case SyncMsg:
 		return DolphinWndProc(hWnd, uMsg, wParam, lParam);
 		break;
-	case WM_USER+1:
+	case SyncCallbackMsg:
 		return GenericCallbackMain(static_cast<SMALLINTEGER>(wParam), reinterpret_cast<BYTE*>(lParam));
+		break;
+	case SyncVirtualMsg:
+		return VirtualCallbackMain(static_cast<SMALLINTEGER>(wParam), reinterpret_cast<COMThunk**>(lParam));
 		break;
 	default:
 		return DefWindowProc(hWnd, uMsg, wParam, lParam);
@@ -708,7 +711,7 @@ DWORD __stdcall Interpreter::GenericCallback(SMALLINTEGER id, BYTE* lpArgs)
 	// As we have entered from an external function
 	if (GetCurrentThreadId() != MainThreadId())
 	{
-		dwResult = SendMessage(m_hWndVM, WM_USER+1, id, (LONG)lpArgs);
+		dwResult = SendMessage(m_hWndVM, SyncCallbackMsg, static_cast<WPARAM>(id), reinterpret_cast<LPARAM>(lpArgs));
 	}
 	else
 		dwResult = GenericCallbackMain(id, lpArgs);
@@ -753,16 +756,22 @@ DWORD Interpreter::callbackResultFromOop(Oop objectPointer)
 ///////////////////////////////////////////////////////////////////////////////
 // Virtual function call-ins
 
-struct COMThunk
+DWORD __fastcall Interpreter::VirtualCallback(SMALLINTEGER offset, COMThunk** args)
 {
-	PROC*	vtbl;
-	DWORD*	argSizes;
-	DWORD	id;
-	DWORD	subId;
-};
+		DWORD dwResult;
+		// We must perform this all inside our standard SEH catcher to handle the stack/OT overflows etc 
+		// As we have entered from an external function
+		if (GetCurrentThreadId() != MainThreadId())
+		{
+			dwResult = SendMessage(m_hWndVM, SyncVirtualMsg, static_cast<WPARAM>(offset), reinterpret_cast<LPARAM>(args));
+		}
+		else
+			dwResult = VirtualCallbackMain(offset, args);
 
+		return dwResult;
+}
 
-DWORD __fastcall /*Interpreter::*/VirtualCallback(SMALLINTEGER offset, COMThunk** args)
+DWORD __fastcall Interpreter::VirtualCallbackMain(SMALLINTEGER offset, COMThunk** args)
 {
 	// We must perform this all inside our standard SEH catcher to handle the stack/OT overflows etc 
 	// and also to handle unwinds
@@ -775,7 +784,7 @@ DWORD __fastcall /*Interpreter::*/VirtualCallback(SMALLINTEGER offset, COMThunk*
 		Interpreter::pushSmallInteger(thisPtr->id);
 		Interpreter::pushSmallInteger(thisPtr->subId);
 		// Arguments are underneath thisPtr on stack
-		Interpreter::pushUnsigned32(DWORD(args+1));
+		Interpreter::pushUIntPtr(reinterpret_cast<UINT_PTR>(args+1));
 		Oop oopAnswer = Interpreter::callback(Pointers.virtualCallbackSelector, 4 TRACEARG(Interpreter::TraceOff));
 		result = Interpreter::callbackResultFromOop(oopAnswer);
 	}
@@ -798,7 +807,7 @@ __declspec(naked) int __stdcall _commonVfnEntryPoint()
 		mov		eax, [eax].argSizes
 		mov		eax, [eax+ecx*4]
 		push	eax								; Save arg size for later
-		call	VirtualCallback
+		call	Interpreter::VirtualCallback
 		pop		ecx								; Account for this pointer in arg size
 		pop		edx								; Pop the return address
 		add		esp, ecx
