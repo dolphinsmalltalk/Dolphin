@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ExternalArray subclass: #OLECountedArray
 	instanceVariableNames: 'elements'
@@ -110,8 +110,8 @@ uncheckedAt: anInteger put: anObject
 clear: addressOrBytes
 	"Free an instance of the structure which instances of the receiver wrap
 	which resides at the specified address."
-	
-	COMTaskMemory free: (addressOrBytes dwordAtOffset: 4)!
+
+	COMTaskMemory free: (addressOrBytes uintPtrAtOffset: 4)!
 
 defineFields
 	"Define the count field common to OLE counted array structures.

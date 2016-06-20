@@ -1,7 +1,7 @@
 "Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #ExternalStructure
-	instanceVariableNames: 'bytes '
+	instanceVariableNames: 'bytes'
 	classVariableNames: 'CompiledMask RecordClasses'
 	poolDictionaries: ''
 	classInstanceVariableNames: 'template flags alignment'!
@@ -210,10 +210,9 @@ free
 	Implementation Note: Whether we free the data or not we must
 	make sure that we remove any lock for which we are responsible."
 
-	self needsFree
-		ifTrue: [self basicFree].
-	bytes := nil.
-	self beUnfinalizable	"finalization no longer required"!
+	self beUnfinalizable.
+	self needsFree ifTrue: [self basicFree].
+	bytes := nil!
 
 getField: fieldNameString
 	"Answer the value of the named field of the receiver,

@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 IUnknown subclass: #IPerPropertyBrowsing
 	instanceVariableNames: ''
@@ -91,27 +91,30 @@ GetPredefinedValue: dispID dwCookie: dwCookie pVarOut: pVarOut
 	^self invalidCall
 !
 
-getStringsAndValues: dispid 
-	"Private - Answer an <Array> of <Association>'s between <readableString> value display names 
-	and the <VARIANT> values associated with those display names for the property with 
-	<integer> dispatch id, dispid."
+getStringsAndValues: anInteger
+	"Private - Answer an <Array> of <Association>'s between <readableString> value display names
+	and the <VARIANT> values associated with those display names for the property with the
+	specified <integer> dispatch id."
 
-	| stringsAndCookies answer strings cookies var |
-	stringsAndCookies := self getPredefinedStrings: dispid.
+	| stringsAndCookies answer strings cookies var count |
+	stringsAndCookies := self getPredefinedStrings: anInteger.
 	strings := stringsAndCookies first.
 	cookies := stringsAndCookies last.
-	answer := Array new: cookies size.
-	var := (VARIANT new)
-				beUnfinalizable;
-				yourself.
-	strings keysAndValuesDo: 
-			[:i :string | 
-			self 
-				GetPredefinedValue: dispid
-				dwCookie: (cookies at: i)
-				pVarOut: var.
-			answer at: i put: string asString -> var value.
-			var basicFree].
+	count := cookies size.
+	answer := Array new: count.
+	count == 0
+		ifFalse: 
+			[var := (VARIANT new)
+						beUnfinalizable;
+						yourself.
+			strings keysAndValuesDo: 
+					[:i :string |
+					self
+						GetPredefinedValue: anInteger
+						dwCookie: (cookies at: i)
+						pVarOut: var.
+					answer at: i put: string asString -> var value.
+					var basicFree]].
 	strings free.
 	cookies free.
 	^answer!
@@ -145,18 +148,6 @@ stringsToValues: dispid
 	<integer> dispatch id, dispid."
 
 	^Dictionary withAll: (self getStringsAndValues: dispid)
-!
-
-valuesToStrings: dispid
-	"Answer an dictionary mapping between <VARIANT> values 
-	and their associated <readableString> display names for the property with 
-	<integer> dispatch id, dispid."
-
-	| answer |
-	answer := LookupTable new.
-	(self getStringsAndValues: dispid) do: [:a |
-		answer at: a value put: a key].
-	^answer
 ! !
 !IPerPropertyBrowsing categoriesFor: #getDisplayString:!methods!public! !
 !IPerPropertyBrowsing categoriesFor: #GetDisplayString:pBstr:!COM Interfaces-IPerPropertyBrowsing!private! !
@@ -168,7 +159,6 @@ valuesToStrings: dispid
 !IPerPropertyBrowsing categoriesFor: #mapPropertyToPage:!**auto generated**!methods!public! !
 !IPerPropertyBrowsing categoriesFor: #MapPropertyToPage:pClsid:!**auto generated**!COM Interfaces-IPerPropertyBrowsing!private! !
 !IPerPropertyBrowsing categoriesFor: #stringsToValues:!accessing!public! !
-!IPerPropertyBrowsing categoriesFor: #valuesToStrings:!accessing!public! !
 
 IPerPropertyBrowsing methodProtocol: #IPerPropertyBrowsing attributes: #() selectors: #(#GetDisplayString:pBstr: #GetPredefinedStrings:pCaStringsOut:pCaCookiesOut: #GetPredefinedValue:dwCookie:pVarOut: #MapPropertyToPage:pClsid:)!
 
