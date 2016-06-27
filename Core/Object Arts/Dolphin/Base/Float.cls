@@ -643,20 +643,18 @@ printOn: aStream decimalPlaces: anInteger
 	self isFinite ifFalse: [^self printOn: aStream].
 	self sign = -1 ifTrue: [aStream nextPutAll: '-'].
 	self = 0.0
-		ifTrue: [
-				aStream nextPut: $0.
-				anInteger > 0 ifTrue: [
-						aStream nextPut: $..
-						anInteger timesRepeat: [aStream nextPut: $0].
-					].
-			]
-		ifFalse: [
-				self
-					absPrintExactlyOn: aStream
-					base: 10
-					decimalPlaces: anInteger
-					showTrailingFractionalZeros: true.
-			].!
+		ifTrue: 
+			[aStream nextPut: $0.
+			anInteger > 0
+				ifTrue: 
+					[aStream nextPut: $..
+					anInteger timesRepeat: [aStream nextPut: $0]]]
+		ifFalse: 
+			[self
+				absPrintExactlyOn: aStream
+				base: 10
+				decimalPlaces: anInteger
+				showTrailingFractionalZeros: true]!
 
 printOn: aStream significantFigures: anInteger
 	"Append the printed representation of the receiver to aStream with anInteger significant
