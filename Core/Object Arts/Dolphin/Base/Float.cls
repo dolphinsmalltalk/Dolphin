@@ -638,27 +638,23 @@ printOn: aStream base: anInteger
 				ifFalse: [self negated absPrintExactlyOn: aStream base: anInteger]]!
 
 printOn: aStream decimalPlaces: anInteger
-	"Append the printed representation of the receiver to the <puttableStream>,
-	aStream, rounded to the <integer> number of decimal places, anInteger."
+	"Append the printed representation of the receiver to the <puttableStream>, aStream, rounded to the <integer> number of decimal places, anInteger."
 
 	self isFinite ifFalse: [^self printOn: aStream].
-	self > 0.0
+	self sign = -1 ifTrue: [aStream nextPutAll: '-'].
+	self = 0.0
 		ifTrue: 
+			[aStream nextPut: $0.
+			anInteger > 0
+				ifTrue: 
+					[aStream nextPut: $..
+					anInteger timesRepeat: [aStream nextPut: $0]]]
+		ifFalse: 
 			[self
 				absPrintExactlyOn: aStream
 				base: 10
 				decimalPlaces: anInteger
-				showTrailingFractionalZeros: true]
-		ifFalse: 
-			[self sign = -1 ifTrue: [aStream nextPutAll: '-'].
-			self = 0.0
-				ifTrue: [aStream nextPutAll: '0.0']
-				ifFalse: 
-					[self
-						absPrintExactlyOn: aStream
-						base: 10
-						decimalPlaces: anInteger
-						showTrailingFractionalZeros: true]]!
+				showTrailingFractionalZeros: true]!
 
 printOn: aStream significantFigures: anInteger
 	"Append the printed representation of the receiver to aStream with anInteger significant

@@ -361,7 +361,29 @@ testPrintOnDecimalPlaces
 	"Defect #373 - produced 3"
 	stream := String writeStream.
 	3.999 printOn: stream decimalPlaces: 0.
-	self assert: stream contents equals: '4'!
+	self assert: stream contents equals: '4'.
+
+	"Previous implementation was failing when sending to zero."
+	stream := String writeStream.
+	0.0 printOn: stream decimalPlaces: 0.
+	self assert: stream contents equals: '0'.
+	stream := String writeStream.
+	0.0 printOn: stream decimalPlaces: 1.
+	self assert: stream contents equals: '0.0'.
+	stream := String writeStream.
+	0.0 printOn: stream decimalPlaces: 2.
+	self assert: stream contents equals: '0.00'.
+
+	"Regression test for negative zero."
+	stream := String writeStream.
+	-0.0 printOn: stream decimalPlaces: 0.
+	self assert: stream contents equals: '-0'.
+	stream := String writeStream.
+	-0.0 printOn: stream decimalPlaces: 1.
+	self assert: stream contents equals: '-0.0'.
+	stream := String writeStream.
+	-0.0 printOn: stream decimalPlaces: 2.
+	self assert: stream contents equals: '-0.00'.!
 
 testPrintString
 	self assert: 1.3 printString equals: '1.3'.
