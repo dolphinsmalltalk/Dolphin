@@ -11650,7 +11650,12 @@ lexerLanguages
 	was added around 1.63, however we do not use this. Dolphin's Smalltalk lexer is implemented
 	in the image and container based lexing is used. This is slower, but much more powerful."
 
-	^#(#container #text #python #cpp #hypertext #xml #perl #sql #vb #props #errorlist #makefile #batch nil #latex #lua #diff #conf #pascal #ave #ada #lisp #ruby #eiffel #eiffelkw #tcl #nncrontab #bullant #vbscript nil nil #baan #matlab #scriptol #asm #cppnocase #fortran #f77 #css #pov #lout #escript #ps #nsis #mmixal nil nil #lot #yaml #tex #metapost #powerbasic #forth #erlang #octave #mssql #verilog #kix #gui4cli #specman #au3 #apdl #bash #asn1 #vhdl #caml #blitzbasic #purebasic #haskell #phpscript #tads3 #rebol #smalltalk #flagship #csound #freebasic #inno #opal #spice #d #cmake #gap #'PL/M' nil #abaqus #asy #r nil #powershell nil #po nil nil nil nil #powerpro #nimrod nil #markdown #txt2tags #a68k #automatic)!
+	"Note that SCLEX_XCODE (13) seem to be dead (i.e. no lexer is registered for it). Note also
+	that the language names are case sensitive. Finally note that there are two special nanes which
+	are not languages as such: #automatic is an instruction to Scintilla to choose a lexer, and #container
+	sends colourization requests back to the control's container (i.e. into our Smalltalk wrapper)."
+
+	^#(#container #text #python #cpp #hypertext #xml #perl #sql #vb #props #errorlist #makefile #batch nil #latex #lua #diff #conf #pascal #ave #ada #lisp #ruby #eiffel #eiffelkw #tcl #nncrontab #bullant #vbscript nil nil #baan #matlab #scriptol #asm #cppnocase #fortran #f77 #css #pov #lout #escript #ps #nsis #mmixal #clarion #clarionnocase #lot #yaml #tex #metapost #powerbasic #forth #erlang #octave #mssql #verilog #kix #gui4cli #specman #au3 #apdl #bash #asn1 #vhdl #caml #blitzbasic #purebasic #haskell #phpscript #tads3 #rebol #smalltalk #flagship #csound #freebasic #inno #opal #spice #d #cmake #gap #'PL/M' #progress #abaqus #asy #r #magiksf #powershell #mysql #po #TAL #COBOL #TACL #sorcins #powerpro #nimrod #SML #markdown #txt2tags #a68k #modula #coffeescript #tcmd #avs #ecl #oscript #visualprolog #literatehaskell #fcST #kvirc #rust #DMAP #as #DMIS #registry #bib #srec #ihex #tehex #json nil nil nil nil nil #automatic)!
 
 lineEndings
 	"Answer the symbolic names of the end-of-line modes supported by Scintilla. These correspond
