@@ -33,7 +33,7 @@ WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER
 TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE 
 OR PERFORMANCE OF THIS SOFTWARE. "'.
 
-package basicPackageVersion: '3.6.4'.
+package basicPackageVersion: '3.6.6'.
 
 
 package classNames
