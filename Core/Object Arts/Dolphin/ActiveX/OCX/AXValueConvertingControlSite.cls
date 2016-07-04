@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 AXControlSite subclass: #AXValueConvertingControlSite
 	instanceVariableNames: 'typeconverter'
@@ -81,13 +81,16 @@ initializeNewTypeConverter: aTypeConverter
 
 	!
 
-OnChanged: dispid
-	"Private - Implement the IPropertyNotifySink::OnChanged() method.
-	The property with <integer> id, dispid, has changed, trigger an event
-	to that effect."
+observePropertyNotifications
+	"Private - Answer whether the site should observer property change notifications through
+	<IPropertyNotifySink>. In the case of AXValueConvertingControlSite this is required to track
+	the current value."
 
-	dispid = DISPID_VALUE ifTrue: [self updateModel].
-	^super OnChanged: dispid!
+	^true!
+
+propertyChanged: aSymbol
+	aSymbol == #Value ifTrue: [self updateModel].
+	^super propertyChanged: aSymbol!
 
 refreshContents
 	"Re-display the receiver with the model's value"
@@ -157,7 +160,8 @@ value: anObject
 !AXValueConvertingControlSite categoriesFor: #displayValue!private!updating! !
 !AXValueConvertingControlSite categoriesFor: #displayValue:!private!updating! !
 !AXValueConvertingControlSite categoriesFor: #initializeNewTypeConverter:!accessing!private! !
-!AXValueConvertingControlSite categoriesFor: #OnChanged:!event handling!private! !
+!AXValueConvertingControlSite categoriesFor: #observePropertyNotifications!helpers!private! !
+!AXValueConvertingControlSite categoriesFor: #propertyChanged:!event handling!private! !
 !AXValueConvertingControlSite categoriesFor: #refreshContents!public!updating! !
 !AXValueConvertingControlSite categoriesFor: #typeconverter!accessing!public! !
 !AXValueConvertingControlSite categoriesFor: #typeconverter:!accessing!public! !

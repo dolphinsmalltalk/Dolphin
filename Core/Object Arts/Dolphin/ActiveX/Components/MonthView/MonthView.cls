@@ -74,6 +74,11 @@ usesAmbientColors
 
 !MonthView class methodsFor!
 
+defaultModel
+	"Answer a default model to be assigned to the receiver when it is initialized."
+
+	^DATE now asValue!
+
 icon
 	^Icon fromId: 6 in: (ExternalResourceLibrary open: 'MSCOMCT2.OCX')!
 
@@ -90,6 +95,7 @@ publishedAspectsOfInstances
 		add: (aspectClass integer: #monthColumns);
 		add: (aspectClass integer: #monthRows);
 		yourself! !
+!MonthView class categoriesFor: #defaultModel!models!public! !
 !MonthView class categoriesFor: #icon!constants!public! !
 !MonthView class categoriesFor: #publishedAspectsOfInstances!constants!development!public! !
 
