@@ -209,9 +209,12 @@ controlUnknown
 	of the ATL create call, the control may send us events through IPropertyNotifySink
 	before that call returns, so we have to be prepared to initialize this lazily. "
 
-	unkControl isNull ifTrue: [
-		unkControl isNil ifTrue: [unkControl := IUnknown newPointer].
-		self hostInterface QueryControl: unkControl iid ppiObject: unkControl].
+	unkControl isNull
+		ifTrue: 
+			[| punk |
+			punk := IUnknown newPointer.
+			self hostInterface QueryControl: punk iid ppiObject: punk.
+			unkControl isNil ifTrue: [unkControl := punk] ifFalse: [unkControl attach: punk detach]].
 	^unkControl!
 
 controlVerbs
@@ -351,21 +354,22 @@ firesControlEvents: aBoolean
 !
 
 firesPropertyNotifications
-	"Answer whether the receiver will sink property change notifications from the control 
-	(i.e. IPropertyNotifySink) and trigger corresponding Dolphin events off the presenter."
+	"Answer whether the receiver will trigger #controlPropertyChanged: events, with the property
+	name as argument, via its <presenter> when property change notifications are received from
+	the control through <IPropertyNotifySink>."
 
 	^hostFlags allMask: FirePropertyEventsMask
 !
 
 firesPropertyNotifications: aBoolean
-	"Set whether the receiver will sink property change notifications from the control 
-	(i.e. IPropertyNotifySink) and trigger corresponding Dolphin events off the presenter."
+	"Set whether the receiver will trigger #controlPropertyChanged: events, with the property
+	name as argument, via its <presenter> when property change notifications are received from
+	the control through <IPropertyNotifySink>."
 
-	| oldHostFlags |
-	oldHostFlags := hostFlags.
+	| wasObserving |
+	wasObserving := self observePropertyNotifications.
 	hostFlags := hostFlags mask: FirePropertyEventsMask set: aBoolean.
-	hostFlags ~= oldHostFlags ifTrue: [self recreateControl].
-!
+	wasObserving == self observePropertyNotifications ifFalse: [self recreateControl]!
 
 forecolor
 	"Answers the ambient foreground colour of the receiver"
@@ -425,7 +429,7 @@ hasMessageReflect: aBoolean
 	self ambientDispatch messageReflect: aBoolean!
 
 hostInterface
-	"Answer an <IAxWinHostWindow> on the control host itself."
+	"Answer an <IDolphinAxHost> on the control host itself."
 
 	host isNull ifTrue: [ | unkContainer |
 		unkContainer := IUnknown fromAddress: (self sendMessage: self class getHostMsg).
@@ -437,11 +441,8 @@ initialize
 
 	super initialize.
 	progId := self defaultProgId.
-	hostFlags := FireControlEventsMask |
-				AllowContextMenuMask | 
-				ReflectMask | 
-				AllowWindowlessMask | 
-				UserModeMask.
+	hostFlags := FireControlEventsMask | AllowContextMenuMask | ReflectMask | AllowWindowlessMask
+				| UserModeMask.
 	propertyMap := LookupTable new!
 
 isDefault
@@ -515,22 +516,17 @@ licenseKey: aString
 	licenseKey := aString.
 	self isOpen ifTrue: [self createControl]!
 
+observePropertyNotifications
+	"Private - Answer whether the site should observer property change notifications through <IPropertyNotifySink>"
+
+	^self firesPropertyNotifications!
+
 OnChanged: dispid
 	"Private - Implement the IPropertyNotifySink::OnChanged() method.
 	The property with <integer> id, dispid, has changed, trigger an event
 	to that effect."
 
-	| property |
-	property := self propertyNameFromDispid: dispid.
-	self isTracingEvents ifTrue: [
-		Notification 
-			signal: ((String writeStream: 80) 
-					nextPutAll: 'IPropertyNotifySink::OnChanged('; 
-					print: property; 
-					nextPut: $); 
-					contents)
-			with: self].
-	self presenter trigger: #controlPropertyChanged: with: property.
+	self propertyChanged: (self propertyNameFromDispid: dispid).
 	^S_OK!
 
 onDestroyed
@@ -611,16 +607,23 @@ progId: aString
 				ifFalse: [aString].
 	self isOpen ifTrue: [self createControl]!
 
-propertyNameFromDispid: dispid
-	"Private - Map a dispid to a property name using the type information for the control's
-	default dispinterface.
-	Implementation Note: Events may arrive during control creation before we have received
-	the control unknown, in which case we must be careful to avoid an infinite recursion by
-	requesting the control's dispatch interface in order to retrieve the type information."
+propertyChanged: aSymbol
+	self isTracingEvents
+		ifTrue: 
+			[Notification signal: ((String writeStream: 80)
+						nextPutAll: 'IPropertyNotifySink::OnChanged(';
+						print: aSymbol;
+						nextPut: $);
+						contents)
+				with: self].
+	self firesPropertyNotifications
+		ifTrue: [self presenter trigger: #controlPropertyChanged: with: aSymbol]!
 
-	^propertyMap at: dispid ifAbsentPut: [	
-"		dispControl isNull ifTrue: [^dispid]."
-		self getPropertyNameForDispid: dispid]!
+propertyNameFromDispid: anInteger
+	"Private - Map an <integer> dispid to a property name using the type information for the
+	control's default dispinterface."
+
+	^propertyMap at: anInteger ifAbsentPut: [self getPropertyNameForDispid: anInteger]!
 
 publishedEvents
 	"Answer a <Set> of <Symbol>s that describe the published events triggered
@@ -699,18 +702,17 @@ restoreAmbientProperties
 			(color isNil and: [color ~= Color window]) ifTrue: [self backcolor: color]].
 	self setFont: self actualFont!
 
-safeCreateControlFromStream: pStream 
-	"Private - Reconstitute a control in the receiver from its persisted representation in
-	the <ByteArray>, pickled, assuming that the stream format is that output by 
-	OleSaveToStream()."
+safeCreateControlFromStream: pStream
+	"Private - Reconstitute a control in the receiver from its persisted representation in the
+	<IStream>, pStream (assumed to be a stream over a previously serialized representation of
+	the control's state such as that created by a call to OleSaveToStream()."
 
 	| wszName unkSink control |
 	wszName := self progId asUnicodeString.
 	propertyMap := LookupTable new.
-	unkSink := self firesPropertyNotifications 
-				ifTrue: [self queryInterface: IPropertyNotifySink].
+	unkSink := self observePropertyNotifications ifTrue: [self queryInterface: IPropertyNotifySink].
 	self assert: [unkControl isNull].
-	control := self hostInterface 
+	control := self hostInterface
 				createControlLicEx: wszName
 				hWnd: self asParameter
 				pStream: pStream
@@ -719,11 +721,8 @@ safeCreateControlFromStream: pStream
 	"If the control fire an event during the creation control, we may already have
 	 had to query the control's interface, otherwise we attach the returned value
 	to the any pre-existing IUnknown object."
-	unkControl isNull 
-		ifTrue: 
-			[unkControl isNil 
-				ifTrue: [unkControl := control]
-				ifFalse: [unkControl attach: control detach]]
+	unkControl isNull
+		ifTrue: [unkControl isNil ifTrue: [unkControl := control] ifFalse: [unkControl attach: control detach]]
 		ifFalse: [control free].
 	self queryControlDispatch.
 	self firesControlEvents ifTrue: [self connectSink]!
@@ -881,6 +880,7 @@ usesAmbientColors
 !AXControlSite categoriesFor: #isWindowless!public!testing! !
 !AXControlSite categoriesFor: #licenseKey!accessing!public! !
 !AXControlSite categoriesFor: #licenseKey:!accessing!public! !
+!AXControlSite categoriesFor: #observePropertyNotifications!helpers!private! !
 !AXControlSite categoriesFor: #OnChanged:!event handling!private! !
 !AXControlSite categoriesFor: #onDestroyed!event handling!private! !
 !AXControlSite categoriesFor: #OnRequestEdit:!event handling!private! !
@@ -890,6 +890,7 @@ usesAmbientColors
 !AXControlSite categoriesFor: #preTranslateKeyboardInput:!dispatching!public! !
 !AXControlSite categoriesFor: #progId!accessing!public! !
 !AXControlSite categoriesFor: #progId:!accessing!public! !
+!AXControlSite categoriesFor: #propertyChanged:!event handling!private! !
 !AXControlSite categoriesFor: #propertyNameFromDispid:!helpers!private! !
 !AXControlSite categoriesFor: #publishedEvents!development!events!public! !
 !AXControlSite categoriesFor: #queryControlDispatch!accessing!private! !
