@@ -32,8 +32,13 @@ public:
 	static LRESULT CALLBACK WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 	static LPCTSTR GetWndClassName()
 	{
-		return _T("AtlAxWin71"/*ATLAXWIN_CLASS*/);
+		return _T("AtlAxWin71");
 	}
+
+	HRESULT ActivateAx(
+		_Inout_opt_ IUnknown* pUnkControl,
+		_In_ bool bInited,
+		_Inout_opt_ IStream* pStream);
 
 	///////////////////////////////////////////////////////////////////////////
 	// Message Handlers
@@ -84,13 +89,6 @@ public:
 	STDMETHOD(QueryControl)(REFIID riid, IUnknown** ppiObject)
 	{
 		return static_cast<IAxWinHostWindow*>(this)->QueryControl(riid, (void**)ppiObject);
-	}
-
-// IOleControlSite - overrides for bug fixes, etc
-	STDMETHOD(TransformCoords)(POINTL* /*pPtlHimetric*/, POINTF* /*pPtfContainer*/, DWORD /*dwFlags*/)
-	{
-		// BSM bug fix - see MSDN Q244817
-		return E_NOTIMPL;
 	}
 
 // IOleClientSite
@@ -265,11 +263,11 @@ LRESULT CDolphinAxHost::OnPaint(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& b
 						dvaInfo.dwFlags = 0; //DVASPECTINFOFLAG_CANOPTIMIZE;
 
 						// BSM bug fix - pass null for lprcWBounds since we are not drawing to a metafile
-						m_spViewObject->Draw(DVASPECT_CONTENT, -1, &dvaInfo, NULL, NULL, hdcCompatible, (RECTL*)&m_rcPos, (RECTL*)&m_rcPos, NULL, NULL); 
+						m_spViewObject->Draw(DVASPECT_CONTENT, -1, &dvaInfo, NULL, NULL, hdcCompatible, (RECTL*)&m_rcPos, (RECTL*)&m_rcPos, NULL, 0); 
 
 						// End of BSM bug fixes
 						// Original code
-						//m_spViewObject->Draw(DVASPECT_CONTENT, -1, NULL, NULL, NULL, hdcCompatible, (RECTL*)&m_rcPos, (RECTL*)&m_rcPos, NULL, NULL); 
+						//m_spViewObject->Draw(DVASPECT_CONTENT, -1, NULL, NULL, NULL, hdcCompatible, (RECTL*)&m_rcPos, (RECTL*)&m_rcPos, NULL, 0); 
 
 						::BitBlt(hdc, 0, 0, rcClient.right, rcClient.bottom,  hdcCompatible, 0, 0, SRCCOPY);
 					}
@@ -287,6 +285,119 @@ LRESULT CDolphinAxHost::OnPaint(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& b
 		return 0;
 	}
 	return 1;
+}
+
+HRESULT CDolphinAxHost::ActivateAx(
+	_Inout_opt_ IUnknown* pUnkControl,
+	_In_ bool bInited,
+	_Inout_opt_ IStream* pStream)
+{
+	if (pUnkControl == NULL)
+		return S_OK;
+
+	m_spUnknown = pUnkControl;
+
+	HRESULT hr = S_OK;
+	pUnkControl->QueryInterface(__uuidof(IOleObject), (void**)&m_spOleObject);
+	if (m_spOleObject)
+	{
+		m_spOleObject->GetMiscStatus(DVASPECT_CONTENT, &m_dwMiscStatus);
+		if (m_dwMiscStatus & OLEMISC_SETCLIENTSITEFIRST)
+		{
+			CComQIPtr<IOleClientSite> spClientSite(GetControllingUnknown());
+			m_spOleObject->SetClientSite(spClientSite);
+		}
+
+		if (!bInited) // If user hasn't initialized the control, initialize/load using IPersistStreamInit or IPersistStream
+		{
+			CComQIPtr<IPersistStreamInit> spPSI(m_spOleObject);
+			if (spPSI)
+			{
+				if (pStream)
+					hr = spPSI->Load(pStream);
+				else
+					hr = spPSI->InitNew();
+			}
+			else if (pStream)
+			{
+				CComQIPtr<IPersistStream> spPS(m_spOleObject);
+				if (spPS)
+					hr = spPS->Load(pStream);
+			}
+
+			if (FAILED(hr)) // If the initialization of the control failed...
+			{
+				// Clean up and return
+				if (m_dwMiscStatus & OLEMISC_SETCLIENTSITEFIRST)
+					m_spOleObject->SetClientSite(NULL);
+
+				m_dwMiscStatus = 0;
+				m_spOleObject.Release();
+				m_spUnknown.Release();
+
+				return hr;
+			}
+		}
+
+		if (0 == (m_dwMiscStatus & OLEMISC_SETCLIENTSITEFIRST))
+		{
+			CComQIPtr<IOleClientSite> spClientSite(GetControllingUnknown());
+			m_spOleObject->SetClientSite(spClientSite);
+		}
+
+		m_dwViewObjectType = 0;
+		hr = m_spOleObject->QueryInterface(__uuidof(IViewObjectEx), (void**)&m_spViewObject);
+		if (FAILED(hr))
+		{
+			hr = m_spOleObject->QueryInterface(__uuidof(IViewObject2), (void**)&m_spViewObject);
+			if (SUCCEEDED(hr))
+				m_dwViewObjectType = 3;
+		}
+		else
+			m_dwViewObjectType = 7;
+
+		if (FAILED(hr))
+		{
+			hr = m_spOleObject->QueryInterface(__uuidof(IViewObject), (void**)&m_spViewObject);
+			if (SUCCEEDED(hr))
+				m_dwViewObjectType = 1;
+		}
+		CComQIPtr<IAdviseSink> spAdviseSink(GetControllingUnknown());
+		m_spOleObject->Advise(spAdviseSink, &m_dwOleObject);
+		if (m_spViewObject)
+			m_spViewObject->SetAdvise(DVASPECT_CONTENT, 0, spAdviseSink);
+		m_spOleObject->SetHostNames(OLESTR("AXWIN"), NULL);
+
+		if ((m_dwMiscStatus & OLEMISC_INVISIBLEATRUNTIME) == 0)
+		{
+			GetClientRect(&m_rcPos);
+			m_pxSize.cx = m_rcPos.right - m_rcPos.left;
+			m_pxSize.cy = m_rcPos.bottom - m_rcPos.top;
+			AtlPixelToHiMetric(&m_pxSize, &m_hmSize);
+			hr = m_spOleObject->SetExtent(DVASPECT_CONTENT, &m_hmSize);
+			// The current atlhost.h implementation fails the entire control creation if the control refuses to set the requested extent.
+			// There is little value in this error check, and it excluded certain controls such as the old Month View control that returns
+			// E_FAIL here. See Dolphin issue "Cannot create MonthView control" #217 
+			//if (FAILED(hr))
+			//	return hr;
+			hr = m_spOleObject->GetExtent(DVASPECT_CONTENT, &m_hmSize);
+			if (FAILED(hr))
+				return hr;
+			AtlHiMetricToPixel(&m_hmSize, &m_pxSize);
+			m_rcPos.right = m_rcPos.left + m_pxSize.cx;
+			m_rcPos.bottom = m_rcPos.top + m_pxSize.cy;
+
+			CComQIPtr<IOleClientSite> spClientSite(GetControllingUnknown());
+			hr = m_spOleObject->DoVerb(OLEIVERB_INPLACEACTIVATE, NULL, spClientSite, 0, m_hWnd, &m_rcPos);
+			RedrawWindow(NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW | RDW_ERASE | RDW_INTERNALPAINT | RDW_FRAME);
+		}
+	}
+	CComPtr<IObjectWithSite> spSite;
+	pUnkControl->QueryInterface(__uuidof(IObjectWithSite), (void**)&spSite);
+	if (spSite != NULL)
+		spSite->SetSite(GetControllingUnknown());
+
+	return hr;
 }
 
 /////////////////////////////////////////////////////////////////
@@ -467,7 +578,6 @@ HRESULT CDolphinAxHost::CreateHost(HWND hWnd, IUnknown** ppUnkContainer)
 
 STDMETHODIMP CDolphinAxHost::CreateControlLicEx(LPCOLESTR lpszTricsData, HWND hWnd, IStream* pStream, IUnknown** ppUnk, REFIID iidAdvise, IUnknown* punkSink, BSTR bstrLic)
 {
-	USES_CONVERSION;
 	ATLASSERT(ppUnk != NULL);
 	if (ppUnk == NULL)
 		return E_POINTER;
@@ -493,9 +603,13 @@ STDMETHODIMP CDolphinAxHost::CreateControlLicEx(LPCOLESTR lpszTricsData, HWND hW
 		if (m_clrBackground == NULL)
 		{
 			if (IsParentDialog())
+			{
 				m_clrBackground = GetSysColor(COLOR_BTNFACE);
+			}
 			else
+			{
 				m_clrBackground = GetSysColor(COLOR_WINDOW);
+			}
 		}
 
 		// BSM change begins - neater handling of errors, returns an error code in 
@@ -513,17 +627,23 @@ STDMETHODIMP CDolphinAxHost::CreateControlLicEx(LPCOLESTR lpszTricsData, HWND hW
 		}
 
 		if (SUCCEEDED(hr))
+		{
 			hr = ActivateAx(*ppUnk, hr == S_FALSE, pStream);
+		}
 
 		//Try to hook up any sink the user might have given us.
 		m_iidSink = iidAdvise;
-		if(SUCCEEDED(hr) && *ppUnk && punkSink)
+		if (SUCCEEDED(hr) && *ppUnk && punkSink)
+		{
 			AtlAdvise(*ppUnk, punkSink, m_iidSink, &m_dwAdviseSink);
+		}
 
 		if (SUCCEEDED(hr) && (otCreated != otOther) && *ppUnk != NULL)
 		{
 			if ((GetStyle() & (WS_VSCROLL | WS_HSCROLL)) == 0)
+			{
 				m_dwDocHostFlags |= DOCHOSTUIFLAG_SCROLL_NO;
+			}
 			else
 			{
 				DWORD dwStyle = GetStyle();
@@ -536,33 +656,31 @@ STDMETHODIMP CDolphinAxHost::CreateControlLicEx(LPCOLESTR lpszTricsData, HWND hW
 			if (otCreated == otMSHTML)
 			{
 				// Just HTML: load the HTML data into the document
-
+				LPWSTR buf = NULL;
 				if (IS_INTRESOURCE(lpszHTMLText))
 				{
 					// Build error report HTML text
-					char szErrorMsg[128];
-					::LoadString(GetResLibHandle(), LOWORD(lpszHTMLText), szErrorMsg, sizeof(szErrorMsg)-1);
-					char szErrorFormat[128];
-					::LoadString(GetResLibHandle(), IDS_AXSITEERRORFMT, szErrorFormat, sizeof(szErrorFormat)-1);
-					char szOsErrMsg[256] = "";
-					::FormatMessage(FORMAT_MESSAGE_FROM_SYSTEM|
+					wchar_t szErrorMsg[128];
+					::LoadStringW(GetResLibHandle(), LOWORD(lpszHTMLText), szErrorMsg, (sizeof(szErrorMsg)/sizeof(wchar_t))-1);
+					wchar_t szErrorFormat[128];
+					::LoadStringW(GetResLibHandle(), IDS_AXSITEERRORFMT, szErrorFormat, (sizeof(szErrorFormat)/sizeof(wchar_t))-1);
+					wchar_t szOsErrMsg[256] = L"";
+					::FormatMessageW(FORMAT_MESSAGE_FROM_SYSTEM|
 									FORMAT_MESSAGE_IGNORE_INSERTS,
 									NULL, hrCreate, 0, 
-									szOsErrMsg, (sizeof(szOsErrMsg)/sizeof(char))-1, 
+									szOsErrMsg, (sizeof(szOsErrMsg)/sizeof(wchar_t))-1, 
 									NULL);
-					LPSTR buf;
-					DWORD args[4];
-					args[0] = DWORD(W2A(lpszTricsData));
+					ULONG_PTR args[4];
+					args[0] = ULONG_PTR(lpszTricsData);
 					args[1] = hrCreate;
-					args[2] = DWORD(szErrorMsg);
-					args[3] = DWORD(szOsErrMsg);
-					::FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER | 
+					args[2] = ULONG_PTR(szErrorMsg);
+					args[3] = ULONG_PTR(szOsErrMsg);
+					::FormatMessageW(FORMAT_MESSAGE_ALLOCATE_BUFFER | 
 									FORMAT_MESSAGE_FROM_STRING |
 									FORMAT_MESSAGE_ARGUMENT_ARRAY,
-									szErrorFormat, 0, 0, LPSTR(&buf), 0, 
+									szErrorFormat, 0, 0, LPWSTR(&buf), 0, 
 									(va_list*)args);
-					lpszHTMLText = A2W(buf);
-					::LocalFree(buf);
+					lpszHTMLText = buf;
 				}
 
 				UINT nCreateSize = ocslen(lpszHTMLText) * sizeof(OLECHAR);
@@ -571,7 +689,7 @@ STDMETHODIMP CDolphinAxHost::CreateControlLicEx(LPCOLESTR lpszTricsData, HWND hW
 				{
 					CComPtr<IStream> spStream;
 					BYTE* pBytes = (BYTE*) GlobalLock(hGlobal);
-					memcpy(pBytes, lpszHTMLText, nCreateSize);
+					Checked::memcpy_s(pBytes, nCreateSize, lpszHTMLText, nCreateSize);
 					GlobalUnlock(hGlobal);
 					hr = CreateStreamOnHGlobal(hGlobal, TRUE, &spStream);
 					if (SUCCEEDED(hr))
@@ -579,11 +697,20 @@ STDMETHODIMP CDolphinAxHost::CreateControlLicEx(LPCOLESTR lpszTricsData, HWND hW
 						CComPtr<IPersistStreamInit> spPSI;
 						hr = spUnk->QueryInterface(__uuidof(IPersistStreamInit), (void**)&spPSI);
 						if (SUCCEEDED(hr))
+						{
 							hr = spPSI->Load(spStream);
+						}
 					}
 				}
 				else
+				{
 					hr = E_OUTOFMEMORY;
+				}
+
+				if (buf != NULL)
+				{
+					::LocalFree(buf);
+				}
 			}
 			else
 			{
