@@ -2,7 +2,7 @@
 
 [![Build status](https://ci.appveyor.com/api/projects/status/6ru55e8y9huog899/branch/master?svg=true)](https://ci.appveyor.com/project/dolphinsmalltalk/dolphinvm-nf68c/branch/master)
 
-The [Dolphin Smalltalk](object-arts.com) virtual machine. 
+The [Dolphin Smalltalk](http://object-arts.com/) virtual machine. 
 
 This is a VS2015 Solution to build the Virtual Machine (VM) elements of Dolphin Smalltalk. This is not required to run the Dolphin IDE, which is available in the [Dolphin](https://github.com/objectarts/Dolphin) GitHub repository, since the latter comes with the executables already pre-built. You'll only need to build DolphinVM if you need to explicitly change the VM itself. 
 
