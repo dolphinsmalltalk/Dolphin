@@ -12,34 +12,26 @@ To create your own tutorial:
 - subclass AbstractTutorial
 - implement a few methods which returns a Lesson instance
 - implement tutorial which returns a Collection of selectors to the methods you''ve created.'!
-!AbstractTutorial categoriesForClass!Kernel-Objects! !
+!AbstractTutorial categoriesForClass!Unclassified! !
 !AbstractTutorial methodsFor!
 
 indexOfLesson: aSelector
-	^self tableOfContents indexOf: aSelector.
-!
+	^self listOfLessons indexOf: aSelector!
 
 lessonAt: anInteger
 	| lessonSelector |
-	lessonSelector := self tableOfContents at: anInteger.
-	^ self perform: lessonSelector asSymbol.
-!
+	lessonSelector := self listOfLessons at: anInteger.
+	^self perform: lessonSelector asSymbol!
+
+listOfLessons
+	^#('welcome' 'testLesson' 'theEnd')!
 
 name	
 	^self class name asString
 !
 
 size
-	^ self tableOfContents size
-!
-
-tableOfContents
-^ #(
-  'welcome'
-  'testLesson'
-  'theEnd'
-)
-!
+	^self listOfLessons size!
 
 testLesson
 	^ Lesson
@@ -60,9 +52,9 @@ welcome
 ! !
 !AbstractTutorial categoriesFor: #indexOfLesson:!accessing!public! !
 !AbstractTutorial categoriesFor: #lessonAt:!accessing!public! !
+!AbstractTutorial categoriesFor: #listOfLessons!accessing!public! !
 !AbstractTutorial categoriesFor: #name!accessing!public! !
 !AbstractTutorial categoriesFor: #size!accessing!public! !
-!AbstractTutorial categoriesFor: #tableOfContents!accessing!public! !
 !AbstractTutorial categoriesFor: #testLesson!pages!public! !
 !AbstractTutorial categoriesFor: #theEnd!pages!public! !
 !AbstractTutorial categoriesFor: #welcome!pages!public! !
