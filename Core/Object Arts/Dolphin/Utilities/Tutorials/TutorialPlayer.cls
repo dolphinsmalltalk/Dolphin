@@ -108,10 +108,10 @@ updateLesson
 	lesson := self currentLesson.
 	title value: lesson title.
 	workspace text: lesson contents.
-	self caption: ('<1d> - Lesson <2d>/<3d>' 
+	self caption: ('<1d> - Lesson <2d>/<3d>'
 				expandMacrosWith: self tutorial name
 				with: self tutorialPosition
-				with: self tutorial tableOfContents size).
+				with: self tutorial listOfLessons size).
 	^lesson! !
 !TutorialPlayer categoriesFor: #createComponents!accessing!private! !
 !TutorialPlayer categoriesFor: #currentLesson!accessing!public! !

@@ -16,30 +16,22 @@ To create your own tutorial:
 !AbstractTutorial methodsFor!
 
 indexOfLesson: aSelector
-	^self tableOfContents indexOf: aSelector.
-!
+	^self listOfLessons indexOf: aSelector!
 
 lessonAt: anInteger
 	| lessonSelector |
-	lessonSelector := self tableOfContents at: anInteger.
-	^ self perform: lessonSelector asSymbol.
-!
+	lessonSelector := self listOfLessons at: anInteger.
+	^self perform: lessonSelector asSymbol!
+
+listOfLessons
+	^#('welcome' 'testLesson' 'theEnd')!
 
 name	
 	^self class name asString
 !
 
 size
-	^ self tableOfContents size
-!
-
-tableOfContents
-^ #(
-  'welcome'
-  'testLesson'
-  'theEnd'
-)
-!
+	^self listOfLessons size!
 
 testLesson
 	^ Lesson
@@ -53,19 +45,16 @@ theEnd
 		contents: '"And that''d be pretty much it :)"'
 !
 
-welcome
-	^ Lesson
-		title: 'Welcome' 
-		contents: '"Hi, this is a test tutorial."'
-! !
+welcomeToSmalltalk
+	^Lesson title: 'Welcome' contents: '"Hi, this is a test tutorial."'! !
 !AbstractTutorial categoriesFor: #indexOfLesson:!accessing!public! !
 !AbstractTutorial categoriesFor: #lessonAt:!accessing!public! !
+!AbstractTutorial categoriesFor: #listOfLessons!accessing!public! !
 !AbstractTutorial categoriesFor: #name!accessing!public! !
 !AbstractTutorial categoriesFor: #size!accessing!public! !
-!AbstractTutorial categoriesFor: #tableOfContents!accessing!public! !
 !AbstractTutorial categoriesFor: #testLesson!pages!public! !
 !AbstractTutorial categoriesFor: #theEnd!pages!public! !
-!AbstractTutorial categoriesFor: #welcome!pages!public! !
+!AbstractTutorial categoriesFor: #welcomeToSmalltalk!pages!public! !
 
 !AbstractTutorial class methodsFor!
 
