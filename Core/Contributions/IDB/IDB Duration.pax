@@ -14,7 +14,7 @@ Public Domain Freeware
 Some methods provided by Richard Harmon
 '.
 
-package basicPackageVersion: 'IDB$PACKAGE$VERSION 6a'.
+package basicPackageVersion: '6a'.
 
 
 package binaryGlobalNames: (Set new

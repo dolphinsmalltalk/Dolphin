@@ -9,7 +9,7 @@ For Version 6 of Dolphin Smalltalk
 ian@idb.me.uk
 Public Domain Freeware'.
 
-package basicPackageVersion: 'IDB$PACKAGE$VERSION 6a'.
+package basicPackageVersion: '6a'.
 
 package basicScriptAt: #postinstall put: 'CurrencyToText 
 	propertyAt: #lsd
