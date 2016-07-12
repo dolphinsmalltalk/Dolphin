@@ -6,7 +6,7 @@ SmalltalkToolShell subclass: #PackageBrowserShell
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
 PackageBrowserShell guid: (GUID fromString: '{87B4C6C0-026E-11D3-9FD7-00A0CC3E4A32}')!
-PackageBrowserShell comment: 'PackageBrowserShell is a <SmalltalkToolShell> that implements the Package Browser tool. This provides a user interface onto all the <Package>s held by the current <PackageManager>. 
+Package Browser comment: 'PackageBrowserShell is a <SmalltalkToolShell> that implements the Package Browser tool. This provides a user interface onto all the <Package>s held by the current <PackageManager>. 
 
 Instance Variables:
 	packagesPresenter		<ListPresenter> holding the list of currently loaded packages.
@@ -29,7 +29,7 @@ Class Variables:
 	UpdateMap 
 	WordWrapComment		<boolean> indicating that the comment pane should word wrap.
 '!
-!PackageBrowserShell categoriesForClass!Development!MVP-Presenters! !
+!Package Browser categoriesForClass!Development!MVP-Presenters! !
 !PackageBrowserShell methodsFor!
 
 accept
@@ -1196,11 +1196,13 @@ updateMethods
 	methodsPresenter list: methods!
 
 updateMethodVersion
+	| sccs |
+	sccs := self sourceControl.
+	sccs isConnected ifFalse: [^self].
 	
 	[| info |
-	info := self selectedMethod isNil 
-				ifFalse: [self sourceControl getVersionInfoFor: self selectedMethod].
-	versionModel value: info] 
+	info := self selectedMethod isNil ifFalse: [sccs getVersionInfoFor: self selectedMethod].
+	versionModel value: info]
 			forkAt: Processor userBackgroundPriority!
 
 updatePrerequisites

@@ -3539,8 +3539,8 @@ keyBindings
 	" asArray"!
 
 keyBindings: aCollectionOfScintillaKeyBindings 
+	keyBindings := nil.
 	aCollectionOfScintillaKeyBindings 
-		ifNil: [keyBindings := nil]
 		ifNotNil: 
 			[| set |
 			set := aCollectionOfScintillaKeyBindings asSet.

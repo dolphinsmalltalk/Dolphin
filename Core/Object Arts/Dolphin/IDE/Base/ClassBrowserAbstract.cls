@@ -684,12 +684,6 @@ deleteItCommand
 		ifTrue: [^#removeInstanceVariables].
 	^nil!
 
-displayVersionInfoFor: anObjectOrNil 
-	
-	[versionModel 
-		value: (anObjectOrNil isNil ifFalse: [self sourceControl getVersionInfoFor: anObjectOrNil])] 
-			forkAt: Processor userBackgroundPriority!
-
 dropMethods: aDragDropSession onto: aClass 
 	| changes isMove count |
 	changes := CompositeRefactoryChange new.
@@ -2604,7 +2598,6 @@ variablesMethodFilter
 !ClassBrowserAbstract categoriesFor: #customDrawProtocols:!helpers!private! !
 !ClassBrowserAbstract categoriesFor: #definitionCardName!constants!private! !
 !ClassBrowserAbstract categoriesFor: #deleteItCommand!helpers!private! !
-!ClassBrowserAbstract categoriesFor: #displayVersionInfoFor:!event handling!private! !
 !ClassBrowserAbstract categoriesFor: #dropMethods:onto:!helpers!private! !
 !ClassBrowserAbstract categoriesFor: #emphasiseCategoryItem:isRelevant:!helpers!private! !
 !ClassBrowserAbstract categoriesFor: #emphasiseProtocolItem:isRelevant:!helpers!private! !

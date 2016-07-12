@@ -241,6 +241,9 @@ package methodNames
 	add: #Package -> #icon;
 	add: #Package -> #publishedAspects;
 	add: #Package -> #searchForInTool:;
+	add: #PackageManager -> #getVersionInfoFor:;
+	add: #PackageManager -> #isConnected;
+	add: #PackageManager -> #sourceControl;
 	add: #PoolConstantsDictionary -> #aspectDisplayOn:;
 	add: #PoolConstantsDictionary -> #browse;
 	add: #PoolDictionary -> #aspectDisplayOn:;
@@ -277,8 +280,6 @@ package methodNames
 	add: #SequenceableCollection -> #newBatchAccessor;
 	add: #Set -> #newBatchAccessor;
 	add: #Slider -> #publishedAspects;
-	add: #SmalltalkScanner -> #recoverFromExpectChar;
-	add: #SmalltalkScanner -> #recoverFromUnterminatedLiteral;
 	add: #SourceManager -> #compressSourcesWith:;
 	add: #SpinButton -> #publishedAspects;
 	add: #StackFrame -> #debugIpFor:;
@@ -1322,7 +1323,7 @@ publishedAspectsOfInstances
 	| aspects |
 	aspects := super publishedAspectsOfInstances.
 	aspects add: (Aspect name: #receiver).
-	#(#argumentCount #envTempCount #stackTempCount) 
+	#(#argumentCount #envTempCount #stackTempCount #initialIP)
 		do: [:each | aspects add: ((Aspect integer: each)
 						beReadOnly;
 						yourself)].
@@ -3346,6 +3347,27 @@ publishedEventsOfInstances
 !Package class categoriesFor: #publishedAspectsOfInstances!constants!development!public! !
 !Package class categoriesFor: #publishedEventsOfInstances!development!events!public! !
 
+!PackageManager methodsFor!
+
+getVersionInfoFor: aCompiledMethod 
+	"Part of the StsManager protocol implemented here for systems which do not have STS
+	installed. Answer nil to indicate that we cannot supply version information for
+	aCompiledMethod"
+
+	^nil!
+
+isConnected
+	"Part of the StsManager protocol implemented here for systems which do not have STS
+	installed. Answer nil to indicate that we are not connected to a repository"
+
+	^false!
+
+sourceControl
+	^self! !
+!PackageManager categoriesFor: #getVersionInfoFor:!public!source tracking system! !
+!PackageManager categoriesFor: #isConnected!public!source tracking system! !
+!PackageManager categoriesFor: #sourceControl!accessing!public! !
+
 !PackageManager class methodsFor!
 
 publishedEventsOfInstances
@@ -4452,16 +4474,6 @@ publishedAspectsOfInstances
 		do: [:each | aspects add: (Aspect boolean: each)].
 	^aspects! !
 !Slider class categoriesFor: #publishedAspectsOfInstances!constants!development!public! !
-
-!SmalltalkScanner methodsFor!
-
-recoverFromExpectChar
-	^self literalErrorToken: nil start: stream position!
-
-recoverFromUnterminatedLiteral
-	^self literalErrorToken: buffer contents start: self previousStepPosition! !
-!SmalltalkScanner categoriesFor: #recoverFromExpectChar!error handling!private! !
-!SmalltalkScanner categoriesFor: #recoverFromUnterminatedLiteral!error handling!private! !
 
 !SourceManager methodsFor!
 
