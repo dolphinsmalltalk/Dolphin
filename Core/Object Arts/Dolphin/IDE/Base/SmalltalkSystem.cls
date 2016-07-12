@@ -812,6 +812,16 @@ browseMethodsWithFullBlocks
 	methods label: 'Methods with Full Blocks'.
 	self browseMethodsIn: methods!
 
+browseMethodsWithNewBytecodes
+	"Open a method browser on all the methods that would have different bytecodes if recompiled
+	with the current compiler."
+
+	"
+	Smalltalk developmentSystem browseMethodsWithNewBytecodes
+	"
+
+	^self browseMethodsIn: self methodsWithNewBytecodes!
+
 browsePackages
 	"Open a new package browser."
 	
@@ -2138,6 +2148,27 @@ methodsWithCompilationIssuesIn: aBrowserEnvironment
 				withProgress: caption.
 	env label: ('Compilation issues in <1d>' expandMacrosWith: aBrowserEnvironment).
 	^env!
+
+methodsWithNewBytecodes
+	"Private - Answer a <BrowserEnvironment> containing all the methods that would have different bytecodes if recompiled with the current compiler."
+
+	^self methodsWithNewBytecodesIn: BrowserEnvironment new!
+
+methodsWithNewBytecodesIn: aBrowserEnvironment
+	"Private - Answer a <BrowserEnvironment> containing all the methods in the
+	<BrowserEnvironment> argument that would have different bytecodes if recompiled with the
+	current compiler."
+
+	^(self
+		selectMethods: 
+			[:each |
+			| method |
+			method := Compiler compile: each getSource in: each methodClass.
+			method notNil and: [method byteCodes ~= each byteCodes or: [method extraIndex ~= each extraIndex]]]
+		in: aBrowserEnvironment
+		withProgress: 'Finding methods that recompile differently...')
+		label: 'Methods that recompile differently in ' , aBrowserEnvironment label;
+		yourself!
 
 methodWorkspaceClass
 	"Answer the class of presenter to be used for method source workspaces in the various tools
@@ -3936,6 +3967,7 @@ wrapText: aString toWidth: max indent: colInteger tabWidth: tabInteger
 !SmalltalkSystem categoriesFor: #browseMethodsInEnvironments:!browsing!public! !
 !SmalltalkSystem categoriesFor: #browseMethodsWithCompilationIssuesIn:!browsing!public! !
 !SmalltalkSystem categoriesFor: #browseMethodsWithFullBlocks!public!utilities! !
+!SmalltalkSystem categoriesFor: #browseMethodsWithNewBytecodes!browsing!public! !
 !SmalltalkSystem categoriesFor: #browsePackages!browsing!commands!public! !
 !SmalltalkSystem categoriesFor: #browsePackages:!browsing!commands!public! !
 !SmalltalkSystem categoriesFor: #browsePoolConstantsDictionary:!browsing!public! !
@@ -4084,6 +4116,8 @@ wrapText: aString toWidth: max indent: colInteger tabWidth: tabInteger
 !SmalltalkSystem categoriesFor: #methodsThatFailedToCompileIn:!browsing!public! !
 !SmalltalkSystem categoriesFor: #methodStylerClass!constants!public! !
 !SmalltalkSystem categoriesFor: #methodsWithCompilationIssuesIn:!private!searching! !
+!SmalltalkSystem categoriesFor: #methodsWithNewBytecodes!browsing!private! !
+!SmalltalkSystem categoriesFor: #methodsWithNewBytecodesIn:!browsing!private! !
 !SmalltalkSystem categoriesFor: #methodWorkspaceClass!options!public! !
 !SmalltalkSystem categoriesFor: #minimizeAll!commands!public! !
 !SmalltalkSystem categoriesFor: #myDolphinAccount!accessing!public! !
