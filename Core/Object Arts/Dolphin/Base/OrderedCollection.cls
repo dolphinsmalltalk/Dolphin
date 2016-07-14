@@ -1,7 +1,7 @@
 "Filed out from Dolphin Smalltalk 7"!
 
 SequencedGrowableCollection variableSubclass: #OrderedCollection
-	instanceVariableNames: 'firstIndex lastIndex '
+	instanceVariableNames: 'firstIndex lastIndex'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -174,6 +174,24 @@ initialize
 	firstIndex := 1.
 	lastIndex := 0
 !
+
+inject: anObject into: aDyadicValuable
+	"Evaluate the <dyadicValuable> argument, aDyadicValuable, once for each element in the
+	receiver, passing the elements as the second argument, and passing the value of the previous
+	evaluation as the first argument, starting with the <Object> argument, initialValue. The
+	operation must answer the value it wishes to have passed as its first argument the next time
+	it is evaluated. The traversal is in the #do: order. Answer the final value of the
+	operation. This enumeration is particularly useful for performing summations and other
+	statistical operations."
+
+	"Implementation Note: Override superclass implementation for efficiency. By inlining the do:
+	implementation we can avoid requiring a full block."
+
+	| nextValue |
+	nextValue := anObject.
+	firstIndex to: lastIndex
+		do: [:i | nextValue := aDyadicValuable value: nextValue value: (self basicAt: i)].
+	^nextValue!
 
 insert: newElement before: anInteger 
 	"Private - Insert the argument, newElement, into the receiver at the basic index
@@ -410,6 +428,7 @@ uncheckedFrom: startInteger to: stopInteger keysAndValuesDo: aDyadicValuable
 !OrderedCollection categoriesFor: #firstIndex:lastIndex:!accessing!private! !
 !OrderedCollection categoriesFor: #includes:!public!searching! !
 !OrderedCollection categoriesFor: #initialize!initializing!public! !
+!OrderedCollection categoriesFor: #inject:into:!enumerating!public! !
 !OrderedCollection categoriesFor: #insert:before:!adding!private! !
 !OrderedCollection categoriesFor: #isEmpty!public!testing! !
 !OrderedCollection categoriesFor: #makeRoomAtEndFor:!adding!private! !
