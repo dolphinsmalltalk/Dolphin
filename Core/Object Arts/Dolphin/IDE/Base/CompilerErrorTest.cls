@@ -37,16 +37,81 @@ parseMethod: aString in: aClass
 		in: aClass
 		flags: self defaultCompileFlags!
 
-testErrorsLexical
+printLiterals: anInteger on: aPuttableStream
+	| i |
+	i := 0.
+	Symbol allInstancesDo: 
+			[:each |
+			aPuttableStream
+				print: each;
+				nextPut: $.;
+				crtab.
+			(i := i + 1) = anInteger ifTrue: [^self]].
+	Smalltalk keysDo: 
+			[:each |
+			aPuttableStream
+				nextPutAll: each;
+				nextPut: $.;
+				crtab.
+			(i := i + 1) = anInteger ifTrue: [^self]].
+	Win32Constants keysDo: 
+			[:each |
+			aPuttableStream
+				display: Win32Constants;
+				nextPut: $.;
+				nextPutAll: each;
+				nextPut: $.;
+				crtab.
+			(i := i + 1) = anInteger ifTrue: [^self]].
+	self halt!
+
+tempWarningRangeIn: aString
+	| start |
+	start := aString indexOf: $$.
+	^start <= 0
+		ifTrue: [super tempWarningRangeIn: aString]
+		ifFalse: [^start + 2 to: (aString lastIndexOf: $$) - 2]!
+
+testErrorsBadContext
+	"This error is untested because it is difficult to produce - the compiler will only raise it if the #allInstVarNames implementation
+	on the class returns an invalid array - this would require building a special class for this purpose, and I don't think it is worth it."
+
+	CErrBadContext!
+
+testErrorsBadPools
+	"This error is untested because it is difficult to produce - the compiler will only raise it if the #allInstVarNames implementation
+	on the class returns an invalid array - this would require building a special class for this purpose, and I don't think it is worth it."
+
+	| source |
+	source := 'xyz'.
+	self
+		should: 
+			[Compiler
+				compileForEvaluation: source
+				in: UndefinedObject
+				evaluationPools: 'Bad pools'
+				logged: false
+				flags: self defaultCompileFlags]
+		raise: self compilationErrorClass
+		matching: 
+			[:ex |
+			| range |
+			range := 1 to: source size.
+			self
+				checkCompileError: ex
+				range: range
+				code: CErrBadPools
+				line: 1
+				source: source]!
+
+testErrorsLexicalExpectExtendedLiteral
 	"Invalid const"
 
-	super testErrorsLexical.
-	self 
+	self
 		parseExprError: '###'
 		range: (3 to: 3)
 		line: 1
-		code: LErrExpectExtendedLiteral
-		message: ((self errorFormats at: LErrExpectExtendedLiteral) expandMacrosWith: $()!
+		code: LErrExpectExtendedLiteral!
 
 testErrorsNonsenseAtEndOfExpression
 	self 
@@ -85,45 +150,23 @@ testErrorsNonsenseAtEndOfMethod
 		line: 1
 		code: CErrInvalExprStart!
 
-testErrorsTooManyBytecodes
-	"This is one error that the parser cannot detect since it does not do code generation.
-	The number of bytecodes in a method has no real limit, except that imposed by the
-	maximum lengths of jumps (and in practice by the maximum size of the literal frame).
-	In order to provoke the 'method tool long' error we need to generate a long jump
-	around a large inlined block. To avoid requring a lot of literals we use expressions
-	with immediate values, i.e. 1+2 .Each 1+2 sequence generates 4 bytecodes:
-		Push 1
-		Push 2
-		Send +
-		Pop.
-	The maximum length of a jump is 32k."
+writtenNotReadRange: aString
+	"The Dolphin Compiler reports written-not-read temps against the temp declaration."
 
-	| source max |
-	source := String writeStream.
-	source
-		nextPutAll: 'Object isNil ifFalse: [';
-		cr.
-	max := 32768 / 4.
-	1 to: max
-		do: 
-			[:i |
-			source
-				nextPutAll: '1+2.';
-				cr].
-	source nextPut: $].
-	source := source contents.
-	self
-		parseExprError: source
-		range: (source size + 1 to: source size)
-		line: max + 2
-		code: CErrMethodTooLarge! !
+	| start |
+	start := aString indexOf: $_.
+	^start to: start + 3! !
 !CompilerErrorTest categoriesFor: #compilationErrorClass!constants!private! !
 !CompilerErrorTest categoriesFor: #compilationWarningClass!constants!private! !
-!CompilerErrorTest categoriesFor: #defaultCompileFlags!private! !
-!CompilerErrorTest categoriesFor: #parseExpression:in:!private! !
-!CompilerErrorTest categoriesFor: #parseMethod:in:!private!unit tests! !
-!CompilerErrorTest categoriesFor: #testErrorsLexical!exceptions!public!unit tests! !
+!CompilerErrorTest categoriesFor: #defaultCompileFlags!constants!private! !
+!CompilerErrorTest categoriesFor: #parseExpression:in:!helpers!private! !
+!CompilerErrorTest categoriesFor: #parseMethod:in:!helpers!private! !
+!CompilerErrorTest categoriesFor: #printLiterals:on:!helpers!private! !
+!CompilerErrorTest categoriesFor: #tempWarningRangeIn:!helpers!private! !
+!CompilerErrorTest categoriesFor: #testErrorsBadContext!public!unit tests! !
+!CompilerErrorTest categoriesFor: #testErrorsBadPools!public!unit tests! !
+!CompilerErrorTest categoriesFor: #testErrorsLexicalExpectExtendedLiteral!exceptions!public!unit tests! !
 !CompilerErrorTest categoriesFor: #testErrorsNonsenseAtEndOfExpression!public!unit tests! !
 !CompilerErrorTest categoriesFor: #testErrorsNonsenseAtEndOfMethod!exceptions!public!unit tests! !
-!CompilerErrorTest categoriesFor: #testErrorsTooManyBytecodes!public!unit tests! !
+!CompilerErrorTest categoriesFor: #writtenNotReadRange:!helpers!private! !
 

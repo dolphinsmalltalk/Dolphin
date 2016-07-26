@@ -1936,6 +1936,8 @@ publishedAspectsOfInstances
 		add: (Aspect name: #byteCodes) beReadOnly;
 		add: (Aspect multilineString: #disassembly) beReadOnly;
 		add: (Aspect name: #literals);
+		add: (Aspect collection: #tempsMap) beReadOnly;
+		add: (Aspect collection: #textMap) beReadOnly;
 		yourself! !
 !CompiledCode class categoriesFor: #publishedAspectsOfInstances!constants!development!public! !
 

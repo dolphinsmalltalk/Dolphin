@@ -35,12 +35,14 @@ package setPrerequisites: (IdentitySet new
 	add: '..\..\ActiveX\Automation\ActiveX Automation';
 	add: '..\Community Edition\ActiveX Automation Development';
 	add: '..\..\..\Samples\MVP\Animal Game\Animals';
+	add: '..\..\System\Continuations\Continuation Tests';
 	add: 'Development System';
 	add: '..\..\Base\Dolphin';
 	add: '..\..\Base\Dolphin Base Tests';
+	add: '..\..\System\Base64\Dolphin Base64';
+	add: '..\..\MVP\Views\Common Controls\Dolphin Common Controls';
 	add: '..\..\Registry\Dolphin Registry Access';
 	add: '..\..\Lagoon\Lagoon Image Stripper';
-	add: '..\..\..\..\Contributions\Refactory\Refactoring Browser\Change Objects\RBChangeObjects';
 	add: '..\..\..\..\Contributions\Refactory\Refactoring Browser\Environments\RBEnvironments';
 	add: '..\..\..\..\Contributions\Refactory\Refactoring Browser\Parser\RBParser';
 	add: '..\..\..\..\Contributions\Refactory\Refactoring Browser\SmallLint\RBSmallLint';
@@ -81,7 +83,7 @@ DolphinTest subclass: #CompiledMethodTest
 	classInstanceVariableNames: ''!
 DolphinTest subclass: #CompilerTest
 	instanceVariableNames: 'defaultCompileFlags'
-	classVariableNames: ''
+	classVariableNames: 'TempInstrs'
 	poolDictionaries: 'CompilerFlags OpcodePool SmalltalkParseErrorCodes'
 	classInstanceVariableNames: ''!
 DolphinTest subclass: #KeyedAspectTest

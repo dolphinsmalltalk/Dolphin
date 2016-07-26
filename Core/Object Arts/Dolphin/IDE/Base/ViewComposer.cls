@@ -6,14 +6,14 @@ SmalltalkToolShell subclass: #ViewComposer
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
 ViewComposer guid: (GUID fromString: '{045641AA-90D2-43E8-A81C-A3F76D7D35B4}')!
-ViewComposer comment: 'The View Composer is Dolphin''s GUI builder. It is used to graphically create views (the user interface components of the MVP framework). 
+View Composer comment: 'The View Composer is Dolphin''s GUI builder. It is used to graphically create views (the user interface components of the MVP framework). 
 
 The view resources are saved down as class-side methods, usually associated with the presenter classes to which the views will be attached. These methods are given selectors of the form, #resource_xxxx_yyyy, where xxxx_yyyy is the resource identifier. The resource methods answer an array of Smalltalk literals that can be used to rebuild an instance of the view when loaded via an STLInFiler.
 
 The View Composer works by loading its ''composing view'' as a child of the desktop and positioning it offscreen so that it is invisible to the user. It then uses WM_PRINT messages to render an image of this view which it displays in its arenaPresenter. Using this shadow image of the real view has a couple of benefits. The first is that mouse clicks over the image can be intercepted directly, whereas mouse clicks over the real view would be handled by the Windows controls themselves. We also discovered that placing a real shell view inside another (e.g. as a composing view inside the View Composer) caused the menu bars for the shell view not to be displayed.
 
 '!
-!ViewComposer categoriesForClass!Development! !
+!View Composer categoriesForClass!Development! !
 !ViewComposer methodsFor!
 
 addGrabberFor: aGrabAspectSymbol of: aView
@@ -2010,10 +2010,10 @@ restoreComposition: viewResource
 		context: self pasteContext
 		position: self incrementAddPositionOffset!
 
-restoreUndoState: aLiteralStoreArray 
-	| state |
+restoreUndoState: aLiteralStoreArray
 	self inspector view noRedrawDo: 
-			[self arena noRedrawDo: 
+			[| state |
+			self arena noRedrawDo: 
 					[| restoredView |
 					self endComposition.
 					state := self systemModel loadViewResource: aLiteralStoreArray inContext: View desktop.

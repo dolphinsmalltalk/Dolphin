@@ -6,8 +6,8 @@ SmalltalkToolShell subclass: #IdeaSpaceShell
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
 IdeaSpaceShell guid: (GUID fromString: '{402CF4F5-0B2E-4533-9664-C99FE1BF84FA}')!
-IdeaSpaceShell comment: ''!
-!IdeaSpaceShell categoriesForClass!Development!MVP-Presenters! !
+Idea Space comment: ''!
+!Idea Space categoriesForClass!Development!MVP-Presenters! !
 !IdeaSpaceShell methodsFor!
 
 absorbCard: card 
@@ -224,22 +224,22 @@ loadErrorDescriptionFrom: anException
 loadIdeaSpace
 	"Private - Loads the receiver from its associated template file (if any)"
 
-	| stream |
 	Cursor wait showWhile: 
-			[stream := FileStream read: self filename.
-			[self view noRedrawDo: [self configureFromSavedStateString: stream contents]] 
+			[| stream |
+			stream := FileStream read: self filename.
+			[self view noRedrawDo: [self configureFromSavedStateString: stream contents]]
 				on: CompilerNotification , Error
 				do: 
-					[:x | 
+					[:x |
 					self view enableRedraw.
-					MessageBox 
+					MessageBox
 						errorMsg: ('There was a problem loading the IdeaSpace template: "<1d>". 
 
 The error reported was: "<2d>". 
 
 As as result the new IdeaSpace may only be partially complete. Please bear in mind that you
 can only reload an IdeaSpace into an equivalent image to the one that was used to save the
-original template. Missing Packages, Classes or Methods may give rise to errors.' 
+original template. Missing Packages, Classes or Methods may give rise to errors.'
 								expandMacrosWith: (File splitFilenameFrom: self filename)
 								with: (self loadErrorDescriptionFrom: x))
 						caption: 'Problem Loading IdeaSpace'].

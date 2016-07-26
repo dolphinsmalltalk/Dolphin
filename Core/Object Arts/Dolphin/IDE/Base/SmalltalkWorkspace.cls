@@ -898,45 +898,48 @@ maybeShowCompletionList
 						ifTrue: 
 							[self showCompletionListAfterToken: (self tokenBefore: last) maxItems: self maxAutoCompletionListSize]]!
 
-messagesForToken: anAssociation startingWith: aString maxItems: anInteger 
+messagesForToken: anAssociation startingWith: aString maxItems: anInteger
 	"Private - Answer the set of selectors that could potentially be sent as messages following
 	the specified token."
 
-	| selectors ignoreCase |
+	| ignoreCase |
 	ignoreCase := self isAutoCompletionCaseInsensitive.
-	(self classForToken: anAssociation) 
+	^(self classForToken: anAssociation)
 		ifNil: 
 			[| allSelectors |
 			allSelectors := Smalltalk developmentSystem allSelectors.
-			aString isEmpty 
-				ifTrue: [selectors := allSelectors size > anInteger ifTrue: [#()] ifFalse: [allSelectors]]
+			aString isEmpty
+				ifTrue: [allSelectors size > anInteger ifTrue: [#()] ifFalse: [allSelectors]]
 				ifFalse: 
-					[selectors := Set new.
+					[| messages |
+					messages := Set new.
 					allSelectors do: 
-							[:eachName | 
-							(eachName beginsWith: aString ignoreCase: ignoreCase) 
+							[:eachName |
+							(eachName beginsWith: aString ignoreCase: ignoreCase)
 								ifTrue: 
-									[selectors add: eachName.
-									selectors size > anInteger ifTrue: [^#()]]]]]
+									[messages add: eachName.
+									messages size > anInteger ifTrue: [^#()]]].
+					messages]]
 		ifNotNil: 
-			[:class | 
-			selectors := Set new.
-			class withAllSuperclassesDo: (aString isEmpty 
+			[:class |
+			| messages |
+			messages := Set new.
+			class withAllSuperclassesDo: (aString isEmpty
 						ifTrue: 
 							[
-							[:eachClass | 
-							selectors addAll: eachClass selectors.
-							selectors size > anInteger ifTrue: [^#()]]]
+							[:eachClass |
+							messages addAll: eachClass selectors.
+							messages size > anInteger ifTrue: [^#()]]]
 						ifFalse: 
 							[
-							[:eachClass | 
+							[:eachClass |
 							eachClass selectors do: 
-									[:eachSelector | 
-									(eachSelector beginsWith: aString ignoreCase: ignoreCase) 
+									[:eachSelector |
+									(eachSelector beginsWith: aString ignoreCase: ignoreCase)
 										ifTrue: 
-											[selectors add: eachSelector.
-											selectors size > anInteger ifTrue: [^#()]]]]])].
-	^selectors!
+											[messages add: eachSelector.
+											messages size > anInteger ifTrue: [^#()]]]]]).
+			messages]!
 
 modifiedModel
 	^modifiedModel!

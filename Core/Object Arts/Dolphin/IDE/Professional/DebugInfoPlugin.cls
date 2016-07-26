@@ -131,7 +131,7 @@ toggleDebug
 	| sel |
 	sel := textMapPresenter selectionByIndex.
 	self displayMethod.
-	textMapPresenter selectionByIndex: sel! !
+	textMapPresenter selectionByIndex: sel ifAbsent: []! !
 !DebugInfoPlugin categoriesFor: #clear!private! !
 !DebugInfoPlugin categoriesFor: #createComponents!initializing!public! !
 !DebugInfoPlugin categoriesFor: #createSchematicWiring!initializing!public! !

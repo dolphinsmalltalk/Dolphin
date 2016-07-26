@@ -249,24 +249,24 @@ printHtmlDescriptionOfKeyBindingsForShell: aShell on: aPuttableStream
 				on: aPuttableStream
 				inUse: global]!
 
-printHtmlTableOfKeyBindingsForView: aView on: aPuttableStream inUse: aSet 
+printHtmlTableOfKeyBindingsForView: aView on: aPuttableStream inUse: aSet
 	| acceleratorKeys commands |
 	acceleratorKeys := Set new.
-	commands := aView keyboardCommands 
+	commands := aView keyboardCommands
 				asSortedCollection: [:a :b | a acceleratorKeyString < b acceleratorKeyString].
-	commands notEmpty 
+	commands notEmpty
 		ifTrue: 
-			[| path |
-			path := String writeStream.
+			[| stream path |
+			stream := String writeStream.
 			(Array with: aView) , aView allParents reverseDo: 
-					[:each | 
-					each name 
+					[:each |
+					each name
 						ifNotNil: 
-							[:name | 
-							path isEmpty ifFalse: [path nextPut: $/].
-							path nextPutAll: name asPhrase]].
-			path := path contents.
-			path isEmpty 
+							[:name |
+							stream isEmpty ifFalse: [stream nextPut: $/].
+							stream nextPutAll: name asPhrase]].
+			path := stream contents.
+			path isEmpty
 				ifFalse: 
 					[aPuttableStream
 						nextPutAll: '<h2>';
@@ -279,9 +279,9 @@ printHtmlTableOfKeyBindingsForView: aView on: aPuttableStream inUse: aSet
 				nextPutAll: '<TH>Description</TH>';
 				nextPutAll: '</TR>'.
 			commands do: 
-					[:each | 
+					[:each |
 					| duplicate |
-					duplicate := (aSet includes: each acceleratorKey) 
+					duplicate := (aSet includes: each acceleratorKey)
 								or: [acceleratorKeys includes: each acceleratorKey].
 					aPuttableStream nextPutAll: '<TR align=left><TD>'.
 					duplicate ifTrue: [aPuttableStream nextPutAll: '<b>'].

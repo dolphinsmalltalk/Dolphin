@@ -55,12 +55,6 @@ failureLog
 	^Transcript
 !
 
-hasFullClosures
-	^self isD6OrLater!
-
-isD6OrLater
-	^self class isD6OrLater!
-
 isLogging
 	^true!
 
@@ -68,7 +62,7 @@ isOnline
 	^true!
 
 methodContextClass
-	^Smalltalk at: (self hasFullClosures ifTrue: [#Context] ifFalse: [#MethodContext])!
+	^Context!
 
 runKnownBug: aString test: aSymbol 
 	Notification 
@@ -91,8 +85,6 @@ shouldRaiseZeroDivide: aBlock
 !DolphinTest categoriesFor: #createPackage:!helpers!public! !
 !DolphinTest categoriesFor: #createTestPackage!helpers!public! !
 !DolphinTest categoriesFor: #failureLog!Accessing!public! !
-!DolphinTest categoriesFor: #hasFullClosures!public!testing! !
-!DolphinTest categoriesFor: #isD6OrLater!public!testing! !
 !DolphinTest categoriesFor: #isLogging!Accessing!public! !
 !DolphinTest categoriesFor: #isOnline!public!unit tests! !
 !DolphinTest categoriesFor: #methodContextClass!constants!private! !
@@ -101,18 +93,10 @@ shouldRaiseZeroDivide: aBlock
 
 !DolphinTest class methodsFor!
 
-hasFullClosures
-	^self isD6OrLater!
-
 isAbstract
 	"Override to true if a TestCase subclass is Abstract and should not have
 	TestCase instances built from it"
 
-	^self == ##(self)!
-
-isD6OrLater
-	^VMLibrary default bytecodeVersion lowWord >= 6! !
-!DolphinTest class categoriesFor: #hasFullClosures!public!testing! !
+	^self == ##(self)! !
 !DolphinTest class categoriesFor: #isAbstract!public!Testing! !
-!DolphinTest class categoriesFor: #isD6OrLater!public!testing! !
 

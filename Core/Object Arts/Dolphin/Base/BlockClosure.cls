@@ -1,7 +1,7 @@
 "Filed out from Dolphin Smalltalk 7"!
 
 Object variableSubclass: #BlockClosure
-	instanceVariableNames: 'outer method initialIP info receiver '
+	instanceVariableNames: 'outer method initialIP info receiver'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -337,14 +337,14 @@ info: aSmallInteger
 	info := aSmallInteger!
 
 initialIP
-	"Answer the initial instruction pointer index into the home method, 
-	used when the block receives a #value* message"
+	"Answer the initial instruction pointer index into the home method, used when the block
+	receives a #value* message. Note that this is 1-based."
 
 	^initialIP!
 
 initialIP: anInteger 
-	"Private - Set the initial instruction pointer index into the receiver's
-	compiled byte codes (used when the block receives a #value* message)."
+	"Private - Set the initial instruction pointer index into the receiver's compiled byte codes
+	(used when the block receives a #value* message), to the 1-based <integer> index argument."
 
 	initialIP := anInteger!
 

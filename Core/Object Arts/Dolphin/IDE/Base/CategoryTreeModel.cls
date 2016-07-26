@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 TreeModel subclass: #CategoryTreeModel
 	instanceVariableNames: 'title'
@@ -15,7 +15,7 @@ Instance Variables:
 !CategoryTreeModel categoriesForClass!Development!MVP-Models! !
 !CategoryTreeModel methodsFor!
 
-addCategory: aCategory 
+addCategory: aCategory
 	"Private - Adds aCategory and all of its parent categories to the receiver. 
 	Parses the name of aCategory to split off the parents"
 
@@ -25,21 +25,20 @@ addCategory: aCategory
 	parent := title.
 
 	"Do fast check to avoid expense of subStrings: for common case"
-	(name identityIncludes: sep) 
+	(name identityIncludes: sep)
 		ifTrue: 
-			[| names moniker class |
-			class := IntermediateCategory.	"aCategory class."
+			[| names moniker |
 			names := name subStrings: sep.
-			moniker := String new.
-			names 
+			moniker := String writeStream.
+			names
 				from: 1
 				to: names size - 1
 				do: 
-					[:part | 
+					[:part |
 					| branch |
-					moniker := moniker , part.
-					branch := self add: (class name: moniker) asChildOf: parent.
-					moniker := moniker copyWith: sep.
+					moniker nextPutAll: part.
+					branch := self add: (IntermediateCategory name: moniker contents) asChildOf: parent.
+					moniker nextPut: sep.
 					parent := branch]].
 	self add: aCategory asChildOf: parent!
 

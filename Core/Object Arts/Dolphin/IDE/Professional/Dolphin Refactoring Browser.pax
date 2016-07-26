@@ -1353,20 +1353,21 @@ performMethodsRefactoring: aMonadicValuable name: aString
 !MethodRefactoring methodsFor!
 
 getOptionMethodName: anRBMethodName
-	anRBMethodName selector isNil 
+	anRBMethodName selector isNil
 		ifTrue: 
 			[| args mname |
 			args := anRBMethodName arguments.
-			mname := args isEmpty 
+			mname := args isEmpty
 						ifTrue: ['method']
 						ifFalse: 
-							[mname := String writeStream.
+							[| stream |
+							stream := String writeStream.
 							anRBMethodName arguments do: 
-									[:arg | 
-									mname
+									[:arg |
+									stream
 										nextPutAll: arg;
 										nextPut: $:].
-							mname contents].
+							stream contents].
 			anRBMethodName selector: mname asSymbol].
 	^(MethodNameDialog showModalOn: anRBMethodName) isNil ifFalse: [anRBMethodName]! !
 !MethodRefactoring categoriesFor: #getOptionMethodName:!options!public! !

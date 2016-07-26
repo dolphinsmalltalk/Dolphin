@@ -50,7 +50,6 @@ nestedReturn3
 
 testCopyingBlock
 	| blocks result |
-	self hasFullClosures ifFalse: [^self].
 	blocks := OrderedCollection new.
 	1 to: 10 do: [:i | blocks add: [i]].
 	1 to: blocks size
@@ -79,13 +78,13 @@ testCullCullCull	[  ] cull: 1 cull: 2 cull: 3.	[ :x |  ] cull: 1 cull: 2 cull:
 testCullCullCullCull	[  ]		cull: 1		cull: 2		cull: 3		cull: 4.	[ :x |  ]		cull: 1		cull: 2		cull: 3		cull: 4.	[ :x :y |  ]		cull: 1		cull: 2		cull: 3		cull: 4.	[ :x :y :z |  ]		cull: 1		cull: 2		cull: 3		cull: 4.	[ :x :y :z :a |  ]		cull: 1		cull: 2		cull: 3		cull: 4.	self		should: [ 			[ :x :y :z :a :b |  ]				cull: 1				cull: 2				cull: 3				cull: 4 ]		raise: Error.	self		assert:			([ 0 ]				cull: 1				cull: 2				cull: 3				cull: 4) = 0.	self		assert:			([ :x | x ]				cull: 1				cull: 2				cull: 3				cull: 4) = 1.	self		assert:			([ :x :y | y ]				cull: 1				cull: 2				cull: 3				cull: 4) = 2.	self		assert:			([ :x :y :z | z ]				cull: 1				cull: 2				cull: 3				cull: 4) = 3.	self		assert:			([ :x :y :z :a | a ]				cull: 1				cull: 2				cull: 3				cull: 4) = 4!
 
 testEmptyBlock
-	(Array 
+	(Array
 		with: []
 		with: [:a | ]
 		with: [:a :b | ]) do: 
-				[:each | 
+				[:each |
 				self assert: (each valueWithArguments: (1 to: each argumentCount) asArray) isNil.
-				self hasFullClosures 
+				true
 					ifTrue: 
 						[self assert: each outer isNil.
 						self assert: each receiver isNil]]!
@@ -103,9 +102,9 @@ testEnsure
 testNesting
 	| a b c |
 	a := 
-			[:x1 | 
+			[:x1 |
 			b := 
-					[:x2 | 
+					[:x2 |
 					c := [:x3 | x3 * x3].
 					x2 * (c value: x2 + 1)].
 			x1 * (b value: x1 + 1)].
@@ -115,7 +114,7 @@ testNesting
 	self assert: (a outer isKindOf: self methodContextClass).
 	"All the shared temps are allocated at the method level"
 	self assert: b outer == a outer.
-	self hasFullClosures 
+	true
 		ifTrue: 
 			["C doesn't need an outer as it only refs its argument"
 			self assert: c outer isNil]!
@@ -145,7 +144,6 @@ testOneArgument
 
 testRecursiveBlock
 	| factorial |
-	self hasFullClosures ifFalse: [^self].
 	factorial := [:int | int > 1 ifTrue: [(factorial value: int - 1) * int] ifFalse: [1]].
 	"factorial itself is a shared temp, so the block must have an outer"
 	self assert: factorial outer notNil.
