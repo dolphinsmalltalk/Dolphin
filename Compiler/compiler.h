@@ -36,8 +36,6 @@ typedef std::valarray<POTE> POTEARRAY;
 #define GENERATEDTEMPSTART " "
 #define TEMPSDELIMITER '|'
 
-#define MAXBLOCKNESTING		255
-
 #include "bytecode.h"
 
 /////////////////////////////////////////////////////////////////////////////
@@ -104,7 +102,6 @@ private:
 
 	void SetFlagsAndText(FLAGS flags, const char* text, int offset);
 	void PrepareToCompile(FLAGS flags, const char* text, int offset, POTE classPointer, Oop compiler, Oop notifier, POTE workspacePools, POTE compiledMethodClass, Oop context=0);
-	void Cleanup();
 	virtual void _CompileErrorV(int code, const TEXTRANGE& range, va_list extras);
 	Oop Notification(int errorCode, const TEXTRANGE& range, va_list extras);
 	void InternalError(const char* szFile, int line, const TEXTRANGE&, const char* szMsg, ...);
@@ -138,6 +135,7 @@ private:
 	POTE AddSymbolToFrame(const char*, const TEXTRANGE&);
 	void InsertByte(int pos, BYTE value, BYTE flags, LexicalScope* pScope);
 	void RemoveByte(int pos);
+	void RemoveBytes(int start, int stop);
 	int RemoveInstruction(int pos);
 	int GenByte(BYTE value, BYTE flags, LexicalScope* pScope);
 	int GenData(BYTE value);
@@ -145,7 +143,7 @@ private:
 	int GenInstructionExtended(BYTE basic, BYTE extension);
 	int GenLongInstruction(BYTE basic, WORD extension);
 	void UngenInstruction(int pos);
-	void UngenData(int pos);
+	void UngenData(int pos, LexicalScope* pScope);
 	
 	int GenNop();
 	int GenDup();
@@ -200,7 +198,6 @@ private:
 	int ShortenJumps();
 	void FixupJumps();
 	void FixupJump(int);
-	void ReduceNilBlocks();
 
 	// Recursive Decent Parsing
 	POTE  ParseMethod();
@@ -303,9 +300,7 @@ private:
 	LexicalScope* GetMethodScope() const;
 	void DetermineTempUsage();
 	TempVarDecl* DeclareTemp(const Str& strName, const TEXTRANGE& range);
-	void PatchStackTempRef(int i, int instruction);
-	int PatchStackTempRefs();
-	void FixupTempRef(BYTECODES::iterator it);
+	void FixupTempRef(int i);
 	int FixupTempRefs();
 	int FixupTempsAndBlocks();
 	void PatchOptimizedScopes();
@@ -321,7 +316,8 @@ private:
 	bool VoidTextMapEntry(int ip);
 #ifdef _DEBUG
 	void AssertValidIpForTextMapEntry(int ip, bool bFinal);
-	void VerifyTextMap(bool bFinal=false);
+	void VerifyTextMap(bool bFinal = false);
+	void VerifyJumps();
 	bool IsBlock(Oop oop);
 	void disassemble(std::ostream& stream);
 	void disassembleAt(std::ostream& stream, int ip);
@@ -335,12 +331,13 @@ private:
 	void PrintTempInstruction(std::ostream& stream, const char* type, int index, const BYTECODE& bytecode);
 	void PrintPushImmediate(std::ostream& stream, int value, int byteSize);
 #else
-	#define VerifyTextMap __noop
+#define AssertValidIpForTextMapEntry __noop
+#define VerifyTextMap __noop
+#define VerifyJumps __noop
+#define disassemble __noop
 #endif
-	void BreakPoint();
 
-	// temps map
-	void AddTempsMap(int nTemps=-1, int nCodeSize=-1);
+	void BreakPoint();
 
 	const VMPointers& GetVMPointers() const
 	{
@@ -424,7 +421,7 @@ private:
 
 	POTE m_compiledMethodClass;				// Class of compiled method to generate
 	Oop m_notifier;							// Notifier object to send compilerError:... callbacks to
-	};
+};
 
 OBJECT_ENTRY_AUTO(__uuidof(DolphinCompiler), Compiler)
 
@@ -460,7 +457,7 @@ inline int Compiler::GenData(BYTE value)
 	return GenByte(value, BYTECODE::IsData, NULL);
 }
 
-inline void Compiler::UngenData(int pos)
+inline void Compiler::UngenData(int pos, LexicalScope* pScope)
 {
 	_ASSERTE(pos < GetCodeSize());
 	#ifdef _DEBUG
@@ -470,7 +467,7 @@ inline void Compiler::UngenData(int pos)
 		_ASSERTE(!bc.isJumpSource());
 	}
 	#endif
-	m_bytecodes[pos].makeNop();
+	m_bytecodes[pos].makeNop(pScope);
 }
 
 // Insert an instruction at the code pointer, returning the position at which
@@ -548,3 +545,8 @@ inline POTE Compiler::InternSymbol(const Str& str) const
 	return InternSymbol(str.c_str());
 }
 
+inline void Compiler::RemoveByte(int ip)
+{
+	_ASSERTE(m_bytecodes[ip].isData());	// Should be using RemoveInstruction for op code bytes
+	RemoveBytes(ip, 1);
+}

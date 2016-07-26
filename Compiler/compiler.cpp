@@ -110,7 +110,24 @@ Compiler::Compiler() :
 	
 Compiler::~Compiler()
 {
-	Cleanup();
+	// Free scopes
+	{
+		const int count = m_allScopes.size();
+		for (int i = 0; i < count ; i++)
+		{
+			LexicalScope* pScope = m_allScopes[i];
+			delete pScope;
+		}
+	}
+
+	// Free literal frame
+	{
+		const int count = m_literalFrame.size();
+		for (int i = 0; i < count; i++)
+		{
+			m_piVM->RemoveReference(m_literalFrame[i]);
+		}
+	}
 }
 
 inline void Compiler::SetFlagsAndText(FLAGS flags, const char* text, int offset)
@@ -140,40 +157,6 @@ void Compiler::PrepareToCompile(FLAGS flags, const char* compiletext, int offset
 	
 	GetContext(workspacePools);
 }
-
-void Compiler::Cleanup()
-{
-	// Tidy up internal allocations
-	m_instVars.resize(0);
-
-	m_class = 0;
-	m_notifier = 0;
-	m_compilerObject = 0;
-	m_context = 0;
-
-	// Free scopes
-	{
-		const SCOPELIST::iterator loopEnd = m_allScopes.end();
-		for (SCOPELIST::iterator it = m_allScopes.begin(); it != m_allScopes.end(); it++)
-		{
-			LexicalScope* pScope = (*it);
-			delete pScope;
-		}
-		m_allScopes.clear();
-	}
-
-	// Free literal frame
-	{
-		const OOPVECTOR::iterator loopEnd = m_literalFrame.end();
-		for (OOPVECTOR::iterator it=m_literalFrame.begin();it != loopEnd;it++)
-			m_piVM->RemoveReference(*it);
-		m_literalFrame.clear();
-	}
-	
-	m_textMaps.clear();
-	m_bytecodes.clear();
-}
-
 
 Str Compiler::GetNameOfClass(Oop oopClass, bool recurse)
 {
@@ -541,6 +524,7 @@ void Compiler::UngenInstruction(int pos)
 	// Marks the byte at pos as being unwanted by changing it to a Nop
 	if (bc.isJumpSource())
 	{
+		_ASSERTE(bc.target < GetCodeSize());
 		_ASSERTE(static_cast<SWORD>(bc.target) >= 0);
 		m_bytecodes[bc.target].removeJumpTo();
 		bc.makeNonJump();
@@ -551,7 +535,7 @@ void Compiler::UngenInstruction(int pos)
 	bc.byte = Nop;
 	// Also nop-out any data bytes associated with the instruction
 	for (int i=1;i<len;i++)
-		UngenData(pos+i);
+		UngenData(pos+i, bc.pScope);
 }
 
 // Opens up a space at pos in the code array
@@ -572,25 +556,27 @@ void Compiler::InsertByte(int pos, BYTE value, BYTE flags, LexicalScope* pScope)
 
 		// New byte may become jump target
 		// Adjust the jumps providing we are not appending to the end of the code.
-		// Note use of <= because we have inserted an addition bytecode
+		// Note use of <= because we have inserted an additional bytecode
 		for (int i=0; i <= codeSize; i++)
 		{
-			if (m_bytecodes[i].isJumpSource())
+			BYTECODE& bc = m_bytecodes[i];
+			if (bc.isJumpSource())
 			{
-				// This is a jump. Does it cross the boundary
-				if (m_bytecodes[i].target >= pos)
+				_ASSERTE(bc.target < GetCodeSize() - 1);
+
+				// This is a jump. Does it cross the boundary?
+				if (bc.target >= pos)
 				{
-					_ASSERTE(static_cast<SWORD>(m_bytecodes[i].target) >= 0);
-					m_bytecodes[i].target++;
+					bc.target++;
 				}
 			}
 		}
 	
 		// Adjust ip of any TextMaps
-		const TEXTMAPLIST::iterator loopEnd = m_textMaps.end();
-		for (TEXTMAPLIST::iterator it = m_textMaps.begin(); it != loopEnd; it++)
+		const int textMapCount = m_textMaps.size();
+		for (int i = 0; i < textMapCount; i++)
 		{
-			TEXTMAP& textMap = (*it);
+			TEXTMAP& textMap = m_textMaps[i];
 			if (textMap.ip >= pos)
 				textMap.ip++;
 		}
@@ -623,7 +609,6 @@ inline void Compiler::GenPushStaticVariable(const Str& strName, const TEXTRANGE&
 		break;
 
 	case STATICVARIABLE:
-		//_ASSERTE(ObjectMemory::isKindOf(oteBinding, GetVMPointers().ClassVariableBinding));
 		GenStatic(oteStatic, range);
 		break;
 		
@@ -702,7 +687,6 @@ void Compiler::GenPushVariable(const Str& strName, const TEXTRANGE& range)
 void Compiler::GenInteger(int val, const TEXTRANGE& range)
 {
 	// Generates code to push a small integer constant.
-	//_ASSERTE(CanBeSmallInteger(val));
 	if (val >= -1 && val <= 2)
 		GenInstruction(ShortPushZero + val);
 	else if (val >= -128 && val <= 127)
@@ -1047,7 +1031,6 @@ int Compiler::GenMessage(const Str& pattern, int argCount, int messageStart)
 	// It wasn't that simple so we'll need a literal 
 	// symbol in the frame.
 	POTE oteSelector = InternSymbol(pattern);
-	//_ASSERTE(m_piVM->IsImmutable(reinterpret_cast<Oop>(oteSelector)));
 	TEXTRANGE errRange = TEXTRANGE(messageStart, argCount == 0 ? ThisTokenRange().m_stop : LastTokenRange().m_stop);
 	int symbolIndex=AddToFrame(reinterpret_cast<Oop>(oteSelector), errRange);
 	if (symbolIndex < 0)
@@ -3254,10 +3237,10 @@ void Compiler::AssertValidIpForTextMapEntry(int ip, bool bFinal)
 		bool isFirstInBlock = prev != NULL && (prev->byte == BlockCopy 
 								|| (bc.pScope == NULL 
 										? bc.byte == Nop && prev != NULL && prev->isUnconditionalJump()
-										: bc.pScope->GetActualScope()->IsBlock() 
-											&& (bc.pScope->GetActualScope()->GetInitialIP() == ip
+										: bc.pScope->GetRealScope()->IsBlock() 
+											&& (bc.pScope->GetRealScope()->GetInitialIP() == ip
 											|| bc.pScope != prev->pScope 
-											|| bc.pScope->GetActualScope() != prev->pScope->GetActualScope())));
+											|| bc.pScope->GetRealScope() != prev->pScope->GetRealScope())));
 		if (bFinal && WantDebugMethod())
 			// If not at the start of a method or block, then a text map entry should only occur after a Break
 			// or (when stripping unreachable code) if the byte immediately follows an unconditional return/jump
@@ -3281,13 +3264,28 @@ void Compiler::VerifyTextMap(bool bFinal)
 {
 	//_CrtCheckMemory();
 	const int size = m_textMaps.size();
-	int arrayIndex = 0;
 	for (int i=0; i<size; i++)
 	{
 		const TEXTMAP& textMap = m_textMaps[i];
 		int ip = textMap.ip;
-		const BYTECODE& bc = m_bytecodes[i];
 		AssertValidIpForTextMapEntry(ip, bFinal);
+	}
+}
+
+void Compiler::VerifyJumps()
+{
+	const int size = GetCodeSize();
+	for (int i = 0; i<size; i++)
+	{
+		const BYTECODE& bc = m_bytecodes[i];
+		if (bc.isJumpSource())
+		{
+			_ASSERTE(bc.isJumpInstruction());
+			_ASSERTE(bc.target >= 0 && bc.target < size);
+			const BYTECODE& target = m_bytecodes[bc.target];
+			_ASSERTE(!target.isData());
+			_ASSERTE(target.jumpsTo > 0);
+		}
 	}
 }
 #endif
@@ -3443,7 +3441,7 @@ STDMETHODIMP_(POTE) Compiler::CompileForClass(IUnknown* piVM, Oop compilerOop, c
 	__try
 	{
 		crtFlag = _CrtSetDbgFlag( _CRTDBG_REPORT_FLAG );
-		_CrtSetDbgFlag( crtFlag | _CRTDBG_DELAY_FREE_MEM_DF /*| _CRTDBG_CHECK_ALWAYS_DF */);
+		_CrtSetDbgFlag( crtFlag /*| _CRTDBG_CHECK_ALWAYS_DF */);
 		
 #ifdef USE_VM_DLL
 		prevLocale = setlocale(LC_ALL, NULL);
@@ -3465,10 +3463,10 @@ STDMETHODIMP_(POTE) Compiler::CompileForClass(IUnknown* piVM, Oop compilerOop, c
 			
 			m_piVM->StorePointerWithValue(&(result.fields[0]), Oop(methodPointer));
 			
-			if (flags & TextMap)
+			if (WantTextMap())
 				m_piVM->StorePointerWithValue(&(result.fields[1]), Oop(GetTextMapObject()));
 			
-			if (flags & TempsMap)
+			if (WantTempsMap())
 				m_piVM->StorePointerWithValue(&(result.fields[2]), Oop(GetTempsMapObject()));
 		}
 		__except(DolphinExceptionFilter(m_piVM, GetExceptionInformation()))
@@ -3491,7 +3489,6 @@ STDMETHODIMP_(POTE) Compiler::CompileForClass(IUnknown* piVM, Oop compilerOop, c
 			free(prevLocale);
 		}
 #endif
-		Cleanup();
 		_CrtSetDbgFlag(crtFlag);
 	}
 	
@@ -3534,10 +3531,10 @@ STDMETHODIMP_(POTE) Compiler::CompileForEval(IUnknown* piVM, Oop compilerOop, co
 			
 			m_piVM->StorePointerWithValue(&(result.fields[0]), Oop(methodPointer));
 			
-			if (flags & TextMap)
+			if (WantTextMap())
 				m_piVM->StorePointerWithValue(&(result.fields[1]), Oop(GetTextMapObject()));
 			
-			if (flags & TempsMap)
+			if (WantTempsMap())
 				m_piVM->StorePointerWithValue(&(result.fields[2]), Oop(GetTempsMapObject()));
 		}
 		__except(DolphinExceptionFilter(m_piVM, GetExceptionInformation()))
@@ -3560,7 +3557,6 @@ STDMETHODIMP_(POTE) Compiler::CompileForEval(IUnknown* piVM, Oop compilerOop, co
 			free(prevLocale);
 		}
 #endif
-		Cleanup();
 	}
 	
 	CHECKREFERENCES

@@ -120,6 +120,18 @@ inline ostream& operator<<(ostream& stream, const Class& cl)
 	return stream << reinterpret_cast<const VariantCharOTE*>(cl.m_name);
 }
 
+
+ostream& operator<<(ostream& stream, const ClassOTE* ote)
+{
+	if (ote->isNil()) return stream << "nil";
+
+	if (!(ObjectMemory::isBehavior(Oop(ote) && !ObjectMemory::isAMetaclass(reinterpret_cast<const OTE*>(ote)))))
+		// Expected a Class Oop, but got something else
+		return stream << "**Non-class: " << reinterpret_cast<const OTE*>(ote) << "**";
+	else
+		return stream << *ote->m_location;
+}
+
 ostream& operator<<(ostream& stream, const MetaClass& meta)
 {
 	return stream << meta.m_instanceClass << " class";
@@ -792,22 +804,11 @@ void Interpreter::StackTraceOn(ostream& dc, StackFrame* pFrame, unsigned depth)
 
 void Interpreter::WarningWithStackTraceBody(const char* warningCaption, StackFrame* pFrame)
 {
-	ostringstream dc;
-	
-	dc << endl << warningCaption << endl;
-	StackTraceOn(dc, pFrame);
-	dc << endl;
+	TRACESTREAM << endl << warningCaption << endl;
+	StackTraceOn(TRACESTREAM, pFrame);
+	TRACESTREAM << endl;
 //		decodeMethod((pFrame?pFrame:m_registers.m_pActiveFrame)->m_method, dc);
-	dc << endl << ends;
-	string strTrace = dc.str();
-	
-#if defined(AFX)
-	if (::MessageBox(NULL, LPCTSTR(strTrace.c_str()), warningCaption, MB_OKCANCEL|MB_SYSTEMMODAL|MB_ICONSTOP) == IDCANCEL)
-		DEBUGBREAK();
-#else
-	TRACESTREAM << strTrace;
-	TRACESTREAM.flush();
-#endif
+	TRACESTREAM << endl << flush;
 }
 
 void Interpreter::WarningWithStackTrace(const char* warningCaption, StackFrame* pFrame)

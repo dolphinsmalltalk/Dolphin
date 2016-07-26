@@ -10,6 +10,8 @@ LexicalScope.h
 #include <map>
 
 #define TEMPORARYLIMIT 		255		// maximum number of temporaries permitted (ditto)
+#define MAXBLOCKNESTING		255		// maximum depth to which blocks (actually contexts) can be nested
+
 
 enum TempVarType { 
 	tvtUnaccessed=0,	// Temp variable which is not accessed at all
@@ -76,14 +78,14 @@ public:
 
 	int GetIndex() const
 	{
-		return m_varType == tvtCopy || m_pOuter == NULL
+		return m_varType == tvtCopy || GetOuter() == NULL
 					? m_nIndex
-					: m_pOuter->GetIndex();
+					: GetOuter()->GetIndex();
 	}
 
 	void SetIndex(int index)
 	{
-		_ASSERTE(m_varType == tvtCopy || m_pOuter == NULL);
+		_ASSERTE(m_varType == tvtCopy || GetOuter() == NULL);
 		m_nIndex = index;
 	}
 
@@ -105,6 +107,11 @@ public:
 	void SetScope(LexicalScope* pScope)
 	{
 		m_pScope = pScope;
+	}
+
+	LexicalScope* GetActualScope() const
+	{
+		return GetActualDecl()->GetScope();
 	}
 
 	TempVarDecl* GetOuter() const
@@ -215,11 +222,6 @@ public:
 	int GetEstimatedDistance() const;
 	int GetActualDistance() const;
 
-	TempVarDecl* GetActualDecl() const
-	{
-		return m_pDecl->GetActualDecl();
-	}
-
 	VarRefType GetRefType() const
 	{
 		return m_refType;
@@ -251,7 +253,7 @@ public:
 		return m_pScope;
 	}
 
-	LexicalScope* GetActualScope() const;
+	LexicalScope* GetRealScope() const;
 
 	const Str& GetName() const
 	{
@@ -261,11 +263,6 @@ public:
 	const TEXTRANGE& GetTextRange() const
 	{
 		return m_range;
-	}
-
-	int GetIndex() const
-	{
-		return GetDecl()->GetIndex();
 	}
 
 	//////////////////////////////////////////////
@@ -321,12 +318,11 @@ class LexicalScope
 private:
 	LexicalScope();
 	LexicalScope(const LexicalScope&);
-	const LexicalScope& operator=(const LexicalScope&);
 
 public:
 	LexicalScope(LexicalScope* pOuter, int nStart, bool bOptimized) : m_pOuter(pOuter), 
 				m_nArgs(0), m_nStackSize(0), m_nSharedTemps(0),
-				m_initialIP(-1), m_finalIP(-1),
+				m_initialIP(-1), m_finalIP(-2),
 				m_bIsEmptyBlock(false), m_bIsOptimizedBlock(bOptimized), m_bHasFarReturn(false),
 				m_bRefersToSelf(false),	m_bRefsOuterTemps(false),
 				m_textRange(nStart, -1), m_oteBlockLiteral(NULL)
@@ -357,16 +353,42 @@ public:
 
 	int GetSharedTempsCount() const
 	{
+		_ASSERTE(!IsOptimizedBlock() || m_nSharedTemps == 0);
 		return m_nSharedTemps;
 	}
-
-	LexicalScope* GetActualScope() const;
 
 	LexicalScope* GetOuter() const
 	{
 		return m_pOuter;
 	}
 
+	LexicalScope* GetRealOuter() const
+	{
+		return GetOuter()->GetRealScope();
+	}
+
+	// Answer the nearest real (non-optimized) scope. If the scope
+	// is itself unoptimized, then this will be the receiver. The
+	// actual scope is the scope in which any variables declared in the
+	// receiver will actually be allocated.
+	LexicalScope* GetRealScope() const
+	{
+		LexicalScope* pScope = const_cast<LexicalScope*>(this);
+		while (pScope != NULL && pScope->IsOptimizedBlock())
+		{
+			pScope = pScope->GetOuter();
+		}
+
+		return pScope;
+	}
+
+private:
+	void SetOuter(LexicalScope* pOuter)
+	{
+		m_pOuter = pOuter;
+	}
+
+public:
 	DECLLIST& GetCopiedTemps()
 	{
 		return m_copiedTemps;
@@ -389,13 +411,47 @@ public:
 	int GetDepth() const
 	{
 		int depth = 0;
-		if (m_pOuter)
+		const LexicalScope* current = this;
+		const LexicalScope* outer;
+		while ((outer = current->GetOuter()) != NULL)
 		{
-			if (!IsOptimizedBlock())
+			if (!current->IsOptimizedBlock())
 				depth++;
-			depth += m_pOuter->GetDepth();
+			current = outer;
 		}
 		return depth;
+	}
+
+	int GetLogicalDepth() const
+	{
+		int depth = 0;
+		const LexicalScope* current = this;
+		const LexicalScope* outer;
+		while ((outer = current->GetOuter()) != NULL)
+		{
+			depth++;
+			current = outer;
+		}
+		return depth;
+	}
+
+	int GetActualDistance(LexicalScope* pDeclScope) const
+	{
+		const LexicalScope* pScope = GetRealScope();
+		int distance = 0;
+		while (pScope != pDeclScope)
+		{
+			_ASSERTE(pScope != NULL);
+			pScope = pScope->GetOuter();
+			if (pScope->GetSharedTempsCount() != 0)
+			{
+				_ASSERTE(!pScope->IsOptimizedBlock());
+				distance++;
+				_ASSERTE(distance <= MAXBLOCKNESTING);
+			}
+		}
+
+		return distance;
 	}
 
 	const TEXTRANGE& GetTextRange() const
@@ -418,8 +474,11 @@ public:
 		if (m_bHasFarReturn) return;
 
 		m_bHasFarReturn = true;
-		if (m_pOuter)
-			m_pOuter->MarkFarReturner();
+		LexicalScope* outer = GetOuter();
+		if (outer != NULL)
+		{
+			outer->MarkFarReturner();
+		}
 	}
 
 	void SetReferencesOuterTempsIn(LexicalScope* pDeclScope)
@@ -430,7 +489,7 @@ public:
 		while (pScope != pDeclScope)
 		{
 			pScope->m_bRefsOuterTemps = true;
-			pScope = pScope->m_pOuter;
+			pScope = pScope->GetOuter();
 			_ASSERTE(pScope != NULL);
 		}
 	}
@@ -449,7 +508,9 @@ public:
 			// to the outer scope so that cases such as the following are handled
 			// correctly: [[.,..] repeat] value
 			if (IsOptimizedBlock())
+			{
 				GetOuter()->MaybeSetInitialIP(ip);
+			}
 		}
 	}
 
@@ -468,8 +529,30 @@ public:
 		if (m_finalIP < ip)
 		{
 			m_finalIP = ip;
-			if (m_pOuter)
-				m_pOuter->SetFinalIP(ip);
+			if (GetOuter())
+			{
+				GetOuter()->SetFinalIP(ip);
+			}
+		}
+	}
+
+	void IncrementIPs()
+	{
+		if (m_initialIP >= 0)
+		{
+			_ASSERTE(m_finalIP >= 0);
+			m_initialIP++;
+			m_finalIP++;
+
+			// If associated with a clean block, we need to update it's initialIP too
+			// Note that the initialIP of the block is 1-based, whereas the m_initialIP
+			// of this object is zero-based.
+			//STBlockClosure* pBlock = GetBlock();
+			//if (pBlock != NULL)
+			//{
+			//	_ASSERTE(IntegerValueOf(pBlock->m_initialIP) == m_initialIP);
+			//	pBlock->m_initialIP = IntegerObjectOf(m_initialIP + 1);
+			//}
 		}
 	}
 
@@ -512,13 +595,13 @@ public:
 
 	bool IsInBlock() const
 	{
-		return m_pOuter != NULL 
-				&& (!IsOptimizedBlock() || m_pOuter->IsInBlock());
+		return GetOuter() != NULL 
+				&& (!IsOptimizedBlock() || GetOuter()->IsInBlock());
 	}
 
 	bool IsBlock() const
 	{
-		return m_pOuter != NULL && !IsOptimizedBlock();
+		return GetOuter() != NULL && !IsOptimizedBlock();
 	}
 
 
@@ -564,6 +647,6 @@ inline int TempVarRef::GetEstimatedDistance() const
 {
 	// Note that this will be an overestimate until the optimized scopes have been
 	// unlinked.
-	return GetActualScope()->GetDepth() - GetDecl()->GetScope()->GetDepth();
+	return GetRealScope()->GetDepth() - GetDecl()->GetScope()->GetDepth();
 }
 

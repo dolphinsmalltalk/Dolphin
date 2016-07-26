@@ -318,8 +318,6 @@ HRESULT ObjectMemory::LoadObject(OTE* ote, ibinstream& imageFile, const ImageHea
 	}
 	else
 	{
-		ASSERT(byteSize >= SizeOfPointers(0) && byteSize < 1024*1024);
-
 		if (byteSize <=	MaxSmallObjectSize)
 		{
 			// Allocate from one of the memory pools
@@ -336,12 +334,9 @@ HRESULT ObjectMemory::LoadObject(OTE* ote, ibinstream& imageFile, const ImageHea
 
 	markObject(ote);
 	VariantObject* obj = static_cast<VariantObject*>(ote->m_location);
-	//obj->m_size = byteSize;
-	//if (!imageFile.read(obj->m_fields, byteSize-sizeof(MWORD)))
 	if (!imageFile.read(obj->m_fields, byteSize))
 		return ImageReadError(imageFile);
 
-	//nRead += byteSize-sizeof(MWORD);
 	nRead += byteSize;
 	FixupObject(ote, oldLocation, pHeader);
 

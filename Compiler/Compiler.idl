@@ -93,7 +93,6 @@ library CompilerLib
 		CErrMethodTooLarge,
 		CErrTooManyLiterals,
 		CErrBlockNestingTooDeep,
-		CErrBlockArgMissing,
 		CErrBadPools=83,
 		CErrDuplicateTempName=85,
 		CErrDuplicateArgName,

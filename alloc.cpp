@@ -452,7 +452,7 @@ void ObjectMemory::FixedSizePool::morePages()
 	m_pFreePages = reinterpret_cast<Link*>(pStart);
 
 	#ifdef _DEBUG
-//		m_nPages++;
+	//		m_nPages++;
 	#endif
 }
 

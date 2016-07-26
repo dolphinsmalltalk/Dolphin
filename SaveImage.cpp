@@ -243,11 +243,7 @@ bool __stdcall ObjectMemory::SaveObjects(obinstream& imageFile, const ImageHeade
 				dwDataSize += sizeof(VirtualObjectHeader);
 			}
 
-			// Debug check to catch corruption - it is of course permitted for Object to be 
-			// greater than 512k in size, just unlikely
 			MWORD bytesToWrite = ote->sizeOf();
-			ASSERT(bytesToWrite < 512*1024);
-
 			imageFile.write(obj, bytesToWrite);
 
 			if (imageFile.good() == 0)

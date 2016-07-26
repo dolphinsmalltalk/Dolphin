@@ -183,7 +183,7 @@ struct VMPointers //: public Object
 	// 127..150
 
 	HandleOTE* MsgWndHandle;							// 127
-	BehaviorOTE* ClassIDispatch;						// 128 - POTE of Semaphore currently in use by timer
+	BehaviorOTE* ClassIDispatch;						// 128
 	Oop ImageVersionMajor;								// 129 - MS word of image version
 	Oop	ImageVersionMinor;								// 130 - LS word of image version
 	Oop InterruptHotKey;								// 131 - HOTKEYF_XXX|VK_XXX value to be used for interrupt key, e.g. Ctrl+Break = VK_CANCEL

@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "Compiler.h"
+#include <minmax.h>
 
 #pragma warning(disable:4786)	// Browser identifier truncated to 255 characters
 
@@ -23,23 +24,75 @@ void Compiler::disassemble()
 
 void Compiler::disassemble(ostream& stream)
 {
+	int maxDepth = 0;
+	for (size_t i = 0; i < m_allScopes.size(); i++)
+	{
+		int depth = m_allScopes[i]->GetLogicalDepth();
+		if (depth > maxDepth) maxDepth = depth;
+	}
+
+	LexicalScope* currentScope = m_allScopes[0];
+	int currentDepth = 0;
 	stream << endl;
 	int i=0;
-	while (i < GetCodeSize())
+	const int size = GetCodeSize();
+	while (i < size)
 	{
-		stream << dec << setw(5) << (i + 1) << ":";
+		// Print one-based ip as this is how they are disassembled in the image
+		stream << dec << setw(5) << (i+1) << ":";
 		int len = lengthOfByteCode(m_bytecodes[i].byte);
 		stream << hex << uppercase << setfill('0');
 		int j;
-		for (j = 0; j < len; j++)
+		for (j = 0; j < min(len,3); j++)
 		{
-			stream << " " << setw(2) << static_cast<unsigned>(m_bytecodes[i + j].byte);
+			stream << ' ' << setw(2) << static_cast<unsigned>(m_bytecodes[i + j].byte);
+		}
+		if (len > 3)
+		{
+			stream << "...";
+			j++;
 		}
 		for (; j < 4; j++)
 		{
 			stream << "   ";
 		}
 		stream << setfill(' ') << nouppercase << dec;
+
+		// Scope changing, and getting deeper?
+		LexicalScope* newScope = m_bytecodes[i].pScope;
+		stream << newScope << ' ';
+
+		char padChar = ' ';
+		// If new nested scope, want to print opening bracket
+		if (currentScope != newScope)
+		{
+			int newDepth = newScope->GetLogicalDepth();
+			if (!(newDepth < currentDepth))
+			{
+				padChar = '-';
+			}
+			currentScope = m_bytecodes[i].pScope;
+			currentDepth = newDepth;
+		}
+
+		// If next is in outer scope, want to print closing bracket now
+		bool lastInstr = i + len >= size;
+		int nextDepth = lastInstr ? 0 : m_bytecodes[i + len].pScope->GetLogicalDepth();
+
+		// If not on last bytecode, and scope will change, close the bracket
+		if (nextDepth < currentDepth)
+		{
+			padChar = '-';
+		}
+
+		for (j = 0; j < currentDepth; j++)
+		{
+			stream << "|";
+		}
+		for (; j <= maxDepth; j++)
+		{
+			stream << padChar;
+		}
 		disassembleAt(stream, i);
 		i += len;
 	}
@@ -50,7 +103,7 @@ void Compiler::disassembleAt(ostream& stream, int ip)
 	const BYTECODE& bytecode = m_bytecodes[ip];
 	const TEXTMAPLIST::iterator it = FindTextMapEntry(ip);
 	if (it != m_textMaps.end())
-		stream << '-';
+		stream << '`';
 	else 
 		stream << ' ';
 
@@ -414,7 +467,7 @@ void Compiler::disassembleAt(ostream& stream, int ip)
 		break;
 
 	case PushOuterTemp:
-		stream << "Push Outer[" << dec << (m_bytecodes[ip + 1].byte >> 5);
+		stream << "Push Outer[" << dec << static_cast<int>(m_bytecodes[ip + 1].byte >> 5);
 		PrintTempInstruction(stream, "]", (m_bytecodes[ip + 1].byte & 0x1F), bytecode);
 		break;
 
@@ -435,7 +488,7 @@ void Compiler::disassembleAt(ostream& stream, int ip)
 		break;
 
 	case StoreOuterTemp:
-		stream << "Store Outer[" << dec << (m_bytecodes[ip + 1].byte >> 5);
+		stream << "Store Outer[" << dec << static_cast<int>(m_bytecodes[ip + 1].byte >> 5);
 		PrintTempInstruction(stream, "]", (m_bytecodes[ip + 1].byte & 0x1F), bytecode);
 		break;
 
@@ -452,7 +505,7 @@ void Compiler::disassembleAt(ostream& stream, int ip)
 		break;
 
 	case PopStoreOuterTemp:
-		stream << "Pop Outer[" << dec << int(m_bytecodes[ip + 1].byte >> 5);
+		stream << "Pop Outer[" << dec << static_cast<int>(m_bytecodes[ip + 1].byte >> 5);
 		PrintTempInstruction(stream, "]", (m_bytecodes[ip + 1].byte & 0x1F), bytecode);
 		break;
 
@@ -482,7 +535,7 @@ void Compiler::disassembleAt(ostream& stream, int ip)
 	case NearJumpIfFalse:
 	case NearJumpIfNil:
 	case NearJumpIfNotNil:
-		PrintJumpInstruction(stream, (JumpType)(opcode-NearJump), m_bytecodes[ip + 1].byte, bytecode.target);
+		PrintJumpInstruction(stream, (JumpType)(opcode-NearJump), static_cast<SBYTE>(m_bytecodes[ip + 1].byte), bytecode.target);
 		break;
 
 	case SendTempWithNoArgs:
@@ -534,16 +587,18 @@ void Compiler::disassembleAt(ostream& stream, int ip)
 	case LongJump:
 	case LongJumpIfTrue:
 	case LongJumpIfFalse:
+	case LongJumpIfNil:
+	case LongJumpIfNotNil:
 		PrintJumpInstruction(stream, (JumpType)(opcode - LongJump), m_bytecodes[ip + 1].byte, bytecode.target);
 		break;
 
 	case LongPushOuterTemp:
-		stream << "Push Outer[" << dec << m_bytecodes[ip + 1].byte;
+		stream << "Push Outer[" << dec << static_cast<int>(m_bytecodes[ip + 1].byte);
 		PrintTempInstruction(stream, "]", m_bytecodes[ip + 2].byte, bytecode);
 		break;
 
 	case LongStoreOuterTemp:
-		stream << "Store Outer[" << dec << m_bytecodes[ip + 1].byte;
+		stream << "Store Outer[" << dec << static_cast<int>(m_bytecodes[ip + 1].byte);
 		PrintTempInstruction(stream, "]", m_bytecodes[ip + 2].byte, bytecode);
 		break;
 
@@ -604,6 +659,7 @@ void Compiler::disassembleAt(ostream& stream, int ip)
 		PrintPushImmediate(stream, (m_bytecodes[ip + 4].byte << 24) + (m_bytecodes[ip + 3].byte << 16) + (m_bytecodes[ip + 2].byte << 8) + m_bytecodes[ip + 1].byte, 4);
 		break;
 
+
 	default:
 		stream << "UNHANDLED BYTE CODE " << opcode << "!!!";
 		break;
@@ -624,7 +680,12 @@ Str Compiler::DebugPrintString(Oop oop)
 void Compiler::PrintJumpInstruction(ostream& stream, JumpType jumpType, SWORD offset, int target)
 {
 	const char* JumpNames[] = { "Jump", "Jump If True", "Jump If False", "Jump If Nil", "Jump If Not Nil" };
-	stream << JumpNames[jumpType] << ' ' << (offset < 0 ? '-' : '+') << dec << static_cast<int>(offset) << " to " << target;
+	stream << JumpNames[jumpType] << ' ';
+	if (offset > 0)
+	{
+		stream << '+';
+	}
+	stream << dec << static_cast<int>(offset) << " to " << (target + 1);
 }
 
 void Compiler::PrintStaticInstruction(ostream& stream, const char* type, int index)
@@ -654,6 +715,6 @@ void Compiler::PrintPushImmediate(std::ostream& stream, int value, int byteSize)
 	stream << "Push " << dec << value;
 	if (byteSize > 0)
 	{
-		stream << " (" << hex << showbase << setfill('0') << setw(2 + (byteSize * 2)) << value << ')' << setfill(' ') << noshowbase;
+		stream << " (" << hex << "0x" << setfill('0') << setw(byteSize * 2) << value << ')' << setfill(' ');
 	}
 }

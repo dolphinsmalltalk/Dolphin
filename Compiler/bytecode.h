@@ -21,7 +21,7 @@ struct BYTECODE
 
 	union
 	{
-		WORD			target;			// Jump target location. Max jump is +/-32K
+		int				target;			// Jump target location. Max jump is +/-32K, but this is checked only when the jump instruction is fixed up
 		TempVarRef*		pVarRef;
 	};
 
@@ -40,14 +40,15 @@ struct BYTECODE
 	bool isOpCode()	const	{ return !isData(); }
 	void makeOpCode(BYTE b, LexicalScope* pScope)	
 	{ 
+		_ASSERTE(pScope != NULL);
 		byte = b; 
 		flags &= ~IsData;
 		this->pScope = pScope;
 	}
 
-	void makeNop()
+	void makeNop(LexicalScope* pScope)
 	{
-		makeOpCode(Nop, NULL);
+		makeOpCode(Nop, pScope);
 	}
 
 	bool isJumpSource() const		
@@ -63,9 +64,23 @@ struct BYTECODE
 		makeJump(); 
 	}
 
-	__forceinline bool isJumpTarget() const	{ return jumpsTo > 0; }
-	void addJumpTo()		{ jumpsTo++; _ASSERTE(jumpsTo < 256); }
-	void removeJumpTo()		{ _ASSERTE(jumpsTo > 0); jumpsTo--; }
+	__forceinline bool isJumpTarget() const	
+	{ 
+		return jumpsTo > 0; 
+	}
+
+	void addJumpTo()		
+	{ 
+		_ASSERTE(isOpCode());
+		jumpsTo++;
+		_ASSERTE(jumpsTo < 256); 
+	}
+
+	void removeJumpTo()		
+	{ 
+		_ASSERTE(isOpCode() && jumpsTo > 0); 
+		jumpsTo--; 
+	}
 	
 	__forceinline int instructionLength() const 
 	{ 

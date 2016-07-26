@@ -672,8 +672,7 @@ TempVarRef* Compiler::AddOptimizedTemp(const Str& tempName, const TEXTRANGE& ran
 {
 	_ASSERTE(m_pCurrentScope->IsOptimizedBlock());
 	TempVarDecl* pDecl = AddTemporary(tempName, range, false);
-	//_ASSERTE(m_pCurrentScope->FindTempRef(pDecl->GetName()) == NULL);
-	pDecl ->BeReadOnly();
+	pDecl->BeReadOnly();
 	return m_pCurrentScope->AddTempRef(pDecl, vrtWrite, range);
 }
 

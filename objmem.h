@@ -57,7 +57,6 @@ public:
 	static HRESULT InitializeImage();
 	static void InitializeMemoryManager();
 	static void Terminate();
-	static void Reset();		// Cleans up and reinits
 
 	// Object Pointer access
 	static Oop fetchPointerOfObject(MWORD fieldIndex, PointersOTE* ote);

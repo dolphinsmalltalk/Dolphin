@@ -25,7 +25,8 @@ void TempVarDecl::MergeRef(const TempVarRef* pRef, Compiler* pCompiler)
 	// nearest enclosing real scope. We still need to use the actual scope of
 	// the ref., however, in case it is a ref. from an optimized scope.
 	_ASSERTE(GetOuter() == NULL);
-	_ASSERTE(pRef->GetActualDecl() == this);
+	_ASSERTE(pRef->GetDecl()->GetActualDecl() == this);
+	// Decl's should have been promoted out of optimized scopes by now to nearest enclosing real scope
 	_ASSERTE(!m_pScope->IsOptimizedBlock());
 
 	if (pCompiler->IsInteractive() && m_refType == vrtUnknown && pRef->GetRefType() == vrtRead && !IsReadOnly())
@@ -33,7 +34,7 @@ void TempVarDecl::MergeRef(const TempVarRef* pRef, Compiler* pCompiler)
 
 	m_refType = static_cast<VarRefType>(m_refType | pRef->GetRefType());
 
-	LexicalScope* pRefScope = pRef->GetActualScope();
+	LexicalScope* pRefScope = pRef->GetRealScope();
 
 	if (m_pScope == pRefScope)
 	{
@@ -107,9 +108,9 @@ void TempVarDecl::MergeRef(const TempVarRef* pRef, Compiler* pCompiler)
 ///////////////////////////////////////////////////////////////////////////////
 // TempVarRef class members
 
-LexicalScope* TempVarRef::GetActualScope() const
+LexicalScope* TempVarRef::GetRealScope() const
 {
-	return m_pScope->GetActualScope();
+	return m_pScope->GetRealScope();
 }
 
 void TempVarRef::MergeRefIntoDecl(Compiler* pCompiler)
@@ -119,18 +120,8 @@ void TempVarRef::MergeRefIntoDecl(Compiler* pCompiler)
 
 int TempVarRef::GetActualDistance() const
 {
-	LexicalScope* pScope = GetActualScope();
-	LexicalScope* pDeclScope = GetDecl()->GetScope();
-	int distance = 0;
-	while (pScope != pDeclScope)
-	{
-		_ASSERTE(!pScope->IsOptimizedBlock());
-		pScope = pScope->GetOuter();
-		if (pScope->GetSharedTempsCount())
-			distance++;
-	}
-
-	return distance;
+	LexicalScope* pScope = GetRealScope();
+	return pScope->GetActualDistance(GetDecl()->GetScope());
 }
 
 // End of TempVarRef class members
@@ -143,13 +134,12 @@ LexicalScope::~LexicalScope()
 {
 	// Delete decls
 	{
-		DECLLIST::iterator loopEnd = m_tempVarDecls.end();
-		for (DECLLIST::iterator it=m_tempVarDecls.begin();it != loopEnd;it++)
+		const int count = m_tempVarDecls.size();
+		for (int i = 0; i < count; i++)
 		{
-			TempVarDecl* pDecl = (*it);
+			TempVarDecl* pDecl = m_tempVarDecls[i];
 			delete pDecl;
 		}
-		m_tempVarDecls.clear();
 	}
 
 	// Delete TempVarRefs
@@ -159,10 +149,9 @@ LexicalScope::~LexicalScope()
 		{
 			REFLIST& refs = (*it).second;
 			const int listEnd = refs.size();
-			for (int i=0; i<listEnd; i++)
+			for (int i = 0; i < listEnd; i++)
 				delete refs[i];
 		}
-		m_tempVarRefs.clear();
 	}
 }
 
@@ -182,7 +171,7 @@ TempVarDecl* LexicalScope::FindTempDecl(const Str& strName)
 			if (pDecl->GetName() == strName)
 				return pDecl;
 		}
-		pScope = pScope->m_pOuter;
+		pScope = pScope->GetOuter();
 	}
 	while (pScope != NULL);
 
@@ -235,25 +224,24 @@ TempVarDecl* LexicalScope::CopyTemp(TempVarDecl* pTemp, Compiler* pCompiler)
 		// This is the declaring scope already
 		return pTemp;
 
-	_ASSERTE(m_pOuter != NULL);
-	// By now optimized scopes should have been unlinked
-	//_ASSERTE(!m_pOuter->IsOptimizedBlock());
+	LexicalScope* outer = GetRealOuter();
+	_ASSERTE(outer != NULL);
 
 	// Temps should never be copied into optimized blocks, as they have no
 	// runtime representation, but we do need to update the reference
 	TempVarDecl* pNewVar;
 	if (IsOptimizedBlock())
 	{
-		pNewVar = m_pOuter->CopyTemp(pTemp, pCompiler);
+		pNewVar = outer->CopyTemp(pTemp, pCompiler);
 	}
 	else
 	{
 		// First we must see if it has already been copied into this scope, 
 		// perhaps when processing a preceeding nested scope
-		const DECLLIST::const_iterator loopEnd = m_tempVarDecls.end();
-		for (DECLLIST::const_iterator it = m_tempVarDecls.begin(); it != loopEnd; it++)
+		const int declCount = m_tempVarDecls.size();
+		for (int i = 0; i < declCount; i++)
 		{
-			TempVarDecl* pDecl = (*it);
+			TempVarDecl* pDecl = m_tempVarDecls[i];
 			if (pDecl->GetActualDecl() == pTemp)
 				return pDecl;
 		}
@@ -265,7 +253,7 @@ TempVarDecl* LexicalScope::CopyTemp(TempVarDecl* pTemp, Compiler* pCompiler)
 		pNewVar->SetScope(this);
 
 		// We must recursively copy into any enclosing scopes
-		pNewVar->SetOuter(m_pOuter->CopyTemp(pTemp, pCompiler));
+		pNewVar->SetOuter(outer->CopyTemp(pTemp, pCompiler));
 
 		pNewVar->SetVarType(tvtCopy);
 		pNewVar->SetIndex(m_copiedTemps.size());
@@ -278,7 +266,8 @@ TempVarDecl* LexicalScope::CopyTemp(TempVarDecl* pTemp, Compiler* pCompiler)
 
 	// We must update any ref in this scope to use the new local declaration
 	REFLIST& refs = m_tempVarRefs[pTemp->GetName()];
-	for (unsigned i=0; i<refs.size(); i++)
+	const int refcount = refs.size();
+	for (int i = 0; i < refcount; i++)
 	{ 
 		TempVarRef* pRef = refs[i];
 		if (pRef->GetDecl() == pTemp)
@@ -323,19 +312,19 @@ void LexicalScope::CopyTemps(Compiler* pCompiler)
 
 void LexicalScope::CopyDownOptimizedDecls(Compiler* pCompiler)
 {
-	LexicalScope* pActualScope = GetActualScope();
+	LexicalScope* pActualScope = GetRealScope();
 	_ASSERTE(pActualScope != this);
 	_ASSERTE(m_bIsOptimizedBlock);
 
-	const DECLLIST::iterator loopEnd = m_tempVarDecls.end();
-	for (DECLLIST::iterator it = m_tempVarDecls.begin(); it != loopEnd; it++)
+	const int count = m_tempVarDecls.size();
+	for (int i = 0; i < count; i++)
 	{
-		TempVarDecl* pDecl = (*it);
+		TempVarDecl* pDecl = m_tempVarDecls[i];
 		_ASSERTE(pDecl->GetScope() == this);
 		_ASSERTE(pDecl->GetOuter() == NULL);
 		
 		TempVarDecl* pNewVar = new TempVarDecl(*pDecl);
-		(*it) = pNewVar;
+		m_tempVarDecls[i] = pNewVar;
 
 		_ASSERTE(pDecl->GetOuter() == NULL);
 		_ASSERTE(pNewVar->GetOuter() == pDecl);
@@ -358,15 +347,8 @@ void LexicalScope::PatchOptimized(Compiler* pCompiler)
 	PropagateOuterRequirements();
 
 	if (IsOptimizedBlock())
-		CopyDownOptimizedDecls(pCompiler);
-	else
 	{
-		// Unlink any optimized scopes in this blocks chain as we don't want
-		// them there when we come to patch up the temp refs
-		LexicalScope* pOuter = m_pOuter;
-		while (pOuter && pOuter->IsOptimizedBlock())
-			pOuter = pOuter->GetOuter();
-		m_pOuter = pOuter;
+		CopyDownOptimizedDecls(pCompiler);
 	}
 }
 
@@ -382,15 +364,16 @@ void LexicalScope::AllocTempIndices(Compiler* pCompiler)
 {
 	_ASSERTE(m_nStackSize == 0);
 	_ASSERTE(m_nSharedTemps == 0);
+	// All temps in optimized blocks must be allocated in the nearest enclosing unoptimized scope
 	_ASSERTE(!IsOptimizedBlock());
 
 	const int nCopiedValues = GetCopiedValuesCount();
 	// We must allow sufficient space for the copied values before the other temps
 	m_nStackSize = m_nArgs + nCopiedValues;
-	const DECLLIST::iterator loopEnd = m_tempVarDecls.end();
-	for (DECLLIST::iterator it = m_tempVarDecls.begin(); it != loopEnd; it++)
+	const int count = m_tempVarDecls.size();
+	for (int i = 0; i < count; i++)
 	{
-		TempVarDecl* pDecl = (*it);
+		TempVarDecl* pDecl = m_tempVarDecls[i];
 		if (pDecl->IsArgument())
 		{
 			_ASSERTE(pDecl->GetIndex() >= 0 && pDecl->GetIndex() < m_nArgs);
@@ -437,12 +420,19 @@ void LexicalScope::AllocTempIndices(Compiler* pCompiler)
 			{
 			case vrtRead:	// Read, not written
 				if (pCompiler->IsInteractive() && !pDecl->IsReadOnly())
+				{
+					// Would be better to report this on the first such read, but we'd need to search for it.
+					// The in-image parser does this anyway, so not worth the effort
 					pCompiler->Warning(pDecl->GetTextRange(), CWarnReadNotWritten);
+				}
 				break;
 
 			case vrtWrite:	// Written, not read
 				if (pCompiler->IsInteractive())
+				{
+					// As above, better reported on the first write, but not worth it for the same reasons.
 					pCompiler->Warning(pDecl->GetTextRange(), CWarnWrittenNotRead);
+				}
 				break;
 
 			case vrtUnknown:		// Unreferenced
@@ -461,37 +451,30 @@ TempVarRef* LexicalScope::AddTempRef(TempVarDecl* pDecl, VarRefType refType, con
 	return pNewVarRef;
 }
 
-// Answer the nearest real (non-optimized) scope. If the scope
-// is itself unoptimized, then this will be the receiver. The
-// actual scope is the scope in which any variables declared in the
-// receiver will actually be allocated.
-LexicalScope* LexicalScope::GetActualScope() const
-{
-	LexicalScope* pScope = const_cast<LexicalScope*>(this);
-	while (pScope->m_bIsOptimizedBlock)
-		pScope = pScope->m_pOuter;
-
-	// Outermost (method) scope cannot be optimized, so result should never be null
-	_ASSERTE(pScope != NULL);
-	return pScope;
-}
-
-// Recursively add all temp declarations that are isible in this scope 
+// Recursively add all temp declarations that are visible in this scope 
 // to the map. Note that outer scope is visited before this scope's
 // own variables are added, so that temps declared in this scope that
 // have the same name as outer temps will correctly "hide" those outer
 // temps.
 void LexicalScope::AddVisibleDeclsTo(DECLMAP& allVisibleDecls, bool bIncludeStack) const
 {
-	if (m_pOuter && (m_bIsOptimizedBlock || m_bRefsOuterTemps))
-		m_pOuter->AddVisibleDeclsTo(allVisibleDecls, m_bIsOptimizedBlock);
-
-	const DECLLIST::const_iterator loopEnd = m_tempVarDecls.end();
-	for (DECLLIST::const_iterator it = m_tempVarDecls.begin(); it != loopEnd; it++)
+	bool isOptimized = IsOptimizedBlock();
+	if (isOptimized || m_bRefsOuterTemps)
 	{
-		TempVarDecl* pDecl = (*it);
-		if (pDecl->IsVisible() && pDecl->IsReferenced() && (bIncludeStack || !pDecl->IsStack()))
-			allVisibleDecls[pDecl->GetName()] = pDecl;
+		LexicalScope* outer = GetOuter();
+		_ASSERTE(outer != NULL);
+		outer->AddVisibleDeclsTo(allVisibleDecls, m_bIsOptimizedBlock);
+	}
+	
+	const int count = m_tempVarDecls.size();
+	for (int i = 0; i < count; i++)
+	{
+		TempVarDecl* pDecl = m_tempVarDecls[i];
+		TempVarDecl* pRealDecl = isOptimized ? pDecl->GetOuter() : pDecl;
+		if (pDecl->IsVisible() && pRealDecl->IsReferenced() && (bIncludeStack || !pRealDecl->IsStack()))
+		{
+			allVisibleDecls[pDecl->GetName()] = pRealDecl;
+		}
 	}
 }
  
@@ -511,7 +494,6 @@ POTE LexicalScope::BuildTempMapEntry(IDolphin* piVM) const
 	scopeTuple.fields[0] = IntegerObjectOf(m_initialIP+1);
 	scopeTuple.fields[1] = IntegerObjectOf(m_finalIP+1);
 
-
 	DECLMAP allVisibleDecls;
 	AddVisibleDeclsTo(allVisibleDecls, true);
 
@@ -521,28 +503,26 @@ POTE LexicalScope::BuildTempMapEntry(IDolphin* piVM) const
 
 	STVarObject& temps = *(STVarObject*)GetObj(tempsPointer);
 
-	int thisScopeDepth = GetDepth();
-
 	DECLMAP::const_iterator it = allVisibleDecls.begin();
-	for (int i=0;i<numTemps;i++)
+	for (int i = 0;i < numTemps; i++, it++)
 	{
 		_ASSERTE(it != allVisibleDecls.end());
 
 		TempVarDecl* pDecl = (*it).second;
-		
+		_ASSERTE(pDecl->IsArgument() || pDecl->GetVarType() != tvtUnaccessed);
+
 		POTE tempPointer = piVM->NewArray(3);
 		piVM->StorePointerWithValue(temps.fields+i, Oop(tempPointer));
 
 		STVarObject& temp = *(STVarObject*)GetObj(tempPointer);
 		piVM->StorePointerWithValue(temp.fields+0, Oop(piVM->NewString(pDecl->GetName().c_str())));
+
 		int nDepth = pDecl->IsStack() 
 			? 0
-			: thisScopeDepth - pDecl->GetScope()->GetDepth() + 1;
+			: GetActualDistance(pDecl->GetScope()) + 1;
 
 		piVM->StorePointerWithValue(temp.fields+1, IntegerObjectOf(nDepth));
 		piVM->StorePointerWithValue(temp.fields+2, IntegerObjectOf(pDecl->GetIndex()+1));
-
-		it++;
 	}
 
 	return scopeTuplePointer;
@@ -575,9 +555,15 @@ void LexicalScope::RenameTemporary(int temporary, const Str& newName, const TEXT
 void LexicalScope::PatchBlockLiteral(IDolphin* piVM, POTE oteMethod)
 {
 	_ASSERTE(IsCleanBlock());
+
 	if (m_oteBlockLiteral == NULL)
+	{
 		// Empty block
+		_ASSERTE(IsEmptyBlock());
 		return;
+	}
+
+	_ASSERTE((m_finalIP - m_initialIP) > 0);	// A minimal block must push a value and return requiring at least two bytes
 
 	STBlockClosure& block = *(STBlockClosure*)GetObj(m_oteBlockLiteral);
 
@@ -603,10 +589,10 @@ void LexicalScope::BeOptimizedBlock()
 	m_bHasFarReturn = false;
 
 	// Any apparent arguments are not really arguments from the point of view of the enclosing scope
-	const DECLLIST::const_iterator loopEnd = m_tempVarDecls.end();
-	for (DECLLIST::const_iterator it = m_tempVarDecls.begin(); it != loopEnd; it++)
+	const int count = m_tempVarDecls.size();
+	for (int i = 0; i < count; i++)
 	{
-		TempVarDecl* pDecl = (*it);
+		TempVarDecl* pDecl = m_tempVarDecls[i];
 		pDecl->SetIsArgument(false);
 	}
 	m_nArgs = 0;
