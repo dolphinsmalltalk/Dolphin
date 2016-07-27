@@ -1,7 +1,7 @@
 "Filed out from Dolphin Smalltalk 7"!
 
 SourceFiler subclass: #ChunkSourceFiler
-	instanceVariableNames: 'sourceFileIndex '
+	instanceVariableNames: 'sourceFileIndex'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -32,7 +32,7 @@ emitCategoriesOfClass: aClass
 	categories notEmpty ifFalse: [^self].
 	stream
 		nextPut: $!!;
-		display: aClass;
+		nextPutAll: aClass name;
 		space;
 		nextPutAll: #categoriesForClass;
 		nextPut: $!!.
@@ -74,7 +74,7 @@ emitCommentOfClass: aClass
 	aWriteStream."
 
 	stream
-		display: aClass;
+		nextPutAll: aClass name;
 		space;
 		display: #comment:;
 		space.
@@ -84,7 +84,7 @@ emitCommentOfClass: aClass
 
 emitDeclarationForClass: aClass variable: anAssociation
 	stream
-		display: aClass;
+		nextPutAll: aClass name;
 		nextPutAll: (anAssociation isImmutable
 					ifTrue: [' addClassConstant: ']
 					ifFalse: [' addClassVariable: ']);

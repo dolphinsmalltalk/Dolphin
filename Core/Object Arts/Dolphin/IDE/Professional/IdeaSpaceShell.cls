@@ -6,8 +6,8 @@ SmalltalkToolShell subclass: #IdeaSpaceShell
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
 IdeaSpaceShell guid: (GUID fromString: '{402CF4F5-0B2E-4533-9664-C99FE1BF84FA}')!
-Idea Space comment: ''!
-!Idea Space categoriesForClass!Development!MVP-Presenters! !
+IdeaSpaceShell comment: ''!
+!IdeaSpaceShell categoriesForClass!Development!MVP-Presenters! !
 !IdeaSpaceShell methodsFor!
 
 absorbCard: card 
