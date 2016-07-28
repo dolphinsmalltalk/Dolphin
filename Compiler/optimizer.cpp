@@ -1968,6 +1968,24 @@ POTE Compiler::NewMethod()
 		else
 			AddToFrameUnconditional(IntegerObjectOf(immediateWord), TEXTRANGE());
 	}
+	else if (byte1 == ExLongPushImmediate && m_bytecodes[ExLongPushImmediateInstructionSize].byte == ReturnMessageStackTop)
+	{
+		_ASSERTE(GetCodeSize() >= 4);
+		_ASSERTE(m_bytecodes[ExLongPushImmediateInstructionSize].isOpCode());
+		MakeQuickMethod(hdr, PRIMITIVE_RETURN_LITERAL_ZERO);
+		_ASSERTE(m_primitiveIndex == 0);
+		SDWORD immediateValue = static_cast<SDWORD>((m_bytecodes[ExLongPushImmediateInstructionSize-1].byte << 24) 
+									| (m_bytecodes[ExLongPushImmediateInstructionSize - 2].byte << 16) 
+									| (m_bytecodes[ExLongPushImmediateInstructionSize - 3].byte << 8) 
+									| m_bytecodes[ExLongPushImmediateInstructionSize - 4].byte);
+		if (GetLiteralCount() > 0)
+		{
+			m_literalFrame.push_back(m_literalFrame[0]);
+			m_literalFrame[0] = IntegerObjectOf(immediateValue);
+		}
+		else
+			AddToFrameUnconditional(IntegerObjectOf(immediateValue), TEXTRANGE());
+	}
 	else if (byte1 == PushChar && byte3 == ReturnMessageStackTop)
 	{
 		_ASSERTE(GetCodeSize() == 3 || !WantOptimize());

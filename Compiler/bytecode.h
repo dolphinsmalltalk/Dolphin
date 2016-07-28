@@ -239,7 +239,7 @@ struct BYTECODE
 
 	inline bool isPush() const
 	{
-		return isShortPush() || isExtendedPush() ||	isDoubleExtendedPush();
+		return isShortPush() || isExtendedPush() ||	isDoubleExtendedPush() || byte == ExLongPushImmediate;
 	}
 
 	INLINE bool isExtendedStore() const

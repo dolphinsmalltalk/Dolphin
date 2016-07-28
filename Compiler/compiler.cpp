@@ -773,6 +773,12 @@ Oop Compiler::IsPushLiteral(int pos) const
 		// Remember x86 is little endian
 		return IntegerObjectOf(SWORD(m_bytecodes[pos+1].byte | (m_bytecodes[pos+2].byte << 8)));
 
+	case ExLongPushImmediate:
+		return IntegerObjectOf(static_cast<SDWORD>((m_bytecodes[pos+ExLongPushImmediateInstructionSize-1].byte) << 24
+			| (m_bytecodes[pos + ExLongPushImmediateInstructionSize - 2].byte << 16)
+			| (m_bytecodes[pos + ExLongPushImmediateInstructionSize - 3].byte << 8)
+			| m_bytecodes[pos + ExLongPushImmediateInstructionSize - 4].byte));
+
 	case PushConst:
 		return m_literalFrame[m_bytecodes[pos+1].byte];
 
