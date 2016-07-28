@@ -97,9 +97,6 @@ getTestMethod: aSymbol
 messageFromError: ex
 	^ex errorMessage!
 
-pushTempPair
-	^233!
-
 scan: aString class: aNumberClass 
 	| expected result |
 	expected := Number readFrom: aString readStream.
@@ -1115,7 +1112,7 @@ testTempPairing
 
 	"short push + short push"
 	method := (self compileExpression: prefix , ' t6 - t7') method.
-	pairs := method byteCodeSegments select: [:each | each first = self pushTempPair].
+	pairs := method byteCodeSegments select: [:each | each first = PushTempPair].
 	self assert: pairs size = 1.
 	pair := pairs first.
 	self assert: pair last = ((6 << 4) + 7).
@@ -1123,7 +1120,7 @@ testTempPairing
 
 	"short push + long push"
 	method := (self compileExpression: prefix , ' t7 - t8') method.
-	pairs := method byteCodeSegments select: [:each | each first = self pushTempPair].
+	pairs := method byteCodeSegments select: [:each | each first = PushTempPair].
 	self assert: pairs size = 1.
 	pair := pairs first.
 	self assert: pair last = ((7 << 4) + 8).
@@ -1131,7 +1128,7 @@ testTempPairing
 
 	"long push + short push"
 	method := (self compileExpression: prefix , ' t8 - t7') method.
-	pairs := method byteCodeSegments select: [:each | each first = self pushTempPair].
+	pairs := method byteCodeSegments select: [:each | each first = PushTempPair].
 	self assert: pairs size = 1.
 	pair := pairs first.
 	self assert: pair last = ((8 << 4) + 7).
@@ -1139,7 +1136,7 @@ testTempPairing
 
 	"long push + long push"
 	method := (self compileExpression: prefix , ' t8 - t10') method.
-	pairs := method byteCodeSegments select: [:each | each first = self pushTempPair].
+	pairs := method byteCodeSegments select: [:each | each first = PushTempPair].
 	self assert: pairs size = 1.
 	pair := pairs first.
 	self assert: pair last = ((8 << 4) + 10).
@@ -1147,25 +1144,25 @@ testTempPairing
 
 	"short + long (out of range)"
 	method := (self compileExpression: prefix , ' t7 - t16') method.
-	pairs := method byteCodeSegments select: [:each | each first = self pushTempPair].
+	pairs := method byteCodeSegments select: [:each | each first = PushTempPair].
 	self assert: pairs isEmpty.
 	self assert: (method value: nil withArguments: #()) = (7 - 16).
 
 	"long + long (out of range)"
 	method := (self compileExpression: prefix , ' t8 - t16') method.
-	pairs := method byteCodeSegments select: [:each | each first = self pushTempPair].
+	pairs := method byteCodeSegments select: [:each | each first = PushTempPair].
 	self assert: pairs isEmpty.
 	self assert: (method value: nil withArguments: #()) = (8 - 16).
 
 	"long (out of range) + short"
 	method := (self compileExpression: prefix , ' t16 - t7') method.
-	pairs := method byteCodeSegments select: [:each | each first = self pushTempPair].
+	pairs := method byteCodeSegments select: [:each | each first = PushTempPair].
 	self assert: pairs isEmpty.
 	self assert: (method value: nil withArguments: #()) = (16 - 7).
 
 	"long (out of range) + long"
 	method := (self compileExpression: prefix , ' t16 - t8') method.
-	pairs := method byteCodeSegments select: [:each | each first = self pushTempPair].
+	pairs := method byteCodeSegments select: [:each | each first = PushTempPair].
 	self assert: pairs isEmpty.
 	self assert: (method value: nil withArguments: #()) = (16 - 8)!
 
@@ -1178,19 +1175,19 @@ testTimesRepeat
 	self assert: method notNil.
 	self deny: method needsContext.
 	self deny: (method byteCodeSegments anySatisfy: [:each | each first = BlockCopy]).
-	self assert: (method value: nil withArguments: #()) = 5.
-	self 
+	self assert: 5 equals: (method value: nil withArguments: #()).
+	self
 		shouldnt: [result := self compileExpression: '| a | a := 0. 10 + (5 timesRepeat: [a := a + 1]). a']
 		raise: self compilationWarningClass.
 	method := result method.
 	self assert: method notNil.
 	self deny: method needsContext.
 	self deny: (method byteCodeSegments anySatisfy: [:each | each first = BlockCopy]).
-	self assert: (method value: nil withArguments: #()) = 5.
+	self assert: 5 equals: (method value: nil withArguments: #()).
 
 	"Test case which cannot be inlined"
 	src := '| aBlock i | i := 0. aBlock := [i := i + 1]. 5 timesRepeat: aBlock. i.'.
-	self 
+	self
 		should: [result := self compileExpression: src]
 		raise: self compilationWarningClass
 		matching: 
@@ -1209,8 +1206,12 @@ testTimesRepeat
 	method := result method.
 	self assert: method notNil.
 	self assert: method isPacked.
-	"	self assert: method byteCodes = (ByteArray with: Nop with: ShortPushZero with: ReturnFromMessage)."
-	self assert: (method value: nil withArguments: #()) = 0.
+	self assert: (ByteArray
+				with: Nop
+				with: ShortPushZero
+				with: ReturnFromMessage)
+		equals: method byteCodes.
+	self assert: 0 equals: (method value: nil withArguments: #()).
 
 	"Test 0 iterations, which compiler can remove (should come down to just a Return Zero, or at least return literal constant zero"
 	self shouldnt: [result := self compileExpression: '-1 timesRepeat: [Sound bell]']
@@ -1218,24 +1219,18 @@ testTimesRepeat
 	method := result method.
 	self assert: method notNil.
 	self assert: method isPacked.
-	self assert: (method value: nil withArguments: #()) = -1!
+	self assert: -1 equals: (method value: nil withArguments: #())!
 
 testTimesRepeatResult
-	#(0 1 2 100) do: 
-			[:each | 
-			self 
-				assert: ((self compileExpression: ('<1p> timesRepeat: []' 
-								expandMacrosWith: each)) 
-						method value: nil withArguments: #()) 
-						= each.
-			self 
-				assert: ((self compileExpression: ('| i | i := 0. <1p> timesRepeat: [i := i + 1]. i' 
-								expandMacrosWith: each)) 
-						method value: nil withArguments: #()) 
-						= each]
-"
-[1000000 timesRepeat: []] method disassembly
-"!
+	#(0 1 2 127 16383 32767 32768) do: 
+			[:each |
+			self assert: each
+				equals: ((self compileExpression: ('<1p> timesRepeat: []' expandMacrosWith: each)) method value: nil
+						withArguments: #()).
+			self assert: each
+				equals: ((self
+						compileExpression: ('| i | i := 0. <1p> timesRepeat: [i := i + 1]. i' expandMacrosWith: each))
+							method value: nil withArguments: #())]!
 
 testToByDo
 	| result method src |
@@ -1421,7 +1416,6 @@ verifyTempsMapOf: aCompiledMethod
 !CompilerTest categoriesFor: #getDebugInfoFor:debug:!private! !
 !CompilerTest categoriesFor: #getTestMethod:!private! !
 !CompilerTest categoriesFor: #messageFromError:!helpers!private! !
-!CompilerTest categoriesFor: #pushTempPair!constants!private! !
 !CompilerTest categoriesFor: #scan:class:!helpers!private! !
 !CompilerTest categoriesFor: #scanNonNumericEnd:class:!helpers!private! !
 !CompilerTest categoriesFor: #scanScaledDecimal:!helpers!private! !
