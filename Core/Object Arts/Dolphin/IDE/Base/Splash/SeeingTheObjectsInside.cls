@@ -291,37 +291,36 @@ randomFrom: anOrderedCollection
 render
 	"Private - Render the background image"
 
-	| graphics |
 	
-	[graphics := self graphics.
+	[| graphics |
+	graphics := self graphics.
 	graphics clear: ARGB white.
-
 	self model do: 
-			[:each | 
+			[:each |
 			| existingScale |
 			existingScale := each scale.
 			each scale: existingScale * insideObjectsScale.
 			each drawOn: graphics.
 			each scale: existingScale].
-	graphics 
+	graphics
 		drawImage: self background
 		at: Point zero
 		extent: self background extent.
-	graphics 
+	graphics
 		drawImage: self dolphinOutline
 		at: Point zero
 		extent: self dolphinOutline extent.
-	self sun 
+	self sun
 		ifNotNil: 
-			[:sun | 
+			[:sun |
 			sun
 				position: self sunPosition;
 				drawOn: graphics].
 	self drawInfoTextOn: graphics.
-	super render] 
+	super render]
 			on: Error
 			do: 
-				[:ex | 
+				[:ex |
 				self stopStepProcess.
 				ex pass]!
 

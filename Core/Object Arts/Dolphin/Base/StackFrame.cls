@@ -107,9 +107,8 @@ basicIP
 	^process at: index + IPOffset!
 
 basicIP: anInteger
-	"Private - Set the IP of the process stack frame the receiver represents to
-	anInteger (which is an offset from the start of the byte code object of the
-	method)."
+	"Private - Set the IP of the process stack frame the receiver represents to anInteger (which
+	is a zero-based offset from the start of the byte code object of the method)."
 
 	process at: index + IPOffset put: anInteger!
 

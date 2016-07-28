@@ -297,7 +297,6 @@ initialize
 		at: CErrMethodTooLarge put: 'method too large';
 		at: CErrTooManyLiterals put: 'too many literals';
 		at: CErrBlockNestingTooDeep put: 'maximum block nesting exceeded';
-		at: CErrBlockArgMissing put: 'block argument name expected';
 		at: CErrBadPools put: 'The workspace pools array is invalid';
 		at: CErrDuplicateTempName put: 'duplicate temporary variable name <1p>';
 		at: CErrDuplicateArgName put: 'duplicate argument name <1p>';

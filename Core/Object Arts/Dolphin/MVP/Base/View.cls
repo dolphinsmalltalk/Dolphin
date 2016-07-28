@@ -1836,7 +1836,7 @@ isEnabledDeeply: aBoolean
 isForeground
 	"Answer whether the receiver is the current foreground window."
 
-	^self class foregroundHandle = self handle!
+	^self isOpen and: [self class foregroundHandle = handle]!
 
 isGroupStop
 	"Answers whether the receiver has the WS_GROUP style. This style is used to identify the

@@ -10,20 +10,12 @@ WindowsEventTest comment: ''!
 !WindowsEventTest categoriesForClass!Unclassified! !
 !WindowsEventTest methodsFor!
 
-newEvent: anInteger 
-	^self isD6OrLater 
-		ifTrue: 
-			[WindowsEvent 
-				handle: 1
-				message: anInteger
-				wParam: 3
-				lParam: 4]
-		ifFalse: 
-			[WindowsEvent 
-				message: anInteger
-				handle: 1
-				wParam: 3
-				lParam: 4]!
+newEvent: anInteger
+	^WindowsEvent
+		handle: 1
+		message: anInteger
+		wParam: 3
+		lParam: 4!
 
 testInstanceCreation
 	"Test that instance creation and initialization using primiitive 157 works correctly"

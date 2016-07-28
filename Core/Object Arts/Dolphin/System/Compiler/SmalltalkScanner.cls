@@ -1,7 +1,7 @@
 "Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #SmalltalkScanner
-	instanceVariableNames: 'stream buffer tokenStart currentCharacter characterType classificationTable separatorsInLiterals extendedLiterals comments errorBlock nameSpaceCharacter line errorHandler'
+	instanceVariableNames: 'stream buffer tokenStart currentCharacter characterType classificationTable separatorsInLiterals extendedLiterals comments errorBlock nameSpaceCharacter line errorHandler environment'
 	classVariableNames: 'ClassificationTable EscapeChars PatternVariableCharacter'
 	poolDictionaries: 'SmalltalkParseErrorCodes'
 	classInstanceVariableNames: ''!
@@ -55,7 +55,7 @@ classify: aCharacter
 
 constantExpected
 	self lexicalError: LErrExpectConst.
-	^self recoverFromUnterminatedLiteral!
+	^self recoverFromInvalidLiteral!
 
 contents
 	| contentsStream |
@@ -69,6 +69,17 @@ do: aBlock
 
 	[self atEnd] whileFalse: [aBlock value: self next]
 !
+
+environment
+	"Answer the environment for which the receiver is scanning. By default this is the global
+	<SystemDictionary> instance, Smalltalk."
+
+	^environment!
+
+environment: anObject
+	"Set the environment for which the receiver is scanning."
+
+	environment := anObject!
 
 errorBlock
 	^errorBlock ifNil: [[:ex | ]]!
@@ -95,7 +106,7 @@ errorPosition
 
 extendedLiteralExpected
 	self lexicalError: LErrExpectExtendedLiteral.
-	^self recoverFromUnterminatedLiteral!
+	^self recoverFromInvalidLiteral!
 
 getComments
 	| oldComments |
@@ -117,7 +128,8 @@ illegalNumber: anInteger
 	^self recoverFromIllegalNumber: anInteger!
 
 invalidQualifier
-	^self lexicalError: LErrInvalidQualifier!
+	self lexicalError: LErrInvalidQualifier.
+	^self recoverFromInvalidLiteral!
 
 lexicalError: anInteger
 	^self lexicalError: anInteger range: (tokenStart to: self errorPosition)!
@@ -175,7 +187,7 @@ notificationClass
 numberTokenClass
 	^StNumberLiteralToken!
 
-on: aStream 
+on: aStream
 	buffer := WriteStream on: (String new: 60).
 	stream := aStream.
 	tokenStart := stream position.
@@ -184,7 +196,8 @@ on: aStream
 	separatorsInLiterals := false.
 	extendedLiterals := true.
 	nameSpaceCharacter := $..	"N.B. Dolphin support namespaces other than for pools."
-	line := 1!
+	line := 1.
+	environment := Smalltalk!
 
 previousStepPosition
 	^characterType == #eof 
@@ -210,6 +223,9 @@ readNumber
 	self step.
 	^number!
 
+recoverFromExpectChar
+	^self literalErrorToken: nil start: stream position!
+
 recoverFromIllegalCharacter
 	| start badChar |
 	badChar := currentCharacter.
@@ -220,6 +236,9 @@ recoverFromIllegalCharacter
 
 recoverFromIllegalNumber: anInteger 
 	^self literalErrorToken: (stream copyFrom: anInteger to: self previousStepPosition) start: anInteger!
+
+recoverFromInvalidLiteral
+	^self literalErrorToken: buffer contents start: self previousStepPosition!
 
 recoverFromUnterminatedComment: anInteger 
 	characterType := #eof.
@@ -267,17 +286,17 @@ scanExtendedLiterals
 	| token |
 	self step.
 	separatorsInLiterals ifTrue: [self stripSeparators].
-	token := characterType == #alphabetic 
+	token := characterType == #alphabetic
 				ifTrue: [self scanSymbol]
 				ifFalse: 
-					[characterType == #binary 
+					[characterType == #binary
 						ifTrue: [(self scanBinary: self literalTokenClass) stop: self previousStepPosition]
 						ifFalse: 
-							[currentCharacter == $' 
+							[currentCharacter == $'
 								ifTrue: [self scanStringSymbol]
 								ifFalse: [currentCharacter == $( ifTrue: [^self scanOptimized]]]].
 	token isNil ifTrue: [^self extendedLiteralExpected].
-	token value: ((Smalltalk at: #EsAtom ifAbsent: [Symbol]) intern: token value asString).
+	token value: ((self environment at: #EsAtom ifAbsent: [Symbol]) intern: token value asString).
 	^token!
 
 scanIdentifierOrKeyword
@@ -453,16 +472,16 @@ scanPatternVariable
 
 scanQualifiedReference
 	| nameToken bindingClass |
-	bindingClass := Smalltalk at: #BindingReference ifAbsent: [nil].
+	bindingClass := self environment at: #BindingReference ifAbsent: [nil].
 	bindingClass isNil ifTrue: [^self illegalCharacter].
 	self step.	"{"
 	self stripSeparators.
 	nameToken := self scanIdentifierOrKeyword.
-	(nameToken isIdentifier and: [nameToken value notEmpty]) ifFalse: [self invalidQualifier].
+	(nameToken isIdentifier and: [nameToken value notEmpty]) ifFalse: [^self invalidQualifier].
 	self stripSeparators.
 	currentCharacter == $} ifFalse: [^self unterminatedQualifiedRef].
 	self step.	"}"
-	^self literalTokenClass 
+	^self literalTokenClass
 		value: (bindingClass pathString: nameToken value)
 		start: tokenStart
 		stop: self previousStepPosition!
@@ -568,11 +587,12 @@ unterminatedComment: anInteger
 	^self recoverFromUnterminatedComment: anInteger!
 
 unterminatedQualifiedRef
-	^self lexicalError: LErrQualifiedRefNotClosed!
+	self lexicalError: LErrQualifiedRefNotClosed.
+	^self recoverFromInvalidLiteral!
 
 unterminatedString
 	self lexicalError: LErrStringNotClosed.
-	^self recoverFromUnterminatedLiteral! !
+	^self recoverFromInvalidLiteral! !
 !SmalltalkScanner categoriesFor: #addComment:!private!scanning! !
 !SmalltalkScanner categoriesFor: #atEnd!public!testing! !
 !SmalltalkScanner categoriesFor: #characterExpected!error handling!private! !
@@ -580,6 +600,8 @@ unterminatedString
 !SmalltalkScanner categoriesFor: #constantExpected!error handling!private! !
 !SmalltalkScanner categoriesFor: #contents!accessing!public! !
 !SmalltalkScanner categoriesFor: #do:!enumerating!public! !
+!SmalltalkScanner categoriesFor: #environment!accessing!public! !
+!SmalltalkScanner categoriesFor: #environment:!accessing!public! !
 !SmalltalkScanner categoriesFor: #errorBlock!error handling!public! !
 !SmalltalkScanner categoriesFor: #errorBlock:!accessing!public! !
 !SmalltalkScanner categoriesFor: #errorHandler!accessing!private! !
@@ -606,8 +628,10 @@ unterminatedString
 !SmalltalkScanner categoriesFor: #previousStepPosition!accessing!private! !
 !SmalltalkScanner categoriesFor: #readIntegerOfRadix:!private!scanning! !
 !SmalltalkScanner categoriesFor: #readNumber!private!scanning! !
+!SmalltalkScanner categoriesFor: #recoverFromExpectChar!error handling!private! !
 !SmalltalkScanner categoriesFor: #recoverFromIllegalCharacter!error handling!private! !
 !SmalltalkScanner categoriesFor: #recoverFromIllegalNumber:!error handling!private! !
+!SmalltalkScanner categoriesFor: #recoverFromInvalidLiteral!error handling!private! !
 !SmalltalkScanner categoriesFor: #recoverFromUnterminatedComment:!error handling!private! !
 !SmalltalkScanner categoriesFor: #reportError:at:line:range:extras:!error handling!private! !
 !SmalltalkScanner categoriesFor: #scanAnySymbol!private!scanning! !

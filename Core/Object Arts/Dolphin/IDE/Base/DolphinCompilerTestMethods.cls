@@ -214,23 +214,64 @@ testOverriddenMethodArgumentWarning: a
 	a := 2.
 	[a]]!
 
+testReturnFalse
+	^false!
+
 testReturnFromOptimizedBlock
 	^
 	[1 > 2 ifTrue: [^1] ifFalse: [[^self]].
 	2 < 1] 
 			whileTrue: [1 > 2 ifTrue: [^nil] ifFalse: [[^self] value]]!
 
+testReturnNil
+	^nil!
+
+testReturnTrue
+	^true!
+
+testSharedOuterTemps1
+	| a |
+	a := [[a := 2]].
+	^a!
+
+testSharedOuterTemps2
+	| a b |
+	b := [[a]].
+	a := 2.
+	^b!
+
+testTempsMapInlinedReturn
+	^self ifTrue: [self] ifFalse: [self printString]!
+
+testTempsMapNestedFullBlocks
+	"See github issue #134"
+
+	"Original example from issue"
+
+	#(1 2) do: 
+			[:each |
+			| a |
+			[
+			[self halt.
+			a := 'AAA'] on: Error do: [:ex | ]] ensure: []].
+
+	"Simple nested full block"
+	
+	[| a |
+	[a := 1] value.
+	a] value!
+
+testTempsMapNestedFullInOptimized
+	iv1 isNil
+		ifFalse: 
+			[| first |
+			first := true.
+			iv1 do: 
+					[:each |
+					first ifTrue: [first := false] ifFalse: [Transcript space].
+					Transcript print: each]]!
+
 testWarningCantOptimizeLoop
-
-	1 whileTrue.
-	2 whileFalse.
-	3 repeat.
-	[:a | ] whileTrue. 
-	[:b | ] whileFalse. 
-	[:c | ] repeat.
-	!
-
-testWarningCantOptimizeLoop1
 
 	1 whileTrue.
 	2 whileFalse.
@@ -243,16 +284,31 @@ testWarningCantOptimizeLoop1
 testWarningReadBeforeWrittenBlockTemp
 	
 	[| _tmp |
-	_tmp ifTrue: [1] ifFalse: [2]]!
+	_tmp := "@"_tmp"@" ifTrue: [1] ifFalse: [2]]!
 
 testWarningReadBeforeWrittenFullBlock
 	| _tmp |
-	_tmp := [:i | i > 1 ifTrue: [i * (_tmp value: i - 1)] ifFalse: [1]]!
+	_tmp := [:i | i > 1 ifTrue: [i * ("@"_tmp"@" value: i - 1)] ifFalse: [1]]!
 
 testWarningReadBeforeWrittenMethodTemp
 	| _tmp |
-	_tmp ifTrue: [^1].
-	^2!
+	"@"_tmp"@" ifTrue: [^1].
+	_tmp := 2.
+	^_tmp!
+
+testWarningReadNotWrittenBlockTemp
+	
+	[| "$"_tmp"$" |
+	"@"_tmp"@" ifTrue: [1] ifFalse: [2]]!
+
+testWarningReadNotWrittenMethodTemp
+	| "$"_tmp"$" |
+	"@"_tmp"@" ifTrue: [^1]!
+
+testWarningReadNotWrittenOptimizedBlockTemp
+	1 to: 5 do: [:each |
+		| "$"_tmp"$" |
+		"@"_tmp"@" ifTrue: [^1]]!
 
 testWarningRedefiningArgInOptimizedBlock: a 
 	a = 1 
@@ -451,12 +507,22 @@ testWarnUnimplementedAbstractMethod
 !DolphinCompilerTestMethods categoriesFor: #testNestedWhileTrueAtStartOfCleanBlock!public!unit tests! !
 !DolphinCompilerTestMethods categoriesFor: #testOverriddenBlockArgumentWarning!public!unit tests! !
 !DolphinCompilerTestMethods categoriesFor: #testOverriddenMethodArgumentWarning:!public!unit tests! !
+!DolphinCompilerTestMethods categoriesFor: #testReturnFalse!public!unit tests! !
 !DolphinCompilerTestMethods categoriesFor: #testReturnFromOptimizedBlock!public!unit tests! !
+!DolphinCompilerTestMethods categoriesFor: #testReturnNil!public!unit tests! !
+!DolphinCompilerTestMethods categoriesFor: #testReturnTrue!public!unit tests! !
+!DolphinCompilerTestMethods categoriesFor: #testSharedOuterTemps1!public!unit tests! !
+!DolphinCompilerTestMethods categoriesFor: #testSharedOuterTemps2!public!unit tests! !
+!DolphinCompilerTestMethods categoriesFor: #testTempsMapInlinedReturn!public!unit tests! !
+!DolphinCompilerTestMethods categoriesFor: #testTempsMapNestedFullBlocks!public!unit tests! !
+!DolphinCompilerTestMethods categoriesFor: #testTempsMapNestedFullInOptimized!public!unit tests! !
 !DolphinCompilerTestMethods categoriesFor: #testWarningCantOptimizeLoop!public! !
-!DolphinCompilerTestMethods categoriesFor: #testWarningCantOptimizeLoop1!public! !
 !DolphinCompilerTestMethods categoriesFor: #testWarningReadBeforeWrittenBlockTemp!public!unit tests! !
 !DolphinCompilerTestMethods categoriesFor: #testWarningReadBeforeWrittenFullBlock!public!unit tests! !
 !DolphinCompilerTestMethods categoriesFor: #testWarningReadBeforeWrittenMethodTemp!public!unit tests! !
+!DolphinCompilerTestMethods categoriesFor: #testWarningReadNotWrittenBlockTemp!public!unit tests! !
+!DolphinCompilerTestMethods categoriesFor: #testWarningReadNotWrittenMethodTemp!public!unit tests! !
+!DolphinCompilerTestMethods categoriesFor: #testWarningReadNotWrittenOptimizedBlockTemp!public!unit tests! !
 !DolphinCompilerTestMethods categoriesFor: #testWarningRedefiningArgInOptimizedBlock:!public!unit tests! !
 !DolphinCompilerTestMethods categoriesFor: #testWarningRedefiningBlockArgInBlock!public!unit tests! !
 !DolphinCompilerTestMethods categoriesFor: #testWarningRedefiningInstVarAsArg:!public!unit tests! !

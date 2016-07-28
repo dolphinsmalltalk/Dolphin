@@ -812,6 +812,16 @@ browseMethodsWithFullBlocks
 	methods label: 'Methods with Full Blocks'.
 	self browseMethodsIn: methods!
 
+browseMethodsWithNewBytecodes
+	"Open a method browser on all the methods that would have different bytecodes if recompiled
+	with the current compiler."
+
+	"
+	Smalltalk developmentSystem browseMethodsWithNewBytecodes
+	"
+
+	^self browseMethodsIn: self methodsWithNewBytecodes!
+
 browsePackages
 	"Open a new package browser."
 	
@@ -2139,6 +2149,27 @@ methodsWithCompilationIssuesIn: aBrowserEnvironment
 	env label: ('Compilation issues in <1d>' expandMacrosWith: aBrowserEnvironment).
 	^env!
 
+methodsWithNewBytecodes
+	"Private - Answer a <BrowserEnvironment> containing all the methods that would have different bytecodes if recompiled with the current compiler."
+
+	^self methodsWithNewBytecodesIn: BrowserEnvironment new!
+
+methodsWithNewBytecodesIn: aBrowserEnvironment
+	"Private - Answer a <BrowserEnvironment> containing all the methods in the
+	<BrowserEnvironment> argument that would have different bytecodes if recompiled with the
+	current compiler."
+
+	^(self
+		selectMethods: 
+			[:each |
+			| method |
+			method := Compiler compile: each getSource in: each methodClass.
+			method notNil and: [method byteCodes ~= each byteCodes or: [method extraIndex ~= each extraIndex]]]
+		in: aBrowserEnvironment
+		withProgress: 'Finding methods that recompile differently...')
+		label: 'Methods that recompile differently in ' , aBrowserEnvironment label;
+		yourself!
+
 methodWorkspaceClass
 	"Answer the class of presenter to be used for method source workspaces in the various tools
 	(e.g. Debugger and method browser)."
@@ -3222,7 +3253,7 @@ removeMethod: aCompiledMethod
 
 	self removeMethods: (Array with: aCompiledMethod)!
 
-removeMethod: aCompiledMethod changes: aCompositeRefactoryChange 
+removeMethod: aCompiledMethod changes: aCompositeRefactoryChange
 	"Private - Removes the <CompiledMethod>, method, from its class. If the method is implementing any
 	protocols on behalf of its owner class or subclasses then we must either remove the method
 	from the protocol, or remove the protocol(s) from the class(es). Since a change to a
@@ -3234,31 +3265,31 @@ removeMethod: aCompiledMethod changes: aCompositeRefactoryChange
 	prots := IdentitySet withAll: aCompiledMethod protocols.
 	"We must also consider all protocols of sub-classes dependent on this method"
 	aCompiledMethod methodClass allSubclasses do: 
-			[:eachClass | 
-			eachClass protocols 
+			[:eachClass |
+			eachClass protocols
 				do: [:eachProtocol | (eachProtocol includesSelector: sel) ifTrue: [prots add: eachProtocol]]].
 	(prots isEmpty or: 
 			[| s |
-			(s := aCompiledMethod methodClass superclass) notNil and: [s canUnderstand: sel]]) 
+			(s := aCompiledMethod methodClass superclass) notNil and: [s canUnderstand: sel]])
 		ifFalse: 
-			[| desc plural response |
-			desc := String writeStream.
-			(plural := prots size > 1) 
+			[| stream desc plural response |
+			stream := String writeStream.
+			(plural := prots size > 1)
 				ifFalse: 
-					[desc
+					[stream
 						space;
 						display: prots asArray first]
 				ifTrue: 
-					[desc nextPutAll: 's '.
-					prots asSortedCollection do: [:p | p displayOn: desc] separatedBy: [desc nextPutAll: ', ']].
-			desc := desc contents.
+					[stream nextPutAll: 's '.
+					prots asSortedCollection do: [:p | p displayOn: stream] separatedBy: [stream nextPutAll: ', ']].
+			desc := stream contents.
 			response := (MessageBox new)
 						defaultButton: 3;
 						confirmOrCancel: ('<1p> is part of the implementation of the protocol<2s> in <3p> and/or its subclasses.<n>
 Are you sure that you would like to remove <1p> from the protocol<4s> as well as from the class?<n>
 Press Yes to remove the method from <3p>, and its selector from the protocol<2s>. <3p> will still conform to the reduced protocol<4s>, but contracting protocols can affect other conforming classes or the users of those classes.<n>
 Press No to remove the method and the dependent protocol <2s> from <3p> and subclasses. <3p> will no longer conform to the protocol<4s>, which might affect the users of <3p> or its subclasses. The protocol<4s> will be unaffected.<n>
-It is recommended that you press Cancel to abort deletion unless you are absolutely sure.' 
+It is recommended that you press Cancel to abort deletion unless you are absolutely sure.'
 									expandMacrosWith: sel
 									with: desc
 									with: aCompiledMethod methodClass
@@ -3936,6 +3967,7 @@ wrapText: aString toWidth: max indent: colInteger tabWidth: tabInteger
 !SmalltalkSystem categoriesFor: #browseMethodsInEnvironments:!browsing!public! !
 !SmalltalkSystem categoriesFor: #browseMethodsWithCompilationIssuesIn:!browsing!public! !
 !SmalltalkSystem categoriesFor: #browseMethodsWithFullBlocks!public!utilities! !
+!SmalltalkSystem categoriesFor: #browseMethodsWithNewBytecodes!browsing!public! !
 !SmalltalkSystem categoriesFor: #browsePackages!browsing!commands!public! !
 !SmalltalkSystem categoriesFor: #browsePackages:!browsing!commands!public! !
 !SmalltalkSystem categoriesFor: #browsePoolConstantsDictionary:!browsing!public! !
@@ -4084,6 +4116,8 @@ wrapText: aString toWidth: max indent: colInteger tabWidth: tabInteger
 !SmalltalkSystem categoriesFor: #methodsThatFailedToCompileIn:!browsing!public! !
 !SmalltalkSystem categoriesFor: #methodStylerClass!constants!public! !
 !SmalltalkSystem categoriesFor: #methodsWithCompilationIssuesIn:!private!searching! !
+!SmalltalkSystem categoriesFor: #methodsWithNewBytecodes!browsing!private! !
+!SmalltalkSystem categoriesFor: #methodsWithNewBytecodesIn:!browsing!private! !
 !SmalltalkSystem categoriesFor: #methodWorkspaceClass!options!public! !
 !SmalltalkSystem categoriesFor: #minimizeAll!commands!public! !
 !SmalltalkSystem categoriesFor: #myDolphinAccount!accessing!public! !

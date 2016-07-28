@@ -1,7 +1,7 @@
 "Filed out from Dolphin Smalltalk 7"!
 
 PermanentLibrary subclass: #VMLibrary
-	instanceVariableNames: 'wndProc dlgProc genericCallback vtable specialSelectorStart '
+	instanceVariableNames: 'wndProc dlgProc genericCallback vtable specialSelectorStart'
 	classVariableNames: 'Registry RegistryKeys'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -167,6 +167,11 @@ dump: msgString path: pathString stackDepth: slotsInteger walkbackDepth: framesI
 	<stdcall: void Dump lpstr lpstr sdword sdword>
 	^self invalidCall
 !
+
+emptyBlock
+	"Private - Answer the singleton empty clean block instance the the compiler installs into methods with empty zero-arg blocks as a space saving optimization."
+
+	^self registry at: 7!
 
 errorIntegerMoreThan32Bits: anInteger
 	"Private - Raise an exception to the effect that anInteger cannot be represented
@@ -535,6 +540,7 @@ versionFormatString
 !VMLibrary categoriesFor: #defaultProductDetails!accessing!private! !
 !VMLibrary categoriesFor: #displayDesktopMessage:!operations!private! !
 !VMLibrary categoriesFor: #dump:path:stackDepth:walkbackDepth:!exceptions!private! !
+!VMLibrary categoriesFor: #emptyBlock!accessing-handles!private! !
 !VMLibrary categoriesFor: #errorIntegerMoreThan32Bits:!exceptions!private! !
 !VMLibrary categoriesFor: #fullVersion!accessing-version!public! !
 !VMLibrary categoriesFor: #getDlgProc!accessing-callbacks!private! !

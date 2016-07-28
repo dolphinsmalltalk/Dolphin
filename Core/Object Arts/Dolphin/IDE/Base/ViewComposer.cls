@@ -2010,10 +2010,10 @@ restoreComposition: viewResource
 		context: self pasteContext
 		position: self incrementAddPositionOffset!
 
-restoreUndoState: aLiteralStoreArray 
-	| state |
+restoreUndoState: aLiteralStoreArray
 	self inspector view noRedrawDo: 
-			[self arena noRedrawDo: 
+			[| state |
+			self arena noRedrawDo: 
 					[| restoredView |
 					self endComposition.
 					state := self systemModel loadViewResource: aLiteralStoreArray inContext: View desktop.

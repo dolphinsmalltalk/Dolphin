@@ -1,7 +1,7 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #CompilationResult
-	instanceVariableNames: 'method _reserved rawTextMap rawTempsMap textMap tempsMap oldMethod package '
+	instanceVariableNames: 'method _reserved rawTextMap rawTempsMap textMap tempsMap oldMethod package'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -13,12 +13,11 @@ CompilationResult comment: ''!
 buildTempsMap
 	tempsMap := OrderedCollection new: rawTempsMap size.
 	rawTempsMap do: 
-			[:each | 
-			| startIP stopIP temps |
-			startIP := each at: 1.
-			stopIP := each at: 2.
-			temps := each at: 3.
-			tempsMap addLast: (startIP to: stopIP) -> temps].
+			[:each |
+			| ipRange |
+			ipRange := (each at: 1) to: (each at: 2).
+			ipRange isEmpty
+				ifFalse: [tempsMap addLast: ipRange -> (each at: 3)]].
 	"Discard the raw temps map built by the compiler to save space"
 	rawTempsMap := nil!
 
@@ -69,14 +68,12 @@ rawTempsMap: anObject
 rawTextMap: anObject
 	rawTextMap := anObject!
 
-tempsAtIp: ip 
-	| found |
-	self tempsMap keysAndValuesDo: 
-			[:i :each | 
-			| range |
-			range := each key.
-			(range includes: ip) ifTrue: [found := each value]].
-	^found ifNil: [Array new]!
+tempsAtIp: anInteger
+	"Private - Answer the temps map entry for the scope that most closely encloses the specified
+	1-based bytecode ip."
+
+	^self tempsMap inject: #()
+		into: [:match :each | (each key includes: anInteger) ifTrue: [each value] ifFalse: [match]]!
 
 tempsMap
 	"Answer the map of ip ranges to temporaries if such was requested (if not, then nil).

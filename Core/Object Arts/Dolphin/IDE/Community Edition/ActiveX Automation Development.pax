@@ -4535,7 +4535,11 @@ buildMethodName
 	funcName := monikers first.
 	self assert: [funcName notEmpty].
 	forceLower := self analyzer forceLowercaseIdentifiers.
-	argc > 0 
+	argc > 0
+		ifFalse: 
+			["Zero arguments"
+			indices := argumentNames := #().
+			keywords := Array with: funcName]
 		ifTrue: 
 			["First argument must be treated differently"
 			| firstArg j |
@@ -4549,8 +4553,8 @@ buildMethodName
 			j := 2.
 			monikers from: 3
 				do: 
-					[:each | 
-					each isEmpty 
+					[:each |
+					each isEmpty
 						ifTrue: 
 							[keywords at: j put: '_:'.
 							argumentNames at: j put: 'arg' , j displayString]
@@ -4560,12 +4564,8 @@ buildMethodName
 							keywords at: j put: (forceLower ifTrue: [param] ifFalse: [each]) , ':'.
 							argumentNames at: j put: param].
 					j := j + 1].
-			self reinventBadVarNames: argumentNames]
-		ifFalse: 
-			["Zero arguments"
-			indices := argumentNames := #().
-			keywords := Array with: funcName].
-	^AXMethodName 
+			self reinventBadVarNames: argumentNames].
+	^AXMethodName
 		keywords: keywords
 		argumentNames: argumentNames
 		indices: indices!

@@ -1,7 +1,7 @@
 "Filed out from Dolphin Smalltalk 7"!
 
 Object variableSubclass: #CompiledCode
-	instanceVariableNames: 'header methodClass selector sourceDescriptor byteCodes '
+	instanceVariableNames: 'header methodClass selector sourceDescriptor byteCodes'
 	classVariableNames: 'InfoCacheKeys InfoCacheValues PrivateMask'
 	poolDictionaries: 'OpcodePool'
 	classInstanceVariableNames: ''!
@@ -141,7 +141,7 @@ byteCodes
 			remaining := remaining bitShift: -8].
 	^bytes!
 
-byteCodes: anObject 
+byteCodes: anObject
 	"Private - Set the value of the receiver's ''byteCodes'' instance variable to the argument,
 	anObject. anObject must be either a ByteArray, or a SmallInteger containing the packed
 	representation of the bytecodes. If a ByteArray is passed that is suitable for packing (it
@@ -149,19 +149,18 @@ byteCodes: anObject
 	format."
 
 	| codes |
-	codes := (anObject isInteger or: [anObject size > 4 or: [anObject first even]]) 
-				ifTrue: [anObject]
-				ifFalse: 
-					[| packed |
-					codes := (anObject size == 4 
-								ifTrue: [anObject sdwordAtOffset: 0]
-								ifFalse: 
-									[packed := 0.
-									anObject reverseDo: [:each | packed := (packed bitShift: 8) + each].
-									packed]) 
-									bitShift: -1.
-					self assert: [codes class == SmallInteger].
-					codes].
+	(anObject isInteger or: [anObject size > 4 or: [anObject first even]])
+		ifTrue: [codes := anObject]
+		ifFalse: 
+			[codes := (anObject size == 4
+						ifTrue: [anObject sdwordAtOffset: 0]
+						ifFalse: 
+							[| packed |
+							packed := 0.
+							anObject reverseDo: [:each | packed := (packed bitShift: 8) + each].
+							packed])
+							bitShift: -1.
+			self assert: [codes class == SmallInteger]].
 	codes isImmutable: true.
 	byteCodes := codes!
 
