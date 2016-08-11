@@ -908,7 +908,7 @@ testSignedFromUnsigned
 !VMTest categoriesFor: #testPrimitiveAtPut!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveIsNullBytes!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveReplaceElements!public!unit tests! !
-!VMTest categoriesFor: #testPrimitiveResume!public! !
+!VMTest categoriesFor: #testPrimitiveResume!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveStringAt!public!unit tests! !
 !VMTest categoriesFor: #testSignedFromUnsigned!public!unit tests! !
 
