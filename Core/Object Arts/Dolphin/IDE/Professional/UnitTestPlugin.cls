@@ -110,11 +110,11 @@ displayDefects: aCollection
 	defectsPresenter list: aCollection.
 	defectsPresenter view isEnabled: aCollection notEmpty!
 
-displayDetails: aString 
+displayDetails: aString
 	"Display aString to indicate additional details about the current mode of operation"
 
 	detailsPresenter value: aString.
-	SessionManager inputState pumpMessages!
+	SessionManager inputState prod.!
 
 displayFail
 	"Indicate that some tests have failed and we have defects"
@@ -287,7 +287,7 @@ queryCommand: aCommandQuery
 
 refreshIcon
 	self view arrangement: self.
-	SessionManager inputState pumpMessages!
+	SessionManager inputState prod.!
 
 runIndividualTests
 	| suite |
@@ -311,8 +311,8 @@ startAutoSwitchProcess
 	autoSwitchProcess := 
 			[Processor sleep: self class autoSwitchDelayMs.
 			self ensureVisible.
-			SessionManager inputState pumpMessages] 
-					forkAt: Processor highIOPriority!
+			SessionManager inputState prod]
+					forkAt: Processor highIOPriority.!
 
 stopAutoSwitchProcess
 	autoSwitchProcess ifNotNil: [:process | process terminate].
