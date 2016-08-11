@@ -752,6 +752,63 @@ testPrimitiveReplaceElements
 				removeFirst;
 				yourself)!
 
+testPrimitiveResume
+	| a b c d e sem state list |
+	sem := Semaphore new.
+	a := 
+			[state := 'a1'.
+			sem wait.
+			state := state , ', a2'.
+			Processor suspendActive.
+			state := state , ', a3'.
+			Processor suspendActive.
+			state := state , ', a4'.
+			Processor suspendActive.
+			state := state , ', a5']
+					forkAt: Processor userInterruptPriority.
+	self assert: 'a1' equals: state.
+	self assert: a isWaiting.
+	self assert: a equals: sem first.
+	a suspend.
+	self assert: a isSuspended.
+	self assert: sem isEmpty.
+	self assert: 'a1' equals: state.
+	b := 
+			[a resume: sem.
+			state := state , ', b'] forkAt: Processor userInterruptPriority.
+	"Regression test for #Process>>resume: suspends calling/active process #89"
+	self assert: b isDead.
+	self assert: 'a1, b' equals: state.
+	"Check that the process was 'resumed' correctly onto the requested list"
+	self assert: a isWaiting.
+	self assert: a equals: sem first.
+	"And that it is runnable."
+	sem signal.
+	self assert: 'a1, b, a2' equals: state.
+	self assert: a isSuspended.
+	list := (Processor instVarNamed: 'processLists') at: a priority.
+	"Resumed process is schedulable, but lower priority than the active process, so waits."
+	c := 
+			[a resume: list.
+			state := state , ', c'] forkAt: Processor lowIOPriority.
+	self assert: 'a1, b, a2, c, a3' equals: state.
+	self assert: a isSuspended.
+	self assert: c isDead.
+	"Resumed process is same priority, and although we expect a rescheduling it is pushed on the back of the list, so still waits"
+	d := 
+			[a resume: list.
+			state := state , ', d'] forkAt: a priority.
+	self assert: 'a1, b, a2, c, a3, d, a4' equals: state.
+	self assert: d isDead.
+	self assert: a isSuspended.
+	"Resumed process is higher priority, so resumes immediately."
+	e := 
+			[a resume: list.
+			state := state , ', e'] forkAt: a priority - 1.
+	self assert: 'a1, b, a2, c, a3, d, a4, a5, e' equals: state.
+	self assert: e isDead.
+	self assert: a isDead!
+
 testPrimitiveStringAt
 	| array |
 	
@@ -851,6 +908,7 @@ testSignedFromUnsigned
 !VMTest categoriesFor: #testPrimitiveAtPut!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveIsNullBytes!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveReplaceElements!public!unit tests! !
+!VMTest categoriesFor: #testPrimitiveResume!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveStringAt!public!unit tests! !
 !VMTest categoriesFor: #testSignedFromUnsigned!public!unit tests! !
 
