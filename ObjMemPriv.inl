@@ -89,10 +89,10 @@ inline OTE* __fastcall ObjectMemory::allocateOop(POBJECT pLocation)
 
 	// Maintain the last used garbage collector mark to speed up collections
 	// Doing this will also reset the free bit and set the pointer bit
-	//.so byte allocations will need to reset it
+	// so byte allocations will need to reset it
 
 	ote->m_flags = m_spaceOTEBits[OTEFlags::PoolSpace];
-	ASSERT(ote->m_flags.m_count == 0);
+	ASSERT(ote->m_count == 0);
 	ote->m_idHash = nextIdentityHash();
 
 	return ote;

@@ -117,7 +117,7 @@ ostream& operator<<(ostream& st, const StringOTE* ote)
 
 inline ostream& operator<<(ostream& stream, const Class& cl)
 {
-	return stream << reinterpret_cast<const VariantCharOTE*>(cl.m_name);
+	return stream << cl.m_name;
 }
 
 
@@ -405,7 +405,7 @@ void DumpStackEntry(Oop* sp, Process* pProc, ostream& stream)
 		stream << ote;
 	#ifdef _DEBUG
 		if (!ObjectMemoryIsIntegerObject(objectPointer))
-			stream << ", refs " << dec << int(ote->m_flags.m_count);
+			stream << ", refs " << dec << int(ote->m_count);
 	#endif
 		stream << endl;
 	}

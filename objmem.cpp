@@ -102,16 +102,16 @@ void __fastcall ObjectMemory::oneWayBecome(OTE* ote1, OTE* ote2)
 		}
 	}
 
-	unsigned newCount = ote1->m_flags.m_count + ote2->m_flags.m_count;
+	unsigned newCount = ote1->m_count + ote2->m_count;
 	if (newCount > OTE::MAXCOUNT)
 		ote2->beSticky();
 	else
-		ote2->m_flags.m_count = static_cast<BYTE>(newCount);
+		ote2->m_count = static_cast<BYTE>(newCount);
 
 	// The old object must be placed in the ZCT since all references have been lost
 	// (we place it in the ZCT rather than free it, since it may reference other objects
 	// that are in the stack but are otherwise unreferenced)
-	ote1->m_flags.m_count = 1;
+	ote1->m_count = 1;
 	ote1->countDown();
 	Interpreter::flushAtCaches();
 
@@ -129,7 +129,7 @@ ArrayOTE* __fastcall ObjectMemory::instancesOf(BehaviorOTE* classPointer)
 	ASSERT(isBehavior(Oop(classPointer)));
 
 	// Use the ref. count as an initial size
-	unsigned size = classPointer->m_flags.m_count;
+	unsigned size = classPointer->m_count;
 	
 	ArrayOTE* arrayPointer = Array::New(size);
 	Array* pInstances = arrayPointer->m_location;
@@ -207,7 +207,7 @@ ArrayOTE* __fastcall ObjectMemory::subinstancesOf(BehaviorOTE* classPointer)
 	ASSERT(isBehavior(Oop(classPointer)));
 
 	// Use the ref. count as an initial size
-	unsigned size = classPointer->m_flags.m_count;
+	unsigned size = classPointer->m_count;
 	if (size < 32)
 		size = 32;
 	
@@ -464,7 +464,7 @@ ArrayOTE* __stdcall ObjectMemory::referencesTo(Oop referencedObjectPointer)
 
 	unsigned size;
 	if (!isIntegerObject(referencedObjectPointer))
-		size = reinterpret_cast<OTE*>(referencedObjectPointer)->m_flags.m_count;
+		size = reinterpret_cast<OTE*>(referencedObjectPointer)->m_count;
 	else
 		size = 32;
 	
@@ -668,7 +668,7 @@ void ObjectMemory::Terminate()
 
 				if (bNeedsDealloc)
 				{
-					ote.m_flags.m_count = 0;	// To avoid assertion
+					ote.m_count = 0;	// To avoid assertion
 					deallocate(&ote);
 				}
 			}

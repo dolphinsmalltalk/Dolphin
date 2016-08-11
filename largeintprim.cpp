@@ -170,7 +170,7 @@ inline void deallocateIntermediateResult(LargeIntegerOTE* liOte)
 {
 	POTE ote = reinterpret_cast<POTE>(liOte);
 
-	HARDASSERT(ote->m_flags.m_count == 0);
+	HARDASSERT(ote->m_count == 0);
 	HARDASSERT(!ote->isFree());
 	// If its in the Zct, then it must be on the stack.
 	HARDASSERT(!ObjectMemory::IsInZct(ote));
@@ -1025,7 +1025,7 @@ liDiv_t __stdcall liDivSingle(LargeIntegerOTE* oteU, SMALLINTEGER v)
 
 			LargeIntegerOTE* absU = liNegatePriv(oteU);
 			ASSERT(!absU->isFree());
-			ASSERT(absU->m_flags.m_count == 0);
+			ASSERT(absU->m_count == 0);
 
 			if (v < 0)
 			{
@@ -1462,7 +1462,7 @@ liDiv_t __stdcall liDiv(LargeIntegerOTE* oteU, LargeIntegerOTE* oteV)
 
 		LargeIntegerOTE* absU = liNegatePriv(oteU);
 		ASSERT(!absU->isFree());
-		ASSERT(absU->m_flags.m_count == 0);
+		ASSERT(absU->m_count == 0);
 
 		if (vHigh < 0)
 		{

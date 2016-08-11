@@ -64,7 +64,7 @@ HRESULT ObjectMemory::Initialize()
 	ASSERT(sizeof(MWORD) == sizeof(DWORD));
 	ASSERT(sizeof(InstanceSpecification) == sizeof(MWORD));
 	ASSERT(sizeof(OTE) == 16);
-	ASSERT(sizeof(OTEFlags) == 2);
+	ASSERT(sizeof(OTEFlags) == 1);
 	ASSERT(sizeof(count_t) == 1);
 	ASSERT(sizeof(hash_t) == 2);
 	ASSERT(sizeof(BlockInfo) == sizeof(MWORD));
@@ -127,7 +127,6 @@ HRESULT ObjectMemory::Initialize()
 		m_spaceOTEBits[i].m_finalize	= FALSE;
 		m_spaceOTEBits[i].m_weakOrZ		= FALSE;
 		m_spaceOTEBits[i].m_space		= i;
-		m_spaceOTEBits[i].m_count		= 0;
 	}
 
 	// Certain spaces contain byte objects

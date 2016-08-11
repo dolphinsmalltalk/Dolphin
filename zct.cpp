@@ -1,10 +1,10 @@
 /******************************************************************************
 
-	File: Alloc.cpp
+	File: Zct.cpp
 
 	Description:
 
-	Object Memory management allocation/coping routines
+	Object Memory Zero Count Table related members
 
 ******************************************************************************/
 
@@ -21,12 +21,12 @@
 // Smalltalk classes
 #include "STVirtualObject.h"
 
-enum { 
-		ZCTMINSIZE = 64,		// Minimum size, and initial high water mark, of the ZCT.
-		ZCTINITIALSIZE = 2048,	// Benchmarking shows this to be the best size at present.
-		ZCTMINRESERVE = 16*1024,
-		ZCTRESERVE = 512*1024   // Allow up to 0.5 million objects to be ref'd only from stack of active process
-		};
+enum {
+	ZCTMINSIZE = 64,		// Minimum size, and initial high water mark, of the ZCT.
+	ZCTINITIALSIZE = 2048,	// Benchmarking shows this to be the best size at present.
+	ZCTMINRESERVE = 16 * 1024,
+	ZCTRESERVE = 512 * 1024   // Allow up to 0.5 million objects to be ref'd only from stack of active process
+};
 
 OTE** ObjectMemory::m_pZct;
 int ObjectMemory::m_nZctEntries;
@@ -36,17 +36,17 @@ static DWORD ZctReserve;
 bool ObjectMemory::m_bIsReconcilingZct;
 
 #ifdef _DEBUG
-	static int nDeleted;
-	static DWORD dwLastReconcileTicks;
-	bool alwaysReconcileOnAdd = true;
+static int nDeleted;
+static DWORD dwLastReconcileTicks;
+bool alwaysReconcileOnAdd = true;
 
-	bool ObjectMemory::IsInZct(OTE* ote)
-	{
-		// Expensive serial search needed because we don't have a flag free in the OTE at present
-		for (int i=0;i<m_nZctEntries;i++)
-			if (m_pZct[i] == ote) return true;
-		return false;
-	}
+bool ObjectMemory::IsInZct(OTE* ote)
+{
+	// Expensive serial search needed because we don't have a flag free in the OTE at present
+	for (int i = 0; i < m_nZctEntries; i++)
+		if (m_pZct[i] == ote) return true;
+	return false;
+}
 #endif
 
 HRESULT ObjectMemory::InitializeZct()
@@ -54,20 +54,20 @@ HRESULT ObjectMemory::InitializeZct()
 	CRegKey rkDump;
 	ZctReserve = ZCTRESERVE;
 	ZctMinSize = ZCTINITIALSIZE;
-	if (OpenDolphinKey(rkDump, "ObjMem", KEY_READ)==ERROR_SUCCESS)
+	if (OpenDolphinKey(rkDump, "ObjMem", KEY_READ) == ERROR_SUCCESS)
 	{
 		DWORD dwValue;
 		if (rkDump.QueryDWORDValue("ZMax", dwValue) == ERROR_SUCCESS && dwValue > ZCTMINRESERVE)
 			ZctReserve = dwValue;
 		if (rkDump.QueryDWORDValue("ZMin", ZctMinSize) == ERROR_SUCCESS && dwValue > ZCTMINSIZE &&
-				dwValue < ZctReserve)
+			dwValue < ZctReserve)
 			ZctMinSize = dwValue;
 	}
 
 	//trace("ZctMinSize = %u, ZctReserve = %u\n", ZctMinSize, ZctReserve);
 	m_nZctEntries = 0;
 	m_bIsReconcilingZct = false;
-	m_pZct = static_cast<OTE**>(::VirtualAlloc(NULL, ZctReserve*sizeof(OTE*), MEM_RESERVE, PAGE_NOACCESS));
+	m_pZct = static_cast<OTE**>(::VirtualAlloc(NULL, ZctReserve * sizeof(OTE*), MEM_RESERVE, PAGE_NOACCESS));
 	if (!m_pZct)
 		return ReportError(IDP_ZCTRESERVEFAIL, ZctReserve, 0);
 
@@ -83,24 +83,24 @@ HRESULT ObjectMemory::InitializeZct()
 
 void ObjectMemory::GrowZct()
 {
-	TRACE("ZCT overflow at %d entries (%d in use), growing to %d\n", m_nZctHighWater, m_nZctEntries, m_nZctHighWater*2);
+	TRACE("ZCT overflow at %d entries (%d in use), growing to %d\n", m_nZctHighWater, m_nZctEntries, m_nZctHighWater * 2);
 	m_nZctHighWater <<= 1;
 	// Reserve and high water must be powers of 2, so this should be unless about to overflow reserve
 	HARDASSERT((DWORD)m_nZctHighWater <= ZctReserve);
-	m_pZct = static_cast<OTE**>(::VirtualAlloc(m_pZct, m_nZctHighWater*sizeof(OTE*), MEM_COMMIT, PAGE_READWRITE));
+	m_pZct = static_cast<OTE**>(::VirtualAlloc(m_pZct, m_nZctHighWater * sizeof(OTE*), MEM_COMMIT, PAGE_READWRITE));
 	if (!m_pZct)
 		RaiseFatalError(IDP_ZCTRESERVEFAIL, 2, m_nZctHighWater, ZctReserve);
 }
 
 void ObjectMemory::ShrinkZct()
 {
-	TRACE("Shrink ZCT from %d entries (%d in use) to %d\n", m_nZctHighWater, m_nZctEntries, m_nZctHighWater/2);
+	TRACE("Shrink ZCT from %d entries (%d in use) to %d\n", m_nZctHighWater, m_nZctEntries, m_nZctHighWater / 2);
 	m_nZctHighWater >>= 1;
 
 	// Can't shrink below one page
-	if (m_nZctHighWater >= (dwPageSize/sizeof(OTE*)))
+	if (m_nZctHighWater >= (dwPageSize / sizeof(OTE*)))
 	{
-		::VirtualFree(m_pZct+m_nZctHighWater, m_nZctHighWater*sizeof(OTE*), MEM_DECOMMIT);
+		::VirtualFree(m_pZct + m_nZctHighWater, m_nZctHighWater * sizeof(OTE*), MEM_DECOMMIT);
 	}
 }
 
@@ -125,7 +125,7 @@ OTE* ObjectMemory::ReconcileZct(OTE* ote)
 	EmptyZct();
 	PopulateZct();
 
-	#ifdef _DEBUG
+#ifdef _DEBUG
 	if (!alwaysReconcileOnAdd)
 	{
 		DWORD dwTicksAfter = timeGetTime();
@@ -134,7 +134,7 @@ OTE* ObjectMemory::ReconcileZct(OTE* ote)
 		if (m_nZctEntries > 0 && Interpreter::executionTrace != 0)
 			DumpZct();
 	}
-	#endif
+#endif
 
 	return ote;
 }
@@ -162,10 +162,10 @@ void ObjectMemory::EmptyZct()
 	const int nOldZctEntries = m_nZctEntries;
 	m_nZctEntries = -1;
 
-	for (int i=0;i<nOldZctEntries;i++)
+	for (int i = 0; i < nOldZctEntries; i++)
 	{
 		OTE* ote = pZct[i];
-		if (!ote->isFree() && ote->m_flags.m_count == 0)
+		if (!ote->isFree() && ote->m_count == 0)
 		{
 			// Note that deallocate cannot make new Zct entries
 			// Because we have bumped the ref. counts of all stack ref'd objects, only true
@@ -180,7 +180,7 @@ void ObjectMemory::EmptyZct()
 		}
 	}
 
-//	CHECKREFSNOFIX
+	//	CHECKREFSNOFIX
 }
 
 void ObjectMemory::PopulateZct()
@@ -203,12 +203,12 @@ void ObjectMemory::PopulateZct()
 	//CHECKREFSNOFIX
 #endif
 
-	if (m_nZctEntries > (m_nZctHighWater - m_nZctHighWater/4))
+	if (m_nZctEntries > (m_nZctHighWater - m_nZctHighWater / 4))
 	{
 		// More than 75% full, then grow it
 		GrowZct();
 	}
-	else if ((m_nZctHighWater > (int)ZctMinSize) && (m_nZctEntries < m_nZctHighWater/4))
+	else if ((m_nZctHighWater > (int)ZctMinSize) && (m_nZctEntries < m_nZctHighWater / 4))
 	{
 		// Less than 25% full, so shrink it
 		ShrinkZct();
@@ -225,7 +225,7 @@ void ObjectMemory::DumpZct()
 	TRACESTREAM << "ZCT @ " << hex << m_pZct << ", size: " << dec << m_nZctEntries << endl;
 	TRACESTREAM << "===========================================================" << endl;
 
-	for (int i=0;i<m_nZctEntries;i++)
+	for (int i = 0; i < m_nZctEntries; i++)
 		TRACESTREAM << dec << i << ": " << hex << (DWORD)m_pZct[i] << ": " << m_pZct[i] << endl;
 
 	TRACESTREAM << "===========================================================" << endl;

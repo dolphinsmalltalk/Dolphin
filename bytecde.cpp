@@ -357,7 +357,7 @@ void __fastcall Interpreter::createActualMessage(const unsigned argCount)
 	message->m_selector = m_oopMessageSelector;
 	message->m_selector->countUp();
 	message->m_args = Array::NewUninitialized(argCount);
-	message->m_args->m_flags.m_count = 1;
+	message->m_args->m_count = 1;
 	Array* args = message->m_args->m_location;
 	
 	m_registers.m_stackPointer -= argCount;//-1;

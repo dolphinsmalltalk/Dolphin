@@ -39,7 +39,7 @@ struct OTEFlags
 	BYTE	m_finalize	: 1;			// Should the object be finalized
 	BYTE 	m_weakOrZ	: 1;			// weak references if pointers, null term if bytes
 	BYTE 	m_space		: SPACEBITS;	// Memory space in which the object resides (used when deallocating)
-	count_t	m_count;					// A byte ref. count
+	//count_t	m_count;					// A byte ref. count
 };
 
 
@@ -73,8 +73,8 @@ public:
 	// The required size for this variable pointer object to accommodate the specified number of indexable fields
 	__forceinline MWORD pointerSizeFor(MWORD pointersRequested) { ASSERT(isPointers()); return pointersRequested + m_oteClass->m_location->fixedFields(); }
 
-	__forceinline BOOL isSticky() const						{ return m_flags.m_count == MAXCOUNT; }
-	__forceinline void beSticky()							{ m_flags.m_count = MAXCOUNT; }
+	__forceinline BOOL isSticky() const						{ return m_count == MAXCOUNT; }
+	__forceinline void beSticky()							{ m_count = MAXCOUNT; }
 
 	// Set the receiver to have the current mark
 	__forceinline void mark()								{ m_flags.m_mark = ObjectMemory::currentMark(); }
@@ -84,17 +84,17 @@ public:
 
 	__forceinline MWORD getIndex()	const					{ return reinterpret_cast<const OTE*>(this) - ObjectMemory::m_pOT; }
 
-	__forceinline void countUp()							{ if (m_flags.m_count < MAXCOUNT) m_flags.m_count++; }
+	__forceinline void countUp()							{ if (m_count < MAXCOUNT) m_count++; }
 
 	__forceinline void countDown()
 	{
-		HARDASSERT(m_flags.m_count > 0);
-		if (m_flags.m_count < MAXCOUNT)
-	 		if (--m_flags.m_count == 0)
+		HARDASSERT(m_count > 0);
+		if (m_count < MAXCOUNT)
+	 		if (--m_count == 0)
 				ObjectMemory::AddToZct(reinterpret_cast<OTE*>(this));
 	}
 
-	__forceinline bool decRefs()							{ return (m_flags.m_count < MAXCOUNT) && (--m_flags.m_count == 0); }
+	__forceinline bool decRefs()							{ return (m_count < MAXCOUNT) && (--m_count == 0); }
 	__forceinline bool isImmutable() const					{ return static_cast<int>(m_size) < 0; }
 	__forceinline void beImmutable()						{ m_size |= 0x80000000; }
 	__forceinline void beMutable()							{ m_size &= ~0x80000000; }
@@ -133,6 +133,7 @@ public:
 		struct 
 		{
 			struct OTEFlags	m_flags;					// 16-bits of flags and ref. count
+			count_t			m_count;
 			hash_t			m_idHash;					// identity hash value (16-bit)
 		};
 		DWORD m_dwFlags;

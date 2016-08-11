@@ -51,7 +51,7 @@ StructureOTE* __fastcall ExternalStructure::NewRefStruct(BehaviorOTE* classPoint
 	ExternalStructure& extStruct = *resultPointer->m_location;
 	AddressOTE* oteAddress = ExternalAddress::New(ptr);
 	extStruct.m_contents = reinterpret_cast<BytesOTE*>(oteAddress);
-	extStruct.m_contents->m_flags.m_count = 1;
+	extStruct.m_contents->m_count = 1;
 	return resultPointer;
 }
 
@@ -104,7 +104,7 @@ OTE* __fastcall ExternalStructure::New(BehaviorOTE* classPointer, void* ptr)
 		ExternalStructure* extStruct = otePointers->m_location;
 		bytesPointer = ObjectMemory::newUninitializedByteObject(Pointers.ClassByteArray, size);
 		extStruct->m_contents = bytesPointer;
-		bytesPointer->m_flags.m_count = 1;
+		bytesPointer->m_count = 1;
 		resultPointer = reinterpret_cast<OTE*>(otePointers);
 	}
 	else

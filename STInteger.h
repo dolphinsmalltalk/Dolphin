@@ -83,7 +83,7 @@ namespace ST
 		else
 		{
 			LargeIntegerOTE* oteNew = LargeInteger::liNewSigned(value);
-			oteNew->m_flags.m_count = 1;
+			oteNew->m_count = 1;
 			return reinterpret_cast<Oop>(oteNew);
 		}
 	}
@@ -110,7 +110,7 @@ namespace ST
 		{
 			// N.B. Answer may have 64-bits!
 			LargeIntegerOTE* oteNew = LargeInteger::liNewUnsigned(value);
-			oteNew->m_flags.m_count = 1;
+			oteNew->m_count = 1;
 			return reinterpret_cast<Oop>(oteNew);
 		}
 	}

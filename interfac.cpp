@@ -339,7 +339,7 @@ void Interpreter::pushUnknown(Oop object)
 	if (!ObjectMemoryIsIntegerObject(object))
 	{
 		OTE* ote = reinterpret_cast<OTE*>(object);
-		if (ote->m_flags.m_count == 0)
+		if (ote->m_count == 0)
 		{
 			HARDASSERT(!ote->isFree());
 			ObjectMemory::AddToZct(ote);
@@ -457,7 +457,7 @@ SymbolOTE* __stdcall Interpreter::NewSymbol(const char* name) /* throws SE_VMCAL
 	pushNewObject(String::New(name));
 	SymbolOTE* symbolPointer = reinterpret_cast<SymbolOTE*>(callback(Pointers.InternSelector, 1 TRACEARG(TraceOff)));
 	ASSERT(symbolPointer->m_oteClass == Pointers.ClassSymbol);
-	ASSERT(symbolPointer->m_flags.m_count > 1);
+	ASSERT(symbolPointer->m_count > 1);
 	// Since it is a symbol, we don't need the extra ref. added by callback
 	// and this won't cause it to be added to the Zct (see previous assertion)
 	symbolPointer->countDown();

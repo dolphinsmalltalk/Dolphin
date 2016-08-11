@@ -26,7 +26,7 @@
 #include "STArray.h"
 
 #ifdef _DEBUG
-	#include "STBehavior.h"
+#include "STBehavior.h"
 #endif
 
 OopQueue<SemaphoreOTE*> Interpreter::m_qAsyncSignals;
@@ -34,7 +34,7 @@ OopQueue<Oop> Interpreter::m_qInterrupts;
 CRITICAL_SECTION Interpreter::m_csAsyncProtect;
 
 /******************************************************************************
-	
+
 	Switching Contexts
 
 	N.B. BYTEASM.ASM also contains context switching code in the routines
@@ -97,7 +97,7 @@ inline void InterpreterRegisters::NewActiveProcess(ProcessOTE* newProcess)
 {
 	HARDASSERT(!newProcess->m_location->IsWaiting());
 
- 	// Save down suspend frame into 
+	// Save down suspend frame into 
 	PrepareToSuspendProcess();
 
 	// Empties Zct and counts up refs from active process stack in preparation for
@@ -119,7 +119,7 @@ void __fastcall Interpreter::resizeActiveProcess()
 	// if a reference count error is detected when loading the image
 	if (m_registers.m_pActiveProcess != NULL)
 #endif
-	m_registers.ResizeProcess();
+		m_registers.ResizeProcess();
 }
 
 // This method is invoked when Smalltalk is first started up, and finds the
@@ -128,7 +128,7 @@ StackFrame* Interpreter::firstFrame()
 {
 	m_oteNewProcess = reinterpret_cast<ProcessOTE*>(Pointers.Nil);
 	ProcessOTE* otePreSnapshotProc = scheduler()->m_activeProcess;
-	
+
 	m_registers.m_oteActiveProcess = otePreSnapshotProc;
 	m_registers.m_pActiveProcess = otePreSnapshotProc->m_location;
 
@@ -146,7 +146,7 @@ StackFrame* Interpreter::firstFrame()
 bool __fastcall Interpreter::disableInterrupts(bool bDisable)
 {
 	HARDASSERT(GetCurrentThreadId() == MainThreadId());
-	
+
 	// Note that the interrupts flag is only every accessed by the main interpreter thread,
 	// and hence there is no need for interlocked operations here
 	bool bWasDisabled = m_bInterruptsDisabled;
@@ -162,14 +162,14 @@ bool __fastcall Interpreter::disableInterrupts(bool bDisable)
 			// the normal flag. Only the normal flag is ever tested by the interpreter,
 			// but the normal flag, or the buffer flag, may be set depending on whether
 			// interrupts are on or off.
-			
+
 			// First switch over to the buffer
 			InterlockedExchangePointer((PVOID)&m_pbAsyncPending, (PVOID)(&m_bAsyncPendingIOff));
-			
+
 			// We must clear the async. pending flag, but if currently set we save that
 			if (InterlockedExchange((LPLONG)&m_bAsyncPending, FALSE))
 				InterlockedExchange((LPLONG)&m_bAsyncPendingIOff, TRUE);
-			
+
 			// At this point the buffer should have the same value as the async. pending flag
 			// (unless the latter was false, and some thread has notified of pending async
 			// events since the buffer was switched in). Anyone thread NotifyAsyncPending() will 
@@ -192,7 +192,7 @@ bool __fastcall Interpreter::disableInterrupts(bool bDisable)
 }
 
 #ifdef NDEBUG
-	#pragma auto_inline(on)
+#pragma auto_inline(on)
 #endif
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -255,7 +255,7 @@ inline ProcessOTE* Interpreter::resumeFirst(LinkedList* list)
 {
 	// There are processes waiting on the semaphore - wake the first
 	ProcessOTE* sleepingProcess = reinterpret_cast<ProcessOTE*>(list->removeFirst());
-	
+
 	// May not actually resume it if the process has been terminated
 	// or not correctly initialized
 	ProcessOTE* oteResumed = resume(sleepingProcess);
@@ -338,12 +338,12 @@ void Interpreter::signalSemaphore(SemaphoreOTE* aSemaphore)
 		{
 			// There are no processes waiting on the semaphore - record the excess signal
 			SMALLINTEGER excessSignals = ObjectMemoryIntegerValueOf(sem->m_excessSignals) + 1;
-			#if defined(_DEBUG)
+#if defined(_DEBUG)
 			{
 				if ((excessSignals % 1000) == 0)
 					DebugDump("signalSemaphore: Very large excess signal count %d", excessSignals);
 			}
-			#endif
+#endif
 
 
 			sem->m_excessSignals = ObjectMemoryIntegerObjectOf(excessSignals);
@@ -382,7 +382,7 @@ ProcessOTE* Interpreter::wakeHighestPriority()
 	Array* processLists = oteLists->m_location;
 	unsigned index = highestPriority;
 	LinkedList* pProcessList;
-	do 
+	do
 	{
 		if (!index)
 		{
@@ -395,7 +395,7 @@ ProcessOTE* Interpreter::wakeHighestPriority()
 			// interrupts must cater for the possibility that even the active process
 			// may actually be in a wait state when an interrupt is sent to it!
 			trace("WARNING: No processes are Ready to run\n");
-			queueInterrupt(VMI_IDLEPANIC, Oop(m_bInterruptsDisabled?Pointers.False:Pointers.True));
+			queueInterrupt(VMI_IDLEPANIC, Oop(m_bInterruptsDisabled ? Pointers.False : Pointers.True));
 			return scheduler->m_activeProcess;
 		}
 		OTE* oteList = reinterpret_cast<OTE*>(processLists->m_elements[--index]);
@@ -412,12 +412,12 @@ ProcessOTE* Interpreter::schedule()
 {
 	HARDASSERT(!newProcessWaiting());
 	// Old newProcess value about to be deref'd
-	
+
 	// Return from wakeHighestPriority() has elevated ref. count, to prevent
 	// process being deleted prematurely so don't need to ref. count assignment 
 	// to newProcess
 	ProcessOTE* mostHungry = wakeHighestPriority();
-	
+
 	// We compare against the ACTUAL active process
 	ProcessOTE* active = actualActiveProcessPointer();
 	if (mostHungry != active)
@@ -466,7 +466,7 @@ void Interpreter::sendVMInterrupt(ProcessOTE* interruptedProcess, Oop nInterrupt
 		5)	Deliver an interrupt to any other process with a switch pending
 
 	When a new process is pending, the sleep() routine will have been called on
-	the actual active process, and it will therefore have been placed on the 
+	the actual active process, and it will therefore have been placed on the
 	back of the ready list at it's priority. This means we may need to reactivate
 	it and put the pending process back to sleep (scenario 2)
 	**************************************************************************/
@@ -489,7 +489,7 @@ void Interpreter::sendVMInterrupt(ProcessOTE* interruptedProcess, Oop nInterrupt
 		// If the process has terminated (or is pending termination), we mustn't deliver 
 		// any more interrupts to it
 		if (interruptedProc->SuspendedFrame() == Oop(Pointers.Nil) ||
-				interruptedProc->IsWaitingOn(reinterpret_cast<LinkedListOTE*>(scheduler()->m_pendingTerms)))
+			interruptedProc->IsWaitingOn(reinterpret_cast<LinkedListOTE*>(scheduler()->m_pendingTerms)))
 		{
 			TRACESTREAM << "Ignored interrupt " << ObjectMemoryIntegerValueOf(nInterrupt) << " to terminated process " << interruptedProcess << endl;
 			return;
@@ -506,8 +506,8 @@ void Interpreter::sendVMInterrupt(ProcessOTE* interruptedProcess, Oop nInterrupt
 			else
 				// Scenario 5; New process waiting, but another non-active process interrupted
 				sleep(m_oteNewProcess);
-				
-		NilOutPointer(m_oteNewProcess);
+
+			NilOutPointer(m_oteNewProcess);
 		}
 		else
 			// Scenario 4: Interrupted process other than active, no switch pending
@@ -525,7 +525,7 @@ void Interpreter::sendVMInterrupt(ProcessOTE* interruptedProcess, Oop nInterrupt
 			// drop to zero (causing it to be added to the ZCT when the process is removed from 
 			// its list since removing the process from the lists nils out its m_myList variable), 
 			// therefore we count up the list now, and then remove the reference again after we have
-			// pushe it onto the stack. This is to avoid any danger of a ZCT reconciliation before
+			// pushed it onto the stack. This is to avoid any danger of a ZCT reconciliation before
 			// we have switched processes. This situation can arise when a Process waiting on
 			// a Semaphore is finalized, since there must be no other refs to Process or
 			// Semaphore.
@@ -557,7 +557,7 @@ void Interpreter::sendVMInterrupt(ProcessOTE* interruptedProcess, Oop nInterrupt
 		// Now we switch to the interrupted process regardless of priorities
 		// There may be no switch if a new process was waiting to start when the interrupt 
 		// got delivered (the new process was put back to sleep above)
-			switchTo(interruptedProcess);
+		switchTo(interruptedProcess);
 	}
 	else
 	{
@@ -612,7 +612,7 @@ void Interpreter::sendVMInterrupt(ProcessOTE* interruptedProcess, Oop nInterrupt
 	HARDASSERT(pFrame > pProc);
 	SMALLUNSIGNED nOffset = pFrame - pProc;
 	pushSmallInteger(nOffset);
-	
+
 	push(oopListArg);
 	ObjectMemory::countDown(oopListArg);
 	push(nInterrupt);
@@ -643,7 +643,7 @@ void Interpreter::switchTo(ProcessOTE* oteProcess, bool bInitFP)
 	Process* newActive = oteProcess->m_location;
 	if (oteProcess != oteOldActive)
 	{
-		#ifdef _DEBUG
+#ifdef _DEBUG
 		{
 			HARDASSERT(!newActive->IsWaiting());
 			HARDASSERT(newActive->Next()->isNil());
@@ -655,11 +655,11 @@ void Interpreter::switchTo(ProcessOTE* oteProcess, bool bInitFP)
 				Process* active = actualActiveProcess();
 				TRACESTREAM << endl << ++processSwitches << ": Switching from " << oteOldActive <<
 					" to " << oteProcess;
-				TRACESTREAM << "\t(from " << LPVOID(oteOldActive) << '/' << &active 
+				TRACESTREAM << "\t(from " << LPVOID(oteOldActive) << '/' << &active
 					<< " to " << LPVOID(oteProcess) << '/' << &newActive << ')' << endl << endl;
 			}
 		}
-		#endif
+#endif
 
 		// Reconciling the ZCT will result in objects being deleted, so these should be removed from
 		// the At Caches.
@@ -677,10 +677,10 @@ void Interpreter::switchTo(ProcessOTE* oteProcess, bool bInitFP)
 
 		// When we return to the byte code loop, we'll continue with the new contexts previously
 		// suspended context
-		#ifdef _DEBUG
-			StackFrame* frame = activeFrame();
-			HARDASSERT(frame->m_sp != Oop(Pointers.Nil) && frame->m_sp != ZeroPointer);
-		#endif
+#ifdef _DEBUG
+		StackFrame* frame = activeFrame();
+		HARDASSERT(frame->m_sp != Oop(Pointers.Nil) && frame->m_sp != ZeroPointer);
+#endif
 	}
 	else
 	{
@@ -704,7 +704,7 @@ void __stdcall ProcessQueuedAPCs()
 	// time interrupts were re-enabled, and because of the way the InputState handle table is protected
 	// by disabling/re-enabling interrupts instead of using a Mutex, the result was that Dolphin would
 	// only process a single Windows message at a time if the CPU was being hogged by another process.
-	SleepEx(0,TRUE);
+	SleepEx(0, TRUE);
 
 	// This doesn't seem to relinquish the timeslice, but is considerably slower, and therefore more
 	// expensive to use in the normal case.
@@ -721,11 +721,11 @@ BOOL __fastcall Interpreter::FireAsyncEvents()
 	if (m_bStepping)
 	{
 		m_bStepping = false;
-		queueInterrupt(VMI_SINGLESTEP, Oop(m_registers.m_pActiveFrame)+1);
+		queueInterrupt(VMI_SINGLESTEP, Oop(m_registers.m_pActiveFrame) + 1);
 	}
 
 	LONG bAsyncPending = ::InterlockedExchange(LPLONG(&m_bAsyncPending), FALSE);
-	
+
 	// Indicates interrupt was fired
 	BOOL bInterrupted = FALSE;
 
@@ -758,11 +758,11 @@ BOOL __fastcall Interpreter::FireAsyncEvents()
 			HARDASSERT(!oteProcess->isNil());
 			// Note that the arg has a ref. count from the queue after popped, removed by sendVMInterrupt
 			Oop oopArg = m_qInterrupts.Pop();
-	#ifdef _DEBUG
-			TRACESTREAM << "Interrupting " << oteProcess << endl << "	with " 
+#ifdef _DEBUG
+			TRACESTREAM << "Interrupting " << oteProcess << endl << "	with "
 				<< ObjectMemoryIntegerValueOf(nInterrupt) << ":" << reinterpret_cast<OTE*>(oopArg)
 				<< endl;
-	#endif
+#endif
 			// 1) We know the process won't actually get deleted because of the ZCT
 			// In any case it is very unlikely its count will actually drop to zero, because
 			// that would only happen for a suspended process that is only referenced from
@@ -801,16 +801,16 @@ BOOL Interpreter::CheckProcessSwitch()
 
 	ASSERT(GetCurrentThreadId() == MainThreadId());
 
-	if(!m_bInterruptsDisabled)
+	if (!m_bInterruptsDisabled)
 		if (FireAsyncEvents())
 			return TRUE;
 
 	if (newProcessWaiting())
 	{
-		#ifdef _DEBUG
-			if (m_bInterruptsDisabled)
-				TRACESTREAM << "WARNING: Switching processes with interrupts disabled" << endl;
-		#endif
+#ifdef _DEBUG
+		if (m_bInterruptsDisabled)
+			TRACESTREAM << "WARNING: Switching processes with interrupts disabled" << endl;
+#endif
 
 		// Shouldn't happen that attempt to switch to same process
 		// but if we do it doesn't matter
@@ -819,9 +819,9 @@ BOOL Interpreter::CheckProcessSwitch()
 		// Nil out newProcess register removing extra ref.
 		NilOutPointer(m_oteNewProcess);
 
-		//CHECKREFERENCES
+		CHECKREFERENCES
 
-		return TRUE;
+			return TRUE;
 	}
 
 	//CHECKREFERENCES
@@ -830,25 +830,25 @@ BOOL Interpreter::CheckProcessSwitch()
 }
 
 #ifdef _DEBUG
-	// Return the priority of the highest priority waiting process
-	int Interpreter::highestWaitingPriority()
-	{
+// Return the priority of the highest priority waiting process
+int Interpreter::highestWaitingPriority()
+{
 	ProcessorScheduler* scheduler = schedulerPointer()->m_location;
 
 	HARDASSERT(scheduler->m_processLists->m_oteClass == Pointers.ClassArray);
 	ArrayOTE* oteLists = scheduler->m_processLists;
 	Array* processLists = oteLists->m_location;
-	
+
 	unsigned highestPriority = oteLists->pointersSize();
 	unsigned index = highestPriority;
 	LinkedList* pProcessList;
-	do 
+	do
 	{
 		LinkedListOTE* oteProcessList = reinterpret_cast<LinkedListOTE*>(processLists->m_elements[--index]);
 		pProcessList = oteProcessList->m_location;
 	} while (pProcessList->isEmpty() && index);
-	return index+1;
-	}
+	return index + 1;
+}
 #endif
 
 void Interpreter::sleep(ProcessOTE* aProcess)
@@ -859,11 +859,11 @@ void Interpreter::sleep(ProcessOTE* aProcess)
 	Process* process = aProcess->m_location;
 	HARDASSERT(!process->IsWaiting());
 	ProcessorScheduler* processor = scheduler();
-	
+
 	HARDASSERT(processor->m_processLists->m_oteClass == Pointers.ClassArray);
 	Array* processLists = processor->m_processLists->m_location;
 
-	LinkedListOTE* oteList = reinterpret_cast<LinkedListOTE*>(processLists->m_elements[process->Priority()-1]);
+	LinkedListOTE* oteList = reinterpret_cast<LinkedListOTE*>(processLists->m_elements[process->Priority() - 1]);
 	QueueProcessOn(aProcess, oteList);
 }
 
@@ -871,7 +871,7 @@ void Interpreter::sleep(ProcessOTE* aProcess)
 void Interpreter::QueueProcessOn(ProcessOTE* oteProcess, LinkedListOTE* oteList)
 {
 	Process* process = oteProcess->m_location;
-	
+
 	// If this process is already waiting on a list, then things are about to go wrong
 	HARDASSERT(!process->IsWaiting());
 	HARDASSERT(process->Next()->isNil());
@@ -894,12 +894,17 @@ LinkedListOTE* __fastcall Interpreter::ResuspendActiveOn(LinkedListOTE* oteList)
 	ProcessOTE* oteActive = actualActiveProcessPointer();
 	LinkedListOTE* list = ResuspendProcessOn(oteActive, oteList);
 	CHECKREFERENCES
-	return list;
+		return list;
 }
 
 LinkedListOTE* Interpreter::ResuspendProcessOn(ProcessOTE* oteProcess, LinkedListOTE* oteList)
 {
 	HARDASSERT(!oteList->isNil());
+
+	// This must either be a request to push the active process onto a list, or it must already be waiting on a list. 
+	// If not, the Reschedule call will schedule another process to run, and the active process will effectively be suspended.
+	HARDASSERT(oteProcess == activeProcessPointer() || activeProcess()->IsWaiting());
+
 	// Nasty, but...
 	if (oteList->m_oteClass == Pointers.ClassSemaphore)
 	{
@@ -915,39 +920,42 @@ LinkedListOTE* Interpreter::ResuspendProcessOn(ProcessOTE* oteProcess, LinkedLis
 		if (excessSignals > 0)
 		{
 			sem->m_excessSignals -= 2;
-			// Yield just in case another higher priority proc-> has become ready
+			// Process is ready to run, queue it for scheduling
 			sleep(oteProcess);
 		}
 		else
-			
-			// Add the active process to the end of the Semaphore's wait queue
+		{
+			// Add the process to the end of the Semaphore's wait queue
 			QueueProcessOn(oteProcess, oteList);
+		}
 	}
 	else
-		// Put the active process back to sleep in prep. for reschedule
+	{
+		// Put the process back on the list for scheduling
 		QueueProcessOn(oteProcess, oteList);
+	}
 
 	// schedule and perform process switch
 	BOOL bSuccess = Reschedule();
 	if (!bSuccess)
 	{
+		HARDASSERT(!newProcessWaiting());
 		// Remove the extra ref left by schedule()
-		oteProcess->countDown();
-
-		// This might happen on return from an interrupt into the idle process - if it is
-		// the only runnable process, then it cannot be returned to the ready state, but
-		// must continue running
-		TRACESTREAM << "Ignored resuspend of " << oteProcess << " on " << oteList << endl;
+		actualActiveProcessPointer()->countDown();
 	}
 
-	return oteList;
+	CHECKREFERENCES
+
+		return oteList;
 }
 
-// Normally one would call sleep(active)/SuspendActiveOn() before calling this 
-// to ensure current process remains alive. If you don't then current process
-// will drop out of the scheduler.
 BOOL __stdcall Interpreter::Reschedule()
 {
+	// Normally one would call sleep(active)/SuspendActiveOn() before calling this 
+	// to ensure current process remains alive. If you don't then current process
+	// will drop out of the scheduler.
+	HARDASSERT(activeProcess()->IsWaiting());
+
 	schedule();
 	return CheckProcessSwitch();
 }
@@ -1010,17 +1018,17 @@ ProcessOTE* Interpreter::resume(ProcessOTE* aProcess)
 		sleep(aProcess);
 	}
 
-	#ifdef _DEBUG
-		int newActivePriority = activeProcess()->Priority();
-		int highestPriorityWaiting = highestWaitingPriority();
-		HARDASSERT(newActivePriority >= highestPriorityWaiting);
-	#endif
+#ifdef _DEBUG
+	int newActivePriority = activeProcess()->Priority();
+	int highestPriorityWaiting = highestWaitingPriority();
+	HARDASSERT(newActivePriority >= highestPriorityWaiting);
+#endif
 
 	return aProcess;	// We resumed something, even if it was the previously active process
 }
 
 #ifdef NDEBUG
-	#pragma auto_inline(on)
+#pragma auto_inline(on)
 #endif
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -1054,7 +1062,7 @@ inline ProcessOTE* LinkedList::removeFirst()
 		m_firstLink = link->Next();
 		link->BasicClearNext();
 	}
-	
+
 	link->ClearList();
 	return removedLink;
 }
@@ -1094,8 +1102,8 @@ ProcessOTE* LinkedList::remove(ProcessOTE* aLink)
 		Process* link = currLink->m_location;
 		currLink = link->Next();
 	}
-	
-	
+
+
 	ProcessOTE* nextLink = currLink->m_location->Next();
 	// Previous link/firstLink must point at removed links nextLink.
 	// Don't lose ref here in case cause Link to be destroyed
@@ -1108,7 +1116,7 @@ ProcessOTE* LinkedList::remove(ProcessOTE* aLink)
 
 	// Nil out the nextLink pointer of the removed link (ref. count remains same overall)
 	currLink->m_location->BasicClearNext();
-	
+
 	// May have removed last link in list
 	if (aLink == m_lastLink)
 		// We DO remove the ref. from lists lastLink pointer
@@ -1175,7 +1183,7 @@ BOOL __fastcall Interpreter::primitiveSetSignals()
 			resumeFirst(sem);
 			if (signals == 0) break;
 			signals--;
-		} while(!sem->isEmpty());
+		} while (!sem->isEmpty());
 		CheckProcessSwitch();
 	}
 
@@ -1190,7 +1198,7 @@ BOOL __fastcall Interpreter::primitiveWait(CompiledMethod&, unsigned argumentCou
 
 	HARDASSERT(argumentCount == 2);
 
-	Oop oopTimeout = stackValue(argumentCount-1);
+	Oop oopTimeout = stackValue(argumentCount - 1);
 	if (!ObjectMemoryIsIntegerObject(oopTimeout))
 	{
 		OTE* oteArg = reinterpret_cast<OTE*>(oopTimeout);
@@ -1206,7 +1214,7 @@ BOOL __fastcall Interpreter::primitiveWait(CompiledMethod&, unsigned argumentCou
 	{
 		oteRetValHolder = reinterpret_cast<OTE*>(stackTop());
 		if (ObjectMemoryIsIntegerObject(oteRetValHolder) || oteRetValHolder->isBytes() ||
-				oteRetValHolder->getWordSize() == ObjectHeaderSize)
+			oteRetValHolder->getWordSize() == ObjectHeaderSize)
 			return primitiveFailureWith(4, Oop(oteRetValHolder));	// Must be a suitable value holder
 	}
 	else
@@ -1254,11 +1262,11 @@ BOOL __fastcall Interpreter::primitiveWait(CompiledMethod&, unsigned argumentCou
 	replaceStackTopWith(oopAnswer);
 
 	CheckProcessSwitch();
-	#ifdef _DEBUG
-		if (abs(executionTrace) > 0)
-			CHECKREFERENCES
-	#endif
-	return primitiveSuccess();
+#ifdef _DEBUG
+	if (abs(executionTrace) > 0)
+		CHECKREFERENCES
+#endif
+		return primitiveSuccess();
 }
 
 // Yield to avoid starving other processes at the same priority only, 
@@ -1273,26 +1281,26 @@ BOOL Interpreter::FastYield()
 	HARDASSERT(processor->m_processLists->m_oteClass == Pointers.ClassArray);
 	ArrayOTE* oteLists = processor->m_processLists;
 	Array* processLists = oteLists->m_location;
-	
+
 	HARDASSERT(activePriority >= 1 && activePriority <= static_cast<SMALLINTEGER>(oteLists->pointersSize()));
 
-	LinkedListOTE* oteList = reinterpret_cast<LinkedListOTE*>(processLists->m_elements[activePriority-1]);
+	LinkedListOTE* oteList = reinterpret_cast<LinkedListOTE*>(processLists->m_elements[activePriority - 1]);
 	LinkedList* processList = oteList->m_location;
 	if (!processList->isEmpty())
 	{
 		// There is another process ready to run at the same priority - so give
 		// it a chance, even though we're not waiting on the Semaphore
-		ProcessOTE* oteActive =  processor->m_activeProcess;
+		ProcessOTE* oteActive = processor->m_activeProcess;
 		HARDASSERT(activeProcessPointer() == oteActive);
 		sleep(oteActive);
 		m_oteNewProcess = processList->removeFirst();
 		//CHECKREFERENCES
 		// Process switch will occur below
-		#ifdef _DEBUG
-			TRACESTREAM << "Interpreter: Yield from " << oteActive << endl << "  to " 
-				<< m_oteNewProcess << endl;
-			TRACESTREAM.flush();
-		#endif
+#ifdef _DEBUG
+		TRACESTREAM << "Interpreter: Yield from " << oteActive << endl << "  to "
+			<< m_oteNewProcess << endl;
+		TRACESTREAM.flush();
+#endif
 		return TRUE;	// Yielded
 	}
 	return FALSE;
@@ -1354,12 +1362,12 @@ DWORD Semaphore::Wait(SemaphoreOTE* oteThis, ProcessOTE* oteProcess, int timeout
 // Does not modify pHome or pMethod
 BOOL __fastcall Interpreter::primitiveResume(CompiledMethod&, unsigned argumentCount)
 {
-	#ifdef _DEBUG
+#ifdef _DEBUG
 	//	if (abs(executionTrace) > 0)
-			CHECKREFERENCES
-	#endif
-	if (argumentCount > 1)
-		return primitiveFailure(2);	// Too many arguments
+	CHECKREFERENCES
+#endif
+		if (argumentCount > 1)
+			return primitiveFailure(2);	// Too many arguments
 
 	ProcessOTE* receiverProcess = reinterpret_cast<ProcessOTE*>(stackValue(argumentCount));
 	Process* proc = receiverProcess->m_location;
@@ -1379,15 +1387,16 @@ BOOL __fastcall Interpreter::primitiveResume(CompiledMethod&, unsigned argumentC
 	else
 	{
 		HARDASSERT(ObjectMemory::isKindOf((POTE)oteList, Pointers.ClassSemaphore->m_location->m_superclass));
+		sleep(activeProcessPointer());
 		ResuspendProcessOn(receiverProcess, oteList);
 	}
 
 	CheckProcessSwitch();
-	#ifdef _DEBUG
+#ifdef _DEBUG
 	//	if (abs(executionTrace) > 0)
-			CHECKREFERENCES
-	#endif
-	return primitiveSuccess();
+	CHECKREFERENCES
+#endif
+		return primitiveSuccess();
 }
 
 // Uses, but does not modify, instructionPointer and stackPointer
@@ -1395,24 +1404,24 @@ BOOL __fastcall Interpreter::primitiveResume(CompiledMethod&, unsigned argumentC
 BOOL __fastcall Interpreter::primitiveSingleStep(CompiledMethod&, unsigned argumentCount)
 {
 	SMALLINTEGER steps;
-	switch(argumentCount)
+	switch (argumentCount)
 	{
 	case 0:
 		steps = 1;	// Default is 2 because of the interrupt return method?
 		break;
-			
+
 	case 1:
+	{
+		Oop oopSteps = stackTop();
+		if (!ObjectMemoryIsIntegerObject(oopSteps))
 		{
-			Oop oopSteps = stackTop();
-			if (!ObjectMemoryIsIntegerObject(oopSteps))
-			{
-				OTE* oteArg = reinterpret_cast<OTE*>(oopSteps);
-				return primitiveFailureWith(PrimitiveFailureNonInteger, oteArg);	// Must be a SmallInteger
-			}
-			steps = ObjectMemoryIntegerValueOf(oopSteps);
+			OTE* oteArg = reinterpret_cast<OTE*>(oopSteps);
+			return primitiveFailureWith(PrimitiveFailureNonInteger, oteArg);	// Must be a SmallInteger
 		}
-		break;
-	default: 
+		steps = ObjectMemoryIntegerValueOf(oopSteps);
+	}
+	break;
+	default:
 		return primitiveFailure(PrimitiveFailureWrongNumberOfArgs);	// Too many arguments
 	}
 
@@ -1428,7 +1437,7 @@ BOOL __fastcall Interpreter::primitiveSingleStep(CompiledMethod&, unsigned argum
 	m_nInputPollCounter = -steps;
 
 	LinkedListOTE* oteList = proc->SuspendingList();
-	
+
 	// We have to be able to single step processes which are either suspended
 	// or waiting on on a queue (i.e. Schedulable processes in a Ready state)
 	// Processes waiting on a Semaphore, cannot be single stepped.
@@ -1445,7 +1454,7 @@ BOOL __fastcall Interpreter::primitiveSingleStep(CompiledMethod&, unsigned argum
 		(suspendingList->remove(receiverProcess))->countDown();
 	}
 
-	pop(argumentCount+1);
+	pop(argumentCount + 1);
 
 	ProcessOTE* activeProcess = activeProcessPointer();
 	if (activeProcess != receiverProcess)
@@ -1473,7 +1482,7 @@ int Interpreter::SuspendProcess(ProcessOTE* processPointer)
 		// know who will run next, and whether interrupts will ever then get re-enabled.
 		disableInterrupts(false);
 
-		#ifdef _DEBUG
+#ifdef _DEBUG
 		{
 			Process* process = processPointer->m_location;
 
@@ -1482,19 +1491,19 @@ int Interpreter::SuspendProcess(ProcessOTE* processPointer)
 			// Mark the Process as suspended (it will not be on any lists)
 			HARDASSERT(!process->IsWaiting());
 		}
-		#endif
+#endif
 
 		TODO("Use SuspendActive here - need to rewrite slightly")
-		if (schedule() == processPointer)
-			return 1;		// Couldn't switch away (last runnable process?)
+			if (schedule() == processPointer)
+				return 1;		// Couldn't switch away (last runnable process?)
 
 		CheckProcessSwitch();
-		#ifdef _DEBUG
-			if (abs(executionTrace) > 0)
-				CHECKREFERENCES
-		#endif
-		// A process switch MUST occur
-		HARDASSERT(processPointer != activeProcessPointer());
+#ifdef _DEBUG
+		if (abs(executionTrace) > 0)
+			CHECKREFERENCES
+#endif
+			// A process switch MUST occur
+			HARDASSERT(processPointer != activeProcessPointer());
 	}
 	else
 	{
@@ -1510,7 +1519,7 @@ int Interpreter::SuspendProcess(ProcessOTE* processPointer)
 			// only occur if the user has fiddled with it in an inspector) then it's
 			// just too bad, and a crash will almost certainly result!
 			LinkedList* suspendingList = process->SuspendingList()->m_location;
-		
+
 			// The removed link has an artificially raised ref. count to prevent
 			// it going away should it be needed
 			(suspendingList->remove(processPointer))->countDown();
@@ -1541,7 +1550,7 @@ BOOL __fastcall Interpreter::primitiveSuspend()
 }
 
 #ifdef NDEBUG
-	#pragma auto_inline(on)
+#pragma auto_inline(on)
 #endif
 
 // Terminate the caller - really just a suspend which also nils the suspended context
@@ -1571,10 +1580,10 @@ BOOL __fastcall Interpreter::primitiveTerminateProcess()
 		}
 	}
 
-	#ifdef _DEBUG
+#ifdef _DEBUG
 	//	if (abs(executionTrace) > 0)
 	//		CHECKREFERENCES
-	#endif
+#endif
 	return primitiveSuccess();
 }
 
@@ -1592,15 +1601,15 @@ BOOL __fastcall Interpreter::primitiveUnwindInterrupt(CompiledMethod&, unsigned)
 // Answers the processes old priority
 BOOL __fastcall Interpreter::primitiveProcessPriority()
 {
-//	CHECKREFERENCES
+	//	CHECKREFERENCES
 
 	Oop argPointer = stackTop();
 	if (!ObjectMemoryIsIntegerObject(argPointer))
 	{
-		OTE* oteArg = reinterpret_cast<OTE*>(argPointer );
+		OTE* oteArg = reinterpret_cast<OTE*>(argPointer);
 		return primitiveFailureWith(PrimitiveFailureNonInteger, oteArg);	// Must be a SmallInteger
 	}
-	
+
 	SMALLUNSIGNED newPriority = ObjectMemoryIntegerValueOf(argPointer);
 	ProcessorScheduler* sched = scheduler();
 	ArrayOTE* listsArrayPointer = sched->m_processLists;
@@ -1663,24 +1672,24 @@ BOOL __fastcall Interpreter::primitiveProcessPriority()
 // more than just the input semaphore, and is independent of receiver.
 BOOL __fastcall Interpreter::primitiveInputSemaphore(CompiledMethod&, unsigned argCount)
 {
-		Oop argPointer = stackValue(1);
-		SMALLUNSIGNED which = ObjectMemoryIntegerValueOf(argPointer);
-		if (which <= 0 || which > NumPointers)
-			return primitiveFailure(1);	// out of bounds
+	Oop argPointer = stackValue(1);
+	SMALLUNSIGNED which = ObjectMemoryIntegerValueOf(argPointer);
+	if (which <= 0 || which > NumPointers)
+		return primitiveFailure(1);	// out of bounds
 
-		// top of stack is value to be put
-		argPointer = stackTop();
+	// top of stack is value to be put
+	argPointer = stackTop();
 
-		if (!isIntegerObject(argPointer))
-			reinterpret_cast<OTE*>(argPointer)->beSticky();
+	if (!isIntegerObject(argPointer))
+		reinterpret_cast<OTE*>(argPointer)->beSticky();
 
-		ObjectMemory::ProtectConstSpace(PAGE_READWRITE);
-		Array* registry = reinterpret_cast<Array*>(&_Pointers);
-		registry->m_elements[which-1] = ObjectMemory::storePointerWithValue(registry->m_elements[which-1], argPointer);
-		ObjectMemory::ProtectConstSpace(PAGE_READONLY);
+	ObjectMemory::ProtectConstSpace(PAGE_READWRITE);
+	Array* registry = reinterpret_cast<Array*>(&_Pointers);
+	registry->m_elements[which - 1] = ObjectMemory::storePointerWithValue(registry->m_elements[which - 1], argPointer);
+	ObjectMemory::ProtectConstSpace(PAGE_READONLY);
 
-		pop(2);						// pop the args, neither ref. counted any more
-		return primitiveSuccess();
+	pop(2);						// pop the args, neither ref. counted any more
+	return primitiveSuccess();
 }
 
 
@@ -1721,7 +1730,7 @@ BOOL __fastcall Interpreter::primitiveSampleInterval()
 inline OverlappedCall* Process::GetOverlappedCall()
 {
 	return ObjectMemoryIsIntegerObject(m_thread) && m_thread != ZeroPointer
-		? reinterpret_cast<OverlappedCall*>(m_thread - 1) 
+		? reinterpret_cast<OverlappedCall*>(m_thread - 1)
 		: NULL;
 }
 
@@ -1742,9 +1751,9 @@ bool Interpreter::TerminateOverlapped(ProcessOTE* oteProc)
 		{
 			QueueProcessOn(oteProc, otePending);
 
-			#ifdef _DEBUG
-					TRACESTREAM << hex << GetCurrentThreadId() << ": Terminating " << *pOverlapped << " in process " << reinterpret_cast<OTE*>(proc->Name()) << endl;
-			#endif
+#ifdef _DEBUG
+			TRACESTREAM << hex << GetCurrentThreadId() << ": Terminating " << *pOverlapped << " in process " << reinterpret_cast<OTE*>(proc->Name()) << endl;
+#endif
 			// Queue an APC to raise a terminate exception in the overlapped call thread.
 			// The overlapped thread will queue an APC back to this thread from its termination
 			// handler to let us know when it has really terminated, at which point we can take 

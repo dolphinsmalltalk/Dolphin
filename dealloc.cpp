@@ -29,7 +29,7 @@
 
 inline void ObjectMemory::releasePointer(OTE* ote)
 {
-	ASSERT(ote->m_flags.m_count == 0);
+	ASSERT(ote->m_count == 0);
 	ASSERT(!ote->isFree());
 	ote->beFree();
 //	if (!m_pFreePointerList)
@@ -74,7 +74,7 @@ void ObjectMemory::deallocate(OTE* ote)
 		if (Interpreter::executionTrace)
 		{
 			tracelock lock(TRACESTREAM);
-			TRACESTREAM << ote << " (" << hex << (UINT)ote << "), refs " << dec << (int)ote->m_flags.m_count << ", is being deallocated" << endl;
+			TRACESTREAM << ote << " (" << hex << (UINT)ote << "), refs " << dec << (int)ote->m_count << ", is being deallocated" << endl;
 		}
 	#endif
 
@@ -147,7 +147,7 @@ OTE* __fastcall ObjectMemory::recursiveFree(OTE* rootOTE)
 	HARDASSERT(!isIntegerObject(rootOTE));
 	HARDASSERT(!isPermanent(rootOTE));
 	HARDASSERT(!rootOTE->isFree());
-	HARDASSERT(rootOTE->m_flags.m_count == 0);
+	HARDASSERT(rootOTE->m_count == 0);
 
 	if (rootOTE->isFinalizable())
 	{

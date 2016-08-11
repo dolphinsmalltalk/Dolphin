@@ -119,7 +119,7 @@ size_t ObjectMemory::compact()
 		// Leave forwarding pointer in the old slot
 		last->m_location = first;
 		last->beFree();
-		last->m_flags.m_count = 0;
+		last->m_count = 0;
 		// Advance last as we've moved this slot
 		last--;
 	}

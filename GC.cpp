@@ -392,7 +392,7 @@ void ObjectMemory::reclaimInaccessibleObjects(DWORD gcFlags)
 
 				// We must ensure count really zero as some deallocation routines may not do this
 				// (normally objects are only deallocated when the count hits zero)
-				ote->m_flags.m_count = 0;
+				ote->m_count = 0;
 				deallocate(ote);
 				deletions++;
 			}
@@ -511,7 +511,7 @@ void ObjectMemory::addVMRefs()
 			if (!isIntegerObject(oop))
 			{
 				OTE* ote = reinterpret_cast<OTE*>(oop);
-				if (ote->m_flags.m_count == 0 && !IsInZct(ote))
+				if (ote->m_count == 0 && !IsInZct(ote))
 				{
 					TRACESTREAM << "WARNING: Zero count Oop not in Zct: " << ote << endl;
 					zeroCountNotInZct++;
@@ -576,8 +576,8 @@ void ObjectMemory::addVMRefs()
 				OTE* ote = &m_pOT[i];
 				if (!ote->isFree() && ote->heapSpace() == OTEFlags::PoolSpace)
 					HARDASSERT(ote->sizeOf() <= MaxSmallObjectSize);
-				currentRefs[i] = ote->m_flags.m_count;
-				ote->m_flags.m_count = 0;
+				currentRefs[i] = ote->m_count;
+				ote->m_count = 0;
 			}
 		}
 
@@ -611,9 +611,9 @@ void ObjectMemory::addVMRefs()
 			OTE* ote = &m_pOT[i];
 			if (currentRefs[i] < OTE::MAXCOUNT)
 			{
-				if (currentRefs[i] != ote->m_flags.m_count)
+				if (currentRefs[i] != ote->m_count)
 				{
-					bool tooSmall = currentRefs[i] < ote->m_flags.m_count;
+					bool tooSmall = currentRefs[i] < ote->m_count;
 
 					tracelock lock(TRACESTREAM);
 
@@ -626,7 +626,7 @@ void ObjectMemory::addVMRefs()
 						TRACESTREAM << "WARNING: ";
 					
 					TRACESTREAM << ote << " (Oop " << LPVOID(ote) << "/" << i << ") had refs " << dec << (int)currentRefs[i] 
-							<< " should be " << int(ote->m_flags.m_count) << endl;
+							<< " should be " << int(ote->m_count) << endl;
 					errors++;
 
 					if (tooSmall)
@@ -646,7 +646,7 @@ void ObjectMemory::addVMRefs()
 					{
 						// If compiler is running then async GCs are disabled, and we should leave the ref. counts
 						// that are too high unaffected
-						ote->m_flags.m_count = currentRefs[i];
+						ote->m_count = currentRefs[i];
 					}
 				} else if (currentRefs[i] == 0 && !ote->isFree() && !IsInZct(ote))
 				{

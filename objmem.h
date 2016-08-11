@@ -963,7 +963,7 @@ inline BytesOTE* ObjectMemory::OTEPool::newByteObject(BehaviorOTE* classPointer,
 	ASSERT(!ote->isPointers());
 	ASSERT(ote->heapSpace() == space);
 	ASSERT(ote->hasCurrentMark());
-	ASSERT(ote->m_flags.m_count == 0);
+	ASSERT(ote->m_count == 0);
 	ASSERT(!ote->isImmutable());
 
 	return ote;
@@ -1004,7 +1004,7 @@ inline PointersOTE* ObjectMemory::OTEPool::newPointerObject(BehaviorOTE* classPo
 	ASSERT(ote->isPointers());
 	ASSERT(ote->heapSpace() == space);
 	ASSERT(ote->hasCurrentMark());
-	ASSERT(ote->m_flags.m_count == 0);
+	ASSERT(ote->m_count == 0);
 
 	return ote;
 }

@@ -110,11 +110,11 @@ void Interpreter::sendStartup(LPCSTR szImagePath, DWORD dwArg)
 	Array* args = oteArgs->m_location;
 	StringOTE* string = String::New(szImagePath);
 	args->m_elements[0] = reinterpret_cast<Oop>(string);
-	string->m_flags.m_count = 1;
+	string->m_count = 1;
 	args->m_elements[1] = Integer::NewUnsigned32(dwArg);
 	ObjectMemory::countUp(args->m_elements[1]);
 	// We no longer need to ref. count things we push on the stack, sendVMInterrupt will count
 	// down the argument after it has pushed it on the stack, possibly causing its addition to the Zct
-	oteArgs->m_flags.m_count = 1;
+	oteArgs->m_count = 1;
 	sendVMInterrupt(VMI_STARTED, reinterpret_cast<Oop>(oteArgs));
 }
