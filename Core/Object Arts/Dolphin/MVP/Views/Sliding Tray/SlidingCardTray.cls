@@ -75,7 +75,7 @@ implicitInsets: aLayoutContext
 		ifFalse: [0 @ self headerHeight corner: 0 @ 0]!
 
 isPinHot
-	^pinInteractor isHot!
+	^pinInteractor ifNil: [false] ifNotNil: [:value | value isHot]!
 
 isPinned
 	^slider notNil and: [slider isPinned]!
@@ -167,15 +167,16 @@ openTheme
 				ifTrue: 
 					[ThemeLibrary default openThemeData: self asParameter pszClassList: 'EXPLORERBAR' asUnicodeString].
 	pinSize := SystemMetrics current smallIconExtent asParameter.
-	theme isNull ifFalse: [
-	ThemeLibrary default 
-		getThemePartSize: theme
-		hdc: nil
-		iPartId: EBP_HEADERPIN
-		iStateId: EBHP_NORMAL
-		prc: nil
-		eSize: TS_TRUE
-		psz: pinSize].
+	theme isNull 
+		ifFalse: 
+			[ThemeLibrary default 
+				getThemePartSize: theme
+				hdc: nil
+				iPartId: EBP_HEADERPIN
+				iStateId: EBHP_NORMAL
+				prc: nil
+				eSize: TS_TRUE
+				psz: pinSize].
 	pinSize := pinSize asObject!
 
 paintClassicBackgroundOn: aCanvas 

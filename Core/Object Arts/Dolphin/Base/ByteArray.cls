@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ArrayedCollection variableByteSubclass: #ByteArray
 	instanceVariableNames: ''
@@ -413,11 +413,15 @@ replaceBytesOf: aByteObject from: start to: stop startingAt: fromStart
 	stop to: start by: -1 do: [:i | aByteObject at: i put: (self basicAt: i + fromOffset)].
 	^aByteObject!
 
-replaceFrom: start to: stop with: aByteObject startingAt: fromStart
+replaceFrom: startInteger to: stopInteger with: aByteObject startingAt: startAtInteger 
 	"Standard method for transfering bytes from one variable
 	byte object to another. See String>>replaceFrom:to:with:startingAt:."
 
-	aByteObject replaceBytesOf: self from: start to: stop startingAt: fromStart!
+	aByteObject 
+		replaceBytesOf: self
+		from: startInteger
+		to: stopInteger
+		startingAt: startAtInteger!
 
 retryDwordAtOffset: anInteger put: anObject 
 	"Private - Fallback code for storing unsigned 32-bit integer into the receiver when a

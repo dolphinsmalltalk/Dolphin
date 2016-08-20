@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #Keyboard
 	instanceVariableNames: 'state'
@@ -311,11 +311,11 @@ virtualKey: aString
 	^VirtualKeys at: aString asUppercase
 		ifAbsent: [self error: 'Unrecognised virtual key: ''' , aString , '''']!
 
-vKeyToScanCode: anInteger
-	"Private - Answer the scan code corresponding to the virtual key
-	code, anInteger, or 0 if there isn't one."
+vKeyToScanCode: anInteger 
+	"Private - Answer the scan code corresponding to the virtual key code, anInteger, or 0 if
+	there isn't one."
 
-	^UserLibrary default mapVirtualKey: (anInteger bitAnd: 16rFF) uMapType: 0! !
+	^UserLibrary default mapVirtualKey: (anInteger bitAnd: 16rFF) uMapType: MAPVK_VK_TO_VSC! !
 !Keyboard class categoriesFor: #buildVKeyMap!**auto generated**!development!private! !
 !Keyboard class categoriesFor: #default!accessing!public! !
 !Keyboard class categoriesFor: #default:!accessing!public! !

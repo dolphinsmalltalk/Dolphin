@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 OrderedCollection variableSubclass: #SortedCollection
 	instanceVariableNames: 'algorithm '
@@ -219,6 +219,16 @@ indexForInserting: anObject
 					ifFalse: [high := index - 1]].
 	^low!
 
+replaceFrom: startInteger to: stopInteger with: aSequencedReadableCollection startingAt: startAtInteger
+	"Destructively replace the elements of the receiver between the <integer> arguments
+	startInteger and stopInteger inclusive with the <Object> elements of the
+	<sequencedReadableCollection> argument, aSequencedReadableCollection, beginning with its
+	element with <integer> index startAtInteger. Answer the receiver."
+
+	"This is not a valid operation for SortedCollections, as it would mess up the sort order."
+
+	^self shouldNotImplement!
+
 reSort
 	"Resort the entire contents of the receiver in the order specified by the current
 	<SortAlgorithm>."
@@ -294,6 +304,7 @@ stbSaveOn: anSTBOutFiler
 !SortedCollection categoriesFor: #copyFrom:to:!copying!public! !
 !SortedCollection categoriesFor: #copyLikeOfSize:!copying!private! !
 !SortedCollection categoriesFor: #indexForInserting:!adding!private! !
+!SortedCollection categoriesFor: #replaceFrom:to:with:startingAt:!public!replacing! !
 !SortedCollection categoriesFor: #reSort!operations!public! !
 !SortedCollection categoriesFor: #reverse!copying!public! !
 !SortedCollection categoriesFor: #setSortAlgorithm:!initializing!private! !

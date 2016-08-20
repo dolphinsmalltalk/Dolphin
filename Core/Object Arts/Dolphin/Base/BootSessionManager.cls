@@ -15,6 +15,9 @@ basicTertiaryStartup
 
 	"Nothing to do - this SessionManager should never be installed on startup anyway?"!
 
+fileInClass: aClass 
+	aClass sourceManager fileIn: aClass fileOutName!
+
 keepAlive
 	"We stay alive until explicitly terminated."
 
@@ -117,16 +120,20 @@ reloadSystemPackage
 	Notification signal: 'Reloading BCL constants pools...'.
 	basePackage sourceGlobalVariables 
 		collect: [:each | srcMgr fileIn: (File relativePathOf: each value fileOutName to: imageDir)].
+	Notification signal: 'Updating ClassBuilder...'.
+	self fileInClass: ClassBuilder.
 	Notification signal: 'Reloading BCL class definitions...'.
 	"First tag all the existing classes so we can spot the dead ones later."
 	srcMgr fileIn: (File relativePathOf: basePackage classDefinitionsFileName to: imageDir).
+	Class subclasses: nil.
+	Smalltalk clearCachedClasses.
 	"Then reload all base package classes in breadth-first order"
 	Notification signal: 'Reloading BCL classes...'.
 	baseClasses := basePackage classesInHierarchyOrder.
 	missingClasses := OrderedCollection new.
 	baseClasses do: 
 			[:each | 
-			each == BootSessionManager 
+			(#(#BootSessionManager #ClassBuilder) identityIncludes: each name) 
 				ifFalse: 
 					[| relativePath |
 					relativePath := File relativePathOf: each fileOutName to: imageDir.
@@ -142,6 +149,7 @@ reloadSystemPackage
 	obsoleteMethodFilter := [:each | each hasChanged not].
 	(baseClasses difference: missingClasses) do: 
 			[:each | 
+			each setInstanceVariables: each instVarNames.
 			(((each selectMethods: obsoleteMethodFilter) 
 				asSortedCollection: [:a :b | a printString <= b printString])
 				addAll: (each class selectMethods: obsoleteMethodFilter);
@@ -257,6 +265,7 @@ updateBootImage
 
 	self reloadSystemPackage! !
 !BootSessionManager categoriesFor: #basicTertiaryStartup!operations-startup!public! !
+!BootSessionManager categoriesFor: #fileInClass:!private! !
 !BootSessionManager categoriesFor: #keepAlive!idling!public! !
 !BootSessionManager categoriesFor: #logError:!operations-logging!public! !
 !BootSessionManager categoriesFor: #main!operations-startup!public! !

@@ -11,19 +11,22 @@ ExceptionTesterClasses comment: ''!
 !ExceptionTesterClasses methodsFor!
 
 createClasses
-	testNotificationClass := self 
+	testNotificationClass := self
 				createClass: #MyTestNotification
 				superclass: Notification
-				instVars: ''.
-	resumableErrorClass := self 
+				instVars: ''
+				pools: ''.
+	resumableErrorClass := self
 				createClass: #MyResumableTestError
 				superclass: Error
-				instVars: ''.
+				instVars: ''
+				pools: ''.
 	resumableErrorClass compile: 'isResumable ^true'.
-	testErrorClass := self 
+	testErrorClass := self
 				createClass: #MyTestError
 				superclass: Error
-				instVars: ''!
+				instVars: ''
+				pools: ''!
 
 isAvailable
 	^testNotificationClass notNil!

@@ -1163,7 +1163,7 @@ pointerFieldType
 
 	^PointerField!
 
-PutField: wFlags pvData: pvData szFieldName: szFieldName pvarField: pvarField 
+PutField: wFlags pvData: pvData szFieldName: szFieldName pvarField: pvarField
 	"Implement the IRecordInfo::PutField() method for the UDT described by the receiver.
 
 		HRESULT __stdcall PutField(
@@ -1173,27 +1173,27 @@ PutField: wFlags pvData: pvData szFieldName: szFieldName pvarField: pvarField
 			[in] VARIANT* pvarField);
 	"
 
-	| refInst value hr |
-	hr := Win32Errors.E_INVALIDARG.
+	| refInst value |
 	refInst := self fromAddress: pvData.
-	wFlags = AXAutomationConstants.INVOKE_PROPERTYPUT 
+	wFlags = AXAutomationConstants.INVOKE_PROPERTYPUT
 		ifTrue: 
 			[| fieldValue |
-			[fieldValue := refInst getField: szFieldName] on: MessageNotUnderstood do: [:x | ^hr].
+			fieldValue := [refInst getField: szFieldName] on: MessageNotUnderstood
+						do: [:x | ^Win32Errors.E_INVALIDARG].
 			value := pvarField isDispatch ifTrue: [pvarField dispatch value] ifFalse: [pvarField value].
-			(fieldValue isKindOf: IDispatch) 
+			(fieldValue isKindOf: IDispatch)
 				ifTrue: 
 					[fieldValue isNull ifTrue: [^Win32Errors.E_POINTER].
 					fieldValue value: value]
 				ifFalse: [refInst setField: szFieldName value: value]]
 		ifFalse: 
-			[wFlags = AXAutomationConstants.INVOKE_PROPERTYPUTREF 
+			[wFlags = AXAutomationConstants.INVOKE_PROPERTYPUTREF
 				ifTrue: [value := pvarField value]
-				ifFalse: [^hr]].
-	
+				ifFalse: [^Win32Errors.E_INVALIDARG]].
+	^
 	[refInst setField: szFieldName value: value.
-	hr := 0	"S_OK"] on: MessageNotUnderstood do: [:x | ].
-	^hr!
+	0	"S_OK"] on: MessageNotUnderstood
+			do: [:x | Win32Errors.E_INVALIDARG]!
 
 PutFieldNoCopy: wFlags pvData: pvData szFieldName: szFieldName pvarField: pvarField
 	"Implement the IRecordInfo::PutFieldNoCopy() method for the UDT described by the receiver.

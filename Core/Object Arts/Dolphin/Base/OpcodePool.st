@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Smalltalk at: #OpcodePool put: (PoolConstantsDictionary named: #OpcodePool)!
 OpcodePool at: 'BlockCopy' put: 16rFC!
@@ -7,6 +7,7 @@ OpcodePool at: 'DecPushTemp' put: 16rFB!
 OpcodePool at: 'Decrement' put: 16r63!
 OpcodePool at: 'DecTemp' put: 16rFA!
 OpcodePool at: 'Dup' put: 16r64!
+OpcodePool at: 'ExLongPushImmediate' put: 16rFF!
 OpcodePool at: 'ExLongSend' put: 16rFD!
 OpcodePool at: 'ExLongSupersend' put: 16rFE!
 OpcodePool at: 'FirstDoubleByte' put: 16rCC!

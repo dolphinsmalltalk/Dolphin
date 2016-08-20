@@ -10,8 +10,20 @@ The above copyright notice and this permission notice shall be included in all c
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 28-Feb-2003	Added millisecondsToWait.  Changed so that by default #executeSync
-		will wait infinitely for the spawned process to complete.'.
+		will wait infinitely for the spawned process to complete.
+22-Jun-2004	Added comment provided by Peter Kenny explaining how the various 
+		directories used when spawning a process are related and used.
+28-Jul-2004	Added processExitCode and threadExitCode instance variables and
+			accessors.
+		Added #executeCommand:inDirectory:waitForSeconds:stdin:stdout:stderr.
+		Added STILL_ACTIVE to Win32Constants.
+14-Mar-2009	Added PROCESS_INFORMATION compileDefinition to the pre-install
+			script.  This classes structure definition is apparently not compiled in
+			the base image.'.
 
+package basicScriptAt: #preinstall put: '"In Dolphin 6 the PROCESS_INFORMATION class definition was not compiled when the base image was built"
+PROCESS_INFORMATION compileDefinition.
+Win32Constants at: ''STILL_ACTIVE'' ifAbsentPut: [ 259 ].'.
 
 package classNames
 	add: #ExternalProcess;
@@ -37,7 +49,7 @@ package!
 "Class Definitions"!
 
 Object subclass: #ExternalProcess
-	instanceVariableNames: 'commandLine directory millisecondsToWait stdinFilename stdoutFilename stderrFilename si pi stdin stdout stderr'
+	instanceVariableNames: 'commandLine directory millisecondsToWait stdinFilename stdoutFilename stderrFilename si pi stdin stdout stderr processExitCode threadExitCode'
 	classVariableNames: ''
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!

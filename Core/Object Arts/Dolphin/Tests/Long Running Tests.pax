@@ -5,8 +5,16 @@ package paxVersion: 1;
 
 
 package methodNames
+	add: #AbstractParserErrorTest -> #testErrorsBlockNestingTooDeep;
+	add: #CompilerErrorTest -> #testErrorsTooManyBytecodes;
+	add: #CompilerErrorTest -> #testErrorsTooManyLiterals;
+	add: #CompilerTest -> #knownTempsMapIssues;
+	add: #CompilerTest -> #knownTextMapIssues;
+	add: #CompilerTest -> #testTempMapOuterDepthExhaustive;
 	add: #CompilerTest -> #testTextMapExhaustive;
-	add: #SortAlgorithmTest -> #testExtremeSortBlocks;
+	add: #VMTest -> #assertLoopInterruptible:;
+	add: #VMTest -> #testLoopsInterruptible;
+	add: #VMTest -> #testQuiesceWhenUIBlocked;
 	yourself.
 
 package binaryGlobalNames: (Set new
@@ -17,7 +25,9 @@ package globalAliases: (Set new
 
 package setPrerequisites: (IdentitySet new
 	add: '..\IDE\Base\Development System Tests';
-	add: '..\Base\Dolphin Base Tests';
+	add: '..\Base\Dolphin';
+	add: '..\..\..\Contributions\Refactory\Refactoring Browser\Change Objects\RBChangeObjects';
+	add: '..\..\..\Contributions\Refactory\Refactoring Browser\Environments\RBEnvironments';
 	yourself).
 
 package!
@@ -30,7 +40,135 @@ package!
 
 "Loose Methods"!
 
+!AbstractParserErrorTest methodsFor!
+
+testErrorsBlockNestingTooDeep
+	"Small test of the test first"
+
+	| mark expected nesting source maxNest |
+	nesting := 10.
+	source := self buildNestedBlocks: nesting.
+	expected := (nesting + 1) factorial.
+	self assert: (self evaluateExpression: source) = expected.
+	"Now 2 under max"
+	maxNest := VMConstants.MaxBlockNesting.
+	nesting := maxNest - 2.
+	source := self buildNestedBlocks: nesting.
+	expected := (nesting + 1) factorial.
+	self assert: (self evaluateExpression: source) = expected.
+	"Now 1 under max"
+	nesting := maxNest - 1.
+	source := self buildNestedBlocks: nesting.
+	expected := (nesting + 1) factorial.
+	self assert: (self evaluateExpression: source) = expected.
+	"max nesting"
+	maxNest := VMConstants.MaxBlockNesting.
+	nesting := maxNest.
+	source := self buildNestedBlocks: nesting.
+	expected := (nesting + 1) factorial.
+	self assert: (self evaluateExpression: source) = expected.
+	"1 over max - should fail"
+	nesting := maxNest + 1.
+	source := self buildNestedBlocks: nesting.
+	mark := (source indexOfSubCollection: nesting displayString) - 3.
+	self
+		parseExprError: source
+		range: (mark to: nil)
+		line: 1
+		code: CErrBlockNestingTooDeep! !
+!AbstractParserErrorTest categoriesFor: #testErrorsBlockNestingTooDeep!public!unit tests! !
+
+!CompilerErrorTest methodsFor!
+
+testErrorsTooManyBytecodes
+	"This is one error that the parser cannot detect since it does not do code generation.
+	The number of bytecodes in a method has no real limit, except that imposed by the
+	maximum lengths of jumps (and in practice by the maximum size of the literal frame).
+	In order to provoke the 'method tool long' error we need to generate a long jump
+	around a large inlined block. To avoid requring a lot of literals we use expressions
+	with immediate values, i.e. 1+2 .Each 1+2 sequence generates 4 bytecodes:
+		Push 1
+		Push 2
+		Send +
+		Pop.
+	The maximum length of a jump is 32k."
+
+	| source max |
+	source := String writeStream.
+	source
+		nextPutAll: 'Object isNil ifFalse: [';
+		cr.
+	max := 32768 / 4.
+	1 to: max
+		do: 
+			[:i |
+			source
+				nextPutAll: '1+2.';
+				cr].
+	source nextPut: $].
+	source := source contents.
+	self
+		parseExprError: source
+		range: (source size + 1 to: source size)
+		line: max + 2
+		code: CErrMethodTooLarge!
+
+testErrorsTooManyLiterals
+	| source max len |
+	source := String writeStream.
+	source print: String empty.
+	max := self maxLiterals.
+	"The empty string and concatenation operator will push it over max literals by 1 if we concate max-1 strings"
+	1 to: max - 1
+		do: 
+			[:i |
+			source
+				nextPut: $,;
+				crtab;
+				nextPut: $';
+				display: i;
+				nextPut: $'].
+	source := source contents.
+	len := source size.
+	self
+		parseExprError: source
+		range: (len - (max - 1) printString size - 1 to: len)
+		line: max
+		code: CErrTooManyLiterals! !
+!CompilerErrorTest categoriesFor: #testErrorsTooManyBytecodes!public!unit tests! !
+!CompilerErrorTest categoriesFor: #testErrorsTooManyLiterals!public!unit tests! !
+
 !CompilerTest methodsFor!
+
+knownTempsMapIssues
+	| specials env |
+	env := BrowserEnvironment new.
+	"There are none"
+	^env not!
+
+knownTextMapIssues
+	| bad env |
+	bad := OrderedCollection new.
+	"These methods are all have optimisation where an unconditional jump is replaced with a
+	return, and the text map for the optimised method then has an extra entry for that return
+	statement as these get breaks inserted before them. The compiler needs to be fixed to mark
+	these returns as optimised returns, and so it's never possible to break on them, or we need
+	to put a text map entry in for the unconditional jump (wouldn't do any harm)."
+	bad add: AddPoolVariableChange >> #changeObject.
+	bad add: RemovePoolVariableChange >> #changeObject.
+	Smalltalk at: #ItcSystemManager ifPresent: [:class | bad add: class class >> #imageFilename].
+	Smalltalk at: #WikiDocImageSelectorServlet ifPresent: [:class | bad add: class >> #searchImages:].
+	bad add: DolphinCompilerTestMethods >> #testWarningReadBeforeWrittenBlockTemp.
+	"Different size maps for debug/optimized - due to empty blocks?"
+	env := BrowserEnvironment new.
+	^(env forMethods: bad asArray) | (env referencesTo: [])!
+
+testTempMapOuterDepthExhaustive
+	"Check that the temp maps for all methods with env temps have the correct outer depth. Note
+	that this is very long running as it compiles every method in the system and analyses the
+	bytecodes for temp references and compares those against the debug info temps map."
+
+	self knownTempsMapIssues not methodsDo: [:each | self verifyTempsMapOf: each]!
 
 testTextMapExhaustive
 	"Check that the release and debug text maps match for every method in the system .... with a
@@ -56,17 +194,101 @@ testTextMapExhaustive
 						ifFalse: 
 							[byte := debugMethod byteCodes at: ip.
 							self assert: byte ~= 0]]]! !
+!CompilerTest categoriesFor: #knownTempsMapIssues!public!unit tests-long running! !
+!CompilerTest categoriesFor: #knownTextMapIssues!private! !
+!CompilerTest categoriesFor: #testTempMapOuterDepthExhaustive!public!unit tests-long running! !
 !CompilerTest categoriesFor: #testTextMapExhaustive!public!unit tests-long running! !
 
-!SortAlgorithmTest methodsFor!
+!VMTest methodsFor!
 
-testExtremeSortBlocks
+assertLoopInterruptible: aBlock 
+	| intervals execTime last sampleInterval go |
+	go := true.
+	last := Time millisecondClockValue.
+	intervals := OrderedCollection new.
+	sampleInterval := 3.
+	
+	[
+	[Processor sleep: sampleInterval.
+	go and: 
+			[| next |
+			next := Time millisecondClockValue.
+			intervals addLast: next - last.
+			last := next.
+			true]] 
+			whileTrue] 
+			forkAt: Processor userInterruptPriority.
+	execTime := Time millisecondsToRun: aBlock.
+	go := false.
+	self assert: (intervals size > 5 and: [intervals size * 1.25 >= (execTime / sampleInterval) asFloat]).
+	self 
+		assert: (intervals size > 2 and: [intervals allSatisfy: [:each | each < (sampleInterval * 2)]])!
 
-	"This is a worst case ..."
-	self sort: (1 to: 10000) sortBlock: [:a :b | true].
+testLoopsInterruptible
+	"#2167: Need to test all the optimisable loop types:
+		#timesRepeat:
+		#whileTrue[:]
+		#whileFalse[:]
+		#to:[by:]do:
+		#repeat		(hmmm, tricky, need some way to break the loop)
+	The loops must not contain any true mesage sends, only bytecodes"
 
-	self sort: (1 to: 10000) sortBlock: [:a :b | false]! !
-!SortAlgorithmTest categoriesFor: #testExtremeSortBlocks!public!unit tests! !
+	"#timesRepeat:"
+
+	self assertLoopInterruptible: [3000000 timesRepeat: [1 + 2]].
+	"#whileFalse"
+	self assertLoopInterruptible: 
+			[| i |
+			i := 0.
+			
+			[i := i + 1.
+			i > 5000000] whileFalse].
+	"#whileTrue"
+	self assertLoopInterruptible: 
+			[| i |
+			i := 0.
+			
+			[i := i + 1.
+			i <= 5000000] whileTrue].
+	"#whileFalse:"
+	self assertLoopInterruptible: 
+			[| i |
+			i := 0.
+			[i >= 5000000] whileFalse: [i := i + 1]].
+	"#whileTrue:"
+	self assertLoopInterruptible: 
+			[| i |
+			i := 0.
+			[i < 5000000] whileTrue: [i := i + 1]].
+	"#to:do:"
+	self assertLoopInterruptible: [1 to: 5000000 do: [:i | i + 1]].
+	"#to:by:do:"
+	self assertLoopInterruptible: 
+			[1 to: 10000000
+				by: 2
+				do: [:i | i + 1]].
+	self assertLoopInterruptible: 
+			[5000000 to: 1
+				by: -1
+				do: [:i | i + 1]]!
+
+testQuiesceWhenUIBlocked
+	"#969: Dolphin burns 100% CPU when main UI process blocked on Semaphore"
+
+	| totalCPUBefore cpuWhileSleeping sleepTime wait |
+	totalCPUBefore := self getCPUTime.
+	"This test needs to measure over a minimum of 2 seconds in order to determine whether Dolphin has quiesced properly"
+	wait := 3000.
+	sleepTime := Time millisecondsToRun: [Processor sleep: wait].
+	cpuWhileSleeping := self getCPUTime - totalCPUBefore.
+	"If the sleep time was significantly longer than requested, then the VM is not waking up the image
+	 properly at the end of the timer"
+	self assert: (sleepTime between: wait * 0.9 and: wait * 1.1).
+	"The VM should quiesce properly, even if events are waiting to be processed, so very little CPU time should have been consumed"
+	self assert: cpuWhileSleeping < (wait * 0.03)! !
+!VMTest categoriesFor: #assertLoopInterruptible:!private!unit tests! !
+!VMTest categoriesFor: #testLoopsInterruptible!public!unit tests! !
+!VMTest categoriesFor: #testQuiesceWhenUIBlocked!public!unit tests! !
 
 "End of package definition"!
 

@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 GraphicsTool subclass: #Menu
 	instanceVariableNames: 'items text name flags image imageManager id _reserved1 _reserved2'
@@ -419,6 +419,9 @@ isModeless
 isModeless: aBoolean 
 	flags := flags mask: MNS_MODELESS set: aBoolean!
 
+isRadioButtonStyle
+	^false!
+
 itemAt: anInteger
 	"Answer the <MenuItem> at the specified <integer> index in the receiver."
 
@@ -527,21 +530,19 @@ queryAllAlong: aCommandPolicy
 
 	| query itemInfo |
 	query := self queryAlong: aCommandPolicy.
-	query isEnabled 
-		ifTrue: 
-			["name = #windowMenu ifTrue: [self halt]."
-			query receiver onAboutToDisplayMenu: self].
+	query isEnabled ifTrue: [query receiver onAboutToDisplayMenu: self].
 	itemInfo := MENUITEMINFOA new.
 	items keysAndValuesDo: 
 			[:i :menuItem | 
-			query := menuItem queryAlong: aCommandPolicy.
+			| itemQuery |
+			itemQuery := menuItem queryAlong: aCommandPolicy.
 			"Set the checked and enabled states, update the text (if desired), etc"
 			itemInfo 
 				menuItem: menuItem
-				text: query text
-				state: (query isChecked ifTrue: [MFS_CHECKED] ifFalse: [MFS_UNCHECKED]) 
-						| (query isEnabled ifTrue: [MFS_ENABLED] ifFalse: [MFS_DISABLED]) 
-							| (query isDefault ifTrue: [MFS_DEFAULT] ifFalse: [0]).
+				text: itemQuery text
+				state: (itemQuery isChecked ifTrue: [MFS_CHECKED] ifFalse: [MFS_UNCHECKED]) 
+						| (itemQuery isEnabled ifTrue: [MFS_ENABLED] ifFalse: [MFS_DISABLED]) 
+							| (itemQuery isDefault ifTrue: [MFS_DEFAULT] ifFalse: [0]).
 			self setItem: i info: itemInfo]!
 
 queryAllFromView: aView
@@ -717,6 +718,7 @@ updateItem: indexInteger id: idInteger text: newText
 !Menu categoriesFor: #isMenuBar!public!testing! !
 !Menu categoriesFor: #isModeless!public!testing! !
 !Menu categoriesFor: #isModeless:!accessing!public! !
+!Menu categoriesFor: #isRadioButtonStyle!public! !
 !Menu categoriesFor: #itemAt:!accessing!public! !
 !Menu categoriesFor: #itemAt:put:!accessing!public! !
 !Menu categoriesFor: #items!accessing!public! !

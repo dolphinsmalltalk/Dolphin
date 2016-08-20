@@ -1,11 +1,13 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #ClassBuilder
-	instanceVariableNames: 'currentClass className instanceVariables superclass instanceSpec classVariables sharedPools comment flags categories '
+	instanceVariableNames: 'currentClass className instanceVariables superclass instanceSpec classVariables sharedPools comment flags categories'
 	classVariableNames: 'FixedInitialLayout FixedLayout IgnoreInstsMask RecompileMask Unsubclassable'
 	poolDictionaries: '_BehaviorMasks'
 	classInstanceVariableNames: ''!
 ClassBuilder guid: (GUID fromString: '{87B4C461-026E-11D3-9FD7-00A0CC3E4A32}')!
+ClassBuilder addClassConstant: 'IgnoreInstsMask' value: 2!
+ClassBuilder addClassConstant: 'RecompileMask' value: 1!
 ClassBuilder comment: ''!
 !ClassBuilder categoriesForClass!System-Support! !
 !ClassBuilder methodsFor!
@@ -43,20 +45,15 @@ canMutateInSitu
 		the instance variable layout and
 		the class instance variable layout."
 
-	self instanceShapeIsBeingChanged
-		ifTrue: [^false].
-	self superclassIsBeingChanged
-		ifFalse: [^self instanceVariablesAreBeingChanged not].
+	self instanceShapeIsBeingChanged ifTrue: [^false].
+	self superclassIsBeingChanged ifFalse: [^self instanceVariablesAreBeingChanged not].
 
 	"The class is being moved."
-	(self class allInstVarNamesOf: superclass),instanceVariables = currentClass allInstVarNames
+	((self class allInstVarNamesOf: superclass) , self instanceVariables) = currentClass allInstVarNames
 		ifFalse: [^false].
 	(self class classOf: superclass) allInstVarNames = currentClass class superclass allInstVarNames
 		ifFalse: [^false].
-
-	^true.
-
-	!
+	^true!
 
 categories
 	categories isNil ifTrue: [self categoryNames: #('')].
@@ -333,19 +330,6 @@ instanceVariablesAreBeingChanged
 
 	^instanceVariables notNil and: [instanceVariables ~= currentClass instVarNames]!
 
-instanceVariableString
-	"Private - Answer the receiver's proposed instance variable list as
-	a space separated String."
-
-	^self instanceVariables isEmpty
-		ifTrue: [nil]
-		ifFalse: [ | aStream |
-			aStream := String writeStream: 32.
-			instanceVariables 
-					do: [:instVarName | aStream nextPutAll: instVarName]
-					separatedBy: [aStream space].
-			aStream contents]!
-
 instanceVariableString: anInstVarNamesString
 	"Set the receiver's proposed instance variable list from aString."
 
@@ -488,7 +472,12 @@ mutateClass: oldClass toBeASubclassOf: newSuperclass
 			newClass := self newClassLike: oldClass superclass: newSuperclass.
 			self install: newClass.
 			self mutateAllInstancesOf: oldClass toBeInstancesOf: newClass.
-			oldClass subclasses do: [:cls | self mutateClass: cls toBeASubclassOf: newClass].
+			oldClass == Class 
+				ifTrue: 
+					["In Dolphin Object class et al are not in the subclasses
+					collection of Class, so need special case handling"
+					Smalltalk allRoots do: [:each | self mutateClass: each class toBeASubclassOf: newClass]]
+				ifFalse: [oldClass subclasses do: [:cls | self mutateClass: cls toBeASubclassOf: newClass]].
 			oldClass class removeFromSuper.
 			oldClass removeFromSuper.
 			oldClass become: newClass.
@@ -499,11 +488,10 @@ mutateInSitu
 	"Private - Mutate the class being modified without mutating its instances.
 	In fact, we only need to change the superclass."
 
-	self superclassIsBeingChanged 
-		ifTrue: 
-			[currentClass class setSuperclass: (self class classOf: superclass).
-			currentClass setSuperclass: superclass.
-			self recompilationRequired: true]!
+	self superclassIsBeingChanged ifFalse: [^self].
+	currentClass class setSuperclass: (self class classOf: superclass).
+	currentClass setSuperclass: superclass.
+	self recompilationRequired: true!
 
 mutateToNewClass
 	"Private - Set currentClass to a mutation of itself based on the information
@@ -633,8 +621,7 @@ setInstanceVariablesOf: aClass
 	"Private - Set the instance variable layout of aClass to those described by
 	the receiver's instanceVariables inst var."
 
-	instanceVariables notNil
-		ifTrue: [aClass instanceVariables: self instanceVariableString]!
+	aClass setInstanceVariables: instanceVariables!
 
 setNewClassCategories
 	currentClass classCategories: self categories!
@@ -643,14 +630,13 @@ setSharedPoolsOf: aClass
 	"Private - Set the shared pools of aClass to those described by
 	the receiver's sharedPools inst var."
 
-	sharedPools notNil 
-		ifTrue: 
-			[| oldPoolNameSet newPoolNameSet |
-			oldPoolNameSet := aClass sharedPoolNames.
-			aClass setSharedPoolNames: self sharedPools.
-			newPoolNameSet := aClass sharedPoolNames.
-			(oldPoolNameSet intersection: newPoolNameSet) size = oldPoolNameSet size 
-				ifFalse: [self recompilationRequired: true]]!
+	| oldPoolNameSet newPoolNameSet |
+	sharedPools notNil ifFalse: [^self].
+	oldPoolNameSet := aClass sharedPoolNames.
+	aClass setSharedPoolNames: self sharedPools.
+	newPoolNameSet := aClass sharedPoolNames.
+	(oldPoolNameSet intersection: newPoolNameSet) size = oldPoolNameSet size 
+		ifFalse: [self recompilationRequired: true]!
 
 sharedPools
 	"Private - Answer an Array of proposed pool dictionary names."
@@ -664,9 +650,9 @@ sharedPools: anArray
 
 sharedPoolString: aString
 	"Set the receiver's sharedPools from the pool name list aString.
-	Silently drop names duplicated within the list."
+	It is an error for names to be duplicated in the list."
 
-	self sharedPools: aString subStrings asSet!
+	self sharedPools: aString subStrings!
 
 superclass: aClass
 	"Private - Set the target superclass."
@@ -702,14 +688,13 @@ translateInstance: oldInstance intoANewInstanceOf: newClass via: mappingArray
 				ifTrue: [newInstance instVarAt: i put: (oldInstance instVarAt: index)]].
 	^newInstance!
 
-updateVMRegistryWith: aClass
+updateVMRegistryWith: aClass 
 	"Private - Ensure that if aClass is a VM registered class then the VM's
 	entry is updated to the new class."
 
 	| name |
 	name := aClass name asSymbol.
-	(VMLibrary registryKeys includesKey: name)
-		ifTrue: [VMLibrary default registryAt: name put: aClass]!
+	(VMLibrary registryKeys includesKey: name) ifTrue: [VMLibrary default registryAt: name put: aClass]!
 
 validateClass
 	"Private - Ensure that currentClass is a valid Behavior."
@@ -924,13 +909,12 @@ validateSuperclassForModify
 	"Private - Ensure that no circularity is introduced into the hierarchy and
 	that the superclass of a metaclass is not changed directly."
 
-	self superclassIsBeingChanged
-		ifTrue: [
-			currentClass isMeta
-				ifTrue: [self error: 'It is invalid to directly change the superclass of a metaclass.'].
-			self validateSuperclassIsSubclassable.
-			(superclass notNil and: [superclass isKindOf: currentClass])
-				ifTrue: [self error: superclass name, ' is a subclass of the class being changed.']].!
+	self superclassIsBeingChanged ifFalse: [^self].
+	currentClass isMeta 
+		ifTrue: [self error: 'It is invalid to directly change the superclass of a metaclass.'].
+	self validateSuperclassIsSubclassable.
+	(superclass notNil and: [superclass isKindOf: currentClass]) 
+		ifTrue: [self error: superclass name , ' is a subclass of the class being changed.']!
 
 validateSuperclassIsSubclassable
 	"Private - Ensure that the superclass is a subclassable object."
@@ -977,7 +961,6 @@ validateSuperclassIsSubclassable
 !ClassBuilder categoriesFor: #instanceVariables!instance variables!private! !
 !ClassBuilder categoriesFor: #instanceVariables:!instance variables!public! !
 !ClassBuilder categoriesFor: #instanceVariablesAreBeingChanged!private!testing! !
-!ClassBuilder categoriesFor: #instanceVariableString!instance variables!private! !
 !ClassBuilder categoriesFor: #instanceVariableString:!instance variables!public! !
 !ClassBuilder categoriesFor: #isFixedInitialLayout!public!testing! !
 !ClassBuilder categoriesFor: #isFixedLayout!public!testing! !
@@ -1085,13 +1068,15 @@ initialize
 		ClassBuilder initialize
 	"
 
-	Unsubclassable := (Set new)
+	self addClassConstant: 'Unsubclassable'
+		value: ((Set new)
 				add: Character;
 				add: SmallInteger;
 				shrink;
 				isImmutable: true;
-				yourself.
-	FixedLayout := (Set new)
+				yourself).
+	self addClassConstant: 'FixedLayout'
+		value: ((Set new)
 				add: true class;
 				add: false class;
 				add: Array;
@@ -1108,9 +1093,10 @@ initialize
 				add: Object;
 				shrink;
 				isImmutable: true;
-				yourself.
+				yourself).
 	"add: ProtoObject;"
-	FixedInitialLayout := (Set new)
+	self addClassConstant: 'FixedInitialLayout'
+		value: ((Set new)
 				add: Class;
 				add: Metaclass;
 				add: PositionableStream;
@@ -1119,9 +1105,9 @@ initialize
 				add: ProcessorScheduler;
 				shrink;
 				isImmutable: true;
-				yourself.
-	RecompileMask := 1.
-	IgnoreInstsMask := 2!
+				yourself).
+	self addClassConstant: 'RecompileMask' value: 1.
+	self addClassConstant: 'IgnoreInstsMask' value: 2!
 
 instanceSpecIsBytes: anInstanceSpec
 	"Private - Answer whether anInstanceSpec represents a byte subclass."
@@ -1215,11 +1201,6 @@ new
 
 	^super new initialize!
 
-parser
-	"Private - Answer the parser to use for identifier validation."
-
-	^Compiler!
-
 removeClass: aClass 
 	"Remove aClass."
 
@@ -1248,19 +1229,18 @@ validateClassVarName: aString using: aCollection
 		ifFalse: [self error: 'Proposed class variable ''' , aString , ''' is invalid as a local identifier.'].
 	(aCollection includes: aString) 
 		ifTrue: [self error: 'Proposed class variable ''' , aString , ''' is multiply defined.'].
-	aString first isUppercase 
-		ifFalse: 
-			[aString first == $_ 
-				ifTrue: 
-					[^Smalltalk at: #SmalltalkSystem
-						ifPresent: 
-							[:c | 
-							c current isOAD 
-								ifFalse: 
-									[Warning signal: 'Identifiers beginning with an underscore, such as ' , aString 
-												, ', are reserved for system use']]].
-			Warning 
-				signal: 'Proposed class variable ''' , aString , ''' should start with an uppercase letter.']!
+	aString first isUppercase ifTrue: [^self].
+	aString first == $_ 
+		ifTrue: 
+			[^Smalltalk at: #SmalltalkSystem
+				ifPresent: 
+					[:c | 
+					c current isOAD 
+						ifFalse: 
+							[Warning signal: 'Identifiers beginning with an underscore, such as ' , aString 
+										, ', are reserved for system use']]].
+	Warning 
+		signal: 'Proposed class variable ''' , aString , ''' should start with an uppercase letter.'!
 
 validateClassVars: classVarsArray againstSuperclass: aClass
 	"Private - Ensure that the proposed class variable name list does not
@@ -1387,7 +1367,6 @@ validateSpecAsVariablePointers: spec size: anInteger superclass: proposedSupercl
 !ClassBuilder class categoriesFor: #isValidInitialIdentifierChar:!private!testing! !
 !ClassBuilder class categoriesFor: #moveClass:toSuperclass:!operations!public! !
 !ClassBuilder class categoriesFor: #new!instance creation!public! !
-!ClassBuilder class categoriesFor: #parser!constants!private! !
 !ClassBuilder class categoriesFor: #removeClass:!operations!public! !
 !ClassBuilder class categoriesFor: #removeClass:ignoreInstances:!operations!public! !
 !ClassBuilder class categoriesFor: #renameClass:to:!operations!public! !

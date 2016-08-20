@@ -1,6 +1,6 @@
 "Filed out from Dolphin Smalltalk 7"!
 
-DolphinTest subclass: #SequenceableCollectionTest
+DolphinCollectionTest subclass: #SequenceableCollectionTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
@@ -10,12 +10,6 @@ SequenceableCollectionTest comment: 'SUnitBrowser openOnTestCase: self'!
 !SequenceableCollectionTest categoriesForClass!Unclassified! !
 !SequenceableCollectionTest methodsFor!
 
-assimilate: aSmallInteger 
-	^aSmallInteger!
-
-assimilateElements: aCollection 
-	^aCollection asArray collect: [:each | self assimilate: each]!
-
 byteArrayForSequence: aCollection
 	| answer |
 	answer := ByteArray new: aCollection size.
@@ -24,9 +18,6 @@ byteArrayForSequence: aCollection
 
 collectionClass
 	^self subclassResponsibility!
-
-newCollection: aCollection
-	^self collectionClass withAll: (self assimilateElements: aCollection)!
 
 newCopy: aCollection
 	^self newCollection: aCollection!
@@ -577,11 +568,8 @@ unsortedCollectionClass
 verifyIndexOfAnyOf: searchFor startingAt: startInteger in: searchee is: foundInteger 
 	self assert: (searchee indexOfAnyOf: searchFor startingAt: startInteger) = foundInteger.
 	self assert: (searchee indexOfAnyOf: searchFor asArray startingAt: startInteger) = foundInteger! !
-!SequenceableCollectionTest categoriesFor: #assimilate:!public!unit tests! !
-!SequenceableCollectionTest categoriesFor: #assimilateElements:!helpers!private! !
 !SequenceableCollectionTest categoriesFor: #byteArrayForSequence:!helpers!private! !
 !SequenceableCollectionTest categoriesFor: #collectionClass!helpers!private! !
-!SequenceableCollectionTest categoriesFor: #newCollection:!helpers!private! !
 !SequenceableCollectionTest categoriesFor: #newCopy:!helpers!private! !
 !SequenceableCollectionTest categoriesFor: #newNumericArray:!helpers!private! !
 !SequenceableCollectionTest categoriesFor: #newUnsortedCollection:!helpers!private! !

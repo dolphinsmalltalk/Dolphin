@@ -22,14 +22,32 @@ ifNil: aBlock
 ifNotNil: notNilBlock ifNil: nilBlock 
 	^notNilBlock value: self!
 
-lexicalError: aString code: anInteger range: anInterval line: lineInteger
-	self 
-		should: [(SmalltalkScanner on: aString readStream) contents]
+lexicalError: aString range: anInterval line: lineInteger code: anInteger
+	self
+		lexicalErrorFrom: [SmalltalkScanner on: aString readStream]
+		range: anInterval
+		line: lineInteger
+		code: anInteger!
+
+lexicalErrorFrom: aBlockClosure range: anInterval line: lineInteger code: anInteger
+	self
+		should: [aBlockClosure value contents]
 		raise: SmalltalkParser errorClass
-		matching: 
-			[:ex | 
-			ex errorCode = anInteger 
-				and: [ex range = anInterval and: [ex line = lineInteger]]]!
+		matching: [:ex | ex errorCode = anInteger and: [ex range = anInterval and: [ex line = lineInteger]]]!
+
+lexicalQualifiedRefError: aString code: anInteger range: anInterval
+	| mockEnv |
+	mockEnv := Dictionary new.
+	mockEnv at: #BindingReference put: Object new.
+	self
+		lexicalErrorFrom: 
+			[(SmalltalkScanner on: aString readStream)
+				environment: mockEnv;
+				separatorsInLiterals: true;
+				yourself]
+		range: anInterval
+		line: 1
+		code: anInteger!
 
 parseExpression: aString in: aClass 
 	^StSemanticAnalyser 
@@ -50,6 +68,29 @@ parserClass
 
 scannerClass
 	^SmalltalkScanner!
+
+testErrorsLexicalBadNumber
+	self
+		lexicalError: ' 1.0e500 '
+		range: (2 to: 8)
+		line: 1
+		code: LErrBadNumber!
+
+testErrorsLexicalInvalidQualifier
+	| source |
+	source := ' #{nil} '.
+	self
+		lexicalQualifiedRefError: source
+		code: LErrInvalidQualifier
+		range: ((source indexOf: $#) to: (source indexOf: $}))!
+
+testErrorsLexicalUnterminatedQualifier
+	| source |
+	source := ' #{abc '.
+	self
+		lexicalQualifiedRefError: source
+		code: LErrQualifiedRefNotClosed
+		range: ((source indexOf: $#) to: source size)!
 
 testErrorsNonsenseAtEndOfExpression
 	| source mark |
@@ -92,6 +133,15 @@ testErrorsNonsenseAtEndOfMethod
 		range: (mark to: source size)
 		line: 1
 		code: CErrNonsenseAtExprEnd!
+
+testErrorsStaticExpressionError
+	| source |
+	source := ' ##(self error: ''Bang!!'') '.
+	self
+		parseExprError: source
+		range: ((source indexOf: $() + 1 to: (source indexOf: $)) - 1)
+		line: 1
+		code: CErrErrorInStaticExpression!
 
 testErrorsTempsNotClosedRecovery
 	| source ast |
@@ -201,184 +251,143 @@ testParserErrors
 	#(#('self foo. + 3' 11) #('#(' 3) #('self 0' 6) #('self asdf;;asfd' 11)) 
 		do: [:each | self parseError: each]!
 
-testWarningReadBeforeWritten
-	#(#testWarningReadBeforeWrittenMethodTemp #testWarningReadBeforeWrittenBlockTemp #testWarningReadBeforeWrittenFullBlock) 
-		do: 
-			[:each | 
-			self 
-				parseMethodWarning: each
-				rangeBlock: 
-					[:source | 
-					| start |
-					start := source lastIndexOf: $_.
-					start to: start + 3]
-				code: CWarnReadBeforeWritten].
-	^self!
-
-testWarningRedefiningInstVar
-	#(#testWarningRedefiningInstVarAsArg: #testWarningRedefiningInstVarAsTemp #testWarningRedefiningInstVarAsOptimizedBlockArg #testWarningRedefiningInstVarAsOptimizedBlockTemp #testWarningRedefiningInstVarAsBlockTemp #testWarningRedefiningInstVarAsBlockArg) 
-		do: 
-			[:each | 
-			self 
-				parseMethodWarning: each
-				rangeBlock: 
-					[:source | 
-					| start |
-					start := source findString: 'iv1'.
-					start to: start + 2]
-				code: CWarnRedefiningInstVar].
-	^self!
-
 testWarningUnreachable
 	#(#testWarningUnreachable) do: 
-			[:each | 
-			self 
+			[:each |
+			self
 				parseMethodWarning: each
 				rangeBlock: 
-					[:source | 
+					[:source |
 					| start |
 					start := source indexOf: $1.
 					start to: source size]
-				code: CWarnUnreachable].
-	^self!
+				code: CWarnUnreachable]!
 
 testWarningUsesBooleanClass
 	#(#testWarningUsesTrue #testWarningUsesFalse) do: 
-			[:each | 
-			self 
+			[:each |
+			self
 				parseMethodWarning: each
 				rangeBlock: 
-					[:source | 
+					[:source |
 					| start name |
 					name := each asPhrase subStrings last.
 					start := source indexOfSubCollection: name startingAt: each size + 1.
 					start to: start + name size - 1]
-				code: CWarnUsesBooleanClass].
-	^self!
-
-testWarningWrittenNotRead
-	#(#testWarningWrittenNotReadMethodTemp #testWarningWrittenNotReadBlockTemp #testWarningWrittenNotReadFullBlock) 
-		do: 
-			[:each | 
-			self 
-				parseMethodWarning: each
-				rangeBlock: 
-					[:source | 
-					| start |
-					start := source lastIndexOf: $_.
-					start to: start + 3]
-				code: CWarnWrittenNotRead].
-	^self!
+				code: CWarnUsesBooleanClass]!
 
 testWarnMsgUnimplemented
-	#(#testWarnMsgUnimplementedBySelf #testWarnMsgUnimplementedBySuper #testWarnMsgUnimplementedByNil) 
+	#(#testWarnMsgUnimplementedBySelf #testWarnMsgUnimplementedBySuper #testWarnMsgUnimplementedByNil)
 		do: 
-			[:each | 
-			self 
+			[:each |
+			self
 				parseMethodWarning: each
 				rangeBlock: 
-					[:source | 
+					[:source |
 					| start name |
 					name := each asPhrase subStrings last asLowercase.
 					start := source indexOfSubCollection: name startingAt: each size + 1.
-					start to: (source 
+					start to: (source
 								nextIndexOf: $.
 								from: start
 								to: source size) - 1]
-				code: CWarnMsgUnimplemented].
-	^self!
+				code: CWarnMsgUnimplemented]!
 
 testWarnNiladicExceptionHandler
 	#(#testWarnNiladicExceptionHandler) do: 
-			[:each | 
-			self 
+			[:each |
+			self
 				parseMethodWarning: each
 				rangeBlock: [:source | (source lastIndexOf: $[) to: (source lastIndexOf: $])]
-				code: CWarnExpectMonadicBlockArg].
-	^self!
+				code: CWarnExpectMonadicBlockArg]!
 
 testWarnNonNiladicGuardedBlock
 	#(#testWarnNonNiladicGuardedBlock) do: 
-			[:each | 
-			self 
+			[:each |
+			self
 				parseMethodWarning: each
 				rangeBlock: 
-					[:source | 
+					[:source |
 					| start |
 					start := source findString: 'on:' startingAt: (source lastIndexOf: $.).
 					start to: start + 2]
-				code: CWarnExpectNiladicBlockReceiver].
-	^self!
+				code: CWarnExpectNiladicBlockReceiver]!
 
 testWarnRestrictedSelector
 	"Test one of each of binary selector, unary, keyword one arg, keyword more than one arg. In each case the entire method signature should be included in the error range"
 
 	#(#== #basicSize #ifNil: #ifNil:ifNotNil:) do: 
-			[:each | 
-			self 
+			[:each |
+			self
 				parseMethodWarning: each
 				rangeBlock: 
-					[:source | 
+					[:source |
 					| signature |
 					signature := source copyFrom: 1 to: (source indexOf: Character cr) - 1.
 					1 to: signature trimBlanks size]
-				code: CWarnRestrictedSelector].
-	^self!
+				code: CWarnRestrictedSelector]!
 
 testWarnUndefinedSelector
 	#(#testWarnUndefinedSelector) do: 
-			[:each | 
-			self 
+			[:each |
+			self
 				parseMethodWarning: each
 				rangeBlock: 
-					[:source | 
+					[:source |
 					| start |
 					start := source indexOfSubCollection: 'self'.
-					start to: (source 
+					start to: (source
 								nextIndexOf: $.
 								from: start
 								to: source size) - 1]
-				code: CWarnUndefinedSelector].
-	^self!
+				code: CWarnUndefinedSelector]!
 
 testWarnUnimplementedAbstractMethod
 	#(#testWarnUnimplementedAbstractMethod) do: 
-			[:each | 
-			self 
+			[:each |
+			self
 				parseMethodWarning: each
 				rangeBlock: 
-					[:source | 
+					[:source |
 					| start msg |
 					msg := 'self subclassResponsibility'.
 					start := source indexOfSubCollection: msg.
 					start to: start + msg size - 1]
-				code: CWarnUnimplementedAbstractMethod].
-	^self! !
+				code: CWarnUnimplementedAbstractMethod]!
+
+writtenNotReadRange: aString
+	| start |
+	start := aString lastIndexOf: $_.
+	^start to: start + 3! !
 !SmalltalkParserErrorTest categoriesFor: #compilationErrorClass!helpers!private! !
 !SmalltalkParserErrorTest categoriesFor: #compilationWarningClass!helpers!private! !
 !SmalltalkParserErrorTest categoriesFor: #ifNil:!control flow!public! !
 !SmalltalkParserErrorTest categoriesFor: #ifNotNil:ifNil:!control flow!public! !
-!SmalltalkParserErrorTest categoriesFor: #lexicalError:code:range:line:!helpers!private! !
+!SmalltalkParserErrorTest categoriesFor: #lexicalError:range:line:code:!helpers!private! !
+!SmalltalkParserErrorTest categoriesFor: #lexicalErrorFrom:range:line:code:!helpers!private! !
+!SmalltalkParserErrorTest categoriesFor: #lexicalQualifiedRefError:code:range:!helpers!private! !
 !SmalltalkParserErrorTest categoriesFor: #parseExpression:in:!private! !
 !SmalltalkParserErrorTest categoriesFor: #parseMethod:in:!private! !
 !SmalltalkParserErrorTest categoriesFor: #parserClass!constants!private! !
 !SmalltalkParserErrorTest categoriesFor: #scannerClass!constants!private! !
+!SmalltalkParserErrorTest categoriesFor: #testErrorsLexicalBadNumber!exceptions!public!unit tests! !
+!SmalltalkParserErrorTest categoriesFor: #testErrorsLexicalInvalidQualifier!exceptions!public!unit tests! !
+!SmalltalkParserErrorTest categoriesFor: #testErrorsLexicalUnterminatedQualifier!exceptions!public!unit tests! !
 !SmalltalkParserErrorTest categoriesFor: #testErrorsNonsenseAtEndOfExpression!public!unit tests! !
 !SmalltalkParserErrorTest categoriesFor: #testErrorsNonsenseAtEndOfMethod!public!unit tests! !
+!SmalltalkParserErrorTest categoriesFor: #testErrorsStaticExpressionError!public!unit tests! !
 !SmalltalkParserErrorTest categoriesFor: #testErrorsTempsNotClosedRecovery!public!unit tests! !
 !SmalltalkParserErrorTest categoriesFor: #testInfoHardBreakpoint!public!unit tests! !
 !SmalltalkParserErrorTest categoriesFor: #testInfoSupersendsOther!public!unit tests! !
 !SmalltalkParserErrorTest categoriesFor: #testInfoUnreferencedArg!public!unit tests! !
 !SmalltalkParserErrorTest categoriesFor: #testParserErrors!public!unit tests! !
-!SmalltalkParserErrorTest categoriesFor: #testWarningReadBeforeWritten!public!unit tests! !
-!SmalltalkParserErrorTest categoriesFor: #testWarningRedefiningInstVar!public!unit tests! !
 !SmalltalkParserErrorTest categoriesFor: #testWarningUnreachable!public!unit tests! !
 !SmalltalkParserErrorTest categoriesFor: #testWarningUsesBooleanClass!public!unit tests! !
-!SmalltalkParserErrorTest categoriesFor: #testWarningWrittenNotRead!public!unit tests! !
 !SmalltalkParserErrorTest categoriesFor: #testWarnMsgUnimplemented!public!unit tests! !
 !SmalltalkParserErrorTest categoriesFor: #testWarnNiladicExceptionHandler!public!unit tests! !
 !SmalltalkParserErrorTest categoriesFor: #testWarnNonNiladicGuardedBlock!public!unit tests! !
 !SmalltalkParserErrorTest categoriesFor: #testWarnRestrictedSelector!public!unit tests! !
 !SmalltalkParserErrorTest categoriesFor: #testWarnUndefinedSelector!public!unit tests! !
 !SmalltalkParserErrorTest categoriesFor: #testWarnUnimplementedAbstractMethod!public!unit tests! !
+!SmalltalkParserErrorTest categoriesFor: #writtenNotReadRange:!helpers!private! !
 

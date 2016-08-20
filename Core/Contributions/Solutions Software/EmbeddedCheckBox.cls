@@ -64,7 +64,10 @@ drawNonThemed: aValue in: aRectangle on: aCanvas buttonOffset: buttonOffset text
 	uState := DFCS_BUTTONCHECK.
 
 	self isEnabled
-		ifTrue: [aValue ifTrue: [uState := uState | DFCS_CHECKED]]
+		ifTrue: 
+			[aValue isNil
+				ifTrue: [uState := uState | DFCS_BUTTON3STATE | DFCS_CHECKED | DFCS_INACTIVE]
+				ifFalse: [aValue ifTrue: [uState := uState | DFCS_CHECKED]]]
 		ifFalse: [uState := uState | DFCS_INACTIVE].
 
 	UserLibrary default 
@@ -82,8 +85,9 @@ drawNonThemed: aValue in: aRectangle on: aCanvas buttonOffset: buttonOffset text
 drawThemed: aValue in: aRectangle on: aCanvas buttonOffset: buttonOffset textOffset: textOffset
 
 	| iState textRect |
-
-	iState := aValue ifTrue: [CBS_CHECKEDNORMAL] ifFalse: [CBS_UNCHECKEDNORMAL].
+	iState := aValue isNil
+				ifTrue: [CBS_MIXEDNORMAL]
+				ifFalse: [aValue ifTrue: [CBS_CHECKEDNORMAL] ifFalse: [CBS_UNCHECKEDNORMAL]].
 
 	ThemeLibrary default 
 		drawThemeBackground: self theme 

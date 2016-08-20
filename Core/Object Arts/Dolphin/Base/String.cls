@@ -558,10 +558,10 @@ indexOfSubCollection: targetSequence startingAt: start
 	^self findString: targetSequence startingAt: start!
 
 isLiteral
-	"Private - Answer whether the receiver can be represented as a literal (i.e. it has a printed
+	"Answer whether the receiver can be represented as a literal (i.e. it has a printed
 	representation which can be directly understood by the compiler)."
 
-	^true!
+	^(self identityIncludes: $\0) not!
 
 isString
 	"Answer whether the receiver is a <String>."
@@ -716,7 +716,7 @@ occurrencesOf: anObject from: startInteger to: endInteger
 			current := next + 1].
 	^occurrences!
 
-printOn: aStream 
+printOn: aStream
 	"Append the receiver as a quoted string to aStream. Internal quotes are doubled to produce a
 	literal String. Null characters are printed as another character to avoid them being treated
 	as null terminators by C api's"
@@ -724,9 +724,9 @@ printOn: aStream
 	aStream nextPut: $'.
 	1 to: self size
 		do: 
-			[:i | 
+			[:i |
 			| ch |
-			(ch := self at: i) == ##(Character null) 
+			(ch := self at: i) == $\0
 				ifTrue: [aStream nextPut: NullPrintCharacter]
 				ifFalse: [(aStream nextPut: ch) == $' ifTrue: [aStream nextPut: $']]].
 	aStream nextPut: $'!
@@ -755,13 +755,16 @@ replaceBytesOf: aByteObject from: start to: stop startingAt: fromStart
 	stop to: start by: -1 do: [:i | aByteObject at: i put: (self at: i + fromOffset)].
 	^aByteObject!
 
-replaceFrom: start to: stop with: replacementElements startingAt: startAt
-	"Replace the characters of the receiver at the <integer> index positions 
-	start through stop with consecutive characters of the <readableString>
-	replacementElements beginning at <integer> index position startAt. 
-	Answer the receiver."
+replaceFrom: startInteger to: stopInteger with: aReadableString startingAt: startAtInteger 
+	"Replace the characters of the receiver at the <integer> index positions startInteger
+	through stopInteger inclusive with consecutive characters of the <readableString>
+	aReadableString beginning at <integer> index position startAtInteger. Answer the receiver."
 
-	replacementElements replaceBytesOf: self from: start to: stop startingAt: startAt!
+	aReadableString 
+		replaceBytesOf: self
+		from: startInteger
+		to: stopInteger
+		startingAt: startAtInteger!
 
 reverse
 	"Answer a copy of the receiver but with its elements in reverse order.
@@ -955,6 +958,11 @@ trueCompare: comparand
 	"The primitive simply invokes this OS case sensitive string collation function"
 	^KernelLibrary default lstrcmp: self lpString2: comparand!
 
+truncateTo: anInteger
+	"Answer a <readableString> of at most anInteger characters from the receiver."
+
+	^self size <= anInteger ifTrue: [self] ifFalse: [self copyFrom: 1 to: anInteger]!
+
 unescapePercents
 	"Answer a copy of the receiver with each %XY substring replaced by 
 	the character with hex ASCII value XY and $+'s replaced by spaces."
@@ -993,20 +1001,18 @@ unescapePercents
 withNormalizedLineDelimiters
 	"Answer a copy of the receiver with any line terminator convention converted to the windows (CR/LF) convention."
 
-	| target cr lf eol stm |
+	| target eol stm |
 	target := self species writeStream: self size.
 	stm := self readStream.
-	cr := Character cr.
-	lf := Character lf.
 	eol := self species lineDelimiter.
 	stm do: 
-			[:each | 
-			each == lf 
+			[:each |
+			each == $\n
 				ifTrue: [target nextPutAll: eol]
 				ifFalse: 
-					[each == cr 
+					[each == $\r
 						ifTrue: 
-							[stm peekFor: lf.
+							[stm peekFor: $\n.
 							target nextPutAll: eol]
 						ifFalse: [target nextPut: each]]].
 	^target contents! !
@@ -1060,7 +1066,7 @@ withNormalizedLineDelimiters
 !String categoriesFor: #includes:!public!searching! !
 !String categoriesFor: #indexOfAnyOf:startingAt:!public!searching! !
 !String categoriesFor: #indexOfSubCollection:startingAt:!public!searching! !
-!String categoriesFor: #isLiteral!private!testing! !
+!String categoriesFor: #isLiteral!public!testing! !
 !String categoriesFor: #isString!public!testing! !
 !String categoriesFor: #leftString:!copying!public! !
 !String categoriesFor: #lines!copying!public! !
@@ -1092,6 +1098,7 @@ withNormalizedLineDelimiters
 !String categoriesFor: #trimBlanks!copying!public! !
 !String categoriesFor: #trimNulls!copying!public! !
 !String categoriesFor: #trueCompare:!comparing!private! !
+!String categoriesFor: #truncateTo:!converting!public! !
 !String categoriesFor: #unescapePercents!operations!public! !
 !String categoriesFor: #withNormalizedLineDelimiters!converting!public! !
 
@@ -1238,6 +1245,12 @@ lineDelimiter
 
 	^LineDelimiter!
 
+nullPrintCharacter
+	^NullPrintCharacter!
+
+nullPrintCharacter: aCharacter
+	NullPrintCharacter := aCharacter!
+
 readFrom: aStream 
 	"Answer a <String> read from the <gettableStream>, aStream
 	Note that the string is expected to be in Smalltalk literal form, i.e.
@@ -1284,8 +1297,10 @@ unicodeClass
 !String class categoriesFor: #fromString:!instance creation!public! !
 !String class categoriesFor: #fromUnicodeString:!instance creation!public! !
 !String class categoriesFor: #icon!constants!public! !
-!String class categoriesFor: #initialize!development!initializing!private! !
+!String class categoriesFor: #initialize!development!initializing!public! !
 !String class categoriesFor: #lineDelimiter!instance creation!public! !
+!String class categoriesFor: #nullPrintCharacter!accessing!public! !
+!String class categoriesFor: #nullPrintCharacter:!accessing!public! !
 !String class categoriesFor: #readFrom:!instance creation!public! !
 !String class categoriesFor: #tab!instance creation!public! !
 !String class categoriesFor: #unicodeClass!constants!public! !

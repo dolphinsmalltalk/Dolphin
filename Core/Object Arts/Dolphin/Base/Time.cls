@@ -1,7 +1,7 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Magnitude subclass: #Time
-	instanceVariableNames: 'milliseconds '
+	instanceVariableNames: 'milliseconds'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -315,7 +315,7 @@ readFrom: aStream
 												ifFalse: 
 													[milliseconds := (milliseconds / (10 raisedToInteger: precision)) asInteger.
 													rounded := 1]]]]]].
-	aStream skipWhile: [:c | c = Character space].
+	aStream skipWhile: [:c | c == $\x20].
 	am := self amMarker.
 	(am notEmpty and: [am skipOver: aStream ignoreCase: true]) 
 		ifTrue: 

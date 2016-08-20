@@ -7,19 +7,19 @@ package paxVersion: 1;
 This package contains the basic/essential Dolphin Smalltalk development system tools and support, for example the Class, Method and Package browsers. 
 '.
 
-package basicPackageVersion: '6.2'.
+package basicPackageVersion: '2016.7.0.4'.
 
 
 package classNames
 	add: #AbstractPublishedAspectInspector;
 	add: #AllMethodsCategory;
-	add: #AMLSourceFiler;
 	add: #AnonymousKeyedAspect;
 	add: #AnonymousKeyedAspectBatchAccessor;
 	add: #Aspect;
 	add: #AspectAccessor;
 	add: #AspectEditorDialog;
 	add: #AspectInspector;
+	add: #AstPlugin;
 	add: #BasicInspector;
 	add: #BasicKeyedAspect;
 	add: #BatchAspectAccessor;
@@ -27,6 +27,7 @@ package classNames
 	add: #CategoryTreeModel;
 	add: #ChangedMethodsCategory;
 	add: #ChooseClassDialog;
+	add: #ClassAspectPlugin;
 	add: #ClassBrowserAbstract;
 	add: #ClassBrowserPlugin;
 	add: #ClassBrowserShell;
@@ -38,7 +39,6 @@ package classNames
 	add: #CommandMenuItemDialog;
 	add: #CompiledMethodInspector;
 	add: #CompiledMethodSearchPolicy;
-	add: #ContextMenuComposerView;
 	add: #CreateSubclassDialog;
 	add: #Debugger;
 	add: #DebuggerMethodCategory;
@@ -48,6 +48,7 @@ package classNames
 	add: #DolphinMoveClassChange;
 	add: #FlipperInspector;
 	add: #Grabber;
+	add: #ImageListView;
 	add: #IndexedInstVarBatchAccessor;
 	add: #InspectorAbstract;
 	add: #InspectorShell;
@@ -59,12 +60,13 @@ package classNames
 	add: #KeyedAspectBatch;
 	add: #KeyedAspectBatchAccessor;
 	add: #MenuBarComposer;
-	add: #MenuBarComposerView;
+	add: #MenuBarPainter;
 	add: #MenuComposer;
 	add: #MenuComposerArena;
 	add: #MenuComposerView;
 	add: #MenuDialog;
 	add: #MenuItemDialog;
+	add: #MenuPainter;
 	add: #MessageNodeCollector;
 	add: #MethodBrowser;
 	add: #MethodBrowserShell;
@@ -88,6 +90,7 @@ package classNames
 	add: #PackedReferencesCategory;
 	add: #PluggableEnvironment;
 	add: #PluggableVirtualMethodCategory;
+	add: #PopupMenuPainter;
 	add: #PropertyInspector;
 	add: #PublishedAspectInspector;
 	add: #ReferencesCategory;
@@ -112,7 +115,6 @@ package classNames
 	add: #SmalltalkWorkspaceDocument;
 	add: #SpecialReferencesCategory;
 	add: #STBDebugger;
-	add: #StLexicalScope;
 	add: #StNumberStylingToken;
 	add: #StructureInspector;
 	add: #StSemanticAnalyser;
@@ -208,12 +210,13 @@ package methodNames
 	add: #FramingLayout -> #arrangementAspect;
 	add: #InputState -> #destroyAllWindows;
 	add: #Interval -> #newBatchAccessor;
+	add: #KernelLibrary -> #queryThreadCycleTime:cycleTime:;
 	add: #LayoutManager -> #arrangementAspect;
 	add: #ListControlView -> #visualObjectAtPoint:;
 	add: #LPVOIDField -> #newAspect:class:;
-	add: #Menu -> #composerViewClass;
 	add: #Menu -> #edit;
-	add: #MenuBar -> #composerViewClass;
+	add: #Menu -> #painterClass;
+	add: #MenuBar -> #painterClass;
 	add: #MethodProtocol -> #icon;
 	add: #MoenTreeView -> #visualObjectAtPoint:;
 	add: #MSG -> #printOn:;
@@ -238,6 +241,9 @@ package methodNames
 	add: #Package -> #icon;
 	add: #Package -> #publishedAspects;
 	add: #Package -> #searchForInTool:;
+	add: #PackageManager -> #getVersionInfoFor:;
+	add: #PackageManager -> #isConnected;
+	add: #PackageManager -> #sourceControl;
 	add: #PoolConstantsDictionary -> #aspectDisplayOn:;
 	add: #PoolConstantsDictionary -> #browse;
 	add: #PoolDictionary -> #aspectDisplayOn:;
@@ -274,26 +280,35 @@ package methodNames
 	add: #SequenceableCollection -> #newBatchAccessor;
 	add: #Set -> #newBatchAccessor;
 	add: #Slider -> #publishedAspects;
-	add: #SmalltalkScanner -> #recoverFromExpectChar;
-	add: #SmalltalkScanner -> #recoverFromUnterminatedLiteral;
 	add: #SourceManager -> #compressSourcesWith:;
 	add: #SpinButton -> #publishedAspects;
 	add: #StackFrame -> #debugIpFor:;
 	add: #StackFrame -> #findIP:inTextMap:;
 	add: #StackFrame -> #makeDebug;
 	add: #StackFrame -> #stackWorkspace;
+	add: #StAssignmentNode -> #displayOn:;
+	add: #StBlockNode -> #displayOn:;
+	add: #StCascadeNode -> #displayOn:;
+	add: #StLiteralArrayNode -> #displayOn:;
 	add: #StLiteralToken -> #textStyle;
+	add: #StLiteralValueNode -> #displayOn:;
+	add: #StMessageNode -> #displayOn:;
 	add: #StNumberLiteralToken -> #textStyle;
+	add: #StOptimizedNode -> #displayOn:;
+	add: #StPrimitiveNode -> #displayOn:;
 	add: #StProgramNode -> #debugPrintString;
 	add: #StProgramNode -> #postComments;
 	add: #StProgramNode -> #preComments;
+	add: #StReturnNode -> #displayOn:;
 	add: #String -> #aspectDisplayOn:;
 	add: #String -> #debugPrintString;
 	add: #String -> #literalTextStyle;
 	add: #String -> #newAspect:class:;
 	add: #String -> #publishedAspects;
+	add: #StSequenceNode -> #displayOn:;
 	add: #StToken -> #postComments;
 	add: #StToken -> #preComments;
+	add: #StVariableNode -> #displayOn:;
 	add: #Symbol -> #aspectDisplayOn:;
 	add: #Symbol -> #literalTextStyle;
 	add: #Symbol -> #searchForInTool:;
@@ -358,6 +373,7 @@ package methodNames
 	add: 'FramingCalculation class' -> #allCalculations;
 	add: 'FramingConstraints class' -> #publishedAspectsOfInstances;
 	add: 'FramingLayout class' -> #example1;
+	add: 'GdiplusImage class' -> #newInstanceAspect:class:;
 	add: 'GridLayout class' -> #publishedAspectsOfInstances;
 	add: 'GroupBox class' -> #publishedAspectsOfInstances;
 	add: 'HotKey class' -> #publishedAspectsOfInstances;
@@ -365,6 +381,7 @@ package methodNames
 	add: 'Icon class' -> #newInstanceAspect:class:;
 	add: 'IconicListAbstract class' -> #publishedAspectsOfInstances;
 	add: 'IconicListAbstract class' -> #publishedEventsOfInstances;
+	add: 'ImagePresenter class' -> #resource_ImageList_view;
 	add: 'ImageViewAbstract class' -> #publishedAspectsOfInstances;
 	add: 'InputState class' -> #publishedEventsOfInstances;
 	add: 'InternalIcon class' -> #choose;
@@ -462,6 +479,7 @@ package methodNames
 	add: 'TextEdit class' -> #applicableTypeConverterCategories;
 	add: 'TextEdit class' -> #publishedAspectsOfInstances;
 	add: 'TextEdit class' -> #publishedEventsOfInstances;
+	add: 'Time class' -> #cpuCyclesToRun:;
 	add: 'Time class' -> #newInstanceAspect:class:;
 	add: 'TimeToText class' -> #publishedAspectsOfInstances;
 	add: 'Toolbar class' -> #publishedAspectsOfInstances;
@@ -502,6 +520,7 @@ package methodNames
 	add: 'View class' -> #publishedEventsOfInstances;
 	add: 'VS_FIXEDFILEINFO class' -> #publishedAspectsOfInstances;
 	add: 'WeakSet class' -> #publishedEventsOfInstances;
+	add: 'WinImageList class' -> #newInstanceAspect:class:;
 	yourself.
 
 package globalNames
@@ -522,7 +541,6 @@ package setPrerequisites: (IdentitySet new
 	add: '..\..\System\Trace\Debug Trace Stream';
 	add: '..\..\Base\Dolphin';
 	add: '..\..\MVP\Presenters\Accelerator\Dolphin Accelerator Presenter';
-	add: '..\..\Base\Dolphin Base';
 	add: '..\..\MVP\Presenters\Boolean\Dolphin Boolean Presenter';
 	add: '..\..\MVP\Views\Cards\Dolphin Card Containers';
 	add: '..\..\MVP\Presenters\Choice\Dolphin Choice Presenter';
@@ -565,6 +583,7 @@ package setPrerequisites: (IdentitySet new
 	add: '..\..\MVP\Type Converters\Dolphin Type Converters';
 	add: '..\..\MVP\Models\Value\Dolphin Value Models';
 	add: '..\..\..\..\Contributions\Burning River\ExternalProcess\ExternalProcess';
+	add: '..\..\MVP\Gdiplus\Gdiplus';
 	add: 'Internal Bitmaps and Icons';
 	add: '..\..\..\..\Contributions\Refactory\Refactoring Browser\Change Objects\RBChangeObjects';
 	add: '..\..\..\..\Contributions\Refactory\Refactoring Browser\Environments\RBEnvironments';
@@ -584,6 +603,11 @@ Object subclass: #Grabber
 	classVariableNames: 'Cursors'
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
+Object subclass: #MenuPainter
+	instanceVariableNames: 'menu conflictingMnemonics conflictingAccelerators'
+	classVariableNames: ''
+	poolDictionaries: 'Win32Constants'
+	classInstanceVariableNames: ''!
 Object subclass: #MethodCategorizationPolicy
 	instanceVariableNames: ''
 	classVariableNames: 'Default'
@@ -596,11 +620,6 @@ Object subclass: #MethodSearch
 	classInstanceVariableNames: ''!
 Object subclass: #SmalltalkSystemIcon
 	instanceVariableNames: 'openBlock icon description tool helpId'
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-Object subclass: #StLexicalScope
-	instanceVariableNames: 'node temps argNames'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -729,6 +748,16 @@ Folder subclass: #PackageFolder
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+MenuPainter subclass: #MenuBarPainter
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+MenuPainter subclass: #PopupMenuPainter
+	instanceVariableNames: 'itemWidth textOffset submenuOffset acceleratorOffset'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
 MethodSearch subclass: #MethodSourceSearch
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -800,8 +829,8 @@ Presenter subclass: #SmalltalkSearchPresenter
 	poolDictionaries: 'ScintillaConstants'
 	classInstanceVariableNames: ''!
 Presenter subclass: #SmalltalkWorkspace
-	instanceVariableNames: 'evaluationContext errorModel findDetails workspacePool evaluationPools compilationErrors textStyles searchEnvironment modifiedModel flags'
-	classVariableNames: 'Abbreviations AnnotationMode AutoCompleteDwell AutoCompleteMask DefaultBackcolor DefaultCaretColor DefaultFont DefaultTabWidth IsAutoCompletionCaseInsensitive IsAutoCompletionEnabled IsAutoCompletionSpaceAdded IsAutoCompletionTruncating KeywordCompletions MaxAutoCompletionListSize StandardUnaryReturnTypes TextStyles VariableTipsMask WordWrap WrapIndentMode'
+	instanceVariableNames: 'evaluationContext errorModel findDetails workspacePool evaluationPools compilationErrors textStyles searchEnvironment modifiedModel flags indicatorStyles'
+	classVariableNames: 'Abbreviations AnnotationMode AutoCompleteDwell AutoCompleteMask DefaultBackcolor DefaultCaretColor DefaultFont DefaultTabWidth IndicatorStyles IsAutoCompletionCaseInsensitive IsAutoCompletionEnabled IsAutoCompletionSpaceAdded IsAutoCompletionTruncating KeywordCompletions MaxAutoCompletionListSize StandardUnaryReturnTypes TextStyles VariableTipsMask WordWrap WrapIndentMode'
 	poolDictionaries: 'CompilerFlags ScintillaConstants'
 	classInstanceVariableNames: 'additionalAccelerators commandQueryHandlers'!
 Presenter subclass: #TwinLevelInspector
@@ -809,8 +838,18 @@ Presenter subclass: #TwinLevelInspector
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ClassBrowserPlugin subclass: #ClassCommentPlugin
-	instanceVariableNames: 'textPresenter'
+ClassBrowserPlugin subclass: #AstPlugin
+	instanceVariableNames: 'astPresenter sourcePresenter'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ClassBrowserPlugin subclass: #ClassAspectPlugin
+	instanceVariableNames: 'textPresenter originalText currentClass'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ClassAspectPlugin subclass: #ClassCommentPlugin
+	instanceVariableNames: ''
 	classVariableNames: 'TextStyles WordWrap'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -980,7 +1019,7 @@ MethodBrowserShell subclass: #MethodExplorerShell
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 SmalltalkWorkspace subclass: #MethodWorkspace
-	instanceVariableNames: 'methodAST refactoringTool'
+	instanceVariableNames: 'parseTree refactoringTool'
 	classVariableNames: 'AutoParseDwell AutoParseMask IsAutoParseEnabled'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -1089,11 +1128,6 @@ SmalltalkSystemIcon subclass: #SmalltalkSystemFolder
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-SourceFiler subclass: #AMLSourceFiler
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
 STBInFiler subclass: #STBDebugger
 	instanceVariableNames: 'indentLevel traceStream printOffsets'
 	classVariableNames: ''
@@ -1104,9 +1138,9 @@ StParseNodeVisitor subclass: #MessageNodeCollector
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-StParseNodeVisitor subclass: #StSemanticAnalyser
-	instanceVariableNames: 'methodNode scopeStack methodClass instVars scopeDepth evaluationContext evaluationPools literals stringLiterals addToFrame specialSelectors tempDecls isStub inStaticExpression'
-	classVariableNames: 'OptimizedMessages RestrictedSelectors'
+StParseNodeAnalyzer subclass: #StSemanticAnalyser
+	instanceVariableNames: 'isStub'
+	classVariableNames: ''
 	poolDictionaries: 'SmalltalkParseErrorCodes'
 	classInstanceVariableNames: ''!
 StNumberLiteralToken subclass: #StNumberStylingToken
@@ -1115,14 +1149,14 @@ StNumberLiteralToken subclass: #StNumberStylingToken
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 View subclass: #MenuComposerView
-	instanceVariableNames: 'selectionIndex conflictingAccelerators conflictingMnemonics'
+	instanceVariableNames: 'selectionIndex painter'
 	classVariableNames: ''
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
 ContainerView subclass: #MenuComposerArena
 	instanceVariableNames: 'dragImageList dragPoint dragMenuIndex dragSource _unused'
 	classVariableNames: ''
-	poolDictionaries: ''
+	poolDictionaries: 'CommCtrlConstants'
 	classInstanceVariableNames: ''!
 ShellView subclass: #DebuggerShellView
 	instanceVariableNames: ''
@@ -1134,18 +1168,13 @@ DialogView subclass: #WalkbackDialog
 	classVariableNames: 'CallStackId Commands IconId'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+ImageViewAbstract subclass: #ImageListView
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
 ImageView subclass: #ViewComposerArena
 	instanceVariableNames: 'composer'
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-MenuComposerView subclass: #ContextMenuComposerView
-	instanceVariableNames: 'itemWidth acceleratorOffset submenuOffset textOffset'
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-MenuComposerView subclass: #MenuBarComposerView
-	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -1294,7 +1323,7 @@ publishedAspectsOfInstances
 	| aspects |
 	aspects := super publishedAspectsOfInstances.
 	aspects add: (Aspect name: #receiver).
-	#(#argumentCount #envTempCount #stackTempCount) 
+	#(#argumentCount #envTempCount #stackTempCount #initialIP)
 		do: [:each | aspects add: ((Aspect integer: each)
 						beReadOnly;
 						yourself)].
@@ -1907,6 +1936,8 @@ publishedAspectsOfInstances
 		add: (Aspect name: #byteCodes) beReadOnly;
 		add: (Aspect multilineString: #disassembly) beReadOnly;
 		add: (Aspect name: #literals);
+		add: (Aspect collection: #tempsMap) beReadOnly;
+		add: (Aspect collection: #textMap) beReadOnly;
 		yourself! !
 !CompiledCode class categoriesFor: #publishedAspectsOfInstances!constants!development!public! !
 
@@ -2460,6 +2491,26 @@ example1
 	shell show! !
 !FramingLayout class categoriesFor: #example1!examples!public! !
 
+!GdiplusImage class methodsFor!
+
+newInstanceAspect: aSymbol class: aspectClass 
+	"Private - Answer a new <Aspect> of the class, aspectClass, and with name, aSymbol, 
+    	which is appropriate for representing aspects of the receiver's type."
+
+	^(aspectClass name: aSymbol
+		presenterBlock: 
+			[:p :m | 
+			| imagePresenter |
+			imagePresenter := ImagePresenter 
+						create: 'Gdiplus view'
+						in: p
+						on: m.
+			imagePresenter view isWholeBackgroundErased: true.
+			imagePresenter])
+		bePresenterBlockReadOnly;
+		yourself! !
+!GdiplusImage class categoriesFor: #newInstanceAspect:class:!adapters!development!private! !
+
 !GridLayout class methodsFor!
 
 publishedAspectsOfInstances
@@ -2539,6 +2590,19 @@ publishedEventsOfInstances
 !IconicListAbstract class categoriesFor: #publishedAspectsOfInstances!constants!development!public! !
 !IconicListAbstract class categoriesFor: #publishedEventsOfInstances!development!events!public! !
 
+!ImagePresenter class methodsFor!
+
+resource_ImageList_view
+	"Answer the literal data from which the 'ImageList view' resource can be reconstituted.
+	DO NOT EDIT OR RECATEGORIZE THIS METHOD.
+
+	If you wish to modify this resource evaluate:
+	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_ImageList_view)
+	"
+
+	^#(#'!!STL' 3 788558 10 ##(Smalltalk.STBViewProxy) 8 ##(Smalltalk.ImageListView) 98 21 0 0 98 2 8 1140850944 1 416 721990 2 ##(Smalltalk.ValueHolder) 0 32 1310726 ##(Smalltalk.EqualitySearchPolicy) 0 524550 ##(Smalltalk.ColorRef) 8 4278190080 0 7 0 0 0 416 0 0 852486 ##(Smalltalk.NullConverter) 0 0 0 0 8 #normal 1 0 8 #none 983302 ##(Smalltalk.MessageSequence) 202 208 98 1 721670 ##(Smalltalk.MessageSend) 8 #createAt:extent: 98 2 328198 ##(Smalltalk.Point) 3839 21 802 225 201 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 127 7 0 0 10 0 0 0 239 7 0 0 110 0 0 0] 98 0 802 193 193 0 27 )! !
+!ImagePresenter class categoriesFor: #resource_ImageList_view!public!resources-views! !
+
 !ImageViewAbstract class methodsFor!
 
 publishedAspectsOfInstances
@@ -2597,6 +2661,13 @@ choose
 newBatchAccessor
 	^IndexedInstVarBatchAccessor subject: self batchSize: self publishedKeyedAspectsBatchSize! !
 !Interval categoriesFor: #newBatchAccessor!public! !
+
+!KernelLibrary methodsFor!
+
+queryThreadCycleTime: anExternalHandle cycleTime: aULARGE_INTEGER
+	<stdcall: bool QueryThreadCycleTime handle qword*>
+	^self invalidCall! !
+!KernelLibrary categoriesFor: #queryThreadCycleTime:cycleTime:!public!win32 functions-performance monitoring! !
 
 !LayoutManager methodsFor!
 
@@ -2783,17 +2854,18 @@ newAspect: aSymbol class: aspectClass
 
 !Menu methodsFor!
 
-composerViewClass
-    	"Private - Answer the class of view used for displaying the receiver."
-    
-    	^ContextMenuComposerView!
-
 edit
     	"Private - Edit the receiver in a dialog box."
     
-    	(MenuDialog createOn: self) showModal! !
-!Menu categoriesFor: #composerViewClass!constants!development!private! !
+    	(MenuDialog createOn: self) showModal!
+
+painterClass
+	"Private - Answer the class of painter used for rendering the receiver in a
+	MenuComposerView."
+
+	^PopupMenuPainter! !
 !Menu categoriesFor: #edit!constants!development!private! !
+!Menu categoriesFor: #painterClass!constants!development!private! !
 
 !Menu class methodsFor!
 
@@ -2817,11 +2889,12 @@ publishedAspectsOfInstances
 
 !MenuBar methodsFor!
 
-composerViewClass
-    	"Private - Answer the class of view used for displaying the receiver."
-    
-    	^MenuBarComposerView! !
-!MenuBar categoriesFor: #composerViewClass!constants!development!private! !
+painterClass
+	"Private - Answer the class of painter used for rendering the receiver in a
+	MenuComposerView."
+
+	^MenuBarPainter! !
+!MenuBar categoriesFor: #painterClass!constants!development!private! !
 
 !MenuBar class methodsFor!
 
@@ -3276,6 +3349,27 @@ publishedEventsOfInstances
 !Package class categoriesFor: #publishedAspectsOfInstances!constants!development!public! !
 !Package class categoriesFor: #publishedEventsOfInstances!development!events!public! !
 
+!PackageManager methodsFor!
+
+getVersionInfoFor: aCompiledMethod 
+	"Part of the StsManager protocol implemented here for systems which do not have STS
+	installed. Answer nil to indicate that we cannot supply version information for
+	aCompiledMethod"
+
+	^nil!
+
+isConnected
+	"Part of the StsManager protocol implemented here for systems which do not have STS
+	installed. Answer nil to indicate that we are not connected to a repository"
+
+	^false!
+
+sourceControl
+	^self! !
+!PackageManager categoriesFor: #getVersionInfoFor:!public!source tracking system! !
+!PackageManager categoriesFor: #isConnected!public!source tracking system! !
+!PackageManager categoriesFor: #sourceControl!accessing!public! !
+
 !PackageManager class methodsFor!
 
 publishedEventsOfInstances
@@ -3293,6 +3387,7 @@ publishedEventsOfInstances
 		add: #resourceRepackaged:from:to:;
 		add: #globalRepackaged:from:to:;
 		add: #aboutToSave:;
+		add: #packageInstalled:;
 		yourself! !
 !PackageManager class categoriesFor: #publishedEventsOfInstances!development!events!public! !
 
@@ -3526,40 +3621,40 @@ step: steps
     
     	SessionManager inputState queueDeferredAction: (MessageSend receiver: self selector: #primStep: argument: steps)!
 
-walkback: aString topFrame: aStackFrame resumable: aBoolean 
+walkback: aString topFrame: aStackFrame resumable: aBoolean
 	"Private - Bring up a walkback window on the receiver with the specified title
 	and with aStackFrame as the top frame of the stack trace"
 
 	| answer traceStream debuggable titleString |
 	Processor enableAsyncEvents: true.
-	titleString := aString 
-				collect: [:each | (each == Character cr or: [each == Character lf]) ifTrue: [$\] ifFalse: [each]].
-	debugger isNil 
+	titleString := aString
+				collect: [:each | (each == $\r or: [each == $\n]) ifTrue: [$\] ifFalse: [each]].
+	debugger isNil
 		ifFalse: 
-			[^debugger 
+			[^debugger
 				onWalkback: titleString
 				topFrame: aStackFrame
 				resumable: aBoolean].
 	traceStream := String writeStream: 512.
 	
-	[self 
+	[self
 		stackFramesFrom: aStackFrame
 		depth: 50
 		do: 
-			[:frame | 
-			frame method selector == #wmPaint:wParam:lParam: 
+			[:frame |
+			frame method selector == #wmPaint:wParam:lParam:
 				ifTrue: [frame receiver validate	"prevent recusive paint walkback"].
 			traceStream
 				display: frame;
-				cr]] 
+				cr]]
 			on: Error
 			do: [:e | e notify].
 
 	"Only show a walkback if the Debugger's global option, #showWalkbacks, is on"
 	debuggable := self canDebug.
-	answer := (debuggable not or: [self debuggerClass showWalkbacks]) 
+	answer := (debuggable not or: [self debuggerClass showWalkbacks])
 				ifTrue: 
-					[self 
+					[self
 						showWalkback: titleString
 						callStack: traceStream contents
 						debuggable: debuggable
@@ -3567,13 +3662,15 @@ walkback: aString topFrame: aStackFrame resumable: aBoolean
 				ifFalse: 
 					[aBoolean ifTrue: [Sound warningBeep] ifFalse: [Sound errorBeep].
 					#debug].
-	answer == #debug 
+	answer == #debug
 		ifTrue: 
-			[[self 
+			[
+			[self
 				debug: titleString
 				topFrame: aStackFrame
-				resumable: aBoolean] postToMessageQueue.
-			self suspendUnconditionally ]
+				resumable: aBoolean]
+					postToMessageQueue.
+			self suspendUnconditionally]
 		ifFalse: [answer == #terminate ifTrue: [self terminate]]
 	"Drop through to resume..."! !
 !Process categoriesFor: #attachDebugger:topFrame:resumable:!development!private! !
@@ -4099,7 +4196,7 @@ publishedAspectsOfInstances
 publishedAspects
 	"Answer a <LookupTable> of the <Aspect>s published by the receiver."
 
-	| createPresenter |
+	| createPresenter indicStyles |
 	createPresenter := 
 			[:p :m | 
 			(ScintillaStylesCollectionPresenter 
@@ -4112,6 +4209,7 @@ publishedAspects
 							yourself);
 				normalStyle: (self styleNamed: #normal);
 				yourself].
+	indicStyles := indicatorStyles keys asSortedCollection.
 	^(super publishedAspects)
 		add: (Aspect name: #textStyles presenterBlock: createPresenter) beImmutable;
 		add: (Aspect name: #annotationStyles presenterBlock: createPresenter) beImmutable;
@@ -4137,7 +4235,7 @@ publishedAspectsOfInstances
 					addEvaluationFrom: (Array with: ScintillaMarkerDefinition name , ' new')) beImmutable;
 		add: (Aspect choice: #whitespaceVisibility from: self whitespaceVisibilityLevels);
 		add: (Aspect dictionary: #braceChars) beImmutable;
-		add: (Aspect choice: #lexer from: (Lexers copyWithout: nil) asSortedCollection);
+		add: (Aspect choice: #lexer from: (self lexerLanguages copyWithout: nil) asSortedCollection);
 		add: (Aspect choice: #foldMarkerStyle
 					from: (Array with: nil) , self foldMarkerStyles asSortedCollection);
 		add: (Aspect choice: #caretStyle from: self caretStyles asSortedCollection);
@@ -4379,16 +4477,6 @@ publishedAspectsOfInstances
 	^aspects! !
 !Slider class categoriesFor: #publishedAspectsOfInstances!constants!development!public! !
 
-!SmalltalkScanner methodsFor!
-
-recoverFromExpectChar
-	^self literalErrorToken: nil start: stream position!
-
-recoverFromUnterminatedLiteral
-	^self literalErrorToken: buffer contents start: self previousStepPosition! !
-!SmalltalkScanner categoriesFor: #recoverFromExpectChar!error handling!private! !
-!SmalltalkScanner categoriesFor: #recoverFromUnterminatedLiteral!error handling!private! !
-
 !SourceManager methodsFor!
 
 compressSourcesWith: aProgressDialog
@@ -4479,7 +4567,6 @@ debugIpFor: debugMethod
 				ifTrue: [(debugMap at: i) key]
 				ifFalse: 
 					[| debugDispatcher steps |
-					self halt.
 					self assert: [offset < 0].
 					debugDispatcher := debugMethod byteCodeDispatcher.
 					i > 1 
@@ -4554,6 +4641,12 @@ publishedAspectsOfInstances
 		add: (Aspect name: #environment);
 		yourself! !
 !StackFrame class categoriesFor: #publishedAspectsOfInstances!constants!development!public! !
+
+!StAssignmentNode methodsFor!
+
+displayOn: aStream
+	aStream nextPutAll: ':='! !
+!StAssignmentNode categoriesFor: #displayOn:!printing!public! !
 
 !StaticBitmap class methodsFor!
 
@@ -4653,17 +4746,65 @@ publishedAspectsOfInstances
     		yourself! !
 !StatusBarItemAbstract class categoriesFor: #publishedAspectsOfInstances!constants!development!public! !
 
+!StBlockNode methodsFor!
+
+displayOn: aStream
+	aStream nextPutAll: '[]'! !
+!StBlockNode categoriesFor: #displayOn:!printing!public! !
+
+!StCascadeNode methodsFor!
+
+displayOn: aStream
+	aStream nextPutAll: 'Cascade'
+! !
+!StCascadeNode categoriesFor: #displayOn:!printing!public! !
+
+!StLiteralArrayNode methodsFor!
+
+displayOn: aStream
+	aStream nextPutAll: '#()'! !
+!StLiteralArrayNode categoriesFor: #displayOn:!printing!public! !
+
 !StLiteralToken methodsFor!
 
 textStyle
 	^self value literalTextStyle! !
 !StLiteralToken categoriesFor: #textStyle!public!visitor/double dispatching! !
 
+!StLiteralValueNode methodsFor!
+
+displayOn: aStream
+	self value printOn: aStream! !
+!StLiteralValueNode categoriesFor: #displayOn:!printing!public! !
+
+!StMessageNode methodsFor!
+
+displayOn: aStream
+	aStream
+		nextPutAll: 'Msg ';
+		print: self selector! !
+!StMessageNode categoriesFor: #displayOn:!development!printing!public! !
+
 !StNumberLiteralToken methodsFor!
 
 textStyle
 	^#literalNumber! !
 !StNumberLiteralToken categoriesFor: #textStyle!public!visitor/double dispatching! !
+
+!StOptimizedNode methodsFor!
+
+displayOn: aStream
+	aStream nextPutAll: '##()'! !
+!StOptimizedNode categoriesFor: #displayOn:!printing!public! !
+
+!StPrimitiveNode methodsFor!
+
+displayOn: aStream
+	aStream
+		nextPutAll: '<Primitive: ';
+		display: self primitiveIndex;
+		nextPut: $>! !
+!StPrimitiveNode categoriesFor: #displayOn:!printing!public! !
 
 !StProgramNode methodsFor!
 
@@ -4702,30 +4843,34 @@ preComments
 !StProgramNode categoriesFor: #postComments!accessing!public! !
 !StProgramNode categoriesFor: #preComments!accessing!public! !
 
+!StReturnNode methodsFor!
+
+displayOn: aStream
+	aStream nextPut: $^! !
+!StReturnNode categoriesFor: #displayOn:!printing!public! !
+
 !String methodsFor!
 
 aspectDisplayOn: aStream
-  	"Private - Append a single-line textual representation of the receiver to the <puttableStream>
+	"Private - Append a single-line textual representation of the receiver to the <puttableStream>
   	argument in a form that a user viewing the receiver as the value of a published aspect would 
   	like to see it. Typically we use #displayOn: but some classes of object can use alternate display 
   	formats. In this case we want to keep to a reasonable length and remove line delimiters.
   	N.B. This is a development time only method that supports the PublishedAspectInspector."
-  
-  	| i max size lf cr |
-  	aStream nextPut: $'.
-  	size := self size.
-  	max := size min: Aspect maxDisplayCharacters - 2.
-  	i := 0.
-  	lf := Character lf.
-  	cr := Character cr.
-  	[i < max] whileTrue: 
-  			[| each |
-  			each := self at: (i := i + 1).
-  			(each == cr or: [each == lf]) 
-  				ifTrue: [max := 0]
-  				ifFalse: [aStream nextPut: each]].
-  	i < size ifTrue: [aStream nextPutAll: ' ...'].
-  	aStream nextPut: $'!
+
+	| i max size |
+	aStream nextPut: $'.
+	size := self size.
+	max := size min: Aspect maxDisplayCharacters - 2.
+	i := 0.
+	[i < max] whileTrue: 
+			[| each |
+			each := self at: (i := i + 1).
+			(each == $\r or: [each == $\n])
+				ifTrue: [max := 0]
+				ifFalse: [aStream nextPut: each]].
+	i < size ifTrue: [aStream nextPutAll: ' ...'].
+	aStream nextPut: $'!
 
 debugPrintString
 	^self printString!
@@ -4763,6 +4908,12 @@ newInstanceAspect: aSymbol class: aspectClass
 	^aspectClass string: aSymbol! !
 !StringField class categoriesFor: #newInstanceAspect:class:!adapters!development!private! !
 
+!StSequenceNode methodsFor!
+
+displayOn: aStream
+	aStream nextPutAll: '...'! !
+!StSequenceNode categoriesFor: #displayOn:!printing!public! !
+
 !StToken methodsFor!
 
 postComments
@@ -4788,6 +4939,14 @@ preComments
 			all select: [:each | each stop < start]]! !
 !StToken categoriesFor: #postComments!accessing!public! !
 !StToken categoriesFor: #preComments!accessing!public! !
+
+!StVariableNode methodsFor!
+
+displayOn: aStream
+	aStream
+		nextPutAll: 'Var ';
+		print: self name! !
+!StVariableNode categoriesFor: #displayOn:!development!printing!public! !
 
 !StyledGradientBrush class methodsFor!
 
@@ -4916,11 +5075,33 @@ publishedEventsOfInstances
 
 !Time class methodsFor!
 
+cpuCyclesToRun: timedBlock
+	"Answer the number of CPU cycles consumed during the evaluation of timedBlock. This can be
+	used to compare the efficiency of small code sequences, but you should expect some variation
+	depending on GC activity, and the number is only useful for relative comparisons."
+
+	| lib start stop hThread sem |
+	lib := KernelLibrary default.
+	hThread := lib getCurrentThread.
+	start := ULARGE_INTEGER new.
+	stop := ULARGE_INTEGER new.
+	sem := Semaphore new.
+	
+	[
+	[lib queryThreadCycleTime: hThread cycleTime: start.
+	timedBlock value.
+	lib queryThreadCycleTime: hThread cycleTime: stop]
+			ensure: [sem signal]]
+			forkAt: Processor userInterruptPriority.
+	sem wait.
+	^stop value - start value!
+
 newInstanceAspect: aSymbol class: aspectClass 
 	"Private - Answer a new <Aspect> of the class, aspectClass, and with name, aSymbol, 
 	which is appropriate for representing aspects of the receiver's type."
 
 	^aspectClass time: aSymbol! !
+!Time class categoriesFor: #cpuCyclesToRun:!operations!public! !
 !Time class categoriesFor: #newInstanceAspect:class:!adapters!development!private! !
 
 !TimeToText class methodsFor!
@@ -5564,6 +5745,15 @@ publishedEventsOfInstances
     		yourself.
     ! !
 !WeakSet class categoriesFor: #publishedEventsOfInstances!development!events!public! !
+
+!WinImageList class methodsFor!
+
+newInstanceAspect: aSymbol class: aspectClass 
+	"Private - Answer a new <Aspect> of the class, aspectClass, and with name, aSymbol, 
+    	which is appropriate for representing aspects of the receiver's type."
+
+	^aspectClass imageList: aSymbol! !
+!WinImageList class categoriesFor: #newInstanceAspect:class:!adapters!development!private! !
 
 "End of package definition"!
 

@@ -11,6 +11,12 @@ ShellsortAlgorithmTest comment: ''!
 !ShellsortAlgorithmTest methodsFor!
 
 algorithmToTest
-	^ShellsortAlgorithm! !
+	^ShellsortAlgorithm!
+
+integerSortSize
+	"Shell sort is slow, so be a bit less ambitious"
+
+	^1000! !
 !ShellsortAlgorithmTest categoriesFor: #algorithmToTest!private!unit tests! !
+!ShellsortAlgorithmTest categoriesFor: #integerSortSize!constants!private! !
 

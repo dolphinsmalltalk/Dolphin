@@ -5,8 +5,11 @@
 
 "Boot a workable Dolphin from the boot image"
 
+"Apply any patches not yet consolidated into the boot image that are required to load the system package"
+SourceManager default fileIn: 'PreBoot.st'.
+
 "Reload the base package constituents to reflect any changes since the boot image was created."
-SourceManager default fileIn: 'Core\Object Arts\Dolphin\Base\BootSessionManager.cls'.
+SourceManager default fileIn: 'Core\Object Arts\Dolphin\Base\BootSessionManager.cls'!
 SessionManager current reloadSystemPackage!
 
 "Install some bare bones packages to get the Installation Management system working"
@@ -69,8 +72,16 @@ ExternalStructure allSubclasses do: [:e | e byteSize]!
 "Mark all the booted packages as base"
 Package manager markAllPackagesAsBase!
 
-SourceManager default compressSources.
-SessionManager current saveImage!
+"Save the booted image"
+| devsesh |
+SourceManager default flushChanges.
+devsesh := SessionManager current.
+devsesh onPreSaveImage.
+[devsesh primSnapshot: devsesh imageFileName
+	backup: false
+	type: 0
+	maxObjects: 24576*1024
+] ensure: [devsesh onPostSaveImage]!
 
 "Remove rogue .img and unnecessary .chg files"
 File delete: (File default: SessionManager current imagePath extension: 'img').

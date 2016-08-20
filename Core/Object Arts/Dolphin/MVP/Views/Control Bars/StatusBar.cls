@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ControlBarAbstract subclass: #StatusBar
 	instanceVariableNames: 'parts leftOverSeparator layoutManager'
@@ -84,16 +84,14 @@ defaultExtent
 defaultWindowStyle
 	"Private - Answer a default base style to use when creating the receiver"
 
-	^super defaultWindowStyle
-		bitOr: ##(SBARS_SIZEGRIP|SBARS_TOOLTIPS)!
+	^super defaultWindowStyle bitOr: ##(SBARS_SIZEGRIP | SBARS_TOOLTIPS)!
 
 getWindowText
 	"Private - Answers the text from the receiver. There is a bug in
 	the status common control which will fail if the first part has
 	SBT_OWNERDRAW set."
 
-	^''
-!
+	^''!
 
 getWindowTextLength
 	"Private - Answers the length of text for the receiver. There is
@@ -124,10 +122,7 @@ hasSizeGrip: aBoolean
 hasToolTips
 	"Answer whether or not the receiver has tool tips (i.e. the SBARS_TOOLTIPS style)."
 
-	^self baseStyleAllMask: SBARS_TOOLTIPS
-
-
-!
+	^self baseStyleAllMask: SBARS_TOOLTIPS!
 
 hasToolTips: aBoolean 
 	"Set whether or not the receiver has tool tips (i.e. the SBARS_TOOLTIPS style)."
@@ -145,7 +140,7 @@ indexFromPoint: aPoint
 
 	^(1 to: parts size) detect: [:i | (self itemRect: i) containsPoint: aPoint] ifNone: [0]!
 
-indexOfItem: part
+indexOfItem: part 
 	"Private - Answer the 1-based <integer> index of part."
 
 	^parts identityIndexOf: part!
@@ -159,16 +154,13 @@ initialize
 	return an error."
 
 	super initialize.
-	(leftOverSeparator := StatusBarNullItem separator: 0)
-		parentView: self.
-	parts := Array with: leftOverSeparator
-!
+	(leftOverSeparator := StatusBarNullItem separator: 0) parentView: self.
+	parts := Array with: leftOverSeparator!
 
-itemAtIndex: anIntegerIndex
+itemAtIndex: anIntegerIndex 
 	"Answers the status bar item at anIntegerIndex in the receiver"
 
-	^parts at: anIntegerIndex
- !
+	^parts at: anIntegerIndex!
 
 itemFromId: dwItemSpec 
 	"Private - Answers the sub-item of the receiver with the specified <integer> item spec."
@@ -190,13 +182,13 @@ items
 
 	^parts asOrderedCollection!
 
-items: tools
+items: tools 
 	"Private - Sets the receiver's collection of <StatusItem>s to those in 
 	the <collection>, tools.
 	Implementation Note: The items are stored as an <Array> to save space."
 
 	parts := tools asArray.
-	self recreate.!
+	self recreate!
 
 layout: aLayoutContext 
 	"Private - Recalculate the geometry of the receiver."
@@ -212,7 +204,7 @@ layoutManager
 
 	^layoutManager!
 
-layoutManager: aLayoutManager
+layoutManager: aLayoutManager 
 	"Set the layout manager for the receiver to aLayoutManager"
 
 	layoutManager := aLayoutManager.
@@ -286,12 +278,15 @@ sbGetRect: anInteger
 			].
 	^rect!
 
-sbSetTipText: iPart text: lpszToolTip
+sbSetTipText: iPart text: lpszToolTip 
 	"Private - Send an SB_SETTIPTEXT message to the control to set the tool-tip text
 	for the item of the receiver with zero-based <integer> index, iPart, to the <readableString>,
 	aString."
 
-	self sendMessage: SB_SETTIPTEXT wParam: iPart lpParam: lpszToolTip!
+	self 
+		sendMessage: SB_SETTIPTEXT
+		wParam: iPart
+		lpParam: lpszToolTip!
 
 scrollbarWidth
 	^SystemMetrics current scrollThumbExtent x!
@@ -321,20 +316,20 @@ setRightEdges: anInteger
 		lpParam: edges) == 0 
 		ifTrue: [^self errorInCommonControlCall]!
 
-setText: aStatusBarItem
+setText: aStatusBarItem 
 	"Private - Set the SB_SETTEXT of the receivers common control for
 	aStatusOwnerDraw."
 
 	| index text |
-	index := self indexOfItem: aStatusBarItem.
+	(index := self indexOfItem: aStatusBarItem) == 0 ifTrue: [^self].
 	text := aStatusBarItem getText.
 	(self 
 		sendMessage: SB_SETTEXT
-		wParam: (aStatusBarItem style bitOr: index-1)
+		wParam: (aStatusBarItem style bitOr: index - 1)
 		lParam: text yourAddress) == 0 
 		ifTrue: [^self errorInCommonControlCall]!
 
-setWindowText: aString
+setWindowText: aString 
 	"Private - Sets the text of the receiver. There is a bug in
 	the status common control which will fail if the first part has
 	SBT_OWNERDRAW set."
@@ -402,13 +397,12 @@ resource_Status_bar
 	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Status_bar)
 	"
 
-	^#(#'!!STL' 3 788558 10 ##(Smalltalk.STBViewProxy)  8 ##(Smalltalk.StatusBar)  98 18 0 0 98 2 8 1409288460 1 416 0 524550 ##(Smalltalk.ColorRef)  8 4278190080 0 5 0 263174 ##(Smalltalk.Font)  0 16 459014 ##(Smalltalk.LOGFONT)  8 #[243 255 255 255 0 0 0 0 0 0 0 0 0 0 0 0 144 1 0 0 0 0 0 0 3 2 1 34 65 114 105 97 108 0 159 4 0 134 63 1 0 0 204 53 63 1 2 0 20 59 0 0 0 0 247 0 5 86 111 1] 328198 ##(Smalltalk.Point)  193 193 0 416 0 8 4294903525 234 256 98 0 98 1 853766 ##(Smalltalk.StatusBarItem)  1 -1 416 0 459270 ##(Smalltalk.Message)  8 #displayString 98 0 754 8 #iconImageIndex 688 1049670 1 ##(Smalltalk.IconImageManager)  1115142 ##(Smalltalk.StatusBarNullItem)  513 1 416 0 0 983302 ##(Smalltalk.MessageSequence)  202 208 98 1 721670 ##(Smalltalk.MessageSend)  8 #createAt:extent: 98 2 626 3359 21 626 701 45 416 983302 ##(Smalltalk.WINDOWPLACEMENT)  8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 143 6 0 0 10 0 0 0 237 7 0 0 32 0 0 0] 98 0 626 193 193 0 27 )!
+	^#(#'!!STL' 3 788558 10 ##(Smalltalk.STBViewProxy) 8 ##(Smalltalk.StatusBar) 98 18 0 0 98 2 8 1409288460 1 416 0 524550 ##(Smalltalk.ColorRef) 8 4278190080 0 5 0 263174 ##(Smalltalk.Font) 0 16 459014 ##(Smalltalk.LOGFONT) 8 #[243 255 255 255 0 0 0 0 0 0 0 0 0 0 0 0 144 1 0 0 0 0 0 0 3 2 1 34 65 114 105 97 108 0 159 4 0 134 63 1 0 0 204 53 63 1 2 0 20 59 0 0 0 0 247 0 5 86 111 1] 328198 ##(Smalltalk.Point) 193 193 0 416 0 8 4294903525 234 256 98 0 98 1 853766 ##(Smalltalk.StatusBarItem) 1 -1 416 0 459270 ##(Smalltalk.Message) 8 #displayString 98 0 754 8 #iconImageIndex 688 1049670 1 ##(Smalltalk.IconImageManager) 1115142 ##(Smalltalk.StatusBarNullItem) 513 1 416 0 0 983302 ##(Smalltalk.MessageSequence) 202 208 98 1 721670 ##(Smalltalk.MessageSend) 8 #createAt:extent: 98 2 626 3359 21 626 701 45 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 143 6 0 0 10 0 0 0 237 7 0 0 32 0 0 0] 98 0 626 193 193 0 27)!
 
 winClassName
 	"Private - Answer the name of the Windows window class to use when realizing the receiver."
 
-	^'msctls_statusbar32'
-! !
+	^'msctls_statusbar32'! !
 !StatusBar class categoriesFor: #resource_Status_bar!public!resources-views! !
 !StatusBar class categoriesFor: #winClassName!constants!private! !
 

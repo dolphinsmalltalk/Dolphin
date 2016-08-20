@@ -485,6 +485,6 @@ testUI8
 !VARIANTTest class methodsFor!
 
 supportsI8
-	^OSVERSIONINFO current isWinXPOrLater! !
+	^VMLibrary default isWindowsXPOrGreater! !
 !VARIANTTest class categoriesFor: #supportsI8!private!testing! !
 

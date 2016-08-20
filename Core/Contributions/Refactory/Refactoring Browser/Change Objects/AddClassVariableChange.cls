@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 2002 release 5.00"!
+"Filed out from Dolphin Smalltalk 7"!
 
 RefactoryVariableChange subclass: #AddClassVariableChange
 	instanceVariableNames: ''
@@ -19,7 +19,7 @@ changeString
 		with: self displayClassName!
 
 changeSymbol
-	^#addClassVarName:!
+	^#addClassVarNamed:!
 
 printOn: aStream 
 	aStream

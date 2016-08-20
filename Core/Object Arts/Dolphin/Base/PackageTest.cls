@@ -11,15 +11,16 @@ PackageTest comment: ''!
 !PackageTest methodsFor!
 
 checkNoTestPackageContents
-	| scribbleTestClass scribbleTest scribbleTestResourceMethod scribbleTestDefaultViewId scribbleTestViewId |
+	| scribbleTestClass scribbleTest scribbleTestResourceMethod scribbleTestDefaultViewId scribbleTestViewId scribbleClass |
 	scribbleTestClass := Smalltalk at: #ScribbleTest ifAbsent: [].
 	self assert: scribbleTestClass isNil.
-	self assert: (Scribble compiledMethodAt: #looseA ifAbsent: []) isNil.
-	self assert: (Scribble compiledMethodAt: #looseC ifAbsent: []) isNil.
-	self assert: (Scribble class compiledMethodAt: #resource_Scribble_test ifAbsent: []) isNil!
+	scribbleClass := Smalltalk at: #Scribble.
+	self assert: (scribbleClass compiledMethodAt: #looseA ifAbsent: []) isNil.
+	self assert: (scribbleClass compiledMethodAt: #looseC ifAbsent: []) isNil.
+	self assert: (scribbleClass class compiledMethodAt: #resource_Scribble_test ifAbsent: []) isNil!
 
 checkTestPackageContents
-	| scribbleTestPackage scribbleTestClass scribbleTest scribbleTestResourceMethod scribbleTestDefaultViewId scribbleTestViewId |
+	| scribbleTestPackage scribbleTestClass scribbleTest scribbleTestResourceMethod scribbleTestDefaultViewId scribbleTestViewId scribbleClass |
 	scribbleTestPackage := loadedPackages first.
 	self assert: (scribbleTestPackage name beginsWith: 'ScribbleTest').
 	scribbleTestClass := Smalltalk at: #ScribbleTest.
@@ -28,16 +29,17 @@ checkTestPackageContents
 	scribbleTestResourceMethod := scribbleTestClass class 
 				compiledMethodAt: #resource_Default_scribble_test_view.
 	self assert: scribbleTestResourceMethod owningPackage = scribbleTestPackage.
-	self assert: (Scribble compiledMethodAt: #looseA) owningPackage = scribbleTestPackage.
-	self assert: (Scribble compiledMethodAt: #looseC) owningPackage = scribbleTestPackage.
-	self assert: (Scribble class compiledMethodAt: #resource_Scribble_test) owningPackage 
+	scribbleClass := Smalltalk at: #Scribble.
+	self assert: (scribbleClass compiledMethodAt: #looseA) owningPackage = scribbleTestPackage.
+	self assert: (scribbleClass compiledMethodAt: #looseC) owningPackage = scribbleTestPackage.
+	self assert: (scribbleClass class compiledMethodAt: #resource_Scribble_test) owningPackage 
 				= scribbleTestPackage.
 	self assert: scribbleTestPackage resourceIdentifiers size = 2.
 	scribbleTestDefaultViewId := ResourceIdentifier class: scribbleTestClass
 				name: 'Default scribble test view'.
 	self assert: (scribbleTestPackage resourceIdentifiers includes: scribbleTestDefaultViewId).
 	self assert: scribbleTestDefaultViewId owningPackage = scribbleTestPackage.
-	scribbleTestViewId := ResourceIdentifier class: Scribble name: 'Scribble test'.
+	scribbleTestViewId := ResourceIdentifier class: scribbleClass name: 'Scribble test'.
 	self assert: (scribbleTestPackage resourceIdentifiers includes: scribbleTestViewId).
 	self assert: scribbleTestViewId owningPackage = scribbleTestPackage.
 	
@@ -231,12 +233,6 @@ testForwardRefLoadPac
 		close.
 	[loadedPackages := Package manager install: pacName] ensure: [File delete: pacName]!
 
-testImageStripperPrereqs
-	"#1476"
-
-	self assert: ((Package manager packageNamed: 'Autoplay') prerequisiteNames asArray 
-				includes: 'Lagoon Image Stripper')!
-
 testLoad21Pac
 	self loadAndTestPackage: 'ScribbleTestPackages\2.1\ScribbleTest21.pac'!
 
@@ -264,108 +260,6 @@ testPackages
 		with: DolphinTestPackages current b
 		with: DolphinTestPackages current c!
 
-testPacTimestampUpdate
-	| a stamp stream text warned |
-	a := DolphinTestPackages current a.
-	self deny: a isUsingPAX.
-	self deny: a isRenegade.
-	2 timesRepeat: 
-			[stamp := a timestamp.
-			warned := false.
-			self assert: ([a save] on: Warning
-						do: 
-							[:ex | 
-							warned := true.
-							false]).
-			self deny: warned.
-			self deny: a isUsingPAX.
-			self deny: a isRenegade.
-			self assert: a timestamp asInteger > stamp asInteger.
-			Processor sleep: 1].
-	stream := FileStream read: a packageFileName text: true.
-	text := stream contents.
-	stream close.
-	self deny: a isRenegade.
-	Processor sleep: 10.
-	stream := FileStream write: a packageFileName text: true.
-	stream nextPutAll: text.
-	stream close.
-	self assert: a isRenegade.
-	self deny: ([a save] on: Warning do: [:ex | false]).
-	self assert: a isRenegade.
-	warned := false.
-	self assert: ([a save] on: Warning
-				do: 
-					[:ex | 
-					warned := true.
-					ex resume]).
-	self assert: warned.
-	self deny: a isRenegade.
-	warned := false.
-	self assert: ([a save] on: Warning
-				do: 
-					[:ex | 
-					warned := true.
-					false]).
-	self deny: warned.
-	"Finally remove and reinstall it"
-	a uninstall.
-	a := (Package manager install: a packageFileName) first.
-	self assert: a name = 'A'.
-	self deny: a isRenegade!
-
-testPaxTimestampUpdate
-	| b stamp stream text warned |
-	b := DolphinTestPackages current b.
-	self deny: b isRenegade.
-	b fileOutAll.
-	self assert: b isUsingPAX.
-	self deny: b isRenegade.
-	2 timesRepeat: 
-			[stamp := b timestamp.
-			warned := false.
-			self assert: ([b save] on: Warning
-						do: 
-							[:ex | 
-							warned := true.
-							false]).
-			self deny: warned.
-			self assert: b isUsingPAX.
-			self deny: b isRenegade.
-			self assert: b timestamp asInteger > stamp asInteger.
-			Processor sleep: 10].
-	stream := FileStream read: b fileOutName text: true.
-	text := stream contents.
-	stream close.
-	self deny: b isRenegade.
-	Processor sleep: 10.
-	stream := FileStream write: b fileOutName text: true.
-	stream nextPutAll: text.
-	stream close.
-	self assert: b isRenegade.
-	self deny: ([b save] on: Warning do: [:ex | false]).
-	self assert: b isRenegade.
-	warned := false.
-	self assert: ([b save] on: Warning
-				do: 
-					[:ex | 
-					warned := true.
-					ex resume]).
-	self assert: warned.
-	self deny: b isRenegade.
-	warned := false.
-	self assert: ([b save] on: Warning
-				do: 
-					[:ex | 
-					warned := true.
-					false]).
-	self deny: warned.
-	"Finally remove and reinstall it"
-	b uninstall.
-	b := (Package manager install: b fileOutName) first.
-	self assert: b name = 'B'.
-	self deny: b isRenegade!
-
 testTimestampInitialized
 	self assert: Package new timestamp asInteger = 0! !
 !PackageTest categoriesFor: #checkNoTestPackageContents!private!unit tests! !
@@ -376,7 +270,6 @@ testTimestampInitialized
 !PackageTest categoriesFor: #setUp!private!unit tests! !
 !PackageTest categoriesFor: #tearDown!private!unit tests! !
 !PackageTest categoriesFor: #testForwardRefLoadPac!public!unit tests! !
-!PackageTest categoriesFor: #testImageStripperPrereqs!public!unit tests! !
 !PackageTest categoriesFor: #testLoad21Pac!public!unit tests! !
 !PackageTest categoriesFor: #testLoad40Pac!public!unit tests! !
 !PackageTest categoriesFor: #testLoad40Pax!public!unit tests! !
@@ -385,8 +278,6 @@ testTimestampInitialized
 !PackageTest categoriesFor: #testLoad60Pac!public!unit tests! !
 !PackageTest categoriesFor: #testLoad60Pax!public!unit tests! !
 !PackageTest categoriesFor: #testPackages!public!unit tests! !
-!PackageTest categoriesFor: #testPacTimestampUpdate!public!unit tests! !
-!PackageTest categoriesFor: #testPaxTimestampUpdate!public!unit tests! !
 !PackageTest categoriesFor: #testTimestampInitialized!public!unit tests! !
 
 !PackageTest class methodsFor!

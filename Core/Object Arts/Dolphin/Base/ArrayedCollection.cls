@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 SequenceableCollection subclass: #ArrayedCollection
 	instanceVariableNames: ''
@@ -68,12 +68,30 @@ includes: target
 	1 to: self size do: [:i | target = (self at: i) ifTrue: [^true]].
 	^false!
 
+inject: anObject into: aDyadicValuable
+	"Evaluate the <dyadicValuable> argument, aDyadicValuable, once for each element in the
+	receiver, passing the elements as the second argument, and passing the value of the previous
+	evaluation as the first argument, starting with the <Object> argument, initialValue. The
+	operation must answer the value it wishes to have passed as its first argument the next time
+	it is evaluated. The traversal is in the #do: order. Answer the final value of the
+	operation. This enumeration is particularly useful for performing summations and other
+	statistical operations."
+
+	"Implementation Note: Override superclass implementation for efficiency. By inlining the do:
+	implementation we can avoid requiring a full block."
+
+	| nextValue |
+	nextValue := anObject.
+	1 to: self size do: [:i | nextValue := aDyadicValuable value: nextValue value: (self at: i)].
+	^nextValue!
+
 nextIdentityIndexOf: anElement from: start to: stop
 	"Answer the index of the next occurrence of anElement in the receiver's indexable
 	variables between startIndex and stopIndex inclusive. If there are no such occurrences, answer 0.
 	Override the inherited implementation to make use of the primitive"
 
-	^self basicIdentityIndexOf: anElement from: start to: stop	!
+	<primitive: 59>
+	^super nextIdentityIndexOf: anElement from: start to: stop!
 
 nextIndexOf: anElement from: start to: stop
 	"Answer the index of the next occurrence of anElement in the receiver between 
@@ -98,7 +116,7 @@ replaceIdentity: anObject with: newElement
 	self at: index put: newElement.
 	^index!
 
-resize: anInteger
+resize: anInteger 
 	"Override back to the primitive implementation for indexable objects (see Object>>resize:)"
 
 	<primitive: 101>
@@ -129,6 +147,7 @@ sortUsing: aSortAlgorithm
 !ArrayedCollection categoriesFor: #findFirst:!public!searching! !
 !ArrayedCollection categoriesFor: #identityIncludes:!public!searching! !
 !ArrayedCollection categoriesFor: #includes:!public!searching! !
+!ArrayedCollection categoriesFor: #inject:into:!enumerating!public! !
 !ArrayedCollection categoriesFor: #nextIdentityIndexOf:from:to:!public!searching! !
 !ArrayedCollection categoriesFor: #nextIndexOf:from:to:!public!searching! !
 !ArrayedCollection categoriesFor: #replaceIdentity:with:!public!replacing! !

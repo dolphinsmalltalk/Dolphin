@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 CompiledCode variableSubclass: #CompiledExpression
 	instanceVariableNames: ''
@@ -71,6 +71,11 @@ storeSourceString: aString evaluationPools: anArray logged: aBoolean
 	self 
 		sourceDescriptor: (pools isNil ifTrue: [aString] ifFalse: [Array with: aString with: pools])!
 
+value
+	"Evaluate the expression with nil as 'self'."
+
+	^self value: nil!
+
 value: anObject
 	"Evaluate the receiver with the argument, anObject, 
 	as its receiver, answering the result."
@@ -83,5 +88,6 @@ value: anObject
 !CompiledExpression categoriesFor: #isExpression!private!testing! !
 !CompiledExpression categoriesFor: #owningPackage!accessing!public! !
 !CompiledExpression categoriesFor: #storeSourceString:evaluationPools:logged:!accessing!private! !
+!CompiledExpression categoriesFor: #value!evaluating!public! !
 !CompiledExpression categoriesFor: #value:!evaluating!public! !
 

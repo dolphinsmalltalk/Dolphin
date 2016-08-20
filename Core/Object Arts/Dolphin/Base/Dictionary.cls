@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Set variableSubclass: #Dictionary
 	instanceVariableNames: ''
@@ -20,6 +20,17 @@ Conforms to the following ANSI protocols:
 _deepCopyElementsInto: aDictionary trail: anIdentityDictionary 
 	self 
 		associationsDo: [:element | aDictionary uncheckedAdd: (element _deepCopy: anIdentityDictionary)]!
+
+= comperand
+	"Answer whether the receiver is equivalent to the <Object>, comperand. Dictionaries are
+	equal to other dictionary-like objects with the equal keys and values."
+
+	comperand == self ifTrue: [^true].
+	(comperand class conformsToProtocol: #abstractDictionary) ifFalse: [^false].
+	comperand size == self size ifFalse: [^false].
+	self
+		keysAndValuesDo: [:key :value | (comperand at: key ifAbsent: [^false]) = value ifFalse: [^false]].
+	^true!
 
 add: anAssociation
 	"Add anAssociation to the receiver. Answer anAssociation.
@@ -142,17 +153,17 @@ at: key ifPresent: operation
 	value := self at: key ifAbsent: [AbsentCookie].
 	^value == AbsentCookie ifFalse: [operation value: value]!
 
-at: key put: newElement 
-	"Store the <Object> argument newElement at the <Object>
-	key, in the receiver. Answer newElement."
+at: keyObject put: valueObject
+	"Store the <Object> argument valueObject at the <Object> keyObject, in the receiver. Answer
+	valueObject."
 
 	| index |
-	key isNil ifTrue: [^self error: 'key cannot be nil'].
-	index := self findKeyOrNil: key.
-	(self basicAt: index) 
-		ifNil: [self privateAt: index put: (self newAssociation: key value: newElement)]
-		ifNotNil: [:element | element value: newElement].
-	^newElement!
+	keyObject isNil ifTrue: [^self error: 'key cannot be nil'].
+	index := self findKeyOrNil: keyObject.
+	(self basicAt: index)
+		ifNil: [self privateAt: index put: (self newAssociation: keyObject value: valueObject)]
+		ifNotNil: [:assoc | assoc value: valueObject].
+	^valueObject!
 
 atAll: keys put: newElement
 	"Replace the elements of the receiver at each of the keys in the <collection> 
@@ -498,6 +509,7 @@ values
 	self do: [:value | answer addLast: value].
 	^answer! !
 !Dictionary categoriesFor: #_deepCopyElementsInto:trail:!copying!private! !
+!Dictionary categoriesFor: #=!comparing!public! !
 !Dictionary categoriesFor: #add:!adding!public! !
 !Dictionary categoriesFor: #asSet!converting!public! !
 !Dictionary categoriesFor: #associationAt:!accessing!public! !

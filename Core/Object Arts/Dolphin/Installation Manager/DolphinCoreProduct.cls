@@ -25,8 +25,6 @@ contents
 	"Base"
 	contents
 		add: #('Core\Object Arts\Dolphin\MVP\Views\SysLink\Dolphin SysLink Control.pax' #encrypted #imageBased);
-		add: #('Core\Object Arts\Dolphin\ActiveX\Components\MonthView\Month View.pax' #encrypted #imageBased);
-		add: #('Core\Object Arts\Dolphin\ActiveX\Components\MSMask\Masked Edit.pax' #plain #imageBased);
 		add: #('Core\Contributions\Refactory\Refactoring Browser\Formatters\RBFormatters.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\System\Announcements\Dolphin Announcements.pax' #plain #imageBased);
 		

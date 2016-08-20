@@ -93,7 +93,7 @@ cr
 	"Implementation Note: Assumes the receiver is in text mode, and 
 	will translate the single LF character to a CR/LF pair on output."
 
-	self nextPut: Character lf!
+	self nextPut: $\n!
 
 crtab
 	"Append a line-delimiter and a tab to the receiver."
@@ -244,12 +244,12 @@ nextLine
 	len := answer size.
 	"Strip off the line terminator, allowing for binary or text mode"
 	last := answer at: len.
-	^last == Character lf 
+	^last == $\n
 		ifTrue: 
-			[(len > 1 and: [(answer at: len - 1) == Character cr]) 
+			[(len > 1 and: [(answer at: len - 1) == $\r]) 
 				ifTrue: [answer copyFrom: 1 to: len - 2]
 				ifFalse: [answer copyFrom: 1 to: len - 1]]
-		ifFalse: [last == Character cr ifTrue: [answer copyFrom: 1 to: len - 1] ifFalse: [answer]]!
+		ifFalse: [last == $\r ifTrue: [answer copyFrom: 1 to: len - 1] ifFalse: [answer]]!
 
 nextPut: anObject 
 	"Store the <Character> or <integer> (in the range 0..255) as the next element of the receiver."
@@ -345,12 +345,12 @@ skip: anInteger
 space
 	"Store a space character as the next element of the receiver."
 
-	self nextPut: Character space!
+	self nextPut: $\x20!
 
 tab
 	"Store a tab character as the next element of the receiver."
 
-	self nextPut: Character tab!
+	self nextPut: $\t!
 
 tab: anInteger 
 	"Append the specified number of tabs to the receiver."

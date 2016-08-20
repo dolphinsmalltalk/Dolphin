@@ -1,7 +1,7 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ClassDescription subclass: #Class
-	instanceVariableNames: 'name classPool sharedPools comment classCategories _guid '
+	instanceVariableNames: 'name classPool sharedPools comment classCategories _guid'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -22,45 +22,73 @@ Instance Variables:
 !Class categoriesForClass!Kernel-Classes! !
 !Class methodsFor!
 
-addClassVarName: aString 
-	"Add a new class variable to the receiver with the specified <readableString> name.
-	Note: This is a low-level operation and does not recompile affected classes. Generally 
-	speaking any modification to a class should be made through a <ClassBuilder>."
+addClassConstant: aString value: anObject
+	"Define a constant binding in the receiver's class pool with the specified name. If the
+	variable already exists, it is marked as constant, and if its existing value is different
+	from anObject, then anObject is assigned to the underlying variable and any methods that may
+	reference the constant are recompiled to pick up the new value. If the variable does not
+	exist, a constant binding is added with initial value nil."
 
-	| varName |
-	varName := aString asString.	"Allow symbolic names too"
-	(self withAllSubclasses detect: [:each | (each classPool bindingFor: varName) notNil]
-		ifNone: []) ifNotNil: 
-				[:existingClass | 
-				^self 
-					error: aString , ' is already used as a variable name in class ' , existingClass name].
+	| binding count requiresRecompile |
+	count := classPool ifNil: [0] ifNotNil: [classPool size].
+	binding := self addClassVarNamed: aString.
+	"We need to recompile if we are modifying an existing binding and either:
+		- the binding was not constant, and the new constant value is inlineable
+		- the binding was constant, but the value has changed, and either the previous or new value are inlineable"
+	requiresRecompile := classPool size = count and: 
+					[binding isImmutable
+						ifFalse: 
+							["Wasn't constant, recompile if it can be inlined"
+							VMLibrary hasBytecodeRepresentation: anObject]
+						ifTrue: 
+							["Was constant, recompile if changed and was inlined, or can be inlined"
+							| oldValue |
+							oldValue := binding value.
+							oldValue ~~ anObject and: 
+									[(VMLibrary hasBytecodeRepresentation: oldValue) or: [VMLibrary hasBytecodeRepresentation: anObject]]]].
+	binding isImmutable: false.
+	[binding value: anObject] ensure: [binding isImmutable: true].
+	requiresRecompile ifTrue: [self recompileAllReferencesToVarNamed: aString].
+	^binding!
+
+addClassVariable: aString value: anObject
+	"Define a variable binding in the receiver's class pool with the specified name. If the
+	variable already exists, this is a no-op. If the variable does not exist, a new binding is
+	added with initial value nil."
+
+	^(self addClassVarNamed: aString)
+		isImmutable: false;
+		value: anObject;
+		yourself!
+
+addClassVarNamed: aString
+	"Answer the binding for a new or existing class variable in the receiver with the specified
+	<readableString>. Note: This is a low-level operation and does not recompile affected
+	classes. Generally speaking any modification to a class should be made through a
+	<ClassBuilder>. It is not considered an error to re-add a class variable that already exists
+	in the class, but it is an error to attempt to add a class variable already defined
+	somewhere in the hierarchy below the class. "
+
+	| varName var |
+	varName := aString trimBlanks.	"Allow symbolic names too"
 	classPool := self classPool.
-	(classPool includesKey: varName) 
-		ifFalse: 
-			[classPool at: varName put: nil.
-			self logDefinition.
-			self environment classUpdated: self]!
-
-addSharedPool: aPoolDictionary 
-	"Add the argument, aPoolDictionary, as one of the receiver's pool dictionaries. 
-	It is an error if the dictionary is already one of the pools.
-	Note: This is a low-level operation and does not recompile affected classes. Generally 
-	speaking any modification to a class should be made through a <ClassBuilder>."
-
-	| poolName pools |
-	poolName := aPoolDictionary name.
-	pools := self sharedPoolNames.
-	(pools includes: poolName)
-		ifTrue: [^self error: 'The dictionary is already in my pool'].
-	pools add: poolName.
-	sharedPools := pools.!
+	(classPool bindingFor: varName) ifNotNil: [:existingVar | ^existingVar].
+	(self allSubclasses detect: [:each | (each classPool bindingFor: varName) notNil] ifNone: [])
+		ifNotNil: [:existingClass | ^self error: aString , ' is already used as a variable name in class ' , existingClass name].
+	var := classPool newAssociation: varName value: nil.
+	classPool add: var.
+	self logDefinition.
+	self environment classUpdated: self.
+	^var!
 
 addToSuper
 	"Private - Add the receiver as a subclass of its superclass
-	and do the same for the receiver's metaclass buddy."
+	and do the same for the receiver's metaclass buddy, but not
+	if a root class."
 
-	super addToSuper.
-	self class addToSuper!
+	superclass notNil ifTrue: [
+		super addToSuper.
+		self class addToSuper]!
 
 basicClassPool
 	"Private - Answer the receiver's class pool (dictionary of class variables)."
@@ -86,12 +114,8 @@ bindingFor: aString
 	If there is no such variable, then answer nil.
 	Note that in Dolphin pools are inherited."
 
-	classPool isNil 
-		ifFalse: [(classPool bindingFor: aString) ifNotNil: [:classVar | ^classVar]].
-	sharedPools isNil 
-		ifFalse: 
-			[self sharedPools 
-				do: [:each | (each bindingFor: aString) ifNotNil: [:sharedVar | ^sharedVar]]].
+	classPool isNil ifFalse: [(classPool bindingFor: aString) ifNotNil: [:classVar | ^classVar]].
+	self sharedPoolsDo: [:each | (each bindingFor: aString) ifNotNil: [:sharedVar | ^sharedVar]].
 	^superclass bindingFor: aString!
 
 canFileOut
@@ -427,16 +451,6 @@ removeFromSystem
 	self sourceManager logEvaluate: self name, ' removeFromSystem'.
 	ClassBuilder removeClass: self!
 
-removeSharedPool: aPoolDictionary 
-	"Remove the argument, aPoolDictionary, as one of the receiver's pool dictionaries. 
-	Note: This is a low-level operation and does not recompile affected classes. Generally 
-	speaking any modification to a class should be made through a <ClassBuilder>."
-
-	| poolName |
-	poolName := aPoolDictionary name.
-	self sharedPoolNames remove: poolName.
-	sharedPools isEmpty ifTrue: [sharedPools := nil]!
-
 rename: aString
 	"Private - Change the name of the receiver to aString.
 	N.B. This is the low-level rename operation, and does not rename any references
@@ -520,38 +534,18 @@ setName: aSymbol
 
 	name := aSymbol!
 
-setSharedPoolNames: aCollection 
-	"Private - Set the shared variable pool to include the names in aCollection.
-	N.B. initial conversion to a set removes duplicates."
+setSharedPoolNames: aCollection
+	"Private - Set the shared variable pool to include the names in aCollection, ignoring any duplicates."
 
-	sharedPools := aCollection notEmpty 
-				ifTrue: [aCollection asSet asArray collect: [:poolName | poolName asSymbol]]!
+	sharedPools := aCollection notEmpty
+				ifTrue: [aCollection distinct asArray collect: [:poolName | poolName asSymbol]]!
 
 sharedPoolNames
-	"Answer a Set of the names of the shared pool dictionaries that
-	are specified locally in the receiver."
+	"Answer a <sequencedReadableCollection> of <Symbol>s, being the names of the shared pool
+	dictionaries that are specified locally in the receiver (pools are inherited in Dolphin), in
+	order of precedence."
 
-	sharedPools isNil ifTrue: [^Set new].
-	^sharedPools asSet.
-!
-
-sharedStaticPools
-	"Private - Answer an array of all the non-empty shared pools for the 
-	receiver.
-	N.B. Sent by compiler, and may be removed in future."
-
-	| answer |
-	answer := OrderedCollection new.
-	"First the class variables"
-	self withAllSuperclassesDo: 
-			[:c | 
-			| pool |
-			pool := c basicClassPool.
-			(pool notNil and: [pool notEmpty]) ifTrue: [answer add: pool]].
-	"Then the pool variables"
-	self 
-		withAllSuperclassesDo: [:c | c sharedPools do: [:s | s notEmpty ifTrue: [answer add: s]]].
-	^answer asArray!
+	^sharedPools ifNil: [#()]!
 
 sourceDescriptor
 	"Answer the source descriptor for the receiver's comment."
@@ -748,8 +742,9 @@ variableSubclass: aClassSymbol
 	^subclass
 
 ! !
-!Class categoriesFor: #addClassVarName:!class variables!public! !
-!Class categoriesFor: #addSharedPool:!pool variables!public! !
+!Class categoriesFor: #addClassConstant:value:!class variables!public! !
+!Class categoriesFor: #addClassVariable:value:!class variables!public! !
+!Class categoriesFor: #addClassVarNamed:!class variables!public! !
 !Class categoriesFor: #addToSuper!class hierarchy-adding!private! !
 !Class categoriesFor: #basicClassPool!class variables!private! !
 !Class categoriesFor: #basicClassPool:!class variables!private! !
@@ -797,7 +792,6 @@ variableSubclass: aClassSymbol
 !Class categoriesFor: #removeFromCategory:!categories-removing!public! !
 !Class categoriesFor: #removeFromSuper!class hierarchy-removing!private! !
 !Class categoriesFor: #removeFromSystem!class hierarchy-removing!private! !
-!Class categoriesFor: #removeSharedPool:!pool variables!public! !
 !Class categoriesFor: #rename:!class hierarchy-accessing!development!private! !
 !Class categoriesFor: #rename:in:!class hierarchy-accessing!private! !
 !Class categoriesFor: #renameClassVar:to:!class variables!private! !
@@ -807,7 +801,6 @@ variableSubclass: aClassSymbol
 !Class categoriesFor: #setName:!accessing!private! !
 !Class categoriesFor: #setSharedPoolNames:!pool variables!private! !
 !Class categoriesFor: #sharedPoolNames!pool variables!public! !
-!Class categoriesFor: #sharedStaticPools!pool variables!private! !
 !Class categoriesFor: #sourceDescriptor!accessing!public!source filing! !
 !Class categoriesFor: #sourceDescriptor:!accessing!private!source filing! !
 !Class categoriesFor: #stbConvertFrom:!binary filing!private! !

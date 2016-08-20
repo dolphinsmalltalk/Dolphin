@@ -1,7 +1,7 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Behavior subclass: #ClassDescription
-	instanceVariableNames: 'instanceVariables methodsCatalogue protocols '
+	instanceVariableNames: 'instanceVariables methodsCatalogue protocols'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -48,13 +48,18 @@ addProtocol: protocol
 	protocols add: protName.
 	self allSubclassesDo: [:q | q removeProtocol: protName ifAbsent: []]!
 
-addSharedPool: aPoolDictionary 
-	"Add the specified pool dictionary to the list of those referenced by the receiver. 
-	Note that this is a low-level operation intended for system use. The <ClassBuilder>
-	should be used to modify classes."
+addSharedPool: aPoolDictionary
+	"Add the argument, aPoolDictionary, as one of the pool dictionaries referenced by the
+	receiver, but lower in precedence than any previously added pools. It is an error if the
+	dictionary is already one of the pools.
+	Note: This is a low-level operation and does not recompile affected classes. Generally 
+	speaking any modification to a class should be made through a <ClassBuilder>."
 
-	self instanceClass
-		setSharedPoolNames: (self sharedPoolNames copyWith: aPoolDictionary name)!
+	| poolName pools |
+	poolName := aPoolDictionary name.
+	pools := self sharedPoolNames.
+	(pools includes: poolName) ifTrue: [^self error: 'Pool is already referenced by this class'].
+	self setSharedPoolNames: (pools copyWith: poolName)!
 
 allGetters
 	"Private - Answer a <Set> of the instance variable getter methods in the receiver"
@@ -438,53 +443,59 @@ includeSelector: aSelector inCategory: category
 		ifFalse: [catalogue at: category put: (selectors copyWith: aSelector)].
 	self methodsCatalogue: catalogue!
 
-indexOfInstVar: instVarName
+indexOfInstVar: aString
 	"Answer the index of the specified inst. var in the receiver, or
 	if no matching instance variable, raise a NotFoundError."
 
-	^self allInstVarNames indexOf: instVarName ifAbsent: [self errorNotFound: instVarName]!
+	^self indexOfInstVar: aString ifAbsent: [self errorNotFound: aString]!
 
-indexOfInstVar: instVarName ifAbsent: exceptionHandler
-	"Answer the <integer> index of the inst. var of the receiver
-	identified by the <readableString> name, instVarName, or
-	if no matching instance variable, the result of evaluating the
-	<niladicValuable>, exceptionHandler."
+indexOfInstVar: aString ifAbsent: aNiladicValuable
+	"Answer the <integer> index of the inst. var of the receiver identified by the
+	<readableString> name, aString, or if no matching instance variable, the result of
+	evaluating the <niladicValuable>, aNiladicValuable."
 
-	^self allInstVarNames indexOf: instVarName ifAbsent: exceptionHandler!
+	| index |
+	index := self instVarNames indexOf: aString.
+	^index == 0
+		ifTrue: 
+			[superclass
+				ifNil: [aNiladicValuable value]
+				ifNotNil: [superclass indexOfInstVar: aString ifAbsent: aNiladicValuable]]
+		ifFalse: [index + (superclass ifNil: [0] ifNotNil: [superclass instSize])]!
 
 instanceClass
 	"Answer the receiver's singleton instance (the actual class object)."
 
 	^self subclassResponsibility!
 
-instanceVariables: aString 
-	"Private - Set the receiver's instanceVariables inst var."
-
-	instanceVariables := (aString notNil and: [aString notEmpty]) ifTrue: [aString]!
-
 instanceVariableString
-	"Answer a string containing the names of the instance 
-	variables in instances of the receiver, in the order they
-	appear in those instances. The names are separated by spaces."
+	"Answer a string containing the names of the instance variables in instances of the
+	receiver, in the order they appear in those instances. The names are separated by spaces."
 
 	| aStream |
 	instanceVariables isNil ifTrue: [^''].
-	instanceVariables class == String ifTrue: [^instanceVariables].
+	instanceVariables isString ifTrue: [^instanceVariables].
 	aStream := String writeStream: 64.
 	instanceVariables 
 		do: [:instVarName | aStream nextPutAll: instVarName]
 		separatedBy: [aStream space].
 	^aStream contents!
 
+instanceVariableString: aString
+	"Private - Set the receiver's instanceVariables inst var to the <String> argument."
+
+	instanceVariables := (aString notNil and: [aString notEmpty]) ifTrue: [aString]!
+
 instVarNames
 	"Answer a <sequencedReadableCollection> of the receiver's instance variable 
 	names."
 
 	instanceVariables isNil ifTrue: [^#()].
-	"This required for bootstrapping purposes only"
-	instanceVariables class == Array ifTrue: [^instanceVariables].
-	"N.B. This assumes that the names in the instance variable string are separated by exactly one space"
-	^instanceVariables subStrings: Character space!
+	^instanceVariables isString
+		ifTrue: 
+			["N.B. This assumes that the names in the instance variable string are separated by exactly one space"
+			instanceVariables subStrings: Character space]
+		ifFalse: [instanceVariables]!
 
 logDefinition
 	self sourceManager logEvaluate: self definition!
@@ -623,6 +634,15 @@ realMethodCategories
 		add: catClass private;
 		yourself!
 
+recompileAllReferencesToVarNamed: aString
+	"Private - Recompile any methods in the receiver's hierarchy which appear to reference the
+	named variable."
+
+	self instanceClass withAllSubclassesDo: 
+			[:each |
+			each recompileReferencesToVarNamed: aString.
+			each class recompileReferencesToVarNamed: aString]!
+
 removeCategory: category
 	"Remove the Category from the receiver. N.B. All the methods belonging to the
 	category are removed even if the method belongs to any other categories.
@@ -702,13 +722,12 @@ removeSelectors: aCollection
 	methods do: [:each | self removeMethodFromNonVirtualCategories: each].
 	^methods!
 
-removeSharedPool: aPoolDictionary 
-	"Remove the specified pool dictionary to the list of those referenced by the receiver. 
-	Note that this is a low-level operation intended for system use. The <ClassBuilder>
-	should be used to modify classes."
+removeSharedPool: aPoolDictionary
+	"Remove the argument, aPoolDictionary, as one of the receiver's pool dictionaries. 
+	Note: This is a low-level operation and does not recompile affected classes. Generally 
+	speaking any modification to a class should be made through a <ClassBuilder>."
 
-	self instanceClass
-		setSharedPoolNames: (self sharedPoolNames remove: aPoolDictionary name; yourself)!
+	self setSharedPoolNames: (self sharedPoolNames copyWithout: aPoolDictionary name)!
 
 removeUnsupportedProtocols: superUnsupported selector: removedSelector
 	"Private - Remove any protocols that are no longer supported after the removal
@@ -769,30 +788,25 @@ selectorsInCategory: category
 
 	^self methodsCatalogue at: category ifAbsent: [Array new]!
 
-setInstanceVariables: aCollection 
+setInstanceVariables: aCollection
 	"Private - Set the instance variable string of the receiver to be the list
 	of names in aCollection, separated by spaces."
 
-	instanceVariables := aCollection notEmpty 
-				ifTrue: 
-					[| aStream |
-					aStream := String writeStream: 64.
-					aCollection do: [:i | aStream nextPutAll: i] separatedBy: [aStream space].
-					aStream contents]!
+	instanceVariables := aCollection notEmpty ifTrue: [aCollection asArray]!
+
+setSharedPoolNames: aCollection
+	"Private - Set the <Symbol>ic names of the shared pool dictionaries that are declared as
+	referenced locally in the receiver (pools are inherited in Dolphin)."
+
+	self instanceClass setSharedPoolNames: aCollection
+!
 
 sharedPoolNames
-	"Answer a <Set> of <String>s, being the names of the shared pool dictionaries that
-	are specified locally in the receiver (pools are inherited in Dolphin)."
+	"Answer a <sequencedReadableCollection> of <Symbol>s, being the names of the shared pool
+	dictionaries that are specified locally in the receiver (pools are inherited in Dolphin), in
+	order of precedence."
 
 	^self instanceClass sharedPoolNames!
-
-sharedPools
-	"Answer a Set of the pools (dictionaries) that are specified locally 
-	in the receiver."
-
-	| environment |
-	environment := self environment.
-	^self sharedPoolNames collect: [:symbol | environment at: symbol ifAbsent: [Dictionary new]]!
 
 sharedVariableString
 	"Answer a String containing the names of the Pools accessable
@@ -896,8 +910,8 @@ whichNonVirtualCategoriesIncludeSelector: aSelector
 !ClassDescription categoriesFor: #indexOfInstVar:!instance variables!public! !
 !ClassDescription categoriesFor: #indexOfInstVar:ifAbsent:!instance variables!public! !
 !ClassDescription categoriesFor: #instanceClass!accessing!public! !
-!ClassDescription categoriesFor: #instanceVariables:!accessing!private! !
 !ClassDescription categoriesFor: #instanceVariableString!accessing!public! !
+!ClassDescription categoriesFor: #instanceVariableString:!accessing!private! !
 !ClassDescription categoriesFor: #instVarNames!instance variables!public! !
 !ClassDescription categoriesFor: #logDefinition!instance variables!private! !
 !ClassDescription categoriesFor: #logRemoveSelector:!helpers!private! !
@@ -918,6 +932,7 @@ whichNonVirtualCategoriesIncludeSelector: aSelector
 !ClassDescription categoriesFor: #protocols!private!protocols! !
 !ClassDescription categoriesFor: #protocols:!private!protocols! !
 !ClassDescription categoriesFor: #realMethodCategories!categories-accessing!public! !
+!ClassDescription categoriesFor: #recompileAllReferencesToVarNamed:!development!private! !
 !ClassDescription categoriesFor: #removeCategory:!categories-removing!public! !
 !ClassDescription categoriesFor: #removeInstVarName:!instance variables!public! !
 !ClassDescription categoriesFor: #removeMethodFromNonVirtualCategories:!development!helpers!private! !
@@ -937,8 +952,8 @@ whichNonVirtualCategoriesIncludeSelector: aSelector
 !ClassDescription categoriesFor: #resourceSelectorsDo:!enumerating!public! !
 !ClassDescription categoriesFor: #selectorsInCategory:!categories-accessing!public! !
 !ClassDescription categoriesFor: #setInstanceVariables:!instance variables!private! !
+!ClassDescription categoriesFor: #setSharedPoolNames:!pool variables!private! !
 !ClassDescription categoriesFor: #sharedPoolNames!pool variables!public! !
-!ClassDescription categoriesFor: #sharedPools!pool variables!public! !
 !ClassDescription categoriesFor: #sharedVariableString!accessing!public! !
 !ClassDescription categoriesFor: #sourceManager!accessing!public! !
 !ClassDescription categoriesFor: #stbReadFrom:format:!binary filing!public! !

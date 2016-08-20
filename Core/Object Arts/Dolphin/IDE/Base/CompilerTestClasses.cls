@@ -15,15 +15,16 @@ createClasses
 	ivs := String writeStream.
 	1 to: 33
 		do: 
-			[:i | 
+			[:i |
 			ivs
 				nextPutAll: 'iv';
 				print: i;
 				space].
-	testClass := self 
+	testClass := self
 				createClass: #CompilerTestClass
 				superclass: Object
-				instVars: ivs contents.
+				instVars: ivs contents
+				pools: ''.
 	self compileAccessorsFor: testClass!
 
 tearDown

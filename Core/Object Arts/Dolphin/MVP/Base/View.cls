@@ -6,6 +6,16 @@ Object subclass: #View
 	poolDictionaries: 'Win32Constants Win32Errors'
 	classInstanceVariableNames: ''!
 View guid: (GUID fromString: '{87B4C4CC-026E-11D3-9FD7-00A0CC3E4A32}')!
+View addClassConstant: 'CreateCenteredMask' value: 64!
+View addClassConstant: 'DragSourceMask' value: 4!
+View addClassConstant: 'DropTargetMask' value: 8!
+View addClassConstant: 'LayoutValidMask' value: 1!
+View addClassConstant: 'ManagedMask' value: 2!
+View addClassConstant: 'MinimizedMask' value: 128!
+View addClassConstant: 'NoInheritMenuMask' value: 512!
+View addClassConstant: 'StateRestoringMask' value: 32!
+View addClassConstant: 'UIValidMask' value: 16!
+View addClassConstant: 'UsePreferredExtentMask' value: 256!
 View comment: 'View is an abstract class which is the root of the view hierarchy of classes. Instances of view or its subclasses are used to display Model data in windows. View is part of the Model-View-Presenter or MVP framework:
 
 SmalltalkSystem help: ''Overviews/ModelViewPresenter''.
@@ -250,17 +260,17 @@ baseStyle: styleBitsToAdd maskedBy: styleBitMask recreateIfChanged: aBoolean
 	newBaseStyle := baseStyle maskClear: styleBitMask.
 	newBaseStyle := newBaseStyle maskSet: (styleBitsToAdd bitAnd: styleBitMask).
 	newBaseStyle = baseStyle ifTrue: [^false].
-	self baseStyle: newBaseStyle.
-	self isOpen ifFalse: [^true].
-	"Window is open, so need to recreate or set style long"
 	aBoolean 
-		ifTrue: [self recreate]
+		ifTrue: [self recreateAround: [self baseStyle: newBaseStyle]]
 		ifFalse: 
 			[| winStyle newWinStyle |
-			winStyle := self getWindowStyle.
-			newWinStyle := winStyle maskClear: styleBitMask.
-			newWinStyle := newWinStyle maskSet: (styleBitsToAdd bitAnd: styleBitMask).
-			self setWindowStyle: newWinStyle].
+			self baseStyle: newBaseStyle.
+			self isOpen 
+				ifTrue: 
+					[winStyle := self getWindowStyle.
+					newWinStyle := winStyle maskClear: styleBitMask.
+					newWinStyle := newWinStyle maskSet: (styleBitsToAdd bitAnd: styleBitMask).
+					self setWindowStyle: newWinStyle]].
 	^true!
 
 baseStyleAllMask: anInteger
@@ -1160,8 +1170,11 @@ exStyle: styleBitsInteger maskedBy: styleMaskInteger recreateIfChanged: aBoolean
 	newExStyle := newExStyle maskSet: (styleBitsInteger bitAnd: styleMaskInteger).
 	newExStyle = exStyle ifTrue: [^false].
 	Array with: self baseStyle with: newExStyle.
-	self extendedStyle: newExStyle.
-	self isOpen ifTrue: [aBoolean ifTrue: [self recreate] ifFalse: [self setWindowExStyle: newExStyle]].
+	aBoolean 
+		ifTrue: [self recreateAround: [self extendedStyle: newExStyle]]
+		ifFalse: 
+			[self extendedStyle: newExStyle.
+			self isOpen ifTrue: [self setWindowExStyle: newExStyle]].
 	^true!
 
 exStyleAllMask: anInteger
@@ -1823,7 +1836,7 @@ isEnabledDeeply: aBoolean
 isForeground
 	"Answer whether the receiver is the current foreground window."
 
-	^self class foregroundHandle = self handle!
+	^self isOpen and: [self class foregroundHandle = handle]!
 
 isGroupStop
 	"Answers whether the receiver has the WS_GROUP style. This style is used to identify the
@@ -2835,8 +2848,14 @@ recreate
 	"Recreate the receiver if it is currently open. Useful for applying styles that are only
 	available as pre-creation options"
 
+	self recreateAround: []!
+
+recreateAround: aNiladicValuable 
 	| prevSibling existingPresenter state savedEvents |
-	self isOpen ifFalse: [^self].
+	self isOpen 
+		ifFalse: 
+			[aNiladicValuable value.
+			^self].
 	existingPresenter := presenter.
 	presenter := self.
 	"Remember the z order position so it can be restored"
@@ -2846,6 +2865,7 @@ recreate
 	state := ViewState recordStateOf: self forRecreate: true.
 	savedEvents := self getEvents.
 	self basicDestroy.
+	aNiladicValuable value.
 	state restore.
 	"Restore z-order position"
 	self zOrderAfter: prevSibling.
@@ -4735,6 +4755,7 @@ zOrderTop
 !View categoriesFor: #queryContextMenu!menus!public! !
 !View categoriesFor: #queryMouseTracking!enquiries!private! !
 !View categoriesFor: #recreate!public!realizing/unrealizing! !
+!View categoriesFor: #recreateAround:!private!realizing/unrealizing! !
 !View categoriesFor: #rectangle!geometry!public! !
 !View categoriesFor: #rectangle:!geometry!public! !
 !View categoriesFor: #refreshContents!public!updating! !
@@ -5088,16 +5109,6 @@ initialize
 	"
 
 	NextId := 4096.
-	LayoutValidMask := 16r1.
-	ManagedMask := 16r2.
-	DragSourceMask := 16r4.
-	DropTargetMask := 16r8.
-	UIValidMask := 16r10.
-	StateRestoringMask := 16r20.
-	CreateCenteredMask := 16r40.
-	MinimizedMask := 16r80.
-	UsePreferredExtentMask := 16r100.
-	NoInheritMenuMask := 16r200.
 	ViewClosedError := Signal description: 'View closed'.
 	self initializeMessageMap.
 	VMLibrary default primRegistryAt: 54 put: #subclassWindow:!
@@ -5109,6 +5120,8 @@ initializeMessageMap
 	themselves from being stripped.
 		self initializeMessageMap
 	"
+
+	"Note that this is not const, since view packages may add new messages they want to receive"
 
 	MessageMap := (Array new: 1024)
 				at: WM_CREATE + 1 put: #wmCreate:wParam:lParam:;

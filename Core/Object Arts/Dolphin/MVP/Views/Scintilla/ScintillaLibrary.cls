@@ -11,11 +11,11 @@ ScintillaLibrary comment: 'ExternalLibrary class to wrap the Scintilla DLL (SciL
 !ScintillaLibrary methodsFor!
 
 directFunction: sciThis msg: msg wParam: wParam lParam: lParam 
-	<stdcall: intptr '_Scintilla_DirectFunction@16' handle dword uintptr uintptr>
+	<stdcall: intptr Scintilla_DirectFunction handle dword uintptr uintptr>
 	^self invalidCall!
 
 directFunction: sciThis msg: msg wParam: wParam lpParam: lpParam 
-	<stdcall: intptr '_Scintilla_DirectFunction@16' handle dword uintptr void*>
+	<stdcall: intptr Scintilla_DirectFunction handle dword uintptr void*>
 	^self invalidCall!
 
 versionFormatString
@@ -28,7 +28,7 @@ versionFormatString
 		5) Product minor low word
 	"
 
-	^'%2!!d!!.%3!!d!!.%4!!d!!.%5!!d!!'! !
+	^'%2!!d!!.%3!!d!!.%4!!d!!'! !
 !ScintillaLibrary categoriesFor: #directFunction:msg:wParam:lParam:!operations!private! !
 !ScintillaLibrary categoriesFor: #directFunction:msg:wParam:lpParam:!operations!private! !
 !ScintillaLibrary categoriesFor: #versionFormatString!constants!private! !
@@ -48,8 +48,14 @@ fileName
 	^'SciLexer'!
 
 realize
-	super default! !
-!ScintillaLibrary class categoriesFor: #default!accessing!public! !
+	super default!
+
+versionString
+	"Answer the version of the Scintilla control for which this library was generated."
+
+	^'3.6.6'! !
+!ScintillaLibrary class categoriesFor: #default!accessing!public!realizing/unrealizing! !
 !ScintillaLibrary class categoriesFor: #fileName!constants!public! !
 !ScintillaLibrary class categoriesFor: #realize!public!realizing/unrealizing! !
+!ScintillaLibrary class categoriesFor: #versionString!**auto generated**!constants!public!scintilla interface! !
 

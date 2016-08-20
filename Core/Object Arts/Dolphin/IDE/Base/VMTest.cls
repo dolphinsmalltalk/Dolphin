@@ -12,48 +12,35 @@ SUnitBrowser openOnTestCase: self'!
 !VMTest categoriesForClass!Unclassified! !
 !VMTest methodsFor!
 
-assertImmutableAtPut: s 
-	self assert: s isImmutable.
-	self should: [s at: 0 put: $x] raise: BoundsError.
-	self should: [s at: s size + 1 put: $x] raise: BoundsError.
-	1 to: s size do: [:each | self should: [s at: each put: $x] raise: Processor constWriteSignal]!
+assertImmutableAtPut: anObject 
+	self assert: anObject isImmutable.
+	self should: [anObject at: 0 put: $x] raise: BoundsError.
+	self should: [anObject at: anObject size + 1 put: $x] raise: BoundsError.
+	1 to: anObject size
+		do: [:each | self should: [anObject at: each put: $x] raise: Processor constWriteSignal]!
 
-assertImmutableBasicAtPut: s 
-	self assert: s isImmutable.
-	self should: [s basicAt: 0 put: $x] raise: BoundsError.
-	self should: [s basicAt: s size + 1 put: $x] raise: BoundsError.
-	1 to: s size do: [:each | self should: [s basicAt: each put: $x] raise: Processor constWriteSignal]!
+assertImmutableBasicAtPut: anObject 
+	self assert: anObject isImmutable.
+	self should: [anObject basicAt: 0 put: $x] raise: BoundsError.
+	self should: [anObject basicAt: anObject size + 1 put: $x] raise: BoundsError.
+	1 to: anObject size
+		do: [:each | self should: [anObject basicAt: each put: $x] raise: Processor constWriteSignal]!
 
-assertImmutableInstVarAtPut: s 
+assertImmutableInstVarAtPut: anObject 
 	| size |
-	self assert: s isImmutable.
-	self should: [s instVarAt: 0 put: $x] raise: BoundsError.
-	size := s class instSize + s basicSize.
-	self should: [s instVarAt: size + 1 put: $x] raise: BoundsError.
-	1 to: size do: [:each | self should: [s instVarAt: each put: $x] raise: Processor constWriteSignal]!
+	self assert: anObject isImmutable.
+	self should: [anObject instVarAt: 0 put: $x] raise: BoundsError.
+	size := anObject class instSize + anObject basicSize.
+	self should: [anObject instVarAt: size + 1 put: $x] raise: BoundsError.
+	1 to: size
+		do: [:each | self should: [anObject instVarAt: each put: $x] raise: Processor constWriteSignal]!
 
-assertLoopInterruptible: aBlock 
-	| intervals execTime last sampleInterval go |
-	go := true.
-	last := Time millisecondClockValue.
-	intervals := OrderedCollection new.
-	sampleInterval := 5.
-	
-	[
-	[Processor sleep: sampleInterval.
-	go and: 
-			[| next |
-			next := Time millisecondClockValue.
-			intervals addLast: next - last.
-			last := next.
-			true]] 
-			whileTrue] 
-			forkAt: Processor userInterruptPriority.
-	execTime := Time millisecondsToRun: aBlock.
-	go := false.
-	self assert: (intervals size > 5 and: [intervals size * 1.25 >= (execTime / sampleInterval) asFloat]).
-	self 
-		assert: (intervals size > 2 and: [intervals allSatisfy: [:each | each < (sampleInterval * 2)]])!
+assertImmutableResize: anObject 
+	self assert: anObject isImmutable.
+	"Should get an error on any resize attempt, whether doesn't change size, grows or shrinks"
+	self should: [anObject resize: anObject size] raise: Processor constWriteSignal.
+	self should: [anObject resize: anObject size + 1] raise: Processor constWriteSignal.
+	self should: [anObject resize: anObject size - 1] raise: Processor constWriteSignal!
 
 earlyTermination: aBoolean 
 	"N.B. Timing is critical to much of this, so its not going to be possible to debug through it. Its really only to show up
@@ -102,6 +89,165 @@ earlyTermination: aBoolean
 			self assert: proc isTerminated.
 			self assert: Processor pendingTerminations isEmpty]!
 
+exerciseReplaceElementsOf: targetCollection from: startInteger to: stopInteger with: sourceCollection startingAt: startAtInteger
+	| fieldsBefore fieldsAfter captureFields expected target |
+	captureFields := [:obj | (1 to: obj class instSize) collect: [:i | obj instVarAt: i]].
+	fieldsBefore := captureFields value: targetCollection.
+	target := targetCollection copy.
+	target
+		replaceFrom: startInteger
+		to: stopInteger
+		with: sourceCollection
+		startingAt: startAtInteger.
+	"The fixed fields should not have been touched"
+	fieldsAfter := captureFields value: target.
+	self assert: fieldsAfter = fieldsBefore.
+	"Build the expected result using low-level operations to avoid inadvertently using the primitive under test"
+	expected := targetCollection class ofSize: targetCollection size.
+	1 to: startInteger - 1 do: [:i | expected at: i put: (targetCollection at: i)].
+	startInteger to: stopInteger do: [:i | expected at: i put: (sourceCollection at: i - startInteger + startAtInteger)].
+	stopInteger + 1 to: targetCollection size do: [:i | expected at: i put: (targetCollection at: i)].
+	"Did it work?"
+	self assert: target = expected!
+
+exerciseReplaceElementsOf: targetCollection with: sourceCollection
+	| target |
+	targetCollection isImmutable: true.
+
+	"Immutable target"
+	self should: 
+			[sourceCollection
+				replaceElementsOf: targetCollection
+				from: 1
+				to: targetCollection size
+				startingAt: 1]
+		raise: Processor constWriteSignal.
+
+	"Move first of source to first of target"
+	self
+		exerciseReplaceElementsOf: targetCollection
+		from: 1
+		to: 1
+		with: sourceCollection
+		startingAt: 1.
+
+	"Move last of source to first of target"
+	self
+		exerciseReplaceElementsOf: targetCollection
+		from: 1
+		to: 1
+		with: sourceCollection
+		startingAt: sourceCollection size.
+
+	"First over last"
+	self
+		exerciseReplaceElementsOf: targetCollection
+		from: targetCollection size
+		to: targetCollection size
+		with: sourceCollection
+		startingAt: 1.
+
+	"Move two from middle of source to middle of target"
+	self
+		exerciseReplaceElementsOf: targetCollection
+		from: 2
+		to: 3
+		with: sourceCollection
+		startingAt: 3.
+
+	"From 2 to end of source over whole target"
+	self
+		exerciseReplaceElementsOf: targetCollection
+		from: 1
+		to: targetCollection size
+		with: sourceCollection
+		startingAt: 2.
+
+	"Complete overwrite"
+	self
+		exerciseReplaceElementsOf: targetCollection
+		from: 1
+		to: targetCollection size
+		with: sourceCollection
+		startingAt: 1.
+
+	"Move last of target to middle of source"
+	self
+		exerciseReplaceElementsOf: targetCollection
+		from: 2
+		to: 2
+		with: sourceCollection
+		startingAt: sourceCollection size.
+
+	"Last two from source over last two from target"
+	self
+		exerciseReplaceElementsOf: targetCollection
+		from: targetCollection size - 1
+		to: targetCollection size
+		with: sourceCollection
+		startingAt: sourceCollection size - 1.
+
+	"Shuffle down - needs to be done forwards, or will get all 5's"
+	self
+		exerciseReplaceElementsOf: targetCollection
+		from: 1
+		to: targetCollection size - 1
+		with: targetCollection
+		startingAt: 2.
+
+	"Shuffle up - needs to be done in reverse, or will get all 1's"
+	self
+		exerciseReplaceElementsOf: targetCollection
+		from: 2
+		to: targetCollection size
+		with: targetCollection
+		startingAt: 1.
+
+	"No-op move over self"
+	self
+		exerciseReplaceElementsOf: targetCollection
+		from: 1
+		to: targetCollection size
+		with: targetCollection
+		startingAt: 1.
+
+	"StartAt = end, count = 2 (source bounds error)"
+	target := targetCollection copy.
+	self should: 
+			[target
+				replaceFrom: 1
+				to: 2
+				with: sourceCollection
+				startingAt: sourceCollection size]
+		raise: BoundsError.
+
+	"Off end of target"
+	target := targetCollection copy.
+	self should: 
+			[target
+				replaceFrom: 2
+				to: target size + 1
+				with: sourceCollection
+				startingAt: 1]
+		raise: BoundsError.
+
+	"Overlapping out of bounds"
+	target := targetCollection copy.
+	self should: 
+			[target
+				replaceFrom: 1
+				to: 5
+				with: target
+				startingAt: 2]
+		raise: BoundsError.
+	self should: 
+			[target
+				replaceFrom: 2
+				to: 6
+				with: target
+				startingAt: 1]
+		raise: BoundsError!
+
 getCPUTime
 	"Answer the total CPU time consumed since Dolphin was started, in milliseconds."
 
@@ -117,7 +263,7 @@ getCPUTime
 		lpExitTime: exit
 		lpKernelTime: kernel
 		lpUserTime: user.
-	^(kernel asInteger + user asInteger) / 10000!
+	^(kernel asInteger + user asInteger) // 10000!
 
 isGPF: gpf reading: aBoolean address: anAddress 
 	| address isReading info |
@@ -306,6 +452,28 @@ testImmutableNextPut
 			strm := WriteStream on: s.
 			self should: [strm nextPut: s last] raise: Processor constWriteSignal]!
 
+testImmutableNextPutAll
+	#(#[1 2 3] 'abc' #(1 2 3)) do: 
+			[:s | 
+			| strm |
+			self assertImmutableAtPut: s.
+			strm := WriteStream on: s.
+			self should: [strm nextPutAll: (s copyFrom: 2 to: 3)] raise: Processor constWriteSignal]!
+
+testImmutableReplacePrimitives
+	#(#[1 2 3] 'abc' #(1 2 3)) do: 
+			[:s | 
+			self assertImmutableAtPut: s.
+			self should: 
+					[s 
+						replaceFrom: 1
+						to: 2
+						with: (s copyFrom: 2 to: 3)]
+				raise: Processor constWriteSignal]!
+
+testImmutableResize
+	#(#(1 2 3) #[1 2 3] 'abcd') do: [:each | self assertImmutableResize: each]!
+
 testImmutableStringCompare
 	| s1 s2 |
 	s1 := 'abc'.
@@ -394,13 +562,21 @@ testOverlappedCallTermination
 	1 to: 10 do: [:i | self earlyTermination: true]!
 
 testPrimitiveAt
-	| array |
-	
 	"First some error cases - accessing non-indexable objects"
-	self should: [Array at: 1] raise: Error matching: [:ex | ex messageText = 'not indexable'].
-	self should: [Array at: 0] raise: Error matching: [:ex | ex messageText = 'not indexable'].
-	self should: [Array at: nil] raise: Error matching: [:ex | ex messageText = 'not indexable'].
 
+	| array |
+	self
+		should: [Array at: 1]
+		raise: Error
+		matching: [:ex | ex messageText = 'not indexable'].
+	self
+		should: [Array at: 0]
+		raise: Error
+		matching: [:ex | ex messageText = 'not indexable'].
+	self
+		should: [Array at: nil]
+		raise: Error
+		matching: [:ex | ex messageText = 'not indexable'].
 	array := Array with: 1.
 	self should: [(array at: 1) == 1].
 	"Some tests are repeated with a new array in case of different behaviour resulting from caching"
@@ -432,103 +608,14 @@ testPrimitiveAt
 	array := Object compiledMethodAt: #addDependent:.
 	self should: [(array at: 1) == #getDependents].
 	self should: [(array at: 1) == #getDependents].
-	self should: [(array at: 2) == WeakArray].
+	self should: 
+			[| lit |
+			lit := array at: 2.
+			lit == WeakArray or: [(lit isKindOf: VariableBinding) and: [lit value == WeakArray]]].
 	self should: [(array at: 3) == #setDependents:].
-	self should: [(array at: 4) == #add:].
+	self should: [(array at: array size) == #add:].
 	self should: [array at: 0] raise: BoundsError.
-	self should: [array at: 5] raise: BoundsError.
-	self should: [array at: SmallInteger maximum] raise: BoundsError.
-	self should: [array at: SmallInteger minimum] raise: BoundsError.
-
-	"LargeIntegers"
-	self should: [array at: SmallInteger maximum+1] raise: BoundsError.
-	self should: [array at: (2 raisedToInteger: 31)-1] raise: BoundsError.
-	self should: [array at: (2 raisedToInteger: 31)] raise: BoundsError.
-	self should: [array at: (2 raisedToInteger: 32)-1] raise: BoundsError.
-	self should: [array at: (2 raisedToInteger: 32)] raise: BoundsError.
-	self should: [array at: SmallInteger minimum-1] raise: BoundsError.
-	self should: [array at: (-2 raisedToInteger: 31)] raise: BoundsError.
-
-	"Try accessing with non-integer indices"
-	self should: [array at: $1] raise: Error matching: [:ex | ex messageText = 'Index: $1 is not an integer'].
-	self should: [array at: '1'] raise: Error matching: [:ex | ex messageText = 'Index: ''1'' is not an integer'].
-	self should: [array at: nil] raise: Error matching: [:ex | ex messageText = 'Index: nil is not an integer'].
-	self should: [array at: #[1]] raise: Error matching: [:ex | ex messageText = 'Index: #[1] is not an integer'].
-	self should: [array at: #'1'] raise: Error matching: [:ex | ex messageText = 'Index: #''1'' is not an integer'].
-	self should: [array at: #(1)] raise: Error matching: [:ex | ex messageText = 'Index: #(1) is not an integer'].
-	self should: [array at: #(1)] raise: Error matching: [:ex | ex messageText = 'Index: #(1) is not an integer'].
-
-	array := Array with: 'a' with: 'b'.
-	self should: [(array at: 1) = 'a'].
-	self should: [(array at: 1) = 'a'].
-	self should: [(array at: 2) = 'b'].
-	self should: [array at: 0] raise: BoundsError.
-	self should: [array at: 3] raise: BoundsError.
-
-	array := MourningWeakArray with: 'a' with: 'b'.
-	self should: [(array at: 1) = 'a'].
-	self should: [(array at: 1) = 'a'].
-	self should: [(array at: 2) = 'b'].
-	self should: [array at: 0] raise: BoundsError.
-	self should: [array at: 3] raise: BoundsError.
-
-	array := (-100 to: 100) asArray.
-	-100 to: 100 do: [:i | self should: [(array at: i+100+1) == i]].
-!
-
-testPrimitiveAtPut
-	"First some error cases - accessing non-indexable objects"
-
-	| array |
-	self 
-		should: [Array at: 1 put: nil]
-		raise: Error
-		matching: [:ex | ex messageText = 'not indexable'].
-	self 
-		should: [Array at: 0 put: nil]
-		raise: Error
-		matching: [:ex | ex messageText = 'not indexable'].
-	self 
-		should: [Array at: nil put: nil]
-		raise: Error
-		matching: [:ex | ex messageText = 'not indexable'].
-	array := Array with: 1.
-	self should: [(array at: 1 put: 1) == 1 and: [(array at: 1) == 1]].
-	"One second access, will be in the cache"
-	self should: [(array at: 1 put: '1') = '1' and: [(array at: 1) = '1']].
-
-	"Now attempt some out of bounds accesses"
-	self should: [array at: 0 put: '0'] raise: BoundsError.
-	self should: [array at: 2 put: '2'] raise: BoundsError.
-	array := Array with: 1.
-	self should: [array at: 0 put: '0'] raise: BoundsError.
-	array := Array with: 1.
-	self should: [array at: 2 put: '2'] raise: BoundsError.
-	self should: [array at: SmallInteger maximum put: nil] raise: BoundsError.
-	self should: [array at: SmallInteger minimum put: nil] raise: BoundsError.
-
-	"Repeat for an object with one named instance variable and no #at: override"
-	array := MourningWeakArray with: 1.
-	self should: [(array at: 1) == 1].
-	self should: [(array at: 1) == 1].
-	self should: [array at: 0] raise: BoundsError.
-	self should: [array at: 2] raise: BoundsError.
-	array := Array with: 1.
-	self should: [array at: 0] raise: BoundsError.
-	array := Array with: 1.
-	self should: [array at: 2] raise: BoundsError.
-	self should: [array at: SmallInteger maximum] raise: BoundsError.
-	self should: [array at: SmallInteger minimum] raise: BoundsError.
-
-	"And again for one with a number of named instance variables (a method)"
-	array := Object compiledMethodAt: #addDependent:.
-	self should: [(array at: 1) == #getDependents].
-	self should: [(array at: 1) == #getDependents].
-	self should: [(array at: 2) == WeakArray].
-	self should: [(array at: 3) == #setDependents:].
-	self should: [(array at: 4) == #add:].
-	self should: [array at: 0] raise: BoundsError.
-	self should: [array at: 5] raise: BoundsError.
+	self should: [array at: array size + 1] raise: BoundsError.
 	self should: [array at: SmallInteger maximum] raise: BoundsError.
 	self should: [array at: SmallInteger minimum] raise: BoundsError.
 
@@ -542,31 +629,31 @@ testPrimitiveAtPut
 	self should: [array at: (-2 raisedToInteger: 31)] raise: BoundsError.
 
 	"Try accessing with non-integer indices"
-	self 
+	self
 		should: [array at: $1]
 		raise: Error
 		matching: [:ex | ex messageText = 'Index: $1 is not an integer'].
-	self 
+	self
 		should: [array at: '1']
 		raise: Error
 		matching: [:ex | ex messageText = 'Index: ''1'' is not an integer'].
-	self 
+	self
 		should: [array at: nil]
 		raise: Error
 		matching: [:ex | ex messageText = 'Index: nil is not an integer'].
-	self 
+	self
 		should: [array at: #[1]]
 		raise: Error
 		matching: [:ex | ex messageText = 'Index: #[1] is not an integer'].
-	self 
+	self
 		should: [array at: #'1']
 		raise: Error
 		matching: [:ex | ex messageText = 'Index: #''1'' is not an integer'].
-	self 
+	self
 		should: [array at: #(1)]
 		raise: Error
 		matching: [:ex | ex messageText = 'Index: #(1) is not an integer'].
-	self 
+	self
 		should: [array at: #(1)]
 		raise: Error
 		matching: [:ex | ex messageText = 'Index: #(1) is not an integer'].
@@ -584,6 +671,37 @@ testPrimitiveAtPut
 	self should: [array at: 3] raise: BoundsError.
 	array := (-100 to: 100) asArray.
 	-100 to: 100 do: [:i | self should: [(array at: i + 100 + 1) == i]]!
+
+testPrimitiveAtPut
+	"First some error cases - accessing non-indexable objects"
+
+	| array |
+	self
+		should: [Array at: 1 put: nil]
+		raise: Error
+		matching: [:ex | ex messageText = 'not indexable'].
+	self
+		should: [Array at: 0 put: nil]
+		raise: Error
+		matching: [:ex | ex messageText = 'not indexable'].
+	self
+		should: [Array at: nil put: nil]
+		raise: Error
+		matching: [:ex | ex messageText = 'not indexable'].
+	array := Array with: 1.
+	self should: [(array at: 1 put: 1) == 1 and: [(array at: 1) == 1]].
+	"One second access, will be in the cache"
+	self should: [(array at: 1 put: '1') = '1' and: [(array at: 1) = '1']].
+
+	"Now attempt some out of bounds accesses"
+	self should: [array at: 0 put: '0'] raise: BoundsError.
+	self should: [array at: 2 put: '2'] raise: BoundsError.
+	array := Array with: 1.
+	self should: [array at: 0 put: '0'] raise: BoundsError.
+	array := Array with: 1.
+	self should: [array at: 2 put: '2'] raise: BoundsError.
+	self should: [array at: SmallInteger maximum put: nil] raise: BoundsError.
+	self should: [array at: SmallInteger minimum put: nil] raise: BoundsError!
 
 testPrimitiveIsNullBytes
 	| addr handle |
@@ -615,6 +733,81 @@ testPrimitiveIsNullBytes
 			| bytes |
 			bytes := DWORDBytes newFixed: each.
 			self assert: bytes isNull]!
+
+testPrimitiveReplaceElements
+	self exerciseReplaceElementsOf: #($a $b $c $d $e) with: #(1 2 3 4 5 6).
+	self exerciseReplaceElementsOf: #($a $b $c $d $e) with: #(1 2 3 4 5 6).
+	self exerciseReplaceElementsOf: #($a $b $c $d $e)
+		with: ((#(2 3 4 5 6) asOrderedCollection)
+				addFirst: 1;
+				yourself).
+	self exerciseReplaceElementsOf: ((#(nil $a $b $c $d $e) asOrderedCollection)
+				removeFirst;
+				yourself)
+		with: #(1 2 3 4 5 6).
+	self exerciseReplaceElementsOf: ((#($b $c $d $e) asOrderedCollection)
+				addFirst: $a;
+				yourself)
+		with: ((#(0 1 2 3 4 5 6) asOrderedCollection)
+				removeFirst;
+				yourself)!
+
+testPrimitiveResume
+	| a b c d e sem state list |
+	sem := Semaphore new.
+	a := 
+			[state := 'a1'.
+			sem wait.
+			state := state , ', a2'.
+			Processor suspendActive.
+			state := state , ', a3'.
+			Processor suspendActive.
+			state := state , ', a4'.
+			Processor suspendActive.
+			state := state , ', a5']
+					forkAt: Processor userInterruptPriority.
+	self assert: 'a1' equals: state.
+	self assert: a isWaiting.
+	self assert: a equals: sem first.
+	a suspend.
+	self assert: a isSuspended.
+	self assert: sem isEmpty.
+	self assert: 'a1' equals: state.
+	b := 
+			[a resume: sem.
+			state := state , ', b'] forkAt: Processor userInterruptPriority.
+	"Regression test for #Process>>resume: suspends calling/active process #89"
+	self assert: b isDead.
+	self assert: 'a1, b' equals: state.
+	"Check that the process was 'resumed' correctly onto the requested list"
+	self assert: a isWaiting.
+	self assert: a equals: sem first.
+	"And that it is runnable."
+	sem signal.
+	self assert: 'a1, b, a2' equals: state.
+	self assert: a isSuspended.
+	list := (Processor instVarNamed: 'processLists') at: a priority.
+	"Resumed process is schedulable, but lower priority than the active process, so waits."
+	c := 
+			[a resume: list.
+			state := state , ', c'] forkAt: Processor lowIOPriority.
+	self assert: 'a1, b, a2, c, a3' equals: state.
+	self assert: a isSuspended.
+	self assert: c isDead.
+	"Resumed process is same priority, and although we expect a rescheduling it is pushed on the back of the list, so still waits"
+	d := 
+			[a resume: list.
+			state := state , ', d'] forkAt: a priority.
+	self assert: 'a1, b, a2, c, a3, d, a4' equals: state.
+	self assert: d isDead.
+	self assert: a isSuspended.
+	"Resumed process is higher priority, so resumes immediately."
+	e := 
+			[a resume: list.
+			state := state , ', e'] forkAt: a priority - 1.
+	self assert: 'a1, b, a2, c, a3, d, a4, a5, e' equals: state.
+	self assert: e isDead.
+	self assert: a isDead!
 
 testPrimitiveStringAt
 	| array |
@@ -663,20 +856,6 @@ testPrimitiveStringAt
 	0 to: 255 do: [:i | self should: [(array at: i+1) == (Character value: i)]].
 !
 
-testQuiesceWhenUIBlocked
-	"#969: Dolphin burns 100% CPU when main UI process blocked on Semaphore"
-
-	| totalCPUBefore cpuWhileSleeping sleepTime wait |
-	totalCPUBefore := self getCPUTime.
-	wait := 2000.
-	sleepTime := Time millisecondsToRun: [Processor sleep: wait].
-	cpuWhileSleeping := self getCPUTime - totalCPUBefore.
-	"If the sleep time was significantly longer than requested, then the VM is not waking up the image
-	 properly at the end of the timer"
-	self assert: (sleepTime between: wait * 0.9 and: wait * 1.1).
-	"The VM should quiesce properly, even if events are waiting to be processed, so very little CPU time should have been consumed"
-	self assert: cpuWhileSleeping < (wait * 0.01)!
-
 testSignedFromUnsigned
 	"Test SmallIntegers and 4 & 8 byte LargeIntegers"
 
@@ -699,8 +878,10 @@ testSignedFromUnsigned
 !VMTest categoriesFor: #assertImmutableAtPut:!private!unit tests! !
 !VMTest categoriesFor: #assertImmutableBasicAtPut:!private!unit tests! !
 !VMTest categoriesFor: #assertImmutableInstVarAtPut:!private!unit tests! !
-!VMTest categoriesFor: #assertLoopInterruptible:!private!unit tests! !
+!VMTest categoriesFor: #assertImmutableResize:!private!unit tests! !
 !VMTest categoriesFor: #earlyTermination:!helpers!public! !
+!VMTest categoriesFor: #exerciseReplaceElementsOf:from:to:with:startingAt:!private!unit tests! !
+!VMTest categoriesFor: #exerciseReplaceElementsOf:with:!private!unit tests! !
 !VMTest categoriesFor: #getCPUTime!helpers!private! !
 !VMTest categoriesFor: #isGPF:reading:address:!helpers!private! !
 !VMTest categoriesFor: #suspendAndTerminate!helpers!public! !
@@ -714,6 +895,9 @@ testSignedFromUnsigned
 !VMTest categoriesFor: #testImmutableBufferAtPuts!public!unit tests! !
 !VMTest categoriesFor: #testImmutableInstVarAtPut!public!unit tests! !
 !VMTest categoriesFor: #testImmutableNextPut!public!unit tests! !
+!VMTest categoriesFor: #testImmutableNextPutAll!public!unit tests! !
+!VMTest categoriesFor: #testImmutableReplacePrimitives!public!unit tests! !
+!VMTest categoriesFor: #testImmutableResize!public!unit tests! !
 !VMTest categoriesFor: #testImmutableStringCompare!public!unit tests! !
 !VMTest categoriesFor: #testImmutableWriteAccessors!public!unit tests! !
 !VMTest categoriesFor: #testMakeLargeUnsigned!public!unit tests! !
@@ -723,8 +907,9 @@ testSignedFromUnsigned
 !VMTest categoriesFor: #testPrimitiveAt!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveAtPut!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveIsNullBytes!public!unit tests! !
+!VMTest categoriesFor: #testPrimitiveReplaceElements!public!unit tests! !
+!VMTest categoriesFor: #testPrimitiveResume!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveStringAt!public!unit tests! !
-!VMTest categoriesFor: #testQuiesceWhenUIBlocked!public!unit tests! !
 !VMTest categoriesFor: #testSignedFromUnsigned!public!unit tests! !
 
 !VMTest class methodsFor!

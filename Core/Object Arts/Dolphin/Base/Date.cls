@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Magnitude subclass: #Date
 	instanceVariableNames: 'days '
@@ -272,10 +272,17 @@ setDays: dayCount
 !
 
 storeOn: aStream 
+	"Append to the <puttableStream> argument, target, an expression which when 
+	evaluated will answer a collection similar to the receiver."
+
+	"Use a format which is locale invariant."
+
 	aStream
 		display: self class;
-		nextPutAll: ' fromString: '.
-	self displayString printOn: aStream!
+		space;
+		display: #fromDays:;
+		space;
+		display: self asDays!
 
 subtractDate: aDate
 	"Answer the difference in days between the receiver and aData, as an Integer"

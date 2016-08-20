@@ -24,6 +24,7 @@ package methodNames
 	add: #AttributeDescriptor -> #mutable;
 	add: #Behavior -> #makeIndirect;
 	add: #Behavior -> #makeNullTerminated;
+	add: #Class -> #addClassVarName:;
 	add: #ExternalStructure -> #do:;
 	add: #ExternalStructure -> #do:separatedBy:;
 	add: #Integer -> #digitSize;
@@ -126,6 +127,13 @@ makeNullTerminated
 	self isNullTerminated: true! !
 !Behavior categoriesFor: #makeIndirect!instance specification-accessing!private! !
 !Behavior categoriesFor: #makeNullTerminated!instance specification-accessing!private! !
+
+!Class methodsFor!
+
+addClassVarName: aString
+	#deprecated.	"Use addClassVarNamed:"
+	^self addClassVarNamed: aString! !
+!Class categoriesFor: #addClassVarName:!class variables!public! !
 
 !ExternalCallback class methodsFor!
 

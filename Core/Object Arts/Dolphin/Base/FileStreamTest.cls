@@ -38,20 +38,21 @@ streamOn: aString
 	^self streamClass read: name text: true!
 
 test1065
-	| stream data r written |
+	| r |
 	r := Random new.
 	#(0 1 512 4095 4096 8191 8192 8193 16383 16384 16385) do: 
-			[:i | 
+			[:i |
+			| data stream written |
 			data := ((1 to: i) collect: [:each | (r next * 256) truncated]) asByteArray.
 			stream := self streamClass write: tempFileName text: false.
 			
-			[stream 
+			[stream
 				next: data size
 				putAll: data
 				startingAt: 1] ensure: [stream close].
 			stream := FileStream read: tempFileName text: false.
 			written := [stream contents] ensure: [stream close].
-			self 
+			self
 				assert: data = written
 				description: 'Failed on write of ' , i printString , ' bytes'
 				resumable: true]!

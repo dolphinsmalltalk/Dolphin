@@ -394,12 +394,11 @@ refersToClass
 	detector name: 'Refers to class name instead of "self class"'.
 	#rbfix.	"Should really be using a methodBlock rather than a classBlock (an inappropriate optimization)"
 	detector methodBlock: 
-			[:context :result | 
+			[:context :result |
 			| method nonMeta |
 			method := context compiledMethod.
 			nonMeta := method methodClass instanceBehavior.
-			#rbFix.	"In DX6 and later class refs in methods are direct to the class object, not the binding, because the binding is constant"
-			(method refersToLiteral: nonMeta"(nonMeta environment bindingFor: nonMeta name)") 
+			(method refersToLiteral: (nonMeta environment bindingFor: nonMeta name))
 				ifTrue: 
 					[result addClass: method methodClass selector: method selector.
 					result addSearchString: nonMeta name]].

@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 NMCUSTOMDRAW subclass: #NMTVCUSTOMDRAW
 	instanceVariableNames: ''
@@ -15,7 +15,9 @@ NMTVCUSTOMDRAW is sent by <TreeView> controls to request custom draw information
 backcolor
 	"Answer the background <Color>."
 
-	^ColorRef fromInteger: self clrTextBk!
+	| clrTextBk |
+	clrTextBk := self clrTextBk.
+	^clrTextBk = CLR_DEFAULT ifTrue: [Color window] ifFalse: [ColorRef fromInteger: clrTextBk]!
 
 backcolor: aColor
 	"Sets the background <Color>."
@@ -45,7 +47,9 @@ clrTextBk: anObject
 forecolor
 	"Answer the foreground text colour."
 
-	^ColorRef fromInteger: self clrText!
+	| clrText |
+	clrText := self clrText.
+	^clrText = CLR_DEFAULT ifTrue: [Color windowText] ifFalse: [ColorRef fromInteger: clrText]!
 
 forecolor: aColor
 	"Sets the text foreground <Color>."

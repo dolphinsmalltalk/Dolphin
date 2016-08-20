@@ -1,7 +1,7 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #Behavior
-	instanceVariableNames: 'superclass methodDictionary instanceSpec subclasses '
+	instanceVariableNames: 'superclass methodDictionary instanceSpec subclasses'
 	classVariableNames: ''
 	poolDictionaries: '_BehaviorMasks'
 	classInstanceVariableNames: ''!
@@ -78,12 +78,9 @@ addSubclass: aClass
 		subclasses := (subs asSortedCollection add: aClass; yourself) asArray]!
 
 addToSuper
-	"Private - Add the receiver to its superclasses' subclass collection.
-	Root classes will have a superclass of nil - we do not put such
-	classes into a subclass collection."
+	"Private - Add the receiver to its superclasses' subclass collection."
 
-	superclass notNil
-		ifTrue: [superclass addSubclass: self]!
+	superclass addSubclass: self!
 
 allClassVarNames
 	"Answer a <Set> of the <readableString> names of the receiver's and the 
@@ -105,7 +102,9 @@ allInstVarNames
 	those specified in the receiver and in all of its superclasses. The array ordering is the order 
 	in which the variables are stored and accessed by the interpreter."
 
-	^(self superclass ifNil: [#()] ifNotNil: [:parent | parent allInstVarNames]) , self instVarNames!
+	^superclass isNil
+		ifTrue: [self instVarNames]
+		ifFalse: [superclass allInstVarNames , self instVarNames]!
 
 allSelectors
 	"Answer a <Set> of <Symbol>s, being all the message selectors to which the receiver 
@@ -117,22 +116,25 @@ allSelectors
 	^answer!
 
 allSharedPoolNames
-	"Answer a Set of the names of the pools (dictionaries) that are specified in the receiver 
-	in the receiver and each of its superclasses"
+	"Answer a <sequencedReadableCollection> of <Symbol>s, being the names of all the shared pool
+	dictionaries that are specified that are specified in the receiver and each of its
+	superclasses. The list is ordered with the receiver's own pool references first, and then
+	those of the superclass, and so on up the class hierarchy. Pools only appear where first
+	referenced (i.e. no duplicates)."
 
-	| answer |
-	answer := Set new.
-	self withAllSuperclassesDo: [ :c | answer addAll: c sharedPoolNames ].
-	^answer!
+	^self allSharedPools collect: [:each | each name]!
 
 allSharedPools
-	"Answer a Set of the pools (dictionaries) that are specified in the receiver in the receiver 
-	and each of its superclasses"
+	"Answer a <sequencedReadableCollection> of the pools (dictionaries) that are specified in
+	the receiver and each of its superclasses."
 
-	| answer |
-	answer := Set new.
-	self withAllSuperclassesDo: [:c | answer addAll: c sharedPools].
-	^answer!
+	| pools seen |
+	pools := Array writeStream: 5.
+	seen := IdentitySet new.
+	self withAllSuperclassesDo: 
+			[:c |
+			c sharedPoolsDo: [:each | (seen addNewElement: each) ifTrue: [pools nextPut: each]]].
+	^pools contents!
 
 allSubclasses
 	"Answer a <collection> of the receiver's subclasses in 
@@ -734,6 +736,16 @@ recompileAll
 			each class compileAll.
 			each compileAll]!
 
+recompileReferencesToVarNamed: aString
+	"Private - Recompile any of the receiver's methods which appear to reference the named variable."
+
+	self methodDictionary do: 
+			[:m |
+			(m containsSource: aString)
+				ifTrue: 
+					[Notification signal: 'Recompiling ' , m printString.
+					m recompile]]!
+
 removeFromSuper
 	"Private - Remove the receiver from its superclasses' subclass collection.
 	Root classes will have a superclass of nil - we do not put such
@@ -851,18 +863,26 @@ shallowCopy
 
 	^self!
 
-sharedPools
-	"Answer a <Set> of <Symbol>s, being the names of the pools (dictionaries) that are
-	specified locally in the receiver."
-
+sharedPoolNames
 	^self subclassResponsibility!
 
-sharedStaticPools
-	"Private - Answer an <Array> of all the shared pools for the receiver (including those
-	inherited from superclasses). Used by compiler, but may be removed in future."
+sharedPools
+	"Answer a <sequencedReadableCollection> of the pools (dictionaries) that are referenced
+	locally in the receiver."
 
-	^self subclassResponsibility
-!
+	| pools |
+	pools := OrderedCollection new.
+	self sharedPoolsDo: [:each | pools add: each].
+	^pools!
+
+sharedPoolsDo: aMonadicValuable
+	"Evaluate the <monadicValuable> argument for each of the shared pools referenced locally for
+	the receiver in order of precedence."
+
+	| environment |
+	environment := self environment.
+	self sharedPoolNames
+		do: [:symbol | (environment at: symbol ifAbsent: []) ifNotNil: [:p | aMonadicValuable value: p]]!
 
 sourceCodeAt: aSymbol
 	"Answer a <String> that is the source code of the receiver's method with selector, aSymbol.
@@ -984,20 +1004,31 @@ whichMethodsRead: aString at: anInteger
 	^self 
 		selectMethods: [:method | method readsInstVar: aString at: anInteger]!
 
-whichMethodsReferTo: anObject 
+whichMethodsReferTo: anObject
 	"Answer a <Set> of methods in the receiver whose literal frames include the argument, anObject."
 
 	| index |
-	anObject isSymbol 
+	anObject isSymbol
 		ifTrue: 
 			[index := VMLibrary default indexOfSpecialSelector: anObject ifAbsent: [0].
-			index ~= 0 ifTrue: [^self selectMethods: [:each | (each refersToLiteral: anObject) or: [each sendsSpecialSelector: index]]]]
+			index ~= 0
+				ifTrue: 
+					[^self
+						selectMethods: [:each | (each refersToLiteral: anObject) or: [each sendsSpecialSelector: index]]]]
 		ifFalse: 
-			[((anObject isKindOf: VariableBinding) and: [anObject isImmutable]) 
+			[(anObject isKindOf: VariableBinding)
 				ifTrue: 
 					[| value |
 					value := anObject value.
-					^self selectMethods: [:each | (each refersToLiteral: value) or: [each refersToLiteral: anObject]]]].
+					"In the case of constant bindings the value may be inlined in the byte codes if there is a representation."
+					(anObject isImmutable and: [VMLibrary hasBytecodeRepresentation: value])
+						ifTrue: 
+							[| constName |
+							constName := anObject key asString.
+							^self selectMethods: [:each | (each refersToLiteral: anObject) or: [each containsSource: constName]]]
+						ifFalse: 
+							["For normal const/var bindings, search for both the binding and the current value of the binding"
+							^self selectMethods: [:each | (each refersToLiteral: anObject) or: [each refersToLiteral: value]]]]].
 	^self selectMethods: [:each | each refersToLiteral: anObject]!
 
 whichSelectorsAccess: aString
@@ -1140,6 +1171,7 @@ withAllSuperclassesDo: aMonadicValuable
 !Behavior categoriesFor: #primAllSubinstances!instances!private! !
 !Behavior categoriesFor: #recompile:!compiling!development!public! !
 !Behavior categoriesFor: #recompileAll!compiling!development!public! !
+!Behavior categoriesFor: #recompileReferencesToVarNamed:!development!private! !
 !Behavior categoriesFor: #removeFromSuper!class hierarchy-removing!private! !
 !Behavior categoriesFor: #removeFromSystem!class hierarchy-removing!private! !
 !Behavior categoriesFor: #removeSelector:!methods-removing!public! !
@@ -1154,8 +1186,9 @@ withAllSuperclassesDo: aMonadicValuable
 !Behavior categoriesFor: #setSpecialBehavior:to:!instance specification-accessing!private! !
 !Behavior categoriesFor: #setSuperclass:!class hierarchy-accessing!private! !
 !Behavior categoriesFor: #shallowCopy!copying!public! !
+!Behavior categoriesFor: #sharedPoolNames!pool variables!public! !
 !Behavior categoriesFor: #sharedPools!pool variables!public! !
-!Behavior categoriesFor: #sharedStaticPools!pool variables!private! !
+!Behavior categoriesFor: #sharedPoolsDo:!pool variables!public! !
 !Behavior categoriesFor: #sourceCodeAt:!development!methods-accessing!public! !
 !Behavior categoriesFor: #storeCategoriesOfMethod:!compiling!private! !
 !Behavior categoriesFor: #subclasses!class hierarchy-accessing!public! !

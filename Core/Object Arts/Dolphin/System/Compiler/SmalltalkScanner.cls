@@ -1,11 +1,12 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #SmalltalkScanner
-	instanceVariableNames: 'stream buffer tokenStart currentCharacter characterType classificationTable separatorsInLiterals extendedLiterals comments errorBlock nameSpaceCharacter line errorHandler'
-	classVariableNames: 'ClassificationTable PatternVariableCharacter'
+	instanceVariableNames: 'stream buffer tokenStart currentCharacter characterType classificationTable separatorsInLiterals extendedLiterals comments errorBlock nameSpaceCharacter line errorHandler environment'
+	classVariableNames: 'ClassificationTable EscapeChars PatternVariableCharacter'
 	poolDictionaries: 'SmalltalkParseErrorCodes'
 	classInstanceVariableNames: ''!
 SmalltalkScanner guid: (GUID fromString: '{F76F2335-9125-488E-A570-5A759A6E67B7}')!
+SmalltalkScanner addClassConstant: 'ClassificationTable' value: #(nil nil nil nil nil nil nil nil #separator #separator #separator #separator #separator nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil #separator #binary nil nil nil #binary #binary nil #special #special #binary #binary #binary #binary #special #binary #digit #digit #digit #digit #digit #digit #digit #digit #digit #digit #special #special #binary #binary #binary #binary #binary #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #special #binary #special #special #alphabetic nil #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic nil #binary nil #binary nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil)!
 SmalltalkScanner comment: 'SmalltalkScanner is the Smalltalk lexical analyzer. It converts source text to a stream of <StToken>''s.
 
 Note that SmalltalkScanner is based on the RBScanner class written by John Brant and Don Roberts for their Refactoring Browser. It has been extended for Dolphin to incorporate additional error reporting capabilities (such as the line number on which the error occurred), and the ability to parse Dolphin''s FFI call syntax.
@@ -31,6 +32,11 @@ Class Instance Variables:
 !SmalltalkScanner categoriesForClass!System-Compiler! !
 !SmalltalkScanner methodsFor!
 
+addComment: anInterval 
+	comments isNil 
+		ifTrue: [comments := OrderedCollection with: anInterval]
+		ifFalse: [comments add: anInterval]!
+
 atEnd
 	^characterType == #eof!
 
@@ -49,7 +55,7 @@ classify: aCharacter
 
 constantExpected
 	self lexicalError: LErrExpectConst.
-	^self recoverFromUnterminatedLiteral!
+	^self recoverFromInvalidLiteral!
 
 contents
 	| contentsStream |
@@ -63,6 +69,17 @@ do: aBlock
 
 	[self atEnd] whileFalse: [aBlock value: self next]
 !
+
+environment
+	"Answer the environment for which the receiver is scanning. By default this is the global
+	<SystemDictionary> instance, Smalltalk."
+
+	^environment!
+
+environment: anObject
+	"Set the environment for which the receiver is scanning."
+
+	environment := anObject!
 
 errorBlock
 	^errorBlock ifNil: [[:ex | ]]!
@@ -89,13 +106,13 @@ errorPosition
 
 extendedLiteralExpected
 	self lexicalError: LErrExpectExtendedLiteral.
-	^self recoverFromUnterminatedLiteral!
+	^self recoverFromInvalidLiteral!
 
 getComments
 	| oldComments |
-	comments isEmpty ifTrue: [^nil].
+	comments isNil ifTrue: [^nil].
 	oldComments := comments.
-	comments := OrderedCollection new: 1.
+	comments := nil.
 	^oldComments!
 
 identifierTokenClass
@@ -110,14 +127,9 @@ illegalNumber: anInteger
 	self lexicalError: LErrBadNumber range: (anInteger to: self errorPosition).
 	^self recoverFromIllegalNumber: anInteger!
 
-initializeForDolphin
-	separatorsInLiterals := false.
-	extendedLiterals := true.
-	nameSpaceCharacter := $..	"N.B. Dolphin does not currently support namespaces."
-	line := 1!
-
 invalidQualifier
-	^self lexicalError: LErrInvalidQualifier!
+	self lexicalError: LErrInvalidQualifier.
+	^self recoverFromInvalidLiteral!
 
 lexicalError: anInteger
 	^self lexicalError: anInteger range: (tokenStart to: self errorPosition)!
@@ -175,19 +187,34 @@ notificationClass
 numberTokenClass
 	^StNumberLiteralToken!
 
-on: aStream 
+on: aStream
 	buffer := WriteStream on: (String new: 60).
 	stream := aStream.
 	tokenStart := stream position.
-	classificationTable := self class classificationTable.
-	comments := OrderedCollection new.
+	classificationTable := ClassificationTable.
 	errorHandler := self.
-	self initializeForDolphin!
+	separatorsInLiterals := false.
+	extendedLiterals := true.
+	nameSpaceCharacter := $..	"N.B. Dolphin support namespaces other than for pools."
+	line := 1.
+	environment := Smalltalk!
 
 previousStepPosition
 	^characterType == #eof 
 		ifTrue: [stream position]
 		ifFalse: [stream position - 1]!
+
+readIntegerOfRadix: anInteger
+	| value |
+	value := nil.
+	[self atEnd] whileFalse: 
+			[| digit |
+			((digit := currentCharacter digitValue) < anInteger and: [digit >= 0])
+				ifTrue: 
+					[self step.
+					value := (value ?? 0) * anInteger + digit]
+				ifFalse: [^value]].
+	^value!
 
 readNumber
 	| number |
@@ -195,6 +222,9 @@ readNumber
 	number := Number readSmalltalkSyntaxFrom: stream.
 	self step.
 	^number!
+
+recoverFromExpectChar
+	^self literalErrorToken: nil start: stream position!
 
 recoverFromIllegalCharacter
 	| start badChar |
@@ -207,10 +237,13 @@ recoverFromIllegalCharacter
 recoverFromIllegalNumber: anInteger 
 	^self literalErrorToken: (stream copyFrom: anInteger to: self previousStepPosition) start: anInteger!
 
+recoverFromInvalidLiteral
+	^self literalErrorToken: buffer contents start: self previousStepPosition!
+
 recoverFromUnterminatedComment: anInteger 
 	characterType := #eof.
 	currentCharacter := nil.
-	comments add: (anInteger to: stream position)!
+	self addComment: (anInteger to: stream position)!
 
 reportError: anInteger at: posInteger line: lineInteger range: anInterval extras: anArray 
 	| err |
@@ -242,7 +275,7 @@ scanBinary: aClass
 	| val |
 	buffer nextPut: currentCharacter.
 	self step.
-	[characterType == #binary and: [currentCharacter ~~ $-]] whileTrue: 
+	[characterType == #binary and: [currentCharacter == $- == false]] whileTrue: 
 			[buffer nextPut: currentCharacter.
 			self step].
 	val := buffer contents.
@@ -253,17 +286,17 @@ scanExtendedLiterals
 	| token |
 	self step.
 	separatorsInLiterals ifTrue: [self stripSeparators].
-	token := characterType == #alphabetic 
+	token := characterType == #alphabetic
 				ifTrue: [self scanSymbol]
 				ifFalse: 
-					[characterType == #binary 
+					[characterType == #binary
 						ifTrue: [(self scanBinary: self literalTokenClass) stop: self previousStepPosition]
 						ifFalse: 
-							[currentCharacter == $' 
+							[currentCharacter == $'
 								ifTrue: [self scanStringSymbol]
 								ifFalse: [currentCharacter == $( ifTrue: [^self scanOptimized]]]].
 	token isNil ifTrue: [^self extendedLiteralExpected].
-	token value: ((Smalltalk at: #EsAtom ifAbsent: [Symbol]) intern: token value asString).
+	token value: ((self environment at: #EsAtom ifAbsent: [Symbol]) intern: token value asString).
 	^token!
 
 scanIdentifierOrKeyword
@@ -345,25 +378,43 @@ scanLiteralArrayToken
 	^token!
 
 scanLiteralCharacter
-	| token |
+	| token stop value |
 	self step.	"$"
 	self atEnd ifTrue: [^self characterExpected].
-	token := self literalTokenClass 
-				value: currentCharacter
-				start: tokenStart
-				stop: stream position.
+	stop := stream position.
+	value := currentCharacter.
 	self step.	"char"
+	"Extended syntax for special characters?"
+	(value == $\ and: [extendedLiterals])
+		ifTrue: 
+			[(EscapeChars at: currentCharacter ifAbsent: [])
+				ifNil: 
+					[currentCharacter == $x
+						ifTrue: 
+							[| codePoint |
+							self step.
+							codePoint := self readIntegerOfRadix: 16.
+							(codePoint isNil or: [codePoint > 255]) ifTrue: [^self characterExpected].
+							value := Character value: codePoint]]
+				ifNotNil: 
+					[:char |
+					value := char.
+					self step]].
+	token := self literalTokenClass
+				value: value
+				start: tokenStart
+				stop: stop.
 	^token!
 
 scanLiteralString
 	self step.
 	
 	[currentCharacter isNil ifTrue: [^self unterminatedString].
-	currentCharacter == $' and: [self step ~~ $']] 
+	currentCharacter == $' and: [self step == $' == false]]
 			whileFalse: 
 				[buffer nextPut: currentCharacter.
 				self step].
-	^self literalTokenClass 
+	^self literalTokenClass
 		value: buffer contents
 		start: tokenStart
 		stop: self previousStepPosition!
@@ -421,16 +472,16 @@ scanPatternVariable
 
 scanQualifiedReference
 	| nameToken bindingClass |
-	bindingClass := Smalltalk at: #BindingReference ifAbsent: [nil].
+	bindingClass := self environment at: #BindingReference ifAbsent: [nil].
 	bindingClass isNil ifTrue: [^self illegalCharacter].
 	self step.	"{"
 	self stripSeparators.
 	nameToken := self scanIdentifierOrKeyword.
-	(nameToken isIdentifier and: [nameToken value notEmpty]) ifFalse: [self invalidQualifier].
+	(nameToken isIdentifier and: [nameToken value notEmpty]) ifFalse: [^self invalidQualifier].
 	self stripSeparators.
 	currentCharacter == $} ifFalse: [^self unterminatedQualifiedRef].
 	self step.	"}"
-	^self literalTokenClass 
+	^self literalTokenClass
 		value: (bindingClass pathString: nameToken value)
 		start: tokenStart
 		stop: self previousStepPosition!
@@ -518,13 +569,12 @@ stripComment
 	[| ch |
 	stream atEnd ifTrue: [^self unterminatedComment: start].
 	ch := stream next.
-	ch isLinefeed ifTrue: [line := line + 1].
-	ch == $"] 
+	ch == $\n ifTrue: [line := line + 1].
+	ch == $"]
 			whileFalse.
 	stop := stream position.
 	self step.
-	"Do we need access to the comments?"
-	comments add: (start to: stop)!
+	self addComment: (start to: stop)!
 
 stripSeparators
 	
@@ -537,17 +587,21 @@ unterminatedComment: anInteger
 	^self recoverFromUnterminatedComment: anInteger!
 
 unterminatedQualifiedRef
-	^self lexicalError: LErrQualifiedRefNotClosed!
+	self lexicalError: LErrQualifiedRefNotClosed.
+	^self recoverFromInvalidLiteral!
 
 unterminatedString
 	self lexicalError: LErrStringNotClosed.
-	^self recoverFromUnterminatedLiteral! !
+	^self recoverFromInvalidLiteral! !
+!SmalltalkScanner categoriesFor: #addComment:!private!scanning! !
 !SmalltalkScanner categoriesFor: #atEnd!public!testing! !
 !SmalltalkScanner categoriesFor: #characterExpected!error handling!private! !
 !SmalltalkScanner categoriesFor: #classify:!private!scanning! !
 !SmalltalkScanner categoriesFor: #constantExpected!error handling!private! !
 !SmalltalkScanner categoriesFor: #contents!accessing!public! !
 !SmalltalkScanner categoriesFor: #do:!enumerating!public! !
+!SmalltalkScanner categoriesFor: #environment!accessing!public! !
+!SmalltalkScanner categoriesFor: #environment:!accessing!public! !
 !SmalltalkScanner categoriesFor: #errorBlock!error handling!public! !
 !SmalltalkScanner categoriesFor: #errorBlock:!accessing!public! !
 !SmalltalkScanner categoriesFor: #errorHandler!accessing!private! !
@@ -558,7 +612,6 @@ unterminatedString
 !SmalltalkScanner categoriesFor: #identifierTokenClass!constants!private! !
 !SmalltalkScanner categoriesFor: #illegalCharacter!error handling!private! !
 !SmalltalkScanner categoriesFor: #illegalNumber:!error handling!private! !
-!SmalltalkScanner categoriesFor: #initializeForDolphin!initializing!public! !
 !SmalltalkScanner categoriesFor: #invalidQualifier!private!scanning! !
 !SmalltalkScanner categoriesFor: #lexicalError:!error handling!private! !
 !SmalltalkScanner categoriesFor: #lexicalError:range:!error handling!private! !
@@ -567,15 +620,18 @@ unterminatedString
 !SmalltalkScanner categoriesFor: #literalErrorToken:start:!error handling!private! !
 !SmalltalkScanner categoriesFor: #literalTokenClass!constants!private! !
 !SmalltalkScanner categoriesFor: #metaVariableExpected!error handling!private! !
-!SmalltalkScanner categoriesFor: #namespaceCharacter:!accessing!private! !
+!SmalltalkScanner categoriesFor: #namespaceCharacter:!accessing!public! !
 !SmalltalkScanner categoriesFor: #next!accessing!public! !
 !SmalltalkScanner categoriesFor: #notificationClass!constants!error handling!private! !
 !SmalltalkScanner categoriesFor: #numberTokenClass!public! !
 !SmalltalkScanner categoriesFor: #on:!initializing!private! !
 !SmalltalkScanner categoriesFor: #previousStepPosition!accessing!private! !
+!SmalltalkScanner categoriesFor: #readIntegerOfRadix:!private!scanning! !
 !SmalltalkScanner categoriesFor: #readNumber!private!scanning! !
+!SmalltalkScanner categoriesFor: #recoverFromExpectChar!error handling!private! !
 !SmalltalkScanner categoriesFor: #recoverFromIllegalCharacter!error handling!private! !
 !SmalltalkScanner categoriesFor: #recoverFromIllegalNumber:!error handling!private! !
+!SmalltalkScanner categoriesFor: #recoverFromInvalidLiteral!error handling!private! !
 !SmalltalkScanner categoriesFor: #recoverFromUnterminatedComment:!error handling!private! !
 !SmalltalkScanner categoriesFor: #reportError:at:line:range:extras:!error handling!private! !
 !SmalltalkScanner categoriesFor: #scanAnySymbol!private!scanning! !
@@ -599,7 +655,7 @@ unterminatedString
 !SmalltalkScanner categoriesFor: #scanToken!accessing!public! !
 !SmalltalkScanner categoriesFor: #separatorsInLiterals:!accessing!private! !
 !SmalltalkScanner categoriesFor: #step!operations!private! !
-!SmalltalkScanner categoriesFor: #stripComment!public!scanning! !
+!SmalltalkScanner categoriesFor: #stripComment!private!scanning! !
 !SmalltalkScanner categoriesFor: #stripSeparators!private!scanning! !
 !SmalltalkScanner categoriesFor: #unterminatedComment:!error handling!private! !
 !SmalltalkScanner categoriesFor: #unterminatedQualifiedRef!error handling!private! !
@@ -607,24 +663,32 @@ unterminatedString
 
 !SmalltalkScanner class methodsFor!
 
-classificationTable
-	^ClassificationTable!
-
 initialize
-	self initializeClassificationTable!
-
-initializeChars: aCollectionOfCharacters to: aSymbol 
-	aCollectionOfCharacters do: [:c | ClassificationTable at: c asInteger put: aSymbol]!
+	| escapeChars |
+	PatternVariableCharacter := $`.
+	self initializeClassificationTable.
+	escapeChars := IdentityDictionary new.
+	Character.EscapeChars
+		keysAndValuesDo: [:i :c | c ifNotNil: [escapeChars at: c put: (Character value: i - 1)]].
+	self addClassConstant: 'EscapeChars'
+		value: (escapeChars
+				shrink;
+				isImmutable: true;
+				yourself)!
 
 initializeClassificationTable
-	PatternVariableCharacter := $`.
-	ClassificationTable := Array new: 255.
+	| classificationTable |
+	classificationTable := Array new: 255.
 	"#2130 ANSI Smalltalk allows only the English alphabet and underscore as letters in identifiers"
-	self initializeChars: '_ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz' to: #alphabetic.
-	self initializeChars: '01234567890' to: #digit.
-	self initializeChars: '!!%&*+,-/<=>?@\~|' to: #binary.
-	self initializeChars: '().:;[]^' to: #special.
-	self initializeChars: (Character byteCharacterSet select: [:each | each isSeparator]) to: #separator!
+	'_ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'
+		do: [:alpha | classificationTable at: alpha asInteger put: #alphabetic].
+	'01234567890' do: [:digit | classificationTable at: digit asInteger put: #digit].
+	'!!%&*+,-/<=>?@\~|' do: [:binary | classificationTable at: binary asInteger put: #binary].
+	'().:;[]^' do: [:special | classificationTable at: special asInteger put: #special].
+	(Character byteCharacterSet select: [:each | each isSeparator])
+		do: [:separator | classificationTable at: separator asInteger put: #separator].
+	classificationTable isImmutable: true.
+	self addClassConstant: 'ClassificationTable' value: classificationTable!
 
 isSelector: aSymbol 
 	| scanner token |
@@ -641,7 +705,7 @@ isVariable: aString
 	| scanner token |
 	aString isString ifFalse: [^false].
 	aString isEmpty ifTrue: [^false].
-	(self classificationTable at: aString first asInteger) == #alphabetic ifFalse: [^false].
+	(ClassificationTable at: aString first asInteger) == #alphabetic ifFalse: [^false].
 	scanner := self basicNew.
 	scanner on: (ReadStream on: aString asString).
 	scanner errorBlock: [:err | ^false].
@@ -678,9 +742,7 @@ on: aStream errorHandler: parseErrorHandler
 
 patternVariableCharacter
 	^PatternVariableCharacter! !
-!SmalltalkScanner class categoriesFor: #classificationTable!accessing!public! !
 !SmalltalkScanner class categoriesFor: #initialize!initializing!public! !
-!SmalltalkScanner class categoriesFor: #initializeChars:to:!initializing!private! !
 !SmalltalkScanner class categoriesFor: #initializeClassificationTable!initializing!private! !
 !SmalltalkScanner class categoriesFor: #isSelector:!public!testing! !
 !SmalltalkScanner class categoriesFor: #isVariable:!public!testing! !

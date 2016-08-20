@@ -1,7 +1,7 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 SourceFiler subclass: #ChunkSourceFiler
-	instanceVariableNames: 'sourceFileIndex '
+	instanceVariableNames: 'sourceFileIndex'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -23,22 +23,21 @@ emitCategories: aCollection for: aSymbol in: aClass
 	aCollection asSortedCollection do: [:each | self nextChunkPut: each name].
 	self endChunk!
 
-emitCategoriesOfClass: aClass 
+emitCategoriesOfClass: aClass
 	"Private - Emit a chunk to source stream to reclassify the <Class>, aClass, in all its existing 
 	categories."
 
 	| categories |
 	categories := aClass categories.
-	categories notEmpty 
-		ifTrue: 
-			[stream
-				nextPut: $!!;
-				nextPutAll: aClass name;
-				space;
-				nextPutAll: #categoriesForClass;
-				nextPutAll: '!!'.
-			categories asSortedCollection do: [:aCategory | self nextChunkPut: aCategory name].
-			self endChunk]!
+	categories notEmpty ifFalse: [^self].
+	stream
+		nextPut: $!!;
+		nextPutAll: aClass name;
+		space;
+		nextPutAll: #categoriesForClass;
+		nextPut: $!!.
+	categories asSortedCollection do: [:aCategory | self nextChunkPut: aCategory name].
+	self endChunk!
 
 emitCategoriesOfMethod: aCompiledMethod 
 	"Private - Append a chunk to the <puttableStream>, aWriteStream,
@@ -50,32 +49,49 @@ emitCategoriesOfMethod: aCompiledMethod
 		for: aCompiledMethod selector
 		in: aCompiledMethod methodClass!
 
-emitChunk: aString 
-	"Private - Output the specified text with a trailing end of chunk marker 
-	to the argument, aWriteStream."
+emitChunk: aString
+	"Private - Output the specified text with a trailing end of chunk marker to the argument,
+	aWriteStream."
 
 	self
 		nextChunkPut: aString;
 		cr!
 
-emitComment: aString 
-	"Private - Record aString to the change log as a comment. All comments
-	logged are prefixed with a timestamp.
-	N.B. Logging requests should be directed through the SessionManager."
+emitComment: aString
+	"Private - Record aString to the chunk stream as a comment. All comments logged are prefixed
+	with a timestamp. N.B. Logging requests should be directed through the SessionManager."
 
+	stream nextPut: $".
+	self emitString: aString.
 	stream
-		nextPut: $";
-		nextPutAll: aString;
 		nextPut: $";
 		nextPut: $!!;
 		cr;
 		flush!
 
-emitCommentOfClass: aClass 
+emitCommentOfClass: aClass
 	"Private - Emit a chunk which defines the comment for the <Class>, aClass, to the <puttableStream>
 	aWriteStream."
 
-	self emitChunk: aClass name , ' comment: ' , aClass comment printString!
+	stream
+		nextPutAll: aClass name;
+		space;
+		display: #comment:;
+		space.
+	self
+		nextChunkPut: aClass comment printString;
+		cr!
+
+emitDeclarationForClass: aClass variable: anAssociation
+	stream
+		nextPutAll: aClass name;
+		nextPutAll: (anAssociation isImmutable
+					ifTrue: [' addClassConstant: ']
+					ifFalse: [' addClassVariable: ']);
+		print: anAssociation key;
+		nextPutAll: ' value: '.
+	self nextChunkPut: anAssociation value storeString.
+	stream cr!
 
 emitFooterForMethodsOf: aClass 
 	"Private - Ends the method definition chunks for aClass onto
@@ -301,10 +317,11 @@ fileOutProtocols: aCollection ofBehavior: aClassDescription
 				cr].
 	self cr!
 
-getSourceFromDescriptor: sourceDescriptor
+getSourceFromDescriptor: sourceDescriptor 
 	"Answer the <readableString> source corresponding to the specified <integer> 
 	descriptor, sourceDescriptor, from the receiver's source stream."
 
+	sourceDescriptor isNil ifTrue: [^''].
 	stream position: (self sourcePositionFromDescriptor: sourceDescriptor).
 	^self nextChunk!
 
@@ -388,7 +405,7 @@ storeSource: aString for: aSourceObject
 	self nextChunkPut: aString.
 	sourceFileIndex notNil 
 		ifTrue: 
-			[aSourceObject sourceDescriptor: (self sourceDescriptorForIndex: sourceFileIndex position: position)]!
+			[aSourceObject sourceDescriptor: (aString isEmpty ifFalse: [self sourceDescriptorForIndex: sourceFileIndex position: position])]!
 
 storeSourceString: aString forMethod: aCompiledMethod 
 	"Private - Save the <readableString>, aString, as the source text for the 
@@ -411,6 +428,7 @@ storeSourceString: aString forMethod: aCompiledMethod
 !ChunkSourceFiler categoriesFor: #emitChunk:!private!source filing! !
 !ChunkSourceFiler categoriesFor: #emitComment:!operations-logging!private! !
 !ChunkSourceFiler categoriesFor: #emitCommentOfClass:!private!source filing! !
+!ChunkSourceFiler categoriesFor: #emitDeclarationForClass:variable:!private!source filing! !
 !ChunkSourceFiler categoriesFor: #emitFooterForMethodsOf:!private!source filing! !
 !ChunkSourceFiler categoriesFor: #emitGUIDOfClass:!private!source filing! !
 !ChunkSourceFiler categoriesFor: #emitHeaderForMethodsOf:!private!source filing! !

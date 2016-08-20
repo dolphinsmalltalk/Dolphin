@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Smalltalk at: #SmalltalkParseErrorCodes put: (PoolConstantsDictionary named: #SmalltalkParseErrorCodes)!
 SmalltalkParseErrorCodes at: 'CErrArgTypeCannotBeVoid' put: 16r33!
@@ -15,7 +15,6 @@ SmalltalkParseErrorCodes at: 'CErrBadTokenInArray' put: 16r3C!
 SmalltalkParseErrorCodes at: 'CErrBadValueInByteArray' put: 16r3E!
 SmalltalkParseErrorCodes at: 'CErrBadVfn' put: 16r3B!
 SmalltalkParseErrorCodes at: 'CErrBlockArgListNotClosed' put: 16r2A!
-SmalltalkParseErrorCodes at: 'CErrBlockArgMissing' put: 16r52!
 SmalltalkParseErrorCodes at: 'CErrBlockNestingTooDeep' put: 16r51!
 SmalltalkParseErrorCodes at: 'CErrBlockNotClosed' put: 16r2B!
 SmalltalkParseErrorCodes at: 'CErrBraceNotClosed' put: 16r25!

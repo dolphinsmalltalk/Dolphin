@@ -217,6 +217,7 @@ package methodNames
 	add: #Bitmap -> #asColorKeyedBitmap:;
 	add: #Color -> #alpha:;
 	add: #Color -> #asARGB;
+	add: #ColorRef -> #asARGB;
 	add: #Point -> #scaledOver:;
 	add: #Point -> #scaledTo:;
 	add: #Rectangle -> #asGdiplusRectangle;
@@ -731,6 +732,12 @@ asARGB
 		b: rgb blue! !
 !Color categoriesFor: #alpha:!accessing!public! !
 !Color categoriesFor: #asARGB!converting!public! !
+
+!ColorRef methodsFor!
+
+asARGB
+	^self isNone ifTrue: [ARGB fromInteger: CLR_NONE] ifFalse: [super asARGB]! !
+!ColorRef categoriesFor: #asARGB!converting!public! !
 
 !Point methodsFor!
 

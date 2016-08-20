@@ -1026,6 +1026,7 @@ ScintillaConstants at: 'SCLEX_HASKELL' put: 16r44!
 ScintillaConstants at: 'SCLEX_HTML' put: 16r4!
 ScintillaConstants at: 'SCLEX_IHEX' put: 16r76!
 ScintillaConstants at: 'SCLEX_INNOSETUP' put: 16r4C!
+ScintillaConstants at: 'SCLEX_JSON' put: 16r78!
 ScintillaConstants at: 'SCLEX_KIX' put: 16r39!
 ScintillaConstants at: 'SCLEX_KVIRC' put: 16r6E!
 ScintillaConstants at: 'SCLEX_LATEX' put: 16rE!

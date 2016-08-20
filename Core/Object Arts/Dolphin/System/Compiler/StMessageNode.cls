@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 StValueNode subclass: #StMessageNode
 	instanceVariableNames: 'receiver selector selectorParts arguments'
@@ -56,7 +56,7 @@ bestNodeFor: anInterval
 buildSelector
 	| selectorStream |
 	selectorStream := WriteStream on: (String new: 50).
-	selectorParts do: [:each | selectorStream display: each value].
+	selectorParts do: [:each | selectorStream nextPutAll: each value].
 	^selectorStream contents asSymbol!
 
 childrenDo: aMonadicValuable 
@@ -89,16 +89,16 @@ isCascaded
 isFirstCascaded
 	^self isCascaded and: [parent messages first == self]!
 
+isInlineable
+	"Answer whether this is an optimisable message, such as #whileTrue."
+
+	^InlinedBlockSelectors includes: self selector!
+
 isKeyword
 	^selectorParts first value last == $:!
 
 isMessage
 	^true!
-
-isOptimizable
-	"Answer whether this is an optimisable message, such as #whileTrue."
-
-	^self class optimizedSelectors includes: self selector!
 
 isUnary
 	^arguments isEmpty!
@@ -184,7 +184,10 @@ startWithoutParentheses
 stopWithoutParentheses
 	^arguments isEmpty 
 		ifTrue: [selectorParts first stop]
-		ifFalse: [arguments last stop]! !
+		ifFalse: [arguments last stop]!
+
+value
+	^self selector! !
 !StMessageNode categoriesFor: #=!comparing!public! !
 !StMessageNode categoriesFor: #acceptVisitor:!public!visitor! !
 !StMessageNode categoriesFor: #argumentCount!accessing!public! !
@@ -198,9 +201,9 @@ stopWithoutParentheses
 !StMessageNode categoriesFor: #isBinary!public!testing! !
 !StMessageNode categoriesFor: #isCascaded!public!testing! !
 !StMessageNode categoriesFor: #isFirstCascaded!public!testing! !
+!StMessageNode categoriesFor: #isInlineable!public! !
 !StMessageNode categoriesFor: #isKeyword!public!testing! !
 !StMessageNode categoriesFor: #isMessage!public!testing! !
-!StMessageNode categoriesFor: #isOptimizable!public! !
 !StMessageNode categoriesFor: #isUnary!public!testing! !
 !StMessageNode categoriesFor: #lastIsReturn!public!testing! !
 !StMessageNode categoriesFor: #needsParenthesis!public!testing! !
@@ -218,6 +221,7 @@ stopWithoutParentheses
 !StMessageNode categoriesFor: #sentMessages!accessing!public! !
 !StMessageNode categoriesFor: #startWithoutParentheses!accessing!public! !
 !StMessageNode categoriesFor: #stopWithoutParentheses!accessing!public! !
+!StMessageNode categoriesFor: #value!accessing!public! !
 
 !StMessageNode class methodsFor!
 

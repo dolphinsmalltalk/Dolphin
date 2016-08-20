@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 StValueToken subclass: #StLiteralToken
 	instanceVariableNames: 'stopPosition'
@@ -12,6 +12,22 @@ StLiteralToken comment: ''!
 
 acceptVisitor: aTokenVisitor 
 	^aTokenVisitor acceptLiteralToken: self!
+
+formatOn: aStream source: aString 
+	(value isKindOf: Symbol) 
+		ifTrue: 
+			[aStream nextPut: $#.
+			((SmalltalkScanner isSelector: value) and: [value ~~ #'||']) 
+				ifTrue: [aStream nextPutAll: value]
+				ifFalse: [value asString printOn: aStream].
+			^self].
+	value storeOn: aStream!
+
+formattedFrom: aString
+	| stream |
+	stream := String writeStream: 32.
+	self formatOn: stream source: aString.
+	^stream contents!
 
 isLiteralToken
 	^true!
@@ -33,34 +49,19 @@ sourceInterval
 stop: anInteger
 	stopPosition := anInteger!
 
-storeOn: aStream 
-	(value isKindOf: Symbol) 
-		ifTrue: 
-			[aStream nextPut: $#.
-			((SmalltalkScanner isSelector: value) and: [value ~~ #'||']) 
-				ifTrue: [aStream nextPutAll: value]
-				ifFalse: [value asString printOn: aStream].
-			^self].
-	value class == Character 
-		ifTrue: 
-			[aStream
-				nextPut: $$;
-				nextPut: value.
-			^self].
-	value storeOn: aStream!
-
 value: aString start: anInteger stop: stopInteger 
 	value := aString.
 	sourcePointer := anInteger.
 	stopPosition := stopInteger! !
 !StLiteralToken categoriesFor: #acceptVisitor:!public!visitor! !
+!StLiteralToken categoriesFor: #formatOn:source:!printing!public! !
+!StLiteralToken categoriesFor: #formattedFrom:!printing!public! !
 !StLiteralToken categoriesFor: #isLiteralToken!public!testing! !
 !StLiteralToken categoriesFor: #isMultiKeyword!public!testing! !
 !StLiteralToken categoriesFor: #length!accessing!private! !
 !StLiteralToken categoriesFor: #realValue!accessing!public! !
 !StLiteralToken categoriesFor: #sourceInterval!accessing!public! !
 !StLiteralToken categoriesFor: #stop:!accessing!public! !
-!StLiteralToken categoriesFor: #storeOn:!printing!public! !
 !StLiteralToken categoriesFor: #value:start:stop:!initializing!private! !
 
 !StLiteralToken class methodsFor!

@@ -26,8 +26,8 @@ runTestForPairs: pairs
 
 setUp
 	settings := Dictionary new.
-	RBConfigurableFormatter classPool 
-		keysAndValuesDo: [:key :value | settings at: key put: value].
+	(Array with: RBConfigurableFormatter with: RBSourceFormatter) 
+		do: [:each | each classPool keysAndValuesDo: [:key :value | settings at: key put: value]].
 	RBConfigurableFormatter indentString: ''.
 	RBConfigurableFormatter newLinesAfterMethodPattern: 1.
 	RBConfigurableFormatter newLinesAfterMethodComment: 1.
@@ -149,8 +149,7 @@ testKeywordMessage
 		runTestForPairs: #(#('self at: x') #('self at: x put: y') #('self at: x + y put: z with: self foo') #('self at: (self at: foo)') #('(self at: foo) at: foo') #('(self at: foo) + z') #('(self at: foo) size'))!
 
 testLiterals
-	self 
-		runTestForPairs: #(#('3') #('#foo') #('#(1 #b ''c'' #[12] #())') #('3.0s + 3.0 = 6.0') #('$ '))!
+	self runTestForPairs: #(#('3') #('#foo') #('#(1 #b ''c'' #[12] #())') #('3.0s + 3.0 = 6.0') #('$\x20'))!
 
 testLongSelectors
 	RBFormatter1 numberOfArgumentsForMultiLine: 2.

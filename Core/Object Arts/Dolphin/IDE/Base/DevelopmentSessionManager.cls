@@ -88,8 +88,17 @@ commandLineParser
 	-x - immediately exit
 	"
 
-	^(CommandLine argv: self argvLegacyOptionsRemoved)
-		options: 'hq';	"Options with arguments described elsewhere"
+	^(super commandLineParser)
+		addOptionAllowingArgument: $d
+			whenPresentDo: 
+				[:rebasePath | 
+				Package manager rebaseBasePackagesTo: (rebasePath ifNil: ['.']).
+				self saveImage];
+		addOptionRequiringArgument: $f
+			whenPresentDo: [:fileInFile | SourceManager default fileIn: fileInFile];
+		addOptionAllowingArgument: $i
+			whenPresentDo: [:newImageFile | self saveImage: (newImageFile ifNil: ['Dolphin'])];
+		addOption: $x whenPresentDo: [self quit];
 		yourself!
 
 dolphinNewsgroupUrl
@@ -418,16 +427,6 @@ processCommandLine
 
 	| commandLine arguments |
 	commandLine := (self commandLineParser)
-				addOptionAllowingArgument: $d
-					whenPresentDo: 
-						[:rebasePath | 
-						Package manager rebaseBasePackagesTo: (rebasePath ifNil: ['.']).
-						self saveImage];
-				addOptionRequiringArgument: $f
-					whenPresentDo: [:fileInFile | SourceManager default fileIn: fileInFile];
-				addOptionAllowingArgument: $i
-					whenPresentDo: [:newImageFile | self saveImage: (newImageFile ifNil: ['Dolphin'])];
-				addOption: $x whenPresentDo: [self quit];
 				processOptions;
 				yourself.
 	"-h and -q are already defined"
@@ -621,7 +620,8 @@ snapshot: fileName
 		advanceImageVersionMinor;
 		primSnapshot: fileName
 			backup: self backupOnImageSave
-			type: 0!
+			type: 0
+			maxObjects: nil!
 
 splashShellClass
 	"Private - Answer the class of splash shell to display on startup, or nil for no splash."
@@ -675,7 +675,9 @@ traceLine: aString
 		cr!
 
 traceStream
-	^(self isHeadless not and: [Transcript notNil]) ifTrue: [Transcript] ifFalse: [Trace]!
+	^(self isHeadless not and: [Transcript notNil])
+		ifTrue: [Transcript]
+		ifFalse: [stdioStreams isNil ifTrue: [Trace] ifFalse: [self stderr]]!
 
 unhandledException: anException 
 	"Private - Pop-up a walkback with details from the argument, anException."

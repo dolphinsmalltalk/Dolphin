@@ -6,6 +6,8 @@ ContainerView subclass: #ShellView
 	poolDictionaries: 'ButtonConstants'
 	classInstanceVariableNames: ''!
 ShellView guid: (GUID fromString: '{87B4C71A-026E-11D3-9FD7-00A0CC3E4A32}')!
+ShellView addClassConstant: 'DefaultButtonIndex' value: 20!
+ShellView addClassConstant: 'TransientMask' value: 1!
 ShellView comment: 'ShellView implements the <topView> protocol for top-level windows whose parent is the desktop. ShellView is also a <topPresenter> so that it is able to stand in as a <Shell> when there is no associated presenter.
 
 Instance Variables:
@@ -1364,14 +1366,15 @@ initialize
 		ShellView initialize
 	"
 
-	DefaultButtonIndex := 20.	"self indexOfInstVar: 'defaultButton'"
-	DialogMessageMap := (LookupTable new)
+	self addClassConstant: 'DefaultButtonIndex' value: 20.	"self indexOfInstVar: 'defaultButton'"
+	self addClassConstant: 'DialogMessageMap'
+		value: ((LookupTable new)
 				at: DM_GETDEFID - WM_USER put: #dmGetDefId:wParam:lParam:;
 				at: DM_SETDEFID - WM_USER put: #dmSetDefId:wParam:lParam:;
 				shrink;
 				isImmutable: true;
-				yourself.
-	TransientMask := 1!
+				yourself).
+	self addClassConstant: 'TransientMask' value: 1!
 
 installNew
 	^(self asSessionManagerClass basicNew mainShellClass: self) install!

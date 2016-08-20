@@ -425,13 +425,6 @@ getLooseMethods
 	self packages do: [:each | loose atAll: each methodNames put: each].
 	^loose!
 
-getVersionInfoFor: aCompiledMethod 
-	"Part of the StsManager protocol implemented here for systems which do not have STS
-	installed. Answer nil to indicate that we cannot supply version information for
-	aCompiledMethod"
-
-	^nil!
-
 globalRepackaged: globalName from: source to: destination 
 	"Private - The global variable named by the <Symbol>, globalName, 
 	has been repackaged. The operation is now complete and the package
@@ -510,7 +503,10 @@ install: aString
 	[newPackages do: 
 			[:each | 
 			self addPackage: each.
-			[self basicInstall: each] ifCurtailed: [self basicUninstall: each].
+			[
+				self basicInstall: each.
+				self trigger: #packageInstalled: with: each.
+			] ifCurtailed: [self basicUninstall: each].
 			self observePackage: each]] 
 			ensure: 
 				[self beProcessingEvents.
@@ -522,12 +518,6 @@ installHere: aString
 	rather than the image base."
 
 	^self install: (File fullPathOf: aString)!
-
-isConnected
-	"Part of the StsManager protocol implemented here for systems which do not have STS
-	installed. Answer nil to indicate that we are not connected to a repository"
-
-	^false!
 
 isLooseMethod: aCompiledMethod
 	"Answer whether the argument is a loose method (i.e. one owned by a package other
@@ -1149,9 +1139,6 @@ sortedPackages
 
 	^self packages asSortedCollection: Package defaultSortBlock!
 
-sourceControl
-	^self!
-
 sourceManager
 	"Answer the receiver's source manager."
 
@@ -1247,14 +1234,12 @@ Would you like to re-enable change monitoring (recommended)?')
 !PackageManager categoriesFor: #forgetLooseMethods!operations!public! !
 !PackageManager categoriesFor: #getEvents!events!private! !
 !PackageManager categoriesFor: #getLooseMethods!helpers!private! !
-!PackageManager categoriesFor: #getVersionInfoFor:!public!source tracking system! !
 !PackageManager categoriesFor: #globalRepackaged:from:to:!events!private! !
 !PackageManager categoriesFor: #includesPackage:!public!searching! !
 !PackageManager categoriesFor: #includesPackageNamed:!public!searching! !
 !PackageManager categoriesFor: #initialize!initializing!private! !
 !PackageManager categoriesFor: #install:!operations!public! !
 !PackageManager categoriesFor: #installHere:!operations!public! !
-!PackageManager categoriesFor: #isConnected!public!source tracking system! !
 !PackageManager categoriesFor: #isLooseMethod:!public!testing! !
 !PackageManager categoriesFor: #isLooseResource:!public!testing! !
 !PackageManager categoriesFor: #isProcessingEvents!private!testing! !
@@ -1311,7 +1296,6 @@ Would you like to re-enable change monitoring (recommended)?')
 !PackageManager categoriesFor: #resourceRepackaged:from:to:!events!private! !
 !PackageManager categoriesFor: #setEvents:!events!private! !
 !PackageManager categoriesFor: #sortedPackages!accessing!public! !
-!PackageManager categoriesFor: #sourceControl!accessing!public! !
 !PackageManager categoriesFor: #sourceManager!accessing!public! !
 !PackageManager categoriesFor: #systemPackage!constants!private! !
 !PackageManager categoriesFor: #uninstall:!public!removing! !

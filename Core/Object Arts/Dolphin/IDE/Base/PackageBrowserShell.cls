@@ -1196,11 +1196,13 @@ updateMethods
 	methodsPresenter list: methods!
 
 updateMethodVersion
+	| sccs |
+	sccs := self sourceControl.
+	sccs isConnected ifFalse: [^self].
 	
 	[| info |
-	info := self selectedMethod isNil 
-				ifFalse: [self sourceControl getVersionInfoFor: self selectedMethod].
-	versionModel value: info] 
+	info := self selectedMethod isNil ifFalse: [sccs getVersionInfoFor: self selectedMethod].
+	versionModel value: info]
 			forkAt: Processor userBackgroundPriority!
 
 updatePrerequisites

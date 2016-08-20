@@ -1,11 +1,12 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Magnitude subclass: #Character
-	instanceVariableNames: 'asciiValue '
-	classVariableNames: 'CharacterSet'
+	instanceVariableNames: 'asciiValue'
+	classVariableNames: 'CharacterSet EscapeChars'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Character guid: (GUID fromString: '{87B4C651-026E-11D3-9FD7-00A0CC3E4A32}')!
+Character addClassConstant: 'EscapeChars' value: #($0 nil nil nil nil nil nil $a $b $t $n $v $f $r)!
 Character comment: 'Character is the class of objects which serve as the elemental values of Smalltalk Strings. There is a finite set of Characters (256 in the current Dolphin implementation). Characters have a literal syntax which is the $ symbol followed by the normal printed representation of the character.
 
 Note that the ANSI standard does not require that Characters be identity objects, but they are in Dolphin.
@@ -206,13 +207,13 @@ isLetter
 isLinefeed
 	"Answer whether the receiver is the line-feed character."
 
-	^asciiValue = 10!
+	^self == $\n!
 
 isLiteral
-	"Private - Answer whether the receiver has a literal representation
-	which is directly recognised by the Compiler."
+	"Answer whether the receiver has a literal representation which is directly recognised by
+	the Compiler."
 
-	^true!
+	^asciiValue > 31 and: [asciiValue ~= 127]!
 
 isLowercase
 	"Answer whether the receiver is a lowercase letter."
@@ -255,7 +256,7 @@ isVowel
 	"Answer whether the receiver is an English vowel (a, e, i, o, or u).
 	This test is case insensitive."
 
-	^'aAeEiIoOuU' includes: self!
+	^'aAeEiIoOuU' identityIncludes: self!
 
 isWhitespace
 	"Answer whether the receiver is a white space character.
@@ -264,10 +265,22 @@ isWhitespace
 	^self isSeparator!
 
 printOn: aStream
-	"Append the ASCII representation of the receiver to aStream as a 
-	developer would want to see it."
+	"Append the ASCII representation of the receiver to aStream as a developer would want to see
+	it."
 
-	aStream nextPut: $$; nextPut: self!
+	aStream nextPut: $$.
+	(asciiValue > 32 and: [asciiValue ~= 127])
+		ifTrue: [aStream nextPut: self]
+		ifFalse: 
+			[aStream nextPut: $\.
+			(EscapeChars at: asciiValue + 1 ifAbsent: [])
+				ifNotNil: [:char | aStream nextPut: char]
+				ifNil: 
+					[aStream nextPut: $x.
+					asciiValue
+						printOn: aStream
+						base: 16
+						showRadix: false]]!
 
 shallowCopy
 	"Answer the receiver, as Characters have a unique representation for
@@ -315,7 +328,7 @@ species
 !Character categoriesFor: #isImmediate!public!testing! !
 !Character categoriesFor: #isLetter!public!testing! !
 !Character categoriesFor: #isLinefeed!public!testing! !
-!Character categoriesFor: #isLiteral!private!testing! !
+!Character categoriesFor: #isLiteral!public!testing! !
 !Character categoriesFor: #isLowercase!public!testing! !
 !Character categoriesFor: #isLowerCase!public!testing! !
 !Character categoriesFor: #isPrintable!public!testing! !
@@ -337,7 +350,7 @@ Character methodProtocol: #Character attributes: #(#ansi #readOnly) selectors: #
 backspace
 	"Answer the backspace Character"
 
-	^##(self value: 8)
+	^$\b
 !
 
 basicNew
@@ -364,7 +377,7 @@ codePoint: integer
 cr
 	"Answer the carriage return <Character>."
 
-	^##(self value: 13)!
+	^$\r!
 
 digitValue: anInteger
 	"Answer the Character that corresponds to anInteger.  0-9 map to $0-$9,
@@ -377,13 +390,12 @@ eof
 	"Answer the EOF (Ctrl+Z) character.
 	DOS interprets this character as marking the end of a file."
 
-	^##(self value: 26)!
+	^$\x1A!
 
 esc
 	"Answer the escape Character"
 
-	^##(self value: 27)
-!
+	^$\x1B!
 
 icon
 	"Answers an Icon that can be used to represent this class"
@@ -391,15 +403,23 @@ icon
 	^##(self) defaultIcon!
 
 initialize
-	CharacterSet isImmutable: true.
-	"Marking binding as constant causes compiler to inline refs"
-	(self bindingFor: 'CharacterSet') isImmutable: true.
-	self class recompileAll!
+	self addClassConstant: 'CharacterSet' value: CharacterSet.
+	self addClassConstant: 'EscapeChars'
+		value: ((Array new: 14)
+				at: 0 + 1 put: $0;
+				at: 7 + 1 put: $a;
+				at: 8 + 1 put: $b;
+				at: 9 + 1 put: $t;
+				at: 10 + 1 put: $n;
+				at: 11 + 1 put: $v;
+				at: 12 + 1 put: $f;
+				at: 13 + 1 put: $r;
+				yourself)!
 
 lf
 	"Answer the linefeed <Character>."
 
-	^##(self value: 10)!
+	^$\n!
 
 new
 	"Characters are immediate objects, and cannot be instantiated directly, they
@@ -412,29 +432,28 @@ new
 newPage
 	"Answer the new page Character."
 
-	^##(self value: 12)
+	^$\f
 !
 
 nl
 	"Answer the new line <Character> (synonym for lf)"
 
-	^self lf!
+	^$\n!
 
 null
 	"Answer the NULL-terminator character"
 
-	^##(self value: 0)
-!
+	^$\0!
 
 space
 	"Answer the space <Character>."
 
-	^$ .!
+	^$\x20!
 
 tab
 	"Answer the tab <Character>."
 
-	^##(self value: 9)!
+	^$\t!
 
 value: anInteger
 	"Answer the character with ascii value, anInteger. If anInteger is not in the range 0..255, 
@@ -442,23 +461,23 @@ value: anInteger
 
 	^CharacterSet at: anInteger + 1
 ! !
-!Character class categoriesFor: #backspace!instance creation!public! !
+!Character class categoriesFor: #backspace!constants!public! !
 !Character class categoriesFor: #basicNew!instance creation!public! !
 !Character class categoriesFor: #byteCharacterSet!constants!public! !
 !Character class categoriesFor: #codePoint:!instance creation!public! !
-!Character class categoriesFor: #cr!instance creation!public! !
+!Character class categoriesFor: #cr!constants!public! !
 !Character class categoriesFor: #digitValue:!instance creation!public! !
-!Character class categoriesFor: #eof!instance creation!public! !
-!Character class categoriesFor: #esc!instance creation!public! !
+!Character class categoriesFor: #eof!constants!public! !
+!Character class categoriesFor: #esc!constants!public! !
 !Character class categoriesFor: #icon!constants!public! !
 !Character class categoriesFor: #initialize!development!initializing!public! !
-!Character class categoriesFor: #lf!instance creation!public! !
+!Character class categoriesFor: #lf!constants!public! !
 !Character class categoriesFor: #new!instance creation!public! !
-!Character class categoriesFor: #newPage!instance creation!public! !
-!Character class categoriesFor: #nl!instance creation!public! !
-!Character class categoriesFor: #null!instance creation!public! !
-!Character class categoriesFor: #space!instance creation!public! !
-!Character class categoriesFor: #tab!instance creation!public! !
+!Character class categoriesFor: #newPage!constants!public! !
+!Character class categoriesFor: #nl!constants!public! !
+!Character class categoriesFor: #null!constants!public! !
+!Character class categoriesFor: #space!constants!public! !
+!Character class categoriesFor: #tab!constants!public! !
 !Character class categoriesFor: #value:!instance creation!public! !
 
 Character class methodProtocol: #'Character factory' attributes: #(#ansi #readOnly) selectors: #(#codePoint: #cr #lf #space #tab)!

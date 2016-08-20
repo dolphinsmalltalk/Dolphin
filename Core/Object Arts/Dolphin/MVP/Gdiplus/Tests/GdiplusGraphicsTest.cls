@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 GdiplusTests subclass: #GdiplusGraphicsTest
 	instanceVariableNames: 'bitmap graphics canvas'
@@ -33,7 +33,8 @@ tearDown
 	bitmap ifNotNil: 
 			[:b | 
 			bitmap := nil.
-			b free]!
+			b free].
+	super tearDown!
 
 testCompositingMode
 	graphics compositingMode: CompositingModeSourceOver.

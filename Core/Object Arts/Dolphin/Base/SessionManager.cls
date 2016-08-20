@@ -794,6 +794,23 @@ primSnapshot: fileName backup: aBoolean type: anInteger
 						in: VMLibrary default asParameter)]
 		ifFalse: [self error: 'Dolphin was unable to save the image.']!
 
+primSnapshot: fileName backup: aBoolean type: typeInteger maxObjects: maxInteger
+	"Private - Save the current image to fileName, optionally creating a backup of the existing file.
+
+	Primitive failure codes:
+		0	- fileName not a String
+		1	- The image has expired
+		2	- Unable to open image file
+		3	- I/O Error writing image file (try KernelLibrary>>getLastError).
+		4	- Insufficient max objects for current image size"
+
+	| result |
+	<primitive: 97>
+	result := Processor activeProcess primitiveFailureCode.
+	result == 1
+		ifTrue: [Warning signal: (String fromId: 516 in: VMLibrary default asParameter)]
+		ifFalse: [self error: 'Dolphin was unable to save the image.']!
+
 queryEndSession
 	"Fire off an event to enquire of observers whether they object to the end of this session.
 	If any observer does, then it must set the boolean value argument to the event to false."
@@ -931,10 +948,11 @@ shutdown
 snapshot: fileName
 	"Private - Save the current image to fileName."
 
-	^self 
+	^self
 		primSnapshot: fileName
 		backup: false
-		type: 0!
+		type: 0
+		maxObjects: nil!
 
 startUI
 	"Start up the input loop/message loop (instruct InputState appropriate depending on whether
@@ -1163,6 +1181,7 @@ windowsDirectory
 !SessionManager categoriesFor: #primaryStartup!operations-startup!public! !
 !SessionManager categoriesFor: #primQuit:!operations-shutdown!private! !
 !SessionManager categoriesFor: #primSnapshot:backup:type:!operations-saving!private! !
+!SessionManager categoriesFor: #primSnapshot:backup:type:maxObjects:!operations-saving!private! !
 !SessionManager categoriesFor: #queryEndSession!event handling!public! !
 !SessionManager categoriesFor: #quit!operations-shutdown!public! !
 !SessionManager categoriesFor: #quit:!operations-shutdown!private! !

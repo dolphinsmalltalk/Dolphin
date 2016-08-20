@@ -10,6 +10,10 @@ SmalltalkParserTest comment: 'SUnitBrowser openOnTestCase: self'!
 !SmalltalkParserTest categoriesForClass!Refactory-Testing! !
 !SmalltalkParserTest methodsFor!
 
+assertToken: aStToken isChar: aCharacter
+	self assert: aStToken isLiteralToken.
+	self assert: aStToken value == aCharacter!
+
 buildArgumentSearch
 	self 
 		createArgumentSearchWith: 'aNode'
@@ -196,6 +200,35 @@ testBlockRewrites
 	<primitive: 1>
 	^asdf +  foo + fdsa')!
 
+testCharacterScanning
+	| subject tok |
+	0 to: 255
+		do: 
+			[:i |
+			| char ch |
+			ch := Character value: i.
+			subject := self scannerClass on: ch printString readStream.
+			char := subject next.
+			self assertToken: char isChar: ch.
+			self assert: subject next isEof.
+			subject := self scannerClass on: ('$\x' , i asHexString) readStream.
+			char := subject next.
+			self assertToken: char isChar: ch.
+			self assert: subject next isEof].
+	subject := self scannerClass on: '$\.' readStream.
+	self assertToken: subject next isChar: (Character value: 92).
+	self assert: (subject next isSpecial: $.).
+	subject := self scannerClass on: '$\c' readStream.
+	self assertToken: subject next isChar: (Character value: 92).
+	tok := subject next.
+	self assert: tok isIdentifier.
+	self assert: 'c' equals: tok value.
+	subject := self scannerClass on: '$\xAG' readStream.
+	self assertToken: subject next isChar: (Character value: 16rA).
+	tok := subject next.
+	self assert: tok isIdentifier.
+	self assert: 'G' equals: tok value!
+
 testComparingTrees
 	| class |
 	class := ClassBuilder class.
@@ -288,7 +321,7 @@ testExternalCalls
 
 	"One simple arg"
 	tree := SmalltalkParser parseMethod: 'blah: x <stdcall: dword blah sdword>'.
-	self assert: tree formattedCode trimBlanks = 'blah: x 
+	self assert: tree formattedCode trimBlanks = 'blah: x
 	<stdcall: dword blah sdword>'.
 	ffiCall := tree tag.
 	self assert: ffiCall returnType typeOrdinal = ExtCallArgDWORD.
@@ -297,13 +330,13 @@ testExternalCalls
 	self assert: ffiCall argumentTypes size = 1.
 	ffiCall argumentTypes with: (Array with: ExtCallArgSDWORD)
 		do: 
-			[:eachArg :eachType | 
+			[:eachArg :eachType |
 			self assert: eachArg typeOrdinal = eachType.
 			self assert: eachArg indirections = 0.
 			self assert: eachArg structClass isNil].
 
 	"Void is not a valid argument type (can only be used for return)"
-	self 
+	self
 		should: [SmalltalkParser parseMethod: 'blah: x <stdcall: void blah void>']
 		raise: SmalltalkParser errorClass
 		matching: [:err | err errorCode = CErrArgTypeCannotBeVoid].
@@ -317,17 +350,17 @@ testExternalCalls
 	src := String writeStream.
 	types := #('lpvoid' 'char' 'byte' 'sbyte' 'word' 'sword' 'dword' 'sdword' 'bool' 'handle' 'double' 'lpstr' 'oop' 'float' 'lppvoid' 'hresult' 'lpwstr' 'qword' 'sqword' 'ote' 'bstr' 'variant' 'date' 'varbool' 'guid').
 	types do: 
-			[:each | 
+			[:each |
 			src
 				nextPutAll: each;
 				nextPutAll: ': ';
-				nextPutAll: each;
-				space].
+				nextPutAll: each]
+		separatedBy: [src space].
 	src
 		crtab;
 		nextPutAll: '<stdcall: void fn'.
 	types do: 
-			[:each | 
+			[:each |
 			src
 				space;
 				nextPutAll: each].
@@ -339,7 +372,7 @@ testExternalCalls
 	self assert: ffiCall argumentTypes size = types size.
 	ffiCall argumentTypes with: (1 to: types size)
 		do: 
-			[:eachArg :eachType | 
+			[:eachArg :eachType |
 			self assert: eachArg typeOrdinal = eachType.
 			self assert: eachArg indirections = 0.
 			self assert: eachArg structClass isNil]!
@@ -593,6 +626,7 @@ verifySelector: aSelector inClass: aClass
 				compile: source
 				in: aClass))
 ! !
+!SmalltalkParserTest categoriesFor: #assertToken:isChar:!helpers!private! !
 !SmalltalkParserTest categoriesFor: #buildArgumentSearch!accessing!private! !
 !SmalltalkParserTest categoriesFor: #buildMessageSearch!accessing!private! !
 !SmalltalkParserTest categoriesFor: #buildMethodArgumentSearch!accessing!private! !
@@ -617,6 +651,7 @@ verifySelector: aSelector inClass: aClass
 !SmalltalkParserTest categoriesFor: #testAllSearches!public!unit tests! !
 !SmalltalkParserTest categoriesFor: #testBestNodeFor!public!unit tests! !
 !SmalltalkParserTest categoriesFor: #testBlockRewrites!public!unit tests! !
+!SmalltalkParserTest categoriesFor: #testCharacterScanning!public!unit tests! !
 !SmalltalkParserTest categoriesFor: #testComparingTrees!public!unit tests! !
 !SmalltalkParserTest categoriesFor: #testCopy!public!unit tests! !
 !SmalltalkParserTest categoriesFor: #testCreationProtocol!public!unit tests! !

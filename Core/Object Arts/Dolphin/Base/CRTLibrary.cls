@@ -104,16 +104,6 @@ _errno
 	<cdecl: sdword _errno>
 	^self invalidCall!
 
-_fcvt: aFloat count: anInteger dec: decInteger sign: signInteger
-	"Answer a String representation of the argument, aFloat, with anInteger decimal places.
-	decInteger and signInteger receive the position of the decimal point and the sign of
-	aFloat respectively.
-
-		char *_fcvt( double value, int count, int *dec, int *sign );"
-  
-	<cdecl: lpstr _fcvt double sdword SDWORD* SDWORD* >
-	^self invalidCall!
-
 _fdopen: anInteger mode: aString
 	"Associate a stream with an open file handle.
 		FILE *_fdopen( int handle, const char *mode );
@@ -131,6 +121,16 @@ _fileno: aFILE
 	"Answer the <integer> file number of a CRT FILE stream."
 
 	<cdecl: sdword _fileno handle>
+	^self invalidCall!
+
+_finite: aFloat
+	"Answer whether the argument is finite floating point number."
+
+	<cdecl: bool _finite double>
+	^self invalidCall!
+
+_fpclass: aFloat
+	<cdecl: sdword _fpclass double>
 	^self invalidCall!
 
 _gcvt: aFloat count: anInteger buffer: aString
@@ -687,10 +687,11 @@ wcscspn: aUnicodeString strCharSet: strCharSet
 !CRTLibrary categoriesFor: #_ecvt:count:dec:sign:!CRT functions-floating point support!public! !
 !CRTLibrary categoriesFor: #_eof:!CRT functions-file handling!public! !
 !CRTLibrary categoriesFor: #_errno!CRT functions-process and environment control!public! !
-!CRTLibrary categoriesFor: #_fcvt:count:dec:sign:!CRT functions-floating point support!public! !
 !CRTLibrary categoriesFor: #_fdopen:mode:!CRT functions-stream I/O!public! !
 !CRTLibrary categoriesFor: #_filelength:!CRT functions-file handling!public! !
 !CRTLibrary categoriesFor: #_fileno:!CRT functions-stream I/O!public! !
+!CRTLibrary categoriesFor: #_finite:!CRT functions-floating point support!public! !
+!CRTLibrary categoriesFor: #_fpclass:!CRT functions-floating point support!public! !
 !CRTLibrary categoriesFor: #_gcvt:count:buffer:!CRT functions-floating point support!public! !
 !CRTLibrary categoriesFor: #_getcwd:maxlen:!CRT functions-floating point support!public! !
 !CRTLibrary categoriesFor: #_i64toa:string:radix:!CRT functions-data conversion!public! !

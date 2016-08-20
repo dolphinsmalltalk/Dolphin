@@ -2,7 +2,7 @@
 
 DolphinTest subclass: #CompilerTest
 	instanceVariableNames: 'defaultCompileFlags'
-	classVariableNames: ''
+	classVariableNames: 'TempInstrs'
 	poolDictionaries: 'CompilerFlags OpcodePool SmalltalkParseErrorCodes'
 	classInstanceVariableNames: ''!
 CompilerTest guid: (GUID fromString: '{5AFF22BD-5D99-4B24-9B1D-C8D1EDE77213}')!
@@ -10,7 +10,15 @@ CompilerTest comment: ''!
 !CompilerTest categoriesForClass!Unclassified! !
 !CompilerTest methodsFor!
 
-checkCompileError: ex range: anInterval code: anInteger message: msgFormat line: lineInteger source: aString 
+assertBlocksOptimized: compiled
+	| literals |
+	self deny: compiled method needsContext.
+	literals := compiled method literals.
+	self deny: (literals anySatisfy: [:each | each isKindOf: BlockClosure]).
+	self
+		deny: (compiled method messages anySatisfy: [:each | StProgramNode optimizedSelectors includes: each])!
+
+checkCompileError: ex range: anInterval code: anInteger line: lineInteger source: aString
 	^ex errorCode = anInteger and: [ex range = anInterval]!
 
 compilationErrorClass
@@ -86,33 +94,8 @@ getTestMethod: aSymbol
 		isImmutable: true.	"The method has not actually changed, so it is inappropriate to issue a #methodUpdated: event"
 	^method!
 
-knownTextMapIssues
-	"There are a couple of methods in the system for which the release and debug text maps do
-	not match. This is because of the compiler is able to optimise out redundant stores into
-	temps in a release method, but obviously this would be undesirable in a debug method (where
-	you expect to see the correct values in temps). However the effort to correct this issue (or
-	alternatively the cost of removing the redundant store operation on the efficiency of the
-	generated code) is not considered worthwhile for now, so we will live with two failures.
-	These have been examined, and there would be no debugging issue anyway.."
-
-	| bad |
-	bad := OrderedCollection new.
-	"These methods are all have optimisation where an unconditional jump is replaced with a
-	return, and the text map for the optimised method then has an extra entry for that return
-	statement as these get breaks inserted before them. The compiler needs to be fixed to mark
-	these returns as optimised returns, and so it's never possible to break on them, or we need
-	to put a text map entry in for the unconditional jump (wouldn't do any harm)."
-	bad add: AddPoolVariableChange >> #changeObject.
-	bad add: RemovePoolVariableChange >> #changeObject.
-	Smalltalk at: #ItcSystemManager ifPresent: [:class | bad add: class class >> #imageFilename].
-	Smalltalk at: #WikiDocImageSelectorServlet ifPresent: [:class | bad add: class >> #searchImages:].
-	^BrowserEnvironment new forMethods: bad asArray!
-
-messageFromError: ex 
-	^self hasFullClosures ifTrue: [ex errorMessage] ifFalse: [ex text]!
-
-pushTempPair
-	^233!
+messageFromError: ex
+	^ex errorMessage!
 
 scan: aString class: aNumberClass 
 	| expected result |
@@ -232,6 +215,26 @@ testByteArraysInLiteralArrays
 						with: #[0 255]
 						with: 2)!
 
+testCharacterScanning
+	| result |
+	0 to: 255
+		do: 
+			[:i |
+			| ch |
+			ch := Character value: i.
+			result := self evaluateExpression: ch printString.
+			self assert: result == ch.
+			result := self evaluateExpression: '$\x' , i asHexString.
+			self assert: result == ch].
+	result := self evaluateExpression: '$\.'.
+	self assert: result == (Character value: 92).
+	result := self evaluateExpression: '$\codePoint'.
+	self assert: result == 92.
+	self
+		should: [self evaluateExpression: '$\xAG']
+		raise: MessageNotUnderstood
+		matching: [:ex | ex tag = (Message selector: #G)]!
+
 testCompileTimeExpressions
 	| result |
 	self shouldnt: [result := self evaluateExpression: '##()'] raise: self compilationErrorClass.
@@ -271,11 +274,10 @@ testCopyingBlocks2
 	self assert: (method value: DolphinCompilerTestMethods new withArguments: #()) = 'abc'!
 
 testDecrementPushTempOptimisation
-	| disasm expr |
+	| disasm expr expected |
 	expr := (self compileExpression: '| j | 5 to: 1  by: -1 do: [:i | j := i]. j') method.
 	disasm := expr disassembly.
-	self assert: disasm 
-				= 'Normal, 0 args, 2 stack temps, 0 literals
+	expected := 'Normal, 0 args, 2 stack temps, <1d> literals
 
 	1	Push 5
 	3	Store Temp[1]
@@ -291,14 +293,15 @@ testDecrementPushTempOptimisation
 	15	Jump If False -9 to 8
 	17	Pop
 	18	Pop; Push Temp[0]
-	19	Return '.
+	19	Return '
+				expandMacrosWith: expr literalCount.
+	self assert: expected equals: disasm.
 	self assert: (expr value: nil) = 1.
-	expr := (self 
-				compileExpression: '| t1 t2 t3 t4 t5 t6 t7 j | t1 := t2 := t3 := t4 := t5 := t6 := t7 := 1. 5 to: 1 by: -1 do: [:i | j := i]. j') 
+	expr := (self
+				compileExpression: '| t1 t2 t3 t4 t5 t6 t7 j | t1 := t2 := t3 := t4 := t5 := t6 := t7 := 1. 5 to: 1 by: -1 do: [:i | j := i]. j')
 					method.
 	disasm := expr disassembly.
-	self assert: disasm 
-				= 'Normal, 0 args, 9 stack temps, 0 literals
+	expected := 'Normal, 0 args, 9 stack temps, <1d> literals
 
 	1	Push 1
 	2	Store Temp[6]
@@ -323,10 +326,12 @@ testDecrementPushTempOptimisation
 	31	Pop
 	32	Pop
 	33	Push Temp[7]
-	34	Return '.
+	34	Return '
+				expandMacrosWith: expr literalCount.
+	self assert: expected equals: disasm.
 	self assert: (expr value: nil) = 1.
 	"Overflow"
-	expr := (self compileExpression: '| i | i := SmallInteger minimum. i class. i := i - 1. i*1') 
+	expr := (self compileExpression: '| i | i := SmallInteger minimum. i class. i := i - 1. i*1')
 				method.
 	self assert: (expr value: nil) = (SmallInteger minimum - 1).
 	"Non-small integer decremented"
@@ -343,25 +348,26 @@ testDecrementTempOptimisation
 	| disasm expr expected |
 	expr := (self compileExpression: '| i | i := 5. [i < 1] whileFalse: [i := i - 1]. i') method.
 	disasm := expr disassembly.
-	self assert: disasm 
-				= 'Normal, 0 args, 1 stack temps, 0 literals
+	expected := 'Normal, 0 args, 1 stack temps, <1d> literals
 
 	1	Push 5
 	3	Pop Temp[0]
 	4	Push Temp[0]
 	5	Push 1
-	6	Special Send #<
+	6	Special Send #%<
 	7	Jump If True +5 to 14
 	9	Decrement Temp[0]
 	12	Jump -10 to 4
 	14	Push Temp[0]
-	15	Return '.
+	15	Return '
+				expandMacrosWith: expr literalCount.
+	self assert: expected equals: disasm.
 	self assert: (expr value: nil) = 0.
-	expr := (self 
-				compileExpression: '| t1 t2 t3 t4 t5 t6 t7 t8 i | t1 := t2 := t3 := t4 := t5 := t6 := t7 := t8 := 1. i := 5. [i < 1] whileFalse: [i := i - 1]. i') 
+	expr := (self
+				compileExpression: '| t1 t2 t3 t4 t5 t6 t7 t8 i | t1 := t2 := t3 := t4 := t5 := t6 := t7 := t8 := 1. i := 5. [i < 1] whileFalse: [i := i - 1]. i')
 					method.
 	disasm := expr disassembly.
-	expected := 'Normal, 0 args, 9 stack temps, 0 literals
+	expected := 'Normal, 0 args, 9 stack temps, <1d> literals
 
 	1	Push 1
 	2	Store Temp[7]
@@ -376,21 +382,22 @@ testDecrementTempOptimisation
 	16	Pop Temp[8]
 	18	Push Temp[8]
 	20	Push 1
-	21	Special Send #<
+	21	Special Send #%<
 	22	Jump If True +5 to 29
 	24	Decrement Temp[8]
 	27	Jump -11 to 18
 	29	Push Temp[8]
-	31	Return '.
+	31	Return '
+				expandMacrosWith: expr literalCount.
 	self assert: disasm = expected.
 	"DiffBrowser  compare: disasm with: expected."
 	self assert: (expr value: nil) = 0.
 	"Overflow"
-	expr := (self compileExpression: '| i | i := SmallInteger minimum. i class. i := i - 1. 5 class. i') 
+	expr := (self compileExpression: '| i | i := SmallInteger minimum. i class. i := i - 1. 5 class. i')
 				method.
 	self assert: (expr value: nil) = (SmallInteger minimum - 1).
 	"Non-small integer decremented"
-	expr := (self compileExpression: '| i | i := 200 factorial. i class. i := i - 1. 5 class. i') 
+	expr := (self compileExpression: '| i | i := 200 factorial. i class. i := i - 1. 5 class. i')
 				method.
 	self assert: (expr value: nil) = (200 factorial - 1).
 	"Non-integer decremented"
@@ -443,6 +450,7 @@ testFarReturnFromBlock
 		matching: [:ex | ex messageText beginsWith: 'Cannot return']!
 
 testFloatScanning
+	Float reset.
 	#('5.1234' '0.0' '0.5' '1.2e1' '1.2d2' '1.2e-1' '1.2e+1' '1.2d-2' '1.2d+2' '1.0e308' '1.0e+308' '2.2250738585072014e-308' '1.7976931348623158e308' '1.7976931348623158e+308' '0.5e0' '0.5d0' '0.5q0' '0.5e+0' '0.5d+0' '0.5q+0' '0.5e-0' '0.5d-0' '0.5q-0') 
 		do: [:each | self scan: each class: Float].
 
@@ -466,13 +474,10 @@ testFloatScanning
 				should: [self evaluateExpression: each first]
 				raise: self compilationErrorClass
 				matching: 
-					[:ex | 
-					self isD6OrLater 
-						ifTrue: 
-							[| start |
-							start := each first indexOfSubCollection: each second.
-							ex errorCode = CErrUndeclared and: [ex range = (start to: start + each second size - 1)]]
-						ifFalse: [(self messageFromError: ex) = ('undeclared ' , each second printString)]]].
+					[:ex |
+					| start |
+					start := each first indexOfSubCollection: each second.
+					ex errorCode = CErrUndeclared and: [ex range = (start to: start + each second size - 1)]]].
 	"#2219"
 	self assert: 10.0 ** -316 = (self evaluateExpression: '1.0e-316')
 	"308 to: -316
@@ -480,132 +485,106 @@ testFloatScanning
 		do: [:each | self assert: (self evaluateExpression: ('1.0e<d>' expandMacrosWith: each)) - (10.0 ** each)]"!
 
 testIfNil
-	| compiled expected |
-	compiled := self compileExpression: '1 ifNil: [2]'.
-	self deny: (compiled method literals includes: 'ifNil:' asSymbol).
-	expected := 'Normal, 0 args, 0 literals
-
-	1	Push 1
-	2	Dup
-	3	Jump If Not Nil +2 to 7
-	5	Pop
-	6	Push 2
-	7	Return '.
-	self assert: compiled method disassembly = expected!
+	| compiled |
+	compiled := self compileExpression: 'key ifNil: [value]' in: Association.
+	self assert: (compiled method value: nil -> 2) = 2.
+	self assert: (compiled method value: 1 -> 2) = 1.
+	self deny: (compiled method messages includes: 'ifNil:' asSymbol).
+	self assertBlocksOptimized: compiled!
 
 testIfNilifNotNil
-	| compiled expected |
-	compiled := self compileExpression: '1 ifNil: [ | x | x := 2. 1+x] ifNotNil: [:x | 1+x]'.
-	self assert: (compiled method value: nil withArguments: #()) = 2.
-	expected := 'Normal, 0 args, 2 stack temps, 0 literals
-
-	1	Push 1
-	2	Dup
-	3	Jump If Not Nil +7 to 12
-	5	Pop
-	6	Push 2
-	7	Pop Temp[0]
-	8	Push 1
-	9	Push Temp[0]
-	10	Special Send #+
-	11	Return 
-	12	Pop Temp[1]
-	13	Push 1
-	14	Push Temp[1]
-	15	Special Send #+
-	16	Return '.
-	self assert: compiled method disassembly = expected
-
-	"
-DiffBrowser compare: compiled method disassembly with: expecteda DiffBrowser
-"!
+	| compiled |
+	compiled := self compileExpression: 'key ifNil: [value+1] ifNotNil: [:x | 1+x]' in: Association.
+	self assert: (compiled method value: nil -> 1 withArguments: #()) = 2.
+	self assert: (compiled method value: 5 -> nil withArguments: #()) = 6.
+	self assertBlocksOptimized: compiled!
 
 testIfNilifNotNilNoArg
-	| compiled expected |
-	compiled := self compileExpression: '1 ifNil: [3] ifNotNil: [2]'.
-	self assert: (compiled method value: nil withArguments: #()) = 2.
-	expected := 'Normal, 0 args, 0 literals
+	| compiled |
+	compiled := self compileExpression: 'key ifNil: [value] ifNotNil: [key+2]' in: Association.
+	self assert: (compiled method value: nil -> 4 withArguments: #()) = 4.
+	self assert: (compiled method value: 1 -> 4 withArguments: #()) = 3.
+	self assertBlocksOptimized: compiled!
 
-	1	Push 1
-	2	Jump If Not Nil +3 to 7
-	4	Push 3
-	6	Return 
-	7	Push 2
-	8	Return '.
-	self assert: compiled method disassembly = expected
+testIfNilifNotNilNoArgUnused
+	| compiled expected actual |
+	compiled := self compileExpression: 'key ifNil: [value+3] ifNotNil: [value+2]. value'
+				in: Association.
+	self assert: (compiled method value: nil -> 4 withArguments: #()) = 4.
+	self assert: (compiled method value: 1 -> 4 withArguments: #()) = 4.
+	self assertBlocksOptimized: compiled!
 
-	"
-DiffBrowser compare: compiled method disassembly with: expected
-"!
+testIfNilifNotNilUnused
+	| compiled |
+	compiled := self compileExpression: 'key ifNil: [value+1] ifNotNil: [:x | 1+x]. value'
+				in: Association.
+	self assert: (compiled method value: nil -> 1 withArguments: #()) = 1.
+	self assert: (compiled method value: 5 -> 1 withArguments: #()) = 1.
+	self assertBlocksOptimized: compiled!
+
+testIfNilUnused
+	| compiled |
+	compiled := self compileExpression: 'key ifNil: [2]. value' in: Association.
+	self assert: (compiled method value: nil -> 1) = 1.
+	self assert: (compiled method value: 1 -> 2) = 2.
+	self deny: (compiled method messages includes: 'ifNil:' asSymbol).
+	self assertBlocksOptimized: compiled!
 
 testIfNotNil
-	| compiled expected result |
-	compiled := self compileExpression: '1 ifNotNil: [:x | x + 2]'.
-	expected := 'Normal, 0 args, 1 stack temps, 0 literals
-
-	1	Push 1
-	2	Dup
-	3	Jump If Nil +3 to 8
-	5	Store Temp[0]
-	6	Push 2
-	7	Special Send #+
-	8	Return '.
-	result := compiled method disassembly.
-	self assert: result = expected.
-	"
-DiffBrowser compare: result with: expected
-"
-
-	compiled := self compileExpression: '1 ifNotNil: [1+2]'.
-	expected := 'Normal, 0 args, 0 literals
-
-	1	Push 1
-	2	Dup
-	3	Jump If Nil +4 to 9
-	5	Pop
-	6	Push 1
-	7	Push 2
-	8	Special Send #+
-	9	Return '.
-	result := compiled method disassembly.
-	self assert: result = expected
-	"
-DiffBrowser compare: result with: expected
-"!
+	| compiled |
+	compiled := self compileExpression: 'key ifNotNil: [:x | x + 2]' in: Association.
+	self assert: (compiled method value: 1 -> nil) = 3.
+	self assert: (compiled method value: nil -> 1) isNil.
+	self assertBlocksOptimized: compiled!
 
 testIfNotNilifNil
-	| compiled expected |
-	compiled := self compileExpression: '1 ifNotNil: [:x | 2] ifNil: [3]'.
-	expected := 'Normal, 0 args, 1 stack temps, 0 literals
-
-	1	Push 1
-	2	Dup
-	3	Jump If Nil +3 to 8
-	5	Pop Temp[0]
-	6	Push 2
-	7	Return 
-	8	Pop
-	9	Push 3
-	11	Return '.
-	self assert: compiled method disassembly = expected!
+	| compiled |
+	compiled := self compileExpression: 'key ifNotNil: [:x | x + 2] ifNil: [3]' in: Association.
+	self assert: (compiled method value: 5 -> nil) = 7.
+	self assert: (compiled method value: nil -> 5) = 3.
+	self assertBlocksOptimized: compiled!
 
 testIfNotNilifNilNoArg
-	| compiled expected |
-	compiled := self compileExpression: '1 ifNotNil: [2] ifNil: [3]'.
-	expected := 'Normal, 0 args, 0 literals
+	| compiled |
+	compiled := self compileExpression: 'key ifNotNil: [key] ifNil: [value]' in: Association.
+	self assert: (compiled method value: 1 -> 2) = 1.
+	self assert: (compiled method value: nil -> 2) = 2.
+	self assertBlocksOptimized: compiled!
 
-	1	Push 1
-	2	Jump If Nil +2 to 6
-	4	Push 2
-	5	Return 
-	6	Push 3
-	8	Return '.
-	self assert: compiled method disassembly = expected
+testIfNotNilifNilNoArgUnused
+	| compiled |
+	compiled := self compileExpression: 'key ifNotNil: [key+1] ifNil: [value+1]. self' in: Association.
+	self assert: (compiled method value: 1 -> 2) = (1 -> 2).
+	self assert: (compiled method value: nil -> 2) = (nil -> 2).
+	self assertBlocksOptimized: compiled!
 
+testIfNotNilifNilUnused
+	| compiled |
+	compiled := self compileExpression: 'key ifNotNil: [:x | x + 2] ifNil: [3]. value' in: Association.
+	self assert: (compiled method value: 5 -> 8) = 8.
+	self assert: (compiled method value: nil -> 5) = 5.
+	self assertBlocksOptimized: compiled!
 
-	"
-DiffBrowser compare: compiled method disassembly with: expected
-"!
+testIfNotNilNoArg
+	| compiled |
+	compiled := self compileExpression: 'key ifNotNil: [1+2]' in: Association.
+	self assert: (compiled method value: 4 -> nil) = 3.
+	self assert: (compiled method value: nil -> 1) isNil.
+	self assertBlocksOptimized: compiled!
+
+testIfNotNilNoArgUnused
+	| compiled |
+	compiled := self compileExpression: 'key ifNotNil: [key+1]. value' in: Association.
+	self assert: (compiled method value: 1 -> 5) = 5.
+	self assert: (compiled method value: nil -> 10) = 10.
+	self assertBlocksOptimized: compiled!
+
+testIfNotNilUnused
+	| compiled |
+	compiled := self compileExpression: 'key ifNotNil: [:x | x + 2]. value' in: Association.
+	self assert: (compiled method value: 1 -> 10) = 10.
+	self assert: (compiled method value: nil -> 11) = 11.
+	self assertBlocksOptimized: compiled!
 
 testImmutableLiterals
 	| method |
@@ -742,11 +721,10 @@ testIncrementPushTempOptimisation
 	self should: [method value: nil] raise: MessageNotUnderstood!
 
 testIncrementTempOptimisation
-	| disasm method map debugMethod debugMap i |
+	| disasm method map debugMethod debugMap i expected |
 	method := self getTestMethod: #testIncrementTempOptimisation.
 	disasm := method disassembly.
-	self assert: disasm 
-				= 'Normal, 0 args, 1 stack temps, 0 literals
+	expected := 'Normal, 0 args, 1 stack temps, <1d> literals
 
 	1	Push 1
 	2	Pop Temp[0]
@@ -757,7 +735,9 @@ testIncrementTempOptimisation
 	9	Increment Temp[0]
 	12	Jump -11 to 3
 	14	Push Temp[0]
-	15	Return '.
+	15	Return '
+				expandMacrosWith: method literalCount.
+	self assert: expected equals: disasm.
 	self assert: (self evalTestMethod: method) = 6.
 	method := self getTestMethod: #testIncrementTempOptimisationLong.
 	self assert: (method byteCodes at: 24) = IncTemp.
@@ -870,7 +850,7 @@ testNestedWhileTrueAtStartOfCleanBlock
 	| method block |
 	method := self getTestMethod: #testNestedWhileTrueAtStartOfCleanBlock.
 	block := method value: DolphinCompilerTestMethods new withArguments: #().
-	self assert: block == (method literals at: 3).
+	self assert: (method literals identityIncludes: block).
 	"Block should start immediately after a short push const and return stack top"
 	self assert: block initialIP = 3!
 
@@ -907,7 +887,7 @@ testReturnFromOptimizedBlock
 	self assert: compiled needsContext.
 	"Note that the far returns in the optimized ifTrue: blocks can replaced with a normal returns"
 	lowerText := compiled disassembly.
-	upperText := 'Normal, 0 args, 0 env temps, 0 literals, needs context
+	upperText := 'Normal, 0 args, 0 env temps, <1d> literals, needs context
 
 	1	Push 1
 	2	Push 2
@@ -921,7 +901,7 @@ testReturnFromOptimizedBlock
 	16	Pop
 	17	Push 2
 	18	Push 1
-	19	Special Send #<
+	19	Special Send #%<
 	20	Jump If False +18 to 40
 	22	Push 1
 	23	Push 2
@@ -934,7 +914,7 @@ testReturnFromOptimizedBlock
 	36	Special Send #value
 	37	Pop
 	38	Jump -39 to 1
-	40	Return nil'.
+	40	Return nil' expandMacrosWith: compiled literalCount. 
 	self assert: lowerText = upperText
 	"
 DiffBrowser show
@@ -967,6 +947,20 @@ testReturnImmediate
 								with: ReturnFromMessage)].
 !
 
+testReturnPseudoVar
+	| method |
+	#(true false nil) keysAndValuesDo: 
+			[:eachKey :eachValue |
+			| selector bytecodes retInstr |
+			selector := ('testReturn' , eachValue printString capitalized) asSymbol.
+			method := self getTestMethod: selector.
+			retInstr := ReturnSelf + eachKey.
+			bytecodes := retInstr odd
+						ifTrue: [ByteArray with: retInstr]
+						ifFalse: [ByteArray with: Nop with: retInstr].
+			self assert: bytecodes equals: method byteCodes.
+			self assert: eachValue equals: (method value: DolphinCompilerTestMethods new withArguments: #())]!
+
 testScanningScaledDecimals
 	"Test Number>>readFrom: with ScaledDecimals"
 
@@ -983,11 +977,7 @@ testScanningScaledDecimals
 	self 
 		should: [self evaluateExpression: '123.s']
 		raise: self compilationErrorClass
-		matching: 
-			[:ex | 
-			self isD6OrLater 
-				ifTrue: [ex errorCode = CErrUndeclared and: [ex range = (5 to: 5)]]
-				ifFalse: [(self messageFromError: ex) = 'undeclared ''s''']]!
+		matching: [:ex | ex errorCode = CErrUndeclared and: [ex range = (5 to: 5)]]!
 
 testScope
 	| compiled text |
@@ -1018,35 +1008,30 @@ testScope
 				in: UndefinedObject
 				flags: defaultCompileFlags]
 		raise: self compilationErrorClass
-		matching: 
-			[:ex | 
-			self isD6OrLater 
-				ifTrue: [ex errorCode = CErrUndeclared]
-				ifFalse: [ex errorMessage = 'undeclared ''arg''']]!
+		matching: [:ex | ex errorCode = CErrUndeclared]!
 
 testSharedOuterTemps
-	#('| a | a := [[a := 2]]' '| a b | b := [[a]]. a := 2. b') do: 
-			[:text | 
+	#(#testSharedOuterTemps1 #testSharedOuterTemps2) do: 
+			[:selector |
 			| value value2 method |
-			method := (Compiler compileExpression: text in: Object) method.
+			method := self getTestMethod: selector.
 			self assert: method needsContext.
 			self assert: method envTempCount = 1.
-			value := method value: nil withArguments: #().
+			value := method value: DolphinCompilerTestMethods new withArguments: #().
 			self assert: (value isKindOf: BlockClosure).
-			"Should only be one copied values, 0 temps and args"
+			"Should only be 0 copied values, temps and args"
+			self assert: value size = 0.
 			self assert: value tempCount = 0.
 			self assert: value argumentCount = 0.
 			self assert: value stackTempCount = 0.
-			self assert: value size = 0.
 			value2 := value value.
 			self assert: (value2 isKindOf: BlockClosure).
-			"Should only be one copied values, 0 temps and args"
+			"Should only be 0 copied values, temps and args"
+			self assert: value2 size = 0.
 			self assert: value2 tempCount = 0.
 			self assert: value2 argumentCount = 0.
 			self assert: value2 stackTempCount = 0.
-			self assert: value2 size = 0.
-			self assert: value2 value = 2]
-!
+			self assert: value2 value = 2]!
 
 testSpecialLiteralsAsUnarySelectors
 	"nil, true and false should all be valid as method selectors"
@@ -1087,6 +1072,37 @@ testSymbolScanning
 					ex receiver == (each copyFrom: 2 to: colon) asSymbol 
 						and: [ex selector == (each copyFrom: colon + 1) asSymbol]]]!
 
+testTempMaps
+	"Check that the temp maps for all the test methods are consistent with the bytecodes."
+
+	| env specials |
+	env := BrowserEnvironment new.
+	specials := OrderedCollection new.
+	"Full block nested in optimized block"
+	specials add: AXMethodName >> #printSignatureOn:.
+	"Inlined return in a whileFalse control structure"
+	specials add: Base64Codec >> #nextBase64From:.
+	"Inlined returns in ifTrue/ifFalse optimised to ifNil"
+	specials add: Behavior >> #whichClassIncludesSelector:.
+	"Inlined returns in ifTrue/ifFalse stgructure"
+	specials add: Boolean >> #&.
+	"Full block nested in otherwise clean block"
+	specials add: BrowserEnvironment >> #numberSelectors.
+	"Full block nested in multiple levels of optimized blocks"
+	specials add: CompiledCode >> #byteCodes:.
+	"Clean and copying blocks as the values of optimized blocks"
+	specials add: ListViewColumn >> #rowSortBlock.
+	"Full block nested in multiple other blocks"
+	specials add: TestResult >> #debugCase:.
+	"Optimized blocks assigning temps inside full blocks"
+	specials add: Date >> #monthsSince:.
+	"Test case for continuations"
+	specials add: ContinuationTest >> #testBlockVars.
+	"Clean block in otherwise empty clean block"
+	specials add: EventsCollection >> #triggerEvent:with:with:.
+	(env forClasses: (Array with: DolphinCompilerTestMethods)) | (env forMethods: specials)
+		methodsDo: [:each | self verifyTempsMapOf: each]!
+
 testTempPairing
 	| prefix method pairs pair |
 	prefix := '
@@ -1096,7 +1112,7 @@ testTempPairing
 
 	"short push + short push"
 	method := (self compileExpression: prefix , ' t6 - t7') method.
-	pairs := method byteCodeSegments select: [:each | each first = self pushTempPair].
+	pairs := method byteCodeSegments select: [:each | each first = PushTempPair].
 	self assert: pairs size = 1.
 	pair := pairs first.
 	self assert: pair last = ((6 << 4) + 7).
@@ -1104,7 +1120,7 @@ testTempPairing
 
 	"short push + long push"
 	method := (self compileExpression: prefix , ' t7 - t8') method.
-	pairs := method byteCodeSegments select: [:each | each first = self pushTempPair].
+	pairs := method byteCodeSegments select: [:each | each first = PushTempPair].
 	self assert: pairs size = 1.
 	pair := pairs first.
 	self assert: pair last = ((7 << 4) + 8).
@@ -1112,7 +1128,7 @@ testTempPairing
 
 	"long push + short push"
 	method := (self compileExpression: prefix , ' t8 - t7') method.
-	pairs := method byteCodeSegments select: [:each | each first = self pushTempPair].
+	pairs := method byteCodeSegments select: [:each | each first = PushTempPair].
 	self assert: pairs size = 1.
 	pair := pairs first.
 	self assert: pair last = ((8 << 4) + 7).
@@ -1120,7 +1136,7 @@ testTempPairing
 
 	"long push + long push"
 	method := (self compileExpression: prefix , ' t8 - t10') method.
-	pairs := method byteCodeSegments select: [:each | each first = self pushTempPair].
+	pairs := method byteCodeSegments select: [:each | each first = PushTempPair].
 	self assert: pairs size = 1.
 	pair := pairs first.
 	self assert: pair last = ((8 << 4) + 10).
@@ -1128,25 +1144,25 @@ testTempPairing
 
 	"short + long (out of range)"
 	method := (self compileExpression: prefix , ' t7 - t16') method.
-	pairs := method byteCodeSegments select: [:each | each first = self pushTempPair].
+	pairs := method byteCodeSegments select: [:each | each first = PushTempPair].
 	self assert: pairs isEmpty.
 	self assert: (method value: nil withArguments: #()) = (7 - 16).
 
 	"long + long (out of range)"
 	method := (self compileExpression: prefix , ' t8 - t16') method.
-	pairs := method byteCodeSegments select: [:each | each first = self pushTempPair].
+	pairs := method byteCodeSegments select: [:each | each first = PushTempPair].
 	self assert: pairs isEmpty.
 	self assert: (method value: nil withArguments: #()) = (8 - 16).
 
 	"long (out of range) + short"
 	method := (self compileExpression: prefix , ' t16 - t7') method.
-	pairs := method byteCodeSegments select: [:each | each first = self pushTempPair].
+	pairs := method byteCodeSegments select: [:each | each first = PushTempPair].
 	self assert: pairs isEmpty.
 	self assert: (method value: nil withArguments: #()) = (16 - 7).
 
 	"long (out of range) + long"
 	method := (self compileExpression: prefix , ' t16 - t8') method.
-	pairs := method byteCodeSegments select: [:each | each first = self pushTempPair].
+	pairs := method byteCodeSegments select: [:each | each first = PushTempPair].
 	self assert: pairs isEmpty.
 	self assert: (method value: nil withArguments: #()) = (16 - 8)!
 
@@ -1159,30 +1175,25 @@ testTimesRepeat
 	self assert: method notNil.
 	self deny: method needsContext.
 	self deny: (method byteCodeSegments anySatisfy: [:each | each first = BlockCopy]).
-	self assert: (method value: nil withArguments: #()) = 5.
-	self 
+	self assert: 5 equals: (method value: nil withArguments: #()).
+	self
 		shouldnt: [result := self compileExpression: '| a | a := 0. 10 + (5 timesRepeat: [a := a + 1]). a']
 		raise: self compilationWarningClass.
 	method := result method.
 	self assert: method notNil.
 	self deny: method needsContext.
 	self deny: (method byteCodeSegments anySatisfy: [:each | each first = BlockCopy]).
-	self assert: (method value: nil withArguments: #()) = 5.
+	self assert: 5 equals: (method value: nil withArguments: #()).
 
 	"Test case which cannot be inlined"
 	src := '| aBlock i | i := 0. aBlock := [i := i + 1]. 5 timesRepeat: aBlock. i.'.
-	self 
+	self
 		should: [result := self compileExpression: src]
 		raise: self compilationWarningClass
 		matching: 
-			[:ex | 
-			self isD6OrLater 
-				ifTrue: 
-					[ex errorCode = CWarnExpectNiladicBlockArg 
-						and: [(src copyFrom: ex range start to: ex range stop) = 'timesRepeat:']]
-				ifFalse: 
-					[ex errorMessage = 'can''t optimize #timesRepeat: (requires niladic block as the argument)' 
-						and: [(src copyFrom: ex range start to: ex range stop) = 'aBlock']]].
+			[:ex |
+			ex errorCode = CWarnExpectNiladicBlockArg
+				and: [(src copyFrom: ex range start to: ex range stop) = 'timesRepeat:']].
 	method := result method.
 	self assert: method notNil.
 	self assert: method needsContext.
@@ -1195,8 +1206,12 @@ testTimesRepeat
 	method := result method.
 	self assert: method notNil.
 	self assert: method isPacked.
-	"	self assert: method byteCodes = (ByteArray with: Nop with: ShortPushZero with: ReturnFromMessage)."
-	self assert: (method value: nil withArguments: #()) = 0.
+	self assert: (ByteArray
+				with: Nop
+				with: ShortPushZero
+				with: ReturnFromMessage)
+		equals: method byteCodes.
+	self assert: 0 equals: (method value: nil withArguments: #()).
 
 	"Test 0 iterations, which compiler can remove (should come down to just a Return Zero, or at least return literal constant zero"
 	self shouldnt: [result := self compileExpression: '-1 timesRepeat: [Sound bell]']
@@ -1204,24 +1219,18 @@ testTimesRepeat
 	method := result method.
 	self assert: method notNil.
 	self assert: method isPacked.
-	self assert: (method value: nil withArguments: #()) = -1!
+	self assert: -1 equals: (method value: nil withArguments: #())!
 
 testTimesRepeatResult
-	#(0 1 2 100) do: 
-			[:each | 
-			self 
-				assert: ((self compileExpression: ('<1p> timesRepeat: []' 
-								expandMacrosWith: each)) 
-						method value: nil withArguments: #()) 
-						= each.
-			self 
-				assert: ((self compileExpression: ('| i | i := 0. <1p> timesRepeat: [i := i + 1]. i' 
-								expandMacrosWith: each)) 
-						method value: nil withArguments: #()) 
-						= each]
-"
-[1000000 timesRepeat: []] method disassembly
-"!
+	#(0 1 2 127 16383 32767 32768) do: 
+			[:each |
+			self assert: each
+				equals: ((self compileExpression: ('<1p> timesRepeat: []' expandMacrosWith: each)) method value: nil
+						withArguments: #()).
+			self assert: each
+				equals: ((self
+						compileExpression: ('| i | i := 0. <1p> timesRepeat: [i := i + 1]. i' expandMacrosWith: each))
+							method value: nil withArguments: #())]!
 
 testToByDo
 	| result method src |
@@ -1277,13 +1286,13 @@ testWhileFalse
 	method := result method.
 	self assert: method notNil.
 	self deny: method needsContext.
-	"	self 
-		assert: method byteCodes = (ByteArray 
+	self
+		assert: method byteCodes = (ByteArray
 						with: ShortPushNil
 						with: NearJumpIfFalse
 						with: 255 - 1 - 1
 						with: ReturnNil).
-"
+
 	"Test a simple counting loop"
 	result := self compileExpression: '| i | i := 0. [i := i + 1. i > 10] whileFalse. i'.
 	method := result method.
@@ -1309,13 +1318,12 @@ testWhileTrue
 	method := result method.
 	self assert: method notNil.
 	self deny: method needsContext.
-	"	self 
-		assert: method byteCodes = (ByteArray 
+	self
+		assert: method byteCodes = (ByteArray
 						with: ShortPushNil
 						with: NearJumpIfTrue
 						with: 255 - 1 - 1
 						with: ReturnNil).
-"
 	result := self compileExpression: '| i | i := 0. [i := i + 1. i <= 10] whileTrue. i'.
 	method := result method.
 	self assert: method notNil.
@@ -1343,34 +1351,83 @@ testWriteAccessor
 			accessor := class compiledMethodAt: selector.
 			self assert: accessor extraIndex = 7.
 			inst perform: selector with: each.
-			self assert: (inst perform: each asSymbol) = each]! !
-!CompilerTest categoriesFor: #checkCompileError:range:code:message:line:source:!helpers!private! !
+			self assert: (inst perform: each asSymbol) = each]!
+
+verifyTempsMapOf: aCompiledMethod
+	| dispatcher info ipRange tempsMap emptyBlock method |
+	info := aCompiledMethod getDebugInfo.
+	"Use the recompiled method as we want to check the current compiler, not what was compiled into the image"
+	method := info method.
+	"First check that all ip's are covered by the method scope"
+	ipRange := 1 to: method byteCodes size.
+	tempsMap := info tempsMap.
+	self assert: ipRange equals: tempsMap first key.
+	"All temps map entries should be for ip's that represent some subset of the method's ip's"
+	tempsMap do: 
+			[:each |
+			self assert: (each key start == 0
+						or: [(ipRange includes: each key start) and: [ipRange includes: each key stop]])].
+	dispatcher := method byteCodeDispatcher.
+	[dispatcher atEnd] whileFalse: 
+			[| ip |
+			ip := dispatcher ip.
+			dispatcher nextInstructionDo: 
+					[:instr :args |
+					TempInstrs at: instr
+						ifPresent: 
+							[:val |
+							| temps actual |
+							temps := info tempsAtIp: ip.
+							actual := val value: args.
+							self assert: (temps
+										anySatisfy: [:tempInfo | tempInfo second == actual key and: [tempInfo last == actual value]])]]].
+	"Check that there is a temps map entry for the initalIP of each clean block in the literal frame"
+	emptyBlock := VMLibrary default emptyBlock.
+	method literalsDo: 
+			[:each |
+			((each isKindOf: BlockClosure) and: [each ~~ emptyBlock])
+				ifTrue: 
+					[each method == method
+						ifTrue: 
+							[| initialIP |
+							initialIP := each initialIP.
+							self assert: (tempsMap anySatisfy: [:temps | temps key start == initialIP])]
+						ifFalse: 
+							[Transcript
+								nextPutAll: 'Ignoring literal block of ';
+								print: method;
+								nextPutAll: ' defined in ';
+								print: each method;
+								nextPutAll: ': ';
+								print: each;
+								cr]]]! !
+!CompilerTest categoriesFor: #assertBlocksOptimized:!helpers!private! !
+!CompilerTest categoriesFor: #checkCompileError:range:code:line:source:!helpers!private! !
 !CompilerTest categoriesFor: #compilationErrorClass!constants!private! !
-!CompilerTest categoriesFor: #compilationWarningClass!constants!public! !
+!CompilerTest categoriesFor: #compilationWarningClass!constants!private! !
 !CompilerTest categoriesFor: #compileExpression:!helpers!private! !
 !CompilerTest categoriesFor: #compileExpression:in:!helpers!private! !
 !CompilerTest categoriesFor: #compileMethod:in:!helpers!private! !
 !CompilerTest categoriesFor: #defaultCompileFlags!helpers!private! !
-!CompilerTest categoriesFor: #evalTestMethod:!helpers!public! !
-!CompilerTest categoriesFor: #evalTestMethod:withArgs:!helpers!public! !
+!CompilerTest categoriesFor: #evalTestMethod:!helpers!private! !
+!CompilerTest categoriesFor: #evalTestMethod:withArgs:!helpers!private! !
 !CompilerTest categoriesFor: #evaluateExpression:!helpers!private! !
 !CompilerTest categoriesFor: #findIP:inTextMap:!development!private! !
 !CompilerTest categoriesFor: #getDebugInfoFor:debug:!private! !
 !CompilerTest categoriesFor: #getTestMethod:!private! !
-!CompilerTest categoriesFor: #knownTextMapIssues!private! !
 !CompilerTest categoriesFor: #messageFromError:!helpers!private! !
-!CompilerTest categoriesFor: #pushTempPair!constants!private! !
 !CompilerTest categoriesFor: #scan:class:!helpers!private! !
 !CompilerTest categoriesFor: #scanNonNumericEnd:class:!helpers!private! !
 !CompilerTest categoriesFor: #scanScaledDecimal:!helpers!private! !
 !CompilerTest categoriesFor: #scanSmallIntegerNonNumericEnd:!helpers!private! !
-!CompilerTest categoriesFor: #setInteractiveCompile!helpers!public! !
+!CompilerTest categoriesFor: #setInteractiveCompile!helpers!private! !
 !CompilerTest categoriesFor: #setUp!helpers!private! !
 !CompilerTest categoriesFor: #shortPushOne!helpers!private! !
 !CompilerTest categoriesFor: #test1054!public!unit tests! !
 !CompilerTest categoriesFor: #testBlockTempsMap!public!unit tests! !
 !CompilerTest categoriesFor: #testBlockWithAllTempTypes!public!unit tests! !
 !CompilerTest categoriesFor: #testByteArraysInLiteralArrays!public!unit tests! !
+!CompilerTest categoriesFor: #testCharacterScanning!public!unit tests! !
 !CompilerTest categoriesFor: #testCompileTimeExpressions!public!unit tests! !
 !CompilerTest categoriesFor: #testConstExpressionReferences!public!unit tests! !
 !CompilerTest categoriesFor: #testCopyingBlocks1!public!unit tests! !
@@ -1384,9 +1441,17 @@ testWriteAccessor
 !CompilerTest categoriesFor: #testIfNil!public!unit tests! !
 !CompilerTest categoriesFor: #testIfNilifNotNil!public!unit tests! !
 !CompilerTest categoriesFor: #testIfNilifNotNilNoArg!public!unit tests! !
+!CompilerTest categoriesFor: #testIfNilifNotNilNoArgUnused!public!unit tests! !
+!CompilerTest categoriesFor: #testIfNilifNotNilUnused!public!unit tests! !
+!CompilerTest categoriesFor: #testIfNilUnused!public!unit tests! !
 !CompilerTest categoriesFor: #testIfNotNil!public!unit tests! !
 !CompilerTest categoriesFor: #testIfNotNilifNil!public!unit tests! !
 !CompilerTest categoriesFor: #testIfNotNilifNilNoArg!public!unit tests! !
+!CompilerTest categoriesFor: #testIfNotNilifNilNoArgUnused!public!unit tests! !
+!CompilerTest categoriesFor: #testIfNotNilifNilUnused!public!unit tests! !
+!CompilerTest categoriesFor: #testIfNotNilNoArg!public!unit tests! !
+!CompilerTest categoriesFor: #testIfNotNilNoArgUnused!public!unit tests! !
+!CompilerTest categoriesFor: #testIfNotNilUnused!public! !
 !CompilerTest categoriesFor: #testImmutableLiterals!public!unit tests! !
 !CompilerTest categoriesFor: #testIncrementDecrementOptimisation!public!unit tests! !
 !CompilerTest categoriesFor: #testIncrementPushTempOptimisation!public!unit tests! !
@@ -1399,11 +1464,13 @@ testWriteAccessor
 !CompilerTest categoriesFor: #testRadixInteger!public!unit tests! !
 !CompilerTest categoriesFor: #testReturnFromOptimizedBlock!public!unit tests! !
 !CompilerTest categoriesFor: #testReturnImmediate!exceptions!public!unit tests! !
+!CompilerTest categoriesFor: #testReturnPseudoVar!public!unit tests! !
 !CompilerTest categoriesFor: #testScanningScaledDecimals!public!unit tests! !
 !CompilerTest categoriesFor: #testScope!public!unit tests! !
 !CompilerTest categoriesFor: #testSharedOuterTemps!public!unit tests! !
 !CompilerTest categoriesFor: #testSpecialLiteralsAsUnarySelectors!public! !
 !CompilerTest categoriesFor: #testSymbolScanning!public!unit tests! !
+!CompilerTest categoriesFor: #testTempMaps!public!unit tests! !
 !CompilerTest categoriesFor: #testTempPairing!public!unit tests! !
 !CompilerTest categoriesFor: #testTimesRepeat!public!unit tests! !
 !CompilerTest categoriesFor: #testTimesRepeatResult!public!unit tests! !
@@ -1412,12 +1479,50 @@ testWriteAccessor
 !CompilerTest categoriesFor: #testWhileFalse!public!unit tests! !
 !CompilerTest categoriesFor: #testWhileTrue!public!unit tests! !
 !CompilerTest categoriesFor: #testWriteAccessor!public!unit tests!unit tests-known failures! !
+!CompilerTest categoriesFor: #verifyTempsMapOf:!helpers!private! !
 
 !CompilerTest class methodsFor!
 
 buildSuiteFromSelectors
-	^self hasFullClosures 
-		ifTrue: [super buildSuiteFromSelectors]
-		ifFalse: [self buildSuiteFromMethods: #()]! !
+	^super buildSuiteFromSelectors!
+
+initialize
+	| accessOuterTemp accessContextTemp accessStackTemp accessOuter1Temp |
+	TempInstrs := LookupTable new.
+	accessStackTemp := [:args | 0 -> (args last + 1)].
+	accessContextTemp := [:args | 1 -> (args last + 1)].
+	accessOuter1Temp := [:args | 2 -> (args last + 1)].
+	accessOuterTemp := [:args | (args last bitShift: -5) + 1 -> ((args last bitAnd: 16r1F) + 1)].
+	TempInstrs
+		at: #decPushTemp:temp: put: accessStackTemp;
+		at: #decTemp:temp: put: accessStackTemp;
+		at: #incPushTemp:temp: put: accessStackTemp;
+		at: #incTemp:temp: put: accessStackTemp;
+		at: #popPushTemp: put: accessStackTemp;
+		at: #pushSelfAndTemp: put: accessStackTemp;
+		at: #popTemp: put: accessStackTemp;
+		at: #pushTemp: put: accessStackTemp;
+		at: #shortPopPushTemp: put: accessStackTemp;
+		at: #shortPopTemp: put: accessStackTemp;
+		at: #shortPushTemp: put: accessStackTemp;
+		at: #pushTempPair: put: [:args | 0 -> ((args last bitAnd: 16rF) + 1)];
+		at: #sendTempZeroArgs: put: [:args | 0 -> ((args last bitShift: -5) + 1)];
+		at: #shortPushTemp: put: accessStackTemp;
+		at: #shortPushSelfAndTemp: put: accessStackTemp;
+		at: #shortStoreTemp: put: accessStackTemp;
+		at: #popContextTemp: put: accessContextTemp;
+		at: #shortPopOuterTemp: put: accessContextTemp;
+		at: #pushContextTemp: put: accessContextTemp;
+		at: #popOuterTemp: put: accessOuterTemp;
+		at: #pushOuterTemp: put: accessOuterTemp;
+		at: #storeOuterTemp: put: accessOuterTemp;
+		at: #shortPopOuterTemp: put: accessOuter1Temp;
+		at: #shortPushOuterTemp: put: accessOuter1Temp;
+		yourself!
+
+resources
+	^Array with: CompilerTestClasses! !
 !CompilerTest class categoriesFor: #buildSuiteFromSelectors!Building Suites!public! !
+!CompilerTest class categoriesFor: #initialize!public!unit tests-long running! !
+!CompilerTest class categoriesFor: #resources!Accessing!public! !
 

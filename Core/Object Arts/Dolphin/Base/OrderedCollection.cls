@@ -1,7 +1,7 @@
 "Filed out from Dolphin Smalltalk 7"!
 
 SequencedGrowableCollection variableSubclass: #OrderedCollection
-	instanceVariableNames: 'firstIndex lastIndex '
+	instanceVariableNames: 'firstIndex lastIndex'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -115,6 +115,19 @@ at: index put: storee
 		ifTrue: [self errorSubscriptBounds: index]
 		ifFalse: [self basicAt: basicIndex put: storee]!
 
+basicReplaceElementsOf: anIndexableObject from: startInteger to: stopInteger startingAt: startAtInteger
+	"Private - Replace the indexable instance variables of the variable pointer object, anIndexableObject, between
+	startInteger and stopInteger inclusive with elements of the receiver starting from startAtInteger. Answers
+	anIndexableObject."
+
+	| offset |
+	<primitive: 188>
+	offset := startAtInteger - startInteger.
+	(anIndexableObject == self and: [startAtInteger < startInteger])
+		ifTrue: [stopInteger to: startInteger by: -1 do: [:i | anIndexableObject basicAt: i put: (self basicAt: offset + i)]]
+		ifFalse: [startInteger to: stopInteger do: [:i | anIndexableObject basicAt: i put: (self basicAt: offset + i)]].
+	^anIndexableObject!
+
 copyWith: newElement
 	"Answer a <sequencedReadableCollection> which is a copy of 
 	the receiver that has newElement added in the correct position
@@ -161,6 +174,24 @@ initialize
 	firstIndex := 1.
 	lastIndex := 0
 !
+
+inject: anObject into: aDyadicValuable
+	"Evaluate the <dyadicValuable> argument, aDyadicValuable, once for each element in the
+	receiver, passing the elements as the second argument, and passing the value of the previous
+	evaluation as the first argument, starting with the <Object> argument, initialValue. The
+	operation must answer the value it wishes to have passed as its first argument the next time
+	it is evaluated. The traversal is in the #do: order. Answer the final value of the
+	operation. This enumeration is particularly useful for performing summations and other
+	statistical operations."
+
+	"Implementation Note: Override superclass implementation for efficiency. By inlining the do:
+	implementation we can avoid requiring a full block."
+
+	| nextValue |
+	nextValue := anObject.
+	firstIndex to: lastIndex
+		do: [:i | nextValue := aDyadicValuable value: nextValue value: (self basicAt: i)].
+	^nextValue!
 
 insert: newElement before: anInteger 
 	"Private - Insert the argument, newElement, into the receiver at the basic index
@@ -288,6 +319,35 @@ removeAtIndex: index
 			lastIndex := lastIndex - 1].
 	^element!
 
+replaceElementsOf: anIndexableObject from: startInteger to: stopInteger startingAt: startAtInteger
+	"Private - Replace the indexable instance variables of the variable pointer object,
+	anIndexableObject, between startInteger and stopInteger inclusive with elements of the
+	receiver starting from startAtInteger. Answers anIndexableObject."
+
+	^self
+		basicReplaceElementsOf: anIndexableObject
+		from: startInteger
+		to: stopInteger
+		startingAt: startAtInteger + firstIndex - 1!
+
+replaceFrom: startInteger to: stopInteger with: aSequencedReadableCollection startingAt: startAtInteger
+	"Destructively replace the elements of the receiver between the <integer> arguments
+	startInteger and stopInteger inclusive with the <Object> elements of the
+	<sequencedReadableCollection> argument, aSequencedReadableCollection, beginning with its
+	element with <integer> index startAtInteger. Answer the receiver. Overlapping moves are
+	correctly handled. Unlike #replaceFrom:to:with:, the size of aSequenceableCollection is not
+	checked directly (X3J20 does not specify that this should be an error), but an error will be
+	raised when an attempt is made to access an out-of-bounds element in replacementElements. It
+	is not an error to specify an empty replacement interval, even if startInteger, stopInteger,
+	and/or startAtInteger are out-of-bounds (this is compatible with the major
+	implementations)."
+
+	aSequencedReadableCollection
+		replaceElementsOf: self
+		from: startInteger + firstIndex - 1
+		to: stopInteger + firstIndex - 1
+		startingAt: startAtInteger!
+
 resize: anInteger
 	"Private - Override back to the basic implementation as our elements are contiguously located.
 	This changes the capacity of the receiver, but has no other effect."
@@ -361,12 +421,14 @@ uncheckedFrom: startInteger to: stopInteger keysAndValuesDo: aDyadicValuable
 !OrderedCollection categoriesFor: #at:!accessing!public! !
 !OrderedCollection categoriesFor: #at:ifAbsent:!accessing!public! !
 !OrderedCollection categoriesFor: #at:put:!accessing!public! !
+!OrderedCollection categoriesFor: #basicReplaceElementsOf:from:to:startingAt:!private!replacing! !
 !OrderedCollection categoriesFor: #copyWith:!copying!public! !
 !OrderedCollection categoriesFor: #copyWithout:!copying!public! !
 !OrderedCollection categoriesFor: #do:!enumerating!public! !
 !OrderedCollection categoriesFor: #firstIndex:lastIndex:!accessing!private! !
 !OrderedCollection categoriesFor: #includes:!public!searching! !
 !OrderedCollection categoriesFor: #initialize!initializing!public! !
+!OrderedCollection categoriesFor: #inject:into:!enumerating!public! !
 !OrderedCollection categoriesFor: #insert:before:!adding!private! !
 !OrderedCollection categoriesFor: #isEmpty!public!testing! !
 !OrderedCollection categoriesFor: #makeRoomAtEndFor:!adding!private! !
@@ -376,6 +438,8 @@ uncheckedFrom: startInteger to: stopInteger keysAndValuesDo: aDyadicValuable
 !OrderedCollection categoriesFor: #removeAll!public!removing! !
 !OrderedCollection categoriesFor: #removeAllSuchThat:!accessing!public! !
 !OrderedCollection categoriesFor: #removeAtIndex:!public!removing! !
+!OrderedCollection categoriesFor: #replaceElementsOf:from:to:startingAt:!private!replacing! !
+!OrderedCollection categoriesFor: #replaceFrom:to:with:startingAt:!public!replacing! !
 !OrderedCollection categoriesFor: #resize:!mutating!private! !
 !OrderedCollection categoriesFor: #reverseDo:!enumerating!public! !
 !OrderedCollection categoriesFor: #select:!enumerating!public! !

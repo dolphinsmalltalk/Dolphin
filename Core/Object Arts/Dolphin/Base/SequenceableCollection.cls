@@ -126,6 +126,17 @@ approxSize
 
 	^self size!
 
+asArray
+	"Answer an <Array> whose elements are those of the receiver in the same sequence."
+
+	| size |
+	size := self size.
+	^self
+		replaceElementsOf: (Array new: size)
+		from: 1
+		to: size
+		startingAt: 1!
+
 asRunArray
 	"Answer a <RunArray> whose elements are the same as those of the receiver. The order of
 	elements will be the same, and there will be the same number when enumerated, but the
@@ -467,16 +478,6 @@ copyWithoutAll: oldElements
 	self 
 		do: [:element | (oldElements includes: element) ifFalse: [aStream nextPut: element]].
 	^aStream contents!
-
-copyWithoutDuplicates
-	"Answers a copy of the receiver that contains no duplicate objects.
-	Uses equality for comparison."
-
-	| set |
-	set := self asSet.
-	^self select: [:each | (set includes: each) 
-		ifTrue: [ set remove:each. true ]
-		ifFalse: [ false ]].!
 
 do: operation 
 	"Evaluate the <monadicValuable> argument, operation, for each of the receiver's elements.
@@ -908,6 +909,22 @@ replaceBytesOf: aByteObject from: start to: stop startingAt: fromStart
 	start to: stop do: [:i | aByteObject at: i put: (self at: i + fromOffset)].
 	^aByteObject!
 
+replaceElementsOf: anIndexableObject from: startInteger to: stopInteger startingAt: startAtInteger
+	"Private - Replace the indexable instance variables of the variable pointer object,
+	anIndexableObject, between startInteger and stopInteger inclusive with elements of the
+	receiver starting from startAtInteger. Answers anIndexableObject."
+
+	| offset |
+	offset := startAtInteger - startInteger.
+	(anIndexableObject == self and: [startAtInteger < startInteger])
+		ifTrue: 
+			[stopInteger to: startInteger
+				by: -1
+				do: [:i | anIndexableObject basicAt: i put: (self at: offset + i)]]
+		ifFalse: 
+			[startInteger to: stopInteger do: [:i | anIndexableObject basicAt: i put: (self at: offset + i)]].
+	^anIndexableObject!
+
 replaceFrom: start to: stop with: replacementElements
 	"Destructively replace the elements of the receiver between the <integer> arguments
 	start and stop with the <Object> elements of the <sequencedReadableCollection> argument, 
@@ -918,32 +935,32 @@ replaceFrom: start to: stop with: replacementElements
 		ifFalse: [^self error: 'size of replacement incorrect'].
 	^self replaceFrom: start to: stop with: replacementElements startingAt: 1!
 
-replaceFrom: start to: stop with: replacementElements startingAt: repStart
+replaceFrom: startInteger to: stopInteger with: aSequencedReadableCollection startingAt: startAtInteger 
 	"Destructively replace the elements of the receiver between the <integer> arguments
-	start and stop with the <Object> elements of the <sequencedReadableCollection> 
-	argument, replacementElements beginning with its element with <integer> index 
-	repStart. Answer the receiver. Overlapping moves are correctly handled.
-	Unlike #replaceFrom:to:with:, the size of replacementElements is not checked
-	directly (X3J20 does not specify that this should be an error), but an error will
-	be raised when an attempt is made to access an out-of-bounds element in
-	replacementElements.
-	N.B. It is not an error to specify an empty replacement interval, even if
-	start, stop, and/or repStart are out-of-bounds (this is compatible with the major
-	implementations).
-	Implementation Note: The performance of this method is very important to overall 
+	startInteger and stopInteger inclusive with the <Object> elements of the
+	<sequencedReadableCollection> argument, aSequencedReadableCollection, beginning with its
+	element with <integer> index startAtInteger. Answer the receiver. Overlapping moves are
+	correctly handled. Unlike #replaceFrom:to:with:, the size of aSequenceableCollection is not
+	checked directly (X3J20 does not specify that this should be an error), but an error will be
+	raised when an attempt is made to access an out-of-bounds element in replacementElements. It
+	is not an error to specify an empty replacement interval, even if startInteger, stopInteger,
+	and/or startAtInteger are out-of-bounds (this is compatible with the major
+	implementations)."
+
+	"Implementation Note: The performance of this method is very important to overall 
 	system performance. This implementation is mostly inlined by the compiler."
 
 	| offset |
-	offset := repStart - start.
-	(self == replacementElements and: [repStart < start])
-		ifTrue: [
-			"Move within same object overlaps, so do backwards"
-			stop to: start by: -1 do: [:i |
-				self at: i put: (replacementElements at: offset + i)]]
-		ifFalse: [
-			"Non-overlapping moves are done forwards"
-			start to: stop do: [:i |
-				self at: i put: (replacementElements at: offset + i)]]!
+	offset := startAtInteger - startInteger.
+	"Perform overlapping moves backwards, otherwise forwards"
+	(self == aSequencedReadableCollection and: [startAtInteger < startInteger]) 
+		ifTrue: 
+			[stopInteger to: startInteger
+				by: -1
+				do: [:i | self at: i put: (aSequencedReadableCollection at: offset + i)]]
+		ifFalse: 
+			[startInteger to: stopInteger
+				do: [:i | self at: i put: (aSequencedReadableCollection at: offset + i)]]!
 
 replaceFrom: start to: stop withObject: replacementElement
 	"Destructively replace the elements of the receiver between the
@@ -957,6 +974,7 @@ resize: anInteger
 	"Private - Resize the receiver to accomodate anInteger elements.
 	Answer the receiver."
 
+	self isImmutable ifTrue: [Processor constWriteSignal signalWith: self].
 	(self copyEmpty: anInteger)
 		replaceFrom: 1 to: self size with: self startingAt: 1;
 		become: self!
@@ -1113,6 +1131,7 @@ writeStream
 !SequenceableCollection categoriesFor: #anyOne!accessing!public! !
 !SequenceableCollection categoriesFor: #appendToStream:!double dispatch!private! !
 !SequenceableCollection categoriesFor: #approxSize!accessing!private! !
+!SequenceableCollection categoriesFor: #asArray!converting!public! !
 !SequenceableCollection categoriesFor: #asRunArray!converting!public! !
 !SequenceableCollection categoriesFor: #associations!accessing!public! !
 !SequenceableCollection categoriesFor: #at:!accessing!public!testing! !
@@ -1137,7 +1156,6 @@ writeStream
 !SequenceableCollection categoriesFor: #copyWith:!copying!public! !
 !SequenceableCollection categoriesFor: #copyWithout:!copying!public! !
 !SequenceableCollection categoriesFor: #copyWithoutAll:!copying!public! !
-!SequenceableCollection categoriesFor: #copyWithoutDuplicates!copying!public! !
 !SequenceableCollection categoriesFor: #do:!debugger-step through!enumerating!public! !
 !SequenceableCollection categoriesFor: #endsWith:!comparing!public! !
 !SequenceableCollection categoriesFor: #errorFirstObject:!exceptions!private! !
@@ -1184,6 +1202,7 @@ writeStream
 !SequenceableCollection categoriesFor: #readStream!public!streaming! !
 !SequenceableCollection categoriesFor: #remove:ifAbsent:!public!removing! !
 !SequenceableCollection categoriesFor: #replaceBytesOf:from:to:startingAt:!double dispatch!primitives!private! !
+!SequenceableCollection categoriesFor: #replaceElementsOf:from:to:startingAt:!private!replacing! !
 !SequenceableCollection categoriesFor: #replaceFrom:to:with:!public!replacing! !
 !SequenceableCollection categoriesFor: #replaceFrom:to:with:startingAt:!public!replacing! !
 !SequenceableCollection categoriesFor: #replaceFrom:to:withObject:!public!replacing! !

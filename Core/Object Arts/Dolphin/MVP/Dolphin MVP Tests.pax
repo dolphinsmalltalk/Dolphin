@@ -5,11 +5,13 @@ package paxVersion: 1;
 
 
 package classNames
+	add: #AbstractContainerViewTest;
 	add: #AcceleratorTableTest;
 	add: #BorderLayoutTest;
 	add: #BrushTest;
 	add: #CanvasTest;
 	add: #ChoicePresenterTest;
+	add: #ColorTest;
 	add: #ContainerViewTest;
 	add: #FlowLayoutTest;
 	add: #FramingLayoutTest;
@@ -68,6 +70,7 @@ package setPrerequisites: (IdentitySet new
 	add: 'Presenters\Color\Dolphin Color Presenter';
 	add: 'Views\Common Controls\Dolphin Common Controls';
 	add: 'Presenters\Date Time\Dolphin Date Time Presenters';
+	add: 'Models\List\Dolphin List Models';
 	add: 'Presenters\List\Dolphin List Presenter';
 	add: '..\System\Filer\Dolphin Literal Filer';
 	add: 'Views\MoenTree\Dolphin MoenTree View';
@@ -102,6 +105,11 @@ StParseNodeVisitor subclass: #StStyler
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+DolphinTest subclass: #AbstractContainerViewTest
+	instanceVariableNames: 'containerView'
+	classVariableNames: ''
+	poolDictionaries: 'Win32Constants'
+	classInstanceVariableNames: ''!
 DolphinTest subclass: #AcceleratorTableTest
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -117,10 +125,10 @@ DolphinTest subclass: #CanvasTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-DolphinTest subclass: #ContainerViewTest
-	instanceVariableNames: 'containerView'
+DolphinTest subclass: #ColorTest
+	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'Win32Constants'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 DolphinTest subclass: #IconTest
 	instanceVariableNames: ''
@@ -182,7 +190,12 @@ DolphinTest subclass: #WindowsEventTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ContainerViewTest subclass: #StyledContainerTest
+AbstractContainerViewTest subclass: #ContainerViewTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: 'Win32Constants'
+	classInstanceVariableNames: ''!
+AbstractContainerViewTest subclass: #StyledContainerTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''

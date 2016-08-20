@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 StValueNode subclass: #StBlockNode
 	instanceVariableNames: 'left right colons body arguments bar'
@@ -119,7 +119,7 @@ isImmediateNode
 isInlined
 	"Answer whether the receiver is an inlined block (i.e. one which is the receiver or an argument of an optimised message that is inlined in the home method."
 
-	^self parent isMessage and: [self parent isOptimizable]!
+	^self parent isMessage and: [self parent isInlineable]!
 
 isLast: aNode 
 	^body isLast: aNode!

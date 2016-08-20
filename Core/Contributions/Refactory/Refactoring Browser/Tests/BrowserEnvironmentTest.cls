@@ -26,7 +26,7 @@ classesFor: aBrowserEnvironment
 	BrowserEnvironment new classesDo: [:each | allClasses remove: each].
 	self assert: allClasses isEmpty!
 
-classNamesFor: anEnvironment 
+classNamesFor: anEnvironment
 	"N.B. A class can be in an environment, and in its inverse, if it is only partially included in the original environment"
 
 	| classNames |
@@ -34,10 +34,9 @@ classNamesFor: anEnvironment
 				addAll: anEnvironment not classNames;
 				yourself.
 	#rbFix.	"Issue here with comparing Sets for equality, use Set>>equals: for now"
-	self assert: (classNames equals: BrowserEnvironment new classNames).
+	self assert: classNames = BrowserEnvironment new classNames.
 	self assert: (anEnvironment & anEnvironment not) classNames isEmpty.
-	self 
-		assert: ((anEnvironment | anEnvironment not) classNames equals: BrowserEnvironment new classNames)!
+	self assert: (anEnvironment | anEnvironment not) classNames = BrowserEnvironment new classNames!
 
 copyFor: aBrowserEnvironment 
 	| newEnvironment |
@@ -254,7 +253,7 @@ testOrEnvironment
 	self assert: orEnvironment classNames asSortedCollection 
 				= universalEnvironment classNames asSortedCollection.
 	#rbFix. "Comparing sets for equality - maybe temporary, as protocolsFor: should presumably return something else"
-	self assert: ((orEnvironment protocolsFor: Object) equals:
+	self assert: ((orEnvironment protocolsFor: Object) =
 				 (universalEnvironment protocolsFor: Object))!
 
 testProtocolEnvironment

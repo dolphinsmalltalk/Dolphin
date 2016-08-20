@@ -1,7 +1,7 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 PositionableStream subclass: #WriteStream
-	instanceVariableNames: 'writeLimit '
+	instanceVariableNames: 'writeLimit'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -186,12 +186,12 @@ setToEnd
 space
 	"Store a space character as the next element of the receiver"
 
-	self nextPut: Character space!
+	self nextPut: $\x20!
 
 tab
 	"Store a tab character as the next element of the receiver"
 
-	self nextPut: Character tab!
+	self nextPut: $\t!
 
 tab: tabCount
 	"Append the specified number of tabs to the receiver."

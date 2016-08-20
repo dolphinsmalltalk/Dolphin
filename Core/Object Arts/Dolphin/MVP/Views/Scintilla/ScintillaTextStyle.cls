@@ -6,6 +6,12 @@ ScintillaAttribute subclass: #ScintillaTextStyle
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ScintillaTextStyle guid: (GUID fromString: '{441D5422-DB7D-4872-A16D-D6CA9D88E0B8}')!
+ScintillaTextStyle addClassConstant: 'EolFilledMask' value: 192!
+ScintillaTextStyle addClassConstant: 'HotspotMask' value: 3072!
+ScintillaTextStyle addClassConstant: 'InvisibleMask' value: 12288!
+ScintillaTextStyle addClassConstant: 'ItalicMask' value: 12!
+ScintillaTextStyle addClassConstant: 'ReadOnlyMask' value: 768!
+ScintillaTextStyle addClassConstant: 'UnderlinedMask' value: 48!
 ScintillaTextStyle comment: 'ScintillaStyle instances represent the visual styles that can be applied to colour text in a particular <ScintillaView>.
 
 There are a number of predefined styles:
@@ -381,12 +387,13 @@ initialize
 		self initialize
 	"
 
-	ItalicMask := 2r1100.
-	UnderlinedMask := 2r110000.
-	EolFilledMask := 2r11000000.
-	ReadOnlyMask := 2r1100000000.
-	HotspotMask := 2r110000000000.
-	InvisibleMask := 2r11000000000000.
+	| predefinedStyleNames |
+	self addClassConstant: 'ItalicMask' value: 2r1100.
+	self addClassConstant: 'UnderlinedMask' value: 2r110000.
+	self addClassConstant: 'EolFilledMask' value: 2r11000000.
+	self addClassConstant: 'ReadOnlyMask' value: 2r1100000000.
+	self addClassConstant: 'HotspotMask' value: 2r110000000000.
+	self addClassConstant: 'InvisibleMask' value: 2r11000000000000.
 	applyMap := (IdentityDictionary new)
 				at: #forecolor put: #(#forecolor ##(Color black) ##(SCI_STYLESETFORE));
 				at: #backcolor put: #(#backcolor ##(Color white) ##(SCI_STYLESETBACK));
@@ -406,13 +413,13 @@ initialize
 				shrink;
 				isImmutable: true;
 				yourself.
-	PredefinedStyleNames := IdentityDictionary new: STYLE_LASTPREDEFINED + 1.
-	(STYLE_NORMAL + 1 to: STYLE_LASTPREDEFINED) do: [:each | PredefinedStyleNames at: each put: each].
+	predefinedStyleNames := IdentityDictionary new: STYLE_LASTPREDEFINED + 1.
+	(STYLE_NORMAL + 1 to: STYLE_LASTPREDEFINED) do: [:each | predefinedStyleNames at: each put: each].
 	"These are not really Scintilla pre-defined styles, but some additional ones we add for convenience in the wrapping"
-	PredefinedStyleNames
+	predefinedStyleNames
 		at: #normal put: STYLE_NORMAL;
 		yourself.
-	PredefinedStyleNames
+	predefinedStyleNames
 		removeKey: STYLE_BRACELIGHT;
 		at: #braceHighlight put: STYLE_BRACELIGHT;
 		removeKey: STYLE_BRACEBAD;
@@ -426,9 +433,10 @@ initialize
 		removeKey: STYLE_CALLTIP;
 		at: #callTip put: STYLE_CALLTIP;
 		removeKey: STYLE_DEFAULT.
-	PredefinedStyleNames
+	predefinedStyleNames
 		isImmutable: true;
-		shrink!
+		shrink.
+	self addClassConstant: 'PredefinedStyleNames' value: predefinedStyleNames!
 
 name: aSymbol 
 	^(self new)

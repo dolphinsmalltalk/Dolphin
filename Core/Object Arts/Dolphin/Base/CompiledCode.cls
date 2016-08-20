@@ -1,7 +1,7 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object variableSubclass: #CompiledCode
-	instanceVariableNames: 'header methodClass selector sourceDescriptor byteCodes '
+	instanceVariableNames: 'header methodClass selector sourceDescriptor byteCodes'
 	classVariableNames: 'InfoCacheKeys InfoCacheValues PrivateMask'
 	poolDictionaries: 'OpcodePool'
 	classInstanceVariableNames: ''!
@@ -141,7 +141,7 @@ byteCodes
 			remaining := remaining bitShift: -8].
 	^bytes!
 
-byteCodes: anObject 
+byteCodes: anObject
 	"Private - Set the value of the receiver's ''byteCodes'' instance variable to the argument,
 	anObject. anObject must be either a ByteArray, or a SmallInteger containing the packed
 	representation of the bytecodes. If a ByteArray is passed that is suitable for packing (it
@@ -149,19 +149,18 @@ byteCodes: anObject
 	format."
 
 	| codes |
-	codes := (anObject isInteger or: [anObject size > 4 or: [anObject first even]]) 
-				ifTrue: [anObject]
-				ifFalse: 
-					[| packed |
-					codes := (anObject size == 4 
-								ifTrue: [anObject sdwordAtOffset: 0]
-								ifFalse: 
-									[packed := 0.
-									anObject reverseDo: [:each | packed := (packed bitShift: 8) + each].
-									packed]) 
-									bitShift: -1.
-					self assert: [codes class == SmallInteger].
-					codes].
+	(anObject isInteger or: [anObject size > 4 or: [anObject first even]])
+		ifTrue: [codes := anObject]
+		ifFalse: 
+			[codes := (anObject size == 4
+						ifTrue: [anObject sdwordAtOffset: 0]
+						ifFalse: 
+							[| packed |
+							packed := 0.
+							anObject reverseDo: [:each | packed := (packed bitShift: 8) + each].
+							packed])
+							bitShift: -1.
+			self assert: [codes class == SmallInteger]].
 	codes isImmutable: true.
 	byteCodes := codes!
 
@@ -360,8 +359,11 @@ literals
 
 	| count |
 	count := self literalCount.
-	^(Array new: count)
-		replaceFrom: 1 to: count with: self startingAt: 1!
+	^self
+		replaceElementsOf: (Array new: count)
+		from: 1
+		to: count
+		startingAt: 1!
 
 literalsDetect: discriminator ifNone: exceptionHandler
 	"Evaluate the <monadicValuable> argument, discriminator, for each of the 
@@ -466,6 +468,23 @@ refersToLiteral: anObject
 	1 to: self literalCount
 		do: [:i | ((self at: i) refersToLiteral: anObject) ifTrue: [^true]].
 	^false!
+
+replaceElementsOf: anIndexableObject from: startInteger to: stopInteger startingAt: startAtInteger
+	"Private - Replace the indexable instance variables of the variable pointer object,
+	anIndexableObject, between startInteger and stopInteger inclusive with literals from the
+	receiver starting from startAtInteger. Answers anIndexableObject."
+
+	| offset |
+	<primitive: 188>
+	offset := startAtInteger - startInteger.
+	(anIndexableObject == self and: [startAtInteger < startInteger])
+		ifTrue: 
+			[stopInteger to: startInteger
+				by: -1
+				do: [:i | anIndexableObject basicAt: i put: (self basicAt: offset + i)]]
+		ifFalse: 
+			[startInteger to: stopInteger do: [:i | anIndexableObject basicAt: i put: (self basicAt: offset + i)]].
+	^anIndexableObject!
 
 selector
 	"Answer the message selector under which the receiver is entered in its class' method
@@ -630,6 +649,7 @@ writesInstVar: aString at: anInteger
 !CompiledCode categoriesFor: #readsInstVar:!development!public!testing! !
 !CompiledCode categoriesFor: #readsInstVar:at:!development!public!testing! !
 !CompiledCode categoriesFor: #refersToLiteral:!private!testing! !
+!CompiledCode categoriesFor: #replaceElementsOf:from:to:startingAt:!private!replacing! !
 !CompiledCode categoriesFor: #selector!accessing!public! !
 !CompiledCode categoriesFor: #selector:!accessing!private! !
 !CompiledCode categoriesFor: #sendsSelector:!development!public!testing! !

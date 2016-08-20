@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 nil subclass: #Object
 	instanceVariableNames: ''
@@ -39,6 +39,11 @@ In addition any selector in Object with a ''basic'' prefix may be subject to inl
 '!
 !Object categoriesForClass!Kernel-Objects! !
 !Object methodsFor!
+
+?? anObject
+	"Answer the receiver if not nil, else the operand."
+
+	^self!
 
 _deepCopy: copiesDictionary 
 	"Private - Answer a 'deep copy' of the receiver, cloning only those parts not already included
@@ -733,19 +738,12 @@ identityHash
 	<primitive: 75>
 	^self primitiveFailed!
 
-ifNil: aBlock
-	"If the receiver is the nil object, then answer the result of evaluating
-	the <niladicValuable>, aBlock, otherwise answer the receiver."
+ifNil: nilBlock 
+	"If the receiver is the nil object, then answer the result of evaluating the
+	<niladicValuable>, nilBlock, otherwise answer the receiver."
 
-	"Implementation Note: This message is normally inlined by the compiler and so
-	is never sent unless #perform'd. The inline form of the bytecodes is:
-
-			dup
-			jmp ifNotNil @notNil
-			pop
-			[...]
-		@notNil
-	"
+	"Implementation Note: This message is normally inlined by the compiler and so is never sent
+	unless #perform'd."
 
 	^self!
 
@@ -753,52 +751,33 @@ ifNil: nilBlock ifNotNil: notNilBlock
 	"If the receiver is the nil object, then answer the result of evaluating the
 	<niladicValuable>, nilBlock, otherwise answer the result of evaluating the <valuable>,
 	notNilBlock. notNilBlock can be a <niladicValuable> or a <monadicValuable>, in which case it
-	is evaluated with the receiver as its argument, "
+	is evaluated with the receiver as its argument."
 
 	"Implementation Note: This message is normally inlined by the compiler and so is never sent
-	unless #perform'd. The inline form of the bytecodes in the normal case where the notNilBlock
-	is monadic is:
+	unless #perform'd."
 
-			dup
-			jmp ifNotNil @notNil
-			pop
-			[...]
-			jmp @exit
-		@notNil
-			pop'n'store 'value'
-			[:value | ...]
-		@exit	
-	"
+	^notNilBlock cull: self!
 
-	^notNilBlock argumentCount = 1 ifTrue: [notNilBlock value: self] ifFalse: [notNilBlock value]!
-
-ifNotNil: aBlock 
+ifNotNil: notNilBlock 
 	"If the receiver is not the nil object, then answer the result of evaluating the valuable
-	argument, aBlock, otherwise answer nil. aBlock can be a <niladicValuable> or a
-	<monadicValuable>, in which case it is evaluated with the receiver as its argument, "
+	argument, notNilBlock, otherwise answer nil. notNilBlock can be a <niladicValuable> or a
+	<monadicValuable>, in which case it is evaluated with the receiver as its argument."
 
 	"Implementation Note: This message is normally inlined by the compiler and so is never sent
-	unless #perform'd. The inline form of the bytecodes is:
+	unless #perform'd."
 
-			dup
-			jmp ifNil @nil
-			pop'n'store 'value'
-			[:value | ...]
-		@nil
-	"
-
-	^aBlock argumentCount = 1 ifTrue: [aBlock value: self] ifFalse: [aBlock value]!
+	^notNilBlock cull: self!
 
 ifNotNil: notNilBlock ifNil: nilBlock 
 	"If the receiver is the nil object, then answer the result of evaluating the
 	<niladicValuable>, nilBlock, otherwise answer the result of evaluating the <valuable>,
 	notNilBlock. notNilBlock can be a <niladicValuable> or a <monadicValuable>, in which case it
-	is evaluated with the receiver as its argument, "
+	is evaluated with the receiver as its argument."
 
 	"Implementation Note: This message is normally inlined by the compiler and so is never sent
 	unless #perform'd."
 
-	^notNilBlock argumentCount = 1 ifTrue: [notNilBlock value: self] ifFalse: [notNilBlock value]!
+	^notNilBlock cull: self!
 
 initialize
 	"Initialise the receiver following instantiation. The default is to do nothing.
@@ -899,7 +878,7 @@ isKindOf: candidateClass
 	^self class includesBehavior: candidateClass!
 
 isLiteral
-	"Private - Answer whether or not the receiver has a literal representation (probably its
+	"Answer whether or not the receiver has a literal representation (probably its
 	printString) which is directly recognised by the Compiler"
 
 	^false!
@@ -1191,7 +1170,7 @@ removePropertyAt: aSymbol ifAbsent: aBlock
 
 	^self propertyManager removePropertyOf: self at: aSymbol ifAbsent: aBlock.!
 
-resize: anInteger
+resize: anInteger 
 	"Resize the receiver to accomodate anInteger indexable instance variables. If anInteger 
 	is greater than the current size of the receiver, then new, safely initialized, elements are 
 	added to the end of the receiver. If anInteger is less that the current size of the receiver, 
@@ -1206,10 +1185,12 @@ resize: anInteger
 
 	Primitive failure reason:
 		0 -	anInteger is not a positive SmallInteger
-		1 -	the receiver is not of an indexable (variable sized) class."
+		1 -	the receiver is not of an indexable (variable sized) class.
+		2 -	the receiver is immutable."
 
 	| answer |
 	<primitive: 101>
+	self isImmutable ifTrue: [Processor constWriteSignal signalWith: self].
 	answer := self class new: anInteger.
 	1 to: anInteger do: [:i | answer at: i put: (self at: i)].
 	self become: answer!
@@ -1507,6 +1488,7 @@ yourself
 
 	^self
 ! !
+!Object categoriesFor: #??!converting!public! !
 !Object categoriesFor: #_deepCopy:!copying!private! !
 !Object categoriesFor: #_deepenShallowCopy:trail:!copying!private! !
 !Object categoriesFor: #~~!comparing!public! !
@@ -1586,7 +1568,7 @@ yourself
 !Object categoriesFor: #isIndexable!public!testing! !
 !Object categoriesFor: #isInteger!public!testing! !
 !Object categoriesFor: #isKindOf:!public!testing! !
-!Object categoriesFor: #isLiteral!private!testing! !
+!Object categoriesFor: #isLiteral!public!testing! !
 !Object categoriesFor: #isMemberOf:!public!testing! !
 !Object categoriesFor: #isNil!public!testing! !
 !Object categoriesFor: #isNumber!public!testing! !

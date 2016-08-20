@@ -1,7 +1,7 @@
 "Filed out from Dolphin Smalltalk 7"!
 
 PermanentLibrary subclass: #VMLibrary
-	instanceVariableNames: 'wndProc dlgProc genericCallback vtable specialSelectorStart '
+	instanceVariableNames: 'wndProc dlgProc genericCallback vtable specialSelectorStart'
 	classVariableNames: 'Registry RegistryKeys'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -168,6 +168,11 @@ dump: msgString path: pathString stackDepth: slotsInteger walkbackDepth: framesI
 	^self invalidCall
 !
 
+emptyBlock
+	"Private - Answer the singleton empty clean block instance the the compiler installs into methods with empty zero-arg blocks as a space saving optimization."
+
+	^self registry at: 7!
+
 errorIntegerMoreThan32Bits: anInteger
 	"Private - Raise an exception to the effect that anInteger cannot be represented
 	as a 32-bit two's complement integer (it's too 'large')."
@@ -269,6 +274,14 @@ isSlowMachine
 "
 	VMLibrary default isSlowMachine
 "!
+
+isUserBreakRequested
+	"Private - Answer whether the user has pressed the break key sequence. The key sequence is
+	configurable through the Development System option 'interruptHotKey', the default being
+	set by SmalltalkSystem>>#initialize."
+
+	<cdecl: bool IsUserBreakRequested>
+	^self invalidCall!
 
 isWindows10OrGreater
 	<stdcall: bool IsWindows10OrGreater>
@@ -376,7 +389,7 @@ onStartup
 	THIS MUST BE DONE FIRST."
 
 	handle := Registry at: 122.
-	specialSelectorStart :=  RegistryKeys at: #arithmeticSelectors.
+	specialSelectorStart := RegistryKeys at: #arithmeticSelectors.
 	wndProc := dlgProc := vtable := genericCallback := nil!
 
 primRegistryAt:  anInteger put: anObject
@@ -410,12 +423,12 @@ registry
 
 	^Registry!
 
-registryAt: aSymbol
+registryAt: aSymbol 
 	"Private - Answer the VM registered object with the name, aSymbol."
 
 	^Registry at: (RegistryKeys at: aSymbol)!
 
-registryAt: aSymbol put: anObject
+registryAt: aSymbol put: anObject 
 	"Private - Register the argument, anObject, as the VM registered object with the name,
 	aSymbol."
 
@@ -491,9 +504,9 @@ unlockVM: productId expireAfter: months flags: flags
 unregisterObject: anObject 
 	| i |
 	i := self registry identityIndexOf: anObject.
-	i > 0 ifTrue: [
-		Notification signal: 'Unregistering VM ref ', anObject printString.
-		self primRegistryAt: i put: nil]!
+	i > 0 ifFalse: [^self].
+	Notification signal: 'Unregistering VM ref ' , anObject printString.
+	self primRegistryAt: i put: nil!
 
 unsignedFromSigned: anInteger
 	"Private - Answer a 32-bit unsigned integer value instantiated from the signed 32-bit integer
@@ -527,6 +540,7 @@ versionFormatString
 !VMLibrary categoriesFor: #defaultProductDetails!accessing!private! !
 !VMLibrary categoriesFor: #displayDesktopMessage:!operations!private! !
 !VMLibrary categoriesFor: #dump:path:stackDepth:walkbackDepth:!exceptions!private! !
+!VMLibrary categoriesFor: #emptyBlock!accessing-handles!private! !
 !VMLibrary categoriesFor: #errorIntegerMoreThan32Bits:!exceptions!private! !
 !VMLibrary categoriesFor: #fullVersion!accessing-version!public! !
 !VMLibrary categoriesFor: #getDlgProc!accessing-callbacks!private! !
@@ -538,6 +552,7 @@ versionFormatString
 !VMLibrary categoriesFor: #highBit:!arithmetic!public! !
 !VMLibrary categoriesFor: #indexOfSpecialSelector:ifAbsent:!accessing-registry!private! !
 !VMLibrary categoriesFor: #isSlowMachine!environment!public! !
+!VMLibrary categoriesFor: #isUserBreakRequested!accessing!helpers!private! !
 !VMLibrary categoriesFor: #isWindows10OrGreater!public!win32 functions-version helpers! !
 !VMLibrary categoriesFor: #isWindows7OrGreater!public!win32 functions-version helpers! !
 !VMLibrary categoriesFor: #isWindows7SP1OrGreater!public!win32 functions-version helpers! !
@@ -584,6 +599,13 @@ fileName
 
 	^self shouldNotImplement!
 
+hasBytecodeRepresentation: anObject
+	"Private - Answer whether the specified object has a special instruction or instructions that when
+	executed will push an identical object on the on the stack, e.g. nil, true, false,
+	SmallIntegers, Characters."
+
+	^anObject isImmediate or: [anObject isNil or: [anObject == true or: [anObject == false]]]!
+
 initialize
 	"Private - Initialize the receiver's class variables - see class comment for further details.
 
@@ -592,7 +614,7 @@ initialize
 
 	"Registry := DO NOT ASSIGN ME."
 
-	RegistryKeys := (IdentityDictionary new)
+	##(RegistryKeys := (IdentityDictionary new)
 				at: #Smalltalk put: 9;
 				at: #Processor put: 10;
 				at: #arithmeticSelectors put: 16;
@@ -641,6 +663,7 @@ initialize
 				at: #IDispatch put: 128;
 				at: #ImageVersionMajor put: 129;
 				at: #ImageVersionMinor put: 130;
+				at: #interruptHotKey put: 131;
 				at: #CRTHandle put: 132;
 				at: #MemoryManager put: 133;
 				at: #BYTE put: 134;
@@ -659,8 +682,9 @@ initialize
 				at: #LARGE_INTEGER put: 147;
 				at: #UINT_PTR put: 148;
 				at: #INT_PTR put: 149;
+				isImmutable: true;
 				shrink;
-				yourself!
+				yourself)!
 
 maxBlockNesting
 	^VMConstants.MaxBlockNesting!
@@ -684,6 +708,7 @@ registryKeys
 
 	^RegistryKeys! !
 !VMLibrary class categoriesFor: #fileName!constants!public! !
+!VMLibrary class categoriesFor: #hasBytecodeRepresentation:!helpers!private! !
 !VMLibrary class categoriesFor: #initialize!development!initializing!private! !
 !VMLibrary class categoriesFor: #maxBlockNesting!limits!public! !
 !VMLibrary class categoriesFor: #maxLiterals!limits!public! !

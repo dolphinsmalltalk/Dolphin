@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #MethodProtocol
 	instanceVariableNames: 'name comment selectors flags '
@@ -145,9 +145,10 @@ attributes
 attributes: attributes
 	"Private - Set the attributes of the receiver to those named by the <Array> of <Symbol>s, attributes."
 
-	(self attributes asSet equals: attributes asSet) ifFalse: [
-		flags := 0.
-		attributes do: [:e | self perform: e]]!
+	self attributes asSet = attributes asSet
+		ifFalse: 
+			[flags := 0.
+			attributes do: [:e | self perform: e]]!
 
 baseBehaviors
 	"Answer a <collection> of all the <ClassDescription> objects which

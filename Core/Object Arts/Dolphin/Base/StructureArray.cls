@@ -67,23 +67,6 @@ packing
 
 	^elementSpacing!
 
-rawDo: operation 
-	"Private - Evaluate the <dyadicValuable>, operation, for each element of the receiver
-	between the specified, inclusive, <integer> indices with the element and its index as
-	respectively the second and first arguments. No bounds checking is performed. "
-
-	"Implementation Note: Override for improved performance (reduction of address calculations).
-	By overriding this one method, we improve the performance of all enumerators."
-
-	| address spacing elem |
-	spacing := self packing.
-	address := self base.
-	elem := elementClass newPointer.
-	self length timesRepeat: 
-			[elem initializeAtAddress: address.
-			operation value: elem.
-			address := address + spacing]!
-
 uncheckedAt: anInteger put: anObject 
 	"Private - Replace the element of the receiver at the specified <integer> index
 	with the <Object> argument. No bounds checks are performed on the subscript."
@@ -122,7 +105,6 @@ with: otherCollection do: operation
 !StructureArray categoriesFor: #initialize!initializing!private! !
 !StructureArray categoriesFor: #initializePointer!initializing!private! !
 !StructureArray categoriesFor: #packing!constants!private! !
-!StructureArray categoriesFor: #rawDo:!enumerating!private! !
 !StructureArray categoriesFor: #uncheckedAt:put:!accessing!private! !
 !StructureArray categoriesFor: #with:do:!enumerating!private! !
 

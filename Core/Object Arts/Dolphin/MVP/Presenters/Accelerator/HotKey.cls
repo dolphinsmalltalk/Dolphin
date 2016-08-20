@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ValueConvertingControlView subclass: #HotKey
 	instanceVariableNames: 'invalidCombinationsRule defaultKeyRule'
@@ -22,15 +22,13 @@ currentModifiers
 	to the current keyboard state. Note that this does NOT bitOr: in either
 	HOTKEYF_EXT or the current default mask."
 
-	| mask kb |
+	| kb |
 	kb := Keyboard default.
-	mask := 0.
-	(Array 
-		with: VK_SHIFT->HOTKEYF_SHIFT 
-		with: VK_CONTROL->HOTKEYF_CONTROL 
-		with: VK_MENU->HOTKEYF_ALT) do: [:a |
-			(kb isKeyDown: a key) ifTrue: [mask := mask bitOr: a value]].
-	^mask!
+	^(Array 
+		with: VK_SHIFT -> HOTKEYF_SHIFT
+		with: VK_CONTROL -> HOTKEYF_CONTROL
+		with: VK_MENU -> HOTKEYF_ALT) inject: 0
+			into: [:mask :each | (kb isKeyDown: each key) ifTrue: [mask bitOr: each value] ifFalse: [mask]]!
 
 defaultExtent
 	"Private - Answer the default size of the receiver. This is used only to
@@ -53,22 +51,17 @@ defaultKeyMask: anInteger
 displayValue
 	"Private - Answer an <integer> representation of the current hot key."
 
-	^self getHotKey!
+	^(self 
+		sendMessage: HKM_GETHOTKEY
+		wParam: 0
+		lpParam: 0) bitAnd: 16rFFFF!
 
 displayValue: anInteger 
 	"Private - Set the hot-key of the receiver to the specified <integer> hot-key code."
 
 	| code |
-	code := anInteger isNil ifTrue: [0] ifFalse: [anInteger].
+	code := anInteger isNil ifTrue: [0] ifFalse: [anInteger bitAnd: 16rFFFF].
 	self setHotKey: (code bitAnd: 16rFF) modifiers: (code bitShift: -8)!
-
-getHotKey
-	"Private - Answer the virtual key code and its modifier."
-
-	^self
-		sendMessage: HKM_GETHOTKEY
-		wParam: 0
-		lpParam: 0!
 
 initialize
 	"Private - Initialise the new receiver."
@@ -167,7 +160,6 @@ wmSysKeyUp: message wParam: wParam lParam: lParam
 !HotKey categoriesFor: #defaultKeyMask:!accessing!public! !
 !HotKey categoriesFor: #displayValue!private!updating! !
 !HotKey categoriesFor: #displayValue:!private!updating! !
-!HotKey categoriesFor: #getHotKey!accessing!private! !
 !HotKey categoriesFor: #initialize!initializing!private! !
 !HotKey categoriesFor: #invalidCombinationsMask!accessing!public! !
 !HotKey categoriesFor: #invalidCombinationsMask:!accessing!public! !

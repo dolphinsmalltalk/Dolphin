@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ListPresenter subclass: #MethodBrowser
 	instanceVariableNames: 'methodsPresenter sourcePresenter filter searchEnvironment refactoringTool versionModel'
@@ -1043,9 +1043,12 @@ togglePrivate
 				ifFalse: [self systemModel privatizeMethod: method]]!
 
 updateMethodVersion
+	| sccs |
+	sccs := self sourceControl.
+	sccs isConnected ifFalse: [^self].
 	
-	[versionModel value: (self selectedMethod isNil 
-				ifFalse: [self sourceControl getVersionInfoFor: self selectedMethod])] 
+	[versionModel
+		value: (self selectedMethod isNil ifFalse: [sccs getVersionInfoFor: self selectedMethod])]
 			forkAt: Processor userBackgroundPriority!
 
 versionModel

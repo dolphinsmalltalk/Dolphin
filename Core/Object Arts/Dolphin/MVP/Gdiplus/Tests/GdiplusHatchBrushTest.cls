@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 GdiplusTests subclass: #GdiplusHatchBrushTest
 	instanceVariableNames: ''
@@ -18,10 +18,6 @@ setSampleDiagCross
 
 setUp
 	self setSampleDiagCross!
-
-tearDown
-	super tearDown.
-	model notNil ifTrue: [model free]!
 
 testClone
 	"force realize"
@@ -46,7 +42,6 @@ testFillingCrossDiagonal
 	self assert: (bitmap pixelAt: 0 @ 0) ~= (bitmap pixelAt: 1 @ 0)! !
 !GdiplusHatchBrushTest categoriesFor: #setSampleDiagCross!public! !
 !GdiplusHatchBrushTest categoriesFor: #setUp!public! !
-!GdiplusHatchBrushTest categoriesFor: #tearDown!public!setup! !
 !GdiplusHatchBrushTest categoriesFor: #testClone!public!unit tests! !
 !GdiplusHatchBrushTest categoriesFor: #testConstructors!public! !
 !GdiplusHatchBrushTest categoriesFor: #testFillingCrossDiagonal!public!unit tests! !

@@ -53,66 +53,13 @@ buildNestedBlocks: nesting
 	nesting timesRepeat: [source nextPutAll: '] value'].
 	^source contents!
 
-buildNestedBlocks2: nesting 
-	| source |
-	source := String writeStream.
-	source
-		nextPutAll: '| t0 | t0 := ';
-		display: 3 factorial;
-		nextPutAll: '. '.
-	"We'll need to skip a few levels, or there will be too many temps"
-	2 to: 3
-		do: 
-			[:each | 
-			source
-				nextPutAll: 't0 := ["';
-				display: each;
-				nextPutAll: '" '].
-	4 to: nesting
-		do: 
-			[:each | 
-			source
-				nextPutAll: '[|t';
-				display: each;
-				nextPutAll: '| t';
-				display: each;
-				nextPutAll: ' := ';
-				display: each;
-				nextPutAll: '. t0 := t';
-				display: each;
-				nextPutAll: ' := '].
-	"Note that the optimized block itself is not counted in the depth"
-	source
-		display: nesting + 1;
-		nextPutAll: ' ifNotNil: [:t';
-		display: nesting + 1;
-		nextPutAll: ' | t0*'.
-	(4 to: nesting) do: 
-			[:each | 
-			"Must assign to each temp, otherwise it will just be copied"
-			source
-				nextPutAll: '(t';
-				print: each;
-				nextPutAll: ':= ';
-				nextPut: $t;
-				print: each;
-				nextPutAll: '*1)';
-				nextPut: $*].
-	source
-		nextPut: $t;
-		display: nesting + 1;
-		nextPutAll: ']'.
-	nesting - 1 timesRepeat: [source nextPutAll: '] value'].
-	^source contents!
-
-checkCompileError: ex range: anInterval code: anInteger message: msgFormat line: lineInteger source: aString 
+checkCompileError: ex range: anInterval code: anInteger line: lineInteger source: aString
 	^ex errorCode = anInteger and: 
-			[((anInterval stop isNil and: [ex range start = anInterval start]) or: [ex range = anInterval]) 
-				and: 
+			[((anInterval stop isNil and: [ex range start = anInterval start]) or: [ex range = anInterval]) and: 
 					[(lineInteger < 0 or: [ex line < 0 or: [ex line = lineInteger]]) and: 
 							[| msgString |
-							msgString := msgFormat 
-										expandMacrosWithArguments: (Array with: (aString copyFrom: ex range start to: ex range stop)) 
+							msgString := (self errorFormats at: anInteger)
+										expandMacrosWithArguments: (Array with: (aString copyFrom: ex range start to: ex range stop))
 												, ex extras.
 							ex errorMessage = msgString]]]!
 
@@ -147,17 +94,13 @@ getTestMethod: aSymbol
 		isImmutable: true.	"The method has not actually changed, so it is inappropriate to issue a #methodUpdated: event"
 	^method!
 
-isValidExpression: aString 
-	[self parseExpression: aString] on: self compilationErrorClass do: [:ex | self traceException: ex source: aString. ^false].
-	^true!
-
-lexicalError: aString range: anInterval line: aSmallInteger code: anInteger 
-	self 
+lexicalError: aString range: anInterval line: lineInteger code: codeInteger
+	self
 		parseExprError: aString
+		in: UndefinedObject
 		range: anInterval
-		line: aSmallInteger
-		code: anInteger
-		message: (self errorFormats at: anInteger)!
+		line: lineInteger
+		code: codeInteger!
 
 maxLiterals
 	^VMConstants.MaxLiterals!
@@ -166,52 +109,51 @@ parseError: each
 	self parserClass parseExpression: each first onError: [:string :pos | ^self assert: pos = each last].
 	self error: 'Parser didn''t fail'!
 
-parseExprError: aString range: anInterval line: lineInteger code: anInteger 
-	self 
-		parseExprError: aString
-		range: anInterval
-		line: lineInteger
-		code: anInteger
-		message: (self errorFormats at: anInteger)!
-
-parseExprError: aString range: anInterval line: lineInteger code: anInteger message: msgString 
-	self 
-		should: [[self parseExpression: aString] on: self compilationWarningClass do: [:ex | ex resume]]
+parseExprError: aString in: aClass range: anInterval line: lineInteger code: anInteger
+	self
+		should: 
+			[[self parseExpression: aString in: aClass] on: self compilationWarningClass do: [:ex | ex resume]]
 		raise: self compilationErrorClass
 		matching: 
-			[:ex | 
+			[:ex |
 			self traceException: ex source: aString.
-			self 
+			self
 				checkCompileError: ex
 				range: anInterval
 				code: anInteger
-				message: msgString
 				line: lineInteger
 				source: aString]!
+
+parseExprError: aString range: anInterval line: lineInteger code: anInteger
+	self
+		parseExprError: aString
+		in: self class
+		range: anInterval
+		line: lineInteger
+		code: anInteger!
 
 parseExpression: aString 
 	^self parseExpression: aString in: self class!
 
-parseExpression: aString in: anObject 
+parseExpression: aString in: aClass
 	^self subclassResponsibility!
 
 parseMethod: aString in: aClass 
 	^self subclassResponsibility!
 
-parseMethod: aString notificationClass: notificationClass in: aClass range: anInterval code: anInteger message: msgFormat 
+parseMethod: aString notificationClass: notificationClass in: aClass range: anInterval code: anInteger
 	| result |
-	self 
+	self
 		should: [result := self parseMethod: aString in: aClass]
 		raise: notificationClass
 		matching: 
-			[:ex | 
+			[:ex |
 			"Useful for debugging to know what the notification actually was"
 			self traceException: ex source: aString.
-			self 
+			self
 				checkCompileError: ex
 				range: anInterval
 				code: anInteger
-				message: msgFormat
 				line: -1
 				source: aString]!
 
@@ -222,32 +164,21 @@ parseMethodError: aString code: anInteger range: anInterval
 		range: anInterval
 		code: anInteger!
 
-parseMethodError: aString in: aClass range: anInterval code: anInteger 
-	self 
+parseMethodError: aString in: aClass range: anInterval code: anInteger
+	self
 		parseMethod: aString
 		notificationClass: CompilerErrorNotification
 		in: aClass
 		range: anInterval
-		code: anInteger
-		message: (self errorFormats at: anInteger)!
+		code: anInteger!
 
-parseMethodError: aString in: aClass range: anInterval code: anInteger message: msgString 
-	self 
-		parseMethod: aString
-		notificationClass: self compilationErrorClass
-		in: aClass
-		range: anInterval
-		code: anInteger
-		message: msgString!
-
-parseMethodInfo: aString in: aClass range: anInterval code: anInteger 
-	self 
+parseMethodInfo: aString in: aClass range: anInterval code: anInteger
+	self
 		parseMethod: aString
 		notificationClass: CompilerInfoNotification
 		in: aClass
 		range: anInterval
-		code: anInteger
-		message: (self errorFormats at: anInteger)!
+		code: anInteger!
 
 parseMethodInfo: aSymbol rangeBlock: aMonadicValuable code: anInteger 
 	| text method range |
@@ -260,23 +191,21 @@ parseMethodInfo: aSymbol rangeBlock: aMonadicValuable code: anInteger
 		range: range
 		code: anInteger!
 
-parseMethodWarning: aString in: aClass range: anInterval code: anInteger 
-	self 
+parseMethodWarning: aString in: aClass range: anInterval code: anInteger
+	self
 		parseMethod: aString
 		notificationClass: CompilerWarningNotification
 		in: aClass
 		range: anInterval
-		code: anInteger
-		message: (self errorFormats at: anInteger)!
+		code: anInteger!
 
-parseMethodWarning: source in: aClass range: anInterval code: code extra: each 
-	^self 
+parseMethodWarning: source in: aClass range: anInterval code: anInteger extra: anObject
+	^self
 		parseMethod: source
 		notificationClass: CompilerWarningNotification
 		in: aClass
 		range: anInterval
-		code: code
-		message: ((self errorFormats at: code) expandMacrosWith: each)!
+		code: anInteger!
 
 parseMethodWarning: aString range: anInterval code: anInteger 
 	^self 
@@ -300,6 +229,13 @@ restrictedSelectors
 	^##(#(#== #and: #or: #ifTrue: #ifTrue:ifFalse: #ifFalse: #ifFalse:ifTrue: #timesRepeat: #to:do: #to:by:do: #yourself #basicAt: #basicAt:put: #basicNew: #basicClass #basicSize #ifNil: #ifNotNil: #ifNil:ifNotNil: #ifNotNil:ifNil:) 
 		asIdentitySet)!
 
+tempWarningRangeIn: aString
+	| mark |
+	mark := aString indexOf: $@.
+	self assert: mark >= 1
+		description: 'Inconclusive: Test method source does not contain expected marker'.
+	^mark + 2 to: (aString lastIndexOf: $@) - 2!
+
 testByteArraysInLiteralArrays
 	"#980"
 
@@ -317,6 +253,23 @@ testCompileTimeExpressions
 				range: (2 to: each size)
 				line: 1
 				code: CErrStaticExprNotClosed]!
+
+testErrorsArrayNotClosed
+	| text start |
+	self
+		parseExprError: '#(() 1 a ''a'' 1.0 &'
+		range: (1 to: 18)
+		line: 1
+		code: CErrArrayNotClosed.
+	text := '#(() -
+		1
+		 (a ''a'' 1.0 &'.
+	start := text lastIndexOf: $(.
+	self
+		parseExprError: text
+		range: (start to: text size)
+		line: 3
+		code: CErrArrayNotClosed!
 
 testErrorsAssignBlockArgument
 	| text i |
@@ -352,13 +305,11 @@ testErrorsAssignClass
 testErrorsAssignConstant
 	| source |
 	source := 'x CErrAssignConstant := 100'.
-	self 
+	self
 		parseMethodError: source
 		in: self class
 		range: (3 to: source size)
-		code: CErrAssignConstant
-		message: ((self errorFormats at: CErrAssignConstant) expandMacrosWith: 'CErrAssignConstant'
-				with: 'CErrAssignConstant')!
+		code: CErrAssignConstant!
 
 testErrorsAssignMethodArgument
 	| source start |
@@ -398,10 +349,6 @@ testErrorsBadCascade
 		range: (mark + 1 to: mark)
 		line: 1
 		code: CErrExpectMessage!
-
-testErrorsBadContext
-	"This error is untested because it is difficult to produce - the compiler will only raise it if the #allInstVarNames implementation
-	on the class returns an invalid array - this would require building a special class for this purpose, and I don't think it is worth it."!
 
 testErrorsBadExtCallTypes
 	"keyword, but unrecognised"
@@ -490,6 +437,20 @@ testErrorsBadSuper
 		line: 1
 		code: CErrExpectMessage!
 
+testErrorsBadTokenInArray
+	"Bad token in array"
+
+	| text start |
+	text := '
+		"Newline in ...
+		... comment" #(() 1 a ''a'' 1.0 :)'.
+	start := text indexOf: $:.
+	self
+		parseExprError: text
+		range: (start to: start)
+		line: 3
+		code: CErrBadTokenInArray!
+
 testErrorsBlockArgNameMissing
 	| source mark |
 	source := '[: ] '.
@@ -513,44 +474,6 @@ testErrorsBlockArgNameMissing
 		range: (mark to: mark + 1)
 		line: 1
 		code: CErrExpectVariable!
-
-testErrorsBlockNestingTooDeep
-	"This test is not really valid - exploits bug in the compiler such that it reduces the literal limit permanently for
-	external library calls (only up to 256 literals can be ref'd from the descriptor."
-
-	"Small test of the test first"
-
-	| mark expected nesting source maxNest |
-	nesting := 10.
-	source := self buildNestedBlocks: nesting.
-	expected := (nesting + 1) factorial.
-	self assert: (self evaluateExpression: source) = expected.
-	"Now 2 under max"
-	maxNest := VMConstants.MaxBlockNesting.
-	nesting := maxNest - 2.
-	source := self buildNestedBlocks: nesting.
-	expected := (nesting + 1) factorial.
-	self assert: (self evaluateExpression: source) = expected.
-	"Now 1 under max"
-	nesting := maxNest - 1.
-	source := self buildNestedBlocks: nesting.
-	expected := (nesting + 1) factorial.
-	self assert: (self evaluateExpression: source) = expected.
-	"max nesting"
-	maxNest := VMConstants.MaxBlockNesting.
-	nesting := maxNest.
-	source := self buildNestedBlocks: nesting.
-	expected := (nesting + 1) factorial.
-	self assert: (self evaluateExpression: source) = expected.
-	"1 over max - should fail"
-	nesting := maxNest + 1.
-	source := self buildNestedBlocks: nesting.
-	mark := (source indexOfSubCollection: nesting displayString) - 3.
-	self 
-		parseExprError: source
-		range: (mark to: nil)
-		line: 1
-		code: CErrBlockNestingTooDeep!
 
 testErrorsBlockNotClosed
 	"Test zero arg form now accepted by D6 compiler"
@@ -611,6 +534,46 @@ testErrorsBlockTempsNotClosed
 		range: (2 to: 4)
 		line: 1
 		code: CErrBlockArgListNotClosed!
+
+testErrorsDuplicateArg
+	| source start |
+	source := '[:arg1 :arg1 | ^arg1]'.
+	start := (source lastIndexOf: $:) + 1.
+	self
+		parseExprError: source
+		range: (start to: start + 3)
+		line: 1
+		code: CErrDuplicateArgName.
+	source := 'a: arg1 b: arg2 c: arg1 ^arg1'.
+	start := (source lastIndexOf: $:) + 2.
+	self
+		parseMethodError: source
+		code: CErrDuplicateArgName
+		range: (start to: start + 3)!
+
+testErrorsDuplicateTemp
+	| source start |
+	source := '[ | arg1 arg1 | ]'.
+	start := source lastIndexOf: $a.
+	self
+		parseExprError: source
+		range: (start to: start + 3)
+		line: 1
+		code: CErrDuplicateTempName.
+	source := 'a | arg1 arg2 arg1 |'.
+	start := source lastIndexOf: $a.
+	self
+		parseMethodError: source
+		code: CErrDuplicateTempName
+		range: (start to: start + 3)!
+
+testErrorsExpectFnName
+	| source |
+	source := 'blah <cdecl: void 1.5>'.
+	self
+		parseMethodError: source
+		code: CErrExpectFnName
+		range: ((source indexOf: $1) to: (source lastIndexOf: $>) - 1)!
 
 testErrorsExpectMessage
 	| source |
@@ -793,16 +756,14 @@ testErrorsIfNotNil
 
 testErrorsIllegalByteArrays
 	#(#('#[1 1234 4]' 5 8) #('#[1 1.0]' 5 7) #('#[1 a]' 5 5) #('#[1 10000000000 2]' 5 15)) do: 
-			[:each | 
-			self 
+			[:each |
+			self
 				parseExprError: each first
 				range: (each second to: each third)
 				line: 1
-				code: CErrBadValueInByteArray
-				message: ('illegal value ''<1s>'' in byte array' 
-						expandMacrosWith: (each first copyFrom: each second to: each third))].
-	self 
-		lexicalError: '#[1 2'
+				code: CErrBadValueInByteArray].
+	self
+		parseExprError: '#[1 2'
 		range: (1 to: 5)
 		line: 1
 		code: CErrByteArrayNotClosed!
@@ -843,91 +804,67 @@ testErrorsInvalidExpressionStart
 		line: 1
 		code: CErrInvalExprStart!
 
-testErrorsLexical
-	"Non-ascii char"
-
-	"eof when expecting character const"
-	| text start badChar |
-	self 
-		parseExprError: '$'
-		range: (1 to: 1)
-		line: 1
-		code: LErrExpectChar
-		message: 'character expected'.
+testErrorsLexicalBadChar
 	"VW binding char"
+
+	| text start badChar |
 	text := '"A VW binding"
 		{Smalltalk.Object}'.
 	badChar := ${.
 	start := text indexOf: badChar.
-	self 
-		parseExprError: text
+	self
+		lexicalError: text
 		range: (start to: start)
 		line: 2
-		code: LErrBadChar
-		message: ((self errorFormats at: LErrBadChar) expandMacrosWith: badChar).
+		code: LErrBadChar.
 	"VW binding char in const expression"
-	self 
-		parseExprError: ('#(<1s>)' expandMacrosWith: badChar)
+	self
+		lexicalError: ('#(<1s>)' expandMacrosWith: badChar)
 		range: (3 to: 3)
 		line: 1
-		code: LErrBadChar
-		message: ((self errorFormats at: LErrBadChar) expandMacrosWith: badChar).
-	"Bad token in array"
-	text := '
-		"Newline in ...
-		... comment" #(() 1 a ''a'' 1.0 :)'.
-	start := text indexOf: $:.
-	self 
-		parseExprError: text
-		range: (start to: start)
-		line: 3
-		code: CErrBadTokenInArray
-		message: 'illegal text '':'' in literal array'.
-	"Unclosed comment"
-	self 
+		code: LErrBadChar.
+	"Non-ascii letters"
+	(Array with: (Character value: 128)) , ((Character byteCharacterSet select: [:each | each isLetter])
+				difference: 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz')
+		do: 
+			[:each |
+			self
+				lexicalError: '#(' , each asString
+				range: (3 to: 3)
+				line: 1
+				code: LErrBadChar]!
+
+testErrorsLexicalCommentNotClosed
+	self
 		lexicalError: '"blah blah ...'
 		range: (1 to: 14)
 		line: 1
-		code: LErrCommentNotClosed.
-	"Unclosed string"
-	self 
-		lexicalError: '''blah blah ...'
-		range: (1 to: 14)
-		line: 1
-		code: LErrStringNotClosed.
-	"Unclosed array"
-	self 
-		lexicalError: '#(() 1 a ''a'' 1.0 &'
-		range: (1 to: 18)
-		line: 1
-		code: CErrArrayNotClosed.
-	"Deliberately have a couple of newlines in the array to check line counting works when newlines appear in literal arrays"
-	text := '#(() -
-		1
-		 (a ''a'' 1.0 &'.
-	start := text lastIndexOf: $(.
-	self 
-		lexicalError: text
-		range: (start to: text size)
-		line: 3
-		code: CErrArrayNotClosed.
+		code: LErrCommentNotClosed!
+
+testErrorsLexicalExpectChar
+	#('$' '$\x' '$\xG' '$\x100' '$\xFFFFFFFF') do: 
+			[:each |
+			self
+				parseExprError: each
+				range: (1 to: each size)
+				line: 1
+				code: LErrExpectChar]!
+
+testErrorsLexicalExpectConst
 	"Invalid symbol"
-	self 
+
+	self
 		lexicalError: '1 + #23'
 		range: (5 to: 6)
 		line: 1
-		code: LErrExpectConst.
-	(Array with: (Character value: 128)) 
-		, ((Character byteCharacterSet select: [:each | each isLetter]) 
-				difference: 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz') 
-			do: 
-				[:each | 
-				self 
-					parseExprError: '#(' , each asString
-					range: (3 to: 3)
-					line: 1
-					code: LErrBadChar
-					message: ((self errorFormats at: LErrBadChar) expandMacrosWith: each)]!
+		code: LErrExpectConst!
+
+testErrorsLexicalStringNotClosed
+	self
+		lexicalError: '''blah blah ...'
+		range: (1 to: 14)
+		line: 1
+		code: LErrStringNotClosed!
 
 testErrorsLiteralArray
 	| text start mark |
@@ -1164,13 +1101,13 @@ testErrorsSupersendFromObject
 	source := 'blah ^super blah'.
 	mark := source indexOf: $^.
 	(Array with: Object with: ProtoObject) do: 
-			[:each | 
-			self 
+			[:each |
+			self
 				parseMethodError: source
 				in: each
 				range: (mark + 1 to: mark + 5)
-				code: CErrUndeclared
-				message: 'undeclared ''super''']!
+				code: CErrUndeclared"
+				format: 'undeclared ''super'''"]!
 
 testErrorsTempsNotClosed
 	| source mark |
@@ -1514,6 +1451,26 @@ testUnoptimizedLoopsNonMonadicArg
 				range: ((source indexOf: $[) to: (source indexOf: $|)).
 			self]!
 
+testWarningReadBeforeWritten
+	#(#testWarningReadBeforeWrittenMethodTemp #testWarningReadBeforeWrittenBlockTemp #testWarningReadBeforeWrittenFullBlock)
+		do: 
+			[:each |
+			self
+				parseMethodWarning: each
+				rangeBlock: [:source | (source indexOf: $@) + 2 to: (source lastIndexOf: $@) - 2]
+				code: CWarnReadBeforeWritten].
+	^self!
+
+testWarningReadNotWritten
+	#(#testWarningReadNotWrittenMethodTemp #testWarningReadNotWrittenBlockTemp #testWarningReadNotWrittenOptimizedBlockTemp)
+		do: 
+			[:each |
+			self
+				parseMethodWarning: each
+				rangeBlock: [:source | self tempWarningRangeIn: source]
+				code: CWarnReadNotWritten].
+	^self!
+
 testWarningRedefiningArg
 	#(#testWarningRedefiningArgInOptimizedBlock: #testWarningRedefiningMethodArgInBlock: #testWarningRedefiningBlockArgInBlock) 
 		do: 
@@ -1526,6 +1483,20 @@ testWarningRedefiningArg
 					start := (source findString: '| a |') + 2.
 					start to: start]
 				code: CWarnRedefiningArg]!
+
+testWarningRedefiningInstVar
+	#(#testWarningRedefiningInstVarAsArg: #testWarningRedefiningInstVarAsTemp #testWarningRedefiningInstVarAsOptimizedBlockArg #testWarningRedefiningInstVarAsOptimizedBlockTemp #testWarningRedefiningInstVarAsBlockTemp #testWarningRedefiningInstVarAsBlockArg) 
+		do: 
+			[:each | 
+			self 
+				parseMethodWarning: each
+				rangeBlock: 
+					[:source | 
+					| start |
+					start := source findString: 'iv1'.
+					start to: start + 2]
+				code: CWarnRedefiningInstVar].
+	^self!
 
 testWarningRedefiningStatic
 	#(#testWarningRedefiningStaticAsArg: #testWarningRedefiningStaticAsTemp #testWarningRedefiningStaticAsBlockArg #testWarningRedefiningStaticAsBlockTemp) 
@@ -1555,12 +1526,12 @@ testWarningSelfSendNotImplemented
 	| source range |
 	source := 'x ^self blah'.
 	range := (source findString: 'self') to: source size.
-	self 
+	self
 		parseMethodWarning: source
 		in: self class
 		range: range
 		code: CWarnMsgUnimplemented.
-	self 
+	self
 		parseMethodWarning: source
 		in: self class class
 		range: range
@@ -1580,12 +1551,12 @@ testWarningSupersendNotImplemented
 	| source range |
 	source := 'blah ^super blah'.
 	range := (source findString: 'super') to: source size.
-	self 
+	self
 		parseMethodWarning: source
 		in: self class
 		range: range
 		code: CWarnMsgUnimplemented.
-	self 
+	self
 		parseMethodWarning: source
 		in: self class class
 		range: range
@@ -1777,6 +1748,16 @@ testWarningUnreferencedTemp
 					start to: start]
 				code: CWarnUnreferencedTemp]!
 
+testWarningWrittenNotRead
+	#(#testWarningWrittenNotReadMethodTemp #testWarningWrittenNotReadBlockTemp #testWarningWrittenNotReadFullBlock)
+		do: 
+			[:each |
+			self
+				parseMethodWarning: each
+				rangeBlock: [:source | self writtenNotReadRange: source]
+				code: CWarnWrittenNotRead].
+	^self!
+
 traceException: ex source: aString 
 	Transcript
 		print: ex errorCode;
@@ -1786,51 +1767,58 @@ traceException: ex source: aString
 		display: ex description;
 		nextPutAll: ': ';
 		print: (aString copyFrom: ex range start to: ex range stop);
-		cr! !
+		cr!
+
+writtenNotReadRange: aString
+	"The Dolphin compiler and the SmalltalkParser report written-not-read differently; the
+	compiler on the temp decl, the parser on the first dead store."
+
+	^self subclassResponsibility! !
 !AbstractParserErrorTest categoriesFor: #buildNestedBlocks:!helpers!private! !
-!AbstractParserErrorTest categoriesFor: #buildNestedBlocks2:!helpers!private! !
-!AbstractParserErrorTest categoriesFor: #checkCompileError:range:code:message:line:source:!helpers!private! !
+!AbstractParserErrorTest categoriesFor: #checkCompileError:range:code:line:source:!helpers!private! !
 !AbstractParserErrorTest categoriesFor: #compilationErrorClass!constants!private! !
 !AbstractParserErrorTest categoriesFor: #compilationWarningClass!constants!private! !
-!AbstractParserErrorTest categoriesFor: #compileMethod:in:!private!unit tests! !
-!AbstractParserErrorTest categoriesFor: #errorFormats!private!unit tests! !
+!AbstractParserErrorTest categoriesFor: #compileMethod:in:!helpers!private! !
+!AbstractParserErrorTest categoriesFor: #errorFormats!constants!private! !
 !AbstractParserErrorTest categoriesFor: #evaluateExpression:!helpers!private! !
 !AbstractParserErrorTest categoriesFor: #getTestMethod:!helpers!private! !
-!AbstractParserErrorTest categoriesFor: #isValidExpression:!private!unit tests! !
-!AbstractParserErrorTest categoriesFor: #lexicalError:range:line:code:!private!unit tests! !
+!AbstractParserErrorTest categoriesFor: #lexicalError:range:line:code:!helpers!private! !
 !AbstractParserErrorTest categoriesFor: #maxLiterals!constants!private! !
 !AbstractParserErrorTest categoriesFor: #parseError:!helpers!private! !
+!AbstractParserErrorTest categoriesFor: #parseExprError:in:range:line:code:!helpers!private! !
 !AbstractParserErrorTest categoriesFor: #parseExprError:range:line:code:!helpers!private! !
-!AbstractParserErrorTest categoriesFor: #parseExprError:range:line:code:message:!helpers!private! !
 !AbstractParserErrorTest categoriesFor: #parseExpression:!helpers!private! !
 !AbstractParserErrorTest categoriesFor: #parseExpression:in:!parsing!private! !
-!AbstractParserErrorTest categoriesFor: #parseMethod:in:!private!unit tests! !
-!AbstractParserErrorTest categoriesFor: #parseMethod:notificationClass:in:range:code:message:!helpers!private! !
+!AbstractParserErrorTest categoriesFor: #parseMethod:in:!helpers!private! !
+!AbstractParserErrorTest categoriesFor: #parseMethod:notificationClass:in:range:code:!helpers!private! !
 !AbstractParserErrorTest categoriesFor: #parseMethodError:code:range:!helpers!private! !
 !AbstractParserErrorTest categoriesFor: #parseMethodError:in:range:code:!helpers!private! !
-!AbstractParserErrorTest categoriesFor: #parseMethodError:in:range:code:message:!helpers!private! !
 !AbstractParserErrorTest categoriesFor: #parseMethodInfo:in:range:code:!helpers!private! !
 !AbstractParserErrorTest categoriesFor: #parseMethodInfo:rangeBlock:code:!helpers!private! !
 !AbstractParserErrorTest categoriesFor: #parseMethodWarning:in:range:code:!helpers!private! !
-!AbstractParserErrorTest categoriesFor: #parseMethodWarning:in:range:code:extra:!public!unit tests! !
-!AbstractParserErrorTest categoriesFor: #parseMethodWarning:range:code:!accessing!public! !
+!AbstractParserErrorTest categoriesFor: #parseMethodWarning:in:range:code:extra:!helpers!private! !
+!AbstractParserErrorTest categoriesFor: #parseMethodWarning:range:code:!helpers!private! !
 !AbstractParserErrorTest categoriesFor: #parseMethodWarning:rangeBlock:code:!helpers!private! !
 !AbstractParserErrorTest categoriesFor: #restrictedSelectors!constants!private! !
+!AbstractParserErrorTest categoriesFor: #tempWarningRangeIn:!helpers!private! !
 !AbstractParserErrorTest categoriesFor: #testByteArraysInLiteralArrays!public!unit tests! !
 !AbstractParserErrorTest categoriesFor: #testCompileTimeExpressions!public!unit tests! !
+!AbstractParserErrorTest categoriesFor: #testErrorsArrayNotClosed!exceptions!public!unit tests! !
 !AbstractParserErrorTest categoriesFor: #testErrorsAssignBlockArgument!exceptions!public!unit tests! !
 !AbstractParserErrorTest categoriesFor: #testErrorsAssignClass!exceptions!public!unit tests! !
 !AbstractParserErrorTest categoriesFor: #testErrorsAssignConstant!exceptions!public!unit tests! !
 !AbstractParserErrorTest categoriesFor: #testErrorsAssignMethodArgument!public!unit tests! !
 !AbstractParserErrorTest categoriesFor: #testErrorsBadCascade!public!unit tests! !
-!AbstractParserErrorTest categoriesFor: #testErrorsBadContext!public!unit tests! !
 !AbstractParserErrorTest categoriesFor: #testErrorsBadExtCallTypes!public!unit tests! !
 !AbstractParserErrorTest categoriesFor: #testErrorsBadMessagePattern!exceptions!public!unit tests! !
 !AbstractParserErrorTest categoriesFor: #testErrorsBadSuper!public!unit tests! !
+!AbstractParserErrorTest categoriesFor: #testErrorsBadTokenInArray!exceptions!public!unit tests! !
 !AbstractParserErrorTest categoriesFor: #testErrorsBlockArgNameMissing!exceptions!public!unit tests! !
-!AbstractParserErrorTest categoriesFor: #testErrorsBlockNestingTooDeep!public!unit tests! !
 !AbstractParserErrorTest categoriesFor: #testErrorsBlockNotClosed!public!unit tests! !
 !AbstractParserErrorTest categoriesFor: #testErrorsBlockTempsNotClosed!public!unit tests! !
+!AbstractParserErrorTest categoriesFor: #testErrorsDuplicateArg!exceptions!public!unit tests! !
+!AbstractParserErrorTest categoriesFor: #testErrorsDuplicateTemp!exceptions!public!unit tests! !
+!AbstractParserErrorTest categoriesFor: #testErrorsExpectFnName!public!unit tests! !
 !AbstractParserErrorTest categoriesFor: #testErrorsExpectMessage!exceptions!public!unit tests! !
 !AbstractParserErrorTest categoriesFor: #testErrorsExpectVariableName!public!unit tests! !
 !AbstractParserErrorTest categoriesFor: #testErrorsExtArgCountMismatch!public!unit tests! !
@@ -1840,7 +1828,11 @@ traceException: ex source: aString
 !AbstractParserErrorTest categoriesFor: #testErrorsIllegalByteArrays!exceptions!public!unit tests! !
 !AbstractParserErrorTest categoriesFor: #testErrorsIncorrectNumberOfNotNilBlockArgs!public!unit tests! !
 !AbstractParserErrorTest categoriesFor: #testErrorsInvalidExpressionStart!exceptions!public!unit tests! !
-!AbstractParserErrorTest categoriesFor: #testErrorsLexical!exceptions!public!unit tests! !
+!AbstractParserErrorTest categoriesFor: #testErrorsLexicalBadChar!exceptions!public!unit tests! !
+!AbstractParserErrorTest categoriesFor: #testErrorsLexicalCommentNotClosed!exceptions!public!unit tests! !
+!AbstractParserErrorTest categoriesFor: #testErrorsLexicalExpectChar!exceptions!public!unit tests! !
+!AbstractParserErrorTest categoriesFor: #testErrorsLexicalExpectConst!exceptions!public!unit tests! !
+!AbstractParserErrorTest categoriesFor: #testErrorsLexicalStringNotClosed!exceptions!public!unit tests! !
 !AbstractParserErrorTest categoriesFor: #testErrorsLiteralArray!public!unit tests! !
 !AbstractParserErrorTest categoriesFor: #testErrorsLiteralByteArray!public!unit tests! !
 !AbstractParserErrorTest categoriesFor: #testErrorsNegateNonNumber!public!unit tests! !
@@ -1868,7 +1860,10 @@ traceException: ex source: aString
 !AbstractParserErrorTest categoriesFor: #testOverriddenMethodArgumentWarning!public!unit tests! !
 !AbstractParserErrorTest categoriesFor: #testRestrictedSelectors!public!unit tests! !
 !AbstractParserErrorTest categoriesFor: #testUnoptimizedLoopsNonMonadicArg!public!unit tests! !
+!AbstractParserErrorTest categoriesFor: #testWarningReadBeforeWritten!public!unit tests! !
+!AbstractParserErrorTest categoriesFor: #testWarningReadNotWritten!public!unit tests! !
 !AbstractParserErrorTest categoriesFor: #testWarningRedefiningArg!public!unit tests! !
+!AbstractParserErrorTest categoriesFor: #testWarningRedefiningInstVar!public!unit tests! !
 !AbstractParserErrorTest categoriesFor: #testWarningRedefiningStatic!public!unit tests! !
 !AbstractParserErrorTest categoriesFor: #testWarningRedefiningTemp!public!unit tests! !
 !AbstractParserErrorTest categoriesFor: #testWarningSelfSendNotImplemented!exceptions!public!unit tests! !
@@ -1879,7 +1874,9 @@ traceException: ex source: aString
 !AbstractParserErrorTest categoriesFor: #testWarningUnoptimizedLoopsNonNiladicArg!public!unit tests! !
 !AbstractParserErrorTest categoriesFor: #testWarningUnoptimizedLoopsNonNiladicReceiver!public!unit tests! !
 !AbstractParserErrorTest categoriesFor: #testWarningUnreferencedTemp!public!unit tests! !
+!AbstractParserErrorTest categoriesFor: #testWarningWrittenNotRead!public!unit tests! !
 !AbstractParserErrorTest categoriesFor: #traceException:source:!helpers!private! !
+!AbstractParserErrorTest categoriesFor: #writtenNotReadRange:!helpers!private! !
 
 !AbstractParserErrorTest class methodsFor!
 

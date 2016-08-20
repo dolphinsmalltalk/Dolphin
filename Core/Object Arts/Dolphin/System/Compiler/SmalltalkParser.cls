@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #SmalltalkParser
 	instanceVariableNames: 'scanner currentToken nextToken emptyStatements errorBlock methodNode st80Syntax comments methodClass source'
@@ -7,33 +7,31 @@ Object subclass: #SmalltalkParser
 	classInstanceVariableNames: ''!
 SmalltalkParser guid: (GUID fromString: '{F15A9F2F-3A15-47CD-8EF9-0534B6F91C17}')!
 SmalltalkParser comment: 'Instance Variables:
-	scanner		<SmalltalkScanner>
+	scanner		<SmalltalkScanner> performing lexical analysis over the source text
 	currentToken	<StToken>
 	nextToken	<StToken>
 	emptyStatements	<boolean>
-	errorBlock		<dyadicValuable>
-	source		<readableString>
-	methodClass	<Class>|<Metaclass>
+	errorBlock		<dyadicValuable> evaluated when a syntax error is detected.
 	methodNode	<StMethodNode>
+	st80Syntax	<boolean>. If true then certain St80 syntax which is not valid ANSI are permitted, e.g. [:a ] is a valid block.
+	comments		nil | <OrderedCollection> of <Interval>. nil until a comment is encountered for the node being parsed, otherwise a sequence of text ranges of comments parsed so far for that node.
+	methodClass	<Class>|<Metaclass>. The class for which the expression/method is being parsed.
+	source		<readableString>. Source text of the expression/method.
 
 Class Variables:
-	ExternalValueTypes 		<LookupTable>. Maps standard external type names, as recognised by the old Dolphin Compiler to the parameter types to be used for passing by value and by reference.
-	ExternalReferenceTypes	<Array> of <integer>|<Symbol>. Reference types corresponding to the <integer> external value types.
-	ExternalCallingConventions	<Array> of <String>. External calling convention keywords (e.g. ''cdecl:'').
 	MaxPrimIndex		<integer>. Maximum primitive number.
 	MaxVfn			<integer>. Maximum virtual function number.
 
-'!
+Pools:
+	ExtCallArgTypes 		Maps standard external type names, as recognised by the old Dolphin Compiler to the parameter types to be used for passing by value and by reference.
+	SmalltalkParseErrorCodes	Maps compiler error/warning names to their corresponding integer code'!
 !SmalltalkParser categoriesForClass!System-Compiler! !
 !SmalltalkParser methodsFor!
 
 addCommentsTo: aNode 
-	comments isEmpty 
-		ifTrue: 
-			["This simple optimisation saves about 10%"
-			^self].
-	aNode comments: aNode comments , comments.
-	comments := OrderedCollection new!
+	comments isNil ifTrue: [^self].
+	aNode addComments: comments.
+	comments := nil!
 
 assignmentNodeClass
 	^StAssignmentNode!
@@ -86,7 +84,6 @@ externalReferenceTypeFor: anInteger
 	^(ExternalDescriptor referenceTypeFor: anInteger) ifNil: [ExtCallArgLPPVOID]!
 
 initialize
-	comments := OrderedCollection new.
 	emptyStatements := false.
 	"If true then certain St80 syntax which is not valid ANSI are permitted, e.g. [:a ] is a valid block"
 	st80Syntax := false!
@@ -181,7 +178,7 @@ parseBinaryPattern
 	self step.
 	args := Array with: self parseVariableNode.
 	node := self methodNodeClass selectorParts: (Array with: binaryToken) arguments: args.
-	node comments: node comments , args last comments.
+	node addComments: args last comments.
 	args last comments: nil.
 	^node!
 
@@ -500,32 +497,32 @@ parseKeywordPattern
 	args := OrderedCollection new: 2.
 	[currentToken isKeyword] whileTrue: 
 			[| arg |
-			keywords add: currentToken.
+			keywords addLast: currentToken.
 			self step.
 			arg := self parseVariableNode.
-			(self validateArg: arg args: args) ifTrue: [args add: arg]].
+			(self validateArg: arg args: args) ifTrue: [args addLast: arg]].
 	node := self methodNodeClass selectorParts: keywords arguments: args.
 	"Be resilient to the absence of arguments"
-	args isEmpty 
+	args isEmpty
 		ifFalse: 
-			[node comments: node comments , args last comments.
+			[node addComments: args last comments.
 			args last comments: nil].
 	^node!
 
 parseLiteralArray
 	| stream start stop |
 	start := currentToken start.
-	stream := WriteStream on: (Array new: 5).
+	stream := WriteStream on: (Array new: 30).
 	self step.
-	[self atEnd or: [currentToken isSpecial and: [currentToken value = $)]]] 
+	[self atEnd or: [currentToken isSpecial and: [currentToken value = $)]]]
 		whileFalse: [stream nextPut: self parseLiteralArrayObject].
-	(currentToken isSpecial and: [currentToken value == $)]) 
+	(currentToken isSpecial and: [currentToken value == $)])
 		ifFalse: 
 			[self parserError: CErrArrayNotClosed range: (start to: self errorPosition - 1)
 			"Error ignored, no recovery needed as at EOF"].
 	stop := currentToken stop.
 	self step.
-	^self literalArrayNodeClass 
+	^self literalArrayNodeClass
 		startPosition: start
 		contents: stream contents
 		stopPosition: stop
@@ -548,9 +545,9 @@ parseLiteralArrayObject
 parseLiteralByteArray
 	| stream start stop |
 	start := currentToken start.
-	stream := WriteStream on: (Array new: 5).
+	stream := WriteStream on: (Array new: 30).
 	self step.
-	[self atEnd or: [currentToken isSpecial and: [currentToken value = $]]]] 
+	[self atEnd or: [currentToken isSpecial and: [currentToken value == $]]]] 
 		whileFalse: [stream nextPut: self parseLiteralByteArrayObject].
 	(currentToken isSpecial and: [currentToken value == $]]) 
 		ifTrue: [stop := currentToken stop]
@@ -950,10 +947,7 @@ patchNegativeLiteral
 					ifFalse: [^self]].
 	nextToken := currentToken.
 	currentToken := StBinarySelectorToken value: #- start: nextToken start.
-	nextToken value: nextToken value negated.
-	(nextToken isKindOf: StNumberLiteralToken) 
-		ifTrue: [nextToken source: (nextToken source copyFrom: 2 to: nextToken source size)].
-	nextToken start: nextToken start + 1!
+	nextToken forgetNegative!
 
 reportError: anInteger at: posInteger line: lineInteger range: anInterval extras: anArray 
 	| err |
@@ -990,7 +984,10 @@ source
 
 step
 	(currentToken notNil and: [currentToken comments notNil]) 
-		ifTrue: [comments addAll: currentToken comments].
+		ifTrue: 
+			[comments isNil 
+				ifTrue: [comments := currentToken comments copy]
+				ifFalse: [comments addAll: currentToken comments]].
 	nextToken notNil 
 		ifTrue: 
 			[currentToken := nextToken.

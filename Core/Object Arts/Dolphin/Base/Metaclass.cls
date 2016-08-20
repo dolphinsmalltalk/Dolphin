@@ -1,7 +1,7 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ClassDescription subclass: #Metaclass
-	instanceVariableNames: 'instanceClass '
+	instanceVariableNames: 'instanceClass'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -27,13 +27,14 @@ Metaclass has the following instance variables:
 !Metaclass methodsFor!
 
 addToSuper
-	"Private - Add the receiver into its superclasses' subclass collection.
-	Root Metaclasses will have a superclass of Class - we do not put such
-	classes into Class's subclass collection."	
+	"Private - Add the receiver as a subclass of its superclass, but not
+	if a root class."
 
-	superclass ~~ Class
-		ifTrue: [super addToSuper]
-!
+	"Implementation Note: Identify Class as the superclass by name, as if the ClassBuilder is
+	currently mutating Class, the Class variable may temporarily be pointing at the old Class
+	object."
+
+	superclass name ~~ #Class ifTrue: [super addToSuper]!
 
 bindingFor: aString 
 	"Answer a variable binding for the named variable in the scope of this class. 
@@ -149,18 +150,6 @@ removeFromSuper
 		ifTrue: [super removeFromSuper]
 !
 
-setSharedPoolNames: aCollection
-	"Private - Set the <Symbol> names of the shared pool dictionaries that
-	are specified locally in the receiver (pools are inherited in Dolphin)."
-
-	self instanceClass setSharedPoolNames: aCollection
-!
-
-sharedStaticPools
-	"Answer the receiver's shared pools."
-
-	^instanceClass sharedStaticPools!
-
 stbSaveOn: anSTBOutFiler
 	"Save out a binary representation of the receiver to anSTBOutFiler."
 
@@ -182,8 +171,6 @@ stbSaveOn: anSTBOutFiler
 !Metaclass categoriesFor: #printDefinitionOn:!development!private!source filing-class definition! !
 !Metaclass categoriesFor: #removeClassVarName:!class variables!public! !
 !Metaclass categoriesFor: #removeFromSuper!class hierarchy-removing!private! !
-!Metaclass categoriesFor: #setSharedPoolNames:!pool variables!private! !
-!Metaclass categoriesFor: #sharedStaticPools!pool variables!public! !
 !Metaclass categoriesFor: #stbSaveOn:!binary filing!public! !
 
 !Metaclass class methodsFor!
