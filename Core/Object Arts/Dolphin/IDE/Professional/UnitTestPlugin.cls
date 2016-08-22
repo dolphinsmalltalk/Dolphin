@@ -110,11 +110,11 @@ displayDefects: aCollection
 	defectsPresenter list: aCollection.
 	defectsPresenter view isEnabled: aCollection notEmpty!
 
-displayDetails: aString
+displayDetails: aString 
 	"Display aString to indicate additional details about the current mode of operation"
 
 	detailsPresenter value: aString.
-	SessionManager inputState prod.!
+	SessionManager inputState pumpMessages!
 
 displayFail
 	"Indicate that some tests have failed and we have defects"
@@ -287,7 +287,7 @@ queryCommand: aCommandQuery
 
 refreshIcon
 	self view arrangement: self.
-	SessionManager inputState prod.!
+	SessionManager inputState pumpMessages!
 
 runIndividualTests
 	| suite |
