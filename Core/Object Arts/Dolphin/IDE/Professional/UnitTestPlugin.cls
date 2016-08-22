@@ -311,8 +311,8 @@ startAutoSwitchProcess
 	autoSwitchProcess := 
 			[Processor sleep: self class autoSwitchDelayMs.
 			self ensureVisible.
-			SessionManager inputState pumpMessages] 
-					forkAt: Processor highIOPriority!
+			SessionManager inputState prod]
+					forkAt: Processor highIOPriority.!
 
 stopAutoSwitchProcess
 	autoSwitchProcess ifNotNil: [:process | process terminate].

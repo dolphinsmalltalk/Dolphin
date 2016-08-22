@@ -461,9 +461,12 @@ pumpMessages
 	is received, then exit Smalltalk. This can be used from user code to empty the message queue
 	if necessary."
 
-	| msg |
-	msg := MSG new.
-	self loopWhile: [self isInputReady: msg]!
+	Processor isActiveMain
+		ifTrue: 
+			[| msg |
+			msg := MSG new.
+			self loopWhile: [self isInputReady: msg]]
+		ifFalse: [self prod].!
 
 purgeDeadWindows
 	"Remove any windows in the windows collection which have a NULL handle. In normal use there
