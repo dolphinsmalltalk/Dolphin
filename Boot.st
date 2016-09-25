@@ -18,27 +18,20 @@ Package manager install: 'Core\Object Arts\Dolphin\Registry\Dolphin Registry Acc
 "We need this to install any packages containing binaries"
 Package manager install: 'Core\Object Arts\Dolphin\System\Base64\Dolphin Base64.pax'!
 
-"We'll need MVP bits in order to be able to display the choice prompter for the image version to boot"
-Package manager 	install: 'Core\Object Arts\Dolphin\Base\Dolphin Base.pax'!
-Package manager 	install: 'Core\Object Arts\Dolphin\MVP\Models\Value\Dolphin Value Models.pax'!
-Package manager 	install: 'Core\Object Arts\Dolphin\MVP\Type Converters\Dolphin Type Converters.pax'!
-Package manager 	install: 'Core\Object Arts\Dolphin\MVP\Base\Dolphin MVP Base.pax'!
-Package manager 	install: 'Core\Object Arts\Dolphin\Installation Manager\Dolphin Products.pax'!
-Package manager  	install: 'Core\Object Arts\Dolphin\MVP\Dialogs\Common\Dolphin Common Dialogs.pax'!
-Package manager 	install: 'Core\Object Arts\Dolphin\MVP\Presenters\List\Dolphin List Presenter.pax'!
-Package manager 	install: 'Core\Object Arts\Dolphin\MVP\Presenters\Choice\Dolphin Choice Presenter.pax'!
-Package manager  	install: 'Core\Object Arts\Dolphin\MVP\Presenters\Text\Dolphin Text Presenter.pax'!
-Package manager 	install: 'Core\Object Arts\Dolphin\MVP\Presenters\Prompters\Dolphin Choice Prompter.pax'!
-
 "Set Dolphin package version and about operation"
 Object owningPackage 
 	packageVersion: VMLibrary default versionString!
+
+"Load standard Dolphin products"
+Package manager install: 'Core\Object Arts\Dolphin\Installation Manager\Dolphin Products.pax'!
 
 "If required, prompt to boot the desired end product"
 | productName product isPrompted |
 
 productName := SessionManager current argv at: 3 ifAbsent: [ | p |
-	p := ChoicePrompter
+	"We'll need MVP bits in order to be able to display the choice prompter for the image version to boot"
+	Package manager install: 'Core\Object Arts\Dolphin\MVP\Presenters\Prompters\Dolphin Choice Prompter.pax'.
+	p := (Smalltalk at: #ChoicePrompter)
 		choices: (DolphinProduct allSubclasses reject: [:each | each isAbstract]) 
 		caption: 'Product to boot...'.
 	p isNil ifTrue: [SessionManager current quit: -1].
