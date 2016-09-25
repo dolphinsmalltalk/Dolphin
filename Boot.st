@@ -30,12 +30,6 @@ Package manager 	install: 'Core\Object Arts\Dolphin\MVP\Presenters\Choice\Dolphi
 Package manager  	install: 'Core\Object Arts\Dolphin\MVP\Presenters\Text\Dolphin Text Presenter.pax'!
 Package manager 	install: 'Core\Object Arts\Dolphin\MVP\Presenters\Prompters\Dolphin Choice Prompter.pax'!
 
-"It was a crap idea to have classes whose names only differed by case wasn't it - hence we need this bodge even now"
-SourceManager default fileIn: 'Core\Object Arts\Dolphin\MVP\Base\BITMAP_Struct.cls'!
-BITMAP initializeAfterLoad!
-SourceManager default fileIn: 'Core\Object Arts\Dolphin\MVP\Base\DIBSECTION_Struct.cls'!
-DIBSECTION initializeAfterLoad!
-
 "Set Dolphin package version and about operation"
 Object owningPackage 
 	packageVersion: VMLibrary default versionString!
