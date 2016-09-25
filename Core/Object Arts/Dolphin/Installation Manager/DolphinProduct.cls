@@ -17,12 +17,8 @@ allPackages
 
 	| set |
 	set := IdentitySet new.
-	self packages do: 
-			[:each | 
-			set
-				addAll: (self deepPrerequisitesOf: each);
-				add: each].
-	^set asOrderedCollection!
+	self packages do: [:each | each addAllPrerequisitesTo: set].
+	^set asOrderedCollection.!
 
 basicLoad
 	"Private - Loads the required packages into the image for the receiver. 
@@ -137,16 +133,6 @@ contents
 		add: #('Core\Object Arts\Internal\Installation Manager\Dolphin Products.pax' #plain #imageBased);
 		yourself.
 	^answer!
-
-deepPrerequisitesOf: aPackage 
-	"Private - Answers an IdentitySet of packages that are the deep prerequisites of aPackage"
-
-	| prereqs deepPrereqs |
-	prereqs := aPackage prerequisites.
-	deepPrereqs := IdentitySet new.
-	deepPrereqs addAll: prereqs.
-	prereqs do: [:each | deepPrereqs addAll: (self deepPrerequisitesOf: each)].
-	^deepPrereqs!
 
 diskBasedPackages
 	"Private - Answer the list of package names associated with the receiver that are intended to be disk based"
@@ -417,7 +403,6 @@ warnOfUnlistedContent
 !DolphinProduct categoriesFor: #beCurrent!operations!public! !
 !DolphinProduct categoriesFor: #boot!operations!private! !
 !DolphinProduct categoriesFor: #contents!accessing!public! !
-!DolphinProduct categoriesFor: #deepPrerequisitesOf:!helpers!private! !
 !DolphinProduct categoriesFor: #diskBasedPackages!accessing!private! !
 !DolphinProduct categoriesFor: #displayOn:!printing!public! !
 !DolphinProduct categoriesFor: #encryptedClasses!accessing!public! !
