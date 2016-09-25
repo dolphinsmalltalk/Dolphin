@@ -292,6 +292,6 @@ updateBootImage
 imageExtension
 	"Answer the suffix for an executable image file"
 
-	^'img'! !
+	^'img7'.! !
 !BootSessionManager class categoriesFor: #imageExtension!constants!public! !
 
