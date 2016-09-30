@@ -108,21 +108,17 @@ createDirectory: path lpSecurityAttributes: aSECURITYATTRIBUTES
 	<stdcall: bool CreateDirectoryA lpstr lpvoid>
 	^self invalidCall!
 
-createEvent: aSECURITYATTRIBUTES bManualReset: aBoolManual bInitialState: aBoolState lpName: aStringPathName
-	"Answer a new Win32 Event object (for thread synchronisation), with the specified
-	security attributes (if aSECURITYATTRIBUTES is nil then the default security 
-	attributes are used), mode (manual or automatic), initial state 
-	(signalled/not-signalled), and name (if aStringPathName is nil, then unnamed).
-	Please see Win32 SDK help for more information."
+createEvent: lpEventAttributes bManualReset: bManualReset bInitialState: bInitialState lpName: lpName
+	"Invoke the CreateEvent() function of the module wrapped by the receiver.
+	Helpstring: Creates a named or unnamed event object
 
-	"HANDLE CreateEvent(
-		LPSECURITY_ATTRIBUTES  lpEventAttributes,	// address of security attributes  
-		BOOL  bManualReset,	// flag for manual-reset event 
-		BOOL  bInitialState,	// flag for initial state 
-		LPCTSTR  lpName 	// address of event-object name  
-	);"
+		HANDLE __stdcall CreateEvent(
+			[in]SECURITY_ATTRIBUTES* lpEventAttributes,
+			BOOL bManualReset,
+			BOOL bInitialState,
+			LPCSTR lpName);"
 
-	<stdcall: handle CreateEventA lpvoid bool bool lpstr>
+	<stdcall: handle CreateEventA SECURITY_ATTRIBUTES* bool bool lpstr>
 	^self invalidCall!
 
 createFile: aStringFileName dwDesiredAccess: anIntegerAccessMode dwSharedMode: anIntegerShareMode 
@@ -1203,17 +1199,12 @@ outputDebugString: aString
 	<stdcall: void OutputDebugStringA lpstr>
 	^self invalidCall!
 
-pulseEvent: aHandle
-	"Set to its 'signalled' state the Win32 Event identified by aHandle, 
-	then reset it to its 'non-signalled' state. Answer whether the function 
-	succeeded or failed. Manual reset Events release all waiting threads when
-	pulsed, auto-reset events release a single waiting thread. If no threads
-	are waiting for the event, then the effect is to reset the Event to its
-	non-signalled state."
+pulseEvent: hEvent
+	"Invoke the PulseEvent() function of the module wrapped by the receiver.
+	Helpstring: Sets the specified event object to the signaled state and then resets it to the nonsignaled state after releasing the appropriate number of waiting threads
 
-	"BOOL PulseEvent(
-		HANDLE  hEvent 	// handle of event object 
-	);"
+		BOOL __stdcall PulseEvent(
+			HANDLE hEvent);"
 
 	<stdcall: bool PulseEvent handle>
 	^self invalidCall!
@@ -1286,16 +1277,12 @@ removeDirectory: aStringFileName
 	<stdcall: bool RemoveDirectoryA lpstr>
 	^self invalidCall!
 
-resetEvent: aHandle
-	"Set the specified Win32 Event object to its 'signalled' state.
-	Answer whether the function succeeded or failed. Manual reset
-	Events remain in the signalled state until explicitly reset (e.g.
-	using #resetEvent:), auto-reset events remain in the signalled state
-	until a single thread waiting for the event is released.
+resetEvent: hEvent
+	"Invoke the ResetEvent() function of the module wrapped by the receiver.
+	Helpstring: Sets the specified event object to the nonsignaled state
 
-		BOOL ResetEvent(
-			HANDLE  hEvent 	// handle of event object 
-		);"
+		BOOL __stdcall ResetEvent(
+			HANDLE hEvent);"
 
 	<stdcall: bool ResetEvent handle>
 	^self invalidCall!
@@ -1321,16 +1308,12 @@ setEnvironmentVariable: lpName lpValue: lpValue
 	<stdcall: bool SetEnvironmentVariableA lpstr lpstr>
 	^self invalidCall!
 
-setEvent: aHandle
-	"Set the specified Win32 Event object to its 'signalled' state.
-	Answer whether the function succeeded or failed. Manual reset
-	Events remain in the signalled state until explicitly reset (e.g.
-	using #resetEvent:), auto-reset events remain in the signalled state
-	until a single thread waiting for the event is released.
+setEvent: hEvent
+	"Invoke the SetEvent() function of the module wrapped by the receiver.
+	Helpstring: Sets the specified event object to the signaled state
 
-		BOOL SetEvent(
-			HANDLE  hEvent 	// handle of event object 
-		);"
+		BOOL __stdcall SetEvent(
+			HANDLE hEvent);"
 
 	<stdcall: bool SetEvent handle>
 	^self invalidCall!
@@ -1530,6 +1513,17 @@ virtualQuery: lpAddress lpBuffer: lpBuffer dwLength: dwLength
 	<stdcall: dword VirtualQuery void* MEMORY_BASIC_INFORMATION* dword>
 	^self invalidCall!
 
+waitForSingleObject: hHandle dwMilliseconds: dwMilliseconds
+	"Invoke the WaitForSingleObject() function of the module wrapped by the receiver.
+	Helpstring: Waits until the specified object reaches the signaled state, or until the time-out elapses
+
+		unsigned long __stdcall WaitForSingleObject(
+			HANDLE hHandle,
+			unsigned long dwMilliseconds);"
+
+	<overlap stdcall: dword WaitForSingleObject handle dword>
+	^self invalidCall!
+
 wideCharToMultiByte: codePage
 	dwFlags: dwFlags
 	lpWideCharStr: lpWideCharStr
@@ -1613,7 +1607,7 @@ zeroMemory: pvDest length: cBytes
 !KernelLibrary categoriesFor: #closeHandle:!public!win32 functions-handles and objects! !
 !KernelLibrary categoriesFor: #copyFile:lpNewFileName:bfailIfExists:!public!win32 functions-file! !
 !KernelLibrary categoriesFor: #createDirectory:lpSecurityAttributes:!public!win32 functions-file! !
-!KernelLibrary categoriesFor: #createEvent:bManualReset:bInitialState:lpName:!public!win32 functions-synchronization! !
+!KernelLibrary categoriesFor: #createEvent:bManualReset:bInitialState:lpName:!**auto generated**!public!win32 functions-synchronization! !
 !KernelLibrary categoriesFor: #createFile:dwDesiredAccess:dwSharedMode:lpSecurityAttributes:dwCreationDistribution:dwFlagsAndAttributes:hTemplateFile:!public!win32 functions-file! !
 !KernelLibrary categoriesFor: #createMutex:bInitialOwner:lpName:!**auto generated**!public! !
 !KernelLibrary categoriesFor: #createProcess:lpCommandLine:lpProcessAttributes:lpThreadAttributes:bInheritsHandles:dwCreationFlags:lpEnvironment:lpCurrentDirectory:lpStartupInfo:lpProcessInformation:!public!win32 functions-process and thread! !
@@ -1698,18 +1692,18 @@ zeroMemory: pvDest length: cBytes
 !KernelLibrary categoriesFor: #multiByteToWideChar:dwFlags:lpMultiByteStr:cchMultiByte:lpWideCharStr:cchWideChar:!public!win32 functions-string manipulation! !
 !KernelLibrary categoriesFor: #openProcess:bInheritHandle:dwProcessId:!public!win32 functions-process and thread! !
 !KernelLibrary categoriesFor: #outputDebugString:!public!win32 functions-debugging! !
-!KernelLibrary categoriesFor: #pulseEvent:!public!win32 functions-synchronization! !
+!KernelLibrary categoriesFor: #pulseEvent:!**auto generated**!public!win32 functions-synchronization! !
 !KernelLibrary categoriesFor: #queryPerformanceCounter:!public!win32 functions-performance monitoring! !
 !KernelLibrary categoriesFor: #queryPerformanceFrequency:!public!win32 functions-performance monitoring! !
 !KernelLibrary categoriesFor: #raiseException:dwExceptionFlags:nNumberOfArguments:lpArguments:!**auto generated**!public! !
 !KernelLibrary categoriesFor: #readFile:lpBuffer:nNumberOfBytesToRead:lpNumberOfBytesRead:lpOverlapped:!public!win32 functions-file! !
 !KernelLibrary categoriesFor: #releaseMutex:!**auto generated**!public! !
 !KernelLibrary categoriesFor: #removeDirectory:!public!win32 functions-file! !
-!KernelLibrary categoriesFor: #resetEvent:!public!win32 functions-synchronization! !
+!KernelLibrary categoriesFor: #resetEvent:!**auto generated**!public!win32 functions-synchronization! !
 !KernelLibrary categoriesFor: #setConsoleCtrlHandler:add:!public!win32 functions-console! !
 !KernelLibrary categoriesFor: #setEndOfFile:!public!win32 functions-file! !
 !KernelLibrary categoriesFor: #setEnvironmentVariable:lpValue:!public!win32 functions-process and thread! !
-!KernelLibrary categoriesFor: #setEvent:!public!win32 functions-synchronization! !
+!KernelLibrary categoriesFor: #setEvent:!**auto generated**!public!win32 functions-synchronization! !
 !KernelLibrary categoriesFor: #setFilePointer:lDistanceToMove:lpDistanceToMoveHigh:dwMoveMethod:!public!win32 functions-file! !
 !KernelLibrary categoriesFor: #setLastError:!public!win32 functions-error! !
 !KernelLibrary categoriesFor: #setStdHandle:hHandle:!public!win32 functions-console! !
@@ -1728,6 +1722,7 @@ zeroMemory: pvDest length: cBytes
 !KernelLibrary categoriesFor: #virtualFree:dwSize:dwFreeType:!**auto generated**!public! !
 !KernelLibrary categoriesFor: #virtualProtect:dwSize:flNewProtect:lpflOldProtect:!**auto generated**!public! !
 !KernelLibrary categoriesFor: #virtualQuery:lpBuffer:dwLength:!**auto generated**!public! !
+!KernelLibrary categoriesFor: #waitForSingleObject:dwMilliseconds:!**auto generated**!public!win32 functions-synchronization! !
 !KernelLibrary categoriesFor: #wideCharToMultiByte:dwFlags:lpWideCharStr:cchWideChar:lpMultiByteStr:cchMultiByte:lpDefaultChar:lpUsedDefaultChar:!public!win32 functions-string manipulation! !
 !KernelLibrary categoriesFor: #winExec:uCmdShow:!public!win32 functions-process and thread! !
 !KernelLibrary categoriesFor: #writeFile:lpBuffer:nNumberOfBytesToWrite:lpNumberOfBytesWritten:lpOverlapped:!public!win32 functions-file! !

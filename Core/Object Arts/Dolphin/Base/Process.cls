@@ -1,7 +1,7 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Link variableSubclass: #Process
-	instanceVariableNames: 'suspendedFrame priority myList callbackDepth primitiveFailureCode primitiveFailureData fpeMask threadSync thread exceptionEnvironment _alreadyPrinted _reserved1 debugger name _reserved2 '
+	instanceVariableNames: 'suspendedFrame priority myList callbackDepth primitiveFailureCode primitiveFailureData fpeMask threadSync thread exceptionEnvironment _alreadyPrinted _reserved1 debugger name _reserved2'
 	classVariableNames: 'DefaultFPEMask DefaultMaxStack DefaultStack'
 	poolDictionaries: 'CRTConstants'
 	classInstanceVariableNames: ''!
@@ -698,6 +698,9 @@ terminate
 
 			self queueInterrupt: Processor terminateInterrupt]!
 
+threadSync
+	^threadSync!
+
 topFrame
 	"Private - Answer a frame representing the top activation record of the receiver's stack.
 	We deliberately answer a frame for the sender if the receiver is the active
@@ -774,6 +777,7 @@ topFrame
 !Process categoriesFor: #suspendingList!accessing!private! !
 !Process categoriesFor: #suspendUnconditionally!public!states-changing! !
 !Process categoriesFor: #terminate!public!states-changing! !
+!Process categoriesFor: #threadSync!accessing!private! !
 !Process categoriesFor: #topFrame!private!stack frames! !
 
 !Process class methodsFor!
