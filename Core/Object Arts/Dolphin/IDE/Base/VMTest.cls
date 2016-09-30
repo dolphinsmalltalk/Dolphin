@@ -856,6 +856,33 @@ testPrimitiveStringAt
 	0 to: 255 do: [:i | self should: [(array at: i+1) == (Character value: i)]].
 !
 
+testPrimitiveStringAtPut
+	| subject |
+	subject := String new: 2.
+	"Valid case"
+	self assert: $\0 equals: (subject at: 1).
+	self assert: $\0 equals: (subject at: 2).
+	self assert: $a equals: (subject at: 1 put: $a).
+	self assert: $a equals: (subject at: 1).
+	self assert: $b equals: (subject at: 2 put: $b).
+	self assert: $b equals: (subject at: 2).
+	"Bounds errors"
+	subject := String new: 2.
+	#(0 3 -1 ##(SmallInteger maximum) ##(SmallInteger minimum)) do: 
+			[:each |
+			self assert: $\0 equals: (subject at: 1).
+			self assert: $\0 equals: (subject at: 2).
+			self should: [subject at: each put: $a] raise: BoundsError].
+	"Objects that strings can't hold, including some special cases that have no object body (issue #234)"
+	#(0 ##(Object new) nil '' #'' true false #() #[]) do: 
+			[:each |
+			self assert: $\0 equals: (subject at: 1).
+			self assert: $\0 equals: (subject at: 2).
+			self
+				should: [subject at: 1 put: each]
+				raise: Error
+				matching: [:ex | ex messageText beginsWith: 'can''t hold']]!
+
 testSignedFromUnsigned
 	"Test SmallIntegers and 4 & 8 byte LargeIntegers"
 
@@ -910,6 +937,7 @@ testSignedFromUnsigned
 !VMTest categoriesFor: #testPrimitiveReplaceElements!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveResume!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveStringAt!public!unit tests! !
+!VMTest categoriesFor: #testPrimitiveStringAtPut!public!unit tests! !
 !VMTest categoriesFor: #testSignedFromUnsigned!public!unit tests! !
 
 !VMTest class methodsFor!
