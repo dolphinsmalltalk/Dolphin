@@ -1132,6 +1132,7 @@ ScintillaConstants at: 'SCN_URIDROPPED' put: 16r7DF!
 ScintillaConstants at: 'SCN_USERLISTSELECTION' put: 16r7DE!
 ScintillaConstants at: 'SCN_ZOOM' put: 16r7E2!
 ScintillaConstants at: 'SCVS_NONE' put: 16r0!
+ScintillaConstants at: 'SCVS_NOWRAPLINESTART' put: 16r4!
 ScintillaConstants at: 'SCVS_RECTANGULARSELECTION' put: 16r1!
 ScintillaConstants at: 'SCVS_USERACCESSIBLE' put: 16r2!
 ScintillaConstants at: 'SCWS_INVISIBLE' put: 16r0!

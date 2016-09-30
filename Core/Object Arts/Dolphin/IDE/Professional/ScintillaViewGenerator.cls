@@ -1209,6 +1209,7 @@ defineConstantsPool
 		at: 'SCN_USERLISTSELECTION' put: 2014;
 		at: 'SCN_ZOOM' put: 2018;
 		at: 'SCVS_NONE' put: 0;
+		at: 'SCVS_NOWRAPLINESTART' put: 4;
 		at: 'SCVS_RECTANGULARSELECTION' put: 1;
 		at: 'SCVS_USERACCESSIBLE' put: 2;
 		at: 'SCWS_INVISIBLE' put: 0;

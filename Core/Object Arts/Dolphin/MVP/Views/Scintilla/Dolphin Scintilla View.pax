@@ -4,7 +4,7 @@ package paxVersion: 1;
 	basicComment: 'Dolphin Scintilla Control Wrapper
 Copyright (c) Object Arts Ltd, 2002-2016.
 
-**Built against Scintilla version 3.6.4**
+**Built against Scintilla version 3.6.7**
 
 This package implements a Dolphin <textView>, <ScintillaView>, that wraps the open-source Scintilla programmers'' editor control. ScintillaView provides at least a basic interface (generated from the ''scintilla.iface'' file supplied with the source) to all of Scintilla''s features. It, and the supporting classes in the package, also provide higher level access to the majority of those features such as annotations, call tips, margins, margin markers, indicators, auto-completion lists, and text styling.
 
