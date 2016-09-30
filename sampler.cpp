@@ -32,7 +32,7 @@ VOID CALLBACK Interpreter::SamplerProc(PVOID , BOOLEAN TimerOrWaitFired)
 	if (::InterlockedDecrement((LPLONG)&m_nInputPollCounter) == 0)
 	{
 		NotifyAsyncPending();
-#ifdef _DEBUG
+#if 0//def _DEBUG
 		DWORD dwTicksNow = timeGetTime();
 		Semaphore* sem = Pointers.InputSemaphore->m_location;
 		TRACE("Fired after %d, last reset at %d, signals %d\n\r", dwTicksNow-dwTicksReset, dwTicksReset, ObjectMemoryIntegerValueOf(sem->m_excessSignals));

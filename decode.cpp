@@ -39,24 +39,20 @@ class UnknownOTE : public OTE {};
 
 typedef TOTE<VariantCharObject> VariantCharOTE;
 
-// Helper to dump characters to the tracestream
-// Unprintable characters are printed in hex
-ostream& operator<<(ostream& stream, const VariantCharOTE* oteChars)
+void printChars(ostream& stream, const VariantCharOTE* oteChars)
 {
-//    stream.lock();
-
 	ASSERT(oteChars->isBytes());
 
-	unsigned len=oteChars->bytesSize();
+	unsigned len = oteChars->bytesSize();
 	VariantCharObject* string = oteChars->m_location;
 	unsigned end = min(len, 80);
-	for(unsigned i=0; i<end; i++)
+	for (unsigned i = 0; i<end; i++)
 	{
-		unsigned char ch = (unsigned char) string->m_characters[i];
+		unsigned char ch = (unsigned char)string->m_characters[i];
 		//if (ch = '\0') break;
 		if (ch < 32 || ch > 127)
 		{
-			static char hexChars[16+1] = "0123456789ABCDEF";
+			static char hexChars[16 + 1] = "0123456789ABCDEF";
 			stream << '\\' << hexChars[ch >> 4] << hexChars[ch & 0xF] << '\\';
 		}
 		else
@@ -65,8 +61,25 @@ ostream& operator<<(ostream& stream, const VariantCharOTE* oteChars)
 
 	if (len > end)
 		stream << "...";
-	
-//	stream.unlock();
+
+	//	stream.unlock();
+}
+
+// Helper to dump characters to the tracestream
+// Unprintable characters are printed in hex
+ostream& operator<<(ostream& stream, const VariantCharOTE* oteChars)
+{
+	//    stream.lock();
+
+	if (oteChars->isNil()) return stream << "nil";
+	if (!oteChars->isBytes())
+	{
+		stream << "**Non-byte object: " << (OTE*)oteChars << "**";
+	}
+	else
+	{
+		printChars(stream, oteChars);
+	}
 
 	return stream;
 }
@@ -105,7 +118,9 @@ ostream& operator<<(ostream& st, const StringOTE* ote)
 	}
 	else
 	{
-		st << "'" << reinterpret_cast<const VariantCharOTE*>(ote) << "'";
+		st << "'";
+		printChars(st, reinterpret_cast<const VariantCharOTE*>(ote));
+		st << "'";
 	}
 	return st;
 }
@@ -117,7 +132,7 @@ ostream& operator<<(ostream& st, const StringOTE* ote)
 
 inline ostream& operator<<(ostream& stream, const Class& cl)
 {
-	return stream << cl.m_name;
+	return stream << (VariantCharOTE*)cl.m_name;
 }
 
 

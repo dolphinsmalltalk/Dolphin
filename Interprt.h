@@ -280,6 +280,10 @@ public:
 						VMI_CRTFAULT = ObjectMemoryIntegerObjectOf(20)
 						};
 
+#ifdef _DEBUG
+	static const char* InterruptNames[static_cast<int>(VMI_CRTFAULT) + 1];
+#endif
+
 	static bool __fastcall disableInterrupts(bool bDisable);
 
 	static bool disableAsyncGC(bool bDisable);

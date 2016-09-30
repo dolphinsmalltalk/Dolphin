@@ -69,12 +69,13 @@ void Interpreter::asyncGC(DWORD gcFlags)
 	resizeActiveProcess();
 	flushAtCaches();
 
-	#ifdef _DEBUG
+#ifdef _DEBUG
+	if (Interpreter::executionTrace != 0)
 	{
 		for (unsigned i=0;i<NUMOTEPOOLS;i++)
 			m_otePools[i].DumpStats();
 	}
-	#endif
+#endif
 
 	ObjectMemory::asyncGC(gcFlags);
 }
@@ -143,7 +144,7 @@ void Interpreter::freePools()
 	}
 
 	#ifdef _DEBUG
-		DumpOTEPoolStats();
+		//DumpOTEPoolStats();
 	#endif
 
 	for (unsigned i=0;i<NUMOTEPOOLS;i++)

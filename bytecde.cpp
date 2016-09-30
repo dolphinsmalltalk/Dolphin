@@ -119,7 +119,6 @@ inline BOOL Interpreter::sampleInput()
 				#endif
 				queueInterrupt(VMI_USERINTERRUPT, Oop(Pointers.Nil));
 			}
-			TRACE("Setting wakeup event...\n");
 			// By setting a Win32 event we guarantee that the image will continue
 			// even if about to make a call to MsgWaitForMultipleObjects(), if we
 			// don't do this then there is a possible window of opportunity where

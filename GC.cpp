@@ -147,10 +147,6 @@ void ObjectMemory::reclaimInaccessibleObjects(DWORD gcFlags)
 	// live object so the test will always fail
 	WeaknessMask = static_cast<BYTE>(gcFlags & GCNoWeakness ? OTE::FreeMask : OTE::WeakMask);
 
-#ifdef _DEBUG
-	trace("GC: Reclaiming inaccessible objects...\n");
-#endif
-
 	// Get the Oop to use for corpses from the interpreter (it's a global)
 	Oop corpse = corpsePointer();
 	HARDASSERT(!isIntegerObject(corpse));
@@ -162,7 +158,6 @@ void ObjectMemory::reclaimInaccessibleObjects(DWORD gcFlags)
 		TRACESTREAM << "GC: WARNING, attempted GC before Corpse registered." << endl;
 		return;	// Refuse to garbage collect if the corpse is invalid
 	}
-
 	
 	#ifdef _DEBUG
 		checkReferences();
@@ -428,6 +423,7 @@ void ObjectMemory::reclaimInaccessibleObjects(DWORD gcFlags)
 	#endif
 
 #if defined(VERBOSEGC)
+	if (deletions > 0)
 	{
 		tracelock lock(TRACESTREAM);
 		TRACESTREAM << "GC: Completed, " << deletions << " objects reclaimed, "

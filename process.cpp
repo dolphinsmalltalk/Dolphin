@@ -27,6 +27,33 @@
 
 #ifdef _DEBUG
 #include "STBehavior.h"
+
+#define NameOf(x) #x
+const char* Interpreter::InterruptNames[] = {
+	NULL,
+	NameOf(VMI_TERMINATE),
+	NameOf(VMI_STACKOVERFLOW),
+	NameOf(VMI_BREAKPOINT),
+	NameOf(VMI_SINGLESTEP),
+	NameOf(VMI_ACCESSVIOLATION),
+	NameOf(VMI_IDLEPANIC),
+	NameOf(VMI_GENERIC),
+	NameOf(VMI_STARTED),
+	NameOf(VMI_KILL),
+	NameOf(VMI_FPFAULT),
+	NameOf(VMI_USERINTERRUPT),
+	NameOf(VMI_ZERODIVIDE),
+	NameOf(VMI_OTOVERFLOW),
+	NameOf(VMI_CONSTWRITE),
+	NameOf(VMI_EXCEPTION),
+	NameOf(VMI_FPSTACK),
+	NameOf(VMI_NOMEMORY),
+	NameOf(VMI_HOSPICECRISIS),
+	NameOf(VMI_BEREAVEDCRISIS),
+	NameOf(VMI_CRTFAULT)
+};
+#undef NameOf
+
 #endif
 
 OopQueue<SemaphoreOTE*> Interpreter::m_qAsyncSignals;
@@ -760,7 +787,7 @@ BOOL __fastcall Interpreter::FireAsyncEvents()
 			Oop oopArg = m_qInterrupts.Pop();
 #ifdef _DEBUG
 			TRACESTREAM << "Interrupting " << oteProcess << endl << "	with "
-				<< ObjectMemoryIntegerValueOf(nInterrupt) << ":" << reinterpret_cast<OTE*>(oopArg)
+				<< InterruptNames[ObjectMemoryIntegerValueOf(nInterrupt)] << "(" << reinterpret_cast<OTE*>(oopArg) << ")"
 				<< endl;
 #endif
 			// 1) We know the process won't actually get deleted because of the ZCT
