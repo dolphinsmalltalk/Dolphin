@@ -220,8 +220,9 @@ terminateProcess
 	"Prompt the user for confirmation to terminate the currently selected process,
 	and if given the go ahead, make it so."
 
-	(MessageBox confirm: 'Are you sure you want to terminate the process?')
-		ifTrue: [self process terminate]!
+	| proc |
+	proc := self process.
+	(MessageBox confirm: 'Are you sure you want to terminate the process?') ifTrue: [proc terminate]!
 
 updateInterval
 	"Private - Answer the value of the receiver's ''updateInterval'' instance variable."

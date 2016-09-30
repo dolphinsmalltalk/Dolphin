@@ -19,6 +19,8 @@ package methodNames
 	add: #StyledContainerTest -> #test1PixDottedBorderPaint;
 	add: #StyledContainerTest -> #test1PixDottedBorderPrint;
 	add: #ViewComposerTest -> #testResizeDoesNotMove;
+	add: #VMTest -> #testInterruptPendingOverlappedCall;
+	add: #VMTest -> #testOverlappedCallsSuspendAndTerminate2;
 	yourself.
 
 package binaryGlobalNames: (Set new
@@ -313,6 +315,139 @@ testResizeDoesNotMove
 	self deny: static extent = extent.
 	self assert: (vc constrainPoint: static extent) = static extent! !
 !ViewComposerTest categoriesFor: #testResizeDoesNotMove!public!unit tests! !
+
+!VMTest methodsFor!
+
+testInterruptPendingOverlappedCall
+	"Test sending a VM interrupt to a Process blocked waiting on an overlapped call"
+
+	| evt continue |
+	evt := KernelLibrary default
+				createEvent: nil
+				bManualReset: false
+				bInitialState: false
+				lpName: nil.
+	continue := true.
+	
+	[| done sem wait proc |
+	wait := 0.
+	proc := 
+			[
+			[wait := wait + 1.
+			KernelLibrary default waitForSingleObject: evt dwMilliseconds: -1.
+			continue]
+					whileTrue]
+					forkAt: 7.
+	self assert: 1 equals: wait.
+	"Interrupt completes while the overlapped call is still pending"
+	done := false.
+	proc interruptWith: [done := true].
+	self assert: done.
+	self assert: 1 equals: wait.
+	KernelLibrary default setEvent: evt.
+	self assert: 2 equals: wait.
+	"Interrupt is waiting when the overlapped call completes (but cannot return)"
+	sem := Semaphore new.
+	proc interruptWith: 
+			[done := false.
+			sem wait.
+			done := 2].
+	KernelLibrary default setEvent: evt.
+	self deny: done.
+	self assert: 2 equals: wait.
+	"Allow interrupt to complete - and the overlapped method to return"
+	sem signal.
+	self assert: done.
+	self assert: 3 equals: wait]
+			ensure: 
+				[continue := false.
+				(KernelLibrary default)
+					setEvent: evt;
+					closeHandle: evt]!
+
+testOverlappedCallsSuspendAndTerminate2
+	| proc a win32Event maxRetries busyWaitForSignal retries sleep |
+	self assert: Processor pendingTerminations isEmpty.
+	win32Event := KernelLibrary default
+				createEvent: nil
+				bManualReset: false
+				bInitialState: false
+				lpName: nil.
+	a := 0.
+	sleep := -1.
+	
+	[proc := 
+			[5 timesRepeat: 
+					[| ret |
+					a := a + 1.
+					ret := KernelLibrary default waitForSingleObject: win32Event dwMilliseconds: sleep.
+					Transcript
+						display: 'Wait returned ';
+						print: ret;
+						cr.
+					sleep := 1000]]
+					forkAt: Processor userInterruptPriority.	"High priority background proc runs but then blocks..."
+	maxRetries := 5.
+	busyWaitForSignal := 
+			[retries := 0.
+			[proc threadSync excessSignals > 0 or: [retries > maxRetries]] whileFalse: 
+					[retries := retries + 1.
+					Processor sleep: 10]].
+	self assert: proc isWaiting.	"proc should be blocked on the overlapped call semaphore"
+	self assert: a == 1.
+	self assert: 0 equals: proc threadSync excessSignals.
+	self assert: proc threadSync equals: proc suspendingList.
+	proc suspend.	"suspend it while blocked on the Win32 event, i.e. before the call on the overlapped thread returns."
+	self assert: proc isSuspended.	"Allow overlapped call to complete"
+	KernelLibrary default setEvent: win32Event.
+
+	"Wait for the overlapped call to complete, at which point the VM should signal the
+	Semaphore, even though the process is not waiting on it anymore. If it doesn't do this, then
+	we lose the notification that the overlapped call is done, and if the process were then
+	resumed onto the list, it would block forever. This is important in practice because a
+	process waiting for an overlapped call to complete can receive an interrupt and be taken off
+	any list it is waiting on while it processes the interrupt, before being resumed to that
+	list on returning from the interrupt. "
+	busyWaitForSignal value.
+	Transcript
+		nextPutAll: 'Signals=';
+		print: proc threadSync excessSignals;
+		nextPutAll: ', retries=';
+		print: retries;
+		cr.
+	self assert: retries <= maxRetries.
+	self assert: 1 equals: proc threadSync excessSignals.
+	self assert: proc isSuspended.
+	self assert: 1 equals: a.
+	"Resume it back onto the Semaphore - should continue immediately, and block again"
+	proc resume: proc threadSync.
+	self assert: 0 equals: proc threadSync excessSignals.
+	self assert: proc isWaiting.
+	self assert: proc threadSync equals: proc suspendingList.
+	self assert: 2 equals: a.
+	"This time interrupt it and make it run the wait itself."
+	proc interruptWith: busyWaitForSignal.
+	Transcript
+		nextPutAll: 'Signals=';
+		print: proc threadSync excessSignals;
+		nextPutAll: ', retries=';
+		print: retries;
+		cr.
+	self assert: retries <= maxRetries.
+	self assert: 1 equals: proc threadSync excessSignals.
+	self assert: proc isSuspended.
+	self assert: 3 equals: a.	"Now suspend it again, and terminate it before the overlapped call completes"
+	proc suspend.
+	self assert: 0 equals: proc threadSync excessSignals.
+	self assert: proc isSuspended.
+	proc terminate.
+	busyWaitForSignal value.
+	self assert: proc isTerminated.
+	self assert: a == 3.
+	self assert: Processor pendingTerminations isEmpty]
+			ensure: [KernelLibrary default closeHandle: win32Event]! !
+!VMTest categoriesFor: #testInterruptPendingOverlappedCall!public!unit tests! !
+!VMTest categoriesFor: #testOverlappedCallsSuspendAndTerminate2!public!unit tests! !
 
 "End of package definition"!
 
