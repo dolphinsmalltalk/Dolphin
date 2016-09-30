@@ -20,15 +20,15 @@ package globalAliases: (Set new
 
 package setPrerequisites: (IdentitySet new
 	add: '..\..\Base\Dolphin';
+	add: '..\..\Base\Dolphin Base Tests';
 	add: 'Dolphin Memory-Mapped Files';
-	add: '..\..\..\..\Contributions\Camp Smalltalk\SUnit\SUnit';
 	yourself).
 
 package!
 
 "Class Definitions"!
 
-TestCase subclass: #MemoryMappedFileTest
+DolphinTest subclass: #MemoryMappedFileTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''

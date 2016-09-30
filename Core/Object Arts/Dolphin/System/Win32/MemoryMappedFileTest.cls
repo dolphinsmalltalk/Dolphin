@@ -1,6 +1,6 @@
 "Filed out from Dolphin Smalltalk 7"!
 
-TestCase subclass: #MemoryMappedFileTest
+DolphinTest subclass: #MemoryMappedFileTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
@@ -42,6 +42,34 @@ testDoubleArray
 	"If this fails then one or other thing is holding the file open"
 	File delete: fname!
 
+testMaximumSize
+	| array file fname mmf view count |
+	fname := File temporaryFilename.
+	mmf := MemoryMappedFile open: fname.
+	"Choose size to be exactly one allocation block so that read/write off the end will cause a fault"
+	count := 64 * 1024 / 4.
+	mmf maximumSize: 4 * count.
+	view := mmf mapView.
+	array := DWORDArray fromAddress: view length: count.
+	1 to: count do: [:each | array at: each put: each].
+	self assert: (1 to: count) equals: array asArray.
+	mmf free.
+	view free.
+	self
+		should: [array at: count]
+		raise: GPFault
+		description: 'Wrote to deallocated memory mapped file'.
+	(MemoryManager current)
+		collectGarbage;
+		administerLastRites.
+	file := FileStream read: fname text: false.
+	self assert: count * 4 equals: file size.
+	array := (1 to: count) collect: [:each | file nextDWORD].
+	self assert: (1 to: count) equals: array.
+	file close.
+	"If this fails then one or other thing is holding the file open"
+	File delete: fname!
+
 testReadOnly
 	| fname file mmf view data |
 	fname := File temporaryFilename.
@@ -58,5 +86,6 @@ testReadOnly
 	mmf free.
 	File delete: fname! !
 !MemoryMappedFileTest categoriesFor: #testDoubleArray!public! !
+!MemoryMappedFileTest categoriesFor: #testMaximumSize!public! !
 !MemoryMappedFileTest categoriesFor: #testReadOnly!public! !
 
