@@ -1422,14 +1422,13 @@ BEGINPRIMITIVE primitiveStringAtPut
 	ASSUME	ecx:PTR Character
 
 	cmp		edx, [Pointers.ClassCharacter]		; Is it a character?
+	jne		localPrimitiveFailure2				; Not a char, fail the primitive
 
-	; TODO: Rather than use codePoint in char, could work entirely with the Oop by deducting
-	; an appropriate offset in the OT
+	; Rather than use codePoint in char, could work entirely with the Oop by deducting
+	; an appropriate offset in the OT, but this will also work for 16-bit or larger character encodings
 	
 	mov		ecx, [ecx].m_asciiValue				; Load first (and only) Oop of object
 	ASSUME	ecx:DWORD							; ecx now contains SmallInteger code pointer of character
-
-	jne		localPrimitiveFailure2				; Not a char, fail the primitive
 
 	shr		ecx, 1								; Convert codePoint from SmallInteger
 	mov		BYTE PTR [eax], cl					; to give 0 based code
