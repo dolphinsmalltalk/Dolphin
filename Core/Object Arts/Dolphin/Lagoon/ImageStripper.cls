@@ -246,10 +246,12 @@ closeAllDevelopmentTools
 	"Ensure any junk or sensitive information in the Transcript is removed."
 
 	Transcript clear.
-	#(#SmalltalkToolShell #SmalltalkWorkspaceDocument) do: 
-			[:each | 
-			Smalltalk at: each
-				ifPresent: [:class | class allSubinstances do: [:tool | tool view isTopView ifTrue: [tool view destroy]]]].
+	(self isConsoleApplication
+		ifTrue: [#(#ShellView)]
+		ifFalse: [#(#SmalltalkToolShell #SmalltalkWorkspaceDocument #TestRunner)]) do: 
+				[:each |
+				Smalltalk at: each
+					ifPresent: [:class | class allSubinstances do: [:shell | shell view isTopView ifTrue: [shell view destroy]]]].
 	(SessionManager current)
 		closeConsole;
 		perform: #closeAllHelp.
