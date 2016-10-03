@@ -1447,8 +1447,7 @@ transact: aDBConnection action: anInteger
 				sqlEndTran: SQL_HANDLE_DBC
 				handle: aDBConnection asParameter
 				completionType: anInteger.
-	ret ~= SQL_SUCCESS 
-		ifTrue: [DBError signalWith: (self exceptionDetails: ret)]! !
+	ret ~= SQL_SUCCESS ifTrue: [DBError signalWith: (aDBConnection exceptionDetails: ret)].! !
 !DBConnection class categoriesFor: #allocHandle!helpers!private! !
 !DBConnection class categoriesFor: #connections!accessing!public! !
 !DBConnection class categoriesFor: #connectString:do:!operations!private! !

@@ -219,23 +219,6 @@ sqlEndTran: anExternalHandleEnv handle: anExternalHandleDBC completionType: anIn
 	<stdcall: sword SQLEndTran sword handle sword>
 	^self invalidCall!
 
-sqlError: anExternalHandleENV hdbc: anExternalHandleDBC hstmt: anExternalHandleSTMT szSqlState: anSQLStateParm pfNativeError: anIntegerParmNErr szErrorMsg: anExternalBufferErrMsg cbErrorMsgMax: anInteger pcbErrorMsg: anIntegerParmLen 
-	"RETCODE SQL_API SQLError(
-		HENV        henv,
-		HDBC        hdbc,
-		HSTMT       hstmt,
-		UCHAR  FAR *szSqlState,
-		SDWORD FAR *pfNativeError,
-		UCHAR  FAR *szErrorMsg,
-		SWORD       cbErrorMsgMax,
-		SWORD  FAR *pcbErrorMsg);
-
-	Get error or status information"
-
-	<stdcall: sword SQLError handle handle handle lpvoid lpvoid lpvoid sword lpvoid>
-	#todo.	"This API has been deprecated - replace with SQLGetDiagRec"
-	^self invalidCall!
-
 sqlExecDirect: anExternalHandle statementText: aString textLength: anInteger 
 	"SQLRETURN SQLExecDirect(
 		SQLHSTMT StatementHandle,
@@ -285,8 +268,8 @@ sqlFreeStmt: anExternalHandle option: anInteger
 	^self invalidCall!
 
 sqlGetConnectAttr: anExternalHandle attribute: idInteger valuePtr: anIntegerOrStringOrBytes bufferLength: lengthInteger stringLengthPtr: anSDWORD 
-	<stdcall: sword SQLGetConnectOption handle sdword lpvoid sdword sdword*>
-	^self invalidCall!
+	<stdcall: sword SQLGetConnectAttr handle sdword lpvoid sdword sdword*>
+	^self invalidCall.!
 
 sqlGetData: anExternalHandleSTMT columnNumber: anIntegerPar targetType: anIntegerCType targetValuePtr: anExternalBuffer bufferLength: anIntegerMax strLenOrIndPtr: anSDWORD 
 	"SQLRETURN SQLGetData(
@@ -299,6 +282,20 @@ sqlGetData: anExternalHandleSTMT columnNumber: anIntegerPar targetType: anIntege
 
 	<stdcall: sword SQLGetData handle word sword lpvoid sdword SDWORD*>
 	^self invalidCall!
+
+sqlGetDiagRec: anIntegerHandleType handle: anExternalHandle recNumber: anIntegerRecordNumber szSqlState: anSQLStateParm pfNativeError: anIntegerParmNErr szErrorMsg: anExternalBufferErrMsg cbErrorMsgMax: anInteger pcbErrorMsg: anIntegerParmLen
+	"SQLRETURN SQLGetDiagRec(
+		SQLSMALLINT     HandleType,
+		SQLHANDLE       Handle,
+		SQLSMALLINT     RecNumber,
+		SQLCHAR *       SQLState,
+		SQLINTEGER *    NativeErrorPtr,
+		SQLCHAR *       MessageText,
+		SQLSMALLINT     BufferLength,
+		SQLSMALLINT *   TextLengthPtr);"
+
+	<stdcall: sword SQLGetDiagRec word handle word lpvoid lpvoid lpvoid sword lpvoid>
+	^self invalidCall.!
 
 sqlGetFunctions: anExternalHandle functionId: anInteger supportedPtr: aWORD 
 	"Request confirmation that a particular function is implemented
@@ -327,8 +324,8 @@ sqlGetInfo: anExternalHandle infoType: anIntegerType infoValuePtr: bytes bufferL
 	^self invalidCall!
 
 sqlGetStmtAttr: anExternalHandle attribute: optionCode valuePtr: anIntegerOrStringOrBytes bufferLength: lengthInteger stringLengthPtr: anSDWORD 
-	<stdcall: sword SQLGetStmtOption handle sdword lpvoid sdword sdword*>
-	^self invalidCall!
+	<stdcall: sword SQLGetStmtAttr handle sdword lpvoid sdword sdword*>
+	^self invalidCall.!
 
 sqlNumResultCols: anExternalHandle pccol: anSWORD 
 	"Return the number of columns in the result set for the statement.
@@ -478,7 +475,6 @@ sqlTables: anExternalHandleSTMT
 !ODBCLibrary categoriesFor: #sqlDisconnect:!public!win32 functions-odbc library! !
 !ODBCLibrary categoriesFor: #sqlDriverConnect:windowHandle:inConnectionString:stringLength1:outConnectionString:bufferLength:stringLength2Ptr:driverCompletion:!public!win32 functions-odbc library! !
 !ODBCLibrary categoriesFor: #sqlEndTran:handle:completionType:!public!win32 functions-odbc library! !
-!ODBCLibrary categoriesFor: #sqlError:hdbc:hstmt:szSqlState:pfNativeError:szErrorMsg:cbErrorMsgMax:pcbErrorMsg:!public!win32 functions-odbc library! !
 !ODBCLibrary categoriesFor: #sqlExecDirect:statementText:textLength:!public!win32 functions-odbc library! !
 !ODBCLibrary categoriesFor: #sqlExecute:!public!win32 functions-odbc library! !
 !ODBCLibrary categoriesFor: #sqlFetchScroll:fetchOrientation:fetchOffset:!public!win32 functions-odbc library! !
@@ -487,6 +483,7 @@ sqlTables: anExternalHandleSTMT
 !ODBCLibrary categoriesFor: #sqlFreeStmt:option:!public!win32 functions-odbc library! !
 !ODBCLibrary categoriesFor: #sqlGetConnectAttr:attribute:valuePtr:bufferLength:stringLengthPtr:!public!win32 functions-odbc library! !
 !ODBCLibrary categoriesFor: #sqlGetData:columnNumber:targetType:targetValuePtr:bufferLength:strLenOrIndPtr:!public!win32 functions-odbc library! !
+!ODBCLibrary categoriesFor: #sqlGetDiagRec:handle:recNumber:szSqlState:pfNativeError:szErrorMsg:cbErrorMsgMax:pcbErrorMsg:!public!win32 functions-odbc library! !
 !ODBCLibrary categoriesFor: #sqlGetFunctions:functionId:supportedPtr:!public!win32 functions-odbc library! !
 !ODBCLibrary categoriesFor: #sqlGetInfo:infoType:infoValuePtr:bufferLength:stringLengthPtr:!public!win32 functions-odbc library! !
 !ODBCLibrary categoriesFor: #sqlGetStmtAttr:attribute:valuePtr:bufferLength:stringLengthPtr:!public!win32 functions-odbc library! !
