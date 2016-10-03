@@ -1473,6 +1473,45 @@ moreParamsAt: n put: anObject
 	self moreParams at: n.
 	^self moreParams at: n put: anObject!
 
+newSelectionsFromEvent: event
+	"Private - Answer the <integer> selection that would occur if the <MouseEvent>,
+	event, was was passed to the control."
+
+	| itemClicked anyKeysDown newSelections markIndex markRange markIsSelected |
+	itemClicked := self itemFromPoint: event position.
+	self isMultiSelect ifFalse: [^itemClicked ifNil: [#()] ifNotNil: [:item | Array with: item]].
+	newSelections := self selectionsByIndex.
+	""
+	anyKeysDown := event isShiftDown or: [event isCtrlDown].
+	((itemClicked isNil and: [anyKeysDown])
+		or: [event button ~= #left and: [anyKeysDown or: [newSelections includes: itemClicked]]])
+			ifTrue: [^newSelections].
+	""
+	anyKeysDown ifFalse: [^itemClicked ifNil: [#()] ifNotNil: [:item | Array with: item]].
+	"Only Ctrl"
+	event isShiftDown ifFalse: 
+			[newSelections := newSelections asSortedCollection.
+			newSelections remove: itemClicked ifAbsent: [newSelections add: itemClicked].
+			^newSelections asArray].
+	"At least Shift, start dealing with the selection mark"
+	markIndex := self selectionMarkIndex.
+	markRange := markIndex == 0
+				ifTrue: [itemClicked to: itemClicked]
+				ifFalse: [(markIndex min: itemClicked) to: (markIndex max: itemClicked)].
+	"Only Shift"
+	event isCtrlDown ifFalse: [^markRange asArray].
+	"Ctrl and Shift"
+	newSelections := newSelections asSet.
+	markIsSelected := newSelections includes: markIndex.
+	markRange do: (markIsSelected
+				ifTrue: [[:i | newSelections add: i]]
+				ifFalse: [[:i | newSelections remove: i ifAbsent: []]]).
+	"For some reason, the item clicked is always left selected,
+	even if we are deselecting the range (markIsSelected == false).
+	This is not true in e.g. Windows Explorer--why?"
+	newSelections add: itemClicked.
+	^newSelections asSortedCollection asArray.!
+
 nmClick: pNMHDR 
 	"Private - Handler for a NM_CLICK notification message.
 	We intercept this to catch potential selection changes resulting from a drag-select
@@ -1507,27 +1546,27 @@ notificationClass
 
 	^NMLISTVIEW!
 
-onButtonPressed: aMouseEvent 
+onButtonPressed: aMouseEvent
 	"Private - Common handler for a button down mouse event. Look for potential
 	selection change events, and fire a #selectionChanging: event if necessary.
 	The mouse event is only allowed to propagate to the control if we are happy that 
 	the selection should indeed be changed."
 
-	| item |
-	item := self selectionFromPoint: aMouseEvent position.
-	^item = lastSelIndices 
+	| indices |
+	indices := self newSelectionsFromEvent: aMouseEvent.
+	^indices = lastSelIndices
 		ifTrue: [self defaultWindowProcessing: aMouseEvent]
 		ifFalse: 
-			[(self onSelChanging: item cause: #mouse) 
+			[(self onSelChanging: indices cause: #mouse)
 				ifTrue: 
-					["Selection change permitted?"
-					| answer |
+					[| answer |
+					"Selection change permitted?"
 					answer := self defaultWindowProcessing: aMouseEvent.
 					self onSelChanged.	"Selection may have changed"
 					answer]
 				ifFalse: 
 					["Suppress the mouse down so not received by control"
-					0]]!
+					0]].!
 
 onDisplayDetailsRequired: lvitem 
 	"Private - Get the display info for the receiver's row identified by the <LVITEM>, lvitem."
@@ -1867,11 +1906,11 @@ selectIndex: anInteger set: aBoolean
 	aBoolean ifTrue: [anLvItem dwState: mask].
 	self lvmSetItem: anInteger - 1 state: anLvItem!
 
-selectionFromPoint: pos
-	"Private - Answer the <integer> selection that would occur if a mouse click at the
-	<Point>, pos, was passed to the control."
+selectionMarkIndex
+	"Private - Answer the one-based <integer> index of the item
+	from which a multiple selection will start, or 0 if there is none."
 
-	^(self itemFromPoint: pos) ifNil: [#()] ifNotNil: [:item | Array with: item]!
+	^(self sendMessage: LVM_GETSELECTIONMARK) + 1.!
 
 selections: aCollection ifAbsent: aNiladicOrMonadicValuable 
 	"Select the first occurrences of the specified collection of <Object>s in the receiver and
@@ -2319,6 +2358,7 @@ wantCustomDrawItemNotifications: pNMHDR
 !ListView categoriesFor: #moreParams!private! !
 !ListView categoriesFor: #moreParamsAt:!private! !
 !ListView categoriesFor: #moreParamsAt:put:!private! !
+!ListView categoriesFor: #newSelectionsFromEvent:!event handling!private! !
 !ListView categoriesFor: #nmClick:!event handling-win32!private! !
 !ListView categoriesFor: #nmNotify:!event handling-win32!private! !
 !ListView categoriesFor: #nmRClick:!event handling-win32!private! !
@@ -2353,7 +2393,7 @@ wantCustomDrawItemNotifications: pNMHDR
 !ListView categoriesFor: #selectAll!public!selection! !
 !ListView categoriesFor: #selectedCount!private!selection! !
 !ListView categoriesFor: #selectIndex:set:!private!selection!wine fix! !
-!ListView categoriesFor: #selectionFromPoint:!event handling!private! !
+!ListView categoriesFor: #selectionMarkIndex!private!selection! !
 !ListView categoriesFor: #selections:ifAbsent:!public!selection! !
 !ListView categoriesFor: #selectionsByIndex:ifAbsent:!public!selection! !
 !ListView categoriesFor: #setColumnIcon:atIndex:!helpers!private! !
