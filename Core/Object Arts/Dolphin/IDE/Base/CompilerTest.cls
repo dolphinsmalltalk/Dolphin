@@ -924,28 +924,34 @@ DiffBrowser show
 
 testReturnImmediate
 	"#397"
+
 	| method |
 	#(-128 -2 3 127) do: 
-			[:each | 
+			[:each |
 			method := (self compileExpression: (each printStringRadix: 2)) method.
 			self assert: method extraIndex = 5.
-			self 
-				assert: method byteCodes = (ByteArray 
+			self
+				assert: method byteCodes = (ByteArray
 								with: Nop
 								with: PushImmediate
 								with: (each bitAnd: 16rFF)
 								with: ReturnFromMessage)].
-	#(2r1111111111 2r11111111111 2r111111111111 2r1111111111111 2r11111111111111 2r111111111111111 -2r111111111111111) do: 
-			[:each | 
+	#(2r1111111111 2r11111111111 2r111111111111 2r1111111111111 2r11111111111111 2r111111111111111 -2r111111111111111 16r3FFFFFFF -16r40000000)
+		do: 
+			[:each |
+			| codes expected |
 			method := (self compileExpression: (each printStringRadix: 2)) method.
 			self assert: method extraIndex = 5.
-			self 
-				assert: method byteCodes = (ByteArray 
+			codes := method byteCodes.
+			expected := codes first = ShortPushConst
+						ifTrue: [ByteArray with: ShortPushConst + 0 with: ReturnFromMessage]
+						ifFalse: 
+							[ByteArray
 								with: LongPushImmediate
-								with: ((each % 256) bitAnd: 16rFF)
-								with: ((each // 256) bitAnd: 16rFF)
-								with: ReturnFromMessage)].
-!
+								with: (each % 256 bitAnd: 16rFF)
+								with: (each // 256 bitAnd: 16rFF)
+								with: ReturnFromMessage].
+			self assert: expected equals: codes]!
 
 testReturnPseudoVar
 	| method |
