@@ -1897,7 +1897,7 @@ POTE Compiler::NewMethod()
 		
 		// Convert to long form to simplify the interpreter's code to exec. this quick method.
 		byte2 = m_bytecodes[0].indexOfPushInstVar();
-		m_bytecodes[0].byte = byte1 = PushInstVar;
+		m_bytecodes[0].byte = PushInstVar;
 		m_codePointer = 1;
 		GenData(byte2);
 		m_codePointer++;
@@ -1967,6 +1967,9 @@ POTE Compiler::NewMethod()
 		}
 		else
 			AddToFrameUnconditional(IntegerObjectOf(immediateWord), TEXTRANGE());
+		// We can save space by replacing the LongPushImmediate instruction with 2-byte argument with a single byte push const 0
+		m_bytecodes[0].byte = ShortPushConst;
+		RemoveBytes(1, 2);
 	}
 	else if (byte1 == ExLongPushImmediate && m_bytecodes[ExLongPushImmediateInstructionSize].byte == ReturnMessageStackTop)
 	{
@@ -1985,6 +1988,9 @@ POTE Compiler::NewMethod()
 		}
 		else
 			AddToFrameUnconditional(IntegerObjectOf(immediateValue), TEXTRANGE());
+		// We can save space by replacing the ExLongPushImmediate instruction with 4-byte argument with a single byte push const 0
+		m_bytecodes[0].byte = ShortPushConst;
+		RemoveBytes(1, ExLongPushImmediateInstructionSize-1);
 	}
 	else if (byte1 == PushChar && byte3 == ReturnMessageStackTop)
 	{
@@ -2039,6 +2045,9 @@ POTE Compiler::NewMethod()
 	POTE method = NewCompiledMethod(m_compiledMethodClass, GetCodeSize(), hdr);
 	STCompiledMethod& cmpldMethod = *(STCompiledMethod*)GetObj(method);
 	
+	// May have been changed above
+	byte1 = m_bytecodes[0].byte;
+
 	// Install bytecodes
 	if (!WantDebugMethod() //&& blockCount == 0
 		&& (GetCodeSize() < sizeof(MWORD) 
