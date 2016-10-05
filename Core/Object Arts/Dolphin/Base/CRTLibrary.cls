@@ -158,12 +158,6 @@ _i64toa: aSmallInteger string: aString radix: anInteger
 	<cdecl: lpstr _i64toa sqword lpstr sdword>
 	^self invalidCall!
 
-_isnan: aFloat
-	"Answer whether the argument is NaN (Not a Number)."
-
-	<cdecl: bool _isnan double>
-	^self invalidCall!
-
 _logb: aFloat
 	"Answer the exponent of the argument, aFloat."
 
@@ -695,7 +689,6 @@ wcscspn: aUnicodeString strCharSet: strCharSet
 !CRTLibrary categoriesFor: #_gcvt:count:buffer:!CRT functions-floating point support!public! !
 !CRTLibrary categoriesFor: #_getcwd:maxlen:!CRT functions-floating point support!public! !
 !CRTLibrary categoriesFor: #_i64toa:string:radix:!CRT functions-data conversion!public! !
-!CRTLibrary categoriesFor: #_isnan:!CRT functions-floating point support!public! !
 !CRTLibrary categoriesFor: #_logb:!CRT functions-floating point support!public! !
 !CRTLibrary categoriesFor: #_ltoa:string:radix:!CRT functions-data conversion!public! !
 !CRTLibrary categoriesFor: #_makepath:drive:dir:fname:ext:!CRT functions-file handling!public! !
