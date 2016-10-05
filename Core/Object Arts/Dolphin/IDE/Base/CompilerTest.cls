@@ -936,22 +936,12 @@ testReturnImmediate
 								with: PushImmediate
 								with: (each bitAnd: 16rFF)
 								with: ReturnFromMessage)].
-	#(2r1111111111 2r11111111111 2r111111111111 2r1111111111111 2r11111111111111 2r111111111111111 -2r111111111111111 "16r3FFFFFFF -16r40000000")
+	#(2r1111111111 2r11111111111 2r111111111111 2r1111111111111 2r11111111111111 2r111111111111111 -2r111111111111111 16r3FFFFFFF -16r40000000)
 		do: 
 			[:each |
-			| codes expected |
 			method := (self compileExpression: (each printStringRadix: 2)) method.
 			self assert: method extraIndex = 5.
-			codes := method byteCodes.
-			expected := codes first = ShortPushConst
-						ifTrue: [ByteArray with: ShortPushConst + 0 with: ReturnFromMessage]
-						ifFalse: 
-							[ByteArray
-								with: LongPushImmediate
-								with: (each % 256 bitAnd: 16rFF)
-								with: (each // 256 bitAnd: 16rFF)
-								with: ReturnFromMessage].
-			self assert: expected equals: codes]!
+			self assert: (ByteArray with: ShortPushConst + 0 with: ReturnFromMessage) equals: method byteCodes]!
 
 testReturnPseudoVar
 	| method |
