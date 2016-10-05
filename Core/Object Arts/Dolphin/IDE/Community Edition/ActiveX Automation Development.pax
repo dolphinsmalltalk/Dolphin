@@ -245,6 +245,7 @@ package methodNames
 	add: #AXTypeLibraryAnalyzer -> #constantsPoolBinding;
 	add: #AXTypeLibraryAnalyzer -> #constantsPoolName;
 	add: #AXTypeLibraryAnalyzer -> #constantsPoolName:;
+	add: #AXTypeLibraryAnalyzer -> #defaultPackageFolder;
 	add: #AXTypeLibraryAnalyzer -> #definesSymbolicConstants;
 	add: #AXTypeLibraryAnalyzer -> #generatableInterfaces;
 	add: #AXTypeLibraryAnalyzer -> #generatableModules;
@@ -3367,6 +3368,9 @@ constantsPoolName: identifier
 	constantsPoolName := identifier.
 !
 
+defaultPackageFolder
+	^PackageFolder dolphinRootPathname , 'Object Arts\Dolphin\ActiveX\Components'!
+
 definesSymbolicConstants
 	^self enums notEmpty 
 		or: [self modules anySatisfy: [:eachModule | eachModule constants notEmpty]]!
@@ -3554,7 +3558,8 @@ package
 	| pm |
 	packageName isNil ifTrue: [packageName := self name].
 	pm := Package manager.
-	^pm packageNamed: self packageName ifNone: [pm newPackage: self packageName]!
+	^pm packageNamed: self packageName
+		ifNone: [pm newPackage: (File composePath: self defaultPackageFolder subPath: self packageName)]!
 
 package: parcel
 	"Set the package into which wrapper classes for the receiver should be generated to
@@ -3777,6 +3782,7 @@ superclassClashSignal
 !AXTypeLibraryAnalyzer categoriesFor: #constantsPoolBinding!accessing!private! !
 !AXTypeLibraryAnalyzer categoriesFor: #constantsPoolName!accessing!public! !
 !AXTypeLibraryAnalyzer categoriesFor: #constantsPoolName:!accessing!public! !
+!AXTypeLibraryAnalyzer categoriesFor: #defaultPackageFolder!accessing!public! !
 !AXTypeLibraryAnalyzer categoriesFor: #definesSymbolicConstants!private!updating! !
 !AXTypeLibraryAnalyzer categoriesFor: #generatableInterfaces!enumerating!public! !
 !AXTypeLibraryAnalyzer categoriesFor: #generatableModules!enumerating!public! !
