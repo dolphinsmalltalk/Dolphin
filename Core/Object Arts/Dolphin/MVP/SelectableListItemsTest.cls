@@ -13,6 +13,9 @@ SelectableListItemsTest comment: ''!
 autoSelectsFirst
 	^false!
 
+classToTest
+	^self class classToTest!
+
 objectsToTest
 	^(OrderedCollection new)
 		add: 5;
@@ -267,7 +270,7 @@ testSelectionByIndex
 	| objects start |
 	objects := self objectsToTest.
 	presenter model addAll: objects.
-	start := self autoSelectsFirst 
+	start := self autoSelectsFirst
 				ifTrue: 
 					[self assert: presenter selection == objects first.
 					2]
@@ -276,14 +279,82 @@ testSelectionByIndex
 					1].
 	start to: objects size
 		do: 
-			[:n | 
-			self 
+			[:n |
+			self
 				should: [presenter selectionByIndex: n]
 				trigger: #selectionChanged
 				against: presenter.
-			self assert: presenter selectionByIndex = n.
-			self assert: presenter selection = (objects at: n)].
+			self assert: n equals: presenter selectionByIndex.
+			"Setting same selection should be a no-op"
+			self
+				shouldnt: [presenter selectionByIndex: n]
+				trigger: #selectionChanged
+				against: presenter.
+			self assert: (objects at: n) equals: presenter selection].
+	self
+		should: [presenter selectionByIndex: 0]
+		trigger: #selectionChanged
+		against: presenter.
+	self deny: presenter hasSelection.
+	self
+		shouldnt: [presenter selectionByIndex: 0]
+		trigger: #selectionChanged
+		against: presenter.
+	self deny: presenter hasSelection.
 	^objects!
+
+testSelectionsByIndexMulti
+	| objects sel |
+	objects := self objectsToTest.
+	presenter view isMultiSelect: true.
+	presenter model addAll: objects.
+	"Select a single object"
+	sel := Array with: objects size.
+	self
+		should: [presenter selectionsByIndex: sel]
+		trigger: #selectionChanged
+		against: presenter.
+	self assert: sel equals: presenter selectionsByIndex.
+	"Selecting same element should be a no-op"
+	self
+		shouldnt: [presenter selectionsByIndex: sel]
+		trigger: #selectionChanged
+		against: presenter.
+	self assert: sel equals: presenter selectionsByIndex.
+	"Selecting a pair including the existing selection"
+	sel := Array with: 1 with: objects size.
+	self
+		should: [presenter selectionsByIndex: sel]
+		trigger: #selectionChanged
+		against: presenter.
+	self assert: sel equals: presenter selectionsByIndex.
+	"Selecting same pair should be a no-op"
+	self
+		shouldnt: [presenter selectionsByIndex: sel]
+		trigger: #selectionChanged
+		against: presenter.
+	self assert: sel equals: presenter selectionsByIndex.
+	"Selecting single item from existing selection should remove other selections"
+	sel := #(1).
+	self
+		should: [presenter selectionsByIndex: sel]
+		trigger: #selectionChanged
+		against: presenter.
+	self assert: sel equals: presenter selectionsByIndex.
+	"Selecting a different pair not including the existing single selection"
+	sel := Array with: 2 with: objects size - 1.
+	self
+		should: [presenter selectionsByIndex: sel]
+		trigger: #selectionChanged
+		against: presenter.
+	self assert: sel equals: presenter selectionsByIndex.
+	"#selectionByIndex: should also clear other selections"
+	sel := sel copyFrom: 2.
+	self
+		should: [presenter selectionByIndex: sel first]
+		trigger: #selectionChanged
+		against: presenter.
+	self assert: sel equals: presenter selectionsByIndex!
 
 testSetTextBlockDoesNotAffectSelection
 	| objects |
@@ -332,6 +403,7 @@ testUpdateSelectedObject
 		trigger: #selectionChanging:
 		against: presenter! !
 !SelectableListItemsTest categoriesFor: #autoSelectsFirst!private!testing! !
+!SelectableListItemsTest categoriesFor: #classToTest!helpers!private! !
 !SelectableListItemsTest categoriesFor: #objectsToTest!helpers!private! !
 !SelectableListItemsTest categoriesFor: #removingResetsSelection!private!testing! !
 !SelectableListItemsTest categoriesFor: #testAddDoesNotChangeSelection!public!unit tests! !
@@ -342,15 +414,34 @@ testUpdateSelectedObject
 !SelectableListItemsTest categoriesFor: #testResetSelection!public!unit tests! !
 !SelectableListItemsTest categoriesFor: #testSelection!public!unit tests! !
 !SelectableListItemsTest categoriesFor: #testSelectionByIndex!public!unit tests! !
+!SelectableListItemsTest categoriesFor: #testSelectionsByIndexMulti!public!unit tests! !
 !SelectableListItemsTest categoriesFor: #testSetTextBlockDoesNotAffectSelection!public!unit tests! !
 !SelectableListItemsTest categoriesFor: #testUpdateSelectedObject!public!unit tests! !
 
 !SelectableListItemsTest class methodsFor!
 
+buildSuiteFromMethods: testMethods
+	^super buildSuiteFromMethods: (testMethods difference: self excludedTestSelectors)!
+
+classToTest
+	^self subclassResponsibility!
+
+excludedTestSelectors
+	^(self isAbstract or: [self classToTest canUnderstand: #isMultiSelect:])
+		ifTrue: [#()]
+		ifFalse: [#(#testSelectionsByIndexMulti)]!
+
 isAbstract
 	"Override to true if a TestCase subclass is Abstract and should not have
 	TestCase instances built from it"
 
-	^self == ##(self)! !
+	^self == ##(self)!
+
+testSelectors
+	^super testSelectors difference: self excludedTestSelectors! !
+!SelectableListItemsTest class categoriesFor: #buildSuiteFromMethods:!Building Suites!public! !
+!SelectableListItemsTest class categoriesFor: #classToTest!helpers!private! !
+!SelectableListItemsTest class categoriesFor: #excludedTestSelectors!accessing!private! !
 !SelectableListItemsTest class categoriesFor: #isAbstract!public!Testing! !
+!SelectableListItemsTest class categoriesFor: #testSelectors!Accessing!public! !
 

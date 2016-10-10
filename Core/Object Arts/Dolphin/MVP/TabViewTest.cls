@@ -13,9 +13,6 @@ TabViewTest comment: ''!
 autoSelectsFirst
 	^true!
 
-classToTest
-	^TabView!
-
 removingResetsSelection
 	^false!
 
@@ -37,7 +34,12 @@ testSetTextImageDoesNotAffectSelection
 		trigger: #selectionChanging:
 		against: presenter! !
 !TabViewTest categoriesFor: #autoSelectsFirst!private!testing! !
-!TabViewTest categoriesFor: #classToTest!helpers!private! !
 !TabViewTest categoriesFor: #removingResetsSelection!public!testing! !
 !TabViewTest categoriesFor: #testSetTextImageDoesNotAffectSelection!public!unit tests! !
+
+!TabViewTest class methodsFor!
+
+classToTest
+	^TabView! !
+!TabViewTest class categoriesFor: #classToTest!helpers!private! !
 

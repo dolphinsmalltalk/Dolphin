@@ -16,9 +16,6 @@ assertCaretVisible
 	pos := (view itemRect: view caretIndex) origin.
 	self assert: (view rectangle containsPoint: pos)!
 
-classToTest
-	^ListView!
-
 getColumns
 	| answer |
 	answer := OrderedCollection new.
@@ -222,7 +219,6 @@ testSetTextImageDoesNotAffectSelection
 				trigger: #selectionChanging:
 				against: presenter]! !
 !ListViewTest categoriesFor: #assertCaretVisible!private!unit tests! !
-!ListViewTest categoriesFor: #classToTest!helpers!private! !
 !ListViewTest categoriesFor: #getColumns!helpers!private! !
 !ListViewTest categoriesFor: #getItem:!private!unit tests! !
 !ListViewTest categoriesFor: #setColumns:!private!unit tests! !
@@ -235,4 +231,10 @@ testSetTextImageDoesNotAffectSelection
 !ListViewTest categoriesFor: #testSelectionRemainsVisibleOnSort!public!unit tests! !
 !ListViewTest categoriesFor: #testSetTextBlockDoesNotAffectSelection!public!unit tests! !
 !ListViewTest categoriesFor: #testSetTextImageDoesNotAffectSelection!public!unit tests! !
+
+!ListViewTest class methodsFor!
+
+classToTest
+	^ListView! !
+!ListViewTest class categoriesFor: #classToTest!helpers!private! !
 

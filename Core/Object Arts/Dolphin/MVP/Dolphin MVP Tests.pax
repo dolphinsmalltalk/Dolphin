@@ -28,7 +28,6 @@ package classNames
 	add: #MultilineTextEditTest;
 	add: #MultipleSelectionListBoxTest;
 	add: #MultipleSelectionListViewTest;
-	add: #MultiSelectListBoxTest;
 	add: #PresenterTest;
 	add: #ProportionalLayoutTest;
 	add: #PushButtonTest;
@@ -296,11 +295,6 @@ SelectableListItemsTest subclass: #ListViewTest
 	poolDictionaries: 'ListViewConstants'
 	classInstanceVariableNames: ''!
 SelectableListItemsTest subclass: #TabViewTest
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-ListBoxTest subclass: #MultiSelectListBoxTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
