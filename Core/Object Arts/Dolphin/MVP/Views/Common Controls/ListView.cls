@@ -1848,25 +1848,6 @@ selectIndex: anInteger set: aBoolean
 	aBoolean ifTrue: [anLvItem dwState: mask].
 	self lvmSetItem: anInteger - 1 state: anLvItem!
 
-selectionByIndex: anInteger ifAbsent: exceptionHandler 
-	"Select the object identified by the specified <integer> index in the receiver. If the index
-	is zero then all selections are cleared. "
-
-	(lastSelIndices includes: anInteger) 
-		ifFalse: 
-			[| newSelIndices |
-			anInteger = self noSelection 
-				ifTrue: 
-					[self basicResetSelection.
-					newSelIndices := #()]
-				ifFalse: 
-					[(anInteger between: 1 and: self size) ifFalse: [^exceptionHandler value].
-					self ensureVisible: anInteger.
-					newSelIndices := Array with: anInteger.
-					self basicSelectionsByIndex: newSelIndices].
-			self onSelChanged].
-	^anInteger!
-
 selectionFromPoint: pos
 	"Private - Answer the <integer> selection that would occur if a mouse click at the
 	<Point>, pos, was passed to the control."
@@ -2352,7 +2333,6 @@ wantCustomDrawItemNotifications: pNMHDR
 !ListView categoriesFor: #selectAll!public!selection! !
 !ListView categoriesFor: #selectedCount!private!selection! !
 !ListView categoriesFor: #selectIndex:set:!private!selection!wine fix! !
-!ListView categoriesFor: #selectionByIndex:ifAbsent:!public!selection! !
 !ListView categoriesFor: #selectionFromPoint:!event handling!private! !
 !ListView categoriesFor: #selections:ifAbsent:!public!selection! !
 !ListView categoriesFor: #selectionsByIndex:ifAbsent:!public!selection! !
