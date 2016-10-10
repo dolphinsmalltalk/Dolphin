@@ -8,9 +8,9 @@ SelectableListItemsTest subclass: #ListPresenterTest
 ListPresenterTest guid: (GUID fromString: '{716D7D13-AFD0-4842-A17B-4EFB293AF4DE}')!
 ListPresenterTest comment: ''!
 !ListPresenterTest categoriesForClass!Unclassified! !
-!ListPresenterTest methodsFor!
+!ListPresenterTest class methodsFor!
 
 classToTest
 	^ListPresenter! !
-!ListPresenterTest categoriesFor: #classToTest!helpers!private! !
+!ListPresenterTest class categoriesFor: #classToTest!helpers!private! !
 
