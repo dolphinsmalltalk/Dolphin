@@ -167,14 +167,12 @@ dropHighlight
 ensureSelectionVisible
 	"Ensure the selected item is visible, scrolling it into view if necessary."
 
-	self isMultiSelect 
+	self isMultiSelect
 		ifTrue: 
-			["In multi-select mode we want to bring the caret into view, or the first
-			 selected item if the caret is not on a selected item"
-			| caret selected |
+			[| caret selected |
 			caret := self caretIndex.
 			selected := self getMultipleSelections.
-			self caretIndex: ((selected isEmpty or: [selected includes: caret]) 
+			self caretIndex: ((selected isEmpty or: [selected includes: caret])
 						ifTrue: [caret]
 						ifFalse: [selected first])]
 		ifFalse: [super ensureSelectionVisible]!
@@ -360,6 +358,17 @@ positionForKeyboardContextMenu
 		ifFalse: [self mapPoint: (self itemRect: caret) bottomLeft to: self class desktop]
 !
 
+primarySelectionIndex
+	"Answer the index of the selected item with focus, or zero if there is no selection."
+
+	| caret selected |
+	selected := self selectionsByIndex.
+	^selected isEmpty
+		ifTrue: [0]
+		ifFalse: 
+			[caret := self caretIndex.
+			(selected includes: caret) ifTrue: [caret] ifFalse: [selected first]]!
+
 selectAll
 	| size |
 	size := self size.
@@ -494,6 +503,7 @@ wmRButtonDown: message wParam: wParam lParam: lParam
 !ListBox categoriesFor: #lbnSelCancel!event handling-win32!private!selection! !
 !ListBox categoriesFor: #lbnSelChange!event handling-win32!private!selection! !
 !ListBox categoriesFor: #positionForKeyboardContextMenu!enquiries!public! !
+!ListBox categoriesFor: #primarySelectionIndex!public!selection! !
 !ListBox categoriesFor: #selectAll!public!selection! !
 !ListBox categoriesFor: #selectedCount!public!selection! !
 !ListBox categoriesFor: #selectIndex:set:!private!selection! !

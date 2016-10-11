@@ -16,6 +16,9 @@ assertCaretVisible
 	pos := (view itemRect: view caretIndex) origin.
 	self assert: (view rectangle containsPoint: pos)!
 
+classToTest
+	^ListView!
+
 getColumns
 	| answer |
 	answer := OrderedCollection new.
@@ -59,7 +62,7 @@ setColumns: cols
 	^list!
 
 sortSelections
-	^#(50)!
+	^self subclassResponsibility!
 
 testChangeViewMode
 	"#1510"
@@ -219,6 +222,7 @@ testSetTextImageDoesNotAffectSelection
 				trigger: #selectionChanging:
 				against: presenter]! !
 !ListViewTest categoriesFor: #assertCaretVisible!private!unit tests! !
+!ListViewTest categoriesFor: #classToTest!helpers!private! !
 !ListViewTest categoriesFor: #getColumns!helpers!private! !
 !ListViewTest categoriesFor: #getItem:!private!unit tests! !
 !ListViewTest categoriesFor: #setColumns:!private!unit tests! !
@@ -234,7 +238,10 @@ testSetTextImageDoesNotAffectSelection
 
 !ListViewTest class methodsFor!
 
-classToTest
-	^ListView! !
-!ListViewTest class categoriesFor: #classToTest!helpers!private! !
+isAbstract
+	"Override to true if a TestCase subclass is Abstract and should not have
+	TestCase instances built from it"
+
+	^self == ##(self)! !
+!ListViewTest class categoriesFor: #isAbstract!public!Testing! !
 
