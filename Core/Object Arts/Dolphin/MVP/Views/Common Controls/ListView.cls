@@ -499,7 +499,7 @@ ensureSelectionVisible
 	| caret selected |
 	caret := self caretIndex.
 	selected := self selectionsByIndex.
-	self ensureVisible: ((selected isEmpty or: [selected includes: caret]) 
+	self ensureVisible: ((selected isEmpty or: [selected includes: caret])
 				ifTrue: [caret]
 				ifFalse: [selected first])!
 
@@ -906,15 +906,18 @@ isMultiSelect
 
 	^self baseStyle noMask: LVS_SINGLESEL!
 
-isMultiSelect: aBoolean 
+isMultiSelect: aBoolean
 	"Set whether the receiver is in multiple or single selection mode."
 
-	| isSingleSelect |
+	| isSingleSelect primary |
 	self isMultiSelect = aBoolean ifTrue: [^self].
-	"If switching to single-select from multi-select we must remove all but one of the
-	selections, since the view does not do this itself."
-	isSingleSelect := aBoolean not.
-	self 
+	(isSingleSelect := aBoolean not)
+		ifTrue: 
+			["If switching to single-select from multi-select we must remove all but one
+			 of the selections, since the view does not do this itself."
+			primary := self primarySelectionIndex.
+			self selectionByIndex: primary].
+	self
 		baseStyleMask: LVS_SINGLESEL
 		set: isSingleSelect
 		recreateIfChanged: false!
@@ -1731,6 +1734,17 @@ primaryColumn
 
 	^self allColumns first!
 
+primarySelectionIndex
+	"Answer the index of the selected item with focus, or zero if there is no selection."
+
+	| caret selected |
+	selected := self selectionsByIndex.
+	^selected isEmpty
+		ifTrue: [0]
+		ifFalse: 
+			[caret := self caretIndex.
+			(selected includes: caret) ifTrue: [caret] ifFalse: [selected first]]!
+
 queryCommand: aCommandQuery
 	"Update aCommandQuery to indicates how a command would be processed.
 	if sent to the receiver. Answers whether the receiver recognised the command
@@ -2321,6 +2335,7 @@ wantCustomDrawItemNotifications: pNMHDR
 !ListView categoriesFor: #onViewCreated!event handling!public! !
 !ListView categoriesFor: #onVScroll:!event handling!public! !
 !ListView categoriesFor: #primaryColumn!columns!private! !
+!ListView categoriesFor: #primarySelectionIndex!public!selection! !
 !ListView categoriesFor: #queryCommand:!commands!public! !
 !ListView categoriesFor: #refreshContents!public!updating! !
 !ListView categoriesFor: #refreshNonVirtual!private!updating! !
