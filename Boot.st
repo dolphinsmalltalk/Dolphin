@@ -83,8 +83,7 @@ devsesh onPreSaveImage.
 	maxObjects: 24576*1024
 ] ensure: [devsesh onPostSaveImage]!
 
-"Remove rogue .img and unnecessary .chg files"
-File delete: (File default: SessionManager current imagePath extension: 'img').
+"Remove unnecessary .chg files"
 File delete: 'DBOOT.chg'!
 
 SessionManager current quit!
