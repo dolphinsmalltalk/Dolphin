@@ -267,7 +267,7 @@ testSelectionByIndex
 	| objects start |
 	objects := self objectsToTest.
 	presenter model addAll: objects.
-	start := self autoSelectsFirst 
+	start := self autoSelectsFirst
 				ifTrue: 
 					[self assert: presenter selection == objects first.
 					2]
@@ -276,13 +276,28 @@ testSelectionByIndex
 					1].
 	start to: objects size
 		do: 
-			[:n | 
-			self 
+			[:n |
+			self
 				should: [presenter selectionByIndex: n]
 				trigger: #selectionChanged
 				against: presenter.
-			self assert: presenter selectionByIndex = n.
-			self assert: presenter selection = (objects at: n)].
+			self assert: n equals: presenter selectionByIndex.
+			"Setting same selection should be a no-op"
+			self
+				shouldnt: [presenter selectionByIndex: n]
+				trigger: #selectionChanged
+				against: presenter.
+			self assert: (objects at: n) equals: presenter selection].
+	self
+		should: [presenter selectionByIndex: 0]
+		trigger: #selectionChanged
+		against: presenter.
+	self deny: presenter hasSelection.
+	self
+		shouldnt: [presenter selectionByIndex: 0]
+		trigger: #selectionChanged
+		against: presenter.
+	self deny: presenter hasSelection.
 	^objects!
 
 testSetTextBlockDoesNotAffectSelection

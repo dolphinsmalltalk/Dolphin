@@ -62,7 +62,7 @@ setColumns: cols
 	^list!
 
 sortSelections
-	^#(50)!
+	^self subclassResponsibility!
 
 testChangeViewMode
 	"#1510"
@@ -235,4 +235,13 @@ testSetTextImageDoesNotAffectSelection
 !ListViewTest categoriesFor: #testSelectionRemainsVisibleOnSort!public!unit tests! !
 !ListViewTest categoriesFor: #testSetTextBlockDoesNotAffectSelection!public!unit tests! !
 !ListViewTest categoriesFor: #testSetTextImageDoesNotAffectSelection!public!unit tests! !
+
+!ListViewTest class methodsFor!
+
+isAbstract
+	"Override to true if a TestCase subclass is Abstract and should not have
+	TestCase instances built from it"
+
+	^self == ##(self)! !
+!ListViewTest class categoriesFor: #isAbstract!public!Testing! !
 
