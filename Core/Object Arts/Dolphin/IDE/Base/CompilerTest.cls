@@ -69,18 +69,6 @@ findIP: anInteger inTextMap: aTextMap
 	[i < size and: [anInteger > (aTextMap at: i) key]] whileTrue: [i := i + 1].
 	^i!
 
-getDebugInfoFor: aCompiledMethod debug: debugBoolean 
-	| methodClass compiler flags optimizeBoolean |
-	optimizeBoolean := true.
-	methodClass := aCompiledMethod methodClass.
-	compiler := aCompiledMethod compilerClass.
-	flags := methodClass defaultCompilationFlags | (compiler debugInfoFlags: debugBoolean).
-	flags := flags mask: NoOptimize set: optimizeBoolean not.
-	^compiler 
-		compile: aCompiledMethod getSource
-		in: methodClass
-		flags: flags!
-
 getTestMethod: aSymbol 
 	| oldMethod result method |
 	oldMethod := DolphinCompilerTestMethods compiledMethodAt: aSymbol.
@@ -1396,7 +1384,26 @@ verifyTempsMapOf: aCompiledMethod
 								print: each method;
 								nextPutAll: ': ';
 								print: each;
-								cr]]]! !
+								cr]]]!
+
+verifyTextMapsOf: each
+	| debugTextMap debugMethod textMap |
+	debugMethod := each asDebugMethod.
+	"If fails then the method failed to compile"
+	self assert: debugMethod notNil.
+	textMap := each debugInfo textMap.
+	debugTextMap := debugMethod textMap.
+	"The text maps should contain exactly the same number of entries, and the text range for each entry should be the same"
+	self assert: textMap size equals: debugTextMap size.
+	textMap with: debugTextMap do: [:a :b | self assert: a value = b value].
+	^debugTextMap do: 
+			[:assoc |
+			| byte ip |
+			ip := assoc key.
+			ip == 0
+				ifFalse: 
+					[byte := debugMethod byteCodes at: ip.
+					self assert: byte ~= 0]]! !
 !CompilerTest categoriesFor: #assertBlocksOptimized:!helpers!private! !
 !CompilerTest categoriesFor: #checkCompileError:range:code:line:source:!helpers!private! !
 !CompilerTest categoriesFor: #compilationErrorClass!constants!private! !
@@ -1409,7 +1416,6 @@ verifyTempsMapOf: aCompiledMethod
 !CompilerTest categoriesFor: #evalTestMethod:withArgs:!helpers!private! !
 !CompilerTest categoriesFor: #evaluateExpression:!helpers!private! !
 !CompilerTest categoriesFor: #findIP:inTextMap:!development!private! !
-!CompilerTest categoriesFor: #getDebugInfoFor:debug:!private! !
 !CompilerTest categoriesFor: #getTestMethod:!private! !
 !CompilerTest categoriesFor: #messageFromError:!helpers!private! !
 !CompilerTest categoriesFor: #scan:class:!helpers!private! !
@@ -1476,6 +1482,7 @@ verifyTempsMapOf: aCompiledMethod
 !CompilerTest categoriesFor: #testWhileTrue!public!unit tests! !
 !CompilerTest categoriesFor: #testWriteAccessor!public!unit tests!unit tests-known failures! !
 !CompilerTest categoriesFor: #verifyTempsMapOf:!helpers!private! !
+!CompilerTest categoriesFor: #verifyTextMapsOf:!helpers!private!unit tests-long running! !
 
 !CompilerTest class methodsFor!
 
