@@ -100,7 +100,13 @@ contents
 	^contents!
 
 defaultSystemFolderColor
-	^RGB red: 41 green: 124 blue: 182!
+	"Reference RGB indirectly to eliminate hard dependency on Dolphin MVP Base.
+	This method will only be called if SmalltalkSystemShell is loaded, in which case RGB will be as well."
+
+	^(Smalltalk at: #RGB)
+		red: 41
+		green: 124
+		blue: 182.!
 
 fullName
 	"Answer the full product name associated with the receiver"

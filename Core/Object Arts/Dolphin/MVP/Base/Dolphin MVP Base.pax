@@ -12,7 +12,12 @@ GDILibrary openDefault!!
 "Opening the CommCtrlLibrary causes the common controls to be registered"
 CommCtrlLibrary default!!
 "Due to a limitation of the Dolphin protocols system, any protocols on a class that are incomplete without loose methods in an add-on package are lost when the add-on package is uninstalled (essentially this is because the package system is largely unaware of protocols, and so only protocols defined in the basic class are maintained). In this case we add #queryCommand: to MessageSend so that it can be used as a closed command. The command routing framework tests for the <commandTarget> protocol to see whether it should include the command itself in the route."
-MessageSend addProtocol: #commandTarget!!'.
+MessageSend addProtocol: #commandTarget!!
+"It was a crap idea to have classes whose names only differed by case wasn''t it - hence we need this bodge even now"
+SourceManager default fileIn: self path , ''BITMAP_Struct.cls''!!
+BITMAP initializeAfterLoad!!
+SourceManager default fileIn: self path , ''DIBSECTION_Struct.cls''!!
+DIBSECTION initializeAfterLoad!!'.
 package basicScriptAt: #postuninstall put: '| resIds |
 resIds := ResourceIdentifier allResourceIdentifiers.
 resIds isEmpty 
