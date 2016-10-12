@@ -8,6 +8,7 @@ Tests should not be added to this package without creating a Github issue, as ot
 
 package methodNames
 	add: #BlockClosureTest -> #testFullBlockEquality;
+	add: #CompilerTest -> #testCleanBlockTextMaps;
 	add: #CompilerTest -> #testOptimizedLoopReadBeforeWritten;
 	add: #DebuggerTest -> #testRemapIPSmokeTest;
 	add: #GdiplusBitmapTest -> #testAsByteArray;
@@ -64,6 +65,10 @@ testFullBlockEquality
 
 !CompilerTest methodsFor!
 
+testCleanBlockTextMaps
+	#('[:a|a > 5 ifTrue: [''Many''] ifFalse: [a printString]]' '[1]' '[]')
+		do: [:each | self verifyTextMapsOf: (self compileExpression: each) method]!
+
 testOptimizedLoopReadBeforeWritten
 	| expected expr actual |
 	expected := OrderedCollection new.
@@ -79,6 +84,7 @@ testOptimizedLoopReadBeforeWritten
 	"Results of actual block evaluation in a loop and optimized loop should be the same - any
 	read-before-written locals must be reinitialized to zero on each iteration"
 	self assert: actual = expected! !
+!CompilerTest categoriesFor: #testCleanBlockTextMaps!public!unit tests! !
 !CompilerTest categoriesFor: #testOptimizedLoopReadBeforeWritten!public!unit tests! !
 
 !DebuggerTest methodsFor!
