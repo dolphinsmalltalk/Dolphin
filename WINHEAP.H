@@ -138,6 +138,8 @@ extern int      __sbh_cntHeaderList;      /*  count of entries defined */
 extern PHEADER      __sbh_pHeaderDefer;
 extern int          __sbh_indGroupDefer;
 
+/************************ BEGIN BSM MODIFICATION ******************************
+* We don't need these
 _Check_return_ extern size_t  __cdecl _get_sb_threshold(void);
 extern int     __cdecl _set_sb_threshold(_In_ size_t _Size);
 
@@ -151,6 +153,7 @@ _Check_return_ _Ret_opt_bytecap_(_NewSize) extern void *  __cdecl _expand_base(_
 
 _Check_return_ extern size_t  __cdecl _msize_base(_In_ void * _Memory);
 _Check_return_ extern size_t  __cdecl _aligned_msize_base(_In_ void * _Memory, _In_ size_t _Alignment, _In_ size_t _Offset);
+************************ END BSM MODIFICATION ********************************/
 
 _Check_return_ extern int     __cdecl __sbh_heap_init(_In_ size_t _Threshold);
 
