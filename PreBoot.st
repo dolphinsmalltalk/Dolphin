@@ -1,6 +1,12 @@
 "This file contains patches to base system classes that are required in order to be able to reload the base class library,
 but which are not yet consolidated into the boot image. Most BCL changes do not require pre-patching, so try without first"!
 
+| emptyBlock |
+VMLibrary default primRegistryAt: 7 put: nil.
+emptyBlock := Compiler evaluate: '[]'.
+emptyBlock method isImmutable: true.
+VMLibrary default primRegistryAt: 7 put: emptyBlock!
+
 !Class methodsFor!
 
 addClassConstant: aString value: anObject
