@@ -3248,9 +3248,17 @@ void Compiler::AssertValidIpForTextMapEntry(int ip, bool bFinal)
 											|| bc.pScope != prev->pScope 
 											|| bc.pScope->GetRealScope() != prev->pScope->GetRealScope())));
 		if (bFinal && WantDebugMethod())
+		{
 			// If not at the start of a method or block, then a text map entry should only occur after a Break
 			// or (when stripping unreachable code) if the byte immediately follows an unconditional return/jump
-			_ASSERTE(ip == 0 || isFirstInBlock || bc.isConditionalJump() || (prev->isBreak() || (!bc.isJumpTarget() && (prev->isReturn() || prev->isLongJump()))));
+			_ASSERTE(ip == 0 
+				|| isFirstInBlock 
+				|| bc.isConditionalJump()
+				|| (bc.isShortPushConst() && IsBlock(m_literalFrame[bc.indexOfShortPushConst()]))
+				|| (bc.byte == PushConst && IsBlock(m_literalFrame[m_bytecodes[ip + 1].byte]))
+				|| (prev->isBreak() || (!bc.isJumpTarget() && (prev->isReturn() || prev->isLongJump()))));
+		}
+
 		_ASSERTE(bc.isSend()
 			|| bc.isConditionalJump()
 			|| bc.isStore()

@@ -2500,19 +2500,21 @@ void Compiler::MakeCleanBlockAt(int i)
 	// with a push of a literal block we store in the frame, and a jump
 	// over the blocks bytecodes.
 
-	POTE blockPointer = GetVMPointers().EmptyBlock;
+	const VMPointers& vmPointers = GetVMPointers();
+	POTE blockPointer = WantDebugMethod() ? vmPointers.EmptyDebugBlock : vmPointers.EmptyBlock;
 	bool isEmptyBlock = pScope->IsEmptyBlock();
-	bool useEmptyBlock = isEmptyBlock && blockPointer != Nil() && !WantDebugMethod();
+	bool useEmptyBlock = isEmptyBlock && blockPointer != Nil() 
+		// We don't want to generate empty block form for the empty block itself
+		&& this->GetTextLength() != 2;
 
 	if (useEmptyBlock)
 	{
 		_ASSERTE(!firstInBlock.isJumpTarget());
 		_ASSERTE(!secondInBlock.isJumpTarget());
-		_ASSERTE(!WantDebugMethod());
 	}
 	else
 	{
-		blockPointer = m_piVM->NewObjectWithPointers(GetVMPointers().ClassBlockClosure, 
+		blockPointer = m_piVM->NewObjectWithPointers(vmPointers.ClassBlockClosure, 
 		((sizeof(STBlockClosure)
 			-sizeof(Oop)	// Deduct dummy literal frame entry (arrays cannot be zero sized in IDL)
 //			-sizeof(ObjectHeader)	// Deduct size of head which NewObjectWithPointers includes implicitly

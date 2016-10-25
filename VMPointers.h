@@ -71,7 +71,7 @@ struct VMPointers //: public Object
 	StringOTE* LineDelimString;							// 5
 	ArrayOTE* EmptyArray;								// 6
 	BlockOTE* EmptyBlock;								// 7
-	Oop _reserved8;										// 8
+	BlockOTE* EmptyDebugBlock;							// 8
 
 	POTE SmalltalkDictionary;							// 9	- Pointer to Smalltalk variable (a variable binding)
 	SchedulerOTE* Scheduler;							// 10	- Pointer to Processor object
