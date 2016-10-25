@@ -1150,6 +1150,40 @@ testTempPairing
 	self assert: pairs isEmpty.
 	self assert: (method value: nil withArguments: #()) = (16 - 8)!
 
+testTextMapOfEmptyBlock
+	| block method debugMethod |
+	block := Compiler evaluate: '| x | x := []. x'.
+	self assert: block == VMLibrary default emptyBlock.
+	method := block method.
+	self assert: (ByteArray
+				with: ShortPushConst + 0
+				with: ReturnFromMessage
+				with: ShortPushNil
+				with: ReturnFromBlock)
+		equals: method byteCodes.
+	debugMethod := block method asDebugMethod.
+	self
+		assert: (ByteArray
+				with: ShortPushConst + 0
+				with: Break
+				with: ReturnFromMessage) , (ByteArray
+							with: ShortPushNil
+							with: Break
+							with: ReturnFromBlock)
+		equals: debugMethod byteCodes.
+	self assert: method textMap size equals: debugMethod textMap size.
+	2 to: 4
+		do: 
+			[:ip |
+			| debugIp |
+			debugIp := self findIP: ip inTextMap: method textMap.
+			self assert: (method byteCodes at: ip)
+				equals: (debugMethod byteCodes at: (debugMethod textMap at: debugIp) key)]!
+
+testTextMapsOfCleanBlocks
+	#('[:a|a > 5 ifTrue: [''Many''] ifFalse: [a printString]]' '[1]' '[]')
+		do: [:each | self verifyTextMapsOf: (self compileExpression: each) method]!
+
 testTimesRepeat
 	"This is erroneous, but compiler does not detect that, just looks for literal zero arg block, which is OK I think"
 
@@ -1474,6 +1508,8 @@ verifyTextMapsOf: each
 !CompilerTest categoriesFor: #testSymbolScanning!public!unit tests! !
 !CompilerTest categoriesFor: #testTempMaps!public!unit tests! !
 !CompilerTest categoriesFor: #testTempPairing!public!unit tests! !
+!CompilerTest categoriesFor: #testTextMapOfEmptyBlock!public! !
+!CompilerTest categoriesFor: #testTextMapsOfCleanBlocks!public!unit tests! !
 !CompilerTest categoriesFor: #testTimesRepeat!public!unit tests! !
 !CompilerTest categoriesFor: #testTimesRepeatResult!public!unit tests! !
 !CompilerTest categoriesFor: #testToByDo!public!unit tests! !

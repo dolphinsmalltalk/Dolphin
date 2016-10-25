@@ -11,7 +11,7 @@ package methodNames
 	add: #CompilerTest -> #knownTempsMapIssues;
 	add: #CompilerTest -> #knownTextMapIssues;
 	add: #CompilerTest -> #testTempMapOuterDepthExhaustive;
-	add: #CompilerTest -> #testTextMapExhaustive;
+	add: #CompilerTest -> #testTextMapsExhaustive;
 	add: #VMTest -> #assertLoopInterruptible:;
 	add: #VMTest -> #testLoopsInterruptible;
 	add: #VMTest -> #testQuiesceWhenUIBlocked;
@@ -147,7 +147,7 @@ knownTempsMapIssues
 	^env not!
 
 knownTextMapIssues
-	| bad env |
+	| bad |
 	bad := OrderedCollection new.
 	"These methods are all have optimisation where an unconditional jump is replaced with a
 	return, and the text map for the optimised method then has an extra entry for that return
@@ -159,9 +159,7 @@ knownTextMapIssues
 	Smalltalk at: #ItcSystemManager ifPresent: [:class | bad add: class class >> #imageFilename].
 	Smalltalk at: #WikiDocImageSelectorServlet ifPresent: [:class | bad add: class >> #searchImages:].
 	bad add: DolphinCompilerTestMethods >> #testWarningReadBeforeWrittenBlockTemp.
-	"Different size maps for debug/optimized - due to empty blocks?"
-	env := BrowserEnvironment new.
-	^(env forMethods: bad asArray) | (env referencesTo: [])!
+	^BrowserEnvironment new forMethods: bad asArray!
 
 testTempMapOuterDepthExhaustive
 	"Check that the temp maps for all methods with env temps have the correct outer depth. Note
@@ -170,7 +168,7 @@ testTempMapOuterDepthExhaustive
 
 	self knownTempsMapIssues not methodsDo: [:each | self verifyTempsMapOf: each]!
 
-testTextMapExhaustive
+testTextMapsExhaustive
 	"Check that the release and debug text maps match for every method in the system .... with a
 	couple of exceptions... ahem"
 
@@ -178,7 +176,7 @@ testTextMapExhaustive
 !CompilerTest categoriesFor: #knownTempsMapIssues!public!unit tests-long running! !
 !CompilerTest categoriesFor: #knownTextMapIssues!private! !
 !CompilerTest categoriesFor: #testTempMapOuterDepthExhaustive!public!unit tests-long running! !
-!CompilerTest categoriesFor: #testTextMapExhaustive!public!unit tests-long running! !
+!CompilerTest categoriesFor: #testTextMapsExhaustive!public!unit tests-long running! !
 
 !VMTest methodsFor!
 
