@@ -882,13 +882,9 @@ hasImageStripper
 hasUncommittedPrerequisites
 	"Private - Answer whether any of the receivers prerequisites or their
 	prerequisites are current uncomitted. If so the package should not be saved
-	as it will not be reloadable into an image without the uncommitted objects.
-	N.B. This method will go infinitely recursive if the package has cyclic
-	pre-requisites as it does not maintain a visit list. It should therefore
-	be called only after hasCyclicPrerequisites has returned false."
+	as it will not be reloadable into an image without the uncommitted objects."
 
-	^self prerequisites anySatisfy: [:prereq | 
-		prereq == _Uncommitted or: [prereq hasUncommittedPrerequisites]]!
+	^self allPrerequisites includes: _Uncommitted.!
 
 hierarchyOrderOfClasses: aCollection 
 	"Private - Answer an OrderedCollection of all the Classes owned
