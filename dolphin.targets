@@ -13,23 +13,25 @@
     <PropertyGroup>
 	  <DolphinVersion>$([System.Datetime]::Now.Year).$(GitTag.SubString(1, $([MSBuild]::Subtract($(GitTag.IndexOf('-')), 1))))</DolphinVersion>
     </PropertyGroup>
-	<Message Importance="Normal" Text="Building Dolphin version $(DolphinVersion)" />
+    <Message Importance="Normal" Text="Building Dolphin version $(DolphinVersion)" />
     <Delete Files="$(IntDir)version.txt"/>
     <Message Importance="Normal" Text="Generating version.h for tag $(GitTag)..." />
-    <WriteLinesToFile Overwrite="true" File="$(VersionHeader)" Encoding="Ascii" Lines="
-// this file generated on $([System.DateTime]::Now)
-#define DOLPHIN_ASSEMBLY_VERSION &quot;$(DolphinVersion)&quot;
-#define DOLPHIN_VERINFO_VERSION $(DolphinVersion.Replace('.',','))
-#if defined(_DEBUG)
-  #define GIT_TAG &quot;$(GitTag) (Debug)&quot;
-#else
-  #define GIT_TAG &quot;$(GitTag)&quot;
-#endif" />
-	<ItemGroup>
-		<Manifest>
-		  <AssemblyIdentity>ObjectArts.DolphinSmalltalk.Dolphin, version=$(DolphinVersion), processorArchitecture=x86, type=win32</AssemblyIdentity>
-		</Manifest>
-	</ItemGroup>
+    <ItemGroup>
+      <VersionHeaderLines Include="// This file generated on $([System.DateTime]::Now)" />
+      <VersionHeaderLines Include="#define DOLPHIN_ASSEMBLY_VERSION &quot;$(DolphinVersion)&quot;" />
+      <VersionHeaderLines Include="#define DOLPHIN_VERINFO_VERSION $(DolphinVersion.Replace('.',','))" />
+      <VersionHeaderLines Include="#if defined(_DEBUG)" />
+      <VersionHeaderLines Include="  #define GIT_TAG &quot;$(GitTag) (Debug)&quot;" />
+      <VersionHeaderLines Include="#else" />
+      <VersionHeaderLines Include="  #define GIT_TAG &quot;$(GitTag)&quot;" />
+      <VersionHeaderLines Include="#endif" />
+    </ItemGroup>
+    <WriteLinesToFile Overwrite="true" File="$(VersionHeader)" Encoding="Ascii" Lines="@(VersionHeaderLines)" />
+    <ItemGroup>
+      <Manifest>
+        <AssemblyIdentity>ObjectArts.DolphinSmalltalk.Dolphin, version=$(DolphinVersion), processorArchitecture=x86, type=win32</AssemblyIdentity>
+      </Manifest>
+    </ItemGroup>
   </Target>
   <Target Name='CleanVersionHeader' AfterTargets='AfterClean'>
     <Delete Files='$(VersionHeader)'/>
