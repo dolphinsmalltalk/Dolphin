@@ -14,6 +14,7 @@ ScintillaConstants at: 'CARETSTYLE_INVISIBLE' put: 16r0!
 ScintillaConstants at: 'CARETSTYLE_LINE' put: 16r1!
 ScintillaConstants at: 'EDGE_BACKGROUND' put: 16r2!
 ScintillaConstants at: 'EDGE_LINE' put: 16r1!
+ScintillaConstants at: 'EDGE_MULTILINE' put: 16r3!
 ScintillaConstants at: 'EDGE_NONE' put: 16r0!
 ScintillaConstants at: 'INDIC_BOX' put: 16r6!
 ScintillaConstants at: 'INDIC_COMPOSITIONTHICK' put: 16rE!
@@ -135,6 +136,7 @@ ScintillaConstants at: 'SC_LASTSTEPINUNDOREDO' put: 16r100!
 ScintillaConstants at: 'SC_LINE_END_TYPE_DEFAULT' put: 16r0!
 ScintillaConstants at: 'SC_LINE_END_TYPE_UNICODE' put: 16r1!
 ScintillaConstants at: 'SC_MARGIN_BACK' put: 16r2!
+ScintillaConstants at: 'SC_MARGIN_COLOUR' put: 16r6!
 ScintillaConstants at: 'SC_MARGIN_FORE' put: 16r3!
 ScintillaConstants at: 'SC_MARGIN_NUMBER' put: 16r1!
 ScintillaConstants at: 'SC_MARGIN_RTEXT' put: 16r5!
@@ -490,11 +492,13 @@ ScintillaConstants at: 'SCI_GETLINESELSTARTPOSITION' put: 16r978!
 ScintillaConstants at: 'SCI_GETLINESTATE' put: 16r82D!
 ScintillaConstants at: 'SCI_GETLINEVISIBLE' put: 16r8B4!
 ScintillaConstants at: 'SCI_GETMAINSELECTION' put: 16rA0F!
+ScintillaConstants at: 'SCI_GETMARGINBACKN' put: 16r8CB!
 ScintillaConstants at: 'SCI_GETMARGINCURSORN' put: 16r8C9!
 ScintillaConstants at: 'SCI_GETMARGINLEFT' put: 16r86C!
 ScintillaConstants at: 'SCI_GETMARGINMASKN' put: 16r8C5!
 ScintillaConstants at: 'SCI_GETMARGINOPTIONS' put: 16r9FD!
 ScintillaConstants at: 'SCI_GETMARGINRIGHT' put: 16r86E!
+ScintillaConstants at: 'SCI_GETMARGINS' put: 16r8CD!
 ScintillaConstants at: 'SCI_GETMARGINSENSITIVEN' put: 16r8C7!
 ScintillaConstants at: 'SCI_GETMARGINTYPEN' put: 16r8C1!
 ScintillaConstants at: 'SCI_GETMARGINWIDTHN' put: 16r8C3!
@@ -504,6 +508,7 @@ ScintillaConstants at: 'SCI_GETMODIFY' put: 16r86F!
 ScintillaConstants at: 'SCI_GETMOUSEDOWNCAPTURES' put: 16r951!
 ScintillaConstants at: 'SCI_GETMOUSEDWELLTIME' put: 16r8D9!
 ScintillaConstants at: 'SCI_GETMOUSESELECTIONRECTANGULARSWITCH' put: 16rA6D!
+ScintillaConstants at: 'SCI_GETMOUSEWHEELCAPTURES' put: 16rA89!
 ScintillaConstants at: 'SCI_GETMULTIPASTE' put: 16rA37!
 ScintillaConstants at: 'SCI_GETMULTIPLESELECTION' put: 16rA04!
 ScintillaConstants at: 'SCI_GETNEXTTABSTOP' put: 16rA75!
@@ -676,6 +681,8 @@ ScintillaConstants at: 'SCI_MARKERSYMBOLDEFINED' put: 16r9E1!
 ScintillaConstants at: 'SCI_MOVECARETINSIDEVIEW' put: 16r961!
 ScintillaConstants at: 'SCI_MOVESELECTEDLINESDOWN' put: 16rA3D!
 ScintillaConstants at: 'SCI_MOVESELECTEDLINESUP' put: 16rA3C!
+ScintillaConstants at: 'SCI_MULTIEDGEADDLINE' put: 16rA86!
+ScintillaConstants at: 'SCI_MULTIEDGECLEARALL' put: 16rA87!
 ScintillaConstants at: 'SCI_MULTIPLESELECTADDEACH' put: 16rA81!
 ScintillaConstants at: 'SCI_MULTIPLESELECTADDNEXT' put: 16rA80!
 ScintillaConstants at: 'SCI_NEWLINE' put: 16r919!
@@ -792,11 +799,13 @@ ScintillaConstants at: 'SCI_SETLINEENDTYPESALLOWED' put: 16rA60!
 ScintillaConstants at: 'SCI_SETLINEINDENTATION' put: 16r84E!
 ScintillaConstants at: 'SCI_SETLINESTATE' put: 16r82C!
 ScintillaConstants at: 'SCI_SETMAINSELECTION' put: 16rA0E!
+ScintillaConstants at: 'SCI_SETMARGINBACKN' put: 16r8CA!
 ScintillaConstants at: 'SCI_SETMARGINCURSORN' put: 16r8C8!
 ScintillaConstants at: 'SCI_SETMARGINLEFT' put: 16r86B!
 ScintillaConstants at: 'SCI_SETMARGINMASKN' put: 16r8C4!
 ScintillaConstants at: 'SCI_SETMARGINOPTIONS' put: 16r9EB!
 ScintillaConstants at: 'SCI_SETMARGINRIGHT' put: 16r86D!
+ScintillaConstants at: 'SCI_SETMARGINS' put: 16r8CC!
 ScintillaConstants at: 'SCI_SETMARGINSENSITIVEN' put: 16r8C6!
 ScintillaConstants at: 'SCI_SETMARGINTYPEN' put: 16r8C0!
 ScintillaConstants at: 'SCI_SETMARGINWIDTHN' put: 16r8C2!
@@ -804,6 +813,7 @@ ScintillaConstants at: 'SCI_SETMODEVENTMASK' put: 16r937!
 ScintillaConstants at: 'SCI_SETMOUSEDOWNCAPTURES' put: 16r950!
 ScintillaConstants at: 'SCI_SETMOUSEDWELLTIME' put: 16r8D8!
 ScintillaConstants at: 'SCI_SETMOUSESELECTIONRECTANGULARSWITCH' put: 16rA6C!
+ScintillaConstants at: 'SCI_SETMOUSEWHEELCAPTURES' put: 16rA88!
 ScintillaConstants at: 'SCI_SETMULTIPASTE' put: 16rA36!
 ScintillaConstants at: 'SCI_SETMULTIPLESELECTION' put: 16rA03!
 ScintillaConstants at: 'SCI_SETOVERTYPE' put: 16r88A!

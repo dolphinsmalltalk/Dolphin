@@ -91,6 +91,7 @@ defineConstantsPool
 		at: 'CARETSTYLE_LINE' put: 1;
 		at: 'EDGE_BACKGROUND' put: 2;
 		at: 'EDGE_LINE' put: 1;
+		at: 'EDGE_MULTILINE' put: 3;
 		at: 'EDGE_NONE' put: 0;
 		at: 'INDIC_BOX' put: 6;
 		at: 'INDIC_COMPOSITIONTHICK' put: 14;
@@ -212,6 +213,7 @@ defineConstantsPool
 		at: 'SC_LINE_END_TYPE_DEFAULT' put: 0;
 		at: 'SC_LINE_END_TYPE_UNICODE' put: 1;
 		at: 'SC_MARGIN_BACK' put: 2;
+		at: 'SC_MARGIN_COLOUR' put: 6;
 		at: 'SC_MARGIN_FORE' put: 3;
 		at: 'SC_MARGIN_NUMBER' put: 1;
 		at: 'SC_MARGIN_RTEXT' put: 5;
@@ -567,11 +569,13 @@ defineConstantsPool
 		at: 'SCI_GETLINESTATE' put: 2093;
 		at: 'SCI_GETLINEVISIBLE' put: 2228;
 		at: 'SCI_GETMAINSELECTION' put: 2575;
+		at: 'SCI_GETMARGINBACKN' put: 2251;
 		at: 'SCI_GETMARGINCURSORN' put: 2249;
 		at: 'SCI_GETMARGINLEFT' put: 2156;
 		at: 'SCI_GETMARGINMASKN' put: 2245;
 		at: 'SCI_GETMARGINOPTIONS' put: 2557;
 		at: 'SCI_GETMARGINRIGHT' put: 2158;
+		at: 'SCI_GETMARGINS' put: 2253;
 		at: 'SCI_GETMARGINSENSITIVEN' put: 2247;
 		at: 'SCI_GETMARGINTYPEN' put: 2241;
 		at: 'SCI_GETMARGINWIDTHN' put: 2243;
@@ -581,6 +585,7 @@ defineConstantsPool
 		at: 'SCI_GETMOUSEDOWNCAPTURES' put: 2385;
 		at: 'SCI_GETMOUSEDWELLTIME' put: 2265;
 		at: 'SCI_GETMOUSESELECTIONRECTANGULARSWITCH' put: 2669;
+		at: 'SCI_GETMOUSEWHEELCAPTURES' put: 2697;
 		at: 'SCI_GETMULTIPASTE' put: 2615;
 		at: 'SCI_GETMULTIPLESELECTION' put: 2564;
 		at: 'SCI_GETNEXTTABSTOP' put: 2677;
@@ -753,6 +758,8 @@ defineConstantsPool
 		at: 'SCI_MOVECARETINSIDEVIEW' put: 2401;
 		at: 'SCI_MOVESELECTEDLINESDOWN' put: 2621;
 		at: 'SCI_MOVESELECTEDLINESUP' put: 2620;
+		at: 'SCI_MULTIEDGEADDLINE' put: 2694;
+		at: 'SCI_MULTIEDGECLEARALL' put: 2695;
 		at: 'SCI_MULTIPLESELECTADDEACH' put: 2689;
 		at: 'SCI_MULTIPLESELECTADDNEXT' put: 2688;
 		at: 'SCI_NEWLINE' put: 2329;
@@ -869,11 +876,13 @@ defineConstantsPool
 		at: 'SCI_SETLINEINDENTATION' put: 2126;
 		at: 'SCI_SETLINESTATE' put: 2092;
 		at: 'SCI_SETMAINSELECTION' put: 2574;
+		at: 'SCI_SETMARGINBACKN' put: 2250;
 		at: 'SCI_SETMARGINCURSORN' put: 2248;
 		at: 'SCI_SETMARGINLEFT' put: 2155;
 		at: 'SCI_SETMARGINMASKN' put: 2244;
 		at: 'SCI_SETMARGINOPTIONS' put: 2539;
 		at: 'SCI_SETMARGINRIGHT' put: 2157;
+		at: 'SCI_SETMARGINS' put: 2252;
 		at: 'SCI_SETMARGINSENSITIVEN' put: 2246;
 		at: 'SCI_SETMARGINTYPEN' put: 2240;
 		at: 'SCI_SETMARGINWIDTHN' put: 2242;
@@ -881,6 +890,7 @@ defineConstantsPool
 		at: 'SCI_SETMOUSEDOWNCAPTURES' put: 2384;
 		at: 'SCI_SETMOUSEDWELLTIME' put: 2264;
 		at: 'SCI_SETMOUSESELECTIONRECTANGULARSWITCH' put: 2668;
+		at: 'SCI_SETMOUSEWHEELCAPTURES' put: 2696;
 		at: 'SCI_SETMULTIPASTE' put: 2614;
 		at: 'SCI_SETMULTIPLESELECTION' put: 2563;
 		at: 'SCI_SETOVERTYPE' put: 2186;
@@ -1373,7 +1383,6 @@ ignoredMessages
 				add: 'SCI_USEPOPUP';
 				add: 'SCI_SETCURRENTPOS';
 				add: 'SCI_LINELENGTH';
-				add: 'SCI_GETSTYLEAT';
 				yourself.
 
 	"We use the direct function exported by the DLL, and don't need a wrapper method for SCI_GETDIRECTPOINTER as we need to send it directly."
@@ -1464,22 +1473,65 @@ ignoredMessages
 	ignoredMessages add: 'SCI_GETMODEVENTMASK'.
 
 	"We don't need these as they are for the GTK+ platform only"
-	ignoredMessages 
+	ignoredMessages
 		addAll: #('SCI_GETRECTANGULARSELECTIONMODIFIER' 'SCI_SETRECTANGULARSELECTIONMODIFIER').
 
-	"We always set the selection range start and end as a pair."
-	ignoredMessages addAll: #('SCI_SETSELECTIONEND' 'SCI_SETSELECTIONSTART').
+	"We always get/set the selection range start and end as a pair."
+	ignoredMessages
+		addAll: #('SCI_GETSELECTIONEND' 'SCI_SETSELECTIONEND' 'SCI_GETSELECTIONSTART' 'SCI_SETSELECTIONSTART' 'SCI_SETSEL' 'SCI_GETTARGETSTART' 'SCI_GETTARGETEND' 'SCI_GETSELECTIONNSTART' 'SCI_GETSELECTIONNEND').
 
 	"Likewise the old messages to set the target start and end separately are no longer needed, as we always set an interval and can use SCI_SETTARGETRANGE"
 	ignoredMessages addAll: #('SCI_SETTARGETSTART' 'SCI_SETTARGETEND').
 
 	"Old style-bits indicators."
 	ignoredMessages addAll: #('SCI_SETSTYLEBITS' 'SCI_GETSTYLEBITS' 'SCI_GETSTYLEBITSNEEDED').
+
+	"Some position functions that we want to keep zero-based"
+	ignoredMessages addAll: #('SCI_LINEFROMPOSITION' 'SCI_POSITIONFROMLINE').
 	ignoredMessages
 		shrink;
 		isImmutable: true;
 		yourself)
-!
+
+	"We use the direct function exported by the DLL, and don't need a wrapper method for SCI_GETDIRECTPOINTER as we need to send it directly."
+	"We don't use direct/unsafe access to the scintilla character buffer."
+	"We don't support background loading"
+
+	"The idFrom field of the notification header is not needed to identify the Scintilla
+	control, as we have an object instance associated with each control instance that receives
+	the notifications directly."
+
+	"Scintilla supports standard Windows focus messages, which are used in the MVP framework already"
+
+	"Margin attributes managed by ScintillaMargin"
+
+	"Indicator attributes managed by ScintillaIndicatorStyle"
+
+	"Indicator attributes managed by ScintillaMarkerDefinition"
+
+	"Annotation attributes are managed by ScintillaAnnotation"
+
+	"Style attributes managed by ScintillaTextStyle, but note that as Scintilla wrapping
+	predates when style definitions were queryable, so we don't use these at all"
+
+	"SCI_GETLENGTH is ignored because it duplicates SCI_GETTEXTLENGTH"
+
+	"Don't make use of document ref. stuff at present."
+	"ignoredMessages add: 'SCI_ADDREFDOCUMENT'."
+
+	"Scintilla's cursor management is not required in Dolphin which has its own mechanisms."
+
+	"We don't need SCI_GETMODEVENTMASK because we store the event mask in an instance variable (for some reason that I no longer know)"
+
+	"We don't need these as they are for the GTK+ platform only"
+
+	"We always get/set the selection range start and end as a pair."
+
+	"Likewise the old messages to set the target start and end separately are no longer needed, as we always set an interval and can use SCI_SETTARGETRANGE"
+
+	"Old style-bits indicators."
+
+	"Some position functions that we want to keep zero-based"!
 
 initialize
 	events := OrderedCollection new: 256.
@@ -1602,7 +1654,7 @@ parseShBang: aReadableStream
 
 	!
 
-parseValue: aReadableStream 
+parseValue: aReadableStream
 	| value numberStream radix constName |
 	self getAndResetCommentQueue.
 	constName := aReadableStream upTo: $=.
@@ -1610,11 +1662,7 @@ parseValue: aReadableStream
 	(lexerConstantPrefixes anySatisfy: [:each | constName beginsWith: each]) ifTrue: [^self].
 	value := aReadableStream upToEnd.
 	numberStream := value readStream.
-	radix := (value beginsWith: '0x') 
-				ifTrue: 
-					[numberStream skip: 2.
-					16]
-				ifFalse: [10].
+	radix := (numberStream skipWhileMatchAll: '0x') ifTrue: [16] ifFalse: [10].
 	value := Integer readFrom: numberStream radix: radix.
 	numberStream atEnd ifFalse: [^self].
 	self constantsPool at: constName put: value!

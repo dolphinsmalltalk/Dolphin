@@ -53,7 +53,7 @@ realize
 versionString
 	"Answer the version of the Scintilla control for which this library was generated."
 
-	^'3.6.7'! !
+	^'3.7.0'! !
 !ScintillaLibrary class categoriesFor: #default!accessing!public!realizing/unrealizing! !
 !ScintillaLibrary class categoriesFor: #fileName!constants!public! !
 !ScintillaLibrary class categoriesFor: #realize!public!realizing/unrealizing! !
