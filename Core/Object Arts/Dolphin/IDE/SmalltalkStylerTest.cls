@@ -18,8 +18,7 @@ restyleFromEachPosition: anObject resumeable: aBoolean
 		do: 
 			[:i | 
 			| t2 |
-			scintilla startStylingFrom: i.
-			scintilla sciColourise: i - 1 end: -1.
+			scintilla restyleFrom: i to: 0.
 			t2 := scintilla styledTextFrom: 1 to: size.
 			self 
 				assert: t1 = t2
@@ -75,7 +74,7 @@ testArrayNoSpace
 	scintilla topView hide.
 	text := 'a self x:#(1)'.
 	scintilla text: text.
-	scintilla sciColourise: 0 end: -1.
+	scintilla restyleFrom: 1 to: 0.
 	self restyleFromEachPosition: text resumeable: false!
 
 testBinaryMethodSignature

@@ -212,6 +212,9 @@ cutSelection
 	self sendMessage: WM_CUT
 !
 
+defaultSelectionRange
+	^1 to: 0!
+
 defaultWindowExStyle
 	"Private - Answer the default extended window creation style.
 	Use the client edge style for the standard Win95 look."
@@ -1085,20 +1088,25 @@ state
 	"Private - Answer a MessageSequence which, when replayed, will restore the receiver 
 	to its current state"
 
-	| state margins |
+	| state margins sel |
 	state := super state.
-	state add: (MessageSend 
-				receiver: self
-				selector: #selectionRange:
-				argument: self selectionRange).
-	state add: (MessageSend 
-				receiver: self
-				selector: #isTextModified:
-				argument: self isTextModified).
-	margins := self marginWidths.
-	margins = #(0 0) 
+	sel := self selectionRange.
+	sel = self defaultSelectionRange
 		ifFalse: 
-			[state add: (MessageSend 
+			[state add: (MessageSend
+						receiver: self
+						selector: #selectionRange:
+						argument: sel)].
+	self isTextModified
+		ifTrue: 
+			[state add: (MessageSend
+						receiver: self
+						selector: #isTextModified:
+						argument: true)].
+	margins := self marginWidths.
+	margins = #(0 0)
+		ifFalse: 
+			[state add: (MessageSend
 						receiver: self
 						selector: #setMarginWidths:
 						argument: margins)].
@@ -1292,6 +1300,7 @@ wmSetFocus: message wParam: wParam lParam: lParam
 !TextEdit categoriesFor: #command:id:!commands!private! !
 !TextEdit categoriesFor: #copySelection!clipboard operations!commands!public! !
 !TextEdit categoriesFor: #cutSelection!clipboard operations!commands!public! !
+!TextEdit categoriesFor: #defaultSelectionRange!constants!private! !
 !TextEdit categoriesFor: #defaultWindowExStyle!constants!private! !
 !TextEdit categoriesFor: #dispatchRegistered:wParam:lParam:!dispatching!private! !
 !TextEdit categoriesFor: #displayValue!private!updating! !

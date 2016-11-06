@@ -190,7 +190,7 @@ addKeyBinding: aScintillaKeyBinding
 	| bindings |
 	bindings := self keyBindings.
 	bindings at: aScintillaKeyBinding acceleratorKey put: aScintillaKeyBinding.
-	self sciAssignCmdKey: aScintillaKeyBinding scintillaKeyCode msg: aScintillaKeyBinding message.
+	self sciAssignCmdKey: aScintillaKeyBinding scintillaKeyCode sciCommand: aScintillaKeyBinding message.
 	keyBindings := bindings!
 
 addMarker: aScintillaMarker 
@@ -220,21 +220,34 @@ addMarkerType: aSymbol at: anInteger
 						yourself].
 	^self addMarker: (markerType newForLine: anInteger)!
 
-addSelectionRange: anInterval 
+addSelectionRange: anInterval
 	"Add a secondary selection to the list of selected ranges."
 
-	self sciAddSelection: anInterval stop anchor: anInterval start - 1!
+	self sciAddSelection: anInterval stop + 1 anchor: anInterval start!
 
 anchorPosition
-	"Answer the position of the selection anchor."
+	"Returns the position of the opposite end of the selection to the caret."
 
-	^self sciGetAnchor + 1!
+	^this isNil
+		ifTrue: [0]
+		ifFalse: 
+			[(ScintillaLibrary default
+				directFunction: this
+				msg: SCI_GETANCHOR
+				wParam: 0
+				lParam: 0) + 1]!
 
-anchorPosition: anInteger 
-	"Move the selection anchor to be at the specified character position (which is one based,
-	i.e. 1 is home)."
+anchorPosition: anchorInteger
+	"Set the selection anchor to a position. The anchor is the opposite end of the selection
+	from the caret."
 
-	^self sciSetAnchor: anInteger - 1!
+	this isNil
+		ifFalse: 
+			[ScintillaLibrary default
+				directFunction: this
+				msg: SCI_SETANCHOR
+				wParam: anchorInteger - 1
+				lParam: 0]!
 
 annotateLine: anInteger withAll: aCollectionOfScintillaAnnotation 
 	"Apply the <collection> of <ScintillaAnnotation> as the annotations for the line identified
@@ -426,7 +439,7 @@ areAdditionalCaretsVisible
 				wParam: 0
 				lParam: 0) asBoolean]!
 
-areAdditionalCaretsVisible: additionalCaretsBlinkBoolean
+areAdditionalCaretsVisible: additionalCaretsVisibleBoolean
 	"Set whether additional carets are visible"
 
 	this isNil
@@ -434,7 +447,7 @@ areAdditionalCaretsVisible: additionalCaretsBlinkBoolean
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SETADDITIONALCARETSVISIBLE
-				wParam: additionalCaretsBlinkBoolean asParameter
+				wParam: additionalCaretsVisibleBoolean asParameter
 				lParam: 0]!
 
 areAllLinesVisible
@@ -537,7 +550,14 @@ autoCompletionImageIdSeparator: aCharacter
 autoCompletionListPosition
 	"Retrieve the position of the caret when the auto-completion list was displayed."
 
-	^self sciAutoCPosStart + 1!
+	^this isNil
+		ifTrue: [0]
+		ifFalse: 
+			[(ScintillaLibrary default
+				directFunction: this
+				msg: SCI_AUTOCPOSSTART
+				wParam: 0
+				lParam: 0) + 1]!
 
 autoCompletionSeparator
 	"Answer the <Character> used as the separator between entries in an auto-completion list <String>."
@@ -624,12 +644,12 @@ basicClearContainerIndicators
 	length := self textLength.
 	INDIC_CONTAINER to: INDIC_MAX
 		do: 
-			[:each | 
+			[:each |
 			self currentIndicatorId: each.
-			self sciIndicatorClearRange: 0 clearLength: length]!
+			self sciIndicatorClearRange: 1 lengthClear: length]!
 
 basicClearSelection
-	"Clear the selection."
+	"Private - Clear the selection."
 
 	this isNil
 		ifFalse: 
@@ -640,7 +660,7 @@ basicClearSelection
 				lParam: 0]!
 
 basicLineFromPosition: posInteger
-	"Retrieve the line containing a position."
+	"Private - Retrieve the line containing a position."
 
 	^this isNil
 		ifTrue: [0]
@@ -652,7 +672,7 @@ basicLineFromPosition: posInteger
 				lParam: 0]!
 
 basicPositionAtLine: lineInteger
-	"Retrieve the position at the start of a line."
+	"Private - Retrieve the position at the start of a line."
 
 	^this isNil
 		ifTrue: [0]
@@ -664,7 +684,7 @@ basicPositionAtLine: lineInteger
 				lParam: 0]!
 
 basicRemoveAllAnnotations
-	"Clear the annotations from all lines"
+	"Private - Clear the annotations from all lines"
 
 	this isNil
 		ifFalse: 
@@ -675,7 +695,7 @@ basicRemoveAllAnnotations
 				lParam: 0]!
 
 basicSelectAll
-	"Select all the text in the document."
+	"Private - Select all the text in the document."
 
 	this isNil
 		ifFalse: 
@@ -685,27 +705,19 @@ basicSelectAll
 				wParam: 0
 				lParam: 0]!
 
-basicSelectionRange
-	"Private - Answer an <interval> identifying the selected range of text as reported by the underlying 
-	Windows control. Note that this range includes the starting character, but the end of the range
-	is the first unselected character. Note further that this characteristic means that the range should 
-	NEVER be empty."
-
-	^self sciGetSelectionStart to: self sciGetSelectionEnd!
-
-basicSelectionStart: startInteger end: endInteger
-	"Select a range of text."
+basicSelectionStart: anchorInteger end: caretInteger
+	"Private - Select a range of text."
 
 	this isNil
 		ifFalse: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SETSEL
-				wParam: startInteger
-				lParam: endInteger]!
+				wParam: anchorInteger
+				lParam: caretInteger]!
 
 basicUndo
-	"Undo one action in the undo history."
+	"Private - Undo one action in the undo history."
 
 	this isNil
 		ifFalse: 
@@ -925,10 +937,16 @@ callTipHighlightColor: aColorOrNil
 		ifFalse: [self setCallTipHighlightColor]!
 
 callTipPosition
-	"Answer the <integer> character position of the caret immediately before the call tip was
-	displayed."
+	"Retrieve the position where the caret was before displaying the call tip."
 
-	^self sciCallTipPosStart + 1!
+	^this isNil
+		ifTrue: [0]
+		ifFalse: 
+			[(ScintillaLibrary default
+				directFunction: this
+				msg: SCI_CALLTIPPOSSTART
+				wParam: 0
+				lParam: 0) + 1]!
 
 callTipPosition: anInteger 
 	"Change the start position of the call tip."
@@ -1103,16 +1121,27 @@ caretPeriod: periodMillisecondsInteger
 				lParam: 0]!
 
 caretPosition
-	"Answer the insertion cursor position, as the number of characters from the start of the
-	receivers text."
+	"Returns the position of the caret."
 
-	^self sciGetCurrentPos + 1!
+	^this isNil
+		ifTrue: [0]
+		ifFalse: 
+			[(ScintillaLibrary default
+				directFunction: this
+				msg: SCI_GETCURRENTPOS
+				wParam: 0
+				lParam: 0) + 1]!
 
-caretPosition: anInteger 
-	"Sets the insertion cursor to be at the specified character position (which is one based,
-	i.e. caretPosition 1 is home)."
+caretPosition: caretInteger
+	"Set caret to a position, while removing any existing selection."
 
-	self sciSetEmptySelection: anInteger - 1!
+	this isNil
+		ifFalse: 
+			[ScintillaLibrary default
+				directFunction: this
+				msg: SCI_SETEMPTYSELECTION
+				wParam: caretInteger - 1
+				lParam: 0]!
 
 caretScreenCoordinates
 	^self mapPoint: (self positionOfChar: self caretPosition) to: View desktop!
@@ -1159,22 +1188,22 @@ centerCurrentLine
 				wParam: 0
 				lParam: 0]!
 
-characterAt: anInteger 
+characterAt: anInteger
 	"Answer the <Character> at the specified one-based <integer> index in the receiver's text."
 
-	^Character value: ((self sciGetCharAt: anInteger - 1) bitAnd: 16rFF)!
+	^Character value: ((self sciGetCharAt: anInteger) bitAnd: 16rFF)!
 
-charCloseToPosition: aPoint 
+charCloseToPosition: aPoint
 	"Answer the one-based index of the character closest to the specified <Point> within the
 	receiver, or 0 if the co-ordinate is outside the window or not 'close' to any character."
 
-	^(self sciCharPositionFromPointClose: aPoint x y: aPoint y) + 1!
+	^self sciCharPositionFromPointClose: aPoint x y: aPoint y!
 
-charNearestPosition: aPoint 
+charNearestPosition: aPoint
 	"Answer the one-based index of the character nearest the specified <Point> within the
 	receiver."
 
-	^(self sciCharPositionFromPoint: aPoint x y: aPoint y) + 1!
+	^self sciCharPositionFromPoint: aPoint x y: aPoint y!
 
 clearAll
 	"Delete all text in the document."
@@ -1198,12 +1227,12 @@ clearIndicator: anIntegerOrSymbol from: startInteger to: stopInteger
 	<integer> positions."
 
 	self currentIndicatorId: (self indicatorIdFromName: anIntegerOrSymbol).
-	self sciIndicatorClearRange: startInteger - 1 clearLength: stopInteger - startInteger + 1!
+	self sciIndicatorClearRange: startInteger lengthClear: stopInteger - startInteger + 1!
 
-clearRange: anInterval 
+clearRange: anInterval
 	"Delete a range of text from the view."
 
-	self sciDeleteRange: anInterval start - 1 deleteLength: anInterval size!
+	self sciDeleteRange: anInterval start lengthDelete: anInterval size!
 
 codePage
 	"Answer a <Symbol> naming the code page currently in use, either #utf8 or #dbcs."
@@ -1216,7 +1245,7 @@ codePage: aSymbol
 
 	self sciSetCodePage: (CodePages keyAtValue: aSymbol)!
 
-columnFromPosition: anInteger 
+columnFromPosition: anInteger
 	"Answer the column number of the character at the specified position."
 
 	"From the Scintilla documentation:' This message returns the column number of a position pos
@@ -1226,7 +1255,7 @@ columnFromPosition: anInteger
 	characters up to the position on the line. In both cases, double byte characters count as a
 	single character. This is probably only useful with monospaced fonts.'"
 
-	^(self sciGetColumn: anInteger - 1) + 1!
+	^(self sciGetColumn: anInteger) + 1!
 
 controlCharacter
 	"Answer the character used to display control characters in the document, or nil if the
@@ -1275,10 +1304,10 @@ copyLine
 				wParam: 0
 				lParam: 0]!
 
-copyRange: anInterval 
+copyRange: anInterval
 	"Copy a range of text to the clipboard."
 
-	self sciCopyRange: anInterval start - 1 end: anInterval stop!
+	self sciCopyRange: anInterval start end: anInterval stop + 1!
 
 copySelection
 	"Copy the selection to the clipboard."
@@ -1631,9 +1660,6 @@ destroyAutoCompletionListImages
 				wParam: 0
 				lParam: 0]!
 
-directPointer
-	^this ifNil: [self getDirectPointer]!
-
 drawingPhases
 	"Answer the <Character> used as the separator between entries in an auto-completion list <String>."
 
@@ -1707,11 +1733,12 @@ edgeMode
 
 	^self class edgeModes at: self sciGetEdgeMode + 1!
 
-edgeMode: aSymbol 
+edgeMode: aSymbol
 	"Set the edge marking mode used to indicate long lines. The <Symbol> argument can be one of:
 		#none - long lines are not marked 
 		#line - a vertical line is drawn at the edge column
 		#background - the #edgeColor is used for the background past the #edgeColumn 
+		#multiline - similar to #line but allows a configurable set of vertical lines to be shown simultaneously. 
 	N.B. #background mode should be used in views with proportional fonts in preference to #line."
 
 	^self sciSetEdgeMode: (self class edgeModes keyAtValue: aSymbol) - 1!
@@ -1796,10 +1823,10 @@ ensureHasAnnotationStyles
 ensureLineVisible: anInteger 
 	self sciEnsureVisible: anInteger - 1!
 
-ensureRangeVisible: anInterval 
+ensureRangeVisible: anInterval
 	"Ensure that the specified range of text is visible, prioritising visibility of the start of the range."
 
-	self sciScrollRange: anInterval stop primary: anInterval start - 1!
+	self sciScrollRange: anInterval stop + 1 primary: anInterval start!
 
 ensureVisible: anInteger 
 	"Ensure that the specified character position is visible."
@@ -1827,7 +1854,7 @@ errorStatus
 				wParam: 0
 				lParam: 0]!
 
-errorStatus: statusCodeInteger
+errorStatus: statusInteger
 	"Change error status - 0 = OK."
 
 	this isNil
@@ -1835,7 +1862,7 @@ errorStatus: statusCodeInteger
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SETSTATUS
-				wParam: statusCodeInteger
+				wParam: statusInteger
 				lParam: 0]!
 
 extendDown
@@ -1883,6 +1910,8 @@ extendPageUp
 				lParam: 0]!
 
 extendParaDown
+	"Extend selection down one paragraph (delimited by empty lines)."
+
 	this isNil
 		ifFalse: 
 			[ScintillaLibrary default
@@ -1892,6 +1921,8 @@ extendParaDown
 				lParam: 0]!
 
 extendParaUp
+	"Extend selection up one paragraph (delimited by empty lines)."
+
 	this isNil
 		ifFalse: 
 			[ScintillaLibrary default
@@ -2117,6 +2148,9 @@ extendToEndOfWordPart
 				lParam: 0]!
 
 extendToEndOfWrappedLine
+	"Like LineEndExtend but when word-wrap is enabled extends first to end of display line
+	LineEndDisplayExtend, then to start of document line LineEndExtend."
+
 	this isNil
 		ifFalse: 
 			[ScintillaLibrary default
@@ -2192,6 +2226,9 @@ extendToStartOfWordPart
 				lParam: 0]!
 
 extendToStartOfWrappedLine
+	"Like HomeExtend but when word-wrap is enabled extends first to start of display line
+	HomeDisplayExtend, then to start of document line HomeExtend."
+
 	this isNil
 		ifFalse: 
 			[ScintillaLibrary default
@@ -2212,6 +2249,9 @@ extendToVcHome
 				lParam: 0]!
 
 extendToWrappedVcHome
+	"Like VCHomeExtend but when word-wrap is enabled extends first to start of display line
+	VCHomeDisplayExtend, then behaves like VCHomeExtend."
+
 	this isNil
 		ifFalse: 
 			[ScintillaLibrary default
@@ -2311,7 +2351,7 @@ find: aString range: anInterval flags: anInteger
 	range := findText chrgText.
 	^range cpMin + 1 to: range cpMax!
 
-findAutoCompletionEntry: textString
+findAutoCompletionEntry: selectString
 	"Select the item in the auto-completion list that starts with a string."
 
 	this isNil
@@ -2320,15 +2360,15 @@ findAutoCompletionEntry: textString
 				directFunction: this
 				msg: SCI_AUTOCSELECT
 				wParam: 0
-				lpParam: textString]!
+				lpParam: selectString]!
 
-findMatchingBrace: anInteger 
+findMatchingBrace: anInteger
 	"Answer the one-based <integer> index of the character in the receiver which is the brace
 	matching that at the one-based <integer> index argument. If there is no matching brace, or
 	the character at the specified position is not itself a brace character, then answer zero.
 	Note that for two brace characters to be considered a match they must have the same style."
 
-	^(self sciBraceMatch: anInteger - 1) + 1!
+	^self sciBraceMatch: anInteger maxReStyle: 0!
 
 findStyleStart: aSymbol before: anInteger 
 	"Answer the one-based <integer> index of the first character in a block of the style named
@@ -2501,10 +2541,16 @@ getRawAnnotations
 			(self sciAnnotationGetLines: i) > 0 ifTrue: [rawAnnotations add: (self getRawAnnotation: i)]].
 	^rawAnnotations!
 
-goto: anInteger 
-	"Move the caret to the specified position and ensure it is visible."
+goto: caretInteger
+	"Set caret to a position and ensure it is visible."
 
-	self sciGotoPos: anInteger - 1!
+	this isNil
+		ifFalse: 
+			[ScintillaLibrary default
+				directFunction: this
+				msg: SCI_GOTOPOS
+				wParam: caretInteger - 1
+				lParam: 0]!
 
 gotoLine: lineInteger 
 	"Set caret to start of the line with the specified one-based <integer> index, ensure that
@@ -2586,6 +2632,11 @@ hasLineNumbers: aBoolean
 	self lineNumberMargin 
 		ifNotNil: [:margin | margin width: (aBoolean ifTrue: [self requiredLineMarginWidth] ifFalse: [0])]!
 
+hasSelection
+	"Answer true if the receiver has a selected range of text."
+
+	^self selectionRange isEmpty not!
+
 hasVisibleLineEndings
 	"Are the end of line characters visible?"
 
@@ -2622,7 +2673,7 @@ hideIndicators
 				wParam: each
 				lParam: INDIC_HIDDEN]!
 
-hideSelection: normalBoolean
+hideSelection: hideBoolean
 	"Draw the selection in normal style or with selection highlighted."
 
 	this isNil
@@ -2630,19 +2681,24 @@ hideSelection: normalBoolean
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_HIDESELECTION
-				wParam: normalBoolean asParameter
+				wParam: hideBoolean asParameter
 				lParam: 0]!
 
-highlightBracesAt: leftInteger and: rightInteger 
-	"Highlight the pair of characters (presumably braces) at the specified one-based <integer>
-	indices by applying the #braceHighlight text style to them."
+highlightBracesAt: posAInteger and: posBInteger
+	"Highlight the characters at two positions."
 
-	self sciBraceHighlight: leftInteger - 1 pos2: rightInteger - 1!
+	this isNil
+		ifFalse: 
+			[ScintillaLibrary default
+				directFunction: this
+				msg: SCI_BRACEHIGHLIGHT
+				wParam: posAInteger - 1
+				lParam: posBInteger - 1]!
 
 highlightCallTipFrom: startInteger to: stopInteger 
 	"Highlight a range of the text in the call tip."
 
-	self sciCallTipSetHlt: startInteger - 1 end: stopInteger - 1!
+	self sciCallTipSetHlt: startInteger - 1 highlightEnd: stopInteger - 1!
 
 highlightFindMatch: anInterval 
 	"self ensureVisible: anInterval start.
@@ -2674,11 +2730,16 @@ highlightGuide: columnInteger
 				wParam: columnInteger
 				lParam: 0]!
 
-highlightMismatchedBrace: anInteger 
-	"Highlight the character (presumably a brace) at the specified one-based <integer> index
-	with the #mismatchedBrace text style. If the argument is zero, any brace highlighting is removed."
+highlightMismatchedBrace: posInteger
+	"Highlight the character at a position indicating there is no matching brace."
 
-	self sciBraceBadLight: anInteger - 1!
+	this isNil
+		ifFalse: 
+			[ScintillaLibrary default
+				directFunction: this
+				msg: SCI_BRACEBADLIGHT
+				wParam: posInteger - 1
+				lParam: 0]!
 
 highlightRange: anInterval withIndicator: idInteger 
 	"Apply the indicator identified by the <integer> argument to the range of text
@@ -2800,11 +2861,17 @@ indicatorIdFromName: anIntegerOrSymbol
 				ifNil: [-1	"Indicator is not configured in the view, not necessarily an error"]
 				ifNotNil: [:indicStyle | indicStyle id]]!
 
-indicatorMaskAt: anInteger 
-	"Answer an <integer> which is a bit mask describing the indicators applied to the character
-	at the specified one-based <integer> index."
+indicatorMaskAt: posInteger
+	"Are any indicators present at pos?"
 
-	^self sciIndicatorAllOnFor: anInteger - 1!
+	^this isNil
+		ifTrue: [0]
+		ifFalse: 
+			[ScintillaLibrary default
+				directFunction: this
+				msg: SCI_INDICATORALLONFOR
+				wParam: posInteger - 1
+				lParam: 0]!
 
 indicators
 	"Answer a <collection> of <ScintillaIndicator>s, being the indicators (e.g. squiggly
@@ -2881,10 +2948,10 @@ initializeControl
 	self isFoldingEnabled ifTrue: [self setFoldProperty: true].
 	keyBindings ifNotNil: [self updateKeyBindings]!
 
-insertText: aString at: anInteger 
+insertText: aString at: anInteger
 	"Insert text at the specified position without moving the caret."
 
-	self sciInsertText: anInteger - 1 text: aString!
+	self sciInsertText: anInteger text: aString!
 
 insertText: lengthInteger from: textString
 	"Add text to the document at current position."
@@ -3289,6 +3356,29 @@ isLineVisible: anInteger
 
 	^self sciGetLineVisible: anInteger - 1!
 
+isMouseWheelCaptured
+	"Get whether mouse wheel can be active outside the window."
+
+	^this isNil
+		ifTrue: [false]
+		ifFalse: 
+			[(ScintillaLibrary default
+				directFunction: this
+				msg: SCI_GETMOUSEWHEELCAPTURES
+				wParam: 0
+				lParam: 0) asBoolean]!
+
+isMouseWheelCaptured: capturesBoolean
+	"Set whether the mouse wheel can be active outside the window."
+
+	this isNil
+		ifFalse: 
+			[ScintillaLibrary default
+				directFunction: this
+				msg: SCI_SETMOUSEWHEELCAPTURES
+				wParam: capturesBoolean asParameter
+				lParam: 0]!
+
 isMultiSelect
 	"Whether multiple selections can be made"
 
@@ -3324,7 +3414,7 @@ isOvertypeEnabled
 				wParam: 0
 				lParam: 0) asBoolean]!
 
-isOvertypeEnabled: overtypeBoolean
+isOvertypeEnabled: overTypeBoolean
 	"Set to overtype (true) or insert mode."
 
 	this isNil
@@ -3332,7 +3422,7 @@ isOvertypeEnabled: overtypeBoolean
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SETOVERTYPE
-				wParam: overtypeBoolean asParameter
+				wParam: overTypeBoolean asParameter
 				lParam: 0]!
 
 isScrollWidthTracking
@@ -3703,7 +3793,7 @@ lineNumberMargin
 
 	^self margins detect: [:each | each type == #lineNumber] ifNone: []!
 
-lineRange: anInteger 
+lineRange: anInteger
 	"Answer an <Interval> specifying the range of character positions in the receiver occuppied
 	by the line with the specified <integer> index, not including the end-of-line terminators
 	(if any)."
@@ -3713,7 +3803,7 @@ lineRange: anInteger
 	| start end pos |
 	pos := anInteger - 1.
 	start := self basicPositionAtLine: pos.
-	end := self sciGetLineEndPosition: pos.
+	end := (self sciGetLineEndPosition: pos) - 1.
 	(start < 0 or: [end < start]) ifTrue: [^self errorSubscriptBounds: anInteger].
 	^start + 1 to: end!
 
@@ -3740,10 +3830,16 @@ linesOnScreen
 				lParam: 0]!
 
 marginCount
-	"Private - Answer the maximum number of margins that can be displayed. This is currently fixed at
-	three."
+	"Answer the maximum number of margins that can be displayed. As of Scintilla 3.7.0
+	this is no longer fixed at three."
 
-	^3!
+	^self sciGetMargins!
+
+marginCount: anInteger
+	"Set the maximum number of margins that can be displayed. As of Scintilla 3.7.0
+	this is no longer fixed at three."
+
+	^self sciSetMargins: anInteger!
 
 margins
 	"Answer a <sequencedReadableCollection> of <ScintillaMargin> containing all the receiver's
@@ -3755,6 +3851,7 @@ margins: aSequenceableCollection
 	"Set the receiver's collection of margins to the <sequencedReadableCollection> of <ScintillaMargin> 
 	argument."
 
+	self marginCount: aSequenceableCollection size.
 	self applyAttributes: aSequenceableCollection!
 
 marginStylesOffset
@@ -3830,11 +3927,11 @@ markers
 
 	^markers!
 
-markers: aCollection 
+markers: aCollection
 	"Set the markers to be displayed in the receiver's margin(s) to be those in the <collection>
 	of the <ScintillaMarker>s argument."
 
-	markers := aCollection asOrderedCollection.
+	markers := aCollection asIdentitySet.
 	self updateMarkers!
 
 markerTypesOnLine: anInteger 
@@ -3894,13 +3991,6 @@ maxCompletionListWidth: characterCountInteger
 				msg: SCI_AUTOCSETMAXWIDTH
 				wParam: characterCountInteger
 				lParam: 0]!
-
-maxStyle
-	"Answer the maximum usable style index. From Scintilla 3.43 all 8-bits are always used for
-	styles, so this is always 255."
-
-	#deprecated.
-	^255!
 
 modificationEventMask
 	"Answer the <integer> notification event mask that controls the SCN_MODIFIED notifications that 
@@ -3989,7 +4079,7 @@ movePageUp
 				lParam: 0]!
 
 moveParaDown
-	"Move caret between paragraphs (delimited by empty lines)."
+	"Move caret down one paragraph (delimited by empty lines)."
 
 	this isNil
 		ifFalse: 
@@ -4000,6 +4090,8 @@ moveParaDown
 				lParam: 0]!
 
 moveParaUp
+	"Move caret up one paragraph (delimited by empty lines)."
+
 	this isNil
 		ifFalse: 
 			[ScintillaLibrary default
@@ -4141,6 +4233,9 @@ moveToEndOfWordPart
 				lParam: 0]!
 
 moveToEndOfWrappedLine
+	"Like LineEnd but when word-wrap is enabled goes first to end of display line
+	LineEndDisplay, then to start of document line LineEnd."
+
 	this isNil
 		ifFalse: 
 			[ScintillaLibrary default
@@ -4205,11 +4300,8 @@ moveToStartOfWordPart
 				lParam: 0]!
 
 moveToStartOfWrappedLine
-	"These are like their namesakes Home(Extend)?, LineEnd(Extend)?, VCHome(Extend)? except they
-	behave differently when word-wrap is enabled: They go first to the start / end of the
-	display line, like (Home|LineEnd)Display The difference is that, the cursor is already at
-	the point, it goes on to the start or end of the document line, as appropriate for
-	(Home|LineEnd|VCHome)(Extend)?."
+	"Like Home but when word-wrap is enabled goes first to start of display line HomeDisplay,
+	then to start of document line Home."
 
 	this isNil
 		ifFalse: 
@@ -4244,6 +4336,9 @@ moveToVcStartOfDisplayLine
 				lParam: 0]!
 
 moveToWrappedVcHome
+	"Like VCHome but when word-wrap is enabled goes first to start of display line
+	VCHomeDisplay, then behaves like VCHome."
+
 	this isNil
 		ifFalse: 
 			[ScintillaLibrary default
@@ -4414,13 +4509,11 @@ positionCacheSize: sizeInteger
 				wParam: sizeInteger
 				lParam: 0]!
 
-positionOfChar: anInteger 
+positionOfChar: anInteger
 	"Map the one-based index of a character in the receiver to its client co-ordinates within
 	the receiver."
 
-	| pos |
-	pos := anInteger - 1.
-	^(self sciPointXFromPosition: pos) @ (self sciPointYFromPosition: pos)!
+	^(self sciPointXFromPosition: anInteger) @ (self sciPointYFromPosition: anInteger)!
 
 primarySelectionIndex
 	"Answer the index of the primary selection in the array of selection ranges. Note that the
@@ -4540,22 +4633,21 @@ queryCommand: aCommandQuery
 			^true].
 	^super queryCommand: aCommandQuery!
 
-rangeOfIndicator: anIntegerOrSymbol at: positionInteger 
+rangeOfIndicator: anIntegerOrSymbol at: positionInteger
 	"Answer an <Interval> representing the range of one-based character positions of the
 	indicator whose style is identified by the <integer> id or <symbol> name, anIntegerOrSymbol,
 	that intersects with the one-based <integer> character position, positionIndicator. If the
 	indicator is not set at the specified position then the interval will be empty."
 
-	| pos |
-	pos := positionInteger - 1.
-	^(positionInteger > 0 and: [self isIndicator: anIntegerOrSymbol setAt: positionInteger]) 
+	^(positionInteger > 0 and: [self isIndicator: anIntegerOrSymbol setAt: positionInteger])
 		ifTrue: 
 			[| id |
 			id := self indicatorIdFromName: anIntegerOrSymbol.
-			(self sciIndicatorStart: id position: pos) + 1 to: (self sciIndicatorEnd: id position: pos) + 1]
+			(self sciIndicatorStart: id pos: positionInteger) + 1
+				to: (self sciIndicatorEnd: id pos: positionInteger)]
 		ifFalse: 
 			["The interval occuppied by the indicator that intersects the position is empty"
-			positionInteger to: pos]!
+			positionInteger to: positionInteger - 1]!
 
 redo
 	"Redoes the next action on the undo history."
@@ -4583,6 +4675,17 @@ removeAllAnnotations
 	"Remove all the annotations from all lines in the receiver."
 
 	self annotations: #()!
+
+removeAllEdges
+	"Clear all vertical edges."
+
+	this isNil
+		ifFalse: 
+			[ScintillaLibrary default
+				directFunction: this
+				msg: SCI_MULTIEDGECLEARALL
+				wParam: 0
+				lParam: 0]!
 
 removeAllMarkers
 	"Remove all markers on all lines from the view."
@@ -4623,7 +4726,7 @@ removeAnnotationsForLine: anInteger
 removeBraceHighlight
 	"Remove any current brace highlighting."
 
-	self sciBraceHighlight: -1 pos2: -1!
+	self highlightBracesAt: 0 and: 0!
 
 removeKeyBinding: aScintillaKeyBinding 
 	| bindings |
@@ -4660,11 +4763,12 @@ removeSelections
 				wParam: 0
 				lParam: 0]!
 
-removeStylingFrom: startInteger to: stopInteger 
+removeStylingFrom: startInteger to: stopInteger
 	"Remove any styling from the specified range of text."
 
-	self sciStartStyling: startInteger - 1 mask: 16rFF.
-	self styleNext: stopInteger - startInteger + 1 mask: 0!
+	self
+		startStylingFrom: startInteger;
+		styleNext: stopInteger - startInteger + 1 mask: 0!
 
 replaceTarget: aString 
 	"Replace the receiver's current target range with the plain text represented by the <String>
@@ -4689,18 +4793,16 @@ restyleAll
 
 	self restyleFrom: 1 to: 0!
 
-restyleFrom: startInteger to: stopInteger 
-	"Restyle the specified range of text. If stopInteger is zero, then text is styled up to the
-	end. Note that this is only a request. The text may be restyled asynchronously in blocks if
-	it is large. In particular if lexing is performed by a <SmalltalkStyler> (i.e. container
-	based lexer with Dolphin as the container), then the maximum amount of text that will be
-	synchronously styled in response to this request is controlled by the #blockSize method on
-	that styler."
+restyleFrom: startInteger to: endInteger
+	"Colourise a segment of the document using the current lexing language."
 
-	"Prior to 1.63 SCI_COLOURISE had no effect for container based lexing (a bug)."
-
-	true ifTrue: [self startStylingFrom: startInteger].
-	self sciColourise: startInteger - 1 end: stopInteger - 1!
+	this isNil
+		ifFalse: 
+			[ScintillaLibrary default
+				directFunction: this
+				msg: SCI_COLOURISE
+				wParam: startInteger - 1
+				lParam: endInteger - 1]!
 
 rotateSelection
 	"Set the main selection to the next selection."
@@ -4733,8 +4835,8 @@ sciAddSelection: caretInteger anchor: anchorInteger
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_ADDSELECTION
-				wParam: caretInteger
-				lParam: anchorInteger]!
+				wParam: caretInteger - 1
+				lParam: anchorInteger - 1]!
 
 sciAddStyledText: lengthInteger c: cByteArray
 	"Private - Add array of cells to document."
@@ -4921,16 +5023,16 @@ sciAppendText: lengthInteger text: textString
 				wParam: lengthInteger
 				lpParam: textString]!
 
-sciAssignCmdKey: kmInteger msg: msgInteger
-	"Private - When key+modifier combination km is pressed perform msg."
+sciAssignCmdKey: keyDefinitionInteger sciCommand: sciCommandInteger
+	"Private - When key+modifier combination keyDefinition is pressed perform sciCommand."
 
 	this isNil
 		ifFalse: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_ASSIGNCMDKEY
-				wParam: kmInteger
-				lParam: msgInteger]!
+				wParam: keyDefinitionInteger
+				lParam: sciCommandInteger]!
 
 sciAutoCGetCaseInsensitiveBehaviour
 	"Private - Get auto-completion case insensitive behaviour."
@@ -5004,18 +5106,6 @@ sciAutoCGetTypeSeparator
 				wParam: 0
 				lParam: 0]!
 
-sciAutoCPosStart
-	"Private - Retrieve the position of the caret when the auto-completion list was displayed."
-
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
-			[ScintillaLibrary default
-				directFunction: this
-				msg: SCI_AUTOCPOSSTART
-				wParam: 0
-				lParam: 0]!
-
 sciAutoCSetCaseInsensitiveBehaviour: behaviourInteger
 	"Private - Set auto-completion case insensitive behaviour to either prefer case-sensitive
 	matches or have no preference."
@@ -5086,8 +5176,8 @@ sciAutoCSetTypeSeparator: separatorCharacterInteger
 				wParam: separatorCharacterInteger
 				lParam: 0]!
 
-sciAutoCShow: lenEnteredInteger itemList: itemListString
-	"Private - Display a auto-completion list. The lenEntered parameter indicates how many
+sciAutoCShow: lengthEnteredInteger itemList: itemListString
+	"Private - Display a auto-completion list. The lengthEntered parameter indicates how many
 	characters before the caret should be used to provide context."
 
 	this isNil
@@ -5095,7 +5185,7 @@ sciAutoCShow: lenEnteredInteger itemList: itemListString
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_AUTOCSHOW
-				wParam: lenEnteredInteger
+				wParam: lengthEnteredInteger
 				lpParam: itemListString]!
 
 sciAutoCStops: characterSetString
@@ -5109,18 +5199,7 @@ sciAutoCStops: characterSetString
 				wParam: 0
 				lpParam: characterSetString]!
 
-sciBraceBadLight: posInteger
-	"Private - Highlight the character at a position indicating there is no matching brace."
-
-	this isNil
-		ifFalse: 
-			[ScintillaLibrary default
-				directFunction: this
-				msg: SCI_BRACEBADLIGHT
-				wParam: posInteger
-				lParam: 0]!
-
-sciBraceBadLightIndicator: useBraceBadLightIndicatorBoolean indicator: indicatorInteger
+sciBraceBadLightIndicator: useSettingBoolean indicator: indicatorInteger
 	"Private - Use specified indicator to highlight non matching brace instead of changing its
 	style."
 
@@ -5129,21 +5208,10 @@ sciBraceBadLightIndicator: useBraceBadLightIndicatorBoolean indicator: indicator
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_BRACEBADLIGHTINDICATOR
-				wParam: useBraceBadLightIndicatorBoolean asParameter
+				wParam: useSettingBoolean asParameter
 				lParam: indicatorInteger]!
 
-sciBraceHighlight: pos1Integer pos2: pos2Integer
-	"Private - Highlight the characters at two positions."
-
-	this isNil
-		ifFalse: 
-			[ScintillaLibrary default
-				directFunction: this
-				msg: SCI_BRACEHIGHLIGHT
-				wParam: pos1Integer
-				lParam: pos2Integer]!
-
-sciBraceHighlightIndicator: useBraceHighlightIndicatorBoolean indicator: indicatorInteger
+sciBraceHighlightIndicator: useSettingBoolean indicator: indicatorInteger
 	"Private - Use specified indicator to highlight matching braces instead of changing their
 	style."
 
@@ -5152,32 +5220,21 @@ sciBraceHighlightIndicator: useBraceHighlightIndicatorBoolean indicator: indicat
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_BRACEHIGHLIGHTINDICATOR
-				wParam: useBraceHighlightIndicatorBoolean asParameter
+				wParam: useSettingBoolean asParameter
 				lParam: indicatorInteger]!
 
-sciBraceMatch: posInteger
-	"Private - Find the position of a matching brace or INVALID_POSITION if no match."
+sciBraceMatch: posInteger maxReStyle: maxReStyleInteger
+	"Private - Find the position of a matching brace or INVALID_POSITION if no match. The
+	maxReStyle must be 0 for now. It may be defined in a future release."
 
 	^this isNil
 		ifTrue: [0]
 		ifFalse: 
-			[ScintillaLibrary default
+			[(ScintillaLibrary default
 				directFunction: this
 				msg: SCI_BRACEMATCH
-				wParam: posInteger
-				lParam: 0]!
-
-sciCallTipPosStart
-	"Private - Retrieve the position where the caret was before displaying the call tip."
-
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
-			[ScintillaLibrary default
-				directFunction: this
-				msg: SCI_CALLTIPPOSSTART
-				wParam: 0
-				lParam: 0]!
+				wParam: posInteger - 1
+				lParam: maxReStyleInteger) + 1]!
 
 sciCallTipSetBack: backRGB
 	"Private - Set the background colour for the call tip."
@@ -5212,7 +5269,7 @@ sciCallTipSetForeHlt: foreRGB
 				wParam: foreRGB asParameter
 				lParam: 0]!
 
-sciCallTipSetHlt: startInteger end: endInteger
+sciCallTipSetHlt: highlightStartInteger highlightEnd: highlightEndInteger
 	"Private - Highlight a segment of the definition."
 
 	this isNil
@@ -5220,8 +5277,8 @@ sciCallTipSetHlt: startInteger end: endInteger
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_CALLTIPSETHLT
-				wParam: startInteger
-				lParam: endInteger]!
+				wParam: highlightStartInteger
+				lParam: highlightEndInteger]!
 
 sciCallTipSetPosStart: posStartInteger
 	"Private - Set the start position in order to change when backspacing removes the calltip."
@@ -5242,7 +5299,7 @@ sciCallTipShow: posInteger definition: definitionString
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_CALLTIPSHOW
-				wParam: posInteger
+				wParam: posInteger - 1
 				lpParam: definitionString]!
 
 sciCallTipUseStyle: tabSizeInteger
@@ -5289,8 +5346,8 @@ sciChangeLexerState: startInteger end: endInteger
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_CHANGELEXERSTATE
-				wParam: startInteger
-				lParam: endInteger]!
+				wParam: startInteger - 1
+				lParam: endInteger - 1]!
 
 sciCharPositionFromPoint: xInteger y: yInteger
 	"Private - Find the position of a character from a point within the window."
@@ -5298,11 +5355,11 @@ sciCharPositionFromPoint: xInteger y: yInteger
 	^this isNil
 		ifTrue: [0]
 		ifFalse: 
-			[ScintillaLibrary default
+			[(ScintillaLibrary default
 				directFunction: this
 				msg: SCI_CHARPOSITIONFROMPOINT
 				wParam: xInteger
-				lParam: yInteger]!
+				lParam: yInteger) + 1]!
 
 sciCharPositionFromPointClose: xInteger y: yInteger
 	"Private - Find the position of a character from a point within the window. Return
@@ -5311,11 +5368,11 @@ sciCharPositionFromPointClose: xInteger y: yInteger
 	^this isNil
 		ifTrue: [0]
 		ifFalse: 
-			[ScintillaLibrary default
+			[(ScintillaLibrary default
 				directFunction: this
 				msg: SCI_CHARPOSITIONFROMPOINTCLOSE
 				wParam: xInteger
-				lParam: yInteger]!
+				lParam: yInteger) + 1]!
 
 sciClearAllCmdKeys
 	"Private - Drop all key mappings."
@@ -5328,15 +5385,15 @@ sciClearAllCmdKeys
 				wParam: 0
 				lParam: 0]!
 
-sciClearCmdKey: kmInteger
-	"Private - When key+modifier combination km is pressed do nothing."
+sciClearCmdKey: keyDefinitionInteger
+	"Private - When key+modifier combination keyDefinition is pressed do nothing."
 
 	this isNil
 		ifFalse: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_CLEARCMDKEY
-				wParam: kmInteger
+				wParam: keyDefinitionInteger
 				lParam: 0]!
 
 sciClearRepresentation: encodedCharacterString
@@ -5360,17 +5417,6 @@ sciClearTabStops: lineInteger
 				msg: SCI_CLEARTABSTOPS
 				wParam: lineInteger
 				lParam: 0]!
-
-sciColourise: startInteger end: endInteger
-	"Private - Colourise a segment of the document using the current lexing language."
-
-	this isNil
-		ifFalse: 
-			[ScintillaLibrary default
-				directFunction: this
-				msg: SCI_COLOURISE
-				wParam: startInteger
-				lParam: endInteger]!
 
 sciContractedFoldNext: lineStartInteger
 	"Private - Find the next line at or after lineStart that is a contracted fold header line.
@@ -5404,10 +5450,10 @@ sciCopyRange: startInteger end: endInteger
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_COPYRANGE
-				wParam: startInteger
-				lParam: endInteger]!
+				wParam: startInteger - 1
+				lParam: endInteger - 1]!
 
-sciCountCharacters: startPosInteger endPos: endPosInteger
+sciCountCharacters: startInteger end: endInteger
 	"Private - Count characters between two positions."
 
 	^this isNil
@@ -5416,8 +5462,8 @@ sciCountCharacters: startPosInteger endPos: endPosInteger
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_COUNTCHARACTERS
-				wParam: startPosInteger
-				lParam: endPosInteger]!
+				wParam: startInteger - 1
+				lParam: endInteger - 1]!
 
 sciCreateDocument
 	"Private - Create a new document object. Starts with reference count of 1 and not selected
@@ -5432,7 +5478,7 @@ sciCreateDocument
 				wParam: 0
 				lParam: 0]!
 
-sciDeleteRange: posInteger deleteLength: deleteLengthInteger
+sciDeleteRange: startInteger lengthDelete: lengthDeleteInteger
 	"Private - Delete a range of text in the document."
 
 	this isNil
@@ -5440,8 +5486,8 @@ sciDeleteRange: posInteger deleteLength: deleteLengthInteger
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_DELETERANGE
-				wParam: posInteger
-				lParam: deleteLengthInteger]!
+				wParam: startInteger - 1
+				lParam: lengthDeleteInteger]!
 
 sciDescribeProperty: nameString description: descriptionString
 	"Private - Describe a property. Result is NUL-terminated."
@@ -5468,7 +5514,7 @@ sciDistanceToSecondaryStyles
 				wParam: 0
 				lParam: 0]!
 
-sciDocLineFromVisible: lineDisplayInteger
+sciDocLineFromVisible: displayLineInteger
 	"Private - Find the document line of a display line taking hidden lines into account."
 
 	^this isNil
@@ -5477,7 +5523,7 @@ sciDocLineFromVisible: lineDisplayInteger
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_DOCLINEFROMVISIBLE
-				wParam: lineDisplayInteger
+				wParam: displayLineInteger
 				lParam: 0]!
 
 sciDropSelectionN: selectionInteger
@@ -5560,8 +5606,8 @@ sciFindIndicatorFlash: startInteger end: endInteger
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_FINDINDICATORFLASH
-				wParam: startInteger
-				lParam: endInteger]!
+				wParam: startInteger - 1
+				lParam: endInteger - 1]!
 
 sciFindIndicatorHide
 	"Private - On OS X, hide the find indicator."
@@ -5582,20 +5628,20 @@ sciFindIndicatorShow: startInteger end: endInteger
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_FINDINDICATORSHOW
-				wParam: startInteger
-				lParam: endInteger]!
+				wParam: startInteger - 1
+				lParam: endInteger - 1]!
 
-sciFindText: flagsInteger ft: ftFINDTEXTEX
+sciFindText: searchFlagsInteger ft: ftFINDTEXTEX
 	"Private - Find some text in the document."
 
 	^this isNil
 		ifTrue: [0]
 		ifFalse: 
-			[ScintillaLibrary default
+			[(ScintillaLibrary default
 				directFunction: this
 				msg: SCI_FINDTEXT
-				wParam: flagsInteger
-				lpParam: ftFINDTEXTEX]!
+				wParam: searchFlagsInteger
+				lpParam: ftFINDTEXTEX) + 1]!
 
 sciFoldAll: actionInteger
 	"Private - Expand or contract all fold headers."
@@ -5636,11 +5682,11 @@ sciFormatRange: drawBoolean fr: frFORMATRANGE
 	^this isNil
 		ifTrue: [0]
 		ifFalse: 
-			[ScintillaLibrary default
+			[(ScintillaLibrary default
 				directFunction: this
 				msg: SCI_FORMATRANGE
 				wParam: drawBoolean asParameter
-				lpParam: frFORMATRANGE]!
+				lpParam: frFORMATRANGE) + 1]!
 
 sciFreeSubStyles
 	"Private - Free allocated sub styles"
@@ -5664,18 +5710,6 @@ sciGetAdditionalSelectionTyping
 				msg: SCI_GETADDITIONALSELECTIONTYPING
 				wParam: 0
 				lParam: 0) asBoolean]!
-
-sciGetAnchor
-	"Private - Returns the position of the opposite end of the selection to the caret."
-
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
-			[ScintillaLibrary default
-				directFunction: this
-				msg: SCI_GETANCHOR
-				wParam: 0
-				lParam: 0]!
 
 sciGetAutomaticFold
 	"Private - Get automatic folding behaviours."
@@ -5723,7 +5757,7 @@ sciGetCharAt: posInteger
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_GETCHARAT
-				wParam: posInteger
+				wParam: posInteger - 1
 				lParam: 0]!
 
 sciGetCodePage
@@ -5747,7 +5781,7 @@ sciGetColumn: posInteger
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_GETCOLUMN
-				wParam: posInteger
+				wParam: posInteger - 1
 				lParam: 0]!
 
 sciGetControlCharSymbol
@@ -5759,18 +5793,6 @@ sciGetControlCharSymbol
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_GETCONTROLCHARSYMBOL
-				wParam: 0
-				lParam: 0]!
-
-sciGetCurrentPos
-	"Private - Returns the position of the caret."
-
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
-			[ScintillaLibrary default
-				directFunction: this
-				msg: SCI_GETCURRENTPOS
 				wParam: 0
 				lParam: 0]!
 
@@ -5822,18 +5844,6 @@ sciGetEndAtLastLine
 				msg: SCI_GETENDATLASTLINE
 				wParam: 0
 				lParam: 0) asBoolean]!
-
-sciGetEndStyled
-	"Private - Retrieve the position of the last correctly styled character."
-
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
-			[ScintillaLibrary default
-				directFunction: this
-				msg: SCI_GETENDSTYLED
-				wParam: 0
-				lParam: 0]!
 
 sciGetEOLMode
 	"Private - Retrieve the current end of line mode - one of CRLF, CR, or LF."
@@ -6009,11 +6019,11 @@ sciGetLineEndPosition: lineInteger
 	^this isNil
 		ifTrue: [0]
 		ifFalse: 
-			[ScintillaLibrary default
+			[(ScintillaLibrary default
 				directFunction: this
 				msg: SCI_GETLINEENDPOSITION
 				wParam: lineInteger
-				lParam: 0]!
+				lParam: 0) + 1]!
 
 sciGetLineEndTypesActive
 	"Private - Get the line end types currently recognised. May be a subset of the allowed types
@@ -6071,11 +6081,11 @@ sciGetLineIndentPosition: lineInteger
 	^this isNil
 		ifTrue: [0]
 		ifFalse: 
-			[ScintillaLibrary default
+			[(ScintillaLibrary default
 				directFunction: this
 				msg: SCI_GETLINEINDENTPOSITION
 				wParam: lineInteger
-				lParam: 0]!
+				lParam: 0) + 1]!
 
 sciGetLineSelEndPosition: lineInteger
 	"Private - Retrieve the position of the end of the selection at the given line
@@ -6084,11 +6094,11 @@ sciGetLineSelEndPosition: lineInteger
 	^this isNil
 		ifTrue: [0]
 		ifFalse: 
-			[ScintillaLibrary default
+			[(ScintillaLibrary default
 				directFunction: this
 				msg: SCI_GETLINESELENDPOSITION
 				wParam: lineInteger
-				lParam: 0]!
+				lParam: 0) + 1]!
 
 sciGetLineSelStartPosition: lineInteger
 	"Private - Retrieve the position of the start of the selection at the given line
@@ -6097,11 +6107,11 @@ sciGetLineSelStartPosition: lineInteger
 	^this isNil
 		ifTrue: [0]
 		ifFalse: 
-			[ScintillaLibrary default
+			[(ScintillaLibrary default
 				directFunction: this
 				msg: SCI_GETLINESELSTARTPOSITION
 				wParam: lineInteger
-				lParam: 0]!
+				lParam: 0) + 1]!
 
 sciGetLineState: lineInteger
 	"Private - Retrieve the extra styling information for a line."
@@ -6139,6 +6149,18 @@ sciGetMainSelection
 				wParam: 0
 				lParam: 0]!
 
+sciGetMarginBackN: marginInteger
+	"Private - Retrieve the background colour of a margin"
+
+	^this isNil
+		ifTrue: [nil]
+		ifFalse: 
+			[RGB fromInteger: (ScintillaLibrary default
+						directFunction: this
+						msg: SCI_GETMARGINBACKN
+						wParam: marginInteger
+						lParam: 0)]!
+
 sciGetMarginLeft
 	"Private - Returns the size in pixels of the left margin."
 
@@ -6172,6 +6194,18 @@ sciGetMarginRight
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_GETMARGINRIGHT
+				wParam: 0
+				lParam: 0]!
+
+sciGetMargins
+	"Private - How many margins are there?."
+
+	^this isNil
+		ifTrue: [0]
+		ifFalse: 
+			[ScintillaLibrary default
+				directFunction: this
+				msg: SCI_GETMARGINS
 				wParam: 0
 				lParam: 0]!
 
@@ -6271,7 +6305,7 @@ sciGetPrintWrapMode
 				wParam: 0
 				lParam: 0]!
 
-sciGetProperty: keyString buf: bufString
+sciGetProperty: keyString value: valueString
 	"Private - Retrieve a 'property' value previously set with SetProperty. Result is
 	NUL-terminated."
 
@@ -6282,9 +6316,9 @@ sciGetProperty: keyString buf: bufString
 				directFunction: this
 				msg: SCI_GETPROPERTY
 				wParam: keyString
-				lpParam: bufString]!
+				lpParam: valueString]!
 
-sciGetPropertyExpanded: keyString buf: bufString
+sciGetPropertyExpanded: keyString value: valueString
 	"Private - Retrieve a 'property' value previously set with SetProperty, with '$()' variable
 	replacement on returned buffer. Result is NUL-terminated."
 
@@ -6295,9 +6329,9 @@ sciGetPropertyExpanded: keyString buf: bufString
 				directFunction: this
 				msg: SCI_GETPROPERTYEXPANDED
 				wParam: keyString
-				lpParam: bufString]!
+				lpParam: valueString]!
 
-sciGetPropertyInt: keyString
+sciGetPropertyInt: keyString defaultValue: defaultValueInteger
 	"Private - Retrieve a 'property' value previously set with SetProperty, interpreted as an
 	int AFTER any '$()' variable replacement."
 
@@ -6308,7 +6342,7 @@ sciGetPropertyInt: keyString
 				directFunction: this
 				msg: SCI_GETPROPERTYINT
 				wParam: keyString
-				lParam: 0]!
+				lParam: defaultValueInteger]!
 
 sciGetPunctuationChars
 	"Private - Get the set of characters making up punctuation characters"
@@ -6335,16 +6369,20 @@ sciGetPunctuationChars
 			result]!
 
 sciGetRectangularSelectionAnchor
+	"Private - Return the anchor position of the rectangular selection."
+
 	^this isNil
 		ifTrue: [0]
 		ifFalse: 
-			[ScintillaLibrary default
+			[(ScintillaLibrary default
 				directFunction: this
 				msg: SCI_GETRECTANGULARSELECTIONANCHOR
 				wParam: 0
-				lParam: 0]!
+				lParam: 0) + 1]!
 
 sciGetRectangularSelectionAnchorVirtualSpace
+	"Private - Return the virtual space of the anchor of the rectangular selection."
+
 	^this isNil
 		ifTrue: [0]
 		ifFalse: 
@@ -6355,16 +6393,20 @@ sciGetRectangularSelectionAnchorVirtualSpace
 				lParam: 0]!
 
 sciGetRectangularSelectionCaret
+	"Private - Return the caret position of the rectangular selection."
+
 	^this isNil
 		ifTrue: [0]
 		ifFalse: 
-			[ScintillaLibrary default
+			[(ScintillaLibrary default
 				directFunction: this
 				msg: SCI_GETRECTANGULARSELECTIONCARET
 				wParam: 0
-				lParam: 0]!
+				lParam: 0) + 1]!
 
 sciGetRectangularSelectionCaretVirtualSpace
+	"Private - Return the virtual space of the caret of the rectangular selection."
+
 	^this isNil
 		ifTrue: [0]
 		ifFalse: 
@@ -6398,18 +6440,6 @@ sciGetSearchFlags
 				wParam: 0
 				lParam: 0]!
 
-sciGetSelectionEnd
-	"Private - Returns the position at the end of the selection."
-
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
-			[ScintillaLibrary default
-				directFunction: this
-				msg: SCI_GETSELECTIONEND
-				wParam: 0
-				lParam: 0]!
-
 sciGetSelectionMode
 	"Private - Get the mode of the current selection."
 
@@ -6423,16 +6453,20 @@ sciGetSelectionMode
 				lParam: 0]!
 
 sciGetSelectionNAnchor: selectionInteger
+	"Private - Return the anchor position of the nth selection."
+
 	^this isNil
 		ifTrue: [0]
 		ifFalse: 
-			[ScintillaLibrary default
+			[(ScintillaLibrary default
 				directFunction: this
 				msg: SCI_GETSELECTIONNANCHOR
 				wParam: selectionInteger
-				lParam: 0]!
+				lParam: 0) + 1]!
 
 sciGetSelectionNAnchorVirtualSpace: selectionInteger
+	"Private - Return the virtual space of the anchor of the nth selection."
+
 	^this isNil
 		ifTrue: [0]
 		ifFalse: 
@@ -6443,16 +6477,20 @@ sciGetSelectionNAnchorVirtualSpace: selectionInteger
 				lParam: 0]!
 
 sciGetSelectionNCaret: selectionInteger
+	"Private - Return the caret position of the nth selection."
+
 	^this isNil
 		ifTrue: [0]
 		ifFalse: 
-			[ScintillaLibrary default
+			[(ScintillaLibrary default
 				directFunction: this
 				msg: SCI_GETSELECTIONNCARET
 				wParam: selectionInteger
-				lParam: 0]!
+				lParam: 0) + 1]!
 
 sciGetSelectionNCaretVirtualSpace: selectionInteger
+	"Private - Return the virtual space of the caret of the nth selection."
+
 	^this isNil
 		ifTrue: [0]
 		ifFalse: 
@@ -6460,42 +6498,6 @@ sciGetSelectionNCaretVirtualSpace: selectionInteger
 				directFunction: this
 				msg: SCI_GETSELECTIONNCARETVIRTUALSPACE
 				wParam: selectionInteger
-				lParam: 0]!
-
-sciGetSelectionNEnd: selectionInteger
-	"Private - Returns the position at the end of the selection."
-
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
-			[ScintillaLibrary default
-				directFunction: this
-				msg: SCI_GETSELECTIONNEND
-				wParam: selectionInteger
-				lParam: 0]!
-
-sciGetSelectionNStart: selectionInteger
-	"Private - Returns the position at the start of the selection."
-
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
-			[ScintillaLibrary default
-				directFunction: this
-				msg: SCI_GETSELECTIONNSTART
-				wParam: selectionInteger
-				lParam: 0]!
-
-sciGetSelectionStart
-	"Private - Returns the position at the start of the selection."
-
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
-			[ScintillaLibrary default
-				directFunction: this
-				msg: SCI_GETSELECTIONSTART
-				wParam: 0
 				lParam: 0]!
 
 sciGetStyledText: trTEXTRANGE
@@ -6597,30 +6599,6 @@ sciGetTag: tagNumberInteger
 				lpParam: result.
 			result]!
 
-sciGetTargetEnd
-	"Private - Get the position that ends the target."
-
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
-			[ScintillaLibrary default
-				directFunction: this
-				msg: SCI_GETTARGETEND
-				wParam: 0
-				lParam: 0]!
-
-sciGetTargetStart
-	"Private - Get the position that starts the target."
-
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
-			[ScintillaLibrary default
-				directFunction: this
-				msg: SCI_GETTARGETSTART
-				wParam: 0
-				lParam: 0]!
-
 sciGetTechnology
 	"Private - Get the tech."
 
@@ -6658,6 +6636,8 @@ sciGetViewWS
 				lParam: 0]!
 
 sciGetVirtualSpaceOptions
+	"Private - Return options for virtual space behaviour."
+
 	^this isNil
 		ifTrue: [0]
 		ifFalse: 
@@ -6776,17 +6756,6 @@ sciGotoLine: lineInteger
 				wParam: lineInteger
 				lParam: 0]!
 
-sciGotoPos: posInteger
-	"Private - Set caret to a position and ensure it is visible."
-
-	this isNil
-		ifFalse: 
-			[ScintillaLibrary default
-				directFunction: this
-				msg: SCI_GOTOPOS
-				wParam: posInteger
-				lParam: 0]!
-
 sciHideLines: lineStartInteger lineEnd: lineEndInteger
 	"Private - Make a range of lines invisible."
 
@@ -6798,19 +6767,7 @@ sciHideLines: lineStartInteger lineEnd: lineEndInteger
 				wParam: lineStartInteger
 				lParam: lineEndInteger]!
 
-sciIndicatorAllOnFor: positionInteger
-	"Private - Are any indicators present at position?"
-
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
-			[ScintillaLibrary default
-				directFunction: this
-				msg: SCI_INDICATORALLONFOR
-				wParam: positionInteger
-				lParam: 0]!
-
-sciIndicatorClearRange: positionInteger clearLength: clearLengthInteger
+sciIndicatorClearRange: startInteger lengthClear: lengthClearInteger
 	"Private - Turn a indicator off over a range."
 
 	this isNil
@@ -6818,10 +6775,10 @@ sciIndicatorClearRange: positionInteger clearLength: clearLengthInteger
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_INDICATORCLEARRANGE
-				wParam: positionInteger
-				lParam: clearLengthInteger]!
+				wParam: startInteger - 1
+				lParam: lengthClearInteger]!
 
-sciIndicatorEnd: indicatorInteger position: positionInteger
+sciIndicatorEnd: indicatorInteger pos: posInteger
 	"Private - Where does a particular indicator end?"
 
 	^this isNil
@@ -6831,9 +6788,9 @@ sciIndicatorEnd: indicatorInteger position: positionInteger
 				directFunction: this
 				msg: SCI_INDICATOREND
 				wParam: indicatorInteger
-				lParam: positionInteger]!
+				lParam: posInteger - 1]!
 
-sciIndicatorFillRange: positionInteger fillLength: fillLengthInteger
+sciIndicatorFillRange: startInteger lengthFill: lengthFillInteger
 	"Private - Turn a indicator on over a range."
 
 	this isNil
@@ -6841,10 +6798,10 @@ sciIndicatorFillRange: positionInteger fillLength: fillLengthInteger
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_INDICATORFILLRANGE
-				wParam: positionInteger
-				lParam: fillLengthInteger]!
+				wParam: startInteger - 1
+				lParam: lengthFillInteger]!
 
-sciIndicatorStart: indicatorInteger position: positionInteger
+sciIndicatorStart: indicatorInteger pos: posInteger
 	"Private - Where does a particular indicator start?"
 
 	^this isNil
@@ -6854,10 +6811,10 @@ sciIndicatorStart: indicatorInteger position: positionInteger
 				directFunction: this
 				msg: SCI_INDICATORSTART
 				wParam: indicatorInteger
-				lParam: positionInteger]!
+				lParam: posInteger - 1]!
 
-sciIndicatorValueAt: indicatorInteger position: positionInteger
-	"Private - What value does a particular indicator have at at a position?"
+sciIndicatorValueAt: indicatorInteger pos: posInteger
+	"Private - What value does a particular indicator have at a position?"
 
 	^this isNil
 		ifTrue: [0]
@@ -6866,7 +6823,7 @@ sciIndicatorValueAt: indicatorInteger position: positionInteger
 				directFunction: this
 				msg: SCI_INDICATORVALUEAT
 				wParam: indicatorInteger
-				lParam: positionInteger]!
+				lParam: posInteger - 1]!
 
 sciInsertText: posInteger text: textString
 	"Private - Insert string at a position."
@@ -6876,7 +6833,7 @@ sciInsertText: posInteger text: textString
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_INSERTTEXT
-				wParam: posInteger
+				wParam: posInteger - 1
 				lpParam: textString]!
 
 sciIsRangeWord: startInteger end: endInteger
@@ -6888,8 +6845,8 @@ sciIsRangeWord: startInteger end: endInteger
 			[(ScintillaLibrary default
 				directFunction: this
 				msg: SCI_ISRANGEWORD
-				wParam: startInteger
-				lParam: endInteger) asBoolean]!
+				wParam: startInteger - 1
+				lParam: endInteger - 1) asBoolean]!
 
 sciLineScroll: columnsInteger lines: linesInteger
 	"Private - Scroll horizontally and vertically."
@@ -7017,7 +6974,7 @@ sciMarginTextClearAll
 				wParam: 0
 				lParam: 0]!
 
-sciMarkerAddSet: lineInteger set: setInteger
+sciMarkerAddSet: lineInteger markerSet: markerSetInteger
 	"Private - Add a set of markers to a line."
 
 	this isNil
@@ -7026,7 +6983,7 @@ sciMarkerAddSet: lineInteger set: setInteger
 				directFunction: this
 				msg: SCI_MARKERADDSET
 				wParam: lineInteger
-				lParam: setInteger]!
+				lParam: markerSetInteger]!
 
 sciMarkerDefinePixmap: markerNumberInteger pixmap: pixmapString
 	"Private - Define a marker from a pixmap."
@@ -7051,7 +7008,7 @@ sciMarkerDefineRGBAImage: markerNumberInteger pixels: pixelsString
 				wParam: markerNumberInteger
 				lpParam: pixelsString]!
 
-sciMarkerDeleteHandle: handleInteger
+sciMarkerDeleteHandle: markerHandleInteger
 	"Private - Delete a marker."
 
 	this isNil
@@ -7059,7 +7016,7 @@ sciMarkerDeleteHandle: handleInteger
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_MARKERDELETEHANDLE
-				wParam: handleInteger
+				wParam: markerHandleInteger
 				lParam: 0]!
 
 sciMarkerEnableHighlight: enabledBoolean
@@ -7086,7 +7043,7 @@ sciMarkerGet: lineInteger
 				wParam: lineInteger
 				lParam: 0]!
 
-sciMarkerLineFromHandle: handleInteger
+sciMarkerLineFromHandle: markerHandleInteger
 	"Private - Retrieve the line number at which a particular marker is located."
 
 	^this isNil
@@ -7095,7 +7052,7 @@ sciMarkerLineFromHandle: handleInteger
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_MARKERLINEFROMHANDLE
-				wParam: handleInteger
+				wParam: markerHandleInteger
 				lParam: 0]!
 
 sciMarkerNext: lineStartInteger markerMask: markerMaskInteger
@@ -7146,6 +7103,17 @@ sciMarkerSymbolDefined: markerNumberInteger
 				wParam: markerNumberInteger
 				lParam: 0]!
 
+sciMultiEdgeAddLine: columnInteger edgeColour: edgeColourRGB
+	"Private - Add a new vertical edge to the view."
+
+	this isNil
+		ifFalse: 
+			[ScintillaLibrary default
+				directFunction: this
+				msg: SCI_MULTIEDGEADDLINE
+				wParam: columnInteger
+				lParam: edgeColourRGB asParameter]!
+
 sciMultipleSelectAddEach
 	"Private - Add each occurrence of the main selection in the target to the set of selections.
 	If the current selection is empty then select word around caret."
@@ -7180,7 +7148,7 @@ sciPointXFromPosition: posInteger
 				directFunction: this
 				msg: SCI_POINTXFROMPOSITION
 				wParam: 0
-				lParam: posInteger]!
+				lParam: posInteger - 1]!
 
 sciPointYFromPosition: posInteger
 	"Private - Retrieve the y value of the point in the window where a position is displayed."
@@ -7192,7 +7160,7 @@ sciPointYFromPosition: posInteger
 				directFunction: this
 				msg: SCI_POINTYFROMPOSITION
 				wParam: 0
-				lParam: posInteger]!
+				lParam: posInteger - 1]!
 
 sciPositionAfter: posInteger
 	"Private - Given a valid document position, return the next position taking code page into
@@ -7201,11 +7169,11 @@ sciPositionAfter: posInteger
 	^this isNil
 		ifTrue: [0]
 		ifFalse: 
-			[ScintillaLibrary default
+			[(ScintillaLibrary default
 				directFunction: this
 				msg: SCI_POSITIONAFTER
-				wParam: posInteger
-				lParam: 0]!
+				wParam: posInteger - 1
+				lParam: 0) + 1]!
 
 sciPositionBefore: posInteger
 	"Private - Given a valid document position, return the previous position taking code page
@@ -7214,11 +7182,11 @@ sciPositionBefore: posInteger
 	^this isNil
 		ifTrue: [0]
 		ifFalse: 
-			[ScintillaLibrary default
+			[(ScintillaLibrary default
 				directFunction: this
 				msg: SCI_POSITIONBEFORE
-				wParam: posInteger
-				lParam: 0]!
+				wParam: posInteger - 1
+				lParam: 0) + 1]!
 
 sciPositionFromPoint: xInteger y: yInteger
 	"Private - Find the position from a point within the window."
@@ -7226,11 +7194,11 @@ sciPositionFromPoint: xInteger y: yInteger
 	^this isNil
 		ifTrue: [0]
 		ifFalse: 
-			[ScintillaLibrary default
+			[(ScintillaLibrary default
 				directFunction: this
 				msg: SCI_POSITIONFROMPOINT
 				wParam: xInteger
-				lParam: yInteger]!
+				lParam: yInteger) + 1]!
 
 sciPositionFromPointClose: xInteger y: yInteger
 	"Private - Find the position from a point within the window but return INVALID_POSITION if
@@ -7239,11 +7207,11 @@ sciPositionFromPointClose: xInteger y: yInteger
 	^this isNil
 		ifTrue: [0]
 		ifFalse: 
-			[ScintillaLibrary default
+			[(ScintillaLibrary default
 				directFunction: this
 				msg: SCI_POSITIONFROMPOINTCLOSE
 				wParam: xInteger
-				lParam: yInteger]!
+				lParam: yInteger) + 1]!
 
 sciPositionRelative: posInteger relative: relativeInteger
 	"Private - Given a valid document position, return a position that differs in a number of
@@ -7252,11 +7220,11 @@ sciPositionRelative: posInteger relative: relativeInteger
 	^this isNil
 		ifTrue: [0]
 		ifFalse: 
-			[ScintillaLibrary default
+			[(ScintillaLibrary default
 				directFunction: this
 				msg: SCI_POSITIONRELATIVE
-				wParam: posInteger
-				lParam: relativeInteger]!
+				wParam: posInteger - 1
+				lParam: relativeInteger) + 1]!
 
 sciPrivateLexerCall: operationInteger pointer: pointerInteger
 	"Private - For private communication between an application and a known lexer."
@@ -7421,8 +7389,8 @@ sciScrollRange: secondaryInteger primary: primaryInteger
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SCROLLRANGE
-				wParam: secondaryInteger
-				lParam: primaryInteger]!
+				wParam: secondaryInteger - 1
+				lParam: primaryInteger - 1]!
 
 sciSearchAnchor
 	"Private - Sets the current caret position to be the search anchor."
@@ -7449,7 +7417,7 @@ sciSearchInTarget: lengthInteger text: textString
 				wParam: lengthInteger
 				lpParam: textString]!
 
-sciSearchNext: flagsInteger text: textString
+sciSearchNext: searchFlagsInteger text: textString
 	"Private - Find some text starting at the search anchor. Does not ensure the selection is
 	visible."
 
@@ -7459,10 +7427,10 @@ sciSearchNext: flagsInteger text: textString
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SEARCHNEXT
-				wParam: flagsInteger
+				wParam: searchFlagsInteger
 				lpParam: textString]!
 
-sciSearchPrev: flagsInteger text: textString
+sciSearchPrev: searchFlagsInteger text: textString
 	"Private - Find some text starting at the search anchor and moving backwards. Does not
 	ensure the selection is visible."
 
@@ -7472,7 +7440,7 @@ sciSearchPrev: flagsInteger text: textString
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SEARCHPREV
-				wParam: flagsInteger
+				wParam: searchFlagsInteger
 				lpParam: textString]!
 
 sciSetAdditionalCaretFore: foreRGB
@@ -7519,18 +7487,6 @@ sciSetAdditionalSelFore: foreRGB
 				directFunction: this
 				msg: SCI_SETADDITIONALSELFORE
 				wParam: foreRGB asParameter
-				lParam: 0]!
-
-sciSetAnchor: posAnchorInteger
-	"Private - Set the selection anchor to a position. The anchor is the opposite end of the
-	selection from the caret."
-
-	this isNil
-		ifFalse: 
-			[ScintillaLibrary default
-				directFunction: this
-				msg: SCI_SETANCHOR
-				wParam: posAnchorInteger
 				lParam: 0]!
 
 sciSetAutomaticFold: automaticFoldInteger
@@ -7634,7 +7590,7 @@ sciSetControlCharSymbol: symbolInteger
 				wParam: symbolInteger
 				lParam: 0]!
 
-sciSetDocPointer: pointerInteger
+sciSetDocPointer: docInteger
 	"Private - Change the document object used."
 
 	this isNil
@@ -7643,7 +7599,7 @@ sciSetDocPointer: pointerInteger
 				directFunction: this
 				msg: SCI_SETDOCPOINTER
 				wParam: 0
-				lParam: pointerInteger]!
+				lParam: docInteger]!
 
 sciSetEdgeColumn: columnInteger
 	"Private - Set the column number of the edge. If text goes past the edge then it is
@@ -7657,27 +7613,16 @@ sciSetEdgeColumn: columnInteger
 				wParam: columnInteger
 				lParam: 0]!
 
-sciSetEdgeMode: modeInteger
-	"Private - The edge may be displayed by a line (EDGE_LINE) or by highlighting text that goes
-	beyond it (EDGE_BACKGROUND) or not displayed at all (EDGE_NONE)."
+sciSetEdgeMode: edgeModeInteger
+	"Private - The edge may be displayed by a line (EDGE_LINE/EDGE_MULTILINE) or by highlighting
+	text that goes beyond it (EDGE_BACKGROUND) or not displayed at all (EDGE_NONE)."
 
 	this isNil
 		ifFalse: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SETEDGEMODE
-				wParam: modeInteger
-				lParam: 0]!
-
-sciSetEmptySelection: posInteger
-	"Private - Set caret to a position, while removing any existing selection."
-
-	this isNil
-		ifFalse: 
-			[ScintillaLibrary default
-				directFunction: this
-				msg: SCI_SETEMPTYSELECTION
-				wParam: posInteger
+				wParam: edgeModeInteger
 				lParam: 0]!
 
 sciSetEOLMode: eolModeInteger
@@ -7691,7 +7636,7 @@ sciSetEOLMode: eolModeInteger
 				wParam: eolModeInteger
 				lParam: 0]!
 
-sciSetFirstVisibleLine: lineDisplayInteger
+sciSetFirstVisibleLine: displayLineInteger
 	"Private - Scroll so that a display line is at the top of the display."
 
 	this isNil
@@ -7699,7 +7644,7 @@ sciSetFirstVisibleLine: lineDisplayInteger
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SETFIRSTVISIBLELINE
-				wParam: lineDisplayInteger
+				wParam: displayLineInteger
 				lParam: 0]!
 
 sciSetFoldExpanded: lineInteger expanded: expandedBoolean
@@ -7737,7 +7682,7 @@ sciSetFoldLevel: lineInteger level: levelInteger
 				lParam: levelInteger]!
 
 sciSetFoldMarginColour: useSettingBoolean back: backRGB
-	"Private - Set the colours used as a chequerboard pattern in the fold margin"
+	"Private - Set one of the colours used as a chequerboard pattern in the fold margin"
 
 	this isNil
 		ifFalse: 
@@ -7748,6 +7693,8 @@ sciSetFoldMarginColour: useSettingBoolean back: backRGB
 				lParam: backRGB asParameter]!
 
 sciSetFoldMarginHiColour: useSettingBoolean fore: foreRGB
+	"Private - Set the other colour used as a chequerboard pattern in the fold margin"
+
 	this isNil
 		ifFalse: 
 			[ScintillaLibrary default
@@ -7789,7 +7736,7 @@ sciSetHotspotActiveFore: useSettingBoolean fore: foreRGB
 				wParam: useSettingBoolean asParameter
 				lParam: foreRGB asParameter]!
 
-sciSetHScrollBar: showBoolean
+sciSetHScrollBar: visibleBoolean
 	"Private - Show or hide the horizontal scroll bar."
 
 	this isNil
@@ -7797,7 +7744,7 @@ sciSetHScrollBar: showBoolean
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SETHSCROLLBAR
-				wParam: showBoolean asParameter
+				wParam: visibleBoolean asParameter
 				lParam: 0]!
 
 sciSetIdentifiers: styleInteger identifiers: identifiersString
@@ -7844,7 +7791,7 @@ sciSetIndentationGuides: indentViewInteger
 				wParam: indentViewInteger
 				lParam: 0]!
 
-sciSetKeyWords: keywordSetInteger keyWords: keyWordsString
+sciSetKeyWords: keyWordSetInteger keyWords: keyWordsString
 	"Private - Set up the key words used by the lexer."
 
 	this isNil
@@ -7852,10 +7799,10 @@ sciSetKeyWords: keywordSetInteger keyWords: keyWordsString
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SETKEYWORDS
-				wParam: keywordSetInteger
+				wParam: keyWordSetInteger
 				lpParam: keyWordsString]!
 
-sciSetLayoutCache: modeInteger
+sciSetLayoutCache: cacheModeInteger
 	"Private - Sets the degree of caching of layout information."
 
 	this isNil
@@ -7863,7 +7810,7 @@ sciSetLayoutCache: modeInteger
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SETLAYOUTCACHE
-				wParam: modeInteger
+				wParam: cacheModeInteger
 				lParam: 0]!
 
 sciSetLengthForEncode: bytesInteger
@@ -7912,7 +7859,7 @@ sciSetLineEndTypesAllowed: lineEndBitSetInteger
 				wParam: lineEndBitSetInteger
 				lParam: 0]!
 
-sciSetLineIndentation: lineInteger indentSize: indentSizeInteger
+sciSetLineIndentation: lineInteger indentation: indentationInteger
 	"Private - Change the indentation of a line to a number of columns."
 
 	this isNil
@@ -7921,7 +7868,7 @@ sciSetLineIndentation: lineInteger indentSize: indentSizeInteger
 				directFunction: this
 				msg: SCI_SETLINEINDENTATION
 				wParam: lineInteger
-				lParam: indentSizeInteger]!
+				lParam: indentationInteger]!
 
 sciSetLineState: lineInteger state: stateInteger
 	"Private - Used to hold extra styling information for each line."
@@ -7944,6 +7891,17 @@ sciSetMainSelection: selectionInteger
 				msg: SCI_SETMAINSELECTION
 				wParam: selectionInteger
 				lParam: 0]!
+
+sciSetMarginBackN: marginInteger back: backRGB
+	"Private - Set the background colour of a margin. Only visible for SC_MARGIN_COLOUR."
+
+	this isNil
+		ifFalse: 
+			[ScintillaLibrary default
+				directFunction: this
+				msg: SCI_SETMARGINBACKN
+				wParam: marginInteger
+				lParam: backRGB asParameter]!
 
 sciSetMarginLeft: pixelWidthInteger
 	"Private - Sets the size in pixels of the left margin."
@@ -7978,7 +7936,18 @@ sciSetMarginRight: pixelWidthInteger
 				wParam: 0
 				lParam: pixelWidthInteger]!
 
-sciSetModEventMask: maskInteger
+sciSetMargins: marginsInteger
+	"Private - Allocate a non-standard number of margins."
+
+	this isNil
+		ifFalse: 
+			[ScintillaLibrary default
+				directFunction: this
+				msg: SCI_SETMARGINS
+				wParam: marginsInteger
+				lParam: 0]!
+
+sciSetModEventMask: eventMaskInteger
 	"Private - Set which document modification events are sent to the container."
 
 	this isNil
@@ -7986,7 +7955,7 @@ sciSetModEventMask: maskInteger
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SETMODEVENTMASK
-				wParam: maskInteger
+				wParam: eventMaskInteger
 				lParam: 0]!
 
 sciSetMouseSelectionRectangularSwitch: mouseSelectionRectangularSwitchBoolean
@@ -8037,7 +8006,7 @@ sciSetPhasesDraw: phasesInteger
 				wParam: phasesInteger
 				lParam: 0]!
 
-sciSetPrintWrapMode: modeInteger
+sciSetPrintWrapMode: wrapModeInteger
 	"Private - Set printing to line wrapped (SC_WRAP_WORD) or not line wrapped (SC_WRAP_NONE)."
 
 	this isNil
@@ -8045,7 +8014,7 @@ sciSetPrintWrapMode: modeInteger
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SETPRINTWRAPMODE
-				wParam: modeInteger
+				wParam: wrapModeInteger
 				lParam: 0]!
 
 sciSetProperty: keyString value: valueString
@@ -8071,16 +8040,20 @@ sciSetPunctuationChars: charactersString
 				wParam: 0
 				lpParam: charactersString]!
 
-sciSetRectangularSelectionAnchor: posAnchorInteger
+sciSetRectangularSelectionAnchor: anchorInteger
+	"Private - Set the anchor position of the rectangular selection."
+
 	this isNil
 		ifFalse: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SETRECTANGULARSELECTIONANCHOR
-				wParam: posAnchorInteger
+				wParam: anchorInteger - 1
 				lParam: 0]!
 
 sciSetRectangularSelectionAnchorVirtualSpace: spaceInteger
+	"Private - Set the virtual space of the anchor of the rectangular selection."
+
 	this isNil
 		ifFalse: 
 			[ScintillaLibrary default
@@ -8089,16 +8062,20 @@ sciSetRectangularSelectionAnchorVirtualSpace: spaceInteger
 				wParam: spaceInteger
 				lParam: 0]!
 
-sciSetRectangularSelectionCaret: posInteger
+sciSetRectangularSelectionCaret: caretInteger
+	"Private - Set the caret position of the rectangular selection."
+
 	this isNil
 		ifFalse: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SETRECTANGULARSELECTIONCARET
-				wParam: posInteger
+				wParam: caretInteger - 1
 				lParam: 0]!
 
 sciSetRectangularSelectionCaretVirtualSpace: spaceInteger
+	"Private - Set the virtual space of the caret of the rectangular selection."
+
 	this isNil
 		ifFalse: 
 			[ScintillaLibrary default
@@ -8130,7 +8107,7 @@ sciSetSavePoint
 				wParam: 0
 				lParam: 0]!
 
-sciSetSearchFlags: flagsInteger
+sciSetSearchFlags: searchFlagsInteger
 	"Private - Set the search flags used by SearchInTarget."
 
 	this isNil
@@ -8138,7 +8115,7 @@ sciSetSearchFlags: flagsInteger
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SETSEARCHFLAGS
-				wParam: flagsInteger
+				wParam: searchFlagsInteger
 				lParam: 0]!
 
 sciSetSelBack: useSettingBoolean back: backRGB
@@ -8162,10 +8139,10 @@ sciSetSelection: caretInteger anchor: anchorInteger
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SETSELECTION
-				wParam: caretInteger
-				lParam: anchorInteger]!
+				wParam: caretInteger - 1
+				lParam: anchorInteger - 1]!
 
-sciSetSelectionMode: modeInteger
+sciSetSelectionMode: selectionModeInteger
 	"Private - Set the selection mode to stream (SC_SEL_STREAM) or rectangular
 	(SC_SEL_RECTANGLE/SC_SEL_THIN) or by lines (SC_SEL_LINES)."
 
@@ -8174,19 +8151,23 @@ sciSetSelectionMode: modeInteger
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SETSELECTIONMODE
-				wParam: modeInteger
+				wParam: selectionModeInteger
 				lParam: 0]!
 
-sciSetSelectionNAnchor: selectionInteger posAnchor: posAnchorInteger
+sciSetSelectionNAnchor: selectionInteger anchor: anchorInteger
+	"Private - Set the anchor position of the nth selection."
+
 	this isNil
 		ifFalse: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SETSELECTIONNANCHOR
 				wParam: selectionInteger
-				lParam: posAnchorInteger]!
+				lParam: anchorInteger - 1]!
 
 sciSetSelectionNAnchorVirtualSpace: selectionInteger space: spaceInteger
+	"Private - Set the virtual space of the anchor of the nth selection."
+
 	this isNil
 		ifFalse: 
 			[ScintillaLibrary default
@@ -8195,16 +8176,20 @@ sciSetSelectionNAnchorVirtualSpace: selectionInteger space: spaceInteger
 				wParam: selectionInteger
 				lParam: spaceInteger]!
 
-sciSetSelectionNCaret: selectionInteger pos: posInteger
+sciSetSelectionNCaret: selectionInteger caret: caretInteger
+	"Private - Set the caret position of the nth selection."
+
 	this isNil
 		ifFalse: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SETSELECTIONNCARET
 				wParam: selectionInteger
-				lParam: posInteger]!
+				lParam: caretInteger - 1]!
 
 sciSetSelectionNCaretVirtualSpace: selectionInteger space: spaceInteger
+	"Private - Set the virtual space of the caret of the nth selection."
+
 	this isNil
 		ifFalse: 
 			[ScintillaLibrary default
@@ -8213,7 +8198,7 @@ sciSetSelectionNCaretVirtualSpace: selectionInteger space: spaceInteger
 				wParam: selectionInteger
 				lParam: spaceInteger]!
 
-sciSetSelectionNEnd: selectionInteger pos: posInteger
+sciSetSelectionNEnd: selectionInteger caret: caretInteger
 	"Private - Sets the position that ends the selection - this becomes the currentPosition."
 
 	this isNil
@@ -8222,9 +8207,9 @@ sciSetSelectionNEnd: selectionInteger pos: posInteger
 				directFunction: this
 				msg: SCI_SETSELECTIONNEND
 				wParam: selectionInteger
-				lParam: posInteger]!
+				lParam: caretInteger - 1]!
 
-sciSetSelectionNStart: selectionInteger pos: posInteger
+sciSetSelectionNStart: selectionInteger anchor: anchorInteger
 	"Private - Sets the position that starts the selection - this becomes the anchor."
 
 	this isNil
@@ -8233,7 +8218,7 @@ sciSetSelectionNStart: selectionInteger pos: posInteger
 				directFunction: this
 				msg: SCI_SETSELECTIONNSTART
 				wParam: selectionInteger
-				lParam: posInteger]!
+				lParam: anchorInteger - 1]!
 
 sciSetSelFore: useSettingBoolean fore: foreRGB
 	"Private - Set the foreground colour of the main and additional selections and whether to
@@ -8266,8 +8251,8 @@ sciSetTargetRange: startInteger end: endInteger
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SETTARGETRANGE
-				wParam: startInteger
-				lParam: endInteger]!
+				wParam: startInteger - 1
+				lParam: endInteger - 1]!
 
 sciSetTechnology: technologyInteger
 	"Private - Set the technology used."
@@ -8304,6 +8289,8 @@ sciSetViewWS: viewWSInteger
 				lParam: 0]!
 
 sciSetVirtualSpaceOptions: virtualSpaceOptionsInteger
+	"Private - Set options for virtual space behaviour."
+
 	this isNil
 		ifFalse: 
 			[ScintillaLibrary default
@@ -8370,7 +8357,7 @@ sciSetWordChars: charactersString
 				wParam: 0
 				lpParam: charactersString]!
 
-sciSetWrapIndentMode: modeInteger
+sciSetWrapIndentMode: wrapIndentModeInteger
 	"Private - Sets how wrapped sublines are placed. Default is fixed."
 
 	this isNil
@@ -8378,10 +8365,10 @@ sciSetWrapIndentMode: modeInteger
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SETWRAPINDENTMODE
-				wParam: modeInteger
+				wParam: wrapIndentModeInteger
 				lParam: 0]!
 
-sciSetWrapMode: modeInteger
+sciSetWrapMode: wrapModeInteger
 	"Private - Sets whether text is word wrapped."
 
 	this isNil
@@ -8389,7 +8376,7 @@ sciSetWrapMode: modeInteger
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SETWRAPMODE
-				wParam: modeInteger
+				wParam: wrapModeInteger
 				lParam: 0]!
 
 sciSetWrapVisualFlags: wrapVisualFlagsInteger
@@ -8448,18 +8435,6 @@ sciShowLines: lineStartInteger lineEnd: lineEndInteger
 				msg: SCI_SHOWLINES
 				wParam: lineStartInteger
 				lParam: lineEndInteger]!
-
-sciStartStyling: posInteger mask: maskInteger
-	"Private - Set the current styling position to pos and the styling mask to mask. The styling
-	mask can be used to protect some bits in each styling byte from modification."
-
-	this isNil
-		ifFalse: 
-			[ScintillaLibrary default
-				directFunction: this
-				msg: SCI_STARTSTYLING
-				wParam: posInteger
-				lParam: maskInteger]!
 
 sciStyleClearAll
 	"Private - Clear all the styles and make equivalent to the global default style."
@@ -8565,7 +8540,7 @@ sciUserListShow: listTypeInteger itemList: itemListString
 				wParam: listTypeInteger
 				lpParam: itemListString]!
 
-sciVisibleFromDocLine: lineInteger
+sciVisibleFromDocLine: docLineInteger
 	"Private - Find the display line of a document line taking hidden lines into account."
 
 	^this isNil
@@ -8574,7 +8549,7 @@ sciVisibleFromDocLine: lineInteger
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_VISIBLEFROMDOCLINE
-				wParam: lineInteger
+				wParam: docLineInteger
 				lParam: 0]!
 
 sciWordEndPosition: posInteger onlyWordCharacters: onlyWordCharactersBoolean
@@ -8586,7 +8561,7 @@ sciWordEndPosition: posInteger onlyWordCharacters: onlyWordCharactersBoolean
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_WORDENDPOSITION
-				wParam: posInteger
+				wParam: posInteger - 1
 				lParam: onlyWordCharactersBoolean asParameter]!
 
 sciWordStartPosition: posInteger onlyWordCharacters: onlyWordCharactersBoolean
@@ -8598,10 +8573,10 @@ sciWordStartPosition: posInteger onlyWordCharacters: onlyWordCharactersBoolean
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_WORDSTARTPOSITION
-				wParam: posInteger
+				wParam: posInteger - 1
 				lParam: onlyWordCharactersBoolean asParameter]!
 
-sciWrapCount: lineInteger
+sciWrapCount: docLineInteger
 	"Private - The number of display lines needed to wrap a document line"
 
 	^this isNil
@@ -8610,7 +8585,7 @@ sciWrapCount: lineInteger
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_WRAPCOUNT
-				wParam: lineInteger
+				wParam: docLineInteger
 				lParam: 0]!
 
 scnAutoCCancelled: pSCNotification 
@@ -9230,21 +9205,57 @@ selectionPlainText: aString
 
 	self modifyText: [self sciReplaceSel: aString]!
 
+selectionRange
+	"Answers an <Interval> identifying the one-based range of selected text. The start of the
+	interval is the one-based position of the first selected character, and the end of the
+	interval is the one-based interval of the last selected character. If one character is
+	selected then the start and end of the interval will be the same. If no characters are
+	selected then the start position represents the caret position, and the end position is less
+	than the start position (i.e. the interval is empty)."
+
+	^this isNil
+		ifTrue: [0 to: -1]
+		ifFalse: 
+			[| lib |
+			lib := ScintillaLibrary default.
+			(lib
+				directFunction: this
+				msg: SCI_GETSELECTIONSTART
+				wParam: 0
+				lParam: 0) + 1
+				to: (lib
+						directFunction: this
+						msg: SCI_GETSELECTIONEND
+						wParam: 0
+						lParam: 0)]!
+
 selectionRanges
 	"Answer an <Array> of <Interval> representing the current selections. Even if not in
 	multi-select mode there could be more than one selection range if a rectangular selection
 	has been made."
 
-	^(0 to: self selectionCount - 1) 
-		collect: [:i | (self sciGetSelectionNStart: i) + 1 to: (self sciGetSelectionNEnd: i)]!
+	| lib |
+	lib := ScintillaLibrary default.
+	^(0 to: self selectionCount - 1) collect: 
+			[:i |
+			(lib
+				directFunction: this
+				msg: SCI_GETSELECTIONNSTART
+				wParam: i
+				lParam: 0) + 1
+				to: (lib
+						directFunction: this
+						msg: SCI_GETSELECTIONNEND
+						wParam: i
+						lParam: 0)]!
 
-selectionRanges: anArrayOfInterval 
+selectionRanges: anArrayOfInterval
 	"Apply the selections provided in the argument. Any existing selections are removed. Note
 	that multiple selection ranges are allowed even if the receiver is not in multi-select
 	mode."
 
 	self removeSelections.
-	anArrayOfInterval do: [:each | self sciAddSelection: each stop anchor: each start - 1]!
+	anArrayOfInterval do: [:each | self addSelectionRange: each]!
 
 selections
 	"Answer an <Array> of <String> being the current selections. Even if not in
@@ -9391,13 +9402,13 @@ setFont: aFont
 	super setFont: aFont.
 	self updateTextStyles!
 
-setIndicator: anIntegerOrSymbol from: startInteger length: lengthInteger 
+setIndicator: anIntegerOrSymbol from: startInteger length: lengthInteger
 	"Apply the indicator identified by the <integer> id or <symbol> name, anIntegerOrSymbol, to
 	the range of text in the receiver starting from the one-base integer character position,
 	startInteger, for a run length specified by the <integer>, lengthInteger."
 
 	self currentIndicatorId: (self indicatorIdFromName: anIntegerOrSymbol).
-	self sciIndicatorFillRange: startInteger - 1 fillLength: lengthInteger!
+	self sciIndicatorFillRange: startInteger lengthFill: lengthInteger!
 
 setIndicator: anIntegerOrSymbol range: anInterval 
 	"Apply the indicator identified by the <integer> id or <symbol> name, anIntegerOrSymbol, to
@@ -9559,10 +9570,10 @@ showAutoCompletionList: aCollection prefixLength: anInteger
 			string := self buildItemList: aCollection asSortedCollection.
 			self sciAutoCShow: anInteger itemList: string]!
 
-showCallTip: aString at: anInteger 
+showCallTip: aString at: anInteger
 	"Show the specified <String> as a call tip at the specified <integer> character position."
 
-	self sciCallTipShow: anInteger - 1 definition: aString!
+	self sciCallTipShow: anInteger definition: aString!
 
 showUserList: aCollection id: anInteger 
 	"Display a 'user list' built from the displayStrings of the elements of the <collection>
@@ -9571,7 +9582,7 @@ showUserList: aCollection id: anInteger
 
 	self sciUserListShow: anInteger itemList: (self buildItemList: aCollection)!
 
-showVerticalScrollBar: showBoolean
+showVerticalScrollBar: visibleBoolean
 	"Show or hide the vertical scroll bar."
 
 	this isNil
@@ -9579,7 +9590,7 @@ showVerticalScrollBar: showBoolean
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SETVSCROLLBAR
-				wParam: showBoolean asParameter
+				wParam: visibleBoolean asParameter
 				lParam: 0]!
 
 splitTarget: pixelWidthInteger
@@ -9608,10 +9619,17 @@ startRecording
 				wParam: 0
 				lParam: 0]!
 
-startStylingFrom: anInteger 
-	"Set the current styling position to the one-based <integer> index argument."
+startStylingFrom: startInteger
+	"Set the current styling position to start. The unused parameter is no longer used and
+	should be set to 0."
 
-	self sciStartStyling: anInteger - 1 mask: 16rFF!
+	this isNil
+		ifFalse: 
+			[ScintillaLibrary default
+				directFunction: this
+				msg: SCI_STARTSTYLING
+				wParam: startInteger - 1
+				lParam: 0]!
 
 state
 	"Private - Answer a <MessageSequence> which, when replayed, will restore the receiver 
@@ -9627,22 +9645,22 @@ state
 
 	| answer |
 	answer := super state.
-	#(#(#modificationEventMask: #modificationEventMask ##(SC_MODEVENTMASKALL)) #(#isDrawingBuffered: #isDrawingBuffered true) #(#hoverTime: #hoverTime 10000000) #(#setIndicators: #indicators #()) #(#sciSetCaretStyle: #sciGetCaretStyle ##(CARETSTYLE_LINE)) #(#caretForecolor: #caretForecolor ##(Color 
-		black asRGB)) #(#secondaryCaretForecolor: #secondaryCaretForecolor ##(Color darkGray asRGB)) #(#currentLineAlpha: #currentLineAlpha ##(SC_ALPHA_NOALPHA)) #(#caretPeriod: #caretPeriod 500) #(#caretWidth: #caretWidth 1) #(#sciSetCaretSticky: #sciGetCaretSticky ##(SC_CARETSTICKY_OFF)) #(#isCurrentLineHighlighted: #isCurrentLineHighlighted false) #(#currentLineBackcolor: #currentLineBackcolor ##(Color 
-		yellow asRGB)) #(#sciSetEOLMode: #sciGetEOLMode ##(SC_EOL_CRLF)) #(#hasVisibleLineEndings: #hasVisibleLineEndings false) #(#wordWrap: #wordWrap false) #(#sciSetLayoutCache: #sciGetLayoutCache ##(SC_CACHE_CARET)) #(#margins: #margins #()) #(#markers: #markers ##(OrderedCollection 
-		new)) #(#isOvertypeEnabled: #isOvertypeEnabled false) #(#printMagnification: #printMagnification 0) #(#printColourMode: #printColourMode ##(SC_PRINT_NORMAL)) #(#canHScroll: #canHScroll true) #(#canScrollPastEnd: #canScrollPastEnd true) #(#scrollWidth: #scrollWidth 2000) #(#xOffset: #xOffset 0) #(#sciSetSelectionMode: #sciGetSelectionMode ##(SC_SEL_STREAM)) #(#backspaceUnindents: #backspaceUnindents false) #(#sciSetIndentationGuides: #sciGetIndentationGuides ##(SC_IV_NONE)) #(#indentation: #indentation 0) #(#tabIndents: #tabIndents false) #(#tabWidth: #tabWidth 8) #(#isUsingTabs: #isUsingTabs true) #(#targetRange: #targetRange ##(1 
-		to: 0)) #(#sciSetViewWS: #sciGetViewWS ##(SCWS_INVISIBLE)) #(#autoCompletionSeparator: #autoCompletionSeparator $ ) #(#autoCompletionImageIdSeparator: #autoCompletionImageIdSeparator $?) #(#isAutoCompletionCancelledAtStart: #isAutoCompletionCancelledAtStart true) #(#isAutoCompletionCaseInsensitive: #isAutoCompletionCaseInsensitive false) #(#isAutoCompletionCancelledWhenNoMatch: #isAutoCompletionCancelledWhenNoMatch true) #(#isAutoCompletionTruncating: #isAutoCompletionTruncating false) #(#maxCompletionListHeight: #maxCompletionListHeight 5) #(#maxCompletionListWidth: #maxCompletionListWidth 0) #(#sciSetCodePage: #sciGetCodePage 0) #(#sciSetEdgeMode: #sciGetEdgeMode ##(EDGE_NONE)) #(#edgeColor: #edgeColor ##(Color 
-		gray asRGB)) #(#zoomLevel: #zoomLevel 0) #(#setLexerLanguage: #lexer #container) #(#controlCharacter: #controlCharacter nil) #(#selectionAlpha: #selectionAlpha ##(SC_ALPHA_NOALPHA)) #(#secondarySelectionAlpha: #secondarySelectionAlpha ##(SC_ALPHA_NOALPHA)) #(#positionCacheSize: #positionCacheSize 1024) #(#activeHotspotBackcolor: #activeHotspotBackcolor ##(Color 
-		white asRGB)) #(#activeHotspotForecolor: #activeHotspotForecolor ##(Color blue asRGB)) #(#areHotspotsSingleLine: #areHotspotsSingleLine true) #(#sciAnnotationSetVisible: #sciAnnotationGetVisible ##(ANNOTATION_HIDDEN)) #(#setRawAnnotations: #getRawAnnotations ##(OrderedCollection 
-		new)) #(#extraAscent: #extraAscent 0) #(#extraDescent: #extraDescent 0) #(#areAdditionalCaretsVisible: #areAdditionalCaretsVisible false) #(#sciSetFontQuality: #sciGetFontQuality ##(SC_EFF_QUALITY_DEFAULT)) #(#whitespaceMarkerSize: #whitespaceMarkerSize 1) #(#sciSetMultiPaste: #sciGetMultiPaste ##(SC_MULTIPASTE_ONCE)) #(#sciSetIMEInteraction: #sciGetIMEInteraction ##(SC_IME_WINDOWED)) #(#sciAutoCSetOrder: #sciAutoCGetOrder ##(SC_ORDER_PRESORTED)) #(#sciSetPhasesDraw: #sciGetPhasesDraw ##(SC_PHASES_TWO)) #(#sciSetIdleStyling: #sciGetIdleStyling ##(SC_IDLESTYLING_NONE))) 
+	#(#(#modificationEventMask: #modificationEventMask ##(SC_MODEVENTMASKALL)) #(#isDrawingBuffered: #isDrawingBuffered true) #(#hoverTime: #hoverTime 10000000) #(#setIndicators: #indicators #()) #(#sciSetCaretStyle: #sciGetCaretStyle ##(CARETSTYLE_LINE)) #(#caretForecolor: #caretForecolor ##(Color
+		black asRGB)) #(#secondaryCaretForecolor: #secondaryCaretForecolor ##(RGB fromInteger: 16r7F7F7F)) #(#currentLineAlpha: #currentLineAlpha ##(SC_ALPHA_NOALPHA)) #(#caretPeriod: #caretPeriod 500) #(#caretWidth: #caretWidth 1) #(#sciSetCaretSticky: #sciGetCaretSticky ##(SC_CARETSTICKY_OFF)) #(#isCurrentLineHighlighted: #isCurrentLineHighlighted false) #(#currentLineBackcolor: #currentLineBackcolor ##(Color
+		yellow asRGB)) #(#sciSetEOLMode: #sciGetEOLMode ##(SC_EOL_CRLF)) #(#hasVisibleLineEndings: #hasVisibleLineEndings false) #(#wordWrap: #wordWrap false) #(#sciSetLayoutCache: #sciGetLayoutCache ##(SC_CACHE_CARET)) #(#margins: #margins #()) #(#markers: #markers ##(IdentitySet
+		new)) #(#isOvertypeEnabled: #isOvertypeEnabled false) #(#printMagnification: #printMagnification 0) #(#printColourMode: #printColourMode ##(SC_PRINT_NORMAL)) #(#canHScroll: #canHScroll true) #(#canScrollPastEnd: #canScrollPastEnd true) #(#scrollWidth: #scrollWidth 2000) #(#xOffset: #xOffset 0) #(#sciSetSelectionMode: #sciGetSelectionMode ##(SC_SEL_STREAM)) #(#backspaceUnindents: #backspaceUnindents false) #(#sciSetIndentationGuides: #sciGetIndentationGuides ##(SC_IV_NONE)) #(#indentation: #indentation 0) #(#tabIndents: #tabIndents true) #(#tabWidth: #tabWidth 8) #(#isUsingTabs: #isUsingTabs true) #(#targetRange: #targetRange ##(1
+		to: 0)) #(#sciSetViewWS: #sciGetViewWS ##(SCWS_INVISIBLE)) #(#autoCompletionSeparator: #autoCompletionSeparator $\x20) #(#autoCompletionImageIdSeparator: #autoCompletionImageIdSeparator $?) #(#isAutoCompletionCancelledAtStart: #isAutoCompletionCancelledAtStart true) #(#isAutoCompletionCaseInsensitive: #isAutoCompletionCaseInsensitive false) #(#isAutoCompletionCancelledWhenNoMatch: #isAutoCompletionCancelledWhenNoMatch true) #(#isAutoCompletionTruncating: #isAutoCompletionTruncating false) #(#maxCompletionListHeight: #maxCompletionListHeight 5) #(#maxCompletionListWidth: #maxCompletionListWidth 0) #(#sciSetCodePage: #sciGetCodePage 0) #(#sciSetEdgeMode: #sciGetEdgeMode ##(EDGE_NONE)) #(#edgeColor: #edgeColor ##(Color
+		gray asRGB)) #(#zoomLevel: #zoomLevel 0) #(#setLexerLanguage: #lexer #container) #(#controlCharacter: #controlCharacter nil) #(#selectionAlpha: #selectionAlpha ##(SC_ALPHA_NOALPHA)) #(#secondarySelectionAlpha: #secondarySelectionAlpha ##(SC_ALPHA_NOALPHA)) #(#positionCacheSize: #positionCacheSize 1024) #(#activeHotspotBackcolor: #activeHotspotBackcolor ##(Color
+		white asRGB)) #(#activeHotspotForecolor: #activeHotspotForecolor ##(Color blue asRGB)) #(#areHotspotsSingleLine: #areHotspotsSingleLine true) #(#sciAnnotationSetVisible: #sciAnnotationGetVisible ##(ANNOTATION_HIDDEN)) #(#setRawAnnotations: #getRawAnnotations ##(OrderedCollection
+		new)) #(#extraAscent: #extraAscent 0) #(#extraDescent: #extraDescent 0) #(#areAdditionalCaretsVisible: #areAdditionalCaretsVisible true) #(#sciSetFontQuality: #sciGetFontQuality ##(SC_EFF_QUALITY_DEFAULT)) #(#whitespaceMarkerSize: #whitespaceMarkerSize 1) #(#sciSetMultiPaste: #sciGetMultiPaste ##(SC_MULTIPASTE_ONCE)) #(#sciSetIMEInteraction: #sciGetIMEInteraction ##(SC_IME_WINDOWED)) #(#sciAutoCSetOrder: #sciAutoCGetOrder ##(SC_ORDER_PRESORTED)) #(#sciSetPhasesDraw: #sciGetPhasesDraw ##(SC_PHASES_TWO)) #(#sciSetIdleStyling: #sciGetIdleStyling ##(SC_IDLESTYLING_NONE)) #(#isMouseWheelCaptured: #isMouseWheelCaptured true))
 			do: 
-				[:each | 
+				[:each |
 				| attrib |
 				attrib := self perform: each second.
-				attrib = each last 
+				attrib = each last
 					ifFalse: 
 						[| msg |
-						msg := MessageSend 
+						msg := MessageSend
 									receiver: self
 									selector: each first
 									argument: attrib.
@@ -9681,9 +9699,6 @@ styleBits
 	#deprecated.
 	^8!
 
-styleBits: anInteger 
-	#deprecated	"This is ignored by Scintilla now, which no longer supports style byte indicators"!
-
 styledTextFrom: startInteger to: stopInteger 
 	"Private - Answer a <ByteArray> containing pairs of bytes that represent the character and
 	style byte for each position in the specified range."
@@ -9703,23 +9718,17 @@ styledTextFrom: startInteger to: stopInteger
 	bytes resize: bytes size - 2.
 	^bytes!
 
-styleIdAt: anInteger 
-	"Answer the style byte at the specified position."
+styleIdAt: posInteger
+	"Returns the style byte at the position."
 
-	"Inlined to minimize overhead when scanning text for the start of a style."
-
-	^this 
-		ifNil: [0]
-		ifNotNil: 
-			[ScintillaLibrary default 
+	^this isNil
+		ifTrue: [0]
+		ifFalse: 
+			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_GETSTYLEAT
-				wParam: anInteger - 1
+				wParam: posInteger - 1
 				lParam: 0]!
-
-styleMaskAt: anInteger 
-	#deprecated.
-	^self styleIdAt: anInteger!
 
 styleNamed: aSymbol 
 	"Answer a <ScintillaTextStyle> being the named style, or nil if the name is not recognised."
@@ -9774,9 +9783,16 @@ styleWithId: anInteger
 				yourself]!
 
 stylingPosition
-	"Answer the one-based <integer> index of the next character in the receiver that requires styling."
+	"Retrieve the position of the last correctly styled character."
 
-	^self sciGetEndStyled + 1!
+	^this isNil
+		ifTrue: [0]
+		ifFalse: 
+			[(ScintillaLibrary default
+				directFunction: this
+				msg: SCI_GETENDSTYLED
+				wParam: 0
+				lParam: 0) + 1]!
 
 swapPrimarySelectionAnchorAndCaret
 	"Swap that caret and anchor of the main selection."
@@ -9850,13 +9866,27 @@ targetRange
 	"Answer the range of the current search/replace target. The target is like the selection,
 	but not visible."
 
-	^self sciGetTargetStart + 1 to: self sciGetTargetEnd!
+	^this isNil
+		ifTrue: [0 to: -1]
+		ifFalse: 
+			[| lib |
+			lib := ScintillaLibrary default.
+			(lib
+				directFunction: this
+				msg: SCI_GETTARGETSTART
+				wParam: 0
+				lParam: 0) + 1
+				to: (lib
+						directFunction: this
+						msg: SCI_GETTARGETEND
+						wParam: 0
+						lParam: 0)]!
 
-targetRange: anInterval 
+targetRange: anInterval
 	"Set the range of the current search/replace target. The target is like the selection, but
 	not visible."
 
-	self sciSetTargetRange: anInterval start - 1 end: anInterval stop!
+	self sciSetTargetRange: anInterval start end: anInterval stop + 1!
 
 targetText
 	"Retrieve the text in the target."
@@ -10079,7 +10109,7 @@ updateKeyBindings
 	its default command key assignments."
 
 	self sciClearAllCmdKeys.
-	self keyBindings do: [:each | self sciAssignCmdKey: each scintillaKeyCode msg: each message]!
+	self keyBindings do: [:each | self sciAssignCmdKey: each scintillaKeyCode sciCommand: each message]!
 
 updateMarkerDefinitions
 	markerDefinitions do: [:each | each applyToView: self at: each basicId]!
@@ -10182,10 +10212,10 @@ whitespaceVisibility
 
 	^self class whitespaceVisibilityLevels at: self sciGetViewWS + 1!
 
-whitespaceVisibility: aSymbol 
-	"Make white space characters invisible, always visible or visible outside indentation
-	depending on the <Symbol> argument (one of #invisible, #visibleAlways or
-	#visibleAfterIndent, respectively)."
+whitespaceVisibility: aSymbol
+	"Make white space characters invisible, always visible, visible only after indentation, or
+	visible only in indentation, depending on the <Symbol> argument (one of #invisible,
+	#visibleAlways, #visibleAfterIndent, or visibleOnlyInIndent respectively)."
 
 	self sciSetViewWS: (self class whitespaceVisibilityLevels indexOf: aSymbol) - 1!
 
@@ -10337,7 +10367,7 @@ xOffset
 				wParam: 0
 				lParam: 0]!
 
-xOffset: newOffsetInteger
+xOffset: xOffsetInteger
 	"Get and Set the xOffset (ie, horizontal scroll position)."
 
 	this isNil
@@ -10345,7 +10375,7 @@ xOffset: newOffsetInteger
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SETXOFFSET
-				wParam: newOffsetInteger
+				wParam: xOffsetInteger
 				lParam: 0]!
 
 zoomIn
@@ -10371,7 +10401,7 @@ zoomLevel
 				wParam: 0
 				lParam: 0]!
 
-zoomLevel: zoomInteger
+zoomLevel: zoomInPointsInteger
 	"Set the zoom level. This number of points is added to the size of all fonts. It may be
 	positive to magnify or negative to reduce."
 
@@ -10380,7 +10410,7 @@ zoomLevel: zoomInteger
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SETZOOM
-				wParam: zoomInteger
+				wParam: zoomInPointsInteger
 				lParam: 0]!
 
 zoomOut
@@ -10403,20 +10433,20 @@ zoomOut
 !ScintillaView categoriesFor: #addMarker:!markers!public! !
 !ScintillaView categoriesFor: #addMarkerType:at:!markers!public! !
 !ScintillaView categoriesFor: #addSelectionRange:!public!selection! !
-!ScintillaView categoriesFor: #anchorPosition!accessing!public!selection! !
-!ScintillaView categoriesFor: #anchorPosition:!accessing!public!selection! !
+!ScintillaView categoriesFor: #anchorPosition!**auto generated**!public!scintilla interface!selection! !
+!ScintillaView categoriesFor: #anchorPosition:!**auto generated**!public!scintilla interface!selection! !
 !ScintillaView categoriesFor: #annotateLine:withAll:!annotations!public! !
-!ScintillaView categoriesFor: #annotationMode!accessing!annotations!public! !
-!ScintillaView categoriesFor: #annotationMode:!accessing!annotations!public! !
-!ScintillaView categoriesFor: #annotations!accessing!annotations!public! !
+!ScintillaView categoriesFor: #annotationMode!annotations!public! !
+!ScintillaView categoriesFor: #annotationMode:!annotations!public! !
+!ScintillaView categoriesFor: #annotations!annotations!public! !
 !ScintillaView categoriesFor: #annotations:!indicators!public! !
 !ScintillaView categoriesFor: #annotationsForLine:!annotations!enquiries!public! !
 !ScintillaView categoriesFor: #annotationsFromRawAnnotation:!annotations!converting!helpers!private! !
-!ScintillaView categoriesFor: #annotationStyles!accessing!annotations!public!style definition! !
-!ScintillaView categoriesFor: #annotationStyles:!accessing!annotations!public!style definition! !
+!ScintillaView categoriesFor: #annotationStyles!annotations!public!style definition! !
+!ScintillaView categoriesFor: #annotationStyles:!annotations!public!style definition! !
 !ScintillaView categoriesFor: #annotationStylesFromStyleBytes:!annotations!converting!private! !
-!ScintillaView categoriesFor: #annotationStylesOffset!**auto generated**!accessing!annotations!public!scintilla interface! !
-!ScintillaView categoriesFor: #annotationStylesOffset:!**auto generated**!accessing!annotations!public!scintilla interface! !
+!ScintillaView categoriesFor: #annotationStylesOffset!**auto generated**!annotations!public!scintilla interface! !
+!ScintillaView categoriesFor: #annotationStylesOffset:!**auto generated**!annotations!public!scintilla interface! !
 !ScintillaView categoriesFor: #appendText:!public!text retrieval & modification! !
 !ScintillaView categoriesFor: #applyAttributes:!helpers!private! !
 !ScintillaView categoriesFor: #applyStyle:toNext:!public!styling! !
@@ -10427,87 +10457,86 @@ zoomOut
 !ScintillaView categoriesFor: #areAllLinesVisible!**auto generated**!public!scintilla interface!testing! !
 !ScintillaView categoriesFor: #areHotspotsSingleLine!**auto generated**!caret, selection, and hotspot styles!public!scintilla interface! !
 !ScintillaView categoriesFor: #areHotspotsSingleLine:!**auto generated**!caret, selection, and hotspot styles!public!scintilla interface! !
-!ScintillaView categoriesFor: #autoCompletionAcceptChars!accessing!autocompletion!public!scintilla interface! !
-!ScintillaView categoriesFor: #autoCompletionAcceptChars:!accessing!autocompletion!public!scintilla interface! !
-!ScintillaView categoriesFor: #autoCompletionCancelChars!accessing!autocompletion!public!scintilla interface! !
-!ScintillaView categoriesFor: #autoCompletionCancelChars:!accessing!autocompletion!public!scintilla interface! !
+!ScintillaView categoriesFor: #autoCompletionAcceptChars!autocompletion!public!scintilla interface! !
+!ScintillaView categoriesFor: #autoCompletionAcceptChars:!autocompletion!public!scintilla interface! !
+!ScintillaView categoriesFor: #autoCompletionCancelChars!autocompletion!public!scintilla interface! !
+!ScintillaView categoriesFor: #autoCompletionCancelChars:!autocompletion!public!scintilla interface! !
 !ScintillaView categoriesFor: #autoCompletionCurrentText!**auto generated**!autocompletion!public!scintilla interface! !
-!ScintillaView categoriesFor: #autoCompletionImageIdSeparator!accessing!autocompletion!public!scintilla interface! !
-!ScintillaView categoriesFor: #autoCompletionImageIdSeparator:!accessing!autocompletion!public!scintilla interface! !
-!ScintillaView categoriesFor: #autoCompletionListPosition!accessing!autocompletion!public!scintilla interface! !
-!ScintillaView categoriesFor: #autoCompletionSeparator!accessing!autocompletion!public!scintilla interface! !
-!ScintillaView categoriesFor: #autoCompletionSeparator:!accessing!autocompletion!public!scintilla interface! !
-!ScintillaView categoriesFor: #autoCompletionSortMode!accessing!autocompletion!public! !
-!ScintillaView categoriesFor: #autoCompletionSortMode:!accessing!autocompletion!public! !
+!ScintillaView categoriesFor: #autoCompletionImageIdSeparator!autocompletion!public!scintilla interface! !
+!ScintillaView categoriesFor: #autoCompletionImageIdSeparator:!autocompletion!public!scintilla interface! !
+!ScintillaView categoriesFor: #autoCompletionListPosition!**auto generated**!autocompletion!public!scintilla interface! !
+!ScintillaView categoriesFor: #autoCompletionSeparator!autocompletion!public!scintilla interface! !
+!ScintillaView categoriesFor: #autoCompletionSeparator:!autocompletion!public!scintilla interface! !
+!ScintillaView categoriesFor: #autoCompletionSortMode!autocompletion!public! !
+!ScintillaView categoriesFor: #autoCompletionSortMode:!autocompletion!public! !
 !ScintillaView categoriesFor: #backcolorChanged!helpers!private! !
 !ScintillaView categoriesFor: #backspace!**auto generated**!commands!public!scintilla interface! !
 !ScintillaView categoriesFor: #backspaceNoLine!**auto generated**!commands!public!scintilla interface! !
 !ScintillaView categoriesFor: #backspaceUnindents!**auto generated**!public!scintilla interface!tabs & indentation guides!testing! !
-!ScintillaView categoriesFor: #backspaceUnindents:!**auto generated**!accessing!public!scintilla interface!tabs & indentation guides! !
+!ScintillaView categoriesFor: #backspaceUnindents:!**auto generated**!public!scintilla interface!tabs & indentation guides! !
 !ScintillaView categoriesFor: #basicAnnotateLine:withText:inStyles:!annotations!helpers!private! !
 !ScintillaView categoriesFor: #basicClearContainerIndicators!indicators!private! !
-!ScintillaView categoriesFor: #basicClearSelection!**auto generated**!public!scintilla interface!selection! !
-!ScintillaView categoriesFor: #basicLineFromPosition:!**auto generated**!enquiries!public!scintilla interface! !
-!ScintillaView categoriesFor: #basicPositionAtLine:!**auto generated**!enquiries!public!scintilla interface! !
-!ScintillaView categoriesFor: #basicRemoveAllAnnotations!**auto generated**!annotations!public!removing!scintilla interface! !
-!ScintillaView categoriesFor: #basicSelectAll!**auto generated**!public!scintilla interface!selection! !
-!ScintillaView categoriesFor: #basicSelectionRange!private!selection! !
-!ScintillaView categoriesFor: #basicSelectionStart:end:!**auto generated**!public!scintilla interface!selection! !
-!ScintillaView categoriesFor: #basicUndo!**auto generated**!public!scintilla interface!undo & redo! !
+!ScintillaView categoriesFor: #basicClearSelection!**auto generated**!private!scintilla interface!selection! !
+!ScintillaView categoriesFor: #basicLineFromPosition:!accessing!private! !
+!ScintillaView categoriesFor: #basicPositionAtLine:!accessing!private! !
+!ScintillaView categoriesFor: #basicRemoveAllAnnotations!**auto generated**!annotations!private!removing!scintilla interface! !
+!ScintillaView categoriesFor: #basicSelectAll!**auto generated**!private!scintilla interface!selection! !
+!ScintillaView categoriesFor: #basicSelectionStart:end:!private!scintilla interface!selection! !
+!ScintillaView categoriesFor: #basicUndo!**auto generated**!private!scintilla interface!undo & redo! !
 !ScintillaView categoriesFor: #beginUndoGroup!**auto generated**!public!scintilla interface!undo & redo! !
 !ScintillaView categoriesFor: #boundingRectangleOfTextRange:!helpers!private! !
-!ScintillaView categoriesFor: #braceChars!accessing!brace highlighting!public! !
-!ScintillaView categoriesFor: #braceChars:!accessing!brace highlighting!public! !
+!ScintillaView categoriesFor: #braceChars!brace highlighting!public! !
+!ScintillaView categoriesFor: #braceChars:!brace highlighting!public! !
 !ScintillaView categoriesFor: #braceHighlight!brace highlighting!helpers!private! !
 !ScintillaView categoriesFor: #buildAnnotationStyles:!annotations!private!style definition! !
 !ScintillaView categoriesFor: #buildDefaultStyle!private!style definition! !
 !ScintillaView categoriesFor: #buildItemList:!autocompletion!private! !
 !ScintillaView categoriesFor: #buildRawAnnotations:!annotations!converting!helpers!private! !
 !ScintillaView categoriesFor: #buildViewStyle!helpers!private! !
-!ScintillaView categoriesFor: #callTipBackcolor!accessing!call tips!public! !
-!ScintillaView categoriesFor: #callTipBackcolor:!accessing!call tips!public! !
-!ScintillaView categoriesFor: #callTipForecolor!accessing!call tips!public! !
-!ScintillaView categoriesFor: #callTipForecolor:!accessing!call tips!public! !
-!ScintillaView categoriesFor: #callTipHighlightColor!accessing!call tips!public! !
-!ScintillaView categoriesFor: #callTipHighlightColor:!accessing!call tips!public! !
-!ScintillaView categoriesFor: #callTipPosition!accessing!call tips!public!scintilla interface! !
-!ScintillaView categoriesFor: #callTipPosition:!accessing!call tips!public!scintilla interface! !
-!ScintillaView categoriesFor: #callTipStyle!accessing!call tips!private! !
-!ScintillaView categoriesFor: #callTipTabWidth!accessing!public! !
-!ScintillaView categoriesFor: #callTipTabWidth:!accessing!public! !
+!ScintillaView categoriesFor: #callTipBackcolor!call tips!public! !
+!ScintillaView categoriesFor: #callTipBackcolor:!call tips!public! !
+!ScintillaView categoriesFor: #callTipForecolor!call tips!public! !
+!ScintillaView categoriesFor: #callTipForecolor:!call tips!public! !
+!ScintillaView categoriesFor: #callTipHighlightColor!call tips!public! !
+!ScintillaView categoriesFor: #callTipHighlightColor:!call tips!public! !
+!ScintillaView categoriesFor: #callTipPosition!**auto generated**!call tips!public!scintilla interface! !
+!ScintillaView categoriesFor: #callTipPosition:!call tips!public!scintilla interface! !
+!ScintillaView categoriesFor: #callTipStyle!call tips!private! !
+!ScintillaView categoriesFor: #callTipTabWidth!call tips!public! !
+!ScintillaView categoriesFor: #callTipTabWidth:!call tips!public! !
 !ScintillaView categoriesFor: #cancelAutoCompletion!**auto generated**!autocompletion!public!scintilla interface! !
 !ScintillaView categoriesFor: #cancelCallTip!**auto generated**!call tips!public!scintilla interface! !
 !ScintillaView categoriesFor: #cancelModes!**auto generated**!commands!public!scintilla interface! !
 !ScintillaView categoriesFor: #canHScroll!**auto generated**!public!scintilla interface!scrolling!testing! !
-!ScintillaView categoriesFor: #canHScroll:!accessing!public!scrolling! !
+!ScintillaView categoriesFor: #canHScroll:!public!scrolling! !
 !ScintillaView categoriesFor: #canonicalizeLineEndings:!line endings!public! !
 !ScintillaView categoriesFor: #canPaste!clipboard operations!public!testing! !
 !ScintillaView categoriesFor: #canRedo!**auto generated**!public!scintilla interface!testing!undo & redo! !
 !ScintillaView categoriesFor: #canScrollPastEnd!public!scrolling!testing! !
-!ScintillaView categoriesFor: #canScrollPastEnd:!**auto generated**!accessing!public!scintilla interface!scrolling! !
+!ScintillaView categoriesFor: #canScrollPastEnd:!**auto generated**!public!scintilla interface!scrolling! !
 !ScintillaView categoriesFor: #canUndo!**auto generated**!public!scintilla interface!testing!undo & redo! !
 !ScintillaView categoriesFor: #canVScroll!**auto generated**!public!scintilla interface!scrolling!testing! !
-!ScintillaView categoriesFor: #caretForecolor!**auto generated**!accessing!caret, selection, and hotspot styles!public!scintilla interface! !
-!ScintillaView categoriesFor: #caretForecolor:!accessing!caret, selection, and hotspot styles!public!scintilla interface! !
-!ScintillaView categoriesFor: #caretPeriod!**auto generated**!accessing!caret, selection, and hotspot styles!public!scintilla interface! !
-!ScintillaView categoriesFor: #caretPeriod:!**auto generated**!accessing!caret, selection, and hotspot styles!public!scintilla interface! !
-!ScintillaView categoriesFor: #caretPosition!accessing!caret!public!selection! !
-!ScintillaView categoriesFor: #caretPosition:!accessing!caret!public!selection! !
-!ScintillaView categoriesFor: #caretScreenCoordinates!accessing!caret, selection, and hotspot styles!public!scintilla interface! !
+!ScintillaView categoriesFor: #caretForecolor!**auto generated**!caret, selection, and hotspot styles!public!scintilla interface! !
+!ScintillaView categoriesFor: #caretForecolor:!caret, selection, and hotspot styles!public!scintilla interface! !
+!ScintillaView categoriesFor: #caretPeriod!**auto generated**!caret, selection, and hotspot styles!public!scintilla interface! !
+!ScintillaView categoriesFor: #caretPeriod:!**auto generated**!caret, selection, and hotspot styles!public!scintilla interface! !
+!ScintillaView categoriesFor: #caretPosition!**auto generated**!caret!public!scintilla interface!selection! !
+!ScintillaView categoriesFor: #caretPosition:!**auto generated**!caret!public!scintilla interface!selection! !
+!ScintillaView categoriesFor: #caretScreenCoordinates!caret, selection, and hotspot styles!public!scintilla interface! !
 !ScintillaView categoriesFor: #caretStyle!caret, selection, and hotspot styles!public! !
 !ScintillaView categoriesFor: #caretStyle:!caret, selection, and hotspot styles!public! !
-!ScintillaView categoriesFor: #caretWidth!**auto generated**!accessing!caret, selection, and hotspot styles!public!scintilla interface! !
-!ScintillaView categoriesFor: #caretWidth:!accessing!caret, selection, and hotspot styles!public!scintilla interface! !
+!ScintillaView categoriesFor: #caretWidth!**auto generated**!caret, selection, and hotspot styles!public!scintilla interface! !
+!ScintillaView categoriesFor: #caretWidth:!caret, selection, and hotspot styles!public!scintilla interface! !
 !ScintillaView categoriesFor: #centerCurrentLine!**auto generated**!commands!public!scintilla interface! !
-!ScintillaView categoriesFor: #characterAt:!accessing!public!text retrieval & modification! !
+!ScintillaView categoriesFor: #characterAt:!public!text retrieval & modification! !
 !ScintillaView categoriesFor: #charCloseToPosition:!public!selection! !
 !ScintillaView categoriesFor: #charNearestPosition:!public!selection! !
 !ScintillaView categoriesFor: #clearAll!**auto generated**!commands!public!scintilla interface!text retrieval & modification! !
 !ScintillaView categoriesFor: #clearContainerIndicators!indicators!public! !
 !ScintillaView categoriesFor: #clearIndicator:from:to:!indicators!public! !
 !ScintillaView categoriesFor: #clearRange:!public!text retrieval & modification! !
-!ScintillaView categoriesFor: #codePage!accessing!public! !
-!ScintillaView categoriesFor: #codePage:!accessing!public! !
+!ScintillaView categoriesFor: #codePage!other settings!public! !
+!ScintillaView categoriesFor: #codePage:!other settings!public! !
 !ScintillaView categoriesFor: #columnFromPosition:!enquiries!public! !
 !ScintillaView categoriesFor: #controlCharacter!caret, selection, and hotspot styles!public! !
 !ScintillaView categoriesFor: #controlCharacter:!caret, selection, and hotspot styles!public! !
@@ -10523,8 +10552,8 @@ zoomOut
 !ScintillaView categoriesFor: #currentIndicatorValue:!**auto generated**!indicators!public!scintilla interface! !
 !ScintillaView categoriesFor: #currentLineAlpha!**auto generated**!caret, selection, and hotspot styles!public!scintilla interface! !
 !ScintillaView categoriesFor: #currentLineAlpha:!**auto generated**!caret, selection, and hotspot styles!public!scintilla interface! !
-!ScintillaView categoriesFor: #currentLineBackcolor!**auto generated**!accessing!caret, selection, and hotspot styles!public!scintilla interface! !
-!ScintillaView categoriesFor: #currentLineBackcolor:!accessing!caret, selection, and hotspot styles!public!scintilla interface! !
+!ScintillaView categoriesFor: #currentLineBackcolor!**auto generated**!caret, selection, and hotspot styles!public!scintilla interface! !
+!ScintillaView categoriesFor: #currentLineBackcolor:!caret, selection, and hotspot styles!public!scintilla interface! !
 !ScintillaView categoriesFor: #currentLineText!**auto generated**!public!scintilla interface!selection! !
 !ScintillaView categoriesFor: #cutLine!**auto generated**!clipboard operations!commands!public!scintilla interface! !
 !ScintillaView categoriesFor: #cutSelection!**auto generated**!clipboard operations!commands!public!scintilla interface! !
@@ -10545,22 +10574,21 @@ zoomOut
 !ScintillaView categoriesFor: #deleteToStartOfWord!**auto generated**!commands!public!scintilla interface! !
 !ScintillaView categoriesFor: #describeKeywordSets!**auto generated**!enquiries!public!scintilla interface! !
 !ScintillaView categoriesFor: #destroyAutoCompletionListImages!**auto generated**!autocompletion!public!scintilla interface! !
-!ScintillaView categoriesFor: #directPointer!accessing!private! !
-!ScintillaView categoriesFor: #drawingPhases!accessing!other settings!public!scintilla interface! !
-!ScintillaView categoriesFor: #drawingPhases:!accessing!other settings!public! !
+!ScintillaView categoriesFor: #drawingPhases!other settings!public!scintilla interface! !
+!ScintillaView categoriesFor: #drawingPhases:!other settings!public! !
 !ScintillaView categoriesFor: #duplicateLine!**auto generated**!commands!public!scintilla interface! !
 !ScintillaView categoriesFor: #duplicateSelection!**auto generated**!commands!public!scintilla interface! !
-!ScintillaView categoriesFor: #edgeColor!**auto generated**!accessing!long lines!public!scintilla interface! !
-!ScintillaView categoriesFor: #edgeColor:!**auto generated**!accessing!long lines!public!scintilla interface! !
-!ScintillaView categoriesFor: #edgeColumn!accessing!long lines!public! !
-!ScintillaView categoriesFor: #edgeColumn:!accessing!long lines!public! !
-!ScintillaView categoriesFor: #edgeMode!accessing!long lines!public! !
-!ScintillaView categoriesFor: #edgeMode:!accessing!long lines!public! !
+!ScintillaView categoriesFor: #edgeColor!**auto generated**!long lines!public!scintilla interface! !
+!ScintillaView categoriesFor: #edgeColor:!**auto generated**!long lines!public!scintilla interface! !
+!ScintillaView categoriesFor: #edgeColumn!long lines!public! !
+!ScintillaView categoriesFor: #edgeColumn:!long lines!public! !
+!ScintillaView categoriesFor: #edgeMode!long lines!public! !
+!ScintillaView categoriesFor: #edgeMode:!long lines!public! !
 !ScintillaView categoriesFor: #editStyles!commands!public! !
 !ScintillaView categoriesFor: #emptyUndoBuffer!**auto generated**!public!scintilla interface!undo & redo! !
 !ScintillaView categoriesFor: #enChange!event handling-win32!private! !
-!ScintillaView categoriesFor: #endOfLineMode!accessing!line endings!public! !
-!ScintillaView categoriesFor: #endOfLineMode:!accessing!line endings!public! !
+!ScintillaView categoriesFor: #endOfLineMode!line endings!public! !
+!ScintillaView categoriesFor: #endOfLineMode:!line endings!public! !
 !ScintillaView categoriesFor: #endUndoGroup!**auto generated**!public!scintilla interface!undo & redo! !
 !ScintillaView categoriesFor: #enKillFocus!event handling-win32!private! !
 !ScintillaView categoriesFor: #enSetFocus!event handling-win32!private! !
@@ -10570,8 +10598,8 @@ zoomOut
 !ScintillaView categoriesFor: #ensureRangeVisible:!public!scrolling! !
 !ScintillaView categoriesFor: #ensureVisible:!public!scrolling! !
 !ScintillaView categoriesFor: #enUpdate!event handling-win32!private! !
-!ScintillaView categoriesFor: #errorStatus!**auto generated**!accessing!error handling!public!scintilla interface! !
-!ScintillaView categoriesFor: #errorStatus:!**auto generated**!accessing!error handling!public!scintilla interface! !
+!ScintillaView categoriesFor: #errorStatus!**auto generated**!error handling!public!scintilla interface! !
+!ScintillaView categoriesFor: #errorStatus:!**auto generated**!error handling!public!scintilla interface! !
 !ScintillaView categoriesFor: #extendDown!**auto generated**!commands!public!scintilla interface!selection! !
 !ScintillaView categoriesFor: #extendLeft!**auto generated**!commands!public!scintilla interface!selection! !
 !ScintillaView categoriesFor: #extendPageDown!**auto generated**!commands!public!scintilla interface!selection! !
@@ -10608,185 +10636,188 @@ zoomOut
 !ScintillaView categoriesFor: #extendToVcHome!**auto generated**!commands!public!scintilla interface!selection! !
 !ScintillaView categoriesFor: #extendToWrappedVcHome!**auto generated**!commands!public!scintilla interface!selection! !
 !ScintillaView categoriesFor: #extendUp!**auto generated**!commands!public!scintilla interface!selection! !
-!ScintillaView categoriesFor: #extraAscent!**auto generated**!accessing!public!scintilla interface! !
-!ScintillaView categoriesFor: #extraAscent:!**auto generated**!accessing!public!scintilla interface! !
-!ScintillaView categoriesFor: #extraDescent!**auto generated**!accessing!public!scintilla interface! !
-!ScintillaView categoriesFor: #extraDescent:!**auto generated**!accessing!public!scintilla interface! !
+!ScintillaView categoriesFor: #extraAscent!**auto generated**!public!scintilla interface!white space! !
+!ScintillaView categoriesFor: #extraAscent:!**auto generated**!public!scintilla interface!white space! !
+!ScintillaView categoriesFor: #extraDescent!**auto generated**!public!scintilla interface!white space! !
+!ScintillaView categoriesFor: #extraDescent:!**auto generated**!public!scintilla interface!white space! !
 !ScintillaView categoriesFor: #find:range:!private!searching & replacing! !
 !ScintillaView categoriesFor: #find:range:flags:!public!searching & replacing! !
 !ScintillaView categoriesFor: #findAutoCompletionEntry:!**auto generated**!autocompletion!public!scintilla interface! !
 !ScintillaView categoriesFor: #findMatchingBrace:!brace highlighting!public! !
 !ScintillaView categoriesFor: #findStyleStart:before:!brace highlighting!public! !
 !ScintillaView categoriesFor: #firstVisibleLine:!public!scrolling! !
-!ScintillaView categoriesFor: #foldFlags!accessing!folding!public! !
-!ScintillaView categoriesFor: #foldFlags:!accessing!folding!public! !
+!ScintillaView categoriesFor: #foldFlags!folding!public! !
+!ScintillaView categoriesFor: #foldFlags:!folding!public! !
 !ScintillaView categoriesFor: #foldLine:level:!folding!public!scintilla interface! !
-!ScintillaView categoriesFor: #foldMargin!accessing!folding!margins!public! !
-!ScintillaView categoriesFor: #foldMarginColor!accessing!folding!margins!public! !
-!ScintillaView categoriesFor: #foldMarginColor:!accessing!folding!margins!public! !
-!ScintillaView categoriesFor: #foldMarginHiColor!accessing!folding!margins!public! !
-!ScintillaView categoriesFor: #foldMarginHiColor:!accessing!folding!margins!public! !
-!ScintillaView categoriesFor: #foldMarkerStyle!accessing!folding!markers!public! !
-!ScintillaView categoriesFor: #foldMarkerStyle:!accessing!folding!markers!public! !
-!ScintillaView categoriesFor: #fontQuality!accessing!other settings!public! !
-!ScintillaView categoriesFor: #fontQuality:!accessing!other settings!public! !
+!ScintillaView categoriesFor: #foldMargin!folding!margins!public! !
+!ScintillaView categoriesFor: #foldMarginColor!folding!margins!public! !
+!ScintillaView categoriesFor: #foldMarginColor:!folding!margins!public! !
+!ScintillaView categoriesFor: #foldMarginHiColor!folding!margins!public! !
+!ScintillaView categoriesFor: #foldMarginHiColor:!folding!margins!public! !
+!ScintillaView categoriesFor: #foldMarkerStyle!folding!markers!public! !
+!ScintillaView categoriesFor: #foldMarkerStyle:!folding!markers!public! !
+!ScintillaView categoriesFor: #fontQuality!other settings!public! !
+!ScintillaView categoriesFor: #fontQuality:!other settings!public! !
 !ScintillaView categoriesFor: #forecolor:!accessing!public! !
 !ScintillaView categoriesFor: #formatRectangle!accessing!public! !
 !ScintillaView categoriesFor: #formFeed!**auto generated**!commands!public!scintilla interface! !
-!ScintillaView categoriesFor: #getDirectPointer!accessing!private! !
+!ScintillaView categoriesFor: #getDirectPointer!helpers!private! !
 !ScintillaView categoriesFor: #getLineState:!lexer!public!styling! !
-!ScintillaView categoriesFor: #getRawAnnotation:!accessing!annotations!private! !
-!ScintillaView categoriesFor: #getRawAnnotations!accessing!annotations!private! !
-!ScintillaView categoriesFor: #goto:!caret!public! !
+!ScintillaView categoriesFor: #getRawAnnotation:!annotations!private! !
+!ScintillaView categoriesFor: #getRawAnnotations!annotations!private! !
+!ScintillaView categoriesFor: #goto:!**auto generated**!caret!public!scintilla interface! !
 !ScintillaView categoriesFor: #gotoLine:!caret!commands!public! !
 !ScintillaView categoriesFor: #handle:!accessing!private! !
-!ScintillaView categoriesFor: #hangingIndent!**auto generated**!accessing!public!scintilla interface! !
-!ScintillaView categoriesFor: #hangingIndent:!**auto generated**!accessing!public!scintilla interface! !
-!ScintillaView categoriesFor: #hasBlinkingSecondaryCarets!**auto generated**!accessing!caret, selection, and hotspot styles!public!scintilla interface! !
-!ScintillaView categoriesFor: #hasBlinkingSecondaryCarets:!**auto generated**!accessing!caret, selection, and hotspot styles!public!scintilla interface! !
-!ScintillaView categoriesFor: #hasFoldMargin!accessing!folding!margins!public!testing! !
-!ScintillaView categoriesFor: #hasFoldMargin:!accessing!folding!margins!public! !
-!ScintillaView categoriesFor: #hasIndentationGuides!accessing!public!tabs & indentation guides! !
-!ScintillaView categoriesFor: #hasIndentationGuides:!accessing!public!tabs & indentation guides! !
-!ScintillaView categoriesFor: #hasLineNumbers!accessing!public!testing! !
-!ScintillaView categoriesFor: #hasLineNumbers:!accessing!commands!margins!public! !
-!ScintillaView categoriesFor: #hasVisibleLineEndings!**auto generated**!accessing!line endings!public!scintilla interface!testing! !
-!ScintillaView categoriesFor: #hasVisibleLineEndings:!**auto generated**!accessing!line endings!public!scintilla interface!testing! !
+!ScintillaView categoriesFor: #hangingIndent!**auto generated**!line wrapping!public!scintilla interface! !
+!ScintillaView categoriesFor: #hangingIndent:!**auto generated**!line wrapping!public!scintilla interface! !
+!ScintillaView categoriesFor: #hasBlinkingSecondaryCarets!**auto generated**!caret, selection, and hotspot styles!public!scintilla interface! !
+!ScintillaView categoriesFor: #hasBlinkingSecondaryCarets:!**auto generated**!caret, selection, and hotspot styles!public!scintilla interface! !
+!ScintillaView categoriesFor: #hasFoldMargin!folding!margins!public!testing! !
+!ScintillaView categoriesFor: #hasFoldMargin:!folding!margins!public! !
+!ScintillaView categoriesFor: #hasIndentationGuides!public!tabs & indentation guides! !
+!ScintillaView categoriesFor: #hasIndentationGuides:!public!tabs & indentation guides! !
+!ScintillaView categoriesFor: #hasLineNumbers!margins!public!testing! !
+!ScintillaView categoriesFor: #hasLineNumbers:!commands!margins!public! !
+!ScintillaView categoriesFor: #hasSelection!public!selection! !
+!ScintillaView categoriesFor: #hasVisibleLineEndings!**auto generated**!line endings!public!scintilla interface!testing! !
+!ScintillaView categoriesFor: #hasVisibleLineEndings:!**auto generated**!line endings!public!scintilla interface!testing! !
 !ScintillaView categoriesFor: #hideIndicators!helpers!indicators!private! !
 !ScintillaView categoriesFor: #hideSelection:!**auto generated**!public!scintilla interface!selection! !
-!ScintillaView categoriesFor: #highlightBracesAt:and:!brace highlighting!public! !
+!ScintillaView categoriesFor: #highlightBracesAt:and:!**auto generated**!brace highlighting!public!scintilla interface! !
 !ScintillaView categoriesFor: #highlightCallTipFrom:to:!call tips!public!scintilla interface! !
 !ScintillaView categoriesFor: #highlightFindMatch:!private!searching & replacing! !
-!ScintillaView categoriesFor: #highlightGuide!**auto generated**!accessing!public!scintilla interface!tabs & indentation guides! !
-!ScintillaView categoriesFor: #highlightGuide:!**auto generated**!accessing!public!scintilla interface!tabs & indentation guides! !
-!ScintillaView categoriesFor: #highlightMismatchedBrace:!brace highlighting!public! !
+!ScintillaView categoriesFor: #highlightGuide!**auto generated**!public!scintilla interface!tabs & indentation guides! !
+!ScintillaView categoriesFor: #highlightGuide:!**auto generated**!public!scintilla interface!tabs & indentation guides! !
+!ScintillaView categoriesFor: #highlightMismatchedBrace:!**auto generated**!brace highlighting!public!scintilla interface! !
 !ScintillaView categoriesFor: #highlightRange:withIndicator:!indicators!public! !
-!ScintillaView categoriesFor: #hoverTime!**auto generated**!accessing!public!scintilla interface! !
-!ScintillaView categoriesFor: #hoverTime:!**auto generated**!accessing!public!scintilla interface! !
-!ScintillaView categoriesFor: #idleStylingMode!accessing!public!styling! !
-!ScintillaView categoriesFor: #idleStylingMode:!accessing!public!styling! !
+!ScintillaView categoriesFor: #hoverTime!**auto generated**!notifications!public!scintilla interface! !
+!ScintillaView categoriesFor: #hoverTime:!**auto generated**!notifications!public!scintilla interface! !
+!ScintillaView categoriesFor: #idleStylingMode!public!styling! !
+!ScintillaView categoriesFor: #idleStylingMode:!public!styling! !
 !ScintillaView categoriesFor: #idOfStyleNamed:!enquiries!helpers!private! !
-!ScintillaView categoriesFor: #imeMode!accessing!ime!public! !
-!ScintillaView categoriesFor: #imeMode:!accessing!public! !
+!ScintillaView categoriesFor: #imeMode!ime!other settings!public! !
+!ScintillaView categoriesFor: #imeMode:!other settings!public! !
 !ScintillaView categoriesFor: #indent!**auto generated**!commands!public!scintilla interface! !
-!ScintillaView categoriesFor: #indentation!**auto generated**!accessing!public!scintilla interface!tabs & indentation guides! !
-!ScintillaView categoriesFor: #indentation:!**auto generated**!accessing!public!scintilla interface!tabs & indentation guides! !
-!ScintillaView categoriesFor: #indentationGuides!accessing!public!tabs & indentation guides! !
-!ScintillaView categoriesFor: #indentationGuides:!accessing!public!tabs & indentation guides! !
-!ScintillaView categoriesFor: #indentationOfLine:!accessing!public!tabs & indentation guides! !
+!ScintillaView categoriesFor: #indentation!**auto generated**!public!scintilla interface!tabs & indentation guides! !
+!ScintillaView categoriesFor: #indentation:!**auto generated**!public!scintilla interface!tabs & indentation guides! !
+!ScintillaView categoriesFor: #indentationGuides!public!tabs & indentation guides! !
+!ScintillaView categoriesFor: #indentationGuides:!public!tabs & indentation guides! !
+!ScintillaView categoriesFor: #indentationOfLine:!public!tabs & indentation guides! !
 !ScintillaView categoriesFor: #indicatorCount!constants!indicators!public! !
-!ScintillaView categoriesFor: #indicatorDefinitions:!accessing!indicators!public! !
-!ScintillaView categoriesFor: #indicatorIdFromName:!accessing!indicators!private! !
-!ScintillaView categoriesFor: #indicatorMaskAt:!accessing!indicators!public! !
-!ScintillaView categoriesFor: #indicators!accessing!indicators!public! !
-!ScintillaView categoriesFor: #indicators:!accessing!indicators!public! !
-!ScintillaView categoriesFor: #indicatorsAt:!accessing!public! !
-!ScintillaView categoriesFor: #indicatorStyles!accessing!public! !
-!ScintillaView categoriesFor: #indicatorStyles:!accessing!public! !
-!ScintillaView categoriesFor: #indicatorsUnder:!accessing!event handling!private! !
+!ScintillaView categoriesFor: #indicatorDefinitions:!indicators!public! !
+!ScintillaView categoriesFor: #indicatorIdFromName:!indicators!private! !
+!ScintillaView categoriesFor: #indicatorMaskAt:!**auto generated**!indicators!public!scintilla interface! !
+!ScintillaView categoriesFor: #indicators!indicators!public! !
+!ScintillaView categoriesFor: #indicators:!indicators!public! !
+!ScintillaView categoriesFor: #indicatorsAt:!indicators!public! !
+!ScintillaView categoriesFor: #indicatorStyles!indicators!public! !
+!ScintillaView categoriesFor: #indicatorStyles:!indicators!public! !
+!ScintillaView categoriesFor: #indicatorsUnder:!indicators!private! !
 !ScintillaView categoriesFor: #initialize!initializing!public! !
 !ScintillaView categoriesFor: #initializeControl!initializing!private! !
 !ScintillaView categoriesFor: #insertText:at:!public!text retrieval & modification! !
 !ScintillaView categoriesFor: #insertText:from:!**auto generated**!public!scintilla interface!text retrieval & modification! !
 !ScintillaView categoriesFor: #invalidateStyling!public!styling! !
-!ScintillaView categoriesFor: #isActiveHotspotUnderlined!**auto generated**!accessing!caret, selection, and hotspot styles!public!scintilla interface!testing! !
-!ScintillaView categoriesFor: #isActiveHotspotUnderlined:!**auto generated**!accessing!caret, selection, and hotspot styles!public!scintilla interface! !
-!ScintillaView categoriesFor: #isAutoCompletionActive!**auto generated**!accessing!autocompletion!public!scintilla interface!testing! !
-!ScintillaView categoriesFor: #isAutoCompletionCancelledAtStart!**auto generated**!accessing!autocompletion!public!scintilla interface!testing! !
-!ScintillaView categoriesFor: #isAutoCompletionCancelledAtStart:!**auto generated**!accessing!autocompletion!public!scintilla interface! !
-!ScintillaView categoriesFor: #isAutoCompletionCancelledWhenNoMatch!**auto generated**!accessing!autocompletion!public!scintilla interface!testing! !
-!ScintillaView categoriesFor: #isAutoCompletionCancelledWhenNoMatch:!**auto generated**!accessing!autocompletion!public!scintilla interface! !
-!ScintillaView categoriesFor: #isAutoCompletionCaseInsensitive!**auto generated**!accessing!autocompletion!public!scintilla interface!testing! !
-!ScintillaView categoriesFor: #isAutoCompletionCaseInsensitive:!**auto generated**!accessing!autocompletion!public!scintilla interface! !
-!ScintillaView categoriesFor: #isAutoCompletionSingleMatchChosen!**auto generated**!accessing!autocompletion!public!scintilla interface!testing! !
-!ScintillaView categoriesFor: #isAutoCompletionSingleMatchChosen:!**auto generated**!accessing!autocompletion!public!scintilla interface! !
-!ScintillaView categoriesFor: #isAutoCompletionTruncating!**auto generated**!accessing!autocompletion!public!scintilla interface!testing! !
-!ScintillaView categoriesFor: #isAutoCompletionTruncating:!**auto generated**!accessing!autocompletion!public!scintilla interface! !
-!ScintillaView categoriesFor: #isBackgroundDwellEnabled!accessing!brace highlighting!public! !
-!ScintillaView categoriesFor: #isBackgroundDwellEnabled:!accessing!brace highlighting!public! !
+!ScintillaView categoriesFor: #isActiveHotspotUnderlined!**auto generated**!caret, selection, and hotspot styles!public!scintilla interface!testing! !
+!ScintillaView categoriesFor: #isActiveHotspotUnderlined:!**auto generated**!caret, selection, and hotspot styles!public!scintilla interface! !
+!ScintillaView categoriesFor: #isAutoCompletionActive!**auto generated**!autocompletion!public!scintilla interface!testing! !
+!ScintillaView categoriesFor: #isAutoCompletionCancelledAtStart!**auto generated**!autocompletion!public!scintilla interface!testing! !
+!ScintillaView categoriesFor: #isAutoCompletionCancelledAtStart:!**auto generated**!autocompletion!public!scintilla interface! !
+!ScintillaView categoriesFor: #isAutoCompletionCancelledWhenNoMatch!**auto generated**!autocompletion!public!scintilla interface!testing! !
+!ScintillaView categoriesFor: #isAutoCompletionCancelledWhenNoMatch:!**auto generated**!autocompletion!public!scintilla interface! !
+!ScintillaView categoriesFor: #isAutoCompletionCaseInsensitive!**auto generated**!autocompletion!public!scintilla interface!testing! !
+!ScintillaView categoriesFor: #isAutoCompletionCaseInsensitive:!**auto generated**!autocompletion!public!scintilla interface! !
+!ScintillaView categoriesFor: #isAutoCompletionSingleMatchChosen!**auto generated**!autocompletion!public!scintilla interface!testing! !
+!ScintillaView categoriesFor: #isAutoCompletionSingleMatchChosen:!**auto generated**!autocompletion!public!scintilla interface! !
+!ScintillaView categoriesFor: #isAutoCompletionTruncating!**auto generated**!autocompletion!public!scintilla interface!testing! !
+!ScintillaView categoriesFor: #isAutoCompletionTruncating:!**auto generated**!autocompletion!public!scintilla interface! !
+!ScintillaView categoriesFor: #isBackgroundDwellEnabled!brace highlighting!public! !
+!ScintillaView categoriesFor: #isBackgroundDwellEnabled:!brace highlighting!public! !
 !ScintillaView categoriesFor: #isBraceAt:!brace highlighting!private!testing! !
-!ScintillaView categoriesFor: #isBraceHighlightingEnabled!accessing!brace highlighting!public! !
-!ScintillaView categoriesFor: #isBraceHighlightingEnabled:!accessing!brace highlighting!public! !
-!ScintillaView categoriesFor: #isCallTipAboveText:!**auto generated**!accessing!public!scintilla interface! !
-!ScintillaView categoriesFor: #isCallTipActive!**auto generated**!accessing!call tips!public!scintilla interface!testing! !
-!ScintillaView categoriesFor: #isCaretSticky!accessing!caret, selection, and hotspot styles!public!testing! !
-!ScintillaView categoriesFor: #isCaretSticky:!accessing!caret, selection, and hotspot styles!public! !
-!ScintillaView categoriesFor: #isCurrentLineHighlighted!**auto generated**!accessing!caret, selection, and hotspot styles!public!scintilla interface!testing! !
-!ScintillaView categoriesFor: #isCurrentLineHighlighted:!**auto generated**!accessing!caret, selection, and hotspot styles!public!scintilla interface! !
-!ScintillaView categoriesFor: #isCurrentLineHighlightedAlways!**auto generated**!accessing!public!scintilla interface! !
-!ScintillaView categoriesFor: #isCurrentLineHighlightedAlways:!**auto generated**!accessing!public!scintilla interface! !
+!ScintillaView categoriesFor: #isBraceHighlightingEnabled!brace highlighting!public! !
+!ScintillaView categoriesFor: #isBraceHighlightingEnabled:!brace highlighting!public! !
+!ScintillaView categoriesFor: #isCallTipAboveText:!**auto generated**!call tips!public!scintilla interface! !
+!ScintillaView categoriesFor: #isCallTipActive!**auto generated**!call tips!public!scintilla interface!testing! !
+!ScintillaView categoriesFor: #isCaretSticky!caret, selection, and hotspot styles!public!testing! !
+!ScintillaView categoriesFor: #isCaretSticky:!caret, selection, and hotspot styles!public! !
+!ScintillaView categoriesFor: #isCurrentLineHighlighted!**auto generated**!caret, selection, and hotspot styles!public!scintilla interface!testing! !
+!ScintillaView categoriesFor: #isCurrentLineHighlighted:!**auto generated**!caret, selection, and hotspot styles!public!scintilla interface! !
+!ScintillaView categoriesFor: #isCurrentLineHighlightedAlways!**auto generated**!caret, selection, and hotspot styles!public!scintilla interface! !
+!ScintillaView categoriesFor: #isCurrentLineHighlightedAlways:!**auto generated**!caret, selection, and hotspot styles!public!scintilla interface! !
 !ScintillaView categoriesFor: #isCurrentLineMarkedWith:!markers!public!testing! !
-!ScintillaView categoriesFor: #isDrawingBuffered!**auto generated**!accessing!other settings!public!scintilla interface!testing! !
-!ScintillaView categoriesFor: #isDrawingBuffered:!**auto generated**!accessing!other settings!public!scintilla interface! !
-!ScintillaView categoriesFor: #isDrawingTwoPhase!**auto generated**!accessing!other settings!public!scintilla interface!testing! !
-!ScintillaView categoriesFor: #isDrawingTwoPhase:!**auto generated**!accessing!other settings!public!scintilla interface! !
-!ScintillaView categoriesFor: #isFoldingEnabled!accessing!folding!public!testing! !
-!ScintillaView categoriesFor: #isFoldingEnabled:!accessing!folding!public! !
+!ScintillaView categoriesFor: #isDrawingBuffered!**auto generated**!other settings!public!scintilla interface!testing! !
+!ScintillaView categoriesFor: #isDrawingBuffered:!**auto generated**!other settings!public!scintilla interface! !
+!ScintillaView categoriesFor: #isDrawingTwoPhase!**auto generated**!other settings!public!scintilla interface!testing! !
+!ScintillaView categoriesFor: #isDrawingTwoPhase:!**auto generated**!other settings!public!scintilla interface! !
+!ScintillaView categoriesFor: #isFoldingEnabled!folding!public!testing! !
+!ScintillaView categoriesFor: #isFoldingEnabled:!folding!public! !
 !ScintillaView categoriesFor: #isIndicator:setAt:!indicators!public! !
-!ScintillaView categoriesFor: #isKeyboardInputUnicode!**auto generated**!accessing!other settings!public!scintilla interface!testing! !
-!ScintillaView categoriesFor: #isKeyboardInputUnicode:!**auto generated**!accessing!other settings!public!scintilla interface! !
+!ScintillaView categoriesFor: #isKeyboardInputUnicode!**auto generated**!other settings!public!scintilla interface!testing! !
+!ScintillaView categoriesFor: #isKeyboardInputUnicode:!**auto generated**!other settings!public!scintilla interface! !
 !ScintillaView categoriesFor: #isLine:folded:!folding!public!scintilla interface! !
 !ScintillaView categoriesFor: #isLine:markedWith:!markers!public!testing! !
 !ScintillaView categoriesFor: #isLineVisible:!folding!public!testing! !
-!ScintillaView categoriesFor: #isMultiSelect!**auto generated**!accessing!public!scintilla interface!selection!testing! !
-!ScintillaView categoriesFor: #isMultiSelect:!**auto generated**!accessing!public!scintilla interface!selection! !
-!ScintillaView categoriesFor: #isOvertypeEnabled!**auto generated**!accessing!overtype!public!scintilla interface!testing! !
-!ScintillaView categoriesFor: #isOvertypeEnabled:!**auto generated**!accessing!overtype!public!scintilla interface! !
-!ScintillaView categoriesFor: #isScrollWidthTracking!**auto generated**!accessing!public!scintilla interface!scrolling!testing! !
-!ScintillaView categoriesFor: #isScrollWidthTracking:!**auto generated**!accessing!public!scintilla interface!scrolling! !
+!ScintillaView categoriesFor: #isMouseWheelCaptured!**auto generated**!mouse capture!public!scintilla interface! !
+!ScintillaView categoriesFor: #isMouseWheelCaptured:!**auto generated**!mouse capture!public!scintilla interface! !
+!ScintillaView categoriesFor: #isMultiSelect!**auto generated**!multiple selection and virtual space!public!scintilla interface!selection!testing! !
+!ScintillaView categoriesFor: #isMultiSelect:!**auto generated**!multiple selection and virtual space!public!scintilla interface!selection! !
+!ScintillaView categoriesFor: #isOvertypeEnabled!**auto generated**!overtype!public!scintilla interface!testing! !
+!ScintillaView categoriesFor: #isOvertypeEnabled:!**auto generated**!overtype!public!scintilla interface! !
+!ScintillaView categoriesFor: #isScrollWidthTracking!**auto generated**!public!scintilla interface!scrolling!testing! !
+!ScintillaView categoriesFor: #isScrollWidthTracking:!**auto generated**!public!scintilla interface!scrolling! !
 !ScintillaView categoriesFor: #isSelectionBackcolorExtendedToEndOfLine!**auto generated**!caret, selection, and hotspot styles!public!scintilla interface!testing! !
 !ScintillaView categoriesFor: #isSelectionBackcolorExtendedToEndOfLine:!**auto generated**!caret, selection, and hotspot styles!public!scintilla interface! !
 !ScintillaView categoriesFor: #isSelectionEmpty!**auto generated**!public!scintilla interface!selection! !
 !ScintillaView categoriesFor: #isSelectionKept!public!testing! !
 !ScintillaView categoriesFor: #isSelectionRectangular!**auto generated**!public!scintilla interface!selection!testing! !
-!ScintillaView categoriesFor: #isStylingEnabled!accessing!public!styling!testing! !
-!ScintillaView categoriesFor: #isStylingEnabled:!accessing!public!styling! !
-!ScintillaView categoriesFor: #isTextModified!**auto generated**!accessing!public!scintilla interface!testing! !
-!ScintillaView categoriesFor: #isTextModified:!accessing!modes!private! !
-!ScintillaView categoriesFor: #isUndoEnabled!**auto generated**!accessing!public!scintilla interface!testing!undo & redo! !
-!ScintillaView categoriesFor: #isUndoEnabled:!**auto generated**!accessing!public!scintilla interface!undo & redo! !
-!ScintillaView categoriesFor: #isUsingPalette!**auto generated**!accessing!other settings!public!scintilla interface!testing! !
-!ScintillaView categoriesFor: #isUsingPalette:!**auto generated**!accessing!other settings!public!scintilla interface! !
-!ScintillaView categoriesFor: #isUsingTabs!**auto generated**!accessing!public!scintilla interface!tabs & indentation guides!testing! !
-!ScintillaView categoriesFor: #isUsingTabs:!**auto generated**!accessing!public!scintilla interface!tabs & indentation guides! !
+!ScintillaView categoriesFor: #isStylingEnabled!public!styling!testing! !
+!ScintillaView categoriesFor: #isStylingEnabled:!public!styling! !
+!ScintillaView categoriesFor: #isTextModified!**auto generated**!public!scintilla interface!testing! !
+!ScintillaView categoriesFor: #isTextModified:!modes!private! !
+!ScintillaView categoriesFor: #isUndoEnabled!**auto generated**!public!scintilla interface!testing!undo & redo! !
+!ScintillaView categoriesFor: #isUndoEnabled:!**auto generated**!public!scintilla interface!undo & redo! !
+!ScintillaView categoriesFor: #isUsingPalette!**auto generated**!other settings!public!scintilla interface!testing! !
+!ScintillaView categoriesFor: #isUsingPalette:!**auto generated**!other settings!public!scintilla interface! !
+!ScintillaView categoriesFor: #isUsingTabs!**auto generated**!public!scintilla interface!tabs & indentation guides!testing! !
+!ScintillaView categoriesFor: #isUsingTabs:!**auto generated**!public!scintilla interface!tabs & indentation guides! !
 !ScintillaView categoriesFor: #joinTarget!**auto generated**!commands!line wrapping!public!scintilla interface! !
-!ScintillaView categoriesFor: #keyBindings!accessing!key bindings!public! !
-!ScintillaView categoriesFor: #keyBindings:!accessing!key bindings!public! !
+!ScintillaView categoriesFor: #keyBindings!key bindings!public! !
+!ScintillaView categoriesFor: #keyBindings:!key bindings!public! !
 !ScintillaView categoriesFor: #keyboardCommands!commands!public! !
 !ScintillaView categoriesFor: #lastLineWithState!enquiries!public!styling! !
-!ScintillaView categoriesFor: #layoutCachingMode!accessing!line wrapping!public! !
-!ScintillaView categoriesFor: #layoutCachingMode:!accessing!line wrapping!public! !
-!ScintillaView categoriesFor: #lexer!accessing!lexer!public! !
-!ScintillaView categoriesFor: #lexer:!accessing!lexer!public! !
-!ScintillaView categoriesFor: #lexerLanguage!**auto generated**!accessing!lexer!public!scintilla interface! !
-!ScintillaView categoriesFor: #lexerPropertyNames!**auto generated**!accessing!lexer!public!scintilla interface! !
-!ScintillaView categoriesFor: #lineCount!**auto generated**!accessing!public!scintilla interface! !
-!ScintillaView categoriesFor: #lineHeight:!accessing!enquiries!public! !
-!ScintillaView categoriesFor: #lineLength:!accessing!public! !
+!ScintillaView categoriesFor: #layoutCachingMode!line wrapping!public! !
+!ScintillaView categoriesFor: #layoutCachingMode:!line wrapping!public! !
+!ScintillaView categoriesFor: #lexer!lexer!public! !
+!ScintillaView categoriesFor: #lexer:!lexer!public! !
+!ScintillaView categoriesFor: #lexerLanguage!**auto generated**!lexer!public!scintilla interface! !
+!ScintillaView categoriesFor: #lexerPropertyNames!**auto generated**!lexer!public!scintilla interface! !
+!ScintillaView categoriesFor: #lineCount!**auto generated**!enquiries!public!scintilla interface! !
+!ScintillaView categoriesFor: #lineHeight:!enquiries!public! !
+!ScintillaView categoriesFor: #lineLength:!enquiries!public! !
 !ScintillaView categoriesFor: #lineLengthFromPosition:!helpers!private! !
-!ScintillaView categoriesFor: #lineNumberMargin!accessing!margins!public! !
+!ScintillaView categoriesFor: #lineNumberMargin!margins!public! !
 !ScintillaView categoriesFor: #lineRange:!accessing!public! !
-!ScintillaView categoriesFor: #lineScroll!accessing!public!scrolling! !
+!ScintillaView categoriesFor: #lineScroll!public!scrolling! !
 !ScintillaView categoriesFor: #lineScrollBy:!public!scrolling! !
 !ScintillaView categoriesFor: #linesOnScreen!**auto generated**!enquiries!public!scintilla interface! !
-!ScintillaView categoriesFor: #marginCount!constants!margins!private! !
-!ScintillaView categoriesFor: #margins!accessing!margins!public! !
-!ScintillaView categoriesFor: #margins:!accessing!margins!public! !
-!ScintillaView categoriesFor: #marginStylesOffset!**auto generated**!accessing!margins!public!scintilla interface! !
-!ScintillaView categoriesFor: #marginStylesOffset:!**auto generated**!accessing!margins!public!scintilla interface! !
+!ScintillaView categoriesFor: #marginCount!constants!margins!public! !
+!ScintillaView categoriesFor: #marginCount:!constants!margins!public! !
+!ScintillaView categoriesFor: #margins!margins!public! !
+!ScintillaView categoriesFor: #margins:!margins!public! !
+!ScintillaView categoriesFor: #marginStylesOffset!**auto generated**!margins!public!scintilla interface! !
+!ScintillaView categoriesFor: #marginStylesOffset:!**auto generated**!margins!public!scintilla interface! !
 !ScintillaView categoriesFor: #marginWidths!accessing!private! !
-!ScintillaView categoriesFor: #markerDefinitions!accessing!markers!public! !
-!ScintillaView categoriesFor: #markerDefinitions:!accessing!markers!public! !
-!ScintillaView categoriesFor: #markers!accessing!markers!public! !
-!ScintillaView categoriesFor: #markers:!accessing!markers!public! !
+!ScintillaView categoriesFor: #markerDefinitions!markers!public! !
+!ScintillaView categoriesFor: #markerDefinitions:!markers!public! !
+!ScintillaView categoriesFor: #markers!markers!public! !
+!ScintillaView categoriesFor: #markers:!markers!public! !
 !ScintillaView categoriesFor: #markerTypesOnLine:!enquiries!markers!public! !
-!ScintillaView categoriesFor: #maxCompletionListHeight!**auto generated**!accessing!autocompletion!public!scintilla interface! !
-!ScintillaView categoriesFor: #maxCompletionListHeight:!**auto generated**!accessing!autocompletion!public!scintilla interface! !
-!ScintillaView categoriesFor: #maxCompletionListWidth!**auto generated**!accessing!autocompletion!public!scintilla interface! !
-!ScintillaView categoriesFor: #maxCompletionListWidth:!**auto generated**!accessing!autocompletion!public!scintilla interface! !
-!ScintillaView categoriesFor: #maxStyle!accessing!constants!public!style definition! !
-!ScintillaView categoriesFor: #modificationEventMask!accessing!public! !
-!ScintillaView categoriesFor: #modificationEventMask:!accessing!public! !
+!ScintillaView categoriesFor: #maxCompletionListHeight!**auto generated**!autocompletion!public!scintilla interface! !
+!ScintillaView categoriesFor: #maxCompletionListHeight:!**auto generated**!autocompletion!public!scintilla interface! !
+!ScintillaView categoriesFor: #maxCompletionListWidth!**auto generated**!autocompletion!public!scintilla interface! !
+!ScintillaView categoriesFor: #maxCompletionListWidth:!**auto generated**!autocompletion!public!scintilla interface! !
+!ScintillaView categoriesFor: #modificationEventMask!notifications!public! !
+!ScintillaView categoriesFor: #modificationEventMask:!notifications!public! !
 !ScintillaView categoriesFor: #modifyText:!private!text retrieval & modification! !
 !ScintillaView categoriesFor: #moveCaretInsideView!**auto generated**!caret!commands!public!scintilla interface! !
 !ScintillaView categoriesFor: #moveDown!**auto generated**!caret!commands!public!scintilla interface! !
@@ -10818,8 +10849,8 @@ zoomOut
 !ScintillaView categoriesFor: #moveToVcStartOfDisplayLine!**auto generated**!caret!commands!public!scintilla interface! !
 !ScintillaView categoriesFor: #moveToWrappedVcHome!**auto generated**!caret!commands!public!scintilla interface! !
 !ScintillaView categoriesFor: #moveUp!**auto generated**!caret!commands!public!scintilla interface! !
-!ScintillaView categoriesFor: #multiPasteMode!accessing!clipboard operations!public! !
-!ScintillaView categoriesFor: #multiPasteMode:!accessing!clipboard operations!public! !
+!ScintillaView categoriesFor: #multiPasteMode!clipboard operations!multiple selection and virtual space!public! !
+!ScintillaView categoriesFor: #multiPasteMode:!clipboard operations!multiple selection and virtual space!public! !
 !ScintillaView categoriesFor: #newLine!**auto generated**!commands!public!scintilla interface!text retrieval & modification! !
 !ScintillaView categoriesFor: #nmNotify:!event handling-win32!private! !
 !ScintillaView categoriesFor: #onEraseRequired:!event handling!public! !
@@ -10833,23 +10864,24 @@ zoomOut
 !ScintillaView categoriesFor: #plainText!**auto generated**!accessing!public!scintilla interface!text retrieval & modification! !
 !ScintillaView categoriesFor: #plainText:!accessing!private!text retrieval & modification! !
 !ScintillaView categoriesFor: #plainTextFrom:to:!accessing!public!text retrieval & modification! !
-!ScintillaView categoriesFor: #positionCacheSize!**auto generated**!accessing!public!scintilla interface! !
-!ScintillaView categoriesFor: #positionCacheSize:!**auto generated**!accessing!public!scintilla interface! !
+!ScintillaView categoriesFor: #positionCacheSize!**auto generated**!line wrapping!public!scintilla interface! !
+!ScintillaView categoriesFor: #positionCacheSize:!**auto generated**!line wrapping!public!scintilla interface! !
 !ScintillaView categoriesFor: #positionOfChar:!enquiries!public! !
-!ScintillaView categoriesFor: #primarySelectionIndex!accessing!public!selection! !
-!ScintillaView categoriesFor: #primarySelectionIndex:!accessing!public!selection! !
+!ScintillaView categoriesFor: #primarySelectionIndex!multiple selection and virtual space!public!selection! !
+!ScintillaView categoriesFor: #primarySelectionIndex:!multiple selection and virtual space!public!selection! !
 !ScintillaView categoriesFor: #printAnnotationStyleBytes:on:!annotations!helpers!private! !
-!ScintillaView categoriesFor: #printColourMode!**auto generated**!accessing!printing!public!scintilla interface! !
-!ScintillaView categoriesFor: #printColourMode:!**auto generated**!accessing!printing!public!scintilla interface! !
-!ScintillaView categoriesFor: #printMagnification!**auto generated**!accessing!printing!public!scintilla interface! !
-!ScintillaView categoriesFor: #printMagnification:!**auto generated**!accessing!printing!public!scintilla interface! !
-!ScintillaView categoriesFor: #punctuation!accessing!character classes!public! !
-!ScintillaView categoriesFor: #punctuation:!accessing!character classes!public! !
+!ScintillaView categoriesFor: #printColourMode!**auto generated**!printing!public!scintilla interface! !
+!ScintillaView categoriesFor: #printColourMode:!**auto generated**!printing!public!scintilla interface! !
+!ScintillaView categoriesFor: #printMagnification!**auto generated**!printing!public!scintilla interface! !
+!ScintillaView categoriesFor: #printMagnification:!**auto generated**!printing!public!scintilla interface! !
+!ScintillaView categoriesFor: #punctuation!character classes!public! !
+!ScintillaView categoriesFor: #punctuation:!character classes!public! !
 !ScintillaView categoriesFor: #queryCommand:!commands!private! !
 !ScintillaView categoriesFor: #rangeOfIndicator:at:!enquiries!indicators!public! !
 !ScintillaView categoriesFor: #redo!**auto generated**!commands!public!scintilla interface!undo & redo! !
 !ScintillaView categoriesFor: #rememberCaretX!**auto generated**!caret!public!scintilla interface! !
 !ScintillaView categoriesFor: #removeAllAnnotations!annotations!public!removing! !
+!ScintillaView categoriesFor: #removeAllEdges!**auto generated**!long lines!public!scintilla interface! !
 !ScintillaView categoriesFor: #removeAllMarkers!markers!public! !
 !ScintillaView categoriesFor: #removeAllStyling!**auto generated**!public!scintilla interface!styling! !
 !ScintillaView categoriesFor: #removeAnnotation:!annotations!public!removing! !
@@ -10865,10 +10897,10 @@ zoomOut
 !ScintillaView categoriesFor: #resetMarkers!helpers!markers!private! !
 !ScintillaView categoriesFor: #resetZoom!commands!public!zooming! !
 !ScintillaView categoriesFor: #restyleAll!public!styling! !
-!ScintillaView categoriesFor: #restyleFrom:to:!public!styling! !
-!ScintillaView categoriesFor: #rotateSelection!**auto generated**!commands!public!scintilla interface!selection! !
+!ScintillaView categoriesFor: #restyleFrom:to:!**auto generated**!public!scintilla interface!styling! !
+!ScintillaView categoriesFor: #rotateSelection!**auto generated**!commands!multiple selection and virtual space!public!scintilla interface!selection! !
 !ScintillaView categoriesFor: #sciAddRefDocument:!**auto generated**!multiple views!private!scintilla interface! !
-!ScintillaView categoriesFor: #sciAddSelection:anchor:!**auto generated**!private!scintilla interface!selection! !
+!ScintillaView categoriesFor: #sciAddSelection:anchor:!**auto generated**!multiple selection and virtual space!private!scintilla interface!selection! !
 !ScintillaView categoriesFor: #sciAddStyledText:c:!**auto generated**!private!scintilla interface!text retrieval & modification! !
 !ScintillaView categoriesFor: #sciAddTabStop:x:!**auto generated**!private!scintilla interface!tabs & indentation guides! !
 !ScintillaView categoriesFor: #sciAddUndoAction:flags:!**auto generated**!private!scintilla interface!undo & redo! !
@@ -10883,14 +10915,13 @@ zoomOut
 !ScintillaView categoriesFor: #sciAnnotationSetText:text:!**auto generated**!annotations!private!scintilla interface! !
 !ScintillaView categoriesFor: #sciAnnotationSetVisible:!**auto generated**!annotations!private!scintilla interface! !
 !ScintillaView categoriesFor: #sciAppendText:text:!**auto generated**!private!scintilla interface!text retrieval & modification! !
-!ScintillaView categoriesFor: #sciAssignCmdKey:msg:!**auto generated**!key bindings!private!scintilla interface! !
+!ScintillaView categoriesFor: #sciAssignCmdKey:sciCommand:!**auto generated**!key bindings!private!scintilla interface! !
 !ScintillaView categoriesFor: #sciAutoCGetCaseInsensitiveBehaviour!**auto generated**!autocompletion!private!scintilla interface! !
 !ScintillaView categoriesFor: #sciAutoCGetCurrent!**auto generated**!autocompletion!private!scintilla interface! !
 !ScintillaView categoriesFor: #sciAutoCGetMulti!**auto generated**!autocompletion!private!scintilla interface! !
 !ScintillaView categoriesFor: #sciAutoCGetOrder!**auto generated**!autocompletion!private!scintilla interface! !
 !ScintillaView categoriesFor: #sciAutoCGetSeparator!**auto generated**!autocompletion!private!scintilla interface! !
 !ScintillaView categoriesFor: #sciAutoCGetTypeSeparator!**auto generated**!autocompletion!private!scintilla interface! !
-!ScintillaView categoriesFor: #sciAutoCPosStart!**auto generated**!autocompletion!private!scintilla interface! !
 !ScintillaView categoriesFor: #sciAutoCSetCaseInsensitiveBehaviour:!**auto generated**!autocompletion!private!scintilla interface! !
 !ScintillaView categoriesFor: #sciAutoCSetFillUps:!**auto generated**!autocompletion!private!scintilla interface! !
 !ScintillaView categoriesFor: #sciAutoCSetMulti:!**auto generated**!autocompletion!private!scintilla interface! !
@@ -10899,16 +10930,13 @@ zoomOut
 !ScintillaView categoriesFor: #sciAutoCSetTypeSeparator:!**auto generated**!autocompletion!private!scintilla interface! !
 !ScintillaView categoriesFor: #sciAutoCShow:itemList:!**auto generated**!autocompletion!private!scintilla interface! !
 !ScintillaView categoriesFor: #sciAutoCStops:!**auto generated**!autocompletion!private!scintilla interface! !
-!ScintillaView categoriesFor: #sciBraceBadLight:!**auto generated**!brace highlighting!private!scintilla interface! !
 !ScintillaView categoriesFor: #sciBraceBadLightIndicator:indicator:!**auto generated**!brace highlighting!private!scintilla interface! !
-!ScintillaView categoriesFor: #sciBraceHighlight:pos2:!**auto generated**!brace highlighting!private!scintilla interface! !
 !ScintillaView categoriesFor: #sciBraceHighlightIndicator:indicator:!**auto generated**!brace highlighting!private!scintilla interface! !
-!ScintillaView categoriesFor: #sciBraceMatch:!**auto generated**!brace highlighting!private!scintilla interface! !
-!ScintillaView categoriesFor: #sciCallTipPosStart!**auto generated**!call tips!private!scintilla interface! !
+!ScintillaView categoriesFor: #sciBraceMatch:maxReStyle:!**auto generated**!brace highlighting!private!scintilla interface! !
 !ScintillaView categoriesFor: #sciCallTipSetBack:!**auto generated**!call tips!private!scintilla interface! !
 !ScintillaView categoriesFor: #sciCallTipSetFore:!**auto generated**!call tips!private!scintilla interface! !
 !ScintillaView categoriesFor: #sciCallTipSetForeHlt:!**auto generated**!call tips!private!scintilla interface! !
-!ScintillaView categoriesFor: #sciCallTipSetHlt:end:!**auto generated**!call tips!private!scintilla interface! !
+!ScintillaView categoriesFor: #sciCallTipSetHlt:highlightEnd:!**auto generated**!call tips!private!scintilla interface! !
 !ScintillaView categoriesFor: #sciCallTipSetPosStart:!**auto generated**!call tips!private!scintilla interface! !
 !ScintillaView categoriesFor: #sciCallTipShow:definition:!**auto generated**!call tips!private!scintilla interface! !
 !ScintillaView categoriesFor: #sciCallTipUseStyle:!**auto generated**!call tips!private!scintilla interface! !
@@ -10919,151 +10947,142 @@ zoomOut
 !ScintillaView categoriesFor: #sciCharPositionFromPointClose:y:!**auto generated**!enquiries!private!scintilla interface! !
 !ScintillaView categoriesFor: #sciClearAllCmdKeys!**auto generated**!key bindings!private!scintilla interface! !
 !ScintillaView categoriesFor: #sciClearCmdKey:!**auto generated**!key bindings!private!scintilla interface! !
-!ScintillaView categoriesFor: #sciClearRepresentation:!**auto generated**!accessing!private!scintilla interface! !
+!ScintillaView categoriesFor: #sciClearRepresentation:!**auto generated**!character representations!private!scintilla interface! !
 !ScintillaView categoriesFor: #sciClearTabStops:!**auto generated**!private!scintilla interface!tabs & indentation guides! !
-!ScintillaView categoriesFor: #sciColourise:end:!**auto generated**!lexer!private!scintilla interface! !
 !ScintillaView categoriesFor: #sciContractedFoldNext:!**auto generated**!folding!private!scintilla interface! !
 !ScintillaView categoriesFor: #sciConvertEOLs:!**auto generated**!line endings!private!scintilla interface! !
 !ScintillaView categoriesFor: #sciCopyRange:end:!**auto generated**!clipboard operations!private!scintilla interface! !
-!ScintillaView categoriesFor: #sciCountCharacters:endPos:!**auto generated**!enquiries!private!scintilla interface! !
+!ScintillaView categoriesFor: #sciCountCharacters:end:!**auto generated**!enquiries!private!scintilla interface! !
 !ScintillaView categoriesFor: #sciCreateDocument!**auto generated**!multiple views!private!scintilla interface! !
-!ScintillaView categoriesFor: #sciDeleteRange:deleteLength:!**auto generated**!private!scintilla interface!text retrieval & modification! !
+!ScintillaView categoriesFor: #sciDeleteRange:lengthDelete:!**auto generated**!private!scintilla interface!text retrieval & modification! !
 !ScintillaView categoriesFor: #sciDescribeProperty:description:!**auto generated**!lexer!private!scintilla interface! !
 !ScintillaView categoriesFor: #sciDistanceToSecondaryStyles!**auto generated**!private!scintilla interface!style definition! !
 !ScintillaView categoriesFor: #sciDocLineFromVisible:!**auto generated**!enquiries!folding!private!scintilla interface! !
-!ScintillaView categoriesFor: #sciDropSelectionN:!**auto generated**!private!scintilla interface!selection! !
+!ScintillaView categoriesFor: #sciDropSelectionN:!**auto generated**!multiple selection and virtual space!private!scintilla interface!selection! !
 !ScintillaView categoriesFor: #sciEncodedFromUTF8:encoded:!**auto generated**!private!scintilla interface!text retrieval & modification! !
 !ScintillaView categoriesFor: #sciEnsureVisible:!**auto generated**!folding!private!scintilla interface! !
 !ScintillaView categoriesFor: #sciEnsureVisibleEnforcePolicy:!**auto generated**!folding!private!scintilla interface! !
 !ScintillaView categoriesFor: #sciExpandChildren:level:!**auto generated**!folding!private!scintilla interface! !
 !ScintillaView categoriesFor: #sciFindColumn:column:!**auto generated**!enquiries!private!scintilla interface!selection! !
-!ScintillaView categoriesFor: #sciFindIndicatorFlash:end:!**auto generated**!private!scintilla interface!searching & replacing! !
-!ScintillaView categoriesFor: #sciFindIndicatorHide!**auto generated**!private!scintilla interface!searching & replacing! !
-!ScintillaView categoriesFor: #sciFindIndicatorShow:end:!**auto generated**!private!scintilla interface!searching & replacing! !
+!ScintillaView categoriesFor: #sciFindIndicatorFlash:end:!**auto generated**!indicators!private!scintilla interface!searching & replacing! !
+!ScintillaView categoriesFor: #sciFindIndicatorHide!**auto generated**!indicators!private!scintilla interface!searching & replacing! !
+!ScintillaView categoriesFor: #sciFindIndicatorShow:end:!**auto generated**!indicators!private!scintilla interface!searching & replacing! !
 !ScintillaView categoriesFor: #sciFindText:ft:!**auto generated**!private!scintilla interface!searching & replacing! !
 !ScintillaView categoriesFor: #sciFoldAll:!**auto generated**!folding!private!scintilla interface! !
 !ScintillaView categoriesFor: #sciFoldChildren:action:!**auto generated**!folding!private!scintilla interface! !
 !ScintillaView categoriesFor: #sciFoldLine:action:!**auto generated**!folding!private!scintilla interface! !
-!ScintillaView categoriesFor: #sciFormatRange:fr:!**auto generated**!accessing!printing!private!scintilla interface! !
+!ScintillaView categoriesFor: #sciFormatRange:fr:!**auto generated**!printing!private!scintilla interface! !
 !ScintillaView categoriesFor: #sciFreeSubStyles!**auto generated**!private!scintilla interface!style definition! !
-!ScintillaView categoriesFor: #sciGetAdditionalSelectionTyping!**auto generated**!accessing!private!scintilla interface!selection! !
-!ScintillaView categoriesFor: #sciGetAnchor!**auto generated**!accessing!private!scintilla interface!selection! !
-!ScintillaView categoriesFor: #sciGetAutomaticFold!**auto generated**!accessing!folding!private!scintilla interface! !
-!ScintillaView categoriesFor: #sciGetCaretSticky!**auto generated**!accessing!caret, selection, and hotspot styles!private!scintilla interface! !
-!ScintillaView categoriesFor: #sciGetCaretStyle!**auto generated**!accessing!caret, selection, and hotspot styles!private!scintilla interface! !
+!ScintillaView categoriesFor: #sciGetAdditionalSelectionTyping!**auto generated**!multiple selection and virtual space!private!scintilla interface!selection! !
+!ScintillaView categoriesFor: #sciGetAutomaticFold!**auto generated**!folding!private!scintilla interface! !
+!ScintillaView categoriesFor: #sciGetCaretSticky!**auto generated**!caret, selection, and hotspot styles!private!scintilla interface! !
+!ScintillaView categoriesFor: #sciGetCaretStyle!**auto generated**!caret, selection, and hotspot styles!private!scintilla interface! !
 !ScintillaView categoriesFor: #sciGetCharAt:!**auto generated**!private!scintilla interface! !
-!ScintillaView categoriesFor: #sciGetCodePage!**auto generated**!accessing!other settings!private!scintilla interface! !
-!ScintillaView categoriesFor: #sciGetColumn:!**auto generated**!accessing!enquiries!private!scintilla interface! !
-!ScintillaView categoriesFor: #sciGetControlCharSymbol!**auto generated**!accessing!private!scintilla interface! !
-!ScintillaView categoriesFor: #sciGetCurrentPos!**auto generated**!accessing!caret!private!scintilla interface! !
-!ScintillaView categoriesFor: #sciGetDocPointer!**auto generated**!accessing!multiple views!private!scintilla interface! !
-!ScintillaView categoriesFor: #sciGetEdgeColumn!**auto generated**!accessing!long lines!private!scintilla interface! !
-!ScintillaView categoriesFor: #sciGetEdgeMode!**auto generated**!accessing!long lines!private!scintilla interface! !
-!ScintillaView categoriesFor: #sciGetEndAtLastLine!**auto generated**!accessing!private!scintilla interface!scrolling! !
-!ScintillaView categoriesFor: #sciGetEndStyled!**auto generated**!accessing!private!scintilla interface!styling! !
-!ScintillaView categoriesFor: #sciGetEOLMode!**auto generated**!accessing!line endings!private!scintilla interface! !
-!ScintillaView categoriesFor: #sciGetFirstVisibleLine!**auto generated**!accessing!enquiries!private!scintilla interface! !
-!ScintillaView categoriesFor: #sciGetFoldExpanded:!**auto generated**!accessing!folding!private!scintilla interface! !
-!ScintillaView categoriesFor: #sciGetFoldLevel:!**auto generated**!accessing!folding!private!scintilla interface! !
-!ScintillaView categoriesFor: #sciGetFoldParent:!**auto generated**!accessing!folding!private!scintilla interface! !
-!ScintillaView categoriesFor: #sciGetFontQuality!**auto generated**!accessing!private!scintilla interface! !
-!ScintillaView categoriesFor: #sciGetIdleStyling!**auto generated**!accessing!private!scintilla interface!styling! !
-!ScintillaView categoriesFor: #sciGetIMEInteraction!**auto generated**!accessing!ime!private!scintilla interface! !
-!ScintillaView categoriesFor: #sciGetIndentationGuides!**auto generated**!accessing!private!scintilla interface!tabs & indentation guides! !
-!ScintillaView categoriesFor: #sciGetLastChild:level:!**auto generated**!accessing!folding!private!scintilla interface! !
-!ScintillaView categoriesFor: #sciGetLayoutCache!**auto generated**!accessing!line wrapping!private!scintilla interface! !
-!ScintillaView categoriesFor: #sciGetLexer!**auto generated**!accessing!lexer!private!scintilla interface! !
-!ScintillaView categoriesFor: #sciGetLine:!**auto generated**!accessing!private!scintilla interface! !
-!ScintillaView categoriesFor: #sciGetLineEndPosition:!**auto generated**!accessing!enquiries!private!scintilla interface! !
-!ScintillaView categoriesFor: #sciGetLineEndTypesActive!**auto generated**!accessing!private!scintilla interface! !
-!ScintillaView categoriesFor: #sciGetLineEndTypesAllowed!**auto generated**!accessing!private!scintilla interface! !
-!ScintillaView categoriesFor: #sciGetLineEndTypesSupported!**auto generated**!accessing!private!scintilla interface! !
-!ScintillaView categoriesFor: #sciGetLineIndentation:!**auto generated**!accessing!private!scintilla interface!tabs & indentation guides! !
-!ScintillaView categoriesFor: #sciGetLineIndentPosition:!**auto generated**!accessing!private!scintilla interface!tabs & indentation guides! !
-!ScintillaView categoriesFor: #sciGetLineSelEndPosition:!**auto generated**!accessing!private!scintilla interface!selection! !
-!ScintillaView categoriesFor: #sciGetLineSelStartPosition:!**auto generated**!accessing!private!scintilla interface!selection! !
-!ScintillaView categoriesFor: #sciGetLineState:!**auto generated**!accessing!private!scintilla interface!styling! !
-!ScintillaView categoriesFor: #sciGetLineVisible:!**auto generated**!accessing!folding!private!scintilla interface! !
-!ScintillaView categoriesFor: #sciGetMainSelection!**auto generated**!accessing!private!scintilla interface!selection! !
-!ScintillaView categoriesFor: #sciGetMarginLeft!**auto generated**!accessing!margins!private!scintilla interface! !
-!ScintillaView categoriesFor: #sciGetMarginOptions!**auto generated**!accessing!private!scintilla interface! !
-!ScintillaView categoriesFor: #sciGetMarginRight!**auto generated**!accessing!margins!private!scintilla interface! !
-!ScintillaView categoriesFor: #sciGetMaxLineState!**auto generated**!accessing!private!scintilla interface!styling! !
-!ScintillaView categoriesFor: #sciGetMouseSelectionRectangularSwitch!**auto generated**!accessing!private!scintilla interface! !
-!ScintillaView categoriesFor: #sciGetMultiPaste!**auto generated**!accessing!private!scintilla interface! !
-!ScintillaView categoriesFor: #sciGetNextTabStop:x:!**auto generated**!accessing!private!scintilla interface!tabs & indentation guides! !
-!ScintillaView categoriesFor: #sciGetPasteConvertEndings!**auto generated**!accessing!clipboard operations!private!scintilla interface! !
-!ScintillaView categoriesFor: #sciGetPhasesDraw!**auto generated**!accessing!other settings!private!scintilla interface! !
-!ScintillaView categoriesFor: #sciGetPrimaryStyleFromStyle:!**auto generated**!accessing!private!scintilla interface! !
-!ScintillaView categoriesFor: #sciGetPrintWrapMode!**auto generated**!accessing!printing!private!scintilla interface! !
-!ScintillaView categoriesFor: #sciGetProperty:buf:!**auto generated**!accessing!lexer!private!scintilla interface! !
-!ScintillaView categoriesFor: #sciGetPropertyExpanded:buf:!**auto generated**!accessing!lexer!private!scintilla interface! !
-!ScintillaView categoriesFor: #sciGetPropertyInt:!**auto generated**!accessing!lexer!private!scintilla interface! !
+!ScintillaView categoriesFor: #sciGetCodePage!**auto generated**!other settings!private!scintilla interface! !
+!ScintillaView categoriesFor: #sciGetColumn:!**auto generated**!enquiries!private!scintilla interface! !
+!ScintillaView categoriesFor: #sciGetControlCharSymbol!**auto generated**!character representations!private!scintilla interface! !
+!ScintillaView categoriesFor: #sciGetDocPointer!**auto generated**!multiple views!private!scintilla interface! !
+!ScintillaView categoriesFor: #sciGetEdgeColumn!**auto generated**!long lines!private!scintilla interface! !
+!ScintillaView categoriesFor: #sciGetEdgeMode!**auto generated**!long lines!private!scintilla interface! !
+!ScintillaView categoriesFor: #sciGetEndAtLastLine!**auto generated**!private!scintilla interface!scrolling! !
+!ScintillaView categoriesFor: #sciGetEOLMode!**auto generated**!line endings!private!scintilla interface! !
+!ScintillaView categoriesFor: #sciGetFirstVisibleLine!**auto generated**!private!scintilla interface!scrolling! !
+!ScintillaView categoriesFor: #sciGetFoldExpanded:!**auto generated**!folding!private!scintilla interface! !
+!ScintillaView categoriesFor: #sciGetFoldLevel:!**auto generated**!folding!private!scintilla interface! !
+!ScintillaView categoriesFor: #sciGetFoldParent:!**auto generated**!folding!private!scintilla interface! !
+!ScintillaView categoriesFor: #sciGetFontQuality!**auto generated**!other settings!private!scintilla interface! !
+!ScintillaView categoriesFor: #sciGetIdleStyling!**auto generated**!private!scintilla interface!styling! !
+!ScintillaView categoriesFor: #sciGetIMEInteraction!**auto generated**!ime!private!scintilla interface! !
+!ScintillaView categoriesFor: #sciGetIndentationGuides!**auto generated**!private!scintilla interface!tabs & indentation guides! !
+!ScintillaView categoriesFor: #sciGetLastChild:level:!**auto generated**!folding!private!scintilla interface! !
+!ScintillaView categoriesFor: #sciGetLayoutCache!**auto generated**!line wrapping!private!scintilla interface! !
+!ScintillaView categoriesFor: #sciGetLexer!**auto generated**!lexer!private!scintilla interface! !
+!ScintillaView categoriesFor: #sciGetLine:!**auto generated**!private!scintilla interface!text retrieval & modification! !
+!ScintillaView categoriesFor: #sciGetLineEndPosition:!**auto generated**!enquiries!private!scintilla interface! !
+!ScintillaView categoriesFor: #sciGetLineEndTypesActive!**auto generated**!line endings!private!scintilla interface! !
+!ScintillaView categoriesFor: #sciGetLineEndTypesAllowed!**auto generated**!line endings!private!scintilla interface! !
+!ScintillaView categoriesFor: #sciGetLineEndTypesSupported!**auto generated**!line endings!private!scintilla interface! !
+!ScintillaView categoriesFor: #sciGetLineIndentation:!**auto generated**!private!scintilla interface!tabs & indentation guides! !
+!ScintillaView categoriesFor: #sciGetLineIndentPosition:!**auto generated**!private!scintilla interface!tabs & indentation guides! !
+!ScintillaView categoriesFor: #sciGetLineSelEndPosition:!**auto generated**!private!scintilla interface!selection! !
+!ScintillaView categoriesFor: #sciGetLineSelStartPosition:!**auto generated**!private!scintilla interface!selection! !
+!ScintillaView categoriesFor: #sciGetLineState:!**auto generated**!private!scintilla interface!styling! !
+!ScintillaView categoriesFor: #sciGetLineVisible:!**auto generated**!folding!private!scintilla interface! !
+!ScintillaView categoriesFor: #sciGetMainSelection!**auto generated**!multiple selection and virtual space!private!scintilla interface!selection! !
+!ScintillaView categoriesFor: #sciGetMarginBackN:!**auto generated**!margins!private!scintilla interface! !
+!ScintillaView categoriesFor: #sciGetMarginLeft!**auto generated**!margins!private!scintilla interface! !
+!ScintillaView categoriesFor: #sciGetMarginOptions!**auto generated**!margins!private!scintilla interface! !
+!ScintillaView categoriesFor: #sciGetMarginRight!**auto generated**!margins!private!scintilla interface! !
+!ScintillaView categoriesFor: #sciGetMargins!**auto generated**!margins!private!scintilla interface! !
+!ScintillaView categoriesFor: #sciGetMaxLineState!**auto generated**!private!scintilla interface!styling! !
+!ScintillaView categoriesFor: #sciGetMouseSelectionRectangularSwitch!**auto generated**!multiple selection and virtual space!private!scintilla interface! !
+!ScintillaView categoriesFor: #sciGetMultiPaste!**auto generated**!multiple selection and virtual space!private!scintilla interface! !
+!ScintillaView categoriesFor: #sciGetNextTabStop:x:!**auto generated**!private!scintilla interface!tabs & indentation guides! !
+!ScintillaView categoriesFor: #sciGetPasteConvertEndings!**auto generated**!clipboard operations!private!scintilla interface! !
+!ScintillaView categoriesFor: #sciGetPhasesDraw!**auto generated**!other settings!private!scintilla interface! !
+!ScintillaView categoriesFor: #sciGetPrimaryStyleFromStyle:!**auto generated**!private!scintilla interface!styling! !
+!ScintillaView categoriesFor: #sciGetPrintWrapMode!**auto generated**!printing!private!scintilla interface! !
+!ScintillaView categoriesFor: #sciGetProperty:value:!**auto generated**!lexer!private!scintilla interface! !
+!ScintillaView categoriesFor: #sciGetPropertyExpanded:value:!**auto generated**!lexer!private!scintilla interface! !
+!ScintillaView categoriesFor: #sciGetPropertyInt:defaultValue:!**auto generated**!private!scintilla interface! !
 !ScintillaView categoriesFor: #sciGetPunctuationChars!**auto generated**!character classes!private!scintilla interface! !
-!ScintillaView categoriesFor: #sciGetRectangularSelectionAnchor!**auto generated**!accessing!private!scintilla interface!selection! !
-!ScintillaView categoriesFor: #sciGetRectangularSelectionAnchorVirtualSpace!**auto generated**!accessing!private!scintilla interface!selection! !
-!ScintillaView categoriesFor: #sciGetRectangularSelectionCaret!**auto generated**!accessing!private!scintilla interface!selection! !
-!ScintillaView categoriesFor: #sciGetRectangularSelectionCaretVirtualSpace!**auto generated**!accessing!private!scintilla interface!selection! !
-!ScintillaView categoriesFor: #sciGetRepresentation:representation:!**auto generated**!accessing!private!scintilla interface! !
-!ScintillaView categoriesFor: #sciGetSearchFlags!**auto generated**!accessing!private!scintilla interface!searching & replacing! !
-!ScintillaView categoriesFor: #sciGetSelectionEnd!**auto generated**!accessing!private!scintilla interface!selection! !
-!ScintillaView categoriesFor: #sciGetSelectionMode!**auto generated**!accessing!private!scintilla interface!selection! !
-!ScintillaView categoriesFor: #sciGetSelectionNAnchor:!**auto generated**!accessing!private!scintilla interface!selection! !
-!ScintillaView categoriesFor: #sciGetSelectionNAnchorVirtualSpace:!**auto generated**!accessing!private!scintilla interface!selection! !
-!ScintillaView categoriesFor: #sciGetSelectionNCaret:!**auto generated**!accessing!private!scintilla interface!selection! !
-!ScintillaView categoriesFor: #sciGetSelectionNCaretVirtualSpace:!**auto generated**!accessing!private!scintilla interface!selection! !
-!ScintillaView categoriesFor: #sciGetSelectionNEnd:!**auto generated**!accessing!private!scintilla interface!selection! !
-!ScintillaView categoriesFor: #sciGetSelectionNStart:!**auto generated**!accessing!private!scintilla interface!selection! !
-!ScintillaView categoriesFor: #sciGetSelectionStart!**auto generated**!accessing!private!scintilla interface!selection! !
-!ScintillaView categoriesFor: #sciGetStyledText:!**auto generated**!accessing!private!scintilla interface!text retrieval & modification! !
+!ScintillaView categoriesFor: #sciGetRectangularSelectionAnchor!**auto generated**!accessing!multiple selection and virtual space!private!scintilla interface!selection! !
+!ScintillaView categoriesFor: #sciGetRectangularSelectionAnchorVirtualSpace!**auto generated**!multiple selection and virtual space!private!scintilla interface!selection! !
+!ScintillaView categoriesFor: #sciGetRectangularSelectionCaret!**auto generated**!accessing!multiple selection and virtual space!private!scintilla interface!selection! !
+!ScintillaView categoriesFor: #sciGetRectangularSelectionCaretVirtualSpace!**auto generated**!multiple selection and virtual space!private!scintilla interface!selection! !
+!ScintillaView categoriesFor: #sciGetRepresentation:representation:!**auto generated**!character representations!private!scintilla interface! !
+!ScintillaView categoriesFor: #sciGetSearchFlags!**auto generated**!private!scintilla interface!searching & replacing! !
+!ScintillaView categoriesFor: #sciGetSelectionMode!**auto generated**!private!scintilla interface!selection! !
+!ScintillaView categoriesFor: #sciGetSelectionNAnchor:!**auto generated**!accessing!multiple selection and virtual space!private!scintilla interface!selection! !
+!ScintillaView categoriesFor: #sciGetSelectionNAnchorVirtualSpace:!**auto generated**!multiple selection and virtual space!private!scintilla interface!selection! !
+!ScintillaView categoriesFor: #sciGetSelectionNCaret:!**auto generated**!accessing!multiple selection and virtual space!private!scintilla interface!selection! !
+!ScintillaView categoriesFor: #sciGetSelectionNCaretVirtualSpace:!**auto generated**!multiple selection and virtual space!private!scintilla interface!selection! !
+!ScintillaView categoriesFor: #sciGetStyledText:!**auto generated**!private!scintilla interface!text retrieval & modification! !
 !ScintillaView categoriesFor: #sciGetStyleFromSubStyle:!**auto generated**!private!scintilla interface!style definition! !
 !ScintillaView categoriesFor: #sciGetSubStyleBases!**auto generated**!private!scintilla interface!style definition! !
 !ScintillaView categoriesFor: #sciGetSubStylesLength:!**auto generated**!private!scintilla interface!style definition! !
 !ScintillaView categoriesFor: #sciGetSubStylesStart:!**auto generated**!private!scintilla interface!style definition! !
-!ScintillaView categoriesFor: #sciGetTag:!**auto generated**!accessing!private!scintilla interface! !
-!ScintillaView categoriesFor: #sciGetTargetEnd!**auto generated**!accessing!private!scintilla interface!searching & replacing! !
-!ScintillaView categoriesFor: #sciGetTargetStart!**auto generated**!accessing!private!scintilla interface!searching & replacing! !
-!ScintillaView categoriesFor: #sciGetTechnology!**auto generated**!accessing!private!scintilla interface! !
-!ScintillaView categoriesFor: #sciGetTextRange:!**auto generated**!accessing!private!scintilla interface!text retrieval & modification! !
-!ScintillaView categoriesFor: #sciGetViewWS!**auto generated**!accessing!private!scintilla interface! !
-!ScintillaView categoriesFor: #sciGetVirtualSpaceOptions!**auto generated**!accessing!private!scintilla interface! !
-!ScintillaView categoriesFor: #sciGetWhitespaceChars!**auto generated**!accessing!character classes!private!scintilla interface!white space! !
-!ScintillaView categoriesFor: #sciGetWordChars!**auto generated**!accessing!character classes!private!scintilla interface! !
-!ScintillaView categoriesFor: #sciGetWrapIndentMode!**auto generated**!accessing!private!scintilla interface! !
-!ScintillaView categoriesFor: #sciGetWrapMode!**auto generated**!accessing!line wrapping!private!scintilla interface! !
-!ScintillaView categoriesFor: #sciGetWrapVisualFlags!**auto generated**!accessing!line wrapping!private!scintilla interface! !
-!ScintillaView categoriesFor: #sciGetWrapVisualFlagsLocation!**auto generated**!accessing!line wrapping!private!scintilla interface! !
+!ScintillaView categoriesFor: #sciGetTag:!**auto generated**!private!scintilla interface!search & replace using target! !
+!ScintillaView categoriesFor: #sciGetTechnology!**auto generated**!other settings!private!scintilla interface! !
+!ScintillaView categoriesFor: #sciGetTextRange:!**auto generated**!private!scintilla interface!text retrieval & modification! !
+!ScintillaView categoriesFor: #sciGetViewWS!**auto generated**!private!scintilla interface!white space! !
+!ScintillaView categoriesFor: #sciGetVirtualSpaceOptions!**auto generated**!multiple selection and virtual space!private!scintilla interface! !
+!ScintillaView categoriesFor: #sciGetWhitespaceChars!**auto generated**!character classes!private!scintilla interface!white space! !
+!ScintillaView categoriesFor: #sciGetWordChars!**auto generated**!character classes!private!scintilla interface! !
+!ScintillaView categoriesFor: #sciGetWrapIndentMode!**auto generated**!line wrapping!private!scintilla interface! !
+!ScintillaView categoriesFor: #sciGetWrapMode!**auto generated**!line wrapping!private!scintilla interface! !
+!ScintillaView categoriesFor: #sciGetWrapVisualFlags!**auto generated**!line wrapping!private!scintilla interface! !
+!ScintillaView categoriesFor: #sciGetWrapVisualFlagsLocation!**auto generated**!line wrapping!private!scintilla interface! !
 !ScintillaView categoriesFor: #sciGotoLine:!**auto generated**!caret!private!scintilla interface! !
-!ScintillaView categoriesFor: #sciGotoPos:!**auto generated**!caret!private!scintilla interface! !
 !ScintillaView categoriesFor: #sciHideLines:lineEnd:!**auto generated**!folding!private!scintilla interface! !
-!ScintillaView categoriesFor: #sciIndicatorAllOnFor:!**auto generated**!enquiries!indicators!private!scintilla interface! !
-!ScintillaView categoriesFor: #sciIndicatorClearRange:clearLength:!**auto generated**!indicators!private!scintilla interface! !
-!ScintillaView categoriesFor: #sciIndicatorEnd:position:!**auto generated**!enquiries!indicators!private!scintilla interface! !
-!ScintillaView categoriesFor: #sciIndicatorFillRange:fillLength:!**auto generated**!indicators!private!scintilla interface! !
-!ScintillaView categoriesFor: #sciIndicatorStart:position:!**auto generated**!enquiries!indicators!private!scintilla interface! !
-!ScintillaView categoriesFor: #sciIndicatorValueAt:position:!**auto generated**!enquiries!indicators!private!scintilla interface! !
+!ScintillaView categoriesFor: #sciIndicatorClearRange:lengthClear:!**auto generated**!indicators!private!scintilla interface! !
+!ScintillaView categoriesFor: #sciIndicatorEnd:pos:!**auto generated**!indicators!private!scintilla interface! !
+!ScintillaView categoriesFor: #sciIndicatorFillRange:lengthFill:!**auto generated**!indicators!private!scintilla interface! !
+!ScintillaView categoriesFor: #sciIndicatorStart:pos:!**auto generated**!indicators!private!scintilla interface! !
+!ScintillaView categoriesFor: #sciIndicatorValueAt:pos:!**auto generated**!indicators!private!scintilla interface! !
 !ScintillaView categoriesFor: #sciInsertText:text:!**auto generated**!private!scintilla interface!text retrieval & modification! !
 !ScintillaView categoriesFor: #sciIsRangeWord:end:!**auto generated**!enquiries!private!scintilla interface! !
 !ScintillaView categoriesFor: #sciLineScroll:lines:!**auto generated**!private!scintilla interface!scrolling! !
 !ScintillaView categoriesFor: #sciLoadLexerLibrary:!**auto generated**!lexer!private!scintilla interface! !
-!ScintillaView categoriesFor: #sciMarginGetStyle:!**auto generated**!accessing!margins!private!scintilla interface! !
-!ScintillaView categoriesFor: #sciMarginGetStyles:!**auto generated**!accessing!margins!private!scintilla interface! !
-!ScintillaView categoriesFor: #sciMarginGetText:!**auto generated**!accessing!margins!private!scintilla interface! !
-!ScintillaView categoriesFor: #sciMarginSetStyle:style:!**auto generated**!accessing!margins!private!scintilla interface! !
-!ScintillaView categoriesFor: #sciMarginSetStyles:styles:!**auto generated**!accessing!margins!private!scintilla interface! !
-!ScintillaView categoriesFor: #sciMarginSetText:text:!**auto generated**!accessing!margins!private!scintilla interface! !
+!ScintillaView categoriesFor: #sciMarginGetStyle:!**auto generated**!margins!private!scintilla interface! !
+!ScintillaView categoriesFor: #sciMarginGetStyles:!**auto generated**!margins!private!scintilla interface! !
+!ScintillaView categoriesFor: #sciMarginGetText:!**auto generated**!margins!private!scintilla interface! !
+!ScintillaView categoriesFor: #sciMarginSetStyle:style:!**auto generated**!margins!private!scintilla interface! !
+!ScintillaView categoriesFor: #sciMarginSetStyles:styles:!**auto generated**!margins!private!scintilla interface! !
+!ScintillaView categoriesFor: #sciMarginSetText:text:!**auto generated**!margins!private!scintilla interface! !
 !ScintillaView categoriesFor: #sciMarginTextClearAll!**auto generated**!margins!private!scintilla interface! !
-!ScintillaView categoriesFor: #sciMarkerAddSet:set:!**auto generated**!markers!private!scintilla interface! !
+!ScintillaView categoriesFor: #sciMarkerAddSet:markerSet:!**auto generated**!markers!private!scintilla interface! !
 !ScintillaView categoriesFor: #sciMarkerDefinePixmap:pixmap:!**auto generated**!markers!private!scintilla interface! !
 !ScintillaView categoriesFor: #sciMarkerDefineRGBAImage:pixels:!**auto generated**!private!scintilla interface! !
-!ScintillaView categoriesFor: #sciMarkerDeleteHandle:!**auto generated**!accessing!markers!private!scintilla interface! !
-!ScintillaView categoriesFor: #sciMarkerEnableHighlight:!**auto generated**!accessing!private!scintilla interface! !
-!ScintillaView categoriesFor: #sciMarkerGet:!**auto generated**!accessing!markers!private!scintilla interface! !
+!ScintillaView categoriesFor: #sciMarkerDeleteHandle:!**auto generated**!markers!private!scintilla interface! !
+!ScintillaView categoriesFor: #sciMarkerEnableHighlight:!**auto generated**!markers!private!scintilla interface! !
+!ScintillaView categoriesFor: #sciMarkerGet:!**auto generated**!markers!private!scintilla interface! !
 !ScintillaView categoriesFor: #sciMarkerLineFromHandle:!**auto generated**!enquiries!markers!private!scintilla interface! !
 !ScintillaView categoriesFor: #sciMarkerNext:markerMask:!**auto generated**!enquiries!markers!private!scintilla interface! !
 !ScintillaView categoriesFor: #sciMarkerPrevious:markerMask:!**auto generated**!enquiries!markers!private!scintilla interface! !
-!ScintillaView categoriesFor: #sciMarkerSetAlpha:alpha:!**auto generated**!accessing!markers!private!scintilla interface! !
+!ScintillaView categoriesFor: #sciMarkerSetAlpha:alpha:!**auto generated**!markers!private!scintilla interface! !
 !ScintillaView categoriesFor: #sciMarkerSymbolDefined:!**auto generated**!enquiries!markers!private!scintilla interface! !
+!ScintillaView categoriesFor: #sciMultiEdgeAddLine:edgeColour:!**auto generated**!private!scintilla interface! !
 !ScintillaView categoriesFor: #sciMultipleSelectAddEach!**auto generated**!commands!private!scintilla interface! !
 !ScintillaView categoriesFor: #sciMultipleSelectAddNext!**auto generated**!commands!private!scintilla interface! !
 !ScintillaView categoriesFor: #sciPointXFromPosition:!**auto generated**!enquiries!private!scintilla interface! !
@@ -11082,104 +11101,103 @@ zoomOut
 !ScintillaView categoriesFor: #sciReplaceSel:!**auto generated**!private!scintilla interface!text retrieval & modification! !
 !ScintillaView categoriesFor: #sciReplaceTarget:text:!**auto generated**!private!scintilla interface!searching & replacing! !
 !ScintillaView categoriesFor: #sciReplaceTargetRE:text:!**auto generated**!private!scintilla interface!searching & replacing! !
-!ScintillaView categoriesFor: #sciRGBAImageSetHeight:!**auto generated**!accessing!private!scintilla interface! !
-!ScintillaView categoriesFor: #sciRGBAImageSetScale:!**auto generated**!accessing!private!scintilla interface! !
-!ScintillaView categoriesFor: #sciRGBAImageSetWidth:!**auto generated**!accessing!private!scintilla interface! !
+!ScintillaView categoriesFor: #sciRGBAImageSetHeight:!**auto generated**!markers!private!scintilla interface! !
+!ScintillaView categoriesFor: #sciRGBAImageSetScale:!**auto generated**!markers!private!scintilla interface! !
+!ScintillaView categoriesFor: #sciRGBAImageSetWidth:!**auto generated**!markers!private!scintilla interface! !
 !ScintillaView categoriesFor: #sciScrollCaret!**auto generated**!private!scintilla interface! !
 !ScintillaView categoriesFor: #sciScrollRange:primary:!**auto generated**!private!scintilla interface!scrolling! !
 !ScintillaView categoriesFor: #sciSearchAnchor!**auto generated**!caret!private!scintilla interface!searching & replacing! !
 !ScintillaView categoriesFor: #sciSearchInTarget:text:!**auto generated**!private!scintilla interface!searching & replacing! !
 !ScintillaView categoriesFor: #sciSearchNext:text:!**auto generated**!private!scintilla interface!searching & replacing! !
 !ScintillaView categoriesFor: #sciSearchPrev:text:!**auto generated**!private!scintilla interface!searching & replacing! !
-!ScintillaView categoriesFor: #sciSetAdditionalCaretFore:!**auto generated**!accessing!caret, selection, and hotspot styles!private!scintilla interface!selection! !
-!ScintillaView categoriesFor: #sciSetAdditionalSelBack:!**auto generated**!accessing!caret, selection, and hotspot styles!private!scintilla interface!selection! !
-!ScintillaView categoriesFor: #sciSetAdditionalSelectionTyping:!**auto generated**!accessing!private!scintilla interface!selection! !
-!ScintillaView categoriesFor: #sciSetAdditionalSelFore:!**auto generated**!accessing!caret, selection, and hotspot styles!private!scintilla interface!selection! !
-!ScintillaView categoriesFor: #sciSetAnchor:!**auto generated**!private!scintilla interface!selection! !
-!ScintillaView categoriesFor: #sciSetAutomaticFold:!**auto generated**!accessing!folding!private!scintilla interface! !
-!ScintillaView categoriesFor: #sciSetCaretFore:!**auto generated**!accessing!caret, selection, and hotspot styles!private!scintilla interface! !
-!ScintillaView categoriesFor: #sciSetCaretLineBack:!**auto generated**!accessing!caret, selection, and hotspot styles!private!scintilla interface! !
-!ScintillaView categoriesFor: #sciSetCaretSticky:!**auto generated**!accessing!caret, selection, and hotspot styles!private!scintilla interface! !
-!ScintillaView categoriesFor: #sciSetCaretStyle:!**auto generated**!accessing!caret, selection, and hotspot styles!private!scintilla interface! !
-!ScintillaView categoriesFor: #sciSetCaretWidth:!**auto generated**!accessing!caret, selection, and hotspot styles!private!scintilla interface! !
+!ScintillaView categoriesFor: #sciSetAdditionalCaretFore:!**auto generated**!caret, selection, and hotspot styles!private!scintilla interface!selection! !
+!ScintillaView categoriesFor: #sciSetAdditionalSelBack:!**auto generated**!caret, selection, and hotspot styles!private!scintilla interface!selection! !
+!ScintillaView categoriesFor: #sciSetAdditionalSelectionTyping:!**auto generated**!multiple selection and virtual space!private!scintilla interface!selection! !
+!ScintillaView categoriesFor: #sciSetAdditionalSelFore:!**auto generated**!caret, selection, and hotspot styles!private!scintilla interface!selection! !
+!ScintillaView categoriesFor: #sciSetAutomaticFold:!**auto generated**!folding!private!scintilla interface! !
+!ScintillaView categoriesFor: #sciSetCaretFore:!**auto generated**!caret, selection, and hotspot styles!private!scintilla interface! !
+!ScintillaView categoriesFor: #sciSetCaretLineBack:!**auto generated**!caret, selection, and hotspot styles!private!scintilla interface! !
+!ScintillaView categoriesFor: #sciSetCaretSticky:!**auto generated**!caret, selection, and hotspot styles!private!scintilla interface! !
+!ScintillaView categoriesFor: #sciSetCaretStyle:!**auto generated**!caret, selection, and hotspot styles!private!scintilla interface! !
+!ScintillaView categoriesFor: #sciSetCaretWidth:!**auto generated**!caret, selection, and hotspot styles!private!scintilla interface! !
 !ScintillaView categoriesFor: #sciSetCharsDefault!**auto generated**!character classes!private!scintilla interface! !
-!ScintillaView categoriesFor: #sciSetCodePage:!**auto generated**!accessing!other settings!private!scintilla interface! !
-!ScintillaView categoriesFor: #sciSetControlCharSymbol:!**auto generated**!accessing!caret, selection, and hotspot styles!private!scintilla interface! !
-!ScintillaView categoriesFor: #sciSetDocPointer:!**auto generated**!accessing!multiple views!private!scintilla interface! !
-!ScintillaView categoriesFor: #sciSetEdgeColumn:!**auto generated**!accessing!long lines!private!scintilla interface! !
-!ScintillaView categoriesFor: #sciSetEdgeMode:!**auto generated**!accessing!long lines!private!scintilla interface! !
-!ScintillaView categoriesFor: #sciSetEmptySelection:!**auto generated**!private!scintilla interface! !
-!ScintillaView categoriesFor: #sciSetEOLMode:!**auto generated**!accessing!line endings!private!scintilla interface! !
+!ScintillaView categoriesFor: #sciSetCodePage:!**auto generated**!other settings!private!scintilla interface! !
+!ScintillaView categoriesFor: #sciSetControlCharSymbol:!**auto generated**!caret, selection, and hotspot styles!private!scintilla interface! !
+!ScintillaView categoriesFor: #sciSetDocPointer:!**auto generated**!multiple views!private!scintilla interface! !
+!ScintillaView categoriesFor: #sciSetEdgeColumn:!**auto generated**!long lines!private!scintilla interface! !
+!ScintillaView categoriesFor: #sciSetEdgeMode:!**auto generated**!long lines!private!scintilla interface! !
+!ScintillaView categoriesFor: #sciSetEOLMode:!**auto generated**!line endings!private!scintilla interface! !
 !ScintillaView categoriesFor: #sciSetFirstVisibleLine:!**auto generated**!private!scintilla interface!scrolling! !
 !ScintillaView categoriesFor: #sciSetFoldExpanded:expanded:!**auto generated**!folding!private!scintilla interface! !
-!ScintillaView categoriesFor: #sciSetFoldFlags:!**auto generated**!accessing!folding!private!scintilla interface! !
+!ScintillaView categoriesFor: #sciSetFoldFlags:!**auto generated**!folding!private!scintilla interface! !
 !ScintillaView categoriesFor: #sciSetFoldLevel:level:!**auto generated**!folding!private!scintilla interface! !
-!ScintillaView categoriesFor: #sciSetFoldMarginColour:back:!**auto generated**!accessing!margins!private!scintilla interface! !
-!ScintillaView categoriesFor: #sciSetFoldMarginHiColour:fore:!**auto generated**!accessing!margins!private!scintilla interface! !
-!ScintillaView categoriesFor: #sciSetFontQuality:!**auto generated**!accessing!private!scintilla interface! !
-!ScintillaView categoriesFor: #sciSetHotspotActiveBack:back:!**auto generated**!accessing!caret, selection, and hotspot styles!private!scintilla interface! !
-!ScintillaView categoriesFor: #sciSetHotspotActiveFore:fore:!**auto generated**!accessing!caret, selection, and hotspot styles!private!scintilla interface! !
-!ScintillaView categoriesFor: #sciSetHScrollBar:!**auto generated**!accessing!private!scintilla interface!scrolling! !
-!ScintillaView categoriesFor: #sciSetIdentifiers:identifiers:!**auto generated**!accessing!private!scintilla interface! !
-!ScintillaView categoriesFor: #sciSetIdleStyling:!**auto generated**!accessing!private!scintilla interface!styling! !
-!ScintillaView categoriesFor: #sciSetIMEInteraction:!**auto generated**!accessing!ime!private!scintilla interface! !
-!ScintillaView categoriesFor: #sciSetIndentationGuides:!**auto generated**!accessing!private!scintilla interface!tabs & indentation guides! !
-!ScintillaView categoriesFor: #sciSetKeyWords:keyWords:!**auto generated**!accessing!lexer!private!scintilla interface! !
-!ScintillaView categoriesFor: #sciSetLayoutCache:!**auto generated**!accessing!line wrapping!private!scintilla interface! !
-!ScintillaView categoriesFor: #sciSetLengthForEncode:!**auto generated**!accessing!private!scintilla interface!text retrieval & modification! !
-!ScintillaView categoriesFor: #sciSetLexer:!**auto generated**!accessing!lexer!private!scintilla interface! !
-!ScintillaView categoriesFor: #sciSetLexerLanguage:!**auto generated**!accessing!lexer!private!scintilla interface! !
-!ScintillaView categoriesFor: #sciSetLineEndTypesAllowed:!**auto generated**!accessing!private!scintilla interface! !
-!ScintillaView categoriesFor: #sciSetLineIndentation:indentSize:!**auto generated**!accessing!private!scintilla interface!tabs & indentation guides! !
-!ScintillaView categoriesFor: #sciSetLineState:state:!**auto generated**!accessing!private!scintilla interface!styling! !
-!ScintillaView categoriesFor: #sciSetMainSelection:!**auto generated**!private!scintilla interface!selection! !
-!ScintillaView categoriesFor: #sciSetMarginLeft:!**auto generated**!accessing!margins!private!scintilla interface! !
-!ScintillaView categoriesFor: #sciSetMarginOptions:!**auto generated**!accessing!margins!private!scintilla interface! !
-!ScintillaView categoriesFor: #sciSetMarginRight:!**auto generated**!accessing!margins!private!scintilla interface! !
-!ScintillaView categoriesFor: #sciSetModEventMask:!**auto generated**!accessing!notifications!private!scintilla interface! !
-!ScintillaView categoriesFor: #sciSetMouseSelectionRectangularSwitch:!**auto generated**!accessing!private!scintilla interface! !
-!ScintillaView categoriesFor: #sciSetMultiPaste:!**auto generated**!accessing!private!scintilla interface! !
-!ScintillaView categoriesFor: #sciSetPasteConvertEndings:!**auto generated**!accessing!clipboard operations!private!scintilla interface! !
-!ScintillaView categoriesFor: #sciSetPhasesDraw:!**auto generated**!accessing!other settings!private!scintilla interface! !
-!ScintillaView categoriesFor: #sciSetPrintWrapMode:!**auto generated**!accessing!printing!private!scintilla interface! !
-!ScintillaView categoriesFor: #sciSetProperty:value:!**auto generated**!accessing!lexer!private!scintilla interface! !
+!ScintillaView categoriesFor: #sciSetFoldMarginColour:back:!**auto generated**!folding!margins!private!scintilla interface! !
+!ScintillaView categoriesFor: #sciSetFoldMarginHiColour:fore:!**auto generated**!folding!margins!private!scintilla interface! !
+!ScintillaView categoriesFor: #sciSetFontQuality:!**auto generated**!other settings!private!scintilla interface! !
+!ScintillaView categoriesFor: #sciSetHotspotActiveBack:back:!**auto generated**!caret, selection, and hotspot styles!private!scintilla interface! !
+!ScintillaView categoriesFor: #sciSetHotspotActiveFore:fore:!**auto generated**!caret, selection, and hotspot styles!private!scintilla interface! !
+!ScintillaView categoriesFor: #sciSetHScrollBar:!**auto generated**!private!scintilla interface!scrolling! !
+!ScintillaView categoriesFor: #sciSetIdentifiers:identifiers:!**auto generated**!lexer!private!scintilla interface! !
+!ScintillaView categoriesFor: #sciSetIdleStyling:!**auto generated**!private!scintilla interface!styling! !
+!ScintillaView categoriesFor: #sciSetIMEInteraction:!**auto generated**!ime!private!scintilla interface! !
+!ScintillaView categoriesFor: #sciSetIndentationGuides:!**auto generated**!private!scintilla interface!tabs & indentation guides! !
+!ScintillaView categoriesFor: #sciSetKeyWords:keyWords:!**auto generated**!lexer!private!scintilla interface! !
+!ScintillaView categoriesFor: #sciSetLayoutCache:!**auto generated**!line wrapping!private!scintilla interface! !
+!ScintillaView categoriesFor: #sciSetLengthForEncode:!**auto generated**!private!scintilla interface!text retrieval & modification! !
+!ScintillaView categoriesFor: #sciSetLexer:!**auto generated**!lexer!private!scintilla interface! !
+!ScintillaView categoriesFor: #sciSetLexerLanguage:!**auto generated**!lexer!private!scintilla interface! !
+!ScintillaView categoriesFor: #sciSetLineEndTypesAllowed:!**auto generated**!line wrapping!private!scintilla interface! !
+!ScintillaView categoriesFor: #sciSetLineIndentation:indentation:!**auto generated**!private!scintilla interface!tabs & indentation guides! !
+!ScintillaView categoriesFor: #sciSetLineState:state:!**auto generated**!private!scintilla interface!styling! !
+!ScintillaView categoriesFor: #sciSetMainSelection:!**auto generated**!multiple selection and virtual space!private!scintilla interface!selection! !
+!ScintillaView categoriesFor: #sciSetMarginBackN:back:!**auto generated**!margins!private!scintilla interface! !
+!ScintillaView categoriesFor: #sciSetMarginLeft:!**auto generated**!margins!private!scintilla interface! !
+!ScintillaView categoriesFor: #sciSetMarginOptions:!**auto generated**!margins!private!scintilla interface! !
+!ScintillaView categoriesFor: #sciSetMarginRight:!**auto generated**!margins!private!scintilla interface! !
+!ScintillaView categoriesFor: #sciSetMargins:!**auto generated**!private!scintilla interface! !
+!ScintillaView categoriesFor: #sciSetModEventMask:!**auto generated**!notifications!private!scintilla interface! !
+!ScintillaView categoriesFor: #sciSetMouseSelectionRectangularSwitch:!**auto generated**!multiple selection and virtual space!private!scintilla interface! !
+!ScintillaView categoriesFor: #sciSetMultiPaste:!**auto generated**!multiple selection and virtual space!private!scintilla interface! !
+!ScintillaView categoriesFor: #sciSetPasteConvertEndings:!**auto generated**!clipboard operations!private!scintilla interface! !
+!ScintillaView categoriesFor: #sciSetPhasesDraw:!**auto generated**!other settings!private!scintilla interface! !
+!ScintillaView categoriesFor: #sciSetPrintWrapMode:!**auto generated**!printing!private!scintilla interface! !
+!ScintillaView categoriesFor: #sciSetProperty:value:!**auto generated**!lexer!private!scintilla interface! !
 !ScintillaView categoriesFor: #sciSetPunctuationChars:!**auto generated**!character classes!private!scintilla interface! !
-!ScintillaView categoriesFor: #sciSetRectangularSelectionAnchor:!**auto generated**!private!scintilla interface!selection! !
-!ScintillaView categoriesFor: #sciSetRectangularSelectionAnchorVirtualSpace:!**auto generated**!accessing!private!scintilla interface!selection! !
-!ScintillaView categoriesFor: #sciSetRectangularSelectionCaret:!**auto generated**!private!scintilla interface!selection! !
-!ScintillaView categoriesFor: #sciSetRectangularSelectionCaretVirtualSpace:!**auto generated**!accessing!private!scintilla interface!selection! !
+!ScintillaView categoriesFor: #sciSetRectangularSelectionAnchor:!**auto generated**!multiple selection and virtual space!private!scintilla interface!selection! !
+!ScintillaView categoriesFor: #sciSetRectangularSelectionAnchorVirtualSpace:!**auto generated**!multiple selection and virtual space!private!scintilla interface!selection! !
+!ScintillaView categoriesFor: #sciSetRectangularSelectionCaret:!**auto generated**!multiple selection and virtual space!private!scintilla interface!selection! !
+!ScintillaView categoriesFor: #sciSetRectangularSelectionCaretVirtualSpace:!**auto generated**!multiple selection and virtual space!private!scintilla interface!selection! !
 !ScintillaView categoriesFor: #sciSetRepresentation:representation:!**auto generated**!private!scintilla interface! !
 !ScintillaView categoriesFor: #sciSetSavePoint!**auto generated**!private!scintilla interface!text retrieval & modification! !
-!ScintillaView categoriesFor: #sciSetSearchFlags:!**auto generated**!accessing!private!scintilla interface!searching & replacing! !
-!ScintillaView categoriesFor: #sciSetSelBack:back:!**auto generated**!accessing!caret, selection, and hotspot styles!private!scintilla interface! !
+!ScintillaView categoriesFor: #sciSetSearchFlags:!**auto generated**!private!scintilla interface!searching & replacing! !
+!ScintillaView categoriesFor: #sciSetSelBack:back:!**auto generated**!caret, selection, and hotspot styles!private!scintilla interface! !
 !ScintillaView categoriesFor: #sciSetSelection:anchor:!**auto generated**!private!scintilla interface!selection! !
-!ScintillaView categoriesFor: #sciSetSelectionMode:!**auto generated**!accessing!private!scintilla interface!selection! !
-!ScintillaView categoriesFor: #sciSetSelectionNAnchor:posAnchor:!**auto generated**!private!scintilla interface!selection! !
-!ScintillaView categoriesFor: #sciSetSelectionNAnchorVirtualSpace:space:!**auto generated**!private!scintilla interface!selection! !
-!ScintillaView categoriesFor: #sciSetSelectionNCaret:pos:!**auto generated**!private!scintilla interface!selection! !
-!ScintillaView categoriesFor: #sciSetSelectionNCaretVirtualSpace:space:!**auto generated**!private!scintilla interface!selection! !
-!ScintillaView categoriesFor: #sciSetSelectionNEnd:pos:!**auto generated**!private!scintilla interface!selection! !
-!ScintillaView categoriesFor: #sciSetSelectionNStart:pos:!**auto generated**!private!scintilla interface!selection! !
-!ScintillaView categoriesFor: #sciSetSelFore:fore:!**auto generated**!accessing!caret, selection, and hotspot styles!private!scintilla interface! !
-!ScintillaView categoriesFor: #sciSetStylingEx:styles:!**auto generated**!accessing!private!scintilla interface!styling! !
+!ScintillaView categoriesFor: #sciSetSelectionMode:!**auto generated**!private!scintilla interface!selection! !
+!ScintillaView categoriesFor: #sciSetSelectionNAnchor:anchor:!**auto generated**!multiple selection and virtual space!private!scintilla interface! !
+!ScintillaView categoriesFor: #sciSetSelectionNAnchorVirtualSpace:space:!**auto generated**!multiple selection and virtual space!private!scintilla interface!selection! !
+!ScintillaView categoriesFor: #sciSetSelectionNCaret:caret:!**auto generated**!private!scintilla interface! !
+!ScintillaView categoriesFor: #sciSetSelectionNCaretVirtualSpace:space:!**auto generated**!multiple selection and virtual space!private!scintilla interface!selection! !
+!ScintillaView categoriesFor: #sciSetSelectionNEnd:caret:!**auto generated**!multiple selection and virtual space!private!scintilla interface! !
+!ScintillaView categoriesFor: #sciSetSelectionNStart:anchor:!**auto generated**!multiple selection and virtual space!private!scintilla interface! !
+!ScintillaView categoriesFor: #sciSetSelFore:fore:!**auto generated**!caret, selection, and hotspot styles!private!scintilla interface! !
+!ScintillaView categoriesFor: #sciSetStylingEx:styles:!**auto generated**!private!scintilla interface!styling! !
 !ScintillaView categoriesFor: #sciSetTargetRange:end:!**auto generated**!private!scintilla interface!selection! !
-!ScintillaView categoriesFor: #sciSetTechnology:!**auto generated**!accessing!private!scintilla interface! !
+!ScintillaView categoriesFor: #sciSetTechnology:!**auto generated**!other settings!private!scintilla interface! !
 !ScintillaView categoriesFor: #sciSetText:!**auto generated**!private!scintilla interface!text retrieval & modification! !
-!ScintillaView categoriesFor: #sciSetViewWS:!**auto generated**!accessing!private!scintilla interface! !
-!ScintillaView categoriesFor: #sciSetVirtualSpaceOptions:!**auto generated**!accessing!private!scintilla interface! !
-!ScintillaView categoriesFor: #sciSetVisiblePolicy:visibleSlop:!**auto generated**!accessing!private!scintilla interface!scrolling! !
-!ScintillaView categoriesFor: #sciSetWhitespaceBack:back:!**auto generated**!accessing!private!scintilla interface!white space! !
-!ScintillaView categoriesFor: #sciSetWhitespaceChars:!**auto generated**!accessing!character classes!private!scintilla interface!white space! !
-!ScintillaView categoriesFor: #sciSetWhitespaceFore:fore:!**auto generated**!accessing!private!scintilla interface!white space! !
-!ScintillaView categoriesFor: #sciSetWordChars:!**auto generated**!accessing!character classes!private!scintilla interface! !
-!ScintillaView categoriesFor: #sciSetWrapIndentMode:!**auto generated**!accessing!line wrapping!private!scintilla interface! !
-!ScintillaView categoriesFor: #sciSetWrapMode:!**auto generated**!accessing!line wrapping!private!scintilla interface! !
-!ScintillaView categoriesFor: #sciSetWrapVisualFlags:!**auto generated**!accessing!line wrapping!private!scintilla interface! !
-!ScintillaView categoriesFor: #sciSetWrapVisualFlagsLocation:!**auto generated**!accessing!line wrapping!private!scintilla interface! !
-!ScintillaView categoriesFor: #sciSetXCaretPolicy:caretSlop:!**auto generated**!accessing!private!scintilla interface!scrolling! !
-!ScintillaView categoriesFor: #sciSetYCaretPolicy:caretSlop:!**auto generated**!accessing!private!scintilla interface!scrolling! !
+!ScintillaView categoriesFor: #sciSetViewWS:!**auto generated**!private!scintilla interface!white space! !
+!ScintillaView categoriesFor: #sciSetVirtualSpaceOptions:!**auto generated**!multiple selection and virtual space!private!scintilla interface! !
+!ScintillaView categoriesFor: #sciSetVisiblePolicy:visibleSlop:!**auto generated**!private!scintilla interface!scrolling! !
+!ScintillaView categoriesFor: #sciSetWhitespaceBack:back:!**auto generated**!private!scintilla interface!white space! !
+!ScintillaView categoriesFor: #sciSetWhitespaceChars:!**auto generated**!character classes!private!scintilla interface!white space! !
+!ScintillaView categoriesFor: #sciSetWhitespaceFore:fore:!**auto generated**!private!scintilla interface!white space! !
+!ScintillaView categoriesFor: #sciSetWordChars:!**auto generated**!character classes!private!scintilla interface! !
+!ScintillaView categoriesFor: #sciSetWrapIndentMode:!**auto generated**!line wrapping!private!scintilla interface! !
+!ScintillaView categoriesFor: #sciSetWrapMode:!**auto generated**!line wrapping!private!scintilla interface! !
+!ScintillaView categoriesFor: #sciSetWrapVisualFlags:!**auto generated**!line wrapping!private!scintilla interface! !
+!ScintillaView categoriesFor: #sciSetWrapVisualFlagsLocation:!**auto generated**!line wrapping!private!scintilla interface! !
+!ScintillaView categoriesFor: #sciSetXCaretPolicy:caretSlop:!**auto generated**!private!scintilla interface!scrolling! !
+!ScintillaView categoriesFor: #sciSetYCaretPolicy:caretSlop:!**auto generated**!private!scintilla interface!scrolling! !
 !ScintillaView categoriesFor: #sciShowLines:lineEnd:!**auto generated**!folding!private!scintilla interface!scrolling! !
-!ScintillaView categoriesFor: #sciStartStyling:mask:!**auto generated**!private!scintilla interface!styling! !
 !ScintillaView categoriesFor: #sciStyleClearAll!**auto generated**!private!scintilla interface!style definition! !
 !ScintillaView categoriesFor: #sciStyleResetDefault!**auto generated**!private!scintilla interface!style definition! !
 !ScintillaView categoriesFor: #sciTargetAsUTF8!**auto generated**!private!scintilla interface!selection! !
@@ -11226,27 +11244,28 @@ zoomOut
 !ScintillaView categoriesFor: #scrollToEnd!**auto generated**!commands!public!scintilla interface!scrolling! !
 !ScintillaView categoriesFor: #scrollToStart!**auto generated**!commands!public!scintilla interface!scrolling! !
 !ScintillaView categoriesFor: #scrollUp!**auto generated**!commands!public!scintilla interface!scrolling! !
-!ScintillaView categoriesFor: #scrollWidth!**auto generated**!accessing!public!scintilla interface!scrolling! !
-!ScintillaView categoriesFor: #scrollWidth:!**auto generated**!accessing!public!scintilla interface!scrolling! !
-!ScintillaView categoriesFor: #secondaryCaretForecolor!**auto generated**!accessing!caret, selection, and hotspot styles!public!scintilla interface! !
-!ScintillaView categoriesFor: #secondaryCaretForecolor:!accessing!caret, selection, and hotspot styles!public!scintilla interface! !
-!ScintillaView categoriesFor: #secondarySelectionAlpha!**auto generated**!accessing!caret, selection, and hotspot styles!public!scintilla interface! !
-!ScintillaView categoriesFor: #secondarySelectionAlpha:!**auto generated**!accessing!caret, selection, and hotspot styles!public!scintilla interface! !
-!ScintillaView categoriesFor: #secondarySelectionBackcolor!accessing!caret, selection, and hotspot styles!public! !
-!ScintillaView categoriesFor: #secondarySelectionBackcolor:!accessing!caret, selection, and hotspot styles!public! !
-!ScintillaView categoriesFor: #secondarySelectionForecolor!accessing!caret, selection, and hotspot styles!public! !
-!ScintillaView categoriesFor: #secondarySelectionForecolor:!accessing!caret, selection, and hotspot styles!public! !
+!ScintillaView categoriesFor: #scrollWidth!**auto generated**!public!scintilla interface!scrolling! !
+!ScintillaView categoriesFor: #scrollWidth:!**auto generated**!public!scintilla interface!scrolling! !
+!ScintillaView categoriesFor: #secondaryCaretForecolor!**auto generated**!caret, selection, and hotspot styles!public!scintilla interface! !
+!ScintillaView categoriesFor: #secondaryCaretForecolor:!caret, selection, and hotspot styles!public!scintilla interface! !
+!ScintillaView categoriesFor: #secondarySelectionAlpha!**auto generated**!caret, selection, and hotspot styles!public!scintilla interface! !
+!ScintillaView categoriesFor: #secondarySelectionAlpha:!**auto generated**!caret, selection, and hotspot styles!public!scintilla interface! !
+!ScintillaView categoriesFor: #secondarySelectionBackcolor!caret, selection, and hotspot styles!public! !
+!ScintillaView categoriesFor: #secondarySelectionBackcolor:!caret, selection, and hotspot styles!public! !
+!ScintillaView categoriesFor: #secondarySelectionForecolor!caret, selection, and hotspot styles!public! !
+!ScintillaView categoriesFor: #secondarySelectionForecolor:!caret, selection, and hotspot styles!public! !
 !ScintillaView categoriesFor: #selection!**auto generated**!public!scintilla interface!selection! !
-!ScintillaView categoriesFor: #selectionAlpha!**auto generated**!accessing!caret, selection, and hotspot styles!public!scintilla interface! !
-!ScintillaView categoriesFor: #selectionAlpha:!**auto generated**!accessing!caret, selection, and hotspot styles!public!scintilla interface! !
-!ScintillaView categoriesFor: #selectionBackcolor!accessing!caret, selection, and hotspot styles!public! !
-!ScintillaView categoriesFor: #selectionBackcolor:!accessing!caret, selection, and hotspot styles!public! !
-!ScintillaView categoriesFor: #selectionCount!**auto generated**!accessing!public!scintilla interface!selection! !
-!ScintillaView categoriesFor: #selectionForecolor!accessing!caret, selection, and hotspot styles!public! !
-!ScintillaView categoriesFor: #selectionForecolor:!accessing!caret, selection, and hotspot styles!public! !
-!ScintillaView categoriesFor: #selectionMode!accessing!public!selection! !
-!ScintillaView categoriesFor: #selectionMode:!accessing!public!selection! !
+!ScintillaView categoriesFor: #selectionAlpha!**auto generated**!caret, selection, and hotspot styles!public!scintilla interface! !
+!ScintillaView categoriesFor: #selectionAlpha:!**auto generated**!caret, selection, and hotspot styles!public!scintilla interface! !
+!ScintillaView categoriesFor: #selectionBackcolor!caret, selection, and hotspot styles!public! !
+!ScintillaView categoriesFor: #selectionBackcolor:!caret, selection, and hotspot styles!public! !
+!ScintillaView categoriesFor: #selectionCount!**auto generated**!multiple selection and virtual space!public!scintilla interface!selection! !
+!ScintillaView categoriesFor: #selectionForecolor!caret, selection, and hotspot styles!public! !
+!ScintillaView categoriesFor: #selectionForecolor:!caret, selection, and hotspot styles!public! !
+!ScintillaView categoriesFor: #selectionMode!public!selection! !
+!ScintillaView categoriesFor: #selectionMode:!public!selection! !
 !ScintillaView categoriesFor: #selectionPlainText:!private!selection! !
+!ScintillaView categoriesFor: #selectionRange!public!selection! !
 !ScintillaView categoriesFor: #selectionRanges!public!selection! !
 !ScintillaView categoriesFor: #selectionRanges:!public!selection! !
 !ScintillaView categoriesFor: #selections!public!selection! !
@@ -11261,7 +11280,7 @@ zoomOut
 !ScintillaView categoriesFor: #setDefaultTextStyle!private!style definition! !
 !ScintillaView categoriesFor: #setFoldFlags!folding!private! !
 !ScintillaView categoriesFor: #setFoldMarginColor!folding!margins!private! !
-!ScintillaView categoriesFor: #setFoldMarginHiColor!folding!margins!public! !
+!ScintillaView categoriesFor: #setFoldMarginHiColor!folding!margins!private! !
 !ScintillaView categoriesFor: #setFoldProperty:!helpers!private! !
 !ScintillaView categoriesFor: #setFont:!helpers!private!style definition! !
 !ScintillaView categoriesFor: #setIndicator:from:length:!indicators!public! !
@@ -11289,31 +11308,29 @@ zoomOut
 !ScintillaView categoriesFor: #splitTarget:!**auto generated**!commands!line wrapping!public!scintilla interface! !
 !ScintillaView categoriesFor: #startDwellTimer!notifications!private! !
 !ScintillaView categoriesFor: #startRecording!**auto generated**!macro recording!public!scintilla interface! !
-!ScintillaView categoriesFor: #startStylingFrom:!public!styling! !
+!ScintillaView categoriesFor: #startStylingFrom:!**auto generated**!public!scintilla interface!styling! !
 !ScintillaView categoriesFor: #state!accessing!private! !
 !ScintillaView categoriesFor: #stopDwellTimer!notifications!private! !
 !ScintillaView categoriesFor: #stopRecording!**auto generated**!macro recording!public!scintilla interface! !
 !ScintillaView categoriesFor: #stopStyling!public!styling! !
-!ScintillaView categoriesFor: #styleAt:!accessing!public!styling! !
+!ScintillaView categoriesFor: #styleAt:!public!styling! !
 !ScintillaView categoriesFor: #styleBits!constants!public!style definition! !
-!ScintillaView categoriesFor: #styleBits:!accessing!public!style definition! !
 !ScintillaView categoriesFor: #styledTextFrom:to:!public!text retrieval & modification! !
-!ScintillaView categoriesFor: #styleIdAt:!accessing!public!styling! !
-!ScintillaView categoriesFor: #styleMaskAt:!accessing!public!styling! !
+!ScintillaView categoriesFor: #styleIdAt:!**auto generated**!public!scintilla interface!styling! !
 !ScintillaView categoriesFor: #styleNamed:!enquiries!public!styling! !
 !ScintillaView categoriesFor: #styleNext:mask:!**auto generated**!public!scintilla interface!styling! !
-!ScintillaView categoriesFor: #styler!accessing!public!styling! !
-!ScintillaView categoriesFor: #styler:!accessing!public!styling! !
-!ScintillaView categoriesFor: #stylerClass!accessing!public!styling! !
-!ScintillaView categoriesFor: #stylerClass:!accessing!public!styling! !
+!ScintillaView categoriesFor: #styler!public!styling! !
+!ScintillaView categoriesFor: #styler:!public!styling! !
+!ScintillaView categoriesFor: #stylerClass!public!styling! !
+!ScintillaView categoriesFor: #stylerClass:!public!styling! !
 !ScintillaView categoriesFor: #styleUnderCaret!enquiries!public!styling! !
 !ScintillaView categoriesFor: #styleWithId:!enquiries!public!style definition! !
-!ScintillaView categoriesFor: #stylingPosition!public!styling! !
+!ScintillaView categoriesFor: #stylingPosition!**auto generated**!public!scintilla interface!styling! !
 !ScintillaView categoriesFor: #swapPrimarySelectionAnchorAndCaret!**auto generated**!commands!public!scintilla interface!selection! !
 !ScintillaView categoriesFor: #tabIndents!**auto generated**!public!scintilla interface!tabs & indentation guides!testing! !
-!ScintillaView categoriesFor: #tabIndents:!**auto generated**!accessing!public!scintilla interface!tabs & indentation guides! !
-!ScintillaView categoriesFor: #tabWidth!**auto generated**!accessing!public!scintilla interface!tabs & indentation guides! !
-!ScintillaView categoriesFor: #tabWidth:!**auto generated**!accessing!public!scintilla interface!tabs & indentation guides! !
+!ScintillaView categoriesFor: #tabIndents:!**auto generated**!public!scintilla interface!tabs & indentation guides! !
+!ScintillaView categoriesFor: #tabWidth!**auto generated**!public!scintilla interface!tabs & indentation guides! !
+!ScintillaView categoriesFor: #tabWidth:!**auto generated**!public!scintilla interface!tabs & indentation guides! !
 !ScintillaView categoriesFor: #targetAll!**auto generated**!public!scintilla interface! !
 !ScintillaView categoriesFor: #targetRange!public!search & replace using target! !
 !ScintillaView categoriesFor: #targetRange:!public!search & replace using target! !
@@ -11322,8 +11339,8 @@ zoomOut
 !ScintillaView categoriesFor: #textLength!**auto generated**!accessing!public!scintilla interface! !
 !ScintillaView categoriesFor: #textLimit!accessing!public! !
 !ScintillaView categoriesFor: #textLimit:!accessing!public! !
-!ScintillaView categoriesFor: #textStyles!accessing!public!style definition! !
-!ScintillaView categoriesFor: #textStyles:!accessing!public!style definition! !
+!ScintillaView categoriesFor: #textStyles!public!style definition! !
+!ScintillaView categoriesFor: #textStyles:!public!style definition! !
 !ScintillaView categoriesFor: #toggleFold:!folding!operations!public! !
 !ScintillaView categoriesFor: #toggleFoldMargin!commands!margins!public! !
 !ScintillaView categoriesFor: #toggleIndentationGuides!commands!public!tabs & indentation guides! !
@@ -11347,34 +11364,34 @@ zoomOut
 !ScintillaView categoriesFor: #updateMarkers!helpers!markers!private! !
 !ScintillaView categoriesFor: #updateTextStyles!helpers!private!style definition! !
 !ScintillaView categoriesFor: #validateUserInterface!operations!public! !
-!ScintillaView categoriesFor: #whitespaceBackcolor!accessing!public!white space! !
-!ScintillaView categoriesFor: #whitespaceBackcolor:!accessing!public!white space! !
-!ScintillaView categoriesFor: #whitespaceForecolor!accessing!public!white space! !
-!ScintillaView categoriesFor: #whitespaceForecolor:!accessing!public!white space! !
-!ScintillaView categoriesFor: #whitespaceMarkerSize!**auto generated**!public!scintilla interface! !
-!ScintillaView categoriesFor: #whitespaceMarkerSize:!**auto generated**!public!scintilla interface! !
-!ScintillaView categoriesFor: #whitespaces!accessing!character classes!public! !
-!ScintillaView categoriesFor: #whitespaces:!accessing!character classes!public! !
-!ScintillaView categoriesFor: #whitespaceVisibility!accessing!public!white space! !
-!ScintillaView categoriesFor: #whitespaceVisibility:!accessing!public!white space! !
+!ScintillaView categoriesFor: #whitespaceBackcolor!public!white space! !
+!ScintillaView categoriesFor: #whitespaceBackcolor:!public!white space! !
+!ScintillaView categoriesFor: #whitespaceForecolor!public!white space! !
+!ScintillaView categoriesFor: #whitespaceForecolor:!public!white space! !
+!ScintillaView categoriesFor: #whitespaceMarkerSize!**auto generated**!public!scintilla interface!white space! !
+!ScintillaView categoriesFor: #whitespaceMarkerSize:!**auto generated**!public!scintilla interface!white space! !
+!ScintillaView categoriesFor: #whitespaces!character classes!public!white space! !
+!ScintillaView categoriesFor: #whitespaces:!character classes!public!white space! !
+!ScintillaView categoriesFor: #whitespaceVisibility!public!white space! !
+!ScintillaView categoriesFor: #whitespaceVisibility:!public!white space! !
 !ScintillaView categoriesFor: #widthOfText:inStyle:!enquiries!public! !
-!ScintillaView categoriesFor: #willCaptureMouse!**auto generated**!public!scintilla interface!testing! !
-!ScintillaView categoriesFor: #willCaptureMouse:!**auto generated**!accessing!public!scintilla interface! !
+!ScintillaView categoriesFor: #willCaptureMouse!**auto generated**!mouse capture!public!scintilla interface!testing! !
+!ScintillaView categoriesFor: #willCaptureMouse:!**auto generated**!mouse capture!public!scintilla interface! !
 !ScintillaView categoriesFor: #wmChar:wParam:lParam:!event handling-win32!private! !
 !ScintillaView categoriesFor: #wmContextMenu:wParam:lParam:!event handling-win32!private! !
 !ScintillaView categoriesFor: #wmKeyDown:wParam:lParam:!event handling-win32!private! !
 !ScintillaView categoriesFor: #wmTimer:wParam:lParam:!event handling-win32!private!timers! !
 !ScintillaView categoriesFor: #wordChars!character classes!other settings!public! !
 !ScintillaView categoriesFor: #wordChars:!character classes!other settings!public! !
-!ScintillaView categoriesFor: #wordWrap!accessing!line wrapping!public! !
-!ScintillaView categoriesFor: #wordWrap:!accessing!line wrapping!public! !
-!ScintillaView categoriesFor: #wrapIndentMode!accessing!other settings!public! !
-!ScintillaView categoriesFor: #wrapIndentMode:!accessing!other settings!public! !
-!ScintillaView categoriesFor: #xOffset!**auto generated**!accessing!public!scintilla interface!scrolling! !
-!ScintillaView categoriesFor: #xOffset:!**auto generated**!accessing!public!scintilla interface!scrolling! !
+!ScintillaView categoriesFor: #wordWrap!line wrapping!public! !
+!ScintillaView categoriesFor: #wordWrap:!line wrapping!public! !
+!ScintillaView categoriesFor: #wrapIndentMode!other settings!public! !
+!ScintillaView categoriesFor: #wrapIndentMode:!other settings!public! !
+!ScintillaView categoriesFor: #xOffset!**auto generated**!public!scintilla interface!scrolling! !
+!ScintillaView categoriesFor: #xOffset:!**auto generated**!public!scintilla interface!scrolling! !
 !ScintillaView categoriesFor: #zoomIn!**auto generated**!commands!public!scintilla interface!zooming! !
-!ScintillaView categoriesFor: #zoomLevel!**auto generated**!accessing!public!scintilla interface!zooming! !
-!ScintillaView categoriesFor: #zoomLevel:!**auto generated**!accessing!public!scintilla interface!zooming! !
+!ScintillaView categoriesFor: #zoomLevel!**auto generated**!public!scintilla interface!zooming! !
+!ScintillaView categoriesFor: #zoomLevel:!**auto generated**!public!scintilla interface!zooming! !
 !ScintillaView categoriesFor: #zoomOut!**auto generated**!commands!public!scintilla interface!zooming! !
 
 !ScintillaView class methodsFor!
@@ -11387,9 +11404,6 @@ autoCompletionSortModes
 
 caretStyles
 	^#(#invisible #line #block)!
-
-codePages
-	^CodePages!
 
 defaultAnnotationStyles
 	"Answer the default annoration style settings to be used for new instances of the receiver."
@@ -11528,7 +11542,7 @@ drawingPhases
 edgeModes
 	"Answer the symbolic names of the long-line edge marking modes supported by Scintilla."
 
-	^#(#none #line #background)!
+	^#(#none #line #background #multiline)!
 
 foldMarkerStyles
 	^#(#arrows #boxTree #circleTree #plusMinus)!
@@ -11655,7 +11669,7 @@ lexerLanguages
 	are not languages as such: #automatic is an instruction to Scintilla to choose a lexer, and #container
 	sends colourization requests back to the control's container (i.e. into our Smalltalk wrapper)."
 
-	^#(#container #text #python #cpp #hypertext #xml #perl #sql #vb #props #errorlist #makefile #batch nil #latex #lua #diff #conf #pascal #ave #ada #lisp #ruby #eiffel #eiffelkw #tcl #nncrontab #bullant #vbscript nil nil #baan #matlab #scriptol #asm #cppnocase #fortran #f77 #css #pov #lout #escript #ps #nsis #mmixal #clarion #clarionnocase #lot #yaml #tex #metapost #powerbasic #forth #erlang #octave #mssql #verilog #kix #gui4cli #specman #au3 #apdl #bash #asn1 #vhdl #caml #blitzbasic #purebasic #haskell #phpscript #tads3 #rebol #smalltalk #flagship #csound #freebasic #inno #opal #spice #d #cmake #gap #'PL/M' #progress #abaqus #asy #r #magiksf #powershell #mysql #po #TAL #COBOL #TACL #sorcins #powerpro #nimrod #SML #markdown #txt2tags #a68k #modula #coffeescript #tcmd #avs #ecl #oscript #visualprolog #literatehaskell #fcST #kvirc #rust #DMAP #as #DMIS #registry #bib #srec #ihex #tehex #json nil nil nil nil nil #automatic)!
+	^#(#container #text #python #cpp #hypertext #xml #perl #sql #vb #props #errorlist #makefile #batch nil #latex #lua #diff #conf #pascal #ave #ada #lisp #ruby #eiffel #eiffelkw #tcl #nncrontab #bullant #vbscript nil nil #baan #matlab #scriptol #asm #cppnocase #fortran #f77 #css #pov #lout #escript #ps #nsis #mmixal #clarion #clarionnocase #lot #yaml #tex #metapost #powerbasic #forth #erlang #octave #mssql #verilog #kix #gui4cli #specman #au3 #apdl #bash #asn1 #vhdl #caml #blitzbasic #purebasic #haskell #phpscript #tads3 #rebol #smalltalk #flagship #csound #freebasic #inno #opal #spice #d #cmake #gap #'PL/M' #abl #abaqus #asy #r #magiksf #powershell #mysql #po #TAL #COBOL #TACL #sorcins #powerpro #nimrod #SML #markdown #txt2tags #a68k #modula #coffeescript #tcmd #avs #ecl #oscript #visualprolog #literatehaskell #fcST #kvirc #rust #DMAP #as #DMIS #registry #bib #srec #ihex #tehex #json nil nil nil nil nil #automatic)!
 
 lineEndings
 	"Answer the symbolic names of the end-of-line modes supported by Scintilla. These correspond
@@ -12021,7 +12035,6 @@ xmlTextStyles
 !ScintillaView class categoriesFor: #annotationModes!constants!public! !
 !ScintillaView class categoriesFor: #autoCompletionSortModes!constants!private! !
 !ScintillaView class categoriesFor: #caretStyles!constants!public! !
-!ScintillaView class categoriesFor: #codePages!constants!public! !
 !ScintillaView class categoriesFor: #defaultAnnotationStyles!constants!public!style definition! !
 !ScintillaView class categoriesFor: #defaultCallTipStyle!constants!public!style definition! !
 !ScintillaView class categoriesFor: #defaultKeyMap!constants!private! !

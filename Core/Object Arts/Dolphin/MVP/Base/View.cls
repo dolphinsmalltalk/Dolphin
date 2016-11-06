@@ -3716,6 +3716,12 @@ wmActivate: message wParam: wParam lParam: lParam
 
 	^nil!
 
+wmActivateApp: message wParam: wParam lParam: lParam
+	"Private - Default handler for a WM_ACTIVATEAPP.
+	Answer nil to accept default window processing."
+
+	^nil!
+
 wmCancelMode: message wParam: wParam lParam: lParam
 	"Private - Default handler for WM_CANCELMODE"
 
@@ -4850,6 +4856,7 @@ zOrderTop
 !View categoriesFor: #withAllParentsDo:!hierarchy!public! !
 !View categoriesFor: #withAllSubViews!hierarchy!public! !
 !View categoriesFor: #wmActivate:wParam:lParam:!event handling-win32!private! !
+!View categoriesFor: #wmActivateApp:wParam:lParam:!event handling-win32!private! !
 !View categoriesFor: #wmCancelMode:wParam:lParam:!event handling-win32!private! !
 !View categoriesFor: #wmCaptureChanged:wParam:lParam:!event handling-win32!private! !
 !View categoriesFor: #wmChar:wParam:lParam:!event handling-win32!private! !
@@ -5203,6 +5210,7 @@ initializeMessageMap
 				at: WM_SETTINGCHANGE + 1 put: #wmSettingChange:wParam:lParam:;
 				at: WM_PRINTCLIENT + 1 put: #wmPrintClient:wParam:lParam:;
 				at: WM_PRINT + 1 put: #wmPrint:wParam:lParam:;
+				at: WM_ACTIVATEAPP + 1 put: #wmActivateApp:wParam:lParam:;
 				isImmutable: true;
 				yourself!
 

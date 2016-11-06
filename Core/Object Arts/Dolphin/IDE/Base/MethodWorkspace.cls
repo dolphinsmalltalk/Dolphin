@@ -238,7 +238,7 @@ onTimerTick: anInteger
 	self isAutoParseEnabled ifTrue: [self autoParse]!
 
 parseContext
-	^parentPresenter parseContext!
+	^parentPresenter ifNotNil: [:p | p parseContext]!
 
 parseSourceIn: methodClass 
 	^SmalltalkParser parseMethod: self source in: methodClass!
@@ -346,7 +346,7 @@ selectedMessageNode
 	^self selectedNode ifNotNil: [:node | node isMessage ifTrue: [node]]!
 
 selectedMethod
-	^parentPresenter selectedMethod!
+	^parentPresenter ifNotNil: [:p | p selectedMethod]!
 
 selectedNode
 	"Answer an <StProgramNode> to represent the syntactic element which is currently selected,
