@@ -1,7 +1,7 @@
 "Filed out from Dolphin Smalltalk 7"!
 
 MultilineTextEdit subclass: #ScintillaView
-	instanceVariableNames: 'this currentTextStyles styleIdMap styler markerDefinitions markers wordChars _unused24 modificationEventMask autoCStops autoCFillups whitespaceBackcolor whitespaceForecolor selectionBackcolor selectionForecolor indicators callTipTabWidth punctuation callTipHighlightColor braceChars whitespaces scFlags allTextStyles foldMarginColor foldMarginHiColor foldMarkerStyle foldFlags _unused44 keyBindings indicatorStyles secondarySelectionForecolor secondarySelectionBackcolor annotationStyles _unused50'
+	instanceVariableNames: 'this currentTextStyles styleIdMap styler markerDefinitions markers wordChars registeredImages modificationEventMask autoCStops autoCFillups whitespaceBackcolor whitespaceForecolor selectionBackcolor selectionForecolor indicators callTipTabWidth punctuation callTipHighlightColor braceChars whitespaces scFlags allTextStyles foldMarginColor foldMarginHiColor foldMarkerStyle foldFlags _unused44 keyBindings indicatorStyles secondarySelectionForecolor secondarySelectionBackcolor annotationStyles _unused50'
 	classVariableNames: 'AnnotationStylesOffset BackgroundDwellEvents BraceHilightingMask CodePages DefaultCallTipTabWidth DefaultKeyBindings DefaultTextStyles FoldingMask MarginStylesOffset ScnMap'
 	poolDictionaries: 'ScintillaConstants Win32Constants'
 	classInstanceVariableNames: ''!
@@ -813,18 +813,20 @@ buildDefaultStyle
 	defaultStyle characterSet ifNil: [defaultStyle characterSet: SC_CHARSET_DEFAULT].
 	^defaultStyle!
 
-buildItemList: aCollection 
+buildItemList: aCollection withIcons: aBoolean
 	| itemList sep typesep |
 	itemList := String writeStream.
 	sep := self autoCompletionSeparator.
 	typesep := self autoCompletionImageIdSeparator.
 	aCollection do: 
-			[:each | 
-			itemList
-				display: each;
-				"nextPut: typesep;
-				display: each icon imageIndex;"
-				nextPut: sep].
+			[:each |
+			itemList display: each.
+			aBoolean
+				ifTrue: 
+					[itemList
+						nextPut: typesep;
+						display: (self imageIndexForIcon: each icon)].
+			itemList nextPut: sep].
 	^itemList
 		pop;
 		contents!
@@ -2780,6 +2782,22 @@ idleStylingMode: aSymbol
 idOfStyleNamed: aSymbol 
 	^(self styleNamed: aSymbol) ifNil: [0] ifNotNil: [:style | style id]!
 
+imageIndexForIcon: anIcon
+	^registeredImages at: anIcon
+		ifAbsentPut: 
+			[| type bmp |
+			type := registeredImages size.
+			bmp := anIcon asMenuBitmap.
+			type = 0
+				ifTrue: 
+					[| ext |
+					ext := bmp extent.
+					self
+						sciRGBAImageSetWidth: ext x;
+						sciRGBAImageSetHeight: ext y].
+			self sciRegisterRGBAImage: type pixels: (self rgbaBitsFromBitmap: bmp).
+			type]!
+
 imeMode
 	^self class imeInteractionModes at: self sciGetIMEInteraction + 1!
 
@@ -2916,12 +2934,15 @@ initialize
 	styles := self class defaultTextStyles.
 	self setCurrentTextStyles: styles.
 	selectionBackcolor := Color gray.
-	scFlags := 0!
+	scFlags := 0.
+	self initializeRegisteredImages.!
 
 initializeControl
 	"Private - Prime the Scintilla control with any settings stored in instance variables that
 	differ from the defaults."
 
+	"Discard registered images rather than restoring - these can be re-registered dynamically as required"
+	self initializeRegisteredImages.
 	self sciSetModEventMask: self modificationEventMask.
 	"Not necessary.
 		self sciUsePopup: false asParameter."
@@ -2947,6 +2968,9 @@ initializeControl
 	foldFlags ifNotNil: [self setFoldFlags].
 	self isFoldingEnabled ifTrue: [self setFoldProperty: true].
 	keyBindings ifNotNil: [self updateKeyBindings]!
+
+initializeRegisteredImages
+	registeredImages := LookupTable new!
 
 insertText: aString at: anInteger
 	"Insert text at the specified position without moving the caret."
@@ -4803,6 +4827,26 @@ restyleFrom: startInteger to: endInteger
 				msg: SCI_COLOURISE
 				wParam: startInteger - 1
 				lParam: endInteger - 1]!
+
+rgbaBitsFromBitmap: aDIBSection
+	"Private - Return a <ByteArray> representing the <DIBSection> in RGBA format (as opposed to the native Windows BRGA format)."
+
+	| bgra rgba count ext |
+	#todo.	"This is going to be slow, even given the small size of the icons. Find a faster way to perform this conversion."
+	ext := aDIBSection extent.
+	count := ext x * ext y * 4.
+	bgra := aDIBSection imageBits.
+	rgba := ByteArray newFixed: count.
+	1 to: count
+		by: 4
+		do: 
+			[:i |
+			rgba
+				at: i put: (bgra at: i + 2);
+				at: i + 1 put: (bgra at: i + 1);
+				at: i + 2 put: (bgra at: i);
+				at: i + 3 put: (bgra at: i + 3)].
+	^rgba!
 
 rotateSelection
 	"Set the main selection to the next selection."
@@ -9551,23 +9595,34 @@ setWhitespaceForecolor
 		ifTrue: [self sciSetWhitespaceFore: false fore: nil]
 		ifFalse: [self sciSetWhitespaceFore: true fore: whitespaceForecolor asRGB]!
 
-showAutoCompletionList: aCollection prefixLength: anInteger 
+showAutoCompletionList: aCollection prefixLength: anInteger
 	"Display a auto-completion list built from the displayStrings of the elements of the
-	<collection> argument. The <Integer> parameter indicates how many characters before the
-	caret should be used to provide context."
+	<collection> argument, but without icons. The <Integer> parameter indicates how many
+	characters before the caret should be used to provide context."
+
+	self
+		showAutoCompletionList: aCollection
+		prefixLength: anInteger
+		withIcons: false!
+
+showAutoCompletionList: aCollection prefixLength: anInteger withIcons: aBoolean
+	"Display a auto-completion list built from the displayStrings of the elements of the
+	<collection> argument, optionally with icons if <boolean> argument is true. The <Integer>
+	parameter indicates how many characters before the caret should be used to provide context."
 
 	"N.B. It is important for correct operation of incremental search in the auto-completion
 	list that the collection of items be appropriately sorted. In particular if Scintilla is
 	configured to perform case-sensitive auto-completion then the list must be sorted in the
 	same order as would result from using strcmp() to compare the items. This is because
 	Scintilla uses a binary chop to perform an incremental search of the the list as characters
-	are entered, and so it may fail to find items if the sort order is not correct."
+	are entered, and so it may fail to find items if the sort order is not based on the same
+	comparison order that it uses."
 
-	aCollection isEmpty 
+	aCollection isEmpty
 		ifTrue: [self cancelAutoCompletion]
 		ifFalse: 
 			[| string |
-			string := self buildItemList: aCollection asSortedCollection.
+			string := self buildItemList: aCollection asSortedCollection withIcons: aBoolean.
 			self sciAutoCShow: anInteger itemList: string]!
 
 showCallTip: aString at: anInteger
@@ -9575,12 +9630,12 @@ showCallTip: aString at: anInteger
 
 	self sciCallTipShow: anInteger definition: aString!
 
-showUserList: aCollection id: anInteger 
+showUserList: aCollection id: anInteger
 	"Display a 'user list' built from the displayStrings of the elements of the <collection>
 	argument. The <Integer> parameter is passed back with the SCN_USERLISTSELECTION
 	notification."
 
-	self sciUserListShow: anInteger itemList: (self buildItemList: aCollection)!
+	self sciUserListShow: anInteger itemList: (self buildItemList: aCollection withIcons: false)!
 
 showVerticalScrollBar: visibleBoolean
 	"Show or hide the vertical scroll bar."
@@ -10490,7 +10545,7 @@ zoomOut
 !ScintillaView categoriesFor: #braceHighlight!brace highlighting!helpers!private! !
 !ScintillaView categoriesFor: #buildAnnotationStyles:!annotations!private!style definition! !
 !ScintillaView categoriesFor: #buildDefaultStyle!private!style definition! !
-!ScintillaView categoriesFor: #buildItemList:!autocompletion!private! !
+!ScintillaView categoriesFor: #buildItemList:withIcons:!autocompletion!private! !
 !ScintillaView categoriesFor: #buildRawAnnotations:!annotations!converting!helpers!private! !
 !ScintillaView categoriesFor: #buildViewStyle!helpers!private! !
 !ScintillaView categoriesFor: #callTipBackcolor!call tips!public! !
@@ -10694,7 +10749,8 @@ zoomOut
 !ScintillaView categoriesFor: #hoverTime:!**auto generated**!notifications!public!scintilla interface! !
 !ScintillaView categoriesFor: #idleStylingMode!public!styling! !
 !ScintillaView categoriesFor: #idleStylingMode:!public!styling! !
-!ScintillaView categoriesFor: #idOfStyleNamed:!enquiries!helpers!private! !
+!ScintillaView categoriesFor: #idOfStyleNamed:!helpers!private! !
+!ScintillaView categoriesFor: #imageIndexForIcon:!autocompletion!helpers!private! !
 !ScintillaView categoriesFor: #imeMode!ime!other settings!public! !
 !ScintillaView categoriesFor: #imeMode:!other settings!public! !
 !ScintillaView categoriesFor: #indent!**auto generated**!commands!public!scintilla interface! !
@@ -10715,6 +10771,7 @@ zoomOut
 !ScintillaView categoriesFor: #indicatorsUnder:!indicators!private! !
 !ScintillaView categoriesFor: #initialize!initializing!public! !
 !ScintillaView categoriesFor: #initializeControl!initializing!private! !
+!ScintillaView categoriesFor: #initializeRegisteredImages!initializing!private! !
 !ScintillaView categoriesFor: #insertText:at:!public!text retrieval & modification! !
 !ScintillaView categoriesFor: #insertText:from:!**auto generated**!public!scintilla interface!text retrieval & modification! !
 !ScintillaView categoriesFor: #invalidateStyling!public!styling! !
@@ -10898,6 +10955,7 @@ zoomOut
 !ScintillaView categoriesFor: #resetZoom!commands!public!zooming! !
 !ScintillaView categoriesFor: #restyleAll!public!styling! !
 !ScintillaView categoriesFor: #restyleFrom:to:!**auto generated**!public!scintilla interface!styling! !
+!ScintillaView categoriesFor: #rgbaBitsFromBitmap:!autocompletion!helpers!private! !
 !ScintillaView categoriesFor: #rotateSelection!**auto generated**!commands!multiple selection and virtual space!public!scintilla interface!selection! !
 !ScintillaView categoriesFor: #sciAddRefDocument:!**auto generated**!multiple views!private!scintilla interface! !
 !ScintillaView categoriesFor: #sciAddSelection:anchor:!**auto generated**!multiple selection and virtual space!private!scintilla interface!selection! !
@@ -11302,6 +11360,7 @@ zoomOut
 !ScintillaView categoriesFor: #setWhitespaceBackcolor!initializing!private! !
 !ScintillaView categoriesFor: #setWhitespaceForecolor!private!white space! !
 !ScintillaView categoriesFor: #showAutoCompletionList:prefixLength:!autocompletion!public!scintilla interface! !
+!ScintillaView categoriesFor: #showAutoCompletionList:prefixLength:withIcons:!autocompletion!public!scintilla interface! !
 !ScintillaView categoriesFor: #showCallTip:at:!call tips!public!scintilla interface! !
 !ScintillaView categoriesFor: #showUserList:id:!autocompletion!public!scintilla interface! !
 !ScintillaView categoriesFor: #showVerticalScrollBar:!**auto generated**!public!scintilla interface!scrolling! !
