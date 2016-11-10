@@ -7,6 +7,8 @@ emptyBlock := Compiler evaluate: '[]'.
 emptyBlock method isImmutable: true.
 VMLibrary default primRegistryAt: 7 put: emptyBlock!
 
+Object withAllSubclassesDo: [:each | each classPool associationsDo: [:assoc | assoc becomeA: VariableBinding]]!
+
 !Class methodsFor!
 
 addClassConstant: aString value: anObject

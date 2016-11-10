@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Association subclass: #VariableBinding
 	instanceVariableNames: ''
@@ -13,6 +13,14 @@ VariableBinding comment: ''!
 displayOn: aStream 
 	"Append a short textual description of the receiver to aStream."
 
-	aStream display: key! !
+	aStream display: key!
+
+displayString
+	^key!
+
+icon
+	^value icon! !
 !VariableBinding categoriesFor: #displayOn:!printing!public! !
+!VariableBinding categoriesFor: #displayString!displaying!public! !
+!VariableBinding categoriesFor: #icon!constants!public! !
 
