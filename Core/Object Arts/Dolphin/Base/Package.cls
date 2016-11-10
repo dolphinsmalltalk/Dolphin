@@ -42,6 +42,15 @@ aboutBlockBytes: aByteArray
 
 !
 
+addAllPrerequisitesTo: aSet
+	"Private - Add to <aSet> all those Packages which must be loaded in
+	before the receiver may be loaded in."
+
+	self prerequisites
+		do: [:each | (aSet includes: each) ifFalse:
+					[aSet add: each.
+					each addAllPrerequisitesTo: aSet]].!
+
 addClass: aClass
 	"Add aClass to the list of classes owned by the receiver. A class can only be owned by
 	a single package. Answer aClass."
@@ -126,12 +135,10 @@ allPrerequisites
 	"Private - Answer a collection of all the Packages objects which must be loaded in before the
 	receiver may be loaded in."
 
-	| answer immediatePrereqs |
-	immediatePrereqs := self prerequisites asIdentitySet.
+	| answer |
 	answer := IdentitySet new.
-	immediatePrereqs do: [:each | 
-		(answer includes: each) ifFalse: [answer add: each; addAll: each allPrerequisites]].
-	^answer!
+	self addAllPrerequisitesTo: answer.
+	^answer.!
 
 allResourceIdentifiers
 	"Answer a Set of all the ResourceIdentifiers directly owned by
@@ -851,19 +858,23 @@ hasCyclicPrerequisites
 	handle this smoothly though it is possible to load in such a thing by
 	repeatedly trying to load in all packages until it works..."
 
-	^self hasCyclicPrerequisites: IdentitySet new!
+	^self hasCyclicPrerequisites: IdentitySet new safe: IdentitySet new.!
 
-hasCyclicPrerequisites: trail
+hasCyclicPrerequisites: trail safe: safe
 	"Private - Walk the package pre-requisite net looking for a cyclic dependency.
-	The <collection> trail includes all those packages already visited. If we find
-	a duplicate package on the path then we know a cycle exists."
+	The <collection> trail includes all those packages already visited.
+	The <collection> safe includes all those packages which were already checked
+	and found not to have cyclic prerequisites, and thus do not need to be checked again.
+	If we find a duplicate package on the path then we know a cycle exists."
 
 	| answer |
+	(safe includes: self) ifTrue: [^false].
 	trail add: self.
-	answer := self prerequisites anySatisfy: [:prereq | 
-				(trail includes: prereq) or: [prereq hasCyclicPrerequisites: trail]].
+	answer := self prerequisites
+				anySatisfy: [:prereq | (trail includes: prereq) or: [prereq hasCyclicPrerequisites: trail safe: safe]].
 	trail remove: self.
-	^answer!
+	answer ifFalse: [safe add: self].
+	^answer.!
 
 hasImageStripper
 	^imageStripperBytes notNil and: [self imageStripper notNil]!
@@ -871,13 +882,9 @@ hasImageStripper
 hasUncommittedPrerequisites
 	"Private - Answer whether any of the receivers prerequisites or their
 	prerequisites are current uncomitted. If so the package should not be saved
-	as it will not be reloadable into an image without the uncommitted objects.
-	N.B. This method will go infinitely recursive if the package has cyclic
-	pre-requisites as it does not maintain a visit list. It should therefore
-	be called only after hasCyclicPrerequisites has returned false."
+	as it will not be reloadable into an image without the uncommitted objects."
 
-	^self prerequisites anySatisfy: [:prereq | 
-		prereq == _Uncommitted or: [prereq hasUncommittedPrerequisites]]!
+	^self allPrerequisites includes: _Uncommitted.!
 
 hierarchyOrderOfClasses: aCollection 
 	"Private - Answer an OrderedCollection of all the Classes owned
@@ -2302,6 +2309,7 @@ If you experience subsequent problems please contact the package supplier for an
 !Package categoriesFor: #aboutBlock!accessing!public! !
 !Package categoriesFor: #aboutBlock:!accessing!public! !
 !Package categoriesFor: #aboutBlockBytes:!accessing!private! !
+!Package categoriesFor: #addAllPrerequisitesTo:!accessing!private! !
 !Package categoriesFor: #addClass:!adding!public! !
 !Package categoriesFor: #addGlobalNamed:!adding!public! !
 !Package categoriesFor: #addLooseMethod:!adding!private! !
@@ -2394,7 +2402,7 @@ If you experience subsequent problems please contact the package supplier for an
 !Package categoriesFor: #globals!accessing!private! !
 !Package categoriesFor: #globalVariables!private!source filing! !
 !Package categoriesFor: #hasCyclicPrerequisites!private!testing! !
-!Package categoriesFor: #hasCyclicPrerequisites:!private!testing! !
+!Package categoriesFor: #hasCyclicPrerequisites:safe:!private!testing! !
 !Package categoriesFor: #hasImageStripper!private!testing! !
 !Package categoriesFor: #hasUncommittedPrerequisites!private!testing! !
 !Package categoriesFor: #hierarchyOrderOfClasses:!helpers!private! !
