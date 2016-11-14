@@ -4196,7 +4196,7 @@ publishedAspectsOfInstances
 publishedAspects
 	"Answer a <LookupTable> of the <Aspect>s published by the receiver."
 
-	| createPresenter indicStyles |
+	| createPresenter |
 	createPresenter := 
 			[:p :m | 
 			(ScintillaStylesCollectionPresenter 
@@ -4209,7 +4209,6 @@ publishedAspects
 							yourself);
 				normalStyle: (self styleNamed: #normal);
 				yourself].
-	indicStyles := indicatorStyles keys asSortedCollection.
 	^(super publishedAspects)
 		add: (Aspect name: #textStyles presenterBlock: createPresenter) beImmutable;
 		add: (Aspect name: #annotationStyles presenterBlock: createPresenter) beImmutable;
