@@ -123,9 +123,10 @@ reloadSystemPackage
 	Notification signal: 'Updating ClassBuilder...'.
 	self fileInClass: ClassBuilder.
 	Notification signal: 'Reloading BCL class definitions...'.
-	"First tag all the existing classes so we can spot the dead ones later."
 	srcMgr fileIn: (File relativePathOf: basePackage classDefinitionsFileName to: imageDir).
 	Class subclasses: nil.
+	"Ensure all base classes (including any defined after the boot image was created) are packaged"
+	Object withAllSubclassesDo: [:each | each owningPackage: basePackage].
 	Smalltalk clearCachedClasses.
 	"Then reload all base package classes in breadth-first order"
 	Notification signal: 'Reloading BCL classes...'.
