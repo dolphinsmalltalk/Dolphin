@@ -6,6 +6,7 @@ ExternalLibrary subclass: #NTLibrary
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 NTLibrary guid: (GUID fromString: '{8293E458-7D81-4ABA-97A5-C1001C4B2153}')!
+NTLibrary comment: ''!
 !NTLibrary categoriesForClass!External-Libraries! !
 !NTLibrary methodsFor!
 

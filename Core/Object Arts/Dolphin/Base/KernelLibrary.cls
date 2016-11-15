@@ -1746,8 +1746,7 @@ fileName
 	^'KERNEL32'!
 
 isWine
-	Smalltalk at: #NTLibrary ifPresent: [:ntl | ^ntl isWine].
-	^false !
+	^NTLibrary isWine!
 
 open
 	"Answer a new instance of the receiver to represent the Kernel32 DLL. Special handling 
