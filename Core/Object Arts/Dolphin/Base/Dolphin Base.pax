@@ -8,7 +8,6 @@ package classNames
 	add: #CommandLine;
 	add: #CommandLineError;
 	add: #CommandLineOption;
-	add: #NTLibrary;
 	yourself.
 
 package binaryGlobalNames: (Set new
@@ -36,11 +35,6 @@ Object subclass: #CommandLineOption
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Notification subclass: #CommandLineError
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-ExternalLibrary subclass: #NTLibrary
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''

@@ -990,6 +990,11 @@ ExternalLibrary subclass: #ExternalResourceLibrary
 	classVariableNames: 'Libraries'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+ExternalLibrary subclass: #NTLibrary
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
 ExternalLibrary subclass: #PermanentLibrary
 	instanceVariableNames: ''
 	classVariableNames: ''

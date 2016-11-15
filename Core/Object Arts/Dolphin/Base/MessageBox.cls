@@ -267,13 +267,13 @@ result
 	"Answer a portable symbolic constant describing the button that was pressed by the user
 	to close the receiver."
 
-	KernelLibrary isWine 
+	NTLibrary isWine
 		ifTrue: 
 			[#wineFix.
 			"Suppressible message boxes under Wine have a bug where they ignore the
 			buttonStyles #yesNo and #yesNoCancel and will always answer #ok or #cancel
 			instead. Here we map the return button ids to the correct values"
-			(self buttonStyle == #yesNo or: [self buttonStyle == #yesNoCancel]) 
+			(self buttonStyle == #yesNo or: [self buttonStyle == #yesNoCancel])
 				ifTrue: 
 					[button = IDOK ifTrue: [button := IDYES].
 					button = IDCANCEL ifTrue: [button := IDNO]]].
