@@ -78,3 +78,7 @@ normalizeLineEndings
 
 normalizeLineEndings: aBoolean
 	flags := flags mask: NormalizeEolsMask set: aBoolean! !
+
+"Remove Float methods that will fail to compile when class vars are redefined"
+#(denormalized setExceptionMask: initialize fmax fminNormalized) do: [:each | Float class removeSelector: each ifAbsent: []].
+#(printOn:) do: [:each | Float removeSelector: each ifAbsent: []]!
