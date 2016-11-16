@@ -174,6 +174,35 @@ testPoolVariablePrecedence
 	self assert: 'ClassBuilderTestPool3.PoolVar6'
 		equals: (self classBuilderTestSubclass2 bindingFor: 'PoolVar6') value!
 
+testReparentSubClassWithSameAllInstVars
+	| testClass testInstance |
+	testClass := self classBuilderTestSubclass1.
+	testInstance := testClass new.
+	testInstance var1: 42.
+	testInstance var2: 'hello'.
+	testInstance var3: 'foo'.
+	testInstance var4: #bar.
+	"Change the superclass and instVars of the class at the same time, such that the answer to #allInstVarNames does not change."
+	Object
+		subclass: #ClassBuilderTestSubClass
+		instanceVariableNames: 'var1 var2 var3 var4'
+		classVariableNames: ''
+		poolDictionaries: ''
+		category: 'Tests-Kernel-Classes'.
+
+	"test state of new class"
+	self assert: testClass instSize = 4.
+	self assert: testClass instVarNames = #('var1' 'var2' 'var3' 'var4').
+	self assert: testClass allInstVarNames = #('var1' 'var2' 'var3' 'var4').
+
+	"test transparency of mapping. Accessors for var1 and var2 were inherited, so are no longer available."
+	self assert: testInstance var3 = 'foo'.
+	self assert: testInstance var4 = #bar.
+	self assert: (testInstance instVarAt: 1) = 42.
+	self assert: (testInstance instVarAt: 2) = 'hello'.
+	self assert: (testInstance instVarAt: 3) = 'foo'.
+	self assert: (testInstance instVarAt: 4) = #bar!
+
 testReshapeClass
 	"see if reshaping classes works"
 
@@ -313,6 +342,7 @@ testUnderscoreWarning
 !ClassBuilderTests categoriesFor: #testAddRemovePools!public!Running! !
 !ClassBuilderTests categoriesFor: #testMoveVariable!public!Running! !
 !ClassBuilderTests categoriesFor: #testPoolVariablePrecedence!public!Running! !
+!ClassBuilderTests categoriesFor: #testReparentSubClassWithSameAllInstVars!public!Running! !
 !ClassBuilderTests categoriesFor: #testReshapeClass!public!Running! !
 !ClassBuilderTests categoriesFor: #testReshapeClassWithJugglingInstVars!public!Running! !
 !ClassBuilderTests categoriesFor: #testReshapeSubClass!public!Running! !
