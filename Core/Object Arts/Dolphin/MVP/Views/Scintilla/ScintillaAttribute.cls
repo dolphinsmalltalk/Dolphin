@@ -4,7 +4,7 @@ Object subclass: #ScintillaAttribute
 	instanceVariableNames: 'id'
 	classVariableNames: ''
 	poolDictionaries: 'ScintillaConstants'
-	classInstanceVariableNames: 'applyMap'!
+	classInstanceVariableNames: 'propertyMap'!
 ScintillaAttribute guid: (GUID fromString: '{B73F94FE-0BB9-4C23-AEE5-E77B3CF408AF}')!
 ScintillaAttribute comment: 'ScintillaAttribute is the abstract superclass of objects that wrap various attributes of <ScintillaView>s. It provides a generic mechanism for setting the attribute value into the underlying control.
 
@@ -12,7 +12,7 @@ Instance Variables:
 	id		<integer>. Identifier of the attribute instance.
 
 Class Instance Variables:
-	applyMap	<IdentityDictionary> mapping from the get selector on the subclass to the windows message used to set the property of the associated Scintilla control.
+	propertyMap	<IdentityDictionary> mapping from the get selector on the subclass to an instance of <ScintillaPropertyDescriptor>
 
 
 
@@ -23,24 +23,18 @@ Class Instance Variables:
 = aScintillaAttribute 
 	^self class == aScintillaAttribute and: [self name = aScintillaAttribute name]!
 
-applyMap
-	^self class applyMap!
-
-applyMapDo: aMonadicValuable 
-	^self applyMap do: aMonadicValuable!
-
-applyToView: aScintillaView 
+applyToView: aScintillaView
 	self view: aScintillaView.
-	self applyMapDo: 
-			[:tuple | 
+	self propertyMapDo: 
+			[:descriptor |
 			"Don't send the value to the control if unspecified (nil), or if has the default value"
-			(self perform: tuple first) 
+			(self perform: descriptor getSelector)
 				ifNotNil: 
-					[:value | 
-					value = tuple second 
+					[:value |
+					value = descriptor defaultValue
 						ifFalse: 
-							[aScintillaView 
-								sendMessage: tuple last
+							[aScintillaView
+								sendMessage: descriptor setMessage
 								wParam: self asParameter
 								lParam: value asUIntPtr]]]!
 
@@ -69,22 +63,13 @@ id: anInteger
 name
 	^self id!
 
-printableAttributes
-	^self applyMap keys!
+printableProperties
+	"Answer the names of properties that should be printed whether or not they have the default
+	value."
 
-printAttributesOn: aStream 
-	self printableAttributes do: 
-			[:each | 
-			(self perform: each) 
-				ifNotNil: 
-					[:attrib | 
-					aStream
-						nextPutAll: ', ';
-						nextPutAll: each;
-						nextPutAll: '=';
-						print: attrib]]!
+	^IdentitySet new!
 
-printOn: aStream 
+printOn: aStream
 	"Append a short textual description of the receiver to aStream."
 
 	aStream
@@ -93,13 +78,32 @@ printOn: aStream
 		print: self id;
 		nextPut: $:;
 		print: self name.
-	self printAttributesOn: aStream.
+	self printPropertiesOn: aStream.
 	aStream nextPut: $)!
 
-storeableAttributes
-	^(Array with: #basicId) , self applyMap keys asArray!
+printPropertiesOn: aStream
+	| alwaysPrint |
+	alwaysPrint := self printableProperties.
+	self propertyMap keysAndValuesDo: 
+			[:name :descriptor |
+			((alwaysPrint includes: name) or: [(self perform: descriptor getSelector) notNil])
+				ifTrue: 
+					[aStream
+						nextPutAll: ', ';
+						nextPutAll: name;
+						nextPutAll: '=';
+						print: (self perform: name)]]!
 
-storeOn: aStream 
+propertyMap
+	^self class propertyMap!
+
+propertyMapDo: aMonadicValuable
+	^self propertyMap do: aMonadicValuable!
+
+storeableProperties
+	^(Array with: #basicId) , self propertyMap keys asArray!
+
+storeOn: aStream
 	"Append to the <puttableStream> argument an expression which when evaluated will answer a
 	collection similar to the receiver."
 
@@ -108,11 +112,11 @@ storeOn: aStream
 		print: self class;
 		nextPutAll: ' new)';
 		space.
-	self storeableAttributes do: 
-			[:each | 
-			(self perform: each) 
+	self storeableProperties do: 
+			[:each |
+			(self perform: each)
 				ifNotNil: 
-					[:attrib | 
+					[:attrib |
 					aStream
 						display: each;
 						nextPut: $:;
@@ -125,16 +129,18 @@ storeOn: aStream
 		display: #yourself;
 		nextPut: $)!
 
-updateViewAttribute: aSymbol 
-	self view 
+updateViewProperty: aSymbol
+	self view
 		ifNotNil: 
-			[:scintilla | 
-			| tuple lParam |
-			tuple := self applyMap at: aSymbol.
-			"If the attribute is nil (unspecified) then set the value back to the default value from the tuple"
-			lParam := (self perform: tuple first) ifNil: [tuple second] ifNotNil: [:value | value asUIntPtr].
-			scintilla 
-				sendMessage: tuple last
+			[:scintilla |
+			| descriptor lParam |
+			descriptor := self propertyMap at: aSymbol.
+			"If the attribute is nil (unspecified) then set the value back to the default value from the descriptor"
+			lParam := (self perform: descriptor getSelector)
+						ifNil: [descriptor defaultValue]
+						ifNotNil: [:value | value asUIntPtr].
+			scintilla
+				sendMessage: descriptor setMessage
 				wParam: self asParameter
 				lParam: lParam].
 	^self!
@@ -145,8 +151,6 @@ view
 view: aScintillaView 
 	self subclassResponsibility! !
 !ScintillaAttribute categoriesFor: #=!comparing!public! !
-!ScintillaAttribute categoriesFor: #applyMap!constants!private! !
-!ScintillaAttribute categoriesFor: #applyMapDo:!helpers!private! !
 !ScintillaAttribute categoriesFor: #applyToView:!helpers!private! !
 !ScintillaAttribute categoriesFor: #applyToView:at:!helpers!private! !
 !ScintillaAttribute categoriesFor: #asParameter!converting!public! !
@@ -156,26 +160,28 @@ view: aScintillaView
 !ScintillaAttribute categoriesFor: #id!accessing!public! !
 !ScintillaAttribute categoriesFor: #id:!accessing!public! !
 !ScintillaAttribute categoriesFor: #name!accessing!public! !
-!ScintillaAttribute categoriesFor: #printableAttributes!development!helpers!printing!private! !
-!ScintillaAttribute categoriesFor: #printAttributesOn:!development!helpers!printing!private! !
+!ScintillaAttribute categoriesFor: #printableProperties!development!helpers!printing!private! !
 !ScintillaAttribute categoriesFor: #printOn:!development!printing!public! !
-!ScintillaAttribute categoriesFor: #storeableAttributes!development!printing!private! !
+!ScintillaAttribute categoriesFor: #printPropertiesOn:!development!helpers!printing!private! !
+!ScintillaAttribute categoriesFor: #propertyMap!constants!private! !
+!ScintillaAttribute categoriesFor: #propertyMapDo:!helpers!private! !
+!ScintillaAttribute categoriesFor: #storeableProperties!development!printing!private! !
 !ScintillaAttribute categoriesFor: #storeOn:!development!printing!public! !
-!ScintillaAttribute categoriesFor: #updateViewAttribute:!helpers!private! !
+!ScintillaAttribute categoriesFor: #updateViewProperty:!helpers!private! !
 !ScintillaAttribute categoriesFor: #view!accessing!private! !
 !ScintillaAttribute categoriesFor: #view:!accessing!private! !
 
 !ScintillaAttribute class methodsFor!
 
-applyMap
-	^applyMap!
-
 icon
 	^ScintillaView icon!
 
+propertyMap
+	^propertyMap!
+
 sortByIdBlock
 	^[:a :b | a basicId ifNil: [true] ifNotNil: [:aId | b basicId ifNil: [false] ifNotNil: [:bId | aId <= bId]]]! !
-!ScintillaAttribute class categoriesFor: #applyMap!constants!private! !
 !ScintillaAttribute class categoriesFor: #icon!constants!development!public! !
+!ScintillaAttribute class categoriesFor: #propertyMap!constants!private! !
 !ScintillaAttribute class categoriesFor: #sortByIdBlock!constants!public! !
 

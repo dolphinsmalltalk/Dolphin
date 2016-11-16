@@ -16,19 +16,20 @@ ScintillaTextStyle comment: 'ScintillaStyle instances represent the visual style
 
 There are a number of predefined styles:
 	#normal - the default style used to draw all unstyled text, and from which user-defined styles inherit.
-	#braceHighlight 	- style used to highlight matching braces (where the brace highlighting feature is implemented)
+	#braceHighlight - style used to highlight matching braces (where the brace highlighting feature is implemented)
 	#mismatchedBrace - style used to highlight mismatched braces (where the brace highlighting feature is implemented)
 	#controlChar - style used to draw control characters such as Form Feed when these are present in the text.
 	#lineNumber - style used to draw text in the line number margin, and to control the background colour of all margins except the fold margin.
 	#indentGuide - style used to draw indentation guides
+	#callTip - style used for call tips.
 	
 With the exception of #normal, these styles are present to allow control over the presentation of particular features, but they cannot themselves be set against regions of text. Note that some styling, such as that used for visible whitespace, is controlled independently of the normal text style definitions  by directly setting properties of the ScintillaView.
 
-Up to 32 other styles* can be defined per view. These have symbolic names for use in Smalltalk code, and have id''s allocated automatically. The predefined styles listed above have ids which Scintilla recognises specifically, and these are not included in the limit of 32 styles. All other styles are user-defined, can have any symbolic name, and are allocated an id in the range 1..31. 
+Up to 256 styles can be defined per view. These have symbolic names for use in Smalltalk code, and have id''s allocated automatically. The predefined styles listed above have ids which Scintilla recognises specifically, with ids between STYLE_DEFAULT (32) and STYLE_LASTPREDEFINED (39). In addition style id 0 is reserved for "normal", which (somewhat confusingly given the existance of STYLE_DEFAULT) is the style applied to text by default and from which all the other styles inherit any unspecified properties. See the Scintilla docs for further details of the predefined styles. All other styles are user-defined, can have any symbolic name, and are allocated an unused id in the range 1..255. 
 
-The instance variables of all styles specify the differences from the default style, so any that are nil imply inheritance of that aspect from the special #normal style (which has style id 0). In turn the #normal style "inherits" any unspecified font and color settings from those aspects of the view itself. 
+The instance variables of all styles specify the differences from the default (or "normal") style, so any that are nil imply inheritance of that aspect from the special #normal style (which has style id 0). In turn the #normal style "inherits" any unspecified font and color settings from those aspects of the view itself. 
 
-*It is possible to define more than 32 styles by changing the number of #styleBits configured for the view, but this reduces the number of indicators that can be used, and is not recommended.
+Note that Scintilla style information is now queryable from the control, but this was not the case when the Dolphin wrapper was originally designed so ScintillaTextStyle is not a <QueryableScintillaAttribute> like <ScintillaIndicatorStyle>.
 
 Instance Variables:
 	forecolor	<Color>. Text foreground colour.
@@ -302,9 +303,9 @@ setThreeStateFlag: anInteger value: aBooleanOrNil
 						ifFalse: [(anInteger bitShift: 1) bitAnd: anInteger]].
 	flags := (flags maskClear: anInteger) maskSet: state!
 
-storeableAttributes
+storeableProperties
 	| attribs |
-	attribs := super storeableAttributes.
+	attribs := super storeableProperties.
 	name ifNotNil: [attribs := (Array with: #name) , attribs].
 	^attribs!
 
@@ -368,7 +369,7 @@ weight: anInteger
 !ScintillaTextStyle categoriesFor: #pointSize:!accessing!public! !
 !ScintillaTextStyle categoriesFor: #restyleFont:!accessing!public! !
 !ScintillaTextStyle categoriesFor: #setThreeStateFlag:value:!helpers!private! !
-!ScintillaTextStyle categoriesFor: #storeableAttributes!development!printing!private! !
+!ScintillaTextStyle categoriesFor: #storeableProperties!development!printing!private! !
 !ScintillaTextStyle categoriesFor: #view!accessing!private! !
 !ScintillaTextStyle categoriesFor: #view:!accessing!private! !
 !ScintillaTextStyle categoriesFor: #weight!accessing!public! !
@@ -394,22 +395,77 @@ initialize
 	self addClassConstant: 'ReadOnlyMask' value: 2r1100000000.
 	self addClassConstant: 'HotspotMask' value: 2r110000000000.
 	self addClassConstant: 'InvisibleMask' value: 2r11000000000000.
-	applyMap := (IdentityDictionary new)
-				at: #forecolor put: #(#forecolor ##(Color black) ##(SCI_STYLESETFORE));
-				at: #backcolor put: #(#backcolor ##(Color white) ##(SCI_STYLESETBACK));
-				at: #fontName put: #(#fontName nil ##(SCI_STYLESETFONT));
-				at: #isBold put: #(#isBold false ##(SCI_STYLESETBOLD));
-				at: #isItalic put: #(#isItalic false ##(SCI_STYLESETITALIC));
-				at: #isUnderlined put: #(#isUnderlined false ##(SCI_STYLESETUNDERLINE));
-				at: #case put: #(#case ##(SC_CASE_MIXED) ##(SCI_STYLESETCASE));
-				at: #characterSet put: #(#characterSet ##(SC_CHARSET_DEFAULT) ##(SCI_STYLESETCHARACTERSET));
-				at: #pointSize put: #(#centiPointSize nil ##(SCI_STYLESETSIZEFRACTIONAL));
+	propertyMap := (IdentityDictionary new)
+				at: #forecolor
+					put: (ScintillaPropertyDescriptor
+							getSelector: #forecolor
+							defaultValue: Color black
+							setMessage: SCI_STYLESETFORE);
+				at: #backcolor
+					put: (ScintillaPropertyDescriptor
+							getSelector: #backcolor
+							defaultValue: Color white
+							setMessage: SCI_STYLESETBACK);
+				at: #fontName
+					put: (ScintillaPropertyDescriptor
+							getSelector: #fontName
+							defaultValue: nil
+							setMessage: SCI_STYLESETFONT);
+				at: #isBold
+					put: (ScintillaPropertyDescriptor
+							getSelector: #isBold
+							defaultValue: false
+							setMessage: SCI_STYLESETBOLD);
+				at: #isItalic
+					put: (ScintillaPropertyDescriptor
+							getSelector: #isItalic
+							defaultValue: false
+							setMessage: SCI_STYLESETITALIC);
+				at: #isUnderlined
+					put: (ScintillaPropertyDescriptor
+							getSelector: #isUnderlined
+							defaultValue: false
+							setMessage: SCI_STYLESETUNDERLINE);
+				at: #case
+					put: (ScintillaPropertyDescriptor
+							getSelector: #case
+							defaultValue: SC_CASE_MIXED
+							setMessage: SCI_STYLESETCASE);
+				at: #characterSet
+					put: (ScintillaPropertyDescriptor
+							getSelector: #characterSet
+							defaultValue: SC_CHARSET_DEFAULT
+							setMessage: SCI_STYLESETCHARACTERSET);
+				at: #pointSize
+					put: (ScintillaPropertyDescriptor
+							getSelector: #centiPointSize
+							defaultValue: nil
+							setMessage: SCI_STYLESETSIZEFRACTIONAL);
 				at: #isBackcolorExtendedToEndOfLine
-					put: #(#isBackcolorExtendedToEndOfLine false ##(SCI_STYLESETEOLFILLED));
-				at: #isChangeable put: #(#isChangeable true ##(SCI_STYLESETCHANGEABLE));
-				at: #isHotspot put: #(#isHotspot false ##(SCI_STYLESETHOTSPOT));
-				at: #isVisible put: #(#isVisible true ##(SCI_STYLESETVISIBLE));
-				at: #weight put: #(#weight ##(SC_WEIGHT_NORMAL) ##(SCI_STYLESETWEIGHT));
+					put: (ScintillaPropertyDescriptor
+							getSelector: #isBackcolorExtendedToEndOfLine
+							defaultValue: false
+							setMessage: SCI_STYLESETEOLFILLED);
+				at: #isChangeable
+					put: (ScintillaPropertyDescriptor
+							getSelector: #isChangeable
+							defaultValue: true
+							setMessage: SCI_STYLESETCHANGEABLE);
+				at: #isHotspot
+					put: (ScintillaPropertyDescriptor
+							getSelector: #isHotspot
+							defaultValue: false
+							setMessage: SCI_STYLESETHOTSPOT);
+				at: #isVisible
+					put: (ScintillaPropertyDescriptor
+							getSelector: #isVisible
+							defaultValue: true
+							setMessage: SCI_STYLESETVISIBLE);
+				at: #weight
+					put: (ScintillaPropertyDescriptor
+							getSelector: #weight
+							defaultValue: SC_WEIGHT_NORMAL
+							setMessage: SCI_STYLESETWEIGHT);
 				shrink;
 				isImmutable: true;
 				yourself.

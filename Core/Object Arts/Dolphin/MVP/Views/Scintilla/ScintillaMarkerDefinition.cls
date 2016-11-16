@@ -26,15 +26,15 @@ Instance Variables:
 alpha
 	^alpha!
 
-alpha: anInteger 
-	alpha := anInteger isNil 
+alpha: anInteger
+	alpha := anInteger isNil
 				ifFalse: 
-					[anInteger = SC_ALPHA_NOALPHA 
+					[anInteger = SC_ALPHA_NOALPHA
 						ifFalse: 
-							[(anInteger between: SC_ALPHA_TRANSPARENT and: SC_ALPHA_OPAQUE) 
+							[(anInteger between: SC_ALPHA_TRANSPARENT and: SC_ALPHA_OPAQUE)
 								ifTrue: [anInteger]
 								ifFalse: [self error: 'Invalid alpha value ' , anInteger displayString]]].
-	self updateViewAttribute: #alpha!
+	self updateViewProperty: #alpha!
 
 alphaValue
 	"Private - Answer the integer alpha value to be passed to Scintilla"
@@ -44,9 +44,9 @@ alphaValue
 backcolor
 	^self basicBackcolor ifNotNil: [:rgbVal | RGB fromInteger: rgbVal]!
 
-backcolor: aColorOrNil 
+backcolor: aColorOrNil
 	self basicBackcolor: (aColorOrNil ifNotNil: [aColorOrNil asParameter]).
-	self updateViewAttribute: #backcolor!
+	self updateViewProperty: #backcolor!
 
 basicBackcolor
 	^backcolor!
@@ -73,9 +73,6 @@ basicSelectionBackcolor: aColor
 					rgb := aColor asRGB.
 					rgb = ##(RGB red) asRGB ifFalse: [aColor asParameter]]!
 
-basicsSelectionBackcolor
-	^Error notYetImplemented!
-
 code
 	^code!
 
@@ -85,9 +82,9 @@ code: anIntegerOrNil
 forecolor
 	^self basicForecolor ifNotNil: [:rgbVal | Color fromInteger: rgbVal]!
 
-forecolor: aColorOrNil 
+forecolor: aColorOrNil
 	self basicForecolor: (aColorOrNil ifNotNil: [aColorOrNil asParameter]).
-	self updateViewAttribute: #forecolor!
+	self updateViewProperty: #forecolor!
 
 glyphName
 	^self code 
@@ -98,16 +95,16 @@ glyphName
 				ifTrue: [self class glyphNames at: c + 1]
 				ifFalse: [(Character codePoint: c - SC_MARK_CHARACTER) asSymbol]]!
 
-glyphName: aSymbol 
-	self code: (aSymbol isNil 
+glyphName: aSymbol
+	self code: (aSymbol isNil
 				ifFalse: 
 					[(self class glyphNames indexOf: aSymbol
 						ifAbsent: 
-							[(aSymbol size = 1 and: [aSymbol first isPrintable and: [aSymbol first isWhitespace not]]) 
+							[(aSymbol size = 1 and: [aSymbol first isPrintable and: [aSymbol first isWhitespace not]])
 								ifTrue: [aSymbol first codePoint + SC_MARK_CHARACTER + 1]
-								ifFalse: [^self error: 'Invalid glyph  ' , aSymbol printString]]) 
+								ifFalse: [^self error: 'Invalid glyph  ' , aSymbol printString]])
 							- 1]).
-	self updateViewAttribute: #glyphName!
+	self updateViewProperty: #glyphName!
 
 name
 	^name ifNil: [self id]!
@@ -123,20 +120,20 @@ newForLine: anInteger
 
 	^ScintillaMarker definition: self line: anInteger!
 
-printableAttributes
-	^(super printableAttributes)
+printableProperties
+	^(super printableProperties)
 		add: #glyphName;
 		yourself!
 
 selectionBackcolor
 	^self basicSelectionBackcolor ifNotNil: [:intVal | Color fromInteger: intVal]!
 
-selectionBackcolor: aColor 
+selectionBackcolor: aColor
 	self basicSelectionBackcolor: aColor.
-	self updateViewAttribute: #selectionBackcolor!
+	self updateViewProperty: #selectionBackcolor!
 
-storeableAttributes
-	^(Array with: #name) , super storeableAttributes!
+storeableProperties
+	^(Array with: #name) , super storeableProperties!
 
 view
 	^view!
@@ -155,7 +152,6 @@ view: aScintillaView
 !ScintillaMarkerDefinition categoriesFor: #basicId!accessing!private! !
 !ScintillaMarkerDefinition categoriesFor: #basicSelectionBackcolor!accessing!private! !
 !ScintillaMarkerDefinition categoriesFor: #basicSelectionBackcolor:!accessing!private! !
-!ScintillaMarkerDefinition categoriesFor: #basicsSelectionBackcolor!accessing!public! !
 !ScintillaMarkerDefinition categoriesFor: #code!accessing!private! !
 !ScintillaMarkerDefinition categoriesFor: #code:!accessing!private! !
 !ScintillaMarkerDefinition categoriesFor: #forecolor!accessing!colors!public! !
@@ -165,10 +161,10 @@ view: aScintillaView
 !ScintillaMarkerDefinition categoriesFor: #name!accessing!public! !
 !ScintillaMarkerDefinition categoriesFor: #name:!accessing!public! !
 !ScintillaMarkerDefinition categoriesFor: #newForLine:!adding!public! !
-!ScintillaMarkerDefinition categoriesFor: #printableAttributes!development!helpers!printing!private! !
+!ScintillaMarkerDefinition categoriesFor: #printableProperties!development!helpers!printing!private! !
 !ScintillaMarkerDefinition categoriesFor: #selectionBackcolor!accessing!colors!public! !
 !ScintillaMarkerDefinition categoriesFor: #selectionBackcolor:!accessing!colors!public! !
-!ScintillaMarkerDefinition categoriesFor: #storeableAttributes!development!printing!private! !
+!ScintillaMarkerDefinition categoriesFor: #storeableProperties!development!printing!private! !
 !ScintillaMarkerDefinition categoriesFor: #view!accessing!private! !
 !ScintillaMarkerDefinition categoriesFor: #view:!accessing!private! !
 
@@ -380,16 +376,36 @@ initialize
 	self initialize
 	"
 
-	"Maps from a symbolic attribute name to a 3-element tuple, being the selector to access the
-	value, the default value if nil, and the Scintilla control message to send."
+	"Maps from a symbolic attribute name to a property descriptor that describes the selector to
+	access the value, the default value if unspecified (nil), and the Scintilla control message
+	to send to set the value."
 
-	applyMap := (IdentityDictionary new)
-				at: #backcolor put: #(#basicBackcolor ##(Color white asParameter) ##(SCI_MARKERSETBACK));
-				at: #forecolor put: #(#basicForecolor ##(Color black asParameter) ##(SCI_MARKERSETFORE));
-				at: #glyphName put: #(#code 0 ##(SCI_MARKERDEFINE));
-				at: #alpha put: #(#alpha ##(SC_ALPHA_NOALPHA) ##(SCI_MARKERSETALPHA));
+	propertyMap := (IdentityDictionary new)
+				at: #backcolor
+					put: (ScintillaPropertyDescriptor
+							getSelector: #basicBackcolor
+							defaultValue: Color white asParameter
+							setMessage: SCI_MARKERSETBACK);
+				at: #forecolor
+					put: (ScintillaPropertyDescriptor
+							getSelector: #basicForecolor
+							defaultValue: Color black asParameter
+							setMessage: SCI_MARKERSETFORE);
+				at: #glyphName
+					put: (ScintillaPropertyDescriptor
+							getSelector: #code
+							defaultValue: 0
+							setMessage: SCI_MARKERDEFINE);
+				at: #alpha
+					put: (ScintillaPropertyDescriptor
+							getSelector: #alpha
+							defaultValue: SC_ALPHA_NOALPHA
+							setMessage: SCI_MARKERSETALPHA);
 				at: #selectionBackcolor
-					put: #(#basicSelectionBackcolor ##(Color red asParameter) ##(SCI_MARKERSETBACKSELECTED));
+					put: (ScintillaPropertyDescriptor
+							getSelector: #basicSelectionBackcolor
+							defaultValue: Color red asParameter
+							setMessage: SCI_MARKERSETBACKSELECTED);
 				shrink;
 				isImmutable: true;
 				yourself.

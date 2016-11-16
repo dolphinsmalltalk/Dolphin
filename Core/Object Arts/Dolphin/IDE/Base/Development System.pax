@@ -4136,6 +4136,7 @@ publishedAspectsOfInstances
 		add: (Aspect integer: #width);
 		add: (Aspect integer: #mask);
 		add: (Aspect choice: #cursorType from: CursorTypes values);
+		add: (Aspect color: #backcolor);
 		yourself! !
 !ScintillaMargin class categoriesFor: #publishedAspectsOfInstances!constants!development!public! !
 
@@ -4205,8 +4206,8 @@ publishedAspects
 
 	| createPresenter |
 	createPresenter := 
-			[:p :m | 
-			(ScintillaStylesCollectionPresenter 
+			[:p :m |
+			(ScintillaStylesCollectionPresenter
 				create: 'Developer view'
 				in: p
 				on: m)
@@ -4254,16 +4255,16 @@ publishedAspectsOfInstances
 		add: (Aspect integer: #whitespaceMarkerSize);
 		yourself.
 	choices := OrderedCollection with: 'nil'.
-	(ScintillaStyler allSubclasses reject: [:each | each isAbstract]) 
+	(ScintillaStyler allSubclasses reject: [:each | each isAbstract])
 		do: [:each | choices add: each name , ' new'].
 	answer add: (Aspect choice: #styler evaluationFrom: choices).
-	#(#autoCompletionAcceptChars #autoCompletionCancelChars) 
+	#(#autoCompletionAcceptChars #autoCompletionCancelChars)
 		do: [:each | answer add: (Aspect string: each)].
-	#(#tabWidth #hoverTime #selectionAlpha #secondarySelectionAlpha) 
+	#(#tabWidth #hoverTime #selectionAlpha #secondarySelectionAlpha #marginCount)
 		do: [:each | answer add: (Aspect integer: each)].
-	#(#caretForecolor #callTipHighlightColor #whitespaceBackcolor #whitespaceForecolor #foldMarginColor #foldMarginHiColor) 
+	#(#caretForecolor #callTipHighlightColor #whitespaceBackcolor #whitespaceForecolor #foldMarginColor #foldMarginHiColor)
 		do: [:each | answer add: (Aspect color: each)].
-	#(#isDrawingBuffered #canScrollPastEnd #isAutoCompletionCancelledAtStart #isAutoCompletionCaseInsensitive #isAutoCompletionCancelledWhenNoMatch #isAutoCompletionSingleMatchChosen #isAutoCompletionTruncating #isBraceHighlightingEnabled #isFoldingEnabled) 
+	#(#isDrawingBuffered #canScrollPastEnd #isAutoCompletionCancelledAtStart #isAutoCompletionCaseInsensitive #isAutoCompletionCancelledWhenNoMatch #isAutoCompletionSingleMatchChosen #isAutoCompletionTruncating #isBraceHighlightingEnabled #isFoldingEnabled)
 		do: [:each | answer add: (Aspect boolean: each)].
 	^answer!
 
