@@ -49,7 +49,7 @@ STBInFiler subclass: #STLInFiler
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 STLInFiler subclass: #STLDebugger
-	instanceVariableNames: 'indentLevel traceStream printOffsets'
+	instanceVariableNames: 'indentLevel traceStream printOffsets slotName'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!

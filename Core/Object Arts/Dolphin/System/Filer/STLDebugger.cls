@@ -1,7 +1,7 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 STLInFiler subclass: #STLDebugger
-	instanceVariableNames: 'indentLevel traceStream printOffsets'
+	instanceVariableNames: 'indentLevel traceStream printOffsets slotName'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -23,62 +23,67 @@ basicNext
 
 	| prefix class anObject newObjectIndex offset |
 	traceStream cr.
-	printOffsets 
+	printOffsets
 		ifTrue: 
 			[offset := stream position.
-			6 - offset displayString size timesRepeat: [traceStream nextPut: $0].
-			traceStream display: offset].
+			traceStream
+				next: 6 - offset displayString size put: $0;
+				display: offset;
+				space].
 	indentLevel timesRepeat: [traceStream nextPutAll: '    '].
+	slotName
+		ifNotNil: 
+			[traceStream
+				display: slotName;
+				nextPut: $:;
+				space.
+			slotName := nil].
 
 	"First, read the prefix."
 	prefix := self readInteger.
-	prefix == 0 ifTrue: [^nil].	"optimize for nil"
+	prefix == 0
+		ifTrue: 
+			[self printValueToTrace: nil.
+			^nil].	"optimize for nil"
 
 	"SmallInteger?"
-	(prefix allMask: SmallIntegerMask) 
+	(prefix allMask: SmallIntegerMask)
 		ifTrue: 
 			[anObject := prefix bitShift: -1.
-			traceStream
-				nextPut: $[;
-				print: anObject;
-				nextPut: $].
+			self printValueToTrace: anObject.
 			^anObject].
 
 	"Literal? (Hook for STL filer)"
-	prefix = LiteralPrefixMask ifTrue: [^self readLiteralData].
-	(prefix allMask: DataPrefixMask) 
+	prefix = LiteralPrefixMask
+		ifTrue: 
+			[| literal |
+			literal := self readLiteralData.
+			self printValueToTrace: literal.
+			^literal].
+	(prefix allMask: DataPrefixMask)
 		ifFalse: 
-			[anObject := (prefix allMask: CharacterMask) 
+			[anObject := (prefix allMask: CharacterMask)
 						ifTrue: [Character value: (prefix bitShift: IndexShift)]
 						ifFalse: [self objectAt: (prefix bitShift: IndexShift)].
-			traceStream
-				nextPut: $[;
-				print: anObject;
-				nextPut: $].
+			self printValueToTrace: anObject.
 			^anObject].
 
 	"Ascertain the class of the object."
 	indentLevel := indentLevel + 1.
 	traceStream nextPut: $[.
-	(prefix allMask: ClassPrefixMask) 
+	(prefix allMask: ClassPrefixMask)
 		ifTrue: 
 			[class := self readClassData: prefix.
-			traceStream print: class name displayString]
+			traceStream display: class name]
 		ifFalse: 
 			[class := self classAt: (prefix bitShift: IndexShift).
 			traceStream nextPutAll: class name].
 	traceStream nextPut: $].
 
-
-
 	"Now read the object data."
 	newObjectIndex := readMap size + 1.
 	anObject := self readObjectOfClass: class.
-	class isBytes 
-		ifTrue: 
-			[traceStream
-				space;
-				print: anObject].
+	class isBytes ifTrue: [self printValueToTrace: anObject].
 	indentLevel := indentLevel - 1.
 	"If anObject was a proxy for the real one, evaluate it now."
 	^anObject stbFixup: self at: newObjectIndex!
@@ -96,15 +101,16 @@ next
 	indentLevel := 0.
 	answer := [self basicNext] on: Notification
 				do: 
-					[:ex | 
-					traceStream cr; cr.
-					80 timesRepeat: [traceStream nextPutAll: $*].
+					[:ex |
 					traceStream
 						cr;
+						cr;
+						next: 80 put: $*;
+						cr;
 						display: ex;
+						cr;
+						next: 80 put: $*;
 						cr.
-					80 timesRepeat: [traceStream nextPutAll: $*].
-					traceStream cr.
 					ex resume].
 	traceStream cr.
 	^answer!
@@ -112,10 +118,13 @@ next
 printOffsets
 	^printOffsets!
 
-printOffsets: anObject
-	printOffsets := anObject!
+printOffsets: aBoolean
+	printOffsets := aBoolean!
 
-readObjectOfClass: aClass format: anObject 
+printValueToTrace: anObject
+	traceStream print: anObject!
+
+readObjectOfClass: aClass format: anObject
 	"Private - Read the stream for the data to create an instance of aClass."
 
 	"First, read the basicSize (number of indexed variables)."
@@ -128,7 +137,7 @@ readObjectOfClass: aClass format: anObject
 		nextPut: $].
 
 	"Create a new object of sufficient size to hold the stored data."
-	(stbClassFormat := converters at: aClass ifAbsent: []) isNil 
+	(stbClassFormat := converters at: aClass ifAbsent: []) isNil
 		ifTrue: 
 			["The object is of the current format.
 			Create an instance of the appropriate class."
@@ -144,10 +153,17 @@ readObjectOfClass: aClass format: anObject
 	self register: newObject.
 
 	"Read the object's instance data."
-	newObject class isBytes 
+	newObject class isBytes
 		ifTrue: [1 to: fullSize do: [:i | newObject basicAt: i put: stream next]]
-		ifFalse: [1 to: fullSize do: [:i | newObject instVarAt: i put: self basicNext]].
-	stbClassFormat notNil 
+		ifFalse: 
+			[| instVarNames |
+			instVarNames := stbClassFormat ifNil: [newObject class allInstVarNames] ifNotNil: [#()].
+			1 to: fullSize
+				do: 
+					[:i |
+					slotName := instVarNames at: i ifAbsent: [i].
+					newObject instVarAt: i put: self basicNext]].
+	stbClassFormat notNil
 		ifTrue: 
 			["Initialise a new instance from the old format object data and become it."
 			newObject become: (stbClassFormat converterBlock value: newObject)].
@@ -163,6 +179,7 @@ traceStream: aPuttableStream
 !STLDebugger categoriesFor: #next!accessing!public! !
 !STLDebugger categoriesFor: #printOffsets!accessing!public! !
 !STLDebugger categoriesFor: #printOffsets:!accessing!public! !
+!STLDebugger categoriesFor: #printValueToTrace:!accessing!private! !
 !STLDebugger categoriesFor: #readObjectOfClass:format:!operations!private! !
 !STLDebugger categoriesFor: #traceStream!accessing!public! !
 !STLDebugger categoriesFor: #traceStream:!accessing!public! !
