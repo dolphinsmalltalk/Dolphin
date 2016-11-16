@@ -488,10 +488,15 @@ mutateInSitu
 	"Private - Mutate the class being modified without mutating its instances.
 	In fact, we only need to change the superclass."
 
-	self superclassIsBeingChanged ifFalse: [^self].
-	currentClass class setSuperclass: (self class classOf: superclass).
-	currentClass setSuperclass: superclass.
-	self recompilationRequired: true!
+	self superclassIsBeingChanged
+		ifTrue:
+			[currentClass class setSuperclass: (self class classOf: superclass).
+			currentClass setSuperclass: superclass.
+			self recompilationRequired: true].
+	self instanceVariablesAreBeingChanged
+		ifTrue:
+			[self setInstanceVariablesOf: currentClass.
+			self recompilationRequired: true].!
 
 mutateToNewClass
 	"Private - Set currentClass to a mutation of itself based on the information
