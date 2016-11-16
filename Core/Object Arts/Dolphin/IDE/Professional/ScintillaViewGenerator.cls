@@ -1411,6 +1411,7 @@ ignoredMessages
 		addAll: #('SCI_GETMARGINWIDTHN' 'SCI_SETMARGINWIDTHN');
 		addAll: #('SCI_GETMARGINSENSITIVEN' 'SCI_SETMARGINSENSITIVEN');
 		addAll: #('SCI_GETMARGINCURSORN' 'SCI_SETMARGINCURSORN');
+		addAll: #('SCI_GETMARGINBACKN' 'SCI_SETMARGINBACKN');
 		yourself.
 
 	"Indicator attributes managed by ScintillaIndicatorStyle"

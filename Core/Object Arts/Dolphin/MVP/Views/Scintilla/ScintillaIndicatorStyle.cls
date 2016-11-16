@@ -48,13 +48,14 @@ Instance Variables:
 
 alpha
 	"Answer the alpha value for the transparency of the background of box indicator styles"
+
 	^alpha!
 
-alpha: anInteger 
-	alpha := anInteger isNil 
+alpha: anInteger
+	self basicAlpha: (anInteger isNil
 				ifFalse: 
-					[self getAlpha: anInteger default: 30	"Magic number from the Scintilla code - no const for this"].
-	self updateViewAttribute: #alpha!
+					[self getAlpha: anInteger default: 30	"Magic number from the Scintilla code - no const for this"]).
+	self updateViewProperty: #alpha!
 
 alphaPercent
 	"Answer an <integer> representing the percentage alpha (transparency) for the indicator.
@@ -74,17 +75,11 @@ alphaPercent: anInteger
 	#deprecated.
 	self alpha: SC_ALPHA_OPAQUE * anInteger // 100!
 
-applyMapDo: aMonadicValuable 
-	"Private - Apply the indicator style settings to the view by evaluating the specified valuable for each setting.
-	The hover styles must be applied after the normal style as (unfortunately) setting the
-	normal style resets the hover style."
+basicAlpha: anIntegerOrNil
+	alpha := anIntegerOrNil!
 
-	| setLast map |
-	setLast := #(#hoverForecolor #hoverStyleName).
-	map := self applyMap.
-	map 
-		keysAndValuesDo: [:eachKey :eachValue | (setLast includes: eachKey) ifFalse: [aMonadicValuable value: eachValue]].
-	setLast do: [:each | aMonadicValuable value: (map at: each)]!
+basicForeAlpha: anIntegerOrNil
+	foreAlpha := anIntegerOrNil!
 
 basicForecolor
 	^forecolor!
@@ -95,8 +90,23 @@ basicForecolor: aColorOrNil
 basicHoverForecolor
 	^hoverForecolor!
 
+basicHoverForecolor: anObject
+	hoverForecolor := anObject!
+
+basicHoverStyle: anIntegerOrNil
+	hoverStyle := anIntegerOrNil!
+
 basicId
 	^id ifNil: [name isInteger ifTrue: [id := name]]!
+
+basicIsUnderText
+	^under!
+
+basicIsUnderText: anIntegerOrNil
+	under := anIntegerOrNil!
+
+basicStyle: anIntegerOrNil
+	style := anIntegerOrNil!
 
 checkIndicatorStyle: anInteger 
 	(anInteger isNil or: [anInteger between: INDIC_PLAIN and: INDIC_MAX]) 
@@ -114,20 +124,20 @@ foreAlpha
 
 	^foreAlpha!
 
-foreAlpha: anInteger 
-	foreAlpha := anInteger isNil 
+foreAlpha: anInteger
+	self basicForeAlpha: (anInteger isNil
 				ifFalse: 
 					["Magic number for default value is from the Scintilla code - no const for this"
-					self getAlpha: anInteger default: 50].
-	self updateViewAttribute: #foreAlpha!
+					self getAlpha: anInteger default: 50]).
+	self updateViewProperty: #foreAlpha!
 
 forecolor
 	^self basicForecolor ifNotNil: [:rgbVal | Color fromInteger: rgbVal]!
 
-forecolor: aColorOrNil 
+forecolor: aColorOrNil
 	self basicForecolor: (aColorOrNil isNil ifFalse: [aColorOrNil asParameter]).
-	self updateViewAttribute: #forecolor.
-	self hoverForecolor isNil ifFalse: [self updateViewAttribute: #hoverForecolor]!
+	self updateViewProperty: #forecolor.
+	self hoverForecolor isNil ifFalse: [self updateViewProperty: #hoverForecolor]!
 
 getAlpha: anInteger default: defaultInteger 
 	^anInteger = defaultInteger 
@@ -141,17 +151,16 @@ hoverForecolor
 
 	^self basicHoverForecolor ifNotNil: [:rgbVal | Color fromInteger: rgbVal]!
 
-hoverForecolor: aColorOrNil 
-	hoverForecolor := aColorOrNil ifNotNil: [aColorOrNil asRGB asParameter].
-	self updateViewAttribute: #hoverForecolor!
+hoverForecolor: aColorOrNil
+	self basicHoverForecolor: (aColorOrNil ifNotNil: [aColorOrNil asRGB asParameter]).
+	self updateViewProperty: #hoverForecolor!
 
 hoverStyle
 	^hoverStyle!
 
-hoverStyle: anInteger 
+hoverStyle: anInteger
 	self checkIndicatorStyle: anInteger.
-	hoverStyle := anInteger = self style ifFalse: [anInteger].
-!
+	self basicHoverStyle: (anInteger = self style ifFalse: [anInteger])!
 
 hoverStyleName
 	"Answer the symbolic name of the indicator style used either an indicator of this style is
@@ -159,19 +168,16 @@ hoverStyleName
 
 	^self hoverStyle ifNotNil: [:s | self class styleNames at: s + 1]!
 
-hoverStyleName: aSymbol 
+hoverStyleName: aSymbol
 	self hoverStyle: (self styleFromName: aSymbol).
-	self updateViewAttribute: #hoverStyleName!
-
-initialize
-	under := false!
+	self updateViewProperty: #hoverStyleName!
 
 isUnderText
-	^under!
+	^(self basicIsUnderText ?? 0) asBoolean!
 
-isUnderText: aBoolean 
-	under := aBoolean asBoolean.
-	self updateViewAttribute: #isUnderText!
+isUnderText: aBooleanOrNil
+	self basicIsUnderText: (aBooleanOrNil ?? false ifTrue: [1]).
+	self updateViewProperty: #isUnderText!
 
 name
 	^name ifNil: ['indicator' , self id displayString]!
@@ -182,13 +188,24 @@ name: anObject
 				ifTrue: [id := anObject]
 				ifFalse: [anObject isEmpty ifFalse: [anObject asSymbol]]!
 
+propertyMapDo: aMonadicValuable
+	"Private - Evaluate the <monadicValuable> argument for each of the indicator style settings' property descriptors.
+	The hover styles are enumerated last as these must be applied after the normal style as (unfortunately) setting the
+	normal style resets the hover style."
+
+	| setLast map |
+	setLast := #(#hoverForecolor #hoverStyleName).
+	map := self propertyMap.
+	map
+		keysAndValuesDo: [:eachKey :eachValue | (setLast includes: eachKey) ifFalse: [aMonadicValuable value: eachValue]].
+	setLast do: [:each | aMonadicValuable value: (map at: each)]!
+
 style
 	^style!
 
-style: anInteger 
+style: anInteger
 	self checkIndicatorStyle: anInteger.
-	style := anInteger.
-!
+	self basicStyle: anInteger!
 
 styleFromName: aSymbolOrNil 
 	^aSymbolOrNil isNil 
@@ -199,21 +216,27 @@ styleFromName: aSymbolOrNil
 styleName
 	^self style ifNotNil: [:s | self class styleNames at: s + 1]!
 
-styleName: aSymbol 
+styleName: aSymbol
 	self style: (self styleFromName: aSymbol).
-	self updateViewAttribute: #styleName.
+	self updateViewProperty: #styleName.
 	"If the style is set, the control, rather annoyingly, overwrites the hover style, so we need
 	to set that again too (if set)."
-	hoverStyle isNil ifFalse: [self updateViewAttribute: #hoverStyleName]! !
+	hoverStyle isNil ifFalse: [self updateViewProperty: #hoverStyleName]! !
 !ScintillaIndicatorStyle categoriesFor: #alpha!accessing!public! !
 !ScintillaIndicatorStyle categoriesFor: #alpha:!accessing!public! !
 !ScintillaIndicatorStyle categoriesFor: #alphaPercent!accessing!public! !
 !ScintillaIndicatorStyle categoriesFor: #alphaPercent:!accessing!public! !
-!ScintillaIndicatorStyle categoriesFor: #applyMapDo:!helpers!private! !
+!ScintillaIndicatorStyle categoriesFor: #basicAlpha:!accessing!private! !
+!ScintillaIndicatorStyle categoriesFor: #basicForeAlpha:!accessing!private! !
 !ScintillaIndicatorStyle categoriesFor: #basicForecolor!accessing!private! !
 !ScintillaIndicatorStyle categoriesFor: #basicForecolor:!accessing!private! !
 !ScintillaIndicatorStyle categoriesFor: #basicHoverForecolor!accessing!private! !
+!ScintillaIndicatorStyle categoriesFor: #basicHoverForecolor:!accessing!private! !
+!ScintillaIndicatorStyle categoriesFor: #basicHoverStyle:!accessing!private! !
 !ScintillaIndicatorStyle categoriesFor: #basicId!accessing!private! !
+!ScintillaIndicatorStyle categoriesFor: #basicIsUnderText!private!testing! !
+!ScintillaIndicatorStyle categoriesFor: #basicIsUnderText:!accessing!private! !
+!ScintillaIndicatorStyle categoriesFor: #basicStyle:!accessing!private! !
 !ScintillaIndicatorStyle categoriesFor: #checkIndicatorStyle:!helpers!private! !
 !ScintillaIndicatorStyle categoriesFor: #flags!accessing!private! !
 !ScintillaIndicatorStyle categoriesFor: #flags:!accessing!private! !
@@ -228,11 +251,11 @@ styleName: aSymbol
 !ScintillaIndicatorStyle categoriesFor: #hoverStyle:!accessing!private! !
 !ScintillaIndicatorStyle categoriesFor: #hoverStyleName!accessing!public! !
 !ScintillaIndicatorStyle categoriesFor: #hoverStyleName:!accessing!public! !
-!ScintillaIndicatorStyle categoriesFor: #initialize!private! !
 !ScintillaIndicatorStyle categoriesFor: #isUnderText!public!testing! !
 !ScintillaIndicatorStyle categoriesFor: #isUnderText:!accessing!public! !
 !ScintillaIndicatorStyle categoriesFor: #name!accessing!public! !
 !ScintillaIndicatorStyle categoriesFor: #name:!accessing!public! !
+!ScintillaIndicatorStyle categoriesFor: #propertyMapDo:!helpers!private! !
 !ScintillaIndicatorStyle categoriesFor: #style!accessing!private! !
 !ScintillaIndicatorStyle categoriesFor: #style:!accessing!private! !
 !ScintillaIndicatorStyle categoriesFor: #styleFromName:!helpers!private! !
@@ -246,29 +269,63 @@ initialize
 		self initialize
 	"
 
-	queryMap := (IdentityDictionary new)
-				at: #forecolor: put: SCI_INDICGETFORE;
-				at: #style: put: SCI_INDICGETSTYLE;
-				at: #hoverStyle: put: SCI_INDICGETHOVERSTYLE;
-				at: #isUnderText: put: SCI_INDICGETUNDER;
-				at: #alpha: put: SCI_INDICGETALPHA;
-				at: #hoverForecolor: put: SCI_INDICGETHOVERFORE;
-				at: #hoverForecolor: put: SCI_INDICGETHOVERFORE;
-				at: #flags: put: SCI_INDICGETFLAGS;
-				at: #foreAlpha: put: SCI_INDICSETOUTLINEALPHA;
-				shrink;
-				isImmutable: true;
-				yourself.
-	applyMap := (IdentityDictionary new)
-				at: #forecolor put: #(#basicForecolor ##(Color black asParameter) ##(SCI_INDICSETFORE));
-				at: #styleName put: #(#style nil ##(SCI_INDICSETSTYLE));
-				at: #hoverStyleName put: #(#hoverStyle ##(INDIC_SQUIGGLE) ##(SCI_INDICSETHOVERSTYLE));
-				at: #isUnderText put: #(#isUnderText false ##(SCI_INDICSETUNDER));
-				at: #alpha put: #(#alpha 30 ##(SCI_INDICSETALPHA));
+	propertyMap := (IdentityDictionary new)
+				at: #forecolor
+					put: (QueryableScintillaPropertyDescriptor
+							getSelector: #basicForecolor
+							defaultValue: Color black asParameter
+							setMessage: SCI_INDICSETFORE
+							setSelector: #basicForecolor:
+							getMessage: SCI_INDICGETFORE);
+				at: #styleName
+					put: (QueryableScintillaPropertyDescriptor
+							getSelector: #style
+							defaultValue: nil
+							setMessage: SCI_INDICSETSTYLE
+							setSelector: #basicStyle:
+							getMessage: SCI_INDICGETSTYLE);
+				at: #hoverStyleName
+					put: (QueryableScintillaPropertyDescriptor
+							getSelector: #hoverStyle
+							defaultValue: INDIC_SQUIGGLE
+							setMessage: SCI_INDICSETHOVERSTYLE
+							setSelector: #basicHoverStyle:
+							getMessage: SCI_INDICGETHOVERSTYLE);
+				at: #isUnderText
+					put: (QueryableScintillaPropertyDescriptor
+							getSelector: #basicIsUnderText
+							defaultValue: 0
+							setMessage: SCI_INDICSETUNDER
+							setSelector: #basicIsUnderText:
+							getMessage: SCI_INDICGETUNDER);
+				at: #alpha
+					put: (QueryableScintillaPropertyDescriptor
+							getSelector: #alpha
+							defaultValue: 30
+							setMessage: SCI_INDICSETALPHA
+							setSelector: #basicAlpha:
+							getMessage: SCI_INDICGETALPHA);
 				at: #hoverForecolor
-					put: #(#basicHoverForecolor ##(Color black asParameter) ##(SCI_INDICSETHOVERFORE));
-				at: #flags put: #(#flags 0 ##(SCI_INDICSETFLAGS));
-				at: #foreAlpha put: #(#foreAlpha 50 ##(SCI_INDICSETOUTLINEALPHA));
+					put: (QueryableScintillaPropertyDescriptor
+							getSelector: #basicHoverForecolor
+							defaultValue: Color black asParameter
+							setMessage: SCI_INDICSETHOVERFORE
+							setSelector: #basicHoverForecolor:
+							getMessage: SCI_INDICGETHOVERFORE);
+				at: #flags
+					put: (QueryableScintillaPropertyDescriptor
+							getSelector: #flags
+							defaultValue: 0
+							setMessage: SCI_INDICSETFLAGS
+							setSelector: #flags:
+							getMessage: SCI_INDICGETFLAGS);
+				at: #foreAlpha
+					put: (QueryableScintillaPropertyDescriptor
+							getSelector: #foreAlpha
+							defaultValue: 50
+							setMessage: SCI_INDICSETOUTLINEALPHA
+							setSelector: #basicForeAlpha:
+							getMessage: SCI_INDICSETOUTLINEALPHA);
 				shrink;
 				isImmutable: true;
 				yourself!

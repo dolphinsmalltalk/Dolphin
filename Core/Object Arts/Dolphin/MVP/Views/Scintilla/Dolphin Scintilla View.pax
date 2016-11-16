@@ -39,6 +39,7 @@ package basicPackageVersion: '3.6.6'.
 package classNames
 	add: #NullScintillaStyler;
 	add: #QueryableScintillaAttribute;
+	add: #QueryableScintillaPropertyDescriptor;
 	add: #ScintillaAnnotation;
 	add: #ScintillaAttribute;
 	add: #ScintillaIndicator;
@@ -49,6 +50,7 @@ package classNames
 	add: #ScintillaMargin;
 	add: #ScintillaMarker;
 	add: #ScintillaMarkerDefinition;
+	add: #ScintillaPropertyDescriptor;
 	add: #ScintillaStyler;
 	add: #ScintillaStylesCollectionPresenter;
 	add: #ScintillaTextStyle;
@@ -108,7 +110,7 @@ Object subclass: #ScintillaAttribute
 	instanceVariableNames: 'id'
 	classVariableNames: ''
 	poolDictionaries: 'ScintillaConstants'
-	classInstanceVariableNames: 'applyMap'!
+	classInstanceVariableNames: 'propertyMap'!
 Object subclass: #ScintillaIndicator
 	instanceVariableNames: 'styleName range tag'
 	classVariableNames: ''
@@ -128,6 +130,11 @@ Object subclass: #ScintillaMarker
 	instanceVariableNames: 'view definition line handle'
 	classVariableNames: ''
 	poolDictionaries: 'ScintillaConstants'
+	classInstanceVariableNames: ''!
+Object subclass: #ScintillaPropertyDescriptor
+	instanceVariableNames: 'getSelector defaultValue setMessage'
+	classVariableNames: ''
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Object subclass: #ScintillaStyler
 	instanceVariableNames: ''
@@ -180,8 +187,13 @@ QueryableScintillaAttribute subclass: #ScintillaIndicatorStyle
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 QueryableScintillaAttribute subclass: #ScintillaMargin
-	instanceVariableNames: 'width type isSensitive mask cursorType'
+	instanceVariableNames: 'width type isSensitive mask cursorType backcolor'
 	classVariableNames: 'CursorTypes MarginTypes'
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ScintillaPropertyDescriptor subclass: #QueryableScintillaPropertyDescriptor
+	instanceVariableNames: 'setSelector getMessage'
+	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ScintillaStyler subclass: #NullScintillaStyler

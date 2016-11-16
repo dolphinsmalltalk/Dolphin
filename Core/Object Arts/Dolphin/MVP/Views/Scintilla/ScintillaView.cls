@@ -6193,18 +6193,6 @@ sciGetMainSelection
 				wParam: 0
 				lParam: 0]!
 
-sciGetMarginBackN: marginInteger
-	"Private - Retrieve the background colour of a margin"
-
-	^this isNil
-		ifTrue: [nil]
-		ifFalse: 
-			[RGB fromInteger: (ScintillaLibrary default
-						directFunction: this
-						msg: SCI_GETMARGINBACKN
-						wParam: marginInteger
-						lParam: 0)]!
-
 sciGetMarginLeft
 	"Private - Returns the size in pixels of the left margin."
 
@@ -7935,17 +7923,6 @@ sciSetMainSelection: selectionInteger
 				msg: SCI_SETMAINSELECTION
 				wParam: selectionInteger
 				lParam: 0]!
-
-sciSetMarginBackN: marginInteger back: backRGB
-	"Private - Set the background colour of a margin. Only visible for SC_MARGIN_COLOUR."
-
-	this isNil
-		ifFalse: 
-			[ScintillaLibrary default
-				directFunction: this
-				msg: SCI_SETMARGINBACKN
-				wParam: marginInteger
-				lParam: backRGB asParameter]!
 
 sciSetMarginLeft: pixelWidthInteger
 	"Private - Sets the size in pixels of the left margin."
@@ -11067,7 +11044,6 @@ zoomOut
 !ScintillaView categoriesFor: #sciGetLineState:!**auto generated**!private!scintilla interface!styling! !
 !ScintillaView categoriesFor: #sciGetLineVisible:!**auto generated**!folding!private!scintilla interface! !
 !ScintillaView categoriesFor: #sciGetMainSelection!**auto generated**!multiple selection and virtual space!private!scintilla interface!selection! !
-!ScintillaView categoriesFor: #sciGetMarginBackN:!**auto generated**!margins!private!scintilla interface! !
 !ScintillaView categoriesFor: #sciGetMarginLeft!**auto generated**!margins!private!scintilla interface! !
 !ScintillaView categoriesFor: #sciGetMarginOptions!**auto generated**!margins!private!scintilla interface! !
 !ScintillaView categoriesFor: #sciGetMarginRight!**auto generated**!margins!private!scintilla interface! !
@@ -11208,7 +11184,6 @@ zoomOut
 !ScintillaView categoriesFor: #sciSetLineIndentation:indentation:!**auto generated**!private!scintilla interface!tabs & indentation guides! !
 !ScintillaView categoriesFor: #sciSetLineState:state:!**auto generated**!private!scintilla interface!styling! !
 !ScintillaView categoriesFor: #sciSetMainSelection:!**auto generated**!multiple selection and virtual space!private!scintilla interface!selection! !
-!ScintillaView categoriesFor: #sciSetMarginBackN:back:!**auto generated**!margins!private!scintilla interface! !
 !ScintillaView categoriesFor: #sciSetMarginLeft:!**auto generated**!margins!private!scintilla interface! !
 !ScintillaView categoriesFor: #sciSetMarginOptions:!**auto generated**!margins!private!scintilla interface! !
 !ScintillaView categoriesFor: #sciSetMarginRight:!**auto generated**!margins!private!scintilla interface! !

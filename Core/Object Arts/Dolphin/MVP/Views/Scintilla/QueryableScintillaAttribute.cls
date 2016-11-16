@@ -16,15 +16,14 @@ Class Instance Variables:
 !QueryableScintillaAttribute categoriesForClass!MVP-Views-Support! !
 !QueryableScintillaAttribute methodsFor!
 
-populateFromView: aScintillaView at: anInteger 
+populateFromView: aScintillaView at: anInteger
 	id := anInteger.
 	view := nil.
-	self class queryMap 
-		ifNotNil: 
-			[:map | 
-			map keysAndValuesDo: 
-					[:eachSetter :eachGetMessage | 
-					self perform: eachSetter with: (aScintillaView sendMessage: eachGetMessage wParam: id)]].
+	self propertyMap do: 
+			[:each |
+			| value |
+			value := aScintillaView sendMessage: each getMessage wParam: id.
+			self perform: each setSelector with: (value = each defaultValue ifFalse: [value])].
 	view := aScintillaView!
 
 view
