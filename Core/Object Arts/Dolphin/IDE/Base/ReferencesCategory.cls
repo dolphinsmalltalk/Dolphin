@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 VirtualMethodCategory subclass: #ReferencesCategory
 	instanceVariableNames: 'literal'
@@ -43,17 +43,16 @@ initialize
 	"
 
 	self referenceSymbols do: 
-			[:each | 
+			[:each |
 			| cat suffix |
 			suffix := each asPhrase asLowercase.
 			cat := (self newNamed: self pseudPrefix , suffix)
 						literal: each asSymbol;
 						yourself.
 			self
-				addPseud: cat;
-				removeCategory: suffix.
-			Table at: suffix put: cat]
-!
+				removeCategory: suffix;
+				addPseud: cat.
+			Table at: suffix put: cat]!
 
 newNamed: aString literal: anObject 
 	^((VMLibrary default indexOfSpecialSelector: anObject ifAbsent: []) 
