@@ -132,7 +132,7 @@ outer
 postCopy
 	super postCopy.
 	self body: body copy.
-	arguments := arguments collect: [:each | each copy].
+	self arguments: (arguments collect: [:each | each copy]).
 	^self!
 
 printOn: aStream 
