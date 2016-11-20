@@ -1888,6 +1888,12 @@ hierarchyBrowserClass: toolClass
 
 	hierarchyBrowserClass := toolClass!
 
+iconForMethod: aCompiledMethod
+	"Answer an icon that can be used to represent the <CompiledMethod> argument in a development environment."
+
+	aCompiledMethod isDeprecated ifTrue: [^CompiledMethod deprecatedIcon].
+	^aCompiledMethod isPrivate ifTrue: [CompiledMethod privateIcon] ifFalse: [CompiledMethod publicIcon]!
+
 ideaSpaceFilesType
 	"Private - Answer a two element array suitable for adding to the FileDialog
 	with the fileTypes: message for loading/saving idea space templates."
@@ -4086,6 +4092,7 @@ wrapText: aString toWidth: max indent: colInteger tabWidth: tabInteger
 !SmalltalkSystem categoriesFor: #helpWhatsThis!commands!public! !
 !SmalltalkSystem categoriesFor: #hierarchyBrowserClass!options!public! !
 !SmalltalkSystem categoriesFor: #hierarchyBrowserClass:!options!public! !
+!SmalltalkSystem categoriesFor: #iconForMethod:!development!helpers!public! !
 !SmalltalkSystem categoriesFor: #ideaSpaceFilesType!constants!private! !
 !SmalltalkSystem categoriesFor: #imageFilesType!constants!private! !
 !SmalltalkSystem categoriesFor: #initialize!initializing!private! !
