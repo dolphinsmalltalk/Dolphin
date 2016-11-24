@@ -44,3 +44,37 @@ hasBytecodeRepresentation: anObject
 	SmallIntegers, Characters."
 
 	^anObject isImmediate or: [anObject isNil or: [anObject == true or: [anObject == false]]]! !
+
+SourceFiler removeSelectors: #(#isSourceOnly #isSourceOnly:)!
+
+Object subclass: #SourceFiler
+	instanceVariableNames: 'stream evaluationContext flags'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+SourceFiler addClassConstant: 'SourceOnlyMask' value: 1!
+
+!SourceFiler methodsFor!
+
+isSourceOnly
+	^flags anyMask: SourceOnlyMask!
+
+isSourceOnly: aBoolean
+	flags := flags mask: SourceOnlyMask set: aBoolean!
+
+setStream: aPuttableStream
+	stream := aPuttableStream.
+	flags := 0! !
+
+ChunkSourceFiler allInstances do: [:each | each setStream: each stream]!
+
+ChunkSourceFiler addClassConstant: 'NormalizeEolsMask' value: 2!
+
+!ChunkSourceFiler methodsFor!
+
+normalizeLineEndings
+	^flags anyMask: NormalizeEolsMask!
+
+normalizeLineEndings: aBoolean
+	flags := flags mask: NormalizeEolsMask set: aBoolean! !
