@@ -1703,13 +1703,13 @@ dolphinNewsgroup
 dolphinWikiWeb
 	self openUrl: self sessionManager dolphinWikiUrl!
 
-dropClassFile: aString 
-	(MessageBox 
+dropClassFile: aString
+	(MessageBox
 		confirm: ('File in <1p>?<n><n>If the class is new it will be <2s>.' expandMacrosWith: aString
-				with: (self packageManager defaultPackage 
+				with: (self packageManager defaultPackage
 						ifNil: ['unpackaged']
-						ifNotNil: [:pkg | 'added to the default package (<1d>)' expandMacrosWith: pkg]))) 
-			ifTrue: [self sourceManager fileIn: aString]!
+						ifNotNil: [:pkg | 'added to the default package (<1d>)' expandMacrosWith: pkg])))
+			ifTrue: [self sourceManager fileIn: aString normalizeLineEndings: true]!
 
 dropFile: aString 
 	[ShellLibrary default shellOpen: aString] on: Win32Error
@@ -1748,14 +1748,14 @@ fileFileIn
 	| filename |
 	filename := (FileOpenDialog new)
 				caption: 'File in...';
-				fileTypes: (Array 
+				fileTypes: (Array
 							with: self smalltalkFilesType
 							with: self classFilesType
 							with: FileDialog allFilesType);
 				defaultExtension: '';
 				showModal.
-	filename notNil 
-		ifTrue: [Cursor wait showWhile: [self sourceManager fileIn: filename]]!
+	filename notNil
+		ifTrue: [Cursor wait showWhile: [self sourceManager fileIn: filename normalizeLineEndings: true]]!
 
 fileNew
 	"Basic implementation of context-sensitive file-new command. Tools typically implement

@@ -1,11 +1,12 @@
 "Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #SourceFiler
-	instanceVariableNames: 'stream evaluationContext isSourceOnly '
-	classVariableNames: ''
+	instanceVariableNames: 'stream evaluationContext flags'
+	classVariableNames: 'SourceOnlyMask'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 SourceFiler guid: (GUID fromString: '{847F25F1-CD60-490C-817F-3F0F2CEFD567}')!
+SourceFiler addClassConstant: 'SourceOnlyMask' value: 1!
 SourceFiler comment: ''!
 !SourceFiler categoriesForClass!Development!System-Support! !
 !SourceFiler methodsFor!
@@ -240,14 +241,14 @@ getSourceFromDescriptor: sourceDescriptor
 	^self subclassResponsibility!
 
 isSourceOnly
-	^isSourceOnly!
+	^flags anyMask: SourceOnlyMask!
 
-isSourceOnly: aBoolean 
-	isSourceOnly := aBoolean!
+isSourceOnly: aBoolean
+	flags := flags mask: SourceOnlyMask set: aBoolean!
 
-setStream: aPuttableStream 
+setStream: aPuttableStream
 	stream := aPuttableStream.
-	self isSourceOnly: false!
+	flags := 0!
 
 setToEnd
 	"Seek to the end of the source stream."
@@ -342,6 +343,9 @@ SourceFiler methodProtocol: #sourceFiler attributes: #(#readOnly) selectors: #(#
 
 !SourceFiler class methodsFor!
 
+initialize
+	self addClassConstant: 'SourceOnlyMask' value: 1.!
+
 on: aWriteStream 
 	"Answer a new instance of the receiver for filing out source code onto the 
 	<puttableStream> argument."
@@ -349,5 +353,6 @@ on: aWriteStream
 	^(self new)
 		setStream: aWriteStream;
 		yourself! !
+!SourceFiler class categoriesFor: #initialize!public! !
 !SourceFiler class categoriesFor: #on:!instance creation!public! !
 

@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ReadWriteStream subclass: #FileStream
 	instanceVariableNames: 'file flags pageBase logicalFileSize'
@@ -268,6 +268,16 @@ next: sizeInteger putAll: aSequenceableCollection startingAt: startInteger
 					self beDirty]].
 	^aSequenceableCollection!
 
+nextOrNil
+	"Answer a <Character>, or <integer> in the range 0..255, being the next of the 
+	receiver's future sequence values. Answer nil if at EOF."
+
+	<primitive: 65>
+	^self atEnd
+		ifFalse: 
+			[self position: self position.
+			collection at: (position := position + 1)]!
+
 nextPut: anIntegerOrCharacter 
 	"Write anIntegerOrCharacter to the receiver and answer the argument."
 
@@ -397,6 +407,7 @@ writePage
 !FileStream categoriesFor: #next!accessing!public! !
 !FileStream categoriesFor: #next:into:startingAt:!accessing!public! !
 !FileStream categoriesFor: #next:putAll:startingAt:!accessing!public! !
+!FileStream categoriesFor: #nextOrNil!accessing!public! !
 !FileStream categoriesFor: #nextPut:!accessing!public! !
 !FileStream categoriesFor: #nextPutAll:!accessing!public! !
 !FileStream categoriesFor: #position!accessing!public! !

@@ -55,11 +55,20 @@ nextAvailable
 	being streamed over is known not to contain nils."
 
 	<primitive: 65>
-	^position >= readLimit ifFalse: [collection at: (position := position + 1)]! !
+	^position >= readLimit ifFalse: [collection at: (position := position + 1)]!
+
+nextOrNil
+	"Answer a <Character>, or <integer> in the range 0..255, being the next of the 
+	receiver's future sequence values. Answer nil if at EOF."
+
+	<primitive: 65>
+	^position >= readLimit
+		ifFalse: [collection at: (position := position + 1)]! !
 !ReadStream categoriesFor: #isReadable!public!testing! !
 !ReadStream categoriesFor: #next!accessing!public! !
 !ReadStream categoriesFor: #next:into:startingAt:!accessing!public! !
 !ReadStream categoriesFor: #nextAvailable!accessing!public! !
+!ReadStream categoriesFor: #nextOrNil!accessing!public! !
 
 ReadStream methodProtocol: #ReadStream attributes: #(#ansi #readOnly) selectors: #(#atEnd #close #contents #do: #isEmpty #next #next: #nextLine #nextMatchFor: #peek #peekFor: #position #position: #reset #setToEnd #skip: #skipTo: #upTo:)!
 

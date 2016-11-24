@@ -34,7 +34,6 @@ package methodNames
 	add: #Object -> #asDword;
 	add: #Package -> #script:;
 	add: #Package -> #script:put:;
-	add: #SourceManager -> #nextChunkFrom:;
 	add: #String -> #asDword;
 	add: 'ExternalCallback class' -> #receiver:prototype:;
 	add: 'ExternalCallback class' -> #receiver:prototype:closure:;
@@ -264,13 +263,6 @@ name: nameString comment: commentString
 		basicComment: commentString;
 		yourself! !
 !Package class categoriesFor: #name:comment:!instance creation!public! !
-
-!SourceManager methodsFor!
-
-nextChunkFrom: aStream 
-	#deprecated.	"Use a ChunkSourceFiler"
-	^(ChunkSourceFiler on: aStream) nextChunk! !
-!SourceManager categoriesFor: #nextChunkFrom:!private!source filing! !
 
 !String methodsFor!
 

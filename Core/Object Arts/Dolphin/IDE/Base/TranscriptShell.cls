@@ -115,13 +115,13 @@ fileFileIn
 	(containing chunks) and file it in."
 
 	| filename |
-	filename := FileOpenDialog new
-		caption: 'File in...';
-		fileTypes: (Array with: self smalltalkFilesType with: FileDialog allFilesType);
-		defaultExtension: '';
-		showModal.
-	filename notNil ifTrue: [
-		Cursor wait showWhile: [self class sourceManager fileIn: filename]]!
+	filename := (FileOpenDialog new)
+				caption: 'File in...';
+				fileTypes: (Array with: self smalltalkFilesType with: FileDialog allFilesType);
+				defaultExtension: '';
+				showModal.
+	filename notNil
+		ifTrue: [Cursor wait showWhile: [self class sourceManager fileIn: filename normalizeLineEndings: true]]!
 
 flush
 	"Flush the buffered output to the display."

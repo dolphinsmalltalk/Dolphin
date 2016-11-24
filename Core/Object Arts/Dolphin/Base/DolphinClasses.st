@@ -301,8 +301,8 @@ Object subclass: #Sound
 	poolDictionaries: 'MessageBoxConstants Win32Constants'
 	classInstanceVariableNames: ''!
 Object subclass: #SourceFiler
-	instanceVariableNames: 'stream evaluationContext isSourceOnly'
-	classVariableNames: ''
+	instanceVariableNames: 'stream evaluationContext flags'
+	classVariableNames: 'SourceOnlyMask'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Object subclass: #SourceManager
@@ -1547,7 +1547,7 @@ PluggableSortAlgorithm subclass: #IntrosortAlgorithm
 	classInstanceVariableNames: ''!
 SourceFiler subclass: #ChunkSourceFiler
 	instanceVariableNames: 'sourceFileIndex'
-	classVariableNames: ''
+	classVariableNames: 'NormalizeEolsMask'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 SourceManager subclass: #VeryBasicSourceManager

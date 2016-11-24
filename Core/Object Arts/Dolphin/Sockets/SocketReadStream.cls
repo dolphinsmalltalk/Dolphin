@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ReadStream subclass: #SocketReadStream
 	instanceVariableNames: 'socket'
@@ -76,6 +76,12 @@ next: countInteger into: aSequenceableCollection startingAt: startInteger
 nextAvailable
 	^self atEnd ifFalse: [self next]!
 
+nextOrNil
+	"Answer a <Character>, or <integer> in the range 0..255, being the next of the 
+	receiver's future sequence values. Answer nil if at EOF."
+
+	^self atEnd ifFalse: [self next]!
+
 readPage
 	"Private - Read ahead, a whole page or as much input as is available, into the buffer."
 
@@ -109,6 +115,18 @@ socket: aSocket
 
 	socket := aSocket!
 
+upTo: anObject 
+	"Answer a collection of elements starting with the next element accessed by the receiver,
+	and up to, not inclusive of, the next element that is equal to anObject. Positions the
+	stream after anObject if found. If anObject is not in the collection, answer the entire rest
+	of the collection. If the receiver is at its end, answer an empty Collection."
+
+	| newStream nextObject |
+	newStream := self contentsSpecies writeStream: 128.
+	[(nextObject := self nextOrNil) isNil or: [nextObject = anObject]] 
+		whileFalse: [newStream nextPut: nextObject].
+	^newStream contents!
+
 upToEnd
 	"Answer a collection consisting of the remaining elements in the receiver (i.e. from the current
 	position to the end)."
@@ -127,11 +145,13 @@ upToEnd
 !SocketReadStream categoriesFor: #next!accessing!public! !
 !SocketReadStream categoriesFor: #next:into:startingAt:!accessing!public! !
 !SocketReadStream categoriesFor: #nextAvailable!public! !
+!SocketReadStream categoriesFor: #nextOrNil!accessing!public! !
 !SocketReadStream categoriesFor: #readPage!operations!private! !
 !SocketReadStream categoriesFor: #setToEnd!positioning!public! !
 !SocketReadStream categoriesFor: #size!accessing!public! !
 !SocketReadStream categoriesFor: #socket!accessing!private! !
 !SocketReadStream categoriesFor: #socket:!accessing!private! !
+!SocketReadStream categoriesFor: #upTo:!accessing!public! !
 !SocketReadStream categoriesFor: #upToEnd!accessing!public! !
 
 !SocketReadStream class methodsFor!

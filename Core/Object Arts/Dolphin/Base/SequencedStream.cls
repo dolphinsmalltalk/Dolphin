@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Stream subclass: #SequencedStream
 	instanceVariableNames: ''
@@ -45,13 +45,17 @@ nextLine
 	the receiver's contents are answered. If the receiver is at its end, then an empty
 	collection is answered. "
 
-	"N.B. This method works for Unix and Windows line delimiters (that is CR/LF and LF sequences
-	respectively), but not if the line delimiter consists solely of a CR."
+	"N.B. This method works for CR, LF and CR/LF line delimiters."
 
-	| result eol |
-	eol := String lineDelimiter.
-	result := self upTo: eol last.
-	^(result notEmpty and: [result last = eol first]) ifTrue: [result allButLast] ifFalse: [result]!
+	| newStream nextObject |
+	newStream := self contentsSpecies writeStream: 128.
+	
+	[(nextObject := self nextOrNil) isNil
+		or: [nextObject == $\n or: [nextObject == $\r and: 
+							[self peekFor: $\n.
+							true]]]]
+			whileFalse: [newStream nextPut: nextObject].
+	^newStream contents!
 
 nextWord
 	"Answer the next 'word' in the receiver's element stream, where a word is defined as a
@@ -85,15 +89,14 @@ peek
 			self position: self position - 1.
 			anObject]!
 
-peekFor: anObject 
+peekFor: anObject
 	"Determine the response to the message peek. If it is the same as the argument, anObject,
 	then advance the current position and answer true. Otherwise answer false and do not change
 	the current position."
 
-	^self atEnd not and: 
-			[self next = anObject 
-				ifTrue: [true]
-				ifFalse: 
+	| next |
+	^(next := self nextOrNil) notNil and: 
+			[next = anObject or: 
 					["We don't use #skip:, since we know going back 1 is in bounds"
 					self position: self position - 1.
 					false]]!
@@ -139,8 +142,9 @@ skipSeparators
 	"Implementation Note: Implementable in terms of #skipWhile:, but this is called so
 	frequently that we open code to avoid instantiating a block."
 
-	[self atEnd] whileFalse: 
-			[self next isSeparator 
+	| next |
+	[(next := self nextOrNil) isNil] whileFalse: 
+			[next isSeparator
 				ifFalse: 
 					[self position: self position - 1.
 					^true]].
