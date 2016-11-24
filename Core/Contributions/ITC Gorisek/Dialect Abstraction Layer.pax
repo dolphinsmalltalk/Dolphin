@@ -135,7 +135,6 @@ package methodNames
 	add: #SocketWriteStream -> #itcFlush;
 	add: #SocketWriteStream -> #sendLine:;
 	add: #Stream -> #itcCrLf;
-	add: #Stream -> #nextOrNil;
 	add: #String -> #add:withDelimiter:;
 	add: #String -> #asDateFromDDMMYYYYString;
 	add: #String -> #asDecimalOrFloat;
@@ -1224,14 +1223,8 @@ sendLine: aCollection
 
 itcCrLf
 	self nextPutAll: '
-'!
-
-nextOrNil
-	"Squeak compatibility method (for #next)"
-
-	^self atEnd ifFalse: [self next]! !
+'! !
 !Stream categoriesFor: #itcCrLf!accessing!public! !
-!Stream categoriesFor: #nextOrNil!accessing!public! !
 
 !String methodsFor!
 
