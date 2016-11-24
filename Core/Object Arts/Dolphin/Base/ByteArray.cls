@@ -552,7 +552,7 @@ storeOn: puttableStream
 	self printPrefixOn: puttableStream.
 	1 to: self size do: [:i | 
 		(self at: i) printDigitsOn: puttableStream base: 10.
-		puttableStream nextPut: $ ].
+		puttableStream nextPut: $\x20].
 	self printSuffixOn: puttableStream.!
 
 swordAtOffset: anInteger

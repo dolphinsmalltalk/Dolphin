@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #StToken
 	instanceVariableNames: 'sourcePointer comments'
@@ -65,7 +65,7 @@ length
 
 printOn: aStream 
 	aStream
-		nextPut: $ ;
+		nextPut: $\x20;
 		nextPutAll: self class name!
 
 removePositions
