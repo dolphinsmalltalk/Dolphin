@@ -980,7 +980,7 @@ unescapePercents
 					startingAt: oldPos.
 				char := self at: pos.
 				char == $+ 
-					ifTrue: [answer nextPut: $ ]
+					ifTrue: [answer nextPut: $\x20]
 					ifFalse: 
 						[(char == $% and: [pos + 2 <= self size]) 
 							ifTrue: 
