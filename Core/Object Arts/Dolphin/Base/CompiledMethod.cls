@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 CompiledCode variableSubclass: #CompiledMethod
 	instanceVariableNames: ''
@@ -74,16 +74,6 @@ hasChanged
 
 	^self changeManager hasMethodChanged: self!
 
-icon
-	"Answers an Icon that can be used to represent this object."
-
-	self isDeprecated ifTrue: [^self class deprecatedIcon].
-
-	^self isPrivate
-		ifTrue: [self class privateIcon]
-		ifFalse: [self class publicIcon]
-!
-
 infoTip
 	"Private - Answer a suitable 'info tip' for the receiver."
 
@@ -108,13 +98,6 @@ isClassMethod
 	"Answer true if the receiver is a class method."
 
 	^self methodClass isMeta!
-
-isDeprecated
-	"Answer whether the receiver is marked as being deprecated.
-	This is based on whether a reference to the symbol, #deprecated, is found
-	in the method, for which we use a ReferencesCategory."
-
-	^MethodCategory deprecatedMethods includesMethod: self!
 
 isExpression
 	"Private - Answer whether the receiver is a standalone (unbound) expression as opposed to 
@@ -232,11 +215,9 @@ storeSourceString: aString
 !CompiledMethod categoriesFor: #getDebugInfo!development!private! !
 !CompiledMethod categoriesFor: #getSource!accessing!development!public! !
 !CompiledMethod categoriesFor: #hasChanged!development!private!testing! !
-!CompiledMethod categoriesFor: #icon!constants!development!public! !
 !CompiledMethod categoriesFor: #infoTip!accessing!development!private! !
 !CompiledMethod categoriesFor: #isChanged!development!private!testing! !
 !CompiledMethod categoriesFor: #isClassMethod!public!testing! !
-!CompiledMethod categoriesFor: #isDeprecated!development!public!testing! !
 !CompiledMethod categoriesFor: #isExpression!private!testing! !
 !CompiledMethod categoriesFor: #isExternalCall!private!testing! !
 !CompiledMethod categoriesFor: #isGetter!public!testing! !
