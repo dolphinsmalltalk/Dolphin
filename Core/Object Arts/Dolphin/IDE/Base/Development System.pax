@@ -189,7 +189,7 @@ package methodNames
 	add: #CompiledExpression -> #stylerClass;
 	add: #CompiledMethod -> #asDebugMethod;
 	add: #CompiledMethod -> #browse;
-	add: #CompiledMethod -> #isDeprecated;
+	add: #CompiledMethod -> #icon;
 	add: #CompiledMethod -> #searchForInTool:;
 	add: #CompiledMethod -> #stylerClass;
 	add: #CompileFailedMethod -> #asDebugMethod;
@@ -1983,12 +1983,10 @@ browse
     
     	^Smalltalk developmentSystem browseMethod: self!
 
-isDeprecated
-	"Answer whether the receiver is marked as being deprecated.
-	This is based on whether a reference to the symbol, #deprecated, is found
-	in the method, for which we use a ReferencesCategory."
+icon
+	"Answers an Icon that can be used to represent this object."
 
-	^MethodCategory deprecatedMethods includesMethod: self!
+	^Smalltalk developmentSystem iconForMethod: self!
 
 searchForInTool: aSmalltalkToolShell 
 	aSmalltalkToolShell searchForMethod: self!
@@ -1997,7 +1995,7 @@ stylerClass
 	^Smalltalk developmentSystem methodStylerClass! !
 !CompiledMethod categoriesFor: #asDebugMethod!development!private! !
 !CompiledMethod categoriesFor: #browse!development!public! !
-!CompiledMethod categoriesFor: #isDeprecated!development!public!testing! !
+!CompiledMethod categoriesFor: #icon!constants!development!public! !
 !CompiledMethod categoriesFor: #searchForInTool:!public! !
 !CompiledMethod categoriesFor: #stylerClass!constants!public! !
 

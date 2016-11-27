@@ -74,13 +74,6 @@ hasChanged
 
 	^self changeManager hasMethodChanged: self!
 
-icon
-	"Answers an Icon that can be used to represent this object."
-
-	^(Smalltalk at: #SmalltalkSystem ifPresent: [:a | a current])
-		ifNil: [super icon]
-		ifNotNil: [:a | a iconForMethod: self]!
-
 infoTip
 	"Private - Answer a suitable 'info tip' for the receiver."
 
@@ -222,7 +215,6 @@ storeSourceString: aString
 !CompiledMethod categoriesFor: #getDebugInfo!development!private! !
 !CompiledMethod categoriesFor: #getSource!accessing!development!public! !
 !CompiledMethod categoriesFor: #hasChanged!development!private!testing! !
-!CompiledMethod categoriesFor: #icon!constants!development!public! !
 !CompiledMethod categoriesFor: #infoTip!accessing!development!private! !
 !CompiledMethod categoriesFor: #isChanged!development!private!testing! !
 !CompiledMethod categoriesFor: #isClassMethod!public!testing! !

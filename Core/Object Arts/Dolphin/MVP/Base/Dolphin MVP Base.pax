@@ -341,9 +341,6 @@ package methodNames
 	add: #UserLibrary -> #validate:lpRect:;
 	add: #UserLibrary -> #windowFromPoint:;
 	add: #UserLibrary -> #winHelp:lpszHelp:uCommand:dwData:;
-	add: 'CompiledMethod class' -> #deprecatedIcon;
-	add: 'CompiledMethod class' -> #privateIcon;
-	add: 'CompiledMethod class' -> #publicIcon;
 	add: 'ConsoleSessionManager class' -> #icon;
 	add: 'Error class' -> #icon;
 	add: 'ExternalLibrary class' -> #icon;
@@ -1255,27 +1252,6 @@ SIZEL := SIZE!
 
 
 "Loose Methods"!
-
-!CompiledMethod class methodsFor!
-
-deprecatedIcon
-	"Private - Answers an Icon that can be used to represent a deprecated instance of this class"
-
-	^Icon fromId: 'COMPILEDMETHOD_DEPRECATED.ICO'
-!
-
-privateIcon
-	"Private - Answers an Icon that can be used to represent a private instance of this class"
-
-	^Icon fromId: 'COMPILEDMETHOD_PRIVATE.ICO'!
-
-publicIcon
-	"Private - Answers an Icon that can be used to represent a public instance of this class"
-
-	^Icon fromId: 'COMPILEDMETHOD_PUBLIC.ICO'! !
-!CompiledMethod class categoriesFor: #deprecatedIcon!constants!development!private! !
-!CompiledMethod class categoriesFor: #privateIcon!constants!development!private! !
-!CompiledMethod class categoriesFor: #publicIcon!constants!development!private! !
 
 !ConsoleSessionManager class methodsFor!
 
