@@ -87,7 +87,6 @@ protected:
 	
 	char PeekAtChar(int lookAhead=0) const;
 	//bool CanBeSmallInteger(long valueLong) const;
-	bool IsAClosingChar(char ch) const;
 	bool IsASingleBinaryChar(char ch) const;
 	//bool IsDigitInRadix(char ch, int radix) const;
 	

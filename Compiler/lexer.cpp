@@ -80,22 +80,6 @@ void Lexer::SetText(const char* compiletext, int offset)
 	AdvanceCharPtr(offset);
 }
 
-bool Lexer::IsAClosingChar(char ch) const
-{
-	// Return true if (ch) can close an expression
-	switch (ch)
-	{
-	case '.':
-	case ']':
-	case ')':
-	case ';':
-	case '\"':
-	case '\'':
-		return true;
-	}
-	return false;
-}
-
 // ANSI Binary chars are ...
 // Note that this does include '-', and therefore whitespace is
 // required to separate negation from a binary operator
