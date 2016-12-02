@@ -622,26 +622,6 @@ BEGIN
     EDITTEXT        IDC_PROGRESSSTATUS,113,84,232,13,ES_AUTOHSCROLL | NOT WS_BORDER,WS_EX_STATICEDGE
 END
 
-IDD_UNLOCK DIALOGEX 0, 0, 316, 150
-STYLE DS_SETFONT | DS_MODALFRAME | DS_NOIDLEMSG | DS_SETFOREGROUND | DS_3DLOOK | DS_NOFAILCREATE | WS_POPUP | WS_CAPTION
-EXSTYLE WS_EX_CONTROLPARENT
-CAPTION "Dolphin Smalltalk Unlock (Fresh Install)"
-FONT 8, "Microsoft Sans Serif", 0, 0, 0x1
-BEGIN
-    LTEXT           "Please enter your product serial number to unlock this copy of Dolphin Smalltalk. The new Dolphin image file will be signed with your unique customer identifier.",IDC_STATIC,42,8,260,30
-    LTEXT           "&Serial number:",IDC_STATIC,42,66,48,15
-    EDITTEXT        IDC_UNLOCKKEY,94,64,198,12,ES_UPPERCASE | ES_AUTOHSCROLL | NOT WS_BORDER,WS_EX_STATICEDGE
-    LTEXT           "&Machine ID:",IDC_STATIC,197,0,45,15,NOT WS_VISIBLE
-    EDITTEXT        IDC_MACHINEID,245,0,70,14,ES_AUTOHSCROLL | ES_READONLY | NOT WS_VISIBLE
-    LTEXT           "When you click the ""Unlock"" button you will be asked for a directory and name for the new image file. The default location supplied is a sub-folder within your My Documents folder.",IDC_STATIC,41,86,186,36
-    PUSHBUTTON      "Apply for Community Edition Serial Number",IDC_APPLYDCE,40,125,167,14
-    DEFPUSHBUTTON   "&Unlock",IDOK,242,92,50,14
-    PUSHBUTTON      "&Quit",IDCANCEL,242,125,50,14
-    ICON            IDI_UNLOCK,IDC_STATIC,8,9,20,20
-    LTEXT           "IF YOU DON'T YET HAVE A SERIAL NUMBER, YOU MUST EITHER PURCHASE DOLPHIN PROFESSIONAL OR APPLY FOR A FREE COMMUNITY EDITION SERIAL NUMBER USING THE BUTTON BELOW.",IDC_STATIC,42,31,251,26
-END
-
-
 /////////////////////////////////////////////////////////////////////////////
 //
 // DESIGNINFO
@@ -682,21 +662,6 @@ BEGIN
 END
 
 #endif    // APSTUDIO_INVOKED
-
-
-/////////////////////////////////////////////////////////////////////////////
-//
-// Dialog Info
-//
-
-IDD_BROWSER DLGINIT
-BEGIN
-    IDC_METHODTYPE, 0x403, 9, 0
-0x6e49, 0x7473, 0x6e61, 0x6563, "\000" 
-    IDC_METHODTYPE, 0x403, 6, 0
-0x6c43, 0x7361, 0x0073, 
-    0
-END
 
 
 /////////////////////////////////////////////////////////////////////////////

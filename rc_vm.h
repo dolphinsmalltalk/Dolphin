@@ -8,7 +8,7 @@
 #define IDS_APP_SHORT_NAME              129
 #define IDD_BACKTRACE                   136
 #define IDD_BLANK                       139
-#define IDP_CRTFAULT		            256
+#define IDP_CRTFAULT                    256
 #define IDP_RECURSIVEDNU                512
 #define IDP_STACKOVERFLOW               513
 #define IDP_OTFULL                      514
@@ -25,6 +25,7 @@
 #define IDP_IMAGEFILETRUNCATED          526
 #define IDP_UNKNOWNIMAGEERROR           527
 #define IDP_FAILTOHOOK                  528
+#define IDP_NOHIRESCLOCK                529
 #define IDS_INVALIDPROGID               768
 #define IDS_CANTCREATECONTROL           769
 #define IDS_CANTCREATEIE                770

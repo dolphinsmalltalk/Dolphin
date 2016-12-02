@@ -117,7 +117,7 @@ END
 
 STRINGTABLE
 BEGIN
-    IDP_VMNOTREGISTERED     "The Dolphin Smalltalk VM is required to run this application, but does not appear to be registered and cannot be found on the path.\nPlease reinstall or use REGSVR32 to register %2, then try running the application again."
+    IDP_VMNOTREGISTERED     "The Dolphin Smalltalk VM is required to run this application, but does not appear to be registered and cannot be found on the path.\nPlease reinstall or use REGSVR32 to register %3, then try running the application again."
     IDP_CREATEVMFAILED      "The Dolphin Smalltalk VM COM component is required to run this application, but could not created.%nThe error was: %1!#x!, %2%nPlease ensure that the application is correctly installed and try again."
     IDP_VERSIONMISMATCH     "This executable was created by a version %1!u!.%2!u!.x VM, but the loaded VM's version is %5!u!.%6!u!.%7!u!.%8!u!"
 END

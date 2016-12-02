@@ -102,6 +102,14 @@ HRESULT __cdecl ReportError(int nPrompt, ...)
 	return hr;
 }
 
+HRESULT __cdecl ReportWin32Error(int nPrompt, DWORD errorCode, LPCSTR arg)
+{
+	LPSTR errorText = GetErrorText(errorCode);
+	HRESULT hr = ReportError(nPrompt, errorCode, errorText, arg);
+	::LocalFree(errorText);
+	return hr;
+}
+
 void __cdecl RaiseFatalError(int nCode, int nArgs, ...)
 {
 	va_list args;

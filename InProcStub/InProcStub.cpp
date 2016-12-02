@@ -71,10 +71,7 @@ HRESULT __stdcall ErrorUnableToCreateVM(HRESULT hr)
 #ifndef TO_GO
 HRESULT __stdcall ErrorVMNotRegistered(HRESULT hr, const char*)
 {
-	LPSTR buf = GetErrorText(hr);
-	HRESULT ret = ReportError(IDP_VMNOTREGISTERED, hr, GetErrorText(hr));
-	::LocalFree(buf);
-	return ret;
+	return ReportWin32Error(IDP_VMNOTREGISTERED, hr);
 }
 
 HRESULT __stdcall ErrorVMVersionMismatch(ImageHeader* pHeader, VS_FIXEDFILEINFO* pvi)

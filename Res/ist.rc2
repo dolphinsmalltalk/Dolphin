@@ -10,24 +10,4 @@
 /////////////////////////////////////////////////////////////////////////////
 // Add manually edited resources here...
 
-#ifdef _AFX2
-	IDD_BROWSER DIALOG DISCARDABLE  0, 0, 305, 176
-	STYLE WS_CHILD
-	FONT 8, "Courier New"
-	BEGIN
-		CONTROL         "Generic1",IDC_CLASSLIST,"SysTreeView32",WS_BORDER | WS_TABSTOP | 
-						0x23,0,0,105,78
-		LISTBOX         IDC_INSTVARLIST,106,0,79,30,LBS_USETABSTOPS | 
-						LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_TABSTOP
-		LISTBOX         IDC_CATEGORYLIST,107,30,76,33,LBS_SORT | 
-						LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_TABSTOP
-		COMBOBOX        IDC_METHODTYPE,105,66,80,12,CBS_DROPDOWNLIST | 
-						WS_VSCROLL | WS_TABSTOP
-		LISTBOX         IDC_METHODLIST,183,0,122,78,LBS_SORT | 
-						LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_TABSTOP
-		CONTROL         "", IDC_METHODTEXT,"RichEdit",ES_MULTILINE | ES_AUTOVSCROLL | 
-						ES_AUTOHSCROLL | WS_VSCROLL | WS_HSCROLL | 0x1000, 0,78,304,97
-	END
-#endif
-
 /////////////////////////////////////////////////////////////////////////////

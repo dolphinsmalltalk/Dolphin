@@ -164,9 +164,7 @@ HRESULT Interpreter::initializeBeforeLoad()
 	}
 	if (m_hWndVM == NULL)
 	{
-		LPSTR errText = GetLastErrorText();
-		ReportError(IDP_FAILTOCREATEVMWND, ::GetLastError(), errText);
-		::LocalFree(errText);
+		return ReportWin32Error(IDP_FAILTOCREATEVMWND, ::GetLastError());
 	}
 
 	OverlappedCall::Initialize();

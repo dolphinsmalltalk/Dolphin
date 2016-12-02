@@ -18,10 +18,7 @@
 
 HRESULT __stdcall ErrorUnableToCreateVM(HRESULT hr)
 {
-	LPSTR buf = GetErrorText(hr);
-	HRESULT ret = ReportError(IDP_CREATEVMFAILED, hr, buf);
-	::LocalFree(buf);
-	return ret;
+	return ReportWin32Error(IDP_CREATEVMFAILED, hr);
 }
 
 static const char* FindImageNameArg()

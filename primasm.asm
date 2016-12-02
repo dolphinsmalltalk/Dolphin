@@ -52,12 +52,21 @@ CallContextPrim MACRO mangledName
 	ret
 ENDM
 
-;; This macro is a simpler version of the above, suitable for primitives which are
+;; This macro is a simpler version of the above, suitable for C++ primitives which are
 ;; likely to modify only the stackpointer
 CallSimplePrim MACRO mangledName
 	StoreIPRegister							;; SP already saved. Save IP in case of fault
 	call	mangledName						;; Transfer control to primitive
 	LoadSPRegister							;; Reload stack pointer as primitive has modified
+	ret
+ENDM
+
+;; This macro is a simpler version of the above, suitable for C++ primitives which do not 
+;; even modify the stackpointer. 
+;; C++ primitives that cannot fault can be invoked directly without a thunk
+CallStackNeutralPrim MACRO mangledName
+	StoreIPRegister							;; SP already saved. Save IP in case of fault
+	call	mangledName						;; Transfer control to primitive
 	ret
 ENDM
 
@@ -265,7 +274,9 @@ extern ?primitiveSinglePrecisionFloatAtPut@Interpreter@@CIHXZ:near32
 extern ?primitiveNextIndexOfFromTo@Interpreter@@CIHXZ:near32
 extern ?primitiveDeQBereavement@Interpreter@@CIHXZ:near32
 extern ?primitiveHookWindowCreate@Interpreter@@CIHXZ:near32
-extern ?primitiveSmallIntegerPrintString@Interpreter@@CIHXZ:near32
+
+primitiveSmallIntegerPrintString EQU ?primitiveSmallIntegerPrintString@Interpreter@@CIHXZ
+extern primitiveSmallIntegerPrintString:near32
 
 PRIMMAKEPOINT EQU ?primitiveMakePoint@Interpreter@@CIHAAVCompiledMethod@ST@@I@Z
 extern PRIMMAKEPOINT:near32
@@ -343,6 +354,12 @@ extern DISABLEINTERRUPTS:near32
 PRIMSTACKATPUT EQU ?primitiveStackAtPut@Interpreter@@CIHAAVCompiledMethod@ST@@I@Z
 extern PRIMSTACKATPUT:near32
 
+primitiveMillisecondClockValue EQU  ?primitiveMillisecondClockValue@Interpreter@@CIHXZ
+extern primitiveMillisecondClockValue:near32
+
+primitiveMicrosecondClockValue EQU  ?primitiveMicrosecondClockValue@Interpreter@@CIHXZ
+extern primitiveMicrosecondClockValue:near32
+ 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; Constants
 ;; Table of primitives for normal primitive dispatching
@@ -540,7 +557,7 @@ DWORD		primitiveIndirectDWORDAtPut					; case 185  Will be primitiveIndirectUInt
 DWORD		primitiveIndirectSDWORDAt					; case 186  Will be primitiveIndirectIntPtrAt
 DWORD		primitiveIndirectSDWORDAtPut				; case 187  Will be primitiveIndirectIntPtrAtPut
 DWORD		primitiveReplacePointers					; case 188
-DWORD		unusedPrimitive								; case 189
+DWORD		primitiveMicrosecondClockValue				; case 189
 DWORD		unusedPrimitive								; case 190
 DWORD		unusedPrimitive								; case 191
 DWORD		unusedPrimitive								; case 192
@@ -3092,12 +3109,9 @@ ENDPRIMITIVE primitiveReplacePointers
 ;; primitiveTruncated()
 ;;
 ;; Thunk for CPP primitive in flotprim.cpp
-;; No need to reload SP as takes no args, but might fault so we save down registers on entry
-
+;; No need to reload SP as takes no args, but might fault so we must save down IP on entry
 BEGINPRIMITIVE primitiveTruncated
-	StoreIPRegister
-	call	?primitiveTruncated@Interpreter@@CIHXZ
-	ret
+	CallStackNeutralPrim <?primitiveTruncated@Interpreter@@CIHXZ>
 ENDPRIMITIVE primitiveTruncated
 
 BEGINPRIMITIVE primitiveInputSemaphore
@@ -3298,17 +3312,6 @@ BEGINPRIMITIVE primitiveStackAtPut
 	CallSimplePrim <PRIMSTACKATPUT>
 ENDPRIMITIVE primitiveStackAtPut
 
-timeGetTime PROTO STDCALL
-EXTRN	NewUnsigned:near32
-
-BEGINPRIMITIVE primitiveMillisecondClockValue
-	INVOKE	timeGetTime
-	mov		ecx, eax
-	call	NewUnsigned
-	ReplaceStackTopWithNewOop <a>			; Overwrite receiver class with new object
-	ret
-ENDPRIMITIVE primitiveMillisecondClockValue
-
 ;; This is actually the GC primitive, and it may switch contexts
 ;; because is synchronously signals a Semaphore (sometimes)
 BEGINPRIMITIVE primitiveCoreLeft
@@ -3328,9 +3331,7 @@ BEGINPRIMITIVE primitiveSnapshot
 ENDPRIMITIVE primitiveSnapshot
 
 BEGINPRIMITIVE primitiveVariantValue
-	StoreIPRegister
-	call	?primitiveVariantValue@Interpreter@@CIHXZ
-	ret
+	CallStackNeutralPrim <?primitiveVariantValue@Interpreter@@CIHXZ>
 ENDPRIMITIVE primitiveVariantValue
 
 BEGINPRIMITIVE primitiveGetImmutable
@@ -3384,11 +3385,5 @@ BEGINPRIMITIVE primitiveSetImmutable
 localPrimitiveFailure0:
 	jmp primitiveFailure0
 ENDPRIMITIVE primitiveSetImmutable
-
-BEGINPRIMITIVE primitiveSmallIntegerPrintString
-	;; Snapshot saves image, so must have correct _IP
-	;; Now pass fileName argument so reset stack
-	CallSimplePrim <?primitiveSmallIntegerPrintString@Interpreter@@CIHXZ>
-ENDPRIMITIVE primitiveSmallIntegerPrintString
 
 END

@@ -15,7 +15,7 @@
 
 HRESULT __stdcall ErrorVMNotRegistered(HRESULT hr, LPCSTR szFileName)
 {
-	return ReportError(IDP_VMNOTREGISTERED, hr, szFileName);
+	return ReportWin32Error(IDP_VMNOTREGISTERED, hr, szFileName);
 }
 
 HRESULT __stdcall ErrorVMVersionMismatch(ImageHeader* pHeader, VS_FIXEDFILEINFO* pvi)

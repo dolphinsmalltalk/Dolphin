@@ -650,6 +650,7 @@ private:
 
 	// Process primitives
 	static BOOL __fastcall primitiveSignalAtTick(CompiledMethod&, unsigned argumentCount);
+	static BOOL __fastcall primitiveMicrosecondClockValue();
 	static BOOL __fastcall primitiveSignal(CompiledMethod&, unsigned argumentCount);
 	static BOOL __fastcall primitiveWait(CompiledMethod&, unsigned argumentCount);
 	static BOOL __fastcall primitiveResume(CompiledMethod&, unsigned argumentCount);
@@ -808,6 +809,8 @@ private:
 	static ProcessOTE* m_oteNewProcess;
 
 	static SemaphoreOTE* m_oteTimerSem;						// Timer Semaphore
+	static uint64_t m_clockFrequency;
+
 	static OTE* m_oteUnderConstruction;				// Window currently under construction
 
 	// Interpreter referenced objects (roots as may have no other refs)
