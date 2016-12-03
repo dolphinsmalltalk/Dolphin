@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Integer subclass: #SmallInteger
 	instanceVariableNames: ''
@@ -355,6 +355,14 @@ instVarAt: index put: value
 
 	^self shouldNotImplement!
 
+isAtomic
+	"Answer whether or not the receiver it the single unique instance of its class that
+	represents its value."
+
+	"SmallIntegers are encoded in object references, so are effectively atomic."
+
+	^true!
+
 isImmediate
 	"Answer whether the receiver has an immediate representation."
 
@@ -498,6 +506,7 @@ yourAddress
 !SmallInteger categoriesFor: #identityHash!comparing!public! !
 !SmallInteger categoriesFor: #instVarAt:!accessing!private! !
 !SmallInteger categoriesFor: #instVarAt:put:!accessing!private! !
+!SmallInteger categoriesFor: #isAtomic!public!testing! !
 !SmallInteger categoriesFor: #isImmediate!public!testing! !
 !SmallInteger categoriesFor: #isZero!public!testing! !
 !SmallInteger categoriesFor: #lowBit!bit manipulation!public! !

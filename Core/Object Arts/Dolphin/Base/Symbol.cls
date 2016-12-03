@@ -103,6 +103,14 @@ initialiseFrom: aString
 		from: 1 to: aString size startingAt: 1
 !
 
+isAtomic
+	"Answer whether or not the receiver is the single unique instance of its class that can
+	represents its value."
+
+	"The purpose of symbols is to be atomic strings."
+
+	^true!
+
 isInfix
 	"Answer whether the receiver is valid as an infix message selector."
 
@@ -181,6 +189,7 @@ stbSaveOn: anSTBOutFiler
 !Symbol categoriesFor: #forwardTo:!operations!public! !
 !Symbol categoriesFor: #hash!comparing!public! !
 !Symbol categoriesFor: #initialiseFrom:!initializing!private! !
+!Symbol categoriesFor: #isAtomic!public! !
 !Symbol categoriesFor: #isInfix!public!testing! !
 !Symbol categoriesFor: #isSymbol!public!RefactoringBrowser! !
 !Symbol categoriesFor: #keywords!accessing!public! !

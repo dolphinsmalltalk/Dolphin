@@ -11,48 +11,17 @@ STBInFiler comment: ''!
 !STBInFiler methodsFor!
 
 basicNext
-	"Private - Answer the next object from the receiver's stream.
-	Implementation Note: This has been optimized to avoid having to create
-	an STBPrefix object for every object loaded during de-serialization,
-	this means that STBPrefix's private knowledge of the prefix format has
-	been used here, which is not ideal, but the performance of serialization
-	is critical for the time taken to instantiate views, etc."
+	"Private - Answer the next object from the receiver's stream."
 
-	"First, read the prefix - ."
-
-	| prefix class anObject newObjectIndex |
+	| prefix |
 	prefix := self readInteger.
-	prefix == 0 ifTrue: [^nil].	"optimize for nil"
+	^self readObjectWithPrefix: prefix!
 
-	"SmallInteger?"
-	(prefix allMask: SmallIntegerMask) ifTrue: [^prefix bitShift: -1].
-
-	"Literal? (Hook for STL filer)"
-	prefix == LiteralPrefixMask ifTrue: [^self readLiteralData].
-	(prefix allMask: DataPrefixMask) 
-		ifFalse: 
-			[^(prefix allMask: CharacterMask) 
-				ifTrue: [Character value: (prefix bitShift: IndexShift)]
-				ifFalse: [self objectAt: (prefix bitShift: IndexShift)]].
-
-	"Ascertain the class of the object."
-	class := (prefix allMask: ClassPrefixMask) 
-				ifTrue: [self readClassData: prefix]
-				ifFalse: [self classAt: (prefix bitShift: IndexShift)].
-
-	"Now read the object data."
-	newObjectIndex := readMap size + 1.
-	anObject := self readObjectOfClass: class.
-
-	"If anObject was a proxy for the real one, evaluate it now."
-	^anObject stbFixup: self at: newObjectIndex!
-
-classAt: anInteger 
+classAt: anInteger
 	"Private - Answer the map value for a class at anInteger. If anInteger is zero then answer nil.
 	Signal an exception if there is no such entry."
 
-	^self objectAt: anInteger.
-	!
+	^readMap at: anInteger!
 
 classLocator
 	"Answer the receiver's classLocator inst var. This holds the context of any remote
@@ -126,18 +95,16 @@ next
 	^nextObject!
 
 objectAt: anInteger
-	"Private - Answer the map value at anInteger. If anInteger is zero then answer nil.
-	Signal an exception if there is no such entry."
+	"Private - Answer the map value at anInteger. Signal an exception if there is no such entry."
 
-	^anInteger == 0 
-		ifFalse: [readMap at: anInteger ifAbsent: [self class errorInconsistentSTB: anInteger]]!
+	^readMap at: anInteger!
 
 readClassData: anInteger 
 	"Private - Answer the class whose details are prefixed by the specified <integer> flags
 	in <STBPrefix> format."
 
 	| versionBeingRead class |
-	versionBeingRead := (anInteger allMask: NonZeroVersionMask) ifTrue: [self readInteger] ifFalse: [0].
+	versionBeingRead := (anInteger allMask: STBPrefix.NonZeroVersionMask) ifTrue: [self readInteger] ifFalse: [0].
 	class := self readClassLocator: anInteger.
 	self register: class.
 	versionBeingRead = class stbVersion 
@@ -153,9 +120,9 @@ readClassData: anInteger
 			converters at: class put: format].
 	^class!
 
-readClassLocator: anIntegerFlags 
+readClassLocator: anIntegerFlags
 	| locatorString |
-	locatorString := (stream next: (anIntegerFlags bitShift: LocatorLenShift)) asString.
+	locatorString := (stream next: (anIntegerFlags bitShift: STBPrefix.LocatorLenShift)) asString.
 	^(classLocator key: locatorString) locateClass!
 
 readInteger
@@ -213,11 +180,44 @@ readObjectOfClass: aClass format: anSTBClassConversion
 			newObject become: (anSTBClassConversion converterBlock value: newObject)].
 	^newObject!
 
-register: anObject 
-	"Private - Add anObject to the readMap. Answer the registered objects unique reference."
+readObjectWithPrefix: anInteger
+	| anObject newObjectIndex class |
+	anInteger == 0 ifTrue: [^nil].	"optimize for nil"
 
-	readMap addLast: anObject.
-	^readMap size!
+	"SmallInteger?"
+	(anInteger allMask: STBPrefix.SmallIntegerMask) ifTrue: [^anInteger bitShift: -1].
+
+	"Literal? (Hook for STL filer)"
+	anInteger == STBPrefix.LiteralPrefixMask ifTrue: [^self readLiteralData].
+	(anInteger allMask: STBPrefix.DataPrefixMask)
+		ifFalse: 
+			[^(anInteger allMask: STBPrefix.CharacterMask)
+				ifTrue: [Character value: (anInteger bitShift: STBPrefix.IndexShift)]
+				ifFalse: [self objectAt: (anInteger bitShift: STBPrefix.IndexShift)]].
+
+	"Ascertain the class of the object."
+	class := (anInteger allMask: STBPrefix.ClassPrefixMask)
+				ifTrue: [self readClassData: anInteger]
+				ifFalse: [self classAt: (anInteger bitShift: STBPrefix.IndexShift)].
+
+	"Now read the object data."
+	newObjectIndex := readMap size + 1.
+	anObject := self readObjectOfClass: class.
+
+	"If anObject was a proxy for the real one, evaluate it now."
+	^anObject stbFixup: self at: newObjectIndex!
+
+readVersion
+	| char |
+	version := 0.
+	[(char := Character value: stream next) isDigit]
+		whileTrue: [version := version * 10 + char digitValue].
+	char == Character space ifFalse: [self class errorNotSTB]!
+
+register: anObject
+	"Private - Add anObject to the readMap."
+
+	^readMap addAnsweringIndex: anObject!
 
 reset
 	"Private - Reset the instance.
@@ -231,12 +231,8 @@ reset
 	super reset!
 
 resetAndValidateStream
-	| char |
 	(self class peekForSignatureIn: stream) ifFalse: [self class errorNotSTB].
-	version := 0.
-	[(char := Character value: stream next) isDigit]
-		whileTrue: [version := version * 10 + char digitValue].
-	char == Character space ifFalse: [self class errorNotSTB].
+	self readVersion.
 	version > self class version ifTrue: [self class errorVersion: version]!
 
 setRefOffset: anInteger
@@ -270,6 +266,8 @@ timedNext
 !STBInFiler categoriesFor: #readMap!accessing!private! !
 !STBInFiler categoriesFor: #readObjectOfClass:!accessing!private! !
 !STBInFiler categoriesFor: #readObjectOfClass:format:!operations!private! !
+!STBInFiler categoriesFor: #readObjectWithPrefix:!accessing!private! !
+!STBInFiler categoriesFor: #readVersion!initializing!private! !
 !STBInFiler categoriesFor: #register:!helpers!private! !
 !STBInFiler categoriesFor: #reset!initializing!private! !
 !STBInFiler categoriesFor: #resetAndValidateStream!initializing!private! !

@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 STBInFiler subclass: #STLInFiler
 	instanceVariableNames: ''
@@ -9,6 +9,13 @@ STLInFiler guid: (GUID fromString: '{0EB5F19A-A120-4002-83D9-C520F502DE6D}')!
 STLInFiler comment: ''!
 !STLInFiler categoriesForClass!System-Binary storage! !
 !STLInFiler methodsFor!
+
+basicNext
+	| prefixOrLiteral |
+	prefixOrLiteral := stream next.
+	^prefixOrLiteral isInteger
+		ifTrue: [self readObjectWithPrefix: prefixOrLiteral]
+		ifFalse: [prefixOrLiteral]!
 
 readClassLocator: anIntegerFlags 
 	^stream next!
@@ -25,14 +32,19 @@ readLiteralData
 	self register: newObject.
 	^newObject!
 
-resetAndValidateStream
-	(self class peekForSignatureIn: stream) ifFalse: [self class errorNotSTB].
-	version := self stream next.
-	version > self class version ifTrue: [self class errorVersion: version]! !
+readVersion
+	version := stream next!
+
+registerPredefinedObjects
+	"Private - Post version 3 the out filer stores everything."
+
+	version < 4 ifTrue: [super registerPredefinedObjects] ifFalse: [self registerPredefinedClasses]! !
+!STLInFiler categoriesFor: #basicNext!accessing!private! !
 !STLInFiler categoriesFor: #readClassLocator:!helpers!private! !
 !STLInFiler categoriesFor: #readInteger!helpers!private! !
 !STLInFiler categoriesFor: #readLiteralData!private! !
-!STLInFiler categoriesFor: #resetAndValidateStream!initializing!private! !
+!STLInFiler categoriesFor: #readVersion!initializing!private! !
+!STLInFiler categoriesFor: #registerPredefinedObjects!initializing!private! !
 
 !STLInFiler class methodsFor!
 

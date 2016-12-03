@@ -822,6 +822,13 @@ instVarNamed: aString
 
 	^self instVarAt: (self class indexOfInstVar: aString)!
 
+isAtomic
+	"Answer whether or not the receiver is the single unique instance of its class that can
+	represents its value. For example, <Symbol>s are always atomic, so #a == 'a' asSymbol, but
+	<string>s in general are not atomic."
+
+	^false!
+
 isFinalizable
 	"Answer whether the receiver is marked as requiring finalization.
 	Finalizable objects will receive a #finalize message after the garbage
@@ -1561,6 +1568,7 @@ yourself
 !Object categoriesFor: #instVarAt:!accessing!private! !
 !Object categoriesFor: #instVarAt:put:!accessing!private! !
 !Object categoriesFor: #instVarNamed:!accessing!private! !
+!Object categoriesFor: #isAtomic!public!testing! !
 !Object categoriesFor: #isFinalizable!public!testing! !
 !Object categoriesFor: #isImmediate!private!testing! !
 !Object categoriesFor: #isImmutable!public!testing! !

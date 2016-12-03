@@ -309,6 +309,14 @@ instanceClass
 
 	^self!
 
+isAtomic
+	"Answer whether or not the receiver has a single unique instance for any individual value it
+	can represent."
+
+	"Each class is the singleton instance of a unique metaclass."
+
+	^true!
+
 isChanged
 	"Answer true if the receiver or any of it's contents have been changed since
 	their changed flag was last reset."
@@ -777,6 +785,7 @@ variableSubclass: aClassSymbol
 !Class categoriesFor: #initializeAfterBinaryLoad!initializing!private! !
 !Class categoriesFor: #initializeAfterLoad!initializing!public! !
 !Class categoriesFor: #instanceClass!accessing!public! !
+!Class categoriesFor: #isAtomic!public!testing! !
 !Class categoriesFor: #isChanged!development!public!source filing!testing! !
 !Class categoriesFor: #isChanged:!accessing!development!public! !
 !Class categoriesFor: #isLiteral!public!testing! !
