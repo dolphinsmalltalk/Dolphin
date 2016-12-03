@@ -124,7 +124,6 @@ BEGIN
     IDP_ZCTRESERVEFAIL      "Unable to reserve memory for %1!u! ZT entries. %nPlease close some appliations and try again."
     IDP_ZCTCOMMITFAIL       "Out of memory attempting to commit %1!u! ZT entries. %nPlease close some appliations and try again."
     IDP_BADSYSINFO          "Unexpected page size %1!d! or allocation granularity %2!d!. This application is limited to running on Intel machines with a page size of %3!d! and an allocation granularity of %4!d!."
-    IDP_BADTIMERRES         "Unable to establish desired timer resolution of %1!d!.%nPlease wait a while and try again.%nYou may need to close some applications.%nIf running Windows 9x it may be necessary to reboot."
     IDP_FAILTOCREATEVMWND   "Failed to create VM message window: %2 (%1!d!)"
     IDP_CORRUPTIMAGE        "Executable is corrupt.%nMismatched checksums %1!u! and %2!u!"
     IDP_IMAGEREADERROR      "Error %1!d! loading executable"
@@ -135,6 +134,7 @@ END
 STRINGTABLE
 BEGIN
     IDP_FAILTOHOOK          "Unable to hook window creation events (%1!d!).%nPlease wait a few moments and try again."
+    IDP_NOHIRESCLOCK        "Unable to establish high-resolution clock frequency (%!1d!: %2)"
 END
 
 STRINGTABLE

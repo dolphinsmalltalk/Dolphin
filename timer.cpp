@@ -26,8 +26,6 @@
 // Smalltalk classes
 #include "STExternal.h"
 
-// Timer resolution (hopefully 1 millisecond)
-static UINT wTimerRes = 1;
 static UINT wTimerMax = 0xFFFF;
 
 // Defines the maximum acceptable timer resolution, over which the VM refuses to run
@@ -163,7 +161,7 @@ BOOL __fastcall Interpreter::primitiveSignalAtTick(CompiledMethod&, unsigned arg
 
 	if (ObjectMemory::fetchClassOf(Oop(semaphorePointer)) == Pointers.ClassSemaphore)
 	{
-		if (nDelay < int(wTimerRes))
+		if (nDelay <= 0)
 		{
 #ifdef _DEBUG
 			TRACESTREAM << "Requested delay " << dec << nDelay << " passed, signalling immediately" << endl;
@@ -274,20 +272,8 @@ HRESULT Interpreter::initializeTimer()
 	m_oteTimerSem = reinterpret_cast<SemaphoreOTE*>(Pointers.Nil);
 	timerID = 0;
 	TIMECAPS tc;
-	tc.wPeriodMin = tc.wPeriodMax = wTimerRes;
 	::timeGetDevCaps(&tc, sizeof(TIMECAPS));
-	wTimerRes = min(max(tc.wPeriodMin, wTimerRes), tc.wPeriodMax) - 1;
 	wTimerMax = tc.wPeriodMax;
-	do
-	{
-		wTimerRes++;
-		if (wTimerRes > MAXTIMERRES)
-			return ReportError(IDP_BADTIMERRES, MAXTIMERRES);
-	} while (::timeBeginPeriod(wTimerRes) != TIMERR_NOERROR);
-
-#ifdef _DEBUG
-	trace("Established timer resolution of %u mS\n", wTimerRes);
-#endif
 
 	return S_OK;
 }
@@ -303,10 +289,6 @@ void Interpreter::terminateTimer()
 		if (err != TIMERR_NOERROR)
 			trace(szFmt, err, "timeKillEvent", timerID);
 	}
-
-	err = ::timeEndPeriod(wTimerRes);
-	if (TIMERR_NOERROR != err)
-		trace(szFmt, err, "timeEndPeriod", wTimerRes);
 }
 
 

@@ -387,7 +387,6 @@
     <Image Include="Res\Time.ico" />
     <Image Include="Res\TimePresenter.ico" />
     <Image Include="Res\TimeStamp.ico" />
-    <Image Include="Res\TipOfTheDay.ico" />
     <Image Include="Res\ToggleLocalHierarchy.ico" />
     <Image Include="Res\Tools.bmp" />
     <Image Include="Res\ToolTip.ico" />

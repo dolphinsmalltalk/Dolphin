@@ -11,3 +11,43 @@
 // Add manually edited resources here...
 
 /////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION 2016,7,0,0
+ PRODUCTVERSION 2016,7,0,0
+ FILEFLAGSMASK 0x3fL
+#ifdef _DEBUG
+ FILEFLAGS 0x2bL
+#else
+ FILEFLAGS 0x2aL
+#endif
+ FILEOS 0x4L
+ FILETYPE 0x1L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904e4"
+        BEGIN
+            VALUE "CompanyName", "Object Arts Ltd."
+            VALUE "FileDescription", "Dolphin Smalltalk Virtual Machine"
+            VALUE "FileVersion", "2016.7.0.0"
+            VALUE "InternalName", "Dolphin"
+            VALUE "LegalCopyright", "Copyright © Object Arts Ltd 1997-2016. STS © David Gorisek 2000-2016"
+            VALUE "OriginalFilename", "DolphinVM7.DLL"
+            VALUE "PrivateBuild", "11192015"
+            VALUE "ProductName", "Dolphin Smalltalk 7"
+            VALUE "ProductVersion", GIT_TAG
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x409, 1252
+    END
+END
+
+
+/////////////////////////////////////////////////////////////////////////////

@@ -138,47 +138,6 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
-// Version
-//
-
-VS_VERSION_INFO VERSIONINFO
- FILEVERSION 2016,7,0,0
- PRODUCTVERSION 2016,7,0,0
- FILEFLAGSMASK 0x3fL
-#ifdef _DEBUG
- FILEFLAGS 0x2bL
-#else
- FILEFLAGS 0x2aL
-#endif
- FILEOS 0x4L
- FILETYPE 0x1L
- FILESUBTYPE 0x0L
-BEGIN
-    BLOCK "StringFileInfo"
-    BEGIN
-        BLOCK "040904e4"
-        BEGIN
-            VALUE "CompanyName", "Object Arts Ltd."
-            VALUE "FileDescription", "Dolphin Smalltalk Virtual Machine"
-            VALUE "FileVersion", "2016.7.0.0"
-            VALUE "InternalName", "Dolphin"
-            VALUE "LegalCopyright", "Copyright © Object Arts Ltd 1997-2016. STS © David Gorisek 2000-2016"
-            VALUE "OriginalFilename", "DolphinVM7.DLL"
-            VALUE "PrivateBuild", "11192015"
-            VALUE "ProductName", "Dolphin Smalltalk 7"
-            VALUE "ProductVersion", GIT_TAG
-            VALUE "WARNING", "Please edit this as a text file rather than with the resource editor to preserve GIT_TAG"
-        END
-    END
-    BLOCK "VarFileInfo"
-    BEGIN
-        VALUE "Translation", 0x409, 1252
-    END
-END
-
-
-/////////////////////////////////////////////////////////////////////////////
-//
 // String Table
 //
 
@@ -198,7 +157,6 @@ BEGIN
     IDP_ZCTRESERVEFAIL      "Unable to reserve memory for %1!u! ZT entries. There is insufficient virtual memory remaining, or it is too fragmented."
     IDP_ZCTCOMMITFAIL       "Out of memory attempting to commit %1!u! ZT entries."
     IDP_BADSYSINFO          "Unexpected page size %1!d! or allocation granularity %2!d!. This application is limited to running on Intel machines with a page size of %3!d! and an allocation granularity of %4!d!."
-    IDP_BADTIMERRES         "Unable to establish maximum desired timer resolution of %1!d!.%nPlease wait a while and try again. %nYou may need to close some applications. %nIf running Windows 9x it may be necessary to reboot."
     IDP_FAILTOCREATEVMWND   "Failed to create VM message window: %2 (%1!d!)"
     IDP_CORRUPTIMAGE        "Image is corrupt. %nMismatch between object data size (%1!u!) and checksum (%2!u!)"
     IDP_IMAGEREADERROR      "Error %1!d! reading image"

@@ -497,8 +497,6 @@ TIMEPRESENTER.ICO       ICON                    "Res\\TimePresenter.ico"
 
 TIMESTAMP.ICO           ICON                    "Res\\TimeStamp.ico"
 
-TIPOFTHEDAY.ICO         ICON                    "Res\\TipOfTheDay.ico"
-
 TOGGLELOCALHIERARCHY.ICO ICON                    "Res\\ToggleLocalHierarchy.ico"
 
 TOOLTIP.ICO             ICON                    "Res\\ToolTip.ico"
