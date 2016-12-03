@@ -1,11 +1,12 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #Delay
-	instanceVariableNames: 'duration resumptionTime waitSemaphore '
-	classVariableNames: 'AccessProtect Current ImageClock Pending Resolution TimerMax TimingProcess TimingSemaphore'
+	instanceVariableNames: 'duration resumptionTime waitSemaphore'
+	classVariableNames: 'AccessProtect Current DefaultResolution HighestResolution ImageClock LowestResolution Pending Resolution TicksPerMillisecond TimingProcess TimingSemaphore'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Delay guid: (GUID fromString: '{87B4C47B-026E-11D3-9FD7-00A0CC3E4A32}')!
+Delay addClassConstant: 'DefaultResolution' value: 15625!
 Delay comment: '<Delay>s are used to introduce timed pauses in the execution of a <Process>.  Delays can be constructed that specify a duration using the instance creation messages #forMilliseconds: and #forSeconds:, or an absolute time based on the millisecond clock value (#untilMilliseconds:). Once constructed a Delay responds to the #wait message by suspending the active process for the desired duration, or until the desired absolute time is reached. 
 
 Delays are "one-shot" in that once they have expired further attempts to #wait on them will return immediately. This applies even if the Delay was originally constructed to wait for a time interval rather than an absolute time. Therefore if one wishes to delay a process in a loop, new Delay instances should be created as required inside the loop. It is often more convenient to use the ProcessorScheduler>>sleep: message, which wraps up the creation and wait operations inside a convenience message.
@@ -34,14 +35,14 @@ Class Variables:
 !Delay methodsFor!
 
 calcResumptionTime
-	"Private - Calculate and answer the value of the millisecond clock after which any 
-	Process waiting on the receiver will be rescheduled. We could lazily evaluate this
-	from the normal accessor, but we want to ensure that scheduling Delays is as fast 
-	as possible, and we also want to be able to control when the calculation is made, 
-	as for relative durations (the most common case) we really want to calculate off 
-	the clock just before the receiver is scheduled, certainly not before that."
+	"Private - Calculate and answer the value of the millisecond clock after which any Process
+	waiting on the receiver will be rescheduled. We could lazily evaluate this from the normal
+	accessor, but we want to ensure that scheduling Delays is as fast as possible, and we also
+	want to be able to control when the calculation is made, as for relative durations (the most
+	common case) we really want to calculate off the clock just before the receiver is
+	scheduled, certainly not before that."
 
-	resumptionTime isNil ifTrue: [resumptionTime := self class millisecondClockValue + duration].
+	resumptionTime isNil ifTrue: [resumptionTime := self class microsecondClockValue + duration].
 	^resumptionTime!
 
 cancel
@@ -64,38 +65,40 @@ delta: anInteger
 
 	resumptionTime := resumptionTime + anInteger!
 
-duration: millisecs
-	"Private - Initialize the receiver to be a Delay for the Number of milliseconds specified by
-	the argument, millisecs. The resumptionTime is calculated when a #wait is sent.
+duration: anInteger
+	"Private - Initialize the receiver to be a Delay for the number of microseconds specified by
+	the <integer> argument. The resumptionTime is calculated when a #wait is sent.
 	Answer the receiver."
 
-	duration := millisecs truncated
-!
+	duration := anInteger truncated!
 
 getDuration
-	"Private - Answer the remaining duration of the receiver based off the current millisecond
-	clock value and requested resumption time. We avoid requesting a delay which is larger than
-	that which the system can provide, which means we may wake up before time and have to
-	reschedule. If the resumptionTime has already passed, then answer 0 (i.e. duration is always
-	positive)."
+	"Private - Answer the remaining duration of the receiver based off the current clock value
+	and requested resumption time. Note that we may request a delay which is larger than that
+	which the operating system can provide (on NT this is 1000000 milliseconds, or ~17 minutes),
+	in which case we may wake up before time and have to reschedule. Delays should not be
+	scheduled when they have expired, so the minimum duration is the timer resolution."
 
-	^(resumptionTime - self class millisecondClockValue min: TimerMax) max: 0!
+	^resumptionTime - self class microsecondClockValue max: HighestResolution!
 
 hasExpired
 	"Private - Answer whether the receiver represents a Delay which should have
 	fired by now."
 
-	^(resumptionTime - self class millisecondClockValue) < Resolution.
-
-	#todo "This, and other Delay methods, do not correctly account for the millisecond clock
-		wrapping round. Fix this, and perhaps allow scheduling of Delays for absolute DateTimes"!
+	^resumptionTime - self class microsecondClockValue < (HighestResolution bitShift: -1)!
 
 initialize
-	"Private - Initialize the receiver to be a valid Delay, but one which will fire immediately.
+	"Private - Initialize the receiver to be a valid Delay, but one which will fire after the minimum possible delay.
 	Answer the receiver."
 
 	duration := 0.
 	waitSemaphore := Semaphore new!
+
+microsecondClockValue
+	"Answer the current value of the microsecond clock."
+
+	<primitive: 189>
+	^self primitiveFailed!
 
 printOn: aStream
 	"Append a short textual description of the receiver to aStream."
@@ -114,19 +117,19 @@ resumptionTime
 
 	^resumptionTime!
 
-resumptionTime: millisecondTime
-	"Private - Initialize the receiver to be a Delay until millisecondTime. The duration remains
-	nil as this is a delay until an absolute time, and cannot be rescheduled.
-	Answer the receiver."
+resumptionTime: anInteger
+	"Private - Initialize the receiver to be a Delay until the microsecond clock value is >=
+	anInteger. The duration remains nil as this is a delay until an absolute time, and cannot be
+	rescheduled. Answer the receiver."
 
-	resumptionTime := millisecondTime truncated!
+	resumptionTime := anInteger truncated!
 
 riseAndShine
 	"Private - The receiver's alarm has gone off. Decide whether to get up yet, or
 	press the snooze button. This is necessary because we cannot always set a Delay
 	for the maximum duration required.
 	Implementation Note: This expects to be called inside the critical section."
-
+	
 	self hasExpired 
 		ifTrue: [self wakeup]
 		ifFalse: [self snooze]!
@@ -143,7 +146,7 @@ schedule
 	we own) to be signalled, which will mean that the assignment to Current
 	must happen before the timing process accesses it. The timing Process
 	will not restart until we exit our critical section."
-	Processor signal: TimingSemaphore afterMilliseconds: self getDuration.
+	Processor signal: TimingSemaphore afterMilliseconds: self getDuration // 1000.
 
 	Current := self!
 
@@ -208,6 +211,7 @@ wakeup
 !Delay categoriesFor: #getDuration!accessing!private! !
 !Delay categoriesFor: #hasExpired!private!testing! !
 !Delay categoriesFor: #initialize!initializing!private! !
+!Delay categoriesFor: #microsecondClockValue!enquiries!public! !
 !Delay categoriesFor: #printOn:!development!printing!public! !
 !Delay categoriesFor: #resumptionTime!accessing!public! !
 !Delay categoriesFor: #resumptionTime:!accessing!private! !
@@ -233,6 +237,13 @@ cancelTimer
 	Processor signal: nil afterMilliseconds: 0.
 !
 
+clampResolution: anInteger
+	"Private - As we are using multimedia timers at present, the shortest delay we
+	can request is 1mS, so we clamp the requested resolution to 1000 as there is no point
+	setting a resolution higher than we can use."
+
+	^anInteger max: 1000!
+
 forkTimingProcess
 	"Private - Start the timing process which manages instances of the receiver. The timing 
 	Process runs at the highest, Timing, priority, to ensure that the signal gets through, regardless 
@@ -255,8 +266,16 @@ forkTimingProcess
 				self scheduleNext]] repeat.
 	] forkAt: Processor timingPriority) name: 'Timing'; yourself!
 
-forMilliseconds: millisecondCount
-	"Answer a new instance of the receiver with a duration of millisecondCount seconds.
+forMicroseconds: anInteger
+	"Answer a new instance of the receiver with a duration of approximately anInteger
+	microseconds The new instance has no effect on the progress of a Process until sent the
+	message #wait. The actual delay achieved will depend on the current resolution of the OS
+	timer, which has a maximum resolution on current Windows systems of at best 500uS."
+
+	^self new duration: anInteger!
+
+forMilliseconds: anInteger
+	"Answer a new instance of the receiver with a duration of anInteger milliseconds.
 	The new instance has no effect on the progress of a Process until sent the 
 	message #wait. 
 	ou can now set a delay down to 1mS - e.g. try 
@@ -265,17 +284,22 @@ forMilliseconds: millisecondCount
 	much CPU time for other processes to run.
 	"
 
-	^self new duration: millisecondCount!
+	^self new duration: anInteger * 1000!
 
-forSeconds: secondCount
-	"Answer a new instance of the receiver with a duration of secondCount seconds.
-	The new instance has no effect on the progress of a Process until sent the 
-	message #wait. A Delay instantiated for a particular duration (as opposed to one
-	instantiated for an absolute millisecond time) can be used repeatedly (i.e. the 
-	#wait message can be sent to it more than once, though at any one time only one 
-	Process can be waiting for a Delay)."
+forSeconds: anInteger
+	"Answer a new instance of the receiver with a duration of anInteger seconds. The new
+	instance has no effect on the progress of a Process until sent the message #wait. A Delay
+	instantiated for a particular duration (as opposed to one instantiated for an absolute
+	millisecond time) can be used repeatedly (i.e. the #wait message can be sent to it more than
+	once, though at any one time only one Process can be waiting for a Delay)."
 
-	^self forMilliseconds: secondCount*1000!
+	^self forMilliseconds: anInteger * 1000!
+
+highestResolution
+	"Answer the maximum resolution of Delays in microseconds, i.e. the shortest period for which
+	one could theoretically request a Delay on the current host."
+
+	^HighestResolution!
 
 icon
 	"Answers an Icon that can be used to represent this class. Here we use a constant expression 
@@ -293,11 +317,10 @@ initialize
 	"
 
 	ImageClock := 0.
-	Resolution := 1.
-	TimerMax := 65535.
+	LowestResolution := HighestResolution := Resolution := DefaultResolution.
 	AccessProtect isNil ifTrue: [AccessProtect := Semaphore forMutualExclusion].
 	AccessProtect critical: 
-			[Pending := SortedCollection 
+			[Pending := SortedCollection
 						sortBlock: [:delay1 :delay2 | delay1 resumptionTime <= delay2 resumptionTime].
 			Current := nil].
 	TimingSemaphore isNil ifTrue: [self initializeTimingSemaphore]!
@@ -316,10 +339,16 @@ keepAlive
 			Notification signal: 'Starting new timing process'.
 			self forkTimingProcess]!
 
-millisecondClockValue
-	"Private - Answer the current millisecond clock value."
+lowestResolution
+	"Answer the maximum resolution of Delays in microseconds, i.e. the shortest period for which
+	one could theoretically request a Delay on the current host."
 
-	<primitive: 174>
+	^LowestResolution!
+
+microsecondClockValue
+	"Private - Answer the current value of the microsecond clock."
+
+	<primitive: 189>
 	^self primitiveFailed!
 
 new
@@ -337,20 +366,12 @@ onPreSaveImage
 	"Private - The image is about to be saved. Store down the millisecond clock
 	value so that we can reschedule Delays on restart."
 
-	ImageClock := self millisecondClockValue!
+	ImageClock := self microsecondClockValue!
 
 onStartup
 	"The system has just started. Initialize the timing system."
 
-	| devCaps |
-	"We don't bother detecting errors reported by the call, because it's too early to report them anyway"
-	devCaps := ByteArray new: 8.
-	WinMMLibrary default timeGetDevCaps: devCaps cbtc: devCaps size.
-	Resolution := devCaps dwordAtOffset: 0.
-
-	"Don't use the full range as its a bit unreliable on Windows 95.
-	On NT4.0 this is fairly long duration anyway."
-	TimerMax := (devCaps dwordAtOffset: 4) // 2.
+	self queryOsTimerResolution.
 	self keepAlive.
 	self reschedule!
 
@@ -360,6 +381,21 @@ prod
 
 	TimingSemaphore signal!
 
+queryOsTimerResolution
+	| min max actual |
+	min := DWORDBytes new.
+	max := DWORDBytes new.
+	actual := DWORDBytes new.
+	(NTLibrary default
+		ntQueryTimerResolution: min
+		maximum: max
+		actual: actual) == 0
+		ifTrue: 
+			[LowestResolution := self clampResolution: min value // 10.
+			HighestResolution := self clampResolution: max value // 10.
+			Resolution := self clampResolution: actual value // 10]
+		ifFalse: [LowestResolution := HighestResolution := Resolution := DefaultResolution]!
+
 reschedule
 	"Private - Ensure that the next pending Delay, or the Current one, is correctly scheduled with 
 	the VM. Called during startup to reschedule Delays based on the difference between the current
@@ -367,16 +403,41 @@ reschedule
 
 	AccessProtect critical: 
 			[| delta |
-			delta := self millisecondClockValue - ImageClock.
+			delta := self microsecondClockValue - ImageClock.
 			Current isNil ifFalse: [Current snooze].	"put current back into Pending"
 			Pending do: [:each | each delta: delta].
 			self scheduleNext]!
 
 resolution
-	"Answer the resolution of Delays. This is the underlying resolution of the timing
-	device. Dolphin will try to service delays of this period, but it may not be possible."
+	"Answer the resolution of Delays in microseconds. This is the underlying resolution of the
+	OS timer. Dolphin will try to service delays of this period, but it may not be possible."
 
 	^Resolution!
+
+resolution: anInteger do: aNiladicValuable
+	"Evaluate the <monadicValuable> argument with the system timer resolution set to the number
+	of 100nS intervals specified by the <integer> argument. The actual timer resolution is
+	passed as the argument to the <monadicValuable>."
+
+	self resolution: anInteger set: true.
+	[aNiladicValuable value] ensure: [self resolution: anInteger set: false]!
+
+resolution: anInteger set: aBoolean
+	"Attempt to set or relinquish a timer resolution specified by the <integer> argument, which
+	represents the desired number of microseconds between each timer tick. If the <boolean>
+	argument is true, then the timer resolution is requested. If the <boolean> argument is
+	false, then a previous request for the specified resolution is given up. Answer the actual
+	timer resolution established in microseconds. On current windows systems the maximum
+	resolution is 500uS, and the minimum (and default) ~15mS. Note that increasing the timer
+	resolution can reduce battery life, so this should be used with care."
+
+	| actualResolution |
+	actualResolution := DWORDBytes new.
+	NTLibrary default
+		setTimerResolution: (anInteger max: 1000) * 10
+		set: aBoolean
+		actualResolution: actualResolution.
+	^Resolution := self clampResolution: actualResolution value!
 
 scheduleNext
 	"Private - Schedule the next Pending Delay (if any). MUST be called from within
@@ -395,24 +456,31 @@ untilMilliseconds: millisecondTime
 	"Answer a new instance of the receiver that will make the active Process
 	wait until the millisecond clock reaches the value millisecondTime."
 
-	^self new resumptionTime: millisecondTime! !
+	^self new resumptionTime: millisecondTime * 1000! !
 !Delay class categoriesFor: #aboutToIdle!event handling!private! !
 !Delay class categoriesFor: #cancelTimer!operations!private! !
+!Delay class categoriesFor: #clampResolution:!helpers!private! !
 !Delay class categoriesFor: #forkTimingProcess!initializing!private! !
+!Delay class categoriesFor: #forMicroseconds:!instance creation!public! !
 !Delay class categoriesFor: #forMilliseconds:!instance creation!public! !
 !Delay class categoriesFor: #forSeconds:!instance creation!public! !
+!Delay class categoriesFor: #highestResolution!constants!public! !
 !Delay class categoriesFor: #icon!constants!development!public! !
 !Delay class categoriesFor: #initialize!development!initializing!public! !
 !Delay class categoriesFor: #initializeTimingSemaphore!initializing!private! !
 !Delay class categoriesFor: #keepAlive!helpers!private! !
-!Delay class categoriesFor: #millisecondClockValue!initializing!private! !
+!Delay class categoriesFor: #lowestResolution!constants!public! !
+!Delay class categoriesFor: #microsecondClockValue!initializing!private! !
 !Delay class categoriesFor: #new!instance creation!public! !
 !Delay class categoriesFor: #onExit!event handling!public! !
 !Delay class categoriesFor: #onPreSaveImage!event handling!private! !
 !Delay class categoriesFor: #onStartup!event handling!public! !
 !Delay class categoriesFor: #prod!operations!private! !
+!Delay class categoriesFor: #queryOsTimerResolution!helpers!private! !
 !Delay class categoriesFor: #reschedule!initializing!private! !
 !Delay class categoriesFor: #resolution!constants!public! !
+!Delay class categoriesFor: #resolution:do:!operations!public! !
+!Delay class categoriesFor: #resolution:set:!helpers!public! !
 !Delay class categoriesFor: #scheduleNext!initializing!private! !
 !Delay class categoriesFor: #timingProcess!initializing!private! !
 !Delay class categoriesFor: #untilMilliseconds:!instance creation!public! !

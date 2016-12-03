@@ -10,12 +10,20 @@ NTLibrary comment: ''!
 !NTLibrary categoriesForClass!External-Libraries! !
 !NTLibrary methodsFor!
 
-ntGetTickCount
-	"Put in a random function just to show that the library exists and works.
-	NTLibrary default ntGetTickCount.
-	ulong NtGetTickCount(void);"
+ntQueryTimerResolution: pulMinimumResolution maximum: pulMaximumResolution actual: pulActualResolution
+	<stdcall: sdword NtQueryTimerResolution dword* dword* dword*>
+	^self invalidCall!
 
-	<stdcall: dword NtGetTickCount>
+setTimerResolution: anInteger set: aBoolean actualResolution: actualResolution 
+	"NTSYSAPI
+		NTSTATUS
+		NTAPI
+		NtSetTimerResolution(
+			IN ULONG RequestedResolution,
+			IN BOOLEAN Set,
+			OUT PULONG ActualResolution"
+
+	<stdcall: dword NtSetTimerResolution dword bool dword*>
 	^self invalidCall!
 
 wineGetVersion
@@ -23,7 +31,8 @@ wineGetVersion
 
 	<stdcall: lpstr wine_get_version>
 	^nil	"instead of reporting an error"! !
-!NTLibrary categoriesFor: #ntGetTickCount!public! !
+!NTLibrary categoriesFor: #ntQueryTimerResolution:maximum:actual:!public! !
+!NTLibrary categoriesFor: #setTimerResolution:set:actualResolution:!accessing!public! !
 !NTLibrary categoriesFor: #wineGetVersion!public! !
 
 !NTLibrary class methodsFor!

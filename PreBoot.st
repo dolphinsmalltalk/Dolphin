@@ -82,3 +82,6 @@ normalizeLineEndings: aBoolean
 "Remove Float methods that will fail to compile when class vars are redefined"
 #(denormalized setExceptionMask: initialize fmax fminNormalized) do: [:each | Float class removeSelector: each ifAbsent: []].
 #(printOn:) do: [:each | Float removeSelector: each ifAbsent: []]!
+
+(Array with: Delay class>>#onStartup with: Delay class>>#initialize with: Delay>>#getDuration) do: [:each |
+	each methodClass removeSelector: each selector ifAbsent: []]!

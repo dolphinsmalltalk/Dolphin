@@ -90,14 +90,6 @@ playSound: aString hmod: anExternalHandle fdwSound: anInteger
 	<stdcall: bool PlaySoundA lpvoid handle dword>
 	^self invalidCall!
 
-timeGetDevCaps: ptc cbtc: anInteger
-	"Query the timer device to determine its capabilities (resoluation and maximum)
-  
-		MMRESULT timeGetDevCaps(LPTIMECAPS ptc, UINT cbtc);"
-
-	<stdcall: dword timeGetDevCaps void* dword>
-	^self invalidCall!
-
 timeGetTime
 
 	<stdcall: dword timeGetTime>
@@ -110,7 +102,6 @@ timeGetTime
 !WinMMLibrary categoriesFor: #midiOutOpenLphmo:uDeviceID:dwCallback:dwCallbackInstance:dwFlags:!public! !
 !WinMMLibrary categoriesFor: #midiOutShortMsgHmo:dwMsg:!public! !
 !WinMMLibrary categoriesFor: #playSound:hmod:fdwSound:!public!win32 functions-wave audio! !
-!WinMMLibrary categoriesFor: #timeGetDevCaps:cbtc:!public!win32 functions-multimedia timer! !
 !WinMMLibrary categoriesFor: #timeGetTime!public!win32 functions-timer! !
 
 !WinMMLibrary class methodsFor!

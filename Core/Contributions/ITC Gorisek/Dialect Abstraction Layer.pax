@@ -14,7 +14,6 @@ package classNames
 	add: #ItcBase64EncoderDecoder;
 	add: #ItcConverter;
 	add: #ItcDeferredValue;
-	add: #ItcDelay;
 	add: #ItcInterval;
 	add: #ItcLookupTable;
 	add: #ItcOrderedUniqueCollection;
@@ -186,10 +185,15 @@ package methodNames
 	add: 'Time class' -> #hours:minutes:seconds:milliseconds:;
 	yourself.
 
+package globalNames
+	add: #ItcDelay;
+	yourself.
+
 package binaryGlobalNames: (Set new
 	yourself).
 
 package globalAliases: (Set new
+	add: #ItcDelay;
 	yourself).
 
 package setPrerequisites: (IdentitySet new
@@ -260,11 +264,6 @@ DeferredValue subclass: #ItcDeferredValue
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-Delay subclass: #ItcDelay
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
 ExternalLibrary subclass: #LIBEAY32Library
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -307,6 +306,8 @@ ProtoObject subclass: #ItcProtoObject
 	classInstanceVariableNames: ''!
 
 "Global Aliases"!
+
+ItcDelay := Delay!
 
 
 "Loose Methods"!

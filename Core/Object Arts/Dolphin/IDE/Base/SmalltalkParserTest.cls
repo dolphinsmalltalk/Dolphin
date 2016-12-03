@@ -73,7 +73,7 @@ buildStatementSearch
 
 	self 
 		createSearchWith: '| `@temps | ``@.Stmts1. ``.Stmt1. ``@.Stmts2. ``.Stmt2. ``@.Stmts3'
-		selectors: #(schedule terminateProcess initialize calcResumptionTime hasExpired signal wait wait)
+		selectors: #(schedule terminateProcess initialize calcResumptionTime signal wait wait)
 		inClass: Delay!
 
 compare: anObject to: anotherObject 
