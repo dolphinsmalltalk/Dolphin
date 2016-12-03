@@ -224,14 +224,8 @@ icon
 microsecondClockValue
 	"Answer the current value of the microsecond clock."
 
-	| mus freq |
-	mus := LargeInteger new64.
-	KernelLibrary default queryPerformanceCounter: mus yourAddress.
-
-	freq := LargeInteger new64.
-	(KernelLibrary default queryPerformanceFrequency: freq yourAddress)
-		ifFalse: [ self error: 'performance counter not available' ].
-	^mus * 1000000 // freq normalize!
+	<primitive: 189>
+	^self primitiveFailed!
 
 microsecondsToRun: timedBlock 
 	"Answer the number of microseconds consumed by the evaluation of timedBlock
@@ -246,8 +240,9 @@ microsecondsToRun: timedBlock
 millisecondClockValue
 	"Answer the current value of the system millisecond clock."
 
-	"Implementation Note: Primitive 174 is actually just a call to the WinMM function timeGetTime()
-	which should be accurate to 1mS (unlike GetTickCount() which is only accurate to 10mS)."
+	"Implementation Note: Primitive 174 is actually just a call to the QueryPerformanceCounter
+	API which should be accurate sub-1mS (unlike GetTickCount() which is only accurate to 10mS),
+	and which also does not suffer the problem of wrapping after ~49 days of uptime."
 
 	<primitive: 174>
 	^self primitiveFailed!
@@ -369,7 +364,7 @@ totalSeconds
 !Time class categoriesFor: #fromSYSTEMTIME:!instance creation!private! !
 !Time class categoriesFor: #hours:minutes:seconds:!instance creation!public! !
 !Time class categoriesFor: #icon!constants!public! !
-!Time class categoriesFor: #microsecondClockValue!operations!public! !
+!Time class categoriesFor: #microsecondClockValue!enquiries!public! !
 !Time class categoriesFor: #microsecondsToRun:!operations!public! !
 !Time class categoriesFor: #millisecondClockValue!accessing!public! !
 !Time class categoriesFor: #millisecondsToRun:!operations!public! !

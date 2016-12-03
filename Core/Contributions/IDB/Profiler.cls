@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #Profiler
 	instanceVariableNames: 'samplingInterval isSampling mutex'
@@ -17,32 +17,34 @@ Public Domain Freeware'!
 initialize
 	"Initialize the singleton instance of this class"
 
-	samplingInterval := 1.
+	samplingInterval := Delay highestResolution.
 	isSampling := true.
 	mutex := Mutex new.
 	^self!
 
-profile: aProcess forSet: aProfilerSampleSet ignoring: anInteger 
+profile: aProcess forSet: aProfilerSampleSet ignoring: anInteger
 	"This is the main profiling method. While the sample set is active, i.e. the process
 	being profiled is still alive,  collect stack frames at appropriate intervals and save 
 	them in the sample set. The mutex allows multiple processes to be profiled
 	at the sume time, as long as they use different sample sets"
 
-	
-	[| started elapsed |
-	started := Time millisecondClockValue.
-	(Delay forMilliseconds: samplingInterval) wait.
-	elapsed := Time millisecondClockValue - started.
-	(isSampling and: [aProfilerSampleSet isActive]) 
-		ifTrue: 
-			[mutex critical: 
-					[self 
-						sampleProcess: aProcess
-						forSet: aProfilerSampleSet
-						elapsedTime: elapsed
-						ignoring: anInteger]].
-	aProfilerSampleSet isActive] 
-			whileTrue!
+	Delay resolution: samplingInterval
+		do: 
+			[
+			[| started elapsed |
+			started := Time microsecondClockValue.
+			(Delay forMicroseconds: samplingInterval) wait.
+			elapsed := Time microsecondClockValue - started.
+			(isSampling and: [aProfilerSampleSet isActive])
+				ifTrue: 
+					[mutex critical: 
+							[self
+								sampleProcess: aProcess
+								forSet: aProfilerSampleSet
+								elapsedTime: elapsed
+								ignoring: anInteger]].
+			aProfilerSampleSet isActive]
+					whileTrue]!
 
 profile: aBlock inSetNamed: aString collect: collectBoolean on: onBoolean 
 	"Profile aBlock storing the results in the sample set named aString which will be cleared 

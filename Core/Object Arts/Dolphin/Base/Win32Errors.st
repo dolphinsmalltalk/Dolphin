@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Smalltalk at: #Win32Errors put: (PoolConstantsDictionary named: #Win32Errors)!
 Win32Errors at: 'CLASS_E_CLASSNOTAVAILABLE' put: -16r7FFBFEEF!
@@ -31,6 +31,7 @@ Win32Errors at: 'S_FALSE' put: 16r1!
 Win32Errors at: 'S_OK' put: 16r0!
 Win32Errors at: 'SEVERITY_ERROR' put: 16r1!
 Win32Errors at: 'SEVERITY_SUCCESS' put: 16r0!
+Win32Errors at: 'STATUS_TIMER_RESOLUTION_NOT_SET' put: -16r3FFFFDBB!
 Win32Errors at: 'STG_E_INVALIDFUNCTION' put: -16r7FFCFFFF!
 Win32Errors at: 'WCODE_HRESULT_FIRST' put: -16r7FFBFE00!
 Win32Errors at: 'WCODE_HRESULT_LAST' put: -16r7FFB0001!
