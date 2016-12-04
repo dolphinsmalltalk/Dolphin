@@ -13,18 +13,18 @@ STLFilerTest comment: ''!
 checkSimpleReadWriteOf: value 
 	^self checkSimpleReadWriteOf: value context: nil!
 
-checkSimpleReadWriteOf: value context: anObject 
+checkSimpleReadWriteOf: value context: anObject
 	| in streamContents |
 	streamContents := self writeLiteralsFor: value.
 	in := STLInFiler on: streamContents readStream.
 	in context: anObject.
-	self assert: in next = value.
+	self assert: value equals: in next.
 	^streamContents!
 
 simpleReadWriteOf: value 
 	^self simpleReadWriteOf: value context: nil!
 
-simpleReadWriteOf: value context: anObject 
+simpleReadWriteOf: value context: anObject
 	| streamContents in |
 	streamContents := self writeLiteralsFor: value.
 	in := STLInFiler on: streamContents readStream.
@@ -32,26 +32,27 @@ simpleReadWriteOf: value context: anObject
 	^in next!
 
 testClassReadWrite
-	| contents answer |
+	| contents answer data |
 	contents := self checkSimpleReadWriteOf: STLFilerTest.
 	self assert: (contents includes: STLFilerTest).
 
-	"Check that multiple references are folded"
-	contents := self checkSimpleReadWriteOf: (Array with: STLFilerTest with: STLFilerTest).
-	self assert: (contents occurrencesOf: STLFilerTest) = 1.
-
-	"Check that muliple references are identical"
-	answer := self simpleReadWriteOf: (Array with: STLFilerTest with: STLFilerTest).
-	self assert: answer first = STLFilerTest.
+	"Check multiple references "
+	data := Array with: STLFilerTest with: STLFilerTest.
+	answer := self simpleReadWriteOf: data.
+	self assert: data equals: answer.
+	self assert: answer first == STLFilerTest.
 	self assert: answer first == answer last!
 
 testIntegerReadWrite
+
+	| contents int |
 	"SmallInteger"
-	| contents |
-	self checkSimpleReadWriteOf: 999.
+	#(##(SmallInteger minimum) -1 0 1 ##(SmallInteger maximum))
+		do: [:each | self checkSimpleReadWriteOf: each].
 	"LargeInteger"
-	contents := self checkSimpleReadWriteOf: 99999999999.
-	self assert: (contents includes: 99999999999)!
+	int := SmallInteger maximum + 1.
+	contents := self checkSimpleReadWriteOf: int.
+	self assert: (contents includes: int)!
 
 testInvalidStream
 	self should: [STLInFiler on: #('Test') readStream] raise: STBError.
@@ -86,7 +87,7 @@ testResourceReadWrite
 	shell2 := in next.
 	self assert: (shell2 isKindOf: ShellView).
 	self assert: shell2 isOpen.
-	self assert: contents1 size = contents2 size] 
+	self assert: contents1 size = contents2 size]
 			ensure: 
 				[shell destroy.
 				shell1 destroy.
@@ -101,21 +102,33 @@ testShellReadWrite
 !
 
 testSymbolReadWrite
-	| contents answer |
-	contents := self checkSimpleReadWriteOf: #testSymbol.
-	self assert: (contents includes: #testSymbol).
+	| contents deserialized data testSymbol |
+	testSymbol := 'testSymbol' asSymbol.
+	contents := self checkSimpleReadWriteOf: testSymbol.
+	self assert: (contents identityIncludes: testSymbol).
 
 	"Now test that multiple references only occur once"
-	contents := self checkSimpleReadWriteOf: #(#testSymbol #testSymbol #otherSymbol).
-	self assert: (contents occurrencesOf: #testSymbol) = 1.
-	self assert: (contents occurrencesOf: #otherSymbol) = 1.
+	data := Array
+				with: testSymbol
+				with: testSymbol
+				with: 'otherSymbol' asSymbol.
+	deserialized := self simpleReadWriteOf: data.
+	self assert: data equals: deserialized.
 
 	"Check that muliple references are identical"
-	answer := self simpleReadWriteOf: #(testSymbol #testSymbol).
-	self assert: answer first = #testSymbol.
-	self assert: answer first == answer last!
+	self assert: deserialized first == testSymbol.
+	self assert: deserialized first == deserialized second!
 
-writeLiteralsFor: value 
+testSystemDictionaryReadWrite
+	| sysdict array array2 |
+	sysdict := self simpleReadWriteOf: Smalltalk.
+	self assert: sysdict == Smalltalk.
+	array := Array with: Smalltalk.
+	array2 := self simpleReadWriteOf: array.
+	self assert: array equals: array2.
+	self assert: array first == Smalltalk!
+
+writeLiteralsFor: value
 	| out |
 	out := STLOutFiler on: Array writeStream.
 	out nextPut: value.
@@ -131,5 +144,6 @@ writeLiteralsFor: value
 !STLFilerTest categoriesFor: #testResourceReadWrite!public!unit tests! !
 !STLFilerTest categoriesFor: #testShellReadWrite!public!unit tests! !
 !STLFilerTest categoriesFor: #testSymbolReadWrite!public!unit tests! !
+!STLFilerTest categoriesFor: #testSystemDictionaryReadWrite!public!unit tests! !
 !STLFilerTest categoriesFor: #writeLiteralsFor:!private!unit tests! !
 

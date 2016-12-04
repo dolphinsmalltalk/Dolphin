@@ -21,7 +21,7 @@ For example to view the contents of a view resource, one can proceed as follows:
 basicNext
 	"Private - Answer the next object from the receiver's stream."
 
-	| prefix class anObject newObjectIndex offset |
+	| prefixOrLiteral class anObject newObjectIndex offset |
 	traceStream cr.
 	printOffsets
 		ifTrue: 
@@ -40,43 +40,47 @@ basicNext
 			slotName := nil].
 
 	"First, read the prefix."
-	prefix := self readInteger.
-	prefix == 0
+	prefixOrLiteral := stream next.
+	prefixOrLiteral isInteger
+		ifFalse: 
+			[self printValueToTrace: prefixOrLiteral.
+			^prefixOrLiteral].
+	prefixOrLiteral == 0
 		ifTrue: 
 			[self printValueToTrace: nil.
 			^nil].	"optimize for nil"
 
 	"SmallInteger?"
-	(prefix allMask: SmallIntegerMask)
+	(prefixOrLiteral allMask: STBPrefix.SmallIntegerMask)
 		ifTrue: 
-			[anObject := prefix bitShift: -1.
+			[anObject := prefixOrLiteral bitShift: -1.
 			self printValueToTrace: anObject.
 			^anObject].
 
 	"Literal? (Hook for STL filer)"
-	prefix = LiteralPrefixMask
+	prefixOrLiteral = STBPrefix.LiteralPrefixMask
 		ifTrue: 
 			[| literal |
 			literal := self readLiteralData.
 			self printValueToTrace: literal.
 			^literal].
-	(prefix allMask: DataPrefixMask)
+	(prefixOrLiteral allMask: STBPrefix.DataPrefixMask)
 		ifFalse: 
-			[anObject := (prefix allMask: CharacterMask)
-						ifTrue: [Character value: (prefix bitShift: IndexShift)]
-						ifFalse: [self objectAt: (prefix bitShift: IndexShift)].
+			[anObject := (prefixOrLiteral allMask: STBPrefix.CharacterMask)
+						ifTrue: [Character value: (prefixOrLiteral bitShift: STBPrefix.IndexShift)]
+						ifFalse: [self objectAt: (prefixOrLiteral bitShift: STBPrefix.IndexShift)].
 			self printValueToTrace: anObject.
 			^anObject].
 
 	"Ascertain the class of the object."
 	indentLevel := indentLevel + 1.
 	traceStream nextPut: $[.
-	(prefix allMask: ClassPrefixMask)
+	(prefixOrLiteral allMask: STBPrefix.ClassPrefixMask)
 		ifTrue: 
-			[class := self readClassData: prefix.
+			[class := self readClassData: prefixOrLiteral.
 			traceStream display: class name]
 		ifFalse: 
-			[class := self classAt: (prefix bitShift: IndexShift).
+			[class := self classAt: (prefixOrLiteral bitShift: STBPrefix.IndexShift).
 			traceStream nextPutAll: class name].
 	traceStream nextPut: $].
 
@@ -114,6 +118,13 @@ next
 					ex resume].
 	traceStream cr.
 	^answer!
+
+objectAt: anInteger
+	"Private - Answer the map value at anInteger. If anInteger is zero then answer nil.
+	Signal an exception if there is no such entry."
+
+	^anInteger == 0
+		ifFalse: [(readMap at: anInteger ifAbsent: []) ifNil: [self class errorInconsistentSTB: anInteger]]!
 
 printOffsets
 	^printOffsets!
@@ -177,6 +188,7 @@ traceStream: aPuttableStream
 !STLDebugger categoriesFor: #basicNext!accessing!private! !
 !STLDebugger categoriesFor: #initialize!initializing!private! !
 !STLDebugger categoriesFor: #next!accessing!public! !
+!STLDebugger categoriesFor: #objectAt:!accessing!private! !
 !STLDebugger categoriesFor: #printOffsets!accessing!public! !
 !STLDebugger categoriesFor: #printOffsets:!accessing!public! !
 !STLDebugger categoriesFor: #printValueToTrace:!accessing!private! !

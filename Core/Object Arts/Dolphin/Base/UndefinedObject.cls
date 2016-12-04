@@ -84,6 +84,14 @@ includesBehavior: aBehavior
 
 	^aBehavior isNil!
 
+isAtomic
+	"Answer whether or not the receiver has a single unique instance for any individual value it
+	can represent."
+
+	"UndefinedObject has the single unique instance, nil"
+
+	^true!
+
 isLiteral
 	"Answer whether or not the receiver has a literal representation (probably its
 	printString) which is directly recognised by the Compiler. Of course nil does."
@@ -199,6 +207,7 @@ yourAddress
 !UndefinedObject categoriesFor: #ifNotNil:!control flow!public! !
 !UndefinedObject categoriesFor: #ifNotNil:ifNil:!control flow!public! !
 !UndefinedObject categoriesFor: #includesBehavior:!class hierarchy-testing!public! !
+!UndefinedObject categoriesFor: #isAtomic!public!testing! !
 !UndefinedObject categoriesFor: #isLiteral!public!testing! !
 !UndefinedObject categoriesFor: #isNil!public!testing! !
 !UndefinedObject categoriesFor: #isNull!private!testing! !

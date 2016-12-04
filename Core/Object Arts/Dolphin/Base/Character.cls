@@ -180,6 +180,14 @@ isAlphaNumeric
 
 	^UserLibrary default isCharAlphaNumeric: self!
 
+isAtomic
+	"Answer whether or not the receiver it the single unique instance of its class that
+	represents its value."
+
+	"Byte characters are atomic"
+
+	^asciiValue <= 255!
+
 isControl
 	"Answer whether the receiver is a control character."
 
@@ -330,6 +338,7 @@ species
 !Character categoriesFor: #hash!comparing!public! !
 !Character categoriesFor: #identityHash!comparing!public! !
 !Character categoriesFor: #isAlphaNumeric!public!testing! !
+!Character categoriesFor: #isAtomic!public!testing! !
 !Character categoriesFor: #isControl!public!testing! !
 !Character categoriesFor: #isDigit!public!testing! !
 !Character categoriesFor: #isEnglishLetter!public!testing! !

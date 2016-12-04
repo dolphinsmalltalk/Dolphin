@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Dictionary variableSubclass: #SystemDictionary
 	instanceVariableNames: 'events allClasses allRoots'
@@ -139,6 +139,14 @@ includesKey: key
 
 	^super includesKey: key asSymbol!
 
+isAtomic
+	"Answer whether or not the receiver is the single unique instance of its class that can
+	represents its value."
+
+	"There can only be one ProcessorScheduler instance."
+
+	^true!
+
 postResize: oldMe
 	"Private - This message is sent by the receiver when resizing, after the
 	receiver's elements have been added to a new collection and the
@@ -228,6 +236,7 @@ triggerGlobalRenamed: anAssociation from: oldSymbol
 !SystemDictionary categoriesFor: #developmentSystem!accessing!public! !
 !SystemDictionary categoriesFor: #getEvents!events!private! !
 !SystemDictionary categoriesFor: #includesKey:!public!searching! !
+!SystemDictionary categoriesFor: #isAtomic!public!testing! !
 !SystemDictionary categoriesFor: #postResize:!adding!private! !
 !SystemDictionary categoriesFor: #removeClass:!private!removing! !
 !SystemDictionary categoriesFor: #removeGlobalNamed:!operations!public! !

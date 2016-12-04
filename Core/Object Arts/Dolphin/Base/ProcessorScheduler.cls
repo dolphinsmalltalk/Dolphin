@@ -1,7 +1,7 @@
 "Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #ProcessorScheduler
-	instanceVariableNames: 'processLists activeProcess pendingReturns comStubs _reserved pendingTerminations '
+	instanceVariableNames: 'processLists activeProcess pendingReturns comStubs _reserved pendingTerminations'
 	classVariableNames: 'ConstWriteSignal InterruptSelectors'
 	poolDictionaries: 'Win32Errors'
 	classInstanceVariableNames: ''!
@@ -337,6 +337,14 @@ isActiveMain
 
 	^activeProcess isMain!
 
+isAtomic
+	"Answer whether or not the receiver is the single unique instance of its class that can
+	represents its value."
+
+	"There can only be one ProcessorScheduler instance."
+
+	^true!
+
 kill: interruptArg 
 	"Private - The active process has been sent a kill interrupt, terminate it without running
 	its unwind blocks."
@@ -670,6 +678,7 @@ zeroDivide: interruptArg
 !ProcessorScheduler categoriesFor: #interruptWith:!interrupts-handling!private! !
 !ProcessorScheduler categoriesFor: #iret:list:!interrupts!private! !
 !ProcessorScheduler categoriesFor: #isActiveMain!public!testing! !
+!ProcessorScheduler categoriesFor: #isAtomic!public!testing! !
 !ProcessorScheduler categoriesFor: #kill:!interrupts-handling!private! !
 !ProcessorScheduler categoriesFor: #killInterrupt!interrupts-names!private! !
 !ProcessorScheduler categoriesFor: #lowIOPriority!priority names!public! !

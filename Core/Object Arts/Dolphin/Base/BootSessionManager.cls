@@ -18,6 +18,13 @@ basicTertiaryStartup
 fileInClass: aClass 
 	aClass sourceManager fileIn: aClass fileOutName!
 
+initializeSystemPackage
+	"Initialize any base system classes that require initialization not performed to create the boot image.
+	We cannot reinitialize all the base system classes after re-load as the class initialize methods are not
+	all safe to re-run. Therefore we must do this selectively."
+
+	STBPrefix initialize!
+
 keepAlive
 	"We stay alive until explicitly terminated."
 
@@ -160,7 +167,8 @@ reloadSystemPackage
 				yourself) do: 
 						[:m | 
 						Notification signal: 'Removing obsolete boot image method ' , m printString.
-						m methodClass removeSelector: m selector]]!
+						m methodClass removeSelector: m selector]].
+	self initializeSystemPackage!
 
 saveImageDefault
 	"Save an image of the current session to the default persistant store (whatever that is)."
@@ -270,6 +278,7 @@ updateBootImage
 	self reloadSystemPackage! !
 !BootSessionManager categoriesFor: #basicTertiaryStartup!operations-startup!public! !
 !BootSessionManager categoriesFor: #fileInClass:!private! !
+!BootSessionManager categoriesFor: #initializeSystemPackage!initializing!public! !
 !BootSessionManager categoriesFor: #keepAlive!idling!public! !
 !BootSessionManager categoriesFor: #logError:!operations-logging!public! !
 !BootSessionManager categoriesFor: #main!operations-startup!public! !

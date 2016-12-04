@@ -102,7 +102,7 @@ Object subclass: #DeferredValue
 	classInstanceVariableNames: ''!
 Object subclass: #Delay
 	instanceVariableNames: 'duration resumptionTime waitSemaphore'
-	classVariableNames: 'AccessProtect Current ImageClock Pending Resolution TimerMax TimingProcess TimingSemaphore'
+	classVariableNames: 'AccessProtect Current DefaultResolution HighestResolution ImageClock LowestResolution Pending Resolution TicksPerMillisecond TimingProcess TimingSemaphore'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Object subclass: #DiskVolumeInformation
@@ -318,17 +318,17 @@ Object subclass: #StackFrame
 Object subclass: #STBClassConversion
 	instanceVariableNames: 'version instSize isBytes isVariable converterBlock filer'
 	classVariableNames: ''
-	poolDictionaries: 'STBPrefixConstants'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Object subclass: #STBFiler
 	instanceVariableNames: 'stream context version'
-	classVariableNames: ''
-	poolDictionaries: 'STBPrefixConstants'
+	classVariableNames: 'MaxPredefinedRef'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Object subclass: #STBPrefix
 	instanceVariableNames: 'dword'
-	classVariableNames: ''
-	poolDictionaries: 'STBPrefixConstants'
+	classVariableNames: 'BytesMask CharacterMask ClassPrefixMask DataPrefix DataPrefixMask IndexShift InstSizeMask InstSizeShift LiteralPrefixMask LocatorLenShift MaxPredefinedRef NonZeroVersionMask ProxyMask ProxyPrefix SmallIntegerMask VariableMask'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Object subclass: #STBProxy
 	instanceVariableNames: ''

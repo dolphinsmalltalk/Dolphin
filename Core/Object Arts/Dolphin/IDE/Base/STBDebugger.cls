@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 STBInFiler subclass: #STBDebugger
 	instanceVariableNames: 'indentLevel traceStream printOffsets'
@@ -109,6 +109,13 @@ next
 	traceStream cr.
 	^answer!
 
+objectAt: anInteger
+	"Private - Answer the map value at anInteger. If anInteger is zero then answer nil.
+	Signal an exception if there is no such entry."
+
+	^anInteger == 0
+		ifFalse: [(readMap at: anInteger ifAbsent: []) ifNil: [self class errorInconsistentSTB: anInteger]]!
+
 printOffsets
 	^printOffsets!
 
@@ -161,6 +168,7 @@ traceStream: aPuttableStream
 !STBDebugger categoriesFor: #basicNext!accessing!private! !
 !STBDebugger categoriesFor: #initialize!initializing!private! !
 !STBDebugger categoriesFor: #next!accessing!public! !
+!STBDebugger categoriesFor: #objectAt:!accessing!private! !
 !STBDebugger categoriesFor: #printOffsets!accessing!public! !
 !STBDebugger categoriesFor: #printOffsets:!accessing!public! !
 !STBDebugger categoriesFor: #readObjectOfClass:format:!operations!private! !

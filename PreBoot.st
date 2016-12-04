@@ -79,9 +79,19 @@ normalizeLineEndings
 normalizeLineEndings: aBoolean
 	flags := flags mask: NormalizeEolsMask set: aBoolean! !
 
-"Remove Float methods that will fail to compile when class vars are redefined"
+"Remove some methods that will fail to compile when class vars are redefined"
+
 #(denormalized setExceptionMask: initialize fmax fminNormalized) do: [:each | Float class removeSelector: each ifAbsent: []].
 #(printOn:) do: [:each | Float removeSelector: each ifAbsent: []]!
 
-(Array with: Delay class>>#onStartup with: Delay class>>#initialize with: Delay>>#getDuration) do: [:each |
-	each methodClass removeSelector: each selector ifAbsent: []]!
+| var |
+var := (Delay classPool associationAt: 'TimerMax').
+(Array with: Delay with: Delay class) do: [:each | 
+	(each whichSelectorsReferTo: var) do: [:s | each removeSelector: s]]!
+
+(Array with: STBClassConversion>>#version:prefix:filer: with: STBInFiler>>#readClassLocator: 
+		with: STBInFiler>>#basicNext with: STBInFiler>>#readClassData:) do: [:each |
+	each methodClass removeSelector: each selector]!
+
+"Remove obsolete constants pools"
+Smalltalk removeKey: #STBPrefixConstants!

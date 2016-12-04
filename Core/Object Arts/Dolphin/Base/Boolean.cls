@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #Boolean
 	instanceVariableNames: ''
@@ -126,6 +126,14 @@ ifTrue: trueOperand ifFalse: falseOperand
 
 	^self subclassResponsibility!
 
+isAtomic
+	"Answer whether or not the receiver has a single unique instance for any individual value it
+	can represent."
+
+	"Boolean has two unique instances, identified by the literals true and false."
+
+	^true!
+
 isLiteral
 	"Answer whether or not the receiver has a literal representation (probably its
 	printString) which is directly recognised by the Compiler."
@@ -176,6 +184,7 @@ xor: operand
 !Boolean categoriesFor: #ifFalse:ifTrue:!control flow!public! !
 !Boolean categoriesFor: #ifTrue:!control flow!public! !
 !Boolean categoriesFor: #ifTrue:ifFalse:!control flow!public! !
+!Boolean categoriesFor: #isAtomic!public!testing! !
 !Boolean categoriesFor: #isLiteral!public!testing! !
 !Boolean categoriesFor: #not!logical operations!public! !
 !Boolean categoriesFor: #or:!control flow!public! !
