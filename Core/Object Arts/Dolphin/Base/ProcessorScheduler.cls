@@ -462,20 +462,6 @@ setHighestPriority: priority activeProcess: aProcess
 	activeProcess := aProcess.
 	pendingReturns := Semaphore new!
 
-signal: aSemaphore afterMilliseconds: anInteger 
-	"Private - Request that the VM signal aSemaphore as soon as possible after the
-	the specified millisecond delay. Cancel any existing request if aSemaphore is 
-	not actuall a Semaphore (typically nil). If anInteger <= 0, then the Semaphore
-	is signalled immediately.
-
-	Primitive failure results:
-		0 -	anInteger is not a SmallInteger
-		2 -  anInteger was greater than the maximum Delay which can be requested.
-		3 -	OS refused to set timer (try KernelLibrary>>getLastError)"
-
-	<primitive: 100>
-	^self primitiveFailed!
-
 sleep: anInteger 
 	"Delay the current active process for at least anInteger milliseconds."
 
@@ -693,7 +679,6 @@ zeroDivide: interruptArg
 !ProcessorScheduler categoriesFor: #processesAt:!processes-accessing!public! !
 !ProcessorScheduler categoriesFor: #returnValue:toFrame:!callbacks!must not strip!private! !
 !ProcessorScheduler categoriesFor: #setHighestPriority:activeProcess:!development!initializing!private! !
-!ProcessorScheduler categoriesFor: #signal:afterMilliseconds:!private!processes-synchronising! !
 !ProcessorScheduler categoriesFor: #sleep:!processes-synchronising!public! !
 !ProcessorScheduler categoriesFor: #stackOverflow:!interrupts-handling!private! !
 !ProcessorScheduler categoriesFor: #suspendActive!processes-changing state!public! !

@@ -2,35 +2,36 @@
 
 Object subclass: #Delay
 	instanceVariableNames: 'duration resumptionTime waitSemaphore'
-	classVariableNames: 'AccessProtect Current DefaultResolution HighestResolution ImageClock LowestResolution Pending Resolution TicksPerMillisecond TimingProcess TimingSemaphore'
+	classVariableNames: 'AccessProtect Current DefaultResolution HighestResolution ImageClock LowestResolution Pending Resolution TimingProcess TimingSemaphore'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Delay guid: (GUID fromString: '{87B4C47B-026E-11D3-9FD7-00A0CC3E4A32}')!
 Delay addClassConstant: 'DefaultResolution' value: 15625!
-Delay comment: '<Delay>s are used to introduce timed pauses in the execution of a <Process>.  Delays can be constructed that specify a duration using the instance creation messages #forMilliseconds: and #forSeconds:, or an absolute time based on the millisecond clock value (#untilMilliseconds:). Once constructed a Delay responds to the #wait message by suspending the active process for the desired duration, or until the desired absolute time is reached. 
+Delay comment: '<Delay>s are used to introduce timed pauses in the execution of a <Process>.  Delays can be constructed that specify a duration using the instance creation messages #forMicroseconds:, #forMilliseconds:, and #forSeconds:, or an absolute time based on the millisecond clock value (#untilMilliseconds:). Once constructed a Delay responds to the #wait message by suspending the active process for the desired duration, or until the desired absolute time is reached. 
 
 Delays are "one-shot" in that once they have expired further attempts to #wait on them will return immediately. This applies even if the Delay was originally constructed to wait for a time interval rather than an absolute time. Therefore if one wishes to delay a process in a loop, new Delay instances should be created as required inside the loop. It is often more convenient to use the ProcessorScheduler>>sleep: message, which wraps up the creation and wait operations inside a convenience message.
 
-Delays are not hard real time, in that the requested delay is the minimum time period that will elapse before the process is restarted. The VM will make a best effort to reschedule the process after the desired delay by using the high-resolution multimedia clock (accurate to 1 millisecond) and high priority threads, but there may still be an arbitrary additional delay before the Process actually restarts depending on the load on the host machine and the relative priority of the Dolphin thread in relation to other OS threads, and the waiting Process in relation to other Processes. There is also some context switching and other processing overhead that will increase the average minimum Delay to a period greater than 1mS, though (depending on machine speed) it should be quite close. 
+Delays are not hard real time, in that the requested delay is the minimum time period that will elapse before the process is restarted. The VM will make a best effort to reschedule the process after the desired delay by using the high-resolution multimedia clock (which is accurate to at best 1 millisecond) and high priority threads, but there may still be an arbitrary additional delay before the Process actually restarts depending on the load on the host machine and the relative priority of the Dolphin thread in relation to other OS threads, and the waiting Process in relation to other Processes. There is also some context switching and other processing overhead that will increase the average minimum Delay to a period greater than 1mS, though (depending on machine speed) it should be quite close. 
 
 Example usage:
 	5 timesRepeat: [(Delay forMilliseconds: 500) wait. Sound bell]
 
 Instance Variables:
-	duration		<integer> number of milliseconds to delay Process
-	resumptionTime	<integer> value of millisecond clock at which to resume
-	waitSemaphore	<Semaphore> on which to delay Process
+	duration			<integer> number of microseconds to delay when #wait is sent
+	resumptionTime	<integer> value of VM microsecond clock at which to resume
+	waitSemaphore		<Semaphore> on which to wait
 
 Class Variables:
-	AccessProtect	<Semaphore> protects the class variables in critical regions
-	Current		<Delay> the next scheduled Delay (or nil if none)
-	ImageClock	<integer> millisecond clock value on last image save - used to reschedule delays on image restart
-	Pending		<SortedCollection> of waiting <Delay>s in ascending order of resumptionTime.
-	Resolution	<integer> resolution of millisecond clock, minimum 1
-	TimerMax		<integer> maximum delay recordable with the timing device.  Longer delays are achieved by repeatedly rescheduling until the desired period has elapsed.
-	TimingProcess	<Process> responsible for waking up delayed processes on expiry of Delay
-	TimingSemaphore	<Semaphore> Signalled by the VM at requested times, governing the operation of the TimingProcess.
-'!
+	AccessProtect		<Semaphore>; protects the class variables in critical regions.
+	Current			<Delay>; the next scheduled Delay (or nil if none).
+	DefaultResolution	The default resolution of Delays; <integer> number of microseconds.
+	HighestResolution	The highest requestable resolution for Delays; <integer> number of microseconds.
+	ImageClock		The <integer> microsecond clock value on last image save - used to rebase pending Delays on image restart.
+	LowestResolution	The lowest requestable resolution for Delays; <integer> number of microseconds.
+	Pending			<SortedCollection> of waiting <Delay>s in ascending order of resumptionTime.
+	Resolution			The current <integer> resolution of Delays specified in microseconds.
+	TimingProcess		<Process> responsible for waking up delayed processes on expiry of Delays.
+	TimingSemaphore	<Semaphore> signalled by the VM at requested times, governing the operation of the TimingProcess.'!
 !Delay categoriesForClass!Kernel-Processes! !
 !Delay methodsFor!
 
@@ -146,7 +147,7 @@ schedule
 	we own) to be signalled, which will mean that the assignment to Current
 	must happen before the timing process accesses it. The timing Process
 	will not restart until we exit our critical section."
-	Processor signal: TimingSemaphore afterMilliseconds: self getDuration // 1000.
+	self class signal: TimingSemaphore afterMilliseconds: self getDuration // 1000.
 
 	Current := self!
 
@@ -234,13 +235,13 @@ aboutToIdle
 cancelTimer
 	"Private - Cancel any previously registered timer."
 
-	Processor signal: nil afterMilliseconds: 0.
+	self signal: nil afterMilliseconds: 0.
 !
 
 clampResolution: anInteger
 	"Private - As we are using multimedia timers at present, the shortest delay we
 	can request is 1mS, so we clamp the requested resolution to 1000 as there is no point
-	setting a resolution higher than we can use."
+	setting a resolution higher than we can achieve."
 
 	^anInteger max: 1000!
 
@@ -271,6 +272,10 @@ forMicroseconds: anInteger
 	microseconds The new instance has no effect on the progress of a Process until sent the
 	message #wait. The actual delay achieved will depend on the current resolution of the OS
 	timer, which has a maximum resolution on current Windows systems of at best 500uS."
+
+	"Implementation Note: The Dolphin VM's timer is implemented on top of Windows multimedia
+	timers, and these have a maximum resolution of 1mS. Any delay requested shorter than 1mS
+	will result in a wait of at least 1mS."
 
 	^self new duration: anInteger!
 
@@ -329,7 +334,8 @@ initializeTimingSemaphore
 	"Private - Create the timing semaphore used for communication with the VM's
 	timer services."
 
-	TimingSemaphore := Semaphore new!
+	TimingSemaphore := Semaphore new.
+	VMLibrary default registryAt: #TimingSemaphore put: TimingSemaphore!
 
 keepAlive
 	"Private - Ensure that there is a timing process, and that it is in a runnable state."
@@ -447,6 +453,20 @@ scheduleNext
 		ifTrue: [Current := nil]
 		ifFalse: [Pending removeFirst schedule]!
 
+signal: aSemaphore afterMilliseconds: anInteger 
+	"Private - Request that the VM signal aSemaphore as soon as possible after the
+	the specified millisecond delay. Cancel any existing request if aSemaphore is 
+	not actuall a Semaphore (typically nil). If anInteger <= 0, then the Semaphore
+	is signalled immediately.
+
+	Primitive failure results:
+		0 - anInteger is not a SmallInteger
+		2 - anInteger was greater than the maximum Delay which can be requested.
+		3 - OS refused to set timer (try KernelLibrary>>getLastError)"
+
+	<primitive: 100>
+	^self primitiveFailed!
+
 timingProcess
 	"Private - Answer the <Process> which is used to manage the list of pending Delays."
 
@@ -482,6 +502,7 @@ untilMilliseconds: millisecondTime
 !Delay class categoriesFor: #resolution:do:!operations!public! !
 !Delay class categoriesFor: #resolution:set:!helpers!public! !
 !Delay class categoriesFor: #scheduleNext!initializing!private! !
+!Delay class categoriesFor: #signal:afterMilliseconds:!private!processes-synchronising! !
 !Delay class categoriesFor: #timingProcess!initializing!private! !
 !Delay class categoriesFor: #untilMilliseconds:!instance creation!public! !
 
