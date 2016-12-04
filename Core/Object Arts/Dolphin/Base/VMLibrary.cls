@@ -682,6 +682,7 @@ initialize
 				at: #LARGE_INTEGER put: 147;
 				at: #UINT_PTR put: 148;
 				at: #INT_PTR put: 149;
+				at: #TimingSemaphore put: 150;
 				isImmutable: true;
 				shrink;
 				yourself)!

@@ -23,7 +23,8 @@ initializeSystemPackage
 	We cannot reinitialize all the base system classes after re-load as the class initialize methods are not
 	all safe to re-run. Therefore we must do this selectively."
 
-	STBPrefix initialize!
+	STBPrefix initialize.
+	Delay initializeTimingSemaphore!
 
 keepAlive
 	"We stay alive until explicitly terminated."
