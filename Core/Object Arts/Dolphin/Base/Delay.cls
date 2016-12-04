@@ -254,7 +254,7 @@ forkTimingProcess
 
 	AccessProtect critical: [	
 		self cancelTimer.
-		TimingSemaphore isNil ifTrue: [self initializeTimingSemaphore].
+		self initializeTimingSemaphore.
 		TimingProcess isNil ifFalse: [TimingProcess terminate].
 		Current isNil ifFalse: [Current snooze].		"put current back into Pending"
 		self scheduleNext.
@@ -328,13 +328,12 @@ initialize
 			[Pending := SortedCollection
 						sortBlock: [:delay1 :delay2 | delay1 resumptionTime <= delay2 resumptionTime].
 			Current := nil].
-	TimingSemaphore isNil ifTrue: [self initializeTimingSemaphore]!
+	self initializeTimingSemaphore!
 
 initializeTimingSemaphore
-	"Private - Create the timing semaphore used for communication with the VM's
-	timer services."
+	"Private - Create the timing semaphore used for communication with the VM's timer services."
 
-	TimingSemaphore := Semaphore new.
+	TimingSemaphore isNil ifTrue: [TimingSemaphore := Semaphore new].
 	VMLibrary default registryAt: #TimingSemaphore put: TimingSemaphore!
 
 keepAlive
