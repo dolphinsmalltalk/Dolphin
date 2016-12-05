@@ -17,7 +17,6 @@
 #include "STExternal.h"
 #include "VMExcept.h"
 #include "RaiseThreadException.h"
-#include "InterlockedOps.h"
 #include "RegKey.h"
 #include "STInteger.h"
 
@@ -416,7 +415,7 @@ void OverlappedCall::Term()
 bool OverlappedCall::beStarted()
 {
 	// Can only transition to Resting state on startup if not terminated in the meantime
-	return InterlockedCompareExchange((PVOID*)&m_state, PVOID(Running), PVOID(Starting)) == PVOID(Starting);
+	return InterlockedCompareExchange((long*)&m_state, Running, Starting) == Starting;
 }
 
 //bool OverlappedCall::beResting()

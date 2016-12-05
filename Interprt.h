@@ -808,7 +808,6 @@ private:
 	// Should this be one of the registers?
 	static ProcessOTE* m_oteNewProcess;
 
-	static SemaphoreOTE* m_oteTimerSem;						// Timer Semaphore
 	static uint64_t m_clockFrequency;
 
 	static OTE* m_oteUnderConstruction;				// Window currently under construction

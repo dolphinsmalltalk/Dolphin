@@ -191,7 +191,7 @@ bool __fastcall Interpreter::disableInterrupts(bool bDisable)
 			// interrupts are on or off.
 
 			// First switch over to the buffer
-			InterlockedExchangePointer((PVOID)&m_pbAsyncPending, (PVOID)(&m_bAsyncPendingIOff));
+			InterlockedExchangePointer((PVOID*)&m_pbAsyncPending, (PVOID)(&m_bAsyncPendingIOff));
 
 			// We must clear the async. pending flag, but if currently set we save that
 			if (InterlockedExchange((LPLONG)&m_bAsyncPending, FALSE))
@@ -209,7 +209,7 @@ bool __fastcall Interpreter::disableInterrupts(bool bDisable)
 			ASSERT(m_pbAsyncPending == &m_bAsyncPendingIOff);
 
 			// First switch back to using the normal flag...
-			InterlockedExchangePointer((PVOID)&m_pbAsyncPending, (PVOID)(&m_bAsyncPending));
+			InterlockedExchangePointer((PVOID*)&m_pbAsyncPending, (PVOID)(&m_bAsyncPending));
 			// ... but if the async. events occurred while interrupts were disabled, make sure these are noticed
 			if (InterlockedExchange((LPLONG)&m_bAsyncPendingIOff, FALSE))
 				InterlockedExchange((LPLONG)&m_bAsyncPending, TRUE);
