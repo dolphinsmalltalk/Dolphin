@@ -141,13 +141,12 @@ schedule
 
 	TimingSemaphore reset.
 
-	"This may fire immediately, causing a Process switch to the timing process
-	(if it's not the scheduler of the Delay), however it will almost immediately
-	be forced to wait for the AccessProtect mutual exclusion Semaphore (which
-	we own) to be signalled, which will mean that the assignment to Current
-	must happen before the timing process accesses it. The timing Process
-	will not restart until we exit our critical section."
-	self class signal: TimingSemaphore afterMilliseconds: self getDuration // 1000.
+	"This may fire immediately, causing a Process switch to the timing process (if it's not the
+	scheduler of the Delay), however it will almost immediately be forced to wait for the
+	AccessProtect mutual exclusion Semaphore (which we own) to be signalled, which will mean
+	that the assignment to Current must happen before the timing process accesses it. The timing
+	Process will not restart until we exit our critical section."
+	self class signalTimerAfter: self getDuration // 1000.
 
 	Current := self!
 
@@ -235,8 +234,7 @@ aboutToIdle
 cancelTimer
 	"Private - Cancel any previously registered timer."
 
-	self signal: nil afterMilliseconds: 0.
-!
+	self signalTimerAfter: -1!
 
 clampResolution: anInteger
 	"Private - As we are using multimedia timers at present, the shortest delay we
@@ -452,15 +450,14 @@ scheduleNext
 		ifTrue: [Current := nil]
 		ifFalse: [Pending removeFirst schedule]!
 
-signal: aSemaphore afterMilliseconds: anInteger 
-	"Private - Request that the VM signal aSemaphore as soon as possible after the
+signalTimerAfter: anInteger
+	"Private - Request that the VM signal the TimingSemaphore as soon as possible after the
 	the specified millisecond delay. Cancel any existing request if aSemaphore is 
-	not actuall a Semaphore (typically nil). If anInteger <= 0, then the Semaphore
-	is signalled immediately.
+	not actuall a Semaphore (typically nil). If anInteger = 0, then the Semaphore
+	is signalled immediately. If anInteger < 0, then the current timer (if any) is cancelled.
 
 	Primitive failure results:
 		0 - anInteger is not a SmallInteger
-		2 - anInteger was greater than the maximum Delay which can be requested.
 		3 - OS refused to set timer (try KernelLibrary>>getLastError)"
 
 	<primitive: 100>
@@ -501,7 +498,7 @@ untilMilliseconds: millisecondTime
 !Delay class categoriesFor: #resolution:do:!operations!public! !
 !Delay class categoriesFor: #resolution:set:!helpers!public! !
 !Delay class categoriesFor: #scheduleNext!initializing!private! !
-!Delay class categoriesFor: #signal:afterMilliseconds:!private!processes-synchronising! !
+!Delay class categoriesFor: #signalTimerAfter:!private!processes-synchronising! !
 !Delay class categoriesFor: #timingProcess!initializing!private! !
 !Delay class categoriesFor: #untilMilliseconds:!instance creation!public! !
 
