@@ -108,7 +108,7 @@ void CALLBACK Interpreter::TimeProc(UINT uID, UINT /*uMsg*/, DWORD /*dwUser*/, D
 // Signal a specified semaphore after the specified milliseconds duration (the argument). 
 // NOTE: NOT ABSOLUTE VALUE!
 // If the specified time has already passed, then the TimingSemaphore is signalled immediately. 
-BOOL __fastcall Interpreter::primitiveSignalAtTick(CompiledMethod&, unsigned)
+BOOL __fastcall Interpreter::primitiveSignalAtTick(CompiledMethod&, unsigned argumentCount)
 {
 	Oop tickPointer = stackTop();
 	SMALLINTEGER nDelay;
@@ -159,7 +159,7 @@ BOOL __fastcall Interpreter::primitiveSignalAtTick(CompiledMethod&, unsigned)
 		{
 			// Unless timer has already fired, record the timer id so can cancel if necessary
 			InterlockedCompareExchange(&timerID, newTimerID, -1);
-			pop(2);		// No ref. counting required
+			pop(argumentCount);		// No ref. counting required
 		}
 		else
 		{
@@ -178,7 +178,7 @@ BOOL __fastcall Interpreter::primitiveSignalAtTick(CompiledMethod&, unsigned)
 		// available timer resolution (i.e. it will happen too soon), so signal
 		// it immediately
 		// We must adjust stack before signalling, as may change Process (and therefore stack!)
-		pop(2);
+		pop(argumentCount);
 
 		// N.B. Signalling may detect a process switch, but does not actually perform it
 		signalSemaphore(Pointers.TimingSemaphore);
