@@ -30,6 +30,8 @@ ScintillaConstants at: 'INDIC_IME' put: 16r20!
 ScintillaConstants at: 'INDIC_IME_MAX' put: 16r23!
 ScintillaConstants at: 'INDIC_MAX' put: 16r23!
 ScintillaConstants at: 'INDIC_PLAIN' put: 16r0!
+ScintillaConstants at: 'INDIC_POINT' put: 16r12!
+ScintillaConstants at: 'INDIC_POINTCHARACTER' put: 16r13!
 ScintillaConstants at: 'INDIC_ROUNDBOX' put: 16r7!
 ScintillaConstants at: 'INDIC_SQUIGGLE' put: 16r1!
 ScintillaConstants at: 'INDIC_SQUIGGLELOW' put: 16rB!
@@ -91,7 +93,6 @@ ScintillaConstants at: 'SC_CHARSET_SYMBOL' put: 16r2!
 ScintillaConstants at: 'SC_CHARSET_THAI' put: 16rDE!
 ScintillaConstants at: 'SC_CHARSET_TURKISH' put: 16rA2!
 ScintillaConstants at: 'SC_CHARSET_VIETNAMESE' put: 16rA3!
-ScintillaConstants at: 'SC_CP_DBCS' put: 16r1!
 ScintillaConstants at: 'SC_CP_UTF8' put: 16rFDE9!
 ScintillaConstants at: 'SC_CURSORARROW' put: 16r2!
 ScintillaConstants at: 'SC_CURSORNORMAL' put: -16r1!
@@ -108,6 +109,9 @@ ScintillaConstants at: 'SC_EOL_LF' put: 16r2!
 ScintillaConstants at: 'SC_FOLDACTION_CONTRACT' put: 16r0!
 ScintillaConstants at: 'SC_FOLDACTION_EXPAND' put: 16r1!
 ScintillaConstants at: 'SC_FOLDACTION_TOGGLE' put: 16r2!
+ScintillaConstants at: 'SC_FOLDDISPLAYTEXT_BOXED' put: 16r2!
+ScintillaConstants at: 'SC_FOLDDISPLAYTEXT_HIDDEN' put: 16r0!
+ScintillaConstants at: 'SC_FOLDDISPLAYTEXT_STANDARD' put: 16r1!
 ScintillaConstants at: 'SC_FOLDFLAG_LEVELNUMBERS' put: 16r40!
 ScintillaConstants at: 'SC_FOLDFLAG_LINEAFTER_CONTRACTED' put: 16r10!
 ScintillaConstants at: 'SC_FOLDFLAG_LINEAFTER_EXPANDED' put: 16r8!
@@ -217,6 +221,9 @@ ScintillaConstants at: 'SC_PERFORMED_USER' put: 16r10!
 ScintillaConstants at: 'SC_PHASES_MULTIPLE' put: 16r2!
 ScintillaConstants at: 'SC_PHASES_ONE' put: 16r0!
 ScintillaConstants at: 'SC_PHASES_TWO' put: 16r1!
+ScintillaConstants at: 'SC_POPUP_ALL' put: 16r1!
+ScintillaConstants at: 'SC_POPUP_NEVER' put: 16r0!
+ScintillaConstants at: 'SC_POPUP_TEXT' put: 16r2!
 ScintillaConstants at: 'SC_PRINT_BLACKONWHITE' put: 16r2!
 ScintillaConstants at: 'SC_PRINT_COLOURONWHITE' put: 16r3!
 ScintillaConstants at: 'SC_PRINT_COLOURONWHITEDEFAULTBG' put: 16r4!
@@ -411,6 +418,7 @@ ScintillaConstants at: 'SCI_FINDINDICATORSHOW' put: 16rA50!
 ScintillaConstants at: 'SCI_FINDTEXT' put: 16r866!
 ScintillaConstants at: 'SCI_FOLDALL' put: 16rA66!
 ScintillaConstants at: 'SCI_FOLDCHILDREN' put: 16r8BE!
+ScintillaConstants at: 'SCI_FOLDDISPLAYTEXTSETSTYLE' put: 16rA8D!
 ScintillaConstants at: 'SCI_FOLDLINE' put: 16r8BD!
 ScintillaConstants at: 'SCI_FORMATRANGE' put: 16r867!
 ScintillaConstants at: 'SCI_FORMFEED' put: 16r91A!
@@ -558,6 +566,7 @@ ScintillaConstants at: 'SCI_GETSTYLEFROMSUBSTYLE' put: 16rFBB!
 ScintillaConstants at: 'SCI_GETSUBSTYLEBASES' put: 16rFBA!
 ScintillaConstants at: 'SCI_GETSUBSTYLESLENGTH' put: 16rFB6!
 ScintillaConstants at: 'SCI_GETSUBSTYLESSTART' put: 16rFB5!
+ScintillaConstants at: 'SCI_GETTABDRAWMODE' put: 16rA8A!
 ScintillaConstants at: 'SCI_GETTABINDENTS' put: 16r8D5!
 ScintillaConstants at: 'SCI_GETTABWIDTH' put: 16r849!
 ScintillaConstants at: 'SCI_GETTAG' put: 16rA38!
@@ -570,7 +579,6 @@ ScintillaConstants at: 'SCI_GETTEXTLENGTH' put: 16r887!
 ScintillaConstants at: 'SCI_GETTEXTRANGE' put: 16r872!
 ScintillaConstants at: 'SCI_GETTWOPHASEDRAW' put: 16r8EB!
 ScintillaConstants at: 'SCI_GETUNDOCOLLECTION' put: 16r7E3!
-ScintillaConstants at: 'SCI_GETUSEPALETTE' put: 16r85B!
 ScintillaConstants at: 'SCI_GETUSETABS' put: 16r84D!
 ScintillaConstants at: 'SCI_GETVIEWEOL' put: 16r933!
 ScintillaConstants at: 'SCI_GETVIEWWS' put: 16r7E4!
@@ -855,6 +863,7 @@ ScintillaConstants at: 'SCI_SETSTATUS' put: 16r94E!
 ScintillaConstants at: 'SCI_SETSTYLEBITS' put: 16r82A!
 ScintillaConstants at: 'SCI_SETSTYLING' put: 16r7F1!
 ScintillaConstants at: 'SCI_SETSTYLINGEX' put: 16r819!
+ScintillaConstants at: 'SCI_SETTABDRAWMODE' put: 16rA8B!
 ScintillaConstants at: 'SCI_SETTABINDENTS' put: 16r8D4!
 ScintillaConstants at: 'SCI_SETTABWIDTH' put: 16r7F4!
 ScintillaConstants at: 'SCI_SETTARGETEND' put: 16r890!
@@ -864,7 +873,6 @@ ScintillaConstants at: 'SCI_SETTECHNOLOGY' put: 16rA46!
 ScintillaConstants at: 'SCI_SETTEXT' put: 16r885!
 ScintillaConstants at: 'SCI_SETTWOPHASEDRAW' put: 16r8EC!
 ScintillaConstants at: 'SCI_SETUNDOCOLLECTION' put: 16r7DC!
-ScintillaConstants at: 'SCI_SETUSEPALETTE' put: 16r7F7!
 ScintillaConstants at: 'SCI_SETUSETABS' put: 16r84C!
 ScintillaConstants at: 'SCI_SETVIEWEOL' put: 16r934!
 ScintillaConstants at: 'SCI_SETVIEWWS' put: 16r7E5!
@@ -935,6 +943,7 @@ ScintillaConstants at: 'SCI_TEXTHEIGHT' put: 16r8E7!
 ScintillaConstants at: 'SCI_TEXTWIDTH' put: 16r8E4!
 ScintillaConstants at: 'SCI_TOGGLECARETSTICKY' put: 16r99B!
 ScintillaConstants at: 'SCI_TOGGLEFOLD' put: 16r8B7!
+ScintillaConstants at: 'SCI_TOGGLEFOLDSHOWTEXT' put: 16rA8C!
 ScintillaConstants at: 'SCI_UNDO' put: 16r880!
 ScintillaConstants at: 'SCI_UPPERCASE' put: 16r925!
 ScintillaConstants at: 'SCI_USEPOPUP' put: 16r943!
@@ -1020,6 +1029,7 @@ ScintillaConstants at: 'SCLEX_DIFF' put: 16r10!
 ScintillaConstants at: 'SCLEX_DMAP' put: 16r70!
 ScintillaConstants at: 'SCLEX_DMIS' put: 16r72!
 ScintillaConstants at: 'SCLEX_ECL' put: 16r69!
+ScintillaConstants at: 'SCLEX_EDIFACT' put: 16r79!
 ScintillaConstants at: 'SCLEX_EIFFEL' put: 16r17!
 ScintillaConstants at: 'SCLEX_EIFFELKW' put: 16r18!
 ScintillaConstants at: 'SCLEX_ERLANG' put: 16r35!
@@ -1130,6 +1140,7 @@ ScintillaConstants at: 'SCN_INDICATORRELEASE' put: 16r7E8!
 ScintillaConstants at: 'SCN_KEY' put: 16r7D5!
 ScintillaConstants at: 'SCN_MACRORECORD' put: 16r7D9!
 ScintillaConstants at: 'SCN_MARGINCLICK' put: 16r7DA!
+ScintillaConstants at: 'SCN_MARGINRIGHTCLICK' put: 16r7EF!
 ScintillaConstants at: 'SCN_MODIFIED' put: 16r7D8!
 ScintillaConstants at: 'SCN_MODIFYATTEMPTRO' put: 16r7D4!
 ScintillaConstants at: 'SCN_NEEDSHOWN' put: 16r7DB!
@@ -1141,6 +1152,8 @@ ScintillaConstants at: 'SCN_UPDATEUI' put: 16r7D7!
 ScintillaConstants at: 'SCN_URIDROPPED' put: 16r7DF!
 ScintillaConstants at: 'SCN_USERLISTSELECTION' put: 16r7DE!
 ScintillaConstants at: 'SCN_ZOOM' put: 16r7E2!
+ScintillaConstants at: 'SCTD_LONGARROW' put: 16r0!
+ScintillaConstants at: 'SCTD_STRIKEOUT' put: 16r1!
 ScintillaConstants at: 'SCVS_NONE' put: 16r0!
 ScintillaConstants at: 'SCVS_NOWRAPLINESTART' put: 16r4!
 ScintillaConstants at: 'SCVS_RECTANGULARSELECTION' put: 16r1!
@@ -1154,6 +1167,7 @@ ScintillaConstants at: 'STYLE_BRACELIGHT' put: 16r22!
 ScintillaConstants at: 'STYLE_CALLTIP' put: 16r26!
 ScintillaConstants at: 'STYLE_CONTROLCHAR' put: 16r24!
 ScintillaConstants at: 'STYLE_DEFAULT' put: 16r20!
+ScintillaConstants at: 'STYLE_FOLDDISPLAYTEXT' put: 16r27!
 ScintillaConstants at: 'STYLE_INDENTGUIDE' put: 16r25!
 ScintillaConstants at: 'STYLE_LASTPREDEFINED' put: 16r27!
 ScintillaConstants at: 'STYLE_LINENUMBER' put: 16r21!

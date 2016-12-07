@@ -488,6 +488,8 @@ initialize
 		at: #indentGuide put: STYLE_INDENTGUIDE;
 		removeKey: STYLE_CALLTIP;
 		at: #callTip put: STYLE_CALLTIP;
+		removeKey: STYLE_FOLDDISPLAYTEXT;
+		at: #foldDisplayText put: STYLE_FOLDDISPLAYTEXT;
 		removeKey: STYLE_DEFAULT.
 	predefinedStyleNames
 		isImmutable: true;

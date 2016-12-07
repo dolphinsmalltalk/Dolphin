@@ -459,8 +459,6 @@ renamedFunctions
 		at: 'SCI_GETSTATUS' put: #errorStatus;
 		at: 'SCI_SETSTATUS' put: #errorStatus:;
 		at: 'SCI_LINESONSCREEN' put: #linesOnScreen;
-		at: 'SCI_GETUSEPALETTE' put: #isUsingPalette;
-		at: 'SCI_SETUSEPALETTE' put: #isUsingPalette:;
 		at: 'SCI_GETMOUSEDOWNCAPTURES' put: #willCaptureMouse;
 		at: 'SCI_SETMOUSEDOWNCAPTURES' put: #willCaptureMouse:;
 		at: 'SCI_ADDTEXT' put: #insertText:from:;

@@ -1,7 +1,7 @@
 "Filed out from Dolphin Smalltalk 7"!
 
 MultilineTextEdit subclass: #ScintillaView
-	instanceVariableNames: 'this currentTextStyles styleIdMap styler markerDefinitions markers wordChars registeredImages modificationEventMask autoCStops autoCFillups whitespaceBackcolor whitespaceForecolor selectionBackcolor selectionForecolor indicators callTipTabWidth punctuation callTipHighlightColor braceChars whitespaces scFlags allTextStyles foldMarginColor foldMarginHiColor foldMarkerStyle foldFlags _unused44 keyBindings indicatorStyles secondarySelectionForecolor secondarySelectionBackcolor annotationStyles _unused50'
+	instanceVariableNames: 'this currentTextStyles styleIdMap styler markerDefinitions markers wordChars registeredImages modificationEventMask autoCStops autoCFillups whitespaceBackcolor whitespaceForecolor selectionBackcolor selectionForecolor indicators callTipTabWidth punctuation callTipHighlightColor braceChars whitespaces scFlags allTextStyles foldMarginColor foldMarginHiColor foldMarkerStyle foldFlags _unused44 keyBindings indicatorStyles secondarySelectionForecolor secondarySelectionBackcolor annotationStyles foldTextTagStyle'
 	classVariableNames: 'AnnotationStylesOffset BackgroundDwellEvents BraceHilightingMask CodePages DefaultCallTipTabWidth DefaultKeyBindings DefaultTextStyles FoldingMask MarginStylesOffset ScnMap'
 	poolDictionaries: 'ScintillaConstants Win32Constants'
 	classInstanceVariableNames: ''!
@@ -1237,15 +1237,16 @@ clearRange: anInterval
 	self sciDeleteRange: anInterval start lengthDelete: anInterval size!
 
 codePage
-	"Answer a <Symbol> naming the code page currently in use, either #utf8 or #dbcs."
+	"Answer a <Symbol> naming the code page currently in use, either #utf8, or nil if multi-byte
+	character support is disabled."
 
-	^CodePages at: self sciGetCodePage ifAbsent: [#dbcs]!
+	^CodePages at: self sciGetCodePage ifAbsent: []!
 
 codePage: aSymbol
 	"Set the code page currently in use to that named by the <Symbol> argument (one of #utf8 or
-	#dbcs)."
+	nil)."
 
-	self sciSetCodePage: (CodePages keyAtValue: aSymbol)!
+	self sciSetCodePage: (aSymbol ifNil: [0] ifNotNil: [CodePages keyAtValue: aSymbol])!
 
 columnFromPosition: anInteger
 	"Answer the column number of the character at the specified position."
@@ -2462,6 +2463,21 @@ foldMarkerStyle: aSymbol
 			markerDefinitions at: each name put: each].
 	foldMarkerStyle := aSymbol!
 
+foldTextTagStyle
+	"Answer the symbolic name of the current fold text tag style:
+		nil		- unspecified (uses current Scintilla default, i.e. #hidden)
+		#hidden	- text tags are not displayed
+		#standard	- text tags are displayed
+		#boxed	- text tags are displayed with a box drawn around them"
+
+	^foldTextTagStyle!
+
+foldTextTagStyle: aSymbolOrNil
+	"Set the appearance of fold text tags - see #foldTextTagStyle for more details."
+
+	foldTextTagStyle := aSymbolOrNil.
+	self setFoldTextTagStyle!
+
 fontQuality
 	"Retrieve the quality level for text."
 
@@ -2942,6 +2958,7 @@ initializeControl
 	differ from the defaults."
 
 	"Discard registered images rather than restoring - these can be re-registered dynamically as required"
+
 	self initializeRegisteredImages.
 	self sciSetModEventMask: self modificationEventMask.
 	"Not necessary.
@@ -2967,7 +2984,8 @@ initializeControl
 	foldMarginHiColor ifNotNil: [self setFoldMarginHiColor].
 	foldFlags ifNotNil: [self setFoldFlags].
 	self isFoldingEnabled ifTrue: [self setFoldProperty: true].
-	keyBindings ifNotNil: [self updateKeyBindings]!
+	keyBindings ifNotNil: [self updateKeyBindings].
+	foldTextTagStyle ifNotNil: [self setFoldTextTagStyle]!
 
 initializeRegisteredImages
 	registeredImages := LookupTable new!
@@ -3351,7 +3369,8 @@ isKeyboardInputUnicode
 				lParam: 0) asBoolean]!
 
 isKeyboardInputUnicode: keysUnicodeBoolean
-	"Deprecated in 3.5.5 Always interpret keyboard input as Unicode"
+	"There are no provisional APIs currently, but some arguments to SCI_SETTECHNOLOGY are
+	provisional. Deprecated in 3.5.5 Always interpret keyboard input as Unicode"
 
 	#deprecated.
 	this isNil
@@ -3582,32 +3601,6 @@ isUndoEnabled: collectUndoBoolean
 				directFunction: this
 				msg: SCI_SETUNDOCOLLECTION
 				wParam: collectUndoBoolean asParameter
-				lParam: 0]!
-
-isUsingPalette
-	"Deprecated in 2.30 In palette mode?"
-
-	#deprecated.
-	^this isNil
-		ifTrue: [false]
-		ifFalse: 
-			[(ScintillaLibrary default
-				directFunction: this
-				msg: SCI_GETUSEPALETTE
-				wParam: 0
-				lParam: 0) asBoolean]!
-
-isUsingPalette: usePaletteBoolean
-	"In palette mode, Scintilla uses the environment's palette calls to display more colours.
-	This may lead to ugly displays."
-
-	#deprecated.
-	this isNil
-		ifFalse: 
-			[ScintillaLibrary default
-				directFunction: this
-				msg: SCI_SETUSEPALETTE
-				wParam: usePaletteBoolean asParameter
 				lParam: 0]!
 
 isUsingTabs
@@ -5709,6 +5702,17 @@ sciFoldChildren: lineInteger action: actionInteger
 				wParam: lineInteger
 				lParam: actionInteger]!
 
+sciFoldDisplayTextSetStyle: styleInteger
+	"Private - Set the style of fold display text"
+
+	this isNil
+		ifFalse: 
+			[ScintillaLibrary default
+				directFunction: this
+				msg: SCI_FOLDDISPLAYTEXTSETSTYLE
+				wParam: styleInteger
+				lParam: 0]!
+
 sciFoldLine: lineInteger action: actionInteger
 	"Private - Expand or contract a fold header."
 
@@ -6604,6 +6608,18 @@ sciGetSubStylesStart: styleBaseInteger
 				directFunction: this
 				msg: SCI_GETSUBSTYLESSTART
 				wParam: styleBaseInteger
+				lParam: 0]!
+
+sciGetTabDrawMode
+	"Private - Retrieve the current tab draw mode. Returns one of SCTD_* constants."
+
+	^this isNil
+		ifTrue: [0]
+		ifFalse: 
+			[ScintillaLibrary default
+				directFunction: this
+				msg: SCI_GETTABDRAWMODE
+				wParam: 0
 				lParam: 0]!
 
 sciGetTag: tagNumberInteger
@@ -8264,6 +8280,17 @@ sciSetStylingEx: lengthInteger styles: stylesString
 				wParam: lengthInteger
 				lpParam: stylesString]!
 
+sciSetTabDrawMode: tabDrawModeInteger
+	"Private - Set how tabs are drawn when visible."
+
+	this isNil
+		ifFalse: 
+			[ScintillaLibrary default
+				directFunction: this
+				msg: SCI_SETTABDRAWMODE
+				wParam: tabDrawModeInteger
+				lParam: 0]!
+
 sciSetTargetRange: startInteger end: endInteger
 	"Private - Sets both the start and end of the target in one call."
 
@@ -8550,6 +8577,18 @@ sciToggleFold: lineInteger
 				wParam: lineInteger
 				lParam: 0]!
 
+sciToggleFoldShowText: lineInteger text: textString
+	"Private - Switch a header line between expanded and contracted and show some text after the
+	line."
+
+	this isNil
+		ifFalse: 
+			[ScintillaLibrary default
+				directFunction: this
+				msg: SCI_TOGGLEFOLDSHOWTEXT
+				wParam: lineInteger
+				lpParam: textString]!
+
 sciUserListShow: listTypeInteger itemList: itemListString
 	"Private - Display a list of strings and send notification when user chooses one."
 
@@ -8821,6 +8860,16 @@ scnMarginClick: pSCNotification
 					line := self lineFromPosition: struct position.
 					self toggleFold: line]].
 	self presenter trigger: #marginClicked: with: struct.
+	^0!
+
+scnMarginRightClick: pSCNotification
+	"Private - Default handler for an SCN_MARGINRIGHTCLICK event.
+	The following fields of the notification structure are set:
+		modifiers
+		position
+		margin"
+
+	self presenter trigger: #marginRightClicked: with: (SCNotification fromAddress: pSCNotification).
 	^0!
 
 scnModified: pSCNotification 
@@ -9417,6 +9466,13 @@ setFoldProperty: aBoolean
 			#('fold' 'fold.html') 
 				do: [:each | self sciSetProperty: each yourAddress value: aBoolean asParameter displayString]]!
 
+setFoldTextTagStyle
+	| style |
+	style := foldTextTagStyle
+				ifNil: [0]
+				ifNotNil: [(self class foldTextTagStyles identityIndexOf: foldTextTagStyle) - 1].
+	self sciFoldDisplayTextSetStyle: style!
+
 setFont: aFont 
 	"Private - Apply the specified font to the receiver's associated Windows control"
 
@@ -9684,7 +9740,7 @@ state
 		to: 0)) #(#sciSetViewWS: #sciGetViewWS ##(SCWS_INVISIBLE)) #(#autoCompletionSeparator: #autoCompletionSeparator $\x20) #(#autoCompletionImageIdSeparator: #autoCompletionImageIdSeparator $?) #(#isAutoCompletionCancelledAtStart: #isAutoCompletionCancelledAtStart true) #(#isAutoCompletionCaseInsensitive: #isAutoCompletionCaseInsensitive false) #(#isAutoCompletionCancelledWhenNoMatch: #isAutoCompletionCancelledWhenNoMatch true) #(#isAutoCompletionTruncating: #isAutoCompletionTruncating false) #(#maxCompletionListHeight: #maxCompletionListHeight 5) #(#maxCompletionListWidth: #maxCompletionListWidth 0) #(#sciSetCodePage: #sciGetCodePage 0) #(#sciSetEdgeMode: #sciGetEdgeMode ##(EDGE_NONE)) #(#edgeColor: #edgeColor ##(Color
 		gray asRGB)) #(#zoomLevel: #zoomLevel 0) #(#setLexerLanguage: #lexer #container) #(#controlCharacter: #controlCharacter nil) #(#selectionAlpha: #selectionAlpha ##(SC_ALPHA_NOALPHA)) #(#secondarySelectionAlpha: #secondarySelectionAlpha ##(SC_ALPHA_NOALPHA)) #(#positionCacheSize: #positionCacheSize 1024) #(#activeHotspotBackcolor: #activeHotspotBackcolor ##(Color
 		white asRGB)) #(#activeHotspotForecolor: #activeHotspotForecolor ##(Color blue asRGB)) #(#areHotspotsSingleLine: #areHotspotsSingleLine true) #(#sciAnnotationSetVisible: #sciAnnotationGetVisible ##(ANNOTATION_HIDDEN)) #(#setRawAnnotations: #getRawAnnotations ##(OrderedCollection
-		new)) #(#extraAscent: #extraAscent 0) #(#extraDescent: #extraDescent 0) #(#areAdditionalCaretsVisible: #areAdditionalCaretsVisible true) #(#sciSetFontQuality: #sciGetFontQuality ##(SC_EFF_QUALITY_DEFAULT)) #(#whitespaceMarkerSize: #whitespaceMarkerSize 1) #(#sciSetMultiPaste: #sciGetMultiPaste ##(SC_MULTIPASTE_ONCE)) #(#sciSetIMEInteraction: #sciGetIMEInteraction ##(SC_IME_WINDOWED)) #(#sciAutoCSetOrder: #sciAutoCGetOrder ##(SC_ORDER_PRESORTED)) #(#sciSetPhasesDraw: #sciGetPhasesDraw ##(SC_PHASES_TWO)) #(#sciSetIdleStyling: #sciGetIdleStyling ##(SC_IDLESTYLING_NONE)) #(#isMouseWheelCaptured: #isMouseWheelCaptured true))
+		new)) #(#extraAscent: #extraAscent 0) #(#extraDescent: #extraDescent 0) #(#areAdditionalCaretsVisible: #areAdditionalCaretsVisible true) #(#sciSetFontQuality: #sciGetFontQuality ##(SC_EFF_QUALITY_DEFAULT)) #(#whitespaceMarkerSize: #whitespaceMarkerSize 1) #(#sciSetMultiPaste: #sciGetMultiPaste ##(SC_MULTIPASTE_ONCE)) #(#sciSetIMEInteraction: #sciGetIMEInteraction ##(SC_IME_WINDOWED)) #(#sciAutoCSetOrder: #sciAutoCGetOrder ##(SC_ORDER_PRESORTED)) #(#sciSetPhasesDraw: #sciGetPhasesDraw ##(SC_PHASES_TWO)) #(#sciSetIdleStyling: #sciGetIdleStyling ##(SC_IDLESTYLING_NONE)) #(#isMouseWheelCaptured: #isMouseWheelCaptured true) #(#sciSetTabDrawMode: #sciGetTabDrawMode 0))
 			do: 
 				[:each |
 				| attrib |
@@ -9836,6 +9892,17 @@ swapPrimarySelectionAnchorAndCaret
 				msg: SCI_SWAPMAINANCHORCARET
 				wParam: 0
 				lParam: 0]!
+
+tabDrawMode
+	"Answer the current indenting mode used when wrapping lines. This can be one of #fixed
+	(indent to a fixed point, by default no indent), #same (indent to the same point as the start
+	of the wrapped line), or #indent (indent from the start of the wrapped line by one tab
+	width)."
+
+	^self class tabDrawModes at: self sciGetTabDrawMode + 1 ifAbsent: [#longArrow]!
+
+tabDrawMode: aSymbol
+	self sciSetTabDrawMode: (self class tabDrawModes keyAtValue: aSymbol) - 1!
 
 tabIndents
 	"Does a tab pressed when caret is within indentation indent?"
@@ -10688,6 +10755,8 @@ zoomOut
 !ScintillaView categoriesFor: #foldMarginHiColor:!folding!margins!public! !
 !ScintillaView categoriesFor: #foldMarkerStyle!folding!markers!public! !
 !ScintillaView categoriesFor: #foldMarkerStyle:!folding!markers!public! !
+!ScintillaView categoriesFor: #foldTextTagStyle!accessing!folding!public! !
+!ScintillaView categoriesFor: #foldTextTagStyle:!accessing!folding!public! !
 !ScintillaView categoriesFor: #fontQuality!other settings!public! !
 !ScintillaView categoriesFor: #fontQuality:!other settings!public! !
 !ScintillaView categoriesFor: #forecolor:!accessing!public! !
@@ -10810,8 +10879,6 @@ zoomOut
 !ScintillaView categoriesFor: #isTextModified:!modes!private! !
 !ScintillaView categoriesFor: #isUndoEnabled!**auto generated**!public!scintilla interface!testing!undo & redo! !
 !ScintillaView categoriesFor: #isUndoEnabled:!**auto generated**!public!scintilla interface!undo & redo! !
-!ScintillaView categoriesFor: #isUsingPalette!**auto generated**!other settings!public!scintilla interface!testing! !
-!ScintillaView categoriesFor: #isUsingPalette:!**auto generated**!other settings!public!scintilla interface! !
 !ScintillaView categoriesFor: #isUsingTabs!**auto generated**!public!scintilla interface!tabs & indentation guides!testing! !
 !ScintillaView categoriesFor: #isUsingTabs:!**auto generated**!public!scintilla interface!tabs & indentation guides! !
 !ScintillaView categoriesFor: #joinTarget!**auto generated**!commands!line wrapping!public!scintilla interface! !
@@ -11005,6 +11072,7 @@ zoomOut
 !ScintillaView categoriesFor: #sciFindText:ft:!**auto generated**!private!scintilla interface!searching & replacing! !
 !ScintillaView categoriesFor: #sciFoldAll:!**auto generated**!folding!private!scintilla interface! !
 !ScintillaView categoriesFor: #sciFoldChildren:action:!**auto generated**!folding!private!scintilla interface! !
+!ScintillaView categoriesFor: #sciFoldDisplayTextSetStyle:!**auto generated**!folding!private!scintilla interface! !
 !ScintillaView categoriesFor: #sciFoldLine:action:!**auto generated**!folding!private!scintilla interface! !
 !ScintillaView categoriesFor: #sciFormatRange:fr:!**auto generated**!printing!private!scintilla interface! !
 !ScintillaView categoriesFor: #sciFreeSubStyles!**auto generated**!private!scintilla interface!style definition! !
@@ -11076,6 +11144,7 @@ zoomOut
 !ScintillaView categoriesFor: #sciGetSubStyleBases!**auto generated**!private!scintilla interface!style definition! !
 !ScintillaView categoriesFor: #sciGetSubStylesLength:!**auto generated**!private!scintilla interface!style definition! !
 !ScintillaView categoriesFor: #sciGetSubStylesStart:!**auto generated**!private!scintilla interface!style definition! !
+!ScintillaView categoriesFor: #sciGetTabDrawMode!**auto generated**!private!scintilla interface! !
 !ScintillaView categoriesFor: #sciGetTag:!**auto generated**!private!scintilla interface!search & replace using target! !
 !ScintillaView categoriesFor: #sciGetTechnology!**auto generated**!other settings!private!scintilla interface! !
 !ScintillaView categoriesFor: #sciGetTextRange:!**auto generated**!private!scintilla interface!text retrieval & modification! !
@@ -11214,6 +11283,7 @@ zoomOut
 !ScintillaView categoriesFor: #sciSetSelectionNStart:anchor:!**auto generated**!multiple selection and virtual space!private!scintilla interface! !
 !ScintillaView categoriesFor: #sciSetSelFore:fore:!**auto generated**!caret, selection, and hotspot styles!private!scintilla interface! !
 !ScintillaView categoriesFor: #sciSetStylingEx:styles:!**auto generated**!private!scintilla interface!styling! !
+!ScintillaView categoriesFor: #sciSetTabDrawMode:!**auto generated**!private!scintilla interface! !
 !ScintillaView categoriesFor: #sciSetTargetRange:end:!**auto generated**!private!scintilla interface!selection! !
 !ScintillaView categoriesFor: #sciSetTechnology:!**auto generated**!other settings!private!scintilla interface! !
 !ScintillaView categoriesFor: #sciSetText:!**auto generated**!private!scintilla interface!text retrieval & modification! !
@@ -11238,6 +11308,7 @@ zoomOut
 !ScintillaView categoriesFor: #sciTextWidth:text:!**auto generated**!enquiries!private!scintilla interface! !
 !ScintillaView categoriesFor: #sciToggleCaretSticky!**auto generated**!caret, selection, and hotspot styles!private!scintilla interface! !
 !ScintillaView categoriesFor: #sciToggleFold:!**auto generated**!folding!private!scintilla interface! !
+!ScintillaView categoriesFor: #sciToggleFoldShowText:text:!**auto generated**!private!scintilla interface! !
 !ScintillaView categoriesFor: #sciUserListShow:itemList:!**auto generated**!private!scintilla interface!user lists! !
 !ScintillaView categoriesFor: #sciVisibleFromDocLine:!**auto generated**!enquiries!folding!private!scintilla interface! !
 !ScintillaView categoriesFor: #sciWordEndPosition:onlyWordCharacters:!**auto generated**!enquiries!private!scintilla interface! !
@@ -11262,6 +11333,7 @@ zoomOut
 !ScintillaView categoriesFor: #scnKey:!event handling-scintilla!notifications!private! !
 !ScintillaView categoriesFor: #scnMacroRecord:!event handling-scintilla!notifications!private! !
 !ScintillaView categoriesFor: #scnMarginClick:!event handling-scintilla!margins!notifications!private! !
+!ScintillaView categoriesFor: #scnMarginRightClick:!event handling-scintilla!private! !
 !ScintillaView categoriesFor: #scnModified:!event handling-scintilla!notifications!private! !
 !ScintillaView categoriesFor: #scnModifyAttemptRO:!event handling-scintilla!notifications!private! !
 !ScintillaView categoriesFor: #scnNeedShown:!event handling-scintilla!notifications!private! !
@@ -11314,7 +11386,8 @@ zoomOut
 !ScintillaView categoriesFor: #setFoldFlags!folding!private! !
 !ScintillaView categoriesFor: #setFoldMarginColor!folding!margins!private! !
 !ScintillaView categoriesFor: #setFoldMarginHiColor!folding!margins!private! !
-!ScintillaView categoriesFor: #setFoldProperty:!helpers!private! !
+!ScintillaView categoriesFor: #setFoldProperty:!folding!private! !
+!ScintillaView categoriesFor: #setFoldTextTagStyle!accessing!folding!private! !
 !ScintillaView categoriesFor: #setFont:!helpers!private!style definition! !
 !ScintillaView categoriesFor: #setIndicator:from:length:!indicators!public! !
 !ScintillaView categoriesFor: #setIndicator:range:!indicators!public! !
@@ -11361,6 +11434,8 @@ zoomOut
 !ScintillaView categoriesFor: #styleWithId:!enquiries!public!style definition! !
 !ScintillaView categoriesFor: #stylingPosition!**auto generated**!public!scintilla interface!styling! !
 !ScintillaView categoriesFor: #swapPrimarySelectionAnchorAndCaret!**auto generated**!commands!public!scintilla interface!selection! !
+!ScintillaView categoriesFor: #tabDrawMode!other settings!public! !
+!ScintillaView categoriesFor: #tabDrawMode:!other settings!public! !
 !ScintillaView categoriesFor: #tabIndents!**auto generated**!public!scintilla interface!tabs & indentation guides!testing! !
 !ScintillaView categoriesFor: #tabIndents:!**auto generated**!public!scintilla interface!tabs & indentation guides! !
 !ScintillaView categoriesFor: #tabWidth!**auto generated**!public!scintilla interface!tabs & indentation guides! !
@@ -11581,6 +11656,9 @@ edgeModes
 foldMarkerStyles
 	^#(#arrows #boxTree #circleTree #plusMinus)!
 
+foldTextTagStyles
+	^#(#hidden #standard #boxed)!
+
 fontQualities
 	^#(#default #unaliased #antialiased #lcdOptimized)!
 
@@ -11618,7 +11696,6 @@ initialize
 	self initializeNotificationMap.
 	self addClassConstant: 'CodePages'
 		value: ((IdentityDictionary new)
-				at: SC_CP_DBCS put: #dbcs;
 				at: SC_CP_UTF8 put: #utf8;
 				shrink;
 				isImmutable: true;
@@ -11654,7 +11731,7 @@ initialize
 	self addClassConstant: 'AnnotationStylesOffset' value: 512!
 
 initializeNotificationMap
-	ScnMap := (Array new: 31)
+	ScnMap := (Array new: 32)
 				at: SCN_STYLENEEDED - 1999 put: #scnStyleNeeded:;
 				at: SCN_CHARADDED - 1999 put: #scnCharAdded:;
 				at: SCN_SAVEPOINTREACHED - 1999 put: #scnSavePointReached:;
@@ -11685,6 +11762,7 @@ initializeNotificationMap
 				at: SCN_FOCUSIN - 1999 put: #scnFocusIn:;
 				at: SCN_FOCUSOUT - 1999 put: #scnFocusOut:;
 				at: SCN_AUTOCCOMPLETED - 1999 put: #scnAutoCCompleted:;
+				at: SCN_MARGINRIGHTCLICK - 1999 put: #scnMarginRightClick:;
 				isImmutable: true;
 				yourself!
 
@@ -11863,6 +11941,9 @@ stbConvertFromVersion9: anArray
 
 stbVersion
 	^14!
+
+tabDrawModes
+	^#(#longArrow #strikeOut)!
 
 txtTextStyles
 	"Answer the default text style settings to be used for new instances of the receiver.
@@ -12076,6 +12157,7 @@ xmlTextStyles
 !ScintillaView class categoriesFor: #drawingPhases!constants!private! !
 !ScintillaView class categoriesFor: #edgeModes!constants!public! !
 !ScintillaView class categoriesFor: #foldMarkerStyles!constants!public! !
+!ScintillaView class categoriesFor: #foldTextTagStyles!constants!public! !
 !ScintillaView class categoriesFor: #fontQualities!constants!public! !
 !ScintillaView class categoriesFor: #icon!constants!public! !
 !ScintillaView class categoriesFor: #idleStylingModes!constants!public! !
@@ -12094,6 +12176,7 @@ xmlTextStyles
 !ScintillaView class categoriesFor: #stbConvertFromVersion13:!binary filing!private! !
 !ScintillaView class categoriesFor: #stbConvertFromVersion9:!binary filing!private! !
 !ScintillaView class categoriesFor: #stbVersion!binary filing!public! !
+!ScintillaView class categoriesFor: #tabDrawModes!constants!public! !
 !ScintillaView class categoriesFor: #txtTextStyles!constants!public!style definition! !
 !ScintillaView class categoriesFor: #whitespaceVisibilityLevels!constants!public! !
 !ScintillaView class categoriesFor: #winClassName!constants!private! !
