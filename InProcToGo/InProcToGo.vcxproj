@@ -233,7 +233,6 @@
     <ClInclude Include="..\DolphinSmalltalk_i.h" />
     <ClInclude Include="..\DolphinX.h" />
     <ClInclude Include="..\environ.h" />
-    <ClInclude Include="..\interlockedops.h" />
     <ClInclude Include="..\InterpRegisters.h" />
     <ClInclude Include="..\Interprt.h" />
     <ClInclude Include="..\ist.h" />
