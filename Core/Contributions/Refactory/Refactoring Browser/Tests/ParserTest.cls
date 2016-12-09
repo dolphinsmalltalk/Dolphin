@@ -233,9 +233,11 @@ testComparingTrees
 		do: [:each | self compare: (class parseTreeFor: each) to: (class parseTreeFor: each)]!
 
 testCopy
-	| tree |
+	| tree copy |
 	tree := self treeWithEverything.
-	self compare: tree to: tree copy!
+	copy := tree copy.
+	self compare: tree to: copy.
+	self verifyTree: copy isDeepCopyOf: tree!
 
 testCreationProtocol
 	| messageNode |
@@ -315,17 +317,14 @@ testIsA
 	| nodes types |
 	nodes := Bag new.
 	types := Set new.
-	#(#(#isAssignment 1) #(#isBlock 1) #(#isCascade 1) #(#isLiteralNode 2) #(#isMessage 3) #(#isMethod 1) #(#isReturn 1) #(#isSequence 2) #(#isValue 15) #(#isVariable 7) #(#isUsed 10) #(#isDirectlyUsed 9) #(#hasParentheses 1) #(#isBinary 0) #(#isPrimitive 0) #(#isImmediateNode 10)) 
+	#(#(#isAssignment 1) #(#isBlock 1) #(#isCascade 1) #(#isLiteralNode 6) #(#isMessage 5) #(#isMethod 1) #(#isReturn 1) #(#isSequence 3) #(#isValue 22) #(#isVariable 7) #(#isUsed 17) #(#isDirectlyUsed 15) #(#hasParentheses 1) #(#isBinary 2) #(#isPrimitive 0) #(#isImmediateNode 15))
 		do: 
-			[:each | 
+			[:each |
 			each last timesRepeat: [nodes add: each first].
 			types add: each first].
 	self treeWithEverything nodesDo: 
-			[:each | 
-			types do: 
-					[:sel | 
-					((each respondsTo: sel) and: [each perform: sel]) 
-						ifTrue: [nodes remove: sel]]].
+			[:each |
+			types do: [:sel | ((each respondsTo: sel) and: [each perform: sel]) ifTrue: [nodes remove: sel]]].
 	self assert: nodes isEmpty!
 
 testLiteralIntevals
@@ -406,7 +405,7 @@ testNodesDo
 	| size |
 	size := 0.
 	self treeWithEverything nodesDo: [:e | size := size + 1].
-	self assert: size = 19!
+	self assert: size = 27!
 
 testNumberParsing
 	2 to: 32
@@ -441,6 +440,14 @@ testPatternCascade
 				tree)
 		to: (RBParser 
 				parseExpression: 'self bar; bar: 4; foo; printString. self foo:4')!
+
+testPatternNodeCopy
+	| tree copy |
+	tree := RBParser
+				parseRewriteMethod: 'method: arg1 | temps | temps := #(10 ##(#sequence -> true. #optimized -> true)). temps foo; foo. `@patternVar bar. ^(temps collect: [:e | e `patternMsg `{:msgNode | ''*pattern*'' match: msgNode selector}])'.
+	copy := tree copy.
+	self compare: copy to: tree.
+	self verifyTree: copy isDeepCopyOf: tree!
 
 testPositions
 	| blockNode optimized |
@@ -680,8 +687,8 @@ testTokens
 		do: [:token :length | self assert: token length = length]!
 
 treeWithEverything
-	^RBParser 
-		parseMethod: 'method: arg1 | temps | temps := #(10). temps foo; foo. ^(temps collect: [:e | ])'!
+	^RBParser
+		parseMethod: 'method: arg1 | temps | temps := #(10 ##(#sequence -> true. #optimized -> true)). temps foo; foo. ^(temps collect: [:e | ])'!
 
 verifyParser
 	Smalltalk allBehaviorsDo: 
@@ -699,9 +706,28 @@ verifySelector: aSelector inClass: aClass
 	source isNil ifTrue: [^self].
 	myTree := aClass parseTreeFor: aSelector.
 	self assert: myTree notNil.
-	self assert: ((Compiler compile: myTree formattedCode in: aClass) 
-				isEqualTo: (Compiler compile: method getSource in: aClass))
-! !
+	self assert: ((Compiler compile: myTree formattedCode in: aClass)
+				isEqualTo: (Compiler compile: source in: aClass))!
+
+verifyTree: copiedNode isDeepCopyOf: originalNode
+	self assert: originalNode class == copiedNode class.
+	self deny: originalNode == copiedNode.
+	self assert: originalNode = copiedNode.
+	originalNode children with: copiedNode children
+		do: 
+			[:originalChild :copiedChild |
+			"Messages in a cascade share their receiver coming out of the parser, but #copy gives them each a separate copy."
+			(originalNode parent notNil and: [originalNode parent isCascade])
+				ifTrue: 
+					[| isLastMessage |
+					isLastMessage := originalNode == originalNode parent messages last.
+					self assert: isLastMessage == (originalChild parent == originalNode)]
+				ifFalse: [self assert: originalChild parent == originalNode].
+			self assert: copiedChild parent == copiedNode.
+			"
+			(Array with: originalNode with: originalChild parent with: copiedNode with: copiedChild parent) collect: #identityHash.
+			"
+			self verifyTree: copiedChild isDeepCopyOf: originalChild]! !
 !ParserTest categoriesFor: #buildArgumentSearch!accessing!public! !
 !ParserTest categoriesFor: #buildMessageSearch!accessing!public! !
 !ParserTest categoriesFor: #buildMethodArgumentSearch!accessing!public! !
@@ -743,6 +769,7 @@ verifySelector: aSelector inClass: aClass
 !ParserTest categoriesFor: #testParserErrors!public!unit tests! !
 !ParserTest categoriesFor: #testParsingLiteralMessages!public!unit tests! !
 !ParserTest categoriesFor: #testPatternCascade!public!unit tests! !
+!ParserTest categoriesFor: #testPatternNodeCopy!public!unit tests! !
 !ParserTest categoriesFor: #testPositions!public!unit tests! !
 !ParserTest categoriesFor: #testPrimitives!public!unit tests! !
 !ParserTest categoriesFor: #testQuerying!public!unit tests! !
@@ -757,4 +784,5 @@ verifySelector: aSelector inClass: aClass
 !ParserTest categoriesFor: #treeWithEverything!private! !
 !ParserTest categoriesFor: #verifyParser!long running!public! !
 !ParserTest categoriesFor: #verifySelector:inClass:!private! !
+!ParserTest categoriesFor: #verifyTree:isDeepCopyOf:!private! !
 
