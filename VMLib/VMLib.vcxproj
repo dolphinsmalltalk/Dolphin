@@ -122,6 +122,9 @@
     <ClCompile Include="..\IDolphin.cpp" />
     <ClCompile Include="..\IDolphinStart.cpp" />
     <ClCompile Include="..\Interfac.cpp" />
+    <ClCompile Include="..\InterlockedOps.c">
+      <PrecompiledHeader />
+    </ClCompile>
     <ClCompile Include="..\Interprt.cpp">
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>ist.h</PrecompiledHeaderFile>

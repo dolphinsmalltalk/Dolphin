@@ -59,7 +59,6 @@ typedef OTE MemManOTE;
 typedef OTE VariableBindingOTE;
 #endif
 
-// Should ideally be sized to a multiple of 16 byte, accounting for object header size (currently 0)
 struct VMPointers //: public Object
 {
 	enum { NumSpecialSelectors = 32 };
@@ -208,7 +207,7 @@ struct VMPointers //: public Object
 	BehaviorOTE* ClassUINT_PTR;								// 148
 	BehaviorOTE* ClassINT_PTR;								// 149
 
-	SemaphoreOTE* TimingSemaphore;							// 150
+	Oop  reservedTails[1];								// 150..150
 };
 
 // Globally accessible pointers, but please don't write to them!

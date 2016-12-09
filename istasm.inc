@@ -249,11 +249,8 @@ VMPointers		STRUCT 2t
 										POTE	?			; 143 (ClassCURRENCY)
 										POTE	?			; 144 (ClassDECIMAL)
 										POTE	?			; 145 (ClassLPBSTR)
-										POTE	?			; 146 (ClassQWORD)
-										POTE	?			; 147 (ClassSQWORD)
-										POTE	?			; 148 (ClassUINT_PTR)
-										POTE	?			; 149 (ClassINT_PTR)
-										POTE	?			; 150 (TimingSemaphore)
+
+	reservedTails						Oop		5t DUP (?)
 
 VMPointers		ENDS
 
