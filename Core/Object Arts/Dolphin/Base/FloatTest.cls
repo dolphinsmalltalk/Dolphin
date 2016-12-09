@@ -3,7 +3,7 @@
 DolphinTest subclass: #FloatTest
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'CRTConstants'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 FloatTest guid: (GUID fromString: '{B2B95B67-E8F3-4991-A4B4-94EDC5E83F28}')!
 FloatTest comment: ''!
@@ -54,25 +54,34 @@ setUp
 	Float reset.
 	super setUp!
 
+shouldRaiseInvalidOperation: aBlock
+	Float reset.
+	self
+		should: aBlock
+		raise: FloatingPointException
+		matching: [:e | e _ieeeRecord causeNames includes: #InvalidOperation]!
+
 shouldRaiseOverflow: aBlock
 	| raised |
 	Float reset.
 	raised := false.
-	aBlock 
-		on: FloatingPointException do: [:e | e isOverflow ifTrue: [raised := true]]
-		on: HRESULTError do: [:e | e hresult asInteger = -2147352566 ifTrue: [raised := true]].
+	aBlock
+		on: FloatingPointException
+		do: [:e | (e isOverflow and: [e _ieeeRecord causeNames includes: #Overflow]) ifTrue: [raised := true]]
+		on: HRESULTError
+		do: [:e | e hresult asInteger = AXAutomationErrors.DISP_E_OVERFLOW ifTrue: [raised := true]].
 	self assert: raised!
 
 shouldRaiseUnderflow: aBlockClosure
 	| answer oldMask |
 	Float reset.
-	oldMask := Processor activeProcess 
-				fpeMask: (Processor activeProcess fpeMask maskClear: _EM_UNDERFLOW).
+	oldMask := Processor activeProcess
+				fpeMask: (Processor activeProcess fpeMask maskClear: CRTConstants._EM_UNDERFLOW).
 	
-	[answer := self 
+	[answer := self
 				should: aBlockClosure
 				raise: FloatingPointException
-				matching: [:e | e isUnderflow]] 
+				matching: [:e | e isUnderflow and: [e _ieeeRecord causeNames includes: #Underflow]]]
 			ensure: [Processor activeProcess fpeMask: oldMask].
 	^answer!
 
@@ -303,6 +312,9 @@ testIntegerComparisons
 			self assert: each asFloat hash equals: each hash.
 			self assert: (each hash = 0 or: [each hash sign = each sign])]!
 
+testInvalidOperation
+	self shouldRaiseInvalidOperation: [-1.0 sqrt]!
+
 testIsFinite
 	self deny: self negativeInfinity isFinite.
 	self deny: self infinity isFinite.
@@ -520,6 +532,7 @@ ulp: aFloat
 !FloatTest categoriesFor: #predecessor:!helpers!private! !
 !FloatTest categoriesFor: #printString:decimalPlaces:!helpers!private! !
 !FloatTest categoriesFor: #setUp!private!Running! !
+!FloatTest categoriesFor: #shouldRaiseInvalidOperation:!helpers!private! !
 !FloatTest categoriesFor: #shouldRaiseOverflow:!helpers!private! !
 !FloatTest categoriesFor: #shouldRaiseUnderflow:!helpers!private! !
 !FloatTest categoriesFor: #successor:!helpers!private! !
@@ -535,6 +548,7 @@ ulp: aFloat
 !FloatTest categoriesFor: #testHash!public!unit tests! !
 !FloatTest categoriesFor: #testIntegerAsFloat!public!Testing! !
 !FloatTest categoriesFor: #testIntegerComparisons!public!unit tests! !
+!FloatTest categoriesFor: #testInvalidOperation!public!unit tests! !
 !FloatTest categoriesFor: #testIsFinite!public!unit tests! !
 !FloatTest categoriesFor: #testIsInfinite!public!unit tests! !
 !FloatTest categoriesFor: #testIsLiteral!public!unit tests! !

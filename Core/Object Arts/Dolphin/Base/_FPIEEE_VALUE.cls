@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ExternalStructure subclass: #_FPIEEE_VALUE
 	instanceVariableNames: ''
@@ -29,21 +29,18 @@ formatName
 isValid
 	^(self flags allMask: 1)!
 
-printFieldsOn: aStream limit: anInteger 
-	self isNull 
+printFieldsOn: aStream limit: anInteger
+	self isNull
 		ifTrue: 
 			[aStream nextPutAll: 'NULL'.
 			^self].
-	self isValid 
+	self isValid
 		ifTrue: 
 			[aStream
 				display: #format;
 				nextPut: $=;
-				print: self formatName;
-				space;
-				display: #value;
-				nextPut: $=;
-				print: self value]
+				print: self formatName
+			"Don't attempt to display the value as often this may result in overflow/underflow exceptions"]
 		ifFalse: [aStream nextPutAll: '<invalid>']!
 
 value
