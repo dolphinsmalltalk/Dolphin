@@ -693,9 +693,11 @@ verifySelector: aSelector inClass: aClass
 	"
 	ParserTest new verifySelector: #testEqualsColon inClass: FloatTest
 	"
-	| myTree method |
-	method := aClass compiledMethodAt: aSelector.
-	myTree := method parseTree.
+
+	| myTree source |
+	source := aClass sourceCodeAt: aSelector.
+	source isNil ifTrue: [^self].
+	myTree := aClass parseTreeFor: aSelector.
 	self assert: myTree notNil.
 	self assert: ((Compiler compile: myTree formattedCode in: aClass) 
 				isEqualTo: (Compiler compile: method getSource in: aClass))

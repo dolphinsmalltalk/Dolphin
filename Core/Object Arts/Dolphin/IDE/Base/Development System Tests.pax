@@ -44,7 +44,6 @@ package setPrerequisites: (IdentitySet new
 	add: '..\..\Registry\Dolphin Registry Access';
 	add: '..\..\Lagoon\Lagoon Image Stripper';
 	add: '..\..\..\..\Contributions\Refactory\Refactoring Browser\Environments\RBEnvironments';
-	add: '..\..\..\..\Contributions\Refactory\Refactoring Browser\Parser\RBParser';
 	add: '..\..\..\..\Contributions\Refactory\Refactoring Browser\SmallLint\RBSmallLint';
 	add: '..\..\..\..\Contributions\Refactory\Refactoring Browser\Tests\RBTests';
 	add: '..\..\System\Compiler\Smalltalk Parser';
@@ -102,7 +101,7 @@ DolphinTest subclass: #RegKeyTest
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 DolphinTest subclass: #SmalltalkParserTest
-	instanceVariableNames: 'currentSelector classSearches rewrites'
+	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'ExtCallArgTypes SmalltalkParseErrorCodes'
 	classInstanceVariableNames: ''!
