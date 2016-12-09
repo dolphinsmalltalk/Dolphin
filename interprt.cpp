@@ -74,6 +74,7 @@ ObjectMemory::OTEPool Interpreter::m_otePools[Interpreter::NUMOTEPOOLS];
 
 POTE* Interpreter::m_roots[] = {
 	reinterpret_cast<POTE*>(&m_oteNewProcess),
+	reinterpret_cast<POTE*>(&m_oteTimerSem),
 	&m_oteUnderConstruction,
 	0
 };
@@ -227,7 +228,7 @@ void Interpreter::ShutDown()
 	_ASSERTE(!m_bShutDown);
 	m_bShutDown = true;
 	// Nulling out the handle means that any further attempts to queue APCs, etc, will fail
-	HANDLE hThread = LPVOID(InterlockedExchange(LPLONG(&m_hThread), 0));
+	HANDLE hThread = LPVOID(::OAInterlockedExchange(LPLONG(&m_hThread), 0));
 
 	TerminateSampler();
 

@@ -15,6 +15,7 @@
 #include "rc_vm.h"				// For error message ids
 #include "InterprtPrim.inl"
 #include "InterprtProc.inl"
+#include "InterlockedOps.h"
 
 // Smalltalk classes
 #include "STExternal.h"
