@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 StValueNode subclass: #StOptimizedNode
 	instanceVariableNames: 'left right body value methodClass source'
@@ -76,6 +76,11 @@ methodClass: anObject
 needsParenthesis
 	^false!
 
+postCopy
+	super postCopy.
+	self body: body copy.
+	^self!
+
 precedence
 	^0!
 
@@ -114,6 +119,7 @@ value: anObject
 !StOptimizedNode categoriesFor: #methodClass!accessing!private! !
 !StOptimizedNode categoriesFor: #methodClass:!accessing!private! !
 !StOptimizedNode categoriesFor: #needsParenthesis!public!testing! !
+!StOptimizedNode categoriesFor: #postCopy!copying!public! !
 !StOptimizedNode categoriesFor: #precedence!accessing!public! !
 !StOptimizedNode categoriesFor: #source!accessing!public! !
 !StOptimizedNode categoriesFor: #source:!accessing!private! !

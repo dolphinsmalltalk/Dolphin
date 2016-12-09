@@ -68,8 +68,8 @@ needsParenthesis
 
 postCopy
 	super postCopy.
-	self variable: variable postCopy.
-	self value: value postCopy.
+	self variable: variable copy.
+	self value: value copy.
 	^self!
 
 precedence
