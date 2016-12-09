@@ -347,7 +347,7 @@ stbVersion
 	^2!
 
 styleNames
-	^#(#underline #squiggle #tt #hatch #strikeOut #hidden #box #roundBox #container #dash #dots #squiggleLow #dotBox #squigglePixmap #compositionThick #compositionThin #fullBox #textFore)! !
+	^#(#underline #squiggle #tt #hatch #strikeOut #hidden #box #roundBox #container #dash #dots #squiggleLow #dotBox #squigglePixmap #compositionThick #compositionThin #fullBox #textFore #point #pointCharacter)! !
 !ScintillaIndicatorStyle class categoriesFor: #initialize!initializing!public! !
 !ScintillaIndicatorStyle class categoriesFor: #new!public! !
 !ScintillaIndicatorStyle class categoriesFor: #stbConvertFrom:!binary filing!private! !

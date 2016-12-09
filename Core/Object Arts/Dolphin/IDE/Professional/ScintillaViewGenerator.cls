@@ -107,6 +107,8 @@ defineConstantsPool
 		at: 'INDIC_IME_MAX' put: 35;
 		at: 'INDIC_MAX' put: 35;
 		at: 'INDIC_PLAIN' put: 0;
+		at: 'INDIC_POINT' put: 18;
+		at: 'INDIC_POINTCHARACTER' put: 19;
 		at: 'INDIC_ROUNDBOX' put: 7;
 		at: 'INDIC_SQUIGGLE' put: 1;
 		at: 'INDIC_SQUIGGLELOW' put: 11;
@@ -168,7 +170,6 @@ defineConstantsPool
 		at: 'SC_CHARSET_THAI' put: 222;
 		at: 'SC_CHARSET_TURKISH' put: 162;
 		at: 'SC_CHARSET_VIETNAMESE' put: 163;
-		at: 'SC_CP_DBCS' put: 1;
 		at: 'SC_CP_UTF8' put: 65001;
 		at: 'SC_CURSORARROW' put: 2;
 		at: 'SC_CURSORNORMAL' put: -1;
@@ -185,6 +186,9 @@ defineConstantsPool
 		at: 'SC_FOLDACTION_CONTRACT' put: 0;
 		at: 'SC_FOLDACTION_EXPAND' put: 1;
 		at: 'SC_FOLDACTION_TOGGLE' put: 2;
+		at: 'SC_FOLDDISPLAYTEXT_BOXED' put: 2;
+		at: 'SC_FOLDDISPLAYTEXT_HIDDEN' put: 0;
+		at: 'SC_FOLDDISPLAYTEXT_STANDARD' put: 1;
 		at: 'SC_FOLDFLAG_LEVELNUMBERS' put: 64;
 		at: 'SC_FOLDFLAG_LINEAFTER_CONTRACTED' put: 16;
 		at: 'SC_FOLDFLAG_LINEAFTER_EXPANDED' put: 8;
@@ -294,6 +298,9 @@ defineConstantsPool
 		at: 'SC_PHASES_MULTIPLE' put: 2;
 		at: 'SC_PHASES_ONE' put: 0;
 		at: 'SC_PHASES_TWO' put: 1;
+		at: 'SC_POPUP_ALL' put: 1;
+		at: 'SC_POPUP_NEVER' put: 0;
+		at: 'SC_POPUP_TEXT' put: 2;
 		at: 'SC_PRINT_BLACKONWHITE' put: 2;
 		at: 'SC_PRINT_COLOURONWHITE' put: 3;
 		at: 'SC_PRINT_COLOURONWHITEDEFAULTBG' put: 4;
@@ -488,6 +495,7 @@ defineConstantsPool
 		at: 'SCI_FINDTEXT' put: 2150;
 		at: 'SCI_FOLDALL' put: 2662;
 		at: 'SCI_FOLDCHILDREN' put: 2238;
+		at: 'SCI_FOLDDISPLAYTEXTSETSTYLE' put: 2701;
 		at: 'SCI_FOLDLINE' put: 2237;
 		at: 'SCI_FORMATRANGE' put: 2151;
 		at: 'SCI_FORMFEED' put: 2330;
@@ -635,6 +643,7 @@ defineConstantsPool
 		at: 'SCI_GETSUBSTYLEBASES' put: 4026;
 		at: 'SCI_GETSUBSTYLESLENGTH' put: 4022;
 		at: 'SCI_GETSUBSTYLESSTART' put: 4021;
+		at: 'SCI_GETTABDRAWMODE' put: 2698;
 		at: 'SCI_GETTABINDENTS' put: 2261;
 		at: 'SCI_GETTABWIDTH' put: 2121;
 		at: 'SCI_GETTAG' put: 2616;
@@ -647,7 +656,6 @@ defineConstantsPool
 		at: 'SCI_GETTEXTRANGE' put: 2162;
 		at: 'SCI_GETTWOPHASEDRAW' put: 2283;
 		at: 'SCI_GETUNDOCOLLECTION' put: 2019;
-		at: 'SCI_GETUSEPALETTE' put: 2139;
 		at: 'SCI_GETUSETABS' put: 2125;
 		at: 'SCI_GETVIEWEOL' put: 2355;
 		at: 'SCI_GETVIEWWS' put: 2020;
@@ -932,6 +940,7 @@ defineConstantsPool
 		at: 'SCI_SETSTYLEBITS' put: 2090;
 		at: 'SCI_SETSTYLING' put: 2033;
 		at: 'SCI_SETSTYLINGEX' put: 2073;
+		at: 'SCI_SETTABDRAWMODE' put: 2699;
 		at: 'SCI_SETTABINDENTS' put: 2260;
 		at: 'SCI_SETTABWIDTH' put: 2036;
 		at: 'SCI_SETTARGETEND' put: 2192;
@@ -941,7 +950,6 @@ defineConstantsPool
 		at: 'SCI_SETTEXT' put: 2181;
 		at: 'SCI_SETTWOPHASEDRAW' put: 2284;
 		at: 'SCI_SETUNDOCOLLECTION' put: 2012;
-		at: 'SCI_SETUSEPALETTE' put: 2039;
 		at: 'SCI_SETUSETABS' put: 2124;
 		at: 'SCI_SETVIEWEOL' put: 2356;
 		at: 'SCI_SETVIEWWS' put: 2021;
@@ -1012,6 +1020,7 @@ defineConstantsPool
 		at: 'SCI_TEXTWIDTH' put: 2276;
 		at: 'SCI_TOGGLECARETSTICKY' put: 2459;
 		at: 'SCI_TOGGLEFOLD' put: 2231;
+		at: 'SCI_TOGGLEFOLDSHOWTEXT' put: 2700;
 		at: 'SCI_UNDO' put: 2176;
 		at: 'SCI_UPPERCASE' put: 2341;
 		at: 'SCI_USEPOPUP' put: 2371;
@@ -1097,6 +1106,7 @@ defineConstantsPool
 		at: 'SCLEX_DMAP' put: 112;
 		at: 'SCLEX_DMIS' put: 114;
 		at: 'SCLEX_ECL' put: 105;
+		at: 'SCLEX_EDIFACT' put: 121;
 		at: 'SCLEX_EIFFEL' put: 23;
 		at: 'SCLEX_EIFFELKW' put: 24;
 		at: 'SCLEX_ERLANG' put: 53;
@@ -1207,6 +1217,7 @@ defineConstantsPool
 		at: 'SCN_KEY' put: 2005;
 		at: 'SCN_MACRORECORD' put: 2009;
 		at: 'SCN_MARGINCLICK' put: 2010;
+		at: 'SCN_MARGINRIGHTCLICK' put: 2031;
 		at: 'SCN_MODIFIED' put: 2008;
 		at: 'SCN_MODIFYATTEMPTRO' put: 2004;
 		at: 'SCN_NEEDSHOWN' put: 2011;
@@ -1218,6 +1229,8 @@ defineConstantsPool
 		at: 'SCN_URIDROPPED' put: 2015;
 		at: 'SCN_USERLISTSELECTION' put: 2014;
 		at: 'SCN_ZOOM' put: 2018;
+		at: 'SCTD_LONGARROW' put: 0;
+		at: 'SCTD_STRIKEOUT' put: 1;
 		at: 'SCVS_NONE' put: 0;
 		at: 'SCVS_NOWRAPLINESTART' put: 4;
 		at: 'SCVS_RECTANGULARSELECTION' put: 1;
@@ -1231,6 +1244,7 @@ defineConstantsPool
 		at: 'STYLE_CALLTIP' put: 38;
 		at: 'STYLE_CONTROLCHAR' put: 36;
 		at: 'STYLE_DEFAULT' put: 32;
+		at: 'STYLE_FOLDDISPLAYTEXT' put: 39;
 		at: 'STYLE_INDENTGUIDE' put: 37;
 		at: 'STYLE_LASTPREDEFINED' put: 39;
 		at: 'STYLE_LINENUMBER' put: 33;

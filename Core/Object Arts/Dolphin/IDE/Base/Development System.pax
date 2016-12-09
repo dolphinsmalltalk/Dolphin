@@ -4253,6 +4253,7 @@ publishedAspectsOfInstances
 		add: (Aspect choice: #fontQuality from: self fontQualities);
 		add: (Aspect choice: #multiPasteMode from: self multiPasteModes);
 		add: (Aspect integer: #whitespaceMarkerSize);
+		add: (Aspect choice: #tabDrawMode from: self tabDrawModes);
 		yourself.
 	choices := OrderedCollection with: 'nil'.
 	(ScintillaStyler allSubclasses reject: [:each | each isAbstract])
