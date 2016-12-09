@@ -116,6 +116,7 @@ package methodNames
 	add: #SmalltalkSystem -> #regressionTestSuite;
 	add: #SmalltalkSystem -> #runRegressionTests;
 	add: #SmalltalkSystem -> #runRegressionTests:logTo:;
+	add: #SmalltalkSystem -> #update:;
 	yourself.
 
 package binaryGlobalNames: (Set new
@@ -691,14 +692,20 @@ regressionTestSuite
 runRegressionTests
 	^self runRegressionTests: self regressionTestSuite logTo: self regressionTestsLogFilename!
 
-runRegressionTests: aTestSuite logTo: aFilenameStringOrNil 
+runRegressionTests: aTestSuite logTo: aFilenameStringOrNil
 	| results timeMs |
-	timeMs := Time millisecondsToRun: 
-					[| runner |
-					runner := TestRunner show.
-					runner runSuite: aTestSuite.
-					results := runner result].
-	aFilenameStringOrNil notNil 
+	timeMs := Time millisecondsToRun: (SessionManager current isUnattended
+						ifTrue: 
+							[
+							[aTestSuite addDependentToHierachy: self.
+							results := [aTestSuite run] ensure: [aTestSuite removeDependentFromHierachy: self]]]
+						ifFalse: 
+							[
+							[| runner |
+							runner := TestRunner show.
+							runner runSuite: aTestSuite.
+							results := runner result]]).
+	aFilenameStringOrNil notNil
 		ifTrue: 
 			[| logStream |
 			logStream := FileStream write: aFilenameStringOrNil.
@@ -710,34 +717,44 @@ runRegressionTests: aTestSuite logTo: aFilenameStringOrNil
 				display: timeMs // 1000;
 				nextPutAll: 'secs';
 				cr.
-			results failures notEmpty 
+			results failures notEmpty
 				ifTrue: 
 					[logStream
 						cr;
 						nextPutAll: 'FAILURES:';
 						cr.
 					results failures do: 
-							[:each | 
+							[:each |
 							logStream
 								nextPutAll: each printString;
 								cr]].
-			results errors notEmpty 
+			results errors notEmpty
 				ifTrue: 
 					[logStream
 						cr;
 						nextPutAll: 'ERRORS:';
 						cr.
 					results errors do: 
-							[:each | 
+							[:each |
 							logStream
 								nextPutAll: each printString;
 								cr]].
 			logStream close].
-	^results! !
+	^results!
+
+update: anObject
+	(anObject isKindOf: TestCase)
+		ifTrue: 
+			[(SessionManager current stdout)
+				print: anObject;
+				cr;
+				flush]
+		ifFalse: [super update: anObject]! !
 !SmalltalkSystem categoriesFor: #regressionTestsLogFilename!public!tests! !
 !SmalltalkSystem categoriesFor: #regressionTestSuite!private!tests! !
 !SmalltalkSystem categoriesFor: #runRegressionTests!public!tests! !
 !SmalltalkSystem categoriesFor: #runRegressionTests:logTo:!public!tests! !
+!SmalltalkSystem categoriesFor: #update:!helpers!public! !
 
 "End of package definition"!
 

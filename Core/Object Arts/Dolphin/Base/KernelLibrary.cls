@@ -34,6 +34,10 @@ allocConsole
 	<stdcall: bool AllocConsole>
 	^self invalidCall!
 
+attachConsole: anInteger
+	<stdcall: bool AttachConsole dword>
+	^self invalidCall!
+
 beep: anInteger dwDuration: dwDuration
 	"Generates simple tones on the speaker. 
 		BOOL Beep(
@@ -660,6 +664,10 @@ getFileTime: hFile
 		);"
 
 	<stdcall: bool GetFileTime handle FILETIME* FILETIME* FILETIME*>
+	^self invalidCall!
+
+getFileType: anExternalHandle
+	<stdcall: dword GetFileType handle>
 	^self invalidCall!
 
 getFullPathName: fname nBufferLength: anInteger lpBuffer: path lpFilePart: aDWORD
@@ -1601,6 +1609,7 @@ zeroMemory: pvDest length: cBytes
 	^self invalidCall! !
 !KernelLibrary categoriesFor: #addAtom:!public!win32 functions-atom! !
 !KernelLibrary categoriesFor: #allocConsole!public!win32 functions-console! !
+!KernelLibrary categoriesFor: #attachConsole:!public!win32 functions-console! !
 !KernelLibrary categoriesFor: #beep:dwDuration:!public!win32 functions-error! !
 !KernelLibrary categoriesFor: #beginUpdateResource:bDeleteExistingResources:!public!win32 functions-resource! !
 !KernelLibrary categoriesFor: #close!public!realizing/unrealizing! !
@@ -1646,6 +1655,7 @@ zeroMemory: pvDest length: cBytes
 !KernelLibrary categoriesFor: #getFileAttributes:!public!win32 functions-file! !
 !KernelLibrary categoriesFor: #getFileSize:lpFileSizeHigh:!public!win32 functions-file system! !
 !KernelLibrary categoriesFor: #getFileTime:lpCreationTime:lpLastAccessTime:lpLastWriteTime:!public!win32 functions-file! !
+!KernelLibrary categoriesFor: #getFileType:!public!win32 functions-file system! !
 !KernelLibrary categoriesFor: #getFullPathName:nBufferLength:lpBuffer:lpFilePart:!public!win32 functions-file! !
 !KernelLibrary categoriesFor: #getLastError!public!win32 functions-error! !
 !KernelLibrary categoriesFor: #getLocaleInfo:lCType:lpLCData:cchData:!public!win32 functions-natural language support! !

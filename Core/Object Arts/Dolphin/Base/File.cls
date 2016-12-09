@@ -71,6 +71,10 @@ delete
 	self free.
 	self class delete: spec!
 
+fileType
+	^#(#disk #char #pipe) at: ((KernelLibrary default getFileType: self handle) bitAnd: 16rFFF)
+		ifAbsent: [#unknown]!
+
 flags: anInteger
 	"Private - Save away the Win32 access and open flags."
 
@@ -468,6 +472,7 @@ writeByte: anIntegerOrCharacter
 !File categoriesFor: #close!operations!public! !
 !File categoriesFor: #creationTime!accessing!public! !
 !File categoriesFor: #delete!operations!private! !
+!File categoriesFor: #fileType!accessing!public! !
 !File categoriesFor: #flags:!accessing!private! !
 !File categoriesFor: #flush!operations!public! !
 !File categoriesFor: #free!private!realizing/unrealizing! !

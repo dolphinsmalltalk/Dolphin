@@ -252,7 +252,7 @@ package methodNames
 	add: #Process -> #debug;
 	add: #Process -> #debug:topFrame:resumable:;
 	add: #Process -> #debuggerClass;
-	add: #Process -> #halt:;
+	add: #Process -> #halt:cause:;
 	add: #Process -> #primStep:;
 	add: #Process -> #showWalkback:callStack:debuggable:resumable:;
 	add: #Process -> #step;
@@ -3122,11 +3122,11 @@ debugPrintString
     !
 
 halt
-    	"Bring up the Smalltalk debugger (suspending the active process) ..."
-    
-    	| process |
-    	process := Processor activeProcess.
-    	process halt: process topFrame sender!
+	"Bring up the Smalltalk debugger (suspending the active process) ..."
+
+	| process |
+	process := Processor activeProcess.
+	process halt: process topFrame sender cause: 'Hard coded breakpoint'!
 
 inspect
     	"Open and answer an inspector window on the receiver."
@@ -3544,15 +3544,16 @@ debuggerClass
     
     	^Smalltalk developmentSystem debuggerClass!
 
-halt: frame
-    	"Private - Bring up a Smalltalk debugger on the receiver in the specified frame."
-    
-    	debugger isNil
-    		ifTrue: [
-    			self walkback: 'Hard coded breakpoint' 
-    				topFrame: frame
-    				resumable: true]
-    		ifFalse: [debugger onHalt: frame]!
+halt: aStackFrame cause: aString
+	"Private - Bring up a Smalltalk debugger on the receiver in the specified frame."
+
+	debugger isNil
+		ifTrue: 
+			[self
+				walkback: aString
+				topFrame: aStackFrame
+				resumable: true]
+		ifFalse: [debugger onHalt: aStackFrame]!
 
 primStep: steps 
 	"Private - Resume the receiver for a single step (method/block activation), at 
@@ -3684,7 +3685,7 @@ walkback: aString topFrame: aStackFrame resumable: aBoolean
 !Process categoriesFor: #debug!development!private! !
 !Process categoriesFor: #debug:topFrame:resumable:!development!private! !
 !Process categoriesFor: #debuggerClass!constants!public! !
-!Process categoriesFor: #halt:!development!private! !
+!Process categoriesFor: #halt:cause:!development!private! !
 !Process categoriesFor: #primStep:!development!private!states-changing! !
 !Process categoriesFor: #showWalkback:callStack:debuggable:resumable:!development!private! !
 !Process categoriesFor: #step!development!private!states-changing! !
@@ -3752,11 +3753,11 @@ debugPrintString
 !
 
 halt
-    	"Bring up the Smalltalk debugger (suspending the active process) ..."
-    
-    	| process |
-    	process := Processor activeProcess.
-    	process halt: process topFrame sender!
+	"Bring up the Smalltalk debugger (suspending the active process) ..."
+
+	| process |
+	process := Processor activeProcess.
+	process halt: process topFrame sender cause: 'Hard coded breakpoint'!
 
 inspect
 	"Open and answer an inspector window on the receiver"

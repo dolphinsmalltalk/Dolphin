@@ -2,10 +2,12 @@
 
 SessionManager subclass: #GUISessionManager
 	instanceVariableNames: 'savedWindows'
-	classVariableNames: ''
+	classVariableNames: 'NoSplashMask UnattendedMask'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 GUISessionManager guid: (GUID fromString: '{81BC839C-BCD6-4502-A491-418ED5A109E6}')!
+GUISessionManager addClassConstant: 'NoSplashMask' value: 2!
+GUISessionManager addClassConstant: 'UnattendedMask' value: 4!
 GUISessionManager comment: 'GUISessionManager is the class of <SessionManager>s used to manage the life-cycle of a graphical (as opposed to command line, or console) application.
 
 Note that Dolphin GUI applications can access the console and standard I/O streams, but a separate console window will be opened.
@@ -16,6 +18,13 @@ Instance Variables:
 '!
 !GUISessionManager categoriesForClass!System-Support! !
 !GUISessionManager methodsFor!
+
+allocConsole
+	"Private - Open a console window for this session."
+
+	| lib |
+	lib := KernelLibrary default.
+	(self isUnattended and: [lib attachConsole: ATTACH_PARENT_PROCESS]) ifFalse: [lib allocConsole]!
 
 basicShutdown
 	"Private - Perform basic system shutdown operations, just prior to the VM putting
@@ -55,13 +64,21 @@ commandLineParser
 		options: 'hq';
 		yourself!
 
-isEmbedding
-	"Answer whether the session was started with the headless flag."
+isUnattended
+	"Answer whether the session was started with a unattended flag"
 
-	^self commandLineParser options includesKey: $h!
+	^flags allMask: UnattendedMask!
 
 onSettingChanged: aWindowsEvent 
 	SystemMetrics current onSettingChanged: aWindowsEvent!
+
+parseCmdLineFlags
+	| options |
+	super parseCmdLineFlags.
+	options := self commandLineParser options.
+	((cmdLineFlags includes: 'nosplash') or: [options includesKey: $q])
+		ifTrue: [flags := flags maskSet: NoSplashMask].
+	(options includesKey: $h) ifTrue: [flags := flags maskSet: EmbeddingMask]!
 
 resourceManager
 	"Answer the resource manager to use to locate resources"
@@ -103,12 +120,11 @@ startUI
 !
 
 tertiaryStartup
-	"Perform GUI  system tertiary startup"
+	"Perform GUI-system tertiary startup"
 
-	"Pop-up the splash screen before the windows are restored"
 	| splashShown silenceSplash |
-	silenceSplash := (self cmdLineFlags includes: 'nosplash') 
-				or: [self commandLineParser options includesKey: $q].
+	silenceSplash := flags allMask: NoSplashMask.
+	"Pop-up the splash screen before the windows are restored"
 	splashShown := silenceSplash not and: [self showSplash].
 	super tertiaryStartup.
 	splashShown ifFalse: [self trigger: #sessionReady]!
@@ -138,13 +154,15 @@ windowSystemStartup
 	env := self class environment.
 	#(#Canvas #GraphicsTool #Clipboard #View #ToolbarIconButton #Command) 
 		do: [:s | env at: s ifPresent: [:c | c onStartup]]! !
+!GUISessionManager categoriesFor: #allocConsole!operations!private! !
 !GUISessionManager categoriesFor: #basicShutdown!operations-shutdown!private! !
 !GUISessionManager categoriesFor: #basicTertiaryStartup!operations-startup!public! !
 !GUISessionManager categoriesFor: #clearSessionState!operations!public! !
 !GUISessionManager categoriesFor: #clearWindowState!operations-saving!private! !
 !GUISessionManager categoriesFor: #commandLineParser!helpers!private! !
-!GUISessionManager categoriesFor: #isEmbedding!public!testing! !
+!GUISessionManager categoriesFor: #isUnattended!public!testing! !
 !GUISessionManager categoriesFor: #onSettingChanged:!event handling!private! !
+!GUISessionManager categoriesFor: #parseCmdLineFlags!operations-startup!private! !
 !GUISessionManager categoriesFor: #resourceManager!accessing!public! !
 !GUISessionManager categoriesFor: #restoreWindowState!operations-startup!private! !
 !GUISessionManager categoriesFor: #saveSessionState!operations!public! !

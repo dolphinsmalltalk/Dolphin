@@ -1113,7 +1113,7 @@ Dialog subclass: #ValueDialog
 	classInstanceVariableNames: ''!
 SessionManager subclass: #GUISessionManager
 	instanceVariableNames: 'savedWindows'
-	classVariableNames: ''
+	classVariableNames: 'NoSplashMask UnattendedMask'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 GUISessionManager subclass: #RuntimeSessionManager
