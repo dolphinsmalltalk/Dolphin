@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ExternalStructure subclass: #_FPIEEE_RECORD
 	instanceVariableNames: ''
@@ -15,13 +15,20 @@ cause
 
 	^bytes dwordAtOffset: ##(self offsetOf: #cause)!
 
-causeNames
-	"Answer the symbolic names of the type of floating point exception the receiver
-	represents, separated by vertical bars."
+causeDescription
+	"Answer the symbolic names of the type of floating point exception the receiver represents."
 
 	| stream |
 	stream := String writeStream.
 	self class printFlags: self cause on: stream.
+	^stream contents!
+
+causeNames
+	"Answer the symbolic names of the type of floating point exception the receiver represents."
+
+	| stream |
+	stream := Array writeStream.
+	self class exceptionFlags: self cause do: [:each | stream nextPut: each].
 	^stream contents!
 
 flags
@@ -112,7 +119,7 @@ printFieldsOn: aStream limit: anInteger
 			aStream
 				display: each;
 				nextPut: $=.
-			self printFlags: (self getField: each) on: aStream]
+			self class printFlags: (self getField: each) on: aStream]
 		separatedBy: [aStream space].
 	#(#operand1 #operand2) do: 
 			[:each | 
@@ -126,22 +133,6 @@ printFieldsOn: aStream limit: anInteger
 						nextPut: $=;
 						print: value]]!
 
-printFlags: anInteger on: aStream 
-	| first |
-	anInteger == 0 
-		ifTrue: 
-			[aStream nextPut: 0.
-			^self].
-	first := true.
-	self class exceptionFlags inject: 1
-		into: 
-			[:mask :each | 
-			(anInteger anyMask: mask) 
-				ifTrue: 
-					[first ifTrue: [first := false] ifFalse: [aStream nextPut: $|].
-					aStream display: each].
-			mask << 1]!
-
 roundingMode
 	"Answer an <integer> which identifies the rounding mode configured at the time of the exception."
 
@@ -152,6 +143,7 @@ roundingModeName
 
 	^self class roundingModes at: self roundingMode + 1 ifAbsent: [#Unknown]! !
 !_FPIEEE_RECORD categoriesFor: #cause!**compiled accessors**!public! !
+!_FPIEEE_RECORD categoriesFor: #causeDescription!accessing!public! !
 !_FPIEEE_RECORD categoriesFor: #causeNames!accessing!public! !
 !_FPIEEE_RECORD categoriesFor: #flags!**compiled accessors**!public! !
 !_FPIEEE_RECORD categoriesFor: #isDivide!public!testing! !
@@ -165,7 +157,6 @@ roundingModeName
 !_FPIEEE_RECORD categoriesFor: #precision!accessing!public! !
 !_FPIEEE_RECORD categoriesFor: #precisionName!accessing!public! !
 !_FPIEEE_RECORD categoriesFor: #printFieldsOn:limit:!printing!private! !
-!_FPIEEE_RECORD categoriesFor: #printFlags:on:!helpers!private! !
 !_FPIEEE_RECORD categoriesFor: #roundingMode!accessing!public! !
 !_FPIEEE_RECORD categoriesFor: #roundingModeName!accessing!public! !
 
@@ -190,17 +181,39 @@ defineFields
 exceptionFlags
 	^#(#Inexact #Underflow #Overflow #ZeroDivide #InvalidOperation)!
 
+exceptionFlags: anInteger do: aMonadicValuable
+	self exceptionFlags inject: 1
+		into: 
+			[:mask :each |
+			(anInteger anyMask: mask) ifTrue: [aMonadicValuable value: each].
+			mask << 1]!
+
 operationCodes
 	^#(#Add #Subtract #Multiply #Divide #SquareRoot #Remainder #Compare #Convert #Round #Truncate #Floor #Ceil #Acos #Asin #Atan #Atan2 #Cabs #Cos #Cosh #Exp #Fabs #Fmod #Frexp #Hypot #Ldexp #Log #Log10 #Modf #Pow #Sin #Sinh #Tan #Tanh #Y0 #Y1 #Yn #Logb #Nextafter #Negate #Fmin #Fmax #ConvertTrunc #Addps #Addss #Subps #Subss #Mulps #Mulss #Divps #Divss #Sqrtps #Sqrtss #Maxps #Maxss #Minps #Minss #Cmpps #Cmpss #Comiss #UComiss #Cvtpi2ps #Cvtsi2ss #Cvtps2pi #Cvtss2si #Cvttps2pi #Cvttss2si #Addsubps #Haddps #Hsubps #Roundps #Roundss #Dpps #Addpd #Addsd #Subpd #Subsd #Mulpd #Mulsd #Divpd #Divsd #Sqrtpd #Sqrtsd #Maxpd #Maxsd #Minpd #Minsd #Cmppd #Cmpsd #Comisd #UComisd #Cvtpd2pi #Cvtsd2si #Cvttpd2pi #Cvttsd2si #Cvtps2pd #Cvtss2sd #Cvtpd2ps #Cvtsd2ss #Cvtdq2ps #Cvttps2dq #Cvtps2dq #Cvttpd2dq #Cvtpd2dq #Addsubpd #Haddpd #Hsubpd #Roundpd #Roundsd #Dppd #Fma #FmaSingle #FmaDouble #Fms #FmsSingle #FmsDouble #Fnma #FnmaSingle #FnmaDouble #Famin #Famax)!
 
 precisionModes
 	^#(#Full 53 24 64 113)!
 
+printFlags: anInteger on: aStream
+	| first |
+	anInteger == 0
+		ifTrue: 
+			[aStream nextPut: $0.
+			^self].
+	first := true.
+	self exceptionFlags: anInteger
+		do: 
+			[:flag |
+			first ifTrue: [first := false] ifFalse: [aStream nextPut: $|].
+			aStream display: flag]!
+
 roundingModes
 	^#(#Nearest #MinusInfinity #PlusInfinity #Chopped)! !
 !_FPIEEE_RECORD class categoriesFor: #defineFields!initializing!public! !
 !_FPIEEE_RECORD class categoriesFor: #exceptionFlags!constants!public! !
+!_FPIEEE_RECORD class categoriesFor: #exceptionFlags:do:!helpers!private! !
 !_FPIEEE_RECORD class categoriesFor: #operationCodes!constants!public! !
 !_FPIEEE_RECORD class categoriesFor: #precisionModes!constants!public! !
+!_FPIEEE_RECORD class categoriesFor: #printFlags:on:!helpers!private! !
 !_FPIEEE_RECORD class categoriesFor: #roundingModes!constants!public! !
 

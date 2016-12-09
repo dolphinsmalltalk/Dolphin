@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ArithmeticError subclass: #FloatingPointException
 	instanceVariableNames: ''
@@ -14,7 +14,7 @@ _descriptionArguments
 	"Answer the arguments to be subsituted into the receiver's description 
 	format string."
 
-	^super _descriptionArguments copyWith: self _ieeeRecord causeNames!
+	^super _descriptionArguments copyWith: self _ieeeRecord causeDescription!
 
 _descriptionFormat
 	"Answer the Win32 format String to be used to format the description for the receiver."

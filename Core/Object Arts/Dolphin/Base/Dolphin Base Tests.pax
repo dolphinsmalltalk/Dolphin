@@ -265,7 +265,7 @@ DolphinTest subclass: #FILETIMETest
 DolphinTest subclass: #FloatTest
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'CRTConstants'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 DolphinTest subclass: #FolderTest
 	instanceVariableNames: 'c windows system root oa'
