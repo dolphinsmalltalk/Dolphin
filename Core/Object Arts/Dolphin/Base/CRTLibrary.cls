@@ -145,6 +145,10 @@ _gcvt: aFloat count: anInteger buffer: aString
 	<cdecl: char* _gcvt double sdword char*>
 	^self invalidCall!
 
+_get_osfhandle: anInteger
+	<cdecl: handle _get_osfhandle sdword>
+	^self invalidCall!
+
 _getcwd: buffer maxlen: maxlen
 	"Copy up to <integer>, maxlen>, characters of the the current working directory 
 	path to the <String> buffer."
@@ -687,6 +691,7 @@ wcscspn: aUnicodeString strCharSet: strCharSet
 !CRTLibrary categoriesFor: #_finite:!CRT functions-floating point support!public! !
 !CRTLibrary categoriesFor: #_fpclass:!CRT functions-floating point support!public! !
 !CRTLibrary categoriesFor: #_gcvt:count:buffer:!CRT functions-floating point support!public! !
+!CRTLibrary categoriesFor: #_get_osfhandle:!CRT functions-file handling!public! !
 !CRTLibrary categoriesFor: #_getcwd:maxlen:!CRT functions-floating point support!public! !
 !CRTLibrary categoriesFor: #_i64toa:string:radix:!CRT functions-data conversion!public! !
 !CRTLibrary categoriesFor: #_logb:!CRT functions-floating point support!public! !

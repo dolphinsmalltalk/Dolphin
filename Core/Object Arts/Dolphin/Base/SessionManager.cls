@@ -1,11 +1,12 @@
 "Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #SessionManager
-	instanceVariableNames: 'inputState resourceLibrary imagePath servers argv cmdLineFlags state sentry startupArgs consoleHandler stdioStreams eventLogHandle'
-	classVariableNames: 'Current PreStartFile'
+	instanceVariableNames: 'inputState resourceLibrary imagePath servers argv cmdLineFlags state sentry startupArgs consoleHandler stdioStreams eventLogHandle flags'
+	classVariableNames: 'Current EmbeddingMask PreStartFile'
 	poolDictionaries: 'Win32Constants Win32Errors'
 	classInstanceVariableNames: ''!
 SessionManager guid: (GUID fromString: '{87B4C4B7-026E-11D3-9FD7-00A0CC3E4A32}')!
+SessionManager addClassConstant: 'EmbeddingMask' value: 1!
 SessionManager comment: 'SessionManager is the class of objects responsible for managing the lifecyle of an application, from startup to shutdown. SessionManagers are also responsible for determining the global policy for dealing with unhandled Exceptions. 
 
 SessionManager itself is abstract, with two further abstract subclasses that divide applications into two groups: <ConsoleSessionManager> whose subclasses implement Console (that is, command line, DOS style) applications, and <GUISessionManager> whose subclasses implement GUI (that is, Windows) applications.
@@ -127,7 +128,8 @@ basicSecondaryStartup
 	app)."
 
 	Float onStartup.
-	self class environment at: #Locale ifPresent: [:d | d onStartup]!
+	self class environment at: #Locale ifPresent: [:d | d onStartup].
+	self parseCmdLineFlags!
 
 basicShutdown
 	"Private - Perform basic system shutdown operations, just prior to the VM putting
@@ -185,22 +187,6 @@ closeEventLog
 	eventLogHandle notNil ifTrue: [
 		AdvApiLibrary default deregisterEventSource: eventLogHandle.
 		eventLogHandle := nil]!
-
-cmdLineFlags
-	"Private - Answer the Set of flags specified on the command line. Currently this is rather
-	simplistic, since it doesn't handle parameters with an argument, if the argument is
-	separated from the parameter name by whitespace. The VM can't handle these anyway, as it
-	knows nothing about the potential parameters, and so treats the first argument which does
-	not beging with $/ or $- as the name of the image file. So, currently, parameters with
-	arguments must be specified without any whitespace between the parameter name and the
-	parameter value."
-
-	cmdLineFlags isNil 
-		ifTrue: 
-			[cmdLineFlags := Set new.
-			self argv 
-				do: [:each | (each notEmpty and: ['/-' includes: each first]) ifTrue: [cmdLineFlags add: (each copyFrom: 2)]]].
-	^cmdLineFlags!
 
 computerName
 	"Answer the name of the computer hosting the current session. 
@@ -459,7 +445,7 @@ isEmbedded
 isEmbedding
 	"Answer whether the session was started with a headless flag"
 
-	^self cmdLineFlags includes: 'Embedding'!
+	^flags allMask: EmbeddingMask!
 
 isHeadless
 	"Private - Answer whether the session is _currently_ headless. This is most likely if the
@@ -645,6 +631,7 @@ onStartup: args
 	startupArgs := args.
 	imagePath := args class == Array ifTrue: [args first] ifFalse: [args].
 	cmdLineFlags := argv := nil.
+	flags := 0.
 
 	[self primaryStartup.
 	state := 1.		"Mewling and puking in the nurse's arms"
@@ -718,22 +705,22 @@ openConsoleStreams
 	stdin/stdout/stderr streams will be correctly set up so that it is possible to use the CRT
 	stdio functions such as puts(), printf(), etc."
 
-	| kernel |
+	| kernel crt |
 	stdioStreams isNil ifFalse: [^self].
 	kernel := KernelLibrary default.
-	stdioStreams := Array 
-				with: (StdioFileStream 
-						attach: (kernel getStdHandle: STD_INPUT_HANDLE)
-						toFd: 0
-						mode: #read)
-				with: (StdioFileStream 
-						attach: (kernel getStdHandle: STD_OUTPUT_HANDLE)
-						toFd: 1
-						mode: #append)
-				with: (StdioFileStream 
-						attach: (kernel getStdHandle: STD_ERROR_HANDLE)
-						toFd: 2
-						mode: #append)!
+	crt := CRTLibrary default.
+	stdioStreams := (0 to: 2) collect: 
+					[:fd |
+					(crt _get_osfhandle: fd) asSignedInteger < 0
+						ifTrue: 
+							["stdio file descriptor is not currently established"
+							StdioFileStream
+								attach: (kernel getStdHandle: STD_INPUT_HANDLE - fd)
+								toFd: fd
+								mode: (fd == 0 ifTrue: [#read] ifFalse: [#append])]
+						ifFalse: 
+							["stdio file descriptor already initialized, e.g. because of pipe or redirection to a file"
+							StdioFileStream fromHandle: (crt _fdopen: fd mode: (fd == 0 ifTrue: ['rt'] ifFalse: ['wt']))]]!
 
 openEventLog
 	"Private - Open the NT event log for writing, and answer a handle onto it that can be passed to the
@@ -754,6 +741,14 @@ outer
 	concerned it is just an opaque value."
 
 	^startupArgs at: 2!
+
+parseCmdLineFlags
+	"Private - Parse the command line flags in order to record user options that might influence tertiary startup."
+
+	cmdLineFlags := Set new.
+	self argv
+		do: [:each | (each notEmpty and: ['/-' includes: each first]) ifTrue: [cmdLineFlags add: (each copyFrom: 2)]].
+	(cmdLineFlags includes: 'Embedding') ifTrue: [flags := flags maskSet: EmbeddingMask]!
 
 popupHelpFile
 	self subclassResponsibility!
@@ -1105,7 +1100,6 @@ windowsDirectory
 !SessionManager categoriesFor: #closeConsole!operations!public! !
 !SessionManager categoriesFor: #closeConsoleStreams!operations!public! !
 !SessionManager categoriesFor: #closeEventLog!operations-logging!private! !
-!SessionManager categoriesFor: #cmdLineFlags!accessing!private! !
 !SessionManager categoriesFor: #computerName!accessing!public! !
 !SessionManager categoriesFor: #comShutdown!operations-shutdown!private! !
 !SessionManager categoriesFor: #createInputState!initializing!private! !
@@ -1176,6 +1170,7 @@ windowsDirectory
 !SessionManager categoriesFor: #openEventLog!operations-logging!private! !
 !SessionManager categoriesFor: #openLibraries!operations-startup!private! !
 !SessionManager categoriesFor: #outer!accessing!public! !
+!SessionManager categoriesFor: #parseCmdLineFlags!operations-startup!private! !
 !SessionManager categoriesFor: #popupHelpFile!constants!public! !
 !SessionManager categoriesFor: #preStart!operations-startup!public! !
 !SessionManager categoriesFor: #primaryStartup!operations-startup!public! !

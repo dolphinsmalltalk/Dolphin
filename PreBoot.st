@@ -9,6 +9,23 @@ VMLibrary default primRegistryAt: 7 put: emptyBlock!
 
 Object withAllSubclassesDo: [:each | each classPool associationsDo: [:assoc | assoc becomeA: VariableBinding]]!
 
+!KernelLibrary methodsFor!
+
+attachConsole: anInteger
+	<stdcall: bool AttachConsole dword>
+	^self invalidCall! !
+
+Win32Constants at: 'ATTACH_PARENT_PROCESS' put: -1!
+
+!BootSessionManager methodsFor!
+
+allocConsole
+	"Private - Open a console window for this session."
+
+	KernelLibrary default attachConsole: Win32Constants.ATTACH_PARENT_PROCESS! !
+
+SessionManager current closeConsole; openConsole!
+
 !Class methodsFor!
 
 addClassConstant: aString value: anObject

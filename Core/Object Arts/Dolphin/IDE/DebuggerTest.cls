@@ -23,17 +23,12 @@ tearDown
 	Debugger showWalkbacks: savedShowWalkbacks!
 
 testNoShowWalkbacks
-	| stop start |
-	Transcript clear.
-	process := 
-			[(ResourceIdentifier class: ContainerView name: 'Default view') loadWithContext: DeafObject current] 
-					forkAt: Processor userInterruptPriority.
+	| start |
+	process := [self halt] forkAt: Processor userInterruptPriority.
 	start := Time millisecondClockValue.
-	SessionManager inputState 
+	SessionManager inputState
 		loopWhile: [Time millisecondClockValue < (start + 5000) and: [process state ~= #debug]].
-	self assert: process state = #debug.
-	self 
-		assert: (Transcript contents beginsWith: 'Forcibly unhooked failed window create of a ContainerView')!
+	self assert: process state = #debug!
 
 testRemapIPOfSendSelf
 	"#1309"

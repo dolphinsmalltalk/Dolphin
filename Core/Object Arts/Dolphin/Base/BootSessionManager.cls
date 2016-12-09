@@ -10,6 +10,12 @@ BootSessionManager comment: 'BootSessionManager is the class of <SessionManager>
 !BootSessionManager categoriesForClass!Development! !
 !BootSessionManager methodsFor!
 
+allocConsole
+	"Private - Open a console window for this session."
+
+	"Attach to the existing console so that the output goes to the build log"
+	KernelLibrary default attachConsole: ATTACH_PARENT_PROCESS!
+
 basicTertiaryStartup
 	"Perform tertiary system startup operations."
 
@@ -277,6 +283,7 @@ updateBootImage
 	"The only thing done currently is to reload the BCL."
 
 	self reloadSystemPackage! !
+!BootSessionManager categoriesFor: #allocConsole!operations!private! !
 !BootSessionManager categoriesFor: #basicTertiaryStartup!operations-startup!public! !
 !BootSessionManager categoriesFor: #fileInClass:!private! !
 !BootSessionManager categoriesFor: #initializeSystemPackage!initializing!public! !

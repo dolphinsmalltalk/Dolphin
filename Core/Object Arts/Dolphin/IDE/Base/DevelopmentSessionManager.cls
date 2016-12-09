@@ -85,13 +85,15 @@ commandLineParser
 	-h - headless (embedded) mode
 	-i imageFile - initialize a new image
 	-q - quiet startup (no splash)
+	-u - run unattended (i.e. don't prompt the user for input)
 	-x - immediately exit
 	"
 
 	^(super commandLineParser)
+		addOption: $u;
 		addOptionAllowingArgument: $d
 			whenPresentDo: 
-				[:rebasePath | 
+				[:rebasePath |
 				Package manager rebaseBasePackagesTo: (rebasePath ifNil: ['.']).
 				self saveImage];
 		addOptionRequiringArgument: $f
@@ -197,7 +199,7 @@ isBinaryLooseMethodInstallationAllowed
 	by the normal source packages. If you accidentally save these source packages they will
 	contain these methods"
 
-	^true!
+	^false!
 
 isDLL
 	"Private - Answer whether the receiver is a shared library, as opposed to an application.
@@ -271,9 +273,6 @@ logError: anException
 
 						]]!
 
-main
-!
-
 mainShellClass
 	"Answer the class of the application's main window (a <Shell> presenter)."
 
@@ -331,6 +330,13 @@ onUnhandledWarning: aWarning
 			response == #abort ifTrue: [Processor activeProcess terminate]].
 	"ignore - Resume execution"!
 
+onUserBreak
+	"Bring up the Smalltalk debugger (suspending the active process) ..."
+
+	| process |
+	process := Processor activeProcess.
+	process halt: process topFrame sender cause: 'Interrupted'!
+
 open: filename
 	"Private - Opens a file identified by the <readableString> filename in this instance of
 	the development environment"
@@ -369,6 +375,10 @@ openWorkspace: filename
 	"Private - Opens a file identified by the <readableString> filename as a workspace file"
 
 	Smalltalk developmentSystem workspaceShellClass filename: filename!
+
+parseCmdLineFlags
+	super parseCmdLineFlags.
+	(self commandLineParser options includesKey: $u) ifTrue: [flags := flags maskSet: UnattendedMask]!
 
 patchLevel
 	"Answer the current patch level of this image"
@@ -679,22 +689,36 @@ traceStream
 		ifTrue: [Transcript]
 		ifFalse: [stdioStreams isNil ifTrue: [Trace] ifFalse: [self stderr]]!
 
-unhandledException: anException 
+unhandledException: anException
 	"Private - Pop-up a walkback with details from the argument, anException."
 
-	"Attempt to log the error, but don't allow it to become recursive (#logError: does not
-	raise an exception if it fails)"
+	self isUnattended
+		ifTrue: 
+			[anException isUserResumable
+				ifTrue: 
+					["If the session is unattended and the exception is
+					 resumable, log the error and continue from the point of
+					 error"
+					self logError: anException.
+					anException resume]
+				ifFalse: 
+					["If the exception is not resumable, then create a crash
+					 dump and abruptly terminate the unattended session."
+					super logError: anException.
+					self primQuit: -1]]
+		ifFalse: 
+			["Attempt to log the error, but don't allow it to become recursive
+			(#logError: does not raise an exception if it fails)"
+			| title topFrame |
+			self logError: anException.
+			title := [anException description] on: Error do: [:e | anException class name].
+			topFrame := anException raisingFrame.
 
-	| title topFrame |
-	self logError: anException.
-	title := [anException description] on: Error do: [:e | anException class name].
-	topFrame := anException raisingFrame.
-
-	"In a development session, we'll be wanting a walkback..."
-	topFrame process 
-		walkback: title
-		topFrame: topFrame
-		resumable: anException isResumable!
+			"In an attended development session, we'll be wanting a walkback..."
+			topFrame process
+				walkback: title
+				topFrame: topFrame
+				resumable: anException isResumable]!
 
 versionInfo
 	"Answer the <VersionInfo> for this session, extracted from the host executable."
@@ -749,7 +773,6 @@ versionString
 !DevelopmentSessionManager categoriesFor: #lastSerialNumberRegistryKeyPre61!accessing!private!product! !
 !DevelopmentSessionManager categoriesFor: #logComment:!operations-logging!public! !
 !DevelopmentSessionManager categoriesFor: #logError:!operations-logging!public! !
-!DevelopmentSessionManager categoriesFor: #main!operations!public! !
 !DevelopmentSessionManager categoriesFor: #mainShellClass!constants!public! !
 !DevelopmentSessionManager categoriesFor: #myDolphinUrl!private! !
 !DevelopmentSessionManager categoriesFor: #objectArtsUrl!constants!private! !
@@ -757,10 +780,12 @@ versionString
 !DevelopmentSessionManager categoriesFor: #onQueryEndSession:!event handling!public! !
 !DevelopmentSessionManager categoriesFor: #onQueryWindowsShutdown!event handling!public! !
 !DevelopmentSessionManager categoriesFor: #onUnhandledWarning:!event handling!public! !
+!DevelopmentSessionManager categoriesFor: #onUserBreak!event handling!private! !
 !DevelopmentSessionManager categoriesFor: #open:!operations-startup!private! !
 !DevelopmentSessionManager categoriesFor: #openPackage:!operations-startup!private! !
 !DevelopmentSessionManager categoriesFor: #openSources!operations-source files!private! !
 !DevelopmentSessionManager categoriesFor: #openWorkspace:!operations-startup!private! !
+!DevelopmentSessionManager categoriesFor: #parseCmdLineFlags!operations-startup!private! !
 !DevelopmentSessionManager categoriesFor: #patchLevel!patching!public! !
 !DevelopmentSessionManager categoriesFor: #patchLevel:!patching!private! !
 !DevelopmentSessionManager categoriesFor: #playImageSaveSound!operations-sounds!private! !
