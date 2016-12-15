@@ -623,10 +623,10 @@ setCommentOf: aClass
 		ifTrue: [aClass comment: comment]!
 
 setInstanceVariablesOf: aClass
-	"Private - Set the instance variable layout of aClass to those described by
-	the receiver's instanceVariables inst var."
+	"Private - Set the instance variable layout of aClass to those described by the receiver's
+	instanceVariables inst var, or those of currentClass if no changes have been proposed."
 
-	aClass setInstanceVariables: instanceVariables!
+	aClass setInstanceVariables: self instanceVariables!
 
 setNewClassCategories
 	currentClass classCategories: self categories!
