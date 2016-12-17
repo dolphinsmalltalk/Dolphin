@@ -694,7 +694,7 @@ runRegressionTests
 
 runRegressionTests: aTestSuite logTo: aFilenameStringOrNil
 	| results timeMs |
-	timeMs := Time millisecondsToRun: (SessionManager current isUnattended
+	timeMs := Time millisecondsToRun: (SessionManager current isUnattended & false
 						ifTrue: 
 							[
 							[aTestSuite addDependentToHierachy: self.

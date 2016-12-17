@@ -10,12 +10,17 @@ CRTLibraryImportTest comment: ''!
 !CRTLibraryImportTest categoriesForClass!SUnit! !
 !CRTLibraryImportTest methodsFor!
 
+devOnlyCrtFunctions
+	^#('_get_osfhandle')!
+
 stubNames
 	^#('ConsoleToGo.exe' 'GUIToGo.exe' 'IPDolphinToGo.dll')!
 
-test
+testStubCrtExports
 	"Ensure that .def files include proper CRTLibrary imports (#183)."
 
+	| expected |
+	expected := self devOnlyCrtFunctions.
 	self stubNames do: 
 			[:eachStubName |
 			| f l procs missing |
@@ -25,8 +30,9 @@ test
 			[procs := (CRTLibrary selectMethods: [:each | each isExternalCall])
 						collect: [:each | each functionName].
 			missing := procs select: [:each | (l getProcAddress: each ifAbsent: []) isNil].
-			self assert: missing isEmpty]
+			self assert: (missing noDifference: expected)]
 					ensure: [l close]]! !
-!CRTLibraryImportTest categoriesFor: #stubNames!public! !
-!CRTLibraryImportTest categoriesFor: #test!public! !
+!CRTLibraryImportTest categoriesFor: #devOnlyCrtFunctions!constants!private! !
+!CRTLibraryImportTest categoriesFor: #stubNames!constants!private! !
+!CRTLibraryImportTest categoriesFor: #testStubCrtExports!public!unit tests! !
 
