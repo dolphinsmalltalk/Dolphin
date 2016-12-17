@@ -320,11 +320,11 @@ BOOL __fastcall Interpreter::primitiveLongDoubleAt()
 	// Its a byte object, so its simpler (no ref counting and no fixed fields)
 	double fValue;
 	Behavior* behavior = receiver->m_oteClass->m_location;
-	long double* pLongDbl;
+	_FP80* pLongDbl;
 	if (behavior->isIndirect())
 	{
 		ExternalAddress* ptr = static_cast<ExternalAddress*>(receiver->m_location);
-		pLongDbl = reinterpret_cast<long double*>(static_cast<BYTE*>(ptr->m_pointer)+offset);
+		pLongDbl = reinterpret_cast<_FP80*>(static_cast<BYTE*>(ptr->m_pointer)+offset);
 	}
 	else
 	{
@@ -335,14 +335,17 @@ BOOL __fastcall Interpreter::primitiveLongDoubleAt()
 			return primitiveFailure(PrimitiveFailureBoundsError);	// Out of bounds
 
 		VariantByteObject* bytes = oteBytes->m_location;
-		pLongDbl = reinterpret_cast<long double*>(&(bytes->m_fields[offset]));
+		pLongDbl = reinterpret_cast<_FP80*>(&(bytes->m_fields[offset]));
 	}
 
+	// VC++ does not support 80-bit floats (it's long double type is the same as double), so we must use assembler here
 	_asm
 	{
 		mov		eax, pLongDbl
 		fld		TBYTE PTR[eax]
 		fstp	fValue
+		// Raise pending exceptions, e.g. overflow
+		fwait
 	}
 
 	pop(1);		// index and value SmallIntegers, so don't need to nil out stack or ref. count
