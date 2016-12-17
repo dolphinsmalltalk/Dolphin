@@ -117,6 +117,27 @@ testAddRemovePools
 		equals: (self classBuilderTestSubclass1 bindingFor: 'PoolVar3') value.
 	self assert: nil equals: (self classBuilderTestSubclass1 bindingFor: 'PoolVar4')!
 
+testMoveClassToSuperclassWithInstVars
+	| newClass |
+	ClassBuilder moveClass: self classBuilderTestSubclass1 toSuperclass: Object.
+	newClass := self classBuilderTestSubclass1.
+	self assert: newClass superclass == Object.
+	self assert: newClass instVarNames = #('var3' 'var4').
+	self assert: newClass instSize = 2!
+
+testMoveClassToSuperclassWithNoInstVars
+	| newClass |
+	self classBuilderTestClass
+		subclass: #ClassBuilderTestSubClass
+		instanceVariableNames: ''
+		classVariableNames: ''
+		poolDictionaries: ''.
+	ClassBuilder moveClass: self classBuilderTestSubclass1 toSuperclass: Object.
+	newClass := self classBuilderTestSubclass1.
+	self assert: newClass superclass == Object.
+	self assert: newClass instVarNames = #().
+	self assert: newClass instSize = 0!
+
 testMoveVariable
 	"test moving an iVar up, sideways and down"
 
@@ -340,6 +361,8 @@ testUnderscoreWarning
 !ClassBuilderTests categoriesFor: #setUp!public!Running! !
 !ClassBuilderTests categoriesFor: #tearDown!public!Running! !
 !ClassBuilderTests categoriesFor: #testAddRemovePools!public!Running! !
+!ClassBuilderTests categoriesFor: #testMoveClassToSuperclassWithInstVars!public!Running! !
+!ClassBuilderTests categoriesFor: #testMoveClassToSuperclassWithNoInstVars!public!Running! !
 !ClassBuilderTests categoriesFor: #testMoveVariable!public!Running! !
 !ClassBuilderTests categoriesFor: #testPoolVariablePrecedence!public!Running! !
 !ClassBuilderTests categoriesFor: #testReparentSubClassWithSameAllInstVars!public!Running! !
