@@ -27,11 +27,25 @@ namespace ST
 	public:
 		BYTE m_elements[];
 
-		static ByteArrayOTE* New(unsigned size);
+		static ByteArrayOTE* New(MWORD size);
+		static ByteArrayOTE* New(MWORD size, const void* pBytes);
+		static ByteArrayOTE* NewWithRef(MWORD size, const void* pBytes);
 	};
 
-	inline ByteArrayOTE* ByteArray::New(unsigned size)
+	inline ByteArrayOTE* ByteArray::New(MWORD size)
 	{
 		return reinterpret_cast<ByteArrayOTE*>(ObjectMemory::newByteObject(Pointers.ClassByteArray, size));
+	}
+
+	inline ByteArrayOTE* ByteArray::New(MWORD size, const void* pBytes)
+	{
+		return reinterpret_cast<ByteArrayOTE*>(ObjectMemory::newByteObject(Pointers.ClassByteArray, size, pBytes));
+	}
+
+	inline ByteArrayOTE* ByteArray::NewWithRef(MWORD size, const void* pBytes)
+	{
+		ByteArrayOTE* byteArray = New(size, pBytes);
+		byteArray->m_count = 1;
+		return byteArray;
 	}
 }

@@ -690,7 +690,7 @@ ostream& operator<<(ostream& stream, StackFrame *pFrame)
 // Dump the interpreter context
 void Interpreter::DumpContext(EXCEPTION_POINTERS *pExceptionInfo, ostream& logStream)
 {
-	saveContextAfterFault(pExceptionInfo);
+	saveContextAfterFault(pExceptionInfo, isInPrimitive());
 	DumpContext(logStream);
 }
 
@@ -1602,14 +1602,9 @@ void Interpreter::checkStack(Oop* sp)
 
 void __fastcall Interpreter::debugReturnToMethod(Oop* sp)
 {
-#if 0
-	{
-		tracelock lock(TRACESTREAM);
-		TRACESTREAM << "* Returned to Method: " << *m_registers.m_pMethod << endl;
-		CHECKREFERENCES
-	}
-#endif
-		}
+	tracelock lock(TRACESTREAM);
+	TRACESTREAM << endl << "** Returned to Method: " << *m_registers.m_pMethod << endl;
+}
 
 void __fastcall Interpreter::debugMethodActivated(Oop* sp)
 {
@@ -1618,7 +1613,7 @@ void __fastcall Interpreter::debugMethodActivated(Oop* sp)
 	if (executionTrace > 1)
 	{
 		decodeMethod(m_registers.m_pMethod, NULL);
-		TRACESTREAM << endl << endl;
+		TRACESTREAM << endl;
 	}
 
 }

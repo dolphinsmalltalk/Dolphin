@@ -67,17 +67,6 @@ VTblThunk* VTable[NUMVTBLENTRIES];
 
 #pragma pack(pop)
 
-int __cdecl Interpreter::IEEEFPHandler(_FPIEEE_RECORD *pIEEEFPException)
-{
-	ResetFP();
-	BytesOTE* bytesPointer = ObjectMemory::newUninitializedByteObject(Pointers.ClassByteArray, sizeof(_FPIEEE_RECORD));
-	VariantByteObject* bytes = bytesPointer->m_location;
-	memcpy(bytes->m_fields, pIEEEFPException, sizeof(_FPIEEE_RECORD));
-	queueInterrupt(VMI_FPFAULT, Oop(bytesPointer));
-	activateNewMethod(m_registers.m_oopNewMethod->m_location);
-	return EXCEPTION_EXECUTE_HANDLER;
-}
-
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Callback entry point. Executes until a callback exit primitive is executed from Smalltalk
 

@@ -1,3 +1,4 @@
+#include "Interprt.h"
 /*
 ============
 Interprt.cpp
@@ -11,7 +12,7 @@ Implementation of Smalltalk interpreter
 
 #ifndef _DEBUG
 	//#pragma optimize("s", on)
-	#pragma auto_inline(off)
+#pragma auto_inline(off)
 #endif
 
 #pragma code_seg(INTERPMISC_SEG)
@@ -35,13 +36,13 @@ Implementation of Smalltalk interpreter
 
 #ifdef _DEBUG
 	// Execution trace
-	BOOL Interpreter::executionTrace = 0;
-	//extern unsigned contextDepth;
-	static unsigned nTotalBlocksAllocated = 0;
+BOOL Interpreter::executionTrace = 0;
+//extern unsigned contextDepth;
+static unsigned nTotalBlocksAllocated = 0;
 #endif
 #define VMWNDCLASS "_VMWnd"
 
-InterpreterRegisters16 Interpreter::m_registers = {0, 0, 0, 0, 0, 0, 0, 0};
+InterpreterRegisters16 Interpreter::m_registers = { 0, 0, 0, 0, 0, 0, 0, 0 };
 
 SymbolOTE*		Interpreter::m_oopMessageSelector;
 
@@ -74,7 +75,6 @@ ObjectMemory::OTEPool Interpreter::m_otePools[Interpreter::NUMOTEPOOLS];
 
 POTE* Interpreter::m_roots[] = {
 	reinterpret_cast<POTE*>(&m_oteNewProcess),
-	reinterpret_cast<POTE*>(&m_oteTimerSem),
 	&m_oteUnderConstruction,
 	0
 };
@@ -103,8 +103,8 @@ HWND Interpreter::m_hWndVM;
 //Initialise
 //==========
 #ifndef _DEBUG
-	#pragma optimize("s", on)
-	#pragma auto_inline(off)
+#pragma optimize("s", on)
+#pragma auto_inline(off)
 #endif
 
 #pragma code_seg(INIT_SEG)
@@ -182,7 +182,7 @@ HRESULT Interpreter::initializeAfterLoad()
 		return hr;
 
 	m_oteNewProcess = reinterpret_cast<ProcessOTE*>(Pointers.Nil);
-    m_oteUnderConstruction = Pointers.Nil;
+	m_oteUnderConstruction = Pointers.Nil;
 
 	hr = ObjectMemory::InitializeImage();
 	if (FAILED(hr))
@@ -190,9 +190,9 @@ HRESULT Interpreter::initializeAfterLoad()
 
 	initializeVMReferences();
 
-	#if defined(_DEBUG)
-		ObjectMemory::checkReferences();	// If this fails, the saved image has a ref. count problem
-	#endif
+#if defined(_DEBUG)
+	ObjectMemory::checkReferences();	// If this fails, the saved image has a ref. count problem
+#endif
 
 	initializeCaches();
 
@@ -228,7 +228,7 @@ void Interpreter::ShutDown()
 	_ASSERTE(!m_bShutDown);
 	m_bShutDown = true;
 	// Nulling out the handle means that any further attempts to queue APCs, etc, will fail
-	HANDLE hThread = LPVOID(::OAInterlockedExchange(LPLONG(&m_hThread), 0));
+	HANDLE hThread = LPVOID(_InterlockedExchange(reinterpret_cast<SHAREDLONG*>(&m_hThread), 0));
 
 	TerminateSampler();
 
@@ -244,7 +244,7 @@ void Interpreter::ShutDown()
 		UnregisterClass(VMWNDCLASS, GetModuleContaining(initializeBeforeLoad));
 		m_atomVMWndClass = NULL;
 	}
-	
+
 	terminateTimer();
 	OverlappedCall::Uninitialize();
 
@@ -271,7 +271,7 @@ inline void Interpreter::initializeCaches()
 }
 
 #ifdef NDEBUG
-	#pragma auto_inline(on)
+#pragma auto_inline(on)
 #endif
 
 ///////////////////////////////////
@@ -282,39 +282,39 @@ inline void Interpreter::initializeCaches()
 }*/
 
 #ifdef _DEBUG
-	#pragma code_seg(DEBUG_SEG)
+#pragma code_seg(DEBUG_SEG)
 
-	static MWORD ResizeProcInContext(InterpreterRegisters& reg)
+static MWORD ResizeProcInContext(InterpreterRegisters& reg)
+{
+	ProcessOTE* oteProc = reg.m_oteActiveProcess;
+	MWORD size = oteProc->getSize();
+	reg.ResizeProcess();
+	if (size != oteProc->getSize() && Interpreter::executionTrace)
 	{
-		ProcessOTE* oteProc = reg.m_oteActiveProcess;
-		MWORD size = oteProc->getSize();
-		reg.ResizeProcess();
-		if (size != oteProc->getSize() && Interpreter::executionTrace)
-		{
-			tracelock lock(TRACESTREAM);
-			TRACESTREAM << "Check Refs: Resized proc " << oteProc << " from " 
-				<< dec << size << " to " << oteProc->getSize() << endl;
-		}
-		return size;
+		tracelock lock(TRACESTREAM);
+		TRACESTREAM << "Check Refs: Resized proc " << oteProc << " from "
+			<< dec << size << " to " << oteProc->getSize() << endl;
 	}
+	return size;
+}
 
-	// Check references without upsetting the current active process size (otherwise
-	// this may mask bugs in the release version)
-	void Interpreter::checkReferences(InterpreterRegisters& reg)
+// Check references without upsetting the current active process size (otherwise
+// this may mask bugs in the release version)
+void Interpreter::checkReferences(InterpreterRegisters& reg)
+{
+	HARDASSERT(ObjectMemory::isKindOf(m_registers.m_oteActiveProcess, Pointers.ClassProcess));
+	MWORD oldProcSize = ResizeProcInContext(reg);
+	if (reg.m_pActiveProcess != m_registers.m_pActiveProcess)
 	{
-		HARDASSERT(ObjectMemory::isKindOf(m_registers.m_oteActiveProcess, Pointers.ClassProcess));
-		MWORD oldProcSize = ResizeProcInContext(reg);
-		if (reg.m_pActiveProcess != m_registers.m_pActiveProcess)
-		{
-			// Resize active process as well as the one in the context passed
-			MWORD oldActiveProcSize = ResizeProcInContext(m_registers);
-			ObjectMemory::checkReferences();
-			m_registers.m_oteActiveProcess->setSize(oldActiveProcSize);
-		}
-		else
-			ObjectMemory::checkReferences();
-		reg.m_oteActiveProcess->setSize(oldProcSize);
+		// Resize active process as well as the one in the context passed
+		MWORD oldActiveProcSize = ResizeProcInContext(m_registers);
+		ObjectMemory::checkReferences();
+		m_registers.m_oteActiveProcess->setSize(oldActiveProcSize);
 	}
+	else
+		ObjectMemory::checkReferences();
+	reg.m_oteActiveProcess->setSize(oldProcSize);
+}
 #endif
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -324,7 +324,7 @@ inline void Interpreter::initializeCaches()
 
 void Interpreter::exitSmalltalk(int exitCode)
 {
-	#ifdef _DEBUG
+#ifdef _DEBUG
 	{
 		extern void DumpPrimitiveCounts(bool);
 		extern void DumpBytecodeCounts(bool);
@@ -332,7 +332,7 @@ void Interpreter::exitSmalltalk(int exitCode)
 		DumpPrimitiveCounts(false);
 		DumpBytecodeCounts(false);
 	}
-	#endif
+#endif
 
 	DolphinExit(exitCode);
 }
@@ -348,20 +348,20 @@ void Interpreter::interpret()
 {
 #pragma warning(push)
 #pragma warning(disable:4127)
-	while(true)
+	while (true)
 #pragma warning(pop)
 	{
 		// Using Win32 structured exception handling here NOT C++
 		DWORD dwCode;
-		__try 
-		{ 
+		__try
+		{
 			_asm jmp byteCodeLoop
 		}
 		// I'd like to just test for IS_ERROR() here, but due to some macro nastiness
 		// it GPFs in a release build
-		__except ((dwCode=GetExceptionCode()) > SE_VMCALLBACKUNWIND 
-					? interpreterExceptionFilter(GetExceptionInformation()) 
-					: EXCEPTION_CONTINUE_SEARCH)
+		__except ((dwCode = GetExceptionCode()) > SE_VMCALLBACKUNWIND
+			? interpreterExceptionFilter(GetExceptionInformation())
+			: EXCEPTION_CONTINUE_SEARCH)
 		{
 			TRACE("interpret: Looping after exception %#x\n\r", dwCode);
 		}
@@ -387,25 +387,31 @@ void Interpreter::interpret()
 // a trappable fault
 //
 #pragma code_seg(INTERPMISC_SEG)
-void Interpreter::saveContextAfterFault(LPEXCEPTION_POINTERS info)
+void Interpreter::saveContextAfterFault(LPEXCEPTION_POINTERS info, bool isInPrimitive)
 {
 	BYTE* ip = reinterpret_cast<BYTE*>(info->ContextRecord->Edi);
 	Oop byteCodes = m_registers.m_pMethod->m_byteCodes;
 	BYTE* pBytes = ObjectMemory::ByteAddressOfObjectContents(byteCodes);
 	int numByteCodes = ObjectMemoryIsIntegerObject(byteCodes) ?
-							sizeof(MWORD) : reinterpret_cast<BytesOTE*>(byteCodes)->bytesSize();
+		sizeof(MWORD) : reinterpret_cast<BytesOTE*>(byteCodes)->bytesSize();
 	if (ip >= pBytes && ip < pBytes + numByteCodes)
-		m_registers.m_instructionPointer = ip;
-	Oop* sp = reinterpret_cast<Oop*>(info->ContextRecord->Esi);
-	Process* pProc = actualActiveProcess();
-	if (sp > reinterpret_cast<Oop*>(pProc))
 	{
-		VirtualObject* pVObj = reinterpret_cast<VirtualObject*>(pProc);
-		VirtualObjectHeader* pBase = pVObj->getHeader();
-		//unsigned maxByteSize = pBase->getMaxAllocation();
-		unsigned cbCurrent = pBase->getCurrentAllocation();
-		if (sp < reinterpret_cast<Oop*>(reinterpret_cast<BYTE*>(pBase) + cbCurrent))
-			m_registers.m_stackPointer = sp;
+		m_registers.m_instructionPointer = ip;
+	}
+	// SP is saved down before primitives are executed, and we don't want to rely on primitive not
+	// updating the SP register until there is no possibility of a fault
+	if (!isInPrimitive)
+	{
+		Oop* sp = reinterpret_cast<Oop*>(info->ContextRecord->Esi);
+		Process* pProc = actualActiveProcess();
+		if (sp > reinterpret_cast<Oop*>(pProc))
+		{
+			VirtualObject* pVObj = reinterpret_cast<VirtualObject*>(pProc);
+			VirtualObjectHeader* pBase = pVObj->getHeader();
+			unsigned cbCurrent = pBase->getCurrentAllocation();
+			if (sp < reinterpret_cast<Oop*>(reinterpret_cast<BYTE*>(pBase) + cbCurrent))
+				m_registers.m_stackPointer = sp;
+		}
 	}
 }
 
@@ -414,43 +420,54 @@ void Interpreter::saveContextAfterFault(LPEXCEPTION_POINTERS info)
 // by testing to see whether the new method is not the same as the active method (primitives
 // do not activate until they fail). We must also ensure that the oop is still a method
 // 
-BOOL Interpreter::isInPrimitive()
+bool Interpreter::isInPrimitive()
 {
 	if (!m_registers.m_oopNewMethod->isFree())
 	{
 		// HARDASSERT(ObjectMemory::isKindOf(m_oopNewMethod, Pointers.ClassCompiledMethod));
 		CompiledMethod* newMethod = m_registers.m_oopNewMethod->m_location;
 		if (newMethod == m_registers.m_pMethod)
-			return FALSE;
+		{
+			return false;
+		}
 		STMethodHeader header = newMethod->m_header;
 		// If really a primitive, then flags in header will be 0
 		return header.primitiveIndex != PRIMITIVE_ACTIVATE_METHOD;
 	}
 	else
-		return FALSE;
+		return false;
 }
 
-#pragma code_seg(DEBUG_SEG)
-void Interpreter::queueGPF(Oop oopInterrupt, LPEXCEPTION_POINTERS pExInfo)
+void Interpreter::AbandonStepping()
 {
-	saveContextAfterFault(pExInfo);
-	ByteArrayOTE* oteBytes = reinterpret_cast<ByteArrayOTE*>(ObjectMemory::newUninitializedByteObject(Pointers.ClassByteArray, sizeof(EXCEPTION_RECORD)));
-	ByteArray *bytes = oteBytes->m_location;
-	memcpy(bytes->m_elements, pExInfo->ExceptionRecord, sizeof(EXCEPTION_RECORD));
-	queueInterrupt(oopInterrupt, Oop(oteBytes));
 	m_bStepping = false;						// We do not want to break now
-
 	ResetInputPollCounter();
 }
 
-#pragma code_seg(DEBUG_SEG)
+void Interpreter::sendExceptionInterrupt(Oop oopInterrupt, LPEXCEPTION_POINTERS pExInfo)
+{
+	AbandonStepping();
+	bool inPrim = isInPrimitive();
+	saveContextAfterFault(pExInfo, inPrim);
+	if (inPrim)
+	{
+		activateNewMethod(m_registers.m_oopNewMethod->m_location);
+	}
+#ifdef _DEBUG
+	{
+		tracelock lock(TRACESTREAM);
+		TRACESTREAM << hex << pExInfo->ExceptionRecord->ExceptionCode << " exception trapped in " << *m_registers.m_pMethod << endl;
+	}
+#endif
+	sendVMInterrupt(oopInterrupt, reinterpret_cast<Oop>(ByteArray::NewWithRef(sizeof(EXCEPTION_RECORD), pExInfo->ExceptionRecord)));
+}
+
 static BOOL WantGPFTrap()
 {
 	CRegKey rk;
 	return OpenDolphinKey(rk, "DisableGPFTrap") != ERROR_SUCCESS;
 }
 
-#pragma code_seg(DEBUG_SEG)
 static BOOL PleaseTrapGPFs()
 {
 	static BOOL TrapEm = -1;
@@ -478,127 +495,122 @@ int Interpreter::interpreterExceptionFilter(LPEXCEPTION_POINTERS pExInfo)
 	ASSERT(exceptionCode > SE_VMCALLBACKUNWIND);
 
 	int action = EXCEPTION_CONTINUE_SEARCH;
-	switch(exceptionCode)
+	switch (exceptionCode)
 	{
-		case EXCEPTION_ACCESS_VIOLATION:
+	case EXCEPTION_ACCESS_VIOLATION:
 #if !defined(NO_GPF_TRAP)
-			action = memoryExceptionFilter(pExRec);
+		action = memoryExceptionFilter(pExRec);
 
-			if (action == EXCEPTION_CONTINUE_SEARCH)
+		if (action == EXCEPTION_CONTINUE_SEARCH)
+		{
+			void* pExceptionAddr = reinterpret_cast<void*>(pExRec->ExceptionInformation[1]);
+			bool bConstWrite = pExRec->ExceptionInformation[0] != 0 &&
+				ObjectMemory::IsConstObj(pExceptionAddr);
+
+			if (bConstWrite)
 			{
-				void* pExceptionAddr = reinterpret_cast<void*>(pExRec->ExceptionInformation[1]);
-				bool bConstWrite = pExRec->ExceptionInformation[0] != 0 &&
-									ObjectMemory::IsConstObj(pExceptionAddr);
-
-				if (bConstWrite)
-				{
-					queueGPF(VMI_CONSTWRITE, pExInfo);
-					if (isInPrimitive())
-					{
-						CompiledMethod* primMethod = m_registers.m_oopNewMethod->m_location;
-						activateNewMethod(primMethod);
-					}
-					action = EXCEPTION_EXECUTE_HANDLER;
-				}
-				else if (isInPrimitive() && PleaseTrapGPFs())
-				{
-					queueGPF(VMI_ACCESSVIOLATION, pExInfo);
-					CompiledMethod* primMethod = m_registers.m_oopNewMethod->m_location;
-					activateNewMethod(primMethod);
-					{
-						tracelock lock(TRACESTREAM);
-						TRACESTREAM << "GP Fault in primitive " << m_registers.m_oopNewMethod << endl;
-					}
-					action = EXCEPTION_EXECUTE_HANDLER;
-				}
-				// else
-				//		continue search for next handler, if any
-			}
-#endif
-			break;
-
-		case STATUS_NO_MEMORY:
-			if (PleaseTrapGPFs())
-			{
-				queueGPF(VMI_NOMEMORY, pExInfo);
-				if (isInPrimitive())
-					activateNewMethod(m_registers.m_oopNewMethod->m_location);
-				#ifdef _DEBUG
-				{
-					tracelock lock(TRACESTREAM);
-					TRACESTREAM << "Out of memory in " << m_registers.m_pMethod << endl;
-				}
-				#endif
+				sendExceptionInterrupt(VMI_CONSTWRITE, pExInfo);
 				action = EXCEPTION_EXECUTE_HANDLER;
 			}
-			break;
+			else if (isInPrimitive() && PleaseTrapGPFs())
+			{
+				sendExceptionInterrupt(VMI_ACCESSVIOLATION, pExInfo);
+				action = EXCEPTION_EXECUTE_HANDLER;
+			}
+			// else
+			//		continue search for next handler, if any
+		}
+#endif
+		break;
 
-		case EXCEPTION_INT_DIVIDE_BY_ZERO:
-			saveContextAfterFault(pExInfo);
-			queueInterrupt(VMI_ZERODIVIDE, Integer::NewSigned32(pExInfo->ContextRecord->Eax));
-			if (isInPrimitive())
-				activateNewMethod(m_registers.m_oopNewMethod->m_location);
-			#ifdef _DEBUG
+	case STATUS_NO_MEMORY:
+		if (PleaseTrapGPFs())
+		{
+			sendExceptionInterrupt(VMI_NOMEMORY, pExInfo);
+			action = EXCEPTION_EXECUTE_HANDLER;
+		}
+		break;
+
+	case EXCEPTION_INT_DIVIDE_BY_ZERO:
+	{
+		bool inPrim = isInPrimitive();
+		saveContextAfterFault(pExInfo, inPrim);
+		if (inPrim)
+		{
+			activateNewMethod(m_registers.m_oopNewMethod->m_location);
+		}
+#ifdef _DEBUG
+		{
+			tracelock lock(TRACESTREAM);
+			TRACESTREAM << "Divide by zero in " << *m_registers.m_pMethod << endl;
+		}
+#endif
+		sendVMInterrupt(VMI_ZERODIVIDE, Integer::NewSigned32WithRef(pExInfo->ContextRecord->Eax));
+		action = EXCEPTION_EXECUTE_HANDLER;
+	}
+	break;
+
+	case EXCEPTION_FLT_STACK_CHECK:
+		if (PleaseTrapGPFs())
+		{
+			_asm fninit;
+			sendExceptionInterrupt(VMI_FPSTACK, pExInfo);
+			action = EXCEPTION_EXECUTE_HANDLER;
+		}
+		break;
+
+	case EXCEPTION_INT_OVERFLOW:
+	case EXCEPTION_PRIV_INSTRUCTION:
+	case EXCEPTION_ILLEGAL_INSTRUCTION:
+		if (isInPrimitive() && PleaseTrapGPFs())
+		{
+			sendExceptionInterrupt(VMI_EXCEPTION, pExInfo);
+#ifdef _DEBUG
 			{
 				tracelock lock(TRACESTREAM);
-				TRACESTREAM << "Divide by zero in " << m_registers.m_pMethod << endl;
+				TRACESTREAM << "Unhandled exception " << exceptionCode << " in " << *m_registers.m_pMethod << endl;
 			}
-			#endif
+#endif
 			action = EXCEPTION_EXECUTE_HANDLER;
-			break;
+		}
+		break;
 
-		case EXCEPTION_FLT_STACK_CHECK:
-			if (PleaseTrapGPFs())
-			{
-				_asm fninit;
-				queueGPF(VMI_FPSTACK, pExInfo);
-				if (isInPrimitive())
-					activateNewMethod(m_registers.m_oopNewMethod->m_location);
-				#ifdef _DEBUG
-				{
-					tracelock lock(TRACESTREAM);
-					TRACESTREAM << "FP stack under/overflow in " << m_registers.m_pMethod << endl;
-				}
-				#endif
-				action = EXCEPTION_EXECUTE_HANDLER;
-			}
-			break;
+	case SE_VMCRTFAULT:
+		if (isInPrimitive())
+		{
+			sendExceptionInterrupt(VMI_CRTFAULT, pExInfo);
+			action = EXCEPTION_EXECUTE_HANDLER;
+		}
+		break;
 
-		case EXCEPTION_INT_OVERFLOW:
-		case EXCEPTION_PRIV_INSTRUCTION:
-		case EXCEPTION_ILLEGAL_INSTRUCTION:
-			if (isInPrimitive() && PleaseTrapGPFs())
-			{
-				queueGPF(VMI_EXCEPTION, pExInfo);
-				activateNewMethod(m_registers.m_oopNewMethod->m_location);
-				#ifdef _DEBUG
-				{
-					tracelock lock(TRACESTREAM);
-					TRACESTREAM << "Unhandled exception " << exceptionCode << " in " << m_registers.m_pMethod << endl;
-				}
-				#endif
-				action = EXCEPTION_EXECUTE_HANDLER;
-			}
-			break;
+	case SE_VMEXIT:
+		break;
 
-		case SE_VMCRTFAULT:
-			if (isInPrimitive())
-			{
-				queueGPF(VMI_CRTFAULT, pExInfo);
-				activateNewMethod(m_registers.m_oopNewMethod->m_location);
-				action = EXCEPTION_EXECUTE_HANDLER;
-			}
-			break;
-		case SE_VMEXIT:
-			break;
-
-		default:
-			saveContextAfterFault(pExInfo);
-			action = _fpieee_flt(exceptionCode, pExInfo, IEEEFPHandler);
-			break;
+	default:
+		saveContextAfterFault(pExInfo, isInPrimitive());
+		action = _fpieee_flt(exceptionCode, pExInfo, IEEEFPHandler);
+		break;
 	}
 
 	return action;
+}
+
+int __cdecl Interpreter::IEEEFPHandler(_FPIEEE_RECORD *pIEEEFPException)
+{
+	ResetFP();
+	AbandonStepping();
+	if (isInPrimitive())
+	{
+		activateNewMethod(m_registers.m_oopNewMethod->m_location);
+	}
+#ifdef _DEBUG
+	{
+		tracelock lock(TRACESTREAM);
+		TRACESTREAM << "FP Fault in " << *m_registers.m_pMethod << endl;
+	}
+#endif
+	sendVMInterrupt(VMI_FPFAULT, reinterpret_cast<Oop>(ByteArray::NewWithRef(sizeof(_FPIEEE_RECORD), pIEEEFPException)));
+	return EXCEPTION_EXECUTE_HANDLER;
 }
 
 #if !defined(NO_GPF_TRAP)
@@ -622,21 +634,21 @@ int Interpreter::memoryExceptionFilter(LPEXCEPTION_RECORD pExRec)
 	MWORD activeProcAlloc = pBase->getCurrentAllocation();
 	DWORD dwNext = DWORD(pBase) + activeProcAlloc;
 
-	#ifdef OAD
+#ifdef OAD
 	{
 		tracelock lock(TRACESTREAM);
 		TRACESTREAM << "Access violation: " << LPVOID(dwAddress) << ", stack top " << LPVOID(dwNext) << endl;
 	}
-	#endif
+#endif
 
 	if (dwAddress >= dwNext && dwAddress <= dwNext + sizeof(StackFrame))
 	{
-		#ifdef OAD
+#ifdef OAD
 		{
 			tracelock lock(TRACESTREAM);
 			TRACESTREAM << "Stack overflow detected" << endl;
 		}
-		#endif
+#endif
 
 		if (::VirtualAlloc(LPVOID(dwNext), dwPageSize, MEM_COMMIT, PAGE_READWRITE))
 		{
@@ -665,19 +677,19 @@ int Interpreter::memoryExceptionFilter(LPEXCEPTION_RECORD pExRec)
 			// Flesh out the new stack page
 			pBase->addPage();
 
-			#ifdef _DEBUG
-				// Let's see whether we got the rounding correct!
-				MEMORY_BASIC_INFORMATION mbi;
-				Process* pActive = m_registers.m_pActiveProcess;
-				VERIFY(::VirtualQuery(pActive, &mbi, sizeof(mbi)) == sizeof(mbi));
-				ASSERT(mbi.AllocationBase == pActive->getHeader());
-				ASSERT(mbi.BaseAddress == mbi.AllocationBase);
-				ASSERT(mbi.AllocationProtect == PAGE_NOACCESS);
-				ASSERT(mbi.Protect == PAGE_READWRITE);
-				ASSERT(mbi.RegionSize == pBase->getCurrentAllocation());
-				ASSERT(mbi.State == MEM_COMMIT);
-				ASSERT(mbi.Type == MEM_PRIVATE);
-			#endif
+#ifdef _DEBUG
+			// Let's see whether we got the rounding correct!
+			MEMORY_BASIC_INFORMATION mbi;
+			Process* pActive = m_registers.m_pActiveProcess;
+			VERIFY(::VirtualQuery(pActive, &mbi, sizeof(mbi)) == sizeof(mbi));
+			ASSERT(mbi.AllocationBase == pActive->getHeader());
+			ASSERT(mbi.BaseAddress == mbi.AllocationBase);
+			ASSERT(mbi.AllocationProtect == PAGE_NOACCESS);
+			ASSERT(mbi.Protect == PAGE_READWRITE);
+			ASSERT(mbi.RegionSize == pBase->getCurrentAllocation());
+			ASSERT(mbi.State == MEM_COMMIT);
+			ASSERT(mbi.Type == MEM_PRIVATE);
+#endif
 		}
 		else
 		{

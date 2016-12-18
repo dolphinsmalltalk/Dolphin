@@ -99,6 +99,7 @@ public:
 	static PointersOTE* __fastcall newUninitializedPointerObject(BehaviorOTE* classPointer, MWORD instanceSize);
 	static BytesOTE* __fastcall newByteObject(BehaviorOTE* classPointer, MWORD instanceByteSize);
 	static BytesOTE* __fastcall newUninitializedByteObject(BehaviorOTE* classPointer, MWORD instanceByteSize);
+	static BytesOTE* __fastcall newByteObject(BehaviorOTE* classPointer, MWORD instanceByteSize, const void* pBytes);
 
 	// Resizing objects (RAW - assumes no. ref counting to be done)
 	static POBJECT basicResize(OTE* ote, MWORD byteSize /*should include header*/, int extra);
@@ -1007,6 +1008,13 @@ inline PointersOTE* ObjectMemory::OTEPool::newPointerObject(BehaviorOTE* classPo
 	ASSERT(ote->m_count == 0);
 
 	return ote;
+}
+
+inline BytesOTE* __fastcall ObjectMemory::newByteObject(BehaviorOTE* classPointer, MWORD cBytes, const void* pBytes)
+{
+	BytesOTE* oteBytes = newUninitializedByteObject(classPointer, cBytes);
+	memcpy(oteBytes->m_location->m_fields, pBytes, cBytes);
+	return oteBytes;
 }
 
 #define NumPools MaxPools

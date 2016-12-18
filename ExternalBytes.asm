@@ -230,8 +230,8 @@ replaceStackTopWithNewUnsigned ENDP
 BEGINPRIMITIVE primitiveIndirectDWORDAt
 	IndirectAtPreamble
 
-	PopStack
 	mov		eax, [eax+edx]							; Load DWORD from *(address+offset)
+	PopStack
 	jmp	replaceStackTopWithNewUnsigned				; Now push on the stack over the receiver
 ENDPRIMITIVE primitiveIndirectDWORDAt
 
@@ -319,10 +319,14 @@ sdwordAtPut PROC
 	jz		@F										; No
 
 	; Store down smallInteger value
-	mov		[_SP-OOPSIZE*2], edx					; Overwrite receiver
-	PopStack <2>									; Past failing so pop arg/offset (both SmallIntegers)
+	mov		ecx, edx
 	sar		edx, 1									; Convert from SmallInteger value
 	mov		[eax], edx								; Store down value into object
+
+	; Don't adjust stack until memory has been accessed in case it is inaccessible and causes an access violation
+
+	mov		[_SP-OOPSIZE*2], ecx					; Overwrite receiver
+	PopStack <2>									; Past failing so pop arg/offset (both SmallIntegers)
 	ret
 
 @@:	

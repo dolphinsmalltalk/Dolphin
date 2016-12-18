@@ -236,8 +236,6 @@ public:
 	static void pop(SMALLUNSIGNED number);
 	static SMALLUNSIGNED indexOfSP(Oop* sp);
 
-	static void unwindStack();
-
 	// Method lookup
 	static MethodOTE* __fastcall lookupMethod(BehaviorOTE* aClass, SymbolOTE* selector);
 	static MethodOTE* __fastcall messageNotUnderstood(BehaviorOTE* aClass, const unsigned argCount);
@@ -332,8 +330,8 @@ private:
 	static int memoryExceptionFilter(LPEXCEPTION_RECORD pExRec);
 	static int callbackTerminationFilter(LPEXCEPTION_POINTERS info, Process* callbackProcess, Oop prevCallbackContext);
 
-	static void queueGPF(Oop oopInterrupt, LPEXCEPTION_POINTERS pExRec);
-	static void saveContextAfterFault(LPEXCEPTION_POINTERS info);
+	static void sendExceptionInterrupt(Oop oopInterrupt, LPEXCEPTION_POINTERS pExRec);
+	static void saveContextAfterFault(LPEXCEPTION_POINTERS info, bool isInPrimitive);
 
 	static void wakePendingCallbacks();
 	static unsigned countPendingCallbacks();
@@ -469,6 +467,7 @@ private:
 	static void CancelSampleTimer();
 	static VOID CALLBACK SamplerProc(PVOID lpParam, BOOLEAN TimerOrWaitFired);
 	static void ResetInputPollCounter();
+	static void AbandonStepping();
 
 public:
 	///////////////////////////////////////////////////////////////////////////
@@ -489,7 +488,7 @@ public:
 
 private:
 	// Answer whether the Interpreter is currently executing a primitive method
-	static BOOL isInPrimitive();
+	static bool isInPrimitive();
 
 	// SmallInteger Arithmetic
 	static BOOL __fastcall primitiveAdd();

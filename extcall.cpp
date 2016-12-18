@@ -77,9 +77,7 @@ OTE* __fastcall ExternalStructure::NewPointer(BehaviorOTE* classPointer, void* p
 		else
 		{
 			int nSize = behavior.extraSpec();
-			BytesOTE* oteBytes = ObjectMemory::newUninitializedByteObject(classPointer, nSize);
-			VariantByteObject* bytes = oteBytes->m_location;
-			memcpy(bytes->m_fields, ptr, nSize);
+			BytesOTE* oteBytes = ObjectMemory::newByteObject(classPointer, nSize, ptr);
 			resultPointer = reinterpret_cast<OTE*>(oteBytes);
 		}
 		classPointer->countUp();
@@ -182,10 +180,7 @@ inline void Interpreter::push(LPCWSTR pStr)
 
 BytesOTE* __fastcall NewGUID(GUID* rguid)
 {
-	BytesOTE* oteGUID = ObjectMemory::newUninitializedByteObject(Pointers.ClassGUID, sizeof(GUID));
-	VariantByteObject* guidBytes = oteGUID->m_location;
-	memcpy(guidBytes->m_fields, rguid, sizeof(GUID));
-	return oteGUID;
+	return ObjectMemory::newByteObject(Pointers.ClassGUID, sizeof(GUID), rguid);
 }
 
 ///////////////////////////////////////////////////////////////////////////////

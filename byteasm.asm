@@ -148,8 +148,6 @@ IFDEF _DEBUG
 	extern DEBUGMETHODACTIVATED:near32
 	DEBUGRETURNTOMETHOD EQU ?debugReturnToMethod@Interpreter@@SIXPAI@Z
 	extern DEBUGRETURNTOMETHOD:near32
-	INHERITSFROM EQU ?inheritsFrom@ObjectMemory@@SI_NPBV?$TOTE@VBehavior@ST@@@@0@Z
-	extern	INHERITSFROM:near32
 
 	ATCACHEHITS EQU ?AtCacheHits@@3KA
 	extern ATCACHEHITS:DWORD
@@ -1534,7 +1532,6 @@ BEGINPROC shortReturn
 			call	DEBUGRETURNTOMETHOD
 			mov		ecx, _IP
 			mov		edx, _SP
-			call	DEBUGEXECTRACE
 		.ENDIF
 	ENDIF
 
@@ -3904,13 +3901,6 @@ ENDBYTECODE longSend
 ; To be used when desiring a check to see if a process switch should occur
 ProcessSignalsAndReturn MACRO
 
-	IFDEF _DEBUG
-		.IF ([EXECUTIONTRACE])
-			mov		ecx, _SP
-			call	DEBUGMETHODACTIVATED
-		.ENDIF
-	ENDIF
-
 	mov		eax, [ASYNCPENDING]
 	test	eax, eax
 	jnz		@F											;; If any ansync. signals, go and test process switch
@@ -3943,7 +3933,6 @@ ENDM
 ; New code which does only a single jump via primitives table
 ;
 MExecNewMethod MACRO
-	LOCAL activateMethod
 	
 	ASSUME	ecx:PTR CompiledCodeObj
 	ASSUME	edx:DWORD
@@ -3975,7 +3964,7 @@ MExecNewMethod MACRO
 	mov		ecx, [ecx].m_location
 	ASSUME	ecx:PTR CompiledCodeObj
 
-	;; Active method after primitive failure
+	;; Activate method as primitive failed
 	call primitiveActivateMethod
 
 	DispatchByteCode
@@ -4053,13 +4042,10 @@ BEGINPROC findMethodCacheMiss
 	
 ENDPROC findMethodCacheMiss
 
-
-PRIMPROC EQU PROC PUBLIC
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-; Create a new context, and run some byte codes, Yeehaaa!
-;
-BEGINPRIMITIVE primitiveActivateMethod
+;; Activate a method (i.e. update the calling stack frame's IP & sp, setup a new stack frame, and initialize appropriate interpreter 
+;; registers to execute the new methods bytecodes, and set up a stack frame)
+MActivateMethod MACRO 
+	ASSUME ecx:PTR CompiledCodeObj					; Expects ptr to new method in ECX
 
 	IFDEF PROFILING
 		inc 	[?contextsSuspended@@3IA]
@@ -4067,7 +4053,7 @@ BEGINPRIMITIVE primitiveActivateMethod
 	ENDIF
 
 	;; Work out _IP index before overwriting old method pointer
-	mov		eax, [pMethod]
+	mov		eax, [pMethod]							; Load pointer to current method into eax
 	ASSUME	eax:PTR CompiledCodeObj
 
 	mov		edx, ecx								; Get pointer to new method into edx
@@ -4190,9 +4176,22 @@ BEGINPRIMITIVE primitiveActivateMethod
 	
 	; Set up interpreters _IP
 	GetInitialIPOfMethod <edx>
-	ProcessSignalsAndReturn
 
-	ASSUME	edx:NOTHING							; We don't need method pointer any more
+	IFDEF _DEBUG
+		.IF ([EXECUTIONTRACE])
+			mov		ecx, _SP
+			call	DEBUGMETHODACTIVATED
+		.ENDIF
+	ENDIF
+
+ENDM
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; Create a new context, and run some byte codes, Yeehaaa!
+;
+BEGINPRIMITIVE primitiveActivateMethod
+	MActivateMethod
+	ProcessSignalsAndReturn
 ENDPRIMITIVE primitiveActivateMethod
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -4479,7 +4478,6 @@ BEGINPROC EXECUTENEWMETHOD
 	jnz		@F									; If succeeeded, jump to exit
 	
 	; Failed, so must activate the new method
-
 	call	primitiveActivateMethod
 
 @@:
@@ -4497,18 +4495,9 @@ BEGINPROC ACTIVATENEWMETHOD
 	push	_IP									; Ditto _IP
 	push	_BP
 
-	; We really don't want a process switch to occur at this point, so muffle the triggers
-	xor		eax, eax 
-	push	[ASYNCPENDING]
-	mov		[ASYNCPENDING], eax
-
 	LoadInterpreterRegisters
-	call	primitiveActivateMethod					; Call assembler method activation routine
+	MActivateMethod
 	StoreInterpreterRegisters
-
-	; Restore the previous state of the process switching triggers
-	pop		ecx
-	mov		[ASYNCPENDING], ecx
 
 	pop		_BP
 	pop		_IP
