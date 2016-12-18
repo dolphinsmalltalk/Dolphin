@@ -96,8 +96,8 @@ precisionName
 
 	^self class precisionModes at: self precision + 1 ifAbsent: [#Unknown]!
 
-printFieldsOn: aStream limit: anInteger 
-	self isNull 
+printFieldsOn: aStream limit: anInteger
+	self isNull
 		ifTrue: 
 			[aStream nextPutAll: 'NULL'.
 			^self].
@@ -115,17 +115,17 @@ printFieldsOn: aStream limit: anInteger
 		print: self operationName;
 		space.
 	#(#cause #enable #status) do: 
-			[:each | 
+			[:each |
 			aStream
+				space;
 				display: each;
 				nextPut: $=.
-			self class printFlags: (self getField: each) on: aStream]
-		separatedBy: [aStream space].
+			self class printFlags: (self getField: each) on: aStream].
 	#(#operand1 #operand2) do: 
-			[:each | 
+			[:each |
 			| value |
 			value := self getField: each.
-			value isValid 
+			value isValid
 				ifTrue: 
 					[aStream
 						space;
