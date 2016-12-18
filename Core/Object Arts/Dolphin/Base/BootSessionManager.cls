@@ -37,7 +37,7 @@ keepAlive
 
 	^self!
 
-logError: anException 
+logError: anException
 	"Append details about the unhandled exception, anException, to the session error log.
 	Ignored for runtime systems, but it is suggested that subclasses perform some appropriate
 	form of error logging. The VM crash dump is one such facility (it doesn't cause a crash and
@@ -45,9 +45,11 @@ logError: anException
 
 	"Write to the crash dump log - this always works"
 
-	| stderrBad |
-	super logError: anException.
-	stderrBad := false.
+	VMLibrary default
+		dump: anException description
+		path: nil
+		stackDepth: -1
+		walkbackDepth: -1.
 	
 	[| target |
 	target := self stderr.
@@ -59,9 +61,7 @@ logError: anException
 		next: 40 put: $-;
 		cr;
 		cr;
-		flush.
-	"In case the session is attended, pause briefly so the user can see the error"
-	Processor sleep: 10000] 
+		flush]
 			on: Error
 			do: [:e | ]!
 
