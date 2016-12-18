@@ -247,10 +247,18 @@ logComment: aString
 
 	self class sourceManager logComment: aString!
 
-logError: anException 
+logError: anException
 	"Append details about the unhandled exception, anException, to the session error log.
 	N.B. MUST NOT RAISE ANY EXCEPTIONS OTHERWISE RECURSIVE WALKBACK MAY RESULT."
 
+	self isUnattended
+		ifTrue: 
+			[VMLibrary default
+				dump: anException description
+				path: nil
+				stackDepth: -1
+				walkbackDepth: -1.
+			^self].
 	
 	[| f |
 	f := FileStream write: self errorLogName mode: #append.
@@ -262,15 +270,14 @@ logError: anException
 		next: 100 put: $-;
 		cr;
 		cr;
-		close] 
+		close]
 			on: Error
 			do: 
-				[:e | 
+				[:e |
 				[e toTrace	"Suppress errors writing to log"] on: Error
 					do: 
-						[:e2 | 
+						[:e2 |
 						"Couldn't even write a trace message"
-
 						]]!
 
 mainShellClass
@@ -690,33 +697,19 @@ traceStream
 		ifFalse: [stdioStreams isNil ifTrue: [Trace] ifFalse: [self stderr]]!
 
 unhandledException: anException
-	"Private - Pop-up a walkback with details from the argument, anException."
+	"Private - The <Exception> argument has been raised but not caught and handled. Log the
+	exception to the error log and, if the session is attended, pop up a walkback. Otherwise for
+	unattended sessions either continue from the point of error if the exception is user
+	resumable, or fail fast if not."
 
+	self logError: anException.
 	self isUnattended
-		ifTrue: 
-			[anException isUserResumable
-				ifTrue: 
-					["If the session is unattended and the exception is
-					 resumable, log the error and continue from the point of
-					 error"
-					self logError: anException.
-					anException resume]
-				ifFalse: 
-					["If the exception is not resumable, then create a crash
-					 dump and abruptly terminate the unattended session."
-					super logError: anException.
-					self primQuit: -1]]
+		ifTrue: [anException isUserResumable ifTrue: [anException resume] ifFalse: [self primQuit: -1]]
 		ifFalse: 
-			["Attempt to log the error, but don't allow it to become recursive
-			(#logError: does not raise an exception if it fails)"
-			| title topFrame |
-			self logError: anException.
-			title := [anException description] on: Error do: [:e | anException class name].
+			[| topFrame |
 			topFrame := anException raisingFrame.
-
-			"In an attended development session, we'll be wanting a walkback..."
 			topFrame process
-				walkback: title
+				walkback: ([anException description] on: Error do: [:e | anException class name])
 				topFrame: topFrame
 				resumable: anException isResumable]!
 
