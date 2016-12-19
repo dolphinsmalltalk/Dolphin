@@ -348,6 +348,7 @@ extern PRIMSTRINGSEARCH:near32
 PRIMSTRINGNEXTINDEX EQU ?primitiveStringNextIndexOfFromTo@Interpreter@@CIHXZ
 extern PRIMSTRINGNEXTINDEX:near32
 
+; Note this function returns 'bool', i.e. single byte in al; doesn't necessarily set whole of eax
 DISABLEINTERRUPTS EQU ?disableInterrupts@Interpreter@@SI_N_N@Z
 extern DISABLEINTERRUPTS:near32
 
@@ -2756,7 +2757,7 @@ BEGINPRIMITIVE primitiveEnableInterrupts
 	call	DISABLEINTERRUPTS
 
 	mov		ecx, [oteTrue]
-	cmp		eax, 0								; Interrupts not previously disabled?
+	test	al, al								; Interrupts not previously disabled?
 	je		@F									; Yes, answer true
 	add		ecx, OTENTRYSIZE					; No, answer false
 @@:
