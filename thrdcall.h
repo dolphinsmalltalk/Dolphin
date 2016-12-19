@@ -295,7 +295,7 @@ private:
 	// Context of the process for which we are running
 	InterpreterRegisters	m_interpContext;
 	ProcessOTE*				m_oteProcess;
-	long					m_dwRefs;
+	SHAREDLONG				m_dwRefs;
 
 	HANDLE					m_hThread;		// thread handle (returned by _beginthread(ex))
 	DWORD					m_dwThreadId;	// thread's ID
@@ -305,11 +305,11 @@ private:
 	// Method causing this overlapped call to start executing
 	CompiledMethod*			m_pMethod;
 	unsigned				m_nArgCount;
-	States					m_state;
+	volatile States			m_state;
 public:
-	volatile LONG			m_nCallDepth;
+	SHAREDLONG				m_nCallDepth;
 private:
-	volatile LONG			m_nSuspendCount;
+	SHAREDLONG				m_nSuspendCount;
 	bool					m_bCompletionRequestPending;
 };
 
@@ -318,12 +318,12 @@ ostream& operator<<(ostream& stream, const OverlappedCall& oc);
 
 inline DWORD OverlappedCall::AddRef()
 {
-	return ::InterlockedIncrement(&m_dwRefs);
+	return _InterlockedIncrement(&m_dwRefs);
 }
 
 inline DWORD OverlappedCall::Release()
 {
-	DWORD dwRefs = ::InterlockedDecrement(&m_dwRefs);
+	DWORD dwRefs = _InterlockedDecrement(&m_dwRefs);
 	if (dwRefs == 0)
 		delete this;
 	return dwRefs;

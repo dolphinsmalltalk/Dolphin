@@ -29,7 +29,7 @@ VOID CALLBACK Interpreter::SamplerProc(PVOID , BOOLEAN TimerOrWaitFired)
 {
 	if (!TimerOrWaitFired)
 		return;
-	if (::InterlockedDecrement((LPLONG)&m_nInputPollCounter) == 0)
+	if (_InterlockedDecrement(&m_nInputPollCounter) == 0)
 	{
 		NotifyAsyncPending();
 #if 0//def _DEBUG
@@ -56,16 +56,26 @@ HRESULT Interpreter::SetSampleTimer(SMALLINTEGER newInterval)
 	HARDASSERT(::GetCurrentThreadId() == Interpreter::MainThreadId());
 
 	if (newInterval == 0)
+	{
 		newInterval = m_nInputPollInterval;
+	}
 	else
+	{
 		m_nInputPollInterval = newInterval;
+	}
 
 	BOOL bSuccess = TRUE;
 	if (m_hSampleTimer == NULL)
+	{
 		bSuccess = ::CreateTimerQueueTimer(&m_hSampleTimer, NULL, SamplerProc, NULL, m_nInputPollInterval, m_nInputPollInterval, WT_EXECUTEINTIMERTHREAD);
+	}
 	else
+	{
 		if (newInterval != m_nInputPollInterval)
+		{
 			bSuccess = ::ChangeTimerQueueTimer(NULL, m_hSampleTimer, m_nInputPollInterval, m_nInputPollInterval);
+		}
+	}
 
 	if (!bSuccess)
 	{

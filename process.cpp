@@ -168,7 +168,6 @@ StackFrame* Interpreter::firstFrame()
 // Asynchronous queuing of Semaphore signals, interrupts, and overlapped
 // call completions. These are thread safe
 ///////////////////////////////////////////////////////////////////////////////
-#pragma auto_inline(off)
 
 bool __fastcall Interpreter::disableInterrupts(bool bDisable)
 {
@@ -191,11 +190,11 @@ bool __fastcall Interpreter::disableInterrupts(bool bDisable)
 			// interrupts are on or off.
 
 			// First switch over to the buffer
-			InterlockedExchangePointer((PVOID)&m_pbAsyncPending, (PVOID)(&m_bAsyncPendingIOff));
+			_InterlockedExchangePointer((PVOID*)(&m_pbAsyncPending), (PVOID)(&m_bAsyncPendingIOff));
 
 			// We must clear the async. pending flag, but if currently set we save that
-			if (InterlockedExchange((LPLONG)&m_bAsyncPending, FALSE))
-				InterlockedExchange((LPLONG)&m_bAsyncPendingIOff, TRUE);
+			if (_InterlockedExchange(&m_bAsyncPending, FALSE))
+				_InterlockedExchange(&m_bAsyncPendingIOff, TRUE);
 
 			// At this point the buffer should have the same value as the async. pending flag
 			// (unless the latter was false, and some thread has notified of pending async
@@ -209,18 +208,14 @@ bool __fastcall Interpreter::disableInterrupts(bool bDisable)
 			ASSERT(m_pbAsyncPending == &m_bAsyncPendingIOff);
 
 			// First switch back to using the normal flag...
-			InterlockedExchangePointer((PVOID)&m_pbAsyncPending, (PVOID)(&m_bAsyncPending));
+			_InterlockedExchangePointer((PVOID*)&m_pbAsyncPending, (PVOID)(&m_bAsyncPending));
 			// ... but if the async. events occurred while interrupts were disabled, make sure these are noticed
-			if (InterlockedExchange((LPLONG)&m_bAsyncPendingIOff, FALSE))
-				InterlockedExchange((LPLONG)&m_bAsyncPending, TRUE);
+			if (_InterlockedExchange(&m_bAsyncPendingIOff, FALSE))
+				_InterlockedExchange(&m_bAsyncPending, TRUE);
 		}
 	}
 	return bWasDisabled;
 }
-
-#ifdef NDEBUG
-#pragma auto_inline(on)
-#endif
 
 ///////////////////////////////////////////////////////////////////////////////
 // Signal a Semaphore without regard to the execution state. The Semaphore will be properly
@@ -751,7 +746,7 @@ BOOL __fastcall Interpreter::FireAsyncEvents()
 		queueInterrupt(VMI_SINGLESTEP, Oop(m_registers.m_pActiveFrame) + 1);
 	}
 
-	LONG bAsyncPending = ::InterlockedExchange(LPLONG(&m_bAsyncPending), FALSE);
+	LONG bAsyncPending = _InterlockedExchange(&m_bAsyncPending, FALSE);
 
 	// Indicates interrupt was fired
 	BOOL bInterrupted = FALSE;
@@ -802,7 +797,9 @@ BOOL __fastcall Interpreter::FireAsyncEvents()
 			// We only process the first interrupt, so there may still be some pending
 			// We leave the flag set if appropriate
 			if (!m_qInterrupts.isEmpty())
-				InterlockedExchange(LPLONG(&m_bAsyncPending), TRUE);
+			{
+				_InterlockedExchange(&m_bAsyncPending, TRUE);
+			}
 
 			// 2) Remove ref to process caused by queue (NOW DONE ABOVE @ 1)
 			//oteProcess->countDown();

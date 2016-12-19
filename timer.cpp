@@ -21,7 +21,6 @@
 #include "rc_vm.h"				// For error message ids
 #include "InterprtPrim.inl"
 #include "InterprtProc.inl"
-#include "InterlockedOps.h"
 
 // Smalltalk classes
 #include "STExternal.h"
@@ -34,9 +33,7 @@ static const UINT MAXTIMERRES = 60;
 // Private timer function static. Modified by two threads.
 static volatile UINT timerID;
 
-SemaphoreOTE* Interpreter::m_oteTimerSem;
 uint64_t Interpreter::m_clockFrequency;
-
 
 ///////////////////////////////////////////////////////////////////////////////
 // Smalltalk Alarm/Delay/Timers
@@ -76,7 +73,7 @@ void CALLBACK Interpreter::TimeProc(UINT uID, UINT /*uMsg*/, DWORD /*dwUser*/, D
 	// We use an InterlockedExchange() to set the value to 0 so that the main thread
 	// can recognise that the timer has fired without race conditions
 
-	if (::InterlockedExchange(LPLONG(&timerID), 0) != 0)
+	if (_InterlockedExchange(reinterpret_cast<SHAREDLONG*>(&timerID), 0) != 0)
 	{
 		// If not previously killed (which is very unlikely except in certain exceptional
 		// circumstances where the timer is killed at the exact moment it is about to fire)
@@ -85,19 +82,18 @@ void CALLBACK Interpreter::TimeProc(UINT uID, UINT /*uMsg*/, DWORD /*dwUser*/, D
 		// We mustn't access Pointers from an async thread when object memory is compacting
 		// as the Pointer will be wrong
 		GrabAsyncProtect();
-		SemaphoreOTE* timerSemaphore = m_oteTimerSem;
-		if (!timerSemaphore->isNil())
-		{
-			HARDASSERT(!ObjectMemoryIsIntegerObject(timerSemaphore));
-			HARDASSERT(!timerSemaphore->isFree());
-			HARDASSERT(timerSemaphore->m_oteClass == Pointers.ClassSemaphore);
 
-			// Asynchronously signal the required semaphore asynchronously, which will be detected
-			// in sync. with the dispatching of byte codes, and properly signalled
-			asynchronousSignalNoProtect(timerSemaphore);
-			// Signal the timing Event, in case the idle process has put the VM to sleep
-			SetWakeupEvent();
-		}
+		SemaphoreOTE* timerSemaphore = Pointers.TimingSemaphore;
+		HARDASSERT(!ObjectMemoryIsIntegerObject(timerSemaphore));
+		HARDASSERT(!timerSemaphore->isFree());
+		HARDASSERT(timerSemaphore->m_oteClass == Pointers.ClassSemaphore);
+
+		// Asynchronously signal the required semaphore asynchronously, which will be detected
+		// in sync. with the dispatching of byte codes, and properly signalled
+		asynchronousSignalNoProtect(timerSemaphore);
+		// Signal the timing Event, in case the idle process has put the VM to sleep
+		SetWakeupEvent();
+
 		RelinquishAsyncProtect();
 	}
 	else
@@ -108,19 +104,11 @@ void CALLBACK Interpreter::TimeProc(UINT uID, UINT /*uMsg*/, DWORD /*dwUser*/, D
 ///////////////////////////////////////////////////////////////////////////////
 // Timer/Idling Primitives
 
-// Signal a specified semaphore after the specified milliseconds duration. 
+// Signal a specified semaphore after the specified milliseconds duration (the argument). 
 // NOTE: NOT ABSOLUTE VALUE!
-// The first argument is a Semaphore, and the second is a millisecond value
-// (a SmallInteger). If the specified time has already passed,
-// then the Semaphore is signalled immediately. Note that the primitive only remembers
-// one Semaphore to signal, so if a new call is made before the last Semaphore has
-// been signalled, then the last semaphore will not be signalled. If the first argument
-// is not a Semaphore, then any currently waiting Semaphore will also be forgotten.
+// If the specified time has already passed, then the TimingSemaphore is signalled immediately. 
 BOOL __fastcall Interpreter::primitiveSignalAtTick(CompiledMethod&, unsigned argumentCount)
 {
-	argumentCount;
-	HARDASSERT(argumentCount == 2);
-
 	Oop tickPointer = stackTop();
 	SMALLINTEGER nDelay;
 
@@ -132,95 +120,81 @@ BOOL __fastcall Interpreter::primitiveSignalAtTick(CompiledMethod&, unsigned arg
 		return primitiveFailureWith(PrimitiveFailureNonInteger, oteArg);	// ticks must be SmallInteger
 	}
 
-	// Clamp the requested delay to the maximum if it is too large. This simplifies the Delay code in the image a little.
-	if (nDelay > SMALLINTEGER(wTimerMax))
-	{
-		nDelay = wTimerMax;
-	}
-
 	// To avoid any race conditions against the global timerID value (it is quite
 	// common for the timer to fire, for example, before the timeSetEvent() call
 	// has actually returned in the duration is very short because the timer thread
 	// is operating at a very high priority), we use an interlocked operation
 
-	UINT outstandingID = ::InterlockedExchange(LPLONG(&timerID), 0);
+	UINT outstandingID = InterlockedExchange(reinterpret_cast<SHAREDLONG*>(&timerID), 0);
 	// If outstanding timer now fires, it will do nothing. We'll end up killing something which is already
 	// dead of course, but that should be OK
 	if (outstandingID)
 	{
-		#ifdef OAD
-			TRACESTREAM << "Killing existing timer with id " << outstandingID << endl;
-		#endif
+#ifdef OAD
+		TRACESTREAM << "Killing existing timer with id " << outstandingID << endl;
+#endif
 		UINT kill = ::timeKillEvent(outstandingID);
 		if (kill != TIMERR_NOERROR)
 			trace("Failed to kill timer %u (%d,%d)!\n\r", outstandingID, kill, GetLastError());
 	}
 
-	::InterlockedExchange(LPLONG(&m_oteTimerSem), LONG(Pointers.Nil));
-	SemaphoreOTE* semaphorePointer = reinterpret_cast<SemaphoreOTE*>(stackValue(1));
-
-	if (ObjectMemory::fetchClassOf(Oop(semaphorePointer)) == Pointers.ClassSemaphore)
+	if (nDelay > 0)
 	{
-		if (nDelay <= 0)
+		// Clamp the requested delay to the maximum if it is too large. This simplifies the Delay code in the image a little.
+		if (nDelay > SMALLINTEGER(wTimerMax))
 		{
-#ifdef _DEBUG
-			TRACESTREAM << "Requested delay " << dec << nDelay << " passed, signalling immediately" << endl;
-#endif
-			// The request time has already passed, or does not fall within the
-			// available timer resolution (i.e. it will happen too soon), so signal
-			// it immediately
-			// We must adjust stack before signalling, as may change Process (and therefore stack!)
-			pop(2);
-			// The semaphore must not go away, as we retain no ref. to it
-			ASSERT(!semaphorePointer->isFree());
+			nDelay = wTimerMax;
+		}
 
-			// N.B. Signalling may detect a process switch, but does not actually perform it
-			signalSemaphore(semaphorePointer);
+		// Set the timerID to a non-zero value just in case the timer fires before timeSetEvent() returns.
+		// This allows the TimerProc to recognise the timer as valid (it doesn't really care about the 
+		// timerID anyway, just that we're interested in it).
+		// N.B. We shouldn't need an interlocked operation here because, assuming no bugs in the Win32 MM
+		// timers, we've killed any outstanding timer, and the timer thread should be dormant
+		timerID = UINT(-1);		// -1 is not used as a timer ID.
+
+		UINT newTimerID = ::timeSetEvent(nDelay, 0, TimeProc, 0, TIME_ONESHOT);
+		if (newTimerID && newTimerID != UINT(-1))
+		{
+			// Unless timer has already fired, record the timer id so can cancel if necessary
+			_InterlockedCompareExchange(reinterpret_cast<SHAREDLONG*>(&timerID), newTimerID, -1);
+			pop(argumentCount);		// No ref. counting required
 		}
 		else
 		{
-			// Set the timerID to a non-zero value just in case the timer fires before timeSetEvent() returns.
-			// This allows the TimerProc to recognise the timer as valid (it doesn't really care about the 
-			// timerID anyway, just that we're interested in it).
-			// N.B. We shouldn't need an interlocked operation here because, assuming no bugs in the Win32 MM
-			// timers, we've killed any outstanding timer, and the timer thread should be dormant
-			timerID = UINT(-1);		// Rely on the fact that -1 is not used as a timer ID. Unsafe?
-
-			// Because a compact may occur while the Timer is outstanding, we can't pass an Oop out
-			// as the cookie, but have to store down the value in m_oteTimerSem instead
-			semaphorePointer->beSticky();
-			::InterlockedExchange(LPLONG(&m_oteTimerSem), LONG(semaphorePointer));
-			UINT newTimerID = ::timeSetEvent(nDelay, 0, TimeProc, 0, TIME_ONESHOT);
-			if (newTimerID && newTimerID != UINT(-1))
-			{
-				// Unless timer has already fired, record the timer id so can cancel if necessary
-				::OAInterlockedCompareExchange((PVOID*)(&timerID), PVOID(newTimerID), PVOID(-1));
-				pop(2);		// No ref. counting required
-			}
-			else
-			{
-				// System refused to set timer for some reason
-				::InterlockedExchange(LPLONG(&m_oteTimerSem), LONG(Pointers.Nil));
-				trace("Oh no, failed to set a timer for %d mS (%d)!\n\r", nDelay, GetLastError());
-				return primitiveFailureWithInt(PrimitiveFailureSystemError, newTimerID);
-			}
+			// System refused to set timer for some reason
+			DWORD error = GetLastError();
+			trace("Oh no, failed to set a timer for %d mS (%d)!\n\r", nDelay, error);
+			return primitiveFailureWithInt(PrimitiveFailureSystemError, error);
 		}
 	}
-	// else we allow this to clear down the existing timer
+	else if (nDelay == 0)
+	{
+#ifdef _DEBUG
+		TRACESTREAM << "Requested delay " << dec << nDelay << " passed, signalling immediately" << endl;
+#endif
+		// The request time has already passed, or does not fall within the
+		// available timer resolution (i.e. it will happen too soon), so signal
+		// it immediately
+		// We must adjust stack before signalling, as may change Process (and therefore stack!)
+		pop(argumentCount);
 
+		// N.B. Signalling may detect a process switch, but does not actually perform it
+		signalSemaphore(Pointers.TimingSemaphore);
+	}
+	// else requested delay was negative - we allow this to clear down the existing timer
 
-	#ifdef _DEBUG
-		if (newProcessWaiting())
-		{
-			ASSERT(m_oteNewProcess->m_oteClass ==Pointers.ClassProcess);
-			ProcessOTE* activeProcess = scheduler()->m_activeProcess;
+#ifdef _DEBUG
+	if (newProcessWaiting())
+	{
+		ASSERT(m_oteNewProcess->m_oteClass == Pointers.ClassProcess);
+		ProcessOTE* activeProcess = scheduler()->m_activeProcess;
 
-			TRACESTREAM << "signalAtTick: Caused process switch to " << m_oteNewProcess
-				<< endl << "\t\tfrom " << activeProcess << endl
-				<< "\tasync signals " << m_qAsyncSignals.isEmpty()<< ')' << endl;
-		}
-	#endif
-
+		TRACESTREAM << "signalAtTick: Caused process switch to " << m_oteNewProcess
+			<< endl << "\t\tfrom " << activeProcess << endl
+			<< "\tasync signals " << m_qAsyncSignals.isEmpty() << ')' << endl;
+	}
+#endif
 
 	// Delay could already have fired
 	CheckProcessSwitch();
@@ -268,8 +242,7 @@ HRESULT Interpreter::initializeTimer()
 		// MSDN says this shouldn't happen: "On systems that run Windows XP or later, the function will always succeed and will thus never return zero."
 		return ReportWin32Error(IDP_NOHIRESCLOCK, ::GetLastError());
 	}
-	
-	m_oteTimerSem = reinterpret_cast<SemaphoreOTE*>(Pointers.Nil);
+
 	timerID = 0;
 	TIMECAPS tc;
 	::timeGetDevCaps(&tc, sizeof(TIMECAPS));
