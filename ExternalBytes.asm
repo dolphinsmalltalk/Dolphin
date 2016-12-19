@@ -387,10 +387,13 @@ dwordAtPut PROC
 	jz		@F										; No
 
 	; Store down smallInteger value
-	mov		[_SP-OOPSIZE*2], edx					; Overwrite receiver
-	PopStack <2>									; Past failing so pop arg/offset (both SmallIntegers)
+	mov		ecx, edx
 	sar		edx, 1									; Convert from SmallInteger value
 	mov		[eax], edx								; Store down value into object
+	
+	; Past failing so adjust stack (returns the argument)
+	mov		[_SP-OOPSIZE*2], ecx					; Overwrite receiver
+	PopStack <2>									
 	ret
 
 @@:	
