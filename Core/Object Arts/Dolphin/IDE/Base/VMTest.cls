@@ -12,7 +12,7 @@ SUnitBrowser openOnTestCase: self'!
 !VMTest categoriesForClass!Unclassified! !
 !VMTest methodsFor!
 
-assertImmutableAtPut: anObject 
+assertImmutableAtPut: anObject
 	self assert: anObject isImmutable.
 	self should: [anObject at: 0 put: $x] raise: BoundsError.
 	self should: [anObject at: anObject size + 1 put: $x] raise: BoundsError.
@@ -35,12 +35,11 @@ assertImmutableInstVarAtPut: anObject
 	1 to: size
 		do: [:each | self should: [anObject instVarAt: each put: $x] raise: Processor constWriteSignal]!
 
-assertImmutableResize: anObject 
+assertImmutableResize: anObject
 	self assert: anObject isImmutable.
 	"Should get an error on any resize attempt, whether doesn't change size, grows or shrinks"
-	self should: [anObject resize: anObject size] raise: Processor constWriteSignal.
-	self should: [anObject resize: anObject size + 1] raise: Processor constWriteSignal.
-	self should: [anObject resize: anObject size - 1] raise: Processor constWriteSignal!
+	#(0 1 -1)
+		do: [:i | self should: [anObject resize: anObject size + i] raise: Processor constWriteSignal]!
 
 earlyTermination: aBoolean 
 	"N.B. Timing is critical to much of this, so its not going to be possible to debug through it. Its really only to show up
@@ -248,22 +247,24 @@ exerciseReplaceElementsOf: targetCollection with: sourceCollection
 				startingAt: 1]
 		raise: BoundsError!
 
-getCPUTime
-	"Answer the total CPU time consumed since Dolphin was started, in milliseconds."
+findCaller: aStackFrame in: aCompiledMethod
+	| frame |
+	frame := aStackFrame.
+	[frame notNil and: [frame isBlockFrame or: [frame method ~~ aCompiledMethod]]]
+		whileTrue: [frame := frame sender].
+	^frame!
 
-	| lib user kernel creation exit |
-	creation := FILETIME new.
-	exit := FILETIME new.
-	user := FILETIME new.
-	kernel := FILETIME new.
-	lib := KernelLibrary default.
-	lib 
-		getThreadTimes: lib getCurrentThread
-		lpCreationTime: creation
-		lpExitTime: exit
-		lpKernelTime: kernel
-		lpUserTime: user.
-	^(kernel asInteger + user asInteger) // 10000!
+findFaultInterruptFrame: anException
+	^self findCaller: anException raisingFrame in: ProcessorScheduler >> #vmi:list:no:with:!
+
+isFault: anException raisedIn: aCompiledMethod receiver: anObject
+	| frame |
+	frame := self findFaultInterruptFrame: anException.
+	^frame notNil and: 
+			[| faultingFrame |
+			faultingFrame := frame sender.
+			faultingFrame notNil
+				and: [faultingFrame receiver == anObject and: [faultingFrame method == aCompiledMethod]]]!
 
 isGPF: gpf reading: aBoolean address: anAddress 
 	| address isReading info |
@@ -314,10 +315,21 @@ testCRTFault
 	"Tests that the VM sends an interrupt when the CRT is passed an invalid parameter and calls
 	the invalid parameter handler (issue #59). On an unfixed V2015 VM this will just crash."
 
-	self 
-		should: [CRTLibrary default _close: -1]
+	| crt |
+	crt := CRTLibrary default.
+	self
+		should: 
+			[Processor enableAsyncEvents: false.
+			crt _close: -1]
 		raise: CRTError
-		matching: [:err | err errno = EBADF]!
+		matching: 
+			[:err |
+			err errno = EBADF and: 
+					["Verify that the fault is dispatched synchronously"
+					self
+						isFault: err
+						raisedIn: CRTLibrary >> #_close:
+						receiver: crt]]!
 
 testDwordAtOffsetPut
 	| bytes dword max |
@@ -361,27 +373,54 @@ testEvaluationOrder
 	i := 2.
 	self assert: (3 between: i and: (i := 4))!
 
-testGPFTrap
-	""
+testFPFaultInPrimitive
+	"An FP fault occurring in a primitive should be reported in the primitive method, not some
+	subsequently invoked method, even when interrupts are off."
 
-	self 
-		should: [ExternalAddress new dwordAtOffset: 0]
+	self
+		should: 
+			[Processor enableAsyncEvents: false.
+			200 factorial asFloat]
+		raise: FloatingPointException
+		matching: 
+			[:fpe |
+			self
+				isFault: fpe
+				raisedIn: CRTLibrary >> #ldexp:exp:
+				receiver: CRTLibrary default]!
+
+testGPFTrap
+
+	| nullPointer |
+	nullPointer := ExternalAddress new.
+	self
+		should: 
+			[Processor enableAsyncEvents: false.
+			nullPointer dwordAtOffset: 0]
 		raise: GPFault
 		matching: 
-			[:gpf | 
-			self 
+			[:gpf |
+			(self
 				isGPF: gpf
 				reading: true
-				address: 0].
-	self 
-		should: [ExternalAddress new dwordAtOffset: 0 put: 1]
+				address: 0) and: 
+						[self
+							isFault: gpf
+							raisedIn: ExternalAddress >> #dwordAtOffset:
+							receiver: nullPointer]].
+	self
+		should: [nullPointer dwordAtOffset: 0 put: 1]
 		raise: GPFault
 		matching: 
-			[:gpf | 
-			self 
+			[:gpf |
+			(self
 				isGPF: gpf
 				reading: false
-				address: 0]!
+				address: 0) and: 
+						[self
+							isFault: gpf
+							raisedIn: ExternalAddress >> #dwordAtOffset:put:
+							receiver: nullPointer]]!
 
 testImmutableAtPut
 	#(#(1 2 3) #[1 2 3] 'abc') do: 
@@ -492,6 +531,273 @@ testImmutableWriteAccessors
 	"Note that the primitive write accessor will fail and fall back on executing the method bytecodes, which will fail sending #errorInstVarAt:put:"
 	class instVarNames 
 		do: [:each | self should: [inst perform: (each , ':') asSymbol with: each] raise: Processor constWriteSignal]!
+
+testIndirectByteAtOffsetPrimitives
+	| nullPointer b p |
+	b := ByteArray newFixed: 3.
+	p := b yourAddress asExternalAddress.
+	#(0 1 127 128 255) do: 
+			[:each |
+			"Should be able to write any 32-bit integer value, and read it back"
+			self assert: each equals: (p byteAtOffset: 1 put: each).
+			self assert: each equals: (b byteAtOffset: 1).
+			self assert: 0 equals: (b byteAtOffset: 0).
+			self assert: 0 equals: (b byteAtOffset: 2)].
+
+	"Arg must be in range 0..255"
+	#(-1 256) do: [:each | self should: [p byteAtOffset: 1 put: each] raise: Error].
+
+	"This class of primitives had a bug whereby if the pointed at memory was inaccessible at the time of the read/write, then the primitive would corrupt the Smalltalk stack."
+	nullPointer := 0 asExternalAddress.
+	self
+		should: 
+			["Test with async events off to verify the fault interrupt is sent synchronously to the faulting frame"
+			Processor enableAsyncEvents: false.
+			nullPointer byteAtOffset: 0 put: 1]
+		raise: GPFault
+		matching: 
+			[:ex |
+			(self
+				isGPF: ex
+				reading: false
+				address: 0) and: 
+						[self
+							isFault: ex
+							raisedIn: ExternalAddress >> #byteAtOffset:put:
+							receiver: nullPointer]].
+	self
+		should: 
+			[Processor enableAsyncEvents: false.
+			nullPointer byteAtOffset: 0]
+		raise: GPFault
+		matching: 
+			[:gpf |
+			(self
+				isGPF: gpf
+				reading: true
+				address: 0) and: 
+						[self
+							isFault: gpf
+							raisedIn: ExternalAddress >> #byteAtOffset:
+							receiver: nullPointer]]!
+
+testIndirectDwordAtOffsetPrimitives
+	| nullPointer b p |
+	b := ByteArray newFixed: 12.
+	p := b yourAddress asExternalAddress.
+	#(0 1 -1 ##(SmallInteger minimum) ##(SmallInteger maximum) ##(SmallInteger maximum + 1) ##(SmallInteger
+		minimum - 1) 16rFFFFFFFF -16r80000000)
+		do: 
+			[:each |
+			"Should be able to write any 32-bit integer value, and read it back"
+			self assert: each equals: (p dwordAtOffset: 4 put: each).
+			self assert: each asDword equals: (b dwordAtOffset: 4).
+			self assert: 0 equals: (b dwordAtOffset: 0).
+			self assert: 0 equals: (b dwordAtOffset: 8)].
+
+	"Error if arg requires more that 32-bits to represent as an unsigned int"
+	#(16r100000000 -16r80000001) do: [:each | self should: [p sdwordAtOffset: 0 put: each] raise: Error].
+
+	"This class of primitives had a bug whereby if the pointed at memory was inaccessible at the time of the read/write, then the primitive would corrupt the Smalltalk stack."
+	nullPointer := 0 asExternalAddress.
+	#(1 16r7FFFFFFF 16rFFFFFFFF) do: 
+			[:each |
+			self
+				should: 
+					["Test with async events off to verify the fault interrupt is sent synchronously to the faulting frame"
+					Processor enableAsyncEvents: false.
+					nullPointer dwordAtOffset: 0 put: each]
+				raise: GPFault
+				matching: 
+					[:ex |
+					(self
+						isGPF: ex
+						reading: false
+						address: 0) and: 
+								[self
+									isFault: ex
+									raisedIn: ExternalAddress >> #dwordAtOffset:put:
+									receiver: nullPointer]]].
+	self
+		should: 
+			[Processor enableAsyncEvents: false.
+			nullPointer dwordAtOffset: 0]
+		raise: GPFault
+		matching: 
+			[:gpf |
+			(self
+				isGPF: gpf
+				reading: true
+				address: 0) and: 
+						[self
+							isFault: gpf
+							raisedIn: ExternalAddress >> #dwordAtOffset:
+							receiver: nullPointer]]!
+
+testIndirectSdwordAtOffsetPrimitives
+	| nullPointer b p |
+	b := ByteArray newFixed: 12.
+	p := b yourAddress asExternalAddress.
+	#(0 1 -1 ##(SmallInteger minimum) ##(SmallInteger maximum) ##(SmallInteger maximum + 1) ##(SmallInteger
+		minimum - 1) 16r7FFFFFFF -16r80000000)
+		do: 
+			[:each |
+			"Should be able to write any 32-bit integer value, and read it back"
+			self assert: each equals: (p sdwordAtOffset: 4 put: each).
+			self assert: each equals: (b sdwordAtOffset: 4).
+			self assert: 0 equals: (b sdwordAtOffset: 0).
+			self assert: 0 equals: (b sdwordAtOffset: 8)].
+
+	"If arg requires more than 32-bits to represent in 2's complement, then should be an error"
+	#(16r80000000 -16r80000001) do: [:each | self should: [p sdwordAtOffset: 0 put: each] raise: Error].
+
+	"This class of primitives had a bug whereby if the pointed at memory was inaccessible at the time of the read/write, then the primitive would corrupt the Smalltalk stack."
+	nullPointer := 0 asExternalAddress.
+	"Test with both SmallInteger and LargeInteger args as the primitive may have different code paths for these"
+	#(1 16r7FFFFFFF) do: 
+			[:each |
+			self
+				should: 
+					["Test with async events off to verify the fault interrupt is sent synchronously to the faulting frame"
+					Processor enableAsyncEvents: false.
+					nullPointer sdwordAtOffset: 0 put: each]
+				raise: GPFault
+				matching: 
+					[:ex |
+					(self
+						isGPF: ex
+						reading: false
+						address: 0) and: 
+								[self
+									isFault: ex
+									raisedIn: ExternalAddress >> #sdwordAtOffset:put:
+									receiver: nullPointer]]].
+	self
+		should: 
+			[Processor enableAsyncEvents: false.
+			nullPointer sdwordAtOffset: 0]
+		raise: GPFault
+		matching: 
+			[:gpf |
+			(self
+				isGPF: gpf
+				reading: true
+				address: 0) and: 
+						[self
+							isFault: gpf
+							raisedIn: ExternalAddress >> #sdwordAtOffset:
+							receiver: nullPointer]]!
+
+testIndirectSwordAtOffsetPrimitives
+	| nullPointer b p |
+	b := ByteArray newFixed: 6.
+	p := b yourAddress asExternalAddress.
+	#(0 -1 1 16r7FFF -16r8000) do: 
+			[:each |
+			"Should be able to write any 32-bit integer value, and read it back"
+			self assert: each equals: (p swordAtOffset: 2 put: each).
+			self assert: each equals: (b swordAtOffset: 2).
+			self assert: 0 equals: (b swordAtOffset: 0).
+			self assert: 0 equals: (b swordAtOffset: 4)].
+
+	"Error if arg requires more that 16-bits to represent as 2's complement signed int"
+	#(16r10000 -16r8001) do: [:each | self should: [p swordAtOffset: 0 put: each] raise: Error].
+
+	"This class of primitives had a bug whereby if the pointed at memory was inaccessible at the time of the read/write, then the primitive would corrupt the Smalltalk stack."
+	nullPointer := 0 asExternalAddress.
+	self
+		should: 
+			["Test with async events off to verify the fault interrupt is sent synchronously to the faulting frame"
+			Processor enableAsyncEvents: false.
+			nullPointer swordAtOffset: 0 put: 1]
+		raise: GPFault
+		matching: 
+			[:ex |
+			(self
+				isGPF: ex
+				reading: false
+				address: 0) and: 
+						[self
+							isFault: ex
+							raisedIn: ExternalAddress >> #swordAtOffset:put:
+							receiver: nullPointer]].
+	self
+		should: 
+			[Processor enableAsyncEvents: false.
+			nullPointer swordAtOffset: 0]
+		raise: GPFault
+		matching: 
+			[:gpf |
+			(self
+				isGPF: gpf
+				reading: true
+				address: 0) and: 
+						[self
+							isFault: gpf
+							raisedIn: ExternalAddress >> #swordAtOffset:
+							receiver: nullPointer]]!
+
+testIndirectWordAtOffsetPrimitives
+	| nullPointer b p |
+	b := ByteArray newFixed: 6.
+	p := b yourAddress asExternalAddress.
+	#(0 1 16r7FFF 16r8000 16rFFFF) do: 
+			[:each |
+			"Should be able to write any 32-bit integer value, and read it back"
+			self assert: each equals: (p wordAtOffset: 2 put: each).
+			self assert: each equals: (b wordAtOffset: 2).
+			self assert: 0 equals: (b wordAtOffset: 0).
+			self assert: 0 equals: (b wordAtOffset: 4)].
+
+	"Error if arg is negative or requires more that 16-bits to represent as an unsigned int"
+	#(-1 16r10000 -16r8001) do: [:each | self should: [p wordAtOffset: 0 put: each] raise: Error].
+
+	"This class of primitives had a bug whereby if the pointed at memory was inaccessible at the time of the read/write, then the primitive would corrupt the Smalltalk stack."
+	nullPointer := 0 asExternalAddress.
+	self
+		should: 
+			["Test with async events off to verify the fault interrupt is sent synchronously to the faulting frame"
+			Processor enableAsyncEvents: false.
+			nullPointer wordAtOffset: 0 put: 1]
+		raise: GPFault
+		matching: 
+			[:ex |
+			(self
+				isGPF: ex
+				reading: false
+				address: 0) and: 
+						[self
+							isFault: ex
+							raisedIn: ExternalAddress >> #wordAtOffset:put:
+							receiver: nullPointer]].
+	self
+		should: 
+			[Processor enableAsyncEvents: false.
+			nullPointer wordAtOffset: 0]
+		raise: GPFault
+		matching: 
+			[:gpf |
+			(self
+				isGPF: gpf
+				reading: true
+				address: 0) and: 
+						[self
+							isFault: gpf
+							raisedIn: ExternalAddress >> #wordAtOffset:
+							receiver: nullPointer]]!
+
+testIntDivideByZero
+	#(#/ #// #\\ #quo:) do: 
+			[:op |
+			Processor enableAsyncEvents: false.
+			[123 perform: op with: 0] on: ZeroDivide
+				do: 
+					[:ex |
+					self assert: 123 equals: ex tag.
+					self assert: (self
+								isFault: ex
+								raisedIn: SmallInteger >> op
+								receiver: 123)]]!
 
 testMakeLargeUnsigned
 	| bytes |
@@ -901,21 +1207,37 @@ testSignedFromUnsigned
 					self assert: signed = expected.
 					self assert: signed isImmutable]].
 	self should: [VMLibrary default signedFromUnsigned: 16r100000000] raise: Error.
-	self should: [VMLibrary default signedFromUnsigned: (2 raisedToInteger: 32) + 1] raise: Error! !
+	self should: [VMLibrary default signedFromUnsigned: (2 raisedToInteger: 32) + 1] raise: Error!
+
+testVMPointersImmutable
+	| vmPointers |
+	vmPointers := VMLibrary default registry yourAddress asExternalAddress.
+	self
+		should: [vmPointers dwordAtOffset: 0 put: 1]
+		raise: Processor constWriteSignal
+		matching: 
+			[:ex |
+			self
+				isFault: ex
+				raisedIn: ExternalAddress >> #dwordAtOffset:put:
+				receiver: vmPointers]! !
 !VMTest categoriesFor: #assertImmutableAtPut:!private!unit tests! !
 !VMTest categoriesFor: #assertImmutableBasicAtPut:!private!unit tests! !
 !VMTest categoriesFor: #assertImmutableInstVarAtPut:!private!unit tests! !
 !VMTest categoriesFor: #assertImmutableResize:!private!unit tests! !
-!VMTest categoriesFor: #earlyTermination:!helpers!public! !
+!VMTest categoriesFor: #earlyTermination:!helpers!private! !
 !VMTest categoriesFor: #exerciseReplaceElementsOf:from:to:with:startingAt:!private!unit tests! !
 !VMTest categoriesFor: #exerciseReplaceElementsOf:with:!private!unit tests! !
-!VMTest categoriesFor: #getCPUTime!helpers!private! !
+!VMTest categoriesFor: #findCaller:in:!helpers!private! !
+!VMTest categoriesFor: #findFaultInterruptFrame:!helpers!private! !
+!VMTest categoriesFor: #isFault:raisedIn:receiver:!helpers!private! !
 !VMTest categoriesFor: #isGPF:reading:address:!helpers!private! !
-!VMTest categoriesFor: #suspendAndTerminate!helpers!public! !
+!VMTest categoriesFor: #suspendAndTerminate!helpers!private! !
 !VMTest categoriesFor: #testBSTRArg!public!unit tests! !
 !VMTest categoriesFor: #testCRTFault!public!unit tests! !
 !VMTest categoriesFor: #testDwordAtOffsetPut!public!unit tests! !
 !VMTest categoriesFor: #testEvaluationOrder!public!unit tests! !
+!VMTest categoriesFor: #testFPFaultInPrimitive!public!unit tests! !
 !VMTest categoriesFor: #testGPFTrap!public!unit tests! !
 !VMTest categoriesFor: #testImmutableAtPut!public!unit tests! !
 !VMTest categoriesFor: #testImmutableBasicAtPut!public!unit tests! !
@@ -927,6 +1249,12 @@ testSignedFromUnsigned
 !VMTest categoriesFor: #testImmutableResize!public!unit tests! !
 !VMTest categoriesFor: #testImmutableStringCompare!public!unit tests! !
 !VMTest categoriesFor: #testImmutableWriteAccessors!public!unit tests! !
+!VMTest categoriesFor: #testIndirectByteAtOffsetPrimitives!public! !
+!VMTest categoriesFor: #testIndirectDwordAtOffsetPrimitives!public! !
+!VMTest categoriesFor: #testIndirectSdwordAtOffsetPrimitives!public! !
+!VMTest categoriesFor: #testIndirectSwordAtOffsetPrimitives!public! !
+!VMTest categoriesFor: #testIndirectWordAtOffsetPrimitives!public! !
+!VMTest categoriesFor: #testIntDivideByZero!public!unit tests! !
 !VMTest categoriesFor: #testMakeLargeUnsigned!public!unit tests! !
 !VMTest categoriesFor: #testMustBeBoolean!public!unit tests! !
 !VMTest categoriesFor: #testOverlappedCallsSuspendAndTerminate!public!unit tests! !
@@ -939,6 +1267,7 @@ testSignedFromUnsigned
 !VMTest categoriesFor: #testPrimitiveStringAt!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveStringAtPut!public!unit tests! !
 !VMTest categoriesFor: #testSignedFromUnsigned!public!unit tests! !
+!VMTest categoriesFor: #testVMPointersImmutable!public!unit tests! !
 
 !VMTest class methodsFor!
 
