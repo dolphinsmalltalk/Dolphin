@@ -12,9 +12,11 @@
 ///////////////////////////////////
 #include "ObjMem.h"
 #include "OopQ.h"
+#include <vector>
 #include <fpieee.h>
 #include "STExternal.h"
 #include "STBehavior.h"
+#include "STClassDesc.h"
 #include "InterpRegisters.h"
 
 #include "DolphinX.h"
@@ -157,7 +159,8 @@ public:
 		static const char* activeMethod();
 		static void decodeMethod(CompiledMethod*, ostream* pstream=NULL);
 		static void decodeMethodAt(CompiledMethod*, unsigned ip, ostream&);
-	#endif
+		static void AppendAllInstVarNames(ClassDescriptionOTE* oteClass, std::vector<std::string>& instVarNames);
+#endif
 
 	// Contexts
 	static StackFrame* activeFrame();

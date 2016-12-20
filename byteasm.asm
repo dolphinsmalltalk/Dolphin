@@ -1260,7 +1260,7 @@ ENDBYTECODE popDup
 ;;
 BEGINBYTECODE sendSelfNoArgs
 	mov		eax, [_BP-OOPSIZE]						; Access receiver at _BP-1
-	FetchNext
+	FetchByte
 
 	; ecx-offset is the literal index
 	mov		edx, [pMethod]							; Load current method

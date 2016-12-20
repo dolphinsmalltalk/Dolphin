@@ -18,16 +18,18 @@ namespace ST
 { 
 	class Class;
 	class MetaClass;
+	class ClassDescription;
 }
 typedef TOTE<ST::Class> ClassOTE;
 typedef TOTE<ST::MetaClass> MetaClassOTE;
+typedef TOTE<ST::ClassDescription> ClassDescriptionOTE;
 
 namespace ST
 {
 	class ClassDescription : public Behavior
 	{
 	public:
-		StringOTE*	m_instanceVariables;
+		ArrayOTE*	m_instanceVariables;
 		POTE		m_methodsCatalogue;
 		POTE		m_protocols;
 

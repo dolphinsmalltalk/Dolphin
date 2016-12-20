@@ -221,6 +221,7 @@
   <ItemGroup>
     <ClInclude Include="..\axhost.h" />
     <ClInclude Include="..\bytecdes.h" />
+    <ClInclude Include="..\disassembler.h" />
     <ClInclude Include="..\dlldatax.h" />
     <ClInclude Include="..\DolphinSmalltalk.h" />
     <ClInclude Include="..\DolphinX.h" />

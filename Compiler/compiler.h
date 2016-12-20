@@ -25,6 +25,10 @@ Smalltalk compiler
 #include <valarray>
 typedef std::valarray<POTE> POTEARRAY;
 
+#ifdef _DEBUG
+	#include "..\disassembler.h"
+#endif
+
 ///////////////////////
 
 #define LITERALLIMIT		65536	// maximum number of literals permitted. Limited by the byte code set, but in
@@ -320,16 +324,17 @@ private:
 	void VerifyJumps();
 	bool IsBlock(Oop oop);
 	void disassemble(std::ostream& stream);
-	void disassembleAt(std::ostream& stream, int ip);
 	void disassemble();
 	Str DebugPrintString(Oop);
-	enum JumpType { Jump, JumpIfTrue, JumpIfFalse, JumpIfNil, JumpIfNotNil };
-	void PrintJumpInstruction(std::ostream& stream, JumpType, SWORD offset, int target);
-	void PrintStaticInstruction(std::ostream& stream, const char* type, int index);
-	void PrintInstVarInstruction(std::ostream& stream, const char* type, int index);
-	void PrintSendInstruction(std::ostream& stream, int index, int argumentCount);
-	void PrintTempInstruction(std::ostream& stream, const char* type, int index, const BYTECODE& bytecode);
-	void PrintPushImmediate(std::ostream& stream, int value, int byteSize);
+
+public:
+	// Methods required by Disassembler
+	BYTE GetBytecode(size_t ip) { return m_bytecodes[ip].byte; }
+	Str GetSpecialSelector(size_t index);
+	Str GetLiteralAsString(size_t index) { return DebugPrintString(m_literalFrame[index]); }
+	Str GetInstVar(size_t index) { return m_instVars[index]; }
+
+private:
 #else
 #define AssertValidIpForTextMapEntry __noop
 #define VerifyTextMap __noop
@@ -358,6 +363,7 @@ public:
 	POTE FindGlobal(const Str&)/* throws SE_VMCALLBACKUNWIND */;
 	POTE DictAtPut(POTE dict, const Str&, Oop value)/* throws SE_VMCALLBACKUNWIND */;
 	bool CanUnderstand(POTE oteBehavior, POTE oteSelector);
+	Str GetString(POTE oopString);
 
 	// Special names for compiler and decoder
 	static const char* s_specialObjectName[];
@@ -549,4 +555,9 @@ inline void Compiler::RemoveByte(int ip)
 {
 	_ASSERTE(m_bytecodes[ip].isData());	// Should be using RemoveInstruction for op code bytes
 	RemoveBytes(ip, 1);
+}
+
+inline Str Compiler::GetString(POTE ote) 
+{ 
+	return MakeString(m_piVM, ote); 
 }

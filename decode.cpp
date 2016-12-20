@@ -32,6 +32,7 @@ Decodes byte codes to stdout
 #include "STContext.h"
 #include "STBlockClosure.h"
 #include "InterprtProc.inl"
+#include "disassembler.h"
 
 tracestream thinDump;
 
@@ -868,14 +869,103 @@ BOOL Interpreter::isCallbackFrame(Oop framePointer)
 	return bRet;
 }
 
+void Interpreter::AppendAllInstVarNames(ClassDescriptionOTE* oteClass, std::vector<string>& instVarNames)
+{
+	if (reinterpret_cast<POTE>(oteClass) != Pointers.Nil)
+	{
+		ClassDescription* pClass = oteClass->m_location;
+		// Recursively walk up to the top of the inheritance hierarchy (found by reaching nil), then append names at 
+		// each level on the way back down
+		AppendAllInstVarNames(reinterpret_cast<ClassDescriptionOTE*>(pClass->m_superclass), instVarNames);
+		if (pClass->m_instanceVariables->m_oteClass == Pointers.ClassString)
+		{
+			StringOTE* oteNamesString = reinterpret_cast<StringOTE*>(pClass->m_instanceVariables);
+			stringstream words(oteNamesString->m_location->m_characters);
+			string each;
+			while (getline(words, each, ' '))
+			{
+				if (!each.empty())
+				{
+					instVarNames.push_back(each);
+				}
+			}
+		}
+		else if (pClass->m_instanceVariables->m_oteClass == Pointers.ClassArray)
+		{
+			ArrayOTE* oteNamesArray = pClass->m_instanceVariables;
+			Array* pNames = oteNamesArray->m_location;
+			for (MWORD i = 0; i < oteNamesArray->pointersSize(); i++)
+			{
+				_ASSERTE(ObjectMemory::isKindOf(pNames->m_elements[i], Pointers.ClassString));
+				StringOTE* oteEach = (StringOTE*)pNames->m_elements[i];
+				instVarNames.push_back(oteEach->m_location->m_characters);
+			}
+		}
+		// else ignore (could be nil legitimately)
+	}
+}
 
-void Interpreter::decodeMethod(CompiledMethod* meth, ostream* pstream)
+class DisassemblyContext
+{
+public:
+	DisassemblyContext(CompiledMethod* method)
+	{
+		this->method = method;
+		if (ObjectMemoryIsIntegerObject(method->m_byteCodes))
+		{
+			cBytes = sizeof(SMALLINTEGER);
+			pBytes = reinterpret_cast<BYTE*>(&(method->m_byteCodes));
+		}
+		else
+		{
+			ByteArrayOTE* oteBytes = reinterpret_cast<ByteArrayOTE*>(method->m_byteCodes);
+			cBytes = oteBytes->bytesSize();
+			pBytes = oteBytes->m_location->m_elements;
+		}
+
+		literalFrame = &(method->m_aLiterals[0]);
+		instVarNamesInitialized = false;
+	}
+
+	BYTE GetBytecode(size_t ip) {
+		_ASSERTE(ip < cBytes);
+		return pBytes[ip];
+	}
+
+	std::string GetInstVar(size_t index) { 
+		if (!instVarNamesInitialized)
+		{
+			Interpreter::AppendAllInstVarNames(reinterpret_cast<ClassDescriptionOTE*>(method->m_methodClass), instVarNames);
+			instVarNamesInitialized = true;
+		}
+		return instVarNames[index]; 
+	}
+
+	std::string GetLiteralAsString(size_t index) {
+		return Interpreter::PrintString(literalFrame[index]);
+	}
+
+	std::string GetSpecialSelector(size_t index) {
+		_ASSERTE(index < NumSpecialSelectors);
+		return Pointers.specialSelectors[index]->m_location->m_characters;
+	}
+
+private:
+	CompiledMethod* method;
+	unsigned cBytes;
+	BYTE* pBytes;
+	Oop* literalFrame;
+	vector<string> instVarNames;
+	bool instVarNamesInitialized;
+};
+
+void Interpreter::decodeMethod(CompiledMethod* method, ostream* pstream)
 {
 	ostream& stream = pstream != NULL ? *pstream : (ostream&)TRACESTREAM;
 
 	// Report method header
-	STMethodHeader hdr = meth->m_header;
-	stream << "Method " << meth;
+	STMethodHeader hdr = method->m_header;
+	stream << "Method " << method;
 	if (hdr.primitiveIndex > 7)
 		stream << ", primitive=" << dec << int(hdr.primitiveIndex);
 	if (hdr.argumentCount > 0)
@@ -891,669 +981,25 @@ void Interpreter::decodeMethod(CompiledMethod* meth, ostream* pstream)
 	}
 	stream << endl;
 
-	BYTE* bytecodes = ObjectMemory::ByteAddressOfObjectContents(meth->m_byteCodes);
-	unsigned size = ObjectMemoryIsIntegerObject(meth->m_byteCodes) ?
-		sizeof(SMALLINTEGER) : reinterpret_cast<ByteArrayOTE*>(meth->m_byteCodes)->bytesSize();
+	DisassemblyContext info(method);
+	BytecodeDisassembler<DisassemblyContext> disassembler(info);
 
-	BYTE* b = bytecodes;
-	while (b < bytecodes + size)
+	const size_t size = ObjectMemoryIsIntegerObject(method->m_byteCodes)
+		? sizeof(SMALLINTEGER)
+		: reinterpret_cast<ByteArrayOTE*>(method->m_byteCodes)->bytesSize();
+
+	size_t i = 0;
+	while (i < size)
 	{
-		int ip = b - bytecodes;
-		decodeMethodAt(meth, ip, stream);
-		b += lengthOfByteCode(*b);
+		i += disassembler.DisassembleAt(i, stream);
 	}
-	stream << endl;
 }
 
-void Interpreter::decodeMethodAt(CompiledMethod* meth, unsigned ip, ostream& stream)
+void Interpreter::decodeMethodAt(CompiledMethod* method, unsigned ip, ostream& stream)
 {
-	BYTE* bp = (ObjectMemory::ByteAddressOfObjectContents(meth->m_byteCodes)) + ip;
-	Oop* literalFrame = &(meth->m_aLiterals[0]);
-
-	const int opcode = bp[0];
-	stream << dec << setw(5) << ip << ":	" << dec << opcode << '	';
-
-	switch (opcode)
-	{
-	case Break:
-		stream << "Debug Break";
-		break;
-
-	case ShortPushInstVar + 0:
-	case ShortPushInstVar + 1:
-	case ShortPushInstVar + 2:
-	case ShortPushInstVar + 3:
-	case ShortPushInstVar + 4:
-	case ShortPushInstVar + 5:
-	case ShortPushInstVar + 6:
-	case ShortPushInstVar + 7:
-	case ShortPushInstVar + 8:
-	case ShortPushInstVar + 9:
-	case ShortPushInstVar + 10:
-	case ShortPushInstVar + 11:
-	case ShortPushInstVar + 12:
-	case ShortPushInstVar + 13:
-	case ShortPushInstVar + 14:
-	case ShortPushInstVar + 15:
-		stream << "Short Push InstVar[" << dec << int(opcode - ShortPushInstVar) << ']';
-		break;
-
-	case ShortPushTemp + 0:
-	case ShortPushTemp + 1:
-	case ShortPushTemp + 2:
-	case ShortPushTemp + 3:
-	case ShortPushTemp + 4:
-	case ShortPushTemp + 5:
-	case ShortPushTemp + 6:
-	case ShortPushTemp + 7:
-		stream << "Short Push Temp[" << dec << int(opcode - ShortPushTemp) << "]";
-		break;
-
-	case ShortPushConst + 0:
-	case ShortPushConst + 1:
-	case ShortPushConst + 2:
-	case ShortPushConst + 3:
-	case ShortPushConst + 4:
-	case ShortPushConst + 5:
-	case ShortPushConst + 6:
-	case ShortPushConst + 7:
-	case ShortPushConst + 8:
-	case ShortPushConst + 9:
-	case ShortPushConst + 10:
-	case ShortPushConst + 11:
-	case ShortPushConst + 12:
-	case ShortPushConst + 13:
-	case ShortPushConst + 14:
-	case ShortPushConst + 15:
-	{
-		int literal = opcode - ShortPushConst;
-		stream << "Short Push Const[" << literal << "]: " << reinterpret_cast<OTE*>(literalFrame[literal]);
-	}
-	break;
-
-	case ShortPushStatic + 0:
-	case ShortPushStatic + 1:
-	case ShortPushStatic + 2:
-	case ShortPushStatic + 3:
-	case ShortPushStatic + 4:
-	case ShortPushStatic + 5:
-	case ShortPushStatic + 6:
-	case ShortPushStatic + 7:
-	case ShortPushStatic + 8:
-	case ShortPushStatic + 9:
-	case ShortPushStatic + 10:
-	case ShortPushStatic + 11:
-	{
-		int literal = opcode - ShortPushStatic;
-		stream << "Short Push Static[" << literal << "]: " << reinterpret_cast<OTE*>(literalFrame[literal]);
-	}
-	break;
-
-	case ShortPushNil:
-		stream << "Short Push Nil";
-		break;
-
-	case ShortPushTrue:
-		stream << "Short Push True";
-		break;
-
-	case ShortPushFalse:
-		stream << "Short Push False";
-		break;
-
-	case ShortPushSelf:
-		stream << "Short Push Self";
-		break;
-
-	case ShortPushMinusOne:
-		stream << "Short Push -1";
-		break;
-
-	case ShortPushZero:
-		stream << "Short Push 0";
-		break;
-
-	case ShortPushOne:
-		stream << "Short Push 1";
-		break;
-
-	case ShortPushTwo:
-		stream << "Short Push 2";
-		break;
-
-	case ShortPushSelfAndTemp + 0:
-	case ShortPushSelfAndTemp + 1:
-	case ShortPushSelfAndTemp + 2:
-	case ShortPushSelfAndTemp + 3:
-		stream << "Push Self and Temp[" << dec << int(opcode - ShortPushSelfAndTemp) << ']';
-		break;
-
-	case ShortStoreTemp + 0:
-	case ShortStoreTemp + 1:
-	case ShortStoreTemp + 2:
-	case ShortStoreTemp + 3:
-		stream << "Short Store Temp[" << dec << int(opcode - ShortStoreTemp) << "]";
-		break;
-
-	case ShortPopPushTemp + 0:
-	case ShortPopPushTemp + 1:
-		stream << "Pop & Push Temp[" << dec << int(opcode - ShortPopPushTemp) << "]";
-		break;
-
-	case PopPushSelf:
-		stream << "Pop & Push Self";
-		break;
-
-	case PopDup:
-		stream << "Pop & Dup";
-		break;
-
-	case ShortPushContextTemp + 0:
-	case ShortPushContextTemp + 1:
-		stream << "Push Outer[0] Temp[" << dec << int(opcode - ShortPushContextTemp) << "]";
-		break;
-
-	case ShortPushOuterTemp + 0:
-	case ShortPushOuterTemp + 1:
-		stream << "Push Outer[1] Temp[" << dec << int(opcode - ShortPushOuterTemp) << "]";
-		break;
-
-	case PopStoreContextTemp + 0:
-	case PopStoreContextTemp + 1:
-		stream << "Pop Store Outer[0] Temp[" << dec << int(opcode - PopStoreContextTemp) << "]";
-		break;
-
-	case ShortPopStoreOuterTemp + 0:
-	case ShortPopStoreOuterTemp + 1:
-		stream << "Pop Store Outer[1] Temp[" << dec << int(opcode - ShortPopStoreOuterTemp) << "]";
-		break;
-
-	case ShortPopStoreInstVar + 0:
-	case ShortPopStoreInstVar + 1:
-	case ShortPopStoreInstVar + 2:
-	case ShortPopStoreInstVar + 3:
-	case ShortPopStoreInstVar + 4:
-	case ShortPopStoreInstVar + 5:
-	case ShortPopStoreInstVar + 6:
-	case ShortPopStoreInstVar + 7:
-		stream << "Short Pop Store InstVar[" << dec << int(opcode - ShortPopStoreInstVar) << "]";
-		break;
-
-	case  ShortPopStoreTemp + 0:
-	case  ShortPopStoreTemp + 1:
-	case  ShortPopStoreTemp + 2:
-	case  ShortPopStoreTemp + 3:
-	case  ShortPopStoreTemp + 4:
-	case  ShortPopStoreTemp + 5:
-	case  ShortPopStoreTemp + 6:
-	case  ShortPopStoreTemp + 7:
-		stream << "Short Pop Store Temp[" << dec << int(opcode - ShortPopStoreTemp) << "]";
-		break;
-
-	case PopStackTop:
-		stream << "Pop Stack Top";
-		break;
-
-	case DuplicateStackTop:
-		stream << "Duplicate Stack Top";
-		break;
-
-	case PushActiveFrame:
-		stream << "Push Active Frame";
-		break;
-
-	case IncrementStackTop:
-		stream << "Increment Stack Top";
-		break;
-
-	case DecrementStackTop:
-		stream << "Decrement Stack Top";
-		break;
-
-	case ReturnNil:
-		stream << "Return Nil";
-		break;
-
-	case ReturnTrue:
-		stream << "Return True";
-		break;
-
-	case ReturnFalse:
-		stream << "Return False";
-		break;
-
-	case ReturnSelf:
-		stream << "Return Self";
-		break;
-
-	case PopReturnSelf:
-		stream << "Pop & Return Self";
-		break;
-
-	case ReturnMessageStackTop:
-		stream << "Return Message stack top";
-		break;
-
-	case ReturnBlockStackTop:
-		stream << "Return Block stack top";
-		break;
-
-	case FarReturn:
-		stream << "Far Return";
-		break;
-
-	case Nop:
-		stream << "Nop";
-		break;
-
-	case  ShortJump + 0:
-	case  ShortJump + 1:
-	case  ShortJump + 2:
-	case  ShortJump + 3:
-	case  ShortJump + 4:
-	case  ShortJump + 5:
-	case  ShortJump + 6:
-	case  ShortJump + 7:
-	{
-		BYTE offset = bp[0] - ShortJump;
-		stream << "Short Jump to " << dec << int(offset + ip + 1 + 1) << " (offset " << dec << int(offset) << ")";
-	}
-	break;
-
-	case  ShortJumpIfFalse + 0:
-	case  ShortJumpIfFalse + 1:
-	case  ShortJumpIfFalse + 2:
-	case  ShortJumpIfFalse + 3:
-	case  ShortJumpIfFalse + 4:
-	case  ShortJumpIfFalse + 5:
-	case  ShortJumpIfFalse + 6:
-	case  ShortJumpIfFalse + 7:
-	{
-		BYTE offset = bp[0] - ShortJumpIfFalse;
-		stream << "Short Jump to " << dec << int(offset + ip + 1 + 1) << " If False (offset " << dec << int(offset) << ")";
-	}
-	break;
-
-	case SendArithmeticAdd:
-	case SendArithmeticSub:
-	case ShortSpecialSend + 2:
-	case ShortSpecialSend + 3:
-	case ShortSpecialSend + 4:
-	case ShortSpecialSend + 5:
-	case ShortSpecialSend + 6:
-	case ShortSpecialSend + 7:
-	case ShortSpecialSend + 8:
-	case ShortSpecialSend + 9:
-	case ShortSpecialSend + 10:
-	case ShortSpecialSend + 11:
-	case ShortSpecialSend + 12:
-	case ShortSpecialSend + 13:
-	case ShortSpecialSend + 14:
-	case ShortSpecialSend + 15:
-	case ShortSpecialSend + 16:
-	case ShortSpecialSend + 17:
-	case ShortSpecialSend + 18:
-	case ShortSpecialSend + 19:
-	case ShortSpecialSend + 20:
-	case ShortSpecialSend + 21:
-	case ShortSpecialSend + 22:
-	case ShortSpecialSend + 23:
-	case ShortSpecialSend + 24:
-	case ShortSpecialSend + 25:
-	case ShortSpecialSend + 26:
-	case ShortSpecialSend + 27:
-	case ShortSpecialSend + 28:
-	case ShortSpecialSend + 29:
-	case ShortSpecialSend + 30:
-	case ShortSpecialSend + 31:
-	{
-		SymbolOTE*const* pSpecialSelectors = Pointers.specialSelectors;
-		const SymbolOTE* stringPointer = pSpecialSelectors[opcode - ShortSpecialSend];
-		_ASSERTE(ObjectMemory::isKindOf(stringPointer, Pointers.ClassString));
-		stream << "Short Special Send " << stringPointer;
-	}
-	break;
-
-
-	case ShortSendWithNoArgs + 0:
-	case ShortSendWithNoArgs + 1:
-	case ShortSendWithNoArgs + 2:
-	case ShortSendWithNoArgs + 3:
-	case ShortSendWithNoArgs + 4:
-	case ShortSendWithNoArgs + 5:
-	case ShortSendWithNoArgs + 6:
-	case ShortSendWithNoArgs + 7:
-	case ShortSendWithNoArgs + 8:
-	case ShortSendWithNoArgs + 9:
-	case ShortSendWithNoArgs + 10:
-	case ShortSendWithNoArgs + 11:
-	case ShortSendWithNoArgs + 12:
-	{
-		int literal = opcode - ShortSendWithNoArgs;
-		stream << "Short Send " << reinterpret_cast<SymbolOTE*>(literalFrame[literal]) <<
-			" with no args (literal " << dec << literal << ')';
-	}
-	break;
-
-	case ShortSendSelfWithNoArgs + 0:
-	case ShortSendSelfWithNoArgs + 1:
-	case ShortSendSelfWithNoArgs + 2:
-	case ShortSendSelfWithNoArgs + 3:
-	case ShortSendSelfWithNoArgs + 4:
-	{
-		int literal = opcode - ShortSendSelfWithNoArgs;
-		stream << "Short Send Self " << reinterpret_cast<OTE*>(literalFrame[literal]) <<
-			" with no args (literal " << dec << literal << ')';
-	}
-	break;
-
-	case ShortSendWith1Arg + 0:
-	case ShortSendWith1Arg + 1:
-	case ShortSendWith1Arg + 2:
-	case ShortSendWith1Arg + 3:
-	case ShortSendWith1Arg + 4:
-	case ShortSendWith1Arg + 5:
-	case ShortSendWith1Arg + 6:
-	case ShortSendWith1Arg + 7:
-	case ShortSendWith1Arg + 8:
-	case ShortSendWith1Arg + 9:
-	case ShortSendWith1Arg + 10:
-	case ShortSendWith1Arg + 11:
-	case ShortSendWith1Arg + 12:
-	case ShortSendWith1Arg + 13:
-	{
-		int literal = opcode - ShortSendWith1Arg;
-		stream << "Short Send " << reinterpret_cast<OTE*>(literalFrame[literal]) <<
-			" with 1 arg (literal " << dec << literal << ')';
-	}
-	break;
-
-	case ShortSendWith2Args + 0:
-	case ShortSendWith2Args + 1:
-	case ShortSendWith2Args + 2:
-	case ShortSendWith2Args + 3:
-	case ShortSendWith2Args + 4:
-	case ShortSendWith2Args + 5:
-	case ShortSendWith2Args + 6:
-	case ShortSendWith2Args + 7:
-	{
-		int literal = opcode - ShortSendWith2Args;
-		stream << "Short Send " << reinterpret_cast<OTE*>(literalFrame[literal]) <<
-			" with 2 args (literal " << dec << literal << ')';
-	}
-	break;
-
-	case SpecialSendIsZero:
-		stream << "Special Send Is Zero";
-		break;
-
-	case PushInstVar:
-		stream << "Push Instance Variable[" << dec << int(bp[1]) << ']';
-		break;
-
-	case PushTemp:
-		stream << "Push Temp[" << dec << int(bp[1]) << ']';
-		break;
-
-	case PushOuterTemp:
-		stream << "Push Outer[" << dec << int(bp[1] >> 5) <<
-			"] Temp[" << dec << int(bp[1] & 0x1F) << ']';
-		break;
-
-	case PushConst:
-		stream << "Push Const[" << dec << int(bp[1]) << "]: "
-			<< reinterpret_cast<OTE*>(literalFrame[bp[1]]);
-		break;
-
-	case PushStatic:
-		stream << "Push Static[" << dec << int(bp[1]) << "]: "
-			<< reinterpret_cast<OTE*>(literalFrame[bp[1]]);
-		break;
-
-	case StoreInstVar:
-		stream << "Store Instance Variable[" << dec << int(bp[1]) << ']';
-		break;
-
-	case StoreTemp:
-		stream << "Store Temp[" << dec << int(bp[1]) << ']';
-		break;
-
-	case StoreOuterTemp:
-		stream << "Store Outer[" << dec << int(bp[1] >> 5) <<
-			"] Temp[" << dec << int(bp[1] & 0x1F) << ']';
-		break;
-
-	case StoreStatic:
-		stream << "Store Static[" << dec << int(bp[1]) << "]: " << reinterpret_cast<OTE*>(literalFrame[bp[1]]);
-		break;
-
-	case PopStoreInstVar:
-		stream << "Pop And Store Instance Variable[" << dec << int(bp[1]) << ']';
-		break;
-
-	case PopStoreTemp:
-		stream << "Pop And Store Temp[" << dec << int(bp[1]) << ']';
-		break;
-
-	case PopStoreOuterTemp:
-		stream << "Pop And Store Outer[" << dec << int(bp[1] >> 5) <<
-			"] Temp[" << dec << int(bp[1] & 0x1F) << ']';
-		break;
-
-	case PopStoreStatic:
-		stream << "Pop and Store Static[" << dec << int(bp[1]) << "]: " << reinterpret_cast<OTE*>(literalFrame[bp[1]]);
-		break;
-
-	case PushImmediate:
-		stream << "Push Immediate " << dec << int(SBYTE(bp[1]));
-		break;
-
-	case PushChar:
-		stream << "Push Char $" << char('\0' + bp[1]);
-		break;
-
-	case Send:
-		stream << "Send " << reinterpret_cast<OTE*>(literalFrame[bp[1] & SendXMaxLiteral]) <<
-			" (literal " << dec << int(bp[1] & SendXMaxLiteral) << "), with " <<
-			int(bp[1] >> SendXLiteralBits) << " args";
-		break;
-
-	case Supersend:
-		stream << "Supersend " << reinterpret_cast<OTE*>(literalFrame[bp[1] & SendXMaxLiteral]) <<
-			" (literal " << dec << int(bp[1] & SendXMaxLiteral) << "), with " <<
-			int(bp[1] >> SendXLiteralBits) << " args";
-		break;
-
-	case NearJump:
-	{
-		int extension = int(SBYTE(bp[1]));
-		stream << "Near Jump to " << dec << (extension + 2 + ip);
-	}
-	break;
-
-	case NearJumpIfTrue:
-	{
-		int extension = int(bp[1]);
-		stream << "Near Jump If True to " << dec << (extension + 2 + ip);
-	}
-	break;
-
-	case NearJumpIfFalse:
-	{
-		int extension = int(bp[1]);
-		stream << "Near Jump If False to " << dec << (extension + 2 + ip);
-	}
-	break;
-
-	case NearJumpIfNil:
-	{
-		int extension = int(bp[1]);
-		stream << "Near Jump If Nil to " << dec << (extension + 2 + ip);
-	}
-	break;
-
-	case NearJumpIfNotNil:
-	{
-		int extension = int(bp[1]);
-		stream << "Near Jump If Not Nil to " << dec << (extension + 2 + ip);
-	}
-	break;
-
-	case SendTempWithNoArgs:
-	{
-		int extension = int(bp[1]);
-		int literal = extension & SendXMaxLiteral;
-		int temp = extension >> SendXLiteralBits;
-		stream << "Send Temp [" << temp << "] " << reinterpret_cast<OTE*>(literalFrame[literal]) <<
-			" with no args (literal " << dec << literal << ')';
-	}
-	break;
-
-	case PushSelfAndTemp:
-	{
-		int extension = int(bp[1]);
-		stream << "Push Self; Push Temp[" << dec << extension << ']';
-	}
-	break;
-
-	case SendSelfWithNoArgs:
-	{
-		int literal = int(bp[1]);
-		stream << "Send Self " << reinterpret_cast<OTE*>(literalFrame[literal]) <<
-			" with no args (literal " << dec << literal << ')';
-	}
-	break;
-
-	case PushTempPair:
-	{
-		int n = bp[1] >> 4;
-		int m = bp[1] & 0xF;
-		stream << dec << "Push Temp[" << n << "] & Temp [" << m << "]";
-	}
-	break;
-
-	// Three bytes from here on ...
-	case LongPushConst:
-	{
-		WORD index = *reinterpret_cast<WORD*>(bp + 1);
-		stream << " Long Push Const[" << dec << index << "]: " << reinterpret_cast<OTE*>(literalFrame[index]);
-	}
-	break;
-
-	case LongPushStatic:
-	{
-		WORD index = *reinterpret_cast<WORD*>(bp + 1);
-		stream << " Long Push Static[" << dec << index << "]: " << reinterpret_cast<OTE*>(literalFrame[index]);
-	}
-	break;
-
-	case LongStoreStatic:
-	{
-		WORD index = *reinterpret_cast<WORD*>(bp + 1);
-		stream << "Long Store Static[" << dec << index << "]: " << reinterpret_cast<OTE*>(literalFrame[index]);
-	}
-	break;
-
-	case LongPushImmediate:
-	{
-		int extension = static_cast<int>(*reinterpret_cast<SWORD*>(&bp[1]));
-		stream << "Long Push Immediate " << dec << extension;
-	}
-	break;
-
-	case LongSend:
-		stream << "Long Send[" << dec << int(bp[2]) << "], " << dec << int(bp[1]) << " args = "
-			<< reinterpret_cast<OTE*>(literalFrame[bp[2]]);
-		break;
-
-	case LongSupersend:
-		stream << "Long Supersend[" << dec << int(bp[2]) << "], " << dec << int(bp[1]) << " args = "
-			<< reinterpret_cast<OTE*>(literalFrame[bp[2]]);
-		break;
-
-
-	case LongJump:
-	{
-		int extension = static_cast<int>(*reinterpret_cast<SWORD*>(&bp[1]));
-		stream << "Long Jump to " << dec << ip + 3 + extension;
-	}
-	break;
-
-	case LongJumpIfTrue:
-	{
-		int extension = static_cast<int>(*reinterpret_cast<SWORD*>(&bp[1]));
-		stream << "Long Jump If True to " << dec << ip + 3 + extension;
-	}
-	break;
-
-	case LongJumpIfFalse:
-	{
-		int extension = static_cast<int>(*reinterpret_cast<SWORD*>(&bp[1]));
-		stream << "Long Jump If False to " << dec << ip + 3 + extension;
-	}
-	break;
-
-	case LongPushOuterTemp:
-		stream << "Long Push Outer[" << dec << int(bp[1]) <<
-			"] Temp[" << dec << int(bp[2]) << ']';
-		break;
-
-	case LongStoreOuterTemp:
-		stream << "Long Store Outer[" << dec << int(bp[1]) <<
-			"] Temp[" << dec << int(bp[2]) << ']';
-		break;
-
-	case IncrementTemp:
-		stream << "Inc Temp[" << dec << int(bp[2]) << ']';
-		break;
-
-	case IncrementPushTemp:
-		stream << "Inc & Push Temp[" << dec << int(bp[2]) << ']';
-		break;
-
-	case DecrementTemp:
-		stream << "Dec Temp[" << dec << int(bp[2]) << ']';
-		break;
-
-	case DecrementPushTemp:
-		stream << "Dec & Push Temp[" << dec << int(bp[2]) << ']';
-		break;
-
-	case BlockCopy:
-	{
-		int nArgs = bp[1];
-		stream << "Block Copy, ";
-		if (nArgs > 0)
-			stream << nArgs << " args, ";
-		int nStackTemps = bp[2];
-		if (nStackTemps > 0)
-			stream << nStackTemps << " stack temps, ";
-		int nEnvTemps = bp[3] >> 1;
-		int nCopied = bp[4] >> 1;
-		if (nEnvTemps > 0)
-			stream << nEnvTemps << " env temps, ";
-		if (nCopied > 0)
-			stream << nCopied << " copied values, ";
-		if (bp[4] & 1)
-			stream << "needs self, ";
-		if (bp[3] & 1)
-			stream << "needs outer, ";
-		stream << "length: " << *reinterpret_cast<WORD*>(bp + 5);
-	}
-	break;
-
-	case ExLongPushImmediate:
-	{
-		int extension = static_cast<int>(*reinterpret_cast<SDWORD*>(&bp[1]));
-		stream << "Ex Long Push Immediate " << dec << extension;
-	}
-	break;
-
-	default:
-		stream << "UNHANDLED BYTE CODE " << opcode << "!!!";
-		break;
-	}
-	stream << endl;
+	DisassemblyContext info(method);
+	BytecodeDisassembler<DisassemblyContext> disassembler(info);
+	disassembler.DisassembleAt(ip, stream);
 	stream.flush();
 }
 

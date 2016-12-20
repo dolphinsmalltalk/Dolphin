@@ -36,7 +36,6 @@ inline int Compiler::Pass2()
 {
 	// Optimise generated code
 	int blockCount = FixupTempsAndBlocks();
-	disassemble();
 	RemoveNops();
 	if (WantOptimize())
 		Optimize();
