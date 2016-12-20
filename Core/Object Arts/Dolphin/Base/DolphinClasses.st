@@ -111,7 +111,7 @@ Object subclass: #DiskVolumeInformation
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Object subclass: #Exception
-	instanceVariableNames: 'tag messageText _activeHandler _signalFrame _environmentWhenRaised _continueBlock _resignalBlock _resignalException'
+	instanceVariableNames: 'tag messageText _activeHandler _process _signalFrame _environmentWhenRaised _continueBlock _resignalBlock _resignalException'
 	classVariableNames: ''
 	poolDictionaries: 'MessageBoxConstants Win32Constants Win32Errors'
 	classInstanceVariableNames: ''!
