@@ -1,7 +1,7 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #Exception
-	instanceVariableNames: 'tag messageText _activeHandler _signalFrame _environmentWhenRaised _continueBlock _resignalBlock _resignalException'
+	instanceVariableNames: 'tag messageText _activeHandler _process _signalFrame _environmentWhenRaised _continueBlock _resignalBlock _resignalException'
 	classVariableNames: ''
 	poolDictionaries: 'MessageBoxConstants Win32Constants Win32Errors'
 	classInstanceVariableNames: ''!
@@ -326,10 +326,8 @@ postCopy
 	therefore we nil the state associated with the context in which the original was raised."
 
 	super postCopy.
-	_environmentWhenRaised := _signalFrame := 
-		_continueBlock := _resignalBlock := nil.
-	^self
-!
+	_environmentWhenRaised := _process := _signalFrame := _continueBlock := _resignalBlock := nil.
+	^self!
 
 printOn: aStream
 	"Append a debug description of the receiver to aStream."
@@ -447,11 +445,13 @@ signal
 	"Raise (or re-raise) the receiver in the context of the current active process, causing its propagation 
 	up through the handler chain."
 
-	_environmentWhenRaised isNil ifTrue: [
-		"Save info about the raising environment in case we want to resignal."
-		_environmentWhenRaised := Processor activeProcess exceptionEnvironment.
-		"If the signaller did not specify the context where the error was raised, make it this one"
-		_signalFrame := thisContext].
+	_environmentWhenRaised isNil
+		ifTrue: 
+			["Save info about the raising environment in case we want to resignal."
+			_process := Processor activeProcess.
+			_environmentWhenRaised := _process exceptionEnvironment.
+			"If the signaller did not specify the context where the error was raised, make it this one"
+			_signalFrame := thisContext].
 	^self _propagate!
 
 signal: signalText
@@ -473,7 +473,7 @@ signalFrame
 	"Private - Answer the StackFrame from which the receiver was signalled. This may be several 
 	levels below the actual error detection frame on the stack."
 
-	^Processor activeProcess frameAtAddress: _signalFrame!
+	^_process frameAtAddress: _signalFrame!
 
 signalType
 	"Private - Answer the type of signal for which the receiver is representing
@@ -488,10 +488,10 @@ signalWith: anObject
 
 stackTrace: anInteger
 	"Private - Answer a <readableString> containing a stack trace to the depth specified by the <integer>
-	argument. Assumes that the receiver is a signalled exception in the active process."
-	
+	argument. Assumes that the receiver is a signalled exception."
+
 	| frame |
-	frame := self raisingFrame.	"N.B. Assumes in active process"
+	frame := self raisingFrame.
 	^frame process stackTraceFrom: self raisingFrame depth: anInteger!
 
 tag
