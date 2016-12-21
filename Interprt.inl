@@ -16,7 +16,6 @@
 #include "STString.h"
 #include "STExternal.h"
 #include "STFloat.h"
-#include "InterlockedOps.h"
 #include "STInteger.h"
 
 inline void Interpreter::GrabAsyncProtect()

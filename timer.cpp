@@ -140,6 +140,14 @@ BOOL __fastcall Interpreter::primitiveSignalAtTick(CompiledMethod&, unsigned arg
 
 	if (nDelay > 0)
 	{
+		// Temporarily handle old image code that passes timer semaphore as an argument
+		if (argumentCount > 1 && (POTE)Pointers.TimingSemaphore == Pointers.Nil)
+		{
+			ObjectMemory::ProtectConstSpace(PAGE_READWRITE);
+			_Pointers.TimingSemaphore = (SemaphoreOTE*)stackValue(1);
+			ObjectMemory::ProtectConstSpace(PAGE_READONLY);
+		}
+
 		// Clamp the requested delay to the maximum if it is too large. This simplifies the Delay code in the image a little.
 		if (nDelay > SMALLINTEGER(wTimerMax))
 		{

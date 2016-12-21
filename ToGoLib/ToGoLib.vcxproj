@@ -128,12 +128,6 @@
     <ClCompile Include="..\IDolphinStart.cpp" />
     <ClCompile Include="..\ImageFileResource.cpp" />
     <ClCompile Include="..\Interfac.cpp" />
-    <ClCompile Include="..\InterlockedOps.c">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-      </PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">
-      </PrecompiledHeader>
-    </ClCompile>
     <ClCompile Include="..\Interprt.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Use</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">Use</PrecompiledHeader>
@@ -276,7 +270,6 @@
     <None Include="..\InterprtProc.inl" />
     <None Include="..\istasm.inc" />
     <None Include="..\ObjMemPriv.inl" />
-    <None Include="..\ote.inl" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\axhost.h" />
