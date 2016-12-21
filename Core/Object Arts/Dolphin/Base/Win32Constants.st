@@ -453,6 +453,7 @@ Win32Constants at: 'MEM_RELEASE' put: 16r8000!
 Win32Constants at: 'MEM_RESERVE' put: 16r2000!
 Win32Constants at: 'MEM_TOP_DOWN' put: 16r100000!
 Win32Constants at: 'MERGECOPY' put: 16rC000CA!
+Win32Constants at: 'MF_BYCOMMAND' put: 16r0!
 Win32Constants at: 'MF_BYPOSITION' put: 16r400!
 Win32Constants at: 'MF_POPUP' put: 16r10!
 Win32Constants at: 'MFS_CHECKED' put: 16r8!
@@ -616,6 +617,7 @@ Win32Constants at: 'SB_THUMBPOSITION' put: 16r4!
 Win32Constants at: 'SB_THUMBTRACK' put: 16r5!
 Win32Constants at: 'SB_TOP' put: 16r6!
 Win32Constants at: 'SB_VERT' put: 16r1!
+Win32Constants at: 'SC_CLOSE' put: 16rF060!
 Win32Constants at: 'SIF_ALL' put: 16r17!
 Win32Constants at: 'SIF_DISABLENOSCROLL' put: 16r8!
 Win32Constants at: 'SIF_PAGE' put: 16r2!
