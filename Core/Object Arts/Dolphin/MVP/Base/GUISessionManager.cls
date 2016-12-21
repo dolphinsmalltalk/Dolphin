@@ -22,9 +22,21 @@ Instance Variables:
 allocConsole
 	"Private - Open a console window for this session."
 
-	| lib |
-	lib := KernelLibrary default.
-	(self isUnattended and: [lib attachConsole: ATTACH_PARENT_PROCESS]) ifFalse: [lib allocConsole]!
+	| kernel |
+	kernel := KernelLibrary default.
+	(self isUnattended and: [kernel attachConsole: ATTACH_PARENT_PROCESS])
+		ifFalse: 
+			[| hConsole hMenu user |
+			kernel allocConsole.
+			"Remove the close button from the console window as otherwise if the user
+			closes it Windows will kill this process with no way to intercept."
+			hConsole := KernelLibrary default getConsoleWindow.
+			user := UserLibrary default.
+			hMenu := user getSystemMenu: hConsole bRevert: false.
+			user
+				deleteMenu: hMenu
+				uPosition: SC_CLOSE
+				uFlags: MF_BYCOMMAND]!
 
 basicShutdown
 	"Private - Perform basic system shutdown operations, just prior to the VM putting

@@ -19,6 +19,7 @@ package classNames
 	add: #ClassBuilderTests;
 	add: #CollectionCombinator;
 	add: #CommandLineTest;
+	add: #CommandLineTestRunner;
 	add: #DateTest;
 	add: #DefaultSortAlgorithmTest;
 	add: #DictionaryTest;
@@ -115,8 +116,7 @@ package methodNames
 	add: #SmalltalkSystem -> #regressionTestsLogFilename;
 	add: #SmalltalkSystem -> #regressionTestSuite;
 	add: #SmalltalkSystem -> #runRegressionTests;
-	add: #SmalltalkSystem -> #runRegressionTests:logTo:;
-	add: #SmalltalkSystem -> #update:;
+	add: #SmalltalkSystem -> #runRegressionTests:logTo:verbose:;
 	yourself.
 
 package binaryGlobalNames: (Set new
@@ -144,7 +144,6 @@ package setPrerequisites: (IdentitySet new
 	add: '..\..\..\Contributions\Refactory\Refactoring Browser\Tests\RBTests';
 	add: '..\System\Compiler\Smalltalk Parser';
 	add: '..\..\..\Contributions\Camp Smalltalk\SUnit\SUnit';
-	add: '..\..\..\Contributions\Camp Smalltalk\SUnit\SUnitUI';
 	add: '..\ActiveX\Shell\Windows Shell';
 	yourself).
 
@@ -154,6 +153,11 @@ package!
 
 Object subclass: #CollectionCombinator
 	instanceVariableNames: 'resultProcessingBlock collectionOfArrays buffer'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Object subclass: #CommandLineTestRunner
+	instanceVariableNames: 'results lastCase caseStart stream verbose runStart runStop'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -681,7 +685,10 @@ DolphinTestClassResource subclass: #MustBeBooleanTestClasses
 !SmalltalkSystem methodsFor!
 
 regressionTestsLogFilename
-	^File default: SessionManager current imagePath extension: 'testlog'!
+	"Answer the name of the file in which to log test results, or nil to have the output sent to stdout"
+
+	^nil
+	"^File default: SessionManager current imagePath extension: 'testlog'"!
 
 regressionTestSuite
 	| suite |
@@ -690,71 +697,34 @@ regressionTestSuite
 	^suite!
 
 runRegressionTests
-	^self runRegressionTests: self regressionTestSuite logTo: self regressionTestsLogFilename!
-
-runRegressionTests: aTestSuite logTo: aFilenameStringOrNil
-	| results timeMs |
-	timeMs := Time millisecondsToRun: (SessionManager current isUnattended
-						ifTrue: 
-							[
-							[aTestSuite addDependentToHierachy: self.
-							results := [aTestSuite run] ensure: [aTestSuite removeDependentFromHierachy: self]]]
-						ifFalse: 
-							[
-							[| runner |
-							runner := TestRunner show.
-							runner runSuite: aTestSuite.
-							results := runner result]]).
-	aFilenameStringOrNil notNil
+	| suite filename |
+	filename := self regressionTestsLogFilename.
+	suite := self regressionTestSuite.
+	^filename isNil
 		ifTrue: 
+			[self
+				runRegressionTests: suite
+				logTo: SessionManager current stdout
+				verbose: true]
+		ifFalse: 
 			[| logStream |
-			logStream := FileStream write: aFilenameStringOrNil.
-			logStream
-				nextPutAll: (results hasPassed ifTrue: ['PASSED'] ifFalse: ['FAILED']);
-				cr;
-				nextPutAll: results printString;
-				nextPutAll: ' in ';
-				display: timeMs // 1000;
-				nextPutAll: 'secs';
-				cr.
-			results failures notEmpty
-				ifTrue: 
-					[logStream
-						cr;
-						nextPutAll: 'FAILURES:';
-						cr.
-					results failures do: 
-							[:each |
-							logStream
-								nextPutAll: each printString;
-								cr]].
-			results errors notEmpty
-				ifTrue: 
-					[logStream
-						cr;
-						nextPutAll: 'ERRORS:';
-						cr.
-					results errors do: 
-							[:each |
-							logStream
-								nextPutAll: each printString;
-								cr]].
-			logStream close].
-	^results!
+			logStream := FileStream write: filename.
+			
+			[self
+				runRegressionTests: suite
+				logTo: logStream
+				verbose: true]
+					ensure: [logStream close]]!
 
-update: anObject
-	(anObject isKindOf: TestCase)
-		ifTrue: 
-			[(SessionManager current stdout)
-				print: anObject;
-				cr;
-				flush]
-		ifFalse: [super update: anObject]! !
+runRegressionTests: aTestSuite logTo: logStream verbose: aBoolean
+	^(CommandLineTestRunner new)
+		stream: logStream;
+		verbose: aBoolean;
+		runSuite: aTestSuite! !
 !SmalltalkSystem categoriesFor: #regressionTestsLogFilename!public!tests! !
 !SmalltalkSystem categoriesFor: #regressionTestSuite!private!tests! !
 !SmalltalkSystem categoriesFor: #runRegressionTests!public!tests! !
-!SmalltalkSystem categoriesFor: #runRegressionTests:logTo:!public!tests! !
-!SmalltalkSystem categoriesFor: #update:!helpers!public! !
+!SmalltalkSystem categoriesFor: #runRegressionTests:logTo:verbose:!public!tests! !
 
 "End of package definition"!
 

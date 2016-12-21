@@ -212,6 +212,7 @@ package classNames
 	yourself.
 
 package methodNames
+	add: #KernelLibrary -> #getConsoleWindow;
 	add: #MessageSend -> #queryCommand:;
 	add: #Object -> #addToImageList:mask:;
 	add: #Point -> #@;
@@ -276,6 +277,7 @@ package methodNames
 	add: #UserLibrary -> #getNextDlgTabItem:hCtl:bPrevious:;
 	add: #UserLibrary -> #getProp:lpString:;
 	add: #UserLibrary -> #getScrollInfo:fnBar:lpsi:;
+	add: #UserLibrary -> #getSystemMenu:bRevert:;
 	add: #UserLibrary -> #getTopWindow:;
 	add: #UserLibrary -> #getUpdateRect:lpRect:bErase:;
 	add: #UserLibrary -> #getWindow:uCmd:;
@@ -1285,6 +1287,13 @@ icon
 	^Icon fromId: 2 in: (ExternalResourceLibrary open: 'Shell32')! !
 !File class categoriesFor: #icon!constants!development!public! !
 
+!KernelLibrary methodsFor!
+
+getConsoleWindow
+	<stdcall: handle GetConsoleWindow>
+	^self invalidCall! !
+!KernelLibrary categoriesFor: #getConsoleWindow!public!win32 functions-console! !
+
 !MessageSend methodsFor!
 
 queryCommand: query
@@ -1970,6 +1979,10 @@ getScrollInfo: aWindowHandle fnBar: flag lpsi: struct
 		);"
 
 	<stdcall: bool GetScrollInfo handle sdword SCROLLINFO* >
+	^self invalidCall!
+
+getSystemMenu: anExternalHandle bRevert: aBoolean
+	<stdcall: handle GetSystemMenu handle bool>
 	^self invalidCall!
 
 getTopWindow: aHandle
@@ -2820,6 +2833,7 @@ winHelp: hwndMain lpszHelp: lpszHelp uCommand: uCommand dwData: dwData
 !UserLibrary categoriesFor: #getNextDlgTabItem:hCtl:bPrevious:!public!win32 functions-window! !
 !UserLibrary categoriesFor: #getProp:lpString:!public!win32 functions-window property! !
 !UserLibrary categoriesFor: #getScrollInfo:fnBar:lpsi:!public!win32 functions-scroll bar! !
+!UserLibrary categoriesFor: #getSystemMenu:bRevert:!public!win32 functions-menu!win32 functions-system information! !
 !UserLibrary categoriesFor: #getTopWindow:!public!win32 functions-window! !
 !UserLibrary categoriesFor: #getUpdateRect:lpRect:bErase:!public!win32 functions-painting and drawing! !
 !UserLibrary categoriesFor: #getWindow:uCmd:!public!win32 functions-window! !
