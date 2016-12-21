@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 StackFrame subclass: #BlockFrame
 	instanceVariableNames: ''
@@ -41,7 +41,7 @@ mapInitialIpFrom: aCompiledMethod to: debugCompiledMethod
 	self assert: [(map at: i) key = ip].
 	^(debugMap at: i) key!
 
-method: aCompiledMethod 
+method: aCompiledMethod
 	"Private - Set the method of the stack frame."
 
 	"Implementation Note: Override to update the block's method reference as well.
@@ -52,12 +52,11 @@ method: aCompiledMethod
 	super method: aCompiledMethod.
 	block := self block.
 	block isNil ifTrue: [^self].
-	block isClean 
+	block isClean
 		ifTrue: 
 			["Note that there may be other refs to the block in the stack, but we 
 			  don't bother updating these because a clean block is a literal const 
 			  and so it doesn't really matter how many copies there are"
-			self assert: [self environment == block].
 			block := block shallowCopy.
 			self environment: block].
 	block method: aCompiledMethod! !

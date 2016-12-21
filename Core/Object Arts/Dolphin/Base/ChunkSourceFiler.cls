@@ -256,12 +256,12 @@ fileOutExpression: aString
 
 	self emitChunk: aString; cr!
 
-fileOutPoolDictionary: aPoolDictionary 
+fileOutPoolDictionary: aPoolDictionary
 	"Append a definition of the <PoolDictionary> (or <PoolConstantsDictionary>, aPoolDictionary,
 	to the <puttableStream>, aWriteStream. The definition should be sufficient to recreate a
 	copy of the dictionary."
 
-	| poolName value env |
+	| poolName env |
 	env := aPoolDictionary environment.
 	poolName := aPoolDictionary name.
 	stream
@@ -271,17 +271,18 @@ fileOutPoolDictionary: aPoolDictionary
 		nextPutAll: ' put: (';
 		nextPutAll: aPoolDictionary class name;
 		nextPutAll: ' named: ';
-		print: aPoolDictionary name.
+		print: poolName.
 	self emitChunk: ')'.
 	aPoolDictionary associations asSortedCollection do: 
-			[:a | 
+			[:a |
+			| value |
 			stream
 				nextPutAll: poolName;
 				nextPutAll: ' at: ';
 				print: a key;
 				nextPutAll: ' put: '.
 			value := a value.
-			value isLiteral 
+			value isLiteral
 				ifTrue: 
 					[self emitChunk: (value isInteger ifTrue: [value printStringRadix: 16] ifFalse: [value printString])]
 				ifFalse: 

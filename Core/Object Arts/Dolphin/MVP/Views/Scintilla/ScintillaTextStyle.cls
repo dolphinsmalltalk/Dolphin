@@ -470,7 +470,7 @@ initialize
 				isImmutable: true;
 				yourself.
 	predefinedStyleNames := IdentityDictionary new: STYLE_LASTPREDEFINED + 1.
-	(STYLE_NORMAL + 1 to: STYLE_LASTPREDEFINED) do: [:each | predefinedStyleNames at: each put: each].
+	STYLE_NORMAL + 1 to: STYLE_LASTPREDEFINED do: [:each | predefinedStyleNames at: each put: each].
 	"These are not really Scintilla pre-defined styles, but some additional ones we add for convenience in the wrapping"
 	predefinedStyleNames
 		at: #normal put: STYLE_NORMAL;

@@ -68,18 +68,10 @@ writeInteger: anInteger
 
 !STLOutFiler class methodsFor!
 
-on: aStream
-	"Answer a new instance attached to the binary stream aStream."
-
-	^self new
-		stream: aStream;
-		initialize!
-
 signature
 	"Private - Answer the signature that identifies the data as
 	being in Smalltalk Literal (STL) format."
 
 	^#'!!STL'! !
-!STLOutFiler class categoriesFor: #on:!instance creation!public! !
 !STLOutFiler class categoriesFor: #signature!constants!private! !
 

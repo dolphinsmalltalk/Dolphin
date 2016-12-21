@@ -400,24 +400,23 @@ flushMethodCache
 	<primitive: 89>
 	^self primitiveFailed!
 
-fullBindingFor: aString 
+fullBindingFor: aString
 	"Answer a variable binding for the named variable in the scope of this class, and
 	failing that in the receiver's environment. If there is no such variable, then answer nil."
 
-	(aString identityIncludes: $.) 
+	(aString identityIncludes: $.)
 		ifTrue: 
-			[| parts env |
+			[| parts env count |
 			parts := aString subStrings: $..
 			"Fully qualified name always starts in Smalltalk"
 			env := Smalltalk.
-			parts 
-				from: 1
-				to: parts size - 1
+			count := parts size.
+			1 to: count - 1
 				do: 
-					[:each | 
-					env := env at: each ifAbsent: [].
+					[:i |
+					env := env at: (parts at: i) ifAbsent: [].
 					env isNil ifTrue: [^nil]].
-			^env bindingFor: parts last].
+			^env bindingFor: (parts at: count)].
 	^(self bindingFor: aString) ifNil: [self environment bindingFor: aString]!
 
 hasCompilationFailures

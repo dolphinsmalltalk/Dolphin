@@ -72,6 +72,7 @@ styleName: aSymbolOrInteger range: anInterval
 		tag: nil!
 
 styleName: aSymbolOrInteger range: anInterval tag: anObject 
+	<primitive: 157>
 	^(self new)
 		setStyleName: aSymbolOrInteger
 			range: anInterval

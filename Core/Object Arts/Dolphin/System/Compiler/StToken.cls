@@ -115,6 +115,8 @@ stop
 !StToken class methodsFor!
 
 start: anInteger 
-	^self new start: anInteger! !
+	<primitive: 157>
+	^self new start: anInteger
+! !
 !StToken class categoriesFor: #start:!instance creation!public! !
 

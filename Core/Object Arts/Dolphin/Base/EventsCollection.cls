@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 SharedIdentityDictionary variableSubclass: #EventsCollection
 	instanceVariableNames: ''
@@ -87,7 +87,7 @@ triggerEvent: aSymbol withArguments: anArray
 	the <Symbol> argument, with the <Array> of arguments, anArray.
 	with the specified arguments. Answer the result of the last evaluation, or nil if none."
 
-	^(self at: aSymbol ifAbsent: [^nil]) valueWithArguments: anArray! !
+	^(self at: aSymbol ifAbsent: []) ifNotNil: [:msgs | msgs valueWithArguments: anArray]! !
 !EventsCollection categoriesFor: #addEvent:action:!adding!private! !
 !EventsCollection categoriesFor: #asMinimumRepresentation!converting!private! !
 !EventsCollection categoriesFor: #hasActionsForEvent:!private!testing! !

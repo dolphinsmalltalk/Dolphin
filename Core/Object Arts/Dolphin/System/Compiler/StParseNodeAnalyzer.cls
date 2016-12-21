@@ -1,7 +1,7 @@
 "Filed out from Dolphin Smalltalk 7"!
 
 StParseNodeVisitor subclass: #StParseNodeAnalyzer
-	instanceVariableNames: 'methodNode scopeStack methodClass scopeDepth evaluationContext evaluationPools literals literalCount stringLiterals addToFrame tempDecls inStaticExpression'
+	instanceVariableNames: 'methodNode scopeStack methodClass scopeDepth evaluationContext evaluationPools literals stringLiterals addToFrame tempDecls inStaticExpression'
 	classVariableNames: 'OptimizedMessages RestrictedSelectors SpecialSelectors'
 	poolDictionaries: 'SmalltalkParseErrorCodes'
 	classInstanceVariableNames: ''!
@@ -61,12 +61,12 @@ acceptOptimizedNode: anOptimizedNode
 			addToFrame := outerAddToFrame]!
 
 acceptSequenceNode: aSequenceNode
-	| answer scope nodes |
+	| answer scope |
 	answer := super acceptSequenceNode: aSequenceNode.
 	scope := self currentScope.
 	aSequenceNode temporaries do: 
 			[:each |
-			| firstWritten firstRead |
+			| firstWritten firstRead nodes |
 			nodes := scope refsToTemp: each name.
 			firstWritten := nodes first.
 			firstRead := nodes second.
@@ -331,16 +331,16 @@ checkRedefines: aVariableNode
 					[(scope includesTemp: identifier)
 						ifTrue: [self signalError: CWarnRedefiningTemp forNode: aVariableNode]]]!
 
-checkRestrictedSelectors: aMethodNode 
+checkRestrictedSelectors: aMethodNode
 	| last first |
 	(self restrictedSelectors identityIncludes: aMethodNode selector) ifFalse: [^self].
-	OptimizedMessages at: methodClass
-		ifPresent: [:selectors | (selectors identityIncludes: aMethodNode selector) ifTrue: [^self]].
+	(OptimizedMessages at: methodClass ifAbsent: [])
+		ifNotNil: [:selectors | (selectors identityIncludes: aMethodNode selector) ifTrue: [^self]].
 	first := aMethodNode selectorParts first sourceInterval.
-	last := aMethodNode argumentCount > 0 
+	last := aMethodNode argumentCount > 0
 				ifTrue: [aMethodNode arguments last sourceInterval]
 				ifFalse: [first].
-	self 
+	self
 		signalError: CWarnRestrictedSelector
 		forNode: aMethodNode
 		range: (first start to: last stop)
@@ -415,8 +415,7 @@ initialize
 	literals := IdentityDictionary new.
 	stringLiterals := Set new.
 	addToFrame := [:literal | self addToFrame: literal].
-	inStaticExpression := false.
-	literalCount := 0!
+	inStaticExpression := false!
 
 isInstVar: aString
 	^(methodClass indexOfInstVar: aString ifAbsent: [0]) > 0!
@@ -429,12 +428,11 @@ isReceiverOfNilTest: aVariableNode
 					[#(#notNil #isNil #ifNil: #ifNotNil: #ifNil:ifNotNil: #ifNotNil:ifNil:) 
 						identityIncludes: parentNode selector]]!
 
-isTempVariable: anStVariableNode 
+isTempVariable: anStVariableNode
 	"Private - Answer whether the specified variable node represents one of the temporaries in
 	the parse tree (note that parameters are included)."
 
-	self tempDecls do: [:each | each = anStVariableNode ifTrue: [^true]].
-	^false!
+	^self tempDecls includes: anStVariableNode!
 
 lineOfSourcePosition: position 
 	| line stream |

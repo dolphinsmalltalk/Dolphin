@@ -1,7 +1,7 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 LinkedList subclass: #Semaphore
-	instanceVariableNames: 'signals '
+	instanceVariableNames: 'signals'
 	classVariableNames: ''
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
@@ -246,7 +246,9 @@ boolean
 	The communication messages #set, and #pulse are intended for use
 	with Boolean Semaphores, rather than #signal."
 
-	^self new signal; yourself!
+	^(self basicNew)
+		excessSignals: 1;
+		yourself!
 
 forMutualExclusion
 	"Answer a new instance of the receiver with one excess signal (i.e a Boolean semaphore)."
