@@ -284,7 +284,7 @@ internCharacter: aCharacter
 
 	^self intern: aCharacter asString!
 
-isLiteralSymbol: aSymbol 
+isLiteralSymbol: aSymbol
 	"Private - Answer whether the <Symbol> argument is representable
 	as an unquoted literal symbol."
 
@@ -292,25 +292,21 @@ isLiteralSymbol: aSymbol
 	size := aSymbol basicSize.
 	size == 0 ifTrue: [^false].
 	binChars := '!!%&*+,/<=>?@\~|-'.
-	(binChars identityIncludes: (aSymbol at: 1)) 
-		ifTrue: 
-			[aSymbol 
-				from: 2
-				to: size
-				do: [:each | (binChars identityIncludes: each) ifFalse: [^false]]]
+	(binChars identityIncludes: (aSymbol at: 1))
+		ifTrue: [2 to: size do: [:i | (binChars identityIncludes: (aSymbol at: i)) ifFalse: [^false]]]
 		ifFalse: 
 			[| includesColon initial |
 			initial := true.
 			includesColon := false.
-			aSymbol 
-				from: 1
-				to: size
+			1 to: size
 				do: 
-					[:each | 
-					initial 
+					[:i |
+					| each |
+					each := aSymbol at: i.
+					initial
 						ifTrue: [(each == $_ or: [each isEnglishLetter]) ifTrue: [initial := false] ifFalse: [^false]]
 						ifFalse: 
-							[each == $: 
+							[each == $:
 								ifTrue: [includesColon := initial := true]
 								ifFalse: [(each == $_ or: [each isEnglishLetter or: [each isDigit]]) ifFalse: [^false]]]].
 			(includesColon and: [aSymbol last ~~ $:]) ifTrue: [^false]].

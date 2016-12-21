@@ -490,13 +490,12 @@ do: operation
 	self keysAndValuesDo: [:i :elem | operation value: elem]!
 
 endsWith: aCollection
-	"Answer whether the receiver begins with the sequence
-	of objects in the <Collection> argument"
+	"Answer whether the receiver ends with the sequence of objects in the <Collection> argument"
 
 	| i |
 	(i := self size - aCollection size + 1) < 1 ifTrue: [^false].
 	aCollection do: 
-			[:each | 
+			[:each |
 			(self at: i) = each ifFalse: [^false].
 			i := i + 1].
 	^true!

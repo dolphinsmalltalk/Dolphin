@@ -176,9 +176,6 @@ source: anObject
 start
 	^1!
 
-startWithoutParentheses
-	^self start!
-
 stop
 	^source size!
 
@@ -226,7 +223,6 @@ uses: aNode
 !StMethodNode categoriesFor: #source!accessing!public! !
 !StMethodNode categoriesFor: #source:!accessing!public! !
 !StMethodNode categoriesFor: #start!accessing!public! !
-!StMethodNode categoriesFor: #startWithoutParentheses!public! !
 !StMethodNode categoriesFor: #stop!accessing!public! !
 !StMethodNode categoriesFor: #tag!accessing!public! !
 !StMethodNode categoriesFor: #tag:!accessing!private! !

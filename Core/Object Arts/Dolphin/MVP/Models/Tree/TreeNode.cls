@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #TreeNode
 	instanceVariableNames: 'parent children object'
@@ -86,7 +86,7 @@ removeChildNode: aTreeNode
 	Answer aTreeNode unless it is not an child of the receiver, in which 
 	case, raise a suitable Exception."
 
-	self removeChildNode: aTreeNode ifAbsent: [^self errorNotFound: aTreeNode].
+	self removeChildNode: aTreeNode ifAbsent: [self errorNotFound: aTreeNode].
 	aTreeNode parent: nil.
 	^aTreeNode
 

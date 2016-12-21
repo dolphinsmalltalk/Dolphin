@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 SequenceableCollection subclass: #SequencedGrowableCollection
 	instanceVariableNames: ''
@@ -59,15 +59,14 @@ addAll: newElements
 	^self addAllLast: newElements!
 
 addAll: newElements after: target
-	"Insert the elements of the collection, newElements, as new elements of the 
-	receiver immediately after target. Answer the newly added elements.
-	Raise an exception if target is not present in the receiver.
-	Implementation Note: We could use reverseDo: to avoid having to keep
-	updating the index, but not all Collections understand #reverseDo:
-	because they are not all ordered."
+	"Insert the elements of the collection, newElements, as new elements of the receiver
+	immediately after target. Answer the newly added elements. Raise an exception if target is
+	not present in the receiver.
+	Implementation Note: We could use reverseDo: to avoid having to keep updating the index,
+	but not all Collections understand #reverseDo: because they are not all ordered."
 
 	| index |
-	index := self indexOf: target ifAbsent: [^self errorNotFound: target].
+	index := self indexOf: target ifAbsent: [self errorNotFound: target].
 	^self addAll: newElements afterIndex: index!
 
 addAll: newElements afterIndex: index
@@ -78,12 +77,12 @@ addAll: newElements afterIndex: index
 	^newElements!
 
 addAll: newElements before: target
-	"Insert the elements of the collection, newElements, as a new element of the 
-	receiver immediately before target. Answer the newly added elements.
-	Report an error if target is not present in the receiver."
+	"Insert the elements of the collection, newElements, as a new element of the receiver
+	immediately before target. Answer the newly added elements. Report an error if target is not
+	present in the receiver."
 
 	| index |
-	index := self indexOf: target ifAbsent: [^self errorNotFound: target].
+	index := self indexOf: target ifAbsent: [self errorNotFound: target].
 	^self addAll: newElements beforeIndex: index!
 
 addAll: newElements beforeIndex: index
@@ -124,11 +123,14 @@ addLast: newElement
 	^self add: newElement afterIndex: self size!
 
 remove: oldElement ifAbsent: exceptionHandler
-	"Remove oldElement from the receiver, and answer it. If oldElement is
-	not present in the receiver, answer the result of evaluating 
-	the niladic block, exceptionHandler."
+	"Remove the first occurrence of the <Object> oldElement from the receiver, and answer it. If
+	oldElement is not present in the receiver, answer the result of evaluating the
+	<niladicValuable>, exceptionHandler."
 
-	^self removeAtIndex: (self indexOf: oldElement ifAbsent: [^exceptionHandler value])!
+	| index |
+	^(index := self indexOf: oldElement) == 0
+		ifTrue: [exceptionHandler value]
+		ifFalse: [self removeAtIndex: index]!
 
 removeAll
 	"Empty the receiver of all contents"

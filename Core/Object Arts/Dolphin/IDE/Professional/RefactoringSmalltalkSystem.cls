@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ProfessionalSmalltalkSystem subclass: #RefactoringSmalltalkSystem
 	instanceVariableNames: 'isOAD'
@@ -1170,27 +1170,27 @@ safeRemoveMethodsIn: methodsEnvironment within: searchEnvironment
 			(mb warning: prompt contents) == #cancel ifTrue: [^self]].
 	self changeManager performChange: model changes!
 
-safeRemoveSelectors: anArrayOfSelectors from: aClass inEnvironment: aBrowserEnvironment 
+safeRemoveSelectors: anArrayOfSelectors from: aClass inEnvironment: aBrowserEnvironment
 	| prompt mb |
 	mb := MessageBox new.
 	mb
 		uniqueId: [self] method displayString;
 		isSuppressible: true.
-	anArrayOfSelectors size = 1 
+	anArrayOfSelectors size = 1
 		ifTrue: 
 			[mb caption: 'Safe Remove Method...'.
-			prompt := 'Remove <1d>>><2d> (if it has no references or is equivalent to the superclass implementation)?' 
+			prompt := 'Remove <1d>>><2d> (if it has no references or is equivalent to the superclass implementation)?'
 						expandMacrosWith: aClass
 						with: anArrayOfSelectors first]
 		ifFalse: 
 			[mb caption: 'Safe Remove Methods...'.
 			prompt := String writeStream.
 			prompt
-				nextPutAll: ('The following methods of <1p> will be removed if they have no references or are equivalent to the superclass implementation:' 
+				nextPutAll: ('The following methods of <1p> will be removed if they have no references or are equivalent to the superclass implementation:'
 							expandMacrosWith: aClass);
 				cr.
 			anArrayOfSelectors do: 
-					[:each | 
+					[:each |
 					prompt
 						crtab;
 						print: each].
@@ -1203,13 +1203,10 @@ safeRemoveSelectors: anArrayOfSelectors from: aClass inEnvironment: aBrowserEnvi
 	^self handleRefactoringException: 
 			[| model1 refactoring |
 			model1 := RBNamespace onEnvironment: aBrowserEnvironment.
-			refactoring := 
-					[:model | 
-					RemoveMethodRefactoring 
-						model: model
+			refactoring := RemoveMethodRefactoring
+						model: model1
 						removeMethods: anArrayOfSelectors
-						from: aClass] 
-							value: model1.
+						from: aClass.
 			model1 name: refactoring displayString.
 			refactoring
 				execute;

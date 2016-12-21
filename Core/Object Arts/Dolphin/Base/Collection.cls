@@ -664,8 +664,7 @@ icon
 initialize
 	"Private - Initialize the receiver's class variables."
 
-	AbsentCookie := Object new
-!
+	self addClassConstant: 'AbsentCookie' value: Object new!
 
 with: element1
 	"Answer an instance of the receiver containing the <Object>, element1.
