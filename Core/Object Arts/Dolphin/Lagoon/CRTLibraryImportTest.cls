@@ -30,7 +30,7 @@ testStubCrtExports
 			[procs := (CRTLibrary selectMethods: [:each | each isExternalCall])
 						collect: [:each | each functionName].
 			missing := procs select: [:each | (l getProcAddress: each ifAbsent: []) isNil].
-			self assert: (missing noDifference: expected)]
+			self assert: (missing difference: expected) isEmpty]
 					ensure: [l close]]! !
 !CRTLibraryImportTest categoriesFor: #devOnlyCrtFunctions!constants!private! !
 !CRTLibraryImportTest categoriesFor: #stubNames!constants!private! !
