@@ -81,8 +81,7 @@ NewSigned PROC
 	ret
 @@:
 	rcr		ecx, 1							; Revert to non-shifted value
-	call	LINEWSIGNED						; Return to caller with Oop of new Signed Integer in eax
-	ret
+	jmp		LINEWSIGNED						; Return to caller with Oop of new Signed Integer in eax
 NewSigned ENDP
 
 
@@ -100,8 +99,7 @@ NewUnsigned PROC
 	ret
 @@:
 	rcr		ecx, 1										; Revert to non-shifted value
-	call	LINEWUNSIGNED32
-	ret
+	jmp		LINEWUNSIGNED32
 NewUnsigned ENDP
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

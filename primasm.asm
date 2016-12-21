@@ -66,8 +66,7 @@ ENDM
 ;; C++ primitives that cannot fault can be invoked directly without a thunk
 CallStackNeutralPrim MACRO mangledName
 	StoreIPRegister							;; SP already saved. Save IP in case of fault
-	call	mangledName						;; Transfer control to primitive
-	ret
+	jmp		mangledName						;; Transfer control to primitive
 ENDM
 
 ; These primitives return the number of bytes to deduct from the stack pointer in eax, rather than updating
