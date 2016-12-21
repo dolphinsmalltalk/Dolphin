@@ -1451,7 +1451,7 @@ returnFromMessage
 							on: compilerClass errorClass
 							do: 
 								[:cn | 
-								MessageBox errorMsg: cn text , String lineDelimiter , String lineDelimiter , 'Please try again.'
+								MessageBox errorMsg: cn errorMessage , String lineDelimiter , String lineDelimiter , 'Please try again.'
 									caption: 'Error in expression...'.
 								loopCookie]].
 	returnValue == loopCookie] 
