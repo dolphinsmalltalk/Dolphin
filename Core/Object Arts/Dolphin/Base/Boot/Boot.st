@@ -21,5 +21,4 @@ version := (version subStrings: $.) last asNumber.
 
 Object owningPackage isChanged: false!
 SourceManager default compressSources!
-(Delay forSeconds: 5) wait!
 SessionManager current quit!
