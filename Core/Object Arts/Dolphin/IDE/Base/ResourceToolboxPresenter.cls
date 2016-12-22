@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ListPresenter subclass: #ResourceToolboxPresenter
 	instanceVariableNames: 'categoriesPresenter resourcesPresenter iconMap'
@@ -83,9 +83,6 @@ createSchematicWiring
 			send: #onDropOverCategory:
 			to: self.
 	(self systemModel)
-		when: #methodCategorized:
-			send: #onMethodCategorized:
-			to: self;
 		when: #methodAdded:
 			send: #onMethodAdded:
 			to: self;
@@ -146,19 +143,13 @@ onDropOverCategory: session
 					session isLink ifTrue: [self remove: rid fromCategory: category]].
 			self refreshResourceList]!
 
-onMethodAdded: aCompilationResult 
-	self onMethodCategorized: aCompilationResult method!
+onMethodAdded: aCompilationResult
+	(aCompilationResult method selector beginsWith: ResourceIdentifier selectorPrefix)
+		ifTrue: [self addResourceIdentifierFor: aCompilationResult method]!
 
-onMethodCategorized: aCompiledMethod 
-	(aCompiledMethod selector beginsWith: ResourceIdentifier selectorPrefix) 
-		ifTrue: [self addResourceIdentifierFor: aCompiledMethod]
-		ifFalse: [self removeResourceIdentifierFor: aCompiledMethod]!
-
-onMethodRemoved: aCompiledMethod 
-	| method |
-	method := aCompiledMethod.
-	(method selector beginsWith: ResourceIdentifier selectorPrefix) 
-		ifTrue: [self removeResourceIdentifierFor: method]!
+onMethodRemoved: aCompiledMethod
+	(aCompiledMethod selector beginsWith: ResourceIdentifier selectorPrefix)
+		ifTrue: [self removeResourceIdentifierFor: aCompiledMethod]!
 
 onViewOpened
 	super onViewOpened.
@@ -271,7 +262,6 @@ systemModel
 !ResourceToolboxPresenter categoriesFor: #onDragOverCategory:!private! !
 !ResourceToolboxPresenter categoriesFor: #onDropOverCategory:!private! !
 !ResourceToolboxPresenter categoriesFor: #onMethodAdded:!private! !
-!ResourceToolboxPresenter categoriesFor: #onMethodCategorized:!private! !
 !ResourceToolboxPresenter categoriesFor: #onMethodRemoved:!private! !
 !ResourceToolboxPresenter categoriesFor: #onViewOpened!private! !
 !ResourceToolboxPresenter categoriesFor: #queryCommand:!commands!private! !
