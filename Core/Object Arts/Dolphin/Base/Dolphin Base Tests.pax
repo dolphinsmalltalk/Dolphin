@@ -699,7 +699,7 @@ regressionTestsLogFilename
 regressionTestSuite
 	| suite |
 	suite := TestSuite new.
-	suite addTests: TestCase buildSuite allTests.
+	suite addTests: TestCase buildSuite allTests asSortedCollection.
 	^suite!
 
 runRegressionTests
