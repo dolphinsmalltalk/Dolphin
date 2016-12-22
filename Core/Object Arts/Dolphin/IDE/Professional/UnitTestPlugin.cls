@@ -155,7 +155,8 @@ displayReset
 			[self icon: (Icon fromFile: 'UnitTestPluginNoTest.ico').
 			self displayMode: 'No Tests'].
 	self displayDetails: ''.
-	self displayDefects: OrderedCollection new.!
+	self displayDefects: OrderedCollection new.
+	result := nil!
 
 displayRunning
 	"Indicate that tests are being run"
