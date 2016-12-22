@@ -1,4 +1,4 @@
-"12:38:45, 15 February 2016: Compressing sources...."!
+"20:13:19, 22 December 2016: Compressing sources...."!
 
 Object comment:
 'Object is the abstract root of the standard Smalltalk class hierarchy. It has no instance variables (indeed it must not have any), but provides behavior common to all objects.
@@ -131,6 +131,11 @@ resourcesLocator
 	^SessionManager current resourcesLocatorForClass: self! !
 
 !Object methodsFor!
+
+?? anObject
+	"Answer the receiver if not nil, else the operand."
+
+	^self!
 
 _deepCopy: copiesDictionary 
 	"Private - Answer a 'deep copy' of the receiver, cloning only those parts not already included
@@ -825,19 +830,12 @@ identityHash
 	<primitive: 75>
 	^self primitiveFailed!
 
-ifNil: aBlock
-	"If the receiver is the nil object, then answer the result of evaluating
-	the <niladicValuable>, aBlock, otherwise answer the receiver."
+ifNil: nilBlock 
+	"If the receiver is the nil object, then answer the result of evaluating the
+	<niladicValuable>, nilBlock, otherwise answer the receiver."
 
-	"Implementation Note: This message is normally inlined by the compiler and so
-	is never sent unless #perform'd. The inline form of the bytecodes is:
-
-			dup
-			jmp ifNotNil @notNil
-			pop
-			[...]
-		@notNil
-	"
+	"Implementation Note: This message is normally inlined by the compiler and so is never sent
+	unless #perform'd."
 
 	^self!
 
@@ -845,52 +843,33 @@ ifNil: nilBlock ifNotNil: notNilBlock
 	"If the receiver is the nil object, then answer the result of evaluating the
 	<niladicValuable>, nilBlock, otherwise answer the result of evaluating the <valuable>,
 	notNilBlock. notNilBlock can be a <niladicValuable> or a <monadicValuable>, in which case it
-	is evaluated with the receiver as its argument, "
+	is evaluated with the receiver as its argument."
 
 	"Implementation Note: This message is normally inlined by the compiler and so is never sent
-	unless #perform'd. The inline form of the bytecodes in the normal case where the notNilBlock
-	is monadic is:
+	unless #perform'd."
 
-			dup
-			jmp ifNotNil @notNil
-			pop
-			[...]
-			jmp @exit
-		@notNil
-			pop'n'store 'value'
-			[:value | ...]
-		@exit	
-	"
+	^notNilBlock cull: self!
 
-	^notNilBlock argumentCount = 1 ifTrue: [notNilBlock value: self] ifFalse: [notNilBlock value]!
-
-ifNotNil: aBlock 
+ifNotNil: notNilBlock 
 	"If the receiver is not the nil object, then answer the result of evaluating the valuable
-	argument, aBlock, otherwise answer nil. aBlock can be a <niladicValuable> or a
-	<monadicValuable>, in which case it is evaluated with the receiver as its argument, "
+	argument, notNilBlock, otherwise answer nil. notNilBlock can be a <niladicValuable> or a
+	<monadicValuable>, in which case it is evaluated with the receiver as its argument."
 
 	"Implementation Note: This message is normally inlined by the compiler and so is never sent
-	unless #perform'd. The inline form of the bytecodes is:
+	unless #perform'd."
 
-			dup
-			jmp ifNil @nil
-			pop'n'store 'value'
-			[:value | ...]
-		@nil
-	"
-
-	^aBlock argumentCount = 1 ifTrue: [aBlock value: self] ifFalse: [aBlock value]!
+	^notNilBlock cull: self!
 
 ifNotNil: notNilBlock ifNil: nilBlock 
 	"If the receiver is the nil object, then answer the result of evaluating the
 	<niladicValuable>, nilBlock, otherwise answer the result of evaluating the <valuable>,
 	notNilBlock. notNilBlock can be a <niladicValuable> or a <monadicValuable>, in which case it
-	is evaluated with the receiver as its argument, "
+	is evaluated with the receiver as its argument."
 
 	"Implementation Note: This message is normally inlined by the compiler and so is never sent
 	unless #perform'd."
 
-	^notNilBlock argumentCount = 1 ifTrue: [notNilBlock value: self] ifFalse: [notNilBlock value]!
+	^notNilBlock cull: self!
 
 initialize
 	"Initialise the receiver following instantiation. The default is to do nothing.
@@ -934,6 +913,13 @@ instVarNamed: aString
 	and so its should be reserved mainly for testing, debugging, and tools."
 
 	^self instVarAt: (self class indexOfInstVar: aString)!
+
+isAtomic
+	"Answer whether or not the receiver is the single unique instance of its class that can
+	represents its value. For example, <Symbol>s are always atomic, so #a == 'a' asSymbol, but
+	<string>s in general are not atomic."
+
+	^false!
 
 isFinalizable
 	"Answer whether the receiver is marked as requiring finalization.
@@ -991,7 +977,7 @@ isKindOf: candidateClass
 	^self class includesBehavior: candidateClass!
 
 isLiteral
-	"Private - Answer whether or not the receiver has a literal representation (probably its
+	"Answer whether or not the receiver has a literal representation (probably its
 	printString) which is directly recognised by the Compiler"
 
 	^false!
@@ -1283,7 +1269,7 @@ removePropertyAt: aSymbol ifAbsent: aBlock
 
 	^self propertyManager removePropertyOf: self at: aSymbol ifAbsent: aBlock.!
 
-resize: anInteger
+resize: anInteger 
 	"Resize the receiver to accomodate anInteger indexable instance variables. If anInteger 
 	is greater than the current size of the receiver, then new, safely initialized, elements are 
 	added to the end of the receiver. If anInteger is less that the current size of the receiver, 
@@ -1298,10 +1284,12 @@ resize: anInteger
 
 	Primitive failure reason:
 		0 -	anInteger is not a positive SmallInteger
-		1 -	the receiver is not of an indexable (variable sized) class."
+		1 -	the receiver is not of an indexable (variable sized) class.
+		2 -	the receiver is immutable."
 
 	| answer |
 	<primitive: 101>
+	self isImmutable ifTrue: [Processor constWriteSignal signalWith: self].
 	answer := self class new: anInteger.
 	1 to: anInteger do: [:i | answer at: i put: (self at: i)].
 	self become: answer!
@@ -2032,12 +2020,9 @@ addSubclass: aClass
 		subclasses := (subs asSortedCollection add: aClass; yourself) asArray]!
 
 addToSuper
-	"Private - Add the receiver to its superclasses' subclass collection.
-	Root classes will have a superclass of nil - we do not put such
-	classes into a subclass collection."
+	"Private - Add the receiver to its superclasses' subclass collection."
 
-	superclass notNil
-		ifTrue: [superclass addSubclass: self]!
+	superclass addSubclass: self!
 
 allClassVarNames
 	"Answer a <Set> of the <readableString> names of the receiver's and the 
@@ -2059,7 +2044,9 @@ allInstVarNames
 	those specified in the receiver and in all of its superclasses. The array ordering is the order 
 	in which the variables are stored and accessed by the interpreter."
 
-	^(self superclass ifNil: [#()] ifNotNil: [:parent | parent allInstVarNames]) , self instVarNames!
+	^superclass isNil
+		ifTrue: [self instVarNames]
+		ifFalse: [superclass allInstVarNames , self instVarNames]!
 
 allSelectors
 	"Answer a <Set> of <Symbol>s, being all the message selectors to which the receiver 
@@ -2071,22 +2058,25 @@ allSelectors
 	^answer!
 
 allSharedPoolNames
-	"Answer a Set of the names of the pools (dictionaries) that are specified in the receiver 
-	in the receiver and each of its superclasses"
+	"Answer a <sequencedReadableCollection> of <Symbol>s, being the names of all the shared pool
+	dictionaries that are specified that are specified in the receiver and each of its
+	superclasses. The list is ordered with the receiver's own pool references first, and then
+	those of the superclass, and so on up the class hierarchy. Pools only appear where first
+	referenced (i.e. no duplicates)."
 
-	| answer |
-	answer := Set new.
-	self withAllSuperclassesDo: [ :c | answer addAll: c sharedPoolNames ].
-	^answer!
+	^self allSharedPools collect: [:each | each name]!
 
 allSharedPools
-	"Answer a Set of the pools (dictionaries) that are specified in the receiver in the receiver 
-	and each of its superclasses"
+	"Answer a <sequencedReadableCollection> of the pools (dictionaries) that are specified in
+	the receiver and each of its superclasses."
 
-	| answer |
-	answer := Set new.
-	self withAllSuperclassesDo: [:c | answer addAll: c sharedPools].
-	^answer!
+	| pools seen |
+	pools := Array writeStream: 5.
+	seen := IdentitySet new.
+	self withAllSuperclassesDo: 
+			[:c |
+			c sharedPoolsDo: [:each | (seen addNewElement: each) ifTrue: [pools nextPut: each]]].
+	^pools contents!
 
 allSubclasses
 	"Answer a <collection> of the receiver's subclasses in 
@@ -2352,24 +2342,23 @@ flushMethodCache
 	<primitive: 89>
 	^self primitiveFailed!
 
-fullBindingFor: aString 
+fullBindingFor: aString
 	"Answer a variable binding for the named variable in the scope of this class, and
 	failing that in the receiver's environment. If there is no such variable, then answer nil."
 
-	(aString identityIncludes: $.) 
+	(aString identityIncludes: $.)
 		ifTrue: 
-			[| parts env |
+			[| parts env count |
 			parts := aString subStrings: $..
 			"Fully qualified name always starts in Smalltalk"
 			env := Smalltalk.
-			parts 
-				from: 1
-				to: parts size - 1
+			count := parts size.
+			1 to: count - 1
 				do: 
-					[:each | 
-					env := env at: each ifAbsent: [].
+					[:i |
+					env := env at: (parts at: i) ifAbsent: [].
 					env isNil ifTrue: [^nil]].
-			^env bindingFor: parts last].
+			^env bindingFor: (parts at: count)].
 	^(self bindingFor: aString) ifNil: [self environment bindingFor: aString]!
 
 hasCompilationFailures
@@ -2688,6 +2677,16 @@ recompileAll
 			each class compileAll.
 			each compileAll]!
 
+recompileReferencesToVarNamed: aString
+	"Private - Recompile any of the receiver's methods which appear to reference the named variable."
+
+	self methodDictionary do: 
+			[:m |
+			(m containsSource: aString)
+				ifTrue: 
+					[Notification signal: 'Recompiling ' , m printString.
+					m recompile]]!
+
 removeFromSuper
 	"Private - Remove the receiver from its superclasses' subclass collection.
 	Root classes will have a superclass of nil - we do not put such
@@ -2805,18 +2804,26 @@ shallowCopy
 
 	^self!
 
-sharedPools
-	"Answer a <Set> of <Symbol>s, being the names of the pools (dictionaries) that are
-	specified locally in the receiver."
-
+sharedPoolNames
 	^self subclassResponsibility!
 
-sharedStaticPools
-	"Private - Answer an <Array> of all the shared pools for the receiver (including those
-	inherited from superclasses). Used by compiler, but may be removed in future."
+sharedPools
+	"Answer a <sequencedReadableCollection> of the pools (dictionaries) that are referenced
+	locally in the receiver."
 
-	^self subclassResponsibility
-!
+	| pools |
+	pools := OrderedCollection new.
+	self sharedPoolsDo: [:each | pools add: each].
+	^pools!
+
+sharedPoolsDo: aMonadicValuable
+	"Evaluate the <monadicValuable> argument for each of the shared pools referenced locally for
+	the receiver in order of precedence."
+
+	| environment |
+	environment := self environment.
+	self sharedPoolNames
+		do: [:symbol | (environment at: symbol ifAbsent: []) ifNotNil: [:p | aMonadicValuable value: p]]!
 
 sourceCodeAt: aSymbol
 	"Answer a <String> that is the source code of the receiver's method with selector, aSymbol.
@@ -2938,20 +2945,31 @@ whichMethodsRead: aString at: anInteger
 	^self 
 		selectMethods: [:method | method readsInstVar: aString at: anInteger]!
 
-whichMethodsReferTo: anObject 
+whichMethodsReferTo: anObject
 	"Answer a <Set> of methods in the receiver whose literal frames include the argument, anObject."
 
 	| index |
-	anObject isSymbol 
+	anObject isSymbol
 		ifTrue: 
 			[index := VMLibrary default indexOfSpecialSelector: anObject ifAbsent: [0].
-			index ~= 0 ifTrue: [^self selectMethods: [:each | (each refersToLiteral: anObject) or: [each sendsSpecialSelector: index]]]]
+			index ~= 0
+				ifTrue: 
+					[^self
+						selectMethods: [:each | (each refersToLiteral: anObject) or: [each sendsSpecialSelector: index]]]]
 		ifFalse: 
-			[((anObject isKindOf: VariableBinding) and: [anObject isImmutable]) 
+			[(anObject isKindOf: VariableBinding)
 				ifTrue: 
 					[| value |
 					value := anObject value.
-					^self selectMethods: [:each | (each refersToLiteral: value) or: [each refersToLiteral: anObject]]]].
+					"In the case of constant bindings the value may be inlined in the byte codes if there is a representation."
+					(anObject isImmutable and: [VMLibrary hasBytecodeRepresentation: value])
+						ifTrue: 
+							[| constName |
+							constName := anObject key asString.
+							^self selectMethods: [:each | (each refersToLiteral: anObject) or: [each containsSource: constName]]]
+						ifFalse: 
+							["For normal const/var bindings, search for both the binding and the current value of the binding"
+							^self selectMethods: [:each | (each refersToLiteral: anObject) or: [each refersToLiteral: value]]]]].
 	^self selectMethods: [:each | each refersToLiteral: anObject]!
 
 whichSelectorsAccess: aString
@@ -3232,8 +3250,7 @@ stbConvertFrom: anSTBClassFormat
 			[ver < 2 
 				ifTrue: [self error: 'Unable to convert interim block format']
 				ifFalse: 
-					[Sound bell.
-					newBlock := self basicNew: data size - self instSize.
+					[newBlock := self basicNew: data size - self instSize.
 					1 to: data size do: [:i | newBlock instVarAt: i put: (data at: i)]]].
 	upgrading ifTrue: [newBlock := self attemptToUpgradeBlock: newBlock data: data].
 	newBlock]!
@@ -3264,6 +3281,9 @@ argumentCount
 argumentCount: anInteger 
 	info := (info bitAnd: ##((16rFF << 7) bitInvert)) 
 				bitOr: ((anInteger bitAnd: 16rFF) bitShift: 7)!
+
+asBlock
+	^self!
 
 at: index
 	"Answer the receiver's indexed instance variable at the argument index.
@@ -3327,6 +3347,35 @@ critical
 	| oldState |
 	oldState := Processor enableAsyncEvents: false.
 	[self value] ensure: [Processor enableAsyncEvents: oldState]!
+
+cull: arg1 
+	^self argumentCount = 0 ifTrue: [self value] ifFalse: [self value: arg1]!
+
+cull: arg1 cull: arg2 
+	^self argumentCount < 2 ifTrue: [self cull: arg1] ifFalse: [self value: arg1 value: arg2]!
+
+cull: arg1 cull: arg2 cull: arg3 
+	^self argumentCount < 3 
+		ifTrue: [self cull: arg1 cull: arg2]
+		ifFalse: 
+			[self 
+				value: arg1
+				value: arg2
+				value: arg3]!
+
+cull: arg1 cull: arg2 cull: arg3 cull: arg4 
+	^self argumentCount < 4 
+		ifTrue: 
+			[self 
+				cull: arg1
+				cull: arg2
+				cull: arg3]
+		ifFalse: 
+			[self 
+				value: arg1
+				value: arg2
+				value: arg3
+				value: arg4]!
 
 deferredValue
 	"Answer a <niladicValuable> that begins evaluating the receiver asynchronously,
@@ -3441,14 +3490,14 @@ info: aSmallInteger
 	info := aSmallInteger!
 
 initialIP
-	"Answer the initial instruction pointer index into the home method, 
-	used when the block receives a #value* message"
+	"Answer the initial instruction pointer index into the home method, used when the block
+	receives a #value* message. Note that this is 1-based."
 
 	^initialIP!
 
 initialIP: anInteger 
-	"Private - Set the initial instruction pointer index into the receiver's
-	compiled byte codes (used when the block receives a #value* message)."
+	"Private - Set the initial instruction pointer index into the receiver's compiled byte codes
+	(used when the block receives a #value* message), to the 1-based <integer> index argument."
 
 	initialIP := anInteger!
 
@@ -3500,6 +3549,9 @@ newProcessWithArguments: anArray
 	from anArray, then terminate"
 
 	^[self valueWithArguments: anArray] newProcess!
+
+numArgs
+	^self argumentCount!
 
 on: selector do: action
 	"Try to evaluate the receiver, and should an exception occur which is matched
@@ -3962,6 +4014,14 @@ ifTrue: trueOperand ifFalse: falseOperand
 
 	^self subclassResponsibility!
 
+isAtomic
+	"Answer whether or not the receiver has a single unique instance for any individual value it
+	can represent."
+
+	"Boolean has two unique instances, identified by the literals true and false."
+
+	^true!
+
 isLiteral
 	"Answer whether or not the receiver has a literal representation (probably its
 	printString) which is directly recognised by the Compiler."
@@ -4056,15 +4116,15 @@ ByteCodeDispatcher comment:
 
 Instance Variables:
 	byteCodes			<ByteArray>
-	method				<CompiledCode>
-	ip					<integer>
-	interpreter			<bytecodeInterpreter>
+	method			<CompiledCode>
+	ip				<integer>
+	interpreter		<bytecodeInterpreter>
 	instructionLength	<integer>
 	byteCode			<integer>
 
 Class Variables:
 	Instructions		<sequencedReadableCollection>
-	RunStarts		<IdentityDictionary>
+	RunStarts			<IdentityDictionary>
 
 '!
 !ByteCodeDispatcher class methodsFor!
@@ -4094,29 +4154,30 @@ initialize
 	| instructions runStarts |
 	instructions := OrderedCollection new.
 	runStarts := IdentityDictionary new.
-	#(#(1 #break) #(16 #shortPushInstVar:) #(8 #shortPushTemp:) #(2 #pushContextTemp:) #(2 #shortPushOuterTemp:) #(16 #shortPushConst:) #(12 #shortPushStatic:) #(1 #pushSelf) #(3 #pushPseudo:) #(4 #shortPushImmediate:) #(4 #shortPushSelfAndTemp:) #(4 #shortStoreTemp:) #(2 #shortPopPushTemp:) #(1 #popPushSelf) #(1 #popDup) #(2 #popContextTemp:) #(2 #shortPopOuterTemp:) #(8 #shortPopInstVar:) #(8 #shortPopTemp:) #(1 #popStackTop) #(1 #incrementStackTop) #(1 #decrementStackTop) #(1 #duplicateStackTop) #(1 #returnSelf) #(3 #returnPseudo:) #(1 #returnFromMessage) #(1 #returnFromBlock) #(1 #returnFromBlockHome) #(1 #popReturnSelf) #(1 #nop) #(8 #shortJump:) #(8 #shortJumpIfFalse:) #(32 #shortSpecialSend:) #(13 #shortSendZeroArgs:) #(5 #shortSendSelfZeroArgs:) #(14 #shortSendOneArg:) #(8 #shortSendTwoArgs:) #(1 #isZero) #(1 #pushActiveFrame) #(4 #unused) #(1 #pushInstVar:) #(1 #pushTemp:) #(1 #pushConst:) #(1 #pushStatic:) #(1 #storeInstVar:) #(1 #storeTemp:) #(1 #storeStatic:) #(1 #popInstVar:) #(1 #popTemp:) #(1 #popStatic:) #(1 #pushImmediate:) #(1 #pushChar:) #(1 #send:) #(1 #supersend:) #(1 #specialSend:) #(1 #nearJump:) #(1 #nearJumpIfTrue:) #(1 #nearJumpIfFalse:) #(1 #nearJumpIfNil:) #(1 #nearJumpIfNotNil:) #(2 #unused:) #(1 #sendTempZeroArgs:) #(1 #pushSelfAndTemp:) #(1 #pushOuterTemp:) #(1 #storeOuterTemp:) #(1 #popOuterTemp:) #(1 #sendSelfZeroArgs:) #(1 #unused:) #(1 #pushTempPair:) #(1 #longPushConst:with:) #(1 #longPushStatic:with:) #(1 #longStoreStatic:with:) #(1 #longPopStoreStatic:with:) #(1 #longPushImmediate:with:) #(1 #longSend:with:) #(1 #longSupersend:with:) #(1 #longJump:with:) #(1 #longJumpIfTrue:with:) #(1 #longJumpIfFalse:with:) #(1 #longJumpIfNil:with:) #(1 #longJumpIfNotNil:with:) #(1 #pushOuter:temp:) #(1 #storeOuter:temp:) #(1 #incTemp:temp:) #(1 #incPushTemp:temp:) #(1 #decTemp:temp:) #(1 #decPushTemp:temp:) #(1 #blockCopy:stack:env:copy:offset1:offset2:) #(1 #exLongSend:with:with:) #(1 #exLongSupersend:with:with:) #(1 #unusedWithArguments:)) 
+	#(#(1 #break) #(16 #shortPushInstVar:) #(8 #shortPushTemp:) #(2 #pushContextTemp:) #(2 #shortPushOuterTemp:) #(16 #shortPushConst:) #(12 #shortPushStatic:) #(1 #pushSelf) #(3 #pushPseudo:) #(4 #shortPushImmediate:) #(4 #shortPushSelfAndTemp:) #(4 #shortStoreTemp:) #(2 #shortPopPushTemp:) #(1 #popPushSelf) #(1 #popDup) #(2 #popContextTemp:) #(2 #shortPopOuterTemp:) #(8 #shortPopInstVar:) #(8 #shortPopTemp:) #(1 #popStackTop) #(1 #incrementStackTop) #(1 #decrementStackTop) #(1 #duplicateStackTop) #(1 #returnSelf) #(3 #returnPseudo:) #(1 #returnFromMessage) #(1 #returnFromBlock) #(1 #returnFromBlockHome) #(1 #popReturnSelf) #(1 #nop) #(8 #shortJump:) #(8 #shortJumpIfFalse:) #(32 #shortSpecialSend:) #(13 #shortSendZeroArgs:) #(5 #shortSendSelfZeroArgs:) #(14 #shortSendOneArg:) #(8 #shortSendTwoArgs:) #(1 #isZero) #(1 #pushActiveFrame) #(4 #unused) #(1 #pushInstVar:) #(1 #pushTemp:) #(1 #pushConst:) #(1 #pushStatic:) #(1 #storeInstVar:) #(1 #storeTemp:) #(1 #storeStatic:) #(1 #popInstVar:) #(1 #popTemp:) #(1 #popStatic:) #(1 #pushImmediate:) #(1 #pushChar:) #(1 #send:) #(1 #supersend:) #(1 #specialSend:) #(1 #nearJump:) #(1 #nearJumpIfTrue:) #(1 #nearJumpIfFalse:) #(1 #nearJumpIfNil:) #(1 #nearJumpIfNotNil:) #(2 #unused:) #(1 #sendTempZeroArgs:) #(1 #pushSelfAndTemp:) #(1 #pushOuterTemp:) #(1 #storeOuterTemp:) #(1 #popOuterTemp:) #(1 #sendSelfZeroArgs:) #(1 #unused:) #(1 #pushTempPair:) #(1 #longPushConst:with:) #(1 #longPushStatic:with:) #(1 #longStoreStatic:with:) #(1 #longPopStoreStatic:with:) #(1 #longPushImmediate:with:) #(1 #longSend:with:) #(1 #longSupersend:with:) #(1 #longJump:with:) #(1 #longJumpIfTrue:with:) #(1 #longJumpIfFalse:with:) #(1 #longJumpIfNil:with:) #(1 #longJumpIfNotNil:with:) #(1 #pushOuter:temp:) #(1 #storeOuter:temp:) #(1 #incTemp:temp:) #(1 #incPushTemp:temp:) #(1 #decTemp:temp:) #(1 #decPushTemp:temp:) #(1 #blockCopy:stack:env:copy:offset1:offset2:) #(1 #exLongSend:with:with:) #(1 #exLongSupersend:with:with:) #(1 #exLongPushImmediate:byte2:byte3:byte4:))
 		do: 
-			[:each | 
+			[:each |
 			| instruction runLength |
 			instruction := each last.
 			runLength := each first.
 			runLength > 1 ifTrue: [runStarts at: instruction put: instructions size].
 			runLength timesRepeat: [instructions add: instruction]].
-	Instructions := instructions asArray.
-	RunStarts := runStarts.
-	self assert: [Instructions size = 256]!
+	self assert: [Instructions size = 256].
+	self addClassConstant: 'Instructions' value: instructions asArray.
+	RunStarts := runStarts!
 
 instructions
 	^Instructions!
 
-lengthOfInstruction: anInteger 
+lengthOfInstruction: anInteger
 	"Private - Answer the number of bytes for the bytecode identified by the <integer> argument."
 
 	anInteger < FirstDoubleByte ifTrue: [^1].
 	anInteger < FirstTripleByte ifTrue: [^2].
 	anInteger < FirstMultiByte ifTrue: [^3].
-	"At the moment the only multi-byte instruction with more than 4 bytes is Block Copy, needing 7 bytes"
-	^anInteger == BlockCopy ifTrue: [7] ifFalse: [4]!
+	^anInteger == BlockCopy
+		ifTrue: [7]
+		ifFalse: [anInteger == ExLongPushImmediate ifTrue: [5] ifFalse: [4]]!
 
 on: aCompiledMethod 
 	"Answer a new instance of the receiver to interpret the <CompiledCode> argument."
@@ -5369,13 +5430,15 @@ initialize
 		ClassBuilder initialize
 	"
 
-	Unsubclassable := (Set new)
+	self addClassConstant: 'Unsubclassable'
+		value: ((Set new)
 				add: Character;
 				add: SmallInteger;
 				shrink;
 				isImmutable: true;
-				yourself.
-	FixedLayout := (Set new)
+				yourself).
+	self addClassConstant: 'FixedLayout'
+		value: ((Set new)
 				add: true class;
 				add: false class;
 				add: Array;
@@ -5392,9 +5455,10 @@ initialize
 				add: Object;
 				shrink;
 				isImmutable: true;
-				yourself.
+				yourself).
 	"add: ProtoObject;"
-	FixedInitialLayout := (Set new)
+	self addClassConstant: 'FixedInitialLayout'
+		value: ((Set new)
 				add: Class;
 				add: Metaclass;
 				add: PositionableStream;
@@ -5403,9 +5467,9 @@ initialize
 				add: ProcessorScheduler;
 				shrink;
 				isImmutable: true;
-				yourself.
-	RecompileMask := 1.
-	IgnoreInstsMask := 2!
+				yourself).
+	self addClassConstant: 'RecompileMask' value: 1.
+	self addClassConstant: 'IgnoreInstsMask' value: 2!
 
 instanceSpecIsBytes: anInstanceSpec
 	"Private - Answer whether anInstanceSpec represents a byte subclass."
@@ -5499,11 +5563,6 @@ new
 
 	^super new initialize!
 
-parser
-	"Private - Answer the parser to use for identifier validation."
-
-	^Compiler!
-
 removeClass: aClass 
 	"Remove aClass."
 
@@ -5532,19 +5591,18 @@ validateClassVarName: aString using: aCollection
 		ifFalse: [self error: 'Proposed class variable ''' , aString , ''' is invalid as a local identifier.'].
 	(aCollection includes: aString) 
 		ifTrue: [self error: 'Proposed class variable ''' , aString , ''' is multiply defined.'].
-	aString first isUppercase 
-		ifFalse: 
-			[aString first == $_ 
-				ifTrue: 
-					[^Smalltalk at: #SmalltalkSystem
-						ifPresent: 
-							[:c | 
-							c current isOAD 
-								ifFalse: 
-									[Warning signal: 'Identifiers beginning with an underscore, such as ' , aString 
-												, ', are reserved for system use']]].
-			Warning 
-				signal: 'Proposed class variable ''' , aString , ''' should start with an uppercase letter.']!
+	aString first isUppercase ifTrue: [^self].
+	aString first == $_ 
+		ifTrue: 
+			[^Smalltalk at: #SmalltalkSystem
+				ifPresent: 
+					[:c | 
+					c current isOAD 
+						ifFalse: 
+							[Warning signal: 'Identifiers beginning with an underscore, such as ' , aString 
+										, ', are reserved for system use']]].
+	Warning 
+		signal: 'Proposed class variable ''' , aString , ''' should start with an uppercase letter.'!
 
 validateClassVars: classVarsArray againstSuperclass: aClass
 	"Private - Ensure that the proposed class variable name list does not
@@ -5686,20 +5744,15 @@ canMutateInSitu
 		the instance variable layout and
 		the class instance variable layout."
 
-	self instanceShapeIsBeingChanged
-		ifTrue: [^false].
-	self superclassIsBeingChanged
-		ifFalse: [^self instanceVariablesAreBeingChanged not].
+	self instanceShapeIsBeingChanged ifTrue: [^false].
+	self superclassIsBeingChanged ifFalse: [^self instanceVariablesAreBeingChanged not].
 
 	"The class is being moved."
-	(self class allInstVarNamesOf: superclass),instanceVariables = currentClass allInstVarNames
+	((self class allInstVarNamesOf: superclass) , self instanceVariables) = currentClass allInstVarNames
 		ifFalse: [^false].
 	(self class classOf: superclass) allInstVarNames = currentClass class superclass allInstVarNames
 		ifFalse: [^false].
-
-	^true.
-
-	!
+	^true!
 
 categories
 	categories isNil ifTrue: [self categoryNames: #('')].
@@ -5976,19 +6029,6 @@ instanceVariablesAreBeingChanged
 
 	^instanceVariables notNil and: [instanceVariables ~= currentClass instVarNames]!
 
-instanceVariableString
-	"Private - Answer the receiver's proposed instance variable list as
-	a space separated String."
-
-	^self instanceVariables isEmpty
-		ifTrue: [nil]
-		ifFalse: [ | aStream |
-			aStream := String writeStream: 32.
-			instanceVariables 
-					do: [:instVarName | aStream nextPutAll: instVarName]
-					separatedBy: [aStream space].
-			aStream contents]!
-
 instanceVariableString: anInstVarNamesString
 	"Set the receiver's proposed instance variable list from aString."
 
@@ -6131,7 +6171,12 @@ mutateClass: oldClass toBeASubclassOf: newSuperclass
 			newClass := self newClassLike: oldClass superclass: newSuperclass.
 			self install: newClass.
 			self mutateAllInstancesOf: oldClass toBeInstancesOf: newClass.
-			oldClass subclasses do: [:cls | self mutateClass: cls toBeASubclassOf: newClass].
+			oldClass == Class 
+				ifTrue: 
+					["In Dolphin Object class et al are not in the subclasses
+					collection of Class, so need special case handling"
+					Smalltalk allRoots do: [:each | self mutateClass: each class toBeASubclassOf: newClass]]
+				ifFalse: [oldClass subclasses do: [:cls | self mutateClass: cls toBeASubclassOf: newClass]].
 			oldClass class removeFromSuper.
 			oldClass removeFromSuper.
 			oldClass become: newClass.
@@ -6142,11 +6187,15 @@ mutateInSitu
 	"Private - Mutate the class being modified without mutating its instances.
 	In fact, we only need to change the superclass."
 
-	self superclassIsBeingChanged 
-		ifTrue: 
+	self superclassIsBeingChanged
+		ifTrue:
 			[currentClass class setSuperclass: (self class classOf: superclass).
 			currentClass setSuperclass: superclass.
-			self recompilationRequired: true]!
+			self recompilationRequired: true].
+	self instanceVariablesAreBeingChanged
+		ifTrue:
+			[self setInstanceVariablesOf: currentClass.
+			self recompilationRequired: true].!
 
 mutateToNewClass
 	"Private - Set currentClass to a mutation of itself based on the information
@@ -6273,11 +6322,10 @@ setCommentOf: aClass
 		ifTrue: [aClass comment: comment]!
 
 setInstanceVariablesOf: aClass
-	"Private - Set the instance variable layout of aClass to those described by
-	the receiver's instanceVariables inst var."
+	"Private - Set the instance variable layout of aClass to those described by the receiver's
+	instanceVariables inst var, or those of currentClass if no changes have been proposed."
 
-	instanceVariables notNil
-		ifTrue: [aClass instanceVariables: self instanceVariableString]!
+	aClass setInstanceVariables: self instanceVariables!
 
 setNewClassCategories
 	currentClass classCategories: self categories!
@@ -6286,14 +6334,13 @@ setSharedPoolsOf: aClass
 	"Private - Set the shared pools of aClass to those described by
 	the receiver's sharedPools inst var."
 
-	sharedPools notNil 
-		ifTrue: 
-			[| oldPoolNameSet newPoolNameSet |
-			oldPoolNameSet := aClass sharedPoolNames.
-			aClass setSharedPoolNames: self sharedPools.
-			newPoolNameSet := aClass sharedPoolNames.
-			(oldPoolNameSet intersection: newPoolNameSet) size = oldPoolNameSet size 
-				ifFalse: [self recompilationRequired: true]]!
+	| oldPoolNameSet newPoolNameSet |
+	sharedPools notNil ifFalse: [^self].
+	oldPoolNameSet := aClass sharedPoolNames.
+	aClass setSharedPoolNames: self sharedPools.
+	newPoolNameSet := aClass sharedPoolNames.
+	(oldPoolNameSet intersection: newPoolNameSet) size = oldPoolNameSet size 
+		ifFalse: [self recompilationRequired: true]!
 
 sharedPools
 	"Private - Answer an Array of proposed pool dictionary names."
@@ -6307,9 +6354,9 @@ sharedPools: anArray
 
 sharedPoolString: aString
 	"Set the receiver's sharedPools from the pool name list aString.
-	Silently drop names duplicated within the list."
+	It is an error for names to be duplicated in the list."
 
-	self sharedPools: aString subStrings asSet!
+	self sharedPools: aString subStrings!
 
 superclass: aClass
 	"Private - Set the target superclass."
@@ -6345,14 +6392,13 @@ translateInstance: oldInstance intoANewInstanceOf: newClass via: mappingArray
 				ifTrue: [newInstance instVarAt: i put: (oldInstance instVarAt: index)]].
 	^newInstance!
 
-updateVMRegistryWith: aClass
+updateVMRegistryWith: aClass 
 	"Private - Ensure that if aClass is a VM registered class then the VM's
 	entry is updated to the new class."
 
 	| name |
 	name := aClass name asSymbol.
-	(VMLibrary registryKeys includesKey: name)
-		ifTrue: [VMLibrary default registryAt: name put: aClass]!
+	(VMLibrary registryKeys includesKey: name) ifTrue: [VMLibrary default registryAt: name put: aClass]!
 
 validateClass
 	"Private - Ensure that currentClass is a valid Behavior."
@@ -6567,13 +6613,12 @@ validateSuperclassForModify
 	"Private - Ensure that no circularity is introduced into the hierarchy and
 	that the superclass of a metaclass is not changed directly."
 
-	self superclassIsBeingChanged
-		ifTrue: [
-			currentClass isMeta
-				ifTrue: [self error: 'It is invalid to directly change the superclass of a metaclass.'].
-			self validateSuperclassIsSubclassable.
-			(superclass notNil and: [superclass isKindOf: currentClass])
-				ifTrue: [self error: superclass name, ' is a subclass of the class being changed.']].!
+	self superclassIsBeingChanged ifFalse: [^self].
+	currentClass isMeta 
+		ifTrue: [self error: 'It is invalid to directly change the superclass of a metaclass.'].
+	self validateSuperclassIsSubclassable.
+	(superclass notNil and: [superclass isKindOf: currentClass]) 
+		ifTrue: [self error: superclass name , ' is a subclass of the class being changed.']!
 
 validateSuperclassIsSubclassable
 	"Private - Ensure that the superclass is a subclassable object."
@@ -6601,8 +6646,7 @@ icon
 initialize
 	"Private - Initialize the receiver's class variables."
 
-	AbsentCookie := Object new
-!
+	self addClassConstant: 'AbsentCookie' value: Object new!
 
 with: element1
 	"Answer an instance of the receiver containing the <Object>, element1.
@@ -6666,6 +6710,31 @@ withAll: newElements
 
 _beginsString: aString
 	^aString basicBeginsWith: self!
+
+_indexOfAnyInString: aString startingAt: anInteger 
+	aString from: anInteger keysAndValuesDo: [:i :elem | (self includes: elem) ifTrue: [^i]].
+	^0!
+
+_separateSubStringsIn: aReadableString 
+	"Private - Answer an Array containing the substrings in aReadableString separated
+	by the elements of the receiver (which must be Characters)."
+
+	| start answer size end |
+	size := aReadableString size.
+	size == 0 ifTrue: [^Array new].
+	end := aReadableString indexOfAnyOf: self startingAt: 1.
+	end == 0 ifTrue: [^Array with: aReadableString].
+	answer := Array writeStream: 5.
+	start := 1.
+	
+	[answer nextPut: (aReadableString copyFrom: start to: end - 1).
+	start := end + 1.
+	end := aReadableString indexOfAnyOf: self startingAt: start.
+	end == 0] 
+			whileFalse.
+	"Copy any remaining chars after the last separator"
+	start <= size ifTrue: [answer nextPut: (aReadableString copyFrom: start to: size)].
+	^answer contents!
 
 add: newElement
 	"Include the <Object> argument, newElement, as one of the receiver's 
@@ -6884,10 +6953,7 @@ copyWithoutDuplicates
 	"Answers a copy of the receiver that contains no duplicate objects. 
 	Uses equality for comparison."
 
-	| newCollection |
-	newCollection := self copyEmpty.
-	self asSet do: [ :each | newCollection add: each ].
-	^newCollection!
+	^self distinct!
 
 countElements
 	"Private - Count, and answer, the number of elements in the receiver.
@@ -6926,6 +6992,13 @@ difference: comperand
 	but not the argument."
 
 	^self reject: [:e | comperand includes: e]!
+
+distinct
+	"Answer a <collection> like the receiver containing only one occurrence of each element."
+
+	| seen |
+	seen := Set new.
+	^self select: [:each | seen addNewElement: each]!
 
 do: operation
 	"Evaluate the <monadicValuable> argument, operation, for each of the 
@@ -7139,6 +7212,13 @@ removeAll: oldElements
 	oldElements do: [:each | self remove: each].
 	^oldElements!
 
+removeAllSuchThat: aBlock 
+	"Evaluate aBlock for each element and remove all that elements from the receiver for that
+	aBlock evaluates to true. Use a copy to enumerate collections whose order changes when an
+	element is removed (i.e. Sets)."
+
+	self copy do: [:each | (aBlock value: each) ifTrue: [self remove: each]]!
+
 select: discriminator
 	"Evaluate the <monadicValuable> argument, discriminator, for each of the receiver's elements.
 	Answer a new <collection> like the receiver containing only those elements for which 
@@ -7207,12 +7287,11 @@ CompilationResult comment:
 buildTempsMap
 	tempsMap := OrderedCollection new: rawTempsMap size.
 	rawTempsMap do: 
-			[:each | 
-			| startIP stopIP temps |
-			startIP := each at: 1.
-			stopIP := each at: 2.
-			temps := each at: 3.
-			tempsMap addLast: (startIP to: stopIP) -> temps].
+			[:each |
+			| ipRange |
+			ipRange := (each at: 1) to: (each at: 2).
+			ipRange isEmpty
+				ifFalse: [tempsMap addLast: ipRange -> (each at: 3)]].
 	"Discard the raw temps map built by the compiler to save space"
 	rawTempsMap := nil!
 
@@ -7263,14 +7342,12 @@ rawTempsMap: anObject
 rawTextMap: anObject
 	rawTextMap := anObject!
 
-tempsAtIp: ip 
-	| found |
-	self tempsMap keysAndValuesDo: 
-			[:i :each | 
-			| range |
-			range := each key.
-			(range includes: ip) ifTrue: [found := each value]].
-	^found ifNil: [Array new]!
+tempsAtIp: anInteger
+	"Private - Answer the temps map entry for the scope that most closely encloses the specified
+	1-based bytecode ip."
+
+	^self tempsMap inject: #()
+		into: [:match :each | (each key includes: anInteger) ifTrue: [each value] ifFalse: [match]]!
 
 tempsMap
 	"Answer the map of ip ranges to temporaries if such was requested (if not, then nil).
@@ -7462,7 +7539,7 @@ byteCodes
 			remaining := remaining bitShift: -8].
 	^bytes!
 
-byteCodes: anObject 
+byteCodes: anObject
 	"Private - Set the value of the receiver's ''byteCodes'' instance variable to the argument,
 	anObject. anObject must be either a ByteArray, or a SmallInteger containing the packed
 	representation of the bytecodes. If a ByteArray is passed that is suitable for packing (it
@@ -7470,19 +7547,18 @@ byteCodes: anObject
 	format."
 
 	| codes |
-	codes := (anObject isInteger or: [anObject size > 4 or: [anObject first even]]) 
-				ifTrue: [anObject]
-				ifFalse: 
-					[| packed |
-					codes := (anObject size == 4 
-								ifTrue: [anObject sdwordAtOffset: 0]
-								ifFalse: 
-									[packed := 0.
-									anObject reverseDo: [:each | packed := (packed bitShift: 8) + each].
-									packed]) 
-									bitShift: -1.
-					self assert: [codes class == SmallInteger].
-					codes].
+	(anObject isInteger or: [anObject size > 4 or: [anObject first even]])
+		ifTrue: [codes := anObject]
+		ifFalse: 
+			[codes := (anObject size == 4
+						ifTrue: [anObject sdwordAtOffset: 0]
+						ifFalse: 
+							[| packed |
+							packed := 0.
+							anObject reverseDo: [:each | packed := (packed bitShift: 8) + each].
+							packed])
+							bitShift: -1.
+			self assert: [codes class == SmallInteger]].
 	codes isImmutable: true.
 	byteCodes := codes!
 
@@ -7634,15 +7710,17 @@ isUnbound
 
 	^true!
 
-literalArray: literalArray do: operation 
+literalArray: literalArray do: operation
 	"Private - Evaluate the <monadicValuable>, operation, for each of the elements of
 	the <Array>, literalArray, recursively drilling down into any embedded arrays too.
 	Note that it is a pre-order traversal."
 
-	literalArray do: 
-			[:literal | 
-			operation value: literal.
-			(literal class == Array and: [literal isImmutable]) 
+	1 to: literalArray size
+		do: 
+			[:i |
+			| literal |
+			operation value: (literal := literalArray at: i).
+			(literal class == Array and: [literal isImmutable])
 				ifTrue: [self literalArray: literal do: operation]]!
 
 literalAt: anInteger 
@@ -7681,8 +7759,11 @@ literals
 
 	| count |
 	count := self literalCount.
-	^(Array new: count)
-		replaceFrom: 1 to: count with: self startingAt: 1!
+	^self
+		replaceElementsOf: (Array new: count)
+		from: 1
+		to: count
+		startingAt: 1!
 
 literalsDetect: discriminator ifNone: exceptionHandler
 	"Evaluate the <monadicValuable> argument, discriminator, for each of the 
@@ -7787,6 +7868,23 @@ refersToLiteral: anObject
 	1 to: self literalCount
 		do: [:i | ((self at: i) refersToLiteral: anObject) ifTrue: [^true]].
 	^false!
+
+replaceElementsOf: anIndexableObject from: startInteger to: stopInteger startingAt: startAtInteger
+	"Private - Replace the indexable instance variables of the variable pointer object,
+	anIndexableObject, between startInteger and stopInteger inclusive with literals from the
+	receiver starting from startAtInteger. Answers anIndexableObject."
+
+	| offset |
+	<primitive: 188>
+	offset := startAtInteger - startInteger.
+	(anIndexableObject == self and: [startAtInteger < startInteger])
+		ifTrue: 
+			[stopInteger to: startInteger
+				by: -1
+				do: [:i | anIndexableObject basicAt: i put: (self basicAt: offset + i)]]
+		ifFalse: 
+			[startInteger to: stopInteger do: [:i | anIndexableObject basicAt: i put: (self basicAt: offset + i)]].
+	^anIndexableObject!
 
 selector
 	"Answer the message selector under which the receiver is entered in its class' method
@@ -8300,7 +8398,7 @@ textMapOf: aString in: aClass
 uninitialize
 	"Clean up VM references that are only required if the compiler is present."
 
-	#(#notificationCallback: #sharedStaticPools #allInstVarNames #evaluate:for:evaluationPools: #bindingFor:) 
+	#(#notificationCallback: #allInstVarNames #evaluate:for:evaluationPools: #bindingFor:)
 		do: [:each | VMLibrary default unregisterObject: each]!
 
 warningClass
@@ -8602,30 +8700,31 @@ value
 	^value! !
 
 Delay comment:
-'<Delay>s are used to introduce timed pauses in the execution of a <Process>.  Delays can be constructed that specify a duration using the instance creation messages #forMilliseconds: and #forSeconds:, or an absolute time based on the millisecond clock value (#untilMilliseconds:). Once constructed a Delay responds to the #wait message by suspending the active process for the desired duration, or until the desired absolute time is reached. 
+'<Delay>s are used to introduce timed pauses in the execution of a <Process>.  Delays can be constructed that specify a duration using the instance creation messages #forMicroseconds:, #forMilliseconds:, and #forSeconds:, or an absolute time based on the millisecond clock value (#untilMilliseconds:). Once constructed a Delay responds to the #wait message by suspending the active process for the desired duration, or until the desired absolute time is reached. 
 
 Delays are "one-shot" in that once they have expired further attempts to #wait on them will return immediately. This applies even if the Delay was originally constructed to wait for a time interval rather than an absolute time. Therefore if one wishes to delay a process in a loop, new Delay instances should be created as required inside the loop. It is often more convenient to use the ProcessorScheduler>>sleep: message, which wraps up the creation and wait operations inside a convenience message.
 
-Delays are not hard real time, in that the requested delay is the minimum time period that will elapse before the process is restarted. The VM will make a best effort to reschedule the process after the desired delay by using the high-resolution multimedia clock (accurate to 1 millisecond) and high priority threads, but there may still be an arbitrary additional delay before the Process actually restarts depending on the load on the host machine and the relative priority of the Dolphin thread in relation to other OS threads, and the waiting Process in relation to other Processes. There is also some context switching and other processing overhead that will increase the average minimum Delay to a period greater than 1mS, though (depending on machine speed) it should be quite close. 
+Delays are not hard real time, in that the requested delay is the minimum time period that will elapse before the process is restarted. The VM will make a best effort to reschedule the process after the desired delay by using the high-resolution multimedia clock (which is accurate to at best 1 millisecond) and high priority threads, but there may still be an arbitrary additional delay before the Process actually restarts depending on the load on the host machine and the relative priority of the Dolphin thread in relation to other OS threads, and the waiting Process in relation to other Processes. There is also some context switching and other processing overhead that will increase the average minimum Delay to a period greater than 1mS, though (depending on machine speed) it should be quite close. 
 
 Example usage:
 	5 timesRepeat: [(Delay forMilliseconds: 500) wait. Sound bell]
 
 Instance Variables:
-	duration		<integer> number of milliseconds to delay Process
-	resumptionTime	<integer> value of millisecond clock at which to resume
-	waitSemaphore	<Semaphore> on which to delay Process
+	duration			<integer> number of microseconds to delay when #wait is sent
+	resumptionTime	<integer> value of VM microsecond clock at which to resume
+	waitSemaphore		<Semaphore> on which to wait
 
 Class Variables:
-	AccessProtect	<Semaphore> protects the class variables in critical regions
-	Current		<Delay> the next scheduled Delay (or nil if none)
-	ImageClock	<integer> millisecond clock value on last image save - used to reschedule delays on image restart
-	Pending		<SortedCollection> of waiting <Delay>s in ascending order of resumptionTime.
-	Resolution	<integer> resolution of millisecond clock, minimum 1
-	TimerMax		<integer> maximum delay recordable with the timing device.  Longer delays are achieved by repeatedly rescheduling until the desired period has elapsed.
-	TimingProcess	<Process> responsible for waking up delayed processes on expiry of Delay
-	TimingSemaphore	<Semaphore> Signalled by the VM at requested times, governing the operation of the TimingProcess.
-'!
+	AccessProtect		<Semaphore>; protects the class variables in critical regions.
+	Current			<Delay>; the next scheduled Delay (or nil if none).
+	DefaultResolution	The default resolution of Delays; <integer> number of microseconds.
+	HighestResolution	The highest requestable resolution for Delays; <integer> number of microseconds.
+	ImageClock		The <integer> microsecond clock value on last image save - used to rebase pending Delays on image restart.
+	LowestResolution	The lowest requestable resolution for Delays; <integer> number of microseconds.
+	Pending			<SortedCollection> of waiting <Delay>s in ascending order of resumptionTime.
+	Resolution			The current <integer> resolution of Delays specified in microseconds.
+	TimingProcess		<Process> responsible for waking up delayed processes on expiry of Delays.
+	TimingSemaphore	<Semaphore> signalled by the VM at requested times, governing the operation of the TimingProcess.'!
 !Delay class methodsFor!
 
 aboutToIdle
@@ -8637,8 +8736,14 @@ aboutToIdle
 cancelTimer
 	"Private - Cancel any previously registered timer."
 
-	Processor signal: nil afterMilliseconds: 0.
-!
+	self signalTimerAfter: -1!
+
+clampResolution: anInteger
+	"Private - As we are using multimedia timers at present, the shortest delay we
+	can request is 1mS, so we clamp the requested resolution to 1000 as there is no point
+	setting a resolution higher than we can achieve."
+
+	^anInteger max: 1000!
 
 forkTimingProcess
 	"Private - Start the timing process which manages instances of the receiver. The timing 
@@ -8649,7 +8754,7 @@ forkTimingProcess
 
 	AccessProtect critical: [	
 		self cancelTimer.
-		TimingSemaphore isNil ifTrue: [self initializeTimingSemaphore].
+		self initializeTimingSemaphore.
 		TimingProcess isNil ifFalse: [TimingProcess terminate].
 		Current isNil ifFalse: [Current snooze].		"put current back into Pending"
 		self scheduleNext.
@@ -8662,8 +8767,20 @@ forkTimingProcess
 				self scheduleNext]] repeat.
 	] forkAt: Processor timingPriority) name: 'Timing'; yourself!
 
-forMilliseconds: millisecondCount
-	"Answer a new instance of the receiver with a duration of millisecondCount seconds.
+forMicroseconds: anInteger
+	"Answer a new instance of the receiver with a duration of approximately anInteger
+	microseconds The new instance has no effect on the progress of a Process until sent the
+	message #wait. The actual delay achieved will depend on the current resolution of the OS
+	timer, which has a maximum resolution on current Windows systems of at best 500uS."
+
+	"Implementation Note: The Dolphin VM's timer is implemented on top of Windows multimedia
+	timers, and these have a maximum resolution of 1mS. Any delay requested shorter than 1mS
+	will result in a wait of at least 1mS."
+
+	^self new duration: anInteger!
+
+forMilliseconds: anInteger
+	"Answer a new instance of the receiver with a duration of anInteger milliseconds.
 	The new instance has no effect on the progress of a Process until sent the 
 	message #wait. 
 	ou can now set a delay down to 1mS - e.g. try 
@@ -8672,17 +8789,22 @@ forMilliseconds: millisecondCount
 	much CPU time for other processes to run.
 	"
 
-	^self new duration: millisecondCount!
+	^self new duration: anInteger * 1000!
 
-forSeconds: secondCount
-	"Answer a new instance of the receiver with a duration of secondCount seconds.
-	The new instance has no effect on the progress of a Process until sent the 
-	message #wait. A Delay instantiated for a particular duration (as opposed to one
-	instantiated for an absolute millisecond time) can be used repeatedly (i.e. the 
-	#wait message can be sent to it more than once, though at any one time only one 
-	Process can be waiting for a Delay)."
+forSeconds: anInteger
+	"Answer a new instance of the receiver with a duration of anInteger seconds. The new
+	instance has no effect on the progress of a Process until sent the message #wait. A Delay
+	instantiated for a particular duration (as opposed to one instantiated for an absolute
+	millisecond time) can be used repeatedly (i.e. the #wait message can be sent to it more than
+	once, though at any one time only one Process can be waiting for a Delay)."
 
-	^self forMilliseconds: secondCount*1000!
+	^self forMilliseconds: anInteger * 1000!
+
+highestResolution
+	"Answer the maximum resolution of Delays in microseconds, i.e. the shortest period for which
+	one could theoretically request a Delay on the current host."
+
+	^HighestResolution!
 
 icon
 	"Answers an Icon that can be used to represent this class. Here we use a constant expression 
@@ -8700,20 +8822,19 @@ initialize
 	"
 
 	ImageClock := 0.
-	Resolution := 1.
-	TimerMax := 65535.
+	LowestResolution := HighestResolution := Resolution := DefaultResolution.
 	AccessProtect isNil ifTrue: [AccessProtect := Semaphore forMutualExclusion].
 	AccessProtect critical: 
-			[Pending := SortedCollection 
+			[Pending := SortedCollection
 						sortBlock: [:delay1 :delay2 | delay1 resumptionTime <= delay2 resumptionTime].
 			Current := nil].
-	TimingSemaphore isNil ifTrue: [self initializeTimingSemaphore]!
+	self initializeTimingSemaphore!
 
 initializeTimingSemaphore
-	"Private - Create the timing semaphore used for communication with the VM's
-	timer services."
+	"Private - Create the timing semaphore used for communication with the VM's timer services."
 
-	TimingSemaphore := Semaphore new!
+	TimingSemaphore isNil ifTrue: [TimingSemaphore := Semaphore new].
+	VMLibrary default registryAt: #TimingSemaphore put: TimingSemaphore!
 
 keepAlive
 	"Private - Ensure that there is a timing process, and that it is in a runnable state."
@@ -8723,10 +8844,16 @@ keepAlive
 			Notification signal: 'Starting new timing process'.
 			self forkTimingProcess]!
 
-millisecondClockValue
-	"Private - Answer the current millisecond clock value."
+lowestResolution
+	"Answer the maximum resolution of Delays in microseconds, i.e. the shortest period for which
+	one could theoretically request a Delay on the current host."
 
-	<primitive: 174>
+	^LowestResolution!
+
+microsecondClockValue
+	"Private - Answer the current value of the microsecond clock."
+
+	<primitive: 189>
 	^self primitiveFailed!
 
 new
@@ -8744,20 +8871,12 @@ onPreSaveImage
 	"Private - The image is about to be saved. Store down the millisecond clock
 	value so that we can reschedule Delays on restart."
 
-	ImageClock := self millisecondClockValue!
+	ImageClock := self microsecondClockValue!
 
 onStartup
 	"The system has just started. Initialize the timing system."
 
-	| devCaps |
-	"We don't bother detecting errors reported by the call, because it's too early to report them anyway"
-	devCaps := ByteArray new: 8.
-	WinMMLibrary default timeGetDevCaps: devCaps cbtc: devCaps size.
-	Resolution := devCaps dwordAtOffset: 0.
-
-	"Don't use the full range as its a bit unreliable on Windows 95.
-	On NT4.0 this is fairly long duration anyway."
-	TimerMax := (devCaps dwordAtOffset: 4) // 2.
+	self queryOsTimerResolution.
 	self keepAlive.
 	self reschedule!
 
@@ -8767,6 +8886,21 @@ prod
 
 	TimingSemaphore signal!
 
+queryOsTimerResolution
+	| min max actual |
+	min := DWORDBytes new.
+	max := DWORDBytes new.
+	actual := DWORDBytes new.
+	(NTLibrary default
+		ntQueryTimerResolution: min
+		maximum: max
+		actual: actual) == 0
+		ifTrue: 
+			[LowestResolution := self clampResolution: min value // 10.
+			HighestResolution := self clampResolution: max value // 10.
+			Resolution := self clampResolution: actual value // 10]
+		ifFalse: [LowestResolution := HighestResolution := Resolution := DefaultResolution]!
+
 reschedule
 	"Private - Ensure that the next pending Delay, or the Current one, is correctly scheduled with 
 	the VM. Called during startup to reschedule Delays based on the difference between the current
@@ -8774,16 +8908,41 @@ reschedule
 
 	AccessProtect critical: 
 			[| delta |
-			delta := self millisecondClockValue - ImageClock.
+			delta := self microsecondClockValue - ImageClock.
 			Current isNil ifFalse: [Current snooze].	"put current back into Pending"
 			Pending do: [:each | each delta: delta].
 			self scheduleNext]!
 
 resolution
-	"Answer the resolution of Delays. This is the underlying resolution of the timing
-	device. Dolphin will try to service delays of this period, but it may not be possible."
+	"Answer the resolution of Delays in microseconds. This is the underlying resolution of the
+	OS timer. Dolphin will try to service delays of this period, but it may not be possible."
 
 	^Resolution!
+
+resolution: anInteger do: aNiladicValuable
+	"Evaluate the <monadicValuable> argument with the system timer resolution set to the number
+	of 100nS intervals specified by the <integer> argument. The actual timer resolution is
+	passed as the argument to the <monadicValuable>."
+
+	self resolution: anInteger set: true.
+	[aNiladicValuable value] ensure: [self resolution: anInteger set: false]!
+
+resolution: anInteger set: aBoolean
+	"Attempt to set or relinquish a timer resolution specified by the <integer> argument, which
+	represents the desired number of microseconds between each timer tick. If the <boolean>
+	argument is true, then the timer resolution is requested. If the <boolean> argument is
+	false, then a previous request for the specified resolution is given up. Answer the actual
+	timer resolution established in microseconds. On current windows systems the maximum
+	resolution is 500uS, and the minimum (and default) ~15mS. Note that increasing the timer
+	resolution can reduce battery life, so this should be used with care."
+
+	| actualResolution |
+	actualResolution := DWORDBytes new.
+	NTLibrary default
+		setTimerResolution: (anInteger max: 1000) * 10
+		set: aBoolean
+		actualResolution: actualResolution.
+	^Resolution := self clampResolution: actualResolution value!
 
 scheduleNext
 	"Private - Schedule the next Pending Delay (if any). MUST be called from within
@@ -8792,6 +8951,19 @@ scheduleNext
 	Pending isEmpty 
 		ifTrue: [Current := nil]
 		ifFalse: [Pending removeFirst schedule]!
+
+signalTimerAfter: anInteger
+	"Private - Request that the VM signal the TimingSemaphore as soon as possible after the
+	the specified millisecond delay. Cancel any existing request if aSemaphore is 
+	not actuall a Semaphore (typically nil). If anInteger = 0, then the Semaphore
+	is signalled immediately. If anInteger < 0, then the current timer (if any) is cancelled.
+
+	Primitive failure results:
+		0 - anInteger is not a SmallInteger
+		3 - OS refused to set timer (try KernelLibrary>>getLastError)"
+
+	<primitive: 100>
+	^self primitiveFailed!
 
 timingProcess
 	"Private - Answer the <Process> which is used to manage the list of pending Delays."
@@ -8802,19 +8974,19 @@ untilMilliseconds: millisecondTime
 	"Answer a new instance of the receiver that will make the active Process
 	wait until the millisecond clock reaches the value millisecondTime."
 
-	^self new resumptionTime: millisecondTime! !
+	^self new resumptionTime: millisecondTime * 1000! !
 
 !Delay methodsFor!
 
 calcResumptionTime
-	"Private - Calculate and answer the value of the millisecond clock after which any 
-	Process waiting on the receiver will be rescheduled. We could lazily evaluate this
-	from the normal accessor, but we want to ensure that scheduling Delays is as fast 
-	as possible, and we also want to be able to control when the calculation is made, 
-	as for relative durations (the most common case) we really want to calculate off 
-	the clock just before the receiver is scheduled, certainly not before that."
+	"Private - Calculate and answer the value of the millisecond clock after which any Process
+	waiting on the receiver will be rescheduled. We could lazily evaluate this from the normal
+	accessor, but we want to ensure that scheduling Delays is as fast as possible, and we also
+	want to be able to control when the calculation is made, as for relative durations (the most
+	common case) we really want to calculate off the clock just before the receiver is
+	scheduled, certainly not before that."
 
-	resumptionTime isNil ifTrue: [resumptionTime := self class millisecondClockValue + duration].
+	resumptionTime isNil ifTrue: [resumptionTime := self class microsecondClockValue + duration].
 	^resumptionTime!
 
 cancel
@@ -8837,38 +9009,40 @@ delta: anInteger
 
 	resumptionTime := resumptionTime + anInteger!
 
-duration: millisecs
-	"Private - Initialize the receiver to be a Delay for the Number of milliseconds specified by
-	the argument, millisecs. The resumptionTime is calculated when a #wait is sent.
+duration: anInteger
+	"Private - Initialize the receiver to be a Delay for the number of microseconds specified by
+	the <integer> argument. The resumptionTime is calculated when a #wait is sent.
 	Answer the receiver."
 
-	duration := millisecs truncated
-!
+	duration := anInteger truncated!
 
 getDuration
-	"Private - Answer the remaining duration of the receiver based off the current millisecond
-	clock value and requested resumption time. We avoid requesting a delay which is larger than
-	that which the system can provide, which means we may wake up before time and have to
-	reschedule. If the resumptionTime has already passed, then answer 0 (i.e. duration is always
-	positive)."
+	"Private - Answer the remaining duration of the receiver based off the current clock value
+	and requested resumption time. Note that we may request a delay which is larger than that
+	which the operating system can provide (on NT this is 1000000 milliseconds, or ~17 minutes),
+	in which case we may wake up before time and have to reschedule. Delays should not be
+	scheduled when they have expired, so the minimum duration is the timer resolution."
 
-	^(resumptionTime - self class millisecondClockValue min: TimerMax) max: 0!
+	^resumptionTime - self class microsecondClockValue max: HighestResolution!
 
 hasExpired
 	"Private - Answer whether the receiver represents a Delay which should have
 	fired by now."
 
-	^(resumptionTime - self class millisecondClockValue) < Resolution.
-
-	#todo "This, and other Delay methods, do not correctly account for the millisecond clock
-		wrapping round. Fix this, and perhaps allow scheduling of Delays for absolute DateTimes"!
+	^resumptionTime - self class microsecondClockValue < (HighestResolution bitShift: -1)!
 
 initialize
-	"Private - Initialize the receiver to be a valid Delay, but one which will fire immediately.
+	"Private - Initialize the receiver to be a valid Delay, but one which will fire after the minimum possible delay.
 	Answer the receiver."
 
 	duration := 0.
 	waitSemaphore := Semaphore new!
+
+microsecondClockValue
+	"Answer the current value of the microsecond clock."
+
+	<primitive: 189>
+	^self primitiveFailed!
 
 printOn: aStream
 	"Append a short textual description of the receiver to aStream."
@@ -8887,19 +9061,19 @@ resumptionTime
 
 	^resumptionTime!
 
-resumptionTime: millisecondTime
-	"Private - Initialize the receiver to be a Delay until millisecondTime. The duration remains
-	nil as this is a delay until an absolute time, and cannot be rescheduled.
-	Answer the receiver."
+resumptionTime: anInteger
+	"Private - Initialize the receiver to be a Delay until the microsecond clock value is >=
+	anInteger. The duration remains nil as this is a delay until an absolute time, and cannot be
+	rescheduled. Answer the receiver."
 
-	resumptionTime := millisecondTime truncated!
+	resumptionTime := anInteger truncated!
 
 riseAndShine
 	"Private - The receiver's alarm has gone off. Decide whether to get up yet, or
 	press the snooze button. This is necessary because we cannot always set a Delay
 	for the maximum duration required.
 	Implementation Note: This expects to be called inside the critical section."
-
+	
 	self hasExpired 
 		ifTrue: [self wakeup]
 		ifFalse: [self snooze]!
@@ -8910,13 +9084,12 @@ schedule
 
 	TimingSemaphore reset.
 
-	"This may fire immediately, causing a Process switch to the timing process
-	(if it's not the scheduler of the Delay), however it will almost immediately
-	be forced to wait for the AccessProtect mutual exclusion Semaphore (which
-	we own) to be signalled, which will mean that the assignment to Current
-	must happen before the timing process accesses it. The timing Process
-	will not restart until we exit our critical section."
-	Processor signal: TimingSemaphore afterMilliseconds: self getDuration.
+	"This may fire immediately, causing a Process switch to the timing process (if it's not the
+	scheduler of the Delay), however it will almost immediately be forced to wait for the
+	AccessProtect mutual exclusion Semaphore (which we own) to be signalled, which will mean
+	that the assignment to Current must happen before the timing process accesses it. The timing
+	Process will not restart until we exit our critical section."
+	self class signalTimerAfter: self getDuration // 1000.
 
 	Current := self!
 
@@ -9650,10 +9823,8 @@ postCopy
 	therefore we nil the state associated with the context in which the original was raised."
 
 	super postCopy.
-	_environmentWhenRaised := _signalFrame := 
-		_continueBlock := _resignalBlock := nil.
-	^self
-!
+	_environmentWhenRaised := _process := _signalFrame := _continueBlock := _resignalBlock := nil.
+	^self!
 
 printOn: aStream
 	"Append a debug description of the receiver to aStream."
@@ -9771,11 +9942,13 @@ signal
 	"Raise (or re-raise) the receiver in the context of the current active process, causing its propagation 
 	up through the handler chain."
 
-	_environmentWhenRaised isNil ifTrue: [
-		"Save info about the raising environment in case we want to resignal."
-		_environmentWhenRaised := Processor activeProcess exceptionEnvironment.
-		"If the signaller did not specify the context where the error was raised, make it this one"
-		_signalFrame := thisContext].
+	_environmentWhenRaised isNil
+		ifTrue: 
+			["Save info about the raising environment in case we want to resignal."
+			_process := Processor activeProcess.
+			_environmentWhenRaised := _process exceptionEnvironment.
+			"If the signaller did not specify the context where the error was raised, make it this one"
+			_signalFrame := thisContext].
 	^self _propagate!
 
 signal: signalText
@@ -9797,7 +9970,7 @@ signalFrame
 	"Private - Answer the StackFrame from which the receiver was signalled. This may be several 
 	levels below the actual error detection frame on the stack."
 
-	^Processor activeProcess frameAtAddress: _signalFrame!
+	^_process frameAtAddress: _signalFrame!
 
 signalType
 	"Private - Answer the type of signal for which the receiver is representing
@@ -9812,10 +9985,10 @@ signalWith: anObject
 
 stackTrace: anInteger
 	"Private - Answer a <readableString> containing a stack trace to the depth specified by the <integer>
-	argument. Assumes that the receiver is a signalled exception in the active process."
-	
+	argument. Assumes that the receiver is a signalled exception."
+
 	| frame |
-	frame := self raisingFrame.	"N.B. Assumes in active process"
+	frame := self raisingFrame.
 	^frame process stackTraceFrom: self raisingFrame depth: anInteger!
 
 tag
@@ -11007,13 +11180,12 @@ load: aString flags: anInteger
 	"Private - Open the external library with the external file name, aString,
 	and answer the handle."
 
-	| hLibrary klib flags |
-	flags := OSVERSIONINFO current isNT ifTrue: [anInteger] ifFalse: [0].
+	| hLibrary klib |
 	klib := KernelLibrary default.
 	hLibrary := klib 
 				loadLibraryEx: aString
 				hFile: nil
-				dwFlags: flags.
+				dwFlags: anInteger.
 	^hLibrary ifNil: [Win32Error signal: aString printString]!
 
 moduleFileName: aLibOrHandle
@@ -12139,10 +12311,9 @@ free
 	Implementation Note: Whether we free the data or not we must
 	make sure that we remove any lock for which we are responsible."
 
-	self needsFree
-		ifTrue: [self basicFree].
-	bytes := nil.
-	self beUnfinalizable	"finalization no longer required"!
+	self beUnfinalizable.
+	self needsFree ifTrue: [self basicFree].
+	bytes := nil!
 
 getField: fieldNameString
 	"Answer the value of the named field of the receiver,
@@ -12285,20 +12456,27 @@ printCyclicRefOn: aStream
 	aStream nextPutAll: '...'!
 
 printFieldsOn: aStream limit: anInteger 
+	| sep |
 	self isNull 
-		ifTrue: [aStream nextPutAll: 'NULL']
-		ifFalse: 
-			[self getValidFields do: 
-					[:field | 
-					aStream position > anInteger 
-						ifTrue: 
-							[aStream nextPutAll: '... etc ...'.
-							^self].
+		ifTrue: 
+			[aStream nextPutAll: 'NULL'.
+			^self].
+	sep := [sep := [aStream space]].
+	self getValidFields do: 
+			[:each | 
+			| field |
+			aStream position > anInteger 
+				ifTrue: 
+					[aStream nextPutAll: '... etc ...'.
+					^self].
+			field := self template at: each.
+			field isReadable 
+				ifTrue: 
+					[sep value.
 					aStream
-						display: field;
+						display: each;
 						nextPutAll: '=';
-						print: (self getField: field)]
-				separatedBy: [aStream space]]!
+						print: (self getField: each)]]!
 
 printOn: aStream 
 	"Append a textual representation of the receiver to aStream.
@@ -13184,6 +13362,10 @@ delete
 	self free.
 	self class delete: spec!
 
+fileType
+	^#(#disk #char #pipe) at: ((KernelLibrary default getFileType: self handle) bitAnd: 16rFFF)
+		ifAbsent: [#unknown]!
+
 flags: anInteger
 	"Private - Save away the Win32 access and open flags."
 
@@ -13627,11 +13809,19 @@ imageRelative
 
 	^ImageRelativeFileLocator current!
 
+imageRelative: aFilenameString
+	^self imageRelative localFileSpecFor: aFilenameString
+!
+
 installRelative
 	"Answers an instance of the receiver that can be used to locate external files
 	relative to the current installation directory."
 
 	^InstallRelativeFileLocator current
+!
+
+installRelative: aFilenameString
+	^self installRelative localFileSpecFor: aFilenameString
 ! !
 
 !FileLocator methodsFor!
@@ -13985,20 +14175,19 @@ InputState comment:
 
 Instance Variables:
 	inputSemaphore	<Semaphore> on which the UI process blocks when the idle (i.e. when message loop is empty).
-	idler		<Process>. The idle process responsible for relinquishing control to Windows when no other Smalltalk <Process>es are ready to run.
+	idler			<Process>. The idle process responsible for relinquishing control to Windows when no other Smalltalk <Process>es are ready to run.
 	idleTimer		<WeakArray> holding <window> currently hosting WM_TIMER used to keep background processing operational when running Windows modal msg loops such as those for common dialogs.
-	main		<Process>. The current main UI process.
+	main			<Process>. The current main UI process.
 	windows		<LookupTable> of <Integer>. Map of window handles to associated Smalltalk windows (usually <View>s).
 	deferredActions	<SharedQueue> of <niladicValuable>. Actions to be processed by the main process when the message loop is empty.
 	lastWindow	<window> that last received a message (cached because most likely to receive next message too).
 	wakeupEvent	<ExternalHandle> of Win32 Event object signalled by the VM when it wants the image to wake up.
+	msgWindow	<PostedActionWindow> 
 
 Class Variables:
-	MaxIdleSleep9x		<SmallInteger>. Timeout passed to MsgWaitForMultipleObjects by idle process when on Windows 9x 
-	MaxIdleSleepNT		<SmallInteger>. Timeout passed to MsgWaitForMultipleObjectsEx by idle process when on Windows NT 
 	EnumHandlesDescriptor	<ExternalDescriptor>. Callback descriptor for EnumWindows.
-	UserInterruptSignal		<Signal>. Exception raised when Ctrl+Break key press detected.
-	SamplingInterval		<SmallInteger> interval (measured in full method/blockactivations) between tests of 					system input queue for host system messsages when running background processes.
+	UserInterruptSignal		<Signal>. Exception raised when Break key combination is pressed.
+	SamplingInterval		<SmallInteger> approximate millisecond interval between tests of system input queue for host system messsages when running background processes.
 '!
 !InputState class methodsFor!
 
@@ -14097,9 +14286,8 @@ ensureMainRunning
 			[main suspendingList == inputSemaphore ifTrue: [^self].
 			main isAlive 
 				ifTrue: 
-					["Check for break key - inlined to avoid dependency on Keyboard class"
-					((UserLibrary default getAsyncKeyState: Win32Constants.VK_CANCEL) anyMask: 16r8001) 
-						ifTrue: [main queueInterrupt: Processor userBreakInterrupt].
+					["Check for user break"
+					VMLibrary default isUserBreakRequested ifTrue: [main queueInterrupt: Processor userBreakInterrupt].
 					^self]].
 	self forkMain!
 
@@ -14459,9 +14647,12 @@ pumpMessages
 	is received, then exit Smalltalk. This can be used from user code to empty the message queue
 	if necessary."
 
-	| msg |
-	msg := MSG new.
-	self loopWhile: [self isInputReady: msg]!
+	Processor isActiveMain
+		ifTrue: 
+			[| msg |
+			msg := MSG new.
+			self loopWhile: [self isInputReady: msg]]
+		ifFalse: [self prod].!
 
 purgeDeadWindows
 	"Remove any windows in the windows collection which have a NULL handle. In normal use there
@@ -14510,8 +14701,8 @@ removeWindowAt: aHandle
 
 setSamplingInterval: anInteger 
 	"Private - Set sampling interval. This is the approximate interval, in milliseconds, at
-	which the system will sample the input queue and check for Ctrl+Break when running
-	computationally expensive tasks in background threads."
+	which the system will sample the input queue and check for the Break key combination when
+	running computationally expensive tasks in background threads."
 
 	SamplingInterval := anInteger.
 	self primSampleInterval: SamplingInterval!
@@ -14756,6 +14947,12 @@ dispatcher: aByteCodeDispatcher
 duplicateStackTop
 	"Interpret a Dup instruction."
 !
+
+exLongPushImmediate: extensionByte1 byte2: extensionByte2 byte3: extensionByte3 byte4: anInteger4
+	"Interpret a PushSmallInteger instruction. The SmallInteger is encoded in the extension
+	bytes in little endian order"
+
+	!
 
 exLongSend: extensionByte1 with: extensionByte2 with: extensionByte3 
 	"Interpret an extended long send instruction."
@@ -15491,11 +15688,11 @@ virtualKey: aString
 	^VirtualKeys at: aString asUppercase
 		ifAbsent: [self error: 'Unrecognised virtual key: ''' , aString , '''']!
 
-vKeyToScanCode: anInteger
-	"Private - Answer the scan code corresponding to the virtual key
-	code, anInteger, or 0 if there isn't one."
+vKeyToScanCode: anInteger 
+	"Private - Answer the scan code corresponding to the virtual key code, anInteger, or 0 if
+	there isn't one."
 
-	^UserLibrary default mapVirtualKey: (anInteger bitAnd: 16rFF) uMapType: 0! !
+	^UserLibrary default mapVirtualKey: (anInteger bitAnd: 16rFF) uMapType: MAPVK_VK_TO_VSC! !
 
 !Keyboard methodsFor!
 
@@ -16683,6 +16880,9 @@ messages
 
 	^Array with: self selector!
 
+numArgs
+	^self argumentCount!
+
 printOn: target 
 	"Append a short textual description of the receiver to the <puttableStream>, 
 	target, in the form a developer might want to see it (attempt an evaluable
@@ -17276,9 +17476,10 @@ attributes
 attributes: attributes
 	"Private - Set the attributes of the receiver to those named by the <Array> of <Symbol>s, attributes."
 
-	(self attributes asSet equals: attributes asSet) ifFalse: [
-		flags := 0.
-		attributes do: [:e | self perform: e]]!
+	self attributes asSet = attributes asSet
+		ifFalse: 
+			[flags := 0.
+			attributes do: [:e | self perform: e]]!
 
 baseBehaviors
 	"Answer a <collection> of all the <ClassDescription> objects which
@@ -17981,14 +18182,6 @@ name: nameString
 		yourself
 !
 
-nameForMethod: aMethod
-	"Private - Answer an Association of the method class name String -> methods selector Symbol.
-	See: Package>>methodFromName for the reverse transformation.
-	Implementation Note: As of file version 1 we use a symbolic class name, if one
-	is available, to save space. Metaclasses are not globals, so these _will_ have string names."
-
-	^aMethod methodClass name -> aMethod selector!
-
 new
 	"Answer a new instance of the receiver."
 
@@ -18259,6 +18452,13 @@ aboutBlockBytes: aByteArray
 
 !
 
+addAllPrerequisitesTo: aSet
+	"Private - Add to <aSet> all those Packages which must be loaded in
+	before the receiver may be loaded in."
+
+	self prerequisites
+		do: [:each | (aSet addNewElement: each) ifTrue: [each addAllPrerequisitesTo: aSet]]!
+
 addClass: aClass
 	"Add aClass to the list of classes owned by the receiver. A class can only be owned by
 	a single package. Answer aClass."
@@ -18332,34 +18532,36 @@ allMethodsDo: operation
 	| loose |
 	loose := self manager looseMethods.
 	self behaviorsDo: 
-			[:eachBehavior | 
-			eachBehavior methodDictionary 
+			[:eachBehavior |
+			eachBehavior methodDictionary
 				do: [:eachMethod | (loose includesKey: eachMethod name) ifFalse: [operation value: eachMethod]]].
 
 	"Finally evaluate the operation for all the package's own loose methods"
-	self methods do: operation!
+	self methodsDo: operation!
 
 allPrerequisites
 	"Private - Answer a collection of all the Packages objects which must be loaded in before the
 	receiver may be loaded in."
 
-	| answer immediatePrereqs |
-	immediatePrereqs := self prerequisites asIdentitySet.
+	| answer |
 	answer := IdentitySet new.
-	immediatePrereqs do: [:each | 
-		(answer includes: each) ifFalse: [answer add: each; addAll: each allPrerequisites]].
-	^answer!
+	self addAllPrerequisitesTo: answer.
+	^answer.!
 
 allResourceIdentifiers
 	"Answer a Set of all the ResourceIdentifiers directly owned by
 	the receiver or by owning the class in which it is situated."
 
-	| resources resourceMethods |
+	| resources prefix |
 	resources := Set new.
 	self classesDo: [:each | resources addAll: each resourceIdentifiers].
-	resourceMethods := self methods 
-				select: [:each | each selector beginsWith: ResourceIdentifier selectorPrefix].
-	resourceMethods do: [:each | resources add: (ResourceIdentifier forMethod: each)].
+	prefix := ResourceIdentifier selectorPrefix.
+	self methodNames do: 
+			[:each |
+			(each value beginsWith: prefix)
+				ifTrue: 
+					[(self behaviorFromName: each key ifAbsent: [])
+						ifNotNil: [:methodClass | resources add: (ResourceIdentifier class: methodClass instanceClass selector: each value)]]].
 	^resources!
 
 allResourceNames
@@ -18390,7 +18592,7 @@ allSourceObjectsDo: operation
 	self classesDo: operation.
 	self sourceGlobalVariables do: [:each | operation value: each value].
 	"Note that the package itself is always enumerated last - this is important"
-	(self isSystemPackage not or: [SessionManager current isOAD]) ifTrue: [operation value: self]!
+	operation value: self!
 
 basicAddClass: aClass 
 	"Private - Add aClass to the list of classes owned by the receiver. A class can only be owned by
@@ -18462,13 +18664,13 @@ basicScriptAt: scriptSymbol put: aString
 			scripts isEmpty ifTrue: [scripts := nil]]
 		ifFalse: [scripts at: scriptSymbol put: aString]!
 
-behaviorFromName: aString ifAbsent: exceptionHandler 
+behaviorFromName: aString ifAbsent: exceptionHandler
 	| index |
-	index := aString identityIndexOf: $ .
-	^index == 0 
+	index := aString identityIndexOf: $\x20.
+	^index == 0
 		ifTrue: [self classFromName: aString ifAbsent: exceptionHandler]
 		ifFalse: 
-			[(self classFromName: (aString leftString: index - 1) ifAbsent: []) 
+			[(self classFromName: (aString first: index - 1) ifAbsent: [])
 				ifNil: [exceptionHandler value]
 				ifNotNil: [:class | class class]]!
 
@@ -19028,17 +19230,20 @@ globalFromName: globalName
 
 	^self environment at: globalName!
 
-globalNameOfLiteral: anObject 
+globalNameOfLiteral: anObject
 	"Private - Answer the global name of the argument, anObject, extracted from a CompiledMethods
 	literal frame, or nil if it is not a global."
 
-	^(anObject isKindOf: VariableBinding) 
+	^(anObject isKindOf: VariableBinding)
 		ifTrue: 
 			[| key |
 			key := anObject key.
-			self environment associationAt: key ifPresent: [:v | v == anObject ifTrue: [key]]]
+			"Avoid interning symbols for all the string Pool variable names by checking first if the var name is a symbol"
+			(key isKindOf: Symbol)
+				ifTrue: 
+					[(self environment associationAt: key ifAbsent: []) ifNotNil: [:v | v == anObject ifTrue: [key]]]]
 		ifFalse: 
-			[(anObject isKindOf: Class) 
+			[(anObject isKindOf: Class)
 				ifTrue: 
 					[| key |
 					key := anObject name.
@@ -19068,19 +19273,23 @@ hasCyclicPrerequisites
 	handle this smoothly though it is possible to load in such a thing by
 	repeatedly trying to load in all packages until it works..."
 
-	^self hasCyclicPrerequisites: IdentitySet new!
+	^self hasCyclicPrerequisites: IdentitySet new safe: IdentitySet new.!
 
-hasCyclicPrerequisites: trail
+hasCyclicPrerequisites: trail safe: safe
 	"Private - Walk the package pre-requisite net looking for a cyclic dependency.
-	The <collection> trail includes all those packages already visited. If we find
-	a duplicate package on the path then we know a cycle exists."
+	The <collection> trail includes all those packages already visited.
+	The <collection> safe includes all those packages which were already checked
+	and found not to have cyclic prerequisites, and thus do not need to be checked again.
+	If we find a duplicate package on the path then we know a cycle exists."
 
 	| answer |
+	(safe includes: self) ifTrue: [^false].
 	trail add: self.
-	answer := self prerequisites anySatisfy: [:prereq | 
-				(trail includes: prereq) or: [prereq hasCyclicPrerequisites: trail]].
+	answer := self prerequisites
+				anySatisfy: [:prereq | (trail includes: prereq) or: [prereq hasCyclicPrerequisites: trail safe: safe]].
 	trail remove: self.
-	^answer!
+	answer ifFalse: [safe add: self].
+	^answer.!
 
 hasImageStripper
 	^imageStripperBytes notNil and: [self imageStripper notNil]!
@@ -19088,13 +19297,9 @@ hasImageStripper
 hasUncommittedPrerequisites
 	"Private - Answer whether any of the receivers prerequisites or their
 	prerequisites are current uncomitted. If so the package should not be saved
-	as it will not be reloadable into an image without the uncommitted objects.
-	N.B. This method will go infinitely recursive if the package has cyclic
-	pre-requisites as it does not maintain a visit list. It should therefore
-	be called only after hasCyclicPrerequisites has returned false."
+	as it will not be reloadable into an image without the uncommitted objects."
 
-	^self prerequisites anySatisfy: [:prereq | 
-		prereq == _Uncommitted or: [prereq hasUncommittedPrerequisites]]!
+	^self allPrerequisites includes: _Uncommitted.!
 
 hierarchyOrderOfClasses: aCollection 
 	"Private - Answer an OrderedCollection of all the Classes owned
@@ -19323,7 +19528,7 @@ loadPAC: stream
 
 	"File in the definitions of the package's members (pools, classes, methods, globals, resources, etc)"
 	filer fileIn.
-	self paxVersion < 1 ifTrue: [self initializeOldSourcePackage].
+	self paxVersion < 1 ifTrue: [self initializeLegacyResources].
 	self initializeGlobals.
 	self fileInScript: #postinstall!
 
@@ -19432,11 +19637,16 @@ methodNames
 methods
 	"Answer an <IdentitySet> of the <CompiledMethod>s owned by the receiver."
 
-	| newIdentitySet names |
-	names := self methodNames.
-	newIdentitySet := IdentitySet new: names size.
-	names do: [:methodName | newIdentitySet add: (self methodFromName: methodName ifAbsent: [])].
+	| newIdentitySet |
+	newIdentitySet := IdentitySet new: 16.
+	self methodsDo: [:each | newIdentitySet add: each].
 	^newIdentitySet!
+
+methodsDo: aMonadicValuable
+	"Evaluate the <monadicValuable> argument for each of the loose methods owned by the receiver."
+
+	self methodNames
+		do: [:each | (self methodFromName: each ifAbsent: []) ifNotNil: [:method | aMonadicValuable value: method]]!
 
 methodsOfClass: aClass
 	"Answer a Collection of the methods of aClass which the receiver either
@@ -19477,7 +19687,7 @@ nameForMethod: aMethod
 	"Private - Answer an Association of the method class name String -> methods selector Symbol.
 	See: Package>>methodFromName for the reverse transformation."
 
-	^self class nameForMethod: aMethod!
+	^Association key: aMethod methodClass name value: aMethod selector!
 
 nameForResourceIdentifier: aResourceIdentifier
 	"Private - Answer an <Association> that uniquely identifies the <ResourceIdentifier> argument."
@@ -19642,7 +19852,7 @@ packageVersion: aString
 !
 
 path
-	"Private - Answer the full path to the directory holding the receivers files."
+	"Answer the full path to the directory holding the receivers files."
 
 	^File splitPathFrom: self packageFileName!
 
@@ -20223,11 +20433,9 @@ trace: trace prerequisite: aPackage from: from to: to type: type
 	"Private - Append the supplied details of a prerequisite link
 	to trace."
 
-	| entries prereq |
 	aPackage == self ifTrue: [^self].
-	prereq := aPackage ifNil: [_Uncommitted].
-	entries := trace at: prereq ifAbsentPut: [OrderedCollection new].
-	entries add: (Array 
+	(trace at: (aPackage ifNil: [_Uncommitted]) ifAbsentPut: [OrderedCollection new: 16])
+		addLast: (Array
 				with: from
 				with: to
 				with: type)!
@@ -20271,7 +20479,7 @@ tracePrerequisites: anIdentityDictionary
 	*	'from' is a global that references an instance of the class 'to'."
 
 	| trace |
-	trace := IdentityDictionary new.
+	trace := IdentityDictionary new: 16.
 	self
 		tracePrerequisitesOfClasses: trace packagedGlobals: anIdentityDictionary;
 		tracePrerequisitesOfGlobals: trace packagedGlobals: anIdentityDictionary;
@@ -20363,18 +20571,18 @@ tracePrerequisitesOfImageStripper: anIdentityDictionary
 						to: each
 						type: 'references class']]!
 
-tracePrerequisitesOfMethods: trace 
+tracePrerequisitesOfMethods: trace
 	"Private - Trace the prerequisites of the receiver's loose methods."
 
 	| manager |
 	manager := self manager.
-	self methods do: 
-			[:aMethod | 
-			self 
+	self methodsDo: 
+			[:each |
+			self
 				trace: trace
-				prerequisite: (manager packageOfClass: aMethod methodClass)
-				from: aMethod
-				to: aMethod methodClass
+				prerequisite: (manager packageOfClass: each methodClass)
+				from: each
+				to: each methodClass
 				type: 'is a method of']!
 
 uninstall
@@ -21020,16 +21228,9 @@ getLooseMethods
 	by name to their owning package."
 
 	| loose |
-	loose := PluggableLookupTable new: 1500 searchPolicy: AssociationSearchPolicy current.
+	loose := PluggableLookupTable new: 3072 searchPolicy: AssociationSearchPolicy current.
 	self packages do: [:each | loose atAll: each methodNames put: each].
 	^loose!
-
-getVersionInfoFor: aCompiledMethod 
-	"Part of the StsManager protocol implemented here for systems which do not have STS
-	installed. Answer nil to indicate that we cannot supply version information for
-	aCompiledMethod"
-
-	^nil!
 
 globalRepackaged: globalName from: source to: destination 
 	"Private - The global variable named by the <Symbol>, globalName, 
@@ -21109,7 +21310,10 @@ install: aString
 	[newPackages do: 
 			[:each | 
 			self addPackage: each.
-			[self basicInstall: each] ifCurtailed: [self basicUninstall: each].
+			[
+				self basicInstall: each.
+				self trigger: #packageInstalled: with: each.
+			] ifCurtailed: [self basicUninstall: each].
 			self observePackage: each]] 
 			ensure: 
 				[self beProcessingEvents.
@@ -21121,12 +21325,6 @@ installHere: aString
 	rather than the image base."
 
 	^self install: (File fullPathOf: aString)!
-
-isConnected
-	"Part of the StsManager protocol implemented here for systems which do not have STS
-	installed. Answer nil to indicate that we are not connected to a repository"
-
-	^false!
 
 isLooseMethod: aCompiledMethod
 	"Answer whether the argument is a loose method (i.e. one owned by a package other
@@ -21748,9 +21946,6 @@ sortedPackages
 
 	^self packages asSortedCollection: Package defaultSortBlock!
 
-sourceControl
-	^self!
-
 sourceManager
 	"Answer the receiver's source manager."
 
@@ -21916,6 +22111,10 @@ initialize
 	self initializeInterruptSelectors!
 
 initializeInterruptSelectors
+	"Private - Initialize the mapping between VM interrupt numbers and the corresponding messages sent to self when those interrupts arrive.
+	Note that we have to store a copy of the literal array (which is marked immutable by the compiler) because the debugger adds/removes
+	some interrupt selectors when it is installed/uninstalled."
+
 	InterruptSelectors := #(#terminate: #stackOverflow: #unusedInterrupt: #unusedInterrupt: #gpFault: #idlePanic: #interruptWith: #onStartup: #kill: #fpException: #userBreak: #zeroDivide: #otOverflow: #constWrite: #win32Fault: #fpStackFault: #noMemory: #hospiceOverflow: #bereavedOverflow: #crtFault:) 
 				copy!
 
@@ -22245,6 +22444,14 @@ isActiveMain
 
 	^activeProcess isMain!
 
+isAtomic
+	"Answer whether or not the receiver is the single unique instance of its class that can
+	represents its value."
+
+	"There can only be one ProcessorScheduler instance."
+
+	^true!
+
 kill: interruptArg 
 	"Private - The active process has been sent a kill interrupt, terminate it without running
 	its unwind blocks."
@@ -22361,20 +22568,6 @@ setHighestPriority: priority activeProcess: aProcess
 	processLists := (1 to: priority) collect: [:i | LinkedList new].
 	activeProcess := aProcess.
 	pendingReturns := Semaphore new!
-
-signal: aSemaphore afterMilliseconds: anInteger 
-	"Private - Request that the VM signal aSemaphore as soon as possible after the
-	the specified millisecond delay. Cancel any existing request if aSemaphore is 
-	not actuall a Semaphore (typically nil). If anInteger <= 0, then the Semaphore
-	is signalled immediately.
-
-	Primitive failure results:
-		0 -	anInteger is not a SmallInteger
-		2 -  anInteger was greater than the maximum Delay which can be requested.
-		3 -	OS refused to set timer (try KernelLibrary>>getLastError)"
-
-	<primitive: 100>
-	^self primitiveFailed!
 
 sleep: anInteger 
 	"Delay the current active process for at least anInteger milliseconds."
@@ -23161,7 +23354,7 @@ ResourceIdentifier comment:
 
 allResourceIdentifiers
 	| rids |
-	rids:= OrderedCollection new: 1000. 
+	rids:= OrderedCollection new: 512. 
 	Object withAllSubclassesDo: [:each | rids addAll: each resourceIdentifiers].
 	^rids asSortedCollection
 !
@@ -23265,6 +23458,14 @@ editExpression
 	"Private - Answer a String that can be evaluated to edit an emitted resource"
 
 	^'ViewComposer openOn: (ResourceIdentifier class: self selector: <1p>)' expandMacrosWith: self selector!
+
+editViewUsing: aMonadicBlock 
+	"Use dynamic lookup to avoid boot ordering problems."
+	| view | 
+	view := self loadWithContext: (Smalltalk at: #View) desktop.
+	aMonadicBlock value: view.
+	self assign: view literalStoreArray.
+	view destroy!
 
 emit: aResourceArray asStringOn: aWriteStream 
 	aWriteStream nextPutAll: '#('.
@@ -23722,7 +23923,8 @@ basicSecondaryStartup
 	app)."
 
 	Float onStartup.
-	self class environment at: #Locale ifPresent: [:d | d onStartup]!
+	self class environment at: #Locale ifPresent: [:d | d onStartup].
+	self parseCmdLineFlags!
 
 basicShutdown
 	"Private - Perform basic system shutdown operations, just prior to the VM putting
@@ -23780,22 +23982,6 @@ closeEventLog
 	eventLogHandle notNil ifTrue: [
 		AdvApiLibrary default deregisterEventSource: eventLogHandle.
 		eventLogHandle := nil]!
-
-cmdLineFlags
-	"Private - Answer the Set of flags specified on the command line. Currently this is rather
-	simplistic, since it doesn't handle parameters with an argument, if the argument is
-	separated from the parameter name by whitespace. The VM can't handle these anyway, as it
-	knows nothing about the potential parameters, and so treats the first argument which does
-	not beging with $/ or $- as the name of the image file. So, currently, parameters with
-	arguments must be specified without any whitespace between the parameter name and the
-	parameter value."
-
-	cmdLineFlags isNil 
-		ifTrue: 
-			[cmdLineFlags := Set new.
-			self argv 
-				do: [:each | (each notEmpty and: ['/-' includes: each first]) ifTrue: [cmdLineFlags add: (each copyFrom: 2)]]].
-	^cmdLineFlags!
 
 computerName
 	"Answer the name of the computer hosting the current session. 
@@ -24036,6 +24222,10 @@ isConsoleApplication
 
 	^self class isConsoleApplication!
 
+isDebug
+
+	^(self versionInfo productVersionString findString: '(Debug)') ~~ 0!
+
 isDLL
 	"Private - Answer whether the receiver is a shared library, as opposed to an application."
 
@@ -24050,7 +24240,7 @@ isEmbedded
 isEmbedding
 	"Answer whether the session was started with a headless flag"
 
-	^self cmdLineFlags includes: 'Embedding'!
+	^flags allMask: EmbeddingMask!
 
 isHeadless
 	"Private - Answer whether the session is _currently_ headless. This is most likely if the
@@ -24236,6 +24426,7 @@ onStartup: args
 	startupArgs := args.
 	imagePath := args class == Array ifTrue: [args first] ifFalse: [args].
 	cmdLineFlags := argv := nil.
+	flags := 0.
 
 	[self primaryStartup.
 	state := 1.		"Mewling and puking in the nurse's arms"
@@ -24309,31 +24500,28 @@ openConsoleStreams
 	stdin/stdout/stderr streams will be correctly set up so that it is possible to use the CRT
 	stdio functions such as puts(), printf(), etc."
 
-	| kernel |
+	| kernel crt |
 	stdioStreams isNil ifFalse: [^self].
 	kernel := KernelLibrary default.
-	stdioStreams := Array 
-				with: (StdioFileStream 
-						attach: (kernel getStdHandle: STD_INPUT_HANDLE)
-						toFd: 0
-						mode: #read)
-				with: (StdioFileStream 
-						attach: (kernel getStdHandle: STD_OUTPUT_HANDLE)
-						toFd: 1
-						mode: #append)
-				with: (StdioFileStream 
-						attach: (kernel getStdHandle: STD_ERROR_HANDLE)
-						toFd: 2
-						mode: #append)!
+	crt := CRTLibrary default.
+	stdioStreams := (0 to: 2) collect: 
+					[:fd |
+					(crt _get_osfhandle: fd) asSignedInteger < 0
+						ifTrue: 
+							["stdio file descriptor is not currently established"
+							StdioFileStream
+								attach: (kernel getStdHandle: STD_INPUT_HANDLE - fd)
+								toFd: fd
+								mode: (fd == 0 ifTrue: [#read] ifFalse: [#append])]
+						ifFalse: 
+							["stdio file descriptor already initialized, e.g. because of pipe or redirection to a file"
+							StdioFileStream fromHandle: (crt _fdopen: fd mode: (fd == 0 ifTrue: ['rt'] ifFalse: ['wt']))]]!
 
 openEventLog
 	"Private - Open the NT event log for writing, and answer a handle onto it that can be passed to the
 	ReportEvent() API."
 
-	OSVERSIONINFO current isNT 
-		ifTrue: 
-			[eventLogHandle := VMLibrary default 
-						registerEventSource: self eventLogSource].
+	eventLogHandle := VMLibrary default registerEventSource: self eventLogSource.
 	^eventLogHandle!
 
 openLibraries
@@ -24348,6 +24536,14 @@ outer
 	concerned it is just an opaque value."
 
 	^startupArgs at: 2!
+
+parseCmdLineFlags
+	"Private - Parse the command line flags in order to record user options that might influence tertiary startup."
+
+	cmdLineFlags := Set new.
+	self argv
+		do: [:each | (each notEmpty and: ['/-' includes: each first]) ifTrue: [cmdLineFlags add: (each copyFrom: 2)]].
+	(cmdLineFlags includes: 'Embedding') ifTrue: [flags := flags maskSet: EmbeddingMask]!
 
 popupHelpFile
 	self subclassResponsibility!
@@ -24386,6 +24582,23 @@ primSnapshot: fileName backup: aBoolean type: anInteger
 		ifTrue: 
 			[Warning signal: (String fromId: 516
 						in: VMLibrary default asParameter)]
+		ifFalse: [self error: 'Dolphin was unable to save the image.']!
+
+primSnapshot: fileName backup: aBoolean type: typeInteger maxObjects: maxInteger
+	"Private - Save the current image to fileName, optionally creating a backup of the existing file.
+
+	Primitive failure codes:
+		0	- fileName not a String
+		1	- The image has expired
+		2	- Unable to open image file
+		3	- I/O Error writing image file (try KernelLibrary>>getLastError).
+		4	- Insufficient max objects for current image size"
+
+	| result |
+	<primitive: 97>
+	result := Processor activeProcess primitiveFailureCode.
+	result == 1
+		ifTrue: [Warning signal: (String fromId: 516 in: VMLibrary default asParameter)]
 		ifFalse: [self error: 'Dolphin was unable to save the image.']!
 
 queryEndSession
@@ -24525,10 +24738,11 @@ shutdown
 snapshot: fileName
 	"Private - Save the current image to fileName."
 
-	^self 
+	^self
 		primSnapshot: fileName
 		backup: false
-		type: 0!
+		type: 0
+		maxObjects: nil!
 
 startUI
 	"Start up the input loop/message loop (instruct InputState appropriate depending on whether
@@ -24658,16 +24872,11 @@ windowsDirectory
 	that under Terminal Server this will be the shared Windows directory, not the per-user
 	Windows directory. See MSDN KB281316  for further information."
 
-	^OSVERSIONINFO current dwMajorVersion >= 5 
-		ifTrue: 
-			[| path len |
-			path := File pathBuffer.
-			len := KernelLibrary default getSystemWindowsDirectory: path uSize: path size.
-			len == 0 ifTrue: [^KernelLibrary default systemError].
-			path leftString: len]
-		ifFalse: 
-			["The system call returns the path sans a delimiter, so we must maintain that behaviour"
-			File removePathDelimiter: (File splitPathFrom: (File removePathDelimiter: self systemDirectory))]! !
+	| path len |
+	path := File pathBuffer.
+	len := KernelLibrary default getSystemWindowsDirectory: path uSize: path size.
+	len == 0 ifTrue: [^KernelLibrary default systemError].
+	^path leftString: len! !
 
 SharedQueue comment:
 ''!
@@ -25231,6 +25440,9 @@ SourceFiler comment:
 ''!
 !SourceFiler class methodsFor!
 
+initialize
+	self addClassConstant: 'SourceOnlyMask' value: 1.!
+
 on: aWriteStream 
 	"Answer a new instance of the receiver for filing out source code onto the 
 	<puttableStream> argument."
@@ -25274,6 +25486,15 @@ emitCategoriesOfMethods: methods
 
 	methods do: [:m | self emitCategoriesOfMethod: m]!
 
+emitClassPoolOfClass: aClass
+	"Private - Emit initialization expressions for each of the literal constants in the class pool of aClass."
+
+	| literalConstants |
+	literalConstants := aClass classPool associations
+				select: [:each | each isImmutable and: [each value isLiteral]].
+	literalConstants asSortedCollection
+		do: [:each | self emitDeclarationForClass: aClass variable: each]!
+
 emitComment: aString 
 	"Private - Record aString to the source stream.
 	N.B. Logging requests should be directed through the SessionManager."
@@ -25283,6 +25504,9 @@ emitComment: aString
 emitCommentOfClass: aClass 
 	"Private - Emit a chunk which defines the comment for the <Class>, aClass, to source stream."
 
+	^self subclassResponsibility!
+
+emitDeclarationForClass: aClass variable: each
 	^self subclassResponsibility!
 
 emitFooterForMethodsOf: aClass 
@@ -25356,14 +25580,16 @@ fileOutAllMethodsOfBehavior: aClassDescription
 	self isSourceOnly 
 		ifFalse: [self fileOutProtocols: aClassDescription protocols ofBehavior: aClassDescription]!
 
-fileOutAttributesOfClass: aClass 
+fileOutAttributesOfClass: aClass
 	"File-out any attributes of the aClass (e.g. the comment, GUID, etc) not included in the basic
 	aClass definition, onto the source stream."
 
 	self emitGUIDOfClass: aClass.
 	self emitSpecialBehaviourAttributesOfClass: aClass.
+	self emitClassPoolOfClass: aClass.
 	self emitCommentOfClass: aClass.
-	self emitCategoriesOfClass: aClass!
+	self emitCategoriesOfClass: aClass.
+!
 
 fileOutBasicDefinitionOfClass: aClass 
 	"Print a definition of the <Class>, aClass, to the source stream."
@@ -25457,14 +25683,14 @@ getSourceFromDescriptor: sourceDescriptor
 	^self subclassResponsibility!
 
 isSourceOnly
-	^isSourceOnly!
+	^flags anyMask: SourceOnlyMask!
 
-isSourceOnly: aBoolean 
-	isSourceOnly := aBoolean!
+isSourceOnly: aBoolean
+	flags := flags mask: SourceOnlyMask set: aBoolean!
 
-setStream: aPuttableStream 
+setStream: aPuttableStream
 	stream := aPuttableStream.
-	self isSourceOnly: false!
+	flags := 0!
 
 setToEnd
 	"Seek to the end of the source stream."
@@ -25672,8 +25898,8 @@ changesStream
 
 	^self basicChangesFiler ifNotNil: [:changes | changes stream]!
 
-chunkFilerOn: aStream 
-	"Answer a <ChunkSourceFiler> on the specified stream."
+chunkFilerOn: aStream
+	"Answer a <ChunkSourceFiler> on the specified stream. The filer leaves existing line endings alone."
 
 	^ChunkSourceFiler on: aStream!
 
@@ -25835,16 +26061,29 @@ errorNotPackaged: anObject
 fileIn: aFileName
 	"File in the chunk format file named, aFileName, into the system."
 
+	self fileIn: aFileName normalizeLineEndings: false!
+
+fileIn: aString normalizeLineEndings: aBoolean
+	"File in the chunk format file named, aString, into the system. If the <Boolean> argument is
+	true then any non-standard CR or LF line endings are converted to CR-LF pairs."
+
 	| stream |
-	stream := FileStream read: aFileName.
-	[self fileInFrom: stream] ensure: [stream close].!
+	stream := FileStream read: aString.
+	[self fileInFrom: stream normalizeLineEndings: aBoolean] ensure: [stream close]!
 
-fileInFrom: aStream 
-	"Private - File in the expressions/definitions from the chunk stream, aStream.
-	in the receiver's chunk format. Any methods that do not	compile are stubbed 
-	with instances of CompileFailedMethod and errors logged to the Transcript."
+fileInFrom: aStream
+	"Private - File in the expressions/definitions from the chunk stream, aStream. in the
+	receiver's chunk format. Any methods that do not compile are stubbed with instances of
+	CompileFailedMethod and errors logged to the Transcript. Existing line endings are
+	preserved, which is probably only appropriate if the source stream is known to have CR-LF
+	line endings already."
 
-	(self chunkFilerOn: aStream) fileIn!
+	self fileInFrom: aStream normalizeLineEndings: false!
+
+fileInFrom: aStream normalizeLineEndings: aBoolean
+	(self chunkFilerOn: aStream)
+		normalizeLineEndings: aBoolean;
+		fileIn!
 
 fileInHere: aFileName 
 	"File in the chunk format file named, aFileName, into the system but with
@@ -26241,46 +26480,27 @@ Note that there is no difference between method and block activations (with one 
 When a block does not itself require a context to hold shared temps (the common case in fact), the environment slot is initialised with a reference to the block itself. This is useful for the debugger and other reflective facilities in the image, as otherwise it would not be possible to locate the closure associated with the frame. It is also used by the VM when it needs to create a nested block that requires an outer pointer; the outer pointer of the new block is set to be the same as the outer pointer of the enclosing, contextless, block. i.e. the outer pointer of a block may *not* point to the context of its immediately enclosing block, but to the context of some wider scope such as the method.'!
 !StackFrame class methodsFor!
 
-frameClassFor: aProcess at: anInteger 
+frameClassFor: aProcess at: anInteger
 	"Private - Answer the subclass of the receiver to use to represent a stack frame in aProcess
 	at the specified index. Answer nil if the index is out of bounds."
 
-	| env |
-	env := aProcess at: anInteger + EnvOffset ifAbsent: [^nil].
+	| env sp |
+	sp := anInteger + EnvOffset.
+	env := (sp > 0 and: [sp <= aProcess size]) ifTrue: [aProcess at: sp] ifFalse: [^nil].
 	^(env isInteger or: [env isNil]) ifTrue: [self] ifFalse: [env frameClass]!
 
-initialize
-	"Initialize the class variables of the receiver.
-
-		self initialize 
-	"
-
-	"Hmmm, we really need a syntax for declaring constant class variables."
-
-	| pool |
-	pool := self classPool.
-	pool associationsDo: [:each | each isImmutable: false].
-	pool
-		at: 'MethodOffset' put: 0;
-		at: 'EnvOffset' put: 1;
-		at: 'ReturnOffset' put: 2;
-		at: 'IPOffset' put: 3;
-		at: 'SPOffset' put: 4;
-		at: 'BPOffset' put: 5;
-		at: 'FrameSize' put: BPOffset + 1.
-	pool associationsDo: [:each | each isImmutable: true].
-	"The compiler will inline the const refs, making the frame slot accessor methods more efficient"
-	self recompileAll!
+onProcess: aProcess index: anInteger
+	<primitive: 157>
+	^(self basicNew)
+		setProcess: aProcess index: anInteger;
+		yourself!
 
 process: aProcess index: anInteger
 	"Private - Answer a new instance of the receiver representing the stack frame in aProcess
 	at the specified index in aProcess, or nil if the specified index is out of bounds in the process."
 
-	^(self frameClassFor: aProcess at: anInteger) ifNotNil: 
-			[:frameClass | 
-			(frameClass new)
-				setProcess: aProcess index: anInteger;
-				yourself]! !
+	^(self frameClassFor: aProcess at: anInteger)
+		ifNotNil: [:frameClass | frameClass onProcess: aProcess index: anInteger]! !
 
 !StackFrame methodsFor!
 
@@ -26355,9 +26575,8 @@ basicIP
 	^process at: index + IPOffset!
 
 basicIP: anInteger
-	"Private - Set the IP of the process stack frame the receiver represents to
-	anInteger (which is an offset from the start of the byte code object of the
-	method)."
+	"Private - Set the IP of the process stack frame the receiver represents to anInteger (which
+	is a zero-based offset from the start of the byte code object of the method)."
 
 	process at: index + IPOffset put: anInteger!
 
@@ -26729,13 +26948,13 @@ version
 
 	^version!
 
-version: versionInteger prefix: anInteger filer: anSTBInFiler 
+version: versionInteger prefix: anInteger filer: anSTBInFiler
 	"Private - Initialise the receiver from the arguments."
 
 	version := versionInteger.
-	instSize := (anInteger bitShift: InstSizeShift) bitAnd: InstSizeMask.
-	isBytes := anInteger allMask: BytesMask.
-	isVariable := anInteger allMask: VariableMask.
+	instSize := (anInteger bitShift: STBPrefix.InstSizeShift) bitAnd: STBPrefix.InstSizeMask.
+	isBytes := anInteger allMask: STBPrefix.BytesMask.
+	isVariable := anInteger allMask: STBPrefix.VariableMask.
 	filer := anSTBInFiler! !
 
 STBFiler comment:
@@ -26807,7 +27026,7 @@ version
 		Version 2 - Delegates save/load to class, format changed for certain pre-registered classes.
 		Version 3 - Only writes basicSize for objects of variable classes."
 
-	^3
+	^4
 ! !
 
 !STBFiler methodsFor!
@@ -26847,19 +27066,25 @@ register: anObject
 
 	^self subclassResponsibility!
 
-reset
-	"Private - Reset the instance. We pre-register objects that must never be recreated - note
-	that if the 'fixed' list of pre-registered objects is changed, then the STB version must be
-	changed and the old versions handled appropriately."
+registerPredefinedClasses
+	self class fixedClasses do: [:each | self register: each].
+	self setRefOffset: MaxPredefinedRef!
 
+registerPredefinedObjects
 	self
 		register: true;
 		register: false;
 		register: Smalltalk;
 		register: Processor.
 	version > 0 ifFalse: [^self].
-	self class fixedClasses do: [:each | self register: each].
-	self setRefOffset: 24!
+	self registerPredefinedClasses!
+
+reset
+	"Private - Reset the instance. We pre-register objects that must never be recreated - note
+	that if the 'fixed' list of pre-registered objects is changed, then the STB version must be
+	changed and the old versions handled appropriately."
+
+	self registerPredefinedObjects!
 
 setRefOffset: anInteger
 	^self subclassResponsibility!
@@ -26951,105 +27176,45 @@ When testing an instance of this class the tests should be performed in the foll
 							to yeild the real object]]]."'!
 !STBPrefix class methodsFor!
 
-forCharacter: aCharacter
-	"Answer a new instance to prefix aCharacter."
+encodeCharacter: aCharacter
+	^(aCharacter asInteger bitShift: IndexShift negated) bitOr: CharacterMask!
 
-	^self new
-		character: aCharacter;
-		yourself!
+encodeObjectRef: anInteger
+	^anInteger bitShift: 4!
+
+encodeSmallInteger: aSmallInteger
+	^(aSmallInteger bitShift: 1) bitOr: 1!
 
 forData
-	"Answer a newly initialised instance to prefix a data object."
+	"Answer an immutable instance carrying the basic encoding to prefix a data object."
 
-	^self fromInteger: DataPrefixMask!
-
-forLiteral
-	"Answer a newly initialised instance to prefix a literal object."
-
-	^self fromInteger: LiteralPrefixMask !
-
-forObjectRef: anInteger
-	"Answer a new instance to prefix an object that has already been output."
-
-	^self new
-		objectRef: anInteger;
-		yourself!
+	^DataPrefix!
 
 forProxy
-	"Answer a newly initialised instance to prefix a proxy object."
+	"Answer an immutable instance carrying the basic encoding to prefix a proxy object."
 
-	^self forData
-		beProxy;
-		yourself!
-
-forSmallInteger: aSmallInteger
-	"Answer a new instance to prefix aSmallInteger."
-
-	^self new
-		smallInteger: aSmallInteger;
-		yourself!
+	^ProxyPrefix!
 
 fromInteger: anInteger
-	"Answer a new instance initialise from anInteger."
+	"Answer a new instance initialised from the 32-bit <integer> STB prefix code, anInteger."
 
 	^self new
-		dword: anInteger! !
+		dword: anInteger!
+
+initialize
+	DataPrefix := (self fromInteger: DataPrefixMask)
+				isImmutable: true;
+				yourself.
+	ProxyPrefix := (self fromInteger: DataPrefixMask | ProxyMask)
+				isImmutable: true;
+				yourself! !
 
 !STBPrefix methodsFor!
-
-beDataPrefix
-	"Set the receiver's isDataPrefix bit flag."
-
-	dword := dword bitOr: DataPrefixMask!
-
-beLiteralPrefix
-	"Set the receiver's isLiteralPrefix bit flag."
-
-	dword := dword bitOr: LiteralPrefixMask!
-
-beProxy
-	"Set the receiver's isProxy bit flag."
-
-	dword := dword bitOr: ProxyMask!
 
 character
 	"Answer the Character represented by the receiver."
 
 	^Character value: (dword bitShift: IndexShift)!
-
-character: aCharacter
-	"Make the receiver a prefix to a 'virtual' Character, virtual because
-	as we encode aCharacter's value entirely within the prefix no object data need follow."
-
-	dword := (aCharacter asInteger bitShift: IndexShift negated) bitOr: CharacterMask!
-
-class: aClass locator: aString
-	"Make the receiver a prefix for an object of a hitherto unencountered class
-	aClass with locator aString."
-
-	dword := (dword bitOr: (
-			ClassPrefixMask bitOr: (
-				(aString size bitShift: 16) bitOr: 
-					(aClass instSize bitShift: 8)))).
-	aClass isBytes
-		ifTrue: [dword := dword bitOr: BytesMask].
-	aClass isVariable
-		ifTrue: [dword := dword bitOr: VariableMask].
-	aClass stbVersion ~= 0
-		ifTrue: [dword := dword bitOr: NonZeroVersionMask].!
-
-classLocatorLen
-	"Answer the receiver's classLocatorLen field."
-
-	^dword bitShift: -16.!
-
-classRef: anInteger
-	"The receiver will prefix a hitherto unencountered object whose class
-	has already been output with reference index anInteger.
-	As we encode the class reference within the prefix the object data
-	immediately follows it."
-
-	dword := dword bitOr: (anInteger bitShift: 4)!
 
 dword
 	"Answer the receiver as a 4 byte DWORD."
@@ -27063,6 +27228,25 @@ dword: anInteger
 
 	dword := anInteger.
 	^self!
+
+encodeClass: aClass locator: aString
+	"Answer a 32-bit <integer> STB prefix code for an object of a hitherto unencountered class
+	aClass, with locator, aString."
+
+	| code |
+	code := dword
+				bitOr: (ClassPrefixMask bitOr: ((aString size bitShift: 16) bitOr: (aClass instSize bitShift: 8))).
+	aClass isBytes ifTrue: [code := code bitOr: BytesMask].
+	aClass isVariable ifTrue: [code := code bitOr: VariableMask].
+	aClass stbVersion ~= 0 ifTrue: [code := code bitOr: NonZeroVersionMask].
+	^code!
+
+encodeClassRef: anInteger
+	"Answer a 32-bit <integer> STB prefix code for a hitherto unencountered object whose class
+	has already been output with reference index, anInteger. As we encode the class reference
+	within the prefix code the object data immediately follows it."
+
+	^dword bitOr: (anInteger bitShift: 4)!
 
 instSize
 	"Answer the receiver's instSize field."
@@ -27116,13 +27300,6 @@ isVariable
 
 	^dword allMask: VariableMask!
 
-objectRef: anInteger
-	"Make the receiver a prefix to a 'virtual' object that has already been
-	output with index anInteger, virtual because as we encode the reference
-	entirely within the prefix no object data need follow."
-
-	dword := anInteger bitShift: 4!
-
 printOn: aStream
 	"Append a debugging description of the receiver to aStream."
 
@@ -27136,7 +27313,7 @@ printOn: aStream
 	ifFalse: [ self isDataPrefix ifFalse: [
 		self isCharacter
 			 ifTrue: [aStream print: self character]
-			ifFalse: [aStream nextPut: 'object ref: '; print: self refIndex]]
+			ifFalse: [aStream nextPutAll: 'object ref: '; print: self refIndex]]
 	ifTrue: [
 		aStream nextPutAll: 'class'.
 		self isClassPrefix
@@ -27152,13 +27329,7 @@ refIndex
 smallInteger
 	"Answer the receiver decoded into a SmallInteger."
 
-	^dword bitShift: -1!
-
-smallInteger: aSmallInteger
-	"Make the receiver a prefix to a 'virtual' SmallInteger, virtual because
-	as we encode the integer entirely within the prefix no object data need follow."
-
-	dword := (aSmallInteger bitShift: 1) bitOr: 1! !
+	^dword bitShift: -1! !
 
 STBProxy comment:
 ''!
@@ -27309,6 +27480,12 @@ nextMatchFor: anObject
 
 	^anObject = self next!
 
+nextOrNil
+	"Answer a <Character>, or <integer> in the range 0..255, being the next of the 
+	receiver's future sequence values. Answer nil if at EOF."
+
+	^self atEnd ifFalse: [self next]!
+
 skipThrough: anObject 
 	"Set the receivers position reference to be past the next occurrence of the argument,
 	anObject, in the collection. Answer the receiver, or nil if no such occurrence existed."
@@ -27334,9 +27511,7 @@ upTo: anObject
 
 	| newStream nextObject |
 	newStream := self contentsSpecies writeStream: 128.
-	[self atEnd or: 
-			[nextObject := self next.
-			nextObject = anObject]] 
+	[(nextObject := self nextOrNil) isNil or: [nextObject = anObject]] 
 		whileFalse: [newStream nextPut: nextObject].
 	^newStream contents!
 
@@ -27376,6 +27551,11 @@ new
 
 !UndefinedObject methodsFor!
 
+?? anObject
+	"Answer the receiver if not nil, else the operand."
+
+	^anObject!
+
 _deepCopy: copiesDictionary
 	^self!
 
@@ -27394,29 +27574,26 @@ displayOn: aStream
 	"Append a representation of the receiver to aStream as a user would want to see it.
 	The default is to do nothing, since, from the end-user perspective, the receiver is a null."!
 
-ifNil: aBlock 
-	"If the receiver is the nil object, then answer the result of evaluating the
-	<niladicValuable>, aBlock, otherwise answer the receiver."
-
-	"Implementation Note: This message is normally inlined by the compiler and so is never sent
-	unless #perform'd."
-
-	^aBlock value!
-
-ifNil: nilBlock ifNotNil: notNilBlock 
-	"If the receiver is the nil object, then answer the result of evaluating the
-	<niladicValuable>, nilBlock, otherwise answer the result of evaluating the
-	<monadicValuable>, notNilBlock, with the receiver as its argument."
+ifNil: nilBlock 
+	"As the receiver is the nil object, answer the result of evaluating the <niladicValuable>,
+	nilBlock."
 
 	"Implementation Note: This message is normally inlined by the compiler and so is never sent
 	unless #perform'd."
 
 	^nilBlock value!
 
-ifNotNil: aBlock 
-	"If the receiver is not the nil object, then answer the result of evaluating the valuable
-	argument, aBlock, otherwise answer nil. aBlock can be a <niladicValuable> or a
-	<monadicValuable>, in which case it is evaluated with the receiver as its argument, "
+ifNil: nilBlock ifNotNil: notNilBlock 
+	"As the receiver is the nil object, answer the result of evaluating the <niladicValuable>,
+	nilBlock."
+
+	"Implementation Note: This message is normally inlined by the compiler and so is never sent
+	unless #perform'd."
+
+	^nilBlock value!
+
+ifNotNil: notNilBlock 
+	"As the receiver is the nil object, ignore the <valuable> argument and answer nil."
 
 	"Implementation Note: This message is normally inlined by the compiler and so is never sent
 	unless #perform'd."
@@ -27424,9 +27601,8 @@ ifNotNil: aBlock
 	^self!
 
 ifNotNil: notNilBlock ifNil: nilBlock 
-	"If the receiver is the nil object, then answer the result of evaluating the
-	<niladicValuable>, nilBlock, otherwise answer the result of evaluating the
-	<monadicValuable>, notNilBlock, with the receiver as its argument."
+	"As the receiver is the nil object, answer the result of evaluating the <niladicValuable>,
+	nilBlock."
 
 	"Implementation Note: This message is normally inlined by the compiler and so is never sent
 	unless #perform'd."
@@ -27438,6 +27614,14 @@ includesBehavior: aBehavior
 	(i.e. is aBehavior the receiver or a superclass of the receiver)"
 
 	^aBehavior isNil!
+
+isAtomic
+	"Answer whether or not the receiver has a single unique instance for any individual value it
+	can represent."
+
+	"UndefinedObject has the single unique instance, nil"
+
+	^true!
 
 isLiteral
 	"Answer whether or not the receiver has a literal representation (probably its
@@ -27674,9 +27858,8 @@ productName
 	^self at: 'ProductName'!
 
 productVersionString
-	"Answer a String in the form N.N.N.N which specifies the version number of the product."
 
-	^self fixedInfo productVersionString!
+	^self at: 'ProductVersion'!
 
 queryValue: name into: buf
 	"Private - Get the language/code-page id from the version info block."
@@ -29185,13 +29368,18 @@ addProtocol: protocol
 	protocols add: protName.
 	self allSubclassesDo: [:q | q removeProtocol: protName ifAbsent: []]!
 
-addSharedPool: aPoolDictionary 
-	"Add the specified pool dictionary to the list of those referenced by the receiver. 
-	Note that this is a low-level operation intended for system use. The <ClassBuilder>
-	should be used to modify classes."
+addSharedPool: aPoolDictionary
+	"Add the argument, aPoolDictionary, as one of the pool dictionaries referenced by the
+	receiver, but lower in precedence than any previously added pools. It is an error if the
+	dictionary is already one of the pools.
+	Note: This is a low-level operation and does not recompile affected classes. Generally 
+	speaking any modification to a class should be made through a <ClassBuilder>."
 
-	self instanceClass
-		setSharedPoolNames: (self sharedPoolNames copyWith: aPoolDictionary name)!
+	| poolName pools |
+	poolName := aPoolDictionary name.
+	pools := self sharedPoolNames.
+	(pools includes: poolName) ifTrue: [^self error: 'Pool is already referenced by this class'].
+	self setSharedPoolNames: (pools copyWith: poolName)!
 
 allGetters
 	"Private - Answer a <Set> of the instance variable getter methods in the receiver"
@@ -29575,53 +29763,59 @@ includeSelector: aSelector inCategory: category
 		ifFalse: [catalogue at: category put: (selectors copyWith: aSelector)].
 	self methodsCatalogue: catalogue!
 
-indexOfInstVar: instVarName
+indexOfInstVar: aString
 	"Answer the index of the specified inst. var in the receiver, or
 	if no matching instance variable, raise a NotFoundError."
 
-	^self allInstVarNames indexOf: instVarName ifAbsent: [self errorNotFound: instVarName]!
+	^self indexOfInstVar: aString ifAbsent: [self errorNotFound: aString]!
 
-indexOfInstVar: instVarName ifAbsent: exceptionHandler
-	"Answer the <integer> index of the inst. var of the receiver
-	identified by the <readableString> name, instVarName, or
-	if no matching instance variable, the result of evaluating the
-	<niladicValuable>, exceptionHandler."
+indexOfInstVar: aString ifAbsent: aNiladicValuable
+	"Answer the <integer> index of the inst. var of the receiver identified by the
+	<readableString> name, aString, or if no matching instance variable, the result of
+	evaluating the <niladicValuable>, aNiladicValuable."
 
-	^self allInstVarNames indexOf: instVarName ifAbsent: exceptionHandler!
+	| index |
+	index := self instVarNames indexOf: aString.
+	^index == 0
+		ifTrue: 
+			[superclass
+				ifNil: [aNiladicValuable value]
+				ifNotNil: [superclass indexOfInstVar: aString ifAbsent: aNiladicValuable]]
+		ifFalse: [index + (superclass ifNil: [0] ifNotNil: [superclass instSize])]!
 
 instanceClass
 	"Answer the receiver's singleton instance (the actual class object)."
 
 	^self subclassResponsibility!
 
-instanceVariables: aString 
-	"Private - Set the receiver's instanceVariables inst var."
-
-	instanceVariables := (aString notNil and: [aString notEmpty]) ifTrue: [aString]!
-
 instanceVariableString
-	"Answer a string containing the names of the instance 
-	variables in instances of the receiver, in the order they
-	appear in those instances. The names are separated by spaces."
+	"Answer a string containing the names of the instance variables in instances of the
+	receiver, in the order they appear in those instances. The names are separated by spaces."
 
 	| aStream |
 	instanceVariables isNil ifTrue: [^''].
-	instanceVariables class == String ifTrue: [^instanceVariables].
+	instanceVariables isString ifTrue: [^instanceVariables].
 	aStream := String writeStream: 64.
 	instanceVariables 
 		do: [:instVarName | aStream nextPutAll: instVarName]
 		separatedBy: [aStream space].
 	^aStream contents!
 
+instanceVariableString: aString
+	"Private - Set the receiver's instanceVariables inst var to the <String> argument."
+
+	instanceVariables := (aString notNil and: [aString notEmpty]) ifTrue: [aString]!
+
 instVarNames
 	"Answer a <sequencedReadableCollection> of the receiver's instance variable 
 	names."
 
 	instanceVariables isNil ifTrue: [^#()].
-	"This required for bootstrapping purposes only"
-	instanceVariables class == Array ifTrue: [^instanceVariables].
-	"N.B. This assumes that the names in the instance variable string are separated by exactly one space"
-	^instanceVariables subStrings: Character space!
+	^instanceVariables isString
+		ifTrue: 
+			["N.B. This assumes that the names in the instance variable string are separated by exactly one space"
+			instanceVariables subStrings: Character space]
+		ifFalse: [instanceVariables]!
 
 logDefinition
 	self sourceManager logEvaluate: self definition!
@@ -29760,6 +29954,15 @@ realMethodCategories
 		add: catClass private;
 		yourself!
 
+recompileAllReferencesToVarNamed: aString
+	"Private - Recompile any methods in the receiver's hierarchy which appear to reference the
+	named variable."
+
+	self instanceClass withAllSubclassesDo: 
+			[:each |
+			each recompileReferencesToVarNamed: aString.
+			each class recompileReferencesToVarNamed: aString]!
+
 removeCategory: category
 	"Remove the Category from the receiver. N.B. All the methods belonging to the
 	category are removed even if the method belongs to any other categories.
@@ -29839,13 +30042,12 @@ removeSelectors: aCollection
 	methods do: [:each | self removeMethodFromNonVirtualCategories: each].
 	^methods!
 
-removeSharedPool: aPoolDictionary 
-	"Remove the specified pool dictionary to the list of those referenced by the receiver. 
-	Note that this is a low-level operation intended for system use. The <ClassBuilder>
-	should be used to modify classes."
+removeSharedPool: aPoolDictionary
+	"Remove the argument, aPoolDictionary, as one of the receiver's pool dictionaries. 
+	Note: This is a low-level operation and does not recompile affected classes. Generally 
+	speaking any modification to a class should be made through a <ClassBuilder>."
 
-	self instanceClass
-		setSharedPoolNames: (self sharedPoolNames remove: aPoolDictionary name; yourself)!
+	self setSharedPoolNames: (self sharedPoolNames copyWithout: aPoolDictionary name)!
 
 removeUnsupportedProtocols: superUnsupported selector: removedSelector
 	"Private - Remove any protocols that are no longer supported after the removal
@@ -29906,30 +30108,25 @@ selectorsInCategory: category
 
 	^self methodsCatalogue at: category ifAbsent: [Array new]!
 
-setInstanceVariables: aCollection 
+setInstanceVariables: aCollection
 	"Private - Set the instance variable string of the receiver to be the list
 	of names in aCollection, separated by spaces."
 
-	instanceVariables := aCollection notEmpty 
-				ifTrue: 
-					[| aStream |
-					aStream := String writeStream: 64.
-					aCollection do: [:i | aStream nextPutAll: i] separatedBy: [aStream space].
-					aStream contents]!
+	instanceVariables := aCollection notEmpty ifTrue: [aCollection asArray]!
+
+setSharedPoolNames: aCollection
+	"Private - Set the <Symbol>ic names of the shared pool dictionaries that are declared as
+	referenced locally in the receiver (pools are inherited in Dolphin)."
+
+	self instanceClass setSharedPoolNames: aCollection
+!
 
 sharedPoolNames
-	"Answer a <Set> of <String>s, being the names of the shared pool dictionaries that
-	are specified locally in the receiver (pools are inherited in Dolphin)."
+	"Answer a <sequencedReadableCollection> of <Symbol>s, being the names of the shared pool
+	dictionaries that are specified locally in the receiver (pools are inherited in Dolphin), in
+	order of precedence."
 
 	^self instanceClass sharedPoolNames!
-
-sharedPools
-	"Answer a Set of the pools (dictionaries) that are specified locally 
-	in the receiver."
-
-	| environment |
-	environment := self environment.
-	^self sharedPoolNames collect: [:symbol | environment at: symbol ifAbsent: [Dictionary new]]!
 
 sharedVariableString
 	"Answer a String containing the names of the Pools accessable
@@ -30102,45 +30299,73 @@ icon
 
 !Class methodsFor!
 
-addClassVarName: aString 
-	"Add a new class variable to the receiver with the specified <readableString> name.
-	Note: This is a low-level operation and does not recompile affected classes. Generally 
-	speaking any modification to a class should be made through a <ClassBuilder>."
+addClassConstant: aString value: anObject
+	"Define a constant binding in the receiver's class pool with the specified name. If the
+	variable already exists, it is marked as constant, and if its existing value is different
+	from anObject, then anObject is assigned to the underlying variable and any methods that may
+	reference the constant are recompiled to pick up the new value. If the variable does not
+	exist, a constant binding is added with initial value nil."
 
-	| varName |
-	varName := aString asString.	"Allow symbolic names too"
-	(self withAllSubclasses detect: [:each | (each classPool bindingFor: varName) notNil]
-		ifNone: []) ifNotNil: 
-				[:existingClass | 
-				^self 
-					error: aString , ' is already used as a variable name in class ' , existingClass name].
+	| binding count requiresRecompile |
+	count := classPool ifNil: [0] ifNotNil: [classPool size].
+	binding := self addClassVarNamed: aString.
+	"We need to recompile if we are modifying an existing binding and either:
+		- the binding was not constant, and the new constant value is inlineable
+		- the binding was constant, but the value has changed, and either the previous or new value are inlineable"
+	requiresRecompile := classPool size = count and: 
+					[binding isImmutable
+						ifFalse: 
+							["Wasn't constant, recompile if it can be inlined"
+							VMLibrary hasBytecodeRepresentation: anObject]
+						ifTrue: 
+							["Was constant, recompile if changed and was inlined, or can be inlined"
+							| oldValue |
+							oldValue := binding value.
+							oldValue ~~ anObject and: 
+									[(VMLibrary hasBytecodeRepresentation: oldValue) or: [VMLibrary hasBytecodeRepresentation: anObject]]]].
+	binding isImmutable: false.
+	[binding value: anObject] ensure: [binding isImmutable: true].
+	requiresRecompile ifTrue: [self recompileAllReferencesToVarNamed: aString].
+	^binding!
+
+addClassVariable: aString value: anObject
+	"Define a variable binding in the receiver's class pool with the specified name. If the
+	variable already exists, this is a no-op. If the variable does not exist, a new binding is
+	added with initial value nil."
+
+	^(self addClassVarNamed: aString)
+		isImmutable: false;
+		value: anObject;
+		yourself!
+
+addClassVarNamed: aString
+	"Answer the binding for a new or existing class variable in the receiver with the specified
+	<readableString>. Note: This is a low-level operation and does not recompile affected
+	classes. Generally speaking any modification to a class should be made through a
+	<ClassBuilder>. It is not considered an error to re-add a class variable that already exists
+	in the class, but it is an error to attempt to add a class variable already defined
+	somewhere in the hierarchy below the class. "
+
+	| varName var |
+	varName := aString trimBlanks.	"Allow symbolic names too"
 	classPool := self classPool.
-	(classPool includesKey: varName) 
-		ifFalse: 
-			[classPool at: varName put: nil.
-			self logDefinition.
-			self environment classUpdated: self]!
-
-addSharedPool: aPoolDictionary 
-	"Add the argument, aPoolDictionary, as one of the receiver's pool dictionaries. 
-	It is an error if the dictionary is already one of the pools.
-	Note: This is a low-level operation and does not recompile affected classes. Generally 
-	speaking any modification to a class should be made through a <ClassBuilder>."
-
-	| poolName pools |
-	poolName := aPoolDictionary name.
-	pools := self sharedPoolNames.
-	(pools includes: poolName)
-		ifTrue: [^self error: 'The dictionary is already in my pool'].
-	pools add: poolName.
-	sharedPools := pools.!
+	(classPool bindingFor: varName) ifNotNil: [:existingVar | ^existingVar].
+	(self allSubclasses detect: [:each | (each classPool bindingFor: varName) notNil] ifNone: [])
+		ifNotNil: [:existingClass | ^self error: aString , ' is already used as a variable name in class ' , existingClass name].
+	var := classPool newAssociation: varName value: nil.
+	classPool add: var.
+	self logDefinition.
+	self environment classUpdated: self.
+	^var!
 
 addToSuper
 	"Private - Add the receiver as a subclass of its superclass
-	and do the same for the receiver's metaclass buddy."
+	and do the same for the receiver's metaclass buddy, but not
+	if a root class."
 
-	super addToSuper.
-	self class addToSuper!
+	superclass notNil ifTrue: [
+		super addToSuper.
+		self class addToSuper]!
 
 basicClassPool
 	"Private - Answer the receiver's class pool (dictionary of class variables)."
@@ -30166,12 +30391,8 @@ bindingFor: aString
 	If there is no such variable, then answer nil.
 	Note that in Dolphin pools are inherited."
 
-	classPool isNil 
-		ifFalse: [(classPool bindingFor: aString) ifNotNil: [:classVar | ^classVar]].
-	sharedPools isNil 
-		ifFalse: 
-			[self sharedPools 
-				do: [:each | (each bindingFor: aString) ifNotNil: [:sharedVar | ^sharedVar]]].
+	classPool isNil ifFalse: [(classPool bindingFor: aString) ifNotNil: [:classVar | ^classVar]].
+	self sharedPoolsDo: [:each | (each bindingFor: aString) ifNotNil: [:sharedVar | ^sharedVar]].
 	^superclass bindingFor: aString!
 
 canFileOut
@@ -30365,6 +30586,14 @@ instanceClass
 
 	^self!
 
+isAtomic
+	"Answer whether or not the receiver has a single unique instance for any individual value it
+	can represent."
+
+	"Each class is the singleton instance of a unique metaclass."
+
+	^true!
+
 isChanged
 	"Answer true if the receiver or any of it's contents have been changed since
 	their changed flag was last reset."
@@ -30507,16 +30736,6 @@ removeFromSystem
 	self sourceManager logEvaluate: self name, ' removeFromSystem'.
 	ClassBuilder removeClass: self!
 
-removeSharedPool: aPoolDictionary 
-	"Remove the argument, aPoolDictionary, as one of the receiver's pool dictionaries. 
-	Note: This is a low-level operation and does not recompile affected classes. Generally 
-	speaking any modification to a class should be made through a <ClassBuilder>."
-
-	| poolName |
-	poolName := aPoolDictionary name.
-	self sharedPoolNames remove: poolName.
-	sharedPools isEmpty ifTrue: [sharedPools := nil]!
-
 rename: aString
 	"Private - Change the name of the receiver to aString.
 	N.B. This is the low-level rename operation, and does not rename any references
@@ -30600,38 +30819,18 @@ setName: aSymbol
 
 	name := aSymbol!
 
-setSharedPoolNames: aCollection 
-	"Private - Set the shared variable pool to include the names in aCollection.
-	N.B. initial conversion to a set removes duplicates."
+setSharedPoolNames: aCollection
+	"Private - Set the shared variable pool to include the names in aCollection, ignoring any duplicates."
 
-	sharedPools := aCollection notEmpty 
-				ifTrue: [aCollection asSet asArray collect: [:poolName | poolName asSymbol]]!
+	sharedPools := aCollection notEmpty
+				ifTrue: [aCollection distinct asArray collect: [:poolName | poolName asSymbol]]!
 
 sharedPoolNames
-	"Answer a Set of the names of the shared pool dictionaries that
-	are specified locally in the receiver."
+	"Answer a <sequencedReadableCollection> of <Symbol>s, being the names of the shared pool
+	dictionaries that are specified locally in the receiver (pools are inherited in Dolphin), in
+	order of precedence."
 
-	sharedPools isNil ifTrue: [^Set new].
-	^sharedPools asSet.
-!
-
-sharedStaticPools
-	"Private - Answer an array of all the non-empty shared pools for the 
-	receiver.
-	N.B. Sent by compiler, and may be removed in future."
-
-	| answer |
-	answer := OrderedCollection new.
-	"First the class variables"
-	self withAllSuperclassesDo: 
-			[:c | 
-			| pool |
-			pool := c basicClassPool.
-			(pool notNil and: [pool notEmpty]) ifTrue: [answer add: pool]].
-	"Then the pool variables"
-	self 
-		withAllSuperclassesDo: [:c | c sharedPools do: [:s | s notEmpty ifTrue: [answer add: s]]].
-	^answer asArray!
+	^sharedPools ifNil: [#()]!
 
 sourceDescriptor
 	"Answer the source descriptor for the receiver's comment."
@@ -30862,13 +31061,14 @@ icon
 !Metaclass methodsFor!
 
 addToSuper
-	"Private - Add the receiver into its superclasses' subclass collection.
-	Root Metaclasses will have a superclass of Class - we do not put such
-	classes into Class's subclass collection."	
+	"Private - Add the receiver as a subclass of its superclass, but not
+	if a root class."
 
-	superclass ~~ Class
-		ifTrue: [super addToSuper]
-!
+	"Implementation Note: Identify Class as the superclass by name, as if the ClassBuilder is
+	currently mutating Class, the Class variable may temporarily be pointing at the old Class
+	object."
+
+	superclass name ~~ #Class ifTrue: [super addToSuper]!
 
 bindingFor: aString 
 	"Answer a variable binding for the named variable in the scope of this class. 
@@ -30983,18 +31183,6 @@ removeFromSuper
 	superclass ~~ Class
 		ifTrue: [super removeFromSuper]
 !
-
-setSharedPoolNames: aCollection
-	"Private - Set the <Symbol> names of the shared pool dictionaries that
-	are specified locally in the receiver (pools are inherited in Dolphin)."
-
-	self instanceClass setSharedPoolNames: aCollection
-!
-
-sharedStaticPools
-	"Answer the receiver's shared pools."
-
-	^instanceClass sharedStaticPools!
 
 stbSaveOn: anSTBOutFiler
 	"Save out a binary representation of the receiver to anSTBOutFiler."
@@ -31892,6 +32080,17 @@ approxSize
 
 	^self size!
 
+asArray
+	"Answer an <Array> whose elements are those of the receiver in the same sequence."
+
+	| size |
+	size := self size.
+	^self
+		replaceElementsOf: (Array new: size)
+		from: 1
+		to: size
+		startingAt: 1!
+
 asRunArray
 	"Answer a <RunArray> whose elements are the same as those of the receiver. The order of
 	elements will be the same, and there will be the same number when enumerated, but the
@@ -32234,16 +32433,6 @@ copyWithoutAll: oldElements
 		do: [:element | (oldElements includes: element) ifFalse: [aStream nextPut: element]].
 	^aStream contents!
 
-copyWithoutDuplicates
-	"Answers a copy of the receiver that contains no duplicate objects.
-	Uses equality for comparison."
-
-	| set |
-	set := self asSet.
-	^self select: [:each | (set includes: each) 
-		ifTrue: [ set remove:each. true ]
-		ifFalse: [ false ]].!
-
 do: operation 
 	"Evaluate the <monadicValuable> argument, operation, for each of the receiver's elements.
 	Answers the receiver. The elements are enumerated in index order."
@@ -32255,13 +32444,12 @@ do: operation
 	self keysAndValuesDo: [:i :elem | operation value: elem]!
 
 endsWith: aCollection
-	"Answer whether the receiver begins with the sequence
-	of objects in the <Collection> argument"
+	"Answer whether the receiver ends with the sequence of objects in the <Collection> argument"
 
 	| i |
 	(i := self size - aCollection size + 1) < 1 ifTrue: [^false].
 	aCollection do: 
-			[:each | 
+			[:each |
 			(self at: i) = each ifFalse: [^false].
 			i := i + 1].
 	^true!
@@ -32641,6 +32829,13 @@ prevIndexOfSubCollection: aSequenceableCollection startingAt: anInteger ifAbsent
 		ifFalse: [index]
 !
 
+randomizeUsing: aRandom 
+	| order |
+	3 timesRepeat: [aRandom next].
+	order := self collect: [:each | aRandom next -> each].
+	order := order asSortedCollection: [:a :b | a key <= b key].
+	^order collect: [:each | each value]!
+
 readStream
 	"Answer a ReadStream on the receiver."
 
@@ -32667,6 +32862,22 @@ replaceBytesOf: aByteObject from: start to: stop startingAt: fromStart
 	start to: stop do: [:i | aByteObject at: i put: (self at: i + fromOffset)].
 	^aByteObject!
 
+replaceElementsOf: anIndexableObject from: startInteger to: stopInteger startingAt: startAtInteger
+	"Private - Replace the indexable instance variables of the variable pointer object,
+	anIndexableObject, between startInteger and stopInteger inclusive with elements of the
+	receiver starting from startAtInteger. Answers anIndexableObject."
+
+	| offset |
+	offset := startAtInteger - startInteger.
+	(anIndexableObject == self and: [startAtInteger < startInteger])
+		ifTrue: 
+			[stopInteger to: startInteger
+				by: -1
+				do: [:i | anIndexableObject basicAt: i put: (self at: offset + i)]]
+		ifFalse: 
+			[startInteger to: stopInteger do: [:i | anIndexableObject basicAt: i put: (self at: offset + i)]].
+	^anIndexableObject!
+
 replaceFrom: start to: stop with: replacementElements
 	"Destructively replace the elements of the receiver between the <integer> arguments
 	start and stop with the <Object> elements of the <sequencedReadableCollection> argument, 
@@ -32677,32 +32888,32 @@ replaceFrom: start to: stop with: replacementElements
 		ifFalse: [^self error: 'size of replacement incorrect'].
 	^self replaceFrom: start to: stop with: replacementElements startingAt: 1!
 
-replaceFrom: start to: stop with: replacementElements startingAt: repStart
+replaceFrom: startInteger to: stopInteger with: aSequencedReadableCollection startingAt: startAtInteger 
 	"Destructively replace the elements of the receiver between the <integer> arguments
-	start and stop with the <Object> elements of the <sequencedReadableCollection> 
-	argument, replacementElements beginning with its element with <integer> index 
-	repStart. Answer the receiver. Overlapping moves are correctly handled.
-	Unlike #replaceFrom:to:with:, the size of replacementElements is not checked
-	directly (X3J20 does not specify that this should be an error), but an error will
-	be raised when an attempt is made to access an out-of-bounds element in
-	replacementElements.
-	N.B. It is not an error to specify an empty replacement interval, even if
-	start, stop, and/or repStart are out-of-bounds (this is compatible with the major
-	implementations).
-	Implementation Note: The performance of this method is very important to overall 
+	startInteger and stopInteger inclusive with the <Object> elements of the
+	<sequencedReadableCollection> argument, aSequencedReadableCollection, beginning with its
+	element with <integer> index startAtInteger. Answer the receiver. Overlapping moves are
+	correctly handled. Unlike #replaceFrom:to:with:, the size of aSequenceableCollection is not
+	checked directly (X3J20 does not specify that this should be an error), but an error will be
+	raised when an attempt is made to access an out-of-bounds element in replacementElements. It
+	is not an error to specify an empty replacement interval, even if startInteger, stopInteger,
+	and/or startAtInteger are out-of-bounds (this is compatible with the major
+	implementations)."
+
+	"Implementation Note: The performance of this method is very important to overall 
 	system performance. This implementation is mostly inlined by the compiler."
 
 	| offset |
-	offset := repStart - start.
-	(self == replacementElements and: [repStart < start])
-		ifTrue: [
-			"Move within same object overlaps, so do backwards"
-			stop to: start by: -1 do: [:i |
-				self at: i put: (replacementElements at: offset + i)]]
-		ifFalse: [
-			"Non-overlapping moves are done forwards"
-			start to: stop do: [:i |
-				self at: i put: (replacementElements at: offset + i)]]!
+	offset := startAtInteger - startInteger.
+	"Perform overlapping moves backwards, otherwise forwards"
+	(self == aSequencedReadableCollection and: [startAtInteger < startInteger]) 
+		ifTrue: 
+			[stopInteger to: startInteger
+				by: -1
+				do: [:i | self at: i put: (aSequencedReadableCollection at: offset + i)]]
+		ifFalse: 
+			[startInteger to: stopInteger
+				do: [:i | self at: i put: (aSequencedReadableCollection at: offset + i)]]!
 
 replaceFrom: start to: stop withObject: replacementElement
 	"Destructively replace the elements of the receiver between the
@@ -32716,6 +32927,7 @@ resize: anInteger
 	"Private - Resize the receiver to accomodate anInteger elements.
 	Answer the receiver."
 
+	self isImmutable ifTrue: [Processor constWriteSignal signalWith: self].
 	(self copyEmpty: anInteger)
 		replaceFrom: 1 to: self size with: self startingAt: 1;
 		become: self!
@@ -32865,31 +33077,35 @@ Set comment:
 'Set is a generic collection class which represents an unordered, extensible/contractible, collection, accessible only by value, not by external keys. Element comparison is by equality (i.e. using #hash and #=).'!
 !Set class methodsFor!
 
+defaultCapacity
+	^2!
+
 initialize
 	"Private - Initialize the receiver's class variables."
 
-	self initializeSizeTable!
-
-initializeSizeTable
-	"Private - Construct a difference table which can be used to calculate the nearest 
-	larger prime for each odd integer up to a certain limit.  The greater the limit the more
-	table space is used, although as this is a byte array this isn't likely to be a problem.
-	Ultimately the use of a byte array limits the table size since at some point the offset
-	to the next prime will be greater than 255.
-
-		self initializeSizeTable
-	"
-
-	| primes last count max |
-	max := (2**12)+1.	"Max size for which entry will be found in table"
-	primes := Integer primesUpTo: max+255.
+	| primes last count max smallPrimeOffsets largePrimeSizes |
+	"Construct a difference table which can be used to calculate the nearest larger prime for
+	each odd integer up to a certain limit. The greater the limit the more table space is used,
+	although as this is a byte array this isn't likely to be a problem. Ultimately the use of a
+	byte array limits the table size since at some point the offset to the next prime will be
+	greater than 255."
+	max := 2 ** 12 + 1.
+	primes := Integer primesUpTo: max + 255.
 	count := max bitShift: -1.
-	SmallPrimeOffsets := ByteArray new: count.
+	smallPrimeOffsets := ByteArray new: count.
 	last := 1.
-	1 to: count do: [:i | | n p |
-		n := (i bitShift: 1) bitOr: 1.
-		[(p := primes at: last) >= n] whileFalse: [last := last + 1].
-		SmallPrimeOffsets at: i put: p - n]!
+	1 to: count
+		do: 
+			[:i |
+			| n p |
+			n := (i bitShift: 1) bitOr: 1.
+			[(p := primes at: last) >= n] whileFalse: [last := last + 1].
+			smallPrimeOffsets at: i put: p - n].	"Good prime sizes for larger tables"
+	largePrimeSizes := #(1151 1549 2069 2237 2423 2617 2797 2999 3167 3359 3539 3727 3911 4441 4787 5119 5471 5801 6143 6521 6827 7177 7517 7853 8783 9601 10243 10867 11549 12239 12919 13679 14293 15013 15731 17569 19051 20443 21767 23159 24611 25847 27397 28571 30047 31397 35771 38201 40841 43973 46633 48989 51631 54371 57349 60139 62969 70589 76091 80347 85843 90697 95791 101051 106261 111143 115777 120691 126311 140863 150523 160969 170557 181243 190717 201653 211891 221251 232591 242873 251443 282089 300869 321949 341227 362353 383681 401411 422927 443231 464951 482033 504011 562621 605779 647659 681607 723623 763307 808261 844709 886163 926623 967229 1014617)
+				select: [:each | each > (primes at: last)].
+	self addClassConstant: 'SmallPrimeOffsets' value: smallPrimeOffsets.
+	self addClassConstant: 'MaxOffsetIndex' value: count.
+	self addClassConstant: 'PrimeSizes' value: largePrimeSizes!
 
 new
 	"Answer a new instance of the receiver with the default initial capacity.
@@ -32898,7 +33114,7 @@ new
 	much more fragile (e.g. they will often need to override #new as well as
 	#new:), so avoid the temptation."
 
-	^self new: 2!
+	^self new: self defaultCapacity!
 
 new: count
 	"Answer a new instance of the receiver with an initial capacity of at least 
@@ -32911,24 +33127,32 @@ sizeFor: anInteger
 	This formula should be kept in step with that in the instance method #privateAt:put:.
 	Try to answer only prime sizes as these give a better hash distribution."
 
-	^anInteger < 2 
+	^anInteger <= 3
 		ifTrue: 
-			["Minimum capacity of Dolphin hashed collection is 2"
-
-			2]
+			["Minimum capacity of Dolphin hashed collection is 5"
+			5]
 		ifFalse: 
-			[| n i |
-			n := anInteger * 100 // 75 bitOr: 1.
+			["Use a load factor of 0.6666~ as this can be calculated without division and is less than (1 - log(2))"
+			| n i |
+			n := anInteger + (anInteger + 1 bitShift: -1) bitOr: 1.
 			i := n bitShift: -1.
-			^i > SmallPrimeOffsets basicSize 
-				ifTrue: 
-					["Larger sizes just left odd"
-
-					n]
+			i <= MaxOffsetIndex
+				ifTrue: [(SmallPrimeOffsets basicAt: i) + n]
 				ifFalse: 
-					["Calculate nearest prime larger than requested size plus 25% slop"
-
-					(SmallPrimeOffsets basicAt: i) + n]]! !
+					["Binary search the blessed prime sizes"
+					| low high |
+					high := PrimeSizes size.
+					n > (PrimeSizes at: high)
+						ifTrue: 
+							["Out of range sizes are just left odd"
+							^n bitOr: 1].
+					low := 1.
+					
+					[i := (high - low) // 2 + low.
+					(PrimeSizes at: i) < n ifTrue: [low := i] ifFalse: [high := i].
+					high - low <= 1]
+							whileFalse.
+					^PrimeSizes at: high]]! !
 
 !Set methodsFor!
 
@@ -32953,21 +33177,41 @@ _deepCopy: anIdentityDictionary
 _deepCopyElementsInto: aSet trail: anIdentityDictionary 
 	self do: [:element | aSet uncheckedAdd: (element _deepCopy: anIdentityDictionary)]!
 
-add: newElement
-	"Include the <Object> newElement as one of the elements of the receiver. 
-	If newElement is nil, then it is not added. Answer newElement.
-	Note: If newElement is already in the receiver (i.e. has an equal element 
-	already in the receiver), then this operation has no effect. Note further
-	that if an equal element already exists then it is not overwritten, but the
-	answer is still newElement. I tried to persuade the committee that the original
-	element should be answered, but they didn't see the problem."
+= comperand
+	"Answer whether the receiver is equivalent to the <Object>, comperand."
+
+	comperand == self ifTrue: [^true].
+	(comperand class conformsToProtocol: #Set) ifFalse: [^false].
+	comperand size == self size ifFalse: [^false].
+	^self allSatisfy: [:each | comperand includes: each]!
+
+add: anObject
+	"Include the <Object> argument as one of the elements of the receiver. If the argument is
+	nil, then it is not added. Answer the argument."
+
+	"Note: If the argument is already in the receiver (i.e. has an equal element already in the
+	receiver), then this operation has no effect. Note further that if an equal element already
+	exists then it is not overwritten, but the answer is still the argument. See also
+	#addNewElement:"
 
 	| index |
-	newElement isNil ifTrue: [^newElement].		"Sets cannot store empty objects"
-	index := self findElementOrNil: newElement.
-	(self basicAt: index) isNil
-		ifTrue: [self privateAt: index put: newElement].
-	^newElement!
+	anObject isNil ifTrue: [^anObject].	"Sets cannot store empty objects"
+	(self basicAt: (index := self findElementOrNil: anObject)) isNil
+		ifTrue: [self privateAt: index put: anObject].
+	^anObject!
+
+addNewElement: anObject
+	"Include the <Object> newElement as one of the elements of the receiver. 
+	If newElement is nil, then it is not added. Answer true if the object was
+	not already a member of the set, else false."
+
+	| index |
+	anObject isNil ifTrue: [^false].
+	^(self basicAt: (index := self findElementOrNil: anObject))
+		ifNil: 
+			[self privateAt: index put: anObject.
+			true]
+		ifNotNil: [false]!
 
 approxSize
 	"Private - Answer the approximate size of the receiver.
@@ -33044,10 +33288,14 @@ copyElementsInto: newMe
 
 copyWithoutDuplicates
 	"Answers a copy of the receiver that contains no duplicate objects. 
-	Implementation Note: Sets are already free of duplicates so a plain
-	copy will do."
+	Implementation Note: Set>>distinct answers self, but we need a copy."
 
 	^self shallowCopy!
+
+distinct
+	"Answer a <collection> like the receiver containing only one occurrence of each element."
+
+	^self!
 
 do: operation 
 	"Evaluate the <monadicValuable> argument, operation, for each of the 
@@ -33072,18 +33320,10 @@ elements: anOrderedCollection
 !
 
 equals: comperand
-	"Answer whether the receiver is equivalent to the <Object>, comperand.
-	I often think this ought to be the definition of Set>>=, but for compatibility
-	with other Smalltalks, we'll use the alternative selector.
-	Implementation Note: Do our best to avoid an element-by-element
-	comparison. The algorithm will be slowest where the comperand is
-	equal to the receiver, but not identical."
+	"Answer whether the receiver is equivalent to the <Object>, comperand."
 
-	comperand == self ifTrue: [^true].
-	comperand species == self species ifFalse: [^false].
-	comperand size == self size ifFalse: [^false].
-	self do: [:e | (comperand includes: e) ifFalse: [^false]].
-	^true!
+	#deprecated.
+	^self = comperand!
 
 find: target
 	"Answer the actual element of the receiver which matches (however 'match' is defined)
@@ -33129,24 +33369,32 @@ fixCollisionsFrom: index
 			hashIndex := self findElementOrNil: element.
 			(self basicAt: hashIndex) isNil ifTrue: [self moveFrom: slotIndex to: hashIndex]]!
 
+fullCheck
+	"Private - Check the load factor in the receiver, and grow if exceeded."
+
+	"Slop calculation should be kept in sync with Set class>>sizeFor:"
+
+	tally * 3 > (self basicSize * 2) ifTrue: [self grow]!
+
 grow
 	"Private - Expand the receiver to a capacity suitable for holding more elements"
 
-	self resize: self size * 2!
+	self resize: (self size - 1) * 2!
 
 hash: anObject max: anInteger
 	^anObject hash \\ anInteger + 1!
 
-identityIncludes: target
-	"Answer whether the <Object> argument, target, is one of the receiver's elements.
-	Implementation Note: If anObject is identical to any object in the Set, then
-	it must also be equal to that object, which means it must have the same hash
-	value as that object, and therefore we can use a hashed lookup to optimize
-	this method over the serial search in the Collection implementation."
+identityIncludes: anObject
+	"Answer whether the <Object> argument is one of the receiver's elements."
+
+	"Implementation Note: If anObject is identical to any object in the Set, then it must also
+	be equal to that object, which means it must have the same hash value as that object, and
+	therefore we can use a hashed lookup to optimize this method over the serial search in the
+	Collection implementation."
 
 	| element |
-	element := self basicAt: (self findElementOrNil: target).
-	^element notNil and: [element == target]!
+	element := self basicAt: (self findElementOrNil: anObject).
+	^element notNil and: [element == anObject]!
 
 includes: target
 	"Answer whether the <Object> argument, target, is one of 
@@ -33192,11 +33440,9 @@ privateAt: index put: newObject
 	'optimal' load factor (and thereby ensures there is always a least one empty slot in the Set, an 
 	invariant required by the search algorithm)."
 
-	| capacity |
 	self basicAt: index put: newObject.
 	tally := tally + 1.
-	capacity := self basicSize.
-	capacity - tally <= (capacity bitShift: -2) ifTrue: [self grow].
+	self fullCheck.
 	^newObject!
 
 rehash
@@ -33412,12 +33658,30 @@ includes: target
 	1 to: self size do: [:i | target = (self at: i) ifTrue: [^true]].
 	^false!
 
+inject: anObject into: aDyadicValuable
+	"Evaluate the <dyadicValuable> argument, aDyadicValuable, once for each element in the
+	receiver, passing the elements as the second argument, and passing the value of the previous
+	evaluation as the first argument, starting with the <Object> argument, initialValue. The
+	operation must answer the value it wishes to have passed as its first argument the next time
+	it is evaluated. The traversal is in the #do: order. Answer the final value of the
+	operation. This enumeration is particularly useful for performing summations and other
+	statistical operations."
+
+	"Implementation Note: Override superclass implementation for efficiency. By inlining the do:
+	implementation we can avoid requiring a full block."
+
+	| nextValue |
+	nextValue := anObject.
+	1 to: self size do: [:i | nextValue := aDyadicValuable value: nextValue value: (self at: i)].
+	^nextValue!
+
 nextIdentityIndexOf: anElement from: start to: stop
 	"Answer the index of the next occurrence of anElement in the receiver's indexable
 	variables between startIndex and stopIndex inclusive. If there are no such occurrences, answer 0.
 	Override the inherited implementation to make use of the primitive"
 
-	^self basicIdentityIndexOf: anElement from: start to: stop	!
+	<primitive: 59>
+	^super nextIdentityIndexOf: anElement from: start to: stop!
 
 nextIndexOf: anElement from: start to: stop
 	"Answer the index of the next occurrence of anElement in the receiver between 
@@ -33442,7 +33706,7 @@ replaceIdentity: anObject with: newElement
 	self at: index put: newElement.
 	^index!
 
-resize: anInteger
+resize: anInteger 
 	"Override back to the primitive implementation for indexable objects (see Object>>resize:)"
 
 	<primitive: 101>
@@ -33757,15 +34021,14 @@ addAll: newElements
 	^self addAllLast: newElements!
 
 addAll: newElements after: target
-	"Insert the elements of the collection, newElements, as new elements of the 
-	receiver immediately after target. Answer the newly added elements.
-	Raise an exception if target is not present in the receiver.
-	Implementation Note: We could use reverseDo: to avoid having to keep
-	updating the index, but not all Collections understand #reverseDo:
-	because they are not all ordered."
+	"Insert the elements of the collection, newElements, as new elements of the receiver
+	immediately after target. Answer the newly added elements. Raise an exception if target is
+	not present in the receiver.
+	Implementation Note: We could use reverseDo: to avoid having to keep updating the index,
+	but not all Collections understand #reverseDo: because they are not all ordered."
 
 	| index |
-	index := self indexOf: target ifAbsent: [^self errorNotFound: target].
+	index := self indexOf: target ifAbsent: [self errorNotFound: target].
 	^self addAll: newElements afterIndex: index!
 
 addAll: newElements afterIndex: index
@@ -33776,12 +34039,12 @@ addAll: newElements afterIndex: index
 	^newElements!
 
 addAll: newElements before: target
-	"Insert the elements of the collection, newElements, as a new element of the 
-	receiver immediately before target. Answer the newly added elements.
-	Report an error if target is not present in the receiver."
+	"Insert the elements of the collection, newElements, as a new element of the receiver
+	immediately before target. Answer the newly added elements. Report an error if target is not
+	present in the receiver."
 
 	| index |
-	index := self indexOf: target ifAbsent: [^self errorNotFound: target].
+	index := self indexOf: target ifAbsent: [self errorNotFound: target].
 	^self addAll: newElements beforeIndex: index!
 
 addAll: newElements beforeIndex: index
@@ -33822,11 +34085,14 @@ addLast: newElement
 	^self add: newElement afterIndex: self size!
 
 remove: oldElement ifAbsent: exceptionHandler
-	"Remove oldElement from the receiver, and answer it. If oldElement is
-	not present in the receiver, answer the result of evaluating 
-	the niladic block, exceptionHandler."
+	"Remove the first occurrence of the <Object> oldElement from the receiver, and answer it. If
+	oldElement is not present in the receiver, answer the result of evaluating the
+	<niladicValuable>, exceptionHandler."
 
-	^self removeAtIndex: (self indexOf: oldElement ifAbsent: [^exceptionHandler value])!
+	| index |
+	^(index := self indexOf: oldElement) == 0
+		ifTrue: [exceptionHandler value]
+		ifFalse: [self removeAtIndex: index]!
 
 removeAll
 	"Empty the receiver of all contents"
@@ -33954,14 +34220,49 @@ printPrefixOn: aStream
 
 	aStream nextPutAll: '#('!
 
-refersToLiteral: anObject 
+refersToLiteral: anObject
 	"Private - Answer whether the receiver is a reference to the literal argument."
 
 	self = anObject ifTrue: [^true].
-	self do: [:each | (each refersToLiteral: anObject) ifTrue: [^true]].
+	1 to: self size do: [:i | ((self at: i) refersToLiteral: anObject) ifTrue: [^true]].
 	^false!
 
-storeOn: aStream 
+replaceElementsOf: anIndexableObject from: startInteger to: stopInteger startingAt: startAtInteger
+	"Private - Replace the indexable instance variables of the variable pointer object,
+	anIndexableObject, between startInteger and stopInteger inclusive with elements of the
+	receiver starting from startAtInteger. Answers anIndexableObject."
+
+	| offset |
+	<primitive: 188>
+	offset := startAtInteger - startInteger.
+	(anIndexableObject == self and: [startAtInteger < startInteger])
+		ifTrue: 
+			[stopInteger to: startInteger
+				by: -1
+				do: [:i | anIndexableObject basicAt: i put: (self basicAt: offset + i)]]
+		ifFalse: 
+			[startInteger to: stopInteger do: [:i | anIndexableObject basicAt: i put: (self basicAt: offset + i)]].
+	^anIndexableObject!
+
+replaceFrom: startInteger to: stopInteger with: aSequencedReadableCollection startingAt: startAtInteger 
+	"Destructively replace the elements of the receiver between the <integer> arguments
+	startInteger and stopInteger inclusive with the <Object> elements of the
+	<sequencedReadableCollection> argument, aSequencedReadableCollection, beginning with its
+	element with <integer> index startAtInteger. Answer the receiver. Overlapping moves are
+	correctly handled. Unlike #replaceFrom:to:with:, the size of aSequenceableCollection is not
+	checked directly (X3J20 does not specify that this should be an error), but an error will be
+	raised when an attempt is made to access an out-of-bounds element in replacementElements. It
+	is not an error to specify an empty replacement interval, even if startInteger, stopInteger,
+	and/or startAtInteger are out-of-bounds (this is compatible with the major
+	implementations)."
+
+	aSequencedReadableCollection 
+		replaceElementsOf: self
+		from: startInteger
+		to: stopInteger
+		startingAt: startAtInteger!
+
+storeOn: aStream
 	"Append to the <puttableStream> argument, target, an expression which when 
 	evaluated will answer a collection similar to the receiver."
 
@@ -33971,17 +34272,14 @@ storeOn: aStream
 
 	aStream nextPutAll: '#('.
 	self do: 
-			[:each | 
-			each isLiteral 
+			[:each |
+			each isLiteral
 				ifTrue: [each storeOn: aStream]
 				ifFalse: 
 					[aStream nextPutAll: '##('.
 					each storeOn: aStream.
 					aStream nextPut: $)]]
-		separatedBy: 
-			[aStream
-				cr;
-				space].
+		separatedBy: [aStream space].
 	aStream nextPut: $)! !
 
 ByteArray comment:
@@ -34441,11 +34739,15 @@ replaceBytesOf: aByteObject from: start to: stop startingAt: fromStart
 	stop to: start by: -1 do: [:i | aByteObject at: i put: (self basicAt: i + fromOffset)].
 	^aByteObject!
 
-replaceFrom: start to: stop with: aByteObject startingAt: fromStart
+replaceFrom: startInteger to: stopInteger with: aByteObject startingAt: startAtInteger 
 	"Standard method for transfering bytes from one variable
 	byte object to another. See String>>replaceFrom:to:with:startingAt:."
 
-	aByteObject replaceBytesOf: self from: start to: stop startingAt: fromStart!
+	aByteObject 
+		replaceBytesOf: self
+		from: startInteger
+		to: stopInteger
+		startingAt: startAtInteger!
 
 retryDwordAtOffset: anInteger put: anObject 
 	"Private - Fallback code for storing unsigned 32-bit integer into the receiver when a
@@ -34576,7 +34878,7 @@ storeOn: puttableStream
 	self printPrefixOn: puttableStream.
 	1 to: self size do: [:i | 
 		(self at: i) printDigitsOn: puttableStream base: 10.
-		puttableStream nextPut: $ ].
+		puttableStream nextPut: $\x20].
 	self printSuffixOn: puttableStream.!
 
 swordAtOffset: anInteger
@@ -34952,6 +35254,12 @@ lineDelimiter
 
 	^LineDelimiter!
 
+nullPrintCharacter
+	^NullPrintCharacter!
+
+nullPrintCharacter: aCharacter
+	NullPrintCharacter := aCharacter!
+
 readFrom: aStream 
 	"Answer a <String> read from the <gettableStream>, aStream
 	Note that the string is expected to be in Smalltalk literal form, i.e.
@@ -35011,6 +35319,18 @@ _collate: comparand
 
 "	^CRTLibrary default _stricmp: self string2: comparand."
 !
+
+_indexOfAnyInString: aString startingAt: anInteger 
+	| span |
+	span := aString strcspn: self start: anInteger.
+	^span + anInteger > aString size 
+		ifTrue: [0]
+		ifFalse: 
+			["CRT function will stop if it hits a null embedded in the string, so we must fall back
+			on slower superclass implementation in that case."
+			^(aString basicAt: span + anInteger) == 0 
+				ifTrue: [super _indexOfAnyInString: aString startingAt: anInteger]
+				ifFalse: [span + anInteger]]!
 
 _sameAsString: aString 
 	"Private - Answer whether the receiver collates the same as argument, aString."
@@ -35495,21 +35815,13 @@ includes: aCharacter
 
 	^self identityIncludes: aCharacter!
 
-indexOfAnyOf: characters startingAt: start 
-	"Answer the one-based integer index of the first encountered element of the receiver which 
-	is equal to one of the characters in the <readableString>, characters, starting from the one-based
-	<integer> index, start, in the receiver. If no occurrences are found, then answer 0."
+indexOfAnyOf: aCollectionOfCharacters startingAt: anInteger 
+	"Answer the one-based integer index of the first encountered element of the receiver which
+	is equal to one of the characters in the argument, aCollectionOfCharacters, starting from
+	the one-based <integer> index, start, in the receiver. If no occurrences are found, then
+	answer 0."
 
-	| span |
-	span := self strcspn: characters start: start.
-	^span + start > self size 
-		ifTrue: [0]
-		ifFalse: 
-			["CRT function will stop if it hits a null embedded in the string, so we must fall back
-			on slower superclass implementation in that case."
-			^(self basicAt: span + start) == 0 
-				ifTrue: [super indexOfAnyOf: characters startingAt: start]
-				ifFalse: [span + start]]!
+	^aCollectionOfCharacters _indexOfAnyInString: self startingAt: anInteger!
 
 indexOfSubCollection: targetSequence startingAt: start 
 	"Answer the <integer> index of the next occurrence within the 
@@ -35520,10 +35832,10 @@ indexOfSubCollection: targetSequence startingAt: start
 	^self findString: targetSequence startingAt: start!
 
 isLiteral
-	"Private - Answer whether the receiver can be represented as a literal (i.e. it has a printed
+	"Answer whether the receiver can be represented as a literal (i.e. it has a printed
 	representation which can be directly understood by the compiler)."
 
-	^true!
+	^(self identityIncludes: $\0) not!
 
 isString
 	"Answer whether the receiver is a <String>."
@@ -35678,7 +35990,7 @@ occurrencesOf: anObject from: startInteger to: endInteger
 			current := next + 1].
 	^occurrences!
 
-printOn: aStream 
+printOn: aStream
 	"Append the receiver as a quoted string to aStream. Internal quotes are doubled to produce a
 	literal String. Null characters are printed as another character to avoid them being treated
 	as null terminators by C api's"
@@ -35686,9 +35998,9 @@ printOn: aStream
 	aStream nextPut: $'.
 	1 to: self size
 		do: 
-			[:i | 
+			[:i |
 			| ch |
-			(ch := self at: i) == ##(Character null) 
+			(ch := self at: i) == $\0
 				ifTrue: [aStream nextPut: NullPrintCharacter]
 				ifFalse: [(aStream nextPut: ch) == $' ifTrue: [aStream nextPut: $']]].
 	aStream nextPut: $'!
@@ -35717,13 +36029,16 @@ replaceBytesOf: aByteObject from: start to: stop startingAt: fromStart
 	stop to: start by: -1 do: [:i | aByteObject at: i put: (self at: i + fromOffset)].
 	^aByteObject!
 
-replaceFrom: start to: stop with: replacementElements startingAt: startAt
-	"Replace the characters of the receiver at the <integer> index positions 
-	start through stop with consecutive characters of the <readableString>
-	replacementElements beginning at <integer> index position startAt. 
-	Answer the receiver."
+replaceFrom: startInteger to: stopInteger with: aReadableString startingAt: startAtInteger 
+	"Replace the characters of the receiver at the <integer> index positions startInteger
+	through stopInteger inclusive with consecutive characters of the <readableString>
+	aReadableString beginning at <integer> index position startAtInteger. Answer the receiver."
 
-	replacementElements replaceBytesOf: self from: start to: stop startingAt: startAt!
+	aReadableString 
+		replaceBytesOf: self
+		from: startInteger
+		to: stopInteger
+		startingAt: startAtInteger!
 
 reverse
 	"Answer a copy of the receiver but with its elements in reverse order.
@@ -35845,15 +36160,42 @@ subStrings
 			word notEmpty ifTrue: [answer add: word]].
 	^answer asArray!
 
-subStrings: separator
+subStrings: separatorOrSeparators 
 	"Answer an array containing the substrings of the receiver separated by occurrences
 	of the <Character> or <readableString> argument, separator.
 	Repeated separators produce empty strings in the array (cf. #subStrings).
 	The separators are removed."
 
-	#todo "This does not comply with the current ANSI definition, which requires an Array of separators,
-		each of which may individually be used as a separator".
-	^separator _separateSubStringsIn: self!
+	#todo.	"This does not comply with the current ANSI definition, which expects that the
+		argument is a <sequencedReadableCollection> of separators, any one of which may
+		separate each token. For historical reasons the Dolphin implementation accepts also
+		accepts a single character as the separator, and furthermore when passed a <String>
+		it will use the entire string as a multi-character separator. A workaround is to
+		convert the separator string to an array of <Character>."
+	^separatorOrSeparators _separateSubStringsIn: self!
+
+subStringsAnsi: separators 
+	"Answer an array containing the substrings of the receiver separated by occurrences
+	of any of the <Character>s in the <collection> argument, separators.
+	Repeated separators produce empty strings in the array (cf. #subStrings).
+	The separators are removed."
+
+	| start answer size end |
+	size := self size.
+	size == 0 ifTrue: [^Array new].
+	end := self indexOfAnyOf: separators startingAt: 1.
+	end == 0 ifTrue: [^Array with: self].
+	answer := Array writeStream: 5.
+	start := 1.
+	
+	[answer nextPut: (self copyFrom: start to: end - 1).
+	start := end + 1.
+	end := self indexOfAnyOf: separators startingAt: start.
+	end == 0] 
+			whileFalse.
+	"Copy any remaining chars after the last separator"
+	start <= size ifTrue: [answer nextPut: (self copyFrom: start to: size)].
+	^answer contents!
 
 trimBlanks
 	"Answer a copy of the receiver with leading and trailing white space removed."
@@ -35890,6 +36232,11 @@ trueCompare: comparand
 	"The primitive simply invokes this OS case sensitive string collation function"
 	^KernelLibrary default lstrcmp: self lpString2: comparand!
 
+truncateTo: anInteger
+	"Answer a <readableString> of at most anInteger characters from the receiver."
+
+	^self size <= anInteger ifTrue: [self] ifFalse: [self copyFrom: 1 to: anInteger]!
+
 unescapePercents
 	"Answer a copy of the receiver with each %XY substring replaced by 
 	the character with hex ASCII value XY and $+'s replaced by spaces."
@@ -35907,7 +36254,7 @@ unescapePercents
 					startingAt: oldPos.
 				char := self at: pos.
 				char == $+ 
-					ifTrue: [answer nextPut: $ ]
+					ifTrue: [answer nextPut: $\x20]
 					ifFalse: 
 						[(char == $% and: [pos + 2 <= self size]) 
 							ifTrue: 
@@ -35928,20 +36275,18 @@ unescapePercents
 withNormalizedLineDelimiters
 	"Answer a copy of the receiver with any line terminator convention converted to the windows (CR/LF) convention."
 
-	| target cr lf eol stm |
+	| target eol stm |
 	target := self species writeStream: self size.
 	stm := self readStream.
-	cr := Character cr.
-	lf := Character lf.
 	eol := self species lineDelimiter.
 	stm do: 
-			[:each | 
-			each == lf 
+			[:each |
+			each == $\n
 				ifTrue: [target nextPutAll: eol]
 				ifFalse: 
-					[each == cr 
+					[each == $\r
 						ifTrue: 
-							[stm peekFor: lf.
+							[stm peekFor: $\n.
 							target nextPutAll: eol]
 						ifFalse: [target nextPut: each]]].
 	^target contents! !
@@ -37004,7 +37349,7 @@ internCharacter: aCharacter
 
 	^self intern: aCharacter asString!
 
-isLiteralSymbol: aSymbol 
+isLiteralSymbol: aSymbol
 	"Private - Answer whether the <Symbol> argument is representable
 	as an unquoted literal symbol."
 
@@ -37012,25 +37357,21 @@ isLiteralSymbol: aSymbol
 	size := aSymbol basicSize.
 	size == 0 ifTrue: [^false].
 	binChars := '!!%&*+,/<=>?@\~|-'.
-	(binChars identityIncludes: (aSymbol at: 1)) 
-		ifTrue: 
-			[aSymbol 
-				from: 2
-				to: size
-				do: [:each | (binChars identityIncludes: each) ifFalse: [^false]]]
+	(binChars identityIncludes: (aSymbol at: 1))
+		ifTrue: [2 to: size do: [:i | (binChars identityIncludes: (aSymbol at: i)) ifFalse: [^false]]]
 		ifFalse: 
 			[| includesColon initial |
 			initial := true.
 			includesColon := false.
-			aSymbol 
-				from: 1
-				to: size
+			1 to: size
 				do: 
-					[:each | 
-					initial 
+					[:i |
+					| each |
+					each := aSymbol at: i.
+					initial
 						ifTrue: [(each == $_ or: [each isEnglishLetter]) ifTrue: [initial := false] ifFalse: [^false]]
 						ifFalse: 
-							[each == $: 
+							[each == $:
 								ifTrue: [includesColon := initial := true]
 								ifFalse: [(each == $_ or: [each isEnglishLetter or: [each isDigit]]) ifFalse: [^false]]]].
 			(includesColon and: [aSymbol last ~~ $:]) ifTrue: [^false]].
@@ -37156,6 +37497,17 @@ argumentCount
 		argCount := argCount max: 1].
 	^argCount!
 
+asBlock
+	"Answer a block capable of sending the receiver to an object"
+
+	| arity |
+	arity := self numArgs + 1.
+	arity = 1 ifTrue: [^[:r | r perform: self]].
+	arity = 2 ifTrue: [^[:r :a | r perform: self with: a]].
+	arity = 3 ifTrue: [^[:r :a :b | r perform: self with: a with: b]].
+	arity = 4 ifTrue: [^[:r :a :b :c| r perform: self with: a with: b with: c]].
+	self error: 'Too many arguments'!
+
 asString
 	"Answer a new <readableString> containing the characters of 
 	the receiver."
@@ -37210,6 +37562,14 @@ initialiseFrom: aString
 		from: 1 to: aString size startingAt: 1
 !
 
+isAtomic
+	"Answer whether or not the receiver is the single unique instance of its class that can
+	represents its value."
+
+	"The purpose of symbols is to be atomic strings."
+
+	^true!
+
 isInfix
 	"Answer whether the receiver is valid as an infix message selector."
 
@@ -37226,7 +37586,7 @@ keywords
 
 	self isEmpty ifTrue: [^#()].
 	^self last == $:
-		ifTrue: [(self subStrings: $:) collect: [:keyword | keyword, ':']]
+		ifTrue: [(self subStrings: $:) collect: [:keyword | keyword copyWith: $:]]
 		ifFalse: [Array with: self]!
 
 numArgs
@@ -37455,24 +37815,20 @@ nextIndexOf: anElement from: start to: stop
 	self from: start to: stop keysAndValuesDo: [:i :elem | elem = anElement ifTrue: [^i]].
 	^0!
 
-replaceFrom: start to: stop with: replacementElements startingAt: repStart
-	"Replace the characters of the receiver at index positions start through stop with 
-	consecutive characters of aString beginning at index position startAt. Answer the 
-	receiver."
+replaceFrom: startInteger to: stopInteger with: aReadableString startingAt: startAtInteger 
+	"Replace the characters of the receiver at index positions startInteger through stopInteger
+	inclusive with consecutive characters of the <readableString>, aReadableString, beginning at
+	index position startAtInteger. Answer the receiver."
 
 	| offset |
-	offset := repStart - start.
-	(self == replacementElements and: [repStart < start]) 
+	offset := startAtInteger - startInteger.
+	"Perform overlapping moves backwards, otherwise forwards"
+	(self == aReadableString and: [startAtInteger < startInteger]) 
 		ifTrue: 
-			["Move within same object overlaps, so do backwards"
-
-			stop to: start
+			[stopInteger to: startInteger
 				by: -1
-				do: [:i | self at: i put: (replacementElements at: offset + i)]]
-		ifFalse: 
-			["Non-overlapping moves are done forwards"
-
-			start to: stop do: [:i | self at: i put: (replacementElements at: offset + i)]]!
+				do: [:i | self at: i put: (aReadableString at: offset + i)]]
+		ifFalse: [startInteger to: stopInteger do: [:i | self at: i put: (aReadableString at: offset + i)]]!
 
 resize: anInteger
 	^super resize: anInteger * 2!
@@ -37655,6 +38011,12 @@ removeAll
 	"Empty the receiver of all contents"
 
 	firstLink := lastLink := nil!
+
+removeAllSuchThat: aBlock 
+	"Evaluate aBlock for each element and remove all that elements from the receiver for that
+	aBlock evaluates to true. For LinkedLists, it's safe to use do:."
+
+	self do: [:each | (aBlock value: each) ifTrue: [self remove: each]]!
 
 removeAtIndex: index
 	"Remove, and answer, the element of the receiver at the specified 
@@ -37858,6 +38220,19 @@ at: index put: storee
 		ifTrue: [self errorSubscriptBounds: index]
 		ifFalse: [self basicAt: basicIndex put: storee]!
 
+basicReplaceElementsOf: anIndexableObject from: startInteger to: stopInteger startingAt: startAtInteger
+	"Private - Replace the indexable instance variables of the variable pointer object, anIndexableObject, between
+	startInteger and stopInteger inclusive with elements of the receiver starting from startAtInteger. Answers
+	anIndexableObject."
+
+	| offset |
+	<primitive: 188>
+	offset := startAtInteger - startInteger.
+	(anIndexableObject == self and: [startAtInteger < startInteger])
+		ifTrue: [stopInteger to: startInteger by: -1 do: [:i | anIndexableObject basicAt: i put: (self basicAt: offset + i)]]
+		ifFalse: [startInteger to: stopInteger do: [:i | anIndexableObject basicAt: i put: (self basicAt: offset + i)]].
+	^anIndexableObject!
+
 copyWith: newElement
 	"Answer a <sequencedReadableCollection> which is a copy of 
 	the receiver that has newElement added in the correct position
@@ -37904,6 +38279,24 @@ initialize
 	firstIndex := 1.
 	lastIndex := 0
 !
+
+inject: anObject into: aDyadicValuable
+	"Evaluate the <dyadicValuable> argument, aDyadicValuable, once for each element in the
+	receiver, passing the elements as the second argument, and passing the value of the previous
+	evaluation as the first argument, starting with the <Object> argument, initialValue. The
+	operation must answer the value it wishes to have passed as its first argument the next time
+	it is evaluated. The traversal is in the #do: order. Answer the final value of the
+	operation. This enumeration is particularly useful for performing summations and other
+	statistical operations."
+
+	"Implementation Note: Override superclass implementation for efficiency. By inlining the do:
+	implementation we can avoid requiring a full block."
+
+	| nextValue |
+	nextValue := anObject.
+	firstIndex to: lastIndex
+		do: [:i | nextValue := aDyadicValuable value: nextValue value: (self basicAt: i)].
+	^nextValue!
 
 insert: newElement before: anInteger 
 	"Private - Insert the argument, newElement, into the receiver at the basic index
@@ -37996,6 +38389,24 @@ removeAll
 	firstIndex := 1.
 	lastIndex := 0!
 
+removeAllSuchThat: aBlock 
+	"Remove each element of the receiver for which aBlock evaluates to true. The method in
+	Collection is O(N^2), this is O(N)."
+
+	| n |
+	n := firstIndex.
+	firstIndex to: lastIndex
+		do: 
+			[:index | 
+			| elem |
+			elem := self basicAt: index.
+			(aBlock value: elem) 
+				ifFalse: 
+					[self basicAt: n put: elem.
+					n := n + 1]].
+	n to: lastIndex do: [:i | self basicAt: i put: nil].
+	lastIndex := n - 1!
+
 removeAtIndex: index
 	"Remove, and answer, the element of the receiver at the specified 
 	<integer> index, by shuffling elements which succeed it down one slot.
@@ -38012,6 +38423,35 @@ removeAtIndex: index
 			self basicAt: lastIndex put: nil.
 			lastIndex := lastIndex - 1].
 	^element!
+
+replaceElementsOf: anIndexableObject from: startInteger to: stopInteger startingAt: startAtInteger
+	"Private - Replace the indexable instance variables of the variable pointer object,
+	anIndexableObject, between startInteger and stopInteger inclusive with elements of the
+	receiver starting from startAtInteger. Answers anIndexableObject."
+
+	^self
+		basicReplaceElementsOf: anIndexableObject
+		from: startInteger
+		to: stopInteger
+		startingAt: startAtInteger + firstIndex - 1!
+
+replaceFrom: startInteger to: stopInteger with: aSequencedReadableCollection startingAt: startAtInteger
+	"Destructively replace the elements of the receiver between the <integer> arguments
+	startInteger and stopInteger inclusive with the <Object> elements of the
+	<sequencedReadableCollection> argument, aSequencedReadableCollection, beginning with its
+	element with <integer> index startAtInteger. Answer the receiver. Overlapping moves are
+	correctly handled. Unlike #replaceFrom:to:with:, the size of aSequenceableCollection is not
+	checked directly (X3J20 does not specify that this should be an error), but an error will be
+	raised when an attempt is made to access an out-of-bounds element in replacementElements. It
+	is not an error to specify an empty replacement interval, even if startInteger, stopInteger,
+	and/or startAtInteger are out-of-bounds (this is compatible with the major
+	implementations)."
+
+	aSequencedReadableCollection
+		replaceElementsOf: self
+		from: startInteger + firstIndex - 1
+		to: stopInteger + firstIndex - 1
+		startingAt: startAtInteger!
 
 resize: anInteger
 	"Private - Override back to the basic implementation as our elements are contiguously located.
@@ -38086,7 +38526,9 @@ boolean
 	The communication messages #set, and #pulse are intended for use
 	with Boolean Semaphores, rather than #signal."
 
-	^self new signal; yourself!
+	^(self basicNew)
+		excessSignals: 1;
+		yourself!
 
 forMutualExclusion
 	"Answer a new instance of the receiver with one excess signal (i.e a Boolean semaphore)."
@@ -38583,6 +39025,16 @@ indexForInserting: anObject
 					ifFalse: [high := index - 1]].
 	^low!
 
+replaceFrom: startInteger to: stopInteger with: aSequencedReadableCollection startingAt: startAtInteger
+	"Destructively replace the elements of the receiver between the <integer> arguments
+	startInteger and stopInteger inclusive with the <Object> elements of the
+	<sequencedReadableCollection> argument, aSequencedReadableCollection, beginning with its
+	element with <integer> index startAtInteger. Answer the receiver."
+
+	"This is not a valid operation for SortedCollections, as it would mess up the sort order."
+
+	^self shouldNotImplement!
+
 reSort
 	"Resort the entire contents of the receiver in the order specified by the current
 	<SortAlgorithm>."
@@ -38659,6 +39111,17 @@ _deepCopyElementsInto: aDictionary trail: anIdentityDictionary
 	self 
 		associationsDo: [:element | aDictionary uncheckedAdd: (element _deepCopy: anIdentityDictionary)]!
 
+= comperand
+	"Answer whether the receiver is equivalent to the <Object>, comperand. Dictionaries are
+	equal to other dictionary-like objects with the equal keys and values."
+
+	comperand == self ifTrue: [^true].
+	(comperand class conformsToProtocol: #abstractDictionary) ifFalse: [^false].
+	comperand size == self size ifFalse: [^false].
+	self
+		keysAndValuesDo: [:key :value | (comperand at: key ifAbsent: [^false]) = value ifFalse: [^false]].
+	^true!
+
 add: anAssociation
 	"Add anAssociation to the receiver. Answer anAssociation.
 	Although very similar to at:put:, we store the actual association passed
@@ -38681,13 +39144,13 @@ asSet
 		addAll: self; 
 		yourself!
 
-associationAt: key 
+associationAt: key
 	"Answer the association named by the argument, key.  If key is not found,
 	raise an exception."
 
-	| assoc |
-	assoc := self associationAt: key ifAbsent: [AbsentCookie].
-	^assoc == AbsentCookie ifTrue: [self errorKeyNotFound: key] ifFalse: [assoc]!
+	^(self associationAt: key ifAbsent: [])
+		ifNil: [self errorKeyNotFound: key]
+		ifNotNil: [:assoc | assoc]!
 
 associationAt: key ifAbsent: exceptionHandler 
 	"Answer the association named by the argument, key. If key is not found,
@@ -38695,15 +39158,13 @@ associationAt: key ifAbsent: exceptionHandler
 
 	^(self basicAt: (self findKeyOrNil: key)) ifNil: [exceptionHandler value]!
 
-associationAt: key ifPresent: operation 
+associationAt: key ifPresent: operation
 	"Answer the result of evaluating the monadic valuable, operation, if
 	the argument, key, is the key of an element in the receiver, with that
 	key and element pair as its argument. If the key is not present, then 
 	answer nil."
 
-	| assoc |
-	assoc := self associationAt: key ifAbsent: [AbsentCookie].
-	^assoc == AbsentCookie ifFalse: [operation value: assoc]!
+	^(self associationAt: key ifAbsent: []) ifNotNil: [:assoc | operation value: assoc]!
 
 associationClass
 	"Private - Answer the class of association to be used for holding
@@ -38771,6 +39232,15 @@ at: key ifAbsentPut: operation
 	preexisting := self at: key ifAbsent: [AbsentCookie].
 	^preexisting == AbsentCookie ifTrue: [self at: key put: operation value] ifFalse: [preexisting]!
 
+at: keyObject ifAbsentPutValue: valueObject
+	"Answer the value of the receiver keyed by the <Object> argument, keyObject.
+	If keyObject is not one of the receiver's keys, then add the <Object>, valueObject,
+	at keyObject, and answer valueObject."
+
+	| preexisting |
+	preexisting := self at: keyObject ifAbsent: [AbsentCookie].
+	^preexisting == AbsentCookie ifTrue: [self at: keyObject put: valueObject] ifFalse: [preexisting]!
+
 at: key ifPresent: operation 
 	"Answer the result of evaluating the monadic valuable, operation, if
 	the argument, key, is the key of an element in the receiver, with that
@@ -38780,17 +39250,17 @@ at: key ifPresent: operation
 	value := self at: key ifAbsent: [AbsentCookie].
 	^value == AbsentCookie ifFalse: [operation value: value]!
 
-at: key put: newElement 
-	"Store the <Object> argument newElement at the <Object>
-	key, in the receiver. Answer newElement."
+at: keyObject put: valueObject
+	"Store the <Object> argument valueObject at the <Object> keyObject, in the receiver. Answer
+	valueObject."
 
 	| index |
-	key isNil ifTrue: [^self error: 'key cannot be nil'].
-	index := self findKeyOrNil: key.
-	(self basicAt: index) 
-		ifNil: [self privateAt: index put: (self newAssociation: key value: newElement)]
-		ifNotNil: [:element | element value: newElement].
-	^newElement!
+	keyObject isNil ifTrue: [^self error: 'key cannot be nil'].
+	index := self findKeyOrNil: keyObject.
+	(self basicAt: index)
+		ifNil: [self privateAt: index put: (self newAssociation: keyObject value: valueObject)]
+		ifNotNil: [:assoc | assoc value: valueObject].
+	^valueObject!
 
 atAll: keys put: newElement
 	"Replace the elements of the receiver at each of the keys in the <collection> 
@@ -38994,6 +39464,15 @@ occurrencesOf: anObject
 	self do: [:element | element = anObject ifTrue: [count := count + 1]].
 	^count!
 
+postCopy
+	"Apply any final flourish to the copy that may be required in order to ensure that the copy
+	does not share any state with the original, apart from the elements. For dictionaries this
+	requires that we make copies of the associations as otherwise modifications to the source
+	dictionary will affect the copy, and vice versa"
+
+	1 to: self basicSize
+		do: [:i | (self basicAt: i) ifNotNil: [:assoc | self basicAt: i put: assoc copy]]!
+
 printOn: aStream
 	"Print a string representation of self on aStream. 
 	We must override because we'd like to print out the associations as this
@@ -39161,7 +39640,16 @@ findElementOrNil: anObject
 hash: anObject max: anInteger
 	^anInteger < 8192 
 		ifTrue: [anObject identityHash \\ anInteger + 1]
-		ifFalse: [anObject identityHash * (anInteger bitShift: -12) \\ anInteger + 1]! !
+		ifFalse: [anObject identityHash * (anInteger bitShift: -12) \\ anInteger + 1]!
+
+identityIncludes: anObject
+	"Answer whether the <Object> argument is one of the receiver's elements."
+
+	"Implementation Note: Override as a (micro) optimization only. This is the same as
+	#includes: for an IdentitySet, and we don't need to check that the found element is
+	identical."
+
+	^(self basicAt: (self findElementOrNil: anObject)) notNil! !
 
 PluggableSet comment:
 'PluggableSet is the class of <Set>s which support a pluggable <searchPolicy>, and which can thus be configured to behave in the same way as either standard <Set>s (equality search) or <IdentitySet>s (identity search), or indeed any user-defined search policy.
@@ -39633,7 +40121,6 @@ postCopy
 	does not share any state with the original, apart from the elements. Answer the receiver. In
 	the case of a LookupTable we need to copy the values array too."
 
-	super postCopy.
 	values := values copy.
 	^self!
 
@@ -39783,6 +40270,33 @@ includesKey: key
 
 	^super includesKey: key asString!
 
+initializerFor: aString 
+	"Answer a chunk reader to read and evaluate an initializer for the receiver's named variable"
+
+	^ChunkReader 
+		do: 
+			[:chunkString | 
+			(self bindingFor: aString) 
+				ifNil: 
+					[Warning signal: ('Ignoring initializer for undefined variable <1S>.<2S>: <3S>' 
+								expandMacrosWith: self
+								with: aString
+								with: chunkString)]
+				ifNotNil: 
+					[:var | 
+					| value |
+					(Compiler compileExpression: chunkString in: UndefinedObject) 
+						ifNotNil: 
+							[:expr | 
+							value := [expr method value] on: Error
+										do: 
+											[:ex | 
+											ex resignalAsWarning.
+											nil].
+							var whileMutableDo: [var value: value]]]]
+		inContext: self
+		atEnd: []!
+
 isChanged
 	"Answer true if the receiver or any of it's contents have been changed since
 	their changed flag was last reset."
@@ -39896,7 +40410,7 @@ associationAt: key ifAbsent: exceptionHandler
 	"Answer the association named by the argument, key. If key is not found,
 	answer the result of evaluating the niladic valuable, exceptionHandler."
 
-	^super associationAt: key asSymbol ifAbsent: exceptionHandler!
+	^(self basicAt: (self findKeyOrNil: key asSymbol)) ifNil: [exceptionHandler value]!
 
 associationClass
 	"Private - Answer the class of association to be used for holding
@@ -39970,6 +40484,14 @@ includesKey: key
 	Override superclass to permit symbolic/string keys."
 
 	^super includesKey: key asSymbol!
+
+isAtomic
+	"Answer whether or not the receiver is the single unique instance of its class that can
+	represents its value."
+
+	"There can only be one ProcessorScheduler instance."
+
+	^true!
 
 postResize: oldMe
 	"Private - This message is sent by the receiver when resizing, after the
@@ -40116,17 +40638,16 @@ copyEmpty: anInteger
 
 	^(super copyEmpty: anInteger) setSearchPolicy: self searchPolicy!
 
-findKeyOrNil: anObject 
+findKeyOrNil: anObject
 	"Private - Answer the <integer> index of the given key in the receiver, or, if not found,
 	the index of the first empty slot including and after that to which 
 	the key hashes. A pluggable <searchPolicy> is used for key comparisons and hashing."
 
-	| capacity index |
-	capacity := self basicSize.
-	index := self searchPolicy hash: anObject max: capacity.
+	| policy capacity index |
+	index := (policy := self searchPolicy) hash: anObject max: (capacity := self basicSize).
 	
 	[| key |
-	(key := self basicAt: index) isNil or: [self searchPolicy compare: key with: anObject]] 
+	(key := self basicAt: index) isNil or: [policy compare: key with: anObject]]
 			whileFalse: [index := index \\ capacity + 1].
 	^index!
 
@@ -40245,22 +40766,19 @@ environment
 	^Smalltalk
 !
 
-errorModify: key value: value 
+errorModify: key value: value
 	"Private - An attempt was made to modify the value of the constant named, key."
 
-	MessageBox 
-		confirm: ('Would you like to recompile references to <1p><n>to reflect the new value <2d> (currently <3d>)' 
-				expandMacrosWith: key
-				with: value
-				with: (self at: key))
-		onYes: 
-			[super at: key put: value.
-			self recompileReferencesTo: key.
-			self isChanged: true]
-		onNo: [super at: key put: value]
-		onCancel: 
-			["Ignore the modification request"
-			]!
+	| recompile |
+	recompile := ConfirmationRequiredWarning
+				signal: ('Would you like to recompile references to <1p><n>to reflect the new value <2d> (currently <3d>)'
+						expandMacrosWith: key
+						with: value
+						with: (self at: key)).
+	recompile isNil ifTrue: [^self].
+	super at: key put: value.
+	self isChanged: true.
+	recompile ifTrue: [self recompileReferencesToVarNamed: key]!
 
 fileOut
 	"File out the receiver to <name>.st"
@@ -40316,13 +40834,14 @@ isChanged: aBoolean
 isValidKey: aString 
 	| initial |
 	initial := true.
-	^aString allSatisfy: 
-			[:each | 
-			initial 
-				ifTrue: 
-					[initial := false.
-					each == $_ or: [each isLetter]]
-				ifFalse: [each == $_ or: [each isAlphaNumeric]]]!
+	^aString notEmpty and: 
+			[aString allSatisfy: 
+					[:each | 
+					initial 
+						ifTrue: 
+							[initial := false.
+							each == $_ or: [each isLetter]]
+						ifFalse: [each == $_ or: [each isAlphaNumeric]]]]!
 
 keyString: anObject 
 	| answer |
@@ -40361,27 +40880,17 @@ preResize: newMe
 
 	name isNil ifFalse: [newMe name: name]!
 
-recompileReferencesTo: keyString 
+recompileReferencesToVarNamed: keyString
 	"Private - Recompile any methods which references the named key, assumed to
 	be a variable name from the receiver."
 
-	Notification 
+	Notification
 		signal: ('Recompiling references to <1p> in <2s>' expandMacrosWith: keyString with: self name).
 	(self environment allClasses select: [:c | c allSharedPools includes: self]) do: 
-			[:c | 
-			self
-				recompileReferencesTo: keyString in: c;
-				recompileReferencesTo: keyString in: c class]!
-
-recompileReferencesTo: keyString in: aBehavior
-	"Private - Recompile any methods which references the named key, assumed to
-	be a variable name from the receiver, in the specified Behavior's method dictionary."
-
-	aBehavior methodDictionary do: [:m | 
-		(m containsSource: keyString) ifTrue: [
-			Notification signal: 'Recompiling ', m printString.
-			m recompile]]
-!
+			[:c |
+			c recompileReferencesToVarNamed: keyString.
+			c class recompileReferencesToVarNamed: keyString.
+			self]!
 
 referencesTo: keyString 
 	"Answer the collection of any methods which references the named key, assumed to
@@ -40682,17 +41191,28 @@ The primary difference from an ordinary identity dictionary in the current imple
 You should not rely on the implementation details of this class, and nor should you change them or the instance shape.'!
 !MethodDictionary class methodsFor!
 
-sizeFor: capacity
-	"Answer the <integer> size of collection that should be created to hold 
-	the number of elements specified by the <integer> argument, capacity.
-	Implementation Note: Round up to the nearest 	power of 2, as required 
+defaultCapacity
+	^1!
+
+sizeFor: anInteger
+	"Private - Answer the <integer> size of collection that should be created to hold 
+	the number of elements specified by the <integer> argument, capacity."
+
+	"Implementation Note: Round up to the nearest power of 2, as required 
 	by the VM, and avoid any dependency on the superclass sizing scheme."
 
-	^capacity < 2
-		ifTrue: [2]
-		ifFalse: [1 bitShift: (((capacity - 1 * 100 // 75)+1) highBit)]! !
+	^anInteger < 2 ifTrue: [2] ifFalse: [1 bitShift: ((anInteger - 1) * 100 // 75 + 1) highBit]! !
 
 !MethodDictionary methodsFor!
+
+fullCheck
+	"Private - Check the load factor in the receiver, and grow if exceeded."
+
+	"Slop calculation should be kept in sync with MethodDictionary class>>sizeFor:"
+
+	| capacity |
+	capacity := self basicSize.
+	(capacity - tally bitShift: 2) < capacity ifTrue: [self grow]!
 
 hash: anObject max: anInteger
 	"Implementation Note: This must match the selector hashing implementation used by the VM."
@@ -41142,7 +41662,7 @@ triggerEvent: aSymbol withArguments: anArray
 	the <Symbol> argument, with the <Array> of arguments, anArray.
 	with the specified arguments. Answer the result of the last evaluation, or nil if none."
 
-	^(self at: aSymbol ifAbsent: [^nil]) valueWithArguments: anArray! !
+	^(self at: aSymbol ifAbsent: []) ifNotNil: [:msgs | msgs valueWithArguments: anArray]! !
 
 NullEventsCollection comment:
 'NullEventsCollection is a special events collection used when a receiver has no event subscriptions. Its purpose is to increase performance for this common case.'!
@@ -41494,6 +42014,11 @@ storeSourceString: aString evaluationPools: anArray logged: aBoolean
 	self 
 		sourceDescriptor: (pools isNil ifTrue: [aString] ifFalse: [Array with: aString with: pools])!
 
+value
+	"Evaluate the expression with nil as 'self'."
+
+	^self value: nil!
+
 value: anObject
 	"Evaluate the receiver with the argument, anObject, 
 	as its receiver, answering the result."
@@ -41597,16 +42122,6 @@ hasChanged
 
 	^self changeManager hasMethodChanged: self!
 
-icon
-	"Answers an Icon that can be used to represent this object."
-
-	self isDeprecated ifTrue: [^self class deprecatedIcon].
-
-	^self isPrivate
-		ifTrue: [self class privateIcon]
-		ifFalse: [self class publicIcon]
-!
-
 infoTip
 	"Private - Answer a suitable 'info tip' for the receiver."
 
@@ -41631,13 +42146,6 @@ isClassMethod
 	"Answer true if the receiver is a class method."
 
 	^self methodClass isMeta!
-
-isDeprecated
-	"Answer whether the receiver is marked as being deprecated.
-	This is based on whether a reference to the symbol, #deprecated, is found
-	in the method, for which we use a ReferencesCategory."
-
-	^MethodCategory deprecatedMethods includesMethod: self!
 
 isExpression
 	"Private - Answer whether the receiver is a standalone (unbound) expression as opposed to 
@@ -41691,7 +42199,7 @@ loseSource
 	self sourceDescriptor: '"Source unavailable for this method"' !
 
 name
-	^self methodClass name -> self selector!
+	^Association key: self methodClass name value: self selector!
 
 owningPackage
 	"Answers the package that owns the receiver or nil if it is not yet owned
@@ -42114,7 +42622,12 @@ isResumable
 	^true! !
 
 ProcessTermination comment:
-''!
+'<ProcessTermination> is a special system <Exception> the sole purpose of which is to provide a safe means to terminate processes cleanly. A ProcessTermination is raised by terminating process, and caught in the base frame (see BlockClosure>>#newProcess), unwinding any protected blocks (see BlockClosure>>#ensure: and BlockClosure>>#ifCurtailed:) on the way. The base frame''s handled from ProcessTermination requests a far return to itself, and it then sends Process>>#shutdown to the active (terminating) Process.
+
+Setting up a handler to catch ProcessTermination is not recommended as it can cause unpredictable behaviour. The #defaultAction for ProcessTermination is to do nothing, so catching a ProcessTermination exception will effectively abort process termination unless the exception is rethrown (see Exception>>#pass). This has application in some circumstances (e.g. on system startup), but interfering with process termination in general is a bad idea. In order to avoid inadvertently trapping ProcessTermination, it derives directly from <Exception> so it is outside the main user exception hierarchies such as that under <Error>. 
+
+For circumstances requiring cleanup code to be run on process shutdown, this should be achieved using BlockClosure>>#ifCurtailed: or BlockClosure>>#ensure:.
+'!
 !ProcessTermination methodsFor!
 
 _descriptionFormat
@@ -42548,12 +43061,14 @@ _descriptionArguments
 	"Answer the arguments to be subsituted into the receiver's description 
 	format string."
 
-	^super _descriptionArguments copyWith: self _ieeeRecord causeNames!
+	| record |
+	record := self _ieeeRecord.
+	^super _descriptionArguments , (Array with: record causeDescription with: record operationName)!
 
 _descriptionFormat
 	"Answer the Win32 format String to be used to format the description for the receiver."
 
-	^'Floating point error: %3'!
+	^'Floating point error: %3 in %4'!
 
 _ieeeRecord
 	"Private - Answer the IEEE exception record associated with the receiver."
@@ -42934,7 +43449,6 @@ initialize
 		at: CErrMethodTooLarge put: 'method too large';
 		at: CErrTooManyLiterals put: 'too many literals';
 		at: CErrBlockNestingTooDeep put: 'maximum block nesting exceeded';
-		at: CErrBlockArgMissing put: 'block argument name expected';
 		at: CErrBadPools put: 'The workspace pools array is invalid';
 		at: CErrDuplicateTempName put: 'duplicate temporary variable name <1p>';
 		at: CErrDuplicateArgName put: 'duplicate argument name <1p>';
@@ -43099,6 +43613,12 @@ selector
 
 	^selector!
 
+severity
+	"Answer an integer severity level; 2 for errors, 1 for warnings, and 0 for info. Useful for
+	sorting compilation issues by severity."
+
+	^self subclassResponsibility!
+
 severityName
 	^self severityClass name!
 
@@ -43246,9 +43766,23 @@ severityClass
 
 	^Error! !
 
+!CompilerErrorNotification methodsFor!
+
+severity
+	"Answer an integer severity level; 2 for errors, 1 for warnings, and 0 for info. Useful for
+	sorting compilation issues by severity."
+
+	^2! !
+
 CompilerInfoNotification comment:
 'CompilerInfoNotification is a resumable exception used to represent low-severity semantic warnings detected by the <StSemanticChecker>'!
 !CompilerInfoNotification methodsFor!
+
+severity
+	"Answer an integer severity level; 2 for errors, 1 for warnings, and 0 for info. Useful for
+	sorting compilation issues by severity."
+
+	^0!
 
 severityName
 	^#Note! !
@@ -43261,6 +43795,87 @@ severityClass
 	"Answer an exception class describing the severity of the notification."
 
 	^Warning! !
+
+!CompilerWarningNotification methodsFor!
+
+severity
+	"Answer an integer severity level; 2 for errors, 1 for warnings, and 0 for info. Useful for
+	sorting compilation issues by severity."
+
+	^1! !
+
+ConfirmationRequiredWarning comment:
+'ConfirmationRequiredWarnings can be signalled when an operation requires user consent. The default action is to show a Yes/No[/Cancel] message box. When the user has responded, execution is continued from the signalling point answering true, false or nil, for Yes, No and Cancel (respectively) responses. The signaller can then act accordingly to proceed with the operation as appropriate. The actions to be taken (or values to be returned) when the buttons are pressed can be overridden individually by providing suitable <niladicValuable>s, e.g. blocks. The cancel button can be suppressed by setting the cancel block to nil.
+
+Examples:
+	ConfirmationRequiredWarning signal: ''Are you well?''. "By default, no Cancel option"
+	ConfirmationRequiredWarning signal: ''Sugar?'' onYes: [''Two lumps''] onNo: [''No sugar''] onCancel: [''Tea refused''].'!
+!ConfirmationRequiredWarning class methodsFor!
+
+signal: aString onYes: confirmValuable onNo: refuseValuable onCancel: cancelValuable
+	"Signal a <Warning>, the default action for which is to prompt the user with a Yes/No/Cancel
+	message box and then evaluate the appropriate <niladicValuable> argument based on the
+	response."
+
+	^(self new)
+		confirmBlock: confirmValuable;
+		refuseBlock: refuseValuable;
+		cancelBlock: cancelValuable;
+		signal: aString! !
+
+!ConfirmationRequiredWarning methodsFor!
+
+cancel
+	"Answer the the result of evaluating the <niladicValuable>, cancelBlock, as the value of the
+	expression which signalled this exception, from whence execution continues. If no cancel
+	block was specified, then the resumption value will be nil."
+
+	self resume: self cancelBlock value!
+
+cancelBlock
+	^cancelBlock ?? []!
+
+cancelBlock: aNiladicValuable
+	cancelBlock := aNiladicValuable!
+
+confirm
+	"Answer the the result of evaluating the <niladicValuable>, confirmBlock, as the value of
+	the expression which signalled this exception, from whence execution continues. If no
+	confirm block was specified, then the resumption value will be true."
+
+	self resume: self confirmBlock value!
+
+confirmBlock
+	^confirmBlock ?? [true]!
+
+confirmBlock: aNiladicValuable
+	confirmBlock := aNiladicValuable!
+
+defaultAction
+	^cancelBlock isNil
+		ifTrue: 
+			[(MessageBox confirm: self messageText)
+				ifTrue: [self confirmBlock value]
+				ifFalse: [self refuseBlock value]]
+		ifFalse: 
+			[MessageBox
+				confirm: self messageText
+				onYes: self confirmBlock
+				onNo: self refuseBlock
+				onCancel: self cancelBlock]!
+
+refuse
+	"Answer the the result of evaluating the <niladicValuable>, refuseBlock, as the value of
+	the expression which signalled this exception, from whence execution continues. If no
+	refuse block was specified, then the resumption value will be false."
+
+	self resume: self refuseBlock value!
+
+refuseBlock
+	^refuseBlock ?? [false]!
+
+refuseBlock: aNiladicValuable
+	refuseBlock := aNiladicValuable! !
 
 ExceptionHandler comment:
 ''!
@@ -43795,6 +44410,46 @@ stbSaveOn: anSTBOutFiler
 		saveObject: self
 		as: (STBExternalResourceLibraryProxy forLibrary: self)! !
 
+NTLibrary comment:
+''!
+!NTLibrary class methodsFor!
+
+fileName
+	"Answer the host system file name for the external library the 
+	receiver represents."
+
+	^'ntdll'!
+
+isWine
+"
+	NTLibrary isWine.
+"
+	^self default wineGetVersion notNil! !
+
+!NTLibrary methodsFor!
+
+ntQueryTimerResolution: pulMinimumResolution maximum: pulMaximumResolution actual: pulActualResolution
+	<stdcall: sdword NtQueryTimerResolution dword* dword* dword*>
+	^self invalidCall!
+
+setTimerResolution: anInteger set: aBoolean actualResolution: actualResolution 
+	"NTSYSAPI
+		NTSTATUS
+		NTAPI
+		NtSetTimerResolution(
+			IN ULONG RequestedResolution,
+			IN BOOLEAN Set,
+			OUT PULONG ActualResolution"
+
+	<stdcall: dword NtSetTimerResolution dword bool dword*>
+	^self invalidCall!
+
+wineGetVersion
+	"static const char * (CDECL *pwine_get_version)(void);"
+
+	<stdcall: lpstr wine_get_version>
+	^nil	"instead of reporting an error"! !
+
 PermanentLibrary comment:
 'PermanentLibrary is the class of <ExternalLibrary>s which are expected to remain permanently open in order for the system to continue functioning. The set of permanent libraries includes all of the basic Win32 system DLLs, the C runtime library, and the Virtual Machine itself. In addition these are not opened lazily to avoid the overhead when accessing the default instance.'!
 !PermanentLibrary class methodsFor!
@@ -44268,14 +44923,6 @@ playSound: aString hmod: anExternalHandle fdwSound: anInteger
 	<stdcall: bool PlaySoundA lpvoid handle dword>
 	^self invalidCall!
 
-timeGetDevCaps: ptc cbtc: anInteger
-	"Query the timer device to determine its capabilities (resoluation and maximum)
-  
-		MMRESULT timeGetDevCaps(LPTIMECAPS ptc, UINT cbtc);"
-
-	<stdcall: dword timeGetDevCaps void* dword>
-	^self invalidCall!
-
 timeGetTime
 
 	<stdcall: dword timeGetTime>
@@ -44392,16 +45039,6 @@ _errno
 	<cdecl: sdword _errno>
 	^self invalidCall!
 
-_fcvt: aFloat count: anInteger dec: decInteger sign: signInteger
-	"Answer a String representation of the argument, aFloat, with anInteger decimal places.
-	decInteger and signInteger receive the position of the decimal point and the sign of
-	aFloat respectively.
-
-		char *_fcvt( double value, int count, int *dec, int *sign );"
-  
-	<cdecl: lpstr _fcvt double sdword SDWORD* SDWORD* >
-	^self invalidCall!
-
 _fdopen: anInteger mode: aString
 	"Associate a stream with an open file handle.
 		FILE *_fdopen( int handle, const char *mode );
@@ -44421,6 +45058,16 @@ _fileno: aFILE
 	<cdecl: sdword _fileno handle>
 	^self invalidCall!
 
+_finite: aFloat
+	"Answer whether the argument is finite floating point number."
+
+	<cdecl: bool _finite double>
+	^self invalidCall!
+
+_fpclass: aFloat
+	<cdecl: sdword _fpclass double>
+	^self invalidCall!
+
 _gcvt: aFloat count: anInteger buffer: aString
 	"Answer a String representation of the argument, aFloat, with anInteger significant
 	figures. Includes a sign (if negative) and decimal point. Exponential format may be used.
@@ -44431,6 +45078,10 @@ _gcvt: aFloat count: anInteger buffer: aString
 		char *_gcvt( double value, int count, char* buffer)"
   
 	<cdecl: char* _gcvt double sdword char*>
+	^self invalidCall!
+
+_get_osfhandle: anInteger
+	<cdecl: handle _get_osfhandle sdword>
 	^self invalidCall!
 
 _getcwd: buffer maxlen: maxlen
@@ -44444,12 +45095,6 @@ _i64toa: aSmallInteger string: aString radix: anInteger
 	"Answer the String representation of a 64-bit Integer."
 
 	<cdecl: lpstr _i64toa sqword lpstr sdword>
-	^self invalidCall!
-
-_isnan: aFloat
-	"Answer whether the argument is NaN (Not a Number)."
-
-	<cdecl: bool _isnan double>
 	^self invalidCall!
 
 _logb: aFloat
@@ -44979,7 +45624,7 @@ clear
 	instances of the receiver from previous runs. etc."
 
 	super clear.
-	OSVERSIONINFO clear
+	Smalltalk at: #OSVERSIONINFO ifPresent: [:osver | osver clear]
 !
 
 fileName
@@ -44987,6 +45632,9 @@ fileName
 	the receiver represents."
 
 	^'KERNEL32'!
+
+isWine
+	^NTLibrary isWine!
 
 open
 	"Answer a new instance of the receiver to represent the Kernel32 DLL. Special handling 
@@ -45014,6 +45662,10 @@ allocConsole
 		BOOL AllocConsole(VOID)"
 
 	<stdcall: bool AllocConsole>
+	^self invalidCall!
+
+attachConsole: anInteger
+	<stdcall: bool AttachConsole dword>
 	^self invalidCall!
 
 beep: anInteger dwDuration: dwDuration
@@ -45090,21 +45742,17 @@ createDirectory: path lpSecurityAttributes: aSECURITYATTRIBUTES
 	<stdcall: bool CreateDirectoryA lpstr lpvoid>
 	^self invalidCall!
 
-createEvent: aSECURITYATTRIBUTES bManualReset: aBoolManual bInitialState: aBoolState lpName: aStringPathName
-	"Answer a new Win32 Event object (for thread synchronisation), with the specified
-	security attributes (if aSECURITYATTRIBUTES is nil then the default security 
-	attributes are used), mode (manual or automatic), initial state 
-	(signalled/not-signalled), and name (if aStringPathName is nil, then unnamed).
-	Please see Win32 SDK help for more information."
+createEvent: lpEventAttributes bManualReset: bManualReset bInitialState: bInitialState lpName: lpName
+	"Invoke the CreateEvent() function of the module wrapped by the receiver.
+	Helpstring: Creates a named or unnamed event object
 
-	"HANDLE CreateEvent(
-		LPSECURITY_ATTRIBUTES  lpEventAttributes,	// address of security attributes  
-		BOOL  bManualReset,	// flag for manual-reset event 
-		BOOL  bInitialState,	// flag for initial state 
-		LPCTSTR  lpName 	// address of event-object name  
-	);"
+		HANDLE __stdcall CreateEvent(
+			[in]SECURITY_ATTRIBUTES* lpEventAttributes,
+			BOOL bManualReset,
+			BOOL bInitialState,
+			LPCSTR lpName);"
 
-	<stdcall: handle CreateEventA lpvoid bool bool lpstr>
+	<stdcall: handle CreateEventA SECURITY_ATTRIBUTES* bool bool lpstr>
 	^self invalidCall!
 
 createFile: aStringFileName dwDesiredAccess: anIntegerAccessMode dwSharedMode: anIntegerShareMode 
@@ -45648,6 +46296,10 @@ getFileTime: hFile
 	<stdcall: bool GetFileTime handle FILETIME* FILETIME* FILETIME*>
 	^self invalidCall!
 
+getFileType: anExternalHandle
+	<stdcall: dword GetFileType handle>
+	^self invalidCall!
+
 getFullPathName: fname nBufferLength: anInteger lpBuffer: path lpFilePart: aDWORD
 	"Retrieves the full path and filename of the file with name fname, into the buffer, path.
 
@@ -45873,15 +46525,6 @@ getUserDefaultLCID
 		LCID GetUserDefaultLCID(VOID)"
   
 	<stdcall: dword GetUserDefaultLCID>
-	^self invalidCall!
-
-getVersionEx: anOSVERSIONINFO
-	"Populate the argument with extended OS version information. Answers whether the request succeeded.
-		BOOL GetVersionEx(
-			LPOSVERSIONINFO lpVersionInformation 
-		);"
-
-	<stdcall: bool GetVersionExA OSVERSIONINFO* >
 	^self invalidCall!
 
 getVolumeInformation: lpRootPathName
@@ -46194,17 +46837,12 @@ outputDebugString: aString
 	<stdcall: void OutputDebugStringA lpstr>
 	^self invalidCall!
 
-pulseEvent: aHandle
-	"Set to its 'signalled' state the Win32 Event identified by aHandle, 
-	then reset it to its 'non-signalled' state. Answer whether the function 
-	succeeded or failed. Manual reset Events release all waiting threads when
-	pulsed, auto-reset events release a single waiting thread. If no threads
-	are waiting for the event, then the effect is to reset the Event to its
-	non-signalled state."
+pulseEvent: hEvent
+	"Invoke the PulseEvent() function of the module wrapped by the receiver.
+	Helpstring: Sets the specified event object to the signaled state and then resets it to the nonsignaled state after releasing the appropriate number of waiting threads
 
-	"BOOL PulseEvent(
-		HANDLE  hEvent 	// handle of event object 
-	);"
+		BOOL __stdcall PulseEvent(
+			HANDLE hEvent);"
 
 	<stdcall: bool PulseEvent handle>
 	^self invalidCall!
@@ -46277,16 +46915,12 @@ removeDirectory: aStringFileName
 	<stdcall: bool RemoveDirectoryA lpstr>
 	^self invalidCall!
 
-resetEvent: aHandle
-	"Set the specified Win32 Event object to its 'signalled' state.
-	Answer whether the function succeeded or failed. Manual reset
-	Events remain in the signalled state until explicitly reset (e.g.
-	using #resetEvent:), auto-reset events remain in the signalled state
-	until a single thread waiting for the event is released.
+resetEvent: hEvent
+	"Invoke the ResetEvent() function of the module wrapped by the receiver.
+	Helpstring: Sets the specified event object to the nonsignaled state
 
-		BOOL ResetEvent(
-			HANDLE  hEvent 	// handle of event object 
-		);"
+		BOOL __stdcall ResetEvent(
+			HANDLE hEvent);"
 
 	<stdcall: bool ResetEvent handle>
 	^self invalidCall!
@@ -46312,16 +46946,12 @@ setEnvironmentVariable: lpName lpValue: lpValue
 	<stdcall: bool SetEnvironmentVariableA lpstr lpstr>
 	^self invalidCall!
 
-setEvent: aHandle
-	"Set the specified Win32 Event object to its 'signalled' state.
-	Answer whether the function succeeded or failed. Manual reset
-	Events remain in the signalled state until explicitly reset (e.g.
-	using #resetEvent:), auto-reset events remain in the signalled state
-	until a single thread waiting for the event is released.
+setEvent: hEvent
+	"Invoke the SetEvent() function of the module wrapped by the receiver.
+	Helpstring: Sets the specified event object to the signaled state
 
-		BOOL SetEvent(
-			HANDLE  hEvent 	// handle of event object 
-		);"
+		BOOL __stdcall SetEvent(
+			HANDLE hEvent);"
 
 	<stdcall: bool SetEvent handle>
 	^self invalidCall!
@@ -46519,6 +47149,17 @@ virtualQuery: lpAddress lpBuffer: lpBuffer dwLength: dwLength
 			DWORD dwLength);"
 
 	<stdcall: dword VirtualQuery void* MEMORY_BASIC_INFORMATION* dword>
+	^self invalidCall!
+
+waitForSingleObject: hHandle dwMilliseconds: dwMilliseconds
+	"Invoke the WaitForSingleObject() function of the module wrapped by the receiver.
+	Helpstring: Waits until the specified object reaches the signaled state, or until the time-out elapses
+
+		unsigned long __stdcall WaitForSingleObject(
+			HANDLE hHandle,
+			unsigned long dwMilliseconds);"
+
+	<overlap stdcall: dword WaitForSingleObject handle dword>
 	^self invalidCall!
 
 wideCharToMultiByte: codePage
@@ -47116,8 +47757,7 @@ messageBeep: anInteger
 	^self invalidCall!
 
 messageBox: anExternalHandle text: textString caption: captionString style: styleInteger icon: iconIdentifier instance: hInstance 
-	| iconId struct wasDisabled hWnd response isTaskModal osver dwStyle |
-	osver := OSVERSIONINFO current.
+	| iconId struct wasDisabled hWnd response isTaskModal dwStyle |
 	isTaskModal := styleInteger allMask: MB_TASKMODAL.
 	hWnd := isTaskModal 
 				ifTrue: [0]
@@ -47132,7 +47772,7 @@ messageBox: anExternalHandle text: textString caption: captionString style: styl
 	iconId isNil 
 		ifTrue: 
 			["Vista no longer supports MB_ICONQUESTION, so set it as a user icon instead."
-			(osver isWinV6OrLater and: [styleInteger allMask: MB_ICONQUESTION]) 
+			(VMLibrary default isWindowsVistaOrGreater and: [styleInteger allMask: MB_ICONQUESTION]) 
 				ifTrue: 
 					[struct lpszIcon: IDI_QUESTION.
 					dwStyle := (dwStyle maskClear: MB_ICONMASK) maskSet: MB_USERICON]]
@@ -47141,7 +47781,7 @@ messageBox: anExternalHandle text: textString caption: captionString style: styl
 			be passed as a Unicode string even though we are calling the ANSI version of
 			the MessageBoxIndirect() function!!. This is obviously a Windows bug which we
 			need to work around."
-			(iconId isInteger not and: [osver isNT]) ifTrue: [iconId := iconId asUnicodeString].
+			iconId isInteger not ifTrue: [iconId := iconId asUnicodeString].
 			struct lpszIcon: iconId asUIntPtr.
 			hInstance notNil ifTrue: [struct hInstance: hInstance asParameter]].
 	struct dwStyle: dwStyle.
@@ -47387,14 +48027,14 @@ sendMessage: aWindowHandle msg: msg wParam: wParam lpParam: lParam
 	"As sendMessage:msg:wParam:lParam, but implicit conversion of lParam
 	to pointer."
 
-	<stdcall: sdword SendMessageA handle dword dword lpvoid>
+	<stdcall: intptr SendMessageA handle dword uintptr lpvoid>
 	^self invalidCall !
 
 sendMessage: aWindowHandle msg: msg wpParam: wParam lpParam: lParam
 	"As sendMessage:msg:wParam:lParam, but implicit conversion of lParam
 	and wParam to pointers."
 
-	<stdcall: sdword SendMessageA handle dword lpvoid lpvoid>
+	<stdcall: intptr SendMessageA handle dword lpvoid lpvoid>
 	^self invalidCall !
 
 setActiveWindow: aHandle
@@ -47614,6 +48254,13 @@ fileName
 
 	^self shouldNotImplement!
 
+hasBytecodeRepresentation: anObject
+	"Private - Answer whether the specified object has a special instruction or instructions that when
+	executed will push an identical object on the on the stack, e.g. nil, true, false,
+	SmallIntegers, Characters."
+
+	^anObject isImmediate or: [anObject isNil or: [anObject == true or: [anObject == false]]]!
+
 initialize
 	"Private - Initialize the receiver's class variables - see class comment for further details.
 
@@ -47622,7 +48269,7 @@ initialize
 
 	"Registry := DO NOT ASSIGN ME."
 
-	RegistryKeys := (IdentityDictionary new)
+	##(RegistryKeys := (IdentityDictionary new)
 				at: #Smalltalk put: 9;
 				at: #Processor put: 10;
 				at: #arithmeticSelectors put: 16;
@@ -47671,6 +48318,7 @@ initialize
 				at: #IDispatch put: 128;
 				at: #ImageVersionMajor put: 129;
 				at: #ImageVersionMinor put: 130;
+				at: #interruptHotKey put: 131;
 				at: #CRTHandle put: 132;
 				at: #MemoryManager put: 133;
 				at: #BYTE put: 134;
@@ -47689,8 +48337,10 @@ initialize
 				at: #LARGE_INTEGER put: 147;
 				at: #UINT_PTR put: 148;
 				at: #INT_PTR put: 149;
+				at: #TimingSemaphore put: 150;
+				isImmutable: true;
 				shrink;
-				yourself!
+				yourself)!
 
 maxBlockNesting
 	^VMConstants.MaxBlockNesting!
@@ -47861,6 +48511,11 @@ dump: msgString path: pathString stackDepth: slotsInteger walkbackDepth: framesI
 	^self invalidCall
 !
 
+emptyBlock
+	"Private - Answer the singleton empty clean block instance the the compiler installs into methods with empty zero-arg blocks as a space saving optimization."
+
+	^self registry at: 7!
+
 errorIntegerMoreThan32Bits: anInteger
 	"Private - Raise an exception to the effect that anInteger cannot be represented
 	as a 32-bit two's complement integer (it's too 'large')."
@@ -47963,6 +48618,62 @@ isSlowMachine
 	VMLibrary default isSlowMachine
 "!
 
+isUserBreakRequested
+	"Private - Answer whether the user has pressed the break key sequence. The key sequence is
+	configurable through the Development System option 'interruptHotKey', the default being
+	set by SmalltalkSystem>>#initialize."
+
+	<cdecl: bool IsUserBreakRequested>
+	^self invalidCall!
+
+isWindows10OrGreater
+	<stdcall: bool IsWindows10OrGreater>
+	^self invalidCall!
+
+isWindows7OrGreater
+	<stdcall: bool IsWindows7OrGreater>
+	^self invalidCall!
+
+isWindows7SP1OrGreater
+	<stdcall: bool IsWindows7SP1OrGreater>
+	^self invalidCall!
+
+isWindows8OrGreater
+	<stdcall: bool IsWindows8OrGreater>
+	^self invalidCall!
+
+isWindows8Point1OrGreater
+	<stdcall: bool IsWindows8Point1OrGreater>
+	^self invalidCall!
+
+isWindowsServer
+	<stdcall: bool IsWindowsServer>
+	^self invalidCall!
+
+isWindowsThresholdOrGreater
+	<stdcall: bool IsWindowsThresholdOrGreater>
+	^self invalidCall!
+
+isWindowsVersionOrGreater: wMajorVersion wMinorVersion: wMinorVersion wServicePackMajor: wServicePackMajor
+	<stdcall: bool IsWindowsVersionOrGreater word word word>
+	^self invalidCall!
+
+isWindowsVistaOrGreater
+	<stdcall: bool IsWindowsVistaOrGreater>
+	^self invalidCall!
+
+isWindowsVistaSP1OrGreater
+	<stdcall: bool IsWindowsVistaSP1OrGreater>
+	^self invalidCall!
+
+isWindowsVistaSP2OrGreater
+	<stdcall: bool IsWindowsVistaSP2OrGreater>
+	^self invalidCall!
+
+isWindowsXPOrGreater
+	<stdcall: bool IsWindowsXPOrGreater>
+	^self invalidCall!
+
 kernelHandle
 	"Private - Answer the handle of the KernelLibrary. This cannot be obtained in the normal way
 	because there is a bit of a chicken and egg problem."
@@ -48021,7 +48732,7 @@ onStartup
 	THIS MUST BE DONE FIRST."
 
 	handle := Registry at: 122.
-	specialSelectorStart :=  RegistryKeys at: #arithmeticSelectors.
+	specialSelectorStart := RegistryKeys at: #arithmeticSelectors.
 	wndProc := dlgProc := vtable := genericCallback := nil!
 
 primRegistryAt:  anInteger put: anObject
@@ -48055,12 +48766,12 @@ registry
 
 	^Registry!
 
-registryAt: aSymbol
+registryAt: aSymbol 
 	"Private - Answer the VM registered object with the name, aSymbol."
 
 	^Registry at: (RegistryKeys at: aSymbol)!
 
-registryAt: aSymbol put: anObject
+registryAt: aSymbol put: anObject 
 	"Private - Register the argument, anObject, as the VM registered object with the name,
 	aSymbol."
 
@@ -48136,9 +48847,9 @@ unlockVM: productId expireAfter: months flags: flags
 unregisterObject: anObject 
 	| i |
 	i := self registry identityIndexOf: anObject.
-	i > 0 ifTrue: [
-		Notification signal: 'Unregistering VM ref ', anObject printString.
-		self primRegistryAt: i put: nil]!
+	i > 0 ifFalse: [^self].
+	Notification signal: 'Unregistering VM ref ' , anObject printString.
+	self primRegistryAt: i put: nil!
 
 unsignedFromSigned: anInteger
 	"Private - Answer a 32-bit unsigned integer value instantiated from the signed 32-bit integer
@@ -48181,11 +48892,31 @@ defineFields
 exceptionFlags
 	^#(#Inexact #Underflow #Overflow #ZeroDivide #InvalidOperation)!
 
+exceptionFlags: anInteger do: aMonadicValuable
+	self exceptionFlags inject: 1
+		into: 
+			[:mask :each |
+			(anInteger anyMask: mask) ifTrue: [aMonadicValuable value: each].
+			mask << 1]!
+
 operationCodes
 	^#(#Add #Subtract #Multiply #Divide #SquareRoot #Remainder #Compare #Convert #Round #Truncate #Floor #Ceil #Acos #Asin #Atan #Atan2 #Cabs #Cos #Cosh #Exp #Fabs #Fmod #Frexp #Hypot #Ldexp #Log #Log10 #Modf #Pow #Sin #Sinh #Tan #Tanh #Y0 #Y1 #Yn #Logb #Nextafter #Negate #Fmin #Fmax #ConvertTrunc #Addps #Addss #Subps #Subss #Mulps #Mulss #Divps #Divss #Sqrtps #Sqrtss #Maxps #Maxss #Minps #Minss #Cmpps #Cmpss #Comiss #UComiss #Cvtpi2ps #Cvtsi2ss #Cvtps2pi #Cvtss2si #Cvttps2pi #Cvttss2si #Addsubps #Haddps #Hsubps #Roundps #Roundss #Dpps #Addpd #Addsd #Subpd #Subsd #Mulpd #Mulsd #Divpd #Divsd #Sqrtpd #Sqrtsd #Maxpd #Maxsd #Minpd #Minsd #Cmppd #Cmpsd #Comisd #UComisd #Cvtpd2pi #Cvtsd2si #Cvttpd2pi #Cvttsd2si #Cvtps2pd #Cvtss2sd #Cvtpd2ps #Cvtsd2ss #Cvtdq2ps #Cvttps2dq #Cvtps2dq #Cvttpd2dq #Cvtpd2dq #Addsubpd #Haddpd #Hsubpd #Roundpd #Roundsd #Dppd #Fma #FmaSingle #FmaDouble #Fms #FmsSingle #FmsDouble #Fnma #FnmaSingle #FnmaDouble #Famin #Famax)!
 
 precisionModes
 	^#(#Full 53 24 64 113)!
+
+printFlags: anInteger on: aStream
+	| first |
+	anInteger == 0
+		ifTrue: 
+			[aStream nextPut: $0.
+			^self].
+	first := true.
+	self exceptionFlags: anInteger
+		do: 
+			[:flag |
+			first ifTrue: [first := false] ifFalse: [aStream nextPut: $|].
+			aStream display: flag]!
 
 roundingModes
 	^#(#Nearest #MinusInfinity #PlusInfinity #Chopped)! !
@@ -48197,13 +48928,20 @@ cause
 
 	^bytes dwordAtOffset: ##(self offsetOf: #cause)!
 
-causeNames
-	"Answer the symbolic names of the type of floating point exception the receiver
-	represents, separated by vertical bars."
+causeDescription
+	"Answer the symbolic names of the type of floating point exception the receiver represents."
 
 	| stream |
 	stream := String writeStream.
 	self class printFlags: self cause on: stream.
+	^stream contents!
+
+causeNames
+	"Answer the symbolic names of the type of floating point exception the receiver represents."
+
+	| stream |
+	stream := Array writeStream.
+	self class exceptionFlags: self cause do: [:each | stream nextPut: each].
 	^stream contents!
 
 flags
@@ -48271,8 +49009,8 @@ precisionName
 
 	^self class precisionModes at: self precision + 1 ifAbsent: [#Unknown]!
 
-printFieldsOn: aStream limit: anInteger 
-	self isNull 
+printFieldsOn: aStream limit: anInteger
+	self isNull
 		ifTrue: 
 			[aStream nextPutAll: 'NULL'.
 			^self].
@@ -48290,39 +49028,23 @@ printFieldsOn: aStream limit: anInteger
 		print: self operationName;
 		space.
 	#(#cause #enable #status) do: 
-			[:each | 
+			[:each |
 			aStream
+				space;
 				display: each;
 				nextPut: $=.
-			self printFlags: (self getField: each) on: aStream]
-		separatedBy: [aStream space].
+			self class printFlags: (self getField: each) on: aStream].
 	#(#operand1 #operand2) do: 
-			[:each | 
+			[:each |
 			| value |
 			value := self getField: each.
-			value isValid 
+			value isValid
 				ifTrue: 
 					[aStream
 						space;
 						display: each;
 						nextPut: $=;
 						print: value]]!
-
-printFlags: anInteger on: aStream 
-	| first |
-	anInteger == 0 
-		ifTrue: 
-			[aStream nextPut: 0.
-			^self].
-	first := true.
-	self class exceptionFlags inject: 1
-		into: 
-			[:mask :each | 
-			(anInteger anyMask: mask) 
-				ifTrue: 
-					[first ifTrue: [first := false] ifFalse: [aStream nextPut: $|].
-					aStream display: each].
-			mask << 1]!
 
 roundingMode
 	"Answer an <integer> which identifies the rounding mode configured at the time of the exception."
@@ -48373,21 +49095,18 @@ formatName
 isValid
 	^(self flags allMask: 1)!
 
-printFieldsOn: aStream limit: anInteger 
-	self isNull 
+printFieldsOn: aStream limit: anInteger
+	self isNull
 		ifTrue: 
 			[aStream nextPutAll: 'NULL'.
 			^self].
-	self isValid 
+	self isValid
 		ifTrue: 
 			[aStream
 				display: #format;
 				nextPut: $=;
-				print: self formatName;
-				space;
-				display: #value;
-				nextPut: $=;
-				print: self value]
+				print: self formatName
+			"Don't attempt to display the value as often this may result in overflow/underflow exceptions"]
 		ifFalse: [aStream nextPutAll: '<invalid>']!
 
 value
@@ -48623,11 +49342,6 @@ asArray
 	"Answer an <Array> containing the constituent elements of the receiver."
 
 	^self collect: [:each | each]!
-
-asByteArray
-	"Answer a ByteArray containing the constituent elements of the receiver."
-
-	^self copy: ByteArray from: 1 to: self byteSize!
 
 asOrderedCollection
 	"Answer an <OrderedCollection> whose elements are those of the receiver
@@ -48923,18 +49637,28 @@ replaceBytesOf: aByteObject from: start to: stop startingAt: fromStart
 
 	^bytes replaceBytesOf: aByteObject from: start to: stop startingAt: fromStart-1*self elementSize+1!
 
-replaceFrom: start to: stop  with: aByteObject startingAt: fromStart
+replaceElementsOf: anIndexableObject from: startInteger to: stopInteger startingAt: startAtInteger
+	"Private - Replace the indexable instance variables of the variable pointer object,
+	anIndexableObject, between startInteger and stopInteger inclusive with values from the
+	receiver starting from startAtInteger. Answers anIndexableObject."
+
+	| offset |
+	offset := startAtInteger - startInteger.
+	startInteger to: stopInteger do: [:i | anIndexableObject basicAt: i put: (self at: offset + i)].
+	^anIndexableObject!
+
+replaceFrom: startInteger to: stopInteger with: aByteObject startingAt: startAtInteger 
 	"Standard method for transfering bytes from one variable
 	byte object to another. See String>>replaceFrom:to:with:startingAt:"
 
 	| elemSize offset |
 	elemSize := self elementSize.
-	offset := start-1 * elemSize.
+	offset := (startInteger - 1) * elemSize.
 	aByteObject 
-		replaceBytesOf: self bytes 
-		from: 1+offset
-		to: stop * elemSize
-		startingAt: fromStart!
+		replaceBytesOf: self bytes
+		from: 1 + offset
+		to: stopInteger * elemSize
+		startingAt: startAtInteger!
 
 select: discriminator
 	"Evaluate the <monadicValuable> argument, discriminator, for each of the receiver's elements.
@@ -49661,19 +50385,6 @@ basicFree
 			[elemClass clear: addr asExternalAddress.
 			addr := addr + spacing]!
 
-copyFrom: start to: stop 
-	"Private - Answer an object of the same species as the receiver
-	containing a copy of the elements of the receiver starting at index start, 
-	until index stop, inclusive."
-
-	| len |
-	len := stop - start + 1.
-	^(self species length: len elementClass: elementClass) 
-		replaceFrom: 1
-		to: len
-		with: self
-		startingAt: start!
-
 elementClass: elemClass 
 	"Private - Set the class to be used for accessing elements of the receiver.
 	Answer the receiver."
@@ -49702,23 +50413,6 @@ packing
 	This is the receiver's elementSize plus any padding necessary."
 
 	^elementSpacing!
-
-rawDo: operation 
-	"Private - Evaluate the <dyadicValuable>, operation, for each element of the receiver
-	between the specified, inclusive, <integer> indices with the element and its index as
-	respectively the second and first arguments. No bounds checking is performed. "
-
-	"Implementation Note: Override for improved performance (reduction of address calculations).
-	By overriding this one method, we improve the performance of all enumerators."
-
-	| address spacing elem |
-	spacing := self packing.
-	address := self base.
-	elem := elementClass newPointer.
-	self length timesRepeat: 
-			[elem initializeAtAddress: address.
-			operation value: elem.
-			address := address + spacing]!
 
 uncheckedAt: anInteger put: anObject 
 	"Private - Replace the element of the receiver at the specified <integer> index
@@ -51160,230 +51854,6 @@ lpszText: anObject
 	"Set the receiver's lpszText field to the value of anObject."
 
 	bytes uintPtrAtOffset: ##(self offsetOf: #lpszText) put: anObject yourAddress! !
-
-OSVERSIONINFO comment:
-'OSVERSIONINFO is an ExternalStructure class to represent the Win32 OSVERSIONINFOEX structure.
-
-OSVERSIONINFO is used to retrieve version information about the host OS on which an application is running. It is used in conjunction with .
-
-This class adds various tests for common Windows variants (e.g. #isWin2k) and also an #osName method which answers a symbolic name for the host OS.
-'!
-!OSVERSIONINFO class methodsFor!
-
-clear
-	"Private - Reinitialize the receiver."
-
-	Current := nil!
-
-current
-	"Answer the current instance of the receiver."
-
-	Current isNil ifTrue: [Current := self getCurrent].
-	^Current!
-
-defineFields
-	"Define the fields of the Win32 OSVERSIONINFO structure.
-
-		OSVERSIONINFO compileDefinition
-
-		typedef struct _OSVERSIONINFOEX{  
-			DWORD dwOSVersionInfoSize; 
-			DWORD dwMajorVersion; 
-			DWORD dwMinorVersion; 
-			DWORD dwBuildNumber; 
-			DWORD dwPlatformId; 
-			TCHAR szCSDVersion[128]; 
-			WORD  wServicePackMajor;
-			WORD  wServicePackMinor;
-			WORD  wSuiteMask;
-			BYTE  wProductType;
-			BYTE  wReserved
-		} OSVERSIONINFOEX;"
-
-	self
-		defineField: #dwSize type: DWORDField writeOnly beOverride;
-		defineField: #dwMajorVersion type: DWORDField readOnly;
-		defineField: #dwMinorVersion type: DWORDField readOnly;
-		defineField: #dwBuildNumber type: DWORDField readOnly;
-		defineField: #dwPlatformId type: DWORDField readOnly;
-		defineField: #szCSDVersion type: (StringField length: 128) beReadOnly;
-		defineField: #wServicePackMajor type: WORDField readOnly;
-		defineField: #wServicePackMinor type: WORDField readOnly;
-		defineField: #wSuiteMask type: WORDField readOnly;
-		defineField: #wProductType type: BYTEField readOnly;
-		defineField: #wReserved type: BYTEField filler!
-
-getCurrent
-	"Private - Get the current OSVERSIONINFO."
-
-	| current |
-	current := self new.
-	KernelLibrary default getVersionEx: current.
-	^current!
-
-uninitialize
-	"Private - Uninitialize the receiver as it is about to be removed from the system."
-
-	self clear.
-! !
-
-!OSVERSIONINFO methodsFor!
-
-calculateOsName
-	| major minor type |
-	self assert: [self dwPlatformId = VER_PLATFORM_WIN32_NT].
-	major := self dwMajorVersion.
-	minor := self dwMinorVersion.
-	type := self wProductType.
-	major > 5 
-		ifTrue: 
-			["Vista or later"
-			minor > 0 
-				ifTrue: 
-					[^type == VER_NT_WORKSTATION ifTrue: [#win7] ifFalse: [#win2k8r2].
-					^type == VER_NT_WORKSTATION ifTrue: [#winVista] ifFalse: [#win2k8]]].
-	minor > 1 ifTrue: [^#win2k3].
-	minor > 0 ifTrue: [#winXP].
-	^#win2k!
-
-dwBuildNumber
-	"Answer the receiver's dwBuildNumber field as a Smalltalk object."
-
-	^(bytes dwordAtOffset: 12)!
-
-dwMajorVersion
-	"Answer the receiver's dwMajorVersion field as a Smalltalk object."
-
-	^bytes dwordAtOffset: ##(self offsetOf: #dwMajorVersion)!
-
-dwMinorVersion
-	"Answer the receiver's dwMinorVersion field as a Smalltalk object."
-
-	^bytes dwordAtOffset: ##(self offsetOf: #dwMinorVersion)!
-
-dwPlatformId
-	"Answer the receiver's dwPlatformId field as a Smalltalk object."
-
-	^bytes dwordAtOffset: ##(self offsetOf: #dwPlatformId)!
-
-dwSize: anObject 
-	"Set the receiver's dwSize field to the value of anObject."
-
-	bytes dwordAtOffset: 0 put: anObject!
-
-hasThemes
-	^self isWinXPOrLater!
-
-isNT
-	"Answer whether the host OS is NT (4 or 2000).
-		OSVERSIONINFO current isNT
-	"
-
-	^self dwPlatformId == VER_PLATFORM_WIN32_NT!
-
-isWin2K
-	"Answer whether the host OS is Windows 2000.
-		OSVERSIONINFO current isWin2K
-	"
-
-	^self osName == #win2k!
-
-isWin2K3
-	"Answer whether the host OS is Windows Server 2003 specifically."
-
-	^self osName = #win2k3!
-
-isWin2K3OrLater
-	"Answer whether the host OS is Windows Server 2003, or some later version."
-
-	^self dwPlatformId == VER_PLATFORM_WIN32_NT 
-		and: [self dwMajorVersion > 5 or: [self dwMajorVersion == 5 and: [self dwMinorVersion >= 2]]]!
-
-isWin95
-	"Answer whether the host OS is Windows 95.
-		OSVERSIONINFO current isWin95
-	"
-
-	"Dolphin no longer supports the pre-NT Windows OSs"
-
-	^false!
-
-isWin9X
-	"Answer whether the host OS is Windows 95/98 or ME."
-
-	"Dolphin no longer supports the pre-NT Windows OSs"
-
-	^false!
-
-isWinV5
-	#deprecated.	"Use isWinV5OrLater, or test for specific versions"
-	^#(#win2k #winXP #win98 #winMe) identityIncludes: self osName!
-
-isWinV5OrLater
-	"Answer whether the host OS is Windows 98 or Windows 2000 or later. These OSs added certain
-	UI features such as menus with images.
-		OSVERSIONINFO current isWinV5OrLater 
-	"
-
-	| major |
-	major := self dwMajorVersion.
-	^self dwPlatformId = VER_PLATFORM_WIN32_NT 
-		ifTrue: [major >= 5]
-		ifFalse: [major > 4 or: [major == 4 and: [self dwMinorVersion > 0]]]!
-
-isWinV6OrLater
-	"Answer whether the host OS is Windows Vista or later."
-
-	^self dwMajorVersion >= 6!
-
-isWinVista
-	"Answer whether the host OS is Windows Vista or later."
-
-	^self dwMajorVersion = 6!
-
-isWinXP
-	"Answer whether the host OS is Windows XP specifically."
-
-	^self osName == #winXP!
-
-isWinXPOrLater
-	"Answer whether the host OS is Windows XP, Windows Server 2003, or some later version."
-
-	^self dwPlatformId == VER_PLATFORM_WIN32_NT 
-		and: [self dwMajorVersion > 5 or: [self dwMajorVersion == 5 and: [self dwMinorVersion >= 1]]]!
-
-osName
-	"Answer a symbolic name which indicates which is the host operating system, this will be one
-	of #win7 #win28kr2, #win2k8, #win2k3, #winXP, #win2k. Dolphin no longer supports NT4 or the
-	pre-NT generation of OSs such as Windows 98."
-
-	osName isNil ifTrue: [osName := self calculateOsName].
-	^osName!
-
-szCSDVersion
-	"Answer the receiver's szCSDVersion field as a Smalltalk object."
-
-	^String fromAddress: bytes yourAddress + ##(self offsetOf: #szCSDVersion)!
-
-wProductType
-	"Answer the receiver's wProductType field as a Smalltalk object."
-
-	^bytes byteAtOffset: ##(self offsetOf: #wProductType)!
-
-wServicePackMajor
-	"Answer the receiver's wServicePackMajor field as a Smalltalk object."
-
-	^bytes wordAtOffset: ##(self offsetOf: #wServicePackMajor)!
-
-wServicePackMinor
-	"Answer the receiver's wServicePackMinor field as a Smalltalk object."
-
-	^bytes wordAtOffset: ##(self offsetOf: #wServicePackMinor)!
-
-wSuiteMask
-	"Answer the receiver's wSuiteMask field as a Smalltalk object."
-
-	^bytes wordAtOffset: ##(self offsetOf: #wSuiteMask)! !
 
 PROCESS_INFORMATION comment:
 ''!
@@ -53463,6 +53933,9 @@ terminate
 
 			self queueInterrupt: Processor terminateInterrupt]!
 
+threadSync
+	^threadSync!
+
 topFrame
 	"Private - Answer a frame representing the top activation record of the receiver's stack.
 	We deliberately answer a frame for the sender if the receiver is the active
@@ -54056,7 +54529,16 @@ value: aValue
 ! !
 
 Character comment:
-'Character is the class of objects which serve as the elemental values of Smalltalk Strings. There is a finite set of Characters (256 in the current Dolphin implementation). Characters have a literal syntax which is the $ symbol followed by the normal printed representation of the character.
+'Character is the class of objects which serve as the elemental values of Smalltalk Strings. There is a finite set of Characters (256 in the current Dolphin implementation). Smalltalk characters have a literal syntax which is the $ symbol followed by the normal printed representation of the character. Dolphin also supports the following escaped literal formats to provide a literal representation of any character:
+	$\0	- Null
+	$\a	- Bell
+	$\b	- Backspace
+	$\t	- Tab
+	$\n	- Newline
+	$\v	- Vertical tab
+	$\f	- Form Feed
+	$\r	- Carriage return
+	$\x<HH> - where <HH> is the hex representation of the character''s code point - can be used to represent any character in the set.
 
 Note that the ANSI standard does not require that Characters be identity objects, but they are in Dolphin.
 '!
@@ -54065,7 +54547,7 @@ Note that the ANSI standard does not require that Characters be identity objects
 backspace
 	"Answer the backspace Character"
 
-	^##(self value: 8)
+	^$\b
 !
 
 basicNew
@@ -54092,7 +54574,7 @@ codePoint: integer
 cr
 	"Answer the carriage return <Character>."
 
-	^##(self value: 13)!
+	^$\r!
 
 digitValue: anInteger
 	"Answer the Character that corresponds to anInteger.  0-9 map to $0-$9,
@@ -54105,13 +54587,12 @@ eof
 	"Answer the EOF (Ctrl+Z) character.
 	DOS interprets this character as marking the end of a file."
 
-	^##(self value: 26)!
+	^$\x1A!
 
 esc
 	"Answer the escape Character"
 
-	^##(self value: 27)
-!
+	^$\x1B!
 
 icon
 	"Answers an Icon that can be used to represent this class"
@@ -54119,15 +54600,23 @@ icon
 	^##(self) defaultIcon!
 
 initialize
-	CharacterSet isImmutable: true.
-	"Marking binding as constant causes compiler to inline refs"
-	(self bindingFor: 'CharacterSet') isImmutable: true.
-	self class recompileAll!
+	self addClassConstant: 'CharacterSet' value: CharacterSet.
+	self addClassConstant: 'EscapeChars'
+		value: ((Array new: 14)
+				at: 0 + 1 put: $0;
+				at: 7 + 1 put: $a;
+				at: 8 + 1 put: $b;
+				at: 9 + 1 put: $t;
+				at: 10 + 1 put: $n;
+				at: 11 + 1 put: $v;
+				at: 12 + 1 put: $f;
+				at: 13 + 1 put: $r;
+				yourself)!
 
 lf
 	"Answer the linefeed <Character>."
 
-	^##(self value: 10)!
+	^$\n!
 
 new
 	"Characters are immediate objects, and cannot be instantiated directly, they
@@ -54140,29 +54629,28 @@ new
 newPage
 	"Answer the new page Character."
 
-	^##(self value: 12)
+	^$\f
 !
 
 nl
 	"Answer the new line <Character> (synonym for lf)"
 
-	^self lf!
+	^$\n!
 
 null
 	"Answer the NULL-terminator character"
 
-	^##(self value: 0)
-!
+	^$\0!
 
 space
 	"Answer the space <Character>."
 
-	^$ .!
+	^$\x20!
 
 tab
 	"Answer the tab <Character>."
 
-	^##(self value: 9)!
+	^$\t!
 
 value: anInteger
 	"Answer the character with ascii value, anInteger. If anInteger is not in the range 0..255, 
@@ -54330,6 +54818,14 @@ isAlphaNumeric
 
 	^UserLibrary default isCharAlphaNumeric: self!
 
+isAtomic
+	"Answer whether or not the receiver it the single unique instance of its class that
+	represents its value."
+
+	"Byte characters are atomic"
+
+	^asciiValue <= 255!
+
 isControl
 	"Answer whether the receiver is a control character."
 
@@ -54366,13 +54862,13 @@ isLetter
 isLinefeed
 	"Answer whether the receiver is the line-feed character."
 
-	^asciiValue = 10!
+	^self == $\n!
 
 isLiteral
-	"Private - Answer whether the receiver has a literal representation
-	which is directly recognised by the Compiler."
+	"Answer whether the receiver has a literal representation which is directly recognised by
+	the Compiler."
 
-	^true!
+	^asciiValue > 31 and: [asciiValue ~= 127]!
 
 isLowercase
 	"Answer whether the receiver is a lowercase letter."
@@ -54415,7 +54911,7 @@ isVowel
 	"Answer whether the receiver is an English vowel (a, e, i, o, or u).
 	This test is case insensitive."
 
-	^'aAeEiIoOuU' includes: self!
+	^'aAeEiIoOuU' identityIncludes: self!
 
 isWhitespace
 	"Answer whether the receiver is a white space character.
@@ -54424,10 +54920,22 @@ isWhitespace
 	^self isSeparator!
 
 printOn: aStream
-	"Append the ASCII representation of the receiver to aStream as a 
-	developer would want to see it."
+	"Append the ASCII representation of the receiver to aStream as a developer would want to see
+	it."
 
-	aStream nextPut: $$; nextPut: self!
+	aStream nextPut: $$.
+	(asciiValue > 32 and: [asciiValue ~= 127])
+		ifTrue: [aStream nextPut: self]
+		ifFalse: 
+			[aStream nextPut: $\.
+			(EscapeChars at: asciiValue + 1 ifAbsent: [])
+				ifNotNil: [:char | aStream nextPut: char]
+				ifNil: 
+					[aStream nextPut: $x.
+					asciiValue
+						printOn: aStream
+						base: 16
+						showRadix: false]]!
 
 shallowCopy
 	"Answer the receiver, as Characters have a unique representation for
@@ -55057,10 +55565,17 @@ setDays: dayCount
 !
 
 storeOn: aStream 
+	"Append to the <puttableStream> argument, target, an expression which when 
+	evaluated will answer a collection similar to the receiver."
+
+	"Use a format which is locale invariant."
+
 	aStream
 		display: self class;
-		nextPutAll: ' fromString: '.
-	self displayString printOn: aStream!
+		space;
+		display: #fromDays:;
+		space;
+		display: self asDays!
 
 subtractDate: aDate
 	"Answer the difference in days between the receiver and aData, as an Integer"
@@ -55185,14 +55700,8 @@ icon
 microsecondClockValue
 	"Answer the current value of the microsecond clock."
 
-	| mus freq |
-	mus := LargeInteger new64.
-	KernelLibrary default queryPerformanceCounter: mus yourAddress.
-
-	freq := LargeInteger new64.
-	(KernelLibrary default queryPerformanceFrequency: freq yourAddress)
-		ifFalse: [ self error: 'performance counter not available' ].
-	^mus * 1000000 // freq normalize!
+	<primitive: 189>
+	^self primitiveFailed!
 
 microsecondsToRun: timedBlock 
 	"Answer the number of microseconds consumed by the evaluation of timedBlock
@@ -55207,8 +55716,9 @@ microsecondsToRun: timedBlock
 millisecondClockValue
 	"Answer the current value of the system millisecond clock."
 
-	"Implementation Note: Primitive 174 is actually just a call to the WinMM function timeGetTime()
-	which should be accurate to 1mS (unlike GetTickCount() which is only accurate to 10mS)."
+	"Implementation Note: Primitive 174 is actually just a call to the QueryPerformanceCounter
+	API which should be accurate sub-1mS (unlike GetTickCount() which is only accurate to 10mS),
+	and which also does not suffer the problem of wrapping after ~49 days of uptime."
 
 	<primitive: 174>
 	^self primitiveFailed!
@@ -55276,7 +55786,7 @@ readFrom: aStream
 												ifFalse: 
 													[milliseconds := (milliseconds / (10 raisedToInteger: precision)) asInteger.
 													rounded := 1]]]]]].
-	aStream skipWhile: [:c | c = Character space].
+	aStream skipWhile: [:c | c == $\x20].
 	am := self amMarker.
 	(am notEmpty and: [am skipOver: aStream ignoreCase: true]) 
 		ifTrue: 
@@ -55788,7 +56298,7 @@ readSmalltalkRealFrom: aStream initialInteger: anInteger
 	<gettableStream>, aStream. The <integer>, integerPart, has already been read from the stream
 	and we are currently positioned immediately after the decimal point."
 
-	| nextChar precision fractionalPart start mantissa |
+	| nextChar precision fractionalPart start mantissa specifiedPrecision |
 	start := aStream position.
 	"Attempt to read positive fractional part"
 	(fractionalPart := self readIntegerFrom: aStream radix: 10) isNil 
@@ -55797,7 +56307,7 @@ readSmalltalkRealFrom: aStream initialInteger: anInteger
 			 onto the stream"
 			aStream pop.
 			^anInteger].
-	precision := aStream position - start.
+	precision := specifiedPrecision := aStream position - start.
 
 	"So as to not accumulate round off errors the mantissa is kept in integer form."
 	fractionalPart = 0 
@@ -55834,7 +56344,7 @@ readSmalltalkRealFrom: aStream initialInteger: anInteger
 					^self 
 						readScaledDecimalFrom: aStream
 						mantissa: mantissa / (10 raisedToInteger: precision)
-						precision: precision]].
+						precision: specifiedPrecision]].
 
 	"Normal Float, such as 2.5 (perhaps with trailing exponent character)"
 	^precision = 0 
@@ -55843,7 +56353,7 @@ readSmalltalkRealFrom: aStream initialInteger: anInteger
 			["Again the fraction does not need to be normalized before conversion"
 			(Fraction numerator: mantissa denominator: (10 raisedToInteger: precision)) asFloat]!
 
-readSmalltalkSyntaxFrom: aStream 
+readSmalltalkSyntaxFrom: aStream
 	"Private - Instantiate a new sub-instance of the receiver from aStream and answer it.
 	If no Number is found at the streams current position then answer nil.
 	Any numbers in the stream are expected to obey Smalltalk syntax 
@@ -55858,38 +56368,40 @@ readSmalltalkSyntaxFrom: aStream
 
 	| isNegative integerPart answer |
 	isNegative := aStream peekFor: $-.
-	(integerPart := self readIntegerFrom: aStream radix: 10) isNil 
+	(integerPart := self readIntegerFrom: aStream radix: 10) isNil
 		ifTrue: 
 			["There's nothing for you here"
-
 			isNegative ifTrue: [aStream pop].
 			^nil].
 
 	"The type of number is determined by what we find next"
-	answer := aStream atEnd 
+	answer := aStream atEnd
 				ifTrue: [integerPart]
 				ifFalse: 
 					[| nextChar |
 					nextChar := aStream next.
-					answer := nextChar == $. 
-								ifTrue: [self readSmalltalkRealFrom: aStream initialInteger: integerPart]
+					nextChar == $.
+						ifTrue: 
+							[| float |
+							float := self readSmalltalkRealFrom: aStream initialInteger: integerPart.
+							(isNegative and: [float isZero]) ifTrue: [^Float negativeZero] ifFalse: [float]]
+						ifFalse: 
+							[nextChar == $r
+								ifTrue: [self readRadixIntegerFrom: aStream initialInteger: integerPart]
 								ifFalse: 
-									[nextChar == $r 
-										ifTrue: [self readRadixIntegerFrom: aStream initialInteger: integerPart]
+									[nextChar == $s
+										ifTrue: 
+											[self
+												readScaledDecimalFrom: aStream
+												mantissa: integerPart
+												precision: 0]
 										ifFalse: 
-											[nextChar == $s 
-												ifTrue: 
-													[self 
-														readScaledDecimalFrom: aStream
-														mantissa: integerPart
-														precision: 0]
+											[nextChar == $e
+												ifTrue: [self readExponentIntegerFrom: aStream initialInteger: integerPart]
 												ifFalse: 
-													[nextChar == $e 
-														ifTrue: [self readExponentIntegerFrom: aStream initialInteger: integerPart]
-														ifFalse: 
-															[aStream pop.
-															integerPart]]
-											"Also support St-80 format integer of the form 1e5, not valid ANSI syntax though"]]].
+													[aStream pop.
+													integerPart]]
+									"Also support St-80 format integer of the form 1e5, not valid ANSI syntax though"]]].
 	^isNegative ifTrue: [answer negated] ifFalse: [answer]!
 
 zero
@@ -56067,6 +56579,11 @@ isLiteral
 
 	^true!
 
+isNumber
+	"Coerces numbers to true and everything else to false."
+
+	^true!
+
 ln
 	"Answer a <Float> which is the natural logarithm of the receiver."
 
@@ -56135,7 +56652,7 @@ to: stop
 	"Answer an <interval> from the receiver up to the argument, stop, with an interval of 1 
 	between elements."
 
-	^Interval from: self to: stop!
+	^Interval from: self to: stop by: 1!
 
 to: stop by: step
 	"Answer an <interval> from the receiver up to the argument, stop, with an interval of 
@@ -56484,8 +57001,7 @@ denormalized
 	"Answer whether the characterized floating point representation allows denormalized
 	values."
 
-	^Processor activeProcess fpeMask allMask: (_EM_DENORMAL bitOr: _EM_UNDERFLOW)
-!
+	^Processor activeProcess fpeMask allMask: (CRTConstants._EM_DENORMAL bitOr: CRTConstants._EM_UNDERFLOW)!
 
 e
 	"Answer a <Float> representing the irrational number, 'e'
@@ -56498,21 +57014,19 @@ emax
 	"Answer an <integer> representing the largest exponent
 	of the characterized floating point representation."
 
-	"Implementation Note: This value is that needed tocorrectly calculate 
+	"Implementation Note: This value is that needed to correctly calculate 
 	#fmax by the expression on p141 of the ANSI Smalltalk standard, 
 	but the IEEE 754 double-precision value for emax is +1023."
 
-	^1024!
+	^1023!
 
 emin
-	"Answer an <integer> representing the smallest exponent
-	of the characterized floating point representation."
+	"Answer an <integer> representing the smallest exponent of the characterized floating point
+	representation."
 
-	"Implementation Note: This value is that needed tocorrectly calculate 
-	#fminNormalized by the expression on p142 of the ANSI Smalltalk standard, 
-	but the IEEE 754 double-precision value for emin is -1022."
+	"Implementation Note: The IEEE 754 double-precision value for emin is -1022."
 
-	^-1021!
+	^EMin!
 
 epsilon
 	"Answer a <Float> representing the minimum relative spacing
@@ -56528,7 +57042,7 @@ fmax
 	"Answer a <Float> representing the largest value
 	allowed by the characterized floating point representation."
 
-	^FMax!
+	^1.7976931348623157e308!
 
 fmin
 	"Answer a <Float> representing the smallest value
@@ -56542,13 +57056,13 @@ fminDenormalized
 	"Answer a <Float> representing the smallest denormalized value
 	allowed by the characterized floating point representation."
 
-	^self radix asFloat raisedTo: self emin - self precision!
+	^##(1.0 timesTwoPower: MinValLogBase2)!
 
 fminNormalized
 	"Answer a <Float> representing the smallest normalized value
 	allowed by the characterized floating point representation."
 
-	^FMin!
+	^2.2250738585072014e-308!
 
 icon
 	"Answers an Icon that can be used to represent this class"
@@ -56560,15 +57074,27 @@ initialize
 		Float initialize
 	"
 
-	"There are only just over 15 digits of precision in a 64-bit IEEE float, but not 16 digits."
-
-	DefaultSigFigs := 15.
-	SignificantDifference := 1.0e-009.
+	self addClassConstant: 'EMin' value: -1022.
+	self addClassConstant: 'Ln2' value: 0.6931471805599453.
+	self addClassConstant: 'MinValLogBase2' value: -1074.
+	self addClassConstant: 'Precision' value: 53.
+	self addClassConstant: 'SignificantDifference' value: 1.0e-9.
 	self assert: [SignificantDifference >= self epsilon].
-	FMax := ((1 - (self radix raisedTo: self precision negated)) 
-				* (self radix raisedTo: self emax)) asFloat.
-	FMin := self radix asFloat raisedTo: self emin - 1.
+	self addClassConstant: 'FpClassInfinite'
+		value: CRTConstants._FPCLASS_NINF | CRTConstants._FPCLASS_PINF.
+	self addClassConstant: 'FpClassStrictlyPositive'
+		value: CRTConstants._FPCLASS_PD | CRTConstants._FPCLASS_PN | CRTConstants._FPCLASS_PINF.
+	self addClassConstant: 'FpClassNegative'
+		value: CRTConstants._FPCLASS_ND | CRTConstants._FPCLASS_NN | CRTConstants._FPCLASS_NINF
+				| CRTConstants._FPCLASS_NZ.
+	self addClassConstant: 'FpClassZero' value: CRTConstants._FPCLASS_NZ | CRTConstants._FPCLASS_PZ.
+	self addClassConstant: 'FpClassNaN' value: CRTConstants._FPCLASS_QNAN | CRTConstants._FPCLASS_SNAN.
 	#(#FloatD #FloatE #FloatQ) do: [:each | Smalltalk at: each ifAbsentPut: [self]]!
+
+negativeZero
+	"Answer the IEEE 754 representation for negative zero"
+
+	^-0.0!
 
 new
 	"Answer a new instance of the receiver."
@@ -56597,7 +57123,7 @@ precision
 	bits stored is 52. The normalized representation means that the high bit is always one
 	and need not be stored."
 
-	^53!
+	^Precision!
 
 radix
 	"Answer an <integer> representing the radix
@@ -56618,13 +57144,17 @@ reset
 	every time an exception occurs, so this must be sent after each FloatingPointException."
 
 	CRTLibrary default _clearfp.
-	self setExceptionMask: Processor activeProcess fpeMask!
+	self setExceptionMask: Processor activeProcess fpeMask.
+	self resetPrecision!
+
+resetPrecision
+	CRTLibrary default _controlfp: CRTConstants._PC_64 mask: CRTConstants._MCW_PC!
 
 setExceptionMask: anInteger
 	"Private - Set the current floating point exception mask
 	to anInteger. Answer the previous mask."
 
-	^CRTLibrary default _controlfp: anInteger mask: _MCW_EM!
+	^CRTLibrary default _controlfp: anInteger mask: CRTConstants._MCW_EM!
 
 zero
 	"Answer the receiver's representation of zero."
@@ -56706,6 +57236,188 @@ abs
 
 	^CRTLibrary default fabs: self
 	!
+
+absPrintExactlyOn: aStream base: base
+	"Private - Print the receiver's value on a stream in the given base.  Assumes that the receiver is strictly
+	positive; negative numbers, zero, and NaNs have already been handled elsewhere.
+	Based upon the algorithm outlined in:
+	Robert G. Burger and R. Kent Dybvig
+	Printing Floating Point Numbers Quickly and Accurately
+	ACM SIGPLAN 1996 Conference on Programming Language Design and Implementation
+	June 1996.
+	This version guarantees that the printed representation exactly represents the receiver's value
+	by using exact integer arithmetic, and is based on the same method in Squeak."
+
+	| significand exp baseExpEstimate r s mPlus mMinus scale roundingIncludesLimits d tc1 tc2 fixedFormat decPointCount slowbit shead |
+	significand := self finiteSignificand.
+	roundingIncludesLimits := significand even.
+	exp := self exponent - 52 max: MinValLogBase2.
+	baseExpEstimate := (self exponent * base asFloat reciprocalLogBase2 - 1.0e-10) ceiling.
+	exp >= 0
+		ifTrue: 
+			[significand ~= 16r10000000000000
+				ifTrue: 
+					[r := significand bitShift: 1 + exp.
+					s := 2.
+					mPlus := mMinus := 1 bitShift: exp]
+				ifFalse: 
+					[r := significand bitShift: 2 + exp.
+					s := 4.
+					mPlus := 2 * (mMinus := 1 bitShift: exp)]]
+		ifFalse: 
+			[(exp = MinValLogBase2 or: [significand ~= 16r10000000000000])
+				ifTrue: 
+					[r := significand bitShift: 1.
+					s := 1 bitShift: 1 - exp.
+					mPlus := mMinus := 1]
+				ifFalse: 
+					[r := significand bitShift: 2.
+					s := 1 bitShift: 2 - exp.
+					mPlus := 2.
+					mMinus := 1]].
+	baseExpEstimate >= 0
+		ifTrue: [s := s * (base raisedToInteger: baseExpEstimate)]
+		ifFalse: 
+			[scale := base raisedToInteger: baseExpEstimate negated.
+			r := r * scale.
+			mPlus := mPlus * scale.
+			mMinus := mMinus * scale].
+	(r + mPlus >= s and: [roundingIncludesLimits or: [r + mPlus > s]])
+		ifTrue: [baseExpEstimate := baseExpEstimate + 1]
+		ifFalse: 
+			[r := r * base.
+			mPlus := mPlus * base.
+			mMinus := mMinus * base].
+	(fixedFormat := baseExpEstimate between: -3 and: 6)
+		ifTrue: 
+			[decPointCount := baseExpEstimate.
+			baseExpEstimate <= 0 ifTrue: [aStream nextPutAll: ('0.000000' truncateTo: 2 - baseExpEstimate)]]
+		ifFalse: [decPointCount := 1].
+	slowbit := 1 - s lowBit.
+	shead := s bitShift: slowbit.
+	
+	[d := (r bitShift: slowbit) // shead.
+	r := r - (d * s).
+	(tc1 := r <= mMinus and: [roundingIncludesLimits or: [r < mMinus]])
+		| (tc2 := r + mPlus >= s and: [roundingIncludesLimits or: [r + mPlus > s]])]
+			whileFalse: 
+				[aStream nextPut: (Character digitValue: d).
+				r := r * base.
+				mPlus := mPlus * base.
+				mMinus := mMinus * base.
+				(decPointCount := decPointCount - 1) = 0 ifTrue: [aStream nextPut: $.]].
+	tc2 ifTrue: [(tc1 not or: [r * 2 >= s]) ifTrue: [d := d + 1]].
+	aStream nextPut: (Character digitValue: d).
+	decPointCount > 0
+		ifTrue: 
+			[decPointCount - 1 timesRepeat: [aStream nextPut: $0].
+			aStream nextPutAll: '.0'].
+	fixedFormat
+		ifFalse: 
+			[aStream nextPut: $e.
+			aStream nextPutAll: (baseExpEstimate - 1) printString]!
+
+absPrintExactlyOn: aStream base: base decimalPlaces: placesDesired showTrailingFractionalZeros: showtrailingZeros
+	"Private - Print the receiver's value on a stream in the given base with fixed number of digits after floating point.
+	When placesDesired are beyond Float precision, zeroes are appended.
+	When showtrailingZeros is false, the trailing zeroes after decimal point will be omitted.
+	If all fractional digits are zeros, the decimal point is omitted too.
+	Assumes that the receiver is strictly positive; negative numbers, zero, and NaNs have already been handled elsewhere.
+	Based upon the algorithm outlined in:
+	Robert G. Burger and R. Kent Dybvig
+	Printing Floating Point Numbers Quickly and Accurately
+	ACM SIGPLAN 1996 Conference on Programming Language Design and Implementation
+	June 1996.."
+
+	| significand exp baseExpEstimate r s mPlus mMinus scale roundingLowIncludesLimits roundingHighIncludesLimits d tc1 tc2 decPointCount slowbit shead delta |
+	significand := self finiteSignificand.
+	exp := self exponent - 52 max: MinValLogBase2.
+	exp >= 0
+		ifTrue: 
+			[significand ~= 16r10000000000000
+				ifTrue: 
+					[r := significand bitShift: 1 + exp.
+					s := 2.
+					mPlus := mMinus := 1 bitShift: exp]
+				ifFalse: 
+					[r := significand bitShift: 2 + exp.
+					s := 4.
+					mPlus := 2 * (mMinus := 1 bitShift: exp)]]
+		ifFalse: 
+			[(exp = MinValLogBase2 or: [significand ~= 16r10000000000000])
+				ifTrue: 
+					[r := significand bitShift: 1.
+					s := 1 bitShift: 1 - exp.
+					mPlus := mMinus := 1]
+				ifFalse: 
+					[r := significand bitShift: 2.
+					s := 1 bitShift: 2 - exp.
+					mPlus := 2.
+					mMinus := 1]].
+	delta := s / 2 / (base raisedTo: placesDesired).
+	roundingLowIncludesLimits := (mMinus < delta and: 
+					[mMinus := delta.
+					true])
+				or: [significand even].
+	roundingHighIncludesLimits := (mPlus < delta and: 
+					[mPlus := delta.
+					true])
+				or: [significand even].
+	baseExpEstimate := (self exponent * base asFloat reciprocalLogBase2 - 1.0e-10) ceiling.
+	baseExpEstimate >= 0
+		ifTrue: [s := s * (base raisedToInteger: baseExpEstimate)]
+		ifFalse: 
+			[scale := base raisedToInteger: baseExpEstimate negated.
+			r := r * scale.
+			mPlus := mPlus * scale.
+			mMinus := mMinus * scale].
+	(r + mPlus >= s and: [roundingHighIncludesLimits or: [r + mPlus > s]])
+		ifTrue: [baseExpEstimate := baseExpEstimate + 1]
+		ifFalse: 
+			[r := r * base.
+			mPlus := mPlus * base.
+			mMinus := mMinus * base].
+	decPointCount := baseExpEstimate.
+	baseExpEstimate <= 0
+		ifTrue: 
+			[placesDesired + baseExpEstimate <= 0
+				ifTrue: 
+					[aStream nextPut: $0.
+					(showtrailingZeros and: [placesDesired > 0])
+						ifTrue: 
+							[aStream
+								nextPut: $.;
+								nextPutAll: (String new: placesDesired withAll: $0)].
+					^self].
+			aStream
+				nextPutAll: '0.';
+				nextPutAll: (String new: 0 - baseExpEstimate withAll: $0)].
+	slowbit := 1 - s lowBit.
+	shead := s bitShift: slowbit.
+	
+	[d := (r bitShift: slowbit) // shead.
+	r := r - (d * s).
+	(tc1 := r <= mMinus and: [roundingLowIncludesLimits or: [r < mMinus]])
+		| (tc2 := r + mPlus >= s and: [roundingHighIncludesLimits or: [r + mPlus > s]])]
+			whileFalse: 
+				[aStream nextPut: (Character digitValue: d).
+				r := r * base.
+				mPlus := mPlus * base.
+				mMinus := mMinus * base.
+				(decPointCount := decPointCount - 1) = 0 ifTrue: [aStream nextPut: $.]].
+	tc2 ifTrue: [(tc1 not or: [r * 2 >= s]) ifTrue: [d := d + 1]].
+	aStream nextPut: (Character digitValue: d).
+	decPointCount > 0
+		ifTrue: 
+			[decPointCount - 1 timesRepeat: [aStream nextPut: $0].
+			(showtrailingZeros and: [placesDesired > 0])
+				ifTrue: 
+					[aStream
+						nextPut: $.;
+						nextPutAll: (String new: placesDesired withAll: $0)]]
+		ifFalse: 
+			[(showtrailingZeros and: [placesDesired + decPointCount > 1])
+				ifTrue: [aStream nextPutAll: (String new: placesDesired + decPointCount - 1 withAll: $0)]]!
 
 addToFloat: aFloat
 	"Private - Answer the result of adding the receiver to the known Float, aFloat.
@@ -56892,7 +57604,10 @@ exp
 exponent
 	"Answer the SmallInteger which is the exponent part of the receiver as a Float."
 
-	^(CRTLibrary default _logb: self) truncated!
+	^self isZero ifTrue: [-1] ifFalse: [(CRTLibrary default _logb: self) truncated]!
+
+finiteSignificand
+	^(self timesTwoPower: Precision - 1 - (self exponent max: EMin)) truncated abs!
 
 floor
 	"Answer the integer nearest the receiver toward negative infinity."
@@ -56904,6 +57619,9 @@ floorLog10
 	"Answer the base 10 exponent of the receiver (an Integer between -308 and 308)."
 
 	^self log floor!
+
+fpClass
+	^CRTLibrary default _fpclass: self!
 
 fractionPart
 	"Answer a <Float> representing the fractional part of the receiver."
@@ -56958,6 +57676,28 @@ integerPart
 	^intPart
 !
 
+isFinite
+	"Answer whether the receiver represents a finite (non-infinite, non-NaN), value."
+
+	^CRTLibrary default _finite: self!
+
+isInfinite
+	"Answer whether the receiver represents infinity (positive or negative)."
+
+	^self fpClass anyMask: FpClassInfinite!
+
+isLiteral
+	"Answer whether the receiver has a literal string representation that can be compiled to
+	create an exact copy of it. All instances have literal representations except positive and
+	negative infinity and NaN, i.e. all finite values."
+
+	^self isFinite!
+
+isNaN
+	"Answer whether the receiver is Not a Number."
+
+	^self fpClass anyMask: FpClassNaN!
+
 lessOrEquals: aNumber 
 	"Answer whether the receiver is numerically less than or equal to aNumber, within the
 	default numerical precision."
@@ -57006,68 +57746,83 @@ negative
 
 	^(self basicAt: 8) anyMask: 128!
 
-printOn: target
-	"Append the ASCII representation of the receiver to the <puttableStream>, target.
+printOn: aPuttableStream
+	"Append the exact string representation of the receiver to the <puttableStream>, target. The
+	representation used is a valid literal representation for floating point numbers, recognised
+	by the Smalltalk compiler, except for the 3 special cases of inifinity, negative infinity,
+	and not-a-number (NaN)."
 
-	The representation we use is a valid literal representation for floating point
-	numbers, recognised by the Smalltalk compiler."
+	self printOn: aPuttableStream base: 10!
 
-	self printOn: target significantFigures: DefaultSigFigs!
+printOn: aStream base: anInteger
+	"Print the receiver with the minimal number of digits that describes it unambiguously in the
+	specified base. This way, every two different Float will have a different printed
+	representation. More over, every Float can be reconstructed from its printed representation
+	with #readFrom:."
 
-printOn: aStream decimalPlaces: anInteger 
-	"Append the printed representation of the receiver to the <puttableStream>,
-	aStream, rounded	to the <integer> number of decimal places, anInteger.
-	Implementation Note: fcvt() is a jolly quirky function, hence the
-	complexity. This seemed preferable to reinventing the wheel, but
-	now I'm not so sure!!"
-
-	| sign ptPos digits |
-	anInteger < 1 ifTrue: [^self rounded printOn: aStream].
-	ptPos := SDWORD new.
-	sign := SDWORD new.
-	digits := CRTLibrary default 
-				_fcvt: self
-				count: anInteger
-				dec: ptPos
-				sign: sign.
-	sign asInteger = 0 ifFalse: [aStream nextPut: $-].
-	ptPos := ptPos asInteger.
-	ptPos <= 0 ifTrue: [aStream nextPut: $0].
-	ptPos < 0 
+	| classification |
+	classification := self fpClass.
+	(classification anyMask: FpClassNaN)
 		ifTrue: 
-			[aStream
-				nextPut: $.;
-				next: (ptPos negated min: anInteger) put: $0;
-				nextPutAll: digits]
-		ifFalse: 
-			[aStream
-				next: ptPos
-					putAll: digits
-					startingAt: 1;
-				nextPut: $.;
-				next: digits size - ptPos
-					putAll: digits
-					startingAt: ptPos + 1]!
+			[aStream nextPutAll: 'NaN'.
+			^self].
+	(classification anyMask: FpClassNegative) ifTrue: [aStream nextPut: $-].
+	(classification anyMask: FpClassInfinite)
+		ifTrue: 
+			[aStream nextPutAll: 'Infinity'.
+			^self].
+	(classification anyMask: FpClassZero)
+		ifTrue: [aStream nextPutAll: '0.0']
+		ifFalse: [self absPrintExactlyOn: aStream base: anInteger]!
 
-printOn: aStream significantFigures: anInteger 
-	"Append the printed representation of the receiver to aStream with
-	anInteger significant figures. Ensure that there is always a digit
-	following the decimal point.
-	Implementation Note: Make use of the CRT to avoid reinventing the
-	wheel. #printOn:decimalPlaces: may be more convenient when printing
-	reports, formatting output fields, etc, as it does not drop into
-	exponential format."
+printOn: aStream decimalPlaces: anInteger
+	"Append the printed representation of the receiver to the <puttableStream>, aStream, rounded
+	to the <integer> number of decimal places, anInteger."
+
+	| classification |
+	classification := self fpClass.
+	(classification anyMask: FpClassNaN)
+		ifTrue: 
+			[aStream nextPutAll: 'NaN'.
+			^self].
+	(classification anyMask: FpClassNegative) ifTrue: [aStream nextPut: $-].
+	(classification anyMask: FpClassInfinite)
+		ifTrue: 
+			[aStream nextPutAll: 'Infinity'.
+			^self].
+	(classification anyMask: FpClassZero)
+		ifTrue: 
+			[aStream nextPut: $0.
+			anInteger > 0
+				ifTrue: 
+					[aStream nextPut: $..
+					aStream next: anInteger put: $0]]
+		ifFalse: 
+			[self
+				absPrintExactlyOn: aStream
+				base: 10
+				decimalPlaces: anInteger
+				showTrailingFractionalZeros: true]!
+
+printOn: aStream significantFigures: anInteger
+	"Append the printed representation of the receiver to aStream with anInteger significant
+	figures. Ensure that there is always a digit following the decimal point.
+	#printOn:decimalPlaces: may be more convenient when printing reports, formatting output
+	fields, etc, as it does not drop into exponential format."
+
+	"Implementation Note: Make use of the CRT to avoid reinventing the wheel. "
 
 	| buf ptPos |
+	self isFinite ifFalse: [self printOn: aStream].
 	buf := String new: (anInteger bitShift: 1) + 10.
-	buf := CRTLibrary default 
+	buf := CRTLibrary default
 				_gcvt: self
 				count: anInteger
 				buffer: buf.
 
 	"Ensure decimal separator is always a $. for printOn:, which outputs Smalltalk real syntax"
 	ptPos := buf findString: CRTLibrary default decimalSeparator.
-	ptPos == 0 
+	ptPos == 0
 		ifTrue: 
 			[aStream
 				nextPutAll: buf;
@@ -57080,13 +57835,13 @@ printOn: aStream significantFigures: anInteger
 					startingAt: 1;
 				nextPut: $..
 			size := buf size.
-			ptPos = size 
+			ptPos = size
 				ifTrue: 
 					["Smalltalk requires a trailing zero to follow decimal points"
 					aStream nextPut: $0]
 				ifFalse: 
 					[(buf at: ptPos + 1) == $e ifTrue: [aStream nextPut: $0].
-					aStream 
+					aStream
 						next: buf size - ptPos
 						putAll: buf
 						startingAt: ptPos + 1]]!
@@ -57103,10 +57858,34 @@ raisedTo: operand
 		ifTrue: [CRTLibrary default pow: self y: operand asFloat]
 		ifFalse: [CRTLibrary default pow: self reciprocal y: operand abs asFloat]!
 
+reciprocalLogBase2
+	^self = 10.0 ifTrue: [##(Ln2 / 10.0 ln)] ifFalse: [Ln2 / self ln]!
+
 rounded
 	"Answer the <integer> nearest the receiver."
 
 	^(self < 0.0 ifTrue: [self - 0.5] ifFalse: [self + 0.5]) truncated!
+
+sign
+	"Answer the <integer> sign of the receiver:
+		1 if the receiver is greater than 0, 
+		-1 if less than 0
+		0 if equal to 0."
+
+	| classification |
+	classification := self fpClass.
+	(classification anyMask: FpClassStrictlyPositive) ifTrue: [^1].
+	"Handle IEEE-754 negative-zero by reporting a sign of -1"
+	(classification anyMask: FpClassNegative) ifTrue: [^-1].
+	^0!
+
+significandAsInteger
+	"Answer the mantissa of a Float shifted so as to have the unit of least precision equal to 1.
+	For exceptional values, infinity and NaN, just answer the bit pattern."
+
+	^self isFinite
+		ifTrue: [self finiteSignificand]
+		ifFalse: [(VMLibrary default makeLargeUnsigned: self) bitAnd: 16r000FFFFFFFFFFFFF]!
 
 sin
 	"Answer a <Float> which is the sine of the receiver, 
@@ -58108,6 +58887,11 @@ isNull
 	"Answer whether the receiver is 'null' (equal to zero)."
 
 	^self == 0!
+
+isPowerOfTwo
+	"Return true if the receiver is an integral power of two."
+
+	^self strictlyPositive and: [(self bitAnd: self - 1) = 0]!
 
 isSDWORD
 	"Answer whether the receiver can be represented as a 32-bit two's complement signed integer
@@ -59463,6 +60247,14 @@ instVarAt: index put: value
 
 	^self shouldNotImplement!
 
+isAtomic
+	"Answer whether or not the receiver it the single unique instance of its class that
+	represents its value."
+
+	"SmallIntegers are encoded in object references, so are effectively atomic."
+
+	^true!
+
 isImmediate
 	"Answer whether the receiver has an immediate representation."
 
@@ -59577,7 +60369,13 @@ VariableBinding comment:
 displayOn: aStream 
 	"Append a short textual description of the receiver to aStream."
 
-	aStream display: key! !
+	aStream display: key!
+
+displayString
+	^key!
+
+icon
+	^value icon! !
 
 MessageSendAbstract comment:
 'A MessageSendAbstract is the abstract base class of fully closed <Message>s, that include a receiver object, a message selector, and an array of sufficient arguments. As a fully closed valuable, Message Sends can be evaluated by sending them the #value message, and they can frequently be employed where a <BlockClosure> might otherwise be used.
@@ -59632,6 +60430,35 @@ selector: aSymbol arguments: anArray
 	Since we override #= we also override hash."
 
 	^super = aMessageSend and: [self receiver == aMessageSend receiver]!
+
+cull: arg 
+	^selector numArgs = 0 ifTrue: [self value] ifFalse: [self value: arg]!
+
+cull: arg1 cull: arg2 
+	^selector numArgs < 2 ifTrue: [self cull: arg1] ifFalse: [self value: arg1 value: arg2]!
+
+cull: arg1 cull: arg2 cull: arg3 
+	^selector numArgs < 3 
+		ifTrue: [self cull: arg1 cull: arg2]
+		ifFalse: 
+			[self 
+				value: arg1
+				value: arg2
+				value: arg3]!
+
+cull: arg1 cull: arg2 cull: arg3 cull: arg4 
+	^selector numArgs < 4 
+		ifTrue: 
+			[self 
+				cull: arg1
+				cull: arg2
+				cull: arg3]
+		ifFalse: 
+			[self 
+				value: arg1
+				value: arg2
+				value: arg3
+				value: arg4]!
 
 deferredValue
 	"Answer a <niladicValuable> that begins evaluating the receiver asynchronously,
@@ -59711,6 +60538,16 @@ value: arg1 value: arg2
 
 	^self valueWithArguments: (Array with: arg1 with: arg2)!
 
+value: arg1 value: arg2 value: arg3
+	"Answer the result of sending the receiver with three arguments"
+
+	^self valueWithArguments: (Array with: arg1 with: arg2 with: arg3)!
+
+value: arg1 value: arg2 value: arg3 value: arg4
+	"Answer the result of sending the receiver with four arguments"
+
+	^self valueWithArguments: (Array with: arg1 with: arg2 with: arg3 with: arg4)!
+
 valueWithArguments: triggerArguments
 	"Executes the receiver with the specified <Array> of arguments. If insufficient arguments are
 	supplied then these are substituted with arguments supplied at the time the event handler was
@@ -59729,6 +60566,12 @@ new
 	^(self new: 1) beWeak; yourself! !
 
 !EventMessageSend methodsFor!
+
+asMessageSend
+	^MessageSend 
+		receiver: self receiver
+		selector: selector
+		arguments: (Array withAll: self arguments)!
 
 forwardTo: anObject withArguments: triggerArguments
 	"Private - Send the receiver Message to the <Object>, anObject, with the <Array> of arguments, anArray.	
@@ -60185,6 +61028,16 @@ result
 	"Answer a portable symbolic constant describing the button that was pressed by the user
 	to close the receiver."
 
+	NTLibrary isWine
+		ifTrue: 
+			[#wineFix.
+			"Suppressible message boxes under Wine have a bug where they ignore the
+			buttonStyles #yesNo and #yesNoCancel and will always answer #ok or #cancel
+			instead. Here we map the return button ids to the correct values"
+			(self buttonStyle == #yesNo or: [self buttonStyle == #yesNoCancel])
+				ifTrue: 
+					[button = IDOK ifTrue: [button := IDYES].
+					button = IDCANCEL ifTrue: [button := IDNO]]].
 	^ButtonMap at: button!
 
 retryCancel
@@ -60805,19 +61658,64 @@ BootSessionManager comment:
 imageExtension
 	"Answer the suffix for an executable image file"
 
-	^'img'! !
+	^'img7'.! !
 
 !BootSessionManager methodsFor!
+
+allocConsole
+	"Private - Open a console window for this session."
+
+	"Attach to the existing console so that the output goes to the build log"
+	KernelLibrary default attachConsole: ATTACH_PARENT_PROCESS!
 
 basicTertiaryStartup
 	"Perform tertiary system startup operations."
 
 	"Nothing to do - this SessionManager should never be installed on startup anyway?"!
 
+fileInClass: aClass 
+	aClass sourceManager fileIn: aClass fileOutName!
+
+initializeSystemPackage
+	"Initialize any base system classes that require initialization not performed to create the boot image.
+	We cannot reinitialize all the base system classes after re-load as the class initialize methods are not
+	all safe to re-run. Therefore we must do this selectively."
+
+	STBPrefix initialize.
+	Delay initializeTimingSemaphore!
+
 keepAlive
 	"We stay alive until explicitly terminated."
 
 	^self!
+
+logError: anException
+	"Append details about the unhandled exception, anException, to the session error log.
+	Ignored for runtime systems, but it is suggested that subclasses perform some appropriate
+	form of error logging. The VM crash dump is one such facility (it doesn't cause a crash and
+	can be used for generating a VM walkback to the crash dump file at any time)"
+
+	"Write to the crash dump log - this always works"
+
+	VMLibrary default
+		dump: anException description
+		path: nil
+		stackDepth: -1
+		walkbackDepth: -1.
+	
+	[| target |
+	target := self stderr.
+	target
+		next: 40 put: $-;
+		nextPutAll: 'Unhandled exception - '.
+	anException printTraceOn: target.
+	target
+		next: 40 put: $-;
+		cr;
+		cr;
+		flush]
+			on: Error
+			do: [:e | ]!
 
 main
 	self stdout 
@@ -60878,6 +61776,58 @@ productVersion
 	
 	^VMLibrary default defaultProductDetails at: 3
 !
+
+reloadSystemPackage
+	| srcMgr basePackage baseClasses imageDir obsoleteMethodFilter missingClasses classesBefore |
+	basePackage := PackageManager systemPackage.
+	imageDir := self imageBase.
+	srcMgr := SourceManager default.
+	"First load the constants pools to ensure all constants ref'd in new code are defined"
+	Notification signal: 'Reloading BCL constants pools...'.
+	basePackage sourceGlobalVariables 
+		collect: [:each | srcMgr fileIn: (File relativePathOf: each value fileOutName to: imageDir)].
+	Notification signal: 'Updating ClassBuilder...'.
+	self fileInClass: ClassBuilder.
+	classesBefore := Object withAllSubclasses.
+	Notification signal: 'Reloading BCL class definitions...'.
+	srcMgr fileIn: (File relativePathOf: basePackage classDefinitionsFileName to: imageDir).
+	Class subclasses: nil.
+	"Ensure all base classes (including any defined after the boot image was created) are packaged"
+	(Object withAllSubclasses difference: classesBefore) do: [:each | 
+		Notification signal: 'Adding new class ', each name, ' to BCL package'.
+		each owningPackage: basePackage].
+	Smalltalk clearCachedClasses.
+	"Then reload all base package classes in breadth-first order"
+	Notification signal: 'Reloading BCL classes...'.
+	baseClasses := basePackage classesInHierarchyOrder.
+	missingClasses := OrderedCollection new.
+	baseClasses do: 
+			[:each | 
+			(#(#BootSessionManager #ClassBuilder) identityIncludes: each name) 
+				ifFalse: 
+					[| relativePath |
+					relativePath := File relativePathOf: each fileOutName to: imageDir.
+					(File exists: relativePath) 
+						ifTrue: [srcMgr fileIn: relativePath]
+						ifFalse: [missingClasses add: each]]].
+	missingClasses reverseDo: 
+			[:each | 
+			Notification signal: 'Removing obsolete boot class ' , each printString , '...'.
+			each removeFromSystem.
+			basePackage basicRemoveClass: each].
+	Notification signal: 'Deleting obsolete boot image methods...'.
+	obsoleteMethodFilter := [:each | each hasChanged not].
+	(baseClasses difference: missingClasses) do: 
+			[:each | 
+			each setInstanceVariables: each instVarNames.
+			(((each selectMethods: obsoleteMethodFilter) 
+				asSortedCollection: [:a :b | a printString <= b printString])
+				addAll: (each class selectMethods: obsoleteMethodFilter);
+				yourself) do: 
+						[:m | 
+						Notification signal: 'Removing obsolete boot image method ' , m printString.
+						m methodClass removeSelector: m selector]].
+	self initializeSystemPackage!
 
 saveImageDefault
 	"Save an image of the current session to the default persistant store (whatever that is)."
@@ -60963,21 +61913,28 @@ trace: aString
 		ifTrue: [super trace: aString]
 		ifFalse: [self stderr nextPutAll: aString; flush]!
 
-unhandledException: anException 
-	"Private - Pop-up a walkback with details from the argument, anException."
+unhandledException: anException
+	"Private - The unhandled Exception, anException, occurred in the active Process.
+	Depending on the user response and the resumability of the exception, either 
+	resume or terminate the process.
+	Note: The exception response protocol (#resume, #pass, #outer, #exit, etc)
+	can only be sent to an Exception inside a handler block (i.e. the second
+	argument to BlockClosure>>on:do:)."
 
-	"Attempt to log the error, but don't allow it to become recursive (#logError: does not
-	raise an exception if it fails)"
-	| title topFrame |
 	self logError: anException.
-	title := [anException description] on: Error do: [:e | anException class name].
-	topFrame := anException raisingFrame.
+	"Note that unlike a GUI session (which is event driven), we kill the entire session in the event
+	  of an unhandled Error. If you are writing a multi-threaded, headless, server then you may 
+	  want to override this behaviour to just #terminate the faulting <Process>."
+	anException isUserResumable ifFalse: [
+		self quit: -1].
+	^anException!
 
-	"In a development session, we'll be wanting a walkback..."
-	topFrame process 
-		walkback: title
-		topFrame: topFrame
-		resumable: anException isResumable! !
+updateBootImage
+	"Update the boot image with any changes made since it was last created."
+
+	"The only thing done currently is to reload the BCL."
+
+	self reloadSystemPackage! !
 
 ConsoleSessionManager comment:
 'ConsoleSessionManager is the class of <SessionManager>s used to manage the life-cycle of a deployed console, or command-line, application.
@@ -61478,6 +62435,9 @@ ChunkSourceFiler comment:
 ''!
 !ChunkSourceFiler class methodsFor!
 
+initialize
+	self addClassConstant: 'NormalizeEolsMask' value: 2.!
+
 on: aWriteStream sourceFileIndex: anInteger
 	"Answer a new instance of the receiver for filing out source code onto the 
 	<puttableStream> argument, and using the <integer>, anInteger, as the 
@@ -61503,22 +62463,21 @@ emitCategories: aCollection for: aSymbol in: aClass
 	aCollection asSortedCollection do: [:each | self nextChunkPut: each name].
 	self endChunk!
 
-emitCategoriesOfClass: aClass 
+emitCategoriesOfClass: aClass
 	"Private - Emit a chunk to source stream to reclassify the <Class>, aClass, in all its existing 
 	categories."
 
 	| categories |
 	categories := aClass categories.
-	categories notEmpty 
-		ifTrue: 
-			[stream
-				nextPut: $!!;
-				nextPutAll: aClass name;
-				space;
-				nextPutAll: #categoriesForClass;
-				nextPutAll: '!!'.
-			categories asSortedCollection do: [:aCategory | self nextChunkPut: aCategory name].
-			self endChunk]!
+	categories notEmpty ifFalse: [^self].
+	stream
+		nextPut: $!!;
+		nextPutAll: aClass name;
+		space;
+		nextPutAll: #categoriesForClass;
+		nextPut: $!!.
+	categories asSortedCollection do: [:aCategory | self nextChunkPut: aCategory name].
+	self endChunk!
 
 emitCategoriesOfMethod: aCompiledMethod 
 	"Private - Append a chunk to the <puttableStream>, aWriteStream,
@@ -61530,32 +62489,49 @@ emitCategoriesOfMethod: aCompiledMethod
 		for: aCompiledMethod selector
 		in: aCompiledMethod methodClass!
 
-emitChunk: aString 
-	"Private - Output the specified text with a trailing end of chunk marker 
-	to the argument, aWriteStream."
+emitChunk: aString
+	"Private - Output the specified text with a trailing end of chunk marker to the argument,
+	aWriteStream."
 
 	self
 		nextChunkPut: aString;
 		cr!
 
-emitComment: aString 
-	"Private - Record aString to the change log as a comment. All comments
-	logged are prefixed with a timestamp.
-	N.B. Logging requests should be directed through the SessionManager."
+emitComment: aString
+	"Private - Record aString to the chunk stream as a comment. All comments logged are prefixed
+	with a timestamp. N.B. Logging requests should be directed through the SessionManager."
 
+	stream nextPut: $".
+	self emitString: aString.
 	stream
-		nextPut: $";
-		nextPutAll: aString;
 		nextPut: $";
 		nextPut: $!!;
 		cr;
 		flush!
 
-emitCommentOfClass: aClass 
+emitCommentOfClass: aClass
 	"Private - Emit a chunk which defines the comment for the <Class>, aClass, to the <puttableStream>
 	aWriteStream."
 
-	self emitChunk: aClass name , ' comment: ' , aClass comment printString!
+	stream
+		nextPutAll: aClass name;
+		space;
+		display: #comment:;
+		space.
+	self
+		nextChunkPut: aClass comment printString;
+		cr!
+
+emitDeclarationForClass: aClass variable: anAssociation
+	stream
+		nextPutAll: aClass name;
+		nextPutAll: (anAssociation isImmutable
+					ifTrue: [' addClassConstant: ']
+					ifFalse: [' addClassVariable: ']);
+		print: anAssociation key;
+		nextPutAll: ' value: '.
+	self nextChunkPut: anAssociation value storeString.
+	stream cr!
 
 emitFooterForMethodsOf: aClass 
 	"Private - Ends the method definition chunks for aClass onto
@@ -61719,12 +62695,12 @@ fileOutExpression: aString
 
 	self emitChunk: aString; cr!
 
-fileOutPoolDictionary: aPoolDictionary 
+fileOutPoolDictionary: aPoolDictionary
 	"Append a definition of the <PoolDictionary> (or <PoolConstantsDictionary>, aPoolDictionary,
 	to the <puttableStream>, aWriteStream. The definition should be sufficient to recreate a
 	copy of the dictionary."
 
-	| poolName value env |
+	| poolName env |
 	env := aPoolDictionary environment.
 	poolName := aPoolDictionary name.
 	stream
@@ -61734,17 +62710,18 @@ fileOutPoolDictionary: aPoolDictionary
 		nextPutAll: ' put: (';
 		nextPutAll: aPoolDictionary class name;
 		nextPutAll: ' named: ';
-		print: aPoolDictionary name.
+		print: poolName.
 	self emitChunk: ')'.
 	aPoolDictionary associations asSortedCollection do: 
-			[:a | 
+			[:a |
+			| value |
 			stream
 				nextPutAll: poolName;
 				nextPutAll: ' at: ';
 				print: a key;
 				nextPutAll: ' put: '.
 			value := a value.
-			value isLiteral 
+			value isLiteral
 				ifTrue: 
 					[self emitChunk: (value isInteger ifTrue: [value printStringRadix: 16] ifFalse: [value printString])]
 				ifFalse: 
@@ -61781,10 +62758,11 @@ fileOutProtocols: aCollection ofBehavior: aClassDescription
 				cr].
 	self cr!
 
-getSourceFromDescriptor: sourceDescriptor
+getSourceFromDescriptor: sourceDescriptor 
 	"Answer the <readableString> source corresponding to the specified <integer> 
 	descriptor, sourceDescriptor, from the receiver's source stream."
 
+	sourceDescriptor isNil ifTrue: [^''].
 	stream position: (self sourcePositionFromDescriptor: sourceDescriptor).
 	^self nextChunk!
 
@@ -61800,12 +62778,24 @@ nextChunk
 	Implementation Note: String concatenation is more efficient here in the loop body because most 
 	chunks do not include embedded chunk markers."
 
-	| result |
+	| chunk |
 	stream skipSeparators.
-	result := stream upTo: $!!.
-	[stream atEnd or: [(stream peekFor: $!!) not]]
-		whileFalse: [result := result, '!!', (stream upTo: $!!)].
-	^result!
+	^self normalizeLineEndings
+		ifTrue: 
+			[| next |
+			chunk := String writeStream: 512.
+			[(next := stream nextOrNil) isNil or: [next == $!! and: [(stream peekFor: $!!) not]]] whileFalse: 
+					[((next == $\r and: 
+							[stream peekFor: $\n.
+							true]) or: [next == $\n])
+						ifTrue: [chunk nextPutAll: String.LineDelimiter]
+						ifFalse: [chunk nextPut: next]].
+			chunk contents]
+		ifFalse: 
+			["Much faster, as we don't need to read and compare each character individually"
+			chunk := stream upTo: $!!.
+			[stream atEnd or: [(stream peekFor: $!!) not]] whileFalse: [chunk := chunk , '!!' , (stream upTo: $!!)].
+			chunk]!
 
 nextChunkPut: aString 
 	"Private - Print the string, aString, to the <puttableStream> aWriteStream as a chunk. 
@@ -61815,6 +62805,12 @@ nextChunkPut: aString
 	self emitString: aString.
 	stream nextPut: $!!.
 	^aString!
+
+normalizeLineEndings
+	^flags anyMask: NormalizeEolsMask!
+
+normalizeLineEndings: aBoolean
+	flags := flags mask: NormalizeEolsMask set: aBoolean!
 
 sourceDescriptorForIndex: indexInteger position: positionInteger 
 	"Private - Answer an <integer> source descriptor which encodes the <integer> source file
@@ -61868,7 +62864,7 @@ storeSource: aString for: aSourceObject
 	self nextChunkPut: aString.
 	sourceFileIndex notNil 
 		ifTrue: 
-			[aSourceObject sourceDescriptor: (self sourceDescriptorForIndex: sourceFileIndex position: position)]!
+			[aSourceObject sourceDescriptor: (aString isEmpty ifFalse: [self sourceDescriptorForIndex: sourceFileIndex position: position])]!
 
 storeSourceString: aString forMethod: aCompiledMethod 
 	"Private - Save the <readableString>, aString, as the source text for the 
@@ -61952,7 +62948,7 @@ mapInitialIpFrom: aCompiledMethod to: debugCompiledMethod
 	self assert: [(map at: i) key = ip].
 	^(debugMap at: i) key!
 
-method: aCompiledMethod 
+method: aCompiledMethod
 	"Private - Set the method of the stack frame."
 
 	"Implementation Note: Override to update the block's method reference as well.
@@ -61963,12 +62959,11 @@ method: aCompiledMethod
 	super method: aCompiledMethod.
 	block := self block.
 	block isNil ifTrue: [^self].
-	block isClean 
+	block isClean
 		ifTrue: 
 			["Note that there may be other refs to the block in the stack, but we 
 			  don't bother updating these because a clean block is a literal const 
 			  and so it doesn't really matter how many copies there are"
-			self assert: [self environment == block].
 			block := block shallowCopy.
 			self environment: block].
 	block method: aCompiledMethod! !
@@ -61994,48 +62989,17 @@ peekForSignatureIn: aReadStream
 !STBInFiler methodsFor!
 
 basicNext
-	"Private - Answer the next object from the receiver's stream.
-	Implementation Note: This has been optimized to avoid having to create
-	an STBPrefix object for every object loaded during de-serialization,
-	this means that STBPrefix's private knowledge of the prefix format has
-	been used here, which is not ideal, but the performance of serialization
-	is critical for the time taken to instantiate views, etc."
+	"Private - Answer the next object from the receiver's stream."
 
-	"First, read the prefix - ."
-
-	| prefix class anObject newObjectIndex |
+	| prefix |
 	prefix := self readInteger.
-	prefix == 0 ifTrue: [^nil].	"optimize for nil"
+	^self readObjectWithPrefix: prefix!
 
-	"SmallInteger?"
-	(prefix allMask: SmallIntegerMask) ifTrue: [^prefix bitShift: -1].
-
-	"Literal? (Hook for STL filer)"
-	prefix == LiteralPrefixMask ifTrue: [^self readLiteralData].
-	(prefix allMask: DataPrefixMask) 
-		ifFalse: 
-			[^(prefix allMask: CharacterMask) 
-				ifTrue: [Character value: (prefix bitShift: IndexShift)]
-				ifFalse: [self objectAt: (prefix bitShift: IndexShift)]].
-
-	"Ascertain the class of the object."
-	class := (prefix allMask: ClassPrefixMask) 
-				ifTrue: [self readClassData: prefix]
-				ifFalse: [self classAt: (prefix bitShift: IndexShift)].
-
-	"Now read the object data."
-	newObjectIndex := readMap size + 1.
-	anObject := self readObjectOfClass: class.
-
-	"If anObject was a proxy for the real one, evaluate it now."
-	^anObject stbFixup: self at: newObjectIndex!
-
-classAt: anInteger 
+classAt: anInteger
 	"Private - Answer the map value for a class at anInteger. If anInteger is zero then answer nil.
 	Signal an exception if there is no such entry."
 
-	^self objectAt: anInteger.
-	!
+	^readMap at: anInteger!
 
 classLocator
 	"Answer the receiver's classLocator inst var. This holds the context of any remote
@@ -62109,18 +63073,16 @@ next
 	^nextObject!
 
 objectAt: anInteger
-	"Private - Answer the map value at anInteger. If anInteger is zero then answer nil.
-	Signal an exception if there is no such entry."
+	"Private - Answer the map value at anInteger. Signal an exception if there is no such entry."
 
-	^anInteger == 0 
-		ifFalse: [readMap at: anInteger ifAbsent: [self class errorInconsistentSTB: anInteger]]!
+	^readMap at: anInteger!
 
 readClassData: anInteger 
 	"Private - Answer the class whose details are prefixed by the specified <integer> flags
 	in <STBPrefix> format."
 
 	| versionBeingRead class |
-	versionBeingRead := (anInteger allMask: NonZeroVersionMask) ifTrue: [self readInteger] ifFalse: [0].
+	versionBeingRead := (anInteger allMask: STBPrefix.NonZeroVersionMask) ifTrue: [self readInteger] ifFalse: [0].
 	class := self readClassLocator: anInteger.
 	self register: class.
 	versionBeingRead = class stbVersion 
@@ -62136,9 +63098,9 @@ readClassData: anInteger
 			converters at: class put: format].
 	^class!
 
-readClassLocator: anIntegerFlags 
+readClassLocator: anIntegerFlags
 	| locatorString |
-	locatorString := (stream next: (anIntegerFlags bitShift: LocatorLenShift)) asString.
+	locatorString := (stream next: (anIntegerFlags bitShift: STBPrefix.LocatorLenShift)) asString.
 	^(classLocator key: locatorString) locateClass!
 
 readInteger
@@ -62196,11 +63158,44 @@ readObjectOfClass: aClass format: anSTBClassConversion
 			newObject become: (anSTBClassConversion converterBlock value: newObject)].
 	^newObject!
 
-register: anObject 
-	"Private - Add anObject to the readMap. Answer the registered objects unique reference."
+readObjectWithPrefix: anInteger
+	| anObject newObjectIndex class |
+	anInteger == 0 ifTrue: [^nil].	"optimize for nil"
 
-	readMap addLast: anObject.
-	^readMap size!
+	"SmallInteger?"
+	(anInteger allMask: STBPrefix.SmallIntegerMask) ifTrue: [^anInteger bitShift: -1].
+
+	"Literal? (Hook for STL filer)"
+	anInteger == STBPrefix.LiteralPrefixMask ifTrue: [^self readLiteralData].
+	(anInteger allMask: STBPrefix.DataPrefixMask)
+		ifFalse: 
+			[^(anInteger allMask: STBPrefix.CharacterMask)
+				ifTrue: [Character value: (anInteger bitShift: STBPrefix.IndexShift)]
+				ifFalse: [self objectAt: (anInteger bitShift: STBPrefix.IndexShift)]].
+
+	"Ascertain the class of the object."
+	class := (anInteger allMask: STBPrefix.ClassPrefixMask)
+				ifTrue: [self readClassData: anInteger]
+				ifFalse: [self classAt: (anInteger bitShift: STBPrefix.IndexShift)].
+
+	"Now read the object data."
+	newObjectIndex := readMap size + 1.
+	anObject := self readObjectOfClass: class.
+
+	"If anObject was a proxy for the real one, evaluate it now."
+	^anObject stbFixup: self at: newObjectIndex!
+
+readVersion
+	| char |
+	version := 0.
+	[(char := Character value: stream next) isDigit]
+		whileTrue: [version := version * 10 + char digitValue].
+	char == Character space ifFalse: [self class errorNotSTB]!
+
+register: anObject
+	"Private - Add anObject to the readMap."
+
+	^readMap addAnsweringIndex: anObject!
 
 reset
 	"Private - Reset the instance.
@@ -62214,12 +63209,8 @@ reset
 	super reset!
 
 resetAndValidateStream
-	| char |
 	(self class peekForSignatureIn: stream) ifFalse: [self class errorNotSTB].
-	version := 0.
-	[(char := Character value: stream next) isDigit] 
-		whileTrue: [version := version * 10 + char digitValue].
-	char = Character space ifFalse: [self class errorNotSTB].
+	self readVersion.
 	version > self class version ifTrue: [self class errorVersion: version]!
 
 setRefOffset: anInteger
@@ -62245,7 +63236,7 @@ Instance Variables:
 '!
 !STBOutFiler methodsFor!
 
-basicNextPut: anObject 
+basicNextPut: anObject
 	"Private - Write anObject to the stream in STB format."
 
 	anObject isNil ifTrue: [^self writeInteger: 0].
@@ -62254,29 +63245,29 @@ basicNextPut: anObject
 	(self objectIsGlobal: anObject) ifTrue: [^self putGlobal: anObject].
 
 	"SmallIntegers can be encoded entirely within the prefix."
-	anObject isImmediate 
+	anObject isImmediate
 		ifTrue: 
-			[anObject class == SmallInteger 
-				ifTrue: [^self writeInteger: (STBPrefix forSmallInteger: anObject) dword].
+			[anObject class == SmallInteger
+				ifTrue: [^self writeInteger: (STBPrefix encodeSmallInteger: anObject)].
 
 			"Characters can be encoded entirely within the prefix."
-			anObject class == Character ifTrue: [^self writeInteger: (STBPrefix forCharacter: anObject) dword].
+			anObject class == Character ifTrue: [^self putCharacter: anObject].
 			self error: 'unrecognised immediate object type'].
 
 	"References to objects already output can also be encoded entirely within the prefix."
-	(self refForObject: anObject) 
-		ifNotNil: [:refIndex | ^self writeInteger: (STBPrefix forObjectRef: refIndex) dword].
+	(self refForObject: anObject)
+		ifNotNil: [:refIndex | ^self writeInteger: (STBPrefix encodeObjectRef: refIndex)].
 
 	"If anObject is the subject of an override:with: message then we output the 'with' proxy object instead."
 	proxyOverrides at: anObject
 		ifPresent: 
-			[:objectToSave | 
+			[:objectToSave |
 			objectToSave notNil ifTrue: [proxyOverrides removeKey: anObject].
 			^self saveObject: anObject as: objectToSave].
-	(self objectIsLiteral: anObject) ifTrue: [^self putLiteral: anObject].
-
-	"Let anObject output itself."
-	anObject stbSaveOn: self!
+	(self tryPutLiteral: anObject)
+		ifFalse: 
+			["Let anObject output itself."
+			anObject stbSaveOn: self]!
 
 nextPut: anObject
 	"Write anObject to the stream in STB format."
@@ -62284,16 +63275,10 @@ nextPut: anObject
 	self basicNextPut: anObject.
 	^anObject!
 
-objectIsGlobal: anObject 
+objectIsGlobal: anObject
 	"Private - Answer true if anObject has been registered as global."
 
-	anObject isNil ifTrue: [^globalNils notEmpty].
-	^globals includesKey: anObject!
-
-objectIsLiteral: anObject 
-	"Private - Override hook for the STL filter"
-
-	^false!
+	^anObject isNil ifTrue: [globalNils isEmpty not] ifFalse: [globals includesKey: anObject]!
 
 override: anObject with: anObjectToSave
 	"This is an opportunity circumvent the running of anObject's #stbSaveOn: method by
@@ -62309,6 +63294,9 @@ override: anObject with: anObjectToSave
 
 	anObject isNil ifFalse: [proxyOverrides at: anObject put: anObjectToSave]!
 
+putCharacter: aCharacter
+	self writeInteger: (STBPrefix encodeCharacter: aCharacter)!
+
 putGlobal: anObject 
 	"Private - Wrap anObject up as an STBGlobalObjectProxy and output that instead."
 
@@ -62321,9 +63309,6 @@ putGlobal: anObject
 			symbol := symbolCollection removeFirst.
 			symbolCollection isEmpty ifTrue: [globals removeKey: anObject]].
 	self basicNextPut: (STBGlobalObjectProxy for: anObject name: symbol)!
-
-putLiteral: anObject
-	self shouldNotImplement!
 
 refForObject: anObject
 	"Private - Answer the map index of anObject or nil if it is not present.
@@ -62396,23 +63381,31 @@ saveObject: anObject as: anObjectToSave
 setRefOffset: anInteger
 	refOffset := anInteger - writeMap size + 1!
 
+tryPutLiteral: anObject
+	"Private - Emit the <Object> argument to the stream in literal form, answering whether or
+	not this was possible."
+
+	"Override hook for the STL filter"
+
+	^false!
+
 writeClass: anObject withLocator: locatorString 
 	stream nextPutAll: locatorString asByteArray!
 
-writeClass: class withPrefix: anSTBPrefix 
+writeClass: class withPrefix: anSTBPrefix
 	"Private - An object of the <Class>, class, is about to be written to the binary stream,
 	output an appropriate class prefix for it."
 
-	(self refForObject: class) 
+	(self refForObject: class)
 		ifNotNil: 
-			[:refIndex | 
+			[:refIndex |
 			"class has already been output 	so we can encode a short reference to the class within the prefix."
-			self writeInteger: (anSTBPrefix classRef: refIndex) dword]
+			self writeInteger: (anSTBPrefix encodeClassRef: refIndex)]
 		ifNil: 
 			["hitherto unencountered class so we need to save full class details in the object header."
 			| classVersion locatorString |
 			locatorString := class name asString.
-			self writeInteger: (anSTBPrefix class: class locator: locatorString) dword.
+			self writeInteger: (anSTBPrefix encodeClass: class locator: locatorString).
 			(classVersion := class stbVersion) ~~ 0 ifTrue: [self writeInteger: classVersion].
 			self writeClass: class withLocator: locatorString.
 			self register: class]!
@@ -62884,7 +63877,7 @@ seed: anInteger
 
 systemClockSeed
 	| seed |
-	seed := Delay millisecondClockValue bitAnd: 16r3FFFFFFF.
+	seed := Delay microsecondClockValue // 1000 bitAnd: 16r3FFFFFFF.
 	seed = 0 ifTrue: [seed := 1].
 	^seed! !
 
@@ -62985,13 +63978,17 @@ nextLine
 	the receiver's contents are answered. If the receiver is at its end, then an empty
 	collection is answered. "
 
-	"N.B. This method works for Unix and Windows line delimiters (that is CR/LF and LF sequences
-	respectively), but not if the line delimiter consists solely of a CR."
+	"N.B. This method works for CR, LF and CR/LF line delimiters."
 
-	| result eol |
-	eol := String lineDelimiter.
-	result := self upTo: eol last.
-	^(result notEmpty and: [result last = eol first]) ifTrue: [result allButLast] ifFalse: [result]!
+	| newStream nextObject |
+	newStream := self contentsSpecies writeStream: 128.
+	
+	[(nextObject := self nextOrNil) isNil
+		or: [nextObject == $\n or: [nextObject == $\r and: 
+							[self peekFor: $\n.
+							true]]]]
+			whileFalse: [newStream nextPut: nextObject].
+	^newStream contents!
 
 nextWord
 	"Answer the next 'word' in the receiver's element stream, where a word is defined as a
@@ -63025,15 +64022,14 @@ peek
 			self position: self position - 1.
 			anObject]!
 
-peekFor: anObject 
+peekFor: anObject
 	"Determine the response to the message peek. If it is the same as the argument, anObject,
 	then advance the current position and answer true. Otherwise answer false and do not change
 	the current position."
 
-	^self atEnd not and: 
-			[self next = anObject 
-				ifTrue: [true]
-				ifFalse: 
+	| next |
+	^(next := self nextOrNil) notNil and: 
+			[next = anObject or: 
 					["We don't use #skip:, since we know going back 1 is in bounds"
 					self position: self position - 1.
 					false]]!
@@ -63079,8 +64075,9 @@ skipSeparators
 	"Implementation Note: Implementable in terms of #skipWhile:, but this is called so
 	frequently that we open code to avoid instantiating a block."
 
-	[self atEnd] whileFalse: 
-			[self next isSeparator 
+	| next |
+	[(next := self nextOrNil) isNil] whileFalse: 
+			[next isSeparator
 				ifFalse: 
 					[self position: self position - 1.
 					^true]].
@@ -63494,6 +64491,30 @@ size
 	readLimit < position ifTrue: [readLimit := position].
 	^self lastPosition!
 
+upTo: anObject
+	"Answer a collection of elements starting with the next element accessed by the receiver,
+	and up to, not inclusive of, the next element that is equal to anObject. Positions the
+	stream after anObject if found. If anObject is not in the collection, answer the entire rest
+	of the collection. If the receiver is at its end, answer an empty Collection."
+
+	| startIndex endIndex |
+	self isReadable ifFalse: [^self shouldNotImplement].
+	startIndex := position + 1.
+	"Override as we can perform a fast scan for anObject in the collection. Most streamed over
+	SequenceableCollections have a primitive implementation of #nextIdentityIndexOf:from:to:"
+	position := collection
+				nextIdentityIndexOf: anObject
+				from: startIndex
+				to: readLimit.
+	position == 0
+		ifTrue: 
+			["Not found. Result is equivalent of #upToEnd"
+			endIndex := position := readLimit]
+		ifFalse: 
+			["Found. Answer the elements before anObject, and leave the stream positioned immediately after it."
+			endIndex := position - 1].
+	^collection copyFrom: startIndex to: endIndex!
+
 upToEnd
 	"Answer a collection consisting of the future sequence values of the receiver (i.e. from 
 	the current position to the end)."
@@ -63504,7 +64525,7 @@ upToEnd
 	^self next: self lastPosition - self position! !
 
 StdioFileStream comment:
-'StdioFileStream is a <FileStream> implemented over C runtime library stdio streams. Its main purpose is to wrap the stdin, stdout, and stderr streams in console applications, and it is not intended for general use. FileStream itself should be used by preference in most cases.
+'StdioFileStream is a <FileStream> implemented over C runtime library stdio streams. Its main purpose is to wrap the stdin, stdout, and stderr streams in console applications, and it is not intended for general use. In order to avoid blocking the main Dolphin thread when attempting to read from stdin, the CRT stream I/O calls are overlapped (i.e. run on a threadpool thread), which makes them rather slow. FileStream itself should be used by preference in most cases.
 
 Instance Variables:
 	stream	<ExternalHandle>. FILE* stream handle.
@@ -63670,7 +64691,14 @@ asParameter
 atEnd
 	"Answer whether the receiver cannot access any more objects"
 
-	^(CRTLibrary default feof: stream) ~~ 0 or: [self peek isNil]!
+	| crt |
+	crt := CRTLibrary default.
+	^(crt feof: stream) ~~ 0 or: 
+			["feof returns non-zero only when an attempt has been made to read past the end of stream, so we have to peek."
+			| ch |
+			(ch := crt fgetc: stream) == -1 or: 
+					[crt ungetc: ch stream: stream.
+					false]]!
 
 attach: anExternalHandle toFd: fdInteger mode: aSymbol text: aBoolean 
 	"Private - Attach the stdio descriptor identified by fdInteger (usually one of 0=stdin,
@@ -63737,7 +64765,7 @@ cr
 	"Implementation Note: Assumes the receiver is in text mode, and 
 	will translate the single LF character to a CR/LF pair on output."
 
-	self nextPut: Character lf!
+	self nextPut: $\n!
 
 crtab
 	"Append a line-delimiter and a tab to the receiver."
@@ -63755,9 +64783,6 @@ display: anObject
 	"Ask anObject to append its end-user textual description to the receiver."
 
 	anObject displayOn: self!
-
-elementFor: anInteger 
-	^isText ifTrue: [Character value: anInteger] ifFalse: [anInteger]!
 
 externalType
 	"Answer a <symbol> which names the external stream type of the receiver."
@@ -63807,7 +64832,9 @@ next
 
 	| ch |
 	ch := CRTLibrary default fgetc: stream.
-	^ch == -1 ifTrue: [self errorEndOfStream] ifFalse: [self elementFor: ch]!
+	^ch == -1
+		ifTrue: [self errorEndOfStream]
+		ifFalse: [isText ifTrue: [Character value: ch] ifFalse: [ch]]!
 
 next: countInteger into: aSequenceableCollection startingAt: startInteger 
 	"Destructively replace the elements of the argument, aSequenceableCollection,
@@ -63888,12 +64915,21 @@ nextLine
 	len := answer size.
 	"Strip off the line terminator, allowing for binary or text mode"
 	last := answer at: len.
-	^last == Character lf 
+	^last == $\n
 		ifTrue: 
-			[(len > 1 and: [(answer at: len - 1) == Character cr]) 
+			[(len > 1 and: [(answer at: len - 1) == $\r]) 
 				ifTrue: [answer copyFrom: 1 to: len - 2]
 				ifFalse: [answer copyFrom: 1 to: len - 1]]
-		ifFalse: [last == Character cr ifTrue: [answer copyFrom: 1 to: len - 1] ifFalse: [answer]]!
+		ifFalse: [last == $\r ifTrue: [answer copyFrom: 1 to: len - 1] ifFalse: [answer]]!
+
+nextOrNil
+	"Answer a <Character>, or <integer> in the range 0..255, being the next of the 
+	receiver's future sequence values. Answer nil if at EOF."
+
+	| ch |
+	ch := CRTLibrary default fgetc: stream.
+	^ch == -1
+		ifFalse: [isText ifTrue: [Character value: ch] ifFalse: [ch]]!
 
 nextPut: anObject 
 	"Store the <Character> or <integer> (in the range 0..255) as the next element of the receiver."
@@ -63913,21 +64949,22 @@ peek
 
 	| ch |
 	ch := CRTLibrary default fgetc: stream.
-	^ch == -1 
+	^ch == -1
 		ifFalse: 
 			[CRTLibrary default ungetc: ch stream: stream.
-			self elementFor: ch]!
+			isText ifTrue: [Character value: ch] ifFalse: [ch]]!
 
-peekFor: anObject 
+peekFor: anObject
 	"Determine the response to the message peek. If it is the same as the
 	argument, anObject, then increment the position reference and answer true.
 	Otherwise answer false and do not change the position reference"
 
 	| ch |
 	ch := CRTLibrary default fgetc: stream.
-	^ch ~~ -1 and: 
-			[CRTLibrary default ungetc: ch stream: stream.
-			(self elementFor: ch) = anObject]!
+	^ch ~~ -1
+		and: [anObject asInteger == ch or: 
+					[CRTLibrary default ungetc: ch stream: stream.
+					false]]!
 
 position
 	"Answer the absolute (zero-based) position of the file pointer."
@@ -63989,12 +65026,12 @@ skip: anInteger
 space
 	"Store a space character as the next element of the receiver."
 
-	self nextPut: Character space!
+	self nextPut: $\x20!
 
 tab
 	"Store a tab character as the next element of the receiver."
 
-	self nextPut: Character tab!
+	self nextPut: $\t!
 
 tab: anInteger 
 	"Append the specified number of tabs to the receiver."
@@ -64050,7 +65087,15 @@ nextAvailable
 	being streamed over is known not to contain nils."
 
 	<primitive: 65>
-	^super nextAvailable! !
+	^position >= readLimit ifFalse: [collection at: (position := position + 1)]!
+
+nextOrNil
+	"Answer a <Character>, or <integer> in the range 0..255, being the next of the 
+	receiver's future sequence values. Answer nil if at EOF."
+
+	<primitive: 65>
+	^position >= readLimit
+		ifFalse: [collection at: (position := position + 1)]! !
 
 WriteStream comment:
 'Class WriteStream is a concrete subclass of PositionableStream representing accessors for writing elements into a collecition. None of the next, next:, nor do: messages can be successfully sent to a WriteStream.
@@ -64253,12 +65298,12 @@ setToEnd
 space
 	"Store a space character as the next element of the receiver"
 
-	self nextPut: Character space!
+	self nextPut: $\x20!
 
 tab
 	"Store a tab character as the next element of the receiver"
 
-	self nextPut: Character tab!
+	self nextPut: $\t!
 
 tab: tabCount
 	"Append the specified number of tabs to the receiver."
@@ -64314,7 +65359,15 @@ next: count into: aSequenceableCollection startingAt: startAt
 		with: collection
 		startingAt: position+1.
 	self position: stop.
-	^aSequenceableCollection! !
+	^aSequenceableCollection!
+
+nextOrNil
+	"Answer a <Character>, or <integer> in the range 0..255, being the next of the 
+	receiver's future sequence values. Answer nil if at EOF."
+
+	<primitive: 65>
+	^position >= readLimit
+		ifFalse: [collection at: (position := position + 1)]! !
 
 FileStream comment:
 'FileStream is a specialized <ReadWriteStream> for streaming over binary and text files.
@@ -64734,6 +65787,16 @@ next: sizeInteger putAll: aSequenceableCollection startingAt: startInteger
 						startingAt: startInteger + writeOffset + wholePagesSize.
 					self beDirty]].
 	^aSequenceableCollection!
+
+nextOrNil
+	"Answer a <Character>, or <integer> in the range 0..255, being the next of the 
+	receiver's future sequence values. Answer nil if at EOF."
+
+	<primitive: 65>
+	^self atEnd
+		ifFalse: 
+			[self position: self position.
+			collection at: (position := position + 1)]!
 
 nextPut: anIntegerOrCharacter 
 	"Write anIntegerOrCharacter to the receiver and answer the argument."
