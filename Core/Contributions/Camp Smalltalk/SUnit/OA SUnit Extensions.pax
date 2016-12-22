@@ -8,6 +8,7 @@ Extensions to the basic SUnit unit testing packages, including the ability to te
 
 
 package methodNames
+	add: #TestCase -> #<=;
 	add: #TestCase -> #=;
 	add: #TestCase -> #debugWithResult;
 	add: #TestCase -> #debugWithResult:;
@@ -48,6 +49,13 @@ package!
 "Loose Methods"!
 
 !TestCase methodsFor!
+
+<= aTestCase
+	"Answer whether the receiver is 'less than' the <TestCase> argument, for collation purposes only."
+
+	^self class == aTestCase class
+		ifTrue: [self selector <= aTestCase selector]
+		ifFalse: [self class <= aTestCase class]!
 
 = aTestCase 
 	"Answer whether the argument, aTestCase, is considered exactly equivalent to the receiver."
@@ -197,6 +205,7 @@ shouldnt: aZeroArgBlock triggerAnyOf: aCollectionOfSymbols against: anObject
 		matching: [:message | true]
 		butNoneOf: aCollectionOfSymbols
 		against: anObject! !
+!TestCase categoriesFor: #<=!comparing!public! !
 !TestCase categoriesFor: #=!comparing!public! !
 !TestCase categoriesFor: #debugWithResult!public!Running! !
 !TestCase categoriesFor: #debugWithResult:!private!Running! !
