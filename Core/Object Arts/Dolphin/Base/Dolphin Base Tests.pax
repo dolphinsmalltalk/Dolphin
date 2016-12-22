@@ -5,6 +5,7 @@ package paxVersion: 1;
 
 
 package classNames
+	add: #AbstractDictionaryTest;
 	add: #AbstractFileStreamTest;
 	add: #AlwaysSearchPolicyTest;
 	add: #ArrayedCollectionTest;
@@ -401,7 +402,7 @@ DolphinTest subclass: #VARIANTTest
 	classVariableNames: ''
 	poolDictionaries: 'AXAutomationConstants'
 	classInstanceVariableNames: ''!
-DolphinCollectionTest subclass: #DictionaryTest
+DolphinCollectionTest subclass: #AbstractDictionaryTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
@@ -416,17 +417,22 @@ DolphinCollectionTest subclass: #SetTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-DictionaryTest subclass: #LookupTableTest
+AbstractDictionaryTest subclass: #DictionaryTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-DictionaryTest subclass: #MethodDictionaryTest
+AbstractDictionaryTest subclass: #LookupTableTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-DictionaryTest subclass: #PoolConstantsDictionaryTest
+AbstractDictionaryTest subclass: #MethodDictionaryTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+AbstractDictionaryTest subclass: #PoolConstantsDictionaryTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''

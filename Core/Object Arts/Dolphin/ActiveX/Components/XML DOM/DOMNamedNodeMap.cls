@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Dictionary variableSubclass: #DOMNamedNodeMap
 	instanceVariableNames: 'interface parentNode'
@@ -142,6 +142,15 @@ nextNode
 
 	^interface nextNode!
 
+postCopy
+	"Apply any final flourish to the copy that may be required in order to ensure that the copy
+	does not share any state with the original, apart from the elements."
+
+	"Implementation note: We don't want to inherit the Dictionary implementation as this is a
+	proxy for an XML DOM object."
+
+	^self!
+
 privateAt: index put: newObject
 	"Private - Should not be sent to the receiver."
 
@@ -222,6 +231,7 @@ uncheckedAdd: newObject
 !DOMNamedNodeMap categoriesFor: #keysAndValuesDo:!enumerating!public! !
 !DOMNamedNodeMap categoriesFor: #length!properties!public! !
 !DOMNamedNodeMap categoriesFor: #nextNode!accessing!public! !
+!DOMNamedNodeMap categoriesFor: #postCopy!copying!public! !
 !DOMNamedNodeMap categoriesFor: #privateAt:put:!accessing!private! !
 !DOMNamedNodeMap categoriesFor: #removeIndex:!private!removing! !
 !DOMNamedNodeMap categoriesFor: #removeKey:ifAbsent:!public!removing! !
