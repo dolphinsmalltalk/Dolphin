@@ -1,6 +1,6 @@
 "Filed out from Dolphin Smalltalk 7"!
 
-DictionaryTest subclass: #MethodDictionaryTest
+AbstractDictionaryTest subclass: #MethodDictionaryTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''

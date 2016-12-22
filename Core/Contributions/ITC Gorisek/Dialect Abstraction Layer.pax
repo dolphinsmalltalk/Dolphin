@@ -66,7 +66,6 @@ package methodNames
 	add: #Date -> #monthsUntil:;
 	add: #Date -> #subtractMonths:;
 	add: #Dictionary -> #at:add:;
-	add: #Dictionary -> #at:ifAbsentPutValue:;
 	add: #Dictionary -> #isDictionaryOrLookupTable;
 	add: #Dictionary -> #replaceAll:with:;
 	add: #Exception -> #exitWith:;
@@ -634,12 +633,6 @@ at: key add: value
 	self at: key put: currentValue.
 	^value!
 
-at: key ifAbsentPutValue: value 
-	"V dictionary doda vrednost samo v primeru, ce je pod tem kljucem se ni."
-
-	(self includesKey: key) ifFalse: [self at: key put: value].
-	^value!
-
 isDictionaryOrLookupTable
 	^true!
 
@@ -647,7 +640,6 @@ replaceAll: aValue with: newValue
 	self 
 		keysAndValuesDo: [:eachKey :eachValue | eachValue = aValue ifTrue: [self at: eachKey put: newValue]]! !
 !Dictionary categoriesFor: #at:add:!accessing!public! !
-!Dictionary categoriesFor: #at:ifAbsentPutValue:!accessing!public! !
 !Dictionary categoriesFor: #isDictionaryOrLookupTable!accessing!public! !
 !Dictionary categoriesFor: #replaceAll:with:!accessing!public! !
 

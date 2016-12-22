@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Dictionary variableSubclass: #RegKeyAbstract
 	instanceVariableNames: 'handle name rootKey parentPath keyInfo sam'
@@ -274,6 +274,15 @@ pathFromRoot
 	^self isRoot 
 		ifTrue: ['']
 		ifFalse: [parentPath isEmpty ifTrue: [name] ifFalse: [(parentPath copyWith: $\) , name]]!
+
+postCopy
+	"Apply any final flourish to the copy that may be required in order to ensure that the copy
+	does not share any state with the original, apart from the elements."
+
+	"Implementation note: We don't want to inherit the Dictionary implementation as this is a
+	proxy for the registry."
+
+	^self!
 
 printOn: aStream
 	"Append a short textual description of the receiver to aStream."
@@ -764,6 +773,7 @@ valueFromObject: value
 !RegKeyAbstract categoriesFor: #parentKey!accessing!public! !
 !RegKeyAbstract categoriesFor: #parentPath!accessing!public! !
 !RegKeyAbstract categoriesFor: #pathFromRoot!accessing!public! !
+!RegKeyAbstract categoriesFor: #postCopy!copying!public! !
 !RegKeyAbstract categoriesFor: #printOn:!printing!public! !
 !RegKeyAbstract categoriesFor: #privateCreateKey:!helpers!private! !
 !RegKeyAbstract categoriesFor: #queryKeyInfo!accessing!public! !
