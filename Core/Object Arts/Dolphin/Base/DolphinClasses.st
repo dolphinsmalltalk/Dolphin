@@ -958,7 +958,7 @@ CompilerNotification subclass: #CompilerWarningNotification
 Warning subclass: #ConfirmationRequiredWarning
 	instanceVariableNames: 'confirmBlock refuseBlock cancelBlock'
 	classVariableNames: ''
-	poolDictionaries: 'Test'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ExceptionHandlerAbstract subclass: #ExceptionHandler
 	instanceVariableNames: 'selector handler'

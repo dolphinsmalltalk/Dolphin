@@ -41,7 +41,6 @@ package methodNames
 	add: 'ExternalCallback class' -> #receiver:selector:closure:;
 	add: 'ExternalDescriptor class' -> #oneStringArg;
 	add: 'File class' -> #for:inAndBelow:do:;
-	add: 'Package class' -> #name:comment:;
 	yourself.
 
 package binaryGlobalNames: (Set new
@@ -254,15 +253,6 @@ script: scriptSymbol put: aString
 	self scriptAt: scriptSymbol put: aString! !
 !Package categoriesFor: #script:!operations!public! !
 !Package categoriesFor: #script:put:!operations!public! !
-
-!Package class methodsFor!
-
-name: nameString comment: commentString 
-	#deprecated.	"In 4.0, but retained becaused needed to load some old format packages"
-	^(self name: nameString)
-		basicComment: commentString;
-		yourself! !
-!Package class categoriesFor: #name:comment:!instance creation!public! !
 
 !String methodsFor!
 

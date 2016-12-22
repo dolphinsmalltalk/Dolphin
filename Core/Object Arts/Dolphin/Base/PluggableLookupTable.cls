@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 LookupTable variableSubclass: #PluggableLookupTable
 	instanceVariableNames: 'searchPolicy'
@@ -22,17 +22,16 @@ copyEmpty: anInteger
 
 	^(super copyEmpty: anInteger) setSearchPolicy: self searchPolicy!
 
-findKeyOrNil: anObject 
+findKeyOrNil: anObject
 	"Private - Answer the <integer> index of the given key in the receiver, or, if not found,
 	the index of the first empty slot including and after that to which 
 	the key hashes. A pluggable <searchPolicy> is used for key comparisons and hashing."
 
-	| capacity index |
-	capacity := self basicSize.
-	index := self searchPolicy hash: anObject max: capacity.
+	| policy capacity index |
+	index := (policy := self searchPolicy) hash: anObject max: (capacity := self basicSize).
 	
 	[| key |
-	(key := self basicAt: index) isNil or: [self searchPolicy compare: key with: anObject]] 
+	(key := self basicAt: index) isNil or: [policy compare: key with: anObject]]
 			whileFalse: [index := index \\ capacity + 1].
 	^index!
 

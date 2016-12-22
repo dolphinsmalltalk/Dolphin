@@ -47,9 +47,7 @@ addAllPrerequisitesTo: aSet
 	before the receiver may be loaded in."
 
 	self prerequisites
-		do: [:each | (aSet includes: each) ifFalse:
-					[aSet add: each.
-					each addAllPrerequisitesTo: aSet]].!
+		do: [:each | (aSet addNewElement: each) ifTrue: [each addAllPrerequisitesTo: aSet]]!
 
 addClass: aClass
 	"Add aClass to the list of classes owned by the receiver. A class can only be owned by
@@ -124,12 +122,12 @@ allMethodsDo: operation
 	| loose |
 	loose := self manager looseMethods.
 	self behaviorsDo: 
-			[:eachBehavior | 
-			eachBehavior methodDictionary 
+			[:eachBehavior |
+			eachBehavior methodDictionary
 				do: [:eachMethod | (loose includesKey: eachMethod name) ifFalse: [operation value: eachMethod]]].
 
 	"Finally evaluate the operation for all the package's own loose methods"
-	self methods do: operation!
+	self methodsDo: operation!
 
 allPrerequisites
 	"Private - Answer a collection of all the Packages objects which must be loaded in before the
@@ -144,12 +142,16 @@ allResourceIdentifiers
 	"Answer a Set of all the ResourceIdentifiers directly owned by
 	the receiver or by owning the class in which it is situated."
 
-	| resources resourceMethods |
+	| resources prefix |
 	resources := Set new.
 	self classesDo: [:each | resources addAll: each resourceIdentifiers].
-	resourceMethods := self methods 
-				select: [:each | each selector beginsWith: ResourceIdentifier selectorPrefix].
-	resourceMethods do: [:each | resources add: (ResourceIdentifier forMethod: each)].
+	prefix := ResourceIdentifier selectorPrefix.
+	self methodNames do: 
+			[:each |
+			(each value beginsWith: prefix)
+				ifTrue: 
+					[(self behaviorFromName: each key ifAbsent: [])
+						ifNotNil: [:methodClass | resources add: (ResourceIdentifier class: methodClass instanceClass selector: each value)]]].
 	^resources!
 
 allResourceNames
@@ -252,13 +254,13 @@ basicScriptAt: scriptSymbol put: aString
 			scripts isEmpty ifTrue: [scripts := nil]]
 		ifFalse: [scripts at: scriptSymbol put: aString]!
 
-behaviorFromName: aString ifAbsent: exceptionHandler 
+behaviorFromName: aString ifAbsent: exceptionHandler
 	| index |
-	index := aString identityIndexOf: $ .
-	^index == 0 
+	index := aString identityIndexOf: $\x20.
+	^index == 0
 		ifTrue: [self classFromName: aString ifAbsent: exceptionHandler]
 		ifFalse: 
-			[(self classFromName: (aString leftString: index - 1) ifAbsent: []) 
+			[(self classFromName: (aString first: index - 1) ifAbsent: [])
 				ifNil: [exceptionHandler value]
 				ifNotNil: [:class | class class]]!
 
@@ -818,17 +820,20 @@ globalFromName: globalName
 
 	^self environment at: globalName!
 
-globalNameOfLiteral: anObject 
+globalNameOfLiteral: anObject
 	"Private - Answer the global name of the argument, anObject, extracted from a CompiledMethods
 	literal frame, or nil if it is not a global."
 
-	^(anObject isKindOf: VariableBinding) 
+	^(anObject isKindOf: VariableBinding)
 		ifTrue: 
 			[| key |
 			key := anObject key.
-			self environment associationAt: key ifPresent: [:v | v == anObject ifTrue: [key]]]
+			"Avoid interning symbols for all the string Pool variable names by checking first if the var name is a symbol"
+			(key isKindOf: Symbol)
+				ifTrue: 
+					[(self environment associationAt: key ifAbsent: []) ifNotNil: [:v | v == anObject ifTrue: [key]]]]
 		ifFalse: 
-			[(anObject isKindOf: Class) 
+			[(anObject isKindOf: Class)
 				ifTrue: 
 					[| key |
 					key := anObject name.
@@ -1222,11 +1227,16 @@ methodNames
 methods
 	"Answer an <IdentitySet> of the <CompiledMethod>s owned by the receiver."
 
-	| newIdentitySet names |
-	names := self methodNames.
-	newIdentitySet := IdentitySet new: names size.
-	names do: [:methodName | newIdentitySet add: (self methodFromName: methodName ifAbsent: [])].
+	| newIdentitySet |
+	newIdentitySet := IdentitySet new: 16.
+	self methodsDo: [:each | newIdentitySet add: each].
 	^newIdentitySet!
+
+methodsDo: aMonadicValuable
+	"Evaluate the <monadicValuable> argument for each of the loose methods owned by the receiver."
+
+	self methodNames
+		do: [:each | (self methodFromName: each ifAbsent: []) ifNotNil: [:method | aMonadicValuable value: method]]!
 
 methodsOfClass: aClass
 	"Answer a Collection of the methods of aClass which the receiver either
@@ -1267,7 +1277,7 @@ nameForMethod: aMethod
 	"Private - Answer an Association of the method class name String -> methods selector Symbol.
 	See: Package>>methodFromName for the reverse transformation."
 
-	^self class nameForMethod: aMethod!
+	^Association key: aMethod methodClass name value: aMethod selector!
 
 nameForResourceIdentifier: aResourceIdentifier
 	"Private - Answer an <Association> that uniquely identifies the <ResourceIdentifier> argument."
@@ -2013,11 +2023,9 @@ trace: trace prerequisite: aPackage from: from to: to type: type
 	"Private - Append the supplied details of a prerequisite link
 	to trace."
 
-	| entries prereq |
 	aPackage == self ifTrue: [^self].
-	prereq := aPackage ifNil: [_Uncommitted].
-	entries := trace at: prereq ifAbsentPut: [OrderedCollection new].
-	entries add: (Array 
+	(trace at: (aPackage ifNil: [_Uncommitted]) ifAbsentPut: [OrderedCollection new: 16])
+		addLast: (Array
 				with: from
 				with: to
 				with: type)!
@@ -2061,7 +2069,7 @@ tracePrerequisites: anIdentityDictionary
 	*	'from' is a global that references an instance of the class 'to'."
 
 	| trace |
-	trace := IdentityDictionary new.
+	trace := IdentityDictionary new: 16.
 	self
 		tracePrerequisitesOfClasses: trace packagedGlobals: anIdentityDictionary;
 		tracePrerequisitesOfGlobals: trace packagedGlobals: anIdentityDictionary;
@@ -2153,18 +2161,18 @@ tracePrerequisitesOfImageStripper: anIdentityDictionary
 						to: each
 						type: 'references class']]!
 
-tracePrerequisitesOfMethods: trace 
+tracePrerequisitesOfMethods: trace
 	"Private - Trace the prerequisites of the receiver's loose methods."
 
 	| manager |
 	manager := self manager.
-	self methods do: 
-			[:aMethod | 
-			self 
+	self methodsDo: 
+			[:each |
+			self
 				trace: trace
-				prerequisite: (manager packageOfClass: aMethod methodClass)
-				from: aMethod
-				to: aMethod methodClass
+				prerequisite: (manager packageOfClass: each methodClass)
+				from: each
+				to: each methodClass
 				type: 'is a method of']!
 
 uninstall
@@ -2445,6 +2453,7 @@ If you experience subsequent problems please contact the package supplier for an
 !Package categoriesFor: #methodFromName:ifAbsent:!mapping!private! !
 !Package categoriesFor: #methodNames!accessing!public! !
 !Package categoriesFor: #methods!enumerating!public! !
+!Package categoriesFor: #methodsDo:!enumerating!public! !
 !Package categoriesFor: #methodsOfClass:!enumerating!public! !
 !Package categoriesFor: #name!accessing!public! !
 !Package categoriesFor: #nameForClass:!mapping!private! !
@@ -2646,14 +2655,6 @@ name: nameString
 		packageFileName: nameString;
 		yourself
 !
-
-nameForMethod: aMethod
-	"Private - Answer an Association of the method class name String -> methods selector Symbol.
-	See: Package>>methodFromName for the reverse transformation.
-	Implementation Note: As of file version 1 we use a symbolic class name, if one
-	is available, to save space. Metaclasses are not globals, so these _will_ have string names."
-
-	^aMethod methodClass name -> aMethod selector!
 
 new
 	"Answer a new instance of the receiver."
@@ -2902,7 +2903,6 @@ unsaveableSignal
 !Package class categoriesFor: #initialize!initializing!private! !
 !Package class categoriesFor: #manager!accessing!public! !
 !Package class categoriesFor: #name:!instance creation!public! !
-!Package class categoriesFor: #nameForMethod:!mapping!private! !
 !Package class categoriesFor: #new!instance creation!public! !
 !Package class categoriesFor: #onPreStripImage!class hierarchy-removing!private! !
 !Package class categoriesFor: #packageExtension!constants!private! !

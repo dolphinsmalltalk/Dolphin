@@ -64,7 +64,7 @@ associationAt: key ifAbsent: exceptionHandler
 	"Answer the association named by the argument, key. If key is not found,
 	answer the result of evaluating the niladic valuable, exceptionHandler."
 
-	^super associationAt: key asSymbol ifAbsent: exceptionHandler!
+	^(self basicAt: (self findKeyOrNil: key asSymbol)) ifNil: [exceptionHandler value]!
 
 associationClass
 	"Private - Answer the class of association to be used for holding

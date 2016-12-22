@@ -312,15 +312,17 @@ isUnbound
 
 	^true!
 
-literalArray: literalArray do: operation 
+literalArray: literalArray do: operation
 	"Private - Evaluate the <monadicValuable>, operation, for each of the elements of
 	the <Array>, literalArray, recursively drilling down into any embedded arrays too.
 	Note that it is a pre-order traversal."
 
-	literalArray do: 
-			[:literal | 
-			operation value: literal.
-			(literal class == Array and: [literal isImmutable]) 
+	1 to: literalArray size
+		do: 
+			[:i |
+			| literal |
+			operation value: (literal := literalArray at: i).
+			(literal class == Array and: [literal isImmutable])
 				ifTrue: [self literalArray: literal do: operation]]!
 
 literalAt: anInteger 

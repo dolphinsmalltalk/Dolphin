@@ -24,6 +24,7 @@ package methodNames
 	add: #Package -> #loadVersion5:filer:;
 	add: #Package -> #resourceNames;
 	add: #Package -> #versionLookup;
+	add: 'Package class' -> #name:comment:;
 	yourself.
 
 package binaryGlobalNames: (Set new
@@ -232,6 +233,15 @@ versionLookup
 !Package categoriesFor: #loadVersion5:filer:!binary filing!private! !
 !Package categoriesFor: #resourceNames!accessing!public! !
 !Package categoriesFor: #versionLookup!binary filing!constants!private! !
+
+!Package class methodsFor!
+
+name: nameString comment: commentString 
+	#deprecated.	"In 4.0, but retained becaused needed to load some old format packages"
+	^(self name: nameString)
+		basicComment: commentString;
+		yourself! !
+!Package class categoriesFor: #name:comment:!instance creation!public! !
 
 "End of package definition"!
 

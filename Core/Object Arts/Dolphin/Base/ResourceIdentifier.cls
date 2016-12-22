@@ -230,7 +230,7 @@ storeOn: aStream
 
 allResourceIdentifiers
 	| rids |
-	rids:= OrderedCollection new: 1000. 
+	rids:= OrderedCollection new: 512. 
 	Object withAllSubclassesDo: [:each | rids addAll: each resourceIdentifiers].
 	^rids asSortedCollection
 !
