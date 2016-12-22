@@ -55,6 +55,7 @@ uncompress
 	_logb
 	_ltoa
 	_makepath
+	_get_osfhandle
 	_open_osfhandle
 	_putenv
 	_rotl
