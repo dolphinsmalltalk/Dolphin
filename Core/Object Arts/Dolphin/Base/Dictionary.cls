@@ -54,13 +54,13 @@ asSet
 		addAll: self; 
 		yourself!
 
-associationAt: key 
+associationAt: key
 	"Answer the association named by the argument, key.  If key is not found,
 	raise an exception."
 
-	| assoc |
-	assoc := self associationAt: key ifAbsent: [AbsentCookie].
-	^assoc == AbsentCookie ifTrue: [self errorKeyNotFound: key] ifFalse: [assoc]!
+	^(self associationAt: key ifAbsent: [])
+		ifNil: [self errorKeyNotFound: key]
+		ifNotNil: [:assoc | assoc]!
 
 associationAt: key ifAbsent: exceptionHandler 
 	"Answer the association named by the argument, key. If key is not found,
@@ -68,15 +68,13 @@ associationAt: key ifAbsent: exceptionHandler
 
 	^(self basicAt: (self findKeyOrNil: key)) ifNil: [exceptionHandler value]!
 
-associationAt: key ifPresent: operation 
+associationAt: key ifPresent: operation
 	"Answer the result of evaluating the monadic valuable, operation, if
 	the argument, key, is the key of an element in the receiver, with that
 	key and element pair as its argument. If the key is not present, then 
 	answer nil."
 
-	| assoc |
-	assoc := self associationAt: key ifAbsent: [AbsentCookie].
-	^assoc == AbsentCookie ifFalse: [operation value: assoc]!
+	^(self associationAt: key ifAbsent: []) ifNotNil: [:assoc | operation value: assoc]!
 
 associationClass
 	"Private - Answer the class of association to be used for holding
