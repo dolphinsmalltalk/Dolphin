@@ -693,13 +693,17 @@ translateInstance: oldInstance intoANewInstanceOf: newClass via: mappingArray
 				ifTrue: [newInstance instVarAt: i put: (oldInstance instVarAt: index)]].
 	^newInstance!
 
-updateVMRegistryWith: aClass 
+updateVMRegistryWith: aClass
 	"Private - Ensure that if aClass is a VM registered class then the VM's
 	entry is updated to the new class."
 
 	| name |
 	name := aClass name asSymbol.
-	(VMLibrary registryKeys includesKey: name) ifTrue: [VMLibrary default registryAt: name put: aClass]!
+	((VMLibrary registryKeys includesKey: name) and: 
+			[| current |
+			current := VMLibrary default registryAt: name.
+			current isNil or: [current class isMetaclass]])
+		ifTrue: [VMLibrary default registryAt: name put: aClass]!
 
 validateClass
 	"Private - Ensure that currentClass is a valid Behavior."
