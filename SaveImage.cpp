@@ -64,6 +64,11 @@ int __stdcall ObjectMemory::SaveImageFile(const char* szFileName, bool bBackup, 
 		return 4;
 	}
 
+	if (nMaxObjects > OTMaxLimit)
+	{
+		return 5;
+	}
+
 	int nRet = 3;
 
 	const char* saveName;

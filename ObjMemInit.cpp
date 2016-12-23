@@ -177,6 +177,7 @@ void ObjectMemory::InitializeMemoryManager()
 	// initial IP) and by not hardcoding it in the image we can avoid the problems I always
 	// seem to get into when I change it.
 	memMan->m_objectHeaderSize = integerObjectOf(SizeOfPointers(0));
+	memMan->m_maxObjects = integerObjectOf(ObjectMemory::m_nOTMax);
 }
 
 extern HMODULE GetModuleContaining(LPCVOID pFunc);

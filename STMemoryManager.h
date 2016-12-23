@@ -25,7 +25,7 @@ namespace ST
 		SemaphoreOTE* m_lastRequests;	// Semaphore to signal objects requiring finalization are waiting
 		OTE* m_hospice;					// Finalization queue (home for dying objects)
 		Oop	 m_hospiceHighWater;		// High water level for hospice
-		OTE* m_reservedForCorpse;		// Corpse object used to replace losses in weaklings
+		Oop  m_maxObjects;				// Implied by OT virtual memory reservation
 		ProcessOTE* m_undertaker;		// Undertaker process sends #elementsExpired: messages to bereaved
 		SemaphoreOTE* m_bereavements;	// Semaphore to signal bereaved queue not empty
 		OTE* m_bereaved;				// Queue of bereaved weaklings

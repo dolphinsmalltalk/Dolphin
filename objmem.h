@@ -209,7 +209,13 @@ public:
 	static MemoryManager* memoryManager();
 
 public:
-	enum { 	OTMinHeadroom = 16384, OTDefaultSize = 65536, OTDefaultMax = 1024*24576 };	// Allow about 24 million objects
+	enum { 	
+		OTMinHeadroom = 16384, 
+		OTDefaultSize = 65536, 
+		OTDefaultMax = 24*1024*1024,
+		OTMaxLimit =  64*1024*1024
+	};
+
 	enum { 	registryIndex, FirstBuiltInIdx };
 
 	/***************************************************************************************
