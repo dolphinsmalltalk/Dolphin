@@ -28,8 +28,8 @@ Instance Variables:
 		do: [:i | (self arguments at: i) = (anObject arguments at: i) ifFalse: [^false]].
 	^self tag = anObject tag!
 
-acceptVisitor: aProgramNodeVisitor 
-	^aProgramNodeVisitor acceptMethodNode: self!
+acceptVisitor: aProgramNodeVisitor
+	^aProgramNodeVisitor visitMethodNode: self!
 
 actualScope
 	"Answer the actual scope in which this nodes variables will be defined."

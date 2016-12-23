@@ -10,24 +10,6 @@ StSemanticAnalyser comment: 'StSemanticAnalyser is a <StParseNodeVisitor> that p
 !StSemanticAnalyser categoriesForClass!System-Compiler! !
 !StSemanticAnalyser methodsFor!
 
-acceptMessageNode: aMessageNode
-	"Process a message send (check for unimplemented selectors)"
-
-	super acceptMessageNode: aMessageNode.
-	self checkIfStubMessage: aMessageNode.
-	self checkUnimplemented: aMessageNode.
-	self checkUnimplementedSubclassResponsibility: aMessageNode.
-	self checkHardBreakpoint: aMessageNode!
-
-acceptSequenceNode: aSequenceNode
-	| answer |
-	answer := super acceptSequenceNode: aSequenceNode.
-	isStub
-		ifFalse: 
-			[self currentScope unreferencedArguments
-				do: [:each | self signalError: CInfoUnreferencedArg forNode: each]].
-	^answer!
-
 checkHardBreakpoint: aStMessageNode 
 	aStMessageNode selector == #halt 
 		ifTrue: [self signalError: CInfoHardBreakpoint forNode: aStMessageNode]!
@@ -104,9 +86,25 @@ pushStatic: aVariableNode variable: aVariableBinding
 			[self
 				signalError: CWarnUsesBooleanClass
 				forNode: aVariableNode
-				extra: aVariableBinding key asLowercase]! !
-!StSemanticAnalyser categoriesFor: #acceptMessageNode:!public!visitor/double dispatching! !
-!StSemanticAnalyser categoriesFor: #acceptSequenceNode:!public!visitor/double dispatching! !
+				extra: aVariableBinding key asLowercase]!
+
+visitMessageNode: aMessageNode
+	"Process a message send (check for unimplemented selectors)"
+
+	super visitMessageNode: aMessageNode.
+	self checkIfStubMessage: aMessageNode.
+	self checkUnimplemented: aMessageNode.
+	self checkUnimplementedSubclassResponsibility: aMessageNode.
+	self checkHardBreakpoint: aMessageNode!
+
+visitSequenceNode: aSequenceNode
+	| answer |
+	answer := super visitSequenceNode: aSequenceNode.
+	isStub
+		ifFalse: 
+			[self currentScope unreferencedArguments
+				do: [:each | self signalError: CInfoUnreferencedArg forNode: each]].
+	^answer! !
 !StSemanticAnalyser categoriesFor: #checkHardBreakpoint:!helpers!private! !
 !StSemanticAnalyser categoriesFor: #checkIfStubMessage:!helpers!private! !
 !StSemanticAnalyser categoriesFor: #checkSupersend:!helpers!private! !
@@ -114,6 +112,8 @@ pushStatic: aVariableNode variable: aVariableBinding
 !StSemanticAnalyser categoriesFor: #checkUnimplementedSubclassResponsibility:!helpers!private! !
 !StSemanticAnalyser categoriesFor: #initialize!initializing!public! !
 !StSemanticAnalyser categoriesFor: #pushStatic:variable:!helpers!instructions-stack ops!private! !
+!StSemanticAnalyser categoriesFor: #visitMessageNode:!public!visitor/double dispatching! !
+!StSemanticAnalyser categoriesFor: #visitSequenceNode:!public!visitor/double dispatching! !
 
 !StSemanticAnalyser class methodsFor!
 

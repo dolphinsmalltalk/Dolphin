@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 StProgramNode subclass: #StReturnNode
 	instanceVariableNames: 'return value'
@@ -21,8 +21,8 @@ Instance Variables:
 	self class = anObject class ifFalse: [^false].
 	^self value = anObject value!
 
-acceptVisitor: aProgramNodeVisitor 
-	^aProgramNodeVisitor acceptReturnNode: self!
+acceptVisitor: aProgramNodeVisitor
+	^aProgramNodeVisitor visitReturnNode: self!
 
 childrenDo: aMonadicValuable 
 	aMonadicValuable value: value!

@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk XP"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ParseTreeSearcher subclass: #ParseTreeRewriter
 	instanceVariableNames: 'tree'
@@ -12,70 +12,6 @@ Instance Variables:
 	tree	<BRProgramNode>	the parse tree we''re transforming'!
 !ParseTreeRewriter categoriesForClass!Refactory-ParseTree Matching! !
 !ParseTreeRewriter methodsFor!
-
-acceptAssignmentNode: anAssignmentNode 
-	anAssignmentNode variable: (self visitNode: anAssignmentNode variable).
-	anAssignmentNode value: (self visitNode: anAssignmentNode value)!
-
-acceptBlockNode: aBlockNode 
-	aBlockNode arguments: (self visitArguments: aBlockNode arguments).
-	aBlockNode body: (self visitNode: aBlockNode body)!
-
-acceptCascadeNode: aCascadeNode 
-	| newMessages notFound |
-	newMessages := OrderedCollection new: aCascadeNode messages size.
-	notFound := OrderedCollection new: aCascadeNode messages size.
-	aCascadeNode messages do: 
-			[:each | 
-			| newNode |
-			newNode := self performSearches: searches on: each.
-			newNode isNil 
-				ifTrue: 
-					[newNode := each.
-					notFound add: newNode].
-			newNode isMessage 
-				ifTrue: [newMessages add: newNode]
-				ifFalse: 
-					[newNode isCascade 
-						ifTrue: [newMessages addAll: newNode messages]
-						ifFalse: 
-							[Transcript
-								show: 'Cannot replace message node inside of cascaded node with non-message node.';
-								cr.
-							newMessages add: each]]].
-	notFound size == aCascadeNode messages size 
-		ifTrue: 
-			[| receiver |
-			receiver := self visitNode: aCascadeNode messages first receiver.
-			newMessages do: [:each | each receiver: receiver]].
-	notFound 
-		do: [:each | each arguments: (each arguments collect: [:arg | self visitNode: arg])].
-	aCascadeNode messages: newMessages!
-
-acceptLiteralArrayNode: aRBArrayLiteralNode 
-	aRBArrayLiteralNode contents: (aRBArrayLiteralNode contents 
-				collect: [:each | self visitNode: each])!
-
-acceptMessageNode: aMessageNode 
-	aMessageNode receiver: (self visitNode: aMessageNode receiver).
-	aMessageNode 
-		arguments: (aMessageNode arguments collect: [:each | self visitNode: each])!
-
-acceptMethodNode: aMethodNode 
-	aMethodNode arguments: (self visitArguments: aMethodNode arguments).
-	aMethodNode body: (self visitNode: aMethodNode body)!
-
-acceptOptimizedNode: anOptimizedNode 
-	anOptimizedNode body: (self visitNode: anOptimizedNode body)!
-
-acceptReturnNode: aReturnNode 
-	aReturnNode value: (self visitNode: aReturnNode value)!
-
-acceptSequenceNode: aSequenceNode 
-	aSequenceNode 
-		temporaries: (self visitArguments: aSequenceNode temporaries).
-	aSequenceNode statements: (aSequenceNode statements 
-				collect: [:each | self visitNode: each])!
 
 executeTree: aParseTree 
 	| oldContext |
@@ -166,17 +102,67 @@ replaceTree: searchTree withTree: replaceTree when: aBlock
 tree
 	^tree!
 
-visitArguments: aNodeCollection 
-	^aNodeCollection collect: [:each | self visitArgument: each]! !
-!ParseTreeRewriter categoriesFor: #acceptAssignmentNode:!public!visitor/double dispatching! !
-!ParseTreeRewriter categoriesFor: #acceptBlockNode:!public!visitor/double dispatching! !
-!ParseTreeRewriter categoriesFor: #acceptCascadeNode:!public!visitor/double dispatching! !
-!ParseTreeRewriter categoriesFor: #acceptLiteralArrayNode:!public!visitor/double dispatching! !
-!ParseTreeRewriter categoriesFor: #acceptMessageNode:!public!visitor/double dispatching! !
-!ParseTreeRewriter categoriesFor: #acceptMethodNode:!public!visitor/double dispatching! !
-!ParseTreeRewriter categoriesFor: #acceptOptimizedNode:!public!visitor/double dispatching! !
-!ParseTreeRewriter categoriesFor: #acceptReturnNode:!public!visitor/double dispatching! !
-!ParseTreeRewriter categoriesFor: #acceptSequenceNode:!public!visitor/double dispatching! !
+visitArgumentNodes: aNodeCollection
+	^aNodeCollection collect: [:each | self visitArgumentNode: each]!
+
+visitAssignmentNode: anAssignmentNode
+	anAssignmentNode variable: (self visitNode: anAssignmentNode variable).
+	anAssignmentNode value: (self visitNode: anAssignmentNode value)!
+
+visitBlockNode: aBlockNode
+	aBlockNode arguments: (self visitArgumentNodes: aBlockNode arguments).
+	aBlockNode body: (self visitNode: aBlockNode body)!
+
+visitCascadeNode: aCascadeNode
+	| newMessages notFound |
+	newMessages := OrderedCollection new: aCascadeNode messages size.
+	notFound := OrderedCollection new: aCascadeNode messages size.
+	aCascadeNode messages do: 
+			[:each |
+			| newNode |
+			newNode := self performSearches: searches on: each.
+			newNode isNil
+				ifTrue: 
+					[newNode := each.
+					notFound add: newNode].
+			newNode isMessage
+				ifTrue: [newMessages add: newNode]
+				ifFalse: 
+					[newNode isCascade
+						ifTrue: [newMessages addAll: newNode messages]
+						ifFalse: 
+							[Transcript
+								show: 'Cannot replace message node inside of cascaded node with non-message node.';
+								cr.
+							newMessages add: each]]].
+	notFound size == aCascadeNode messages size
+		ifTrue: 
+			[| receiver |
+			receiver := self visitNode: aCascadeNode messages first receiver.
+			newMessages do: [:each | each receiver: receiver]].
+	notFound do: [:each | each arguments: (each arguments collect: [:arg | self visitNode: arg])].
+	aCascadeNode messages: newMessages!
+
+visitLiteralArrayNode: aRBArrayLiteralNode
+	aRBArrayLiteralNode contents: (aRBArrayLiteralNode contents collect: [:each | self visitNode: each])!
+
+visitMessageNode: aMessageNode
+	aMessageNode receiver: (self visitNode: aMessageNode receiver).
+	aMessageNode arguments: (aMessageNode arguments collect: [:each | self visitNode: each])!
+
+visitMethodNode: aMethodNode
+	aMethodNode arguments: (self visitArgumentNodes: aMethodNode arguments).
+	aMethodNode body: (self visitNode: aMethodNode body)!
+
+visitOptimizedNode: anOptimizedNode
+	anOptimizedNode body: (self visitNode: anOptimizedNode body)!
+
+visitReturnNode: aReturnNode
+	aReturnNode value: (self visitNode: aReturnNode value)!
+
+visitSequenceNode: aSequenceNode
+	aSequenceNode temporaries: (self visitArgumentNodes: aSequenceNode temporaries).
+	aSequenceNode statements: (aSequenceNode statements collect: [:each | self visitNode: each])! !
 !ParseTreeRewriter categoriesFor: #executeTree:!accessing!public! !
 !ParseTreeRewriter categoriesFor: #foundMatch!helpers!private! !
 !ParseTreeRewriter categoriesFor: #lookForMoreMatchesInContext:!operations!private! !
@@ -195,7 +181,16 @@ visitArguments: aNodeCollection
 !ParseTreeRewriter categoriesFor: #replaceTree:withTree:!public!replacing! !
 !ParseTreeRewriter categoriesFor: #replaceTree:withTree:when:!public!replacing! !
 !ParseTreeRewriter categoriesFor: #tree!accessing!public! !
-!ParseTreeRewriter categoriesFor: #visitArguments:!public!visiting! !
+!ParseTreeRewriter categoriesFor: #visitArgumentNodes:!public!visiting! !
+!ParseTreeRewriter categoriesFor: #visitAssignmentNode:!public!visitor/double dispatching! !
+!ParseTreeRewriter categoriesFor: #visitBlockNode:!public!visitor/double dispatching! !
+!ParseTreeRewriter categoriesFor: #visitCascadeNode:!public!visitor/double dispatching! !
+!ParseTreeRewriter categoriesFor: #visitLiteralArrayNode:!public!visitor/double dispatching! !
+!ParseTreeRewriter categoriesFor: #visitMessageNode:!public!visitor/double dispatching! !
+!ParseTreeRewriter categoriesFor: #visitMethodNode:!public!visitor/double dispatching! !
+!ParseTreeRewriter categoriesFor: #visitOptimizedNode:!public!visitor/double dispatching! !
+!ParseTreeRewriter categoriesFor: #visitReturnNode:!public!visitor/double dispatching! !
+!ParseTreeRewriter categoriesFor: #visitSequenceNode:!public!visitor/double dispatching! !
 
 !ParseTreeRewriter class methodsFor!
 

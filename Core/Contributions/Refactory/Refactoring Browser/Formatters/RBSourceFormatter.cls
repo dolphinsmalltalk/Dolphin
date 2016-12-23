@@ -16,43 +16,6 @@ Instance Variables:
 !RBSourceFormatter categoriesForClass!Refactory-ParseTree Matching! !
 !RBSourceFormatter methodsFor!
 
-acceptExternalArgTypeNode: anStExternalArgTypeNode
-	| typeOrdinal |
-	typeOrdinal := anStExternalArgTypeNode typeOrdinal.
-	codeStream nextPutAll: (ExternalDescriptor nameOf: typeOrdinal type: anStExternalArgTypeNode structClass).
-	anStExternalArgTypeNode indirections timesRepeat: [codeStream nextPut: $*].!
-
-acceptExternalCallNode: aStExternalCallNode 
-	codeStream nextPut: $<.
-	aStExternalCallNode isOverlapped ifTrue: [codeStream nextPutAll: 'overlap '].
-	aStExternalCallNode isVirtual ifTrue: [codeStream nextPutAll: 'virtual '].
-	codeStream
-		nextPutAll: (ExternalDescriptor nameOfConvention: aStExternalCallNode callingConvention);
-		space.
-	self visitNode: aStExternalCallNode returnType.
-	codeStream space.
-	self formatExternalCallName: aStExternalCallNode.
-	aStExternalCallNode argumentTypes do: 
-			[:each | 
-			codeStream space.
-			self visitNode: each].
-	codeStream nextPut: $>.
-	self newLine!
-
-acceptMethodNode: aMethodNode 
-	self formatMethodPatternFor: aMethodNode.
-	self formatMethodBodyFor: aMethodNode!
-
-acceptPrimitiveNode: anStPrimitiveNode 
-	codeStream
-		nextPutAll: '<primitive: ';
-		print: anStPrimitiveNode primitiveIndex;
-		nextPut: $>.
-	self newLine!
-
-acceptVariableNode: aVariableNode 
-	codeStream nextPutAll: aVariableNode name!
-
 format: aNode
 	self visitNode: aNode.
 	^codeStream contents!
@@ -94,12 +57,45 @@ newLine
 	^self subclassResponsibility!
 
 space
-	codeStream space! !
-!RBSourceFormatter categoriesFor: #acceptExternalArgTypeNode:!public!visitor/double dispatching! !
-!RBSourceFormatter categoriesFor: #acceptExternalCallNode:!public!visitor/double dispatching! !
-!RBSourceFormatter categoriesFor: #acceptMethodNode:!public!visitor/double dispatching! !
-!RBSourceFormatter categoriesFor: #acceptPrimitiveNode:!public!visitor/double dispatching! !
-!RBSourceFormatter categoriesFor: #acceptVariableNode:!public!visitor/double dispatching! !
+	codeStream space!
+
+visitExternalArgTypeNode: anStExternalArgTypeNode
+	| typeOrdinal |
+	typeOrdinal := anStExternalArgTypeNode typeOrdinal.
+	codeStream
+		nextPutAll: (ExternalDescriptor nameOf: typeOrdinal type: anStExternalArgTypeNode structClass).
+	anStExternalArgTypeNode indirections timesRepeat: [codeStream nextPut: $*]!
+
+visitExternalCallNode: aStExternalCallNode
+	codeStream nextPut: $<.
+	aStExternalCallNode isOverlapped ifTrue: [codeStream nextPutAll: 'overlap '].
+	aStExternalCallNode isVirtual ifTrue: [codeStream nextPutAll: 'virtual '].
+	codeStream
+		nextPutAll: (ExternalDescriptor nameOfConvention: aStExternalCallNode callingConvention);
+		space.
+	self visitNode: aStExternalCallNode returnType.
+	codeStream space.
+	self formatExternalCallName: aStExternalCallNode.
+	aStExternalCallNode argumentTypes do: 
+			[:each |
+			codeStream space.
+			self visitNode: each].
+	codeStream nextPut: $>.
+	self newLine!
+
+visitMethodNode: aMethodNode
+	self formatMethodPatternFor: aMethodNode.
+	self formatMethodBodyFor: aMethodNode!
+
+visitPrimitiveNode: anStPrimitiveNode
+	codeStream
+		nextPutAll: '<primitive: ';
+		print: anStPrimitiveNode primitiveIndex;
+		nextPut: $>.
+	self newLine!
+
+visitVariableNode: aVariableNode
+	codeStream nextPutAll: aVariableNode name! !
 !RBSourceFormatter categoriesFor: #format:!operations!public! !
 !RBSourceFormatter categoriesFor: #formatExternalCallName:!formatting!private! !
 !RBSourceFormatter categoriesFor: #formatMethodBodyFor:!formatting!private! !
@@ -110,6 +106,11 @@ space
 !RBSourceFormatter categoriesFor: #initialize!initializing!private! !
 !RBSourceFormatter categoriesFor: #newLine!formatting!private! !
 !RBSourceFormatter categoriesFor: #space!formatting!private! !
+!RBSourceFormatter categoriesFor: #visitExternalArgTypeNode:!public!visitor/double dispatching! !
+!RBSourceFormatter categoriesFor: #visitExternalCallNode:!public!visitor/double dispatching! !
+!RBSourceFormatter categoriesFor: #visitMethodNode:!public!visitor/double dispatching! !
+!RBSourceFormatter categoriesFor: #visitPrimitiveNode:!public!visitor/double dispatching! !
+!RBSourceFormatter categoriesFor: #visitVariableNode:!public!visitor/double dispatching! !
 
 !RBSourceFormatter class methodsFor!
 

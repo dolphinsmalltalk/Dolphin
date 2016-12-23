@@ -27,8 +27,8 @@ Instance Variables:
 		do: [:i | (self arguments at: i) = (anObject arguments at: i) ifFalse: [^false]].
 	^true!
 
-acceptVisitor: aProgramNodeVisitor 
-	^aProgramNodeVisitor acceptMessageNode: self!
+acceptVisitor: aProgramNodeVisitor
+	^aProgramNodeVisitor visitMessageNode: self!
 
 argumentCount
 	^self arguments size!

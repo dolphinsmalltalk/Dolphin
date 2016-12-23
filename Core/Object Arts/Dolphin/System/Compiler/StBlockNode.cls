@@ -29,8 +29,8 @@ Instance Variables:
 		do: [:i | (self arguments at: i) = (anObject arguments at: i) ifFalse: [^false]].
 	^true!
 
-acceptVisitor: aProgramNodeVisitor 
-	^aProgramNodeVisitor acceptBlockNode: self!
+acceptVisitor: aProgramNodeVisitor
+	^aProgramNodeVisitor visitBlockNode: self!
 
 actualScope
 	"Answer the actual scope in which this nodes variables will be defined."

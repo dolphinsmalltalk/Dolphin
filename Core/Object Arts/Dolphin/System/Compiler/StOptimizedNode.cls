@@ -22,8 +22,8 @@ Instance Variables:
 	self class = anObject class ifFalse: [^false].
 	^self body = anObject body!
 
-acceptVisitor: aProgramNodeVisitor 
-	^aProgramNodeVisitor acceptOptimizedNode: self!
+acceptVisitor: aProgramNodeVisitor
+	^aProgramNodeVisitor visitOptimizedNode: self!
 
 arguments
 	^#()!

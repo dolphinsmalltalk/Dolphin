@@ -22,8 +22,8 @@ Instance Variables:
 	self class = anObject class ifFalse: [^false].
 	^self variable = anObject variable and: [self value = anObject value]!
 
-acceptVisitor: aProgramNodeVisitor 
-	^aProgramNodeVisitor acceptAssignmentNode: self!
+acceptVisitor: aProgramNodeVisitor
+	^aProgramNodeVisitor visitAssignmentNode: self!
 
 assignmentPosition
 	^assignment!

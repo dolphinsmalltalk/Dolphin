@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk XP 2002 release 5.02"!
+"Filed out from Dolphin Smalltalk 7"!
 
 StBlockNode subclass: #RBPatternBlockNode
 	instanceVariableNames: 'valueBlock'
@@ -10,8 +10,8 @@ RBPatternBlockNode comment: ''!
 !RBPatternBlockNode categoriesForClass!Refactory-Parser! !
 !RBPatternBlockNode methodsFor!
 
-acceptVisitor: aProgramNodeVisitor 
-	^aProgramNodeVisitor acceptPatternBlockNode: self!
+acceptVisitor: aProgramNodeVisitor
+	^aProgramNodeVisitor visitPatternBlockNode: self!
 
 addArgumentWithNameBasedOn: aString to: aRBBlockNode 
 	| name index vars |

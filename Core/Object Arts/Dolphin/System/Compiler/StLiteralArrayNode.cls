@@ -18,8 +18,8 @@ StLiteralArrayNode comment: ''!
 		do: [:i | (self contents at: i) = (anObject contents at: i) ifFalse: [^false]].
 	^true!
 
-acceptVisitor: aProgramNodeVisitor 
-	^aProgramNodeVisitor acceptLiteralArrayNode: self!
+acceptVisitor: aProgramNodeVisitor
+	^aProgramNodeVisitor visitLiteralArrayNode: self!
 
 children
 	^contents!
