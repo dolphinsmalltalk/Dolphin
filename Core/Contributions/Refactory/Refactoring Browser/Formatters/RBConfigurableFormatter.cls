@@ -19,77 +19,6 @@ Instance Variables:
 !RBConfigurableFormatter categoriesForClass!System-Compiler-Formatters! !
 !RBConfigurableFormatter methodsFor!
 
-acceptAssignmentNode: anAssignmentNode 
-	self visitNode: anAssignmentNode variable.
-	codeStream nextPutAll: ' := '.
-	self visitNode: anAssignmentNode value!
-
-acceptBlockNode: aBlockNode
-	self bracketWith: '[]' around: [self formatBlock: aBlockNode]!
-
-acceptCascadeNode: aCascadeNode 
-	self visitNode: aCascadeNode receiver.
-	self indentAround: 
-			[NewLineBeforeFirstCascade ifTrue: [self newLine] ifFalse: [self space].
-			aCascadeNode messages do: 
-					[:each | 
-					self indentAround: 
-							[self 
-								formatSelectorAndArguments: each
-								firstSeparator: []
-								restSeparator: ((self isMultiLineMessage: each) 
-										ifTrue: [[self newLine]]
-										ifFalse: [[self space]])]]
-				separatedBy: 
-					[codeStream nextPut: $;.
-					NewLineAfterCascade ifTrue: [self newLine] ifFalse: [self space]]]!
-
-acceptLiteralArrayNode: aRBArrayLiteralNode 
-	| brackets |
-	codeStream nextPut: $#.
-	brackets := aRBArrayLiteralNode isForByteArray 
-				ifTrue: ['[]']
-				ifFalse: ['()'].
-	self bracketWith: brackets
-		around: 
-			[aRBArrayLiteralNode contents do: [:each | self visitNode: each]
-				separatedBy: [self space]]!
-
-acceptLiteralNode: aLiteralNode 
-	self writeString: (aLiteralNode token formattedFrom: originalSource).!
-
-acceptMessageNode: aMessageNode 
-	self visitNode: aMessageNode receiver.
-	self formatSelectorAndArguments: aMessageNode!
-
-acceptOptimizedNode: anOptimizedNode
-	codeStream nextPutAll: '##'.
-	self 
-		bracketWith: '()' 
-		around: [self indentAround: [self visitNode: anOptimizedNode body]]!
-
-acceptPatternBlockNode: aRBPatternBlockNode 
-	codeStream nextPut: $`.
-	self 
-		bracketWith: '{}' 
-		around: [self formatBlock: aRBPatternBlockNode]!
-
-acceptReturnNode: aReturnNode 
-	codeStream
-		nextPut: $^;
-		nextPutAll: StringFollowingReturn.
-	self visitNode: aReturnNode value!
-
-acceptSequenceNode: aSequenceNode 
-	self formatTemporariesFor: aSequenceNode.
-	#rbFix.	"Dolphin's primitive tags follow the temp definitions"
-	self tagBeforeTemporaries 
-		ifFalse: 
-			[aSequenceNode parent 
-				ifNotNil: [:parent | parent isMethod ifTrue: [self formatTagFor: parent]]].
-	self formatSequenceCommentsFor: aSequenceNode.
-	self formatSequenceNodeStatementsFor: aSequenceNode!
-
 addNewLinesBeforeStatementStartingAt: anInteger 
 	| newLines |
 	newLines := MinimumNewLinesBetweenStatements 
@@ -380,6 +309,43 @@ precedenceOf: parentSelector greaterThan: childSelector
 				ifTrue: [childIndex := i]].
 	^childIndex < parentIndex!
 
+visitAssignmentNode: anAssignmentNode
+	self visitNode: anAssignmentNode variable.
+	codeStream nextPutAll: ' := '.
+	self visitNode: anAssignmentNode value!
+
+visitBlockNode: aBlockNode
+	self bracketWith: '[]' around: [self formatBlock: aBlockNode]!
+
+visitCascadeNode: aCascadeNode
+	self visitNode: aCascadeNode receiver.
+	self indentAround: 
+			[NewLineBeforeFirstCascade ifTrue: [self newLine] ifFalse: [self space].
+			aCascadeNode messages do: 
+					[:each |
+					self indentAround: 
+							[self
+								formatSelectorAndArguments: each
+								firstSeparator: []
+								restSeparator: ((self isMultiLineMessage: each) ifTrue: [[self newLine]] ifFalse: [[self space]])]]
+				separatedBy: 
+					[codeStream nextPut: $;.
+					NewLineAfterCascade ifTrue: [self newLine] ifFalse: [self space]]]!
+
+visitLiteralArrayNode: aRBArrayLiteralNode
+	| brackets |
+	codeStream nextPut: $#.
+	brackets := aRBArrayLiteralNode isForByteArray ifTrue: ['[]'] ifFalse: ['()'].
+	self bracketWith: brackets
+		around: [aRBArrayLiteralNode contents do: [:each | self visitNode: each] separatedBy: [self space]]!
+
+visitLiteralNode: aLiteralNode
+	self writeString: (aLiteralNode token formattedFrom: originalSource)!
+
+visitMessageNode: aMessageNode
+	self visitNode: aMessageNode receiver.
+	self formatSelectorAndArguments: aMessageNode!
+
 visitNode: aNode
 	| needsParenthesis |
 	(lookaheadCode includesKey: aNode)
@@ -397,6 +363,29 @@ visitNode: aNode
 				ifFalse: [self formatCommentsFor: aNode].
 			needsParenthesis
 				ifTrue: [codeStream nextPutAll: StringInsideParentheses]]!
+
+visitOptimizedNode: anOptimizedNode
+	codeStream nextPutAll: '##'.
+	self bracketWith: '()' around: [self indentAround: [self visitNode: anOptimizedNode body]]!
+
+visitPatternBlockNode: aRBPatternBlockNode
+	codeStream nextPut: $`.
+	self bracketWith: '{}' around: [self formatBlock: aRBPatternBlockNode]!
+
+visitReturnNode: aReturnNode
+	codeStream
+		nextPut: $^;
+		nextPutAll: StringFollowingReturn.
+	self visitNode: aReturnNode value!
+
+visitSequenceNode: aSequenceNode
+	self formatTemporariesFor: aSequenceNode.
+	#rbFix.	"Dolphin's primitive tags follow the temp definitions"
+	self tagBeforeTemporaries
+		ifFalse: 
+			[aSequenceNode parent ifNotNil: [:parent | parent isMethod ifTrue: [self formatTagFor: parent]]].
+	self formatSequenceCommentsFor: aSequenceNode.
+	self formatSequenceNodeStatementsFor: aSequenceNode!
 
 willBeMultiline: aNode 
 	^(self formattedSourceFor: aNode) includes: Character cr!
@@ -421,16 +410,6 @@ writeString: aString
 	codeStream nextPutAll: aString.
 	index > 0 
 		ifTrue: [lineStart := codeStream position - (aString size - index)]! !
-!RBConfigurableFormatter categoriesFor: #acceptAssignmentNode:!public!visitor/double dispatching! !
-!RBConfigurableFormatter categoriesFor: #acceptBlockNode:!public!visitor/double dispatching! !
-!RBConfigurableFormatter categoriesFor: #acceptCascadeNode:!public!visitor/double dispatching! !
-!RBConfigurableFormatter categoriesFor: #acceptLiteralArrayNode:!public!visitor/double dispatching! !
-!RBConfigurableFormatter categoriesFor: #acceptLiteralNode:!public!visitor/double dispatching! !
-!RBConfigurableFormatter categoriesFor: #acceptMessageNode:!public!visitor/double dispatching! !
-!RBConfigurableFormatter categoriesFor: #acceptOptimizedNode:!public!visitor/double dispatching! !
-!RBConfigurableFormatter categoriesFor: #acceptPatternBlockNode:!public!visitor/double dispatching! !
-!RBConfigurableFormatter categoriesFor: #acceptReturnNode:!public!visitor/double dispatching! !
-!RBConfigurableFormatter categoriesFor: #acceptSequenceNode:!public!visitor/double dispatching! !
 !RBConfigurableFormatter categoriesFor: #addNewLinesBeforeStatementStartingAt:!helpers!private! !
 !RBConfigurableFormatter categoriesFor: #bracketWith:around:!helpers!private! !
 !RBConfigurableFormatter categoriesFor: #currentLineLength!helpers!private! !
@@ -459,7 +438,17 @@ writeString: aString
 !RBConfigurableFormatter categoriesFor: #newLines:!formatting!private! !
 !RBConfigurableFormatter categoriesFor: #newLinesBeforeStartingAt:!formatting!private! !
 !RBConfigurableFormatter categoriesFor: #precedenceOf:greaterThan:!helpers!private! !
+!RBConfigurableFormatter categoriesFor: #visitAssignmentNode:!public!visitor/double dispatching! !
+!RBConfigurableFormatter categoriesFor: #visitBlockNode:!public!visitor/double dispatching! !
+!RBConfigurableFormatter categoriesFor: #visitCascadeNode:!public!visitor/double dispatching! !
+!RBConfigurableFormatter categoriesFor: #visitLiteralArrayNode:!public!visitor/double dispatching! !
+!RBConfigurableFormatter categoriesFor: #visitLiteralNode:!public!visitor/double dispatching! !
+!RBConfigurableFormatter categoriesFor: #visitMessageNode:!public!visitor/double dispatching! !
 !RBConfigurableFormatter categoriesFor: #visitNode:!formatting!private!visiting! !
+!RBConfigurableFormatter categoriesFor: #visitOptimizedNode:!public!visitor/double dispatching! !
+!RBConfigurableFormatter categoriesFor: #visitPatternBlockNode:!public!visitor/double dispatching! !
+!RBConfigurableFormatter categoriesFor: #visitReturnNode:!public!visitor/double dispatching! !
+!RBConfigurableFormatter categoriesFor: #visitSequenceNode:!public!visitor/double dispatching! !
 !RBConfigurableFormatter categoriesFor: #willBeMultiline:!helpers!private! !
 !RBConfigurableFormatter categoriesFor: #with:and:do:separatedBy:!formatting!private!utility! !
 !RBConfigurableFormatter categoriesFor: #writeString:!formatting!private! !

@@ -24,8 +24,8 @@ Instance Variables:
 		do: [:i | (self messages at: i) = (anObject messages at: i) ifFalse: [^false]].
 	^true!
 
-acceptVisitor: aProgramNodeVisitor 
-	^aProgramNodeVisitor acceptCascadeNode: self!
+acceptVisitor: aProgramNodeVisitor
+	^aProgramNodeVisitor visitCascadeNode: self!
 
 bestNodeFor: anInterval 
 	| selectedChildren |

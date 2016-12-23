@@ -10,28 +10,6 @@ RBReadBeforeWrittenTester comment: ''!
 !RBReadBeforeWrittenTester categoriesForClass!Refactory-ParseTree Matching! !
 !RBReadBeforeWrittenTester methodsFor!
 
-acceptAssignmentNode: anAssignmentNode 
-	self visitNode: anAssignmentNode value.
-	self variableWritten: anAssignmentNode!
-
-acceptMessageNode: aMessageNode 
-	((#(#whileTrue: #whileFalse: #whileTrue #whileFalse) 
-		includes: aMessageNode selector) and: [aMessageNode receiver isBlock]) 
-		ifTrue: [self executeTree: aMessageNode receiver body]
-		ifFalse: 
-			[(aMessageNode isCascaded not or: [aMessageNode isFirstCascaded]) 
-				ifTrue: [self visitNode: aMessageNode receiver]].
-	((#(#ifTrue:ifFalse: #ifFalse:ifTrue:) includes: aMessageNode selector) 
-		and: [aMessageNode arguments allSatisfy: [:each | each isBlock]]) 
-			ifTrue: [^self processIfTrueIfFalse: aMessageNode].
-	aMessageNode arguments do: [:each | self visitNode: each]!
-
-acceptSequenceNode: aSequenceNode 
-	self processStatementNode: aSequenceNode!
-
-acceptVariableNode: aVariableNode 
-	self variableRead: aVariableNode!
-
 checkNewTemps: aBoolean 
 	checkNewTemps := aBoolean!
 
@@ -127,11 +105,29 @@ variableWritten: aNode
 	(self currentScope includesKey: aNode variable name) 
 		ifTrue: 
 			[(self currentScope at: aNode variable name) isNil 
-				ifTrue: [self currentScope at: aNode variable name put: false]]! !
-!RBReadBeforeWrittenTester categoriesFor: #acceptAssignmentNode:!public!visitor/double dispatching! !
-!RBReadBeforeWrittenTester categoriesFor: #acceptMessageNode:!public!visitor/double dispatching! !
-!RBReadBeforeWrittenTester categoriesFor: #acceptSequenceNode:!public!visitor/double dispatching! !
-!RBReadBeforeWrittenTester categoriesFor: #acceptVariableNode:!public!visitor/double dispatching! !
+				ifTrue: [self currentScope at: aNode variable name put: false]]!
+
+visitAssignmentNode: anAssignmentNode
+	self visitNode: anAssignmentNode value.
+	self variableWritten: anAssignmentNode!
+
+visitMessageNode: aMessageNode
+	((#(#whileTrue: #whileFalse: #whileTrue #whileFalse) includes: aMessageNode selector)
+		and: [aMessageNode receiver isBlock])
+			ifTrue: [self executeTree: aMessageNode receiver body]
+			ifFalse: 
+				[(aMessageNode isCascaded not or: [aMessageNode isFirstCascaded])
+					ifTrue: [self visitNode: aMessageNode receiver]].
+	((#(#ifTrue:ifFalse: #ifFalse:ifTrue:) includes: aMessageNode selector)
+		and: [aMessageNode arguments allSatisfy: [:each | each isBlock]])
+			ifTrue: [^self processIfTrueIfFalse: aMessageNode].
+	aMessageNode arguments do: [:each | self visitNode: each]!
+
+visitSequenceNode: aSequenceNode
+	self processStatementNode: aSequenceNode!
+
+visitVariableNode: aVariableNode
+	self variableRead: aVariableNode! !
 !RBReadBeforeWrittenTester categoriesFor: #checkNewTemps:!initializing!public! !
 !RBReadBeforeWrittenTester categoriesFor: #copyDictionary:!helpers!private! !
 !RBReadBeforeWrittenTester categoriesFor: #createScope!helpers!private! !
@@ -146,6 +142,10 @@ variableWritten: aNode
 !RBReadBeforeWrittenTester categoriesFor: #removeScope!private!removing! !
 !RBReadBeforeWrittenTester categoriesFor: #variableRead:!helpers!private! !
 !RBReadBeforeWrittenTester categoriesFor: #variableWritten:!helpers!private! !
+!RBReadBeforeWrittenTester categoriesFor: #visitAssignmentNode:!public!visitor/double dispatching! !
+!RBReadBeforeWrittenTester categoriesFor: #visitMessageNode:!public!visitor/double dispatching! !
+!RBReadBeforeWrittenTester categoriesFor: #visitSequenceNode:!public!visitor/double dispatching! !
+!RBReadBeforeWrittenTester categoriesFor: #visitVariableNode:!public!visitor/double dispatching! !
 
 !RBReadBeforeWrittenTester class methodsFor!
 

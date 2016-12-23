@@ -11,19 +11,6 @@ RBFormatter comment: 'RBFormatter is an <StParseNodeVisitor> for pretty printing
 !RBFormatter categoriesForClass!System-Compiler-Formatters! !
 !RBFormatter methodsFor!
 
-acceptAssignmentNode: anAssignmentNode
-	self indent: 2
-		around: 
-			[self visitNode: anAssignmentNode variable.
-			codeStream nextPutAll: ' := '.
-			self visitNode: anAssignmentNode value]!
-
-acceptBlockNode: aBlockNode
-	self
-		acceptBlockNode: aBlockNode
-		startBlockString: '['
-		endBlockString: ']'!
-
 acceptBlockNode: aBlockNode startBlockString: startBlockString endBlockString: endBlockString
 	| seqNode multiline formattedBody formatter |
 	seqNode := aBlockNode body.
@@ -46,65 +33,6 @@ acceptBlockNode: aBlockNode startBlockString: startBlockString endBlockString: e
 	codeStream
 		nextPutAll: formattedBody;
 		nextPutAll: endBlockString!
-
-acceptCascadeNode: aCascadeNode
-	| messages |
-	messages := aCascadeNode messages.
-	self visitNode: messages first receiver.
-	self indentWhile: 
-			[self
-				for: messages
-				do: 
-					[:each |
-					self
-						newLine;
-						indentWhile: [self formatMessage: each cascade: true]]
-				separatedBy: [codeStream nextPut: $;]]!
-
-acceptLiteralArrayNode: aRBArrayLiteralNode
-	codeStream nextPutAll: (aRBArrayLiteralNode isForByteArray ifTrue: ['#['] ifFalse: ['#(']).
-	self
-		for: aRBArrayLiteralNode contents
-		do: [:each | self visitNode: each]
-		separatedBy: [self space].
-	codeStream nextPut: (aRBArrayLiteralNode isForByteArray ifTrue: [$]] ifFalse: [$)])!
-
-acceptLiteralNode: aLiteralNode
-	aLiteralNode token formatOn: codeStream source: aLiteralNode source!
-
-acceptMessageNode: aMessageNode
-	| newFormatter code |
-	newFormatter := self copy.
-	code := newFormatter format: aMessageNode receiver.
-	codeStream nextPutAll: code.
-	newFormatter isMultiLine ifTrue: [lineStart := codeStream position - newFormatter lastLineLength].
-	self indent: (newFormatter isMultiLine ifTrue: [2] ifFalse: [1])
-		around: [self formatMessage: aMessageNode cascade: false]!
-
-acceptOptimizedNode: anOptimizedNode
-	codeStream nextPutAll: '##('.
-	self visitNode: anOptimizedNode body.
-	codeStream nextPut: $)!
-
-acceptPatternBlockNode: aRBPatternBlockNode
-	self
-		acceptBlockNode: aRBPatternBlockNode
-		startBlockString: '`{'
-		endBlockString: '}'!
-
-acceptReturnNode: aReturnNode
-	codeStream nextPut: $^.
-	self visitNode: aReturnNode value!
-
-acceptSequenceNode: aSequenceNode
-	self formatMethodCommentFor: aSequenceNode indentBefore: false.
-	self formatTemporariesFor: aSequenceNode.
-	self tagBeforeTemporaries
-		ifFalse: 
-			[| parent |
-			parent := aSequenceNode parent.
-			(parent notNil and: [parent isMethod]) ifTrue: [self formatTagFor: parent]].
-	self formatStatementsFor: aSequenceNode!
 
 firstLineLength
 	^firstLineLength isNil ifTrue: [codeStream position] ifFalse: [firstLineLength]!
@@ -204,7 +132,7 @@ formatMethodPatternFor: aMethodNode
 					codeStream
 						nextPutAll: (selectorParts at: i) value;
 						space.
-					self visitArgument: (arguments at: i)]]!
+					self visitArgumentNode: (arguments at: i)]]!
 
 formatStatementCommentFor: aNode
 	| source |
@@ -241,7 +169,7 @@ formatTemporariesFor: aSequenceNode
 	codeStream nextPutAll: '| '.
 	temps do: 
 			[:each |
-			self visitArgument: each.
+			self visitArgumentNode: each.
 			self space].
 	codeStream nextPut: $|.
 	self newLine!
@@ -346,23 +274,85 @@ startMessageSendOnNewLine: aMessageNode
 	#rbFix.	"Use ANSI standard #argumentCount message instead of #numArgs"
 	^aMessageNode selector argumentCount > self maximumArgumentsPerLine!
 
+visitAssignmentNode: anAssignmentNode
+	self indent: 2
+		around: 
+			[self visitNode: anAssignmentNode variable.
+			codeStream nextPutAll: ' := '.
+			self visitNode: anAssignmentNode value]!
+
+visitBlockNode: aBlockNode
+	self
+		acceptBlockNode: aBlockNode
+		startBlockString: '['
+		endBlockString: ']'!
+
+visitCascadeNode: aCascadeNode
+	| messages |
+	messages := aCascadeNode messages.
+	self visitNode: messages first receiver.
+	self indentWhile: 
+			[self
+				for: messages
+				do: 
+					[:each |
+					self
+						newLine;
+						indentWhile: [self formatMessage: each cascade: true]]
+				separatedBy: [codeStream nextPut: $;]]!
+
+visitLiteralArrayNode: aRBArrayLiteralNode
+	codeStream nextPutAll: (aRBArrayLiteralNode isForByteArray ifTrue: ['#['] ifFalse: ['#(']).
+	self
+		for: aRBArrayLiteralNode contents
+		do: [:each | self visitNode: each]
+		separatedBy: [self space].
+	codeStream nextPut: (aRBArrayLiteralNode isForByteArray ifTrue: [$]] ifFalse: [$)])!
+
+visitLiteralNode: aLiteralNode
+	aLiteralNode token formatOn: codeStream source: aLiteralNode source!
+
+visitMessageNode: aMessageNode
+	| newFormatter code |
+	newFormatter := self copy.
+	code := newFormatter format: aMessageNode receiver.
+	codeStream nextPutAll: code.
+	newFormatter isMultiLine ifTrue: [lineStart := codeStream position - newFormatter lastLineLength].
+	self indent: (newFormatter isMultiLine ifTrue: [2] ifFalse: [1])
+		around: [self formatMessage: aMessageNode cascade: false]!
+
 visitNode: aNode
 	| parenthesis |
 	parenthesis := self needsParenthesisFor: aNode.
 	parenthesis ifTrue: [codeStream nextPut: $(].
 	aNode acceptVisitor: self.
-	parenthesis ifTrue: [codeStream nextPut: $)]! !
-!RBFormatter categoriesFor: #acceptAssignmentNode:!public!visitor/double dispatching! !
-!RBFormatter categoriesFor: #acceptBlockNode:!public!visitor/double dispatching! !
+	parenthesis ifTrue: [codeStream nextPut: $)]!
+
+visitOptimizedNode: anOptimizedNode
+	codeStream nextPutAll: '##('.
+	self visitNode: anOptimizedNode body.
+	codeStream nextPut: $)!
+
+visitPatternBlockNode: aRBPatternBlockNode
+	self
+		acceptBlockNode: aRBPatternBlockNode
+		startBlockString: '`{'
+		endBlockString: '}'!
+
+visitReturnNode: aReturnNode
+	codeStream nextPut: $^.
+	self visitNode: aReturnNode value!
+
+visitSequenceNode: aSequenceNode
+	self formatMethodCommentFor: aSequenceNode indentBefore: false.
+	self formatTemporariesFor: aSequenceNode.
+	self tagBeforeTemporaries
+		ifFalse: 
+			[| parent |
+			parent := aSequenceNode parent.
+			(parent notNil and: [parent isMethod]) ifTrue: [self formatTagFor: parent]].
+	self formatStatementsFor: aSequenceNode! !
 !RBFormatter categoriesFor: #acceptBlockNode:startBlockString:endBlockString:!private!visitor/double dispatching! !
-!RBFormatter categoriesFor: #acceptCascadeNode:!public!visitor/double dispatching! !
-!RBFormatter categoriesFor: #acceptLiteralArrayNode:!public!visitor/double dispatching! !
-!RBFormatter categoriesFor: #acceptLiteralNode:!public!visitor/double dispatching! !
-!RBFormatter categoriesFor: #acceptMessageNode:!public!visitor/double dispatching! !
-!RBFormatter categoriesFor: #acceptOptimizedNode:!public!visitor/double dispatching! !
-!RBFormatter categoriesFor: #acceptPatternBlockNode:!public!visitor/double dispatching! !
-!RBFormatter categoriesFor: #acceptReturnNode:!public!visitor/double dispatching! !
-!RBFormatter categoriesFor: #acceptSequenceNode:!public!visitor/double dispatching! !
 !RBFormatter categoriesFor: #firstLineLength!accessing!public! !
 !RBFormatter categoriesFor: #for:do:separatedBy:!enumerating!private! !
 !RBFormatter categoriesFor: #formatMessage:cascade:!formatting!private! !
@@ -388,7 +378,17 @@ visitNode: aNode
 !RBFormatter categoriesFor: #selectorsToLeaveOnLine!constants!public! !
 !RBFormatter categoriesFor: #selectorsToStartOnNewLine!constants!public! !
 !RBFormatter categoriesFor: #startMessageSendOnNewLine:!private!testing! !
+!RBFormatter categoriesFor: #visitAssignmentNode:!public!visitor/double dispatching! !
+!RBFormatter categoriesFor: #visitBlockNode:!public!visitor/double dispatching! !
+!RBFormatter categoriesFor: #visitCascadeNode:!public!visitor/double dispatching! !
+!RBFormatter categoriesFor: #visitLiteralArrayNode:!public!visitor/double dispatching! !
+!RBFormatter categoriesFor: #visitLiteralNode:!public!visitor/double dispatching! !
+!RBFormatter categoriesFor: #visitMessageNode:!public!visitor/double dispatching! !
 !RBFormatter categoriesFor: #visitNode:!public!visiting! !
+!RBFormatter categoriesFor: #visitOptimizedNode:!public!visitor/double dispatching! !
+!RBFormatter categoriesFor: #visitPatternBlockNode:!public!visitor/double dispatching! !
+!RBFormatter categoriesFor: #visitReturnNode:!public!visitor/double dispatching! !
+!RBFormatter categoriesFor: #visitSequenceNode:!public!visitor/double dispatching! !
 
 !RBFormatter class methodsFor!
 

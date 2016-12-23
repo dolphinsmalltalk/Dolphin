@@ -11,79 +11,6 @@ StParseNodeAnalyzer comment: ''!
 !StParseNodeAnalyzer categoriesForClass!System-Compiler! !
 !StParseNodeAnalyzer methodsFor!
 
-acceptAssignmentNode: anAssignmentNode 
-	self visitNode: anAssignmentNode value.
-	self varRef: anAssignmentNode variable isAssignment: true!
-
-acceptBlockNode: aBlockNode
-	| inlined |
-	self createScope: aBlockNode.
-	inlined := aBlockNode isInlined.
-	inlined ifFalse: [scopeDepth := scopeDepth + 1].
-	scopeDepth > VMConstants.MaxBlockNesting
-		ifTrue: [self signalError: CErrBlockNestingTooDeep forNode: aBlockNode].
-	self processBlock: aBlockNode.
-	self removeScope.
-	inlined ifFalse: [scopeDepth := scopeDepth - 1]!
-
-acceptLiteralArrayNode: aLiteralArrayNode
-	"We don't want to visit the individual elements"!
-
-acceptLiteralNode: aLiteralNode 
-	addToFrame value: aLiteralNode.!
-
-acceptMessageNode: aMessageNode
-	"Process a message send (check for wrong argument types for optimized messages, etc)"
-
-	| receiver |
-	super acceptMessageNode: aMessageNode.
-	self addMessageToFrame: aMessageNode.
-	self checkMessageArgumentCount: aMessageNode.
-	self checkOptimizedMessages: aMessageNode.
-	receiver := aMessageNode receiver.
-	(receiver isVariable and: [receiver name = 'super']) ifTrue: [self checkSupersend: aMessageNode].
-	self checkTryBlock: aMessageNode!
-
-acceptMethodNode: aMethodNode 
-	self checkRestrictedSelectors: aMethodNode.
-	self createScope: aMethodNode.
-	super acceptMethodNode: aMethodNode.
-	self removeScope!
-
-acceptOptimizedNode: anOptimizedNode
-	| wasInStaticExpression outerAddToFrame |
-	outerAddToFrame := addToFrame.
-	(wasInStaticExpression := inStaticExpression)
-		ifFalse: [addToFrame := [:literal | self addToFrameStatic: literal]].
-	inStaticExpression := true.
-	[super acceptOptimizedNode: anOptimizedNode] ensure: 
-			[inStaticExpression := wasInStaticExpression.
-			addToFrame := outerAddToFrame]!
-
-acceptSequenceNode: aSequenceNode
-	| answer scope |
-	answer := super acceptSequenceNode: aSequenceNode.
-	scope := self currentScope.
-	aSequenceNode temporaries do: 
-			[:each |
-			| firstWritten firstRead nodes |
-			nodes := scope refsToTemp: each name.
-			firstWritten := nodes first.
-			firstRead := nodes second.
-			firstWritten
-				ifNil: 
-					["Not Written..."
-					firstRead
-						ifNil: [self signalError: CWarnUnreferencedTemp forNode: each]
-						ifNotNil: [self signalError: CWarnReadNotWritten forNode: firstRead]]
-				ifNotNil: 
-					["Written..."
-					nodes second ifNil: [self signalError: CWarnWrittenNotRead forNode: firstWritten]]].
-	^answer!
-
-acceptVariableNode: aVariableNode 
-	self varRef: aVariableNode isAssignment: false!
-
 addLiteral: aLiteralNode value: anObject
 	(literals addNewElement: anObject) ifTrue: [self checkLiteralFrameSize: aLiteralNode]!
 
@@ -607,7 +534,7 @@ varRef: aVariableNode isAssignment: aBoolean
 						ifFalse: [self storeStatic: aVariableNode variable: var]]
 				ifFalse: [self pushStatic: aVariableNode variable: var]]!
 
-visitArguments: aNodeCollection
+visitArgumentNodes: aNodeCollection
 	| count max |
 	aNodeCollection isEmpty ifTrue: [^self].
 	count := self countOuterTemps.
@@ -623,7 +550,79 @@ visitArguments: aNodeCollection
 						forNode: each
 						extra: each name]]!
 
-visitTempDecls: aNodeCollection
+visitAssignmentNode: anAssignmentNode
+	self visitNode: anAssignmentNode value.
+	self varRef: anAssignmentNode variable isAssignment: true!
+
+visitBlockNode: aBlockNode
+	| inlined |
+	self createScope: aBlockNode.
+	inlined := aBlockNode isInlined.
+	inlined ifFalse: [scopeDepth := scopeDepth + 1].
+	scopeDepth > VMConstants.MaxBlockNesting
+		ifTrue: [self signalError: CErrBlockNestingTooDeep forNode: aBlockNode].
+	self processBlock: aBlockNode.
+	self removeScope.
+	inlined ifFalse: [scopeDepth := scopeDepth - 1]!
+
+visitLiteralArrayNode: aLiteralArrayNode
+	"We don't want to visit the individual elements"
+
+	!
+
+visitLiteralNode: aLiteralNode
+	addToFrame value: aLiteralNode!
+
+visitMessageNode: aMessageNode
+	"Process a message send (check for wrong argument types for optimized messages, etc)"
+
+	| receiver |
+	super visitMessageNode: aMessageNode.
+	self addMessageToFrame: aMessageNode.
+	self checkMessageArgumentCount: aMessageNode.
+	self checkOptimizedMessages: aMessageNode.
+	receiver := aMessageNode receiver.
+	(receiver isVariable and: [receiver name = 'super']) ifTrue: [self checkSupersend: aMessageNode].
+	self checkTryBlock: aMessageNode!
+
+visitMethodNode: aMethodNode
+	self checkRestrictedSelectors: aMethodNode.
+	self createScope: aMethodNode.
+	super visitMethodNode: aMethodNode.
+	self removeScope!
+
+visitOptimizedNode: anOptimizedNode
+	| wasInStaticExpression outerAddToFrame |
+	outerAddToFrame := addToFrame.
+	(wasInStaticExpression := inStaticExpression)
+		ifFalse: [addToFrame := [:literal | self addToFrameStatic: literal]].
+	inStaticExpression := true.
+	[super visitOptimizedNode: anOptimizedNode] ensure: 
+			[inStaticExpression := wasInStaticExpression.
+			addToFrame := outerAddToFrame]!
+
+visitSequenceNode: aSequenceNode
+	| answer scope |
+	answer := super visitSequenceNode: aSequenceNode.
+	scope := self currentScope.
+	aSequenceNode temporaries do: 
+			[:each |
+			| firstWritten firstRead nodes |
+			nodes := scope refsToTemp: each name.
+			firstWritten := nodes first.
+			firstRead := nodes second.
+			firstWritten
+				ifNil: 
+					["Not Written..."
+					firstRead
+						ifNil: [self signalError: CWarnUnreferencedTemp forNode: each]
+						ifNotNil: [self signalError: CWarnReadNotWritten forNode: firstRead]]
+				ifNotNil: 
+					["Written..."
+					nodes second ifNil: [self signalError: CWarnWrittenNotRead forNode: firstWritten]]].
+	^answer!
+
+visitTemporaryNodes: aNodeCollection
 	| max count scope |
 	aNodeCollection isEmpty ifTrue: [^self].
 	scope := self currentScope.
@@ -641,16 +640,10 @@ visitTempDecls: aNodeCollection
 					[self
 						signalError: CErrTooManyTemps
 						forNode: each
-						extra: identifier]]! !
-!StParseNodeAnalyzer categoriesFor: #acceptAssignmentNode:!public!visitor/double dispatching! !
-!StParseNodeAnalyzer categoriesFor: #acceptBlockNode:!public!visitor/double dispatching! !
-!StParseNodeAnalyzer categoriesFor: #acceptLiteralArrayNode:!public!visitor/double dispatching! !
-!StParseNodeAnalyzer categoriesFor: #acceptLiteralNode:!public!visitor/double dispatching! !
-!StParseNodeAnalyzer categoriesFor: #acceptMessageNode:!public!visitor/double dispatching! !
-!StParseNodeAnalyzer categoriesFor: #acceptMethodNode:!public!visitor/double dispatching! !
-!StParseNodeAnalyzer categoriesFor: #acceptOptimizedNode:!public!visitor/double dispatching! !
-!StParseNodeAnalyzer categoriesFor: #acceptSequenceNode:!public!visitor/double dispatching! !
-!StParseNodeAnalyzer categoriesFor: #acceptVariableNode:!public!visitor/double dispatching! !
+						extra: identifier]]!
+
+visitVariableNode: aVariableNode
+	self varRef: aVariableNode isAssignment: false! !
 !StParseNodeAnalyzer categoriesFor: #addLiteral:value:!helpers!private! !
 !StParseNodeAnalyzer categoriesFor: #addMessageToFrame:!helpers!private! !
 !StParseNodeAnalyzer categoriesFor: #addToFrame:!helpers!private! !
@@ -704,8 +697,17 @@ visitTempDecls: aNodeCollection
 !StParseNodeAnalyzer categoriesFor: #targetOfMessage:!commands!private!refactoring! !
 !StParseNodeAnalyzer categoriesFor: #tempDecls!accessing!private! !
 !StParseNodeAnalyzer categoriesFor: #varRef:isAssignment:!helpers!private! !
-!StParseNodeAnalyzer categoriesFor: #visitArguments:!public!visiting! !
-!StParseNodeAnalyzer categoriesFor: #visitTempDecls:!public!visiting! !
+!StParseNodeAnalyzer categoriesFor: #visitArgumentNodes:!public!visiting! !
+!StParseNodeAnalyzer categoriesFor: #visitAssignmentNode:!public!visitor/double dispatching! !
+!StParseNodeAnalyzer categoriesFor: #visitBlockNode:!public!visitor/double dispatching! !
+!StParseNodeAnalyzer categoriesFor: #visitLiteralArrayNode:!public!visitor/double dispatching! !
+!StParseNodeAnalyzer categoriesFor: #visitLiteralNode:!public!visitor/double dispatching! !
+!StParseNodeAnalyzer categoriesFor: #visitMessageNode:!public!visitor/double dispatching! !
+!StParseNodeAnalyzer categoriesFor: #visitMethodNode:!public!visitor/double dispatching! !
+!StParseNodeAnalyzer categoriesFor: #visitOptimizedNode:!public!visitor/double dispatching! !
+!StParseNodeAnalyzer categoriesFor: #visitSequenceNode:!public!visitor/double dispatching! !
+!StParseNodeAnalyzer categoriesFor: #visitTemporaryNodes:!public!visiting! !
+!StParseNodeAnalyzer categoriesFor: #visitVariableNode:!public!visitor/double dispatching! !
 
 !StParseNodeAnalyzer class methodsFor!
 

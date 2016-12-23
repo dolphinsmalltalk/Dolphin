@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 StTagNode subclass: #StPrimitiveNode
 	instanceVariableNames: 'primitiveIndex'
@@ -15,8 +15,8 @@ StPrimitiveNode comment: ''!
 	self class = anObject class ifFalse: [^false].
 	^self primitiveIndex = anObject primitiveIndex!
 
-acceptVisitor: aProgramNodeVisitor 
-	^aProgramNodeVisitor acceptPrimitiveNode: self!
+acceptVisitor: aProgramNodeVisitor
+	^aProgramNodeVisitor visitPrimitiveNode: self!
 
 primitiveIndex
 	^primitiveIndex!

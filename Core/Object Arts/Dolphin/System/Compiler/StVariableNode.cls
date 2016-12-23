@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 StValueNode subclass: #StVariableNode
 	instanceVariableNames: 'token'
@@ -20,8 +20,8 @@ Instance Variables:
 	self class = anObject class ifFalse: [^false].
 	^self name = anObject name!
 
-acceptVisitor: aProgramNodeVisitor 
-	^aProgramNodeVisitor acceptVariableNode: self!
+acceptVisitor: aProgramNodeVisitor
+	^aProgramNodeVisitor visitVariableNode: self!
 
 equalTo: anObject withMapping: aDictionary 
 	^self class = anObject class and: 
