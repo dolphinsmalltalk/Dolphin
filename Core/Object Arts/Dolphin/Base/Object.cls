@@ -1407,8 +1407,17 @@ update: anAspect with: argument from: originator
 	self update: anAspect with: argument.!
 
 when: aSymbol perform: aValuable 
-	"Adds aValuable to the event list for the event named by aSymbol 
-	in the receiver"
+	"Private - Adds aValuable to the event list for the event named by aSymbol in the receiver.
+	N.B. Do not use this to register blocks as event handlers as you will not be able to
+	unregister them and they will remain registered, creating a memory leak. Instead use code of
+	the following form: 
+		handler := [:arg1 | ...].
+		eventSource when: #myEvent: send: #value: to: handler.
+		...
+		eventSource trigger: #myEvent: with: 123.	""handler Block is evaluated with 123""
+		...
+		eventSource removeEventsTriggeredFor: handler.
+	"
 
 	self getEvents 
 		ifNil: 
@@ -1633,7 +1642,7 @@ yourself
 !Object categoriesFor: #update:!dependency!public! !
 !Object categoriesFor: #update:with:!dependency!public! !
 !Object categoriesFor: #update:with:from:!dependency!public! !
-!Object categoriesFor: #when:perform:!events!public! !
+!Object categoriesFor: #when:perform:!events!private! !
 !Object categoriesFor: #when:send:to:!events!public! !
 !Object categoriesFor: #when:send:to:with:!events!public! !
 !Object categoriesFor: #when:send:to:withArguments:!events!public! !
