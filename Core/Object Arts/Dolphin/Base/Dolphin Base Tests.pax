@@ -133,8 +133,8 @@ package setPrerequisites: (IdentitySet new
 	add: '..\IDE\Base\Development System';
 	add: 'Dolphin';
 	add: 'Dolphin Additional Sort Algorithms';
-	add: 'Dolphin Base';
 	add: '..\System\Base64\Dolphin Base64';
+	add: 'Dolphin Command-line Parser';
 	add: '..\System\Win32\Dolphin File System Watcher';
 	add: '..\System\Filer\Dolphin Literal Filer';
 	add: '..\MVP\Base\Dolphin MVP Base';
