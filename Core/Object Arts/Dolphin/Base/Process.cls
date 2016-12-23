@@ -529,7 +529,7 @@ size
 	size is only recorded from the SP on process switches, when thisContext is accessed,
 	on GC's, on invocations of the #allReferences primitive, and on image save."
 
-	Processor activeProcess == self ifTrue: [thisContext].
+	thisContext.
 	^super size!
 
 spOfIndex: anInteger

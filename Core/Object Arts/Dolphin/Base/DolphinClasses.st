@@ -191,7 +191,7 @@ Object subclass: #Magnitude
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Object subclass: #MemoryManager
-	instanceVariableNames: 'finalizer lastRequests hospice hospiceHighWater reserved undertaker bereavements bereaved bereavedHighWater gcInterval lastGCTime lastGCDuration objectHeaderSize'
+	instanceVariableNames: 'finalizer lastRequests hospice hospiceHighWater maxObjects undertaker bereavements bereaved bereavedHighWater gcInterval lastGCTime lastGCDuration objectHeaderSize'
 	classVariableNames: 'Current GCInterval'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!

@@ -38,6 +38,27 @@ testBytesUsedByObject
 	self assert: (meman bytesUsedByObject: #()) = (0 + 16).
 	self assert: (meman bytesUsedByObject: #(1)) = (granularity + 16).
 	self assert: (meman bytesUsedByObject: #(1 2)) = (4 * 2 + 16).
-! !
+!
+
+testOtOverflow
+	| subject objects i max events handler |
+	subject := MemoryManager current.
+	max := 8192.
+	objects := Array new: max.
+	events := OrderedCollection new.
+	i := 1.
+	handler := [:otSize | events add: i -> otSize].
+	subject
+		when: #otOverflow:
+		send: #value:
+		to: handler.
+	
+	[subject compact.
+	[i <= max] whileTrue: 
+			[objects at: i put: Object new.
+			i := i + 1]]
+			ensure: [subject removeEventsTriggeredFor: handler].
+	self assert: events notEmpty! !
 !MemoryManagerTest categoriesFor: #testBytesUsedByObject!public!unit tests! !
+!MemoryManagerTest categoriesFor: #testOtOverflow!public!unit tests! !
 

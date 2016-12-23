@@ -388,12 +388,10 @@ onStartup: args
 	"Pass control to the SessionManager to start up as it wishes"
 	SessionManager current onStartup: args!
 
-otOverflow: anInteger 
+otOverflow: anInteger
 	"Private - The VM has allocated more memory for object headers. Inform the memory manager."
 
-	MemoryManager current otOverflow: anInteger.
-	"This interrupt is only ever sent to the active process, therefore no need to reschedule"
-	self enableAsyncEvents: true!
+	MemoryManager current otOverflow: anInteger!
 
 pendingTerminations
 	^pendingTerminations!
