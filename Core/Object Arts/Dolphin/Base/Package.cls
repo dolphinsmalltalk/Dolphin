@@ -145,13 +145,7 @@ allResourceIdentifiers
 	| resources |
 	resources := Set new.
 	self classesDo: [:each | each resourceIdentifiersDo: [:eachResId | resources add: eachResId]].
-	prefix := ResourceIdentifier selectorPrefix.
-	self methodNames do: 
-			[:each |
-			(each value beginsWith: prefix)
-				ifTrue: 
-					[(self behaviorFromName: each key ifAbsent: [])
-						ifNotNil: [:methodClass | resources add: (ResourceIdentifier class: methodClass instanceClass selector: each value)]]].
+	self looseResourceIdentifiersDo: [:each | resources add: each].
 	^resources!
 
 allResourceNames
@@ -1161,6 +1155,22 @@ loadPAX
 	self fileInScript: #postinstall] 
 			ensure: [filer close]!
 
+looseResourceIdentifiers
+	| rids |
+	rids := Set new.
+	self looseResourceIdentifiersDo: [:each | rids add: each].
+	^rids!
+
+looseResourceIdentifiersDo: aMonadicValuable
+	self methodNames do: 
+			[:each |
+			(each value beginsWith: ResourceIdentifier selectorPrefix)
+				ifTrue: 
+					[(self behaviorFromName: each key ifAbsent: [])
+						ifNotNil: 
+							[:methodClass |
+							aMonadicValuable value: (ResourceIdentifier class: methodClass instanceClass selector: each value)]]]!
+
 manager
 	"Answer the object responsible for managing this package."
 
@@ -1397,16 +1407,18 @@ packageFileName
 
 	^File fullPathOf: packagePathname relativeTo: SessionManager current imageBase!
 
-packageFileName: pathname 
+packageFileName: pathname
 	"Private - Set the path name (ie Path+Stem+Extension) of the file used
 	to store the binary representation of the receiver. This is always held as
 	relative to the current image base. This name should only be changed
 	through the PackageManager, and in fact it is not advisable to change
 	it any way because other packages may be dependent upon it.."
 
-	self packagePathname: (FileLocator imageRelative 
-				relativePathTo: (File default: pathname
-						extension: self class packageExtension))!
+	(self setPackageFileName: pathname)
+		ifTrue: 
+			[self isChanged: true.
+			"If a package is renamed, then the dependent packages need to be resaved to update their pre-requisite information"
+			self dependentPackages do: [:each | each isChanged: true]]!
 
 packageFolder
 	^File splitPathFrom: self packagePathname!
@@ -1414,18 +1426,15 @@ packageFolder
 packagePathname
 	^packagePathname!
 
-packagePathname: aString 
-	"Private - Set the receiver's path and name."
+packagePathname: aString
+	"Private - Set the receiver's path and name. Answer whether the name was changed."
 
 	| oldname |
 	packagePathname := aString.
-	"The name can no longer be independent of the file name, and is in fact just cached from the file stem"
+	"The name cannot be independent of the file name, and is in fact just cached from the file stem"
 	oldname := name.
 	name := File splitStemFrom: aString.
-	(oldname isNil or: [oldname sameAs: name]) ifTrue: [^self].
-	self isChanged: true.
-	"If a package is renamed, then the dependent packages need to be resaved to update their pre-requisite information"
-	self dependentPackages do: [:each | each isChanged: true]!
+	^oldname isNil or: [(oldname sameAs: name) not]!
 
 packageVersion
 	"Answer the version identification of the receiver as a String"
@@ -1619,7 +1628,7 @@ resetPrerequisites
 resourceIdentifiers
 	"Answer a collection of <ResourceIdentifier> objects owned by the receiver."
 
-	^ResourceIdentifier allResourceIdentifiers select: [:each | each owningPackage == self]!
+	^self allResourceIdentifiers!
 
 save
 	"Save the receiver to a single PAC file. This includes all of the source for the receiver's contents.
@@ -1930,6 +1939,10 @@ setManualPrerequisites: anArrayOfStrings
 	and should not be deleted**."
 
 	manualPrerequisites := anArrayOfStrings!
+
+setPackageFileName: aString
+	^self packagePathname: (FileLocator imageRelative
+				relativePathTo: (File default: aString extension: self class packageExtension))!
 
 setPrerequisites: anIdentitySet
 	"Private - Set the pre-computed pre-requisites of the receiver to specified Set of package names. 
@@ -2267,7 +2280,7 @@ untracedGlobals: aCollectionOfSymbols
 upateFileNames
 	"Private - Update the package filename to match the package name and to be a PAC."
 
-	self packageFileName: (File 
+	self setPackageFileName: (File
 				composePath: self path
 				stem: self name
 				extension: self class packageExtension).
@@ -2444,6 +2457,8 @@ If you experience subsequent problems please contact the package supplier for an
 !Package categoriesFor: #loadPAC!private!source filing! !
 !Package categoriesFor: #loadPAC:!private!source filing! !
 !Package categoriesFor: #loadPAX!private!source filing-pax! !
+!Package categoriesFor: #looseResourceIdentifiers!accessing!public! !
+!Package categoriesFor: #looseResourceIdentifiersDo:!enumerating!public! !
 !Package categoriesFor: #manager!accessing!public! !
 !Package categoriesFor: #manualPrerequisites!accessing!public! !
 !Package categoriesFor: #manualPrerequisites:!accessing!public! !
@@ -2516,6 +2531,7 @@ If you experience subsequent problems please contact the package supplier for an
 !Package categoriesFor: #scripts!accessing!private! !
 !Package categoriesFor: #setEvents:!events!private! !
 !Package categoriesFor: #setManualPrerequisites:!accessing!private! !
+!Package categoriesFor: #setPackageFileName:!accessing!private! !
 !Package categoriesFor: #setPrerequisites:!accessing!private! !
 !Package categoriesFor: #sourceDescriptor!accessing!private! !
 !Package categoriesFor: #sourceDescriptor:!accessing!private! !
@@ -2590,7 +2606,7 @@ fromFile: path
 	answer := ((File splitExtensionFrom: pathname) sameAs: self sourcePackageExtension) 
 		ifTrue: [self fromPAXFile: pathname]
 		ifFalse: [self fromPACFile: pathname].
-	answer packageFileName: pathname.
+	answer setPackageFileName: pathname.
 	^answer!
 
 fromPACFile: pathname 
@@ -2652,7 +2668,7 @@ name: nameString
 	"Answer a new instance of the receiver with the <readableString> name, nameString."
 
 	^self new
-		packageFileName: nameString;
+		setPackageFileName: nameString;
 		yourself
 !
 

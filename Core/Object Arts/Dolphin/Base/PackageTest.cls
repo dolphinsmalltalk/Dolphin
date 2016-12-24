@@ -20,31 +20,32 @@ checkNoTestPackageContents
 	self assert: (scribbleClass class compiledMethodAt: #resource_Scribble_test ifAbsent: []) isNil!
 
 checkTestPackageContents
-	| scribbleTestPackage scribbleTestClass scribbleTest scribbleTestResourceMethod scribbleTestDefaultViewId scribbleTestViewId scribbleClass |
+	| scribbleTestPackage scribbleTestClass scribbleTest scribbleTestResourceMethod scribbleTestDefaultViewId scribbleTestViewId scribbleClass resourceIds |
 	scribbleTestPackage := loadedPackages first.
 	self assert: (scribbleTestPackage name beginsWith: 'ScribbleTest').
 	scribbleTestClass := Smalltalk at: #ScribbleTest.
 	self assert: scribbleTestClass notNil.
 	self assert: (scribbleTestPackage classes identityIncludes: scribbleTestClass).
-	scribbleTestResourceMethod := scribbleTestClass class 
+	scribbleTestResourceMethod := scribbleTestClass class
 				compiledMethodAt: #resource_Default_scribble_test_view.
 	self assert: scribbleTestResourceMethod owningPackage = scribbleTestPackage.
 	scribbleClass := Smalltalk at: #Scribble.
 	self assert: (scribbleClass compiledMethodAt: #looseA) owningPackage = scribbleTestPackage.
 	self assert: (scribbleClass compiledMethodAt: #looseC) owningPackage = scribbleTestPackage.
-	self assert: (scribbleClass class compiledMethodAt: #resource_Scribble_test) owningPackage 
+	self assert: (scribbleClass class compiledMethodAt: #resource_Scribble_test) owningPackage
 				= scribbleTestPackage.
-	self assert: scribbleTestPackage resourceIdentifiers size = 2.
+	resourceIds := scribbleTestPackage allResourceIdentifiers.
+	self assert: resourceIds size = 2.
 	scribbleTestDefaultViewId := ResourceIdentifier class: scribbleTestClass
 				name: 'Default scribble test view'.
-	self assert: (scribbleTestPackage resourceIdentifiers includes: scribbleTestDefaultViewId).
+	self assert: (resourceIds includes: scribbleTestDefaultViewId).
 	self assert: scribbleTestDefaultViewId owningPackage = scribbleTestPackage.
 	scribbleTestViewId := ResourceIdentifier class: scribbleClass name: 'Scribble test'.
-	self assert: (scribbleTestPackage resourceIdentifiers includes: scribbleTestViewId).
+	self assert: (resourceIds includes: scribbleTestViewId).
 	self assert: scribbleTestViewId owningPackage = scribbleTestPackage.
 	
 	[scribbleTest := scribbleTestClass show.
-	self assert: scribbleTest a = 'A'] 
+	self assert: scribbleTest a = 'A']
 			ensure: [scribbleTest view topView destroy]!
 
 d5ForwardRefTestPacContents
@@ -201,6 +202,12 @@ b2xwaGluZHIwMDUuZGxsAAAAAA==''))!!
 
 '!
 
+dolphinTestPackages
+	^Array
+		with: DolphinTestPackages current a
+		with: DolphinTestPackages current b
+		with: DolphinTestPackages current c!
+
 filenameFor: aString 
 	^FileLocator installRelative localFileSpecFor: 'Resources\Tests\' , aString!
 
@@ -211,7 +218,7 @@ loadAndTestPackage: filename
 
 setUp
 	Package classPool at: 'CheckTimestamps' put: true.
-	self testPackages do: [:each | each updateTimestamp]!
+	self dolphinTestPackages do: [:each | each updateTimestamp]!
 
 tearDown
 	Package classPool at: 'CheckTimestamps' put: false.
@@ -254,20 +261,24 @@ testLoad60Pac
 testLoad60Pax
 	self loadAndTestPackage: 'ScribbleTestPackages\6.0\ScribbleTest6.pax'!
 
-testPackages
-	^Array 
-		with: DolphinTestPackages current a
-		with: DolphinTestPackages current b
-		with: DolphinTestPackages current c!
+testLooseResourceIdentifiers
+	| all loose notLoose |
+	loose := Package manager looseResourceIdentifiers.
+	self assert: (loose allSatisfy: [:each | each owningClass owningPackage ~= each owningPackage]).
+	all := ResourceIdentifier allResourceIdentifiers.
+	self assert: (loose difference: all) isEmpty.
+	notLoose := all difference: loose.
+	self assert: (notLoose allSatisfy: [:each | each owningClass owningPackage = each owningPackage])!
 
 testTimestampInitialized
 	self assert: Package new timestamp asInteger = 0! !
 !PackageTest categoriesFor: #checkNoTestPackageContents!private!unit tests! !
 !PackageTest categoriesFor: #checkTestPackageContents!private!unit tests! !
 !PackageTest categoriesFor: #d5ForwardRefTestPacContents!private!unit tests! !
-!PackageTest categoriesFor: #filenameFor:!private!unit tests! !
-!PackageTest categoriesFor: #loadAndTestPackage:!private!unit tests! !
-!PackageTest categoriesFor: #setUp!private!unit tests! !
+!PackageTest categoriesFor: #dolphinTestPackages!helpers!private! !
+!PackageTest categoriesFor: #filenameFor:!helpers!private! !
+!PackageTest categoriesFor: #loadAndTestPackage:!helpers!private! !
+!PackageTest categoriesFor: #setUp!initializing!private!unit tests! !
 !PackageTest categoriesFor: #tearDown!private!unit tests! !
 !PackageTest categoriesFor: #testForwardRefLoadPac!public!unit tests! !
 !PackageTest categoriesFor: #testLoad21Pac!public!unit tests! !
@@ -277,7 +288,7 @@ testTimestampInitialized
 !PackageTest categoriesFor: #testLoad51Pax!public!unit tests! !
 !PackageTest categoriesFor: #testLoad60Pac!public!unit tests! !
 !PackageTest categoriesFor: #testLoad60Pax!public!unit tests! !
-!PackageTest categoriesFor: #testPackages!public!unit tests! !
+!PackageTest categoriesFor: #testLooseResourceIdentifiers!public! !
 !PackageTest categoriesFor: #testTimestampInitialized!public!unit tests! !
 
 !PackageTest class methodsFor!
