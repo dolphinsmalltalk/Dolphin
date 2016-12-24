@@ -13,6 +13,39 @@ UnicodeStrings can be constructed from <String>s when needed by sending the #asU
 !UnicodeString categoriesForClass!Collections-Text! !
 !UnicodeString methodsFor!
 
+, aSequencedReadableCollection
+	"Answer a new <sequencedReadableCollection> like the receiver (i.e. of the receiver's
+	species but not necessarily the exact same class) containing the elements	of the receiver 
+	in their original order with those of the <sequencedReadableCollection> argument
+	appended in their original order.
+	Note: This is the concatenation operation, and is a simplified form of 
+	#copyReplaceFrom:to:with:."
+
+	| size newSize |
+	size := self size.
+	newSize := size + aSequencedReadableCollection size.
+	^(self copyLikeOfSize: newSize)
+		replaceFrom: 1
+			to: size
+			with: self
+			startingAt: 1;
+		replaceFrom: size + 1
+			to: newSize
+			with: aSequencedReadableCollection
+			startingAt: 1;
+		yourself!
+
+asByteArray
+	"Answer a <ByteArray> containing the Unicode representation of the characters of the
+	receiver."
+
+	| size |
+	size := self basicSize.
+	^super
+		replaceBytesOf: (ByteArray new: size) 
+		from: 1 to: size startingAt: 1.
+!
+
 asLowercase
 	| copy |
 	copy := self basicCopy.
@@ -53,14 +86,12 @@ asUppercase
 at: anInteger
 	"Answer the character at index, anInteger, in the receiver."
 
-	| index |
-	index := anInteger+anInteger.
-	^Character value: (self basicAt: index) * 256 + (self basicAt: index-1)!
+	^Character value: (self wordAtOffset: anInteger + anInteger - 2)!
 
 at: anInteger put: aCharacter
 	"Replace the character at index, anInteger, in the receiver with aCharacter."
 
-	^super at: anInteger+anInteger-1 put: aCharacter!
+	^self wordAtOffset: anInteger + anInteger - 2 put: aCharacter asInteger!
 
 beginsWith: aCollection
 	"Answer whether the receiver begins with the sequence
@@ -128,6 +159,17 @@ nextIndexOf: anElement from: start to: stop
 	self from: start to: stop keysAndValuesDo: [:i :elem | elem = anElement ifTrue: [^i]].
 	^0!
 
+replaceBytesOf: aByteObject from: start to: stop startingAt: fromStart
+	"Private - Standard method for transfering bytes from one variable byte object to another,
+	normally double dispatched from #replaceFrom:to:with:startingAt:"
+
+	| fromOffset |
+	fromOffset := fromStart - start.
+	stop to: start
+		by: -1
+		do: [:i | aByteObject basicAt: i put: (self at: i + fromOffset) asInteger].
+	^aByteObject!
+
 replaceFrom: startInteger to: stopInteger with: aReadableString startingAt: startAtInteger 
 	"Replace the characters of the receiver at index positions startInteger through stopInteger
 	inclusive with consecutive characters of the <readableString>, aReadableString, beginning at
@@ -158,7 +200,39 @@ size
 
 strcspn: aString start: anInteger 
 	^CRTLibrary default wcscspn: self yourAddress + ((anInteger - 1) * 2)
-		strCharSet: aString asUnicodeString! !
+		strCharSet: aString asUnicodeString!
+
+wordAtOffset: anInteger
+	"Private - Answer the unsigned 2 byte integer at offset (i.e. zero relative) anInteger in the receiver. 
+	On iX86 the high and low order bytes are reversed; i.e. the bytes are ordered least 
+	significant first.
+
+	Primitive failure reasons:
+		0 -	anInteger is not a SmallInteger.
+		1 -	anInteger is out of bounds."
+
+	| answer |
+	<primitive: 124>
+	answer := 0.
+	2 to: 1 by: -1 do: [:i |
+		answer := (answer bitShift: 8) + (self basicAt: anInteger + i)].
+	^answer!
+
+wordAtOffset: anInteger put: anObject
+	"Private - Store an unsigned 16-bit value at byte offset anInteger within the receiver.
+	If anObject is not representable as a 16-bit unsigned (Small)Integer, then 
+	raise a 'cannot hold' error.
+
+	Primitive failure reasons:
+		0 -	anInteger is not a SmallInteger.
+		1 -	anInteger is out of bounds.
+		2 -	anObject is not a SmallInteger
+		3 -	anObject is not in the range -32768..32767 (i.e. out of signed 16-bit range)."
+
+	<primitive: 125>
+	^self primitiveFailed! !
+!UnicodeString categoriesFor: #,!copying!public! !
+!UnicodeString categoriesFor: #asByteArray!converting!public! !
 !UnicodeString categoriesFor: #asLowercase!converting!public! !
 !UnicodeString categoriesFor: #asString!converting!public! !
 !UnicodeString categoriesFor: #asUnicodeString!converting!public! !
@@ -172,11 +246,14 @@ strcspn: aString start: anInteger
 !UnicodeString categoriesFor: #first:!copying!public! !
 !UnicodeString categoriesFor: #nextIdentityIndexOf:from:to:!public!searching! !
 !UnicodeString categoriesFor: #nextIndexOf:from:to:!public!searching! !
+!UnicodeString categoriesFor: #replaceBytesOf:from:to:startingAt:!double dispatch!private! !
 !UnicodeString categoriesFor: #replaceFrom:to:with:startingAt:!public!replacing! !
 !UnicodeString categoriesFor: #resize:!mutating!public! !
 !UnicodeString categoriesFor: #shallowCopy!public! !
 !UnicodeString categoriesFor: #size!accessing!public! !
 !UnicodeString categoriesFor: #strcspn:start:!private!searching! !
+!UnicodeString categoriesFor: #wordAtOffset:!accessing!primitives!private! !
+!UnicodeString categoriesFor: #wordAtOffset:put:!accessing!primitives!private! !
 
 !UnicodeString class methodsFor!
 

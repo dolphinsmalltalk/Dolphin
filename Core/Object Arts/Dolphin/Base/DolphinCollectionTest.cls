@@ -10,8 +10,8 @@ DolphinCollectionTest comment: ''!
 !DolphinCollectionTest categoriesForClass!Unclassified! !
 !DolphinCollectionTest methodsFor!
 
-assimilate: aSmallInteger 
-	^aSmallInteger!
+assimilate: anObject
+	^anObject!
 
 assimilateElements: aCollection 
 	^aCollection asArray collect: [:each | self assimilate: each]!

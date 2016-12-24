@@ -32,6 +32,20 @@ SequenceableCollection comment: 'SequenceableCollection is the class of Collecti
 			startingAt: 1;
 		yourself!
 
+_appendToString: aString
+	| size newSize |
+	size := aString size.
+	^(aString copyLikeOfSize: (newSize := size + self size))
+		replaceFrom: 1
+			to: size
+			with: aString
+			startingAt: 1;
+		replaceFrom: size + 1
+			to: newSize
+			with: self
+			startingAt: 1;
+		yourself!
+
 _sameAsString: comparand
 	"Private - Answer whether the receiver collates the same as <readableString>
 	argument, comparand.
@@ -905,7 +919,7 @@ replaceBytesOf: aByteObject from: start to: stop startingAt: fromStart
 
 	| fromOffset |
 	fromOffset := fromStart - start.
-	start to: stop do: [:i | aByteObject at: i put: (self at: i + fromOffset)].
+	start to: stop do: [:i | aByteObject basicAt: i put: (self at: i + fromOffset) asInteger].
 	^aByteObject!
 
 replaceElementsOf: anIndexableObject from: startInteger to: stopInteger startingAt: startAtInteger
@@ -1119,6 +1133,7 @@ writeStream
 
 	^WriteStream on: self! !
 !SequenceableCollection categoriesFor: #,!copying!public! !
+!SequenceableCollection categoriesFor: #_appendToString:!comparing!double dispatch!private! !
 !SequenceableCollection categoriesFor: #_sameAsString:!comparing!private! !
 !SequenceableCollection categoriesFor: #=!comparing!public! !
 !SequenceableCollection categoriesFor: #after:!public!searching! !
