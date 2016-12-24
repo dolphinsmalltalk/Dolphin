@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ListPresenter subclass: #ResourceListPresenter
 	instanceVariableNames: 'filterBlock resourcesPresenter previewPresenter resourceIdModel'
@@ -45,6 +45,13 @@ browseSystem
 
 caption
 	^''!
+
+clear
+	"Empty the resource list."
+
+	filterBlock := [:each | false].
+	self list: #()
+	!
 
 clearSelection
 	"Remove the selected resource from the ResourceManager."
@@ -296,6 +303,7 @@ systemModel
 !ResourceListPresenter categoriesFor: #browseReferences!commands!public! !
 !ResourceListPresenter categoriesFor: #browseSystem!commands!public! !
 !ResourceListPresenter categoriesFor: #caption!accessing!public! !
+!ResourceListPresenter categoriesFor: #clear!commands!public! !
 !ResourceListPresenter categoriesFor: #clearSelection!commands!public! !
 !ResourceListPresenter categoriesFor: #createComponents!initializing!public! !
 !ResourceListPresenter categoriesFor: #createSchematicWiring!initializing!public! !

@@ -2681,11 +2681,13 @@ hasVisibleLineEndings: visibleBoolean
 hideIndicators
 	"Private - Reconfigure all indicator styles to hidden apart from the default 3 pre-configured styles."
 
+	| lib |
 	this ifNil: [^self].
+	lib := ScintillaLibrary default.
 	3 to: INDIC_MAX
 		do: 
-			[:each | 
-			ScintillaLibrary default 
+			[:each |
+			lib
 				directFunction: this
 				msg: SCI_INDICSETSTYLE
 				wParam: each

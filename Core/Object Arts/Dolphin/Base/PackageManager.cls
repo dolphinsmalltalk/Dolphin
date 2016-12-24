@@ -218,7 +218,7 @@ allPackagedClasses
 
 	| answer |
 	answer := OrderedCollection new: 2000.
-	self packages do: [:eachPackage | eachPackage classesDo: [:eachClass | answer add: eachClass]].
+	self packages do: [:eachPackage | eachPackage classesDo: [:eachClass | answer addLast: eachClass]].
 	^answer!
 
 allPackagedGlobalNames

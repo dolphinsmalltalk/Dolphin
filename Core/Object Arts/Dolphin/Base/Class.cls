@@ -860,8 +860,9 @@ allClasses
 
 	| answer roots |
 	roots := self allRoots.
-	answer := OrderedCollection withAll: roots.
-	roots do: [:root | answer addAll: root allSubclasses].
+	answer := OrderedCollection new: 2500.
+	answer addAllLast: roots.
+	roots do: [:root | root allSubclassesBreadthFirstDo: [:each | answer addLast: each]].
 	^answer.!
 
 allClassesDo: operation

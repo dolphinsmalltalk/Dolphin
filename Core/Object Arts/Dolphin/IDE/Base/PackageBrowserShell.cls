@@ -259,7 +259,7 @@ clearPrerequisites
 clearResources
 	"Private - Clear the resources list."
 
-	resourcesPresenter filterBlock: [:each | each isNil]!
+	resourcesPresenter clear!
 
 clearScriptNames
 	"Private - Clear the scripts list."
@@ -587,7 +587,7 @@ onClassRepackaged: aClass from: oldPackage to: newPackage
 	kind of update if the classes card is actually displayed. If not we just mark the classes
 	card as dirty to reduce overhead."
 
-	self 
+	self
 		objectRepackaged: aClass
 		from: oldPackage
 		to: newPackage
@@ -1215,6 +1215,7 @@ updatePrerequisites
 updateResources
 	"Private - Update the resources list for this package."
 
+	Package manager looseMethods.
 	resourcesPresenter showResourcesOwnedByPackages: self packages!
 
 updateScriptNames

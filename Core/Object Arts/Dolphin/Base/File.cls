@@ -546,7 +546,7 @@ commonPrefixOf: path1 and: path2
 			pathCommonPrefix: path1 
 			pszFile2: path2
 			achPath: prefix.
-	^prefix copyFrom: 1 to: len!
+	^prefix first: len!
 
 composePath: aPathString stem: aStemString extension: anExtensionString
 	"Composes a full pathname from its components. The path or extension components 

@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #PropertyManager
 	instanceVariableNames: 'register'
@@ -23,11 +23,13 @@ propertyOf: anObject at: aSymbol
 		at: aSymbol
 		ifAbsent: [anObject errorNotFound: aSymbol]!
 
-propertyOf: anObject at: aSymbol ifAbsent: aBlock 
+propertyOf: anObject at: aSymbol ifAbsent: aBlock
 	"Answers a property value matching aSymbol for anObject. If no such property
 	exists then aBlock will be evaluated"
 
-	^(register at: anObject ifAbsent: [^aBlock value]) at: aSymbol ifAbsent: aBlock!
+	^(register at: anObject ifAbsent: [])
+		ifNil: [aBlock value]
+		ifNotNil: [:properties | properties at: aSymbol ifAbsent: aBlock]!
 
 propertyOf: anObject at: aSymbol ifAbsentPut: valueOperation 
 	"Answers a property value matching aSymbol for anObject. If no such property

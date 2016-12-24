@@ -27,7 +27,7 @@ allBehaviors
 	metaclasses."
 
 	| answer |
-	answer := OrderedCollection new: 4000.
+	answer := OrderedCollection new: 5000.
 	self allBehaviorsDo: [:behavior | answer addLast: behavior].
 	^answer!
 

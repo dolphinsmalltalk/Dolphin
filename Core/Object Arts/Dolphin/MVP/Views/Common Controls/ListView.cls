@@ -6,6 +6,7 @@ IconicListAbstract subclass: #ListView
 	poolDictionaries: 'ListViewConstants'
 	classInstanceVariableNames: ''!
 ListView guid: (GUID fromString: '{87B4C730-026E-11D3-9FD7-00A0CC3E4A32}')!
+ListView addClassConstant: 'LvnMap' value: #(#lvnItemChanging: #lvnItemChanged: #lvnInsertItem: #nmDeleteItem: #lvnDeleteAllItems: #nmBeginLabelEdit: #nmEndLabelEdit: #nmDummy: #lvnColumnClick: #nmBeginDrag: #nmDummy: #nmBeginRDrag: #nmDummy: #nmDummy: #lvnItemActivate: #lvnODStateChanged: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmGetDispInfo: #nmSetDispInfo: #lvnFindItem: #nmDummy: #nmDummy: #nmKeyDown: #lvnMarqueeBegin: #lvnGetInfoTip:)!
 ListView comment: 'ListView is the <listView> implementing the Windows "SysListView32" common control. It is for single selection use and, therefore, implements the <selectableItems> protocol for use with any <listModel>.
 
 A ListView is capable of displaying it items in one of four modes (#smallIcons, #largeIcons, #list, #report) which can be set using the #viewMode aspect. In the first three of these modes the list effectively has only one column being displayed; this is the primary column. Columns are described using instances of ListViewColumn. See the comment for this class for details on how to set up a column to display the appropriate information for a list item.
@@ -1479,15 +1480,18 @@ nmClick: pNMHDR
 	self isMultiSelect ifTrue: [self maybeSelChanging: #mouse].
 	^super nmClick: pNMHDR!
 
-nmNotify: pNMHDR 
+nmNotify: pNMHDR
 	"Private - Handler for a redirected ListView WM_NOTIFY message.
 	Implementation Note: Rather than create the appropriate header structure
 	object here, we delay that until the handler, because most of the time
 	we don't need to look at the notification at all."
 
-	^(LvnMap at: LVN_FIRST - (pNMHDR sdwordAtOffset: 8) + 1 ifAbsent: []) 
-		ifNil: [super nmNotify: pNMHDR]
-		ifNotNil: [:action | self perform: action with: pNMHDR]!
+	| code |
+	code := pNMHDR sdwordAtOffset: 8.
+	"Note that the notification codes are negative"
+	^(code <= LVN_FIRST and: [code >= LVN_GETINFOTIPA])
+		ifTrue: [self perform: (LvnMap at: ##(LVN_FIRST + 1) - code) with: pNMHDR]
+		ifFalse: [super nmNotify: pNMHDR]!
 
 nmRClick: pNMHDR 
 	"Private - Handler for a NM_RCLICK notification message.
@@ -2398,7 +2402,6 @@ initialize
 		self initialize
 	"
 
-	self initializeNotificationMap.
 	LvModes := (IdentityDictionary new)
 				at: #thumbnails put: LVS_ICON;
 				at: #smallIcons put: LVS_SMALLICON;
@@ -2420,7 +2423,8 @@ initializeNotificationMap
 	"Implementation Note: Use an Array for best lookup performance since the notification
 	nodes are in a contiguous range, even if it is a little sparse"
 
-	LvnMap := (Array new: 58)
+	| lvnMap |
+	lvnMap := (Array new: 58)
 				at: LVN_FIRST - LVN_ITEMCHANGING + 1 put: #lvnItemChanging:;
 				at: LVN_FIRST - LVN_ITEMCHANGED + 1 put: #lvnItemChanged:;
 				at: LVN_FIRST - LVN_INSERTITEM + 1 put: #lvnInsertItem:;
@@ -2442,7 +2446,8 @@ initializeNotificationMap
 				at: LVN_FIRST - LVN_MARQUEEBEGIN + 1 put: #lvnMarqueeBegin:;
 				at: LVN_FIRST - LVN_GETINFOTIPA + 1 put: #lvnGetInfoTip:;
 				yourself.
-	LvnMap := LvnMap collect: [:each | each isNil ifTrue: [#nmDummy:] ifFalse: [each]]!
+	lvnMap := lvnMap collect: [:each | each isNil ifTrue: [#nmDummy:] ifFalse: [each]].
+	self addClassConstant: 'LvnMap' value: lvnMap!
 
 onStartup
 	"The system is starting: Register a message to be used for cancelling a selection after

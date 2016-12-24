@@ -150,7 +150,7 @@ allSubclasses
 
 	| answer |
 	answer := OrderedCollection new.
-	self allSubclassesBreadthFirstDo: [:each | answer add: each].
+	self allSubclassesBreadthFirstDo: [:each | answer addLast: each].
 	^answer!
 
 allSubclassesBreadthFirstDo: aMonadicValuable 
@@ -158,7 +158,7 @@ allSubclassesBreadthFirstDo: aMonadicValuable
 	subclasses in breadth-first order. The standard #allSubclassesDo: method 
 	performs a depth-first traversal (which is quicker)."
 
-	self subclasses ifNotNil: 
+	subclasses ifNotNil: 
 			[:classes | 
 			classes do: [:each | aMonadicValuable value: each].
 			classes do: [:each | each allSubclassesBreadthFirstDo: aMonadicValuable]]!
@@ -871,7 +871,7 @@ sharedPools
 
 	| pools |
 	pools := OrderedCollection new.
-	self sharedPoolsDo: [:each | pools add: each].
+	self sharedPoolsDo: [:each | pools addLast: each].
 	^pools!
 
 sharedPoolsDo: aMonadicValuable

@@ -880,7 +880,7 @@ logRemainingResources
 	self startElement: 'RemainingResources'.
 	total := 0.
 	resman := self resourceManager.
-	resman allResourceIdentifiers do: 
+	resman allResourceIdentifiersDo: 
 			[:each | 
 			self startElement: 'Resource'.
 			self logElement: 'OwningClass' value: each owningClass name.
@@ -1292,7 +1292,7 @@ resizeStubFile: exeFilePath
 resourceManager
 	^ResourceIdentifier!
 
-resourcesForClasses: classes 
+resourcesForClasses: classes
 	"Private - Answer a <collection> of the <ResourceIdentifiers> for all resources that are potentially 
 	referenced from the specified <Set> of classes"
 
@@ -1310,14 +1310,12 @@ resourcesForClasses: classes
 		do: [:m | m literalsDo: [:l | l class == String ifTrue: [literalStrings add: l]]].
 	resourceIds := Set new.
 	classes do: 
-			[:class | 
-			| resources |
-			resources := class resourceIdentifiers .
-			resources do: 
-							[:each | 
-							(literalStrings includes: each name) 
-								ifTrue: [resourceIds add: (ResourceIdentifier class: class name: each name)]]].
-	self ignoreViewReferences 
+			[:class |
+			class resourceIdentifiersDo: 
+					[:each |
+					(literalStrings includes: each name)
+						ifTrue: [resourceIds add: (ResourceIdentifier class: class name: each name)]]].
+	self ignoreViewReferences
 		ifFalse: [resourceIds addAll: (self scanResourcesForViewReferences: resourceIds)].
 	^resourceIds!
 

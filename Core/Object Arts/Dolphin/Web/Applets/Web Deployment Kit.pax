@@ -56,6 +56,7 @@ package methodNames
 	add: #Presenter -> #site;
 	add: #View -> #fileLocator;
 	add: #View -> #site;
+	add: 'ClassLocator class' -> #importedClasses;
 	add: 'ExternalLibrary class' -> #stbModifyExportProxy:;
 	add: 'Image class' -> #fromURL:;
 	add: 'Presenter class' -> #show:inPlugin:;
@@ -229,34 +230,45 @@ findOrImportForeignClass
 	| class classKey |
 	classKey := self fullClassKey.
 	self class importedClassesMutex critical: 
-			["To avoid leaving the class loader mutex locked if an error occurs we must
-		 establish a guard block - #ifCurtailed: will not do because the mutex will
-	 	still be locked when the walkback appears"
+			["Lazily initialize the ImportedClasses table on first attempt to import a class"
+			ImportedClasses isNil ifTrue: [ImportedClasses := WeakLookupTable new haveWeakValues].
+
+			"To avoid leaving the class loader mutex locked if an error occurs we must
+			establish a guard block - #ifCurtailed: will not do because the mutex will
+			still be locked when the walkback appears"
 			
 			[class := ImportedClasses at: classKey
 						ifAbsent: 
-							[self hasPackageName 
+							[self hasPackageName
 								ifFalse: 
 									["The receiver does not contain a package name. Hence, there is no point	
 				in continuing and trying to load a binary package."
 									self errorClassNotFound].
 							BinaryPackage loadUsing: self copyWithCodeBase.
-							ImportedClasses at: classKey ifAbsent: []]] 
+							ImportedClasses at: classKey ifAbsent: []]]
 					on: Error
 					do: 
-						[:e | 
+						[:e |
 						self class importedClassesMutex signal.
 						e pass]].
 
 	"You won't get here if an exception occurs - this is where we detect
 	an impending endless recursion."
-	class isNil 
+	class isNil
 		ifTrue: 
 			[ImportedClasses removeKey: classKey ifAbsent: [].
 			self errorClassCircularityDetected].
 	^class! !
 !ClassLocator categoriesFor: #binaryPackageFilename!accessing!private! !
 !ClassLocator categoriesFor: #findOrImportForeignClass!operations!private! !
+
+!ClassLocator class methodsFor!
+
+importedClasses
+	"Answer the LookupTable of classes that have been imported into this image."
+
+	^ImportedClasses! !
+!ClassLocator class categoriesFor: #importedClasses!accessing!public! !
 
 !ExternalLibrary class methodsFor!
 
