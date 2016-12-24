@@ -1,7 +1,7 @@
 "Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #CommandLineTestRunner
-	instanceVariableNames: 'results lastCase caseStart stream verbose runStart runStop'
+	instanceVariableNames: 'results lastCase caseStart stream verbose runStart runStop timings'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -36,11 +36,12 @@ resultFor: aTestCase
 	^#indeterminate!
 
 runSuite: aTestSuite
+	runStart := Time microsecondClockValue.
 	verbose ifTrue: [aTestSuite addDependentToHierachy: self].
 	results := TestResult new.
 	aTestSuite resources do: [:res | res isAvailable ifFalse: [^res signalInitializationError]].
 	stream isNil ifTrue: [stream := SessionManager current stdout].
-	runStart := Time microsecondClockValue.
+	timings := OrderedCollection new.
 	
 	[lastCase := nil.
 	aTestSuite run: results.
@@ -57,37 +58,65 @@ runSuite: aTestSuite
 stream: aPuttableStream
 	stream := aPuttableStream!
 
-summarizeResults
-	stream
-		nextPutAll: (results hasPassed ifTrue: ['PASSED'] ifFalse: ['FAILED']);
-		cr;
-		nextPutAll: results printString;
-		nextPutAll: ' in '.
-	self printRuntime: caseStart - runStart.
-	stream cr.
-	results failures notEmpty
+summarizeFailures
+	| failures errors |
+	failures := results failures.
+	failures notEmpty
 		ifTrue: 
 			[stream
 				cr;
 				nextPutAll: 'FAILURES:';
 				cr.
-			results failures do: 
+			failures do: 
 					[:each |
 					stream
-						nextPutAll: each printString;
+						print: each;
 						cr]].
-	results errors notEmpty
+	errors := results errors.
+	errors notEmpty
 		ifTrue: 
 			[stream
 				cr;
 				nextPutAll: 'ERRORS:';
 				cr.
-			results errors do: 
+			errors do: 
 					[:each |
 					stream
-						nextPutAll: each printString;
-						cr]].
+						print: each;
+						cr]]!
+
+summarizeResults
+	| passed |
+	passed := results hasPassed.
+	stream
+		nextPutAll: (passed ifTrue: ['PASSED'] ifFalse: ['FAILED']);
+		cr;
+		nextPutAll: results printString;
+		nextPutAll: ' in '.
+	self printRuntime: caseStart - runStart.
+	stream cr.
+	passed ifTrue: [self summarizeTimings: 1000000] ifFalse: [self summarizeFailures].
 	stream flush!
+
+summarizeTimings: anInteger
+	| slowTests |
+	slowTests := (timings select: [:each | each value >= anInteger])
+				asSortedCollectionUsing: (MergesortAlgorithm sortBlock: [:a :b | a value > b value]).
+	stream
+		print: slowTests size;
+		nextPutAll: ' tests took '.
+	self printRuntime: anInteger.
+	stream
+		nextPutAll: ' or more to run:';
+		cr.
+	slowTests do: 
+			[:each |
+			stream tab.
+			self printRuntime: each value.
+			stream
+				tab;
+				print: each key;
+				cr]!
 
 update: anObject with: argument from: originator
 	| stop |
@@ -100,10 +129,13 @@ update: anObject with: argument from: originator
 				from: originator].
 	lastCase isNil
 		ifFalse: 
-			[stream
+			[| time |
+			time := stop - caseStart.
+			timings add: lastCase -> time.
+			stream
 				nextPutAll: (self resultFor: lastCase) asUppercase;
 				nextPutAll: ' in '.
-			self printRuntime: stop - caseStart.
+			self printRuntime: time.
 			stream cr].
 	anObject isNil
 		ifFalse: 
@@ -122,7 +154,9 @@ verbose: anObject
 !CommandLineTestRunner categoriesFor: #resultFor:!helpers!private! !
 !CommandLineTestRunner categoriesFor: #runSuite:!operations!public! !
 !CommandLineTestRunner categoriesFor: #stream:!accessing!public! !
+!CommandLineTestRunner categoriesFor: #summarizeFailures!helpers!private! !
 !CommandLineTestRunner categoriesFor: #summarizeResults!helpers!private! !
+!CommandLineTestRunner categoriesFor: #summarizeTimings:!helpers!private! !
 !CommandLineTestRunner categoriesFor: #update:with:from:!private!updating! !
 !CommandLineTestRunner categoriesFor: #verbose:!accessing!public! !
 

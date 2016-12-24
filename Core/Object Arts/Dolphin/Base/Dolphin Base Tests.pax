@@ -158,7 +158,7 @@ Object subclass: #CollectionCombinator
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Object subclass: #CommandLineTestRunner
-	instanceVariableNames: 'results lastCase caseStart stream verbose runStart runStop'
+	instanceVariableNames: 'results lastCase caseStart stream verbose runStart runStop timings'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
