@@ -142,9 +142,9 @@ allResourceIdentifiers
 	"Answer a Set of all the ResourceIdentifiers directly owned by
 	the receiver or by owning the class in which it is situated."
 
-	| resources prefix |
+	| resources |
 	resources := Set new.
-	self classesDo: [:each | resources addAll: each resourceIdentifiers].
+	self classesDo: [:each | each resourceIdentifiersDo: [:eachResId | resources add: eachResId]].
 	prefix := ResourceIdentifier selectorPrefix.
 	self methodNames do: 
 			[:each |
@@ -175,7 +175,7 @@ allSourceObjects
 
 	| answer |
 	answer := OrderedCollection new.
-	self allSourceObjectsDo: [:each | answer add: each].
+	self allSourceObjectsDo: [:each | answer addLast: each].
 	^answer!
 
 allSourceObjectsDo: operation 
@@ -1025,7 +1025,7 @@ isGlobalAlias: anAssociation
 isImportedClass: aClass
 	"Private - Answer true if aClass is an imported binary class"
 
-	^ClassLocator importedClasses identityIncludes: aClass!
+	^ClassLocator isImportedClass: aClass!
 
 isInstalled
 	"Answer whether the receiver is currently installed in the system."

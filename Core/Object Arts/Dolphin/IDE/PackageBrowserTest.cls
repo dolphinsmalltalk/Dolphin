@@ -1,7 +1,7 @@
 "Filed out from Dolphin Smalltalk 7"!
 
 DolphinTest subclass: #PackageBrowserTest
-	instanceVariableNames: 'packageA packageB packageC dolphinTestA dolphinTestB dolphinTestC shell cardsPresenter classesPresenter methodsPresenter globalsPresenter resourcesPresenter dependencyPresenters methodAA methodAB methodAC methodBA methodBB methodCA resourceAA resourceAB resourceAC resourceBA resourceBB resourceCA resourceCC'
+	instanceVariableNames: 'packageA packageB packageC dolphinTestA dolphinTestB dolphinTestC shell cardsPresenter classesPresenter methodsPresenter globalsPresenter resourcesPresenter dependencyPresenters methodAA methodAB methodAC methodBA methodBB methodCA'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -13,26 +13,38 @@ PackageBrowserTest comment: ''!
 addRemoveRenameClasses
 	"Remove classes"
 
-	self updateAll.
+	self assertCurrentCardInSync.
 	self
 		createClassesABC;
 		createMethods.
-	self assertInSync: false.
-	self updateAll.
-	self assertInSync: true.
+	self assertCurrentCardInSync.
 	self renameClass.
 	dolphinTestC removeFromSystem.
-	self assertInSync: false.
-	self updateAll.
-	self assertInSync: true.
+	self assertCurrentCardInSync.
 	dolphinTestB removeFromSystem.
-	self assertInSync: false.
-	self updateAll.
-	self assertInSync: true.
+	self assertCurrentCardInSync.
 	dolphinTestA removeFromSystem.
-	self assertInSync: false.
-	self updateAll.
-	self assertInSync: true!
+	self assertCurrentCardInSync!
+
+assertClassesInSync
+	| classes |
+	classes := OrderedCollection new.
+	shell packages do: [:each | classes addAll: each classes].
+	self assert: (classesPresenter model noDifference: classes)!
+
+assertCurrentCardInSync
+	| card |
+	cardsPresenter view update.
+	card := self currentCard.
+	"PB should think the current card is up to date"
+	self assert: (shell isCardUpToDate: card).
+	card == #classes ifTrue: [^self assertClassesInSync].
+	card == #methods ifTrue: [^self assertMethodsInSync].
+	card == #globals ifTrue: [^self assertGlobalsInSync].
+	card == #dependents ifTrue: [^self assertDependencyCard: #dependents inSync: true].
+	card == #prerequisites ifTrue: [^self assertDependencyCard: #prerequisites inSync: true].
+	card == #resources ifTrue: [^self assertResourcesInSync].
+	self assert: false description: 'Unknown card: ' , card!
 
 assertDependencyCard: aSymbol inSync: aBoolean 
 	| dependencyPresenter tree |
@@ -48,27 +60,11 @@ assertDependencyCard: aSymbol inSync: aBoolean
 			self assert: (tree model rootNodes allSatisfy: [:each | each getChildren isNil])]
 		ifFalse: [self assert: tree model roots isEmpty]!
 
-assertInSync: aBoolean 
-	cardsPresenter view update.
-	aBoolean | (shell isCardUpToDate: #classes) 
-		ifTrue: 
-			[| classes |
-			classes := OrderedCollection new.
-			shell packages do: [:each | classes addAll: each classes].
-			self assert: (classesPresenter model noDifference: classes)]
-		ifFalse: [self assert: classesPresenter model isEmpty].
-	aBoolean | (shell isCardUpToDate: #methods) 
-		ifTrue: [self assertMethodsInSync]
-		ifFalse: [self assert: methodsPresenter model isEmpty].
-	aBoolean | (shell isCardUpToDate: #globals) 
-		ifTrue: 
-			[| globals |
-			globals := OrderedCollection new.
-			shell packages do: [:each | globals addAll: each globalNames].
-			self assert: (globalsPresenter model noDifference: globals)]
-		ifFalse: [self assert: globalsPresenter model isEmpty].
-	dependencyPresenters keysDo: [:each | self assertDependencyCard: each inSync: aBoolean].
-	self assertResourcesUpToDate!
+assertGlobalsInSync
+	| globals |
+	globals := OrderedCollection new.
+	shell packages do: [:each | globals addAll: each globalNames].
+	self assert: (globalsPresenter model noDifference: globals)!
 
 assertMethodsInSync
 	(shell isCardUpToDate: #methods) 
@@ -80,8 +76,8 @@ assertMethodsInSync
 			self assert: (methodsPresenter model noDifference: methods)]
 		ifFalse: [self assert: methodsPresenter model isEmpty]!
 
-assertResourcesUpToDate
-	(shell isCardUpToDate: #resources) 
+assertResourcesInSync
+	(shell isCardUpToDate: #resources)
 		ifTrue: 
 			[| resources |
 			resources := OrderedCollection new.
@@ -196,9 +192,7 @@ renameClass
 	self assert: methodAB methodClass == (Smalltalk at: testA2).
 	self assert: methodCA isLoose.
 	self assert: methodCA methodClass == dolphinTestC.
-	self assertInSync: false.
-	self updateAll.
-	self assertInSync: true.
+	self assertCurrentCardInSync.
 	ClassBuilder renameClass: (Smalltalk at: testA2) to: testA.
 	self assert: methodAB isLoose.
 	self assert: methodAB methodClass == (Smalltalk at: testA).
@@ -206,48 +200,40 @@ renameClass
 	self assert: methodAB methodClass == (Smalltalk at: testA).
 	self assert: methodCA isLoose.
 	self assert: methodCA methodClass == dolphinTestC.
-	self assertInSync: false.
-	self updateAll.
-	self assertInSync: true!
+	self assertCurrentCardInSync
+!
 
 repackageClasses
 	"Remove classes"
 
+	self assertCurrentCardInSync.
 	self removeClasses.
-	self updateAll.
+	self assertCurrentCardInSync.
 	self
 		createClassesABC;
 		createMethods.
-	self assertInSync: false.
-	self updateAll.
-	self assertInSync: true.
+	self assertCurrentCardInSync.
 	"Move a displayed class (with loose and non-loose methods) to a non-displayed package"
 	packageB addClass: dolphinTestC.
-	self assertInSync: false.
-	self updateAll.
-	self assertInSync: true.
+	self assertCurrentCardInSync.
 	"Move a class with loose methods in A into A"
 	packageA addClass: dolphinTestB.
-	self assertInSync: false.
-	self updateAll.
-	self assertInSync: true.
+	self assertCurrentCardInSync.
 	"Move a class between displayed packages"
 	packageC addClass: dolphinTestA.
-	self assertInSync: false.
-	self updateAll.
-	self assertInSync: true!
+	self assertCurrentCardInSync.
+!
 
 resourceManager
 	^SessionManager current resourceManager!
 
 setUp
-	| hasDependentsTab |
 	super setUp.
 	self assert: Package manager defaultPackage isNil.
 	packageA := DolphinTestPackages current a.
 	packageB := DolphinTestPackages current b.
 	packageC := DolphinTestPackages current c.
-	(Array 
+	(Array
 		with: packageA
 		with: packageB
 		with: packageC) do: [:each | self assert: each globalNames isEmpty].
@@ -260,11 +246,8 @@ setUp
 	dependencyPresenters := IdentityDictionary new.
 	dependencyPresenters at: #prerequisites
 		put: (shell instVarAt: (shell class indexOfInstVar: 'prerequisitesPresenter')).
-	hasDependentsTab := SessionManager current productVersion >= 6.
-	hasDependentsTab 
-		ifTrue: 
-			[dependencyPresenters at: #dependents
-				put: (shell instVarAt: (shell class indexOfInstVar: 'dependentsPresenter'))].
+	dependencyPresenters at: #dependents
+		put: (shell instVarAt: (shell class indexOfInstVar: 'dependentsPresenter')).
 	self createGlobals!
 
 showClassesPane
@@ -275,6 +258,7 @@ showClassesPane
 tearDown
 	super tearDown.
 	shell destroy.
+	shell := cardsPresenter := classesPresenter := methodsPresenter := globalsPresenter := resourcesPresenter := dependencyPresenters := nil.
 	self removeClasses.
 	self removeGlobals.
 	packageA := packageB := packageC := nil!
@@ -514,19 +498,14 @@ testRepackageMethods
 	classesPresenter view update.
 	self assertMethodsInSync.
 	methodsPresenter ensureVisible.
-	self assertMethodsInSync!
-
-updateAll
-	#(#classes #methods #globals #resources) , dependencyPresenters keys asArray do: 
-			[:each | 
-			shell updateCardNow: each.
-			self assert: (shell isCardUpToDate: each)].
-	self assertInSync: true! !
+	self assertMethodsInSync! !
 !PackageBrowserTest categoriesFor: #addRemoveRenameClasses!private!unit tests! !
+!PackageBrowserTest categoriesFor: #assertClassesInSync!private!unit tests! !
+!PackageBrowserTest categoriesFor: #assertCurrentCardInSync!private!unit tests! !
 !PackageBrowserTest categoriesFor: #assertDependencyCard:inSync:!private!unit tests! !
-!PackageBrowserTest categoriesFor: #assertInSync:!private!unit tests! !
+!PackageBrowserTest categoriesFor: #assertGlobalsInSync!private!unit tests! !
 !PackageBrowserTest categoriesFor: #assertMethodsInSync!private!unit tests! !
-!PackageBrowserTest categoriesFor: #assertResourcesUpToDate!private!unit tests! !
+!PackageBrowserTest categoriesFor: #assertResourcesInSync!private!unit tests! !
 !PackageBrowserTest categoriesFor: #create:subclassOf:!helpers!private! !
 !PackageBrowserTest categoriesFor: #create:subclassOf:inPackage:!helpers!private! !
 !PackageBrowserTest categoriesFor: #createClassesABC!helpers!private! !
@@ -546,5 +525,4 @@ updateAll
 !PackageBrowserTest categoriesFor: #testGlobals!public!unit tests! !
 !PackageBrowserTest categoriesFor: #testRepackageClasses!public!unit tests! !
 !PackageBrowserTest categoriesFor: #testRepackageMethods!public!unit tests! !
-!PackageBrowserTest categoriesFor: #updateAll!private!unit tests! !
 

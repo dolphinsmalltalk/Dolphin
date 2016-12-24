@@ -99,7 +99,7 @@ sort: aCollection sortBlock: block
 											[:a :b | 
 											comp := comp + 1.
 											block value: a value: b])].
-	aCollection size >= 500 
+	aCollection size > 2000 
 		ifTrue: 
 			[Transcript
 				print: self algorithmToTest;

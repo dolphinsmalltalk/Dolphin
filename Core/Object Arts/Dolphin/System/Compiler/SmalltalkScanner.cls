@@ -512,18 +512,18 @@ scanSymbol
 	startPosition := lastPosition := stream position.
 	[characterType == #alphabetic] whileTrue: 
 			[self scanName.
-			currentCharacter == $: 
+			currentCharacter == $:
 				ifTrue: 
 					[buffer nextPut: $:.
 					hasColon := true.
 					lastPosition := stream position.
 					self step]].
 	value := buffer contents.
-	(hasColon and: [value last ~~ $:]) 
+	(hasColon and: [value last ~~ $:])
 		ifTrue: 
 			[stream position: lastPosition.
 			self step.
-			value := value copyFrom: 1 to: lastPosition - startPosition + 1].
+			value := value first: lastPosition - startPosition + 1].
 	^self literalTokenClass
 		value: value asSymbol
 		start: tokenStart

@@ -757,29 +757,32 @@ renameInstVar: oldString to: newString
 	self logDefinition.
 	self environment classUpdated: self!
 
-resourceIdentifierClass
-	^Smalltalk at: #ResourceIdentifier!
-
 resourceIdentifiers
-	^self resourceSelectors collect: [:each | self resourceIdentifierClass class: self selector: each]!
+	| identifiers |
+	identifiers := OrderedCollection new.
+	self resourceIdentifiersDo: [:each | identifiers addLast: each].
+	^identifiers!
+
+resourceIdentifiersDo: aMonadicValuable
+	self
+		resourceSelectorsDo: [:each | aMonadicValuable value: (ResourceIdentifier class: self selector: each)]!
 
 resourceNames
-	^(self resourceSelectors collect: [:each | self resourceIdentifierClass nameFromSelector: each]) 
-		asSortedCollection!
+	| names |
+	names := OrderedCollection new.
+	self resourceSelectorsDo: [:each | names add: (ResourceIdentifier nameFromSelector: each)].
+	^names asSortedCollection!
 
 resources
-	^self resourceIdentifiers collect: [:each | each resource]!
+	| resources |
+	resources := OrderedCollection new.
+	self resourceIdentifiersDo: [:each | resources add: each resource].
+	^resources!
 
-resourceSelectors
-	| answer |
-	answer := IdentitySet new.
-	self resourceSelectorsDo: [:each | answer add: each].
-	^answer!
-
-resourceSelectorsDo: aMonadicValuable 
+resourceSelectorsDo: aMonadicValuable
 	| prefix |
-	prefix := self resourceIdentifierClass selectorPrefix.
-	^self class methodDictionary 
+	prefix := ResourceIdentifier selectorPrefix.
+	self class methodDictionary
 		do: [:each | (each selector beginsWith: prefix) ifTrue: [aMonadicValuable value: each selector]]!
 
 selectorsInCategory: category
@@ -944,11 +947,10 @@ whichNonVirtualCategoriesIncludeSelector: aSelector
 !ClassDescription categoriesFor: #removeSharedPool:!pool variables!public! !
 !ClassDescription categoriesFor: #removeUnsupportedProtocols:selector:!development!methods-removing!private!protocols! !
 !ClassDescription categoriesFor: #renameInstVar:to:!instance variables!private! !
-!ClassDescription categoriesFor: #resourceIdentifierClass!constants!private! !
 !ClassDescription categoriesFor: #resourceIdentifiers!accessing!public! !
+!ClassDescription categoriesFor: #resourceIdentifiersDo:!enumerating!public! !
 !ClassDescription categoriesFor: #resourceNames!accessing!public! !
 !ClassDescription categoriesFor: #resources!accessing!public! !
-!ClassDescription categoriesFor: #resourceSelectors!accessing!public! !
 !ClassDescription categoriesFor: #resourceSelectorsDo:!enumerating!public! !
 !ClassDescription categoriesFor: #selectorsInCategory:!categories-accessing!public! !
 !ClassDescription categoriesFor: #setInstanceVariables:!instance variables!private! !

@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 FileLocator subclass: #ClassLocator
 	instanceVariableNames: 'packageName codeBase key'
@@ -224,11 +224,6 @@ default
 	^self new
 !
 
-importedClasses
-	"Answer the LookupTable of classes that have been imported into this image."
-
-	^ImportedClasses!
-
 importedClassesMutex
 	"Private - Answer the mutex used to provide mutual exclusion to the locateClass
 	method."
@@ -241,13 +236,15 @@ initialize
 		self initialize
 	"
 
-	ImportedClasses := WeakLookupTable new haveWeakValues.
 	ImportedClassesMutex := Mutex new.
 	SessionManager current 
 		when: #sessionStarted
 		send: #onStartup
 		to: self.
 	Aliases := WeakLookupTable new haveWeakValues!
+
+isImportedClass: aClass
+	^ImportedClasses notNil and: [ImportedClasses identityIncludes: aClass]!
 
 new
 	"Answer a new, initialized, instance of the receiver."
@@ -259,7 +256,7 @@ onStartup
 
 	DefaultFileLocator := nil.
 	InstallationFileLocator := nil.
-	ImportedClasses := WeakLookupTable new haveWeakValues.
+	ImportedClasses := nil.
 !
 
 removeAlias: aSymbol
@@ -298,9 +295,9 @@ uninitialize
 !ClassLocator class categoriesFor: #codeBase:packageName:!instance creation!public! !
 !ClassLocator class categoriesFor: #codeBase:packageName:key:!instance creation!public! !
 !ClassLocator class categoriesFor: #default!accessing!public! !
-!ClassLocator class categoriesFor: #importedClasses!accessing!public! !
 !ClassLocator class categoriesFor: #importedClassesMutex!accessing!private! !
 !ClassLocator class categoriesFor: #initialize!development!initializing!private! !
+!ClassLocator class categoriesFor: #isImportedClass:!public!testing! !
 !ClassLocator class categoriesFor: #new!instance creation!public! !
 !ClassLocator class categoriesFor: #onStartup!events-session!private! !
 !ClassLocator class categoriesFor: #removeAlias:!accessing!public! !
