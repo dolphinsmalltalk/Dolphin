@@ -665,7 +665,7 @@ looseResourceIdentifiers
 
 	| answer |
 	answer := Set new: 25.
-	self packages do: [:p | answer addAll: p resourceIdentifiers].
+	self packages do: [:p | answer addAll: p looseResourceIdentifiers].
 	^answer!
 
 markAllPackagesAsBase
