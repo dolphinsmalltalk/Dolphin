@@ -39,6 +39,51 @@ testLiteralStoreOn
 
 !
 
+testMixedConcatenation
+	"Test concatenating other types of sequenceable collection onto an array"
+
+	| subjects |
+	subjects := #(#() #(1) #(1 2)).
+	(Array
+		with: String empty
+		with: UnicodeString empty
+		with: ByteArray new
+		with: OrderedCollection new
+		with: (1 to: 0)) do: 
+				[:eachEmpty |
+				subjects do: 
+						[:eachArray |
+						| result |
+						result := eachArray , eachEmpty.
+						self deny: eachArray == result.
+						self assert: eachArray equals: result]].
+	(Array
+		with: 'a'
+		with: 'a' asUnicodeString
+		with: #[255]
+		with: (OrderedCollection with: 1234)
+		with: (100 to: 100)) do: 
+				[:eachOne |
+				subjects do: 
+						[:eachArray |
+						| result |
+						result := self verifyConcatenation: eachOne with: eachArray.
+						self deny: eachArray == result.
+						self assert: result class == Array]].
+	(Array
+		with: 'ab'
+		with: 'ab' asUnicodeString
+		with: #[1 255]
+		with: (OrderedCollection with: 1234 with: $x)
+		with: (100 to: 101)) do: 
+				[:eachTwo |
+				subjects do: 
+						[:eachArray |
+						| result |
+						result := self verifyConcatenation: eachTwo with: eachArray.
+						self deny: eachArray == result.
+						self assert: result class == Array]]!
+
 testNonLiteralStoreOn
 	| stream storeString rehydrated array |
 	stream := String writeStream.
@@ -54,5 +99,6 @@ testNonLiteralStoreOn
 !ArrayTest categoriesFor: #testCyclicRefPrinting!public! !
 !ArrayTest categoriesFor: #testIsLiteral!public!unit tests! !
 !ArrayTest categoriesFor: #testLiteralStoreOn!public!unit tests! !
+!ArrayTest categoriesFor: #testMixedConcatenation!public! !
 !ArrayTest categoriesFor: #testNonLiteralStoreOn!public!unit tests! !
 

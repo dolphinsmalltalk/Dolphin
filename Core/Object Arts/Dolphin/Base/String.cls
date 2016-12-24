@@ -22,6 +22,25 @@ String complies with the following ANSI protocols:
 !String categoriesForClass!Collections-Text! !
 !String methodsFor!
 
+, aSequencedReadableCollection
+	^aSequencedReadableCollection _appendToString: self!
+
+_appendToString: aString
+	| size newSize result |
+	size := aString size.
+	result := aString species new: (newSize := size + self size).
+	aString
+		replaceBytesOf: result
+		from: 1
+		to: size
+		startingAt: 1.
+	self
+		replaceBytesOf: result
+		from: size + 1
+		to: newSize
+		startingAt: 1.
+	^result!
+
 _beginsString: aString
 	^(CRTLibrary default 
 		strncmp: aString
@@ -130,11 +149,11 @@ _separateSubStringsIn: aReadableString
 	^(self _collate: comparand) >= 0!
 
 asByteArray
-	"Answer a <ByteArray> containing the Unicode representation of the characters of the
+	"Answer a <ByteArray> containing the codepoint representations of the characters of the
 	receiver."
 
 	| size |
-	size := self basicSize.
+	size := self size.
 	^self
 		replaceBytesOf: (ByteArray new: size) 
 		from: 1 to: size startingAt: 1.
@@ -1016,6 +1035,8 @@ withNormalizedLineDelimiters
 							target nextPutAll: eol]
 						ifFalse: [target nextPut: each]]].
 	^target contents! !
+!String categoriesFor: #,!copying!public! !
+!String categoriesFor: #_appendToString:!comparing!double dispatch!private! !
 !String categoriesFor: #_beginsString:!comparing!double dispatch!private! !
 !String categoriesFor: #_collate:!comparing!private! !
 !String categoriesFor: #_indexOfAnyInString:startingAt:!double dispatch!private!searching! !

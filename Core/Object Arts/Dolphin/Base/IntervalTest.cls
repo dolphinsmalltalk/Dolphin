@@ -13,6 +13,9 @@ IntervalTest comment: ''!
 assimilate: anObject 
 	^anObject asInteger!
 
+assimilateResultElement: anObject
+	^anObject!
+
 collectionClass
 	^Array!
 
@@ -22,7 +25,7 @@ newCollection: anArray
 	start := anArray first asInteger.
 	anArray size = 1 ifTrue: [^start to: start].
 	interval := start to: anArray last asInteger by: (anArray second asInteger - start max: 1).
-	^interval asArray = (self assimilateElements: anArray)
+	^interval asArray = (anArray asArray collect: [:each | each asInteger])
 		ifTrue: [interval]
 		ifFalse: [super newCollection: anArray]!
 
@@ -190,6 +193,7 @@ testStoreOn
 				copy := Compiler evaluate: expr.
 				self assert: copy = each]! !
 !IntervalTest categoriesFor: #assimilate:!public!unit tests! !
+!IntervalTest categoriesFor: #assimilateResultElement:!private! !
 !IntervalTest categoriesFor: #collectionClass!helpers!private! !
 !IntervalTest categoriesFor: #newCollection:!private!unit tests! !
 !IntervalTest categoriesFor: #testCollect!public!unit tests! !
