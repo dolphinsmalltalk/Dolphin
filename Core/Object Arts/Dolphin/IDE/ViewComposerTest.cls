@@ -10,15 +10,22 @@ ViewComposerTest comment: ''!
 !ViewComposerTest categoriesForClass!Unclassified! !
 !ViewComposerTest methodsFor!
 
-dragResourceFor: resourceName operation: op 
+doArenaDropOf: subPresenterType operation: aSymbol
+	| overShell ddSession |
+	ddSession := self dragResourceFor: subPresenterType.
+	aSymbol ifNotNil: [ddSession defaultOperation: aSymbol].
+	overShell := vc arena mapPoint: 50 @ 50 to: View desktop.
+	ddSession continueTrackingAt: overShell from: ddSession dragPoint.
+	ddSession endTrackingAt: overShell.
+	^ddSession!
+
+dragResourceFor: resourceName
 	| session toolbox |
 	toolbox := vc instVarNamed: 'toolboxPresenter'.
 	session := InternalDragDropSession dragSource: toolbox view
 				item: (ResourceIdentifier class: resourceName).
 	toolbox resourcesPresenter onDragResource: session.
-	session
-		startTrackingAt: 20 @ 20;
-		operation: op.
+	session startTrackingAt: 20 @ 20.
 	^session!
 
 getButtonResource
@@ -43,8 +50,10 @@ setUp
 				classInstanceVariableNames: ''!
 
 tearDown
+	DragDropSession current ifNotNil: [:dd | dd cancelTrackingAt: 0 @ 0].
 	testClass removeFromSystem.
-	^vc destroy!
+	vc destroy.
+	vc := nil!
 
 testBasicEdit
 	| sampleResourceIdentifier |
@@ -117,23 +126,24 @@ testCutCopyPaste
 
 testDragResourceOverEmptyArena
 	| session |
-	vc onDragOverArena: (session := self dragResourceFor: Shell operation: #copy).
+	vc onDragOverArena: (session := self dragResourceFor: Shell).
 	self assert: session operation == #copy.
-	self assert: session suggestedTarget == vc arena.
-!
+	self assert: session suggestedTarget == vc arena!
 
 testDropResourceLinkOverShell
 	"Drop a Checkbox link onto a shell"
 
+	| ddSession |
 	vc newShellView.
-	vc onDropOverArena: (self dragResourceFor: TextPresenter operation: #link).
+	ddSession := self doArenaDropOf: TextPresenter operation: #link.
 	self assert: (vc primarySelection isKindOf: ReferenceView).
-	self assert: vc primarySelection resourceIdentifier = (ResourceIdentifier class: TextPresenter)!
+	self assert: vc primarySelection resourceIdentifier = (ResourceIdentifier class: TextPresenter).
+	ddSession!
 
 testDropResourceOverEmptyArena
 	"Drop a shell onto an empty arena"
 
-	vc onDropOverArena: (self dragResourceFor: Shell operation: #copy).
+	self doArenaDropOf: Shell operation: #copy.
 	self assert: (vc composingView isKindOf: ShellView)!
 
 testDropResourceOverHierarchy
@@ -141,16 +151,17 @@ testDropResourceOverHierarchy
 
 	| session |
 	vc newShellView.
-	session := self dragResourceFor: TextPresenter operation: #copy.
-	session suggestedTarget: vc viewHierarchyPresenter model roots first.
+	session := self dragResourceFor: TextPresenter.
+	session
+		operation: #copy;
+		suggestedTarget: vc viewHierarchyPresenter model roots first.
 	vc onDropOverHierarchy: session.
 	self assert: (vc primarySelection isKindOf: TextEdit)!
 
 testDropResourceOverShell
 	"Drop a Checkbox onto a shell"
 
-	vc newShellView.
-	vc onDropOverArena: (self dragResourceFor: TextPresenter operation: #copy).
+	self doArenaDropOf: TextPresenter operation: #copy.
 	self assert: (vc primarySelection isKindOf: TextEdit)!
 
 testIgnoreShellPreferredExtent
@@ -238,7 +249,8 @@ testZOrderPreservedByMutate
 	vc selection: shell.
 	vc mutateTo: ContainerView.
 	self assert: (shell subViews collect: [:each | each name]) asArray = #('1' '2' '3')! !
-!ViewComposerTest categoriesFor: #dragResourceFor:operation:!private!unit tests! !
+!ViewComposerTest categoriesFor: #doArenaDropOf:operation:!private!unit tests! !
+!ViewComposerTest categoriesFor: #dragResourceFor:!private!unit tests! !
 !ViewComposerTest categoriesFor: #getButtonResource!private!unit tests! !
 !ViewComposerTest categoriesFor: #getContainerResource!private!unit tests! !
 !ViewComposerTest categoriesFor: #getShellResource!private!unit tests! !
