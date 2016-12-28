@@ -13,9 +13,6 @@ MergesortAlgorithmTest comment: ''!
 algorithmToTest
 	^MergesortAlgorithm!
 
-testBigStringSort
-	self bigStringSort!
-
 testTempArrayLargeEnough
 	| sorted |
 	sorted := SortedCollection sortAlgorithm: self algorithmToTest new.
@@ -24,6 +21,5 @@ testTempArrayLargeEnough
 	sorted addAll: (130 to: 200).
 	self assertSorted: sorted! !
 !MergesortAlgorithmTest categoriesFor: #algorithmToTest!private!unit tests! !
-!MergesortAlgorithmTest categoriesFor: #testBigStringSort!public!unit tests! !
 !MergesortAlgorithmTest categoriesFor: #testTempArrayLargeEnough!public!unit tests! !
 

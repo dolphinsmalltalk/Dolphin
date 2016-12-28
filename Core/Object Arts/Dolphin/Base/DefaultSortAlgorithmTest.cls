@@ -51,12 +51,8 @@ sort: aCollection sortBlock: block
 				flush].
 	self assertSorted: sorted.
 	self add: aCollection sortBlock: block.
-	^sorted!
-
-testBigStringSort
-	self bigStringSort! !
+	^sorted! !
 !DefaultSortAlgorithmTest categoriesFor: #add:sortBlock:!helpers!private! !
 !DefaultSortAlgorithmTest categoriesFor: #algorithmToTest!private!unit tests! !
 !DefaultSortAlgorithmTest categoriesFor: #sort:sortBlock:!helpers!private! !
-!DefaultSortAlgorithmTest categoriesFor: #testBigStringSort!public!unit tests! !
 

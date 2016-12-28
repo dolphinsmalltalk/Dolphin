@@ -11,10 +11,6 @@ IntrosortAlgorithmTest comment: ''!
 !IntrosortAlgorithmTest methodsFor!
 
 algorithmToTest
-	^IntrosortAlgorithm!
-
-testBigStringSort
-	self bigStringSort! !
+	^IntrosortAlgorithm! !
 !IntrosortAlgorithmTest categoriesFor: #algorithmToTest!private!unit tests! !
-!IntrosortAlgorithmTest categoriesFor: #testBigStringSort!public!unit tests! !
 
