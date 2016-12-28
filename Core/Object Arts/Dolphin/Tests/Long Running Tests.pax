@@ -12,6 +12,10 @@ package methodNames
 	add: #CompilerTest -> #knownTextMapIssues;
 	add: #CompilerTest -> #testTempMapOuterDepthExhaustive;
 	add: #CompilerTest -> #testTextMapsExhaustive;
+	add: #DefaultSortAlgorithmTest -> #testBigStringSort;
+	add: #HeapsortAlgorithmTest -> #testBigStringSort;
+	add: #IntrosortAlgorithmTest -> #testBigStringSort;
+	add: #MergesortAlgorithmTest -> #testBigStringSort;
 	add: #VMTest -> #assertLoopInterruptible:;
 	add: #VMTest -> #testLoopsInterruptible;
 	add: #VMTest -> #testQuiesceWhenUIBlocked;
@@ -26,6 +30,7 @@ package globalAliases: (Set new
 package setPrerequisites: (IdentitySet new
 	add: '..\IDE\Base\Development System Tests';
 	add: '..\Base\Dolphin';
+	add: '..\Base\Dolphin Base Tests';
 	add: '..\..\..\Contributions\Refactory\Refactoring Browser\Change Objects\RBChangeObjects';
 	add: '..\..\..\Contributions\Refactory\Refactoring Browser\Environments\RBEnvironments';
 	yourself).
@@ -177,6 +182,30 @@ testTextMapsExhaustive
 !CompilerTest categoriesFor: #knownTextMapIssues!private! !
 !CompilerTest categoriesFor: #testTempMapOuterDepthExhaustive!public!unit tests-long running! !
 !CompilerTest categoriesFor: #testTextMapsExhaustive!public!unit tests-long running! !
+
+!DefaultSortAlgorithmTest methodsFor!
+
+testBigStringSort
+	self bigStringSort! !
+!DefaultSortAlgorithmTest categoriesFor: #testBigStringSort!public!unit tests! !
+
+!HeapsortAlgorithmTest methodsFor!
+
+testBigStringSort
+	self bigStringSort! !
+!HeapsortAlgorithmTest categoriesFor: #testBigStringSort!public!unit tests! !
+
+!IntrosortAlgorithmTest methodsFor!
+
+testBigStringSort
+	self bigStringSort! !
+!IntrosortAlgorithmTest categoriesFor: #testBigStringSort!public!unit tests! !
+
+!MergesortAlgorithmTest methodsFor!
+
+testBigStringSort
+	self bigStringSort! !
+!MergesortAlgorithmTest categoriesFor: #testBigStringSort!public!unit tests! !
 
 !VMTest methodsFor!
 
