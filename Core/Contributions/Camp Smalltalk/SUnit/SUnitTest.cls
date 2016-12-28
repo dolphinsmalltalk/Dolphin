@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 TestCase subclass: #SUnitTest
 	instanceVariableNames: 'hasRun hasSetup hasRanOnce'
@@ -115,7 +115,7 @@ testResult
 		errors: 0!
 
 testRunning
-	(SUnitDelay forSeconds: 2) wait!
+	(SUnitDelay forMicroseconds: 20) wait!
 
 testShould
 	self should: [true].
