@@ -843,27 +843,27 @@ testNestedWhileTrueAtStartOfCleanBlock
 	self assert: block initialIP = 3!
 
 testRadixInteger
-	0 to: 72
+	2 to: 36
 		do: 
-			[:eachVal | 
-			2 to: 36
-				do: [:eachRadix | (self evaluateExpression: (eachVal printStringRadix: eachRadix)) = eachVal]].
+			[:eachRadix |
+			0 to: eachRadix * 2 - 1
+				by: 3
+				do: [:eachVal | (self evaluateExpression: (eachVal printStringRadix: eachRadix)) = eachVal]].
 	0 to: 35
 		do: 
-			[:eachRadix | 
+			[:eachRadix |
 			"Test invalid radix integers cause an MNU of #rN"
-
 			| suffix |
 			suffix := String with: $r with: (Character digitValue: eachRadix).
-			self 
+			self
 				should: 
 					[| expr |
 					expr := eachRadix printString , suffix.
 					self evaluateExpression: expr]
 				raise: MessageNotUnderstood
 				matching: 
-					[:ex | 
-					(ex receiver = eachRadix and: [ex selector equals: suffix]) 
+					[:ex |
+					(ex receiver = eachRadix and: [ex selector equals: suffix])
 						ifFalse: 
 							[self halt.
 							false]
