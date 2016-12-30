@@ -527,3 +527,9 @@ testRepackageMethods
 !PackageBrowserTest categoriesFor: #testRepackageClasses!public!unit tests! !
 !PackageBrowserTest categoriesFor: #testRepackageMethods!public!unit tests! !
 
+!PackageBrowserTest class methodsFor!
+
+resources
+	^Array with: DolphinTestPackages! !
+!PackageBrowserTest class categoriesFor: #resources!public! !
+

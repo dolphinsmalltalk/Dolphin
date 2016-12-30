@@ -39,18 +39,17 @@ setUp
 !
 
 tearDown
-	a notNil 
-		ifTrue: 
-			[Package manager removePackage: a.
-			a := nil].
-	b notNil 
-		ifTrue: 
-			[Package manager removePackage: b.
-			b := nil].
-	c notNil 
-		ifTrue: 
-			[Package manager removePackage: c.
-			c := nil].
+	(Array
+		with: a
+		with: b
+		with: c) do: 
+				[:each |
+				each notNil
+					ifTrue: 
+						[(Array with: each packageFileName with: each fileOutName)
+							do: [:filename | (File exists: filename) ifTrue: [File delete: filename]].
+						Package manager removePackage: each]].
+	a := b := c := nil.
 	super tearDown! !
 !DolphinTestPackages categoriesFor: #a!accessing!public! !
 !DolphinTestPackages categoriesFor: #b!accessing!public! !
