@@ -1,7 +1,7 @@
 "Filed out from Dolphin Smalltalk 7"!
 
 DolphinTest subclass: #PackageTest
-	instanceVariableNames: 'loadedPackages'
+	instanceVariableNames: 'loadedPackages checkTimestamps'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -11,7 +11,7 @@ PackageTest comment: ''!
 !PackageTest methodsFor!
 
 checkNoTestPackageContents
-	| scribbleTestClass scribbleTest scribbleTestResourceMethod scribbleTestDefaultViewId scribbleTestViewId scribbleClass |
+	| scribbleTestClass scribbleClass |
 	scribbleTestClass := Smalltalk at: #ScribbleTest ifAbsent: [].
 	self assert: scribbleTestClass isNil.
 	scribbleClass := Smalltalk at: #Scribble.
@@ -202,12 +202,6 @@ b2xwaGluZHIwMDUuZGxsAAAAAA==''))!!
 
 '!
 
-dolphinTestPackages
-	^Array
-		with: DolphinTestPackages current a
-		with: DolphinTestPackages current b
-		with: DolphinTestPackages current c!
-
 filenameFor: aString 
 	^FileLocator installRelative localFileSpecFor: 'Resources\Tests\' , aString!
 
@@ -217,18 +211,17 @@ loadAndTestPackage: filename
 	self checkTestPackageContents!
 
 setUp
-	Package classPool at: 'CheckTimestamps' put: true.
-	self dolphinTestPackages do: [:each | each updateTimestamp]!
+	| var |
+	var := Package classPool associationAt: 'CheckTimestamps'.
+	checkTimestamps := var value.
+	var value: true!
 
 tearDown
-	Package classPool at: 'CheckTimestamps' put: false.
-	#(#a #b #c) do: 
-			[:each | 
-			| package |
-			package := DolphinTestPackages current perform: each.
-			(Array with: package packageFileName with: package fileOutName) do: [:filename | (File exists: filename) ifTrue: [File delete: filename]]].
-	loadedPackages notNil ifTrue: [loadedPackages do: [:each | Package manager basicUninstall: each]. loadedPackages  := nil].
-	DolphinTestPackages reset!
+	Package classPool at: 'CheckTimestamps' put: checkTimestamps.
+	loadedPackages notNil
+		ifTrue: 
+			[loadedPackages do: [:each | Package manager basicUninstall: each].
+			loadedPackages := nil]!
 
 testForwardRefLoadPac
 	"#1720: Test loading and converting of old packages with forward reference view referereces"
@@ -275,7 +268,6 @@ testTimestampInitialized
 !PackageTest categoriesFor: #checkNoTestPackageContents!private!unit tests! !
 !PackageTest categoriesFor: #checkTestPackageContents!private!unit tests! !
 !PackageTest categoriesFor: #d5ForwardRefTestPacContents!private!unit tests! !
-!PackageTest categoriesFor: #dolphinTestPackages!helpers!private! !
 !PackageTest categoriesFor: #filenameFor:!helpers!private! !
 !PackageTest categoriesFor: #loadAndTestPackage:!helpers!private! !
 !PackageTest categoriesFor: #setUp!initializing!private!unit tests! !
@@ -290,10 +282,4 @@ testTimestampInitialized
 !PackageTest categoriesFor: #testLoad60Pax!public!unit tests! !
 !PackageTest categoriesFor: #testLooseResourceIdentifiers!public! !
 !PackageTest categoriesFor: #testTimestampInitialized!public!unit tests! !
-
-!PackageTest class methodsFor!
-
-resources
-	^Array with: DolphinTestPackages! !
-!PackageTest class categoriesFor: #resources!Accessing!public! !
 

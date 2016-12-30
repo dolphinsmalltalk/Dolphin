@@ -303,7 +303,7 @@ DolphinTest subclass: #ObjectTest
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 DolphinTest subclass: #PackageTest
-	instanceVariableNames: 'loadedPackages'
+	instanceVariableNames: 'loadedPackages checkTimestamps'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
