@@ -835,8 +835,8 @@ releaseAccelerators
 releaseMenu
 	"Private - Release the menu."
 
-	self basicMenu: nil
-!
+	self basicMenu: nil.
+	menuBar ifNotNil: [menuBar free]!
 
 resetDefaultButton
 	"Private - No default button has been explicitly specified for the receiver, so attempt
