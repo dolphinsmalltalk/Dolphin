@@ -743,8 +743,9 @@ identifiersStartingWith: aString maxItems: anInteger
 indicatorStyles
 	^indicatorStyles!
 
-indicatorStyles: aCollectionOfScintillaIndicatorStyles 
-	indicatorStyles := aCollectionOfScintillaIndicatorStyles asOrderedCollection.
+indicatorStyles: aCollectionOfScintillaIndicatorStyles
+	"The indicator styles in a ScintillaView must be private to it, so ensure we have a copy."
+	indicatorStyles := aCollectionOfScintillaIndicatorStyles collect: [:each | each copy].
 	self isOpen ifTrue: [self view indicatorStyles: indicatorStyles]!
 
 initialize
