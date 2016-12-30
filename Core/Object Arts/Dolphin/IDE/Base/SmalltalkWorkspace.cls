@@ -761,14 +761,14 @@ initialize
 	self indicatorStyles: self class indicatorStyles.
 	self isAutoCompletionEnabled: self class isAutoCompletionEnabled!
 
-insertCompletion: aString at: anInteger 
+insertCompletion: aString at: anInteger
 	"Private-"
 
+	| word |
 	"Special case for insertions of unquoted symbols in Smalltalk-80 style literal arrays. Since
 	this is deprecated syntax, correct it..."
-	| word |
-	word := ((view styleAt: anInteger) name == #literalSymbol 
-				and: [(view characterAt: anInteger) ~~ $#]) ifTrue: ['#' , aString] ifFalse: [aString].
+	word := ((view styleAt: anInteger) name == #literalSymbol
+				and: [(view characterAt: anInteger - 1) ~~ $#]) ifTrue: ['#' , aString] ifFalse: [aString].
 	view performUndoableAction: [self completeWordAt: anInteger with: word]!
 
 insertKeywordCompletion: aString startingAt: anInteger 
