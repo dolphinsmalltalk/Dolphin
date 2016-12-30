@@ -26,12 +26,17 @@ populateFromView: aScintillaView at: anInteger
 			self perform: each setSelector with: (value = each defaultValue ifFalse: [value])].
 	view := aScintillaView!
 
+postCopy
+	view := nil.
+	^super postCopy!
+
 view
 	^view!
 
 view: aScintillaView 
 	view := aScintillaView! !
 !QueryableScintillaAttribute categoriesFor: #populateFromView:at:!initializing!private! !
+!QueryableScintillaAttribute categoriesFor: #postCopy!copying!public! !
 !QueryableScintillaAttribute categoriesFor: #view!accessing!private! !
 !QueryableScintillaAttribute categoriesFor: #view:!accessing!private! !
 
