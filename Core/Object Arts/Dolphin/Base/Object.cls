@@ -152,6 +152,13 @@ allReferences
 	<primitive: 153>
 	^self primitiveFailed!
 
+allReferences: aBoolean
+	"Answer an Array containing all objects which reference the receiver, including weak
+	references if the <boolean> argument is true. The primitive should not fail."
+
+	<primitive: 153>
+	^self primitiveFailed!
+
 asParameter
 	"Answer the receiver in a form suitable for passing to an external function
 	primitive method (see ExternalLibrary and subclasses). The default is self."
@@ -1514,6 +1521,7 @@ yourself
 !Object categoriesFor: #->!converting!public! !
 !Object categoriesFor: #addDependent:!dependency!public! !
 !Object categoriesFor: #allReferences!enumerating!public! !
+!Object categoriesFor: #allReferences:!enumerating!public! !
 !Object categoriesFor: #asParameter!converting!public! !
 !Object categoriesFor: #assert:!public!testing! !
 !Object categoriesFor: #asUIntPtr!converting!public! !
