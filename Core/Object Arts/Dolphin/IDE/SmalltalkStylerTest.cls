@@ -65,7 +65,10 @@ setUp
 	mock textStyles: SmalltalkWorkspace defaultTextStyles!
 
 tearDown
-	scintilla ifNotNil: [scintilla topView destroy].
+	scintilla
+		ifNotNil: 
+			[scintilla topView destroy.
+			scintilla := nil].
 	super tearDown!
 
 testArrayNoSpace

@@ -25,7 +25,8 @@ setUp
 	radioSet := RadioButtonSetPresenter showOn: #option1!
 
 tearDown
-	radioSet topShell destroy!
+	radioSet topShell destroy.
+	radioSet := nil!
 
 testDisableEnableAll
 	radioSet radioButtons do: [:each | self assert: each isEnabled].

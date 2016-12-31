@@ -1006,7 +1006,7 @@ setUp
 
 tearDown
 	useShell ifTrue: [shell destroy] ifFalse: [treeView isNil ifFalse: [treeView destroy]].
-	shell := scroller := treeView := nil!
+	shell := scroller := treeView := treeModel := nil!
 
 testMoveChildToChildlessRoot
 	"Tests: NNC x RNC, NCC x RNC,

@@ -261,7 +261,8 @@ tearDown
 	shell := cardsPresenter := classesPresenter := methodsPresenter := globalsPresenter := resourcesPresenter := dependencyPresenters := nil.
 	self removeClasses.
 	self removeGlobals.
-	packageA := packageB := packageC := nil!
+	packageA := packageB := packageC := nil.
+	MemoryManager current collectGarbage!
 
 testAddRemoveClasses
 	"Test adding and removing classes"

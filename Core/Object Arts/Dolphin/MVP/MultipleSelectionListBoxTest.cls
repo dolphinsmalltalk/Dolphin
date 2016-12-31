@@ -24,7 +24,8 @@ setUp
 	box := self classToTest show!
 
 tearDown
-	box topView destroy!
+	box topView destroy.
+	box := nil!
 
 testSelection
 	"Test legacy selection behaviour is maintained (even though it is incorrect)"
