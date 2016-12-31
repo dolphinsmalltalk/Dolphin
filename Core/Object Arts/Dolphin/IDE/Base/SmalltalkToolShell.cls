@@ -47,17 +47,17 @@ canSaveState
 
 	^false!
 
-configureFromSavedStateString: aSavedStateString 
+configureFromSavedStateString: aSavedStateString
 	"Configures the receiver using the monadic block source in aSavedStateString"
 
 	| result |
-	result := Compiler 
+	result := Compiler
 				compileForEvaluation: aSavedStateString
 				in: UndefinedObject
 				evaluationPools: #()
 				logged: false
 				flags: 0.
-	(result method value: nil) value: self!
+	self view noRedrawDo: [(result method value: nil) value: self]!
 
 createComponents
 	"Private - Create the presenters contained by the receiver"
