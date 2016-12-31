@@ -4990,7 +4990,11 @@ cursor
 defaultId
 	"Private - Answer a new id to use for a View"
 
-	^NextId := NextId + 1!
+	"We start some distance away from the standard Windows IDs for command buttons such as IDOK,
+	etc, to avoid any clashes now or in future. Note that these id's need to fit in16-bits
+	because of DM_GETDEFID."
+
+	^4096 + (NextId := NextId + 1) bitAnd: 16rFFFF!
 
 defaultModel
 	"Answer a default model to be assigned to the receiver when it
@@ -5115,7 +5119,7 @@ initialize
 		View initialize
 	"
 
-	NextId := 4096.
+	NextId := 0.
 	ViewClosedError := Signal description: 'View closed'.
 	self initializeMessageMap.
 	VMLibrary default primRegistryAt: 54 put: #subclassWindow:!
@@ -5244,20 +5248,18 @@ onStartup
 	"Perform post startup processing to initialize the View system"
 
 	WndClassAtom := nil.
-
-	self allSubclassesDo: [:c |
-		(c class includesSelector: #onStartup) ifTrue: [c onStartup]].
+	self allSubclassesDo: [:c | (c class includesSelector: #onStartup) ifTrue: [c onStartup]].
 
 	"Load the Common Control Library."
 	CommCtrlLibrary openDefault.
-
-	"We start some distance away from the standard Windows IDs for command buttons
-	such as IDOK, etc, to avoid any clashes now or in future."
-	NextId := 4096.
+	NextId := 0.
 
 	"Register a hot key so that Ctrl+Break does not cancel dialogs (closes user interrupt walkback)"
-	UserLibrary default registerHotKey: nil id: 0 fsModifiers: MOD_CONTROL vk: VK_CANCEL.
-
+	UserLibrary default
+		registerHotKey: nil
+		id: 0
+		fsModifiers: MOD_CONTROL
+		vk: VK_CANCEL.
 	ThemeLibrary default onStartup!
 
 registerClass
