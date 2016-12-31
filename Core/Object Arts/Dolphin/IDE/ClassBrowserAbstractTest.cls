@@ -194,7 +194,7 @@ tearDown
 	methods := packageA methods.
 	browser destroy.
 	self deleteTestMethods: methods.
-	packageA := nil!
+	browser := methodsPresenter := packageA := nil!
 
 testAddRemoveOfInheritedMethods
 	browser toggleShowInheritedMethods.

@@ -227,7 +227,7 @@ tearDown
 			| package |
 			package := DolphinTestPackages current perform: each.
 			(Array with: package packageFileName with: package fileOutName) do: [:filename | (File exists: filename) ifTrue: [File delete: filename]]].
-	loadedPackages notNil ifTrue: [loadedPackages do: [:each | Package manager basicUninstall: each]].
+	loadedPackages notNil ifTrue: [loadedPackages do: [:each | Package manager basicUninstall: each]. loadedPackages  := nil].
 	DolphinTestPackages reset!
 
 testForwardRefLoadPac

@@ -111,8 +111,9 @@ setUp
 	containerView rectangle: self initialParentRect.
 	containerView backcolor: self backgroundColor!
 
-tearDown	
-	containerView topView destroy!
+tearDown
+	containerView topView destroy.
+	containerView := nil!
 
 testBorderedNcRectangle
 	"Check that applying a border correctly changes the NC and Client rectagle calcs"
