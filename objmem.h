@@ -14,8 +14,8 @@
 #include <stdio.h>
 #include "STObject.h"
 #include "STVirtualObject.h"
-#include "STArray.h"
 #include "STString.h"
+#include "STBehavior.h"
 #include "STMemoryManager.h"
 #include "ImageHeader.h"
 
@@ -78,7 +78,7 @@ public:
 	// Formerly Private reference count management
 	static void  __fastcall countUp(Oop objectPointer);
 	static void __fastcall countDown(Oop rootObjectPointer);
-	static ArrayOTE* __stdcall referencesTo(Oop referencedObjectPointer);
+	static ArrayOTE* __stdcall referencesTo(Oop referencedObjectPointer, bool includeWeakRefs);
 	static ArrayOTE* __fastcall instancesOf(BehaviorOTE* classPointer);
 	static ArrayOTE* __fastcall subinstancesOf(BehaviorOTE* classPointer);
 	static ArrayOTE* __fastcall ObjectMemory::instanceCounts(ArrayOTE* oteClasses);
@@ -400,6 +400,8 @@ private:
 	static void releasePointer(OTE* ote);
 
 	// Garbage collection/Ref count checking
+	static BYTE WeaknessMask;
+	static MWORD lastStrongPointerOf(OTE* ote);
 	static void reclaimInaccessibleObjects(DWORD flags);
 	static void markObjectsAccessibleFrom(OTE* ote);
 	static void ClearGCInfo();
@@ -807,6 +809,18 @@ inline void ObjectMemory::markObject(OTE* ote)
 	ote->mark();
 	//ote->m_flags.m_mark = m_spaceOTEBits[OTEFlags::NormalSpace].m_mark;
 }
+
+// lastPointerOf includes the object header, sizeBitsOf()/mwordSizeOf() does NOT
+inline MWORD ObjectMemory::lastStrongPointerOf(OTE* ote)
+{
+	BYTE flags = ote->getFlagsByte();
+	return (flags & OTE::PointerMask)
+		? (flags & WeaknessMask) == OTE::WeakMask 
+				? ObjectHeaderSize + ote->m_oteClass->m_location->fixedFields() 
+				: ote->getWordSize()
+		: 0;
+}
+
 
 ///////////////////////////////////////////////////////////////////////////////
 // Memory pool routines

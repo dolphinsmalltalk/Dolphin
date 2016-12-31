@@ -639,7 +639,7 @@ private:
 	static BOOL __fastcall primitiveIdentityHash();
 	//static BOOL __fastcall primitiveAsOop();
 	//static BOOL __fastcall primitiveAsObject();
-	static BOOL __fastcall primitiveAllReferences();
+	static BOOL __fastcall primitiveAllReferences(CompiledMethod&, unsigned argumentCount);
 	static BOOL __fastcall primitiveAllInstances();
 	
 	// Control Primitives

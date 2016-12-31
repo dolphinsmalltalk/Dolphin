@@ -371,7 +371,7 @@
     </Expand>
   </Type>
   <Type Name="OTEFlags">
-    <DisplayString Condition="m_pointer">{{space={(OTEFlags::Spaces)m_space,en}, weak={(bool)m_weakOrZ}, finalizable={(bool)m_finalize}}}</DisplayString>
+    <DisplayString Condition="m_pointer">{(OTEFlags::Spaces)m_space,en}, weak={(bool)m_weakOrZ}, finalizable={(bool)m_finalize}, mark={m_mark}</DisplayString>
     <DisplayString>{{bytes, space={(OTEFlags::Spaces)m_space,en}, nullTerminated={(bool)m_weakOrZ}, finalizable={(bool)m_finalize}}}</DisplayString>
     <Expand HideRawView="true"></Expand>
   </Type>
@@ -386,10 +386,10 @@
     </Expand>
   </Type>
   <Type Name="TOTE&lt;ST::VariantObject&gt;">
-    <DisplayString Condition="!m_flags.m_weakOrZ&amp;&amp;!m_flags.m_finalize">a {m_oteClass} {{{(m_size&amp;0x7FFFFFFF)>>2} field(s), {(OTEFlags::Spaces)m_flags.m_space,en}}</DisplayString>
-    <DisplayString Condition="!m_flags.m_weakOrZ&amp;&amp;m_flags.m_finalize">a {m_oteClass} {{{(m_size&amp;0x7FFFFFFF)>>2} field(s), {(OTEFlags::Spaces)m_flags.m_space,en}, finalizable}</DisplayString>
-    <DisplayString Condition="m_flags.m_weakOrZ&amp;&amp;!m_flags.m_finalize">a {m_oteClass} {{{(m_size&amp;0x7FFFFFFF)>>2} field(s), {(OTEFlags::Spaces)m_flags.m_space,en}, weak}</DisplayString>
-    <DisplayString Condition="m_flags.m_weakOrZ&amp;&amp;m_flags.m_finalize">a {m_oteClass} {{{(m_size&amp;0x7FFFFFFF)>>2} field(s), {(OTEFlags::Spaces)m_flags.m_space,en}, weak, finalizable}</DisplayString>
+    <DisplayString Condition="!m_flags.m_weakOrZ&amp;&amp;!m_flags.m_finalize">a {m_oteClass} {{{(m_size&amp;0x7FFFFFFF)>>2} field(s), {(OTEFlags::Spaces)m_flags.m_space,en}, refs={(int)m_count}}</DisplayString>
+    <DisplayString Condition="!m_flags.m_weakOrZ&amp;&amp;m_flags.m_finalize">a {m_oteClass} {{{(m_size&amp;0x7FFFFFFF)>>2} field(s), {(OTEFlags::Spaces)m_flags.m_space,en}, finalizable, refs={(int)m_count}}</DisplayString>
+    <DisplayString Condition="m_flags.m_weakOrZ&amp;&amp;!m_flags.m_finalize">a {m_oteClass} {{{(m_size&amp;0x7FFFFFFF)>>2} field(s), {(OTEFlags::Spaces)m_flags.m_space,en}, weak, refs={(int)m_count}}</DisplayString>
+    <DisplayString Condition="m_flags.m_weakOrZ&amp;&amp;m_flags.m_finalize">a {m_oteClass} {{{(m_size&amp;0x7FFFFFFF)>>2} field(s), {(OTEFlags::Spaces)m_flags.m_space,en}, weak, finalizable, refs={(int)m_count}}</DisplayString>
     <Expand>
       <ArrayItems>
         <Size>(m_size&amp;0x7FFFFFFF)>>2</Size>

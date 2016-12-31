@@ -300,6 +300,8 @@ extern primitiveLargeIntegerAsFloat:near32
 PRIMASYNCCALL EQU ?primitiveAsyncDLL32Call@Interpreter@@CIHAAVCompiledMethod@ST@@I@Z
 extern PRIMASYNCCALL:near32
 
+extern ?primitiveAllReferences@Interpreter@@CIHAAVCompiledMethod@ST@@I@Z:near32
+
 IFDEF _DEBUG
 	extern ?primitiveExecutionTrace@Interpreter@@CIHXZ:near32
 	extern ?checkReferences@ObjectMemory@@SIXXZ:near32
@@ -320,8 +322,6 @@ INSTANCESOF EQU ?instancesOf@ObjectMemory@@SIPAV?$TOTE@VArray@ST@@@@PAV?$TOTE@VB
 extern INSTANCESOF:near32
 SUBINSTANCESOF EQU ?subinstancesOf@ObjectMemory@@SIPAV?$TOTE@VArray@ST@@@@PAV?$TOTE@VBehavior@ST@@@@@Z
 extern SUBINSTANCESOF:near32
-REFERENCESTO EQU ?referencesTo@ObjectMemory@@SGPAV?$TOTE@VArray@ST@@@@I@Z 
-extern REFERENCESTO:near32
 INSTANCECOUNTS EQU ?instanceCounts@ObjectMemory@@SIPAV?$TOTE@VArray@ST@@@@PAV2@@Z
 extern INSTANCECOUNTS:near32
 
@@ -2407,16 +2407,10 @@ BEGINPRIMITIVE primitiveAllSubinstances
 ENDPRIMITIVE primitiveAllSubinstances
 
 
-;  BOOL __fastcall Interpreter::primitiveAllReferences()
+;  BOOL __fastcall Interpreter::primitiveAllReferences(CompiledMethod*, unsigned argCount)
 ;
 BEGINPRIMITIVE primitiveAllReferences
-	mov		ecx, [_SP]							; Load receiver at stack top
-	sub		_SP, OOPSIZE						; And pop it so not included in refs.
-	push	ecx									; Push arg to references to
-	StoreSPRegister								; Save down adjusted the stack pointer
-	call	REFERENCESTO
-	PushNewObject <a>
-	ret											; Will succeed because eax is non-zero
+		CallSimplePrim <?primitiveAllReferences@Interpreter@@CIHAAVCompiledMethod@ST@@I@Z>
 ENDPRIMITIVE primitiveAllReferences
 
 ;  BOOL __fastcall Interpreter::primitiveObjectCount()

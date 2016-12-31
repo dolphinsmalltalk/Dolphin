@@ -46,7 +46,7 @@ extern VMPointers _Pointers;
 #endif
 
 enum { NoWeakMask = 0, GCNoWeakness = 1 };
-static BYTE WeaknessMask;
+BYTE ObjectMemory::WeaknessMask = static_cast<BYTE>(OTE::WeakMask);
 
 void ObjectMemory::ClearGCInfo()
 {
@@ -57,21 +57,6 @@ void ObjectMemory::ClearGCInfo()
 inline Oop ObjectMemory::corpsePointer()
 {
 	return _Pointers.Corpse;
-}
-
-// lastPointerOf includes the object header, sizeBitsOf()/mwordSizeOf() does NOT
-inline MWORD lastStrongPointerOf(OTE* ote)
-{
-	HARDASSERT(ote->isPointers());
-
-	// TODO: Check code generated here, may be slower than previously
-	if (ote->flagsAllMask(WeaknessMask))
-	{
-		const Behavior* behavior = ote->m_oteClass->m_location;
-		return ObjectHeaderSize + behavior->fixedFields();
-	}
-	else
-		return ote->getWordSize();
 }
 
 void ObjectMemory::MarkObjectsAccessibleFromRoot(OTE* rootOTE)
@@ -96,9 +81,6 @@ void ObjectMemory::markObjectsAccessibleFrom(OTE* ote)
 	BehaviorOTE* oteClass = ote->m_oteClass;
 	if ((oteClass->getFlagsByte() ^ curMark) & OTE::MarkMask)	// Already accessible from roots of world?
 		markObjectsAccessibleFrom(reinterpret_cast<POTE>(oteClass));
-
-	if (ote->isBytes())
-		return;
 
 	const MWORD lastPointer = lastStrongPointerOf(ote);
 	Oop* pFields = reinterpret_cast<Oop*>(ote->m_location);
@@ -145,7 +127,7 @@ void ObjectMemory::reclaimInaccessibleObjects(DWORD gcFlags)
 	// and we don't want to pass down to the depths. When we want to turn off
 	// weakness we mask with the free bit, which obviously can't be set on any
 	// live object so the test will always fail
-	WeaknessMask = static_cast<BYTE>(gcFlags & GCNoWeakness ? OTE::FreeMask : OTE::WeakMask);
+	WeaknessMask = static_cast<BYTE>(gcFlags & GCNoWeakness ? 0 : OTE::WeakMask);
 
 	// Get the Oop to use for corpses from the interpreter (it's a global)
 	Oop corpse = corpsePointer();
@@ -224,25 +206,24 @@ void ObjectMemory::reclaimInaccessibleObjects(DWORD gcFlags)
 	// candidate scan so that we don't end up nilling out weak references to objects that are accessible
 	// from finalizable objects
 	unsigned queuedForBereavement=0;
-	for (OTE* ote=m_pOT+OTBase; ote < pEnd; ote++)
+	if (WeaknessMask != 0)
 	{
-		BYTE oteFlags = ote->getFlagsByte();
-		if (!(oteFlags & OTE::FreeMask))								// Already free'd?
+		for (OTE* ote = m_pOT + OTBase; ote < pEnd; ote++)
 		{
-			// We check all weak objects for bereavements, whether they are marked or not, as they
-			// need to be notified of losses, whether or not they're about to disappear themselves,
-			// in case they need to take appropriate action.
-			if ((oteFlags & WeaknessMask) == WeaknessMask)
+			BYTE oteFlags = ote->getFlagsByte();
+			// Is it a non-free'd weak pointer object?
+			if ((oteFlags & (OTE::WeakMask|OTE::FreeMask)) == OTE::WeakMask)
 			{
-				HARDASSERT((oteFlags & OTE::WeakMask) == OTE::WeakMask);
-				// Yeehaa, let's add some Corpses
+				// We check all weak objects for bereavements, whether they are marked or not, as they
+				// need to be notified of losses, whether or not they're about to disappear themselves,
+				// in case they need to take appropriate action.
 				SMALLINTEGER losses = 0;
 				PointersOTE* otePointers = reinterpret_cast<PointersOTE*>(ote);
 				const MWORD size = otePointers->pointersSize();
 				VariantObject* weakObj = otePointers->m_location;
 				const Behavior* weakObjClass = ote->m_oteClass->m_location;
 				const MWORD fixedFields = weakObjClass->fixedFields();
-				for (MWORD j=fixedFields;j<size;j++)
+				for (MWORD j = fixedFields; j < size; j++)
 				{
 					Oop fieldPointer = weakObj->m_fields[j];
 					if (!ObjectMemoryIsIntegerObject(fieldPointer))
@@ -251,11 +232,11 @@ void ObjectMemory::reclaimInaccessibleObjects(DWORD gcFlags)
 						BYTE fieldFlags = fieldOTE->getFlagsByte();
 						if (fieldFlags & OTE::FreeMask)
 						{
-							#if defined(_DEBUG) && 0
-								TRACESTREAM << "Weakling " << ote << " loses reference to freed object " <<
-									(UINT)fieldOTE << "/" << indexOfObject(fieldOTE) << endl;
-							#endif
-							
+#if defined(_DEBUG) && 0
+							TRACESTREAM << "Weakling " << ote << " loses reference to freed object " <<
+								(UINT)fieldOTE << "/" << indexOfObject(fieldOTE) << endl;
+#endif
+
 							weakObj->m_fields[j] = corpse;
 							losses++;
 						}
@@ -264,11 +245,11 @@ void ObjectMemory::reclaimInaccessibleObjects(DWORD gcFlags)
 							HARDASSERT(!fieldOTE->hasCurrentMark());
 							// We must correctly maintain ref. count of dying object,
 							// just in case it is in (or will be in) the finalization queue
-							#if defined(_DEBUG) && 0
-								TRACESTREAM << "Weakling " << ote << " loses reference to " <<
-									fieldOTE << "(" << (UINT)fieldOTE << "/" << indexOfObject(fieldOTE) << " refs " <<
-									int(ote->m_flags.m_count) << ")" << endl;
-							#endif	
+#if defined(_DEBUG) && 0
+							TRACESTREAM << "Weakling " << ote << " loses reference to " <<
+								fieldOTE << "(" << (UINT)fieldOTE << "/" << indexOfObject(fieldOTE) << " refs " <<
+								int(ote->m_flags.m_count) << ")" << endl;
+#endif	
 							decRefs(fieldOTE);
 							weakObj->m_fields[j] = corpse;
 							losses++;
@@ -281,12 +262,12 @@ void ObjectMemory::reclaimInaccessibleObjects(DWORD gcFlags)
 				{
 					queuedForBereavement++;
 					Interpreter::queueForBereavementOf(ote, integerObjectOf(losses));
-					#ifdef _DEBUG
+#ifdef _DEBUG
 					{
 						tracelock lock(TRACESTREAM);
 						TRACESTREAM << "Weakling: " << ote << " (" << UINT(ote) << " lost " << losses << " elements" << endl;
 					}
-					#endif
+#endif
 					// We must also ensure that it and its referenced objects are marked since we're
 					// rescuing it.
 					markObjectsAccessibleFrom(ote);
@@ -630,7 +611,7 @@ void ObjectMemory::addVMRefs()
 						if (!Interpreter::m_bAsyncGCDisabled)
 						{
 							TRACESTREAM << " Referenced From:" << endl;
-							ArrayOTE* oteRefs = ObjectMemory::referencesTo(reinterpret_cast<Oop>(ote));
+							ArrayOTE* oteRefs = ObjectMemory::referencesTo(reinterpret_cast<Oop>(ote), true);
 							Array* refs = oteRefs->m_location;
 							for (unsigned i=0;i<oteRefs->pointersSize();i++)
 								TRACESTREAM << "  " << reinterpret_cast<OTE*>(refs->m_elements[i]) << endl;

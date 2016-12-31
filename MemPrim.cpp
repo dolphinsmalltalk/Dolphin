@@ -53,3 +53,38 @@ BOOL __fastcall Interpreter::primitiveNewVirtual()
 	return replaceStackTopWithNew(newObject);
 }
 
+BOOL __fastcall Interpreter::primitiveAllReferences(CompiledMethod&, unsigned argumentCount)
+{
+	// Make sure we don't include refs above TOS as these are invalid - also don't include the ref to the receiver on the stack
+	Oop* sp;
+	bool includeWeakRefs;
+	Oop receiver;
+	switch (argumentCount)
+	{
+	case 0:
+		includeWeakRefs = true;
+		receiver = stackTop();
+		sp = m_registers.m_stackPointer - 1;
+		break;
+	case 1:
+		includeWeakRefs = stackTop() == reinterpret_cast<Oop>(Pointers.True);
+		receiver = stackValue(1);
+		sp = m_registers.m_stackPointer - 2;
+		break;
+	default:
+		// 0 or 1 args expected
+		return primitiveFailure(0);
+	}
+
+	// Resize the active process to exclude the receiver and arg (if any) to the primitive
+	ST::Process* pActiveProcess = m_registers.m_pActiveProcess;
+	MWORD words = sp - reinterpret_cast<const Oop*>(pActiveProcess) + 1;
+	m_registers.m_oteActiveProcess->setSize(words * sizeof(MWORD));
+
+	ArrayOTE* refs = ObjectMemory::referencesTo(receiver, includeWeakRefs);
+
+	// Primitive is not going to fail or fault now, so adjust the stack
+	pop(argumentCount);
+
+	return replaceStackTopWithNew(refs);
+}

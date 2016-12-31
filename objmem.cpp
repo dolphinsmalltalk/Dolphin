@@ -457,17 +457,16 @@ ArrayOTE* __fastcall ObjectMemory::instanceCounts(ArrayOTE* oteClasses)
 
 // Return an array containing all objects which reference
 // objectPointer (which may be a SmallInteger)
-ArrayOTE* __stdcall ObjectMemory::referencesTo(Oop referencedObjectPointer)
+ArrayOTE* __stdcall ObjectMemory::referencesTo(Oop referencedObjectPointer, bool includeWeakRefs)
 {
-	// Make sure we don't include refs above TOS as these are invalid
-	Interpreter::resizeActiveProcess();
+	WeaknessMask = includeWeakRefs ? 0 : OTE::WeakMask;
 
 	unsigned size;
 	if (!isIntegerObject(referencedObjectPointer))
 		size = reinterpret_cast<OTE*>(referencedObjectPointer)->m_count;
 	else
 		size = 32;
-	
+
 	ArrayOTE* arrayPointer = Array::New(size);
 	Array* pRefs = arrayPointer->m_location;
 	// Temporarily mark the ref array as being free to prevent it appearing as a ref. 
@@ -476,8 +475,8 @@ ArrayOTE* __stdcall ObjectMemory::referencesTo(Oop referencedObjectPointer)
 	arrayPointer->beFree();
 
 	unsigned refCnt = 0;
-	const OTE* pEnd = m_pOT+m_nOTSize;
-	for (OTE* ote=m_pOT; ote < pEnd; ote++)
+	const OTE* pEnd = m_pOT + m_nOTSize;
+	for (OTE* ote = m_pOT; ote < pEnd; ote++)
 	{
 		if (!ote->isFree())
 		{
@@ -494,10 +493,10 @@ ArrayOTE* __stdcall ObjectMemory::referencesTo(Oop referencedObjectPointer)
 				// object, we need to inc. its ref. count!
 				ote->countUp();
 			}
-			else if (ote->isPointers())
+			else
 			{
 				VariantObject* obj = static_cast<VariantObject*>(ote->m_location);
-				const MWORD lastPointer = ote->pointersSize();
+				const MWORD lastPointer = lastStrongPointerOf(ote);
 				for (MWORD i = 0; i < lastPointer; i++)
 				{
 					if (obj->m_fields[i] == referencedObjectPointer)
@@ -523,7 +522,9 @@ ArrayOTE* __stdcall ObjectMemory::referencesTo(Oop referencedObjectPointer)
 
 	ASSERT(refCnt <= size);
 	if (refCnt < size)
-		basicResize(reinterpret_cast<OTE*>(arrayPointer), SizeOfPointers(refCnt), 0); 
+	{
+		basicResize(reinterpret_cast<OTE*>(arrayPointer), SizeOfPointers(refCnt), 0);
+	}
 
 	// Ref. count of arrayPointer currently 0
 	return arrayPointer;

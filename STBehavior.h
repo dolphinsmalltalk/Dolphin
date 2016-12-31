@@ -15,6 +15,7 @@
 #pragma once
 
 #include "STObject.h"
+#include "STArray.h"
 
 class InstanceSpecification
 {
