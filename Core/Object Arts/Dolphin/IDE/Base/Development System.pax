@@ -236,6 +236,7 @@ package methodNames
 	add: #Object -> #publishedAspects;
 	add: #Object -> #publishedEvents;
 	add: #Object -> #searchForInTool:;
+	add: #OrEnvironment -> #includesResource:;
 	add: #Package -> #browse;
 	add: #Package -> #defaultAbout;
 	add: #Package -> #defaultAboutBitmap;
@@ -3236,6 +3237,13 @@ publishedEventsOfInstances
 !Object class categoriesFor: #publishedAspectsOfInstances!constants!development!public! !
 !Object class categoriesFor: #publishedEvents!development!events!public! !
 !Object class categoriesFor: #publishedEventsOfInstances!development!events!public! !
+
+!OrEnvironment methodsFor!
+
+includesResource: aResourceIdentifier 
+	^(environment includesResource: aResourceIdentifier) 
+		and: [oredEnvironment includesResource: aResourceIdentifier]! !
+!OrEnvironment categoriesFor: #includesResource:!public!testing! !
 
 !Package methodsFor!
 

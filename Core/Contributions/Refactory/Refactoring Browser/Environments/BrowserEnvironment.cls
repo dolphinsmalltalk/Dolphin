@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #BrowserEnvironment
 	instanceVariableNames: 'label searchStrings search filter progressBlock'
@@ -21,13 +21,13 @@ Instance Variables:
 	anEnvironment isSystem ifTrue: [^self].
 	^AndEnvironment onEnvironment: self and: anEnvironment!
 
-| anEnvironment 
+| anEnvironment
 	"If we or anEnvironment includes everything, then return it instead of creating 
 	an or that will include everything."
 
 	self isSystem ifTrue: [^self].
 	anEnvironment isSystem ifTrue: [^anEnvironment].
-	^(self not & anEnvironment not) not!
+	^OrEnvironment onEnvironment: self or: anEnvironment!
 
 addSearchString: aString 
 	searchStrings isNil ifTrue: 
