@@ -1,7 +1,7 @@
 "Filed out from Dolphin Smalltalk 7"!
 
 DolphinTest subclass: #VMTest
-	instanceVariableNames: ''
+	instanceVariableNames: 'expiryHandler'
 	classVariableNames: ''
 	poolDictionaries: 'CRTConstants'
 	classInstanceVariableNames: ''!
@@ -87,6 +87,9 @@ earlyTermination: aBoolean
 			"and the process should have died"
 			self assert: proc isTerminated.
 			self assert: Processor pendingTerminations isEmpty]!
+
+elementsExpired: anInteger of: aMourningWeakObject
+	expiryHandler value: anInteger value: aMourningWeakObject!
 
 exerciseReplaceElementsOf: targetCollection from: startInteger to: stopInteger with: sourceCollection startingAt: startAtInteger
 	| fieldsBefore fieldsAfter captureFields expected target |
@@ -1220,12 +1223,57 @@ testVMPointersImmutable
 			self
 				isFault: ex
 				raisedIn: ExternalAddress >> #dwordAtOffset:put:
-				receiver: vmPointers]! !
+				receiver: vmPointers]!
+
+testWeakMournerNotifications
+	| subject1 subject2 losses obj1 obj2 obj3 id1 id2 |
+	obj1 := Object new.
+	obj2 := Object new.
+	obj3 := Object new.
+	subject1 := MourningWeakArray
+				with: obj1
+				with: obj2
+				with: obj3.
+	subject1 pathologist: self.
+	subject2 := MourningWeakArray
+				with: obj3
+				with: obj2
+				with: obj1.
+	subject2 pathologist: self.
+	subject2 beFinalizable.
+	losses := IdentityDictionary new.
+	id1 := subject1 identityHash.
+	losses at: id1 put: 0.
+	id2 := subject2 identityHash.
+	losses at: id2 put: 0.
+	expiryHandler := 
+			[:count :mourner |
+			| id |
+			id := mourner identityHash.
+			losses at: id put: (losses at: id) + count].
+	obj1 := obj3 := nil.
+	MemoryManager current collectGarbage.
+	"Weak array should have been notified of loss of obj1 and obj3"
+	self assert: 2 equals: (losses at: id1).
+	self assert: subject1 first == DeadObject current.
+	self assert: subject1 second == obj2.
+	self assert: subject1 third == DeadObject current.
+	self assert: 2 equals: (losses at: id2).
+	self assert: subject2 first == DeadObject current.
+	self assert: subject2 second == obj2.
+	self assert: subject2 third == DeadObject current.
+	obj2 := subject1 := subject2 := nil.
+	MemoryManager current collectGarbage.
+	"Garbage weak array should not have been notified of loss of obj2 as it was collected in same GC cycle"
+	self assert: 2 equals: (losses at: id1).
+	"Garbage but finalizable weak array should have been notified of loss of obj2"
+	self assert: 3 equals: (losses at: id2)! !
 !VMTest categoriesFor: #assertImmutableAtPut:!private!unit tests! !
 !VMTest categoriesFor: #assertImmutableBasicAtPut:!private!unit tests! !
 !VMTest categoriesFor: #assertImmutableInstVarAtPut:!private!unit tests! !
 !VMTest categoriesFor: #assertImmutableResize:!private!unit tests! !
 !VMTest categoriesFor: #earlyTermination:!helpers!private! !
+!VMTest categoriesFor: #elementsExpired:of:!helpers!private! !
 !VMTest categoriesFor: #exerciseReplaceElementsOf:from:to:with:startingAt:!private!unit tests! !
 !VMTest categoriesFor: #exerciseReplaceElementsOf:with:!private!unit tests! !
 !VMTest categoriesFor: #findCaller:in:!helpers!private! !
@@ -1268,6 +1316,7 @@ testVMPointersImmutable
 !VMTest categoriesFor: #testPrimitiveStringAtPut!public!unit tests! !
 !VMTest categoriesFor: #testSignedFromUnsigned!public!unit tests! !
 !VMTest categoriesFor: #testVMPointersImmutable!public!unit tests! !
+!VMTest categoriesFor: #testWeakMournerNotifications!public!unit tests! !
 
 !VMTest class methodsFor!
 
