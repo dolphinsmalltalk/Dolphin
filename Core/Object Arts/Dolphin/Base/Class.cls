@@ -860,10 +860,10 @@ allClasses
 
 	| answer roots |
 	roots := self allRoots.
-	answer := OrderedCollection new: 2500.
-	answer addAllLast: roots.
-	roots do: [:root | root allSubclassesBreadthFirstDo: [:each | answer addLast: each]].
-	^answer.!
+	answer := Array writeStream: 2500.
+	roots do: [:each | answer nextPut: each].
+	roots do: [:root | root allSubclassesBreadthFirstDo: [:each | answer nextPut: each]].
+	^answer contents!
 
 allClassesDo: operation
 	"Private - Evaluate the monadic valuable, operation, for each of the classes in the system.

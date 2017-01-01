@@ -44,7 +44,11 @@ allClasses
 	"Answer a <sequencedReadableCollection> of all of the classes in the system, in breadth-first order.
 	There is no particular ordering at a particular depth."
 
-	allClasses isNil ifTrue: [allClasses := Class allClasses].
+	allClasses isNil
+		ifTrue: 
+			[allClasses := (Class allClasses)
+						isImmutable: true;
+						yourself].
 	^allClasses!
 
 allClassesDo: operation

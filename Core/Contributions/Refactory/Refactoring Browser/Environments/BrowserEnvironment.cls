@@ -36,7 +36,9 @@ addSearchString: aString
 							(a indexOf: $: ifAbsent: [a size]) > (b indexOf: $: ifAbsent: [b size])]].
 	searchStrings add: aString!
 
-allClassesDo: aBlock 
+allClassesDo: aBlock
+	"Private - Evaluate the <monadicValuable> argument, aBlock, for every class that could possibly be included in the receiver."
+
 	| allClasses numClasses step |
 	allClasses := Smalltalk allClasses.
 	numClasses := allClasses size.
@@ -44,7 +46,7 @@ allClassesDo: aBlock
 	progressBlock value: 0.
 	1 to: numClasses
 		do: 
-			[:i | 
+			[:i |
 			| class |
 			class := allClasses at: i.
 			aBlock value: class.
@@ -73,9 +75,22 @@ at: aKey ifAbsent: aBlock
 		ifFalse: [assoc value]!
 
 categories
-	#rbFix. "Need a portability layer here to access system categories"
-	^(ClassCategory allClassCategories collect: [:e | e name])
-		select: [:each | self includesCategory: each]
+	| answer unclassified |
+	#rbFix.	"Dolphin's category systems are very different. Enumerating all the categories and
+		examining their contents is very slow as ClassCategory>>contents has to perform a
+		linear search across each category array of each class in the system, i.e.
+		numberCategories x numberClasses. Therefore we enumerate all included classes and
+		build a set from those."
+	answer := Set new.
+	unclassified := ClassCategory unclassified name.
+	self classesDo: 
+			[:eachClass |
+			eachClass isMeta
+				ifFalse: 
+					[eachClass classCategories
+						ifNil: [answer add: unclassified]
+						ifNotNil: [:categories | categories do: [:eachCategory | answer add: eachCategory name]]]].
+	^answer
 	"^Smalltalk organization categories select: [:each | self includesCategory: each]"!
 
 classes
@@ -276,7 +291,7 @@ methodsDo: aBlock
 		classesAndSelectorsDo: [:class :selector | aBlock value: (class compiledMethodAt: selector)]!
 
 not
-	self isSystem ifTrue: [^SelectorEnvironment new].
+	self isSystem ifTrue: [^SelectorEnvironment onEnvironment: self].
 	^NotEnvironment onEnvironment: self!
 
 notEmpty
