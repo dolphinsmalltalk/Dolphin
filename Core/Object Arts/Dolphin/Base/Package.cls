@@ -178,17 +178,18 @@ allSourceObjectsDo: operation
 	"Note that the package itself is always enumerated last - this is important"
 	operation value: self!
 
-basicAddClass: aClass 
+basicAddClass: aClass
 	"Private - Add aClass to the list of classes owned by the receiver. A class can only be owned by
 	a single package. Answer aClass. Note that it is assumed that the class is _not_ currently
 	packaged. To correctly add a class regardless of packaging use PackageManager>>addClass:to:"
 
 	"ignore any methods of aClass which we own as they are included by our new ownership of aClass"
+
 	| className |
-	(self methods 
-		select: [:aMethod | aMethod methodClass == aClass or: [aMethod methodClass == aClass class]]) 
+	(self methods
+		select: [:aMethod | aMethod methodClass == aClass or: [aMethod methodClass == aClass class]])
 			do: [:method | self removeLooseMethod: method].
-	className := self nameForClass: aClass.
+	className := aClass name.
 	classNames add: className.
 
 	"Although the class hasn't changed in itself, it will need to be filed out to its new location, if using .PAX format"
@@ -225,7 +226,7 @@ basicRemoveClass: aClass
 	"Private - Remove aClass from the list of Classes owned by the receiver.
 	Answer aClass."
 
-	classNames remove: (self nameForClass: aClass).
+	classNames remove: aClass name.
 	^aClass!
 
 basicRemoveGlobalNamed: globalName 
@@ -924,12 +925,11 @@ imageStripperBytes: aByteArray
 
 !
 
-includesClass: aClass 
+includesClass: aClass
 	"Answer whether the receiver owns aClass. aClass's metaclass is
 	automatically owned as well."
 
-	^(classNames includes: (self nameForClass: aClass instanceClass)) 
-		and: [(self isImportedClass: aClass) not]!
+	^(classNames includes: aClass instanceClass name) and: [(self isImportedClass: aClass) not]!
 
 includesGlobalNamed: globalName
 	"Answer whether the receiver owns the global named globalName."
@@ -1274,14 +1274,6 @@ name
 	file name, and must be unique amongst all loaded packages in the system."
 
 	^name!
-
-nameForClass: aClass
-	"Private - Answer a String name suitable for adding to the receivers classNames.
-	See: Package>>classFromName for the reverse transformation.
-	Implementation Note: As of package binary file version 1, we store the class names
-	as Symbols to avoid wasting space."
-
-	^aClass name!
 
 nameForMethod: aMethod
 	"Private - Answer an Association of the method class name String -> methods selector Symbol.
@@ -2471,7 +2463,6 @@ If you experience subsequent problems please contact the package supplier for an
 !Package categoriesFor: #methodsDo:!enumerating!public! !
 !Package categoriesFor: #methodsOfClass:!enumerating!public! !
 !Package categoriesFor: #name!accessing!public! !
-!Package categoriesFor: #nameForClass:!mapping!private! !
 !Package categoriesFor: #nameForMethod:!mapping!private! !
 !Package categoriesFor: #nameForResourceIdentifier:!mapping!private! !
 !Package categoriesFor: #okToSaveOrDeploy!helpers!private! !

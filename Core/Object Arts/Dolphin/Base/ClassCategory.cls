@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Category subclass: #ClassCategory
 	instanceVariableNames: ''
@@ -21,13 +21,12 @@ contents
 
 	^self class environment allClasses select: [:aClass | self includesClass: aClass]!
 
-includesClass: class 
+includesClass: class
 	"Answer whether the receiver includes the <ClassDescription>, class."
 
-	| classCategories |
-	^(classCategories := class classCategories) isNil 
-		ifTrue: [self == self class unclassified]
-		ifFalse: [classCategories identityIncludes: self]!
+	^class classCategories
+		ifNil: [self == self class unclassified]
+		ifNotNil: [:classCategories | classCategories identityIncludes: self]!
 
 removeClass: aClass
 	"Remove aClass from the classes held by the reciver. Answer
