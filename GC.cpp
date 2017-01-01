@@ -211,12 +211,11 @@ void ObjectMemory::reclaimInaccessibleObjects(DWORD gcFlags)
 		for (OTE* ote = m_pOT + OTBase; ote < pEnd; ote++)
 		{
 			BYTE oteFlags = ote->getFlagsByte();
-			// Is it a non-free'd weak pointer object?
-			if ((oteFlags & (OTE::WeakMask|OTE::FreeMask)) == OTE::WeakMask)
+			// Is it a non-free'd, weak pointer object, and does it either have the current mark or is finalizable?
+			// If so it's losses are replaced with references to the corpse object, and it may be sent a loss notification
+			if (((oteFlags & (OTE::WeakMask|OTE::FreeMask)) == OTE::WeakMask)
+				&& (((oteFlags ^ curMark) & (OTE::MarkMask|OTE::FinalizeMask)) != OTE::MarkMask))
 			{
-				// We check all weak objects for bereavements, whether they are marked or not, as they
-				// need to be notified of losses, whether or not they're about to disappear themselves,
-				// in case they need to take appropriate action.
 				SMALLINTEGER losses = 0;
 				PointersOTE* otePointers = reinterpret_cast<PointersOTE*>(ote);
 				const MWORD size = otePointers->pointersSize();
