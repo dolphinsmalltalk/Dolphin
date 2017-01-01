@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 BrowserEnvironmentWrapper subclass: #VariableEnvironment
 	instanceVariableNames: 'instanceVariables instanceVariableReaders instanceVariableWriters classVariables selectorCache'
@@ -48,31 +48,32 @@ addClass: aClass instanceVariableWriter: aString
 	self flushCachesFor: aClass.
 	self addSearchString: aString!
 
-allClassesDo: aBlock 
+allClassesDo: aBlock
 	| classes instVarBlock numClasses i |
-	classes := Set new.
+	classes := IdentitySet new.
 	instVarBlock := 
-			[:each | 
+			[:each |
 			| class |
 			class := self classForName: each.
-			classes addAll: class withAllSubclasses].
+			classes add: class.
+			class allSubclassesDo: [:eachSub | classes add: eachSub]].
 	instanceVariables keysDo: instVarBlock.
 	instanceVariableReaders keysDo: instVarBlock.
 	instanceVariableWriters keysDo: instVarBlock.
 	classVariables keysDo: 
-			[:each | 
-			| class |
-			class := self classForName: each.
-			class notNil 
-				ifTrue: 
-					[classes
-						addAll: class withAllSubclasses;
-						addAll: class class withAllSubclasses]].
+			[:each |
+			(self classForName: each)
+				ifNotNil: 
+					[:class |
+					classes add: class.
+					class allSubclassesDo: [:eachSub | classes add: eachSub].
+					classes add: class class.
+					class class allSubclassesDo: [:eachSub | classes add: eachSub]]].
 	numClasses := classes size.
 	i := 0.0.
 	progressBlock value: i.
 	classes do: 
-			[:class | 
+			[:class |
 			aBlock value: class.
 			i := i + 1.
 			progressBlock value: i * 100 // numClasses]!
@@ -322,11 +323,8 @@ removeClass: aClass instanceVariableWriter: aString
 		ifTrue: [instanceVariableWriters removeKey: aClass name ifAbsent: []].
 	self flushCachesFor: aClass!
 
-selectorCache
-	^selectorCache isNil ifTrue: [selectorCache := self lookupTableClass new] ifFalse: [selectorCache]!
-
-selectorCacheFor: aClass 
-	^self selectorCache at: aClass
+selectorCacheFor: aClass
+	^(selectorCache ifNil: [selectorCache := self lookupTableClass new]) at: aClass
 		ifAbsentPut: [self computeSelectorCacheFor: aClass]!
 
 storeOn: aStream 
@@ -383,7 +381,6 @@ storeOn: aStream
 !VariableEnvironment categoriesFor: #removeClass:instanceVariable:!accessing!public! !
 !VariableEnvironment categoriesFor: #removeClass:instanceVariableReader:!accessing!public! !
 !VariableEnvironment categoriesFor: #removeClass:instanceVariableWriter:!accessing!public! !
-!VariableEnvironment categoriesFor: #selectorCache!accessing!private! !
 !VariableEnvironment categoriesFor: #selectorCacheFor:!accessing!private! !
 !VariableEnvironment categoriesFor: #storeOn:!printing!public! !
 
