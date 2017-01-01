@@ -4198,16 +4198,13 @@ ENDPRIMITIVE primitiveActivateMethod
 
 QuickReturnSpecial MACRO specialValue
 	ASSUME	edx:SDWORD						;; EDX is the argument count
-	neg		edx
 	mov		eax, [STEPPING]
-	lea		_SP, [_SP+edx*OOPSIZE]
+	neg		edx
 	test	eax, eax						;; Stepping?
-	
-	; Just pop off the args, don't need to do any ref. counting any more
-	
 	mov		eax, specialValue				;; Load pointer of appropriate object
 	jnz		@F
-	mov		[_SP], eax						;; Replace receiver at stack top with special object (NOT ref counted)
+	mov		[_SP+edx*OOPSIZE], eax						;; Replace receiver at stack top with special object (NOT ref counted)
+	lea		_SP, [_SP+edx*OOPSIZE]
 	ret
 @@:
 	xor		eax, eax
@@ -4219,8 +4216,8 @@ ENDM
 BEGINPRIMITIVE primitiveReturnSelf
 	mov		eax, [STEPPING]
 	shl		edx, 2
-	dec		eax
-	jz		@F								;; If stepping then fail the primitive, otherwise eax = -1 (success)
+	xor		eax, 1
+	jz		@F								;; If stepping then fail the primitive, otherwise eax = 1 (success)
 	sub		_SP, edx
 @@:
 	ret
@@ -4246,10 +4243,10 @@ BEGINPRIMITIVE primitiveReturnLiteralZero
 	mov		eax, [STEPPING]
 	neg		edx
 	test	eax, eax
-	jnz		localPrimitiveFailure0
-	lea		_SP, [_SP+edx*OOPSIZE]
 	mov		eax, [ecx].m_aLiterals[0]			; Load first literal into EAX
-	mov		[_SP], eax							; Overwrite receiver
+	jnz		localPrimitiveFailure0
+	mov		[_SP+edx*OOPSIZE], eax				; Overwrite receiver
+	lea		_SP, [_SP+edx*OOPSIZE]
 	ret											; EAX contains Oop, therefore non-zero
 	
 localPrimitiveFailure0:
