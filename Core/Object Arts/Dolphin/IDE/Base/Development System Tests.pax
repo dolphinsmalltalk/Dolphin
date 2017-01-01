@@ -116,7 +116,7 @@ DolphinTest subclass: #VersionResourceTest
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 DolphinTest subclass: #VMTest
-	instanceVariableNames: ''
+	instanceVariableNames: 'expiryHandler'
 	classVariableNames: ''
 	poolDictionaries: 'CRTConstants'
 	classInstanceVariableNames: ''!
