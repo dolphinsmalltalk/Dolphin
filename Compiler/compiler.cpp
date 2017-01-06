@@ -872,9 +872,6 @@ int Compiler::AddToFrame(Oop object, const TEXTRANGE& errRange)
 
 		if (literalPointer == object)
 		{
-			// Cause object to be deallocated (if new) by adding and removing reference.
-			m_piVM->AddReference(object);
-			m_piVM->RemoveReference(object);
 			CHECKREFERENCES
 			return i;
 		}
@@ -899,10 +896,6 @@ int Compiler::AddStringToFrame(POTE stringPointer, const TEXTRANGE& range)
 		if ((m_piVM->FetchClassOf(literalPointer) == classPointer) &&
 			strcmp((const char*)FetchBytesOf(POTE(literalPointer)), szValue) == 0)
 		{
-			// Cause object to be deallocated (if new) by adding and removing reference.
-			m_piVM->AddReference(Oop(stringPointer));
-			m_piVM->RemoveReference(Oop(stringPointer));
-
 			return i;
 		}
 	}
@@ -3068,26 +3061,23 @@ Oop Compiler::ParseConstExpression()
 
 		if (pCompiler->m_ok && oteMethod != Nil())
 		{
-			// Copy out the literals so that IDE references search still works.
+			STCompiledMethod& exprMethod = *(STCompiledMethod*)GetObj(oteMethod);
+
+			// Add all the literals in the expression to the literal frame of this method as this
+			// allows normal references search to work in IDE
+			const int loopEnd = pCompiler->GetLiteralCount();
+			for (int i=0; i < loopEnd;i++)
 			{
-				STCompiledMethod& exprMethod = *(STCompiledMethod*)GetObj(oteMethod);
+				Oop oopLiteral = exprMethod.aLiterals[i];
+				_ASSERTE(oopLiteral);
+				if (!IsIntegerObject(oopLiteral) &&
+						(m_piVM->IsKindOf(oopLiteral, GetVMPointers().ClassSymbol) ||
+							m_piVM->IsAClass((POTE)oopLiteral) ||
+							m_piVM->IsKindOf(oopLiteral, GetVMPointers().ClassVariableBinding) ||
+							m_piVM->IsKindOf(oopLiteral, GetVMPointers().ClassArray)))
 
-				// Add all the literals in the expression to the literal frame of this method as this
-				// allows normal references search to work in IDE
-				const int loopEnd = pCompiler->GetLiteralCount();
-				for (int i=0; i < loopEnd;i++)
 				{
-					Oop oopLiteral = exprMethod.aLiterals[i];
-					_ASSERTE(oopLiteral);
-					if (!IsIntegerObject(oopLiteral) &&
-							(m_piVM->IsKindOf(oopLiteral, GetVMPointers().ClassSymbol) ||
-								m_piVM->IsAClass((POTE)oopLiteral) ||
-								m_piVM->IsKindOf(oopLiteral, GetVMPointers().ClassVariableBinding) ||
-								m_piVM->IsKindOf(oopLiteral, GetVMPointers().ClassArray)))
-
-					{
-						AddToFrame(oopLiteral, LastTokenRange());
-					}
+					AddToFrame(oopLiteral, LastTokenRange());
 				}
 			}
 

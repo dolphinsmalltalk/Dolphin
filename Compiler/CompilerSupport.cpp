@@ -2,7 +2,7 @@
 ============
 CompilerSupport.cpp
 ============
-Interpreter interface functions that are used purely by the Compiler, and which can, therefore, 
+Interpreter interface functions that are used purely by the Compiler, and which can, therefore,
 be thrown away eventually, or perhaps compiled into a separate DLL.
 */
 
@@ -18,11 +18,11 @@ POTE Compiler::NewCompiledMethod(POTE classPointer, unsigned numBytes, const STM
 {
 	//_ASSERTE(ObjectMemory::inheritsFrom(classPointer, GetVMPointers().ClassCompiledMethod));
 	// Note we subtract
-	POTE methodPointer = m_piVM->NewObjectWithPointers(classPointer, 
+	POTE methodPointer = m_piVM->NewObjectWithPointers(classPointer,
 		((sizeof(STCompiledMethod)
-			-sizeof(Oop)	// Deduct dummy literal frame entry (arrays cannot be zero sized in IDL)
+			- sizeof(Oop)	// Deduct dummy literal frame entry (arrays cannot be zero sized in IDL)
 //			-sizeof(ObjectHeader)	// Deduct size of head which NewObjectWithPointers includes implicitly
-		)/sizeof(Oop))+GetLiteralCount());
+) / sizeof(Oop)) + GetLiteralCount());
 	STCompiledMethod* method = reinterpret_cast<STCompiledMethod*>(GetObj(methodPointer));
 	POTE bytes = m_piVM->NewByteArray(numBytes);
 	m_piVM->StorePointerWithValue((Oop*)&method->byteCodes, Oop(bytes));
@@ -70,23 +70,49 @@ POTE Compiler::DictAtPut(POTE dict, const Str& name, Oop value)// throws SE_VMCA
 
 	// SystemDictionary will convert String to Symbol in #at:put:
 	_ASSERTE(!IsIntegerObject(Oop(dict)));
-	POTE symbolPointer=NewString(name);
+	POTE symbolPointer = NewString(name);
 	return (POTE)m_piVM->PerformWithWith(Oop(dict), atPutSelector, Oop(symbolPointer), value);
 }
 
 bool Compiler::CanUnderstand(POTE oteBehavior, POTE oteSelector)
 {
 	return ((POTE)m_piVM->PerformWith(Oop(oteBehavior), GetVMPointers().canUnderstandSymbol, Oop(oteSelector)))
-				== GetVMPointers().True;
+		== GetVMPointers().True;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 // 
 
-Oop Compiler::EvaluateExpression(const char* text, POTE method, Oop contextOop, POTE pools)
+Oop Compiler::EvaluateExpression(const char* text, POTE oteMethod, Oop contextOop, POTE pools)
 {
-	Oop oopSource = Oop(NewString(text));
-	return m_piVM->PerformWithWithWith(Oop(method), GetVMPointers().evaluateExpressionSelector, oopSource, contextOop, Oop(pools));
+	STCompiledMethod& exprMethod = *(STCompiledMethod*)GetObj(oteMethod);
+	BYTE primitive = exprMethod.header.primitiveIndex;
+	Oop result;
+	// As an optimization avoid calling back into Smalltalk if we the expression is of simple form, e.g. a class ref
+	switch (primitive)
+	{
+	case PRIMITIVE_RETURN_SELF:
+		result = contextOop;
+		break;
+	case PRIMITIVE_RETURN_TRUE:
+		return reinterpret_cast<Oop>(this->GetVMPointers().True);
+	case PRIMITIVE_RETURN_FALSE:
+		return reinterpret_cast<Oop>(this->GetVMPointers().False);
+	case PRIMITIVE_RETURN_NIL:
+		return reinterpret_cast<Oop>(this->GetVMPointers().Nil);
+	case PRIMITIVE_RETURN_LITERAL_ZERO:
+		result = exprMethod.aLiterals[0];
+		break;
+	case PRIMITIVE_RETURN_STATIC_ZERO:
+		result = reinterpret_cast<STVariableBinding*>(GetObj(reinterpret_cast<POTE>(exprMethod.aLiterals[0])))->value;
+		break;
+	default:
+		return m_piVM->PerformWithWithWith(Oop(oteMethod), GetVMPointers().evaluateExpressionSelector, Oop(NewString(text)), contextOop, Oop(pools));
+	}
+
+	m_piVM->AddReference(result);
+
+	return result;
 }
 
 
