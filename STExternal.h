@@ -36,7 +36,7 @@ struct COMThunk
 
 namespace ST
 {
-	class ExternalStructure //: public Object
+	class ExternalStructure : public Object
 	{
 	public:
 		BytesOTE*	m_contents;
@@ -47,13 +47,13 @@ namespace ST
 	};
 
 	// Really a subclass of ByteArray
-	class DWORDBytes //: public Object
+	class DWORDBytes : public Object
 	{
 	public:
 		DWORD m_dwValue;
 	};
 
-	class ExternalHandle //: public Object
+	class ExternalHandle : public Object
 	{
 		// ExternalHandle is really a variable byte subclass of length 4
 	public:
@@ -64,7 +64,7 @@ namespace ST
 		static Oop IntegerOrNew(HANDLE hValue);
 	};
 
-	class ExternalAddress //: public Object
+	class ExternalAddress : public Object
 	{
 		// ExternalAddress is really a variable byte subclass of length 4
 	public:
@@ -73,7 +73,7 @@ namespace ST
 		static AddressOTE* New(void* ptrValue);
 	};
 
-	class CallbackDescriptor //: public Object
+	class CallbackDescriptor : public Object
 	{
 	public:
 		Oop m_convention;
@@ -85,7 +85,7 @@ namespace ST
 	typedef TOTE<DescriptorBytes> DescriptorOTE;
 
 	// Not a real class, but useful all the same
-	class DescriptorBytes //: public Object
+	class DescriptorBytes : public Object
 	{
 	public:
 		BYTE	m_callingConvention;
@@ -97,7 +97,7 @@ namespace ST
 		static unsigned argsLen(DescriptorOTE* ote) { return ote->getSize() - offsetof(DescriptorBytes, m_args); }
 	};
 
-	class ExternalDescriptor //: public Object
+	class ExternalDescriptor : public Object
 	{
 	public:
 		DescriptorOTE* m_descriptor;	// Byte array of descriptor bytes

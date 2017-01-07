@@ -360,7 +360,7 @@ void __fastcall Interpreter::createActualMessage(const unsigned argCount)
 	Array* args = message->m_args->m_location;
 	
 	m_registers.m_stackPointer -= argCount;//-1;
-	const Oop* sp = m_registers.m_stackPointer;
+	Oop* const sp = m_registers.m_stackPointer;
 
 	// Transfer the arguments off the stack to the array
 	const unsigned loopEnd = argCount;
@@ -700,7 +700,7 @@ BlockOTE* __fastcall Interpreter::blockCopy(DWORD ext)
 	const unsigned nValuesToCopy = extension.copiedValuesCount;
 	if (nValuesToCopy > 0)
 	{
-		register Oop* sp = m_registers.m_stackPointer;
+		Oop* sp = m_registers.m_stackPointer;
 		unsigned i=0;
 		do
 		{

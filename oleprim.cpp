@@ -19,16 +19,19 @@
 #include "STExternal.h"
 #include "STBehavior.h"
 
-static BOOL AnswerNewStructure(BehaviorOTE* oteClass, void* ptr)
+static Oop* AnswerNewStructure(BehaviorOTE* oteClass, void* ptr)
 {
 	if (oteClass->isNil())
 		return Interpreter::primitiveFailure(4);
 
-	Interpreter::replaceStackTopWithNew(ExternalStructure::New(oteClass, ptr));
-	return primitiveSuccess();
+	OTE* oteStruct = ExternalStructure::New(oteClass, ptr);
+	Oop* const sp = Interpreter::m_registers.m_stackPointer;
+	*sp = reinterpret_cast<Oop>(oteStruct);
+	ObjectMemory::AddToZct(oteStruct);
+	return sp;
 }
 
-static BOOL AnswerNewInterfacePointer(BehaviorOTE* oteClass, IUnknown* punk)
+static Oop* AnswerNewInterfacePointer(BehaviorOTE* oteClass, IUnknown* punk)
 {
 	if (oteClass->isNil())
 		return Interpreter::primitiveFailure(4);
@@ -38,17 +41,18 @@ static BOOL AnswerNewInterfacePointer(BehaviorOTE* oteClass, IUnknown* punk)
 
 	OTE* poteUnk = ExternalStructure::NewPointer(oteClass, punk);
 	poteUnk->beFinalizable();
-	Interpreter::replaceStackTopWithNew(poteUnk);
-	return primitiveSuccess();
+	Oop* const sp = Interpreter::m_registers.m_stackPointer;
+	*sp = reinterpret_cast<Oop>(poteUnk);
+	ObjectMemory::AddToZct(poteUnk);
+	return sp;
 }
 
 // Answer an array of allInstances of the receiver.
 // Fails if receiver is not a Class/MetaClass
-// No effect on stack pointer, and doesn't use successFlag.
-// No arguments, so leaves a clean stack (no ref. counted objects above stack top).
-BOOL __fastcall Interpreter::primitiveVariantValue()
+Oop* __fastcall Interpreter::primitiveVariantValue()
 {
-	StructureOTE* oteReceiver = reinterpret_cast<StructureOTE*>stackTop();
+	Oop* const sp = m_registers.m_stackPointer;
+	StructureOTE* oteReceiver = reinterpret_cast<StructureOTE*>(*sp);
 	ExternalStructure* objVariant = oteReceiver->m_location;
 
 	BytesOTE* oteContents = objVariant->m_contents;
@@ -181,51 +185,57 @@ BOOL __fastcall Interpreter::primitiveVariantValue()
 		if (oteStructClass == reinterpret_cast<BehaviorOTE*>(Pointers.Nil))
 			return primitiveFailure(4);
 
-		replaceStackTopWithNew(ExternalStructure::NewPointer(oteStructClass, pRef));
+		OTE* oteRef = ExternalStructure::NewPointer(oteStructClass, pRef);
+
+		*sp = reinterpret_cast<Oop>(oteRef);
+		ObjectMemory::AddToZct(oteRef);
+		return sp;
 	}
 	else
 	{
+		Oop value;
+
 		switch(vt)
 		{
 		case VT_NULL:
 		case VT_EMPTY:
-			replaceStackTopWith(Pointers.Nil);
+			value = reinterpret_cast<Oop>(Pointers.Nil);
 			break;
 
 		case VT_I1:
 			{
 				SDWORD i1 = V_I1(pVar);
-				replaceStackTopWith(ObjectMemoryIntegerObjectOf(i1));
+				value = ObjectMemoryIntegerObjectOf(i1);
 			}
 			break;
 
 		case VT_I2:
 			{
 				SDWORD i2 = V_I2(pVar);
-				replaceStackTopWith(ObjectMemoryIntegerObjectOf(i2));
+				value = ObjectMemoryIntegerObjectOf(i2);
 			}
 			break;
 
 		case VT_INT:
 		case VT_I4:
-			replaceStackTopWithNew(Integer::NewSigned32(V_I4(pVar)));
+			value = Integer::NewSigned32(V_I4(pVar));
 			break;
 
 		case VT_I8:
-			replaceStackTopWithNew(LargeInteger::NewSigned64(V_I8(pVar)));
+			value = LargeInteger::NewSigned64(V_I8(pVar));
 			break;
 
 		case VT_R4:
-			replaceStackTopWithNew(V_R4(pVar));
+			value = reinterpret_cast<Oop>(Float::New(V_R4(pVar)));
 			break;
 
 		case VT_R8:
-			replaceStackTopWithNew(V_R8(pVar));
+			value = reinterpret_cast<Oop>(Float::New(V_R8(pVar)));
 			break;
 
 
 		case VT_BSTR:
-			replaceStackTopWithNew(String::NewFromBSTR(V_BSTR(pVar)));
+			value = reinterpret_cast<Oop>(String::NewFromBSTR(V_BSTR(pVar)));
 			break;
 
 		case VT_DATE:
@@ -247,30 +257,30 @@ BOOL __fastcall Interpreter::primitiveVariantValue()
 			break;
 
 		case VT_BOOL:
-			replaceStackTopWith(reinterpret_cast<Oop>(V_BOOL(pVar) ? Pointers.True : Pointers.False));
+			value = reinterpret_cast<Oop>(V_BOOL(pVar) ? Pointers.True : Pointers.False);
 			break;
 
 		case VT_UI1:
 			{
 				DWORD ui1 = V_UI1(pVar);
-				replaceStackTopWith(ObjectMemoryIntegerObjectOf(ui1));
+				value = ObjectMemoryIntegerObjectOf(ui1);
 			}
 			break;
 		
 		case VT_UI2:
 			{
 				DWORD ui2 = V_UI2(pVar);
-				replaceStackTopWith(ObjectMemoryIntegerObjectOf(ui2));
+				value = ObjectMemoryIntegerObjectOf(ui2);
 			}
 			break;
 
 		case VT_UINT:
 		case VT_UI4:
-			replaceStackTopWithNew(Integer::NewUnsigned32(V_UI4(pVar)));
+			value = Integer::NewUnsigned32(V_UI4(pVar));
 			break;
 
 		case VT_UI8:
-			replaceStackTopWithNew(LargeInteger::NewUnsigned64(V_UI8(pVar)));
+			value = LargeInteger::NewUnsigned64(V_UI8(pVar));
 			break;
 
 		case VT_CY:
@@ -286,7 +296,11 @@ BOOL __fastcall Interpreter::primitiveVariantValue()
 			return primitiveFailure(3);
 			break;
 		}
-	}
 
-	return primitiveSuccess();
+		// Note that we must write the object to the stack before adding to the ZCT, as if the 
+		// ZCT overflows the object would otherwise be freed.
+		*sp = value;
+		ObjectMemory::AddToZct(value);
+		return sp;
+	}
 }

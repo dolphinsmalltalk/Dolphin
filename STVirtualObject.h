@@ -43,7 +43,7 @@ namespace ST
 		return mbi.RegionSize;
 	}
 
-	class VirtualObject // : public Object
+	class VirtualObject  : public Object
 	{
 	public:
 

@@ -25,40 +25,56 @@
 // Smalltalk classes
 #include "STBehavior.h"
 
-BOOL __fastcall Interpreter::primitiveMakePoint(CompiledMethod&, unsigned argCount)
+Oop* __fastcall Interpreter::primitiveMakePoint(CompiledMethod&, unsigned argCount)
 {
-		Oop oopReceiver = stackValue(argCount);
-		if (!ObjectMemory::isBehavior(oopReceiver))
-			return primitiveFailure(0);
-		BehaviorOTE* oteClass = reinterpret_cast<BehaviorOTE*>(oopReceiver);
-		Behavior* behavior = oteClass->m_location;
-		
-		if (behavior->isBytes())
-			return primitiveFailure(1);
-		
-		MWORD oops = argCount;
-		if (behavior->isIndexable())
-		{
-			oops += behavior->fixedFields();
-		}
-		else
-		{
-			if (behavior->fixedFields() != oops)
-				return primitiveFailure(2);
+	Oop* sp = m_registers.m_stackPointer;
+	Oop oopReceiver = *(sp-argCount);
+	if (!ObjectMemory::isBehavior(oopReceiver))
+		return primitiveFailure(0);
+	BehaviorOTE* oteClass = reinterpret_cast<BehaviorOTE*>(oopReceiver);
+	Behavior* behavior = oteClass->m_location;
 
-		}
+	if (behavior->isBytes())
+		return primitiveFailure(1);
 
-		// Note that instantiateClassWithPointers counts up the class,
-		PointersOTE* oteObj = ObjectMemory::newPointerObject(oteClass, oops);
-		VariantObject* obj = oteObj->m_location;
-		for (int i=oops-1;i>=0;i--)
+	size_t minSize = behavior->fixedFields();
+	size_t i;
+	if (behavior->isIndexable())
+	{
+		i = max(minSize, argCount);
+	}
+	else
+	{
+		if (argCount > minSize)
 		{
-			Oop oopArg = popStack();
-			ObjectMemory::countUp(oopArg);
-			obj->m_fields[i] = oopArg;
+			// Not indexable, and too many fields
+			return primitiveFailure(2);
 		}
-		replaceStackTopWithNew(oteObj);
+		i = minSize;
+	}
 
-	return TRUE;
+	// Note that instantiateClassWithPointers counts up the class,
+	PointersOTE* oteObj = ObjectMemory::newUninitializedPointerObject(oteClass, i);
+	VariantObject* obj = oteObj->m_location;
+
+	// nil out any extra fields
+	const Oop nil = reinterpret_cast<Oop>(Pointers.Nil);
+	while (i > argCount)
+	{
+		obj->m_fields[--i] = nil;
+	}
+
+	while (i != 0)
+	{
+		i--;
+		Oop oopArg = *sp--;
+		ObjectMemory::countUp(oopArg);
+		obj->m_fields[i] = oopArg;
+	}
+
+	*sp = reinterpret_cast<Oop>(oteObj);
+	ObjectMemory::AddToZct(reinterpret_cast<OTE*>(oteObj));
+	ASSERT(m_registers.m_stackPointer - sp == argCount);
+	return sp;
 }
 

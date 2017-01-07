@@ -64,15 +64,26 @@ FloatOTE* __stdcall Float::New(double fValue)
 ///////////////////////////////////////////////////////////////////////////////
 //	Float primitives
 
+Oop* __fastcall Interpreter::primitiveAsFloat()
+{
+	Oop* const sp = m_registers.m_stackPointer;
+
+	FloatOTE* oteResult = Float::New(ObjectMemoryIntegerValueOf(*sp));
+	*sp = reinterpret_cast<Oop>(oteResult);
+	ObjectMemory::AddToZct(oteResult);
+	return sp;
+}
+
 // We need to be careful here - C semantics for truncation are too
 // crude; we must check that the receiver is representable in 30
 // or 31 bits
-// Does not use success flag, does not modify SP, and leaves a clean stack
-BOOL __fastcall Interpreter::primitiveTruncated()
+Oop* __fastcall Interpreter::primitiveTruncated()
 {
+	Oop* const sp = m_registers.m_stackPointer;
+
 	// This primitive should only be called from the Float class and so does not
 	// check that the receiver is a float
-	FloatOTE* oteFloat = reinterpret_cast<FloatOTE*>(stackTop());
+	FloatOTE* oteFloat = reinterpret_cast<FloatOTE*>(*sp);
 	ASSERT(isAFloat(Oop(oteFloat)));
 	Float* floatReceiver = oteFloat->m_location;
 
@@ -85,7 +96,9 @@ BOOL __fastcall Interpreter::primitiveTruncated()
 		{
 			// ... representable in 64-bits
 			LONGLONG liTrunc = static_cast<LONGLONG>(fValue);
-			replaceStackTopWithNew(Integer::NewSigned64(liTrunc));
+			Oop truncated = Integer::NewSigned64(liTrunc);
+			*sp = truncated;
+			ObjectMemory::AddToZct(reinterpret_cast<OTE*>(truncated));
 		}
 		else
 			return primitiveFailure(1);
@@ -93,11 +106,87 @@ BOOL __fastcall Interpreter::primitiveTruncated()
 	else
 	{
 		int intVal = static_cast<int>(fValue);
-		stackTop() = ObjectMemoryIntegerObjectOf(intVal);
+		*sp = ObjectMemoryIntegerObjectOf(intVal);
 	}
 
-	return primitiveSuccess();
+	return sp;
 }
+
+Oop* Interpreter::primitiveFloatLessThan()
+{
+	Oop* const sp = m_registers.m_stackPointer;
+
+	FloatOTE* oteReceiver = reinterpret_cast<FloatOTE*>(*(sp - 1));
+	Oop oopArg = *sp;
+	if (ObjectMemoryIsIntegerObject(oopArg))
+	{
+		ASSERT(isAFloat(Oop(oteReceiver)));
+		*(sp - 1) = reinterpret_cast<Oop>(oteReceiver->m_location->m_fValue < ObjectMemoryIntegerValueOf(oopArg)
+			? Pointers.True : Pointers.False);
+	}
+	else
+	{
+		FloatOTE* oteArg = reinterpret_cast<FloatOTE*>(oopArg);
+		if (oteArg->m_oteClass != Pointers.ClassFloat)
+		{
+			return NULL;
+		}
+		*(sp - 1) = reinterpret_cast<Oop>(oteReceiver->m_location->m_fValue < oteArg->m_location->m_fValue
+			? Pointers.True : Pointers.False);
+	}
+	return sp - 1;
+}
+
+Oop* Interpreter::primitiveFloatGreaterThan()
+{
+	Oop* const sp = m_registers.m_stackPointer;
+
+	FloatOTE* oteReceiver = reinterpret_cast<FloatOTE*>(*(sp - 1));
+	Oop oopArg = *sp;
+	if (ObjectMemoryIsIntegerObject(oopArg))
+	{
+		ASSERT(isAFloat(Oop(oteReceiver)));
+		*(sp - 1) = reinterpret_cast<Oop>(oteReceiver->m_location->m_fValue > ObjectMemoryIntegerValueOf(oopArg)
+			? Pointers.True : Pointers.False);
+	}
+	else
+	{
+		FloatOTE* oteArg = reinterpret_cast<FloatOTE*>(oopArg);
+		if (oteArg->m_oteClass != Pointers.ClassFloat)
+		{
+			return NULL;
+		}
+		*(sp - 1) = reinterpret_cast<Oop>(oteReceiver->m_location->m_fValue > oteArg->m_location->m_fValue
+			? Pointers.True : Pointers.False);
+	}
+	return sp - 1;
+}
+
+Oop* Interpreter::primitiveFloatEqual()
+{
+	Oop* const sp = m_registers.m_stackPointer;
+
+	FloatOTE* oteReceiver = reinterpret_cast<FloatOTE*>(*(sp - 1));
+	Oop oopArg = *sp;
+	if (ObjectMemoryIsIntegerObject(oopArg))
+	{
+		ASSERT(isAFloat(Oop(oteReceiver)));
+		*(sp - 1) = reinterpret_cast<Oop>(oteReceiver->m_location->m_fValue == ObjectMemoryIntegerValueOf(oopArg)
+			? Pointers.True : Pointers.False);
+	}
+	else
+	{
+		FloatOTE* oteArg = reinterpret_cast<FloatOTE*>(oopArg);
+		if (oteArg->m_oteClass != Pointers.ClassFloat)
+		{
+			return NULL;
+		}
+		*(sp - 1) = reinterpret_cast<Oop>(oteReceiver->m_location->m_fValue == oteArg->m_location->m_fValue
+			? Pointers.True : Pointers.False);
+	}
+	return sp - 1;
+}
+
 
 ///////////////////////////////////////////////////////////////////////////////
 // Primitives for external buffer manipulation of floats/doubles
@@ -114,10 +203,11 @@ BOOL __fastcall Interpreter::primitiveTruncated()
 // (e.g. ExternalAddress).
 //
 
-// Leaves a clean stack as the only argument is an integer
-BOOL __fastcall Interpreter::primitiveDoublePrecisionFloatAt()
+Oop* __fastcall Interpreter::primitiveDoublePrecisionFloatAt()
 {
-	Oop integerPointer = stackTop();
+	Oop* const sp = m_registers.m_stackPointer;
+
+	Oop integerPointer = *sp;
 	if (!ObjectMemoryIsIntegerObject(integerPointer))
 	{
 		OTE* oteArg = reinterpret_cast<OTE*>(integerPointer);
@@ -125,18 +215,19 @@ BOOL __fastcall Interpreter::primitiveDoublePrecisionFloatAt()
 	}
 
 	SMALLUNSIGNED offset = ObjectMemoryIntegerValueOf(integerPointer);
-	OTE* receiver = reinterpret_cast<OTE*>(stackValue(1));
+	OTE* receiver = reinterpret_cast<OTE*>(*(sp-1));
 
 	ASSERT(!ObjectMemoryIsIntegerObject(receiver));
 	ASSERT(receiver->isBytes());
 
 	// Its a byte object, so its simpler (no ref counting and no fixed fields)
-	double fValue;
+	FloatOTE* oteResult = Float::New();
 	Behavior* behavior = receiver->m_oteClass->m_location;
+	Float* result = oteResult->m_location;
 	if (behavior->isIndirect())
 	{
 		ExternalAddress* ptr = static_cast<ExternalAddress*>(receiver->m_location);
-		fValue = *reinterpret_cast<double*>(static_cast<BYTE*>(ptr->m_pointer)+offset);
+		result->m_fValue = *reinterpret_cast<double*>(static_cast<BYTE*>(ptr->m_pointer)+offset);
 	}
 	else
 	{
@@ -147,20 +238,21 @@ BOOL __fastcall Interpreter::primitiveDoublePrecisionFloatAt()
 			return primitiveFailure(PrimitiveFailureBoundsError);	// Out of bounds
 
 		VariantByteObject* bytes = oteBytes->m_location;
-		fValue = *reinterpret_cast<double*>(&(bytes->m_fields[offset]));
+		result->m_fValue = *reinterpret_cast<double*>(&(bytes->m_fields[offset]));
 	}
 
-	pop(1);		// index and value SmallIntegers, so don't need to nil out stack or ref. count
-
-	replaceStackTopWithNew(fValue);
-	return primitiveSuccess();
+	oteResult->beImmutable();
+	*(sp - 1) = reinterpret_cast<Oop>(oteResult);
+	ObjectMemory::AddToZct(reinterpret_cast<OTE*>(oteResult));
+	return sp - 1;
 }
 
 
-// Leaves a clean stack as the only argument is an integer
-BOOL __fastcall Interpreter::primitiveSinglePrecisionFloatAt()
+Oop* __fastcall Interpreter::primitiveSinglePrecisionFloatAt()
 {
-	Oop integerPointer = stackTop();
+	Oop* const sp = m_registers.m_stackPointer;
+
+	Oop integerPointer = *sp;
 	if (!ObjectMemoryIsIntegerObject(integerPointer))
 	{
 		OTE* oteArg = reinterpret_cast<OTE*>(integerPointer);
@@ -168,18 +260,19 @@ BOOL __fastcall Interpreter::primitiveSinglePrecisionFloatAt()
 	}
 
 	SMALLUNSIGNED offset = ObjectMemoryIntegerValueOf(integerPointer);
-	OTE* receiver = reinterpret_cast<OTE*>(stackValue(1));
+	OTE* receiver = reinterpret_cast<OTE*>(*(sp-1));
 
 	ASSERT(!ObjectMemoryIsIntegerObject(receiver));
 	ASSERT(receiver->isBytes());
 
 	// Its a byte object, so its simpler (no ref counting and no fixed fields)
-	float fValue;
+	FloatOTE* oteResult = Float::New();
 	Behavior* behavior = receiver->m_oteClass->m_location;
+	Float* result = oteResult->m_location;
 	if (behavior->isIndirect())
 	{
 		ExternalAddress* ptr = static_cast<ExternalAddress*>(receiver->m_location);
-		fValue = *reinterpret_cast<float*>(static_cast<BYTE*>(ptr->m_pointer)+offset);
+		result->m_fValue = *reinterpret_cast<float*>(static_cast<BYTE*>(ptr->m_pointer)+offset);
 	}
 	else
 	{
@@ -190,45 +283,57 @@ BOOL __fastcall Interpreter::primitiveSinglePrecisionFloatAt()
 			return primitiveFailure(PrimitiveFailureBoundsError);	// Out of bounds
 
 		VariantByteObject* bytes = oteBytes->m_location;
-		fValue = *reinterpret_cast<float*>(&(bytes->m_fields[offset]));
+		result->m_fValue = *reinterpret_cast<float*>(&(bytes->m_fields[offset]));
 	}
 
-	pop(1);		// index and value SmallIntegers, so don't need to nil out stack or ref. count
-
-	replaceStackTopWithNew(fValue);
-	return primitiveSuccess();
+	oteResult->beImmutable();
+	*(sp - 1) = reinterpret_cast<Oop>(oteResult);
+	ObjectMemory::AddToZct(reinterpret_cast<OTE*>(oteResult));
+	return sp - 1;
 }
 
 
-BOOL __fastcall Interpreter::primitiveDoublePrecisionFloatAtPut()
+Oop* __fastcall Interpreter::primitiveDoublePrecisionFloatAtPut()
 {
-	Oop integerPointer = stackValue(1);
+	Oop* const sp = m_registers.m_stackPointer;
+
+	Oop integerPointer = *(sp-1);
 	if (!ObjectMemoryIsIntegerObject(integerPointer))
 	{
 		OTE* oteArg = reinterpret_cast<OTE*>(integerPointer);
 		return primitiveFailureWith(PrimitiveFailureNonInteger, oteArg);	// Index not an integer
 	}
 
-	Oop valuePointer = stackTop();
-	if (ObjectMemory::fetchClassOf(valuePointer) != Pointers.ClassFloat)
-		return primitiveFailure(PrimitiveFailureBadValue);
+	double fValue;
+	Oop valuePointer = *sp;
+	if (ObjectMemoryIsIntegerObject(valuePointer))
+	{
+		fValue = ObjectMemoryIntegerValueOf(valuePointer);
+	}
+	else
+	{
+		if (ObjectMemory::fetchClassOf(valuePointer) != Pointers.ClassFloat)
+		{
+			return primitiveFailure(PrimitiveFailureBadValue);
+		}
+		FloatOTE* oteValue = reinterpret_cast<FloatOTE*>(valuePointer);
+		fValue = oteValue->m_location->m_fValue;
+	}
 
 	SMALLUNSIGNED offset = ObjectMemoryIntegerValueOf(integerPointer);
-	OTE* receiver = (OTE*)stackValue(2);
 
+	OTE* receiver = reinterpret_cast<OTE*>(*(sp-2));
 	ASSERT(!ObjectMemoryIsIntegerObject(receiver));
 	ASSERT(receiver->isBytes());
 
 	// All entry conditions passed, proceed to copy floating point value into buffer
 
 	// Its a byte object, so its simpler (no ref counting and no fixed fields)
-	FloatOTE* oteValue = reinterpret_cast<FloatOTE*>(valuePointer);
-	Float* fValue = oteValue->m_location;
 	Behavior* behavior = receiver->m_oteClass->m_location;
 	if (behavior->isIndirect())
 	{
 		ExternalAddress* ptr = static_cast<ExternalAddress*>(receiver->m_location);
-		*reinterpret_cast<double*>(static_cast<BYTE*>(ptr->m_pointer)+offset) = fValue->m_fValue;
+		*reinterpret_cast<double*>(static_cast<BYTE*>(ptr->m_pointer)+offset) = fValue;
 	}
 	else
 	{
@@ -239,46 +344,55 @@ BOOL __fastcall Interpreter::primitiveDoublePrecisionFloatAtPut()
 			return primitiveFailure(1);	// Non-integer value or Out of bounds
 
 		VariantByteObject* bytes = oteBytes->m_location;
-		*reinterpret_cast<double*>(&(bytes->m_fields[offset])) = fValue->m_fValue;
+		*reinterpret_cast<double*>(&(bytes->m_fields[offset])) = fValue;
 	}
 
-	//stackTop() = StackNullValue;		// value will be moved over receiver to return
-	pop(2);
-	
-	replaceStackTopWith(valuePointer);
-	return primitiveSuccess();
+	*(sp-2) = valuePointer;
+	return sp-2;
 }
 
 
-BOOL __fastcall Interpreter::primitiveSinglePrecisionFloatAtPut()
+Oop* __fastcall Interpreter::primitiveSinglePrecisionFloatAtPut()
 {
-	Oop integerPointer = stackValue(1);
+	Oop* const sp = m_registers.m_stackPointer;
+
+	Oop integerPointer = *(sp-1);
 	if (!ObjectMemoryIsIntegerObject(integerPointer))
 	{
 		OTE* oteArg = reinterpret_cast<OTE*>(integerPointer);
 		return primitiveFailureWith(PrimitiveFailureNonInteger, oteArg);	// Index not an integer
 	}
 
-	Oop valuePointer = stackTop();
-	if (ObjectMemory::fetchClassOf(valuePointer) != Pointers.ClassFloat)
-		return primitiveFailure(PrimitiveFailureBadValue);
+	float fValue;
+	Oop valuePointer = *sp;
+	if (ObjectMemoryIsIntegerObject(valuePointer))
+	{
+		fValue = static_cast<float>(ObjectMemoryIntegerValueOf(valuePointer));
+	}
+	else
+	{
+		if (ObjectMemory::fetchClassOf(valuePointer) != Pointers.ClassFloat)
+		{
+			return primitiveFailure(PrimitiveFailureBadValue);
+		}
+		FloatOTE* oteValue = reinterpret_cast<FloatOTE*>(valuePointer);
+		fValue = static_cast<float>(oteValue->m_location->m_fValue);
+	}
 
 	SMALLUNSIGNED offset = ObjectMemoryIntegerValueOf(integerPointer);
-	OTE* receiver = reinterpret_cast<OTE*>(stackValue(2));
 
+	OTE* receiver = reinterpret_cast<OTE*>(*(sp-2));
 	ASSERT(!ObjectMemoryIsIntegerObject(receiver));
 	ASSERT(receiver->isBytes());
 
 	// All entry conditions passed, proceed to copy floating point value into buffer
 
 	// Its a byte object, so its simpler (no ref counting and no fixed fields)
-	FloatOTE* oteValue = reinterpret_cast<FloatOTE*>(valuePointer);
-	Float* fValue = oteValue->m_location;
 	Behavior* behavior = receiver->m_oteClass->m_location;
 	if (behavior->isIndirect())
 	{
 		ExternalAddress* ptr = static_cast<ExternalAddress*>(receiver->m_location);
-		*reinterpret_cast<float*>(static_cast<BYTE*>(ptr->m_pointer)+offset) = static_cast<float>(fValue->m_fValue);
+		*reinterpret_cast<float*>(static_cast<BYTE*>(ptr->m_pointer)+offset) = fValue;
 	}
 	else
 	{
@@ -289,22 +403,17 @@ BOOL __fastcall Interpreter::primitiveSinglePrecisionFloatAtPut()
 			return primitiveFailure(PrimitiveFailureBoundsError);	// Out of bounds
 
 		VariantByteObject* bytes = oteBytes->m_location;
-		*reinterpret_cast<float*>(&(bytes->m_fields[offset])) = static_cast<float>(fValue->m_fValue);
+		*reinterpret_cast<float*>(&(bytes->m_fields[offset])) = fValue;
 	}
-	// Raise any pending overflow exception
-	_asm fwait;
 
-	//stackTop() = StackNullValue;		// value will be moved over receiver to return
-	pop(2);
-
-	replaceStackTopWith(valuePointer);
-	return primitiveSuccess();
+	*(sp-2) = valuePointer;
+	return sp-2;
 }
 
-// Leaves a clean stack as the only argument is an integer
-BOOL __fastcall Interpreter::primitiveLongDoubleAt()
+Oop* __fastcall Interpreter::primitiveLongDoubleAt()
 {
-	Oop integerPointer = stackTop();
+	Oop* const sp = m_registers.m_stackPointer;
+	Oop integerPointer = *sp;
 	if (!ObjectMemoryIsIntegerObject(integerPointer))
 	{
 		OTE* oteArg = reinterpret_cast<OTE*>(integerPointer);
@@ -312,7 +421,7 @@ BOOL __fastcall Interpreter::primitiveLongDoubleAt()
 	}
 
 	SMALLUNSIGNED offset = ObjectMemoryIntegerValueOf(integerPointer);
-	OTE* receiver = reinterpret_cast<OTE*>(stackValue(1));
+	OTE* receiver = reinterpret_cast<OTE*>(*(sp-1));
 
 	ASSERT(!ObjectMemoryIsIntegerObject(receiver));
 	ASSERT(receiver->isBytes());
@@ -348,10 +457,9 @@ BOOL __fastcall Interpreter::primitiveLongDoubleAt()
 		fwait
 	}
 
-	pop(1);		// index and value SmallIntegers, so don't need to nil out stack or ref. count
-
-	replaceStackTopWithNew(fValue);
-	return primitiveSuccess();
+	FloatOTE* oteResult = Float::New(fValue);
+	*(sp - 1) = reinterpret_cast<Oop>(oteResult);
+	ObjectMemory::AddToZct(reinterpret_cast<OTE*>(oteResult));
+	return sp - 1;
 }
-
 

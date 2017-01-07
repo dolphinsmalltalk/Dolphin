@@ -10,8 +10,6 @@
 
 #include "STProcess.h"	// In order to be able to set primitive failure code
 
-#define primitiveSuccess() TRUE
-
 inline void ST::Process::SetPrimitiveFailureCode(SMALLINTEGER code)
 {
 	m_primitiveFailureCode = integerObjectOf(code);
@@ -37,36 +35,36 @@ inline void ST::Process::SetPrimitiveFailureData(SMALLINTEGER failureData)
 	m_primitiveFailureData = integerObjectOf(failureData);
 }
 
-inline BOOL Interpreter::primitiveFailure(int failureCode)
+inline Oop* Interpreter::primitiveFailure(int failureCode)
 {
 	m_registers.activeProcess()->SetPrimitiveFailureCode(failureCode);
-	return FALSE;
+	return NULL;
 }
 
-inline BOOL Interpreter::primitiveFailureWith(int failureCode, Oop failureData)
+inline Oop* Interpreter::primitiveFailureWith(int failureCode, Oop failureData)
 {
 	Process* proc = m_registers.activeProcess();
 	proc->SetPrimitiveFailureCode(failureCode);
 	proc->SetPrimitiveFailureData(failureData);
-	return FALSE;
+	return NULL;
 }
 
-inline BOOL Interpreter::primitiveFailureWith(int failureCode, OTE* oteFailure)
+inline Oop* Interpreter::primitiveFailureWith(int failureCode, OTE* oteFailure)
 {
 	ASSERT(!ObjectMemoryIsIntegerObject(oteFailure));
 	Process* proc = m_registers.activeProcess();
 	proc->SetPrimitiveFailureCode(failureCode);
 	proc->SetPrimitiveFailureData(oteFailure);
-	return FALSE;
+	return NULL;
 }
 
 // Just to avoid any confusion with Oop overload, give this one a different name
-inline BOOL Interpreter::primitiveFailureWithInt(int failureCode, SMALLINTEGER failureData)
+inline Oop* Interpreter::primitiveFailureWithInt(int failureCode, SMALLINTEGER failureData)
 {
 	Process* proc = m_registers.activeProcess();
 	proc->SetPrimitiveFailureCode(failureCode);
 	proc->SetPrimitiveFailureData(failureData);
-	return FALSE;
+	return NULL;
 }
 
 

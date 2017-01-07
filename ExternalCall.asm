@@ -18,12 +18,10 @@ INCLUDE IstAsm.Inc
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; Imports
 
-NewExternalStructurePointer EQU ?NewPointer@ExternalStructure@ST@@SIPAV?$TOTE@X@@PAV?$TOTE@VBehavior@ST@@@@PAX@Z
+NewExternalStructurePointer EQU ?NewPointer@ExternalStructure@ST@@SIPAV?$TOTE@VObject@ST@@@@PAV?$TOTE@VBehavior@ST@@@@PAX@Z
 extern NewExternalStructurePointer:near32
-NewExternalStructure EQU ?New@ExternalStructure@ST@@SIPAV?$TOTE@X@@PAV?$TOTE@VBehavior@ST@@@@PAX@Z
+NewExternalStructure EQU ?New@ExternalStructure@ST@@SIPAV?$TOTE@VObject@ST@@@@PAV?$TOTE@VBehavior@ST@@@@PAX@Z
 extern NewExternalStructure:near32
-extern NewUnsigned:near32
-extern NewSigned:near32
 NewStringWithLen EQU ?NewWithLen@String@ST@@SIPAV?$TOTE@VString@ST@@@@PBDI@Z
 extern NewStringWithLen:near32
 NewStringFromWide EQU ?NewFromWide@String@ST@@SIPAV?$TOTE@VString@ST@@@@PB_W@Z
@@ -52,10 +50,6 @@ extern REQUESTCOMPLETION:near32
 
 ; We need to test the structure type specially
 ArgSTRUCT	EQU		50
-
-extern primitiveFailure0:near32
-extern primitiveFailure1:near32
-extern primitiveFailure2:near32
 
 atoi PROTO C :DWORD
 GetProcAddress  PROTO STDCALL :HINSTANCE, :LPCSTR
@@ -156,15 +150,15 @@ primitiveVirtualCall PROC
 	
 	mov		eax, [eax].m_location
 	ASSUME	eax:PTR ExternalStructure
-	jb		primitiveFailure0
+	jb		localPrimitiveFailure0
 
 	mov		eax, [eax].m_contents
 	test	al, 1
-	jnz		primitiveFailure0
+	jnz		localPrimitiveFailure0
 	ASSUME	eax:PTR OTE
 
 	test	[eax].m_flags, MASK m_pointer
-	jnz		primitiveFailure0
+	jnz		localPrimitiveFailure0
 
 @@:
 	ASSUME	eax:PTR OTE									; At this point, EAX is OTE of 'this' pointer
@@ -206,11 +200,16 @@ primitiveVirtualCall PROC
 	mov		eax, DWORD PTR[eax]							; Load address of virtual function table from object
 	push	DWORD PTR[eax+ecx]							; ARG1: Address of virtual function at offset in table
 
+	; Can't jmp direct to callExternalFunction as needs its own stack frame for local vars
 	call	callExternalFunction
 	ret
 
 	ASSUME	eax:NOTHING
 	ASSUME	edx:NOTHING
+
+	LocalPrimitiveFailure 0
+	LocalPrimitiveFailure 1
+
 primitiveVirtualCall ENDP
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -247,21 +246,21 @@ asyncDLL32Call PROC STDCALL PUBLIC USES edi esi ebx,
 	test	eax, eax										; Zero?
 
 	push	edx												; ARG2: argCount
-	jnz		@F												
-	call	getProcAddress									; Cache value 0, so lookup the proc address
-	test	eax, eax										; Returns null if not a valid proc name
-	jnz		@F												; ?Valid proc name, if so jump to call
+	jz		procAddressNotCached							; Proc address cached?
 
-	int		3												; What to do here?
-															; Invalid proc name, GetProcAddress returned failed
-	add		esp, 16											; Remove args pushed for aborted call
-	jmp		primitiveFailure1
-
-@@:
+performCall:
 	push	eax												; ARG1: cached proc address
 	call	callExternalFunction
 	StoreSPRegister
 	ret														; eax will be non-zero as otherwise we'd not be here
+
+procAddressNotCached:
+	call	getProcAddress									; Cache value 0, so lookup the proc address
+	test	eax, eax										; Returns null if not a valid proc name
+	jnz		performCall
+
+	add		esp, 16											; Remove args pushed for aborted call
+	PrimitiveFailureCode 1
 
 asyncDLL32Call ENDP
 
@@ -329,20 +328,20 @@ primitiveDLL32Call PROC
 	test	eax, eax										; Zero?
 
 	push	edx												; ARG2: argCount
-	jnz		@F												; Non-zero cache, no need to lookup the proc address
+	jz		procAddressNotCached							; Non-zero cache, no need to lookup the proc address
 
-	call	getProcAddress									; Cache value 0, so lookup the proc address
-	test	eax, eax										; Returns null if not a valid proc name
-	jnz		@F												; ?Valid proc name, is so jump to call
-
-															; Invalid proc name, GetProcAddress returned 0
-	add		esp, 20											; Remove args pushed for aborted call
-	jmp		primitiveFailure1
-
-@@:
+performCall:
 	push	eax												; ARG1: cached proc address
 	call	callExternalFunction
 	ret
+
+procAddressNotCached:
+	call	getProcAddress									; Cache value 0, so lookup the proc address
+	test	eax, eax										; Returns null if not a valid proc name
+	jnz		performCall
+
+	add		esp, 20											; Remove args pushed for aborted call
+	PrimitiveFailureCode 1
 
 primitiveDLL32Call ENDP
 
@@ -401,18 +400,16 @@ ENDM
 	
 AnswerResult MACRO
 	_AnswerResult
+	mov	eax, _SP								; primitiveSuccess(0)
 	ret
-ENDM
-
-AddResultToZct MACRO
-	AddToZct <a>, _SP
 ENDM
 
 AnswerObjectResult MACRO
 	ASSUME	eax:PTR OTE
 
 	_AnswerResult
-	AddResultToZct
+	AddToZct <a>
+	mov	eax, _SP								; primitiveSuccess(0)
 	ret	
 ENDM
 
@@ -425,8 +422,10 @@ AnswerOopResult MACRO
 
 	_AnswerResult
 	.IF (!(al & 1))
-		AddResultToZct
+		AddToZct <a>
 	.ENDIF
+
+	mov	eax, _SP								; primitiveSuccess(0)
 	ret
 ENDM
 
@@ -567,8 +566,9 @@ unwindExit:
 	mov		_IP, [eax].m_instructionPointer
 	mov		_BP, [eax].m_basePointer
 	ASSUME	eax:NOTHING
-	; We succeed so as not to run Smalltalk code after primitive (eax MUST be non-zero, but also a valid SmallInteger value)
-	mov		eax, 1
+	
+	; We succeed so as not to run Smalltalk code after primitive
+	mov		eax, _SP									; primitiveSuccess(0)
 	ret
 
 
@@ -1040,7 +1040,6 @@ extCallArgBSTR:
 			cmp		TEMP, [Pointers.ClassUnicodeString]
 			jne		preCallFail
 
-			;lea		ecx, [ARG+HEADERSIZE]						; Get address of LPWSTR into ECX
 			mov		ecx, ARG									; Get address of LPWSTR into ECX
 			call	NewBSTRFromWide								; Create new finalizable BSTR
 		.ENDIF
@@ -1049,8 +1048,10 @@ extCallArgBSTR:
 
 		;; Now we need some way to ensure this is destroyed, and the easiest way is to stuff
 		;; it on the ST stack in the slot occuppied by the UnicodeString argument
-		mov		[_SP+4], eax								; Replace UnicodeString with BSTR object
+		mov		[_SP+OOPSIZE], eax								; Replace UnicodeString with BSTR object
 		AddToZctNoSP <a>
+
+		mov		eax, [_SP+OOPSIZE]
 		mov		ARG, [eax].m_location
 		
 		; ARG now contains address of bytes
@@ -1714,31 +1715,57 @@ extCallRetHRESULT:
 
 	; FAILED(HRESULT)
 	ASSERTNEQU %RESULT, <ecx>
+	
 	mov		ecx, RESULT
-	call	NewSigned
-	mov		edx, callContext
-	ASSUME	edx:PTR InterpRegisters
-	test	al, 1								; Is the result a SmallInteger?
+	add		RESULT, RESULT					; Will it fit into a SmallInteger
+	jo		hrOverflow						; No, more than 31 bits required (will return to my caller)
+	or		eax, 1							; Yes, create SmallInteger to return in EAX
 
-	mov		ecx, [edx].m_pActiveProcess
-	ASSUME	ecx:PTR Process
-	jnz		@F
+	mov		ecx, callContext
+	ASSUME	ecx:PTR InterpRegisters
+
+	mov		edx, [ecx].m_pActiveProcess
+	ASSUME	edx:PTR Process
+
+	mov		_SP, [ecx].m_stackPointer
+	mov		_IP, [ecx].m_instructionPointer
+	mov		_BP, [ecx].m_basePointer
+
+	mov		[edx].m_primitiveFailureCode, -1
+	mov		ecx, [edx].m_primitiveFailureData
+	mov		[edx].m_primitiveFailureData, eax
+	ASSUME	edx:NOTHING
+	
+	CountDownOopIn <c>
+
+	xor		eax,eax								; Fail the primitive
+	ret
+
+hrOverflow:
+	call	LINEWSIGNED		
+
+	mov		ecx, callContext
+	ASSUME	ecx:PTR InterpRegisters
 
 	; Result is a LargeInteger, so we must set ref. count to 1, but only because we are storing it into
 	; a non-stack slot in the process
 	ASSUME	eax:PTR OTE
 	mov		[eax].m_count, 1
 
-@@:
-	mov		[ecx].m_primitiveFailureCode, -1
-	xchg	[ecx].m_primitiveFailureData, eax
+	mov		edx, [ecx].m_pActiveProcess
+	ASSUME	edx:PTR Process
 
-	mov		_SP, [edx].m_stackPointer
-	mov		_IP, [edx].m_instructionPointer
-	mov		_BP, [edx].m_basePointer
-	ASSUME	edx:NOTHING
+	mov		_SP, [ecx].m_stackPointer
+	mov		_IP, [ecx].m_instructionPointer
+	mov		_BP, [ecx].m_basePointer
+	ASSUME	ecx:NOTHING
+
+	mov		[edx].m_primitiveFailureCode, -1
+	mov		ecx, [edx].m_primitiveFailureData
+	mov		[edx].m_primitiveFailureData, eax
 	
-	CountDownOopIn <a>
+	CountDownOopIn <c>
+	
 	xor		eax,eax								; Fail the primitive
 	ret
 
@@ -1749,9 +1776,16 @@ extCallRetDWORD:
 	ASSUME RESULT:DWORD
 
 	mov		ecx, RESULT
-	call	NewUnsigned
-	AnswerOopResult
-	
+	add		RESULT, RESULT					; Will it fit into a SmallInteger
+	jo		dwordOverflow					; No, more than 31 bits required (will return to my caller)
+	js		dwordOverflow					; No, won't be positive SmallInteger
+	or		RESULT, 1						; Yes, create SmallInteger to return in EAX
+	AnswerResult
+
+dwordOverflow:
+	call	LINEWUNSIGNED32
+	AnswerObjectResult
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 extCallRetINTPTR:
@@ -1759,8 +1793,14 @@ extCallRetSDWORD:
 	ASSUME RESULT:SDWORD
 
 	mov		ecx, RESULT
-	call	NewSigned
-	AnswerOopResult
+	add		RESULT, RESULT					; Will it fit into a SmallInteger
+	jo		sdwordOverflow					; No, more than 31 bits required (will return to my caller)
+	or		RESULT, 1						; Yes, create SmallInteger to return in EAX
+	AnswerResult
+
+sdwordOverflow:
+	call	LINEWSIGNED	
+	AnswerObjectResult
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
@@ -1859,16 +1899,14 @@ extCallRetVOID:									; Returning void just leaves receiver on stack
 
 	;; Need to pop the arguments, so reload the argument count
 	mov		edx, argCount
-	shl		edx, 2
+	neg		edx
 	
 	; Reload interpreter context registers
 	mov		_SP, [ecx].m_stackPointer
 	mov		_IP, [ecx].m_instructionPointer
 	mov		_BP, [ecx].m_basePointer
  
-	sub		_SP, edx							; Pop off the arguments, AFTER A COMPLETED CALL
-
-	mov		eax, 1								; Succeed
+	lea		eax, [_SP+edx*OOPSIZE]				; primitiveSuccess(argumentCount)
 	ret
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

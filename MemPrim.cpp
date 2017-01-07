@@ -29,31 +29,31 @@
 
 // Answer a new process with an initial stack size specified by the first argument, and a maximum
 // stack size specified by the second argument.
-BOOL __fastcall Interpreter::primitiveNewVirtual()
+Oop* __fastcall Interpreter::primitiveNewVirtual()
 {
-	Oop argPointer = stackTop();
+	Oop* const sp = m_registers.m_stackPointer;
+	Oop argPointer = *sp;
 	if (!ObjectMemoryIsIntegerObject(argPointer))
 		return primitiveFailure(0);	// Arg not a SmallInteger
 	MWORD maxSize = ObjectMemoryIntegerValueOf(argPointer);
-	argPointer = stackValue(1);
+	argPointer = *(sp-1);
 	if (!ObjectMemoryIsIntegerObject(argPointer))
 		return primitiveFailure(1);	// Arg not a SmallInteger
 	MWORD initialSize = ObjectMemoryIntegerValueOf(argPointer);
 
-	BehaviorOTE* receiverClass = reinterpret_cast<BehaviorOTE*>(stackValue(2));
+	BehaviorOTE* receiverClass = reinterpret_cast<BehaviorOTE*>(*(sp-2));
 	Behavior* behavior = receiverClass->m_location;
 	if (!behavior->isIndexable())
 		return primitiveFailure(2);
 	
-	// We'll not fail now, args are correct types
-	pop(2);
-
 	unsigned fixedFields = behavior->fixedFields();
 	VirtualOTE* newObject = ObjectMemory::newVirtualObject(receiverClass, initialSize+fixedFields, maxSize+fixedFields);
-	return replaceStackTopWithNew(newObject);
+	*(sp - 2) = reinterpret_cast<Oop>(newObject);
+	ObjectMemory::AddToZct(reinterpret_cast<OTE*>(newObject));
+	return sp-2;
 }
 
-BOOL __fastcall Interpreter::primitiveAllReferences(CompiledMethod&, unsigned argumentCount)
+Oop* __fastcall Interpreter::primitiveAllReferences(CompiledMethod&, unsigned argumentCount)
 {
 	// Make sure we don't include refs above TOS as these are invalid - also don't include the ref to the receiver on the stack
 	Oop* sp;
@@ -83,8 +83,7 @@ BOOL __fastcall Interpreter::primitiveAllReferences(CompiledMethod&, unsigned ar
 
 	ArrayOTE* refs = ObjectMemory::referencesTo(receiver, includeWeakRefs);
 
-	// Primitive is not going to fail or fault now, so adjust the stack
-	pop(argumentCount);
-
-	return replaceStackTopWithNew(refs);
+	*(sp+1) = reinterpret_cast<Oop>(refs);
+	ObjectMemory::AddToZct(reinterpret_cast<OTE*>(refs));
+	return sp+1;
 }

@@ -409,23 +409,25 @@ unsigned Interpreter::pushArgsAt(const ExternalDescriptor* descriptor, BYTE* lpP
 
 ///////////////////////////////////////////////////////////////////////////////
 //
-BOOL __fastcall Interpreter::primitivePerformWithArgsAt(CompiledMethod& /*method*/, unsigned )
+Oop* __fastcall Interpreter::primitivePerformWithArgsAt(CompiledMethod& /*method*/, unsigned )
 {
-	Oop argPointer = stackTop();
+	Oop* const sp = m_registers.m_stackPointer;
+
+	Oop argPointer = *sp;
 	if (ObjectMemoryIsIntegerObject(argPointer))
 		return primitiveFailure(0);
 	OTE* descriptorPointer = reinterpret_cast<OTE*>(argPointer);
 	if (descriptorPointer->isBytes())
 		return primitiveFailure(0);
 
-	argPointer = stackValue(2);
+	argPointer = *(sp-2);
 	if (ObjectMemoryIsIntegerObject(argPointer))
 		return primitiveFailure(2);
 	TODO("Should really check that it is actually a symbol?");
 	SymbolOTE* selectorPointer = reinterpret_cast<SymbolOTE*>(argPointer);
 
 	// Decode the address argument
-	argPointer = stackValue(1);
+	argPointer = *(sp-1);
 	BYTE* lpParms;
 	if (ObjectMemoryIsIntegerObject(argPointer))
 		lpParms = reinterpret_cast<BYTE*>(ObjectMemoryIntegerValueOf(argPointer));
@@ -440,7 +442,8 @@ BOOL __fastcall Interpreter::primitivePerformWithArgsAt(CompiledMethod& /*method
 		}
 	}
 
-	pop(3);		// Pop the descriptor and address and the selector
+	// Pop the descriptor and address and the selector
+	m_registers.m_stackPointer = sp - 3;
 
 	unsigned argCount;
 	// NEW FORMAT
@@ -450,14 +453,15 @@ BOOL __fastcall Interpreter::primitivePerformWithArgsAt(CompiledMethod& /*method
 	// Now we can throw away the descriptor
 	sendSelectorArgumentCount(selectorPointer, argCount);
 
-	return primitiveSuccess();
+	return primitiveSuccess(0);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 // N.B. THIS IS VERY SIMILAR TO primitiveValueWithArgs()!
-BOOL __fastcall Interpreter::primitiveValueWithArgsAt(CompiledMethod&, unsigned)
+Oop* __fastcall Interpreter::primitiveValueWithArgsAt(CompiledMethod&, unsigned)
 {
-	Oop argPointer = stackTop();
+	Oop* sp = m_registers.m_stackPointer;
+	Oop argPointer = *sp;
 	if (ObjectMemoryIsIntegerObject(argPointer))
 		return primitiveFailure(0);
 	OTE* descriptorPointer = reinterpret_cast<OTE*>(argPointer);
@@ -465,7 +469,7 @@ BOOL __fastcall Interpreter::primitiveValueWithArgsAt(CompiledMethod&, unsigned)
 		return primitiveFailure(0);
 
 	// Decode the address argument (do this last so can count down)
-	argPointer = stackValue(1);
+	argPointer = *(sp-1);
 	BYTE* lpParms;
 	if (ObjectMemoryIsIntegerObject(argPointer))
 		lpParms = reinterpret_cast<BYTE*>(ObjectMemoryIntegerValueOf(argPointer));
@@ -478,7 +482,7 @@ BOOL __fastcall Interpreter::primitiveValueWithArgsAt(CompiledMethod&, unsigned)
 			lpParms = static_cast<BYTE*>(static_cast<ExternalAddress*>(args->m_location)->m_pointer);
 	}
 
-	BlockOTE* oteBlock = reinterpret_cast<BlockOTE*>(stackValue(2));
+	BlockOTE* oteBlock = reinterpret_cast<BlockOTE*>(*(sp-2));
 	HARDASSERT(ObjectMemory::fetchClassOf(Oop(oteBlock)) == Pointers.ClassBlockClosure);
 	BlockClosure* block = oteBlock->m_location;
 	const MWORD blockArgumentCount = block->m_info.argumentCount;
@@ -490,9 +494,9 @@ BOOL __fastcall Interpreter::primitiveValueWithArgsAt(CompiledMethod&, unsigned)
 	if (argCount != blockArgumentCount)
 		return primitiveFailure(2);
 
-	// Pop off args and receiver block. We'll adjust arg ref. counts/overwrite 
-	// later as necessary (we can't count down now as we need the objects)
-	pop(3);
+	// Pop off args and receiver block.
+	m_registers.m_stackPointer = sp - 3;
+
 	// Store old context details from interpreter registers
 	m_registers.StoreContextRegisters();
 
@@ -504,7 +508,7 @@ BOOL __fastcall Interpreter::primitiveValueWithArgsAt(CompiledMethod&, unsigned)
 	// With new block closures, args must be on the stack immediate after receiver (i.e. at BP)
 	pushArgsAt(descriptor, lpParms);
 
-	Oop* sp = m_registers.m_stackPointer + 1;
+	sp = m_registers.m_stackPointer + 1;
 
 	const unsigned copiedValues = block->copiedValuesCount(oteBlock);
 	{
@@ -559,7 +563,7 @@ BOOL __fastcall Interpreter::primitiveValueWithArgsAt(CompiledMethod&, unsigned)
 											block->initialIP() - 1;
 	m_registers.m_pActiveFrame = pFrame;
 
-	return primitiveSuccess();
+	return m_registers.m_stackPointer;
 }
 
 
@@ -701,9 +705,6 @@ void doBlah()
 	//
 	// This primitive does not check that enough types are specified, because it
 	// assumes that the compiler does this.
-	//
-	// Leaves a clean stack by popping and niling all args after call (but not before to ensure
-	// they don't get prematurely deallocated)
 	//
 	BOOL __fastcall Interpreter::primitiveDLL32Call(CompiledMethod& method, unsigned argCount)
 	{
@@ -1135,7 +1136,7 @@ void doBlah()
 			#endif
 			
 			// Place return value on Smalltalk stack.
-			// It may appear that the popAndNil() to clear down the stack is common, but it isn't because
+			// It may appear that the pop() to clear down the stack is common, but it isn't because
 			// HRESULT returns can fail the primitive at this late stage. Note also that VOID return
 			// value causes the method to answer self.
 			switch(argTypes[ExtCallReturnType])
@@ -1143,37 +1144,36 @@ void doBlah()
 				case ExtCallArgLPPVOID:
 					// Compiler should not generate as a return type, but if it does, treat as lpvoid
 				case ExtCallArgLPVOID:
-					// Nil out arguments to clean up stack
-					popAndNil(argCount);
+					pop(argCount);
 					replaceStackTopObjectWithNewObject(NewExternalAddress(reinterpret_cast<BYTE*>(dwValue));
 					break;
 
 				case ExtCallArgCHAR:
-					popAndNil(argCount);
+					pop(argCount);
 					replaceStackTopObjectNoRefCnt(NewChar(static_cast<char>(dwValue)));
 					break;
 
 				case ExtCallArgBYTE:
-					popAndNil(argCount);
+					pop(argCount);
 					replaceStackTopObjectNoRefCnt(ObjectMemoryIntegerObjectOf(static_cast<BYTE>(dwValue));
 					break;
 
 				case ExtCallArgSBYTE:
 				{
-					popAndNil(argCount);
+					pop(argCount);
 					char signedChar = static_cast<char>(dwValue);
 					replaceStackTopObjectNoRefCnt(ObjectMemoryIntegerObjectOf(static_cast<SMALLINTEGER>(signedChar)));
 					break;
 				}
 
 				case ExtCallArgWORD:
-					popAndNil(argCount);
+					pop(argCount);
 					replaceStackTopObjectNoRefCnt(ObjectMemoryIntegerObjectOf(static_cast<WORD>(dwValue));
 					break;
 
 				case ExtCallArgSWORD:
 				{
-					popAndNil(argCount);
+					pop(argCount);
 					SWORD signedWord = static_cast<SWORD>(dwValue);
 					replaceStackTopObjectNoRefCnt(ObjectMemoryIntegerObjectOf(static_cast<SMALLINTEGER>(signedWord)));
 					break;
@@ -1188,22 +1188,22 @@ void doBlah()
 				// Deliberately drop through, so handled same as #dword
 
 				case ExtCallArgDWORD:
-					popAndNil(argCount);
+					pop(argCount);
 					replaceObjectAtStackTopWith(NewUnsigned(dwValue));
 					break;
 
 				case ExtCallArgSDWORD:
-					popAndNil(argCount);
+					pop(argCount);
 					replaceObjectAtStackTopWith(NewSigned(dwValue));
 					break;
 
 				case ExtCallArgBOOL:
-					popAndNil(argCount);
+					pop(argCount);
 					replaceStackTopObjectNoRefCnt(dwValue ? Pointers.True : Pointers.False);
 					break;
 
 				case ExtCallArgHANDLE:
-					popAndNil(argCount);
+					pop(argCount);
 					if (!dwValue)
 						replaceStackTopObjectNoRefCnt(Pointers.Nil);
 					else
@@ -1216,13 +1216,13 @@ void doBlah()
 				{
 					double fResult;
 					_asm fstp	QWORD PTR [fResult]
-					popAndNil(argCount);
+					pop(argCount);
 					replaceStackTopObjectWithNewObject(NewFloat(fResult));
 					break;
 				}
 
 				case ExtCallArgLPSTR:
-					popAndNil(argCount);
+					pop(argCount);
 					if (!dwValue)
 						replaceStackTopObjectNoRefCnt(Pointers.Nil);
 					else
@@ -1231,7 +1231,7 @@ void doBlah()
 
 				// For future use with User Primitive Kit
 				case ExtCallArgOOP:
-					popAndNil(argCount);
+					pop(argCount);
 					ASSERT(!ObjectMemoryIsIntegerObject(dwValue));
 					stackTop() = dwValue;
 					break;
@@ -1239,7 +1239,7 @@ void doBlah()
 				case ExtCallArgVOID:
 					// Do nothing - leaving receiver on stack
 				default:
-					popAndNil(argCount);
+					pop(argCount);
 					break;					// Not a valid return type
 			}
 		}

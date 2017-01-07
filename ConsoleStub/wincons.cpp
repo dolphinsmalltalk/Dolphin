@@ -27,9 +27,9 @@ int __stdcall DolphinMessage(UINT flags, const char* msg)
 	return 0;
 }
 
-BOOL __fastcall Interpreter::primitiveHookWindowCreate()
+Oop* __fastcall Interpreter::primitiveHookWindowCreate()
 {
-	return FALSE;
+	return NULL;
 }
 
 #pragma code_seg(INIT_SEG)

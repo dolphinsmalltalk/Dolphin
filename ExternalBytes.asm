@@ -36,10 +36,6 @@ public primitiveByteAtAddressPut
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; Imports
-extern primitiveFailure0:near32
-extern primitiveFailure1:near32
-extern primitiveFailure2:near32
-extern primitiveFailure3:near32
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; MACROS
@@ -57,7 +53,7 @@ IndirectAtPreamble MACRO							;; Set up EAX/EDX ready to access value
 
 	mov		eax, [eax].m_pointer					;; Load pointer out of object (immediately after header)
 
-	jnc		primitiveFailure0						;; Arg not a SmallInteger, fail the primitive
+	jnc		localPrimitiveFailure0						;; Arg not a SmallInteger, fail the primitive
 
 	ASSUME	eax:NOTHING
 	ASSUME	ecx:NOTHING
@@ -76,7 +72,7 @@ IndirectAtPutPreamble MACRO							;; Set up EAX/EDX ready to access value
 
 	mov		eax, [eax].m_pointer					;; Load pointer out of object (immediately after header)
 
-	jnc		primitiveFailure0						;; Arg not a SmallInteger, fail the primitive
+	jnc		localPrimitiveFailure0						;; Arg not a SmallInteger, fail the primitive
 
 	ASSUME	eax:NOTHING
 	ASSUME	ecx:NOTHING
@@ -91,17 +87,30 @@ ENDM
 ; Answer the address of the contents of the receiving byte object
 ; as an Integer. Notice that this is a very fast and simple primitive
 ;
-; Clean stack as no arguments
-;
 BEGINPRIMITIVE primitiveAddressOf
 	mov		ecx, [_SP]							; Load receiver at stack top
-;	mov		eax, HEADERSIZE						; We'll want to skip the header
 
 	CANTBEINTEGEROBJECT	<ecx>
 
-;	add		eax, [ecx].m_location				; Load address of object
 	mov		eax, [ecx].m_location				; Load address of object
-	jmp		replaceStackTopWithNewUnsigned		; Overwrite receiver in ecx, with eax
+	
+	mov		ecx, eax							; Save DWORD value in case of overflow
+	add		eax, eax							; Will it fit into a SmallInteger?
+	jo		largePositiveRequired				; No, its a 32-bit value
+	js		largePositiveRequired				; Won't be positive SmallInteger (31 bit value)
+
+	or		eax, 1								; Yes, add SmallInteger flag
+	mov		[_SP], eax							; Store new SmallInteger at stack top
+	mov		eax, _SP							; primitiveSuccess(0)
+	ret
+
+largePositiveRequired:
+	call	LINEWUNSIGNED32						; Returns new object to our caller in eax
+	mov		[_SP], eax							; Overwrite receiver with new object
+	AddToZctNoSP <a>
+	mov		eax, _SP							; primitiveSuccess(0)
+	ret
+
 ENDPRIMITIVE primitiveAddressOf
 
 
@@ -117,22 +126,26 @@ BEGINPRIMITIVE primitiveWORDAt
 	ASSUME	ecx:PTR OTE
 	sar		edx, 1									; Convert byte offset from SmallInteger (at the same time testing bottom bit)
 	mov		eax, [ecx].m_location					; EAX is pointer to receiver
-	jnc		primitiveFailure0						; Arg not a SmallInteger, fail the primitive
-	js		primitiveFailure1						; Negative offset not valid
+	jnc		localPrimitiveFailure0						; Arg not a SmallInteger, fail the primitive
+	js		localPrimitiveFailure1						; Negative offset not valid
 				     	
    	; Receiver is a normal byte object
 	mov		ecx, [ecx].m_size
 	add		edx, SIZEOF WORD						; Adjust offset to be last byte ref'd
 	and		ecx, 7fffffffh							; Ignore immutability bit
 	cmp		edx, ecx								; Off end of object?
-	jg		primitiveFailure1						; Yes, offset too large
+	jg		localPrimitiveFailure1						; Yes, offset too large
 
-	movzx	eax, WORD PTR[eax+edx-SIZEOF WORD]		; No, load WORD from object[offset]
+	movzx	ecx, WORD PTR[eax+edx-SIZEOF WORD]		; No, load WORD from object[offset]
 
-	lea		eax, [eax+eax+1]						; Convert to SmallInteger
-	mov		[_SP-OOPSIZE], eax						; Overwrite receiver
-	PopStack
+	lea		eax, [_SP-OOPSIZE]						; primitiveSuccess(1)
+	lea		ecx, [ecx+ecx+1]						; Convert to SmallInteger
+	mov		[_SP-OOPSIZE], ecx						; Overwrite receiver
 	ret
+
+LocalPrimitiveFailure 0
+LocalPrimitiveFailure 1
+
 ENDPRIMITIVE primitiveWORDAt
 
 
@@ -145,24 +158,34 @@ BEGINPRIMITIVE primitiveSWORDAt
 	mov		edx, [_SP]								; Load the byte offset
 	sar		edx, 1									; Convert byte offset from SmallInteger (at the same time testing bottom bit)
 	mov		eax, [ecx].m_location					; EAX is pointer to receiver
-	jnc		primitiveFailure0						; Arg not a SmallInteger, fail the primitive
-	js		primitiveFailure1						; Negative offset not valid
+	jnc		localPrimitiveFailure0						; Arg not a SmallInteger, fail the primitive
+	js		localPrimitiveFailure1						; Negative offset not valid
 				     	
 	; Receiver is a normal byte object
 	mov		ecx, [ecx].m_size
 	add		edx, SIZEOF WORD						; Adjust offset to be last byte ref'd
 	and		ecx, 7fffffffh							; Ignore immutability bit
 	cmp		edx, ecx								; Off end of object?
-	jg		primitiveFailure1						; Yes, offset too large
+	jg		localPrimitiveFailure1						; Yes, offset too large
 
-	movsx	eax, WORD PTR[eax+edx-SIZEOF WORD]		; No, load WORD from object[offset]
+	movsx	ecx, WORD PTR[eax+edx-SIZEOF WORD]		; No, load WORD from object[offset]
 
-	lea		eax, [eax+eax+1]						; Convert to SmallInteger
-	mov		[_SP-OOPSIZE], eax						; Overwrite receiver
-	PopStack
+	lea		eax, [_SP-OOPSIZE]						; primitiveSuccess(1)
+	lea		ecx, [ecx+ecx+1]						; Convert to SmallInteger
+	mov		[_SP-OOPSIZE], ecx						; Overwrite receiver
 	ret
+
+LocalPrimitiveFailure 0
+LocalPrimitiveFailure 1
+
 ENDPRIMITIVE primitiveSWORDAt
 
+primitiveFailure0:
+	PrimitiveFailureCode 0
+primitiveFailure1:
+	PrimitiveFailureCode 1
+primitiveFailure2:
+	PrimitiveFailureCode 2
 
 ; static BOOL __fastcall Interpreter::primitiveDWORDAt()
 ;
@@ -170,7 +193,7 @@ ENDPRIMITIVE primitiveSWORDAt
 ; addressable object) and answer either a SmallInteger, or a 
 ; LargePositiveInteger if 30-bits or more are required
 ;
-; Leaves a clean stack as can only succeed if the argument is a SmallInteger
+; Can only succeed if the argument is a SmallInteger
 ;
 BEGINPRIMITIVE primitiveDWORDAt
 	mov		ecx, [_SP-OOPSIZE]						; Access receiver below arg
@@ -179,49 +202,42 @@ BEGINPRIMITIVE primitiveDWORDAt
 	sar		edx, 1									; Convert byte offset from SmallInteger
 	mov		eax, [ecx].m_location					; EAX is pointer to receiver
 
-	jnc		primitiveFailure0						; Not a SmallInteger, fail the primitive
-	js		primitiveFailure1						; Negative offset not valid
+	jnc		localPrimitiveFailure0						; Not a SmallInteger, fail the primitive
+	js		localPrimitiveFailure1						; Negative offset not valid
 
 	;; Receiver is a normal byte object
 	mov		ecx, [ecx].m_size
 	add		edx, SIZEOF DWORD						; Adjust offset to be last byte ref'd
 	and		ecx, 7fffffffh							; Ignore immutability bit
 	cmp		edx, ecx								; Off end of object?
-	jg		primitiveFailure1						; Yes, offset too large
+	jg		localPrimitiveFailure1						; Yes, offset too large
 
 	mov		eax, [eax+edx-SIZEOF DWORD]				; No, load DWORD from object[offset]
 
-	;; Its not going to fail, so prepare Smalltalk stack
-	PopStack
-
-	;; Deliberately drop through ...
-
-ENDPRIMITIVE primitiveDWORDAt
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Replace object at stack top with a new unsigned (i.e. positive) Integer 
-;; (Small or LargePositive as necessary) with the value in EAX
-;; Returns TRUE.
-;;
-replaceStackTopWithNewUnsigned PROC			; Also used from primitiveAddressOf, 32-bit value in eax, overwritten Oop in ecx
 	mov		ecx, eax						; Save DWORD value
-	add		ecx, eax						; Will it fit into a SmallInteger?
+	add		eax, eax						; Will it fit into a SmallInteger?
 	jo		largePositiveRequired			; No, its a 32-bit value
 	js		largePositiveRequired			; Won't be positive SmallInteger (31 bit value)
-	inc		ecx								; Yes, add SmallInteger flag
-	mov		[_SP], ecx						; Store new SmallInteger at stack top
-	mov		eax, ecx						; Return TRUE (non-zero)
+
+	or		eax, 1							; Yes, add SmallInteger flag
+	mov		[_SP-OOPSIZE], eax				; Store new SmallInteger at stack top
+	lea		eax, [_SP-OOPSIZE]				; primitiveSuccess(0)
 	ret
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Replace the object at stack top (assuming no count down necessary, or already done)
 ;; with a new LargePositiveInteger whose value is half that in ECX/Carry Flag
 largePositiveRequired:						; eax contains left shifted value
-	mov		ecx, eax						; Revert to non-shifted value
 	call	LINEWUNSIGNED32					; Returns new object to our caller in eax
-	ReplaceStackTopWithNew
-	ret										; Return TRUE (Oop must be non zero)
-replaceStackTopWithNewUnsigned ENDP
+	mov		[_SP-OOPSIZE], eax				; Overwrite receiver with new object
+	AddToZct <a>
+	lea		eax, [_SP-OOPSIZE]				; primitiveSuccess(1)
+	ret
+
+LocalPrimitiveFailure 0
+LocalPrimitiveFailure 1
+
+ENDPRIMITIVE primitiveDWORDAt
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; As above, but receiver is indirection object
@@ -230,9 +246,27 @@ replaceStackTopWithNewUnsigned ENDP
 BEGINPRIMITIVE primitiveIndirectDWORDAt
 	IndirectAtPreamble
 
-	mov		eax, [eax+edx]							; Load DWORD from *(address+offset)
-	PopStack
-	jmp	replaceStackTopWithNewUnsigned				; Now push on the stack over the receiver
+	mov		eax, [eax+edx]						; Load DWORD from *(address+offset)
+
+	mov		ecx, eax							; Save DWORD value in case of overflow
+	add		eax, eax							; Will it fit into a SmallInteger?
+	jo		largePositiveRequired				; No, its a 32-bit value
+	js		largePositiveRequired				; Won't be positive SmallInteger (31 bit value)
+
+	or		eax, 1								; Yes, add SmallInteger flag
+	mov		[_SP-OOPSIZE], eax					; Store new SmallInteger at stack top
+	lea		eax, [_SP-OOPSIZE]					; primitiveSuccess(1)
+	ret
+
+largePositiveRequired:
+	call	LINEWUNSIGNED32						; Returns new object to our caller in eax
+	mov		[_SP-OOPSIZE], eax					; Overwrite receiver with new object
+	AddToZct <a>
+	lea		eax, [_SP-OOPSIZE]					; primitiveSuccess(1)
+	ret
+
+LocalPrimitiveFailure 0
+
 ENDPRIMITIVE primitiveIndirectDWORDAt
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -241,8 +275,6 @@ ENDPRIMITIVE primitiveIndirectDWORDAt
 ; Extract a 4-byte signed integer from the receiver (which must be a byte
 ; addressable object) and answer either a SmallInteger, or a 
 ; LargeInteger if 31-bits or more are required
-;
-; Leaves a clean stack as can only succeed if the argument is a SmallInteger
 ;
 BEGINPRIMITIVE primitiveSDWORDAt
 	mov		ecx, [_SP-OOPSIZE]						; Access receiver at stack top
@@ -254,35 +286,38 @@ BEGINPRIMITIVE primitiveSDWORDAt
 	mov		eax, [ecx].m_location					; EAX is pointer to receiver
 	ASSUME	eax:PTR Object
 
-	jnc		primitiveFailure0						; Not a SmallInteger, fail the primitive
-	js		primitiveFailure1						; Negative offset not valid
+	jnc		localPrimitiveFailure0						; Not a SmallInteger, fail the primitive
+	js		localPrimitiveFailure1						; Negative offset not valid
 
 	;; Receiver is a normal byte object
 	mov		ecx, [ecx].m_size
 	add		edx, SIZEOF DWORD						; Adjust offset to be last byte ref'd
 	and		ecx, 7fffffffh							; Ignore immutability bit
 	cmp		edx, ecx								; Off end of object?
-	jg		primitiveFailure1						; Yes, offset too large
+	jg		localPrimitiveFailure1						; Yes, offset too large
 
 	mov		eax, [eax+edx-SIZEOF DWORD]				; No, load SDWORD from object[offset]
 	ASSUME	eax:SDWORD
 
-	;; Its not going to fail, so prepare Smalltalk stack
-	PopStack
-	
 	mov		ecx, eax								; Restore SDWORD value into ECX
 	add		ecx, eax								; Will it fit into a SmallInteger
 	jo		@F										; No, its at 32-bit number
-	inc		ecx										; Yes, add SmallInteger flag
-	mov		[_SP], ecx								; Store new SmallInteger at stack top
-	mov		eax, ecx								; Return TRUE (non-zero)
+
+	or		ecx, 1									; Yes, add SmallInteger flag
+	lea		eax, [_SP-OOPSIZE]						; primitiveSuccess(1)
+	mov		[_SP-OOPSIZE], ecx						; Store new SmallInteger at stack top
 	ret
 
 @@:
 	mov		ecx, eax								; Revert to non-shifted value
 	call	LINEWSIGNED								; Create new LI with 32-bit signed value in ECX
-	ReplaceStackTopWithNew							; Replace stack top with new signed, large, integer
-	ret												; When called from primitive, eax non-zero, so will succeed
+	mov		[_SP-OOPSIZE], eax						; Overwrite receiver with new object
+	AddToZct <a>
+	lea		eax, [_SP-OOPSIZE]						; primitiveSuccess(1)
+	ret
+
+LocalPrimitiveFailure 0
+LocalPrimitiveFailure 1
 
 ENDPRIMITIVE primitiveSDWORDAt
 
@@ -299,8 +334,8 @@ BEGINPRIMITIVE primitiveSDWORDAtPut
 	mov		eax, [ecx].m_location					; EAX is pointer to receiver
 	ASSUME	eax:PTR Object
 
-	jnc		primitiveFailure0						; Offset, not a SmallInteger, fail the primitive
 	js		primitiveFailure1						; Negative offset invalid
+	jnc		primitiveFailure0						; Offset, not a SmallInteger, fail the primitive
 
 	;; Receiver is a normal byte object
 	add		edx, SIZEOF DWORD						; Adjust offset to be last byte ref'd
@@ -326,7 +361,7 @@ sdwordAtPut PROC
 	; Don't adjust stack until memory has been accessed in case it is inaccessible and causes an access violation
 
 	mov		[_SP-OOPSIZE*2], ecx					; Overwrite receiver
-	PopStack <2>									; Past failing so pop arg/offset (both SmallIntegers)
+	lea		eax, [_SP-OOPSIZE*2]					; primitiveSuccess(2)
 	ret
 
 @@:	
@@ -350,10 +385,10 @@ sdwordAtPut PROC
 
 	mov		edx, [_SP]								; Reload arg
 	mov		[_SP-OOPSIZE*2], edx					; Overwrite receiver
-	PopStack <2>									; Pop value and SmallInteger offset
+
+	lea		eax, [_SP-OOPSIZE*2]					; primitiveSuccess(2)
 	ret
 sdwordAtPut ENDP
-
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; An exact copy of the above, but omits LargePositiveInteger range check
@@ -397,7 +432,8 @@ dwordAtPut PROC
 	
 	; Past failing so adjust stack (returns the argument)
 	mov		[_SP-OOPSIZE*2], ecx					; Overwrite receiver
-	PopStack <2>									
+
+	lea		eax, [_SP-OOPSIZE*2]					; primitiveSuccess(2)
 	ret
 
 @@:	
@@ -429,7 +465,8 @@ dwordAtPut PROC
 
 	mov		edx, [_SP]								; Reload arg
 	mov		[_SP-OOPSIZE*2], edx					; Overwrite receiver with arg for answer
-	PopStack <2>									; Pop value and SmallInteger offset
+
+	lea		eax, [_SP-OOPSIZE*2]					; primitiveSuccess(2)
 	ret
 
 	ASSUME	edx:NOTHING
@@ -467,7 +504,6 @@ BEGINPRIMITIVE primitiveIndirectDWORDAtPut
 	mov		eax, [ecx].m_location					; EAX is pointer to receiver
 
 	jnc		primitiveFailure0						; Offset, not a SmallInteger, fail the primitive
-	;js		primitiveFailure1						; Negative offsets are valid
 
 	; Receiver is an ExternalAddress
 	mov		eax, (ExternalAddress PTR[eax]).m_pointer; Load pointer out of object (immediately after header)
@@ -481,24 +517,28 @@ ENDPRIMITIVE primitiveIndirectDWORDAtPut
 BEGINPRIMITIVE primitiveIndirectSDWORDAt
 	IndirectAtPreamble
 
-	push	DWORD PTR[eax+edx]						; Save SDWORD from *(address+offset)
+	mov	eax, DWORD PTR[eax+edx]						; Save SDWORD from *(address+offset)
 
 	;; Its not going to fail, so prepare Smalltalk stack
-	PopStack
 	
-	pop		ecx										; Restore SDWORD value into ECX
-	add		ecx, ecx								; Will it fit into a SmallInteger
-	jo		@F										; No, its at 32-bit number
-	inc		ecx										; Yes, add SmallInteger flag
-	mov		[_SP], ecx								; Store new SmallInteger at stack top
-	mov		eax, ecx								; Return TRUE (non-zero)
+	mov		ecx, eax								; Restore SDWORD value into ECX
+	add		eax, eax								; Will it fit into a SmallInteger
+	jo		overflow								; No, its at 32-bit number
+
+	or		eax, 1									; Yes, add SmallInteger flag
+	mov		[_SP-OOPSIZE], eax						; Store new SmallInteger at stack top
+	lea		eax, [_SP-OOPSIZE]						; primitiveSuccess(0)
 	ret
 
-@@:
-	rcr		ecx, 1									; Revert to non-shifted value
+overflow:
 	call	LINEWSIGNED								; Create new LI with 32-bit signed value in ECX
-	ReplaceStackTopWithNew
-	ret												; When called from primitive, eax non-zero, so will succeed
+	mov		[_SP-OOPSIZE], eax						; Overwrite receiver with new object
+	AddToZct <a>
+	lea		eax, [_SP-OOPSIZE]						; primitiveSuccess(1)
+	ret
+
+LocalPrimitiveFailure 0
+
 ENDPRIMITIVE primitiveIndirectSDWORDAt
 
 
@@ -507,12 +547,15 @@ ENDPRIMITIVE primitiveIndirectSDWORDAt
 BEGINPRIMITIVE primitiveIndirectSWORDAt
 	IndirectAtPreamble
 
-	movsx	eax, WORD PTR[eax+edx]					; Sign extend WORD from *(address+offset) into EAX
+	movsx	ecx, WORD PTR[eax+edx]					; Sign extend WORD from *(address+offset) into EAX
 
-	lea		eax, [eax+eax+1]						; Convert to SmallInteger
-	mov		[_SP-OOPSIZE], eax						; Overwrite receiver
-	PopStack
+	lea		ecx, [ecx+ecx+1]						; Convert to SmallInteger
+	lea		eax, [_SP-OOPSIZE]						; primitiveSuccess(1)
+	mov		[_SP-OOPSIZE], ecx						; Overwrite receiver
 	ret
+
+LocalPrimitiveFailure 0
+
 ENDPRIMITIVE primitiveIndirectSWORDAt
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -520,12 +563,15 @@ ENDPRIMITIVE primitiveIndirectSWORDAt
 BEGINPRIMITIVE primitiveIndirectWORDAt
 	IndirectAtPreamble
 				     	
-	movzx	eax, WORD PTR[eax+edx]					; Zero extend WORD from *(address+offset) into EAX
+	movzx	ecx, WORD PTR[eax+edx]					; Zero extend WORD from *(address+offset) into EAX
 
-	lea		eax, [eax+eax+1]						; Convert to SmallInteger
-	mov		[_SP-OOPSIZE], eax						; Overwrite receiver
-	PopStack
+	lea		ecx, [ecx+ecx+1]						; Convert to SmallInteger
+	lea		eax, [_SP-OOPSIZE]						; primitiveSuccess(1)
+	mov		[_SP-OOPSIZE], ecx						; Overwrite receiver
 	ret
+
+LocalPrimitiveFailure 0
+
 ENDPRIMITIVE primitiveIndirectWORDAt
 
 
@@ -539,12 +585,16 @@ ENDPRIMITIVE primitiveIndirectWORDAt
 ;
 BEGINPRIMITIVE primitiveByteAtAddress
 	IndirectAtPreamble
-	mov		al, BYTE PTR[eax+edx]			; Load the desired byte into AL
-	and		eax, 0FFh						; Mask off unwanted high bytes
-	lea		eax, [eax+eax+1]				; Convert to SmallInteger
-	mov		[_SP-OOPSIZE], eax				; Store new SmallInteger at stack top
-	PopStack
+
+	xor		ecx, ecx
+	mov		cl, BYTE PTR[eax+edx]			; Load the desired byte into AL
+	lea		eax, [_SP-OOPSIZE]				; primitiveSuccess(1)
+	lea		ecx, [ecx+ecx+1]				; Convert to SmallInteger
+	mov		[_SP-OOPSIZE], ecx				; Store new SmallInteger at stack top
 	ret
+
+LocalPrimitiveFailure 0
+
 ENDPRIMITIVE primitiveByteAtAddress
 
 
@@ -567,8 +617,7 @@ BEGINPRIMITIVE primitiveByteAtAddressPut
 	mov		ecx, [ecx].m_location			; Load address of object into EAX
 	ASSUME	ecx:PTR ExternalAddress
 
-	jnc		primitiveFailure0      			; Offset not a SmallInteger, fail the primitive
-	;js		primitiveFailure1				; Negative offsets ARE valid in this case
+	jnc		localPrimitiveFailure0      	; Offset not a SmallInteger, fail the primitive
 
 	mov		ecx, [ecx].m_pointer			; Load the base address from the object
 	ASSUME	ecx:PTR BYTE
@@ -579,17 +628,22 @@ BEGINPRIMITIVE primitiveByteAtAddressPut
 	mov		edx, eax						; Load value into EDX
 
 	sar		edx, 1							; Convert byte value from SmallInteger
-	jnc		primitiveFailure2      			; Not a SmallInteger, fail the primitive
+	jnc		localPrimitiveFailure2      	; Not a SmallInteger, fail the primitive
 	
 	cmp		edx, 0FFh						; Is it in range?
-	ja		primitiveFailure3      			; No, too big (N.B. unsigned comparison)
+	ja		localPrimitiveFailure3      	; No, too big (N.B. unsigned comparison)
 
 	mov		[ecx], dl						; Store byte at the specified offset
 
 	mov		[_SP-OOPSIZE*2], eax			; SmallInteger answer (same as value arg)
-	PopStack <2>							; Pop SmallInteger args
-	; Succeed - EAX contains SmallInteger value, and therefore non-zero
+
+	lea		eax, [_SP-OOPSIZE*2]			; primitiveSuccess(2)
 	ret
+
+LocalPrimitiveFailure 0
+LocalPrimitiveFailure 2
+LocalPrimitiveFailure 3
+
 ENDPRIMITIVE primitiveByteAtAddressPut
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -601,25 +655,32 @@ BEGINPRIMITIVE primitiveWORDAtPut
 	mov		edx, [_SP-OOPSIZE]				; Load the byte offset
 	sar		edx, 1							; Convert byte offset from SmallInteger
 	mov		eax, [ecx].m_location			; Load address of object
-	jnc		primitiveFailure0       		; Not a SmallInteger, fail the primitive
-	js		primitiveFailure1				; Negative offsets not valid
+	jnc		localPrimitiveFailure0       	; Not a SmallInteger, fail the primitive
+	js		localPrimitiveFailure1			; Negative offsets not valid
 
 	add		edx, SIZEOF WORD				; Adjust offset to be last byte ref'd
 	cmp		edx, [ecx].m_size				; Off end of object? N.B. Ignore the immutable bit so fails if receiver constant
-	jg		primitiveFailure1				; Yes, offset too large, fail it
+	jg		localPrimitiveFailure1			; Yes, offset too large, fail it
 
 	mov		ecx, [_SP]						; Load the value argument
 	sar		ecx, 1							; Convert byte value from SmallInteger
-	jnc		primitiveFailure2       		; Not a SmallInteger, fail the primitive
+	jnc		localPrimitiveFailure2       	; Not a SmallInteger, fail the primitive
 	cmp		ecx, 0FFFFh						; Is it in range?
-	ja		primitiveFailure3       		; No, too big (N.B. unsigned comparison)
+	ja		localPrimitiveFailure3       	; No, too big (N.B. unsigned comparison)
 
 	mov		WORD PTR[eax+edx-SIZEOF WORD], cx	; No, Store down the 16-bit value
 
 	mov		eax, [_SP]						; and value
 	mov		[_SP-OOPSIZE*2], eax			; SmallInteger answer (same as value arg)
-	PopStack <2>							; Pop SmallInteger args
-	ret										; Succeed - non-zero (valid SmallInteger) in eax
+
+	lea		eax, [_SP-OOPSIZE*2]			; primitiveSuccess(2)
+	ret
+
+LocalPrimitiveFailure 0
+LocalPrimitiveFailure 1
+LocalPrimitiveFailure 2
+LocalPrimitiveFailure 3
+
 ENDPRIMITIVE primitiveWORDAtPut
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -630,16 +691,21 @@ BEGINPRIMITIVE primitiveIndirectWORDAtPut
 
 	mov		ecx, [_SP]						; Load the value argument
 	sar		ecx, 1							; Convert byte value from SmallInteger
-	jnc		primitiveFailure2       		; Not a SmallInteger, fail the primitive
+	jnc		localPrimitiveFailure2       	; Not a SmallInteger, fail the primitive
 	cmp		ecx, 0FFFFh						; Is it in range?
-	ja		primitiveFailure3       		; No, too big (N.B. unsigned comparison)
+	ja		localPrimitiveFailure3       	; No, too big (N.B. unsigned comparison)
 
 	mov		WORD PTR[eax+edx], cx			; Store down the 16-bit value
 
-	mov		eax, [_SP]						; and value
-	mov		[_SP-OOPSIZE*2], eax			; SmallInteger answer (same as value arg)
-	PopStack <2>							; Pop SmallInteger args
-	ret										; Succeed - non-zero (valid address) in eax
+	mov		ecx, [_SP]						; and value
+	lea		eax, [_SP-OOPSIZE*2]			; primitiveSuccess(2)
+	mov		[_SP-OOPSIZE*2], ecx			; SmallInteger answer (same as value arg)
+	ret
+
+LocalPrimitiveFailure 0
+LocalPrimitiveFailure 2
+LocalPrimitiveFailure 3
+
 ENDPRIMITIVE primitiveIndirectWORDAtPut
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -652,27 +718,33 @@ BEGINPRIMITIVE primitiveSWORDAtPut
 	mov		edx, [_SP-OOPSIZE]				; Load the byte offset
 	sar		edx, 1							; Convert byte offset from SmallInteger
 	mov		eax, [ecx].m_location			; Load address of object
-	jnc		primitiveFailure0       		; Not a SmallInteger, fail the primitive
-	js		primitiveFailure1				; Negative offsets not valid
+	jnc		localPrimitiveFailure0       	; Not a SmallInteger, fail the primitive
+	js		localPrimitiveFailure1			; Negative offsets not valid
 
 	add		edx, SIZEOF WORD				; Adjust offset to be last byte ref'd
 	cmp		edx, [ecx].m_size				; Off end of object? N.B. Ignore the immutable bit so fails if receiver constant
-	jg		primitiveFailure1				; Yes, offset too large, fail it
+	jg		localPrimitiveFailure1			; Yes, offset too large, fail it
 
 	mov		ecx, [_SP]						; Load the value argument
 	sar		ecx, 1							; Convert byte value from SmallInteger
-	jnc		primitiveFailure2       		; Not a SmallInteger, fail the primitive
+	jnc		localPrimitiveFailure2       	; Not a SmallInteger, fail the primitive
 	cmp		ecx, 08000h						; Is it in range?
-	jge		primitiveFailure3       		; No, too large positive
+	jge		localPrimitiveFailure3       	; No, too large positive
 	cmp		ecx, -08000h
-	jl		primitiveFailure3				; No, too large negative
+	jl		localPrimitiveFailure3			; No, too large negative
 
 	mov		WORD PTR[eax+edx-SIZEOF WORD], cx	; No, Store down the 16-bit value
 
-	mov		eax, [_SP]						; and value
-	mov		[_SP-OOPSIZE*2], eax			; SmallInteger answer (same as value arg)
-	PopStack <2>							; Pop SmallInteger args
-	ret										; Succeed - non-zero (valid address) in eax
+	mov		ecx, [_SP]						; and value
+	lea		eax, [_SP-OOPSIZE*2]			; primitiveSuccess(2)
+	mov		[_SP-OOPSIZE*2], ecx			; SmallInteger answer (same as value arg)
+	ret
+
+LocalPrimitiveFailure 0
+LocalPrimitiveFailure 1
+LocalPrimitiveFailure 2
+LocalPrimitiveFailure 3
+
 ENDPRIMITIVE primitiveSWORDAtPut
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -686,19 +758,23 @@ BEGINPRIMITIVE primitiveIndirectSWORDAtPut
 
 	mov		ecx, [_SP]						; Load the value argument
 	sar		ecx, 1							; Convert byte value from SmallInteger
-	jnc		primitiveFailure2       		; Not a SmallInteger, fail the primitive
+	jnc		localPrimitiveFailure2       	; Not a SmallInteger, fail the primitive
 	cmp		ecx, 08000h						; Is it in range?
-	jge		primitiveFailure3       		; No, too large positive
+	jge		localPrimitiveFailure3       	; No, too large positive
 	cmp		ecx, -08000h
-	jl		primitiveFailure3				; No, too large negative
+	jl		localPrimitiveFailure3			; No, too large negative
 
 	mov		WORD PTR[eax+edx], cx			; Store down the 16-bit value
 
-	mov		eax, [_SP]						; and value
-	mov		[_SP-OOPSIZE*2], eax			; SmallInteger answer (same as value arg)
-	PopStack <2>							; Pop SmallInteger args
-	ret										; Succeed - non-zero (valid address) in eax
-ENDPRIMITIVE primitiveIndirectSWORDAtPut
+	mov		ecx, [_SP]						; and value
+	lea		eax, [_SP-OOPSIZE*2]			; primitiveSuccess(2)
+	mov		[_SP-OOPSIZE*2], ecx			; SmallInteger answer (same as value arg)
+	ret
 
+LocalPrimitiveFailure 0
+LocalPrimitiveFailure 2
+LocalPrimitiveFailure 3
+
+ENDPRIMITIVE primitiveIndirectSWORDAtPut
 
 END

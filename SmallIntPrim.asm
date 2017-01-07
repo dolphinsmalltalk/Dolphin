@@ -51,56 +51,16 @@ public primitiveBitShift
 public primitiveSmallIntegerAt
 public primitiveHighBit
 public primitiveLowBit
-public NewSigned
-public NewUnsigned
 public arithmeticBitShift
-
-LINEWARRAY2 EQU ?liNewArray2@@YIPAV?$TOTE@VArray@ST@@@@II@Z
-extern LINEWARRAY2:near32
-
-extern primitiveFailure0:near32
-extern primitiveFailure1:near32
-extern primitiveFailure2:near32
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Imports
 
+LINEWARRAY2 EQU ?liNewArray2@@YIPAV?$TOTE@VArray@ST@@@@II@Z
+extern LINEWARRAY2:near32
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Helpers
-
-;; Oop __fastcall NewSigned(SDWORD value)
-;; Instantiate a new signed integer object from the 32-bit integer value in ecx
-;; Creates either a SmallInteger, or LargePositive/NegativeInteger as appropriate
-;;
-ALIGNPRIMITIVE
-NewSigned PROC
-	add		ecx, ecx						; Will it fit into a SmallInteger
-	mov		eax, ecx
-	jo		@F								; No, more than 31 bits required (will return to my caller)
-	inc		eax								; Yes, create SmallInteger to return in EAX
-	ret
-@@:
-	rcr		ecx, 1							; Revert to non-shifted value
-	jmp		LINEWSIGNED						; Return to caller with Oop of new Signed Integer in eax
-NewSigned ENDP
-
-
-;; Oop __fastcall NewUnsigned(SDWORD value)
-;; Instantiate a new signed integer object from the 32-bit integer value in ecx
-;; Creates either a SmallInteger, or LargePositive/NegativeInteger as appropriate
-;;
-ALIGNPRIMITIVE
-NewUnsigned PROC
-	add		ecx, ecx						; Will it fit into a SmallInteger
-	mov		eax, ecx
-	jo		@F								; No, more than 31 bits required (will return to my caller)
-	js		@F								; No, won't be positive SmallInteger
-	inc		eax								; Yes, create SmallInteger to return in EAX
-	ret
-@@:
-	rcr		ecx, 1										; Revert to non-shifted value
-	jmp		LINEWUNSIGNED32
-NewUnsigned ENDP
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;	SmallInteger arithmetic primitives
@@ -121,37 +81,33 @@ NewUnsigned ENDP
 ; No reference counting is necessary because a stack item is only overwritten with a
 ; SmallInteger, and this can only happen if that item is a SmallInteger.
 ;
-; Leaves stack in a clean state (no ref. counted objects above _SP)
-;
 BEGINPRIMITIVE primitiveAdd
 	mov		ecx, [_SP-OOPSIZE]				; Access receiver underneath argument
-   	IFDEF _DEBUG
-		test	cl, 1						; Receiver is a SmallInteger?
-		jnz		@F							; Yes, continue
-		int		3							; No, debug break
-	@@:
-   	ENDIF
 	mov		eax, [_SP]						; Load argument from stack
 	test	al, 1							; Argument is a SmallInteger?
-	jz		localPrimitiveFailure0				; No, primitive failure
+	jz		localPrimitiveFailure0			; No, primitive failure
 
-	sub		_SP, OOPSIZE					; Pop argument
-	dec		ecx								; Clear bottom bit of receiver (arithmetic can then be done without shifting)
+	xor		ecx, 1							; Clear bottom bit of receiver (arithmetic can then be done without shifting)
 	add		ecx, eax						; Perform the actual addition
-	jo		@F								; If overflowed SmallInteger bits then create a large integer
+	jo		overflow						; If overflowed SmallInteger bits then create a large integer
 
 	;; Normal, and fastest, case; SmallInteger + SmallInteger yields SmallInteger
-	mov		[_SP], ecx						; Replace stack top integer
-	ret										; Succeed, eax is non-zero (contains SmallInteger value)
+	mov		[_SP-OOPSIZE], ecx				; Replace stack top integer
 
-@@:
-	rcr		ecx, 1							; Revert to non-shifted value
+	lea		eax, [_SP-OOPSIZE]				; primitiveSuccess(1)
+	ret
+
+overflow:
+	rcr		ecx, 1							; Create non-shifted value
 	call	LINEWSIGNED						; Create new LI with 32-bit signed value in ECX
-	ReplaceStackTopWithNew
-	ret										; When called from primitive, eax non-zero, so will succeed
+	mov		[_SP-OOPSIZE], eax				; Overwrite receiver with new object
+	AddToZct <a>
+	lea		eax, [_SP-OOPSIZE]				; primitiveSuccess(1)
+	ret
 
 localPrimitiveFailure0:
-	jmp		primitiveFailure0
+	xor		eax, eax
+	ret
 
 ENDPRIMITIVE primitiveAdd
 
@@ -160,38 +116,32 @@ ENDPRIMITIVE primitiveAdd
 ;
 ; N.B. Neither SmallInteger needs to be right shifted
 ;
-; Leaves stack in a clean state (no ref. counted objects above _SP)
-;
 BEGINPRIMITIVE primitiveSubtract
 	mov		ecx, [_SP-OOPSIZE]				; Load receiver
-	IFDEF _DEBUG
-		test	cl, 1						; Receiver is a SmallInteger?
-		jnz		@F							; Yes, continue
-		int		3							; No, debug break
-	@@:
-	ENDIF
 	mov		eax, [_SP]						; Load argument
 	test	al, 1							; Argument is SmallInteger
 	jz		localPrimitiveFailure0
 
-	sub		_SP, OOPSIZE
-	dec		eax								; Clear args SmallInteger bit
+	xor		eax, 1							; Clear args SmallInteger bit
 	sub		ecx, eax						; Perform the actual subtraction
-	jo		@F								; If underflowed SmallInteger bits then create a large integer
+	jo		underflow						; If underflowed SmallInteger bits then create a large integer
 
-	mov		[_SP], ecx						; Replace stack top integer
-	mov		al, 1
+	mov		[_SP-OOPSIZE], ecx				; Replace stack top integer
+	lea		eax, [_SP-OOPSIZE]				; primitiveSuccess(1)
 	ret										; Succeed (non-zero eax)
 
-@@:
+underflow:
 	cmc
 	rcr		ecx, 1							; Revert to non-shifted value
 	call	LINEWSIGNED						; Create new LI with 32-bit signed value in ECX
-	ReplaceStackTopWithNew					; Replace stack top with new signed, large, integer
-	ret										; When called from primitive, eax non-zero, so will succeed
+	mov		[_SP-OOPSIZE], eax				; Overwrite receiver with new object
+	AddToZct <a>
+	lea		eax, [_SP-OOPSIZE]				; primitiveSuccess(1)
+	ret
 
 localPrimitiveFailure0:
-	jmp		primitiveFailure0
+	xor		eax, eax
+	ret
 
 ENDPRIMITIVE primitiveSubtract
 
@@ -200,33 +150,24 @@ ENDPRIMITIVE primitiveSubtract
 ;
 ; N.B. Only the argument need be right shifted
 ;
-; Leaves stack in a clean state (no ref. counted objects above _SP)
-;
 BEGINPRIMITIVE primitiveMultiply
 	mov		eax, [_SP-OOPSIZE]				; Access receiver at stack top
-	IFDEF _DEBUG
-		test	al, 1						; Receiver is a SmallInteger?
-		jnz		@F							; Yes, continue
-		int		3							; No, debug break
-	@@:
-	ENDIF
 	mov		edx, [_SP]						; Load argument from stack
 	sar		edx, 1							; Extract integer value of arg
-	jnc		localPrimitiveFailure0				; Arg not a SmallInteger
-	dec		eax								; Clear SmallInteger flag of receiver
+	jnc		localPrimitiveFailure0			; Arg not a SmallInteger
+	xor		eax, 1							; Clear SmallInteger flag of receiver
 	imul	edx
 	jo		localPrimitiveFailure1			; If overflowed SmallInteger bits then primitive failure
 
 	or		eax, 1							; Replace SmallInteger flag bit
 	mov		[_SP-OOPSIZE], eax				; Replace stack top integer
-	sub		_SP, OOPSIZE
-	ret										; Succeed (non-zero eax as its a SmallInteger)
+	lea		eax, [_SP-OOPSIZE]				; primitiveSuccess(1)
+	ret
 
 localPrimitiveFailure0:
-	jmp		primitiveFailure0
-
 localPrimitiveFailure1:
-	jmp		primitiveFailure1
+	xor		eax, eax
+	ret
 
 ENDPRIMITIVE primitiveMultiply
 
@@ -236,22 +177,16 @@ ENDPRIMITIVE primitiveMultiply
 ; Divide fails if the receiver or arg non-SmallInteger, if arg is 0,
 ; if result inexact (Smalltalk backup code creates a Fraction)
 ;
-; Can only succeed if argument is a SmallInteger, so clean stack maintained
+; Can only succeed if argument is a SmallInteger
 ;
 BEGINPRIMITIVE primitiveDivide
 	mov		eax, [_SP-OOPSIZE]				; Access receiver at stack top
 	sar		eax, 1							; Convert from SmallInteger
-   	IFDEF _DEBUG
-		jc		@F							; Its a SmallInteger, continue
-		int		3							; Not a SmallInteger, debug break
-	@@:
-   	ENDIF
 	mov		ecx, [_SP]						; Load argument from stack
 	sar		ecx, 1							; Extract integer value of arg
 	jnc		localPrimitiveFailure0				; Arg not a SmallInteger
 	
-	; We now allow a fault to occur which we catch
-	;jz		localPrimitiveFailure1			; Catch division by zero
+	; Division by zero does not fail the primitive, rather we allow an int division fault to be raised and trapped
 	
 	cdq										; Sign extend into edx
 	idiv	ecx
@@ -261,31 +196,32 @@ BEGINPRIMITIVE primitiveDivide
 	; N.B. Overflow is possible if min. SmallInteger negated by division by -1
 	add		eax, eax
 	mov		ecx, eax
-	jo		@F
-	inc		eax
-
+	jo		overflow
+	
+	or		eax, 1							; Add SmallInteger flag
 	mov		[_SP-OOPSIZE], eax				; Replace stack top integer
-	sub		_SP, OOPSIZE
-	ret										; Success (eax is non-zero as SmallInteger)
+	lea		eax, [_SP-OOPSIZE]				; primitiveSuccess(1)
+	ret
 
-@@:
+overflow:
 	rcr		ecx, 1							; Revert to non-shifted value
 	call	LINEWSIGNED						; Create new LI with 32-bit signed value in ECX
-	ReplaceStackTopWithNew					; Replace stack top with new signed, large, integer
-	ret										; When called from primitive, eax non-zero, so will succeed
+	mov		[_SP-OOPSIZE], eax				; Overwrite receiver with new object
+	AddToZct <a>
+	lea		eax, [_SP-OOPSIZE]				; primitiveSuccess(1)
+	ret
 
 localPrimitiveFailure0:
-	jmp		primitiveFailure0
-
 localPrimitiveFailure2:
-	jmp		primitiveFailure2
+	xor		eax, eax
+	ret
 
 ENDPRIMITIVE primitiveDivide
 
 
 ;  int __fastcall Interpreter::primitiveMod()
 ;
-; Can only succeed if argument is a SmallInteger, so clean stack maintained
+; Can only succeed if argument is a SmallInteger
 ;
 BEGINPRIMITIVE primitiveMod
 	mov		eax, [_SP-OOPSIZE]				; Access receiver at stack top
@@ -304,7 +240,6 @@ BEGINPRIMITIVE primitiveMod
 	sar		edx, 31							; ... complete sign extend into edx		(v)
 
 	idiv	ecx
-	PopStack								; It'll work, pop arg
 
 	test	eax,eax							; test Quotient
 	mov		eax, 1
@@ -318,12 +253,15 @@ BEGINPRIMITIVE primitiveMod
 @@:
 	add		eax, edx
 	add		eax, edx
-	;lea		eax, [edx+edx+1]				; Recreate SmallInteger from edx
-	mov		[_SP], eax						; Replace stack top integer with remainder
+
+	mov		[_SP-OOPSIZE], eax				; Replace stack top integer with remainder
+
+	lea		eax, [_SP-OOPSIZE]				; primitiveSuccess(1)
 	ret
 
 localPrimitiveFailure0:
-	jmp		primitiveFailure0
+	xor		eax, eax
+	ret
 
 ENDPRIMITIVE primitiveMod
 
@@ -341,11 +279,6 @@ BEGINPRIMITIVE primitiveDiv
 	mov		eax, [_SP-OOPSIZE]				; (u) Access receiver at stack top
 	mov		ecx, [_SP]						; (v) Load argument from stack
 	sar		eax, 1							; (u) Convert from SmallInteger
-   	IFDEF _DEBUG
-		jc		@F							; Its a SmallInteger, continue
-		int		3							; Not a SmallInteger, debug break
-	@@:
-   	ENDIF
 
 	sar		ecx, 1							; Extract integer value of arg
 	mov		edx, eax						; (v) Sign extend eax ...				(u)
@@ -354,7 +287,6 @@ BEGINPRIMITIVE primitiveDiv
 	sar		edx, 31							; ... complete sign extend into edx		(v)
 
 	idiv	ecx
-	PopStack								; It worked, pop arg
 
 	test	eax, eax						; Quotient?
 	jg		@F								; greater than zero
@@ -367,34 +299,24 @@ BEGINPRIMITIVE primitiveDiv
 @@:
 	add		eax, eax						; Convert to SmallInteger
 	mov		ecx, eax
-	jo		@F								; Overflow possible if divide by -1
-	inc		eax
-	mov		[_SP], eax						; Replace stack top integer
-	ret										; Succeed (eax contains non-zero (SmallInteger) value)
+	jo		overflow						; Overflow possible if divide by -1
+	
+	or		eax, 1							; Add SmallInteger flag
+	mov		[_SP-OOPSIZE], eax				; Replace stack top integer
+	lea		eax, [_SP-OOPSIZE]				; primitiveSuccess(1)
+	ret
 
-@@:
+overflow:
 	rcr		ecx, 1							; Revert to non-shifted value
 	call	LINEWSIGNED						; Create new LI with 32-bit signed value in ECX
-	ReplaceStackTopWithNew					; Replace stack top with new signed, large, integer
-	ret										; When called from primitive, eax non-zero, so will succeed
-
-; Nice idea, but although works for -7//2 doesn't work for -11//5. OK as long as divisor is even.
-;	mov		eax, [_SP-OOPSIZE]				; Access receiver at stack top
-;	mov		ecx, [_SP]						; Load argument from stack
-;	dec		eax								; Remove receiver's SmallInteger flags
-;	sar		ecx, 1							; Extract integer value of arg
-;	jnc		localPrimitiveFailure0				; Arg not a SmallInteger
-;
-;	cdq										; Sign extend into edx
-;	idiv	ecx
-;
-;	or		eax, 1							; Quicker even on PII to use whole register (i.e. eax rather than al)
-;	mov		[_SP-OOPSIZE], eax				; Replace stack top integer
-;	sub		_SP, OOPSIZE					; Pop arg
-;	ret										; Succeed (eax is Oop value (i.e. non-zero))
+	mov		[_SP-OOPSIZE], eax				; Overwrite receiver with new object
+	AddToZct <a>
+	lea		eax, [_SP-OOPSIZE]				; primitiveSuccess(1)
+	ret
 
 localPrimitiveFailure0:
-	jmp		primitiveFailure0
+	xor		eax, eax
+	ret
 
 ENDPRIMITIVE primitiveDiv
 
@@ -409,27 +331,30 @@ BEGINPRIMITIVE primitiveQuo
 	sar		ecx, 1							; Extract integer value of arg
 	mov		edx, eax						; (v) Sign extend eax ...				(u)
 
-	jnc		localPrimitiveFailure0				; Arg not a SmallInteger
+	jnc		localPrimitiveFailure0			; Arg not a SmallInteger
 
 	sar		edx, 31							; ... complete sign extend into edx		(v)
 	idiv	ecx
 
-	add		eax, eax
 	mov		ecx, eax
-	jo		@F								; Overflow possible if divide by -1
-	inc		eax
+	add		eax, eax
+	jo		overflow						; Overflow possible if divide by -1
+	
+	or		eax, 1							; Add SmallInteger flag
 	mov		[_SP-OOPSIZE], eax				; Replace stack top integer
-	sub		_SP, OOPSIZE					; Pop arg
-	ret										; Succeed (eax is Oop value (i.e. non-zero))
+	lea		eax, [_SP-OOPSIZE]				; primitiveSuccess(1)
+	ret
 
-@@:
-	rcr		ecx, 1							; Revert to non-shifted value
+overflow:
 	call	LINEWSIGNED						; Create new LI with 32-bit signed value in ECX
-	ReplaceStackTopWithNew					; Replace stack top with new signed, large, integer
-	ret										; When called from primitive, eax non-zero, so will succeed
+	mov		[_SP-OOPSIZE], eax				; Overwrite stack top with new object
+	AddToZct <a>
+	lea		eax, [_SP-OOPSIZE]
+	ret
 
 localPrimitiveFailure0:
-	jmp		primitiveFailure0
+	xor		eax, eax
+	ret
 
 ENDPRIMITIVE primitiveQuo
 
@@ -438,17 +363,12 @@ ENDPRIMITIVE primitiveQuo
 ; Yet another division primitive, but this time with truncation towards zero
 ; which is simple makes this the same as integer division in lesser languages
 ;
-; Can only succeed if argument is a SmallInteger, so clean stack maintained
+; Can only succeed if argument is a SmallInteger
 ;
 BEGINPRIMITIVE primitiveQuoAndRem
 	mov		eax, [_SP-OOPSIZE]				; Access receiver at stack top
 	mov		ecx, [_SP]						; Load argument from stack
 	sar		eax, 1							; Convert from SmallInteger
-   	IFDEF _DEBUG
-		jc		@F							; Its a SmallInteger, continue
-		int		3							; Not a SmallInteger, debug break
-	@@:
-   	ENDIF
 	sar		ecx, 1							; Extract integer value of arg
 	mov		edx, eax						; (v) Sign extend eax ...				(u)
 	jnc		localPrimitiveFailure0				; Arg not a SmallInteger
@@ -456,10 +376,10 @@ BEGINPRIMITIVE primitiveQuoAndRem
 	sar		edx, 31							; ... complete sign extend into edx		(v)
 	idiv	ecx
 
-	sub		_SP, OOPSIZE					; Pop arg
 	add		eax, eax						; Quotient is in eax
 
 	jno		@F
+
 	; Overflowed, must be division of -16r40000000 by -1, remainder must be zero
 	mov		ecx, eax
 	push	edx
@@ -470,19 +390,22 @@ BEGINPRIMITIVE primitiveQuoAndRem
 	pop		edx
 	jmp		skip
 @@:
-	inc	eax								; Add flag
+	or		eax, 1							; Add SmallInteger flag
 skip:
 	add		edx, edx						; Convert remainder into SmallInteger
 	mov		ecx, eax						; Get quotient into ECX
-	inc		edx								; Add flag for SmallInteger remainder
+	or		edx, 1							; Add flag for SmallInteger remainder
 
 	call	LINEWARRAY2						; Construct 2-element quotient and remainder array
 	ASSUME	eax:PTR OTE
-	ReplaceStackTopWithNew					; Replace stack top integer with the 2-elem array array
-	ret										; Succeed (eax is Oop value (i.e. non-zero))
+	mov		[_SP-OOPSIZE], eax				; Overwrite receiver with new object
+	AddToZct <a>
+	lea		eax, [_SP-OOPSIZE]				; primitiveSuccess(1)
+	ret
 
 localPrimitiveFailure0:
-	jmp		primitiveFailure0
+	xor		eax, eax
+	ret
 
 ENDPRIMITIVE primitiveQuoAndRem
 
@@ -510,16 +433,10 @@ ENDPRIMITIVE primitiveQuoAndRem
 ; failure case where the argument is not a SmallInteger (more
 ; normally fails due to receiver not being a SmallInteger).
 ;
-; Can only succeed if argument is a SmallInteger, so clean stack maintained
+; Can only succeed if argument is a SmallInteger
 ;
 BEGINPRIMITIVE primitiveEqual
 	mov		ecx, [_SP-OOPSIZE]				; Access receiver at stack top
-   	IFDEF _DEBUG
-		test	cl, 1						; Receiver is a SmallInteger?
-		jnz		@F							; Yes, continue
-		int		3							; No, debug break
-	@@:
-	ENDIF
 	mov		eax, [oteTrue]					; Load True as default
 	xor		ecx, [_SP]						; Receiver = arg?
 	jz		@F								; Yes, result zero if equal
@@ -530,11 +447,13 @@ BEGINPRIMITIVE primitiveEqual
 	add		eax, OTENTRYSIZE				; Load False, arg was SmallInteger, but not equal
 @@:
 	mov		[_SP-OOPSIZE], eax				; Replace stack top integer with boolean result
-	sub		_SP, OOPSIZE
-	ret										; Succeed (eax is non-zero - contains True/False Oop)
+
+	lea		eax, [_SP-OOPSIZE]				; primitiveSuccess(1)
+	ret
 
 localPrimitiveFailure0:
-	jmp		primitiveFailure0
+	xor		eax, eax
+	ret
 
 ENDPRIMITIVE primitiveEqual
 
@@ -543,8 +462,6 @@ ENDPRIMITIVE primitiveEqual
 ;
 ; Same optimisation as primtiveEqual where test for SmallInteger argument
 ; is delayed until we know receiver and argument are not equal
-;
-; Can only succeed if argument is a SmallInteger, so clean stack maintained
 ;
 ;BEGINPRIMITIVE primitiveNotEqual
 ;	mov		ecx, [_SP-OOPSIZE]				; Access receiver at stack top
@@ -564,8 +481,8 @@ ENDPRIMITIVE primitiveEqual
 ;	mov		eax, [oteTrue]			; Yes, arg is SmallInteger, and Not Equal to receiver
 ;
 ;@@:
-;	sub		_SP, OOPSIZE					; pop arg
-;	mov		[_SP], eax						; Replace stack top integer with boolean result
+;	mov		[_SP-OOPSIZE], eax				; Replace stack top integer with boolean result
+;	lea		eax, [_SP-OOPSIZE]				; primitiveSuccess(1)
 ;	ret										; Succeed (eax is non-zero - contains True/False Oop)
 ;primitiveNotEqual ENDP
 
@@ -585,31 +502,27 @@ ENDPRIMITIVE primitiveEqual
 ; as though it takes a little more room, it saves a cycle for
 ; one case (which would be consumed by an unecessary mov instruction)
 ;
-; Can only succeed if argument is a SmallInteger, so clean stack maintained
+; Can only succeed if argument is a SmallInteger
 ;
 BEGINPRIMITIVE primitiveLessThan
 	mov		ecx, [_SP-OOPSIZE]				; Access receiver under argument
-   	IFDEF _DEBUG
-		test	cl, 1						; Receiver is a SmallInteger?
-		jnz		@F							; Yes, continue
-		int		3							; No, debug break
-	@@:
-	ENDIF
 	mov		edx, [_SP]						; Load argument from stack
 	test	dl, 1							; Arg is a SmallInteger?
 	jz		localPrimitiveFailure0				; No, primitive failure
 				     	
-	sub		_SP, OOPSIZE					; pop arg
 	cmp		ecx, edx						; receiver < arg?
 	mov		eax, [oteFalse]					; Default - not less than arg
 	jge		@F
 	sub		eax, OTENTRYSIZE				; Yes, receiver < arg
 @@:
-	mov		[_SP], eax						; Replace stack top integer with True/False
-	ret										; Succceed (non-zero eax)
+	mov		[_SP-OOPSIZE], eax				; Replace stack top integer with True/False
+
+	lea		eax, [_SP-OOPSIZE]				; primitiveSuccess(1)
+	ret
 
 localPrimitiveFailure0:
-	jmp		primitiveFailure0
+	xor		eax, eax
+	ret
 
 ENDPRIMITIVE primitiveLessThan
 
@@ -619,31 +532,27 @@ ENDPRIMITIVE primitiveLessThan
 ; Again when used for loops, we assume the TRUE case is the more
 ; important
 ;
-; Can only succeed if argument is a SmallInteger, so clean stack maintained
+; Can only succeed if argument is a SmallInteger
 ;
 BEGINPRIMITIVE primitiveLessOrEqual
 	mov		ecx, [_SP-OOPSIZE]				; Access receiver at stack top
-   	IFDEF _DEBUG
-		test	cl, 1						; Receiver is a SmallInteger?
-		jnz		@F							; Yes, continue
-		int		3							; No, debug break
-	@@:
-	ENDIF
 	mov		edx, [_SP]						; Load argument from stack
 	test	dl, 1							; Arg is a SmallInteger?
 	jz		localPrimitiveFailure0				; No, primitive failure
 				     	
-	sub		_SP, OOPSIZE					; pop arg
 	cmp		ecx, edx						; receiver <= arg?
 	mov		eax, [oteFalse]
 	jg		@F								; No, receiver > arg
 	sub		eax, OTENTRYSIZE				; Yes, receiver <= arg
 @@:
-	mov		[_SP], eax						; Replace stack top integer with True/False
-	ret										; Yes it worked, in 15 cycles
+	mov		[_SP-OOPSIZE], eax				; Replace stack top integer with True/False
+
+	lea		eax, [_SP-OOPSIZE]				; primitiveSuccess(1)
+	ret
 
 localPrimitiveFailure0:
-	jmp		primitiveFailure0
+	xor		eax, eax
+	ret
 
 ENDPRIMITIVE primitiveLessOrEqual
 
@@ -653,62 +562,54 @@ ENDPRIMITIVE primitiveLessOrEqual
 ; In this case we make the false case marginally faster, as frequently
 ; > is used in whileFalse loops
 ;
-; Can only succeed if argument is a SmallInteger, so clean stack maintained
+; Can only succeed if argument is a SmallInteger
 ;
 BEGINPRIMITIVE primitiveGreaterThan
 	mov		ecx, [_SP-OOPSIZE]				; Access receiver at stack top
-   	IFDEF _DEBUG
-		test	cl, 1						; Receiver is a SmallInteger?
-		jnz		@F							; Yes, continue
-		int		3							; No, debug break
-	@@:
-	ENDIF
 	mov		edx, [_SP]						; Load argument from stack
 	test	dl, 1							; Arg is a SmallInteger?
 	jz		localPrimitiveFailure0				; No, primitive failure
 
-	sub		_SP, OOPSIZE					; pop arg
 	cmp		ecx, edx
 	mov		eax, [oteTrue]					; Yes
 	jg		@F								; receiver > arg?
 	add		eax, OTENTRYSIZE				; No
 @@:
-	mov		[_SP], eax						; Replace stack top integer with True/False
-	ret										; Yes it worked, in 18 cycles
+	mov		[_SP-OOPSIZE], eax				; Replace stack top integer with True/False
+
+	lea		eax, [_SP-OOPSIZE]				; primitiveSuccess(1)
+	ret
 
 localPrimitiveFailure0:
-	jmp		primitiveFailure0
+	xor		eax, eax
+	ret
 
 ENDPRIMITIVE primitiveGreaterThan
 
 
 ;  int __fastcall Interpreter::primitiveGreaterOrEqual()
 ;
-; Can only succeed if argument is a SmallInteger, so clean stack maintained
+; Can only succeed if argument is a SmallInteger
 ;
 BEGINPRIMITIVE primitiveGreaterOrEqual
 	mov		ecx, [_SP-OOPSIZE]				; Access receiver at stack top
-   	IFDEF _DEBUG
-		test	cl, 1						; Receiver is a SmallInteger?
-		jnz		@F							; Yes, continue
-		int		3							; No, debug break
-	@@:
-	ENDIF
 	mov		edx, [_SP]						; Load argument from stack
 	test	dl, 1							; Arg is a SmallInteger?
 	jz		localPrimitiveFailure0					; No, primitive failure
 
-	sub		_SP, OOPSIZE					; pop arg
 	cmp		ecx, edx						; receiver >= arg?
 	mov		eax, [oteTrue]
 	jge		@F								; Yes
 	add		eax, OTENTRYSIZE				; No
 @@:
-	mov		[_SP], eax						; Replace stack top integer with True/False
-	ret										; Yes it worked, in 18 cycles
+	mov		[_SP-OOPSIZE], eax				; Replace stack top integer with True/False
+
+	lea		eax, [_SP-OOPSIZE]				; primitiveSuccess(1)
+	ret
 
 localPrimitiveFailure0:
-	jmp		primitiveFailure0
+	xor		eax, eax
+	ret
 
 ENDPRIMITIVE primitiveGreaterOrEqual
 
@@ -723,7 +624,7 @@ ENDPRIMITIVE primitiveGreaterOrEqual
 ; necessary. This reduces successful invocations to a mere
 ; 6 cycles (plus call and return overhead if applicable)
 ;
-; Can only succeed if argument is a SmallInteger, so clean stack maintained
+; Can only succeed if argument is a SmallInteger
 ;
 BEGINPRIMITIVE primitiveBitAnd
 	mov		eax, [_SP-OOPSIZE]				; Access receiver at stack top
@@ -731,39 +632,39 @@ BEGINPRIMITIVE primitiveBitAnd
 	and		eax, ecx						; Perform the bitwise op with arg
 	test	al, 1							; Result a SmallInteger
 	jz		localPrimitiveFailure0				; No, receiver or Arg not a SmallInt
+
 	mov		[_SP-OOPSIZE], eax				; Replace stack top integer
-	sub		_SP, OOPSIZE
-	ret										; Yes it worked (any bitAnd of two SmallIntegers must have bottom bit set)
+
+	lea		eax, [_SP-OOPSIZE]				; primitiveSuccess(1)
+	ret
 
 localPrimitiveFailure0:
-	jmp		primitiveFailure0
+	xor		eax, eax
+	ret
 
 ENDPRIMITIVE primitiveBitAnd
 
 
 ; _declspec(naked) int __fastcall Interpreter::primitiveBitOr()
 ;
-; Can only succeed if argument is a SmallInteger, so clean stack maintained
+; Can only succeed if argument is a SmallInteger
 ;
 BEGINPRIMITIVE primitiveBitOr
-	mov		eax, [_SP-OOPSIZE]				; Access receiver at stack top
+	mov		ecx, [_SP-OOPSIZE]				; Access receiver at stack top
 	mov		edx, [_SP]						; Load argument from stack
-   	IFDEF _DEBUG
-		test	al, 1						; Receiver is a SmallInteger?
-		jnz		@F							; Yes, continue
-		int		3							; No, debug break
-	@@:
-	ENDIF
 	test	dl, 1							; Arg is a SmallInteger?
 	jz		localPrimitiveFailure0				; No, primitive failure
+
+	lea		eax, [_SP-OOPSIZE]				; primitiveSuccess(1)
 	; There is no need to shift or clear the SmallInteger flag
-	or		eax, edx						; Perform the actual bitwise op
-	mov		[_SP-OOPSIZE], eax				; Replace stack top integer
-	sub		_SP, OOPSIZE
-	ret										; Yes it worked (eax contains a SmallInteger, so non-zero)
+	or		ecx, edx						; Perform the actual bitwise op
+
+	mov		[_SP-OOPSIZE], ecx				; Replace stack top integer
+	ret
 
 localPrimitiveFailure0:
-	jmp		primitiveFailure0
+	xor		eax, eax
+	ret
 
 ENDPRIMITIVE primitiveBitOr
 
@@ -781,11 +682,13 @@ BEGINPRIMITIVE primitiveAnyMask
 	add		ecx, SIZEOF OTE					; Convert answer to false
 @@:
 	mov		[_SP-OOPSIZE], ecx				; Overwrite receiving integer with boolean result
-	sub		_SP, OOPSIZE
-	ret										; Yes it worked (any bitAnd of two SmallIntegers must have bottom bit set)
+
+	lea		eax, [_SP-OOPSIZE]				; primitiveSuccess(1)
+	ret
 
 localPrimitiveFailure0:
-	jmp		primitiveFailure0
+	xor		eax, eax
+	ret
 
 ENDPRIMITIVE primitiveAnyMask
 
@@ -794,20 +697,21 @@ ENDPRIMITIVE primitiveAnyMask
 BEGINPRIMITIVE primitiveAllMask
 	mov		eax, [_SP-OOPSIZE]				; Access receiver at stack top
 	mov		edx, [_SP]						; Load mask into edx
-	mov		ecx, [oteTrue]					; Load True as default answer
 	and		eax, edx 						; Perform the bitwise op with arg
-	test	al, 1							; Result a SmallInteger
-	jz		localPrimitiveFailure0				; No, receiver or Arg not a SmallInt
+	mov		ecx, [oteTrue]					; Load True as default answer
 	cmp		eax, edx						; Does the masked value exactly equal the mask?
 	je		@F								; Yes, then skip to answer true
-	add		ecx, SIZEOF OTE					; Convert answer to false
+	test	al, 1							; Result a SmallInteger
+	jz		localPrimitiveFailure0			; No, receiver or Arg not a SmallInt
+	add		ecx, OTENTRYSIZE				; Convert answer to false
 @@:
+	lea		eax, [_SP-OOPSIZE]				; primitiveSuccess(1)
 	mov		[_SP-OOPSIZE], ecx				; Overwrite receiving integer with boolean result
-	sub		_SP, OOPSIZE
-	ret										; Yes it worked (any bitAnd of two SmallIntegers must have bottom bit set)
+	ret
 
 localPrimitiveFailure0:
-	jmp		primitiveFailure0
+	xor		eax, eax
+	ret
 
 ENDPRIMITIVE primitiveAllMask
 
@@ -816,27 +720,23 @@ ENDPRIMITIVE primitiveAllMask
 ; As for BitAnd can take advantage of semantics of Xor to reduce
 ; checking, but not quite so much.
 ;
-; Can only succeed if argument is a SmallInteger, so clean stack maintained
+; Can only succeed if argument is a SmallInteger
 ;
 BEGINPRIMITIVE primitiveBitXor
 	mov		eax, [_SP-OOPSIZE]				; Access receiver at stack top
 	mov		ecx, [_SP]
-   	IFDEF _DEBUG
-		test	al, 1						; Receiver is a SmallInteger?
-		jnz		@F							; Yes, continue
-		int		3							; No, debug break
-	@@:
-	ENDIF
 	xor		eax, ecx						; Perform the actual bitwise op
 	test	al, 1							; Bottom bit cleared if both SmallIntegers?
 	jnz		localPrimitiveFailure0
-	inc		eax								; Replace SmallInteger flag
+	or		eax, 1							; Replace SmallInteger flag
 	mov		[_SP-OOPSIZE], eax				; Replace stack top integer
-	sub		_SP, OOPSIZE
-	ret										; Succeed (non-zero (SmallInteger) return eax)
+
+	lea		eax, [_SP-OOPSIZE]				; primitiveSuccess(1)
+	ret
 
 localPrimitiveFailure0:
-	jmp		primitiveFailure0
+	xor		eax, eax
+	ret
 
 ENDPRIMITIVE primitiveBitXor
 
@@ -846,17 +746,11 @@ ENDPRIMITIVE primitiveBitXor
 ;;
 ;; N.B. We use _BP to cache stack pointer here because cl needed for shift
 ;;
-;; Can only succeed if argument is a SmallInteger, so clean stack maintained
+;; Can only succeed if argument is a SmallInteger
 ;;
 ALIGNPRIMITIVE
 primitiveBitShift:
 	mov		eax, [_SP-OOPSIZE]				; Access receiver at stack top
-   	IFDEF _DEBUG
-		test	al, 1
-		jnz		@F							; SmallInteger? Yes, continue
-		int		3							; No, debug break
-	@@:
-	ENDIF
 
 arithmeticBitShift:
 	ASSUME	eax:SDWORD						; eax contains SmallInteger receiver's SDWORD value
@@ -864,19 +758,21 @@ arithmeticBitShift:
 	mov		ecx, [_SP]						; Load argument from stack
 	mov		edx, eax						; Sign extend into edx from eax part 1
 	sar		ecx, 1							; Access integer value
-	jnc		bsLocalPrimitiveFailure0				; Not a SmallInteger, primitive failure
+	jnc		bsLocalPrimitiveFailure0		; Not a SmallInteger, primitive failure
 	js		rightShift						; If negative, perform right shift (simpler)
 
 	; Perform a left shift (more tricky sadly because of overflow detection)
 
 	cmp		ecx, 30							; We can't shift more than 30 places this way
-	jge		bsLocalPrimitiveFailure0
+	jge		bsLocalPrimitiveFailure1
 
 	; To avoid using a loop, we use the double precision shift first
 	; to detect potential overflow.
 	; This overflow check works, but is slow (about 12 cycles)
 	; since the majority of shifts are <= 16, perhaps should loop?
-	dec		eax								; Remove SmallInteger sign bit
+	sub		eax, 1							; Remove SmallInteger sign bit
+	jz		@F								; If receiver is zero, then result always zero
+
 	push 	_BP								; We must preserve _BP
 	sar		edx, 31							; Sign extend part 2
 	inc		ecx								; Need to check space for sign too
@@ -885,20 +781,23 @@ arithmeticBitShift:
 	dec		ecx
 	xor		edx, _BP						; Overflowed?
 	pop		_BP
-	jnz		bsLocalPrimitiveFailure0				; Yes, LargeInteger needed
+	jnz		bsLocalPrimitiveFailure1		; Yes, LargeInteger needed
 
 	sal		eax, cl							; No, perform the real shift
 
+@@:
 	or		eax, 1							; Replace SmallInteger flag
 	mov		[_SP-OOPSIZE], eax				; Replace stack top integer
-	PopStack
-	ret										; Yes it worked (eax is SmallInteger, therefore non-zero)
+
+	lea		eax, [_SP-OOPSIZE]				; primitiveSuccess(1)
+	ret
 
 bsLocalPrimitiveFailure0:
-	jmp		primitiveFailure0
+bsLocalPrimitiveFailure1:
+	xor		eax, eax
+	ret
 
 rightShift:
-	PopStack								; OK, it'll work
 							
 	neg		ecx								; Get shift as absolute value
 	.IF (ecx > 31)							; Will the shift remove all significant bits
@@ -907,8 +806,11 @@ rightShift:
 
 	sar		eax, cl							; Perform the shift
 	or		eax, 1							; Replace SmallInteger flag
-	mov		[_SP], eax						; Replace stack top integer
-	ret										; Yes it worked (eax is non-zero)
+
+	mov		[_SP-OOPSIZE], eax				; Replace stack top integer
+
+	lea		eax, [_SP-OOPSIZE]				; primitiveSuccess(1)
+	ret
 
 ;
 ; BOOL __fastcall Interpreter::primitiveSmallIntegerAt()
@@ -918,7 +820,7 @@ rightShift:
 ;
 ; Assumes receiver is SmallInteger
 ;
-; Can only succeed if argument is a SmallInteger, so clean stack maintained
+; Can only succeed if argument is a SmallInteger
 ;
 BEGINPRIMITIVE primitiveSmallIntegerAt
 	mov		ecx, [_SP]						; Load argument from stack
@@ -931,33 +833,31 @@ BEGINPRIMITIVE primitiveSmallIntegerAt
 
 	mov		eax, [_SP-OOPSIZE]				; Access receiver underneath argument
 	or		eax, eax						; Negative eax?
-	jns		@F
+	jns		positive
 	sar		eax, 1							; Must be more careful with Negative numbers
 	neg		eax
 	sar		eax, cl
 	and		eax, 0FFh						; 8 bits only
 	add		eax, eax						; Shift left 1 bit
 
-	inc		eax								; Add SmallInteger flag
+	or		eax, 1							; Add SmallInteger flag
 	mov		[_SP-OOPSIZE], eax				; Replace stack top integer
-	sub		_SP, OOPSIZE					; Pop argument
-	ret										; Succeed, eax is non-zero as a SmallInteger
-@@:
+
+	lea		eax, [_SP-OOPSIZE]				; primitiveSuccess(1)
+	ret
+
+positive:
 	; Access byte of positive SmallInteger
 	sar		eax, cl							; byte :=  (receiver >> ((arg-1)*8)) & 0xFF
 	and		eax, 01FEh						; 8 bits only
 
-	inc 	eax								; Add SmallInteger flag
+	or 		eax, 1							; Add SmallInteger flag
 	mov		[_SP-OOPSIZE], eax				; Replace stack top integer
-	sub		_SP, OOPSIZE					; Pop argument
+	lea		eax, [_SP-OOPSIZE]				; primitiveSuccess(1)
 	ret										; Succeed, eax is non-zero as a SmallInteger
 
-localPrimitiveFailure0:
-	jmp		primitiveFailure0
-
-	
-localPrimitiveFailure1:
-	jmp		primitiveFailure1
+LocalPrimitiveFailure 0
+LocalPrimitiveFailure 1
 
 ENDPRIMITIVE primitiveSmallIntegerAt
 
@@ -970,11 +870,15 @@ BEGINPRIMITIVE primitiveHighBit
 	js		localPrimitiveFailure0				; If negative then fail it
 	bsr		eax, ecx						; Actually quite handy that shifted left one, as we'll get 1-based index!
 	lea		eax, [eax+eax+1]
+
 	mov		[_SP], eax
+	
+	mov		eax, _SP						; primitiveSuccess(0)
 	ret
 
 localPrimitiveFailure0:
-	jmp		primitiveFailure0
+	xor		eax, eax
+	ret
 
 ENDPRIMITIVE primitiveHighBit
 
@@ -982,14 +886,13 @@ ENDPRIMITIVE primitiveHighBit
 BEGINPRIMITIVE primitiveLowBit
 	mov		ecx, [_SP]
 	xor		eax, eax						; Must clear in case value is zero
-	dec		ecx								; Remove flag bit (as otherwise would always find that)
+	xor		ecx, 1							; Remove flag bit (as otherwise would always find that)
 	bsf		eax, ecx						; Actually quite handy that shifted left one, as we'll get 1-based index!
 	lea		eax, [eax+eax+1]
 	mov		[_SP], eax
-	ret
 
-localPrimitiveFailure0:
-	jmp		primitiveFailure0
+	mov		eax, _SP						; primitiveSuccess(0)
+	ret
 
 ENDPRIMITIVE primitiveLowBit
 

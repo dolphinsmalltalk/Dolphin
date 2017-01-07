@@ -102,12 +102,16 @@ OTE* Interpreter::dequeueBereaved(VariantObject* out)
 		answer = Pointers.False;
 	else
 	{
-		for (unsigned i=0;i<OopsPerBereavementQEntry;i++)
+		for (unsigned i = 0; i < OopsPerBereavementQEntry; i++)
 		{
 			ObjectMemory::countDown(out->m_fields[i]);
 			out->m_fields[i] = m_qBereavements.Pop();
 		}
 		answer = Pointers.True;
+
+		ASSERT(!ObjectMemoryIsIntegerObject(out->m_fields[0]));
+		ASSERT(reinterpret_cast<OTE*>(out->m_fields[0])->isWeak());
+		ASSERT(ObjectMemoryIsIntegerObject(out->m_fields[1]));
 	}
 
 	return answer;

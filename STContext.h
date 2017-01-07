@@ -27,7 +27,7 @@ typedef TOTE<ST::Context> ContextOTE;
 
 namespace ST
 {
-	class Context //: public Object
+	class Context : public Object
 	{
 	public:
 		// Outer environment, or SmallInteger frame pointer if a method env.

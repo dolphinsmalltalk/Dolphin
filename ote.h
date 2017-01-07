@@ -82,7 +82,7 @@ public:
 	__forceinline bool hasCurrentMark()						{ return m_flags.m_mark == ObjectMemory::currentMark(); }
 	__forceinline void setMark(BYTE mark)					{ m_flags.m_mark = mark; }
 
-	__forceinline MWORD getIndex()	const					{ return reinterpret_cast<const OTE*>(this) - ObjectMemory::m_pOT; }
+	__forceinline MWORD getIndex()	const					{ return this - reinterpret_cast<const TOTE<T>*>(ObjectMemory::m_pOT); }
 
 	__forceinline void countUp()							{ if (m_count < MAXCOUNT) m_count++; }
 
@@ -91,7 +91,7 @@ public:
 		HARDASSERT(m_count > 0);
 		if (m_count < MAXCOUNT)
 	 		if (--m_count == 0)
-				ObjectMemory::AddToZct(reinterpret_cast<OTE*>(this));
+				ObjectMemory::AddToZct(this);
 	}
 
 	__forceinline bool decRefs()							{ return (m_count < MAXCOUNT) && (--m_count == 0); }
@@ -140,12 +140,6 @@ public:
 	};
 };
 
-typedef TOTE<void> OTE;
-#ifndef POTE_DEFINED
-	typedef OTE* POTE;
-	#define POTE_DEFINED
-#endif
-
 #define isIntegerObject(objectPointer)	(Oop(objectPointer) & 1)
 #define integerObjectOf(value) 			(Oop(((SMALLINTEGER)(value) << 1) | 1))
 #define integerValueOf(objectPointer) 	(SMALLINTEGER(objectPointer) >> 1)
@@ -160,9 +154,14 @@ typedef TOTE<void> OTE;
 #define TwoPointer (integerObjectOf(2))
 #define ThreePointer (integerObjectOf(3))
 
-std::ostream& operator<<(std::ostream& stream, const OTE*);
-
 #include "STObject.h"
+typedef TOTE<ST::Object> OTE;
+#ifndef POTE_DEFINED
+typedef OTE* POTE;
+#define POTE_DEFINED
+#endif
+
+std::ostream& operator<<(std::ostream& stream, const OTE*);
 
 // Useful for overwriting structure members
 template <class T> TOTE<T>* StorePointerWithValue(TOTE<T>*& oteSlot, TOTE<T>* oteValue)

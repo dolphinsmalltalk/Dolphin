@@ -91,7 +91,7 @@ public:
 	enum { MaxSmallObjectSize = 0x3f8 };
 	enum { PoolObjectSizeLimit = 144 };
 	enum { MinObjectSize = /*sizeof(Object)+*/PoolGranularity };
-	enum { MaxPools = (PoolObjectSizeLimit-MinObjectSize)/PoolGranularity + 1 };
+	enum { MaxPools = (PoolObjectSizeLimit - MinObjectSize) / PoolGranularity + 1 };
 
 	static VirtualOTE* __fastcall newVirtualObject(BehaviorOTE* classPointer, MWORD initialSize, MWORD maxSize);
 	static PointersOTE* __fastcall newPointerObject(BehaviorOTE* classPointer);
@@ -147,7 +147,7 @@ public:
 	// Test Oop of objects class
 	static bool isPointers(Oop objectPointer);	// faster than Interpreter::isPointers()
 	static bool isBytes(Oop objectPointer);
-	
+
 	// All these routines fail for SmallIntegers (hence the OTE argument)
 	static bool __fastcall isAMetaclass(const OTE* ote);
 	static bool __fastcall isBehavior(Oop objectPointer);
@@ -168,7 +168,7 @@ public:
 
 
 	// More C++ like interface
-	
+
 	// Sadly, this is not legal, since operator[] cannot be static
 	// static POBJECT operator[](Oop objectPointer);
 	static BYTE* ByteAddressOfObject(Oop& objectPointer);			// pointer to header (or SmallInteger)
@@ -204,34 +204,38 @@ public:
 	static int __stdcall SaveImageFile(const char* fileName, bool bBackup, int nCompressionLevel, unsigned nMaxObjects);
 	static HRESULT __stdcall LoadImage(const char* szImageName, LPVOID imageData, UINT imageSize, bool bIsDevSys);
 
-	static int gpFaultExceptionFilter(LPEXCEPTION_RECORD pExRec);
+	static int gpFaultExceptionFilter(LPEXCEPTION_POINTERS pExInfo);
 
 	static MemoryManager* memoryManager();
 
 public:
-	enum { 	
-		OTMinHeadroom = 16384, 
-		OTDefaultSize = 65536, 
-		OTDefaultMax = 24*1024*1024,
-		OTMaxLimit =  64*1024*1024
+	enum {
+		OTMinHeadroom = 16384,
+		OTDefaultSize = 65536,
+		OTDefaultMax = 24 * 1024 * 1024,
+		OTMaxLimit = 64 * 1024 * 1024
 	};
 
-	enum { 	registryIndex, FirstBuiltInIdx };
+	enum { registryIndex, FirstBuiltInIdx };
 
 	/***************************************************************************************
 	* N.B. If inserting new fixed Oops, must also update the FIRSTCHAROFFSET in ISTASM.INC
 	* or will get garbage DNU very early in boot
 	/***************************************************************************************/
-	enum { 	nilOOPIndex	= FirstBuiltInIdx,
-			trueOOPIndex, 
-			falseOOPIndex,
-			emptyStringOOPIndex,
-			delimStringOOPIndex,
-			emptyArrayOOPIndex,
-			FirstCharacterIdx };
-	enum {  NumCharacters		= 256,
-			NumPermanent = FirstCharacterIdx + NumCharacters };
-	enum { 	OTBase = NumPermanent };
+	enum {
+		nilOOPIndex = FirstBuiltInIdx,
+		trueOOPIndex,
+		falseOOPIndex,
+		emptyStringOOPIndex,
+		delimStringOOPIndex,
+		emptyArrayOOPIndex,
+		FirstCharacterIdx
+	};
+	enum {
+		NumCharacters = 256,
+		NumPermanent = FirstCharacterIdx + NumCharacters
+	};
+	enum { OTBase = NumPermanent };
 
 	class OTEPool
 	{
@@ -246,7 +250,7 @@ public:
 		void	registerNew(OTE* newOTE, BehaviorOTE* classPointer);
 #endif
 
-		OTEPool() : m_pFreeList(0) 
+		OTEPool() : m_pFreeList(0)
 		{
 #ifdef MEMSTATS
 			m_nFree = 0;
@@ -290,7 +294,31 @@ private:
 	static void ShrinkZct();
 
 public:
-	static OTE* __fastcall AddToZct(OTE*);
+	template <typename T> static void __fastcall AddToZct(TOTE<T>* ote)
+	{
+		HARDASSERT(m_nZctEntries >= 0);
+
+		m_pZct[m_nZctEntries++] = reinterpret_cast<OTE*>(ote);
+
+#ifdef _DEBUG
+		if (alwaysReconcileOnAdd || m_nZctEntries >= m_nZctHighWater)
+#else
+		if (m_nZctEntries >= m_nZctHighWater)
+#endif
+		{
+			if (m_bIsReconcilingZct)
+			{
+				// Uh oh, the Zct overflowed when attempting to repopulate it from the active process
+				// stack. We must "grow" it.
+				GrowZct();
+			}
+			else
+				ReconcileZct(reinterpret_cast<OTE*>(ote));
+		}
+	}
+
+	static void __fastcall AddToZct(Oop);
+
 	// Used by Interpreter when switching processes
 	static void EmptyZct();
 	static void PopulateZct();
@@ -367,15 +395,15 @@ private:
 	static hash_t nextIdentityHash();
 
 	// Memory allocators - these are very thin layers of C/Win32 heap
-	static void freeChunk(void* pChunk);
-	static void freeSmallChunk(void* pObj, MWORD size);
-	static void* reallocChunk(void* pChunk, MWORD newChunkSize);
+	static void freeChunk(POBJECT pChunk);
+	static void freeSmallChunk(POBJECT pObj, MWORD size);
+	static POBJECT reallocChunk(POBJECT pChunk, MWORD newChunkSize);
 #ifdef _DEBUG
 	static MWORD chunkSize(void* pChunk);
 #endif
 
-	static void* allocSmallChunk(MWORD chunkSize);
-	static void* allocChunk(MWORD chunkSize);
+	static POBJECT allocSmallChunk(MWORD chunkSize);
+	static POBJECT allocChunk(MWORD chunkSize);
 	static POBJECT allocObject(MWORD objectSize, OTE*& ote);
 	static POBJECT allocLargeObject(MWORD objectSize, OTE*& ote);
 
@@ -604,29 +632,12 @@ inline void ObjectMemory::countDown(Oop rootObjectPointer)
 	extern bool alwaysReconcileOnAdd;
 #endif
 
-inline OTE* __fastcall ObjectMemory::AddToZct(OTE* ote)
+inline void __fastcall ObjectMemory::AddToZct(Oop oop)
 {
-	HARDASSERT(m_nZctEntries >= 0);
-
-	m_pZct[m_nZctEntries++] = ote;
-
-#ifdef _DEBUG
-	if (alwaysReconcileOnAdd || m_nZctEntries >= m_nZctHighWater)
-#else
-	if (m_nZctEntries >= m_nZctHighWater)
-#endif
+	if (!ObjectMemoryIsIntegerObject(oop))
 	{
-		if (m_bIsReconcilingZct)
-		{
-			// Uh oh, the Zct overflowed when attempting to repopulate it from the active process
-			// stack. We must "grow" it.
-			GrowZct();
-		}
-		else
-			return ReconcileZct(ote);
+		AddToZct(reinterpret_cast<OTE*>(oop));
 	}
-
-	return ote;
 }
 
 inline bool ObjectMemory::IsReconcilingZct()
@@ -833,7 +844,7 @@ inline ObjectMemory::FixedSizePool& ObjectMemory::spacePoolForSize(MWORD objectS
 	return m_pools[nPool];
 }
 
-inline void* ObjectMemory::FixedSizePool::allocate()
+inline POBJECT ObjectMemory::FixedSizePool::allocate()
 {
 	if (!m_pFreeChunks)
 	{
@@ -849,10 +860,10 @@ inline void* ObjectMemory::FixedSizePool::allocate()
 			HARDASSERT(isValid());
 	#endif
 
-	return pChunk;
+	return reinterpret_cast<POBJECT>(pChunk);
 }
 
-inline void ObjectMemory::FixedSizePool::deallocate(void *p)
+inline void ObjectMemory::FixedSizePool::deallocate(POBJECT p)
 {
 	#ifdef _DEBUG
 		HARDASSERT(isMyChunk(p));
@@ -863,7 +874,7 @@ inline void ObjectMemory::FixedSizePool::deallocate(void *p)
 		memset(p, 0xCD, m_nChunkSize);
 	#endif
 
-	Link* pChunk = static_cast<Link*>(p);
+	Link* pChunk = reinterpret_cast<Link*>(p);
 	pChunk->next = m_pFreeChunks;
 	m_pFreeChunks = pChunk;
 }

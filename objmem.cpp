@@ -599,7 +599,7 @@ HRESULT ObjectMemory::allocateOT(unsigned reserve, unsigned commit)
 #endif
 
 		ote->beFree();
-		ote->m_location = ote+1;
+		ote->m_location = reinterpret_cast<POBJECT>(ote+1);
 	}
 
 	//TRACE("%d OTEs on free list\n", m_nFreeOTEs);
@@ -767,8 +767,10 @@ int ObjectMemory::OopsUsed()
 ///////////////////////////////////////////////////////////////////////////////
 #pragma code_seg(MEM_SEG)
 
-int ObjectMemory::gpFaultExceptionFilter(LPEXCEPTION_RECORD pExRec)
+int ObjectMemory::gpFaultExceptionFilter(LPEXCEPTION_POINTERS pExInfo)
 {
+	LPEXCEPTION_RECORD pExRec = pExInfo->ExceptionRecord;
+
 	// This "filter" is designed to handle GPFs only
 	ASSERT(pExRec->ExceptionCode == EXCEPTION_ACCESS_VIOLATION);
 
@@ -806,7 +808,7 @@ int ObjectMemory::gpFaultExceptionFilter(LPEXCEPTION_RECORD pExRec)
 					#endif
 
 					pLink->beFree();
-					pLink->m_location = pLink+1;
+					pLink->m_location = reinterpret_cast<POBJECT>(pLink+1);
 					pLink++;
 				}
 				m_nOTSize += extraOTEs;

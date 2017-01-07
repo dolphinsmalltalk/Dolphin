@@ -36,7 +36,7 @@ typedef TOTE<ST::ProcessorScheduler> SchedulerOTE;
 namespace ST
 {
 	// Really a subclass of Link, but VM doesn't care about that
-	class Process //: public Object
+	class Process : public Object
 	{
 	private:
 		// Really a member of Link superclass

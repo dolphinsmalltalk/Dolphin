@@ -1214,10 +1214,6 @@ ENDBYTECODE shortPopStoreInstVar
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Pop Stack Top Instruction (single byte)
 ;;
-;; Pop stack top and nil out the entry before reducing ref. count of object popped
-;; This is done to maintain a clean stack with no ref. counted objects above stackPointer
-;; which speeds up push operations (which are more common)
-;;
 BEGINBYTECODE popStack
  	MPrefetch
 	sub		_SP, OOPSIZE					;; Perform the actual pop
@@ -1568,7 +1564,7 @@ BEGINBYTECODE farReturnFromBlock
 
 	cmp		eax, SMALLINTZERO							; Already returned?
 	je		invalidReturn								; Yes, cannot return from home
-	dec		eax											; Remove SmallInteger flag, hey presto pointer to frame
+	xor		eax, 1										; Remove SmallInteger flag, hey presto pointer to frame
 	ASSUME	eax:PStackFrame
 	cmp		eax, [ACTIVEFRAME]
 	jge		invalidReturn
@@ -1625,10 +1621,16 @@ BEGINPRIMITIVE primitiveReturn
 	jne		@F
 
 	call	shortReturn
+
+	mov		eax, _SP							; primitiveSuccess(0)
 	ret
 
 @@:
-	CallCPP <NONLOCALRETURN>
+	StoreInterpreterRegisters
+	call	NONLOCALRETURN
+	LoadIPRegister
+	mov		eax, [STACKPOINTER]
+	LoadBPRegister
 	ret
 ENDPRIMITIVE primitiveReturn
 
@@ -2448,8 +2450,8 @@ overflow:
 	mov		ecx, eax
 	rcr		ecx, 1										; Revert to non-shifted value
 	call	LINEWSIGNED									; Return to caller with Oop of new Signed Integer in eax
-
-	ReplaceStackTopWithNew
+	mov		[_SP], eax									; Replace ToS with new object
+	AddToZct <a>
 	DispatchByteCode
 
 ENDBYTECODE decrementStackTop
@@ -2501,8 +2503,6 @@ ENDBYTECODE decrementStackTop
 ; code dispatching time (8 cycles). Other SmallInteger arithmetic
 ; and relational operations have cycle times of similar magnitudes
 ;
-; All these instructions leave the stack in a clean state, with no
-; ref. counted Oops above the TOS
 
 BEGINBYTECODE sendArithmeticAdd
 	LoadStackValueInto <1>, <eax>						; Access receiver beneath argument
@@ -2511,8 +2511,8 @@ BEGINBYTECODE sendArithmeticAdd
 	jz		sendMessageToObject							; No, skip primitive response (v)
 	test	dl, 1										; Argument is a SmallInteger? (u)
 	jz		sendMessageToInteger						; No, skip primitive response (v)
-	sub		_SP, OOPSIZE								; Pop argument	(which is not ref. counted)
-	dec		eax											; Clear bottom bit of receiver (arithmetic can then be done without shifting)
+	sub		_SP, OOPSIZE								; Pop argument
+	xor		eax, 1										; Clear bottom bit of receiver (arithmetic can then be done without shifting)
 	add		eax, edx									; Perform the actual addition
 	jo		overflow									; Overflowed 31-bits?
 
@@ -2524,7 +2524,8 @@ overflow:
 	mov		ecx, eax
 	rcr		ecx, 1										; Revert to non-shifted value
 	call	LINEWSIGNED									; Return to caller with Oop of new Signed Integer in eax
-	ReplaceStackTopWithNew								; Replace stack top with new signed, large, integer
+	mov		[_SP], eax									; Replace ToS with new object
+	AddToZct <a>
 	DispatchByteCode
 
 sendMessageToObject:
@@ -2545,7 +2546,7 @@ BEGINBYTECODE sendArithmeticSubtract
 	test	dl, 1										; Argument is SmallInteger
 	jz		sendMessageToInteger						; No, skip primitive response
 	PopStack											; Pop argument	(which is not ref. counted)
-	dec		edx											; Remove args SmallInteger bit
+	xor		edx, 1										; Remove arg's SmallInteger bit
 	sub		eax, edx									; Perform actual subtraction
 	jo		pushLargeFromSmallNegAndCarryEAX			; Overflowed 31-bits?
 	
@@ -2558,7 +2559,8 @@ pushLargeFromSmallNegAndCarryEAX:
 	mov		ecx, eax
 	rcr		ecx, 1										; Revert to non-shifted value
 	call	LINEWSIGNED	
-	ReplaceStackTopWithNew								; Return to caller with Oop of new Signed Integer in eax
+	mov		[_SP], eax									; Replace ToS with new object
+	AddToZct <a>
 	DispatchByteCode
 
 sendMessageToObject:
@@ -2606,7 +2608,8 @@ overflow:
 	mov		ecx, eax
 	rcr		ecx, 1										; Revert to non-shifted value
 	call	LINEWSIGNED									; Return to caller with Oop of new Signed Integer in eax
-	ReplaceStackTopWithNew								; Replace stack top with new signed, large, integer
+	mov		[_SP], eax									; Replace ToS with new object
+	AddToZct <a>
 	DispatchByteCode
 ENDBYTECODE incrementStackTop
 
@@ -2694,7 +2697,7 @@ elseBranch:
 	SendSelectorNoArgs <Pointers.MustBeBooleanSelector>
 ENDBYTECODE nearJumpIfFalse
 
-; Inlines primitive coding for SmallInteger, leaves stack in clean state
+; Inlines primitive coding for SmallInteger
 BEGINBYTECODE sendArithmeticLessOrEqual
 	LoadStackValueInto <1>, <eax>						; Access receiver beneath argument
 	mov		edx, [_SP]									; Load argument from stack
@@ -2702,7 +2705,7 @@ BEGINBYTECODE sendArithmeticLessOrEqual
 	jz		sendMessageToObject							; No, skip primitive response
 	test	dl, 1										; Arg is a SmallInteger?
 	jz		sendMessageToInteger						; No, skip primitive response
-	PopStack											; Pop argument	(which is not ref. counted)
+	PopStack											; Pop argument
 	MPrefetch
 	cmp		eax, edx									; receiver <= arg?
 	mov		edx, [oteFalse]								; Default, No
@@ -2721,7 +2724,6 @@ sendMessageToInteger:
 
 ENDBYTECODE sendArithmeticLessOrEqual
 
-; Stack left in clean condition
 BEGINBYTECODE sendArithmeticGreaterThan
 	LoadStackValueInto <1>, <eax>						; Access receiver beneath argument
 	mov		edx, [_SP]									; Load argument from stack
@@ -2729,7 +2731,7 @@ BEGINBYTECODE sendArithmeticGreaterThan
 	jz		sendMessageToObject							; No, skip primitive response
 	test	dl, 1										; Arg is a SmallInteger?
 	jz		sendMessageToInteger						; No, skip primitive response
-	PopStack											; Pop argument	(which is not ref. counted)
+	PopStack											; Pop argument
 	cmp		eax, edx									; receiver > arg?
 	mov		edx, [oteTrue]								; Default, yes
 	jg		@F											;
@@ -2748,7 +2750,7 @@ sendMessageToInteger:
 
 ENDBYTECODE sendArithmeticGreaterThan
 
-; Inlines primitive coding for SmallInteger, leaves stack in clean state
+; Inlines primitive coding for SmallInteger
 BEGINBYTECODE sendArithmeticGreaterOrEqual
 	LoadStackValueInto <1>, <eax>						; Access receiver beneath argument
 	mov		edx, [_SP]									; Load argument from stack
@@ -2756,7 +2758,7 @@ BEGINBYTECODE sendArithmeticGreaterOrEqual
 	jz		sendMessageToObject							; No, skip primitive response
 	test	dl, 1										; Arg is a SmallInteger?
 	jz		sendMessageToInteger						; No, skip primitive response
-	PopStack											; Pop argument	(which is not ref. counted)
+	PopStack											; Pop argument
 	cmp		eax, edx
 	mov		edx, [oteTrue]								; Yes
 	jge		@F											; receiver >= arg?
@@ -2841,7 +2843,7 @@ BEGINBYTECODE sendArithmeticMultiply
 	sar		edx, 1										; Extract integer value of arg
 	jnc		sendMessageToInteger						; Arg not a SmallInteger
 
-	dec		eax											; Remove SmallInteger flag
+	xor		eax, 1										; Remove SmallInteger flag
 	imul	edx
 	jo		sendMessageToInteger						; If overflowed SmallInteger bits then skip primitive response
 	
@@ -2853,7 +2855,7 @@ BEGINBYTECODE sendArithmeticMultiply
 	
 	PopStack
 	IFDEF _DEBUG
-		DispatchByteCode								; Continue fast track execution
+		DispatchByteCode
 	ELSE
 		inc		_IP
 		jmp		byteCodeTable[ecx*4]
@@ -2895,10 +2897,11 @@ BEGINBYTECODE sendArithmeticDivide
 	; Note that an overflow could occur if min. SmallInteger divided by -1
 	add		eax, eax									; Shift for SmallInteger
 	jo		overflow
-	inc		eax											; Add SmallInteger bit
+	or		eax, 1										; Add SmallInteger bit
 
+	MPrefetch
 	mov		[_SP], eax									; Replace stack top integer
-	DispatchByteCode
+	DispatchNext
 
 sendMessageToObject:
 	; Try sending the '/' selector through normal message lookup
@@ -2912,7 +2915,8 @@ overflow:
 	mov		ecx, eax
 	rcr		ecx, 1										; Revert to non-shifted value
 	call	LINEWSIGNED	
-	ReplaceStackTopWithNew
+	mov		[_SP], eax									; Replace ToS with new object
+	AddToZct <a>
 	DispatchByteCode
 
 ENDBYTECODE sendArithmeticDivide
@@ -2948,11 +2952,11 @@ BEGINBYTECODE sendArithmeticMod
 	xor       ecx,edx									; reverse previous XOR				(no pair, write, read)
 	add       edx,ecx									; adjust remainder by numerator
 @@:
-	; TODO: Use of lea causes AGI here. Split into add eax, eax, inc eax and distribute for pairing
 	lea		eax, [edx+edx+1]
 	;; N.B. Pop happens above
+	MPrefetch
 	mov		[_SP], eax									; Replace stack top integer with remainder
-	DispatchByteCode
+	DispatchNext
 
 sendMessageToObject:
 	; Try sending the '\\' selector through normal message lookup
@@ -2996,7 +3000,7 @@ BEGINBYTECODE sendArithmeticDiv
 @@:
 	add		eax, eax
 	jo		overflow									; Overflow possible if divide by -1
-	inc		eax											; Add SmallInteger bit
+	or		eax, 1										; Add SmallInteger bit
 	mov		[_SP], eax									; (u) Replace stack top integer
 	DispatchByteCode
 
@@ -3012,7 +3016,8 @@ overflow:
 	mov		ecx, eax
 	rcr		ecx, 1										; Revert to non-shifted value
 	call	LINEWSIGNED									; Return to caller with Oop of new Signed Integer in eax
-	ReplaceStackTopWithNew
+	mov		[_SP], eax									; Replace ToS with new object
+	AddToZct <a>
 	DispatchByteCode
 
 ENDBYTECODE sendArithmeticDiv
@@ -3027,7 +3032,10 @@ BEGINBYTECODE sendArithmeticBitShift
 	call	arithmeticBitShift							; Try primitive response
 	test	eax, eax									; Primitive response failed (eax==zero)?
 	jz		sendMessage									; Failed, so send the message
-	DispatchByteCode
+
+	MPrefetch
+	mov		_SP, eax
+	DispatchNext
 
 sendMessage:
 	SendSelectorOneArgToInteger <Pointers.bitShiftSelector>
@@ -3132,29 +3140,29 @@ BEGINBYTECODE shortSpecialSendBasicSize
 	mov		eax, [_SP]								; Load receiver into eax
 
 	test	al, 1									; Is it a SmallInteger?
-	jz		@F										; If so, the answer is 0!
+	jz		notSmallInteger
 
 	MPrefetch
 	mov		[_SP], SMALLINTZERO						; Size of SmallInteger is zero
 	DispatchNext
 
-@@:
+notSmallInteger:
 	ASSUME	eax:PTR OTE								; eax points at receiver OTE
 
 	mov		ecx, eax
 	ASSUME	ecx:PTR OTE
 
-	;; Get the byte length of the object (into edx)
+	;; Get the byte length of the object (into eax)
 	mov		edx, [eax].m_location					; Load object address into edx
 	ASSUME	edx:PTR Object							; edx points at receiver object
-
-	mov		eax, [eax].m_size						; Get size of object into eax
+	mov		eax, [eax].m_size
 	ASSUME	eax:NOTHING
-	and		eax, 7fffffffh							; Ignore the sign bit (used to mark const objects)
-	
-	test	[ecx].m_flags, MASK m_pointer
-	jz		@F										; Byte objects cannot have inst vars, so can skip next bit
 
+	test	[ecx].m_flags, MASK m_pointer			; ote->isPointers?
+	jz		isBytes									; Byte objects cannot have inst vars, so can skip next bit
+
+	and		eax, 7fffffffh							; Mask out sign bit of size (used to mark const objects)
+	
 	;; Calculate the length of the indexed part of a pointer object
 	mov		edx, [ecx].m_oteClass					; Get class Oop	from Object into edx
 	ASSUME	edx:PTR OTE								; edx now points at class OTE
@@ -3168,11 +3176,16 @@ BEGINBYTECODE shortSpecialSendBasicSize
 	
 	add		edx, edx								; Convert to byte size (already *2 since SmallInteger)
 	sub		eax, edx								; Calculate length of variable part in bytes
-	shr		eax, 2									; Divide byte size by 4 to get MWORD size
-@@:
+	shr		eax, 1									; Divide byte size by 2 to get MWORD size as SmallInteger
+	or		eax, 1									; Add SmallInteger flag
 	MPrefetch
-	lea		eax, [eax+eax+1]						; Convert to SmallInteger
-	mov		[_SP], eax								; Replace stack top
+	mov		[_SP], eax								; Replace stack top with indexed pointer size
+	DispatchNext
+
+isBytes:
+	lea		eax, [eax+eax+1]						; Convert byte size to SmallInteger
+	MPrefetch
+	mov		[_SP], eax								; Replace stack top with byte size
 	DispatchNext
 
 ENDBYTECODE shortSpecialSendBasicSize
@@ -3190,7 +3203,7 @@ BEGINBYTECODE shortSpecialSendBasicAt
 	sar		edx, 1								; Argument is a SmallInteger?
 	jnc		sendMessage							; Arg not a SmallInteger, send the message
 	
-	dec		edx									; Convert 1 based index to zero based offset
+	sub		edx, 1								; Convert 1 based index to zero based offset
 	
 	mov		eax, [ecx].m_oteClass				; Get class Oop from OTE into eax for later use
 	ASSUME	eax:PTR OTE
@@ -3253,10 +3266,10 @@ byteObjectAt:
 	cmp		edx, ecx							; Bounds check
 	jae		sendMessage							; Index out of bounds (>= size)
 	
-	MPrefetch
-	
 	movzx	eax, BYTE PTR[eax+edx]				; Load required byte, zero extending
 	ASSUME	eax:NOTHING
+
+	MPrefetch
 
 	lea		eax, [eax+eax+1]					; Convert to SmallInteger
 	mov		[_SP-OOPSIZE], eax					; Overwrite receiver with result. No need to count as SmallInteger
@@ -3281,7 +3294,7 @@ BEGINBYTECODE shortSpecialSendBasicAtPut
 	sar		edx, 1								; Argument is a SmallInteger?
 	jnc		sendMessage			 				; No, send the message
 
-	dec		edx									; Convert 1 based index to zero based offset
+	sub		edx, 1									; Convert 1 based index to zero based offset
 
 	mov		eax, [ecx].m_oteClass				; Get class Oop	from OTE into eax
 	ASSUME	eax:PTR OTE
@@ -3312,25 +3325,29 @@ BEGINBYTECODE shortSpecialSendBasicAtPut
 
 	cmp		edx, ecx							; Index <= size (still in ecx)?
 	jge		sendMessage							; No, out of bounds
-	
-	mov		ecx, [_SP]							; Load value to write
-	ASSUME	ecx:PTR OTE
+
 	mov		eax, [eax].m_location
 	ASSUME	eax:PTR Object
+	
+	lea		eax, [eax+edx*OOPSIZE]
 
+	mov		edx, [_SP]							; Load value to write
+	ASSUME	edx:PTR OTE
+	
 	; We must inc ref. count, as we are storing into a heap allocated object here
-	CountUpOopIn <c>
+	CountUpOopIn <d>
 	
-	; Do the store
-	xchg	ecx, [eax+edx*OOPSIZE]				; Exchange Oop of overwritten value with new value
-	
+	; Exchange Oop of overwritten value with new value
+	mov		ecx, [eax]
+	mov		[eax], edx
+
 	; Must count down overwritten value, as it was in a heap object slot
 	CountDownOopIn <c>							
 
 	; count down destroys eax, ecx, and edx, so have to wait til now for prefetch
-	MPrefetch
 	
 	mov		eax, [_SP]							; Reload new value into eax
+	MPrefetch
 	mov		[_SP-OOPSIZE*2], eax				; And overwrite receiver in stack with new value
 	sub		_SP, OOPSIZE*2						; Pop args
 	
@@ -3379,58 +3396,69 @@ ENDBYTECODE shortSpecialSendBasicAtPut
 
 BEGINBYTECODE shortSpecialSendBasicClass
 	mov		ecx, [_SP]								; Load receiver into ecx
-	.IF	(cl & 1)
-		mov		eax, [Pointers.ClassSmallInteger]
-	.ELSE
-		ASSUME	ecx:PTR OTE
-		mov		eax, [ecx].m_oteClass					; Get class Oop	from Object into eax
-	.ENDIF
-	
+	test	cl, 1
+	jne		smallInteger
+
+	ASSUME	ecx:PTR OTE
+	mov		eax, [ecx].m_oteClass					; Get class Oop	from Object into eax
 	MPrefetch
 	mov		[_SP], eax								; Replace stack top with class Oop
 	DispatchNext
+
+smallInteger:	
+	mov		eax, [Pointers.ClassSmallInteger]
+	MPrefetch
+	mov		[_SP], eax								; Replace stack top with class Oop
+	DispatchNext
+
 ENDBYTECODE shortSpecialSendBasicClass
 
 BEGINBYTECODE shortSpecialSendIsNil
-	mov		eax, [_SP]
-	mov		edx, [oteTrue]							; Load oteTrue (default answer)
+	mov		eax, [oteNil]
+	cmp		eax, [_SP]
+	je		isNil
 
+	add		eax, OTENTRYSIZE*2						; false immediately follows true in OT
 	MPrefetch
-	
-	.IF (eax != [oteNil])
-		add		edx, OTENTRYSIZE					; No, load false
-	.ENDIF
-
-	mov		[_SP], edx								; Overwrite stack top with true/false
+	mov		[_SP], eax								; Overwrite stack top with false
 	DispatchNext
+
+isNil:
+	add		eax, OTENTRYSIZE						; true immediately follows nil in OT
+	MPrefetch
+	mov		[_SP], eax								; Overwrite stack top with true
+	DispatchNext
+
 ENDBYTECODE shortSpecialSendIsNil
 
 BEGINBYTECODE shortSpecialSendNotNil
-	mov		eax, [_SP]
-	mov		edx, [oteTrue]							; Load oteTrue (default answer)
+	mov		eax, [oteNil]
+	cmp		eax, [_SP]
+	je		isNil
 
+	add		eax, OTENTRYSIZE						; true immediately follows nil in OT
 	MPrefetch
-
-	.IF (eax == [oteNil])
-		add		edx, OTENTRYSIZE					; No, load false
-	.ENDIF
-
-	mov		[_SP], edx								; Overwrite stack top with true/false
+	mov		[_SP], eax								; Overwrite stack top with true
 	DispatchNext
+
+isNil:
+	add		eax, OTENTRYSIZE*2						; false immediately follows true in OT
+	MPrefetch
+	mov		[_SP], eax								; Overwrite stack top with false
+	DispatchNext
+
 ENDBYTECODE shortSpecialSendNotNil
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;
 BEGINBYTECODE isZero
-	mov		eax, [_SP]									; Load "receiver" into eax
-	mov		edx, [oteTrue]								; Load oteTrue (default answer)
+	cmp		[_SP], SMALLINTZERO							; "receiver" is 0?
+	mov		eax, [oteTrue]								; Load oteTrue (default answer)
+	je		@F
+	add		eax, OTENTRYSIZE							; No, load false
+@@:
 	MPrefetch
-
-	.IF (eax != SMALLINTZERO)							; Is it zero?
-		add		edx, OTENTRYSIZE						; No, load false
-	.ENDIF
-
-	mov		[_SP], edx									; Overwrite stack top with true/false
+	mov		[_SP], eax									; Overwrite stack top with true/false
 	DispatchNext
 ENDBYTECODE isZero
 
@@ -3663,7 +3691,7 @@ BEGINBYTECODE shortSpecialSendAt
 	cmp		_AtCache[eax].oteArray, ecx
 	jne		cacheMiss								; If not in cache, must set up before can access entry
 
-	dec		edx										; Convert 1 based index to zero based offset
+	sub		edx, 1									; Convert 1 based index to zero based offset
 	js		sendAt									; Index out of bounds (<= 0)
 
 	; Access the object in the cache
@@ -3772,7 +3800,7 @@ BEGINBYTECODE shortSpecialSendAtPut
 	cmp		_AtPutCache[eax].oteArray, ecx
 	jne		cacheMiss									; If not in cache, must set up before can access entry
 
-	dec		edx											; Convert 1 based index to zero based offset
+	sub		edx, 1										; Convert 1 based index to zero based offset
 	js		sendAtPut									; Index out of bounds (<= 0)
 
 	; Access the object in the cache
@@ -3898,24 +3926,6 @@ ENDBYTECODE longSend
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
-; To be used when desiring a check to see if a process switch should occur
-ProcessSignalsAndReturn MACRO
-
-	mov		eax, [ASYNCPENDING]
-	test	eax, eax
-	jnz		@F											;; If any ansync. signals, go and test process switch
-	
-	; If we get here then there are no async signals pending (eax == 0)
-	not		eax											; Ensure eax non-zero so primitive doesn't fail
-	ret
-
-@@:
-	CallCPP <MSGPOLL>
-	mov		eax, 1										; Ensure eax non-zero
-	ret
-	
-ENDM
-
 
 ; Executing a method may involve a primitive response (quick return of nil/true/
 ; false/zero/self/instance var, or a primitive call) or 
@@ -3943,20 +3953,23 @@ MExecNewMethod MACRO
 		ASSUME	eax:NOTHING
 		xor		eax, eax
 		mov		al, [ecx].m_header.primitiveIndex
-		StoreIPRegister							;; Save IP in case of assert in debug version
 		inc DWORD PTR[_primitiveCounters+eax*4]
 		pop		eax
 		ASSUME	eax:DWORD
 	ENDIF
+
+	StoreIPRegister							;; Save IP in case of fault or call to C++ primitive
 
 	call	eax
 
 	;; Likelihood is that the primitive will succeed, so jump conditionally in that case
 	;; (PII predicts all forwards jumps will not be taken if no other info available)
 
-	.IF (eax & eax)								;; Primitives return 0 for failure, ~0 for success
-		DispatchByteCode						;; succeeded, continue executing byte codes without activating new context
-	.ENDIF	
+	test	eax, eax
+	jz		@F								;; Primitive failed?
+	mov		_SP, eax						;; Reload stack pointer as primitive may have modified
+	DispatchByteCode						;; succeeded, continue executing byte codes without activating new context
+@@:
 
 	mov		ecx, [NEWMETHOD]
 	ASSUME	ecx:PTR OTE
@@ -3965,7 +3978,8 @@ MExecNewMethod MACRO
 	ASSUME	ecx:PTR CompiledCodeObj
 
 	;; Activate method as primitive failed
-	call primitiveActivateMethod
+	call	primitiveActivateMethod
+	mov		esi, eax
 
 	DispatchByteCode
 ENDM
@@ -4021,7 +4035,7 @@ BEGINPROC execMethodOfClass
 ENDPROC execMethodOfClass
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-; Create a new context, and run some byte codes, Yeehaaa!
+;
 
 BEGINPROC findMethodCacheMiss
 	push	ecx
@@ -4125,7 +4139,7 @@ MActivateMethod MACRO
 
 		shr		ecx, 2									; Access the actual env temp count
 		lea		edx, [_SP+1]							; 2: Calc SmallInteger frame pointer into EAX...
-		dec		ecx										; Count is one greater than number of slots required (to flag need for Context for far ^-return)
+		sub		ecx, 1									; Count is one greater than number of slots required (to flag need for Context for far ^-return)
 
 		call	NEWCONTEXT								
 		ASSUME	eax:PTR OTE								; EAX is the Oop of the new Context
@@ -4187,27 +4201,180 @@ MActivateMethod MACRO
 ENDM
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-; Create a new context, and run some byte codes, Yeehaaa!
+; Create a new frame for the new method and start executing its bytcodes
 ;
 BEGINPRIMITIVE primitiveActivateMethod
-	MActivateMethod
-	ProcessSignalsAndReturn
+	;MActivateMethod
+		ASSUME ecx:PTR CompiledCodeObj					; Expects ptr to new method in ECX
+
+	IFDEF PROFILING
+		inc 	[?contextsSuspended@@3IA]
+		inc 	[?methodsActivated@@3IA]
+	ENDIF
+
+	;; Work out _IP index before overwriting old method pointer
+	mov		eax, [pMethod]							; Load pointer to current method into eax
+	ASSUME	eax:PTR CompiledCodeObj
+
+	mov		edx, ecx								; Get pointer to new method into edx
+	ASSUME	edx:PTR CompiledCodeObj
+	mov		[pMethod], ecx							; Save down pointer to new method
+
+	.IF ((BYTE PTR([eax].m_byteCodes) & 1))
+		add		eax, CompiledCodeObj.m_byteCodes
+	.ELSE
+		mov		eax, [eax].m_byteCodes
+		ASSUME	eax:PTR OTE
+		mov		eax, [eax].m_location
+	.ENDIF
+	ASSUME	eax:NOTHING
+	sub		_IP, eax
+	IFDEF _DEBUG
+		.IF (_IP > 16384)
+			int	3									;; Probably a bug - unusual to have a method with more than 16k bytecodes
+		.ENDIF
+	ENDIF
+	; At this point _IP is the offset into the byte codes
+
+	xor		eax, eax
+	mov		al, [edx].m_header.argumentCount
+
+	; Work out the new base pointer (points at first argument - not receiver)
+	neg		eax										; We'll be subtracting arg count
+	lea		_IP, [_IP+_IP+1]						; Convert old IP offset to SmallInteger for later
+
+	; We're don't need pointer to new method any more
+	ASSUME ecx:NOTHING
+
+	; Now work out the number of temporaries required for new method
+	; Load flag word which contains temp count
+	xor		ecx, ecx
+	mov		cl, [edx].m_header.stackTempCount		; Get stack temp count into ecx
+
+	lea		_BP, [_SP+eax*OOPSIZE+OOPSIZE]			; Calculate _BP of new context (points at first argument NOT receiver)
+	add		_SP, OOPSIZE
+
+	mov		eax, [oteNil]							; Temps must have initial value of Nil
+	cmp		ecx, 0
+	.WHILE (!ZERO?)
+		mov		[_SP], eax
+		add		_SP, OOPSIZE
+		dec		ecx
+	.ENDW
+
+	ASSUME	_SP:PStackFrame						; _SP now points at location for new StackFrame
+
+	mov		ecx, [NEWMETHOD]					; Restore method Oop
+	; Note that we used to have to count up the method's ref. count here, but no more since the frame is on the stack
+	mov		[_SP].m_method, ecx					; Store new method oop into new StackFrame fields
+
+	; Now see whether a real (object) context is required
+
+	.IF !([edx].m_header.flags & MASK envTempCount)					; Test if method requires a context
+		mov		[_SP].m_environment, SMALLINTZERO	; Zero out the env slot as this frame has no environment
+	.ELSE
+		; At this point, _BP points at the first argument of the new context (in the stack), i.e. it is
+		; correctly set up for the new frame. ECX contains method header flags
+		ASSUME	_SP:PStackFrame					; _SP now points at location for new StackFrame
+
+		xor		ecx, ecx
+		mov		cl, [edx].m_header.flags
+		
+		push	edx										; Save edx for later
+		ASSUME	edx:NOTHING
+
+		shr		ecx, 2									; Access the actual env temp count
+		lea		edx, [_SP+1]							; 2: Calc SmallInteger frame pointer into EAX...
+		sub		ecx, 1									; Count is one greater than number of slots required (to flag need for Context for far ^-return)
+
+		call	NEWCONTEXT								
+		ASSUME	eax:PTR OTE								; EAX is the Oop of the new Context
+
+		lea		edx, [_SP].m_environment
+		; Set the context of the stack frame to be the new method context
+		mov		[_SP].m_environment, eax
+		AddToZct <a>,<edx>
+		ASSUME	eax:NOTHING								; Context Oop no longer needed
+
+		pop		edx
+		ASSUME	edx:PTR CompiledCodeObj
+	.ENDIF
+
+	ASSUME eax:NOTHING
+	ASSUME ecx:NOTHING
+	ASSUME _SP:PStackFrame
+	ASSUME _BP:PTR Oop
+	ASSUME edx:PTR CompiledCodeObj
+
+	lea		eax, [_BP+1]						; Make SmallInteger pointer to base in EAX
+	mov		[BASEPOINTER], _BP					; Save down BP into interpreter register
+
+	mov		ecx, [ACTIVEFRAME]					; Load frame being suspended into ECX
+	ASSUME	ecx:PStackFrame
+
+	mov		[_SP].m_ip, SMALLINTZERO			; Zero out the new frames IP
+	mov		[_SP].m_bp, eax						; Store SmallInteger base pointer into new frame fields
+
+	;; Suspended contexts _SP is _BP - 2		(_BP points at first arg, not receiver)
+	sub		eax, OOPSIZE*2			  			; EAX contains SmallInteger _BP (from above)
+
+	;; Save down suspended context's _IP and _SP (using ECX)
+	mov		[ecx].m_ip, _IP						; IP index was worked out above
+	mov		[ecx].m_sp, eax
+
+	lea		eax, [ecx+1]	  					; Create SmallInteger pointer to frame being suspended ...
+	ASSUME	ecx:NOTHING							; We have no further use for the suspended context
+
+	mov		[_SP].m_sp, SMALLINTZERO			; Zero out new frames SP
+	mov		[_SP].m_caller, eax					; Store SmallInt pointer to calling frame into new context fields
+	
+	; Save down frame pointer for C++
+	mov		[ACTIVEFRAME], _SP
+
+	ASSUME	_SP:PTR Oop
+	add		_SP, SIZEOF StackFrame-OOPSIZE		; Adjust _SP to point at last field of frame
+	
+	; Set up interpreters _IP
+	GetInitialIPOfMethod <edx>
+
+	IFDEF _DEBUG
+		.IF ([EXECUTIONTRACE])
+			mov		ecx, _SP
+			call	DEBUGMETHODACTIVATED
+		.ENDIF
+	ENDIF
+
+	mov		eax, [ASYNCPENDING]
+	test	eax, eax
+	jnz		asyncPending								;; If any ansync. signals, go and test process switch
+	
+	mov		eax, _SP									; primitiveSuccess(0)
+	ret
+
+asyncPending:
+	StoreInterpreterRegisters
+	call	MSGPOLL
+	LoadIPRegister
+	mov		eax, [STACKPOINTER]
+	LoadBPRegister
+	ret
 ENDPRIMITIVE primitiveActivateMethod
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 QuickReturnSpecial MACRO specialValue
 	ASSUME	edx:SDWORD						;; EDX is the argument count
+
 	mov		eax, [STEPPING]
 	neg		edx
 	test	eax, eax						;; Stepping?
-	mov		eax, specialValue				;; Load pointer of appropriate object
-	jnz		@F
-	mov		[_SP+edx*OOPSIZE], eax						;; Replace receiver at stack top with special object (NOT ref counted)
-	lea		_SP, [_SP+edx*OOPSIZE]
+	mov		ecx, specialValue				;; Load pointer of appropriate object
+	jnz		stepping
+	lea		eax, [_SP+edx*OOPSIZE]			;; primitiveSuccess(argumentCount)
+	mov		[_SP+edx*OOPSIZE], ecx			;; Replace receiver at stack top with special object (NOT ref counted)
 	ret
-@@:
-	xor		eax, eax
+stepping:
+	xor		eax, eax						;; If stepping, fail the primitive to activate the full method
 	ret
 ENDM
 
@@ -4215,11 +4382,13 @@ ENDM
 ; or which are empty!
 BEGINPRIMITIVE primitiveReturnSelf
 	mov		eax, [STEPPING]
-	shl		edx, 2
-	xor		eax, 1
-	jz		@F								;; If stepping then fail the primitive, otherwise eax = 1 (success)
-	sub		_SP, edx
-@@:
+	neg		edx
+	test	eax, eax
+	jnz		stepping						; If stepping then fail the primitive
+	lea		eax, [_SP+edx*OOPSIZE]			; primitiveSuccess(argumentCount)
+	ret
+stepping:
+	xor		eax, eax						; If stepping, fail the primitive to activate the full method
 	ret
 ENDPRIMITIVE primitiveReturnSelf
 
@@ -4243,34 +4412,38 @@ BEGINPRIMITIVE primitiveReturnLiteralZero
 	mov		eax, [STEPPING]
 	neg		edx
 	test	eax, eax
-	mov		eax, [ecx].m_aLiterals[0]			; Load first literal into EAX
-	jnz		localPrimitiveFailure0
-	mov		[_SP+edx*OOPSIZE], eax				; Overwrite receiver
-	lea		_SP, [_SP+edx*OOPSIZE]
-	ret											; EAX contains Oop, therefore non-zero
+	mov		ecx, [ecx].m_aLiterals[0]			; Load first literal into EAX
+	jnz		stepping
+
+	lea		eax, [_SP+edx*OOPSIZE]				; primitiveSuccess(argumentCount)
+	mov		[_SP+edx*OOPSIZE], ecx				; Overwrite receiver
+	ret
 	
-localPrimitiveFailure0:
+stepping:
+	; Fail so can step into method
 	xor		eax, eax
 	ret
 ENDPRIMITIVE primitiveReturnLiteralZero
 
 BEGINPRIMITIVE primitiveReturnStaticZero
-	ASSUME	ecx:PTR CompiledCodeObj				; ECX points at the new method (still)	
+	ASSUME	ecx:PTR CompiledCodeObj					; ECX points at the new method (still)	
 	ASSUME	edx:DWORD
 	ASSUME	_SP:PTR Oop
 	mov		eax, [STEPPING]
 	neg		edx
-	test	eax, eax							; Debugging? If so fail so can step into the method
-	mov		eax, [ecx].m_aLiterals[0]			; Load first literal into EAX
-	ASSUME	ecx:DWORD							; Method no longer needed
-	jnz		localPrimitiveFailure0
-	lea		_SP, [_SP+edx*OOPSIZE]				; Adjust SP to pop any args
-	mov		eax, (OTE PTR[eax]).m_location			; Load pointer to binding
-	mov		eax, (Object PTR[eax]).fields[OOPSIZE]	; Load value Oop from binding
-	mov		[_SP], eax							; Overwrite receiver
-	ret											; EAX contains Oop, therefore non-zero
+	test	eax, eax								; Debugging? If so fail so can step into the method
+	mov		ecx, [ecx].m_aLiterals[0]				; Load first literal into EAX
+	ASSUME	ecx:PTR OTE								; ECX is now the OTE of the var binding
+	jnz		stepping
 
-localPrimitiveFailure0:
+	mov		ecx, (OTE PTR[ecx]).m_location			; Load pointer to binding
+	lea		eax, [_SP+edx*OOPSIZE]					; primitiveSuccess(argumentCount)
+	mov		ecx, (Object PTR[ecx]).fields[OOPSIZE]	; Load value Oop from binding
+	mov		[_SP+edx*OOPSIZE], ecx					; Overwrite receiver
+	ret
+
+stepping:
+	; Fail so can step into method
 	xor		eax, eax
 	ret
 	
@@ -4299,7 +4472,7 @@ BEGINPRIMITIVE primitiveReturnInstVar
 	ASSUME	ecx:PTR OTE
 
 	test	edx, edx
-	jnz		localPrimitiveFailure0
+	jnz		stepping
 	
 	shr		eax, 16
 	mov		edx, [ecx].m_location 				; edx points at receiver object
@@ -4314,10 +4487,11 @@ BEGINPRIMITIVE primitiveReturnInstVar
 
 	mov		[_SP], edx							; Overwrite receiver with inst. var Oop
 
-	mov		eax, 1
+	mov		eax, _SP							; primitiveSuccess(0)
 	ret
 
-localPrimitiveFailure0:
+stepping:
+	; Fail so can step into method
 	xor		eax, eax
 	ret
 
@@ -4347,7 +4521,7 @@ BEGINPRIMITIVE primitiveSetInstVar
 	
 	mov		eax, [ecx].m_byteCodes				; Get bytecodes into eax - MUST be a SmallInteger
 
-	jne		localPrimitiveFailure0
+	jne		steppingOrFailure
 
 	mov		ecx, [edx].m_location 				; edx now points at receiver object
 	ASSUME	ecx:PTR Object
@@ -4364,7 +4538,7 @@ BEGINPRIMITIVE primitiveSetInstVar
 	
 	ASSUME eax:DWORD		; eax is now the offset into the fields of the inst var to set
 	cmp		eax, [edx].m_size
-	jge		localPrimitiveFailure0					; Attempt to write off end, or immutable
+	jge		steppingOrFailure					; Attempt to write off end, or immutable
 	
 	lea		eax, [ecx].fields[eax]
 	ASSUME	eax:PTR Oop
@@ -4375,18 +4549,17 @@ BEGINPRIMITIVE primitiveSetInstVar
 	mov		ecx, [eax]							; Load existing inst. var value into ECX for count down
 	ASSUME	ecx:Oop
 
-	PopStack									; Pop the argument
-
 	; Storing new inst var value, we must bump its ref. count
 	CountUpOopIn <d>
 	mov		[eax], edx
 
-	; Can use common end of primitive macro because EAX is non-zero
 	; We must count down ECX (the old inst var value) here, because we've overwritten a heap object slot
 	CountDownOopIn <c>
+
+	lea		eax, [_SP-OOPSIZE]				; primitiveSuccess(1)
 	ret
 
-localPrimitiveFailure0:
+steppingOrFailure:
 	xor		eax, eax
 	ret
 
@@ -4464,25 +4637,37 @@ BEGINPROC EXECUTENEWMETHOD
 	mov		al, [ecx].m_header.primitiveIndex
 	LoadInterpreterRegisters
 
-	push	ecx
+	push	ecx									; Save pMethod
 	IFDEF _DEBUG
 		inc	DWORD PTR[_primitiveCounters+eax*4]
 	ENDIF
 	call	DWORD PTR[_primitivesTable+eax*4]	; Call via jump table
-	pop		ecx
+	pop		ecx									; Restore pMethod
 
 	test	eax, eax							; Primitives return 0 for failure, ~0 for success
-	jnz		@F									; If succeeeded, jump to exit
+	jz		@F									; Failed?
 	
-	; Failed, so must activate the new method
-	call	primitiveActivateMethod
+	; StoreInterpreterRegisters
+	mov		[STACKPOINTER], eax	
+	StoreIPRegister								; Do we need this?
 
-@@:
-	StoreInterpreterRegisters
 	pop		_BP
 	pop		_IP
 	pop		_SP
 	ret
+
+@@:
+	; Failed, so must activate the new method
+	call	primitiveActivateMethod
+
+	mov		[STACKPOINTER], eax	
+	StoreIPRegister
+
+	pop		_BP
+	pop		_IP
+	pop		_SP
+	ret
+
 ENDPROC EXECUTENEWMETHOD
 
 BEGINPROC ACTIVATENEWMETHOD
@@ -4643,7 +4828,7 @@ BEGINPROC activateBlock
 	@@:
 		mov		ecx, [edx].m_copiedValues[eax*OOPSIZE-OOPSIZE]
 		mov		[_SP+eax*OOPSIZE-OOPSIZE], ecx
-		dec		eax
+		sub		eax, 1
 		jnz		@B
 
 		pop		eax
@@ -4659,7 +4844,7 @@ BEGINPROC activateBlock
 	@@:
 		mov	[_SP], ecx
 		add _SP, OOPSIZE
-		dec eax
+		sub eax, 1
 		jnz @B
 	.ENDIF
 	
@@ -4695,6 +4880,9 @@ BEGINPROC activateBlock
 		; The environment ref. in the frame is in this case a real context
 		mov		[_SP].m_environment, eax
 		AddToZct <a>,<edx>
+
+		mov		eax, [_SP].m_environment	; Reload env OTE
+		ASSUME	eax:PTR OTE
 
 		mov		ecx, [eax].m_location
 		ASSUME	ecx:PTR Context
@@ -4776,7 +4964,15 @@ BEGINPROC activateBlock
 	mov		[BASEPOINTER], _BP						; ... Save down BP into interpreter global for C++
 
 	; Necessary to permit debug break on entry to block
-	ProcessSignalsAndReturn
+
+	mov		eax, [ASYNCPENDING]
+	test	eax, eax
+	jnz		@F											;; If any ansync. signals, go and test process switch
+	ret
+@@:
+	CallCPP <MSGPOLL>
+	ret
+
 ENDPROC activateBlock
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -5028,7 +5224,7 @@ BEGINRARECODE pushActiveFrame
 	mov		[edx].m_sp, eax
 	ASSUME	edx:NOTHING
 
-	inc		edx								; Make active frame address a SmallInteger pointer
+	or		edx, 1							; Make active frame address a SmallInteger pointer
 	PushAndDispatch <d>						; And push it on to the stack before continuing
 ENDBYTECODE pushActiveFrame
 
@@ -5043,7 +5239,7 @@ BEGINRARECODE break
 	mov		ecx, HALTINTERRUPT						; Load interrupt number to send
 
 	ResetInputPollCounter
-	inc		edx										; Make it a SmallInteger pointer to the frame
+	or		edx, 1									; Make it a SmallInteger pointer to the frame
 	CallCPPAndLoop	<SENDVMINTERRUPT>
 
 	ASSUME	edx:NOTHING

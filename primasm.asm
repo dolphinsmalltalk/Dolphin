@@ -46,34 +46,9 @@ INCLUDE IstAsm.Inc
 ; change the context), thus requiring the reloading of the registers which cache interpreter
 ; state
 CallContextPrim MACRO mangledName
-	StoreIPRegister							;; SP already saved. Save IP in case of fault and may be required by primitive
 	call	mangledName						;; Transfer control to primitive 
-	LoadInterpreterRegisters				;; Reload all interpreter registers (_IP, _SP and _BP)
-	ret
-ENDM
-
-;; This macro is a simpler version of the above, suitable for C++ primitives which are
-;; likely to modify only the stackpointer
-CallSimplePrim MACRO mangledName
-	StoreIPRegister							;; SP already saved. Save IP in case of fault
-	call	mangledName						;; Transfer control to primitive
-	LoadSPRegister							;; Reload stack pointer as primitive has modified
-	ret
-ENDM
-
-;; This macro is a simpler version of the above, suitable for C++ primitives which do not 
-;; even modify the stackpointer. 
-;; C++ primitives that cannot fault can be invoked directly without a thunk
-CallStackNeutralPrim MACRO mangledName
-	StoreIPRegister							;; SP already saved. Save IP in case of fault
-	jmp		mangledName						;; Transfer control to primitive
-ENDM
-
-; These primitives return the number of bytes to deduct from the stack pointer in eax, rather than updating
-; the stackpointer themselves
-CallSimplePrimSP MACRO mangledName
-	call	mangledName						;; Transfer control to primitive
-	sub		_SP, eax						;; Adjust stack pointer
+	LoadIPRegister
+	LoadBPRegister							;; _SP is always reloaded after executing a primitive
 	ret
 ENDM
 
@@ -83,12 +58,6 @@ ENDM
 
 ; Helpers
 public @callPrimitiveValue@8
-; Some modules have their own copy of these routines for locality, others
-; use these where speed is less important
-public primitiveFailure0
-public primitiveFailure1
-public primitiveFailure2
-public primitiveFailure3
 
 ; Entry points for byte code dispatcher (see primasm.asm)
 public _primitivesTable
@@ -124,13 +93,18 @@ extern primitiveReturnInstVar:near32
 extern primitiveSetInstVar:near32
 
 ; Imports from flotprim.asm
+primitiveAsFloat EQU ?primitiveAsFloat@Interpreter@@CIPAIXZ
 extern primitiveAsFloat:near32
 extern primitiveFloatAdd:near32
 extern primitiveFloatSub:near32
 extern primitiveFloatMul:near32
 extern primitiveFloatDiv:near32
+primitiveFloatEQ EQU ?primitiveFloatEqual@Interpreter@@CIPAIXZ
 extern primitiveFloatEQ:near32
+primitiveFloatLT EQU ?primitiveFloatLessThan@Interpreter@@CIPAIXZ
 extern primitiveFloatLT:near32
+primitiveFloatGT EQU ?primitiveFloatGreaterThan@Interpreter@@CIPAIXZ
+extern primitiveFloatGT:near32
 
 ; Imports from ExternalBytes.asm
 extern primitiveAddressOf:near32
@@ -203,23 +177,35 @@ CURRENTCALLBACK EQU ?currentCallbackContext@@3IA
 extern CURRENTCALLBACK:DWORD
 
 ; C++ Primitive method imports
-extern ?primitiveTruncated@Interpreter@@CIHXZ:near32
-extern ?primitiveNext@Interpreter@@CIHXZ:near32
-extern ?primitiveNextSDWORD@Interpreter@@CIHXZ:near32
-extern ?primitiveNextPut@Interpreter@@CIHXZ	:near32
-PRIMITIVENEXTPUTALL EQU ?primitiveNextPutAll@Interpreter@@CIHXZ	
-extern PRIMITIVENEXTPUTALL:near32
-extern ?primitiveAtEnd@Interpreter@@CIHXZ:near32
+primitiveTruncated EQU ?primitiveTruncated@Interpreter@@CIPAIXZ
+extern primitiveTruncated:near32
+primitiveNext EQU ?primitiveNext@Interpreter@@CIPAIXZ
+extern primitiveNext:near32
+primitiveNextSDWORD EQU ?primitiveNextSDWORD@Interpreter@@CIPAIXZ
+extern primitiveNextSDWORD:near32
+primitiveNextPut EQU ?primitiveNextPut@Interpreter@@CIPAIXZ
+extern primitiveNextPut:near32
+primitiveNextPutAll EQU ?primitiveNextPutAll@Interpreter@@CIPAIXZ	
+extern primitiveNextPutAll:near32
+primitiveAtEnd EQU ?primitiveAtEnd@Interpreter@@CIPAIXZ
+extern primitiveAtEnd:near32
 
-extern ?primitiveValueWithArgs@Interpreter@@CIHXZ:near32
-extern ?primitivePerform@Interpreter@@CIHAAVCompiledMethod@ST@@I@Z:near32
-extern ?primitivePerformWithArgs@Interpreter@@CIHXZ:near32
-extern ?primitivePerformMethod@Interpreter@@CIHAAVCompiledMethod@ST@@I@Z:near32
-extern ?primitivePerformWithArgsAt@Interpreter@@CIHAAVCompiledMethod@ST@@I@Z:near32
-extern ?primitiveValueWithArgsAt@Interpreter@@CIHAAVCompiledMethod@ST@@I@Z:near32
-extern ?primitiveVariantValue@Interpreter@@CIHXZ:near32
+primitiveValueWithArgs EQU ?primitiveValueWithArgs@Interpreter@@CIPAIXZ
+extern primitiveValueWithArgs:near32
+primitivePerform EQU ?primitivePerform@Interpreter@@CIPAIAAVCompiledMethod@ST@@I@Z
+extern primitivePerform:near32
+primitivePerformWithArgs EQU ?primitivePerformWithArgs@Interpreter@@CIPAIXZ
+extern primitivePerformWithArgs:near32
+primitivePerformMethod EQU ?primitivePerformMethod@Interpreter@@CIPAIAAVCompiledMethod@ST@@I@Z
+extern primitivePerformMethod:near32
+primitivePerformWithArgsAt EQU ?primitivePerformWithArgsAt@Interpreter@@CIPAIAAVCompiledMethod@ST@@I@Z
+extern primitivePerformWithArgsAt:near32
+primitiveValueWithArgsAt EQU ?primitiveValueWithArgsAt@Interpreter@@CIPAIAAVCompiledMethod@ST@@I@Z
+extern primitiveValueWithArgsAt:near32
+primitiveVariantValue EQU ?primitiveVariantValue@Interpreter@@CIPAIXZ
+extern primitiveVariantValue:near32
 
-PRIMUNWINDINTERRUPT EQU ?primitiveUnwindInterrupt@Interpreter@@CIHAAVCompiledMethod@ST@@I@Z
+PRIMUNWINDINTERRUPT EQU ?primitiveUnwindInterrupt@Interpreter@@CIPAIAAVCompiledMethod@ST@@I@Z
 extern PRIMUNWINDINTERRUPT:near32
 
 RESUSPENDACTIVEON EQU ?ResuspendActiveOn@Interpreter@@SIPAV?$TOTE@VLinkedList@ST@@@@PAV2@@Z
@@ -228,82 +214,108 @@ extern RESUSPENDACTIVEON:near32
 RESCHEDULE EQU ?Reschedule@Interpreter@@SGHXZ
 extern RESCHEDULE:near32
 
-PRIMITIVESIGNAL EQU ?primitiveSignal@Interpreter@@CIHAAVCompiledMethod@ST@@I@Z
-extern PRIMITIVESIGNAL:near32
+primitiveSignal EQU ?primitiveSignal@Interpreter@@CIPAIAAVCompiledMethod@ST@@I@Z
+extern primitiveSignal:near32
 
-extern ?primitiveSetSignals@Interpreter@@CIHXZ:near32
-PRIMSIGNALATTICK EQU ?primitiveSignalAtTick@Interpreter@@CIHAAVCompiledMethod@ST@@I@Z
-extern PRIMSIGNALATTICK:near32
-PRIMITIVEINPUTSEMAPHORE EQU ?primitiveInputSemaphore@Interpreter@@CIHAAVCompiledMethod@ST@@I@Z
-extern PRIMITIVEINPUTSEMAPHORE:near32
-extern ?primitiveSampleInterval@Interpreter@@CIHXZ:near32
+extern ?primitiveSetSignals@Interpreter@@CIPAIXZ:near32
+primitiveSignalAtTick EQU ?primitiveSignalAtTick@Interpreter@@CIPAIAAVCompiledMethod@ST@@I@Z
+extern primitiveSignalAtTick:near32
+primitiveInputSemaphore EQU ?primitiveInputSemaphore@Interpreter@@CIPAIAAVCompiledMethod@ST@@I@Z
+extern primitiveInputSemaphore:near32
+primitiveSampleInterval EQU ?primitiveSampleInterval@Interpreter@@CIPAIXZ
+extern primitiveSampleInterval:near32
 
-PRIMITIVEWAIT EQU ?primitiveWait@Interpreter@@CIHAAVCompiledMethod@ST@@I@Z
+PRIMITIVEWAIT EQU ?primitiveWait@Interpreter@@CIPAIAAVCompiledMethod@ST@@I@Z
 extern PRIMITIVEWAIT:near32
 
-primitiveFlushCache EQU ?primitiveFlushCache@Interpreter@@CIHXZ
+primitiveFlushCache EQU ?primitiveFlushCache@Interpreter@@CIPAIXZ
 extern primitiveFlushCache:near32
 
-PRIMITIVERESUME EQU ?primitiveResume@Interpreter@@CIHAAVCompiledMethod@ST@@I@Z
+PRIMITIVERESUME EQU ?primitiveResume@Interpreter@@CIPAIAAVCompiledMethod@ST@@I@Z
 extern PRIMITIVERESUME:near32
 
-PRIMITIVESINGLESTEP EQU ?primitiveSingleStep@Interpreter@@CIHAAVCompiledMethod@ST@@I@Z
+PRIMITIVESINGLESTEP EQU ?primitiveSingleStep@Interpreter@@CIPAIAAVCompiledMethod@ST@@I@Z
 extern PRIMITIVESINGLESTEP:near32
 
-extern ?primitiveSuspend@Interpreter@@CIHXZ	:near32
-extern ?primitiveTerminateProcess@Interpreter@@CIHXZ	:near32
-extern ?primitiveProcessPriority@Interpreter@@CIHXZ:near32
-extern ?primitiveNewVirtual@Interpreter@@CIHXZ:near32
-PRIMSNAPSHOT EQU ?primitiveSnapshot@Interpreter@@CIHAAVCompiledMethod@ST@@I@Z
-extern PRIMSNAPSHOT:near32
-extern ?primitiveReplaceBytes@Interpreter@@CIHXZ:near32
-extern ?primitiveIndirectReplaceBytes@Interpreter@@CIHXZ:near32
-extern ?primitiveReplacePointers@Interpreter@@CIHXZ:near32
-PRIMCORELEFT EQU ?primitiveCoreLeft@Interpreter@@CIHAAVCompiledMethod@ST@@I@Z
-extern PRIMCORELEFT:near32
-PRIMQUIT EQU ?primitiveQuit@Interpreter@@CIXAAVCompiledMethod@ST@@I@Z
-extern PRIMQUIT:near32
-extern ?primitiveOopsLeft@Interpreter@@CIHXZ:near32
-extern ?primitiveResize@Interpreter@@CIHXZ:near32
-extern ?primitiveDoublePrecisionFloatAt@Interpreter@@CIHXZ:near32
-extern ?primitiveDoublePrecisionFloatAtPut@Interpreter@@CIHXZ:near32
-extern ?primitiveLongDoubleAt@Interpreter@@CIHXZ:near32
-extern ?primitiveSinglePrecisionFloatAt@Interpreter@@CIHXZ:near32
-extern ?primitiveSinglePrecisionFloatAtPut@Interpreter@@CIHXZ:near32
-extern ?primitiveNextIndexOfFromTo@Interpreter@@CIHXZ:near32
-extern ?primitiveDeQBereavement@Interpreter@@CIHXZ:near32
-extern ?primitiveHookWindowCreate@Interpreter@@CIHXZ:near32
+extern ?primitiveSuspend@Interpreter@@CIPAIXZ	:near32
+extern ?primitiveTerminateProcess@Interpreter@@CIPAIXZ	:near32
+extern ?primitiveProcessPriority@Interpreter@@CIPAIXZ:near32
+primitiveNewVirtual EQU ?primitiveNewVirtual@Interpreter@@CIPAIXZ
+extern primitiveNewVirtual:near32
+primitiveSnapshot EQU ?primitiveSnapshot@Interpreter@@CIPAIAAVCompiledMethod@ST@@I@Z
+extern primitiveSnapshot:near32
+primitiveReplaceBytes EQU ?primitiveReplaceBytes@Interpreter@@CIPAIXZ
+extern primitiveReplaceBytes:near32
+primitiveIndirectReplaceBytes EQU ?primitiveIndirectReplaceBytes@Interpreter@@CIPAIXZ
+extern primitiveIndirectReplaceBytes :near32
+primitiveReplacePointers EQU ?primitiveReplacePointers@Interpreter@@CIPAIXZ
+extern primitiveReplacePointers:near32
+primitiveCoreLeft EQU ?primitiveCoreLeft@Interpreter@@CIPAIAAVCompiledMethod@ST@@I@Z
+extern primitiveCoreLeft:near32
+primitiveQuit EQU ?primitiveQuit@Interpreter@@CIXAAVCompiledMethod@ST@@I@Z
+extern primitiveQuit:near32
+primitiveOopsLeft EQU ?primitiveOopsLeft@Interpreter@@CIPAIXZ
+extern primitiveOopsLeft:near32
+primitiveResize EQU ?primitiveResize@Interpreter@@CIPAIXZ
+extern primitiveResize:near32
+primitiveDoublePrecisionFloatAt EQU ?primitiveDoublePrecisionFloatAt@Interpreter@@CIPAIXZ
+extern ?primitiveDoublePrecisionFloatAt@Interpreter@@CIPAIXZ:near32
+primitiveDoublePrecisionFloatAtPut EQU ?primitiveDoublePrecisionFloatAtPut@Interpreter@@CIPAIXZ
+extern ?primitiveDoublePrecisionFloatAtPut@Interpreter@@CIPAIXZ:near32
+primitiveLongDoubleAt EQU ?primitiveLongDoubleAt@Interpreter@@CIPAIXZ
+extern primitiveLongDoubleAt:near32
+primitiveSinglePrecisionFloatAt EQU ?primitiveSinglePrecisionFloatAt@Interpreter@@CIPAIXZ
+extern primitiveSinglePrecisionFloatAt:near32
+primitiveSinglePrecisionFloatAtPut EQU ?primitiveSinglePrecisionFloatAtPut@Interpreter@@CIPAIXZ
+extern primitiveSinglePrecisionFloatAtPut:near32
+primitiveNextIndexOfFromTo EQU ?primitiveNextIndexOfFromTo@Interpreter@@CIPAIXZ
+extern primitiveNextIndexOfFromTo:near32
+primitiveDeQBereavement EQU ?primitiveDeQBereavement@Interpreter@@CIPAIXZ
+extern primitiveDeQBereavement:near32
+primitiveHookWindowCreate EQU ?primitiveHookWindowCreate@Interpreter@@CIPAIXZ
+extern primitiveHookWindowCreate:near32
 
-primitiveSmallIntegerPrintString EQU ?primitiveSmallIntegerPrintString@Interpreter@@CIHXZ
+primitiveSmallIntegerPrintString EQU ?primitiveSmallIntegerPrintString@Interpreter@@CIPAIXZ
 extern primitiveSmallIntegerPrintString:near32
 
-PRIMMAKEPOINT EQU ?primitiveMakePoint@Interpreter@@CIHAAVCompiledMethod@ST@@I@Z
-extern PRIMMAKEPOINT:near32
+; Note that this isn't really MakePoint anymore, in fact it will make any pointer object
+; of length 2, storing the two args on the stack as the inst. vars (either fixed or first
+; two indexed, if indexed).
+primitiveNewInitializedObject EQU ?primitiveMakePoint@Interpreter@@CIPAIAAVCompiledMethod@ST@@I@Z
+extern primitiveNewInitializedObject:near32
 
-extern ?primitiveLargeIntegerDivide@Interpreter@@CIHXZ:near32
+primitiveLargeIntegerDivide EQU ?primitiveLargeIntegerDivide@Interpreter@@CIPAIXZ
+extern primitiveLargeIntegerDivide:near32
+primitiveLargeIntegerDiv EQU ?primitiveLargeIntegerDiv@Interpreter@@CIPAIXZ
+extern primitiveLargeIntegerDiv:near32
+primitiveLargeIntegerMod EQU ?primitiveLargeIntegerMod@Interpreter@@CIPAIXZ
+extern primitiveLargeIntegerMod:near32
+primitiveLargeIntegerQuoAndRem EQU ?primitiveLargeIntegerQuoAndRem@Interpreter@@CIPAIXZ
+extern primitiveLargeIntegerQuoAndRem:near32
+primitiveLargeIntegerBitShift EQU ?primitiveLargeIntegerBitShift@Interpreter@@CIPAIXZ
+extern primitiveLargeIntegerBitShift:near32
 
-extern ?primitiveLargeIntegerMod@Interpreter@@CIHXZ:near32
-extern ?primitiveLargeIntegerDiv@Interpreter@@CIHXZ:near32
-extern ?primitiveLargeIntegerQuoAndRem@Interpreter@@CIHXZ:near32
+primitiveLargeIntegerGreaterThan EQU ?primitiveLargeIntegerGreaterThan@Interpreter@@CIPAIXZ
+extern primitiveLargeIntegerGreaterThan:near32
+primitiveLargeIntegerLessThan EQU ?primitiveLargeIntegerLessThan@Interpreter@@CIPAIXZ
+extern primitiveLargeIntegerLessThan:near32
+primitiveLargeIntegerGreaterOrEqual EQU ?primitiveLargeIntegerGreaterOrEqual@Interpreter@@CIPAIXZ
+extern primitiveLargeIntegerGreaterOrEqual:near32
+primitiveLargeIntegerLessOrEqual EQU ?primitiveLargeIntegerLessOrEqual@Interpreter@@CIPAIXZ
+extern primitiveLargeIntegerLessOrEqual:near32
+primitiveLargeIntegerEqual EQU ?primitiveLargeIntegerEqual@Interpreter@@CIPAIXZ
+extern primitiveLargeIntegerEqual:near32
 
-extern ?primitiveLargeIntegerBitShift@Interpreter@@CIHXZ:near32
-
-extern ?primitiveLargeIntegerGreaterThan@Interpreter@@CIHXZ:near32
-extern ?primitiveLargeIntegerLessThan@Interpreter@@CIHXZ:near32
-extern ?primitiveLargeIntegerGreaterOrEqual@Interpreter@@CIHXZ:near32
-extern ?primitiveLargeIntegerLessOrEqual@Interpreter@@CIHXZ:near32
-extern ?primitiveLargeIntegerEqual@Interpreter@@CIHXZ:near32
-
-primitiveLargeIntegerAsFloat EQU ?primitiveLargeIntegerAsFloat@Interpreter@@CIHXZ
+primitiveLargeIntegerAsFloat EQU ?primitiveLargeIntegerAsFloat@Interpreter@@CIPAIXZ
 extern primitiveLargeIntegerAsFloat:near32
 
-PRIMASYNCCALL EQU ?primitiveAsyncDLL32Call@Interpreter@@CIHAAVCompiledMethod@ST@@I@Z
-extern PRIMASYNCCALL:near32
+primitiveAsyncDLL32Call EQU ?primitiveAsyncDLL32Call@Interpreter@@CIPAIAAVCompiledMethod@ST@@I@Z
+extern primitiveAsyncDLL32Call:near32
 
-extern ?primitiveAllReferences@Interpreter@@CIHAAVCompiledMethod@ST@@I@Z:near32
+primitiveAllReferences EQU ?primitiveAllReferences@Interpreter@@CIPAIAAVCompiledMethod@ST@@I@Z
+extern primitiveAllReferences:near32
 
 IFDEF _DEBUG
-	extern ?primitiveExecutionTrace@Interpreter@@CIHXZ:near32
 	extern ?checkReferences@ObjectMemory@@SIXXZ:near32
 ENDIF
 
@@ -315,7 +327,7 @@ extern NEWBYTEOBJECT:near32
 ALLOCATEBYTESNOZERO		EQU	?newUninitializedByteObject@ObjectMemory@@SIPAV?$TOTE@VVariantByteObject@ST@@@@PAV?$TOTE@VBehavior@ST@@@@I@Z
 extern ALLOCATEBYTESNOZERO:near32
 
-DQFORFINALIZATION EQU ?dequeueForFinalization@Interpreter@@CIPAV?$TOTE@X@@XZ
+DQFORFINALIZATION EQU ?dequeueForFinalization@Interpreter@@CIPAV?$TOTE@VObject@ST@@@@XZ
 extern DQFORFINALIZATION:near32
 
 INSTANCESOF EQU ?instancesOf@ObjectMemory@@SIPAV?$TOTE@VArray@ST@@@@PAV?$TOTE@VBehavior@ST@@@@@Z
@@ -327,9 +339,9 @@ extern INSTANCECOUNTS:near32
 
 QUEUEINTERRUPT EQU ?queueInterrupt@Interpreter@@SGXPAV?$TOTE@VProcess@ST@@@@II@Z
 extern QUEUEINTERRUPT:near32
-ONEWAYBECOME EQU ?oneWayBecome@ObjectMemory@@SIXPAV?$TOTE@X@@0@Z
+ONEWAYBECOME EQU ?oneWayBecome@ObjectMemory@@SIXPAV?$TOTE@VObject@ST@@@@0@Z
 extern ONEWAYBECOME:near32
-SHALLOWCOPY EQU ?shallowCopy@ObjectMemory@@SIPAV?$TOTE@X@@PAV2@@Z
+SHALLOWCOPY EQU ?shallowCopy@ObjectMemory@@SIPAV?$TOTE@VObject@ST@@@@PAV2@@Z
 extern SHALLOWCOPY:near32
 
 OOPSUSED EQU ?OopsUsed@ObjectMemory@@SIHXZ
@@ -341,23 +353,23 @@ extern YIELD:near32												; See process.cpp
 LOOKUPMETHOD EQU ?lookupMethod@Interpreter@@SIPAV?$TOTE@VCompiledMethod@ST@@@@PAV?$TOTE@VBehavior@ST@@@@PAV?$TOTE@VSymbol@ST@@@@@Z
 extern LOOKUPMETHOD:near32
 
-PRIMSTRINGSEARCH EQU ?primitiveStringSearch@Interpreter@@CIHXZ
+PRIMSTRINGSEARCH EQU ?primitiveStringSearch@Interpreter@@CIPAIXZ
 extern PRIMSTRINGSEARCH:near32
 
-PRIMSTRINGNEXTINDEX EQU ?primitiveStringNextIndexOfFromTo@Interpreter@@CIHXZ
-extern PRIMSTRINGNEXTINDEX:near32
+primitiveStringNextIndexOfFromTo EQU ?primitiveStringNextIndexOfFromTo@Interpreter@@CIPAIXZ
+extern primitiveStringNextIndexOfFromTo:near32
 
 ; Note this function returns 'bool', i.e. single byte in al; doesn't necessarily set whole of eax
 DISABLEINTERRUPTS EQU ?disableInterrupts@Interpreter@@SI_N_N@Z
 extern DISABLEINTERRUPTS:near32
 
-PRIMSTACKATPUT EQU ?primitiveStackAtPut@Interpreter@@CIHAAVCompiledMethod@ST@@I@Z
-extern PRIMSTACKATPUT:near32
+primitiveStackAtPut EQU ?primitiveStackAtPut@Interpreter@@CIPAIAAVCompiledMethod@ST@@I@Z
+extern primitiveStackAtPut:near32
 
-primitiveMillisecondClockValue EQU  ?primitiveMillisecondClockValue@Interpreter@@CIHXZ
+primitiveMillisecondClockValue EQU  ?primitiveMillisecondClockValue@Interpreter@@CIPAIXZ
 extern primitiveMillisecondClockValue:near32
 
-primitiveMicrosecondClockValue EQU  ?primitiveMicrosecondClockValue@Interpreter@@CIHXZ
+primitiveMicrosecondClockValue EQU  ?primitiveMicrosecondClockValue@Interpreter@@CIPAIXZ
 extern primitiveMicrosecondClockValue:near32
  
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -365,202 +377,202 @@ extern primitiveMicrosecondClockValue:near32
 ;; Table of primitives for normal primitive dispatching
 .DATA
 ALIGN 16
-_primitivesTable DD			primitiveActivateMethod		; case 0
-DWORD		primitiveReturnSelf							; case 1
-DWORD		primitiveReturnTrue							; case 2	
-DWORD		primitiveReturnFalse						; case 3
-DWORD		primitiveReturnNil							; case 4	
-DWORD		primitiveReturnLiteralZero					; case 5
-DWORD		primitiveReturnInstVar						; case 6
-DWORD		primitiveSetInstVar							; case 7
-DWORD		primitiveReturnStaticZero					; case 8	Was SmallInteger>>~= (redundant)
-DWORD		primitiveMultiply							; case 9
-DWORD		primitiveDivide								; case 10
-DWORD		primitiveMod								; case 11
-DWORD		primitiveDiv								; case 12
-DWORD		primitiveQuoAndRem							; case 13
-DWORD		primitiveSubtract							; case 14
-DWORD		primitiveAdd								; case 15
-DWORD		primitiveEqual								; case 16
-DWORD		primitiveGreaterOrEqual						; case 17
-DWORD		primitiveLessThan							; case 18	Number>>#@
-DWORD		primitiveGreaterThan						; case 19	Not Used in Smalltalk-80
-DWORD		primitiveLessOrEqual						; case 20	Not used in Smalltalk-80
-DWORD		primitiveLargeIntegerAdd					; case 21	LargeInteger>>#+
-DWORD		primitiveLargeIntegerSub					; case 22	LargeInteger>>#-
-DWORD		primitiveLargeIntegerLessThan				; case 23	LargeInteger>>#<
-DWORD		primitiveLargeIntegerGreaterThan			; case 24	LargeInteger>>#>
-DWORD		primitiveLargeIntegerLessOrEqual			; case 25	LargeInteger>>#<=
-DWORD		primitiveLargeIntegerGreaterOrEqual			; case 26	LargeInteger>>#>=
-DWORD		primitiveLargeIntegerEqual					; case 27	LargeInteger>>#=
-DWORD		primitiveLargeIntegerNormalize				; case 28	LargeInteger>>normalize. LargeInteger>>#~= in Smalltalk-80 (redundant)
-DWORD		primitiveLargeIntegerMul					; case 29	LargeInteger>>#*
-DWORD		primitiveLargeIntegerDivide					; case 30	LargeInteger>>#/
-DWORD		primitiveLargeIntegerMod					; case 31	LargeInteger>>#\\
-DWORD		primitiveLargeIntegerDiv					; case 32	LargeInteger>>#//
-DWORD		primitiveLargeIntegerQuoAndRem				; case 33	Was LargeInteger>>#quo:
-DWORD		primitiveLargeIntegerBitAnd					; case 34	LargeInteger>>#bitAnd:
-DWORD		primitiveLargeIntegerBitOr					; case 35	LargeInteger>>#bitOr:
-DWORD		primitiveLargeIntegerBitXor					; case 36	LargeInteger>>#bitXor:
-DWORD		primitiveLargeIntegerBitShift				; case 37	LargeInteger>>#bitShift
-DWORD		primitiveLargeIntegerBitInvert				; case 38	Not used in Smalltalk-80
-DWORD		primitiveLargeIntegerNegate					; case 39	Not used in Smalltalk-80
-DWORD		primitiveBitAnd								; case 40	SmallInteger>>asFloat
-DWORD		primitiveBitOr								; case 41	Float>>#+
-DWORD		primitiveBitXor								; case 42	Float>>#-
-DWORD		primitiveBitShift							; case 43	Float>>#<
-DWORD		primitiveSmallIntegerPrintString			; case 44	Float>>#> in Smalltalk-80
-DWORD		unusedPrimitive								; case 45	Float>>#<= in Smalltalk-80
-DWORD		unusedPrimitive								; case 46	Float>>#>= in Smalltalk-80
-DWORD		unusedPrimitive								; case 47	Float>>#= in Smalltalk-80
-DWORD		primitiveAsyncDLL32Call						; case 48	Float>>#~= in Smalltalk-80
-DWORD		primitiveBasicAt							; case 49	Float>>#* in Smalltalk-80
-DWORD		primitiveBasicAtPut							; case 50	Float>>#/ in Smalltalk-80
-DWORD		primitiveStringCollates						; case 51	Float>>#truncated
-DWORD		primitiveStringNextIndex					; case 52	Float>>#fractionPart in Smalltalk-80
-DWORD		primitiveQuo								; case 53	Float>>#exponent in Smalltalk-80
-DWORD		primitiveHighBit							; case 54	Float>>#timesTwoPower: in Smalltalk-80
-DWORD		primitiveStringCompare						; case 55	Not used in Smalltalk-80
-DWORD		primitiveStringCollate						; case 56
-DWORD		primitiveIsKindOf							; case 57	Not used in Smalltalk-80
-DWORD		primitiveAllSubinstances					; case 58	Not used in Smalltalk-80
-DWORD		primitiveNextIndexOfFromTo					; case 59	Not used in Smalltalk-80
-DWORD		primitiveAtCached							; case 60	LargeInteger>>#digitAt: and Object>>#at:
-DWORD		primitiveAtPutCached						; case 61	
-DWORD		primitiveSize								; case 62	LargeInteger>>#digitLength
-DWORD		primitiveStringAt							; case 63	
-DWORD		primitiveStringAtPut						; case 64
-DWORD		?primitiveNext@Interpreter@@CIHXZ			; case 65	
-DWORD		primitiveNextPut							; case 66
-DWORD		?primitiveAtEnd@Interpreter@@CIHXZ			; case 67
-DWORD		primitiveReturnFromInterrupt				; case 68	Was CompiledMethod>>#objectAt: (reserve for upTo:)
-DWORD		primitiveSetSpecialBehavior					; case 69	Was CompiledMethod>>#objectAt:put:
-DWORD		primitiveNew								; case 70	
-DWORD		primitiveNewWithArg							; case 71
-DWORD		primitiveBecome								; case 72
-DWORD		primitiveInstVarAt							; case 73
-DWORD		primitiveInstVarAtPut						; case 74
-DWORD		primitiveIdentityHash16						; case 75	Object>>hash, Object>>identityHash, Symbol>>hash
-DWORD		primitiveNewWithArg							; case 76	Will be primitiveNewFixed:
-DWORD		primitiveAllInstances						; case 77	was Behavior>>someInstance
-DWORD		primitiveReturn								; case 78	was Object>>nextInstance
-DWORD		primitiveValueOnUnwind						; case 79	CompiledMethod class>>newMethod:header:
-DWORD		primitiveVirtualCall						; case 80	Was ContextPart>>blockCopy:
-DWORD		primitiveValue								; case 81
-DWORD		primitiveValueWithArgs						; case 82
-DWORD		primitivePerform							; case 83
-DWORD		primitivePerformWithArgs					; case 84
-DWORD		primitiveSignal								; case 85
-DWORD		primitiveWait								; case 86	N.B. DON'T CHANGE, ref'd from signalSemaphore() in process.cpp 
-DWORD		primitiveResume								; case 87
-DWORD		primitiveSuspend							; case 88
-DWORD		primitiveFlushCache							; case 89	Behavior>>flushCache
-DWORD		primitiveNewVirtual							; case 90	Was InputSensor>>primMousePt, InputState>>primMousePt
-DWORD		primitiveTerminate							; case 91	Was InputState>>primCursorLocPut:, InputState>>primCursorLocPutAgain:
-DWORD		primitiveProcessPriority					; case 92	Was Cursor class>>cursorLink:
-DWORD		primitiveInputSemaphore						; case 93	Is InputState>>primInputSemaphore:
-DWORD		primitiveSampleInterval						; case 94	Is InputState>>primSampleInterval:
-DWORD		primitiveEnableInterrupts					; case 95	Was InputState>>primInputWord
-DWORD		primitiveDLL32Call							; case 96	Was BitBlt>>copyBits
-DWORD		primitiveSnapshot							; case 97	Is SystemDictionary>>snapshotPrimitive
-DWORD		primitiveQueueInterrupt						; case 98	Was Time class>>secondClockInto:
-DWORD		primitiveSetSignals							; case 99	Was Time class>>millisecondClockInto:
-DWORD		primitiveSignalAtTick						; case 100	Is ProcessorScheduler>>signal:atMilliseconds:
-DWORD		primitiveResize								; case 101	Was Cursor>>beCursor
-DWORD		primitiveChangeBehavior						; case 102	Was DisplayScreen>>beDisplay
-DWORD		primitiveAddressOf							; case 103	Was CharacterScanner>>scanCharactersFrom:to:in:rightX:stopConditions:di_SPlaying:
-DWORD		primitiveReturnFromCallback					; case 104	Was BitBlt drawLoopX:Y:
-DWORD		primitiveSingleStep							; case 105
-DWORD		primitiveHashBytes							; case 106	Not used in Smalltalk-80
-DWORD		primitiveUnwindCallback						; case 107	ProcessorScheduler>>primUnwindCallback
-DWORD		primitiveHookWindowCreate					; case 108	Not used in Smalltalk-80
-DWORD		primitiveIsSuperclassOf						; case 109	Not used in Smalltalk-80
-DWORD		primitiveEquivalent							; case 110	Character =, Object ==
-DWORD		primitiveClass								; case 111	Object class
-DWORD		primitiveCoreLeft							; case 112	Was SystemDictionary>>coreLeft - This is now the basic, non-compacting, incremental, garbage collect
-DWORD		PRIMQUIT									; case 113	SystemDictionary>>quitPrimitive
-DWORD		primitivePerformWithArgsAt					; case 114	SystemDictionary>>exitToDebugger
-DWORD		primitiveOopsLeft							; case 115	SystemDictionary>>oopsLeft - Use this for a compacting garbage collect
-DWORD		primitivePerformMethod						; case 116	This was primitiveSignalAtOopsLeftWordsLeft (low memory signal)
-DWORD		primitiveValueWithArgsAt					; case 117	Not used in Smalltalk-80
-DWORD		primitiveDeQForFinalize						; case 118	Not used in Smalltalk-80 - Dequeue an object from the VM's finalization queue
-DWORD		primitiveDeQBereavement						; case 119	Not used in Smalltalk-80 - Dequeue a weak object which has new Corpses and notify it
-DWORD		primitiveDWORDAt							; case 120	Not used in Smalltalk-80
-DWORD		primitiveDWORDAtPut							; case 121	Not used in Smalltalk-80
-DWORD		primitiveSDWORDAt							; case 122	Not used in Smalltalk-80
-DWORD		primitiveSDWORDAtPut						; case 123	Not used in Smalltalk-80
-DWORD		primitiveWORDAt								; case 124	Not used in Smalltalk-80
-DWORD		primitiveWORDAtPut							; case 125	Not used in Smalltalk-80
-DWORD		primitiveSWORDAt							; case 126	Not used in Smalltalk-80
-DWORD		primitiveSWORDAtPut							; case 127	Not used in Smalltalk-80
+_primitivesTable DD			primitiveActivateMethod			; case 0
+DWORD		primitiveReturnSelf								; case 1
+DWORD		primitiveReturnTrue								; case 2	
+DWORD		primitiveReturnFalse							; case 3
+DWORD		primitiveReturnNil								; case 4	
+DWORD		primitiveReturnLiteralZero						; case 5
+DWORD		primitiveReturnInstVar							; case 6
+DWORD		primitiveSetInstVar								; case 7
+DWORD		primitiveReturnStaticZero						; case 8	Was SmallInteger>>~= (redundant)
+DWORD		primitiveMultiply								; case 9
+DWORD		primitiveDivide									; case 10
+DWORD		primitiveMod									; case 11
+DWORD		primitiveDiv									; case 12
+DWORD		primitiveQuoAndRem								; case 13
+DWORD		primitiveSubtract								; case 14
+DWORD		primitiveAdd									; case 15
+DWORD		primitiveEqual									; case 16
+DWORD		primitiveGreaterOrEqual							; case 17
+DWORD		primitiveLessThan								; case 18	Number>>#@
+DWORD		primitiveGreaterThan							; case 19	Not Used in Smalltalk-80
+DWORD		primitiveLessOrEqual							; case 20	Not used in Smalltalk-80
+DWORD		primitiveLargeIntegerAdd						; case 21	LargeInteger>>#+
+DWORD		primitiveLargeIntegerSub						; case 22	LargeInteger>>#-
+DWORD		primitiveLargeIntegerLessThan					; case 23	LargeInteger>>#<
+DWORD		primitiveLargeIntegerGreaterThan				; case 24	LargeInteger>>#>
+DWORD		primitiveLargeIntegerLessOrEqual				; case 25	LargeInteger>>#<=
+DWORD		primitiveLargeIntegerGreaterOrEqual				; case 26	LargeInteger>>#>=
+DWORD		primitiveLargeIntegerEqual						; case 27	LargeInteger>>#=
+DWORD		primitiveLargeIntegerNormalize					; case 28	LargeInteger>>normalize. LargeInteger>>#~= in Smalltalk-80 (redundant)
+DWORD		primitiveLargeIntegerMul						; case 29	LargeInteger>>#*
+DWORD		primitiveLargeIntegerDivide						; case 30	LargeInteger>>#/
+DWORD		primitiveLargeIntegerMod						; case 31	LargeInteger>>#\\
+DWORD		primitiveLargeIntegerDiv						; case 32	LargeInteger>>#//
+DWORD		primitiveLargeIntegerQuoAndRem					; case 33	Was LargeInteger>>#quo:
+DWORD		primitiveLargeIntegerBitAnd						; case 34	LargeInteger>>#bitAnd:
+DWORD		primitiveLargeIntegerBitOr						; case 35	LargeInteger>>#bitOr:
+DWORD		primitiveLargeIntegerBitXor						; case 36	LargeInteger>>#bitXor:
+DWORD		primitiveLargeIntegerBitShift					; case 37	LargeInteger>>#bitShift
+DWORD		primitiveLargeIntegerBitInvert					; case 38	Not used in Smalltalk-80
+DWORD		primitiveLargeIntegerNegate						; case 39	Not used in Smalltalk-80
+DWORD		primitiveBitAnd									; case 40	SmallInteger>>asFloat
+DWORD		primitiveBitOr									; case 41	Float>>#+
+DWORD		primitiveBitXor									; case 42	Float>>#-
+DWORD		primitiveBitShift								; case 43	Float>>#<
+DWORD		primitiveSmallIntegerPrintString				; case 44	Float>>#> in Smalltalk-80
+DWORD		primitiveFloatGT								; case 45	Float>>#<= in Smalltalk-80
+DWORD		unusedPrimitive									; case 46	Float>>#>= in Smalltalk-80
+DWORD		unusedPrimitive									; case 47	Float>>#= in Smalltalk-80
+DWORD		primitiveAsyncDLL32CallThunk					; case 48	Float>>#~= in Smalltalk-80
+DWORD		primitiveBasicAt								; case 49	Float>>#* in Smalltalk-80
+DWORD		primitiveBasicAtPut								; case 50	Float>>#/ in Smalltalk-80
+DWORD		primitiveStringCollates							; case 51	Float>>#truncated
+DWORD		primitiveStringNextIndexOfFromTo								; case 52	Float>>#fractionPart in Smalltalk-80
+DWORD		primitiveQuo									; case 53	Float>>#exponent in Smalltalk-80
+DWORD		primitiveHighBit								; case 54	Float>>#timesTwoPower: in Smalltalk-80
+DWORD		primitiveStringCompare							; case 55	Not used in Smalltalk-80
+DWORD		primitiveStringCollate							; case 56
+DWORD		primitiveIsKindOf								; case 57	Not used in Smalltalk-80
+DWORD		primitiveAllSubinstances						; case 58	Not used in Smalltalk-80
+DWORD		primitiveNextIndexOfFromTo						; case 59	Not used in Smalltalk-80
+DWORD		primitiveAtCached								; case 60	LargeInteger>>#digitAt: and Object>>#at:
+DWORD		primitiveAtPutCached							; case 61	
+DWORD		primitiveSize									; case 62	LargeInteger>>#digitLength
+DWORD		primitiveStringAt								; case 63	
+DWORD		primitiveStringAtPut							; case 64
+DWORD		primitiveNext									; case 65	
+DWORD		primitiveNextPut								; case 66
+DWORD		primitiveAtEnd									; case 67
+DWORD		primitiveReturnFromInterrupt					; case 68	Was CompiledMethod>>#objectAt: (reserve for upTo:)
+DWORD		primitiveSetSpecialBehavior						; case 69	Was CompiledMethod>>#objectAt:put:
+DWORD		primitiveNew									; case 70	
+DWORD		primitiveNewWithArg								; case 71
+DWORD		primitiveBecome									; case 72
+DWORD		primitiveInstVarAt								; case 73
+DWORD		primitiveInstVarAtPut							; case 74
+DWORD		primitiveIdentityHash16							; case 75	Object>>hash, Object>>identityHash, Symbol>>hash
+DWORD		primitiveNewWithArg								; case 76	Will be primitiveNewFixed:
+DWORD		primitiveAllInstances							; case 77	was Behavior>>someInstance
+DWORD		primitiveReturn									; case 78	was Object>>nextInstance
+DWORD		primitiveValueOnUnwind							; case 79	CompiledMethod class>>newMethod:header:
+DWORD		primitiveVirtualCall							; case 80	Was ContextPart>>blockCopy:
+DWORD		primitiveValue									; case 81
+DWORD		primitiveValueWithArgsThunk						; case 82
+DWORD		primitivePerformThunk							; case 83
+DWORD		primitivePerformWithArgsThunk					; case 84
+DWORD		primitiveSignalThunk							; case 85
+DWORD		primitiveWaitThunk								; case 86	N.B. DON'T CHANGE, ref'd from signalSemaphore() in process.cpp 
+DWORD		primitiveResumeThunk							; case 87
+DWORD		primitiveSuspendThunk							; case 88
+DWORD		primitiveFlushCache								; case 89	Behavior>>flushCache
+DWORD		primitiveNewVirtual								; case 90	Was InputSensor>>primMousePt, InputState>>primMousePt
+DWORD		primitiveTerminateThunk							; case 91	Was InputState>>primCursorLocPut:, InputState>>primCursorLocPutAgain:
+DWORD		primitiveProcessPriorityThunk					; case 92	Was Cursor class>>cursorLink:
+DWORD		primitiveInputSemaphore							; case 93	Is InputState>>primInputSemaphore:
+DWORD		primitiveSampleInterval							; case 94	Is InputState>>primSampleInterval:
+DWORD		primitiveEnableInterrupts						; case 95	Was InputState>>primInputWord
+DWORD		primitiveDLL32Call								; case 96	Was BitBlt>>copyBits
+DWORD		primitiveSnapshot								; case 97	Is SystemDictionary>>snapshotPrimitive
+DWORD		primitiveQueueInterrupt							; case 98	Was Time class>>secondClockInto:
+DWORD		primitiveSetSignalsThunk						; case 99	Was Time class>>millisecondClockInto:
+DWORD		primitiveSignalAtTickThunk						; case 100	Is ProcessorScheduler>>signal:atMilliseconds:
+DWORD		primitiveResize									; case 101	Was Cursor>>beCursor
+DWORD		primitiveChangeBehavior							; case 102	Was DisplayScreen>>beDisplay
+DWORD		primitiveAddressOf								; case 103	Was CharacterScanner>>scanCharactersFrom:to:in:rightX:stopConditions:di_SPlaying:
+DWORD		primitiveReturnFromCallback						; case 104	Was BitBlt drawLoopX:Y:
+DWORD		primitiveSingleStepThunk						; case 105
+DWORD		primitiveHashBytes								; case 106	Not used in Smalltalk-80
+DWORD		primitiveUnwindCallback							; case 107	ProcessorScheduler>>primUnwindCallback
+DWORD		primitiveHookWindowCreate						; case 108	Not used in Smalltalk-80
+DWORD		primitiveIsSuperclassOf							; case 109	Not used in Smalltalk-80
+DWORD		primitiveEquivalent								; case 110	Character =, Object ==
+DWORD		primitiveClass									; case 111	Object class
+DWORD		primitiveCoreLeftThunk							; case 112	Was SystemDictionary>>coreLeft - This is now the basic, non-compacting, incremental, garbage collect
+DWORD		primitiveQuit									; case 113	SystemDictionary>>quitPrimitive
+DWORD		primitivePerformWithArgsAtThunk					; case 114	SystemDictionary>>exitToDebugger
+DWORD		primitiveOopsLeftThunk							; case 115	SystemDictionary>>oopsLeft - Use this for a compacting garbage collect
+DWORD		primitivePerformMethodThunk						; case 116	This was primitiveSignalAtOopsLeftWordsLeft (low memory signal)
+DWORD		primitiveValueWithArgsAtThunk					; case 117	Not used in Smalltalk-80
+DWORD		primitiveDeQForFinalize							; case 118	Not used in Smalltalk-80 - Dequeue an object from the VM's finalization queue
+DWORD		primitiveDeQBereavement							; case 119	Not used in Smalltalk-80 - Dequeue a weak object which has new Corpses and notify it
+DWORD		primitiveDWORDAt								; case 120	Not used in Smalltalk-80
+DWORD		primitiveDWORDAtPut								; case 121	Not used in Smalltalk-80
+DWORD		primitiveSDWORDAt								; case 122	Not used in Smalltalk-80
+DWORD		primitiveSDWORDAtPut							; case 123	Not used in Smalltalk-80
+DWORD		primitiveWORDAt									; case 124	Not used in Smalltalk-80
+DWORD		primitiveWORDAtPut								; case 125	Not used in Smalltalk-80
+DWORD		primitiveSWORDAt								; case 126	Not used in Smalltalk-80
+DWORD		primitiveSWORDAtPut								; case 127	Not used in Smalltalk-80
 
 ;; Smalltalk-80 used 7-bits for primitive numbers, so last was 127
 
-DWORD		primitiveDoublePrecisionFloatAt				; case 128
-DWORD		primitiveDoublePrecisionFloatAtPut			; case 129
-DWORD		primitiveSinglePrecisionFloatAt				; case 130
-DWORD		primitiveSinglePrecisionFloatAtPut			; case 131
-DWORD		primitiveByteAtAddress						; case 132
-DWORD		primitiveByteAtAddressPut					; case 133
-DWORD		primitiveIndirectDWORDAt					; case 134
-DWORD		primitiveIndirectDWORDAtPut					; case 135
-DWORD		primitiveIndirectSDWORDAt					; case 136
-DWORD		primitiveIndirectSDWORDAtPut				; case 137
-DWORD		primitiveIndirectWORDAt						; case 138
-DWORD		primitiveIndirectWORDAtPut					; case 139
-DWORD		primitiveIndirectSWORDAt					; case 140
-DWORD		primitiveIndirectSWORDAtPut					; case 141
-DWORD		primitiveReplaceBytes						; case 142
-DWORD		primitiveIndirectReplaceBytes				; case 143
-DWORD		?primitiveNextSDWORD@Interpreter@@CIHXZ		; case 144
-DWORD		primitiveAnyMask							; case 145
-DWORD		primitiveAllMask							; case 146
-DWORD		primitiveIdentityHash32						; case 147
-DWORD		primitiveLookupMethod						; case 148
-DWORD		primitiveStringSearch						; case 149
-DWORD		primitiveUnwindInterrupt 					; case 150
-DWORD		primitiveExtraInstanceSpec					; case 151
-DWORD		primitiveLowBit								; case 152
-DWORD		primitiveAllReferences						; case 153
-DWORD		primitiveOneWayBecome						; case 154
-DWORD		primitiveShallowCopy						; case 155
-DWORD		primitiveYield								; case 156
-DWORD		primitiveMakePoint							; case 157
-DWORD		primitiveSmallIntegerAt						; case 158
-DWORD		primitiveLongDoubleAt						; case 159
-DWORD		primitiveFloatAdd							; case 160
-DWORD		primitiveFloatSub							; case 161
-DWORD		primitiveFloatLT							; case 162
-DWORD		primitiveFloatEQ							; case 163
-DWORD		primitiveFloatMul							; case 164
-DWORD		primitiveFloatDiv							; case 165
-DWORD		primitiveTruncated							; case 166
-DWORD		primitiveLargeIntegerAsFloat				; case 167
-DWORD		primitiveAsFloat							; case 168
-DWORD		primitiveObjectCount						; case 169
-DWORD		primitiveStructureIsNull					; case 170
-DWORD		primitiveBytesIsNull						; case 171
-DWORD		primitiveVariantValue						; case 172
-DWORD		primitiveNextPutAll							; case 173
-DWORD		primitiveMillisecondClockValue				; case 174
-DWORD		primitiveIndexOfSP							; case 175
-DWORD		primitiveStackAtPut							; case 176
-DWORD		primitiveGetImmutable						; case 177
-DWORD		primitiveSetImmutable						; case 178
-DWORD		primitiveInstanceCounts						; case 179
-DWORD		primitiveDWORDAt							; case 180	Will be primitiveUIntPtrAt
-DWORD		primitiveDWORDAtPut							; case 181	Will be primitiveUIntPtrAtPut
-DWORD		primitiveSDWORDAt							; case 182	Will be primitiveIntPtrAt
-DWORD		primitiveSDWORDAtPut						; case 183	Will be primitiveIntPtrAtPut
-DWORD		primitiveIndirectDWORDAt					; case 184  Will be primitiveIndirectUIntPtrAt
-DWORD		primitiveIndirectDWORDAtPut					; case 185  Will be primitiveIndirectUIntPtrAtPut
-DWORD		primitiveIndirectSDWORDAt					; case 186  Will be primitiveIndirectIntPtrAt
-DWORD		primitiveIndirectSDWORDAtPut				; case 187  Will be primitiveIndirectIntPtrAtPut
-DWORD		primitiveReplacePointers					; case 188
-DWORD		primitiveMicrosecondClockValue				; case 189
-DWORD		unusedPrimitive								; case 190
-DWORD		unusedPrimitive								; case 191
-DWORD		unusedPrimitive								; case 192
+DWORD		primitiveDoublePrecisionFloatAt					; case 128
+DWORD		primitiveDoublePrecisionFloatAtPut				; case 129
+DWORD		primitiveSinglePrecisionFloatAt					; case 130
+DWORD		primitiveSinglePrecisionFloatAtPut				; case 131
+DWORD		primitiveByteAtAddress							; case 132
+DWORD		primitiveByteAtAddressPut						; case 133
+DWORD		primitiveIndirectDWORDAt						; case 134
+DWORD		primitiveIndirectDWORDAtPut						; case 135
+DWORD		primitiveIndirectSDWORDAt						; case 136
+DWORD		primitiveIndirectSDWORDAtPut					; case 137
+DWORD		primitiveIndirectWORDAt							; case 138
+DWORD		primitiveIndirectWORDAtPut						; case 139
+DWORD		primitiveIndirectSWORDAt						; case 140
+DWORD		primitiveIndirectSWORDAtPut						; case 141
+DWORD		primitiveReplaceBytes							; case 142
+DWORD		primitiveIndirectReplaceBytes					; case 143
+DWORD		primitiveNextSDWORD								; case 144
+DWORD		primitiveAnyMask								; case 145
+DWORD		primitiveAllMask								; case 146
+DWORD		primitiveIdentityHash32							; case 147
+DWORD		primitiveLookupMethod							; case 148
+DWORD		PRIMSTRINGSEARCH								; case 149
+DWORD		primitiveUnwindInterruptThunk					; case 150
+DWORD		primitiveExtraInstanceSpec						; case 151
+DWORD		primitiveLowBit									; case 152
+DWORD		primitiveAllReferences							; case 153
+DWORD		primitiveOneWayBecome							; case 154
+DWORD		primitiveShallowCopy							; case 155
+DWORD		primitiveYield									; case 156
+DWORD		primitiveNewInitializedObject					; case 157
+DWORD		primitiveSmallIntegerAt							; case 158
+DWORD		primitiveLongDoubleAt							; case 159
+DWORD		primitiveFloatAdd								; case 160
+DWORD		primitiveFloatSub								; case 161
+DWORD		primitiveFloatLT								; case 162
+DWORD		primitiveFloatEQ								; case 163
+DWORD		primitiveFloatMul								; case 164
+DWORD		primitiveFloatDiv								; case 165
+DWORD		primitiveTruncated								; case 166
+DWORD		primitiveLargeIntegerAsFloat					; case 167
+DWORD		primitiveAsFloat								; case 168
+DWORD		primitiveObjectCount							; case 169
+DWORD		primitiveStructureIsNull						; case 170
+DWORD		primitiveBytesIsNull							; case 171
+DWORD		primitiveVariantValue							; case 172
+DWORD		primitiveNextPutAll								; case 173
+DWORD		primitiveMillisecondClockValue					; case 174
+DWORD		primitiveIndexOfSP								; case 175
+DWORD		primitiveStackAtPut								; case 176
+DWORD		primitiveGetImmutable							; case 177
+DWORD		primitiveSetImmutable							; case 178
+DWORD		primitiveInstanceCounts							; case 179
+DWORD		primitiveDWORDAt								; case 180	Will be primitiveUIntPtrAt
+DWORD		primitiveDWORDAtPut								; case 181	Will be primitiveUIntPtrAtPut
+DWORD		primitiveSDWORDAt								; case 182	Will be primitiveIntPtrAt
+DWORD		primitiveSDWORDAtPut							; case 183	Will be primitiveIntPtrAtPut
+DWORD		primitiveIndirectDWORDAt						; case 184  Will be primitiveIndirectUIntPtrAt
+DWORD		primitiveIndirectDWORDAtPut						; case 185  Will be primitiveIndirectUIntPtrAtPut
+DWORD		primitiveIndirectSDWORDAt						; case 186  Will be primitiveIndirectIntPtrAt
+DWORD		primitiveIndirectSDWORDAtPut					; case 187  Will be primitiveIndirectIntPtrAtPut
+DWORD		primitiveReplacePointers						; case 188
+DWORD		primitiveMicrosecondClockValue					; case 189
+DWORD		unusedPrimitive									; case 190
+DWORD		unusedPrimitive									; case 191
+DWORD		unusedPrimitive									; case 192
 
 IFDEF _DEBUG
 	_primitiveCounters DD	256 DUP (0)
@@ -584,8 +596,6 @@ ENDIF
 ; operations need be performed at all by these primitives (the ref. count of the
 ; new object is forced to 1).
 ;
-; No arguments, so a clean stack is maintained
-;
 BEGINPRIMITIVE primitiveNew
 	mov		ecx, [_SP]						; Load receiver class at stack top
 	mov		edx, (OTE PTR[ecx]).m_location
@@ -602,17 +612,16 @@ BEGINPRIMITIVE primitiveNew
 
 	call	NEWPOINTEROBJECT				; Allocate the object
 
-	ReplaceStackTopWithNew					; Overwrite receiver class with new object (receiver's ref. count remains same)
-	ret										; Succeed - non-zero EAX
+	mov		[_SP], eax						; Overwrite receiver with new object
+	AddToZctNoSP <a>
+	mov		eax, _SP						; primitiveSuccess(0)
+	ret
 
-localPrimitiveFailure0:
-	jmp primitiveFailure0
+LocalPrimitiveFailure 0
 
 ENDPRIMITIVE primitiveNew
 
 ;  BOOL __fastcall Interpreter::primitiveNewWithArg()
-;
-; Can only succeed if argument is a SmallInteger, so a clean stack is maintained
 ;
 BEGINPRIMITIVE primitiveNewWithArg
 	mov		eax, [_SP]						; Load argument at stack top
@@ -630,9 +639,6 @@ BEGINPRIMITIVE primitiveNewWithArg
 	test    edx, MASK m_indexable
 	jz		localPrimitiveFailure2				; No, must use #new, not #new:
 
-	; Its going to work, pop arg
-	sub		_SP, OOPSIZE
-
    	; Do instances of the class contain pointers?
 	test    edx, MASK m_pointers
 	jz		newByteObject					; skip pointer object handling
@@ -643,7 +649,9 @@ BEGINPRIMITIVE primitiveNewWithArg
 	add		edx, eax						; edx now contains complete object size in oops
 	call	NEWPOINTEROBJECT				; Allocate the object
 
-	ReplaceStackTopWithNew <a>				; Overwrite receiver class with new object (receiver's ref. count remains same)
+	mov		[_SP-OOPSIZE], eax				; Overwrite receiver with new object
+	AddToZct <a>
+	lea		eax, [_SP-OOPSIZE]				; primitiveSuccess(1)
 	ret
 
 newByteObject:
@@ -651,19 +659,16 @@ newByteObject:
 	ASSUME	ecx:PTR OTE						; ECX still contains pointer to class
 	call	NEWBYTEOBJECT					; Allocate the object
 
-	ReplaceStackTopWithNew <a>				; Overwrite receiver class with new object (receiver's ref. count remains same)
+	mov		[_SP-OOPSIZE], eax				; Overwrite receiver with new object
+	AddToZct <a>
+	lea		eax, [_SP-OOPSIZE]				; primitiveSuccess(1)
 	ret
 
 	ASSUME	eax:NOTHING
 
-localPrimitiveFailure0:
-	jmp primitiveFailure0
-
-localPrimitiveFailure1:
-	jmp primitiveFailure1
-
-localPrimitiveFailure2:
-	jmp primitiveFailure2
+LocalPrimitiveFailure 0
+LocalPrimitiveFailure 1
+LocalPrimitiveFailure 2
 
 ENDPRIMITIVE primitiveNewWithArg
 
@@ -679,41 +684,38 @@ ENDPRIMITIVE primitiveNewWithArg
 ;	eax (which will not be 0), SO LIKE WIN32 FUNCTIONS, DO NOT 
 ;	COMPARE FOR EQUALITY WITH TRUE!
 ;
-;	Maintains a clean stack above _SP
-;
 ;	N.B. This primitive is not used unless #== is performed, because #== is inlined
 ;	by the compiler for performance reasons.
 ;
 BEGINPRIMITIVE primitiveEquivalent
-	PopOopInto <eax>							; Load argument ...
+	mov		eax, [_SP]							; Load argument ...
 	mov		edx, [oteTrue]						; Load oteTrue (default answer)
-	mov		ecx, [_SP]							; Load receiver into ecx
+	mov		ecx, [_SP-OOPSIZE]					; Load receiver into ecx
 	.IF ecx != eax								; receiver == arg?
 		add		edx, OTENTRYSIZE				; No, load oteFalse
 	.ENDIF
-	mov		[_SP], edx							; Overwrite the receiver with true/false
-	ret											; Not eax is non-zero, so will succeed
+	mov		[_SP-OOPSIZE], edx					; Overwrite the receiver with true/false
+	lea		eax, [_SP-OOPSIZE]					; primitiveSuccess(1)
+	ret
 ENDPRIMITIVE primitiveEquivalent
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;  int __fastcall Interpreter::primitiveClass()
 ;
-;	Faster than the wind (12+ret cycles) for SmallIntegers, a bit slower for other
-;	Objects.
-;
-;	Like primitiveEquivalent, cannot fail, so always returns a non-zero value.
-;
-;	Zero arguments, so leaves a clean stack
-;
 BEGINPRIMITIVE primitiveClass
 	mov		ecx, [_SP]							; Load receiver into ecx
-	.IF (!(cl & 1))
-		mov		eax, (OTE PTR[ecx]).m_oteClass		; Get class Oop	from Object into eax
-	.ELSE
-		mov		eax, [Pointers.ClassSmallInteger]
-	.ENDIF
-	mov		[_SP], eax
+	mov		eax, _SP							; primitiveSuccess(0)
+	test	cl, 1								; SmallInteger?
+	jne		smallInteger
+
+	mov		ecx, (OTE PTR[ecx]).m_oteClass		; No, get class Oop	from Object into eax
+	mov		[_SP], ecx
+	ret
+
+smallInteger:
+	mov		ecx, [Pointers.ClassSmallInteger]
+	mov		[_SP], ecx
 	ret
 ENDPRIMITIVE primitiveClass
 
@@ -722,16 +724,13 @@ ENDPRIMITIVE primitiveClass
 ;;
 ;  int __fastcall Interpreter::primitiveIsSuperclassOf()
 ;
-;	Primitive to speed up #isKindOf: (so we don't have to implement too many #isXXXXX methods, 
-;	which are nasty, requiring a change to Object for each). Double dispatched from Behavior,
-; 	so we know receiver and args are correct types
-;	Cannot fail, so always returns a non-zero value.
+; Double dispatched from Behavior, so we know receiver and args are correct types
 ;
 BEGINPRIMITIVE primitiveIsSuperclassOf
-	PopOopInto <eax>									; Load and nil out argument ...
+	mov		eax, [_SP]									; Load argument ...
 
 	; We ASSUME that the argument is indeed a Class object (because of a double dispatch)
-	mov		ecx, [_SP]									; Load receiver into ecx
+	mov		ecx, [_SP-OOPSIZE]							; Load receiver into ecx
 	mov		edx, [oteFalse]								; Default answer is false
 
 	;; Now we have the class of the object in ECX, and the class we're looking for in EAX
@@ -742,8 +741,11 @@ BEGINPRIMITIVE primitiveIsSuperclassOf
 		je		@F										; Yes, answer false
 	.ENDW
 	mov			edx, [oteTrue]
+
 @@:
-	mov			[_SP], edx								; overwrite on stack
+	mov			[_SP-OOPSIZE], edx						; overwrite receiver on stack
+
+	lea			eax, [_SP-OOPSIZE]						; primitiveSuccess(1)
 	ret
 ENDPRIMITIVE primitiveIsSuperclassOf
 
@@ -753,17 +755,16 @@ ENDPRIMITIVE primitiveIsSuperclassOf
 ;
 ;	Primitive to speed up #isKindOf: (so we don't have to implement too many #isXXXXX methods, 
 ;	which are nasty, requiring a change to Object for each).
-;	Cannot fail, so always returns a non-zero value.
 ;
 BEGINPRIMITIVE primitiveIsKindOf
-	PopOopInto <eax>									; Load and nil out argument ...
+	mov		eax, [_SP]									; Load argument ...
 	test	al, 1
 	jnz		answerFalse									; Nothing is a kind of SmallInteger instance
 
 	cmp		eax, [oteNil]
 	je		answerTrue									; everything is a type of nil
 
-	mov		ecx, [_SP]									; Load receiver into ecx
+	mov		ecx, [_SP-OOPSIZE]								; Load receiver into ecx
 
 	.IF (cl & 1)
 		mov	ecx, [Pointers.ClassSmallInteger]
@@ -780,14 +781,17 @@ BEGINPRIMITIVE primitiveIsKindOf
 	.ENDW
 
 answerTrue:
-	mov			eax, [oteTrue]						; Use EAX register so non-zero on exit
-	jmp			@F
+	mov			ecx, [oteTrue]							; Use EAX register so non-zero on exit
+	lea			eax, [_SP-OOPSIZE]						; primitiveSuccess(1)
+	mov			[_SP-OOPSIZE], ecx						; overwrite on stack
+
+	ret
 
 answerFalse:
-	mov			eax, [oteFalse]
-@@:
-	mov			ecx, [_SP]
-	mov			[_SP], eax							; overwrite on stack
+	mov			ecx, [oteFalse]
+	lea			eax, [_SP-OOPSIZE]						; primitiveSuccess(1)
+	mov			[_SP-OOPSIZE], ecx						; overwrite on stack
+
 	ret
 ENDPRIMITIVE primitiveIsKindOf
 
@@ -808,12 +812,11 @@ BEGINPRIMITIVE primitiveLookupMethod
 	; eax contains method Oop, or nil
 
 	mov		[_SP-OOPSIZE], eax						; Store back result
-	PopStack
+	lea		eax, [_SP-OOPSIZE]						; primitiveSuccess(1)
 
 	ret
 
-localPrimitiveFailure1:
-	jmp		primitiveFailure1
+LocalPrimitiveFailure 1
 
 ENDPRIMITIVE primitiveLookupMethod
 
@@ -821,17 +824,18 @@ ENDPRIMITIVE primitiveLookupMethod
 ;;
 ;  int __fastcall Interpreter::primitiveSize()
 ;
-;	9+ret cycles for SmallInteger, 
 ;	This primitive is unusual (like primitiveClass) in that it cannot fail
 ;	The primitive ASSUMES it is never called for SmallIntegers.
-;
-; 	No arguments, so leaves a clean stack
+;	Essentially same code as shortSpecialSendBasicSize
 ;
 BEGINPRIMITIVE primitiveSize
 	mov		ecx, [_SP]								; Load receiver into ecx
 	ASSUME	ecx:PTR OTE								; ecx points at receiver OTE
 
 	mov		eax, [ecx].m_size						; Load size into eax
+
+	test	[ecx].m_flags, MASK m_pointer			; ote->isPointers?
+	jz		isBytes
 
 	;; Calculate the length of the indexed part of a pointer object
 	mov		edx, [ecx].m_oteClass					; Get class Oop	from OTE into edx
@@ -848,15 +852,18 @@ BEGINPRIMITIVE primitiveSize
 	
 	add		edx, edx								; Convert to byte size (already *2 since SmallInteger)
 	sub		eax, edx								; Calculate length of variable part in bytes
-
-	; Is it a pointer object
-	test	[ecx].m_flags, MASK m_pointer
-	jz		@F										; No, skip MWORD length calculation
-	shr		eax, 2									; Divide byte size by 4 to get MWORD size
-@@:
-	lea		eax, [eax+eax+1]						; Convert to SmallInteger
+	
+	shr		eax, 1									; Divide byte size by 2 to get MWORD size as SmallInteger
+	or		eax, 1									; Add SmallInteger flag
 	mov		[_SP], eax								; Replace stack top
 
+	mov		eax, _SP								; primitiveSuccess(0)
+	ret
+
+isBytes:
+	lea		ecx, [eax+eax+1]						; Convert to SmallInteger
+	mov		eax, _SP								; primitiveSuccess(0)
+	mov		[_SP], ecx								; Replace stack top
 	ret
 
 	ASSUME	edx:NOTHING
@@ -887,7 +894,7 @@ BEGINPRIMITIVE primitiveAtCached
 	sar		edx, 1
 	jnc		localPrimitiveFailure0			; Index not an integer
 
-	dec		edx								; Convert 1 based index to zero based offset
+	sub		edx, 1							; Convert 1 based index to zero based offset
 	js		localPrimitiveFailure0			; Index out of bounds (<= 0)
 
 	; Is the array already in the AtCache?
@@ -970,12 +977,11 @@ updateAtCacheForPointerObject:
 
 	; Overwrite the receiver
 	mov		[_SP-OOPSIZE], eax
-	sub		_SP, OOPSIZE						; Adjust stack pointer
+	lea		eax, [_SP-OOPSIZE]					; primitiveSuccess(1)
 
 	ret
 
-localPrimitiveFailure0:
-	jmp primitiveFailure0
+LocalPrimitiveFailure 0
 
 updateAtCacheForByteArray:
 	ASSUME	eax:DWORD		; EAX is the offset into the AtCache
@@ -999,16 +1005,16 @@ updateAtCacheForByteArray:
 	; Store address of elements into AtCache entry
 	mov		_AtCache[eax].pElements, edi
 
-	movzx	eax, BYTE PTR[edi+edx]				; Load required byte, zero extending
+	movzx	ecx, BYTE PTR[edi+edx]				; Load required byte, zero extending
 	
 	pop		ebx									; Restore ebx
 	pop		edi									; Restore edi
 
-	lea		eax, [eax+eax+1]					; Convert to SmallInteger
+	lea		ecx, [ecx+ecx+1]					; Convert to SmallInteger
+	lea		eax, [_SP-OOPSIZE]					; primitiveSuccess(1)
 
 	; Overwrite the receiver in the stack
-	mov		[_SP-OOPSIZE], eax
-	sub		_SP, OOPSIZE						; Adjust stack pointer
+	mov		[_SP-OOPSIZE], ecx
 
 	ret
 
@@ -1031,7 +1037,7 @@ accessCachedObject:
 
 	; Overwrite the receiver
 	mov		[_SP-OOPSIZE], eax
-	sub		_SP, OOPSIZE						; Adjust stack pointer
+	lea		eax, [_SP-OOPSIZE]					; primitiveSuccess(1)
 
 	ret
 
@@ -1039,8 +1045,7 @@ localPrimitiveFailure1WithPop:
 	pop		ebx									; Restore ebx
 	pop		edi									; Restore edi
 
-localPrimitiveFailure1:
-	jmp primitiveFailure1
+LocalPrimitiveFailure 1
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 byteObjectAtCached:
@@ -1051,11 +1056,10 @@ IFDEF _DEBUG
 	jg		stringAt
 ENDIF
 
-	movzx	eax, BYTE PTR[eax+edx]				; Load required byte, zero extending
-	lea		eax, [eax+eax+1]					; Convert to SmallInteger
-
-	mov		[_SP-OOPSIZE], eax					; Overwrite the receiver
-	sub		_SP, OOPSIZE						; Adjust stack pointer
+	movzx	ecx, BYTE PTR[eax+edx]				; Load required byte, zero extending
+	lea		eax, [_SP-OOPSIZE]					; primitiveSuccess(1)
+	lea		ecx, [ecx+ecx+1]					; Convert to SmallInteger
+	mov		[_SP-OOPSIZE], ecx					; Overwrite the receiver
 
 	ret
 
@@ -1081,7 +1085,7 @@ BEGINPRIMITIVE primitiveAtPutCached
 	sar		edx, 1
 	jnc		localPrimitiveFailure0			; Index not an integer
 	
-	dec		edx								; Convert 1 based index to zero based offset
+	sub		edx, 1							; Convert 1 based index to zero based offset
 	js		localPrimitiveFailure0			; Index out of bounds (<= 0)
 
 	; Is the array already in the AtPutCache?
@@ -1181,12 +1185,11 @@ updateAtPutCacheForPointerObject:
 	pop		edi									; Ditto edi
 
 	mov		[_SP-OOPSIZE*2], eax				; And overwrite receiver in stack with new value
-	sub		_SP, OOPSIZE*2						; Pop args
+	lea		eax, [_SP-OOPSIZE*2]				; primitiveSuccess(2)
 
 	ret	
 
-localPrimitiveFailure0:
-	jmp primitiveFailure0
+LocalPrimitiveFailure 0
 
 updateAtPutCacheForByteArray:
 	ASSUME	edx:DWORD							; The desired index
@@ -1227,7 +1230,7 @@ updateAtPutCacheForByteArray:
 	pop		edi
 
 	mov		[_SP-OOPSIZE*2], eax				; And overwrite receiver in stack with new value
-	sub		_SP, OOPSIZE*2						; Pop args
+	lea		eax, [_SP-OOPSIZE*2]				; primitiveSuccess(2)
 
 	ret	
 
@@ -1235,15 +1238,13 @@ localPrimitiveFailure1WithPop:
 	pop		ebx
 	pop		edi
 
-localPrimitiveFailure1:
-	jmp primitiveFailure1
+LocalPrimitiveFailure 1
 
 localPrimitiveFailure2WithPop:
 	pop		ebx
 	pop		edi
 
-localPrimitiveFailure2:
-	jmp primitiveFailure2
+LocalPrimitiveFailure 2
 
 accessCachedObject:
 	; Note that we won't normally get here unless the primitive methods is #perform:'d, since
@@ -1280,7 +1281,7 @@ accessCachedObject:
 
 	CountUpOopIn <a>							; Because arg stored into a heap object, count goes up by one
 	mov		[_SP-OOPSIZE*2], eax				; And overwrite receiver in stack with new value
-	sub		_SP, OOPSIZE*2						; Pop args
+	lea		eax, [_SP-OOPSIZE*2]				; primitiveSuccess(2)
 
 	ret	
 
@@ -1309,7 +1310,7 @@ cachedByteObjectAtPut:
 	lea		eax, [edx+edx+1]					; Regenerate SmallInteger argument
 
 	mov		[_SP-OOPSIZE*2], eax				; And overwrite receiver in stack with new value
-	sub		_SP, OOPSIZE*2						; Pop args
+	lea		eax, [_SP-OOPSIZE*2]				; primitiveSuccess(2)
 
 	ret	
 
@@ -1331,8 +1332,6 @@ ENDPRIMITIVE primitiveAtPutCached
 ; that the receiver is a string, as does not expect to be used in incorrect
 ; classes.
 ;
-; Stack left clean as argument can only be SmallInteger
-;
 BEGINPRIMITIVE primitiveStringAt
 	mov		eax, DWORD PTR [_SP-OOPSIZE]	; Load receiver OTE from stack into EAX
 	ASSUME	eax:PTR OTE
@@ -1345,7 +1344,7 @@ BEGINPRIMITIVE primitiveStringAt
 	sar		edx, 1
 	jnc		localPrimitiveFailure0			; Index not an integer
 
-	dec		edx								; Convert 1 based index to zero based offset
+	sub		edx, 1							; Convert 1 based index to zero based offset
 	js		localPrimitiveFailure1			; Index out of bounds (<= 0)
 
 	; Is the string already in the AtCache?
@@ -1386,21 +1385,18 @@ accessCachedObject:
 	movzx	edx, BYTE PTR[eax+edx]				; Load the character value from the string
 	mov		eax, [OBJECTTABLE]
 
-	shl		edx, 4								; Multiply edx by OTENTRYSIZE (16)
+	shl		edx, 4								; Multiply edx by OTENTRYSIZE (16) (unfortunately not a valid scale value for LEA)
 	add		eax, FIRSTCHAROFFSET
 	add		eax, edx
 
-	; Overwrite the receiver with the accessed character and inc. its ref count
+	; Overwrite the receiver with the accessed character
 	mov		[_SP-OOPSIZE], eax
-	sub		_SP, OOPSIZE						; Adjust stack pointer
+	lea		eax, [_SP-OOPSIZE*1]				; primitiveSuccess(1)
 
 	ret
 
-localPrimitiveFailure0:
-	jmp primitiveFailure0
-
-localPrimitiveFailure1:
-	jmp primitiveFailure1
+LocalPrimitiveFailure 0
+LocalPrimitiveFailure 1
 
 ENDPRIMITIVE primitiveStringAt
 
@@ -1408,8 +1404,6 @@ ENDPRIMITIVE primitiveStringAt
 ;  BOOL __fastcall Interpreter::primitiveStringAtPut()
 ;
 ; Primitive for storing characters into Strings
-; A clean stack is maintained, since value and index are not ref. counted, and
-; receiver is overwritten with value
 ;
 BEGINPRIMITIVE primitiveStringAtPut
 	mov		ecx, [_SP-OOPSIZE*2]				; Access receiver under arguments
@@ -1418,13 +1412,13 @@ BEGINPRIMITIVE primitiveStringAtPut
 	sar		edx, 1								; Argument is a SmallInteger?
 	jnc		localPrimitiveFailure0				; No, primitive failure
 
-	dec		edx									; Convert 1 based index to zero based offset
+	sub		edx, 1								; Convert 1 based index to zero based offset
 	js		localPrimitiveFailure1				; Index out of bounds (<= 0)
 
 	mov		eax, [ecx].m_location				; Load object address into eax
 
 	cmp		edx, [ecx].m_size					; Compare offset with object size (if immutable size < 0, so will fail)
-	jge		localPrimitiveFailure2				; Index out of bounds (>= size)
+	jge		localPrimitiveFailure1				; Index out of bounds (>= size)
 
 	add		eax, edx							; eax now contains pointer to destination
 
@@ -1452,17 +1446,12 @@ BEGINPRIMITIVE primitiveStringAtPut
 
 	mov		eax, [_SP]							; Relod char (not ref. counted)
 	mov		[_SP-OOPSIZE*2], eax				; ...and overwrite with value for return
-	PopStack <2>
+	lea		eax, [_SP-OOPSIZE*2]				; primitiveSuccess(2)
 	ret
 
-localPrimitiveFailure0:
-	jmp primitiveFailure0
-
-localPrimitiveFailure1:
-	jmp primitiveFailure1
-
-localPrimitiveFailure2:
-	jmp primitiveFailure2
+LocalPrimitiveFailure 0
+LocalPrimitiveFailure 1
+LocalPrimitiveFailure 2
 
 ENDPRIMITIVE primitiveStringAtPut
 
@@ -1473,7 +1462,6 @@ ENDPRIMITIVE primitiveStringAtPut
 ;;
 ;; Primitive for getting elements of indexed objects without using AtCache
 ;;
-;; Can only succeed if argument is a SmallInteger, so a clean stack is maintained
 ;; The receiver MUST not be a SmallInteger, or a crash will result when attempting
 ;; the line marked with a '*'
 ;;
@@ -1483,9 +1471,9 @@ BEGINPRIMITIVE primitiveBasicAt
    	ASSUME	ecx:PTR OTE							; ecx is pointer to receiver for rest of primitive
 
 	sar		edx, 1								; Argument is a SmallInteger?
-	jnc		localPrimitiveFailure0					; Arg not a SmallInteger, primitive failure 0
+	jnc		localPrimitiveFailure0				; Arg not a SmallInteger, primitive failure 0
 
-	dec		edx									; Convert 1 based index to zero based offset
+	sub		edx, 1								; Convert 1 based index to zero based offset
 
 	mov		eax, [ecx].m_oteClass				; Get class Oop from OTE into EAX for later use
 	ASSUME	eax:PTR OTE
@@ -1529,16 +1517,12 @@ pointerAt:
 	
 	mov		eax, [eax+edx*OOPSIZE]				; Load Oop of element at required index
 	mov		[_SP-OOPSIZE], eax					; And overwrite receiver in stack with it
-	
-	PopStack
+	lea		eax, [_SP-OOPSIZE]					; primitiveSuccess(1)
 
 	ret
 
-localPrimitiveFailure0:
-	jmp primitiveFailure0
-
-localPrimitiveFailure1:
-	jmp primitiveFailure1
+LocalPrimitiveFailure 0
+LocalPrimitiveFailure 1
 
 ENDPRIMITIVE primitiveBasicAt
 
@@ -1559,18 +1543,16 @@ byteObjectAt PROC
 	cmp		edx, ecx							; Index out of bounds (>= size) ?
 	jae		localPrimitiveFailure1				; 
 	
-	movzx	eax, BYTE PTR[eax+edx]				; Load required byte, zero extending
-	ASSUME	eax:NOTHING
+	movzx	ecx, BYTE PTR[eax+edx]				; Load required byte, zero extending
 
-	lea		eax, [eax+eax+1]					; Convert to SmallInteger
-	mov		[_SP-OOPSIZE], eax					; Overwrite receiver with result. No need to count as SmallInteger
-	sub		_SP, OOPSIZE						; Pop arg off stack
+	lea		eax, [_SP-OOPSIZE]					; primitiveSuccess(1)
+	lea		ecx, [ecx+ecx+1]					; Convert to SmallInteger
+	mov		[_SP-OOPSIZE], ecx					; Overwrite receiver with result. No need to count as SmallInteger
 
 	; eax now contains a SmallInteger, so it cannot be zero (i.e. success indication is returned)
 	ret
 
-localPrimitiveFailure1:
-	jmp primitiveFailure1
+LocalPrimitiveFailure 1
 
 byteObjectAt ENDP
 
@@ -1587,7 +1569,7 @@ BEGINPRIMITIVE primitiveInstVarAt
    	ASSUME	ecx:PTR OTE							; ecx is pointer to receiver for rest of primitive
 	jnc		localPrimitiveFailure0				; Arg not a SmallInteger, primitive failure 0
 
-	dec		edx									; Convert 1 based index to zero based offset
+	sub		edx, 1								; Convert 1 based index to zero based offset
 	mov		eax, [ecx].m_location				; Load object address into eax *Will fail if receiver is SmallInteger*
 	ASSUME	eax:PTR VariantObject
 	js		localPrimitiveFailure1				; Index out of bounds (<= 0)
@@ -1602,18 +1584,14 @@ BEGINPRIMITIVE primitiveInstVarAt
 	cmp		edx, ecx							; offset < size?
 	jae		localPrimitiveFailure1				; No, out of bounds (>=)
 
-	mov		eax, [eax].m_elements[edx*OOPSIZE]	; Load Oop of element at required index
-	ASSUME	eax:NOTHING
-	mov		[_SP-OOPSIZE], eax					; And overwrite receiver in stack with it
-	PopStack
+	mov		ecx, [eax].m_elements[edx*OOPSIZE]	; Load Oop from inst var
+	lea		eax, [_SP-OOPSIZE]					; primitiveSuccess(1)
+	mov		[_SP-OOPSIZE], ecx					; Overwrite receiver with inst var value
 
 	ret
 
-localPrimitiveFailure0:
-	jmp primitiveFailure0
-
-localPrimitiveFailure1:
-	jmp primitiveFailure1
+LocalPrimitiveFailure 0
+LocalPrimitiveFailure 1
 
 ENDPRIMITIVE primitiveInstVarAt
 
@@ -1624,8 +1602,7 @@ ENDPRIMITIVE primitiveInstVarAt
 ;; Primitive for setting elements of indexed objects without using AtPutCache
 ;; This primitive answers its value argument, so it moves it down
 ;; the stack, overwriting the receiver. The other argument must be a
-;; SmallInteger (for the primitive to succeed) so the net result is
-;; that a clean stack is maintained.
+;; SmallInteger for the primitive to succeed.
 ;;
 BEGINPRIMITIVE primitiveBasicAtPut
 	mov		edx, [_SP-OOPSIZE]					; Load index argument from stack
@@ -1635,7 +1612,7 @@ BEGINPRIMITIVE primitiveBasicAtPut
 	sar		edx, 1								; Argument is a SmallInteger?
 	jnc		localPrimitiveFailure0 				; No, primitive failure
 
-	dec		edx									; Convert 1 based index to zero based offset
+	sub		edx, 1								; Convert 1 based index to zero based offset
 
 	js		localPrimitiveFailure1				; Index out of bounds (<= 0)
 
@@ -1671,29 +1648,25 @@ BEGINPRIMITIVE primitiveBasicAtPut
 	mov		eax, [ecx].m_location				; Reload address of receiver into eax
 	ASSUME	eax:PTR VariantObject
 	
-	mov		ecx, [_SP]							; Reload value to write
-	ASSUME	ecx:PTR OTE
+	lea		eax, [eax+edx*OOPSIZE]	
+	mov		edx, [_SP]							; Reload value to write
 
-	xchg	ecx, [eax+edx*OOPSIZE]				; Exchange Oop of overwritten value with new value
+	mov		ecx, [eax]				 			; Load value to overwrite into ECX
+	mov		[eax], edx							; and overwrite with new value in edx
 	CountDownOopIn <c>							; Count down overwritten value
 
 	; count down destroys eax, ecx, and edx
-	mov		eax, [_SP]							; Reload new value into eax
+	mov		eax, [_SP]							; Reload new value into eax again
 	mov		ecx, [_SP-OOPSIZE*2]				; Reload receiver (again)
 	mov		[_SP-OOPSIZE*2], eax				; And overwrite receiver in stack with new value
-	sub		_SP, OOPSIZE*2						; Pop args
 
 	CountUpOopIn <a>							; Must count up argument because written into a heap object
+	lea		eax, [_SP-OOPSIZE*2]				; primitiveSuccess(2)
 	ret
 
-localPrimitiveFailure0:
-	jmp primitiveFailure0
-
-localPrimitiveFailure1:
-	jmp primitiveFailure1
-
-localPrimitiveFailure2:
-	jmp primitiveFailure2
+LocalPrimitiveFailure 0
+LocalPrimitiveFailure 1
+LocalPrimitiveFailure 2
 
 ENDPRIMITIVE primitiveBasicAtPut
 
@@ -1725,19 +1698,14 @@ byteObjectAtPut PROC
 	mov		[eax], dl						; Store byte into receiver
 	ASSUME	eax:NOTHING
 
-	mov		eax, [_SP]						; Reload value to store from stack top
-	mov		[_SP-OOPSIZE*2], eax			; ...and overwrite with value for return (still in EAX)
+	mov		ecx, [_SP]						; Reload value to store from stack top
+	lea		eax, [_SP-OOPSIZE*2]			; primitiveSuccess(2)
+	mov		[_SP-OOPSIZE*2], ecx			; ...and overwrite with value for return (still in EAX)
 
-	PopStack <2>							; Pop Args
-
-	;; EAX still contains SmallInteger value, and therefore is non-zero for success
 	ret
 
-localPrimitiveFailure1:
-	jmp primitiveFailure1
-
-localPrimitiveFailure2:
-	jmp primitiveFailure2
+LocalPrimitiveFailure 1
+LocalPrimitiveFailure 2
 
 byteObjectAtPut ENDP
 
@@ -1755,7 +1723,7 @@ BEGINPRIMITIVE primitiveInstVarAtPut
 	sar		edx, 1								; Argument is a SmallInteger?
 	jnc		localPrimitiveFailure0				; No, primitive failure
 
-	dec		edx									; Convert 1 based index to zero based offset
+	sub		edx, 1								; Convert 1 based index to zero based offset
 	mov		eax, [ecx].m_location				; Load object address into eax
 	js		localPrimitiveFailure1				; Index out of bounds (<= 0)
 
@@ -1771,8 +1739,11 @@ BEGINPRIMITIVE primitiveInstVarAtPut
 	cmp		edx, ecx							; Index <= size (still in ecx)?
 	jge		localPrimitiveFailure1				; No, out of bounds
 	
-	mov		ecx, [_SP]							; Load value to write
-	xchg	ecx, [eax].m_elements[edx*OOPSIZE]	; Exchange Oop of overwritten value with new value
+	lea		eax, [eax].m_elements[edx*OOPSIZE]
+
+	mov		edx, [_SP]							; Load value to write
+	mov		ecx, [eax]							; Exchange Oop of overwritten value with new value
+	mov		[eax], edx
 	ASSUME	eax:NOTHING
 	CountDownOopIn <c>							; Count down overwritten value
 
@@ -1780,16 +1751,15 @@ BEGINPRIMITIVE primitiveInstVarAtPut
 	mov		ecx, [_SP-OOPSIZE*2]				; Reload receiver
 	mov		eax, [_SP]							; Reload new value into eax
 	mov		[_SP-OOPSIZE*2], eax				; And overwrite receiver in stack with new value
-	PopStack <2>
+
 	; Must count up arg, because written into a heap object
 	CountUpOopIn <a>
+
+	lea		eax, [_SP-OOPSIZE*2]				; primitiveSuccess(2)
 	ret
 
-localPrimitiveFailure0:
-	jmp primitiveFailure0
-
-localPrimitiveFailure1:
-	jmp primitiveFailure1
+LocalPrimitiveFailure 0
+LocalPrimitiveFailure 1
 
 ENDPRIMITIVE primitiveInstVarAtPut
 
@@ -1799,7 +1769,9 @@ BEGINPRIMITIVE primitiveShallowCopy
 	mov		ecx, [_SP]
 	CANTBEINTEGEROBJECT <ecx>
 	call	SHALLOWCOPY
-	ReplaceStackTopWithNew
+	mov		[_SP], eax						; Overwrite receiver with new object
+	AddToZctNoSP <a>
+	mov		eax, _SP						; primitiveSuccess(0)
 	ret
 ENDPRIMITIVE primitiveShallowCopy
 
@@ -1833,13 +1805,12 @@ BEGINPRIMITIVE primitiveStringCollate
 
 	add		eax, eax					; Shift lstrcmpi result to make SmallInteger
 @@:
-	inc		eax							; Add SmallInteger flag
+	or		eax, 1						; Add SmallInteger flag
 	mov		[_SP-OOPSIZE], eax			; Store back the SmallInteger result over receiver
-	PopStack
+	lea		eax, [_SP-OOPSIZE*1]		; primitiveSuccess(1)
 	ret
 
-localPrimitiveFailure0:
-	jmp primitiveFailure0
+LocalPrimitiveFailure 0
 
 ENDPRIMITIVE primitiveStringCollate
 
@@ -1850,13 +1821,13 @@ BEGINPRIMITIVE primitiveStringCollates
 	ASSUME	ecx:PTR OTE
 	mov		edx, [_SP]
 
-	test	dl, 1								; Arg is SmallInteger?
-	jnz		localPrimitiveFailure0
-	ASSUME	edx:PTR OTE
-
 	xor		eax, eax							; Set 0 as default (i.e. equal)
 	cmp		ecx, edx
 	je		@F									; If identical, can short cut as must be =
+
+	test	dl, 1								; Arg is SmallInteger?
+	jnz		localPrimitiveFailure0
+	ASSUME	edx:PTR OTE
 
 	test	[edx].m_flags, MASK m_weakOrZ		; Arg object is null terminated?
 	mov		ecx, [ecx].m_location				; Preload ptr to receiver string
@@ -1868,16 +1839,15 @@ BEGINPRIMITIVE primitiveStringCollates
 
 	INVOKE	lstrcmp, ecx, edx
 
-	add		eax, eax					; Shift to make SmallInteger
+	add		eax, eax							; Shift to make SmallInteger
 
 @@:
-	inc		eax							; Add SmallInteger flag
-	mov		[_SP-OOPSIZE], eax			; Store back the SmallInteger result over receiver
-	PopStack
+	or		eax, 1								; Add SmallInteger flag
+	mov		[_SP-OOPSIZE], eax					; Store SmallInteger result over receiver
+	lea		eax, [_SP-OOPSIZE*1]				; primitiveSuccess(1)
 	ret
 
-localPrimitiveFailure0:
-	jmp primitiveFailure0
+LocalPrimitiveFailure 0
 
 ENDPRIMITIVE primitiveStringCollates
 
@@ -1886,22 +1856,22 @@ BEGINPRIMITIVE primitiveStringCompare
 	ASSUME	eax:PTR OTE
 	mov		edx, [_SP]
 
+	cmp		eax, edx
+	jne		notIdentical
+
+	mov		ecx, [oteTrue]					; Identical
+	lea		eax, [_SP-OOPSIZE]				; primitiveSuccess(1)
+	mov		[_SP-OOPSIZE], ecx
+	ret
+
+notIdentical:
 	test	dl, 1
 	jnz		localPrimitiveFailure0
 	ASSUME	edx:PTR OTE
 
-	cmp		eax, edx
-	jne		@F
-
-	mov		eax, [oteTrue]					; Identical
-	mov		[_SP-OOPSIZE], eax
-	PopStack
-	ret										; EAX contains an Oop, so non-zero for success return
-
-@@:
 	mov		ecx, [eax].m_oteClass			; Load ecx with receiver class
 	cmp		ecx, [edx].m_oteClass			; receiver class == arg class?
-	jne		primitiveFailure0				; Same class? If not fail it
+	jne		localPrimitiveFailure0				; Same class? If not fail it
 
 	push	esi								; Save esi for temp store
 	mov		ecx, [eax].m_size				; Load ecx with size of both objects
@@ -1912,10 +1882,11 @@ BEGINPRIMITIVE primitiveStringCompare
 	je		@F
 
 	pop		esi
-	mov		eax, [oteFalse]					; Different sizes, therefore cannot be equal
-	mov		[_SP-OOPSIZE], eax
-	PopStack
-	ret										; EAX contains an Oop, so non-zero for success return
+
+	mov		ecx, [oteFalse]					; Different sizes, therefore cannot be equal
+	lea		eax, [_SP-OOPSIZE]				; primitiveSuccess(1)
+	mov		[_SP-OOPSIZE], ecx
+	ret
 
 @@:
 	mov		esi, [eax].m_location			
@@ -1940,7 +1911,7 @@ BEGINPRIMITIVE primitiveStringCompare
 	and		ecx, 3							; compare the remaining bytes
 	repe	cmpsb
 
-	jne		@F
+	jne		@F								; If not equal, skip to answer false
 
 	sub		eax, OTENTRYSIZE				; true is Oop before false
 
@@ -1953,11 +1924,10 @@ BEGINPRIMITIVE primitiveStringCompare
 	ASSUME	_SP:PTR Oop
 
 	mov		[_SP-OOPSIZE], eax
-	PopStack
-	ret										; EAX contains an Oop, so non-zero for success return
+	lea		eax, [_SP-OOPSIZE]				; primitiveSuccess(1)
+	ret
 
-localPrimitiveFailure0:
-	jmp primitiveFailure0
+LocalPrimitiveFailure 0
 
 ENDPRIMITIVE primitiveStringCompare
 
@@ -1974,6 +1944,7 @@ BEGINPRIMITIVE primitiveIdentityHash16
 	or			eax, 1
 	
 	mov		[_SP], eax								; Overwrite stack top
+	mov		eax, _SP								; primitiveSuccess(0)
 	ret
 ENDPRIMITIVE primitiveIdentityHash16
 
@@ -1984,14 +1955,15 @@ BEGINPRIMITIVE primitiveIdentityHash32
 	mov		eax, [ecx].m_oteClass
 	ASSUME	eax:PTR OTE								; eax now OTE of class
 	mov		dx, [ecx].m_idHash						; Load identity hash value from the receiver's OTE
-	xor		eax, eax
-	mov		ax, [eax].m_idHash						; Load ax with identity hash of the class
+	xor		ecx, ecx
+	mov		cx, [eax].m_idHash						; Load ax with identity hash of the class
 	ASSUME	eax:NOTHING
-	shl		eax, 16
-	or		eax, edx
-	and		eax, 3FFFFFFFh							; Keep as positive SmallInteger
-	lea		eax, [eax+eax+1]						; Convert to SmallInteger
-	mov		[_SP], eax								; Overwrite stack top
+	shl		ecx, 16
+	or		ecx, edx
+	and		ecx, 3FFFFFFFh							; Keep as positive SmallInteger
+	mov		eax, _SP								; primitiveSuccess(0)
+	lea		ecx, [ecx+ecx+1]						; Convert to SmallInteger
+	mov		[_SP], ecx								; Overwrite stack top
 	ret
 ENDPRIMITIVE primitiveIdentityHash32
 
@@ -2039,7 +2011,7 @@ hashStringRepeat:
 	;and		eax, 0fffffffh				; Mask out the former top nibble
 
 hashStringNoCarry:
-	inc     ecx
+	inc		ecx
 	dec     edx
 	jnz     hashStringRepeat
 hashStringRet:
@@ -2051,8 +2023,7 @@ hashBytes ENDP
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;  int __fastcall Interpreter::primitiveHashBytes()
 ;
-; Leaves a clean stack as takes no arguments. Should not fail
-; as long as has not been called for a non-byte object (i.e. somebody 
+; Should not fail as long as has not been called for a non-byte object (i.e. somebody 
 ; has put the primitive in a method of a non-byte class). The only other 
 ; possibility for failure is a VM bug which results in the stack pointer being out for
 ; some reason. This will be trapped in the debug system only.
@@ -2071,9 +2042,9 @@ BEGINPRIMITIVE primitiveHashBytes
 	ASSUME	ecx:PTR Object
 
 	call	hashBytes
-	add		eax, eax							; Left shift 1 (SmallInteger conversion)
-	inc		eax									; Add in SmallInteger bit
-	mov		[_SP], eax
+	lea		ecx, [eax+eax+1]					; Convert to SmallInteger
+	mov		eax, _SP							; primitiveSuccess(0)
+	mov		[_SP], ecx
 	ret
 ENDPRIMITIVE primitiveHashBytes
 
@@ -2094,7 +2065,7 @@ BEGINPRIMITIVE primitiveReturnFromCallback
 	jne		@F										; No, skip longjmp
 
 	PopStack										; Pop off the jmp_buf pointer
-	dec		eax										; Convert from a SmallInteger
+	xor		eax, 1									; Convert from a SmallInteger
 	pushd	SE_VMCALLBACKEXIT						; Return SE_VMCALLBACKEXIT code as the setjmp retval
 	StoreInterpreterRegisters						; Store down IP/SP for C++ we're about to jump back to
 	
@@ -2181,7 +2152,7 @@ BEGINPRIMITIVE primitiveReturnFromInterrupt
 
 	add		edx, [ACTIVEPROCESS]				; Add offset back to active proc. base address to get frame address in edx
 	sub		_SP, OOPSIZE*3						; Pop args
-	inc		edx									; Convert to SmallInteger (addresses aligned on 4-byte boundary)
+	or		edx, 1								; Convert to SmallInteger (addresses aligned on 4-byte boundary)
 
 	call	shortReturn							; Return to interrupted frame (returning the suspendingList at the time of the interrupt)
 
@@ -2193,7 +2164,7 @@ BEGINPRIMITIVE primitiveReturnFromInterrupt
 	cmp		ecx, [oteNil]						; Was it waiting on a list?
 	jne		@F
 
-	mov		eax, 1								; Process was active, succeed and continue
+	mov		eax, _SP							; Process was active, succeed and continue
 	ret
 @@:
 	; The interrupted process was waiting/suspended
@@ -2206,17 +2177,16 @@ BEGINPRIMITIVE primitiveReturnFromInterrupt
 	jz		@F									; No, skip so "suspend on list"
 	call	RESCHEDULE							; Just resuspend the process and schedule another
 	LoadInterpreterRegisters
-	mov		eax, 1
+	mov		eax, _SP							; primitiveSuccess(0)
 	ret
 		
 @@:
 	call	RESUSPENDACTIVEON
-	mov		ecx, eax							; EAX contains object and is therefore non-zero
 	LoadInterpreterRegisters
+	mov		eax, _SP							; primitiveSuccess(0)
 	ret
 
-localPrimitiveFailure0:
-	jmp primitiveFailure0
+LocalPrimitiveFailure 0
 
 ENDPRIMITIVE primitiveReturnFromInterrupt
 	
@@ -2228,10 +2198,10 @@ ALIGNPRIMITIVE
 	push	_BP									; and _BP
 	LoadInterpreterRegisters
 	call	primitiveValue
+	mov		[STACKPOINTER], eax	
 	pop		_BP									; Restore callers registers
 	StoreIPRegister
 	pop		_IP
-	StoreSPRegister
 	pop		_SP
 	ret
 @callPrimitiveValue@8 ENDP
@@ -2264,11 +2234,13 @@ BEGINPRIMITIVE primitiveValue
 	; Leave SP point at TOS, BP to point at [receiver+1],  ECX contains receiver Oop, EDX pointer to block body
 	add		_BP, OOPSIZE
 
-	jmp		activateBlock							; Pass control to block activation routine in byteasm.asm
-													; will return to our sender. Expects ECX=OTE* & EDX = *block
+	call	activateBlock							; Pass control to block activation routine in byteasm.asm. Expects ECX=OTE* & EDX = *block
+	mov		eax, _SP								; primitiveSuccess(0)
+	ret
+
 localPrimitiveFailure0:
 	pop	_BP											; Restore saved base pointer
-	jmp primitiveFailure0
+	PrimitiveFailureCode 0
 
 ENDPRIMITIVE primitiveValue
 
@@ -2309,17 +2281,17 @@ BEGINPRIMITIVE primitiveValueOnUnwind
 	pop		eax
 	ASSUME eax:PStackFrame
 	sub		[eax].m_sp, OOPSIZE*2
+	mov		eax, _SP							; primitiveSuccess(0)
 	ret
 
-localPrimitiveFailure0:
-	jmp primitiveFailure0
+LocalPrimitiveFailure 0
 
 ENDPRIMITIVE primitiveValueOnUnwind
 
 
 IF 0
 ;; Under construction
-?primitivePerform@Interpreter@@CIHAAVCompiledMethod@ST@@I@Z:
+?primitivePerformInterpreter@@CIPAIAAVCompiledMethod@ST@@I@Z:
 	mov		eax, [MESSAGE]							; Load current message selector (#perform:???) ...
 	push	eax										; ... and save in case need to restore
 	lea		eax, [edx*4]
@@ -2373,7 +2345,9 @@ ENDIF
 BEGINPRIMITIVE primitiveAllInstances
 	mov		ecx, [_SP]						; Load receiver class at stack top
 	call	INSTANCESOF
-	ReplaceStackTopWithNew <a>
+	mov		[_SP], eax						; Overwrite receiver with new object
+	AddToZctNoSP <a>
+	mov		eax, _SP						; primitiveSuccess(0)
 	ret
 ENDPRIMITIVE primitiveAllInstances
 
@@ -2388,13 +2362,14 @@ BEGINPRIMITIVE primitiveInstanceCounts
 	cmp		[ecx].m_oteClass, edx
 	jne		localPrimitiveFailure0
 @@:	
-	PopStack
 	call	INSTANCECOUNTS
-	ReplaceStackTopWithNew <a>
+	mov		[_SP-OOPSIZE], eax						; Overwrite receiver with new object
+	AddToZct <a>
+	lea		eax, [_SP-OOPSIZE]						; primitiveSuccess(1)
 	ret
 
-localPrimitiveFailure0:
-	jmp primitiveFailure0
+LocalPrimitiveFailure 0
+
 ENDPRIMITIVE primitiveInstanceCounts
 
 ;  BOOL __fastcall Interpreter::primitiveAllInstances()
@@ -2402,24 +2377,20 @@ ENDPRIMITIVE primitiveInstanceCounts
 BEGINPRIMITIVE primitiveAllSubinstances
 	mov		ecx, [_SP]						; Load receiver class at stack top
 	call	SUBINSTANCESOF
-	ReplaceStackTopWithNew <a>
+	mov		[_SP], eax						; Overwrite receiver with new object
+	AddToZctNoSP <a>
+	mov		eax, _SP						; primitiveSuccess(0)
 	ret
 ENDPRIMITIVE primitiveAllSubinstances
 
-
-;  BOOL __fastcall Interpreter::primitiveAllReferences(CompiledMethod*, unsigned argCount)
-;
-BEGINPRIMITIVE primitiveAllReferences
-		CallSimplePrim <?primitiveAllReferences@Interpreter@@CIHAAVCompiledMethod@ST@@I@Z>
-ENDPRIMITIVE primitiveAllReferences
 
 ;  BOOL __fastcall Interpreter::primitiveObjectCount()
 ;
 BEGINPRIMITIVE primitiveObjectCount
 	call	OOPSUSED
-	add		eax, eax						; Convert result to SmallInteger
-	inc		eax
-	mov		[_SP], eax						; Overwrite receiver class with new object
+	lea		ecx, [eax+eax+1]				; Convert result to SmallInteger
+	mov		eax, _SP						; primitiveSuccess(0)
+	mov		[_SP], ecx						; Overwrite receiver class with new object
 	ret
 ENDPRIMITIVE primitiveObjectCount
 
@@ -2428,10 +2399,11 @@ BEGINPRIMITIVE primitiveExtraInstanceSpec
 	mov		edx, (OTE PTR[ecx]).m_location
 	ASSUME	edx:PTR Behavior
 
-	mov		eax, [edx].m_instanceSpec
-	shr		eax, 15							; Shift to get the high 16 bits
-	or		eax, 1							; Set SmallInteger flag
-	mov		[_SP], eax						; Overwrite receiver class with new object (receiver's ref. count remains same)
+	mov		ecx, [edx].m_instanceSpec
+	shr		ecx, 15							; Shift to get the high 16 bits
+	or		ecx, 1							; Set SmallInteger flag
+	mov		eax, _SP						; primitiveSuccess(0)
+	mov		[_SP], ecx						; Overwrite receiver class with new object (receiver's ref. count remains same)
 	ret
 ENDPRIMITIVE primitiveExtraInstanceSpec
 
@@ -2451,10 +2423,9 @@ BEGINPRIMITIVE primitiveSetSpecialBehavior
 	
 	; No other failures after this point
 	mov		ecx, [_SP-OOPSIZE]					; Load Oop of receiver
-	sub		_SP, OOPSIZE						; _SP now points at receiver
 	
 	test	cl, 1
-	jnz		localPrimitiveFailure1					; SmallIntegers can't have special behavior
+	jnz		localPrimitiveFailure1				; SmallIntegers can't have special behavior
 	ASSUME ecx:PTR OTE							; ECX is now an Oop
 
 	; Ensure the masks cannot affect the critical bits of the flags
@@ -2469,18 +2440,16 @@ BEGINPRIMITIVE primitiveSetSpecialBehavior
 	and		al, dh								; Mask out the desired bits
 	or		al, dl								; Mask in the desired bits
 	mov		[ecx].m_flags, al
-	pop		eax
-	lea		eax, [eax+eax+1]					; Convert old mask to SmallInteger
-	mov		[_SP], eax							; Store old mask as return value
-	
-	ret
 	ASSUME	ecx:NOTHING
+	pop		ecx
+	lea		eax, [_SP-OOPSIZE]					; primitiveSuccess(1)
+	lea		ecx, [ecx+ecx+1]					; Convert old mask to SmallInteger
+	mov		[_SP-OOPSIZE], ecx					; Store old mask as return value
 
-localPrimitiveFailure0:
-	jmp primitiveFailure0
+	ret
 
-localPrimitiveFailure1:
-	jmp primitiveFailure1
+LocalPrimitiveFailure 0
+LocalPrimitiveFailure 1
 
 ENDPRIMITIVE primitiveSetSpecialBehavior
 
@@ -2491,8 +2460,6 @@ ENDPRIMITIVE primitiveSetSpecialBehavior
 ; Receiver becomes an instance of the class specified as the argument - neither
 ; receiver or arg may be SmallIntegers, and the shape of the receivers current class
 ; must be identical to its new class.
-;
-; Leaves a clean stack by transferring the class object to the receiver and nilling out the stack entry
 ;
 BEGINPRIMITIVE primitiveChangeBehavior
 	mov		edx, [_SP]								; Load arg Oop into edx
@@ -2548,15 +2515,13 @@ BEGINPRIMITIVE primitiveChangeBehavior
 	ASSUME	eax:PTR DWORDBytes
 	sar		edx, 1							; Convert receiver to real integer value
 	mov		[eax].m_value, edx				; Save receivers integer value into new object
-	AddToZct	<c>
+	AddToZct <c>
+	mov		eax, _SP						; primitiveSuccess(0)
 	ret
 	ASSUME	eax:NOTHING
 
-localPrimitiveFailure0:
-	jmp primitiveFailure0
-
-localPrimitiveFailure1:
-	jmp primitiveFailure1
+LocalPrimitiveFailure 0
+LocalPrimitiveFailure 1
 
 @@:
 	;; The receiver is a non-immediate object
@@ -2578,7 +2543,7 @@ localPrimitiveFailure1:
 	xor		ecx, [edx].m_instanceSpec			; Get shape differences into ecx
 
 	test	ecx, SHAPEMASK						; Test to see if any significant bits differ
-	jnz		localPrimitiveFailure2					; Some significant bits differenct, fail the primitive
+	jnz		localPrimitiveFailure2				; Some significant bits differenct, fail the primitive
 
 	PopOopInto <edx>							; Reload the new class Oop
 	mov		ecx, [eax].m_oteClass				; Save current class Oop of receiver in ecx (ready for count down)
@@ -2588,10 +2553,11 @@ localPrimitiveFailure1:
 	CountUpObjectIn <d>
 	CountDownObjectIn <c>
 	
+	mov		eax, _SP							; primitiveSuccess(0)
+
 	ret
 
-localPrimitiveFailure2:
-	jmp primitiveFailure2
+LocalPrimitiveFailure 2
 
 ENDPRIMITIVE primitiveChangeBehavior
 
@@ -2662,11 +2628,10 @@ BEGINPRIMITIVE primitiveBecome
 
 	pop		ebx
 
-	sub		_SP, OOPSIZE					; POPARG
+	lea		eax, [_SP-OOPSIZE]				; primitiveSuccess(1)
 	ret
 
-localPrimitiveFailure0:
-	jmp primitiveFailure0
+LocalPrimitiveFailure 0
 
 ENDPRIMITIVE primitiveBecome
 
@@ -2684,11 +2649,10 @@ BEGINPRIMITIVE primitiveOneWayBecome
 	; oneWayBecome deallocates the become'd object, which flushes it from the at(put) caches
 	call	ONEWAYBECOME
 
-	PopOopInto <eax>
+	lea		eax, [_SP-OOPSIZE]				; primitiveSuccess(1)
 	ret
 
-localPrimitiveFailure0:
-	jmp primitiveFailure0
+LocalPrimitiveFailure 0
 
 ENDPRIMITIVE primitiveOneWayBecome
 
@@ -2699,6 +2663,7 @@ BEGINPRIMITIVE primitiveDeQForFinalize
 	call	DQFORFINALIZATION							; Answers nil, or an Oop with raised ref.count
 	mov		[_SP], eax									; Overwrite TOS with answer, and count it down
 	CountDownObjectIn <a>								; Remove the ref from the queue - will probably place object in the Zct
+	mov		eax, _SP									; primitiveSuccess(0)
 	ret
 ENDPRIMITIVE primitiveDeQForFinalize
 
@@ -2713,64 +2678,64 @@ BEGINPRIMITIVE primitiveQueueInterrupt
 
 	mov		eax, (OTE PTR[ecx]).m_location
 	mov		eax, (Process PTR[eax]).m_suspendedFrame
-	cmp		eax, [oteNil]					; suspended context is nil if terminated
+	cmp		eax, [oteNil]						; suspended context is nil if terminated
 	mov		eax, [_SP]							; Load TOS (extra arg). Doesn't affect flags
 	je		localPrimitiveFailure1
 
-	push	eax									; ARG 3: opaque argument passed on the stack (no ref count required)
+	push	eax									; ARG 3: opaque argument passed on the stack
 	push	edx									; ARG 2: Interrupt number
 	push	ecx									; ARG 1: Process Oop
 
-	; No other failures after this point
 	call	QUEUEINTERRUPT
 
-	; Now we can pop the args	
-	sub		_SP, OOPSIZE*2
-	mov		eax, 1
+	lea		eax, [_SP-OOPSIZE*2]				; primitiveSuccess(2)
 	ret
 
-localPrimitiveFailure0:
-	jmp primitiveFailure0
-
-localPrimitiveFailure1:
-	jmp primitiveFailure1
+LocalPrimitiveFailure 0
+LocalPrimitiveFailure 1
 
 ENDPRIMITIVE primitiveQueueInterrupt
 
-; The processor has a max'd ref. count, so we don't need to adjust it
 BEGINPRIMITIVE primitiveEnableInterrupts
 	mov		eax, [_SP]							; Access argument
 	xor		ecx, ecx
 	sub		eax, [oteTrue]
 	jz		@F
+
 	cmp		eax, OTENTRYSIZE
-	jne		localPrimitiveFailure0			; Non-boolean arg
-	inc		ecx
+	jne		localPrimitiveFailure0				; Non-boolean arg
+	
+	mov		ecx, 1								; arg=false, so disable interrupts
+
 @@:
 	call	DISABLEINTERRUPTS
-
-	mov		ecx, [oteTrue]
+	; N.B. Returns bool, so only AL will be set, not whole of EAX
 	test	al, al								; Interrupts not previously disabled?
 	je		@F									; Yes, answer true
-	add		ecx, OTENTRYSIZE					; No, answer false
-@@:
-	mov		eax, 1
-	mov		[_SP-OOPSIZE], ecx					; Eax is non-zero, so will succeed
-	sub		_SP, OOPSIZE
+
+	mov		ecx, [oteFalse]
+	lea		eax, [_SP-OOPSIZE]					; primitiveSuccess(1)
+	mov		[_SP-OOPSIZE], ecx
 	ret
 
-localPrimitiveFailure0:
-	jmp primitiveFailure0
+@@:
+	mov		ecx, [oteTrue]
+	lea		eax, [_SP-OOPSIZE]					; primitiveSuccess(1)
+	mov		[_SP-OOPSIZE], ecx
+	ret
+
+LocalPrimitiveFailure 0
 
 ENDPRIMITIVE primitiveEnableInterrupts
 
 BEGINPRIMITIVE primitiveYield
-	; Can't use CallContextPrim macro here as Yield may return 0, which would cause prim failure
-
-	StoreIPRegister
 	call	YIELD
-	LoadInterpreterRegisters
-	mov		eax, 1
+	
+	; LoadInterpreterRegisters
+	mov		eax, [STACKPOINTER]					; primitiveSuccess(0)
+	LoadIPRegister
+	LoadBPRegister
+
 	ret
 ENDPRIMITIVE primitiveYield
 
@@ -2826,36 +2791,37 @@ zeroTest:
 
 answer:
 	mov		[_SP], eax
+	mov		eax, _SP								; primitiveSuccess(0)
 	ret
 
-localPrimitiveFailure0:
-	jmp primitiveFailure0
+LocalPrimitiveFailure 0
 
 ENDPRIMITIVE primitiveStructureIsNull
 
 BEGINPRIMITIVE primitiveBytesIsNull
-	mov		ecx, [_SP]								; Access argument
-	ASSUME	ecx:PTR OTE
-	mov		eax, [oteFalse]							; Use EAX for true/false so is non-zero on exit from primitive
+	mov		eax, [_SP]								; Access argument
+	ASSUME	eax:PTR OTE
+	mov		ecx, [oteFalse]							; Load ECX with default answer (false)
 
-	mov		edx, [ecx].m_size
+	mov		edx, [eax].m_size
 	and		edx, 7fffffffh							; Mask out immutability bit
 	cmp		edx, SIZEOF DWORD						; Must be exactly 4 bytes (excluding any header)
 
-	jne		localPrimitiveFailure0					; No, answer false
+	jne		localPrimitiveFailure0					; If not 32-bits, fail the primitive
 
-	mov		edx, [ecx].m_location					; Ptr to object now in edx
+	mov		edx, [eax].m_location					; Ptr to object now in edx
 	ASSUME	edx:PTR ByteArray						; We know we've got a byte object now
 
+	mov		eax, _SP								; primitiveSuccess(0)
+
 	.IF (DWORD PTR([edx].m_elements[0]) == 0)
-		sub		eax, OTENTRYSIZE						; True immediately preceeds False in the OT
+		sub		ecx, OTENTRYSIZE					; True immediately preceeds False in the OT
 	.ENDIF
 	
-	mov		[_SP], eax
+	mov		[_SP], ecx
 	ret
 
-localPrimitiveFailure0:
-	jmp primitiveFailure0
+LocalPrimitiveFailure 0
 
 ENDPRIMITIVE primitiveBytesIsNull
 
@@ -2879,7 +2845,6 @@ LIARITHMPRIMR MACRO Op
 
 		.IF	(al & 1)										; SmallInteger?
 			ASSUME	eax:Oop
-			sub		_SP, OOPSIZE
 			sar		eax, 1
 			jz		noOp									; Operand is zero? - result is receiver
 			push	eax
@@ -2896,20 +2861,21 @@ LIARITHMPRIMR MACRO Op
 			push	eax
 			push	ecx
 			call	li&Op
-			sub		_SP, OOPSIZE							; Adjust stack
 		.ENDIF
 
 		; Normalize and return
 		push	eax
 		call	normalizeIntermediateResult
-		ReplaceStackTopWithNewOop <a>
-		ret
+		test	al, 1
+		mov		[_SP-OOPSIZE], eax						; Overwrite receiver class with new object
+		jnz		noOp
+		AddToZct <a>
+
 	noOp:
-		mov		al, 1
+		lea		eax, [_SP-OOPSIZE]						; primitiveSuccess(0)
 		ret
 		
-	localPrimitiveFailure0:
-		jmp primitiveFailure0
+	LocalPrimitiveFailure 0
 
 	ENDPRIMITIVE primitiveLargeInteger&Op
 ENDM
@@ -2929,7 +2895,6 @@ LIARITHMPRIMZ MACRO Op
 
 		.IF	(al & 1)										; SmallInteger?
 			ASSUME	eax:Oop
-			sub		_SP, OOPSIZE
 			sar		eax, 1
 			jz		zero
 			push	eax
@@ -2946,22 +2911,25 @@ LIARITHMPRIMZ MACRO Op
 			push	eax
 			push	ecx
 			call	li&Op
-			sub		_SP, OOPSIZE							; Adjust stack
 		.ENDIF
 
 		; Normalize and return
 		push	eax
 		call	normalizeIntermediateResult
-		ReplaceStackTopWithNewOop <a>
+		test	al, 1
+		mov		[_SP-OOPSIZE], eax						; Overwrite receiver class with new object
+		jnz		@F
+		AddToZct <a>
+	@@:
+		lea		eax, [_SP-OOPSIZE]						; primitiveSuccess(1)
 		ret
 
 	zero:
-		mov		eax, SMALLINTZERO
-		mov		[_SP], eax
+		lea		eax, [_SP-OOPSIZE]						; primitiveSuccess(1)
+		mov		[_SP-OOPSIZE], SMALLINTZERO
 		ret
 		
-	localPrimitiveFailure0:
-		jmp primitiveFailure0
+	LocalPrimitiveFailure 0
 
 	ENDPRIMITIVE primitiveLargeInteger&Op
 ENDM
@@ -2995,36 +2963,43 @@ BEGINPRIMITIVE primitiveLargeIntegerNormalize
 	mov		eax, [_SP]
 	push	eax
 	call	liNormalize
-	ReplaceStackTopWithNewOop <a>
+	test	al, 1
+	mov		[_SP], eax					; Overwrite stack top with new Oop
+	jnz		@F	
+	AddToZctNoSP <a>
+@@:
+	mov		eax, _SP					; primitiveSuccess(0)
 	ret
 ENDPRIMITIVE primitiveLargeIntegerNormalize	
 
 BEGINPRIMITIVE primitiveLargeIntegerBitInvert
 	mov		eax, [_SP]
-	IFDEF _DEBUG
-		test	al, 1
-		jnz		primitiveFailure0
-	ENDIF
 
 	ASSUME	eax:PTR OTE
 	push	eax
 	call	liBitInvert
-	ReplaceStackTopWithNewOop
+	test	al, 1
+	mov		[_SP], eax					; Overwrite stack top with new Oop
+	jnz		@F	
+	AddToZctNoSP <a>
+@@:
+	mov		eax, _SP					; primitiveSuccess(0)
 	ret
 ENDPRIMITIVE primitiveLargeIntegerBitInvert
 
 
 BEGINPRIMITIVE primitiveLargeIntegerNegate
 	mov		eax, [_SP]
-	IFDEF _DEBUG
-		test	al, 1
-		jnz		primitiveFailure0
-	ENDIF
 
 	ASSUME	eax:PTR OTE
 	push	eax
 	call	liNegate
-	ReplaceStackTopWithNewOop
+	test	al, 1
+	mov		[_SP], eax					; Overwrite stack top with new Oop
+	jnz		@F	
+	AddToZctNoSP <a>
+@@:
+	mov		eax, _SP					; primitiveSuccess(0)
 	ret
 ENDPRIMITIVE primitiveLargeIntegerNegate
 
@@ -3032,246 +3007,86 @@ ENDPRIMITIVE primitiveLargeIntegerNegate
 
 ; Note that the failure code is not set.
 BEGINPRIMITIVE unusedPrimitive
-   	IFDEF _DEBUG
-		;int	3
-   	ENDIF
 	xor		eax, eax
 	ret
 ENDPRIMITIVE unusedPrimitive
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-; Generate the primitive failure routines for each common reason code
-; We don't jump to theses directly, but via a short branch and an unconditional
-; jump in order to avoid generating prefixed long conditional branches.
-; 
-failureCode = 0
-REPEAT 4
-	PrimitiveFailureN %failureCode
-	failureCode = failureCode + 1
-ENDM
-		
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; C++ Primitive Thunks
-;;  These thunks do translation into/outof the assembler world for
-;;  the sad primitives still written in C++ (most of them)
-;;  It is unfortunate that these are necessary, but it does allow the
-;;  assembler primitives to run faster by allowing them to use only
-;;  the cached _SP/_IP
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-BEGINPRIMITIVE primitiveNextPut
-	CallSimplePrimSP <?primitiveNextPut@Interpreter@@CIHXZ	>
-ENDPRIMITIVE primitiveNextPut
-
-BEGINPRIMITIVE primitiveNextPutAll
-	CallSimplePrimSP <PRIMITIVENEXTPUTALL>
-ENDPRIMITIVE primitiveNextPutAll
-
-BEGINPRIMITIVE primitiveReplaceBytes
-	CallSimplePrim <?primitiveReplaceBytes@Interpreter@@CIHXZ>
-ENDPRIMITIVE primitiveReplaceBytes
-
-BEGINPRIMITIVE primitiveIndirectReplaceBytes
-	CallSimplePrim <?primitiveIndirectReplaceBytes@Interpreter@@CIHXZ>
-ENDPRIMITIVE primitiveIndirectReplaceBytes
-
-BEGINPRIMITIVE primitiveStringSearch
-	CallSimplePrim <PRIMSTRINGSEARCH>
-ENDPRIMITIVE primitiveStringSearch
-
-BEGINPRIMITIVE primitiveStringNextIndex
-	CallSimplePrim <PRIMSTRINGNEXTINDEX>
-ENDPRIMITIVE primitiveStringNextIndex
-
-IFDEF _DEBUG
-	BEGINPRIMITIVE primitiveExecutionTrace
-		CallSimplePrim <?primitiveExecutionTrace@Interpreter@@CIHXZ>
-	ENDPRIMITIVE primitiveExecutionTrace
-ENDIF
-
-BEGINPRIMITIVE primitiveResize
-	CallSimplePrim <?primitiveResize@Interpreter@@CIHXZ>
-ENDPRIMITIVE primitiveResize
-
-BEGINPRIMITIVE primitiveReplacePointers
-	CallSimplePrim <?primitiveReplacePointers@Interpreter@@CIHXZ>
-ENDPRIMITIVE primitiveReplacePointers
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; primitiveTruncated()
-;;
-;; Thunk for CPP primitive in flotprim.cpp
-;; No need to reload SP as takes no args, but might fault so we must save down IP on entry
-BEGINPRIMITIVE primitiveTruncated
-	CallStackNeutralPrim <?primitiveTruncated@Interpreter@@CIHXZ>
-ENDPRIMITIVE primitiveTruncated
-
-BEGINPRIMITIVE primitiveInputSemaphore
-	CallSimplePrim <PRIMITIVEINPUTSEMAPHORE>
-ENDPRIMITIVE primitiveInputSemaphore
-
-BEGINPRIMITIVE primitiveSampleInterval
-	CallSimplePrim <?primitiveSampleInterval@Interpreter@@CIHXZ>
-ENDPRIMITIVE primitiveSampleInterval
-
-BEGINPRIMITIVE primitiveNewVirtual
-	CallSimplePrim <?primitiveNewVirtual@Interpreter@@CIHXZ>
-ENDPRIMITIVE primitiveNewVirtual
-
-BEGINPRIMITIVE primitiveNextIndexOfFromTo
-	CallSimplePrim <?primitiveNextIndexOfFromTo@Interpreter@@CIHXZ>
-ENDPRIMITIVE primitiveNextIndexOfFromTo
-
-BEGINPRIMITIVE primitiveDeQBereavement
-	CallSimplePrim <?primitiveDeQBereavement@Interpreter@@CIHXZ>
-ENDPRIMITIVE primitiveDeQBereavement
-
-BEGINPRIMITIVE primitiveHookWindowCreate
-	CallSimplePrim <?primitiveHookWindowCreate@Interpreter@@CIHXZ>
-ENDPRIMITIVE primitiveHookWindowCreate
-
-; Note that this isn't really MakePoint anymore, in fact it will make any pointer object
-; of length 2, storing the two args on the stack as the inst. vars (either fixed or first
-; two indexed, if indexed).
-BEGINPRIMITIVE primitiveMakePoint
-	CallSimplePrim <PRIMMAKEPOINT>
-ENDPRIMITIVE primitiveMakePoint
-
-BEGINPRIMITIVE primitiveLargeIntegerDivide
-	CallSimplePrim <?primitiveLargeIntegerDivide@Interpreter@@CIHXZ>
-ENDPRIMITIVE primitiveLargeIntegerDivide
-
-BEGINPRIMITIVE primitiveLargeIntegerMod
-	CallSimplePrim <?primitiveLargeIntegerMod@Interpreter@@CIHXZ>
-ENDPRIMITIVE primitiveLargeIntegerMod
-
-BEGINPRIMITIVE primitiveLargeIntegerDiv
-	CallSimplePrim <?primitiveLargeIntegerDiv@Interpreter@@CIHXZ>
-ENDPRIMITIVE primitiveLargeIntegerDiv
-
-BEGINPRIMITIVE primitiveLargeIntegerQuoAndRem
-	CallSimplePrim <?primitiveLargeIntegerQuoAndRem@Interpreter@@CIHXZ>
-ENDPRIMITIVE primitiveLargeIntegerQuoAndRem
-
-BEGINPRIMITIVE primitiveLargeIntegerBitShift
-	CallSimplePrim <?primitiveLargeIntegerBitShift@Interpreter@@CIHXZ>
-ENDPRIMITIVE primitiveLargeIntegerBitShift
-
-BEGINPRIMITIVE primitiveLargeIntegerGreaterThan
-	CallSimplePrimSP <?primitiveLargeIntegerGreaterThan@Interpreter@@CIHXZ>
-ENDPRIMITIVE primitiveLargeIntegerGreaterThan
-
-BEGINPRIMITIVE primitiveLargeIntegerLessThan
-	CallSimplePrimSP <?primitiveLargeIntegerLessThan@Interpreter@@CIHXZ>
-ENDPRIMITIVE primitiveLargeIntegerLessThan
-
-BEGINPRIMITIVE primitiveLargeIntegerGreaterOrEqual
-	CallSimplePrimSP <?primitiveLargeIntegerGreaterOrEqual@Interpreter@@CIHXZ>
-ENDPRIMITIVE primitiveLargeIntegerGreaterOrEqual
-
-BEGINPRIMITIVE primitiveLargeIntegerLessOrEqual
-	CallSimplePrimSP <?primitiveLargeIntegerLessOrEqual@Interpreter@@CIHXZ>
-ENDPRIMITIVE primitiveLargeIntegerLessOrEqual
-
-BEGINPRIMITIVE primitiveLargeIntegerEqual
-	CallSimplePrimSP <?primitiveLargeIntegerEqual@Interpreter@@CIHXZ>
-ENDPRIMITIVE primitiveLargeIntegerEqual
-
-BEGINPRIMITIVE primitiveSinglePrecisionFloatAt
-	CallSimplePrim <?primitiveSinglePrecisionFloatAt@Interpreter@@CIHXZ>
-ENDPRIMITIVE primitiveSinglePrecisionFloatAt
-
-BEGINPRIMITIVE primitiveSinglePrecisionFloatAtPut
-	CallSimplePrim <?primitiveSinglePrecisionFloatAtPut@Interpreter@@CIHXZ>
-ENDPRIMITIVE primitiveSinglePrecisionFloatAtPut
-
-BEGINPRIMITIVE primitiveDoublePrecisionFloatAt
-	CallSimplePrim <?primitiveDoublePrecisionFloatAt@Interpreter@@CIHXZ>
-ENDPRIMITIVE primitiveDoublePrecisionFloatAt
-
-BEGINPRIMITIVE primitiveDoublePrecisionFloatAtPut
-	CallSimplePrim <?primitiveDoublePrecisionFloatAtPut@Interpreter@@CIHXZ>
-ENDPRIMITIVE primitiveDoublePrecisionFloatAtPut
-
-BEGINPRIMITIVE primitiveLongDoubleAt
-	CallSimplePrim <?primitiveLongDoubleAt@Interpreter@@CIHXZ>
-ENDPRIMITIVE primitiveLongDoubleAt
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Thunks for control (context switching) primitives
+;; Other C++ primitives no longer need thunks (the convention is to return the
+;; adjusted stack pointer on success, or NULL on failure)
 
-BEGINPRIMITIVE primitiveAsyncDLL32Call
-	CallContextPrim <PRIMASYNCCALL>
-ENDPRIMITIVE primitiveAsyncDLL32Call
+BEGINPRIMITIVE primitiveAsyncDLL32CallThunk
+	CallContextPrim <primitiveAsyncDLL32Call>
+ENDPRIMITIVE primitiveAsyncDLL32CallThunk
 
-BEGINPRIMITIVE primitiveValueWithArgs
-	CallContextPrim <?primitiveValueWithArgs@Interpreter@@CIHXZ>
-ENDPRIMITIVE primitiveValueWithArgs
+BEGINPRIMITIVE primitiveValueWithArgsThunk
+	CallContextPrim <primitiveValueWithArgs>
+ENDPRIMITIVE primitiveValueWithArgsThunk
 
-BEGINPRIMITIVE primitivePerform
-	CallContextPrim <?primitivePerform@Interpreter@@CIHAAVCompiledMethod@ST@@I@Z>
-ENDPRIMITIVE primitivePerform
+BEGINPRIMITIVE primitivePerformThunk
+	CallContextPrim <primitivePerform>
+ENDPRIMITIVE primitivePerformThunk
 
-BEGINPRIMITIVE primitivePerformWithArgs
-	CallContextPrim <?primitivePerformWithArgs@Interpreter@@CIHXZ>
-ENDPRIMITIVE primitivePerformWithArgs
+BEGINPRIMITIVE primitivePerformWithArgsThunk
+	CallContextPrim <primitivePerformWithArgs>
+ENDPRIMITIVE primitivePerformWithArgsThunk
 
-BEGINPRIMITIVE primitivePerformWithArgsAt
-	CallContextPrim <?primitivePerformWithArgsAt@Interpreter@@CIHAAVCompiledMethod@ST@@I@Z>
-ENDPRIMITIVE primitivePerformWithArgsAt
+BEGINPRIMITIVE primitivePerformWithArgsAtThunk
+	CallContextPrim <primitivePerformWithArgsAt>
+ENDPRIMITIVE primitivePerformWithArgsAtThunk
 
-BEGINPRIMITIVE primitivePerformMethod
-	CallContextPrim <?primitivePerformMethod@Interpreter@@CIHAAVCompiledMethod@ST@@I@Z>
-ENDPRIMITIVE primitivePerformMethod
+BEGINPRIMITIVE primitivePerformMethodThunk
+	CallContextPrim <primitivePerformMethod>
+ENDPRIMITIVE primitivePerformMethodThunk
 
-BEGINPRIMITIVE primitiveValueWithArgsAt
-	CallContextPrim <?primitiveValueWithArgsAt@Interpreter@@CIHAAVCompiledMethod@ST@@I@Z>
-ENDPRIMITIVE primitiveValueWithArgsAt
+BEGINPRIMITIVE primitiveValueWithArgsAtThunk
+	CallContextPrim <primitiveValueWithArgsAt>
+ENDPRIMITIVE primitiveValueWithArgsAtThunk
 
-BEGINPRIMITIVE primitiveSignal
-	CallContextPrim <PRIMITIVESIGNAL>
-ENDPRIMITIVE primitiveSignal
+BEGINPRIMITIVE primitiveSignalThunk
+	CallContextPrim <primitiveSignal>
+ENDPRIMITIVE primitiveSignalThunk
 
-BEGINPRIMITIVE primitiveSingleStep
+BEGINPRIMITIVE primitiveSingleStepThunk
 	CallContextPrim	<PRIMITIVESINGLESTEP>
-ENDPRIMITIVE primitiveSingleStep
+ENDPRIMITIVE primitiveSingleStepThunk
 
-BEGINPRIMITIVE primitiveResume
+BEGINPRIMITIVE primitiveResumeThunk
 	CallContextPrim	<PRIMITIVERESUME>
-ENDPRIMITIVE primitiveResume
+ENDPRIMITIVE primitiveResumeThunk
 
-BEGINPRIMITIVE primitiveWait
+BEGINPRIMITIVE primitiveWaitThunk
 	CallContextPrim <PRIMITIVEWAIT>
-ENDPRIMITIVE primitiveWait
+ENDPRIMITIVE primitiveWaitThunk
 
-BEGINPRIMITIVE primitiveSuspend
-	CallContextPrim <?primitiveSuspend@Interpreter@@CIHXZ>
-ENDPRIMITIVE primitiveSuspend
+BEGINPRIMITIVE primitiveSuspendThunk
+	CallContextPrim <?primitiveSuspend@Interpreter@@CIPAIXZ>
+ENDPRIMITIVE primitiveSuspendThunk
 
-BEGINPRIMITIVE primitiveTerminate
-	CallContextPrim <?primitiveTerminateProcess@Interpreter@@CIHXZ>
-ENDPRIMITIVE primitiveTerminate
+BEGINPRIMITIVE primitiveTerminateThunk
+	CallContextPrim <?primitiveTerminateProcess@Interpreter@@CIPAIXZ>
+ENDPRIMITIVE primitiveTerminateThunk
 
-BEGINPRIMITIVE primitiveSetSignals
-	CallContextPrim <?primitiveSetSignals@Interpreter@@CIHXZ>
-ENDPRIMITIVE primitiveSetSignals
+BEGINPRIMITIVE primitiveSetSignalsThunk
+	CallContextPrim <?primitiveSetSignals@Interpreter@@CIPAIXZ>
+ENDPRIMITIVE primitiveSetSignalsThunk
 
-BEGINPRIMITIVE primitiveProcessPriority
-	CallContextPrim <?primitiveProcessPriority@Interpreter@@CIHXZ>
-ENDPRIMITIVE primitiveProcessPriority
+BEGINPRIMITIVE primitiveProcessPriorityThunk
+	CallContextPrim <?primitiveProcessPriority@Interpreter@@CIPAIXZ>
+ENDPRIMITIVE primitiveProcessPriorityThunk
 
-BEGINPRIMITIVE primitiveUnwindInterrupt
+BEGINPRIMITIVE primitiveUnwindInterruptThunk
 	CallContextPrim <PRIMUNWINDINTERRUPT>
-ENDPRIMITIVE primitiveUnwindInterrupt
+ENDPRIMITIVE primitiveUnwindInterruptThunk
 
 ;; The specification primitiveSignalAtTick requires that it immediately signal
 ;; the specified semaphore if the time has already passed, so we must call
 ;; it as potentially context switching primitive
-BEGINPRIMITIVE primitiveSignalAtTick
-	CallContextPrim <PRIMSIGNALATTICK>
-ENDPRIMITIVE primitiveSignalAtTick
+BEGINPRIMITIVE primitiveSignalAtTickThunk
+	CallContextPrim <primitiveSignalAtTick>
+ENDPRIMITIVE primitiveSignalAtTickThunk
 
 BEGINPRIMITIVE primitiveIndexOfSP
 	mov	ecx, [_SP-OOPSIZE]				; Receiver
@@ -3279,54 +3094,33 @@ BEGINPRIMITIVE primitiveIndexOfSP
 	test al, 1
 	jz	 localPrimitiveFailure0
 	
-	sub	_SP, OOPSIZE					; Pop arg
 	sub	eax, OFFSET Process.m_stack
 	mov	edx, (OTE PTR[ecx]).m_location	; Load address of object
 	sub	eax, edx
 	shr	eax, 1							; Only div byte offset by 2 as need a SmallInteger
 	add	eax, 3							; Add 1 (to convert zero-based offset to 1 based index) and flag as SmallInteger
-	mov	[_SP], eax
+	mov	[_SP-OOPSIZE], eax
+	lea	eax, [_SP - OOPSIZE]			; primitiveSuccess(1)
 	ret
 	
-localPrimitiveFailure0:
-	jmp primitiveFailure0
+LocalPrimitiveFailure 0
 	
 ENDPRIMITIVE primitiveIndexOfSP
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
-;;	BOOL __fastcall Interpreter::primitiveStackPut()
-;;
-;; Primitive for setting elements of process stack. This needs to be careful
-;; to do the right type of ref. counting, depending on whether the process being
-;; stored into is the active process (with deferred reference counts) or a sleeping
-;; process (with fully reconciled reference counts).
-;;
-BEGINPRIMITIVE primitiveStackAtPut
-	CallSimplePrim <PRIMSTACKATPUT>
-ENDPRIMITIVE primitiveStackAtPut
 
 ;; This is actually the GC primitive, and it may switch contexts
 ;; because is synchronously signals a Semaphore (sometimes)
-BEGINPRIMITIVE primitiveCoreLeft
-	CallContextPrim <PRIMCORELEFT>
-ENDPRIMITIVE primitiveCoreLeft
+BEGINPRIMITIVE primitiveCoreLeftThunk
+	CallContextPrim <primitiveCoreLeft>
+ENDPRIMITIVE primitiveCoreLeftThunk
 
 ;; This is actually a GC primitive, and it may switch contexts
 ;; because is synchronously signals a Semaphore (sometimes)
-BEGINPRIMITIVE primitiveOopsLeft
-	CallContextPrim <?primitiveOopsLeft@Interpreter@@CIHXZ>
-ENDPRIMITIVE primitiveOopsLeft
-
-BEGINPRIMITIVE primitiveSnapshot
-	;; Snapshot saves image, so must have correct _IP
-	;; Now pass fileName argument so reset stack
-	CallSimplePrim <PRIMSNAPSHOT>
-ENDPRIMITIVE primitiveSnapshot
-
-BEGINPRIMITIVE primitiveVariantValue
-	CallStackNeutralPrim <?primitiveVariantValue@Interpreter@@CIHXZ>
-ENDPRIMITIVE primitiveVariantValue
+BEGINPRIMITIVE primitiveOopsLeftThunk
+	CallContextPrim <?primitiveOopsLeft@Interpreter@@CIPAIXZ>
+ENDPRIMITIVE primitiveOopsLeftThunk
 
 BEGINPRIMITIVE primitiveGetImmutable
 	mov		eax, [_SP]								; Load receiver into eax
@@ -3340,6 +3134,8 @@ BEGINPRIMITIVE primitiveGetImmutable
 	add		ecx, OTENTRYSIZE
 @@:
 	mov		[_SP], ecx								; Replace stack top with true/false
+
+	mov		eax, _SP								; primitiveSuccess(0)
 	ret
 
 	ASSUME	ecx:NOTHING
@@ -3359,9 +3155,8 @@ BEGINPRIMITIVE primitiveSetImmutable
 		and		eax, AtCacheMask
 		mov		_AtPutCache[eax].oteArray, 0
 	.ENDIF
-	
-	sub		_SP, OOPSIZE						; Pop arg
-	mov		al, 1								; Succeed
+
+	lea		eax, [_SP - OOPSIZE]				; primitiveSuccess(1)
 	ret
 
 @@:
@@ -3370,14 +3165,15 @@ BEGINPRIMITIVE primitiveSetImmutable
 	jnz		localPrimitiveFailure0
 	
 	ASSUME	eax:PTR OTE							; ecx points at receiver OTE
-	sub		_SP, OOPSIZE						; Pop arg
-	and		[eax].m_size, 7FFFFFFFh				
+	and		[eax].m_size, 7FFFFFFFh		
+	
+	lea		eax, [_SP-OOPSIZE]					; primitiveSuccess(1)
 	ret											; eax is non-zero so will succeed
 	
 	ASSUME	eax:NOTHING
 	
-localPrimitiveFailure0:
-	jmp primitiveFailure0
+LocalPrimitiveFailure 0
+
 ENDPRIMITIVE primitiveSetImmutable
 
 END

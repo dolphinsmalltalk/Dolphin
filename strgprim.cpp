@@ -64,7 +64,7 @@ void Interpreter::memmove(BYTE* dst, const BYTE* src, size_t count)
 //
 //		aByteObject replaceBytesOf: anOtherByteObject from: start to: stop startingAt: startAt
 //
-BOOL __fastcall Interpreter::primitiveReplaceBytes()
+Oop* __fastcall Interpreter::primitiveReplaceBytes()
 {
 	Oop integerPointer = stackTop();
 	if (!ObjectMemoryIsIntegerObject(integerPointer))
@@ -144,8 +144,7 @@ BOOL __fastcall Interpreter::primitiveReplaceBytes()
 
 	// Answers the argument by moving it down over the receiver
 	stackValue(4) = reinterpret_cast<Oop>(argPointer);
-	pop(4);
-	return TRUE;
+	return primitiveSuccess(4);
 }
 
 
@@ -154,24 +153,26 @@ BOOL __fastcall Interpreter::primitiveReplaceBytes()
 //
 //		anExternalAddress replaceBytesOf: anOtherByteObject from: start to: stop startingAt: startAt
 //
-BOOL __fastcall Interpreter::primitiveIndirectReplaceBytes()
+Oop* __fastcall Interpreter::primitiveIndirectReplaceBytes()
 {
-	Oop integerPointer = stackTop();
+	Oop* const sp = m_registers.m_stackPointer;
+
+	Oop integerPointer = *sp;
 	if (!ObjectMemoryIsIntegerObject(integerPointer))
 		return primitiveFailure(0);	// startAt is not an integer
 	SMALLINTEGER startAt = ObjectMemoryIntegerValueOf(integerPointer);
 
-	integerPointer = stackValue(1);
+	integerPointer = *(sp-1);
 	if (!ObjectMemoryIsIntegerObject(integerPointer))
 		return primitiveFailure(1);	// stop is not an integer
 	SMALLINTEGER stop = ObjectMemoryIntegerValueOf(integerPointer);
 
-	integerPointer = stackValue(2);
+	integerPointer = *(sp-2);
 	if (!ObjectMemoryIsIntegerObject(integerPointer))
 		return primitiveFailure(2);	// start is not an integer
 	SMALLINTEGER start = ObjectMemoryIntegerValueOf(integerPointer);
 
-	OTE* argPointer = reinterpret_cast<OTE*>(stackValue(3));
+	OTE* argPointer = reinterpret_cast<OTE*>(*(sp-3));
 	if (ObjectMemoryIsIntegerObject(argPointer) || !argPointer->isBytes())
 		return primitiveFailure(3);	// Argument MUST be a byte object
 
@@ -181,7 +182,7 @@ BOOL __fastcall Interpreter::primitiveIndirectReplaceBytes()
 		if (start < 1 || startAt < 1)
 			return primitiveFailure(4);		// out-of-bounds
 
-		AddressOTE* receiverPointer = reinterpret_cast<AddressOTE*>(stackValue(4));
+		AddressOTE* receiverPointer = reinterpret_cast<AddressOTE*>(*(sp-4));
 		// Only works for byte objects
 		ASSERT(receiverPointer->isBytes());
 		ExternalAddress* receiverBytes = receiverPointer->m_location;
@@ -224,13 +225,12 @@ BOOL __fastcall Interpreter::primitiveIndirectReplaceBytes()
 		memmove(pTo+start-1, pFrom+startAt-1, stop-start+1);
 	}
 	// Answers the argument by moving it down over the receiver
-	stackValue(4) = reinterpret_cast<Oop>(argPointer);
-	pop(4);
-	return TRUE;
+	*(sp-4) = reinterpret_cast<Oop>(argPointer);
+	return sp-4;
 }
 
 // Locate the next occurrence of the given character in the receiver between the specified indices.
-BOOL __fastcall Interpreter::primitiveStringNextIndexOfFromTo()
+Oop* __fastcall Interpreter::primitiveStringNextIndexOfFromTo()
 {
 	Oop integerPointer = stackTop();
 	if (!ObjectMemoryIsIntegerObject(integerPointer))
@@ -278,6 +278,5 @@ BOOL __fastcall Interpreter::primitiveStringNextIndexOfFromTo()
 	}
 
 	stackValue(3) = answer;
-	pop(3);
-	return primitiveSuccess();
+	return primitiveSuccess(3);
 }

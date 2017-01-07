@@ -53,6 +53,11 @@ extern "C" void __cdecl byteCodeLoop();	// See byteasm.asm
 
 typedef volatile LONG SHAREDLONG;
 
+#define stackValue(offset) (*(Interpreter::m_registers.m_stackPointer - (offset)))
+#define pop(number) (Interpreter::m_registers.m_stackPointer -=(number))
+#define popStack()	(*Interpreter::m_registers.m_stackPointer--)
+#define stackTop()	(*Interpreter::m_registers.m_stackPointer)
+
 class Interpreter
 {
 	friend class ObjectMemory; 
@@ -171,24 +176,17 @@ public:
 
 	// Stack
 
-	// These members assume that the stack is clean above the
-	// stack pointer, and consequently do NOT count down the
-	// overwritten objects. This makes stack maintenance more
-	// onerous, but offers a useful performance improvement
-	// since pushing is more commonly done with unknown object
-	// types than popping (popping a known non-ref counted Oop
-	// requires no ref. counting)
-	static void push(Oop object);			// Most general, push SmallInteger OR object
-	static void pushNewObject(Oop);			// Push newly created objects (add to Zct)
-	static void pushUnknown(Oop);			// Push an object that might be new, might be old
-	static void pushBool(BOOL bValue);		// Push the appropriate Smalltalk boolean object
+	static void push(Oop object);					// Most general, push SmallInteger OR object
+	static void pushNewObject(Oop);					// Push newly created objects (add to Zct)
+	static void pushUnknown(Oop);					// Push an object that might be new, might be old
+	static void pushBool(BOOL bValue);				// Push the appropriate Smalltalk boolean object
 	static void pushSmallInteger(SMALLINTEGER n);	// Push a gtd SmallInteger (no overflow check)
 	static void pushUnsigned32(DWORD value);
 	static void pushSigned32(SDWORD value);
 	static void pushUIntPtr(UINT_PTR value);
 	static void pushIntPtr(INT_PTR value);
-	static void push(LPCSTR psz);			// Push ANSI string
-	static void push(LPCWSTR pwsz);			// Push Wide string
+	static void push(LPCSTR psz);					// Push ANSI string
+	static void push(LPCWSTR pwsz);					// Push Wide string
 	static void pushNil();
 	static void pushHandle(HANDLE h);
 	static void push(double d);
@@ -205,38 +203,14 @@ public:
 		// Note that object is pushed on stack before being added to Zct, this means
 		// that on ZCT overflow the reconciliation will work correctly
 		pushObject(object);
-		ObjectMemory::AddToZct(reinterpret_cast<OTE*>(object));
+		ObjectMemory::AddToZct(object);
 	}
 
 	static Oop popAndCountUp();
 	
-	// These members overwrite the Oop at the top of the stack
-	// and there are a number of variations; choose the one
-	// which is the least general which will perform the correct
-	// function in order to get best performance	
-	static Oop replaceStackTopWith(Oop);
-	static Oop replaceStackTopWith(OTE*);
-	static Oop replaceStackTopWithNew(Oop);
-	static Oop replaceStackTopWithNew(double);
-	
-	template <typename T> static Oop replaceStackTopWithNew(TOTE<T>* ote)
-	{
-		*m_registers.m_stackPointer = reinterpret_cast<Oop>(ote);
-		return reinterpret_cast<Oop>(ObjectMemory::AddToZct(reinterpret_cast<OTE*>(ote)));
-	}
-
-	// To avoid any errors, remove popStack() as the operation
-	// of the stack now requires that entries be nil'd out when
-	// popped off. stack values should be accessed using stackValue()
-	// and when all OK, use popAndNil() or whatever strategy
-	// is appropriate
-	static Oop stackTop();	// Equivalent to stackValue(0)
-	static Oop stackValue(SMALLUNSIGNED offset);
-	
 	// N.B. pop() merely adjusts the stackPointer, remember that
 	// it is necessary to ensure that no ref. counted objects
 	// remain above the stackPointer (this is why there's no unPop)
-	static void pop(SMALLUNSIGNED number);
 	static SMALLUNSIGNED indexOfSP(Oop* sp);
 
 	// Method lookup
@@ -330,9 +304,10 @@ private:
 	static void exitSmalltalk(int exitCode);
 
 	static int interpreterExceptionFilter(LPEXCEPTION_POINTERS info);
-	static int memoryExceptionFilter(LPEXCEPTION_RECORD pExRec);
+	static int memoryExceptionFilter(LPEXCEPTION_POINTERS pExInfo);
 	static int callbackTerminationFilter(LPEXCEPTION_POINTERS info, Process* callbackProcess, Oop prevCallbackContext);
 
+	static void recoverFromFault(LPEXCEPTION_POINTERS pExRec);
 	static void sendExceptionInterrupt(Oop oopInterrupt, LPEXCEPTION_POINTERS pExRec);
 	static void saveContextAfterFault(LPEXCEPTION_POINTERS info, bool isInPrimitive);
 
@@ -484,88 +459,89 @@ public:
 	//		of primitives invoked by special selectors, then only
 	//		the argumentCount can be relied upon.
 
-	static BOOL primitiveFailure(int failureCode);
-	static BOOL primitiveFailureWith(int failureCode, Oop failureOop);
-	static BOOL primitiveFailureWith(int failureCode, OTE* failureObject);
-	static BOOL primitiveFailureWithInt(int failureCode, SMALLINTEGER failureInt);
+	static Oop* primitiveFailure(int failureCode);
+	static Oop* primitiveFailureWith(int failureCode, Oop failureOop);
+	static Oop* primitiveFailureWith(int failureCode, OTE* failureObject);
+	static Oop* primitiveFailureWithInt(int failureCode, SMALLINTEGER failureInt);
 
 private:
 	// Answer whether the Interpreter is currently executing a primitive method
 	static bool isInPrimitive();
 
 	// SmallInteger Arithmetic
-	static BOOL __fastcall primitiveAdd();
-	static BOOL __fastcall primitiveSubtract();
-	static BOOL __fastcall primitiveMultiply();
-	static BOOL __fastcall primitiveDivide();
-	static BOOL __fastcall primitiveDiv();
-	static BOOL __fastcall primitiveMod();
-	static BOOL __fastcall primitiveQuo();
+	static Oop* __fastcall primitiveAdd();
+	static Oop* __fastcall primitiveSubtract();
+	static Oop* __fastcall primitiveMultiply();
+	static Oop* __fastcall primitiveDivide();
+	static Oop* __fastcall primitiveDiv();
+	static Oop* __fastcall primitiveMod();
+	static Oop* __fastcall primitiveQuo();
 
 	// SmallInteger relational ops
-	static BOOL __fastcall primitiveEqual();
-	//static BOOL __fastcall primitiveNotEqual();		Removed as redundant
-	static BOOL __fastcall primitiveLessThan();
-	static BOOL __fastcall primitiveLessOrEqual();
-	static BOOL __fastcall primitiveGreaterThan();
-	static BOOL __fastcall primitiveGreaterOrEqual();
+	static Oop* __fastcall primitiveEqual();
+	//static Oop* __fastcall primitiveNotEqual();		Removed as redundant
+	static Oop* __fastcall primitiveLessThan();
+	static Oop* __fastcall primitiveLessOrEqual();
+	static Oop* __fastcall primitiveGreaterThan();
+	static Oop* __fastcall primitiveGreaterOrEqual();
 
 	// SmallInteger bit manipulation
-	static BOOL __fastcall primitiveBitAnd();
-	static BOOL __fastcall primitiveBitOr();
-	static BOOL __fastcall primitiveBitXor();
-	static BOOL __fastcall primitiveBitShift();
+	static Oop* __fastcall primitiveBitAnd();
+	static Oop* __fastcall primitiveBitOr();
+	static Oop* __fastcall primitiveBitXor();
+	static Oop* __fastcall primitiveBitShift();
 
-	static BOOL __fastcall primitiveSmallIntegerPrintString();
+	static Oop* __fastcall primitiveSmallIntegerPrintString();
 
 	// LargeInteger Arithmetic
-	static BOOL __fastcall primitiveLargeIntegerAdd();
-	static BOOL __fastcall primitiveLargeIntegerSubtract();
-	static BOOL __fastcall primitiveLargeIntegerMultiply();
-	static BOOL __fastcall primitiveLargeIntegerDivide();
-	static BOOL __fastcall primitiveLargeIntegerDiv();
-	static BOOL __fastcall primitiveLargeIntegerMod();
-	static BOOL __fastcall primitiveLargeIntegerQuoAndRem();
+	static Oop* __fastcall primitiveLargeIntegerAdd();
+	static Oop* __fastcall primitiveLargeIntegerSubtract();
+	static Oop* __fastcall primitiveLargeIntegerMultiply();
+	static Oop* __fastcall primitiveLargeIntegerDivide();
+	static Oop* __fastcall primitiveLargeIntegerDiv();
+	static Oop* __fastcall primitiveLargeIntegerMod();
+	static Oop* __fastcall primitiveLargeIntegerQuoAndRem();
 
 	// LargeInteger relational ops
-	static BOOL __fastcall primitiveLargeIntegerEqual();
-	static BOOL __fastcall primitiveLargeIntegerLessThan();
-	static BOOL __fastcall primitiveLargeIntegerLessOrEqual();
-	static BOOL __fastcall primitiveLargeIntegerGreaterThan();
-	static BOOL __fastcall primitiveLargeIntegerGreaterOrEqual();
+	static Oop* __fastcall primitiveLargeIntegerEqual();
+	static Oop* __fastcall primitiveLargeIntegerLessThan();
+	static Oop* __fastcall primitiveLargeIntegerLessOrEqual();
+	static Oop* __fastcall primitiveLargeIntegerGreaterThan();
+	static Oop* __fastcall primitiveLargeIntegerGreaterOrEqual();
 
 	// LargeInteger bit manipulation
-	static BOOL __fastcall primitiveLargeIntegerBitAnd();
-	static BOOL __fastcall primitiveLargeIntegerBitOr();
-	static BOOL __fastcall primitiveLargeIntegerBitXor();
-	static BOOL __fastcall primitiveLargeIntegerBitShift();
+	static Oop* __fastcall primitiveLargeIntegerBitAnd();
+	static Oop* __fastcall primitiveLargeIntegerBitOr();
+	static Oop* __fastcall primitiveLargeIntegerBitXor();
+	static Oop* __fastcall primitiveLargeIntegerBitShift();
 
 	// LargeInteger miscellaneous
-	static BOOL __fastcall primitiveLargeIntegerNormalize();
-	static BOOL __fastcall primitiveLargeIntegerAsFloat();
+	static Oop* __fastcall primitiveLargeIntegerNormalize();
+	static Oop* __fastcall primitiveLargeIntegerAsFloat();
 
 	// Float primitives
-	static BOOL __fastcall primitiveAsFloat();
-	static BOOL __fastcall primitiveFloatAdd();
-	static BOOL __fastcall primitiveFloatSubtract();
-	static BOOL __fastcall primitiveFloatLessThan();
-	static BOOL __fastcall primitiveFloatEqual();
-	static BOOL __fastcall primitiveFloatMultiply();
-	static BOOL __fastcall primitiveFloatDivide();
-	static BOOL __fastcall primitiveTruncated();
+	static Oop* __fastcall primitiveAsFloat();
+	static Oop* __fastcall primitiveFloatAdd();
+	static Oop* __fastcall primitiveFloatSubtract();
+	static Oop* __fastcall primitiveFloatLessThan();
+	static Oop* __fastcall primitiveFloatGreaterThan();
+	static Oop* __fastcall primitiveFloatEqual();
+	static Oop* __fastcall primitiveFloatMultiply();
+	static Oop* __fastcall primitiveFloatDivide();
+	static Oop* __fastcall primitiveTruncated();
 
-	static BOOL __fastcall primitiveMakePoint(CompiledMethod& , unsigned argCount);
+	static Oop* __fastcall primitiveMakePoint(CompiledMethod& , unsigned argCount);
 
-	static BOOL __fastcall primitiveSize();
+	static Oop* __fastcall primitiveSize();
    	
 	// Object Indexing Primitives
-	static BOOL __fastcall primitiveAtPut();
-	static BOOL __fastcall primitiveInstVarAt();
-	static BOOL __fastcall primitiveInstVarAtPut();
-	static BOOL __fastcall primitiveNextIndexOfFromTo();
+	static Oop* __fastcall primitiveAtPut();
+	static Oop* __fastcall primitiveInstVarAt();
+	static Oop* __fastcall primitiveInstVarAtPut();
+	static Oop* __fastcall primitiveNextIndexOfFromTo();
 
 	// Specialized primitive for storing into process stacks. Allows for Zct
-	static BOOL __fastcall primitiveStackAtPut(CompiledMethod& , unsigned argCount);
+	static Oop* __fastcall primitiveStackAtPut(CompiledMethod& , unsigned argCount);
 
 	///////////////////////////////////////////////////////////////////////////
 	// External Buffer access primitives
@@ -573,134 +549,128 @@ private:
 	enum { PrimitiveFailureNonInteger, PrimitiveFailureBoundsError, PrimitiveFailureBadValue, PrimitiveFailureSystemError, PrimitiveFailureWrongNumberOfArgs };
 
 	#ifndef _M_IX86
-		static BOOL __fastcall primitiveDWORDAt();
-		static BOOL __fastcall primitiveDWORDAtPut();
-		static BOOL __fastcall primitiveSDWORDAt();
-		static BOOL __fastcall primitiveSDWORDAtPut();	// Not implemented
+		static Oop* __fastcall primitiveDWORDAt();
+		static Oop* __fastcall primitiveDWORDAtPut();
+		static Oop* __fastcall primitiveSDWORDAt();
+		static Oop* __fastcall primitiveSDWORDAtPut();	// Not implemented
 
-		static BOOL __fastcall primitiveWORDAt();
-		static BOOL __fastcall primitiveWORDAtPut();
-		static BOOL __fastcall primitiveSWORDAt();
-		static BOOL __fastcall primitiveSWORDAtPut();
+		static Oop* __fastcall primitiveWORDAt();
+		static Oop* __fastcall primitiveWORDAtPut();
+		static Oop* __fastcall primitiveSWORDAt();
+		static Oop* __fastcall primitiveSWORDAtPut();
 	#endif
 
 	// Floating point number accessors
-	static BOOL __fastcall primitiveSinglePrecisionFloatAt();
-	static BOOL __fastcall primitiveSinglePrecisionFloatAtPut();
-	static BOOL __fastcall primitiveDoublePrecisionFloatAt();
-	static BOOL __fastcall primitiveDoublePrecisionFloatAtPut();
-	static BOOL __fastcall primitiveLongDoubleAt();
+	static Oop* __fastcall primitiveSinglePrecisionFloatAt();
+	static Oop* __fastcall primitiveSinglePrecisionFloatAtPut();
+	static Oop* __fastcall primitiveDoublePrecisionFloatAt();
+	static Oop* __fastcall primitiveDoublePrecisionFloatAtPut();
+	static Oop* __fastcall primitiveLongDoubleAt();
 
 	// Most of the External Buffer primitives handle indirect addresses
 	// as well, but bytes are normally accessed via the standard primitives 
 	// for #at: and #at:put:, which we'd rather not complicate and/or slow 
 	// these down.
-	static BOOL __fastcall primitiveByteAtAddress();
-	static BOOL __fastcall primitiveByteAtAddressPut();
+	static Oop* __fastcall primitiveByteAtAddress();
+	static Oop* __fastcall primitiveByteAtAddressPut();
 
 	// Get address of contents of a byte object
-	static BOOL __fastcall primitiveAddressOf();
+	static Oop* __fastcall primitiveAddressOf();
 
 	///////////////////////////////////////////////////////////////////////////
 	// String Class Primitives
-	static BOOL __fastcall primitiveStringAt();
-	static BOOL __fastcall primitiveStringAtPut();
+	static Oop* __fastcall primitiveStringAt();
+	static Oop* __fastcall primitiveStringAtPut();
 
 	// Helper for memory moves
 	static void memmove(BYTE* dst, const BYTE* src, size_t count);
-	static BOOL __fastcall primitiveStringReplace();
-	static BOOL __fastcall primitiveReplaceBytes();
-	static BOOL __fastcall primitiveIndirectReplaceBytes();
-	static BOOL __fastcall primitiveReplacePointers();
+	static Oop* __fastcall primitiveStringReplace();
+	static Oop* __fastcall primitiveReplaceBytes();
+	static Oop* __fastcall primitiveIndirectReplaceBytes();
+	static Oop* __fastcall primitiveReplacePointers();
 
-	static BOOL __fastcall primitiveHashBytes();
-	static BOOL __fastcall primitiveStringCompare();
-	static BOOL __fastcall primitiveStringLessOrEqual();
-	static BOOL __fastcall primitiveStringSearch();
-	static BOOL __fastcall primitiveStringNextIndexOfFromTo();
+	static Oop* __fastcall primitiveHashBytes();
+	static Oop* __fastcall primitiveStringCompare();
+	static Oop* __fastcall primitiveStringLessOrEqual();
+	static Oop* __fastcall primitiveStringSearch();
+	static Oop* __fastcall primitiveStringNextIndexOfFromTo();
 
 	// Stream Primitives
-	static BOOL __fastcall primitiveNext();
-	static BOOL __fastcall primitiveNextSDWORD();
-	static BOOL __fastcall primitiveNextPut();
-	static BOOL __fastcall primitiveNextPutAll();
-	static BOOL __fastcall primitiveAtEnd();
+	static Oop* __fastcall primitiveNext();
+	static Oop* __fastcall primitiveNextSDWORD();
+	static Oop* __fastcall primitiveNextPut();
+	static Oop* __fastcall primitiveNextPutAll();
+	static Oop* __fastcall primitiveAtEnd();
 
 	// Storage Management Primitives
-	static BOOL __fastcall primitiveNew();
-	static BOOL __fastcall primitiveNewWithArg();
+	static Oop* __fastcall primitiveNew();
+	static Oop* __fastcall primitiveNewWithArg();
 
 	// Object mutation
-	static BOOL __fastcall primitiveChangeBehavior();
-	static BOOL __fastcall primitiveResize();
-	//static BOOL __fastcall primitiveBecome();
+	static Oop* __fastcall primitiveChangeBehavior();
+	static Oop* __fastcall primitiveResize();
+	//static Oop* __fastcall primitiveBecome();
 
 	// Object Memory primitives
-	static BOOL __fastcall primitiveIdentityHash();
-	//static BOOL __fastcall primitiveAsOop();
-	//static BOOL __fastcall primitiveAsObject();
-	static BOOL __fastcall primitiveAllReferences(CompiledMethod&, unsigned argumentCount);
-	static BOOL __fastcall primitiveAllInstances();
+	static Oop* __fastcall primitiveIdentityHash();
+	static Oop* __fastcall primitiveAllReferences(CompiledMethod&, unsigned argumentCount);
+	static Oop* __fastcall primitiveAllInstances();
 	
 	// Control Primitives
 	
-	static BOOL __fastcall primitiveValue(CompiledMethod* , unsigned argumentCount);
-	static BOOL __fastcall primitiveValueWithArgs();
-	static BOOL __fastcall primitivePerform(CompiledMethod&, unsigned argumentCount);
-	static BOOL __fastcall primitivePerformWithArgs();
-	static BOOL __fastcall primitivePerformMethod(CompiledMethod&, unsigned argumentCount);
+	static Oop* __fastcall primitiveValue(CompiledMethod* , unsigned argumentCount);
+	static Oop* __fastcall primitiveValueWithArgs();
+	static Oop* __fastcall primitivePerform(CompiledMethod&, unsigned argumentCount);
+	static Oop* __fastcall primitivePerformWithArgs();
+	static Oop* __fastcall primitivePerformMethod(CompiledMethod&, unsigned argumentCount);
 
 	// Process primitives
-	static BOOL __fastcall primitiveSignalAtTick(CompiledMethod&, unsigned argumentCount);
-	static BOOL __fastcall primitiveMicrosecondClockValue();
-	static BOOL __fastcall primitiveSignal(CompiledMethod&, unsigned argumentCount);
-	static BOOL __fastcall primitiveWait(CompiledMethod&, unsigned argumentCount);
-	static BOOL __fastcall primitiveResume(CompiledMethod&, unsigned argumentCount);
-	static BOOL __fastcall primitiveSingleStep(CompiledMethod&, unsigned argumentCount);
-	static BOOL __fastcall primitiveSuspend();
-	static BOOL __fastcall primitiveSetSignals();
-	static BOOL __fastcall primitiveFlushCache();
-	static BOOL __fastcall primitiveInputSemaphore(CompiledMethod&, unsigned argumentCount);
-	static BOOL __fastcall primitiveSampleInterval();
-	static BOOL __fastcall primitiveNewVirtual();
-	static BOOL __fastcall primitiveProcessPriority();
-	static BOOL __fastcall primitiveTerminateProcess();
-	static BOOL __fastcall primitiveMillisecondClockValue();
-
-	#ifdef _DEBUG
-		static BOOL __fastcall primitiveExecutionTrace();
-	#endif
+	static Oop* __fastcall primitiveSignalAtTick(CompiledMethod&, unsigned argumentCount);
+	static Oop* __fastcall primitiveMicrosecondClockValue();
+	static Oop* __fastcall primitiveSignal(CompiledMethod&, unsigned argumentCount);
+	static Oop* __fastcall primitiveWait(CompiledMethod&, unsigned argumentCount);
+	static Oop* __fastcall primitiveResume(CompiledMethod&, unsigned argumentCount);
+	static Oop* __fastcall primitiveSingleStep(CompiledMethod&, unsigned argumentCount);
+	static Oop* __fastcall primitiveSuspend();
+	static Oop* __fastcall primitiveSetSignals();
+	static Oop* __fastcall primitiveFlushCache();
+	static Oop* __fastcall primitiveInputSemaphore(CompiledMethod&, unsigned argumentCount);
+	static Oop* __fastcall primitiveSampleInterval();
+	static Oop* __fastcall primitiveNewVirtual();
+	static Oop* __fastcall primitiveProcessPriority();
+	static Oop* __fastcall primitiveTerminateProcess();
+	static Oop* __fastcall primitiveMillisecondClockValue();
 
 	// Input/Out Primitives
-	static BOOL __fastcall primitiveSnapshot(CompiledMethod& , unsigned argCount);
+	static Oop* __fastcall primitiveSnapshot(CompiledMethod& , unsigned argCount);
 
 	// Dispatcher Primitives
-	static BOOL __fastcall primitiveHookWindowCreate();
+	static Oop* __fastcall primitiveHookWindowCreate();
 
 	// System Primitives
-	static BOOL __fastcall primitiveEquivalent();
-	static BOOL __fastcall primitiveClass();
-	static BOOL __fastcall primitiveCoreLeft(CompiledMethod& , unsigned argCount);
+	static Oop* __fastcall primitiveEquivalent();
+	static Oop* __fastcall primitiveClass();
+	static Oop* __fastcall primitiveCoreLeft(CompiledMethod& , unsigned argCount);
 	static void __fastcall primitiveQuit(CompiledMethod&, unsigned argumentCount);
-	static BOOL __fastcall primitiveOopsLeft();
-	static BOOL __fastcall primitiveInheritsFrom();
-	static BOOL __fastcall primitiveShallowCopy();
-	static BOOL __fastcall primitiveSetSpecialBehavior();
-	static BOOL __fastcall primitiveQueueInterrupt();
+	static Oop* __fastcall primitiveOopsLeft();
+	static Oop* __fastcall primitiveInheritsFrom();
+	static Oop* __fastcall primitiveShallowCopy();
+	static Oop* __fastcall primitiveSetSpecialBehavior();
+	static Oop* __fastcall primitiveQueueInterrupt();
 
-	static BOOL __fastcall primitiveDeQBereavement();
+	static Oop* __fastcall primitiveDeQBereavement();
 
 
 	// Extension system primitives
-	static BOOL __fastcall primitiveDLL32Call(CompiledMethod& method, unsigned argCount);
-	static BOOL __fastcall primitiveVirtualCall(CompiledMethod& method, unsigned argCount);
-	static BOOL __fastcall primitiveAsyncDLL32Call(CompiledMethod& method, unsigned argCount);
+	static Oop* __fastcall primitiveDLL32Call(CompiledMethod& method, unsigned argCount);
+	static Oop* __fastcall primitiveVirtualCall(CompiledMethod& method, unsigned argCount);
+	static Oop* __fastcall primitiveAsyncDLL32Call(CompiledMethod& method, unsigned argCount);
 
-	static BOOL __fastcall primitivePerformWithArgsAt(CompiledMethod& method, unsigned argCount);
-	static BOOL __fastcall primitiveValueWithArgsAt(CompiledMethod& method, unsigned argCount);
+	static Oop* __fastcall primitivePerformWithArgsAt(CompiledMethod& method, unsigned argCount);
+	static Oop* __fastcall primitiveValueWithArgsAt(CompiledMethod& method, unsigned argCount);
 
-	static BOOL __fastcall primitiveUnwindInterrupt(CompiledMethod& method, unsigned argCount);
-	static BOOL __fastcall primitiveVariantValue();
+	static Oop* __fastcall primitiveUnwindInterrupt(CompiledMethod& method, unsigned argCount);
+	static Oop* __fastcall primitiveVariantValue();
 
 private:
 
@@ -803,8 +773,10 @@ private:
 	static DWORD				m_dwThreadId;	// Interpreter thread
 	static HANDLE				m_hThread;
 	static ProcessorScheduler*	m_pProcessor;
+public:
 	static InterpreterRegisters16 m_registers;
 
+private:
 	static SymbolOTE*			m_oopMessageSelector;
 
 	// Should this be one of the registers?

@@ -322,7 +322,7 @@ ProcessOTE* Interpreter::resumeFirst(Semaphore* sem)
 		// way of doing this that doesn't use the output parameter.
 		if (method->m_methodClass == Pointers.ClassSemaphore)
 		{
-			Oop* sp = pTopFrame->stackPointer();
+			Oop* const sp = pTopFrame->stackPointer();
 			// Value is returned via a value holder at stack top
 			OTE* oteRetValHolder = reinterpret_cast<OTE*>(*sp);
 			if (ObjectMemoryIsIntegerObject(oteRetValHolder) || oteRetValHolder->isBytes() ||
@@ -1164,7 +1164,7 @@ inline bool LinkedList::isEmpty()
 // Process related primitives (Semaphore etc)
 #include "InterprtPrim.inl"
 
-BOOL __fastcall Interpreter::primitiveSignal(CompiledMethod&, unsigned)
+Oop* __fastcall Interpreter::primitiveSignal(CompiledMethod&, unsigned)
 {
 	SemaphoreOTE* receiver = reinterpret_cast<SemaphoreOTE*>(stackTop());
 	HARDASSERT(ObjectMemory::fetchClassOf((Oop)receiver) == Pointers.ClassSemaphore);
@@ -1172,13 +1172,14 @@ BOOL __fastcall Interpreter::primitiveSignal(CompiledMethod&, unsigned)
 	// Sending #signal always re-enables interrupts (inside signalSemaphore)
 	signalSemaphore(receiver);
 	CheckProcessSwitch();
-	return primitiveSuccess();
+	return primitiveSuccess(0);
 }
 
 
-BOOL __fastcall Interpreter::primitiveSetSignals()
+Oop* __fastcall Interpreter::primitiveSetSignals()
 {
-	Oop integerPointer = stackTop();
+	Oop* const sp = m_registers.m_stackPointer;
+	Oop integerPointer = *sp;
 	if (!ObjectMemoryIsIntegerObject(integerPointer))
 	{
 		OTE* oteArg = reinterpret_cast<OTE*>(integerPointer);
@@ -1189,8 +1190,8 @@ BOOL __fastcall Interpreter::primitiveSetSignals()
 	// of disabled state to another process
 	disableInterrupts(false);
 
-	popStack();
-	Oop semaphorePointer = stackTop();
+	Oop semaphorePointer = *(sp-1);
+	m_registers.m_stackPointer = sp - 1;
 
 	HARDASSERT(ObjectMemory::fetchClassOf(semaphorePointer) == Pointers.ClassSemaphore);
 	SemaphoreOTE* oteSem = reinterpret_cast<SemaphoreOTE*>(semaphorePointer);
@@ -1213,10 +1214,10 @@ BOOL __fastcall Interpreter::primitiveSetSignals()
 
 	sem->m_excessSignals = ObjectMemoryIntegerObjectOf(signals);
 
-	return primitiveSuccess();
+	return primitiveSuccess(0);
 }
 
-BOOL __fastcall Interpreter::primitiveWait(CompiledMethod&, unsigned argumentCount)
+Oop* __fastcall Interpreter::primitiveWait(CompiledMethod&, unsigned argumentCount)
 {
 	//CHECKREFERENCES
 
@@ -1283,14 +1284,16 @@ BOOL __fastcall Interpreter::primitiveWait(CompiledMethod&, unsigned argumentCou
 		oopAnswer = reinterpret_cast<Oop>(oteRetValHolder);
 	}
 
-	replaceStackTopWith(oopAnswer);
+	stackTop() = oopAnswer;
 
 	CheckProcessSwitch();
 #ifdef _DEBUG
 	if (abs(executionTrace) > 0)
+	{
 		CHECKREFERENCES
+	}
 #endif
-		return primitiveSuccess();
+	return primitiveSuccess(0);
 }
 
 // Yield to avoid starving other processes at the same priority only, 
@@ -1384,14 +1387,14 @@ DWORD Semaphore::Wait(SemaphoreOTE* oteThis, ProcessOTE* oteProcess, int timeout
 
 // Uses, but does not modify, instructionPointer and stackPointer
 // Does not modify pHome or pMethod
-BOOL __fastcall Interpreter::primitiveResume(CompiledMethod&, unsigned argumentCount)
+Oop* __fastcall Interpreter::primitiveResume(CompiledMethod&, unsigned argumentCount)
 {
 #ifdef _DEBUG
 	//	if (abs(executionTrace) > 0)
 	CHECKREFERENCES
 #endif
-		if (argumentCount > 1)
-			return primitiveFailure(2);	// Too many arguments
+	if (argumentCount > 1)
+		return primitiveFailure(2);	// Too many arguments
 
 	ProcessOTE* receiverProcess = reinterpret_cast<ProcessOTE*>(stackValue(argumentCount));
 	Process* proc = receiverProcess->m_location;
@@ -1420,12 +1423,13 @@ BOOL __fastcall Interpreter::primitiveResume(CompiledMethod&, unsigned argumentC
 	//	if (abs(executionTrace) > 0)
 	CHECKREFERENCES
 #endif
-		return primitiveSuccess();
+
+	return primitiveSuccess(0);
 }
 
 // Uses, but does not modify, instructionPointer and stackPointer
 // Does not modify pHome or pMethod
-BOOL __fastcall Interpreter::primitiveSingleStep(CompiledMethod&, unsigned argumentCount)
+Oop* __fastcall Interpreter::primitiveSingleStep(CompiledMethod&, unsigned argumentCount)
 {
 	SMALLINTEGER steps;
 	switch (argumentCount)
@@ -1494,7 +1498,7 @@ BOOL __fastcall Interpreter::primitiveSingleStep(CompiledMethod&, unsigned argum
 	m_bAsyncPending = true;
 	m_bStepping = true;
 
-	return primitiveSuccess();
+	return primitiveSuccess(0);
 }
 
 int Interpreter::SuspendProcess(ProcessOTE* processPointer)
@@ -1559,7 +1563,7 @@ int Interpreter::SuspendProcess(ProcessOTE* processPointer)
 
 // Suspend the caller if it is the receiver if it is the active process
 // if it is not the active process, then the primitive fails
-BOOL __fastcall Interpreter::primitiveSuspend()
+Oop* __fastcall Interpreter::primitiveSuspend()
 {
 	ProcessOTE* processPointer = reinterpret_cast<ProcessOTE*>(stackTop());
 
@@ -1570,7 +1574,7 @@ BOOL __fastcall Interpreter::primitiveSuspend()
 	Process* process = processPointer->m_location;
 	process->SuspendOverlappedCall();
 
-	return primitiveSuccess();			// OK, suspended
+	return primitiveSuccess(0);			// OK, suspended
 }
 
 #ifdef NDEBUG
@@ -1582,7 +1586,7 @@ BOOL __fastcall Interpreter::primitiveSuspend()
 // then it won't get as far as nilling out the suspended context. The alternative is to
 // use another process to do the nilling, but that seems more error prone and consumes
 // more resources than this very simple primitive.
-BOOL __fastcall Interpreter::primitiveTerminateProcess()
+Oop* __fastcall Interpreter::primitiveTerminateProcess()
 {
 	ProcessOTE* processPointer = reinterpret_cast<ProcessOTE*>(stackTop());
 
@@ -1608,26 +1612,26 @@ BOOL __fastcall Interpreter::primitiveTerminateProcess()
 	//	if (abs(executionTrace) > 0)
 	//		CHECKREFERENCES
 #endif
-	return primitiveSuccess();
+	return primitiveSuccess(0);
 }
 
-BOOL __fastcall Interpreter::primitiveUnwindInterrupt(CompiledMethod&, unsigned)
+Oop* __fastcall Interpreter::primitiveUnwindInterrupt(CompiledMethod&, unsigned)
 {
 	// Terminate any overlapped call outstanding for the process, this may need to suspend the process
 	// and so this may cause a context switch
 	TerminateOverlapped(actualActiveProcessPointer());
-	return TRUE;
+	return primitiveSuccess(0);
 }
 
 
 // Change the priority of the receiver to the argument.
 // Fail if the argument is not a SmallInteger in the range 1..max priority
 // Answers the processes old priority
-BOOL __fastcall Interpreter::primitiveProcessPriority()
+Oop* __fastcall Interpreter::primitiveProcessPriority()
 {
 	//	CHECKREFERENCES
-
-	Oop argPointer = stackTop();
+	Oop* const sp = m_registers.m_stackPointer;
+	Oop argPointer = *sp;
 	if (!ObjectMemoryIsIntegerObject(argPointer))
 	{
 		OTE* oteArg = reinterpret_cast<OTE*>(argPointer);
@@ -1646,10 +1650,7 @@ BOOL __fastcall Interpreter::primitiveProcessPriority()
 	// to be run with interrupts disabled, and may never re-enable them.
 	disableInterrupts(false);
 
-	// Pop SmallInteger argument (from here on in we know will succeed)
-	pop(1);
-
-	ProcessOTE* receiverPointer = reinterpret_cast<ProcessOTE*>(stackTop());
+	ProcessOTE* receiverPointer = reinterpret_cast<ProcessOTE*>(*(sp-1));
 
 	Process* process = receiverPointer->m_location;
 	SMALLUNSIGNED oldPriority = process->Priority();
@@ -1657,7 +1658,10 @@ BOOL __fastcall Interpreter::primitiveProcessPriority()
 
 	// Answer the previous priority (we do this now in case a Process switch occurs
 	// as then we'd end up putting the result on the wrong stack!)
-	stackTop() = ObjectMemoryIntegerObjectOf(oldPriority);
+	*(sp-1) = ObjectMemoryIntegerObjectOf(oldPriority);
+
+	// Pop SmallInteger argument before context switch
+	m_registers.m_stackPointer = sp - 1;
 
 	if (receiverPointer == activeProcessPointer())
 	{
@@ -1689,31 +1693,34 @@ BOOL __fastcall Interpreter::primitiveProcessPriority()
 		}
 	}
 
-	return primitiveSuccess();
+	return primitiveSuccess(0);
 }
 
 // Register a new Object with the VM. This primitive is now used to register
 // more than just the input semaphore, and is independent of receiver.
-BOOL __fastcall Interpreter::primitiveInputSemaphore(CompiledMethod&, unsigned argCount)
+Oop* __fastcall Interpreter::primitiveInputSemaphore(CompiledMethod&, unsigned argCount)
 {
-	Oop argPointer = stackValue(1);
-	SMALLUNSIGNED which = ObjectMemoryIntegerValueOf(argPointer);
+	Oop* const sp = m_registers.m_stackPointer;
+
+	Oop oopIndex = *(sp-1);
+	SMALLUNSIGNED which = ObjectMemoryIntegerValueOf(oopIndex);
 	if (which <= 0 || which > NumPointers)
 		return primitiveFailure(1);	// out of bounds
 
 	// top of stack is value to be put
-	argPointer = stackTop();
+	Oop oopValue = *sp;
 
-	if (!isIntegerObject(argPointer))
-		reinterpret_cast<OTE*>(argPointer)->beSticky();
+	if (!isIntegerObject(oopValue))
+	{
+		reinterpret_cast<OTE*>(oopValue)->beSticky();
+	}
 
 	ObjectMemory::ProtectConstSpace(PAGE_READWRITE);
 	Array* registry = reinterpret_cast<Array*>(&_Pointers);
-	registry->m_elements[which - 1] = ObjectMemory::storePointerWithValue(registry->m_elements[which - 1], argPointer);
+	registry->m_elements[which - 1] = ObjectMemory::storePointerWithValue(registry->m_elements[which - 1], oopValue);
 	ObjectMemory::ProtectConstSpace(PAGE_READONLY);
 
-	pop(2);						// pop the args, neither ref. counted any more
-	return primitiveSuccess();
+	return sp-2;
 }
 
 
@@ -1721,7 +1728,7 @@ BOOL __fastcall Interpreter::primitiveInputSemaphore(CompiledMethod&, unsigned a
 // Answers the old sample interval.
 // If the new interval is 0, simply resets the counter.
 // If the new interval is < 0, turns off the input polling
-BOOL __fastcall Interpreter::primitiveSampleInterval()
+Oop* __fastcall Interpreter::primitiveSampleInterval()
 {
 	Oop argPointer = stackTop();
 	if (!ObjectMemoryIsIntegerObject(argPointer))
@@ -1743,9 +1750,8 @@ BOOL __fastcall Interpreter::primitiveSampleInterval()
 	// And ensure pressed bit of async key state is reset
 	IsUserBreakRequested();
 
-	popStack();											// Pop the SmallInteger argument
-	replaceStackTopWith(oldInterval);	// Answer the old interval, and return non-zero to succeed
-	return primitiveSuccess();
+	stackValue(1) = oldInterval;
+	return primitiveSuccess(1);
 }
 
 ///////////////////////////////////////////////////////////////////////////////

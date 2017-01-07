@@ -16,16 +16,16 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Low-level memory allocation
 
-inline void* ObjectMemory::allocChunk(MWORD chunkSize)
+inline POBJECT ObjectMemory::allocChunk(MWORD chunkSize)
 {
 	#if defined(PRIVATE_HEAP)
-		return ::HeapAlloc(m_hHeap, HEAP_NO_SERIALIZE, chunkSize);
+		return static_cast<POBJECT>(::HeapAlloc(m_hHeap, HEAP_NO_SERIALIZE, chunkSize));
 	#else
 		return malloc(chunkSize);
 	#endif
 }
 
-inline void* ObjectMemory::allocSmallChunk(MWORD chunkSize)
+inline POBJECT ObjectMemory::allocSmallChunk(MWORD chunkSize)
 {
 #ifdef MEMSTATS
 	++m_nSmallAllocated;
@@ -33,14 +33,14 @@ inline void* ObjectMemory::allocSmallChunk(MWORD chunkSize)
 
 	ASSERT(chunkSize <= MaxSmallObjectSize);
 	return chunkSize > MaxSizeOfPoolObject 
-		? __sbh_alloc_block(chunkSize) 
+		? static_cast<POBJECT>(__sbh_alloc_block(chunkSize))
 		: chunkSize == 0 
 				? NULL
 				: // Use Blair's very fast pools which tend to fragment a fair bit
 					spacePoolForSize(chunkSize).allocate();
 }
 
-inline void ObjectMemory::freeSmallChunk(void* pBlock, MWORD size)
+inline void ObjectMemory::freeSmallChunk(POBJECT pBlock, MWORD size)
 {
 #ifdef MEMSTATS
 	++m_nSmallFreed;

@@ -17,7 +17,7 @@
 
 namespace ST
 {
-	class Magnitude //: public Object
+	class Magnitude : public Object
 	{
 	public:
 		enum { FixedSize = 0 };

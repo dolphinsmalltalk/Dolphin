@@ -35,7 +35,7 @@ inline void ObjectMemory::releasePointer(OTE* ote)
 //	if (!m_pFreePointerList)
 //		_asm int 3;
 
-	ote->m_location = m_pFreePointerList;
+	ote->m_location = reinterpret_cast<POBJECT>(m_pFreePointerList);
 	m_pFreePointerList = ote;
 
 #ifdef _DEBUG
@@ -50,7 +50,7 @@ inline void ObjectMemory::releasePointer(OTE* ote)
 //
 // These map directly onto C or Win32 heap
 
-void ObjectMemory::freeChunk(void* pObj)
+void ObjectMemory::freeChunk(POBJECT pObj)
 {
 #ifdef MEMSTATS
 	++m_nLargeFreed;

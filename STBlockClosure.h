@@ -20,7 +20,7 @@ namespace ST
 {
 	#include "STBlockInfo.h"
 
-	class BlockClosure //: public Object
+	class BlockClosure : public Object
 	{
 	public:
 		// Outer environment, or SmallInteger frame pointer if a method env.

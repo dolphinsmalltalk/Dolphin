@@ -22,7 +22,7 @@ namespace ST
 {
 	#include "STMethodHeader.h"
 
-	class CompiledMethod //: public Object
+	class CompiledMethod : public Object
 	{
 	public:
 		STMethodHeader	m_header;		// Must look like a small integer

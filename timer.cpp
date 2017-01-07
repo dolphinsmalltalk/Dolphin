@@ -107,7 +107,7 @@ void CALLBACK Interpreter::TimeProc(UINT uID, UINT /*uMsg*/, DWORD /*dwUser*/, D
 // Signal a specified semaphore after the specified milliseconds duration (the argument). 
 // NOTE: NOT ABSOLUTE VALUE!
 // If the specified time has already passed, then the TimingSemaphore is signalled immediately. 
-BOOL __fastcall Interpreter::primitiveSignalAtTick(CompiledMethod&, unsigned argumentCount)
+Oop* __fastcall Interpreter::primitiveSignalAtTick(CompiledMethod&, unsigned argumentCount)
 {
 	Oop tickPointer = stackTop();
 	SMALLINTEGER nDelay;
@@ -206,10 +206,11 @@ BOOL __fastcall Interpreter::primitiveSignalAtTick(CompiledMethod&, unsigned arg
 
 	// Delay could already have fired
 	CheckProcessSwitch();
-	return primitiveSuccess();
+
+	return primitiveSuccess(0);
 }
 
-BOOL __fastcall Interpreter::primitiveMillisecondClockValue()
+Oop* __fastcall Interpreter::primitiveMillisecondClockValue()
 {
 	// QPC is declared as returning (via out param) a signed value, but this makes no sense because
 	// the function boils down to a wrapper around the RDTSC instruction, which Intel's docs make
@@ -226,10 +227,15 @@ BOOL __fastcall Interpreter::primitiveMillisecondClockValue()
 	uint64_t remainder = counter % m_clockFrequency;
 
 	uint64_t millisecs = seconds * 1000 + (remainder * 1000 / m_clockFrequency);
-	return replaceStackTopWithNew(Integer::NewUnsigned64(millisecs));
+	
+	Oop result = Integer::NewUnsigned64(millisecs);
+	Oop* const sp = m_registers.m_stackPointer;
+	*sp = result;
+	ObjectMemory::AddToZct(result);
+	return sp;
 }
 
-BOOL __fastcall Interpreter::primitiveMicrosecondClockValue()
+Oop* __fastcall Interpreter::primitiveMicrosecondClockValue()
 {
 	uint64_t counter;
 	::QueryPerformanceCounter(reinterpret_cast<LARGE_INTEGER*>(&counter));
@@ -237,7 +243,12 @@ BOOL __fastcall Interpreter::primitiveMicrosecondClockValue()
 	uint64_t seconds = counter / m_clockFrequency;
 	uint64_t remainder = counter % m_clockFrequency;
 	uint64_t microsecs = seconds * 1000000 + (remainder * 1000000 / m_clockFrequency);
-	return replaceStackTopWithNew(Integer::NewUnsigned64(microsecs));
+
+	Oop result = Integer::NewUnsigned64(microsecs);
+	Oop* const sp = m_registers.m_stackPointer;
+	*sp = result;
+	ObjectMemory::AddToZct(result);
+	return sp;
 }
 
 // Establish the desired timer resolution and create the Win32 event used to terminate

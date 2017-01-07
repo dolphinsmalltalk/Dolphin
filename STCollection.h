@@ -17,7 +17,7 @@
 
 namespace ST
 {
-	class Collection //: public Object
+	class Collection : public Object
 	{
 	public:
 		enum { FixedSize = 0 };		// FixedSize does not include Header

@@ -27,9 +27,10 @@
 // This primitive handles PositionableStream>>next, but only for Arrays, Strings and ByteArrays
 // Unary message, so does not modify stack pointer, and is therefore called directly from the ASM 
 // primitive table without indirection through an ASM thunk.
-BOOL __fastcall Interpreter::primitiveNext()
+Oop* __fastcall Interpreter::primitiveNext()
 {
-	PosStreamOTE* streamPointer = reinterpret_cast<PosStreamOTE*>(stackTop());		// Access receiver
+	Oop* const sp = m_registers.m_stackPointer;
+	PosStreamOTE* streamPointer = reinterpret_cast<PosStreamOTE*>(*sp);		// Access receiver
 	
 	// Only works for subclasses of PositionableStream (or look alikes)
 	//ASSERT(!ObjectMemoryIsIntegerObject(streamPointer) && ObjectMemory::isKindOf(streamPointer, Pointers.ClassPositionableStream));
@@ -63,7 +64,7 @@ BOOL __fastcall Interpreter::primitiveNext()
 			return primitiveFailure(3);
 
 		String* buf = oteString->m_location;
-		stackTop() = reinterpret_cast<Oop>(Character::New(buf->m_characters[index]));
+		*sp = reinterpret_cast<Oop>(Character::New(buf->m_characters[index]));
 	}
 	// We also support ByteArrays in our primitiveNext (unlike BB).
 	else if (bufClass == Pointers.ClassByteArray)
@@ -74,7 +75,7 @@ BOOL __fastcall Interpreter::primitiveNext()
 			return primitiveFailure(3);
 
 		ByteArray* buf = oteBytes->m_location;
-		stackTop() = ObjectMemoryIntegerObjectOf(buf->m_elements[index]);
+		*sp = ObjectMemoryIntegerObjectOf(buf->m_elements[index]);
 	}
 	else if (bufClass == Pointers.ClassArray)
 	{
@@ -83,7 +84,7 @@ BOOL __fastcall Interpreter::primitiveNext()
 			return primitiveFailure(3);
 
 		Array* buf = oteArray->m_location;
-		stackTop() = buf->m_elements[index];
+		*sp = buf->m_elements[index];
 	}
 	else
 		return primitiveFailure(1);		// Collection cannot be handled by primitive, rely on Smalltalk code
@@ -92,20 +93,16 @@ BOOL __fastcall Interpreter::primitiveNext()
 	// this is extremely unlikely in practice
 	readStream->m_index = Integer::NewSigned32WithRef(index+1);
 
-	return primitiveSuccess();									// Succeed
+	return sp;									// Succeed
 }
 
 
 // This primitive handles WriteStream>>NextPut:, but only for Arrays, Strings & ByteArrays
-// Uses but does not modify stack pointer, instead returns the number of bytes to 
-// pop from the Smalltalk stack.
-BOOL __fastcall Interpreter::primitiveNextPut()
+Oop* __fastcall Interpreter::primitiveNextPut()
 {
-	Oop* sp = m_registers.m_stackPointer;
+	Oop* const sp = m_registers.m_stackPointer;
 	WriteStreamOTE* streamPointer = reinterpret_cast<WriteStreamOTE*>(*(sp-1));		// Access receiver under argument
 	
-	//ASSERT(!ObjectMemoryIsIntegerObject(streamPointer) && ObjectMemory::isKindOf(streamPointer, Pointers.ClassPositionableStream));
-
 	WriteStream* writeStream = streamPointer->m_location;
 	
 	// Ensure valid stream - checks from Blue Book
@@ -170,16 +167,14 @@ BOOL __fastcall Interpreter::primitiveNextPut()
 	
 	writeStream->m_index = Integer::NewSigned32WithRef(index + 1);		// Increment the stream index
 
-	// As we no longer pop stack here, the receiver is still under the argument
 	*(sp-1) = value;
-
-	return sizeof(Oop);		// Pop 4 bytes
+	return sp - 1;
 }
 
 // Non-standard, but has very beneficial effect on performance
-BOOL __fastcall Interpreter::primitiveNextPutAll()
+Oop* __fastcall Interpreter::primitiveNextPutAll()
 {
-	Oop* sp = m_registers.m_stackPointer;
+	Oop* const sp = m_registers.m_stackPointer;
 	WriteStreamOTE* streamPointer = reinterpret_cast<WriteStreamOTE*>(*(sp-1));		// Access receiver under argument
 
 	WriteStream* writeStream = streamPointer->m_location;
@@ -273,14 +268,14 @@ BOOL __fastcall Interpreter::primitiveNextPutAll()
 	// As we no longer pop stack here, the receiver is still under the argument
 	*(sp-1) = value;
 
-	return sizeof(Oop);		// Pop 4 bytes
+	return sp - 1;
 }
 
 // The primitive handles PositionableStream>>atEnd, but only for arrays/strings
-// Does not use successFlag. Unary, so does not modify the stack pointer
-BOOL __fastcall Interpreter::primitiveAtEnd()
+Oop* __fastcall Interpreter::primitiveAtEnd()
 {
-	PosStreamOTE* streamPointer = reinterpret_cast<PosStreamOTE*>(stackTop());		// Access receiver
+	Oop* const sp = m_registers.m_stackPointer;
+	PosStreamOTE* streamPointer = reinterpret_cast<PosStreamOTE*>(*sp);		// Access receiver
 	//ASSERT(!ObjectMemoryIsIntegerObject(streamPointer) && ObjectMemory::isKindOf(streamPointer, Pointers.ClassPositionableStream));
 	PositionableStream* readStream = streamPointer->m_location;
 
@@ -289,30 +284,31 @@ BOOL __fastcall Interpreter::primitiveAtEnd()
 		!ObjectMemoryIsIntegerObject(readStream->m_readLimit))
 		return primitiveFailure(0);
 
-	SMALLINTEGER index = ObjectMemoryIntegerValueOf(readStream->m_index);
-	SMALLINTEGER limit = ObjectMemoryIntegerValueOf(readStream->m_readLimit);
+	Oop index = readStream->m_index;
+	Oop limit = readStream->m_readLimit;
 	BehaviorOTE* bufClass = readStream->m_array->m_oteClass;
 
 	OTE* boolResult;
 	if (bufClass == Pointers.ClassString || bufClass == Pointers.ClassByteArray)
-		boolResult = index >= limit || (MWORD(index) >= readStream->m_array->bytesSize()) ?
+		boolResult = index >= limit || (MWORD(ObjectMemoryIntegerValueOf(index)) >= readStream->m_array->bytesSize()) ?
 			Pointers.True : Pointers.False;
 	else if (bufClass == Pointers.ClassArray)
-		boolResult = index >= limit || (MWORD(index) >= readStream->m_array->pointersSize()) ?
+		boolResult = index >= limit || (MWORD(ObjectMemoryIntegerValueOf(index)) >= readStream->m_array->pointersSize()) ?
 			Pointers.True : Pointers.False;
 	else
 		return primitiveFailure(1);		// Doesn't work for non-Strings/ByteArrays/Arrays, or if out of bounds
 	
-	stackTop() = reinterpret_cast<Oop>(boolResult);
-	return primitiveSuccess();
+	*sp = reinterpret_cast<Oop>(boolResult);
+	return sp;
 }
 
 
 // This primitive handles PositionableStream>>nextSDWORD, but only for byte-arrays
 // Unary message, so does not modify stack pointer
-BOOL __fastcall Interpreter::primitiveNextSDWORD()
+Oop* __fastcall Interpreter::primitiveNextSDWORD()
 {
-	PosStreamOTE* streamPointer = reinterpret_cast<PosStreamOTE*>(stackTop());		// Access receiver
+	Oop* const sp = m_registers.m_stackPointer;
+	PosStreamOTE* streamPointer = reinterpret_cast<PosStreamOTE*>(*sp);		// Access receiver
 	PositionableStream* readStream = streamPointer->m_location;
 
 	// Ensure valid stream - unusually this validity check is included in the Blue Book spec
@@ -352,8 +348,10 @@ BOOL __fastcall Interpreter::primitiveNextSDWORD()
 
 	// Receiver is overwritten
 	ByteArray* byteArray = oteBytes->m_location;
-	replaceStackTopWithNew(Integer::NewSigned32(*reinterpret_cast<SDWORD*>(byteArray->m_elements+index)));
 
-	return primitiveSuccess();									// Succeed
+	Oop result = Integer::NewSigned32(*reinterpret_cast<SDWORD*>(byteArray->m_elements + index));
+	*sp = result;
+	ObjectMemory::AddToZct(result);
+	return sp;
 }
 

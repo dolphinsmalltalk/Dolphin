@@ -28,7 +28,7 @@
 
 #pragma auto_inline(off)
 
-BOOL __fastcall Interpreter::primitiveSnapshot(CompiledMethod&, unsigned argCount)
+Oop* __fastcall Interpreter::primitiveSnapshot(CompiledMethod&, unsigned argCount)
 {
 	Oop arg = stackValue(argCount - 1);
 	char* szFileName;
@@ -94,8 +94,7 @@ BOOL __fastcall Interpreter::primitiveSnapshot(CompiledMethod&, unsigned argCoun
 	if (!saveResult)
 	{
 		// Success
-		popStack();
-		return primitiveSuccess();
+		return primitiveSuccess(1);
 	}
 	else
 	{

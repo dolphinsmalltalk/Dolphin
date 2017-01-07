@@ -37,9 +37,11 @@
 //	SmallInteger Primitives - See IntPrim.cpp (OR primasm.asm for IX86)
 ///////////////////////////////////////////////////////////////////////////////
 
-BOOL __fastcall Interpreter::primitiveSmallIntegerPrintString()
+Oop* __fastcall Interpreter::primitiveSmallIntegerPrintString()
 {
-	Oop integerPointer = stackTop();
+	Oop* const sp = m_registers.m_stackPointer;
+
+	Oop integerPointer = *sp;
 
 #ifdef _WIN64
 	char buffer[32];
@@ -50,11 +52,13 @@ BOOL __fastcall Interpreter::primitiveSmallIntegerPrintString()
 #endif
 	if (err == 0)
 	{
-		replaceStackTopWithNew(String::New(buffer));
-		return TRUE;
+		StringOTE* oteResult = String::New(buffer);
+		*sp = reinterpret_cast<Oop>(oteResult);
+		ObjectMemory::AddToZct(reinterpret_cast<OTE*>(oteResult));
+		return sp;
 	}
 	else
-		return FALSE;
+		return primitiveFailure(0);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -71,9 +75,7 @@ BOOL __fastcall Interpreter::primitiveSmallIntegerPrintString()
 
 #pragma code_seg(MEM_SEG)
 
-// Does not use successFlag, and returns a clean stack because can only succeed if
-// argument is a positive SmallInteger
-BOOL __fastcall Interpreter::primitiveResize()
+Oop* __fastcall Interpreter::primitiveResize()
 {
 	Oop integerPointer = stackTop();
 	SMALLINTEGER newSize;
@@ -99,8 +101,7 @@ BOOL __fastcall Interpreter::primitiveResize()
 		if (currentPointerSize == (int)newPointerSize)
 		{
 			// No change, succeed
-			pop(1);
-			return primitiveSuccess();
+			return primitiveSuccess(1);
 		}
 
 		if (currentPointerSize < 0)
@@ -110,7 +111,6 @@ BOOL __fastcall Interpreter::primitiveResize()
 		}
 			
 		// Changing size of mutable pointer object
-		pop(1);
 		bool bCountDownRemoved = reinterpret_cast<OTE*>(Interpreter::actualActiveProcessPointer()) != oteReceiver;
 		VariantObject* pNew = ObjectMemory::resize(reinterpret_cast<PointersOTE*>(oteReceiver),
 			newPointerSize,
@@ -123,8 +123,7 @@ BOOL __fastcall Interpreter::primitiveResize()
 		if (currentByteSize == (int)newSize)
 		{
 			// No change, succeed
-			pop(1);
-			return primitiveSuccess();
+			return primitiveSuccess(1);
 		}
 		
 		if (currentByteSize < 0)
@@ -134,7 +133,6 @@ BOOL __fastcall Interpreter::primitiveResize()
 		}
 
 		// Changing size of mutable byte object
-		pop(1);
 		VariantByteObject* pNew = ObjectMemory::resize(reinterpret_cast<BytesOTE*>(oteReceiver), newSize);
 		ASSERT(pNew != NULL || newSize == 0);
 	}
@@ -142,23 +140,8 @@ BOOL __fastcall Interpreter::primitiveResize()
 	// Object size has changed, invalidating any AtCache entry
 	purgeObjectFromCaches(oteReceiver);
 
-	return primitiveSuccess();
+	return primitiveSuccess(1);
 }
-
-#pragma code_seg(PRIM_SEG)
-
-
-#ifdef _DEBUG
-	// Argument should be true/false value, but speed not critical, so use popAndNil
-	BOOL __fastcall Interpreter::primitiveExecutionTrace()
-	{
-		Oop arg = popStack();
-		#ifdef _DEBUG
-			executionTrace = ObjectMemoryIntegerValueOf(arg);
-		#endif
-		return primitiveSuccess();
-	}
-#endif
 
 
 #pragma code_seg(PROCESS_SEG)
@@ -166,9 +149,10 @@ BOOL __fastcall Interpreter::primitiveResize()
 // Remove a request from the last request queue, nil if none pending. Fails if argument is not an
 // array of the correct length to receiver the popped Queue entry (currently 2 objects)
 // Answers nil if the queue is empty, or the argument if an entry was successfully popped into it
-BOOL __fastcall Interpreter::primitiveDeQBereavement()
+Oop* __fastcall Interpreter::primitiveDeQBereavement()
 {
-	Oop argPointer = stackTop();
+	Oop* const sp = m_registers.m_stackPointer;
+	Oop argPointer = *sp;
 	if (ObjectMemoryIsIntegerObject(argPointer))
 		return primitiveFailure(PrimitiveFailureBadValue);
 
@@ -180,9 +164,8 @@ BOOL __fastcall Interpreter::primitiveDeQBereavement()
 
 	// dequeueBereaved returns Pointers.True or Pointers.False
 	OTE* answer = dequeueBereaved(array);
-	stackValue(1) = reinterpret_cast<Oop>(answer);
-	popStack();
-	return primitiveSuccess();
+	*(sp-1) = reinterpret_cast<Oop>(answer);
+	return sp-1;
 }
 
 ///////////////////////////////////
@@ -217,22 +200,24 @@ void Interpreter::flushAtCaches()
 	ZeroMemory(AtPutCache, sizeof(AtPutCache));
 }
 
-BOOL __fastcall Interpreter::primitiveFlushCache()
+Oop* __fastcall Interpreter::primitiveFlushCache()
 {
 #ifdef _DEBUG
 	DumpCacheStats();
 #endif
 	flushCaches();
-	return TRUE;	// return success value so can be used directly as primitive
+	return primitiveSuccess(0);	// return success value so can be used directly as primitive
 }
 
 // Separate atPut primitive is needed to write to the stack because the active process
 // stack is not reference counted.
-BOOL __fastcall Interpreter::primitiveStackAtPut(CompiledMethod& , unsigned argCount)
+Oop* __fastcall Interpreter::primitiveStackAtPut(CompiledMethod& , unsigned argCount)
 {
 	ASSERT(argCount == 2); argCount;
 	
-	Oop indexPointer = stackValue(1);
+	Oop* const sp = m_registers.m_stackPointer;
+
+	Oop indexPointer = *(sp-1);
 	if (!ObjectMemoryIsIntegerObject(indexPointer))
 		return primitiveFailure(PrimitiveFailureNonInteger);
 
@@ -242,12 +227,12 @@ BOOL __fastcall Interpreter::primitiveStackAtPut(CompiledMethod& , unsigned argC
 
 	resizeActiveProcess();
 
-	ProcessOTE* oteReceiver = reinterpret_cast<ProcessOTE*>(stackValue(2));
+	ProcessOTE* oteReceiver = reinterpret_cast<ProcessOTE*>(*(sp-2));
 	Process* receiverProcess = static_cast<Process*>(oteReceiver->m_location);
 	if (static_cast<MWORD>(index) > receiverProcess->stackSize(oteReceiver))
 			return primitiveFailure(PrimitiveFailureBoundsError);
 
-	Oop argPointer = stackTop();
+	Oop argPointer = *sp;
 	Oop oopExisting = receiverProcess->m_stack[index-1];
 
 	// No ref. counting required writing to active process stack
@@ -258,9 +243,8 @@ BOOL __fastcall Interpreter::primitiveStackAtPut(CompiledMethod& , unsigned argC
 	}
 
 	receiverProcess->m_stack[index-1] = argPointer;
-	pop(2);
-	stackTop() = argPointer;
-	return TRUE;
+	*(sp-2) = argPointer;
+	return sp-2;
 }
 
 
@@ -271,24 +255,25 @@ void __fastcall Interpreter::primitiveQuit(CompiledMethod&,unsigned)
 	exitSmalltalk(ObjectMemoryIntegerValueOf(argPointer));
 }
 
-BOOL __fastcall Interpreter::primitiveReplacePointers()
+Oop* __fastcall Interpreter::primitiveReplacePointers()
 {
-	Oop integerPointer = stackTop();
+	Oop* const sp = m_registers.m_stackPointer;
+	Oop integerPointer = *sp;
 	if (!ObjectMemoryIsIntegerObject(integerPointer))
 		return primitiveFailure(0);	// startAt is not an integer
 	SMALLINTEGER startAt = ObjectMemoryIntegerValueOf(integerPointer);
 
-	integerPointer = stackValue(1);
+	integerPointer = *(sp-1);
 	if (!ObjectMemoryIsIntegerObject(integerPointer))
 		return primitiveFailure(1);	// stop is not an integer
 	SMALLINTEGER stop = ObjectMemoryIntegerValueOf(integerPointer);
 
-	integerPointer = stackValue(2);
+	integerPointer = *(sp-2);
 	if (!ObjectMemoryIsIntegerObject(integerPointer))
 		return primitiveFailure(2);	// start is not an integer
 	SMALLINTEGER start = ObjectMemoryIntegerValueOf(integerPointer);
 
-	PointersOTE* argPointer = reinterpret_cast<PointersOTE*>(stackValue(3));
+	PointersOTE* argPointer = reinterpret_cast<PointersOTE*>(*(sp-3));
 	if (ObjectMemoryIsIntegerObject(argPointer) || !argPointer->isPointers())
 		return primitiveFailure(3);	// Argument MUST be pointer object
 
@@ -315,7 +300,7 @@ BOOL __fastcall Interpreter::primitiveReplacePointers()
 		VariantObject* arg = reinterpret_cast<PointersOTE*>(argPointer)->m_location;
 		Oop* pTo = arg->m_fields;
 
-		PointersOTE* receiverPointer = reinterpret_cast<PointersOTE*>(stackValue(4));
+		PointersOTE* receiverPointer = reinterpret_cast<PointersOTE*>(*(sp-4));
 
 		int fromSize = receiverPointer->pointersSize();
 		unsigned fromOffset = receiverPointer->m_oteClass->m_location->fixedFields();
@@ -352,8 +337,7 @@ BOOL __fastcall Interpreter::primitiveReplacePointers()
 	}
 
 	// Answers the argument by moving it down over the receiver
-	stackValue(4) = reinterpret_cast<Oop>(argPointer);
-	pop(4);
-	return TRUE;
+	*(sp-4) = reinterpret_cast<Oop>(argPointer);
+	return sp-4;
 }
 

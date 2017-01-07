@@ -537,10 +537,10 @@ inline ObjectMemory::FixedSizePool::FixedSizePool(unsigned nChunkSize) : m_pFree
 //	#pragma auto_inline(on)
 //#endif
 
-inline void* ObjectMemory::reallocChunk(void* pChunk, MWORD newChunkSize)
+inline POBJECT ObjectMemory::reallocChunk(POBJECT pChunk, MWORD newChunkSize)
 {
 	#ifdef PRIVATE_HEAP
-		return ::HeapReAlloc(m_hHeap, HEAP_NO_SERIALIZE, pChunk, newChunkSize);
+		return static_cast<POBJECT>(::HeapReAlloc(m_hHeap, HEAP_NO_SERIALIZE, pChunk, newChunkSize));
 	#else
 		void *oldPointer = pChunk;
 		void *newPointer = realloc(pChunk, newChunkSize);

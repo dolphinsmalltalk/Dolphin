@@ -72,7 +72,7 @@
   <Type Name="TOTE&lt;ST::Float&gt;">
     <DisplayString Condition="(Oop)this == Pointers.Nil">nil</DisplayString>
     <DisplayString Condition="m_flags.m_free">**a Freed Float**</DisplayString>
-    <DisplayString>{m_location->m_fValue,g}</DisplayString>
+    <DisplayString>{m_location->m_fValue,f}</DisplayString>
     <Expand HideRawView="true"></Expand>   
   </Type>
   <Type Name="TOTE&lt;ST::Character&gt;">

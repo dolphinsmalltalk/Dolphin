@@ -23,9 +23,7 @@
 #include "STBlockClosure.h"
 
 // Value with args takes an array of arguments
-// Does not use success flag, or adjust stack pointer until successful
-// Effectively leaves a clean stack as it pops nothing off
-BOOL __fastcall Interpreter::primitiveValueWithArgs()
+Oop* __fastcall Interpreter::primitiveValueWithArgs()
 {
 	Oop* bp = m_registers.m_stackPointer;
 
@@ -127,11 +125,10 @@ BOOL __fastcall Interpreter::primitiveValueWithArgs()
 	m_registers.m_stackPointer = reinterpret_cast<Oop*>(reinterpret_cast<BYTE*>(pFrame)+sizeof(StackFrame)) - 1;
 	ASSERT(m_registers.m_stackPointer == &pFrame->m_bp);
 
-	return primitiveSuccess();
+	return primitiveSuccess(0);
 }
 
-// Does not use successFlag, leaves a clean stack
-BOOL __fastcall Interpreter::primitivePerform(CompiledMethod& , unsigned argCount)
+Oop* __fastcall Interpreter::primitivePerform(CompiledMethod& , unsigned argCount)
 {
 	SymbolOTE* performSelector = m_oopMessageSelector;	// Save in case we need to restore
 
@@ -167,7 +164,7 @@ BOOL __fastcall Interpreter::primitivePerform(CompiledMethod& , unsigned argCoun
 		// method found which may not equal argCount)
 		const unsigned methodArgCount = method->m_header.argumentCount;
 		// #pragma message("primitivePerform: Instead of shuffling args down 1, why not just deduct 1 from calling frames suspended SP after exec?")
-		Oop* sp = m_registers.m_stackPointer - methodArgCount;
+		Oop* const sp = m_registers.m_stackPointer - methodArgCount;
 
 		// We don't need to count down the overwritten oop anymore, since we don't ref. count stack ops
 
@@ -177,7 +174,7 @@ BOOL __fastcall Interpreter::primitivePerform(CompiledMethod& , unsigned argCoun
 			sp[i] = sp[i+1];
 		popStack();
 		executeNewMethod(methodPointer, methodArgCount);
-		return primitiveSuccess();
+		return primitiveSuccess(0);
 	}
 	else
 	{
@@ -189,10 +186,9 @@ BOOL __fastcall Interpreter::primitivePerform(CompiledMethod& , unsigned argCoun
 	}
 }
 
-// Does not use successFlag, leaves a clean stack in the presence of success or failure
-BOOL __fastcall Interpreter::primitivePerformWithArgs()
+Oop* __fastcall Interpreter::primitivePerformWithArgs()
 {
-	Oop* sp = m_registers.m_stackPointer;
+	Oop* const sp = m_registers.m_stackPointer;
 	ArrayOTE* argumentArray = reinterpret_cast<ArrayOTE*>(*(sp));
 	BehaviorOTE* arrayClass = ObjectMemory::fetchClassOf(Oop(argumentArray));
 	if (arrayClass != Pointers.ClassArray)
@@ -221,8 +217,6 @@ BOOL __fastcall Interpreter::primitivePerformWithArgs()
 
 	Oop newReceiver = *(sp-2);			// receiver is under selector and arg array
 
-	sp -= 2;	// Args written over top of selector and argument array
-
 	// Push the args from the array onto the stack. We must do this before
 	// looking up the method, because if the receiver does not understand
 	// the method then the lookup routines copy the arguments off the stack
@@ -232,9 +226,10 @@ BOOL __fastcall Interpreter::primitivePerformWithArgs()
 	{
 		Oop pushee = args->m_elements[i];
 		// Note no need to inc the ref. count when pushing on the stack
-		sp[i+1] = pushee;
+		sp[i-1] = pushee;
 	}
-	m_registers.m_stackPointer = sp+argCount;
+	// Args written over top of selector and argument array (hence -2)
+	m_registers.m_stackPointer = sp+argCount-2;
 
 	// There is a subtle complication here when the receiver does not
 	// understand the message, by which lookupMethodInClass() converts
@@ -254,7 +249,7 @@ BOOL __fastcall Interpreter::primitivePerformWithArgs()
 	{
 		// WE no longer need the argument array, but don't count it down since we only have a stack ref.
 		executeNewMethod(methodPointer, methodArgCount);
-		return primitiveSuccess();
+		return primitiveSuccess(0);
 	}
 	else
 	{
@@ -270,8 +265,7 @@ BOOL __fastcall Interpreter::primitivePerformWithArgs()
 }
 
 
-// Does not use successFlag, leaves a clean stack
-BOOL __fastcall Interpreter::primitivePerformMethod(CompiledMethod& , unsigned)
+Oop* __fastcall Interpreter::primitivePerformMethod(CompiledMethod& , unsigned)
 {
 	Oop * sp = m_registers.m_stackPointer;
 	ArrayOTE* oteArg = reinterpret_cast<ArrayOTE*>(*(sp));
@@ -305,5 +299,5 @@ BOOL __fastcall Interpreter::primitivePerformMethod(CompiledMethod& , unsigned)
 
 	// Don't count down any args
 	executeNewMethod(oteMethod, argCount);
-	return primitiveSuccess();
+	return primitiveSuccess(0);
 }

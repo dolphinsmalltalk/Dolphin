@@ -117,7 +117,7 @@ size_t ObjectMemory::compact()
 		*first = *last;
 		moved++;
 		// Leave forwarding pointer in the old slot
-		last->m_location = first;
+		last->m_location = reinterpret_cast<POBJECT>(first);
 		last->beFree();
 		last->m_count = 0;
 		// Advance last as we've moved this slot
@@ -172,7 +172,7 @@ size_t ObjectMemory::compact()
 	while (cur < end)
 	{
 		HARDASSERT(cur->isFree());
-		cur->m_location = cur + 1;
+		cur->m_location = reinterpret_cast<POBJECT>(cur + 1);
 		cur++;
 	}
 

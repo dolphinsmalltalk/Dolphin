@@ -1009,7 +1009,7 @@ void OverlappedCall::ReincrementProcessReferences()
 ///////////////////////////////////////////////////////////////////////////////
 // Interpreter primitive 
 
-BOOL __fastcall Interpreter::primitiveAsyncDLL32Call(CompiledMethod& method, unsigned argCount)
+Oop* __fastcall Interpreter::primitiveAsyncDLL32Call(CompiledMethod& method, unsigned argCount)
 {
 	//inPrim = true;
 	//completed = false;
@@ -1057,5 +1057,5 @@ BOOL __fastcall Interpreter::primitiveAsyncDLL32Call(CompiledMethod& method, uns
 
 	//inPrim = false;
 
-	return TRUE;
+	return m_registers.m_stackPointer;
 }

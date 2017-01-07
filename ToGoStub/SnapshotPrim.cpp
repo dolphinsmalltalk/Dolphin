@@ -23,7 +23,7 @@
 
 #pragma auto_inline(off)
 
-BOOL __fastcall Interpreter::primitiveSnapshot(CompiledMethod& , unsigned argCount)
+Oop* __fastcall Interpreter::primitiveSnapshot(CompiledMethod& , unsigned argCount)
 {
-	return FALSE;
+	return NULL;
 }

@@ -26,7 +26,7 @@
 // These map directly onto C or Win32 heap
 
 
-inline void* ObjectMemory::reallocChunk(void* pChunk, MWORD newChunkSize)
+inline POBJECT ObjectMemory::reallocChunk(POBJECT pChunk, MWORD newChunkSize)
 {
 	#if defined(_DEBUG)
 		if (__sbh_find_block(pChunk) != NULL)
@@ -40,7 +40,7 @@ inline void* ObjectMemory::reallocChunk(void* pChunk, MWORD newChunkSize)
 	#endif
 
 	#ifdef PRIVATE_HEAP
-		return ::HeapReAlloc(m_hHeap, 0, pChunk, newChunkSize);
+		return static_cast<POBJECT>(::HeapReAlloc(m_hHeap, 0, pChunk, newChunkSize));
 	#else
 		return realloc(pChunk, newChunkSize);
 	#endif

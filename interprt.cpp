@@ -444,7 +444,7 @@ void Interpreter::AbandonStepping()
 	ResetInputPollCounter();
 }
 
-void Interpreter::sendExceptionInterrupt(Oop oopInterrupt, LPEXCEPTION_POINTERS pExInfo)
+void Interpreter::recoverFromFault(LPEXCEPTION_POINTERS pExInfo)
 {
 	AbandonStepping();
 	bool inPrim = isInPrimitive();
@@ -453,6 +453,11 @@ void Interpreter::sendExceptionInterrupt(Oop oopInterrupt, LPEXCEPTION_POINTERS 
 	{
 		activateNewMethod(m_registers.m_oopNewMethod->m_location);
 	}
+}
+
+void Interpreter::sendExceptionInterrupt(Oop oopInterrupt, LPEXCEPTION_POINTERS pExInfo)
+{
+	recoverFromFault(pExInfo);
 #ifdef _DEBUG
 	{
 		tracelock lock(TRACESTREAM);
@@ -499,7 +504,7 @@ int Interpreter::interpreterExceptionFilter(LPEXCEPTION_POINTERS pExInfo)
 	{
 	case EXCEPTION_ACCESS_VIOLATION:
 #if !defined(NO_GPF_TRAP)
-		action = memoryExceptionFilter(pExRec);
+		action = memoryExceptionFilter(pExInfo);
 
 		if (action == EXCEPTION_CONTINUE_SEARCH)
 		{
@@ -618,8 +623,10 @@ int __cdecl Interpreter::IEEEFPHandler(_FPIEEE_RECORD *pIEEEFPException)
 #pragma code_seg(INTERPMISC_SEG)
 // Exception filter to handle continuable win32 exceptions caused by object table/process
 // stack overflows
-int Interpreter::memoryExceptionFilter(LPEXCEPTION_RECORD pExRec)
+int Interpreter::memoryExceptionFilter(LPEXCEPTION_POINTERS pExInfo)
 {
+	LPEXCEPTION_RECORD pExRec = pExInfo->ExceptionRecord;
+
 	// This "filter" is only designed to handle GPFs
 	ASSERT(pExRec->ExceptionCode == EXCEPTION_ACCESS_VIOLATION);
 
@@ -700,7 +707,7 @@ int Interpreter::memoryExceptionFilter(LPEXCEPTION_RECORD pExRec)
 	else
 	{
 		// The ObjectMemory may be able to handle it
-		action = ObjectMemory::gpFaultExceptionFilter(pExRec);
+		action = ObjectMemory::gpFaultExceptionFilter(pExInfo);
 	}
 
 	return action;

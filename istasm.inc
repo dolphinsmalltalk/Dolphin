@@ -452,9 +452,9 @@ extern  METHODCACHE:PTR MethodCacheEntry
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; C++ member imports
 
-OBJECTTABLE EQU ?m_pOT@ObjectMemory@@2PAV?$TOTE@X@@A
+OBJECTTABLE EQU ?m_pOT@ObjectMemory@@2PAV?$TOTE@VObject@ST@@@@A
 EXTERN OBJECTTABLE:PTR OTE
-ZCT EQU ?m_pZct@ObjectMemory@@0PAPAV?$TOTE@X@@A
+ZCT EQU ?m_pZct@ObjectMemory@@0PAPAV?$TOTE@VObject@ST@@@@A
 EXTERN ZCT:near32
 ZCTENTRIES EQU ?m_nZctEntries@ObjectMemory@@0HA
 EXTERN ZCTENTRIES:near32
@@ -467,7 +467,6 @@ NEWDWORD				EQU		?NewDWORD@Interpreter@@SIPAV?$TOTE@VVariantByteObject@ST@@@@KPA
 extern NEWDWORD:near32
 LINEWSIGNED				EQU		?liNewSigned@LargeInteger@ST@@SIPAV?$TOTE@VLargeInteger@ST@@@@J@Z
 extern LINEWSIGNED:near32
-NEWSIGNED				EQU		NewSigned
 NEWFLOATOBJ				EQU		?New@Float@ST@@SGPAV?$TOTE@VFloat@ST@@@@XZ
 extern NEWFLOATOBJ:near32
 NEWFLOAT8				EQU		?New@Float@ST@@SGPAV?$TOTE@VFloat@ST@@@@N@Z
@@ -496,7 +495,7 @@ InterpRegisters STRUCT 2t
 	m_oopActiveProcess		POTE  ?
 InterpRegisters ENDS
 
-INTERPCONTEXT			EQU ?m_registers@Interpreter@@0UInterpreterRegisters@@A
+INTERPCONTEXT			EQU ?m_registers@Interpreter@@2UInterpreterRegisters@@A
 extern INTERPCONTEXT:InterpRegisters
 
 MESSAGE					EQU		?m_oopMessageSelector@Interpreter@@0PAV?$TOTE@VSymbol@ST@@@@A
@@ -683,23 +682,15 @@ CallCPP MACRO mangledName
 
 ENDM
 
-IFDEF _DEBUG
-	ADDTOZCT EQU ?AddToZct@ObjectMemory@@SIPAV?$TOTE@X@@PAV2@@Z
-	extern ADDTOZCT:near32
-ENDIF
-
-RECONCILEZCT EQU ?ReconcileZct@ObjectMemory@@SIPAV?$TOTE@X@@PAV2@@Z
+RECONCILEZCT EQU ?ReconcileZct@ObjectMemory@@SIPAV?$TOTE@VObject@ST@@@@PAV2@@Z
 extern RECONCILEZCT:near32
 
-AddToZct MACRO oopRegLetter:=<c>, stackP:=<_SP>
+AddToZct MACRO oopRegLetter, stackP:=<_SP>
 	LOCAL	fini
 	IFDIFI <e&oopRegLetter&x>, <ecx>				;; Don't move ecx onto itself
 		mov		ecx, e&oopRegLetter&x
 	ENDIF
-IF 0 ;DEF _DEBUG
-	StoreSPRegister									;; CPP SP register must be up to date in case of reconciliation
-	call	ADDTOZCT								;; Stick it in the Zct
-ELSE
+
 	IFDIFI <&stackP&>, <_SP>						;; Preserve the stack pointer value for later
 		push	stackP
 	ENDIF
@@ -712,13 +703,15 @@ ELSE
 	IFDIFI <&stackP&>, <_SP>
 		pop	stackP
 	ENDIF
-	.IF	(eax == DWORD PTR[ZCTHIGHWATER])			;; ZCT full?
+	IFDEF _DEBUG
 		mov		[STACKPOINTER], stackP			 	;; Save down interpreter stack pointer, e.g. for C routine
 		call	RECONCILEZCT
-	.ELSE
-		mov		eax, ecx							;; EAX must be OTE on exit from macro
-	.ENDIF
-ENDIF
+	ELSE
+		.IF	(eax == DWORD PTR[ZCTHIGHWATER])			;; ZCT full?
+			mov		[STACKPOINTER], stackP			 	;; Save down interpreter stack pointer, e.g. for C routine
+			call	RECONCILEZCT
+		.ENDIF
+	ENDIF
 fini:
 ENDM
 
@@ -726,7 +719,7 @@ ENDM
 ;; memory register is assumed to hold the correct value already.
 ;; I'd like to have achieved this using conditional assembly, but couldn't work out
 ;; how to do it in a reasonable amount of time.
-AddToZctNoSP MACRO oopRegLetter:=<c>
+AddToZctNoSP MACRO oopRegLetter
 	LOCAL	fini
 	IFDIFI <e&oopRegLetter&x>, <ecx>				;; Don't move ecx onto itself
 		mov		ecx, e&oopRegLetter&x
@@ -737,30 +730,30 @@ AddToZctNoSP MACRO oopRegLetter:=<c>
 	mov		DWORD PTR[edx+eax*4], ecx
 	inc		eax
 	mov		DWORD PTR[ZCTENTRIES], eax
-	.IF	(eax == DWORD PTR[ZCTHIGHWATER])			;; ZCT full?
+	IFDEF _DEBUG
 		call	RECONCILEZCT
-	.ELSE
-		mov		eax, ecx							;; EAX must be OTE on exit from macro
-	.ENDIF
+	ELSE
+		.IF	(eax == DWORD PTR[ZCTHIGHWATER])			;; ZCT full?
+			call	RECONCILEZCT
+		.ENDIF
+	ENDIF
 fini:
 ENDM
 
-;; Macro to count down an object in specified register - leaves Oop in eax, 
+;; Macro to count down an object in specified register
 ;; but object may have been deleted.
-;; Destroys ECX and EDX, and returns input in EAX
+;; Destroys ECX and EDX
 CountDownOopIn MACRO oopRegLetter:=<c>
 	LOCAL	fini
 	ASSUME	e&oopRegLetter&x:PTR OTE
 	test 	oopRegLetter&l, 1						;; Is is a SmallInteger
 	jnz 	fini									;; Yes, no further processing
-	ASSERTNEQU d, &oopRegLetter						;; If so, then it'll be trashed
+	ASSERTNEQU d, &oopRegLetter						;; Macro only works for count down of ECX, EAX, not EDX
 	mov		dl, [e&oopRegLetter&x].m_count
 	cmp		dl, 0ffh								;; Has count overflowed?
-;	cmp		[e&oopRegLetter&x].m_count, 0ffh
-	je		fini								;; Yes, do nothing
+	je		fini									;; Yes, do nothing
 	dec		dl
 	mov		[e&oopRegLetter&x].m_count, dl
-;	dec		[e&oopRegLetter&x].m_count
 
 	ASSUME	e&oopRegLetter&x:NOTHING
 	jnz		fini								;; Count not reduced to zero, skip deallocation
@@ -793,21 +786,6 @@ PushNewObject MACRO oopRegLetter:=<a>
 	AddToZct oopRegLetter
 ENDM
 
-ReplaceStackTopWithNew MACRO oopRegLetter:=<a>
-	IFDIFI <e&oopRegLetter&x>, <ecx>				;; Don't move ecx onto itself
-		mov		ecx, e&oopRegLetter&x
-	ENDIF
-	mov		[_SP], e&oopRegLetter&x					; Overwrite receiver class with new object
-	AddToZct oopRegLetter
-ENDM
-
-ReplaceStackTopWithNewOop MACRO oopRegLetter:=<a>
-	test	oopRegLetter&l, 1
-	mov		[_SP], e&oopRegLetter&x					; Overwrite receiver class with new object
-	jnz		@F	
-	AddToZct oopRegLetter
-@@:
-ENDM
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 CANTBEINTEGEROBJECT MACRO oopReg
@@ -853,6 +831,7 @@ GetIPOffsetUsing MACRO tempRegister
 	ENDIF
 ENDM
 
+
 PrimitiveFailureCode MACRO failureCode
 	mov		edx, [ACTIVEPROCESS]
 	xor		eax, eax
@@ -860,10 +839,9 @@ PrimitiveFailureCode MACRO failureCode
 	ret
 ENDM
 	
-PrimitiveFailureN MACRO failureCode
-	primitiveFailure&failureCode PROC
-		PrimitiveFailureCode failureCode
-	primitiveFailure&failureCode ENDP
+LocalPrimitiveFailure MACRO failureCode
+localPrimitiveFailure&failureCode:
+	PrimitiveFailureCode failureCode
 ENDM
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

@@ -47,9 +47,13 @@ bool Interpreter::disableAsyncGC(bool bDisable)
 void Interpreter::NotifyOTOverflow()
 {
 	if (m_bAsyncGCDisabled)
+	{
 		m_nOTOverflows++;
+	}
 	else
+	{
 		queueInterrupt(VMI_OTOVERFLOW, ObjectMemoryIntegerObjectOf(ObjectMemory::GetOTSize()));
+	}
 }
 
 void Interpreter::syncGC(DWORD gcFlags)
@@ -85,9 +89,8 @@ void Interpreter::asyncGC(DWORD gcFlags)
 #endif
 
 
-// Does not use successFlag, no args so leaves a clean stack
 // This has been usurped for GC primitive
-BOOL __fastcall Interpreter::primitiveCoreLeft(CompiledMethod& , unsigned argCount)
+Oop* __fastcall Interpreter::primitiveCoreLeft(CompiledMethod& , unsigned argCount)
 {
 	DWORD gcFlags = 0;
 	if (argCount)
@@ -99,7 +102,7 @@ BOOL __fastcall Interpreter::primitiveCoreLeft(CompiledMethod& , unsigned argCou
 	}
 
 	syncGC(gcFlags);
-	return primitiveSuccess();
+	return primitiveSuccess(0);
 }
 
 #ifdef _DEBUG
@@ -158,8 +161,7 @@ void Interpreter::freePools()
 	#endif
 }
 
-// Nof effect on stack, and leaves it clean
-BOOL __fastcall Interpreter::primitiveOopsLeft()
+Oop* __fastcall Interpreter::primitiveOopsLeft()
 {
 	// Ensure active process has the correct size and that the Zct is empty
 	// and all ref counts are correct
@@ -179,10 +181,10 @@ BOOL __fastcall Interpreter::primitiveOopsLeft()
 		return primitiveFailure(1);
 
 	// Adjust stack before any process switch!
-	replaceStackTopWith(ObjectMemoryIntegerObjectOf(oopsLeft));
+	stackTop() = ObjectMemoryIntegerObjectOf(oopsLeft);
 
 	// N.B. May cause a process switch
 	CheckProcessSwitch();
 
-	return primitiveSuccess();
+	return primitiveSuccess(0);
 }

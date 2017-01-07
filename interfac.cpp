@@ -634,7 +634,7 @@ int __stdcall Interpreter::callbackExceptionFilter(LPEXCEPTION_POINTERS info)
 		case EXCEPTION_ACCESS_VIOLATION:
 #if !defined(NO_GPF_TRAP)
 			// Handle errors due to stack/OT overflow
-			return memoryExceptionFilter(pExRec);
+			return memoryExceptionFilter(info);
 #endif
 		default:
 			return EXCEPTION_CONTINUE_SEARCH;

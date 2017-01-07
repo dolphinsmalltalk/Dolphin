@@ -18,6 +18,8 @@
 #include "STFloat.h"
 #include "STInteger.h"
 
+#define primitiveSuccess(argCount) (Interpreter::m_registers.m_stackPointer - argCount)
+
 inline void Interpreter::GrabAsyncProtect()
 {
 	::EnterCriticalSection(&m_csAsyncProtect);
@@ -31,11 +33,6 @@ inline void Interpreter::RelinquishAsyncProtect()
 //=============
 //Stack Inlines 
 //=============
-
-#define stackValue(offset) (*(Interpreter::m_registers.m_stackPointer - (offset)))
-#define pop(number) (Interpreter::m_registers.m_stackPointer -=(number))
-#define popStack()	(*Interpreter::m_registers.m_stackPointer--)
-#define stackTop()	(*Interpreter::m_registers.m_stackPointer)
 
 inline void Interpreter::push(LPCSTR pStr)
 {
@@ -106,36 +103,9 @@ inline void Interpreter::push(Oop object)
 	// Unfortunately the Compiler generate code with an AGI penalty for this by
 	// performing the +1 before writing through the new SP, and I can't persuade
 	// it to use an instruction with an offset
-	Oop* sp = m_registers.m_stackPointer;
+	Oop* const sp = m_registers.m_stackPointer;
 	sp[1] = object;
 	m_registers.m_stackPointer = sp+1;
-	
-	// This does cause it to use an offset, but the ++ causes it to read the global variable twice
-	//(m_registers.m_stackPointer++)[1] = object;
-}
-
-inline Oop Interpreter::replaceStackTopWith(OTE* object)
-{
-	return *m_registers.m_stackPointer = Oop(object);
-}
-
-inline Oop Interpreter::replaceStackTopWith(Oop oop)
-{
-	return *m_registers.m_stackPointer = oop;
-}
-
-inline Oop Interpreter::replaceStackTopWithNew(Oop oop)
-{
-	if (ObjectMemoryIsIntegerObject(oop))
-		*m_registers.m_stackPointer = oop;
-	else
-		replaceStackTopWithNew(reinterpret_cast<OTE*>(oop));
-	return oop;
-}
-
-inline Oop Interpreter::replaceStackTopWithNew(double fValue)
-{
-	return 	replaceStackTopWithNew(Float::New(fValue));
 }
 
 inline Oop Interpreter::popAndCountUp()
@@ -238,7 +208,7 @@ inline void Interpreter::DecStackRefs()
 inline void InterpreterRegisters::IncStackRefs()
 {
 	Process* pProcess = activeProcess();
-	Oop* sp = m_stackPointer;
+	Oop* const sp = m_stackPointer;
 	for (Oop* pOop = pProcess->m_stack;pOop <= sp;pOop++)
 		ObjectMemory::countUp(*pOop);
 }
@@ -246,7 +216,7 @@ inline void InterpreterRegisters::IncStackRefs()
 inline void InterpreterRegisters::DecStackRefs()
 {
 	Process* pProcess = activeProcess();
-	Oop* sp = m_stackPointer;
+	Oop* const sp = m_stackPointer;
 	for (Oop* pOop = pProcess->m_stack;pOop <= sp;pOop++)
 		ObjectMemory::countDown(*pOop);
 }
@@ -278,6 +248,9 @@ inline void Interpreter::queueForFinalization(OTE* ote, int highWater)
 
 inline void Interpreter::queueForBereavementOf(OTE* ote, Oop argPointer)
 {
+	ASSERT(ote->isWeak());
+	ASSERT(ObjectMemoryIsIntegerObject(argPointer));
+
 	// Must keep the OopsPerEntry constant in sync. with num objects pushed here
 	m_qBereavements.Push(reinterpret_cast<Oop>(ote));
 	m_qBereavements.Push(argPointer);
