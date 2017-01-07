@@ -61,10 +61,16 @@ public:
 		}
 		else
 		{
-			m_nTail = m_nHead--;
-			while (m_pBuffer[m_nTail] != nil)
-				m_nTail = (m_nTail + 1) % m_nSize;
+			size_t next = m_nHead--;
+			ASSERT(m_pBuffer[next] != nil);
+			do
+			{
+				m_nTail = next;
+				next = (next + 1) % m_nSize;
+			} while (m_pBuffer[next] != nil);
+			ASSERT(m_pBuffer[m_nTail] != nil);
 		}
+		ASSERT(m_pBuffer[m_nHead] == nil);
 	}
 
 	// accessing
@@ -152,8 +158,8 @@ private:
 private:
 	ArrayOTE*	m_bufferArray;			// Object pointer of buffer (an Array)
 	T*			m_pBuffer;				// Pointer to the elements of the above
-	MWORD		m_nHead;				// Head of queue, from where items popped
-	MWORD		m_nTail;				// Tail of queue, to where items pushed
-	MWORD		m_nSize;				// Current queue size
-	MWORD 		m_nGrowthGranularity;	// The number of pointers by which to grow on overflow
+	size_t		m_nHead;				// Head of queue, from where items popped: Index of free slot before first item in queue
+	size_t		m_nTail;				// Tail of queue, to where items pushed: Index of last item in queue
+	size_t		m_nSize;				// Current queue size
+	size_t 		m_nGrowthGranularity;	// The number of pointers by which to grow on overflow
 };
