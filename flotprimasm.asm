@@ -95,10 +95,9 @@ PrimitiveFloatOp MACRO op
 		; If we get to here, then we know FP fault is not going to occur, so we can adjust ST stack
 
 		mov		[_SP-OOPSIZE], eax							; Overwrite receiver...
+		sub		_SP, OOPSIZE
 		AddToZct <a>
-		lea		eax, [_SP-OOPSIZE]							; primitiveSuccess(1)
-
-		ASSUME	eax:Oop
+		mov		eax, _SP
 		ret
 
 	primitiveFloatOpFailure0:

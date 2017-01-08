@@ -129,14 +129,14 @@ inline void InterpreterRegisters::NewActiveProcess(ProcessOTE* newProcess)
 
 	// Empties Zct and counts up refs from active process stack in preparation for
 	// it being suspended
-	ObjectMemory::EmptyZct();
+	ObjectMemory::EmptyZct(m_stackPointer);
 
 	m_oteActiveProcess = newProcess;
 	m_pActiveProcess = newProcess->m_location;
 	PrepareToResumeProcess();
 
 	// Count down refs from new process' stack
-	ObjectMemory::PopulateZct();
+	ObjectMemory::PopulateZct(m_stackPointer);
 }
 
 void __fastcall Interpreter::resizeActiveProcess()
@@ -159,7 +159,7 @@ StackFrame* Interpreter::firstFrame()
 	m_registers.m_oteActiveProcess = otePreSnapshotProc;
 	m_registers.m_pActiveProcess = otePreSnapshotProc->m_location;
 
-	Oop suspFrame = m_registers.activeProcess()->SuspendedFrame();
+	Oop suspFrame = actualActiveProcess()->SuspendedFrame();
 	HARDASSERT(suspFrame != Oop(Pointers.Nil));
 	return StackFrame::FromFrameOop(suspFrame);
 }
@@ -629,7 +629,7 @@ void Interpreter::sendVMInterrupt(ProcessOTE* interruptedProcess, Oop nInterrupt
 	HARDASSERT(actualActiveProcess()->Next()->isNil());
 
 	pushObject(reinterpret_cast<POTE>(Pointers.Scheduler));
-	BYTE* pProc = reinterpret_cast<BYTE*>(m_registers.activeProcess());
+	BYTE* pProc = reinterpret_cast<BYTE*>(actualActiveProcess());
 	BYTE* pFrame = reinterpret_cast<BYTE*>(m_registers.m_pActiveFrame);
 	HARDASSERT(pFrame > pProc);
 	SMALLUNSIGNED nOffset = pFrame - pProc;
@@ -647,7 +647,7 @@ void Interpreter::sendVMInterrupt(ProcessOTE* interruptedProcess, Oop nInterrupt
 
 void Interpreter::ResetFP()
 {
-	DWORD fpeMask = m_registers.activeProcess()->FpeMask();
+	DWORD fpeMask = actualActiveProcess()->FpeMask();
 	_clearfp();
 	unsigned int old;
 	_controlfp_s(&old, fpeMask, _MCW_EM);

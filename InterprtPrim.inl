@@ -37,13 +37,13 @@ inline void ST::Process::SetPrimitiveFailureData(SMALLINTEGER failureData)
 
 inline Oop* Interpreter::primitiveFailure(int failureCode)
 {
-	m_registers.activeProcess()->SetPrimitiveFailureCode(failureCode);
+	actualActiveProcess()->SetPrimitiveFailureCode(failureCode);
 	return NULL;
 }
 
 inline Oop* Interpreter::primitiveFailureWith(int failureCode, Oop failureData)
 {
-	Process* proc = m_registers.activeProcess();
+	Process* proc = actualActiveProcess();
 	proc->SetPrimitiveFailureCode(failureCode);
 	proc->SetPrimitiveFailureData(failureData);
 	return NULL;
@@ -52,7 +52,7 @@ inline Oop* Interpreter::primitiveFailureWith(int failureCode, Oop failureData)
 inline Oop* Interpreter::primitiveFailureWith(int failureCode, OTE* oteFailure)
 {
 	ASSERT(!ObjectMemoryIsIntegerObject(oteFailure));
-	Process* proc = m_registers.activeProcess();
+	Process* proc = actualActiveProcess();
 	proc->SetPrimitiveFailureCode(failureCode);
 	proc->SetPrimitiveFailureData(oteFailure);
 	return NULL;
@@ -61,7 +61,7 @@ inline Oop* Interpreter::primitiveFailureWith(int failureCode, OTE* oteFailure)
 // Just to avoid any confusion with Oop overload, give this one a different name
 inline Oop* Interpreter::primitiveFailureWithInt(int failureCode, SMALLINTEGER failureData)
 {
-	Process* proc = m_registers.activeProcess();
+	Process* proc = actualActiveProcess();
 	proc->SetPrimitiveFailureCode(failureCode);
 	proc->SetPrimitiveFailureData(failureData);
 	return NULL;

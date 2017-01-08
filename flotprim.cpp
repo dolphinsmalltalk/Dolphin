@@ -98,7 +98,7 @@ Oop* __fastcall Interpreter::primitiveTruncated()
 			LONGLONG liTrunc = static_cast<LONGLONG>(fValue);
 			Oop truncated = Integer::NewSigned64(liTrunc);
 			*sp = truncated;
-			ObjectMemory::AddToZct(reinterpret_cast<OTE*>(truncated));
+			ObjectMemory::AddToZct(truncated);
 		}
 		else
 			return primitiveFailure(1);
@@ -205,9 +205,9 @@ Oop* Interpreter::primitiveFloatEqual()
 
 Oop* __fastcall Interpreter::primitiveDoublePrecisionFloatAt()
 {
-	Oop* const sp = m_registers.m_stackPointer;
+	Oop* sp = m_registers.m_stackPointer;
 
-	Oop integerPointer = *sp;
+	Oop integerPointer = *sp--;
 	if (!ObjectMemoryIsIntegerObject(integerPointer))
 	{
 		OTE* oteArg = reinterpret_cast<OTE*>(integerPointer);
@@ -215,7 +215,7 @@ Oop* __fastcall Interpreter::primitiveDoublePrecisionFloatAt()
 	}
 
 	SMALLUNSIGNED offset = ObjectMemoryIntegerValueOf(integerPointer);
-	OTE* receiver = reinterpret_cast<OTE*>(*(sp-1));
+	OTE* receiver = reinterpret_cast<OTE*>(*sp);
 
 	ASSERT(!ObjectMemoryIsIntegerObject(receiver));
 	ASSERT(receiver->isBytes());
@@ -242,17 +242,17 @@ Oop* __fastcall Interpreter::primitiveDoublePrecisionFloatAt()
 	}
 
 	oteResult->beImmutable();
-	*(sp - 1) = reinterpret_cast<Oop>(oteResult);
-	ObjectMemory::AddToZct(reinterpret_cast<OTE*>(oteResult));
-	return sp - 1;
+	*sp = reinterpret_cast<Oop>(oteResult);
+	ObjectMemory::AddToZct(oteResult);
+	return sp;
 }
 
 
 Oop* __fastcall Interpreter::primitiveSinglePrecisionFloatAt()
 {
-	Oop* const sp = m_registers.m_stackPointer;
+	Oop* sp = m_registers.m_stackPointer;
 
-	Oop integerPointer = *sp;
+	Oop integerPointer = *sp--;
 	if (!ObjectMemoryIsIntegerObject(integerPointer))
 	{
 		OTE* oteArg = reinterpret_cast<OTE*>(integerPointer);
@@ -260,7 +260,7 @@ Oop* __fastcall Interpreter::primitiveSinglePrecisionFloatAt()
 	}
 
 	SMALLUNSIGNED offset = ObjectMemoryIntegerValueOf(integerPointer);
-	OTE* receiver = reinterpret_cast<OTE*>(*(sp-1));
+	OTE* receiver = reinterpret_cast<OTE*>(*sp);
 
 	ASSERT(!ObjectMemoryIsIntegerObject(receiver));
 	ASSERT(receiver->isBytes());
@@ -287,9 +287,9 @@ Oop* __fastcall Interpreter::primitiveSinglePrecisionFloatAt()
 	}
 
 	oteResult->beImmutable();
-	*(sp - 1) = reinterpret_cast<Oop>(oteResult);
-	ObjectMemory::AddToZct(reinterpret_cast<OTE*>(oteResult));
-	return sp - 1;
+	*sp = reinterpret_cast<Oop>(oteResult);
+	ObjectMemory::AddToZct(oteResult);
+	return sp;
 }
 
 
@@ -412,8 +412,8 @@ Oop* __fastcall Interpreter::primitiveSinglePrecisionFloatAtPut()
 
 Oop* __fastcall Interpreter::primitiveLongDoubleAt()
 {
-	Oop* const sp = m_registers.m_stackPointer;
-	Oop integerPointer = *sp;
+	Oop* sp = m_registers.m_stackPointer;
+	Oop integerPointer = *sp--;
 	if (!ObjectMemoryIsIntegerObject(integerPointer))
 	{
 		OTE* oteArg = reinterpret_cast<OTE*>(integerPointer);
@@ -421,7 +421,7 @@ Oop* __fastcall Interpreter::primitiveLongDoubleAt()
 	}
 
 	SMALLUNSIGNED offset = ObjectMemoryIntegerValueOf(integerPointer);
-	OTE* receiver = reinterpret_cast<OTE*>(*(sp-1));
+	OTE* receiver = reinterpret_cast<OTE*>(*sp);
 
 	ASSERT(!ObjectMemoryIsIntegerObject(receiver));
 	ASSERT(receiver->isBytes());
@@ -458,8 +458,8 @@ Oop* __fastcall Interpreter::primitiveLongDoubleAt()
 	}
 
 	FloatOTE* oteResult = Float::New(fValue);
-	*(sp - 1) = reinterpret_cast<Oop>(oteResult);
-	ObjectMemory::AddToZct(reinterpret_cast<OTE*>(oteResult));
-	return sp - 1;
+	*sp = reinterpret_cast<Oop>(oteResult);
+	ObjectMemory::AddToZct(oteResult);
+	return sp;
 }
 

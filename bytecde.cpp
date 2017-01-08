@@ -556,7 +556,7 @@ void Interpreter::nonLocalReturnValueTo(Oop resultPointer, Oop framePointer)
 
 	StackFrame* pFrame = StackFrame::FromFrameOop(framePointer);
 	StackFrame* pActiveFrame = m_registers.m_pActiveFrame;
-	Process* pProcess = m_registers.activeProcess();
+	Process* pProcess = actualActiveProcess();
 	if (pFrame > pActiveFrame 
 			|| pFrame < reinterpret_cast<StackFrame*>(&pProcess->m_stack[0]))
 	{

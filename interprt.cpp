@@ -204,7 +204,7 @@ HRESULT Interpreter::initializeAfterLoad()
 #endif
 
 	// Populate the ZCT with zero count objects in the startup process' stack
-	ObjectMemory::PopulateZct();
+	ObjectMemory::PopulateZct(m_registers.m_stackPointer);
 
 	// Set the callback pending count correctly to take account of any processes that were waiting
 	// on the pendingReturns Semaphore when the image was saved.
@@ -637,7 +637,7 @@ int Interpreter::memoryExceptionFilter(LPEXCEPTION_POINTERS pExInfo)
 	// pass control to the exception handler
 	DWORD dwAddress = pExRec->ExceptionInformation[1];
 
-	VirtualObjectHeader* pBase = m_registers.activeProcess()->getHeader();
+	VirtualObjectHeader* pBase = actualActiveProcess()->getHeader();
 	MWORD activeProcAlloc = pBase->getCurrentAllocation();
 	DWORD dwNext = DWORD(pBase) + activeProcAlloc;
 

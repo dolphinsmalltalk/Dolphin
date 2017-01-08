@@ -31,45 +31,41 @@
 // stack size specified by the second argument.
 Oop* __fastcall Interpreter::primitiveNewVirtual()
 {
-	Oop* const sp = m_registers.m_stackPointer;
-	Oop argPointer = *sp;
-	if (!ObjectMemoryIsIntegerObject(argPointer))
+	Oop* sp = m_registers.m_stackPointer;
+	Oop maxArg = *sp--;
+	if (!ObjectMemoryIsIntegerObject(maxArg))
 		return primitiveFailure(0);	// Arg not a SmallInteger
-	MWORD maxSize = ObjectMemoryIntegerValueOf(argPointer);
-	argPointer = *(sp-1);
-	if (!ObjectMemoryIsIntegerObject(argPointer))
+	MWORD maxSize = ObjectMemoryIntegerValueOf(maxArg);
+	Oop initArg = *sp--;
+	if (!ObjectMemoryIsIntegerObject(initArg))
 		return primitiveFailure(1);	// Arg not a SmallInteger
-	MWORD initialSize = ObjectMemoryIntegerValueOf(argPointer);
+	MWORD initialSize = ObjectMemoryIntegerValueOf(initArg);
 
-	BehaviorOTE* receiverClass = reinterpret_cast<BehaviorOTE*>(*(sp-2));
+	BehaviorOTE* receiverClass = reinterpret_cast<BehaviorOTE*>(*sp);
 	Behavior* behavior = receiverClass->m_location;
 	if (!behavior->isIndexable())
 		return primitiveFailure(2);
 	
 	unsigned fixedFields = behavior->fixedFields();
 	VirtualOTE* newObject = ObjectMemory::newVirtualObject(receiverClass, initialSize+fixedFields, maxSize+fixedFields);
-	*(sp - 2) = reinterpret_cast<Oop>(newObject);
-	ObjectMemory::AddToZct(reinterpret_cast<OTE*>(newObject));
-	return sp-2;
+	*sp = reinterpret_cast<Oop>(newObject);
+	// No point saving down SP before potential Zct reconcile as the init & max args must be SmallIntegers
+	ObjectMemory::AddToZct(newObject);
+	return sp;
 }
 
 Oop* __fastcall Interpreter::primitiveAllReferences(CompiledMethod&, unsigned argumentCount)
 {
 	// Make sure we don't include refs above TOS as these are invalid - also don't include the ref to the receiver on the stack
-	Oop* sp;
+	Oop* sp = m_registers.m_stackPointer;
 	bool includeWeakRefs;
-	Oop receiver;
 	switch (argumentCount)
 	{
 	case 0:
 		includeWeakRefs = true;
-		receiver = stackTop();
-		sp = m_registers.m_stackPointer - 1;
 		break;
 	case 1:
-		includeWeakRefs = stackTop() == reinterpret_cast<Oop>(Pointers.True);
-		receiver = stackValue(1);
-		sp = m_registers.m_stackPointer - 2;
+		includeWeakRefs = *sp-- == reinterpret_cast<Oop>(Pointers.True);
 		break;
 	default:
 		// 0 or 1 args expected
@@ -78,12 +74,13 @@ Oop* __fastcall Interpreter::primitiveAllReferences(CompiledMethod&, unsigned ar
 
 	// Resize the active process to exclude the receiver and arg (if any) to the primitive
 	ST::Process* pActiveProcess = m_registers.m_pActiveProcess;
-	MWORD words = sp - reinterpret_cast<const Oop*>(pActiveProcess) + 1;
+	MWORD words = sp - reinterpret_cast<const Oop*>(pActiveProcess);
 	m_registers.m_oteActiveProcess->setSize(words * sizeof(MWORD));
 
+	Oop receiver = *sp;
 	ArrayOTE* refs = ObjectMemory::referencesTo(receiver, includeWeakRefs);
 
-	*(sp+1) = reinterpret_cast<Oop>(refs);
-	ObjectMemory::AddToZct(reinterpret_cast<OTE*>(refs));
-	return sp+1;
+	*sp = reinterpret_cast<Oop>(refs);
+	ObjectMemory::AddToZct(refs);
+	return sp;
 }

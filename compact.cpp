@@ -80,10 +80,10 @@ void ObjectMemory::compactObject(OTE* ote)
 }
 
 // Perform a compacting GC
-size_t ObjectMemory::compact()
+size_t ObjectMemory::compact(Oop* const sp)
 {
 	TRACE("Compacting OT, size %d, free %d, ...\n", m_nOTSize, m_pOT + m_nOTSize - m_pFreePointerList);
-	EmptyZct();
+	EmptyZct(sp);
 
 	// First perform a normal GC
 	reclaimInaccessibleObjects(GCNormal);
@@ -177,7 +177,7 @@ size_t ObjectMemory::compact()
 	}
 
 	// Could do this before or after check refs, since that can account for Zct state
-	PopulateZct();
+	PopulateZct(sp);
 
 	CHECKREFERENCES
 

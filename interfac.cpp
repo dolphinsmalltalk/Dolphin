@@ -324,7 +324,7 @@ void Interpreter::wakePendingCallbacks()
 
 void Interpreter::pushUnknown(Oop object)
 {
-	Interpreter::push(object);
+	push(object);
 	if (!ObjectMemoryIsIntegerObject(object))
 	{
 		OTE* ote = reinterpret_cast<OTE*>(object);

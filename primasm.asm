@@ -1067,7 +1067,8 @@ IFDEF _DEBUG
 stringAt:
 	; Should not get here
 	int 3
-	jmp primitiveFailure2
+	xor		eax, eax
+	ret
 ENDIF
 
 ENDPRIMITIVE primitiveAtCached
@@ -1318,7 +1319,8 @@ IFDEF _DEBUG
 cachedStringAtPut:
 	; Should not get here
 	int 3
-	jmp		primitiveFailure3
+	xor		eax, eax
+	ret
 ENDIF
 
 ENDPRIMITIVE primitiveAtPutCached
@@ -2509,13 +2511,12 @@ BEGINPRIMITIVE primitiveChangeBehavior
 	call	ALLOCATEBYTESNOZERO
 	ASSUME	eax:PTR OTE
 	mov		edx, [_SP]						; Reload SmallInteger receiver before overwritten
-	mov		ecx, eax
 	mov		[_SP], eax						; Replace SmallInteger at ToS receiver with new object
-	mov		eax, [eax].m_location			; Load address of new object
-	ASSUME	eax:PTR DWORDBytes
+	mov		ecx, [eax].m_location			; Load address of new object
+	ASSUME	ecx:PTR DWORDBytes
 	sar		edx, 1							; Convert receiver to real integer value
-	mov		[eax].m_value, edx				; Save receivers integer value into new object
-	AddToZct <c>
+	mov		[ecx].m_value, edx				; Save receivers integer value into new object
+	AddToZct <a>
 	mov		eax, _SP						; primitiveSuccess(0)
 	ret
 	ASSUME	eax:NOTHING

@@ -81,7 +81,7 @@ void Interpreter::asyncGC(DWORD gcFlags)
 	}
 #endif
 
-	ObjectMemory::asyncGC(gcFlags);
+	ObjectMemory::asyncGC(gcFlags, m_registers.m_stackPointer);
 }
 
 #ifndef _DEBUG
@@ -171,7 +171,7 @@ Oop* __fastcall Interpreter::primitiveOopsLeft()
 	// so any that are saved down in Smalltalk will be invalidated.
 	GrabAsyncProtect();
 	// It is OK for compact to perform additional GrabAsyncProtects()
-	SMALLINTEGER oopsLeft = ObjectMemory::compact();
+	SMALLINTEGER oopsLeft = ObjectMemory::compact(m_registers.m_stackPointer);
 	RelinquishAsyncProtect();
 
 	// compact() returns -1 if unable to reserve space for a new OT. This can happen

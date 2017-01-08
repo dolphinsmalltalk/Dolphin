@@ -3478,7 +3478,9 @@ BEGINBYTECODE blockCopy
 	add		_IP, edx								; Jump to first byte code after block
 	call	BLOCKCOPY								; Create new block (returned in EAX)
 	LoadSPRegister									; blockCopy may have adjusted stack to remove copied values
-	PushNewObject <a>
+	mov	[_SP+OOPSIZE], eax
+	add	_SP, OOPSIZE
+	AddToZct <a>
 	DispatchByteCode
 ENDBYTECODE blockCopy
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

@@ -171,8 +171,8 @@ public:
 	static StackFrame* activeFrame();
 	static void __fastcall resizeActiveProcess();
 
-	static void IncStackRefs();
-	static void DecStackRefs();
+	static void IncStackRefs(Oop* const sp);
+	static void DecStackRefs(Oop* const sp);
 
 	// Stack
 

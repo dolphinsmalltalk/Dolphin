@@ -120,7 +120,7 @@ public:
 	static SMALLINTEGER OopsLeft();
 	static int __fastcall OopsUsed();
 	static unsigned GetOTSize();
-	static size_t compact();
+	static size_t compact(Oop* const sp);
 	static void HeapCompact();
 	static BYTE currentMark();
 
@@ -178,7 +178,7 @@ public:
 	static Oop* rootObjectPointers[];
 
 	enum GCFlags { GCNormal, GCNoWeakness };
-	static void asyncGC(DWORD flags);
+	static void asyncGC(DWORD flags, Oop* const sp);
 
 	static void markObject(OTE* ote);
 	static void MarkObjectsAccessibleFromRoot(OTE* ote);
@@ -192,7 +192,7 @@ public:
 	static void checkReferences();
 	static void addRefsFrom(OTE* ote);
 	static void checkPools();
-	static void checkStackRefs();
+	static void checkStackRefs(Oop* const sp);
 	static bool isValidOop(Oop);
 #endif
 
@@ -313,16 +313,16 @@ public:
 				GrowZct();
 			}
 			else
-				ReconcileZct(reinterpret_cast<OTE*>(ote));
+				ReconcileZct();
 		}
 	}
 
 	static void __fastcall AddToZct(Oop);
 
 	// Used by Interpreter when switching processes
-	static void EmptyZct();
-	static void PopulateZct();
-	static OTE* __fastcall ReconcileZct(OTE*);
+	static void EmptyZct(Oop* const sp);
+	static void PopulateZct(Oop* const sp);
+	static Oop* __fastcall ReconcileZct();
 #ifdef _DEBUG
 	static bool IsInZct(OTE*);
 	static void DumpZct();

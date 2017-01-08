@@ -11,7 +11,7 @@ OPTION READONLY
 
 Oop			TYPEDEF		DWORD
 UINT		TYPEDEF		WORD
-HINSTANCE	TYPEDEF		UINT
+HINSTANCE	TYPEDEF		UINT 
 LPCSTR		TYPEDEF		PTR SBYTE
 HANDLE		TYPEDEF		DWORD
 BOOL		TYPEDEF		DWORD
@@ -682,24 +682,24 @@ CallCPP MACRO mangledName
 
 ENDM
 
-RECONCILEZCT EQU ?ReconcileZct@ObjectMemory@@SIPAV?$TOTE@VObject@ST@@@@PAV2@@Z
+RECONCILEZCT EQU ?ReconcileZct@ObjectMemory@@SIPAIXZ
 extern RECONCILEZCT:near32
 
 AddToZct MACRO oopRegLetter, stackP:=<_SP>
 	LOCAL	fini
-	IFDIFI <e&oopRegLetter&x>, <ecx>				;; Don't move ecx onto itself
-		mov		ecx, e&oopRegLetter&x
+	IFDIFI <e&oopRegLetter&x>, <eax>				;; Don't move eax onto itself
+		mov		eax, e&oopRegLetter&x
 	ENDIF
 
 	IFDIFI <&stackP&>, <_SP>						;; Preserve the stack pointer value for later
 		push	stackP
 	ENDIF
 	;; Only add OBJECTs (not SmallIntegers) with ref. count of zero to the Zct
-	mov		eax, DWORD PTR[ZCTENTRIES]
+	mov		ecx, DWORD PTR[ZCTENTRIES]
 	mov		edx, DWORD PTR[ZCT]
-	mov		DWORD PTR[edx+eax*4], ecx
-	inc		eax
-	mov		DWORD PTR[ZCTENTRIES], eax
+	mov		DWORD PTR[edx+ecx*4], eax
+	inc		ecx
+	mov		DWORD PTR[ZCTENTRIES], ecx
 	IFDIFI <&stackP&>, <_SP>
 		pop	stackP
 	ENDIF
@@ -707,7 +707,7 @@ AddToZct MACRO oopRegLetter, stackP:=<_SP>
 		mov		[STACKPOINTER], stackP			 	;; Save down interpreter stack pointer, e.g. for C routine
 		call	RECONCILEZCT
 	ELSE
-		.IF	(eax == DWORD PTR[ZCTHIGHWATER])			;; ZCT full?
+		.IF	(ecx == DWORD PTR[ZCTHIGHWATER])			;; ZCT full?
 			mov		[STACKPOINTER], stackP			 	;; Save down interpreter stack pointer, e.g. for C routine
 			call	RECONCILEZCT
 		.ENDIF
@@ -721,19 +721,19 @@ ENDM
 ;; how to do it in a reasonable amount of time.
 AddToZctNoSP MACRO oopRegLetter
 	LOCAL	fini
-	IFDIFI <e&oopRegLetter&x>, <ecx>				;; Don't move ecx onto itself
-		mov		ecx, e&oopRegLetter&x
+	IFDIFI <e&oopRegLetter&x>, <eax>				;; Don't move eax onto itself
+		mov		eax, e&oopRegLetter&x
 	ENDIF
 	;; Only add OBJECTs (not SmallIntegers) with ref. count of zero to the Zct
-	mov		eax, DWORD PTR[ZCTENTRIES]
+	mov		ecx, DWORD PTR[ZCTENTRIES]
 	mov		edx, DWORD PTR[ZCT]
-	mov		DWORD PTR[edx+eax*4], ecx
-	inc		eax
-	mov		DWORD PTR[ZCTENTRIES], eax
+	mov		DWORD PTR[edx+ecx*4], eax
+	inc		ecx
+	mov		DWORD PTR[ZCTENTRIES], ecx
 	IFDEF _DEBUG
 		call	RECONCILEZCT
 	ELSE
-		.IF	(eax == DWORD PTR[ZCTHIGHWATER])			;; ZCT full?
+		.IF	(ecx == DWORD PTR[ZCTHIGHWATER])			;; ZCT full?
 			call	RECONCILEZCT
 		.ENDIF
 	ENDIF
@@ -778,12 +778,6 @@ CountDownObjectIn MACRO oopRegLetter:=<c>
 	jnz		unRefdOop								;; Count not reduced to zero, skip deallocation
 	AddToZct oopRegLetter
 unRefdOop:
-ENDM
-
-PushNewObject MACRO oopRegLetter:=<a>
-	mov	[_SP+OOPSIZE], e&oopRegLetter&x
-	add	_SP, OOPSIZE
-	AddToZct oopRegLetter
 ENDM
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

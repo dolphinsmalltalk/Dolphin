@@ -195,28 +195,16 @@ inline void Interpreter::purgeObjectFromCaches(OTE* ote)
 		ace->oteArray = NULL;
 }
 
-inline void Interpreter::IncStackRefs()
+inline void Interpreter::IncStackRefs(Oop* const sp)
 {
-	m_registers.IncStackRefs();
-}
-
-inline void Interpreter::DecStackRefs()
-{
-	m_registers.DecStackRefs();
-}
-
-inline void InterpreterRegisters::IncStackRefs()
-{
-	Process* pProcess = activeProcess();
-	Oop* const sp = m_stackPointer;
-	for (Oop* pOop = pProcess->m_stack;pOop <= sp;pOop++)
+	Process* pProcess = actualActiveProcess();
+	for (Oop* pOop = pProcess->m_stack; pOop <= sp; pOop++)
 		ObjectMemory::countUp(*pOop);
 }
 
-inline void InterpreterRegisters::DecStackRefs()
+inline void Interpreter::DecStackRefs(Oop* const sp)
 {
-	Process* pProcess = activeProcess();
-	Oop* const sp = m_stackPointer;
+	Process* pProcess = actualActiveProcess();
 	for (Oop* pOop = pProcess->m_stack;pOop <= sp;pOop++)
 		ObjectMemory::countDown(*pOop);
 }

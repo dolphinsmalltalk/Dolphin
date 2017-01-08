@@ -89,7 +89,7 @@ void ObjectMemory::GrowZct()
 	HARDASSERT((DWORD)m_nZctHighWater <= ZctReserve);
 	m_pZct = static_cast<OTE**>(::VirtualAlloc(m_pZct, m_nZctHighWater * sizeof(OTE*), MEM_COMMIT, PAGE_READWRITE));
 	if (!m_pZct)
-		RaiseFatalError(IDP_ZCTRESERVEFAIL, 2, m_nZctHighWater, ZctReserve);
+		RaiseFatalError(IDP_ZCTCOMMITFAIL, 2, m_nZctHighWater, ZctReserve);
 }
 
 void ObjectMemory::ShrinkZct()
@@ -105,7 +105,7 @@ void ObjectMemory::ShrinkZct()
 }
 
 
-OTE* ObjectMemory::ReconcileZct(OTE* ote)
+Oop* ObjectMemory::ReconcileZct()
 {
 #ifdef _DEBUG
 	DWORD dwTicksNow = timeGetTime();
@@ -122,8 +122,10 @@ OTE* ObjectMemory::ReconcileZct(OTE* ote)
 
 	Interpreter::flushAtCaches();
 
-	EmptyZct();
-	PopulateZct();
+	Oop* const sp = Interpreter::m_registers.m_stackPointer;
+
+	EmptyZct(sp);
+	PopulateZct(sp);
 
 #ifdef _DEBUG
 	if (!alwaysReconcileOnAdd)
@@ -136,10 +138,10 @@ OTE* ObjectMemory::ReconcileZct(OTE* ote)
 	}
 #endif
 
-	return ote;
+	return sp;
 }
 
-void ObjectMemory::EmptyZct()
+void ObjectMemory::EmptyZct(Oop* const sp)
 {
 	if (m_bIsReconcilingZct)
 		__debugbreak();
@@ -149,12 +151,12 @@ void ObjectMemory::EmptyZct()
 	if (!alwaysReconcileOnAdd || Interpreter::executionTrace)
 		CHECKREFSNOFIX
 	else
-		checkStackRefs();
+		checkStackRefs(sp);
 #endif
 
 	// Bump the refs from the stack. Any objects remaining in the ZCT with zero counts
 	// are truly garbage.
-	Interpreter::IncStackRefs();
+	Interpreter::IncStackRefs(sp);
 
 	OTE** pZct = m_pZct;
 	// This tells us that we are in the process of reconcilation
@@ -183,7 +185,7 @@ void ObjectMemory::EmptyZct()
 	//	CHECKREFSNOFIX
 }
 
-void ObjectMemory::PopulateZct()
+void ObjectMemory::PopulateZct(Oop* const sp)
 {
 	HARDASSERT(m_nZctEntries <= 0);
 
@@ -197,7 +199,7 @@ void ObjectMemory::PopulateZct()
 #endif
 
 	// This will populate the Zct with all objects ref'd only from the active process stack
-	Interpreter::DecStackRefs();
+	Interpreter::DecStackRefs(sp);
 #ifdef _DEBUG
 	alwaysReconcileOnAdd = bLast;
 	//CHECKREFSNOFIX

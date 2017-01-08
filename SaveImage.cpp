@@ -195,14 +195,14 @@ int __stdcall ObjectMemory::SaveImageFile(const char* szFileName, bool bBackup, 
 
 bool __stdcall ObjectMemory::SaveImage(obinstream& imageFile, const ImageHeader* pHeader, int nRet)
 {
-	EmptyZct();
+	EmptyZct(Interpreter::m_registers.m_stackPointer);
 	// Do the save.
 	bool bResult = imageFile.good() != 0 
 		&& (nRet == 3)
 		&& SaveObjectTable(imageFile, pHeader) 
 		&& SaveObjects(imageFile, pHeader) 
 		&& imageFile.flush().good();
-	PopulateZct();
+	PopulateZct(Interpreter::m_registers.m_stackPointer);
 	return bResult;
 }
 /*

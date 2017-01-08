@@ -29,7 +29,6 @@ struct InterpreterRegisters
 	ProcessOTE*			m_oteActiveProcess;
 
 public:
-	Process* activeProcess()		{ return m_pActiveProcess; }
 	Oop activeFrameOop()			{ return Oop(m_pActiveFrame)+1; }
 	StackFrame& activeFrame()		{ return *m_pActiveFrame; }
 
@@ -48,15 +47,12 @@ public:
 	void PrepareToSuspendProcess();	// Resize proc, update suspended frame, and store context to that frame
 	void PrepareToResumeProcess();	// Resize proc, update suspended frame, and store context to that frame
 	void ResizeProcess();
-
-	void IncStackRefs();
-	void DecStackRefs();
 };
 
 inline void InterpreterRegisters::ResizeProcess()
 {
 	HARDASSERT(m_pActiveProcess != NULL);
-	MWORD words = m_stackPointer - reinterpret_cast<const Oop*>(activeProcess()) + 1;
+	MWORD words = m_stackPointer - reinterpret_cast<const Oop*>(m_pActiveProcess) + 1;
 	m_oteActiveProcess->setSize(words*sizeof(MWORD));
 }
 

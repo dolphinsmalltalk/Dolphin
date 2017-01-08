@@ -37,7 +37,7 @@ inline Process* Interpreter::activeProcess()
 // Always returns the active process, even if a new process is waiting
 inline Process* Interpreter::actualActiveProcess()
 {
-	return m_registers.activeProcess();
+	return m_registers.m_pActiveProcess;
 }
 
 // Always returns the active process, even if a new process is waiting
@@ -65,7 +65,7 @@ inline BOOL Interpreter::newProcessWaiting()
 inline void InterpreterRegisters::StoreSuspendedFrame()
 {
 	ResizeProcess();
-	activeProcess()->SetSuspendedFrame(activeFrameOop());
+	m_pActiveProcess->SetSuspendedFrame(activeFrameOop());
 }
 
 inline void InterpreterRegisters::StoreIPInFrame()

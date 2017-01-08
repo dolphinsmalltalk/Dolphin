@@ -112,11 +112,11 @@ OTEFlags ObjectMemory::nextMark()
 	return oldMark;
 }
 
-void ObjectMemory::asyncGC(DWORD gcFlags)
+void ObjectMemory::asyncGC(DWORD gcFlags, Oop* const sp)
 {
-	EmptyZct();
+	EmptyZct(sp);
 	reclaimInaccessibleObjects(gcFlags);
-	PopulateZct();
+	PopulateZct(sp);
 
 	Interpreter::scheduleFinalization();
 }
@@ -476,11 +476,10 @@ void ObjectMemory::addVMRefs()
 		return count;
 	}
 
-	void ObjectMemory::checkStackRefs()
+	void ObjectMemory::checkStackRefs(Oop* const sp)
 	{
 		int zeroCountNotInZct = 0;
 		Process* pProcess = Interpreter::m_registers.m_pActiveProcess;
-		Oop* sp = Interpreter::m_registers.m_stackPointer;
 		for (Oop* pOop = pProcess->m_stack;pOop <= sp;pOop++)
 		{
 			Oop oop = *pOop;
@@ -526,11 +525,13 @@ void ObjectMemory::addVMRefs()
 
 		Interpreter::GrabAsyncProtect();
 
+		Oop* const sp = Interpreter::m_registers.m_stackPointer;
+
 		// Now adjust for the current active process, depending on whether the ZCT has been reconciled or not
 		if (!IsReconcilingZct())
 		{
-			checkStackRefs();
-			Interpreter::IncStackRefs();
+			checkStackRefs(sp);
+			Interpreter::IncStackRefs(sp);
 		}
 	
 		int errors=0;
@@ -671,11 +672,10 @@ void ObjectMemory::addVMRefs()
 			// We have to be careful not to cause more entries to be placed in the Zct, so we need to inline this
 			// operation and just count down the refs and not act when they drop to zero
 			Process* pProcess = Interpreter::m_registers.m_pActiveProcess;
-			Oop* sp = Interpreter::m_registers.m_stackPointer;
 			for (Oop* pOop = pProcess->m_stack;pOop <= sp;pOop++)
 				ObjectMemory::decRefs(*pOop);
 
-			checkStackRefs();
+			checkStackRefs(sp);
 		}
 
 		Interpreter::RelinquishAsyncProtect();

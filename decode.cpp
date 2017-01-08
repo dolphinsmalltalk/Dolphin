@@ -408,7 +408,7 @@ ostream& operator<<(ostream& stream, const OTE* ote)
 
 SMALLUNSIGNED Interpreter::indexOfSP(Oop* sp)
 {
-	return m_registers.activeProcess()->indexOfSP(sp);
+	return actualActiveProcess()->indexOfSP(sp);
 }
 
 void DumpStackEntry(Oop* sp, Process* pProc, ostream& stream)
@@ -733,7 +733,7 @@ void Interpreter::DumpContext(ostream& logStream)
 	__try
 	{
 		logStream << "BP: ";
-		DumpBP(m_registers.m_basePointer, m_registers.activeProcess(), logStream);
+		DumpBP(m_registers.m_basePointer, actualActiveProcess(), logStream);
 	}
 	__except (EXCEPTION_EXECUTE_HANDLER)
 	{
@@ -778,7 +778,7 @@ void Interpreter::DumpStack(ostream& logStream, unsigned nStackDepth)
 	logStream << endl << "*----> Stack <----*" << endl;
 	__try
 	{
-		::DumpStack(m_registers.m_stackPointer, m_registers.activeProcess(), logStream, nStackDepth);
+		::DumpStack(m_registers.m_stackPointer, actualActiveProcess(), logStream, nStackDepth);
 	}
 	__except (EXCEPTION_EXECUTE_HANDLER)
 	{
