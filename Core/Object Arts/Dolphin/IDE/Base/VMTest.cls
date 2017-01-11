@@ -41,6 +41,35 @@ assertImmutableResize: anObject
 	#(0 1 -1)
 		do: [:i | self should: [anObject resize: anObject size + i] raise: Processor constWriteSignal]!
 
+createPrimitiveMethod: anInteger in: aBehavior argCount: argc setsFailCode: aBoolean
+	| method text |
+	text := String writeStream.
+	argc isZero
+		ifTrue: [text nextPutAll: 'prim ']
+		ifFalse: 
+			[1 to: argc
+				do: 
+					[:i |
+					text
+						nextPutAll: 'op: operand';
+						print: i;
+						space]].
+	text
+		nextPutAll: '<primitive: ';
+		print: anInteger;
+		nextPutAll: '> ^''failed'''.
+	aBoolean ifTrue: [text nextPutAll: ', Processor activeProcess primitiveFailureCode printString'].
+	method := Compiler compile: text contents in: aBehavior.
+	self assert: method ~~ nil.
+	^method!
+
+createPrimitiveMethodLike: aCompiledMethod setsFailCode: aBoolean
+	^self
+		createPrimitiveMethod: aCompiledMethod primitiveIndex
+		in: aCompiledMethod methodClass
+		argCount: aCompiledMethod argumentCount
+		setsFailCode: aBoolean!
+
 earlyTermination: aBoolean 
 	"N.B. Timing is critical to much of this, so its not going to be possible to debug through it. Its really only to show up
 	problems in the VM, so debugging at the Smalltalk level is not terribly useful anyway."
@@ -375,6 +404,32 @@ testEvaluationOrder
 	| i |
 	i := 2.
 	self assert: (3 between: i and: (i := 4))!
+
+testExtCallRetHRESULT
+	"Test that HRESULT return codes are translated into exceptions correctly."
+
+	| method |
+	method := Compiler
+				compile: 'hresult: anInteger
+	| proc |
+	<stdcall: hresult AnswerDWORD sdword>
+	proc := Processor activeProcess.
+	^proc primitiveFailureCode -> proc primitiveFailureData'
+				in: VMLibrary.
+	#(0 1 16r3FFFFFFF 16r40000000 16r7FFFFFFF) do: 
+			[:each |
+			| result |
+			result := method value: VMLibrary default withArguments: (Array with: each).
+			self assert: each equals: result.
+			self assert: each class == result class].
+	"Negative HRESULTs should cause the primitive to fail with the failure data set to the HR code."
+	#(-1 -16r40000000 -16r40000001 -16r80000000) do: 
+			[:each |
+			| result |
+			result := method value: VMLibrary default withArguments: (Array with: each).
+			self assert: -1 equals: result key.
+			self assert: each equals: result value.
+			self assert: each class == result value class]!
 
 testFPFaultInPrimitive
 	"An FP fault occurring in a primitive should be reported in the primitive method, not some
@@ -1012,6 +1067,59 @@ testPrimitiveAtPut
 	self should: [array at: SmallInteger maximum put: nil] raise: BoundsError.
 	self should: [array at: SmallInteger minimum put: nil] raise: BoundsError!
 
+testPrimitiveBytesIsNull
+	| method subject |
+	method := self createPrimitiveMethodLike: ExternalIntegerBytes >> #isNull setsFailCode: true.
+	subject := DWORDBytes new.
+	self assert: (method value: subject withArguments: #()).
+	subject isImmutable: true.
+	self assert: (method value: subject withArguments: #()).
+	subject := DWORDBytes fromInteger: 1.
+	self deny: (method value: subject withArguments: #()).
+	subject := ExternalIntegerBytes newFixed: 8.
+	self assert: 'failed0' equals: (method value: subject withArguments: #())!
+
+testPrimitiveEnableInterrupts
+	| enabled method |
+	method := self createPrimitiveMethodLike: ProcessorScheduler >> #enableAsyncEvents:
+				setsFailCode: true.
+	self assert: 'failed0' equals: (method value: Processor withArguments: #(1)).
+	self assert: 'failed0' equals: (method value: Processor withArguments: #('abc')).
+	enabled := method value: Processor withArguments: #(false).
+	self assert: enabled description: 'Interrupts unexpectedly disabled before test'.
+	enabled := method value: Processor withArguments: #(false).
+	self deny: enabled description: 'Interrupts should have been disabled previously'.
+	enabled := method value: Processor withArguments: #(true).
+	self deny: enabled description: 'Interrupts should have remained disabled'.
+	enabled := method value: Processor withArguments: #(true).
+	self assert: enabled description: 'Interrupts should have been enabled'.
+	enabled := method value: Processor withArguments: #(true).
+	self assert: enabled description: 'Interrupts should have remained enabled'!
+
+testPrimitiveInstanceCounts
+	"Test primitive that returns instance count stats for a list of requested classes."
+
+	| method stats |
+	method := self createPrimitiveMethodLike: MemoryManager >> #primInstanceStats: setsFailCode: true.
+	stats := method value: MemoryManager current withArguments: #(nil).
+	"Kick a couple of tyres"
+	self assert: stats size \\ 3 == 0.
+	1 to: stats size
+		by: 3
+		do: 
+			[:i |
+			| class |
+			class := stats at: i.
+			class isMetaclass
+				ifTrue: 
+					["Metaclasses should have only a single instance"
+					self assert: 1 equals: (stats at: i + 1)].
+			class == SmallInteger ifTrue: [self assert: 0 equals: (stats at: i + 1)]].
+	#(1 'a') do: 
+			[:each |
+			self assert: 'failed0'
+				equals: (method value: MemoryManager current withArguments: (Array with: each))]!
+
 testPrimitiveIsNullBytes
 	| addr handle |
 	addr := ExternalAddress new.
@@ -1042,6 +1150,87 @@ testPrimitiveIsNullBytes
 			| bytes |
 			bytes := DWORDBytes newFixed: each.
 			self assert: bytes isNull]!
+
+testPrimitiveIsSuperclassOf
+	"Test the currently unused isSuperclassOf primitive."
+
+	| method |
+	method := self
+				createPrimitiveMethod: 109
+				in: Behavior
+				argCount: 1
+				setsFailCode: true.
+	"The primitive is like includesBehavior with arg/receiver inverted, and if both are the same class then the answer is true."
+	self assert: (method value: Association withArguments: (Array with: Association)).
+	self assert: (method value: Magnitude withArguments: (Array with: Association)).
+	self assert: (method value: Object withArguments: (Array with: Association)).
+	self deny: (method value: Association withArguments: (Array with: Object)).
+	self deny: (method value: Association withArguments: (Array with: SmallInteger)).
+	self deny: (method value: Object class withArguments: (Array with: Behavior)).
+	self assert: (method value: Object class withArguments: (Array with: Object class)).
+	self assert: (method value: Object class withArguments: (Array with: Magnitude class)).
+	self assert: (method value: Object withArguments: (Array with: Magnitude class)).
+	self assert: (method value: Behavior withArguments: (Array with: Object class)).
+	self assert: (method value: Magnitude class withArguments: (Array with: Association class))!
+
+testPrimitiveMakePoint
+	"Test the general object instantiation and initialization primitive (it doesn't just make Points)."
+
+	| primitiveIndex method result expected |
+	primitiveIndex := (Array class >> #with:) primitiveIndex.
+	"Indexable type with no fixed fields, e.g. Array"
+	0 to: 2
+		do: 
+			[:i |
+			method := self
+						createPrimitiveMethod: primitiveIndex
+						in: Array class
+						argCount: i
+						setsFailCode: true.
+			expected := (1 to: i) asArray.
+			result := method value: Array withArguments: expected.
+			self assert: expected equals: result].
+	"Non-indexable type, e.g. Point3D"
+	0 to: 3
+		do: 
+			[:i |
+			method := self
+						createPrimitiveMethod: primitiveIndex
+						in: Point3D class
+						argCount: i
+						setsFailCode: true.
+			expected := Point3D basicNew.
+			1 to: i do: [:j | expected instVarAt: j put: j].
+			result := method value: Point3D withArguments: (1 to: i) asArray.
+			self assert: expected equals: result].
+	"Indexable type with fixed fields too, e.g. Context"
+	0 to: 4
+		do: 
+			[:i |
+			method := self
+						createPrimitiveMethod: primitiveIndex
+						in: Context class
+						argCount: i
+						setsFailCode: true.
+			expected := (Array new: (i max: Context instSize))
+						replaceFrom: 1
+							to: i
+							with: (1 to: i) asArray
+							startingAt: 1;
+						yourself.
+			result := method value: Context withArguments: (1 to: i) asArray.
+			1 to: expected size do: [:j | self assert: (expected at: j) equals: (result instVarAt: j)]]!
+
+testPrimitiveObjectCount
+	"Test primitive that returns object instance count."
+
+	| method count1 count2 subject |
+	method := self createPrimitiveMethodLike: MemoryManager >> #objectCount setsFailCode: true.
+	subject := MemoryManager current.
+	count1 := method value: subject withArguments: #().
+	count2 := method value: subject withArguments: #().
+	self assert: count2 equals: count1.
+	self assert: count1 > 0!
 
 testPrimitiveReplaceElements
 	self exerciseReplaceElementsOf: #($a $b $c $d $e) with: #(1 2 3 4 5 6).
@@ -1166,31 +1355,66 @@ testPrimitiveStringAt
 !
 
 testPrimitiveStringAtPut
-	| subject |
+	| subject method |
+	method := self createPrimitiveMethodLike: String >> #at:put: setsFailCode: true.
 	subject := String new: 2.
 	"Valid case"
 	self assert: $\0 equals: (subject at: 1).
 	self assert: $\0 equals: (subject at: 2).
-	self assert: $a equals: (subject at: 1 put: $a).
+	self assert: $a equals: (method value: subject withArguments: #(1 $a)).
 	self assert: $a equals: (subject at: 1).
-	self assert: $b equals: (subject at: 2 put: $b).
+	self assert: $b equals: (method value: subject withArguments: #(2 $b)).
 	self assert: $b equals: (subject at: 2).
+	"Invalid index argument"
+	self assert: 'failed0' equals: (method value: subject withArguments: #($a $b)).
 	"Bounds errors"
 	subject := String new: 2.
 	#(0 3 -1 ##(SmallInteger maximum) ##(SmallInteger minimum)) do: 
 			[:each |
 			self assert: $\0 equals: (subject at: 1).
 			self assert: $\0 equals: (subject at: 2).
-			self should: [subject at: each put: $a] raise: BoundsError].
+			self assert: 'failed1' equals: (method value: subject withArguments: (Array with: each with: $a))].
 	"Objects that strings can't hold, including some special cases that have no object body (issue #234)"
 	#(0 ##(Object new) nil '' #'' true false #() #[]) do: 
 			[:each |
 			self assert: $\0 equals: (subject at: 1).
 			self assert: $\0 equals: (subject at: 2).
-			self
-				should: [subject at: 1 put: each]
-				raise: Error
-				matching: [:ex | ex messageText beginsWith: 'can''t hold']]!
+			self assert: 'failed2' equals: (method value: subject withArguments: (Array with: 1 with: each))]!
+
+testPrimitiveStringCmp
+	"Test case sensitive string comparison primitive"
+
+	| method |
+	method := self createPrimitiveMethodLike: String >> #trueCompare: setsFailCode: true.
+	"Note that we don't test that the primitive fails for a non-String receiver - in general primitives assume they are only used in methods of suitable receiver classes."
+	#(#('a' 'b' -1) #('abc' 'abc' 0) #('' 'a' -1) #('a' 'ab' -1) #('ab' 'a' 1) #('a' 1 'failed0')) do: 
+			[:each |
+			| subject result operand expected |
+			subject := each first.
+			self assert: subject class == String.
+			operand := each second.
+			expected := each third.
+			result := method value: subject withArguments: (Array with: operand).
+			self assert: result class == expected class.
+			self assert: expected equals: result]!
+
+testPrimitiveSubtract
+	"Test the SmallInteger subtract primitive for normal, overflow and failure cases."
+
+	| method |
+	method := self createPrimitiveMethodLike: SmallInteger >> #- setsFailCode: false.
+	"Note that we don't test that the primitive fails for a non-SmallInteger receiver - in general primitives assume they are only used in methods of suitable receiver classes."
+	#(#(3 2 1) #(-1 -1 0) #(-1 16r3FFFFFFF -16r40000000) #(-2 16r3FFFFFFF -16r40000001) #(-16r40000000 1 -16r40000001) #(-16r40000000 -16r40000000 0) #(-16r40000000 16r3FFFFFFF -16r7FFFFFFF) #(16r3FFFFFFF -16r40000000 16r7FFFFFFF) #(1 'a' 'failed') #(1 16r40000000 'failed'))
+		do: 
+			[:each |
+			| subject result operand expected |
+			subject := each first.
+			self assert: subject class == SmallInteger.
+			operand := each second.
+			expected := each third.
+			result := method value: subject withArguments: (Array with: operand).
+			self assert: result class == expected class.
+			self assert: expected equals: result]!
 
 testSignedFromUnsigned
 	"Test SmallIntegers and 4 & 8 byte LargeIntegers"
@@ -1272,6 +1496,8 @@ testWeakMournerNotifications
 !VMTest categoriesFor: #assertImmutableBasicAtPut:!private!unit tests! !
 !VMTest categoriesFor: #assertImmutableInstVarAtPut:!private!unit tests! !
 !VMTest categoriesFor: #assertImmutableResize:!private!unit tests! !
+!VMTest categoriesFor: #createPrimitiveMethod:in:argCount:setsFailCode:!helpers!private! !
+!VMTest categoriesFor: #createPrimitiveMethodLike:setsFailCode:!helpers!private! !
 !VMTest categoriesFor: #earlyTermination:!helpers!private! !
 !VMTest categoriesFor: #elementsExpired:of:!helpers!private! !
 !VMTest categoriesFor: #exerciseReplaceElementsOf:from:to:with:startingAt:!private!unit tests! !
@@ -1285,6 +1511,7 @@ testWeakMournerNotifications
 !VMTest categoriesFor: #testCRTFault!public!unit tests! !
 !VMTest categoriesFor: #testDwordAtOffsetPut!public!unit tests! !
 !VMTest categoriesFor: #testEvaluationOrder!public!unit tests! !
+!VMTest categoriesFor: #testExtCallRetHRESULT!public!unit tests! !
 !VMTest categoriesFor: #testFPFaultInPrimitive!public!unit tests! !
 !VMTest categoriesFor: #testGPFTrap!public!unit tests! !
 !VMTest categoriesFor: #testImmutableAtPut!public!unit tests! !
@@ -1309,11 +1536,19 @@ testWeakMournerNotifications
 !VMTest categoriesFor: #testOverlappedCallTermination!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveAt!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveAtPut!public!unit tests! !
+!VMTest categoriesFor: #testPrimitiveBytesIsNull!public!unit tests! !
+!VMTest categoriesFor: #testPrimitiveEnableInterrupts!public!unit tests! !
+!VMTest categoriesFor: #testPrimitiveInstanceCounts!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveIsNullBytes!public!unit tests! !
+!VMTest categoriesFor: #testPrimitiveIsSuperclassOf!public!unit tests! !
+!VMTest categoriesFor: #testPrimitiveMakePoint!public!unit tests! !
+!VMTest categoriesFor: #testPrimitiveObjectCount!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveReplaceElements!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveResume!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveStringAt!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveStringAtPut!public!unit tests! !
+!VMTest categoriesFor: #testPrimitiveStringCmp!public!unit tests! !
+!VMTest categoriesFor: #testPrimitiveSubtract!public!unit tests! !
 !VMTest categoriesFor: #testSignedFromUnsigned!public!unit tests! !
 !VMTest categoriesFor: #testVMPointersImmutable!public!unit tests! !
 !VMTest categoriesFor: #testWeakMournerNotifications!public!unit tests! !

@@ -27,72 +27,62 @@ Class Variables:
 !Float methodsFor!
 
 - aNumber
-	"Answer the result of subtracting the argument, aNumber, from the receiver.
-
-	Primitive failure reasons:
-		0 -	aNumber is not a SmallInteger or a Float.
-
-	May also raise a floating point exception."
+	"Answer the result of subtracting the argument, aNumber, from the receiver.The primitive
+	will fail if aNumber is not a SmallInteger of Float, but does not set the failure code. May
+	also raise a floating point exception."
 
 	<primitive: 161>
 	^aNumber subtractFromFloat: self!
 
 * aNumber
-	"Answer the result of multiplying the receiver by the argument, aNumber.
-
-	Primitive failure reasons:
-		0 -	aNumber is not a SmallInteger or a Float.
-
-	May also raise a floating point exception."
+	"Answer the result of multiplying the receiver by the argument, aNumber. The primitive will
+	fail if aNumber is not a SmallInteger of Float, but does not set the failure code. May also
+	raise a floating point exception."
 
 	<primitive: 164>
 	^aNumber multiplyByFloat: self!
 
 / operand
-	"Answer the result of dividing the receiver by the <number>, operand.
-	Raise a <ZeroDivide> exception if the operand is zero.
-
-	Primitive failure reasons:
-		0 -	aNumber is not a SmallInteger or a Float."
+	"Answer the result of dividing the receiver by the <number>, operand. Raise a <ZeroDivide>
+	exception if the operand is zero. The primitive will fail if aNumber is not a SmallInteger
+	of Float, but does not set the failure code."
 
 	<primitive: 165>
 	^operand divideIntoFloat: self!
 
 + aNumber
-	"Answer the result of adding aNumber to the receiver.
-
-	Primitive failure reasons:
-		0 -	aNumber is not a SmallInteger or a Float.
-
-	May also raise a floating point exception."
+	"Answer the result of adding aNumber to the receiver.The primitive will fail if aNumber is
+	not a SmallInteger of Float, but does not set the failure code. May also raise a floating
+	point exception."
 
 	<primitive: 160>
 	^aNumber addToFloat: self!
 
 < aNumber
-	"Answer true if the receiver is less than aNumber. This relational operator is 
-	implemented as a primitive, and >, <=, and >= are expressed in terms of it.
-
-	Primitive failure reasons:
-		0 -	aNumber is not a SmallInteger or a Float.
-
-	May also raise a floating point exception."
+	"Answer true if the receiver is less than aNumber. This relational operator is implemented
+	as a primitive, and >, <=, and >= are expressed in terms of it. The primitive will fail if
+	aNumber is not a SmallInteger of Float, but does not set the failure code. May also raise a
+	floating point exception."
 
 	<primitive: 162>
 	^aNumber greaterThanFloat: self
 !
 
 = comperand
-	"Answer whether the receiver is numerically equivalent to the argument,
-	comperand (e.g. 1 = 1.0 is true).
-
-	Primitive failure reasons:
-		0 -	aNumber is not a SmallInteger or a Float.
-
-	May also raise a floating point exception."
+	"Answer whether the receiver is numerically equivalent to the argument, comperand (e.g. 1 =
+	1.0 is true).The primitive will fail if aNumber is not a SmallInteger of Float, but does not
+	set the failure code. May also raise a floating point exception."
 
 	<primitive: 163>
 	^super = comperand!
+
+> aNumber
+	"Answer true if the receiver is greater than aNumber. The primitive will fail if aNumber is
+	not a SmallInteger of Float, but does not set the failure code. May also raise a floating
+	point exception."
+
+	<primitive: 45>
+	^aNumber < self!
 
 abs
 	"Answer a Number that is the absolute value - positive magnitude - of the receiver."
@@ -823,6 +813,7 @@ truncated
 !Float categoriesFor: #+!arithmetic!public! !
 !Float categoriesFor: #<!comparing!public! !
 !Float categoriesFor: #=!comparing!public! !
+!Float categoriesFor: #>!comparing!public! !
 !Float categoriesFor: #abs!mathematical!public! !
 !Float categoriesFor: #absPrintExactlyOn:base:!printing!private! !
 !Float categoriesFor: #absPrintExactlyOn:base:decimalPlaces:showTrailingFractionalZeros:!printing!private! !

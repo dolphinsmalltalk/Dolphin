@@ -359,6 +359,8 @@ testOverflow
 	self shouldRaiseOverflow: [Float fmax * SmallInteger maximum].
 	self shouldRaiseOverflow: [Float fmax * SmallInteger minimum].
 	self shouldRaiseOverflow: [Float fmax + Float fmax].
+	self shouldRaiseOverflow: [Float fmax / Float fmin].
+	self shouldRaiseOverflow: [Float fmax * -1 - Float fmax].
 !
 
 testPrintOnDecimalPlaces

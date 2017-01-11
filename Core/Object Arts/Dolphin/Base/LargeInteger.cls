@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Integer variableByteSubclass: #LargeInteger
 	instanceVariableNames: ''
@@ -518,8 +518,7 @@ fromSmallInteger: anInteger
 	not strictly a valid LargeInteger in all circumstances, hence this routine is 
 	private."
 
-	^(self basicNew: VMConstants.IntPtrSize)
-		intPtrAtOffset: 0 put: anInteger;
+	^(anInteger becomeA: self)
 		isImmutable: true;
 		yourself!
 
