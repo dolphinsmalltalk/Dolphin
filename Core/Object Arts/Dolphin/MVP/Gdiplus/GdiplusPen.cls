@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 GdiplusBase subclass: #GdiplusPen
 	instanceVariableNames: ''
@@ -15,8 +15,8 @@ alignment
 
 	| status alignment |
 	alignment := SDWORD new.
-	(status := GdiplusLibrary default gdipGetPenMode: self asParameter penMode: alignment yourAddress) 
-		= Ok ifFalse: [GdiplusError signal: 'GdipGetPenMode failed' with: status].
+	(status := GdiplusLibrary default gdipGetPenMode: self asParameter penMode: alignment) = Ok
+		ifFalse: [GdiplusError signal: 'GdipGetPenMode failed' with: status].
 	^alignment value!
 
 alignment: aPenAlignmentConstant 
@@ -63,7 +63,7 @@ color
 
 	| status color |
 	color := DWORD new.
-	(status := GdiplusLibrary default gdipGetPenColor: self asParameter argb: color yourAddress) = Ok 
+	(status := GdiplusLibrary default gdipGetPenColor: self asParameter argb: color) = Ok
 		ifFalse: [GdiplusError signal: 'GdipGetPenColor failed' with: status].
 	^ARGB fromInteger: color value!
 
@@ -136,10 +136,10 @@ dashPattern
 
 	| status array |
 	array := FLOATArray new: self dashPatternCount.
-	(status := GdiplusLibrary default 
+	(status := GdiplusLibrary default
 				gdipGetPenDashArray: self asParameter
-				dash: array yourAddress
-				count: array size) = Ok 
+				dash: array
+				count: array size) = Ok
 		ifFalse: [GdiplusError signal: 'GdipGetPenDashArray failed' with: status].
 	^array asArray!
 

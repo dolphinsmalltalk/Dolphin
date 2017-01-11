@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 GdiplusBase subclass: #GdiplusCustomLineCap
 	instanceVariableNames: ''
@@ -34,9 +34,8 @@ baseInset
 
 	| status baseInset |
 	baseInset := FLOAT new.
-	(status := GdiplusLibrary default gdipGetCustomLineCapBaseInset: self asParameter
-				inset: baseInset yourAddress) = Ok 
-		ifFalse: [GdiplusError signal: 'GdipGetCustomLineCapBaseInset failed' with: status].
+	(status := GdiplusLibrary default gdipGetCustomLineCapBaseInset: self asParameter inset: baseInset)
+		= Ok ifFalse: [GdiplusError signal: 'GdipGetCustomLineCapBaseInset failed' with: status].
 	^baseInset value!
 
 baseInset: aNumber 
@@ -88,10 +87,10 @@ strokeCaps
 	| status startCap endCap |
 	startCap := SDWORD new.
 	endCap := SDWORD new.
-	(status := GdiplusLibrary default 
+	(status := GdiplusLibrary default
 				gdipGetCustomLineCapStrokeCaps: self asParameter
-				startCap: startCap yourAddress
-				endCap: endCap yourAddress) = Ok 
+				startCap: startCap
+				endCap: endCap) = Ok
 		ifFalse: [GdiplusError signal: 'GdipGetCustomLineCapStrokeCaps failed' with: status].
 	^Array with: startCap value with: endCap value!
 
@@ -119,7 +118,7 @@ widthScale
 	| status widthScale |
 	widthScale := FLOAT new.
 	(status := GdiplusLibrary default gdipGetCustomLineCapWidthScale: self asParameter
-				widthScale: widthScale yourAddress) = Ok 
+				widthScale: widthScale) = Ok
 		ifFalse: [GdiplusError signal: 'GdipGetCustomLineCapWidthScale failed' with: status].
 	^widthScale value!
 
