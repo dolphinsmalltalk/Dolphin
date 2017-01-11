@@ -37,7 +37,7 @@ inline void Interpreter::RelinquishAsyncProtect()
 inline void Interpreter::push(LPCSTR pStr)
 {
 	if (pStr)
-		pushNewObject(String::New(pStr));
+		pushNewObject((OTE*)String::New(pStr));
 	else
 		pushNil();
 }
@@ -45,14 +45,14 @@ inline void Interpreter::push(LPCSTR pStr)
 inline void Interpreter::pushHandle(HANDLE h)
 {
 	if (h)
-		pushNewObject(ExternalHandle::New(h));
+		pushNewObject((OTE*)ExternalHandle::New(h));
 	else
 		pushNil();
 }
 
 inline void Interpreter::push(double d)
 {
-	pushNewObject(Float::New(d));
+	pushNewObject((OTE*)Float::New(d));
 }
 
 inline void Interpreter::pushNil()

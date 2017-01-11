@@ -91,7 +91,7 @@ public:
 		HARDASSERT(m_count > 0);
 		if (m_count < MAXCOUNT)
 	 		if (--m_count == 0)
-				ObjectMemory::AddToZct(this);
+				ObjectMemory::AddToZct((OTE*)this);
 	}
 
 	__forceinline bool decRefs()							{ return (m_count < MAXCOUNT) && (--m_count == 0); }
@@ -163,18 +163,8 @@ typedef OTE* POTE;
 
 std::ostream& operator<<(std::ostream& stream, const OTE*);
 
-// Useful for overwriting structure members
-template <class T> TOTE<T>* StorePointerWithValue(TOTE<T>*& oteSlot, TOTE<T>* oteValue)
-{
-	// Sadly compiler refuses to inline the count up code, and macro seems to generate
-	// bad code(!) so inline by hand
-	oteValue->countUp();			// Increase the reference count on stored object
-	oteSlot->countDown();
-	return (oteSlot = oteValue);
-}
-
-template <class T> TOTE<T>* NilOutPointer(TOTE<T>*& ote)
+template <class T> inline void NilOutPointer(TOTE<T>*& ote)
 {
 	ote->countDown();
-	return ote = reinterpret_cast<TOTE<T>*>(Pointers.Nil);
+	ote = reinterpret_cast<TOTE<T>*>(Pointers.Nil);
 }

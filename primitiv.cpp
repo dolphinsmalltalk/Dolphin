@@ -54,7 +54,7 @@ Oop* __fastcall Interpreter::primitiveSmallIntegerPrintString()
 	{
 		StringOTE* oteResult = String::New(buffer);
 		*sp = reinterpret_cast<Oop>(oteResult);
-		ObjectMemory::AddToZct(oteResult);
+		ObjectMemory::AddToZct((OTE*)oteResult);
 		return sp;
 	}
 	else

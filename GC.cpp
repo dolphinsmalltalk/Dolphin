@@ -630,14 +630,6 @@ void ObjectMemory::addVMRefs()
 					// Shouldn't be zero count objects around that are not in the Zct
 					TRACESTREAM << ote << " (Oop " << LPVOID(ote) << "/" << i << ") had zero refs" << endl;
 					errors++;
-
-					if (!Interpreter::m_bAsyncGCDisabled && !IsReconcilingZct())
-					{
-						BOOL save = Interpreter::executionTrace;
-						Interpreter::executionTrace = 1;
-						recursiveFree(ote);
-						Interpreter::executionTrace = save;
-					}
 				}
 			}
 			else

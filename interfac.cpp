@@ -339,26 +339,26 @@ void Interpreter::pushUnknown(Oop object)
 // Public methods for performing callbacks
 Oop	__stdcall Interpreter::perform(Oop receiver, SymbolOTE* selector TRACEPARM) /* throws SE_VMCALLBACKUNWIND */
 {
-	pushObject(Pointers.Scheduler);
+	pushObject((OTE*)Pointers.Scheduler);
 	pushUnknown(receiver);
-	pushObject(selector);
+	pushObject((OTE*)selector);
 	return callback(Pointers.callbackPerformSymbol, 2 TRACEARG(traceFlag));
 }
 
 Oop	__stdcall Interpreter::performWith(Oop receiver, SymbolOTE* selector, Oop arg TRACEPARM) /* throws SE_VMCALLBACKUNWIND */
 {
-	pushObject(Pointers.Scheduler);
+	pushObject((OTE*)Pointers.Scheduler);
 	pushUnknown(receiver);
-	pushObject(selector);
+	pushObject((OTE*)selector);
 	pushUnknown(arg);
 	return callback(Pointers.callbackPerformWithSymbol, 3 TRACEARG(traceFlag));
 }
 
 Oop	__stdcall Interpreter::performWithWith(Oop receiver, SymbolOTE* selector, Oop arg1, Oop arg2 TRACEPARM) /* throws SE_VMCALLBACKUNWIND */
 {
-	pushObject(Pointers.Scheduler);
+	pushObject((OTE*)Pointers.Scheduler);
 	pushUnknown(receiver);
-	pushObject(selector);
+	pushObject((OTE*)selector);
 	pushUnknown(arg1);
 	pushUnknown(arg2);
 	return callback(Pointers.callbackPerformWithWithSymbol, 4 TRACEARG(traceFlag));
@@ -366,9 +366,9 @@ Oop	__stdcall Interpreter::performWithWith(Oop receiver, SymbolOTE* selector, Oo
 
 Oop	__stdcall Interpreter::performWithWithWith(Oop receiver, SymbolOTE* selector, Oop arg1, Oop arg2, Oop arg3 TRACEPARM) /* throws SE_VMCALLBACKUNWIND */
 {
-	pushObject(Pointers.Scheduler);
+	pushObject((OTE*)Pointers.Scheduler);
 	pushUnknown(receiver);
-	pushObject(selector);
+	pushObject((OTE*)selector);
 	pushUnknown(arg1);
 	pushUnknown(arg2);
 	pushUnknown(arg3);
@@ -378,9 +378,9 @@ Oop	__stdcall Interpreter::performWithWithWith(Oop receiver, SymbolOTE* selector
 
 Oop	__stdcall Interpreter::performWithArguments(Oop receiver, SymbolOTE* selector, Oop anArray TRACEPARM) /* throws SE_VMCALLBACKUNWIND */
 {
-	pushObject(Pointers.Scheduler);
+	pushObject((OTE*)Pointers.Scheduler);
 	pushUnknown(receiver);
-	pushObject(selector);
+	pushObject((OTE*)selector);
 	ASSERT(ObjectMemory::fetchClassOf(anArray) == Pointers.ClassArray);
 	pushUnknown(anArray);
 	return callback(Pointers.callbackPerformWithArgumentsSymbol, 3 TRACEARG(traceFlag));
@@ -442,8 +442,8 @@ SymbolOTE* __stdcall Interpreter::NewSymbol(const char* name) /* throws SE_VMCAL
 	// to intern the symbol (Symbol intern: aString)
 	//
 
-	pushObject(Pointers.ClassSymbol);
-	pushNewObject(String::New(name));
+	pushObject((OTE*)Pointers.ClassSymbol);
+	pushNewObject((OTE*)String::New(name));
 	SymbolOTE* symbolPointer = reinterpret_cast<SymbolOTE*>(callback(Pointers.InternSelector, 1 TRACEARG(TraceOff)));
 	ASSERT(symbolPointer->m_oteClass == Pointers.ClassSymbol);
 	ASSERT(symbolPointer->m_count > 1);
@@ -649,7 +649,7 @@ inline DWORD __stdcall Interpreter::GenericCallbackMain(SMALLINTEGER id, BYTE* l
 	{
 		// All accesses to stack/OT allocations must be inside the
 		// memoryExceptionFilter to implement stack and OT growth-on-demand
-		pushObject(Pointers.Scheduler);
+		pushObject((OTE*)Pointers.Scheduler);
 		pushSmallInteger(id);
 		// Add sizeof(DWORD*) to the stack pointer as it includes the return address for
 		// the call which invoked the function
@@ -767,17 +767,17 @@ DWORD __fastcall Interpreter::VirtualCallbackMain(SMALLINTEGER offset, COMThunk*
 	DWORD result;
 	__try
 	{
-		Interpreter::pushObject(Pointers.Scheduler);
-		Interpreter::pushSmallInteger(offset+1);	// Smalltalk expects 1-based index
+		pushObject((OTE*)Pointers.Scheduler);
+		pushSmallInteger(offset+1);	// Smalltalk expects 1-based index
 		COMThunk* thisPtr = *args;
-		Interpreter::pushSmallInteger(thisPtr->id);
-		Interpreter::pushSmallInteger(thisPtr->subId);
+		pushSmallInteger(thisPtr->id);
+		pushSmallInteger(thisPtr->subId);
 		// Arguments are underneath thisPtr on stack
-		Interpreter::pushUIntPtr(reinterpret_cast<UINT_PTR>(args+1));
-		Oop oopAnswer = Interpreter::callback(Pointers.virtualCallbackSelector, 4 TRACEARG(Interpreter::TraceOff));
-		result = Interpreter::callbackResultFromOop(oopAnswer);
+		pushUIntPtr(reinterpret_cast<UINT_PTR>(args+1));
+		Oop oopAnswer = callback(Pointers.virtualCallbackSelector, 4 TRACEARG(Interpreter::TraceOff));
+		result = callbackResultFromOop(oopAnswer);
 	}
-	__except (Interpreter::callbackExceptionFilter(GetExceptionInformation()))
+	__except (callbackExceptionFilter(GetExceptionInformation()))
 	{
 		TRACESTREAM << "WARNING: Unwinding VirtualCallback(" << dec << offset << ',' << args << ')' << endl; 
 		result = static_cast<DWORD>(E_UNEXPECTED);

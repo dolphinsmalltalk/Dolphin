@@ -50,7 +50,7 @@ Oop* __fastcall Interpreter::primitiveNewVirtual()
 	VirtualOTE* newObject = ObjectMemory::newVirtualObject(receiverClass, initialSize+fixedFields, maxSize+fixedFields);
 	*sp = reinterpret_cast<Oop>(newObject);
 	// No point saving down SP before potential Zct reconcile as the init & max args must be SmallIntegers
-	ObjectMemory::AddToZct(newObject);
+	ObjectMemory::AddToZct((OTE*)newObject);
 	return sp;
 }
 
@@ -81,6 +81,6 @@ Oop* __fastcall Interpreter::primitiveAllReferences(CompiledMethod&, unsigned ar
 	ArrayOTE* refs = ObjectMemory::referencesTo(receiver, includeWeakRefs);
 
 	*sp = reinterpret_cast<Oop>(refs);
-	ObjectMemory::AddToZct(refs);
+	ObjectMemory::AddToZct((OTE*)refs);
 	return sp;
 }

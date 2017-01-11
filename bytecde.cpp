@@ -371,7 +371,7 @@ void __fastcall Interpreter::createActualMessage(const unsigned argCount)
 		args->m_elements[i] = oopArg;
 	}
 
-	pushNewObject(messagePointer);
+	pushNewObject((OTE*)messagePointer);
 }
 
 #pragma code_seg(INTERP_SEG)
@@ -507,7 +507,7 @@ BlockOTE* __fastcall BlockClosure::New(unsigned copiedValuesCount)
 // not objects
 void Interpreter::invalidReturn(Oop resultPointer)
 {
-	pushObject(Pointers.Scheduler);	// Receiver of cannotReturn
+	pushObject((OTE*)Pointers.Scheduler);	// Receiver of cannotReturn
 	push(resultPointer);
 	sendSelectorArgumentCount(Pointers.CannotReturnSelector, 1);
 }

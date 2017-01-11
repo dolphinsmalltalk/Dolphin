@@ -39,30 +39,34 @@
 	}
 #endif
 
-// Just allocs the space for a new float
-FloatOTE* __stdcall Float::New()
+inline FloatOTE* __stdcall Float::New()
 {
-	ASSERT(sizeof(Float) == sizeof(double)+ObjectHeaderSize);
+	ASSERT(sizeof(Float) == sizeof(double) + ObjectHeaderSize);
 
 	FloatOTE* newFloatPointer = reinterpret_cast<FloatOTE*>(Interpreter::m_otePools[Interpreter::FLOATPOOL].newByteObject(Pointers.ClassFloat, sizeof(double), OTEFlags::FloatSpace));
 	ASSERT(newFloatPointer->hasCurrentMark());
 	ASSERT(newFloatPointer->m_oteClass == Pointers.ClassFloat);
+	newFloatPointer->beImmutable();
 
 	return newFloatPointer;
 }
 
 // Allocates and sets the value of a new float
-FloatOTE* __stdcall Float::New(double fValue)
+inline FloatOTE* __stdcall Float::New(double fValue)
 {
-	FloatOTE* newFloatPointer = New();
+	ASSERT(sizeof(Float) == sizeof(double) + ObjectHeaderSize);
+
+	FloatOTE* newFloatPointer = reinterpret_cast<FloatOTE*>(Interpreter::m_otePools[Interpreter::FLOATPOOL].newByteObject(Pointers.ClassFloat, sizeof(double), OTEFlags::FloatSpace));
+	ASSERT(newFloatPointer->hasCurrentMark());
+	ASSERT(newFloatPointer->m_oteClass == Pointers.ClassFloat);
+
 	Float* newFloat = newFloatPointer->m_location;
 	newFloat->m_fValue = fValue;
-	newFloatPointer->beImmutable();
 	return newFloatPointer;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-//	Float primitives
+//	Float conversion primitives
 
 Oop* __fastcall Interpreter::primitiveAsFloat()
 {
@@ -70,7 +74,7 @@ Oop* __fastcall Interpreter::primitiveAsFloat()
 
 	FloatOTE* oteResult = Float::New(ObjectMemoryIntegerValueOf(*sp));
 	*sp = reinterpret_cast<Oop>(oteResult);
-	ObjectMemory::AddToZct(oteResult);
+	ObjectMemory::AddToZct((OTE*)oteResult);
 	return sp;
 }
 
@@ -112,81 +116,171 @@ Oop* __fastcall Interpreter::primitiveTruncated()
 	return sp;
 }
 
-Oop* Interpreter::primitiveFloatLessThan()
+///////////////////////////////////////////////////////////////////////////////
+//	Float comparison primitives
+
+template <class P1, class P2> __forceinline static Oop* primitiveFloatCompare(P1 &pred, P2& predMixed)
 {
-	Oop* const sp = m_registers.m_stackPointer;
+	Oop* const sp = Interpreter::m_registers.m_stackPointer;
 
 	FloatOTE* oteReceiver = reinterpret_cast<FloatOTE*>(*(sp - 1));
 	Oop oopArg = *sp;
-	if (ObjectMemoryIsIntegerObject(oopArg))
-	{
-		ASSERT(isAFloat(Oop(oteReceiver)));
-		*(sp - 1) = reinterpret_cast<Oop>(oteReceiver->m_location->m_fValue < ObjectMemoryIntegerValueOf(oopArg)
-			? Pointers.True : Pointers.False);
-	}
-	else
+	if (!ObjectMemoryIsIntegerObject(oopArg))
 	{
 		FloatOTE* oteArg = reinterpret_cast<FloatOTE*>(oopArg);
-		if (oteArg->m_oteClass != Pointers.ClassFloat)
+		if (oteArg->m_oteClass == Pointers.ClassFloat)
+		{
+			*(sp - 1) = reinterpret_cast<Oop>(pred(oteReceiver->m_location->m_fValue, oteArg->m_location->m_fValue) 
+							? Pointers.True : Pointers.False);
+		}
+		else
 		{
 			return NULL;
 		}
-		*(sp - 1) = reinterpret_cast<Oop>(oteReceiver->m_location->m_fValue < oteArg->m_location->m_fValue
+	}
+	else
+	{
+		*(sp - 1) = reinterpret_cast<Oop>(predMixed(oteReceiver->m_location->m_fValue, ObjectMemoryIntegerValueOf(oopArg))
 			? Pointers.True : Pointers.False);
 	}
+
 	return sp - 1;
 }
 
+template <class T1, class T2> struct op_less {
+	bool operator() (const T1& x, const T2& y) const { return x<y; }
+};
+
+Oop* Interpreter::primitiveFloatLessThan()
+{
+	return primitiveFloatCompare(op_less<double, double>(), op_less<double, SMALLINTEGER>());
+}
+
+template <class T1, class T2> struct op_greater {
+	bool operator() (const T1& x, const T2& y) const { return x>y; }
+};
+
 Oop* Interpreter::primitiveFloatGreaterThan()
 {
-	Oop* const sp = m_registers.m_stackPointer;
-
-	FloatOTE* oteReceiver = reinterpret_cast<FloatOTE*>(*(sp - 1));
-	Oop oopArg = *sp;
-	if (ObjectMemoryIsIntegerObject(oopArg))
-	{
-		ASSERT(isAFloat(Oop(oteReceiver)));
-		*(sp - 1) = reinterpret_cast<Oop>(oteReceiver->m_location->m_fValue > ObjectMemoryIntegerValueOf(oopArg)
-			? Pointers.True : Pointers.False);
-	}
-	else
-	{
-		FloatOTE* oteArg = reinterpret_cast<FloatOTE*>(oopArg);
-		if (oteArg->m_oteClass != Pointers.ClassFloat)
-		{
-			return NULL;
-		}
-		*(sp - 1) = reinterpret_cast<Oop>(oteReceiver->m_location->m_fValue > oteArg->m_location->m_fValue
-			? Pointers.True : Pointers.False);
-	}
-	return sp - 1;
+	return primitiveFloatCompare(op_greater<double, double>(), op_greater<double, SMALLINTEGER>());
 }
 
 Oop* Interpreter::primitiveFloatEqual()
 {
-	Oop* const sp = m_registers.m_stackPointer;
+	Oop* const sp = Interpreter::m_registers.m_stackPointer;
 
 	FloatOTE* oteReceiver = reinterpret_cast<FloatOTE*>(*(sp - 1));
 	Oop oopArg = *sp;
-	if (ObjectMemoryIsIntegerObject(oopArg))
+	if ((Oop)oteReceiver != oopArg)
 	{
-		ASSERT(isAFloat(Oop(oteReceiver)));
-		*(sp - 1) = reinterpret_cast<Oop>(oteReceiver->m_location->m_fValue == ObjectMemoryIntegerValueOf(oopArg)
-			? Pointers.True : Pointers.False);
+		if (!ObjectMemoryIsIntegerObject(oopArg))
+		{
+			FloatOTE* oteArg = reinterpret_cast<FloatOTE*>(oopArg);
+			if (oteArg->m_oteClass == Pointers.ClassFloat)
+			{
+				*(sp - 1) = reinterpret_cast<Oop>(oteReceiver->m_location->m_fValue == oteArg->m_location->m_fValue
+					? Pointers.True : Pointers.False);
+			}
+			else
+			{
+				return NULL;
+			}
+		}
+		else
+		{
+			*(sp - 1) = reinterpret_cast<Oop>(oteReceiver->m_location->m_fValue == ObjectMemoryIntegerValueOf(oopArg)
+				? Pointers.True : Pointers.False);
+		}
 	}
 	else
 	{
-		FloatOTE* oteArg = reinterpret_cast<FloatOTE*>(oopArg);
-		if (oteArg->m_oteClass != Pointers.ClassFloat)
-		{
-			return NULL;
-		}
-		*(sp - 1) = reinterpret_cast<Oop>(oteReceiver->m_location->m_fValue == oteArg->m_location->m_fValue
-			? Pointers.True : Pointers.False);
+		*(sp - 1) = reinterpret_cast<Oop>(Pointers.True);
 	}
+
 	return sp - 1;
 }
 
+///////////////////////////////////////////////////////////////////////////////
+//	Float arithmetic primitives
+// 
+// These are carefully arranged for optimal code generation. In particular the
+// Float object to hold the result is allocated before the FP calculation is
+// performed. This will temporarily "leak" the object if there is an FP fault in 
+// the calculation, although only until the next GC. By allocating the Float upfront, 
+// the C++ compiler is able to generated code that stores directly from the XMM0 
+// register into the object. If the Float is allocated after the calculation, then the result value 
+// will be stored down to a local on the stack, and then copied into the object later, slowing
+// down the primitives quite a lot.
+// The conditions are also arranged so that the conditional forward jumps are taken in the less
+// common case, which reduces branch misprediction overhead.
+
+template <class O1, class O2> __forceinline static Oop* primitiveFloatArithOp(O1 &op, O2& opMixed)
+{
+	Oop* sp = Interpreter::m_registers.m_stackPointer;
+	Oop oopArg = *sp--;
+	FloatOTE* oteReceiver = reinterpret_cast<FloatOTE*>(*sp);
+	Float* receiver = oteReceiver->m_location;
+
+	FloatOTE* oteResult;
+	if (!ObjectMemoryIsIntegerObject(oopArg))
+	{
+		FloatOTE* oteArg = reinterpret_cast<FloatOTE*>(oopArg);
+		if (oteArg->m_oteClass == Pointers.ClassFloat)
+		{
+			oteResult = Float::New();
+			oteResult->m_location->m_fValue = op(receiver->m_fValue, oteArg->m_location->m_fValue);
+		}
+		else
+		{
+			return NULL;
+		}
+	}
+	else
+	{
+		oteResult = Float::New();
+		oteResult->m_location->m_fValue = opMixed(receiver->m_fValue, ObjectMemoryIntegerValueOf(oopArg));
+	}
+
+	*sp = reinterpret_cast<Oop>(oteResult);
+	ObjectMemory::AddToZct((OTE*)oteResult);
+	return sp;
+}
+
+template <class T1, class T2> struct op_add {
+	double operator() (const T1& x, const T2& y) const { return x+y; }
+};
+
+Oop* Interpreter::primitiveFloatAdd()
+{
+	return primitiveFloatArithOp(op_add<double, double>(), op_add<double, SMALLINTEGER>());
+}
+
+template <class T1, class T2> struct op_sub {
+	double operator() (const T1& x, const T2& y) const { return x - y; }
+};
+
+Oop* Interpreter::primitiveFloatSubtract()
+{
+	return primitiveFloatArithOp(op_sub<double, double>(), op_sub<double, SMALLINTEGER>());
+}
+
+template <class T1, class T2> struct op_mul {
+	double operator() (const T1& x, const T2& y) const { return x * y; }
+};
+
+Oop* Interpreter::primitiveFloatMultiply()
+{
+	return primitiveFloatArithOp(op_mul<double, double>(), op_mul<double, SMALLINTEGER>());
+}
+
+template <class T1, class T2> struct op_div {
+	double operator() (const T1& x, const T2& y) const { return x / y; }
+};
+
+Oop* Interpreter::primitiveFloatDivide()
+{
+	return primitiveFloatArithOp(op_div<double, double>(), op_div<double, SMALLINTEGER>());
+}
 
 ///////////////////////////////////////////////////////////////////////////////
 // Primitives for external buffer manipulation of floats/doubles
@@ -221,13 +315,12 @@ Oop* __fastcall Interpreter::primitiveDoublePrecisionFloatAt()
 	ASSERT(receiver->isBytes());
 
 	// Its a byte object, so its simpler (no ref counting and no fixed fields)
-	FloatOTE* oteResult = Float::New();
+	FloatOTE* oteResult;
 	Behavior* behavior = receiver->m_oteClass->m_location;
-	Float* result = oteResult->m_location;
 	if (behavior->isIndirect())
 	{
 		ExternalAddress* ptr = static_cast<ExternalAddress*>(receiver->m_location);
-		result->m_fValue = *reinterpret_cast<double*>(static_cast<BYTE*>(ptr->m_pointer)+offset);
+		oteResult = Float::New(*reinterpret_cast<double*>(static_cast<BYTE*>(ptr->m_pointer)+offset));
 	}
 	else
 	{
@@ -238,12 +331,11 @@ Oop* __fastcall Interpreter::primitiveDoublePrecisionFloatAt()
 			return primitiveFailure(PrimitiveFailureBoundsError);	// Out of bounds
 
 		VariantByteObject* bytes = oteBytes->m_location;
-		result->m_fValue = *reinterpret_cast<double*>(&(bytes->m_fields[offset]));
+		oteResult = Float::New(*reinterpret_cast<double*>(&(bytes->m_fields[offset])));
 	}
 
-	oteResult->beImmutable();
 	*sp = reinterpret_cast<Oop>(oteResult);
-	ObjectMemory::AddToZct(oteResult);
+	ObjectMemory::AddToZct((OTE*)oteResult);
 	return sp;
 }
 
@@ -266,13 +358,12 @@ Oop* __fastcall Interpreter::primitiveSinglePrecisionFloatAt()
 	ASSERT(receiver->isBytes());
 
 	// Its a byte object, so its simpler (no ref counting and no fixed fields)
-	FloatOTE* oteResult = Float::New();
+	FloatOTE* oteResult;
 	Behavior* behavior = receiver->m_oteClass->m_location;
-	Float* result = oteResult->m_location;
 	if (behavior->isIndirect())
 	{
 		ExternalAddress* ptr = static_cast<ExternalAddress*>(receiver->m_location);
-		result->m_fValue = *reinterpret_cast<float*>(static_cast<BYTE*>(ptr->m_pointer)+offset);
+		oteResult = Float::New(*reinterpret_cast<float*>(static_cast<BYTE*>(ptr->m_pointer)+offset));
 	}
 	else
 	{
@@ -283,12 +374,11 @@ Oop* __fastcall Interpreter::primitiveSinglePrecisionFloatAt()
 			return primitiveFailure(PrimitiveFailureBoundsError);	// Out of bounds
 
 		VariantByteObject* bytes = oteBytes->m_location;
-		result->m_fValue = *reinterpret_cast<float*>(&(bytes->m_fields[offset]));
+		oteResult = Float::New(*reinterpret_cast<float*>(&(bytes->m_fields[offset])));
 	}
 
-	oteResult->beImmutable();
 	*sp = reinterpret_cast<Oop>(oteResult);
-	ObjectMemory::AddToZct(oteResult);
+	ObjectMemory::AddToZct((OTE*)oteResult);
 	return sp;
 }
 
@@ -459,7 +549,7 @@ Oop* __fastcall Interpreter::primitiveLongDoubleAt()
 
 	FloatOTE* oteResult = Float::New(fValue);
 	*sp = reinterpret_cast<Oop>(oteResult);
-	ObjectMemory::AddToZct(oteResult);
+	ObjectMemory::AddToZct((OTE*)oteResult);
 	return sp;
 }
 

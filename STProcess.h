@@ -120,10 +120,7 @@ namespace ST
 		}
 		void BasicClearNext();
 		void BasicSetNext(ProcessOTE* oteNext) { m_nextLink = oteNext; }
-		void SetNext(ProcessOTE* oteNext)
-		{
-			StorePointerWithValue(m_nextLink, oteNext);
-		}
+		void SetNext(ProcessOTE* oteNext);
 		Oop SuspendedFrame() const { return m_suspendedFrame; }
 		void SetSuspendedFrame(Oop intPointer)
 		{

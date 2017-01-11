@@ -75,7 +75,7 @@ Oop* __fastcall Interpreter::primitiveMakePoint(CompiledMethod&, unsigned argCou
 	// Save down SP in case ZCT is reconciled on adding result, allowing unref'd args to be reclaimed
 	m_registers.m_stackPointer = sp;
 	*sp = reinterpret_cast<Oop>(oteObj);
-	ObjectMemory::AddToZct(oteObj);
+	ObjectMemory::AddToZct((OTE*)oteObj);
 	return sp;
 }
 

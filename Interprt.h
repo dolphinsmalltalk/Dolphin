@@ -192,13 +192,13 @@ public:
 	static void push(double d);
 
 	// To be used when pushing a known non-SmallInteger (skips the SmallInteger check)
-	template <typename T> static void pushObject(TOTE<T>* object)
+	static void pushObject(OTE* object)
 	{
 		push(reinterpret_cast<Oop>(object));
 	}
 
 	// Push newly created objects (add to Zct)
-	template <typename T> static void pushNewObject(TOTE<T>* object)
+	static void pushNewObject(OTE* object)
 	{
 		// Note that object is pushed on stack before being added to Zct, this means
 		// that on ZCT overflow the reconciliation will work correctly

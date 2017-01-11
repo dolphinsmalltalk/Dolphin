@@ -294,7 +294,7 @@ private:
 	static void ShrinkZct();
 
 public:
-	template <typename T> static void __fastcall AddToZct(TOTE<T>* ote)
+	static void __fastcall AddToZct(TOTE<Object>* ote)
 	{
 		HARDASSERT(m_nZctEntries >= 0);
 

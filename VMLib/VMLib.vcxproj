@@ -201,12 +201,18 @@
       <PrecompiledHeader />
     </ClCompile>
   </ItemGroup>
+  <ItemDefinitionGroup>
+    <MASM>
+      <AdditionalDependencies>..\istasm.inc</AdditionalDependencies>
+    </MASM>
+    <ClCompile />
+    <ClCompile />
+  </ItemDefinitionGroup>
   <ItemGroup>
     <MASM Include="..\byteasm.asm" />
     <MASM Include="..\constobj.asm" />
     <MASM Include="..\ExternalBytes.asm" />
     <MASM Include="..\ExternalCall.asm" />
-    <MASM Include="..\flotprimasm.asm" />
     <MASM Include="..\primasm.asm" />
     <MASM Include="..\SmallIntPrim.asm" />
     <None Include="..\Interprt.inl" />

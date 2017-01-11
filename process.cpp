@@ -1029,7 +1029,7 @@ ProcessOTE* Interpreter::resume(ProcessOTE* aProcess)
 			NilOutPointer(m_oteNewProcess);
 		}
 		else
-			StorePointerWithValue(m_oteNewProcess, aProcess);
+			ObjectMemory::storePointerWithValue((OTE*&)m_oteNewProcess, (OTE*)aProcess);
 
 		HARDASSERT(!proc->IsWaiting());
 	}
@@ -1091,6 +1091,10 @@ inline ProcessOTE* LinkedList::removeFirst()
 	return removedLink;
 }
 
+inline void Process::SetNext(ProcessOTE* oteNext)
+{
+	ObjectMemory::storePointerWithValue((OTE*&)m_nextLink, (OTE*)oteNext);
+}
 
 // Add link to end of list
 inline void LinkedList::addLast(ProcessOTE* aLink)
@@ -1098,7 +1102,7 @@ inline void LinkedList::addLast(ProcessOTE* aLink)
 	if (isEmpty())
 	{
 		// Incs the ref. count on aLink (current value is nil)
-		StorePointerWithValue(m_firstLink, aLink);
+		ObjectMemory::storePointerWithValue((OTE*&)m_firstLink, (OTE*)aLink);
 	}
 	else
 	{
@@ -1108,7 +1112,7 @@ inline void LinkedList::addLast(ProcessOTE* aLink)
 		// We add to the end of the list, so the current end of the list loses
 		// a reference from the list
 	}
-	StorePointerWithValue(m_lastLink, aLink);
+	ObjectMemory::storePointerWithValue((OTE*&)m_lastLink, (OTE*)aLink);
 }
 
 // Ref. count of removed (and returned) link will be one too high
@@ -1143,8 +1147,10 @@ ProcessOTE* LinkedList::remove(ProcessOTE* aLink)
 
 	// May have removed last link in list
 	if (aLink == m_lastLink)
+	{
 		// We DO remove the ref. from lists lastLink pointer
-		StorePointerWithValue(m_lastLink, prevLink);
+		ObjectMemory::storePointerWithValue((OTE*&)m_lastLink, (OTE*)prevLink);
+	}
 
 	Process* proc = aLink->m_location;
 

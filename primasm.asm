@@ -92,12 +92,16 @@ extern primitiveActivateMethod:near32
 extern primitiveReturnInstVar:near32
 extern primitiveSetInstVar:near32
 
-; Imports from flotprim.asm
+; Imports from flotprim.cpp
 primitiveAsFloat EQU ?primitiveAsFloat@Interpreter@@CIPAIXZ
 extern primitiveAsFloat:near32
+primitiveFloatAdd EQU ?primitiveFloatAdd@Interpreter@@CIPAIXZ
 extern primitiveFloatAdd:near32
+primitiveFloatSub EQU ?primitiveFloatSubtract@Interpreter@@CIPAIXZ
 extern primitiveFloatSub:near32
+primitiveFloatMul EQU ?primitiveFloatMultiply@Interpreter@@CIPAIXZ
 extern primitiveFloatMul:near32
+primitiveFloatDiv EQU ?primitiveFloatDivide@Interpreter@@CIPAIXZ
 extern primitiveFloatDiv:near32
 primitiveFloatEQ EQU ?primitiveFloatEqual@Interpreter@@CIPAIXZ
 extern primitiveFloatEQ:near32

@@ -256,7 +256,7 @@ Oop* __fastcall Interpreter::primitivePerformWithArgs()
 		// Receiver must have understood the message, but we had wrong 
 		// number of arguments, so reinstate the stack and fail the primitive
 		pop(argCount);
-		pushObject(m_oopMessageSelector);
+		pushObject((OTE*)m_oopMessageSelector);
 		// Argument array already has artificially increased ref. count
 		push(Oop(argumentArray));
 		m_oopMessageSelector = performSelector;

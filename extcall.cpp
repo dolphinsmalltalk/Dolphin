@@ -172,7 +172,7 @@ inline void Interpreter::push(LPCWSTR pStr)
 		StringOTE* stringPointer = reinterpret_cast<StringOTE*>(ObjectMemory::newUninitializedByteObject(Pointers.ClassString, len-1));
 		String* string = stringPointer->m_location;
 		::WideCharToMultiByte(CP_ACP,0,pStr,-1,string->m_characters,len,NULL,NULL);
-		pushNewObject(stringPointer);
+		pushNewObject((OTE*)stringPointer);
 	}
 	else
 		pushNil();
@@ -204,12 +204,12 @@ unsigned Interpreter::pushArgsAt(const ExternalDescriptor* descriptor, BYTE* lpP
 				break;
 
 			case ExtCallArgLPVOID:
-				pushNewObject(ExternalAddress::New(*(BYTE**)lpParms));
+				pushNewObject((OTE*)ExternalAddress::New(*(BYTE**)lpParms));
 				lpParms += sizeof(BYTE*);
 				break;
 
 			case ExtCallArgCHAR:
-				pushObject(Character::New(char(*lpParms)));
+				pushObject((OTE*)Character::New(char(*lpParms)));
 				lpParms += sizeof(MWORD);
 				break;
 
@@ -327,7 +327,7 @@ unsigned Interpreter::pushArgsAt(const ExternalDescriptor* descriptor, BYTE* lpP
 				break;
 
 			case ExtCallArgGUID:
-				pushNewObject(NewGUID(reinterpret_cast<GUID*>(lpParms)));
+				pushNewObject((OTE*)NewGUID(reinterpret_cast<GUID*>(lpParms)));
 				lpParms += sizeof(GUID);
 				break;
 
@@ -394,7 +394,7 @@ unsigned Interpreter::pushArgsAt(const ExternalDescriptor* descriptor, BYTE* lpP
 						punk->AddRef();
 						oteUnknown->beFinalizable();
 					}
-					pushNewObject(oteUnknown);
+					pushNewObject((OTE*)oteUnknown);
 					lpParms += sizeof(IUnknown*);
 				}
 				break;
