@@ -185,8 +185,8 @@ flags
 
 	| flags status |
 	flags := DWORD new.
-	(status := GdiplusLibrary default gdipGetImageFlags: self asParameter flags: flags yourAddress) 
-		= Ok ifFalse: [^GdiplusError signal: 'GdipGetImageFlags failed' with: status].
+	(status := GdiplusLibrary default gdipGetImageFlags: self asParameter flags: flags) = Ok
+		ifFalse: [^GdiplusError signal: 'GdipGetImageFlags failed' with: status].
 	^flags asInteger!
 
 flipX
@@ -267,10 +267,10 @@ getBounds
 	| status rect unit |
 	rect := RECTF new.
 	unit := SDWORD new.
-	(status := GdiplusLibrary default 
+	(status := GdiplusLibrary default
 				gdipGetImageBounds: self asParameter
-				srcRect: rect yourAddress
-				srcUnit: unit yourAddress) = Ok 
+				srcRect: rect
+				srcUnit: unit) = Ok
 		ifFalse: [^GdiplusError signal: 'GdipGetImageBounds failed' with: status].
 	^Array with: rect asRectangle with: unit value!
 

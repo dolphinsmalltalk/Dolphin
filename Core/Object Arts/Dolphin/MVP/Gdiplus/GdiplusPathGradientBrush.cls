@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 GdiplusBrush subclass: #GdiplusPathGradientBrush
 	instanceVariableNames: ''
@@ -23,11 +23,11 @@ blendColors
 	count := self blendColorsCount.
 	blend := DWORDArray new: count.
 	positions := FLOATArray new: count.
-	(status := GdiplusLibrary default 
+	(status := GdiplusLibrary default
 				gdipGetPathGradientPresetBlend: self asParameter
-				blend: blend yourAddress
-				positions: positions yourAddress
-				count: count) = Ok 
+				blend: blend
+				positions: positions
+				count: count) = Ok
 		ifFalse: [GdiplusError signal: 'GdipGetPathGradientPresetBlend failed' with: status].
 	^Array with: (blend asArray collect: [:e | ARGB fromInteger: e]) with: positions asArray!
 
@@ -56,9 +56,8 @@ blendColorsCount
 
 	| status count |
 	count := SDWORD new.
-	(status := GdiplusLibrary default gdipGetPathGradientPresetBlendCount: self asParameter
-				count: count yourAddress) = Ok 
-		ifFalse: [GdiplusError signal: 'GdipGetPathGradientPresetBlendCount failed' with: status].
+	(status := GdiplusLibrary default gdipGetPathGradientPresetBlendCount: self asParameter count: count)
+		= Ok ifFalse: [GdiplusError signal: 'GdipGetPathGradientPresetBlendCount failed' with: status].
 	^count value!
 
 blendFactors
@@ -66,11 +65,11 @@ blendFactors
 	count := self blendFactorsCount.
 	factors := FLOATArray new: count.
 	positions := FLOATArray new: count.
-	(status := GdiplusLibrary default 
+	(status := GdiplusLibrary default
 				gdipGetPathGradientBlend: self asParameter
-				blend: factors yourAddress
-				positions: positions yourAddress
-				count: count) = Ok 
+				blend: factors
+				positions: positions
+				count: count) = Ok
 		ifFalse: [GdiplusError signal: 'GdipGetPathGradientBlend failed' with: status].
 	^Array with: factors asArray with: positions asArray!
 
@@ -92,8 +91,7 @@ blendFactorsCount
 
 	| status count |
 	count := SDWORD new.
-	(status := GdiplusLibrary default gdipGetPathGradientBlendCount: self asParameter
-				count: count yourAddress) = Ok 
+	(status := GdiplusLibrary default gdipGetPathGradientBlendCount: self asParameter count: count) = Ok
 		ifFalse: [GdiplusError signal: 'GdipGetPathGradientBlendCount failed' with: status].
 	^count value!
 
@@ -110,8 +108,8 @@ bounds
 
 	| status rect |
 	rect := RECTL new.
-	(status := GdiplusLibrary default gdipGetPathGradientRectI: self asParameter rect: rect yourAddress) 
-		= Ok ifFalse: [GdiplusError signal: 'GdipGetPathGradientRectI failed' with: status].
+	(status := GdiplusLibrary default gdipGetPathGradientRectI: self asParameter rect: rect) = Ok
+		ifFalse: [GdiplusError signal: 'GdipGetPathGradientRectI failed' with: status].
 	^rect asRectangle!
 
 centerColor
@@ -119,9 +117,8 @@ centerColor
 
 	| status color |
 	color := DWORD new.
-	(status := GdiplusLibrary default gdipGetPathGradientCenterColor: self asParameter
-				colors: color yourAddress) = Ok 
-		ifFalse: [GdiplusError signal: 'GdipGetPathGradientCenterColor failed' with: status].
+	(status := GdiplusLibrary default gdipGetPathGradientCenterColor: self asParameter colors: color)
+		= Ok ifFalse: [GdiplusError signal: 'GdipGetPathGradientCenterColor failed' with: status].
 	^ARGB fromInteger: color value!
 
 centerColor: anARGB 
@@ -137,9 +134,8 @@ centerPoint
 
 	| status point |
 	point := POINT new.
-	(status := GdiplusLibrary default gdipGetPathGradientCenterPointI: self asParameter
-				points: point yourAddress) = Ok 
-		ifFalse: [GdiplusError signal: 'GdipGetPathGradientCenterPointI failed' with: status].
+	(status := GdiplusLibrary default gdipGetPathGradientCenterPointI: self asParameter points: point)
+		= Ok ifFalse: [GdiplusError signal: 'GdipGetPathGradientCenterPointI failed' with: status].
 	^point asPoint!
 
 centerPoint: aPoint 
@@ -157,10 +153,10 @@ focusScales
 	| status x y |
 	x := FLOAT new.
 	y := FLOAT new.
-	(status := GdiplusLibrary default 
+	(status := GdiplusLibrary default
 				gdipGetPathGradientFocusScales: self asParameter
-				xScale: x yourAddress
-				yScale: y yourAddress) = Ok 
+				xScale: x
+				yScale: y) = Ok
 		ifFalse: [GdiplusError signal: 'GdipGetPathGradientFocusScales failed' with: status].
 	^x value @ y value!
 
@@ -269,28 +265,28 @@ surroundColors
 	| status count colors |
 	count := DWORD new value: self surroundColorsCount.
 	colors := DWORDArray new: count value.
-	(status := GdiplusLibrary default 
+	(status := GdiplusLibrary default
 				gdipGetPathGradientSurroundColorsWithCount: self asParameter
-				color: colors yourAddress
-				count: count yourAddress) = Ok 
+				color: colors
+				count: count) = Ok
 		ifFalse: [GdiplusError signal: 'GdipGetPathGradientSurroundColorsWithCount failed' with: status].
 	^colors asArray collect: [:e | ARGB fromInteger: e]!
 
-surroundColors: colorsArray 
+surroundColors: colorsArray
 	"Set the colors that appear on the receiver's boundaries."
 
 	| status |
-	(status := GdiplusLibrary default 
+	(status := GdiplusLibrary default
 				gdipSetPathGradientSurroundColorsWithCount: self asParameter
-				color: (DWORDArray withAll: (colorsArray collect: [:e | e asParameter])) yourAddress
-				count: (DWORD new value: colorsArray size) yourAddress) = Ok 
+				color: (DWORDArray withAll: (colorsArray collect: [:e | e asParameter]))
+				count: (DWORD new value: colorsArray size)) = Ok
 		ifFalse: [GdiplusError signal: 'GdipSetPathGradientSurroundColorsWithCount failed' with: status]!
 
 surroundColorsCount
 	| status count |
 	count := SDWORD new.
 	(status := GdiplusLibrary default gdipGetPathGradientSurroundColorCount: self asParameter
-				count: count yourAddress) = Ok 
+				count: count) = Ok
 		ifFalse: [GdiplusError signal: 'GdipGetPathGradientSurroundColorCount failed' with: status].
 	^count value!
 

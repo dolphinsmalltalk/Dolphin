@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 GdiplusCustomLineCap subclass: #GdiplusAdjustableArrowCap
 	instanceVariableNames: ''
@@ -15,9 +15,8 @@ height
 
 	| status height |
 	height := FLOAT new.
-	(status := GdiplusLibrary default gdipGetAdjustableArrowCapHeight: self asParameter
-				height: height yourAddress) = Ok 
-		ifFalse: [GdiplusError signal: 'GdipGetAdjustableArrowCapHeight failed' with: status].
+	(status := GdiplusLibrary default gdipGetAdjustableArrowCapHeight: self asParameter height: height)
+		= Ok ifFalse: [GdiplusError signal: 'GdipGetAdjustableArrowCapHeight failed' with: status].
 	^height value!
 
 height: aNumber 
@@ -51,7 +50,7 @@ middleInset
 	| status middleInset |
 	middleInset := FLOAT new.
 	(status := GdiplusLibrary default gdipGetAdjustableArrowCapMiddleInset: self asParameter
-				middleInset: middleInset yourAddress) = Ok 
+				middleInset: middleInset) = Ok
 		ifFalse: [GdiplusError signal: 'GdipGetAdjustableArrowCapMiddleInset failed' with: status].
 	^middleInset value!
 
@@ -68,9 +67,8 @@ width
 
 	| status width |
 	width := FLOAT new.
-	(status := GdiplusLibrary default gdipGetAdjustableArrowCapWidth: self asParameter
-				width: width yourAddress) = Ok 
-		ifFalse: [GdiplusError signal: 'GdipGetAdjustableArrowCapWidth failed' with: status].
+	(status := GdiplusLibrary default gdipGetAdjustableArrowCapWidth: self asParameter width: width)
+		= Ok ifFalse: [GdiplusError signal: 'GdipGetAdjustableArrowCapWidth failed' with: status].
 	^width value!
 
 width: aNumber 
