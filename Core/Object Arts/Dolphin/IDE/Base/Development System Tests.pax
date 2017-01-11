@@ -41,6 +41,7 @@ package setPrerequisites: (IdentitySet new
 	add: '..\..\Base\Dolphin Base Tests';
 	add: '..\..\System\Base64\Dolphin Base64';
 	add: '..\..\MVP\Views\Common Controls\Dolphin Common Controls';
+	add: '..\..\MVP\Base\Dolphin MVP Base';
 	add: '..\..\Registry\Dolphin Registry Access';
 	add: '..\..\Lagoon\Lagoon Image Stripper';
 	add: '..\..\..\..\Contributions\Refactory\Refactoring Browser\Environments\RBEnvironments';

@@ -41,23 +41,18 @@ testBytesUsedByObject
 !
 
 testOtOverflow
-	| subject objects i max events handler |
+	| subject objects max events handler |
 	subject := MemoryManager current.
 	max := 8192.
 	objects := Array new: max.
 	events := OrderedCollection new.
-	i := 1.
-	handler := [:otSize | events add: i -> otSize].
+	handler := [:otSize | events addLast: otSize].
 	subject
 		when: #otOverflow:
 		send: #value:
 		to: handler.
-	
-	[subject compact.
-	[i <= max] whileTrue: 
-			[objects at: i put: Object new.
-			i := i + 1]]
-			ensure: [subject removeEventsTriggeredFor: handler].
+	subject compact.
+	1 to: max do: [:i | objects at: i put: Object new].
 	self assert: events notEmpty! !
 !MemoryManagerTest categoriesFor: #testBytesUsedByObject!public!unit tests! !
 !MemoryManagerTest categoriesFor: #testOtOverflow!public!unit tests! !
