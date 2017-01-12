@@ -39,7 +39,6 @@ struct OTEFlags
 	BYTE	m_finalize	: 1;			// Should the object be finalized
 	BYTE 	m_weakOrZ	: 1;			// weak references if pointers, null term if bytes
 	BYTE 	m_space		: SPACEBITS;	// Memory space in which the object resides (used when deallocating)
-	//count_t	m_count;					// A byte ref. count
 };
 
 
@@ -132,7 +131,7 @@ public:
 	{
 		struct 
 		{
-			struct OTEFlags	m_flags;					// 16-bits of flags and ref. count
+			struct OTEFlags	m_flags;					// 8-bits of flags
 			count_t			m_count;
 			hash_t			m_idHash;					// identity hash value (16-bit)
 		};

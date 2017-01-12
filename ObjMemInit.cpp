@@ -110,7 +110,7 @@ HRESULT ObjectMemory::Initialize()
 
 	FixedSizePool::Initialize();
 
-	m_nNextIdHash = 123;
+	m_nNextIdHash = 1;
 	m_nOTSize = OTDefaultSize;
 	m_nOTMax = OTDefaultMax;
 	//m_pOT does not need to be initialized

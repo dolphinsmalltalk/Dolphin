@@ -375,7 +375,10 @@ extern primitiveMillisecondClockValue:near32
 
 primitiveMicrosecondClockValue EQU  ?primitiveMicrosecondClockValue@Interpreter@@CIPAIXZ
 extern primitiveMicrosecondClockValue:near32
- 
+
+primitiveIdentityHash EQU ?primitiveIdentityHash@Interpreter@@CIPAIXZ
+extern primitiveIdentityHash:near32
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; Constants
 ;; Table of primitives for normal primitive dispatching
@@ -456,7 +459,7 @@ DWORD		primitiveNewWithArg								; case 71
 DWORD		primitiveBecome									; case 72
 DWORD		primitiveInstVarAt								; case 73
 DWORD		primitiveInstVarAtPut							; case 74
-DWORD		primitiveIdentityHash16							; case 75	Object>>hash, Object>>identityHash, Symbol>>hash
+DWORD		primitiveIdentityHash							; case 75	Object>>hash, Object>>identityHash, Symbol>>hash
 DWORD		primitiveNewWithArg								; case 76	Will be primitiveNewFixed:
 DWORD		primitiveAllInstances							; case 77	was Behavior>>someInstance
 DWORD		primitiveReturn									; case 78	was Object>>nextInstance
@@ -531,7 +534,7 @@ DWORD		primitiveIndirectReplaceBytes					; case 143
 DWORD		primitiveNextSDWORD								; case 144
 DWORD		primitiveAnyMask								; case 145
 DWORD		primitiveAllMask								; case 146
-DWORD		primitiveIdentityHash32							; case 147
+DWORD		unusedPrimitive									; case 147
 DWORD		primitiveLookupMethod							; case 148
 DWORD		PRIMSTRINGSEARCH								; case 149
 DWORD		primitiveUnwindInterruptThunk					; case 150
@@ -1936,42 +1939,6 @@ notIdentical:
 LocalPrimitiveFailure 0
 
 ENDPRIMITIVE primitiveStringCompare
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-; Answer the Oop index of an object
-
-BEGINPRIMITIVE primitiveIdentityHash16
-	mov		ecx, [_SP]								; Load receiver into ecx
-	ASSUME	ecx:PTR OTE
-	
-	; Avoid using slow 16-bit instruction by loading whole word and shifting down
-	mov			eax, DWORD PTR([ecx].m_flags)
-	shr			eax, 15
-	or			eax, 1
-	
-	mov		[_SP], eax								; Overwrite stack top
-	mov		eax, _SP								; primitiveSuccess(0)
-	ret
-ENDPRIMITIVE primitiveIdentityHash16
-
-BEGINPRIMITIVE primitiveIdentityHash32
-	mov		ecx, [_SP]								; Load receiver into ecx
-	ASSUME	ecx:PTR OTE
-	xor		edx, edx
-	mov		eax, [ecx].m_oteClass
-	ASSUME	eax:PTR OTE								; eax now OTE of class
-	mov		dx, [ecx].m_idHash						; Load identity hash value from the receiver's OTE
-	xor		ecx, ecx
-	mov		cx, [eax].m_idHash						; Load ax with identity hash of the class
-	ASSUME	eax:NOTHING
-	shl		ecx, 16
-	or		ecx, edx
-	and		ecx, 3FFFFFFFh							; Keep as positive SmallInteger
-	mov		eax, _SP								; primitiveSuccess(0)
-	lea		ecx, [ecx+ecx+1]						; Convert to SmallInteger
-	mov		[_SP], ecx								; Overwrite stack top
-	ret
-ENDPRIMITIVE primitiveIdentityHash32
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; _declspec(naked) unsigned long __stdcall hashBytes(const BYTE* chars, int len)

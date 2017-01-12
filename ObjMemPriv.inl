@@ -64,11 +64,6 @@ inline void ObjectMemory::freeSmallChunk(POBJECT pBlock, MWORD size)
 ///////////////////////////////////////////////////////////////////////////////
 // Oop allocation
 
-inline hash_t ObjectMemory::nextIdentityHash()
-{
-	m_nNextIdHash = 1664525L * m_nNextIdHash + 1013904223L;
-	return static_cast<hash_t>(m_nNextIdHash & 0xFFFF);
-}
 inline OTE* __fastcall ObjectMemory::allocateOop(POBJECT pLocation)
 {
 	// OT is globally shared, so access must be in crit section
@@ -90,10 +85,7 @@ inline OTE* __fastcall ObjectMemory::allocateOop(POBJECT pLocation)
 	// Maintain the last used garbage collector mark to speed up collections
 	// Doing this will also reset the free bit and set the pointer bit
 	// so byte allocations will need to reset it
-
-	ote->m_flags = m_spaceOTEBits[OTEFlags::PoolSpace];
-	ASSERT(ote->m_count == 0);
-	ote->m_idHash = nextIdentityHash();
+	ote->m_dwFlags = *reinterpret_cast<BYTE*>(&m_spaceOTEBits[OTEFlags::PoolSpace]);
 
 	return ote;
 }

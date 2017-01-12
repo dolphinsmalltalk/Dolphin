@@ -380,20 +380,15 @@ private:
 		static	unsigned	m_nAllocations;
 	};
 
-	// Object Table entry access routines
-	static OTE& ot(Oop objectPointer);
-
-	static OTE* headOfFreePointerListPut(OTE* ote);
-	static OTE* toFreePointerListAdd(OTE* ote);
-
 	static HRESULT __stdcall allocateOT(unsigned reserve, unsigned commit);
 
 	// Answer the index of the last occuppied OT entry
 	static unsigned __stdcall lastOTEntry();
 
 	static OTE* __fastcall allocateOop(POBJECT pLocation);
+public:
 	static hash_t nextIdentityHash();
-
+private:
 	// Memory allocators - these are very thin layers of C/Win32 heap
 	static void freeChunk(POBJECT pChunk);
 	static void freeSmallChunk(POBJECT pObj, MWORD size);
@@ -439,16 +434,10 @@ private:
 
 	static Oop corpsePointer();
 
-private: 
-	static void scheduleFinalization();
-	static void checkHospiceCrisis();
-
-
 private:
 	// Const obj support - very crude at present
 
 	static void* m_pConstObjs;
-	static BYTE* MakeObjConst(OTE* ote, BYTE*);
 public:
 	static DWORD __stdcall ProtectConstSpace(DWORD dwNewProtect);
 	static bool IsConstObj(void* ptr);
@@ -459,12 +448,9 @@ private:
 
 	static const char ISTHDRTYPE[4];
 
-	static bool __stdcall SavePointers(obinstream& imageFile, const ImageHeader*);
 	static bool __stdcall SaveObjectTable(obinstream& imageFile, const ImageHeader*);
 	static bool __stdcall SaveObjects(obinstream& imageFile, const ImageHeader*);
 	static bool __stdcall SaveImage(obinstream& imageFile, const ImageHeader*, int);
-
-	static void ShowExpiryDialog();
 
 	static HRESULT __stdcall LoadImage(ibinstream& imageFile, ImageHeader*);
 
@@ -1054,6 +1040,12 @@ inline BytesOTE* __fastcall ObjectMemory::newByteObject(BehaviorOTE* classPointe
 inline bool ObjectMemory::IsConstObj(void* ptr)
 {
 	return ptr >= m_pConstObjs && ptr < static_cast<BYTE*>(m_pConstObjs)+dwPageSize;
+}
+
+inline hash_t ObjectMemory::nextIdentityHash()
+{
+	m_nNextIdHash = 1664525L * m_nNextIdHash + 1013904223L;
+	return static_cast<hash_t>(m_nNextIdHash & 0xFFFF);
 }
 
 ///////////////////////////////////////////////////////////////////////////////

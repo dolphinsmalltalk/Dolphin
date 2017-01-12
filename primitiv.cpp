@@ -75,6 +75,28 @@ Oop* __fastcall Interpreter::primitiveSmallIntegerPrintString()
 
 #pragma code_seg(MEM_SEG)
 
+Oop* __fastcall Interpreter::primitiveIdentityHash()
+{
+	Oop* const sp = m_registers.m_stackPointer;
+	OTE* ote = (OTE*)*sp;
+	SMALLINTEGER idHash = ote->m_idHash;
+	if (idHash != 0)
+	{
+		*sp = ObjectMemoryIntegerObjectOf(idHash);
+	}
+	else
+	{
+		do
+		{
+			ote->m_idHash = ObjectMemory::nextIdentityHash();
+		} while (ote->m_idHash == 0);
+		*sp = ObjectMemoryIntegerObjectOf(ote->m_idHash);
+	}
+	return sp;
+}
+
+// Does not use successFlag, and returns a clean stack because can only succeed if
+// argument is a positive SmallInteger
 Oop* __fastcall Interpreter::primitiveResize()
 {
 	Oop integerPointer = stackTop();

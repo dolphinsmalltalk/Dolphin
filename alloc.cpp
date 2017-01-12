@@ -301,7 +301,6 @@ VirtualOTE* ObjectMemory::newVirtualObject(BehaviorOTE* classPointer, MWORD init
 	ote->setSize(byteSize);
 	ote->m_oteClass = classPointer;
 	classPointer->countUp();
-	// We don't want to overwrite the identity hash allocated by allocateOop
 	ote->m_flags = m_spaceOTEBits[OTEFlags::VirtualSpace];
 	ASSERT(ote->isPointers());
 
