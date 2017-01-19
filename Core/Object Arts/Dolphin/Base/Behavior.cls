@@ -745,6 +745,32 @@ recompileReferencesToVarNamed: aString
 					[Notification signal: 'Recompiling ' , m printString.
 					m recompile]]!
 
+referenceFilterFor: anObject
+	"Private - Answer a <monadicValuable> that when evaluated for a <CompiledMethod> answers
+	true if the method references anObject, or false if not."
+
+	| index |
+	anObject isSymbol
+		ifTrue: 
+			[index := VMLibrary default indexOfSpecialSelector: anObject ifAbsent: [0].
+			index ~= 0
+				ifTrue: [^[:each | (each refersToLiteral: anObject) or: [each sendsSpecialSelector: index]]]]
+		ifFalse: 
+			[(anObject isKindOf: VariableBinding)
+				ifTrue: 
+					[| value |
+					value := anObject value.
+					"In the case of constant bindings the value may be inlined in the byte codes if there is a representation."
+					(anObject isImmutable and: [VMLibrary hasBytecodeRepresentation: value])
+						ifTrue: 
+							[| constName |
+							constName := anObject key asString.
+							^[:each | (each refersToLiteral: anObject) or: [each containsSource: constName]]]
+						ifFalse: 
+							["For normal const/var bindings, search for both the binding and the current value of the binding"
+							^[:each | (each refersToLiteral: anObject) or: [each refersToLiteral: value]]]]].
+	^[:each | each refersToLiteral: anObject]!
+
 removeFromSuper
 	"Private - Remove the receiver from its superclasses' subclass collection.
 	Root classes will have a superclass of nil - we do not put such
@@ -1006,29 +1032,7 @@ whichMethodsRead: aString at: anInteger
 whichMethodsReferTo: anObject
 	"Answer a <Set> of methods in the receiver whose literal frames include the argument, anObject."
 
-	| index |
-	anObject isSymbol
-		ifTrue: 
-			[index := VMLibrary default indexOfSpecialSelector: anObject ifAbsent: [0].
-			index ~= 0
-				ifTrue: 
-					[^self
-						selectMethods: [:each | (each refersToLiteral: anObject) or: [each sendsSpecialSelector: index]]]]
-		ifFalse: 
-			[(anObject isKindOf: VariableBinding)
-				ifTrue: 
-					[| value |
-					value := anObject value.
-					"In the case of constant bindings the value may be inlined in the byte codes if there is a representation."
-					(anObject isImmutable and: [VMLibrary hasBytecodeRepresentation: value])
-						ifTrue: 
-							[| constName |
-							constName := anObject key asString.
-							^self selectMethods: [:each | (each refersToLiteral: anObject) or: [each containsSource: constName]]]
-						ifFalse: 
-							["For normal const/var bindings, search for both the binding and the current value of the binding"
-							^self selectMethods: [:each | (each refersToLiteral: anObject) or: [each refersToLiteral: value]]]]].
-	^self selectMethods: [:each | each refersToLiteral: anObject]!
+	^self selectMethods: (self referenceFilterFor: anObject)!
 
 whichSelectorsAccess: aString
 	"Answer a <collection> of <Symbol>s, being the selectors of methods of the receiver
@@ -1171,6 +1175,7 @@ withAllSuperclassesDo: aMonadicValuable
 !Behavior categoriesFor: #recompile:!compiling!development!public! !
 !Behavior categoriesFor: #recompileAll!compiling!development!public! !
 !Behavior categoriesFor: #recompileReferencesToVarNamed:!development!private! !
+!Behavior categoriesFor: #referenceFilterFor:!methods-testing!private! !
 !Behavior categoriesFor: #removeFromSuper!class hierarchy-removing!private! !
 !Behavior categoriesFor: #removeFromSystem!class hierarchy-removing!private! !
 !Behavior categoriesFor: #removeSelector:!methods-removing!public! !

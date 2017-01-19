@@ -570,18 +570,17 @@ byteSize: anInteger
 		ifFalse: [self error: 'Invalid structure size ' , anInteger displayString].
 	self extraInstanceSpec: anInteger!
 
-changedByteSizeFrom: oldByteSize 
-	"Private - If the size of the receiver changes such that it fits into a different
-	type for passing/returning structures by value, then we must recompile
-	all existing referencing methods."
+changedByteSizeFrom: oldByteSize
+	"Private - If the size of the receiver changes such that it fits into a different type for passing
+	/ returning structures by value , then we must recompile all existing referencing methods"
 
 	| newByteSize |
 	newByteSize := self byteSize.
-	(oldByteSize ~= newByteSize and: 
-			[oldByteSize == 0 or: 
-					[(self descriptorClass structTypeForSize: oldByteSize) 
-						~= (self descriptorClass structTypeForSize: newByteSize)]]) 
-		ifTrue: [self recompileReferences]!
+	oldByteSize ~= newByteSize ifFalse: [^self].
+	"Recompile own methods so that they have the correct offsets encoded"
+	(self selectMethods: [:each | each refersToLiteral: #offsetOf:]) do: [:each | each recompile].
+	(self descriptorClass structTypeForSize: oldByteSize)
+		~= (self descriptorClass structTypeForSize: newByteSize) ifTrue: [self recompileReferences]!
 
 clear: addressOrBytes
 	"Finalize an instance of the structure which instances of the receiver wrap
@@ -1007,20 +1006,19 @@ recompileReferences
 	"Private - Recompile all directly referencing external call methods
 	that might need to change if the receiver's size changes."
 
-	| binding |
+	| binding pred |
 	Notification signal: ('Recompiling references to <1d> (size <2d>)...' expandMacrosWith: self
 				with: self basicByteSize).
-	"First recompile own methods so that they have the correct offsets encoded"
-	(self selectMethods: [:each | each refersToLiteral: #offsetOf:]) do: [:each | each recompile].
 	"Then recompile any FFI calls that reference the class in case they are passing/returning by
 	value (the calling conventions vary depending on the structure length), OR any methods that
 	might be using static expressions to get the byte-size."
 	binding := self environment associationAt: self name.
+	pred := self referenceFilterFor: binding.
 	Smalltalk allBehaviorsDo: 
-			[:eachClass | 
-			(eachClass whichMethodsReferTo: binding) do: 
-					[:eachMethod | 
-					(eachMethod isExternalCall or: [eachMethod refersToLiteral: #basicByteSize]) 
+			[:eachClass |
+			(eachClass selectMethods: pred) do: 
+					[:eachMethod |
+					(eachMethod isExternalCall or: [eachMethod refersToLiteral: #basicByteSize])
 						ifTrue: [eachMethod recompile]]]!
 
 register
