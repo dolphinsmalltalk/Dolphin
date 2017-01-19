@@ -294,6 +294,10 @@ private:
 	static void ShrinkZct();
 
 public:
+#ifdef _DEBUG
+	static bool alwaysReconcileOnAdd;
+#endif
+
 	static void __fastcall AddToZct(TOTE<Object>* ote)
 	{
 		HARDASSERT(m_nZctEntries >= 0);

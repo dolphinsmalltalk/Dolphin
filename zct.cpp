@@ -38,7 +38,7 @@ bool ObjectMemory::m_bIsReconcilingZct;
 #ifdef _DEBUG
 static int nDeleted;
 static DWORD dwLastReconcileTicks;
-bool alwaysReconcileOnAdd = true;
+bool ObjectMemory::alwaysReconcileOnAdd = true;
 
 bool ObjectMemory::IsInZct(OTE* ote)
 {
