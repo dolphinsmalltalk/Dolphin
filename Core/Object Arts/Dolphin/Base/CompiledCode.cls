@@ -244,9 +244,9 @@ getSource
 	^self subclassResponsibility!
 
 hash
-	"Answer the <SmallInteger> hash value for the receiver. We use only the selector at the moment."
+	"Answer the <SmallInteger> hash value for the receiver."
 
-	^(selector hash bitShift: 4) bitXor: methodClass hash!
+	^selector identityHash bitXor: methodClass basicIdentityHash!
 
 header
 	^header!
