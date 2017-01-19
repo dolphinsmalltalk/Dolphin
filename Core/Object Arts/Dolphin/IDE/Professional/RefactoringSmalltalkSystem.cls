@@ -1030,32 +1030,36 @@ renameMethodReferences: aCompiledMethod to: anRBMethodName
 				execute;
 				yourself]!
 
-renameTemporary: aStVariableNode to: aString in: aClass selector: aSelector 
+renameTemporary: aStVariableNode to: aString in: aClass selector: aSelector
 	"Rename the temporary variable in the range, anInterval, of the source code of the method of
 	the class, aClass, with selector, aSelector, to aString, or if aString is nil a new
 	temporary variable name chosen by the user. Implements the 'Rename Temporary' refactoring."
 
 	| oldName |
 	oldName := aStVariableNode name.
-	(aString 
+	(aString
 		ifNil: 
 			[| newName |
-			newName := (Prompter 
+			newName := (Prompter
 						createOn: oldName
 						prompt: ('Please enter the new name for <1p>:' expandMacrosWith: oldName)
 						caption: 'Rename Temporary...')
 						validationBlock: 
-								[:name | 
-								self 
+								[:name |
+								
+								[self
 									validateRenameTemp: aStVariableNode
 									to: name
-									in: aClass];
+									in: aClass.
+								true]
+										on: RefactoringError
+										do: [:ex | ex exitWith: false]];
 						showModal.
-			newName]) 
+			newName])
 			ifNotNil: 
-				[:newName | 
+				[:newName |
 				self handleRefactoringException: 
-						[(RenameTemporaryRefactoring 
+						[(RenameTemporaryRefactoring
 							renameTemporaryFrom: aStVariableNode sourceInterval
 							to: newName
 							in: aClass
