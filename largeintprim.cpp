@@ -2322,9 +2322,10 @@ Oop* __fastcall Interpreter::primitiveLargeIntegerAsFloat()
 	const MWORD size = oteReceiver->getWordSize();
 	if (size <= 2)
 	{
-		FloatOTE* oteResult = Float::New(size <= 1 
+		FloatOTE* oteResult = Float::New();
+		oteResult->m_location->m_fValue = size <= 1
 			? static_cast<double>(*reinterpret_cast<SDWORD*>(liReceiver->m_digits)) 
-			: static_cast<double>(*reinterpret_cast<__int64*>(liReceiver->m_digits)));
+			: static_cast<double>(*reinterpret_cast<__int64*>(liReceiver->m_digits));
 		*sp = reinterpret_cast<Oop>(oteResult);
 		ObjectMemory::AddToZct(reinterpret_cast<OTE*>(oteResult));
 		return sp;

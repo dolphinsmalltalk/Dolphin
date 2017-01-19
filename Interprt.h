@@ -612,6 +612,7 @@ private:
 	//static Oop* __fastcall primitiveBecome();
 
 	// Object Memory primitives
+	static Oop* __fastcall primitiveBasicIdentityHash();
 	static Oop* __fastcall primitiveIdentityHash();
 	static Oop* __fastcall primitiveAllReferences(CompiledMethod&, unsigned argumentCount);
 	static Oop* __fastcall primitiveAllInstances();

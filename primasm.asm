@@ -376,6 +376,8 @@ extern primitiveMillisecondClockValue:near32
 primitiveMicrosecondClockValue EQU  ?primitiveMicrosecondClockValue@Interpreter@@CIPAIXZ
 extern primitiveMicrosecondClockValue:near32
 
+primitiveBasicIdentityHash EQU ?primitiveBasicIdentityHash@Interpreter@@CIPAIXZ
+extern primitiveBasicIdentityHash:near32
 primitiveIdentityHash EQU ?primitiveIdentityHash@Interpreter@@CIPAIXZ
 extern primitiveIdentityHash:near32
 
@@ -459,7 +461,7 @@ DWORD		primitiveNewWithArg								; case 71
 DWORD		primitiveBecome									; case 72
 DWORD		primitiveInstVarAt								; case 73
 DWORD		primitiveInstVarAtPut							; case 74
-DWORD		primitiveIdentityHash							; case 75	Object>>hash, Object>>identityHash, Symbol>>hash
+DWORD		primitiveBasicIdentityHash						; case 75	Object>>basicIdentityHash
 DWORD		primitiveNewWithArg								; case 76	Will be primitiveNewFixed:
 DWORD		primitiveAllInstances							; case 77	was Behavior>>someInstance
 DWORD		primitiveReturn									; case 78	was Object>>nextInstance
@@ -534,7 +536,7 @@ DWORD		primitiveIndirectReplaceBytes					; case 143
 DWORD		primitiveNextSDWORD								; case 144
 DWORD		primitiveAnyMask								; case 145
 DWORD		primitiveAllMask								; case 146
-DWORD		unusedPrimitive									; case 147
+DWORD		primitiveIdentityHash							; case 147
 DWORD		primitiveLookupMethod							; case 148
 DWORD		PRIMSTRINGSEARCH								; case 149
 DWORD		primitiveUnwindInterruptThunk					; case 150

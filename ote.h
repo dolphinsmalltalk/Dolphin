@@ -121,6 +121,15 @@ public:
 	__forceinline BYTE getFlagsByte() const					{ return *reinterpret_cast<const BYTE*>(&m_dwFlags); }
 	__forceinline bool flagsAllMask(BYTE mask) const		{ return (getFlagsByte() & mask) == mask; }
 
+	hash_t identityHash()
+	{
+		while (m_idHash == 0)
+		{
+			m_idHash = ObjectMemory::nextIdentityHash();
+		}
+		return m_idHash;
+	}
+
 public:
 	T*				m_location;					// Pointer to array of elements which is the object
 	BehaviorOTE*	m_oteClass;					// Class Oop

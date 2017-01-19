@@ -47,8 +47,6 @@ static Oop* AnswerNewInterfacePointer(BehaviorOTE* oteClass, IUnknown* punk)
 	return sp;
 }
 
-// Answer an array of allInstances of the receiver.
-// Fails if receiver is not a Class/MetaClass
 Oop* __fastcall Interpreter::primitiveVariantValue()
 {
 	Oop* const sp = m_registers.m_stackPointer;
