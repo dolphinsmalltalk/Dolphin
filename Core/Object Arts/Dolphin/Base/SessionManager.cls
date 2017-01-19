@@ -372,7 +372,7 @@ initialize
 	Answer the receiver."
 
 	state := 6.
-	servers := SharedIdentitySet new.
+	servers := nil.
 	imagePath := '.\Dolphin'.
 	^self!
 

@@ -170,11 +170,6 @@ hash
 
 	^self asInteger!
 
-identityHash
-	"Answer the <integer> identity hash value for the receiver."
-
-	^self asInteger!
-
 isAlphaNumeric
 	"Answer whether the receiver is a letter or a digit."
 
@@ -336,7 +331,6 @@ species
 !Character categoriesFor: #digitValue!accessing!public! !
 !Character categoriesFor: #displayOn:!printing!public! !
 !Character categoriesFor: #hash!comparing!public! !
-!Character categoriesFor: #identityHash!comparing!public! !
 !Character categoriesFor: #isAlphaNumeric!public!testing! !
 !Character categoriesFor: #isAtomic!public!testing! !
 !Character categoriesFor: #isControl!public!testing! !

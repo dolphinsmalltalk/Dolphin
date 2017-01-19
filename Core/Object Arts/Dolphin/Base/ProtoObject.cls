@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 nil subclass: #ProtoObject
 	instanceVariableNames: ''
@@ -40,6 +40,16 @@ basicClass
 	"Answer the class of the receiver. The primitive should not fail."
 
 	<primitive: 111>
+	^self primitiveFailed!
+
+basicIdentityHash
+	"Answer the <integer> identity hash value for the receiver. This is
+	currently a 16-bit SmallInteger value, which is always positive. The value is a pseudo-random number 
+	assigned on first request, and it never changes (i.e. it is temporally 
+	invariant). Because the range is limited to 16-bits, very large collections 
+	hashed by identity using this value alone may be slow to access."
+
+	<primitive: 75>
 	^self primitiveFailed!
 
 basicPrintOn: aStream
@@ -108,33 +118,13 @@ error: signalerText
 	^Error signal: signalerText!
 
 identityHash
-	"Answer the <integer> identity hash value for the receiver. This is
-	currently a 16-bit SmallInteger value, which may be negative.
-	This value is assigned when the object is created, and never changes
-	(i.e. it is temporally invariant). Because the range is limited
-	to 16-bits, very large collections hashed by identity using this value
-	alone are likely to be slow (consider including the identityHash of
-	the objects class e.g. 
-		^((self class identityHash bitAnd: 16r3FFFFFFF) bitShift: 16) 
-			bitOr: self identityHash
-		or: <primitive: 147> which is similar.
-	However, this would not be safe in general, because #become: and #becomeA:
-	might change an object's class, because it is not associated with the
-	identity, but the object itself.
+	"Answer the <integer> identity hash value for the receiver. Be aware that this is based on a
+	16-bit integer randomly generated for each object on first request, so there are only 65536
+	unique values. The 16-bit hash is scaled to 30-bits to avoid closely grouped objects in large
+	hashed collections with internal overflow causing extremely poor performance. See
+	#basicIdentityHash for further details."
 
-	Although this implementation is temporally invariant while an object remains
-	in memory, a binary filed object is re-incarnated with a different identity,
-	and so identity hash collections must be rebuilt or rehashed on load (the 
-	standard Collections do this already).
-
-	This need not be reimplemented (except by immediate subclasses), because 
-	it is not possible to override #==, indeed reimplementation is jolly unwise.
-	
-	N.B. The primitive does not fail, but will raise a benign invalid memory access 
-	exception if called for immediate subclasses such as SmallInteger."
-	
-	<primitive: 75>
-	^self primitiveFailed!
+	^self basicIdentityHash bitShift: 14!
 
 instVarAt: index
 	"Private - Answer a variable in the receiver. The numbering of the variables begins with 
@@ -196,6 +186,7 @@ primitiveFailed
 !ProtoObject categoriesFor: #==!comparing!public! !
 !ProtoObject categoriesFor: #allReferences!enumerating!public! !
 !ProtoObject categoriesFor: #basicClass!accessing!public! !
+!ProtoObject categoriesFor: #basicIdentityHash!comparing!public! !
 !ProtoObject categoriesFor: #basicPrintOn:!printing!public! !
 !ProtoObject categoriesFor: #basicPrintString!printing!public! !
 !ProtoObject categoriesFor: #basicSize!accessing!private! !

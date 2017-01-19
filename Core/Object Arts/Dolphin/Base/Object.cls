@@ -261,6 +261,36 @@ basicDoesNotUnderstand: failedMessage
 
 	^MessageNotUnderstood receiver: self message: failedMessage!
 
+basicIdentityHash
+	"Answer the <integer> identity hash value for the receiver. This is
+	currently a 16-bit SmallInteger value, which is always positive (although
+	note that SmallInteger's override this implementation to answer 
+	themselves and hence an arbitrary object's identity hash is only 
+	guaranteed to be an integer). The value is a pseudo-random number 
+	assigned on first request, and it never changes (i.e. it is temporally 
+	invariant). Because the range is limited to 16-bits, very large collections 
+	hashed by identity using this value alone may be slow to access. One could 
+	consider including the identityHash of the objects class e.g. 
+		^((self class basicIdentityHash bitAnd: 16r3FFFFFFF) bitShift: 16) 
+			bitOr: self basicIdentityHash
+	However, this would not be safe in general, because #become: and #becomeA:
+	might change an object's class, (an object's class is an attribute of the object
+	not it's identity).
+
+	Although this implementation is temporally invariant while an object remains
+	in memory, a binary filed object is re-incarnated with a different identity,
+	and so identity hash collections must be rebuilt or rehashed on load (the 
+	standard Collections do this already).
+
+	This need not be reimplemented (except by immediate subclasses), because 
+	it is not possible to override #==, indeed reimplementation is jolly unwise.
+	
+	N.B. The primitive does not fail, but will raise a benign invalid memory access 
+	exception if called for immediate subclasses such as SmallInteger."
+	
+	<primitive: 75>
+	^self primitiveFailed!
+
 basicIdentityIndexOf: anElement from: start to: stop
 	"Private - Answer the index of the next occurrence of anElement in the receiver's indexable
 	variables between startIndex and stopIndex inclusive. If there are no such occurrences, answer 0.
@@ -691,20 +721,19 @@ getSpecialBehavior
 	^self setSpecialBehavior: _GetSpecialMask!
 
 hash
-	"Answer the <integer> hash value for the receiver. By default use the identity hash
-	assigned at object creation time, which is temporally invariant.
+	"Answer the <integer> hash value for the receiver. By default use the identity hash assigned
+	at object creation time, which is temporally invariant. See #identityHash for more details.
 
-	Equivalent objects (i.e. those that answer true for #=) MUST
-	answer the same hash value, in order that they can be stored and
-	retrieved successfully from hashed collections. Therefore, classes 
-	which reimplement either #= or #hash, will probably need to 
-	reimplement both.
+	Equivalent objects (i.e. those that answer true for #=) MUST answer the same hash value,
+	in order that they can be stored and retrieved successfully from hashed collections.
+	Therefore, classes which reimplement either #= or #hash, will probably need to reimplement
+	both.
 
-	N.B. The primitive does not fail, but will raise an invalid memory access 
-	exception if called for immediate subclasses such as SmallInteger."
-	
-	<primitive: 75>
-	^self primitiveFailed!
+	N.B. The primitive does not fail, but will raise an invalid memory access exception if
+	called for immediate subclasses such as SmallInteger."
+
+	<primitive: 147>
+	^self identityHash!
 
 icon
 	"Answer an Icon representing the receiver."
@@ -715,35 +744,14 @@ iconImageIndex
 	^self icon imageIndex!
 
 identityHash
-	"Answer the <integer> identity hash value for the receiver. This is
-	currently a 16-bit SmallInteger value, which is always positive (although
-	note that SmallInteger's override this implementation to answer 
-	themselves and hence an arbitrary object's identity hash is only 
-	guaranteed to be an integer). The value is a pseudo-random number 
-	assigned when the object is created, and it never changes (i.e. it is temporally 
-	invariant). Because the range is limited to 16-bits, very large collections 
-	hashed by identity using this value alone are likely to be slow. One could 
-	consider including the identityHash of the objects class e.g. 
-		^((self class identityHash bitAnd: 16r3FFFFFFF) bitShift: 16) 
-			bitOr: self identityHash
-		or: <primitive: 147> which is similar.
-	However, this would not be safe in general, because #become: and #becomeA:
-	might change an object's class, (an object's class is an attribute of the object
-	not it's identity).
-
-	Although this implementation is temporally invariant while an object remains
-	in memory, a binary filed object is re-incarnated with a different identity,
-	and so identity hash collections must be rebuilt or rehashed on load (the 
-	standard Collections do this already).
-
-	This need not be reimplemented (except by immediate subclasses), because 
-	it is not possible to override #==, indeed reimplementation is jolly unwise.
+	"Answer the <integer> identity hash value for the receiver. Be aware that this is based on a
+	16-bit integer randomly generated for each object on first request, so there are only 65536
+	unique values. The hash is scaled to a 30-bit positive SmallInteger to avoid closely grouped
+	objects in large hashed collections with internal overflow, which causes extremely poor
+	performance. See #basicIdentityHash for further details."
 	
-	N.B. The primitive does not fail, but will raise a benign invalid memory access 
-	exception if called for immediate subclasses such as SmallInteger."
-	
-	<primitive: 75>
-	^self primitiveFailed!
+	<primitive: 147>
+	^self basicIdentityHash bitShift: 14!
 
 ifNil: nilBlock 
 	"If the receiver is the nil object, then answer the result of evaluating the
@@ -1531,6 +1539,7 @@ yourself
 !Object categoriesFor: #basicAt:put:!accessing!private! !
 !Object categoriesFor: #basicClass!accessing!public! !
 !Object categoriesFor: #basicDoesNotUnderstand:!exceptions!public! !
+!Object categoriesFor: #basicIdentityHash!comparing!public! !
 !Object categoriesFor: #basicIdentityIndexOf:from:to:!private!searching! !
 !Object categoriesFor: #basicPrintOn:!printing!public! !
 !Object categoriesFor: #basicPrintString!printing!public! !

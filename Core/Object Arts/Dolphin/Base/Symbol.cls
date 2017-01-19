@@ -85,14 +85,11 @@ forwardTo: anObject
 	^anObject perform: self!
 
 hash
-	"Answer the <integer> hash value for the receiver.
-	Override back to the 16-bit identity hash which is temporally invariant,
-	and very fast to calculate).
-	The primitve should not fail (but must not be used for immediate objects).
-	N.B. It is critical that this implementation is not changed."
+	"Answer the <integer> hash value for the receiver. Override back to the identity hash (which
+	is temporally invariant, and very fast to calculate)."
 
-	<primitive: 75>
-	^self primitiveFailed!
+	<primitive: 147>
+	^self identityHash!
 
 initialiseFrom: aString
 	"Private - Initialize the receiver to contain the characters of aString.

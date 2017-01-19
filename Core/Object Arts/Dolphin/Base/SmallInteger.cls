@@ -174,6 +174,14 @@ basicAt: index put: value
 
 	^self shouldNotImplement!
 
+basicIdentityHash
+	"Answer the <integer> identity hash value for the receiver (itself)."
+
+	"Implementation Note: We must override because the identity hash primitives do not work for
+	immediate objects."
+
+	^self!
+
 basicShallowCopy
 	"SmallIntegers have an immediate representation - i.e. they have only
 	one representation for a particular value - and are immutable."
@@ -297,8 +305,8 @@ highBit
 identityHash
 	"Answer the <integer> identity hash value for the receiver (itself)."
 
-	"Implementation Note: We must override because the identity hash primitive does not work
-	for immediate objects."
+	"Implementation Note: We must override because the identity hash primitives do not work for
+	immediate objects."
 
 	^self!
 
@@ -446,6 +454,7 @@ yourAddress
 !SmallInteger categoriesFor: #asFloat!converting!public! !
 !SmallInteger categoriesFor: #basicAt:!accessing!private! !
 !SmallInteger categoriesFor: #basicAt:put:!accessing!private! !
+!SmallInteger categoriesFor: #basicIdentityHash!comparing!public! !
 !SmallInteger categoriesFor: #basicShallowCopy!copying!public! !
 !SmallInteger categoriesFor: #basicSize!accessing!private! !
 !SmallInteger categoriesFor: #basicYourAddress!accessing!private! !
