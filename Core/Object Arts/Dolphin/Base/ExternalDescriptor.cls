@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object variableSubclass: #ExternalDescriptor
 	instanceVariableNames: 'descriptor'
@@ -591,14 +591,13 @@ sizeOf: anInteger type: aClass
 		ifTrue: [aClass byteSize]
 		ifFalse: [TypeSizes at: anInteger + 1]!
 
-structTypeForSize: anInteger 
-	"Private - Answer the structure type to use for structures of the
-	specified byte size."
+structTypeForSize: anInteger
+	"Private - Answer the structure type to use for structures of the specified byte size."
 
-	^anInteger <= 8 
+	anInteger <= 8
 		ifTrue: 
-			[anInteger <= 4 ifTrue: [ExtCallArgSTRUCT4] ifFalse: [ExtCallArgSTRUCT8]]
-		ifFalse: [ExtCallArgSTRUCT]!
+			[anInteger <= 4 ifTrue: [anInteger > 0 ifTrue: [^ExtCallArgSTRUCT4]] ifFalse: [^ExtCallArgSTRUCT8]].
+	^ExtCallArgSTRUCT!
 
 typeFromName: typeName
 	"Answer the type code for the specified <readableString> type name."

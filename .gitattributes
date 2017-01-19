@@ -12,3 +12,8 @@
 *.pax eol=crlf
 *.st  eol=crlf
 *.cls eol=crlf 
+
+*.cls linguist-language=Smalltalk
+*.st linguist-language=Smalltalk
+*.pax linguist-language=Smalltalk
+
