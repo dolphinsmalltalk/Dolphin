@@ -2,6 +2,18 @@
 
 Package manager systemPackage removeGlobalNamed: #STBPrefixConstants!
 ClassLocator.ImportedClasses := nil!
+!ClassLocator class methodsFor!
+
+isImportedClass: aClass
+	^ImportedClasses notNil and: [ImportedClasses identityIncludes: aClass]! !
+!ClassLocator class categoriesFor: #isImportedClass:!public!testing! !
+!Package methodsFor!
+
+isImportedClass: aClass
+	"Private - Answer true if aClass is an imported binary class"
+
+	^ClassLocator isImportedClass: aClass! !
+!Package categoriesFor: #isImportedClass:!private!testing! !
 
 "Switch to new identity hash - which is tricky"!
 
