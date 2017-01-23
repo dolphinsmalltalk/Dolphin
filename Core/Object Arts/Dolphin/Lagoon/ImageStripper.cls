@@ -167,9 +167,7 @@ buildManifest: assemblyNameString description: assemblyDescriptionString version
 	^manifest contents!
 
 buildMessageMap
-	^self referencesFromObjectsInClasses: ((Class allClasses)
-				removeAll: ImageStripper withAllSubclasses;
-				yourself)!
+	^self referencesFromObjectsInClasses: (Class allClasses difference: ImageStripper withAllSubclasses).!
 
 buildPreservedMessages
 	"Private - Build the set of all the message selectors that are to be preserved
