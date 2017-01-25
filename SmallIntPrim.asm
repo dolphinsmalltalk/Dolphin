@@ -763,16 +763,16 @@ arithmeticBitShift:
 
 	; Perform a left shift (more tricky sadly because of overflow detection)
 
-	cmp		ecx, 30							; We can't shift more than 30 places this way
+	sub		eax, 1							; Remove SmallInteger sign bit
+	jz		@F								; If receiver is zero, then result always zero
+
+	cmp		ecx, 30							; We can't shift more than 30 places this way, since receiver not zero
 	jge		bsLocalPrimitiveFailure1
 
 	; To avoid using a loop, we use the double precision shift first
 	; to detect potential overflow.
 	; This overflow check works, but is slow (about 12 cycles)
 	; since the majority of shifts are <= 16, perhaps should loop?
-	sub		eax, 1							; Remove SmallInteger sign bit
-	jz		@F								; If receiver is zero, then result always zero
-
 	push 	_BP								; We must preserve _BP
 	sar		edx, 31							; Sign extend part 2
 	inc		ecx								; Need to check space for sign too
