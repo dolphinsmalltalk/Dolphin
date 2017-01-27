@@ -51,13 +51,6 @@ allClasses
 						yourself].
 	^allClasses!
 
-allClassesDo: operation
-	"Private - Evaluate the monadic valuable, operation, for each of the classes in the system.
-	N.B. No guarantee is made about ordering, except that the block is evaluated
-	for a subclass after its superclass."
-
-	self allClasses do: operation!
-
 allRoots
 	"Answer a <sequencedReadableCollection> of all global root classes - ie. those that are subclasses of nil."
 
@@ -226,7 +219,6 @@ triggerGlobalRenamed: anAssociation from: oldSymbol
 !SystemDictionary categoriesFor: #allBehaviors!class hierarchy-accessing!private! !
 !SystemDictionary categoriesFor: #allBehaviorsDo:!enumerating!private! !
 !SystemDictionary categoriesFor: #allClasses!accessing!public! !
-!SystemDictionary categoriesFor: #allClassesDo:!enumerating!private! !
 !SystemDictionary categoriesFor: #allRoots!accessing!public! !
 !SystemDictionary categoriesFor: #associationAt:ifAbsent:!accessing!public! !
 !SystemDictionary categoriesFor: #associationClass!constants!private! !

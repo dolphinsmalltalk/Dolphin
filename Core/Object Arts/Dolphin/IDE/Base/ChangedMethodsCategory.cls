@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 VirtualMethodCategory subclass: #ChangedMethodsCategory
 	instanceVariableNames: ''
@@ -13,7 +13,7 @@ Although this class is strictly redundant (it being implementable as a Pluggable
 !ChangedMethodsCategory methodsFor!
 
 behaviorsDo: aMonadicValuable 
-	self class environment allClassesDo: 
+	self class environment allClasses do: 
 			[:each | 
 			each isChanged 
 				ifTrue: 

@@ -2195,20 +2195,20 @@ uninstallClasses
 	just affirm. The outer handler needs to resume with true in order to actually go ahead
 	and remove the class, otherwise the class will be "
 
-	| classes empty |
+	| classes |
 	classes := self remainingClasses.
 
 	"Remove classes, bottom up so as to remove subclasses first"
 	classes := classes asSortedCollection: [:a :b | (self depthOfClass: a) > (self depthOfClass: b)].
 	classes do: 
-			[:aClass | 
+			[:aClass |
 			"Notification signal: 'Removing class ', aClass name."
-			[ClassBuilder removeClass: aClass ignoreInstances: true] 
+			[ClassBuilder removeClass: aClass ignoreInstances: true]
 				on: ClassBuilder invalidRemoveError
 				do: 
-					[:e | 
+					[:e |
 					e notify.
-					e isNested 
+					e isNested
 						ifTrue: 
 							["Remember that global Error trap will also count as nest"
 							e outer == true ifFalse: [e return]].
@@ -2216,19 +2216,18 @@ uninstallClasses
 					e resume]
 				on: Error
 				do: 
-					[:ignoredException | 
+					[:ignoredException |
 					ignoredException notify
 					"aClass allInstances do: [:e | Notification signal: e allReferences printString]"]].
 
 	"If having difficulty tracking down the source of an image stripping problem which is
 	 keeping references to uninstalled packaged classes, then try commenting in this code."
-	empty := MethodDictionary new.
 	classes do: 
-			[:aClass | 
-			(aClass environment includesKey: aClass name) 
+			[:aClass |
+			(aClass environment includesKey: aClass name)
 				ifFalse: 
-					[aClass class methodDictionary: empty.
-					aClass methodDictionary: empty]]!
+					[aClass class methodDictionary: nil.
+					aClass methodDictionary: nil]]!
 
 uninstallGlobals
 	"Private - Uninstall the globals owned by the receiver. Should be done before classes 

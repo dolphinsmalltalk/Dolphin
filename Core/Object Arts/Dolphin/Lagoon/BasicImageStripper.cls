@@ -137,31 +137,6 @@ foldDuplicateStringsNotifying: notifier
 		folded: a first - a second
 		total: a first!
 
-foldEmptyMethodDictionariesNotifying: notifier 
-	"Private - For each class with an empty method dictionary, share a single empty
-	method dictionary. This is not safe if the application adds new methods at runtime."
-
-	| count empty total |
-	self stripEmptyMethodDictionaries ifFalse: [^self].
-	empty := MethodDictionary new.
-	count := total := 0.
-	"Note: Need breadth-first order, so use #allClasses"
-	Class allClassesDo: 
-			[:each | 
-			total := total + 2.
-			each methodDictionary isEmpty 
-				ifTrue: 
-					[count := count + 1.
-					each methodDictionary: empty].
-			each class methodDictionary isEmpty 
-				ifTrue: 
-					[count := count + 1.
-					each class methodDictionary: empty]].
-	self 
-		logFold: 'FoldEmptyMethodDictionaries'
-		folded: count
-		total: total!
-
 prepareExternalStructuresNotifying: notifier 
 	"Private - Fully compile all ExternalStructure subclasses if required. They must already
 	have fully defined templates."
@@ -188,16 +163,14 @@ prepareExternalStructuresNotifying: notifier
 	self 
 		finishedWithAll: #(#compileExternalStructures #compileExternalStructures: #compileExternalStructuresNotifying: #defineExternalStructuresNotifying: #prepareExternalStructuresNotifying:)!
 
-purgeStubbornClass: aClass notifying: notifier 
+purgeStubbornClass: aClass notifying: notifier
 	"Private - Remove what we can of a stubborn class that refuses to uninstall for some reason."
 
-	| empty |
 	self emptyMethodDictionariesOfStubbornClasses ifFalse: [^self].
 	Notification signal: 'Purging class ' , aClass name.
 	aClass clearGuid.
-	empty := MethodDictionary new.
-	aClass class methodDictionary: empty.
-	aClass methodDictionary: empty!
+	aClass class methodDictionary: nil.
+	aClass methodDictionary: nil!
 
 removeClass: aClass notifying: notifier 
 	"Private - Removes aClass from the image. Answer the number of classes that
@@ -595,7 +568,6 @@ stripSystemDictionaryNotifying: notifier
 !BasicImageStripper categoriesFor: #destroyAndRemoveProgressNotifying:!operations!private! !
 !BasicImageStripper categoriesFor: #foldDuplicateBytecodesNotifying:!operations!private! !
 !BasicImageStripper categoriesFor: #foldDuplicateStringsNotifying:!operations!private! !
-!BasicImageStripper categoriesFor: #foldEmptyMethodDictionariesNotifying:!operations!private! !
 !BasicImageStripper categoriesFor: #prepareExternalStructuresNotifying:!operations!private! !
 !BasicImageStripper categoriesFor: #purgeStubbornClass:notifying:!operations!private! !
 !BasicImageStripper categoriesFor: #removeClass:notifying:!helpers!private! !

@@ -166,12 +166,10 @@ createProper
 	| metaSuperclass newMetaclass |
 	metaSuperclass := self class classOf: superclass.
 	(newMetaclass := Metaclass new)
-		methodDictionary: MethodDictionary new;
 		instanceSpec: metaSuperclass instanceSpec;
 		superclass: metaSuperclass.
 
 	(currentClass := newMetaclass new)
-		methodDictionary: MethodDictionary new;
 		instanceSpec: instanceSpec;
 		setName: className asSymbol;
 		setSuperclass: superclass.
