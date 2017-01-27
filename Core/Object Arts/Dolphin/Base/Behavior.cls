@@ -2,7 +2,7 @@
 
 Object subclass: #Behavior
 	instanceVariableNames: 'superclass methodDictionary instanceSpec subclasses'
-	classVariableNames: ''
+	classVariableNames: '_NullMethodDictionary'
 	poolDictionaries: '_BehaviorMasks'
 	classInstanceVariableNames: ''!
 Behavior guid: (GUID fromString: '{87B4C459-026E-11D3-9FD7-00A0CC3E4A32}')!
@@ -47,7 +47,7 @@ Behavior implements the ANSI protocols <Object>, <classDescription>, <instantiat
 !Behavior categoriesForClass!Kernel-Classes! !
 !Behavior methodsFor!
 
-addSelector: aSymbol withMethod: aCompiledMethod 
+addSelector: aSymbol withMethod: aCompiledMethod
 	"Private - Add the message selector, aSymbol, with the corresponding
 	CompiledMethod, to the receiver's method dictionary.
 	Implementation Note: Clears down the VM method cache in case a previous 
@@ -58,7 +58,8 @@ addSelector: aSymbol withMethod: aCompiledMethod
 	aCompiledMethod
 		methodClass: self;
 		selector: selector.
-	methodDictionary at: selector put: aCompiledMethod.
+	(methodDictionary ifNil: [methodDictionary := MethodDictionary new]) at: selector
+		put: aCompiledMethod.
 
 	"One might expect to be able to trigger a #methodAdded: event here,
 	 to be symetrical with Behavior>>removeSelector:. However, the 
@@ -233,29 +234,32 @@ basicCompile: aString
 
 	^self basicCompile: aString flags: self defaultCompilationFlags!
 
-basicCompile: aString flags: anInteger 
+basicCompile: aString flags: anInteger
 	| error result stubMethod |
 	result := error := stubMethod := nil.
 	
-	[result := self compilerClass 
+	[result := self compilerClass
 				compile: aString
 				in: self
-				flags: anInteger] 
+				flags: anInteger]
 			on: self compilerClass errorClass
 			do: 
-				[:n | 
+				[:n |
 				error := n.
 				stubMethod := (MethodCompileFailed with: n) signal: n description.
 				n pass].
 	error notNil ifTrue: [result := stubMethod].
-	result notNil 
+	result notNil
 		ifTrue: 
-			[| selector method oldMethod |
+			[| selector method |
 			method := result method.
 			selector := method selector asSymbol.
-			oldMethod := methodDictionary at: selector ifAbsent: [].
-			result oldMethod: oldMethod.
-			oldMethod ifNotNil: [method isPrivate: oldMethod isPrivate].
+			methodDictionary
+				ifNotNil: 
+					[| oldMethod |
+					oldMethod := methodDictionary at: selector ifAbsent: [].
+					result oldMethod: oldMethod.
+					oldMethod ifNotNil: [method isPrivate: oldMethod isPrivate]].
 			self addSelector: selector withMethod: method.
 			method
 				storeSourceString: aString asString;
@@ -336,14 +340,14 @@ compiledMethodAt: aSymbol
 	"Answer the compiled method associated with the selector argument, aSymbol, in 
 	the receiver's local method dictionary. Report an error if the selector cannot be found."
 
-	^methodDictionary at: aSymbol!
+	^methodDictionary ?? _NullMethodDictionary at: aSymbol!
 
 compiledMethodAt: aSymbol ifAbsent: aNiladicValuable
 	"Answer the compiled method associated with the selector argument, aSymbol, in 
 	the receiver's local method dictionary, or the result of evaluating the niladic
 	valuable argument if the selector can not be found."
 
-	^methodDictionary at: aSymbol ifAbsent: aNiladicValuable!
+	^methodDictionary ?? _NullMethodDictionary at: aSymbol ifAbsent: aNiladicValuable!
 
 compilerClass
 	"Answer the default Compiler class to use for compiling methods, etc, of the
@@ -435,8 +439,7 @@ hasImmediateInstances
 hasMethods
 	"Answer whether the receiver has any methods in its local method dictionary."
 
-	^methodDictionary size ~= 0
-!
+	^methodDictionary notNil and: [methodDictionary size > 0]!
 
 includesBehavior: aBehavior
 	"Answer whether the receiver includes the behavior, aBehavior
@@ -449,7 +452,7 @@ includesSelector: aSymbol
 	"Answer whether the local method dictionary contains a method whose
 	selector is the argument, aSymbol."
 
-	^methodDictionary includesKey: aSymbol!
+	^methodDictionary notNil and: [methodDictionary includesKey: aSymbol]!
 
 inheritsFrom: aClass
 	"Answer whether the receiver is a subclass of aClass.
@@ -598,14 +601,15 @@ makeMourner
 methodDictionary
 	"Private - Answer the receiver's <MethodDictionary>."
 
-	^methodDictionary!
+	^methodDictionary ?? _NullMethodDictionary!
 
 methodDictionary: aMethodDictionary
 	"Private - Store the <MethodDictionary> argument as the method dictionary of the receiver.
 	Incorrect use of this method (e.g. with an argument which is not a <MethodDictionary>)
 	can cause unexpected behavior of the VM)."
 
-	methodDictionary := aMethodDictionary!
+	methodDictionary := (aMethodDictionary isNil or: [aMethodDictionary isEmpty])
+				ifFalse: [aMethodDictionary]!
 
 name
 	"Answer a <readableString> that is the name of the receiver."
@@ -798,8 +802,9 @@ removeSelector: aSymbol ifAbsent: aNiladicValuable
 	The #methodRemoved: event is triggered to inform interested parties."
 
 	| method |
-	method := methodDictionary removeKey: aSymbol
-				ifAbsent: [^aNiladicValuable value].
+	(methodDictionary isNil or: [(method := methodDictionary removeKey: aSymbol ifAbsent: []) isNil])
+		ifTrue: [^aNiladicValuable value].
+	methodDictionary isEmpty ifTrue: [methodDictionary := nil].
 	self flushMethodCache.
 	self environment trigger: #methodRemoved: with: method.
 	^method!
@@ -811,10 +816,11 @@ removeSelectors: aCollection
 	removed."
 
 	| methods env |
-
+	methodDictionary ifNil: [^#()].
 	"Take advantage of the fact that Sets ignores requests to add nil"
 	methods := aCollection asSet 
 				collect: [:each | methodDictionary removeKey: each ifAbsent: []].
+	methodDictionary isEmpty ifTrue: [methodDictionary := nil].
 	self flushMethodCache.
 	env := self environment.
 	methods do: [:each | env trigger: #methodRemoved: with: each].
@@ -854,8 +860,7 @@ selectors
 	"Answer a <Set> of <Symbol>s, being all the selectors of all the methods
 	in the receiver."
 
-	^methodDictionary keys
-!
+	^(methodDictionary ?? _NullMethodDictionary) keys!
 
 setShapeFlags: anIntegerMask to: aBoolean
 	"Private - Set/Reset the receivers shape/structure flags (as defined by anIntegerMask)
@@ -1231,6 +1236,13 @@ Behavior methodProtocol: #'Object class' attributes: #(#ansi #readOnly) selector
 icon
 	"Answers an Icon that can be used to represent this class."
 
-	^Class icon! !
+	^Class icon!
+
+initialize
+	self addClassConstant: '_NullMethodDictionary'
+		value: ((MethodDictionary new)
+				isImmutable: true;
+				yourself)! !
 !Behavior class categoriesFor: #icon!constants!public! !
+!Behavior class categoriesFor: #initialize!development!initializing!public! !
 

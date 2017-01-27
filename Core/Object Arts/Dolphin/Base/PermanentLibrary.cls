@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ExternalLibrary subclass: #PermanentLibrary
 	instanceVariableNames: ''
@@ -49,7 +49,7 @@ onStartup
 	may get called."
 
 	KernelLibrary clear.			"This has to be opened first"
-	self allSubclasses do: [:s |
+	self allSubclassesDo: [:s |
 		s == KernelLibrary ifFalse: [s clear]]!
 
 onStartup2
@@ -58,7 +58,7 @@ onStartup2
 	before they are re-opened, otherwise invalid function addresses
 	may get called."
 
-	self allSubclasses do: [:c | c openDefault]! !
+	self allSubclassesDo: [:c | c openDefault]! !
 !PermanentLibrary class categoriesFor: #clear!initializing!private! !
 !PermanentLibrary class categoriesFor: #closeDefault!private!realizing/unrealizing! !
 !PermanentLibrary class categoriesFor: #default!accessing!public! !

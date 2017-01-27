@@ -17,7 +17,7 @@ Object subclass: #AttributeDescriptor
 	classInstanceVariableNames: ''!
 Object subclass: #Behavior
 	instanceVariableNames: 'superclass methodDictionary instanceSpec subclasses'
-	classVariableNames: ''
+	classVariableNames: '_NullMethodDictionary'
 	poolDictionaries: '_BehaviorMasks'
 	classInstanceVariableNames: ''!
 Object variableSubclass: #BlockClosure

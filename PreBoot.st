@@ -77,3 +77,9 @@ m := Symbol basicCompile: 'hash ^self identityHash'.
 st rehash!
 
 Set allSubinstances do: [:each | each size > 0 ifTrue: [each rehash]]!
+
+"Behavior.methodDictionary can now be nil"
+Behavior addClassConstant: '_NullMethodDictionary'
+		value: ((MethodDictionary new)
+				isImmutable: true;
+				yourself)!

@@ -188,7 +188,7 @@ compressChangesOf: aClass onto: aSourceFiler
 				changeIndexValue: [0]]!
 
 compressChangesOnto: aSourceFiler 
-	self class environment allClassesDo: [:each | self compressChangesOf: each onto: aSourceFiler].
+	self class environment allClasses do: [:each | self compressChangesOf: each onto: aSourceFiler].
 	Package manager packages do: 
 			[:each | 
 			(self sourceIndexFromDescriptor: each sourceDescriptor) = ChangesIndex 

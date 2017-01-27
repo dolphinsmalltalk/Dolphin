@@ -167,7 +167,7 @@ buildManifest: assemblyNameString description: assemblyDescriptionString version
 	^manifest contents!
 
 buildMessageMap
-	^self referencesFromObjectsInClasses: (Class allClasses difference: ImageStripper withAllSubclasses).!
+	^self referencesFromObjectsInClasses: (Class allClasses difference: ImageStripper withAllSubclasses)!
 
 buildPreservedMessages
 	"Private - Build the set of all the message selectors that are to be preserved
@@ -898,14 +898,15 @@ logRemoveMethod: aCompiledMethod
 logSelector: each 
 	^self logElement: 'Selector' value: each!
 
-logSentMessages: aWeakIdentityDictionary 
-	| aCollectionOfClasses implemented originallySent allRefs diff sent |
+logSentMessages: aWeakIdentityDictionary
+	| remainingClasses implemented originallySent allRefs diff sent |
 	self startElement: 'SentMessages'.
 	originallySent := Set new.
 	aWeakIdentityDictionary do: [:each | originallySent addAll: each].
-	aCollectionOfClasses := Class allClasses 
-				reject: [:each | each includesBehavior: BasicImageStripper].
-	allRefs := self messagesSentByClasses: aCollectionOfClasses.
+	remainingClasses := Set new.
+	Class
+		allClassesDo: [:each | (each includesBehavior: BasicImageStripper) ifFalse: [remainingClasses add: each]].
+	allRefs := self messagesSentByClasses: remainingClasses.
 	sent := allRefs intersection: originallySent.
 	sent asSortedCollection do: [:each | self logSelector: each].
 	self endElement.
@@ -915,7 +916,7 @@ logSentMessages: aWeakIdentityDictionary
 	self endElement.
 "
 	self startElement: 'UnimplementedMessages'.
-	implemented := self messagesImplementedBy: aCollectionOfClasses.
+	implemented := self messagesImplementedBy: remainingClasses.
 	diff := sent difference: implemented.
 	diff asSortedCollection do: [:each | self logSelector: each].
 	self endElement!
@@ -1470,7 +1471,7 @@ snapshot: anImageFilename
 
 	| sesh type |
 	type := self snapshotType.
-	self class methodDictionary: MethodDictionary new.
+	self class methodDictionary: nil.
 	Smalltalk clearCachedClasses.
 
 	"Flush out the garbage again"
@@ -1534,7 +1535,7 @@ stripAndSave
 	self prepareToStrip ifTrue: [
 		self stripAndSaveNotifying: (Array with: DeafObject current)]!
 
-stripAndSaveNotifying: notifier 
+stripAndSaveNotifying: notifier
 	"Strips the image and saves an executable file according to the configuration held by the
 	receiver. Notification messages are sent to notifier in the form of #status: messages. N.B.
 	This method is in the 'must not strip' category to prevent the receiver pulling the rug out
@@ -1588,7 +1589,7 @@ stripAndSaveNotifying: notifier
 	self finishedWithAll: #(#disableClassChangeFlagging #stripDevelopmentSystemNotifying: #purgeIcons:).
 
 	"Empty the receiver's class' method dictionary"
-	self class class methodDictionary: MethodDictionary new.
+	self class class methodDictionary: nil.
 	self stripRedundantObjects: false notifying: notifier.
 	self stripDuplicatesNotifying: notifier.
 	self finishedWith: #stripDuplicatesNotifying:.
@@ -1622,26 +1623,23 @@ stripAndSaveNotifying: notifier
 	self notifyClassesOfCompletedStrip: notifier.
 
 	"And one final go at the methods that might be hanging around because of class stripping code"
-	self 
+	self
 		finishedWithAll: #(#stripClassRemovalNotifying: #stripRedundantResources #stripRedundantObjects:notifying: #addClassesReferencedByClass:andResources:to: #stripClassInfoNotifying: #notifyClassesOfCompletedStrip: #finishedStrippingResources).
 	self stripRedundantMethodsNotifying: notifier.
 	self finishedWithAll: #(#stripRedundantMethodsNotifying: #stripRedundantMethodsOnceFrom:notifying:).
 	self logSentMessages: messageMap.
 	messageMap := nil.
-	self foldEmptyMethodDictionariesNotifying: notifier.
-	self 
-		finishedWithAll: #(#stripEmptyMethodDictionaries #foldEmptyMethodDictionariesNotifying: #logFold:folded:total:).
-
+	self finishedWithAll: #(#logFold:folded:total:).
 
 	"Remove as much as we can of the remainder of ImageStripper in case it hangs around"
 	self finishedWithStripping.
 	self shrinkHashedCollections.
-	self shrinkSymbolTable] 
+	self shrinkSymbolTable]
 			on: Error
 			do: [:ex | self onError: ex]
 			on: Notification
 			do: 
-				[:ex | 
+				[:ex |
 				self onNotification: ex notifier: notifier.
 				ex resume].
 	self deferredSaveExecutable: path.
@@ -1794,20 +1792,6 @@ stripDuplicateStrings: aBoolean
 	"Set the fold duplicate strings option of the stripping process to aBoolean"
 
 	flags := flags mask: FoldStringsMask set: aBoolean!
-
-stripEmptyMethodDictionaries
-	"Answer whether the stripping process will replace empty method dictionaries with a 
-	shared empty dictionary.	This is safe unless the application adds new methods 
-	at run time (most don't)."
-
-	^flags allMask: FoldMethodDictsMask!
-
-stripEmptyMethodDictionaries: aBoolean
-	"Set whether the stripping process will replace empty method dictionaries with a 
-	shared empty dictionary.	This is safe unless the application adds new methods 
-	at run time (most don't)."
-
-	flags := flags mask: FoldMethodDictsMask set: aBoolean!
 
 stripRedundantClasses
 	"Answer true if the receiver will attempt to remove redundant classes not
@@ -2201,8 +2185,6 @@ writeLogFile: aBoolean
 !ImageStripper categoriesFor: #stripDuplicatesNotifying:!operations!private! !
 !ImageStripper categoriesFor: #stripDuplicateStrings!accessing!public!testing! !
 !ImageStripper categoriesFor: #stripDuplicateStrings:!accessing!development!public! !
-!ImageStripper categoriesFor: #stripEmptyMethodDictionaries!accessing!public!testing! !
-!ImageStripper categoriesFor: #stripEmptyMethodDictionaries:!accessing!development!public! !
 !ImageStripper categoriesFor: #stripRedundantClasses!accessing!public!testing! !
 !ImageStripper categoriesFor: #stripRedundantClasses:!accessing!development!public! !
 !ImageStripper categoriesFor: #stripRedundantMethods!accessing!public!testing! !
@@ -2264,7 +2246,7 @@ initialize
 	StripMethodsMask := 16r40.
 	StripResourcesMask := 16r80.
 	CompileStructsMask := 16r100.
-	FoldMethodDictsMask := 16r200.
+	FoldMethodDictsMask := 16r200.	"No longer used, but may still be set in existing instances"
 	WriteLogMask := 16r400.
 	EmptyMethodDictsMask := 16r800.
 	FoldBytecodesMask := 16r1000.
