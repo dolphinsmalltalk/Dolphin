@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 SingletonSearchPolicy subclass: #EqualitySearchPolicy
 	instanceVariableNames: ''
@@ -50,12 +50,4 @@ nextIndexOf: anElement in: collection from: start to: stop
 !EqualitySearchPolicy categoriesFor: #keyAtValue:in:ifAbsent:!public!searching! !
 !EqualitySearchPolicy categoriesFor: #newLookupTable!operations!public! !
 !EqualitySearchPolicy categoriesFor: #nextIndexOf:in:from:to:!public!searching! !
-
-!EqualitySearchPolicy class methodsFor!
-
-current
-	"Answer the singleton instance of the receiver."
-
-	^self equality! !
-!EqualitySearchPolicy class categoriesFor: #current!instance creation!public! !
 

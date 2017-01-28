@@ -55,11 +55,3 @@ nextIndexOf: anElement in: collection from: start to: stop
 !IdentitySearchPolicy categoriesFor: #newLookupTable!operations!public! !
 !IdentitySearchPolicy categoriesFor: #nextIndexOf:in:from:to:!public!searching! !
 
-!IdentitySearchPolicy class methodsFor!
-
-current
-	"Answer the singleton instance of the receiver."
-
-	^self identity! !
-!IdentitySearchPolicy class categoriesFor: #current!instance creation!public! !
-

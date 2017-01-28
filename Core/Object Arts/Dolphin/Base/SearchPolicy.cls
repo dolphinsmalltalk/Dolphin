@@ -1,8 +1,8 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #SearchPolicy
 	instanceVariableNames: ''
-	classVariableNames: 'Always CaseInsensitive Equality Identity Never'
+	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 SearchPolicy guid: (GUID fromString: '{123A1501-7CB8-11D3-93CA-00A024CA708A}')!
@@ -82,54 +82,36 @@ always
 	true to #compare:with: (i.e. under this comparison policy two objects 
 	are always considered equal)."
 
-	Always isNil ifTrue: [Always := AlwaysSearchPolicy new].
-	^Always!
+	^AlwaysSearchPolicy current!
 
 caseInsensitive
 	"Answer the singleton sub-instance of the receiver which supports a search policy
 	based on case-insensitive string comparisons."
 
-	CaseInsensitive isNil ifTrue: [CaseInsensitive := CaseInsensitiveSearchPolicy new].
-	^CaseInsensitive
+	^CaseInsensitiveSearchPolicy current
 !
 
 equality
 	"Answer the singleton sub-instance of the receiver which supports a search policy
 	based on equality."
 
-	Equality isNil ifTrue: [Equality := EqualitySearchPolicy new].
-	^Equality
-!
+	^EqualitySearchPolicy current!
 
 identity
 	"Answer the singleton sub-instance of the receiver which supports a search policy
 	based on identity."
 
-	Identity isNil ifTrue: [Identity := IdentitySearchPolicy new].
-	^Identity!
+	^IdentitySearchPolicy current!
 
 never
 	"Answers the singleton instance of the receiver that always answers 
 	false to #compare:with: (i.e. under this comparison policy two objects 
 	are never considered equal)."
 
-	Never isNil ifTrue: [Never := NeverSearchPolicy new].
-	^Never!
-
-onPreStripImage
-	"Private - Tidy up the receiver's lazily initialized class vars in preparation for image stripping."
-
-	self uninitialize!
-
-uninitialize
-	"Private - Tidy up the receiver in preparation for removal from the system."
-
-	Always := Never := CaseInsensitive := Equality := Identity := nil! !
+	^NeverSearchPolicy current! !
 !SearchPolicy class categoriesFor: #always!instance creation!public! !
 !SearchPolicy class categoriesFor: #caseInsensitive!instance creation!public! !
 !SearchPolicy class categoriesFor: #equality!instance creation!public! !
 !SearchPolicy class categoriesFor: #identity!instance creation!public! !
 !SearchPolicy class categoriesFor: #never!instance creation!public! !
-!SearchPolicy class categoriesFor: #onPreStripImage!class hierarchy-removing!private! !
-!SearchPolicy class categoriesFor: #uninitialize!class hierarchy-removing!private! !
 
