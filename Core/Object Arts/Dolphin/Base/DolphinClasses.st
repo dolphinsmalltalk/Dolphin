@@ -1170,6 +1170,11 @@ ExternalInteger subclass: #DWORD
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+ExternalInteger subclass: #HRESULT
+	instanceVariableNames: ''
+	classVariableNames: 'Facilities Fail'
+	poolDictionaries: 'FacilityCodes Win32Constants Win32Errors'
+	classInstanceVariableNames: ''!
 ExternalInteger subclass: #QWORD
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -1199,11 +1204,6 @@ SDWORD subclass: #BOOL
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-SDWORD subclass: #HRESULT
-	instanceVariableNames: ''
-	classVariableNames: 'Facilities Fail'
-	poolDictionaries: 'FacilityCodes Win32Constants Win32Errors'
 	classInstanceVariableNames: ''!
 QWORD subclass: #LARGE_INTEGER
 	instanceVariableNames: ''

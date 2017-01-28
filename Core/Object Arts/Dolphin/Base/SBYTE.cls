@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 BYTE subclass: #SBYTE
 	instanceVariableNames: ''
@@ -16,11 +16,6 @@ The range of integer values that can be represented by instances of this class i
 !SBYTE categoriesForClass!External-Data-Structured! !
 !SBYTE methodsFor!
 
-asUnsignedInteger
-	"Answer the unsigned 16-bit Integer value of the receiver."
-
-	^bytes byteAtOffset: 0!
-
 unsignedValue: anUnsigned
 	"Set the receiver's value field to the value of the unsigned positive
 	integer, anUnsigned."
@@ -36,7 +31,6 @@ value: anObject
 	"Set the receiver's value field to the value of anObject."
 
 	bytes sbyteAtOffset: 0 put: anObject! !
-!SBYTE categoriesFor: #asUnsignedInteger!converting!public! !
 !SBYTE categoriesFor: #unsignedValue:!accessing!public! !
 !SBYTE categoriesFor: #value!**compiled accessors**!public! !
 !SBYTE categoriesFor: #value:!**compiled accessors**!public! !

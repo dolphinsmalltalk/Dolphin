@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ExternalInteger subclass: #QWORD
 	instanceVariableNames: ''
@@ -12,10 +12,16 @@ This class of structures is useful for communication with Win32 services that re
 !QWORD categoriesForClass!External-Data-Structured-Win32! !
 !QWORD methodsFor!
 
-asString
-	"Answer the String representation of the receiver."
+asSignedInteger
+	"Answer the signed 64-bit <Integer> value of the receiver."
 
-	^self asInteger displayString!
+	^bytes sqwordAtOffset: 0!
+
+asUnsignedInteger
+	"Answer the unsigned 64-bit <Integer> value of the receiver.
+	This can be useful where unsigned values are stored in signed values."
+
+	^bytes qwordAtOffset: 0!
 
 displayOn: aStream
 	"Append a text representation of the receiver to aStream."
@@ -48,26 +54,15 @@ printOn: aStream
 	aStream
 		basicPrint: self;
 		nextPut: $(; display: self; nextPut: $)
-!
-
-value
-	"Answer the receiver's value field as a Smalltalk object."
-
-	^bytes qwordAtOffset: 0!
-
-value: anObject 
-	"Set the receiver's value field to the value of anObject."
-
-	bytes qwordAtOffset: 0 put: anObject! !
-!QWORD categoriesFor: #asString!converting!public! !
+! !
+!QWORD categoriesFor: #asSignedInteger!converting!public! !
+!QWORD categoriesFor: #asUnsignedInteger!converting!public! !
 !QWORD categoriesFor: #displayOn:!displaying!public! !
 !QWORD categoriesFor: #highPart!**compiled accessors**!public! !
 !QWORD categoriesFor: #highPart:!**compiled accessors**!public! !
 !QWORD categoriesFor: #lowPart!**compiled accessors**!public! !
 !QWORD categoriesFor: #lowPart:!**compiled accessors**!public! !
 !QWORD categoriesFor: #printOn:!printing!public! !
-!QWORD categoriesFor: #value!**compiled accessors**!public! !
-!QWORD categoriesFor: #value:!**compiled accessors**!public! !
 
 !QWORD class methodsFor!
 

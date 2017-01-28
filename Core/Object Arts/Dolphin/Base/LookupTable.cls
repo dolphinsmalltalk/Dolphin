@@ -283,7 +283,7 @@ valuesClass
 !LookupTable categoriesFor: #identityIncludes:!public!searching! !
 !LookupTable categoriesFor: #includesAssociation:!public!searching! !
 !LookupTable categoriesFor: #initialize!initializing!private! !
-!LookupTable categoriesFor: #isImmutable:!accessing!public! !
+!LookupTable categoriesFor: #isImmutable:!initializing!public! !
 !LookupTable categoriesFor: #keyAtEqualValue:ifAbsent:!accessing!public! !
 !LookupTable categoriesFor: #keyAtValue:ifAbsent:!accessing!public! !
 !LookupTable categoriesFor: #keysAndValuesDo:!enumerating!public! !

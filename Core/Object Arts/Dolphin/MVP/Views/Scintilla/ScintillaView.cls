@@ -831,7 +831,7 @@ buildItemList: aCollection withIcons: aBoolean
 		pop;
 		contents!
 
-buildRawAnnotations: aCollectionOfScintillaAnnotations 
+buildRawAnnotations: aCollectionOfScintillaAnnotations
 	"Private - Convert the specified <collection> of <ScintillaAnnotation>s in public API format
 	(i.e. one annotation object per line, one-based line indices, and symbolic style names), to
 	the raw format required by the private API fo the underlying control (i.e. line numbers are
@@ -847,17 +847,17 @@ buildRawAnnotations: aCollectionOfScintillaAnnotations
 	firstInLine := true.
 	rawAnnotations := OrderedCollection new.
 	"Use a stable sort algorithm to preserve any existing ordering"
-	(aCollectionOfScintillaAnnotations 
-		asSortedCollectionUsing: (MergesortAlgorithm sortBlock: [:a :b | a line < b line])) do: 
-				[:eachAnnotation | 
-				eachAnnotation line ~= currentLine 
+	(aCollectionOfScintillaAnnotations
+		asSortedCollectionUsing: (MergesortAlgorithm newSortBlock: [:a :b | a line < b line])) do: 
+				[:eachAnnotation |
+				eachAnnotation line ~= currentLine
 					ifTrue: 
 						["Line has changed, so convert any previously
 						 buffered annotation data and prepare for the next
 						 line"
-						currentLine == 0 
+						currentLine == 0
 							ifFalse: 
-								[rawAnnotations add: (ScintillaAnnotation 
+								[rawAnnotations add: (ScintillaAnnotation
 											line: currentLine - 1
 											text: text contents
 											styles: styleBytes contents)].
@@ -865,7 +865,7 @@ buildRawAnnotations: aCollectionOfScintillaAnnotations
 						text reset.
 						styleBytes reset.
 						firstInLine := true].
-				firstInLine 
+				firstInLine
 					ifTrue: [firstInLine := false]
 					ifFalse: 
 						["Each line of annotations is separated by a single line feed character"
@@ -876,7 +876,7 @@ buildRawAnnotations: aCollectionOfScintillaAnnotations
 				self printAnnotationStyleBytes: eachAnnotation on: styleBytes].
 	"Add the annotations for the last annotated line, as these remain in the buffers when the
 	loop terminates"
-	rawAnnotations add: (ScintillaAnnotation 
+	rawAnnotations add: (ScintillaAnnotation
 				line: currentLine - 1
 				text: text contents
 				styles: styleBytes contents).

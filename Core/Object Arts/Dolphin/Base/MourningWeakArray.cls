@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 WeakArray variableSubclass: #MourningWeakArray
 	instanceVariableNames: 'pathologist'
@@ -47,7 +47,7 @@ pathologist: anObject
 !MourningWeakArray categoriesFor: #elementsExpired:!finalizing!public! !
 !MourningWeakArray categoriesFor: #initialize!initializing!private! !
 !MourningWeakArray categoriesFor: #pathologist!accessing!public! !
-!MourningWeakArray categoriesFor: #pathologist:!accessing!public! !
+!MourningWeakArray categoriesFor: #pathologist:!initializing!public! !
 
 !MourningWeakArray class methodsFor!
 

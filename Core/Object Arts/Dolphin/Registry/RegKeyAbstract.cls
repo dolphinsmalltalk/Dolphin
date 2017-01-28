@@ -716,25 +716,26 @@ valueAt: aString put: anObject type: aSymbol
 	size > info maxValueLen ifTrue: [info maxValueLen: size].
 	^anObject!
 
-valueFromObject: value 
+valueFromObject: value
 	"Private - This is nasty, but we don't want to modify the base classes to support a
 	conversion function..."
 
 	value isNil ifTrue: [^#none -> #[]].
-	value isInteger 
+	value isInteger
 		ifTrue: 
-			[(value between: ##(-2 ** 31) and: ##(2 ** 31 - 1)) 
+			[(value between: ##(-2 ** 31) and: ##(2 ** 31 - 1))
 				ifTrue: [^#dword -> (DWORD fromInteger: value)]
 				ifFalse: 
-					[(value between: ##(-2 ** 63) and: ##(2 ** 63 - 1)) ifTrue: [^#qword -> (QWORD fromInteger: value)]]].
+					[(value between: ##(-2 ** 63) and: ##(2 ** 63 - 1))
+						ifTrue: [^#qword -> (LARGE_INTEGER fromInteger: value)]]].
 	(value isKindOf: String) ifTrue: [^#string -> value].
-	(value isKindOf: Array) 
+	(value isKindOf: Array)
 		ifTrue: 
 			["Assume its an array of strings"
 			| stream |
 			stream := String writeStream.
 			value do: 
-					[:each | 
+					[:each |
 					stream
 						display: each;
 						nextPut: Character null].

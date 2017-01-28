@@ -122,7 +122,7 @@ createEvent: lpEventAttributes bManualReset: bManualReset bInitialState: bInitia
 			BOOL bInitialState,
 			LPCSTR lpName);"
 
-	<stdcall: handle CreateEventA SECURITY_ATTRIBUTES* bool bool lpstr>
+	<stdcall: handle CreateEventA lpvoid bool bool lpstr>
 	^self invalidCall!
 
 createFile: aStringFileName dwDesiredAccess: anIntegerAccessMode dwSharedMode: anIntegerShareMode 
@@ -429,16 +429,16 @@ formatMessage: dwFlags lpSource: aStringOrHandleOrNil dwMessageId: dwMessageId d
 	<stdcall: dword FormatMessageA dword lpvoid dword dword lpvoid dword lpvoid>
 	^self invalidCall!
 
-formatMessage: messageId source: aHandleOrString flags: dwFlag withArguments: arguments 
+formatMessage: messageId source: aHandleOrString flags: dwFlag withArguments: arguments
 	"Answer a <readableString> which is a message formatted from the specified Win32 format
 	string (see Win32 help) and the arguments in the <sequencedReadableCollection>, arguments,
 	which will be substitued for the argument identified as %1..%n in the format string."
 
 	| ptr len msg args |
-	ptr := ExternalMemory new.
+	ptr := ExternalAddress new.
 	args := ByteArray new: arguments size * VMConstants.IntPtrSize.
 	arguments keysAndValuesDo: 
-			[:i :a | 
+			[:i :a |
 			args uintPtrAtOffset: (i - 1) * VMConstants.IntPtrSize
 				put: (a isInteger ifTrue: [a] ifFalse: [a yourAddress])].
 	len := self
@@ -452,7 +452,7 @@ formatMessage: messageId source: aHandleOrString flags: dwFlag withArguments: ar
 					arguments: args.	"To enable us to distinguish the error case from the empty string case"
 
 	"FormatMessage() unhelpfully treats the empty string result as an error, so we must handle specially."
-	len == 0 
+	len == 0
 		ifTrue: 
 			[| err |
 			err := self getLastError.
@@ -460,7 +460,10 @@ formatMessage: messageId source: aHandleOrString flags: dwFlag withArguments: ar
 			msg := String new]
 		ifFalse: 
 			[msg := String fromAddress: ptr length: len.
-			ptr free].
+			self
+				heapFree: self getProcessHeap
+				dwFlags: 0
+				lpMem: ptr].
 	^msg
 
 	"
@@ -1247,7 +1250,7 @@ raiseException: dwExceptionCode dwExceptionFlags: dwExceptionFlags nNumberOfArgu
 			[in]unsigned long nNumberOfArguments,
 			[in]ULONG_PTR* lpArguments);"
 
-	<stdcall: void RaiseException dword dword dword uintptr*>
+	<stdcall: void RaiseException dword dword dword lpvoid>
 	^self invalidCall!
 
 readFile: aHandle lpBuffer: anAddress nNumberOfBytesToRead: anIntegerBytesToRead
@@ -1518,7 +1521,7 @@ virtualQuery: lpAddress lpBuffer: lpBuffer dwLength: dwLength
 			MEMORY_BASIC_INFORMATION* lpBuffer,
 			DWORD dwLength);"
 
-	<stdcall: dword VirtualQuery void* MEMORY_BASIC_INFORMATION* dword>
+	<stdcall: dword VirtualQuery void* lpvoid dword>
 	^self invalidCall!
 
 waitForSingleObject: hHandle dwMilliseconds: dwMilliseconds

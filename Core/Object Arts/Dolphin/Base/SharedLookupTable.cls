@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 LookupTable variableSubclass: #SharedLookupTable
 	instanceVariableNames: 'mutex'
@@ -293,7 +293,7 @@ stbSaveOn: anSTBOutFiler
 !SharedLookupTable categoriesFor: #keysAndValuesDo:!enumerating!public! !
 !SharedLookupTable categoriesFor: #keysDo:!enumerating!public! !
 !SharedLookupTable categoriesFor: #mutex!accessing!private! !
-!SharedLookupTable categoriesFor: #mutex:!accessing!private! !
+!SharedLookupTable categoriesFor: #mutex:!initializing!private! !
 !SharedLookupTable categoriesFor: #postCopy!copying!public! !
 !SharedLookupTable categoriesFor: #preResize:!adding!public! !
 !SharedLookupTable categoriesFor: #printOn:!printing!public! !

@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Shell subclass: #GdiplusImageViewSampleShell
 	instanceVariableNames: 'image edgeChoice viewChoice padding interpolationChoice classChoice useImageClass filename'
@@ -127,7 +127,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE'
 icon
 	"Answers an Icon that can be used to represent this class"
 
-	^Icon fromId: 43 in: ShellLibrary default!
+	^Icon fromId: 43 in: (ExternalResourceLibrary open: 'Shell32')!
 
 resource_Default_view
 	"Answer the literal data from which the 'Default view' resource can be reconstituted.

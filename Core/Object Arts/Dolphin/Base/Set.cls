@@ -393,7 +393,7 @@ uncheckedAdd: newObject
 !Set categoriesFor: #distinct!public!set operations! !
 !Set categoriesFor: #do:!enumerating!public! !
 !Set categoriesFor: #elements!accessing!private! !
-!Set categoriesFor: #elements:!accessing!private! !
+!Set categoriesFor: #elements:!initializing!private! !
 !Set categoriesFor: #equals:!comparing!public! !
 !Set categoriesFor: #find:!public!searching! !
 !Set categoriesFor: #find:ifAbsent:!public!searching! !

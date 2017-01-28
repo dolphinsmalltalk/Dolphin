@@ -11,7 +11,7 @@ NTLibrary comment: ''!
 !NTLibrary methodsFor!
 
 ntQueryTimerResolution: pulMinimumResolution maximum: pulMaximumResolution actual: pulActualResolution
-	<stdcall: sdword NtQueryTimerResolution dword* dword* dword*>
+	<stdcall: sdword NtQueryTimerResolution lpvoid lpvoid lpvoid>
 	^self invalidCall!
 
 setTimerResolution: anInteger set: aBoolean actualResolution: actualResolution 

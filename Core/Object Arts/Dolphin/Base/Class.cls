@@ -661,7 +661,7 @@ uninitializeBeforeRemove
 	common uninitialization prior to removal, in which case this message can be overridden."
 
 	(self class includesSelector: #uninitialize) ifTrue: [self uninitialize].
-	self removeAllProperties!
+!
 
 variableByteSubclass: aClassSymbol instanceVariableNames: instVarString classVariableNames: classVarString poolDictionaries: poolDictString
 	^(self 

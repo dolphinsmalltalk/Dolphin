@@ -1,7 +1,7 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Magnitude subclass: #Association
-	instanceVariableNames: 'key value '
+	instanceVariableNames: 'key value'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -44,7 +44,9 @@ key
 !
 
 key: aKey
-	"Set the lookup key of the receiver."
+	"Set the lookup key of the receiver. Normally this is only done when initializing the
+	Association as changing the key of an Association stored in a Dictionary will break that
+	Dictionary."
 
 	key := aKey
 !
@@ -83,8 +85,8 @@ value: aValue
 !Association categoriesFor: #displayOn:!printing!public! !
 !Association categoriesFor: #hash!comparing!public! !
 !Association categoriesFor: #key!accessing!public! !
-!Association categoriesFor: #key:!accessing!public! !
-!Association categoriesFor: #key:value:!accessing!public! !
+!Association categoriesFor: #key:!initializing!public! !
+!Association categoriesFor: #key:value:!initializing!public! !
 !Association categoriesFor: #owningPackage:!accessing!development!public! !
 !Association categoriesFor: #printOn:!printing!public! !
 !Association categoriesFor: #value!accessing!public! !

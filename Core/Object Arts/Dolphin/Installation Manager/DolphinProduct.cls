@@ -351,7 +351,7 @@ shrink
 	self resizeSymbolTable!
 
 shrinkEventsRegister
-	Object _eventsRegister keys do: [:each | each setEvents: each getEvents shrink]!
+	Object._EventsRegister keys do: [:each | each setEvents: each getEvents shrink]!
 
 shrinkHashedCollections
 	Set primAllSubinstances do: [:each | each shrink]!

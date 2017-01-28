@@ -32,7 +32,6 @@ package setPrerequisites: (IdentitySet new
 	add: '..\Gdiplus';
 	add: '..\Gdiplus ImageView';
 	add: '..\..\..\ActiveX\Components\Picture\OLE Picture';
-	add: '..\..\..\ActiveX\Shell\Windows Shell';
 	yourself).
 
 package!

@@ -34,7 +34,6 @@ package setPrerequisites: (IdentitySet new
 	add: '..\..\..\Dolphin\MVP\Presenters\Text\Dolphin Text Presenter';
 	add: '..\..\..\Dolphin\MVP\Type Converters\Dolphin Type Converters';
 	add: '..\..\..\Dolphin\MVP\Models\Value\Dolphin Value Models';
-	add: '..\..\..\Dolphin\ActiveX\Shell\Windows Shell';
 	yourself).
 
 package!

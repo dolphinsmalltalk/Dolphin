@@ -344,7 +344,7 @@ securityAttributes
 
 	^nil!
 
-seek: offsetInteger sense: senseFlag 
+seek: offsetInteger sense: senseFlag
 	"Move the receiver's file pointer to position anInteger
 	relative to the postition indicated by senseFlag.
 
@@ -355,8 +355,10 @@ seek: offsetInteger sense: senseFlag
 	signal a FileException if the operation fails."
 
 	| result high |
-	high := DWORDBytes fromInteger: (offsetInteger bitShift: -32).
-	result := KernelLibrary default 
+	high := (ByteArray newFixed: 4)
+				dwordAtOffset: 0 put: (offsetInteger bitShift: -32);
+				yourself.
+	result := KernelLibrary default
 				setFilePointer: handle
 				lDistanceToMove: (16rFFFFFFFF bitAnd: offsetInteger)
 				lpDistanceToMoveHigh: high
@@ -366,10 +368,9 @@ seek: offsetInteger sense: senseFlag
 	 a legitimate file pointer low-word value and an error. As you step in the debugger 
 	the error code will be altered by other API calls, and so it may no longer be zero
 	when tested."
-	^(16rFFFFFFFF = result and: [KernelLibrary default getLastError ~~ 0]) 
+	^(16rFFFFFFFF = result and: [KernelLibrary default getLastError ~~ 0])
 		ifTrue: [self signalOsError: false]
-		ifFalse: [(high asSignedInteger bitShift: 32) bitOr: result]
-!
+		ifFalse: [((high sdwordAtOffset: 0) bitShift: 32) bitOr: result]!
 
 setHandle: anExternalHandle flags: anInteger 
 	"Private - Set the handle inst var to aHandle."
@@ -488,7 +489,7 @@ writeByte: anIntegerOrCharacter
 !File categoriesFor: #open:mode:check:share:!operations!public! !
 !File categoriesFor: #openFlags!accessing!private! !
 !File categoriesFor: #position!positioning!public! !
-!File categoriesFor: #position:!positioning!public! !
+!File categoriesFor: #position:!operations!positioning!public! !
 !File categoriesFor: #printOn:!printing!public! !
 !File categoriesFor: #read:!operations!public! !
 !File categoriesFor: #read:count:!operations!public! !
@@ -1058,13 +1059,27 @@ removeDirectory: aString
 	(KernelLibrary default removeDirectory: aString) 
 		ifFalse: [KernelLibrary default systemError]!
 
-removeExtension: aPathnameString 
-	"Answer a String which is fileName with the extension component removed."
+removeExtension: aString
+	"Answer a <readableString> which is the path argument with the extension component removed."
 
-	| answer |
-	answer := aPathnameString copy.
-	ShlwapiLibrary default pathRemoveExtension: answer.
-	^answer trimNulls!
+	| drive dir fname path |
+	aString isNil ifTrue: [^self error: 'nil path'].
+	drive := String new: _MAX_DRIVE.
+	dir := String new: _MAX_DIR.
+	fname := String new: _MAX_FNAME.
+	path := String new: aString size.
+	(CRTLibrary default)
+		_splitpath: aString
+			drive: drive
+			dir: dir
+			fname: fname
+			ext: nil;
+		_makepath: path
+			drive: drive
+			dir: dir
+			fname: fname
+			ext: nil.
+	^path trimNulls!
 
 removePathDelimiter: aString
 	"Answer a <readableString> that is the argument with a path separator at its end, if any, removed."
@@ -1264,7 +1279,7 @@ workingDirectory
 		ifFalse: [dir copyWith: $\]!
 
 workingDirectory: aString
-	"Answer the current working directory."
+	"Set the current working directory."
 
 	^CRTLibrary default _chdir: aString! !
 !File class categoriesFor: #appendPathDelimiter:!filename manipulation!public!testing! !
@@ -1330,6 +1345,6 @@ workingDirectory: aString
 !File class categoriesFor: #temporaryFilename!filename manipulation!public! !
 !File class categoriesFor: #temporaryFilenameWithPrefix:!filename manipulation!public! !
 !File class categoriesFor: #tempPath!filename manipulation!public! !
-!File class categoriesFor: #workingDirectory!filename manipulation!public! !
-!File class categoriesFor: #workingDirectory:!filename manipulation!public! !
+!File class categoriesFor: #workingDirectory!file operations!public! !
+!File class categoriesFor: #workingDirectory:!file operations!public! !
 

@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ExternalLibrary subclass: #ShlwapiLibrary
 	instanceVariableNames: ''
@@ -149,16 +149,6 @@ pathRelativePathTo: pszPath pszFrom: pszFrom dwAttrFrom: dwAttrFrom pszTo: pszTo
 	<stdcall: bool PathRelativePathToA lpstr lpstr dword lpstr dword>
 	^self invalidCall!
 
-pathRemoveExtension: pszPath
-	"Invoke the PathRemoveExtension() function of the module wrapped by the receiver.
-	Helpstring: Removes the file extension from a path, if there is one
-
-		void __stdcall PathRemoveExtension(
-			LPSTR pszPath);"
-
-	<stdcall: void PathRemoveExtensionA lpstr>
-	^self invalidCall!
-
 pathSetDlgItemPath: hDlg id: id pszPath: pszPath
 	"Invoke the PathSetDlgItemPath() function of the module wrapped by the receiver.
 	Helpstring: Sets the text of a child control in a window or dialog box, using PathCompactPath to make sure the path fits in the control
@@ -197,7 +187,6 @@ shMessageBoxCheck: hwnd pszText: pszText pszTitle: pszTitle uType: uType iDefaul
 !ShlwapiLibrary categoriesFor: #pathIsURL:!**auto generated**!public! !
 !ShlwapiLibrary categoriesFor: #pathParseIconLocation:!**auto generated**!public! !
 !ShlwapiLibrary categoriesFor: #pathRelativePathTo:pszFrom:dwAttrFrom:pszTo:dwAttrTo:!**auto generated**!public! !
-!ShlwapiLibrary categoriesFor: #pathRemoveExtension:!**auto generated**!public! !
 !ShlwapiLibrary categoriesFor: #pathSetDlgItemPath:id:pszPath:!**auto generated**!public! !
 !ShlwapiLibrary categoriesFor: #shMessageBoxCheck:pszText:pszTitle:uType:iDefault:pszRegVal:!**auto generated**!public! !
 

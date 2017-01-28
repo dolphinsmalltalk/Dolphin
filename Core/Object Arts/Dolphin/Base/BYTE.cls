@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ExternalInteger subclass: #BYTE
 	instanceVariableNames: ''
@@ -16,9 +16,14 @@ The range of integer values that can be represented by instances of this class i
 !BYTE methodsFor!
 
 asSignedInteger
-	"Answer the signed 8-bit Integer value of the receiver."
+	"Answer the signed 8-bit <Integer> value of the receiver."
 
 	^bytes sbyteAtOffset: 0!
+
+asUnsignedInteger
+	"Answer the unsigned 8-bit <Integer> value of the receiver."
+
+	^bytes byteAtOffset: 0!
 
 value
 	"Answer the receiver's value field as a Smalltalk object."
@@ -30,6 +35,7 @@ value: anObject
 
 	bytes byteAtOffset: 0 put: anObject! !
 !BYTE categoriesFor: #asSignedInteger!converting!public! !
+!BYTE categoriesFor: #asUnsignedInteger!converting!public! !
 !BYTE categoriesFor: #value!**compiled accessors**!public! !
 !BYTE categoriesFor: #value:!**compiled accessors**!public! !
 

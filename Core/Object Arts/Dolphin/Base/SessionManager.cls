@@ -81,14 +81,20 @@ argc
 argv
 	"Answer an array of Strings containing the command line arguments."
 
-	argv isNil 
+	argv isNil
 		ifTrue: 
-			[| lib |
+			[| lib argc lppstr |
 			lib := VMLibrary default.
-			argv := (lib argv)
-						elementClass: LPSTR;
-						basicLength: lib argc;
-						asArray].
+			argc := lib argc.
+			argv := Array new: argc.
+			"Open code the access to the array of strings to reduce base system dependencies on external struct classes"
+			lppstr := lib argv.
+			1 to: argc
+				do: 
+					[:i |
+					| offset |
+					offset := (i - 1) * VMConstants.IntPtrSize.
+					argv at: i put: (String fromAddress: (lppstr dwordAtOffset: offset))]].
 	^argv!
 
 argvLegacyOptionsRemoved
@@ -776,35 +782,25 @@ primSnapshot: fileName backup: aBoolean type: anInteger
 
 	Primitive failure codes:
 		0	- fileName not a String
-		1	- The image has expired
+		1	- No longer used
 		2	- Unable to open image file
 		3	- I/O Error writing image file (try KernelLibrary>>getLastError)."
 
-	| result |
 	<primitive: 97>
-	result := Processor activeProcess primitiveFailureCode.
-	result == 1 
-		ifTrue: 
-			[Warning signal: (String fromId: 516
-						in: VMLibrary default asParameter)]
-		ifFalse: [self error: 'Dolphin was unable to save the image.']!
+	^self error: 'Dolphin was unable to save the image.'!
 
 primSnapshot: fileName backup: aBoolean type: typeInteger maxObjects: maxInteger
 	"Private - Save the current image to fileName, optionally creating a backup of the existing file.
 
 	Primitive failure codes:
 		0	- fileName not a String
-		1	- The image has expired
+		1	- Not used
 		2	- Unable to open image file
 		3	- I/O Error writing image file (try KernelLibrary>>getLastError).
 		4	- Insufficient max objects for current image size"
 
-	| result |
 	<primitive: 97>
-	result := Processor activeProcess primitiveFailureCode.
-	result == 1
-		ifTrue: [Warning signal: (String fromId: 516 in: VMLibrary default asParameter)]
-		ifFalse: [self error: 'Dolphin was unable to save the image.']!
+	^self error: 'Dolphin was unable to save the image.'!
 
 queryEndSession
 	"Fire off an event to enquire of observers whether they object to the end of this session.
