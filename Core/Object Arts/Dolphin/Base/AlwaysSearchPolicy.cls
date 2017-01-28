@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 SingletonSearchPolicy subclass: #AlwaysSearchPolicy
 	instanceVariableNames: ''
@@ -24,12 +24,4 @@ hash: operand
 	^1! !
 !AlwaysSearchPolicy categoriesFor: #compare:with:!comparing!public! !
 !AlwaysSearchPolicy categoriesFor: #hash:!comparing!public! !
-
-!AlwaysSearchPolicy class methodsFor!
-
-current
-	"Answer the singleton instance of the receiver."
-
-	^self always! !
-!AlwaysSearchPolicy class categoriesFor: #current!instance creation!public! !
 

@@ -1,8 +1,8 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 EqualitySearchPolicy subclass: #AssociationSearchPolicy
 	instanceVariableNames: ''
-	classVariableNames: 'Current'
+	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 AssociationSearchPolicy guid: (GUID fromString: '{F7FA3E66-A3EC-48A8-A083-DEFDF8679834}')!
@@ -30,26 +30,4 @@ hash: operand max: maximum
 	^(operand key hash bitXor: operand value hash) \\ maximum + 1! !
 !AssociationSearchPolicy categoriesFor: #hash:!comparing!public! !
 !AssociationSearchPolicy categoriesFor: #hash:max:!comparing!public! !
-
-!AssociationSearchPolicy class methodsFor!
-
-current
-	"Answer the singleton sub-instance of the receiver which supports a search policy
-	based on equality."
-
-	Current isNil ifTrue: [Current := super new].
-	^Current!
-
-onPreStripImage
-	"Private - Tidy up the receiver's lazily initialized class vars in preparation for image stripping."
-
-	self uninitialize!
-
-uninitialize
-	"Private - Tidy up the receiver in preparation for removal from the system."
-
-	Current := nil! !
-!AssociationSearchPolicy class categoriesFor: #current!instance creation!public! !
-!AssociationSearchPolicy class categoriesFor: #onPreStripImage!class hierarchy-removing!private! !
-!AssociationSearchPolicy class categoriesFor: #uninitialize!class hierarchy-removing!private! !
 

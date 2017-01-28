@@ -272,7 +272,7 @@ Object subclass: #ResourceIdentifier
 	classInstanceVariableNames: ''!
 Object subclass: #SearchPolicy
 	instanceVariableNames: ''
-	classVariableNames: 'Always CaseInsensitive Equality Identity Never'
+	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Object subclass: #SessionManager
@@ -1479,7 +1479,7 @@ SearchPolicy subclass: #SingletonSearchPolicy
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: 'current'!
 SingletonSearchPolicy subclass: #AlwaysSearchPolicy
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -1507,12 +1507,12 @@ SingletonSearchPolicy subclass: #NeverSearchPolicy
 	classInstanceVariableNames: ''!
 SingletonSearchPolicy subclass: #SymbolStringSearchPolicy
 	instanceVariableNames: ''
-	classVariableNames: 'Current'
+	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 EqualitySearchPolicy subclass: #AssociationSearchPolicy
 	instanceVariableNames: ''
-	classVariableNames: 'Current'
+	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 SessionManager subclass: #BootSessionManager

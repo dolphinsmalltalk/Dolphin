@@ -1112,7 +1112,7 @@ SmalltalkStyler subclass: #SmalltalkMethodStyler
 	classInstanceVariableNames: ''!
 SingletonSearchPolicy subclass: #CompiledMethodSearchPolicy
 	instanceVariableNames: ''
-	classVariableNames: 'Current'
+	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 GUISessionManager subclass: #DevelopmentSessionManager
