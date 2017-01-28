@@ -1598,7 +1598,7 @@ yourself
 !Object categoriesFor: #isFinalizable!public!testing! !
 !Object categoriesFor: #isImmediate!private!testing! !
 !Object categoriesFor: #isImmutable!public!testing! !
-!Object categoriesFor: #isImmutable:!accessing!public! !
+!Object categoriesFor: #isImmutable:!initializing!public! !
 !Object categoriesFor: #isIndexable!public!testing! !
 !Object categoriesFor: #isInteger!public!testing! !
 !Object categoriesFor: #isKindOf:!public!testing! !
@@ -1671,11 +1671,6 @@ yourself
 Object methodProtocol: #Object attributes: #(#ansi #readOnly) selectors: #(#~~ #~= #= #== #class #copy #doesNotUnderstand: #error: #hash #identityHash #isKindOf: #isMemberOf: #isNil #notNil #perform: #perform:with: #perform:with:with: #perform:with:with:with: #perform:withArguments: #printOn: #printString #respondsTo: #yourself)!
 
 !Object class methodsFor!
-
-_eventsRegister
-	"Private - Answer the register of events"
-
-	^_EventsRegister!
 
 binaryReadFrom: aStream
 	"Answers an object read from its binary representation on aStream.
@@ -1767,7 +1762,6 @@ resourcesLocator
 	environment it is assumed that all resources will be in a Resources subdirectory relative to the installation directory"
 
 	^SessionManager current resourcesLocatorForClass: self! !
-!Object class categoriesFor: #_eventsRegister!accessing!private! !
 !Object class categoriesFor: #binaryReadFrom:!binary filing!public! !
 !Object class categoriesFor: #binaryReadFrom:context:!binary filing!public! !
 !Object class categoriesFor: #fromBinaryStoreBytes:!binary filing!public! !

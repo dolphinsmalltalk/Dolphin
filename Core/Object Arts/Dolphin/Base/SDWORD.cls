@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 DWORD subclass: #SDWORD
 	instanceVariableNames: ''
@@ -16,11 +16,6 @@ The range of integer values that can be represented by instances of this class i
 !SDWORD categoriesForClass!External-Data-Structured! !
 !SDWORD methodsFor!
 
-asUnsignedInteger
-	"Answer the unsigned 32-bit Integer value of the receiver."
-
-	^bytes dwordAtOffset: 0!
-
 unsignedValue: anUnsigned
 	"Set the receiver's value field to the value of the unsigned positive
 	integer, anUnsigned."
@@ -36,7 +31,6 @@ value: anObject
 	"Set the receiver's value field to the value of anObject."
 
 	bytes sdwordAtOffset: 0 put: anObject! !
-!SDWORD categoriesFor: #asUnsignedInteger!converting!public! !
 !SDWORD categoriesFor: #unsignedValue:!accessing!public! !
 !SDWORD categoriesFor: #value!**compiled accessors**!public! !
 !SDWORD categoriesFor: #value:!**compiled accessors**!public! !

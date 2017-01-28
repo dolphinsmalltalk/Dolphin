@@ -14,7 +14,7 @@ Instance Variables:
 	name	<String>. Path of file. Can be nil, e.g. if connected to standard I/O handle
 
 '!
-!StdioFileStream categoriesForClass!I/O-Streams! !
+!StdioFileStream categoriesForClass!Collections-Streams! !
 !StdioFileStream methodsFor!
 
 asParameter

@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 SequencedGrowableCollection subclass: #ListModel
 	instanceVariableNames: 'list events searchPolicy'
@@ -84,10 +84,10 @@ beSorted
 	self list: self list asSortedCollection.
 !
 
-beSorted: aSortBlock 
+beSorted: aSortBlock
 	"Sort the collection held by the receiver using aSortBlock"
 
-	self list: (self list asSortedCollectionUsing: (self sortAlgorithmClass sortBlock: aSortBlock))!
+	self list: (self list asSortedCollectionUsing: (self sortAlgorithmClass newSortBlock: aSortBlock))!
 
 beUnsorted
 	"Change the list in the receiver into an OrderedCollection. The

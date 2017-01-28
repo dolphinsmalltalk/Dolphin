@@ -262,12 +262,16 @@ initialize
 				yourself.
 	ProxyPrefix := (self fromInteger: DataPrefixMask | ProxyMask)
 				isImmutable: true;
-				yourself! !
+				yourself!
+
+uninitialize
+	DataPrefix := ProxyPrefix := nil! !
 !STBPrefix class categoriesFor: #encodeCharacter:!operations!public! !
 !STBPrefix class categoriesFor: #encodeObjectRef:!operations!public! !
 !STBPrefix class categoriesFor: #encodeSmallInteger:!operations!public! !
 !STBPrefix class categoriesFor: #forData!instance creation!public! !
 !STBPrefix class categoriesFor: #forProxy!instance creation!public! !
 !STBPrefix class categoriesFor: #fromInteger:!instance creation!public! !
-!STBPrefix class categoriesFor: #initialize!initializing!public! !
+!STBPrefix class categoriesFor: #initialize!development!initializing!public! !
+!STBPrefix class categoriesFor: #uninitialize!class hierarchy-removing!private! !
 

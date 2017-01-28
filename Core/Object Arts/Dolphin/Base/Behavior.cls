@@ -1161,7 +1161,7 @@ withAllSuperclassesDo: aMonadicValuable
 !Behavior categoriesFor: #isMetaclass!public!testing! !
 !Behavior categoriesFor: #isMourner!instance specification-testing!public! !
 !Behavior categoriesFor: #isNullTerminated!instance specification-testing!public! !
-!Behavior categoriesFor: #isNullTerminated:!accessing!public! !
+!Behavior categoriesFor: #isNullTerminated:!instance specification-accessing!public! !
 !Behavior categoriesFor: #isPointers!instance specification-testing!public! !
 !Behavior categoriesFor: #isVariable!instance specification-testing!public! !
 !Behavior categoriesFor: #isWords!instance specification-testing!public! !

@@ -35,6 +35,11 @@ Class Variables:
 !Delay categoriesForClass!Kernel-Processes! !
 !Delay methodsFor!
 
+<= anotherDelay
+	"Answer whether the receiver is less than or equal to the <Delay>, anotherDelay."
+
+	^self resumptionTime <= anotherDelay resumptionTime!
+
 calcResumptionTime
 	"Private - Calculate and answer the value of the millisecond clock after which any Process
 	waiting on the receiver will be rescheduled. We could lazily evaluate this from the normal
@@ -204,6 +209,7 @@ wakeup
 	"Private - The receiver has fired, resume the Process suspended on the receiver (if any)."
 
 	waitSemaphore signal! !
+!Delay categoriesFor: #<=!comparing!public! !
 !Delay categoriesFor: #calcResumptionTime!accessing!private! !
 !Delay categoriesFor: #cancel!process synchronisation!public! !
 !Delay categoriesFor: #delta:!operations!private! !
@@ -323,8 +329,7 @@ initialize
 	LowestResolution := HighestResolution := Resolution := DefaultResolution.
 	AccessProtect isNil ifTrue: [AccessProtect := Semaphore forMutualExclusion].
 	AccessProtect critical: 
-			[Pending := SortedCollection
-						sortBlock: [:delay1 :delay2 | delay1 resumptionTime <= delay2 resumptionTime].
+			[Pending := SortedCollection new.
 			Current := nil].
 	self initializeTimingSemaphore!
 
@@ -386,17 +391,17 @@ prod
 
 queryOsTimerResolution
 	| min max actual |
-	min := DWORDBytes new.
-	max := DWORDBytes new.
-	actual := DWORDBytes new.
+	min := ByteArray newFixed: 4.
+	max := ByteArray newFixed: 4.
+	actual := ByteArray newFixed: 4.
 	(NTLibrary default
 		ntQueryTimerResolution: min
 		maximum: max
 		actual: actual) == 0
 		ifTrue: 
-			[LowestResolution := self clampResolution: min value // 10.
-			HighestResolution := self clampResolution: max value // 10.
-			Resolution := self clampResolution: actual value // 10]
+			[LowestResolution := self clampResolution: (min dwordAtOffset: 0) // 10.
+			HighestResolution := self clampResolution: (max dwordAtOffset: 0) // 10.
+			Resolution := self clampResolution: (actual dwordAtOffset: 0) // 10]
 		ifFalse: [LowestResolution := HighestResolution := Resolution := DefaultResolution]!
 
 reschedule

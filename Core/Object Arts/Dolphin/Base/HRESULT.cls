@@ -1,6 +1,6 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
-SDWORD subclass: #HRESULT
+ExternalInteger subclass: #HRESULT
 	instanceVariableNames: ''
 	classVariableNames: 'Facilities Fail'
 	poolDictionaries: 'FacilityCodes Win32Constants Win32Errors'
@@ -9,6 +9,16 @@ HRESULT guid: (GUID fromString: '{87B4C5AE-026E-11D3-9FD7-00A0CC3E4A32}')!
 HRESULT comment: ''!
 !HRESULT categoriesForClass!External-Data-Structured! !
 !HRESULT methodsFor!
+
+asSignedInteger
+	"Answer the signed 32-bit <Integer> value of the receiver."
+
+	^bytes sdwordAtOffset: 0!
+
+asUnsignedInteger
+	"Answer the unsigned 32-bit <Integer> value of the receiver."
+
+	^bytes dwordAtOffset: 0!
 
 displayOn: aStream 
 	"Append a textual representation of the receiver to aStream."
@@ -99,7 +109,25 @@ succeeded
 	"Answer whether the receiver represents the result of a successful operation
 	(named for compatibility with the C/C++ SUCCEEDED macro)."
 
-	^self failed not! !
+	^self failed not!
+
+unsignedValue: anUnsigned
+	"Set the receiver's value field to the value of the unsigned positive
+	integer, anUnsigned."
+
+	bytes dwordAtOffset: 0 put: anUnsigned!
+
+value
+	"Answer the receiver's value field as a Smalltalk object."
+
+	^bytes sdwordAtOffset: 0!
+
+value: anObject
+	"Set the receiver's value field to the value of anObject."
+
+	bytes sdwordAtOffset: 0 put: anObject! !
+!HRESULT categoriesFor: #asSignedInteger!converting!public! !
+!HRESULT categoriesFor: #asUnsignedInteger!converting!public! !
 !HRESULT categoriesFor: #displayOn:!displaying!public! !
 !HRESULT categoriesFor: #errorCode!accessing!public! !
 !HRESULT categoriesFor: #facility!accessing!public! !
@@ -110,6 +138,9 @@ succeeded
 !HRESULT categoriesFor: #severity!accessing!public! !
 !HRESULT categoriesFor: #statusCode!accessing!public! !
 !HRESULT categoriesFor: #succeeded!public!testing! !
+!HRESULT categoriesFor: #unsignedValue:!accessing!public! !
+!HRESULT categoriesFor: #value!**compiled accessors**!public! !
+!HRESULT categoriesFor: #value:!**compiled accessors**!public! !
 
 !HRESULT class methodsFor!
 
@@ -117,6 +148,17 @@ fail
 	"Answer the generic failure HRESULT."
 
 	^Fail!
+
+fieldType
+	"Private - Answer the <ExternalField> type to be used to represent the receiver's field type in 
+	other structures."
+
+	^SDWORDField!
+
+fromUnsignedInteger: anUnsignedInteger
+	"Answer a new instance of the receiver with contents copied from anInteger"
+
+	^self new unsignedValue: anUnsignedInteger!
 
 initialize
 	"Private - Initialize the receiver's class variables.
@@ -171,6 +213,8 @@ win32Error: anInteger
 		facility: FACILITY_WIN32
 		code: anInteger! !
 !HRESULT class categoriesFor: #fail!constants!instance creation!public! !
+!HRESULT class categoriesFor: #fieldType!constants!development!private! !
+!HRESULT class categoriesFor: #fromUnsignedInteger:!instance creation!public! !
 !HRESULT class categoriesFor: #initialize!development!initializing!private! !
 !HRESULT class categoriesFor: #notImplemented!constants!instance creation!public! !
 !HRESULT class categoriesFor: #ntStatusCode:!instance creation!public! !

@@ -1321,7 +1321,7 @@ unicodeClass
 !String class categoriesFor: #initialize!development!initializing!public! !
 !String class categoriesFor: #lineDelimiter!instance creation!public! !
 !String class categoriesFor: #nullPrintCharacter!accessing!public! !
-!String class categoriesFor: #nullPrintCharacter:!accessing!public! !
+!String class categoriesFor: #nullPrintCharacter:!accessing!development!public! !
 !String class categoriesFor: #readFrom:!instance creation!public! !
 !String class categoriesFor: #tab!instance creation!public! !
 !String class categoriesFor: #unicodeClass!constants!public! !

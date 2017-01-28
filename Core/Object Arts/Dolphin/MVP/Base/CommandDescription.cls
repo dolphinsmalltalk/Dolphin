@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #CommandDescription
 	instanceVariableNames: 'command description acceleratorKey flags image'
@@ -210,7 +210,7 @@ toolTipText
 !CommandDescription categoriesFor: #command!accessing!public! !
 !CommandDescription categoriesFor: #command:!accessing!public! !
 !CommandDescription categoriesFor: #commandString!accessing!public! !
-!CommandDescription categoriesFor: #commandString:!accessing!public! !
+!CommandDescription categoriesFor: #commandString:!accessing!initializing!public! !
 !CommandDescription categoriesFor: #commandSymbol!accessing!public! !
 !CommandDescription categoriesFor: #description!accessing!public! !
 !CommandDescription categoriesFor: #description:!accessing!public! !

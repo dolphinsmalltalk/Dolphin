@@ -30,8 +30,8 @@ __iscsymf: aCharacter
 	^self invalidCall
 !
 
-_chdir: aDirectoryString
-	"Change the cuyrrent working directoryto aDirectoryNameString
+_chdir: aString
+	"Change the current working directory to that identified by the path, aString.
 
 		int _chdir( const char *dirname);"
 
@@ -90,8 +90,8 @@ _ecvt: aFloat count: anInteger dec: decInteger sign: signInteger
 	aFloat respectively.
 
 		char *_ecvt( double value, int count, int *dec, int *sign );"
-  
-	<cdecl: lpstr _ecvt double sdword SDWORD* SDWORD* >
+
+	<cdecl: lpstr _ecvt double sdword sdword* sdword*>
 	^self invalidCall!
 
 _eof: handleInteger
@@ -149,10 +149,10 @@ _get_osfhandle: anInteger
 	<cdecl: handle _get_osfhandle sdword>
 	^self invalidCall!
 
-_getcwd: buffer maxlen: maxlen
-	"Copy up to <integer>, maxlen>, characters of the the current working directory 
-	path to the <String> buffer."
-  
+_getcwd: aString maxlen: anInteger
+	"Copy up to anInteger characters of the the current working directory path over the <String>
+	buffer, aString."
+
 	<cdecl: lpstr _getcwd lpstr sdword>
 	^self invalidCall!
 
@@ -645,8 +645,10 @@ synchronizeLocale
 	| buf |
 	self setlocale: 0 locale: ''.
 	buf := String new: 10.
-	buf := self _gcvt: Float zero count: 2 buffer: buf.
+	buf := self _gcvt: 0 count: 2 buffer: buf.
 	decimalSeparator := buf copyFrom: 2
+
+
 
 !
 
@@ -675,7 +677,7 @@ wcscspn: aUnicodeString strCharSet: strCharSet
 	^self invalidCall! !
 !CRTLibrary categoriesFor: #__iscsym:!CRT functions-character classification!public! !
 !CRTLibrary categoriesFor: #__iscsymf:!CRT functions-character classification!public! !
-!CRTLibrary categoriesFor: #_chdir:!CRT functions-file handling!public! !
+!CRTLibrary categoriesFor: #_chdir:!CRT functions-directory control!public! !
 !CRTLibrary categoriesFor: #_chmod:pmode:!CRT functions-file handling!public! !
 !CRTLibrary categoriesFor: #_clearfp!CRT functions-floating point support!public! !
 !CRTLibrary categoriesFor: #_close:!CRT functions-low level I/O!public! !
@@ -692,7 +694,7 @@ wcscspn: aUnicodeString strCharSet: strCharSet
 !CRTLibrary categoriesFor: #_fpclass:!CRT functions-floating point support!public! !
 !CRTLibrary categoriesFor: #_gcvt:count:buffer:!CRT functions-floating point support!public! !
 !CRTLibrary categoriesFor: #_get_osfhandle:!CRT functions-file handling!public! !
-!CRTLibrary categoriesFor: #_getcwd:maxlen:!CRT functions-floating point support!public! !
+!CRTLibrary categoriesFor: #_getcwd:maxlen:!CRT functions-directory control!public! !
 !CRTLibrary categoriesFor: #_i64toa:string:radix:!CRT functions-data conversion!public! !
 !CRTLibrary categoriesFor: #_logb:!CRT functions-floating point support!public! !
 !CRTLibrary categoriesFor: #_ltoa:string:radix:!CRT functions-data conversion!public! !

@@ -12,6 +12,10 @@ CompiledMethod comment: 'CompiledMethod is the class of CompiledCode objects rep
 !CompiledMethod categoriesForClass!Kernel-Methods! !
 !CompiledMethod methodsFor!
 
+<= aCompiledMethod
+	^methodClass name < aCompiledMethod methodClass name
+		or: [methodClass == aCompiledMethod methodClass and: [selector < aCompiledMethod selector]]!
+
 categories
 	"Answer a <Collection> of all the method categories in which the receiver is
 	included."
@@ -207,6 +211,7 @@ storeSourceString: aString
 	"Private - Record aString as the source for the receiver. Delegate to the receiver's source manager"
 
 	self class sourceManager storeSourceString: aString forMethod: self! !
+!CompiledMethod categoriesFor: #<=!comparing!public! !
 !CompiledMethod categoriesFor: #categories!categories!development!public! !
 !CompiledMethod categoriesFor: #categories:!categories!development!private! !
 !CompiledMethod categoriesFor: #changeManager!development!private! !

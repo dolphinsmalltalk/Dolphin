@@ -451,7 +451,7 @@ yourAddress
 !ExternalStructure categoriesFor: #beNullPointer!modes!private! !
 !ExternalStructure categoriesFor: #bufferClass!constants!private! !
 !ExternalStructure categoriesFor: #bytes!accessing!public! !
-!ExternalStructure categoriesFor: #bytes:!accessing!private! !
+!ExternalStructure categoriesFor: #bytes:!initializing!private! !
 !ExternalStructure categoriesFor: #bytesAtOffset:put:!accessing!public! !
 !ExternalStructure categoriesFor: #byteSize!accessing!public! !
 !ExternalStructure categoriesFor: #comparisonSize!accessing!private! !
@@ -484,7 +484,7 @@ yourAddress
 !ExternalStructure categoriesFor: #pointerClass!constants!private! !
 !ExternalStructure categoriesFor: #printArgumentTypeOn:!printing!private! !
 !ExternalStructure categoriesFor: #printCyclicRefOn:!printing!private! !
-!ExternalStructure categoriesFor: #printFieldsOn:limit:!printing!private! !
+!ExternalStructure categoriesFor: #printFieldsOn:limit:!development!printing!private! !
 !ExternalStructure categoriesFor: #printOn:!development!printing!public! !
 !ExternalStructure categoriesFor: #replaceBytesOf:from:to:startingAt:!double dispatch!private!replacing! !
 !ExternalStructure categoriesFor: #replaceFrom:to:with:startingAt:!public!replacing! !

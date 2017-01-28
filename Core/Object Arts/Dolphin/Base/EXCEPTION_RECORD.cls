@@ -22,21 +22,35 @@ ExceptionCode
 
 	^bytes dwordAtOffset: 0!
 
-ExceptionInformation
-	"Answer the receiver's ExceptionInformation field as a Smalltalk object."
-
-	^UINT_PTRArray fromAddress: bytes yourAddress + ##(self offsetOf: #ExceptionInformation) length: 15!
-
 information
 	"Answer the receiver's ExceptionInformation as an <Array> of <Integer>."
 
-	info isNil ifTrue: [info := self ExceptionInformation copyFrom: 1 to: self NumberParameters].
+	info isNil
+		ifTrue: 
+			["Open coded to avoid a base system dependency on UINT_PTR and associated array type"
+			| count |
+			count := self NumberParameters.
+			info := Array new: count.
+			1 to: count
+				do: 
+					[:i |
+					info at: i
+						put: (bytes
+								uintPtrAtOffset: ##(self offsetOf: #ExceptionInformation) + ((i - 1) * VMConstants.IntPtrSize))]].
 	^info!
 
 moduleFileName
 	"Answer the file name of the module within which the exception occurred."
 
-	^(MEMORY_BASIC_INFORMATION forAddress: self ExceptionAddress) moduleFileName!
+	"Avoid dependency on MEMORY_BASIC_INFORMATION"
+
+	| buf |
+	buf := ByteArray new: ##(VMConstants.IntPtrSize * 2 + (4 * 5)).
+	^(KernelLibrary default
+		virtualQuery: self ExceptionAddress
+		lpBuffer: buf
+		dwLength: buf size) == 0
+		ifFalse: [ExternalLibrary moduleFileName: (buf uintPtrAtOffset: VMConstants.IntPtrSize)]!
 
 NumberParameters
 	"Answer the receiver's NumberParameters field as a Smalltalk object."
@@ -44,7 +58,6 @@ NumberParameters
 	^bytes dwordAtOffset: ##(self offsetOf: #NumberParameters)! !
 !EXCEPTION_RECORD categoriesFor: #ExceptionAddress!**compiled accessors**!public! !
 !EXCEPTION_RECORD categoriesFor: #ExceptionCode!**compiled accessors**!public! !
-!EXCEPTION_RECORD categoriesFor: #ExceptionInformation!**compiled accessors**!public! !
 !EXCEPTION_RECORD categoriesFor: #information!accessing!public! !
 !EXCEPTION_RECORD categoriesFor: #moduleFileName!accessing!public! !
 !EXCEPTION_RECORD categoriesFor: #NumberParameters!**compiled accessors**!public! !
@@ -72,6 +85,7 @@ defineFields
 		defineField: #ExceptionAddress type: LPVOIDField readOnly;
 		defineField: #NumberParameters type: DWORDField readOnly;
 		defineField: #ExceptionInformation
-			type: (ArrayField type: UINT_PTRArray length: EXCEPTION_MAXIMUM_PARAMETERS) beReadOnly! !
+			type: (ArrayField type: ByteArray length: EXCEPTION_MAXIMUM_PARAMETERS * VMConstants.IntPtrSize)
+					beFiller! !
 !EXCEPTION_RECORD class categoriesFor: #defineFields!initializing!public! !
 

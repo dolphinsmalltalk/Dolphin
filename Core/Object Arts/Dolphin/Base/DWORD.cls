@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ExternalInteger subclass: #DWORD
 	instanceVariableNames: ''
@@ -16,9 +16,14 @@ The range of integer values that can be represented by instances of this class i
 !DWORD methodsFor!
 
 asSignedInteger
-	"Answer the signed 32-bit Integer value of the receiver."
+	"Answer the signed 32-bit <Integer> value of the receiver."
 
 	^bytes sdwordAtOffset: 0!
+
+asUnsignedInteger
+	"Answer the unsigned 32-bit <Integer> value of the receiver."
+
+	^bytes dwordAtOffset: 0!
 
 highSWord
 	"Answer the high-order signed word of the receiver. Assumes little-endian
@@ -78,6 +83,7 @@ value: anObject
 
 	bytes dwordAtOffset: 0 put: anObject! !
 !DWORD categoriesFor: #asSignedInteger!converting!public! !
+!DWORD categoriesFor: #asUnsignedInteger!converting!public! !
 !DWORD categoriesFor: #highSWord!accessing!public! !
 !DWORD categoriesFor: #highSWord:!accessing!public! !
 !DWORD categoriesFor: #highWord!accessing!public! !

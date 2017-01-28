@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 TextDocument subclass: #WordPad
 	instanceVariableNames: ''
@@ -117,7 +117,7 @@ fileTypes
 icon
 	"Answers an Icon that can be used to represent this class."
 
-	^Icon fromId: 2 in: ShellLibrary default!
+	^Icon fromId: 2 in: (ExternalResourceLibrary open: 'Shell32')!
 
 initialize
 	"Private - Initialize the receiver's class variables

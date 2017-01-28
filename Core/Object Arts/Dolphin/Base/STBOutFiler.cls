@@ -249,3 +249,13 @@ writePreambleFor: anObject
 !STBOutFiler categoriesFor: #writeObject:as:withPrefix:!operations!private! !
 !STBOutFiler categoriesFor: #writePreambleFor:!binary filing!public! !
 
+!STBOutFiler class methodsFor!
+
+uninitialize
+	"Private - STBPrefix is only used by STBOutFiler now so if STBOutFiler is going, we no longer need it.
+	However it has some static instances that will prevent it being stripped if we don't clear
+	them away."
+
+	STBPrefix uninitialize! !
+!STBOutFiler class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+

@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #SortAlgorithm
 	instanceVariableNames: ''
@@ -21,12 +21,8 @@ compare: operand1 with: operand2
 
 	^self sortBlock value: operand1 value: operand2!
 
-copyWithSortBlock: aDyadicValuable 
-	"Answer a new <SortAlgorithm> that implements the same sorting algorithm as the receiver,
-	but using the <dyadicValuable> argument for comparing elements instead of the receiver's
-	current comparison."
-
-	^self subclassResponsibility!
+copyWithSortBlock: aDyadicValuable
+	^self class newSortBlock: aDyadicValuable!
 
 heapsort: anObject from: startInteger to: stopInteger 
 	| i |
@@ -114,4 +110,15 @@ sortBlock
 !SortAlgorithm categoriesFor: #sift:from:between:and:!helpers!private! !
 !SortAlgorithm categoriesFor: #sort:from:to:!operations!public! !
 !SortAlgorithm categoriesFor: #sortBlock!accessing!public! !
+
+!SortAlgorithm class methodsFor!
+
+newSortBlock: aDyadicValuable
+	^self subclassResponsibility!
+
+sortBlock: aDyadicValuable
+	#deprecated.
+	^self newSortBlock: aDyadicValuable! !
+!SortAlgorithm class categoriesFor: #newSortBlock:!instance creation!public! !
+!SortAlgorithm class categoriesFor: #sortBlock:!instance creation!public! !
 

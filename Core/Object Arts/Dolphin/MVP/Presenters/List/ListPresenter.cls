@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 SelectableItemsPresenter subclass: #ListPresenter
 	instanceVariableNames: 'sortBlock'
@@ -62,14 +62,14 @@ list
 
 	^self model list!
 
-list: aSequenceableCollection 
+list: aSequenceableCollection
 	"Set the contents of the receiver to be aSequenceableCollection"
 
 	| list |
-	list := self isSorted 
+	list := self isSorted
 				ifTrue: 
-					[aSequenceableCollection 
-						asSortedCollectionUsing: (self sortAlgorithmClass sortBlock: self sortBlock)]
+					[aSequenceableCollection
+						asSortedCollectionUsing: (self sortAlgorithmClass newSortBlock: self sortBlock)]
 				ifFalse: [aSequenceableCollection].
 	^self viewModel list: list!
 

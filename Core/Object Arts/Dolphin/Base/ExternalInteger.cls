@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ExternalStructure subclass: #ExternalInteger
 	instanceVariableNames: ''
@@ -36,13 +36,14 @@ asInteger
 	^self value!
 
 asSignedInteger
-	"Answer the signed 32-bit Integer value of the receiver.
-	This can be useful where functions return values declared as unsigned, but with signed
-	values in them (a typical C programmers' trick for notifying error conditions).
-	Implementation Note: This should really be a subclass responsibility,
-	but this saves some space."
+	"Answer the signed <Integer> value of the receiver."
 
-	^self value!
+	^self subclassResponsibility!
+
+asString
+	"Answer the String representation of the receiver."
+
+	^self asInteger displayString!
 
 asUIntPtr
 	"Answer the receiver in a form suitable for passing/returning as a Windows LRESULT
@@ -53,12 +54,10 @@ asUIntPtr
 	^self value!
 
 asUnsignedInteger
-	"Answer the unsigned Integer value of the receiver.
-	This can be useful where unsigned values are stored in signed values.
-	Implementation Note: This should really be a subclass responsibility,
-	but this saves some space."
+	"Answer the unsigned <Integer> value of the receiver.
+	This can be useful where unsigned values are stored in signed values."
 
-	^self value!
+	^self subclassResponsibility!
 
 displayOn: aStream
 	"Append, to aStream, a String whose characters are a representation of the receiver as a user
@@ -103,6 +102,7 @@ value: anObject
 !ExternalInteger categoriesFor: #=!comparing!public! !
 !ExternalInteger categoriesFor: #asInteger!converting!public! !
 !ExternalInteger categoriesFor: #asSignedInteger!converting!public! !
+!ExternalInteger categoriesFor: #asString!converting!public! !
 !ExternalInteger categoriesFor: #asUIntPtr!converting!public! !
 !ExternalInteger categoriesFor: #asUnsignedInteger!converting!public! !
 !ExternalInteger categoriesFor: #displayOn:!printing!public! !

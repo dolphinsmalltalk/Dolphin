@@ -2172,7 +2172,7 @@ textStyles: aCollectionOfScintillaTextStyles
 	names used in the styler, which by default is a <SmalltalkStyler>."
 
 	TextStyles := aCollectionOfScintillaTextStyles asOrderedCollection 
-				sortUsing: (DefaultSortAlgorithm sortBlock: [:a :b | a name <= b name]).
+				sortUsing: (DefaultSortAlgorithm newSortBlock: [:a :b | a name <= b name]).
 	self primAllSubinstances do: [:each | each textStyles: self textStyles]!
 
 textStylesAspect

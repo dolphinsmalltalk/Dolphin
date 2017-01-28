@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Win32Error subclass: #Win32Fault
 	instanceVariableNames: 'exceptionRecord'
@@ -7,7 +7,7 @@ Win32Error subclass: #Win32Fault
 	classInstanceVariableNames: ''!
 Win32Fault guid: (GUID fromString: '{3B2FCCEA-10B3-4DA2-9932-179927F451A2}')!
 Win32Fault comment: ''!
-!Win32Fault categoriesForClass!Unclassified! !
+!Win32Fault categoriesForClass!System-Exception Handling! !
 !Win32Fault methodsFor!
 
 _descriptionArguments

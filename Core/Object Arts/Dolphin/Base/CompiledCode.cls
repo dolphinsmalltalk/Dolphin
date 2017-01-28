@@ -714,7 +714,7 @@ onPreStripImage
 	InfoCacheKeys := InfoCacheValues := nil! !
 !CompiledCode class categoriesFor: #elementsExpired:of:!finalizing!private! !
 !CompiledCode class categoriesFor: #initialize!development!initializing!private! !
-!CompiledCode class categoriesFor: #initializeInfoCache!initializing!private! !
-!CompiledCode class categoriesFor: #initializeInfoCache:!initializing!private! !
-!CompiledCode class categoriesFor: #onPreStripImage!initializing!private! !
+!CompiledCode class categoriesFor: #initializeInfoCache!development!initializing!private! !
+!CompiledCode class categoriesFor: #initializeInfoCache:!development!initializing!private! !
+!CompiledCode class categoriesFor: #onPreStripImage!class hierarchy-removing!private! !
 
