@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 GdiplusFromBytesInitializer subclass: #GdiplusImageFromBytesInitializer
 	instanceVariableNames: ''
@@ -20,9 +20,11 @@ createHandle
 	        lastResult = DllExports::GdipCreateBitmapFromStream(stream, &bitmap);
 	    }"
 
-	| gpHandle status |
+	| gpHandle status stm |
 	gpHandle := ExternalHandle new.
-	status := self library gdipLoadImageFromStream: self iStream asParameter image: gpHandle.
+	stm := self iStream.
+	status := self library gdipLoadImageFromStream: stm image: gpHandle.
+	stm free.
 	self assertStatusOk: status.
 	^gpHandle!
 
