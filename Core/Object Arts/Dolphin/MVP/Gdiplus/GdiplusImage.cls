@@ -1673,11 +1673,7 @@ fileTypes
 fromByteArray: aByteArray
 	"Answer an instance of the receiver created from data in aByteArray."
 
-	| pStream |
-	pStream := IStream onHGLOBAL.
-	pStream nextPutAll: aByteArray.
-	pStream reset.
-	^self fromIStream: pStream!
+	^self fromIStream: (IStream fromBytes: aByteArray)!
 
 fromFile: aFilename
 	"Answer an instance of the receiver created from data in the specified file."

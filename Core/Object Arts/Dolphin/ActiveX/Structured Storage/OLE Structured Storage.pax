@@ -65,6 +65,7 @@ package methodNames
 	add: #SequencedStream -> #Stat:grfStatFlag:;
 	add: #SequencedStream -> #UnlockRegion:cb:dwLockType:;
 	add: #SequencedStream -> #Write:cb:pcbWritten:;
+	add: #ShlwapiLibrary -> #shCreateMemStream:cbInit:;
 	yourself.
 
 package globalNames
@@ -609,6 +610,20 @@ Write: pv cb: cb pcbWritten: pcbWritten
 !SequencedStream categoriesFor: #Stat:grfStatFlag:!public! !
 !SequencedStream categoriesFor: #UnlockRegion:cb:dwLockType:!public! !
 !SequencedStream categoriesFor: #Write:cb:pcbWritten:!public! !
+
+!ShlwapiLibrary methodsFor!
+
+shCreateMemStream: pInit cbInit: cbInit
+	"Invoke the SHCreateMemStream() function of the module wrapped by the receiver.
+	Helpstring: Creates a memory stream on a copy of a byte buffer
+
+		IStream* __stdcall SHCreateMemStream(
+			[in]BYTE* pInit,
+			[in]unsigned int cbInit);"
+
+	<stdcall: IStream* 12 byte* dword>
+	^self invalidCall! !
+!ShlwapiLibrary categoriesFor: #shCreateMemStream:cbInit:!**auto generated**!public! !
 
 "End of package definition"!
 
