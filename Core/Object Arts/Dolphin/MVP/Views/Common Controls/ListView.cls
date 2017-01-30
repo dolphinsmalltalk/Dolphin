@@ -798,19 +798,20 @@ iconSpacing: aPointOrNil
 	self fontChanged.
 !
 
-imageFromRow: item 
+imageFromRow: item
 	"Private - Answer the image for row which represents the <Object>, item.
 	As of Dolphin 3.0 the image block is permitted to be nil for the common case
 	where the list does not have images."
 
 	self viewMode == #thumbnails ifTrue: [^self getThumbnailOf: item].
-
-	KernelLibrary isWine ifTrue: [
-		#wineFix.
-		"Wine ListViews seem to expect image indices to always be set in ListView>>onDisplayDetailsRequired:, 
-		even if we don't want images to appear. Normally, we answer nil here if no image is required. 
-		In Wine we must answer an image index of 0"
-		getImageBlock ifNil: [^0]].
+	NTLibrary isWine
+		ifTrue: 
+			[#wineFix.
+			"Wine ListViews seem to expect image indices to always be set in
+			ListView>>onDisplayDetailsRequired:, even if we don't want images to appear.
+			Normally, we answer nil here if no image is required. In Wine we must answer
+			an image index of 0"
+			getImageBlock ifNil: [^0]].
 	^self getImageBlock isNil ifFalse: [getImageBlock value: item]!
 
 indentFromRow: item
@@ -1846,14 +1847,14 @@ selectedCount
 
 	^self sendMessage: LVM_GETSELECTEDCOUNT!
 
-selectIndex: anInteger set: aBoolean 
+selectIndex: anInteger set: aBoolean
 	"Private - Set/reset the selection state of the object at the specified one-based <integer>
 	index within the receiver according to the <boolean> argument."
 
 	| anLvItem mask |
 	anLvItem := LVITEM new.
 	mask := ##(LVIS_SELECTED | LVIS_FOCUSED).
-	KernelLibrary isWine 
+	NTLibrary isWine
 		ifTrue: 
 			["Having autoSelectPackages option turned on in System Browser gives
 			unpleasant scrolling effect when many multiple packages are selected. This

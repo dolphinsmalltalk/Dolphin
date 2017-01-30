@@ -1758,9 +1758,6 @@ fileName
 
 	^'KERNEL32'!
 
-isWine
-	^NTLibrary isWine!
-
 open
 	"Answer a new instance of the receiver to represent the Kernel32 DLL. Special handling 
 	is required for this library because opening a library is normally done through the 
@@ -1770,6 +1767,5 @@ open
 	^self fromHandle: VMLibrary default kernelHandle! !
 !KernelLibrary class categoriesFor: #clear!initializing!private! !
 !KernelLibrary class categoriesFor: #fileName!constants!public! !
-!KernelLibrary class categoriesFor: #isWine!public! !
 !KernelLibrary class categoriesFor: #open!instance creation!public! !
 
