@@ -508,10 +508,10 @@ messageBeep: anInteger
 	<stdcall: bool MessageBeep dword>
 	^self invalidCall!
 
-messageBox: anExternalHandle text: textString caption: captionString style: styleInteger icon: iconIdentifier instance: hInstance 
+messageBox: anExternalHandle text: textString caption: captionString style: styleInteger icon: iconIdentifier instance: hInstance
 	| iconId struct wasDisabled hWnd response isTaskModal dwStyle |
 	isTaskModal := styleInteger allMask: MB_TASKMODAL.
-	hWnd := isTaskModal 
+	hWnd := isTaskModal
 				ifTrue: [0]
 				ifFalse: 
 					["#2107: getActiveWindow may return nil, e.g. in a headless app with no windows"
@@ -521,10 +521,10 @@ messageBox: anExternalHandle text: textString caption: captionString style: styl
 	struct lpszText: textString.
 	struct lpszCaption: captionString.
 	iconId := iconIdentifier.
-	iconId isNil 
+	iconId isNil
 		ifTrue: 
-			["Vista no longer supports MB_ICONQUESTION, so set it as a user icon instead."
-			(VMLibrary default isWindowsVistaOrGreater and: [styleInteger allMask: MB_ICONQUESTION]) 
+			["Windows no longer supports MB_ICONQUESTION, so set it as a user icon instead."
+			(styleInteger allMask: MB_ICONQUESTION)
 				ifTrue: 
 					[struct lpszIcon: IDI_QUESTION.
 					dwStyle := (dwStyle maskClear: MB_ICONMASK) maskSet: MB_USERICON]]
@@ -538,7 +538,7 @@ messageBox: anExternalHandle text: textString caption: captionString style: styl
 			hInstance notNil ifTrue: [struct hInstance: hInstance asParameter]].
 	struct dwStyle: dwStyle.
 	struct hwndOwner: hWnd.
-	isTaskModal 
+	isTaskModal
 		ifTrue: 
 			["If taskModal, then the owner will be the desktop so we need to get actual active view"
 			hWnd := self getActiveWindow.
@@ -548,7 +548,7 @@ messageBox: anExternalHandle text: textString caption: captionString style: styl
 					[SessionManager inputState startIdleTimer: hWnd.
 					"Task modal only disables windows in the calling thread, so we can't use an
 					overlapped call here."
-					self messageBoxIndirect: struct] 
+					self messageBoxIndirect: struct]
 							ensure: [SessionManager inputState stopIdleTimer: hWnd]]
 		ifFalse: 
 			[wasDisabled := (self isWindowEnabled: hWnd) not.
@@ -556,7 +556,7 @@ messageBox: anExternalHandle text: textString caption: captionString style: styl
 			losing control of the message loop. If the initiating process is the UI process then its
 			priority is boosted so that the operation requested by the user completes more quickly 
 			when the dialog is closed."
-			Processor forkMainIfMain 
+			Processor forkMainIfMain
 				ifTrue: 
 					[| proc |
 					proc := Processor activeProcess.

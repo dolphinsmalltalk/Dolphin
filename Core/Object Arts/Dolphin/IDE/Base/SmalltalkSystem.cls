@@ -931,7 +931,7 @@ browseReferencesToVariable: anAssociation
 
 	self browseReferencesToLiteral: anAssociation in: self systemEnvironment!
 
-browserEnvFromDom: anIXMLDOMDocument 
+browserEnvFromDom: anIXMLDOMDocument
 	| manifest classes env exeName time |
 	manifest := anIXMLDOMDocument selectSingleNode: './/Manifest'.
 	classes := manifest selectNodes: 'Classes/Class'.
@@ -940,12 +940,12 @@ browserEnvFromDom: anIXMLDOMDocument
 	time := (anIXMLDOMDocument selectSingleNode: './/TimeStamp') text.
 	env label: ('<1s> (<2s>)' expandMacrosWith: exeName with: time).
 	classes do: 
-			[:each | 
+			[:each |
 			| methods className classMethods |
-			className := (each selectSingleNode: 'Name') text asSymbol.
+			className := (each getAttribute: 'name') asSymbol.
 			Smalltalk at: className
 				ifPresent: 
-					[:class | 
+					[:class |
 					methods := each selectNodes: 'Methods/Method'.
 					env addClass: class selectors: (methods collect: [:eachMethod | eachMethod text asSymbol]).
 					classMethods := each selectNodes: 'ClassMethods/Method'.

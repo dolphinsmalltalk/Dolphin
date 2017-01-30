@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ImageManager subclass: #IconImageManager
 	instanceVariableNames: 'menuBitmaps'
@@ -46,6 +46,12 @@ new
 
 	^self shouldNotImplement!
 
+onPreStripImage
+	"Private -  Assist in the image stripping process by clearning down any
+	lazily initialized variables held by the receiver."
+
+	Current := nil!
+
 reset
 	"Reset the receiver. Kill off the current singleton instance"
 
@@ -65,6 +71,7 @@ uninitialize
 	Current := nil.! !
 !IconImageManager class categoriesFor: #current!instance creation!public! !
 !IconImageManager class categoriesFor: #new!instance creation!private! !
+!IconImageManager class categoriesFor: #onPreStripImage!class hierarchy-removing!private! !
 !IconImageManager class categoriesFor: #reset!operations!public! !
 !IconImageManager class categoriesFor: #stbReadFrom:format:!binary filing!public! !
 !IconImageManager class categoriesFor: #uninitialize!class hierarchy-removing!private! !

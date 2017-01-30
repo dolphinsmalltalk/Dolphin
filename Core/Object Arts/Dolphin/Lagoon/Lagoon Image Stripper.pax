@@ -23,6 +23,7 @@ package methodNames
 	add: #Package -> #rehydrateImageStripper:;
 	add: #UserLibrary -> #messageBox:lpText:lpCaption:uType:;
 	add: 'ExternalStructure class' -> #fullyCompileDefinition;
+	add: 'Object class' -> #onPreStripImage;
 	yourself.
 
 package binaryGlobalNames: (Set new
@@ -60,7 +61,7 @@ Model subclass: #BasicImageStripper
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 BasicImageStripper subclass: #ImageStripper
-	instanceVariableNames: 'rootPackageName executableName runtimeSessionManagerClass flags preStripScript versionResource termWnd stubFilePath logStream elementStack developmentClasses preservedMessages snapshotType rootClasses'
+	instanceVariableNames: 'rootPackageName executableName runtimeSessionManagerClass flags preStripScript versionResource preservedAspectSetters stubFilePath logStream elementStack developmentClasses preservedMessages snapshotType rootClasses'
 	classVariableNames: 'AllResourcesStripped ClearGuidsMask CompileStructsMask EmptyMethodDictsMask FoldBytecodesMask FoldMethodDictsMask FoldStringsMask IgnoreViewReferencesMask LogPrerequisitesMask LogReferencesMask NoXPManifestMask PreserveAspectsMask RetainInstVarNamesMask RetainSubclassRespMask StripClassBuilderMask StripClassesMask StripClassInfoMask StripDeprecatedMask StripMethodsMask StripPackagesMask StripResourcesMask StripShouldNotImplMask ToGoMask UnattendedMask WriteLogMask'
 	poolDictionaries: 'MessageBoxConstants Win32Constants'
 	classInstanceVariableNames: ''!
@@ -81,6 +82,15 @@ fullyCompileDefinition
 	self template do: [:each | each beCompiled].
 	self recompileDefinition; shrink.! !
 !ExternalStructure class categoriesFor: #fullyCompileDefinition!development!public! !
+
+!Object class methodsFor!
+
+onPreStripImage
+	"Private - Tidy up the receiver's lazily initialized class vars in preparation for image stripping."
+
+	"Allows PropertyManager to be stripped if #propertyManager is never sent. If it is the method will still ref the var binding."
+	classPool removeKey: '_PropertyRegister'! !
+!Object class categoriesFor: #onPreStripImage!class hierarchy-removing!private! !
 
 !Package methodsFor!
 

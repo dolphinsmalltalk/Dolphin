@@ -133,7 +133,7 @@ createDC: lpszDriver lpszDevice: lpszDevice lpszOutput: lpszOutput lpInitData: l
 			LPCSTR lpszOutput,
 			DEVMODE* lpInitData);"
 
-	<stdcall: handle CreateDCA lpstr lpstr lpstr DEVMODE*>
+	<stdcall: handle CreateDCA lpstr lpstr lpstr void*>
 	^self invalidCall!
 
 createDIBSection: hdc pbmi: pbmi iUsage: iUsage ppvBits: ppvBits hSection: hSection dwOffset: dwOffset
@@ -1154,7 +1154,7 @@ textOut: hdc nXStart: nXStart nYStart: nYStart lpString: lpString cbString: cbSt
 !GDILibrary categoriesFor: #createBrushIndirect:!**auto generated**!public!win32 functions-brush! !
 !GDILibrary categoriesFor: #createCompatibleBitmap:nWidth:nHeight:!**auto generated**!public!win32 functions-bitmap! !
 !GDILibrary categoriesFor: #createCompatibleDC:!**auto generated**!public!win32 functions-device context! !
-!GDILibrary categoriesFor: #createDC:lpszDevice:lpszOutput:lpInitData:!**auto generated**!public!win32 functions-device context! !
+!GDILibrary categoriesFor: #createDC:lpszDevice:lpszOutput:lpInitData:!public!win32 functions-device context! !
 !GDILibrary categoriesFor: #createDIBSection:pbmi:iUsage:ppvBits:hSection:dwOffset:!**auto generated**!public!win32 functions-bitmap! !
 !GDILibrary categoriesFor: #createEllipticRgnIndirect:!**auto generated**!public!win32 functions-region! !
 !GDILibrary categoriesFor: #createFontIndirect:!**auto generated**!public!win32 functions-font and text! !

@@ -45,11 +45,11 @@ aboutToIdle
 	| now interval |
 	self ensureProcessesRunning.
 	Delay aboutToIdle.
-	now := self millisecondClockValue.
+	now := self millisecondClock.
 	interval := now - lastGCTime.
 	(interval > self gcInterval or: [interval < 0]) ifFalse: [^self].
 	self collectGarbage.
-	lastGCDuration := self millisecondClockValue - now max: 10.
+	lastGCDuration := self millisecondClock - now max: 10.
 	gcInterval := GCInterval max: (lastGCDuration * 2 max: self minGCInterval)!
 
 administerLastRites
@@ -136,9 +136,9 @@ collectGarbage
 	Should this be the behaviour desired, then weaklings must clear away corpses themselves
 	from their #elementsExpired: method."
 
-	lastGCTime := self millisecondClockValue.
+	lastGCTime := self millisecondClock.
 	self primCollectGarbage: 0.
-	lastGCDuration := self millisecondClockValue - lastGCTime!
+	lastGCDuration := self millisecondClock - lastGCTime!
 
 compact
 	"Private - Invoke the slow (compacting) garbage collector to minimize the size
@@ -300,7 +300,7 @@ maxObjects
 
 	^maxObjects!
 
-millisecondClockValue
+millisecondClock
 	"Private - Answer the current millisecond clock value."
 
 	<primitive: 174>
@@ -353,12 +353,12 @@ otOverflow: anInteger
 	VM."
 
 	| now |
-	now := self millisecondClockValue.
+	now := self millisecondClock.
 	now - lastGCTime > (lastGCDuration * 4)
 		ifTrue: 
 			[lastGCTime := now.
 			self primCollectGarbage: 1.
-			lastGCDuration := self millisecondClockValue - now max: 10].
+			lastGCDuration := self millisecondClock - now max: 10].
 	"This interrupt is only ever sent to the active process, therefore no need to reschedule"
 	Processor enableAsyncEvents: true.
 	"Trigger an event so apps can monitor their memory consumption. Note that this will fire in
@@ -464,10 +464,10 @@ undertakerMain
 !MemoryManager categoriesFor: #forkUndertaker!finalizing!private! !
 !MemoryManager categoriesFor: #gcInterval!accessing!private! !
 !MemoryManager categoriesFor: #hospiceOverflow:!interrupts-handling!private! !
-!MemoryManager categoriesFor: #initialize!initializing!private! !
+!MemoryManager categoriesFor: #initialize!development!initializing!private! !
 !MemoryManager categoriesFor: #instanceStats:!enquiries!public! !
 !MemoryManager categoriesFor: #maxObjects!accessing!public! !
-!MemoryManager categoriesFor: #millisecondClockValue!enquiries!private! !
+!MemoryManager categoriesFor: #millisecondClock!enquiries!private! !
 !MemoryManager categoriesFor: #minGCInterval!accessing!private! !
 !MemoryManager categoriesFor: #objectCount!garbage collection!private! !
 !MemoryManager categoriesFor: #objectHeaderSize!accessing!private! !

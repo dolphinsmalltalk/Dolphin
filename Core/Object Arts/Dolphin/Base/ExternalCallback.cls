@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #ExternalCallback
 	instanceVariableNames: 'thunk cookie descriptor'
@@ -6,6 +6,9 @@ Object subclass: #ExternalCallback
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
 ExternalCallback guid: (GUID fromString: '{87B4C486-026E-11D3-9FD7-00A0CC3E4A32}')!
+ExternalCallback addClassConstant: 'ArgSizeOffset' value: 14!
+ExternalCallback addClassConstant: 'MaxThunks' value: 256!
+ExternalCallback addClassConstant: 'ThunkSize' value: 16!
 ExternalCallback comment: ''!
 !ExternalCallback categoriesForClass!System-Support! !
 !ExternalCallback methodsFor!
@@ -217,14 +220,14 @@ initialize
 		ExternalCallback initialize
 	"
 
-	ThunkSize := 16.
+	self addClassConstant: 'ThunkSize' value: 16.
 	self assert: [(4096 rem: ThunkSize) = 0].
 	"The maximum number of callback that can be allocated at any one time is limited by
 	MaxThunks. If insufficient, increase by a multiple of 256 and restart."
-	MaxThunks := 256.
+	self addClassConstant: 'MaxThunks' value: 256.
 	self assert: [(ThunkSize * MaxThunks rem: 4096) = 0].
 	Registry isNil ifTrue: [self clear].
-	ArgSizeOffset := ThunkSize - 2!
+	self addClassConstant: 'ArgSizeOffset' value: ThunkSize - 2!
 
 new
 	"Answer a new registered instance of the receiver with a unique magic cookie."

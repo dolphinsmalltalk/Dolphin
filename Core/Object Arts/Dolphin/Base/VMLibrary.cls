@@ -144,11 +144,6 @@ defaultProductDetails
 		at: 8 put: nil; "Boot info"
 		yourself!
 
-displayDesktopMessage: aString 
-	<stdcall: handle DisplayDesktopMessage lpstr>
-	^self invalidCall
-!
-
 dump: msgString path: pathString stackDepth: slotsInteger walkbackDepth: framesInteger
 	"Write a VM state log to the file with <readableString> path, pathString, with the 
 	<readableString> message, msgString, as the header description, and with the
@@ -529,7 +524,6 @@ versionFormatString
 !VMLibrary categoriesFor: #crtHandle!accessing-handles!private! !
 !VMLibrary categoriesFor: #debugDump:!exceptions!private! !
 !VMLibrary categoriesFor: #defaultProductDetails!accessing!private! !
-!VMLibrary categoriesFor: #displayDesktopMessage:!operations!private! !
 !VMLibrary categoriesFor: #dump:path:stackDepth:walkbackDepth:!exceptions!private! !
 !VMLibrary categoriesFor: #emptyBlock!accessing-handles!private! !
 !VMLibrary categoriesFor: #errorIntegerMoreThan32Bits:!exceptions!private! !
