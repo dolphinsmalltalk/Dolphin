@@ -131,7 +131,7 @@ hasGdiPalettes
 	"Wine doesn't yet implement GDILibrary>>getPaletteEntries:"
 
 	#wineFix.
-	^KernelLibrary isWine not!
+	^NTLibrary isWine not!
 
 hasIconScaleDown
 	"Answer whether the host supports scaling down of larger icons when the requested size is
@@ -141,7 +141,7 @@ hasIconScaleDown
 	availble under Vista and later. Hence we don't allow this to be called even if the Windows
 	version indicates Vista is available."
 
-	^VMLibrary default isWindowsVistaOrGreater and: [KernelLibrary isWine not]!
+	^VMLibrary default isWindowsVistaOrGreater and: [NTLibrary isWine not]!
 
 hasImageListDragCursors
 	"Answer whether the host supports using image lists for drag cursors."
@@ -149,13 +149,13 @@ hasImageListDragCursors
 	"Wine doesn't appear to support setting drag cursors from image lists."
 
 	#wineFix.
-	^KernelLibrary isWine not!
+	^NTLibrary isWine not!
 
 hasInternetExplorerControl
 	"Answer whether the host provides an Internet Explorer control."
 
 	#wineFix.
-	^KernelLibrary isWine not!
+	^NTLibrary isWine not!
 
 hasLinkButtons
 	"Answer whether the host supports link buttons (i.e. push buttons with the BS_COMMANDLINK
@@ -201,7 +201,7 @@ hasTextBoxMargins
 	"Wine doesn't yet implement EM_SETMARGINS "
 
 	#wineFix.
-	^KernelLibrary isWine not!
+	^NTLibrary isWine not!
 
 hasThemes
 	"Answer whether the host support desktop themes (XP and later)."
@@ -209,7 +209,7 @@ hasThemes
 	^VMLibrary default isWindowsXPOrGreater and: 
 			["Wine currently errors on theme APIs, so bypass"
 			#wineFix.
-			KernelLibrary isWine not]!
+			NTLibrary isWine not]!
 
 hasTreeViewHotTracking
 	"Does the host support hot tracking in tree views?"
