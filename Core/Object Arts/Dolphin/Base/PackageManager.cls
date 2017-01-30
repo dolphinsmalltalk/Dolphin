@@ -954,7 +954,10 @@ onPreStripImage
 
 	packagedGlobals := nil.
 	self release.
-	self beNotProcessingEvents !
+	self beNotProcessingEvents.
+	self forgetLooseMethods.
+	"Allow the search policy used for the loose methods cache to be stripped if not used elsewhere"
+	AssociationSearchPolicy uninitialize!
 
 packagedGlobals
 	"Private - Answer an <IdentityDictionary> which maps the symbolic names of all packaged

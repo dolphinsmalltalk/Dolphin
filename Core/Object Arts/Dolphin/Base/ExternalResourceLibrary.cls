@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ExternalLibrary subclass: #ExternalResourceLibrary
 	instanceVariableNames: 'fileName loadFlags'
@@ -108,7 +108,7 @@ onPreStripImage
 	"Private - The image is about to be stripped, close down defaults to allow unused
 	subclasses to be stripped."
 
-	self closeAllDefaults!
+	self initialize!
 
 open: aString
 	"Answer an instance of the receiver which references the external

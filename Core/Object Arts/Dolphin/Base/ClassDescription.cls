@@ -789,7 +789,7 @@ selectorsInCategory: category
 	"Answer an <Collection> of selector <Symbol>s, of the receiver's methods 
 	which are included in the <methodCategory>, category."
 
-	^self methodsCatalogue at: category ifAbsent: [Array new]!
+	^self methodsCatalogue at: category ifAbsent: [#()]!
 
 setInstanceVariables: aCollection
 	"Private - Set the instance variable string of the receiver to be the list

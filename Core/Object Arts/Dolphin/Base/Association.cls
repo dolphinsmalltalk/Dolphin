@@ -16,6 +16,9 @@ a key and a value. It is used for the elements of Dictionaries.'!
 
 	^key < anAssociation key!
 
+<= operand
+	^key <= operand key!
+
 = anAssociation 
 	"Answer whether the receiver is equal to the argument."
 
@@ -81,6 +84,7 @@ value: aValue
 	value := aValue
 ! !
 !Association categoriesFor: #<!comparing!public! !
+!Association categoriesFor: #<=!comparing!public! !
 !Association categoriesFor: #=!comparing!public! !
 !Association categoriesFor: #displayOn:!printing!public! !
 !Association categoriesFor: #hash!comparing!public! !
