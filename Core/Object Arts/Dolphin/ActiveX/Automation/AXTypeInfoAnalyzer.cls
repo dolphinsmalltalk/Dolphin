@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 AXTypeInfoObject subclass: #AXTypeInfoAnalyzer
 	instanceVariableNames: 'typeLib globalBinding guid index basicName'
@@ -234,6 +234,11 @@ isInstalled
 		glob := self global.
 		glob methodDictionary notEmpty or: [glob class methodDictionary notEmpty]]!
 
+isStructure
+	"Answer whether the receiver describes a struct or union type."
+
+	^false!
+
 isUnion
 	"Answer whether the receiver describes a union."
 
@@ -368,6 +373,7 @@ vt
 !AXTypeInfoAnalyzer categoriesFor: #isGlobalDefined!public!testing! !
 !AXTypeInfoAnalyzer categoriesFor: #isHidden!public!testing! !
 !AXTypeInfoAnalyzer categoriesFor: #isInstalled!public!testing! !
+!AXTypeInfoAnalyzer categoriesFor: #isStructure!public!testing! !
 !AXTypeInfoAnalyzer categoriesFor: #isUnion!public!testing! !
 !AXTypeInfoAnalyzer categoriesFor: #nameOfID:!accessing!public! !
 !AXTypeInfoAnalyzer categoriesFor: #nameOfID:ifAbsent:!accessing!public! !

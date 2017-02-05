@@ -140,13 +140,14 @@ package methodNames
 	add: #AXStructureTypeAnalyzer -> #generateGlobalDefinition:;
 	add: #AXStructureTypeAnalyzer -> #generateInstanceSide:;
 	add: #AXStructureTypeAnalyzer -> #generateTypeLibAccessor;
+	add: #AXStructureTypeAnalyzer -> #generateWrapper;
+	add: #AXStructureTypeAnalyzer -> #printAnonymousStruct:offset:prefix:on:;
 	add: #AXStructureTypeAnalyzer -> #printClassCommentPreambleOn:;
-	add: #AXStructureTypeAnalyzer -> #printFieldDefinition:offset:on:;
-	add: #AXStructureTypeAnalyzer -> #printFieldDefinitionsOn:offset:;
+	add: #AXStructureTypeAnalyzer -> #printFieldDefinition:offset:prefix:on:;
+	add: #AXStructureTypeAnalyzer -> #printFieldDefinitionsOn:offset:prefix:;
 	add: #AXStructureTypeAnalyzer -> #printIDLBodyOn:indent:;
 	add: #AXStructureTypeAnalyzer -> #printIDLForVariablesOn:indent:;
 	add: #AXStructureTypeAnalyzer -> #printIDLOn:indent:;
-	add: #AXStructureTypeAnalyzer -> #printUnionDefinition:offset:on:;
 	add: #AXTypeInfoAnalyzer -> #autoGenCategoryName;
 	add: #AXTypeInfoAnalyzer -> #autoGenMethodComment;
 	add: #AXTypeInfoAnalyzer -> #baseClassCheck:;
@@ -1930,7 +1931,7 @@ generateDefineFields
 		nextPutAll: #defineFields;
 		crtab;
 		nextPut: $";
-		nextPutAll: ('Define the fields of the <1s> structure.<n><n><t><2s>  compileDefinition<n><n>' 
+		nextPutAll: ('Define the fields of the <1s> structure.<n><n><t><2s>  compileDefinition<n><n>'
 					expandMacrosWith: self name
 					with: self globalName).
 	idl := String writeStream.
@@ -1938,7 +1939,10 @@ generateDefineFields
 	self emitComment: idl contents on: target.
 	self printAutoGenMethodPostambleOn: target.
 	target nextPutAll: 'self'.
-	self printFieldDefinitionsOn: target offset: 0.
+	self
+		printFieldDefinitionsOn: target
+		offset: 0
+		prefix: ''.
 	target
 		nextPut: $.;
 		crtab;
@@ -1981,6 +1985,15 @@ generateTypeLibAccessor
 		display: tlbInterface libraryAndIndex value.
 	self compileClassMethod: target contents categories: self classInitializerCategories!
 
+generateWrapper
+	^(BuiltIns at: self guid ifAbsent: []) ifNil: [super generateWrapper]!
+
+printAnonymousStruct: aVARDESC offset: anInteger prefix: aString on: aWriteStream
+	aVARDESC tdesc typeInfo
+		printFieldDefinitionsOn: aWriteStream
+		offset: anInteger + aVARDESC oInst
+		prefix: aString , (aVARDESC isAnonymous ifTrue: [''] ifFalse: [aVARDESC name , '_'])!
+
 printClassCommentPreambleOn: target
 	"Private - Print a comment preamble appropriate for the receiver onto the 
 	<puttableStream>, target."
@@ -1998,19 +2011,20 @@ printClassCommentPreambleOn: target
 		nextPutAll: lib helpstring;
 		nextPutAll: ''' library.'!
 
-printFieldDefinition: aVARDESC offset: anInteger on: aPuttableStream 
+printFieldDefinition: aVARDESC offset: anInteger prefix: aString on: aPuttableStream
 	| classdesc |
 	aPuttableStream
 		crtab: 2;
 		nextPutAll: 'defineField: #';
+		nextPutAll: aString;
 		nextPutAll: aVARDESC name;
 		nextPutAll: ' type: '.
 	classdesc := aVARDESC classDesc.
-	classdesc key 
+	classdesc key
 		printStructField: aVARDESC
 		indirections: classdesc value
 		on: aPuttableStream.
-	aVARDESC isReadOnly 
+	aVARDESC isReadOnly
 		ifTrue: 
 			[aPuttableStream
 				space;
@@ -2020,19 +2034,21 @@ printFieldDefinition: aVARDESC offset: anInteger on: aPuttableStream
 		nextPutAll: ' offset: ';
 		print: anInteger + aVARDESC oInst!
 
-printFieldDefinitionsOn: aPuttableStream offset: anInteger 
+printFieldDefinitionsOn: aPuttableStream offset: anInteger prefix: aString
 	self variables do: 
-			[:each | 
-			each isUnion 
+			[:each |
+			each tdesc isAnonymous
 				ifTrue: 
-					[self 
-						printUnionDefinition: each
+					[self
+						printAnonymousStruct: each
 						offset: anInteger
+						prefix: aString
 						on: aPuttableStream]
 				ifFalse: 
-					[self 
+					[self
 						printFieldDefinition: each
 						offset: anInteger
+						prefix: aString
 						on: aPuttableStream]]
 		separatedBy: [aPuttableStream nextPut: $;]!
 
@@ -2071,12 +2087,7 @@ printIDLOn: target indent: tabs
 		tab: tabs;
 		nextPutAll: 'typedef '.
 	self printIDLAttributesOn: target indent: -1.
-	self printIDLBodyOn: target indent: tabs!
-
-printUnionDefinition: aVARDESC offset: anInteger on: aWriteStream 
-	| union |
-	union := aVARDESC tdesc getRefType.
-	union printFieldDefinitionsOn: aWriteStream offset: anInteger + aVARDESC oInst! !
+	self printIDLBodyOn: target indent: tabs! !
 !AXStructureTypeAnalyzer categoriesFor: #classMethodCategoryClass!constants!private! !
 !AXStructureTypeAnalyzer categoriesFor: #conformsToRequiredProtocols:!development!private!testing! !
 !AXStructureTypeAnalyzer categoriesFor: #generateClassSide:!development!private! !
@@ -2084,13 +2095,14 @@ printUnionDefinition: aVARDESC offset: anInteger on: aWriteStream
 !AXStructureTypeAnalyzer categoriesFor: #generateGlobalDefinition:!development!private! !
 !AXStructureTypeAnalyzer categoriesFor: #generateInstanceSide:!development!private! !
 !AXStructureTypeAnalyzer categoriesFor: #generateTypeLibAccessor!automatic generation!development!private! !
+!AXStructureTypeAnalyzer categoriesFor: #generateWrapper!development!private! !
+!AXStructureTypeAnalyzer categoriesFor: #printAnonymousStruct:offset:prefix:on:!private! !
 !AXStructureTypeAnalyzer categoriesFor: #printClassCommentPreambleOn:!development!printing!private! !
-!AXStructureTypeAnalyzer categoriesFor: #printFieldDefinition:offset:on:!development!private! !
-!AXStructureTypeAnalyzer categoriesFor: #printFieldDefinitionsOn:offset:!development!private! !
+!AXStructureTypeAnalyzer categoriesFor: #printFieldDefinition:offset:prefix:on:!development!private! !
+!AXStructureTypeAnalyzer categoriesFor: #printFieldDefinitionsOn:offset:prefix:!development!private! !
 !AXStructureTypeAnalyzer categoriesFor: #printIDLBodyOn:indent:!development!printing-IDL!private! !
 !AXStructureTypeAnalyzer categoriesFor: #printIDLForVariablesOn:indent:!development!printing-IDL!private! !
 !AXStructureTypeAnalyzer categoriesFor: #printIDLOn:indent:!development!printing-IDL!public! !
-!AXStructureTypeAnalyzer categoriesFor: #printUnionDefinition:offset:on:!public! !
 
 !AXStructureTypeAnalyzer class methodsFor!
 
@@ -2699,7 +2711,7 @@ printIDLDecl: name type: tdesc on: target
 						ifTrue: 
 							["Chase down the actual type via the referenced Type Info."
 
-							target nextPutAll: tdesc getRefType name]
+							target nextPutAll: tdesc typeInfo name]
 						ifFalse: [target nextPutAll: (self idlTypeOfVT: vt)]]].
 	name notEmpty 
 		ifTrue: 
@@ -2707,39 +2719,43 @@ printIDLDecl: name type: tdesc on: target
 				space;
 				nextPutAll: name]!
 
-printIDLForVariable: aVARDESC on: aPuttableStream indent: anInteger 
+printIDLForVariable: aVARDESC on: aPuttableStream indent: anInteger
 	"Private - Generate an IDL-style description of the property described by the 
 	<VARDESC>, on the <puttableStream>. This is useful for documentary purposes,
 	e.g. in method comments."
 
-	| isConst |
-	(self 
+	| isConst typedesc |
+	(self
 		printIDLAttributes: aVARDESC idlAttributes
 		on: aPuttableStream
 		indent: -1) ifTrue: [aPuttableStream space].
-	aVARDESC isUnion 
+	typedesc := aVARDESC tdesc.
+	typedesc isAnonymous
 		ifTrue: 
-			[| union |
-			union := aVARDESC tdesc getRefType.
-			(union name beginsWith: '_MIDL_') 
-				ifTrue: 
+			[| structure |
+			structure := typedesc typeInfo.
+			aPuttableStream
+				nextPutAll: structure idlKeyword;
+				space;
+				nextPut: ${.
+			structure printIDLForVariablesOn: aPuttableStream indent: anInteger + 1.
+			aPuttableStream
+				crtab: anInteger;
+				nextPut: $}.
+			aVARDESC isAnonymous
+				ifFalse: 
 					[aPuttableStream
-						nextPutAll: union idlKeyword;
 						space;
-						nextPut: ${.
-					union printIDLForVariablesOn: aPuttableStream indent: anInteger + 1.
-					aPuttableStream
-						crtab: anInteger;
-						nextPut: $};
-						nextPut: $;.
-					^self]].
+						nextPutAll: aVARDESC name].
+			aPuttableStream nextPut: $;.
+			^self].
 	isConst := aVARDESC isSymbolicConstant.
 	isConst ifTrue: [aPuttableStream nextPutAll: 'const '].
-	self 
+	self
 		printIDLDecl: aVARDESC name
-		type: aVARDESC tdesc
+		type: typedesc
 		on: aPuttableStream.
-	isConst 
+	isConst
 		ifTrue: 
 			[aPuttableStream
 				nextPutAll: ' = ';
@@ -2818,7 +2834,7 @@ You can Ignore this warning, but it is suggested that you check the location of 
 	mb 
 		caption: ('Dolphin Type Library Analyzer: Generating <1s>.<2s>' expandMacrosWith: self typeLib name
 				with: self name).
-	mb style: #abortRetryIgnore.
+	mb buttonStyle: #abortRetryIgnore.
 	mb defaultButton: 2.
 	^mb open! !
 !AXTypeInfoAnalyzer categoriesFor: #autoGenCategoryName!constants!private! !
@@ -3698,7 +3714,11 @@ printIDLOn: aPuttableStream indent: anInteger
 			[:e | 
 			e printIDLOn: aPuttableStream indent: childIndent.
 			aPuttableStream crtab: anInteger].
-	self structs do: 
+	self namedStructs do: 
+			[:s | 
+			s printIDLOn: aPuttableStream indent: childIndent.
+			aPuttableStream crtab: anInteger].
+	self namedUnions do: 
 			[:s | 
 			s printIDLOn: aPuttableStream indent: childIndent.
 			aPuttableStream crtab: anInteger].
@@ -4005,8 +4025,8 @@ publishedAspectsOfInstances
 		add: (Aspect sequenceableCollection: #coclasses) beReadOnly;
 		add: (Aspect sequenceableCollection: #enums) beReadOnly;
 		add: (Aspect sequenceableCollection: #modules) beReadOnly;
-		add: (Aspect sequenceableCollection: #structs) beReadOnly;
-		add: (Aspect sequenceableCollection: #unions) beReadOnly;
+		add: (Aspect sequenceableCollection: #namedStructs) beReadOnly;
+		add: (Aspect sequenceableCollection: #namedUnions) beReadOnly;
 		add: (Aspect sequenceableCollection: #typedefs) beReadOnly;
 		yourself!
 
@@ -5332,7 +5352,7 @@ generateWrapper
 	by the receiver. There is no wrapper for alias types in Dolphin, but we can
 	wrap the aliased type."
 
-	^self tdesc getRefType generate!
+	^self tdesc typeInfo generate!
 
 idlAttributes
 	"Private - Answer a <sequencedReadableCollection> of IDL-style attributes

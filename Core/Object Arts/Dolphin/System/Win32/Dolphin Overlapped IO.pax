@@ -108,7 +108,7 @@ postQueuedCompletionStatus: completionPort dwNumberOfBytesTransferred: dwNumberO
 			[in]unsigned long dwCompletionKey,
 			[in]OVERLAPPED* lpOverlapped);"
 
-	<stdcall: sdword GetQueuedCompletionStatus sdword dword dword OVERLAPPED*>
+	<stdcall: sdword PostQueuedCompletionStatus sdword dword dword OVERLAPPED*>
 	^self invalidCall! !
 !KernelLibrary categoriesFor: #cancelIo:!**auto generated**!public! !
 !KernelLibrary categoriesFor: #createIoCompletionPort:existingCompletionPort:completionKey:numberOfConcurrentThreads:!**auto generated**!public! !

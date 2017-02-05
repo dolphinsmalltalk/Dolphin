@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 AXMemberDesc subclass: #VARDESC
 	instanceVariableNames: ''
@@ -60,6 +60,15 @@ getValidFields
 	fields := super getValidFields.
 	self isSymbolicConstant ifFalse: [fields remove: #lpvarValue].
 	^fields!
+
+isAnonymous
+	"Answer whether the variable described by the receiver is anonymous (i.e. unnamed). This is
+	independent of whether the type of the variable is anonymous."
+
+	"This relies on an implementation detail of MIDL, but there is (it would appear) no other
+	way to tell if the variable was unnamed in the original IDL."
+
+	^self name beginsWith: '__MIDL_'!
 
 isReadOnly
 	"Answer whether the receiver is describing a read-only variable/property."
@@ -124,6 +133,7 @@ wVarFlags
 !VARDESC categoriesFor: #elemDesc!accessing!public! !
 !VARDESC categoriesFor: #flags!accessing!private! !
 !VARDESC categoriesFor: #getValidFields!accessing!private! !
+!VARDESC categoriesFor: #isAnonymous!public!testing! !
 !VARDESC categoriesFor: #isReadOnly!public!testing! !
 !VARDESC categoriesFor: #isRequestEdit!public!testing! !
 !VARDESC categoriesFor: #isRestricted!public!testing! !
