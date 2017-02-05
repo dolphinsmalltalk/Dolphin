@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 AXTypeInfoStructure subclass: #AXMemberDesc
 	instanceVariableNames: ''
@@ -184,10 +184,10 @@ name
 	^piTypeInfo nameOfID: self memid!
 
 tdesc
-	"Private - Answer a TYPEDESC describing the receiver's return type.
-	N.B. The return type is the type of the argument marked with the 'retval'
-	attribute in the IDL, or, if there is no retval argument, the return type of
-	the function (usually HRESULT)."
+	"Private - Answer a TYPEDESC describing the type of the receiver. For a function this is the
+	return type, for a variable the type of the variable. N.B. The return type of a function is
+	the type of the argument marked with the 'retval' attribute in the IDL, or, if there is no
+	retval argument, the return type of the function (usually HRESULT)."
 
 	^self elemDesc tdesc! !
 !AXMemberDesc categoriesFor: #=!comparing!public! !

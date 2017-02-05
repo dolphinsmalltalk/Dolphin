@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 AXTypeInfoObject subclass: #AXTypeLibraryAnalyzer
 	instanceVariableNames: 'attributes prefix packageName globalName constantsPoolName aliasMap typeAnalyzers'
@@ -348,6 +348,18 @@ modules
 
 	^self selectTypeKind: TKIND_MODULE!
 
+namedStructs
+	"Answer a <sequencedReadableCollection> of all the named structs (i.e. excluding anonymous
+	structs) described in the receiver."
+
+	^self structs reject: [:each | each isAnonymous]!
+
+namedUnions
+	"Answer a <sequencedReadableCollection> of all the named unions (i.e. excluding anonymous
+	unions) described in the receiver."
+
+	^self unions reject: [:each | each isAnonymous]!
+
 names
 	"Answer the 'names' of all the elements in the receiver."
 
@@ -545,8 +557,7 @@ uninitialize
 !
 
 unions
-	"Answer a <sequencedReadableCollection> of all the 
-	unions described in the receiver."
+	"Answer a <sequencedReadableCollection> of all the unions described in the receiver."
 
 	^self selectTypeKind: TKIND_UNION!
 
@@ -595,6 +606,8 @@ vtblInterfaces
 !AXTypeLibraryAnalyzer categoriesFor: #libid!accessing!public! !
 !AXTypeLibraryAnalyzer categoriesFor: #loadTypeLib!accessing!private! !
 !AXTypeLibraryAnalyzer categoriesFor: #modules!enumerating!public! !
+!AXTypeLibraryAnalyzer categoriesFor: #namedStructs!enumerating!public! !
+!AXTypeLibraryAnalyzer categoriesFor: #namedUnions!enumerating!public! !
 !AXTypeLibraryAnalyzer categoriesFor: #names!enumerating!public! !
 !AXTypeLibraryAnalyzer categoriesFor: #path!accessing!public! !
 !AXTypeLibraryAnalyzer categoriesFor: #realize!private!realizing/unrealizing! !

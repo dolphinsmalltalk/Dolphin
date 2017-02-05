@@ -1,8 +1,8 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 AXTypeInfoAnalyzer subclass: #AXStructureTypeAnalyzer
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: 'BuiltIns'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 AXStructureTypeAnalyzer guid: (GUID fromString: '{17F3FF59-EB25-47B0-8831-7E0D0960D84D}')!
@@ -26,6 +26,16 @@ classDesc
 	to the type."
 
 	^self global -> 0!
+
+isAnonymous
+	"Answer whether the receiver describes an anonymous (i.e. unnamed) structure or union."
+
+	^self name beginsWith: '_MIDL_'!
+
+isStructure
+	"Answer whether the receiver describes a struct or union type."
+
+	^true!
 
 members
 	"Answer <sequencedReadableCollection> of VARDESCs describing the 
@@ -60,6 +70,7 @@ suggestedBinding
 	defined in type libraries actually have an associated GUID."
 
 	| id |
+	self isAnonymous ifTrue: [^nil].
 	(id := self guid) isNull ifTrue: [^super suggestedBinding].
 	^(self baseClass classForGUID: id ifNone: []) 
 		ifNil: [super suggestedBinding]
@@ -67,8 +78,17 @@ suggestedBinding
 !AXStructureTypeAnalyzer categoriesFor: #baseClass!constants!private! !
 !AXStructureTypeAnalyzer categoriesFor: #byteSize!accessing!public! !
 !AXStructureTypeAnalyzer categoriesFor: #classDesc!constants!private! !
+!AXStructureTypeAnalyzer categoriesFor: #isAnonymous!public!testing! !
+!AXStructureTypeAnalyzer categoriesFor: #isStructure!public!testing! !
 !AXStructureTypeAnalyzer categoriesFor: #members!enumerating!public! !
 !AXStructureTypeAnalyzer categoriesFor: #name!accessing!public! !
 !AXStructureTypeAnalyzer categoriesFor: #recordInfoIfNone:!accessing!public! !
 !AXStructureTypeAnalyzer categoriesFor: #suggestedBinding!accessing!private! !
+
+!AXStructureTypeAnalyzer class methodsFor!
+
+initialize
+	BuiltIns := LookupTable new.
+	(Array with: ExternalHandle) do: [:each | BuiltIns at: each guid put: each]! !
+!AXStructureTypeAnalyzer class categoriesFor: #initialize!initializing!private! !
 

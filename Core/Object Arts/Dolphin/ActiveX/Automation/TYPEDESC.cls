@@ -1,7 +1,7 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 OLEStructure subclass: #TYPEDESC
-	instanceVariableNames: 'owner classDesc'
+	instanceVariableNames: 'owner classDesc typeInfo'
 	classVariableNames: ''
 	poolDictionaries: 'AXAutomationConstants'
 	classInstanceVariableNames: ''!
@@ -50,7 +50,7 @@ buildClassDesc
 			^(arryDesc key arrayType: arryDesc value) -> 0].
 	vt == VT_SAFEARRAY ifTrue: [^SAFEARRAY -> 1].
 	vt == VT_USERDEFINED 
-		ifTrue: [^owner isNil ifTrue: [ExternalStructure -> 1] ifFalse: [self getRefType classDesc]].
+		ifTrue: [^owner isNil ifTrue: [ExternalStructure -> 1] ifFalse: [self typeInfo classDesc]].
 	vt == VT_UNKNOWN ifTrue: [^IUnknown -> 1].
 	vt == VT_DISPATCH ifTrue: [^IDispatch -> 1].
 	^(VARIANT classForVT: vt) -> 0!
@@ -70,13 +70,26 @@ hreftype
 
 	^bytes dwordAtOffset: 0!
 
+isAnonymous
+	"Answer whether the type described by the receiver is an anonymous (i.e. unnamed)
+	struct or union type."
+
+	^self isStructure and: [self typeInfo isAnonymous]!
+
+isStructure
+	"Answer whether the receiver describes a user-defined struct or union type."
+
+	^self isUserDefined and: [self typeInfo isStructure]!
+
 isUnion
 	"Answer whether the receiver describes a user-defined union type."
 
-	| refType |
-	self vt = VT_USERDEFINED ifFalse: [^false].
-	refType := self getRefType.
-	^refType isUnion!
+	^self isUserDefined and: [self typeInfo isUnion]!
+
+isUserDefined
+	"Answer whether the receiver describes a user-defined type, e.g. a struct."
+
+	^self vt = VT_USERDEFINED!
 
 lpadesc
 	"Answer the receiver's lpadesc field as a Smalltalk object."
@@ -99,19 +112,22 @@ printOn: aStream
 
 	aStream
 		basicPrint: self;
-		nextPut: $(;
-		print: self typeName;
-		nextPut: $)!
+		nextPut: $(.
+	self isAnonymous
+		ifTrue: 
+			[aStream
+				nextPutAll: 'Anon: ';
+				print: self typeInfo name]
+		ifFalse: [aStream print: self typeName].
+	aStream nextPut: $)!
 
 tdesc
-	"Answer a <TYPEDESC> which is the type of the elmement for which the receiver
-	descibes a pointer or SAFEARRAY.
+	"Answer a <TYPEDESC> which is the type of the element described by the receiver.
 	Implementation Note: Set the back-pointer to be the same as the receiver's, since it
 	is the destruction of the <AXTypeInfoStructure> which we wish to postpone for the
 	lifetime of the TYPEDESC."
 
-	^self lptdesc
-		owner: owner!
+	^self lptdesc owner: owner!
 
 tdescArray
 	"Answer a <TYPEDESC> which is the type of the array described by the receiver.
@@ -122,14 +138,19 @@ tdescArray
 	^self lpadesc
 		owner: owner!
 
+typeInfo
+	^typeInfo ifNil: [typeInfo := self getRefType]!
+
 typeName
 	"Answer the Dolphin external type name for the type described by the receiver."
 
-	| desc answer |
-	desc := self classDesc.
-	answer := desc key typeName.
-	desc value timesRepeat: [answer := answer , '*'].
-	^answer!
+	^self isAnonymous
+		ifFalse: 
+			[| desc answer |
+			desc := self classDesc.
+			answer := desc key typeName.
+			desc value timesRepeat: [answer := answer , '*'].
+			answer]!
 
 vartype
 	"Private - Answer the ultimate (implementation) variant type of the receiver.
@@ -143,7 +164,7 @@ vartype
 		ifTrue: 
 			["Chase down the actual type via the referenced Type Info."
 
-			^self getRefType vt].
+			^self typeInfo vt].
 	^vt!
 
 vt
@@ -160,13 +181,17 @@ vtName
 !TYPEDESC categoriesFor: #classDesc!accessing!private! !
 !TYPEDESC categoriesFor: #getRefType!accessing!private! !
 !TYPEDESC categoriesFor: #hreftype!**compiled accessors**!public! !
+!TYPEDESC categoriesFor: #isAnonymous!public!testing! !
+!TYPEDESC categoriesFor: #isStructure!public!testing! !
 !TYPEDESC categoriesFor: #isUnion!public!testing! !
+!TYPEDESC categoriesFor: #isUserDefined!public!testing! !
 !TYPEDESC categoriesFor: #lpadesc!**compiled accessors**!public! !
 !TYPEDESC categoriesFor: #lptdesc!**compiled accessors**!public! !
 !TYPEDESC categoriesFor: #owner:!accessing!private! !
 !TYPEDESC categoriesFor: #printOn:!development!printing!public! !
 !TYPEDESC categoriesFor: #tdesc!accessing!public! !
 !TYPEDESC categoriesFor: #tdescArray!accessing!public! !
+!TYPEDESC categoriesFor: #typeInfo!accessing!public! !
 !TYPEDESC categoriesFor: #typeName!accessing!public! !
 !TYPEDESC categoriesFor: #vartype!accessing!public! !
 !TYPEDESC categoriesFor: #vt!**compiled accessors**!public! !

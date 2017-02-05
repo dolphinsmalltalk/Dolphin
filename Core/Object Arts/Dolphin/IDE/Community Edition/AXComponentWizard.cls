@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 SmalltalkToolShell subclass: #AXComponentWizard
 	instanceVariableNames: 'typeLibs types description guid globalName prefix packageName forcePackage cards libraryName libraryPath prefixClasses buffer typelibGlobal constantsPoolName highLevelWrappers classComments tracing defineProtocols defineFunctionTables lowercaseIdentifiers verboseTracing'
@@ -388,7 +388,7 @@ updateTypelibGlobal
 
 	globalName view isEnabled: typelibGlobal value!
 
-updateTypesList: typelib 
+updateTypesList: typelib
 	"Private - Populate the receiver's list of types that can be generated from the 
 	<AXTypeLibraryAnalyzer>, typelib."
 
@@ -397,9 +397,9 @@ updateTypesList: typelib
 	list := Array writeStream.
 	list
 		nextPutAll: typelib generatableInterfaces;
-		nextPutAll: typelib structs;
+		nextPutAll: typelib namedStructs;
 		nextPutAll: typelib generatableModules;
-		nextPutAll: typelib unions.
+		nextPutAll: typelib namedUnions.
 	types list: (list contents asSortedCollection: [:a :b | a name <= b name])! !
 !AXComponentWizard categoriesFor: #apply!operations!private! !
 !AXComponentWizard categoriesFor: #browseIDL!commands!public! !

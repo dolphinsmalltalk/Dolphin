@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 IUnknown subclass: #ITypeLib
 	instanceVariableNames: ''
@@ -316,16 +316,28 @@ open: pathName
 
 	^self open: pathName register: true!
 
-open: pathName register: aBoolean
+open: aString register: aBoolean
 	"Open the type library at the specified path and answer an instance of the
 	receiver on it. Optionally (re)register the type library."
 
-	| answer |
+	| answer oleaut wpath |
 	answer := self newPointer.
-	OLEAutLibrary default 
-		loadTypeLibEx: pathName asUnicodeString 
-		regkind: (aBoolean ifTrue: [REGKIND_REGISTER] ifFalse: [REGKIND_DEFAULT])
-		pptlib: answer.
+	oleaut := OLEAutLibrary default.
+	wpath := aString asUnicodeString.
+	oleaut loadTypeLib: wpath pptlib: answer.
+	aBoolean
+		ifTrue: 
+			["Attempt to register system wide first - this will fail if not running elevated"
+			(oleaut
+				registerTypeLib: answer
+				wszFullPath: wpath
+				wszHelpDir: nil) < S_OK
+				ifTrue: 
+					["Fall back on user specific registration, which does not require admin priviledges"
+					oleaut
+						registerTypeLibForUser: answer
+						szFullPath: wpath
+						szHelpDir: nil]].
 	^answer!
 
 queryPath: libid major: major minor: minor locale: locale
