@@ -20,6 +20,7 @@ Win32Errors at: 'ERROR_ALREADY_EXISTS' put: 16rB7!
 Win32Errors at: 'ERROR_FILE_NOT_FOUND' put: 16r2!
 Win32Errors at: 'ERROR_INVALID_HANDLE' put: 16r6!
 Win32Errors at: 'ERROR_INVALID_NAME' put: 16r7B!
+Win32Errors at: 'ERROR_MORE_DATA' put: 16rEA!
 Win32Errors at: 'ERROR_NO_MORE_FILES' put: 16r12!
 Win32Errors at: 'ERROR_NO_MORE_ITEMS' put: 16r103!
 Win32Errors at: 'ERROR_NOACCESS' put: 16r3E6!
@@ -27,6 +28,7 @@ Win32Errors at: 'ERROR_OPERATION_ABORTED' put: 16r3E3!
 Win32Errors at: 'ERROR_PROC_NOT_FOUND' put: 16r7F!
 Win32Errors at: 'ERROR_STACK_OVERFLOW' put: 16r3E9!
 Win32Errors at: 'ERROR_SUCCESS' put: 16r0!
+Win32Errors at: 'NO_ERROR' put: 16r0!
 Win32Errors at: 'S_FALSE' put: 16r1!
 Win32Errors at: 'S_OK' put: 16r0!
 Win32Errors at: 'SEVERITY_ERROR' put: 16r1!
