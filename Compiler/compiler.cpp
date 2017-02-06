@@ -2216,11 +2216,14 @@ void Compiler::mangleDescriptorReturnType(TypeDescriptor& retType, const TEXTRAN
 			// We can save the interpreter work by compiling down this info now, thereby allowing
 			// for improved run-time performance
 			unsigned byteSize = ((STBehavior*)GetObj(POTE(retType.parm)))->instSpec.extraSpec;
-
-			if (byteSize <= 4)
-				retType.type = DolphinX::ExtCallArgSTRUCT4;
-			else if (byteSize <= 8)
-				retType.type = DolphinX::ExtCallArgSTRUCT8;
+			
+			if (byteSize != 0)
+			{
+				if (byteSize <= 4)
+					retType.type = DolphinX::ExtCallArgSTRUCT4;
+				else if (byteSize <= 8)
+					retType.type = DolphinX::ExtCallArgSTRUCT8;
+			}
 		}
 	}
 	
