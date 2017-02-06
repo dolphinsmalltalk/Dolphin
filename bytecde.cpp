@@ -270,79 +270,68 @@ MethodOTE* __stdcall Interpreter::findNewMethodInClassNoCache(BehaviorOTE* class
 	const BehaviorOTE* currentClass = classPointer;
 	const SMALLUNSIGNED targetSelectorHash = targetSelector->m_idHash;
 	const Oop nil = Oop(Pointers.Nil);
-	while (Oop(currentClass) != nil)
+	do
 	{
-/*		#ifdef _DEBUG
+		Behavior* behavior = currentClass->m_location;
+		const MethodDictOTE* methodDictionary = behavior->m_methodDictionary;
+		if ((Oop)methodDictionary != nil)
 		{
-			if (abs(executionTrace) > 1)
-				TRACESTREAM << "Looking up " << targetSelector << " in " << currentClass << "\n";
-		}
-		#endif
-*/
-		const MethodDictOTE* methodDictionary = currentClass->m_location->m_methodDictionary;
-		// mask is the number of keys in the dictionary (which is pointer size - header - 2) minus 1
-		// as the size is a power of 2, thus we can avoid a modulus operation which is relatively slow
-		// requiring a division instruction
-		SMALLUNSIGNED lastKeyIndex = methodDictionary->pointersSize() - 
-										(ObjectHeaderSize + MethodDictionary::FixedSize + 1);
-		SMALLUNSIGNED index = targetSelectorHash & lastKeyIndex;
-		MethodDictionary* dict = methodDictionary->m_location;
+			// mask is the number of keys in the dictionary (which is pointer size - header - 2) minus 1
+			// as the size is a power of 2, thus we can avoid a modulus operation which is relatively slow
+			// requiring a division instruction
+			SMALLUNSIGNED lastKeyIndex = methodDictionary->pointersSize() - (ObjectHeaderSize + MethodDictionary::FixedSize + 1);
+			SMALLUNSIGNED index = targetSelectorHash & lastKeyIndex;
+			MethodDictionary* dict = methodDictionary->m_location;
 
-		bool wrapAround = false;
-
-		const SymbolOTE* nextSelector;
-		while (Oop(nextSelector = dict->m_selectors[index]) != nil)
-		{
-			if (nextSelector == targetSelector)
+			bool wrapped = false;
+			const SymbolOTE* nextSelector;
+			while (Oop(nextSelector = dict->m_selectors[index]) != nil)
 			{
-				// MethodDictionary is IdentityDictionary, which store values as an Array
-				const ArrayOTE* methodArray = dict->m_methods;
-				HARDASSERT(methodArray->m_oteClass == Pointers.ClassArray);
-				MethodOTE* methodPointer = reinterpret_cast<MethodOTE*>(methodArray->m_location->m_elements[index]);
-				HARDASSERT(ObjectMemory::isKindOf(methodPointer, Pointers.ClassCompiledMethod));
-
-				unsigned hashForCache = cacheHash(classPointer, targetSelector);
-				// Write back into the cache, no longer store selector in the cache
-				methodCache[hashForCache].selector			= targetSelector;
-				methodCache[hashForCache].classPointer 		= classPointer;
-				methodCache[hashForCache].method			= methodPointer;
-				methodCache[hashForCache].primAddress		= LookupMethodPrimitive(methodPointer);
-
-				#ifdef _DEBUG
+				if (nextSelector == targetSelector)
 				{
-					if (abs(executionTrace) > 1)
+					// MethodDictionary is IdentityDictionary, which store values as an Array
+					const ArrayOTE* methodArray = dict->m_methods;
+					HARDASSERT(methodArray->m_oteClass == Pointers.ClassArray);
+					MethodOTE* methodPointer = reinterpret_cast<MethodOTE*>(methodArray->m_location->m_elements[index]);
+					HARDASSERT(ObjectMemory::isKindOf(methodPointer, Pointers.ClassCompiledMethod));
+
+					unsigned hashForCache = cacheHash(classPointer, targetSelector);
+					// Write back into the cache, no longer store selector in the cache
+					methodCache[hashForCache].selector = targetSelector;
+					methodCache[hashForCache].classPointer = classPointer;
+					methodCache[hashForCache].method = methodPointer;
+					methodCache[hashForCache].primAddress = LookupMethodPrimitive(methodPointer);
+
+#ifdef _DEBUG
 					{
-						tracelock lock(TRACESTREAM);
-						TRACESTREAM << "Found method " << classPointer << ">>" << targetSelector << " (" << methodPointer << ")" << endl;
+						if (abs(executionTrace) > 1)
+						{
+							tracelock lock(TRACESTREAM);
+							TRACESTREAM << "Found method " << classPointer << ">>" << targetSelector << " (" << methodPointer << ")" << endl;
+						}
+					}
+#endif
+					return methodPointer;
+				}
+				else
+				{
+					if (++index > lastKeyIndex)
+					{
+						// Our IdentityDictionaries should not wrap around more than once, as they
+						// are guaranteed to contain empty slots, however there are a couple of corner
+						// cases where the dictonaries can be temporarily full after adding a new 
+						// element that takes the last slot (e.g. adding 2nd element to dict of capacity 2)
+						if (wrapped) break;
+						wrapped = true;
+						index = 0;
 					}
 				}
-				#endif
-				return methodPointer;
-			}
-			else
-			{
-				if (++index > lastKeyIndex)
-				{
-					// Our IdentityDictionaries should not wrap around more than once, as they
-					// are guaranteed to contain empty slots, but there is one case when the dict.
-					// is grown with only 1 element, and is of size 2, that it fills completely.
-					// This breaks the system if the dictionary in question is a method dictionary
-					// in the Dictionary hierarchy.
-					if (wrapAround)
-						break;
-					wrapAround = true;
-					index=0;
-				}
 			}
 		}
-		
-		//currentClass = superclassOf(currentClass);
-		currentClass = currentClass->m_location->m_superclass;
-	}
+		currentClass = behavior->m_superclass;
+	} while (Oop(currentClass) != nil);
 
-	// The message was not understood, try delegating, and if that fails, send a 
-	// #doesNotUnderstand: to the receiver.
-
+	// The message was not understood, send a #doesNotUnderstand: to the receiver.
 	return messageNotUnderstood(classPointer, argCount);
 }
 
@@ -754,45 +743,47 @@ MethodOTE* __fastcall Interpreter::lookupMethod(BehaviorOTE* classPointer, Symbo
 	const BehaviorOTE* currentClass=classPointer;
 	const SMALLUNSIGNED targetSelectorHash = targetSelector->m_idHash;
 	const Oop nil = Oop(Pointers.Nil);
-	while (Oop(currentClass) != nil)
+	do
 	{
-		const MethodDictOTE* methodDictionary = currentClass->m_location->m_methodDictionary;
-
-		SMALLUNSIGNED lastKeyIndex = methodDictionary->pointersSize() - (ObjectHeaderSize + MethodDictionary::FixedSize + 1);
-		ASSERT((((lastKeyIndex+1) >> 1) << 1) == (lastKeyIndex+1));
-		SMALLUNSIGNED index = targetSelectorHash & lastKeyIndex;
-
-		const MethodDictionary* dict = methodDictionary->m_location;
-
-		const SymbolOTE* nextSelector;
-		while (Oop(nextSelector = dict->m_selectors[index]) != nil)
+		const Behavior* current = currentClass->m_location;
+		const MethodDictOTE* methodDictionary = current->m_methodDictionary;
+		if ((Oop)methodDictionary != nil)
 		{
-			if (nextSelector == targetSelector)
+			SMALLUNSIGNED lastKeyIndex = methodDictionary->pointersSize() - (ObjectHeaderSize + MethodDictionary::FixedSize + 1);
+			ASSERT((((lastKeyIndex + 1) >> 1) << 1) == (lastKeyIndex + 1));
+			SMALLUNSIGNED index = targetSelectorHash & lastKeyIndex;
+
+			const MethodDictionary* dict = methodDictionary->m_location;
+
+			const SymbolOTE* nextSelector;
+			while (Oop(nextSelector = dict->m_selectors[index]) != nil)
 			{
-				// MethodDictionary is IdentityDictionary, which store values as an Array
-				const ArrayOTE* methodArray = dict->m_methods;
-				HARDASSERT(methodArray->m_oteClass == Pointers.ClassArray);
-				MethodOTE* methodPointer = reinterpret_cast<MethodOTE*>(methodArray->m_location->m_elements[index]);
-				HARDASSERT(ObjectMemory::isKindOf(methodPointer, Pointers.ClassCompiledMethod));
-				return methodPointer;
-			}
-			else
-			{
-				// Inc and test is quicker than mod.
-				if (++index > lastKeyIndex)
+				if (nextSelector == targetSelector)
 				{
-					// Our IdentityDictionaries cannot wrap around more than once, as they
-					// are guaranteed to contain empty slots.
-					index=0;
+					// MethodDictionary is IdentityDictionary, which store values as an Array
+					const ArrayOTE* methodArray = dict->m_methods;
+					HARDASSERT(methodArray->m_oteClass == Pointers.ClassArray);
+					MethodOTE* methodPointer = reinterpret_cast<MethodOTE*>(methodArray->m_location->m_elements[index]);
+					HARDASSERT(ObjectMemory::isKindOf(methodPointer, Pointers.ClassCompiledMethod));
+					return methodPointer;
+				}
+				else
+				{
+					// Inc and test is quicker than mod.
+					if (++index > lastKeyIndex)
+					{
+						// Our IdentityDictionaries cannot wrap around more than once, as they
+						// are guaranteed to contain empty slots.
+						index = 0;
+					}
 				}
 			}
 		}
-		
-		currentClass = currentClass->m_location->m_superclass;
-	}
+		currentClass = current->m_superclass;
+	} while ((Oop)currentClass != nil);
 
 	// We didn't find a method with matching selector
-	return reinterpret_cast<MethodOTE*>(Pointers.Nil);
+	return reinterpret_cast<MethodOTE*>(nil);
 }
 
 #pragma code_seg(DEBUG_SEG)

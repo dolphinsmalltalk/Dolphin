@@ -205,8 +205,8 @@ struct VMPointers //: public Object
 	BehaviorOTE* ClassLPBSTR;								// 145
 	BehaviorOTE* ClassQWORD;								// 146	Actually ULARGE_INTEGER
 	BehaviorOTE* ClassSQWORD;								// 147	Actually LARGE_INTEGER
-	BehaviorOTE* ClassUINT_PTR;								// 148
-	BehaviorOTE* ClassINT_PTR;								// 149
+	BehaviorOTE* _unused148;								// 148	Reserved for UINT_PTR
+	BehaviorOTE* _unused149;								// 149  Reserved for INT_PTR
 
 	SemaphoreOTE* TimingSemaphore;							// 150
 };

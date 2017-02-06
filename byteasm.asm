@@ -4034,12 +4034,7 @@ BEGINPROC execMethodOfClass
 	; Execute new method, and dispatch the next byte code
 	MExecNewMethod
 
-ENDPROC execMethodOfClass
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;
-
-BEGINPROC findMethodCacheMiss
+findMethodCacheMiss:
 	push	ecx
 	call	FINDNEWMETHODNOCACHE
 	mov		[NEWMETHOD], eax
@@ -4056,7 +4051,7 @@ BEGINPROC findMethodCacheMiss
 	; ECX = CompiledMethod*, EDX = arg count, EAX = primitive routine to call
 	MExecNewMethod
 	
-ENDPROC findMethodCacheMiss
+ENDPROC execMethodOfClass
 
 ;; Activate a method (i.e. update the calling stack frame's IP & sp, setup a new stack frame, and initialize appropriate interpreter 
 ;; registers to execute the new methods bytecodes, and set up a stack frame)

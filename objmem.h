@@ -302,7 +302,10 @@ public:
 	{
 		HARDASSERT(m_nZctEntries >= 0);
 
-		m_pZct[m_nZctEntries++] = reinterpret_cast<OTE*>(ote);
+		// If we don't use a temp here, compiler generates code that needlessly reads the field from memory multiple times
+		int zctEntries = m_nZctEntries;
+		m_pZct[zctEntries++] = reinterpret_cast<OTE*>(ote);
+		m_nZctEntries = zctEntries;
 
 #ifdef _DEBUG
 		if (alwaysReconcileOnAdd || m_nZctEntries >= m_nZctHighWater)
@@ -310,14 +313,16 @@ public:
 		if (m_nZctEntries >= m_nZctHighWater)
 #endif
 		{
-			if (m_bIsReconcilingZct)
+			if (!m_bIsReconcilingZct)
+			{
+				ReconcileZct();
+			}
+			else
 			{
 				// Uh oh, the Zct overflowed when attempting to repopulate it from the active process
 				// stack. We must "grow" it.
 				GrowZct();
 			}
-			else
-				ReconcileZct();
 		}
 	}
 
@@ -710,7 +715,7 @@ inline Oop ObjectMemory::nilOutPointer(Oop& objectPointer)
 inline OTE* ObjectMemory::nilOutPointer(OTE*& ote)
 {
 	ote->countDown();
-	return ote = Pointers.Nil;
+	return ote = const_cast<OTE*>(Pointers.Nil);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
