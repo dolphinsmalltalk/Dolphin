@@ -83,3 +83,7 @@ Behavior addClassConstant: '_NullMethodDictionary'
 		value: ((MethodDictionary new)
 				isImmutable: true;
 				yourself)!
+
+ExternalCallback class removeSelector: #initialize!
+#(always caseInsensitive equality identity never uninitialize) do: [:each | SearchPolicy class removeSelector: each]!
+#(current uninitialize) do: [:each | SymbolStringSearchPolicy class removeSelector: each. AssociationSearchPolicy class removeSelector: each]!
