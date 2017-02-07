@@ -952,13 +952,13 @@ modifiedModel: aValueModel
 newVariablePool
 	workspacePool := PoolDictionary new!
 
-onAutoComplete: aString startingAt: anInteger accept: aValueHolder 
+onAutoComplete: aString startingAt: anInteger accept: aValueHolder
 	"Private - "
 
-	(aString first ~~ $# and: [aString includes: $:]) 
+	((view styleAt: anInteger) name ~~ #literalSymbol and: [aString includes: $:])
 		ifTrue: [self insertKeywordCompletion: aString startingAt: anInteger]
 		ifFalse: [self insertCompletion: aString at: anInteger].
-	aValueHolder value: false!
+	aValueHolder value: false.!
 
 onCharAdded: aCharacter 
 	(self isAutoCompletionEnabled and: [self isSyntaxColoringEnabled]) ifFalse: [^self].
