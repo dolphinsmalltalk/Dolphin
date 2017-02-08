@@ -430,10 +430,6 @@ registryAt: aSymbol put: anObject
 	self primRegistryAt: (RegistryKeys at: aSymbol) put: anObject.
 	^anObject!
 
-removeDesktopMessage: anExternalHandle
-	<stdcall: void RemoveDesktopMessage handle>
-	^self invalidCall!
-
 shortName
 	"Answer the localised short name for Dolphin."
 
@@ -564,7 +560,6 @@ versionFormatString
 !VMLibrary categoriesFor: #registry!accessing!private! !
 !VMLibrary categoriesFor: #registryAt:!accessing-registry!private! !
 !VMLibrary categoriesFor: #registryAt:put:!accessing-registry!private! !
-!VMLibrary categoriesFor: #removeDesktopMessage:!operations!private! !
 !VMLibrary categoriesFor: #shortName!accessing!public! !
 !VMLibrary categoriesFor: #signedFromUnsigned:!helpers!private! !
 !VMLibrary categoriesFor: #specialSelectors!accessing-registry!private! !
