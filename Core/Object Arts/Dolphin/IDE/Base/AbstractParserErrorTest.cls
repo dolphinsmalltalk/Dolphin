@@ -496,42 +496,49 @@ testErrorsBlockTempsNotClosed
 
 	| source mark |
 	source := '[:a ]'.
-	self 
+	self
 		parseExprError: source
 		range: (1 to: 3)
 		line: 1
 		code: CErrBlockArgListNotClosed.
 	source := '[:a 1]'.
-	self 
+	self
 		parseExprError: source
 		range: (1 to: 3)
 		line: 1
 		code: CErrBlockArgListNotClosed.
 	source := '[:arg1 :arg2 1]'.
 	mark := source indexOf: $2.
-	self 
+	self
 		parseExprError: source
 		range: ((source indexOf: $[) to: mark)
 		line: 1
 		code: CErrBlockArgListNotClosed.
 	"Binary symbol appears before close block temps"
 	source := '[:a >]'.
-	self 
+	self
 		parseExprError: source
 		range: (1 to: 3)
 		line: 1
 		code: CErrBlockArgListNotClosed.
 	"eof occurs before close block temps (or block)"
 	source := ' [:a'.
-	self 
+	self
 		parseExprError: source
 		range: (2 to: source size)
 		line: 1
 		code: CErrBlockArgListNotClosed.
 	source := ' [:a '.
-	self 
+	self
 		parseExprError: ' [:a '
 		range: (2 to: 4)
+		line: 1
+		code: CErrBlockArgListNotClosed.
+	"Issue #299 - a case tested above, but not in an optimized block"
+	source := '1 to: 10 do: [:index 2 | index2]'.
+	self
+		parseExprError: source
+		range: ((source indexOf: $[) to: (source indexOf: $2) - 2)
 		line: 1
 		code: CErrBlockArgListNotClosed!
 
