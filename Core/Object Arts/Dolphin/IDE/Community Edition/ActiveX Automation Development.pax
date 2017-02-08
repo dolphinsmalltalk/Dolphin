@@ -4294,20 +4294,19 @@ printStructField: vardesc indirections: indirs on: target
 	of <integer> indirections."
 
 	| arrayDesc |
-	arrayDesc := vardesc tdesc tdescArray.
+	arrayDesc := vardesc tdesc arrayDesc.
 	"Can't really handle any more than one dimension at present"
-	arrayDesc cDims > 1 ifTrue: [
-		Warning signal: 'Multi-dimensioned byte array treated as single-dimensioned: ', vardesc printString].
-	target nextPut: $(; 
-		print: (indirs == 0 
-				ifTrue: [ArrayField] 						"An embedded array"
-				ifFalse: [ArrayPointerField] 		"Pointer to array");
+	arrayDesc cDims > 1
+		ifTrue: 
+			[Warning signal: 'Multi-dimensioned byte array treated as single-dimensioned: ' , vardesc printString].
+	target
+		nextPut: $(;
+		print: (indirs == 0 ifTrue: [ArrayField] ifFalse: [ArrayPointerField]);
 		nextPutAll: ' type: ';
 		print: self;
 		nextPutAll: ' length: ';
 		display: arrayDesc elementCount;
-		nextPut: $)
-! !
+		nextPut: $)	"An embedded array"	"Pointer to array"! !
 !ExternalArray class categoriesFor: #printStructField:indirections:on:!development!private! !
 
 !ExternalField class methodsFor!
@@ -5092,7 +5091,7 @@ printStructField: vardesc indirections: indirs on: target
 	of <integer> indirections."
 
 	| arrayDesc elemclassdesc elemType elemIndirs |
-	arrayDesc := vardesc tdesc tdescArray.
+	arrayDesc := vardesc tdesc arrayDesc.
 	"Can't really handle any more than one dimension at present"
 	arrayDesc cDims > 1 
 		ifTrue: 
@@ -5385,14 +5384,15 @@ printIDLBodyOn: aPuttableStream indent: anInteger
 		nextPut: $;;
 		cr!
 
-printIDLOn: target indent: tabs 
+printIDLOn: target indent: tabs
 	"Print the IDL description of the receiver on the <puttableStream>, target."
 
 	target
 		tab: tabs;
 		nextPutAll: self idlKeyword;
 		space.
-	(self printIDLAttributesOn: target indent: -1) ifTrue: [target tab: tabs].
+	(self printIDLAttributesOn: target indent: -1)
+		ifTrue: [tabs > 0 ifTrue: [target crtab: tabs] ifFalse: [target space]].
 	self printIDLBodyOn: target indent: tabs! !
 !TKindAliasAnalyzer categoriesFor: #generateGlobalDefinition:!development!private! !
 !TKindAliasAnalyzer categoriesFor: #generateWrapper!development!private! !

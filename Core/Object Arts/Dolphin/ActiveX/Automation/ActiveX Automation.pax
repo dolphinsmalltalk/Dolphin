@@ -20,6 +20,7 @@ ExternalStructure registerSubclasses.'.
 package basicScriptAt: #postuninstall put: 'ExternalStructure classPool at: ''RecordClasses'' put: nil.'.
 
 package classNames
+	add: #AbstractELEMDESC;
 	add: #ARRAYDESC;
 	add: #AXAPIInfoAnalyzer;
 	add: #AXDispatchImpAbstract;
@@ -458,10 +459,10 @@ LPVOID subclass: #LPBSTR
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-OLEStructure subclass: #ARRAYDESC
-	instanceVariableNames: 'owner'
+OLEStructure subclass: #AbstractELEMDESC
+	instanceVariableNames: 'owner tdesc'
 	classVariableNames: ''
-	poolDictionaries: ''
+	poolDictionaries: 'AXAutomationConstants'
 	classInstanceVariableNames: ''!
 OLEStructure subclass: #CURRENCY
 	instanceVariableNames: ''
@@ -481,11 +482,6 @@ OLEStructure subclass: #DECIMAL
 OLEStructure subclass: #DISPPARAMS
 	instanceVariableNames: 'args vargs dispids'
 	classVariableNames: 'ZeroArgs'
-	poolDictionaries: 'AXAutomationConstants'
-	classInstanceVariableNames: ''!
-OLEStructure subclass: #ELEMDESC
-	instanceVariableNames: 'owner param tdesc'
-	classVariableNames: ''
 	poolDictionaries: 'AXAutomationConstants'
 	classInstanceVariableNames: ''!
 OLEStructure subclass: #FONTDESC
@@ -520,6 +516,16 @@ OLEStructure subclass: #TLIBATTR
 	classInstanceVariableNames: ''!
 OLEStructure subclass: #TYPEDESC
 	instanceVariableNames: 'owner classDesc typeInfo'
+	classVariableNames: ''
+	poolDictionaries: 'AXAutomationConstants'
+	classInstanceVariableNames: ''!
+AbstractELEMDESC subclass: #ARRAYDESC
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+AbstractELEMDESC subclass: #ELEMDESC
+	instanceVariableNames: 'param'
 	classVariableNames: ''
 	poolDictionaries: 'AXAutomationConstants'
 	classInstanceVariableNames: ''!

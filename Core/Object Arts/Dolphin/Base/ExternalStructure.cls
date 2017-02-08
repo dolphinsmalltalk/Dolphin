@@ -339,6 +339,9 @@ pointerClass
 
 	^ExternalAddress!
 
+printableFields
+	^self getValidFields!
+
 printArgumentTypeOn: aStream
 	"Private - Append a compilable argument type name, which is the receiver, to aStream."
 
@@ -354,22 +357,22 @@ printCyclicRefOn: aStream
 	self basicPrintOn: aStream.
 	aStream nextPutAll: '...'!
 
-printFieldsOn: aStream limit: anInteger 
+printFieldsOn: aStream limit: anInteger
 	| sep |
-	self isNull 
+	self isNull
 		ifTrue: 
 			[aStream nextPutAll: 'NULL'.
 			^self].
 	sep := [sep := [aStream space]].
-	self getValidFields do: 
-			[:each | 
+	self printableFields do: 
+			[:each |
 			| field |
-			aStream position > anInteger 
+			aStream position > anInteger
 				ifTrue: 
 					[aStream nextPutAll: '... etc ...'.
 					^self].
 			field := self template at: each.
-			field isReadable 
+			field isReadable
 				ifTrue: 
 					[sep value.
 					aStream
@@ -482,6 +485,7 @@ yourAddress
 !ExternalStructure categoriesFor: #needsFree!private!realizing/unrealizing! !
 !ExternalStructure categoriesFor: #notNull!public!testing! !
 !ExternalStructure categoriesFor: #pointerClass!constants!private! !
+!ExternalStructure categoriesFor: #printableFields!development!printing!private! !
 !ExternalStructure categoriesFor: #printArgumentTypeOn:!printing!private! !
 !ExternalStructure categoriesFor: #printCyclicRefOn:!printing!private! !
 !ExternalStructure categoriesFor: #printFieldsOn:limit:!development!printing!private! !

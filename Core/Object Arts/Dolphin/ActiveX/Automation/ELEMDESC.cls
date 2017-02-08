@@ -1,7 +1,7 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
-OLEStructure subclass: #ELEMDESC
-	instanceVariableNames: 'owner param tdesc'
+AbstractELEMDESC subclass: #ELEMDESC
+	instanceVariableNames: 'param'
 	classVariableNames: ''
 	poolDictionaries: 'AXAutomationConstants'
 	classInstanceVariableNames: ''!
@@ -22,18 +22,6 @@ Instance Variables:
 !ELEMDESC categoriesForClass!External-Data-Structured-COM! !
 !ELEMDESC methodsFor!
 
-analyzer
-	"Private - Answer the <AXTypeInfoAnalyzer> from which the receiver originated."
-
-	^owner analyzer!
-
-classDesc
-	"Private - Answer an <Association> between a Dolphin class suitable for representing
-	the external type described by the receiver, and the number of indirections
-	to the type."
-
-	^self tdesc classDesc!
-
 defaultValue
 	"Answer a <VARIANT> which is the default value for the parameter described
 	by the receiver, or nil if it doesn't have a default value."
@@ -42,12 +30,6 @@ defaultValue
 
 hasDefaultValue
 	^self param hasDefaultValue!
-
-indirections
-	"Answer the number of levels by which this element is indirect, e.g. if a reference parameter
-	then this will usually be 1, if a value  parameter then 0."
-
-	^self classDesc value!
 
 isIn
 	"Answer whether the receiver is describing an input argument."
@@ -73,27 +55,6 @@ isRetVal
 
 	^self param isRetVal!
 
-isVariant
-	"Private - Answer whether the receiver is describing an element of VARIANT type."
-
-	^self tdesc vartype == VT_VARIANT!
-
-objectClass
-	"Answer the class of Smalltalk object used to wrap the type of this element."
-
-	^self classDesc key!
-
-owner
-	"Private - Answer the value of the receiver's ''owner'' instance variable."
-
-	^owner!
-
-owner: struct
-	"Private - Set the value of the receiver's 'owner' instance variable to the <AXTypeInfoStructure> 
-	argument, struct. Answer the receiver."
-
-	owner := struct!
-
 param
 	"Answer a <PARAMDESC> describing the parameter associated with the receiver."
 
@@ -103,48 +64,15 @@ param
 paramdesc
 	"Answer the receiver's paramdesc field as a Smalltalk object."
 
-	^PARAMDESC fromAddress: bytes yourAddress + ##(self offsetOf: #paramdesc)!
-
-tdesc
-	"Answer a <TYPEDESC> which is the type of the elmement described by the receiver.
-	Implementation Note: Set the back-pointer to be the same as the receiver's, since it
-	is the destruction of the <AXTypeInfoStructure> which we wish to postpone for the
-	lifetime of the TYPEDESC."
-
-	tdesc isNil 
-		ifTrue: 
-			[tdesc := (self tdescElem)
-						owner: owner;
-						yourself].
-	^tdesc!
-
-tdescElem
-	"Answer the receiver's tdescElem field as a Smalltalk object."
-
-	^TYPEDESC fromAddress: bytes yourAddress!
-
-typeName
-	"Answer the Dolphin external type name for the type described by the receiver."
-
-	^self tdesc typeName! !
-!ELEMDESC categoriesFor: #analyzer!accessing!private! !
-!ELEMDESC categoriesFor: #classDesc!accessing!private! !
+	^PARAMDESC fromAddress: bytes yourAddress + ##(self offsetOf: #paramdesc)! !
 !ELEMDESC categoriesFor: #defaultValue!accessing!public! !
 !ELEMDESC categoriesFor: #hasDefaultValue!development!helpers!private! !
-!ELEMDESC categoriesFor: #indirections!accessing!public! !
 !ELEMDESC categoriesFor: #isIn!public!testing! !
 !ELEMDESC categoriesFor: #isOptional!public!testing! !
 !ELEMDESC categoriesFor: #isOut!public!testing! !
 !ELEMDESC categoriesFor: #isRetVal!public!testing! !
-!ELEMDESC categoriesFor: #isVariant!private!testing! !
-!ELEMDESC categoriesFor: #objectClass!accessing!public! !
-!ELEMDESC categoriesFor: #owner!accessing!private! !
-!ELEMDESC categoriesFor: #owner:!accessing!private! !
 !ELEMDESC categoriesFor: #param!accessing!public! !
 !ELEMDESC categoriesFor: #paramdesc!**compiled accessors**!public! !
-!ELEMDESC categoriesFor: #tdesc!accessing!public! !
-!ELEMDESC categoriesFor: #tdescElem!**compiled accessors**!public! !
-!ELEMDESC categoriesFor: #typeName!accessing!public! !
 
 !ELEMDESC class methodsFor!
 
@@ -160,8 +88,7 @@ defineFields
 		ELEMDESC, * LPELEMDESC;
 	"
 
-	self
-		defineField: #tdescElem	type: (StructureField type: TYPEDESC) beReadOnly;
-		defineField: #paramdesc	type: (StructureField type: PARAMDESC) beReadOnly! !
+	super defineFields.
+	self defineField: #paramdesc type: (StructureField type: PARAMDESC) beReadOnly! !
 !ELEMDESC class categoriesFor: #defineFields!initializing!public! !
 

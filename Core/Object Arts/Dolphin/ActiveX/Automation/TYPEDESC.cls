@@ -30,6 +30,15 @@ analyzer
 
 	^owner analyzer!
 
+arrayDesc
+	"Private - Recurse down through any typedefs to the underlying ARRAYDESC. Assumes that the receiver terminates in an C-array type."
+
+	| vt |
+	vt := self vt.
+	vt == VT_CARRAY ifTrue: [^self tdescArray].
+	vt == VT_USERDEFINED ifTrue: [^self typeInfo tdesc arrayDesc].
+	^self error: 'Not a C-array'!
+
 buildClassDesc
 	| vt |
 	vt := self vt.
@@ -177,6 +186,7 @@ vtName
 
 	^VARIANT nameOfVT: self vartype! !
 !TYPEDESC categoriesFor: #analyzer!accessing!private! !
+!TYPEDESC categoriesFor: #arrayDesc!development!private! !
 !TYPEDESC categoriesFor: #buildClassDesc!helpers!private! !
 !TYPEDESC categoriesFor: #classDesc!accessing!private! !
 !TYPEDESC categoriesFor: #getRefType!accessing!private! !
