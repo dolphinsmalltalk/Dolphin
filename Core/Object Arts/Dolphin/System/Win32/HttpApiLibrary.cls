@@ -266,6 +266,13 @@ asyncHttpReceiveHttpRequest: requestQueueHandle requestId: requestId flags: flag
 	<overlap stdcall: dword HttpReceiveHttpRequest handle qword dword HTTP_REQUEST* dword dword* OVERLAPPED*>
 	^self invalidCall!
 
+close
+	"Release the reference the receiver has to the External Library it represents. Answer whether the
+	library was successfully closed."
+
+	^(handle notNull and: [(self httpTerminate: self class initFlags pReserved: nil) == NO_ERROR])
+		& super close!
+
 httpAddFragmentToCache: requestQueueHandle urlPrefix: urlPrefix dataChunk: dataChunk cachePolicy: cachePolicy overlapped: overlapped
 	"Invoke the HttpAddFragmentToCache() function of the module wrapped by the receiver.
 	Helpstring:  caches a data fragment with a specified name by which it can be retrieved, or updates data cached under a specified name. Such cached data fragments can be used repeatedly to construct dynamic responses without going to disk.
@@ -346,7 +353,7 @@ httpCreateRequestQueue: version name: name securityAttributes: securityAttribute
 			[in]unsigned long flags,
 			[out]HANDLE* RequestQueueHandle);"
 
-	<stdcall: dword HttpCreateRequestQueue HTTPAPI_VERSION lpwstr SECURITY_ATTRIBUTES* dword handle*>
+	<stdcall: dword HttpCreateRequestQueue dword lpwstr SECURITY_ATTRIBUTES* dword handle*>
 	^self invalidCall!
 
 httpCreateServerSession: version serverSessionId: serverSessionId reserved: reserved
@@ -358,7 +365,7 @@ httpCreateServerSession: version serverSessionId: serverSessionId reserved: rese
 			[out]unsigned __int64* ServerSessionId,
 			[in]unsigned long Reserved);"
 
-	<stdcall: dword HttpCreateServerSession HTTPAPI_VERSION qword* dword>
+	<stdcall: dword HttpCreateServerSession dword qword* dword>
 	^self invalidCall!
 
 httpCreateUrlGroup: serverSessionId pUrlGroupId: pUrlGroupId reserved: reserved
@@ -424,7 +431,7 @@ httpInitialize: version flags: flags pReserved: pReserved
 			[in]unsigned long flags,
 			[in, out]void* pReserved);"
 
-	<stdcall: dword HttpInitialize HTTPAPI_VERSION dword void*>
+	<stdcall: dword HttpInitialize dword dword void*>
 	^self invalidCall!
 
 httpPrepareUrl: reserved flags: flags url: url preparedUrl: preparedUrl
@@ -590,7 +597,7 @@ httpSendHttpResponse: requestQueueHandle requestId: requestId flags: flags httpR
 			[in]LPOVERLAPPED OVERLAPPED,
 			[in]PHTTP_LOG_DATA LogData);"
 
-	<stdcall: dword HttpSendHttpResponse handle qword dword HTTP_RESPONSE* HTTP_CACHE_POLICY* dword* void* dword OVERLAPPED* HTTP_LOG_DATA*>
+	<stdcall: dword HttpSendHttpResponse handle qword dword HTTP_RESPONSE* HTTP_CACHE_POLICY* dword* void* dword OVERLAPPED* HTTP_LOG_FIELDS_DATA*>
 	^self invalidCall!
 
 httpSendResponseEntityBody: requestQueueHandle requestId: requestId flags: flags entityChunkCount: entityChunkCount entityChunks: entityChunks bytesSent: bytesSent reserved1: reserved1 reserved2: reserved2 overlapped: overlapped logData: logData
@@ -609,7 +616,7 @@ httpSendResponseEntityBody: requestQueueHandle requestId: requestId flags: flags
 			[in]LPOVERLAPPED OVERLAPPED,
 			[in]PHTTP_LOG_DATA LogData);"
 
-	<stdcall: dword HttpSendResponseEntityBody handle qword dword word HTTP_DATA_CHUNK* dword* void* dword OVERLAPPED* HTTP_LOG_DATA*>
+	<stdcall: dword HttpSendResponseEntityBody handle qword dword word HTTP_DATA_CHUNK* dword* void* dword OVERLAPPED* HTTP_LOG_FIELDS_DATA*>
 	^self invalidCall!
 
 httpSetRequestQueueProperty: requestQueueHandle property: property propertyInformation: propertyInformation propertyInformationLength: propertyInformationLength reserved1: reserved1 reserved2: reserved2
@@ -722,8 +729,20 @@ httpWaitForDisconnectEx: requestQueueHandle connectionId: connectionId reserved:
 			[in]LPOVERLAPPED OVERLAPPED);"
 
 	<stdcall: dword HttpWaitForDisconnectEx handle qword dword OVERLAPPED*>
-	^self invalidCall! !
+	^self invalidCall!
+
+initialize
+	"Private - Initialize http.sys"
+
+	| ret |
+	ret := self
+				httpInitialize: self class apiVersion
+				flags: self class initFlags
+				pReserved: nil.
+	ret ~= NO_ERROR ifTrue: [(Win32Error fromInteger: ret) signal].
+	^self! !
 !HttpApiLibrary categoriesFor: #asyncHttpReceiveHttpRequest:requestId:flags:requestBuffer:requestBufferLength:bytesReturned:overlapped:!public! !
+!HttpApiLibrary categoriesFor: #close!public!realizing/unrealizing! !
 !HttpApiLibrary categoriesFor: #httpAddFragmentToCache:urlPrefix:dataChunk:cachePolicy:overlapped:!**auto generated**!public! !
 !HttpApiLibrary categoriesFor: #httpAddUrlToUrlGroup:pFullyQualifiedUrl:urlContext:reserved:!**auto generated**!public! !
 !HttpApiLibrary categoriesFor: #httpCancelHttpRequest:requestId:overlapped:!**auto generated**!public! !
@@ -758,29 +777,35 @@ httpWaitForDisconnectEx: requestQueueHandle connectionId: connectionId reserved:
 !HttpApiLibrary categoriesFor: #httpWaitForDemandStart:overlapped:!**auto generated**!public! !
 !HttpApiLibrary categoriesFor: #httpWaitForDisconnect:connectionId:overlapped:!**auto generated**!public! !
 !HttpApiLibrary categoriesFor: #httpWaitForDisconnectEx:connectionId:reserved:overlapped:!**auto generated**!public! !
+!HttpApiLibrary categoriesFor: #initialize!initializing!private! !
 
 !HttpApiLibrary class methodsFor!
+
+apiVersion
+	"Answer the required Win32 Http Server API version in HTTPAPI_VERSION representation, i.e. a
+	4-byte value with the first word being the major version, and the 2nd word being the major
+	version.
+
+		typedef [uuid(61D915C6-278B-4ED6-942B-DB3B81C86C11), helpstring('Api Version. This is used to ensure compatibility between applications and httpapi.dll and http.sys. This should not be confused with the HTTP Protocol version.')]
+		struct tagHTTPAPI_VERSION {
+			unsigned short HttpApiMajorVersion;
+			unsigned short HttpApiMinorVersion;
+		} HTTPAPI_VERSION;"
+
+	^##((WORDArray withAll: #(2 0)) bytes dwordAtOffset: 0)!
 
 example1
 	"
 	self example1
 	"
 
-	| lib apiVersion sessionId queue groupId checkerror initFlags listener urlPrefix bindingInfo |
+	| lib sessionId queue groupId checkerror listener urlPrefix bindingInfo |
 	checkerror := [:code | code == Win32Errors.NO_ERROR ifFalse: [(Win32Error fromInteger: code) signal]].
 	lib := self default.
-	"Instantiate api version struct requesting v2 api"
-	apiVersion := HTTPAPI_VERSION new.
-	"Initialize http.sys"
-	initFlags := WinHttpServerConsts.HTTP_INITIALIZE_SERVER | WinHttpServerConsts.HTTP_INITIALIZE_CONFIG.
-	checkerror value: (lib
-				httpInitialize: apiVersion
-				flags: initFlags
-				pReserved: nil).
 	"Create a server session"
 	sessionId := ULARGE_INTEGER new.
 	checkerror value: (lib
-				httpCreateServerSession: apiVersion
+				httpCreateServerSession: self apiVersion
 				serverSessionId: sessionId
 				reserved: 0).
 	sessionId := sessionId asInteger.
@@ -799,7 +824,7 @@ example1
 		display: 'Created http server url group ';
 		display: groupId hex;
 		cr.
-	urlPrefix := 'http://localhost:80/test/'.
+	urlPrefix := 'http://+:80/test/'.
 	checkerror value: (lib
 				httpAddUrlToUrlGroup: groupId
 				pFullyQualifiedUrl: urlPrefix asUnicodeString
@@ -813,7 +838,7 @@ example1
 	"Allocate a request queue"
 	queue := ExternalHandle new.
 	checkerror value: (lib
-				httpCreateRequestQueue: apiVersion
+				httpCreateRequestQueue: self apiVersion
 				name: 'MyQueue'
 				securityAttributes: nil
 				flags: 0
@@ -872,13 +897,18 @@ example1
 	"Finished with the session"
 	lib httpCloseServerSession: sessionId.
 	"Finished with HTTP server API"
-	lib httpTerminate: initFlags pReserved: nil!
+	self closeDefault!
 
 fileName
 	"Answer the host system file name for the library."
 
 	^'HttpApi'
-! !
+!
+
+initFlags
+	^##(WinHttpServerConsts.HTTP_INITIALIZE_SERVER | WinHttpServerConsts.HTTP_INITIALIZE_CONFIG)! !
+!HttpApiLibrary class categoriesFor: #apiVersion!constants!public! !
 !HttpApiLibrary class categoriesFor: #example1!public! !
 !HttpApiLibrary class categoriesFor: #fileName!**auto generated**!constants!public! !
+!HttpApiLibrary class categoriesFor: #initFlags!constants!public! !
 

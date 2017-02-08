@@ -37,7 +37,7 @@ AddrLength: anObject
 pAddress
 	"Answer the receiver's pAddress field as a Smalltalk object."
 
-	^Sockaddr fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #pAddress))!
+	^SOCKADDR fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #pAddress))!
 
 pAddress: anObject
 	"Set the receiver's pAddress field to the value of anObject."
@@ -58,13 +58,13 @@ defineFields
 		typedef [uuid(00A93E39-C011-4A5B-AF4D-13F2DF7A38D4), helpstring('Set/Delete IP Listen-Only List record. Used as a parameter to both HttpSetServiceConfiguration() and HttpDeleteServiceConfiguration() functions.')]
 		struct tagHTTP_SERVICE_CONFIG_IP_LISTEN_PARAM {
 			unsigned short AddrLength;
-			sockaddr* pAddress;
+			SOCKADDR* pAddress;
 		} HTTP_SERVICE_CONFIG_IP_LISTEN_PARAM;
 "
 
 	self
 		defineField: #AddrLength type: WORDField new offset: 0;
-		defineField: #pAddress type: (PointerField type: Sockaddr) offset: 4.
+		defineField: #pAddress type: (PointerField type: SOCKADDR) offset: 4.
 	self byteSize: 8! !
 !HTTP_SERVICE_CONFIG_IP_LISTEN_PARAM class categoriesFor: #defineFields!**auto generated**!initializing!public! !
 

@@ -27,7 +27,7 @@ struct tagHTTP_SERVICE_CONFIG_SSL_CCS_SET {
 KeyDesc
 	"Answer the receiver's KeyDesc field as a Smalltalk object."
 
-	^HTTP_SERVICE_CONFIG_SSL_CCS_KEY fromAddress: bytes yourAddress!
+	^SOCKADDR_STORAGE fromAddress: bytes yourAddress!
 
 KeyDesc: anObject
 	"Set the receiver's KeyDesc field to the value of anObject."
@@ -35,7 +35,7 @@ KeyDesc: anObject
 	anObject
 		replaceBytesOf: bytes
 		from: 1
-		to: ##(HTTP_SERVICE_CONFIG_SSL_CCS_KEY basicByteSize)
+		to: ##(SOCKADDR_STORAGE basicByteSize)
 		startingAt: 1!
 
 paramdesc
@@ -71,7 +71,7 @@ defineFields
 "
 
 	self
-		defineField: #KeyDesc type: (StructureField type: HTTP_SERVICE_CONFIG_SSL_CCS_KEY) offset: 0;
+		defineField: #KeyDesc type: (StructureField type: SOCKADDR_STORAGE) offset: 0;
 		defineField: #paramdesc type: (StructureField type: HTTP_SERVICE_CONFIG_SSL_PARAM) offset: 128.
 	self byteSize: 184! !
 !HTTP_SERVICE_CONFIG_SSL_CCS_SET class categoriesFor: #defineFields!**auto generated**!initializing!public! !

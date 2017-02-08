@@ -38,7 +38,7 @@ dwToken: anObject
 KeyDesc
 	"Answer the receiver's KeyDesc field as a Smalltalk object."
 
-	^HTTP_SERVICE_CONFIG_SSL_CCS_KEY fromAddress: bytes yourAddress + ##(self offsetOf: #KeyDesc)!
+	^SOCKADDR_STORAGE fromAddress: bytes yourAddress + ##(self offsetOf: #KeyDesc)!
 
 KeyDesc: anObject
 	"Set the receiver's KeyDesc field to the value of anObject."
@@ -46,7 +46,7 @@ KeyDesc: anObject
 	anObject
 		replaceBytesOf: bytes
 		from: ##((self offsetOf: #KeyDesc) + 1)
-		to: ##((self offsetOf: #KeyDesc) + HTTP_SERVICE_CONFIG_SSL_CCS_KEY basicByteSize)
+		to: ##((self offsetOf: #KeyDesc) + SOCKADDR_STORAGE basicByteSize)
 		startingAt: 1!
 
 QueryDesc
@@ -82,7 +82,7 @@ defineFields
 
 	self
 		defineField: #QueryDesc type: SDWORDField new offset: 0;
-		defineField: #KeyDesc type: (StructureField type: HTTP_SERVICE_CONFIG_SSL_CCS_KEY) offset: 8;
+		defineField: #KeyDesc type: (StructureField type: SOCKADDR_STORAGE) offset: 8;
 		defineField: #dwToken type: DWORDField new offset: 136.
 	self byteSize: 144! !
 !HTTP_SERVICE_CONFIG_SSL_CCS_QUERY class categoriesFor: #defineFields!**auto generated**!initializing!public! !

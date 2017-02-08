@@ -45,15 +45,20 @@ struct tagHTTP_REQUEST {
 Address
 	"Answer the receiver's Address field as a Smalltalk object."
 
-	^HTTP_TRANSPORT_ADDRESS fromAddress: bytes yourAddress + ##(self offsetOf: #Address)!
+	^PointerArray
+		fromAddress: bytes yourAddress + ##(self offsetOf: #Address)
+		length: 2
+		elementClass: SOCKADDR!
 
 Address: anObject
 	"Set the receiver's Address field to the value of anObject."
 
+	| size |
+	size := anObject byteSize min: ##(2 * SOCKADDR basicByteSize).
 	anObject
 		replaceBytesOf: bytes
 		from: ##((self offsetOf: #Address) + 1)
-		to: ##((self offsetOf: #Address) + HTTP_TRANSPORT_ADDRESS basicByteSize)
+		to: ##(self offsetOf: #Address) + size
 		startingAt: 1!
 
 byteSize
@@ -250,15 +255,17 @@ Verb: anObject
 Version
 	"Answer the receiver's Version field as a Smalltalk object."
 
-	^HTTP_VERSION fromAddress: bytes yourAddress + ##(self offsetOf: #Version)!
+	^WORDArray fromAddress: bytes yourAddress + ##(self offsetOf: #Version) length: 2!
 
 Version: anObject
 	"Set the receiver's Version field to the value of anObject."
 
+	| size |
+	size := anObject byteSize min: ##(2 * WORDArray elementSize).
 	anObject
 		replaceBytesOf: bytes
 		from: ##((self offsetOf: #Version) + 1)
-		to: ##((self offsetOf: #Version) + HTTP_VERSION basicByteSize)
+		to: ##(self offsetOf: #Version) + size
 		startingAt: 1! !
 !HTTP_REQUEST categoriesFor: #Address!**compiled accessors**!public! !
 !HTTP_REQUEST categoriesFor: #Address:!**compiled accessors**!public! !
@@ -339,14 +346,14 @@ defineFields
 		defineField: #ConnectionId type: QWORDField new offset: 8;
 		defineField: #RequestId type: QWORDField new offset: 16;
 		defineField: #UrlContext type: QWORDField new offset: 24;
-		defineField: #Version type: (StructureField type: HTTP_VERSION) offset: 32;
+		defineField: #Version type: (ArrayField type: WORDArray length: 2) offset: 32;
 		defineField: #Verb type: SDWORDField new offset: 36;
 		defineField: #UnknownVerbLength type: WORDField new offset: 40;
 		defineField: #RawUrlLength type: WORDField new offset: 42;
 		defineField: #pUnknownVerb type: (PointerField type: String) offset: 44;
 		defineField: #pRawUrl type: (PointerField type: String) offset: 48;
 		defineField: #CookedUrl type: (StructureField type: HTTP_COOKED_URL) offset: 52;
-		defineField: #Address type: (StructureField type: HTTP_TRANSPORT_ADDRESS) offset: 76;
+		defineField: #Address type: (PointerArrayField type: SOCKADDR length: 2) offset: 76;
 		defineField: #Headers type: (StructureField type: HTTP_REQUEST_HEADERS) offset: 84;
 		defineField: #BytesReceived type: QWORDField new offset: 432;
 		defineField: #EntityChunkCount type: WORDField new offset: 440;

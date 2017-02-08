@@ -27,30 +27,22 @@ struct tagHTTP_SERVICE_CONFIG_URLACL_SET {
 KeyDesc
 	"Answer the receiver's KeyDesc field as a Smalltalk object."
 
-	^HTTP_SERVICE_CONFIG_URLACL_KEY fromAddress: bytes yourAddress!
+	^UnicodeString fromAddress: (bytes intPtrAtOffset: 0)!
 
 KeyDesc: anObject
 	"Set the receiver's KeyDesc field to the value of anObject."
 
-	anObject
-		replaceBytesOf: bytes
-		from: 1
-		to: ##(HTTP_SERVICE_CONFIG_URLACL_KEY basicByteSize)
-		startingAt: 1!
+	bytes uintPtrAtOffset: 0 put: anObject yourAddress!
 
 paramdesc
 	"Answer the receiver's paramdesc field as a Smalltalk object."
 
-	^HTTP_SERVICE_CONFIG_URLACL_PARAM fromAddress: bytes yourAddress + ##(self offsetOf: #paramdesc)!
+	^UnicodeString fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #paramdesc))!
 
 paramdesc: anObject
 	"Set the receiver's paramdesc field to the value of anObject."
 
-	anObject
-		replaceBytesOf: bytes
-		from: ##((self offsetOf: #paramdesc) + 1)
-		to: ##((self offsetOf: #paramdesc) + HTTP_SERVICE_CONFIG_URLACL_PARAM basicByteSize)
-		startingAt: 1! !
+	bytes uintPtrAtOffset: ##(self offsetOf: #paramdesc) put: anObject yourAddress! !
 !HTTP_SERVICE_CONFIG_URLACL_SET categoriesFor: #KeyDesc!**compiled accessors**!public! !
 !HTTP_SERVICE_CONFIG_URLACL_SET categoriesFor: #KeyDesc:!**compiled accessors**!public! !
 !HTTP_SERVICE_CONFIG_URLACL_SET categoriesFor: #paramdesc!**compiled accessors**!public! !
@@ -71,8 +63,8 @@ defineFields
 "
 
 	self
-		defineField: #KeyDesc type: (StructureField type: HTTP_SERVICE_CONFIG_URLACL_KEY) offset: 0;
-		defineField: #paramdesc type: (StructureField type: HTTP_SERVICE_CONFIG_URLACL_PARAM) offset: 4.
+		defineField: #KeyDesc type: (PointerField type: UnicodeString) offset: 0;
+		defineField: #paramdesc type: (PointerField type: UnicodeString) offset: 4.
 	self byteSize: 8! !
 !HTTP_SERVICE_CONFIG_URLACL_SET class categoriesFor: #defineFields!**auto generated**!initializing!public! !
 

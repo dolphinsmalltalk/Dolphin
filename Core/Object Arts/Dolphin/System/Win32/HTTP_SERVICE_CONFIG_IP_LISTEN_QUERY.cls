@@ -39,14 +39,14 @@ AddrList
 
 	^StructureArray
 		fromAddress: bytes yourAddress + ##(self offsetOf: #AddrList)
-		length: 1
+		length: self AddrCount
 		elementClass: SOCKADDR_STORAGE!
 
 AddrList: anObject
 	"Set the receiver's AddrList field to the value of anObject."
 
 	| size |
-	size := anObject byteSize min: ##(1 * SOCKADDR_STORAGE basicByteSize).
+	size := anObject byteSize min: self AddrCount * ##(SOCKADDR_STORAGE basicByteSize).
 	anObject
 		replaceBytesOf: bytes
 		from: ##((self offsetOf: #AddrList) + 1)
@@ -66,14 +66,18 @@ defineFields
 
 		typedef [uuid(3EEBCB9D-9DC3-4701-A044-C16DF022085B), helpstring('Query IP Listen-Only List record. Parameter to HttpQueryServiceConfiguration() for the config ID HttpServiceConfigIPListenList.')]
 		struct tagHTTP_SERVICE_CONFIG_IP_LISTEN_QUERY {
-			unsigned long AddrCount;
-			SOCKADDR_STORAGE AddrList[1];
+			[helpstring('The number of address structures in the AddrList array.')] unsigned long AddrCount;
+			[helpstring('An array of SOCKADDR_STORAGE structures that contains IP addresses in either IPv4 or IPv6 form. To determine what form an address in the list has, cast it to a SOCKADDR and examine the sa_family element.')] SOCKADDR_STORAGE AddrList[1];
 		} HTTP_SERVICE_CONFIG_IP_LISTEN_QUERY;
 "
 
 	self
-		defineField: #AddrCount type: DWORDField new offset: 0;
-		defineField: #AddrList type: (StructureArrayField type: SOCKADDR_STORAGE length: 1) offset: 8.
+		defineField: #AddrCount
+			type: DWORDField new
+			offset: 0;
+		defineField: #AddrList
+			type: (ConformantStructureArrayField type: SOCKADDR_STORAGE length: #AddrCount)
+			offset: 8.
 	self byteSize: 136! !
-!HTTP_SERVICE_CONFIG_IP_LISTEN_QUERY class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!HTTP_SERVICE_CONFIG_IP_LISTEN_QUERY class categoriesFor: #defineFields!initializing!public! !
 
