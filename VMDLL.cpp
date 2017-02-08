@@ -78,33 +78,6 @@ HMODULE __stdcall GetResLibHandle()
 	return GetVMModule();
 }
 
-HWND __stdcall DisplayDesktopMessage(LPCSTR szMessage)
-{
-	HDC dc = GetWindowDC(GetDesktopWindow());
-	HFONT font = CreateFont(-16, 0, 0,
-			0, FW_BOLD, FALSE, FALSE, FALSE, ANSI_CHARSET,
-			OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY, DEFAULT_PITCH, 
-			"Arial");
-	int x = GetDeviceCaps(dc, HORZRES) / 2;
-	int y = GetDeviceCaps(dc, VERTRES) / 2;
-	font = (HFONT)SelectObject(dc, font);
-	SetBkColor(dc, 0xFF0000);
-	SetTextColor(dc, 0xFFFFFF);
-	SetTextAlign(dc, (TA_CENTER|TA_BASELINE));
-	TextOut(dc, x, y, szMessage, strlen(szMessage));
-	font = (HFONT)SelectObject(dc, font);
-	DeleteObject(font);
-	ReleaseDC(GetDesktopWindow(), dc);
-
-	return NULL;
-}
-
-void __stdcall RemoveDesktopMessage(HWND)
-{
-	InvalidateRect(NULL, NULL, TRUE);
-}
-
-
 #pragma code_seg(INIT_SEG)
 
 HINSTANCE GetApplicationInstance()

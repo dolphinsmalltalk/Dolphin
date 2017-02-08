@@ -15,8 +15,6 @@ AnswerQWORD
 AnswerDQWORD
 Dump
 DebugDump
-DisplayDesktopMessage
-RemoveDesktopMessage
 RegisterAsEventSource
 argc
 argv
@@ -32,13 +30,6 @@ CompileForEval=_PrimCompileForEval@24
 ; Stuff for ActiveXHost
 AxWinTerm
 AtlAxWinInit=AxWinInit
-
-;LinearCongruentialHash30Bit
-;DiffusionHash30Bit
-;Djb2Hash30Bit
-;SdbmHash30Bit
-;DiffusionHashAsm30
-;LinearCongruentialHashAsm30
 
 ; ZLib
 compress2
