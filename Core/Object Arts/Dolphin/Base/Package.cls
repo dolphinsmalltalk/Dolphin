@@ -283,12 +283,12 @@ beNotUsingPAX
 	| msg names |
 	self isUsingPAX ifFalse: [^self].
 	names := self allFileOutNames.
-	msg := 'Placing this package into PAC mode will delete <2d> PAX source files in the<n>directory <3s>.<n><n>Are you sure that you wish to proceed?' 
+	msg := 'Placing this package into PAC mode will delete <2d> PAX source files in the<n>directory <3s>.<n><n>Are you sure that you wish to proceed?'
 				expandMacrosWith: self name
 				with: names size
 				with: self path.
-	(MessageBox confirm: msg caption: ('Convert <1p> to PAC mode...' expandMacrosWith: self name)) 
-		ifTrue: [names do: [:each | File delete: each]]!
+	(MessageBox confirm: msg caption: ('Convert <1p> to PAC mode...' expandMacrosWith: self name))
+		ifTrue: [names do: [:each | (File exists: each) ifTrue: [File delete: each]]]!
 
 beUsingPAX
 	"Place the receiver into a mode where it is using PAX source files.
