@@ -38,16 +38,12 @@ dwToken: anObject
 KeyDesc
 	"Answer the receiver's KeyDesc field as a Smalltalk object."
 
-	^HTTP_SERVICE_CONFIG_URLACL_KEY fromAddress: bytes yourAddress + ##(self offsetOf: #KeyDesc)!
+	^UnicodeString fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #KeyDesc))!
 
 KeyDesc: anObject
 	"Set the receiver's KeyDesc field to the value of anObject."
 
-	anObject
-		replaceBytesOf: bytes
-		from: ##((self offsetOf: #KeyDesc) + 1)
-		to: ##((self offsetOf: #KeyDesc) + HTTP_SERVICE_CONFIG_URLACL_KEY basicByteSize)
-		startingAt: 1!
+	bytes uintPtrAtOffset: ##(self offsetOf: #KeyDesc) put: anObject yourAddress!
 
 QueryDesc
 	"Answer the receiver's QueryDesc field as a Smalltalk object."
@@ -82,7 +78,7 @@ defineFields
 
 	self
 		defineField: #QueryDesc type: SDWORDField new offset: 0;
-		defineField: #KeyDesc type: (StructureField type: HTTP_SERVICE_CONFIG_URLACL_KEY) offset: 4;
+		defineField: #KeyDesc type: (PointerField type: UnicodeString) offset: 4;
 		defineField: #dwToken type: DWORDField new offset: 8.
 	self byteSize: 12! !
 !HTTP_SERVICE_CONFIG_URLACL_QUERY class categoriesFor: #defineFields!**auto generated**!initializing!public! !

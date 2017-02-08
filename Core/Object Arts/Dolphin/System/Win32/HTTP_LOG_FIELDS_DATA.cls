@@ -52,20 +52,6 @@ struct tagHTTP_LOG_FIELDS_DATA {
 !HTTP_LOG_FIELDS_DATA categoriesForClass!Win32-Structs! !
 !HTTP_LOG_FIELDS_DATA methodsFor!
 
-Base
-	"Answer the receiver's Base field as a Smalltalk object."
-
-	^HTTP_LOG_DATA fromAddress: bytes yourAddress!
-
-Base: anObject
-	"Set the receiver's Base field to the value of anObject."
-
-	anObject
-		replaceBytesOf: bytes
-		from: 1
-		to: ##(HTTP_LOG_DATA basicByteSize)
-		startingAt: 1!
-
 ClientIp
 	"Answer the receiver's ClientIp field as a Smalltalk object."
 
@@ -266,6 +252,16 @@ SubStatus: anObject
 
 	bytes wordAtOffset: ##(self offsetOf: #SubStatus) put: anObject!
 
+Type
+	"Answer the receiver's Type field as a Smalltalk object."
+
+	^bytes sdwordAtOffset: 0!
+
+Type: anObject
+	"Set the receiver's Type field to the value of anObject."
+
+	bytes sdwordAtOffset: 0 put: anObject!
+
 UriQuery
 	"Answer the receiver's UriQuery field as a Smalltalk object."
 
@@ -355,8 +351,6 @@ Win32Status: anObject
 	"Set the receiver's Win32Status field to the value of anObject."
 
 	bytes dwordAtOffset: ##(self offsetOf: #Win32Status) put: anObject! !
-!HTTP_LOG_FIELDS_DATA categoriesFor: #Base!**compiled accessors**!public! !
-!HTTP_LOG_FIELDS_DATA categoriesFor: #Base:!**compiled accessors**!public! !
 !HTTP_LOG_FIELDS_DATA categoriesFor: #ClientIp!**compiled accessors**!public! !
 !HTTP_LOG_FIELDS_DATA categoriesFor: #ClientIp:!**compiled accessors**!public! !
 !HTTP_LOG_FIELDS_DATA categoriesFor: #ClientIpLength!**compiled accessors**!public! !
@@ -397,6 +391,8 @@ Win32Status: anObject
 !HTTP_LOG_FIELDS_DATA categoriesFor: #ServiceNameLength:!**compiled accessors**!public! !
 !HTTP_LOG_FIELDS_DATA categoriesFor: #SubStatus!**compiled accessors**!public! !
 !HTTP_LOG_FIELDS_DATA categoriesFor: #SubStatus:!**compiled accessors**!public! !
+!HTTP_LOG_FIELDS_DATA categoriesFor: #Type!**compiled accessors**!public! !
+!HTTP_LOG_FIELDS_DATA categoriesFor: #Type:!**compiled accessors**!public! !
 !HTTP_LOG_FIELDS_DATA categoriesFor: #UriQuery!**compiled accessors**!public! !
 !HTTP_LOG_FIELDS_DATA categoriesFor: #UriQuery:!**compiled accessors**!public! !
 !HTTP_LOG_FIELDS_DATA categoriesFor: #UriQueryLength!**compiled accessors**!public! !
@@ -425,7 +421,7 @@ defineFields
 
 		typedef [uuid(35C62B99-ABF3-46F3-B967-7B54DC2641CC), helpstring('Current log fields data structure for of type HttpLogDataTypeFields.')]
 		struct tagHTTP_LOG_FIELDS_DATA {
-			HTTP_LOG_DATA Base;
+			HTTP_LOG_DATA_TYPE Type;
 			unsigned short UserNameLength;
 			unsigned short UriStemLength;
 			unsigned short ClientIpLength;
@@ -459,7 +455,7 @@ defineFields
 "
 
 	self
-		defineField: #Base type: (StructureField type: HTTP_LOG_DATA) offset: 0;
+		defineField: #Type type: SDWORDField new offset: 0;
 		defineField: #UserNameLength type: WORDField new offset: 4;
 		defineField: #UriStemLength type: WORDField new offset: 6;
 		defineField: #ClientIpLength type: WORDField new offset: 8;

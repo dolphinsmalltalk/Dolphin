@@ -129,15 +129,17 @@ StatusCode: anObject
 Version
 	"Answer the receiver's Version field as a Smalltalk object."
 
-	^HTTP_VERSION fromAddress: bytes yourAddress + ##(self offsetOf: #Version)!
+	^WORDArray fromAddress: bytes yourAddress + ##(self offsetOf: #Version) length: 2!
 
 Version: anObject
 	"Set the receiver's Version field to the value of anObject."
 
+	| size |
+	size := anObject byteSize min: ##(2 * WORDArray elementSize).
 	anObject
 		replaceBytesOf: bytes
 		from: ##((self offsetOf: #Version) + 1)
-		to: ##((self offsetOf: #Version) + HTTP_VERSION basicByteSize)
+		to: ##(self offsetOf: #Version) + size
 		startingAt: 1! !
 !HTTP_RESPONSE categoriesFor: #EntityChunkCount!**compiled accessors**!public! !
 !HTTP_RESPONSE categoriesFor: #EntityChunkCount:!**compiled accessors**!public! !
@@ -184,7 +186,7 @@ defineFields
 
 	self
 		defineField: #flags type: DWORDField new offset: 0;
-		defineField: #Version type: (StructureField type: HTTP_VERSION) offset: 4;
+		defineField: #Version type: (ArrayField type: WORDArray length: 2) offset: 4;
 		defineField: #StatusCode type: WORDField new offset: 8;
 		defineField: #ReasonLength type: WORDField new offset: 10;
 		defineField: #pReason type: (PointerField type: String) offset: 12;

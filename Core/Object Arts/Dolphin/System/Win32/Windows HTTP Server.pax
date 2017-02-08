@@ -28,7 +28,6 @@ package classNames
 	add: #HTTP_FLOWRATE_INFO;
 	add: #HTTP_KNOWN_HEADER;
 	add: #HTTP_LISTEN_ENDPOINT_INFO;
-	add: #HTTP_LOG_DATA;
 	add: #HTTP_LOG_FIELDS_DATA;
 	add: #HTTP_LOGGING_INFO;
 	add: #HTTP_MULTIPLE_KNOWN_HEADERS;
@@ -52,10 +51,8 @@ package classNames
 	add: #HTTP_SERVICE_CONFIG_CACHE_SET;
 	add: #HTTP_SERVICE_CONFIG_IP_LISTEN_PARAM;
 	add: #HTTP_SERVICE_CONFIG_IP_LISTEN_QUERY;
-	add: #HTTP_SERVICE_CONFIG_SSL_CCS_KEY;
 	add: #HTTP_SERVICE_CONFIG_SSL_CCS_QUERY;
 	add: #HTTP_SERVICE_CONFIG_SSL_CCS_SET;
-	add: #HTTP_SERVICE_CONFIG_SSL_KEY;
 	add: #HTTP_SERVICE_CONFIG_SSL_PARAM;
 	add: #HTTP_SERVICE_CONFIG_SSL_QUERY;
 	add: #HTTP_SERVICE_CONFIG_SSL_SET;
@@ -63,8 +60,6 @@ package classNames
 	add: #HTTP_SERVICE_CONFIG_SSL_SNI_QUERY;
 	add: #HTTP_SERVICE_CONFIG_SSL_SNI_SET;
 	add: #HTTP_SERVICE_CONFIG_TIMEOUT_SET;
-	add: #HTTP_SERVICE_CONFIG_URLACL_KEY;
-	add: #HTTP_SERVICE_CONFIG_URLACL_PARAM;
 	add: #HTTP_SERVICE_CONFIG_URLACL_QUERY;
 	add: #HTTP_SERVICE_CONFIG_URLACL_SET;
 	add: #HTTP_SSL_CLIENT_CERT_INFO;
@@ -72,13 +67,8 @@ package classNames
 	add: #HTTP_SSL_PROTOCOL_INFO;
 	add: #HTTP_STATE_INFO;
 	add: #HTTP_TIMEOUT_LIMIT_INFO;
-	add: #HTTP_TRANSPORT_ADDRESS;
 	add: #HTTP_UNKNOWN_HEADER;
-	add: #HTTP_VERSION;
-	add: #HTTPAPI_VERSION;
 	add: #HttpApiLibrary;
-	add: #Sockaddr;
-	add: #SOCKADDR_STORAGE;
 	yourself.
 
 package globalNames
@@ -94,6 +84,7 @@ package globalAliases: (Set new
 package setPrerequisites: (IdentitySet new
 	add: '..\..\Base\Dolphin';
 	add: 'Dolphin Overlapped IO';
+	add: '..\..\Sockets\Dolphin Sockets';
 	yourself).
 
 package!
@@ -156,11 +147,6 @@ ExternalStructure subclass: #HTTP_KNOWN_HEADER
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ExternalStructure subclass: #HTTP_LISTEN_ENDPOINT_INFO
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-ExternalStructure subclass: #HTTP_LOG_DATA
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
@@ -280,22 +266,12 @@ ExternalStructure subclass: #HTTP_SERVICE_CONFIG_IP_LISTEN_QUERY
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ExternalStructure subclass: #HTTP_SERVICE_CONFIG_SSL_CCS_KEY
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
 ExternalStructure subclass: #HTTP_SERVICE_CONFIG_SSL_CCS_QUERY
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ExternalStructure subclass: #HTTP_SERVICE_CONFIG_SSL_CCS_SET
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-ExternalStructure subclass: #HTTP_SERVICE_CONFIG_SSL_KEY
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
@@ -335,16 +311,6 @@ ExternalStructure subclass: #HTTP_SERVICE_CONFIG_TIMEOUT_SET
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ExternalStructure subclass: #HTTP_SERVICE_CONFIG_URLACL_KEY
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-ExternalStructure subclass: #HTTP_SERVICE_CONFIG_URLACL_PARAM
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
 ExternalStructure subclass: #HTTP_SERVICE_CONFIG_URLACL_QUERY
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -380,32 +346,7 @@ ExternalStructure subclass: #HTTP_TIMEOUT_LIMIT_INFO
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ExternalStructure subclass: #HTTP_TRANSPORT_ADDRESS
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
 ExternalStructure subclass: #HTTP_UNKNOWN_HEADER
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-ExternalStructure subclass: #HTTP_VERSION
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-ExternalStructure subclass: #HTTPAPI_VERSION
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-ExternalStructure subclass: #Sockaddr
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-ExternalStructure subclass: #SOCKADDR_STORAGE
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''

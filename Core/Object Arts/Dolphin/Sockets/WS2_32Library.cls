@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ExternalLibrary subclass: #WS2_32Library
 	instanceVariableNames: 'wsaData'
@@ -723,6 +723,18 @@ inet_ntoa: in
 	<stdcall: lpstr inet_ntoa IN_ADDR>
 	^self invalidCall!
 
+inet_ntop: saInteger pAddr: anIN_ADDR pStringBuf: aString stringBufSize: sizeInteger
+	"Convert an IN_ADDR or IN6_ADDR to a string in canonical form."
+
+	<stdcall: lpstr inet_ntop sdword void* lpstr sdword>
+	^self invalidCall!
+
+inet_pton: saInteger pszAddrString: aString pAddrBuf: anIN_ADDR
+	"Convert an internet address expressed as a string to an IN_ADDR or IN6_ADDR."
+
+	<stdcall: sdword inet_pton sdword lpstr void*>
+	^self invalidCall!
+
 initialize
 	| version res |
 	version := 2 bitOr: (0 bitShift: 8).
@@ -879,6 +891,12 @@ WSACleanup
 	<stdcall: sdword WSACleanup>
 	^self invalidCall!
 
+wsaGetLastError
+	"int WSAGetLastError(void);"
+
+	<stdcall: sdword WSAGetLastError>
+	^self invalidCall!
+
 WSAGetLastError
 	"Invoke the WSAGetLastError() function of the module wrapped by the receiver.
 
@@ -924,6 +942,8 @@ WSAStartup: wVersionRequested lpWSAData: lpWSAData
 !WS2_32Library categoriesFor: #htons:!**auto generated**!public!win32 functions-sockets library! !
 !WS2_32Library categoriesFor: #inet_addr:!public!win32 functions-sockets library! !
 !WS2_32Library categoriesFor: #inet_ntoa:!public!win32 functions-sockets library! !
+!WS2_32Library categoriesFor: #inet_ntop:pAddr:pStringBuf:stringBufSize:!public!win32 functions-sockets library! !
+!WS2_32Library categoriesFor: #inet_pton:pszAddrString:pAddrBuf:!public!win32 functions-sockets library! !
 !WS2_32Library categoriesFor: #initialize!initializing!private! !
 !WS2_32Library categoriesFor: #ioctlsocket:cmd:argp:!**auto generated**!public! !
 !WS2_32Library categoriesFor: #listen:backlog:!**auto generated**!public! !
@@ -938,6 +958,7 @@ WSAStartup: wVersionRequested lpWSAData: lpWSAData
 !WS2_32Library categoriesFor: #shutdown:how:!**auto generated**!public!win32 functions-sockets library! !
 !WS2_32Library categoriesFor: #socket:type:protocol:!public!win32 functions-sockets library! !
 !WS2_32Library categoriesFor: #WSACleanup!**auto generated**!public! !
+!WS2_32Library categoriesFor: #wsaGetLastError!public!win32 functions-sockets library! !
 !WS2_32Library categoriesFor: #WSAGetLastError!**auto generated**!public!win32 functions-sockets library! !
 !WS2_32Library categoriesFor: #WSASetLastError:!public!win32 functions-sockets library! !
 !WS2_32Library categoriesFor: #WSAStartup:lpWSAData:!**auto generated**!public!win32 functions-sockets library! !
