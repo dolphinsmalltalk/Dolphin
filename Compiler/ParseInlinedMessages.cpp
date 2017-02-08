@@ -915,7 +915,9 @@ int Compiler::ParseOptimizeBlock(int arguments)
 			NextToken();
 		}
 		else
-			m_ok = false;
+		{
+			CompileError(TEXTRANGE(nTextStart, LastTokenRange().m_stop), CErrBlockArgListNotClosed);
+		}
 	}
 
 	int nBlockTemps = 0;
