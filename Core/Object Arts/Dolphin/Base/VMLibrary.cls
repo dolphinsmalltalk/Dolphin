@@ -141,7 +141,7 @@ defaultProductDetails
 		at: 5 put: self basePatchLevel;
 		at: 6 put: 'D7';
 		at: 7 put: nil; "Serial #"
-		at: 8 put: nil; "Boot info"
+		at: 8 put: version productVersionString; "Boot info"
 		yourself!
 
 dump: msgString path: pathString stackDepth: slotsInteger walkbackDepth: framesInteger
