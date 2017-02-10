@@ -107,6 +107,11 @@ allInstVarNames
 		ifTrue: [self instVarNames]
 		ifFalse: [superclass allInstVarNames , self instVarNames]!
 
+allMethodsDo: operation
+	"Evaluate the monadic valuable, operation, for each and every method defined in the hierarchy rooted in the receiver."
+
+	self withAllSubclassesDo: [:behavior | behavior methodDictionary do: operation]!
+
 allSelectors
 	"Answer a <Set> of <Symbol>s, being all the message selectors to which the receiver 
 	is able to respond (this includes messages understood by superclasses)."
@@ -1108,6 +1113,7 @@ withAllSuperclassesDo: aMonadicValuable
 !Behavior categoriesFor: #allClassVarNames!class variables!public! !
 !Behavior categoriesFor: #allInstances!instances!public! !
 !Behavior categoriesFor: #allInstVarNames!instance variables!public! !
+!Behavior categoriesFor: #allMethodsDo:!enumerating!public! !
 !Behavior categoriesFor: #allSelectors!methods-accessing!public! !
 !Behavior categoriesFor: #allSharedPoolNames!pool variables!public! !
 !Behavior categoriesFor: #allSharedPools!pool variables!public! !

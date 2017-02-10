@@ -582,9 +582,9 @@ changedByteSizeFrom: oldByteSize
 	newByteSize := self byteSize.
 	oldByteSize ~= newByteSize ifFalse: [^self].
 	"Recompile own methods so that they have the correct offsets encoded"
-	(self selectMethods: [:each | each refersToLiteral: #offsetOf:]) do: [:each | each recompile].
-	(self descriptorClass structTypeForSize: oldByteSize)
-		~= (self descriptorClass structTypeForSize: newByteSize) ifTrue: [self recompileReferences]!
+	self methodDictionary do: [:each | (each refersToLiteral: #offsetOf:) ifTrue: [each recompile]].
+	"Recompile any references that might have a static literal snapshot of the byte size of the receiver."
+	self recompileReferences!
 
 clear: addressOrBytes
 	"Finalize an instance of the structure which instances of the receiver wrap
@@ -1007,23 +1007,28 @@ recompileDefinition
 !
 
 recompileReferences
-	"Private - Recompile all directly referencing external call methods
-	that might need to change if the receiver's size changes."
+	"Private - Recompile all directly referencing external call methods that might need to
+	change if the receiver's size changes."
 
-	| binding pred |
+	| pred |
 	Notification signal: ('Recompiling references to <1d> (size <2d>)...' expandMacrosWith: self
 				with: self basicByteSize).
 	"Then recompile any FFI calls that reference the class in case they are passing/returning by
-	value (the calling conventions vary depending on the structure length), OR any methods that
-	might be using static expressions to get the byte-size."
-	binding := self environment associationAt: self name.
-	pred := self referenceFilterFor: binding.
-	Smalltalk allBehaviorsDo: 
-			[:eachClass |
-			(eachClass selectMethods: pred) do: 
-					[:eachMethod |
-					(eachMethod isExternalCall or: [eachMethod refersToLiteral: #basicByteSize])
-						ifTrue: [eachMethod recompile]]]!
+	value (the calling conventions vary depending on the structure length), AND any
+	ExternalStructure methods that might be using static expressions to get the byte-size."
+	pred := self referenceFilterFor: self classBinding.
+	ExternalLibrary allMethodsDo: 
+			[:each |
+			(each isExternalCall and: [pred value: each])
+				ifTrue: 
+					[Notification signal: 'Recompiling ' , each printString.
+					each recompile]].
+	ExternalStructure allMethodsDo: 
+			[:each |
+			((each refersToLiteral: #basicByteSize) and: [pred value: each])
+				ifTrue: 
+					[Notification signal: 'Recompiling ' , each printString.
+					each recompile]]!
 
 register
 	"(Re)Register the receiver's as the Record class for its GUID.
