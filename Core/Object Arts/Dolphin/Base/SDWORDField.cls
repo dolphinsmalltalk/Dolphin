@@ -1,12 +1,12 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ScalarField subclass: #SDWORDField
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-SDWORDField guid: (GUID fromString: '{87B4C4EC-026E-11D3-9FD7-00A0CC3E4A32}')!
-SDWORDField comment: ''!
+SDWORDField guid: (GUID fromString: '{87b4c4ec-026e-11d3-9fd7-00a0cc3e4a32}')!
+SDWORDField comment: '<SDWORDField> is a <ScalarField> class to represent <ExternalStructure> fields that are 32-bit signed integers.'!
 !SDWORDField categoriesForClass!External-Data-Types! !
 !SDWORDField methodsFor!
 
@@ -15,18 +15,27 @@ accessorMessage
 
 	^#sdwordAtOffset:put:!
 
-readFrom: anExternal
-	"Private - Instantiate an object of the the type the receiver represents
-	at the receiver's offset in anExternal"
+readFrom: anExternalStructure
+	"Private - Answer the 32-bit signed <integer> that is the value of the at the receiver's
+	offset in the <ExternalStructure> argument."
 
-	^anExternal sdwordAtOffset: offset!
+	^anExternalStructure bytes sdwordAtOffset: offset!
 
-writeInto: anExternal value: anObject
-	"Private - Write anObject into anExternal at the receiver's offset, and in a form
-	appropriate for the receiver's External type"
+writeInto: anExternalStructure value: anInteger
+	"Private - Write the 32-bit signed <integer>, anInteger, into the <ExternalStructure>,
+	anExternalStructure, at the receiver's offset."
 
-	^anExternal sdwordAtOffset: offset put: anObject! !
+	^anExternalStructure bytes sdwordAtOffset: offset put: anInteger! !
 !SDWORDField categoriesFor: #accessorMessage!initializing!private! !
 !SDWORDField categoriesFor: #readFrom:!indirect accessing!private! !
 !SDWORDField categoriesFor: #writeInto:value:!indirect accessing!private! !
+
+!SDWORDField class methodsFor!
+
+byteSize
+	"Private - Answer the size of the field type the receiver represents in bytes.
+	An SDWORD is always 4 bytes."
+
+	^4! !
+!SDWORDField class categoriesFor: #byteSize!constants!private! !
 

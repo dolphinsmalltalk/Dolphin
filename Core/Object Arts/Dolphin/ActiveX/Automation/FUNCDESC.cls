@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 AXMemberDesc subclass: #FUNCDESC
 	instanceVariableNames: 'names arguments outputIndices retvalIndex methodName'
@@ -73,7 +73,18 @@ arguments
 basicFree
 	"Private - Free external resources owned by the receiver."
 
-	piTypeInfo asParameter ReleaseFuncDesc: self!
+	analyzer releaseFuncDesc: self!
+
+basicIdlAttributes
+	"Private - Answer a <sequencedReadableCollection> of the string names
+	of the various IDL flags assocated with the receiver."
+
+	| answer |
+	answer := super basicIdlAttributes.
+	self isPropPut ifTrue: [answer add: 'propput'].
+	self isPropPutRef ifTrue: [answer add: 'propputref'].
+	self isPropGet ifTrue: [answer add: 'propget'].
+	^answer!
 
 callconv
 	"Answer the receiver's callconv field as a Smalltalk object."
@@ -130,6 +141,9 @@ funckind
 	"Answer the receiver's funckind field as a Smalltalk object."
 
 	^bytes sdwordAtOffset: ##(self offsetOf: #funckind)!
+
+getAllCustData
+	^analyzer tlbInterface getAllFuncCustData: index!
 
 hasRetval
 	"Answer whether the receiver has retval argument."
@@ -242,7 +256,7 @@ names
 		ifTrue: 
 			[| count |
 			count := self cParams + 1.
-			names := piTypeInfo getNamesOfMember: self memid count: count].
+			names := analyzer getNamesOfMember: self memid count: count].
 	^names!
 
 optionalInputs
@@ -308,17 +322,25 @@ selector
 	"Although this might seem to be development time only functionality, it can be used at run time
 	to build the names of events to be triggered when sinking a COM 'source'/event interface."
 
-	| keywords argc |
-	keywords := self names.
-	"Special case if no arguments"
-	^(argc := self argumentCount) < 1 
-		ifTrue: [keywords first asSymbol]
-		ifFalse: [ | answer |
+	| argc |
+	^(argc := self argumentCount) < 1
+		ifTrue: 
+			["Special case if no arguments"
+			self name asSymbol]
+		ifFalse: 
+			[| answer keywords |
+			keywords := self names.
 			answer := String writeStream: argc * 10.
-			answer nextPutAll: keywords first; nextPut: $:.
-			3 to: keywords size do: [:i | answer nextPutAll: (keywords at: i); nextPut: $:].
-			answer contents asSymbol]
-!
+			answer
+				nextPutAll: keywords first;
+				nextPut: $:.
+			3 to: keywords size
+				do: 
+					[:i |
+					answer
+						nextPutAll: (keywords at: i);
+						nextPut: $:].
+			answer contents asSymbol]!
 
 tdescFunc
 	"Private - Answer a TYPEDESC describing the receiver's formal return type.
@@ -342,6 +364,7 @@ wFuncFlags
 !FUNCDESC categoriesFor: #argumentNames!accessing!public! !
 !FUNCDESC categoriesFor: #arguments!accessing!public! !
 !FUNCDESC categoriesFor: #basicFree!private!realizing/unrealizing! !
+!FUNCDESC categoriesFor: #basicIdlAttributes!printing-IDL!private! !
 !FUNCDESC categoriesFor: #callconv!**compiled accessors**!public! !
 !FUNCDESC categoriesFor: #callingConvention!accessing!public! !
 !FUNCDESC categoriesFor: #clearMethodName!development!initializing!private! !
@@ -353,6 +376,7 @@ wFuncFlags
 !FUNCDESC categoriesFor: #elemDescFunc!accessing!public! !
 !FUNCDESC categoriesFor: #flags!accessing!private! !
 !FUNCDESC categoriesFor: #funckind!**compiled accessors**!public! !
+!FUNCDESC categoriesFor: #getAllCustData!accessing!private! !
 !FUNCDESC categoriesFor: #hasRetval!public!testing! !
 !FUNCDESC categoriesFor: #idlCallingConvention!printing-IDL!private! !
 !FUNCDESC categoriesFor: #invkind!**compiled accessors**!public! !

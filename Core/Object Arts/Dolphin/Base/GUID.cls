@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object variableByteSubclass: #GUID
 	instanceVariableNames: ''
 	classVariableNames: 'Null'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-GUID guid: (GUID fromString: '{87B4C48F-026E-11D3-9FD7-00A0CC3E4A32}')!
+GUID guid: (GUID fromString: '{87b4c48f-026e-11d3-9fd7-00a0cc3e4a32}')!
 GUID comment: 'GUID is the class of 128-bit Globally Unique Identifiers (guids) which are used wherever a unique identifier is required in COM, for example to identify specific coclasses and interfaces.
 
 You can easily allocate a new GUID by sending #newUnique to this class. Note that this process is very fast, so there is no particular reason not to use GUIDs for other purposes requiring unique identifiers such as records in a database.
@@ -98,7 +98,6 @@ idlString
 	| pSz answer status |
 	pSz := ExternalAddress new.
 	(status := RPCLibrary default uuidToString: self stringUuid: pSz) == 0 ifFalse: [RPCError signal: status].
-	UserLibrary default stringUpperA: pSz.
 	answer := String fromAddress: pSz.
 	RPCLibrary default rpcStringFree: pSz.
 	^answer!

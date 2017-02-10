@@ -5,7 +5,7 @@ GenericExternalArray subclass: #StructureArray
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-StructureArray guid: (GUID fromString: '{87B4C5A5-026E-11D3-9FD7-00A0CC3E4A32}')!
+StructureArray guid: (GUID fromString: '{87b4c5a5-026e-11d3-9fd7-00a0cc3e4a32}')!
 StructureArray comment: 'Generic <ExternalArray> class which can represent single-dimensioned arrays of any class of <ExternalStructure>. Packing and alignment rules are respected.
 
 Note that although StructureArray is capable of fulfilling the tasks of other more specialized <ExternalArray> classes such as <DWORDArray> and <FLOATArray>, it is far less efficient and marginally more inconvenient as indexed access always yields an <ExternalStructure> rather than a fundamental Smalltalk object.
@@ -146,9 +146,15 @@ stbConvertFrom: anSTBClassFormat
 stbVersion
 	"Answer the current binary filer version number for instances of the receiver."
 
-	^1! !
+	^1!
+
+with: anExternalStructure
+	^(self length: 1 elementClass: anExternalStructure class)
+		at: 1 put: anExternalStructure;
+		yourself! !
 !StructureArray class categoriesFor: #fromAddress:length:elementClass:!instance creation!public! !
 !StructureArray class categoriesFor: #length:elementClass:!instance creation!public! !
 !StructureArray class categoriesFor: #stbConvertFrom:!binary filing!public! !
 !StructureArray class categoriesFor: #stbVersion!binary filing!public! !
+!StructureArray class categoriesFor: #with:!public! !
 

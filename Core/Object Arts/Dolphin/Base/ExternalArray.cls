@@ -5,7 +5,7 @@ ExternalStructure subclass: #ExternalArray
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ExternalArray guid: (GUID fromString: '{87B4C593-026E-11D3-9FD7-00A0CC3E4A32}')!
+ExternalArray guid: (GUID fromString: '{87b4c593-026e-11d3-9fd7-00a0cc3e4a32}')!
 ExternalArray comment: 'ExternalArray is a specialized class of <ExternalStructure> to represent contiguous heterogeneous arrays of external types, be they scalar of structured. The various subclasses can be used for external interfacing tasks such as where C arrays are expected.
 
 StructureArray is the most general of the subclasses in that it supports arbitrary element types (represented by other ExternalStructures), and can in fact perform the task of the other subclasses such as DWORDArray. The more specialized subclasses do, however, offer much greater efficiency where they are applicable.

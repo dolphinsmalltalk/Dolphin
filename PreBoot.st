@@ -86,20 +86,67 @@ Behavior addClassConstant: '_NullMethodDictionary'
 				isImmutable: true;
 				yourself)!
 
-ExternalCallback class removeSelector: #initialize!
+!Behavior methodsFor!
+
+addSelector: aSymbol withMethod: aCompiledMethod
+	| selector |
+	selector := aSymbol asSymbol.
+	aCompiledMethod
+		methodClass: self;
+		selector: selector.
+	(methodDictionary ifNil: [methodDictionary := MethodDictionary new]) at: selector
+		put: aCompiledMethod.
+
+	self flushMethodCache!
+
+basicCompile: aString flags: anInteger
+	| error result stubMethod |
+	result := error := stubMethod := nil.
+	
+	[result := self compilerClass
+				compile: aString
+				in: self
+				flags: anInteger]
+			on: self compilerClass errorClass
+			do: 
+				[:n |
+				error := n.
+				stubMethod := (MethodCompileFailed with: n) signal: n description.
+				n pass].
+	error notNil ifTrue: [result := stubMethod].
+	result notNil
+		ifTrue: 
+			[| selector method |
+			method := result method.
+			selector := method selector asSymbol.
+			methodDictionary
+				ifNotNil: 
+					[| oldMethod |
+					oldMethod := methodDictionary at: selector ifAbsent: [].
+					result oldMethod: oldMethod.
+					oldMethod ifNotNil: [method isPrivate: oldMethod isPrivate]].
+			self addSelector: selector withMethod: method.
+			method
+				storeSourceString: aString asString;
+				isImmutable: true].
+	^result! !
+
+(Array with: ExternalCallback with: ExternalDescriptor) do: [:each | each class removeSelector: #initialize]!
+ExternalDescriptor addClassConstant: 'RetTypeMask' value: 63!
 #(always caseInsensitive equality identity never uninitialize) do: [:each | SearchPolicy class removeSelector: each]!
 #(current uninitialize) do: [:each | SymbolStringSearchPolicy class removeSelector: each. AssociationSearchPolicy class removeSelector: each]!
 
-ExternalArray subclass: #BYTEArray
+BYTE subclass: #BOOLEAN
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 
-!BYTEArray class methodsFor!
+!BOOLEAN class methodsFor!
 
 fileOutStem
 	^super fileOutStem, '_struct'! !
-!BYTEArray class categoriesFor: #fileOutStem!development!private!source filing! !
 
 NTLibrary addClassVariable: 'IsWine' value: false!
+
+(Array with: ArrayField with: ArrayPointerField) do: [:each | each withAllSubclassesDo: [:f | (f whichSelectorsAccess: 'length') do: [:s | f removeSelector: s]]]!

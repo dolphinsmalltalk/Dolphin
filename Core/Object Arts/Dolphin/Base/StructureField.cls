@@ -1,16 +1,16 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 EmbeddedField subclass: #StructureField
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-StructureField guid: (GUID fromString: '{87B4C4DF-026E-11D3-9FD7-00A0CC3E4A32}')!
-StructureField comment: 'ExternalField Type for embedded structures'!
+StructureField guid: (GUID fromString: '{87b4c4df-026e-11d3-9fd7-00a0cc3e4a32}')!
+StructureField comment: 'StructureField is an <ExternalField> type  for described <ExternalStructure> fields that are themselves instances of <ExternalStructure>s.'!
 !StructureField categoriesForClass!External-Data-Types! !
 !StructureField methodsFor!
 
-printMutatorBody: aSymbol on: aWriteStream 
+printMutatorBody: aSymbol on: aWriteStream
 	"Private - Answer suitable method text for compiling a write-accessor method
 	to substitute for the receiver (does not include the selector).
 	N.B. In this case we overwrite the entire embedded structure with
@@ -19,12 +19,13 @@ printMutatorBody: aSymbol on: aWriteStream
 	| keywords |
 	keywords := #replaceBytesOf:from:to:startingAt: keywords.
 	aWriteStream
-		nextPutAll: 'anObject ';
+		nextPutAll: self valueParameterName;
+		space;
 		display: keywords first;
 		nextPutAll: ' bytes ';
 		display: keywords second;
 		space.
-	self 
+	self
 		printOffsetExpression: aSymbol
 		on: aWriteStream
 		extra: 1.
@@ -32,11 +33,11 @@ printMutatorBody: aSymbol on: aWriteStream
 		space;
 		display: keywords third;
 		space.
-	self 
+	self
 		printOffsetExpression: aSymbol
 		on: aWriteStream
 		extra: ((String writeStream)
-				display: self fieldClass;
+				display: self fieldClassName;
 				space;
 				display: #basicByteSize;
 				contents).
@@ -46,14 +47,11 @@ printMutatorBody: aSymbol on: aWriteStream
 		space;
 		display: 1!
 
-readFrom: anExternal
-	"Private - Answer the embedded object at the receiver's offset 
-	in anExternal. This may be a copy of the original data
-	(e.g. if structureClass is a subclass of External) or a
-	reference to the original data (e.g. if structureClass is a
-	subclass of ExternalStructure)"
+readFrom: anExternalStructure
+	"Private - Answer an <ExternalStructure> of the receiver's field class that is a reference
+	to the data in the <ExternalStructure> argument at the receiver's offset."
 
-	^self fieldClass fromAddress: anExternal yourAddress + offset!
+	^self fieldClass fromAddress: anExternalStructure yourAddress + offset!
 
 writeInto: anExternal value: anExternalStructure
 	"Private - Write the bytes of anExternalStructure into anExternal."

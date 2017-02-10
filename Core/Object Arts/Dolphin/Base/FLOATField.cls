@@ -1,12 +1,12 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ScalarField subclass: #FLOATField
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-FLOATField guid: (GUID fromString: '{87B4C4EA-026E-11D3-9FD7-00A0CC3E4A32}')!
-FLOATField comment: ''!
+FLOATField guid: (GUID fromString: '{87b4c4ea-026e-11d3-9fd7-00a0cc3e4a32}')!
+FLOATField comment: '<FLOATField> is a <ScalarField> class to represent <ExternalStructure> fields that are 32-bit IEEE single precision floating point numbers.'!
 !FLOATField categoriesForClass!External-Data-Types! !
 !FLOATField methodsFor!
 
@@ -15,19 +15,23 @@ accessorMessage
 
 	^#floatAtOffset:put:!
 
-readFrom: anExternal
-	"Private - Instantiate an object of the the type the receiver represents
-	at the receiver's offset in anExternal"
+fieldClassName
+	^Float name!
 
-	^anExternal floatAtOffset: offset
+readFrom: anExternal
+	"Private - Answer a <Float> with the same value as the 32-bit single precision floating
+	point value at the receiver's offset in the <ExternalStructure> argument."
+
+	^anExternal bytes floatAtOffset: offset
 !
 
-writeInto: anExternal value: anObject
-	"Private - Write anObject into anExternal at the receiver's offset, and in a form
-	appropriate for the receiver's External type"
+writeInto: anExternalStructure value: aFloat
+	"Private - Write a 32-bit IEEE single precision equivalent value to the <Float> argument,
+	aFloat, into the <ExternalStructure>, anExternalStructure, at the receiver's offset."
 
-	^anExternal floatAtOffset: offset put: anObject! !
+	^anExternalStructure bytes floatAtOffset: offset put: aFloat! !
 !FLOATField categoriesFor: #accessorMessage!initializing!private! !
+!FLOATField categoriesFor: #fieldClassName!automatic generation!constants!development!private! !
 !FLOATField categoriesFor: #readFrom:!indirect accessing!private! !
 !FLOATField categoriesFor: #writeInto:value:!indirect accessing!private! !
 

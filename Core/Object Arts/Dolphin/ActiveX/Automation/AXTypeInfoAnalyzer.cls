@@ -1,7 +1,7 @@
 "Filed out from Dolphin Smalltalk 7"!
 
 AXTypeInfoObject subclass: #AXTypeInfoAnalyzer
-	instanceVariableNames: 'typeLib globalBinding guid index basicName'
+	instanceVariableNames: 'typeLib globalBinding guid index documentation'
 	classVariableNames: 'TypeKindToClassMap VTtoIDLTypeMap'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -48,6 +48,12 @@ asImplType
 
 	^self!
 
+attributes
+	"Answer a <TYPEATTR> detailing the receiver's attributes - may raise an <HRESULTError>.
+	Note that this is cached by the ITypeInfo."
+
+	^self tlbInterface attributes!
+
 baseClass
 	"Private - Answer the Dolphin class used to represent superclass of the receiver."
 
@@ -57,8 +63,7 @@ basicName
 	"Private - Answer a <readableString> name for the receiver, retrieved directly
 	from the documentation in the type library."
 
-	basicName isNil ifTrue: [basicName := self nameOfID: MEMBERID_NIL].
-	^basicName!
+	^self documentation name!
 
 classDesc
 	"Private - Answer an <association> between a Dolphin class suitable for representing
@@ -82,7 +87,49 @@ displayOn: aStream
 documentation
 	"Answer an <AXTypeLibDocumentation> object containing the documentation for this type."
 
-	^self tlbInterface documentationForMember: MEMBERID_NIL!
+	documentation isNil ifTrue: [documentation := self documentationForMember: MEMBERID_NIL].
+	^documentation!
+
+documentationForMember: memid
+	"Answer an <AXTypeLibDocumentation> object containing the documentation for the 
+	element of the receiver identified by the <MEMBERID>, memid. Note that this
+	differs from ITypeLib, where indices are used to access the elements.
+	The method may raise an HRESULTError, or a NotFoundError if the memid 
+	is not recognised. Refer to the SDK help for further possible error conditions."
+
+	^self documentationForMember: memid ifAbsent: [self errorNotFound: memid]!
+
+documentationForMember: memid ifAbsent: exceptionHandler
+	"Answer an <AXTypeLibDocumentation> object containing the documentation for the 
+	element of the receiver identified by the <MEMBERID>, memid. Note that this
+	differs from ITypeLib, where indices are used to access the elements.
+	If the member is not found, then answers the result of evaluating the <niladicValuable>
+	exceptionHandler.
+	The method may raise an HRESULTError, e.g. if the index is out of range. Refer
+	to the SDK help for further possible error conditions."
+
+	| bstrName bstrDocString dwHelpContext answer hr |
+	bstrName := BSTR basicNew.
+	bstrDocString := BSTR basicNew.
+	dwHelpContext := DWORDBytes new.
+	hr := self tlbInterface
+				GetDocumentation: memid
+				pBstrName: bstrName
+				pBstrDocString: bstrDocString
+				pdwHelpContext: dwHelpContext
+				pBstrHelpFile: nil.
+	hr < 0
+		ifTrue: 
+			[hr = AXAutomationErrors.TYPE_E_ELEMENTNOTFOUND ifTrue: [^exceptionHandler value].
+			^HRESULTError signalWith: hr].
+	answer := AXTypeLibDocumentation new
+				name: bstrName asString
+				helpstring: bstrDocString asString
+				helpcontext: dwHelpContext value
+				helpfile: ''.
+	bstrName basicFree.
+	bstrDocString basicFree.
+	^answer!
 
 environment
 	"Answer the namespace into which global representing the receiver type will be/has been generated."
@@ -96,12 +143,14 @@ fullyQualifiedName
 	^self typeLib name, '.', self name.
 !
 
-funcDescAt: subscript 
-	"Private - Answer a FUNCDESC for the function in the receiver at the 
-	specified one-based <integer> index, subscript."
+funcDescAt: anInteger
+	"Private - Answer a FUNCDESC for the function in the receiver at the specified one-based
+	<integer> index."
 
-	^(self tlbInterface funcDescAt: subscript)
-		analyzer: self;
+	| funcIndex |
+	funcIndex := anInteger - 1.
+	^(self tlbInterface getFuncDesc: funcIndex)
+		setAnalyzer: self index: funcIndex;
 		yourself!
 
 functions
@@ -196,8 +245,11 @@ idOfName: name ifAbsent: exceptionHandler
 
 	^self tlbInterface idOfName: name ifAbsent: exceptionHandler!
 
+includeIDLInClassComment
+	^true!
+
 index
-	"Private - Answer the receiver's one-based integer index within its owning type library."
+	"Answer the receiver's one-based integer index within its owning type library."
 
 	^index!
 
@@ -278,11 +330,19 @@ realize
 	self setTypeInfo: (typeLib basicTypeInfoAt: index)
 !
 
-setTypeInfo: anITypeInfo 
+releaseFuncDesc: aFUNCDESC
+	tlbInterface isNull ifFalse: [tlbInterface ReleaseFuncDesc: aFUNCDESC]!
+
+releaseTypeAttr: aTYPEATTR
+	tlbInterface isNull ifFalse: [tlbInterface ReleaseTypeAttr: aTYPEATTR]!
+
+releaseVarDesc: aVARDESC
+	tlbInterface isNull ifFalse: [tlbInterface ReleaseVarDesc: aVARDESC]!
+
+setTypeInfo: anITypeInfo
 	"Private - Set the value of the receiver's <ITypeInfo> instance variable to the argument."
 
-	anITypeInfo attributes analyzer: self.
-	tlbInterface := anITypeInfo!
+	(tlbInterface := (anITypeInfo queryInterface: ITypeInfo2) ?? anITypeInfo) attributes analyzer: self!
 
 setTypeInfo: anITypeInfo typeLib: anAXTypeLibraryAnalyzer index: anInteger 
 	"Private - Initialize the receiver's identity instance variables."
@@ -302,10 +362,9 @@ tdesc
 	^self attributes tdesc!
 
 typeFlags
-	"Answer the receiver's type flags (from the TYPEFLAGS enumeration).
-	ITypeInfo and ITypeInfo2 implement this in different ways."
+	"Answer the receiver's type flags (from the TYPEFLAGS enumeration)."
 
-	^self tlbInterface typeFlags!
+	^self attributes wTypeFlags!
 
 typekind
 	"Answer the Automation TYPEKIND associated with the receiver."
@@ -323,12 +382,14 @@ typeName
 
 	^self classDesc key typeName!
 
-varDescAt: anInteger 
+varDescAt: anInteger
 	"Private - Answer a VARDESC for the member variable of the receiver's structure
 	at the specified index."
 
-	^(self tlbInterface varDescAt: anInteger)
-		analyzer: self;
+	| varIndex |
+	varIndex := anInteger - 1.
+	^(self tlbInterface getVarDesc: varIndex)
+		setAnalyzer: self index: varIndex;
 		yourself!
 
 variables
@@ -346,12 +407,15 @@ vt
 	^VT_USERDEFINED! !
 !AXTypeInfoAnalyzer categoriesFor: #=!comparing!public! !
 !AXTypeInfoAnalyzer categoriesFor: #asImplType!converting!public! !
+!AXTypeInfoAnalyzer categoriesFor: #attributes!accessing!public! !
 !AXTypeInfoAnalyzer categoriesFor: #baseClass!constants!private! !
 !AXTypeInfoAnalyzer categoriesFor: #basicName!accessing!private! !
 !AXTypeInfoAnalyzer categoriesFor: #classDesc!constants!private! !
 !AXTypeInfoAnalyzer categoriesFor: #constants!enumerating!public! !
 !AXTypeInfoAnalyzer categoriesFor: #displayOn:!displaying!public! !
 !AXTypeInfoAnalyzer categoriesFor: #documentation!accessing!public! !
+!AXTypeInfoAnalyzer categoriesFor: #documentationForMember:!accessing!public! !
+!AXTypeInfoAnalyzer categoriesFor: #documentationForMember:ifAbsent:!accessing!public! !
 !AXTypeInfoAnalyzer categoriesFor: #environment!constants!public! !
 !AXTypeInfoAnalyzer categoriesFor: #fullyQualifiedName!constants!private! !
 !AXTypeInfoAnalyzer categoriesFor: #funcDescAt:!accessing!private! !
@@ -367,7 +431,8 @@ vt
 !AXTypeInfoAnalyzer categoriesFor: #guid!accessing!public! !
 !AXTypeInfoAnalyzer categoriesFor: #hash!comparing!public! !
 !AXTypeInfoAnalyzer categoriesFor: #idOfName:ifAbsent:!accessing!public! !
-!AXTypeInfoAnalyzer categoriesFor: #index!accessing!private! !
+!AXTypeInfoAnalyzer categoriesFor: #includeIDLInClassComment!constants!private! !
+!AXTypeInfoAnalyzer categoriesFor: #index!constants!public! !
 !AXTypeInfoAnalyzer categoriesFor: #isDispatchable!public!testing! !
 !AXTypeInfoAnalyzer categoriesFor: #isDual!public!testing! !
 !AXTypeInfoAnalyzer categoriesFor: #isGlobalDefined!public!testing! !
@@ -379,6 +444,9 @@ vt
 !AXTypeInfoAnalyzer categoriesFor: #nameOfID:ifAbsent:!accessing!public! !
 !AXTypeInfoAnalyzer categoriesFor: #nameSansTag!accessing!private! !
 !AXTypeInfoAnalyzer categoriesFor: #realize!private!realizing/unrealizing! !
+!AXTypeInfoAnalyzer categoriesFor: #releaseFuncDesc:!private!realizing/unrealizing! !
+!AXTypeInfoAnalyzer categoriesFor: #releaseTypeAttr:!private!realizing/unrealizing! !
+!AXTypeInfoAnalyzer categoriesFor: #releaseVarDesc:!private!realizing/unrealizing! !
 !AXTypeInfoAnalyzer categoriesFor: #setTypeInfo:!accessing!private! !
 !AXTypeInfoAnalyzer categoriesFor: #setTypeInfo:typeLib:index:!accessing!private! !
 !AXTypeInfoAnalyzer categoriesFor: #suggestedBinding!accessing!private! !
@@ -429,7 +497,7 @@ initializeVTtoIDLTypeMap
 				at: VT_DISPATCH put: 'IDispatch*';
 				at: VT_ERROR put: 'SCODE';
 				at: VT_HRESULT put: 'HRESULT';
-				at: VT_I1 put: 'CHAR';
+				at: VT_I1 put: 'char';
 				at: VT_I2 put: 'short';
 				at: VT_I4 put: 'long';
 				at: VT_I8 put: '__int64';

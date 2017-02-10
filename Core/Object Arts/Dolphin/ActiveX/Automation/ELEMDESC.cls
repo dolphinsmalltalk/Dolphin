@@ -5,7 +5,7 @@ AbstractELEMDESC subclass: #ELEMDESC
 	classVariableNames: ''
 	poolDictionaries: 'AXAutomationConstants'
 	classInstanceVariableNames: ''!
-ELEMDESC guid: (GUID fromString: '{C06F3B77-0868-11D3-93AF-00A024CA708A}')!
+ELEMDESC guid: (GUID fromString: '{c06f3b77-0868-11d3-93af-00a024ca708a}')!
 ELEMDESC comment: 'ELEMDESC is an <ExternalStructure> class to represent the AX Automation structure of the same name.
 
 ELEMDESC contains type and marshalling information for a variable, a function, or a function parameter.
@@ -62,7 +62,7 @@ param
 	^param!
 
 paramdesc
-	"Answer the receiver's paramdesc field as a Smalltalk object."
+	"Answer the <PARAMDESC> value of the receiver's 'paramdesc' field."
 
 	^PARAMDESC fromAddress: bytes yourAddress + ##(self offsetOf: #paramdesc)! !
 !ELEMDESC categoriesFor: #defaultValue!accessing!public! !

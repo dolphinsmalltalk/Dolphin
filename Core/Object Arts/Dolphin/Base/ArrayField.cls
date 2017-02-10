@@ -1,12 +1,17 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 EmbeddedField subclass: #ArrayField
-	instanceVariableNames: 'length'
+	instanceVariableNames: 'arrayLength'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ArrayField guid: (GUID fromString: '{87B4C4DE-026E-11D3-9FD7-00A0CC3E4A32}')!
-ArrayField comment: 'ArrayField is an <ExternalField> type to represent <ExternalStructure> members which are arrays whose contents are actually embedded in the structure, as opposed to being merely pointed at from the structure.'!
+ArrayField guid: (GUID fromString: '{87b4c4de-026e-11d3-9fd7-00a0cc3e4a32}')!
+ArrayField comment: 'ArrayField is an <ExternalField> type to represent <ExternalStructure> fields which are fixed arrays whose contents are actually embedded in the structure, as opposed to being merely pointed at from the structure.
+
+Instance Variables:
+	length		<SmallInteger> or <Symbol>. Either the integer length of fixed arrays, or the symbolic name of the length field for conformant arrays.
+
+'!
 !ArrayField categoriesForClass!External-Data-Types! !
 !ArrayField methodsFor!
 
@@ -18,10 +23,16 @@ alignment
 
 	^self elementSize!
 
+allocationLength
+	^arrayLength allocationLength!
+
 arrayClass
 	"Private - Answer the class of <ExternalArray> that this field type describes."
 
 	^fieldClass!
+
+arrayLength: anArrayFieldLength
+	arrayLength := anArrayFieldLength!
 
 byteSize
 	"Private - Answer the byte size of the embedded array the receiver represents.
@@ -30,7 +41,7 @@ byteSize
 	"N.B. We use the length variable directly, rather than sending the length message as we need
 	the allocation length, not the element count (the latter excludes null-terminators)"
 
-	^length * self elementSize!
+	^arrayLength allocationLength * self elementSize!
 
 elementClass
 	"Private - Answer the byte size of the structures/values that constitute
@@ -47,18 +58,16 @@ elementSize
 elementSizeSelector
 	^#elementSize!
 
+isFixedSize
+	^arrayLength isFixedSize!
+
 length
 	"Private - Answer the length of the embedded array represented by the receiver."
 
-	^length!
+	#deprecated.
+	^self allocationLength!
 
-length: anInteger
-	"Private - Set the length (element count) of the embedded array the receiver 
-	represents. Answer the receiver."
-
-	length := anInteger!
-
-printAccessorExpressionSuffixOn: aWriteStream 
+printAccessorExpressionSuffixOn: aWriteStream
 	"Private - Print any extra messages/statements onto the <puttableStream> argument that are required to
 	configure the object being read from the structure instance."
 
@@ -68,7 +77,7 @@ printAccessorExpressionSuffixOn: aWriteStream
 		space;
 		display: #length:;
 		space.
-	self printLengthExpressionOn: aWriteStream!
+	arrayLength printElementCountExpressionFor: self on: aWriteStream!
 
 printElementSizeExpressionBodyOn: stream 
 	stream
@@ -76,16 +85,12 @@ printElementSizeExpressionBodyOn: stream
 		space;
 		display: #elementSize!
 
-printElementSizeExpressionOn: aWriteStream 
-	self emitStaticExpression: [:stream | self printElementSizeExpressionBodyOn: stream]
-		on: aWriteStream!
-
-printFieldSizeExpressionBodyOn: aWriteStream 
-	self printLengthExpressionOn: aWriteStream.
+printFieldSizeExpressionBodyOn: aWriteStream
+	arrayLength printElementCountExpressionFor: self on: aWriteStream.
 	aWriteStream nextPutAll: ' * '.
-	self isFixedSize 
+	self isFixedSize
 		ifTrue: [self printElementSizeExpressionBodyOn: aWriteStream]
-		ifFalse: [self printElementSizeExpressionOn: aWriteStream]!
+		ifFalse: [self printStaticElementSizeExpressionOn: aWriteStream]!
 
 printFieldSizeExpressionOn: aWriteStream 
 	self isFixedSize 
@@ -93,36 +98,43 @@ printFieldSizeExpressionOn: aWriteStream
 			[self emitStaticExpression: [:stream | self printFieldSizeExpressionBodyOn: stream] on: aWriteStream]
 		ifFalse: [self printFieldSizeExpressionBodyOn: aWriteStream]!
 
-printLengthExpressionOn: aWriteStream 
-	aWriteStream display: self length!
-
-printMutatorBody: aSymbol on: aWriteStream 
+printMutatorBody: aSymbol on: aWriteStream
 	"Private - Print a suitable statement or statement onto the specified <puttableStream> which
 	will write the value of this field into an isntance of the structure. The field in question
 	is after the fields in the <sequencedReadableCollection> that is the 2nd argument."
 
-	| keywords |
+	| keywords valueParam |
+	valueParam := self valueParameterName.
 	aWriteStream
 		nextPutAll: '| size |';
 		crtab;
-		nextPutAll: 'size := (anObject byteSize'.
+		nextPutAll: 'size := (';
+		nextPutAll: valueParam;
+		space;
+		display: #byteSize.
 	"Null terminator is included in the reported byteSize, but not the size/basicSize"
-	self arrayClass isNullTerminated 
+	self arrayClass isNullTerminated
 		ifTrue: 
 			[aWriteStream nextPutAll: ' - '.
-			self printElementSizeExpressionOn: aWriteStream].
-	aWriteStream nextPutAll: ') min: ('.
-	self printFieldSizeExpressionOn: aWriteStream.
+			self printStaticElementSizeExpressionOn: aWriteStream].
+	self isFixedSize
+		ifTrue: 
+			[aWriteStream
+				nextPutAll: ') ';
+				display: #min:;
+				nextPutAll: ' ('.
+			self printFieldSizeExpressionOn: aWriteStream].
 	keywords := #replaceBytesOf:from:to:startingAt: keywords.
 	aWriteStream
 		nextPutAll: ').';
 		crtab;
-		nextPutAll: 'anObject ';
+		nextPutAll: valueParam;
+		space;
 		display: keywords first;
 		nextPutAll: ' bytes ';
 		display: keywords second;
 		space.
-	self 
+	self
 		printOffsetExpression: aSymbol
 		on: aWriteStream
 		extra: 1.
@@ -130,56 +142,93 @@ printMutatorBody: aSymbol on: aWriteStream
 		space;
 		display: keywords third;
 		space.
-	self offset = 0 
+	self offset = 0
 		ifFalse: 
 			[self printOffsetExpression: aSymbol on: aWriteStream.
 			aWriteStream nextPutAll: ' + '].
 	aWriteStream
 		nextPutAll: 'size ';
 		display: keywords fourth;
-		nextPutAll: ' 1'!
+		nextPutAll: ' 1.';
+		crtab.
+	arrayLength printSetSizeFor: self on: aWriteStream!
 
-readFrom: anExternal
-	"Private - Answer the embedded object at the receiver's offset 
-	in anExternal. This may be a copy of the original data
-	(e.g. if structureClass is a subclass of External) or a
-	reference to the original data (e.g. if structureClass is a
-	subclass of ExternalStructure)"
+printStaticElementSizeExpressionOn: aWriteStream
+	self emitStaticExpression: [:stream | self printElementSizeExpressionBodyOn: stream]
+		on: aWriteStream!
 
-	^self arrayClass fromAddress: anExternal yourAddress + offset length: self length!
+readFrom: anExternalStructure
+	"Private - Answer an byte-object array of the type described by the receiver, and of the
+	size described by the receiver, which is either an <ExternalArray> reference to the data in
+	the <ExternalStructure> argument at the receiver's offset, or a <ByteArray> copy of the data
+	at that offset."
 
-writeInto: bytes value: anObject
+	^self arrayClass fromAddress: anExternalStructure yourAddress + offset
+		length: (arrayLength getElementCountOf: ExternalField new in: anExternalStructure)!
+
+writeInto: anExternalStructure value: anObject
 	"Private - Write the bytes of anObject into anExternal."
 
-	| size |
-	size := anObject size min: self length * self elementSize.
-	bytes replaceFrom: offset+1 to: offset+size with: anObject startingAt: 1! !
+	| byteSize |
+	byteSize := self isFixedSize
+				ifTrue: 
+					[anObject byteSize
+						min: (arrayLength getElementCountOf: ExternalField new in: anExternalStructure) * self elementSize]
+				ifFalse: [anObject byteSize].
+	anExternalStructure bytes
+		replaceFrom: offset + 1
+		to: offset + byteSize
+		with: anObject
+		startingAt: 1.
+	arrayLength
+		setElementCount: anObject
+		of: self
+		in: anExternalStructure! !
 !ArrayField categoriesFor: #alignment!constants!public! !
+!ArrayField categoriesFor: #allocationLength!accessing!private! !
 !ArrayField categoriesFor: #arrayClass!constants!private! !
+!ArrayField categoriesFor: #arrayLength:!accessing!private! !
 !ArrayField categoriesFor: #byteSize!accessing!private! !
 !ArrayField categoriesFor: #elementClass!accessing!private! !
 !ArrayField categoriesFor: #elementSize!accessing!private! !
 !ArrayField categoriesFor: #elementSizeSelector!automatic generation!constants!private! !
+!ArrayField categoriesFor: #isFixedSize!private!testing! !
 !ArrayField categoriesFor: #length!accessing!private! !
-!ArrayField categoriesFor: #length:!accessing!private! !
 !ArrayField categoriesFor: #printAccessorExpressionSuffixOn:!automatic generation!development!private! !
 !ArrayField categoriesFor: #printElementSizeExpressionBodyOn:!automatic generation!private! !
-!ArrayField categoriesFor: #printElementSizeExpressionOn:!automatic generation!private! !
 !ArrayField categoriesFor: #printFieldSizeExpressionBodyOn:!automatic generation!private! !
 !ArrayField categoriesFor: #printFieldSizeExpressionOn:!automatic generation!private! !
-!ArrayField categoriesFor: #printLengthExpressionOn:!automatic generation!private! !
 !ArrayField categoriesFor: #printMutatorBody:on:!automatic generation!development!private! !
+!ArrayField categoriesFor: #printStaticElementSizeExpressionOn:!automatic generation!private! !
 !ArrayField categoriesFor: #readFrom:!indirect accessing!private! !
 !ArrayField categoriesFor: #writeInto:value:!indirect accessing!private! !
 
 !ArrayField class methodsFor!
 
+type: aClass arrayLength: anArrayFieldLength
+	"Answer a new instance of the receiver which is used for describing embedded array objects
+	of type, aClass, where the length is described by the <ArrayFieldLength> argument. The field
+	could be fixed in length, or varying (conformant)."
+
+	^(self basicNew)
+		initialize;
+		fieldClass: aClass;
+		arrayLength: anArrayFieldLength;
+		yourself!
+
 type: aClass length: anInteger
 	"Answer a new instance of the receiver which is used for describing
 	embedded arrays of type aClass, with anInteger elements."
 
-	^self basicNew initialize;
-		fieldClass: aClass;
-		length: anInteger! !
+	^self type: aClass arrayLength: (FixedArrayFieldLength elementCount: anInteger)!
+
+type: aClass lengthField: aSymbol
+	"Answer a new instance of the receiver which is used for describing embedded conformant
+	array objects of type, aClass, where the length is specified by the another field of the
+	structure being described with the specified <Symbol> name."
+
+	^self type: aClass arrayLength: (ConformantArrayFieldLength lengthField: aSymbol)! !
+!ArrayField class categoriesFor: #type:arrayLength:!instance creation!public! !
 !ArrayField class categoriesFor: #type:length:!instance creation!public! !
+!ArrayField class categoriesFor: #type:lengthField:!instance creation!public! !
 

@@ -5,7 +5,7 @@ DolphinTest subclass: #SmalltalkParserTest
 	classVariableNames: ''
 	poolDictionaries: 'ExtCallArgTypes SmalltalkParseErrorCodes'
 	classInstanceVariableNames: ''!
-SmalltalkParserTest guid: (GUID fromString: '{947B6D13-1A2A-43C0-8053-BDE0FCCFBD44}')!
+SmalltalkParserTest guid: (GUID fromString: '{947b6d13-1a2a-43c0-8053-bde0fccfbd44}')!
 SmalltalkParserTest comment: 'SUnitBrowser openOnTestCase: self'!
 !SmalltalkParserTest categoriesForClass!Refactory-Testing! !
 !SmalltalkParserTest methodsFor!
@@ -48,6 +48,22 @@ testCharacterScanning
 	tok := subject next.
 	self assert: tok isIdentifier.
 	self assert: 'G' equals: tok value!
+
+testExpressionSolver
+	#(#('y := 3' nil) #('x := 3' 'x := 3') #('y := x' 'x := y') #('y := x + 1' 'x := y - 1') #('y := x >> 2 - 1' 'x := y + 1 << 2') #('y := 1+z/x' 'x := (1 + z) / y') #('y := a - ((b / x) * c)' 'x := b / ((a - y) / c)') #('y := (m*x)+b' 'x := (y - b) / m') #('y := (m/x)-b' 'x := m / (y + b)' #('y:=a-c*x/(d-e)-f')))
+		do: 
+			[:pair |
+			| expr solution case |
+			case := pair first.
+			expr := self parserClass parseExpression: case.
+			(case includes: 'y')
+				ifTrue: 
+					[solution := expr solveFor: 'y'.
+					self assert: solution == expr].
+			solution := expr solveFor: 'x'.
+			pair second
+				ifNil: [self assert: solution isNil]
+				ifNotNil: [:expected | self assert: expected equals: solution formattedCode]]!
 
 testExternalCallEquality
 	| strings |
@@ -136,6 +152,7 @@ testExternalCalls
 !SmalltalkParserTest categoriesFor: #parserClass!constants!private! !
 !SmalltalkParserTest categoriesFor: #scannerClass!constants!private! !
 !SmalltalkParserTest categoriesFor: #testCharacterScanning!public!unit tests! !
+!SmalltalkParserTest categoriesFor: #testExpressionSolver!public! !
 !SmalltalkParserTest categoriesFor: #testExternalCallEquality!public!unit tests! !
 !SmalltalkParserTest categoriesFor: #testExternalCalls!public!unit tests! !
 

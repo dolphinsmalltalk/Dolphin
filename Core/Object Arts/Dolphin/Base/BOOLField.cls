@@ -1,51 +1,57 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ScalarField subclass: #BOOLField
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-BOOLField guid: (GUID fromString: '{87B4C4E6-026E-11D3-9FD7-00A0CC3E4A32}')!
-BOOLField comment: ''!
+BOOLField guid: (GUID fromString: '{87b4c4e6-026e-11d3-9fd7-00a0cc3e4a32}')!
+BOOLField comment: '<BOOLField> is a <ScalarField> class to represent <ExternalStructure> fields that are boolean values encoded as 32-bit integers, where 0 is False, and any other value is True.'!
 !BOOLField categoriesForClass!External-Data-Types! !
 !BOOLField methodsFor!
-
-accessorConverter
-	"Private - Answer the converter message to be sent to the value read from the structure to
-	convert it to an appropriate Smalltalk object."
-
-	^#asBoolean!
 
 accessorMessage
 	"Private - Answer the receiver's 'accessorStem'."
 
 	^#dwordAtOffset:put:!
 
-printMutatorBody: aSymbol on: aWriteStream 
-	"Private - Print a suitable statement or statement onto the specified <puttableStream> which
-	will write the value of this field into an isntance of the structure. The field in question
-	is after the fields in the <sequencedReadableCollection> that is the 2nd argument."
+fieldClassName
+	^Boolean name!
 
-	super printMutatorBody: aSymbol on: aWriteStream.
+printAccessorExpressionSuffixOn: aWriteStream
+	"Private - Print any extra messages/statements onto the <puttableStream> argument that are required to
+	configure the object being read from the structure instance."
+
 	aWriteStream
+		space;
+		display: #asBoolean!
+
+printMutatorValueOn: aWriteStream parameter: aString
+	"Private - Print a suitable expression onto the specified <puttableStream> which will
+	evaluate to the the value to be stored into this field in an instance of the structure when
+	compiled into a mutator method where the value parameter is named by the <String> argument."
+
+	aWriteStream
+		nextPutAll: aString;
 		space;
 		display: #asParameter!
 
-readFrom: anExternal
-	"Private - Instantiate an object of the the type the receiver represents
-	at the receiver's offset in anExternal"
+readFrom: anExternalStructure
+	"Private - Answer the <Boolean> value represented by the 32-bit integer value at the receiver's offset in
+	the <ExternalStructure> argument, i.e. false if zero, true for any other value."
 
-	^(anExternal dwordAtOffset: offset) asBoolean
-!
+	^(anExternalStructure bytes dwordAtOffset: offset) asBoolean!
 
-writeInto: anExternal value: anObject
-	"Private - Write anObject into anExternal at the receiver's offset, and in a form
-	appropriate for the receiver's External type"
+writeInto: anExternalStructure value: anObject
+	"Private - Write zero or non-zero to the BOOL field of the <ExternalStructure>,
+	anExternalStructure, at the receiver's offset, depending on the value of the <integer> or
+	<Boolean> argument, anObject."
 
-	^(anExternal dwordAtOffset: offset put: anObject) asBoolean! !
-!BOOLField categoriesFor: #accessorConverter!automatic generation!private! !
+	anExternalStructure bytes dwordAtOffset: offset put: anObject asParameter! !
 !BOOLField categoriesFor: #accessorMessage!automatic generation!private! !
-!BOOLField categoriesFor: #printMutatorBody:on:!automatic generation!development!private! !
+!BOOLField categoriesFor: #fieldClassName!automatic generation!constants!development!private! !
+!BOOLField categoriesFor: #printAccessorExpressionSuffixOn:!automatic generation!development!private! !
+!BOOLField categoriesFor: #printMutatorValueOn:parameter:!automatic generation!development!private! !
 !BOOLField categoriesFor: #readFrom:!indirect accessing!private! !
 !BOOLField categoriesFor: #writeInto:value:!indirect accessing!private! !
 

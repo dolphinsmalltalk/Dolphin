@@ -5,7 +5,7 @@ String variableByteSubclass: #UnicodeString
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-UnicodeString guid: (GUID fromString: '{87B4C51E-026E-11D3-9FD7-00A0CC3E4A32}')!
+UnicodeString guid: (GUID fromString: '{87b4c51e-026e-11d3-9fd7-00a0cc3e4a32}')!
 UnicodeString isNullTerminated: true!
 UnicodeString comment: 'UnicodeString is a minimal class to support wide character (16-bit) Unicode strings. Natively Dolphin uses byte-character strings at present.
 
@@ -34,6 +34,9 @@ UnicodeStrings can be constructed from <String>s when needed by sending the #asU
 			with: aSequencedReadableCollection
 			startingAt: 1;
 		yourself!
+
+_appendToString: aString
+	^self asString _appendToString: aString!
 
 asByteArray
 	"Answer a <ByteArray> containing the Unicode representation of the characters of the
@@ -159,17 +162,6 @@ nextIndexOf: anElement from: start to: stop
 	self from: start to: stop keysAndValuesDo: [:i :elem | elem = anElement ifTrue: [^i]].
 	^0!
 
-replaceBytesOf: aByteObject from: start to: stop startingAt: fromStart
-	"Private - Standard method for transfering bytes from one variable byte object to another,
-	normally double dispatched from #replaceFrom:to:with:startingAt:"
-
-	| fromOffset |
-	fromOffset := fromStart - start.
-	stop to: start
-		by: -1
-		do: [:i | aByteObject basicAt: i put: (self at: i + fromOffset) asInteger].
-	^aByteObject!
-
 replaceFrom: startInteger to: stopInteger with: aReadableString startingAt: startAtInteger 
 	"Replace the characters of the receiver at index positions startInteger through stopInteger
 	inclusive with consecutive characters of the <readableString>, aReadableString, beginning at
@@ -232,6 +224,7 @@ wordAtOffset: anInteger put: anObject
 	<primitive: 125>
 	^self primitiveFailed! !
 !UnicodeString categoriesFor: #,!copying!public! !
+!UnicodeString categoriesFor: #_appendToString:!comparing!double dispatch!private! !
 !UnicodeString categoriesFor: #asByteArray!converting!public! !
 !UnicodeString categoriesFor: #asLowercase!converting!public! !
 !UnicodeString categoriesFor: #asString!converting!public! !
@@ -246,7 +239,6 @@ wordAtOffset: anInteger put: anObject
 !UnicodeString categoriesFor: #first:!copying!public! !
 !UnicodeString categoriesFor: #nextIdentityIndexOf:from:to:!public!searching! !
 !UnicodeString categoriesFor: #nextIndexOf:from:to:!public!searching! !
-!UnicodeString categoriesFor: #replaceBytesOf:from:to:startingAt:!double dispatch!private! !
 !UnicodeString categoriesFor: #replaceFrom:to:with:startingAt:!public!replacing! !
 !UnicodeString categoriesFor: #resize:!mutating!public! !
 !UnicodeString categoriesFor: #shallowCopy!public! !
@@ -273,10 +265,16 @@ fromAddress: anAddress length: anInteger
 	"Answer a new UnicodeString, of length anInteger, copied from the first anInteger
 	characters pointed at by anAddress."
 
-	| answer |
-	answer := self new: anInteger.
-	anAddress asExternalAddress replaceBytesOf: answer from: 1 to: anInteger*2 startingAt: 1.
-	^answer!
+	^anAddress isNull
+		ifFalse: 
+			[| answer |
+			answer := self new: anInteger.
+			anAddress asExternalAddress
+				replaceBytesOf: answer
+				from: 1
+				to: anInteger * 2
+				startingAt: 1.
+			answer]!
 
 fromString: aString
 	"Answer a new instance of the receiver containing the same characters as the <String>

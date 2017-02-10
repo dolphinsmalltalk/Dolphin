@@ -1,26 +1,32 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 UINT_PTRField subclass: #LPVOIDField
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-LPVOIDField guid: (GUID fromString: '{87B4C4F0-026E-11D3-9FD7-00A0CC3E4A32}')!
-LPVOIDField comment: ''!
+LPVOIDField guid: (GUID fromString: '{87b4c4f0-026e-11d3-9fd7-00a0cc3e4a32}')!
+LPVOIDField comment: '<LPVOIDField> is a <ScalarField> type to represent <ExternalStructure> fields that are untyped pointers to external memory.'!
 !LPVOIDField categoriesForClass!External-Data-Types! !
 !LPVOIDField methodsFor!
 
-accessorConverter
-	"Private - Answer the converter message to be sent to the value read from the structure to
-	convert it to an appropriate Smalltalk object."
+fieldClassName
+	^ExternalAddress name!
 
-	^#asExternalAddress!
+printAccessorExpressionSuffixOn: aWriteStream
+	"Private - Print any extra messages/statements onto the <puttableStream> argument that are required to
+	configure the object being read from the structure instance."
 
-readFrom: anExternal
-	"Private - Instantiate an object of the the type the receiver represents
-	at the receiver's offset in anExternal."
+	aWriteStream
+		space;
+		display: #asExternalAddress!
 
-	^(super readFrom: anExternal) asExternalAddress! !
-!LPVOIDField categoriesFor: #accessorConverter!automatic generation!private! !
+readFrom: anExternalStructure
+	"Private - Answer an <ExternalAddress> representing the pointer value of the field at the
+	receiver's offset in the <ExternalStructure> argument."
+
+	^(anExternalStructure bytes uintPtrAtOffset: offset) asExternalAddress! !
+!LPVOIDField categoriesFor: #fieldClassName!automatic generation!constants!development!private! !
+!LPVOIDField categoriesFor: #printAccessorExpressionSuffixOn:!automatic generation!development!private! !
 !LPVOIDField categoriesFor: #readFrom:!indirect accessing!private! !
 

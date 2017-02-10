@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ScalarField subclass: #SBYTEField
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-SBYTEField guid: (GUID fromString: '{D9145096-C1D5-4C8D-B640-605D284B0C42}')!
+SBYTEField guid: (GUID fromString: '{d9145096-c1d5-4c8d-b640-605d284b0c42}')!
 SBYTEField comment: ''!
 !SBYTEField categoriesForClass!External-Data-Types! !
 !SBYTEField methodsFor!
@@ -15,18 +15,17 @@ accessorMessage
 
 	^#sbyteAtOffset:put:!
 
-readFrom: anExternal
-	"Private - Instantiate an object of the the type the receiver represents
-	at the receiver's offset in anExternal"
+readFrom: anExternalStructure
+	"Private - Answer the 8-bit signed <integer> that is the value of the at the receiver's
+	offset in the <ExternalStructure> argument."
 
-	^anExternal sbyteAtOffset: offset
-!
+	^anExternalStructure bytes sbyteAtOffset: offset!
 
-writeInto: anExternal value: anObject
-	"Private - Write the value of anObject into anExternal at the receiver's offset, and in a form
-	appropriate for the receiver's External type"
+writeInto: anExternalStructure value: anInteger
+	"Private - Write the 8-bit signed <integer>, anInteger, into the <ExternalStructure>,
+	anExternalStructure, at the receiver's offset."
 
-	^anExternal sbyteAtOffset: offset put: anObject! !
+	^anExternalStructure bytes sbyteAtOffset: offset put: anInteger! !
 !SBYTEField categoriesFor: #accessorMessage!initializing!private! !
 !SBYTEField categoriesFor: #readFrom:!indirect accessing!private! !
 !SBYTEField categoriesFor: #writeInto:value:!indirect accessing!private! !

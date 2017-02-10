@@ -5,7 +5,7 @@ OLEStructure subclass: #AbstractELEMDESC
 	classVariableNames: ''
 	poolDictionaries: 'AXAutomationConstants'
 	classInstanceVariableNames: ''!
-AbstractELEMDESC guid: (GUID fromString: '{24CBEADB-8708-4BB1-A28D-207EBD2A8C8E}')!
+AbstractELEMDESC guid: (GUID fromString: '{24cbeadb-8708-4bb1-a28d-207ebd2a8c8e}')!
 AbstractELEMDESC comment: ''!
 !AbstractELEMDESC categoriesForClass!External-Data-Structured-COM! !
 !AbstractELEMDESC methodsFor!
@@ -49,11 +49,6 @@ owner: struct
 
 	owner := struct!
 
-printableFields
-	^(super printableFields)
-		remove: #tdescElem;
-		yourself!
-
 printFieldsOn: aStream limit: anInteger
 	self isNull
 		ifFalse: 
@@ -78,7 +73,7 @@ tdesc
 	^tdesc!
 
 tdescElem
-	"Answer the receiver's tdescElem field as a Smalltalk object."
+	"Answer the <TYPEDESC> value of the receiver's 'tdescElem' field."
 
 	^TYPEDESC fromAddress: bytes yourAddress!
 
@@ -93,7 +88,6 @@ typeName
 !AbstractELEMDESC categoriesFor: #objectClass!accessing!public! !
 !AbstractELEMDESC categoriesFor: #owner!accessing!private! !
 !AbstractELEMDESC categoriesFor: #owner:!accessing!private! !
-!AbstractELEMDESC categoriesFor: #printableFields!development!private! !
 !AbstractELEMDESC categoriesFor: #printFieldsOn:limit:!development!printing!private! !
 !AbstractELEMDESC categoriesFor: #tdesc!accessing!public! !
 !AbstractELEMDESC categoriesFor: #tdescElem!**compiled accessors**!public! !
@@ -106,6 +100,6 @@ defineFields
 		self compileDefinition.
 	"
 
-	self defineField: #tdescElem type: (StructureField type: TYPEDESC) beReadOnly! !
+	self defineField: #tdescElem type: (StructureField type: TYPEDESC) beReadOnly beNonBrowsable! !
 !AbstractELEMDESC class categoriesFor: #defineFields!initializing!public! !
 

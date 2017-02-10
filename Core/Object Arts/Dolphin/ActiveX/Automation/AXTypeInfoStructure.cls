@@ -1,7 +1,7 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 OLEFinalizableStructure subclass: #AXTypeInfoStructure
-	instanceVariableNames: 'piTypeInfo analyzer'
+	instanceVariableNames: 'analyzer'
 	classVariableNames: ''
 	poolDictionaries: 'AXAutomationConstants'
 	classInstanceVariableNames: ''!
@@ -35,7 +35,7 @@ free
 	externally owned (i.e. non-null pointer) instances of the receiver."
 
 	super free.
-	analyzer := piTypeInfo := nil!
+	analyzer := nil!
 
 fullName
 	"Answer a fully qualified name for the receiver, useful in debug output etc"
@@ -58,12 +58,7 @@ needsFree
 	Implementation Note: In this case we tend to have references to externally allocated
 	buffers, and these must be free'd by passing them back to the allocating interface."
 
-	^self notNull and: [piTypeInfo notNull]!
-
-piTypeInfo: anObject
-	"Private - Set the value of the receiver's ''piTypeInfo'' instance variable to the argument, anObject."
-
-	piTypeInfo := anObject!
+	^self notNull and: [analyzer notNil]!
 
 tdesc
 	"Private - Answer a TYPEDESC for the object described by the receiver."
@@ -86,7 +81,6 @@ vtName
 !AXTypeInfoStructure categoriesFor: #initializePointer!initializing!private! !
 !AXTypeInfoStructure categoriesFor: #name!accessing!public! !
 !AXTypeInfoStructure categoriesFor: #needsFree!private!realizing/unrealizing! !
-!AXTypeInfoStructure categoriesFor: #piTypeInfo:!accessing!private! !
 !AXTypeInfoStructure categoriesFor: #tdesc!accessing!private! !
 !AXTypeInfoStructure categoriesFor: #typeName!accessing!public! !
 !AXTypeInfoStructure categoriesFor: #vtName!accessing!private! !

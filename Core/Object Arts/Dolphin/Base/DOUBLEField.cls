@@ -1,12 +1,12 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ScalarField subclass: #DOUBLEField
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-DOUBLEField guid: (GUID fromString: '{87B4C4E8-026E-11D3-9FD7-00A0CC3E4A32}')!
-DOUBLEField comment: ''!
+DOUBLEField guid: (GUID fromString: '{87b4c4e8-026e-11d3-9fd7-00a0cc3e4a32}')!
+DOUBLEField comment: '<DOUBLEField> is a <ScalarField> class to represent <ExternalStructure> fields that are 64-bit IEEE double precision floating point numbers.'!
 !DOUBLEField categoriesForClass!External-Data-Types! !
 !DOUBLEField methodsFor!
 
@@ -15,19 +15,22 @@ accessorMessage
 
 	^#doubleAtOffset:put:!
 
-readFrom: anExternal
-	"Private - Instantiate an object of the the type the receiver represents
-	at the receiver's offset in anExternal"
+fieldClassName
+	^Float name!
 
-	^anExternal doubleAtOffset: offset
-!
+readFrom: anExternalStructure
+	"Private - Answer a <Float> representing the 64-bit double precision floating value at the
+	receiver's offset in the <ExternalStructure> argument."
 
-writeInto: anExternal value: anObject
-	"Private - Write anObject into anExternal at the receiver's offset, and in a form
-	appropriate for the receiver's External type"
+	^anExternalStructure bytes doubleAtOffset: offset!
 
-	^anExternal doubleAtOffset: offset put: anObject! !
+writeInto: anExternalStructure value: aFloat
+	"Private - Write the 64-bit IEEE double precision value of the <Float> argument, aFloat,
+	into the <ExternalStructure>, anExternalStructure, at the receiver's offset."
+
+	^anExternalStructure bytes doubleAtOffset: offset put: aFloat! !
 !DOUBLEField categoriesFor: #accessorMessage!initializing!private! !
+!DOUBLEField categoriesFor: #fieldClassName!automatic generation!constants!development!private! !
 !DOUBLEField categoriesFor: #readFrom:!indirect accessing!private! !
 !DOUBLEField categoriesFor: #writeInto:value:!indirect accessing!private! !
 

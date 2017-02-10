@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 IUnknown subclass: #ITypeInfo
 	instanceVariableNames: 'attributes'
@@ -87,56 +87,22 @@ CreateInstance: pUnkOuter riid: riid ppvObj: ppvObj
 	^self invalidCall
 !
 
-documentationForMember: memid
-	"Answer an <AXTypeLibDocumentation> object containing the documentation for the 
-	element of the receiver identified by the <MEMBERID>, memid. Note that this
-	differs from ITypeLib, where indices are used to access the elements.
-	The method may raise an HRESULTError, or a NotFoundError if the memid 
-	is not recognised. Refer to the SDK help for further possible error conditions."
+getAllCustData
+	"Answer a <CUSTDATA> describing the custom data associated with the type described by this ITypeInfo."
 
-	^self documentationForMember: memid ifAbsent: [self errorNotFound: memid]!
+	^self nullCustData!
 
-documentationForMember: memid ifAbsent: exceptionHandler
-	"Answer an <AXTypeLibDocumentation> object containing the documentation for the 
-	element of the receiver identified by the <MEMBERID>, memid. Note that this
-	differs from ITypeLib, where indices are used to access the elements.
-	If the member is not found, then answers the result of evaluating the <niladicValuable>
-	exceptionHandler.
-	The method may raise an HRESULTError, e.g. if the index is out of range. Refer
-	to the SDK help for further possible error conditions."
+getAllFuncCustData: index 
+	"Answer a <CUSTDATA> for the function of the type described by the receiver with the specified zero-based index."
 
-	| bstrName bstrDocString dwHelpContext bstrHelpFile answer hr |
-	bstrName := BSTR new.
-	bstrDocString := BSTR new.
-	bstrHelpFile := nil"BSTR new".
-	dwHelpContext := DWORDBytes new.
-	hr := self 
-				GetDocumentation: memid
-				pBstrName: bstrName
-				pBstrDocString: bstrDocString
-				pdwHelpContext: dwHelpContext
-				pBstrHelpFile: bstrHelpFile.
-	hr < 0 
-		ifTrue: 
-			[hr = TYPE_E_ELEMENTNOTFOUND ifTrue: [^exceptionHandler value].
-			^HRESULTError signalWith: hr].
-	answer := (AXTypeLibDocumentation new)
-				name: bstrName asString;
-				helpstring: bstrDocString asString;
-				helpcontext: dwHelpContext value;
-				helpfile: bstrHelpFile displayString trimNulls;
-				yourself.
-	bstrName free.
-	bstrDocString free.
-	^answer!
+	^self nullCustData
+!
 
-funcDescAt: index
-	"Answer a FUNCDESC for the function in the receiver at the 
-	specified <integer> index."
+getAllVarCustData: anInteger
+	"Answer a <CUSTDATA> for the variable of the type described by the receiver with the specified zero-based index."
 
-	^(self getFuncDesc: index-1)
-		piTypeInfo: self;
-		yourself!
+
+	^self nullCustData!
 
 GetContainingTypeLib: ppTLib pIndex: pIndex
 	"Private - Invoke the GetContainingTypeLib() method of the COM object wrapped by the receiver.
@@ -296,11 +262,21 @@ getNamesOfMember: memid count: cMaxNames
 	receiver identified by the <MEMBERID>, memid."
 
 	| names bstr cNames |
-	names := DWORDArray new: cMaxNames.
+	names := UINT_PTRArray new: cMaxNames.
 	cNames := DWORDBytes new.
-	self GetNames: memid rgBstrNames: names cMaxNames: cMaxNames pcNames: cNames.
-	bstr := BSTR new beUnfinalizable; yourself.
-	^names collect: [:a | | s | s := (bstr value: a) asString. bstr free. s]!
+	self
+		GetNames: memid
+		rgBstrNames: names
+		cMaxNames: cMaxNames
+		pcNames: cNames.
+	bstr := BSTR basicNew.
+	^names collect: 
+			[:each |
+			| name |
+			bstr basicUIntPtrAtOffset: 0 put: each.
+			name := (bstr value: each) asString.
+			bstr basicFree.
+			name]!
 
 getRefTypeInfo: hreftype 
 	"Answer the <ITypeInfo> result of invoking the COM Object's GetRefTypeInfo() method."
@@ -510,7 +486,7 @@ nameOfID: anInteger ifAbsent: exceptionHandler
 	We can use this as the reverse mapping to GetIDsOfNames."
 
 	| bstrName name hr |
-	bstrName := BSTR new.
+	bstrName := BSTR basicNew.
 	"We could use documentationForMember:, but that involves a lot of extra
 	processing for information we don't need."
 	hr := self 
@@ -525,8 +501,13 @@ nameOfID: anInteger ifAbsent: exceptionHandler
 				ifTrue: [exceptionHandler value]
 				ifFalse: [HRESULTError signalWith: hr]].
 	name := bstrName asString.
-	bstrName free.
+	bstrName basicFree.
 	^name!
+
+nullCustData
+	^(CUSTDATA new)
+		beUnfinalizable;
+		yourself!
 
 recordInfoIfNone: exceptionHandler
 	"Answer an <IRecordInfo> on the receiver's type information."
@@ -606,23 +587,15 @@ typeLib
 	"Answer an <ITypeLib> on the receiver's containing type library."
 
 	^self libraryAndIndex key
-!
-
-varDescAt: anInteger
-	"Answer a VARDESC for the member variable of the receiver's structure
-	at the specified index."
-
-	^(self getVarDesc: anInteger-1)
-		piTypeInfo: self;
-		yourself! !
+! !
 !ITypeInfo categoriesFor: #AddressOfMember:invKind:ppv:!COM Interfaces-OAIDL.ITypeInfo!private! !
 !ITypeInfo categoriesFor: #asImplType!accessing!converting!public! !
 !ITypeInfo categoriesFor: #attributes!accessing!public! !
 !ITypeInfo categoriesFor: #basicFree!private!realizing/unrealizing! !
 !ITypeInfo categoriesFor: #CreateInstance:riid:ppvObj:!COM Interfaces-OAIDL.ITypeInfo!private! !
-!ITypeInfo categoriesFor: #documentationForMember:!accessing!public! !
-!ITypeInfo categoriesFor: #documentationForMember:ifAbsent:!accessing!public! !
-!ITypeInfo categoriesFor: #funcDescAt:!accessing!public! !
+!ITypeInfo categoriesFor: #getAllCustData!accessing!public! !
+!ITypeInfo categoriesFor: #getAllFuncCustData:!**auto generated**!public! !
+!ITypeInfo categoriesFor: #getAllVarCustData:!accessing!public! !
 !ITypeInfo categoriesFor: #GetContainingTypeLib:pIndex:!COM Interfaces-OAIDL.ITypeInfo!private! !
 !ITypeInfo categoriesFor: #GetDllEntry:invkind:pBstrDllName:pBstrName:pwOrdinal:!COM Interfaces-OAIDL.ITypeInfo!private! !
 !ITypeInfo categoriesFor: #GetDocumentation:pBstrName:pBstrDocString:pdwHelpContext:pBstrHelpFile:!COM Interfaces-OAIDL.ITypeInfo!private! !
@@ -657,6 +630,7 @@ varDescAt: anInteger
 !ITypeInfo categoriesFor: #libraryAndIndex!accessing!public! !
 !ITypeInfo categoriesFor: #nameOfID:!accessing!public! !
 !ITypeInfo categoriesFor: #nameOfID:ifAbsent:!accessing!public! !
+!ITypeInfo categoriesFor: #nullCustData!accessing!public! !
 !ITypeInfo categoriesFor: #recordInfoIfNone:!accessing!public! !
 !ITypeInfo categoriesFor: #ReleaseFuncDesc:!COM Interfaces-OAIDL.ITypeInfo!private! !
 !ITypeInfo categoriesFor: #ReleaseTypeAttr:!COM Interfaces-OAIDL.ITypeInfo!private! !
@@ -666,7 +640,6 @@ varDescAt: anInteger
 !ITypeInfo categoriesFor: #typeFlags!accessing!public! !
 !ITypeInfo categoriesFor: #typekind!accessing!public! !
 !ITypeInfo categoriesFor: #typeLib!accessing!public! !
-!ITypeInfo categoriesFor: #varDescAt:!accessing!public! !
 
 !ITypeInfo class methodsFor!
 

@@ -15,12 +15,6 @@ The range of integer values that can be represented by instances of this class i
 !SWORD categoriesForClass!External-Data-Structured! !
 !SWORD methodsFor!
 
-unsignedValue: anUnsigned
-	"Set the receiver's value field to the value of the unsigned positive
-	integer, anUnsigned."
-
-	bytes dwordAtOffset: 0 put: anUnsigned!
-
 value
 	"Answer the receiver's value field as a Smalltalk object."
 
@@ -30,7 +24,6 @@ value: anObject
 	"Set the receiver's value field to the value of anObject."
 
 	bytes swordAtOffset: 0 put: anObject! !
-!SWORD categoriesFor: #unsignedValue:!accessing!public! !
 !SWORD categoriesFor: #value!**compiled accessors**!public! !
 !SWORD categoriesFor: #value:!**compiled accessors**!public! !
 

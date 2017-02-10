@@ -5,7 +5,7 @@ ExternalInteger subclass: #BYTE
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-BYTE guid: (GUID fromString: '{87B4C5A9-026E-11D3-9FD7-00A0CC3E4A32}')!
+BYTE guid: (GUID fromString: '{87b4c5a9-026e-11d3-9fd7-00a0cc3e4a32}')!
 BYTE comment: '<BYTE> is an <ExternalStructure> class to wrap the Win32 type of the same name.
 
 BYTE is used to represent unsigned 8-bit integers in conjunction with Win32 APIs. 
@@ -25,17 +25,23 @@ asUnsignedInteger
 
 	^bytes byteAtOffset: 0!
 
+unsignedValue: anInteger
+	"Set the receiver's value field to the value of the unsigned positive integer argument."
+
+	bytes byteAtOffset: 0 put: anInteger!
+
 value
-	"Answer the receiver's value field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'value' field."
 
 	^bytes byteAtOffset: 0!
 
-value: anObject 
-	"Set the receiver's value field to the value of anObject."
+value: anInteger
+	"Set the receiver's 'value' field to the value of the argument, anInteger"
 
-	bytes byteAtOffset: 0 put: anObject! !
+	bytes byteAtOffset: 0 put: anInteger! !
 !BYTE categoriesFor: #asSignedInteger!converting!public! !
 !BYTE categoriesFor: #asUnsignedInteger!converting!public! !
+!BYTE categoriesFor: #unsignedValue:!accessing!public! !
 !BYTE categoriesFor: #value!**compiled accessors**!public! !
 !BYTE categoriesFor: #value:!**compiled accessors**!public! !
 

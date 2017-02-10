@@ -145,13 +145,12 @@ documentation
 
 	^[self documentationAt: 0] on: HRESULTError
 		do: 
-			[:ex | 
-			(AXTypeLibDocumentation new)
-				name: globalName;
-				helpstring: ex messageText;
-				helpcontext: 0;
-				helpfile: '';
-				yourself]!
+			[:ex |
+			AXTypeLibDocumentation new
+				name: globalName
+				helpstring: ex messageText
+				helpcontext: 0
+				helpfile: '']!
 
 documentationAt: index
 	"Private - Answer a  new <AXTypeLibraryDocumentation> containing the documentation 
@@ -168,7 +167,7 @@ documentationAt: index
 
 	^self documentationAt: index ifAbsent: [self errorNotFound: index]!
 
-documentationAt: index ifAbsent: exceptionHandler 
+documentationAt: index ifAbsent: exceptionHandler
 	"Private - Answer a  new <AXTypeLibraryDocumentation> containing the documentation 
 	for the type info. identified by the <integer>, index, in the receiver. 
 	The range of indices is 0..<type info count>, with 0 answering docs
@@ -186,22 +185,21 @@ documentationAt: index ifAbsent: exceptionHandler
 	bstrDocString := BSTR new.
 	bstrHelpFile := BSTR new.
 	dwHelpContext := DWORDBytes new.
-	hr := self tlbInterface 
+	hr := self tlbInterface
 				GetDocumentation: index - 1
 				pBstrName: bstrName
 				pBstrDocString: bstrDocString
 				pdwHelpContext: dwHelpContext
 				pBstrHelpFile: bstrHelpFile.
-	hr < 0 
+	hr < 0
 		ifTrue: 
 			[hr = TYPE_E_ELEMENTNOTFOUND ifTrue: [^exceptionHandler value].
 			^HRESULTError signalWith: hr].
-	answer := (AXTypeLibDocumentation new)
-				name: bstrName asString;
-				helpstring: bstrDocString asString;
-				helpcontext: dwHelpContext value;
-				helpfile: bstrHelpFile asString trimNulls;
-				yourself.
+	answer := AXTypeLibDocumentation new
+				name: bstrName asString
+				helpstring: bstrDocString asString
+				helpcontext: dwHelpContext value
+				helpfile: bstrHelpFile asString trimNulls.
 	bstrName free.
 	bstrDocString free.
 	bstrHelpFile free.
@@ -412,13 +410,13 @@ selectTypes: discriminator
 	^self typeAnalyzers select: discriminator
 !
 
-setTypeLib: lib attributes: attr 
+setTypeLib: anITypeLib attributes: aTLIBATTR
 	"Private - Set the <ITypeLib> which the receiver is wrapping and cache some info
 	which will enable a connection to be re-established subsequently. Answer
 	the receiver."
 
-	tlbInterface := lib.
-	attributes := attr.
+	tlbInterface := anITypeLib.
+	attributes := aTLIBATTR.
 	generationFlags := self defaultGenerationFlags.
 	self initializeAliasMap!
 
