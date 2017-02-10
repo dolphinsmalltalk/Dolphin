@@ -181,6 +181,9 @@ changeIndexValue: aBlock
 		at: #changeIndex
 		ifAbsentPut: aBlock!
 
+classBinding
+	^self environment associationAt: self name!
+
 classCategories
 	"Private - Answer a <collection> of <ClassCategory> objects representing the 
 	class categories of which the receiver is a member, or nil if unclassified."
@@ -766,6 +769,7 @@ variableSubclass: aClassSymbol
 !Class categoriesFor: #category:!categories-accessing!public! !
 !Class categoriesFor: #changeIndex!accessing!development!private! !
 !Class categoriesFor: #changeIndexValue:!accessing!development!private! !
+!Class categoriesFor: #classBinding!compiling!public! !
 !Class categoriesFor: #classCategories!categories-accessing!private!source filing! !
 !Class categoriesFor: #classCategories:!categories-accessing!private! !
 !Class categoriesFor: #classPool!accessing!class variables!public! !
