@@ -1,37 +1,33 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ArrayField subclass: #StringField
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-StringField guid: (GUID fromString: '{87B4C4E0-026E-11D3-9FD7-00A0CC3E4A32}')!
-StringField comment: '<StringField> is an <ExternalField> class which can be used to represent embedded strings fields in <ExternalStructure>s.
+StringField guid: (GUID fromString: '{87b4c4e0-026e-11d3-9fd7-00a0cc3e4a32}')!
+StringField comment: '<StringField> is an <ExternalField> class which can be used to represent embedded null-terminated string fields in <ExternalStructure>s.
 
 StringField can be used for both <String>s and <UnicodeString>s.'!
 !StringField categoriesForClass!External-Data-Types! !
 !StringField methodsFor!
 
-length
+allocationLength
 	"Private - Answer the size of object of the receivers fieldClass required to hold the
 	number of elements in the field."
 
-	^super length - 1!
+	^super allocationLength - 1!
 
 printAccessorExpressionSuffixOn: aWriteStream 
 	"Private - Print any extra messages/statements onto the <puttableStream> argument that are required to
 	configure the object being read from the structure instance."
 
-	"Implementation Note: Revert back to the doing nothing as we don't want to use the length (need
-	to trim nulls)."
-
+	"If the length of the field is fixed, then assume we are reading a null-terminated string."
+	self isFixedSize ifFalse: [super printAccessorExpressionSuffixOn: aWriteStream]
 	!
 
 printElementSizeExpressionBodyOn: aWriteStream 
 	aWriteStream display: self arrayClass elementSize!
-
-printElementSizeExpressionOn: aWriteStream 
-	self printElementSizeExpressionBodyOn: aWriteStream!
 
 printFieldSizeExpressionOn: aWriteStream 
 	| charSize |
@@ -47,7 +43,7 @@ printFieldSizeExpressionOn: aWriteStream
 				on: aWriteStream]
 		ifFalse: [aWriteStream display: self length]!
 
-printMutatorBody: aSymbol on: aWriteStream 
+printMutatorBody: aSymbol on: aWriteStream
 	"Private - Print a suitable statement or statement onto the specified <puttableStream> which
 	will write the value of this field into an isntance of the structure. The field in question
 	is after the fields in the <sequencedReadableCollection> that is the 2nd argument."
@@ -57,11 +53,8 @@ printMutatorBody: aSymbol on: aWriteStream
 
 	| keywords |
 	super printMutatorBody: aSymbol on: aWriteStream.
-	aWriteStream
-		nextPut: $.;
-		crtab;
-		nextPutAll: 'bytes '.
-	keywords := (self elementSize == 2 ifTrue: [#wordAtOffset:put:] ifFalse: [#byteAtOffset:put:]) 
+	aWriteStream nextPutAll: 'bytes '.
+	keywords := (self elementSize == 2 ifTrue: [#wordAtOffset:put:] ifFalse: [#byteAtOffset:put:])
 				keywords.
 	aWriteStream
 		display: keywords first;
@@ -73,11 +66,14 @@ printMutatorBody: aSymbol on: aWriteStream
 		space;
 		nextPut: $0!
 
-readFrom: anExternal
-	"Private - Answer the embedded object at the receiver's offset 
-	in anExternal. We trim any trailing nulls."
+printStaticElementSizeExpressionOn: aWriteStream
+	self printElementSizeExpressionBodyOn: aWriteStream!
 
-	^self arrayClass fromAddress: anExternal yourAddress + offset!
+readFrom: anExternalStructure
+	"Private - Answer a <String> which is a copy of the null-terminated string embedded in the
+	<ExternalStructure> argument at the receiver's offset."
+
+	^self arrayClass fromAddress: anExternalStructure yourAddress + offset!
 
 writeInto: bytes value: anObject 
 	"Private - Write the bytes of anObject into anExternal. Don't forget the Null Terminator"
@@ -92,12 +88,12 @@ writeInto: bytes value: anObject
 		startingAt: 1.
 	"We need 2 null-terminator bytes for a wide-char string of course"
 	1 to: elemSize do: [:i | bytes at: offset + size + i put: 0]! !
-!StringField categoriesFor: #length!accessing!private! !
+!StringField categoriesFor: #allocationLength!accessing!private! !
 !StringField categoriesFor: #printAccessorExpressionSuffixOn:!automatic generation!development!private! !
 !StringField categoriesFor: #printElementSizeExpressionBodyOn:!automatic generation!private! !
-!StringField categoriesFor: #printElementSizeExpressionOn:!automatic generation!private! !
 !StringField categoriesFor: #printFieldSizeExpressionOn:!automatic generation!private! !
 !StringField categoriesFor: #printMutatorBody:on:!automatic generation!development!private! !
+!StringField categoriesFor: #printStaticElementSizeExpressionOn:!automatic generation!private! !
 !StringField categoriesFor: #readFrom:!indirect accessing!private! !
 !StringField categoriesFor: #writeInto:value:!indirect accessing!private! !
 

@@ -1,7 +1,7 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 AXTypeInfoStructure subclass: #TYPEATTR
-	instanceVariableNames: ''
+	instanceVariableNames: 'piTypeInfo'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -162,6 +162,9 @@ name
 
 	^self shouldNotImplement!
 
+piTypeInfo: anITypeInfo
+	piTypeInfo := anITypeInfo!
+
 tdesc
 	"Answer a TYPEDESC describing the type for which the receiver describes an alias (typedef)."
 
@@ -215,6 +218,7 @@ wTypeFlags
 !TYPEATTR categoriesFor: #memidConstructor!**compiled accessors**!public! !
 !TYPEATTR categoriesFor: #memidDestructor!**compiled accessors**!public! !
 !TYPEATTR categoriesFor: #name!accessing!public! !
+!TYPEATTR categoriesFor: #piTypeInfo:!accessing!private! !
 !TYPEATTR categoriesFor: #tdesc!accessing!public! !
 !TYPEATTR categoriesFor: #tdescAlias!**compiled accessors**!public! !
 !TYPEATTR categoriesFor: #typekind!**compiled accessors**!public! !

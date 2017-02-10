@@ -1,12 +1,12 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ScalarField subclass: #UINT_PTRField
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-UINT_PTRField guid: (GUID fromString: '{19012B00-96F4-4181-A7E1-0A85A4268D7B}')!
-UINT_PTRField comment: ''!
+UINT_PTRField guid: (GUID fromString: '{19012b00-96f4-4181-a7e1-0a85a4268d7b}')!
+UINT_PTRField comment: '<UINT_PTRField> is a <ScalarField> class to represent <ExternalStructure> fields that are unsigned integers the same size as a pointer on the host machine architecture. Currently these are always 32-bit as Dolphin is a 32-bit process.'!
 !UINT_PTRField categoriesForClass!External-Data-Types! !
 !UINT_PTRField methodsFor!
 
@@ -15,17 +15,17 @@ accessorMessage
 
 	^#uintPtrAtOffset:put:!
 
-readFrom: anExternal 
-	"Private - Instantiate an object of the the type the receiver represents
-	at the receiver's offset in anExternal"
+readFrom: anExternalStructure
+	"Private - Answer an <integer> representing the pointer-sized unsigned integer value of the
+	field at the receiver's offset in the <ExternalStructure> argument."
 
-	^anExternal uintPtrAtOffset: offset!
+	^anExternalStructure bytes uintPtrAtOffset: offset!
 
-writeInto: anExternal value: anObject 
-	"Private - Write anObject into anExternal at the receiver's offset, and in a form
-	appropriate for the receiver's External type"
+writeInto: anExternalStructure value: anInteger
+	"Private - Write the pointer-sized unsigned <integer> value, anInteger, into the
+	<ExternalStructure, anExternalStructure, at the receiver's offset ."
 
-	^anExternal uintPtrAtOffset: offset put: anObject! !
+	^anExternalStructure bytes uintPtrAtOffset: offset put: anInteger! !
 !UINT_PTRField categoriesFor: #accessorMessage!automatic generation!private! !
 !UINT_PTRField categoriesFor: #readFrom:!indirect accessing!private! !
 !UINT_PTRField categoriesFor: #writeInto:value:!indirect accessing!private! !

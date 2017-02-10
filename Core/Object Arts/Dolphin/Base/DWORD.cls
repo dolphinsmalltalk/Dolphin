@@ -5,7 +5,7 @@ ExternalInteger subclass: #DWORD
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-DWORD guid: (GUID fromString: '{87B4C5AA-026E-11D3-9FD7-00A0CC3E4A32}')!
+DWORD guid: (GUID fromString: '{87b4c5aa-026e-11d3-9fd7-00a0cc3e4a32}')!
 DWORD comment: '<DWORD> is an <ExternalStructure> class to wrap the Win32 type of the same name.
 
 DWORD is used to represent unsigned 32-bit integers in conjunction with Win32 APIs. 
@@ -74,14 +74,14 @@ lowWord: anInteger
 	bytes wordAtOffset: 0 put: anInteger!
 
 value
-	"Answer the receiver's value field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'value' field."
 
 	^bytes dwordAtOffset: 0!
 
-value: anObject 
-	"Set the receiver's value field to the value of anObject."
+value: anInteger
+	"Set the receiver's 'value' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: 0 put: anObject! !
+	bytes dwordAtOffset: 0 put: anInteger! !
 !DWORD categoriesFor: #asSignedInteger!converting!public! !
 !DWORD categoriesFor: #asUnsignedInteger!converting!public! !
 !DWORD categoriesFor: #highSWord!accessing!public! !

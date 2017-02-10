@@ -5,7 +5,7 @@ StValueNode subclass: #StMessageNode
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-StMessageNode guid: (GUID fromString: '{3A681160-291E-495F-A7CE-71B4A751F5D4}')!
+StMessageNode guid: (GUID fromString: '{3a681160-291e-495f-a7ce-71b4a751f5d4}')!
 StMessageNode comment: 'StMessageNode is a parse tree node that represents a message send.
 
 Instance Variables:
@@ -29,6 +29,15 @@ Instance Variables:
 
 acceptVisitor: aProgramNodeVisitor
 	^aProgramNodeVisitor visitMessageNode: self!
+
+argument
+	"Answer the argument. Fails if the message does not have exactly one argument."
+
+	| args |
+	args := self arguments.
+	^args size == 1
+		ifTrue: [args first]
+		ifFalse: [self error: 'Not a binary or one argument keyword message']!
 
 argumentCount
 	^self arguments size!
@@ -190,6 +199,7 @@ value
 	^self selector! !
 !StMessageNode categoriesFor: #=!comparing!public! !
 !StMessageNode categoriesFor: #acceptVisitor:!public!visitor! !
+!StMessageNode categoriesFor: #argument!accessing!public! !
 !StMessageNode categoriesFor: #argumentCount!accessing!public! !
 !StMessageNode categoriesFor: #arguments!accessing!public! !
 !StMessageNode categoriesFor: #arguments:!accessing!public! !

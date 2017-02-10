@@ -1,12 +1,12 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ExternalField subclass: #PointerField
 	instanceVariableNames: 'pointerClass'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-PointerField guid: (GUID fromString: '{87B4C4DC-026E-11D3-9FD7-00A0CC3E4A32}')!
-PointerField comment: 'PointerField is an <ExternalField> type to represent pointer members of <ExternalStructure>s.'!
+PointerField guid: (GUID fromString: '{87b4c4dc-026e-11d3-9fd7-00a0cc3e4a32}')!
+PointerField comment: 'PointerField is an <ExternalField> type to represent fields of <ExternalStructure>s that are pointers to external data.'!
 !PointerField categoriesForClass!External-Data-Types! !
 !PointerField methodsFor!
 
@@ -15,6 +15,9 @@ byteSize
 	Answer the size of a 32-bit pointer"
 
 	^VMConstants.IntPtrSize!
+
+fieldClassName
+	^self pointerClass name!
 
 pointerClass
 	"Private - Answer the class of Smalltalk object to be used when dereferencing
@@ -43,9 +46,9 @@ printAccessorExpression: aSymbol on: aWriteStream
 	self printOffsetExpression: aSymbol on: aWriteStream.
 	aWriteStream nextPut: $)!
 
-printMutatorBody: aSymbol on: aWriteStream 
+printMutatorBody: aSymbol on: aWriteStream
 	"Private - Print a suitable statement or statement onto the specified <puttableStream> which
-	will write the value of this field into an isntance of the structure. The field in question
+	will write the value of this field into an instance of the structure. The field in question
 	is after the fields in the <sequencedReadableCollection> that is the 2nd argument."
 
 	| keywords |
@@ -58,16 +61,18 @@ printMutatorBody: aSymbol on: aWriteStream
 	aWriteStream
 		space;
 		display: keywords second;
-		nextPutAll: ' anObject ';
+		space;
+		nextPutAll: self valueParameterName;
+		space;
 		display: #yourAddress!
 
-readFrom: anExternal 
-	"Private - Answer an object of the type pointed at by the receiver in 
-	anExternal. WARNING: May be a copy or a reference depending on 
-	the behavior of pointerClass (which can be any Behavior which
-	has the instance creation method #fromAddress:)"
+readFrom: anExternalStructure
+	"Private - Answer a pointer object of the type pointed at by the receiver in the
+	<ExternalStructure> argument. WARNING: May be a copy or a reference depending on the
+	behavior of pointerClass (which can be any Behavior which has the instance creation method
+	#fromAddress:)"
 
-	^self pointerClass fromAddress: (anExternal intPtrAtOffset: offset)!
+	^self pointerClass fromAddress: (anExternalStructure bytes intPtrAtOffset: offset)!
 
 writeInto: anExternal value: anObject 
 	"Private - Write the address of the externally addressable Smalltalk object, anObject,
@@ -81,6 +86,7 @@ writeInto: anExternal value: anObject
 
 	^anExternal uintPtrAtOffset: offset put: anObject yourAddress! !
 !PointerField categoriesFor: #byteSize!accessing!private! !
+!PointerField categoriesFor: #fieldClassName!automatic generation!constants!development!private! !
 !PointerField categoriesFor: #pointerClass!accessing!private! !
 !PointerField categoriesFor: #pointerClass:!accessing!private! !
 !PointerField categoriesFor: #printAccessorExpression:on:!automatic generation!development!private! !

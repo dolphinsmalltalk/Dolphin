@@ -5,7 +5,7 @@ DWORD subclass: #SDWORD
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-SDWORD guid: (GUID fromString: '{87B4C5AB-026E-11D3-9FD7-00A0CC3E4A32}')!
+SDWORD guid: (GUID fromString: '{87b4c5ab-026e-11d3-9fd7-00a0cc3e4a32}')!
 SDWORD comment: '<SDWORD> is an <ExternalStructure> class to wrap the Win32 type of the same name.
 
 SDWORD is used to represent signed 32-bit integers in conjunction with Win32 APIs. 
@@ -23,19 +23,29 @@ unsignedValue: anUnsigned
 	bytes dwordAtOffset: 0 put: anUnsigned!
 
 value
-	"Answer the receiver's value field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'value' field."
 
 	^bytes sdwordAtOffset: 0!
 
-value: anObject 
-	"Set the receiver's value field to the value of anObject."
+value: anInteger
+	"Set the receiver's 'value' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: 0 put: anObject! !
+	bytes sdwordAtOffset: 0 put: anInteger! !
 !SDWORD categoriesFor: #unsignedValue:!accessing!public! !
 !SDWORD categoriesFor: #value!**compiled accessors**!public! !
 !SDWORD categoriesFor: #value:!**compiled accessors**!public! !
 
 !SDWORD class methodsFor!
+
+defineFields
+	"Define the fields of the SDWORD external type.
+		SDWORD compileDefinition
+	"
+
+	self defineField: #value
+		type: ((SDWORDField new)
+				beOverride;
+				yourself)!
 
 fieldType
 	"Private - Answer the <ExternalField> type to be used to represent the receiver's field type in 
@@ -59,6 +69,7 @@ uninitialize
 	"Private - Uninitialize the receiver prior to its removal from the image."
 
 	VMLibrary default registryAt: self name put: nil! !
+!SDWORD class categoriesFor: #defineFields!initializing!public! !
 !SDWORD class categoriesFor: #fieldType!constants!development!private! !
 !SDWORD class categoriesFor: #fromUnsignedInteger:!instance creation!public! !
 !SDWORD class categoriesFor: #initialize!development!initializing!private! !

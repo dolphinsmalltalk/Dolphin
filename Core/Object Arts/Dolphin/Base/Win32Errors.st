@@ -18,6 +18,7 @@ Win32Errors at: 'E_UNEXPECTED' put: -16r7FFF0001!
 Win32Errors at: 'ERROR_ACCESS_DENIED' put: 16r5!
 Win32Errors at: 'ERROR_ALREADY_EXISTS' put: 16rB7!
 Win32Errors at: 'ERROR_FILE_NOT_FOUND' put: 16r2!
+Win32Errors at: 'ERROR_INSUFFICIENT_BUFFER' put: 16r7A!
 Win32Errors at: 'ERROR_INVALID_DATA' put: 16rD!
 Win32Errors at: 'ERROR_INVALID_HANDLE' put: 16r6!
 Win32Errors at: 'ERROR_INVALID_NAME' put: 16r7B!

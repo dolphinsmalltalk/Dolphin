@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 AXAPIInfoAnalyzer subclass: #TKindModuleAnalyzer
 	instanceVariableNames: ''
@@ -45,6 +45,9 @@ getDllEntry: funcDesc
 	pBstrName free.
 	^answer!
 
+includeIDLInClassComment
+	^false!
+
 suggestedGlobalName
 	"Private - Answer a <readableString> name suggested as the (unprefixed) for a global
 	generated to represent the receiver's type."
@@ -53,6 +56,7 @@ suggestedGlobalName
 !TKindModuleAnalyzer categoriesFor: #baseClass!constants!private! !
 !TKindModuleAnalyzer categoriesFor: #dllNameIfNone:!accessing!public! !
 !TKindModuleAnalyzer categoriesFor: #getDllEntry:!accessing!private! !
+!TKindModuleAnalyzer categoriesFor: #includeIDLInClassComment!constants!private! !
 !TKindModuleAnalyzer categoriesFor: #suggestedGlobalName!accessing!private! !
 
 !TKindModuleAnalyzer class methodsFor!

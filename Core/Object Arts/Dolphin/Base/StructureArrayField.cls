@@ -1,12 +1,13 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ArrayField subclass: #StructureArrayField
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-StructureArrayField guid: (GUID fromString: '{87B4C4E1-026E-11D3-9FD7-00A0CC3E4A32}')!
-StructureArrayField comment: ''!
+StructureArrayField guid: (GUID fromString: '{87b4c4e1-026e-11d3-9fd7-00a0cc3e4a32}')!
+StructureArrayField comment: 'StructureArrayField is an <ExternalField> type that can be used to described embedded arrays of structures in <ExternalStructures>.
+'!
 !StructureArrayField categoriesForClass!External-Data-Types! !
 !StructureArrayField methodsFor!
 
@@ -22,11 +23,6 @@ arrayClass
 	"Private - Answer the class of <ExternalArray> that this field type describes."
 
 	^StructureArray!
-
-byteSize
-	"Private - Answer the byte size of the embedded array the receiver represents"
-
-	^self length * self elementSize!
 
 elementClass
 	^self fieldClass!
@@ -63,22 +59,23 @@ printElementSizeExpressionBodyOn: aWriteStream
 		display: #basicByteSize!
 
 readFrom: anExternal
-	"Private -  Answer a <StructureArray> which references the array
-	of structures embedded in the <ExternalStructure>, struct, in the
-	field described by the receiver.  The result may be sent #at: and #at:put:
-	messages to get/set the actual elements in-place."
+	"Private - Answer a <StructureArray> of the receiver's field class which references the
+	array of structures embedded in the <ExternalStructure> argument at the receiver's offset."
 
-	^self arrayClass 
-		fromAddress: anExternal yourAddress + offset 
-		length: self length
-		elementClass: self fieldClass! !
+	^self arrayClass
+		fromAddress: anExternal yourAddress + offset
+		length: (arrayLength getElementCountOf: ExternalField new in: anExternal)
+		elementClass: self fieldClass!
+
+valueParameterName
+	^'aStructureArrayOf', self elementClass name! !
 !StructureArrayField categoriesFor: #alignment!constants!public! !
 !StructureArrayField categoriesFor: #arrayClass!constants!private! !
-!StructureArrayField categoriesFor: #byteSize!accessing!private! !
 !StructureArrayField categoriesFor: #elementClass!accessing!private! !
 !StructureArrayField categoriesFor: #elementSize!accessing!private! !
 !StructureArrayField categoriesFor: #fieldClassName!accessing!private! !
 !StructureArrayField categoriesFor: #printAccessorExpressionSuffixOn:!automatic generation!development!private! !
 !StructureArrayField categoriesFor: #printElementSizeExpressionBodyOn:!automatic generation!private! !
 !StructureArrayField categoriesFor: #readFrom:!indirect accessing!private! !
+!StructureArrayField categoriesFor: #valueParameterName!automatic generation!constants!development!private! !
 

@@ -11,6 +11,10 @@ package basicPackageVersion: '6.1'.
 
 
 package classNames
+	add: #ConformantArrayField;
+	add: #ConformantArrayPointerField;
+	add: #ConformantStructureArrayField;
+	add: #ConformantStructureArrayPointerField;
 	add: #MethodContext;
 	add: #OSVERSIONINFO;
 	add: #STBSymbolProxy;
@@ -57,6 +61,26 @@ package!
 
 Object variableSubclass: #MethodContext
 	instanceVariableNames: 'frame method receiver'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ArrayField subclass: #ConformantArrayField
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+StructureArrayField subclass: #ConformantStructureArrayField
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ArrayPointerField subclass: #ConformantArrayPointerField
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+StructureArrayPointerField subclass: #ConformantStructureArrayPointerField
+	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!

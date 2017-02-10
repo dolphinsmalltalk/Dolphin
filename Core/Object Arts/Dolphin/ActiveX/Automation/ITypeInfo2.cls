@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ITypeInfo subclass: #ITypeInfo2
 	instanceVariableNames: ''
@@ -347,7 +347,7 @@ typekind
 !ITypeInfo2 categoriesFor: #GetAllImplTypeCustData:pCustData:!COM Interfaces-OAIDL.ITypeInfo2!private! !
 !ITypeInfo2 categoriesFor: #getAllParamCustData:indexParam:!**auto generated**!public! !
 !ITypeInfo2 categoriesFor: #GetAllParamCustData:indexParam:pCustData:!COM Interfaces-OAIDL.ITypeInfo2!private! !
-!ITypeInfo2 categoriesFor: #getAllVarCustData:!**auto generated**!public! !
+!ITypeInfo2 categoriesFor: #getAllVarCustData:!**auto generated**!accessing!public! !
 !ITypeInfo2 categoriesFor: #GetAllVarCustData:pCustData:!COM Interfaces-OAIDL.ITypeInfo2!private! !
 !ITypeInfo2 categoriesFor: #getCustData:!**auto generated**!public! !
 !ITypeInfo2 categoriesFor: #GetCustData:pVarVal:!COM Interfaces-OAIDL.ITypeInfo2!private! !

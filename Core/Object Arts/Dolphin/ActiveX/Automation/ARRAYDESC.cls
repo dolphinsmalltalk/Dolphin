@@ -5,7 +5,7 @@ AbstractELEMDESC subclass: #ARRAYDESC
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ARRAYDESC guid: (GUID fromString: '{C06F3B6C-0868-11D3-93AF-00A024CA708A}')!
+ARRAYDESC guid: (GUID fromString: '{c06f3b6c-0868-11d3-93af-00a024ca708a}')!
 ARRAYDESC comment: 'ARRAYDESC is an ExternalStructure class to represent the COM Automation structure of the same name.
 
 ARRAYDESC describes an Automation safe array, specifically the type of the elements, the number of dimensions, and the bounds for each dimension.
@@ -18,7 +18,7 @@ Member variables:
 !ARRAYDESC methodsFor!
 
 cDims
-	"Answer the receiver's cDims field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'cDims' field."
 
 	^bytes wordAtOffset: ##(self offsetOf: #cDims)!
 
@@ -29,7 +29,7 @@ elementCount
 	^self rgbounds inject: 1 into: [:sz :b | sz * b cElements]!
 
 rgbounds
-	"Answer the receiver's rgbounds field as a Smalltalk object."
+	"Answer the <StructureArray> value of the receiver's 'rgbounds' field."
 
 	^StructureArray
 		fromAddress: bytes yourAddress + ##(self offsetOf: #rgbounds)

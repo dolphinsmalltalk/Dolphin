@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 AXTypeInfoAnalyzer subclass: #TKindAliasAnalyzer
 	instanceVariableNames: ''
 	classVariableNames: 'BaseTypes'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-TKindAliasAnalyzer guid: (GUID fromString: '{C06F3B79-0868-11D3-93AF-00A024CA708A}')!
+TKindAliasAnalyzer guid: (GUID fromString: '{c06f3b79-0868-11d3-93af-00a024ca708a}')!
 TKindAliasAnalyzer comment: 'TKindAliasAnalyzer is a class which wraps an OLE Automation <ITypeInfo> interface pointer that describes a ''typedef'' (a declaration of a name for a type), i.e. an ITypeInfo of type kind TKIND_ALIAS. It supports high level behaviours for analyzing the type information associated with typedefs, and resolving them down to the fundamental type referenced.'!
 !TKindAliasAnalyzer categoriesForClass!ActiveX Automation! !
 !TKindAliasAnalyzer methodsFor!
@@ -47,12 +47,13 @@ initialize
 	self initialize
 	"
 
-	BaseTypes := (LookupTable new)
-				at: 'UINT_PTR' put: UINT_PTR;
-				at: 'ULONG_PTR' put: UINT_PTR;
-				at: 'INT_PTR' put: INT_PTR;
-				at: 'LONG_PTR' put: INT_PTR;
-				yourself.
+	BaseTypes := LookupTable new.
+	#(#UINT_PTR #INT_PTR #LARGE_INTEGER #ULARGE_INTEGER #BOOLEAN)
+		do: [:each | BaseTypes at: each asString put: (Smalltalk at: each)].
+	BaseTypes
+		at: 'guid' put: GUID;
+		at: 'ULONG_PTR' put: UINT_PTR;
+		at: 'LONG_PTR' put: INT_PTR.
 	self wireHandleNames do: [:each | BaseTypes at: 'wire' , each put: ExternalHandle].
 	BaseTypes
 		shrink;
@@ -66,7 +67,7 @@ typekind
 
 wireHandleNames
 	^#('HACCEL' 'HWND' 'HINSTANCE' 'HDC' 'HFILE' 'HGDIOBJ' 'HICON' 'HCURSOR' 'HFONT' 'HDWP' 'HKEY' 'HPEN' 'HRGN' 'HMODULE' 'HTASK' 'HRSRC' 'HBITMAP' 'HGLOBAL' 'HPALETTE' 'HMETAFILE' 'HENHMETAFILE' 'HBRUSH' 'HMENU' 'HIMAGELIST')! !
-!TKindAliasAnalyzer class categoriesFor: #initialize!public! !
+!TKindAliasAnalyzer class categoriesFor: #initialize!class initialization!development!public! !
 !TKindAliasAnalyzer class categoriesFor: #typekind!constants!private! !
 !TKindAliasAnalyzer class categoriesFor: #wireHandleNames!constants!private! !
 

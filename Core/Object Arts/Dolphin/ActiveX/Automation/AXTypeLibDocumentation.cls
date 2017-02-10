@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #AXTypeLibDocumentation
 	instanceVariableNames: 'name helpstring helpcontext helpfile'
@@ -19,14 +19,8 @@ Instance Variables:
 helpcontext
 	^helpcontext!
 
-helpcontext: anInteger 
-	helpcontext := anInteger!
-
 helpfile
 	^helpfile!
-
-helpfile: aString 
-	helpfile := aString trimNulls!
 
 helpstring
 	"Answer the value of the receiver's instance variable helpstring.
@@ -34,16 +28,14 @@ helpstring
 
 	^helpstring!
 
-helpstring: aString 
-	"Private - Set the helpstring associated with the receiver to the <readableString> argument."
-
-	helpstring := aString trimNulls!
-
 name
 	^name!
 
-name: anObject 
-	name := anObject!
+name: nameString helpstring: helpString helpcontext: anInteger helpfile: helpfileString
+	name := nameString.
+	helpstring := helpString.
+	helpcontext := anInteger.
+	helpfile := helpfileString!
 
 printOn: aStream 
 	"Append a developer friendly textual representation of the receiver to aStream."
@@ -54,12 +46,9 @@ printOn: aStream
 		print: self name;
 		nextPut: $)! !
 !AXTypeLibDocumentation categoriesFor: #helpcontext!accessing!public! !
-!AXTypeLibDocumentation categoriesFor: #helpcontext:!accessing!private! !
 !AXTypeLibDocumentation categoriesFor: #helpfile!accessing!public! !
-!AXTypeLibDocumentation categoriesFor: #helpfile:!accessing!private! !
 !AXTypeLibDocumentation categoriesFor: #helpstring!accessing!public! !
-!AXTypeLibDocumentation categoriesFor: #helpstring:!accessing!private! !
 !AXTypeLibDocumentation categoriesFor: #name!accessing!public! !
-!AXTypeLibDocumentation categoriesFor: #name:!accessing!private! !
+!AXTypeLibDocumentation categoriesFor: #name:helpstring:helpcontext:helpfile:!initializing!private! !
 !AXTypeLibDocumentation categoriesFor: #printOn:!printing!public! !
 

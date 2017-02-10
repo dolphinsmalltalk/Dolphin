@@ -5,7 +5,7 @@ AXTypeInfoAnalyzer subclass: #AXStructureTypeAnalyzer
 	classVariableNames: 'BuiltIns'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-AXStructureTypeAnalyzer guid: (GUID fromString: '{17F3FF59-EB25-47B0-8831-7E0D0960D84D}')!
+AXStructureTypeAnalyzer guid: (GUID fromString: '{17f3ff59-eb25-47b0-8831-7e0d0960d84d}')!
 AXStructureTypeAnalyzer comment: ''!
 !AXStructureTypeAnalyzer categoriesForClass!Unclassified! !
 !AXStructureTypeAnalyzer methodsFor!
@@ -13,7 +13,11 @@ AXStructureTypeAnalyzer comment: ''!
 baseClass
 	"Private - Answer the Dolphin class used to represent superclass of the receiver."
 
-	^ExternalStructure!
+	| firstVar |
+	firstVar := self variables first.
+	^(firstVar isAnonymous and: [firstVar tdesc isAnonymous not])
+		ifTrue: [firstVar tdesc typeInfo globalBinding value]
+		ifFalse: [ExternalStructure]!
 
 byteSize
 	"Answer the size in bytes of the structure described by the receiver."
@@ -72,7 +76,7 @@ suggestedBinding
 	| id |
 	self isAnonymous ifTrue: [^nil].
 	(id := self guid) isNull ifTrue: [^super suggestedBinding].
-	^(self baseClass classForGUID: id ifNone: []) 
+	^(ExternalStructure classForGUID: id ifNone: []) 
 		ifNil: [super suggestedBinding]
 		ifNotNil: [:structClass | structClass environment associationAt: structClass name]! !
 !AXStructureTypeAnalyzer categoriesFor: #baseClass!constants!private! !

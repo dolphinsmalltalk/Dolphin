@@ -1,26 +1,32 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 UINT_PTRField subclass: #HANDLEField
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-HANDLEField guid: (GUID fromString: '{92844AE1-5120-4FC8-822F-111A92AC0485}')!
-HANDLEField comment: ''!
+HANDLEField guid: (GUID fromString: '{92844ae1-5120-4fc8-822f-111a92ac0485}')!
+HANDLEField comment: '<HANDLEField> is a <ScalarField> type to represent <ExternalStructure> fields that are opaque pointers, or "handles".'!
 !HANDLEField categoriesForClass!External-Data-Types! !
 !HANDLEField methodsFor!
 
-accessorConverter
-	"Private - Answer the converter message to be sent to the value read from the structure to
-	convert it to an appropriate Smalltalk object."
+fieldClassName
+	^ExternalHandle name!
 
-	^#asExternalHandle!
+printAccessorExpressionSuffixOn: aWriteStream
+	"Private - Print any extra messages/statements onto the <puttableStream> argument that are required to
+	configure the object being read from the structure instance."
 
-readFrom: anExternal
-	"Private - Instantiate an object of the the type the receiver represents
-	at the receiver's offset in anExternal."
+	aWriteStream
+		space;
+		display: #asExternalHandle!
 
-	^(super readFrom: anExternal) asExternalHandle! !
-!HANDLEField categoriesFor: #accessorConverter!automatic generation!private! !
+readFrom: anExternalStructure
+	"Private - Answer an <ExternalHandler> that is the value of the field at the receiver's
+	offset in the <ExternalStructure> argument."
+
+	^(anExternalStructure bytes uintPtrAtOffset: offset) asExternalHandle! !
+!HANDLEField categoriesFor: #fieldClassName!automatic generation!constants!development!private! !
+!HANDLEField categoriesFor: #printAccessorExpressionSuffixOn:!automatic generation!development!private! !
 !HANDLEField categoriesFor: #readFrom:!indirect accessing!private! !
 

@@ -5,7 +5,7 @@ AXMemberDesc subclass: #VARDESC
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-VARDESC guid: (GUID fromString: '{C06F3B6B-0868-11D3-93AF-00A024CA708A}')!
+VARDESC guid: (GUID fromString: '{c06f3b6b-0868-11d3-93af-00a024ca708a}')!
 VARDESC comment: 'VARDESC is an <ExternalStructure> class to represent the OLE Automation structure of the same name.
 
 The VARDESC structure describes a variable constant or data member.
@@ -36,7 +36,16 @@ arguments
 basicFree
 	"Private - Free external resources owned by the receiver."
 
-	piTypeInfo asParameter ReleaseVarDesc: self.!
+	analyzer releaseVarDesc: self.!
+
+basicIdlAttributes
+	"Private - Answer a <sequencedReadableCollection> of the string names
+	of the various IDL flags assocated with the receiver."
+
+	| answer |
+	answer := super basicIdlAttributes.
+	self isReadOnly ifTrue: [answer add: 'readonly'].
+	^answer!
 
 elemdesc
 	"Answer the receiver's elemdesc field as a Smalltalk object."
@@ -50,6 +59,9 @@ elemDesc
 
 flags
 	^self wVarFlags!
+
+getAllCustData
+	^analyzer tlbInterface getAllVarCustData: index!
 
 getValidFields
 	"Private - Answer a <sequencedReadableCollection> of the fields defined 
@@ -69,6 +81,11 @@ isAnonymous
 	way to tell if the variable was unnamed in the original IDL."
 
 	^self name beginsWith: '__MIDL_'!
+
+isConformant
+	"Answer whether the variable described by the receiver has the custom Dolphin 'size_is' attribute in the original IDL."
+
+	^self customAttributes includesKey: #size_is!
 
 isReadOnly
 	"Answer whether the receiver is describing a read-only variable/property."
@@ -91,6 +108,14 @@ isStatic
 	"Answer whether the receiver is describing a static (i.e. non-member) variable."
 
 	^self varkind == VAR_STATIC!
+
+isStringField
+	"Answer whether the variable described by the receiver has the custom Dolphin 'string'
+	attribute in the original IDL. This can be used to mark embedded character arrays as
+	strings, which is not normally supported as although the [string] attribute is valid in IDL
+	for arrays, it is not supported by type libraries."
+
+	^self customAttributes includesKey: #string!
 
 isSymbolicConstant
 	"Answer whether the receiver is describing a symbolic constant (not to be
@@ -129,15 +154,19 @@ wVarFlags
 	^bytes wordAtOffset: ##(self offsetOf: #wVarFlags)! !
 !VARDESC categoriesFor: #arguments!accessing!public! !
 !VARDESC categoriesFor: #basicFree!private!realizing/unrealizing! !
+!VARDESC categoriesFor: #basicIdlAttributes!printing-IDL!private! !
 !VARDESC categoriesFor: #elemdesc!**compiled accessors**!public! !
 !VARDESC categoriesFor: #elemDesc!accessing!public! !
 !VARDESC categoriesFor: #flags!accessing!private! !
+!VARDESC categoriesFor: #getAllCustData!accessing!private! !
 !VARDESC categoriesFor: #getValidFields!accessing!private! !
 !VARDESC categoriesFor: #isAnonymous!public!testing! !
+!VARDESC categoriesFor: #isConformant!public!testing! !
 !VARDESC categoriesFor: #isReadOnly!public!testing! !
 !VARDESC categoriesFor: #isRequestEdit!public!testing! !
 !VARDESC categoriesFor: #isRestricted!public!testing! !
 !VARDESC categoriesFor: #isStatic!public!testing! !
+!VARDESC categoriesFor: #isStringField!public!testing! !
 !VARDESC categoriesFor: #isSymbolicConstant!public!testing! !
 !VARDESC categoriesFor: #isUnion!public!testing! !
 !VARDESC categoriesFor: #lpvarValue!**compiled accessors**!public! !

@@ -10,6 +10,11 @@ nil subclass: #ProtoObject
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+Object subclass: #ArrayFieldLength
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
 Object subclass: #AttributeDescriptor
 	instanceVariableNames: 'flags'
 	classVariableNames: 'AccessorMask MutableMask MutatorMask NonBrowsableMask NullableMask OverrideMask ReadableMask WriteableMask'
@@ -350,8 +355,18 @@ Object subclass: #VersionInfo
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+ArrayFieldLength subclass: #ConformantArrayFieldLength
+	instanceVariableNames: 'lengthField'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ArrayFieldLength subclass: #FixedArrayFieldLength
+	instanceVariableNames: 'elementCount'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
 AttributeDescriptor subclass: #ExternalField
-	instanceVariableNames: 'offset'
+	instanceVariableNames: 'offset structClass'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -376,16 +391,11 @@ ExternalField subclass: #ScalarField
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 EmbeddedField subclass: #ArrayField
-	instanceVariableNames: 'length'
+	instanceVariableNames: 'arrayLength'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 EmbeddedField subclass: #StructureField
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-ArrayField subclass: #ConformantArrayField
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
@@ -400,32 +410,17 @@ ArrayField subclass: #StructureArrayField
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-StructureArrayField subclass: #ConformantStructureArrayField
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
 StructureArrayField subclass: #PointerArrayField
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 PointerField subclass: #ArrayPointerField
-	instanceVariableNames: 'length'
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-ArrayPointerField subclass: #ConformantArrayPointerField
-	instanceVariableNames: ''
+	instanceVariableNames: 'arrayLength'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ArrayPointerField subclass: #StructureArrayPointerField
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-StructureArrayPointerField subclass: #ConformantStructureArrayPointerField
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
@@ -496,6 +491,11 @@ ScalarField subclass: #UINT_PTRField
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ScalarField subclass: #WORDField
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+BOOLField subclass: #BOOLEANField
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
@@ -1201,6 +1201,11 @@ ExternalInteger subclass: #UINT_PTR
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ExternalInteger subclass: #WORD
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+BYTE subclass: #BOOLEAN
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''

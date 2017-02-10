@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #AXTypeInfoObject
 	instanceVariableNames: 'tlbInterface generationFlags'
@@ -29,7 +29,7 @@ asParameter
 attributes
 	"Answer a <TYPEATTR> detailing the receiver's attributes - may raise an <HRESULTError>."
 
-	^self tlbInterface attributes!
+	^self subclassResponsibility!
 
 basicName
 	"Private - Answer a <readableString> name for the receiver, retrieved directly

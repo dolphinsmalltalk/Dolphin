@@ -4,7 +4,7 @@
 ]!
 
 "Apply any patches not yet consolidated into the boot image that are required to load the system package"
-SourceManager default fileIn: 'PreBoot.st'.
+SourceManager default fileIn: 'PreBoot.st'!
 
 "Reload the base package constituents to reflect any changes since the boot image was created."
 SourceManager default fileIn: 'Core\Object Arts\Dolphin\Base\BootSessionManager.cls'!

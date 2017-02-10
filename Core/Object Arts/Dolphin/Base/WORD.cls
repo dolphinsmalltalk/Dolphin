@@ -26,6 +26,11 @@ asUnsignedInteger
 
 	^bytes wordAtOffset: 0!
 
+unsignedValue: anInteger
+	"Set the receiver's value field to the value of the unsigned positive integer argument."
+
+	bytes wordAtOffset: 0 put: anInteger!
+
 value
 	"Answer the receiver's value field as a Smalltalk object."
 
@@ -37,6 +42,7 @@ value: anObject
 	bytes wordAtOffset: 0 put: anObject! !
 !WORD categoriesFor: #asSignedInteger!converting!public! !
 !WORD categoriesFor: #asUnsignedInteger!converting!public! !
+!WORD categoriesFor: #unsignedValue:!accessing!public! !
 !WORD categoriesFor: #value!**compiled accessors**!public! !
 !WORD categoriesFor: #value:!**compiled accessors**!public! !
 

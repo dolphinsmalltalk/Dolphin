@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 SDWORD subclass: #BOOL
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-BOOL guid: (GUID fromString: '{73888634-0C5B-4D09-83DC-C52101C10BA3}')!
+BOOL guid: (GUID fromString: '{73888634-0c5b-4d09-83dc-c52101c10ba3}')!
 BOOL comment: '<BOOL> is an <ExternalStructure> class to represent the Win32 BOOL (integer boolean) type.
 
 Possible values are: 
@@ -15,14 +15,14 @@ Possible values are:
 !BOOL methodsFor!
 
 value
-	"Answer the receiver's value field as a Smalltalk object."
+	"Answer the <Boolean> value of the receiver's 'value' field."
 
 	^(bytes dwordAtOffset: 0) asBoolean!
 
-value: anObject
-	"Set the receiver's value field to the value of anObject."
+value: aBoolean
+	"Set the receiver's 'value' field to the value of the argument, aBoolean"
 
-	bytes dwordAtOffset: 0 put: anObject asParameter! !
+	bytes dwordAtOffset: 0 put: aBoolean asParameter! !
 !BOOL categoriesFor: #value!**compiled accessors**!public! !
 !BOOL categoriesFor: #value:!**compiled accessors**!public! !
 

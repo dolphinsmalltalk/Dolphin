@@ -159,6 +159,7 @@ package methodNames
 	add: #TimeStamp -> #asVariant;
 	add: #UndefinedObject -> #asVariant;
 	add: 'BOOL class' -> #typeName;
+	add: 'BOOLEAN class' -> #typeName;
 	add: 'BSTR class' -> #fromObject:;
 	add: 'BSTR class' -> #newSAFEARRAY:;
 	add: 'BSTR class' -> #typeName;
@@ -295,7 +296,7 @@ Object subclass: #AXTypeLibRegistration
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 AXTypeInfoObject subclass: #AXTypeInfoAnalyzer
-	instanceVariableNames: 'typeLib globalBinding guid index basicName'
+	instanceVariableNames: 'typeLib globalBinding guid index documentation'
 	classVariableNames: 'TypeKindToClassMap VTtoIDLTypeMap'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -516,7 +517,7 @@ OLEStructure subclass: #TLIBATTR
 	classInstanceVariableNames: ''!
 OLEStructure subclass: #TYPEDESC
 	instanceVariableNames: 'owner classDesc typeInfo'
-	classVariableNames: ''
+	classVariableNames: 'VTIndirections'
 	poolDictionaries: 'AXAutomationConstants'
 	classInstanceVariableNames: ''!
 AbstractELEMDESC subclass: #ARRAYDESC
@@ -535,13 +536,13 @@ OLEFinalizableStructure subclass: #AXRecord
 	poolDictionaries: 'AXAutomationConstants AXAutomationErrors'
 	classInstanceVariableNames: ''!
 OLEFinalizableStructure subclass: #AXTypeInfoStructure
-	instanceVariableNames: 'piTypeInfo analyzer'
+	instanceVariableNames: 'analyzer'
 	classVariableNames: ''
 	poolDictionaries: 'AXAutomationConstants'
 	classInstanceVariableNames: ''!
 OLEFinalizableStructure subclass: #CUSTDATA
-	instanceVariableNames: ''
-	classVariableNames: ''
+	instanceVariableNames: 'contents'
+	classVariableNames: 'WellKnownCustomAttributes'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 OLEFinalizableStructure subclass: #VARIANT
@@ -550,12 +551,12 @@ OLEFinalizableStructure subclass: #VARIANT
 	poolDictionaries: 'AXAutomationConstants AXAutomationErrors Win32Constants'
 	classInstanceVariableNames: ''!
 AXTypeInfoStructure subclass: #AXMemberDesc
-	instanceVariableNames: ''
+	instanceVariableNames: 'index customAttributes documentation'
 	classVariableNames: ''
 	poolDictionaries: 'AXAutomationConstants'
 	classInstanceVariableNames: ''!
 AXTypeInfoStructure subclass: #TYPEATTR
-	instanceVariableNames: ''
+	instanceVariableNames: 'piTypeInfo'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -591,6 +592,15 @@ asVariant
 
 	^VARIANT fromBoolean: self! !
 !Boolean categoriesFor: #asVariant!converting!public! !
+
+!BOOLEAN class methodsFor!
+
+typeName
+	"Private - Answer the Dolphin external type name for the receiver.
+	There is an appropriate built-in type which we can substitute."
+
+	^#bool! !
+!BOOLEAN class categoriesFor: #typeName!constants!private! !
 
 !BSTR methodsFor!
 
