@@ -14,6 +14,15 @@ All functions in this library use the stdcall calling convention.'!
 !UserLibrary categoriesForClass!External-Libraries-Win32! !
 !UserLibrary methodsFor!
 
+blockInput: aBoolean
+	"Blocks keyboard and mouse input events from reaching applications. 
+		BOOL BlockInput(
+			BOOL fBlockIt 	
+		);"
+
+	<stdcall: bool BlockInput bool>
+	^self invalidCall!
+
 charLower: aCharacter
 	"Answer the lowercase equivalent of aCharacter. This will be dependent on the semantics of the 
 	language selected by the user during setup or by using Control Panel.
@@ -983,6 +992,7 @@ vkKeyScan: aChar
 	^self invalidCall
 
 ! !
+!UserLibrary categoriesFor: #blockInput:!public!win32 functions-window! !
 !UserLibrary categoriesFor: #charLower:!public!win32 functions-string manipulation! !
 !UserLibrary categoriesFor: #charUpper:!public!win32 functions-string manipulation! !
 !UserLibrary categoriesFor: #copyImage:uType:cxDesired:cyDesired:fuFlags:!public!win32 functions-resources! !
