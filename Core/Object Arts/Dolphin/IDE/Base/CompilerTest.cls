@@ -227,13 +227,17 @@ testCompileTimeExpressions
 	| result |
 	self shouldnt: [result := self evaluateExpression: '##()'] raise: self compilationErrorClass.
 	self assert: result = UndefinedObject.
-	#('1' '1+2') do: 
-			[:each | 
+	#('1' '1+2' 'nil' 'true' 'false' 'Smalltalk.Object') do: 
+			[:each |
 			| expected |
 			expected := self evaluateExpression: each.
 			self shouldnt: [result := self evaluateExpression: '##(' , each , ')']
 				raise: self compilationErrorClass.
-			self assert: result = expected]!
+			self assert: result = expected].
+	(Array with: self with: self class) do: 
+			[:each |
+			result := (self compileExpression: '##(self)' in: each class) method value: each.
+			self assert: each class instanceClass equals: result]!
 
 testConstExpressionReferences
 	"Test that references in a compile-time evaluated expression are retained in the literal frame 
