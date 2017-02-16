@@ -1,0 +1,55 @@
+| package |
+package := Package name: 'Windows Data Protection API'.
+package paxVersion: 1;
+	basicComment: 'Dolphin Smalltalk Win32 Data Protection API
+
+This package contains classes and methods for using the Windows Data Protection API (aka DP API)'.
+
+
+package classNames
+	add: #Crypt32Library;
+	add: #CRYPTOAPI_BLOB;
+	add: #CRYPTPROTECT_PROMPTSTRUCT;
+	yourself.
+
+package globalNames
+	add: #WinCryptConstants;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\..\Base\Dolphin';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+ExternalLibrary subclass: #Crypt32Library
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: 'WinCryptConstants'
+	classInstanceVariableNames: ''!
+ExternalStructure subclass: #CRYPTOAPI_BLOB
+	instanceVariableNames: 'localData'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Win32Structure subclass: #CRYPTPROTECT_PROMPTSTRUCT
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+"End of package definition"!
+

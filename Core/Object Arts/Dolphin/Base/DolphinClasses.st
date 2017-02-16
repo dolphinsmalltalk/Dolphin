@@ -415,6 +415,11 @@ PointerField subclass: #ArrayPointerField
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+ArrayPointerField subclass: #ConformantArrayPointerField
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
 ArrayPointerField subclass: #StructureArrayPointerField
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -1100,6 +1105,11 @@ ExternalStructure subclass: #Win32Structure
 	classVariableNames: ''
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
+ExternalArray subclass: #BYTEArray
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
 ExternalArray subclass: #DOUBLEArray
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -1121,6 +1131,11 @@ ExternalArray subclass: #GenericExternalArray
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ExternalArray subclass: #INT_PTRArray
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ExternalArray subclass: #SBYTEArray
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
