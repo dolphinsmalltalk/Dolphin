@@ -1095,6 +1095,15 @@ localFileTimeToFileTime: lpLocalFileTime lpFileTime: lpFileTime
 	<stdcall: bool LocalFileTimeToFileTime FILETIME* FILETIME* >
 	^self invalidCall!
 
+localFree: hMem
+	"Invoke the LocalFree() function of the module wrapped by the receiver.
+
+		wireHGLOBAL __stdcall LocalFree(
+			wireHGLOBAL hMem);"
+
+	<stdcall: handle LocalFree handle>
+	^self invalidCall!
+
 lockResource: anExternalHandle
 	"Lock the specified resource in memory. 
 		LPVOID LockResource(
@@ -1696,6 +1705,7 @@ zeroMemory: pvDest length: cBytes
 !KernelLibrary categoriesFor: #loadLibraryEx:hFile:dwFlags:!public!win32 functions-dynamic link library! !
 !KernelLibrary categoriesFor: #loadResource:hResInfo:!public!win32 functions-resource! !
 !KernelLibrary categoriesFor: #localFileTimeToFileTime:lpFileTime:!public!win32 functions-date and time! !
+!KernelLibrary categoriesFor: #localFree:!**auto generated**!public! !
 !KernelLibrary categoriesFor: #lockResource:!public!win32 functions-resource! !
 !KernelLibrary categoriesFor: #lstrcmp:lpString2:!public!win32 functions-string manipulation! !
 !KernelLibrary categoriesFor: #lstrcmpi:lpString2:!public!win32 functions-string manipulation! !
