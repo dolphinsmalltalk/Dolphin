@@ -1,0 +1,39 @@
+| package |
+package := Package name: 'Windows Data Protection API Tests'.
+package paxVersion: 1;
+	basicComment: ''.
+
+
+package classNames
+	add: #DpApiTest;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\..\Base\Dolphin';
+	add: '..\..\Base\Dolphin Base Tests';
+	add: 'Windows Data Protection API';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+DolphinTest subclass: #DpApiTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+"End of package definition"!
+

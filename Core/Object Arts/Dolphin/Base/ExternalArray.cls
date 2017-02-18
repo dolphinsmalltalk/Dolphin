@@ -466,13 +466,11 @@ fromAddress: anAddress length: anInteger
 	Implementation Note: If the length is zero, then we ignore the address (even if invalid).
 	If the length is non-zero then we answer nil if the address is the Null pointer."
 
-	^anInteger == 0 
-		ifTrue: [self basicNew basicLength: 0]
-		ifFalse: [
-			anAddress isNull ifFalse: [
-				self basicNew
-					initializeAtAddress: anAddress;
-					basicLength: anInteger]]!
+	^anAddress isNull
+		ifFalse: 
+			[(self basicNew)
+				initializeAtAddress: anAddress;
+				basicLength: anInteger]!
 
 icon
 	"Answers an Icon that can be used to represent this class"

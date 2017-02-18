@@ -12,64 +12,6 @@ The type library contains the following helpstring for this module
 	"Crypto API"
 
 Warning: This comment was automatically generated from the module''s type information, but any changes made here will not be overwritten if the wrapper class is regenerated.
-
-IDL definition follows:
-
-[
-	dllname("Crypt32.dll"), 
-	uuid(02c78993-ba10-47a1-953f-63f60b7693ab), 
-	helpstring("Crypto API")
-]
-module Crypt32
-{
-	const unsigned long CRYPTPROTECT_PROMPT_ON_UNPROTECT = 1;
-	const unsigned long CRYPTPROTECT_PROMPT_ON_PROTECT = 2;
-	const unsigned long CRYPTPROTECT_PROMPT_RESERVED = 4;
-	const unsigned long CRYPTPROTECT_PROMPT_STRONG = 8;
-	const unsigned long CRYPTPROTECT_PROMPT_REQUIRE_STRONG = 16;
-	const unsigned long CRYPTPROTECT_UI_FORBIDDEN = 1;
-	const unsigned long CRYPTPROTECT_LOCAL_MACHINE = 4;
-	const unsigned long CRYPTPROTECT_CRED_SYNC = 8;
-	const unsigned long CRYPTPROTECT_AUDIT = 16;
-	const unsigned long CRYPTPROTECT_NO_RECOVERY = 32;
-	const unsigned long CRYPTPROTECT_VERIFY_PROTECTION = 64;
-	const unsigned long CRYPTPROTECT_CRED_REGENERATE = 128;
-	const unsigned long CRYPTPROTECT_FIRST_RESERVED_FLAGVAL = 268435455;
-	const unsigned long CRYPTPROTECT_LAST_RESERVED_FLAGVAL = 4294967295;
-	const unsigned long CRYPTPROTECTMEMORY_BLOCK_SIZE = 16;
-	const unsigned long CRYPTPROTECTMEMORY_SAME_PROCESS = 0;
-	const unsigned long CRYPTPROTECTMEMORY_CROSS_PROCESS = 1;
-	const unsigned long CRYPTPROTECTMEMORY_SAME_LOGON = 2;
-
-	[entry(0x60000000)]
-	BOOL __stdcall CryptProtectData(
-		DATA_BLOB* pDataIn,
-		LPCWSTR szDataDescr,
-		DATA_BLOB* pOptionalEntropy,
-		void* pvReserved,
-		CRYPTPROTECT_PROMPTSTRUCT* pPromptStruct,
-		unsigned long dwFlags,
-		DATA_BLOB* pDataOut);
-	[entry(0x60000001)]
-	BOOL __stdcall CryptUnprotectData(
-		DATA_BLOB* pDataIn,
-		LPWSTR* ppszDataDescr,
-		DATA_BLOB* pOptionalEntropy,
-		void* pvReserved,
-		CRYPTPROTECT_PROMPTSTRUCT* pPromptStruct,
-		unsigned long dwFlags,
-		DATA_BLOB* pDataOut);
-	[entry(0x60000002)]
-	BOOL __stdcall CryptProtectMemory(
-		LPVOID pDataIn,
-		unsigned long cbDataIn,
-		unsigned long dwFlags);
-	[entry(0x60000003)]
-	BOOL __stdcall CryptUnprotectMemory(
-		LPVOID pDataIn,
-		unsigned long cbDataIn,
-		unsigned long dwFlags);
-};
 '!
 !Crypt32Library categoriesForClass!Win32-Modules! !
 !Crypt32Library methodsFor!
@@ -133,9 +75,11 @@ cryptUnprotectMemory: pDataIn cbDataIn: cbDataIn dwFlags: dwFlags
 !Crypt32Library class methodsFor!
 
 example1
-	| encrypted decrypted |
-	encrypted := self protectData: 'Hello world'.
-	decrypted := self unprotectData: encrypted!
+	| encrypted decrypted original |
+	original := 'Hello world'.
+	encrypted := self protectData: original.
+	decrypted := self unprotectData: encrypted.
+	self assert: [decrypted = original]!
 
 fileName
 	"Answer the host system file name for the library."
@@ -159,30 +103,33 @@ protectData: aByteObject additionalEntropy: aByteArrayOrNil
 		additionalEntropy: aByteArrayOrNil
 		machineWide: false!
 
-protectData: aByteObject additionalEntropy: aByteArray machineWide: aBoolean
+protectData: aByteObject additionalEntropy: aByteArrayOrNil machineWide: aBoolean
 	"Answer an encrypted representation of the data in the byte object argument, aByteObject.
 	Additional entropy to increase the complexity of the encryption can be specified by
-	providing a suitable <ByteArray> argument.. The encrypted data is usually associated with
-	the current user, but passing true as the <Boolean> argument will yield data associated with
-	the machine context that can subsequently be decrypted by any process running for any
-	principal. Machine-wide protection is normally only appropriate for service applications not
-	running for a specific user."
+	providing a suitable <ByteArray> as the second argument. The encrypted data is usually
+	associated with the current user, but passing true as the <Boolean> argument will yield data
+	associated with the machine context that can subsequently be decrypted by *any* process
+	running for any principal. Machine-wide protection is normally only appropriate for service
+	applications not running for a specific user."
 
-	| unencrypted encrypted flags description answer |
+	| unencrypted encrypted flags description answer entropy |
 	unencrypted := CRYPTOAPI_BLOB fromBytes: aByteObject.
 	encrypted := CRYPTOAPI_BLOB new.
 	flags := WinCryptConstants.CRYPTPROTECT_UI_FORBIDDEN.
 	aBoolean ifTrue: [flags := flags | WinCryptConstants.CRYPTPROTECT_LOCAL_MACHINE].
 	description := aByteObject class name asUnicodeString.
+	entropy := aByteArrayOrNil ifNotNil: [CRYPTOAPI_BLOB fromBytes: aByteArrayOrNil].
 	(self default
 		cryptProtectData: unencrypted
 		szDataDescr: description
-		pOptionalEntropy: aByteArray
+		pOptionalEntropy: entropy
 		pvReserved: nil
 		pPromptStruct: nil
 		dwFlags: flags
 		pDataOut: encrypted) ifFalse: [^Win32Error signal].
 	answer := encrypted data copy.
+	"The encrypted data is allocated by the API function using LocalAlloc, so free it now to
+	avoid generating finalizable garbage"
 	encrypted free.
 	^answer!
 
@@ -203,37 +150,39 @@ unprotectData: dataByteArray additionalEntropy: aByteArrayOrNil
 		additionalEntropy: aByteArrayOrNil
 		machineWide: false!
 
-unprotectData: aByteObject additionalEntropy: aByteArray machineWide: aBoolean
-	"Decrypt the protected data in the <ByteArray> argument, dataByteArray.
-	Additional entropy to increase the complexity of the encryption can be specified by
-	providing a suitable <ByteArray> argument.. The encrypted data is usually associated with
-	the current user, but passing true as the <Boolean> argument will yield data associated with
-	the machine context that can subsequently be decrypted by any process running for any
-	principal. Machine-wide protection is normally only appropriate for service applications not
-	running for a specific user."
+unprotectData: aByteObject additionalEntropy: aByteArrayOrNil machineWide: aBoolean
+	"Decrypt the protected data in the byte object argument, aByteObject, answering the
+	decrypted data as an instance of the same class as that of the original data. Additional
+	entropy to increase the complexity of the encryption can be specified by providing a
+	suitable <ByteArray> argument. The encrypted data is usually associated with the current
+	user, but passing true as the <Boolean> argument will yield data associated with the machine
+	context that can subsequently be decrypted by *any* process running for any user.
+	Machine-wide protection is, therefore, normally only appropriate for service applications
+	not running for a specific user."
 
-	| unencrypted encrypted flags description answer dataClass |
+	| unencrypted encrypted flags description answer dataClass entropy size |
 	encrypted := CRYPTOAPI_BLOB fromBytes: aByteObject.
 	unencrypted := CRYPTOAPI_BLOB new.
 	flags := WinCryptConstants.CRYPTPROTECT_UI_FORBIDDEN.
 	aBoolean ifTrue: [flags := flags | WinCryptConstants.CRYPTPROTECT_LOCAL_MACHINE].
 	description := aByteObject class name asUnicodeString.
 	description := ExternalAddress new.
+	entropy := aByteArrayOrNil ifNotNil: [CRYPTOAPI_BLOB fromBytes: aByteArrayOrNil].
 	(self default
 		cryptUnprotectData: encrypted
 		ppszDataDescr: description
-		pOptionalEntropy: aByteArray
+		pOptionalEntropy: entropy
 		pvReserved: nil
 		pPromptStruct: nil
 		dwFlags: flags
 		pDataOut: unencrypted) ifFalse: [^Win32Error signal].
 	description := UnicodeString fromAddress: description.
 	dataClass := Smalltalk at: description asString ifAbsent: [ByteArray].
-	answer := unencrypted data.
-	answer := answer
+	size := unencrypted cbData.
+	answer := unencrypted data
 				copy: dataClass
 				from: 1
-				to: answer byteSize.
+				to: size.
 	unencrypted free.
 	^answer! !
 !Crypt32Library class categoriesFor: #example1!examples!must strip!public! !
