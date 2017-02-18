@@ -25,6 +25,8 @@ inline POBJECT ObjectMemory::allocChunk(MWORD chunkSize)
 	#endif
 }
 
+extern "C" ST::Object emptyObj;
+
 inline POBJECT ObjectMemory::allocSmallChunk(MWORD chunkSize)
 {
 #ifdef MEMSTATS
@@ -35,8 +37,8 @@ inline POBJECT ObjectMemory::allocSmallChunk(MWORD chunkSize)
 	return chunkSize > MaxSizeOfPoolObject 
 		? static_cast<POBJECT>(__sbh_alloc_block(chunkSize))
 		: chunkSize == 0 
-				? NULL
-				: // Use Blair's very fast pools which tend to fragment a fair bit
+				? &emptyObj
+				: // Use chunk pools, which are fast but can cause memory fragmentation
 					spacePoolForSize(chunkSize).allocate();
 }
 
@@ -56,7 +58,7 @@ inline void ObjectMemory::freeSmallChunk(POBJECT pBlock, MWORD size)
 	}
 	else
 	{
-		if (pBlock != NULL)
+		if (pBlock != &emptyObj)
 			spacePoolForSize(size).deallocate(pBlock);
 	}
 }
