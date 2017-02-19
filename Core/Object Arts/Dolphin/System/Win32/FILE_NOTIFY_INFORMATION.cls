@@ -1,51 +1,53 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ExternalStructure subclass: #FILE_NOTIFY_INFORMATION
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-FILE_NOTIFY_INFORMATION guid: (GUID fromString: '{59C5B86E-902B-4194-AB8B-EF10D1CF539D}')!
-FILE_NOTIFY_INFORMATION comment: '<FILE_NOTIFY_INFORMATION> is an <ExternalStructure> class to wrap the struct ''Win32.FILE_NOTIFY_INFORMATION'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
+FILE_NOTIFY_INFORMATION guid: (GUID fromString: '{59c5b86e-902b-4194-ab8b-ef10d1cf539d}')!
+FILE_NOTIFY_INFORMATION comment: '<FILE_NOTIFY_INFORMATION> is an <ExternalStructure> class to wrap the struct ''Win32.FILE_NOTIFY_INFORMATION'' from type information in the ''Win32 API'' library.
 
-This structure is used in conjunction with the ReadDirectoryChangesW API. It is a variable length structure, in that the unicode file name may contain a variable number of characters. The structures are then packed together into an irregular array.
+The type library contains the following helpstring for this struct
+	"This structure is used in conjunction with the ReadDirectoryChangesW API. It is a variable length structure, in that the unicode file name may contain a variable number of characters. The structures are then packed together into an irregular array."
+
+** This comment was automatically generated from a type library. Delete this line to prevent any manual edits from being overwritten if the wrapper class is regenerated. **
 
 IDL definition follows:
 
-typedef 
+typedef [uuid(59c5b86e-902b-4194-ab8b-ef10d1cf539d), helpstring("This structure is used in conjunction with the ReadDirectoryChangesW API. It is a variable length structure, in that the unicode file name may contain a variable number of characters. The structures are then packed together into an irregular array.")]
 struct tagFILE_NOTIFY_INFORMATION {
-	unsigned long NextEntryOffset;
-	unsigned long Action;
-	unsigned long FileNameLength;
-	unsigned short FileName[1];
+	[readonly] DWORD NextEntryOffset;
+	[readonly] DWORD Action;
+	[readonly] DWORD FileNameLength;
+	[readonly, string, size_is("FileNameLength>>1")] unsigned short FileName[1];
 } FILE_NOTIFY_INFORMATION;
 '!
 !FILE_NOTIFY_INFORMATION categoriesForClass!Win32-Structs! !
 !FILE_NOTIFY_INFORMATION methodsFor!
 
 Action
-	"Answer the receiver's Action field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'Action' field."
 
 	^bytes dwordAtOffset: ##(self offsetOf: #Action)!
 
-fileName
-	"Implementation Note: The FileNameLength is oddly the size of the FileName string in bytes,
-	not including the terminating null, rather than the length in characters (which is what we'd
-	normally expect for a conformant array)"
+FileName
+	"Answer the <UnicodeString> value of the receiver's 'FileName' field."
 
-	^UnicodeString fromAddress: bytes yourAddress + 12 length: self FileNameLength // 2!
+	^UnicodeString fromAddress: bytes yourAddress + ##(self offsetOf: #FileName)
+		length: self FileNameLength >> 1!
 
 FileNameLength
-	"Answer the receiver's FileNameLength field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'FileNameLength' field."
 
 	^bytes dwordAtOffset: ##(self offsetOf: #FileNameLength)!
 
 NextEntryOffset
-	"Answer the receiver's NextEntryOffset field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'NextEntryOffset' field."
 
 	^bytes dwordAtOffset: 0! !
 !FILE_NOTIFY_INFORMATION categoriesFor: #Action!**compiled accessors**!public! !
-!FILE_NOTIFY_INFORMATION categoriesFor: #fileName!accessing!public! !
+!FILE_NOTIFY_INFORMATION categoriesFor: #FileName!**compiled accessors**!public! !
 !FILE_NOTIFY_INFORMATION categoriesFor: #FileNameLength!**compiled accessors**!public! !
 !FILE_NOTIFY_INFORMATION categoriesFor: #NextEntryOffset!**compiled accessors**!public! !
 
@@ -53,21 +55,27 @@ NextEntryOffset
 
 defineFields
 	"Define the fields of the FILE_NOTIFY_INFORMATION structure.
-		FILE_NOTIFY_INFORMATION compileDefinition
-	
-		typedef 
+
+	FILE_NOTIFY_INFORMATION compileDefinition
+
+		typedef [uuid(59c5b86e-902b-4194-ab8b-ef10d1cf539d), helpstring('This structure is used in conjunction with the ReadDirectoryChangesW API. It is a variable length structure, in that the unicode file name may contain a variable number of characters. The structures are then packed together into an irregular array.')]
 		struct tagFILE_NOTIFY_INFORMATION {
-			unsigned long NextEntryOffset;
-			unsigned long Action;
-			unsigned long FileNameLength;
-			unsigned short FileName[1];
+			[readonly] DWORD NextEntryOffset;
+			[readonly] DWORD Action;
+			[readonly] DWORD FileNameLength;
+			[readonly, string, size_is('FileNameLength>>1')] unsigned short FileName[1];
 		} FILE_NOTIFY_INFORMATION;
 "
 
 	self
-		defineField: #NextEntryOffset type: DWORDField readOnly;
-		defineField: #Action type: DWORDField readOnly;
-		defineField: #FileNameLength type: DWORDField readOnly;
-		defineField: #FileName type: (ConformantArrayField type: UnicodeString length: #FileNameLength) beFiller! !
-!FILE_NOTIFY_INFORMATION class categoriesFor: #defineFields!initializing!public! !
+		defineField: #NextEntryOffset type: DWORDField new beReadOnly offset: 0;
+		defineField: #Action type: DWORDField new beReadOnly offset: 4;
+		defineField: #FileNameLength type: DWORDField new beReadOnly offset: 8;
+		defineField: #FileName type: (StringField type: UnicodeString arrayLength: (SizeIsArrayFieldLength sizeIs: 'FileNameLength >> 1')) beReadOnly offset: 12.
+	self byteSize: 16!
+
+new
+	^self new: ##((self offsetOf: #FileName) + ((CRTConstants._MAX_PATH + 1) * 2))! !
+!FILE_NOTIFY_INFORMATION class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!FILE_NOTIFY_INFORMATION class categoriesFor: #new!public! !
 

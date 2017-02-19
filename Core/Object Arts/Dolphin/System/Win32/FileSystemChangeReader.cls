@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #FileSystemChangeReader
 	instanceVariableNames: 'handle directory watchSubDirs notificationMask callback buffer overlapStruct filters'
 	classVariableNames: 'ActionMap FileIOCompletionRoutineDescriptor'
 	poolDictionaries: 'FileSystemWatcherConstants Win32Constants Win32Errors'
 	classInstanceVariableNames: ''!
-FileSystemChangeReader guid: (GUID fromString: '{D46A38A5-966C-4E12-A910-00936A4993BD}')!
+FileSystemChangeReader guid: (GUID fromString: '{d46a38a5-966c-4e12-a910-00936a4993bd}')!
 FileSystemChangeReader comment: 'FileSystemChangeReader is a class of objects that can be used to monitor the file system for changes occurring in a specified directory, and (optionally) its sub-directories. The directory can reside on the local computer, a network drive, or a remote computer, as long as the computers concerned are not running Windows 9x (which does not support the necessary Win32 API).
 
 FileSystemChangeReader employs the ReadDirectoryChangesW API to request directory monitoring, and uses Win32 overlapped I/O in conjunction with asynchronous procedure calls to receive the notifications. By utilising Dolphin''s generic callback mechanism overlapped I/O APCs are simple and efficient, however because they are received when Dolphin enters an alertable wait state, they will normally be processed by the idle process when it issues a MsgWaitForMultipleObjectsEx call to quiesce the system. 
@@ -310,9 +310,8 @@ unpackNotifications
 	address := buffer yourAddress.
 	struct := FILE_NOTIFY_INFORMATION fromAddress: address.
 	last := nil.
-	
 	[| code fileName |
-	fileName := struct fileName asString.
+	fileName := struct FileName asString.
 
 	code := struct Action.
 	next := FileSystemChange code: code fileName: fileName.
