@@ -35,6 +35,7 @@ package globalAliases: (Set new
 package setPrerequisites: (IdentitySet new
 	add: '..\..\Base\Dolphin';
 	add: 'Dolphin Overlapped IO';
+	add: '..\..\Base\Dolphin SizeIs Fields';
 	yourself).
 
 package!
