@@ -1,21 +1,21 @@
 "Filed out from Dolphin Smalltalk 7"!
 
-ExternalStructure subclass: #HTTP_SERVICE_CONFIG_SSL_SNI_SET
+HttpServerStructure subclass: #HTTP_SERVICE_CONFIG_SSL_SNI_SET
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-HTTP_SERVICE_CONFIG_SSL_SNI_SET guid: (GUID fromString: '{4C2FB659-18F1-4258-BEB7-2283ED27E94B}')!
+HTTP_SERVICE_CONFIG_SSL_SNI_SET guid: (GUID fromString: '{4c2fb659-18f1-4258-beb7-2283ed27e94b}')!
 HTTP_SERVICE_CONFIG_SSL_SNI_SET comment: '<HTTP_SERVICE_CONFIG_SSL_SNI_SET> is an <ExternalStructure> class to wrap the struct ''Win32.HTTP_SERVICE_CONFIG_SSL_SNI_SET'' from type information in the ''Win32 API'' library.
 
 The type library contains the following helpstring for this struct
 	"Used by HttpSetServiceConfiguration() to add a new HttpServiceConfigSslSniCertInfo record to the SSL bindings list"
 
-Warning: This comment was automatically generated from the struct''s type information, but any changes made here will not be overwritten if the wrapper class is regenerated.
+** This comment was automatically generated from a type library. Delete this line to prevent any manual edits from being overwritten if the wrapper class is regenerated. **
 
 IDL definition follows:
 
-typedef [uuid(4C2FB659-18F1-4258-BEB7-2283ED27E94B), helpstring("Used by HttpSetServiceConfiguration() to add a new HttpServiceConfigSslSniCertInfo record to the SSL bindings list")]
+typedef [uuid(4c2fb659-18f1-4258-beb7-2283ed27e94b), helpstring("Used by HttpSetServiceConfiguration() to add a new HttpServiceConfigSslSniCertInfo record to the SSL bindings list")]
 struct tagHTTP_SERVICE_CONFIG_SSL_SNI_SET {
 	HTTP_SERVICE_CONFIG_SSL_SNI_KEY KeyDesc;
 	HTTP_SERVICE_CONFIG_SSL_PARAM paramdesc;
@@ -25,28 +25,28 @@ struct tagHTTP_SERVICE_CONFIG_SSL_SNI_SET {
 !HTTP_SERVICE_CONFIG_SSL_SNI_SET methodsFor!
 
 KeyDesc
-	"Answer the receiver's KeyDesc field as a Smalltalk object."
+	"Answer the <HTTP_SERVICE_CONFIG_SSL_SNI_KEY> value of the receiver's 'KeyDesc' field."
 
 	^HTTP_SERVICE_CONFIG_SSL_SNI_KEY fromAddress: bytes yourAddress!
 
-KeyDesc: anObject
-	"Set the receiver's KeyDesc field to the value of anObject."
+KeyDesc: aHTTP_SERVICE_CONFIG_SSL_SNI_KEY
+	"Set the receiver's 'KeyDesc' field to the value of the argument, aHTTP_SERVICE_CONFIG_SSL_SNI_KEY"
 
-	anObject
+	aHTTP_SERVICE_CONFIG_SSL_SNI_KEY
 		replaceBytesOf: bytes
 		from: 1
 		to: ##(HTTP_SERVICE_CONFIG_SSL_SNI_KEY basicByteSize)
 		startingAt: 1!
 
 paramdesc
-	"Answer the receiver's paramdesc field as a Smalltalk object."
+	"Answer the <HTTP_SERVICE_CONFIG_SSL_PARAM> value of the receiver's 'paramdesc' field."
 
 	^HTTP_SERVICE_CONFIG_SSL_PARAM fromAddress: bytes yourAddress + ##(self offsetOf: #paramdesc)!
 
-paramdesc: anObject
-	"Set the receiver's paramdesc field to the value of anObject."
+paramdesc: aHTTP_SERVICE_CONFIG_SSL_PARAM
+	"Set the receiver's 'paramdesc' field to the value of the argument, aHTTP_SERVICE_CONFIG_SSL_PARAM"
 
-	anObject
+	aHTTP_SERVICE_CONFIG_SSL_PARAM
 		replaceBytesOf: bytes
 		from: ##((self offsetOf: #paramdesc) + 1)
 		to: ##((self offsetOf: #paramdesc) + HTTP_SERVICE_CONFIG_SSL_PARAM basicByteSize)
@@ -61,9 +61,9 @@ paramdesc: anObject
 defineFields
 	"Define the fields of the HTTP_SERVICE_CONFIG_SSL_SNI_SET structure.
 
-	HTTP_SERVICE_CONFIG_SSL_SNI_SET  compileDefinition
+	HTTP_SERVICE_CONFIG_SSL_SNI_SET compileDefinition
 
-		typedef [uuid(4C2FB659-18F1-4258-BEB7-2283ED27E94B), helpstring('Used by HttpSetServiceConfiguration() to add a new HttpServiceConfigSslSniCertInfo record to the SSL bindings list')]
+		typedef [uuid(4c2fb659-18f1-4258-beb7-2283ed27e94b), helpstring('Used by HttpSetServiceConfiguration() to add a new HttpServiceConfigSslSniCertInfo record to the SSL bindings list')]
 		struct tagHTTP_SERVICE_CONFIG_SSL_SNI_SET {
 			HTTP_SERVICE_CONFIG_SSL_SNI_KEY KeyDesc;
 			HTTP_SERVICE_CONFIG_SSL_PARAM paramdesc;

@@ -1,25 +1,25 @@
 "Filed out from Dolphin Smalltalk 7"!
 
-ExternalStructure subclass: #HTTP_REQUEST_TOKEN_BINDING_INFO
+HttpServerStructure subclass: #HTTP_REQUEST_TOKEN_BINDING_INFO
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-HTTP_REQUEST_TOKEN_BINDING_INFO guid: (GUID fromString: '{9A86EB3D-22EE-4CC3-980D-F3427EECDB0C}')!
+HTTP_REQUEST_TOKEN_BINDING_INFO guid: (GUID fromString: '{9a86eb3d-22ee-4cc3-980d-f3427eecdb0c}')!
 HTTP_REQUEST_TOKEN_BINDING_INFO comment: '<HTTP_REQUEST_TOKEN_BINDING_INFO> is an <ExternalStructure> class to wrap the struct ''Win32.HTTP_REQUEST_TOKEN_BINDING_INFO'' from type information in the ''Win32 API'' library.
 
 The type library contains no documentation for this struct
 
-Warning: This comment was automatically generated from the struct''s type information, but any changes made here will not be overwritten if the wrapper class is regenerated.
+** This comment was automatically generated from a type library. Delete this line to prevent any manual edits from being overwritten if the wrapper class is regenerated. **
 
 IDL definition follows:
 
-typedef [uuid(9A86EB3D-22EE-4CC3-980D-F3427EECDB0C)]
+typedef [uuid(9a86eb3d-22ee-4cc3-980d-f3427eecdb0c)]
 struct tagHTTP_REQUEST_TOKEN_BINDING_INFO {
-	BYTE* TokenBinding;
-	unsigned long TokenBindingSize;
-	BYTE* TlsUnique;
-	unsigned long TlsUniqueSize;
+	UCHAR* TokenBinding;
+	ULONG TokenBindingSize;
+	UCHAR* TlsUnique;
+	ULONG TlsUniqueSize;
 	LPWSTR KeyType;
 } HTTP_REQUEST_TOKEN_BINDING_INFO;
 '!
@@ -27,54 +27,54 @@ struct tagHTTP_REQUEST_TOKEN_BINDING_INFO {
 !HTTP_REQUEST_TOKEN_BINDING_INFO methodsFor!
 
 KeyType
-	"Answer the receiver's KeyType field as a Smalltalk object."
+	"Answer the <UnicodeString> value of the receiver's 'KeyType' field."
 
 	^UnicodeString fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #KeyType))!
 
-KeyType: anObject
-	"Set the receiver's KeyType field to the value of anObject."
+KeyType: anUnicodeString
+	"Set the receiver's 'KeyType' field to the value of the argument, anUnicodeString"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #KeyType) put: anObject yourAddress!
+	bytes uintPtrAtOffset: ##(self offsetOf: #KeyType) put: anUnicodeString yourAddress!
 
 TlsUnique
-	"Answer the receiver's TlsUnique field as a Smalltalk object."
+	"Answer the <BYTE> value of the receiver's 'TlsUnique' field."
 
 	^BYTE fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #TlsUnique))!
 
-TlsUnique: anObject
-	"Set the receiver's TlsUnique field to the value of anObject."
+TlsUnique: aBYTE
+	"Set the receiver's 'TlsUnique' field to the value of the argument, aBYTE"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #TlsUnique) put: anObject yourAddress!
+	bytes uintPtrAtOffset: ##(self offsetOf: #TlsUnique) put: aBYTE yourAddress!
 
 TlsUniqueSize
-	"Answer the receiver's TlsUniqueSize field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'TlsUniqueSize' field."
 
 	^bytes dwordAtOffset: ##(self offsetOf: #TlsUniqueSize)!
 
-TlsUniqueSize: anObject
-	"Set the receiver's TlsUniqueSize field to the value of anObject."
+TlsUniqueSize: anInteger
+	"Set the receiver's 'TlsUniqueSize' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #TlsUniqueSize) put: anObject!
+	bytes dwordAtOffset: ##(self offsetOf: #TlsUniqueSize) put: anInteger!
 
 TokenBinding
-	"Answer the receiver's TokenBinding field as a Smalltalk object."
+	"Answer the <BYTE> value of the receiver's 'TokenBinding' field."
 
 	^BYTE fromAddress: (bytes intPtrAtOffset: 0)!
 
-TokenBinding: anObject
-	"Set the receiver's TokenBinding field to the value of anObject."
+TokenBinding: aBYTE
+	"Set the receiver's 'TokenBinding' field to the value of the argument, aBYTE"
 
-	bytes uintPtrAtOffset: 0 put: anObject yourAddress!
+	bytes uintPtrAtOffset: 0 put: aBYTE yourAddress!
 
 TokenBindingSize
-	"Answer the receiver's TokenBindingSize field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'TokenBindingSize' field."
 
 	^bytes dwordAtOffset: ##(self offsetOf: #TokenBindingSize)!
 
-TokenBindingSize: anObject
-	"Set the receiver's TokenBindingSize field to the value of anObject."
+TokenBindingSize: anInteger
+	"Set the receiver's 'TokenBindingSize' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #TokenBindingSize) put: anObject! !
+	bytes dwordAtOffset: ##(self offsetOf: #TokenBindingSize) put: anInteger! !
 !HTTP_REQUEST_TOKEN_BINDING_INFO categoriesFor: #KeyType!**compiled accessors**!public! !
 !HTTP_REQUEST_TOKEN_BINDING_INFO categoriesFor: #KeyType:!**compiled accessors**!public! !
 !HTTP_REQUEST_TOKEN_BINDING_INFO categoriesFor: #TlsUnique!**compiled accessors**!public! !
@@ -91,14 +91,14 @@ TokenBindingSize: anObject
 defineFields
 	"Define the fields of the HTTP_REQUEST_TOKEN_BINDING_INFO structure.
 
-	HTTP_REQUEST_TOKEN_BINDING_INFO  compileDefinition
+	HTTP_REQUEST_TOKEN_BINDING_INFO compileDefinition
 
-		typedef [uuid(9A86EB3D-22EE-4CC3-980D-F3427EECDB0C)]
+		typedef [uuid(9a86eb3d-22ee-4cc3-980d-f3427eecdb0c)]
 		struct tagHTTP_REQUEST_TOKEN_BINDING_INFO {
-			BYTE* TokenBinding;
-			unsigned long TokenBindingSize;
-			BYTE* TlsUnique;
-			unsigned long TlsUniqueSize;
+			UCHAR* TokenBinding;
+			ULONG TokenBindingSize;
+			UCHAR* TlsUnique;
+			ULONG TlsUniqueSize;
 			LPWSTR KeyType;
 		} HTTP_REQUEST_TOKEN_BINDING_INFO;
 "

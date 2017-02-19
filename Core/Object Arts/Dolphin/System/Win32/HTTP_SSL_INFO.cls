@@ -1,114 +1,119 @@
 "Filed out from Dolphin Smalltalk 7"!
 
-ExternalStructure subclass: #HTTP_SSL_INFO
+HttpServerStructure subclass: #HTTP_SSL_INFO
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-HTTP_SSL_INFO guid: (GUID fromString: '{FD0D6F69-8AFE-4748-A88B-9FB70593DFC8}')!
+HTTP_SSL_INFO guid: (GUID fromString: '{fd0d6f69-8afe-4748-a88b-9fb70593dfc8}')!
 HTTP_SSL_INFO comment: '<HTTP_SSL_INFO> is an <ExternalStructure> class to wrap the struct ''Win32.HTTP_SSL_INFO'' from type information in the ''Win32 API'' library.
 
 The type library contains the following helpstring for this struct
 	"Data computed during SSL handshake."
 
-Warning: This comment was automatically generated from the struct''s type information, but any changes made here will not be overwritten if the wrapper class is regenerated.
+** This comment was automatically generated from a type library. Delete this line to prevent any manual edits from being overwritten if the wrapper class is regenerated. **
 
 IDL definition follows:
 
-typedef [uuid(FD0D6F69-8AFE-4748-A88B-9FB70593DFC8), helpstring("Data computed during SSL handshake.")]
+typedef [uuid(fd0d6f69-8afe-4748-a88b-9fb70593dfc8), helpstring("Data computed during SSL handshake.")]
 struct tagHTTP_SSL_INFO {
-	unsigned short ServerCertKeySize;
-	unsigned short ConnectionKeySize;
-	unsigned long ServerCertIssuerSize;
-	unsigned long ServerCertSubjectSize;
-	LPCSTR pServerCertIssuer;
-	LPCSTR pServerCertSubject;
-	PHTTP_SSL_CLIENT_CERT_INFO pClientCertInfo;
-	unsigned long SslClientCertNegotiated;
+	[helpstring("The size, in bytes, of the public key used to sign the server certificate.")] USHORT ServerCertKeySize;
+	[helpstring("The size, in bytes, of the cipher key used to encrypt the current session.")] USHORT ConnectionKeySize;
+	[nonbrowsable, helpstring("The size, in bytes, of the string pointed to by the pServerCertIssuer member not including the terminating null character.")] ULONG ServerCertIssuerSize;
+	[nonbrowsable, helpstring("The size, in bytes, of the string pointed to by the pServerCertSubject member not including the terminating null character.")] ULONG ServerCertSubjectSize;
+	[helpstring("A pointer to a null-terminated string of octets that specifies the name of the entity that issued the certificate."), size_is("ServerCertIssuerSize")] LPCSTR pServerCertIssuer;
+	[helpstring("A pointer to a null-terminated string of octets that specifies the name of the entity to which the certificate belongs."), size_is("ServerCertSubjectSize")] LPCSTR pServerCertSubject;
+	[helpstring("A pointer to an HTTP_SSL_CLIENT_CERT_INFO structure that specifies the client certificate.")] PHTTP_SSL_CLIENT_CERT_INFO pClientCertInfo;
+	[helpstring("If non-zero, indicates that the client certificate is already present locally.")] ULONG SslClientCertNegotiated;
 } HTTP_SSL_INFO;
 '!
 !HTTP_SSL_INFO categoriesForClass!Win32-Structs! !
 !HTTP_SSL_INFO methodsFor!
 
 ConnectionKeySize
-	"Answer the receiver's ConnectionKeySize field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'ConnectionKeySize' field."
 
 	^bytes wordAtOffset: ##(self offsetOf: #ConnectionKeySize)!
 
-ConnectionKeySize: anObject
-	"Set the receiver's ConnectionKeySize field to the value of anObject."
+ConnectionKeySize: anInteger
+	"Set the receiver's 'ConnectionKeySize' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: ##(self offsetOf: #ConnectionKeySize) put: anObject!
+	bytes wordAtOffset: ##(self offsetOf: #ConnectionKeySize) put: anInteger!
 
 pClientCertInfo
-	"Answer the receiver's pClientCertInfo field as a Smalltalk object."
+	"Answer the <HTTP_SSL_CLIENT_CERT_INFO> value of the receiver's 'pClientCertInfo' field."
 
 	^HTTP_SSL_CLIENT_CERT_INFO fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #pClientCertInfo))!
 
-pClientCertInfo: anObject
-	"Set the receiver's pClientCertInfo field to the value of anObject."
+pClientCertInfo: aHTTP_SSL_CLIENT_CERT_INFO
+	"Set the receiver's 'pClientCertInfo' field to the value of the argument, aHTTP_SSL_CLIENT_CERT_INFO"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #pClientCertInfo) put: anObject yourAddress!
+	bytes uintPtrAtOffset: ##(self offsetOf: #pClientCertInfo)
+		put: aHTTP_SSL_CLIENT_CERT_INFO yourAddress!
 
 pServerCertIssuer
-	"Answer the receiver's pServerCertIssuer field as a Smalltalk object."
+	"Answer the <String> value of the receiver's 'pServerCertIssuer' field."
 
-	^String fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #pServerCertIssuer))!
+	^String fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #pServerCertIssuer))
+		length: self ServerCertIssuerSize!
 
-pServerCertIssuer: anObject
-	"Set the receiver's pServerCertIssuer field to the value of anObject."
+pServerCertIssuer: aString
+	"Set the receiver's 'pServerCertIssuer' field to the value of the argument, aString"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #pServerCertIssuer) put: anObject yourAddress!
+	bytes uintPtrAtOffset: ##(self offsetOf: #pServerCertIssuer) put: aString yourAddress.
+	self ServerCertIssuerSize: aString size!
 
 pServerCertSubject
-	"Answer the receiver's pServerCertSubject field as a Smalltalk object."
+	"Answer the <String> value of the receiver's 'pServerCertSubject' field."
 
-	^String fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #pServerCertSubject))!
+	^String fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #pServerCertSubject))
+		length: self ServerCertSubjectSize!
 
-pServerCertSubject: anObject
-	"Set the receiver's pServerCertSubject field to the value of anObject."
+pServerCertSubject: aString
+	"Set the receiver's 'pServerCertSubject' field to the value of the argument, aString"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #pServerCertSubject) put: anObject yourAddress!
+	bytes uintPtrAtOffset: ##(self offsetOf: #pServerCertSubject) put: aString yourAddress.
+	self ServerCertSubjectSize: aString size!
 
 ServerCertIssuerSize
-	"Answer the receiver's ServerCertIssuerSize field as a Smalltalk object."
+	"Private - Answer the <Integer> value of the receiver's 'ServerCertIssuerSize' field."
 
 	^bytes dwordAtOffset: ##(self offsetOf: #ServerCertIssuerSize)!
 
-ServerCertIssuerSize: anObject
-	"Set the receiver's ServerCertIssuerSize field to the value of anObject."
+ServerCertIssuerSize: anInteger
+	"Set the receiver's 'ServerCertIssuerSize' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #ServerCertIssuerSize) put: anObject!
+	bytes dwordAtOffset: ##(self offsetOf: #ServerCertIssuerSize) put: anInteger!
 
 ServerCertKeySize
-	"Answer the receiver's ServerCertKeySize field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'ServerCertKeySize' field."
 
 	^bytes wordAtOffset: 0!
 
-ServerCertKeySize: anObject
-	"Set the receiver's ServerCertKeySize field to the value of anObject."
+ServerCertKeySize: anInteger
+	"Set the receiver's 'ServerCertKeySize' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: 0 put: anObject!
+	bytes wordAtOffset: 0 put: anInteger!
 
 ServerCertSubjectSize
-	"Answer the receiver's ServerCertSubjectSize field as a Smalltalk object."
+	"Private - Answer the <Integer> value of the receiver's 'ServerCertSubjectSize' field."
 
 	^bytes dwordAtOffset: ##(self offsetOf: #ServerCertSubjectSize)!
 
-ServerCertSubjectSize: anObject
-	"Set the receiver's ServerCertSubjectSize field to the value of anObject."
+ServerCertSubjectSize: anInteger
+	"Set the receiver's 'ServerCertSubjectSize' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #ServerCertSubjectSize) put: anObject!
+	bytes dwordAtOffset: ##(self offsetOf: #ServerCertSubjectSize) put: anInteger!
 
 SslClientCertNegotiated
-	"Answer the receiver's SslClientCertNegotiated field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'SslClientCertNegotiated' field."
 
 	^bytes dwordAtOffset: ##(self offsetOf: #SslClientCertNegotiated)!
 
-SslClientCertNegotiated: anObject
-	"Set the receiver's SslClientCertNegotiated field to the value of anObject."
+SslClientCertNegotiated: anInteger
+	"Set the receiver's 'SslClientCertNegotiated' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #SslClientCertNegotiated) put: anObject! !
+	bytes dwordAtOffset: ##(self offsetOf: #SslClientCertNegotiated) put: anInteger! !
 !HTTP_SSL_INFO categoriesFor: #ConnectionKeySize!**compiled accessors**!public! !
 !HTTP_SSL_INFO categoriesFor: #ConnectionKeySize:!**compiled accessors**!public! !
 !HTTP_SSL_INFO categoriesFor: #pClientCertInfo!**compiled accessors**!public! !
@@ -117,12 +122,12 @@ SslClientCertNegotiated: anObject
 !HTTP_SSL_INFO categoriesFor: #pServerCertIssuer:!**compiled accessors**!public! !
 !HTTP_SSL_INFO categoriesFor: #pServerCertSubject!**compiled accessors**!public! !
 !HTTP_SSL_INFO categoriesFor: #pServerCertSubject:!**compiled accessors**!public! !
-!HTTP_SSL_INFO categoriesFor: #ServerCertIssuerSize!**compiled accessors**!public! !
-!HTTP_SSL_INFO categoriesFor: #ServerCertIssuerSize:!**compiled accessors**!public! !
+!HTTP_SSL_INFO categoriesFor: #ServerCertIssuerSize!**compiled accessors**!private! !
+!HTTP_SSL_INFO categoriesFor: #ServerCertIssuerSize:!**compiled accessors**!private! !
 !HTTP_SSL_INFO categoriesFor: #ServerCertKeySize!**compiled accessors**!public! !
 !HTTP_SSL_INFO categoriesFor: #ServerCertKeySize:!**compiled accessors**!public! !
-!HTTP_SSL_INFO categoriesFor: #ServerCertSubjectSize!**compiled accessors**!public! !
-!HTTP_SSL_INFO categoriesFor: #ServerCertSubjectSize:!**compiled accessors**!public! !
+!HTTP_SSL_INFO categoriesFor: #ServerCertSubjectSize!**compiled accessors**!private! !
+!HTTP_SSL_INFO categoriesFor: #ServerCertSubjectSize:!**compiled accessors**!private! !
 !HTTP_SSL_INFO categoriesFor: #SslClientCertNegotiated!**compiled accessors**!public! !
 !HTTP_SSL_INFO categoriesFor: #SslClientCertNegotiated:!**compiled accessors**!public! !
 
@@ -131,28 +136,28 @@ SslClientCertNegotiated: anObject
 defineFields
 	"Define the fields of the HTTP_SSL_INFO structure.
 
-	HTTP_SSL_INFO  compileDefinition
+	HTTP_SSL_INFO compileDefinition
 
-		typedef [uuid(FD0D6F69-8AFE-4748-A88B-9FB70593DFC8), helpstring('Data computed during SSL handshake.')]
+		typedef [uuid(fd0d6f69-8afe-4748-a88b-9fb70593dfc8), helpstring('Data computed during SSL handshake.')]
 		struct tagHTTP_SSL_INFO {
-			unsigned short ServerCertKeySize;
-			unsigned short ConnectionKeySize;
-			unsigned long ServerCertIssuerSize;
-			unsigned long ServerCertSubjectSize;
-			LPCSTR pServerCertIssuer;
-			LPCSTR pServerCertSubject;
-			PHTTP_SSL_CLIENT_CERT_INFO pClientCertInfo;
-			unsigned long SslClientCertNegotiated;
+			[helpstring('The size, in bytes, of the public key used to sign the server certificate.')] USHORT ServerCertKeySize;
+			[helpstring('The size, in bytes, of the cipher key used to encrypt the current session.')] USHORT ConnectionKeySize;
+			[nonbrowsable, helpstring('The size, in bytes, of the string pointed to by the pServerCertIssuer member not including the terminating null character.')] ULONG ServerCertIssuerSize;
+			[nonbrowsable, helpstring('The size, in bytes, of the string pointed to by the pServerCertSubject member not including the terminating null character.')] ULONG ServerCertSubjectSize;
+			[helpstring('A pointer to a null-terminated string of octets that specifies the name of the entity that issued the certificate.'), size_is('ServerCertIssuerSize')] LPCSTR pServerCertIssuer;
+			[helpstring('A pointer to a null-terminated string of octets that specifies the name of the entity to which the certificate belongs.'), size_is('ServerCertSubjectSize')] LPCSTR pServerCertSubject;
+			[helpstring('A pointer to an HTTP_SSL_CLIENT_CERT_INFO structure that specifies the client certificate.')] PHTTP_SSL_CLIENT_CERT_INFO pClientCertInfo;
+			[helpstring('If non-zero, indicates that the client certificate is already present locally.')] ULONG SslClientCertNegotiated;
 		} HTTP_SSL_INFO;
 "
 
 	self
 		defineField: #ServerCertKeySize type: WORDField new offset: 0;
 		defineField: #ConnectionKeySize type: WORDField new offset: 2;
-		defineField: #ServerCertIssuerSize type: DWORDField new offset: 4;
-		defineField: #ServerCertSubjectSize type: DWORDField new offset: 8;
-		defineField: #pServerCertIssuer type: (PointerField type: String) offset: 12;
-		defineField: #pServerCertSubject type: (PointerField type: String) offset: 16;
+		defineField: #ServerCertIssuerSize type: DWORDField new beNonBrowsable offset: 4;
+		defineField: #ServerCertSubjectSize type: DWORDField new beNonBrowsable offset: 8;
+		defineField: #pServerCertIssuer type: (ArrayPointerField type: String lengthField: #ServerCertIssuerSize) offset: 12;
+		defineField: #pServerCertSubject type: (ArrayPointerField type: String lengthField: #ServerCertSubjectSize) offset: 16;
 		defineField: #pClientCertInfo type: (PointerField type: HTTP_SSL_CLIENT_CERT_INFO) offset: 20;
 		defineField: #SslClientCertNegotiated type: DWORDField new offset: 24.
 	self byteSize: 28! !

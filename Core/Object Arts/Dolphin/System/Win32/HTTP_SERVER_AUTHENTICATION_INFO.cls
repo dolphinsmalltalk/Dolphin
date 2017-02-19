@@ -1,27 +1,27 @@
 "Filed out from Dolphin Smalltalk 7"!
 
-ExternalStructure subclass: #HTTP_SERVER_AUTHENTICATION_INFO
+HTTP_PROPERTY_FLAGS subclass: #HTTP_SERVER_AUTHENTICATION_INFO
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-HTTP_SERVER_AUTHENTICATION_INFO guid: (GUID fromString: '{7F4599B6-BDFD-4A19-8A4A-A7FD55A9E207}')!
+HTTP_SERVER_AUTHENTICATION_INFO guid: (GUID fromString: '{7f4599b6-bdfd-4a19-8a4a-a7fd55a9e207}')!
 HTTP_SERVER_AUTHENTICATION_INFO comment: '<HTTP_SERVER_AUTHENTICATION_INFO> is an <ExternalStructure> class to wrap the struct ''Win32.HTTP_SERVER_AUTHENTICATION_INFO'' from type information in the ''Win32 API'' library.
 
 The type library contains no documentation for this struct
 
-Warning: This comment was automatically generated from the struct''s type information, but any changes made here will not be overwritten if the wrapper class is regenerated.
+** This comment was automatically generated from a type library. Delete this line to prevent any manual edits from being overwritten if the wrapper class is regenerated. **
 
 IDL definition follows:
 
-typedef [uuid(7F4599B6-BDFD-4A19-8A4A-A7FD55A9E207)]
+typedef [uuid(7f4599b6-bdfd-4a19-8a4a-a7fd55a9e207)]
 struct tagHTTP_SERVER_AUTHENTICATION_INFO {
-	HTTP_PROPERTY_FLAGS flags;
-	unsigned long AuthSchemes;
-	CHAR ReceiveMutualAuth;
-	CHAR ReceiveContextHandle;
-	CHAR DisableNTLMCredentialCaching;
-	BYTE ExFlags;
+	HTTP_PROPERTY_FLAGS;
+	ULONG AuthSchemes;
+	BOOLEAN ReceiveMutualAuth;
+	BOOLEAN ReceiveContextHandle;
+	BOOLEAN DisableNTLMCredentialCaching;
+	UCHAR ExFlags;
 	HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS DigestParams;
 	HTTP_SERVER_AUTHENTICATION_BASIC_PARAMS BasicParams;
 } HTTP_SERVER_AUTHENTICATION_INFO;
@@ -30,94 +30,84 @@ struct tagHTTP_SERVER_AUTHENTICATION_INFO {
 !HTTP_SERVER_AUTHENTICATION_INFO methodsFor!
 
 AuthSchemes
-	"Answer the receiver's AuthSchemes field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'AuthSchemes' field."
 
 	^bytes dwordAtOffset: ##(self offsetOf: #AuthSchemes)!
 
-AuthSchemes: anObject
-	"Set the receiver's AuthSchemes field to the value of anObject."
+AuthSchemes: anInteger
+	"Set the receiver's 'AuthSchemes' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #AuthSchemes) put: anObject!
+	bytes dwordAtOffset: ##(self offsetOf: #AuthSchemes) put: anInteger!
 
 BasicParams
-	"Answer the receiver's BasicParams field as a Smalltalk object."
+	"Answer the <HTTP_SERVER_AUTHENTICATION_BASIC_PARAMS> value of the receiver's 'BasicParams' field."
 
 	^HTTP_SERVER_AUTHENTICATION_BASIC_PARAMS
 		fromAddress: bytes yourAddress + ##(self offsetOf: #BasicParams)!
 
-BasicParams: anObject
-	"Set the receiver's BasicParams field to the value of anObject."
+BasicParams: aHTTP_SERVER_AUTHENTICATION_BASIC_PARAMS
+	"Set the receiver's 'BasicParams' field to the value of the argument, aHTTP_SERVER_AUTHENTICATION_BASIC_PARAMS"
 
-	anObject
+	aHTTP_SERVER_AUTHENTICATION_BASIC_PARAMS
 		replaceBytesOf: bytes
 		from: ##((self offsetOf: #BasicParams) + 1)
 		to: ##((self offsetOf: #BasicParams) + HTTP_SERVER_AUTHENTICATION_BASIC_PARAMS basicByteSize)
 		startingAt: 1!
 
 DigestParams
-	"Answer the receiver's DigestParams field as a Smalltalk object."
+	"Answer the <HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS> value of the receiver's 'DigestParams' field."
 
 	^HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS
 		fromAddress: bytes yourAddress + ##(self offsetOf: #DigestParams)!
 
-DigestParams: anObject
-	"Set the receiver's DigestParams field to the value of anObject."
+DigestParams: aHTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS
+	"Set the receiver's 'DigestParams' field to the value of the argument, aHTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS"
 
-	anObject
+	aHTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS
 		replaceBytesOf: bytes
 		from: ##((self offsetOf: #DigestParams) + 1)
 		to: ##((self offsetOf: #DigestParams) + HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS basicByteSize)
 		startingAt: 1!
 
 DisableNTLMCredentialCaching
-	"Answer the receiver's DisableNTLMCredentialCaching field as a Smalltalk object."
+	"Answer the <Boolean> value of the receiver's 'DisableNTLMCredentialCaching' field."
 
-	^bytes sbyteAtOffset: ##(self offsetOf: #DisableNTLMCredentialCaching)!
+	^(bytes byteAtOffset: ##(self offsetOf: #DisableNTLMCredentialCaching)) asBoolean!
 
-DisableNTLMCredentialCaching: anObject
-	"Set the receiver's DisableNTLMCredentialCaching field to the value of anObject."
+DisableNTLMCredentialCaching: aBoolean
+	"Set the receiver's 'DisableNTLMCredentialCaching' field to the value of the argument, aBoolean"
 
-	bytes sbyteAtOffset: ##(self offsetOf: #DisableNTLMCredentialCaching) put: anObject!
+	bytes byteAtOffset: ##(self offsetOf: #DisableNTLMCredentialCaching) put: aBoolean asParameter!
 
 ExFlags
-	"Answer the receiver's ExFlags field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'ExFlags' field."
 
 	^bytes byteAtOffset: ##(self offsetOf: #ExFlags)!
 
-ExFlags: anObject
-	"Set the receiver's ExFlags field to the value of anObject."
+ExFlags: anInteger
+	"Set the receiver's 'ExFlags' field to the value of the argument, anInteger"
 
-	bytes byteAtOffset: ##(self offsetOf: #ExFlags) put: anObject!
-
-flags
-	"Answer the receiver's flags field as a Smalltalk object."
-
-	^bytes dwordAtOffset: 0!
-
-flags: anObject
-	"Set the receiver's flags field to the value of anObject."
-
-	bytes dwordAtOffset: 0 put: anObject!
+	bytes byteAtOffset: ##(self offsetOf: #ExFlags) put: anInteger!
 
 ReceiveContextHandle
-	"Answer the receiver's ReceiveContextHandle field as a Smalltalk object."
+	"Answer the <Boolean> value of the receiver's 'ReceiveContextHandle' field."
 
-	^bytes sbyteAtOffset: ##(self offsetOf: #ReceiveContextHandle)!
+	^(bytes byteAtOffset: ##(self offsetOf: #ReceiveContextHandle)) asBoolean!
 
-ReceiveContextHandle: anObject
-	"Set the receiver's ReceiveContextHandle field to the value of anObject."
+ReceiveContextHandle: aBoolean
+	"Set the receiver's 'ReceiveContextHandle' field to the value of the argument, aBoolean"
 
-	bytes sbyteAtOffset: ##(self offsetOf: #ReceiveContextHandle) put: anObject!
+	bytes byteAtOffset: ##(self offsetOf: #ReceiveContextHandle) put: aBoolean asParameter!
 
 ReceiveMutualAuth
-	"Answer the receiver's ReceiveMutualAuth field as a Smalltalk object."
+	"Answer the <Boolean> value of the receiver's 'ReceiveMutualAuth' field."
 
-	^bytes sbyteAtOffset: ##(self offsetOf: #ReceiveMutualAuth)!
+	^(bytes byteAtOffset: ##(self offsetOf: #ReceiveMutualAuth)) asBoolean!
 
-ReceiveMutualAuth: anObject
-	"Set the receiver's ReceiveMutualAuth field to the value of anObject."
+ReceiveMutualAuth: aBoolean
+	"Set the receiver's 'ReceiveMutualAuth' field to the value of the argument, aBoolean"
 
-	bytes sbyteAtOffset: ##(self offsetOf: #ReceiveMutualAuth) put: anObject! !
+	bytes byteAtOffset: ##(self offsetOf: #ReceiveMutualAuth) put: aBoolean asParameter! !
 !HTTP_SERVER_AUTHENTICATION_INFO categoriesFor: #AuthSchemes!**compiled accessors**!public! !
 !HTTP_SERVER_AUTHENTICATION_INFO categoriesFor: #AuthSchemes:!**compiled accessors**!public! !
 !HTTP_SERVER_AUTHENTICATION_INFO categoriesFor: #BasicParams!**compiled accessors**!public! !
@@ -128,8 +118,6 @@ ReceiveMutualAuth: anObject
 !HTTP_SERVER_AUTHENTICATION_INFO categoriesFor: #DisableNTLMCredentialCaching:!**compiled accessors**!public! !
 !HTTP_SERVER_AUTHENTICATION_INFO categoriesFor: #ExFlags!**compiled accessors**!public! !
 !HTTP_SERVER_AUTHENTICATION_INFO categoriesFor: #ExFlags:!**compiled accessors**!public! !
-!HTTP_SERVER_AUTHENTICATION_INFO categoriesFor: #flags!**compiled accessors**!public! !
-!HTTP_SERVER_AUTHENTICATION_INFO categoriesFor: #flags:!**compiled accessors**!public! !
 !HTTP_SERVER_AUTHENTICATION_INFO categoriesFor: #ReceiveContextHandle!**compiled accessors**!public! !
 !HTTP_SERVER_AUTHENTICATION_INFO categoriesFor: #ReceiveContextHandle:!**compiled accessors**!public! !
 !HTTP_SERVER_AUTHENTICATION_INFO categoriesFor: #ReceiveMutualAuth!**compiled accessors**!public! !
@@ -140,27 +128,27 @@ ReceiveMutualAuth: anObject
 defineFields
 	"Define the fields of the HTTP_SERVER_AUTHENTICATION_INFO structure.
 
-	HTTP_SERVER_AUTHENTICATION_INFO  compileDefinition
+	HTTP_SERVER_AUTHENTICATION_INFO compileDefinition
 
-		typedef [uuid(7F4599B6-BDFD-4A19-8A4A-A7FD55A9E207)]
+		typedef [uuid(7f4599b6-bdfd-4a19-8a4a-a7fd55a9e207)]
 		struct tagHTTP_SERVER_AUTHENTICATION_INFO {
-			HTTP_PROPERTY_FLAGS flags;
-			unsigned long AuthSchemes;
-			CHAR ReceiveMutualAuth;
-			CHAR ReceiveContextHandle;
-			CHAR DisableNTLMCredentialCaching;
-			BYTE ExFlags;
+			HTTP_PROPERTY_FLAGS;
+			ULONG AuthSchemes;
+			BOOLEAN ReceiveMutualAuth;
+			BOOLEAN ReceiveContextHandle;
+			BOOLEAN DisableNTLMCredentialCaching;
+			UCHAR ExFlags;
 			HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS DigestParams;
 			HTTP_SERVER_AUTHENTICATION_BASIC_PARAMS BasicParams;
 		} HTTP_SERVER_AUTHENTICATION_INFO;
 "
 
+	super defineFields.
 	self
-		defineField: #flags type: DWORDField new offset: 0;
 		defineField: #AuthSchemes type: DWORDField new offset: 4;
-		defineField: #ReceiveMutualAuth type: SBYTEField new offset: 8;
-		defineField: #ReceiveContextHandle type: SBYTEField new offset: 9;
-		defineField: #DisableNTLMCredentialCaching type: SBYTEField new offset: 10;
+		defineField: #ReceiveMutualAuth type: BOOLEANField new offset: 8;
+		defineField: #ReceiveContextHandle type: BOOLEANField new offset: 9;
+		defineField: #DisableNTLMCredentialCaching type: BOOLEANField new offset: 10;
 		defineField: #ExFlags type: BYTEField new offset: 11;
 		defineField: #DigestParams type: (StructureField type: HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS) offset: 12;
 		defineField: #BasicParams type: (StructureField type: HTTP_SERVER_AUTHENTICATION_BASIC_PARAMS) offset: 28.

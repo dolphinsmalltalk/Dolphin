@@ -26,22 +26,26 @@ package classNames
 	add: #HTTP_COOKED_URL;
 	add: #HTTP_DATA_CHUNK;
 	add: #HTTP_FLOWRATE_INFO;
+	add: #HTTP_HEADERS;
 	add: #HTTP_KNOWN_HEADER;
 	add: #HTTP_LISTEN_ENDPOINT_INFO;
 	add: #HTTP_LOG_FIELDS_DATA;
 	add: #HTTP_LOGGING_INFO;
 	add: #HTTP_MULTIPLE_KNOWN_HEADERS;
+	add: #HTTP_PROPERTY_FLAGS;
 	add: #HTTP_PROTECTION_LEVEL_INFO;
 	add: #HTTP_QOS_SETTING_INFO;
-	add: #HTTP_REQUEST;
 	add: #HTTP_REQUEST_AUTH_INFO;
 	add: #HTTP_REQUEST_CHANNEL_BIND_STATUS;
 	add: #HTTP_REQUEST_HEADERS;
 	add: #HTTP_REQUEST_INFO;
 	add: #HTTP_REQUEST_TOKEN_BINDING_INFO;
-	add: #HTTP_RESPONSE;
+	add: #HTTP_REQUEST_V1;
+	add: #HTTP_REQUEST_V2;
 	add: #HTTP_RESPONSE_HEADERS;
 	add: #HTTP_RESPONSE_INFO;
+	add: #HTTP_RESPONSE_V1;
+	add: #HTTP_RESPONSE_V2;
 	add: #HTTP_SERVER_AUTHENTICATION_BASIC_PARAMS;
 	add: #HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS;
 	add: #HTTP_SERVER_AUTHENTICATION_INFO;
@@ -68,10 +72,16 @@ package classNames
 	add: #HTTP_STATE_INFO;
 	add: #HTTP_TIMEOUT_LIMIT_INFO;
 	add: #HTTP_UNKNOWN_HEADER;
+	add: #HTTP_VERSION;
 	add: #HttpApiLibrary;
+	add: #HttpQosSetting;
+	add: #HttpServerStructure;
+	add: #HttpServiceConfigQuery;
 	yourself.
 
 package globalNames
+	add: #HTTP_REQUEST;
+	add: #HTTP_RESPONSE;
 	add: #WinHttpServerConsts;
 	yourself.
 
@@ -79,11 +89,14 @@ package binaryGlobalNames: (Set new
 	yourself).
 
 package globalAliases: (Set new
+	add: #HTTP_REQUEST;
+	add: #HTTP_RESPONSE;
 	yourself).
 
 package setPrerequisites: (IdentitySet new
 	add: '..\..\Base\Dolphin';
 	add: 'Dolphin Overlapped IO';
+	add: '..\..\Base\Dolphin SizeIs Fields';
 	add: '..\..\Sockets\Dolphin Sockets';
 	yourself).
 
@@ -96,263 +109,307 @@ ExternalLibrary subclass: #HttpApiLibrary
 	classVariableNames: ''
 	poolDictionaries: 'WinHttpServerConsts'
 	classInstanceVariableNames: ''!
-ExternalStructure subclass: #HTTP_BANDWIDTH_LIMIT_INFO
+ExternalStructure subclass: #HttpServerStructure
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: 'WinHttpServerConsts'
+	classInstanceVariableNames: ''!
+HttpServerStructure subclass: #HTTP_BYTE_RANGE
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ExternalStructure subclass: #HTTP_BINDING_INFO
+HttpServerStructure subclass: #HTTP_CACHE_POLICY
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ExternalStructure subclass: #HTTP_BYTE_RANGE
+HttpServerStructure subclass: #HTTP_CHANNEL_BIND_INFO
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ExternalStructure subclass: #HTTP_CACHE_POLICY
+HttpServerStructure subclass: #HTTP_COOKED_URL
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ExternalStructure subclass: #HTTP_CHANNEL_BIND_INFO
+HttpServerStructure subclass: #HTTP_DATA_CHUNK
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ExternalStructure subclass: #HTTP_CONNECTION_LIMIT_INFO
+HttpServerStructure subclass: #HTTP_HEADERS
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: 'WinHttpServerConsts'
+	classInstanceVariableNames: ''!
+HttpServerStructure subclass: #HTTP_KNOWN_HEADER
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ExternalStructure subclass: #HTTP_COOKED_URL
+HttpServerStructure subclass: #HTTP_LOG_FIELDS_DATA
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ExternalStructure subclass: #HTTP_DATA_CHUNK
+HttpServerStructure subclass: #HTTP_MULTIPLE_KNOWN_HEADERS
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ExternalStructure subclass: #HTTP_FLOWRATE_INFO
+HttpServerStructure subclass: #HTTP_PROPERTY_FLAGS
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ExternalStructure subclass: #HTTP_KNOWN_HEADER
+HttpServerStructure subclass: #HTTP_QOS_SETTING_INFO
+	instanceVariableNames: 'setting'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+HttpServerStructure subclass: #HTTP_REQUEST_AUTH_INFO
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ExternalStructure subclass: #HTTP_LISTEN_ENDPOINT_INFO
+HttpServerStructure subclass: #HTTP_REQUEST_CHANNEL_BIND_STATUS
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ExternalStructure subclass: #HTTP_LOG_FIELDS_DATA
+HttpServerStructure subclass: #HTTP_REQUEST_INFO
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ExternalStructure subclass: #HTTP_LOGGING_INFO
+HttpServerStructure subclass: #HTTP_REQUEST_TOKEN_BINDING_INFO
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ExternalStructure subclass: #HTTP_MULTIPLE_KNOWN_HEADERS
+HttpServerStructure subclass: #HTTP_REQUEST_V1
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: 'WinHttpServerConsts'
+	classInstanceVariableNames: ''!
+HttpServerStructure subclass: #HTTP_RESPONSE_INFO
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: 'WinHttpServerConsts'
+	classInstanceVariableNames: ''!
+HttpServerStructure subclass: #HTTP_RESPONSE_V1
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ExternalStructure subclass: #HTTP_PROTECTION_LEVEL_INFO
+HttpServerStructure subclass: #HTTP_SERVER_AUTHENTICATION_BASIC_PARAMS
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ExternalStructure subclass: #HTTP_QOS_SETTING_INFO
+HttpServerStructure subclass: #HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ExternalStructure subclass: #HTTP_REQUEST
+HttpServerStructure subclass: #HTTP_SERVICE_BINDING_BASE
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: 'WinHttpServerConsts'
+	classInstanceVariableNames: ''!
+HttpServerStructure subclass: #HTTP_SERVICE_CONFIG_CACHE_SET
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ExternalStructure subclass: #HTTP_REQUEST_AUTH_INFO
+HttpServerStructure subclass: #HTTP_SERVICE_CONFIG_IP_LISTEN_PARAM
+	instanceVariableNames: 'address'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+HttpServerStructure subclass: #HTTP_SERVICE_CONFIG_IP_LISTEN_QUERY
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ExternalStructure subclass: #HTTP_REQUEST_CHANNEL_BIND_STATUS
+HttpServerStructure subclass: #HTTP_SERVICE_CONFIG_SSL_CCS_SET
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ExternalStructure subclass: #HTTP_REQUEST_HEADERS
+HttpServerStructure subclass: #HTTP_SERVICE_CONFIG_SSL_PARAM
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ExternalStructure subclass: #HTTP_REQUEST_INFO
+HttpServerStructure subclass: #HTTP_SERVICE_CONFIG_SSL_SET
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ExternalStructure subclass: #HTTP_REQUEST_TOKEN_BINDING_INFO
+HttpServerStructure subclass: #HTTP_SERVICE_CONFIG_SSL_SNI_KEY
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ExternalStructure subclass: #HTTP_RESPONSE
+HttpServerStructure subclass: #HTTP_SERVICE_CONFIG_SSL_SNI_SET
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ExternalStructure subclass: #HTTP_RESPONSE_HEADERS
+HttpServerStructure subclass: #HTTP_SERVICE_CONFIG_TIMEOUT_SET
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ExternalStructure subclass: #HTTP_RESPONSE_INFO
+HttpServerStructure subclass: #HTTP_SERVICE_CONFIG_URLACL_SET
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ExternalStructure subclass: #HTTP_SERVER_AUTHENTICATION_BASIC_PARAMS
+HttpServerStructure subclass: #HTTP_SSL_CLIENT_CERT_INFO
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ExternalStructure subclass: #HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS
+HttpServerStructure subclass: #HTTP_SSL_INFO
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ExternalStructure subclass: #HTTP_SERVER_AUTHENTICATION_INFO
+HttpServerStructure subclass: #HTTP_SSL_PROTOCOL_INFO
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ExternalStructure subclass: #HTTP_SERVICE_BINDING_A
+HttpServerStructure subclass: #HTTP_UNKNOWN_HEADER
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ExternalStructure subclass: #HTTP_SERVICE_BINDING_BASE
+HttpServerStructure subclass: #HTTP_VERSION
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ExternalStructure subclass: #HTTP_SERVICE_BINDING_W
+HttpServerStructure subclass: #HttpServiceConfigQuery
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ExternalStructure subclass: #HTTP_SERVICE_CONFIG_CACHE_SET
+HTTP_HEADERS subclass: #HTTP_REQUEST_HEADERS
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: 'WinHttpServerConsts'
+	classInstanceVariableNames: ''!
+HTTP_HEADERS subclass: #HTTP_RESPONSE_HEADERS
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ExternalStructure subclass: #HTTP_SERVICE_CONFIG_IP_LISTEN_PARAM
+HTTP_PROPERTY_FLAGS subclass: #HTTP_BINDING_INFO
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ExternalStructure subclass: #HTTP_SERVICE_CONFIG_IP_LISTEN_QUERY
+HTTP_PROPERTY_FLAGS subclass: #HTTP_LISTEN_ENDPOINT_INFO
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ExternalStructure subclass: #HTTP_SERVICE_CONFIG_SSL_CCS_QUERY
+HTTP_PROPERTY_FLAGS subclass: #HTTP_LOGGING_INFO
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ExternalStructure subclass: #HTTP_SERVICE_CONFIG_SSL_CCS_SET
+HTTP_PROPERTY_FLAGS subclass: #HTTP_PROTECTION_LEVEL_INFO
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ExternalStructure subclass: #HTTP_SERVICE_CONFIG_SSL_PARAM
+HTTP_PROPERTY_FLAGS subclass: #HTTP_SERVER_AUTHENTICATION_INFO
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ExternalStructure subclass: #HTTP_SERVICE_CONFIG_SSL_QUERY
+HTTP_PROPERTY_FLAGS subclass: #HTTP_STATE_INFO
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ExternalStructure subclass: #HTTP_SERVICE_CONFIG_SSL_SET
+HTTP_PROPERTY_FLAGS subclass: #HTTP_TIMEOUT_LIMIT_INFO
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ExternalStructure subclass: #HTTP_SERVICE_CONFIG_SSL_SNI_KEY
+HTTP_PROPERTY_FLAGS subclass: #HttpQosSetting
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ExternalStructure subclass: #HTTP_SERVICE_CONFIG_SSL_SNI_QUERY
+HttpQosSetting subclass: #HTTP_BANDWIDTH_LIMIT_INFO
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ExternalStructure subclass: #HTTP_SERVICE_CONFIG_SSL_SNI_SET
+HttpQosSetting subclass: #HTTP_CONNECTION_LIMIT_INFO
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ExternalStructure subclass: #HTTP_SERVICE_CONFIG_TIMEOUT_SET
+HttpQosSetting subclass: #HTTP_FLOWRATE_INFO
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ExternalStructure subclass: #HTTP_SERVICE_CONFIG_URLACL_QUERY
+HTTP_REQUEST_V1 subclass: #HTTP_REQUEST_V2
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ExternalStructure subclass: #HTTP_SERVICE_CONFIG_URLACL_SET
+HTTP_RESPONSE_V1 subclass: #HTTP_RESPONSE_V2
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ExternalStructure subclass: #HTTP_SSL_CLIENT_CERT_INFO
+HTTP_SERVICE_BINDING_BASE subclass: #HTTP_SERVICE_BINDING_A
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ExternalStructure subclass: #HTTP_SSL_INFO
+HTTP_SERVICE_BINDING_BASE subclass: #HTTP_SERVICE_BINDING_W
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ExternalStructure subclass: #HTTP_SSL_PROTOCOL_INFO
+HttpServiceConfigQuery subclass: #HTTP_SERVICE_CONFIG_SSL_CCS_QUERY
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ExternalStructure subclass: #HTTP_STATE_INFO
+HttpServiceConfigQuery subclass: #HTTP_SERVICE_CONFIG_SSL_QUERY
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ExternalStructure subclass: #HTTP_TIMEOUT_LIMIT_INFO
+HttpServiceConfigQuery subclass: #HTTP_SERVICE_CONFIG_SSL_SNI_QUERY
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ExternalStructure subclass: #HTTP_UNKNOWN_HEADER
+HttpServiceConfigQuery subclass: #HTTP_SERVICE_CONFIG_URLACL_QUERY
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 
 "Global Aliases"!
+
+HTTP_REQUEST := HTTP_REQUEST_V2!
+
+HTTP_RESPONSE := HTTP_RESPONSE_V2!
 
 
 "Loose Methods"!

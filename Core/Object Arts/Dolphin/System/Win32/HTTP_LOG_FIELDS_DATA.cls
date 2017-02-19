@@ -1,356 +1,377 @@
 "Filed out from Dolphin Smalltalk 7"!
 
-ExternalStructure subclass: #HTTP_LOG_FIELDS_DATA
+HttpServerStructure subclass: #HTTP_LOG_FIELDS_DATA
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-HTTP_LOG_FIELDS_DATA guid: (GUID fromString: '{35C62B99-ABF3-46F3-B967-7B54DC2641CC}')!
+HTTP_LOG_FIELDS_DATA guid: (GUID fromString: '{35c62b99-abf3-46f3-b967-7b54dc2641cc}')!
 HTTP_LOG_FIELDS_DATA comment: '<HTTP_LOG_FIELDS_DATA> is an <ExternalStructure> class to wrap the struct ''Win32.HTTP_LOG_FIELDS_DATA'' from type information in the ''Win32 API'' library.
 
 The type library contains the following helpstring for this struct
 	"Current log fields data structure for of type HttpLogDataTypeFields."
 
-Warning: This comment was automatically generated from the struct''s type information, but any changes made here will not be overwritten if the wrapper class is regenerated.
+** This comment was automatically generated from a type library. Delete this line to prevent any manual edits from being overwritten if the wrapper class is regenerated. **
 
 IDL definition follows:
 
-typedef [uuid(35C62B99-ABF3-46F3-B967-7B54DC2641CC), helpstring("Current log fields data structure for of type HttpLogDataTypeFields.")]
+typedef [uuid(35c62b99-abf3-46f3-b967-7b54dc2641cc), helpstring("Current log fields data structure for of type HttpLogDataTypeFields.")]
 struct tagHTTP_LOG_FIELDS_DATA {
-	HTTP_LOG_DATA Base;
-	unsigned short UserNameLength;
-	unsigned short UriStemLength;
-	unsigned short ClientIpLength;
-	unsigned short ServerNameLength;
-	unsigned short ServiceNameLength;
-	unsigned short ServerIpLength;
-	unsigned short MethodLength;
-	unsigned short UriQueryLength;
-	unsigned short HostLength;
-	unsigned short UserAgentLength;
-	unsigned short CookieLength;
-	unsigned short ReferrerLength;
-	unsigned short* UserName;
-	unsigned short* UriStem;
-	CHAR* ClientIp;
-	CHAR* ServerName;
-	CHAR* ServiceName;
-	CHAR* ServerIp;
-	CHAR* Method;
-	CHAR* UriQuery;
-	CHAR* Host;
-	CHAR* UserAgent;
-	CHAR* Cookie;
-	CHAR* Referrer;
-	unsigned short ServerPort;
-	unsigned short ProtocolStatus;
-	unsigned long Win32Status;
+	HTTP_LOG_DATA_TYPE Type;
+	USHORT UserNameLength;
+	USHORT UriStemLength;
+	USHORT ClientIpLength;
+	USHORT ServerNameLength;
+	USHORT ServiceNameLength;
+	USHORT ServerIpLength;
+	USHORT MethodLength;
+	USHORT UriQueryLength;
+	USHORT HostLength;
+	USHORT UserAgentLength;
+	USHORT CookieLength;
+	USHORT ReferrerLength;
+	[string, size_is("UserNameLength")] PWCHAR UserName;
+	[string, size_is("UriStemLength")] PWCHAR UriStem;
+	[string, size_is("ClientIpLength")] PCHAR ClientIp;
+	[string, size_is("ServerNameLength")] PCHAR ServerName;
+	[string, size_is("ServiceNameLength")] PCHAR ServiceName;
+	[string, size_is("ServerIpLength")] PCHAR ServerIp;
+	[string, size_is("MethodLength")] PCHAR Method;
+	[string, size_is("UriQueryLength")] PCHAR UriQuery;
+	[string, size_is("HostLength")] PCHAR Host;
+	[string, size_is("UserAgentLength")] PCHAR UserAgent;
+	[string, size_is("CookieLength")] PCHAR Cookie;
+	[string, size_is("ReferrerLength")] PCHAR Referrer;
+	USHORT ServerPort;
+	USHORT ProtocolStatus;
+	ULONG Win32Status;
 	HTTP_VERB MethodNum;
-	unsigned short SubStatus;
+	USHORT SubStatus;
 } HTTP_LOG_FIELDS_DATA;
 '!
 !HTTP_LOG_FIELDS_DATA categoriesForClass!Win32-Structs! !
 !HTTP_LOG_FIELDS_DATA methodsFor!
 
 ClientIp
-	"Answer the receiver's ClientIp field as a Smalltalk object."
+	"Answer the <String> value of the receiver's 'ClientIp' field."
 
-	^SBYTE fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #ClientIp))!
+	^String fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #ClientIp))
+		length: self ClientIpLength!
 
-ClientIp: anObject
-	"Set the receiver's ClientIp field to the value of anObject."
+ClientIp: aString
+	"Set the receiver's 'ClientIp' field to the value of the argument, aString"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #ClientIp) put: anObject yourAddress!
+	bytes uintPtrAtOffset: ##(self offsetOf: #ClientIp) put: aString yourAddress.
+	self ClientIpLength: aString size!
 
 ClientIpLength
-	"Answer the receiver's ClientIpLength field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'ClientIpLength' field."
 
 	^bytes wordAtOffset: ##(self offsetOf: #ClientIpLength)!
 
-ClientIpLength: anObject
-	"Set the receiver's ClientIpLength field to the value of anObject."
+ClientIpLength: anInteger
+	"Set the receiver's 'ClientIpLength' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: ##(self offsetOf: #ClientIpLength) put: anObject!
+	bytes wordAtOffset: ##(self offsetOf: #ClientIpLength) put: anInteger!
 
 Cookie
-	"Answer the receiver's Cookie field as a Smalltalk object."
+	"Answer the <String> value of the receiver's 'Cookie' field."
 
-	^SBYTE fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #Cookie))!
+	^String fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #Cookie)) length: self CookieLength!
 
-Cookie: anObject
-	"Set the receiver's Cookie field to the value of anObject."
+Cookie: aString
+	"Set the receiver's 'Cookie' field to the value of the argument, aString"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #Cookie) put: anObject yourAddress!
+	bytes uintPtrAtOffset: ##(self offsetOf: #Cookie) put: aString yourAddress.
+	self CookieLength: aString size!
 
 CookieLength
-	"Answer the receiver's CookieLength field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'CookieLength' field."
 
 	^bytes wordAtOffset: ##(self offsetOf: #CookieLength)!
 
-CookieLength: anObject
-	"Set the receiver's CookieLength field to the value of anObject."
+CookieLength: anInteger
+	"Set the receiver's 'CookieLength' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: ##(self offsetOf: #CookieLength) put: anObject!
+	bytes wordAtOffset: ##(self offsetOf: #CookieLength) put: anInteger!
 
 Host
-	"Answer the receiver's Host field as a Smalltalk object."
+	"Answer the <String> value of the receiver's 'Host' field."
 
-	^SBYTE fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #Host))!
+	^String fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #Host)) length: self HostLength!
 
-Host: anObject
-	"Set the receiver's Host field to the value of anObject."
+Host: aString
+	"Set the receiver's 'Host' field to the value of the argument, aString"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #Host) put: anObject yourAddress!
+	bytes uintPtrAtOffset: ##(self offsetOf: #Host) put: aString yourAddress.
+	self HostLength: aString size!
 
 HostLength
-	"Answer the receiver's HostLength field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'HostLength' field."
 
 	^bytes wordAtOffset: ##(self offsetOf: #HostLength)!
 
-HostLength: anObject
-	"Set the receiver's HostLength field to the value of anObject."
+HostLength: anInteger
+	"Set the receiver's 'HostLength' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: ##(self offsetOf: #HostLength) put: anObject!
+	bytes wordAtOffset: ##(self offsetOf: #HostLength) put: anInteger!
 
 Method
-	"Answer the receiver's Method field as a Smalltalk object."
+	"Answer the <String> value of the receiver's 'Method' field."
 
-	^SBYTE fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #Method))!
+	^String fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #Method)) length: self MethodLength!
 
-Method: anObject
-	"Set the receiver's Method field to the value of anObject."
+Method: aString
+	"Set the receiver's 'Method' field to the value of the argument, aString"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #Method) put: anObject yourAddress!
+	bytes uintPtrAtOffset: ##(self offsetOf: #Method) put: aString yourAddress.
+	self MethodLength: aString size!
 
 MethodLength
-	"Answer the receiver's MethodLength field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'MethodLength' field."
 
 	^bytes wordAtOffset: ##(self offsetOf: #MethodLength)!
 
-MethodLength: anObject
-	"Set the receiver's MethodLength field to the value of anObject."
+MethodLength: anInteger
+	"Set the receiver's 'MethodLength' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: ##(self offsetOf: #MethodLength) put: anObject!
+	bytes wordAtOffset: ##(self offsetOf: #MethodLength) put: anInteger!
 
 MethodNum
-	"Answer the receiver's MethodNum field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'MethodNum' field."
 
 	^bytes sdwordAtOffset: ##(self offsetOf: #MethodNum)!
 
-MethodNum: anObject
-	"Set the receiver's MethodNum field to the value of anObject."
+MethodNum: anInteger
+	"Set the receiver's 'MethodNum' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: ##(self offsetOf: #MethodNum) put: anObject!
+	bytes sdwordAtOffset: ##(self offsetOf: #MethodNum) put: anInteger!
 
 ProtocolStatus
-	"Answer the receiver's ProtocolStatus field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'ProtocolStatus' field."
 
 	^bytes wordAtOffset: ##(self offsetOf: #ProtocolStatus)!
 
-ProtocolStatus: anObject
-	"Set the receiver's ProtocolStatus field to the value of anObject."
+ProtocolStatus: anInteger
+	"Set the receiver's 'ProtocolStatus' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: ##(self offsetOf: #ProtocolStatus) put: anObject!
+	bytes wordAtOffset: ##(self offsetOf: #ProtocolStatus) put: anInteger!
 
 Referrer
-	"Answer the receiver's Referrer field as a Smalltalk object."
+	"Answer the <String> value of the receiver's 'Referrer' field."
 
-	^SBYTE fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #Referrer))!
+	^String fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #Referrer))
+		length: self ReferrerLength!
 
-Referrer: anObject
-	"Set the receiver's Referrer field to the value of anObject."
+Referrer: aString
+	"Set the receiver's 'Referrer' field to the value of the argument, aString"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #Referrer) put: anObject yourAddress!
+	bytes uintPtrAtOffset: ##(self offsetOf: #Referrer) put: aString yourAddress.
+	self ReferrerLength: aString size!
 
 ReferrerLength
-	"Answer the receiver's ReferrerLength field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'ReferrerLength' field."
 
 	^bytes wordAtOffset: ##(self offsetOf: #ReferrerLength)!
 
-ReferrerLength: anObject
-	"Set the receiver's ReferrerLength field to the value of anObject."
+ReferrerLength: anInteger
+	"Set the receiver's 'ReferrerLength' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: ##(self offsetOf: #ReferrerLength) put: anObject!
+	bytes wordAtOffset: ##(self offsetOf: #ReferrerLength) put: anInteger!
 
 ServerIp
-	"Answer the receiver's ServerIp field as a Smalltalk object."
+	"Answer the <String> value of the receiver's 'ServerIp' field."
 
-	^SBYTE fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #ServerIp))!
+	^String fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #ServerIp))
+		length: self ServerIpLength!
 
-ServerIp: anObject
-	"Set the receiver's ServerIp field to the value of anObject."
+ServerIp: aString
+	"Set the receiver's 'ServerIp' field to the value of the argument, aString"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #ServerIp) put: anObject yourAddress!
+	bytes uintPtrAtOffset: ##(self offsetOf: #ServerIp) put: aString yourAddress.
+	self ServerIpLength: aString size!
 
 ServerIpLength
-	"Answer the receiver's ServerIpLength field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'ServerIpLength' field."
 
 	^bytes wordAtOffset: ##(self offsetOf: #ServerIpLength)!
 
-ServerIpLength: anObject
-	"Set the receiver's ServerIpLength field to the value of anObject."
+ServerIpLength: anInteger
+	"Set the receiver's 'ServerIpLength' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: ##(self offsetOf: #ServerIpLength) put: anObject!
+	bytes wordAtOffset: ##(self offsetOf: #ServerIpLength) put: anInteger!
 
 ServerName
-	"Answer the receiver's ServerName field as a Smalltalk object."
+	"Answer the <String> value of the receiver's 'ServerName' field."
 
-	^SBYTE fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #ServerName))!
+	^String fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #ServerName))
+		length: self ServerNameLength!
 
-ServerName: anObject
-	"Set the receiver's ServerName field to the value of anObject."
+ServerName: aString
+	"Set the receiver's 'ServerName' field to the value of the argument, aString"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #ServerName) put: anObject yourAddress!
+	bytes uintPtrAtOffset: ##(self offsetOf: #ServerName) put: aString yourAddress.
+	self ServerNameLength: aString size!
 
 ServerNameLength
-	"Answer the receiver's ServerNameLength field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'ServerNameLength' field."
 
 	^bytes wordAtOffset: ##(self offsetOf: #ServerNameLength)!
 
-ServerNameLength: anObject
-	"Set the receiver's ServerNameLength field to the value of anObject."
+ServerNameLength: anInteger
+	"Set the receiver's 'ServerNameLength' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: ##(self offsetOf: #ServerNameLength) put: anObject!
+	bytes wordAtOffset: ##(self offsetOf: #ServerNameLength) put: anInteger!
 
 ServerPort
-	"Answer the receiver's ServerPort field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'ServerPort' field."
 
 	^bytes wordAtOffset: ##(self offsetOf: #ServerPort)!
 
-ServerPort: anObject
-	"Set the receiver's ServerPort field to the value of anObject."
+ServerPort: anInteger
+	"Set the receiver's 'ServerPort' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: ##(self offsetOf: #ServerPort) put: anObject!
+	bytes wordAtOffset: ##(self offsetOf: #ServerPort) put: anInteger!
 
 ServiceName
-	"Answer the receiver's ServiceName field as a Smalltalk object."
+	"Answer the <String> value of the receiver's 'ServiceName' field."
 
-	^SBYTE fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #ServiceName))!
+	^String fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #ServiceName))
+		length: self ServiceNameLength!
 
-ServiceName: anObject
-	"Set the receiver's ServiceName field to the value of anObject."
+ServiceName: aString
+	"Set the receiver's 'ServiceName' field to the value of the argument, aString"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #ServiceName) put: anObject yourAddress!
+	bytes uintPtrAtOffset: ##(self offsetOf: #ServiceName) put: aString yourAddress.
+	self ServiceNameLength: aString size!
 
 ServiceNameLength
-	"Answer the receiver's ServiceNameLength field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'ServiceNameLength' field."
 
 	^bytes wordAtOffset: ##(self offsetOf: #ServiceNameLength)!
 
-ServiceNameLength: anObject
-	"Set the receiver's ServiceNameLength field to the value of anObject."
+ServiceNameLength: anInteger
+	"Set the receiver's 'ServiceNameLength' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: ##(self offsetOf: #ServiceNameLength) put: anObject!
+	bytes wordAtOffset: ##(self offsetOf: #ServiceNameLength) put: anInteger!
 
 SubStatus
-	"Answer the receiver's SubStatus field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'SubStatus' field."
 
 	^bytes wordAtOffset: ##(self offsetOf: #SubStatus)!
 
-SubStatus: anObject
-	"Set the receiver's SubStatus field to the value of anObject."
+SubStatus: anInteger
+	"Set the receiver's 'SubStatus' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: ##(self offsetOf: #SubStatus) put: anObject!
+	bytes wordAtOffset: ##(self offsetOf: #SubStatus) put: anInteger!
 
 Type
-	"Answer the receiver's Type field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'Type' field."
 
 	^bytes sdwordAtOffset: 0!
 
-Type: anObject
-	"Set the receiver's Type field to the value of anObject."
+Type: anInteger
+	"Set the receiver's 'Type' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: 0 put: anObject!
+	bytes sdwordAtOffset: 0 put: anInteger!
 
 UriQuery
-	"Answer the receiver's UriQuery field as a Smalltalk object."
+	"Answer the <String> value of the receiver's 'UriQuery' field."
 
-	^SBYTE fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #UriQuery))!
+	^String fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #UriQuery))
+		length: self UriQueryLength!
 
-UriQuery: anObject
-	"Set the receiver's UriQuery field to the value of anObject."
+UriQuery: aString
+	"Set the receiver's 'UriQuery' field to the value of the argument, aString"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #UriQuery) put: anObject yourAddress!
+	bytes uintPtrAtOffset: ##(self offsetOf: #UriQuery) put: aString yourAddress.
+	self UriQueryLength: aString size!
 
 UriQueryLength
-	"Answer the receiver's UriQueryLength field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'UriQueryLength' field."
 
 	^bytes wordAtOffset: ##(self offsetOf: #UriQueryLength)!
 
-UriQueryLength: anObject
-	"Set the receiver's UriQueryLength field to the value of anObject."
+UriQueryLength: anInteger
+	"Set the receiver's 'UriQueryLength' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: ##(self offsetOf: #UriQueryLength) put: anObject!
+	bytes wordAtOffset: ##(self offsetOf: #UriQueryLength) put: anInteger!
 
 UriStem
-	"Answer the receiver's UriStem field as a Smalltalk object."
+	"Answer the <UnicodeString> value of the receiver's 'UriStem' field."
 
-	^WORD fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #UriStem))!
+	^UnicodeString fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #UriStem))
+		length: self UriStemLength!
 
-UriStem: anObject
-	"Set the receiver's UriStem field to the value of anObject."
+UriStem: anUnicodeString
+	"Set the receiver's 'UriStem' field to the value of the argument, anUnicodeString"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #UriStem) put: anObject yourAddress!
+	bytes uintPtrAtOffset: ##(self offsetOf: #UriStem) put: anUnicodeString yourAddress.
+	self UriStemLength: anUnicodeString size!
 
 UriStemLength
-	"Answer the receiver's UriStemLength field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'UriStemLength' field."
 
 	^bytes wordAtOffset: ##(self offsetOf: #UriStemLength)!
 
-UriStemLength: anObject
-	"Set the receiver's UriStemLength field to the value of anObject."
+UriStemLength: anInteger
+	"Set the receiver's 'UriStemLength' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: ##(self offsetOf: #UriStemLength) put: anObject!
+	bytes wordAtOffset: ##(self offsetOf: #UriStemLength) put: anInteger!
 
 UserAgent
-	"Answer the receiver's UserAgent field as a Smalltalk object."
+	"Answer the <String> value of the receiver's 'UserAgent' field."
 
-	^SBYTE fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #UserAgent))!
+	^String fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #UserAgent))
+		length: self UserAgentLength!
 
-UserAgent: anObject
-	"Set the receiver's UserAgent field to the value of anObject."
+UserAgent: aString
+	"Set the receiver's 'UserAgent' field to the value of the argument, aString"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #UserAgent) put: anObject yourAddress!
+	bytes uintPtrAtOffset: ##(self offsetOf: #UserAgent) put: aString yourAddress.
+	self UserAgentLength: aString size!
 
 UserAgentLength
-	"Answer the receiver's UserAgentLength field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'UserAgentLength' field."
 
 	^bytes wordAtOffset: ##(self offsetOf: #UserAgentLength)!
 
-UserAgentLength: anObject
-	"Set the receiver's UserAgentLength field to the value of anObject."
+UserAgentLength: anInteger
+	"Set the receiver's 'UserAgentLength' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: ##(self offsetOf: #UserAgentLength) put: anObject!
+	bytes wordAtOffset: ##(self offsetOf: #UserAgentLength) put: anInteger!
 
 UserName
-	"Answer the receiver's UserName field as a Smalltalk object."
+	"Answer the <UnicodeString> value of the receiver's 'UserName' field."
 
-	^WORD fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #UserName))!
+	^UnicodeString fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #UserName))
+		length: self UserNameLength!
 
-UserName: anObject
-	"Set the receiver's UserName field to the value of anObject."
+UserName: anUnicodeString
+	"Set the receiver's 'UserName' field to the value of the argument, anUnicodeString"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #UserName) put: anObject yourAddress!
+	bytes uintPtrAtOffset: ##(self offsetOf: #UserName) put: anUnicodeString yourAddress.
+	self UserNameLength: anUnicodeString size!
 
 UserNameLength
-	"Answer the receiver's UserNameLength field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'UserNameLength' field."
 
 	^bytes wordAtOffset: ##(self offsetOf: #UserNameLength)!
 
-UserNameLength: anObject
-	"Set the receiver's UserNameLength field to the value of anObject."
+UserNameLength: anInteger
+	"Set the receiver's 'UserNameLength' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: ##(self offsetOf: #UserNameLength) put: anObject!
+	bytes wordAtOffset: ##(self offsetOf: #UserNameLength) put: anInteger!
 
 Win32Status
-	"Answer the receiver's Win32Status field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'Win32Status' field."
 
 	^bytes dwordAtOffset: ##(self offsetOf: #Win32Status)!
 
-Win32Status: anObject
-	"Set the receiver's Win32Status field to the value of anObject."
+Win32Status: anInteger
+	"Set the receiver's 'Win32Status' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #Win32Status) put: anObject! !
+	bytes dwordAtOffset: ##(self offsetOf: #Win32Status) put: anInteger! !
 !HTTP_LOG_FIELDS_DATA categoriesFor: #ClientIp!**compiled accessors**!public! !
 !HTTP_LOG_FIELDS_DATA categoriesFor: #ClientIp:!**compiled accessors**!public! !
 !HTTP_LOG_FIELDS_DATA categoriesFor: #ClientIpLength!**compiled accessors**!public! !
@@ -417,40 +438,40 @@ Win32Status: anObject
 defineFields
 	"Define the fields of the HTTP_LOG_FIELDS_DATA structure.
 
-	HTTP_LOG_FIELDS_DATA  compileDefinition
+	HTTP_LOG_FIELDS_DATA compileDefinition
 
-		typedef [uuid(35C62B99-ABF3-46F3-B967-7B54DC2641CC), helpstring('Current log fields data structure for of type HttpLogDataTypeFields.')]
+		typedef [uuid(35c62b99-abf3-46f3-b967-7b54dc2641cc), helpstring('Current log fields data structure for of type HttpLogDataTypeFields.')]
 		struct tagHTTP_LOG_FIELDS_DATA {
 			HTTP_LOG_DATA_TYPE Type;
-			unsigned short UserNameLength;
-			unsigned short UriStemLength;
-			unsigned short ClientIpLength;
-			unsigned short ServerNameLength;
-			unsigned short ServiceNameLength;
-			unsigned short ServerIpLength;
-			unsigned short MethodLength;
-			unsigned short UriQueryLength;
-			unsigned short HostLength;
-			unsigned short UserAgentLength;
-			unsigned short CookieLength;
-			unsigned short ReferrerLength;
-			unsigned short* UserName;
-			unsigned short* UriStem;
-			CHAR* ClientIp;
-			CHAR* ServerName;
-			CHAR* ServiceName;
-			CHAR* ServerIp;
-			CHAR* Method;
-			CHAR* UriQuery;
-			CHAR* Host;
-			CHAR* UserAgent;
-			CHAR* Cookie;
-			CHAR* Referrer;
-			unsigned short ServerPort;
-			unsigned short ProtocolStatus;
-			unsigned long Win32Status;
+			USHORT UserNameLength;
+			USHORT UriStemLength;
+			USHORT ClientIpLength;
+			USHORT ServerNameLength;
+			USHORT ServiceNameLength;
+			USHORT ServerIpLength;
+			USHORT MethodLength;
+			USHORT UriQueryLength;
+			USHORT HostLength;
+			USHORT UserAgentLength;
+			USHORT CookieLength;
+			USHORT ReferrerLength;
+			[string, size_is('UserNameLength')] PWCHAR UserName;
+			[string, size_is('UriStemLength')] PWCHAR UriStem;
+			[string, size_is('ClientIpLength')] PCHAR ClientIp;
+			[string, size_is('ServerNameLength')] PCHAR ServerName;
+			[string, size_is('ServiceNameLength')] PCHAR ServiceName;
+			[string, size_is('ServerIpLength')] PCHAR ServerIp;
+			[string, size_is('MethodLength')] PCHAR Method;
+			[string, size_is('UriQueryLength')] PCHAR UriQuery;
+			[string, size_is('HostLength')] PCHAR Host;
+			[string, size_is('UserAgentLength')] PCHAR UserAgent;
+			[string, size_is('CookieLength')] PCHAR Cookie;
+			[string, size_is('ReferrerLength')] PCHAR Referrer;
+			USHORT ServerPort;
+			USHORT ProtocolStatus;
+			ULONG Win32Status;
 			HTTP_VERB MethodNum;
-			unsigned short SubStatus;
+			USHORT SubStatus;
 		} HTTP_LOG_FIELDS_DATA;
 "
 
@@ -468,18 +489,18 @@ defineFields
 		defineField: #UserAgentLength type: WORDField new offset: 22;
 		defineField: #CookieLength type: WORDField new offset: 24;
 		defineField: #ReferrerLength type: WORDField new offset: 26;
-		defineField: #UserName type: (PointerField type: WORD) offset: 28;
-		defineField: #UriStem type: (PointerField type: WORD) offset: 32;
-		defineField: #ClientIp type: (PointerField type: SBYTE) offset: 36;
-		defineField: #ServerName type: (PointerField type: SBYTE) offset: 40;
-		defineField: #ServiceName type: (PointerField type: SBYTE) offset: 44;
-		defineField: #ServerIp type: (PointerField type: SBYTE) offset: 48;
-		defineField: #Method type: (PointerField type: SBYTE) offset: 52;
-		defineField: #UriQuery type: (PointerField type: SBYTE) offset: 56;
-		defineField: #Host type: (PointerField type: SBYTE) offset: 60;
-		defineField: #UserAgent type: (PointerField type: SBYTE) offset: 64;
-		defineField: #Cookie type: (PointerField type: SBYTE) offset: 68;
-		defineField: #Referrer type: (PointerField type: SBYTE) offset: 72;
+		defineField: #UserName type: (ArrayPointerField type: UnicodeString lengthField: #UserNameLength) offset: 28;
+		defineField: #UriStem type: (ArrayPointerField type: UnicodeString lengthField: #UriStemLength) offset: 32;
+		defineField: #ClientIp type: (ArrayPointerField type: String lengthField: #ClientIpLength) offset: 36;
+		defineField: #ServerName type: (ArrayPointerField type: String lengthField: #ServerNameLength) offset: 40;
+		defineField: #ServiceName type: (ArrayPointerField type: String lengthField: #ServiceNameLength) offset: 44;
+		defineField: #ServerIp type: (ArrayPointerField type: String lengthField: #ServerIpLength) offset: 48;
+		defineField: #Method type: (ArrayPointerField type: String lengthField: #MethodLength) offset: 52;
+		defineField: #UriQuery type: (ArrayPointerField type: String lengthField: #UriQueryLength) offset: 56;
+		defineField: #Host type: (ArrayPointerField type: String lengthField: #HostLength) offset: 60;
+		defineField: #UserAgent type: (ArrayPointerField type: String lengthField: #UserAgentLength) offset: 64;
+		defineField: #Cookie type: (ArrayPointerField type: String lengthField: #CookieLength) offset: 68;
+		defineField: #Referrer type: (ArrayPointerField type: String lengthField: #ReferrerLength) offset: 72;
 		defineField: #ServerPort type: WORDField new offset: 76;
 		defineField: #ProtocolStatus type: WORDField new offset: 78;
 		defineField: #Win32Status type: DWORDField new offset: 80;

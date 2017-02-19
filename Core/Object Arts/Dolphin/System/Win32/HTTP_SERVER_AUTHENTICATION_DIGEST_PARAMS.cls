@@ -1,24 +1,24 @@
 "Filed out from Dolphin Smalltalk 7"!
 
-ExternalStructure subclass: #HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS
+HttpServerStructure subclass: #HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS guid: (GUID fromString: '{EED513F2-C404-408C-9DDB-F5D39020D426}')!
+HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS guid: (GUID fromString: '{eed513f2-c404-408c-9ddb-f5d39020d426}')!
 HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS comment: '<HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS> is an <ExternalStructure> class to wrap the struct ''Win32.HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS'' from type information in the ''Win32 API'' library.
 
 The type library contains no documentation for this struct
 
-Warning: This comment was automatically generated from the struct''s type information, but any changes made here will not be overwritten if the wrapper class is regenerated.
+** This comment was automatically generated from a type library. Delete this line to prevent any manual edits from being overwritten if the wrapper class is regenerated. **
 
 IDL definition follows:
 
-typedef [uuid(EED513F2-C404-408C-9DDB-F5D39020D426)]
+typedef [uuid(eed513f2-c404-408c-9ddb-f5d39020d426)]
 struct tagHTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS {
-	unsigned short DomainNameLength;
+	USHORT DomainNameLength;
 	LPWSTR DomainName;
-	unsigned short RealmLength;
+	USHORT RealmLength;
 	LPWSTR Realm;
 } HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS;
 '!
@@ -26,44 +26,44 @@ struct tagHTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS {
 !HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS methodsFor!
 
 DomainName
-	"Answer the receiver's DomainName field as a Smalltalk object."
+	"Answer the <UnicodeString> value of the receiver's 'DomainName' field."
 
 	^UnicodeString fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #DomainName))!
 
-DomainName: anObject
-	"Set the receiver's DomainName field to the value of anObject."
+DomainName: anUnicodeString
+	"Set the receiver's 'DomainName' field to the value of the argument, anUnicodeString"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #DomainName) put: anObject yourAddress!
+	bytes uintPtrAtOffset: ##(self offsetOf: #DomainName) put: anUnicodeString yourAddress!
 
 DomainNameLength
-	"Answer the receiver's DomainNameLength field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'DomainNameLength' field."
 
 	^bytes wordAtOffset: 0!
 
-DomainNameLength: anObject
-	"Set the receiver's DomainNameLength field to the value of anObject."
+DomainNameLength: anInteger
+	"Set the receiver's 'DomainNameLength' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: 0 put: anObject!
+	bytes wordAtOffset: 0 put: anInteger!
 
 Realm
-	"Answer the receiver's Realm field as a Smalltalk object."
+	"Answer the <UnicodeString> value of the receiver's 'Realm' field."
 
 	^UnicodeString fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #Realm))!
 
-Realm: anObject
-	"Set the receiver's Realm field to the value of anObject."
+Realm: anUnicodeString
+	"Set the receiver's 'Realm' field to the value of the argument, anUnicodeString"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #Realm) put: anObject yourAddress!
+	bytes uintPtrAtOffset: ##(self offsetOf: #Realm) put: anUnicodeString yourAddress!
 
 RealmLength
-	"Answer the receiver's RealmLength field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'RealmLength' field."
 
 	^bytes wordAtOffset: ##(self offsetOf: #RealmLength)!
 
-RealmLength: anObject
-	"Set the receiver's RealmLength field to the value of anObject."
+RealmLength: anInteger
+	"Set the receiver's 'RealmLength' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: ##(self offsetOf: #RealmLength) put: anObject! !
+	bytes wordAtOffset: ##(self offsetOf: #RealmLength) put: anInteger! !
 !HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS categoriesFor: #DomainName!**compiled accessors**!public! !
 !HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS categoriesFor: #DomainName:!**compiled accessors**!public! !
 !HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS categoriesFor: #DomainNameLength!**compiled accessors**!public! !
@@ -78,13 +78,13 @@ RealmLength: anObject
 defineFields
 	"Define the fields of the HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS structure.
 
-	HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS  compileDefinition
+	HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS compileDefinition
 
-		typedef [uuid(EED513F2-C404-408C-9DDB-F5D39020D426)]
+		typedef [uuid(eed513f2-c404-408c-9ddb-f5d39020d426)]
 		struct tagHTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS {
-			unsigned short DomainNameLength;
+			USHORT DomainNameLength;
 			LPWSTR DomainName;
-			unsigned short RealmLength;
+			USHORT RealmLength;
 			LPWSTR Realm;
 		} HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS;
 "

@@ -1,140 +1,142 @@
 "Filed out from Dolphin Smalltalk 7"!
 
-ExternalStructure subclass: #HTTP_SERVICE_CONFIG_SSL_PARAM
+HttpServerStructure subclass: #HTTP_SERVICE_CONFIG_SSL_PARAM
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-HTTP_SERVICE_CONFIG_SSL_PARAM guid: (GUID fromString: '{7FE46AEF-BB33-40AC-A388-846C53EFDE1D}')!
+HTTP_SERVICE_CONFIG_SSL_PARAM guid: (GUID fromString: '{7fe46aef-bb33-40ac-a388-846c53efde1d}')!
 HTTP_SERVICE_CONFIG_SSL_PARAM comment: '<HTTP_SERVICE_CONFIG_SSL_PARAM> is an <ExternalStructure> class to wrap the struct ''Win32.HTTP_SERVICE_CONFIG_SSL_PARAM'' from type information in the ''Win32 API'' library.
 
 The type library contains the following helpstring for this struct
 	"This defines a record for the SSL config store."
 
-Warning: This comment was automatically generated from the struct''s type information, but any changes made here will not be overwritten if the wrapper class is regenerated.
+** This comment was automatically generated from a type library. Delete this line to prevent any manual edits from being overwritten if the wrapper class is regenerated. **
 
 IDL definition follows:
 
-typedef [uuid(7FE46AEF-BB33-40AC-A388-846C53EFDE1D), helpstring("This defines a record for the SSL config store.")]
+typedef [uuid(7fe46aef-bb33-40ac-a388-846c53efde1d), helpstring("This defines a record for the SSL config store.")]
 struct tagHTTP_SERVICE_CONFIG_SSL_PARAM {
-	unsigned long SslHashLength;
-	void* pSslHash;
-	GUID AppId;
-	LPWSTR pSslCertStoreName;
-	unsigned long DefaultCertCheckMode;
-	[helpstring("DefaultRevocationFreshnessTime (seconds) - How often to check for an updated Certificate revocation list (CRL). If this value is 0 then the new CRL is updated only if the previous one expires")] unsigned long DefaultRevocationFreshnessTime;
-	[helpstring("DefaultRevocationUrlRetrievalTimeout (milliseconds) - Timeout on attempt to retrieve certificate revocation list from the remote URL.")] unsigned long DefaultRevocationUrlRetrievalTimeout;
+	[nonbrowsable, helpstring("The size, in bytes, of the SSL hash.")] ULONG SslHashLength;
+	[helpstring("A pointer to the SSL certificate hash."), size_is("SslHashLength")] void* pSslHash;
+	[helpstring("A unique identifier of the application setting this record.")] guid AppId;
+	[helpstring("A pointer to a wide-character string that contains the name of the store from which the server certificate is to be read. If set to NULL, "MY" is assumed as the default name.")] LPWSTR pSslCertStoreName;
+	[helpstring("Determines how client certificates are checked.")] DWORD DefaultCertCheckMode;
+	[helpstring("DefaultRevocationFreshnessTime (seconds) - How often to check for an updated Certificate revocation list (CRL). If this value is 0 then the new CRL is updated only if the previous one expires")] DWORD DefaultRevocationFreshnessTime;
+	[helpstring("DefaultRevocationUrlRetrievalTimeout (milliseconds) - Timeout on attempt to retrieve certificate revocation list from the remote URL.")] DWORD DefaultRevocationUrlRetrievalTimeout;
 	[helpstring("pDefaultSslCtlIdentifier - Restrict the certificate issuers that you want to trust. Can be a subset of the certificate issuers that are trusted by the machine.")] LPWSTR pDefaultSslCtlIdentifier;
 	[helpstring("Store name under LOCAL_MACHINE where Ctl identified by pDefaultSslCtlIdentifier is stored.")] LPWSTR pDefaultSslCtlStoreName;
-	[helpstring("Default Flags - see HTTP_SERVICE_CONFIG_SSL_FLAG* below.")] unsigned long DefaultFlags;
+	[helpstring("Default Flags - see HTTP_SERVICE_CONFIG_SSL_FLAG* below.")] DWORD DefaultFlags;
 } HTTP_SERVICE_CONFIG_SSL_PARAM;
 '!
 !HTTP_SERVICE_CONFIG_SSL_PARAM categoriesForClass!Win32-Structs! !
 !HTTP_SERVICE_CONFIG_SSL_PARAM methodsFor!
 
 AppId
-	"Answer the receiver's AppId field as a Smalltalk object."
+	"Answer the <GUID> value of the receiver's 'AppId' field."
 
 	^GUID fromAddress: bytes yourAddress + ##(self offsetOf: #AppId)!
 
-AppId: anObject
-	"Set the receiver's AppId field to the value of anObject."
+AppId: aGUID
+	"Set the receiver's 'AppId' field to the value of the argument, aGUID"
 
-	anObject
+	aGUID
 		replaceBytesOf: bytes
 		from: ##((self offsetOf: #AppId) + 1)
 		to: ##((self offsetOf: #AppId) + GUID basicByteSize)
 		startingAt: 1!
 
 DefaultCertCheckMode
-	"Answer the receiver's DefaultCertCheckMode field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'DefaultCertCheckMode' field."
 
 	^bytes dwordAtOffset: ##(self offsetOf: #DefaultCertCheckMode)!
 
-DefaultCertCheckMode: anObject
-	"Set the receiver's DefaultCertCheckMode field to the value of anObject."
+DefaultCertCheckMode: anInteger
+	"Set the receiver's 'DefaultCertCheckMode' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #DefaultCertCheckMode) put: anObject!
+	bytes dwordAtOffset: ##(self offsetOf: #DefaultCertCheckMode) put: anInteger!
 
 DefaultFlags
-	"Answer the receiver's DefaultFlags field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'DefaultFlags' field."
 
 	^bytes dwordAtOffset: ##(self offsetOf: #DefaultFlags)!
 
-DefaultFlags: anObject
-	"Set the receiver's DefaultFlags field to the value of anObject."
+DefaultFlags: anInteger
+	"Set the receiver's 'DefaultFlags' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #DefaultFlags) put: anObject!
+	bytes dwordAtOffset: ##(self offsetOf: #DefaultFlags) put: anInteger!
 
 DefaultRevocationFreshnessTime
-	"Answer the receiver's DefaultRevocationFreshnessTime field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'DefaultRevocationFreshnessTime' field."
 
 	^bytes dwordAtOffset: ##(self offsetOf: #DefaultRevocationFreshnessTime)!
 
-DefaultRevocationFreshnessTime: anObject
-	"Set the receiver's DefaultRevocationFreshnessTime field to the value of anObject."
+DefaultRevocationFreshnessTime: anInteger
+	"Set the receiver's 'DefaultRevocationFreshnessTime' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #DefaultRevocationFreshnessTime) put: anObject!
+	bytes dwordAtOffset: ##(self offsetOf: #DefaultRevocationFreshnessTime) put: anInteger!
 
 DefaultRevocationUrlRetrievalTimeout
-	"Answer the receiver's DefaultRevocationUrlRetrievalTimeout field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'DefaultRevocationUrlRetrievalTimeout' field."
 
 	^bytes dwordAtOffset: ##(self offsetOf: #DefaultRevocationUrlRetrievalTimeout)!
 
-DefaultRevocationUrlRetrievalTimeout: anObject
-	"Set the receiver's DefaultRevocationUrlRetrievalTimeout field to the value of anObject."
+DefaultRevocationUrlRetrievalTimeout: anInteger
+	"Set the receiver's 'DefaultRevocationUrlRetrievalTimeout' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #DefaultRevocationUrlRetrievalTimeout) put: anObject!
+	bytes dwordAtOffset: ##(self offsetOf: #DefaultRevocationUrlRetrievalTimeout) put: anInteger!
 
 pDefaultSslCtlIdentifier
-	"Answer the receiver's pDefaultSslCtlIdentifier field as a Smalltalk object."
+	"Answer the <UnicodeString> value of the receiver's 'pDefaultSslCtlIdentifier' field."
 
 	^UnicodeString fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #pDefaultSslCtlIdentifier))!
 
-pDefaultSslCtlIdentifier: anObject
-	"Set the receiver's pDefaultSslCtlIdentifier field to the value of anObject."
+pDefaultSslCtlIdentifier: anUnicodeString
+	"Set the receiver's 'pDefaultSslCtlIdentifier' field to the value of the argument, anUnicodeString"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #pDefaultSslCtlIdentifier) put: anObject yourAddress!
+	bytes uintPtrAtOffset: ##(self offsetOf: #pDefaultSslCtlIdentifier) put: anUnicodeString yourAddress!
 
 pDefaultSslCtlStoreName
-	"Answer the receiver's pDefaultSslCtlStoreName field as a Smalltalk object."
+	"Answer the <UnicodeString> value of the receiver's 'pDefaultSslCtlStoreName' field."
 
 	^UnicodeString fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #pDefaultSslCtlStoreName))!
 
-pDefaultSslCtlStoreName: anObject
-	"Set the receiver's pDefaultSslCtlStoreName field to the value of anObject."
+pDefaultSslCtlStoreName: anUnicodeString
+	"Set the receiver's 'pDefaultSslCtlStoreName' field to the value of the argument, anUnicodeString"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #pDefaultSslCtlStoreName) put: anObject yourAddress!
+	bytes uintPtrAtOffset: ##(self offsetOf: #pDefaultSslCtlStoreName) put: anUnicodeString yourAddress!
 
 pSslCertStoreName
-	"Answer the receiver's pSslCertStoreName field as a Smalltalk object."
+	"Answer the <UnicodeString> value of the receiver's 'pSslCertStoreName' field."
 
 	^UnicodeString fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #pSslCertStoreName))!
 
-pSslCertStoreName: anObject
-	"Set the receiver's pSslCertStoreName field to the value of anObject."
+pSslCertStoreName: anUnicodeString
+	"Set the receiver's 'pSslCertStoreName' field to the value of the argument, anUnicodeString"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #pSslCertStoreName) put: anObject yourAddress!
+	bytes uintPtrAtOffset: ##(self offsetOf: #pSslCertStoreName) put: anUnicodeString yourAddress!
 
 pSslHash
-	"Answer the receiver's pSslHash field as a Smalltalk object."
+	"Answer the <ExternalArray> value of the receiver's 'pSslHash' field."
 
-	^(bytes uintPtrAtOffset: ##(self offsetOf: #pSslHash)) asExternalAddress!
+	^ExternalArray fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #pSslHash))
+		length: self SslHashLength!
 
-pSslHash: anObject
-	"Set the receiver's pSslHash field to the value of anObject."
+pSslHash: anExternalArray
+	"Set the receiver's 'pSslHash' field to the value of the argument, anExternalArray"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #pSslHash) put: anObject!
+	bytes uintPtrAtOffset: ##(self offsetOf: #pSslHash) put: anExternalArray yourAddress.
+	self SslHashLength: anExternalArray size!
 
 SslHashLength
-	"Answer the receiver's SslHashLength field as a Smalltalk object."
+	"Private - Answer the <Integer> value of the receiver's 'SslHashLength' field."
 
 	^bytes dwordAtOffset: 0!
 
-SslHashLength: anObject
-	"Set the receiver's SslHashLength field to the value of anObject."
+SslHashLength: anInteger
+	"Set the receiver's 'SslHashLength' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: 0 put: anObject! !
+	bytes dwordAtOffset: 0 put: anInteger! !
 !HTTP_SERVICE_CONFIG_SSL_PARAM categoriesFor: #AppId!**compiled accessors**!public! !
 !HTTP_SERVICE_CONFIG_SSL_PARAM categoriesFor: #AppId:!**compiled accessors**!public! !
 !HTTP_SERVICE_CONFIG_SSL_PARAM categoriesFor: #DefaultCertCheckMode!**compiled accessors**!public! !
@@ -153,34 +155,34 @@ SslHashLength: anObject
 !HTTP_SERVICE_CONFIG_SSL_PARAM categoriesFor: #pSslCertStoreName:!**compiled accessors**!public! !
 !HTTP_SERVICE_CONFIG_SSL_PARAM categoriesFor: #pSslHash!**compiled accessors**!public! !
 !HTTP_SERVICE_CONFIG_SSL_PARAM categoriesFor: #pSslHash:!**compiled accessors**!public! !
-!HTTP_SERVICE_CONFIG_SSL_PARAM categoriesFor: #SslHashLength!**compiled accessors**!public! !
-!HTTP_SERVICE_CONFIG_SSL_PARAM categoriesFor: #SslHashLength:!**compiled accessors**!public! !
+!HTTP_SERVICE_CONFIG_SSL_PARAM categoriesFor: #SslHashLength!**compiled accessors**!private! !
+!HTTP_SERVICE_CONFIG_SSL_PARAM categoriesFor: #SslHashLength:!**compiled accessors**!private! !
 
 !HTTP_SERVICE_CONFIG_SSL_PARAM class methodsFor!
 
 defineFields
 	"Define the fields of the HTTP_SERVICE_CONFIG_SSL_PARAM structure.
 
-	HTTP_SERVICE_CONFIG_SSL_PARAM  compileDefinition
+	HTTP_SERVICE_CONFIG_SSL_PARAM compileDefinition
 
-		typedef [uuid(7FE46AEF-BB33-40AC-A388-846C53EFDE1D), helpstring('This defines a record for the SSL config store.')]
+		typedef [uuid(7fe46aef-bb33-40ac-a388-846c53efde1d), helpstring('This defines a record for the SSL config store.')]
 		struct tagHTTP_SERVICE_CONFIG_SSL_PARAM {
-			unsigned long SslHashLength;
-			void* pSslHash;
-			GUID AppId;
-			LPWSTR pSslCertStoreName;
-			unsigned long DefaultCertCheckMode;
-			[helpstring('DefaultRevocationFreshnessTime (seconds) - How often to check for an updated Certificate revocation list (CRL). If this value is 0 then the new CRL is updated only if the previous one expires')] unsigned long DefaultRevocationFreshnessTime;
-			[helpstring('DefaultRevocationUrlRetrievalTimeout (milliseconds) - Timeout on attempt to retrieve certificate revocation list from the remote URL.')] unsigned long DefaultRevocationUrlRetrievalTimeout;
+			[nonbrowsable, helpstring('The size, in bytes, of the SSL hash.')] ULONG SslHashLength;
+			[helpstring('A pointer to the SSL certificate hash.'), size_is('SslHashLength')] void* pSslHash;
+			[helpstring('A unique identifier of the application setting this record.')] guid AppId;
+			[helpstring('A pointer to a wide-character string that contains the name of the store from which the server certificate is to be read. If set to NULL, 'MY' is assumed as the default name.')] LPWSTR pSslCertStoreName;
+			[helpstring('Determines how client certificates are checked.')] DWORD DefaultCertCheckMode;
+			[helpstring('DefaultRevocationFreshnessTime (seconds) - How often to check for an updated Certificate revocation list (CRL). If this value is 0 then the new CRL is updated only if the previous one expires')] DWORD DefaultRevocationFreshnessTime;
+			[helpstring('DefaultRevocationUrlRetrievalTimeout (milliseconds) - Timeout on attempt to retrieve certificate revocation list from the remote URL.')] DWORD DefaultRevocationUrlRetrievalTimeout;
 			[helpstring('pDefaultSslCtlIdentifier - Restrict the certificate issuers that you want to trust. Can be a subset of the certificate issuers that are trusted by the machine.')] LPWSTR pDefaultSslCtlIdentifier;
 			[helpstring('Store name under LOCAL_MACHINE where Ctl identified by pDefaultSslCtlIdentifier is stored.')] LPWSTR pDefaultSslCtlStoreName;
-			[helpstring('Default Flags - see HTTP_SERVICE_CONFIG_SSL_FLAG* below.')] unsigned long DefaultFlags;
+			[helpstring('Default Flags - see HTTP_SERVICE_CONFIG_SSL_FLAG* below.')] DWORD DefaultFlags;
 		} HTTP_SERVICE_CONFIG_SSL_PARAM;
 "
 
 	self
-		defineField: #SslHashLength type: DWORDField new offset: 0;
-		defineField: #pSslHash type: LPVOIDField new offset: 4;
+		defineField: #SslHashLength type: DWORDField new beNonBrowsable offset: 0;
+		defineField: #pSslHash type: (ArrayPointerField type: ExternalArray lengthField: #SslHashLength) offset: 4;
 		defineField: #AppId type: (StructureField type: GUID) offset: 8;
 		defineField: #pSslCertStoreName type: (PointerField type: UnicodeString) offset: 24;
 		defineField: #DefaultCertCheckMode type: DWORDField new offset: 28;

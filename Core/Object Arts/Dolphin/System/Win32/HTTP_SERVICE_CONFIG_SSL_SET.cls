@@ -1,21 +1,21 @@
 "Filed out from Dolphin Smalltalk 7"!
 
-ExternalStructure subclass: #HTTP_SERVICE_CONFIG_SSL_SET
+HttpServerStructure subclass: #HTTP_SERVICE_CONFIG_SSL_SET
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-HTTP_SERVICE_CONFIG_SSL_SET guid: (GUID fromString: '{F2C9434B-739E-4905-BCF3-D552724F69FF}')!
+HTTP_SERVICE_CONFIG_SSL_SET guid: (GUID fromString: '{f2c9434b-739e-4905-bcf3-d552724f69ff}')!
 HTTP_SERVICE_CONFIG_SSL_SET comment: '<HTTP_SERVICE_CONFIG_SSL_SET> is an <ExternalStructure> class to wrap the struct ''Win32.HTTP_SERVICE_CONFIG_SSL_SET'' from type information in the ''Win32 API'' library.
 
 The type library contains the following helpstring for this struct
 	"Used by HttpSetServiceConfiguration() to add a new HttpServiceConfigSSLCertInfo record to the SSL bindings list"
 
-Warning: This comment was automatically generated from the struct''s type information, but any changes made here will not be overwritten if the wrapper class is regenerated.
+** This comment was automatically generated from a type library. Delete this line to prevent any manual edits from being overwritten if the wrapper class is regenerated. **
 
 IDL definition follows:
 
-typedef [uuid(F2C9434B-739E-4905-BCF3-D552724F69FF), helpstring("Used by HttpSetServiceConfiguration() to add a new HttpServiceConfigSSLCertInfo record to the SSL bindings list")]
+typedef [uuid(f2c9434b-739e-4905-bcf3-d552724f69ff), helpstring("Used by HttpSetServiceConfiguration() to add a new HttpServiceConfigSSLCertInfo record to the SSL bindings list")]
 struct tagHTTP_SERVICE_CONFIG_SSL_SET {
 	HTTP_SERVICE_CONFIG_SSL_KEY KeyDesc;
 	HTTP_SERVICE_CONFIG_SSL_PARAM paramdesc;
@@ -25,24 +25,24 @@ struct tagHTTP_SERVICE_CONFIG_SSL_SET {
 !HTTP_SERVICE_CONFIG_SSL_SET methodsFor!
 
 KeyDesc
-	"Answer the receiver's KeyDesc field as a Smalltalk object."
+	"Answer the <SOCKADDR> value of the receiver's 'KeyDesc' field."
 
 	^SOCKADDR fromAddress: (bytes intPtrAtOffset: 0)!
 
-KeyDesc: anObject
-	"Set the receiver's KeyDesc field to the value of anObject."
+KeyDesc: aSOCKADDR
+	"Set the receiver's 'KeyDesc' field to the value of the argument, aSOCKADDR"
 
-	bytes uintPtrAtOffset: 0 put: anObject yourAddress!
+	bytes uintPtrAtOffset: 0 put: aSOCKADDR yourAddress!
 
 paramdesc
-	"Answer the receiver's paramdesc field as a Smalltalk object."
+	"Answer the <HTTP_SERVICE_CONFIG_SSL_PARAM> value of the receiver's 'paramdesc' field."
 
 	^HTTP_SERVICE_CONFIG_SSL_PARAM fromAddress: bytes yourAddress + ##(self offsetOf: #paramdesc)!
 
-paramdesc: anObject
-	"Set the receiver's paramdesc field to the value of anObject."
+paramdesc: aHTTP_SERVICE_CONFIG_SSL_PARAM
+	"Set the receiver's 'paramdesc' field to the value of the argument, aHTTP_SERVICE_CONFIG_SSL_PARAM"
 
-	anObject
+	aHTTP_SERVICE_CONFIG_SSL_PARAM
 		replaceBytesOf: bytes
 		from: ##((self offsetOf: #paramdesc) + 1)
 		to: ##((self offsetOf: #paramdesc) + HTTP_SERVICE_CONFIG_SSL_PARAM basicByteSize)
@@ -57,9 +57,9 @@ paramdesc: anObject
 defineFields
 	"Define the fields of the HTTP_SERVICE_CONFIG_SSL_SET structure.
 
-	HTTP_SERVICE_CONFIG_SSL_SET  compileDefinition
+	HTTP_SERVICE_CONFIG_SSL_SET compileDefinition
 
-		typedef [uuid(F2C9434B-739E-4905-BCF3-D552724F69FF), helpstring('Used by HttpSetServiceConfiguration() to add a new HttpServiceConfigSSLCertInfo record to the SSL bindings list')]
+		typedef [uuid(f2c9434b-739e-4905-bcf3-d552724f69ff), helpstring('Used by HttpSetServiceConfiguration() to add a new HttpServiceConfigSSLCertInfo record to the SSL bindings list')]
 		struct tagHTTP_SERVICE_CONFIG_SSL_SET {
 			HTTP_SERVICE_CONFIG_SSL_KEY KeyDesc;
 			HTTP_SERVICE_CONFIG_SSL_PARAM paramdesc;

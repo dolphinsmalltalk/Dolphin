@@ -5,37 +5,37 @@ ExternalStructure subclass: #HTTP_REQUEST
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-HTTP_REQUEST guid: (GUID fromString: '{5f3f936f-b824-47af-a69e-62dc4730010c}')!
+HTTP_REQUEST guid: (GUID fromString: '{5F3F936F-B824-47AF-A69E-62DC4730010C}')!
 HTTP_REQUEST comment: '<HTTP_REQUEST> is an <ExternalStructure> class to wrap the struct ''Win32.HTTP_REQUEST'' from type information in the ''Win32 API'' library.
 
 The type library contains the following helpstring for this struct
-	"Represents an incoming HTTP request (N.B. this is the V2 structure)"
+	"The structure of an HTTP request for downlevel OS"
 
-** This comment was automatically generated from a type library. Delete this line to prevent any manual edits from being overwritten if the wrapper class is regenerated. **
+Warning: This comment was automatically generated from the struct''s type information, but any changes made here will not be overwritten if the wrapper class is regenerated.
 
 IDL definition follows:
 
-typedef [uuid(5f3f936f-b824-47af-a69e-62dc4730010c), helpstring("Represents an incoming HTTP request (N.B. this is the V2 structure)")]
+typedef [uuid(5F3F936F-B824-47AF-A69E-62DC4730010C), helpstring("The structure of an HTTP request for downlevel OS")]
 struct tagHTTP_REQUEST {
-	[helpstring("Request flags (see HTTP_REQUEST_FLAG_* definitions below).")] ULONG flags;
+	[helpstring("Request flags (see HTTP_REQUEST_FLAG_* definitions below).")] unsigned long flags;
 	[helpstring("An opaque request identifier. These values are used by the driver to correlate outgoing responses with incoming requests.")] unsigned __int64 ConnectionId;
 	unsigned __int64 RequestId;
 	[helpstring("The context associated with the URL prefix.")] HTTP_URL_CONTEXT UrlContext;
 	[helpstring("The HTTP version number.")] HTTP_VERSION Version;
 	[helpstring("The request verb.")] HTTP_VERB Verb;
-	[nonbrowsable, helpstring("The length of the verb string if the Verb field is HttpVerbUnknown. In bytes not including the NUL")] USHORT UnknownVerbLength;
-	[nonbrowsable, helpstring("The length of the raw (uncooked) URL in bytes not including the NUL")] USHORT RawUrlLength;
-	[helpstring("Pointer to the verb string if the Verb field is HttpVerbUnknown."), string, size_is("UnknownVerbLength")] LPCSTR pUnknownVerb;
-	[helpstring("Pointer to the raw (uncooked) URL"), string, size_is("RawUrlLength")] LPCSTR pRawUrl;
+	[helpstring("The length of the verb string if the Verb field is HttpVerbUnknown. In bytes not including the NUL")] unsigned short UnknownVerbLength;
+	[helpstring("The length of the raw (uncooked) URL in bytes not including the NUL")] unsigned short RawUrlLength;
+	[helpstring("Pointer to the verb string if the Verb field is HttpVerbUnknown.")] LPCSTR pUnknownVerb;
+	[helpstring("Pointer to the raw (uncooked) URL")] LPCSTR pRawUrl;
 	[helpstring("The canonicalized Unicode URL")] HTTP_COOKED_URL CookedUrl;
 	[helpstring("Local and remote transport addresses for the connection.")] HTTP_TRANSPORT_ADDRESS Address;
 	[helpstring("The request headers.")] HTTP_REQUEST_HEADERS Headers;
 	[helpstring("The total number of bytes received from network for this request.")] unsigned __int64 BytesReceived;
-	USHORT EntityChunkCount;
+	unsigned short EntityChunkCount;
 	[helpstring("pEntityChunks is an array of EntityChunkCount HTTP_DATA_CHUNKs. The entity body is copied only if HTTP_RECEIVE_REQUEST_FLAG_COPY_BODY was passed to HttpReceiveHttpRequest().")] HTTP_DATA_CHUNK* pEntityChunks;
 	unsigned __int64 RawConnectionId;
 	[helpstring("SSL connection information.")] PHTTP_SSL_INFO pSslInfo;
-	USHORT RequestInfoCount;
+	unsigned short RequestInfoCount;
 	[helpstring("Additional Request Informations.")] PHTTP_REQUEST_INFO pRequestInfo;
 } HTTP_REQUEST;
 '!
@@ -145,13 +145,12 @@ pEntityChunks: aHTTP_DATA_CHUNK
 pRawUrl
 	"Answer the <String> value of the receiver's 'pRawUrl' field."
 
-	^String fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #pRawUrl)) length: self RawUrlLength!
+	^String fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #pRawUrl))!
 
 pRawUrl: aString
 	"Set the receiver's 'pRawUrl' field to the value of the argument, aString"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #pRawUrl) put: aString yourAddress.
-	self RawUrlLength: aString size!
+	bytes uintPtrAtOffset: ##(self offsetOf: #pRawUrl) put: aString yourAddress!
 
 pRequestInfo
 	"Answer the <HTTP_REQUEST_INFO> value of the receiver's 'pRequestInfo' field."
@@ -176,14 +175,12 @@ pSslInfo: aHTTP_SSL_INFO
 pUnknownVerb
 	"Answer the <String> value of the receiver's 'pUnknownVerb' field."
 
-	^String fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #pUnknownVerb))
-		length: self UnknownVerbLength!
+	^String fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #pUnknownVerb))!
 
 pUnknownVerb: aString
 	"Set the receiver's 'pUnknownVerb' field to the value of the argument, aString"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #pUnknownVerb) put: aString yourAddress.
-	self UnknownVerbLength: aString size!
+	bytes uintPtrAtOffset: ##(self offsetOf: #pUnknownVerb) put: aString yourAddress!
 
 RawConnectionId
 	"Answer the <Integer> value of the receiver's 'RawConnectionId' field."
@@ -196,7 +193,7 @@ RawConnectionId: anInteger
 	bytes qwordAtOffset: ##(self offsetOf: #RawConnectionId) put: anInteger!
 
 RawUrlLength
-	"Private - Answer the <Integer> value of the receiver's 'RawUrlLength' field."
+	"Answer the <Integer> value of the receiver's 'RawUrlLength' field."
 
 	^bytes wordAtOffset: ##(self offsetOf: #RawUrlLength)!
 
@@ -226,7 +223,7 @@ RequestInfoCount: anInteger
 	bytes wordAtOffset: ##(self offsetOf: #RequestInfoCount) put: anInteger!
 
 UnknownVerbLength
-	"Private - Answer the <Integer> value of the receiver's 'UnknownVerbLength' field."
+	"Answer the <Integer> value of the receiver's 'UnknownVerbLength' field."
 
 	^bytes wordAtOffset: ##(self offsetOf: #UnknownVerbLength)!
 
@@ -297,14 +294,14 @@ Version: aWORDArray
 !HTTP_REQUEST categoriesFor: #pUnknownVerb:!**compiled accessors**!public! !
 !HTTP_REQUEST categoriesFor: #RawConnectionId!**compiled accessors**!public! !
 !HTTP_REQUEST categoriesFor: #RawConnectionId:!**compiled accessors**!public! !
-!HTTP_REQUEST categoriesFor: #RawUrlLength!**compiled accessors**!private! !
-!HTTP_REQUEST categoriesFor: #RawUrlLength:!**compiled accessors**!private! !
+!HTTP_REQUEST categoriesFor: #RawUrlLength!**compiled accessors**!public! !
+!HTTP_REQUEST categoriesFor: #RawUrlLength:!**compiled accessors**!public! !
 !HTTP_REQUEST categoriesFor: #RequestId!**compiled accessors**!public! !
 !HTTP_REQUEST categoriesFor: #RequestId:!**compiled accessors**!public! !
 !HTTP_REQUEST categoriesFor: #RequestInfoCount!**compiled accessors**!public! !
 !HTTP_REQUEST categoriesFor: #RequestInfoCount:!**compiled accessors**!public! !
-!HTTP_REQUEST categoriesFor: #UnknownVerbLength!**compiled accessors**!private! !
-!HTTP_REQUEST categoriesFor: #UnknownVerbLength:!**compiled accessors**!private! !
+!HTTP_REQUEST categoriesFor: #UnknownVerbLength!**compiled accessors**!public! !
+!HTTP_REQUEST categoriesFor: #UnknownVerbLength:!**compiled accessors**!public! !
 !HTTP_REQUEST categoriesFor: #UrlContext!**compiled accessors**!public! !
 !HTTP_REQUEST categoriesFor: #UrlContext:!**compiled accessors**!public! !
 !HTTP_REQUEST categoriesFor: #Verb!**compiled accessors**!public! !
@@ -319,7 +316,7 @@ defineFields
 
 	HTTP_REQUEST  compileDefinition
 
-		typedef [uuid(5f3f936f-b824-47af-a69e-62dc4730010c), helpstring('Represents an incoming HTTP request (N.B. this is the V2 structure)')]
+		typedef [uuid(5F3F936F-B824-47AF-A69E-62DC4730010C), helpstring('The structure of an HTTP request for downlevel OS')]
 		struct tagHTTP_REQUEST {
 			[helpstring('Request flags (see HTTP_REQUEST_FLAG_* definitions below).')] ULONG flags;
 			[helpstring('An opaque request identifier. These values are used by the driver to correlate outgoing responses with incoming requests.')] unsigned __int64 ConnectionId;
@@ -327,10 +324,10 @@ defineFields
 			[helpstring('The context associated with the URL prefix.')] HTTP_URL_CONTEXT UrlContext;
 			[helpstring('The HTTP version number.')] HTTP_VERSION Version;
 			[helpstring('The request verb.')] HTTP_VERB Verb;
-			[nonbrowsable, helpstring('The length of the verb string if the Verb field is HttpVerbUnknown. In bytes not including the NUL')] USHORT UnknownVerbLength;
-			[nonbrowsable, helpstring('The length of the raw (uncooked) URL in bytes not including the NUL')] USHORT RawUrlLength;
-			[helpstring('Pointer to the verb string if the Verb field is HttpVerbUnknown.'), string, size_is('UnknownVerbLength')] LPCSTR pUnknownVerb;
-			[helpstring('Pointer to the raw (uncooked) URL'), string, size_is('RawUrlLength')] LPCSTR pRawUrl;
+			[helpstring('The length of the verb string if the Verb field is HttpVerbUnknown. In bytes not including the NUL')] USHORT UnknownVerbLength;
+			[helpstring('The length of the raw (uncooked) URL in bytes not including the NUL')] USHORT RawUrlLength;
+			[helpstring('Pointer to the verb string if the Verb field is HttpVerbUnknown.')] LPCSTR pUnknownVerb;
+			[helpstring('Pointer to the raw (uncooked) URL')] LPCSTR pRawUrl;
 			[helpstring('The canonicalized Unicode URL')] HTTP_COOKED_URL CookedUrl;
 			[helpstring('Local and remote transport addresses for the connection.')] HTTP_TRANSPORT_ADDRESS Address;
 			[helpstring('The request headers.')] HTTP_REQUEST_HEADERS Headers;
@@ -351,10 +348,10 @@ defineFields
 		defineField: #UrlContext type: QWORDField new offset: 24;
 		defineField: #Version type: (ArrayField type: WORDArray length: 2) offset: 32;
 		defineField: #Verb type: SDWORDField new offset: 36;
-		defineField: #UnknownVerbLength type: WORDField new beNonBrowsable offset: 40;
-		defineField: #RawUrlLength type: WORDField new beNonBrowsable offset: 42;
-		defineField: #pUnknownVerb type: (ConformantArrayPointerField type: String length: #UnknownVerbLength) offset: 44;
-		defineField: #pRawUrl type: (ConformantArrayPointerField type: String length: #RawUrlLength) offset: 48;
+		defineField: #UnknownVerbLength type: WORDField new offset: 40;
+		defineField: #RawUrlLength type: WORDField new offset: 42;
+		defineField: #pUnknownVerb type: (PointerField type: String) offset: 44;
+		defineField: #pRawUrl type: (PointerField type: String) offset: 48;
 		defineField: #CookedUrl type: (StructureField type: HTTP_COOKED_URL) offset: 52;
 		defineField: #Address type: (PointerArrayField type: SOCKADDR length: 2) offset: 76;
 		defineField: #Headers type: (StructureField type: HTTP_REQUEST_HEADERS) offset: 84;
