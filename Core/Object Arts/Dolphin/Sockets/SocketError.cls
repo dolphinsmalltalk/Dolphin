@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Win32Error subclass: #SocketError
 	instanceVariableNames: ''
@@ -28,7 +28,7 @@ basicSignalWith: anInteger
 	^self new signalWith: (HRESULT win32Error: anInteger)!
 
 errorCode
-	^WS2_32Library default WSAGetLastError!
+	^WS2_32Library default wsaGetLastError!
 
 initialize
 	ErrorClasses := LookupTable new.

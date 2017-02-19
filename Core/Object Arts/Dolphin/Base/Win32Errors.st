@@ -22,6 +22,7 @@ Win32Errors at: 'ERROR_INSUFFICIENT_BUFFER' put: 16r7A!
 Win32Errors at: 'ERROR_INVALID_DATA' put: 16rD!
 Win32Errors at: 'ERROR_INVALID_HANDLE' put: 16r6!
 Win32Errors at: 'ERROR_INVALID_NAME' put: 16r7B!
+Win32Errors at: 'ERROR_INVALID_PARAMETER' put: 16r57!
 Win32Errors at: 'ERROR_MORE_DATA' put: 16rEA!
 Win32Errors at: 'ERROR_NO_MORE_FILES' put: 16r12!
 Win32Errors at: 'ERROR_NO_MORE_ITEMS' put: 16r103!
@@ -35,6 +36,7 @@ Win32Errors at: 'S_FALSE' put: 16r1!
 Win32Errors at: 'S_OK' put: 16r0!
 Win32Errors at: 'SEVERITY_ERROR' put: 16r1!
 Win32Errors at: 'SEVERITY_SUCCESS' put: 16r0!
+Win32Errors at: 'STATUS_INVALID_PARAMETER' put: -16r3FFFFFF3!
 Win32Errors at: 'STATUS_TIMER_RESOLUTION_NOT_SET' put: -16r3FFFFDBB!
 Win32Errors at: 'STG_E_INVALIDFUNCTION' put: -16r7FFCFFFF!
 Win32Errors at: 'WCODE_HRESULT_FIRST' put: -16r7FFBFE00!

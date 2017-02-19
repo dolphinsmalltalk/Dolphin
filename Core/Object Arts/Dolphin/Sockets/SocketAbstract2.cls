@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #SocketAbstract2
 	instanceVariableNames: 'port descriptor'
@@ -93,12 +93,12 @@ queryPort
 		name: name
 		namelen: nameLength) = SOCKET_ERROR 
 		ifTrue: [^self socketError].
-	^WS2_32Library default ntohs: name sin_port!
+	^name port!
 
 socketError
 	"Private - Raise a <SocketError> in response to an error in a non-overlapped socket library call."
 
-	SocketError signalWith: WS2_32Library default WSAGetLastError!
+	SocketError signalWith: WS2_32Library default wsaGetLastError!
 
 socketErrorOverlap
 	"Private - Raise a <SocketError> in response to an error in an overlapped socket library call."

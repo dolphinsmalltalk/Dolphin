@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Win32Structure subclass: #PROTOENT
 	instanceVariableNames: ''
@@ -6,20 +6,38 @@ Win32Structure subclass: #PROTOENT
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 PROTOENT guid: (GUID fromString: '{87B4C60A-026E-11D3-9FD7-00A0CC3E4A32}')!
-PROTOENT comment: '<PROTOENT> is an <ExternalStructure> class to wrap the struct ''WINSOCK2Lib.protoent'' from type information in the ''Windows Sockets 2 Type Library'' library.
+PROTOENT comment: '<PROTOENT> is an <ExternalStructure> class to wrap the struct ''Win32.PROTOENT'' from type information in the ''Win32 API'' library.
 
-This class represents the Windows PROTOENT structure used to hold protocol information. The structure is allocated by Windows Sockets, one per thread, and the contents must not be modified. 
+The type library contains the following helpstring for this struct
+	"The name and protocol numbers that correspond to a given protocol name. Applications must never attempt to modify this structure or to free any of its components. Furthermore, only one copy of this structure is allocated per thread."
+
+Warning: This comment was automatically generated from the struct''s type information, but any changes made here will not be overwritten if the wrapper class is regenerated.
 
 IDL definition follows:
 
-typedef struct tagprotoent {
-	CHAR* p_name;
-	CHAR** p_aliases;
-	short p_proto;
-} protoent;
+typedef [uuid(87B4C60A-026E-11D3-9FD7-00A0CC3E4A32), helpstring("The name and protocol numbers that correspond to a given protocol name. Applications must never attempt to modify this structure or to free any of its components. Furthermore, only one copy of this structure is allocated per thread.")]
+struct tagPROTOENT {
+	[readonly, helpstring("Official name of the protocol.")] LPCSTR p_name;
+	[hidden, readonly, helpstring("Null-terminated array of alternate names.")] void** p_aliases;
+	[readonly, helpstring("Protocol number, in host byte order.")] short p_proto;
+} PROTOENT;
 '!
-!PROTOENT categoriesForClass!External-Data-Structured-Win32!Windows Sockets! !
+!PROTOENT categoriesForClass!Win32-Structs! !
 !PROTOENT methodsFor!
+
+aliases
+	"Answer an <Array> of <String>, being the alias names for the protocol."
+
+	| i addresses list each |
+	addresses := Array writeStream.
+	i := 0.
+	list := (bytes uintPtrAtOffset: ##(self offsetOf: #p_aliases)) asExternalAddress.
+	
+	[each := list uintPtrAtOffset: i.
+	each isNull] whileFalse: 
+				[addresses nextPut: (String fromAddress: each).
+				i := i + VMConstants.IntPtrSize].
+	^addresses contents!
 
 p_name
 	"Answer the receiver's p_name field as a Smalltalk object."
@@ -29,27 +47,56 @@ p_name
 p_proto
 	"Answer the receiver's p_proto field as a Smalltalk object."
 
-	^(bytes swordAtOffset: 8)! !
+	^bytes swordAtOffset: ##(self offsetOf: #p_proto)!
+
+printFieldsOn: aStream limit: anInteger
+	super printFieldsOn: aStream limit: anInteger.
+	aStream
+		nextPutAll: ', aliases=';
+		print: self aliases!
+
+protocol
+	"Answer the <integer> protocol number."
+
+	| bigEndian |
+	bigEndian := self p_proto.
+	^(bigEndian << 8 bitOr: bigEndian >> 8) bitAnd: 16rFFFF! !
+!PROTOENT categoriesFor: #aliases!public! !
 !PROTOENT categoriesFor: #p_name!**compiled accessors**!public! !
 !PROTOENT categoriesFor: #p_proto!**compiled accessors**!public! !
+!PROTOENT categoriesFor: #printFieldsOn:limit:!development!printing!private! !
+!PROTOENT categoriesFor: #protocol!public! !
 
 !PROTOENT class methodsFor!
 
 defineFields
-	"Define the fields of the protoent structure.
-		PROTOENT compileDefinition
-	
-		typedef 		struct tagprotoent {
-			CHAR* p_name;
-			CHAR** p_aliases;
-			short p_proto;
-		} protoent;"
+	"Define the fields of the PROTOENT structure.
 
-	"Implementation Note: Originally auto-generated, but modifications applied."
+	PROTOENT  compileDefinition
+
+		typedef [uuid(87B4C60A-026E-11D3-9FD7-00A0CC3E4A32), helpstring('The name and protocol numbers that correspond to a given protocol name. Applications must never attempt to modify this structure or to free any of its components. Furthermore, only one copy of this structure is allocated per thread.')]
+		struct tagPROTOENT {
+			[readonly, helpstring('Official name of the protocol.')] LPCSTR p_name;
+			[hidden, readonly, helpstring('Null-terminated array of alternate names.')] LPCSTR* p_aliases;
+			[readonly, helpstring('Protocol number, in host byte order.')] short p_proto;
+		} PROTOENT;
+"
 
 	self
-		defineField: #p_name type: (PointerField type: String) beReadOnly;
-		defineField: #p_aliases type: LPVOIDField filler;
-		defineField: #p_proto type: SWORDField readOnly! !
-!PROTOENT class categoriesFor: #defineFields!initializing!public! !
+		defineField: #p_name type: (PointerField type: String) beReadOnly offset: 0;
+		defineField: #p_aliases type: (PointerField type: LPSTR) beReadOnly beFiller offset: 4;
+		defineField: #p_proto type: SWORDField new beReadOnly offset: 8.
+	self byteSize: 12!
+
+fromString: aString
+	"Answer the static (per-thread) PROTOENT instance populated with data for the named protocol.
+		(self fromString: 'tcp') 
+	"
+
+	| answer lib |
+	lib := WS2_32Library default.
+	answer := lib getprotobyname: aString.
+	^answer isNull ifTrue: [SocketError signalWith: lib wsaGetLastError] ifFalse: [answer]! !
+!PROTOENT class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!PROTOENT class categoriesFor: #fromString:!public! !
 

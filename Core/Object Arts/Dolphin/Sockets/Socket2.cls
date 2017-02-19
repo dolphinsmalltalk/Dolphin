@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 SocketAbstract2 subclass: #Socket2
 	instanceVariableNames: 'address readStream writeStream isText'
@@ -26,9 +26,9 @@ connect
 	self isOpen ifFalse: [self create].
 	(socketAddress := SOCKADDR_IN new)
 		sin_family: AF_INET;
-		sin_port: (WS2_32Library default htons: self port);
+		port: self port;
 		sin_addr: (IN_ADDR address: self address).
-	result := WS2_32Library default 
+	result := WS2_32Library default
 				connect: self asParameter
 				name: socketAddress
 				namelen: socketAddress byteSize.

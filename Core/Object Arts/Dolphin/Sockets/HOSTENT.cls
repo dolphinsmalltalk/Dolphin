@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Win32Structure subclass: #HOSTENT
 	instanceVariableNames: ''
@@ -6,27 +6,34 @@ Win32Structure subclass: #HOSTENT
 	poolDictionaries: 'WinSocketConstants'
 	classInstanceVariableNames: ''!
 HOSTENT guid: (GUID fromString: '{87B4C5F4-026E-11D3-9FD7-00A0CC3E4A32}')!
-HOSTENT comment: '<HOSTENT> is an <ExternalStructure> class to wrap the struct ''WINSOCK2Lib.hostent'' from type information in the ''Windows Sockets 2 Type Library'' library.
+HOSTENT comment: '<HOSTENT> is an <ExternalStructure> class to wrap the struct ''Win32.HOSTENT'' from type information in the ''Win32 API'' library.
 
-This class represents the Windows HOSTENT structure used to hold host information. The structure is allocated by Windows Sockets, one per thread, and the contents must not be modified. 
+The type library contains the following helpstring for this struct
+	"Stores information about a given host, such as host name, IPv4 address, and so forth. An application should never attempt to modify this structure or to free any of its components. Furthermore, only one copy of the hostent structure is allocated per thread."
+
+Warning: This comment was automatically generated from the struct''s type information, but any changes made here will not be overwritten if the wrapper class is regenerated.
 
 IDL definition follows:
 
-typedef struct taghostent {
-	CHAR* h_name;
-	CHAR** h_aliases;
-	short h_addrtype;
-	short h_length;
-	CHAR** h_addr_list;
-} hostent;
+typedef [uuid(87B4C5F4-026E-11D3-9FD7-00A0CC3E4A32), helpstring("Stores information about a given host, such as host name, IPv4 address, and so forth. An application should never attempt to modify this structure or to free any of its components. Furthermore, only one copy of the hostent structure is allocated per thread.")]
+struct tagHOSTENT {
+	[readonly, helpstring("The official name of the host (PC). If using the DNS or similar resolution system, it is the Fully Qualified Domain Name (FQDN) that caused the server to return a reply. If using a local hosts file, it is the first entry after the IPv4 address.")] LPCSTR h_name;
+	[readonly, helpstring("A NULL-terminated array of alternate names.")] void** h_aliases;
+	[readonly, helpstring("The type of address being returned.")] short h_addrtype;
+	[readonly, helpstring("The length, in bytes, of each address.")] short h_length;
+	[readonly, helpstring("A NULL-terminated list of addresses for the host. Addresses are returned in network byte order.")] void** h_addr_list;
+} HOSTENT;
 '!
-!HOSTENT categoriesForClass!External-Data-Structured-Win32!Windows Sockets! !
+!HOSTENT categoriesForClass!Win32-Structs! !
 !HOSTENT methodsFor!
 
 address
 	"Answer the primary <InternetAddress> for the receiver"
 
-	^(IN_ADDR fromAddress: self h_addr) address!
+	^(self addressClass fromAddress: self h_addr) address!
+
+addressClass
+	^self h_addrtype == WinSocketConstants.AF_INET6 ifTrue: [IN6_ADDR] ifFalse: [IN_ADDR]!
 
 allAddresses
 	"Answer an <Array> of <InternetAddress>, composed from the receiver's
@@ -48,22 +55,22 @@ h_addr
 h_addr_list
 	"Answer the receiver's h_addr_list field as a Smalltalk object."
 
-	^(bytes uintPtrAtOffset: 12) asExternalAddress!
+	^(bytes uintPtrAtOffset: ##(self offsetOf: #h_addr_list)) asExternalAddress!
 
 h_addrtype
 	"Answer the receiver's h_addrtype field as a Smalltalk object."
 
-	^(bytes swordAtOffset: 8)!
+	^bytes swordAtOffset: ##(self offsetOf: #h_addrtype)!
 
 h_aliases
 	"Answer the receiver's h_aliases field as a Smalltalk object."
 
-	^(bytes uintPtrAtOffset: 4) asExternalAddress!
+	^(bytes uintPtrAtOffset: ##(self offsetOf: #h_aliases)) asExternalAddress!
 
 h_length
 	"Answer the receiver's h_length field as a Smalltalk object."
 
-	^(bytes swordAtOffset: 10)!
+	^bytes swordAtOffset: ##(self offsetOf: #h_length)!
 
 h_name
 	"Answer the receiver's h_name field as a Smalltalk object."
@@ -75,17 +82,19 @@ host
 
 	^self h_name trimNulls!
 
-reifyNullTerminatedArray: list 
-	| i each addresses |
+reifyNullTerminatedArray: list
+	| i each addresses addressClass |
 	addresses := OrderedCollection new.
 	i := 0.
+	addressClass := self addressClass.
 	
-	[each := list dwordAtOffset: i.
+	[each := list uintPtrAtOffset: i.
 	each isNull] whileFalse: 
-				[addresses add: (IN_ADDR fromAddress: each) address.
-				i := i + 4].
+				[addresses add: (addressClass fromAddress: each) address.
+				i := i + VMConstants.IntPtrSize].
 	^addresses asArray! !
 !HOSTENT categoriesFor: #address!accessing!public! !
+!HOSTENT categoriesFor: #addressClass!helpers!private! !
 !HOSTENT categoriesFor: #allAddresses!accessing!public! !
 !HOSTENT categoriesFor: #allAliases!accessing!public! !
 !HOSTENT categoriesFor: #h_addr!accessing!public! !
@@ -100,36 +109,39 @@ reifyNullTerminatedArray: list
 !HOSTENT class methodsFor!
 
 defineFields
-	"Define the fields of the hostent structure.
-		HOSTENT compileDefinition
-	
-		typedef 		struct taghostent {
-			CHAR* h_name;
-			CHAR** h_aliases;
-			short h_addrtype;
-			short h_length;
-			CHAR** h_addr_list;
-		} hostent;"
+	"Define the fields of the HOSTENT structure.
 
-	"Implementation Note: Originally auto-generated, but modifications applied; in particular
-	the the real length of the h_add_list field is not known statically."
+	HOSTENT  compileDefinition
+
+		typedef [uuid(87B4C5F4-026E-11D3-9FD7-00A0CC3E4A32), helpstring('Stores information about a given host, such as host name, IPv4 address, and so forth. An application should never attempt to modify this structure or to free any of its components. Furthermore, only one copy of the hostent structure is allocated per thread.')]
+		struct tagHOSTENT {
+			[readonly, helpstring('The official name of the host (PC). If using the DNS or similar resolution system, it is the Fully Qualified Domain Name (FQDN) that caused the server to return a reply. If using a local hosts file, it is the first entry after the IPv4 address.')] LPCSTR h_name;
+			[readonly, helpstring('A NULL-terminated array of alternate names.')] void** h_aliases;
+			[readonly, helpstring('The type of address being returned.')] short h_addrtype;
+			[readonly, helpstring('The length, in bytes, of each address.')] short h_length;
+			[readonly, helpstring('A NULL-terminated list of addresses for the host. Addresses are returned in network byte order.')] void** h_addr_list;
+		} HOSTENT;
+"
 
 	self
-		defineField: #h_name type: (PointerField type: String) beReadOnly;
-		defineField: #h_aliases type: LPVOIDField readOnly;
-		defineField: #h_addrtype type: SWORDField readOnly;
-		defineField: #h_length type: SWORDField readOnly;
-		defineField: #h_addr_list type: LPVOIDField readOnly!
+		defineField: #h_name type: (PointerField type: String) beReadOnly offset: 0;
+		defineField: #h_aliases type: LPVOIDField new beReadOnly offset: 4;
+		defineField: #h_addrtype type: SWORDField new beReadOnly offset: 8;
+		defineField: #h_length type: SWORDField new beReadOnly offset: 10;
+		defineField: #h_addr_list type: LPVOIDField new beReadOnly offset: 12.
+	self byteSize: 16!
 
 host: aStringHostName 
 	"Answer a new instance of the receiver describing a host with the name 
-	held in aStringHostName."
+	held in aStringHostName.
+		(self host: SessionManager current computerName) address
+	"
 
 	| answer |
 	answer := WS2_32Library default gethostbyname: aStringHostName.
 	^answer isNull 
 		ifTrue: [SocketError signalWith: Processor activeProcess lastError]
 		ifFalse: [answer]! !
-!HOSTENT class categoriesFor: #defineFields!initializing!public! !
+!HOSTENT class categoriesFor: #defineFields!**auto generated**!initializing!public! !
 !HOSTENT class categoriesFor: #host:!instance creation!public! !
 

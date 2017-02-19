@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #InternetAddress
 	instanceVariableNames: 'host ipAddress'
@@ -94,32 +94,23 @@ printOn: aStream
 
 !InternetAddress class methodsFor!
 
-allForHost: aStringHostName 
+allForHost: aStringHostName
 	"Answer an Array of instances of the receiver for all the addresses of the host with
 	aStringHostName.
 
-		InternetAddress allForHost: 'object-arts.com'
+		InternetAddress allForHost: SessionManager current computerName
 	"
 
 	^(HOSTENT host: aStringHostName) allAddresses!
 
-errorInvalidFormat
-	"Raise an error that some attempt to create an instance of the receiver failed
-	because the input stream was in the wrong format"
-
-	InvalidFormat signalWith: self!
-
-fromIPString: aString 
+fromIPString: aString
 	"Instantiate a new instance of the receiver from aString representing the textual
 	form of the IP address.
 
 		InternetAddress fromIPString: '192.169.0.1'
 	"
 
-	| address |
-	address := WS2_32Library default inet_addr: aString.
-	address = 16rFFFFFFFF ifTrue: [^self errorInvalidFormat].
-	^(IN_ADDR new s_addr: address) address!
+	^(IN_ADDR fromString: aString) address!
 
 fromString: aString 
 	"Instantiate a new instance of the receiver from aString. This may contain either a host
@@ -140,7 +131,7 @@ host: aStringHostName
 
 ipAddress: aByteArray 
 	"Answer a new instance of the receiver containing the address, aByteArray.
-	This will be a 4 byte arry containing the IP address,
+	This will be a 4 byte array containing the IP address,
 
 	InternetAddress ipAddress: #[192 169 0 1]
 	"
@@ -166,7 +157,6 @@ localHost
 	result = SOCKET_ERROR ifTrue: [^SocketError signal].
 	^self host: hostName trimNulls! !
 !InternetAddress class categoriesFor: #allForHost:!accessing!public! !
-!InternetAddress class categoriesFor: #errorInvalidFormat!exceptions!public! !
 !InternetAddress class categoriesFor: #fromIPString:!instance creation!public! !
 !InternetAddress class categoriesFor: #fromString:!instance creation!public! !
 !InternetAddress class categoriesFor: #host:!instance creation!public! !

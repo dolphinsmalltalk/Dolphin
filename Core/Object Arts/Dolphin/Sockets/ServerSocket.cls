@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 SocketAbstract subclass: #ServerSocket
 	instanceVariableNames: 'acceptSemaphore'
@@ -61,7 +61,7 @@ bind
 	socketAddress := SOCKADDR_IN new.
 	socketAddress sin_family: AF_INET.
 	socketAddress sin_addr s_addr: INADDR_ANY.
-	socketAddress sin_port: (WSockLibrary default htons: self port).
+	socketAddress port: self port.
 	result := WSockLibrary default 
 				bind: self asParameter
 				addr: socketAddress asParameter
