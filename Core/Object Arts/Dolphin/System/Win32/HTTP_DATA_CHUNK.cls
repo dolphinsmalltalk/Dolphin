@@ -1,34 +1,34 @@
 "Filed out from Dolphin Smalltalk 7"!
 
-ExternalStructure subclass: #HTTP_DATA_CHUNK
+HttpServerStructure subclass: #HTTP_DATA_CHUNK
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-HTTP_DATA_CHUNK guid: (GUID fromString: '{831E8135-6BB5-45E2-B278-10B1C489883A}')!
+HTTP_DATA_CHUNK guid: (GUID fromString: '{831e8135-6bb5-45e2-b278-10b1c489883a}')!
 HTTP_DATA_CHUNK comment: '<HTTP_DATA_CHUNK> is an <ExternalStructure> class to wrap the struct ''Win32.HTTP_DATA_CHUNK'' from type information in the ''Win32 API'' library.
 
 The type library contains the following helpstring for this struct
 	"This structure describes an individual data chunk."
 
-Warning: This comment was automatically generated from the struct''s type information, but any changes made here will not be overwritten if the wrapper class is regenerated.
+** This comment was automatically generated from a type library. Delete this line to prevent any manual edits from being overwritten if the wrapper class is regenerated. **
 
 IDL definition follows:
 
-typedef [uuid(831E8135-6BB5-45E2-B278-10B1C489883A), helpstring("This structure describes an individual data chunk.")]
+typedef [uuid(831e8135-6bb5-45e2-b278-10b1c489883a), helpstring("This structure describes an individual data chunk.")]
 struct tagHTTP_DATA_CHUNK {
 	[helpstring("The type of this data chunk.")] HTTP_DATA_CHUNK_TYPE DataChunkType;
 	[helpstring("The data chunk structures, one per supported data chunk type.")] union {
 		[helpstring("From-memory data chunk.")] struct {
 			void* pBuffer;
-			unsigned long BufferLength;
+			ULONG BufferLength;
 		} FromMemory;
 		[helpstring("From-file handle data chunk.")] struct {
 			HTTP_BYTE_RANGE ByteRange;
 			HANDLE FileHandle;
 		} FromFileHandle;
 		[helpstring("From-fragment cache data chunk.")] struct {
-			unsigned short FragmentNameLength;
+			USHORT FragmentNameLength;
 			LPCWSTR pFragmentName;
 		} FromFragmentCache;
 		[helpstring("From-fragment cache data chunk that specifies a byte range.")] struct {
@@ -42,105 +42,106 @@ struct tagHTTP_DATA_CHUNK {
 !HTTP_DATA_CHUNK methodsFor!
 
 DataChunkType
-	"Answer the receiver's DataChunkType field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'DataChunkType' field."
 
 	^bytes sdwordAtOffset: 0!
 
-DataChunkType: anObject
-	"Set the receiver's DataChunkType field to the value of anObject."
+DataChunkType: anInteger
+	"Set the receiver's 'DataChunkType' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: 0 put: anObject!
+	bytes sdwordAtOffset: 0 put: anInteger!
 
 FromFileHandle_ByteRange
-	"Answer the receiver's FromFileHandle_ByteRange field as a Smalltalk object."
+	"Answer the <HTTP_BYTE_RANGE> value of the receiver's 'FromFileHandle_ByteRange' field."
 
 	^HTTP_BYTE_RANGE fromAddress: bytes yourAddress + ##(self offsetOf: #FromFileHandle_ByteRange)!
 
-FromFileHandle_ByteRange: anObject
-	"Set the receiver's FromFileHandle_ByteRange field to the value of anObject."
+FromFileHandle_ByteRange: aHTTP_BYTE_RANGE
+	"Set the receiver's 'FromFileHandle_ByteRange' field to the value of the argument, aHTTP_BYTE_RANGE"
 
-	anObject
+	aHTTP_BYTE_RANGE
 		replaceBytesOf: bytes
 		from: ##((self offsetOf: #FromFileHandle_ByteRange) + 1)
 		to: ##((self offsetOf: #FromFileHandle_ByteRange) + HTTP_BYTE_RANGE basicByteSize)
 		startingAt: 1!
 
 FromFileHandle_FileHandle
-	"Answer the receiver's FromFileHandle_FileHandle field as a Smalltalk object."
+	"Answer the <ExternalHandle> value of the receiver's 'FromFileHandle_FileHandle' field."
 
 	^(bytes uintPtrAtOffset: ##(self offsetOf: #FromFileHandle_FileHandle)) asExternalHandle!
 
-FromFileHandle_FileHandle: anObject
-	"Set the receiver's FromFileHandle_FileHandle field to the value of anObject."
+FromFileHandle_FileHandle: anExternalHandle
+	"Set the receiver's 'FromFileHandle_FileHandle' field to the value of the argument, anExternalHandle"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #FromFileHandle_FileHandle) put: anObject!
+	bytes uintPtrAtOffset: ##(self offsetOf: #FromFileHandle_FileHandle) put: anExternalHandle!
 
 FromFragmentCache_FragmentNameLength
-	"Answer the receiver's FromFragmentCache_FragmentNameLength field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'FromFragmentCache_FragmentNameLength' field."
 
 	^bytes wordAtOffset: ##(self offsetOf: #FromFragmentCache_FragmentNameLength)!
 
-FromFragmentCache_FragmentNameLength: anObject
-	"Set the receiver's FromFragmentCache_FragmentNameLength field to the value of anObject."
+FromFragmentCache_FragmentNameLength: anInteger
+	"Set the receiver's 'FromFragmentCache_FragmentNameLength' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: ##(self offsetOf: #FromFragmentCache_FragmentNameLength) put: anObject!
+	bytes wordAtOffset: ##(self offsetOf: #FromFragmentCache_FragmentNameLength) put: anInteger!
 
 FromFragmentCache_pFragmentName
-	"Answer the receiver's FromFragmentCache_pFragmentName field as a Smalltalk object."
+	"Answer the <UnicodeString> value of the receiver's 'FromFragmentCache_pFragmentName' field."
 
 	^UnicodeString
 		fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #FromFragmentCache_pFragmentName))!
 
-FromFragmentCache_pFragmentName: anObject
-	"Set the receiver's FromFragmentCache_pFragmentName field to the value of anObject."
+FromFragmentCache_pFragmentName: anUnicodeString
+	"Set the receiver's 'FromFragmentCache_pFragmentName' field to the value of the argument, anUnicodeString"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #FromFragmentCache_pFragmentName) put: anObject yourAddress!
+	bytes uintPtrAtOffset: ##(self offsetOf: #FromFragmentCache_pFragmentName)
+		put: anUnicodeString yourAddress!
 
 FromFragmentCacheEx_ByteRange
-	"Answer the receiver's FromFragmentCacheEx_ByteRange field as a Smalltalk object."
+	"Answer the <HTTP_BYTE_RANGE> value of the receiver's 'FromFragmentCacheEx_ByteRange' field."
 
 	^HTTP_BYTE_RANGE fromAddress: bytes yourAddress + ##(self offsetOf: #FromFragmentCacheEx_ByteRange)!
 
-FromFragmentCacheEx_ByteRange: anObject
-	"Set the receiver's FromFragmentCacheEx_ByteRange field to the value of anObject."
+FromFragmentCacheEx_ByteRange: aHTTP_BYTE_RANGE
+	"Set the receiver's 'FromFragmentCacheEx_ByteRange' field to the value of the argument, aHTTP_BYTE_RANGE"
 
-	anObject
+	aHTTP_BYTE_RANGE
 		replaceBytesOf: bytes
 		from: ##((self offsetOf: #FromFragmentCacheEx_ByteRange) + 1)
 		to: ##((self offsetOf: #FromFragmentCacheEx_ByteRange) + HTTP_BYTE_RANGE basicByteSize)
 		startingAt: 1!
 
 FromFragmentCacheEx_pFragmentName
-	"Answer the receiver's FromFragmentCacheEx_pFragmentName field as a Smalltalk object."
+	"Answer the <UnicodeString> value of the receiver's 'FromFragmentCacheEx_pFragmentName' field."
 
 	^UnicodeString
 		fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #FromFragmentCacheEx_pFragmentName))!
 
-FromFragmentCacheEx_pFragmentName: anObject
-	"Set the receiver's FromFragmentCacheEx_pFragmentName field to the value of anObject."
+FromFragmentCacheEx_pFragmentName: anUnicodeString
+	"Set the receiver's 'FromFragmentCacheEx_pFragmentName' field to the value of the argument, anUnicodeString"
 
 	bytes uintPtrAtOffset: ##(self offsetOf: #FromFragmentCacheEx_pFragmentName)
-		put: anObject yourAddress!
+		put: anUnicodeString yourAddress!
 
 FromMemory_BufferLength
-	"Answer the receiver's FromMemory_BufferLength field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'FromMemory_BufferLength' field."
 
 	^bytes dwordAtOffset: ##(self offsetOf: #FromMemory_BufferLength)!
 
-FromMemory_BufferLength: anObject
-	"Set the receiver's FromMemory_BufferLength field to the value of anObject."
+FromMemory_BufferLength: anInteger
+	"Set the receiver's 'FromMemory_BufferLength' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #FromMemory_BufferLength) put: anObject!
+	bytes dwordAtOffset: ##(self offsetOf: #FromMemory_BufferLength) put: anInteger!
 
 FromMemory_pBuffer
-	"Answer the receiver's FromMemory_pBuffer field as a Smalltalk object."
+	"Answer the <ExternalAddress> value of the receiver's 'FromMemory_pBuffer' field."
 
 	^(bytes uintPtrAtOffset: ##(self offsetOf: #FromMemory_pBuffer)) asExternalAddress!
 
-FromMemory_pBuffer: anObject
-	"Set the receiver's FromMemory_pBuffer field to the value of anObject."
+FromMemory_pBuffer: anExternalAddress
+	"Set the receiver's 'FromMemory_pBuffer' field to the value of the argument, anExternalAddress"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #FromMemory_pBuffer) put: anObject! !
+	bytes uintPtrAtOffset: ##(self offsetOf: #FromMemory_pBuffer) put: anExternalAddress! !
 !HTTP_DATA_CHUNK categoriesFor: #DataChunkType!**compiled accessors**!public! !
 !HTTP_DATA_CHUNK categoriesFor: #DataChunkType:!**compiled accessors**!public! !
 !HTTP_DATA_CHUNK categoriesFor: #FromFileHandle_ByteRange!**compiled accessors**!public! !
@@ -165,22 +166,22 @@ FromMemory_pBuffer: anObject
 defineFields
 	"Define the fields of the HTTP_DATA_CHUNK structure.
 
-	HTTP_DATA_CHUNK  compileDefinition
+	HTTP_DATA_CHUNK compileDefinition
 
-		typedef [uuid(831E8135-6BB5-45E2-B278-10B1C489883A), helpstring('This structure describes an individual data chunk.')]
+		typedef [uuid(831e8135-6bb5-45e2-b278-10b1c489883a), helpstring('This structure describes an individual data chunk.')]
 		struct tagHTTP_DATA_CHUNK {
 			[helpstring('The type of this data chunk.')] HTTP_DATA_CHUNK_TYPE DataChunkType;
 			[helpstring('The data chunk structures, one per supported data chunk type.')] union {
 				[helpstring('From-memory data chunk.')] struct {
 					void* pBuffer;
-					unsigned long BufferLength;
+					ULONG BufferLength;
 				} FromMemory;
 				[helpstring('From-file handle data chunk.')] struct {
 					HTTP_BYTE_RANGE ByteRange;
 					HANDLE FileHandle;
 				} FromFileHandle;
 				[helpstring('From-fragment cache data chunk.')] struct {
-					unsigned short FragmentNameLength;
+					USHORT FragmentNameLength;
 					LPCWSTR pFragmentName;
 				} FromFragmentCache;
 				[helpstring('From-fragment cache data chunk that specifies a byte range.')] struct {

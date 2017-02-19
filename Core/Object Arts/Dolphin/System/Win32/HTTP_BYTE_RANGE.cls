@@ -1,48 +1,48 @@
 "Filed out from Dolphin Smalltalk 7"!
 
-ExternalStructure subclass: #HTTP_BYTE_RANGE
+HttpServerStructure subclass: #HTTP_BYTE_RANGE
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-HTTP_BYTE_RANGE guid: (GUID fromString: '{3426318C-022F-4DD9-9E4E-A04FEBF70A10}')!
+HTTP_BYTE_RANGE guid: (GUID fromString: '{3426318c-022f-4dd9-9e4e-a04febf70a10}')!
 HTTP_BYTE_RANGE comment: '<HTTP_BYTE_RANGE> is an <ExternalStructure> class to wrap the struct ''Win32.HTTP_BYTE_RANGE'' from type information in the ''Win32 API'' library.
 
 The type library contains the following helpstring for this struct
 	"This structure defines a file byte range. If the Length field is HTTP_BYTE_RANGE_TO_EOF then the remainder of the file (everything after StartingOffset) is sent."
 
-Warning: This comment was automatically generated from the struct''s type information, but any changes made here will not be overwritten if the wrapper class is regenerated.
+** This comment was automatically generated from a type library. Delete this line to prevent any manual edits from being overwritten if the wrapper class is regenerated. **
 
 IDL definition follows:
 
-typedef [uuid(3426318C-022F-4DD9-9E4E-A04FEBF70A10), helpstring("This structure defines a file byte range. If the Length field is HTTP_BYTE_RANGE_TO_EOF then the remainder of the file (everything after StartingOffset) is sent.")]
+typedef [uuid(3426318c-022f-4dd9-9e4e-a04febf70a10), helpstring("This structure defines a file byte range. If the Length field is HTTP_BYTE_RANGE_TO_EOF then the remainder of the file (everything after StartingOffset) is sent.")]
 struct tagHTTP_BYTE_RANGE {
-	ULARGE_INTEGER StartingOffset;
-	ULARGE_INTEGER Length;
+	[helpstring("Starting offset of the byte range.")] ULARGE_INTEGER StartingOffset;
+	[helpstring("Size, in bytes, of the range. If this member is HTTP_BYTE_RANGE_TO_EOF, the range extends from the starting offset to the end of the file or data block.")] ULARGE_INTEGER Length;
 } HTTP_BYTE_RANGE;
 '!
 !HTTP_BYTE_RANGE categoriesForClass!Win32-Structs! !
 !HTTP_BYTE_RANGE methodsFor!
 
 Length
-	"Answer the receiver's Length field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'Length' field."
 
 	^bytes qwordAtOffset: ##(self offsetOf: #Length)!
 
-Length: anObject
-	"Set the receiver's Length field to the value of anObject."
+Length: anInteger
+	"Set the receiver's 'Length' field to the value of the argument, anInteger"
 
-	bytes qwordAtOffset: ##(self offsetOf: #Length) put: anObject!
+	bytes qwordAtOffset: ##(self offsetOf: #Length) put: anInteger!
 
 StartingOffset
-	"Answer the receiver's StartingOffset field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'StartingOffset' field."
 
 	^bytes qwordAtOffset: 0!
 
-StartingOffset: anObject
-	"Set the receiver's StartingOffset field to the value of anObject."
+StartingOffset: anInteger
+	"Set the receiver's 'StartingOffset' field to the value of the argument, anInteger"
 
-	bytes qwordAtOffset: 0 put: anObject! !
+	bytes qwordAtOffset: 0 put: anInteger! !
 !HTTP_BYTE_RANGE categoriesFor: #Length!**compiled accessors**!public! !
 !HTTP_BYTE_RANGE categoriesFor: #Length:!**compiled accessors**!public! !
 !HTTP_BYTE_RANGE categoriesFor: #StartingOffset!**compiled accessors**!public! !
@@ -53,12 +53,12 @@ StartingOffset: anObject
 defineFields
 	"Define the fields of the HTTP_BYTE_RANGE structure.
 
-	HTTP_BYTE_RANGE  compileDefinition
+	HTTP_BYTE_RANGE compileDefinition
 
-		typedef [uuid(3426318C-022F-4DD9-9E4E-A04FEBF70A10), helpstring('This structure defines a file byte range. If the Length field is HTTP_BYTE_RANGE_TO_EOF then the remainder of the file (everything after StartingOffset) is sent.')]
+		typedef [uuid(3426318c-022f-4dd9-9e4e-a04febf70a10), helpstring('This structure defines a file byte range. If the Length field is HTTP_BYTE_RANGE_TO_EOF then the remainder of the file (everything after StartingOffset) is sent.')]
 		struct tagHTTP_BYTE_RANGE {
-			ULARGE_INTEGER StartingOffset;
-			ULARGE_INTEGER Length;
+			[helpstring('Starting offset of the byte range.')] ULARGE_INTEGER StartingOffset;
+			[helpstring('Size, in bytes, of the range. If this member is HTTP_BYTE_RANGE_TO_EOF, the range extends from the starting offset to the end of the file or data block.')] ULARGE_INTEGER Length;
 		} HTTP_BYTE_RANGE;
 "
 

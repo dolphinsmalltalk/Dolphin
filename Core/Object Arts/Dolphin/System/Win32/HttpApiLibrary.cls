@@ -5,7 +5,7 @@ ExternalLibrary subclass: #HttpApiLibrary
 	classVariableNames: ''
 	poolDictionaries: 'WinHttpServerConsts'
 	classInstanceVariableNames: ''!
-HttpApiLibrary guid: (GUID fromString: '{06475580-47CF-4641-9EB7-96D83F2D2E96}')!
+HttpApiLibrary guid: (GUID fromString: '{06475580-47cf-4641-9eb7-96d83f2d2e96}')!
 HttpApiLibrary comment: 'HttpApiLibrary is the <ExternalLibrary> class to represent the dynamic link library, ''HttpApi.dll''.It was generated generated from type information in the ''Win32 API'' library. It contains methods for each of the functions defined by the corresponding module in that type library.
 
 The type library contains the following helpstring for this module
@@ -250,6 +250,15 @@ module HttpApi
 !HttpApiLibrary categoriesForClass!Win32-Modules! !
 !HttpApiLibrary methodsFor!
 
+addUrl: aString toUrlGroup: anIntegerUrlGroupId
+	| url |
+	url := aString asUnicodeString.
+	self checkReturnCode: (self
+				httpAddUrlToUrlGroup: anIntegerUrlGroupId
+				pFullyQualifiedUrl: url
+				urlContext: 0
+				reserved: 0)!
+
 asyncHttpReceiveHttpRequest: requestQueueHandle requestId: requestId flags: flags requestBuffer: requestBuffer requestBufferLength: requestBufferLength bytesReturned: bytesReturned overlapped: overlapped
 	"Invoke the HttpReceiveHttpRequest() function of the module wrapped by the receiver.
 	Helpstring: Retrieve the next available HTTP request from the specified request queue either synchronously or asynchronously.
@@ -266,12 +275,50 @@ asyncHttpReceiveHttpRequest: requestQueueHandle requestId: requestId flags: flag
 	<overlap stdcall: dword HttpReceiveHttpRequest handle qword dword HTTP_REQUEST* dword dword* OVERLAPPED*>
 	^self invalidCall!
 
+bindQueue: anExternalHandle toUrlGroup: anIntegerGroupId
+	self setUrlGroup: anIntegerGroupId
+		property: ((HTTP_BINDING_INFO new)
+				requestQueueHandle: anExternalHandle;
+				yourself)!
+
+checkReturnCode: anInteger
+	anInteger == Win32Errors.NO_ERROR ifFalse: [(Win32Error fromInteger: anInteger) signal]!
+
 close
 	"Release the reference the receiver has to the External Library it represents. Answer whether the
 	library was successfully closed."
 
 	^(handle notNull and: [(self httpTerminate: self class initFlags pReserved: nil) == NO_ERROR])
 		& super close!
+
+createRequestQueue: aString
+	| queue |
+	queue := ExternalHandle new.
+	self checkReturnCode: (self
+				httpCreateRequestQueue: self class apiVersion
+				name: aString
+				securityAttributes: nil
+				flags: 0
+				requestQueueHandle: queue).
+	^queue!
+
+createServerSession
+	| sessionId ret |
+	sessionId := ULARGE_INTEGER new.
+	self checkReturnCode: (self
+				httpCreateServerSession: self class apiVersion
+				serverSessionId: sessionId
+				reserved: 0).
+	^sessionId asInteger!
+
+createUrlGroup: anIntegerSessionId
+	| groupId ret |
+	groupId := ULARGE_INTEGER new.
+	self checkReturnCode: (self
+				httpCreateUrlGroup: anIntegerSessionId
+				pUrlGroupId: groupId
+				reserved: 0).
+	^groupId asInteger!
 
 httpAddFragmentToCache: requestQueueHandle urlPrefix: urlPrefix dataChunk: dataChunk cachePolicy: cachePolicy overlapped: overlapped
 	"Invoke the HttpAddFragmentToCache() function of the module wrapped by the receiver.
@@ -740,9 +787,153 @@ initialize
 				flags: self class initFlags
 				pReserved: nil.
 	ret ~= NO_ERROR ifTrue: [(Win32Error fromInteger: ret) signal].
-	^self! !
+	^self!
+
+querySession: sessionIdInteger property: propIdInteger
+	| type buf ret bufSize |
+	type := ##((Array new: HttpServerProtectionLevelProperty + 1)
+				at: HttpServerAuthenticationProperty + 1 put: HTTP_SERVER_AUTHENTICATION_INFO;
+				at: HttpServerLoggingProperty + 1 put: HTTP_LOGGING_INFO;
+				at: HttpServerTimeoutsProperty + 1 put: HTTP_TIMEOUT_LIMIT_INFO;
+				at: HttpServerQueueLengthProperty + 1 put: nil;
+				at: HttpServerStateProperty + 1 put: HTTP_STATE_INFO;
+				at: HttpServer503VerbosityProperty + 1 put: DWORDBytes;
+				at: HttpServerBindingProperty + 1 put: HTTP_BINDING_INFO;
+				at: HttpServerExtendedAuthenticationProperty + 1 put: HTTP_SERVER_AUTHENTICATION_INFO;
+				at: HttpServerListenEndpointProperty + 1 put: nil;
+				at: HttpServerChannelBindProperty + 1 put: HTTP_CHANNEL_BIND_INFO;
+				at: HttpServerProtectionLevelProperty + 1 put: nil;
+				yourself) at: propIdInteger + 1.
+	type isNil ifTrue: [^self error: 'Unable to query property ', propIdInteger printString].
+	buf := type new.
+	bufSize := DWORDBytes new.
+	ret := self
+				httpQueryServerSessionProperty: sessionIdInteger
+				property: propIdInteger
+				propertyInformation: buf
+				propertyInformationLength: buf byteSize
+				returnLength: bufSize.
+	ret == Win32Errors.ERROR_MORE_DATA
+		ifTrue: 
+			[buf := type new: bufSize value.
+			ret := self
+						httpQueryServerSessionProperty: sessionIdInteger
+						property: propIdInteger
+						propertyInformation: buf
+						propertyInformationLength: buf byteSize
+						returnLength: bufSize].
+	^ret == Win32Errors.ERROR_INVALID_PARAMETER
+		ifFalse: 
+			[self checkReturnCode: ret.
+			buf]!
+
+querySession: sessionIdInteger qosProperty: qosTypeInteger
+	| query ret bufSize |
+	query := HTTP_QOS_SETTING_INFO new.
+	query QosType: qosTypeInteger.
+	bufSize := DWORDBytes new.
+	ret := self
+				httpQueryServerSessionProperty: sessionIdInteger
+				property: HttpServerQosProperty
+				propertyInformation: query
+				propertyInformationLength: query byteSize
+				returnLength: bufSize.
+	ret == Win32Errors.ERROR_MORE_DATA ifFalse: [^self checkReturnCode: ret].
+	query := HTTP_QOS_SETTING_INFO new: bufSize value.
+	ret := self
+				httpQueryServerSessionProperty: sessionIdInteger
+				property: HttpServerQosProperty
+				propertyInformation: query
+				propertyInformationLength: query byteSize
+				returnLength: bufSize.
+	self checkReturnCode: ret.
+	^query!
+
+queryUrlGroup: urlGroupId qosSetting: anInteger
+	| query ret bufSize |
+	query := (HTTP_QOS_SETTING_INFO new)
+				QosType: anInteger;
+				yourself.
+	bufSize := DWORDBytes new.
+	ret := self
+				httpQueryUrlGroupProperty: urlGroupId
+				property: HttpServerQosProperty
+				propertyInformation: query
+				propertyInformationLength: query byteSize
+				returnLength: bufSize.
+	ret == Win32Errors.ERROR_MORE_DATA ifFalse: [^self checkReturnCode: ret].
+	query := (HTTP_QOS_SETTING_INFO new: bufSize value)
+				QosType: anInteger;
+				yourself.
+	ret := self
+				httpQueryUrlGroupProperty: urlGroupId
+				property: HttpServerQosProperty
+				propertyInformation: query
+				propertyInformationLength: query byteSize
+				returnLength: bufSize.
+	self checkReturnCode: ret.
+	^query value!
+
+receiveRequest: anExternalHandle
+	| bytesReceived buf requestId |
+	buf := HTTP_REQUEST new: 1024.
+	bytesReceived := DWORDBytes new.
+	requestId := 0.
+	
+	[| ret |
+	ret := self
+				asyncHttpReceiveHttpRequest: anExternalHandle
+				requestId: requestId
+				flags: WinHttpServerConsts.HTTP_RECEIVE_REQUEST_FLAG_COPY_BODY
+				requestBuffer: buf
+				requestBufferLength: buf size
+				bytesReturned: bytesReceived
+				overlapped: nil.
+	(ret == Win32Errors.ERROR_INVALID_PARAMETER and: [requestId ~~ 0])
+		ifTrue: 
+			["Start again"
+			requestId := 0]
+		ifFalse: 
+			[ret == Win32Errors.ERROR_MORE_DATA
+				ifTrue: 
+					["Allocate required size buffer and go round again"
+					requestId := buf RequestId.
+					buf := HTTP_REQUEST new: bytesReceived asInteger]
+				ifFalse: 
+					[self checkReturnCode: ret.
+					^buf]]]
+			repeat!
+
+setQueue: anExternalHandle property: aWinHttpPropertyInfo
+	self checkReturnCode: (self
+				httpSetRequestQueueProperty: anExternalHandle
+				property: aWinHttpPropertyInfo propertyId
+				propertyInformation: aWinHttpPropertyInfo
+				propertyInformationLength: aWinHttpPropertyInfo byteSize
+				reserved1: 0
+				reserved2: 0)!
+
+setSession: anInteger property: anHttpPropertyStruct
+	self checkReturnCode: (self
+				httpSetServerSessionProperty: anInteger
+				property: anHttpPropertyStruct propertyId
+				propertyInformation: anHttpPropertyStruct
+				propertyInformationLength: anHttpPropertyStruct byteSize)!
+
+setUrlGroup: anIntegerGroupId property: aWinHttpPropertyInfo
+	self checkReturnCode: (self
+				httpSetUrlGroupProperty: anIntegerGroupId
+				property: aWinHttpPropertyInfo propertyId
+				propertyInformation: aWinHttpPropertyInfo
+				propertyInformationLength: aWinHttpPropertyInfo byteSize)! !
+!HttpApiLibrary categoriesFor: #addUrl:toUrlGroup:!operations!public! !
 !HttpApiLibrary categoriesFor: #asyncHttpReceiveHttpRequest:requestId:flags:requestBuffer:requestBufferLength:bytesReturned:overlapped:!public! !
+!HttpApiLibrary categoriesFor: #bindQueue:toUrlGroup:!operations!public! !
+!HttpApiLibrary categoriesFor: #checkReturnCode:!helpers!private! !
 !HttpApiLibrary categoriesFor: #close!public!realizing/unrealizing! !
+!HttpApiLibrary categoriesFor: #createRequestQueue:!operations!public! !
+!HttpApiLibrary categoriesFor: #createServerSession!operations!public! !
+!HttpApiLibrary categoriesFor: #createUrlGroup:!operations!public! !
 !HttpApiLibrary categoriesFor: #httpAddFragmentToCache:urlPrefix:dataChunk:cachePolicy:overlapped:!**auto generated**!public! !
 !HttpApiLibrary categoriesFor: #httpAddUrlToUrlGroup:pFullyQualifiedUrl:urlContext:reserved:!**auto generated**!public! !
 !HttpApiLibrary categoriesFor: #httpCancelHttpRequest:requestId:overlapped:!**auto generated**!public! !
@@ -778,6 +969,13 @@ initialize
 !HttpApiLibrary categoriesFor: #httpWaitForDisconnect:connectionId:overlapped:!**auto generated**!public! !
 !HttpApiLibrary categoriesFor: #httpWaitForDisconnectEx:connectionId:reserved:overlapped:!**auto generated**!public! !
 !HttpApiLibrary categoriesFor: #initialize!initializing!private! !
+!HttpApiLibrary categoriesFor: #querySession:property:!operations!public! !
+!HttpApiLibrary categoriesFor: #querySession:qosProperty:!operations!public! !
+!HttpApiLibrary categoriesFor: #queryUrlGroup:qosSetting:!operations!public! !
+!HttpApiLibrary categoriesFor: #receiveRequest:!operations!public! !
+!HttpApiLibrary categoriesFor: #setQueue:property:!accessing!public! !
+!HttpApiLibrary categoriesFor: #setSession:property:!public! !
+!HttpApiLibrary categoriesFor: #setUrlGroup:property:!operations!public! !
 
 !HttpApiLibrary class methodsFor!
 
@@ -796,108 +994,191 @@ apiVersion
 
 example1
 	"
-	self example1
+	Note that it seems to be necessary to be running as admin to execute this example.
+		self example1
 	"
 
-	| lib sessionId queue groupId checkerror listener urlPrefix bindingInfo |
-	checkerror := [:code | code == Win32Errors.NO_ERROR ifFalse: [(Win32Error fromInteger: code) signal]].
+	| lib sessionId queue groupId |
 	lib := self default.
-	"Create a server session"
-	sessionId := ULARGE_INTEGER new.
-	checkerror value: (lib
-				httpCreateServerSession: self apiVersion
-				serverSessionId: sessionId
-				reserved: 0).
-	sessionId := sessionId asInteger.
+	
+	[| urlPrefix listener |
+	sessionId := lib createServerSession.
 	Transcript
 		display: 'Created http server session ';
 		display: sessionId hex;
 		cr.
 	"Register the URLs to listen on (MSDN sample uses old v1 API HttpAddUrl here)"
-	groupId := ULARGE_INTEGER new.
-	checkerror value: (lib
-				httpCreateUrlGroup: sessionId
-				pUrlGroupId: groupId
-				reserved: 0).
-	groupId := groupId asInteger.
+	groupId := lib createUrlGroup: sessionId.
 	Transcript
 		display: 'Created http server url group ';
 		display: groupId hex;
 		cr.
-	urlPrefix := 'http://+:80/test/'.
-	checkerror value: (lib
-				httpAddUrlToUrlGroup: groupId
-				pFullyQualifiedUrl: urlPrefix asUnicodeString
-				urlContext: 1
-				reserved: 0).
+	urlPrefix := 'http://localhost:80/test/'.
+	lib addUrl: urlPrefix toUrlGroup: groupId.
 	Transcript
 		display: 'Registered http server url group ';
 		print: urlPrefix;
 		cr.
-
-	"Allocate a request queue"
-	queue := ExternalHandle new.
-	checkerror value: (lib
-				httpCreateRequestQueue: self apiVersion
-				name: 'MyQueue'
-				securityAttributes: nil
-				flags: 0
-				requestQueueHandle: queue).
+	"Associate the request queue with the URL group"
+	queue := lib createRequestQueue: 'MyQueue'.
 	Transcript
 		display: 'Created  http server request queue ';
 		print: queue;
 		cr.
-	"Associate the request queue with the URL group"
-	bindingInfo := HTTP_BINDING_INFO new.
-	bindingInfo requestQueueHandle: queue.
-	checkerror value: (lib
-				httpSetUrlGroupProperty: groupId
-				property: HttpServerBindingProperty
-				propertyInformation: bindingInfo
-				propertyInformationLength: bindingInfo size).
+	lib bindQueue: queue toUrlGroup: groupId.
 	Transcript
 		display: 'Associated  http server request queue with url group';
 		cr.
 
 	"Receive a request, this can use either the Windows Overlapped I/O mechanisn, or Dolphin's own overlapped calls. The latter is simpler."
 	listener := 
-			[| buf bytesReceived |
-			buf := HTTP_REQUEST new: 16384.
-			bytesReceived := DWORDBytes new.
-			
-			[Transcript
+			[
+			[| request |
+			Transcript
 				display: 'Listening for requests... ';
 				cr.
-			checkerror value: (lib
-						asyncHttpReceiveHttpRequest: queue
-						requestId: 0
-						flags: WinHttpServerConsts.HTTP_RECEIVE_REQUEST_FLAG_COPY_BODY
-						requestBuffer: buf
-						requestBufferLength: buf size
-						bytesReturned: bytesReceived
-						overlapped: nil).
-			#todo.	"May return ERROR_MORE_DATA"
+			request := lib receiveRequest: queue.
 			Transcript
 				display: 'Request received, length=';
-				print: bytesReceived asInteger;
+				print: request BytesReceived;
 				cr;
-				print: buf;
+				print: request;
 				cr;
 				flush.
 			#todo	"Send a response"]
 					repeat]
 					fork.
-	MessageBox notify: 'Listening for HTTP requests...'.
-	listener terminate.
+	MessageBox notify: 'Listening for HTTP requests. Press OK to stop...'.
+	listener terminate]
+			ensure: 
+				[queue notNil
+					ifTrue: 
+						["Finished with request queue"
+						Transcript
+							display: 'Closing request queue ';
+							print: queue;
+							cr.
+						lib httpCloseRequestQueue: queue].
+				groupId notNil
+					ifTrue: 
+						["Finished with URL group"
+						Transcript
+							display: 'Closing URL group ';
+							print: groupId;
+							cr.
+						lib httpCloseUrlGroup: groupId].
+				sessionId notNil
+					ifTrue: 
+						["Finished with the session"
+						Transcript
+							display: 'Closing Http session ';
+							print: sessionId;
+							cr.
+						lib httpCloseServerSession: sessionId]]!
 
-	"Finished with request queue"
-	lib httpCloseRequestQueue: queue.
-	"Finished with URL group"
-	lib httpCloseUrlGroup: groupId.
-	"Finished with the session"
-	lib httpCloseServerSession: sessionId.
-	"Finished with HTTP server API"
-	self closeDefault!
+example3
+	"Example of service config set/query API - Sets/queries IP listen list.
+		self example3
+	"
+
+	| param bufSize lib ret sizeRequired buf |
+	lib := self default.
+	"Add IPv6 localhost to the list list"
+	param := HTTP_SERVICE_CONFIG_IP_LISTEN_PARAM new.
+	param address: (SOCKADDR fromString: '::1').
+	ret := lib
+				httpSetServiceConfiguration: 0
+				configId: HttpServiceConfigIPListenList
+				pConfigInformation: param
+				configInformationLength: param byteSize
+				pOverlapped: nil.
+	(ret == 0 or: [ret == Win32Errors.ERROR_ALREADY_EXISTS]) ifFalse: [Win32Error signalWith: ret].
+	bufSize := DWORDBytes new.
+	buf := HTTP_SERVICE_CONFIG_IP_LISTEN_QUERY new.
+	ret := lib
+				httpQueryServiceConfiguration: 0
+				configId: HttpServiceConfigIPListenList
+				pInput: nil
+				inputLength: 0
+				pOutput: buf
+				outputLength: buf byteSize
+				pReturnLength: bufSize
+				pOverlapped: nil.
+	ret == 0
+		ifFalse: 
+			["The query struct has space for one sockaddr, but if there are more we'll need to re-allocate and try again"
+			ret == Win32Errors.ERROR_MORE_DATA ifFalse: [Win32Error signalWith: ret].
+			sizeRequired := bufSize value.
+			buf := HTTP_SERVICE_CONFIG_IP_LISTEN_QUERY new: sizeRequired.
+			ret := lib
+						httpQueryServiceConfiguration: 0
+						configId: HttpServiceConfigIPListenList
+						pInput: nil
+						inputLength: 0
+						pOutput: buf
+						outputLength: sizeRequired
+						pReturnLength: bufSize
+						pOverlapped: nil.
+			ret == 0 ifFalse: [Win32Error signalWith: ret]].
+	"Remove the IPv6 entry added above from the listen list"
+	ret := lib
+				httpDeleteServiceConfiguration: 0
+				configId: HttpServiceConfigIPListenList
+				pConfigInformation: param
+				configInformationLength: param byteSize
+				pOverlapped: nil.
+	^buf!
+
+example4
+	"Example of querying session properties.
+		self example4
+	"
+
+	| lib sessionId |
+	lib := self default.
+	
+	[sessionId := lib createServerSession.
+	^lib querySession: sessionId property: HttpServerTimeoutsProperty]
+			ensure: [lib httpCloseServerSession: sessionId]!
+
+example6
+	"Example of querying URL group QOS properties.
+		self example6
+	"
+
+	| lib sessionId groupId queue |
+	lib := self default.
+	^
+	[sessionId := lib createServerSession.
+	groupId := lib createUrlGroup: sessionId.
+	queue := lib createRequestQueue: 'Temp'.
+	lib setUrlGroup: groupId property: (HTTP_QOS_SETTING_INFO maxConnections: 100).
+	lib setUrlGroup: groupId property: (HTTP_QOS_SETTING_INFO maxBandwidth: 10000).
+	"lib setQueue: queue
+		property: (HTTP_QOS_SETTING_INFO new value: (HTTP_FLOWRATE_INFO
+						maxBandwidth: 10000
+						maxPeakBandwidth: 30000
+						burstSize: 20000))."
+	Array with: (lib queryUrlGroup: groupId qosSetting: HttpQosSettingTypeConnectionLimit)
+		with: (lib queryUrlGroup: groupId qosSetting: HttpQosSettingTypeBandwidth)
+	"with: (lib queryUrlGroup: groupId qosSetting: HttpQosSettingTypeFlowRate)"]
+			ensure: 
+				[queue ifNotNil: [lib httpCloseRequestQueue: queue].
+				groupId ifNotNil: [lib httpCloseUrlGroup: groupId].
+				sessionId ifNotNil: [lib httpCloseServerSession: sessionId]]!
+
+example7
+	"Example of querying/setting the session enablement state property.
+		self example7
+	"
+
+	| lib sessionId |
+	lib := self default.
+	^
+	[sessionId := lib createServerSession.
+	lib setSession: sessionId property: HTTP_STATE_INFO inactive.
+	lib querySession: sessionId property: HttpServerStateProperty]
+			ensure: [lib httpCloseServerSession: sessionId]!
 
 fileName
 	"Answer the host system file name for the library."
@@ -906,9 +1187,57 @@ fileName
 !
 
 initFlags
-	^##(WinHttpServerConsts.HTTP_INITIALIZE_SERVER | WinHttpServerConsts.HTTP_INITIALIZE_CONFIG)! !
+	^##(WinHttpServerConsts.HTTP_INITIALIZE_SERVER | WinHttpServerConsts.HTTP_INITIALIZE_CONFIG)!
+
+querySslCertInfo
+	"Example of calling config query API - Returns all SSL cert settings configured.
+		self querySslCertInfo last
+	"
+
+	| parms bufSize lib count answer ret |
+	parms := HTTP_SERVICE_CONFIG_SSL_QUERY new.
+	parms QueryDesc: HttpServiceConfigQueryNext.
+	lib := self default.
+	count := 0.
+	bufSize := DWORDBytes new.
+	answer := OrderedCollection new.
+	
+	[parms dwToken: count.
+	ret := lib
+				httpQueryServiceConfiguration: 0
+				configId: HttpServiceConfigSSLCertInfo
+				pInput: parms
+				inputLength: parms byteSize
+				pOutput: nil
+				outputLength: 0
+				pReturnLength: bufSize
+				pOverlapped: nil.
+	ret == Win32Errors.ERROR_NO_MORE_ITEMS]
+			whileFalse: 
+				[| buf sizeRequired |
+				ret == Win32Errors.ERROR_INSUFFICIENT_BUFFER ifFalse: [Win32Error signalWith: ret].
+				sizeRequired := bufSize value.
+				buf := HTTP_SERVICE_CONFIG_SSL_SET new: sizeRequired.
+				ret := lib
+							httpQueryServiceConfiguration: 0
+							configId: HttpServiceConfigSSLCertInfo
+							pInput: parms
+							inputLength: parms byteSize
+							pOutput: buf
+							outputLength: sizeRequired
+							pReturnLength: bufSize
+							pOverlapped: nil.
+				ret == 0 ifFalse: [Win32Error signalWith: ret].
+				answer addLast: buf.
+				count := count + 1].
+	^answer! !
 !HttpApiLibrary class categoriesFor: #apiVersion!constants!public! !
-!HttpApiLibrary class categoriesFor: #example1!public! !
+!HttpApiLibrary class categoriesFor: #example1!examples!public! !
+!HttpApiLibrary class categoriesFor: #example3!examples!public! !
+!HttpApiLibrary class categoriesFor: #example4!examples!public! !
+!HttpApiLibrary class categoriesFor: #example6!examples!public! !
+!HttpApiLibrary class categoriesFor: #example7!examples!public! !
 !HttpApiLibrary class categoriesFor: #fileName!**auto generated**!constants!public! !
 !HttpApiLibrary class categoriesFor: #initFlags!constants!public! !
+!HttpApiLibrary class categoriesFor: #querySslCertInfo!examples!public! !
 

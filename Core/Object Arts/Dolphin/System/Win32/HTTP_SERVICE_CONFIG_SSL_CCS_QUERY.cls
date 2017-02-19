@@ -1,87 +1,75 @@
 "Filed out from Dolphin Smalltalk 7"!
 
-ExternalStructure subclass: #HTTP_SERVICE_CONFIG_SSL_CCS_QUERY
+HttpServiceConfigQuery subclass: #HTTP_SERVICE_CONFIG_SSL_CCS_QUERY
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-HTTP_SERVICE_CONFIG_SSL_CCS_QUERY guid: (GUID fromString: '{D6A678D5-678E-4BF6-AB65-77C8E6A641A9}')!
+HTTP_SERVICE_CONFIG_SSL_CCS_QUERY guid: (GUID fromString: '{d6a678d5-678e-4bf6-ab65-77c8e6a641a9}')!
 HTTP_SERVICE_CONFIG_SSL_CCS_QUERY comment: '<HTTP_SERVICE_CONFIG_SSL_CCS_QUERY> is an <ExternalStructure> class to wrap the struct ''Win32.HTTP_SERVICE_CONFIG_SSL_CCS_QUERY'' from type information in the ''Win32 API'' library.
 
 The type library contains the following helpstring for this struct
 	"Used with HttpQueryServiceConfiguration() to query a HttpServiceConfigSslCcsCertInfo record from the SSL store."
 
-Warning: This comment was automatically generated from the struct''s type information, but any changes made here will not be overwritten if the wrapper class is regenerated.
+** This comment was automatically generated from a type library. Delete this line to prevent any manual edits from being overwritten if the wrapper class is regenerated. **
 
 IDL definition follows:
 
-typedef [uuid(D6A678D5-678E-4BF6-AB65-77C8E6A641A9), helpstring("Used with HttpQueryServiceConfiguration() to query a HttpServiceConfigSslCcsCertInfo record from the SSL store.")]
+typedef [uuid(d6a678d5-678e-4bf6-ab65-77c8e6a641a9), helpstring("Used with HttpQueryServiceConfiguration() to query a HttpServiceConfigSslCcsCertInfo record from the SSL store.")]
 struct tagHTTP_SERVICE_CONFIG_SSL_CCS_QUERY {
-	HTTP_SERVICE_CONFIG_QUERY_TYPE QueryDesc;
+	HttpServiceConfigQuery;
 	HTTP_SERVICE_CONFIG_SSL_CCS_KEY KeyDesc;
-	unsigned long dwToken;
+	DWORD dwToken;
 } HTTP_SERVICE_CONFIG_SSL_CCS_QUERY;
 '!
 !HTTP_SERVICE_CONFIG_SSL_CCS_QUERY categoriesForClass!Win32-Structs! !
 !HTTP_SERVICE_CONFIG_SSL_CCS_QUERY methodsFor!
 
 dwToken
-	"Answer the receiver's dwToken field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'dwToken' field."
 
 	^bytes dwordAtOffset: ##(self offsetOf: #dwToken)!
 
-dwToken: anObject
-	"Set the receiver's dwToken field to the value of anObject."
+dwToken: anInteger
+	"Set the receiver's 'dwToken' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #dwToken) put: anObject!
+	bytes dwordAtOffset: ##(self offsetOf: #dwToken) put: anInteger!
 
 KeyDesc
-	"Answer the receiver's KeyDesc field as a Smalltalk object."
+	"Answer the <SOCKADDR_STORAGE> value of the receiver's 'KeyDesc' field."
 
 	^SOCKADDR_STORAGE fromAddress: bytes yourAddress + ##(self offsetOf: #KeyDesc)!
 
-KeyDesc: anObject
-	"Set the receiver's KeyDesc field to the value of anObject."
+KeyDesc: aSOCKADDR_STORAGE
+	"Set the receiver's 'KeyDesc' field to the value of the argument, aSOCKADDR_STORAGE"
 
-	anObject
+	aSOCKADDR_STORAGE
 		replaceBytesOf: bytes
 		from: ##((self offsetOf: #KeyDesc) + 1)
 		to: ##((self offsetOf: #KeyDesc) + SOCKADDR_STORAGE basicByteSize)
-		startingAt: 1!
-
-QueryDesc
-	"Answer the receiver's QueryDesc field as a Smalltalk object."
-
-	^bytes sdwordAtOffset: 0!
-
-QueryDesc: anObject
-	"Set the receiver's QueryDesc field to the value of anObject."
-
-	bytes sdwordAtOffset: 0 put: anObject! !
+		startingAt: 1! !
 !HTTP_SERVICE_CONFIG_SSL_CCS_QUERY categoriesFor: #dwToken!**compiled accessors**!public! !
 !HTTP_SERVICE_CONFIG_SSL_CCS_QUERY categoriesFor: #dwToken:!**compiled accessors**!public! !
 !HTTP_SERVICE_CONFIG_SSL_CCS_QUERY categoriesFor: #KeyDesc!**compiled accessors**!public! !
 !HTTP_SERVICE_CONFIG_SSL_CCS_QUERY categoriesFor: #KeyDesc:!**compiled accessors**!public! !
-!HTTP_SERVICE_CONFIG_SSL_CCS_QUERY categoriesFor: #QueryDesc!**compiled accessors**!public! !
-!HTTP_SERVICE_CONFIG_SSL_CCS_QUERY categoriesFor: #QueryDesc:!**compiled accessors**!public! !
 
 !HTTP_SERVICE_CONFIG_SSL_CCS_QUERY class methodsFor!
 
 defineFields
 	"Define the fields of the HTTP_SERVICE_CONFIG_SSL_CCS_QUERY structure.
 
-	HTTP_SERVICE_CONFIG_SSL_CCS_QUERY  compileDefinition
+	HTTP_SERVICE_CONFIG_SSL_CCS_QUERY compileDefinition
 
-		typedef [uuid(D6A678D5-678E-4BF6-AB65-77C8E6A641A9), helpstring('Used with HttpQueryServiceConfiguration() to query a HttpServiceConfigSslCcsCertInfo record from the SSL store.')]
+		typedef [uuid(d6a678d5-678e-4bf6-ab65-77c8e6a641a9), helpstring('Used with HttpQueryServiceConfiguration() to query a HttpServiceConfigSslCcsCertInfo record from the SSL store.')]
 		struct tagHTTP_SERVICE_CONFIG_SSL_CCS_QUERY {
-			HTTP_SERVICE_CONFIG_QUERY_TYPE QueryDesc;
+			HttpServiceConfigQuery;
 			HTTP_SERVICE_CONFIG_SSL_CCS_KEY KeyDesc;
-			unsigned long dwToken;
+			DWORD dwToken;
 		} HTTP_SERVICE_CONFIG_SSL_CCS_QUERY;
 "
 
+	super defineFields.
 	self
-		defineField: #QueryDesc type: SDWORDField new offset: 0;
 		defineField: #KeyDesc type: (StructureField type: SOCKADDR_STORAGE) offset: 8;
 		defineField: #dwToken type: DWORDField new offset: 136.
 	self byteSize: 144! !

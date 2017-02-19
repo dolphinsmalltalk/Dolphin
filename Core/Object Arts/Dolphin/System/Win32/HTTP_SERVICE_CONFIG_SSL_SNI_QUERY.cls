@@ -1,87 +1,75 @@
 "Filed out from Dolphin Smalltalk 7"!
 
-ExternalStructure subclass: #HTTP_SERVICE_CONFIG_SSL_SNI_QUERY
+HttpServiceConfigQuery subclass: #HTTP_SERVICE_CONFIG_SSL_SNI_QUERY
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-HTTP_SERVICE_CONFIG_SSL_SNI_QUERY guid: (GUID fromString: '{4D8CBFDF-8766-4E01-A7F0-C775406DD04C}')!
+HTTP_SERVICE_CONFIG_SSL_SNI_QUERY guid: (GUID fromString: '{4d8cbfdf-8766-4e01-a7f0-c775406dd04c}')!
 HTTP_SERVICE_CONFIG_SSL_SNI_QUERY comment: '<HTTP_SERVICE_CONFIG_SSL_SNI_QUERY> is an <ExternalStructure> class to wrap the struct ''Win32.HTTP_SERVICE_CONFIG_SSL_SNI_QUERY'' from type information in the ''Win32 API'' library.
 
 The type library contains the following helpstring for this struct
 	"Used with HttpQueryServiceConfiguration() to query a HttpServiceConfigSSLSniCertInfo record from the SSL store."
 
-Warning: This comment was automatically generated from the struct''s type information, but any changes made here will not be overwritten if the wrapper class is regenerated.
+** This comment was automatically generated from a type library. Delete this line to prevent any manual edits from being overwritten if the wrapper class is regenerated. **
 
 IDL definition follows:
 
-typedef [uuid(4D8CBFDF-8766-4E01-A7F0-C775406DD04C), helpstring("Used with HttpQueryServiceConfiguration() to query a HttpServiceConfigSSLSniCertInfo record from the SSL store.")]
+typedef [uuid(4d8cbfdf-8766-4e01-a7f0-c775406dd04c), helpstring("Used with HttpQueryServiceConfiguration() to query a HttpServiceConfigSSLSniCertInfo record from the SSL store.")]
 struct tagHTTP_SERVICE_CONFIG_SSL_SNI_QUERY {
-	HTTP_SERVICE_CONFIG_QUERY_TYPE QueryDesc;
+	HttpServiceConfigQuery;
 	HTTP_SERVICE_CONFIG_SSL_SNI_KEY KeyDesc;
-	unsigned long dwToken;
+	DWORD dwToken;
 } HTTP_SERVICE_CONFIG_SSL_SNI_QUERY;
 '!
 !HTTP_SERVICE_CONFIG_SSL_SNI_QUERY categoriesForClass!Win32-Structs! !
 !HTTP_SERVICE_CONFIG_SSL_SNI_QUERY methodsFor!
 
 dwToken
-	"Answer the receiver's dwToken field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'dwToken' field."
 
 	^bytes dwordAtOffset: ##(self offsetOf: #dwToken)!
 
-dwToken: anObject
-	"Set the receiver's dwToken field to the value of anObject."
+dwToken: anInteger
+	"Set the receiver's 'dwToken' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #dwToken) put: anObject!
+	bytes dwordAtOffset: ##(self offsetOf: #dwToken) put: anInteger!
 
 KeyDesc
-	"Answer the receiver's KeyDesc field as a Smalltalk object."
+	"Answer the <HTTP_SERVICE_CONFIG_SSL_SNI_KEY> value of the receiver's 'KeyDesc' field."
 
 	^HTTP_SERVICE_CONFIG_SSL_SNI_KEY fromAddress: bytes yourAddress + ##(self offsetOf: #KeyDesc)!
 
-KeyDesc: anObject
-	"Set the receiver's KeyDesc field to the value of anObject."
+KeyDesc: aHTTP_SERVICE_CONFIG_SSL_SNI_KEY
+	"Set the receiver's 'KeyDesc' field to the value of the argument, aHTTP_SERVICE_CONFIG_SSL_SNI_KEY"
 
-	anObject
+	aHTTP_SERVICE_CONFIG_SSL_SNI_KEY
 		replaceBytesOf: bytes
 		from: ##((self offsetOf: #KeyDesc) + 1)
 		to: ##((self offsetOf: #KeyDesc) + HTTP_SERVICE_CONFIG_SSL_SNI_KEY basicByteSize)
-		startingAt: 1!
-
-QueryDesc
-	"Answer the receiver's QueryDesc field as a Smalltalk object."
-
-	^bytes sdwordAtOffset: 0!
-
-QueryDesc: anObject
-	"Set the receiver's QueryDesc field to the value of anObject."
-
-	bytes sdwordAtOffset: 0 put: anObject! !
+		startingAt: 1! !
 !HTTP_SERVICE_CONFIG_SSL_SNI_QUERY categoriesFor: #dwToken!**compiled accessors**!public! !
 !HTTP_SERVICE_CONFIG_SSL_SNI_QUERY categoriesFor: #dwToken:!**compiled accessors**!public! !
 !HTTP_SERVICE_CONFIG_SSL_SNI_QUERY categoriesFor: #KeyDesc!**compiled accessors**!public! !
 !HTTP_SERVICE_CONFIG_SSL_SNI_QUERY categoriesFor: #KeyDesc:!**compiled accessors**!public! !
-!HTTP_SERVICE_CONFIG_SSL_SNI_QUERY categoriesFor: #QueryDesc!**compiled accessors**!public! !
-!HTTP_SERVICE_CONFIG_SSL_SNI_QUERY categoriesFor: #QueryDesc:!**compiled accessors**!public! !
 
 !HTTP_SERVICE_CONFIG_SSL_SNI_QUERY class methodsFor!
 
 defineFields
 	"Define the fields of the HTTP_SERVICE_CONFIG_SSL_SNI_QUERY structure.
 
-	HTTP_SERVICE_CONFIG_SSL_SNI_QUERY  compileDefinition
+	HTTP_SERVICE_CONFIG_SSL_SNI_QUERY compileDefinition
 
-		typedef [uuid(4D8CBFDF-8766-4E01-A7F0-C775406DD04C), helpstring('Used with HttpQueryServiceConfiguration() to query a HttpServiceConfigSSLSniCertInfo record from the SSL store.')]
+		typedef [uuid(4d8cbfdf-8766-4e01-a7f0-c775406dd04c), helpstring('Used with HttpQueryServiceConfiguration() to query a HttpServiceConfigSSLSniCertInfo record from the SSL store.')]
 		struct tagHTTP_SERVICE_CONFIG_SSL_SNI_QUERY {
-			HTTP_SERVICE_CONFIG_QUERY_TYPE QueryDesc;
+			HttpServiceConfigQuery;
 			HTTP_SERVICE_CONFIG_SSL_SNI_KEY KeyDesc;
-			unsigned long dwToken;
+			DWORD dwToken;
 		} HTTP_SERVICE_CONFIG_SSL_SNI_QUERY;
 "
 
+	super defineFields.
 	self
-		defineField: #QueryDesc type: SDWORDField new offset: 0;
 		defineField: #KeyDesc type: (StructureField type: HTTP_SERVICE_CONFIG_SSL_SNI_KEY) offset: 8;
 		defineField: #dwToken type: DWORDField new offset: 144.
 	self byteSize: 152! !

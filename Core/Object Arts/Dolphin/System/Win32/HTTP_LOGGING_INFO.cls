@@ -1,35 +1,35 @@
 "Filed out from Dolphin Smalltalk 7"!
 
-ExternalStructure subclass: #HTTP_LOGGING_INFO
+HTTP_PROPERTY_FLAGS subclass: #HTTP_LOGGING_INFO
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-HTTP_LOGGING_INFO guid: (GUID fromString: '{41C67887-C529-4196-9C0F-5BB698324D32}')!
+HTTP_LOGGING_INFO guid: (GUID fromString: '{41c67887-c529-4196-9c0f-5bb698324d32}')!
 HTTP_LOGGING_INFO comment: '<HTTP_LOGGING_INFO> is an <ExternalStructure> class to wrap the struct ''Win32.HTTP_LOGGING_INFO'' from type information in the ''Win32 API'' library.
 
 The type library contains the following helpstring for this struct
 	"Configuration structure used for setting the logging property."
 
-Warning: This comment was automatically generated from the struct''s type information, but any changes made here will not be overwritten if the wrapper class is regenerated.
+** This comment was automatically generated from a type library. Delete this line to prevent any manual edits from being overwritten if the wrapper class is regenerated. **
 
 IDL definition follows:
 
-typedef [uuid(41C67887-C529-4196-9C0F-5BB698324D32), helpstring("Configuration structure used for setting the logging property.")]
+typedef [uuid(41c67887-c529-4196-9c0f-5bb698324d32), helpstring("Configuration structure used for setting the logging property.")]
 struct tagHTTP_LOGGING_INFO {
-	[helpstring("Specifies whether this property exists or not.")] HTTP_PROPERTY_FLAGS flags;
-	[helpstring("Optional logging flags.")] unsigned long LoggingFlags;
+	[helpstring("Specifies whether this property exists or not.")] HTTP_PROPERTY_FLAGS;
+	[helpstring("Optional logging flags.")] ULONG LoggingFlags;
 	[helpstring("Optional informational software directive string for W3C type logging. Not used for other types of logging. If nothing is provided here HTTPAPI will log a default string. Any arbitrary string could be used here to identify the application.")] LPCWSTR SoftwareName;
-	[helpstring("Lengh of SoftwareName in number of bytes. Cannot be greater than MAX_PATH.")] unsigned short SoftwareNameLength;
-	[helpstring("Lengh of DirectoryName in number of bytes. Cannot be greater than MAX_PATH.")] unsigned short DirectoryNameLength;
+	[helpstring("Length of SoftwareName in number of bytes. Cannot be greater than MAX_PATH.")] USHORT SoftwareNameLength;
+	[helpstring("Length of DirectoryName in number of bytes. Cannot be greater than MAX_PATH.")] USHORT DirectoryNameLength;
 	[helpstring("Log file directory must be a fully qualified path.")] LPCWSTR DirectoryName;
 	[helpstring("Specifies the format for the log files.")] HTTP_LOGGING_TYPE Format;
-	[helpstring("Bitmask value indicates which fields to be logged if the log format is set to W3C.This must be the ''bitwise or'' of the HTTP_LOG_FIELD_... values.")] unsigned long Fields;
+	[helpstring("Bitmask value indicates which fields to be logged if the log format is set to W3C.This must be the ''bitwise or'' of the HTTP_LOG_FIELD_... values.")] ULONG Fields;
 	[helpstring("Reserved must be NULL.")] void* pExtFields;
-	[helpstring("Reserved must be zero.")] unsigned short NumOfExtFields;
-	[helpstring("Reserved must be zero.")] unsigned short MaxRecordSize;
+	[helpstring("Reserved must be zero.")] USHORT NumOfExtFields;
+	[helpstring("Reserved must be zero.")] USHORT MaxRecordSize;
 	[helpstring("Defines the rollover type for the log files.")] HTTP_LOGGING_ROLLOVER_TYPE RolloverType;
-	[helpstring("Indicates the maximum size (in bytes) after which the log files should be rolled over.A value of HTTP_LIMIT_INFINITE (-1) indicates an unlimited size. This value is discarded if rollover type is not set to HttpLoggingRolloverSize.")] unsigned long RolloverSize;
+	[helpstring("Indicates the maximum size (in bytes) after which the log files should be rolled over.A value of HTTP_LIMIT_INFINITE (-1) indicates an unlimited size. This value is discarded if rollover type is not set to HttpLoggingRolloverSize.")] ULONG RolloverSize;
 	[helpstring("Specifies the security descriptor to be applied to the log files and the sub - directories. If null we will inherit the system default. This security descriptor must be self-relative.")] void* pSecurityDescriptor;
 } HTTP_LOGGING_INFO;
 '!
@@ -37,152 +37,140 @@ struct tagHTTP_LOGGING_INFO {
 !HTTP_LOGGING_INFO methodsFor!
 
 DirectoryName
-	"Answer the receiver's DirectoryName field as a Smalltalk object."
+	"Answer the <UnicodeString> value of the receiver's 'DirectoryName' field."
 
 	^UnicodeString fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #DirectoryName))!
 
-DirectoryName: anObject
-	"Set the receiver's DirectoryName field to the value of anObject."
+DirectoryName: anUnicodeString
+	"Set the receiver's 'DirectoryName' field to the value of the argument, anUnicodeString"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #DirectoryName) put: anObject yourAddress!
+	bytes uintPtrAtOffset: ##(self offsetOf: #DirectoryName) put: anUnicodeString yourAddress!
 
 DirectoryNameLength
-	"Answer the receiver's DirectoryNameLength field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'DirectoryNameLength' field."
 
 	^bytes wordAtOffset: ##(self offsetOf: #DirectoryNameLength)!
 
-DirectoryNameLength: anObject
-	"Set the receiver's DirectoryNameLength field to the value of anObject."
+DirectoryNameLength: anInteger
+	"Set the receiver's 'DirectoryNameLength' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: ##(self offsetOf: #DirectoryNameLength) put: anObject!
+	bytes wordAtOffset: ##(self offsetOf: #DirectoryNameLength) put: anInteger!
 
 Fields
-	"Answer the receiver's Fields field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'Fields' field."
 
 	^bytes dwordAtOffset: ##(self offsetOf: #Fields)!
 
-Fields: anObject
-	"Set the receiver's Fields field to the value of anObject."
+Fields: anInteger
+	"Set the receiver's 'Fields' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #Fields) put: anObject!
-
-flags
-	"Answer the receiver's flags field as a Smalltalk object."
-
-	^bytes dwordAtOffset: 0!
-
-flags: anObject
-	"Set the receiver's flags field to the value of anObject."
-
-	bytes dwordAtOffset: 0 put: anObject!
+	bytes dwordAtOffset: ##(self offsetOf: #Fields) put: anInteger!
 
 Format
-	"Answer the receiver's Format field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'Format' field."
 
 	^bytes sdwordAtOffset: ##(self offsetOf: #Format)!
 
-Format: anObject
-	"Set the receiver's Format field to the value of anObject."
+Format: anInteger
+	"Set the receiver's 'Format' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: ##(self offsetOf: #Format) put: anObject!
+	bytes sdwordAtOffset: ##(self offsetOf: #Format) put: anInteger!
 
 LoggingFlags
-	"Answer the receiver's LoggingFlags field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'LoggingFlags' field."
 
 	^bytes dwordAtOffset: ##(self offsetOf: #LoggingFlags)!
 
-LoggingFlags: anObject
-	"Set the receiver's LoggingFlags field to the value of anObject."
+LoggingFlags: anInteger
+	"Set the receiver's 'LoggingFlags' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #LoggingFlags) put: anObject!
+	bytes dwordAtOffset: ##(self offsetOf: #LoggingFlags) put: anInteger!
 
 MaxRecordSize
-	"Answer the receiver's MaxRecordSize field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'MaxRecordSize' field."
 
 	^bytes wordAtOffset: ##(self offsetOf: #MaxRecordSize)!
 
-MaxRecordSize: anObject
-	"Set the receiver's MaxRecordSize field to the value of anObject."
+MaxRecordSize: anInteger
+	"Set the receiver's 'MaxRecordSize' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: ##(self offsetOf: #MaxRecordSize) put: anObject!
+	bytes wordAtOffset: ##(self offsetOf: #MaxRecordSize) put: anInteger!
 
 NumOfExtFields
-	"Answer the receiver's NumOfExtFields field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'NumOfExtFields' field."
 
 	^bytes wordAtOffset: ##(self offsetOf: #NumOfExtFields)!
 
-NumOfExtFields: anObject
-	"Set the receiver's NumOfExtFields field to the value of anObject."
+NumOfExtFields: anInteger
+	"Set the receiver's 'NumOfExtFields' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: ##(self offsetOf: #NumOfExtFields) put: anObject!
+	bytes wordAtOffset: ##(self offsetOf: #NumOfExtFields) put: anInteger!
 
 pExtFields
-	"Answer the receiver's pExtFields field as a Smalltalk object."
+	"Answer the <ExternalAddress> value of the receiver's 'pExtFields' field."
 
 	^(bytes uintPtrAtOffset: ##(self offsetOf: #pExtFields)) asExternalAddress!
 
-pExtFields: anObject
-	"Set the receiver's pExtFields field to the value of anObject."
+pExtFields: anExternalAddress
+	"Set the receiver's 'pExtFields' field to the value of the argument, anExternalAddress"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #pExtFields) put: anObject!
+	bytes uintPtrAtOffset: ##(self offsetOf: #pExtFields) put: anExternalAddress!
 
 pSecurityDescriptor
-	"Answer the receiver's pSecurityDescriptor field as a Smalltalk object."
+	"Answer the <ExternalAddress> value of the receiver's 'pSecurityDescriptor' field."
 
 	^(bytes uintPtrAtOffset: ##(self offsetOf: #pSecurityDescriptor)) asExternalAddress!
 
-pSecurityDescriptor: anObject
-	"Set the receiver's pSecurityDescriptor field to the value of anObject."
+pSecurityDescriptor: anExternalAddress
+	"Set the receiver's 'pSecurityDescriptor' field to the value of the argument, anExternalAddress"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #pSecurityDescriptor) put: anObject!
+	bytes uintPtrAtOffset: ##(self offsetOf: #pSecurityDescriptor) put: anExternalAddress!
 
 RolloverSize
-	"Answer the receiver's RolloverSize field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'RolloverSize' field."
 
 	^bytes dwordAtOffset: ##(self offsetOf: #RolloverSize)!
 
-RolloverSize: anObject
-	"Set the receiver's RolloverSize field to the value of anObject."
+RolloverSize: anInteger
+	"Set the receiver's 'RolloverSize' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #RolloverSize) put: anObject!
+	bytes dwordAtOffset: ##(self offsetOf: #RolloverSize) put: anInteger!
 
 RolloverType
-	"Answer the receiver's RolloverType field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'RolloverType' field."
 
 	^bytes sdwordAtOffset: ##(self offsetOf: #RolloverType)!
 
-RolloverType: anObject
-	"Set the receiver's RolloverType field to the value of anObject."
+RolloverType: anInteger
+	"Set the receiver's 'RolloverType' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: ##(self offsetOf: #RolloverType) put: anObject!
+	bytes sdwordAtOffset: ##(self offsetOf: #RolloverType) put: anInteger!
 
 SoftwareName
-	"Answer the receiver's SoftwareName field as a Smalltalk object."
+	"Answer the <UnicodeString> value of the receiver's 'SoftwareName' field."
 
 	^UnicodeString fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #SoftwareName))!
 
-SoftwareName: anObject
-	"Set the receiver's SoftwareName field to the value of anObject."
+SoftwareName: anUnicodeString
+	"Set the receiver's 'SoftwareName' field to the value of the argument, anUnicodeString"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #SoftwareName) put: anObject yourAddress!
+	bytes uintPtrAtOffset: ##(self offsetOf: #SoftwareName) put: anUnicodeString yourAddress!
 
 SoftwareNameLength
-	"Answer the receiver's SoftwareNameLength field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'SoftwareNameLength' field."
 
 	^bytes wordAtOffset: ##(self offsetOf: #SoftwareNameLength)!
 
-SoftwareNameLength: anObject
-	"Set the receiver's SoftwareNameLength field to the value of anObject."
+SoftwareNameLength: anInteger
+	"Set the receiver's 'SoftwareNameLength' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: ##(self offsetOf: #SoftwareNameLength) put: anObject! !
+	bytes wordAtOffset: ##(self offsetOf: #SoftwareNameLength) put: anInteger! !
 !HTTP_LOGGING_INFO categoriesFor: #DirectoryName!**compiled accessors**!public! !
 !HTTP_LOGGING_INFO categoriesFor: #DirectoryName:!**compiled accessors**!public! !
 !HTTP_LOGGING_INFO categoriesFor: #DirectoryNameLength!**compiled accessors**!public! !
 !HTTP_LOGGING_INFO categoriesFor: #DirectoryNameLength:!**compiled accessors**!public! !
 !HTTP_LOGGING_INFO categoriesFor: #Fields!**compiled accessors**!public! !
 !HTTP_LOGGING_INFO categoriesFor: #Fields:!**compiled accessors**!public! !
-!HTTP_LOGGING_INFO categoriesFor: #flags!**compiled accessors**!public! !
-!HTTP_LOGGING_INFO categoriesFor: #flags:!**compiled accessors**!public! !
 !HTTP_LOGGING_INFO categoriesFor: #Format!**compiled accessors**!public! !
 !HTTP_LOGGING_INFO categoriesFor: #Format:!**compiled accessors**!public! !
 !HTTP_LOGGING_INFO categoriesFor: #LoggingFlags!**compiled accessors**!public! !
@@ -209,29 +197,29 @@ SoftwareNameLength: anObject
 defineFields
 	"Define the fields of the HTTP_LOGGING_INFO structure.
 
-	HTTP_LOGGING_INFO  compileDefinition
+	HTTP_LOGGING_INFO compileDefinition
 
-		typedef [uuid(41C67887-C529-4196-9C0F-5BB698324D32), helpstring('Configuration structure used for setting the logging property.')]
+		typedef [uuid(41c67887-c529-4196-9c0f-5bb698324d32), helpstring('Configuration structure used for setting the logging property.')]
 		struct tagHTTP_LOGGING_INFO {
-			[helpstring('Specifies whether this property exists or not.')] HTTP_PROPERTY_FLAGS flags;
-			[helpstring('Optional logging flags.')] unsigned long LoggingFlags;
+			[helpstring('Specifies whether this property exists or not.')] HTTP_PROPERTY_FLAGS;
+			[helpstring('Optional logging flags.')] ULONG LoggingFlags;
 			[helpstring('Optional informational software directive string for W3C type logging. Not used for other types of logging. If nothing is provided here HTTPAPI will log a default string. Any arbitrary string could be used here to identify the application.')] LPCWSTR SoftwareName;
-			[helpstring('Lengh of SoftwareName in number of bytes. Cannot be greater than MAX_PATH.')] unsigned short SoftwareNameLength;
-			[helpstring('Lengh of DirectoryName in number of bytes. Cannot be greater than MAX_PATH.')] unsigned short DirectoryNameLength;
+			[helpstring('Length of SoftwareName in number of bytes. Cannot be greater than MAX_PATH.')] USHORT SoftwareNameLength;
+			[helpstring('Length of DirectoryName in number of bytes. Cannot be greater than MAX_PATH.')] USHORT DirectoryNameLength;
 			[helpstring('Log file directory must be a fully qualified path.')] LPCWSTR DirectoryName;
 			[helpstring('Specifies the format for the log files.')] HTTP_LOGGING_TYPE Format;
-			[helpstring('Bitmask value indicates which fields to be logged if the log format is set to W3C.This must be the 'bitwise or' of the HTTP_LOG_FIELD_... values.')] unsigned long Fields;
+			[helpstring('Bitmask value indicates which fields to be logged if the log format is set to W3C.This must be the 'bitwise or' of the HTTP_LOG_FIELD_... values.')] ULONG Fields;
 			[helpstring('Reserved must be NULL.')] void* pExtFields;
-			[helpstring('Reserved must be zero.')] unsigned short NumOfExtFields;
-			[helpstring('Reserved must be zero.')] unsigned short MaxRecordSize;
+			[helpstring('Reserved must be zero.')] USHORT NumOfExtFields;
+			[helpstring('Reserved must be zero.')] USHORT MaxRecordSize;
 			[helpstring('Defines the rollover type for the log files.')] HTTP_LOGGING_ROLLOVER_TYPE RolloverType;
-			[helpstring('Indicates the maximum size (in bytes) after which the log files should be rolled over.A value of HTTP_LIMIT_INFINITE (-1) indicates an unlimited size. This value is discarded if rollover type is not set to HttpLoggingRolloverSize.')] unsigned long RolloverSize;
+			[helpstring('Indicates the maximum size (in bytes) after which the log files should be rolled over.A value of HTTP_LIMIT_INFINITE (-1) indicates an unlimited size. This value is discarded if rollover type is not set to HttpLoggingRolloverSize.')] ULONG RolloverSize;
 			[helpstring('Specifies the security descriptor to be applied to the log files and the sub - directories. If null we will inherit the system default. This security descriptor must be self-relative.')] void* pSecurityDescriptor;
 		} HTTP_LOGGING_INFO;
 "
 
+	super defineFields.
 	self
-		defineField: #flags type: DWORDField new offset: 0;
 		defineField: #LoggingFlags type: DWORDField new offset: 4;
 		defineField: #SoftwareName type: (PointerField type: UnicodeString) offset: 8;
 		defineField: #SoftwareNameLength type: WORDField new offset: 12;

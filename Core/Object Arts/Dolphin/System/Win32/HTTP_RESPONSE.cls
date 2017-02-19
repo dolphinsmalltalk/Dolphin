@@ -5,27 +5,27 @@ ExternalStructure subclass: #HTTP_RESPONSE
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-HTTP_RESPONSE guid: (GUID fromString: '{5E3A97DA-7345-49A7-A5A9-1DDEA2366EB2}')!
+HTTP_RESPONSE guid: (GUID fromString: '{5e3a97da-7345-49a7-a5a9-1ddea2366eb2}')!
 HTTP_RESPONSE comment: '<HTTP_RESPONSE> is an <ExternalStructure> class to wrap the struct ''Win32.HTTP_RESPONSE'' from type information in the ''Win32 API'' library.
 
 The type library contains the following helpstring for this struct
 	"This structure describes an HTTP response."
 
-Warning: This comment was automatically generated from the struct''s type information, but any changes made here will not be overwritten if the wrapper class is regenerated.
+** This comment was automatically generated from a type library. Delete this line to prevent any manual edits from being overwritten if the wrapper class is regenerated. **
 
 IDL definition follows:
 
-typedef [uuid(5E3A97DA-7345-49A7-A5A9-1DDEA2366EB2), helpstring("This structure describes an HTTP response.")]
+typedef [uuid(5e3a97da-7345-49a7-a5a9-1ddea2366eb2), helpstring("This structure describes an HTTP response.")]
 struct tagHTTP_RESPONSE {
-	[helpstring("Response flags from the HTTP_RESPONSE_FLAGS_* constants.")] unsigned long flags;
+	[helpstring("Response flags from the HTTP_RESPONSE_FLAGS_* constants.")] ULONG flags;
 	[helpstring("The raw HTTP protocol version number.")] HTTP_VERSION Version;
-	[helpstring("The HTTP status code (e.g., 200).")] unsigned short StatusCode;
-	unsigned short ReasonLength;
+	[helpstring("The HTTP status code (e.g., 200).")] USHORT StatusCode;
+	USHORT ReasonLength;
 	[helpstring("The HTTP reason (e.g., ''OK''). This MUST not contain non-ASCII characters (i.e., all chars must be in range 0x20-0x7E).")] LPCSTR pReason;
 	[helpstring("The response headers.")] HTTP_RESPONSE_HEADERS Headers;
-	unsigned short EntityChunkCount;
+	USHORT EntityChunkCount;
 	[helpstring("pEntityChunks points to an array of EntityChunkCount HTTP_DATA_CHUNKs.")] HTTP_DATA_CHUNK* pEntityChunks;
-	unsigned short ResponseInfoCount;
+	USHORT ResponseInfoCount;
 	PHTTP_RESPONSE_INFO pResponseInfo;
 } HTTP_RESPONSE;
 '!
@@ -33,110 +33,110 @@ struct tagHTTP_RESPONSE {
 !HTTP_RESPONSE methodsFor!
 
 EntityChunkCount
-	"Answer the receiver's EntityChunkCount field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'EntityChunkCount' field."
 
 	^bytes wordAtOffset: ##(self offsetOf: #EntityChunkCount)!
 
-EntityChunkCount: anObject
-	"Set the receiver's EntityChunkCount field to the value of anObject."
+EntityChunkCount: anInteger
+	"Set the receiver's 'EntityChunkCount' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: ##(self offsetOf: #EntityChunkCount) put: anObject!
+	bytes wordAtOffset: ##(self offsetOf: #EntityChunkCount) put: anInteger!
 
 flags
-	"Answer the receiver's flags field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'flags' field."
 
 	^bytes dwordAtOffset: 0!
 
-flags: anObject
-	"Set the receiver's flags field to the value of anObject."
+flags: anInteger
+	"Set the receiver's 'flags' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: 0 put: anObject!
+	bytes dwordAtOffset: 0 put: anInteger!
 
 Headers
-	"Answer the receiver's Headers field as a Smalltalk object."
+	"Answer the <HTTP_RESPONSE_HEADERS> value of the receiver's 'Headers' field."
 
 	^HTTP_RESPONSE_HEADERS fromAddress: bytes yourAddress + ##(self offsetOf: #Headers)!
 
-Headers: anObject
-	"Set the receiver's Headers field to the value of anObject."
+Headers: aHTTP_RESPONSE_HEADERS
+	"Set the receiver's 'Headers' field to the value of the argument, aHTTP_RESPONSE_HEADERS"
 
-	anObject
+	aHTTP_RESPONSE_HEADERS
 		replaceBytesOf: bytes
 		from: ##((self offsetOf: #Headers) + 1)
 		to: ##((self offsetOf: #Headers) + HTTP_RESPONSE_HEADERS basicByteSize)
 		startingAt: 1!
 
 pEntityChunks
-	"Answer the receiver's pEntityChunks field as a Smalltalk object."
+	"Answer the <HTTP_DATA_CHUNK> value of the receiver's 'pEntityChunks' field."
 
 	^HTTP_DATA_CHUNK fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #pEntityChunks))!
 
-pEntityChunks: anObject
-	"Set the receiver's pEntityChunks field to the value of anObject."
+pEntityChunks: aHTTP_DATA_CHUNK
+	"Set the receiver's 'pEntityChunks' field to the value of the argument, aHTTP_DATA_CHUNK"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #pEntityChunks) put: anObject yourAddress!
+	bytes uintPtrAtOffset: ##(self offsetOf: #pEntityChunks) put: aHTTP_DATA_CHUNK yourAddress!
 
 pReason
-	"Answer the receiver's pReason field as a Smalltalk object."
+	"Answer the <String> value of the receiver's 'pReason' field."
 
 	^String fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #pReason))!
 
-pReason: anObject
-	"Set the receiver's pReason field to the value of anObject."
+pReason: aString
+	"Set the receiver's 'pReason' field to the value of the argument, aString"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #pReason) put: anObject yourAddress!
+	bytes uintPtrAtOffset: ##(self offsetOf: #pReason) put: aString yourAddress!
 
 pResponseInfo
-	"Answer the receiver's pResponseInfo field as a Smalltalk object."
+	"Answer the <HTTP_RESPONSE_INFO> value of the receiver's 'pResponseInfo' field."
 
 	^HTTP_RESPONSE_INFO fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #pResponseInfo))!
 
-pResponseInfo: anObject
-	"Set the receiver's pResponseInfo field to the value of anObject."
+pResponseInfo: aHTTP_RESPONSE_INFO
+	"Set the receiver's 'pResponseInfo' field to the value of the argument, aHTTP_RESPONSE_INFO"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #pResponseInfo) put: anObject yourAddress!
+	bytes uintPtrAtOffset: ##(self offsetOf: #pResponseInfo) put: aHTTP_RESPONSE_INFO yourAddress!
 
 ReasonLength
-	"Answer the receiver's ReasonLength field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'ReasonLength' field."
 
 	^bytes wordAtOffset: ##(self offsetOf: #ReasonLength)!
 
-ReasonLength: anObject
-	"Set the receiver's ReasonLength field to the value of anObject."
+ReasonLength: anInteger
+	"Set the receiver's 'ReasonLength' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: ##(self offsetOf: #ReasonLength) put: anObject!
+	bytes wordAtOffset: ##(self offsetOf: #ReasonLength) put: anInteger!
 
 ResponseInfoCount
-	"Answer the receiver's ResponseInfoCount field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'ResponseInfoCount' field."
 
 	^bytes wordAtOffset: ##(self offsetOf: #ResponseInfoCount)!
 
-ResponseInfoCount: anObject
-	"Set the receiver's ResponseInfoCount field to the value of anObject."
+ResponseInfoCount: anInteger
+	"Set the receiver's 'ResponseInfoCount' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: ##(self offsetOf: #ResponseInfoCount) put: anObject!
+	bytes wordAtOffset: ##(self offsetOf: #ResponseInfoCount) put: anInteger!
 
 StatusCode
-	"Answer the receiver's StatusCode field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'StatusCode' field."
 
 	^bytes wordAtOffset: ##(self offsetOf: #StatusCode)!
 
-StatusCode: anObject
-	"Set the receiver's StatusCode field to the value of anObject."
+StatusCode: anInteger
+	"Set the receiver's 'StatusCode' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: ##(self offsetOf: #StatusCode) put: anObject!
+	bytes wordAtOffset: ##(self offsetOf: #StatusCode) put: anInteger!
 
 Version
-	"Answer the receiver's Version field as a Smalltalk object."
+	"Answer the <WORDArray> value of the receiver's 'Version' field."
 
 	^WORDArray fromAddress: bytes yourAddress + ##(self offsetOf: #Version) length: 2!
 
-Version: anObject
-	"Set the receiver's Version field to the value of anObject."
+Version: aWORDArray
+	"Set the receiver's 'Version' field to the value of the argument, aWORDArray"
 
 	| size |
-	size := anObject byteSize min: ##(2 * WORDArray elementSize).
-	anObject
+	size := aWORDArray byteSize min: ##(2 * WORDArray elementSize).
+	aWORDArray
 		replaceBytesOf: bytes
 		from: ##((self offsetOf: #Version) + 1)
 		to: ##(self offsetOf: #Version) + size
@@ -169,17 +169,17 @@ defineFields
 
 	HTTP_RESPONSE  compileDefinition
 
-		typedef [uuid(5E3A97DA-7345-49A7-A5A9-1DDEA2366EB2), helpstring('This structure describes an HTTP response.')]
+		typedef [uuid(5e3a97da-7345-49a7-a5a9-1ddea2366eb2), helpstring('This structure describes an HTTP response.')]
 		struct tagHTTP_RESPONSE {
-			[helpstring('Response flags from the HTTP_RESPONSE_FLAGS_* constants.')] unsigned long flags;
+			[helpstring('Response flags from the HTTP_RESPONSE_FLAGS_* constants.')] ULONG flags;
 			[helpstring('The raw HTTP protocol version number.')] HTTP_VERSION Version;
-			[helpstring('The HTTP status code (e.g., 200).')] unsigned short StatusCode;
-			unsigned short ReasonLength;
+			[helpstring('The HTTP status code (e.g., 200).')] USHORT StatusCode;
+			USHORT ReasonLength;
 			[helpstring('The HTTP reason (e.g., 'OK'). This MUST not contain non-ASCII characters (i.e., all chars must be in range 0x20-0x7E).')] LPCSTR pReason;
 			[helpstring('The response headers.')] HTTP_RESPONSE_HEADERS Headers;
-			unsigned short EntityChunkCount;
+			USHORT EntityChunkCount;
 			[helpstring('pEntityChunks points to an array of EntityChunkCount HTTP_DATA_CHUNKs.')] HTTP_DATA_CHUNK* pEntityChunks;
-			unsigned short ResponseInfoCount;
+			USHORT ResponseInfoCount;
 			PHTTP_RESPONSE_INFO pResponseInfo;
 		} HTTP_RESPONSE;
 "
