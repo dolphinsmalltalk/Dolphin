@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ExternalStructure subclass: #NCCALCSIZE_PARAMS
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-NCCALCSIZE_PARAMS guid: (GUID fromString: '{DBC3695F-4C20-411C-8110-539CE4BE4B4A}')!
+NCCALCSIZE_PARAMS guid: (GUID fromString: '{dbc3695f-4c20-411c-8110-539ce4be4b4a}')!
 NCCALCSIZE_PARAMS comment: '<NCCALCSIZE_PARAMS> is an <ExternalStructure> class to wrap the struct ''Win32.NCCALCSIZE_PARAMS'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -24,29 +24,29 @@ struct tagNCCALCSIZE_PARAMS {
 !NCCALCSIZE_PARAMS methodsFor!
 
 lppos
-	"Answer the receiver's lppos field as a Smalltalk object."
+	"Answer the <WINDOWPOS> value of the receiver's 'lppos' field."
 
 	^WINDOWPOS fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #lppos))!
 
-lppos: anObject 
-	"Set the receiver's lppos field to the value of anObject."
+lppos: aWINDOWPOS
+	"Set the receiver's 'lppos' field to the value of the argument, aWINDOWPOS"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #lppos) put: anObject yourAddress!
+	bytes uintPtrAtOffset: ##(self offsetOf: #lppos) put: aWINDOWPOS yourAddress!
 
 rgrc
-	"Answer the receiver's rgrc field as a Smalltalk object."
+	"Answer the <StructureArray> value of the receiver's 'rgrc' field."
 
-	^StructureArray 
+	^StructureArray
 		fromAddress: bytes yourAddress
 		length: 3
 		elementClass: RECT!
 
-rgrc: anObject 
-	"Set the receiver's rgrc field to the value of anObject."
+rgrc: aStructureArrayOfRECT
+	"Set the receiver's 'rgrc' field to the value of the argument, aStructureArrayOfRECT"
 
 	| size |
-	size := anObject byteSize min: ##(3 * RECT basicByteSize).
-	anObject 
+	size := aStructureArrayOfRECT byteSize min: ##(3 * RECT basicByteSize).
+	aStructureArrayOfRECT
 		replaceBytesOf: bytes
 		from: 1
 		to: size
