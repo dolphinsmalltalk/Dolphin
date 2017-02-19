@@ -1,41 +1,42 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ExternalStructure subclass: #CPINFO
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-CPINFO guid: (GUID fromString: '{00C3C027-FA7E-43CB-B7CC-39D358049048}')!
-CPINFO comment: '<CPINFO> is an <ExternalStructure> class to wrap the struct ''Win32.CPINFO'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
+CPINFO guid: (GUID fromString: '{00c3c027-fa7e-43cb-b7cc-39d358049048}')!
+CPINFO comment: '<CPINFO> is an <ExternalStructure> class to wrap the struct ''Win32.CPINFO'' from type information in the ''Win32 API'' library.
 
-The type library contains no documentation for this struct
+The type library contains the following helpstring for this struct
+	"Contains information about a code page. This structure is used by the GetCPInfo function."
 
-Warning: This comment was automatically generated from the struct''s type information, but any changes made here will not be overwritten if the wrapper class is regenerated.
+** This comment was automatically generated from a type library. Delete this line to prevent any manual edits from being overwritten if the wrapper class is regenerated. **
 
 IDL definition follows:
 
-typedef [uuid(00C3C027-FA7E-43CB-B7CC-39D358049048)]
+typedef [uuid(00c3c027-fa7e-43cb-b7cc-39d358049048), helpstring("Contains information about a code page. This structure is used by the GetCPInfo function.")]
 struct tagCPINFO {
-	[helpstring("max length (bytes) of a char")] UINT MaxCharSize;
-	BYTE DefaultChar[2];
-	BYTE LeadByte[12];
+	[readonly, helpstring("Maximum length, in bytes, of a character in the code page.")] unsigned int MaxCharSize;
+	[readonly, helpstring("Default character used when translating character strings to the specific code page.")] BYTE DefaultChar[2];
+	[readonly, helpstring("A fixed-length array of lead byte ranges, for which the number of lead byte ranges is variable.")] BYTE LeadByte[12];
 } CPINFO;
 '!
 !CPINFO categoriesForClass!Win32-Structs! !
 !CPINFO methodsFor!
 
 DefaultChar
-	"Answer the receiver's DefaultChar field as a Smalltalk object."
+	"Answer the <ExternalArray> value of the receiver's 'DefaultChar' field."
 
-	^ByteArray fromAddress: bytes yourAddress + ##(self offsetOf: #DefaultChar) length: 2!
+	^ExternalArray fromAddress: bytes yourAddress + ##(self offsetOf: #DefaultChar) length: 2!
 
 LeadByte
-	"Answer the receiver's LeadByte field as a Smalltalk object."
+	"Answer the <ExternalArray> value of the receiver's 'LeadByte' field."
 
-	^ByteArray fromAddress: bytes yourAddress + ##(self offsetOf: #LeadByte) length: 12!
+	^ExternalArray fromAddress: bytes yourAddress + ##(self offsetOf: #LeadByte) length: 12!
 
 MaxCharSize
-	"Answer the receiver's MaxCharSize field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'MaxCharSize' field."
 
 	^bytes dwordAtOffset: 0! !
 !CPINFO categoriesFor: #DefaultChar!**compiled accessors**!public! !
@@ -47,19 +48,20 @@ MaxCharSize
 defineFields
 	"Define the fields of the CPINFO structure.
 
-	CPINFO  compileDefinition
+	CPINFO compileDefinition
 
-		typedef [uuid(00C3C027-FA7E-43CB-B7CC-39D358049048)]
+		typedef [uuid(00c3c027-fa7e-43cb-b7cc-39d358049048), helpstring('Contains information about a code page. This structure is used by the GetCPInfo function.')]
 		struct tagCPINFO {
-			[helpstring('max length (bytes) of a char')] UINT MaxCharSize;
-			BYTE DefaultChar[2];
-			BYTE LeadByte[12];
+			[readonly, helpstring('Maximum length, in bytes, of a character in the code page.')] unsigned int MaxCharSize;
+			[readonly, helpstring('Default character used when translating character strings to the specific code page.')] BYTE DefaultChar[2];
+			[readonly, helpstring('A fixed-length array of lead byte ranges, for which the number of lead byte ranges is variable.')] BYTE LeadByte[12];
 		} CPINFO;
 "
 
 	self
-		defineField: #MaxCharSize type: DWORDField readOnly;
-		defineField: #DefaultChar type: (ArrayField type: ByteArray length: 2) beReadOnly;
-		defineField: #LeadByte type: (ArrayField type: ByteArray length: 12) beReadOnly! !
-!CPINFO class categoriesFor: #defineFields!initializing!public! !
+		defineField: #MaxCharSize type: DWORDField new beReadOnly offset: 0;
+		defineField: #DefaultChar type: (ArrayField type: ExternalArray length: 2) beReadOnly offset: 4;
+		defineField: #LeadByte type: (ArrayField type: ExternalArray length: 12) beReadOnly offset: 6.
+	self byteSize: 20! !
+!CPINFO class categoriesFor: #defineFields!**auto generated**!initializing!public! !
 
