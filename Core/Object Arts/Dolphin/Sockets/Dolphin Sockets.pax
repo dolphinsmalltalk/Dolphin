@@ -19,6 +19,8 @@ package classNames
 	add: #IN_ADDR;
 	add: #IN6_ADDR;
 	add: #InternetAddress;
+	add: #IpHlpApiLibrary;
+	add: #NET_ADDRESS_INFO;
 	add: #PROTOENT;
 	add: #SERVENT;
 	add: #ServerSocket2;
@@ -82,6 +84,11 @@ SocketError subclass: #SocketWaitCancelled
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+ExternalLibrary subclass: #IpHlpApiLibrary
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: 'WinSocketConstants'
+	classInstanceVariableNames: ''!
 ExternalLibrary subclass: #WS2_32Library
 	instanceVariableNames: 'wsaData'
 	classVariableNames: ''
@@ -97,10 +104,15 @@ ExternalStructure subclass: #FD_SET
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ExternalStructure subclass: #SOCKADDR
+ExternalStructure subclass: #NET_ADDRESS_INFO
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ExternalStructure subclass: #SOCKADDR
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: 'WinSocketConstants'
 	classInstanceVariableNames: ''!
 ExternalStructure subclass: #TIMEVAL
 	instanceVariableNames: ''

@@ -5,7 +5,7 @@ AbstractIN_ADDR subclass: #IN6_ADDR
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-IN6_ADDR guid: (GUID fromString: '{BEBF4C25-CE63-4511-B68E-2434810FA9C3}')!
+IN6_ADDR guid: (GUID fromString: '{bebf4c25-ce63-4511-b68e-2434810fa9c3}')!
 IN6_ADDR comment: '<IN6_ADDR> is an <ExternalStructure> class to wrap the struct ''Win32.IN6_ADDR'' from type information in the ''Win32 API'' library.
 
 The type library contains no documentation for this struct
@@ -17,31 +17,31 @@ IDL definition follows:
 typedef [uuid(BEBF4C25-CE63-4511-B68E-2434810FA9C3)]
 struct tagIN6_ADDR {
 	union {
-		BYTE Byte[16];
-		unsigned short Word[8];
+		UCHAR Bytes[16];
+		[hidden] USHORT Words[8];
 	};
 } IN6_ADDR;
 '!
 !IN6_ADDR categoriesForClass!Win32-Structs! !
 !IN6_ADDR methodsFor!
 
-Byte
-	"Answer the receiver's Byte field as a Smalltalk object."
+Bytes
+	"Answer the <ByteArray> value of the receiver's 'Bytes' field."
 
-	^bytes!
+	^ByteArray fromAddress: bytes yourAddress length: 16!
 
-Byte: anObject
-	"Set the receiver's Byte field to the value of anObject."
+Bytes: aByteArray
+	"Set the receiver's 'Bytes' field to the value of the argument, aByteArray"
 
 	| size |
-	size := anObject byteSize min: ##(16 * ByteArray elementSize).
-	anObject
+	size := aByteArray byteSize min: ##(16 * ByteArray elementSize).
+	aByteArray
 		replaceBytesOf: bytes
 		from: 1
 		to: size
 		startingAt: 1! !
-!IN6_ADDR categoriesFor: #Byte!public! !
-!IN6_ADDR categoriesFor: #Byte:!**compiled accessors**!public! !
+!IN6_ADDR categoriesFor: #Bytes!**compiled accessors**!public! !
+!IN6_ADDR categoriesFor: #Bytes:!**compiled accessors**!public! !
 
 !IN6_ADDR class methodsFor!
 
@@ -56,23 +56,16 @@ defineFields
 		typedef [uuid(BEBF4C25-CE63-4511-B68E-2434810FA9C3)]
 		struct tagIN6_ADDR {
 			union {
-				BYTE Byte[16];
-				unsigned short Word[8];
+				UCHAR Bytes[16];
+				[hidden] USHORT Words[8];
 			};
 		} IN6_ADDR;
-	"
-
-	"As the IN_ADDR structs are in network order (big endian) its likely to lead to errors
-	attempting to access as words on a little-endian machine architecture."
+"
 
 	self
-		defineField: #Byte
-			type: (ArrayField type: ByteArray length: 16)
-			offset: 0;
-		defineField: #Word
-			type: (ArrayField type: WORDArray length: 8) beFiller
-			offset: 0.
+		defineField: #Bytes type: (ArrayField type: ByteArray length: 16) offset: 0;
+		defineField: #Words type: (ArrayField type: WORDArray length: 8) beFiller offset: 0.
 	self byteSize: 16! !
-!IN6_ADDR class categoriesFor: #addressFamily!public! !
-!IN6_ADDR class categoriesFor: #defineFields!initializing!public! !
+!IN6_ADDR class categoriesFor: #addressFamily!constants!public! !
+!IN6_ADDR class categoriesFor: #defineFields!**auto generated**!initializing!public! !
 

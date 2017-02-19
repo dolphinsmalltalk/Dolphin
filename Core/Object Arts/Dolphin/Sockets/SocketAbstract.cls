@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #SocketAbstract
 	instanceVariableNames: 'port descriptor asyncError events'
@@ -183,7 +183,7 @@ queryPort
 		name: name
 		namelen: nameLength) < 0 
 		ifTrue: [self error].
-	^WSockLibrary default ntohs: name sin_port!
+	^name port!
 
 registerDescriptor
 	"Private - Add the receiver to the AllSockets class variable."

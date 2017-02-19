@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 SocketAbstract subclass: #Socket
 	instanceVariableNames: 'address readSemaphore writeSemaphore connectSemaphore readStream writeStream'
@@ -28,7 +28,7 @@ basicConnect
 	self create.
 	(socketAddress := SOCKADDR_IN new)
 		sin_family: AF_INET;
-		sin_port: (WSockLibrary default htons: self port);
+		port: self port;
 		sin_addr: (IN_ADDR address: self address).
 	result := WSockLibrary default 
 				connect: self asParameter
