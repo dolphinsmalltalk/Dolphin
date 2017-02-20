@@ -87,3 +87,5 @@ Behavior addClassConstant: '_NullMethodDictionary'
 ExternalCallback class removeSelector: #initialize!
 #(always caseInsensitive equality identity never uninitialize) do: [:each | SearchPolicy class removeSelector: each]!
 #(current uninitialize) do: [:each | SymbolStringSearchPolicy class removeSelector: each. AssociationSearchPolicy class removeSelector: each]!
+
+NTLibrary addClassVariable: 'IsWine' value: false!

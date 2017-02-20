@@ -1000,11 +1000,6 @@ ExternalLibrary subclass: #ExternalResourceLibrary
 	classVariableNames: 'Libraries'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ExternalLibrary subclass: #NTLibrary
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
 ExternalLibrary subclass: #PermanentLibrary
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -1038,6 +1033,11 @@ PermanentLibrary subclass: #CRTLibrary
 PermanentLibrary subclass: #KernelLibrary
 	instanceVariableNames: ''
 	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+PermanentLibrary subclass: #NTLibrary
+	instanceVariableNames: ''
+	classVariableNames: 'IsWine'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 PermanentLibrary subclass: #UserLibrary
