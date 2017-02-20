@@ -1,7 +1,7 @@
 "Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #ExternalLibrary
-	instanceVariableNames: 'handle '
+	instanceVariableNames: 'handle'
 	classVariableNames: ''
 	poolDictionaries: 'Win32Constants Win32Errors'
 	classInstanceVariableNames: 'default'!
@@ -200,33 +200,35 @@ invalidCall
 		-	System error.
 		-	Unknown primitive failure. An uncategorised primitive failure occurred. Seek assistance."
 
-	| error failureCode proc |
+	| error failureCode proc frame descriptor |
 	proc := Processor activeProcess.
 	failureCode := proc primitiveFailureCode.
 	failureCode < 0 ifTrue: [^HRESULTError signalWith: proc primitiveFailureData].
-	failureCode >= 16 
+	frame := proc topFrame sender.
+	descriptor := frame method descriptor.
+	failureCode >= 16
 		ifTrue: 
 			["An invalid argument was passed"
-
-			| frame arg i descriptor |
-			frame := proc topFrame sender.
-			descriptor := frame method descriptor.
+			| arg i |
 			i := descriptor argumentIndexFromOffset: failureCode - 16.
 			arg := frame method isVirtualFunction ifTrue: [i - 1] ifFalse: [i].
-			self invalidArgErrorClass 
+			self invalidArgErrorClass
 				invalidArgument: arg
 				got: (frame arguments at: arg)
 				expected: (descriptor argumentTypes at: i)]
 		ifFalse: 
 			[failureCode == 0 ifTrue: [^self error: 'invalid receiver'].
-			failureCode == 1 
+			failureCode == 1
 				ifTrue: 
 					["Function name not found in the DLL, i.e. failure of GetProcAddress().
 					Often caused by omitting the A (for ASCII) or W (for Wide = Unicode) 
 					function name suffix. Note that this may be required even if the function
 					has no string arguments."
-
-					^Win32Error signalWith: ERROR_PROC_NOT_FOUND]].
+					^Win32Error signalWith: ERROR_PROC_NOT_FOUND].
+			failureCode == 2
+				ifTrue: 
+					["VM has detected an attempt to return an ExternalStructure of an uninitialized class (i.e. basicByteSize is zero)"
+					^self error: 'Returned ExternalStructure type not initialized: ' , descriptor returnType]].
 
 	"All arguments were apparently valid (assuming the Smalltalk validation matches the VM's),
 	it must have been some system or unknown error."
