@@ -12,8 +12,8 @@ nil subclass: #ProtoObject
 	classInstanceVariableNames: ''!
 Object subclass: #AttributeDescriptor
 	instanceVariableNames: 'flags'
-	classVariableNames: ''
-	poolDictionaries: 'AttributeDescriptorFlags'
+	classVariableNames: 'AccessorMask MutableMask MutatorMask NonBrowsableMask NullableMask OverrideMask ReadableMask WriteableMask'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Object subclass: #Behavior
 	instanceVariableNames: 'superclass methodDictionary instanceSpec subclasses'

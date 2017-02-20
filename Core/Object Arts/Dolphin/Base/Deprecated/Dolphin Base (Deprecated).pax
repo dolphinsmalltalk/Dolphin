@@ -20,8 +20,6 @@ package methodNames
 	add: #_FPIEEE_RECORD -> #causeCode;
 	add: #_FPIEEE_RECORD -> #causeName;
 	add: #_FPIEEE_VALUE -> #valueType;
-	add: #AttributeDescriptor -> #immutable;
-	add: #AttributeDescriptor -> #mutable;
 	add: #Behavior -> #makeIndirect;
 	add: #Behavior -> #makeNullTerminated;
 	add: #Class -> #addClassVarName:;
@@ -101,18 +99,6 @@ valueType
 	#deprecated.
 	^self format! !
 !_FPIEEE_VALUE categoriesFor: #valueType!accessing!public! !
-
-!AttributeDescriptor methodsFor!
-
-immutable
-	#deprecated.
-	self beImmutable!
-
-mutable
-	#deprecated.
-	self beMutable! !
-!AttributeDescriptor categoriesFor: #immutable!accessing!public! !
-!AttributeDescriptor categoriesFor: #mutable!accessing!public! !
 
 !Behavior methodsFor!
 

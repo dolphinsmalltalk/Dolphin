@@ -332,7 +332,7 @@ AXTypeInfoAnalyzer subclass: #TKindEnumAnalyzer
 AXAPIInfoAnalyzer subclass: #AXInterfaceTypeAnalyzer
 	instanceVariableNames: 'protocol isSource'
 	classVariableNames: 'ReservedDispSelectors ReservedUnkSelectors'
-	poolDictionaries: 'AttributeDescriptorFlags'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 AXAPIInfoAnalyzer subclass: #TKindModuleAnalyzer
 	instanceVariableNames: ''

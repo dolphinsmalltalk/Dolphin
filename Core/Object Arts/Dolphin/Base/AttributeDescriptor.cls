@@ -1,11 +1,19 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #AttributeDescriptor
 	instanceVariableNames: 'flags'
-	classVariableNames: ''
-	poolDictionaries: 'AttributeDescriptorFlags'
+	classVariableNames: 'AccessorMask MutableMask MutatorMask NonBrowsableMask NullableMask OverrideMask ReadableMask WriteableMask'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-AttributeDescriptor guid: (GUID fromString: '{87B4C455-026E-11D3-9FD7-00A0CC3E4A32}')!
+AttributeDescriptor guid: (GUID fromString: '{87b4c455-026e-11d3-9fd7-00a0cc3e4a32}')!
+AttributeDescriptor addClassConstant: 'AccessorMask' value: 4!
+AttributeDescriptor addClassConstant: 'MutableMask' value: 32!
+AttributeDescriptor addClassConstant: 'MutatorMask' value: 8!
+AttributeDescriptor addClassConstant: 'NonBrowsableMask' value: 128!
+AttributeDescriptor addClassConstant: 'NullableMask' value: 64!
+AttributeDescriptor addClassConstant: 'OverrideMask' value: 16!
+AttributeDescriptor addClassConstant: 'ReadableMask' value: 1!
+AttributeDescriptor addClassConstant: 'WriteableMask' value: 2!
 AttributeDescriptor comment: 'AttributeDescriptor is an abstract class of meta-objects that be used to describe the shape of other objects. It has a subclass, Aspect, instances of which describe how to access object''s published ''aspects'' (e.g. instance variables) through getter and setter methods, and a subclass, ExternalField, instances of which describe the fields of C style structures. Note that these objects are all descriptors, and need to be combined with a subject object in order to become "closed".'!
 !AttributeDescriptor categoriesForClass!Attribute-Definition! !
 !AttributeDescriptor methodsFor!
@@ -31,6 +39,12 @@ beMutable
 	"Set this aspect to be mutable, i.e. it can be modified in-place."
 
 	flags := flags maskSet: MutableMask!
+
+beNonBrowsable
+	"Set the receiver's flags to specify it as an non-browseable attribute. Non-browseable
+	attributes are not normally shown in printed output and in inspectors, etc."
+
+	flags := flags maskSet: NonBrowsableMask!
 
 beOverride
 	"Set the receiver's flags to specify it as an override attribute
@@ -91,6 +105,11 @@ initialize
 
 	flags := self defaultFlags!
 
+isBrowsable
+	"Answer whether the receiver describes an attribute that should appear in property browsers, printStrings, etc."
+
+	^(flags bitAnd: ##(ReadableMask | NonBrowsableMask)) == ReadableMask!
+
 isInaccessible
 	"Answer whether the receiver is an inaccessible attribute."
 
@@ -102,6 +121,12 @@ isMutable
 
 	^flags allMask: MutableMask
 	!
+
+isNonBrowsable
+	"Answer whether the receiver describes a non-browsable attribute. Non-browsable attributes
+	are not normally shown in printed output and in inspectors, etc."
+
+	^flags allMask: NonBrowsableMask!
 
 isNullable
 	"Answer true if this aspect is nullable, i.e. it can be set to nil.
@@ -143,6 +168,7 @@ writeInto: subjectObject value: valueObject
 !AttributeDescriptor categoriesFor: #beImmutable!modes!public! !
 !AttributeDescriptor categoriesFor: #beInaccessible!modes!public! !
 !AttributeDescriptor categoriesFor: #beMutable!modes!public! !
+!AttributeDescriptor categoriesFor: #beNonBrowsable!modes!public! !
 !AttributeDescriptor categoriesFor: #beOverride!modes!public! !
 !AttributeDescriptor categoriesFor: #beReadOnly!modes!public! !
 !AttributeDescriptor categoriesFor: #beUncompiled!modes!public! !
@@ -152,8 +178,10 @@ writeInto: subjectObject value: valueObject
 !AttributeDescriptor categoriesFor: #canGenerateMutator!private!testing! !
 !AttributeDescriptor categoriesFor: #defaultFlags!initializing!private! !
 !AttributeDescriptor categoriesFor: #initialize!initializing!private! !
+!AttributeDescriptor categoriesFor: #isBrowsable!public!testing! !
 !AttributeDescriptor categoriesFor: #isInaccessible!public!testing! !
 !AttributeDescriptor categoriesFor: #isMutable!public!testing! !
+!AttributeDescriptor categoriesFor: #isNonBrowsable!public!testing! !
 !AttributeDescriptor categoriesFor: #isNullable!public!testing! !
 !AttributeDescriptor categoriesFor: #isNullable:!modes!public! !
 !AttributeDescriptor categoriesFor: #isOverride!public!testing! !
