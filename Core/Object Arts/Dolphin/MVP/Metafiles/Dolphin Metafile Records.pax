@@ -86,6 +86,7 @@ package classNames
 	add: #LOGFONTW;
 	add: #PIXELFORMATDESCRIPTOR;
 	add: #POINTS;
+	add: #XFORM;
 	yourself.
 
 package methodNames
@@ -149,6 +150,11 @@ ExternalStructure subclass: #LOGCOLORSPACEW
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ExternalStructure subclass: #PIXELFORMATDESCRIPTOR
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ExternalStructure subclass: #XFORM
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''

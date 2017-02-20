@@ -208,7 +208,6 @@ package classNames
 	add: #WindowsEvent;
 	add: #WinImageList;
 	add: #WNDCLASS;
-	add: #XFORM;
 	yourself.
 
 package methodNames
@@ -679,11 +678,6 @@ ExternalStructure subclass: #DEVMODE
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ExternalStructure subclass: #NCCALCSIZE_PARAMS
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-ExternalStructure subclass: #XFORM
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
