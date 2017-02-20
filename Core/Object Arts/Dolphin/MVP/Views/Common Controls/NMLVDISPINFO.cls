@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 NMHDR subclass: #NMLVDISPINFO
 	instanceVariableNames: 'item'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-NMLVDISPINFO guid: (GUID fromString: '{87B4C625-026E-11D3-9FD7-00A0CC3E4A32}')!
+NMLVDISPINFO guid: (GUID fromString: '{87b4c625-026e-11d3-9fd7-00a0cc3e4a32}')!
 NMLVDISPINFO comment: ''!
 !NMLVDISPINFO categoriesForClass!External-Data-Structured-Win32! !
 !NMLVDISPINFO methodsFor!
@@ -37,6 +37,10 @@ defineFields
 	"
 
 	super defineFields.
-	self defineField: #lvItem type: (StructureField type: LVITEM) beReadOnly! !
+	self defineField: #lvItem type: (StructureField type: LVITEM) beReadOnly!
+
+itemFromNMHDR: anExternalAddress
+	^LVITEM fromAddress: anExternalAddress yourAddress + (self offsetOf: #lvItem)! !
 !NMLVDISPINFO class categoriesFor: #defineFields!initializing!public! !
+!NMLVDISPINFO class categoriesFor: #itemFromNMHDR:!public! !
 
