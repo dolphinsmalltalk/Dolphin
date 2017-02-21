@@ -5,7 +5,7 @@ SourceFiler subclass: #ChunkSourceFiler
 	classVariableNames: 'NormalizeEolsMask'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ChunkSourceFiler guid: (GUID fromString: '{558B318A-9FF3-4346-A445-76EE18D5458B}')!
+ChunkSourceFiler guid: (GUID fromString: '{558b318a-9ff3-4346-a445-76ee18d5458b}')!
 ChunkSourceFiler addClassConstant: 'NormalizeEolsMask' value: 2!
 ChunkSourceFiler comment: ''!
 !ChunkSourceFiler categoriesForClass!Development!System-Support! !
@@ -176,39 +176,32 @@ fileIn
 	
 	[[stream atEnd] whileFalse: 
 			[stream skipSeparators.
-			(stream peekFor: $!!) 
+			(stream peekFor: $!!)
 				ifTrue: 
 					["#methodsFor: expression (we hope) - don't log evaluation"
-
 					| chunk reader |
 					chunk := self nextChunk.
-					reader := Compiler 
-								evaluate: chunk
-								for: self evaluationContext
-								logged: false.
-					reader isNil 
+					reader := Compiler evaluate: chunk for: self evaluationContext.
+					reader isNil
 						ifTrue: 
 							["The above evaluation failed to compile and the error will have
 					been logged to the Transcript. Use the null ChunkReader to skip
 					over the chunks in the source file."
-
 							reader := ChunkReader null].
 					reader fileInFrom: self]
 				ifFalse: 
 					["Normal expression evaluation - log it"
-
 					| chunk |
 					chunk := self nextChunk.
-					Compiler 
+					Compiler
 						evaluate: chunk
 						for: self evaluationContext
-						logged: true]]] 
+						logged: true]]]
 			on: MethodCompileFailed
 			do: 
-				[:n | 
+				[:n |
 				"If we get a method compilation error then we install a stub method so we'll be able 
 			to see the source. For evaluations this does nothing, unfortunately"
-
 				n
 					beep;
 					resumeWithStubMethod]!

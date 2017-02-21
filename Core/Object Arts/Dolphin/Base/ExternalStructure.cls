@@ -578,13 +578,16 @@ changedByteSizeFrom: oldByteSize
 	"Private - If the size of the receiver changes such that it fits into a different type for passing
 	/ returning structures by value , then we must recompile all existing referencing methods"
 
-	| newByteSize |
+	| newByteSize recompileRefs |
 	newByteSize := self byteSize.
 	oldByteSize ~= newByteSize ifFalse: [^self].
 	"Recompile own methods so that they have the correct offsets encoded"
-	self methodDictionary do: [:each | (each refersToLiteral: #offsetOf:) ifTrue: [each recompile]].
+	recompileRefs := [:each | (each refersToLiteral: #offsetOf:) ifTrue: [each recompile]].
+	self methodDictionary do: recompileRefs.
+	self class methodDictionary do: recompileRefs.
 	"Recompile any references that might have a static literal snapshot of the byte size of the receiver."
-	self recompileReferences!
+	self recompileReferences
+!
 
 clear: addressOrBytes
 	"Finalize an instance of the structure which instances of the receiver wrap
@@ -726,7 +729,6 @@ defineTemplate
 			["Receiver doesn't define any new fields, so inherit the lot"
 			self inheritTemplate.
 			template notNil ifTrue: [^self changedByteSizeFrom: oldByteSize]].
-	alignment := self baseAlignment.
 	self
 		initializeTemplate;
 		defineFields;
@@ -926,7 +928,9 @@ newTemplate
 	"Private - Reset the template instance variable of the receiver in preparation for loading a
 	new template."
 
-	template := IdentityDictionary new!
+	template := IdentityDictionary new.
+	alignment := self baseAlignment.
+!
 
 offsetFor: anExternalField base: anInteger 
 	"Answer the adjusted offset for the <ExternalField> from the base offset, anInteger.
@@ -1051,7 +1055,7 @@ registerClass: structureClass forGUID: aGUID
 resetTemplate
 	self byteSize: 0.
 	flags := CompiledMask.
-	template := nil!
+	alignment := template := nil!
 
 setGuid: aGUID
 	"Private - Set the value of the receiver's 'guid' instance variable to the 

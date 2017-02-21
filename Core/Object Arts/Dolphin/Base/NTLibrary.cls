@@ -1,12 +1,18 @@
 "Filed out from Dolphin Smalltalk 7"!
 
-ExternalLibrary subclass: #NTLibrary
+PermanentLibrary subclass: #NTLibrary
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: 'IsWine'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-NTLibrary guid: (GUID fromString: '{8293E458-7D81-4ABA-97A5-C1001C4B2153}')!
-NTLibrary comment: ''!
+NTLibrary guid: (GUID fromString: '{8293e458-7d81-4aba-97a5-c1001c4b2153}')!
+NTLibrary comment: 'NtDllLibrary is the <ExternalLibrary> class to represent the dynamic link library, ''ntdll.dll''.It was generated generated from type information in the ''Win32 API'' library. It contains methods for each of the functions defined by the corresponding module in that type library.
+
+The type library contains the following helpstring For this Module
+	"Windows NT Runtime Library"
+
+Warning: This comment was automatically generated from the Module''s type information, but any changes made here will not be overwritten if the wrapper class is regenerated.
+'!
 !NTLibrary categoriesForClass!External-Libraries! !
 !NTLibrary methodsFor!
 
@@ -44,10 +50,18 @@ fileName
 	^'ntdll'!
 
 isWine
-"
+	"
 	NTLibrary isWine.
 "
-	^self default wineGetVersion notNil! !
-!NTLibrary class categoriesFor: #fileName!constants!public! !
-!NTLibrary class categoriesFor: #isWine!public! !
+
+	^IsWine!
+
+openDefault
+	| lib |
+	lib := super openDefault.
+	IsWine := lib wineGetVersion notNil.
+	^lib! !
+!NTLibrary class categoriesFor: #fileName!**auto generated**!constants!public! !
+!NTLibrary class categoriesFor: #isWine!testing!public! !
+!NTLibrary class categoriesFor: #openDefault!instance creation!private!realizing/unrealizing! !
 

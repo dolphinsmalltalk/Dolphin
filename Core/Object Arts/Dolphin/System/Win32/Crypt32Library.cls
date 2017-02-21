@@ -150,6 +150,7 @@ unprotectData: dataByteArray additionalEntropy: aByteArrayOrNil
 		additionalEntropy: aByteArrayOrNil
 		machineWide: false!
 
+
 unprotectData: aByteObject additionalEntropy: aByteArrayOrNil machineWide: aBoolean
 	"Decrypt the protected data in the byte object argument, aByteObject, answering the
 	decrypted data as an instance of the same class as that of the original data. Additional
@@ -193,4 +194,3 @@ unprotectData: aByteObject additionalEntropy: aByteArrayOrNil machineWide: aBool
 !Crypt32Library class categoriesFor: #unprotectData:!operations!public! !
 !Crypt32Library class categoriesFor: #unprotectData:additionalEntropy:!operations!public! !
 !Crypt32Library class categoriesFor: #unprotectData:additionalEntropy:machineWide:!operations!public! !
-

@@ -1,6 +1,8 @@
 "This file contains patches to base system classes that are required in order to be able to reload the base class library, but which are not yet consolidated into the boot image. Note that the BCL is reloaded anyway (see Boot.st), so most BCL changes do not require pre-patching; try without first"!
 
-Package manager systemPackage removeGlobalNamed: #STBPrefixConstants!
+AttributeDescriptorFlags keysAndValuesDo: [:k :v | AttributeDescriptor addClassConstant: k value: v].
+AttributeDescriptor addClassConstant: 'NonBrowsableMask' value: 128!
+#(#AttributeDescriptorFlags #STBPrefixConstants) do: [:each | Package manager systemPackage removeGlobalNamed: each. Smalltalk removeKey: each ifAbsent: []]!
 ClassLocator.ImportedClasses := nil!
 !ClassLocator class methodsFor!
 
@@ -100,3 +102,4 @@ fileOutStem
 	^super fileOutStem, '_struct'! !
 !BYTEArray class categoriesFor: #fileOutStem!development!private!source filing! !
 
+NTLibrary addClassVariable: 'IsWine' value: false!

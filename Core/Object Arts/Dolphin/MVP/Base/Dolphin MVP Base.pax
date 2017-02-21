@@ -116,7 +116,6 @@ package classNames
 	add: #Interactor;
 	add: #InternalDragDropObject;
 	add: #InternalDragDropSession;
-	add: #INTLIST;
 	add: #KeyEvent;
 	add: #LayoutContext;
 	add: #LayoutManager;
@@ -208,7 +207,6 @@ package classNames
 	add: #WindowsEvent;
 	add: #WinImageList;
 	add: #WNDCLASS;
-	add: #XFORM;
 	yourself.
 
 package methodNames
@@ -683,11 +681,6 @@ ExternalStructure subclass: #NCCALCSIZE_PARAMS
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ExternalStructure subclass: #XFORM
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
 Win32Structure subclass: #AbstractLOGFONT
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -764,11 +757,6 @@ Win32Structure subclass: #GRADIENT_TRIANGLE
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Win32Structure subclass: #ICONINFO
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-Win32Structure subclass: #INTLIST
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''

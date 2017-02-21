@@ -12,8 +12,8 @@ nil subclass: #ProtoObject
 	classInstanceVariableNames: ''!
 Object subclass: #AttributeDescriptor
 	instanceVariableNames: 'flags'
-	classVariableNames: ''
-	poolDictionaries: 'AttributeDescriptorFlags'
+	classVariableNames: 'AccessorMask MutableMask MutatorMask NonBrowsableMask NullableMask OverrideMask ReadableMask WriteableMask'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Object subclass: #Behavior
 	instanceVariableNames: 'superclass methodDictionary instanceSpec subclasses'
@@ -1000,11 +1000,6 @@ ExternalLibrary subclass: #ExternalResourceLibrary
 	classVariableNames: 'Libraries'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ExternalLibrary subclass: #NTLibrary
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
 ExternalLibrary subclass: #PermanentLibrary
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -1038,6 +1033,11 @@ PermanentLibrary subclass: #CRTLibrary
 PermanentLibrary subclass: #KernelLibrary
 	instanceVariableNames: ''
 	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+PermanentLibrary subclass: #NTLibrary
+	instanceVariableNames: ''
+	classVariableNames: 'IsWine'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 PermanentLibrary subclass: #UserLibrary

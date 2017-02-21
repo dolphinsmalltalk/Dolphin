@@ -2316,16 +2316,16 @@ alternateInspectorClass
 publishedAspects
 	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
 
-    | aspects |
-    aspects := super publishedAspects.
-    self isNull 
-        ifFalse: 
-            [self getValidFields do: 
-                    [:each | 
-                    | field |
-                    field := self template at: each.
-                    field isReadable ifTrue: [aspects add: (field newAspect: each class: Aspect)]]].
-    ^aspects! !
+	| aspects |
+	aspects := super publishedAspects.
+	self isNull
+		ifFalse: 
+			[self getValidFields do: 
+					[:each |
+					| field |
+					field := self template at: each.
+					field isBrowsable ifTrue: [aspects add: (field newAspect: each class: Aspect)]]].
+	^aspects! !
 !ExternalStructure categoriesFor: #alternateInspectorClass!constants!development!public! !
 !ExternalStructure categoriesFor: #publishedAspects!accessing!development!public! !
 

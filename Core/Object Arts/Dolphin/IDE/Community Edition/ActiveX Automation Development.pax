@@ -550,7 +550,7 @@ AXAutomationAspect subclass: #AXRecordAspect
 AXAutomationAspect subclass: #DispatchAspect
 	instanceVariableNames: 'dispid'
 	classVariableNames: ''
-	poolDictionaries: 'AttributeDescriptorFlags'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ValueDialog subclass: #AXTypeLibraryPrompter
 	instanceVariableNames: 'typeLibs path guidPresenter'
@@ -1015,10 +1015,10 @@ buildPublishedAspects: aLookupTable forObject: anIUnknown
 										yourself].
 					aspect
 						flags: (aspect flags maskSet: (each isPropGet
-										ifTrue: [ReadableMask]
+										ifTrue: [AttributeDescriptor.ReadableMask]
 										ifFalse: 
 											[self assert: [each isPropSet].
-											WriteableMask]))]].
+											AttributeDescriptor.WriteableMask]))]].
 	ppb ifNotNil: [ppb free]!
 
 classCategories

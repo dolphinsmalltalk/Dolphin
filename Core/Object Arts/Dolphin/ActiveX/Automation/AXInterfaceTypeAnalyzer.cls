@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 AXAPIInfoAnalyzer subclass: #AXInterfaceTypeAnalyzer
 	instanceVariableNames: 'protocol isSource'
 	classVariableNames: 'ReservedDispSelectors ReservedUnkSelectors'
-	poolDictionaries: 'AttributeDescriptorFlags'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-AXInterfaceTypeAnalyzer guid: (GUID fromString: '{C06F3B7D-0868-11D3-93AF-00A024CA708A}')!
+AXInterfaceTypeAnalyzer guid: (GUID fromString: '{c06f3b7d-0868-11d3-93af-00a024ca708a}')!
 AXInterfaceTypeAnalyzer comment: 'AXInterfaceTypeAnalyzer is the abstract superclass of <AXTypeInfoAnalyzer>s describing custom COM interfaces (TKindInterfaceAnalyzer) and dispatch interfaces (TKindDispatchAnalyzer).
 
 AXInterfaceTypeAnalyzers wrap <ITypeInfo> pointers from a type library, providing behaviour which allows one to query information and generate wrapper classes appropriate for COM interfaces.
