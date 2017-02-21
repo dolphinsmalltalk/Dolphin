@@ -136,7 +136,7 @@ reloadSystemPackage
 		collect: [:each | srcMgr fileIn: (File relativePathOf: each value fileOutName to: imageDir)].
 	Notification signal: 'Updating ClassBuilder...'.
 	self fileInClass: ClassBuilder.
-	classesBefore := Object withAllSubclasses.
+	classesBefore := basePackage classes.
 	Notification signal: 'Reloading BCL class definitions...'.
 	srcMgr fileIn: (File relativePathOf: basePackage classDefinitionsFileName to: imageDir).
 	Class subclasses: nil.

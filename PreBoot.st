@@ -90,4 +90,16 @@ ExternalCallback class removeSelector: #initialize!
 #(always caseInsensitive equality identity never uninitialize) do: [:each | SearchPolicy class removeSelector: each]!
 #(current uninitialize) do: [:each | SymbolStringSearchPolicy class removeSelector: each. AssociationSearchPolicy class removeSelector: each]!
 
+ExternalArray subclass: #BYTEArray
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+!BYTEArray class methodsFor!
+
+fileOutStem
+	^super fileOutStem, '_struct'! !
+!BYTEArray class categoriesFor: #fileOutStem!development!private!source filing! !
+
 NTLibrary addClassVariable: 'IsWine' value: false!

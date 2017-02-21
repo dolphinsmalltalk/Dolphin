@@ -1416,6 +1416,23 @@ testPrimitiveSubtract
 			self assert: result class == expected class.
 			self assert: expected equals: result]!
 
+testPrimitiveYourAddress
+	| method |
+	method := self createPrimitiveMethodLike: Object >> #yourAddress setsFailCode: false.
+	#('' 'abc') do: 
+			[:each || addr |
+			addr := method value: each withArguments: #().
+			self deny: addr == 0.
+			self assert: (String fromAddress: each) equals: each].
+	"Bug: #yourAddress returns 0 for an empty byte array?"
+	#(#[]#[1 2 3]) do: 
+			[:each || addr |
+			addr := method value: each withArguments: #().
+			self deny: addr == 0.
+			self assert: (ByteArray fromAddress: addr length: each size) equals: each].
+	self assert: 0 equals: (method value: nil withArguments: #()).
+!
+
 testSignedFromUnsigned
 	"Test SmallIntegers and 4 & 8 byte LargeIntegers"
 
@@ -1549,6 +1566,7 @@ testWeakMournerNotifications
 !VMTest categoriesFor: #testPrimitiveStringAtPut!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveStringCmp!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveSubtract!public!unit tests! !
+!VMTest categoriesFor: #testPrimitiveYourAddress!public!unit tests! !
 !VMTest categoriesFor: #testSignedFromUnsigned!public!unit tests! !
 !VMTest categoriesFor: #testVMPointersImmutable!public!unit tests! !
 !VMTest categoriesFor: #testWeakMournerNotifications!public!unit tests! !
