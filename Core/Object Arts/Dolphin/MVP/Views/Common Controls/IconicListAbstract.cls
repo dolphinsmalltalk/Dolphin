@@ -382,8 +382,10 @@ nmBeginDrag: pNMHDR
 
 	| nm |
 	nm := self notificationClass fromAddress: pNMHDR.
-	self isDragSource ifTrue: [
-		self onBegin: #left drag: (self objectFromHandle: nm itemHandle)].
+	self isDragSource
+		ifTrue: 
+			[(self objectFromHandle: nm itemHandle ifAbsent: [])
+				ifNotNil: [:dragee | self onBegin: #left drag: dragee]].
 	^nil!
 
 nmBeginLabelEdit: pNMHDR
