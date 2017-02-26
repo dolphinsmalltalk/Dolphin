@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ENHMETARECORD subclass: #EMRPLGBLT
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-EMRPLGBLT guid: (GUID fromString: '{CDAE1F25-39C4-4555-985B-3B2CD197D3E0}')!
+EMRPLGBLT guid: (GUID fromString: '{cdae1f25-39c4-4555-985b-3b2cd197d3e0}')!
 EMRPLGBLT comment: '<EMRPLGBLT> is an <ExternalStructure> class to wrap the struct ''Win32.EMRPLGBLT'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -43,221 +43,221 @@ struct tagEMRPLGBLT {
 !EMRPLGBLT methodsFor!
 
 aptlDest
-	"Answer the receiver's aptlDest field as a Smalltalk object."
+	"Answer the <StructureArray> value of the receiver's 'aptlDest' field."
 
-	^StructureArray 
+	^StructureArray
 		fromAddress: bytes yourAddress + ##(self offsetOf: #aptlDest)
 		length: 3
 		elementClass: POINTL!
 
-aptlDest: anObject 
-	"Set the receiver's aptlDest field to the value of anObject."
+aptlDest: aStructureArrayOfPOINTL
+	"Set the receiver's 'aptlDest' field to the value of the argument, aStructureArrayOfPOINTL"
 
 	| size |
-	size := anObject byteSize min: ##(3 * POINTL basicByteSize).
-	anObject 
+	size := aStructureArrayOfPOINTL byteSize min: ##(3 * POINTL basicByteSize).
+	aStructureArrayOfPOINTL
 		replaceBytesOf: bytes
 		from: ##((self offsetOf: #aptlDest) + 1)
 		to: ##(self offsetOf: #aptlDest) + size
 		startingAt: 1!
 
 cbBitsMask
-	"Answer the receiver's cbBitsMask field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'cbBitsMask' field."
 
 	^bytes dwordAtOffset: ##(self offsetOf: #cbBitsMask)!
 
-cbBitsMask: anObject 
-	"Set the receiver's cbBitsMask field to the value of anObject."
+cbBitsMask: anInteger
+	"Set the receiver's 'cbBitsMask' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #cbBitsMask) put: anObject!
+	bytes dwordAtOffset: ##(self offsetOf: #cbBitsMask) put: anInteger!
 
 cbBitsSrc
-	"Answer the receiver's cbBitsSrc field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'cbBitsSrc' field."
 
 	^bytes dwordAtOffset: ##(self offsetOf: #cbBitsSrc)!
 
-cbBitsSrc: anObject 
-	"Set the receiver's cbBitsSrc field to the value of anObject."
+cbBitsSrc: anInteger
+	"Set the receiver's 'cbBitsSrc' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #cbBitsSrc) put: anObject!
+	bytes dwordAtOffset: ##(self offsetOf: #cbBitsSrc) put: anInteger!
 
 cbBmiMask
-	"Answer the receiver's cbBmiMask field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'cbBmiMask' field."
 
 	^bytes dwordAtOffset: ##(self offsetOf: #cbBmiMask)!
 
-cbBmiMask: anObject 
-	"Set the receiver's cbBmiMask field to the value of anObject."
+cbBmiMask: anInteger
+	"Set the receiver's 'cbBmiMask' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #cbBmiMask) put: anObject!
+	bytes dwordAtOffset: ##(self offsetOf: #cbBmiMask) put: anInteger!
 
 cbBmiSrc
-	"Answer the receiver's cbBmiSrc field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'cbBmiSrc' field."
 
 	^bytes dwordAtOffset: ##(self offsetOf: #cbBmiSrc)!
 
-cbBmiSrc: anObject 
-	"Set the receiver's cbBmiSrc field to the value of anObject."
+cbBmiSrc: anInteger
+	"Set the receiver's 'cbBmiSrc' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #cbBmiSrc) put: anObject!
+	bytes dwordAtOffset: ##(self offsetOf: #cbBmiSrc) put: anInteger!
 
 crBkColorSrc
-	"Answer the receiver's crBkColorSrc field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'crBkColorSrc' field."
 
 	^bytes dwordAtOffset: ##(self offsetOf: #crBkColorSrc)!
 
-crBkColorSrc: anObject 
-	"Set the receiver's crBkColorSrc field to the value of anObject."
+crBkColorSrc: anInteger
+	"Set the receiver's 'crBkColorSrc' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #crBkColorSrc) put: anObject!
+	bytes dwordAtOffset: ##(self offsetOf: #crBkColorSrc) put: anInteger!
 
 cxSrc
-	"Answer the receiver's cxSrc field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'cxSrc' field."
 
 	^bytes sdwordAtOffset: ##(self offsetOf: #cxSrc)!
 
-cxSrc: anObject 
-	"Set the receiver's cxSrc field to the value of anObject."
+cxSrc: anInteger
+	"Set the receiver's 'cxSrc' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: ##(self offsetOf: #cxSrc) put: anObject!
+	bytes sdwordAtOffset: ##(self offsetOf: #cxSrc) put: anInteger!
 
 cySrc
-	"Answer the receiver's cySrc field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'cySrc' field."
 
 	^bytes sdwordAtOffset: ##(self offsetOf: #cySrc)!
 
-cySrc: anObject 
-	"Set the receiver's cySrc field to the value of anObject."
+cySrc: anInteger
+	"Set the receiver's 'cySrc' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: ##(self offsetOf: #cySrc) put: anObject!
+	bytes sdwordAtOffset: ##(self offsetOf: #cySrc) put: anInteger!
 
 iUsageMask
-	"Answer the receiver's iUsageMask field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'iUsageMask' field."
 
 	^bytes dwordAtOffset: ##(self offsetOf: #iUsageMask)!
 
-iUsageMask: anObject 
-	"Set the receiver's iUsageMask field to the value of anObject."
+iUsageMask: anInteger
+	"Set the receiver's 'iUsageMask' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #iUsageMask) put: anObject!
+	bytes dwordAtOffset: ##(self offsetOf: #iUsageMask) put: anInteger!
 
 iUsageSrc
-	"Answer the receiver's iUsageSrc field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'iUsageSrc' field."
 
 	^bytes dwordAtOffset: ##(self offsetOf: #iUsageSrc)!
 
-iUsageSrc: anObject 
-	"Set the receiver's iUsageSrc field to the value of anObject."
+iUsageSrc: anInteger
+	"Set the receiver's 'iUsageSrc' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #iUsageSrc) put: anObject!
+	bytes dwordAtOffset: ##(self offsetOf: #iUsageSrc) put: anInteger!
 
 offBitsMask
-	"Answer the receiver's offBitsMask field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'offBitsMask' field."
 
 	^bytes dwordAtOffset: ##(self offsetOf: #offBitsMask)!
 
-offBitsMask: anObject 
-	"Set the receiver's offBitsMask field to the value of anObject."
+offBitsMask: anInteger
+	"Set the receiver's 'offBitsMask' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #offBitsMask) put: anObject!
+	bytes dwordAtOffset: ##(self offsetOf: #offBitsMask) put: anInteger!
 
 offBitsSrc
-	"Answer the receiver's offBitsSrc field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'offBitsSrc' field."
 
 	^bytes dwordAtOffset: ##(self offsetOf: #offBitsSrc)!
 
-offBitsSrc: anObject 
-	"Set the receiver's offBitsSrc field to the value of anObject."
+offBitsSrc: anInteger
+	"Set the receiver's 'offBitsSrc' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #offBitsSrc) put: anObject!
+	bytes dwordAtOffset: ##(self offsetOf: #offBitsSrc) put: anInteger!
 
 offBmiMask
-	"Answer the receiver's offBmiMask field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'offBmiMask' field."
 
 	^bytes dwordAtOffset: ##(self offsetOf: #offBmiMask)!
 
-offBmiMask: anObject 
-	"Set the receiver's offBmiMask field to the value of anObject."
+offBmiMask: anInteger
+	"Set the receiver's 'offBmiMask' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #offBmiMask) put: anObject!
+	bytes dwordAtOffset: ##(self offsetOf: #offBmiMask) put: anInteger!
 
 offBmiSrc
-	"Answer the receiver's offBmiSrc field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'offBmiSrc' field."
 
 	^bytes dwordAtOffset: ##(self offsetOf: #offBmiSrc)!
 
-offBmiSrc: anObject 
-	"Set the receiver's offBmiSrc field to the value of anObject."
+offBmiSrc: anInteger
+	"Set the receiver's 'offBmiSrc' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #offBmiSrc) put: anObject!
+	bytes dwordAtOffset: ##(self offsetOf: #offBmiSrc) put: anInteger!
 
 rclBounds
-	"Answer the receiver's rclBounds field as a Smalltalk object."
+	"Answer the <RECT> value of the receiver's 'rclBounds' field."
 
 	^RECT fromAddress: bytes yourAddress + ##(self offsetOf: #rclBounds)!
 
-rclBounds: anObject 
-	"Set the receiver's rclBounds field to the value of anObject."
+rclBounds: aRECT
+	"Set the receiver's 'rclBounds' field to the value of the argument, aRECT"
 
-	anObject 
+	aRECT
 		replaceBytesOf: bytes
 		from: ##((self offsetOf: #rclBounds) + 1)
 		to: ##((self offsetOf: #rclBounds) + RECT basicByteSize)
 		startingAt: 1!
 
 xformSrc
-	"Answer the receiver's xformSrc field as a Smalltalk object."
+	"Answer the <XFORM> value of the receiver's 'xformSrc' field."
 
 	^XFORM fromAddress: bytes yourAddress + ##(self offsetOf: #xformSrc)!
 
-xformSrc: anObject 
-	"Set the receiver's xformSrc field to the value of anObject."
+xformSrc: aXFORM
+	"Set the receiver's 'xformSrc' field to the value of the argument, aXFORM"
 
-	anObject 
+	aXFORM
 		replaceBytesOf: bytes
 		from: ##((self offsetOf: #xformSrc) + 1)
 		to: ##((self offsetOf: #xformSrc) + XFORM basicByteSize)
 		startingAt: 1!
 
 xMask
-	"Answer the receiver's xMask field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'xMask' field."
 
 	^bytes sdwordAtOffset: ##(self offsetOf: #xMask)!
 
-xMask: anObject 
-	"Set the receiver's xMask field to the value of anObject."
+xMask: anInteger
+	"Set the receiver's 'xMask' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: ##(self offsetOf: #xMask) put: anObject!
+	bytes sdwordAtOffset: ##(self offsetOf: #xMask) put: anInteger!
 
 xSrc
-	"Answer the receiver's xSrc field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'xSrc' field."
 
 	^bytes sdwordAtOffset: ##(self offsetOf: #xSrc)!
 
-xSrc: anObject 
-	"Set the receiver's xSrc field to the value of anObject."
+xSrc: anInteger
+	"Set the receiver's 'xSrc' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: ##(self offsetOf: #xSrc) put: anObject!
+	bytes sdwordAtOffset: ##(self offsetOf: #xSrc) put: anInteger!
 
 yMask
-	"Answer the receiver's yMask field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'yMask' field."
 
 	^bytes sdwordAtOffset: ##(self offsetOf: #yMask)!
 
-yMask: anObject 
-	"Set the receiver's yMask field to the value of anObject."
+yMask: anInteger
+	"Set the receiver's 'yMask' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: ##(self offsetOf: #yMask) put: anObject!
+	bytes sdwordAtOffset: ##(self offsetOf: #yMask) put: anInteger!
 
 ySrc
-	"Answer the receiver's ySrc field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'ySrc' field."
 
 	^bytes sdwordAtOffset: ##(self offsetOf: #ySrc)!
 
-ySrc: anObject 
-	"Set the receiver's ySrc field to the value of anObject."
+ySrc: anInteger
+	"Set the receiver's 'ySrc' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: ##(self offsetOf: #ySrc) put: anObject! !
+	bytes sdwordAtOffset: ##(self offsetOf: #ySrc) put: anInteger! !
 !EMRPLGBLT categoriesFor: #aptlDest!**compiled accessors**!public! !
 !EMRPLGBLT categoriesFor: #aptlDest:!**compiled accessors**!public! !
 !EMRPLGBLT categoriesFor: #cbBitsMask!**compiled accessors**!public! !

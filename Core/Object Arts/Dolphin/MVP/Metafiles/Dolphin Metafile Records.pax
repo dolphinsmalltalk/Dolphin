@@ -101,6 +101,7 @@ package globalAliases: (Set new
 
 package setPrerequisites: (IdentitySet new
 	add: '..\..\Base\Dolphin';
+	add: '..\..\Base\Deprecated\Dolphin Base (Deprecated)';
 	add: 'Dolphin Metafiles';
 	add: '..\Base\Dolphin MVP Base';
 	yourself).

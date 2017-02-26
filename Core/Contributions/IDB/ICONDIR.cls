@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Win32Structure subclass: #ICONDIR
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ICONDIR guid: (GUID fromString: '{B5BE1F5B-E245-4CDF-B274-B6609AB85B23}')!
+ICONDIR guid: (GUID fromString: '{b5be1f5b-e245-4cdf-b274-b6609ab85b23}')!
 ICONDIR comment: 'See [DolphinImageFolder]/Idb/Documentation for details
 
 (C) 2005 Ian Bartholomew
@@ -75,7 +75,7 @@ defineFields
 		defineField: #idReserved type: WORDField readOnly;
 		defineField: #idType type: WORDField new;
 		defineField: #idCount type: WORDField new;
-		defineField: #idEntries type: (ConformantStructureArrayField type: ICONDIRENTRY length: #idCount)!
+		defineField: #idEntries type: (StructureArrayField type: ICONDIRENTRY lengthField: #idCount)!
 
 for: anInteger
 	"Create an ICONDIR using this method and not new as we need to know

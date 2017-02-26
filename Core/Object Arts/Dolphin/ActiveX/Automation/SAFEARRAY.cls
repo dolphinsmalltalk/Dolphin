@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 GenericExternalArray subclass: #SAFEARRAY
 	instanceVariableNames: 'data start recordInfo'
 	classVariableNames: ''
 	poolDictionaries: 'AXAutomationConstants AXAutomationErrors'
 	classInstanceVariableNames: ''!
-SAFEARRAY guid: (GUID fromString: '{C06F3B6A-0868-11D3-93AF-00A024CA708A}')!
+SAFEARRAY guid: (GUID fromString: '{c06f3b6a-0868-11d3-93af-00a024ca708a}')!
 SAFEARRAY comment: 'SAFEARRAY is an <ExternalArray> class to represent the OLE Automation arrays.
 
 SAFEARRAYs are a flexible representation of potentially multiple dimensioned arrays of almost any of the Variant (Visual Basic) types.
@@ -69,17 +69,17 @@ base
 	^data!
 
 cbElements
-	"Answer the receiver's cbElements field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'cbElements' field."
 
 	^bytes dwordAtOffset: ##(self offsetOf: #cbElements)!
 
 cDims
-	"Answer the receiver's cDims field as a Smalltalk object."
+	"Private - Answer the <Integer> value of the receiver's 'cDims' field."
 
 	^bytes wordAtOffset: 0!
 
 cLocks
-	"Answer the receiver's cLocks field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'cLocks' field."
 
 	^bytes dwordAtOffset: ##(self offsetOf: #cLocks)!
 
@@ -196,7 +196,7 @@ elementSize
 	^self cbElements!
 
 fFeatures
-	"Answer the receiver's fFeatures field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'fFeatures' field."
 
 	^bytes wordAtOffset: ##(self offsetOf: #fFeatures)!
 
@@ -305,7 +305,7 @@ printOn: aStream
 !
 
 pvData
-	"Answer the receiver's pvData field as a Smalltalk object."
+	"Answer the <ExternalAddress> value of the receiver's 'pvData' field."
 
 	^(bytes uintPtrAtOffset: ##(self offsetOf: #pvData)) asExternalAddress!
 
@@ -346,9 +346,9 @@ redim: interval
 		safeArrayRedim: self psaboundNew: bound!
 
 rgsabound
-	"Answer the receiver's rgsabound field as a Smalltalk object."
+	"Answer the <StructureArray> value of the receiver's 'rgsabound' field."
 
-	^StructureArray 
+	^StructureArray
 		fromAddress: bytes yourAddress + ##(self offsetOf: #rgsabound)
 		length: self cDims
 		elementClass: SAFEARRAYBOUND!
@@ -413,7 +413,7 @@ vt
 !SAFEARRAY categoriesFor: #asVariant!converting!public! !
 !SAFEARRAY categoriesFor: #base!accessing!private! !
 !SAFEARRAY categoriesFor: #cbElements!**compiled accessors**!public! !
-!SAFEARRAY categoriesFor: #cDims!**compiled accessors**!public! !
+!SAFEARRAY categoriesFor: #cDims!**compiled accessors**!private! !
 !SAFEARRAY categoriesFor: #cLocks!**compiled accessors**!public! !
 !SAFEARRAY categoriesFor: #copy!copying!public! !
 !SAFEARRAY categoriesFor: #data!accessing!public! !
@@ -510,13 +510,13 @@ defineFields
 		}; "
 
 	self
-		defineField: #cDims type: WORDField readOnly;
+		defineField: #cDims type: WORDField readOnly beNonBrowsable;
 		defineField: #fFeatures type: WORDField readOnly;
 		defineField: #cbElements type: DWORDField readOnly;
 		defineField: #cLocks type: DWORDField readOnly;
 		defineField: #pvData type: LPVOIDField readOnly;
 		defineField: #rgsabound
-			type: (ConformantStructureArrayField type: SAFEARRAYBOUND length: #cDims) beReadOnly!
+			type: (StructureArrayField type: SAFEARRAYBOUND lengthField: #cDims) beReadOnly!
 
 elementSize
 	"Answer the size (in bytes) of the structure the receiver represents

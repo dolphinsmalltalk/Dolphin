@@ -30,7 +30,7 @@ buildContents
 	^attrs!
 
 cCustData
-	"Answer the receiver's cCustData field as a Smalltalk object."
+	"Private - Answer the <Integer> value of the receiver's 'cCustData' field."
 
 	^bytes dwordAtOffset: 0!
 
@@ -42,15 +42,15 @@ contents
 	^contents ifNil: [contents := self buildContents]!
 
 prgCustData
-	"Answer the receiver's prgCustData field as a Smalltalk object."
+	"Answer the <StructureArray> value of the receiver's 'prgCustData' field."
 
-	^StructureArray 
+	^StructureArray
 		fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #prgCustData))
 		length: self cCustData
 		elementClass: CUSTDATAITEM! !
 !CUSTDATA categoriesFor: #basicFree!private!realizing/unrealizing! !
 !CUSTDATA categoriesFor: #buildContents!printing-IDL!private! !
-!CUSTDATA categoriesFor: #cCustData!**compiled accessors**!public! !
+!CUSTDATA categoriesFor: #cCustData!**compiled accessors**!private! !
 !CUSTDATA categoriesFor: #contents!printing-IDL!public! !
 !CUSTDATA categoriesFor: #prgCustData!**compiled accessors**!public! !
 
@@ -68,9 +68,9 @@ defineFields
 	"
 
 	self
-		defineField: #cCustData type: DWORDField readOnly;
+		defineField: #cCustData type: DWORDField readOnly beNonBrowsable;
 		defineField: #prgCustData
-			type: (ConformantStructureArrayPointerField type: CUSTDATAITEM length: #cCustData) beReadOnly!
+			type: (StructureArrayPointerField type: CUSTDATAITEM lengthField: #cCustData) beReadOnly!
 
 initialize
 	"Define some custom attributes to work around the limitiations of type libraries in not
