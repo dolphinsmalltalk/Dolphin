@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Win32Structure subclass: #SHITEMID
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-SHITEMID guid: (GUID fromString: '{A7DE965E-05A0-4E48-A2B0-5DAB55449C53}')!
+SHITEMID guid: (GUID fromString: '{a7de965e-05a0-4e48-a2b0-5dab55449c53}')!
 SHITEMID comment: '<SHITEMID> is an <ExternalStructure> class to wrap the struct ''IShellFolderEx.SHITEMID'' from type information in the ''IShellFolder Extended Type Library v1.0'' library.
 
 The type library contains no documentation for this struct.
@@ -19,44 +19,44 @@ typedef struct tagSHITEMID {
 	BYTE abID[1];
 } SHITEMID;
 '!
-!SHITEMID categoriesForClass!IShellFolderEx_TLB-Structs! !
+!SHITEMID categoriesForClass!Win32-Structs! !
 !SHITEMID methodsFor!
 
 abID
-	"Answer the receiver's abID field as a Smalltalk object."
+	"Answer the <ExternalArray> value of the receiver's 'abID' field."
 
-	^StructureArray 
-		fromAddress: bytes yourAddress + ##(self offsetOf: #abID)
-		length: self cb
-		elementClass: BYTE!
+	^ExternalArray fromAddress: bytes yourAddress + ##(self offsetOf: #abID) length: self cb!
 
 cb
-	"Answer the receiver's cb field as a Smalltalk object."
+	"Private - Answer the <Integer> value of the receiver's 'cb' field."
 
 	^bytes wordAtOffset: 0! !
 !SHITEMID categoriesFor: #abID!**compiled accessors**!public! !
-!SHITEMID categoriesFor: #cb!**compiled accessors**!public! !
+!SHITEMID categoriesFor: #cb!**compiled accessors**!private! !
 
 !SHITEMID class methodsFor!
 
 defineFields
 	"Define the fields of the SHITEMID structure.
-		SHITEMID compileDefinition
-	
-		typedef 		struct tagSHITEMID {
-			USHORT cb;
-			BYTE abID[1]
+
+	SHITEMID compileDefinition
+
+		typedef [uuid(a7de965e-05a0-4e48-a2b0-5dab55449c53)]
+		struct tagSHITEMID {
+			[nonbrowsable, readonly, helpstring('Size of the ID (including cb itself)')] USHORT cb;
+			[readonly, helpstring('The item ID (variable length)'), size_is('cb')] BYTE abID[1];
 		} SHITEMID;
-	"
+"
 
 	self
-		defineField: #cb type: WORDField readOnly;
-		defineField: #abID type: (ConformantStructureArrayField type: BYTE length: #cb) beReadOnly!
+		defineField: #cb type: WORDField new beReadOnly beNonBrowsable offset: 0;
+		defineField: #abID type: (ArrayField type: ExternalArray lengthField: #cb) beReadOnly offset: 2.
+	self byteSize: 4!
 
 packing
 	"Uses byte packing"
 
 	^1! !
-!SHITEMID class categoriesFor: #defineFields!initializing!public! !
+!SHITEMID class categoriesFor: #defineFields!**auto generated**!initializing!public! !
 !SHITEMID class categoriesFor: #packing!constants!public! !
 

@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ExternalStructure subclass: #GpEncoderParameters
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-GpEncoderParameters guid: (GUID fromString: '{7AA7C3A4-85D9-4298-AD05-11C85D76C885}')!
+GpEncoderParameters guid: (GUID fromString: '{7aa7c3a4-85d9-4298-ad05-11c85d76c885}')!
 GpEncoderParameters comment: '<GpEncoderParameters> is an <ExternalStructure> class to wrap the struct ''Gdiplus.GpEncoderParameters'' from type information in the ''GDI+ Library 1.0'' library.
 
 The type library contains no documentation for this struct
@@ -73,7 +73,7 @@ defineFields
 			type: DWORDField new
 			offset: 0;
 		defineField: #Parameter
-			type: (ConformantStructureArrayField type: GpEncoderParameter length: #Count)
+			type: (StructureArrayField type: GpEncoderParameter lengthField: #Count)
 			offset: 4.
 	"The byteSize includes space for one parameter, i.e. as in the above structure definition"
 	self byteSize: 32!

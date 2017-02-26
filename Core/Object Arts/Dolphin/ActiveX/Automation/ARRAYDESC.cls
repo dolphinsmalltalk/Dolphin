@@ -18,7 +18,7 @@ Member variables:
 !ARRAYDESC methodsFor!
 
 cDims
-	"Answer the <Integer> value of the receiver's 'cDims' field."
+	"Private - Answer the <Integer> value of the receiver's 'cDims' field."
 
 	^bytes wordAtOffset: ##(self offsetOf: #cDims)!
 
@@ -35,7 +35,7 @@ rgbounds
 		fromAddress: bytes yourAddress + ##(self offsetOf: #rgbounds)
 		length: self cDims
 		elementClass: SAFEARRAYBOUND! !
-!ARRAYDESC categoriesFor: #cDims!**compiled accessors**!public! !
+!ARRAYDESC categoriesFor: #cDims!**compiled accessors**!private! !
 !ARRAYDESC categoriesFor: #elementCount!accessing!private! !
 !ARRAYDESC categoriesFor: #rgbounds!**compiled accessors**!public! !
 
@@ -58,8 +58,8 @@ defineFields
 
 	super defineFields.
 	self
-		defineField: #cDims type: WORDField readOnly;
+		defineField: #cDims type: WORDField readOnly beNonBrowsable;
 		defineField: #rgbounds
-			type: (ConformantStructureArrayField type: SAFEARRAYBOUND length: #cDims) beReadOnly! !
+			type: (StructureArrayField type: SAFEARRAYBOUND lengthField: #cDims) beReadOnly! !
 !ARRAYDESC class categoriesFor: #defineFields!initializing!public! !
 

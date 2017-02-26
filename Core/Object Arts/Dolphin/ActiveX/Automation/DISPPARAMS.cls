@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 OLEStructure subclass: #DISPPARAMS
 	instanceVariableNames: 'args vargs dispids'
 	classVariableNames: 'ZeroArgs'
 	poolDictionaries: 'AXAutomationConstants'
 	classInstanceVariableNames: ''!
-DISPPARAMS guid: (GUID fromString: '{C06F3B6F-0868-11D3-93AF-00A024CA708A}')!
+DISPPARAMS guid: (GUID fromString: '{c06f3b6f-0868-11d3-93af-00a024ca708a}')!
 DISPPARAMS comment: 'DISPPARAMS is an <ExternalStructure> to represent the OLE Automation structure DISPPARAMS.
 
 DISPPARAMS is the parameter block used in calls to IDispatch::Invoke. It contains an array of VARIANTARG structures (which are actually represented by the identical <VARIANT> structure in Dolphin), a count of the total number of arguments, an array of the <integer> DISPIDs of the so called "named" arguments, and a count of the number of named arguments in that array. The named arguments are assumed to appear first in the rgvarg array.
@@ -46,30 +46,29 @@ args: arguments
 			| j |
 			j := argc - i + 1.
 			vargs uncheckedAt: j put: (args at: j put: (arguments at: i) asVariant)].
-	self rgvarg: vargs.
-	self cArgs: argc!
+	self rgvarg: vargs!
 
 cArgs
-	"Answer the receiver's cArgs field as a Smalltalk object."
+	"Private - Answer the <Integer> value of the receiver's 'cArgs' field."
 
 	^bytes dwordAtOffset: ##(self offsetOf: #cArgs)!
 
-cArgs: anObject 
-	"Set the receiver's cArgs field to the value of anObject."
+cArgs: anInteger
+	"Set the receiver's 'cArgs' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #cArgs) put: anObject!
+	bytes dwordAtOffset: ##(self offsetOf: #cArgs) put: anInteger!
 
 cNamedArgs
-	"Answer the receiver's cNamedArgs field as a Smalltalk object."
+	"Private - Answer the <Integer> value of the receiver's 'cNamedArgs' field."
 
 	^bytes dwordAtOffset: ##(self offsetOf: #cNamedArgs)!
 
-cNamedArgs: anObject 
-	"Set the receiver's cNamedArgs field to the value of anObject."
+cNamedArgs: anInteger
+	"Set the receiver's 'cNamedArgs' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #cNamedArgs) put: anObject!
+	bytes dwordAtOffset: ##(self offsetOf: #cNamedArgs) put: anInteger!
 
-names: names named: namedArgs args: unnamedArgs 
+names: names named: namedArgs args: unnamedArgs
 	"Set the receiver's arguments to be the <sequencedReadableCollection> of named arguments,
 	namedArgs, the names (ids) of which are specified in the corresponding positions of the
 	<sequencedReadableCollection>, dispids, and the <sequencedReadableCollection> of unnamed
@@ -88,7 +87,7 @@ names: names named: namedArgs args: unnamedArgs
 	"Named args can appear in normal order"
 	1 to: cNamed
 		do: 
-			[:i | 
+			[:i |
 			| v |
 			dispids at: i put: (names at: i).
 			v := (namedArgs at: i) asVariant.
@@ -97,15 +96,13 @@ names: names named: namedArgs args: unnamedArgs
 	"Unnamed args must appear in reverse order"
 	1 to: cUnnamed
 		do: 
-			[:i | 
+			[:i |
 			| v j |
 			v := (unnamedArgs at: i) asVariant.
 			j := argc - i + 1.
 			vargs at: j put: (args at: j put: v)].
 	self rgdispidNamedArgs: dispids.
-	self cNamedArgs: cNamed.
-	self rgvarg: vargs.
-	self cArgs: argc!
+	self rgvarg: vargs!
 
 propertyPut: item value: argument
 	"Set up the receiver for a subscripted property put operation, with the specified <VARIANT> 
@@ -131,30 +128,30 @@ propertyPutValue: argument
 	self cNamedArgs: 1!
 
 rgdispidNamedArgs
-	"Answer the receiver's rgdispidNamedArgs field as a Smalltalk object."
+	"Answer the <SDWORDArray> value of the receiver's 'rgdispidNamedArgs' field."
 
-	^StructureArray 
-		fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #rgdispidNamedArgs))
-		length: self cNamedArgs
-		elementClass: SDWORD!
+	^SDWORDArray fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #rgdispidNamedArgs))
+		length: self cNamedArgs!
 
-rgdispidNamedArgs: anObject 
-	"Set the receiver's rgdispidNamedArgs field to the value of anObject."
+rgdispidNamedArgs: aSDWORDArray
+	"Set the receiver's 'rgdispidNamedArgs' field to the value of the argument, aSDWORDArray"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #rgdispidNamedArgs) put: anObject yourAddress!
+	bytes uintPtrAtOffset: ##(self offsetOf: #rgdispidNamedArgs) put: aSDWORDArray yourAddress.
+	self cNamedArgs: aSDWORDArray size!
 
 rgvarg
-	"Answer the receiver's rgvarg field as a Smalltalk object."
+	"Answer the <StructureArray> value of the receiver's 'rgvarg' field."
 
-	^StructureArray 
+	^StructureArray
 		fromAddress: (bytes intPtrAtOffset: 0)
 		length: self cArgs
 		elementClass: VARIANT!
 
-rgvarg: anObject 
-	"Set the receiver's rgvarg field to the value of anObject."
+rgvarg: aStructureArray
+	"Set the receiver's 'rgvarg' field to the value of the argument, aStructureArray"
 
-	bytes uintPtrAtOffset: 0 put: anObject yourAddress!
+	bytes uintPtrAtOffset: 0 put: aStructureArray yourAddress.
+	self cArgs: aStructureArray size!
 
 singleArg
 	"Answer the single VARIANT parameter - assumes cArgs == 1"
@@ -162,10 +159,10 @@ singleArg
 	^VARIANT fromAddress: (bytes intPtrAtOffset: 0)! !
 !DISPPARAMS categoriesFor: #arg:!accessing!public! !
 !DISPPARAMS categoriesFor: #args:!accessing!public! !
-!DISPPARAMS categoriesFor: #cArgs!**compiled accessors**!public! !
-!DISPPARAMS categoriesFor: #cArgs:!**compiled accessors**!public! !
-!DISPPARAMS categoriesFor: #cNamedArgs!**compiled accessors**!public! !
-!DISPPARAMS categoriesFor: #cNamedArgs:!**compiled accessors**!public! !
+!DISPPARAMS categoriesFor: #cArgs!**compiled accessors**!private! !
+!DISPPARAMS categoriesFor: #cArgs:!**compiled accessors**!private! !
+!DISPPARAMS categoriesFor: #cNamedArgs!**compiled accessors**!private! !
+!DISPPARAMS categoriesFor: #cNamedArgs:!**compiled accessors**!private! !
 !DISPPARAMS categoriesFor: #names:named:args:!accessing!public! !
 !DISPPARAMS categoriesFor: #propertyPut:value:!accessing!public! !
 !DISPPARAMS categoriesFor: #propertyPutValue:!accessing!public! !
@@ -192,11 +189,11 @@ defineFields
 	"
 
 	self
-		defineField: #rgvarg type: (ConformantStructureArrayPointerField type: VARIANT length: #cArgs);
+		defineField: #rgvarg type: (StructureArrayPointerField type: VARIANT lengthField: #cArgs);
 		defineField: #rgdispidNamedArgs
-			type: (ConformantStructureArrayPointerField type: SDWORD length: #cNamedArgs);
-		defineField: #cArgs type: DWORDField new;
-		defineField: #cNamedArgs type: DWORDField new!
+			type: (ArrayPointerField type: SDWORDArray lengthField: #cNamedArgs);
+		defineField: #cArgs type: DWORDField new beNonBrowsable;
+		defineField: #cNamedArgs type: DWORDField new beNonBrowsable!
 
 initialize
 	"Private - Initialize the receiver's class variables.
