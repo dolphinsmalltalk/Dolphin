@@ -9,6 +9,7 @@ The API is very simple to use - see Crypt32Library class>>#example1.
 
 Note that care should be taken to prevent unencrypted secrets persisting in the Dolphin object memory. Even after an object has been GC''d, its content may remain in the object heap for some indeterminate time. This means that the secret may be visible to any code running within the process, or in a memory dump. To minimize the time that unencrypted secrets are present in memory associated objects should be zero''d out before they go out of scope.'.
 
+
 package classNames
 	add: #Crypt32Library;
 	add: #CRYPTOAPI_BLOB;

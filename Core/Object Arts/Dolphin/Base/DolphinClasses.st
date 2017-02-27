@@ -1105,11 +1105,6 @@ ExternalStructure subclass: #Win32Structure
 	classVariableNames: ''
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
-ExternalArray subclass: #BYTEArray
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
 ExternalArray subclass: #DOUBLEArray
 	instanceVariableNames: ''
 	classVariableNames: ''
