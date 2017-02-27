@@ -4323,7 +4323,7 @@ arrayType
 	"Private - Answer the class of object (typically an <ExternalArray> subclass) to be used to 
 	represent arrays of the receiver's field type in other structures."
 
-	^BYTEArray! !
+	^ExternalArray! !
 !BYTE class categoriesFor: #arrayType!constants!development!private! !
 
 !ByteArray class methodsFor!
@@ -7234,7 +7234,7 @@ arrayType
 	however where a field is a void* pointer to a conformant array, we assume it is pointing at
 	bytes."
 
-	^BYTEArray!
+	^ExternalArray!
 
 fieldType
 	"Private - Answer the <ExternalField> type to be used to represent the receiver's field type in 

@@ -5,7 +5,7 @@ ExternalStructure subclass: #CRYPTOAPI_BLOB
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-CRYPTOAPI_BLOB guid: (GUID fromString: '{E93356A1-821E-4719-8038-F2813B7615D2}')!
+CRYPTOAPI_BLOB guid: (GUID fromString: '{e93356a1-821e-4719-8038-f2813b7615d2}')!
 CRYPTOAPI_BLOB comment: '<CRYPTOAPI_BLOB> is an <ExternalStructure> class to wrap the struct ''Win32.CRYPTOAPI_BLOB'' from type information in the ''Win32 API'' library.
 
 The type library contains the following helpstring for this struct
@@ -33,14 +33,14 @@ basicPbData
 	^bytes intPtrAtOffset: ##(self offsetOf: #pbData)!
 
 cbData
-	"Answer the receiver's cbData field as a Smalltalk object."
+	"Private - Answer the <Integer> value of the receiver's 'cbData' field."
 
 	^bytes dwordAtOffset: 0!
 
-cbData: anObject
-	"Set the receiver's cbData field to the value of anObject."
+cbData: anInteger
+	"Set the receiver's 'cbData' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: 0 put: anObject!
+	bytes dwordAtOffset: 0 put: anInteger!
 
 data
 	^localData ifNil: [
@@ -68,18 +68,19 @@ needsFree
 	^localData isNil and: [bytes notNull and: [self basicPbData ~~ 0]]!
 
 pbData
-	"Answer the receiver's pbData field as a Smalltalk object."
+	"Answer the <ExternalArray> value of the receiver's 'pbData' field."
 
-	^BYTEArray fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #pbData)) length: self cbData!
+	^ExternalArray fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #pbData)) length: self cbData!
 
-pbData: anObject
-	"Set the receiver's pbData field to the value of anObject."
+pbData: anExternalArray
+	"Set the receiver's 'pbData' field to the value of the argument, anExternalArray"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #pbData) put: anObject yourAddress! !
+	bytes uintPtrAtOffset: ##(self offsetOf: #pbData) put: anExternalArray yourAddress.
+	self cbData: anExternalArray size! !
 !CRYPTOAPI_BLOB categoriesFor: #basicFree!private!realizing/unrealizing! !
 !CRYPTOAPI_BLOB categoriesFor: #basicPbData!private!realizing/unrealizing! !
-!CRYPTOAPI_BLOB categoriesFor: #cbData!**compiled accessors**!public! !
-!CRYPTOAPI_BLOB categoriesFor: #cbData:!**compiled accessors**!public! !
+!CRYPTOAPI_BLOB categoriesFor: #cbData!**compiled accessors**!private! !
+!CRYPTOAPI_BLOB categoriesFor: #cbData:!**compiled accessors**!private! !
 !CRYPTOAPI_BLOB categoriesFor: #data!public! !
 !CRYPTOAPI_BLOB categoriesFor: #data:!public! !
 !CRYPTOAPI_BLOB categoriesFor: #initialize!initializing!private! !
@@ -96,18 +97,18 @@ defineFields
 
 		typedef [helpstring('Structure to represent an arbitrary, counted, array of bytes.')]
 		struct tagCRYPTOAPI_BLOB {
-			unsigned long cbData;
+			[nonbrowsable] unsigned long cbData;
 			BYTE* pbData;
 		} CRYPTOAPI_BLOB;
 "
 
 	self
-		defineField: #cbData type: DWORDField new offset: 0;
-		defineField: #pbData type: (ConformantArrayPointerField type: BYTEArray length: #cbData) offset: 4.
+		defineField: #cbData type: DWORDField new beNonBrowsable offset: 0;
+		defineField: #pbData type: (ArrayPointerField type: ExternalArray lengthField: #cbData) offset: 4.
 	self byteSize: 8!
 
 fromBytes: aByteObject
 	^self new data: aByteObject! !
-!CRYPTOAPI_BLOB class categoriesFor: #defineFields!initializing!public! !
+!CRYPTOAPI_BLOB class categoriesFor: #defineFields!**auto generated**!initializing!public! !
 !CRYPTOAPI_BLOB class categoriesFor: #fromBytes:!public! !
 
