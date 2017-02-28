@@ -3,6 +3,8 @@ package := Package name: 'Learn Smalltalk'.
 package paxVersion: 1;
 	basicComment: ''.
 
+package basicPackageVersion: '0.001'.
+
 
 package classNames
 	add: #ProfStef;
