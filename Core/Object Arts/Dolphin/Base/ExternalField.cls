@@ -1,12 +1,18 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 AttributeDescriptor subclass: #ExternalField
-	instanceVariableNames: 'offset'
+	instanceVariableNames: 'offset structClass'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ExternalField guid: (GUID fromString: '{87B4C4D8-026E-11D3-9FD7-00A0CC3E4A32}')!
-ExternalField comment: ''!
+ExternalField guid: (GUID fromString: '{87b4c4d8-026e-11d3-9fd7-00a0cc3e4a32}')!
+ExternalField comment: 'ExternalField is the abstract class of metadata objects that describe the fields of <ExternalStructure>s, including such attributes as the byte offset of the field, the type of the field, and potentially the size of the field.
+
+Instance Variables:
+	offset		<SmallInteger>. Fixed offset, in bytes, of the field described in any instance of structClass.
+	structClass	<ExternalStructure class> of which the instance is describing a field.
+
+'!
 !ExternalField categoriesForClass!External-Data-Types! !
 !ExternalField methodsFor!
 
@@ -17,6 +23,20 @@ alignment
 	same as the byte size."
 
 	^self byteSize!
+
+autoGenCategories
+	^Array with: ExternalStructure autoGenCategory
+		with: (self isNonBrowsable
+				ifTrue: [self class methodCategoryClass private]
+				ifFalse: [self class methodCategoryClass public])!
+
+autoGenComment
+	"Private - Answer a suitable piece of comment to warn the user that a
+	method is automatically generated and should not be modified.
+	Implementation Note: As of v2.2 this is empty by default as otherwise
+	it tends to lead to rather bloated source files."
+
+	^''!
 
 beFiller
 	"Set the receiver's flag to specify that it is a filler field.
@@ -35,6 +55,9 @@ emitStaticExpression: operation on: aWriteStream
 	operation value: aWriteStream.
 	aWriteStream nextPut: $)!
 
+fieldClassName
+	^Object name!
+
 isFiller
 	"Private - Answer whether the receiver is a filler field."
 
@@ -42,7 +65,13 @@ isFiller
 !
 
 isFixedSize
+	"Private - Answer whether the field described by the receiver is of a fixed size, i.e.
+	known statically as opposed to varying dynamically at runtime."
+
 	^true!
+
+makeInstanceName: className
+	^(className first isVowel ifTrue: ['an'] ifFalse: ['a']) , className!
 
 offset
 	"Private - Answer the offset of the receiver's field in its structure template."
@@ -54,6 +83,31 @@ offset: anInteger
 
 	offset := anInteger.
 	!
+
+printAccessor: aSymbol on: aPuttableStream
+	| remark |
+	aPuttableStream
+		nextPutAll: aSymbol;
+		crtab;
+		nextPut: $".
+	self isNonBrowsable ifTrue: [aPuttableStream nextPutAll: 'Private - '].
+	aPuttableStream
+		nextPutAll: 'Answer the <';
+		nextPutAll: self fieldClassName;
+		nextPutAll: '> value of the receiver''s ''';
+		display: aSymbol;
+		nextPutAll: ''' field.'.
+	remark := self autoGenComment.
+	remark notEmpty
+		ifTrue: 
+			[aPuttableStream
+				crtab;
+				nextPutAll: remark].
+	aPuttableStream
+		nextPut: $";
+		cr;
+		crtab.
+	self printAccessorBody: aSymbol on: aPuttableStream!
 
 printAccessorBody: aSymbol on: aWriteStream 
 	"Private - Answer suitable method text for compiling a read-accessor method
@@ -77,6 +131,31 @@ printAccessorExpressionSuffixOn: aWriteStream
 	"By default, nothing is needed."
 
 	!
+
+printMutator: aSymbol on: aPuttableStream
+	| fieldName remark paramName |
+	fieldName := aSymbol allButLast asSymbol.
+	paramName := self valueParameterName.
+	aPuttableStream
+		nextPutAll: aSymbol;
+		space;
+		nextPutAll: paramName;
+		crtab;
+		nextPutAll: '"Set the receiver''s ''';
+		display: fieldName;
+		nextPutAll: ''' field to the value of the argument, ';
+		nextPutAll: paramName.
+	remark := self autoGenComment.
+	remark notEmpty
+		ifTrue: 
+			[aPuttableStream
+				crtab;
+				nextPutAll: remark].
+	aPuttableStream
+		nextPut: $";
+		cr;
+		crtab.
+	self printMutatorBody: fieldName on: aPuttableStream!
 
 printMutatorBody: aSymbol on: aWriteStream 
 	"Private - Print a suitable statement or statement onto the specified <puttableStream> which
@@ -118,22 +197,40 @@ printOn: aStream
 
 	aStream
 		basicPrint: self;
-		nextPut: $(; print: self offset; nextPut: $)! !
+		nextPut: $(; print: self offset; nextPut: $)!
+
+structClass
+	^structClass!
+
+structClass: anExternalStructureClass
+	structClass := anExternalStructureClass!
+
+valueParameterName
+	^self makeInstanceName: self fieldClassName! !
 !ExternalField categoriesFor: #alignment!constants!public! !
+!ExternalField categoriesFor: #autoGenCategories!development!private! !
+!ExternalField categoriesFor: #autoGenComment!constants!development!private! !
 !ExternalField categoriesFor: #beFiller!modes!public! !
 !ExternalField categoriesFor: #byteSize!accessing!private! !
 !ExternalField categoriesFor: #emitStaticExpression:on:!automatic generation!private! !
+!ExternalField categoriesFor: #fieldClassName!automatic generation!constants!development!private! !
 !ExternalField categoriesFor: #isFiller!private!testing! !
 !ExternalField categoriesFor: #isFixedSize!private!testing! !
+!ExternalField categoriesFor: #makeInstanceName:!automatic generation!development!private! !
 !ExternalField categoriesFor: #offset!accessing!private! !
 !ExternalField categoriesFor: #offset:!accessing!private! !
+!ExternalField categoriesFor: #printAccessor:on:!development!private! !
 !ExternalField categoriesFor: #printAccessorBody:on:!automatic generation!development!private! !
 !ExternalField categoriesFor: #printAccessorExpression:on:!automatic generation!development!private! !
 !ExternalField categoriesFor: #printAccessorExpressionSuffixOn:!automatic generation!development!private! !
+!ExternalField categoriesFor: #printMutator:on:!development!private! !
 !ExternalField categoriesFor: #printMutatorBody:on:!automatic generation!development!private! !
 !ExternalField categoriesFor: #printOffsetExpression:on:!automatic generation!development!private! !
 !ExternalField categoriesFor: #printOffsetExpression:on:extra:!automatic generation!development!private! !
 !ExternalField categoriesFor: #printOn:!printing!public! !
+!ExternalField categoriesFor: #structClass!accessing!private! !
+!ExternalField categoriesFor: #structClass:!accessing!private! !
+!ExternalField categoriesFor: #valueParameterName!automatic generation!constants!development!private! !
 
 !ExternalField class methodsFor!
 

@@ -5,7 +5,7 @@ Object subclass: #Compiler
 	classVariableNames: 'DefaultFlags DisabledWarnings'
 	poolDictionaries: 'CompilerFlags SmalltalkParseErrorCodes'
 	classInstanceVariableNames: ''!
-Compiler guid: (GUID fromString: '{87B4C470-026E-11D3-9FD7-00A0CC3E4A32}')!
+Compiler guid: (GUID fromString: '{87b4c470-026e-11d3-9fd7-00a0cc3e4a32}')!
 Compiler comment: 'The Compiler class is responsible for compiling new methods and evaluating expressions.'!
 !Compiler categoriesForClass!System-Support! !
 !Compiler class methodsFor!
@@ -217,6 +217,17 @@ evaluate: aString
 	The expression is not written to the change log."
 
 	^self evaluate: aString logged: false!
+
+evaluate: aString for: anObject
+	"Compile and evaluate the expression, aString, with anObject as the receiver. If the
+	expression compiles, answer the result of evaluating the expression. If the compilation
+	fails, signal a CompilerNotification and answer nil."
+
+	^self
+		evaluate: aString
+		for: anObject
+		evaluationPools: nil
+		logged: false!
 
 evaluate: aString for: anObject evaluationPools: anArray logged: aBoolean 
 	"Compile and evaluate the expression, aString, with anObject as the 
@@ -431,6 +442,7 @@ warningClass
 !Compiler class categoriesFor: #enableWarning:!helpers!public! !
 !Compiler class categoriesFor: #errorClass!public! !
 !Compiler class categoriesFor: #evaluate:!evaluating!public! !
+!Compiler class categoriesFor: #evaluate:for:!evaluating!public! !
 !Compiler class categoriesFor: #evaluate:for:evaluationPools:logged:!evaluating!public! !
 !Compiler class categoriesFor: #evaluate:for:evaluationPools:logged:ifFail:!evaluating!public! !
 !Compiler class categoriesFor: #evaluate:for:logged:!evaluating!public! !

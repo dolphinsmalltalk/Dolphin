@@ -56,12 +56,24 @@ testNextLine
 	stream reset.
 	self readOperationNotImplemented: [stream nextLine]!
 
+testNextLineCrOnly
+	| stream |
+	stream := self streamWith: (String with: $\r) , 'abc'.
+	stream reset.
+	self readOperationNotImplemented: [stream nextLine]!
+
 testNextWord
 	| stream |
 	stream := self streamWith: 'abc'.
 	stream reset.
 	"It is an error to attempt to read from a WriteStream"
 	self should: [stream nextWord] raise: Error!
+
+testPeekFor
+	| stream |
+	stream := self streamWith: 'abc'.
+	stream reset.
+	self readOperationNotImplemented: [stream peekFor: $a]!
 
 testSetToEnd
 	| string stream |
@@ -79,6 +91,9 @@ testSkipToAllColon
 	stream := self streamOn: chars.
 
 	self readOperationNotImplemented: [stream skipToAll: 'a']!
+
+testUpTo
+	self readOperationNotImplemented: [super testUpTo]!
 
 testUpToAllColon
 	| chars stream |
@@ -98,9 +113,12 @@ testUpToEnd
 !WriteStreamTest categoriesFor: #testContents!public!unit tests! !
 !WriteStreamTest categoriesFor: #testNewContents!public!unit tests! !
 !WriteStreamTest categoriesFor: #testNextLine!public!unit tests! !
+!WriteStreamTest categoriesFor: #testNextLineCrOnly!public!unit tests! !
 !WriteStreamTest categoriesFor: #testNextWord!public!unit tests! !
+!WriteStreamTest categoriesFor: #testPeekFor!public!unit tests! !
 !WriteStreamTest categoriesFor: #testSetToEnd!public!testing! !
 !WriteStreamTest categoriesFor: #testSkipToAllColon!public!unit tests! !
+!WriteStreamTest categoriesFor: #testUpTo!public!unit tests! !
 !WriteStreamTest categoriesFor: #testUpToAllColon!public!unit tests! !
 !WriteStreamTest categoriesFor: #testUpToEnd!public!unit tests! !
 

@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 AXMemberDesc subclass: #FUNCDESC
 	instanceVariableNames: 'names arguments outputIndices retvalIndex methodName'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-FUNCDESC guid: (GUID fromString: '{C06F3B6E-0868-11D3-93AF-00A024CA708A}')!
+FUNCDESC guid: (GUID fromString: '{c06f3b6e-0868-11d3-93af-00a024ca708a}')!
 FUNCDESC comment: 'FUNCDESC is an <ExternalStructure> class to represent the Active-X Automation FUNCDESC structure.
 
 A FUNCDESC describes various attributes of a function including, for example, the number of parameters, and their types.
@@ -73,10 +73,21 @@ arguments
 basicFree
 	"Private - Free external resources owned by the receiver."
 
-	piTypeInfo asParameter ReleaseFuncDesc: self!
+	analyzer releaseFuncDesc: self!
+
+basicIdlAttributes
+	"Private - Answer a <sequencedReadableCollection> of the string names
+	of the various IDL flags assocated with the receiver."
+
+	| answer |
+	answer := super basicIdlAttributes.
+	self isPropPut ifTrue: [answer add: 'propput'].
+	self isPropPutRef ifTrue: [answer add: 'propputref'].
+	self isPropGet ifTrue: [answer add: 'propget'].
+	^answer!
 
 callconv
-	"Answer the receiver's callconv field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'callconv' field."
 
 	^bytes sdwordAtOffset: ##(self offsetOf: #callconv)!
 
@@ -93,17 +104,17 @@ clearMethodName
 	methodName := nil!
 
 cParams
-	"Answer the receiver's cParams field as a Smalltalk object."
+	"Private - Answer the <Integer> value of the receiver's 'cParams' field."
 
 	^bytes swordAtOffset: ##(self offsetOf: #cParams)!
 
 cParamsOpt
-	"Answer the receiver's cParamsOpt field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'cParamsOpt' field."
 
 	^bytes swordAtOffset: ##(self offsetOf: #cParamsOpt)!
 
 cScodes
-	"Answer the receiver's cScodes field as a Smalltalk object."
+	"Private - Answer the <Integer> value of the receiver's 'cScodes' field."
 
 	^bytes swordAtOffset: ##(self offsetOf: #cScodes)!
 
@@ -114,7 +125,7 @@ elemDesc
 	^self hasRetval ifTrue: [self arguments at: self retvalIndex] ifFalse: [self elemDescFunc]!
 
 elemdescFunc
-	"Answer the receiver's elemdescFunc field as a Smalltalk object."
+	"Answer the <ELEMDESC> value of the receiver's 'elemdescFunc' field."
 
 	^ELEMDESC fromAddress: bytes yourAddress + ##(self offsetOf: #elemdescFunc)!
 
@@ -127,9 +138,12 @@ flags
 	^self wFuncFlags!
 
 funckind
-	"Answer the receiver's funckind field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'funckind' field."
 
 	^bytes sdwordAtOffset: ##(self offsetOf: #funckind)!
+
+getAllCustData
+	^analyzer tlbInterface getAllFuncCustData: index!
 
 hasRetval
 	"Answer whether the receiver has retval argument."
@@ -146,7 +160,7 @@ idlCallingConvention
 	at: self callconv!
 
 invkind
-	"Answer the receiver's invkind field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'invkind' field."
 
 	^bytes sdwordAtOffset: ##(self offsetOf: #invkind)!
 
@@ -209,23 +223,23 @@ isVirtual
 	^fk == FUNC_PUREVIRTUAL or: [fk == FUNC_VIRTUAL]!
 
 lprgelemdescParam
-	"Answer the receiver's lprgelemdescParam field as a Smalltalk object."
+	"Answer the <StructureArray> value of the receiver's 'lprgelemdescParam' field."
 
-	^StructureArray 
+	^StructureArray
 		fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #lprgelemdescParam))
 		length: self cParams
 		elementClass: ELEMDESC!
 
 lprgscode
-	"Answer the receiver's lprgscode field as a Smalltalk object."
+	"Answer the <StructureArray> value of the receiver's 'lprgscode' field."
 
-	^StructureArray 
+	^StructureArray
 		fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #lprgscode))
 		length: self cScodes
 		elementClass: HRESULT!
 
 memid
-	"Answer the receiver's memid field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'memid' field."
 
 	^bytes sdwordAtOffset: 0!
 
@@ -242,7 +256,7 @@ names
 		ifTrue: 
 			[| count |
 			count := self cParams + 1.
-			names := piTypeInfo getNamesOfMember: self memid count: count].
+			names := analyzer getNamesOfMember: self memid count: count].
 	^names!
 
 optionalInputs
@@ -267,7 +281,7 @@ outputIndices
 !
 
 oVft
-	"Answer the receiver's oVft field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'oVft' field."
 
 	^bytes swordAtOffset: ##(self offsetOf: #oVft)!
 
@@ -308,17 +322,25 @@ selector
 	"Although this might seem to be development time only functionality, it can be used at run time
 	to build the names of events to be triggered when sinking a COM 'source'/event interface."
 
-	| keywords argc |
-	keywords := self names.
-	"Special case if no arguments"
-	^(argc := self argumentCount) < 1 
-		ifTrue: [keywords first asSymbol]
-		ifFalse: [ | answer |
+	| argc |
+	^(argc := self argumentCount) < 1
+		ifTrue: 
+			["Special case if no arguments"
+			self name asSymbol]
+		ifFalse: 
+			[| answer keywords |
+			keywords := self names.
 			answer := String writeStream: argc * 10.
-			answer nextPutAll: keywords first; nextPut: $:.
-			3 to: keywords size do: [:i | answer nextPutAll: (keywords at: i); nextPut: $:].
-			answer contents asSymbol]
-!
+			answer
+				nextPutAll: keywords first;
+				nextPut: $:.
+			3 to: keywords size
+				do: 
+					[:i |
+					answer
+						nextPutAll: (keywords at: i);
+						nextPut: $:].
+			answer contents asSymbol]!
 
 tdescFunc
 	"Private - Answer a TYPEDESC describing the receiver's formal return type.
@@ -335,24 +357,26 @@ vfnIndex
 	^(self oVft//4)+1.!
 
 wFuncFlags
-	"Answer the receiver's wFuncFlags field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'wFuncFlags' field."
 
 	^bytes wordAtOffset: ##(self offsetOf: #wFuncFlags)! !
 !FUNCDESC categoriesFor: #argumentNameFor:!helpers!private! !
 !FUNCDESC categoriesFor: #argumentNames!accessing!public! !
 !FUNCDESC categoriesFor: #arguments!accessing!public! !
 !FUNCDESC categoriesFor: #basicFree!private!realizing/unrealizing! !
+!FUNCDESC categoriesFor: #basicIdlAttributes!printing-IDL!private! !
 !FUNCDESC categoriesFor: #callconv!**compiled accessors**!public! !
 !FUNCDESC categoriesFor: #callingConvention!accessing!public! !
 !FUNCDESC categoriesFor: #clearMethodName!development!initializing!private! !
-!FUNCDESC categoriesFor: #cParams!**compiled accessors**!public! !
+!FUNCDESC categoriesFor: #cParams!**compiled accessors**!private! !
 !FUNCDESC categoriesFor: #cParamsOpt!**compiled accessors**!public! !
-!FUNCDESC categoriesFor: #cScodes!**compiled accessors**!public! !
+!FUNCDESC categoriesFor: #cScodes!**compiled accessors**!private! !
 !FUNCDESC categoriesFor: #elemDesc!accessing!public! !
 !FUNCDESC categoriesFor: #elemdescFunc!**compiled accessors**!public! !
 !FUNCDESC categoriesFor: #elemDescFunc!accessing!public! !
 !FUNCDESC categoriesFor: #flags!accessing!private! !
 !FUNCDESC categoriesFor: #funckind!**compiled accessors**!public! !
+!FUNCDESC categoriesFor: #getAllCustData!accessing!private! !
 !FUNCDESC categoriesFor: #hasRetval!public!testing! !
 !FUNCDESC categoriesFor: #idlCallingConvention!printing-IDL!private! !
 !FUNCDESC categoriesFor: #invkind!**compiled accessors**!public! !
@@ -408,18 +432,18 @@ defineFields
 	self
 		defineField: #memid type: SDWORDField readOnly;
 		defineField: #lprgscode
-			type: (ConformantStructureArrayPointerField type: HRESULT length: #cScodes) beReadOnly;
+			type: (StructureArrayPointerField type: HRESULT lengthField: #cScodes) beReadOnly;
 		defineField: #lprgelemdescParam
-			type: (ConformantStructureArrayPointerField type: ELEMDESC length: #cParams) beReadOnly;
+			type: (StructureArrayPointerField type: ELEMDESC lengthField: #cParams) beReadOnly;
 		defineField: #funckind type: SDWORDField readOnly;
 		defineField: #invkind type: SDWORDField readOnly;
 		defineField: #callconv type: SDWORDField readOnly;
-		defineField: #cParams type: SWORDField readOnly;
+		defineField: #cParams type: SWORDField readOnly beNonBrowsable;
 		defineField: #cParamsOpt type: SWORDField readOnly;
 		defineField: #oVft type: SWORDField readOnly;
-		defineField: #cScodes type: SWORDField readOnly;
+		defineField: #cScodes type: SWORDField readOnly beNonBrowsable ;
 		defineField: #elemdescFunc type: (StructureField type: ELEMDESC) beReadOnly;
-		defineField: #wFuncFlags type: WORDField readOnly	"MEMBERID = DISPID = LONG"	"FUNCKIND enum"	"INVOKEKIND enum"	"CALLCONV enum"!
+		defineField: #wFuncFlags type: WORDField readOnly!
 
 stbConvertFrom: anSTBClassFormat
 	"Convert from version 0 FUNCDESC.

@@ -152,6 +152,13 @@ allReferences
 	<primitive: 153>
 	^self primitiveFailed!
 
+allReferences: aBoolean
+	"Answer an Array containing all objects which reference the receiver, including weak
+	references if the <boolean> argument is true. The primitive should not fail."
+
+	<primitive: 153>
+	^self primitiveFailed!
+
 asParameter
 	"Answer the receiver in a form suitable for passing to an external function
 	primitive method (see ExternalLibrary and subclasses). The default is self."
@@ -253,6 +260,36 @@ basicDoesNotUnderstand: failedMessage
 	message."
 
 	^MessageNotUnderstood receiver: self message: failedMessage!
+
+basicIdentityHash
+	"Answer the <integer> identity hash value for the receiver. This is
+	currently a 16-bit SmallInteger value, which is always positive (although
+	note that SmallInteger's override this implementation to answer 
+	themselves and hence an arbitrary object's identity hash is only 
+	guaranteed to be an integer). The value is a pseudo-random number 
+	assigned on first request, and it never changes (i.e. it is temporally 
+	invariant). Because the range is limited to 16-bits, very large collections 
+	hashed by identity using this value alone may be slow to access. One could 
+	consider including the identityHash of the objects class e.g. 
+		^((self class basicIdentityHash bitAnd: 16r3FFFFFFF) bitShift: 16) 
+			bitOr: self basicIdentityHash
+	However, this would not be safe in general, because #become: and #becomeA:
+	might change an object's class, (an object's class is an attribute of the object
+	not it's identity).
+
+	Although this implementation is temporally invariant while an object remains
+	in memory, a binary filed object is re-incarnated with a different identity,
+	and so identity hash collections must be rebuilt or rehashed on load (the 
+	standard Collections do this already).
+
+	This need not be reimplemented (except by immediate subclasses), because 
+	it is not possible to override #==, indeed reimplementation is jolly unwise.
+	
+	N.B. The primitive does not fail, but will raise a benign invalid memory access 
+	exception if called for immediate subclasses such as SmallInteger."
+	
+	<primitive: 75>
+	^self primitiveFailed!
 
 basicIdentityIndexOf: anElement from: start to: stop
 	"Private - Answer the index of the next occurrence of anElement in the receiver's indexable
@@ -684,20 +721,19 @@ getSpecialBehavior
 	^self setSpecialBehavior: _GetSpecialMask!
 
 hash
-	"Answer the <integer> hash value for the receiver. By default use the identity hash
-	assigned at object creation time, which is temporally invariant.
+	"Answer the <integer> hash value for the receiver. By default use the identity hash assigned
+	at object creation time, which is temporally invariant. See #identityHash for more details.
 
-	Equivalent objects (i.e. those that answer true for #=) MUST
-	answer the same hash value, in order that they can be stored and
-	retrieved successfully from hashed collections. Therefore, classes 
-	which reimplement either #= or #hash, will probably need to 
-	reimplement both.
+	Equivalent objects (i.e. those that answer true for #=) MUST answer the same hash value,
+	in order that they can be stored and retrieved successfully from hashed collections.
+	Therefore, classes which reimplement either #= or #hash, will probably need to reimplement
+	both.
 
-	N.B. The primitive does not fail, but will raise an invalid memory access 
-	exception if called for immediate subclasses such as SmallInteger."
-	
-	<primitive: 75>
-	^self primitiveFailed!
+	N.B. The primitive does not fail, but will raise an invalid memory access exception if
+	called for immediate subclasses such as SmallInteger."
+
+	<primitive: 147>
+	^self identityHash!
 
 icon
 	"Answer an Icon representing the receiver."
@@ -708,35 +744,14 @@ iconImageIndex
 	^self icon imageIndex!
 
 identityHash
-	"Answer the <integer> identity hash value for the receiver. This is
-	currently a 16-bit SmallInteger value, which is always positive (although
-	note that SmallInteger's override this implementation to answer 
-	themselves and hence an arbitrary object's identity hash is only 
-	guaranteed to be an integer). The value is a pseudo-random number 
-	assigned when the object is created, and it never changes (i.e. it is temporally 
-	invariant). Because the range is limited to 16-bits, very large collections 
-	hashed by identity using this value alone are likely to be slow. One could 
-	consider including the identityHash of the objects class e.g. 
-		^((self class identityHash bitAnd: 16r3FFFFFFF) bitShift: 16) 
-			bitOr: self identityHash
-		or: <primitive: 147> which is similar.
-	However, this would not be safe in general, because #become: and #becomeA:
-	might change an object's class, (an object's class is an attribute of the object
-	not it's identity).
-
-	Although this implementation is temporally invariant while an object remains
-	in memory, a binary filed object is re-incarnated with a different identity,
-	and so identity hash collections must be rebuilt or rehashed on load (the 
-	standard Collections do this already).
-
-	This need not be reimplemented (except by immediate subclasses), because 
-	it is not possible to override #==, indeed reimplementation is jolly unwise.
+	"Answer the <integer> identity hash value for the receiver. Be aware that this is based on a
+	16-bit integer randomly generated for each object on first request, so there are only 65536
+	unique values. The hash is scaled to a 30-bit positive SmallInteger to avoid closely grouped
+	objects in large hashed collections with internal overflow, which causes extremely poor
+	performance. See #basicIdentityHash for further details."
 	
-	N.B. The primitive does not fail, but will raise a benign invalid memory access 
-	exception if called for immediate subclasses such as SmallInteger."
-	
-	<primitive: 75>
-	^self primitiveFailed!
+	<primitive: 147>
+	^self basicIdentityHash bitShift: 14!
 
 ifNil: nilBlock 
 	"If the receiver is the nil object, then answer the result of evaluating the
@@ -821,6 +836,13 @@ instVarNamed: aString
 	and so its should be reserved mainly for testing, debugging, and tools."
 
 	^self instVarAt: (self class indexOfInstVar: aString)!
+
+isAtomic
+	"Answer whether or not the receiver is the single unique instance of its class that can
+	represents its value. For example, <Symbol>s are always atomic, so #a == 'a' asSymbol, but
+	<string>s in general are not atomic."
+
+	^false!
 
 isFinalizable
 	"Answer whether the receiver is marked as requiring finalization.
@@ -1400,8 +1422,17 @@ update: anAspect with: argument from: originator
 	self update: anAspect with: argument.!
 
 when: aSymbol perform: aValuable 
-	"Adds aValuable to the event list for the event named by aSymbol 
-	in the receiver"
+	"Private - Adds aValuable to the event list for the event named by aSymbol in the receiver.
+	N.B. Do not use this to register blocks as event handlers as you will not be able to
+	unregister them and they will remain registered, creating a memory leak. Instead use code of
+	the following form: 
+		handler := [:arg1 | ...].
+		eventSource when: #myEvent: send: #value: to: handler.
+		...
+		eventSource trigger: #myEvent: with: 123.	""handler Block is evaluated with 123""
+		...
+		eventSource removeEventsTriggeredFor: handler.
+	"
 
 	self getEvents 
 		ifNil: 
@@ -1498,6 +1529,7 @@ yourself
 !Object categoriesFor: #->!converting!public! !
 !Object categoriesFor: #addDependent:!dependency!public! !
 !Object categoriesFor: #allReferences!enumerating!public! !
+!Object categoriesFor: #allReferences:!enumerating!public! !
 !Object categoriesFor: #asParameter!converting!public! !
 !Object categoriesFor: #assert:!public!testing! !
 !Object categoriesFor: #asUIntPtr!converting!public! !
@@ -1507,6 +1539,7 @@ yourself
 !Object categoriesFor: #basicAt:put:!accessing!private! !
 !Object categoriesFor: #basicClass!accessing!public! !
 !Object categoriesFor: #basicDoesNotUnderstand:!exceptions!public! !
+!Object categoriesFor: #basicIdentityHash!comparing!public! !
 !Object categoriesFor: #basicIdentityIndexOf:from:to:!private!searching! !
 !Object categoriesFor: #basicPrintOn:!printing!public! !
 !Object categoriesFor: #basicPrintString!printing!public! !
@@ -1561,10 +1594,11 @@ yourself
 !Object categoriesFor: #instVarAt:!accessing!private! !
 !Object categoriesFor: #instVarAt:put:!accessing!private! !
 !Object categoriesFor: #instVarNamed:!accessing!private! !
+!Object categoriesFor: #isAtomic!public!testing! !
 !Object categoriesFor: #isFinalizable!public!testing! !
 !Object categoriesFor: #isImmediate!private!testing! !
 !Object categoriesFor: #isImmutable!public!testing! !
-!Object categoriesFor: #isImmutable:!accessing!public! !
+!Object categoriesFor: #isImmutable:!initializing!public! !
 !Object categoriesFor: #isIndexable!public!testing! !
 !Object categoriesFor: #isInteger!public!testing! !
 !Object categoriesFor: #isKindOf:!public!testing! !
@@ -1625,7 +1659,7 @@ yourself
 !Object categoriesFor: #update:!dependency!public! !
 !Object categoriesFor: #update:with:!dependency!public! !
 !Object categoriesFor: #update:with:from:!dependency!public! !
-!Object categoriesFor: #when:perform:!events!public! !
+!Object categoriesFor: #when:perform:!events!private! !
 !Object categoriesFor: #when:send:to:!events!public! !
 !Object categoriesFor: #when:send:to:with:!events!public! !
 !Object categoriesFor: #when:send:to:withArguments:!events!public! !
@@ -1637,11 +1671,6 @@ yourself
 Object methodProtocol: #Object attributes: #(#ansi #readOnly) selectors: #(#~~ #~= #= #== #class #copy #doesNotUnderstand: #error: #hash #identityHash #isKindOf: #isMemberOf: #isNil #notNil #perform: #perform:with: #perform:with:with: #perform:with:with:with: #perform:withArguments: #printOn: #printString #respondsTo: #yourself)!
 
 !Object class methodsFor!
-
-_eventsRegister
-	"Private - Answer the register of events"
-
-	^_EventsRegister!
 
 binaryReadFrom: aStream
 	"Answers an object read from its binary representation on aStream.
@@ -1733,7 +1762,6 @@ resourcesLocator
 	environment it is assumed that all resources will be in a Resources subdirectory relative to the installation directory"
 
 	^SessionManager current resourcesLocatorForClass: self! !
-!Object class categoriesFor: #_eventsRegister!accessing!private! !
 !Object class categoriesFor: #binaryReadFrom:!binary filing!public! !
 !Object class categoriesFor: #binaryReadFrom:context:!binary filing!public! !
 !Object class categoriesFor: #fromBinaryStoreBytes:!binary filing!public! !

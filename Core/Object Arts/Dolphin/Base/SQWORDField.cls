@@ -1,12 +1,12 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ScalarField subclass: #SQWORDField
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-SQWORDField guid: (GUID fromString: '{87B4C4ED-026E-11D3-9FD7-00A0CC3E4A32}')!
-SQWORDField comment: ''!
+SQWORDField guid: (GUID fromString: '{87b4c4ed-026e-11d3-9fd7-00a0cc3e4a32}')!
+SQWORDField comment: '<SQWORDField> is a <ScalarField> class to represent <ExternalStructure> fields that are 64-bit signed integers.'!
 !SQWORDField categoriesForClass!External-Data-Types! !
 !SQWORDField methodsFor!
 
@@ -15,18 +15,17 @@ accessorMessage
 
 	^#sqwordAtOffset:put:!
 
-readFrom: anExternal
-	"Private - Instantiate an object of the the type the receiver represents
-	at the receiver's offset in anExternal"
+readFrom: anExternalStructure
+	"Private - Answer the 64-bit signed <integer> that is the value of the at the receiver's
+	offset in the <ExternalStructure> argument."
 
-	^anExternal sqwordAtOffset: offset
-!
+	^anExternalStructure bytes sqwordAtOffset: offset!
 
-writeInto: anExternal value: anObject
-	"Private - Write anObject into anExternal at the receiver's offset, and in a form
-	appropriate for the receiver's External type"
+writeInto: anExternalStructure value: anInteger
+	"Private - Write the 64-bit signed <integer>, anInteger, into the <ExternalStructure>,
+	anExternalStructure, at the receiver's offset."
 
-	^anExternal sqwordAtOffset: offset put: anObject! !
+	^anExternalStructure bytes sqwordAtOffset: offset put: anInteger! !
 !SQWORDField categoriesFor: #accessorMessage!automatic generation!private! !
 !SQWORDField categoriesFor: #readFrom:!indirect accessing!private! !
 !SQWORDField categoriesFor: #writeInto:value:!indirect accessing!private! !

@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Win32Structure subclass: #NMHDR
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'CommCtrlConstants'
 	classInstanceVariableNames: ''!
-NMHDR guid: (GUID fromString: '{87B4C601-026E-11D3-9FD7-00A0CC3E4A32}')!
+NMHDR guid: (GUID fromString: '{87b4c601-026e-11d3-9fd7-00a0cc3e4a32}')!
 NMHDR comment: 'NMHDR is a <Win32Structure> representing the NMHDR external Win32 API structure.'!
 !NMHDR categoriesForClass!External-Data-Structured-Win32! !
 !NMHDR methodsFor!
@@ -45,6 +45,9 @@ defineFields
 		defineField: #idFrom type: UINT_PTRField readOnly;
 		defineField: #code type: SDWORDField readOnly!
 
+itemFromNMHDR: anExternalAddress
+	^nil!
+
 new
 	"We only ever point to NMHDRs through an ExternalAddress. We
 	never create those with embedded data."
@@ -52,5 +55,6 @@ new
 	^self shouldNotImplement
 ! !
 !NMHDR class categoriesFor: #defineFields!initializing!public! !
+!NMHDR class categoriesFor: #itemFromNMHDR:!public! !
 !NMHDR class categoriesFor: #new!instance creation!public! !
 

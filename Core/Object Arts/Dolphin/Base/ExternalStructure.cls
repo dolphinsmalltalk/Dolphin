@@ -5,7 +5,7 @@ Object subclass: #ExternalStructure
 	classVariableNames: 'CompiledMask RecordClasses'
 	poolDictionaries: ''
 	classInstanceVariableNames: 'template flags alignment'!
-ExternalStructure guid: (GUID fromString: '{87B4C489-026E-11D3-9FD7-00A0CC3E4A32}')!
+ExternalStructure guid: (GUID fromString: '{87b4c489-026e-11d3-9fd7-00a0cc3e4a32}')!
 ExternalStructure comment: ''!
 !ExternalStructure categoriesForClass!External-Data-Structured! !
 !ExternalStructure methodsFor!
@@ -178,7 +178,7 @@ detach
 	self beUnfinalizable.	"reduce Memory Manager load"
 	^detached!
 
-doesNotUnderstand: aMessage 
+doesNotUnderstand: aMessage
 	"Sent to the receiver by the VM when a message sent to the receiver was 
 	not implemented by the receiver or its superclasses. In this case then the 
 	selector of aMessage is looked up in the receiver's class' template, and 
@@ -187,10 +187,10 @@ doesNotUnderstand: aMessage
 	| args field |
 	args := aMessage arguments.
 	field := self template at: aMessage selector ifAbsent: [^super doesNotUnderstand: aMessage].
-	^args size == 0 
-		ifTrue: 
-			[field isReadable ifTrue: [field readFrom: self bytes] ifFalse: [super doesNotUnderstand: aMessage]]
-		ifFalse: [field writeInto: self bytes value: (args at: 1)]!
+	args size == 0
+		ifTrue: [field isReadable ifTrue: [^field readFrom: self]]
+		ifFalse: [field isWriteable ifTrue: [^field writeInto: self value: (args at: 1)]].
+	^super doesNotUnderstand: aMessage!
 
 fieldsDo: aMonadicValuable 
 	"Evaluate the <monadicValuable> argument, operation, for each of the receiver's fields."
@@ -339,6 +339,9 @@ pointerClass
 
 	^ExternalAddress!
 
+printableFields
+	^self getValidFields!
+
 printArgumentTypeOn: aStream
 	"Private - Append a compilable argument type name, which is the receiver, to aStream."
 
@@ -354,22 +357,19 @@ printCyclicRefOn: aStream
 	self basicPrintOn: aStream.
 	aStream nextPutAll: '...'!
 
-printFieldsOn: aStream limit: anInteger 
-	| sep |
-	self isNull 
-		ifTrue: 
-			[aStream nextPutAll: 'NULL'.
-			^self].
+printFields: aCollection on: aStream limit: anInteger
+	| sep template |
 	sep := [sep := [aStream space]].
-	self getValidFields do: 
-			[:each | 
+	template := self template.
+	aCollection do: 
+			[:each |
 			| field |
-			aStream position > anInteger 
+			aStream position > anInteger
 				ifTrue: 
 					[aStream nextPutAll: '... etc ...'.
 					^self].
-			field := self template at: each.
-			field isReadable 
+			field := template at: each.
+			field isBrowsable
 				ifTrue: 
 					[sep value.
 					aStream
@@ -377,7 +377,17 @@ printFieldsOn: aStream limit: anInteger
 						nextPutAll: '=';
 						print: (self getField: each)]]!
 
-printOn: aStream 
+printFieldsOn: aStream limit: anInteger
+	self isNull
+		ifTrue: 
+			[aStream nextPutAll: 'NULL'.
+			^self].
+	self
+		printFields: self printableFields
+		on: aStream
+		limit: anInteger!
+
+printOn: aStream
 	"Append a textual representation of the receiver to aStream.
 	We use the template definition to do this in a generic way for all correctly 
 	defined subclasses. Fields are printed in the order of their offset"
@@ -389,10 +399,10 @@ printOn: aStream
 	
 	[| tooMany |
 	tooMany := aStream position + self maxPrint.
-	super printOn: aStream.
+	self basicPrintOn: aStream.
 	aStream nextPut: $(.
 	self printFieldsOn: aStream limit: tooMany.
-	aStream nextPut: $)] 
+	aStream nextPut: $)]
 			ensure: [printed remove: self ifAbsent: []]!
 
 replaceBytesOf: aByteObject from: start to: stop startingAt: fromStart
@@ -451,7 +461,7 @@ yourAddress
 !ExternalStructure categoriesFor: #beNullPointer!modes!private! !
 !ExternalStructure categoriesFor: #bufferClass!constants!private! !
 !ExternalStructure categoriesFor: #bytes!accessing!public! !
-!ExternalStructure categoriesFor: #bytes:!accessing!private! !
+!ExternalStructure categoriesFor: #bytes:!initializing!private! !
 !ExternalStructure categoriesFor: #bytesAtOffset:put:!accessing!public! !
 !ExternalStructure categoriesFor: #byteSize!accessing!public! !
 !ExternalStructure categoriesFor: #comparisonSize!accessing!private! !
@@ -482,9 +492,11 @@ yourAddress
 !ExternalStructure categoriesFor: #needsFree!private!realizing/unrealizing! !
 !ExternalStructure categoriesFor: #notNull!public!testing! !
 !ExternalStructure categoriesFor: #pointerClass!constants!private! !
+!ExternalStructure categoriesFor: #printableFields!development!printing!private! !
 !ExternalStructure categoriesFor: #printArgumentTypeOn:!printing!private! !
 !ExternalStructure categoriesFor: #printCyclicRefOn:!printing!private! !
-!ExternalStructure categoriesFor: #printFieldsOn:limit:!printing!private! !
+!ExternalStructure categoriesFor: #printFields:on:limit:!development!printing!private! !
+!ExternalStructure categoriesFor: #printFieldsOn:limit:!development!printing!private! !
 !ExternalStructure categoriesFor: #printOn:!development!printing!public! !
 !ExternalStructure categoriesFor: #replaceBytesOf:from:to:startingAt:!double dispatch!private!replacing! !
 !ExternalStructure categoriesFor: #replaceFrom:to:with:startingAt:!public!replacing! !
@@ -516,27 +528,11 @@ atAddress: anAddress
 
 	^self fromAddress: anAddress!
 
-autoGenCategories
-	"Private - Answer a <sequencedReadableCollection> of <MethodCategory>s into 
-	which the auto-generated the structure accessors for the receiver should be compiled."
-
-	^Array
-		with: self autoGenCategory
-		with: self methodCategoryClass public.!
-
 autoGenCategory
 	"Private - Answer the basic<MethodCategory>s into which the auto-generated 
 	structure accessors for the receiver should be compiled."
 
 	^self methodCategoryClass name: '**compiled accessors**'!
-
-autoGenComment
-	"Private - Answer a suitable piece of comment to warn the user that a
-	method is automatically generated and should not be modified.
-	Implementation Note: As of v2.2 this is empty by default as otherwise
-	it tends to lead to rather bloated source files."
-
-	^''!
 
 baseAlignment
 	^self == ##(self) ifTrue: [1] ifFalse: [self superclass alignment]!
@@ -570,18 +566,19 @@ byteSize: anInteger
 		ifFalse: [self error: 'Invalid structure size ' , anInteger displayString].
 	self extraInstanceSpec: anInteger!
 
-changedByteSizeFrom: oldByteSize 
-	"Private - If the size of the receiver changes such that it fits into a different
-	type for passing/returning structures by value, then we must recompile
-	all existing referencing methods."
+changedByteSizeFrom: oldByteSize
+	"Private - If the size of the receiver changes such that it fits into a different type for passing
+	/ returning structures by value , then we must recompile all existing referencing methods"
 
-	| newByteSize |
+	| newByteSize recompileRefs |
 	newByteSize := self byteSize.
-	(oldByteSize ~= newByteSize and: 
-			[oldByteSize == 0 or: 
-					[(self descriptorClass structTypeForSize: oldByteSize) 
-						~= (self descriptorClass structTypeForSize: newByteSize)]]) 
-		ifTrue: [self recompileReferences]!
+	oldByteSize ~= newByteSize ifFalse: [^self].
+	"Recompile own methods so that they have the correct offsets encoded"
+	recompileRefs := [:each | (each refersToLiteral: #offsetOf:) ifTrue: [each recompile]].
+	self methodDictionary do: recompileRefs.
+	self class methodDictionary do: recompileRefs.
+	"Recompile any references that might have a static literal snapshot of the byte size of the receiver."
+	self recompileReferences!
 
 clear: addressOrBytes
 	"Finalize an instance of the structure which instances of the receiver wrap
@@ -606,59 +603,25 @@ compileDefinition
 		recompileDefinition;
 		shrink!
 
-compileGetMethod: aSymbol forField: anExternalField 
+compileGetMethod: aSymbol forField: anExternalField
 	"Private - Generate a compiled 'get' accessor method for the selector aSymbol 
 	and field definition anExternalField."
 
-	| methodText remark |
+	| methodText |
 	anExternalField canGenerateAccessor ifFalse: [^self].
 	methodText := String writeStream: 256.
-	methodText
-		nextPutAll: aSymbol;
-		crtab;
-		nextPutAll: '"Answer the receiver''s ';
-		nextPutAll: aSymbol;
-		nextPutAll: ' field as a Smalltalk object.'.
-	remark := self autoGenComment.
-	remark notEmpty 
-		ifTrue: 
-			[methodText
-				crtab;
-				nextPutAll: remark].
-	methodText
-		nextPut: $";
-		cr;
-		crtab.
-	anExternalField printAccessorBody: aSymbol on: methodText.
-	self formatAndCompile: methodText contents categories: self autoGenCategories!
+	anExternalField printAccessor: aSymbol on: methodText.
+	self formatAndCompile: methodText contents categories: anExternalField autoGenCategories!
 
-compileSetMethod: aSelector forField: anExternalField 
+compileSetMethod: aSelector forField: anExternalField
 	"Private - Generate a compiled 'set' accessor method for the selector aSymbol 
 	and field definition, anExternalField"
 
-	| methodText remark fieldName |
+	| methodText |
 	anExternalField canGenerateMutator ifFalse: [^self].
 	methodText := String writeStream: 256.
-	fieldName := aSelector allButLast asSymbol.
-	methodText
-		nextPutAll: aSelector;
-		nextPutAll: ' anObject';
-		crtab;
-		nextPutAll: '"Set the receiver''s ';
-		display: fieldName;
-		nextPutAll: ' field to the value of anObject.'.
-	remark := self autoGenComment.
-	remark notEmpty 
-		ifTrue: 
-			[methodText
-				crtab;
-				nextPutAll: remark].
-	methodText
-		nextPut: $";
-		cr;
-		crtab.
-	anExternalField printMutatorBody: fieldName on: methodText.
-	self formatAndCompile: methodText contents categories: self autoGenCategories!
+	anExternalField printMutator: aSelector on: methodText.
+	self formatAndCompile: methodText contents categories: anExternalField autoGenCategories!
 
 contentsAccessText
 	"Private - Answer the method text that must be inserted to get access to the
@@ -687,12 +650,13 @@ defineField: fieldName type: anExternalField offset: offset
 	N.B. This should only be used where the offset is known, note also that the
 	byte size is updated if the field is added at the end."
 
+	anExternalField structClass: self.
 	self isCompiled ifFalse: [anExternalField beUncompiled].
 	alignment := alignment max: anExternalField alignment.
 	anExternalField offset: offset.
 	self byteSize: (self basicByteSize max: offset + anExternalField byteSize).
 	"We always retain the read selector in the template - this is needed to calc the field
-	offset when compiling methods"
+	offset when compiling methods, and might be required for evaluating size_is expressions."
 	template at: fieldName asSymbol put: anExternalField.
 	anExternalField isWriteable ifTrue: [template at: (fieldName , ':') asSymbol put: anExternalField]!
 
@@ -723,7 +687,6 @@ defineTemplate
 			["Receiver doesn't define any new fields, so inherit the lot"
 			self inheritTemplate.
 			template notNil ifTrue: [^self changedByteSizeFrom: oldByteSize]].
-	alignment := self baseAlignment.
 	self
 		initializeTemplate;
 		defineFields;
@@ -746,11 +709,25 @@ elementSize
 ensureDefined
 	template isNil ifTrue: [self defineTemplate]	"ensure the structure accessors are correctly defined"!
 
-fieldType
-	"Private - Answer the <ExternalField> type to be used to represent the receiver's field type in 
-	other structures."
+fieldType: aVARDESC indirections: anInteger
+	"Private - Answer the <ExternalField> type to be used to represent a field described by the
+	<VARDESC> argument based of the receiver's basic field type in structures with the given
+	number of <integer> indirections."
 
-	^StructureField!
+	^anInteger > 1
+		ifTrue: 
+			["Represent ** (or more) as anon. indirection"
+			LPVOIDField]
+		ifFalse: 
+			[anInteger == 0
+				ifTrue: 
+					[self assert: 
+							["Should not have arrived here for conformant embedded arrays"
+							aVARDESC isConformant not].
+					self fieldType]
+				ifFalse: 
+					["Its a pointer, but could be to an array"
+					aVARDESC isConformant ifTrue: [self arrayType pointerFieldType] ifFalse: [self pointerFieldType]]]!
 
 formatAndCompile: aString categories: categories 
 	| source |
@@ -923,7 +900,9 @@ newTemplate
 	"Private - Reset the template instance variable of the receiver in preparation for loading a
 	new template."
 
-	template := IdentityDictionary new!
+	template := IdentityDictionary new.
+	alignment := self baseAlignment.
+!
 
 offsetFor: anExternalField base: anInteger 
 	"Answer the adjusted offset for the <ExternalField> from the base offset, anInteger.
@@ -992,36 +971,29 @@ recompileDefinition
 	self decompileDefinition.
 	self definesNewFields ifFalse: [^self].
 	self template keysAndValuesDo: 
-			[:selector :field | 
-			(self shouldCompile: selector forField: field) 
+			[:selector :field |
+			(self shouldCompile: selector forField: field)
 				ifTrue: 
-					[selector last == $: 
+					[selector last == $:
 						ifTrue: [self compileSetMethod: selector forField: field]
-						ifFalse: [self compileGetMethod: selector forField: field]]
-				ifFalse: 
-					[Notification signal: self name , ': Compiled accessor ' , selector printString , ' not generated']]
-
-!
+						ifFalse: [self compileGetMethod: selector forField: field]]]!
 
 recompileReferences
-	"Private - Recompile all directly referencing external call methods
-	that might need to change if the receiver's size changes."
+	"Private - Recompile all directly referencing external call methods that might need to
+	change if the receiver's size changes such any ExternalLibrary FFI methods that reference
+	the class and might be passing/returning by value (the calling conventions vary depending on
+	the structure length), AND any ExternalStructure methods that might be using static
+	expressions to get the byte-size."
 
-	| binding |
+	| pred |
 	Notification signal: ('Recompiling references to <1d> (size <2d>)...' expandMacrosWith: self
 				with: self basicByteSize).
-	"First recompile own methods so that they have the correct offsets encoded"
-	(self selectMethods: [:each | each refersToLiteral: #offsetOf:]) do: [:each | each recompile].
-	"Then recompile any FFI calls that reference the class in case they are passing/returning by
-	value (the calling conventions vary depending on the structure length), OR any methods that
-	might be using static expressions to get the byte-size."
-	binding := self environment associationAt: self name.
-	Smalltalk allBehaviorsDo: 
-			[:eachClass | 
-			(eachClass whichMethodsReferTo: binding) do: 
-					[:eachMethod | 
-					(eachMethod isExternalCall or: [eachMethod refersToLiteral: #basicByteSize]) 
-						ifTrue: [eachMethod recompile]]]!
+	pred := self referenceFilterFor: self classBinding.
+	ExternalLibrary
+		allMethodsDo: [:each | (each isExternalCall and: [pred value: each]) ifTrue: [each recompile]].
+	ExternalStructure allMethodsDo: 
+			[:each |
+			((each refersToLiteral: #basicByteSize) and: [pred value: each]) ifTrue: [each recompile]]!
 
 register
 	"(Re)Register the receiver's as the Record class for its GUID.
@@ -1044,7 +1016,7 @@ registerClass: structureClass forGUID: aGUID
 resetTemplate
 	self byteSize: 0.
 	flags := CompiledMask.
-	template := nil!
+	alignment := template := nil!
 
 setGuid: aGUID
 	"Private - Set the value of the receiver's 'guid' instance variable to the 
@@ -1131,9 +1103,7 @@ withBytes: aByteObject
 		yourself! !
 !ExternalStructure class categoriesFor: #alignment!constants!public! !
 !ExternalStructure class categoriesFor: #atAddress:!instance creation!public! !
-!ExternalStructure class categoriesFor: #autoGenCategories!constants!development!private! !
 !ExternalStructure class categoriesFor: #autoGenCategory!constants!development!private! !
-!ExternalStructure class categoriesFor: #autoGenComment!constants!development!private! !
 !ExternalStructure class categoriesFor: #baseAlignment!accessing!private! !
 !ExternalStructure class categoriesFor: #basicByteSize!accessing!public! !
 !ExternalStructure class categoriesFor: #beCompiled!modes!public! !
@@ -1156,7 +1126,7 @@ withBytes: aByteObject
 !ExternalStructure class categoriesFor: #descriptorClass!constants!private! !
 !ExternalStructure class categoriesFor: #elementSize!accessing!public! !
 !ExternalStructure class categoriesFor: #ensureDefined!instance creation!private! !
-!ExternalStructure class categoriesFor: #fieldType!constants!development!private! !
+!ExternalStructure class categoriesFor: #fieldType:indirections:!public! !
 !ExternalStructure class categoriesFor: #formatAndCompile:categories:!compiling!private! !
 !ExternalStructure class categoriesFor: #fromAddress:!instance creation!public! !
 !ExternalStructure class categoriesFor: #fromBytes:!instance creation!public! !

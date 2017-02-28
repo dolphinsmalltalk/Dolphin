@@ -218,7 +218,7 @@ allPackagedClasses
 
 	| answer |
 	answer := OrderedCollection new: 2000.
-	self packages do: [:eachPackage | eachPackage classesDo: [:eachClass | answer add: eachClass]].
+	self packages do: [:eachPackage | eachPackage classesDo: [:eachClass | answer addLast: eachClass]].
 	^answer!
 
 allPackagedGlobalNames
@@ -421,7 +421,7 @@ getLooseMethods
 	by name to their owning package."
 
 	| loose |
-	loose := PluggableLookupTable new: 1500 searchPolicy: AssociationSearchPolicy current.
+	loose := PluggableLookupTable new: 3072 searchPolicy: AssociationSearchPolicy current.
 	self packages do: [:each | loose atAll: each methodNames put: each].
 	^loose!
 
@@ -665,7 +665,7 @@ looseResourceIdentifiers
 
 	| answer |
 	answer := Set new: 25.
-	self packages do: [:p | answer addAll: p resourceIdentifiers].
+	self packages do: [:p | answer addAll: p looseResourceIdentifiers].
 	^answer!
 
 markAllPackagesAsBase
@@ -954,7 +954,10 @@ onPreStripImage
 
 	packagedGlobals := nil.
 	self release.
-	self beNotProcessingEvents !
+	self beNotProcessingEvents.
+	self forgetLooseMethods.
+	"Allow the search policy used for the loose methods cache to be stripped if not used elsewhere"
+	AssociationSearchPolicy uninitialize!
 
 packagedGlobals
 	"Private - Answer an <IdentityDictionary> which maps the symbolic names of all packaged

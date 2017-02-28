@@ -10,14 +10,19 @@ nil subclass: #ProtoObject
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+Object subclass: #ArrayFieldLength
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
 Object subclass: #AttributeDescriptor
 	instanceVariableNames: 'flags'
-	classVariableNames: ''
-	poolDictionaries: 'AttributeDescriptorFlags'
+	classVariableNames: 'AccessorMask MutableMask MutatorMask NonBrowsableMask NullableMask OverrideMask ReadableMask WriteableMask'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Object subclass: #Behavior
 	instanceVariableNames: 'superclass methodDictionary instanceSpec subclasses'
-	classVariableNames: ''
+	classVariableNames: '_NullMethodDictionary'
 	poolDictionaries: '_BehaviorMasks'
 	classInstanceVariableNames: ''!
 Object variableSubclass: #BlockClosure
@@ -102,7 +107,7 @@ Object subclass: #DeferredValue
 	classInstanceVariableNames: ''!
 Object subclass: #Delay
 	instanceVariableNames: 'duration resumptionTime waitSemaphore'
-	classVariableNames: 'AccessProtect Current ImageClock Pending Resolution TimerMax TimingProcess TimingSemaphore'
+	classVariableNames: 'AccessProtect Current DefaultResolution HighestResolution ImageClock LowestResolution Pending Resolution TimingProcess TimingSemaphore'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Object subclass: #DiskVolumeInformation
@@ -111,7 +116,7 @@ Object subclass: #DiskVolumeInformation
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Object subclass: #Exception
-	instanceVariableNames: 'tag messageText _activeHandler _signalFrame _environmentWhenRaised _continueBlock _resignalBlock _resignalException'
+	instanceVariableNames: 'tag messageText _activeHandler _process _signalFrame _environmentWhenRaised _continueBlock _resignalBlock _resignalException'
 	classVariableNames: ''
 	poolDictionaries: 'MessageBoxConstants Win32Constants Win32Errors'
 	classInstanceVariableNames: ''!
@@ -191,7 +196,7 @@ Object subclass: #Magnitude
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Object subclass: #MemoryManager
-	instanceVariableNames: 'finalizer lastRequests hospice hospiceHighWater reserved undertaker bereavements bereaved bereavedHighWater gcInterval lastGCTime lastGCDuration objectHeaderSize'
+	instanceVariableNames: 'finalizer lastRequests hospice hospiceHighWater maxObjects undertaker bereavements bereaved bereavedHighWater gcInterval lastGCTime lastGCDuration objectHeaderSize'
 	classVariableNames: 'Current GCInterval'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -272,12 +277,12 @@ Object subclass: #ResourceIdentifier
 	classInstanceVariableNames: ''!
 Object subclass: #SearchPolicy
 	instanceVariableNames: ''
-	classVariableNames: 'Always CaseInsensitive Equality Identity Never'
+	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Object subclass: #SessionManager
-	instanceVariableNames: 'inputState resourceLibrary imagePath servers argv cmdLineFlags state sentry startupArgs consoleHandler stdioStreams eventLogHandle'
-	classVariableNames: 'Current PreStartFile'
+	instanceVariableNames: 'inputState resourceLibrary imagePath servers argv cmdLineFlags state sentry startupArgs consoleHandler stdioStreams eventLogHandle flags'
+	classVariableNames: 'Current EmbeddingMask PreStartFile'
 	poolDictionaries: 'Win32Constants Win32Errors'
 	classInstanceVariableNames: ''!
 Object subclass: #SharedQueue
@@ -301,8 +306,8 @@ Object subclass: #Sound
 	poolDictionaries: 'MessageBoxConstants Win32Constants'
 	classInstanceVariableNames: ''!
 Object subclass: #SourceFiler
-	instanceVariableNames: 'stream evaluationContext isSourceOnly'
-	classVariableNames: ''
+	instanceVariableNames: 'stream evaluationContext flags'
+	classVariableNames: 'SourceOnlyMask'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Object subclass: #SourceManager
@@ -318,17 +323,17 @@ Object subclass: #StackFrame
 Object subclass: #STBClassConversion
 	instanceVariableNames: 'version instSize isBytes isVariable converterBlock filer'
 	classVariableNames: ''
-	poolDictionaries: 'STBPrefixConstants'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Object subclass: #STBFiler
 	instanceVariableNames: 'stream context version'
-	classVariableNames: ''
-	poolDictionaries: 'STBPrefixConstants'
+	classVariableNames: 'MaxPredefinedRef'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Object subclass: #STBPrefix
 	instanceVariableNames: 'dword'
-	classVariableNames: ''
-	poolDictionaries: 'STBPrefixConstants'
+	classVariableNames: 'BytesMask CharacterMask ClassPrefixMask DataPrefix DataPrefixMask IndexShift InstSizeMask InstSizeShift LiteralPrefixMask LocatorLenShift MaxPredefinedRef NonZeroVersionMask ProxyMask ProxyPrefix SmallIntegerMask VariableMask'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Object subclass: #STBProxy
 	instanceVariableNames: ''
@@ -350,8 +355,18 @@ Object subclass: #VersionInfo
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+ArrayFieldLength subclass: #ConformantArrayFieldLength
+	instanceVariableNames: 'lengthField'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ArrayFieldLength subclass: #FixedArrayFieldLength
+	instanceVariableNames: 'elementCount'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
 AttributeDescriptor subclass: #ExternalField
-	instanceVariableNames: 'offset'
+	instanceVariableNames: 'offset structClass'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -376,16 +391,11 @@ ExternalField subclass: #ScalarField
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 EmbeddedField subclass: #ArrayField
-	instanceVariableNames: 'length'
+	instanceVariableNames: 'arrayLength'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 EmbeddedField subclass: #StructureField
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-ArrayField subclass: #ConformantArrayField
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
@@ -400,27 +410,17 @@ ArrayField subclass: #StructureArrayField
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-StructureArrayField subclass: #ConformantStructureArrayField
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
 StructureArrayField subclass: #PointerArrayField
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 PointerField subclass: #ArrayPointerField
-	instanceVariableNames: 'length'
+	instanceVariableNames: 'arrayLength'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ArrayPointerField subclass: #StructureArrayPointerField
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-StructureArrayPointerField subclass: #ConformantStructureArrayPointerField
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
@@ -491,6 +491,11 @@ ScalarField subclass: #UINT_PTRField
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ScalarField subclass: #WORDField
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+BOOLField subclass: #BOOLEANField
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
@@ -955,6 +960,11 @@ CompilerNotification subclass: #CompilerWarningNotification
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+Warning subclass: #ConfirmationRequiredWarning
+	instanceVariableNames: 'confirmBlock refuseBlock cancelBlock'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
 ExceptionHandlerAbstract subclass: #ExceptionHandler
 	instanceVariableNames: 'selector handler'
 	classVariableNames: ''
@@ -1023,6 +1033,11 @@ PermanentLibrary subclass: #CRTLibrary
 PermanentLibrary subclass: #KernelLibrary
 	instanceVariableNames: ''
 	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+PermanentLibrary subclass: #NTLibrary
+	instanceVariableNames: ''
+	classVariableNames: 'IsWine'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 PermanentLibrary subclass: #UserLibrary
@@ -1115,6 +1130,11 @@ ExternalArray subclass: #INT_PTRArray
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+ExternalArray subclass: #SBYTEArray
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
 ExternalArray subclass: #SDWORDArray
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -1160,6 +1180,11 @@ ExternalInteger subclass: #DWORD
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+ExternalInteger subclass: #HRESULT
+	instanceVariableNames: ''
+	classVariableNames: 'Facilities Fail'
+	poolDictionaries: 'FacilityCodes Win32Constants Win32Errors'
+	classInstanceVariableNames: ''!
 ExternalInteger subclass: #QWORD
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -1171,6 +1196,11 @@ ExternalInteger subclass: #UINT_PTR
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ExternalInteger subclass: #WORD
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+BYTE subclass: #BOOLEAN
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
@@ -1189,11 +1219,6 @@ SDWORD subclass: #BOOL
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-SDWORD subclass: #HRESULT
-	instanceVariableNames: ''
-	classVariableNames: 'Facilities Fail'
-	poolDictionaries: 'FacilityCodes Win32Constants Win32Errors'
 	classInstanceVariableNames: ''!
 QWORD subclass: #LARGE_INTEGER
 	instanceVariableNames: ''
@@ -1387,7 +1412,7 @@ ArithmeticValue subclass: #Point
 	classInstanceVariableNames: ''!
 Number variableByteSubclass: #Float
 	instanceVariableNames: ''
-	classVariableNames: 'EMin FMax FMin Infinity Ln2 MinValLogBase2 NegativeZero Precision SignificantDifference'
+	classVariableNames: 'EMin FpClassInfinite FpClassNaN FpClassNegative FpClassStrictlyPositive FpClassZero Ln2 MinValLogBase2 Precision SignificantDifference'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Number subclass: #Fraction
@@ -1469,7 +1494,7 @@ SearchPolicy subclass: #SingletonSearchPolicy
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: 'current'!
 SingletonSearchPolicy subclass: #AlwaysSearchPolicy
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -1497,12 +1522,12 @@ SingletonSearchPolicy subclass: #NeverSearchPolicy
 	classInstanceVariableNames: ''!
 SingletonSearchPolicy subclass: #SymbolStringSearchPolicy
 	instanceVariableNames: ''
-	classVariableNames: 'Current'
+	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 EqualitySearchPolicy subclass: #AssociationSearchPolicy
 	instanceVariableNames: ''
-	classVariableNames: 'Current'
+	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 SessionManager subclass: #BootSessionManager
@@ -1542,7 +1567,7 @@ PluggableSortAlgorithm subclass: #IntrosortAlgorithm
 	classInstanceVariableNames: ''!
 SourceFiler subclass: #ChunkSourceFiler
 	instanceVariableNames: 'sourceFileIndex'
-	classVariableNames: ''
+	classVariableNames: 'NormalizeEolsMask'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 SourceManager subclass: #VeryBasicSourceManager

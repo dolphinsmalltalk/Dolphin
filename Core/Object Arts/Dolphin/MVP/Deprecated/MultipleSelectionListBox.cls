@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ListBox subclass: #MultipleSelectionListBox
 	instanceVariableNames: ''
@@ -64,7 +64,7 @@ selectionOrNil
 icon
 	"Answers an Icon that can be used to represent this class"
 
-	^CompiledMethod deprecatedIcon!
+	^Smalltalk developmentSystem deprecatedMethodIcon!
 
 publishedEventsOfInstances
     	"Answer a Set of Symbols that describe the published events triggered

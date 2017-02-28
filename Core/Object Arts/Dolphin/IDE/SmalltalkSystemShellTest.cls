@@ -19,6 +19,7 @@ systemFolderPresenter
 
 tearDown
 	systemShell topShell view destroy.
+	systemShell := nil.
 	super tearDown!
 
 testIconOrdering

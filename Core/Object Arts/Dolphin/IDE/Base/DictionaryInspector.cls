@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 BasicInspector subclass: #DictionaryInspector
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-DictionaryInspector guid: (GUID fromString: '{87B4C694-026E-11D3-9FD7-00A0CC3E4A32}')!
+DictionaryInspector guid: (GUID fromString: '{87b4c694-026e-11d3-9fd7-00a0cc3e4a32}')!
 DictionaryInspector comment: 'DictionaryInspector is a <compositePresenter> that implements a specialised inspect facility onto a <Dictionary>. This provides additional functionality to inspect the dictionary via its keys and also to allow the user to add new keys and values.'!
 !DictionaryInspector categoriesForClass!Development!MVP-Presenters! !
 !DictionaryInspector methodsFor!
@@ -23,8 +23,7 @@ addField
 			[| newKey |
 			newKey := self selfField class compilerClass 
 						evaluate: newField
-						for: self selfField
-						logged: false.
+						for: self selfField.
 			newKey notNil 
 				ifTrue: 
 					[(self selfField includesKey: newKey) 

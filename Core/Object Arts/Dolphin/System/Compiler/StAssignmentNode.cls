@@ -22,8 +22,8 @@ Instance Variables:
 	self class = anObject class ifFalse: [^false].
 	^self variable = anObject variable and: [self value = anObject value]!
 
-acceptVisitor: aProgramNodeVisitor 
-	^aProgramNodeVisitor acceptAssignmentNode: self!
+acceptVisitor: aProgramNodeVisitor
+	^aProgramNodeVisitor visitAssignmentNode: self!
 
 assignmentPosition
 	^assignment!
@@ -68,8 +68,8 @@ needsParenthesis
 
 postCopy
 	super postCopy.
-	self variable: variable postCopy.
-	self value: value postCopy.
+	self variable: variable copy.
+	self value: value copy.
 	^self!
 
 precedence

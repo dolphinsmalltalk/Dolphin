@@ -15,8 +15,8 @@ StLiteralValueNode comment: ''!
 			[self value = anObject value 
 				and: [self value species == anObject value species]]!
 
-acceptVisitor: aProgramNodeVisitor 
-	^aProgramNodeVisitor acceptLiteralNode: self!
+acceptVisitor: aProgramNodeVisitor
+	^aProgramNodeVisitor visitLiteralNode: self!
 
 literalToken: aLiteralToken 
 	token := aLiteralToken!

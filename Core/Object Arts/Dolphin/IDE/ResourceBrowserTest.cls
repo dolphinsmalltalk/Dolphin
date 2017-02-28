@@ -37,6 +37,7 @@ setUp
 
 tearDown
 	self resourceBrowser destroy.
+	resourceBrowser := nil.
 	testClass removeFromSystem.
 	super tearDown!
 

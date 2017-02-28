@@ -47,7 +47,7 @@ baseProtocolFor: anObject named: aStringName
 		ifTrue: [OperationAborted signal]
 		ifFalse: [default value]!
 
-browseKeyBindingsOfShell: aShell 
+browseKeyBindingsOfShell: aShellView
 	"... and then we can stuff in the HTML"
 
 	| stream presenter browser shell |
@@ -55,7 +55,7 @@ browseKeyBindingsOfShell: aShell
 	stream nextPutAll: '<HTML>'.
 	self printInlineStyleSheetOn: stream.
 	stream nextPutAll: '<BODY>'.
-	self printHtmlDescriptionOfKeyBindingsForShell: aShell on: stream.
+	self printHtmlDescriptionOfKeyBindingsForShell: aShellView on: stream.
 	stream nextPutAll: '</BODY></HTML>'.
 	shell := Shell create.
 	(shell view)
@@ -63,7 +63,7 @@ browseKeyBindingsOfShell: aShell
 		layoutManager: GridLayout new;
 		largeIcon: (Icon fromId: 'HotKey.ico');
 		isPersistentView: false.
-	shell caption: ('<1d> Key Bindings' expandMacrosWith: aShell class).
+	shell caption: ('<1d> Key Bindings' expandMacrosWith: aShellView presenter class).
 	presenter := URLPresenter createIn: shell.
 	shell show.
 	browser := presenter view controlDispatch.
@@ -99,19 +99,21 @@ extendClassCommentMenu: aClassBrowserAbstract
 		addCommandDescription: (ClosedCommandDescription 
 					command: #emitClassLayoutDescription
 					description: 'Emit Class Layout Description'
-					queryBlock: [:query | query isEnabled: aClassBrowserAbstract hasClassSelected]
+					queryBlock: [:query | query isEnabled: plugin browser hasClassSelected]
 					receiver: plugin)!
 
-extendHelpMenu: aSmalltalkToolShell 
-	aSmalltalkToolShell view menuBar 
+extendHelpMenu: aSmalltalkToolShell
+	| shellView |
+	shellView := aSmalltalkToolShell view.
+	shellView menuBar
 		ifNotNil: 
-			[:menuBar | 
-			(menuBar find: 'Help' ifAbsent: []) 
+			[:menuBar |
+			(menuBar find: 'Help' ifAbsent: [])
 				ifNotNil: 
-					[:helpMenu | 
-					helpMenu 
-						insertItem: ((CommandMenuItem commandDescription: (ClosedCommandDescription 
-										command: (Message selector: #browseKeyBindingsOfShell: argument: aSmalltalkToolShell)
+					[:helpMenu |
+					helpMenu
+						insertItem: ((CommandMenuItem commandDescription: (ClosedCommandDescription
+										command: (Message selector: #browseKeyBindingsOfShell: argument: shellView)
 										description: '&Key Bindings'
 										receiver: self))
 								image: Keyboard icon;
@@ -234,17 +236,17 @@ onClassAdded: aClass
 onToolOpened: aSmalltalkToolShell
 	self enableKeyBindingsHelp ifTrue: [self extendHelpMenu: aSmalltalkToolShell]!
 
-printHtmlDescriptionOfKeyBindingsForShell: aShell on: aPuttableStream 
+printHtmlDescriptionOfKeyBindingsForShell: aShellView on: aPuttableStream
 	| topShell global |
-	topShell := aShell topShell view.
-	global := self 
+	topShell := aShellView topShell view.
+	global := self
 				printHtmlTableOfKeyBindingsForView: topShell
 				on: aPuttableStream
 				inUse: Set new.
 	self allVisibleSubViewsOf: topShell
 		do: 
-			[:each | 
-			self 
+			[:each |
+			self
 				printHtmlTableOfKeyBindingsForView: each
 				on: aPuttableStream
 				inUse: global]!

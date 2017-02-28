@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Smalltalk at: #WinSocketConstants put: (PoolConstantsDictionary named: #WinSocketConstants)!
 WinSocketConstants at: 'AF_12844' put: 16r19!
@@ -41,12 +41,43 @@ WinSocketConstants at: 'FD_CONNECT' put: 16r10!
 WinSocketConstants at: 'FD_OOB' put: 16r4!
 WinSocketConstants at: 'FD_READ' put: 16r1!
 WinSocketConstants at: 'FD_WRITE' put: 16r2!
+WinSocketConstants at: 'GAA_FLAG_INCLUDE_PREFIX' put: 16r10!
+WinSocketConstants at: 'GAA_FLAG_SKIP_ANYCAST' put: 16r2!
+WinSocketConstants at: 'GAA_FLAG_SKIP_DNS_SERVER' put: 16r8!
+WinSocketConstants at: 'GAA_FLAG_SKIP_FRIENDLY_NAME' put: 16r20!
+WinSocketConstants at: 'GAA_FLAG_SKIP_MULTICAST' put: 16r4!
+WinSocketConstants at: 'GAA_FLAG_SKIP_UNICAST' put: 16r1!
 WinSocketConstants at: 'INADDR_ANY' put: 16r0!
 WinSocketConstants at: 'INADDR_BROADCAST' put: -16r1!
 WinSocketConstants at: 'INADDR_LOOPBACK' put: 16r7F000001!
 WinSocketConstants at: 'INADDR_NONE' put: -16r1!
+WinSocketConstants at: 'INET_ADDRSTRLEN' put: 16r16!
+WinSocketConstants at: 'INET6_ADDRSTRLEN' put: 16r41!
 WinSocketConstants at: 'INVALID_SOCKET' put: 16rFFFFFFFF!
 WinSocketConstants at: 'MAXGETHOSTSTRUCT' put: 16r400!
+WinSocketConstants at: 'NET_ADDRESS_DNS_NAME' put: 16r1!
+WinSocketConstants at: 'NET_ADDRESS_FORMAT_UNSPECIFIED' put: 16r0!
+WinSocketConstants at: 'NET_ADDRESS_IPV4' put: 16r2!
+WinSocketConstants at: 'NET_ADDRESS_IPV6' put: 16r3!
+WinSocketConstants at: 'NET_STRING_ANY_ADDRESS' put: 16r109!
+WinSocketConstants at: 'NET_STRING_ANY_ADDRESS_NO_SCOPE' put: 16r111!
+WinSocketConstants at: 'NET_STRING_ANY_SERVICE' put: 16r222!
+WinSocketConstants at: 'NET_STRING_ANY_SERVICE_NO_SCOPE' put: 16r242!
+WinSocketConstants at: 'NET_STRING_IP_ADDRESS' put: 16r9!
+WinSocketConstants at: 'NET_STRING_IP_ADDRESS_NO_SCOPE' put: 16r11!
+WinSocketConstants at: 'NET_STRING_IP_NETWORK' put: 16r84!
+WinSocketConstants at: 'NET_STRING_IP_SERVICE' put: 16r22!
+WinSocketConstants at: 'NET_STRING_IP_SERVICE_NO_SCOPE' put: 16r42!
+WinSocketConstants at: 'NET_STRING_IPV4_ADDRESS' put: 16r1!
+WinSocketConstants at: 'NET_STRING_IPV4_NETWORK' put: 16r4!
+WinSocketConstants at: 'NET_STRING_IPV4_SERVICE' put: 16r2!
+WinSocketConstants at: 'NET_STRING_IPV6_ADDRESS' put: 16r8!
+WinSocketConstants at: 'NET_STRING_IPV6_ADDRESS_NO_SCOPE' put: 16r10!
+WinSocketConstants at: 'NET_STRING_IPV6_NETWORK' put: 16r80!
+WinSocketConstants at: 'NET_STRING_IPV6_SERVICE' put: 16r20!
+WinSocketConstants at: 'NET_STRING_IPV6_SERVICE_NO_SCOPE' put: 16r40!
+WinSocketConstants at: 'NET_STRING_NAMED_ADDRESS' put: 16r100!
+WinSocketConstants at: 'NET_STRING_NAMED_SERVICE' put: 16r200!
 WinSocketConstants at: 'SO_ACCEPTCONN' put: 16r2!
 WinSocketConstants at: 'SO_BROADCAST' put: 16r20!
 WinSocketConstants at: 'SO_DEBUG' put: 16r1!

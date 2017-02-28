@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Signal subclass: #NotificationSignal
 	instanceVariableNames: ''
@@ -7,7 +7,7 @@ Signal subclass: #NotificationSignal
 	classInstanceVariableNames: ''!
 NotificationSignal guid: (GUID fromString: '{87B4C6DE-026E-11D3-9FD7-00A0CC3E4A32}')!
 NotificationSignal comment: ''!
-!NotificationSignal categoriesForClass!Kernel-Objects! !
+!NotificationSignal categoriesForClass!Kernel-Exception Handling! !
 !NotificationSignal methodsFor!
 
 defaultAction: exception

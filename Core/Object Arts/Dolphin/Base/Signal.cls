@@ -1,13 +1,13 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #Signal
-	instanceVariableNames: 'description resumable '
+	instanceVariableNames: 'description resumable'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Signal guid: (GUID fromString: '{87B4C4B9-026E-11D3-9FD7-00A0CC3E4A32}')!
 Signal comment: ''!
-!Signal categoriesForClass!Kernel-Objects! !
+!Signal categoriesForClass!Kernel-Exception Handling! !
 !Signal methodsFor!
 
 , arg

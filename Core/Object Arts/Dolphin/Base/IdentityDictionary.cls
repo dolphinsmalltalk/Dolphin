@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 LookupTable variableSubclass: #IdentityDictionary
 	instanceVariableNames: ''
@@ -31,9 +31,7 @@ findKeyOrNil: anObject
 	^index!
 
 hash: anObject max: anInteger
-	^anInteger < 8192 
-		ifTrue: [anObject identityHash \\ anInteger + 1]
-		ifFalse: [anObject identityHash * (anInteger bitShift: -12) \\ anInteger + 1]!
+	^anObject identityHash \\ anInteger + 1!
 
 keysClass
 	"Answer the class of <collection> to be used for collecting the keys of the receiver"

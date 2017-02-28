@@ -69,18 +69,6 @@ findIP: anInteger inTextMap: aTextMap
 	[i < size and: [anInteger > (aTextMap at: i) key]] whileTrue: [i := i + 1].
 	^i!
 
-getDebugInfoFor: aCompiledMethod debug: debugBoolean 
-	| methodClass compiler flags optimizeBoolean |
-	optimizeBoolean := true.
-	methodClass := aCompiledMethod methodClass.
-	compiler := aCompiledMethod compilerClass.
-	flags := methodClass defaultCompilationFlags | (compiler debugInfoFlags: debugBoolean).
-	flags := flags mask: NoOptimize set: optimizeBoolean not.
-	^compiler 
-		compile: aCompiledMethod getSource
-		in: methodClass
-		flags: flags!
-
 getTestMethod: aSymbol 
 	| oldMethod result method |
 	oldMethod := DolphinCompilerTestMethods compiledMethodAt: aSymbol.
@@ -239,13 +227,17 @@ testCompileTimeExpressions
 	| result |
 	self shouldnt: [result := self evaluateExpression: '##()'] raise: self compilationErrorClass.
 	self assert: result = UndefinedObject.
-	#('1' '1+2') do: 
-			[:each | 
+	#('1' '1+2' 'nil' 'true' 'false' 'Smalltalk.Object') do: 
+			[:each |
 			| expected |
 			expected := self evaluateExpression: each.
 			self shouldnt: [result := self evaluateExpression: '##(' , each , ')']
 				raise: self compilationErrorClass.
-			self assert: result = expected]!
+			self assert: result = expected].
+	(Array with: self with: self class) do: 
+			[:each |
+			result := (self compileExpression: '##(self)' in: each class) method value: each.
+			self assert: each class instanceClass equals: result]!
 
 testConstExpressionReferences
 	"Test that references in a compile-time evaluated expression are retained in the literal frame 
@@ -855,27 +847,27 @@ testNestedWhileTrueAtStartOfCleanBlock
 	self assert: block initialIP = 3!
 
 testRadixInteger
-	0 to: 72
+	2 to: 36
 		do: 
-			[:eachVal | 
-			2 to: 36
-				do: [:eachRadix | (self evaluateExpression: (eachVal printStringRadix: eachRadix)) = eachVal]].
+			[:eachRadix |
+			0 to: eachRadix * 2 - 1
+				by: 3
+				do: [:eachVal | (self evaluateExpression: (eachVal printStringRadix: eachRadix)) = eachVal]].
 	0 to: 35
 		do: 
-			[:eachRadix | 
+			[:eachRadix |
 			"Test invalid radix integers cause an MNU of #rN"
-
 			| suffix |
 			suffix := String with: $r with: (Character digitValue: eachRadix).
-			self 
+			self
 				should: 
 					[| expr |
 					expr := eachRadix printString , suffix.
 					self evaluateExpression: expr]
 				raise: MessageNotUnderstood
 				matching: 
-					[:ex | 
-					(ex receiver = eachRadix and: [ex selector equals: suffix]) 
+					[:ex |
+					(ex receiver = eachRadix and: [ex selector equals: suffix])
 						ifFalse: 
 							[self halt.
 							false]
@@ -924,28 +916,24 @@ DiffBrowser show
 
 testReturnImmediate
 	"#397"
+
 	| method |
 	#(-128 -2 3 127) do: 
-			[:each | 
+			[:each |
 			method := (self compileExpression: (each printStringRadix: 2)) method.
 			self assert: method extraIndex = 5.
-			self 
-				assert: method byteCodes = (ByteArray 
+			self
+				assert: method byteCodes = (ByteArray
 								with: Nop
 								with: PushImmediate
 								with: (each bitAnd: 16rFF)
 								with: ReturnFromMessage)].
-	#(2r1111111111 2r11111111111 2r111111111111 2r1111111111111 2r11111111111111 2r111111111111111 -2r111111111111111) do: 
-			[:each | 
+	#(2r1111111111 2r11111111111 2r111111111111 2r1111111111111 2r11111111111111 2r111111111111111 -2r111111111111111 16r3FFFFFFF -16r40000000)
+		do: 
+			[:each |
 			method := (self compileExpression: (each printStringRadix: 2)) method.
 			self assert: method extraIndex = 5.
-			self 
-				assert: method byteCodes = (ByteArray 
-								with: LongPushImmediate
-								with: ((each % 256) bitAnd: 16rFF)
-								with: ((each // 256) bitAnd: 16rFF)
-								with: ReturnFromMessage)].
-!
+			self assert: (ByteArray with: ShortPushConst + 0 with: ReturnFromMessage) equals: method byteCodes]!
 
 testReturnPseudoVar
 	| method |
@@ -1165,6 +1153,40 @@ testTempPairing
 	pairs := method byteCodeSegments select: [:each | each first = PushTempPair].
 	self assert: pairs isEmpty.
 	self assert: (method value: nil withArguments: #()) = (16 - 8)!
+
+testTextMapOfEmptyBlock
+	| block method debugMethod |
+	block := Compiler evaluate: '| x | x := []. x'.
+	self assert: block == VMLibrary default emptyBlock.
+	method := block method.
+	self assert: (ByteArray
+				with: ShortPushConst + 0
+				with: ReturnFromMessage
+				with: ShortPushNil
+				with: ReturnFromBlock)
+		equals: method byteCodes.
+	debugMethod := block method asDebugMethod.
+	self
+		assert: (ByteArray
+				with: ShortPushConst + 0
+				with: Break
+				with: ReturnFromMessage) , (ByteArray
+							with: ShortPushNil
+							with: Break
+							with: ReturnFromBlock)
+		equals: debugMethod byteCodes.
+	self assert: method textMap size equals: debugMethod textMap size.
+	2 to: 4
+		do: 
+			[:ip |
+			| debugIp |
+			debugIp := self findIP: ip inTextMap: method textMap.
+			self assert: (method byteCodes at: ip)
+				equals: (debugMethod byteCodes at: (debugMethod textMap at: debugIp) key)]!
+
+testTextMapsOfCleanBlocks
+	#('[:a|a > 5 ifTrue: [''Many''] ifFalse: [a printString]]' '[1]' '[]')
+		do: [:each | self verifyTextMapsOf: (self compileExpression: each) method]!
 
 testTimesRepeat
 	"This is erroneous, but compiler does not detect that, just looks for literal zero arg block, which is OK I think"
@@ -1400,7 +1422,26 @@ verifyTempsMapOf: aCompiledMethod
 								print: each method;
 								nextPutAll: ': ';
 								print: each;
-								cr]]]! !
+								cr]]]!
+
+verifyTextMapsOf: each
+	| debugTextMap debugMethod textMap |
+	debugMethod := each asDebugMethod.
+	"If fails then the method failed to compile"
+	self assert: debugMethod notNil.
+	textMap := each debugInfo textMap.
+	debugTextMap := debugMethod textMap.
+	"The text maps should contain exactly the same number of entries, and the text range for each entry should be the same"
+	self assert: textMap size equals: debugTextMap size.
+	textMap with: debugTextMap do: [:a :b | self assert: a value = b value].
+	^debugTextMap do: 
+			[:assoc |
+			| byte ip |
+			ip := assoc key.
+			ip == 0
+				ifFalse: 
+					[byte := debugMethod byteCodes at: ip.
+					self assert: byte ~= 0]]! !
 !CompilerTest categoriesFor: #assertBlocksOptimized:!helpers!private! !
 !CompilerTest categoriesFor: #checkCompileError:range:code:line:source:!helpers!private! !
 !CompilerTest categoriesFor: #compilationErrorClass!constants!private! !
@@ -1413,7 +1454,6 @@ verifyTempsMapOf: aCompiledMethod
 !CompilerTest categoriesFor: #evalTestMethod:withArgs:!helpers!private! !
 !CompilerTest categoriesFor: #evaluateExpression:!helpers!private! !
 !CompilerTest categoriesFor: #findIP:inTextMap:!development!private! !
-!CompilerTest categoriesFor: #getDebugInfoFor:debug:!private! !
 !CompilerTest categoriesFor: #getTestMethod:!private! !
 !CompilerTest categoriesFor: #messageFromError:!helpers!private! !
 !CompilerTest categoriesFor: #scan:class:!helpers!private! !
@@ -1472,6 +1512,8 @@ verifyTempsMapOf: aCompiledMethod
 !CompilerTest categoriesFor: #testSymbolScanning!public!unit tests! !
 !CompilerTest categoriesFor: #testTempMaps!public!unit tests! !
 !CompilerTest categoriesFor: #testTempPairing!public!unit tests! !
+!CompilerTest categoriesFor: #testTextMapOfEmptyBlock!public! !
+!CompilerTest categoriesFor: #testTextMapsOfCleanBlocks!public!unit tests! !
 !CompilerTest categoriesFor: #testTimesRepeat!public!unit tests! !
 !CompilerTest categoriesFor: #testTimesRepeatResult!public!unit tests! !
 !CompilerTest categoriesFor: #testToByDo!public!unit tests! !
@@ -1480,6 +1522,7 @@ verifyTempsMapOf: aCompiledMethod
 !CompilerTest categoriesFor: #testWhileTrue!public!unit tests! !
 !CompilerTest categoriesFor: #testWriteAccessor!public!unit tests!unit tests-known failures! !
 !CompilerTest categoriesFor: #verifyTempsMapOf:!helpers!private! !
+!CompilerTest categoriesFor: #verifyTextMapsOf:!helpers!private!unit tests-long running! !
 
 !CompilerTest class methodsFor!
 

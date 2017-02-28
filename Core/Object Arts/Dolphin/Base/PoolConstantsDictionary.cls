@@ -1,7 +1,7 @@
 "Filed out from Dolphin Smalltalk 7"!
 
 LookupTable variableSubclass: #PoolConstantsDictionary
-	instanceVariableNames: 'name '
+	instanceVariableNames: 'name'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -68,19 +68,16 @@ environment
 errorModify: key value: value
 	"Private - An attempt was made to modify the value of the constant named, key."
 
-	MessageBox
-		confirm: ('Would you like to recompile references to <1p><n>to reflect the new value <2d> (currently <3d>)'
-				expandMacrosWith: key
-				with: value
-				with: (self at: key))
-		onYes: 
-			[super at: key put: value.
-			self recompileReferencesToVarNamed: key.
-			self isChanged: true]
-		onNo: [super at: key put: value]
-		onCancel: 
-			["Ignore the modification request"
-			]!
+	| recompile |
+	recompile := ConfirmationRequiredWarning
+				signal: ('Would you like to recompile references to <1p><n>to reflect the new value <2d> (currently <3d>)'
+						expandMacrosWith: key
+						with: value
+						with: (self at: key)).
+	recompile isNil ifTrue: [^self].
+	super at: key put: value.
+	self isChanged: true.
+	recompile ifTrue: [self recompileReferencesToVarNamed: key]!
 
 fileOut
 	"File out the receiver to <name>.st"

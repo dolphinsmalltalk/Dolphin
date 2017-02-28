@@ -110,7 +110,7 @@ Info word usage:
 	16..23	stack temp count
 	24..31	env temp count (Context size, 0 if no Context needed).
 '!
-!BlockClosure categoriesForClass!Kernel-Objects! !
+!BlockClosure categoriesForClass!Kernel-Methods! !
 !BlockClosure methodsFor!
 
 = aBlockClosure 
@@ -729,7 +729,7 @@ whileTrue: iterationBlock
 	^[self value] whileTrue: [iterationBlock value]! !
 !BlockClosure categoriesFor: #=!comparing!public! !
 !BlockClosure categoriesFor: #argumentCount!accessing!public! !
-!BlockClosure categoriesFor: #argumentCount:!accessing!private! !
+!BlockClosure categoriesFor: #argumentCount:!accessing!development!private! !
 !BlockClosure categoriesFor: #asBlock!accessing!converting!public! !
 !BlockClosure categoriesFor: #at:!accessing!public! !
 !BlockClosure categoriesFor: #at:put:!accessing!public! !
@@ -750,9 +750,9 @@ whileTrue: iterationBlock
 !BlockClosure categoriesFor: #home!accessing!private! !
 !BlockClosure categoriesFor: #ifCurtailed:!debugger-step through!not restartable!public!unwinding! !
 !BlockClosure categoriesFor: #info!accessing!private! !
-!BlockClosure categoriesFor: #info:!accessing!private! !
+!BlockClosure categoriesFor: #info:!accessing!development!private! !
 !BlockClosure categoriesFor: #initialIP!accessing!public! !
-!BlockClosure categoriesFor: #initialIP:!accessing!private! !
+!BlockClosure categoriesFor: #initialIP:!accessing!development!private! !
 !BlockClosure categoriesFor: #isClean!private!testing! !
 !BlockClosure categoriesFor: #localCount!accessing!private! !
 !BlockClosure categoriesFor: #method!accessing!private! !
@@ -769,7 +769,7 @@ whileTrue: iterationBlock
 !BlockClosure categoriesFor: #on:do:on:do:on:do:on:do:on:do:on:do:!exceptions!public! !
 !BlockClosure categoriesFor: #onDo:!exceptions!public! !
 !BlockClosure categoriesFor: #outer!accessing!private! !
-!BlockClosure categoriesFor: #outer:!accessing!private! !
+!BlockClosure categoriesFor: #outer:!accessing!development!private! !
 !BlockClosure categoriesFor: #postToInputQueue!event handling!public! !
 !BlockClosure categoriesFor: #postToMessageQueue!event handling!public! !
 !BlockClosure categoriesFor: #printOn:!development!printing!public! !

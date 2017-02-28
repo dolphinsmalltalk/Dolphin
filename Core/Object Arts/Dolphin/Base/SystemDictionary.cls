@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Dictionary variableSubclass: #SystemDictionary
 	instanceVariableNames: 'events allClasses allRoots'
@@ -27,7 +27,7 @@ allBehaviors
 	metaclasses."
 
 	| answer |
-	answer := OrderedCollection new: 4000.
+	answer := OrderedCollection new: 5000.
 	self allBehaviorsDo: [:behavior | answer addLast: behavior].
 	^answer!
 
@@ -44,15 +44,12 @@ allClasses
 	"Answer a <sequencedReadableCollection> of all of the classes in the system, in breadth-first order.
 	There is no particular ordering at a particular depth."
 
-	allClasses isNil ifTrue: [allClasses := Class allClasses].
+	allClasses isNil
+		ifTrue: 
+			[allClasses := (Class allClasses)
+						isImmutable: true;
+						yourself].
 	^allClasses!
-
-allClassesDo: operation
-	"Private - Evaluate the monadic valuable, operation, for each of the classes in the system.
-	N.B. No guarantee is made about ordering, except that the block is evaluated
-	for a subclass after its superclass."
-
-	self allClasses do: operation!
 
 allRoots
 	"Answer a <sequencedReadableCollection> of all global root classes - ie. those that are subclasses of nil."
@@ -64,7 +61,7 @@ associationAt: key ifAbsent: exceptionHandler
 	"Answer the association named by the argument, key. If key is not found,
 	answer the result of evaluating the niladic valuable, exceptionHandler."
 
-	^super associationAt: key asSymbol ifAbsent: exceptionHandler!
+	^(self basicAt: (self findKeyOrNil: key asSymbol)) ifNil: [exceptionHandler value]!
 
 associationClass
 	"Private - Answer the class of association to be used for holding
@@ -138,6 +135,14 @@ includesKey: key
 	Override superclass to permit symbolic/string keys."
 
 	^super includesKey: key asSymbol!
+
+isAtomic
+	"Answer whether or not the receiver is the single unique instance of its class that can
+	represents its value."
+
+	"There can only be one ProcessorScheduler instance."
+
+	^true!
 
 postResize: oldMe
 	"Private - This message is sent by the receiver when resizing, after the
@@ -214,7 +219,6 @@ triggerGlobalRenamed: anAssociation from: oldSymbol
 !SystemDictionary categoriesFor: #allBehaviors!class hierarchy-accessing!private! !
 !SystemDictionary categoriesFor: #allBehaviorsDo:!enumerating!private! !
 !SystemDictionary categoriesFor: #allClasses!accessing!public! !
-!SystemDictionary categoriesFor: #allClassesDo:!enumerating!private! !
 !SystemDictionary categoriesFor: #allRoots!accessing!public! !
 !SystemDictionary categoriesFor: #associationAt:ifAbsent:!accessing!public! !
 !SystemDictionary categoriesFor: #associationClass!constants!private! !
@@ -228,6 +232,7 @@ triggerGlobalRenamed: anAssociation from: oldSymbol
 !SystemDictionary categoriesFor: #developmentSystem!accessing!public! !
 !SystemDictionary categoriesFor: #getEvents!events!private! !
 !SystemDictionary categoriesFor: #includesKey:!public!searching! !
+!SystemDictionary categoriesFor: #isAtomic!public!testing! !
 !SystemDictionary categoriesFor: #postResize:!adding!private! !
 !SystemDictionary categoriesFor: #removeClass:!private!removing! !
 !SystemDictionary categoriesFor: #removeGlobalNamed:!operations!public! !

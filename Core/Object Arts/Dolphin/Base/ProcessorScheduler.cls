@@ -1,7 +1,7 @@
 "Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #ProcessorScheduler
-	instanceVariableNames: 'processLists activeProcess pendingReturns comStubs _reserved pendingTerminations '
+	instanceVariableNames: 'processLists activeProcess pendingReturns comStubs _reserved pendingTerminations'
 	classVariableNames: 'ConstWriteSignal InterruptSelectors'
 	poolDictionaries: 'Win32Errors'
 	classInstanceVariableNames: ''!
@@ -337,6 +337,14 @@ isActiveMain
 
 	^activeProcess isMain!
 
+isAtomic
+	"Answer whether or not the receiver is the single unique instance of its class that can
+	represents its value."
+
+	"There can only be one ProcessorScheduler instance."
+
+	^true!
+
 kill: interruptArg 
 	"Private - The active process has been sent a kill interrupt, terminate it without running
 	its unwind blocks."
@@ -380,12 +388,10 @@ onStartup: args
 	"Pass control to the SessionManager to start up as it wishes"
 	SessionManager current onStartup: args!
 
-otOverflow: anInteger 
+otOverflow: anInteger
 	"Private - The VM has allocated more memory for object headers. Inform the memory manager."
 
-	MemoryManager current otOverflow: anInteger.
-	"This interrupt is only ever sent to the active process, therefore no need to reschedule"
-	self enableAsyncEvents: true!
+	MemoryManager current otOverflow: anInteger!
 
 pendingTerminations
 	^pendingTerminations!
@@ -453,20 +459,6 @@ setHighestPriority: priority activeProcess: aProcess
 	processLists := (1 to: priority) collect: [:i | LinkedList new].
 	activeProcess := aProcess.
 	pendingReturns := Semaphore new!
-
-signal: aSemaphore afterMilliseconds: anInteger 
-	"Private - Request that the VM signal aSemaphore as soon as possible after the
-	the specified millisecond delay. Cancel any existing request if aSemaphore is 
-	not actuall a Semaphore (typically nil). If anInteger <= 0, then the Semaphore
-	is signalled immediately.
-
-	Primitive failure results:
-		0 -	anInteger is not a SmallInteger
-		2 -  anInteger was greater than the maximum Delay which can be requested.
-		3 -	OS refused to set timer (try KernelLibrary>>getLastError)"
-
-	<primitive: 100>
-	^self primitiveFailed!
 
 sleep: anInteger 
 	"Delay the current active process for at least anInteger milliseconds."
@@ -670,6 +662,7 @@ zeroDivide: interruptArg
 !ProcessorScheduler categoriesFor: #interruptWith:!interrupts-handling!private! !
 !ProcessorScheduler categoriesFor: #iret:list:!interrupts!private! !
 !ProcessorScheduler categoriesFor: #isActiveMain!public!testing! !
+!ProcessorScheduler categoriesFor: #isAtomic!public!testing! !
 !ProcessorScheduler categoriesFor: #kill:!interrupts-handling!private! !
 !ProcessorScheduler categoriesFor: #killInterrupt!interrupts-names!private! !
 !ProcessorScheduler categoriesFor: #lowIOPriority!priority names!public! !
@@ -684,7 +677,6 @@ zeroDivide: interruptArg
 !ProcessorScheduler categoriesFor: #processesAt:!processes-accessing!public! !
 !ProcessorScheduler categoriesFor: #returnValue:toFrame:!callbacks!must not strip!private! !
 !ProcessorScheduler categoriesFor: #setHighestPriority:activeProcess:!development!initializing!private! !
-!ProcessorScheduler categoriesFor: #signal:afterMilliseconds:!private!processes-synchronising! !
 !ProcessorScheduler categoriesFor: #sleep:!processes-synchronising!public! !
 !ProcessorScheduler categoriesFor: #stackOverflow:!interrupts-handling!private! !
 !ProcessorScheduler categoriesFor: #suspendActive!processes-changing state!public! !

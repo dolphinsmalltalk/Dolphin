@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Set variableSubclass: #SharedSet
 	instanceVariableNames: 'mutex'
@@ -193,7 +193,7 @@ stbSaveOn: anSTBOutFiler
 !SharedSet categoriesFor: #includes:!public!searching! !
 !SharedSet categoriesFor: #initialize!initializing!public! !
 !SharedSet categoriesFor: #mutex!accessing!private! !
-!SharedSet categoriesFor: #mutex:!accessing!private! !
+!SharedSet categoriesFor: #mutex:!initializing!private! !
 !SharedSet categoriesFor: #postCopy!copying!public! !
 !SharedSet categoriesFor: #preResize:!adding!public! !
 !SharedSet categoriesFor: #printOn:!printing!public! !

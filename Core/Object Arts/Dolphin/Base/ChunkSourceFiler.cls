@@ -2,10 +2,11 @@
 
 SourceFiler subclass: #ChunkSourceFiler
 	instanceVariableNames: 'sourceFileIndex'
-	classVariableNames: ''
+	classVariableNames: 'NormalizeEolsMask'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ChunkSourceFiler guid: (GUID fromString: '{558B318A-9FF3-4346-A445-76EE18D5458B}')!
+ChunkSourceFiler guid: (GUID fromString: '{558b318a-9ff3-4346-a445-76ee18d5458b}')!
+ChunkSourceFiler addClassConstant: 'NormalizeEolsMask' value: 2!
 ChunkSourceFiler comment: ''!
 !ChunkSourceFiler categoriesForClass!Development!System-Support! !
 !ChunkSourceFiler methodsFor!
@@ -175,39 +176,32 @@ fileIn
 	
 	[[stream atEnd] whileFalse: 
 			[stream skipSeparators.
-			(stream peekFor: $!!) 
+			(stream peekFor: $!!)
 				ifTrue: 
 					["#methodsFor: expression (we hope) - don't log evaluation"
-
 					| chunk reader |
 					chunk := self nextChunk.
-					reader := Compiler 
-								evaluate: chunk
-								for: self evaluationContext
-								logged: false.
-					reader isNil 
+					reader := Compiler evaluate: chunk for: self evaluationContext.
+					reader isNil
 						ifTrue: 
 							["The above evaluation failed to compile and the error will have
 					been logged to the Transcript. Use the null ChunkReader to skip
 					over the chunks in the source file."
-
 							reader := ChunkReader null].
 					reader fileInFrom: self]
 				ifFalse: 
 					["Normal expression evaluation - log it"
-
 					| chunk |
 					chunk := self nextChunk.
-					Compiler 
+					Compiler
 						evaluate: chunk
 						for: self evaluationContext
-						logged: true]]] 
+						logged: true]]]
 			on: MethodCompileFailed
 			do: 
-				[:n | 
+				[:n |
 				"If we get a method compilation error then we install a stub method so we'll be able 
 			to see the source. For evaluations this does nothing, unfortunately"
-
 				n
 					beep;
 					resumeWithStubMethod]!
@@ -255,12 +249,12 @@ fileOutExpression: aString
 
 	self emitChunk: aString; cr!
 
-fileOutPoolDictionary: aPoolDictionary 
+fileOutPoolDictionary: aPoolDictionary
 	"Append a definition of the <PoolDictionary> (or <PoolConstantsDictionary>, aPoolDictionary,
 	to the <puttableStream>, aWriteStream. The definition should be sufficient to recreate a
 	copy of the dictionary."
 
-	| poolName value env |
+	| poolName env |
 	env := aPoolDictionary environment.
 	poolName := aPoolDictionary name.
 	stream
@@ -270,17 +264,18 @@ fileOutPoolDictionary: aPoolDictionary
 		nextPutAll: ' put: (';
 		nextPutAll: aPoolDictionary class name;
 		nextPutAll: ' named: ';
-		print: aPoolDictionary name.
+		print: poolName.
 	self emitChunk: ')'.
 	aPoolDictionary associations asSortedCollection do: 
-			[:a | 
+			[:a |
+			| value |
 			stream
 				nextPutAll: poolName;
 				nextPutAll: ' at: ';
 				print: a key;
 				nextPutAll: ' put: '.
 			value := a value.
-			value isLiteral 
+			value isLiteral
 				ifTrue: 
 					[self emitChunk: (value isInteger ifTrue: [value printStringRadix: 16] ifFalse: [value printString])]
 				ifFalse: 
@@ -337,12 +332,24 @@ nextChunk
 	Implementation Note: String concatenation is more efficient here in the loop body because most 
 	chunks do not include embedded chunk markers."
 
-	| result |
+	| chunk |
 	stream skipSeparators.
-	result := stream upTo: $!!.
-	[stream atEnd or: [(stream peekFor: $!!) not]]
-		whileFalse: [result := result, '!!', (stream upTo: $!!)].
-	^result!
+	^self normalizeLineEndings
+		ifTrue: 
+			[| next |
+			chunk := String writeStream: 512.
+			[(next := stream nextOrNil) isNil or: [next == $!! and: [(stream peekFor: $!!) not]]] whileFalse: 
+					[((next == $\r and: 
+							[stream peekFor: $\n.
+							true]) or: [next == $\n])
+						ifTrue: [chunk nextPutAll: String.LineDelimiter]
+						ifFalse: [chunk nextPut: next]].
+			chunk contents]
+		ifFalse: 
+			["Much faster, as we don't need to read and compare each character individually"
+			chunk := stream upTo: $!!.
+			[stream atEnd or: [(stream peekFor: $!!) not]] whileFalse: [chunk := chunk , '!!' , (stream upTo: $!!)].
+			chunk]!
 
 nextChunkPut: aString 
 	"Private - Print the string, aString, to the <puttableStream> aWriteStream as a chunk. 
@@ -352,6 +359,12 @@ nextChunkPut: aString
 	self emitString: aString.
 	stream nextPut: $!!.
 	^aString!
+
+normalizeLineEndings
+	^flags anyMask: NormalizeEolsMask!
+
+normalizeLineEndings: aBoolean
+	flags := flags mask: NormalizeEolsMask set: aBoolean!
 
 sourceDescriptorForIndex: indexInteger position: positionInteger 
 	"Private - Answer an <integer> source descriptor which encodes the <integer> source file
@@ -446,6 +459,8 @@ storeSourceString: aString forMethod: aCompiledMethod
 !ChunkSourceFiler categoriesFor: #logEvaluation:!private!source filing! !
 !ChunkSourceFiler categoriesFor: #nextChunk!private!source filing! !
 !ChunkSourceFiler categoriesFor: #nextChunkPut:!private!source filing! !
+!ChunkSourceFiler categoriesFor: #normalizeLineEndings!accessing!public! !
+!ChunkSourceFiler categoriesFor: #normalizeLineEndings:!accessing!public! !
 !ChunkSourceFiler categoriesFor: #sourceDescriptorForIndex:position:!private!source filing! !
 !ChunkSourceFiler categoriesFor: #sourceFileIndex:!accessing!private! !
 !ChunkSourceFiler categoriesFor: #storeCommentString:forClass:!public!source filing! !
@@ -454,6 +469,9 @@ storeSourceString: aString forMethod: aCompiledMethod
 !ChunkSourceFiler categoriesFor: #storeSourceString:forMethod:!private!source filing! !
 
 !ChunkSourceFiler class methodsFor!
+
+initialize
+	self addClassConstant: 'NormalizeEolsMask' value: 2.!
 
 on: aWriteStream sourceFileIndex: anInteger
 	"Answer a new instance of the receiver for filing out source code onto the 
@@ -464,5 +482,6 @@ on: aWriteStream sourceFileIndex: anInteger
 	^(self on: aWriteStream)
 		sourceFileIndex: anInteger;
 		yourself! !
+!ChunkSourceFiler class categoriesFor: #initialize!public! !
 !ChunkSourceFiler class categoriesFor: #on:sourceFileIndex:!instance creation!public! !
 

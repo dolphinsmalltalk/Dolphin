@@ -128,6 +128,7 @@ package methodNames
 	add: #AXInterfaceTypeAnalyzer -> #wrapMethodComment:;
 	add: #AXMemberDesc -> #idlAttributes;
 	add: #AXMemberDesc -> #idlAttributesAndId;
+	add: #AXMemberDesc -> #idlCustomAttributes;
 	add: #AXMemberDesc -> #isInspectable;
 	add: #AXMemberDesc -> #printIDL;
 	add: #AXMemberDesc -> #printIDLOn:;
@@ -135,19 +136,23 @@ package methodNames
 	add: #AXRecord -> #publishedAspects;
 	add: #AXStructureTypeAnalyzer -> #classMethodCategoryClass;
 	add: #AXStructureTypeAnalyzer -> #conformsToRequiredProtocols:;
+	add: #AXStructureTypeAnalyzer -> #determineNewBase:forExistingWrapper:;
 	add: #AXStructureTypeAnalyzer -> #generateClassSide:;
 	add: #AXStructureTypeAnalyzer -> #generateDefineFields;
 	add: #AXStructureTypeAnalyzer -> #generateGlobalDefinition:;
 	add: #AXStructureTypeAnalyzer -> #generateInstanceSide:;
 	add: #AXStructureTypeAnalyzer -> #generateTypeLibAccessor;
+	add: #AXStructureTypeAnalyzer -> #generateWrapper;
+	add: #AXStructureTypeAnalyzer -> #printAnonymousStruct:offset:prefix:hidden:on:;
 	add: #AXStructureTypeAnalyzer -> #printClassCommentPreambleOn:;
-	add: #AXStructureTypeAnalyzer -> #printFieldDefinition:offset:on:;
-	add: #AXStructureTypeAnalyzer -> #printFieldDefinitionsOn:offset:;
+	add: #AXStructureTypeAnalyzer -> #printFieldDefinition:offset:prefix:hidden:on:;
+	add: #AXStructureTypeAnalyzer -> #printFieldDefinitionsOn:offset:prefix:hidden:;
 	add: #AXStructureTypeAnalyzer -> #printIDLBodyOn:indent:;
 	add: #AXStructureTypeAnalyzer -> #printIDLForVariablesOn:indent:;
 	add: #AXStructureTypeAnalyzer -> #printIDLOn:indent:;
-	add: #AXStructureTypeAnalyzer -> #printUnionDefinition:offset:on:;
+	add: #AXStructureTypeAnalyzer -> #printNamedFieldDefinition:offset:prefix:hidden:on:;
 	add: #AXTypeInfoAnalyzer -> #autoGenCategoryName;
+	add: #AXTypeInfoAnalyzer -> #autoGenClassCommentMarker;
 	add: #AXTypeInfoAnalyzer -> #autoGenMethodComment;
 	add: #AXTypeInfoAnalyzer -> #baseClassCheck:;
 	add: #AXTypeInfoAnalyzer -> #basicGenerate;
@@ -166,7 +171,6 @@ package methodNames
 	add: #AXTypeInfoAnalyzer -> #compileTestingMethod:;
 	add: #AXTypeInfoAnalyzer -> #conformsToRequiredProtocols:;
 	add: #AXTypeInfoAnalyzer -> #constantsPool;
-	add: #AXTypeInfoAnalyzer -> #custDataInterface;
 	add: #AXTypeInfoAnalyzer -> #determineNewBase:forExistingWrapper:;
 	add: #AXTypeInfoAnalyzer -> #emitComment:on:;
 	add: #AXTypeInfoAnalyzer -> #generate;
@@ -198,12 +202,12 @@ package methodNames
 	add: #AXTypeInfoAnalyzer -> #removeOldWrappers:;
 	add: #AXTypeInfoAnalyzer -> #reservedSelectors;
 	add: #AXTypeInfoAnalyzer -> #resolveExistingClass:;
+	add: #AXTypeInfoAnalyzer -> #shouldOverwriteClassComment;
 	add: #AXTypeInfoAnalyzer -> #superclassClashPrompt:;
 	add: #AXTypeInfoObject -> #abortGeneration;
 	add: #AXTypeInfoObject -> #basicIdlAttributes;
 	add: #AXTypeInfoObject -> #classComments;
 	add: #AXTypeInfoObject -> #classComments:;
-	add: #AXTypeInfoObject -> #custDataInterface;
 	add: #AXTypeInfoObject -> #customAttributes;
 	add: #AXTypeInfoObject -> #defineFunctionTables;
 	add: #AXTypeInfoObject -> #defineFunctionTables:;
@@ -245,6 +249,7 @@ package methodNames
 	add: #AXTypeLibraryAnalyzer -> #constantsPoolBinding;
 	add: #AXTypeLibraryAnalyzer -> #constantsPoolName;
 	add: #AXTypeLibraryAnalyzer -> #constantsPoolName:;
+	add: #AXTypeLibraryAnalyzer -> #defaultPackageFolder;
 	add: #AXTypeLibraryAnalyzer -> #definesSymbolicConstants;
 	add: #AXTypeLibraryAnalyzer -> #generatableInterfaces;
 	add: #AXTypeLibraryAnalyzer -> #generatableModules;
@@ -281,7 +286,7 @@ package methodNames
 	add: #AXTypeLibraryAnalyzer -> #sharedPoolNames;
 	add: #AXTypeLibraryAnalyzer -> #superclassClashSignal;
 	add: #CUSTDATAITEM -> #printIDLOn:;
-	add: #ELEMDESC -> #idlFlags;
+	add: #ELEMDESC -> #idlAttributes;
 	add: #ExternalLibrary -> #DllRegisterServer;
 	add: #FUNCDESC -> #buildMethodName;
 	add: #FUNCDESC -> #displayOn:;
@@ -290,7 +295,6 @@ package methodNames
 	add: #FUNCDESC -> #hasMultipleOutputs;
 	add: #FUNCDESC -> #hasOptionalInputs;
 	add: #FUNCDESC -> #hasReturnValue;
-	add: #FUNCDESC -> #idlFlags;
 	add: #FUNCDESC -> #isInspectable;
 	add: #FUNCDESC -> #isValueSetter;
 	add: #FUNCDESC -> #methodName;
@@ -303,7 +307,7 @@ package methodNames
 	add: #IDispatch -> #publishedAspects;
 	add: #ITypeInfo -> #printOn:;
 	add: #ITypeLib -> #printOn:;
-	add: #PARAMDESC -> #idlFlags;
+	add: #PARAMDESC -> #idlAttributes;
 	add: #TKindAliasAnalyzer -> #generateGlobalDefinition:;
 	add: #TKindAliasAnalyzer -> #generateWrapper;
 	add: #TKindAliasAnalyzer -> #idlAttributes;
@@ -385,10 +389,11 @@ package methodNames
 	add: #TKindModuleAnalyzer -> #printRawMethodBody:name:on:;
 	add: #TKindRecordAnalyzer -> #idlKeyword;
 	add: #TKindUnionAnalyzer -> #idlKeyword;
-	add: #VARDESC -> #idlFlags;
 	add: #VARDESC -> #printIDLOn:indent:;
 	add: #VARDESC -> #printOn:;
 	add: #VARIANT -> #printIDLOn:;
+	add: 'ArrayField class' -> #printVariable:type:indirections:on:;
+	add: 'ArrayPointerField class' -> #printVariable:type:indirections:on:;
 	add: 'AXDispatchImpAbstract class' -> #icon;
 	add: 'AXInterfaceTypeAnalyzer class' -> #icon;
 	add: 'AXInterfaceTypeAnalyzer class' -> #optimizedSelectors;
@@ -427,6 +432,9 @@ package methodNames
 	add: 'BSTR class' -> #printOptionalParameter:on:;
 	add: 'BSTR class' -> #unspecifiedParameterValue;
 	add: 'BYTE class' -> #arrayType;
+	add: 'ByteArray class' -> #fieldType;
+	add: 'ByteArray class' -> #fieldType:indirections:;
+	add: 'ByteArray class' -> #pointerFieldType;
 	add: 'ByteArray class' -> #printStructField:indirections:on:;
 	add: 'COMInterface class' -> #printMethodArgument:elemdesc:indirections:on:;
 	add: 'COMInterface class' -> #printOptionalParameter:on:;
@@ -435,18 +443,28 @@ package methodNames
 	add: 'DATE class' -> #newInstanceAspect:class:;
 	add: 'DATE class' -> #printDefaultValue:on:;
 	add: 'DOUBLE class' -> #arrayType;
+	add: 'DOUBLE class' -> #fieldType;
 	add: 'DWORD class' -> #arrayType;
+	add: 'ExternalArray class' -> #arrayType;
+	add: 'ExternalArray class' -> #fieldType;
+	add: 'ExternalArray class' -> #fieldType:indirections:;
+	add: 'ExternalArray class' -> #pointerFieldType;
 	add: 'ExternalArray class' -> #printStructField:indirections:on:;
+	add: 'ExternalField class' -> #printArrayField:length:on:;
+	add: 'ExternalField class' -> #printArrayField:type:on:;
+	add: 'ExternalField class' -> #printConformantArrayLength:on:;
+	add: 'ExternalField class' -> #printFixedArrayLength:on:;
+	add: 'ExternalField class' -> #printTypedField:on:;
 	add: 'ExternalField class' -> #printVariable:type:indirections:on:;
+	add: 'ExternalField class' -> #warningMultiDimensionArray:;
 	add: 'ExternalHandle class' -> #arrayType:;
 	add: 'ExternalHandle class' -> #printMethodArgument:elemdesc:indirections:on:;
-	add: 'ExternalIntegerBytes class' -> #fieldType:;
+	add: 'ExternalIntegerBytes class' -> #pointerFieldType;
 	add: 'ExternalIntegerBytes class' -> #printStructField:indirections:on:;
 	add: 'ExternalStructure class' -> #arrayType;
 	add: 'ExternalStructure class' -> #arrayType:;
-	add: 'ExternalStructure class' -> #basicPrintStructField:indirections:on:;
 	add: 'ExternalStructure class' -> #elementType:;
-	add: 'ExternalStructure class' -> #fieldType:;
+	add: 'ExternalStructure class' -> #fieldType;
 	add: 'ExternalStructure class' -> #mustWrapOptionalArgument:;
 	add: 'ExternalStructure class' -> #printDefaultValue:on:;
 	add: 'ExternalStructure class' -> #printMethodArgument:elemdesc:indirections:on:;
@@ -455,6 +473,7 @@ package methodNames
 	add: 'ExternalStructure class' -> #printWrappedValue:on:;
 	add: 'ExternalStructure class' -> #unspecifiedParameterValue;
 	add: 'FLOAT class' -> #arrayType;
+	add: 'FLOAT class' -> #fieldType;
 	add: 'FLOAT class' -> #printDefaultValue:on:;
 	add: 'GUID class' -> #arrayType:;
 	add: 'GUID class' -> #elementType:;
@@ -466,19 +485,26 @@ package methodNames
 	add: 'IDispatch class' -> #example3;
 	add: 'IDispatch class' -> #example4;
 	add: 'INT_PTR class' -> #arrayType;
-	add: 'OLECountedArray class' -> #printStructField:indirections:on:;
-	add: 'PointerArray class' -> #printStructField:indirections:on:;
+	add: 'OLECountedArray class' -> #fieldType;
+	add: 'OLECountedArray class' -> #pointerFieldType;
+	add: 'PointerArray class' -> #fieldType;
+	add: 'PointerArray class' -> #pointerFieldType;
+	add: 'PointerArrayField class' -> #printVariable:type:indirections:on:;
 	add: 'PointerField class' -> #printVariable:type:indirections:on:;
+	add: 'SAFEARRAY class' -> #fieldType;
+	add: 'SAFEARRAY class' -> #pointerFieldType;
 	add: 'SAFEARRAY class' -> #printMethodArgument:elemdesc:indirections:on:;
-	add: 'SAFEARRAY class' -> #printStructField:indirections:on:;
 	add: 'SBYTE class' -> #arrayType;
-	add: 'SBYTE class' -> #fieldType:;
 	add: 'SDWORD class' -> #arrayType;
+	add: 'String class' -> #arrayType;
 	add: 'String class' -> #arrayType:;
 	add: 'String class' -> #elementType:;
 	add: 'String class' -> #printMethodArgument:elemdesc:indirections:on:;
 	add: 'String class' -> #printStructField:indirections:on:;
-	add: 'StructureArray class' -> #printStructField:indirections:on:;
+	add: 'StructureArray class' -> #fieldType;
+	add: 'StructureArray class' -> #pointerFieldType;
+	add: 'StructureArrayField class' -> #printVariable:type:indirections:on:;
+	add: 'StructureArrayPointerField class' -> #printVariable:type:indirections:on:;
 	add: 'StructureField class' -> #printVariable:type:indirections:on:;
 	add: 'SWORD class' -> #arrayType;
 	add: 'TKindCoclassAnalyzer class' -> #publishedAspectsOfInstances;
@@ -494,6 +520,7 @@ package methodNames
 	add: 'VARIANT class' -> #printOptionalParameter:on:;
 	add: 'VARIANT_BOOL class' -> #newInstanceAspect:class:;
 	add: 'VOID class' -> #arrayType;
+	add: 'VOID class' -> #fieldType;
 	add: 'VOID class' -> #pointerFieldType;
 	add: 'WORD class' -> #arrayType;
 	yourself.
@@ -519,10 +546,12 @@ package setPrerequisites: (IdentitySet new
 	add: '..\..\MVP\Dialogs\Progress\Dolphin Progress Dialog';
 	add: '..\..\MVP\Presenters\Prompters\Dolphin Prompter';
 	add: '..\..\Registry\Dolphin Registry Access';
+	add: '..\..\Base\Dolphin SizeIs Fields';
 	add: '..\..\MVP\Presenters\Text\Dolphin Text Presenter';
 	add: '..\..\MVP\Type Converters\Dolphin Type Converters';
 	add: '..\..\MVP\Models\Value\Dolphin Value Models';
 	add: '..\..\ActiveX\COM\OLE COM';
+	add: '..\..\System\Compiler\Smalltalk Parser';
 	add: '..\..\ActiveX\Shell\Windows Shell';
 	yourself).
 
@@ -548,7 +577,7 @@ AXAutomationAspect subclass: #AXRecordAspect
 AXAutomationAspect subclass: #DispatchAspect
 	instanceVariableNames: 'dispid'
 	classVariableNames: ''
-	poolDictionaries: 'AttributeDescriptorFlags'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ValueDialog subclass: #AXTypeLibraryPrompter
 	instanceVariableNames: 'typeLibs path guidPresenter'
@@ -570,6 +599,38 @@ BasicInspector subclass: #AXInspector
 
 
 "Loose Methods"!
+
+!ArrayField class methodsFor!
+
+printVariable: aVARDESC type: arrayClass indirections: anInteger on: aPuttableStream
+	"Private - Generate a structure field definition message onto the specified <puttableStream>
+	for the variable described by the <VARDESC>, aVARDESC, with the specified number of <integer>
+	indirections."
+
+	self assert: 
+			["Instances of the receiver describe fields that are embedded arrays (not pointers to arrays)."
+			anInteger == 0].
+	self
+		printArrayField: aVARDESC
+		type: arrayClass
+		on: aPuttableStream! !
+!ArrayField class categoriesFor: #printVariable:type:indirections:on:!development!private! !
+
+!ArrayPointerField class methodsFor!
+
+printVariable: aVARDESC type: extClass indirections: anInteger on: aPuttableStream
+	"Private - Print a structure field definition message onto the <puttableStream> argument,
+	for the C-array of structures variable described by the <VARDESC> argument, with the
+	specified <integer> number of indirections."
+
+	self assert: 
+			["Instances of the receiver describe fields that are embedded fixed arrays (not pointers to array, and not conformant arrays)."
+			anInteger == 1].
+	self
+		printArrayField: aVARDESC
+		type: extClass arrayType
+		on: aPuttableStream! !
+!ArrayPointerField class categoriesFor: #printVariable:type:indirections:on:!development!private! !
 
 !AXAPIInfoAnalyzer methodsFor!
 
@@ -690,17 +751,17 @@ printCommentPrefixOn: aPuttableStream isPrivate: aBoolean
 		nextPut: $".
 	aBoolean ifTrue: [aPuttableStream nextPutAll: 'Private - ']!
 
-printFunctionPrototype: aFUNCDESC on: target indent: tabs 
+printFunctionPrototype: aFUNCDESC on: target indent: tabs
 	"Private - Generate an IDL-style prototype for the method described by the <FUNCDESC>, funcDesc,
 	on the <puttableStream>, target. This is useful for documentatary purposes in the method comment."
 
 	target tab: tabs.
-	self 
+	self
 		printIDLDecl: ''
 		type: aFUNCDESC tdescFunc
 		on: target.
 	target space.
-	aFUNCDESC isDispatchable 
+	aFUNCDESC isDispatchable
 		ifFalse: 
 			[target
 				nextPutAll: aFUNCDESC idlCallingConvention;
@@ -708,23 +769,23 @@ printFunctionPrototype: aFUNCDESC on: target indent: tabs
 	target
 		nextPutAll: aFUNCDESC name;
 		nextPut: $(.
-	aFUNCDESC argumentCount > 0 
+	aFUNCDESC argumentCount > 0
 		ifTrue: 
 			[| params types |
 			params := aFUNCDESC argumentNames.
 			types := aFUNCDESC arguments.
 			(1 to: params size) do: 
-					[:each | 
+					[:each |
 					| name type |
 					type := types at: each.
 					target crtab: tabs + 1.
-					self 
-						printIDLAttributes: type idlFlags
+					self
+						printIDLAttributes: type idlAttributes
 						on: target
 						indent: -1.
 					name := params at: each.
 					name isEmpty ifTrue: [name := 'arg' , each displayString].
-					self 
+					self
 						printIDLDecl: name
 						type: type tdesc
 						on: target]
@@ -1013,10 +1074,10 @@ buildPublishedAspects: aLookupTable forObject: anIUnknown
 										yourself].
 					aspect
 						flags: (aspect flags maskSet: (each isPropGet
-										ifTrue: [ReadableMask]
+										ifTrue: [AttributeDescriptor.ReadableMask]
 										ifFalse: 
 											[self assert: [each isPropSet].
-											WriteableMask]))]].
+											AttributeDescriptor.WriteableMask]))]].
 	ppb ifNotNil: [ppb free]!
 
 classCategories
@@ -1835,12 +1896,42 @@ reservedUnkSelectors
 
 idlAttributes
 	^(OrderedCollection new)
-		addAll: self idlFlags;
-		addAll: self documentation idlAttributes;
+		addAllLast: self basicIdlAttributes;
+		addAllLast: self documentation idlAttributes;
+		addAllLast: self idlCustomAttributes;
 		yourself!
 
 idlAttributesAndId
 	^(Array with: self idlId) , self idlAttributes!
+
+idlCustomAttributes
+	| attrs |
+	attrs := Array writeStream.
+	self customAttributes keysAndValuesDo: 
+			[:eachKey :eachValue |
+			| attr |
+			attr := String writeStream.
+			eachKey isSymbol
+				ifTrue: 
+					[attr display: eachKey.
+					(eachValue isEmpty or: 
+							["Doesn't seem to be possible to actually set the value of a custom attribute to VT_EMPTY, to we treat an empty string as no argument"
+							eachValue value = ''])
+						ifFalse: 
+							[attr nextPut: $(.
+							eachValue printIDLOn: attr.
+							attr nextPut: $)]]
+				ifFalse: 
+					[attr
+						nextPutAll: 'custom(';
+						nextPutAll: eachKey idlString.
+					eachValue isEmpty
+						ifFalse: 
+							[attr nextPutAll: ', '.
+							eachValue printIDLOn: attr.
+							attr nextPutAll: $)]].
+			attrs nextPut: attr contents].
+	^attrs contents!
 
 isInspectable
 	"Answer whether the receiver is describing a 'browsable' property that is not 'restricted'
@@ -1868,6 +1959,7 @@ printIDLOn: target indent: tabs
 	^self subclassResponsibility! !
 !AXMemberDesc categoriesFor: #idlAttributes!printing-IDL!private! !
 !AXMemberDesc categoriesFor: #idlAttributesAndId!accessing!private! !
+!AXMemberDesc categoriesFor: #idlCustomAttributes!accessing!public! !
 !AXMemberDesc categoriesFor: #isInspectable!public!testing! !
 !AXMemberDesc categoriesFor: #printIDL!development!printing-IDL!public! !
 !AXMemberDesc categoriesFor: #printIDLOn:!development!printing-IDL!public! !
@@ -1913,6 +2005,11 @@ conformsToRequiredProtocols: binding
 	^(super conformsToRequiredProtocols: binding) or: [
 		binding value class conformsToProtocol: #'externalStructure class']!
 
+determineNewBase: baseClass forExistingWrapper: existingClass
+	| existingSuper |
+	existingSuper := existingClass superclass.
+	^existingSuper == ExternalStructure ifTrue: [baseClass] ifFalse: [existingSuper]!
+
 generateClassSide: aClass
 	self generateDefineFields.
 	self generateClassComment.
@@ -1929,15 +2026,24 @@ generateDefineFields
 		nextPutAll: #defineFields;
 		crtab;
 		nextPut: $";
-		nextPutAll: ('Define the fields of the <1s> structure.<n><n><t><2s>  compileDefinition<n><n>' 
-					expandMacrosWith: self name
-					with: self globalName).
+		nextPutAll: 'Define the fields of the ';
+		nextPutAll: self name;
+		nextPutAll: ' structure.';
+		cr;
+		crtab;
+		nextPutAll: self globalName;
+		nextPutAll: ' compileDefinition';
+		cr;
+		cr.
 	idl := String writeStream.
 	self printIDLOn: idl indent: 2.
 	self emitComment: idl contents on: target.
 	self printAutoGenMethodPostambleOn: target.
-	target nextPutAll: 'self'.
-	self printFieldDefinitionsOn: target offset: 0.
+	self
+		printFieldDefinitionsOn: target
+		offset: 0
+		prefix: ''
+		hidden: false.
 	target
 		nextPut: $.;
 		crtab;
@@ -1980,6 +2086,28 @@ generateTypeLibAccessor
 		display: tlbInterface libraryAndIndex value.
 	self compileClassMethod: target contents categories: self classInitializerCategories!
 
+generateWrapper
+	^(BuiltIns at: self guid ifAbsent: []) ifNil: [super generateWrapper]!
+
+printAnonymousStruct: aVARDESC offset: anInteger prefix: aString hidden: aBoolean on: aWriteStream
+	| hidden prefix offset structTypeInfo |
+	structTypeInfo := aVARDESC tdesc typeInfo.
+	offset := anInteger + aVARDESC oInst.
+	prefix := aString , (aVARDESC isAnonymous ifTrue: [''] ifFalse: [aVARDESC name , '_']).
+	hidden := (aBoolean or: [aVARDESC isHidden]) or: [structTypeInfo isHidden].
+	structTypeInfo variables do: 
+			[:each |
+			structTypeInfo
+				printFieldDefinition: each
+				offset: offset
+				prefix: prefix
+				hidden: hidden
+				on: aWriteStream]
+		separatedBy: 
+			[aWriteStream
+				nextPut: $;;
+				crtab: 2]!
+
 printClassCommentPreambleOn: target
 	"Private - Print a comment preamble appropriate for the receiver onto the 
 	<puttableStream>, target."
@@ -1997,43 +2125,64 @@ printClassCommentPreambleOn: target
 		nextPutAll: lib helpstring;
 		nextPutAll: ''' library.'!
 
-printFieldDefinition: aVARDESC offset: anInteger on: aPuttableStream 
-	| classdesc |
-	aPuttableStream
-		crtab: 2;
-		nextPutAll: 'defineField: #';
-		nextPutAll: aVARDESC name;
-		nextPutAll: ' type: '.
-	classdesc := aVARDESC classDesc.
-	classdesc key 
-		printStructField: aVARDESC
-		indirections: classdesc value
-		on: aPuttableStream.
-	aVARDESC isReadOnly 
+printFieldDefinition: aVARDESC offset: anInteger prefix: aString hidden: aBoolean on: aPuttableStream
+	aVARDESC tdesc isAnonymous
+		ifTrue: 
+			[self
+				printAnonymousStruct: aVARDESC
+				offset: anInteger
+				prefix: aString
+				hidden: aBoolean
+				on: aPuttableStream]
+		ifFalse: 
+			[self
+				printNamedFieldDefinition: aVARDESC
+				offset: anInteger
+				prefix: aString
+				hidden: aBoolean
+				on: aPuttableStream]!
+
+printFieldDefinitionsOn: aPuttableStream offset: anInteger prefix: aString hidden: aBoolean
+	| hidden vars firstField first |
+	hidden := aBoolean or: [self isHidden].
+	vars := self variables.
+	firstField := vars first.
+	first := true.
+	(firstField isAnonymous and: [firstField tdesc isAnonymous not])
 		ifTrue: 
 			[aPuttableStream
-				space;
-				nextPutAll: #beReadOnly].
-	"The offset is explicitly set in case typelib using special packing"
-	aPuttableStream
-		nextPutAll: ' offset: ';
-		print: anInteger + aVARDESC oInst!
-
-printFieldDefinitionsOn: aPuttableStream offset: anInteger 
-	self variables do: 
-			[:each | 
-			each isUnion 
+				nextPutAll: 'super defineFields.';
+				crtab]
+		ifFalse: 
+			[aPuttableStream
+				nextPutAll: 'self';
+				crtab: 2.
+			self
+				printFieldDefinition: firstField
+				offset: anInteger
+				prefix: aString
+				hidden: hidden
+				on: aPuttableStream.
+			first := false].
+	2 to: vars size
+		do: 
+			[:i |
+			first
 				ifTrue: 
-					[self 
-						printUnionDefinition: each
-						offset: anInteger
-						on: aPuttableStream]
+					[aPuttableStream
+						nextPutAll: 'self';
+						crtab: 2.
+					first := false]
 				ifFalse: 
-					[self 
-						printFieldDefinition: each
-						offset: anInteger
-						on: aPuttableStream]]
-		separatedBy: [aPuttableStream nextPut: $;]!
+					[aPuttableStream
+						nextPut: $;;
+						crtab: 2].
+			self
+				printFieldDefinition: (vars at: i)
+				offset: anInteger
+				prefix: aString
+				hidden: hidden
+				on: aPuttableStream]!
 
 printIDLBodyOn: aPuttableStream indent: anInteger 
 	"Private - Print the IDL description for the receiver on the <puttableStream>, target."
@@ -2072,24 +2221,53 @@ printIDLOn: target indent: tabs
 	self printIDLAttributesOn: target indent: -1.
 	self printIDLBodyOn: target indent: tabs!
 
-printUnionDefinition: aVARDESC offset: anInteger on: aWriteStream 
-	| union |
-	union := aVARDESC tdesc getRefType.
-	union printFieldDefinitionsOn: aWriteStream offset: anInteger + aVARDESC oInst! !
+printNamedFieldDefinition: aVARDESC offset: anInteger prefix: aString hidden: aBoolean on: aPuttableStream
+	| classdesc |
+	aPuttableStream
+		nextPutAll: 'defineField: #';
+		nextPutAll: aString;
+		nextPutAll: aVARDESC name;
+		nextPutAll: ' type: '.
+	classdesc := aVARDESC classDesc.
+	(aVARDESC isStringField
+		ifTrue: [classdesc key elementSize == 2 ifTrue: [UnicodeString] ifFalse: [String]]
+		ifFalse: [classdesc key])
+			printStructField: aVARDESC
+			indirections: classdesc value
+			on: aPuttableStream.
+	#(#(#isReadOnly #beReadOnly) #(#isNonBrowsable #beNonBrowsable) #(#isRestricted #beWriteOnly)) do: 
+			[:each |
+			(aVARDESC perform: each first)
+				ifTrue: 
+					[aPuttableStream
+						space;
+						nextPutAll: each second]].
+	(aBoolean or: [aVARDESC isHidden])
+		ifTrue: 
+			[aPuttableStream
+				space;
+				nextPutAll: #beFiller].
+	"The offset is explicitly set in case typelib using special packing"
+	aPuttableStream
+		nextPutAll: ' offset: ';
+		print: anInteger + aVARDESC oInst! !
 !AXStructureTypeAnalyzer categoriesFor: #classMethodCategoryClass!constants!private! !
 !AXStructureTypeAnalyzer categoriesFor: #conformsToRequiredProtocols:!development!private!testing! !
+!AXStructureTypeAnalyzer categoriesFor: #determineNewBase:forExistingWrapper:!development!private! !
 !AXStructureTypeAnalyzer categoriesFor: #generateClassSide:!development!private! !
 !AXStructureTypeAnalyzer categoriesFor: #generateDefineFields!development!private! !
 !AXStructureTypeAnalyzer categoriesFor: #generateGlobalDefinition:!development!private! !
 !AXStructureTypeAnalyzer categoriesFor: #generateInstanceSide:!development!private! !
 !AXStructureTypeAnalyzer categoriesFor: #generateTypeLibAccessor!automatic generation!development!private! !
+!AXStructureTypeAnalyzer categoriesFor: #generateWrapper!development!private! !
+!AXStructureTypeAnalyzer categoriesFor: #printAnonymousStruct:offset:prefix:hidden:on:!private! !
 !AXStructureTypeAnalyzer categoriesFor: #printClassCommentPreambleOn:!development!printing!private! !
-!AXStructureTypeAnalyzer categoriesFor: #printFieldDefinition:offset:on:!development!private! !
-!AXStructureTypeAnalyzer categoriesFor: #printFieldDefinitionsOn:offset:!development!private! !
+!AXStructureTypeAnalyzer categoriesFor: #printFieldDefinition:offset:prefix:hidden:on:!development!private! !
+!AXStructureTypeAnalyzer categoriesFor: #printFieldDefinitionsOn:offset:prefix:hidden:!development!private! !
 !AXStructureTypeAnalyzer categoriesFor: #printIDLBodyOn:indent:!development!printing-IDL!private! !
 !AXStructureTypeAnalyzer categoriesFor: #printIDLForVariablesOn:indent:!development!printing-IDL!private! !
 !AXStructureTypeAnalyzer categoriesFor: #printIDLOn:indent:!development!printing-IDL!public! !
-!AXStructureTypeAnalyzer categoriesFor: #printUnionDefinition:offset:on:!public! !
+!AXStructureTypeAnalyzer categoriesFor: #printNamedFieldDefinition:offset:prefix:hidden:on:!development!private! !
 
 !AXStructureTypeAnalyzer class methodsFor!
 
@@ -2114,6 +2292,9 @@ autoGenCategoryName
 	methods."
 
 	^'**auto generated**'!
+
+autoGenClassCommentMarker
+	^'** This comment was automatically generated from a type library. Delete this line to prevent any manual edits from being overwritten if the wrapper class is regenerated. **'!
 
 autoGenMethodComment
 	"Private - Answer a suitable piece of comment to warn the user that a
@@ -2267,9 +2448,6 @@ conformsToRequiredProtocols: binding
 constantsPool
 	^self typeLib constantsPool!
 
-custDataInterface
-	^self tlbInterface queryInterface: ITypeInfo2!
-
 determineNewBase: baseClass forExistingWrapper: existingClass 
 	"Answer the superclass for the wrapper class generated by the receiver when 
 	modifying an existing wrapper class. By default the existing superclass is
@@ -2323,7 +2501,7 @@ generateClassComment
 		cr.
 	helpstring := self helpstring.
 	idlkey := self idlKeyword.
-	helpstring isEmpty 
+	helpstring isEmpty
 		ifTrue: 
 			[stm
 				nextPutAll: 'The type library contains no documentation for this ';
@@ -2339,23 +2517,24 @@ generateClassComment
 	stm
 		cr;
 		cr;
-		nextPutAll: 'Warning: This comment was automatically generated from the ';
-		nextPutAll: idlkey;
-		nextPutAll: '''s type information, but any changes made here will not be overwritten if the wrapper class is regenerated.';
-		cr;
-		cr;
-		nextPutAll: 'IDL definition follows:';
-		cr;
+		nextPutAll: self autoGenClassCommentMarker;
 		cr.
-	self printIDLOn: stm.
+	self includeIDLInClassComment
+		ifTrue: 
+			[stm
+				cr;
+				nextPutAll: 'IDL definition follows:';
+				cr;
+				cr.
+			self printIDLOn: stm].
 	flags := self generationFlags.
 	(flags anyMask: Trace) ifTrue: [Notification signal: stm contents].
 	self isTraceOnly ifTrue: [^self].
 	class := self global.
-	(class comment isEmpty or: [self generationFlags allMask: OverwriteClassComments]) 
+	self shouldOverwriteClassComment
 		ifTrue: [self global comment: stm contents]
 		ifFalse: 
-			[(flags allMask: Verbose) 
+			[(flags allMask: Verbose)
 				ifTrue: [Notification signal: 'Existing class comment for ' , self name , ' not overwritten']]!
 
 generateClassDefinition: suggestedName 
@@ -2411,7 +2590,6 @@ generateClassDefinition: suggestedName
 	binding := self environment associationAt: var key.
 	self globalBinding: binding.
 	existingClass isNil ifTrue: [self typeLib addClassToPackage: class].
-	self assert: [self checkConformanceOfExistingClass: binding].
 	^class!
 
 generateClassSide: aClass
@@ -2595,10 +2773,8 @@ packageCheck: anAssociation
 			mb := MessageBox new.
 			mb iconStyle: #warning.
 			mb 
-				text: ('The <1s> <2s> already exists in the <3p> package.
-
-Would you like to move it to the <4p> package?
-
+				text: ('The <1s> <2s> already exists in the <3p> package.<n>
+Would you like to move it to the <4p> package?<n>
 Press Yes to move the class, No to leave it where it is, or Cancel to abort' 
 						expandMacrosWith: type
 						with: anAssociation key
@@ -2653,92 +2829,94 @@ printHelpstringComment: anAXMemberDesc on: aPuttableStream
 			self emitComment: help on: aPuttableStream.
 			true]!
 
-printIDLDecl: name type: tdesc on: target 
-	"Private - Print a <readableString> IDL-style description of the <TYPEDESC>
-	argument, tdesc, onto the <puttableStream>, target. This may involve chasing 
-	down through aliases, etc, if the type is user defined, or looking up a pointer
-	 type through a further level of indirection."
+printIDLDecl: aString type: aTYPEDESC on: aPuttableStream
+	"Private - Print a <readableString> IDL-style description of the <TYPEDESC> argument onto
+	the <puttableStream> argument. This may involve chasing down through aliases, etc, if the
+	type is user defined, or looking up a pointer type through a further level of indirection."
 
 	| vt |
-	vt := tdesc vt.
+	vt := aTYPEDESC vt.
 	self assert: [vt <= 16rFFF	"modifier flags not valid in a TYPEDESC"].
-	vt == VT_CARRAY 
+	vt == VT_CARRAY
 		ifTrue: 
 			[| array |
-			array := tdesc tdescArray.
-			self 
-				printIDLDecl: name
-				type: tdesc tdesc
-				on: target.
+			array := aTYPEDESC tdescArray.
+			self
+				printIDLDecl: aString
+				type: aTYPEDESC tdesc
+				on: aPuttableStream.
 			array rgbounds do: 
-					[:sab | 
-					target
+					[:sab |
+					aPuttableStream
 						nextPut: $[;
 						print: sab cElements;
 						nextPut: $]].
 			^self].
-	vt == VT_PTR 
+	vt == VT_PTR
 		ifTrue: 
-			[self 
+			[self
 				printIDLDecl: ''
-				type: tdesc tdesc
-				on: target.
-			target nextPut: $*]
+				type: aTYPEDESC tdesc
+				on: aPuttableStream.
+			aPuttableStream nextPut: $*]
 		ifFalse: 
-			[vt == VT_SAFEARRAY 
+			[vt == VT_SAFEARRAY
 				ifTrue: 
-					[target nextPutAll: 'SAFEARRAY('.
-					self 
+					[aPuttableStream nextPutAll: 'SAFEARRAY('.
+					self
 						printIDLDecl: ''
-						type: tdesc tdesc
-						on: target.
-					target nextPut: $)]
+						type: aTYPEDESC tdesc
+						on: aPuttableStream.
+					aPuttableStream nextPut: $)]
 				ifFalse: 
-					[vt == VT_USERDEFINED 
+					[vt == VT_USERDEFINED
 						ifTrue: 
 							["Chase down the actual type via the referenced Type Info."
-
-							target nextPutAll: tdesc getRefType name]
-						ifFalse: [target nextPutAll: (self idlTypeOfVT: vt)]]].
-	name notEmpty 
+							aPuttableStream nextPutAll: aTYPEDESC typeInfo name]
+						ifFalse: [aPuttableStream nextPutAll: (self idlTypeOfVT: vt)]]].
+	aString notEmpty
 		ifTrue: 
-			[target
+			[aPuttableStream
 				space;
-				nextPutAll: name]!
+				nextPutAll: aString]!
 
-printIDLForVariable: aVARDESC on: aPuttableStream indent: anInteger 
+printIDLForVariable: aVARDESC on: aPuttableStream indent: anInteger
 	"Private - Generate an IDL-style description of the property described by the 
 	<VARDESC>, on the <puttableStream>. This is useful for documentary purposes,
 	e.g. in method comments."
 
-	| isConst |
-	(self 
+	| isConst typedesc |
+	(self
 		printIDLAttributes: aVARDESC idlAttributes
 		on: aPuttableStream
 		indent: -1) ifTrue: [aPuttableStream space].
-	aVARDESC isUnion 
+	typedesc := aVARDESC tdesc.
+	typedesc isAnonymous
 		ifTrue: 
-			[| union |
-			union := aVARDESC tdesc getRefType.
-			(union name beginsWith: '_MIDL_') 
-				ifTrue: 
+			[| structure |
+			structure := typedesc typeInfo.
+			aPuttableStream
+				nextPutAll: structure idlKeyword;
+				space;
+				nextPut: ${.
+			structure printIDLForVariablesOn: aPuttableStream indent: anInteger + 1.
+			aPuttableStream
+				crtab: anInteger;
+				nextPut: $}.
+			aVARDESC isAnonymous
+				ifFalse: 
 					[aPuttableStream
-						nextPutAll: union idlKeyword;
 						space;
-						nextPut: ${.
-					union printIDLForVariablesOn: aPuttableStream indent: anInteger + 1.
-					aPuttableStream
-						crtab: anInteger;
-						nextPut: $};
-						nextPut: $;.
-					^self]].
+						nextPutAll: aVARDESC name].
+			aPuttableStream nextPut: $;.
+			^self].
 	isConst := aVARDESC isSymbolicConstant.
 	isConst ifTrue: [aPuttableStream nextPutAll: 'const '].
-	self 
-		printIDLDecl: aVARDESC name
-		type: aVARDESC tdesc
+	self
+		printIDLDecl: (aVARDESC isAnonymous ifTrue: [''] ifFalse: [aVARDESC name])
+		type: typedesc
 		on: aPuttableStream.
-	isConst 
+	isConst
 		ifTrue: 
 			[aPuttableStream
 				nextPutAll: ' = ';
@@ -2795,6 +2973,13 @@ resolveExistingClass: className
 	"Found a conformant class"
 	^binding!
 
+shouldOverwriteClassComment
+	| existingComment |
+	existingComment := self global comment.
+	^existingComment isEmpty or: 
+			[(existingComment findString: self autoGenClassCommentMarker) ~~ 0
+				or: [self generationFlags allMask: OverwriteClassComments]]!
+
 superclassClashPrompt: binding 
 	"Private - Prompt the user as to how they wish to resolve an inheritance mismatch."
 
@@ -2817,10 +3002,11 @@ You can Ignore this warning, but it is suggested that you check the location of 
 	mb 
 		caption: ('Dolphin Type Library Analyzer: Generating <1s>.<2s>' expandMacrosWith: self typeLib name
 				with: self name).
-	mb style: #abortRetryIgnore.
+	mb buttonStyle: #abortRetryIgnore.
 	mb defaultButton: 2.
 	^mb open! !
 !AXTypeInfoAnalyzer categoriesFor: #autoGenCategoryName!constants!private! !
+!AXTypeInfoAnalyzer categoriesFor: #autoGenClassCommentMarker!constants!private! !
 !AXTypeInfoAnalyzer categoriesFor: #autoGenMethodComment!constants!private! !
 !AXTypeInfoAnalyzer categoriesFor: #baseClassCheck:!development!private! !
 !AXTypeInfoAnalyzer categoriesFor: #basicGenerate!development!public! !
@@ -2839,7 +3025,6 @@ You can Ignore this warning, but it is suggested that you check the location of 
 !AXTypeInfoAnalyzer categoriesFor: #compileTestingMethod:!development!private! !
 !AXTypeInfoAnalyzer categoriesFor: #conformsToRequiredProtocols:!development!private!testing! !
 !AXTypeInfoAnalyzer categoriesFor: #constantsPool!development!public! !
-!AXTypeInfoAnalyzer categoriesFor: #custDataInterface!accessing!development!private! !
 !AXTypeInfoAnalyzer categoriesFor: #determineNewBase:forExistingWrapper:!development!private! !
 !AXTypeInfoAnalyzer categoriesFor: #emitComment:on:!development!helpers!printing!private! !
 !AXTypeInfoAnalyzer categoriesFor: #generate!development!public! !
@@ -2871,6 +3056,7 @@ You can Ignore this warning, but it is suggested that you check the location of 
 !AXTypeInfoAnalyzer categoriesFor: #removeOldWrappers:!development!private! !
 !AXTypeInfoAnalyzer categoriesFor: #reservedSelectors!accessing!public! !
 !AXTypeInfoAnalyzer categoriesFor: #resolveExistingClass:!helpers!private! !
+!AXTypeInfoAnalyzer categoriesFor: #shouldOverwriteClassComment!development!private! !
 !AXTypeInfoAnalyzer categoriesFor: #superclassClashPrompt:!development!helpers!private! !
 
 !AXTypeInfoAnalyzer class methodsFor!
@@ -2920,9 +3106,6 @@ classComments: aSymbol
 	flags := self generationFlags maskClear: CommentStyleMask.
 	self generationFlags: (flags 
 				maskSet: (self class classCommentStyleMap at: aSymbol ifAbsent: [0]))!
-
-custDataInterface
-	^self tlbInterface!
 
 customAttributes
 	"Private - Answer an <abstractDictionary> of the custom attributes defined against this type.
@@ -2995,10 +3178,10 @@ generationFlags: anObject
 	generationFlags := anObject!
 
 getCustData
-	^self custDataInterface 
+	^self tlbInterface
 		ifNil: [#()]
 		ifNotNil: 
-			[:iti2 | 
+			[:iti2 |
 			| custData answer array |
 			custData := iti2 getAllCustData.
 			array := custData prgCustData.
@@ -3158,7 +3341,6 @@ tracing: aSymbol
 !AXTypeInfoObject categoriesFor: #basicIdlAttributes!development!printing-IDL!private! !
 !AXTypeInfoObject categoriesFor: #classComments!accessing!public! !
 !AXTypeInfoObject categoriesFor: #classComments:!accessing!public! !
-!AXTypeInfoObject categoriesFor: #custDataInterface!accessing!development!private! !
 !AXTypeInfoObject categoriesFor: #customAttributes!development!printing-IDL!private! !
 !AXTypeInfoObject categoriesFor: #defineFunctionTables!accessing!public! !
 !AXTypeInfoObject categoriesFor: #defineFunctionTables:!accessing!public! !
@@ -3367,6 +3549,9 @@ constantsPoolName: identifier
 	constantsPoolName := identifier.
 !
 
+defaultPackageFolder
+	^PackageFolder dolphinRootPathname , 'Object Arts\Dolphin\ActiveX\Components'!
+
 definesSymbolicConstants
 	^self enums notEmpty 
 		or: [self modules anySatisfy: [:eachModule | eachModule constants notEmpty]]!
@@ -3554,7 +3739,8 @@ package
 	| pm |
 	packageName isNil ifTrue: [packageName := self name].
 	pm := Package manager.
-	^pm packageNamed: self packageName ifNone: [pm newPackage: self packageName]!
+	^pm packageNamed: self packageName
+		ifNone: [pm newPackage: (File composePath: self defaultPackageFolder subPath: self packageName)]!
 
 package: parcel
 	"Set the package into which wrapper classes for the receiver should be generated to
@@ -3693,7 +3879,11 @@ printIDLOn: aPuttableStream indent: anInteger
 			[:e | 
 			e printIDLOn: aPuttableStream indent: childIndent.
 			aPuttableStream crtab: anInteger].
-	self structs do: 
+	self namedStructs do: 
+			[:s | 
+			s printIDLOn: aPuttableStream indent: childIndent.
+			aPuttableStream crtab: anInteger].
+	self namedUnions do: 
 			[:s | 
 			s printIDLOn: aPuttableStream indent: childIndent.
 			aPuttableStream crtab: anInteger].
@@ -3777,6 +3967,7 @@ superclassClashSignal
 !AXTypeLibraryAnalyzer categoriesFor: #constantsPoolBinding!accessing!private! !
 !AXTypeLibraryAnalyzer categoriesFor: #constantsPoolName!accessing!public! !
 !AXTypeLibraryAnalyzer categoriesFor: #constantsPoolName:!accessing!public! !
+!AXTypeLibraryAnalyzer categoriesFor: #defaultPackageFolder!accessing!public! !
 !AXTypeLibraryAnalyzer categoriesFor: #definesSymbolicConstants!private!updating! !
 !AXTypeLibraryAnalyzer categoriesFor: #generatableInterfaces!enumerating!public! !
 !AXTypeLibraryAnalyzer categoriesFor: #generatableModules!enumerating!public! !
@@ -3999,8 +4190,8 @@ publishedAspectsOfInstances
 		add: (Aspect sequenceableCollection: #coclasses) beReadOnly;
 		add: (Aspect sequenceableCollection: #enums) beReadOnly;
 		add: (Aspect sequenceableCollection: #modules) beReadOnly;
-		add: (Aspect sequenceableCollection: #structs) beReadOnly;
-		add: (Aspect sequenceableCollection: #unions) beReadOnly;
+		add: (Aspect sequenceableCollection: #namedStructs) beReadOnly;
+		add: (Aspect sequenceableCollection: #namedUnions) beReadOnly;
 		add: (Aspect sequenceableCollection: #typedefs) beReadOnly;
 		yourself!
 
@@ -4132,33 +4323,40 @@ arrayType
 	"Private - Answer the class of object (typically an <ExternalArray> subclass) to be used to 
 	represent arrays of the receiver's field type in other structures."
 
-	^ByteArray! !
+	^ExternalArray! !
 !BYTE class categoriesFor: #arrayType!constants!development!private! !
 
 !ByteArray class methodsFor!
 
-printStructField: vardesc indirections: indirs on: target 
-	"Private - Generate a structure field definition message onto the <puttableStream>, target,
-	for the C array variable described by the <VARDESC>, vardesc,  with the specified number 
-	of <integer> indirections."
+fieldType
+	^ArrayField!
 
-	| arrayDesc elemclassdesc |
-	arrayDesc := vardesc tdesc tdescArray.
-	"Can't really handle any more than one dimension at present"
-	arrayDesc cDims > 1 
-		ifTrue: 
-			[Warning 
-				signal: 'Multi-dimensioned byte array treated as single-dimensioned: ' , vardesc printString].
-	elemclassdesc := arrayDesc tdesc classDesc.
-	self assert: [elemclassdesc value == 0].	"ByteArray cannot support points to bytes, only bytes"
-	target
-		nextPut: $(;
-		print: (indirs == 0 ifTrue: [ArrayField] ifFalse: [ArrayPointerField]);
-		nextPutAll: ' type: ';
-		print: self;
-		nextPutAll: ' length: ';
-		display: arrayDesc elementCount;
-		nextPut: $)	"An embedded ByteArray"	"Pointer to ByteArray"! !
+fieldType: aVARDESC indirections: anInteger
+	"Private - Answer the <ExternalField> type to be used to represent a field described by the
+	<VARDESC> argument based of the receiver's basic field type in structures with the given
+	number of <integer> indirections."
+
+	^anInteger == 0
+		ifTrue: [self fieldType]
+		ifFalse: 
+			[anInteger == 1 ifTrue: [self pointerFieldType] ifFalse: [LPVOIDField]	"Represent as anon. indirection"]!
+
+pointerFieldType
+	^ArrayPointerField!
+
+printStructField: aVARDESC indirections: anInteger on: aPuttableStream
+	"Private - Generate a structure field definition message onto the <puttableStream>, target,
+	for the C-array of bytes variable described by the <VARDESC>, vardesc, with the specified
+	number of <integer> indirections."
+
+	(self fieldType: aVARDESC indirections: anInteger)
+		printVariable: aVARDESC
+		type: self
+		indirections: anInteger
+		on: aPuttableStream! !
+!ByteArray class categoriesFor: #fieldType!constants!development!private! !
+!ByteArray class categoriesFor: #fieldType:indirections:!constants!development!private! !
+!ByteArray class categoriesFor: #pointerFieldType!constants!development!private! !
 !ByteArray class categoriesFor: #printStructField:indirections:on:!development!private! !
 
 !COMInterface class methodsFor!
@@ -4238,8 +4436,15 @@ arrayType
 	represent arrays of the receiver's field type in other structures."
 
 	^DOUBLEArray
-! !
+!
+
+fieldType
+	"Private - Answer the <ExternalField> type to be used to represent the receiver's field type in 
+	other structures."
+
+	^DOUBLEField! !
 !DOUBLE class categoriesFor: #arrayType!constants!development!private! !
+!DOUBLE class categoriesFor: #fieldType!constants!development!private! !
 
 !DWORD class methodsFor!
 
@@ -4253,46 +4458,136 @@ arrayType
 
 !ELEMDESC methodsFor!
 
-idlFlags
-	"Answer a <sequencedReadableCollection> of flag names (IDL attributes)
+idlAttributes
+	"Private - Answer a <sequencedReadableCollection> of flag names (IDL attributes)
 	from the receiver."
 
-	^self paramdesc idlFlags! !
-!ELEMDESC categoriesFor: #idlFlags!printing-IDL!public! !
+	^self paramdesc idlAttributes! !
+!ELEMDESC categoriesFor: #idlAttributes!printing-IDL!private! !
 
 !ExternalArray class methodsFor!
 
-printStructField: vardesc indirections: indirs on: target
-	"Private - Generate a structure field definition message onto the <puttableStream>, target,
-	for the C array variable described by the <VARDESC>, vardesc,  with the specified number 
-	of <integer> indirections."
+arrayType
+	^self!
 
-	| arrayDesc |
-	arrayDesc := vardesc tdesc tdescArray.
-	"Can't really handle any more than one dimension at present"
-	arrayDesc cDims > 1 ifTrue: [
-		Warning signal: 'Multi-dimensioned byte array treated as single-dimensioned: ', vardesc printString].
-	target nextPut: $(; 
-		print: (indirs == 0 
-				ifTrue: [ArrayField] 						"An embedded array"
-				ifFalse: [ArrayPointerField] 		"Pointer to array");
-		nextPutAll: ' type: ';
-		print: self;
-		nextPutAll: ' length: ';
-		display: arrayDesc elementCount;
-		nextPut: $)
-! !
+fieldType
+	^ArrayField!
+
+fieldType: aVARDESC indirections: anInteger
+	"Private - Answer the <ExternalField> type to be used to represent a field described by the
+	<VARDESC> argument based of the receiver's basic field type in structures with the given
+	number of <integer> indirections."
+
+	^anInteger > 1
+		ifTrue: 
+			["Represent ** (or more) as anon. indirection"
+			LPVOIDField]
+		ifFalse: [anInteger == 0 ifTrue: [self fieldType] ifFalse: [self pointerFieldType]]!
+
+pointerFieldType
+	^ArrayPointerField!
+
+printStructField: aVARDESC indirections: anInteger on: aPuttableStream
+	"Private - Generate a structure field definition message onto the <puttableStream>, target,
+	for the structure variable described by the <VARDESC>, vardesc, with the specified <integer>
+	number of indirections."
+
+	(self fieldType: aVARDESC indirections: anInteger)
+		printVariable: aVARDESC
+		type: self
+		indirections: anInteger
+		on: aPuttableStream! !
+!ExternalArray class categoriesFor: #arrayType!constants!development!private! !
+!ExternalArray class categoriesFor: #fieldType!constants!development!private! !
+!ExternalArray class categoriesFor: #fieldType:indirections:!public! !
+!ExternalArray class categoriesFor: #pointerFieldType!constants!development!private! !
 !ExternalArray class categoriesFor: #printStructField:indirections:on:!development!private! !
 
 !ExternalField class methodsFor!
+
+printArrayField: elementOrArrayClass length: sizeisObject on: aPuttableStream
+	aPuttableStream
+		nextPut: $(;
+		print: self;
+		nextPutAll: ' type: ';
+		print: elementOrArrayClass;
+		nextPutAll: ' length: ';
+		print: sizeisObject;
+		nextPut: $)!
+
+printArrayField: aVARDESC type: extClass on: aPuttableStream
+	aPuttableStream
+		nextPut: $(;
+		print: self;
+		nextPutAll: ' type: ';
+		print: extClass.
+	aVARDESC isConformant
+		ifTrue: [self printConformantArrayLength: aVARDESC on: aPuttableStream]
+		ifFalse: [self printFixedArrayLength: aVARDESC on: aPuttableStream].
+	aPuttableStream nextPut: $)!
+
+printConformantArrayLength: aVARDESC on: aPuttableStream
+	| sizeIs |
+	sizeIs := SmalltalkParser parseExpression: (aVARDESC customAttributes at: #size_is) value.
+	sizeIs isVariable
+		ifTrue: 
+			["Simple size_is expression which names another field, e.g. size_is(cbBytes)."
+			aPuttableStream
+				nextPutAll: ' lengthField: #';
+				nextPutAll: sizeIs name]
+		ifFalse: 
+			[(sizeIs isLiteralNode and: [sizeIs value isInteger])
+				ifTrue: 
+					["e.g. size_is(5) - redundant and should be a fixed array, but support it."
+					aPuttableStream
+						nextPutAll: ' length: ';
+						print: sizeIs value]
+				ifFalse: 
+					["Complex size_is expression, e.g. size_is(cbBytes >> 1 - 1)"
+					aPuttableStream
+						nextPutAll: ' arrayLength: (';
+						print: SizeIsArrayFieldLength;
+						space;
+						display: #sizeIs:;
+						space;
+						print: sizeIs formattedCode;
+						nextPut: $)]]!
+
+printFixedArrayLength: aVARDESC on: aPuttableStream
+	| arrayDesc |
+	arrayDesc := aVARDESC tdesc arrayDesc.
+	arrayDesc cDims > 1 ifTrue: [self warningMultiDimensionArray: aVARDESC].
+	aPuttableStream
+		nextPutAll: ' length: ';
+		print: arrayDesc elementCount!
+
+printTypedField: extClass on: aPuttableStream
+	aPuttableStream
+		nextPut: $(;
+		print: self;
+		space;
+		nextPutAll: #type:;
+		space;
+		print: extClass;
+		nextPut: $)!
 
 printVariable: vardesc type: extClass indirections: indirs on: target
 	"Private - Generate a structure field definition message onto the <puttableStream>, target,
 	for the variable described by the <VARDESC>, vardesc,  with the specified number 
 	of <integer> indirections."
 
-	target print: self; nextPutAll: ' new'! !
+	target print: self; nextPutAll: ' new'!
+
+warningMultiDimensionArray: aVARDESC
+	Warning
+		signal: 'Multi-dimensioned byte array treated as single-dimensioned: ' , aVARDESC printString! !
+!ExternalField class categoriesFor: #printArrayField:length:on:!development!private! !
+!ExternalField class categoriesFor: #printArrayField:type:on:!development!private! !
+!ExternalField class categoriesFor: #printConformantArrayLength:on:!development!private! !
+!ExternalField class categoriesFor: #printFixedArrayLength:on:!development!private! !
+!ExternalField class categoriesFor: #printTypedField:on:!development!private! !
 !ExternalField class categoriesFor: #printVariable:type:indirections:on:!development!private! !
+!ExternalField class categoriesFor: #warningMultiDimensionArray:!development!private! !
 
 !ExternalHandle class methodsFor!
 
@@ -4328,28 +4623,22 @@ printMethodArgument: argName elemdesc: elemdesc indirections: indirs on: target
 
 !ExternalIntegerBytes class methodsFor!
 
-fieldType: indirs
-	"Private - Answer the <ExternalField> type to be used to represent the receiver's field type 
-	in other structures with the given number of <integer> indirections."
+pointerFieldType
+	^PointerField!
 
-	^indirs == 0
-		ifTrue: [self fieldType]
-		ifFalse: [
-			indirs == 1 
-				ifTrue: [PointerField]
-				ifFalse: [LPVOIDField]	"Represent as anon. indirection"]!
+printStructField: aVARDESC indirections: anInteger on: aPuttableStream
+	"Private - Print a structure field definition message onto the <puttableStream> argument,
+	for the integer variable described by the <VARDESC> argument, with the specified <integer>
+	number of indirections."
 
-printStructField: vardesc indirections: indirs on: target
-	"Private - Generate a structure field definition message onto the <puttableStream>, target,
-	for the variable described by the <VARDESC>, vardesc,  with the specified number of <integer>
-	indirections.
-	Implementation Note: Copy <ExternalStructure>'s implementation."
+	"Implementation Note: Copy <ExternalStructure>'s implementation."
 
-	(self fieldType: indirs)
-		printVariable: vardesc type: self indirections: indirs on: target
-
-! !
-!ExternalIntegerBytes class categoriesFor: #fieldType:!constants!development!private! !
+	(self fieldType: aVARDESC indirections: anInteger)
+		printVariable: aVARDESC
+		type: self
+		indirections: anInteger
+		on: aPuttableStream! !
+!ExternalIntegerBytes class categoriesFor: #pointerFieldType!constants!development!private! !
 !ExternalIntegerBytes class categoriesFor: #printStructField:indirections:on:!development!private! !
 
 !ExternalLibrary methodsFor!
@@ -4376,15 +4665,6 @@ arrayType: indirs
 		ifTrue: [self arrayType]
 		ifFalse: [PointerArray]!
 
-basicPrintStructField: vardesc indirections: indirs on: target
-	"Private - Generate a structure field definition message onto the <puttableStream>, target,
-	for the variable described by the <VARDESC>, vardesc,  with the specified number of <integer>
-	indirections."
-
-	(self fieldType: indirs)
-		printVariable: vardesc type: self indirections: indirs on: target
-!
-
 elementType: indirs
 	"Private - Answer the <ExternalStructure> class to represent array elements of this 
 	external type with the <integer> indirections, indirs."
@@ -4393,16 +4673,11 @@ elementType: indirs
 		ifTrue: [self]
 		ifFalse: [LPVOID]	"double-indirection"!
 
-fieldType: indirs
+fieldType
 	"Private - Answer the <ExternalField> type to be used to represent the receiver's field type in 
-	other structures with the given number of <integer> indirections."
+	other structures."
 
-	^indirs == 0
-		ifTrue: [self fieldType]
-		ifFalse: [
-			indirs == 1 
-				ifTrue: [self pointerFieldType]
-				ifFalse: [LPVOIDField]	"Represent as anon. indirection"]!
+	^StructureField!
 
 mustWrapOptionalArgument: anELEMDESC 
 	^anELEMDESC indirections > 0 and: [anELEMDESC isOut not]!
@@ -4472,12 +4747,16 @@ printOptionalParameter: anELEMDESC on: aPuttableStream
 		ifTrue: [self printWrappedValue: defaultValue on: aPuttableStream]
 		ifFalse: [self printDefaultValue: defaultValue on: aPuttableStream]!
 
-printStructField: vardesc indirections: indirs on: target
+printStructField: aVARDESC indirections: anInteger on: aPuttableStream
 	"Private - Generate a structure field definition message onto the <puttableStream>, target,
-	for the variable described by the <VARDESC>, vardesc,  with the specified number of <integer>
-	indirections."
+	for the structure variable described by the <VARDESC>, vardesc, with the specified <integer>
+	number of indirections."
 
-	self basicPrintStructField: vardesc indirections: indirs on: target!
+	(self fieldType: aVARDESC indirections: anInteger)
+		printVariable: aVARDESC
+		type: self
+		indirections: anInteger
+		on: aPuttableStream!
 
 printWrappedValue: aVARIANT on: aPuttableStream 
 	aPuttableStream
@@ -4500,9 +4779,8 @@ unspecifiedParameterValue
 		yourself! !
 !ExternalStructure class categoriesFor: #arrayType!constants!development!private! !
 !ExternalStructure class categoriesFor: #arrayType:!constants!development!private! !
-!ExternalStructure class categoriesFor: #basicPrintStructField:indirections:on:!development!private! !
 !ExternalStructure class categoriesFor: #elementType:!constants!development!private! !
-!ExternalStructure class categoriesFor: #fieldType:!constants!development!private! !
+!ExternalStructure class categoriesFor: #fieldType!constants!development!private! !
 !ExternalStructure class categoriesFor: #mustWrapOptionalArgument:!development!helpers!private! !
 !ExternalStructure class categoriesFor: #printDefaultValue:on:!development!helpers!private! !
 !ExternalStructure class categoriesFor: #printMethodArgument:elemdesc:indirections:on:!development!private! !
@@ -4520,10 +4798,17 @@ arrayType
 	^FLOATArray
 !
 
+fieldType
+	"Private - Answer the <ExternalField> type to be used to represent the receiver's field type in 
+	other structures."
+
+	^FLOATField!
+
 printDefaultValue: aVARIANT on: aPuttableStream 
 	self assert: [aVARIANT vt == self vt].
 	aVARIANT value printOn: aPuttableStream significantFigures: 8! !
 !FLOAT class categoriesFor: #arrayType!constants!development!private! !
+!FLOAT class categoriesFor: #fieldType!constants!development!private! !
 !FLOAT class categoriesFor: #printDefaultValue:on:!development!helpers!private! !
 
 !FUNCDESC methodsFor!
@@ -4604,17 +4889,6 @@ hasReturnValue
 
 	^self tdesc vt ~= VT_VOID!
 
-idlFlags
-	"Private - Answer a <sequencedReadableCollection> of the string names
-	of the various IDL flags assocated with the receiver."
-
-	| answer |
-	answer := super idlFlags.
-	self isPropPut ifTrue: [answer add: 'propput'].
-	self isPropPutRef ifTrue: [answer add: 'propputref'].
-	self isPropGet ifTrue: [answer add: 'propget'].
-	^answer!
-
 isInspectable
 	"Answer whether the receiver is describing a 'browsable' property that is not 'restricted'
 	and therefore suitable for display in inspectors, etc."
@@ -4675,7 +4949,6 @@ reinventBadVarNames: anOrderedCollection
 !FUNCDESC categoriesFor: #hasMultipleOutputs!private!testing! !
 !FUNCDESC categoriesFor: #hasOptionalInputs!accessing!private! !
 !FUNCDESC categoriesFor: #hasReturnValue!public!testing! !
-!FUNCDESC categoriesFor: #idlFlags!printing-IDL!private! !
 !FUNCDESC categoriesFor: #isInspectable!public!testing! !
 !FUNCDESC categoriesFor: #isValueSetter!development!private! !
 !FUNCDESC categoriesFor: #methodName!accessing!development!private! !
@@ -4751,14 +5024,18 @@ printMethodArgument: argName elemdesc: elemdesc indirections: indirs on: target
 			["Input only, just pass the GUID"
 			target nextPutAll: argName]!
 
-printStructField: vardesc indirections: indirs on: target
-	"Private - Generate a structure field definition message onto the <puttableStream>, target,
-	for the variable described by the <VARDESC>, vardesc,  with the specified number of <integer>
-	indirections.
-	Implementation Note: Copy <ExternalStructure>'s implementation."
+printStructField: aVARDESC indirections: anInteger on: aPuttableStream
+	"Private - Print a structure field definition message onto the <puttableStream> argument,
+	for the Guid variable described by the <VARDESC> argument, with the specified <integer>
+	number of indirections."
 
-	(ExternalStructure fieldType: indirs)
-		printVariable: vardesc type: self indirections: indirs on: target! !
+	"Implementation Note: Copy <ExternalStructure>'s implementation."
+
+	(ExternalStructure fieldType: aVARDESC indirections: anInteger)
+		printVariable: aVARDESC
+		type: self
+		indirections: anInteger
+		on: aPuttableStream! !
 !GUID class categoriesFor: #arrayType:!constants!development!private! !
 !GUID class categoriesFor: #elementType:!constants!development!private! !
 !GUID class categoriesFor: #newToClipboard!public! !
@@ -5024,19 +5301,18 @@ printOn: aStream
 
 !OLECountedArray class methodsFor!
 
-printStructField: vardesc indirections: indirs on: target
-	"Private - Generate a structure field definition message onto the <puttableStream>, target,
-	for the variable described by the <VARDESC>, vardesc,  with the specified number of <integer>
-	indirections.
-	Implementation Note: Override back to <ExternalStructure> definition."
+fieldType
+	^StructureField!
 
-	self basicPrintStructField: vardesc indirections: indirs on: target! !
-!OLECountedArray class categoriesFor: #printStructField:indirections:on:!development!private! !
+pointerFieldType
+	^PointerField! !
+!OLECountedArray class categoriesFor: #fieldType!constants!development!private! !
+!OLECountedArray class categoriesFor: #pointerFieldType!constants!development!private! !
 
 !PARAMDESC methodsFor!
 
-idlFlags
-	"Answer a <sequencedReadableCollection> of flag names (IDL attributes)
+idlAttributes
+	"Private - Answer a <sequencedReadableCollection> of flag names (IDL attributes)
 	from the receiver."
 
 	| answer flags |
@@ -5046,7 +5322,7 @@ idlFlags
 	(flags anyMask: PARAMFLAG_FOUT) ifTrue: [answer addLast: 'out'].
 	(flags anyMask: PARAMFLAG_FRETVAL) ifTrue: [answer addLast: 'retval'].
 	"defaultvalue() implies optional"
-	self hasDefaultValue 
+	self hasDefaultValue
 		ifTrue: 
 			[| stm |
 			stm := String writeStream.
@@ -5056,52 +5332,66 @@ idlFlags
 			answer addLast: stm contents]
 		ifFalse: [(flags anyMask: PARAMFLAG_FOPT) ifTrue: [answer addLast: 'optional']].
 	^answer! !
-!PARAMDESC categoriesFor: #idlFlags!accessing!public! !
+!PARAMDESC categoriesFor: #idlAttributes!accessing!private! !
 
 !PointerArray class methodsFor!
 
-printStructField: vardesc indirections: indirs on: target 
-	"Private - Generate a structure field definition message onto the <puttableStream>, target,
-	for the C array variable described by the <VARDESC>, vardesc,  with the specified number 
-	of <integer> indirections."
+fieldType
+	^PointerArrayField!
 
-	| arrayDesc elemclassdesc elemType elemIndirs |
-	arrayDesc := vardesc tdesc tdescArray.
-	"Can't really handle any more than one dimension at present"
-	arrayDesc cDims > 1 
-		ifTrue: 
-			[Warning 
-				signal: 'Multi-dimensioned array treated as single-dimensioned: ' , vardesc printString].
+pointerFieldType
+	^PointerArrayPointerField! !
+!PointerArray class categoriesFor: #fieldType!development!private! !
+!PointerArray class categoriesFor: #pointerFieldType!development!private! !
+
+!PointerArrayField class methodsFor!
+
+printVariable: aVARDESC type: aClass indirections: anInteger on: aWriteStream
+	"Private - Print an <ExternalField> instance creation expression on the <puttableStream>
+	argument, aWriteStream, that will create a field descriptor appropriate for the structure
+	field described by the <VARDESC>, aVARDESC. In this case the field must be a pointer to a
+	fixed-length array, so we need to determine the length and element class by looking these up
+	from the typeinfo."
+
+	| arrayDesc elemIndirs elemclassdesc elemType |
+	self assert: 
+			["Instances of the receiver describe fields that are embedded fixed arrays
+			 of pointers to structs (not pointers to arrays, and not conformant arrays)."
+			aClass == PointerArray and: [anInteger == 0 and: [aVARDESC isConformant not]]].
+	arrayDesc := aVARDESC tdesc arrayDesc.
+	arrayDesc cDims > 1 ifTrue: [self warningMultiDimensionArray: aVARDESC].
 	elemclassdesc := arrayDesc tdesc classDesc.
 	elemType := elemclassdesc key.
 	elemIndirs := elemclassdesc value.
-	target
-		nextPut: $(;
-		print: (indirs == 0 ifTrue: [PointerArrayField] ifFalse: [PointerArrayPointerField]);
-		nextPutAll: ' type: ';
-		print: (elemType elementType: elemIndirs);
-		nextPutAll: ' length: ';
-		display: arrayDesc elementCount;
-		nextPut: $)	"An embedded array of pointers"	"Pointer to array of pointers"! !
-!PointerArray class categoriesFor: #printStructField:indirections:on:!development!private! !
+	self assert: 
+			["Can only describe arrays of pointers."
+			elemIndirs == 1].
+	self assert: [aVARDESC isStringField not].
+	self
+		printArrayField: (aVARDESC isStringField
+				ifTrue: [elemType elementClass byteSize == 2 ifTrue: [UnicodeString] ifFalse: [String]]
+				ifFalse: [elemType])
+		length: arrayDesc elementCount
+		on: aWriteStream! !
+!PointerArrayField class categoriesFor: #printVariable:type:indirections:on:!public! !
 
 !PointerField class methodsFor!
 
-printVariable: vardesc type: extClass indirections: indirs on: target
-	"Private - Generate a structure field definition message onto the <puttableStream>, target,
-	for the variable described by the <VARDESC>, vardesc,  with the specified number 
-	of <integer> indirections."
+printVariable: aVARDESC type: extClass indirections: anInteger on: aPuttableStream
+	"Private - Generate a structure field definition message onto the specified <puttableStream>
+	for the variable described by the <VARDESC>, aVARDESC, with the specified number of <integer>
+	indirections."
 
-	target nextPut: $(; 
-		print: self; space; 
-		nextPutAll: #type:; space; 
-		print: extClass; 
-		nextPut: $)
-
-! !
+	self printTypedField: extClass on: aPuttableStream! !
 !PointerField class categoriesFor: #printVariable:type:indirections:on:!development!private! !
 
 !SAFEARRAY class methodsFor!
+
+fieldType
+	^StructureField!
+
+pointerFieldType
+	^PointerField!
 
 printMethodArgument: argName elemdesc: elemdesc indirections: indirs on: target 
 	"Private - Generate an output argument instantiation statement onto the <puttableStream>, 
@@ -5120,17 +5410,10 @@ printMethodArgument: argName elemdesc: elemdesc indirections: indirs on: target
 			target
 				print: self;
 				space;
-				display: #newPointer]!
-
-printStructField: vardesc indirections: indirs on: target
-	"Private - Generate a structure field definition message onto the <puttableStream>, target,
-	for the variable described by the <VARDESC>, vardesc,  with the specified number of <integer>
-	indirections.
-	Implementation Note: Override back to <ExternalStructure> definition."
-
-	self basicPrintStructField: vardesc indirections: indirs on: target! !
+				display: #newPointer]! !
+!SAFEARRAY class categoriesFor: #fieldType!constants!development!private! !
+!SAFEARRAY class categoriesFor: #pointerFieldType!constants!development!private! !
 !SAFEARRAY class categoriesFor: #printMethodArgument:elemdesc:indirections:on:!development!private! !
-!SAFEARRAY class categoriesFor: #printStructField:indirections:on:!development!private! !
 
 !SBYTE class methodsFor!
 
@@ -5138,16 +5421,8 @@ arrayType
 	"Private - Answer the class of object (typically an <ExternalArray> subclass) to be used to 
 	represent arrays of the receiver's field type in other structures."
 
-	^ByteArray!
-
-fieldType: indirs
-	"Private - Answer the <ExternalField> type to be used to represent the receiver's field type in 
-	other structures with the given number of <integer> indirections."
-
-	#todo "Hmmm, is a different array type needed here. Should arrays of these be strings - probably not in general".
-	^super fieldType: indirs! !
+	^SBYTEArray! !
 !SBYTE class categoriesFor: #arrayType!constants!development!private! !
-!SBYTE class categoriesFor: #fieldType:!constants!development!private! !
 
 !SDWORD class methodsFor!
 
@@ -5160,6 +5435,9 @@ arrayType
 !SDWORD class categoriesFor: #arrayType!constants!development!private! !
 
 !String class methodsFor!
+
+arrayType
+	^self!
 
 arrayType: indirs
 	"Private - Answer the class of object (typically an <ExternalArray> subclass) to be used to 
@@ -5240,21 +5518,27 @@ printMethodArgument: argName elemdesc: elemdesc indirections: indirs on: target
 								space;
 								display: #new]]]!
 
-printStructField: vardesc indirections: indirs on: target
-	"Private - Generate a structure field definition message onto the <puttableStream>, target,
-	for the variable described by the <VARDESC>, vardesc,  with the specified number of <integer>
-	indirections.
-	Implementation Note: Copy <ExternalStructure>'s implementation."
+printStructField: aVARDESC indirections: anInteger on: aPuttableStream
+	"Private - Print a structure field definition message onto the <puttableStream> argument,
+	for the string pointer variable described by the <VARDESC> argument, with the specified
+	<integer> number of indirections."
 
-	PointerField 
-		printVariable: vardesc 
-		type: (indirs < 1			"N.B. One level of indirection implied"
-				ifTrue: [self] 
-				ifFalse: [self pointerType])
-		indirections: indirs 
-		on: target
-
-! !
+	aVARDESC tdesc arrayDesc
+		ifNil: 
+			["a [string] type in the IDL, e.g. an LPSTR, our could be an array of chars, or pointer to array of chars."
+			self assert: [anInteger > 0].
+			(aVARDESC isConformant ifTrue: [ArrayPointerField] ifFalse: [PointerField])
+				printVariable: aVARDESC
+				type: (anInteger < 2 ifTrue: [self] ifFalse: [self pointerType])
+				indirections: anInteger
+				on: aPuttableStream]
+		ifNotNil: 
+			[self assert: [anInteger == 0].
+			StringField
+				printArrayField: aVARDESC
+				type: self
+				on: aPuttableStream]! !
+!String class categoriesFor: #arrayType!constants!development!private! !
 !String class categoriesFor: #arrayType:!constants!development!private! !
 !String class categoriesFor: #elementType:!constants!development!private! !
 !String class categoriesFor: #printMethodArgument:elemdesc:indirections:on:!development!private! !
@@ -5262,45 +5546,61 @@ printStructField: vardesc indirections: indirs on: target
 
 !StructureArray class methodsFor!
 
-printStructField: vardesc indirections: indirs on: target 
-	"Private - Generate a structure field definition message onto the <puttableStream>, target,
-	for the C array variable described by the <VARDESC>, vardesc,  with the specified number 
-	of <integer> indirections."
+fieldType
+	^StructureArrayField!
 
-	| arrayDesc elemclassdesc elemType elemIndirs |
-	arrayDesc := vardesc tdesc tdescArray.
-	"Can't really handle any more than one dimension at present"
-	arrayDesc cDims > 1 
-		ifTrue: 
-			[Warning 
-				signal: 'Multi-dimensioned array treated as single-dimensioned: ' , vardesc printString].
+pointerFieldType
+	^StructureArrayPointerField! !
+!StructureArray class categoriesFor: #fieldType!development!private! !
+!StructureArray class categoriesFor: #pointerFieldType!development!private! !
+
+!StructureArrayField class methodsFor!
+
+printVariable: aVARDESC type: extClass indirections: anInteger on: aPuttableStream
+	"Private - Generate a structure field definition message onto the specified <puttableStream>
+	for the variable described by the <VARDESC>, aVARDESC, with the specified number of <integer>
+	indirections."
+
+	| arrayDesc elemclassdesc |
+	self assert: 
+			["Instances of the receiver describe fields that are embedded arrays (not pointers to arrays)."
+			anInteger == 0].
+	arrayDesc := aVARDESC tdesc arrayDesc.
+	arrayDesc cDims > 1 ifTrue: [self warningMultiDimensionArray: aVARDESC].
 	elemclassdesc := arrayDesc tdesc classDesc.
-	elemType := elemclassdesc key.
-	elemIndirs := elemclassdesc value.
-	target
-		nextPut: $(;
-		print: (indirs == 0 ifTrue: [StructureArrayField] ifFalse: [StructureArrayPointerField]);
-		nextPutAll: ' type: ';
-		print: (elemType elementType: elemIndirs);
-		nextPutAll: ' length: ';
-		display: arrayDesc elementCount;
-		nextPut: $)	"An embedded array"	"Pointer to array"! !
-!StructureArray class categoriesFor: #printStructField:indirections:on:!development!private! !
+	self assert: 
+			["Not expecting to be used for arrays of pointers."
+			elemclassdesc value == 0].
+	self
+		printArrayField: aVARDESC
+		type: elemclassdesc key
+		on: aPuttableStream! !
+!StructureArrayField class categoriesFor: #printVariable:type:indirections:on:!development!private! !
+
+!StructureArrayPointerField class methodsFor!
+
+printVariable: aVARDESC type: extClass indirections: anInteger on: aPuttableStream
+	"Private - Print a structure field definition message onto the <puttableStream> argument,
+	for the C-array of structures variable described by the <VARDESC> argument, with the
+	specified <integer> number of indirections."
+
+	self assert: 
+			["Instances of the receiver describe fields that are embedded fixed arrays (not pointers to array, and not conformant arrays)."
+			anInteger == 1].
+	self
+		printArrayField: aVARDESC
+		type: extClass
+		on: aPuttableStream! !
+!StructureArrayPointerField class categoriesFor: #printVariable:type:indirections:on:!development!private! !
 
 !StructureField class methodsFor!
 
-printVariable: vardesc type: extClass indirections: indirs on: target
-	"Private - Generate a structure field definition message onto the <puttableStream>, target,
-	for the variable described by the <VARDESC>, vardesc,  with the specified number 
-	of <integer> indirections."
+printVariable: aVARDESC type: extClass indirections: anIntegre on: aPuttableStream
+	"Private - Generate a structure field definition message onto the specified <puttableStream>
+	for the pointer-to-conformant-array field described by the <VARDESC>, aVARDESC, with the
+	specified number of <integer> indirections."
 
-	target nextPut: $(; 
-		print: self; space; 
-		nextPutAll: #type:; space; 
-		print: extClass; 
-		nextPut: $)
-
-! !
+	self printTypedField: extClass on: aPuttableStream! !
 !StructureField class categoriesFor: #printVariable:type:indirections:on:!development!private! !
 
 !SWORD class methodsFor!
@@ -5326,7 +5626,7 @@ generateWrapper
 	by the receiver. There is no wrapper for alias types in Dolphin, but we can
 	wrap the aliased type."
 
-	^self tdesc getRefType generate!
+	^self tdesc typeInfo generate!
 
 idlAttributes
 	"Private - Answer a <sequencedReadableCollection> of IDL-style attributes
@@ -5359,14 +5659,15 @@ printIDLBodyOn: aPuttableStream indent: anInteger
 		nextPut: $;;
 		cr!
 
-printIDLOn: target indent: tabs 
+printIDLOn: target indent: tabs
 	"Print the IDL description of the receiver on the <puttableStream>, target."
 
 	target
 		tab: tabs;
 		nextPutAll: self idlKeyword;
 		space.
-	(self printIDLAttributesOn: target indent: -1) ifTrue: [target tab: tabs].
+	(self printIDLAttributesOn: target indent: -1)
+		ifTrue: [tabs > 0 ifTrue: [target crtab: tabs] ifFalse: [target space]].
 	self printIDLBodyOn: target indent: tabs! !
 !TKindAliasAnalyzer categoriesFor: #generateGlobalDefinition:!development!private! !
 !TKindAliasAnalyzer categoriesFor: #generateWrapper!development!private! !
@@ -6016,7 +6317,7 @@ idlKeyword
 
 	^'enum'!
 
-printIDLBodyOn: aPuttableStream indent: anInteger 
+printIDLBodyOn: aPuttableStream indent: anInteger
 	"Private - Print the IDL description for the receiver on the <puttableStream>, target."
 
 	| childIndent |
@@ -6027,16 +6328,16 @@ printIDLBodyOn: aPuttableStream indent: anInteger
 		cr.
 	childIndent := anInteger + 1.
 	self constants do: 
-			[:c | 
+			[:each |
 			aPuttableStream tab: childIndent.
-			(self 
-				printIDLAttributes: c idlAttributes
+			(self
+				printIDLAttributes: each idlAttributes
 				on: aPuttableStream
 				indent: -1) ifTrue: [aPuttableStream space].
 			aPuttableStream
-				nextPutAll: c name;
+				nextPutAll: each name;
 				nextPutAll: ' = ';
-				print: c lpvarValue value]
+				print: each lpvarValue value]
 		separatedBy: 
 			[aPuttableStream
 				nextPut: $,;
@@ -6621,7 +6922,7 @@ idlAttributes
 idlAttributesOfFunc: aFUNCDESC 
 	"Private - Answer a <sequencedReadableCollection> of IDL attribute strings for the receiver."
 
-	^(Array with: ('entry(%#010x)' sprintfWith: aFUNCDESC memid)) , aFUNCDESC idlAttributes!
+	^(Array with: ('entry("%s")' sprintfWith: aFUNCDESC name)) , aFUNCDESC idlAttributes!
 
 idlKeyword
 	"Private - Answer a <readableString> IDL keyword for the type of object
@@ -6806,15 +7107,6 @@ printMethodArgument: argName elemdesc: elemdesc indirections: indirs on: target
 
 !VARDESC methodsFor!
 
-idlFlags
-	"Private - Answer a <sequencedReadableCollection> of the string names
-	of the various IDL flags assocated with the receiver."
-
-	| answer |
-	answer := super idlFlags.
-	self isReadOnly ifTrue: [answer add: 'readonly'].
-	^answer!
-
 printIDLOn: target indent: tabs
 	"Print the IDL description of the receiver on the <puttableStream>, target."
 
@@ -6828,7 +7120,6 @@ printOn: aStream
 		nextPut: $(.
 	self printIDLOn: aStream indent: -1.
 	aStream nextPut: $)! !
-!VARDESC categoriesFor: #idlFlags!printing-IDL!private! !
 !VARDESC categoriesFor: #printIDLOn:indent:!printing-IDL!public! !
 !VARDESC categoriesFor: #printOn:!printing!public! !
 
@@ -6937,14 +7228,19 @@ newInstanceAspect: aSymbol class: aspectClass
 !VOID class methodsFor!
 
 arrayType
-	"Private - Answer the <ExternalArray> class to be used to represent C arrays of the receiver's type.
-	Implementation Note: Arrays of <VOID> are not valid, since no size is known. There must
-	be at least one level of indirection."
+	"Private - Answer the <ExternalArray> class to be used to represent C arrays of the receiver's type."
 
-	^self shouldNotImplement
+	"Implementation Note: Embedded arrays of <VOID> are not valid, since no size is known,
+	however where a field is a void* pointer to a conformant array, we assume it is pointing at
+	bytes."
 
+	^ExternalArray!
 
-!
+fieldType
+	"Private - Answer the <ExternalField> type to be used to represent the receiver's field type in 
+	other structures. VOID is of course only valid when indirected."
+
+	^self shouldNotImplement!
 
 pointerFieldType
 	"Answer the <ExternalField> class to represent pointers to this external type with the
@@ -6952,6 +7248,7 @@ pointerFieldType
 
 	^LPVOIDField! !
 !VOID class categoriesFor: #arrayType!constants!development!private! !
+!VOID class categoriesFor: #fieldType!constants!development!private! !
 !VOID class categoriesFor: #pointerFieldType!constants!development!private! !
 
 !WORD class methodsFor!

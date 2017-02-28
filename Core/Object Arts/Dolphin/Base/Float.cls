@@ -2,14 +2,18 @@
 
 Number variableByteSubclass: #Float
 	instanceVariableNames: ''
-	classVariableNames: 'EMin FMax FMin Infinity Ln2 MinValLogBase2 NegativeZero Precision SignificantDifference'
+	classVariableNames: 'EMin FpClassInfinite FpClassNaN FpClassNegative FpClassStrictlyPositive FpClassZero Ln2 MinValLogBase2 Precision SignificantDifference'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Float guid: (GUID fromString: '{87B4C65A-026E-11D3-9FD7-00A0CC3E4A32}')!
 Float addClassConstant: 'EMin' value: -1022!
+Float addClassConstant: 'FpClassInfinite' value: 516!
+Float addClassConstant: 'FpClassNaN' value: 3!
+Float addClassConstant: 'FpClassNegative' value: 60!
+Float addClassConstant: 'FpClassStrictlyPositive' value: 896!
+Float addClassConstant: 'FpClassZero' value: 96!
 Float addClassConstant: 'Ln2' value: 0.6931471805599453!
 Float addClassConstant: 'MinValLogBase2' value: -1074!
-Float addClassConstant: 'NegativeZero' value: -0.0!
 Float addClassConstant: 'Precision' value: 53!
 Float addClassConstant: 'SignificantDifference' value: 1.0e-9!
 Float comment: 'Float is the class of double precision floating point Numbers (64-bit) in IEEE-754 format. Note that the original Smalltalk-80 definition of Float, was only single precision, but this is considered somewhat outdated. Rather than introduce the complexity of multiple classes to represent floating point numbers, we have chosen to standardise on double precision.
@@ -23,72 +27,62 @@ Class Variables:
 !Float methodsFor!
 
 - aNumber
-	"Answer the result of subtracting the argument, aNumber, from the receiver.
-
-	Primitive failure reasons:
-		0 -	aNumber is not a SmallInteger or a Float.
-
-	May also raise a floating point exception."
+	"Answer the result of subtracting the argument, aNumber, from the receiver.The primitive
+	will fail if aNumber is not a SmallInteger of Float, but does not set the failure code. May
+	also raise a floating point exception."
 
 	<primitive: 161>
 	^aNumber subtractFromFloat: self!
 
 * aNumber
-	"Answer the result of multiplying the receiver by the argument, aNumber.
-
-	Primitive failure reasons:
-		0 -	aNumber is not a SmallInteger or a Float.
-
-	May also raise a floating point exception."
+	"Answer the result of multiplying the receiver by the argument, aNumber. The primitive will
+	fail if aNumber is not a SmallInteger of Float, but does not set the failure code. May also
+	raise a floating point exception."
 
 	<primitive: 164>
 	^aNumber multiplyByFloat: self!
 
 / operand
-	"Answer the result of dividing the receiver by the <number>, operand.
-	Raise a <ZeroDivide> exception if the operand is zero.
-
-	Primitive failure reasons:
-		0 -	aNumber is not a SmallInteger or a Float."
+	"Answer the result of dividing the receiver by the <number>, operand. Raise a <ZeroDivide>
+	exception if the operand is zero. The primitive will fail if aNumber is not a SmallInteger
+	of Float, but does not set the failure code."
 
 	<primitive: 165>
 	^operand divideIntoFloat: self!
 
 + aNumber
-	"Answer the result of adding aNumber to the receiver.
-
-	Primitive failure reasons:
-		0 -	aNumber is not a SmallInteger or a Float.
-
-	May also raise a floating point exception."
+	"Answer the result of adding aNumber to the receiver.The primitive will fail if aNumber is
+	not a SmallInteger of Float, but does not set the failure code. May also raise a floating
+	point exception."
 
 	<primitive: 160>
 	^aNumber addToFloat: self!
 
 < aNumber
-	"Answer true if the receiver is less than aNumber. This relational operator is 
-	implemented as a primitive, and >, <=, and >= are expressed in terms of it.
-
-	Primitive failure reasons:
-		0 -	aNumber is not a SmallInteger or a Float.
-
-	May also raise a floating point exception."
+	"Answer true if the receiver is less than aNumber. This relational operator is implemented
+	as a primitive, and >, <=, and >= are expressed in terms of it. The primitive will fail if
+	aNumber is not a SmallInteger of Float, but does not set the failure code. May also raise a
+	floating point exception."
 
 	<primitive: 162>
 	^aNumber greaterThanFloat: self
 !
 
 = comperand
-	"Answer whether the receiver is numerically equivalent to the argument,
-	comperand (e.g. 1 = 1.0 is true).
-
-	Primitive failure reasons:
-		0 -	aNumber is not a SmallInteger or a Float.
-
-	May also raise a floating point exception."
+	"Answer whether the receiver is numerically equivalent to the argument, comperand (e.g. 1 =
+	1.0 is true).The primitive will fail if aNumber is not a SmallInteger of Float, but does not
+	set the failure code. May also raise a floating point exception."
 
 	<primitive: 163>
 	^super = comperand!
+
+> aNumber
+	"Answer true if the receiver is greater than aNumber. The primitive will fail if aNumber is
+	not a SmallInteger of Float, but does not set the failure code. May also raise a floating
+	point exception."
+
+	<primitive: 45>
+	^aNumber < self!
 
 abs
 	"Answer a Number that is the absolute value - positive magnitude - of the receiver."
@@ -108,10 +102,6 @@ absPrintExactlyOn: aStream base: base
 	by using exact integer arithmetic, and is based on the same method in Squeak."
 
 	| significand exp baseExpEstimate r s mPlus mMinus scale roundingIncludesLimits d tc1 tc2 fixedFormat decPointCount slowbit shead |
-	self isInfinite
-		ifTrue: 
-			[aStream nextPutAll: 'Infinity'.
-			^self].
 	significand := self finiteSignificand.
 	roundingIncludesLimits := significand even.
 	exp := self exponent - 52 max: MinValLogBase2.
@@ -193,10 +183,6 @@ absPrintExactlyOn: aStream base: base decimalPlaces: placesDesired showTrailingF
 	June 1996.."
 
 	| significand exp baseExpEstimate r s mPlus mMinus scale roundingLowIncludesLimits roundingHighIncludesLimits d tc1 tc2 decPointCount slowbit shead delta |
-	self isInfinite
-		ifTrue: 
-			[aStream nextPutAll: 'Infinity'.
-			^self].
 	significand := self finiteSignificand.
 	exp := self exponent - 52 max: MinValLogBase2.
 	exp >= 0
@@ -487,6 +473,9 @@ floorLog10
 
 	^self log floor!
 
+fpClass
+	^CRTLibrary default _fpclass: self!
+
 fractionPart
 	"Answer a <Float> representing the fractional part of the receiver."
 
@@ -548,8 +537,7 @@ isFinite
 isInfinite
 	"Answer whether the receiver represents infinity (positive or negative)."
 
-	^(CRTLibrary default _fpclass: self)
-		anyMask: ##(CRTConstants._FPCLASS_NINF | CRTConstants._FPCLASS_PINF)!
+	^self fpClass anyMask: FpClassInfinite!
 
 isLiteral
 	"Answer whether the receiver has a literal string representation that can be compiled to
@@ -561,7 +549,7 @@ isLiteral
 isNaN
 	"Answer whether the receiver is Not a Number."
 
-	^CRTLibrary default _isnan: self!
+	^self fpClass anyMask: FpClassNaN!
 
 lessOrEquals: aNumber 
 	"Answer whether the receiver is numerically less than or equal to aNumber, within the
@@ -625,30 +613,43 @@ printOn: aStream base: anInteger
 	representation. More over, every Float can be reconstructed from its printed representation
 	with #readFrom:."
 
-	self isNaN
+	| classification |
+	classification := self fpClass.
+	(classification anyMask: FpClassNaN)
 		ifTrue: 
 			[aStream nextPutAll: 'NaN'.
-			^self].	"check for NaN before sign"
-	self > 0.0
-		ifTrue: [self absPrintExactlyOn: aStream base: anInteger]
-		ifFalse: 
-			[self sign = -1 ifTrue: [aStream nextPutAll: '-'].
-			self = 0.0
-				ifTrue: [aStream nextPutAll: '0.0']
-				ifFalse: [self negated absPrintExactlyOn: aStream base: anInteger]]!
+			^self].
+	(classification anyMask: FpClassNegative) ifTrue: [aStream nextPut: $-].
+	(classification anyMask: FpClassInfinite)
+		ifTrue: 
+			[aStream nextPutAll: 'Infinity'.
+			^self].
+	(classification anyMask: FpClassZero)
+		ifTrue: [aStream nextPutAll: '0.0']
+		ifFalse: [self absPrintExactlyOn: aStream base: anInteger]!
 
 printOn: aStream decimalPlaces: anInteger
-	"Append the printed representation of the receiver to the <puttableStream>, aStream, rounded to the <integer> number of decimal places, anInteger."
+	"Append the printed representation of the receiver to the <puttableStream>, aStream, rounded
+	to the <integer> number of decimal places, anInteger."
 
-	self isFinite ifFalse: [^self printOn: aStream].
-	self sign = -1 ifTrue: [aStream nextPutAll: '-'].
-	self = 0.0
+	| classification |
+	classification := self fpClass.
+	(classification anyMask: FpClassNaN)
+		ifTrue: 
+			[aStream nextPutAll: 'NaN'.
+			^self].
+	(classification anyMask: FpClassNegative) ifTrue: [aStream nextPut: $-].
+	(classification anyMask: FpClassInfinite)
+		ifTrue: 
+			[aStream nextPutAll: 'Infinity'.
+			^self].
+	(classification anyMask: FpClassZero)
 		ifTrue: 
 			[aStream nextPut: $0.
 			anInteger > 0
 				ifTrue: 
 					[aStream nextPut: $..
-					anInteger timesRepeat: [aStream nextPut: $0]]]
+					aStream next: anInteger put: $0]]
 		ifFalse: 
 			[self
 				absPrintExactlyOn: aStream
@@ -725,15 +726,10 @@ sign
 		0 if equal to 0."
 
 	| classification |
-	classification := CRTLibrary default _fpclass: self.
-	(classification
-		anyMask: ##(CRTConstants._FPCLASS_PD | CRTConstants._FPCLASS_PN | CRTConstants._FPCLASS_PINF))
-			ifTrue: [^1].
+	classification := self fpClass.
+	(classification anyMask: FpClassStrictlyPositive) ifTrue: [^1].
 	"Handle IEEE-754 negative-zero by reporting a sign of -1"
-	(classification
-		anyMask: ##(CRTConstants._FPCLASS_ND | CRTConstants._FPCLASS_NN | CRTConstants._FPCLASS_NINF
-				| CRTConstants._FPCLASS_NZ))
-			ifTrue: [^-1].
+	(classification anyMask: FpClassNegative) ifTrue: [^-1].
 	^0!
 
 significandAsInteger
@@ -817,6 +813,7 @@ truncated
 !Float categoriesFor: #+!arithmetic!public! !
 !Float categoriesFor: #<!comparing!public! !
 !Float categoriesFor: #=!comparing!public! !
+!Float categoriesFor: #>!comparing!public! !
 !Float categoriesFor: #abs!mathematical!public! !
 !Float categoriesFor: #absPrintExactlyOn:base:!printing!private! !
 !Float categoriesFor: #absPrintExactlyOn:base:decimalPlaces:showTrailingFractionalZeros:!printing!private! !
@@ -843,6 +840,7 @@ truncated
 !Float categoriesFor: #finiteSignificand!helpers!private! !
 !Float categoriesFor: #floor!public!truncation and round off! !
 !Float categoriesFor: #floorLog10!mathematical!public! !
+!Float categoriesFor: #fpClass!helpers!private! !
 !Float categoriesFor: #fractionPart!accessing!public! !
 !Float categoriesFor: #generality!coercing!private! !
 !Float categoriesFor: #greaterOrEquals:!comparing!public! !
@@ -926,7 +924,7 @@ fmax
 	"Answer a <Float> representing the largest value
 	allowed by the characterized floating point representation."
 
-	^FMax!
+	^1.7976931348623157e308!
 
 fmin
 	"Answer a <Float> representing the smallest value
@@ -946,7 +944,7 @@ fminNormalized
 	"Answer a <Float> representing the smallest normalized value
 	allowed by the characterized floating point representation."
 
-	^FMin!
+	^2.2250738585072014e-308!
 
 icon
 	"Answers an Icon that can be used to represent this class"
@@ -958,13 +956,27 @@ initialize
 		Float initialize
 	"
 
+	self addClassConstant: 'EMin' value: -1022.
+	self addClassConstant: 'Ln2' value: 0.6931471805599453.
+	self addClassConstant: 'MinValLogBase2' value: -1074.
+	self addClassConstant: 'Precision' value: 53.
+	self addClassConstant: 'SignificantDifference' value: 1.0e-9.
 	self assert: [SignificantDifference >= self epsilon].
+	self addClassConstant: 'FpClassInfinite'
+		value: CRTConstants._FPCLASS_NINF | CRTConstants._FPCLASS_PINF.
+	self addClassConstant: 'FpClassStrictlyPositive'
+		value: CRTConstants._FPCLASS_PD | CRTConstants._FPCLASS_PN | CRTConstants._FPCLASS_PINF.
+	self addClassConstant: 'FpClassNegative'
+		value: CRTConstants._FPCLASS_ND | CRTConstants._FPCLASS_NN | CRTConstants._FPCLASS_NINF
+				| CRTConstants._FPCLASS_NZ.
+	self addClassConstant: 'FpClassZero' value: CRTConstants._FPCLASS_NZ | CRTConstants._FPCLASS_PZ.
+	self addClassConstant: 'FpClassNaN' value: CRTConstants._FPCLASS_QNAN | CRTConstants._FPCLASS_SNAN.
 	#(#FloatD #FloatE #FloatQ) do: [:each | Smalltalk at: each ifAbsentPut: [self]]!
 
 negativeZero
 	"Answer the IEEE 754 representation for negative zero"
 
-	^NegativeZero!
+	^-0.0!
 
 new
 	"Answer a new instance of the receiver."

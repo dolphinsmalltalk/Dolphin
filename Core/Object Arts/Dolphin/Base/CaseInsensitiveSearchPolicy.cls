@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 SingletonSearchPolicy subclass: #CaseInsensitiveSearchPolicy
 	instanceVariableNames: ''
@@ -40,12 +40,4 @@ keyAtValue: value in: collection ifAbsent: operation
 !CaseInsensitiveSearchPolicy categoriesFor: #compare:with:!comparing!public! !
 !CaseInsensitiveSearchPolicy categoriesFor: #hash:!comparing!public! !
 !CaseInsensitiveSearchPolicy categoriesFor: #keyAtValue:in:ifAbsent:!public!searching! !
-
-!CaseInsensitiveSearchPolicy class methodsFor!
-
-current
-	"Answer the singleton instance of the receiver."
-
-	^self caseInsensitive! !
-!CaseInsensitiveSearchPolicy class categoriesFor: #current!instance creation!public! !
 

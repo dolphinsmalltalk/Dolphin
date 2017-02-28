@@ -45,8 +45,8 @@ setUp
 	self initializePresenter!
 
 tearDown
-	presenter topShell close
-	!
+	presenter topShell close.
+	presenter := nil!
 
 waitForInputIdle
 	SessionManager inputState pumpMessages! !

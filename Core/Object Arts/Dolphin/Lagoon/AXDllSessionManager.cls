@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 SessionManager subclass: #AXDllSessionManager
 	instanceVariableNames: ''
@@ -62,7 +62,7 @@ unhandledException: anException
 icon
 	"Answers an Icon that can be used to represent this class"
 
-	^Icon fromId: 154 in: ShellLibrary default!
+	^Icon fromId: 154 in: (ExternalResourceLibrary open: 'Shell32')!
 
 imageExtension
 	"Answer the suffix for an executable image file"

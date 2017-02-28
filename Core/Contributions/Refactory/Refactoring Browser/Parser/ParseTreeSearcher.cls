@@ -144,23 +144,21 @@ recusivelySearchInContext
 	self lookForMoreMatchesInContext: oldContext.
 	context := oldContext!
 
-visitArgument: aNode 
+visitArgumentNode: aNode
 	| value |
 	value := self performSearches: argumentSearches on: aNode.
-	^value isNil 
-		ifTrue: 
-			[aNode acceptVisitor: self.
-			aNode]
-		ifFalse: [value]!
+	^value
+		ifNil: 
+			[super visitArgumentNode: aNode.
+			aNode]!
 
-visitNode: aNode 
+visitNode: aNode
 	| value |
 	value := self performSearches: searches on: aNode.
-	^value isNil 
-		ifTrue: 
-			[aNode acceptVisitor: self.
-			aNode]
-		ifFalse: [value]! !
+	^value
+		ifNil: 
+			[super visitNode: aNode.
+			aNode]! !
 !ParseTreeSearcher categoriesFor: #addArgumentRule:!accessing!public! !
 !ParseTreeSearcher categoriesFor: #addArgumentRules:!accessing!public! !
 !ParseTreeSearcher categoriesFor: #addRule:!accessing!public! !
@@ -187,7 +185,7 @@ visitNode: aNode
 !ParseTreeSearcher categoriesFor: #messages!accessing!public! !
 !ParseTreeSearcher categoriesFor: #performSearches:on:!operations!private! !
 !ParseTreeSearcher categoriesFor: #recusivelySearchInContext!operations!private! !
-!ParseTreeSearcher categoriesFor: #visitArgument:!public!visiting! !
+!ParseTreeSearcher categoriesFor: #visitArgumentNode:!public!visiting! !
 !ParseTreeSearcher categoriesFor: #visitNode:!public!visiting! !
 
 !ParseTreeSearcher class methodsFor!

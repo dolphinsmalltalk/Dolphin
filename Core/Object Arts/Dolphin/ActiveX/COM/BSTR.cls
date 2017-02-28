@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ExternalAddress variableByteSubclass: #BSTR
 	instanceVariableNames: ''
@@ -31,18 +31,17 @@ asString
 	"Answer a byte string representation of the receiver."
 
 	| buf size bytes |
-	size := self size.
-	buf := String new: size+size.
-	size == 0 ifTrue: [^buf].	"Avoid 'The Parameter is Incorrect' error"
+	(size := self size) == 0 ifTrue: [^''].
+	buf := String new: size + size.
 	bytes := KernelLibrary default
-		wideCharToMultiByte: 0
-		dwFlags: 0
-		lpWideCharStr: self
-		cchWideChar: size
-		lpMultiByteStr: buf
-		cchMultiByte: buf size
-		lpDefaultChar: nil
-		lpUsedDefaultChar: nil.
+				wideCharToMultiByte: 0
+				dwFlags: 0
+				lpWideCharStr: self
+				cchWideChar: size
+				lpMultiByteStr: buf
+				cchMultiByte: buf size
+				lpDefaultChar: nil
+				lpUsedDefaultChar: nil.
 	bytes == 0 ifTrue: [^KernelLibrary default systemError].
 	buf resize: bytes.
 	^buf!
@@ -76,7 +75,7 @@ basicFree
 	"Private - Free the receiver's external resources."
 
 	OLEAutLibrary default sysFreeString: self.
-	self value: 0!
+	self basicUIntPtrAtOffset: 0 put: 0!
 
 byteSize
 	"Answer the size in bytes of the string pointed at by the receiver, including any
@@ -112,7 +111,8 @@ free
 	"Private - Frees the receiver's external resources by releasing the interface."
 
 	self asInteger == 0
-		ifFalse: [self basicFree]!
+		ifFalse: [self basicFree].
+	self beUnfinalizable!
 
 onStartup
 	"Private - The system is starting. Modify the state of the receiver to account for the fact
@@ -175,6 +175,9 @@ value: newValue
 
 !BSTR class methodsFor!
 
+basicNew
+	^self newFixed: 4!
+
 clear: anExternalAddress
 	OLEAutLibrary default sysFreeString: (anExternalAddress dwordAtOffset: 0)!
 
@@ -219,8 +222,8 @@ initialize
 new
 	"Answer a new instance of the receiver of the initially holding a null pointer."
 
-	^(self basicNew: 4)
-		beFinalizable; 
+	^(self basicNew)
+		beFinalizable;
 		yourself!
 
 newBuffer
@@ -240,6 +243,7 @@ uninitialize
 
 	VMLibrary default registryAt: #BSTR put: nil.
 	SessionManager current removeEventsTriggeredFor: self! !
+!BSTR class categoriesFor: #basicNew!instance creation!private! !
 !BSTR class categoriesFor: #clear:!public!realizing/unrealizing! !
 !BSTR class categoriesFor: #fromInteger:!instance creation!public! !
 !BSTR class categoriesFor: #fromString:!instance creation!public! !

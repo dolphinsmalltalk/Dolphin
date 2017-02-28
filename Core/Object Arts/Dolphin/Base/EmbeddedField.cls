@@ -1,12 +1,18 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ExternalField subclass: #EmbeddedField
 	instanceVariableNames: 'fieldClass'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-EmbeddedField guid: (GUID fromString: '{87B4C4DA-026E-11D3-9FD7-00A0CC3E4A32}')!
-EmbeddedField comment: ''!
+EmbeddedField guid: (GUID fromString: '{87b4c4da-026e-11d3-9fd7-00a0cc3e4a32}')!
+EmbeddedField comment: 'EmbeddedField is the abstract class of <ExternalField>s that describe fields of <ExternalStructure>s that are directly embedded in the structure itself, as opposed to being pointers to external memory where the data resides.
+
+Instance Variables:
+	fieldClass		<Class> of Smalltalk object that can be used to represent the data stored in the field.
+
+
+'!
 !EmbeddedField categoriesForClass!External-Data-Types! !
 !EmbeddedField methodsFor!
 

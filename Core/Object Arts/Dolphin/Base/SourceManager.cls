@@ -1,7 +1,7 @@
 "Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #SourceManager
-	instanceVariableNames: 'mutex '
+	instanceVariableNames: 'mutex'
 	classVariableNames: 'ChangesIndex DefaultInstance SourcesIndex'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -113,8 +113,8 @@ changesStream
 
 	^self basicChangesFiler ifNotNil: [:changes | changes stream]!
 
-chunkFilerOn: aStream 
-	"Answer a <ChunkSourceFiler> on the specified stream."
+chunkFilerOn: aStream
+	"Answer a <ChunkSourceFiler> on the specified stream. The filer leaves existing line endings alone."
 
 	^ChunkSourceFiler on: aStream!
 
@@ -188,7 +188,7 @@ compressChangesOf: aClass onto: aSourceFiler
 				changeIndexValue: [0]]!
 
 compressChangesOnto: aSourceFiler 
-	self class environment allClassesDo: [:each | self compressChangesOf: each onto: aSourceFiler].
+	self class environment allClasses do: [:each | self compressChangesOf: each onto: aSourceFiler].
 	Package manager packages do: 
 			[:each | 
 			(self sourceIndexFromDescriptor: each sourceDescriptor) = ChangesIndex 
@@ -276,16 +276,29 @@ errorNotPackaged: anObject
 fileIn: aFileName
 	"File in the chunk format file named, aFileName, into the system."
 
+	self fileIn: aFileName normalizeLineEndings: false!
+
+fileIn: aString normalizeLineEndings: aBoolean
+	"File in the chunk format file named, aString, into the system. If the <Boolean> argument is
+	true then any non-standard CR or LF line endings are converted to CR-LF pairs."
+
 	| stream |
-	stream := FileStream read: aFileName.
-	[self fileInFrom: stream] ensure: [stream close].!
+	stream := FileStream read: aString.
+	[self fileInFrom: stream normalizeLineEndings: aBoolean] ensure: [stream close]!
 
-fileInFrom: aStream 
-	"Private - File in the expressions/definitions from the chunk stream, aStream.
-	in the receiver's chunk format. Any methods that do not	compile are stubbed 
-	with instances of CompileFailedMethod and errors logged to the Transcript."
+fileInFrom: aStream
+	"Private - File in the expressions/definitions from the chunk stream, aStream. in the
+	receiver's chunk format. Any methods that do not compile are stubbed with instances of
+	CompileFailedMethod and errors logged to the Transcript. Existing line endings are
+	preserved, which is probably only appropriate if the source stream is known to have CR-LF
+	line endings already."
 
-	(self chunkFilerOn: aStream) fileIn!
+	self fileInFrom: aStream normalizeLineEndings: false!
+
+fileInFrom: aStream normalizeLineEndings: aBoolean
+	(self chunkFilerOn: aStream)
+		normalizeLineEndings: aBoolean;
+		fileIn!
 
 fileInHere: aFileName 
 	"File in the chunk format file named, aFileName, into the system but with
@@ -687,7 +700,9 @@ truncateChanges
 !SourceManager categoriesFor: #emitFileOutHeaderOn:!private!source filing! !
 !SourceManager categoriesFor: #errorNotPackaged:!exceptions!private! !
 !SourceManager categoriesFor: #fileIn:!public!source filing! !
+!SourceManager categoriesFor: #fileIn:normalizeLineEndings:!public!source filing! !
 !SourceManager categoriesFor: #fileInFrom:!private!source filing! !
+!SourceManager categoriesFor: #fileInFrom:normalizeLineEndings:!private!source filing! !
 !SourceManager categoriesFor: #fileInHere:!public!source filing! !
 !SourceManager categoriesFor: #fileInPackagedClass:!public!source filing! !
 !SourceManager categoriesFor: #fileInPackagedClass:from:!public!source filing! !

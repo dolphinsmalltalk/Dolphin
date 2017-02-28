@@ -86,6 +86,7 @@ package classNames
 	add: #LOGFONTW;
 	add: #PIXELFORMATDESCRIPTOR;
 	add: #POINTS;
+	add: #XFORM;
 	yourself.
 
 package methodNames
@@ -100,6 +101,7 @@ package globalAliases: (Set new
 
 package setPrerequisites: (IdentitySet new
 	add: '..\..\Base\Dolphin';
+	add: '..\..\Base\Deprecated\Dolphin Base (Deprecated)';
 	add: 'Dolphin Metafiles';
 	add: '..\Base\Dolphin MVP Base';
 	yourself).
@@ -149,6 +151,11 @@ ExternalStructure subclass: #LOGCOLORSPACEW
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ExternalStructure subclass: #PIXELFORMATDESCRIPTOR
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ExternalStructure subclass: #XFORM
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''

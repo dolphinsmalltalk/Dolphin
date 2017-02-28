@@ -30,7 +30,7 @@ Class Variables:
 !SmalltalkWorkspace methodsFor!
 
 allDefinedVariablesDo: aMonadicValuable 
-	workspacePool keysDo: aMonadicValuable!
+	workspacePool associationsDo: aMonadicValuable!
 
 allPools
 	"Private - Answers an Array of all the PoolDictionaries used during evaluations in the
@@ -75,32 +75,32 @@ areVariableTipsEnabled
 areVariableTipsEnabled: aBoolean 
 	flags := flags mask: VariableTipsMask set: aBoolean!
 
-autoComplete: aSymbol at: posInteger maxItems: maxInteger 
-	aSymbol == #specialCharacter 
+autoComplete: aSymbol at: posInteger maxItems: maxInteger
+	aSymbol == #specialCharacter
 		ifTrue: 
-			[(self maybeExtendingQualifiedNameAt: posInteger) 
+			[(self maybeExtendingQualifiedNameAt: posInteger)
 				ifTrue: 
-					[self 
+					[self
 						showIdentifierCompletionListAt: posInteger
 						maxItems: maxInteger
 						start: (self tokenStartAt: posInteger - 1)].
 			^self].
-	aSymbol == #identifier 
+	aSymbol == #identifier
 		ifTrue: 
-			[self 
+			[self
 				showIdentifierCompletionListAt: posInteger
 				maxItems: maxInteger
 				start: (self tokenStartAt: posInteger).
 			^self].
-	aSymbol == #literalSymbol 
+	aSymbol == #literalSymbol
 		ifTrue: 
 			[self showSymbolCompletionListAt: posInteger maxItems: maxInteger.
 			^self].
-	(#(#unaryMessage #keywordMessage #binaryMessage) identityIncludes: aSymbol) 
+	(#(#unaryMessage #keywordMessage #binaryMessage) identityIncludes: aSymbol)
 		ifTrue: 
 			[self showMessageCompletionListAt: posInteger maxItems: maxInteger.
 			^self].
-	(#(#unarySelector #keywordSelector #binarySelector) identityIncludes: aSymbol) 
+	(#(#unarySelector #keywordSelector #binarySelector) identityIncludes: aSymbol)
 		ifTrue: 
 			[self showSelectorCompletionListAt: posInteger maxItems: maxInteger.
 			^self].
@@ -374,9 +374,11 @@ completeWordAt: anInteger with: aString
 completionListSortBlock
 	| crt |
 	crt := CRTLibrary default.
-	^self isAutoCompletionCaseInsensitive 
-		ifTrue: [[:a :b | (crt _stricmp: a string2: b) <= 0]]
-		ifFalse: [[:a :b | (crt strcmp: a string2: b) <= 0]]!
+	"Note that we must use str[i]cmp to ensure the same comparison order as Scintilla uses when
+	searching for items in the list."
+	^self isAutoCompletionCaseInsensitive
+		ifTrue: [[:a :b | (crt _stricmp: a displayString string2: b displayString) <= 0]]
+		ifFalse: [[:a :b | (crt strcmp: a displayString string2: b displayString) <= 0]]!
 
 copySelection
 	"Copy the selection to the clipboard, or the line on which the caret is placed if there is
@@ -701,51 +703,49 @@ identifierAt: anInteger
 			range := view tokenRangeAt: anInteger.
 			StIdentifierToken value: (view plainTextRange: range) start: range start]!
 
-identifiersStartingWith: aString maxItems: anInteger 
+identifiersStartingWith: aString maxItems: anInteger
 	"Private - Build and answer a colleciton of identifiers that are potential completions for
 	the specified prefix. If in case-sensitive mode assume that the convention of starting all
 	class/pool/global variables with an uppercase letter, and all temps and inst. vars with a
 	lowercase one, is followed. If there are more matching identifiers than the specified
 	maximum, then answer an empty collection."
 
-	| variables ignoreCase filter |
+	| variables ignoreCase filter accum selectVars |
 	variables := Set new.
 	ignoreCase := self isAutoCompletionCaseInsensitive.
-	filter := aString isEmpty 
-				ifTrue: 
-					[
-					[:eachName | 
-					variables add: eachName.
-					variables size > anInteger ifTrue: [^#()]]]
-				ifFalse: 
-					[
-					[:eachName | 
-					(eachName beginsWith: aString ignoreCase: ignoreCase) 
-						ifTrue: 
-							[variables add: eachName.
-							variables size > anInteger ifTrue: [^#()]]]].
-	(ignoreCase or: [aString isEmpty or: [aString first isLowercase]]) 
+	filter := aString isEmpty
+				ifTrue: [[:each | true]]
+				ifFalse: [[:each | each displayString beginsWith: aString ignoreCase: ignoreCase]].
+	accum := 
+			[:each |
+			variables add: each.
+			variables size > anInteger ifTrue: [^#()]].
+	selectVars := [:each | (filter value: each) ifTrue: [accum value: each]].
+	(ignoreCase or: [aString isEmpty or: [aString first isLowercase]])
 		ifTrue: 
-			[Compiler reservedWords do: filter.
-			self allDefinedVariablesDo: filter.
-			self selfClass allInstVarNames do: filter].
-	(ignoreCase or: [aString isEmpty or: [aString first isUppercase]]) 
+			[(#(nil true false) select: filter)
+				do: [:each | accum value: (ScintillaListItem text: each printString icon: each icon)].
+			(#('thisContext' 'super' 'self') select: filter) do: accum.
+			self allDefinedVariablesDo: selectVars.
+			self selfClass allInstVarNames do: selectVars].
+	(ignoreCase or: [aString isEmpty or: [aString first isUppercase]])
 		ifTrue: 
 			[| class |
 			class := self selfClass instanceClass.
 			class withAllSuperclassesDo: 
-					[:eachClass | 
-					eachClass classPool keysDo: filter.
-					eachClass sharedPools do: [:eachPool | eachPool keysDo: filter]].
-			evaluationPools do: [:each | each keysDo: filter].
-			class environment keysDo: filter].
+					[:eachClass |
+					eachClass classPool associationsDo: selectVars.
+					eachClass sharedPoolsDo: [:eachPool | eachPool associationsDo: selectVars]].
+			evaluationPools do: [:eachPool | eachPool associationsDo: selectVars].
+			class environment associationsDo: selectVars].
 	^variables!
 
 indicatorStyles
 	^indicatorStyles!
 
-indicatorStyles: aCollectionOfScintillaIndicatorStyles 
-	indicatorStyles := aCollectionOfScintillaIndicatorStyles asOrderedCollection.
+indicatorStyles: aCollectionOfScintillaIndicatorStyles
+	"The indicator styles in a ScintillaView must be private to it, so ensure we have a copy."
+	indicatorStyles := aCollectionOfScintillaIndicatorStyles collect: [:each | each copy].
 	self isOpen ifTrue: [self view indicatorStyles: indicatorStyles]!
 
 initialize
@@ -762,14 +762,14 @@ initialize
 	self indicatorStyles: self class indicatorStyles.
 	self isAutoCompletionEnabled: self class isAutoCompletionEnabled!
 
-insertCompletion: aString at: anInteger 
+insertCompletion: aString at: anInteger
 	"Private-"
 
+	| word |
 	"Special case for insertions of unquoted symbols in Smalltalk-80 style literal arrays. Since
 	this is deprecated syntax, correct it..."
-	| word |
-	word := ((view styleAt: anInteger) name == #literalSymbol 
-				and: [(view characterAt: anInteger) ~~ $#]) ifTrue: ['#' , aString] ifFalse: [aString].
+	word := ((view styleAt: anInteger) name == #literalSymbol
+				and: [(view characterAt: anInteger - 1) ~~ $#]) ifTrue: ['#' , aString] ifFalse: [aString].
 	view performUndoableAction: [self completeWordAt: anInteger with: word]!
 
 insertKeywordCompletion: aString startingAt: anInteger 
@@ -873,7 +873,7 @@ maxAutoCompletionListSize
 	^self class maxAutoCompletionListSize!
 
 maxCompletionListSize
-	^50000!
+	^10000!
 
 maybeExtendingQualifiedNameAt: anInteger 
 	^anInteger > 1 
@@ -902,9 +902,10 @@ messagesForToken: anAssociation startingWith: aString maxItems: anInteger
 	"Private - Answer the set of selectors that could potentially be sent as messages following
 	the specified token."
 
-	| ignoreCase |
+	| ignoreCase icon |
 	ignoreCase := self isAutoCompletionCaseInsensitive.
-	^(self classForToken: anAssociation)
+	icon := Message icon.
+	^((self classForToken: anAssociation)
 		ifNil: 
 			[| allSelectors |
 			allSelectors := Smalltalk developmentSystem allSelectors.
@@ -939,7 +940,8 @@ messagesForToken: anAssociation startingWith: aString maxItems: anInteger
 										ifTrue: 
 											[messages add: eachSelector.
 											messages size > anInteger ifTrue: [^#()]]]]]).
-			messages]!
+			messages])
+			collect: [:each | ScintillaListItem text: each icon: icon]!
 
 modifiedModel
 	^modifiedModel!
@@ -950,13 +952,13 @@ modifiedModel: aValueModel
 newVariablePool
 	workspacePool := PoolDictionary new!
 
-onAutoComplete: aString startingAt: anInteger accept: aValueHolder 
+onAutoComplete: aString startingAt: anInteger accept: aValueHolder
 	"Private - "
 
-	(aString first ~~ $# and: [aString includes: $:]) 
+	((view styleAt: anInteger) name ~~ #literalSymbol and: [aString includes: $:])
 		ifTrue: [self insertKeywordCompletion: aString startingAt: anInteger]
 		ifFalse: [self insertCompletion: aString at: anInteger].
-	aValueHolder value: false!
+	aValueHolder value: false.!
 
 onCharAdded: aCharacter 
 	(self isAutoCompletionEnabled and: [self isSyntaxColoringEnabled]) ifFalse: [^self].
@@ -1302,14 +1304,15 @@ setTabWidth
 setWordWrap
 	view wordWrap: self class wordWrap!
 
-showCompletionList: aCollectionOfStrings prefixLength: anInteger 
-	(aCollectionOfStrings size = 1 and: [aCollectionOfStrings anyOne size = anInteger]) 
+showCompletionList: aCollection prefixLength: anInteger
+	(aCollection size = 1 and: [aCollection anyOne size = anInteger])
 		ifTrue: 
 			["Don't display a list of one item that is the same as the prefix"
 			^self].
-	view 
-		showAutoCompletionList: (aCollectionOfStrings asSortedCollection: self completionListSortBlock)
-		prefixLength: anInteger!
+	view
+		showAutoCompletionList: (aCollection asSortedCollection: self completionListSortBlock)
+		prefixLength: anInteger
+		withIcons: true!
 
 showCompletionListAfterToken: anAssociation maxItems: anInteger 
 	| styleName |
@@ -1362,7 +1365,7 @@ showIdentifierCompletionListAt: posInteger maxItems: maxInteger start: start
 		ifTrue: [choices := self identifiersStartingWith: prefix maxItems: maxInteger]
 		ifFalse: 
 			["Qualified name, find the binding"
-			| qualifier var pool |
+			| qualifier pool |
 			qualifier := prefix copyFrom: 1 to: lastDot - 1.
 			prefix := prefix copyFrom: lastDot + 1 to: prefix size.
 			choices := #().
@@ -1374,11 +1377,11 @@ showIdentifierCompletionListAt: posInteger maxItems: maxInteger start: start
 					(pool isKindOf: Dictionary) 
 						ifTrue: 
 							[choices := prefix isEmpty 
-										ifTrue: [pool keys]
+										ifTrue: [pool associations]
 										ifFalse: 
 											[| ignoreCase |
 											ignoreCase := self isAutoCompletionCaseInsensitive.
-											pool keys select: [:each | each beginsWith: prefix ignoreCase: ignoreCase]].
+											pool associations select: [:each | each key beginsWith: prefix ignoreCase: ignoreCase]].
 							choices size > maxInteger ifTrue: [choices := #()]]]].
 	self showCompletionList: choices prefixLength: prefix size!
 
@@ -1403,23 +1406,24 @@ showResult: anObject at: caretPos
 	self replaceSelection: result.
 	self selectionRange: (selStart to: selStart + result size - 1)!
 
-showSelectorCompletionListAt: posInteger maxItems: maxInteger 
+showSelectorCompletionListAt: posInteger maxItems: maxInteger
 	| prefix start choices |
 	start := self tokenStartAt: posInteger.
 	prefix := view plainTextFrom: start to: posInteger.
 	choices := self selectorsStartingWith: prefix maxItems: maxInteger.
 	self showCompletionList: choices prefixLength: prefix size!
 
-showSymbolCompletionListAt: posInteger maxItems: maxInteger 
-	| prefix start symbols hashed prefixLength |
+showSymbolCompletionListAt: posInteger maxItems: maxInteger
+	| prefix start symbols prefixLength |
 	start := self tokenStartAt: posInteger.
 	prefix := view plainTextRange: (start to: posInteger).
 	prefixLength := prefix size.
-	(hashed := prefix first == $#) ifTrue: [prefix := prefix copyFrom: 2].
+	prefix first == $#
+		ifTrue: 
+			[prefix := prefix copyFrom: 2.
+			prefixLength := prefixLength - 1].
 	symbols := self symbolsStartingWith: prefix maxItems: maxInteger.
-	self 
-		showCompletionList: (hashed ifTrue: [symbols collect: [:each | '#' , each]] ifFalse: [symbols])
-		prefixLength: prefixLength!
+	self showCompletionList: symbols prefixLength: prefixLength!
 
 showTipForIdentifier: anStIdentifierToken 
 	| context name |
@@ -2168,7 +2172,7 @@ textStyles: aCollectionOfScintillaTextStyles
 	names used in the styler, which by default is a <SmalltalkStyler>."
 
 	TextStyles := aCollectionOfScintillaTextStyles asOrderedCollection 
-				sortUsing: (DefaultSortAlgorithm sortBlock: [:a :b | a name <= b name]).
+				sortUsing: (DefaultSortAlgorithm newSortBlock: [:a :b | a name <= b name]).
 	self primAllSubinstances do: [:each | each textStyles: self textStyles]!
 
 textStylesAspect

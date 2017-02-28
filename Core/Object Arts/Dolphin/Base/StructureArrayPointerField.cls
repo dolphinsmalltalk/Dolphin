@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ArrayPointerField subclass: #StructureArrayPointerField
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-StructureArrayPointerField guid: (GUID fromString: '{87B4C4E4-026E-11D3-9FD7-00A0CC3E4A32}')!
+StructureArrayPointerField guid: (GUID fromString: '{87b4c4e4-026e-11d3-9fd7-00a0cc3e4a32}')!
 StructureArrayPointerField comment: 'StructureArrayPointerField is an <ExternalField> type to represent <ExternalStructure> members which are pointers to arrays of structures.'!
 !StructureArrayPointerField categoriesForClass!External-Data-Types! !
 !StructureArrayPointerField methodsFor!
@@ -35,14 +35,14 @@ printAccessorExpressionSuffixOn: aWriteStream
 		space;
 		display: self elementClass!
 
-readFrom: struct
-	"Private - Answer a <StructureArray> which references the array of structures
-	pointed at by the field described by the receiver in the <ExternalStructure>, struct.
-	N.B. The answer is a reference, and modifications to it will update the original buffer."
+readFrom: anExternalStructure
+	"Private - Answer an <StructureArray> of the receiver's element class that is a reference to
+	the data pointed at by the corresponding pointer field of the <ExternalStructure> argument
+	at the receiver's offset, and which is of the length described by the receiver."
 
-	^self pointerClass 
-		fromAddress: (struct sdwordAtOffset: offset) 
-		length: self length
+	^self pointerClass
+		fromAddress: (anExternalStructure sdwordAtOffset: offset)
+		length: (arrayLength getElementCountOf: ExternalField new in: anExternalStructure)
 		elementClass: self elementClass! !
 !StructureArrayPointerField categoriesFor: #elementClass!accessing!private! !
 !StructureArrayPointerField categoriesFor: #pointerClass!accessing!private! !

@@ -85,14 +85,11 @@ forwardTo: anObject
 	^anObject perform: self!
 
 hash
-	"Answer the <integer> hash value for the receiver.
-	Override back to the 16-bit identity hash which is temporally invariant,
-	and very fast to calculate).
-	The primitve should not fail (but must not be used for immediate objects).
-	N.B. It is critical that this implementation is not changed."
+	"Answer the <integer> hash value for the receiver. Override back to the identity hash (which
+	is temporally invariant, and very fast to calculate)."
 
-	<primitive: 75>
-	^self primitiveFailed!
+	<primitive: 147>
+	^self identityHash!
 
 initialiseFrom: aString
 	"Private - Initialize the receiver to contain the characters of aString.
@@ -102,6 +99,14 @@ initialiseFrom: aString
 		replaceBytesOf: self
 		from: 1 to: aString size startingAt: 1
 !
+
+isAtomic
+	"Answer whether or not the receiver is the single unique instance of its class that can
+	represents its value."
+
+	"The purpose of symbols is to be atomic strings."
+
+	^true!
 
 isInfix
 	"Answer whether the receiver is valid as an infix message selector."
@@ -181,6 +186,7 @@ stbSaveOn: anSTBOutFiler
 !Symbol categoriesFor: #forwardTo:!operations!public! !
 !Symbol categoriesFor: #hash!comparing!public! !
 !Symbol categoriesFor: #initialiseFrom:!initializing!private! !
+!Symbol categoriesFor: #isAtomic!public! !
 !Symbol categoriesFor: #isInfix!public!testing! !
 !Symbol categoriesFor: #isSymbol!public!RefactoringBrowser! !
 !Symbol categoriesFor: #keywords!accessing!public! !
@@ -275,7 +281,7 @@ internCharacter: aCharacter
 
 	^self intern: aCharacter asString!
 
-isLiteralSymbol: aSymbol 
+isLiteralSymbol: aSymbol
 	"Private - Answer whether the <Symbol> argument is representable
 	as an unquoted literal symbol."
 
@@ -283,25 +289,21 @@ isLiteralSymbol: aSymbol
 	size := aSymbol basicSize.
 	size == 0 ifTrue: [^false].
 	binChars := '!!%&*+,/<=>?@\~|-'.
-	(binChars identityIncludes: (aSymbol at: 1)) 
-		ifTrue: 
-			[aSymbol 
-				from: 2
-				to: size
-				do: [:each | (binChars identityIncludes: each) ifFalse: [^false]]]
+	(binChars identityIncludes: (aSymbol at: 1))
+		ifTrue: [2 to: size do: [:i | (binChars identityIncludes: (aSymbol at: i)) ifFalse: [^false]]]
 		ifFalse: 
 			[| includesColon initial |
 			initial := true.
 			includesColon := false.
-			aSymbol 
-				from: 1
-				to: size
+			1 to: size
 				do: 
-					[:each | 
-					initial 
+					[:i |
+					| each |
+					each := aSymbol at: i.
+					initial
 						ifTrue: [(each == $_ or: [each isEnglishLetter]) ifTrue: [initial := false] ifFalse: [^false]]
 						ifFalse: 
-							[each == $: 
+							[each == $:
 								ifTrue: [includesColon := initial := true]
 								ifFalse: [(each == $_ or: [each isEnglishLetter or: [each isDigit]]) ifFalse: [^false]]]].
 			(includesColon and: [aSymbol last ~~ $:]) ifTrue: [^false]].

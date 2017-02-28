@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ProfessionalSmalltalkSystem subclass: #RefactoringSmalltalkSystem
 	instanceVariableNames: 'isOAD'
@@ -1030,32 +1030,36 @@ renameMethodReferences: aCompiledMethod to: anRBMethodName
 				execute;
 				yourself]!
 
-renameTemporary: aStVariableNode to: aString in: aClass selector: aSelector 
+renameTemporary: aStVariableNode to: aString in: aClass selector: aSelector
 	"Rename the temporary variable in the range, anInterval, of the source code of the method of
 	the class, aClass, with selector, aSelector, to aString, or if aString is nil a new
 	temporary variable name chosen by the user. Implements the 'Rename Temporary' refactoring."
 
 	| oldName |
 	oldName := aStVariableNode name.
-	(aString 
+	(aString
 		ifNil: 
 			[| newName |
-			newName := (Prompter 
+			newName := (Prompter
 						createOn: oldName
 						prompt: ('Please enter the new name for <1p>:' expandMacrosWith: oldName)
 						caption: 'Rename Temporary...')
 						validationBlock: 
-								[:name | 
-								self 
+								[:name |
+								
+								[self
 									validateRenameTemp: aStVariableNode
 									to: name
-									in: aClass];
+									in: aClass.
+								true]
+										on: RefactoringError
+										do: [:ex | ex exitWith: false]];
 						showModal.
-			newName]) 
+			newName])
 			ifNotNil: 
-				[:newName | 
+				[:newName |
 				self handleRefactoringException: 
-						[(RenameTemporaryRefactoring 
+						[(RenameTemporaryRefactoring
 							renameTemporaryFrom: aStVariableNode sourceInterval
 							to: newName
 							in: aClass
@@ -1170,27 +1174,27 @@ safeRemoveMethodsIn: methodsEnvironment within: searchEnvironment
 			(mb warning: prompt contents) == #cancel ifTrue: [^self]].
 	self changeManager performChange: model changes!
 
-safeRemoveSelectors: anArrayOfSelectors from: aClass inEnvironment: aBrowserEnvironment 
+safeRemoveSelectors: anArrayOfSelectors from: aClass inEnvironment: aBrowserEnvironment
 	| prompt mb |
 	mb := MessageBox new.
 	mb
 		uniqueId: [self] method displayString;
 		isSuppressible: true.
-	anArrayOfSelectors size = 1 
+	anArrayOfSelectors size = 1
 		ifTrue: 
 			[mb caption: 'Safe Remove Method...'.
-			prompt := 'Remove <1d>>><2d> (if it has no references or is equivalent to the superclass implementation)?' 
+			prompt := 'Remove <1d>>><2d> (if it has no references or is equivalent to the superclass implementation)?'
 						expandMacrosWith: aClass
 						with: anArrayOfSelectors first]
 		ifFalse: 
 			[mb caption: 'Safe Remove Methods...'.
 			prompt := String writeStream.
 			prompt
-				nextPutAll: ('The following methods of <1p> will be removed if they have no references or are equivalent to the superclass implementation:' 
+				nextPutAll: ('The following methods of <1p> will be removed if they have no references or are equivalent to the superclass implementation:'
 							expandMacrosWith: aClass);
 				cr.
 			anArrayOfSelectors do: 
-					[:each | 
+					[:each |
 					prompt
 						crtab;
 						print: each].
@@ -1203,13 +1207,10 @@ safeRemoveSelectors: anArrayOfSelectors from: aClass inEnvironment: aBrowserEnvi
 	^self handleRefactoringException: 
 			[| model1 refactoring |
 			model1 := RBNamespace onEnvironment: aBrowserEnvironment.
-			refactoring := 
-					[:model | 
-					RemoveMethodRefactoring 
-						model: model
+			refactoring := RemoveMethodRefactoring
+						model: model1
 						removeMethods: anArrayOfSelectors
-						from: aClass] 
-							value: model1.
+						from: aClass.
 			model1 name: refactoring displayString.
 			refactoring
 				execute;

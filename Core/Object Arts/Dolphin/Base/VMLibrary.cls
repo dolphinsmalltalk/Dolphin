@@ -62,7 +62,7 @@ argv
 	"Private - Answer a pointer to the array of strings which constitute the command line arguments, 
 	starting with the host executable's full path."
 
-	<cdecl: StructureArray* argv>
+	<cdecl: lpvoid argv>
 	^self invalidCall!
 
 basePatchLevel
@@ -143,11 +143,6 @@ defaultProductDetails
 		at: 7 put: nil; "Serial #"
 		at: 8 put: nil; "Boot info"
 		yourself!
-
-displayDesktopMessage: aString 
-	<stdcall: handle DisplayDesktopMessage lpstr>
-	^self invalidCall
-!
 
 dump: msgString path: pathString stackDepth: slotsInteger walkbackDepth: framesInteger
 	"Write a VM state log to the file with <readableString> path, pathString, with the 
@@ -435,10 +430,6 @@ registryAt: aSymbol put: anObject
 	self primRegistryAt: (RegistryKeys at: aSymbol) put: anObject.
 	^anObject!
 
-removeDesktopMessage: anExternalHandle
-	<stdcall: void RemoveDesktopMessage handle>
-	^self invalidCall!
-
 shortName
 	"Answer the localised short name for Dolphin."
 
@@ -492,15 +483,6 @@ stringFromAddress: pointer
 	len := addr indexOf: 0.
 	^addr copyStringFrom: 1 to: len - 1!
 
-unlockVM: productId expireAfter: months flags: flags
-	"Private - Attempts to unlock the image. Registers the given <Integer> productId within the image
-	and extends the expiry period by <Integer> months. If months is zero then the expiry period is
-	extended indefinitely. The <integer>, flags, specifies various flags. At present the only flag is
-	16r1, meaning that the image is to be machine locked (i.e. a fixed rather than floating license)."
-
-	<primitive: 93>
-	^self error: 'Unable to unlock image - please contact Dolphin Support'!
-
 unregisterObject: anObject 
 	| i |
 	i := self registry identityIndexOf: anObject.
@@ -538,7 +520,6 @@ versionFormatString
 !VMLibrary categoriesFor: #crtHandle!accessing-handles!private! !
 !VMLibrary categoriesFor: #debugDump:!exceptions!private! !
 !VMLibrary categoriesFor: #defaultProductDetails!accessing!private! !
-!VMLibrary categoriesFor: #displayDesktopMessage:!operations!private! !
 !VMLibrary categoriesFor: #dump:path:stackDepth:walkbackDepth:!exceptions!private! !
 !VMLibrary categoriesFor: #emptyBlock!accessing-handles!private! !
 !VMLibrary categoriesFor: #errorIntegerMoreThan32Bits:!exceptions!private! !
@@ -579,7 +560,6 @@ versionFormatString
 !VMLibrary categoriesFor: #registry!accessing!private! !
 !VMLibrary categoriesFor: #registryAt:!accessing-registry!private! !
 !VMLibrary categoriesFor: #registryAt:put:!accessing-registry!private! !
-!VMLibrary categoriesFor: #removeDesktopMessage:!operations!private! !
 !VMLibrary categoriesFor: #shortName!accessing!public! !
 !VMLibrary categoriesFor: #signedFromUnsigned:!helpers!private! !
 !VMLibrary categoriesFor: #specialSelectors!accessing-registry!private! !
@@ -587,7 +567,6 @@ versionFormatString
 !VMLibrary categoriesFor: #stdin!accessing-handles!private! !
 !VMLibrary categoriesFor: #stdout!accessing-handles!private! !
 !VMLibrary categoriesFor: #stringFromAddress:!helpers!private! !
-!VMLibrary categoriesFor: #unlockVM:expireAfter:flags:!locking!private! !
 !VMLibrary categoriesFor: #unregisterObject:!accessing-registry!private! !
 !VMLibrary categoriesFor: #unsignedFromSigned:!helpers!private! !
 !VMLibrary categoriesFor: #versionFormatString!constants!private! !
@@ -680,8 +659,7 @@ initialize
 				at: #LPBSTR put: 145;
 				at: #ULARGE_INTEGER put: 146;
 				at: #LARGE_INTEGER put: 147;
-				at: #UINT_PTR put: 148;
-				at: #INT_PTR put: 149;
+				at: #TimingSemaphore put: 150;
 				isImmutable: true;
 				shrink;
 				yourself)!

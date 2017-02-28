@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk XP"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Collection subclass: #RBSmallDictionary
 	instanceVariableNames: 'keys values size'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-RBSmallDictionary guid: (GUID fromString: '{65EF5A3F-ECE9-4966-8D14-B90BF121A5D6}')!
+RBSmallDictionary guid: (GUID fromString: '{65ef5a3f-ece9-4966-8d14-b90bf121a5d6}')!
 RBSmallDictionary comment: 'RBSmallDictionary is an <abstractDictionary> optimized for small collections. It is part of the Refactoring Browser.
 Note that the implementation is similar to <LookupTable> in that RBSmallDictionarys do not store <Association>s.
 
@@ -90,6 +90,16 @@ initialize
 	values := Array new: 2.
 	size := 0!
 
+keys
+	"Answer a <collection> containing the receiver's keys.
+	Implementation Note: We answer a <Set>, but that should
+	not be relied upon in portable code."
+
+	| aSet |
+	aSet := Set new: self size.
+	self keysDo: [:key | aSet add: key].
+	^aSet!
+
 keysAndValuesDo: aBlock 
 	1 to: size do: [:i | aBlock value: (keys at: i) value: (values at: i)]!
 
@@ -150,6 +160,7 @@ size
 !RBSmallDictionary categoriesFor: #growTo:!helpers!private! !
 !RBSmallDictionary categoriesFor: #includesKey:!public!testing! !
 !RBSmallDictionary categoriesFor: #initialize!initializing!public! !
+!RBSmallDictionary categoriesFor: #keys!accessing!public! !
 !RBSmallDictionary categoriesFor: #keysAndValuesDo:!enumerating!public! !
 !RBSmallDictionary categoriesFor: #keysDo:!enumerating!public! !
 !RBSmallDictionary categoriesFor: #postCopy!copying!public! !

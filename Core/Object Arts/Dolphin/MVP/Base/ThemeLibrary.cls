@@ -5,7 +5,7 @@ ExternalLibrary subclass: #ThemeLibrary
 	classVariableNames: ''
 	poolDictionaries: 'ThemeConstants'
 	classInstanceVariableNames: ''!
-ThemeLibrary guid: (GUID fromString: '{FB91DF3F-4CB4-48A2-ADEE-A75B9A4D30A2}')!
+ThemeLibrary guid: (GUID fromString: '{fb91df3f-4cb4-48a2-adee-a75b9a4d30a2}')!
 ThemeLibrary comment: 'ThemeLibrary is the <ExternalLibrary> class to represent the dynamic link library, ''UXTHEME.DLL''.It was generated generated from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library. It contains methods for each of the functions defined by the corresponding module in that type library.
 
 The type library contains the following helpstring for this module
@@ -644,20 +644,6 @@ getThemeInt: htheme iPartId: iPartId iStateId: iStateId iPropId: iPropId piVal: 
 	<stdcall: hresult GetThemeInt handle sdword sdword sdword sdword*>
 	^self invalidCall!
 
-getThemeIntList: htheme iPartId: iPartId iStateId: iStateId iPropId: iPropId pIntList: pIntList
-	"Invoke the GetThemeIntList() function of the module wrapped by the receiver.
-	Helpstring: Get the value for the specified INTLIST struct
-
-		HRESULT __stdcall GetThemeIntList(
-			[in]HTHEME HTHEME,
-			[in]int iPartId,
-			[in]int iStateId,
-			[in]int iPropId,
-			[out]INTLIST* pIntList);"
-
-	<stdcall: hresult GetThemeIntList handle sdword sdword sdword INTLIST*>
-	^self invalidCall!
-
 getThemeMargins: htheme hdc: hdc iPartId: iPartId iStateId: iStateId iPropId: iPropId prc: prc pMargins: pMargins
 	"Invoke the GetThemeMargins() function of the module wrapped by the receiver.
 	Helpstring: Get the value for the specified MARGINS property
@@ -1020,7 +1006,6 @@ setWindowTheme: hwnd pszSubAppName: pszSubAppName pszSubIdList: pszSubIdList
 !ThemeLibrary categoriesFor: #getThemeFilename:iPartId:iStateId:iPropId:pszThemeFileName:cchMaxBuffChars:!**auto generated**!public! !
 !ThemeLibrary categoriesFor: #getThemeFont:hdc:iPartId:iStateId:iPropId:pFont:!**auto generated**!public! !
 !ThemeLibrary categoriesFor: #getThemeInt:iPartId:iStateId:iPropId:piVal:!**auto generated**!public! !
-!ThemeLibrary categoriesFor: #getThemeIntList:iPartId:iStateId:iPropId:pIntList:!**auto generated**!public! !
 !ThemeLibrary categoriesFor: #getThemeMargins:hdc:iPartId:iStateId:iPropId:prc:pMargins:!**auto generated**!public! !
 !ThemeLibrary categoriesFor: #getThemeMetric:hdc:iPartId:iStateId:iPropId:piVal:!**auto generated**!public! !
 !ThemeLibrary categoriesFor: #getThemePartSize:hdc:iPartId:iStateId:prc:eSize:psz:!**auto generated**!public! !

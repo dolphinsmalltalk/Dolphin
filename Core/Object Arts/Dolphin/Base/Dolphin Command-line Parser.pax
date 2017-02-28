@@ -1,5 +1,5 @@
 | package |
-package := Package name: 'Dolphin Base'.
+package := Package name: 'Dolphin Command-line Parser'.
 package paxVersion: 1;
 	basicComment: ''.
 
@@ -8,7 +8,6 @@ package classNames
 	add: #CommandLine;
 	add: #CommandLineError;
 	add: #CommandLineOption;
-	add: #NTLibrary;
 	yourself.
 
 package binaryGlobalNames: (Set new
@@ -36,11 +35,6 @@ Object subclass: #CommandLineOption
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Notification subclass: #CommandLineError
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-ExternalLibrary subclass: #NTLibrary
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''

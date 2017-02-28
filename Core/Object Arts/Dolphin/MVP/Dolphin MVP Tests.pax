@@ -29,6 +29,7 @@ package classNames
 	add: #MultipleSelectionListBoxTest;
 	add: #MultipleSelectionListViewTest;
 	add: #MultiSelectListBoxTest;
+	add: #MultiSelectListViewTest;
 	add: #PresenterTest;
 	add: #ProportionalLayoutTest;
 	add: #PushButtonTest;
@@ -41,6 +42,8 @@ package classNames
 	add: #SelectableItemsTest;
 	add: #SelectableListItemsTest;
 	add: #SelectableTreeItemsTest;
+	add: #SingleSelectListBoxTest;
+	add: #SingleSelectListViewTest;
 	add: #SliderTest;
 	add: #StaticPathTest;
 	add: #StStyler;
@@ -304,6 +307,21 @@ ListBoxTest subclass: #MultiSelectListBoxTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ListBoxTest subclass: #SingleSelectListBoxTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ListViewTest subclass: #MultiSelectListViewTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ListViewTest subclass: #SingleSelectListViewTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: 'ListViewConstants'
 	classInstanceVariableNames: ''!
 SelectableTreeItemsTest subclass: #MoenTreeViewTest2
 	instanceVariableNames: ''

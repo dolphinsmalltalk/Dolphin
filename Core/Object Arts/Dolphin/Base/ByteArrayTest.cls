@@ -49,6 +49,51 @@ testDwordAtOffsetPut
 	self should: [array dwordAtOffset: 0 put: -16r80000001] raise: Error.
 	self should: [array dwordAtOffset: 0 put: 16rFFFFFFFF + 1] raise: Error!
 
+testMixedConcatenation
+	"Test concatenating other types of sequenceable collection onto an array"
+
+	| subjects |
+	subjects := #(#[] #[1] #[1 2]).
+	(Array
+		with: String empty
+		with: UnicodeString empty
+		with: Array new
+		with: OrderedCollection new
+		with: (1 to: 0)) do: 
+				[:eachEmpty |
+				subjects do: 
+						[:eachArray |
+						| result |
+						result := eachArray , eachEmpty.
+						self deny: eachArray == result.
+						self assert: eachArray equals: result]].
+	(Array
+		with: 'a'
+		with: 'a' asUnicodeString
+		with: #(255)
+		with: (OrderedCollection with: 123)
+		with: (100 to: 100)) do: 
+				[:eachOne |
+				subjects do: 
+						[:eachArray |
+						| result |
+						result := self verifyConcatenation: eachOne with: eachArray.
+						self deny: eachArray == result.
+						self assert: result class == self collectionClass]].
+	(Array
+		with: 'ab'
+		with: 'a' asUnicodeString
+		with: #(1 255)
+		with: (OrderedCollection with: 123 with: 255)
+		with: (100 to: 101)) do: 
+				[:eachTwo |
+				subjects do: 
+						[:eachArray |
+						| result |
+						result := self verifyConcatenation: eachTwo with: eachArray.
+						self deny: eachArray == result.
+						self assert: result class == self collectionClass]]!
+
 testSbyteAtOffset
 	0 to: 127 do: [:each | self assert: ((ByteArray with: each) sbyteAtOffset: 0) = each].
 	128 to: 255
@@ -92,6 +137,7 @@ wordValues
 !ByteArrayTest categoriesFor: #dwordValues!constants!private! !
 !ByteArrayTest categoriesFor: #testBasicDwordAtOffsetPut!public!unit tests! !
 !ByteArrayTest categoriesFor: #testDwordAtOffsetPut!public!unit tests! !
+!ByteArrayTest categoriesFor: #testMixedConcatenation!public! !
 !ByteArrayTest categoriesFor: #testSbyteAtOffset!public!unit tests! !
 !ByteArrayTest categoriesFor: #testSbyteAtOffsetPut!public!unit tests! !
 !ByteArrayTest categoriesFor: #testWordAtOffsetPut!public!unit tests! !

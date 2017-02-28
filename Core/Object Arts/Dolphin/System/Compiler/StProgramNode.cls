@@ -125,18 +125,15 @@ containsReturn
 	self childrenDo: [:each | each containsReturn ifTrue: [^true]].
 	^false!
 
-copyCommentsFrom: aNode 
+copyCommentsFrom: aNode
 	"Add all comments from aNode to us. If we already have the comment, then don't add it."
 
 	| newComments |
 	newComments := OrderedCollection new.
 	aNode nodesDo: [:each | newComments addAll: each comments].
-	self nodesDo: 
-			[:each | 
-			each comments do: [:comment | newComments remove: comment ifAbsent: []]].
+	self nodesDo: [:each | each comments do: [:comment | newComments remove: comment ifAbsent: []]].
 	newComments isEmpty ifTrue: [^self].
-	newComments := newComments asSortedCollection: [:a :b | a first < b first].
-	self comments: newComments!
+	self comments: (newComments asSortedCollection: [:a :b | a first < b first])!
 
 defines: aName
 	^false!
@@ -276,6 +273,16 @@ parent
 parent: anStProgramNode 
 	parent := anStProgramNode!
 
+postCopy
+	"Apply any final flourish to the copy that may be required. In the case of a program node,
+	we should no longer consider ourselves to have a parent, as our original parent does not
+	refer to us, only to our original. In many cases we will be assigned a new parent shortly,
+	as part of a larger #copy operation."
+
+	super postCopy.
+	parent := nil.
+	^self!
+
 precedence
 	^6!
 
@@ -411,6 +418,7 @@ whoDefines: aName
 !StProgramNode categoriesFor: #outer!public! !
 !StProgramNode categoriesFor: #parent!accessing!public! !
 !StProgramNode categoriesFor: #parent:!accessing!public! !
+!StProgramNode categoriesFor: #postCopy!copying!public! !
 !StProgramNode categoriesFor: #precedence!accessing!public! !
 !StProgramNode categoriesFor: #printOn:!printing!public! !
 !StProgramNode categoriesFor: #recurseInto!public!testing/matching! !

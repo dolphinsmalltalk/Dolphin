@@ -5,7 +5,7 @@ AttributeDescriptor subclass: #Aspect
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-Aspect guid: (GUID fromString: '{87B4C4D7-026E-11D3-9FD7-00A0CC3E4A32}')!
+Aspect guid: (GUID fromString: '{87b4c4d7-026e-11d3-9fd7-00a0cc3e4a32}')!
 Aspect comment: 'Part of the PublishedAspectorInspector framework.
 
 <Aspect>s are used to describe the published aspects of various objects. An Aspect descriptor can be combined with a particular object to create an <AspectAccessor> that can be used to access the subject object with the value/value> protocol. The <AspectAccessor> uses the aspect name to construct accessor messages (e.g. #myAspect and #myAspect:) for getting and setting the value. An Aspect instance also holds a presenter block (a <dyadicValuable>) which, when evaluated, will create a presenter suitable for editing the aspect as its model.
@@ -98,7 +98,7 @@ displayAspectText: anObject on: aStream
 		ifFalse: 
 			[self displayAspectNameOf: anObject on: aStream.
 			"Note that the #yourself aspect must be readable"
-			self isReadable ifFalse: [^self].
+			self isBrowsable ifFalse: [^self].
 			aStream nextPut: $=].
 	self displayAspectValueOf: anObject on: aStream!
 

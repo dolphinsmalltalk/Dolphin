@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Integer subclass: #SmallInteger
 	instanceVariableNames: ''
@@ -13,31 +13,26 @@ Wherever an Integer may be represented as a SmallInteger, then its only truly va
 !SmallInteger methodsFor!
 
 - operand
-	"Answer the result of subtracting the <number>, operand, from the receiver.
-
-	Primitive failure codes:
-		0	- operand is not a SmallInteger."
+	"Answer the result of subtracting the <number>, operand, from the receiver. The primitive
+	fails iff the operand is not a SmallInteger, but does not set the primitive failure code."
 
 	<primitive: 14>
 	^operand subtractFromInteger: self!
 
 & anInteger
-	"Answer the result of a bitwise AND between the receiver and the argument, anInteger.
-	N.B. Use of #bitAnd: is preferred (even though it is more typing) because it is
-	a special selector (i.e. it is more compact and faster), and is portable.
-	
-	Primitive failure codes:
-		0	- anInteger is not a SmallInteger."
+	"Answer the result of a bitwise AND between the receiver and the argument, anInteger. N.B.
+	Use of #bitAnd: is preferred (even though it is more typing) because it is a special
+	selector (i.e. it is more compact and faster), and is portable. The primitive fails iff
+	aNumber is not a SmallInteger, and does not set the failure code."
 
 	<primitive: 40>
 	^anInteger bitAnd: self!
 
 * aNumber
 	"Answer the result of multiplying the receiver by aNumber. 
-
-	Primitive failure codes:
-		0	- aNumber is not a SmallInteger.
-		1	- the result requires more than 31-bits to represent. 
+	The primitive may fail for the following reasons, but does not set the failure code:
+		- aNumber is not a SmallInteger.
+		- the result requires more than 31-bits to represent. 
 
 	When the primitive fails we use a double dispatch to ask aNumber to multiply the receiver, 
 	which we know to be a kind of Integer, by itself."
@@ -50,9 +45,9 @@ Wherever an Integer may be represented as a SmallInteger, then its only truly va
 	Attempted division by zero will cause a <ZeroDivide> exception to be
 	raised.
 
-	Primitive failure codes:
-		0 -	aNumber is not a SmallInteger.
-		2 -	the result cannot be represented exactly as an Integer."
+	The primitive may fail for the following reasons, but does not set the failure code:
+		 - aNumber is not a SmallInteger.
+		 - the result cannot be represented exactly as an Integer."
 
 	<primitive: 10>
 	^operand divideIntoInteger: self!
@@ -61,11 +56,8 @@ Wherever an Integer may be represented as a SmallInteger, then its only truly va
 	"Answer the integer quotient defined by division with truncation toward negative
 	infinity.
 
-	Primitive failure codes:
-		0	- aNumber is not a SmallInteger.
-
-	Attempted division by zero will cause a ZeroDivide exception to be
-	raised by the VM."
+	The primitive fails only if aNumber is not a SmallInteger, and does not set the failure code.
+	Attempted division by zero will cause a ZeroDivide exception to be raised by the VM."
 
 	<primitive: 12>
 	^super // aNumber!
@@ -75,11 +67,8 @@ Wherever an Integer may be represented as a SmallInteger, then its only truly va
 	the modulo operation. N.B. This is not the same as the C/C++ modulus operator (%), which always
 	truncates towards zero.
 
-	Primitive failure codes:
-		0 -	aNumber is not a SmallInteger.
-
-	Attempted division by zero will cause a ZeroDivide exception to be
-	raised by the VM."
+	The primitive fails only if aNumber is not a SmallInteger, and does not set the failure code.
+	Attempted division by zero will cause a ZeroDivide exception to be raised by the VM."
 
 	<primitive: 11>
 	^super \\ aNumber!
@@ -88,30 +77,24 @@ _deepCopy: anIdentityDictionary
 	^self!
 
 | anInteger
-	"Answer the result of a bitwise OR between the receiver and the argument, anInteger.
-	N.B. Use of #bitOr: is preferred (even though it is more typing) because it is
-	a special selector (i.e. it is more compact and faster), and is portable.
-
-	Primitive failure codes:
-		0	- anInteger is not a SmallInteger."
+	"Answer the result of a bitwise OR between the receiver and the argument, anInteger. N.B.
+	Use of #bitOr: is preferred (even though it is more typing) because it is a special selector
+	(i.e. it is more compact and faster), and is portable.The primitive fails iff the operand is
+	not a SmallInteger, but does not set the primitive failure code."
 
 	<primitive: 41>
 	^anInteger bitOr: self!
 
 + aNumber
-	"Add the argument, aNumber, to the receiver and answer the result.
-
-	Primitive failure codes:
-		0	- aNumber is not a SmallInteger."
+	"Add the argument, aNumber, to the receiver and answer the result. The primitive fails 
+	iff the operand is not a SmallInteger, but does not set the primitive failure code."
 
 	<primitive: 15>
 	^aNumber addToInteger: self!
 
 < aNumber
-	"Answer whether the receiver is less than the argument, aNumber.
-
-	Primitive failure codes:
-		0	- aNumber is not a SmallInteger."
+	"Answer whether the receiver is less than the argument, aNumber.The primitive fails iff
+	aNumber is not a SmallInteger, and does not set the failure code."
 
 	<primitive: 18>
 	^aNumber greaterThanInteger: self!
@@ -123,58 +106,46 @@ _deepCopy: anIdentityDictionary
 	^self bitShift: anInteger!
 
 <= aNumber
-	"Answer whether the receiver is numerically less than or equal to the argument aNumber.
-
-	Primitive failure codes:
-		0	- aNumber is not a SmallInteger."
+	"Answer whether the receiver is numerically less than or equal to the argument aNumber.The
+	primitive fails iff aNumber is not a SmallInteger, and does not set the failure code."
 
 	<primitive: 20>
 	^super <= aNumber!
 
 = aNumber
-	"Answer whether the receiver is equal to aNumber. Numbers are considered
-	equal if their difference is zero.
-
-	Primitive failure codes:
-		0	- aNumber is not a SmallInteger."
+	"Answer whether the receiver is equal to aNumber. Numbers are considered equal if their
+	difference is zero. The primitive fails iff aNumber is not a SmallInteger, and does not set
+	the failure code."
 
 	<primitive: 16>
 	^super = aNumber!
 
 > aNumber
-	"Answer whether the receiver is greater than the argument, aNumber.
-
-	Primitive failure codes:
-		0	- aNumber is not a SmallInteger."
+	"Answer whether the receiver is greater than the argument, aNumber. The primitive fails iff
+	aNumber is not a SmallInteger, and does not set the failure code."
 
 	<primitive: 19>
 	^super > aNumber!
 
 >= aNumber
-	"Answer whether the receiver is greater than or equal to the argument, aNumber.
-
-	Primitive failure codes:
-		0	- aNumber is not a SmallInteger."
+	"Answer whether the receiver is greater than or equal to the argument, aNumber.The primitive
+	fails iff aNumber is not a SmallInteger, and does not set the failure code."
 
 	<primitive: 17>
 	^super >= aNumber!
 
 allMask: mask
-	"Answer whether all of the bits that are set in the <integer> mask are also set in 
-	the receiver.
-
-	Primitive failure reasons:
-		0 -	mask is not a SmallInteger."
+	"Answer whether all of the bits that are set in the <integer> mask are also set in the
+	receiver.The primitive fails iff the operand is not a SmallInteger, but does not set the
+	primitive failure code."
 
 	<primitive: 146>
 	^super allMask: mask!
 
 anyMask: mask
-	"Answer whether any of the bits that are set in the <integer> mask are also set 
-	in the receiver.
-
-	Primitive failure reasons:
-		0 -	mask is not a SmallInteger."
+	"Answer whether any of the bits that are set in the <integer> mask are also set in the
+	receiver.The primitive fails iff the operand is not a SmallInteger, but does not set the
+	primitive failure code."
 
 	<primitive: 145>
 	^super anyMask: mask!
@@ -184,6 +155,13 @@ asFloat
 
 	<primitive: 168>
 	^self primitiveFailed!
+
+at: index put: value
+	"Replace the receivers indexed instance variable at the argument, index, with the argument,
+	value. Not valid for immediate, objects which are constants. Do not remove this method, as
+	the primitive implementation in Object will behave unexpectedly for immediate objects."
+
+	^self shouldNotImplement!
 
 basicAt: index
 	"Private - Answer the receivers indexed instance variable at the
@@ -202,6 +180,14 @@ basicAt: index put: value
 	will behave unexpectedly for immediate objects."
 
 	^self shouldNotImplement!
+
+basicIdentityHash
+	"Answer the <integer> identity hash value for the receiver (itself)."
+
+	"Implementation Note: We must override because the identity hash primitives do not work for
+	immediate objects."
+
+	^self!
 
 basicShallowCopy
 	"SmallIntegers have an immediate representation - i.e. they have only
@@ -223,21 +209,17 @@ basicYourAddress
 	^self!
 
 bitAnd: anInteger
-	"Answer an Integer whose bits are the logical AND of the receiver's bits
-	and those of the argument anInteger. 
-
-	Primitive failure reasons:
-		0 -	anInteger is not a SmallInteger."
+	"Answer an Integer whose bits are the logical AND of the receiver's bits and those of the
+	argument anInteger. The primitive fails iff the operand is not a SmallInteger, but does not
+	set the primitive failure code."
 
 	<primitive: 40>
 	^anInteger bitAnd: self!
 
 bitOr: anInteger
 	"Answer an Integer whose bits are the logical OR of the receiver's bits
-	and those of the argument anInteger. 
-
-	Primitive failure reasons:
-		0 -	anInteger is not a SmallInteger."
+	and those of the argument anInteger. The primitive fails 
+	iff the operand is not a SmallInteger, but does not set the primitive failure code."
 
 	<primitive: 41>
 	^anInteger bitOr: self!
@@ -249,19 +231,17 @@ bitShift: anInteger
 	A right shift of more than 30 bits will lose all significant bits, so the result will be 0
 	for positive receivers, and -1 for negative receivers (sign extension).
 
-	Primitive failure codes:
-		0 -	anInteger is not a SmallInteger.
-		1 -	the result overflowed the SmallInteger range."
+	The primitive may fail for the following reasons, but does not set the failure code:
+		 - anInteger is not a SmallInteger.
+		 - the result overflowed the SmallInteger range."
 
 	<primitive: 43>
-	^(LargeInteger fromSmallInteger: self) bitShift: anInteger!
+	^(self becomeA: LargeInteger) bitShift: anInteger!
 
 bitXor: mask
 	"Answer an <integer> whose bits are the logical XOR of the receiver's
-	bits and those of the argument, mask.
-
-	Primitive failure codes:
-		0 -	mask is not a SmallInteger."
+	bits and those of the argument, mask.The primitive fails 
+	iff the operand is not a SmallInteger, but does not set the primitive failure code."
 
 	<primitive: 42>
 	^mask bitXor: self!
@@ -324,9 +304,7 @@ highBit
 	it can be implemented in a single instruction in x86 assembler, hence the
 	(very fast) primitive.
 
-	Primitive Failure Reasons:
-		0	- Negative receiver (high bit would always be sign bit!!!!)
-	"
+	The primitive fails only if the receiver is negative, so does not set the failure code."
 
 	<primitive: 54>
 	^self primitiveFailed!
@@ -334,8 +312,8 @@ highBit
 identityHash
 	"Answer the <integer> identity hash value for the receiver (itself)."
 
-	"Implementation Note: We must override because the identity hash primitive does not work
-	for immediate objects."
+	"Implementation Note: We must override because the identity hash primitives do not work for
+	immediate objects."
 
 	^self!
 
@@ -354,6 +332,14 @@ instVarAt: index put: value
 	will behave unexpectedly for SmallIntegers."
 
 	^self shouldNotImplement!
+
+isAtomic
+	"Answer whether or not the receiver it the single unique instance of its class that
+	represents its value."
+
+	"SmallIntegers are encoded in object references, so are effectively atomic."
+
+	^true!
 
 isImmediate
 	"Answer whether the receiver has an immediate representation."
@@ -418,11 +404,8 @@ printString
 quo: aNumber
 	"Answer the integer quotient defined by division with truncation toward zero.
 
-	Primitive failure codes:
-		0 -	aNumber is not a SmallInteger.
-
-	Attempted division by zero will cause a ZeroDivide exception to be
-	raised by the VM."
+	The primitive fails only if aNumber is not a SmallInteger, and does not set the failure code.
+	Attempted division by zero will cause a ZeroDivide exception to be raised by the VM."
 
 	<primitive: 53>
 	^(aNumber quoAndRemFromInteger: self) basicAt: 1
@@ -433,11 +416,8 @@ quoAndRem: aNumber
 	resulting from division of the receiver by the argument with truncation 
 	toward zero.
 
-	Primitive failure codes:
-		0 -	aNumber is not a SmallInteger.
-
-	Attempted division by zero will cause a ZeroDivide exception to be
-	raised by the VM."
+	The primitive fails only if aNumber is not a SmallInteger, and does not set the failure code.
+	Attempted division by zero will cause a ZeroDivide exception to be raised by the VM."
 
 	<primitive: 13>
 	^aNumber quoAndRemFromInteger: self!
@@ -479,8 +459,10 @@ yourAddress
 !SmallInteger categoriesFor: #allMask:!bit manipulation!public! !
 !SmallInteger categoriesFor: #anyMask:!bit manipulation!public! !
 !SmallInteger categoriesFor: #asFloat!converting!public! !
+!SmallInteger categoriesFor: #at:put:!accessing!public! !
 !SmallInteger categoriesFor: #basicAt:!accessing!private! !
 !SmallInteger categoriesFor: #basicAt:put:!accessing!private! !
+!SmallInteger categoriesFor: #basicIdentityHash!comparing!public! !
 !SmallInteger categoriesFor: #basicShallowCopy!copying!public! !
 !SmallInteger categoriesFor: #basicSize!accessing!private! !
 !SmallInteger categoriesFor: #basicYourAddress!accessing!private! !
@@ -498,6 +480,7 @@ yourAddress
 !SmallInteger categoriesFor: #identityHash!comparing!public! !
 !SmallInteger categoriesFor: #instVarAt:!accessing!private! !
 !SmallInteger categoriesFor: #instVarAt:put:!accessing!private! !
+!SmallInteger categoriesFor: #isAtomic!public!testing! !
 !SmallInteger categoriesFor: #isImmediate!public!testing! !
 !SmallInteger categoriesFor: #isZero!public!testing! !
 !SmallInteger categoriesFor: #lowBit!bit manipulation!public! !

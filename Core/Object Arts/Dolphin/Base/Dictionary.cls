@@ -54,13 +54,13 @@ asSet
 		addAll: self; 
 		yourself!
 
-associationAt: key 
+associationAt: key
 	"Answer the association named by the argument, key.  If key is not found,
 	raise an exception."
 
-	| assoc |
-	assoc := self associationAt: key ifAbsent: [AbsentCookie].
-	^assoc == AbsentCookie ifTrue: [self errorKeyNotFound: key] ifFalse: [assoc]!
+	^(self associationAt: key ifAbsent: [])
+		ifNil: [self errorKeyNotFound: key]
+		ifNotNil: [:assoc | assoc]!
 
 associationAt: key ifAbsent: exceptionHandler 
 	"Answer the association named by the argument, key. If key is not found,
@@ -68,15 +68,13 @@ associationAt: key ifAbsent: exceptionHandler
 
 	^(self basicAt: (self findKeyOrNil: key)) ifNil: [exceptionHandler value]!
 
-associationAt: key ifPresent: operation 
+associationAt: key ifPresent: operation
 	"Answer the result of evaluating the monadic valuable, operation, if
 	the argument, key, is the key of an element in the receiver, with that
 	key and element pair as its argument. If the key is not present, then 
 	answer nil."
 
-	| assoc |
-	assoc := self associationAt: key ifAbsent: [AbsentCookie].
-	^assoc == AbsentCookie ifFalse: [operation value: assoc]!
+	^(self associationAt: key ifAbsent: []) ifNotNil: [:assoc | operation value: assoc]!
 
 associationClass
 	"Private - Answer the class of association to be used for holding
@@ -143,6 +141,15 @@ at: key ifAbsentPut: operation
 	| preexisting |
 	preexisting := self at: key ifAbsent: [AbsentCookie].
 	^preexisting == AbsentCookie ifTrue: [self at: key put: operation value] ifFalse: [preexisting]!
+
+at: keyObject ifAbsentPutValue: valueObject
+	"Answer the value of the receiver keyed by the <Object> argument, keyObject.
+	If keyObject is not one of the receiver's keys, then add the <Object>, valueObject,
+	at keyObject, and answer valueObject."
+
+	| preexisting |
+	preexisting := self at: keyObject ifAbsent: [AbsentCookie].
+	^preexisting == AbsentCookie ifTrue: [self at: keyObject put: valueObject] ifFalse: [preexisting]!
 
 at: key ifPresent: operation 
 	"Answer the result of evaluating the monadic valuable, operation, if
@@ -367,6 +374,15 @@ occurrencesOf: anObject
 	self do: [:element | element = anObject ifTrue: [count := count + 1]].
 	^count!
 
+postCopy
+	"Apply any final flourish to the copy that may be required in order to ensure that the copy
+	does not share any state with the original, apart from the elements. For dictionaries this
+	requires that we make copies of the associations as otherwise modifications to the source
+	dictionary will affect the copy, and vice versa"
+
+	1 to: self basicSize
+		do: [:i | (self basicAt: i) ifNotNil: [:assoc | self basicAt: i put: assoc copy]]!
+
 printOn: aStream
 	"Print a string representation of self on aStream. 
 	We must override because we'd like to print out the associations as this
@@ -522,6 +538,7 @@ values
 !Dictionary categoriesFor: #at:!accessing!public! !
 !Dictionary categoriesFor: #at:ifAbsent:!accessing!public! !
 !Dictionary categoriesFor: #at:ifAbsentPut:!accessing!public! !
+!Dictionary categoriesFor: #at:ifAbsentPutValue:!accessing!public! !
 !Dictionary categoriesFor: #at:ifPresent:!accessing!public! !
 !Dictionary categoriesFor: #at:put:!accessing!public! !
 !Dictionary categoriesFor: #atAll:put:!accessing!public! !
@@ -548,6 +565,7 @@ values
 !Dictionary categoriesFor: #keysDo:!enumerating!public! !
 !Dictionary categoriesFor: #newAssociation:value:!helpers!private! !
 !Dictionary categoriesFor: #occurrencesOf:!public!searching! !
+!Dictionary categoriesFor: #postCopy!copying!public! !
 !Dictionary categoriesFor: #printOn:!printing!public! !
 !Dictionary categoriesFor: #remove:ifAbsent:!public!removing! !
 !Dictionary categoriesFor: #removeAllKeys:!public!removing! !

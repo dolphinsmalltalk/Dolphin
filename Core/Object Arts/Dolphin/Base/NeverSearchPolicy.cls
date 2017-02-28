@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 SingletonSearchPolicy subclass: #NeverSearchPolicy
 	instanceVariableNames: ''
@@ -16,12 +16,4 @@ compare: operand1 with: operand2
 
 	^false! !
 !NeverSearchPolicy categoriesFor: #compare:with:!comparing!public! !
-
-!NeverSearchPolicy class methodsFor!
-
-current
-	"Answer the singleton instance of the receiver."
-
-	^self never! !
-!NeverSearchPolicy class categoriesFor: #current!instance creation!public! !
 

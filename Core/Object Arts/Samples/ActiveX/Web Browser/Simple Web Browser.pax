@@ -39,7 +39,6 @@ package setPrerequisites: (IdentitySet new
 	add: '..\..\..\Dolphin\MVP\Models\Value\Dolphin Value Models';
 	add: '..\..\..\Dolphin\ActiveX\Components\SHDocVw\Internet Explorer';
 	add: '..\..\..\Dolphin\ActiveX\COM\OLE COM';
-	add: '..\..\..\Dolphin\ActiveX\Shell\Windows Shell';
 	yourself).
 
 package!

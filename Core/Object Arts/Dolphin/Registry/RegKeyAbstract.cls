@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Dictionary variableSubclass: #RegKeyAbstract
 	instanceVariableNames: 'handle name rootKey parentPath keyInfo sam'
@@ -274,6 +274,15 @@ pathFromRoot
 	^self isRoot 
 		ifTrue: ['']
 		ifFalse: [parentPath isEmpty ifTrue: [name] ifFalse: [(parentPath copyWith: $\) , name]]!
+
+postCopy
+	"Apply any final flourish to the copy that may be required in order to ensure that the copy
+	does not share any state with the original, apart from the elements."
+
+	"Implementation note: We don't want to inherit the Dictionary implementation as this is a
+	proxy for the registry."
+
+	^self!
 
 printOn: aStream
 	"Append a short textual description of the receiver to aStream."
@@ -707,25 +716,26 @@ valueAt: aString put: anObject type: aSymbol
 	size > info maxValueLen ifTrue: [info maxValueLen: size].
 	^anObject!
 
-valueFromObject: value 
+valueFromObject: value
 	"Private - This is nasty, but we don't want to modify the base classes to support a
 	conversion function..."
 
 	value isNil ifTrue: [^#none -> #[]].
-	value isInteger 
+	value isInteger
 		ifTrue: 
-			[(value between: ##(-2 ** 31) and: ##(2 ** 31 - 1)) 
+			[(value between: ##(-2 ** 31) and: ##(2 ** 31 - 1))
 				ifTrue: [^#dword -> (DWORD fromInteger: value)]
 				ifFalse: 
-					[(value between: ##(-2 ** 63) and: ##(2 ** 63 - 1)) ifTrue: [^#qword -> (QWORD fromInteger: value)]]].
+					[(value between: ##(-2 ** 63) and: ##(2 ** 63 - 1))
+						ifTrue: [^#qword -> (LARGE_INTEGER fromInteger: value)]]].
 	(value isKindOf: String) ifTrue: [^#string -> value].
-	(value isKindOf: Array) 
+	(value isKindOf: Array)
 		ifTrue: 
 			["Assume its an array of strings"
 			| stream |
 			stream := String writeStream.
 			value do: 
-					[:each | 
+					[:each |
 					stream
 						display: each;
 						nextPut: Character null].
@@ -764,6 +774,7 @@ valueFromObject: value
 !RegKeyAbstract categoriesFor: #parentKey!accessing!public! !
 !RegKeyAbstract categoriesFor: #parentPath!accessing!public! !
 !RegKeyAbstract categoriesFor: #pathFromRoot!accessing!public! !
+!RegKeyAbstract categoriesFor: #postCopy!copying!public! !
 !RegKeyAbstract categoriesFor: #printOn:!printing!public! !
 !RegKeyAbstract categoriesFor: #privateCreateKey:!helpers!private! !
 !RegKeyAbstract categoriesFor: #queryKeyInfo!accessing!public! !

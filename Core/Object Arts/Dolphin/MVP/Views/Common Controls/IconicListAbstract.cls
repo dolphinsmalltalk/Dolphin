@@ -5,7 +5,7 @@ ListControlView subclass: #IconicListAbstract
 	classVariableNames: 'ViewModes'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-IconicListAbstract guid: (GUID fromString: '{87B4C728-026E-11D3-9FD7-00A0CC3E4A32}')!
+IconicListAbstract guid: (GUID fromString: '{87b4c728-026e-11d3-9fd7-00a0cc3e4a32}')!
 IconicListAbstract comment: 'IconicListAbstract is an abstract class whose subclasses implement various Windows iconic list common controls.
 
 Each of the subclasses of IconicListAbstract are capable of displaying the list items in an iconic form with associated descriptive text. The list determines the text for an item by mapping it via its #getTextBlock aspect. Similarly, the image for an item can be determined by setting an appropriate #getImageBlock. This is a <monadicValuable> which must map a particular item to an image index. The images are held in an <ImageManager> set into the #imageManager aspect.
@@ -382,8 +382,10 @@ nmBeginDrag: pNMHDR
 
 	| nm |
 	nm := self notificationClass fromAddress: pNMHDR.
-	self isDragSource ifTrue: [
-		self onBegin: #left drag: (self objectFromHandle: nm itemHandle)].
+	self isDragSource
+		ifTrue: 
+			[(self objectFromHandle: nm itemHandle ifAbsent: [])
+				ifNotNil: [:dragee | self onBegin: #left drag: dragee]].
 	^nil!
 
 nmBeginLabelEdit: pNMHDR
@@ -443,28 +445,28 @@ nmDeleteItem: pNMHDR
 
 	^nil!
 
-nmEndLabelEdit: pNMHDR 
+nmEndLabelEdit: pNMHDR
 	"Private - Default handler for the ?VN_ENDLABELEDIT notification message. Note that we don't
 	forward the event to the presenter if the edit was cancelled, or if the text wasn't actually
 	changed. N.B. This notification is not necessarily sent by all subclasses."
 
 	| item object text |
-	item := (self dispInfoClass fromAddress: pNMHDR) item.
+	item := self dispInfoClass itemFromNMHDR: pNMHDR.
 	text := item pszText.
 	self canEditLabels ifFalse: [self disableLabelEdit].
-	text isNil 
+	text isNil
 		ifTrue: 
 			["Edit cancelled"
 			^nil].
 	object := self objectFromHandle: item handle.
-	^text = (self getTextBlock value: object) displayString 
+	^text = (self getTextBlock value: object) displayString
 		ifFalse: [self presenter onLabelOf: object editedTo: text]!
 
 nmGetDispInfo: pNMHDR
 	"Private - Handler for a ?VN_GETDISPINFO notification message.
 	N.B. This notification is not necessarily sent by all subclasses."
 
-	^self onDisplayDetailsRequired: (self dispInfoClass fromAddress: pNMHDR) item!
+	^self onDisplayDetailsRequired: (self dispInfoClass itemFromNMHDR: pNMHDR)!
 
 nmSelChanged: anExternalAddress 
 	"Private - Default handler for the ??N_SELCHANGED notification message.
@@ -476,7 +478,7 @@ nmSetDispInfo: pNMHDR
 	"Private - Default handler for the ?VN_SETDISPINFO notification message.
 	Forward as an onDisplayDetailsChanged: event."
 
-	^self onDisplayDetailsChanged: (self dispInfoClass fromAddress: pNMHDR) item!
+	^self onDisplayDetailsChanged: (self dispInfoClass itemFromNMHDR: pNMHDR)!
 
 notificationClass
 	"Private - Answer the class of NMHDR associated with certain notifications sent

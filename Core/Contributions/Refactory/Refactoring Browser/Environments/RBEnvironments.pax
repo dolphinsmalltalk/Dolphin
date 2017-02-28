@@ -16,6 +16,7 @@ package classNames
 	add: #CategoryEnvironment;
 	add: #ClassEnvironment;
 	add: #NotEnvironment;
+	add: #OrEnvironment;
 	add: #ProtocolEnvironment;
 	add: #SelectorEnvironment;
 	add: #VariableEnvironment;
@@ -77,6 +78,11 @@ BrowserEnvironmentWrapper subclass: #ClassEnvironment
 	classInstanceVariableNames: ''!
 BrowserEnvironmentWrapper subclass: #NotEnvironment
 	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+BrowserEnvironmentWrapper subclass: #OrEnvironment
+	instanceVariableNames: 'oredEnvironment'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -145,7 +151,7 @@ selectorsAndMethodsDo: aDyadicValuable
 	"Evaluate the <dyadicValuable> argument for each of the selector/method pairs in 
 	the receiver's method dictionary."
 
-	^methodDictionary keysAndValuesDo: aDyadicValuable!
+	^methodDictionary ifNotNil: [methodDictionary keysAndValuesDo: aDyadicValuable]!
 
 subBehaviors
 	"Answer a <collection> containing the receiver's immediate subclasses."

@@ -5,7 +5,7 @@ Object subclass: #SmalltalkParser
 	classVariableNames: 'MaxPrimIndex MaxVfn'
 	poolDictionaries: 'ExtCallArgTypes SmalltalkParseErrorCodes'
 	classInstanceVariableNames: ''!
-SmalltalkParser guid: (GUID fromString: '{F15A9F2F-3A15-47CD-8EF9-0534B6F91C17}')!
+SmalltalkParser guid: (GUID fromString: '{f15a9f2f-3a15-47cd-8ef9-0534b6f91c17}')!
 SmalltalkParser comment: 'Instance Variables:
 	scanner		<SmalltalkScanner> performing lexical analysis over the source text
 	currentToken	<StToken>
@@ -70,13 +70,11 @@ errorBlock: aBlock
 errorPosition
 	^currentToken start!
 
-evaluateStatements: anStSequenceNode 
+evaluateStatements: anStSequenceNode
 	methodClass isNil ifTrue: [^nil].
 	^
-	[Compiler 
-		evaluate: (self source copyFrom: anStSequenceNode start to: anStSequenceNode stop)
-		for: methodClass instanceClass
-		logged: false] 
+	[Compiler evaluate: (self source copyFrom: anStSequenceNode start to: anStSequenceNode stop)
+		for: methodClass instanceClass]
 			on: Error
 			do: [:ex | self parserError: CErrErrorInStaticExpression range: anStSequenceNode sourceInterval]!
 

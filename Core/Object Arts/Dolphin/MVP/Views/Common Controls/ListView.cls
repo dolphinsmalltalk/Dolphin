@@ -6,6 +6,7 @@ IconicListAbstract subclass: #ListView
 	poolDictionaries: 'ListViewConstants'
 	classInstanceVariableNames: ''!
 ListView guid: (GUID fromString: '{87B4C730-026E-11D3-9FD7-00A0CC3E4A32}')!
+ListView addClassConstant: 'LvnMap' value: #(#lvnItemChanging: #lvnItemChanged: #lvnInsertItem: #nmDeleteItem: #lvnDeleteAllItems: #nmBeginLabelEdit: #nmEndLabelEdit: #nmDummy: #lvnColumnClick: #nmBeginDrag: #nmDummy: #nmBeginRDrag: #nmDummy: #nmDummy: #lvnItemActivate: #lvnODStateChanged: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmGetDispInfo: #nmSetDispInfo: #lvnFindItem: #nmDummy: #nmDummy: #nmKeyDown: #lvnMarqueeBegin: #lvnGetInfoTip:)!
 ListView comment: 'ListView is the <listView> implementing the Windows "SysListView32" common control. It is for single selection use and, therefore, implements the <selectableItems> protocol for use with any <listModel>.
 
 A ListView is capable of displaying it items in one of four modes (#smallIcons, #largeIcons, #list, #report) which can be set using the #viewMode aspect. In the first three of these modes the list effectively has only one column being displayed; this is the primary column. Columns are described using instances of ListViewColumn. See the comment for this class for details on how to set up a column to display the appropriate information for a list item.
@@ -499,7 +500,7 @@ ensureSelectionVisible
 	| caret selected |
 	caret := self caretIndex.
 	selected := self selectionsByIndex.
-	self ensureVisible: ((selected isEmpty or: [selected includes: caret]) 
+	self ensureVisible: ((selected isEmpty or: [selected includes: caret])
 				ifTrue: [caret]
 				ifFalse: [selected first])!
 
@@ -797,19 +798,20 @@ iconSpacing: aPointOrNil
 	self fontChanged.
 !
 
-imageFromRow: item 
+imageFromRow: item
 	"Private - Answer the image for row which represents the <Object>, item.
 	As of Dolphin 3.0 the image block is permitted to be nil for the common case
 	where the list does not have images."
 
 	self viewMode == #thumbnails ifTrue: [^self getThumbnailOf: item].
-
-	KernelLibrary isWine ifTrue: [
-		#wineFix.
-		"Wine ListViews seem to expect image indices to always be set in ListView>>onDisplayDetailsRequired:, 
-		even if we don't want images to appear. Normally, we answer nil here if no image is required. 
-		In Wine we must answer an image index of 0"
-		getImageBlock ifNil: [^0]].
+	NTLibrary isWine
+		ifTrue: 
+			[#wineFix.
+			"Wine ListViews seem to expect image indices to always be set in
+			ListView>>onDisplayDetailsRequired:, even if we don't want images to appear.
+			Normally, we answer nil here if no image is required. In Wine we must answer
+			an image index of 0"
+			getImageBlock ifNil: [^0]].
 	^self getImageBlock isNil ifFalse: [getImageBlock value: item]!
 
 indentFromRow: item
@@ -906,15 +908,18 @@ isMultiSelect
 
 	^self baseStyle noMask: LVS_SINGLESEL!
 
-isMultiSelect: aBoolean 
+isMultiSelect: aBoolean
 	"Set whether the receiver is in multiple or single selection mode."
 
-	| isSingleSelect |
+	| isSingleSelect primary |
 	self isMultiSelect = aBoolean ifTrue: [^self].
-	"If switching to single-select from multi-select we must remove all but one of the
-	selections, since the view does not do this itself."
-	isSingleSelect := aBoolean not.
-	self 
+	(isSingleSelect := aBoolean not)
+		ifTrue: 
+			["If switching to single-select from multi-select we must remove all but one
+			 of the selections, since the view does not do this itself."
+			primary := self primarySelectionIndex.
+			self selectionByIndex: primary].
+	self
 		baseStyleMask: LVS_SINGLESEL
 		set: isSingleSelect
 		recreateIfChanged: false!
@@ -1476,15 +1481,18 @@ nmClick: pNMHDR
 	self isMultiSelect ifTrue: [self maybeSelChanging: #mouse].
 	^super nmClick: pNMHDR!
 
-nmNotify: pNMHDR 
+nmNotify: pNMHDR
 	"Private - Handler for a redirected ListView WM_NOTIFY message.
 	Implementation Note: Rather than create the appropriate header structure
 	object here, we delay that until the handler, because most of the time
 	we don't need to look at the notification at all."
 
-	^(LvnMap at: LVN_FIRST - (pNMHDR sdwordAtOffset: 8) + 1 ifAbsent: []) 
-		ifNil: [super nmNotify: pNMHDR]
-		ifNotNil: [:action | self perform: action with: pNMHDR]!
+	| code |
+	code := pNMHDR sdwordAtOffset: 8.
+	"Note that the notification codes are negative"
+	^(code <= LVN_FIRST and: [code >= LVN_GETINFOTIPA])
+		ifTrue: [self perform: (LvnMap at: ##(LVN_FIRST + 1) - code) with: pNMHDR]
+		ifFalse: [super nmNotify: pNMHDR]!
 
 nmRClick: pNMHDR 
 	"Private - Handler for a NM_RCLICK notification message.
@@ -1731,6 +1739,17 @@ primaryColumn
 
 	^self allColumns first!
 
+primarySelectionIndex
+	"Answer the index of the selected item with focus, or zero if there is no selection."
+
+	| caret selected |
+	selected := self selectionsByIndex.
+	^selected isEmpty
+		ifTrue: [0]
+		ifFalse: 
+			[caret := self caretIndex.
+			(selected includes: caret) ifTrue: [caret] ifFalse: [selected first]]!
+
 queryCommand: aCommandQuery
 	"Update aCommandQuery to indicates how a command would be processed.
 	if sent to the receiver. Answers whether the receiver recognised the command
@@ -1828,14 +1847,14 @@ selectedCount
 
 	^self sendMessage: LVM_GETSELECTEDCOUNT!
 
-selectIndex: anInteger set: aBoolean 
+selectIndex: anInteger set: aBoolean
 	"Private - Set/reset the selection state of the object at the specified one-based <integer>
 	index within the receiver according to the <boolean> argument."
 
 	| anLvItem mask |
 	anLvItem := LVITEM new.
 	mask := ##(LVIS_SELECTED | LVIS_FOCUSED).
-	KernelLibrary isWine 
+	NTLibrary isWine
 		ifTrue: 
 			["Having autoSelectPackages option turned on in System Browser gives
 			unpleasant scrolling effect when many multiple packages are selected. This
@@ -1847,25 +1866,6 @@ selectIndex: anInteger set: aBoolean
 	anLvItem stateMask: mask.
 	aBoolean ifTrue: [anLvItem dwState: mask].
 	self lvmSetItem: anInteger - 1 state: anLvItem!
-
-selectionByIndex: anInteger ifAbsent: exceptionHandler 
-	"Select the object identified by the specified <integer> index in the receiver. If the index
-	is zero then all selections are cleared. "
-
-	(lastSelIndices includes: anInteger) 
-		ifFalse: 
-			[| newSelIndices |
-			anInteger = self noSelection 
-				ifTrue: 
-					[self basicResetSelection.
-					newSelIndices := #()]
-				ifFalse: 
-					[(anInteger between: 1 and: self size) ifFalse: [^exceptionHandler value].
-					self ensureVisible: anInteger.
-					newSelIndices := Array with: anInteger.
-					self basicSelectionsByIndex: newSelIndices].
-			self onSelChanged].
-	^anInteger!
 
 selectionFromPoint: pos
 	"Private - Answer the <integer> selection that would occur if a mouse click at the
@@ -2340,6 +2340,7 @@ wantCustomDrawItemNotifications: pNMHDR
 !ListView categoriesFor: #onViewCreated!event handling!public! !
 !ListView categoriesFor: #onVScroll:!event handling!public! !
 !ListView categoriesFor: #primaryColumn!columns!private! !
+!ListView categoriesFor: #primarySelectionIndex!public!selection! !
 !ListView categoriesFor: #queryCommand:!commands!public! !
 !ListView categoriesFor: #refreshContents!public!updating! !
 !ListView categoriesFor: #refreshNonVirtual!private!updating! !
@@ -2352,7 +2353,6 @@ wantCustomDrawItemNotifications: pNMHDR
 !ListView categoriesFor: #selectAll!public!selection! !
 !ListView categoriesFor: #selectedCount!private!selection! !
 !ListView categoriesFor: #selectIndex:set:!private!selection!wine fix! !
-!ListView categoriesFor: #selectionByIndex:ifAbsent:!public!selection! !
 !ListView categoriesFor: #selectionFromPoint:!event handling!private! !
 !ListView categoriesFor: #selections:ifAbsent:!public!selection! !
 !ListView categoriesFor: #selectionsByIndex:ifAbsent:!public!selection! !
@@ -2403,7 +2403,6 @@ initialize
 		self initialize
 	"
 
-	self initializeNotificationMap.
 	LvModes := (IdentityDictionary new)
 				at: #thumbnails put: LVS_ICON;
 				at: #smallIcons put: LVS_SMALLICON;
@@ -2425,7 +2424,8 @@ initializeNotificationMap
 	"Implementation Note: Use an Array for best lookup performance since the notification
 	nodes are in a contiguous range, even if it is a little sparse"
 
-	LvnMap := (Array new: 58)
+	| lvnMap |
+	lvnMap := (Array new: 58)
 				at: LVN_FIRST - LVN_ITEMCHANGING + 1 put: #lvnItemChanging:;
 				at: LVN_FIRST - LVN_ITEMCHANGED + 1 put: #lvnItemChanged:;
 				at: LVN_FIRST - LVN_INSERTITEM + 1 put: #lvnInsertItem:;
@@ -2447,7 +2447,8 @@ initializeNotificationMap
 				at: LVN_FIRST - LVN_MARQUEEBEGIN + 1 put: #lvnMarqueeBegin:;
 				at: LVN_FIRST - LVN_GETINFOTIPA + 1 put: #lvnGetInfoTip:;
 				yourself.
-	LvnMap := LvnMap collect: [:each | each isNil ifTrue: [#nmDummy:] ifFalse: [each]]!
+	lvnMap := lvnMap collect: [:each | each isNil ifTrue: [#nmDummy:] ifFalse: [each]].
+	self addClassConstant: 'LvnMap' value: lvnMap!
 
 onStartup
 	"The system is starting: Register a message to be used for cancelling a selection after

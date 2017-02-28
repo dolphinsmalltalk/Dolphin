@@ -931,7 +931,7 @@ browseReferencesToVariable: anAssociation
 
 	self browseReferencesToLiteral: anAssociation in: self systemEnvironment!
 
-browserEnvFromDom: anIXMLDOMDocument 
+browserEnvFromDom: anIXMLDOMDocument
 	| manifest classes env exeName time |
 	manifest := anIXMLDOMDocument selectSingleNode: './/Manifest'.
 	classes := manifest selectNodes: 'Classes/Class'.
@@ -940,12 +940,12 @@ browserEnvFromDom: anIXMLDOMDocument
 	time := (anIXMLDOMDocument selectSingleNode: './/TimeStamp') text.
 	env label: ('<1s> (<2s>)' expandMacrosWith: exeName with: time).
 	classes do: 
-			[:each | 
+			[:each |
 			| methods className classMethods |
-			className := (each selectSingleNode: 'Name') text asSymbol.
+			className := (each getAttribute: 'name') asSymbol.
 			Smalltalk at: className
 				ifPresent: 
-					[:class | 
+					[:class |
 					methods := each selectNodes: 'Methods/Method'.
 					env addClass: class selectors: (methods collect: [:eachMethod | eachMethod text asSymbol]).
 					classMethods := each selectNodes: 'ClassMethods/Method'.
@@ -1685,6 +1685,11 @@ deleteResource: aResourceIdentifier
 				, aResourceIdentifier storeString.
 	self resourceManager removeResource: aResourceIdentifier!
 
+deprecatedMethodIcon
+	"Private - Answers an Icon that can be used to represent a deprecated method"
+
+	^Icon fromId: 'COMPILEDMETHOD_DEPRECATED.ICO'!
+
 disassembleMethod: aCompiledCode 
 	^'Disassembly is only available in Dolphin Professional'!
 
@@ -1703,13 +1708,13 @@ dolphinNewsgroup
 dolphinWikiWeb
 	self openUrl: self sessionManager dolphinWikiUrl!
 
-dropClassFile: aString 
-	(MessageBox 
+dropClassFile: aString
+	(MessageBox
 		confirm: ('File in <1p>?<n><n>If the class is new it will be <2s>.' expandMacrosWith: aString
-				with: (self packageManager defaultPackage 
+				with: (self packageManager defaultPackage
 						ifNil: ['unpackaged']
-						ifNotNil: [:pkg | 'added to the default package (<1d>)' expandMacrosWith: pkg]))) 
-			ifTrue: [self sourceManager fileIn: aString]!
+						ifNotNil: [:pkg | 'added to the default package (<1d>)' expandMacrosWith: pkg])))
+			ifTrue: [self sourceManager fileIn: aString normalizeLineEndings: true]!
 
 dropFile: aString 
 	[ShellLibrary default shellOpen: aString] on: Win32Error
@@ -1748,14 +1753,14 @@ fileFileIn
 	| filename |
 	filename := (FileOpenDialog new)
 				caption: 'File in...';
-				fileTypes: (Array 
+				fileTypes: (Array
 							with: self smalltalkFilesType
 							with: self classFilesType
 							with: FileDialog allFilesType);
 				defaultExtension: '';
 				showModal.
-	filename notNil 
-		ifTrue: [Cursor wait showWhile: [self sourceManager fileIn: filename]]!
+	filename notNil
+		ifTrue: [Cursor wait showWhile: [self sourceManager fileIn: filename normalizeLineEndings: true]]!
 
 fileNew
 	"Basic implementation of context-sensitive file-new command. Tools typically implement
@@ -1887,6 +1892,12 @@ hierarchyBrowserClass: toolClass
 	to be used by default in the development environment."
 
 	hierarchyBrowserClass := toolClass!
+
+iconForMethod: aCompiledMethod
+	"Answer an icon that can be used to represent the <CompiledMethod> argument in a development environment."
+
+	(self isDeprecatedMethod: aCompiledMethod) ifTrue: [^self deprecatedMethodIcon].
+	^aCompiledMethod isPrivate ifTrue: [self privateMethodIcon] ifFalse: [self publicMethodIcon]!
 
 ideaSpaceFilesType
 	"Private - Answer a two element array suitable for adding to the FileDialog
@@ -2037,6 +2048,13 @@ interruptHotKey: anInteger
 	go badly."
 
 	VMLibrary default registryAt: #interruptHotKey put: anInteger!
+
+isDeprecatedMethod: aCompiledMethod
+	"Answer whether the <CompiledMethod> argument is marked as being deprecated.
+	This is based on whether a reference to the symbol, #deprecated, is found
+	in the method, for which we use a ReferencesCategory."
+
+	^MethodCategory deprecatedMethods includesMethod: aCompiledMethod!
 
 isOAD
 	"Private - Is this an Object Arts Development version"
@@ -2843,6 +2861,11 @@ printSignatureForKeywordsAndArgs: keywordsAndArgs on: aWriteStream
 						space]].
 	aWriteStream pop!
 
+privateMethodIcon
+	"Private - Answers an Icon that can be used to represent a private method."
+
+	^Icon fromId: 'COMPILEDMETHOD_PRIVATE.ICO'!
+
 privatePrefix
 	"Private - Answer the prefix to be used in the comments of private methods."
 
@@ -3030,6 +3053,11 @@ publicizeMethod: aCompiledMethod
 		ifTrue: 
 			[catClass public addMethod: aCompiledMethod.
 			aCompiledMethod storeCategories]!
+
+publicMethodIcon
+	"Private - Answers an Icon that can be used to represent a public method"
+
+	^Icon fromId: 'COMPILEDMETHOD_PUBLIC.ICO'!
 
 queryCommand: aCommandQuery 
 	"Private - Enter details about a potential command for the receiver into the <CommandQuery>."
@@ -4054,6 +4082,7 @@ wrapText: aString toWidth: max indent: colInteger tabWidth: tabInteger
 !SmalltalkSystem categoriesFor: #definitionsOf:!browsing!private! !
 !SmalltalkSystem categoriesFor: #deleteClassHierarchy:!operations!public! !
 !SmalltalkSystem categoriesFor: #deleteResource:!browsing!commands!public! !
+!SmalltalkSystem categoriesFor: #deprecatedMethodIcon!constants!development!private! !
 !SmalltalkSystem categoriesFor: #disassembleMethod:!public! !
 !SmalltalkSystem categoriesFor: #disassemblyStylerClass!constants!public! !
 !SmalltalkSystem categoriesFor: #displayOn:!displaying!public! !
@@ -4086,6 +4115,7 @@ wrapText: aString toWidth: max indent: colInteger tabWidth: tabInteger
 !SmalltalkSystem categoriesFor: #helpWhatsThis!commands!public! !
 !SmalltalkSystem categoriesFor: #hierarchyBrowserClass!options!public! !
 !SmalltalkSystem categoriesFor: #hierarchyBrowserClass:!options!public! !
+!SmalltalkSystem categoriesFor: #iconForMethod:!development!helpers!public! !
 !SmalltalkSystem categoriesFor: #ideaSpaceFilesType!constants!private! !
 !SmalltalkSystem categoriesFor: #imageFilesType!constants!private! !
 !SmalltalkSystem categoriesFor: #initialize!initializing!private! !
@@ -4100,6 +4130,7 @@ wrapText: aString toWidth: max indent: colInteger tabWidth: tabInteger
 !SmalltalkSystem categoriesFor: #instVarWriterFilter:in:!helpers!private! !
 !SmalltalkSystem categoriesFor: #interruptHotKey!options!public! !
 !SmalltalkSystem categoriesFor: #interruptHotKey:!options!public! !
+!SmalltalkSystem categoriesFor: #isDeprecatedMethod:!public!testing! !
 !SmalltalkSystem categoriesFor: #isOAD!accessing!private!product! !
 !SmalltalkSystem categoriesFor: #isRegisteredTool:!public!testing! !
 !SmalltalkSystem categoriesFor: #isValidClassVarName:for:!enquiries!helpers!private!refactoring! !
@@ -4186,6 +4217,7 @@ wrapText: aString toWidth: max indent: colInteger tabWidth: tabInteger
 !SmalltalkSystem categoriesFor: #preferAlternateInspectors!accessing!public! !
 !SmalltalkSystem categoriesFor: #preferAlternateInspectors:!accessing!public! !
 !SmalltalkSystem categoriesFor: #printSignatureForKeywordsAndArgs:on:!autocompletion!helpers!private! !
+!SmalltalkSystem categoriesFor: #privateMethodIcon!constants!development!private! !
 !SmalltalkSystem categoriesFor: #privatePrefix!constants!private! !
 !SmalltalkSystem categoriesFor: #privatizeMethod:!operations!private! !
 !SmalltalkSystem categoriesFor: #promptForClass!enquiries!public! !
@@ -4199,6 +4231,7 @@ wrapText: aString toWidth: max indent: colInteger tabWidth: tabInteger
 !SmalltalkSystem categoriesFor: #protocolBrowserClass!options!public! !
 !SmalltalkSystem categoriesFor: #protocolBrowserClass:!options!public! !
 !SmalltalkSystem categoriesFor: #publicizeMethod:!operations!private! !
+!SmalltalkSystem categoriesFor: #publicMethodIcon!constants!development!private! !
 !SmalltalkSystem categoriesFor: #queryCommand:!commands!private! !
 !SmalltalkSystem categoriesFor: #redoChange!commands!public! !
 !SmalltalkSystem categoriesFor: #referencesMatching:in:!browsing!private! !

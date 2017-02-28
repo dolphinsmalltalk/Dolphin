@@ -181,7 +181,7 @@ asSortedCollection
 		addAll: self; 
 		yourself!
 
-asSortedCollection: aDyadicValuable 
+asSortedCollection: aDyadicValuable
 	"Answer a <SortedCollection> whose elements are those of the receiver, sorted according to 
 	the <dynadicValuable> argument, sortBlock.
 	Exceptions may occur if any of the elements of the receiver are not
@@ -189,7 +189,7 @@ asSortedCollection: aDyadicValuable
 	Note: The argument does not need to be a BlockClosure, it must simply
 	understand the #value:value: message from the dyadic valuable protocol."
 
-	^self asSortedCollectionUsing: (self class defaultSortAlgorithmClass sortBlock: aDyadicValuable)!
+	^self asSortedCollectionUsing: (self class defaultSortAlgorithmClass newSortBlock: aDyadicValuable)!
 
 asSortedCollectionUsing: aSortAlgorithm 
 	"Answer a <SortedCollection> whose elements are those of the receiver, sorted using the
@@ -604,7 +604,7 @@ union: comperand
 !Collection categoriesFor: #copyEmpty!copying!public! !
 !Collection categoriesFor: #copyEmpty:!copying!private! !
 !Collection categoriesFor: #copyLike!enumerating!private! !
-!Collection categoriesFor: #copyLike:!enumerating!private! !
+!Collection categoriesFor: #copyLike:!copying!private! !
 !Collection categoriesFor: #copySize!copying!private! !
 !Collection categoriesFor: #copyWithoutDuplicates!copying!public! !
 !Collection categoriesFor: #countElements!accessing!private! !
@@ -664,8 +664,7 @@ icon
 initialize
 	"Private - Initialize the receiver's class variables."
 
-	AbsentCookie := Object new
-!
+	self addClassConstant: 'AbsentCookie' value: Object new!
 
 with: element1
 	"Answer an instance of the receiver containing the <Object>, element1.

@@ -33,32 +33,40 @@ buildErrorInfo
 	 a 'reduced' error is created using the return code from function
 	 which caused the error"
 
-	(code ~~ SQL_SUCCESS and: [code ~~ SQL_INVALID_HANDLE]) 
-		ifTrue: 
-			[| szSqlState fNativeError szErrorMsg cbErrorMsg |
-			szSqlState := String new: SQL_STATE_SIZE + 1.
-			szErrorMsg := String new: 512.
-			cbErrorMsg := SWORD new.
-			fNativeError := SDWORD new.
-			
-			[(ODBCLibrary default 
-				sqlError: hEnv
-				hdbc: hDBC
-				hstmt: hStmt
-				szSqlState: szSqlState
-				pfNativeError: fNativeError
-				szErrorMsg: szErrorMsg
-				cbErrorMsgMax: szErrorMsg size
-				pcbErrorMsg: cbErrorMsg) = SQL_SUCCESS] 
-					whileTrue: 
-						[| newErr |
-						newErr := DBErrorDetails 
-									fromSQLError: (szErrorMsg copyFrom: 1 to: cbErrorMsg asInteger).
-						newErr
-							nativeErr: fNativeError asInteger;
-							sqlState: (szSqlState copyFrom: 1 to: 5).
-						self addErrorDetails: newErr]].
-	errors isNil ifTrue: [self retCodeError: code]!
+	(code ~~ SQL_SUCCESS and: [code ~~ SQL_INVALID_HANDLE]) ifTrue:
+			[hEnv isNull ifFalse: [self buildErrorInfoFrom: hEnv type: SQL_HANDLE_ENV].
+			hDBC isNull ifFalse: [self buildErrorInfoFrom: hDBC type: SQL_HANDLE_DBC].
+			hStmt isNull ifFalse: [self buildErrorInfoFrom: hStmt type: SQL_HANDLE_STMT]].
+	errors isNil ifTrue: [self retCodeError: code].!
+
+buildErrorInfoFrom: anExternalHandle type: anIntegerHandleType
+	"Private - Retrieve all error information available from the ODBC Driver
+	 for <anExternalHandle>, which is of type <anIntegerHandleType>"
+
+	| szSqlState fNativeError szErrorMsg cbErrorMsg recNumber |
+	szSqlState := String new: SQL_STATE_SIZE + 1.
+	szErrorMsg := String new: 512.
+	cbErrorMsg := SWORD new.
+	fNativeError := SDWORD new.
+	recNumber := 1.
+	
+	[(ODBCLibrary default
+		sqlGetDiagRec: anIntegerHandleType
+		handle: anExternalHandle
+		recNumber: recNumber
+		szSqlState: szSqlState
+		pfNativeError: fNativeError
+		szErrorMsg: szErrorMsg
+		cbErrorMsgMax: szErrorMsg size
+		pcbErrorMsg: cbErrorMsg) = SQL_SUCCESS] 
+			whileTrue:
+				[| newErr |
+				newErr := DBErrorDetails fromSQLError: (szErrorMsg copyFrom: 1 to: cbErrorMsg asInteger).
+				newErr
+					nativeErr: fNativeError asInteger;
+					sqlState: (szSqlState copyFrom: 1 to: 5).
+				self addErrorDetails: newErr.
+				recNumber := recNumber + 1].!
 
 code
 	"Answer the code instance variable."
@@ -129,6 +137,7 @@ retCodeError: anInteger
 			yourself)! !
 !DBExceptionDetails categoriesFor: #addErrorDetails:!operations!private! !
 !DBExceptionDetails categoriesFor: #buildErrorInfo!operations!private! !
+!DBExceptionDetails categoriesFor: #buildErrorInfoFrom:type:!operations!private! !
 !DBExceptionDetails categoriesFor: #code!accessing!public! !
 !DBExceptionDetails categoriesFor: #code:!accessing!private! !
 !DBExceptionDetails categoriesFor: #errors!accessing!public! !

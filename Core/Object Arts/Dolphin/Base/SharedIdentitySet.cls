@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 SharedSet variableSubclass: #SharedIdentitySet
 	instanceVariableNames: ''
@@ -23,9 +23,7 @@ findElementOrNil: anObject
 	^index!
 
 hash: anObject max: anInteger
-	^anInteger < 8192 
-		ifTrue: [anObject identityHash \\ anInteger + 1]
-		ifFalse: [anObject identityHash * (anInteger bitShift: -12) \\ anInteger + 1]! !
+	^anObject identityHash \\ anInteger + 1! !
 !SharedIdentitySet categoriesFor: #findElementOrNil:!private!searching! !
 !SharedIdentitySet categoriesFor: #hash:max:!private!searching! !
 

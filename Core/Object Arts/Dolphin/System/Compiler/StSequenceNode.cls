@@ -34,8 +34,8 @@ Instance Variables:
 		do: [:i | (self statements at: i) = (anObject statements at: i) ifFalse: [^false]].
 	^true!
 
-acceptVisitor: aProgramNodeVisitor 
-	^aProgramNodeVisitor acceptSequenceNode: self!
+acceptVisitor: aProgramNodeVisitor
+	^aProgramNodeVisitor visitSequenceNode: self!
 
 addNodeFirst: aNode 
 	aNode parent: self.

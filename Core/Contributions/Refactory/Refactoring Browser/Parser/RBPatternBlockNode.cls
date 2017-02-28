@@ -1,17 +1,17 @@
-"Filed out from Dolphin Smalltalk XP 2002 release 5.02"!
+"Filed out from Dolphin Smalltalk 7"!
 
 StBlockNode subclass: #RBPatternBlockNode
 	instanceVariableNames: 'valueBlock'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-RBPatternBlockNode guid: (GUID fromString: '{63F4AB8A-D94E-4A65-BDAE-742311429C7C}')!
+RBPatternBlockNode guid: (GUID fromString: '{63f4ab8a-d94e-4a65-bdae-742311429c7c}')!
 RBPatternBlockNode comment: ''!
 !RBPatternBlockNode categoriesForClass!Refactory-Parser! !
 !RBPatternBlockNode methodsFor!
 
-acceptVisitor: aProgramNodeVisitor 
-	^aProgramNodeVisitor acceptPatternBlockNode: self!
+acceptVisitor: aProgramNodeVisitor
+	^aProgramNodeVisitor visitPatternBlockNode: self!
 
 addArgumentWithNameBasedOn: aString to: aRBBlockNode 
 	| name index vars |
@@ -44,8 +44,7 @@ createBlockFor: aRBBlockNode
 	source := aRBBlockNode formattedCode.
 	^Compiler 
 		evaluate: source
-		for: self
-		logged: false!
+		for: self!
 
 createMatchingBlock
 	| newBlock |

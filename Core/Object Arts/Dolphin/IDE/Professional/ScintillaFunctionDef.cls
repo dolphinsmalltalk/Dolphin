@@ -135,16 +135,16 @@ emitMethodPreambleOn: aPuttableStream
 				nextPut: $.;
 				crtab]!
 
-emitMethodTextOn: aWriteStream 
-	^wParamName 
-		ifNil: 
-			[lParamName 
-				ifNil: [self emitNullNullFunctionOn: aWriteStream]
-				ifNotNil: [self emitNullLParamFunctionOn: aWriteStream]]
-		ifNotNil: 
-			[lParamName 
-				ifNil: [self emitWParamNullFunctionOn: aWriteStream]
-				ifNotNil: [self emitWParamLParamFunctionOn: aWriteStream]]!
+emitMethodTextOn: aWriteStream
+	^(self isUnusedParameter: wParamName)
+		ifTrue: 
+			[(self isUnusedParameter: lParamName)
+				ifTrue: [self emitNullNullFunctionOn: aWriteStream]
+				ifFalse: [self emitNullLParamFunctionOn: aWriteStream]]
+		ifFalse: 
+			[(self isUnusedParameter: lParamName)
+				ifTrue: [self emitWParamNullFunctionOn: aWriteStream]
+				ifFalse: [self emitWParamLParamFunctionOn: aWriteStream]]!
 
 emitNullLParamFunctionOn: aWriteStream 
 	^self hasStringResult 
@@ -265,7 +265,9 @@ isFunction
 	^funcType = 'fun'!
 
 isPrivate
-	^(self renamedFunctions includesKey: constName) not!
+	| sel |
+	sel := self renamedFunctions at: constName ifAbsent: [].
+	^sel isNil or: [sel beginsWith: 'basic']!
 
 isPropGet
 	^funcType = 'get'!
@@ -277,7 +279,10 @@ isStringResultFunction
 	^lParamType name = 'stringresult'!
 
 isStringResultWParamFunction
-	^lParamType name = 'stringresult' and: [wParamType name = 'int']!
+	^self isStringResultFunction and: [wParamType name = 'int']!
+
+isUnusedParameter: aString
+	^aString isNil or: [aString = 'unused']!
 
 lParam: anArray 
 	lParamName := anArray last.
@@ -301,6 +306,7 @@ renamedFunctions
 		at: 'SCI_SETINDICATORCURRENT' put: #currentIndicatorId:;
 		at: 'SCI_GETINDICATORVALUE' put: #currentIndicatorValue;
 		at: 'SCI_SETINDICATORVALUE' put: #currentIndicatorValue:;
+		at: 'SCI_INDICATORALLONFOR' put: #indicatorMaskAt:;
 		yourself.
 
 	"Zooming"
@@ -352,6 +358,11 @@ renamedFunctions
 		yourself.
 	"Caret"
 	renamedMessages
+		at: 'SCI_GOTOPOS' put: #goto:;
+		at: 'SCI_GETCURRENTPOS' put: #caretPosition;
+		at: 'SCI_SETEMPTYSELECTION' put: #caretPosition:;
+		at: 'SCI_GETANCHOR' put: #anchorPosition;
+		at: 'SCI_SETANCHOR' put: #anchorPosition:;
 		at: 'SCI_GETCARETFORE' put: #caretForecolor;
 		at: 'SCI_GETCARETPERIOD' put: #caretPeriod;
 		at: 'SCI_SETCARETPERIOD' put: #caretPeriod:;
@@ -395,7 +406,6 @@ renamedFunctions
 	"Selection and information"
 	renamedMessages
 		at: 'SCI_SELECTIONISRECTANGLE' put: #isSelectionRectangular;
-		at: 'SCI_SETSEL' put: #basicSelectionStart:end:;
 		at: 'SCI_HIDESELECTION' put: #hideSelection:;
 		at: 'SCI_GETSELALPHA' put: #selectionAlpha;
 		at: 'SCI_SETSELALPHA' put: #selectionAlpha:;
@@ -417,6 +427,10 @@ renamedFunctions
 	renamedMessages
 		at: 'SCI_CLEARDOCUMENTSTYLE' put: #removeAllStyling;
 		at: 'SCI_SETSTYLING' put: #styleNext:mask:;
+		at: 'SCI_GETENDSTYLED' put: #stylingPosition;
+		at: 'SCI_STARTSTYLING' put: #startStylingFrom:;
+		at: 'SCI_COLOURISE' put: #restyleFrom:to:;
+		at: 'SCI_GETSTYLEAT' put: #styleIdAt:;
 		yourself.
 
 	"Miscellaneous"
@@ -445,8 +459,6 @@ renamedFunctions
 		at: 'SCI_GETSTATUS' put: #errorStatus;
 		at: 'SCI_SETSTATUS' put: #errorStatus:;
 		at: 'SCI_LINESONSCREEN' put: #linesOnScreen;
-		at: 'SCI_GETUSEPALETTE' put: #isUsingPalette;
-		at: 'SCI_SETUSEPALETTE' put: #isUsingPalette:;
 		at: 'SCI_GETMOUSEDOWNCAPTURES' put: #willCaptureMouse;
 		at: 'SCI_SETMOUSEDOWNCAPTURES' put: #willCaptureMouse:;
 		at: 'SCI_ADDTEXT' put: #insertText:from:;
@@ -492,6 +504,7 @@ renamedFunctions
 		at: 'SCI_AUTOCGETMAXHEIGHT' put: #maxCompletionListHeight;
 		at: 'SCI_AUTOCSETMAXHEIGHT' put: #maxCompletionListHeight:;
 		at: 'SCI_AUTOCGETCURRENTTEXT' put: #autoCompletionCurrentText;
+		at: 'SCI_AUTOCPOSSTART' put: #autoCompletionListPosition;
 		yourself.
 
 	"Calltips"
@@ -500,6 +513,7 @@ renamedFunctions
 		at: 'SCI_CALLTIPCANCEL' put: #cancelCallTip;
 		at: 'SCI_CANCEL' put: #cancelModes;
 		at: 'SCI_CALLTIPSETPOSITION' put: #isCallTipAboveText:;
+		at: 'SCI_CALLTIPPOSSTART' put: #callTipPosition;
 		yourself.
 
 	"Macros"
@@ -584,7 +598,7 @@ renamedFunctions
 		yourself.
 
 	"Unsupported rectangular selection commands"
-	false 
+	false
 		ifTrue: 
 			[renamedMessages
 				at: 'SCI_PARADOWNRECTEXTEND' put: #extendRectangleParaDown;
@@ -632,6 +646,12 @@ renamedFunctions
 		at: 'SCI_SCROLLTOSTART' put: #scrollToStart;
 		at: 'SCI_SCROLLTOEND' put: #scrollToEnd;
 		yourself.
+	
+	"Brace highlighting"
+	renamedMessages
+		at: 'SCI_BRACEBADLIGHT' put: #highlightMismatchedBrace:;
+		at: 'SCI_BRACEHIGHLIGHT' put: #highlightBracesAt:and:;
+		yourself.
 
 	"1.67"
 	renamedMessages
@@ -674,6 +694,12 @@ renamedFunctions
 		at: 'SCI_DESCRIBEKEYWORDSETS' put: #describeKeywordSets;
 		at: 'SCI_GETLEXERLANGUAGE' put: #lexerLanguage;
 		at: 'SCI_PROPERTYNAMES' put: #lexerPropertyNames;
+		yourself.
+	"3.7.0"
+	renamedMessages
+		at: 'SCI_MULTIEDGECLEARALL' put: #removeAllEdges;
+		at: 'SCI_GETMOUSEWHEELCAPTURES' put: #isMouseWheelCaptured;
+		at: 'SCI_SETMOUSEWHEELCAPTURES' put: #isMouseWheelCaptured:;
 		yourself.
 	renamedMessages
 		shrink;
@@ -723,238 +749,11 @@ renamedFunctions
 
 	"1.77"
 
-	"2.01"
-	"3.6.3"
-	"Indicators"
-
-	"Zooming"
-	"Undo and Redo"
-	"Tabs & indents"
-	""
-	"Caret"
-	"Markers"
-	"Scrolling"
-	"Line wrapping"
-
-	"Whitespace"
-
-	"Selection and information"
-	"Text retrieval and modification"
-	"Styling"
-
-	"Miscellaneous"
-
-	"Hotspot"
-
-	"Autocompletion"
-
-	"Calltips"
-
-	"Macros"
-
-	"Commands - Cursor movement"
-
-	"Commands - Selection movement"
-
-	"Unsupported rectangular selection commands"
-
-	"Commands - Deletion"
-
-	"Commands - Insertion"
-
-	"Commands - Cut, Copy & Paste"
-
-	"Commands - Other"
-
-	"1.67"
-
-	"1.77"
+	"Annotations"
 
 	"2.01"
 	"3.6.3"
-	"Indicators"
-
-	"Zooming"
-	"Undo and Redo"
-	"Tabs & indents"
-	""
-	"Caret"
-	"Markers"
-	"Scrolling"
-	"Line wrapping"
-
-	"Whitespace"
-
-	"Selection and information"
-	"Styling"
-
-	"Miscellaneous"
-
-	"Hotspot"
-
-	"Autocompletion"
-
-	"Calltips"
-
-	"Macros"
-
-	"Commands - Cursor movement"
-
-	"Commands - Selection movement"
-
-	"Unsupported rectangular selection commands"
-
-	"Commands - Deletion"
-
-	"Commands - Insertion"
-
-	"Commands - Cut, Copy & Paste"
-
-	"Commands - Other"
-
-	"1.67"
-
-	"1.77"
-
-	"2.01"
-	"3.6.3"
-	"Indicators"
-
-	"Zoom"
-	"Undo/redo"
-	"Tabs & indents"
-	""
-	"Caret"
-	"Markers"
-	"Scrolling"
-	"Line wrapping"
-
-	"Whitespace"
-
-	"Selection"
-	"Styling"
-
-	"Miscellaneous"
-
-	"Hotspot"
-
-	"Autocompletion"
-
-	"Calltips"
-
-	"Macros"
-
-	"Commands - Cursor movement"
-
-	"Commands - Selection movement"
-
-	"Unsupported rectangular selection commands"
-
-	"Commands - Deletion"
-
-	"Commands - Insertion"
-
-	"Commands - Cut, Copy & Paste"
-
-	"Commands - Other"
-
-	"1.67"
-
-	"1.77"
-
-	"2.01"
-	"3.6.3"
-	"Indicators"
-
-	"Zoom"
-	"Undo/redo"
-	"Tabs & indents"
-	""
-	"Caret"
-	"Markers"
-	"Scrolling"
-	"Line wrapping"
-
-	"Whitespace"
-
-	"Selection"
-	"Styling"
-
-	"Miscellaneous"
-
-	"Hotspot"
-
-	"Autocompletion"
-
-	"Calltips"
-
-	"Macros"
-
-	"Commands - Cursor movement"
-
-	"Commands - Selection movement"
-
-	"Unsupported rectangular selection commands"
-
-	"Commands - Deletion"
-
-	"Commands - Insertion"
-
-	"Commands - Cut, Copy & Paste"
-
-	"Commands - Other"
-
-	"1.67"
-
-	"1.77"
-
-	"2.01"
-	"3.6.3"
-	"Indicators"
-
-	"Zoom"
-	"Undo/redo"
-	"Tabs & indents"
-	""
-	"Caret"
-	"Markers"
-	"Scrolling"
-	"Line wrapping"
-
-	"Whitespace"
-
-	"Selection"
-
-	"Miscellaneous"
-
-	"Hotspot"
-
-	"Autocompletion"
-
-	"Calltips"
-
-	"Macros"
-
-	"Commands - Cursor movement"
-
-	"Commands - Selection movement"
-
-	"Unsupported rectangular selection commands"
-
-	"Commands - Deletion"
-
-	"Commands - Insertion"
-
-	"Commands - Cut, Copy & Paste"
-
-	"Commands - Other"
-
-	"1.67"
-
-	"1.77"
-
-	"2.01"
-	"3.6.3"!
+	"3.7.0"!
 
 retType: aString 
 	returnType := ScintillaTypeRef named: aString!
@@ -993,7 +792,7 @@ wParamType
 !ScintillaFunctionDef categoriesFor: #emitCommentString:on:!helpers!private! !
 !ScintillaFunctionDef categoriesFor: #emitMethodBodyOn:wParam:lParam:!generating!private! !
 !ScintillaFunctionDef categoriesFor: #emitMethodPreambleOn:!helpers!private! !
-!ScintillaFunctionDef categoriesFor: #emitMethodTextOn:!generating!helpers!public! !
+!ScintillaFunctionDef categoriesFor: #emitMethodTextOn:!generating!public! !
 !ScintillaFunctionDef categoriesFor: #emitNullLParamFunctionOn:!generating!private! !
 !ScintillaFunctionDef categoriesFor: #emitNullNullFunctionOn:!generating!private! !
 !ScintillaFunctionDef categoriesFor: #emitScintillaCallOn:wParam:lParam:!generating!private! !
@@ -1011,6 +810,7 @@ wParamType
 !ScintillaFunctionDef categoriesFor: #isPropSet!public!testing! !
 !ScintillaFunctionDef categoriesFor: #isStringResultFunction!helpers!private! !
 !ScintillaFunctionDef categoriesFor: #isStringResultWParamFunction!helpers!private! !
+!ScintillaFunctionDef categoriesFor: #isUnusedParameter:!generating!helpers!public! !
 !ScintillaFunctionDef categoriesFor: #lParam:!accessing!private! !
 !ScintillaFunctionDef categoriesFor: #lParamName!accessing!public! !
 !ScintillaFunctionDef categoriesFor: #lParamType!accessing!public! !

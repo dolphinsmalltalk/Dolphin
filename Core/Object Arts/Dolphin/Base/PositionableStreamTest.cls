@@ -33,106 +33,91 @@ testNew
 	self should: [self streamClass new] raise: Error!
 
 testNextLine
+	"No line delimiters"
+
 	#('' 'a' 'ab' 'abc') do: 
-			[:each | 
-			| stream line |
+			[:each |
+			| stream |
 			stream := self streamOn: each.
-			line := stream nextLine.
-			self assert: line = each.
+			self assert: each equals: stream nextLine.
 			self assert: stream atEnd.
 			self closeTempStream: stream].
 
 	"Empty but for a single line delimiter"
 	(Array with: (String with: Character lf) with: String lineDelimiter) do: 
-			[:each | 
+			[:each |
 			| stream |
 			stream := self streamOn: each.
-			self assert: stream nextLine = ''.
+			self assert: '' equals: stream nextLine.
 			self assert: stream atEnd.
 			self closeTempStream: stream].
+	"Finishes with line delimiter"
 	(Array with: (String with: Character lf) with: String lineDelimiter) do: 
-			[:eachDelim | 
+			[:eachDelim |
 			#('a' 'ab' 'abc') do: 
-					[:each | 
-					| stream |
-					stream := self streamOn: eachDelim , each.
-					self assert: stream nextLine = ''.
-					self assert: stream atEnd not.
-					self assert: stream nextLine = each.
-					self assert: stream atEnd.
-					self closeTempStream: stream]].
-	(Array with: (String with: Character lf) with: String lineDelimiter) do: 
-			[:eachDelim | 
-			#('a' 'ab' 'abc') do: 
-					[:each | 
-					| stream |
-					stream := self streamOn: each , eachDelim , each.
-					self assert: stream nextLine = each.
-					self assert: stream atEnd not.
-					self assert: stream nextLine = each.
-					self assert: stream atEnd.
-					self closeTempStream: stream]].
-	(Array with: (String with: Character lf) with: String lineDelimiter) do: 
-			[:eachDelim | 
-			#('a' 'ab' 'abc') do: 
-					[:each | 
-					| stream line |
-					stream := self streamOn: each , eachDelim , eachDelim , each.
-					stream reset.
-					line := stream nextLine.
-					self assert: line = each.
-					self assert: stream atEnd not.
-					line := stream nextLine.
-					self assert: line = ''.
-					self assert: stream atEnd not.
-					line := stream nextLine.
-					self assert: line = each.
-					self assert: stream atEnd.
-					self closeTempStream: stream]].
-	(Array with: (String with: Character lf) with: String lineDelimiter) do: 
-			[:eachDelim | 
-			#('a' 'ab' 'abc') do: 
-					[:each | 
-					| stream |
-					stream := self streamOn: each , eachDelim , eachDelim , each , eachDelim.
-					self assert: stream nextLine = each.
-					self assert: stream atEnd not.
-					self assert: stream nextLine = ''.
-					self assert: stream atEnd not.
-					self assert: stream nextLine = each.
-					self assert: stream atEnd.
-					self closeTempStream: stream]].
-	(Array with: (String with: Character lf) with: String lineDelimiter) do: 
-			[:eachDelim | 
-			#('' 'a' 'ab' 'abc') do: 
-					[:each | 
+					[:each |
 					| stream |
 					stream := self streamOn: each , eachDelim.
 					self assert: stream nextLine = each.
 					self assert: stream atEnd.
 					self closeTempStream: stream]].
+	"Finishes with pair of line delimiters"
+	(Array with: (String with: Character lf) with: String lineDelimiter) do: 
+			[:eachDelim |
+			#('' 'a' 'ab' 'abc') do: 
+					[:each |
+					| stream |
+					stream := self streamOn: each , eachDelim , eachDelim.
+					self assert: each equals: stream nextLine.
+					self assert: stream atEnd not.
+					"Empty line"
+					self assert: '' equals: stream nextLine.
+					self assert: stream atEnd.
+					self closeTempStream: stream]].
+	"Starts with line delimiter, delimiter between lines, two delimiters between lines"
+	(Array with: (String with: Character lf) with: String lineDelimiter) do: 
+			[:eachDelim |
+			#('a' 'ab' 'abc') do: 
+					[:each |
+					| stream |
+					stream := self streamOn: eachDelim , each , eachDelim , each , eachDelim , eachDelim , each.
+					self assert: '' equals: stream nextLine.
+					self deny: stream atEnd.
+					self assert: each equals: stream nextLine.
+					self deny: stream atEnd.
+					self assert: each equals: stream nextLine.
+					self deny: stream atEnd.
+					self assert: '' equals: stream nextLine.
+					self deny: stream atEnd.
+					self assert: each equals: stream nextLine.
+					self assert: stream atEnd.
+					self closeTempStream: stream]].
 
-	"Single CR - not treated as a line delimiter unless last in file"
+
+	"Single CR at end of file"
 	#('' 'a' 'ab' 'abc') do: 
-			[:each | 
+			[:each |
 			| line chars stream |
 			chars := each , (String with: Character cr).
 			stream := self streamOn: chars.
 			stream reset.
 			line := stream nextLine.
-			self assert: line = each.
+			self assert: each equals: line.
 			self assert: stream atEnd.
-			self closeTempStream: stream].
+			self closeTempStream: stream]!
 
-	"Single CR - not treated as a line delimiter unless last in file"
+testNextLineCrOnly
+	"Test PositionableStream>>nextLine for text streams with <CR> between lines"
+
 	#('a' 'ab' 'abc') do: 
-			[:each | 
-			| line2 chars stream |
+			[:each |
+			| chars stream |
 			chars := each , (String with: Character cr) , each.
 			stream := self streamOn: chars.
 			stream reset.
-			line2 := stream nextLine.
-			self assert: line2 = chars.
+			self assert: each equals: stream nextLine.
+			self deny: stream atEnd.
+			self assert: each equals: stream nextLine.
 			self assert: stream atEnd.
 			self closeTempStream: stream]!
 
@@ -175,6 +160,35 @@ testNextWord
 				self assert: stream nextWord isNil.
 				self assert: stream atEnd.
 				self closeTempStream: stream]!
+
+testPeekFor
+	"Test PositionableStream>>peekFor:"
+
+	"Empty stream (initlially at end)"
+	| stream |
+	stream := self streamOn: ''.
+	self deny: (stream peekFor: $a).
+	self assert: stream atEnd.
+	self closeTempStream: stream.
+	"Non-empty stream"
+	stream := self streamOn: 'ab'.
+	"Not at end but mismatch"
+	self deny: (stream peekFor: $b).
+	self assert: 0 equals: stream position.
+	"Successful match"
+	self assert: (stream peekFor: $a).
+	self assert: 1 equals: stream position.
+	"Another mismatch"
+	self deny: (stream peekFor: $c).
+	self assert: 1 equals: stream position.
+	"Another Successful match"
+	self deny: stream atEnd.
+	self assert: (stream peekFor: $b).
+	self assert: stream atEnd.
+	"Now at end"
+	self deny: (stream peekFor: $a).
+	self assert: stream atEnd.
+	self closeTempStream: stream!
 
 testSkipToAllColon
 	| chars stream |
@@ -383,7 +397,9 @@ testUpToEnd
 !PositionableStreamTest categoriesFor: #testContents!public!unit tests! !
 !PositionableStreamTest categoriesFor: #testNew!public!testing! !
 !PositionableStreamTest categoriesFor: #testNextLine!public!unit tests! !
+!PositionableStreamTest categoriesFor: #testNextLineCrOnly!public!unit tests! !
 !PositionableStreamTest categoriesFor: #testNextWord!public!unit tests! !
+!PositionableStreamTest categoriesFor: #testPeekFor!public!unit tests! !
 !PositionableStreamTest categoriesFor: #testSkipToAllColon!public!unit tests! !
 !PositionableStreamTest categoriesFor: #testUpToAllColon!public!unit tests! !
 !PositionableStreamTest categoriesFor: #testUpToEnd!public!unit tests! !

@@ -29,9 +29,7 @@ findElementOrNil: anObject
 	^index!
 
 hash: anObject max: anInteger
-	^anInteger < 8192 
-		ifTrue: [anObject identityHash \\ anInteger + 1]
-		ifFalse: [anObject identityHash * (anInteger bitShift: -12) \\ anInteger + 1]!
+	^anObject identityHash \\ anInteger + 1!
 
 identityIncludes: anObject
 	"Answer whether the <Object> argument is one of the receiver's elements."

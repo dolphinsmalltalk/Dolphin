@@ -41,7 +41,7 @@ completeWordAt: anInteger with: aString
 completionListSortBlock
 	| crt |
 	crt := CRTLibrary default.
-	^[:a :b | (crt strcmp: a string2: b) <= 0]!
+	^[:a :b | (crt strcmp: a displayString string2: b displayString) <= 0]!
 
 createSchematicWiring
 	"Private - Create the trigger wiring for the receiver"
@@ -153,34 +153,34 @@ rangeToCompleteAt: anInteger
 				ifTrue: [self tokenRangeAt: anInteger]
 				ifFalse: [anInteger to: view caretPosition - 1]]!
 
-searchItemsStartingWith: aString maxItems: anInteger 
+searchItemsStartingWith: aString maxItems: anInteger
 	| result classes filter |
-	aString first isLowerCase 
+	aString first isLowerCase
 		ifTrue: 
 			[| matchingSymbols |
 			matchingSymbols := self selectorsStartingWith: aString maxItems: anInteger.
-			^matchingSymbols collect: [:each | each displayString]].
-	filter := (aString includes: $>) 
+			^matchingSymbols].
+	filter := (aString includes: $>)
 				ifTrue: 
 					[| classNamePrefix |
 					classNamePrefix := aString upTo: $>.
 					[:each | each name asString = classNamePrefix]]
 				ifFalse: 
-					[(aString includes: Character space) 
+					[(aString includes: Character space)
 						ifTrue: [[:each | each name beginsWith: aString]]
 						ifFalse: [[:each | each isMetaclass not and: [each name beginsWith: aString]]]].
 	classes := environment classes select: filter.
 	result := OrderedCollection new.
-	classes size > 1 
+	classes size > 1
 		ifTrue: 
-			[classes do: [:eachClass | result add: eachClass name].
+			[classes do: [:eachClass | result add: eachClass].
 			^result].
 	classes do: 
-			[:eachClass | 
-			result add: eachClass name.
-			(environment selectorsForClass: eachClass) do: [:sel | result add: eachClass name , '>>' , sel]].
-	Package manager packageNames do: [:each | result add: each].
-	^result select: [:each | each beginsWith: aString]!
+			[:eachClass |
+			result add: eachClass.
+			(environment selectorsForClass: eachClass) do: [:sel | result add: eachClass >> sel]].
+	Package manager packages do: [:each | result add: each].
+	^result select: [:each | each displayString beginsWith: aString]!
 
 searchObject
 	^
@@ -209,14 +209,15 @@ selectorsStartingWith: aString maxItems: anInteger
 					stream size > anInteger ifTrue: [^#()]]].
 	^stream contents!
 
-showCompletionList: aCollectionOfStrings prefixLength: anInteger 
-	(aCollectionOfStrings size = 1 and: [aCollectionOfStrings anyOne size = anInteger]) 
+showCompletionList: aCollection prefixLength: anInteger
+	(aCollection size = 1 and: [aCollection anyOne size = anInteger])
 		ifTrue: 
 			["Don't display a list of one item that is the same as the prefix"
 			^self].
-	view 
-		showAutoCompletionList: (aCollectionOfStrings asSortedCollection: self completionListSortBlock)
-		prefixLength: anInteger!
+	view
+		showAutoCompletionList: (aCollection asSortedCollection: self completionListSortBlock)
+		prefixLength: anInteger
+		withIcons: true!
 
 showCompletionListAt: posInteger maxItems: maxInteger 
 	| prefix start choices |

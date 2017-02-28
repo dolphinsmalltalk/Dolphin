@@ -6,7 +6,6 @@ package paxVersion: 1;
 
 package classNames
 	add: #ResumableTestFailure;
-	add: #SUnitDelay;
 	add: #SUnitNameResolver;
 	add: #TestFailure;
 	yourself.
@@ -28,10 +27,15 @@ package methodNames
 	add: 'Exception class' -> #sunitSignalWith:;
 	yourself.
 
+package globalNames
+	add: #SUnitDelay;
+	yourself.
+
 package binaryGlobalNames: (Set new
 	yourself).
 
 package globalAliases: (Set new
+	add: #SUnitDelay;
 	yourself).
 
 package setPrerequisites: (IdentitySet new
@@ -43,11 +47,6 @@ package!
 "Class Definitions"!
 
 Object subclass: #SUnitNameResolver
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-Delay subclass: #SUnitDelay
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
@@ -64,6 +63,8 @@ TestFailure subclass: #ResumableTestFailure
 	classInstanceVariableNames: ''!
 
 "Global Aliases"!
+
+SUnitDelay := Delay!
 
 
 "Loose Methods"!

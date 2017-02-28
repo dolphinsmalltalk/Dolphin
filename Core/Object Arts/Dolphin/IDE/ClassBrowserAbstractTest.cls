@@ -193,13 +193,8 @@ tearDown
 	| methods |
 	methods := packageA methods.
 	browser destroy.
-	"Attempting to remove methods during termination (as a result of tearDown being run as ensured
-	 execution when the process is terminated) seems to cause the process to get finalized and terminated
-	 again - perhaps the process blocks and is GC'd? Therefore to bodge around this I've forked off the
-	 delete and delayed it a bit to allow any debugger to go away first."
-	"[Processor sleep: 500. "
-	self deleteTestMethods: methods.	"] forkAt: 2"
-	packageA := nil!
+	self deleteTestMethods: methods.
+	browser := methodsPresenter := packageA := nil!
 
 testAddRemoveOfInheritedMethods
 	browser toggleShowInheritedMethods.

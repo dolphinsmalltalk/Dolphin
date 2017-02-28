@@ -9,6 +9,7 @@ Win32Constants at: 'ANSI_VAR_FONT' put: 16rC!
 Win32Constants at: 'ASPECTX' put: 16r28!
 Win32Constants at: 'ASPECTXY' put: 16r2C!
 Win32Constants at: 'ASPECTY' put: 16r2A!
+Win32Constants at: 'ATTACH_PARENT_PROCESS' put: 16rFFFFFFFF!
 Win32Constants at: 'AW_ACTIVATE' put: 16r20000!
 Win32Constants at: 'AW_BLEND' put: 16r80000!
 Win32Constants at: 'AW_CENTER' put: 16r10!
@@ -252,6 +253,11 @@ Win32Constants at: 'FILE_LIST_DIRECTORY' put: 16r1!
 Win32Constants at: 'FILE_SHARE_DELETE' put: 16r4!
 Win32Constants at: 'FILE_SHARE_READ' put: 16r1!
 Win32Constants at: 'FILE_SHARE_WRITE' put: 16r2!
+Win32Constants at: 'FILE_TYPE_CHAR' put: 16r2!
+Win32Constants at: 'FILE_TYPE_DISK' put: 16r1!
+Win32Constants at: 'FILE_TYPE_PIPE' put: 16r3!
+Win32Constants at: 'FILE_TYPE_REMOTE' put: 16r8000!
+Win32Constants at: 'FILE_TYPE_UNKNOWN' put: 16r0!
 Win32Constants at: 'FLASHW_ALL' put: 16r3!
 Win32Constants at: 'FLASHW_CAPTION' put: 16r1!
 Win32Constants at: 'FLASHW_STOP' put: 16r0!
@@ -447,6 +453,7 @@ Win32Constants at: 'MEM_RELEASE' put: 16r8000!
 Win32Constants at: 'MEM_RESERVE' put: 16r2000!
 Win32Constants at: 'MEM_TOP_DOWN' put: 16r100000!
 Win32Constants at: 'MERGECOPY' put: 16rC000CA!
+Win32Constants at: 'MF_BYCOMMAND' put: 16r0!
 Win32Constants at: 'MF_BYPOSITION' put: 16r400!
 Win32Constants at: 'MF_POPUP' put: 16r10!
 Win32Constants at: 'MFS_CHECKED' put: 16r8!
@@ -610,6 +617,7 @@ Win32Constants at: 'SB_THUMBPOSITION' put: 16r4!
 Win32Constants at: 'SB_THUMBTRACK' put: 16r5!
 Win32Constants at: 'SB_TOP' put: 16r6!
 Win32Constants at: 'SB_VERT' put: 16r1!
+Win32Constants at: 'SC_CLOSE' put: 16rF060!
 Win32Constants at: 'SIF_ALL' put: 16r17!
 Win32Constants at: 'SIF_DISABLENOSCROLL' put: 16r8!
 Win32Constants at: 'SIF_PAGE' put: 16r2!
@@ -718,6 +726,7 @@ Win32Constants at: 'STATUS_WAIT_0' put: 16r0!
 Win32Constants at: 'STD_ERROR_HANDLE' put: -16rC!
 Win32Constants at: 'STD_INPUT_HANDLE' put: -16rA!
 Win32Constants at: 'STD_OUTPUT_HANDLE' put: -16rB!
+Win32Constants at: 'STILL_ACTIVE' put: 16r103!
 Win32Constants at: 'STM_GETICON' put: 16r171!
 Win32Constants at: 'STM_GETIMAGE' put: 16r173!
 Win32Constants at: 'STM_SETICON' put: 16r170!

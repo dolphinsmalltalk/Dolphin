@@ -1451,7 +1451,7 @@ returnFromMessage
 							on: compilerClass errorClass
 							do: 
 								[:cn | 
-								MessageBox errorMsg: cn text , String lineDelimiter , String lineDelimiter , 'Please try again.'
+								MessageBox errorMsg: cn errorMessage , String lineDelimiter , String lineDelimiter , 'Please try again.'
 									caption: 'Error in expression...'.
 								loopCookie]].
 	returnValue == loopCookie] 
@@ -2059,6 +2059,7 @@ initialize
 		self initialize
 	"
 
+	| debugEmptyBlock |
 	StackDepthIncrement := 10.
 	DefaultStackDepth := 40.
 	MainMask := 16r1.
@@ -2072,7 +2073,12 @@ initialize
 	self showWalkbacks: true.
 	Smalltalk developmentSystem registerTool: self.
 	self interrupts do: [:each | ProcessorScheduler interruptSelectors at: each first put: each second].
-	self initializeSkipTable!
+	self initializeSkipTable.
+	"Set up the debug empty block"
+	VMLibrary default primRegistryAt: 8 put: nil.
+	debugEmptyBlock := VMLibrary default emptyBlock method asDebugMethod value.
+	debugEmptyBlock method isImmutable: true.
+	VMLibrary default primRegistryAt: 8 put: debugEmptyBlock.!
 
 initializeSkipTable
 	"Initialize the table of methods to be skipped (in one way or another) when debugging.

@@ -51,17 +51,14 @@ keysFor: aBrowserEnvironment
 	allKeys removeAll: Smalltalk keys.
 	self assert: allKeys isEmpty!
 
-numberSelectorsFor: aBrowserEnvironment 
-	self 
-		assert: aBrowserEnvironment numberSelectors 
-				+ aBrowserEnvironment not numberSelectors 
-					= BrowserEnvironment new numberSelectors.
-	self 
-		assert: (aBrowserEnvironment & aBrowserEnvironment not) numberSelectors = 0.
-	self assert: (universalEnvironment & aBrowserEnvironment) numberSelectors 
-				= aBrowserEnvironment numberSelectors.
-	self assert: (aBrowserEnvironment & universalEnvironment) numberSelectors 
-				= aBrowserEnvironment numberSelectors!
+numberSelectorsFor: aBrowserEnvironment
+	| selectorCount |
+	selectorCount := aBrowserEnvironment numberSelectors.
+	self assert: selectorCount + aBrowserEnvironment not numberSelectors
+				= BrowserEnvironment new numberSelectors.
+	self assert: (aBrowserEnvironment & aBrowserEnvironment not) numberSelectors = 0.
+	self assert: (universalEnvironment & aBrowserEnvironment) numberSelectors = selectorCount.
+	self assert: (aBrowserEnvironment & universalEnvironment) numberSelectors = selectorCount!
 
 setUp
 	super setUp.

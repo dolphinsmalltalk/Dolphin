@@ -203,7 +203,7 @@ imageFromRow: item
 	As of Dolphin 3.0 the image block is permitted to be nil for the common case
 	where the columns does not have images."
 
-	KernelLibrary isWine ifTrue: [
+	NTLibrary isWine ifTrue: [
 		#wineFix.
 		"Wine ListViews seem to expect image indices to always be set in ListView>>onDisplayDetailsRequired:, 
 		even if we don't want images to appear. Normally, we answer nil here if no image is required. 

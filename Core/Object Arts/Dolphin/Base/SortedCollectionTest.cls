@@ -48,7 +48,15 @@ testStrongTalkTests
 !
 
 unsortedCollectionClass
-	^OrderedCollection! !
+	^OrderedCollection!
+
+verifyConcatenation: b with: a
+	| result |
+	result := a , b.
+	(a isKindOf: SortedCollection)
+		ifTrue: [self assert: ((a symmetricDifference: result) noDifference: b)]
+		ifFalse: [super verifyConcatenation: b with: a].
+	^result! !
 !SortedCollectionTest categoriesFor: #collectionClass!constants!private! !
 !SortedCollectionTest categoriesFor: #shouldnt:implement:!private!unit tests! !
 !SortedCollectionTest categoriesFor: #testAddAllFirst!public!unit tests! !
@@ -58,4 +66,5 @@ unsortedCollectionClass
 !SortedCollectionTest categoriesFor: #testReplaceFromToWithStartingAt!public!unit tests! !
 !SortedCollectionTest categoriesFor: #testStrongTalkTests!public!unit tests! !
 !SortedCollectionTest categoriesFor: #unsortedCollectionClass!public!unit tests! !
+!SortedCollectionTest categoriesFor: #verifyConcatenation:with:!public!unit tests! !
 

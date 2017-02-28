@@ -113,8 +113,13 @@ fileFileIn
 	self model fileFileIn!
 
 fileLoad
+	| caret |
+	caret := self workspace view caretPosition.
 	self hasFilename ifTrue: [self setLexer].
-	super fileLoad!
+	super fileLoad.
+	(self workspace view)
+		caretPosition: caret;
+		ensureCaretVisible!
 
 fileNew
 	"The user has selected the standard File/New command. Use this

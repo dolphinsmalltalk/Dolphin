@@ -181,6 +181,9 @@ changeIndexValue: aBlock
 		at: #changeIndex
 		ifAbsentPut: aBlock!
 
+classBinding
+	^self environment associationAt: self name!
+
 classCategories
 	"Private - Answer a <collection> of <ClassCategory> objects representing the 
 	class categories of which the receiver is a member, or nil if unclassified."
@@ -308,6 +311,14 @@ instanceClass
 	"Answer the receiver's singleton instance (the actual class object)."
 
 	^self!
+
+isAtomic
+	"Answer whether or not the receiver has a single unique instance for any individual value it
+	can represent."
+
+	"Each class is the singleton instance of a unique metaclass."
+
+	^true!
 
 isChanged
 	"Answer true if the receiver or any of it's contents have been changed since
@@ -653,7 +664,7 @@ uninitializeBeforeRemove
 	common uninitialization prior to removal, in which case this message can be overridden."
 
 	(self class includesSelector: #uninitialize) ifTrue: [self uninitialize].
-	self removeAllProperties!
+!
 
 variableByteSubclass: aClassSymbol instanceVariableNames: instVarString classVariableNames: classVarString poolDictionaries: poolDictString
 	^(self 
@@ -758,6 +769,7 @@ variableSubclass: aClassSymbol
 !Class categoriesFor: #category:!categories-accessing!public! !
 !Class categoriesFor: #changeIndex!accessing!development!private! !
 !Class categoriesFor: #changeIndexValue:!accessing!development!private! !
+!Class categoriesFor: #classBinding!compiling!public! !
 !Class categoriesFor: #classCategories!categories-accessing!private!source filing! !
 !Class categoriesFor: #classCategories:!categories-accessing!private! !
 !Class categoriesFor: #classPool!accessing!class variables!public! !
@@ -777,6 +789,7 @@ variableSubclass: aClassSymbol
 !Class categoriesFor: #initializeAfterBinaryLoad!initializing!private! !
 !Class categoriesFor: #initializeAfterLoad!initializing!public! !
 !Class categoriesFor: #instanceClass!accessing!public! !
+!Class categoriesFor: #isAtomic!public!testing! !
 !Class categoriesFor: #isChanged!development!public!source filing!testing! !
 !Class categoriesFor: #isChanged:!accessing!development!public! !
 !Class categoriesFor: #isLiteral!public!testing! !
@@ -851,9 +864,10 @@ allClasses
 
 	| answer roots |
 	roots := self allRoots.
-	answer := OrderedCollection withAll: roots.
-	roots do: [:root | answer addAll: root allSubclasses].
-	^answer.!
+	answer := Array writeStream: 2500.
+	roots do: [:each | answer nextPut: each].
+	roots do: [:root | root allSubclassesBreadthFirstDo: [:each | answer nextPut: each]].
+	^answer contents!
 
 allClassesDo: operation
 	"Private - Evaluate the monadic valuable, operation, for each of the classes in the system.

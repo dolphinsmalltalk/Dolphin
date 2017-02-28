@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 StProgramNode subclass: #StExternalArgTypeNode
 	instanceVariableNames: 'typeOrdinal structClass indirections start stop'
@@ -10,8 +10,8 @@ StExternalArgTypeNode comment: ''!
 !StExternalArgTypeNode categoriesForClass!System-Compiler! !
 !StExternalArgTypeNode methodsFor!
 
-acceptVisitor: aProgramNodeVisitor 
-	aProgramNodeVisitor acceptExternalArgTypeNode: self!
+acceptVisitor: aProgramNodeVisitor
+	aProgramNodeVisitor visitExternalArgTypeNode: self!
 
 indirections
 	^indirections!

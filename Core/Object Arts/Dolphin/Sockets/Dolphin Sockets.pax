@@ -13,14 +13,21 @@ package basicPackageVersion: '6.1'.
 
 
 package classNames
+	add: #AbstractIN_ADDR;
 	add: #FD_SET;
 	add: #HOSTENT;
 	add: #IN_ADDR;
+	add: #IN6_ADDR;
 	add: #InternetAddress;
+	add: #IpHlpApiLibrary;
+	add: #NET_ADDRESS_INFO;
 	add: #PROTOENT;
 	add: #SERVENT;
 	add: #ServerSocket2;
+	add: #SOCKADDR;
 	add: #SOCKADDR_IN;
+	add: #SOCKADDR_IN6;
+	add: #SOCKADDR_STORAGE;
 	add: #Socket2;
 	add: #SocketAbstract2;
 	add: #SocketClosed;
@@ -77,8 +84,18 @@ SocketError subclass: #SocketWaitCancelled
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+ExternalLibrary subclass: #IpHlpApiLibrary
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: 'WinSocketConstants'
+	classInstanceVariableNames: ''!
 ExternalLibrary subclass: #WS2_32Library
 	instanceVariableNames: 'wsaData'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ExternalStructure subclass: #AbstractIN_ADDR
+	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -87,7 +104,42 @@ ExternalStructure subclass: #FD_SET
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+ExternalStructure subclass: #NET_ADDRESS_INFO
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ExternalStructure subclass: #SOCKADDR
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: 'WinSocketConstants'
+	classInstanceVariableNames: ''!
 ExternalStructure subclass: #TIMEVAL
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+AbstractIN_ADDR subclass: #IN_ADDR
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+AbstractIN_ADDR subclass: #IN6_ADDR
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+SOCKADDR subclass: #SOCKADDR_IN
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+SOCKADDR subclass: #SOCKADDR_IN6
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+SOCKADDR subclass: #SOCKADDR_STORAGE
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
@@ -97,22 +149,12 @@ Win32Structure subclass: #HOSTENT
 	classVariableNames: ''
 	poolDictionaries: 'WinSocketConstants'
 	classInstanceVariableNames: ''!
-Win32Structure subclass: #IN_ADDR
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
 Win32Structure subclass: #PROTOENT
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Win32Structure subclass: #SERVENT
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-Win32Structure subclass: #SOCKADDR_IN
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''

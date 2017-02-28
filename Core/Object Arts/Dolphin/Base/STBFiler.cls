@@ -1,11 +1,12 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #STBFiler
 	instanceVariableNames: 'stream context version'
-	classVariableNames: ''
-	poolDictionaries: 'STBPrefixConstants'
+	classVariableNames: 'MaxPredefinedRef'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 STBFiler guid: (GUID fromString: '{87B4C4C1-026E-11D3-9FD7-00A0CC3E4A32}')!
+STBFiler addClassConstant: 'MaxPredefinedRef' value: 24!
 STBFiler comment: ''!
 !STBFiler categoriesForClass!System-Binary storage! !
 !STBFiler methodsFor!
@@ -45,19 +46,25 @@ register: anObject
 
 	^self subclassResponsibility!
 
-reset
-	"Private - Reset the instance. We pre-register objects that must never be recreated - note
-	that if the 'fixed' list of pre-registered objects is changed, then the STB version must be
-	changed and the old versions handled appropriately."
+registerPredefinedClasses
+	self class fixedClasses do: [:each | self register: each].
+	self setRefOffset: MaxPredefinedRef!
 
+registerPredefinedObjects
 	self
 		register: true;
 		register: false;
 		register: Smalltalk;
 		register: Processor.
 	version > 0 ifFalse: [^self].
-	self class fixedClasses do: [:each | self register: each].
-	self setRefOffset: 24!
+	self registerPredefinedClasses!
+
+reset
+	"Private - Reset the instance. We pre-register objects that must never be recreated - note
+	that if the 'fixed' list of pre-registered objects is changed, then the STB version must be
+	changed and the old versions handled appropriately."
+
+	self registerPredefinedObjects!
 
 setRefOffset: anInteger
 	^self subclassResponsibility!
@@ -83,6 +90,8 @@ version: anInteger
 !STBFiler categoriesFor: #initialize!initializing!private! !
 !STBFiler categoriesFor: #position:!operations!public! !
 !STBFiler categoriesFor: #register:!helpers!public! !
+!STBFiler categoriesFor: #registerPredefinedClasses!initializing!private! !
+!STBFiler categoriesFor: #registerPredefinedObjects!initializing!private! !
 !STBFiler categoriesFor: #reset!initializing!private! !
 !STBFiler categoriesFor: #setRefOffset:!initializing!private! !
 !STBFiler categoriesFor: #stream!accessing!public! !
@@ -157,7 +166,7 @@ version
 		Version 2 - Delegates save/load to class, format changed for certain pre-registered classes.
 		Version 3 - Only writes basicSize for objects of variable classes."
 
-	^3
+	^4
 ! !
 !STBFiler class categoriesFor: #errorInconsistentSTB:!exceptions!private! !
 !STBFiler class categoriesFor: #errorNotSTB!exceptions!private! !

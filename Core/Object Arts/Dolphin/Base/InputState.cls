@@ -10,20 +10,19 @@ InputState comment: '<InputState> is a singleton responsible for managing the wi
 
 Instance Variables:
 	inputSemaphore	<Semaphore> on which the UI process blocks when the idle (i.e. when message loop is empty).
-	idler		<Process>. The idle process responsible for relinquishing control to Windows when no other Smalltalk <Process>es are ready to run.
+	idler			<Process>. The idle process responsible for relinquishing control to Windows when no other Smalltalk <Process>es are ready to run.
 	idleTimer		<WeakArray> holding <window> currently hosting WM_TIMER used to keep background processing operational when running Windows modal msg loops such as those for common dialogs.
-	main		<Process>. The current main UI process.
+	main			<Process>. The current main UI process.
 	windows		<LookupTable> of <Integer>. Map of window handles to associated Smalltalk windows (usually <View>s).
 	deferredActions	<SharedQueue> of <niladicValuable>. Actions to be processed by the main process when the message loop is empty.
 	lastWindow	<window> that last received a message (cached because most likely to receive next message too).
 	wakeupEvent	<ExternalHandle> of Win32 Event object signalled by the VM when it wants the image to wake up.
+	msgWindow	<PostedActionWindow> 
 
 Class Variables:
-	MaxIdleSleep9x		<SmallInteger>. Timeout passed to MsgWaitForMultipleObjects by idle process when on Windows 9x 
-	MaxIdleSleepNT		<SmallInteger>. Timeout passed to MsgWaitForMultipleObjectsEx by idle process when on Windows NT 
 	EnumHandlesDescriptor	<ExternalDescriptor>. Callback descriptor for EnumWindows.
-	UserInterruptSignal		<Signal>. Exception raised when Ctrl+Break key press detected.
-	SamplingInterval		<SmallInteger> interval (measured in full method/blockactivations) between tests of 					system input queue for host system messsages when running background processes.
+	UserInterruptSignal		<Signal>. Exception raised when Break key combination is pressed.
+	SamplingInterval		<SmallInteger> approximate millisecond interval between tests of system input queue for host system messsages when running background processes.
 '!
 !InputState categoriesForClass!Kernel-Support! !
 !InputState methodsFor!
@@ -461,9 +460,12 @@ pumpMessages
 	is received, then exit Smalltalk. This can be used from user code to empty the message queue
 	if necessary."
 
-	| msg |
-	msg := MSG new.
-	self loopWhile: [self isInputReady: msg]!
+	Processor isActiveMain
+		ifTrue: 
+			[| msg |
+			msg := MSG new.
+			self loopWhile: [self isInputReady: msg]]
+		ifFalse: [self prod].!
 
 purgeDeadWindows
 	"Remove any windows in the windows collection which have a NULL handle. In normal use there
@@ -512,8 +514,8 @@ removeWindowAt: aHandle
 
 setSamplingInterval: anInteger 
 	"Private - Set sampling interval. This is the approximate interval, in milliseconds, at
-	which the system will sample the input queue and check for Ctrl+Break when running
-	computationally expensive tasks in background threads."
+	which the system will sample the input queue and check for the Break key combination when
+	running computationally expensive tasks in background threads."
 
 	SamplingInterval := anInteger.
 	self primSampleInterval: SamplingInterval!

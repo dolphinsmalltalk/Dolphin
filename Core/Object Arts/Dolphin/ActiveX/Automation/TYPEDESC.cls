@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 OLEStructure subclass: #TYPEDESC
-	instanceVariableNames: 'owner classDesc'
-	classVariableNames: ''
+	instanceVariableNames: 'owner classDesc typeInfo'
+	classVariableNames: 'VTIndirections'
 	poolDictionaries: 'AXAutomationConstants'
 	classInstanceVariableNames: ''!
-TYPEDESC guid: (GUID fromString: '{C06F3B7A-0868-11D3-93AF-00A024CA708A}')!
+TYPEDESC guid: (GUID fromString: '{c06f3b7a-0868-11d3-93af-00a024ca708a}')!
 TYPEDESC comment: 'TYPEDESC is an ExternalStructure class to represent the AX Automation structure, TYPEDESC.
 
 The TYPEDESC structure describes the type of a variable, function parameter, or return value, and is one of the key structures in the type library model.
@@ -30,17 +30,26 @@ analyzer
 
 	^owner analyzer!
 
+arrayDesc
+	"Private - Recurse down through any typedefs to the underlying ARRAYDESC. Anwer nil if the type does not describe an array."
+
+	| vt |
+	vt := self vt.
+	vt == VT_PTR ifTrue: [^self tdesc arrayDesc].
+	vt == VT_CARRAY ifTrue: [^self tdescArray].
+	vt == VT_USERDEFINED ifTrue: [^self typeInfo tdesc arrayDesc].
+	^nil!
+
 buildClassDesc
 	| vt |
 	vt := self vt.
-	vt == VT_PTR 
+	vt == VT_PTR
 		ifTrue: 
 			["Its a pointer to something, so we need to recurse and answer  <typename>*"
-
 			| indirTo |
 			indirTo := self tdesc classDesc.
 			^indirTo key -> (indirTo value + 1 min: 2)].
-	vt == VT_CARRAY 
+	vt == VT_CARRAY
 		ifTrue: 
 			[| arryDesc |
 			arryDesc := self tdescArray tdesc classDesc.
@@ -49,11 +58,9 @@ buildClassDesc
 		<StructureArray>."
 			^(arryDesc key arrayType: arryDesc value) -> 0].
 	vt == VT_SAFEARRAY ifTrue: [^SAFEARRAY -> 1].
-	vt == VT_USERDEFINED 
-		ifTrue: [^owner isNil ifTrue: [ExternalStructure -> 1] ifFalse: [self getRefType classDesc]].
-	vt == VT_UNKNOWN ifTrue: [^IUnknown -> 1].
-	vt == VT_DISPATCH ifTrue: [^IDispatch -> 1].
-	^(VARIANT classForVT: vt) -> 0!
+	vt == VT_USERDEFINED
+		ifTrue: [^owner isNil ifTrue: [ExternalStructure -> 1] ifFalse: [self typeInfo classDesc]].
+	^(VARIANT classForVT: vt) -> (VTIndirections at: vt)!
 
 classDesc
 	"Private - Answer a Dolphin class and indirection count pair which can be used to
@@ -70,13 +77,26 @@ hreftype
 
 	^bytes dwordAtOffset: 0!
 
+isAnonymous
+	"Answer whether the type described by the receiver is an anonymous (i.e. unnamed)
+	struct or union type."
+
+	^self isStructure and: [self typeInfo isAnonymous]!
+
+isStructure
+	"Answer whether the receiver describes a user-defined struct or union type."
+
+	^self isUserDefined and: [self typeInfo isStructure]!
+
 isUnion
 	"Answer whether the receiver describes a user-defined union type."
 
-	| refType |
-	self vt = VT_USERDEFINED ifFalse: [^false].
-	refType := self getRefType.
-	^refType isUnion!
+	^self isUserDefined and: [self typeInfo isUnion]!
+
+isUserDefined
+	"Answer whether the receiver describes a user-defined type, e.g. a struct."
+
+	^self vt = VT_USERDEFINED!
 
 lpadesc
 	"Answer the receiver's lpadesc field as a Smalltalk object."
@@ -99,19 +119,22 @@ printOn: aStream
 
 	aStream
 		basicPrint: self;
-		nextPut: $(;
-		print: self typeName;
-		nextPut: $)!
+		nextPut: $(.
+	self isAnonymous
+		ifTrue: 
+			[aStream
+				nextPutAll: 'Anon: ';
+				print: self typeInfo name]
+		ifFalse: [aStream print: self typeName].
+	aStream nextPut: $)!
 
 tdesc
-	"Answer a <TYPEDESC> which is the type of the elmement for which the receiver
-	descibes a pointer or SAFEARRAY.
+	"Answer a <TYPEDESC> which is the type of the element described by the receiver.
 	Implementation Note: Set the back-pointer to be the same as the receiver's, since it
 	is the destruction of the <AXTypeInfoStructure> which we wish to postpone for the
 	lifetime of the TYPEDESC."
 
-	^self lptdesc
-		owner: owner!
+	^self lptdesc owner: owner!
 
 tdescArray
 	"Answer a <TYPEDESC> which is the type of the array described by the receiver.
@@ -122,14 +145,29 @@ tdescArray
 	^self lpadesc
 		owner: owner!
 
+typeDesc
+	"Recurse down through any typedefs to resolve the actual element type."
+
+	| vt |
+	vt := self vt.
+	vt == VT_PTR ifTrue: [^self tdesc typeDesc].
+	vt == VT_CARRAY ifTrue: [^self tdescArray tdesc typeDesc].
+	vt == VT_USERDEFINED ifTrue: [self typeInfo tdesc typeDesc].
+	^self!
+
+typeInfo
+	^typeInfo ifNil: [typeInfo := self getRefType]!
+
 typeName
 	"Answer the Dolphin external type name for the type described by the receiver."
 
-	| desc answer |
-	desc := self classDesc.
-	answer := desc key typeName.
-	desc value timesRepeat: [answer := answer , '*'].
-	^answer!
+	^self isAnonymous
+		ifFalse: 
+			[| desc answer |
+			desc := self classDesc.
+			answer := desc key typeName.
+			desc value timesRepeat: [answer := answer , '*'].
+			answer]!
 
 vartype
 	"Private - Answer the ultimate (implementation) variant type of the receiver.
@@ -143,7 +181,7 @@ vartype
 		ifTrue: 
 			["Chase down the actual type via the referenced Type Info."
 
-			^self getRefType vt].
+			^self typeInfo vt].
 	^vt!
 
 vt
@@ -156,17 +194,23 @@ vtName
 
 	^VARIANT nameOfVT: self vartype! !
 !TYPEDESC categoriesFor: #analyzer!accessing!private! !
+!TYPEDESC categoriesFor: #arrayDesc!development!private! !
 !TYPEDESC categoriesFor: #buildClassDesc!helpers!private! !
 !TYPEDESC categoriesFor: #classDesc!accessing!private! !
 !TYPEDESC categoriesFor: #getRefType!accessing!private! !
 !TYPEDESC categoriesFor: #hreftype!**compiled accessors**!public! !
+!TYPEDESC categoriesFor: #isAnonymous!public!testing! !
+!TYPEDESC categoriesFor: #isStructure!public!testing! !
 !TYPEDESC categoriesFor: #isUnion!public!testing! !
+!TYPEDESC categoriesFor: #isUserDefined!public!testing! !
 !TYPEDESC categoriesFor: #lpadesc!**compiled accessors**!public! !
 !TYPEDESC categoriesFor: #lptdesc!**compiled accessors**!public! !
 !TYPEDESC categoriesFor: #owner:!accessing!private! !
 !TYPEDESC categoriesFor: #printOn:!development!printing!public! !
 !TYPEDESC categoriesFor: #tdesc!accessing!public! !
 !TYPEDESC categoriesFor: #tdescArray!accessing!public! !
+!TYPEDESC categoriesFor: #typeDesc!helpers!private! !
+!TYPEDESC categoriesFor: #typeInfo!accessing!public! !
 !TYPEDESC categoriesFor: #typeName!accessing!public! !
 !TYPEDESC categoriesFor: #vartype!accessing!public! !
 !TYPEDESC categoriesFor: #vt!**compiled accessors**!public! !
@@ -202,6 +246,16 @@ defineFields
 			offset: 0;
 		defineField: #hreftype
 			type: DWORDField readOnly
-			offset: 0! !
+			offset: 0!
+
+initialize
+	VTIndirections := Array new: VT_CLSID+1 withAll: 0.
+	VTIndirections
+		at: VT_DISPATCH put: 1;
+		at: VT_UNKNOWN put: 1;
+		at: VT_SAFEARRAY put: 1;
+		at: VT_LPSTR put: 1;
+		at: VT_LPWSTR put: 1! !
 !TYPEDESC class categoriesFor: #defineFields!initializing!public! !
+!TYPEDESC class categoriesFor: #initialize!class initialization!public! !
 

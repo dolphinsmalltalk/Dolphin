@@ -2,7 +2,7 @@
 
 Object subclass: #Behavior
 	instanceVariableNames: 'superclass methodDictionary instanceSpec subclasses'
-	classVariableNames: ''
+	classVariableNames: '_NullMethodDictionary'
 	poolDictionaries: '_BehaviorMasks'
 	classInstanceVariableNames: ''!
 Behavior guid: (GUID fromString: '{87B4C459-026E-11D3-9FD7-00A0CC3E4A32}')!
@@ -47,7 +47,7 @@ Behavior implements the ANSI protocols <Object>, <classDescription>, <instantiat
 !Behavior categoriesForClass!Kernel-Classes! !
 !Behavior methodsFor!
 
-addSelector: aSymbol withMethod: aCompiledMethod 
+addSelector: aSymbol withMethod: aCompiledMethod
 	"Private - Add the message selector, aSymbol, with the corresponding
 	CompiledMethod, to the receiver's method dictionary.
 	Implementation Note: Clears down the VM method cache in case a previous 
@@ -58,7 +58,8 @@ addSelector: aSymbol withMethod: aCompiledMethod
 	aCompiledMethod
 		methodClass: self;
 		selector: selector.
-	methodDictionary at: selector put: aCompiledMethod.
+	(methodDictionary ifNil: [methodDictionary := MethodDictionary new]) at: selector
+		put: aCompiledMethod.
 
 	"One might expect to be able to trigger a #methodAdded: event here,
 	 to be symetrical with Behavior>>removeSelector:. However, the 
@@ -106,6 +107,11 @@ allInstVarNames
 		ifTrue: [self instVarNames]
 		ifFalse: [superclass allInstVarNames , self instVarNames]!
 
+allMethodsDo: operation
+	"Evaluate the monadic valuable, operation, for each and every method defined in the hierarchy rooted in the receiver."
+
+	self withAllSubclassesDo: [:behavior | behavior methodDictionary do: operation]!
+
 allSelectors
 	"Answer a <Set> of <Symbol>s, being all the message selectors to which the receiver 
 	is able to respond (this includes messages understood by superclasses)."
@@ -150,7 +156,7 @@ allSubclasses
 
 	| answer |
 	answer := OrderedCollection new.
-	self allSubclassesBreadthFirstDo: [:each | answer add: each].
+	self allSubclassesBreadthFirstDo: [:each | answer addLast: each].
 	^answer!
 
 allSubclassesBreadthFirstDo: aMonadicValuable 
@@ -158,7 +164,7 @@ allSubclassesBreadthFirstDo: aMonadicValuable
 	subclasses in breadth-first order. The standard #allSubclassesDo: method 
 	performs a depth-first traversal (which is quicker)."
 
-	self subclasses ifNotNil: 
+	subclasses ifNotNil: 
 			[:classes | 
 			classes do: [:each | aMonadicValuable value: each].
 			classes do: [:each | each allSubclassesBreadthFirstDo: aMonadicValuable]]!
@@ -233,29 +239,32 @@ basicCompile: aString
 
 	^self basicCompile: aString flags: self defaultCompilationFlags!
 
-basicCompile: aString flags: anInteger 
+basicCompile: aString flags: anInteger
 	| error result stubMethod |
 	result := error := stubMethod := nil.
 	
-	[result := self compilerClass 
+	[result := self compilerClass
 				compile: aString
 				in: self
-				flags: anInteger] 
+				flags: anInteger]
 			on: self compilerClass errorClass
 			do: 
-				[:n | 
+				[:n |
 				error := n.
 				stubMethod := (MethodCompileFailed with: n) signal: n description.
 				n pass].
 	error notNil ifTrue: [result := stubMethod].
-	result notNil 
+	result notNil
 		ifTrue: 
-			[| selector method oldMethod |
+			[| selector method |
 			method := result method.
 			selector := method selector asSymbol.
-			oldMethod := methodDictionary at: selector ifAbsent: [].
-			result oldMethod: oldMethod.
-			oldMethod ifNotNil: [method isPrivate: oldMethod isPrivate].
+			methodDictionary
+				ifNotNil: 
+					[| oldMethod |
+					oldMethod := methodDictionary at: selector ifAbsent: [].
+					result oldMethod: oldMethod.
+					oldMethod ifNotNil: [method isPrivate: oldMethod isPrivate]].
 			self addSelector: selector withMethod: method.
 			method
 				storeSourceString: aString asString;
@@ -336,14 +345,14 @@ compiledMethodAt: aSymbol
 	"Answer the compiled method associated with the selector argument, aSymbol, in 
 	the receiver's local method dictionary. Report an error if the selector cannot be found."
 
-	^methodDictionary at: aSymbol!
+	^methodDictionary ?? _NullMethodDictionary at: aSymbol!
 
 compiledMethodAt: aSymbol ifAbsent: aNiladicValuable
 	"Answer the compiled method associated with the selector argument, aSymbol, in 
 	the receiver's local method dictionary, or the result of evaluating the niladic
 	valuable argument if the selector can not be found."
 
-	^methodDictionary at: aSymbol ifAbsent: aNiladicValuable!
+	^methodDictionary ?? _NullMethodDictionary at: aSymbol ifAbsent: aNiladicValuable!
 
 compilerClass
 	"Answer the default Compiler class to use for compiling methods, etc, of the
@@ -400,24 +409,23 @@ flushMethodCache
 	<primitive: 89>
 	^self primitiveFailed!
 
-fullBindingFor: aString 
+fullBindingFor: aString
 	"Answer a variable binding for the named variable in the scope of this class, and
 	failing that in the receiver's environment. If there is no such variable, then answer nil."
 
-	(aString identityIncludes: $.) 
+	(aString identityIncludes: $.)
 		ifTrue: 
-			[| parts env |
+			[| parts env count |
 			parts := aString subStrings: $..
 			"Fully qualified name always starts in Smalltalk"
 			env := Smalltalk.
-			parts 
-				from: 1
-				to: parts size - 1
+			count := parts size.
+			1 to: count - 1
 				do: 
-					[:each | 
-					env := env at: each ifAbsent: [].
+					[:i |
+					env := env at: (parts at: i) ifAbsent: [].
 					env isNil ifTrue: [^nil]].
-			^env bindingFor: parts last].
+			^env bindingFor: (parts at: count)].
 	^(self bindingFor: aString) ifNil: [self environment bindingFor: aString]!
 
 hasCompilationFailures
@@ -436,8 +444,7 @@ hasImmediateInstances
 hasMethods
 	"Answer whether the receiver has any methods in its local method dictionary."
 
-	^methodDictionary size ~= 0
-!
+	^methodDictionary notNil and: [methodDictionary size > 0]!
 
 includesBehavior: aBehavior
 	"Answer whether the receiver includes the behavior, aBehavior
@@ -450,7 +457,7 @@ includesSelector: aSymbol
 	"Answer whether the local method dictionary contains a method whose
 	selector is the argument, aSymbol."
 
-	^methodDictionary includesKey: aSymbol!
+	^methodDictionary notNil and: [methodDictionary includesKey: aSymbol]!
 
 inheritsFrom: aClass
 	"Answer whether the receiver is a subclass of aClass.
@@ -599,14 +606,15 @@ makeMourner
 methodDictionary
 	"Private - Answer the receiver's <MethodDictionary>."
 
-	^methodDictionary!
+	^methodDictionary ?? _NullMethodDictionary!
 
 methodDictionary: aMethodDictionary
 	"Private - Store the <MethodDictionary> argument as the method dictionary of the receiver.
 	Incorrect use of this method (e.g. with an argument which is not a <MethodDictionary>)
 	can cause unexpected behavior of the VM)."
 
-	methodDictionary := aMethodDictionary!
+	methodDictionary := (aMethodDictionary isNil or: [aMethodDictionary isEmpty])
+				ifFalse: [aMethodDictionary]!
 
 name
 	"Answer a <readableString> that is the name of the receiver."
@@ -746,6 +754,32 @@ recompileReferencesToVarNamed: aString
 					[Notification signal: 'Recompiling ' , m printString.
 					m recompile]]!
 
+referenceFilterFor: anObject
+	"Private - Answer a <monadicValuable> that when evaluated for a <CompiledMethod> answers
+	true if the method references anObject, or false if not."
+
+	| index |
+	anObject isSymbol
+		ifTrue: 
+			[index := VMLibrary default indexOfSpecialSelector: anObject ifAbsent: [0].
+			index ~= 0
+				ifTrue: [^[:each | (each refersToLiteral: anObject) or: [each sendsSpecialSelector: index]]]]
+		ifFalse: 
+			[(anObject isKindOf: VariableBinding)
+				ifTrue: 
+					[| value |
+					value := anObject value.
+					"In the case of constant bindings the value may be inlined in the byte codes if there is a representation."
+					(anObject isImmutable and: [VMLibrary hasBytecodeRepresentation: value])
+						ifTrue: 
+							[| constName |
+							constName := anObject key asString.
+							^[:each | (each refersToLiteral: anObject) or: [each containsSource: constName]]]
+						ifFalse: 
+							["For normal const/var bindings, search for both the binding and the current value of the binding"
+							^[:each | (each refersToLiteral: anObject) or: [each refersToLiteral: value]]]]].
+	^[:each | each refersToLiteral: anObject]!
+
 removeFromSuper
 	"Private - Remove the receiver from its superclasses' subclass collection.
 	Root classes will have a superclass of nil - we do not put such
@@ -773,8 +807,9 @@ removeSelector: aSymbol ifAbsent: aNiladicValuable
 	The #methodRemoved: event is triggered to inform interested parties."
 
 	| method |
-	method := methodDictionary removeKey: aSymbol
-				ifAbsent: [^aNiladicValuable value].
+	(methodDictionary isNil or: [(method := methodDictionary removeKey: aSymbol ifAbsent: []) isNil])
+		ifTrue: [^aNiladicValuable value].
+	methodDictionary isEmpty ifTrue: [methodDictionary := nil].
 	self flushMethodCache.
 	self environment trigger: #methodRemoved: with: method.
 	^method!
@@ -786,10 +821,11 @@ removeSelectors: aCollection
 	removed."
 
 	| methods env |
-
+	methodDictionary ifNil: [^#()].
 	"Take advantage of the fact that Sets ignores requests to add nil"
 	methods := aCollection asSet 
 				collect: [:each | methodDictionary removeKey: each ifAbsent: []].
+	methodDictionary isEmpty ifTrue: [methodDictionary := nil].
 	self flushMethodCache.
 	env := self environment.
 	methods do: [:each | env trigger: #methodRemoved: with: each].
@@ -829,8 +865,7 @@ selectors
 	"Answer a <Set> of <Symbol>s, being all the selectors of all the methods
 	in the receiver."
 
-	^methodDictionary keys
-!
+	^(methodDictionary ?? _NullMethodDictionary) keys!
 
 setShapeFlags: anIntegerMask to: aBoolean
 	"Private - Set/Reset the receivers shape/structure flags (as defined by anIntegerMask)
@@ -872,7 +907,7 @@ sharedPools
 
 	| pools |
 	pools := OrderedCollection new.
-	self sharedPoolsDo: [:each | pools add: each].
+	self sharedPoolsDo: [:each | pools addLast: each].
 	^pools!
 
 sharedPoolsDo: aMonadicValuable
@@ -1007,29 +1042,7 @@ whichMethodsRead: aString at: anInteger
 whichMethodsReferTo: anObject
 	"Answer a <Set> of methods in the receiver whose literal frames include the argument, anObject."
 
-	| index |
-	anObject isSymbol
-		ifTrue: 
-			[index := VMLibrary default indexOfSpecialSelector: anObject ifAbsent: [0].
-			index ~= 0
-				ifTrue: 
-					[^self
-						selectMethods: [:each | (each refersToLiteral: anObject) or: [each sendsSpecialSelector: index]]]]
-		ifFalse: 
-			[(anObject isKindOf: VariableBinding)
-				ifTrue: 
-					[| value |
-					value := anObject value.
-					"In the case of constant bindings the value may be inlined in the byte codes if there is a representation."
-					(anObject isImmutable and: [VMLibrary hasBytecodeRepresentation: value])
-						ifTrue: 
-							[| constName |
-							constName := anObject key asString.
-							^self selectMethods: [:each | (each refersToLiteral: anObject) or: [each containsSource: constName]]]
-						ifFalse: 
-							["For normal const/var bindings, search for both the binding and the current value of the binding"
-							^self selectMethods: [:each | (each refersToLiteral: anObject) or: [each refersToLiteral: value]]]]].
-	^self selectMethods: [:each | each refersToLiteral: anObject]!
+	^self selectMethods: (self referenceFilterFor: anObject)!
 
 whichSelectorsAccess: aString
 	"Answer a <collection> of <Symbol>s, being the selectors of methods of the receiver
@@ -1100,6 +1113,7 @@ withAllSuperclassesDo: aMonadicValuable
 !Behavior categoriesFor: #allClassVarNames!class variables!public! !
 !Behavior categoriesFor: #allInstances!instances!public! !
 !Behavior categoriesFor: #allInstVarNames!instance variables!public! !
+!Behavior categoriesFor: #allMethodsDo:!enumerating!public! !
 !Behavior categoriesFor: #allSelectors!methods-accessing!public! !
 !Behavior categoriesFor: #allSharedPoolNames!pool variables!public! !
 !Behavior categoriesFor: #allSharedPools!pool variables!public! !
@@ -1153,7 +1167,7 @@ withAllSuperclassesDo: aMonadicValuable
 !Behavior categoriesFor: #isMetaclass!public!testing! !
 !Behavior categoriesFor: #isMourner!instance specification-testing!public! !
 !Behavior categoriesFor: #isNullTerminated!instance specification-testing!public! !
-!Behavior categoriesFor: #isNullTerminated:!accessing!public! !
+!Behavior categoriesFor: #isNullTerminated:!instance specification-accessing!public! !
 !Behavior categoriesFor: #isPointers!instance specification-testing!public! !
 !Behavior categoriesFor: #isVariable!instance specification-testing!public! !
 !Behavior categoriesFor: #isWords!instance specification-testing!public! !
@@ -1172,6 +1186,7 @@ withAllSuperclassesDo: aMonadicValuable
 !Behavior categoriesFor: #recompile:!compiling!development!public! !
 !Behavior categoriesFor: #recompileAll!compiling!development!public! !
 !Behavior categoriesFor: #recompileReferencesToVarNamed:!development!private! !
+!Behavior categoriesFor: #referenceFilterFor:!methods-testing!private! !
 !Behavior categoriesFor: #removeFromSuper!class hierarchy-removing!private! !
 !Behavior categoriesFor: #removeFromSystem!class hierarchy-removing!private! !
 !Behavior categoriesFor: #removeSelector:!methods-removing!public! !
@@ -1227,6 +1242,13 @@ Behavior methodProtocol: #'Object class' attributes: #(#ansi #readOnly) selector
 icon
 	"Answers an Icon that can be used to represent this class."
 
-	^Class icon! !
+	^Class icon!
+
+initialize
+	self addClassConstant: '_NullMethodDictionary'
+		value: ((MethodDictionary new)
+				isImmutable: true;
+				yourself)! !
 !Behavior class categoriesFor: #icon!constants!public! !
+!Behavior class categoriesFor: #initialize!development!initializing!public! !
 

@@ -1,20 +1,14 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ExternalField subclass: #ScalarField
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ScalarField guid: (GUID fromString: '{87B4C4DD-026E-11D3-9FD7-00A0CC3E4A32}')!
-ScalarField comment: ''!
+ScalarField guid: (GUID fromString: '{87b4c4dd-026e-11d3-9fd7-00a0cc3e4a32}')!
+ScalarField comment: '<ScalarField> is the abstract class of <ExternalField>s to describe <ExternalStructure> fields of simple scalar types, e.g. ints, boolean, etc.'!
 !ScalarField categoriesForClass!External-Data-Types! !
 !ScalarField methodsFor!
-
-accessorConverter
-	"Private - Answer the converter message to be sent to the value read from the structure to
-	convert it to an appropriate Smalltalk object."
-
-	^nil!
 
 accessorMessage
 	"Private - Answer the stem of the accessor message used to access the value of the field
@@ -28,6 +22,9 @@ byteSize
 
 	^self class byteSize!
 
+fieldClassName
+	^Integer name!
+
 printAccessorExpression: aSymbol on: aWriteStream 
 	"Private - Print a suitable statement or statement onto the specified <puttableStream> which
 	will read the value of this field from an instance of the structure. The field in question
@@ -38,17 +35,11 @@ printAccessorExpression: aSymbol on: aWriteStream
 		display: self accessorMessage keywords first;
 		space.
 	self printOffsetExpression: aSymbol on: aWriteStream.
-	aWriteStream nextPut: $).
-	self accessorConverter 
-		ifNotNil: 
-			[:message | 
-			aWriteStream
-				space;
-				display: message]!
+	aWriteStream nextPut: $)!
 
-printMutatorBody: aSymbol on: aWriteStream 
+printMutatorBody: aSymbol on: aWriteStream
 	"Private - Print a suitable statement or statement onto the specified <puttableStream> which
-	will write the value of this field into an isntance of the structure. The field in question
+	will write the value of this field into an instance of the structure. The field in question
 	is after the fields in the <sequencedReadableCollection> that is the 2nd argument."
 
 	| keywords |
@@ -62,12 +53,21 @@ printMutatorBody: aSymbol on: aWriteStream
 	aWriteStream
 		space;
 		display: keywords second;
-		nextPutAll: ' anObject'! !
-!ScalarField categoriesFor: #accessorConverter!automatic generation!private! !
+		space.
+	self printMutatorValueOn: aWriteStream parameter: self valueParameterName!
+
+printMutatorValueOn: aWriteStream parameter: aString
+	"Private - Print a suitable expression onto the specified <puttableStream> which will
+	evaluate to the the value to be stored into this field in an instance of the structure when
+	compiled into a mutator method where the value parameter is named by the <String> argument."
+
+	aWriteStream nextPutAll: aString! !
 !ScalarField categoriesFor: #accessorMessage!automatic generation!private! !
 !ScalarField categoriesFor: #byteSize!constants!private! !
+!ScalarField categoriesFor: #fieldClassName!automatic generation!constants!development!private! !
 !ScalarField categoriesFor: #printAccessorExpression:on:!automatic generation!development!private! !
 !ScalarField categoriesFor: #printMutatorBody:on:!automatic generation!development!private! !
+!ScalarField categoriesFor: #printMutatorValueOn:parameter:!automatic generation!development!private! !
 
 !ScalarField class methodsFor!
 

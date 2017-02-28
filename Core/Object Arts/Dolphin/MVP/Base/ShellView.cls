@@ -835,8 +835,8 @@ releaseAccelerators
 releaseMenu
 	"Private - Release the menu."
 
-	self basicMenu: nil
-!
+	self basicMenu: nil.
+	menuBar ifNotNil: [menuBar free]!
 
 resetDefaultButton
 	"Private - No default button has been explicitly specified for the receiver, so attempt
@@ -1366,15 +1366,15 @@ initialize
 		ShellView initialize
 	"
 
-	self addClassConstant: 'DefaultButtonIndex' value: 20.	"self indexOfInstVar: 'defaultButton'"
-	self addClassConstant: 'DialogMessageMap'
-		value: ((LookupTable new)
+	"N.B. This method is not in the 'development' category (as most class initialize methods are) as it must be preserved in a deployed GUI application in order to 
+	prevent the #dm[G|S]etDefId:wParam:lParam: methods from being stripped."
+
+	DialogMessageMap := (LookupTable new)
 				at: DM_GETDEFID - WM_USER put: #dmGetDefId:wParam:lParam:;
 				at: DM_SETDEFID - WM_USER put: #dmSetDefId:wParam:lParam:;
 				shrink;
 				isImmutable: true;
-				yourself).
-	self addClassConstant: 'TransientMask' value: 1!
+				yourself!
 
 installNew
 	^(self asSessionManagerClass basicNew mainShellClass: self) install!

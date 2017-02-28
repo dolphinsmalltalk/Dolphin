@@ -11,6 +11,10 @@ package basicPackageVersion: '6.1'.
 
 
 package classNames
+	add: #ConformantArrayField;
+	add: #ConformantArrayPointerField;
+	add: #ConformantStructureArrayField;
+	add: #ConformantStructureArrayPointerField;
 	add: #MethodContext;
 	add: #OSVERSIONINFO;
 	add: #STBSymbolProxy;
@@ -20,8 +24,6 @@ package methodNames
 	add: #_FPIEEE_RECORD -> #causeCode;
 	add: #_FPIEEE_RECORD -> #causeName;
 	add: #_FPIEEE_VALUE -> #valueType;
-	add: #AttributeDescriptor -> #immutable;
-	add: #AttributeDescriptor -> #mutable;
 	add: #Behavior -> #makeIndirect;
 	add: #Behavior -> #makeNullTerminated;
 	add: #Class -> #addClassVarName:;
@@ -34,7 +36,6 @@ package methodNames
 	add: #Object -> #asDword;
 	add: #Package -> #script:;
 	add: #Package -> #script:put:;
-	add: #SourceManager -> #nextChunkFrom:;
 	add: #String -> #asDword;
 	add: 'ExternalCallback class' -> #receiver:prototype:;
 	add: 'ExternalCallback class' -> #receiver:prototype:closure:;
@@ -42,7 +43,6 @@ package methodNames
 	add: 'ExternalCallback class' -> #receiver:selector:closure:;
 	add: 'ExternalDescriptor class' -> #oneStringArg;
 	add: 'File class' -> #for:inAndBelow:do:;
-	add: 'Package class' -> #name:comment:;
 	yourself.
 
 package binaryGlobalNames: (Set new
@@ -61,6 +61,26 @@ package!
 
 Object variableSubclass: #MethodContext
 	instanceVariableNames: 'frame method receiver'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ArrayField subclass: #ConformantArrayField
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+StructureArrayField subclass: #ConformantStructureArrayField
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ArrayPointerField subclass: #ConformantArrayPointerField
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+StructureArrayPointerField subclass: #ConformantStructureArrayPointerField
+	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -103,18 +123,6 @@ valueType
 	#deprecated.
 	^self format! !
 !_FPIEEE_VALUE categoriesFor: #valueType!accessing!public! !
-
-!AttributeDescriptor methodsFor!
-
-immutable
-	#deprecated.
-	self beImmutable!
-
-mutable
-	#deprecated.
-	self beMutable! !
-!AttributeDescriptor categoriesFor: #immutable!accessing!public! !
-!AttributeDescriptor categoriesFor: #mutable!accessing!public! !
 
 !Behavior methodsFor!
 
@@ -255,22 +263,6 @@ script: scriptSymbol put: aString
 	self scriptAt: scriptSymbol put: aString! !
 !Package categoriesFor: #script:!operations!public! !
 !Package categoriesFor: #script:put:!operations!public! !
-
-!Package class methodsFor!
-
-name: nameString comment: commentString 
-	#deprecated.	"In 4.0, but retained becaused needed to load some old format packages"
-	^(self name: nameString)
-		basicComment: commentString;
-		yourself! !
-!Package class categoriesFor: #name:comment:!instance creation!public! !
-
-!SourceManager methodsFor!
-
-nextChunkFrom: aStream 
-	#deprecated.	"Use a ChunkSourceFiler"
-	^(ChunkSourceFiler on: aStream) nextChunk! !
-!SourceManager categoriesFor: #nextChunkFrom:!private!source filing! !
 
 !String methodsFor!
 

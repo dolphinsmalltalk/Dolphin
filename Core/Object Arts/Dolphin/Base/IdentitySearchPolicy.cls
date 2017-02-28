@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 SingletonSearchPolicy subclass: #IdentitySearchPolicy
 	instanceVariableNames: ''
@@ -23,13 +23,9 @@ hash: operand
 
 hash: operand max: maximum
 	"Answer a suitable hash value for the <Object>, operand, under this search policy, 
-	between 1 and the <integer>, maximum.
-	Implementation Note: The identityHash range is limited to 16-bits, so we must scale for large 
-	collections to avoid excessive collisions causing a dramatic fall off in performance."
+	between 1 and the <integer>, maximum."
 
-	^maximum < 8192
-		ifTrue: [operand identityHash \\ maximum + 1]
-		ifFalse: [(operand identityHash * (maximum bitShift: -12)) \\ maximum + 1]!
+	^operand identityHash \\ maximum + 1!
 
 keyAtValue: value in: collection ifAbsent: operation
 	"Answer the <Object> key of the <Object> argument, value in the keyed
@@ -58,12 +54,4 @@ nextIndexOf: anElement in: collection from: start to: stop
 !IdentitySearchPolicy categoriesFor: #keyAtValue:in:ifAbsent:!public!searching! !
 !IdentitySearchPolicy categoriesFor: #newLookupTable!operations!public! !
 !IdentitySearchPolicy categoriesFor: #nextIndexOf:in:from:to:!public!searching! !
-
-!IdentitySearchPolicy class methodsFor!
-
-current
-	"Answer the singleton instance of the receiver."
-
-	^self identity! !
-!IdentitySearchPolicy class categoriesFor: #current!instance creation!public! !
 

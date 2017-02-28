@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 SocketAbstract2 subclass: #ServerSocket2
 	instanceVariableNames: ''
@@ -38,11 +38,11 @@ bind
 	socketAddress := SOCKADDR_IN new.
 	socketAddress sin_family: AF_INET.
 	socketAddress sin_addr s_addr: INADDR_ANY.
-	socketAddress sin_port: (WS2_32Library default htons: self port).
-	(WS2_32Library default 
+	socketAddress port: self port.
+	(WS2_32Library default
 		bind: self asParameter
 		name: socketAddress
-		namelen: socketAddress byteSize) = SOCKET_ERROR 
+		namelen: socketAddress byteSize) = SOCKET_ERROR
 		ifTrue: [^self socketErrorOverlap]!
 
 bindPort: anInteger 

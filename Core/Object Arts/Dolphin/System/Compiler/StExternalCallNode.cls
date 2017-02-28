@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 StTagNode subclass: #StExternalCallNode
 	instanceVariableNames: 'nameOrOrdinal returnType argumentTypes flags callingConvention'
@@ -16,8 +16,8 @@ StExternalCallNode comment: ''!
 	#todo "Implement more efficiently".
 	^self formattedCode = anObject formattedCode!
 
-acceptVisitor: aProgramNodeVisitor 
-	^aProgramNodeVisitor acceptExternalCallNode: self!
+acceptVisitor: aProgramNodeVisitor
+	^aProgramNodeVisitor visitExternalCallNode: self!
 
 argumentTypes
 	^argumentTypes!

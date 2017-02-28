@@ -1,12 +1,12 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 StructureArrayField subclass: #PointerArrayField
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-PointerArrayField guid: (GUID fromString: '{23C14350-68AB-4481-A095-5C4F9654D211}')!
-PointerArrayField comment: ''!
+PointerArrayField guid: (GUID fromString: '{23c14350-68ab-4481-a095-5c4f9654d211}')!
+PointerArrayField comment: 'PointerArrayField is the class of <ExternalField>s used to describe fields that are fixed-size arrays of pointers to structures.'!
 !PointerArrayField categoriesForClass!External-Data-Types! !
 !PointerArrayField methodsFor!
 

@@ -1,7 +1,7 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Stream subclass: #Random
-	instanceVariableNames: 'seed '
+	instanceVariableNames: 'seed'
 	classVariableNames: 'DefaultGeneratorClass'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -114,7 +114,7 @@ seed: anInteger
 
 systemClockSeed
 	| seed |
-	seed := Delay millisecondClockValue bitAnd: 16r3FFFFFFF.
+	seed := Delay microsecondClockValue // 1000 bitAnd: 16r3FFFFFFF.
 	seed = 0 ifTrue: [seed := 1].
 	^seed! !
 !Random class categoriesFor: #defaultGeneratorClass!accessing!public! !

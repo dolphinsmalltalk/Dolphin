@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ExternalStructure subclass: #DOUBLE
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-DOUBLE guid: (GUID fromString: '{87B4C592-026E-11D3-9FD7-00A0CC3E4A32}')!
+DOUBLE guid: (GUID fromString: '{87b4c592-026e-11d3-9fd7-00a0cc3e4a32}')!
 DOUBLE comment: 'DOUBLE is an <ExternalStructure> class to represent double precision (64-bit) floating point numbers in native format'!
 !DOUBLE categoriesForClass!External-Data-Structured! !
 !DOUBLE methodsFor!
@@ -45,12 +45,6 @@ defineFields
 
 	self defineField: #value type: DOUBLEField new!
 
-fieldType
-	"Private - Answer the <ExternalField> type to be used to represent the receiver's field type in 
-	other structures."
-
-	^DOUBLEField!
-
 icon
 	"Answer a suitable iconic representation for the receiver."
 
@@ -68,7 +62,6 @@ uninitialize
 
 	VMLibrary default registryAt: self name put: nil! !
 !DOUBLE class categoriesFor: #defineFields!initializing!public! !
-!DOUBLE class categoriesFor: #fieldType!constants!development!private! !
 !DOUBLE class categoriesFor: #icon!constants!public! !
 !DOUBLE class categoriesFor: #initialize!development!initializing!private! !
 !DOUBLE class categoriesFor: #uninitialize!class hierarchy-removing!private! !

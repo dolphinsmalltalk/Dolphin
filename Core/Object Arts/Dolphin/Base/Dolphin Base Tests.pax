@@ -5,6 +5,7 @@ package paxVersion: 1;
 
 
 package classNames
+	add: #AbstractDictionaryTest;
 	add: #AbstractFileStreamTest;
 	add: #AlwaysSearchPolicyTest;
 	add: #ArrayedCollectionTest;
@@ -19,6 +20,7 @@ package classNames
 	add: #ClassBuilderTests;
 	add: #CollectionCombinator;
 	add: #CommandLineTest;
+	add: #CommandLineTestRunner;
 	add: #DateTest;
 	add: #DefaultSortAlgorithmTest;
 	add: #DictionaryTest;
@@ -115,7 +117,7 @@ package methodNames
 	add: #SmalltalkSystem -> #regressionTestsLogFilename;
 	add: #SmalltalkSystem -> #regressionTestSuite;
 	add: #SmalltalkSystem -> #runRegressionTests;
-	add: #SmalltalkSystem -> #runRegressionTests:logTo:;
+	add: #SmalltalkSystem -> #runRegressionTests:logTo:verbose:;
 	yourself.
 
 package binaryGlobalNames: (Set new
@@ -131,8 +133,8 @@ package setPrerequisites: (IdentitySet new
 	add: '..\IDE\Base\Development System';
 	add: 'Dolphin';
 	add: 'Dolphin Additional Sort Algorithms';
-	add: 'Dolphin Base';
 	add: '..\System\Base64\Dolphin Base64';
+	add: 'Dolphin Command-line Parser';
 	add: '..\System\Win32\Dolphin File System Watcher';
 	add: '..\System\Filer\Dolphin Literal Filer';
 	add: '..\MVP\Base\Dolphin MVP Base';
@@ -143,7 +145,6 @@ package setPrerequisites: (IdentitySet new
 	add: '..\..\..\Contributions\Refactory\Refactoring Browser\Tests\RBTests';
 	add: '..\System\Compiler\Smalltalk Parser';
 	add: '..\..\..\Contributions\Camp Smalltalk\SUnit\SUnit';
-	add: '..\..\..\Contributions\Camp Smalltalk\SUnit\SUnitUI';
 	add: '..\ActiveX\Shell\Windows Shell';
 	yourself).
 
@@ -153,6 +154,11 @@ package!
 
 Object subclass: #CollectionCombinator
 	instanceVariableNames: 'resultProcessingBlock collectionOfArrays buffer'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Object subclass: #CommandLineTestRunner
+	instanceVariableNames: 'results lastCase caseStart stream verbose runStart runStop timings'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -264,7 +270,7 @@ DolphinTest subclass: #FILETIMETest
 DolphinTest subclass: #FloatTest
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'CRTConstants'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 DolphinTest subclass: #FolderTest
 	instanceVariableNames: 'c windows system root oa'
@@ -297,7 +303,7 @@ DolphinTest subclass: #ObjectTest
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 DolphinTest subclass: #PackageTest
-	instanceVariableNames: 'loadedPackages'
+	instanceVariableNames: 'loadedPackages checkTimestamps'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -396,7 +402,7 @@ DolphinTest subclass: #VARIANTTest
 	classVariableNames: ''
 	poolDictionaries: 'AXAutomationConstants'
 	classInstanceVariableNames: ''!
-DolphinCollectionTest subclass: #DictionaryTest
+DolphinCollectionTest subclass: #AbstractDictionaryTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
@@ -411,17 +417,22 @@ DolphinCollectionTest subclass: #SetTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-DictionaryTest subclass: #LookupTableTest
+AbstractDictionaryTest subclass: #DictionaryTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-DictionaryTest subclass: #MethodDictionaryTest
+AbstractDictionaryTest subclass: #LookupTableTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-DictionaryTest subclass: #PoolConstantsDictionaryTest
+AbstractDictionaryTest subclass: #MethodDictionaryTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+AbstractDictionaryTest subclass: #PoolConstantsDictionaryTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
@@ -680,64 +691,46 @@ DolphinTestClassResource subclass: #MustBeBooleanTestClasses
 !SmalltalkSystem methodsFor!
 
 regressionTestsLogFilename
-	^File default: SessionManager current imagePath extension: 'testlog'!
+	"Answer the name of the file in which to log test results, or nil to have the output sent to stdout"
+
+	^nil
+	"^File default: SessionManager current imagePath extension: 'testlog'"!
 
 regressionTestSuite
 	| suite |
 	suite := TestSuite new.
-	suite addTests: TestCase buildSuite allTests.
+	suite addTests: TestCase buildSuite allTests asSortedCollection.
 	^suite!
 
 runRegressionTests
-	^self runRegressionTests: self regressionTestSuite logTo: self regressionTestsLogFilename!
-
-runRegressionTests: aTestSuite logTo: aFilenameStringOrNil 
-	| results timeMs |
-	timeMs := Time millisecondsToRun: 
-					[| runner |
-					runner := TestRunner show.
-					runner runSuite: aTestSuite.
-					results := runner result].
-	aFilenameStringOrNil notNil 
+	| suite filename |
+	filename := self regressionTestsLogFilename.
+	suite := self regressionTestSuite.
+	^filename isNil
 		ifTrue: 
+			[self
+				runRegressionTests: suite
+				logTo: SessionManager current stdout
+				verbose: true]
+		ifFalse: 
 			[| logStream |
-			logStream := FileStream write: aFilenameStringOrNil.
-			logStream
-				nextPutAll: (results hasPassed ifTrue: ['PASSED'] ifFalse: ['FAILED']);
-				cr;
-				nextPutAll: results printString;
-				nextPutAll: ' in ';
-				display: timeMs // 1000;
-				nextPutAll: 'secs';
-				cr.
-			results failures notEmpty 
-				ifTrue: 
-					[logStream
-						cr;
-						nextPutAll: 'FAILURES:';
-						cr.
-					results failures do: 
-							[:each | 
-							logStream
-								nextPutAll: each printString;
-								cr]].
-			results errors notEmpty 
-				ifTrue: 
-					[logStream
-						cr;
-						nextPutAll: 'ERRORS:';
-						cr.
-					results errors do: 
-							[:each | 
-							logStream
-								nextPutAll: each printString;
-								cr]].
-			logStream close].
-	^results! !
+			logStream := FileStream write: filename.
+			
+			[self
+				runRegressionTests: suite
+				logTo: logStream
+				verbose: true]
+					ensure: [logStream close]]!
+
+runRegressionTests: aTestSuite logTo: logStream verbose: aBoolean
+	^(CommandLineTestRunner new)
+		stream: logStream;
+		verbose: aBoolean;
+		runSuite: aTestSuite! !
 !SmalltalkSystem categoriesFor: #regressionTestsLogFilename!public!tests! !
 !SmalltalkSystem categoriesFor: #regressionTestSuite!private!tests! !
 !SmalltalkSystem categoriesFor: #runRegressionTests!public!tests! !
-!SmalltalkSystem categoriesFor: #runRegressionTests:logTo:!public!tests! !
+!SmalltalkSystem categoriesFor: #runRegressionTests:logTo:verbose:!public!tests! !
 
 "End of package definition"!
 

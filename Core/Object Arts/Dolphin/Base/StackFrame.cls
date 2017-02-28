@@ -469,23 +469,28 @@ textMap
 
 !StackFrame class methodsFor!
 
-frameClassFor: aProcess at: anInteger 
+frameClassFor: aProcess at: anInteger
 	"Private - Answer the subclass of the receiver to use to represent a stack frame in aProcess
 	at the specified index. Answer nil if the index is out of bounds."
 
-	| env |
-	env := aProcess at: anInteger + EnvOffset ifAbsent: [^nil].
+	| env sp |
+	sp := anInteger + EnvOffset.
+	env := (sp > 0 and: [sp <= aProcess size]) ifTrue: [aProcess at: sp] ifFalse: [^nil].
 	^(env isInteger or: [env isNil]) ifTrue: [self] ifFalse: [env frameClass]!
+
+onProcess: aProcess index: anInteger
+	<primitive: 157>
+	^(self basicNew)
+		setProcess: aProcess index: anInteger;
+		yourself!
 
 process: aProcess index: anInteger
 	"Private - Answer a new instance of the receiver representing the stack frame in aProcess
 	at the specified index in aProcess, or nil if the specified index is out of bounds in the process."
 
-	^(self frameClassFor: aProcess at: anInteger) ifNotNil: 
-			[:frameClass | 
-			(frameClass new)
-				setProcess: aProcess index: anInteger;
-				yourself]! !
-!StackFrame class categoriesFor: #frameClassFor:at:!instance creation!public! !
+	^(self frameClassFor: aProcess at: anInteger)
+		ifNotNil: [:frameClass | frameClass onProcess: aProcess index: anInteger]! !
+!StackFrame class categoriesFor: #frameClassFor:at:!instance creation!private! !
+!StackFrame class categoriesFor: #onProcess:index:!instance creation!private! !
 !StackFrame class categoriesFor: #process:index:!instance creation!public! !
 

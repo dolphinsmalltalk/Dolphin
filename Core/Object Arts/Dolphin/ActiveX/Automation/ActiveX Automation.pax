@@ -20,6 +20,7 @@ ExternalStructure registerSubclasses.'.
 package basicScriptAt: #postuninstall put: 'ExternalStructure classPool at: ''RecordClasses'' put: nil.'.
 
 package classNames
+	add: #AbstractELEMDESC;
 	add: #ARRAYDESC;
 	add: #AXAPIInfoAnalyzer;
 	add: #AXDispatchImpAbstract;
@@ -114,9 +115,12 @@ package methodNames
 	add: #OLEAutLibrary -> #getRecordInfoFromTypeInfo:ppRecInfo:;
 	add: #OLEAutLibrary -> #lHashValOfNameSys:lcid:szName:;
 	add: #OLEAutLibrary -> #loadRegTypeLib:wVerMajor:wVerMinor:lcid:pptlib:;
+	add: #OLEAutLibrary -> #loadTypeLib:pptlib:;
 	add: #OLEAutLibrary -> #loadTypeLibEx:regkind:pptlib:;
 	add: #OLEAutLibrary -> #oleCreateFontIndirect:riid:ppvObj:;
 	add: #OLEAutLibrary -> #queryPathOfRegTypeLib:wVerMajor:wVerMinor:lcid:lpbstrPathName:;
+	add: #OLEAutLibrary -> #registerTypeLib:wszFullPath:wszHelpDir:;
+	add: #OLEAutLibrary -> #registerTypeLibForUser:szFullPath:szHelpDir:;
 	add: #OLEAutLibrary -> #safeArrayAccessData:ppvData:;
 	add: #OLEAutLibrary -> #safeArrayCopy:ppsaout:;
 	add: #OLEAutLibrary -> #safeArrayCreateEx:cDims:rgsabound:pvExtra:;
@@ -137,6 +141,7 @@ package methodNames
 	add: #OLEAutLibrary -> #safeArrayUnlock:;
 	add: #OLEAutLibrary -> #setErrorInfo:perrinfo:;
 	add: #OLEAutLibrary -> #systemTimeToVariantTime:pvtime:;
+	add: #OLEAutLibrary -> #unRegisterTypeLib:wVerMajor:wVerMinor:lcid:syskind:;
 	add: #OLEAutLibrary -> #varCmp:pvarRight:lcid:dwFlags:;
 	add: #OLEAutLibrary -> #varDateFromStr:lcid:dwFlags:pdateOut:;
 	add: #OLEAutLibrary -> #variantChangeType:pvarSrc:wFlags:vt:;
@@ -154,6 +159,7 @@ package methodNames
 	add: #TimeStamp -> #asVariant;
 	add: #UndefinedObject -> #asVariant;
 	add: 'BOOL class' -> #typeName;
+	add: 'BOOLEAN class' -> #typeName;
 	add: 'BSTR class' -> #fromObject:;
 	add: 'BSTR class' -> #newSAFEARRAY:;
 	add: 'BSTR class' -> #typeName;
@@ -290,7 +296,7 @@ Object subclass: #AXTypeLibRegistration
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 AXTypeInfoObject subclass: #AXTypeInfoAnalyzer
-	instanceVariableNames: 'typeLib globalBinding guid index basicName'
+	instanceVariableNames: 'typeLib globalBinding guid index documentation'
 	classVariableNames: 'TypeKindToClassMap VTtoIDLTypeMap'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -306,7 +312,7 @@ AXTypeInfoAnalyzer subclass: #AXAPIInfoAnalyzer
 	classInstanceVariableNames: ''!
 AXTypeInfoAnalyzer subclass: #AXStructureTypeAnalyzer
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: 'BuiltIns'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 AXTypeInfoAnalyzer subclass: #TKindAliasAnalyzer
@@ -327,7 +333,7 @@ AXTypeInfoAnalyzer subclass: #TKindEnumAnalyzer
 AXAPIInfoAnalyzer subclass: #AXInterfaceTypeAnalyzer
 	instanceVariableNames: 'protocol isSource'
 	classVariableNames: 'ReservedDispSelectors ReservedUnkSelectors'
-	poolDictionaries: 'AttributeDescriptorFlags'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 AXAPIInfoAnalyzer subclass: #TKindModuleAnalyzer
 	instanceVariableNames: ''
@@ -454,10 +460,10 @@ LPVOID subclass: #LPBSTR
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-OLEStructure subclass: #ARRAYDESC
-	instanceVariableNames: 'owner'
+OLEStructure subclass: #AbstractELEMDESC
+	instanceVariableNames: 'owner tdesc'
 	classVariableNames: ''
-	poolDictionaries: ''
+	poolDictionaries: 'AXAutomationConstants'
 	classInstanceVariableNames: ''!
 OLEStructure subclass: #CURRENCY
 	instanceVariableNames: ''
@@ -477,11 +483,6 @@ OLEStructure subclass: #DECIMAL
 OLEStructure subclass: #DISPPARAMS
 	instanceVariableNames: 'args vargs dispids'
 	classVariableNames: 'ZeroArgs'
-	poolDictionaries: 'AXAutomationConstants'
-	classInstanceVariableNames: ''!
-OLEStructure subclass: #ELEMDESC
-	instanceVariableNames: 'owner param tdesc'
-	classVariableNames: ''
 	poolDictionaries: 'AXAutomationConstants'
 	classInstanceVariableNames: ''!
 OLEStructure subclass: #FONTDESC
@@ -515,7 +516,17 @@ OLEStructure subclass: #TLIBATTR
 	poolDictionaries: 'AXAutomationConstants'
 	classInstanceVariableNames: ''!
 OLEStructure subclass: #TYPEDESC
-	instanceVariableNames: 'owner classDesc'
+	instanceVariableNames: 'owner classDesc typeInfo'
+	classVariableNames: 'VTIndirections'
+	poolDictionaries: 'AXAutomationConstants'
+	classInstanceVariableNames: ''!
+AbstractELEMDESC subclass: #ARRAYDESC
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+AbstractELEMDESC subclass: #ELEMDESC
+	instanceVariableNames: 'param'
 	classVariableNames: ''
 	poolDictionaries: 'AXAutomationConstants'
 	classInstanceVariableNames: ''!
@@ -525,13 +536,13 @@ OLEFinalizableStructure subclass: #AXRecord
 	poolDictionaries: 'AXAutomationConstants AXAutomationErrors'
 	classInstanceVariableNames: ''!
 OLEFinalizableStructure subclass: #AXTypeInfoStructure
-	instanceVariableNames: 'piTypeInfo analyzer'
+	instanceVariableNames: 'analyzer'
 	classVariableNames: ''
 	poolDictionaries: 'AXAutomationConstants'
 	classInstanceVariableNames: ''!
 OLEFinalizableStructure subclass: #CUSTDATA
-	instanceVariableNames: ''
-	classVariableNames: ''
+	instanceVariableNames: 'contents'
+	classVariableNames: 'WellKnownCustomAttributes'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 OLEFinalizableStructure subclass: #VARIANT
@@ -540,12 +551,12 @@ OLEFinalizableStructure subclass: #VARIANT
 	poolDictionaries: 'AXAutomationConstants AXAutomationErrors Win32Constants'
 	classInstanceVariableNames: ''!
 AXTypeInfoStructure subclass: #AXMemberDesc
-	instanceVariableNames: ''
+	instanceVariableNames: 'index customAttributes documentation'
 	classVariableNames: ''
 	poolDictionaries: 'AXAutomationConstants'
 	classInstanceVariableNames: ''!
 AXTypeInfoStructure subclass: #TYPEATTR
-	instanceVariableNames: ''
+	instanceVariableNames: 'piTypeInfo'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -581,6 +592,15 @@ asVariant
 
 	^VARIANT fromBoolean: self! !
 !Boolean categoriesFor: #asVariant!converting!public! !
+
+!BOOLEAN class methodsFor!
+
+typeName
+	"Private - Answer the Dolphin external type name for the receiver.
+	There is an appropriate built-in type which we can substitute."
+
+	^#bool! !
+!BOOLEAN class categoriesFor: #typeName!constants!private! !
 
 !BSTR methodsFor!
 
@@ -1645,6 +1665,10 @@ loadRegTypeLib: rguid wVerMajor: wVerMajor wVerMinor: wVerMinor lcid: lcid pptli
 	<stdcall: hresult LoadRegTypeLib GUID* word word dword lppvoid>
 	^self invalidCall!
 
+loadTypeLib: szFileName pptlib: lplptlib
+	<stdcall: hresult LoadTypeLib UnicodeString* lppvoid>
+	^self invalidCall!
+
 loadTypeLibEx: szFileName regkind: regkind pptlib: lplptlib
 	"Loads, and optionally registers, a type library from the specified path.
 
@@ -1684,6 +1708,30 @@ queryPathOfRegTypeLib: rguid wVerMajor: wVerMajor wVerMinor: wVerMinor lcid: lci
 		LPBSTR lpbstrPathName);"
   
 	<stdcall: sdword QueryPathOfRegTypeLib GUID* word word dword BSTR*>
+	^self invalidCall!
+
+registerTypeLib: ptlib wszFullPath: wszFullPath wszHelpDir: wszHelpDir
+	"Invoke the RegisterTypeLib() function of the module wrapped by the receiver.
+	Helpstring: Adds information about a type library to the system registry
+
+		HRESULT __stdcall RegisterTypeLib(
+			ITypeLib* ptlib,
+			LPWSTR wszFullPath,
+			LPWSTR wszHelpDir);"
+
+	<stdcall: sdword RegisterTypeLib ITypeLib* lpwstr lpwstr>
+	^self invalidCall!
+
+registerTypeLibForUser: ptlib szFullPath: szFullPath szHelpDir: szHelpDir
+	"Invoke the RegisterTypeLibForUser() function of the module wrapped by the receiver.
+	Helpstring: Registers a type library for use by the calling user.
+
+		HRESULT __stdcall RegisterTypeLibForUser(
+			ITypeLib* ptlib,
+			LPWSTR szFullPath,
+			LPWSTR szHelpDir);"
+
+	<stdcall: hresult RegisterTypeLibForUser ITypeLib* lpwstr lpwstr>
 	^self invalidCall!
 
 safeArrayAccessData: psa ppvData: ppvData
@@ -1904,6 +1952,20 @@ systemTimeToVariantTime: lpSystemTime pvtime: pvtime
 	<stdcall: bool SystemTimeToVariantTime SYSTEMTIME* DOUBLE*>
 	^self invalidCall!
 
+unRegisterTypeLib: rguid wVerMajor: wVerMajor wVerMinor: wVerMinor lcid: lcid syskind: syskind
+	"Invoke the UnRegisterTypeLib() function of the module wrapped by the receiver.
+	Helpstring: Removes type library information from the system registry.
+
+		HRESULT __stdcall UnRegisterTypeLib(
+			GUID* rguid,
+			unsigned short wVerMajor,
+			unsigned short wVerMinor,
+			unsigned long lcid,
+			SYSKIND syskind);"
+
+	<stdcall: hresult UnRegisterTypeLib GUID* word word dword sdword>
+	^self invalidCall!
+
 varCmp: pvarLeft pvarRight: pvarRight lcid: lcid dwFlags: dwFlags
 	"Answer a comparison result between the two VARIANT arguments.
 
@@ -1996,9 +2058,12 @@ variantTimeToSystemTime: vtime lpSystemTime: lpSystemTime
 !OLEAutLibrary categoriesFor: #getRecordInfoFromTypeInfo:ppRecInfo:!OLE Functions-OLE!public! !
 !OLEAutLibrary categoriesFor: #lHashValOfNameSys:lcid:szName:!Automation Functions-Type Compilation And Library!primitives!public! !
 !OLEAutLibrary categoriesFor: #loadRegTypeLib:wVerMajor:wVerMinor:lcid:pptlib:!Automation Functions-Type Compilation And Library!public! !
+!OLEAutLibrary categoriesFor: #loadTypeLib:pptlib:!Automation Functions-Type Compilation And Library!primitives!public! !
 !OLEAutLibrary categoriesFor: #loadTypeLibEx:regkind:pptlib:!Automation Functions-Type Compilation And Library!primitives!public! !
 !OLEAutLibrary categoriesFor: #oleCreateFontIndirect:riid:ppvObj:!OLE Functions-OLE!public! !
 !OLEAutLibrary categoriesFor: #queryPathOfRegTypeLib:wVerMajor:wVerMinor:lcid:lpbstrPathName:!Automation Functions-Type Compilation And Library!public! !
+!OLEAutLibrary categoriesFor: #registerTypeLib:wszFullPath:wszHelpDir:!Automation Functions-Type Compilation And Library!public! !
+!OLEAutLibrary categoriesFor: #registerTypeLibForUser:szFullPath:szHelpDir:!**auto generated**!Automation Functions-Type Compilation And Library!public! !
 !OLEAutLibrary categoriesFor: #safeArrayAccessData:ppvData:!Automation Functions-Array Manipulation!public! !
 !OLEAutLibrary categoriesFor: #safeArrayCopy:ppsaout:!Automation Functions-Array Manipulation!public! !
 !OLEAutLibrary categoriesFor: #safeArrayCreateEx:cDims:rgsabound:pvExtra:!Automation Functions-Array Manipulation!public! !
@@ -2019,6 +2084,7 @@ variantTimeToSystemTime: vtime lpSystemTime: lpSystemTime
 !OLEAutLibrary categoriesFor: #safeArrayUnlock:!Automation Functions-Array Manipulation!public! !
 !OLEAutLibrary categoriesFor: #setErrorInfo:perrinfo:!Automation Functions-Error Handling API!public! !
 !OLEAutLibrary categoriesFor: #systemTimeToVariantTime:pvtime:!Automation Functions-Variant Manipulation!public! !
+!OLEAutLibrary categoriesFor: #unRegisterTypeLib:wVerMajor:wVerMinor:lcid:syskind:!**auto generated**!Automation Functions-Type Compilation And Library!public! !
 !OLEAutLibrary categoriesFor: #varCmp:pvarRight:lcid:dwFlags:!Automation Functions-Variant Manipulation!public! !
 !OLEAutLibrary categoriesFor: #varDateFromStr:lcid:dwFlags:pdateOut:!Automation Functions-Variant Manipulation!public! !
 !OLEAutLibrary categoriesFor: #variantChangeType:pvarSrc:wFlags:vt:!Automation Functions-Variant Manipulation!public! !

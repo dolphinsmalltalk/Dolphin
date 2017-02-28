@@ -11,10 +11,6 @@ HeapsortAlgorithmTest comment: ''!
 !HeapsortAlgorithmTest methodsFor!
 
 algorithmToTest
-	^HeapsortAlgorithm!
-
-testBigStringSort
-	self bigStringSort! !
+	^HeapsortAlgorithm! !
 !HeapsortAlgorithmTest categoriesFor: #algorithmToTest!private!unit tests! !
-!HeapsortAlgorithmTest categoriesFor: #testBigStringSort!public!unit tests! !
 

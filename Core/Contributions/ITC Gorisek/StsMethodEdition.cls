@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 StsEdition subclass: #StsMethodEdition
 	instanceVariableNames: 'classSymbol selector isPrivate categoriesString source'
@@ -274,7 +274,9 @@ displayOn: aStream
 				nextPutAll: developer]!
 
 icon
-	^isPrivate == true ifTrue: [CompiledMethod privateIcon] ifFalse: [CompiledMethod publicIcon]!
+	^isPrivate == true
+		ifTrue: [Smalltalk developmentSystem privateMethodIcon]
+		ifFalse: [Smalltalk developmentSystem publicMethodIcon]!
 
 isExpression
 	^false!

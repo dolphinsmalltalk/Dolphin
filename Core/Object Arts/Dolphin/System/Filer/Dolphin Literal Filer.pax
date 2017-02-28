@@ -14,6 +14,7 @@ package classNames
 
 package methodNames
 	add: #ArrayedCollection -> #literalPrintOn:;
+	add: #Boolean -> #literalPrintOn:;
 	add: #Class -> #literalPrintOn:;
 	add: #Number -> #literalPrintOn:;
 	add: #Object -> #literalStoreArray;
@@ -21,8 +22,11 @@ package methodNames
 	add: #Object -> #literalStoreEvaluationString;
 	add: #Object -> #literalStoreOn:;
 	add: #PoolConstantsDictionary -> #literalPrintOn:;
+	add: #ProcessorScheduler -> #literalPrintOn:;
 	add: #String -> #literalPrintOn:;
 	add: #Symbol -> #literalPrintOn:;
+	add: #SystemDictionary -> #literalPrintOn:;
+	add: #UndefinedObject -> #literalPrintOn:;
 	add: 'Object class' -> #fromLiteralStoreArray:;
 	add: 'Object class' -> #fromLiteralStoreArray:context:;
 	add: 'Object class' -> #literalReadFrom:;
@@ -49,7 +53,7 @@ STBInFiler subclass: #STLInFiler
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 STLInFiler subclass: #STLDebugger
-	instanceVariableNames: 'indentLevel traceStream printOffsets'
+	instanceVariableNames: 'indentLevel traceStream printOffsets slotName'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -71,6 +75,12 @@ literalPrintOn: aWriteStream
 	self do: [:each | each literalPrintOn: aWriteStream] separatedBy: [aWriteStream space].
 	self printSuffixOn: aWriteStream! !
 !ArrayedCollection categoriesFor: #literalPrintOn:!public! !
+
+!Boolean methodsFor!
+
+literalPrintOn: aWriteStream
+	self printOn: aWriteStream! !
+!Boolean categoriesFor: #literalPrintOn:!public! !
 
 !Class methodsFor!
 
@@ -125,7 +135,7 @@ literalStoreEvaluationString
 	self literalStoreEvaluationOn: stream.
 	^stream contents!
 
-literalStoreOn: aStream 
+literalStoreOn: aStream
 	"Stores the receiver in a literal form on aStream that can be reconstituted using Object class>>literalReadFrom:.
 	Uses the STL filing mechanism to achieve this. This implementation is sufficient for all objects
 	that do not need to isolate themselves from their surroundings. Sub-classes may override this
@@ -163,7 +173,7 @@ literalReadFrom: aStream
 
 !
 
-literalReadFrom: aStream context: anObject 
+literalReadFrom: aStream context: anObject
 	"Answers an object read from its literal STL representation on aStream.
 	This must have been saved using Object>>literalStoreOn:"
 
@@ -184,6 +194,12 @@ literalPrintOn: aWriteStream
 		nextPutAll: ') '! !
 !PoolConstantsDictionary categoriesFor: #literalPrintOn:!public! !
 
+!ProcessorScheduler methodsFor!
+
+literalPrintOn: aWriteStream
+	aWriteStream nextPutAll: '##(Smalltalk.Processor)'! !
+!ProcessorScheduler categoriesFor: #literalPrintOn:!public! !
+
 !String methodsFor!
 
 literalPrintOn: aWriteStream 
@@ -199,6 +215,18 @@ literalPrintOn: aWriteStream
 literalPrintOn: aWriteStream 
 	self printOn: aWriteStream! !
 !Symbol categoriesFor: #literalPrintOn:!public! !
+
+!SystemDictionary methodsFor!
+
+literalPrintOn: aWriteStream
+	aWriteStream nextPutAll: '##(Smalltalk)'! !
+!SystemDictionary categoriesFor: #literalPrintOn:!public! !
+
+!UndefinedObject methodsFor!
+
+literalPrintOn: aWriteStream
+	self printOn: aWriteStream! !
+!UndefinedObject categoriesFor: #literalPrintOn:!public! !
 
 "End of package definition"!
 

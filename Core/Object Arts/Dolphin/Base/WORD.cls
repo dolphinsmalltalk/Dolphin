@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ExternalInteger subclass: #WORD
 	instanceVariableNames: ''
@@ -16,9 +16,20 @@ The range of integer values that can be represented by instances of this class i
 !WORD methodsFor!
 
 asSignedInteger
-	"Answer the signed 16-bit Integer value of the receiver."
+	"Answer the signed 16-bit <Integer> value of the receiver."
 
 	^bytes swordAtOffset: 0!
+
+asUnsignedInteger
+	"Answer the unsigned 16-bit <Integer> value of the receiver.
+	This can be useful where unsigned values are stored in signed values."
+
+	^bytes wordAtOffset: 0!
+
+unsignedValue: anInteger
+	"Set the receiver's value field to the value of the unsigned positive integer argument."
+
+	bytes wordAtOffset: 0 put: anInteger!
 
 value
 	"Answer the receiver's value field as a Smalltalk object."
@@ -30,6 +41,8 @@ value: anObject
 
 	bytes wordAtOffset: 0 put: anObject! !
 !WORD categoriesFor: #asSignedInteger!converting!public! !
+!WORD categoriesFor: #asUnsignedInteger!converting!public! !
+!WORD categoriesFor: #unsignedValue:!accessing!public! !
 !WORD categoriesFor: #value!**compiled accessors**!public! !
 !WORD categoriesFor: #value:!**compiled accessors**!public! !
 

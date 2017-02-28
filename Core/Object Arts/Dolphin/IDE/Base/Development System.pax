@@ -189,6 +189,7 @@ package methodNames
 	add: #CompiledExpression -> #stylerClass;
 	add: #CompiledMethod -> #asDebugMethod;
 	add: #CompiledMethod -> #browse;
+	add: #CompiledMethod -> #icon;
 	add: #CompiledMethod -> #searchForInTool:;
 	add: #CompiledMethod -> #stylerClass;
 	add: #CompileFailedMethod -> #asDebugMethod;
@@ -235,6 +236,7 @@ package methodNames
 	add: #Object -> #publishedAspects;
 	add: #Object -> #publishedEvents;
 	add: #Object -> #searchForInTool:;
+	add: #OrEnvironment -> #includesResource:;
 	add: #Package -> #browse;
 	add: #Package -> #defaultAbout;
 	add: #Package -> #defaultAboutBitmap;
@@ -251,7 +253,7 @@ package methodNames
 	add: #Process -> #debug;
 	add: #Process -> #debug:topFrame:resumable:;
 	add: #Process -> #debuggerClass;
-	add: #Process -> #halt:;
+	add: #Process -> #halt:cause:;
 	add: #Process -> #primStep:;
 	add: #Process -> #showWalkback:callStack:debuggable:resumable:;
 	add: #Process -> #step;
@@ -1110,7 +1112,7 @@ SmalltalkStyler subclass: #SmalltalkMethodStyler
 	classInstanceVariableNames: ''!
 SingletonSearchPolicy subclass: #CompiledMethodSearchPolicy
 	instanceVariableNames: ''
-	classVariableNames: 'Current'
+	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 GUISessionManager subclass: #DevelopmentSessionManager
@@ -1433,11 +1435,11 @@ allMethods
 
 	| methods |
 	methods := OrderedCollection new: 256.
-	self methodsDo: [:each | methods add: each].
+	self methodsDo: [:each | methods addLast: each].
 	^methods!
 
 allResourcesDo: aBlock 
-	ResourceIdentifier allResourceIdentifiers do: aBlock!
+	ResourceIdentifier allResourceIdentifiersDo: aBlock!
 
 browse
 	^self openEditor!
@@ -1982,6 +1984,11 @@ browse
     
     	^Smalltalk developmentSystem browseMethod: self!
 
+icon
+	"Answers an Icon that can be used to represent this object."
+
+	^Smalltalk developmentSystem iconForMethod: self!
+
 searchForInTool: aSmalltalkToolShell 
 	aSmalltalkToolShell searchForMethod: self!
 
@@ -1989,6 +1996,7 @@ stylerClass
 	^Smalltalk developmentSystem methodStylerClass! !
 !CompiledMethod categoriesFor: #asDebugMethod!development!private! !
 !CompiledMethod categoriesFor: #browse!development!public! !
+!CompiledMethod categoriesFor: #icon!constants!development!public! !
 !CompiledMethod categoriesFor: #searchForInTool:!public! !
 !CompiledMethod categoriesFor: #stylerClass!constants!public! !
 
@@ -2308,16 +2316,16 @@ alternateInspectorClass
 publishedAspects
 	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
 
-    | aspects |
-    aspects := super publishedAspects.
-    self isNull 
-        ifFalse: 
-            [self getValidFields do: 
-                    [:each | 
-                    | field |
-                    field := self template at: each.
-                    field isReadable ifTrue: [aspects add: (field newAspect: each class: Aspect)]]].
-    ^aspects! !
+	| aspects |
+	aspects := super publishedAspects.
+	self isNull
+		ifFalse: 
+			[self getValidFields do: 
+					[:each |
+					| field |
+					field := self template at: each.
+					field isBrowsable ifTrue: [aspects add: (field newAspect: each class: Aspect)]]].
+	^aspects! !
 !ExternalStructure categoriesFor: #alternateInspectorClass!constants!development!public! !
 !ExternalStructure categoriesFor: #publishedAspects!accessing!development!public! !
 
@@ -3115,11 +3123,11 @@ debugPrintString
     !
 
 halt
-    	"Bring up the Smalltalk debugger (suspending the active process) ..."
-    
-    	| process |
-    	process := Processor activeProcess.
-    	process halt: process topFrame sender!
+	"Bring up the Smalltalk debugger (suspending the active process) ..."
+
+	| process |
+	process := Processor activeProcess.
+	process halt: process topFrame sender cause: 'Hard coded breakpoint'!
 
 inspect
     	"Open and answer an inspector window on the receiver."
@@ -3229,6 +3237,13 @@ publishedEventsOfInstances
 !Object class categoriesFor: #publishedAspectsOfInstances!constants!development!public! !
 !Object class categoriesFor: #publishedEvents!development!events!public! !
 !Object class categoriesFor: #publishedEventsOfInstances!development!events!public! !
+
+!OrEnvironment methodsFor!
+
+includesResource: aResourceIdentifier 
+	^(environment includesResource: aResourceIdentifier) 
+		and: [oredEnvironment includesResource: aResourceIdentifier]! !
+!OrEnvironment categoriesFor: #includesResource:!public!testing! !
 
 !Package methodsFor!
 
@@ -3537,15 +3552,16 @@ debuggerClass
     
     	^Smalltalk developmentSystem debuggerClass!
 
-halt: frame
-    	"Private - Bring up a Smalltalk debugger on the receiver in the specified frame."
-    
-    	debugger isNil
-    		ifTrue: [
-    			self walkback: 'Hard coded breakpoint' 
-    				topFrame: frame
-    				resumable: true]
-    		ifFalse: [debugger onHalt: frame]!
+halt: aStackFrame cause: aString
+	"Private - Bring up a Smalltalk debugger on the receiver in the specified frame."
+
+	debugger isNil
+		ifTrue: 
+			[self
+				walkback: aString
+				topFrame: aStackFrame
+				resumable: true]
+		ifFalse: [debugger onHalt: aStackFrame]!
 
 primStep: steps 
 	"Private - Resume the receiver for a single step (method/block activation), at 
@@ -3677,7 +3693,7 @@ walkback: aString topFrame: aStackFrame resumable: aBoolean
 !Process categoriesFor: #debug!development!private! !
 !Process categoriesFor: #debug:topFrame:resumable:!development!private! !
 !Process categoriesFor: #debuggerClass!constants!public! !
-!Process categoriesFor: #halt:!development!private! !
+!Process categoriesFor: #halt:cause:!development!private! !
 !Process categoriesFor: #primStep:!development!private!states-changing! !
 !Process categoriesFor: #showWalkback:callStack:debuggable:resumable:!development!private! !
 !Process categoriesFor: #step!development!private!states-changing! !
@@ -3745,11 +3761,11 @@ debugPrintString
 !
 
 halt
-    	"Bring up the Smalltalk debugger (suspending the active process) ..."
-    
-    	| process |
-    	process := Processor activeProcess.
-    	process halt: process topFrame sender!
+	"Bring up the Smalltalk debugger (suspending the active process) ..."
+
+	| process |
+	process := Processor activeProcess.
+	process halt: process topFrame sender cause: 'Hard coded breakpoint'!
 
 inspect
 	"Open and answer an inspector window on the receiver"
@@ -4129,6 +4145,7 @@ publishedAspectsOfInstances
 		add: (Aspect integer: #width);
 		add: (Aspect integer: #mask);
 		add: (Aspect choice: #cursorType from: CursorTypes values);
+		add: (Aspect color: #backcolor);
 		yourself! !
 !ScintillaMargin class categoriesFor: #publishedAspectsOfInstances!constants!development!public! !
 
@@ -4196,10 +4213,10 @@ publishedAspectsOfInstances
 publishedAspects
 	"Answer a <LookupTable> of the <Aspect>s published by the receiver."
 
-	| createPresenter indicStyles |
+	| createPresenter |
 	createPresenter := 
-			[:p :m | 
-			(ScintillaStylesCollectionPresenter 
+			[:p :m |
+			(ScintillaStylesCollectionPresenter
 				create: 'Developer view'
 				in: p
 				on: m)
@@ -4209,7 +4226,6 @@ publishedAspects
 							yourself);
 				normalStyle: (self styleNamed: #normal);
 				yourself].
-	indicStyles := indicatorStyles keys asSortedCollection.
 	^(super publishedAspects)
 		add: (Aspect name: #textStyles presenterBlock: createPresenter) beImmutable;
 		add: (Aspect name: #annotationStyles presenterBlock: createPresenter) beImmutable;
@@ -4246,18 +4262,19 @@ publishedAspectsOfInstances
 		add: (Aspect choice: #fontQuality from: self fontQualities);
 		add: (Aspect choice: #multiPasteMode from: self multiPasteModes);
 		add: (Aspect integer: #whitespaceMarkerSize);
+		add: (Aspect choice: #tabDrawMode from: self tabDrawModes);
 		yourself.
 	choices := OrderedCollection with: 'nil'.
-	(ScintillaStyler allSubclasses reject: [:each | each isAbstract]) 
+	(ScintillaStyler allSubclasses reject: [:each | each isAbstract])
 		do: [:each | choices add: each name , ' new'].
 	answer add: (Aspect choice: #styler evaluationFrom: choices).
-	#(#autoCompletionAcceptChars #autoCompletionCancelChars) 
+	#(#autoCompletionAcceptChars #autoCompletionCancelChars)
 		do: [:each | answer add: (Aspect string: each)].
-	#(#tabWidth #hoverTime #selectionAlpha #secondarySelectionAlpha) 
+	#(#tabWidth #hoverTime #selectionAlpha #secondarySelectionAlpha #marginCount)
 		do: [:each | answer add: (Aspect integer: each)].
-	#(#caretForecolor #callTipHighlightColor #whitespaceBackcolor #whitespaceForecolor #foldMarginColor #foldMarginHiColor) 
+	#(#caretForecolor #callTipHighlightColor #whitespaceBackcolor #whitespaceForecolor #foldMarginColor #foldMarginHiColor)
 		do: [:each | answer add: (Aspect color: each)].
-	#(#isDrawingBuffered #canScrollPastEnd #isAutoCompletionCancelledAtStart #isAutoCompletionCaseInsensitive #isAutoCompletionCancelledWhenNoMatch #isAutoCompletionSingleMatchChosen #isAutoCompletionTruncating #isBraceHighlightingEnabled #isFoldingEnabled) 
+	#(#isDrawingBuffered #canScrollPastEnd #isAutoCompletionCancelledAtStart #isAutoCompletionCaseInsensitive #isAutoCompletionCancelledWhenNoMatch #isAutoCompletionSingleMatchChosen #isAutoCompletionTruncating #isBraceHighlightingEnabled #isFoldingEnabled)
 		do: [:each | answer add: (Aspect boolean: each)].
 	^answer!
 

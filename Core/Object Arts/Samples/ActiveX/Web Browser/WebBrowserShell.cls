@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Shell subclass: #WebBrowserShell
 	instanceVariableNames: 'address browser statusModel commandStates'
@@ -203,7 +203,7 @@ displayOn: aStream
 icon
 	"Answers an Icon that can be used to represent this class"
 
-	^Icon fromId: 14 in: ShellLibrary default!
+	^Icon fromId: 14 in: (ExternalResourceLibrary open: 'Shell32')!
 
 initialize
 	"Private - Initialize the receiver's class variables

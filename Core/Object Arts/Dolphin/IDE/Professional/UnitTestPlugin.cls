@@ -155,7 +155,8 @@ displayReset
 			[self icon: (Icon fromFile: 'UnitTestPluginNoTest.ico').
 			self displayMode: 'No Tests'].
 	self displayDetails: ''.
-	self displayDefects: OrderedCollection new.!
+	self displayDefects: OrderedCollection new.
+	result := nil!
 
 displayRunning
 	"Indicate that tests are being run"
@@ -311,8 +312,8 @@ startAutoSwitchProcess
 	autoSwitchProcess := 
 			[Processor sleep: self class autoSwitchDelayMs.
 			self ensureVisible.
-			SessionManager inputState pumpMessages] 
-					forkAt: Processor highIOPriority!
+			SessionManager inputState prod]
+					forkAt: Processor highIOPriority.!
 
 stopAutoSwitchProcess
 	autoSwitchProcess ifNotNil: [:process | process terminate].

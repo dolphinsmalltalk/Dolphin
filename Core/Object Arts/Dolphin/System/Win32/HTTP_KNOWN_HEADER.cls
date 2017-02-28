@@ -1,0 +1,72 @@
+"Filed out from Dolphin Smalltalk 7"!
+
+HttpServerStructure subclass: #HTTP_KNOWN_HEADER
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+HTTP_KNOWN_HEADER guid: (GUID fromString: '{787c501e-95b2-4a23-9f7c-2dd856b8d51d}')!
+HTTP_KNOWN_HEADER comment: '<HTTP_KNOWN_HEADER> is an <ExternalStructure> class to wrap the struct ''Win32.HTTP_KNOWN_HEADER'' from type information in the ''Win32 API'' library.
+
+The type library contains the following helpstring for this struct
+	"Structure defining format of a known HTTP header. Name is from HTTP_HEADER_ID."
+
+** This comment was automatically generated from a type library. Delete this line to prevent any manual edits from being overwritten if the wrapper class is regenerated. **
+
+IDL definition follows:
+
+typedef [uuid(787c501e-95b2-4a23-9f7c-2dd856b8d51d), helpstring("Structure defining format of a known HTTP header. Name is from HTTP_HEADER_ID.")]
+struct tagHTTP_KNOWN_HEADER {
+	[nonbrowsable] USHORT RawValueLength;
+	[string, size_is("RawValueLength")] LPCSTR pRawValue;
+} HTTP_KNOWN_HEADER;
+'!
+!HTTP_KNOWN_HEADER categoriesForClass!Win32-Structs! !
+!HTTP_KNOWN_HEADER methodsFor!
+
+pRawValue
+	"Answer the <String> value of the receiver's 'pRawValue' field."
+
+	^String fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #pRawValue))
+		length: self RawValueLength!
+
+pRawValue: aString
+	"Set the receiver's 'pRawValue' field to the value of the argument, aString"
+
+	bytes uintPtrAtOffset: ##(self offsetOf: #pRawValue) put: aString yourAddress.
+	self RawValueLength: aString size!
+
+RawValueLength
+	"Private - Answer the <Integer> value of the receiver's 'RawValueLength' field."
+
+	^bytes wordAtOffset: 0!
+
+RawValueLength: anInteger
+	"Set the receiver's 'RawValueLength' field to the value of the argument, anInteger"
+
+	bytes wordAtOffset: 0 put: anInteger! !
+!HTTP_KNOWN_HEADER categoriesFor: #pRawValue!**compiled accessors**!public! !
+!HTTP_KNOWN_HEADER categoriesFor: #pRawValue:!**compiled accessors**!public! !
+!HTTP_KNOWN_HEADER categoriesFor: #RawValueLength!**compiled accessors**!private! !
+!HTTP_KNOWN_HEADER categoriesFor: #RawValueLength:!**compiled accessors**!private! !
+
+!HTTP_KNOWN_HEADER class methodsFor!
+
+defineFields
+	"Define the fields of the HTTP_KNOWN_HEADER structure.
+
+	HTTP_KNOWN_HEADER compileDefinition
+
+		typedef [uuid(787c501e-95b2-4a23-9f7c-2dd856b8d51d), helpstring('Structure defining format of a known HTTP header. Name is from HTTP_HEADER_ID.')]
+		struct tagHTTP_KNOWN_HEADER {
+			[nonbrowsable] USHORT RawValueLength;
+			[string, size_is('RawValueLength')] LPCSTR pRawValue;
+		} HTTP_KNOWN_HEADER;
+"
+
+	self
+		defineField: #RawValueLength type: WORDField new beNonBrowsable offset: 0;
+		defineField: #pRawValue type: (ArrayPointerField type: String lengthField: #RawValueLength) offset: 4.
+	self byteSize: 8! !
+!HTTP_KNOWN_HEADER class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+

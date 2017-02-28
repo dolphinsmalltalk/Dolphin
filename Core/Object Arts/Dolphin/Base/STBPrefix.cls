@@ -1,11 +1,25 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #STBPrefix
 	instanceVariableNames: 'dword'
-	classVariableNames: ''
-	poolDictionaries: 'STBPrefixConstants'
+	classVariableNames: 'BytesMask CharacterMask ClassPrefixMask DataPrefix DataPrefixMask IndexShift InstSizeMask InstSizeShift LiteralPrefixMask LocatorLenShift MaxPredefinedRef NonZeroVersionMask ProxyMask ProxyPrefix SmallIntegerMask VariableMask'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 STBPrefix guid: (GUID fromString: '{87B4C4C2-026E-11D3-9FD7-00A0CC3E4A32}')!
+STBPrefix addClassConstant: 'BytesMask' value: 16!
+STBPrefix addClassConstant: 'CharacterMask' value: 4!
+STBPrefix addClassConstant: 'ClassPrefixMask' value: 4!
+STBPrefix addClassConstant: 'DataPrefixMask' value: 2!
+STBPrefix addClassConstant: 'IndexShift' value: -4!
+STBPrefix addClassConstant: 'InstSizeMask' value: 255!
+STBPrefix addClassConstant: 'InstSizeShift' value: -8!
+STBPrefix addClassConstant: 'LiteralPrefixMask' value: 8!
+STBPrefix addClassConstant: 'LocatorLenShift' value: -16!
+STBPrefix addClassConstant: 'MaxPredefinedRef' value: 24!
+STBPrefix addClassConstant: 'NonZeroVersionMask' value: 64!
+STBPrefix addClassConstant: 'ProxyMask' value: 8!
+STBPrefix addClassConstant: 'SmallIntegerMask' value: 1!
+STBPrefix addClassConstant: 'VariableMask' value: 32!
 STBPrefix comment: 'STBPrefix represents the object prefix encoding used in an STB binary file stream. It encapsulates much of the complexity of the data encoding performed by the STBOutFiler and STBInFiler classes. As the data encoding has been designed to achieve a reasonably compact format there are some restrictions on the order in which the methods can be called.
 
 Instance Variables:
@@ -77,59 +91,10 @@ When testing an instance of this class the tests should be performed in the foll
 !STBPrefix categoriesForClass!System-Binary storage! !
 !STBPrefix methodsFor!
 
-beDataPrefix
-	"Set the receiver's isDataPrefix bit flag."
-
-	dword := dword bitOr: DataPrefixMask!
-
-beLiteralPrefix
-	"Set the receiver's isLiteralPrefix bit flag."
-
-	dword := dword bitOr: LiteralPrefixMask!
-
-beProxy
-	"Set the receiver's isProxy bit flag."
-
-	dword := dword bitOr: ProxyMask!
-
 character
 	"Answer the Character represented by the receiver."
 
 	^Character value: (dword bitShift: IndexShift)!
-
-character: aCharacter
-	"Make the receiver a prefix to a 'virtual' Character, virtual because
-	as we encode aCharacter's value entirely within the prefix no object data need follow."
-
-	dword := (aCharacter asInteger bitShift: IndexShift negated) bitOr: CharacterMask!
-
-class: aClass locator: aString
-	"Make the receiver a prefix for an object of a hitherto unencountered class
-	aClass with locator aString."
-
-	dword := (dword bitOr: (
-			ClassPrefixMask bitOr: (
-				(aString size bitShift: 16) bitOr: 
-					(aClass instSize bitShift: 8)))).
-	aClass isBytes
-		ifTrue: [dword := dword bitOr: BytesMask].
-	aClass isVariable
-		ifTrue: [dword := dword bitOr: VariableMask].
-	aClass stbVersion ~= 0
-		ifTrue: [dword := dword bitOr: NonZeroVersionMask].!
-
-classLocatorLen
-	"Answer the receiver's classLocatorLen field."
-
-	^dword bitShift: -16.!
-
-classRef: anInteger
-	"The receiver will prefix a hitherto unencountered object whose class
-	has already been output with reference index anInteger.
-	As we encode the class reference within the prefix the object data
-	immediately follows it."
-
-	dword := dword bitOr: (anInteger bitShift: 4)!
 
 dword
 	"Answer the receiver as a 4 byte DWORD."
@@ -143,6 +108,25 @@ dword: anInteger
 
 	dword := anInteger.
 	^self!
+
+encodeClass: aClass locator: aString
+	"Answer a 32-bit <integer> STB prefix code for an object of a hitherto unencountered class
+	aClass, with locator, aString."
+
+	| code |
+	code := dword
+				bitOr: (ClassPrefixMask bitOr: ((aString size bitShift: 16) bitOr: (aClass instSize bitShift: 8))).
+	aClass isBytes ifTrue: [code := code bitOr: BytesMask].
+	aClass isVariable ifTrue: [code := code bitOr: VariableMask].
+	aClass stbVersion ~= 0 ifTrue: [code := code bitOr: NonZeroVersionMask].
+	^code!
+
+encodeClassRef: anInteger
+	"Answer a 32-bit <integer> STB prefix code for a hitherto unencountered object whose class
+	has already been output with reference index, anInteger. As we encode the class reference
+	within the prefix code the object data immediately follows it."
+
+	^dword bitOr: (anInteger bitShift: 4)!
 
 instSize
 	"Answer the receiver's instSize field."
@@ -196,13 +180,6 @@ isVariable
 
 	^dword allMask: VariableMask!
 
-objectRef: anInteger
-	"Make the receiver a prefix to a 'virtual' object that has already been
-	output with index anInteger, virtual because as we encode the reference
-	entirely within the prefix no object data need follow."
-
-	dword := anInteger bitShift: 4!
-
 printOn: aStream
 	"Append a debugging description of the receiver to aStream."
 
@@ -216,7 +193,7 @@ printOn: aStream
 	ifFalse: [ self isDataPrefix ifFalse: [
 		self isCharacter
 			 ifTrue: [aStream print: self character]
-			ifFalse: [aStream nextPut: 'object ref: '; print: self refIndex]]
+			ifFalse: [aStream nextPutAll: 'object ref: '; print: self refIndex]]
 	ifTrue: [
 		aStream nextPutAll: 'class'.
 		self isClassPrefix
@@ -232,23 +209,12 @@ refIndex
 smallInteger
 	"Answer the receiver decoded into a SmallInteger."
 
-	^dword bitShift: -1!
-
-smallInteger: aSmallInteger
-	"Make the receiver a prefix to a 'virtual' SmallInteger, virtual because
-	as we encode the integer entirely within the prefix no object data need follow."
-
-	dword := (aSmallInteger bitShift: 1) bitOr: 1! !
-!STBPrefix categoriesFor: #beDataPrefix!accessing!public! !
-!STBPrefix categoriesFor: #beLiteralPrefix!accessing!public! !
-!STBPrefix categoriesFor: #beProxy!accessing!public! !
+	^dword bitShift: -1! !
 !STBPrefix categoriesFor: #character!accessing!public! !
-!STBPrefix categoriesFor: #character:!accessing!public! !
-!STBPrefix categoriesFor: #class:locator:!accessing!public! !
-!STBPrefix categoriesFor: #classLocatorLen!accessing!public! !
-!STBPrefix categoriesFor: #classRef:!accessing!public! !
 !STBPrefix categoriesFor: #dword!accessing!public! !
 !STBPrefix categoriesFor: #dword:!accessing!public! !
+!STBPrefix categoriesFor: #encodeClass:locator:!accessing!public! !
+!STBPrefix categoriesFor: #encodeClassRef:!accessing!public! !
 !STBPrefix categoriesFor: #instSize!accessing!public! !
 !STBPrefix categoriesFor: #isBytes!public!testing! !
 !STBPrefix categoriesFor: #isCharacter!public!testing! !
@@ -259,62 +225,53 @@ smallInteger: aSmallInteger
 !STBPrefix categoriesFor: #isProxy!public!testing! !
 !STBPrefix categoriesFor: #isSmallInteger!public!testing! !
 !STBPrefix categoriesFor: #isVariable!public!testing! !
-!STBPrefix categoriesFor: #objectRef:!accessing!public! !
 !STBPrefix categoriesFor: #printOn:!development!printing!public! !
 !STBPrefix categoriesFor: #refIndex!accessing!public! !
 !STBPrefix categoriesFor: #smallInteger!accessing!public! !
-!STBPrefix categoriesFor: #smallInteger:!accessing!public! !
 
 !STBPrefix class methodsFor!
 
-forCharacter: aCharacter
-	"Answer a new instance to prefix aCharacter."
+encodeCharacter: aCharacter
+	^(aCharacter asInteger bitShift: IndexShift negated) bitOr: CharacterMask!
 
-	^self new
-		character: aCharacter;
-		yourself!
+encodeObjectRef: anInteger
+	^anInteger bitShift: 4!
+
+encodeSmallInteger: aSmallInteger
+	^(aSmallInteger bitShift: 1) bitOr: 1!
 
 forData
-	"Answer a newly initialised instance to prefix a data object."
+	"Answer an immutable instance carrying the basic encoding to prefix a data object."
 
-	^self fromInteger: DataPrefixMask!
-
-forLiteral
-	"Answer a newly initialised instance to prefix a literal object."
-
-	^self fromInteger: LiteralPrefixMask !
-
-forObjectRef: anInteger
-	"Answer a new instance to prefix an object that has already been output."
-
-	^self new
-		objectRef: anInteger;
-		yourself!
+	^DataPrefix!
 
 forProxy
-	"Answer a newly initialised instance to prefix a proxy object."
+	"Answer an immutable instance carrying the basic encoding to prefix a proxy object."
 
-	^self forData
-		beProxy;
-		yourself!
-
-forSmallInteger: aSmallInteger
-	"Answer a new instance to prefix aSmallInteger."
-
-	^self new
-		smallInteger: aSmallInteger;
-		yourself!
+	^ProxyPrefix!
 
 fromInteger: anInteger
-	"Answer a new instance initialise from anInteger."
+	"Answer a new instance initialised from the 32-bit <integer> STB prefix code, anInteger."
 
 	^self new
-		dword: anInteger! !
-!STBPrefix class categoriesFor: #forCharacter:!instance creation!public! !
+		dword: anInteger!
+
+initialize
+	DataPrefix := (self fromInteger: DataPrefixMask)
+				isImmutable: true;
+				yourself.
+	ProxyPrefix := (self fromInteger: DataPrefixMask | ProxyMask)
+				isImmutable: true;
+				yourself!
+
+uninitialize
+	DataPrefix := ProxyPrefix := nil! !
+!STBPrefix class categoriesFor: #encodeCharacter:!operations!public! !
+!STBPrefix class categoriesFor: #encodeObjectRef:!operations!public! !
+!STBPrefix class categoriesFor: #encodeSmallInteger:!operations!public! !
 !STBPrefix class categoriesFor: #forData!instance creation!public! !
-!STBPrefix class categoriesFor: #forLiteral!instance creation!public! !
-!STBPrefix class categoriesFor: #forObjectRef:!instance creation!public! !
 !STBPrefix class categoriesFor: #forProxy!instance creation!public! !
-!STBPrefix class categoriesFor: #forSmallInteger:!instance creation!public! !
 !STBPrefix class categoriesFor: #fromInteger:!instance creation!public! !
+!STBPrefix class categoriesFor: #initialize!development!initializing!public! !
+!STBPrefix class categoriesFor: #uninitialize!class hierarchy-removing!private! !
 

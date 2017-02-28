@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 GdiplusInitializer subclass: #GdiplusFromBytesInitializer
 	instanceVariableNames: 'bytes'
@@ -20,11 +20,7 @@ hash
 	^self bytes hash!
 
 iStream
-	| iStream |
-	iStream := IStream onHGLOBAL.
-	iStream nextPutAll: bytes.
-	iStream reset.
-	^iStream!
+	^IStream fromBytes: bytes!
 
 setBytes: aByteArray 
 	bytes := aByteArray! !

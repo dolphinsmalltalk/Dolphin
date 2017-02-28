@@ -1,11 +1,36 @@
 "Filed out from Dolphin Smalltalk 7"!
 
 BasicImageStripper subclass: #ImageStripper
-	instanceVariableNames: 'rootPackageName executableName runtimeSessionManagerClass flags preStripScript versionResource termWnd stubFilePath logStream elementStack developmentClasses preservedMessages snapshotType rootClasses'
+	instanceVariableNames: 'rootPackageName executableName runtimeSessionManagerClass flags preStripScript versionResource preservedAspectSetters stubFilePath logStream elementStack developmentClasses preservedMessages snapshotType rootClasses'
 	classVariableNames: 'AllResourcesStripped ClearGuidsMask CompileStructsMask EmptyMethodDictsMask FoldBytecodesMask FoldMethodDictsMask FoldStringsMask IgnoreViewReferencesMask LogPrerequisitesMask LogReferencesMask NoXPManifestMask PreserveAspectsMask RetainInstVarNamesMask RetainSubclassRespMask StripClassBuilderMask StripClassesMask StripClassInfoMask StripDeprecatedMask StripMethodsMask StripPackagesMask StripResourcesMask StripShouldNotImplMask ToGoMask UnattendedMask WriteLogMask'
 	poolDictionaries: 'MessageBoxConstants Win32Constants'
 	classInstanceVariableNames: ''!
 ImageStripper guid: (GUID fromString: '{87B4C667-026E-11D3-9FD7-00A0CC3E4A32}')!
+ImageStripper addClassConstant: 'AllResourcesStripped' value: 4194304!
+ImageStripper addClassConstant: 'ClearGuidsMask' value: 1!
+ImageStripper addClassConstant: 'CompileStructsMask' value: 256!
+ImageStripper addClassConstant: 'EmptyMethodDictsMask' value: 2048!
+ImageStripper addClassConstant: 'FoldBytecodesMask' value: 4096!
+ImageStripper addClassConstant: 'FoldMethodDictsMask' value: 512!
+ImageStripper addClassConstant: 'FoldStringsMask' value: 2!
+ImageStripper addClassConstant: 'IgnoreViewReferencesMask' value: 524288!
+ImageStripper addClassConstant: 'LogPrerequisitesMask' value: 262144!
+ImageStripper addClassConstant: 'LogReferencesMask' value: 8192!
+ImageStripper addClassConstant: 'NoXPManifestMask' value: 2097152!
+ImageStripper addClassConstant: 'PreserveAspectsMask' value: 4!
+ImageStripper addClassConstant: 'RetainInstVarNamesMask' value: 8!
+ImageStripper addClassConstant: 'RetainSubclassRespMask' value: 8388608!
+ImageStripper addClassConstant: 'StripClassBuilderMask' value: 16384!
+ImageStripper addClassConstant: 'StripClassesMask' value: 16!
+ImageStripper addClassConstant: 'StripClassInfoMask' value: 32!
+ImageStripper addClassConstant: 'StripDeprecatedMask' value: 65536!
+ImageStripper addClassConstant: 'StripMethodsMask' value: 64!
+ImageStripper addClassConstant: 'StripPackagesMask' value: 131072!
+ImageStripper addClassConstant: 'StripResourcesMask' value: 128!
+ImageStripper addClassConstant: 'StripShouldNotImplMask' value: 32768!
+ImageStripper addClassConstant: 'ToGoMask' value: 1048576!
+ImageStripper addClassConstant: 'UnattendedMask' value: 16777216!
+ImageStripper addClassConstant: 'WriteLogMask' value: 1024!
 ImageStripper comment: 'An ImageStripper holds deployment information that indicates how a Dolphin image should be stripped of redundant objects during deployment. ImageStripper is part of the Application Deployment Kit package.
 
 Instance Variables:
@@ -84,6 +109,26 @@ addClassesReferencedByMethod: aCompiledMethod to: aSet
 		do: [:each | self addClassesReferencedByClass: each to: aSet].
 	^aSet!
 
+addPotentialAspectSettersIn: aClass to: aSet excluding: aCollection
+	"Private - Add to the <Set> argument all those methods of the <Behavior>, aClass, that
+	_might_ be aspect setters. These are judged as those with one-argument keyword selectors for
+	which there is a corresponding unary selector implemented in the class or its superclasses.
+	This is, of course, a conservative judgement and will tend to result in more methods being
+	preserved than are strictly required. Methods matching this criteria that are known not to
+	be aspect setters can be added to the special method category 'not an aspect setter'"
+
+	aClass methodDictionary do: 
+			[:each |
+			"Assume all one argument keyword messages are potentially setters if a
+			corresponding zero argument 'getter' exists"
+			(each argumentCount == 1 and: 
+					[each selector last = $: and: 
+							[(aCollection includes: each selector) not and: 
+									[| getter |
+									getter := Symbol findInterned: (each selector first: each selector size - 1).
+									getter notNil and: [aClass canUnderstand: getter]]]])
+				ifTrue: [aSet add: each]]!
+
 addReferencedViews: resid to: referenced 
 	"Private - Recursively add any ReferenceViews referenced by the <Resource>, res, to the
 	<Set> argument, referenced."
@@ -143,6 +188,25 @@ appendManifestContent: manifest
 			manifest 
 				nextPutAll: '<dependency><dependentAssembly><assemblyIdentity type="win32" name="Microsoft.Windows.Common-Controls" version="6.0.0.0" processorArchitecture="X86" publicKeyToken="6595b64144ccf1df" language="*"/></dependentAssembly></dependency>']!
 
+behaviorsWithIgnoredAspectSetters
+	"Answer the <collection> of <Behavior>s to be excluded from aspect-setter preservation."
+
+	| answer |
+	answer := IdentitySet withAll: BasicImageStripper withAllSubclasses.
+	self classCategoriesToIgnoreAspectSetters do: 
+			[:each |
+			(ClassCategory name: each) contents do: 
+					[:eachClass |
+					answer
+						add: eachClass;
+						add: eachClass class]].
+	(Array with: Symbol with: Interval) do: 
+			[:each |
+			answer
+				add: each;
+				add: each class].
+	^answer!
+
 binaryStoreOn: aStream
 	"Stores the receiver in a binary form on aStream that can be reconstituted using 
 	Object class>>binaryReadFrom:. Clear down some caching instance variables
@@ -167,23 +231,45 @@ buildManifest: assemblyNameString description: assemblyDescriptionString version
 	^manifest contents!
 
 buildMessageMap
-	^self referencesFromObjectsInClasses: ((Class allClasses)
-				removeAll: ImageStripper withAllSubclasses;
-				yourself)!
+	^self
+		referencesFromObjectsInClasses: (Class allClasses difference: BasicImageStripper withAllSubclasses)!
+
+buildPreservedAspectSetters
+	| behaviors excluded catClass aspectSetters |
+	aspectSetters := IdentitySet new.
+	self preserveAspectSetters ifFalse: [^aspectSetters].
+	catClass := Object methodCategoryClass.
+	excluded := self nonAspectSetterCategories collect: [:each | catClass name: each].
+	behaviors := Class allBehaviors difference: self behaviorsWithIgnoredAspectSetters.
+	behaviors do: 
+			[:each |
+			each hasMethods
+				ifTrue: 
+					[| nonAspectSetters catalogue |
+					nonAspectSetters := IdentitySet new.
+					catalogue := each methodsCatalogue.
+					excluded do: 
+							[:eachCat |
+							(catalogue at: eachCat ifAbsent: [])
+								ifNotNil: [:selectors | selectors do: [:eachSelector | nonAspectSetters add: eachSelector]]].
+					self
+						addPotentialAspectSettersIn: each
+						to: aspectSetters
+						excluding: nonAspectSetters]].
+	^aspectSetters!
 
 buildPreservedMessages
-	"Private - Build the set of all the message selectors that are to be preserved
-	due to membership of one of the requiredMethodCategories."
+	"Private - Build the set of all the message selectors that are to be preserved due to
+	membership of one of the requiredMethodCategories. If preserving aspect setters, also build
+	a (weak) collection of all potential aspect setter methods which is later used to identify
+	methods that should not be deleted."
 
-	| resourceSelectors |
 	preservedMessages := IdentitySet new.
-	self requiredMethodCategories 
-		do: [:each | preservedMessages addAll: (each contents collect: [:method | method selector])].
+	self requiredMethodCategories
+		do: [:each | each contents do: [:method | preservedMessages add: method selector]].
 	"Currently we have to preserve all resources because they are referenced by string name
 	(except from ReferenceViews in other resources)"
-	resourceSelectors := self resourceManager allResourceIdentifiers asSet 
-				collect: [:each | each selector].
-	preservedMessages addAll: resourceSelectors!
+	self resourceManager allResourceIdentifiers do: [:each | preservedMessages add: each selector]!
 
 buildRootClasses
 	"Private - Build the <IdentitySet> of <Class>es that are considered the roots of the 
@@ -210,6 +296,12 @@ checkedStubFilePath
 	^(File exists: stubFile) 
 		ifTrue: [stubFile]
 		ifFalse: [self error: 'Stub file not found: ''' , stubFile , '''']!
+
+classCategoriesToIgnoreAspectSetters
+	"Answer a <collection> of <String> names of the categories of class to be excluded from
+	aspect-setter preservation."
+
+	^#('Collections-Streams' 'External-Data-Unstructured' 'External-Libraries' 'Kernel-Classes' 'Kernel-Exception Handling' 'Kernel-Methods' 'Kernel-Processes' 'Kernel-Support' 'Magnitude-Numbers' 'System-Exception Handling' 'System-Support' 'System-Binary storage')!
 
 classesReferencedByMethod: aCompiledMethod
 	"Private - Answers a Set of all the  classes referred to by aCompiledMethod's literal
@@ -246,10 +338,12 @@ closeAllDevelopmentTools
 	"Ensure any junk or sensitive information in the Transcript is removed."
 
 	Transcript clear.
-	#(#SmalltalkToolShell #SmalltalkWorkspaceDocument) do: 
-			[:each | 
-			Smalltalk at: each
-				ifPresent: [:class | class allSubinstances do: [:tool | tool view isTopView ifTrue: [tool view destroy]]]].
+	(self isConsoleApplication
+		ifTrue: [#(#ShellView)]
+		ifFalse: [#(#SmalltalkToolShell #SmalltalkWorkspaceDocument #TestRunner)]) do: 
+				[:each |
+				Smalltalk at: each
+					ifPresent: [:class | class allSubinstances do: [:shell | shell view isTopView ifTrue: [shell view destroy]]]].
 	(SessionManager current)
 		closeConsole;
 		perform: #closeAllHelp.
@@ -312,14 +406,10 @@ deferredSaveExecutable: aString
 	SessionManager inputState queueDeferredAction: [self saveExecutable: aString]!
 
 developmentClasses
-	"Answers an <IdentitySet> of all the classes that are in the basic
-	development system. These are marked by being in the 'Development'
-	category"
+	"Answers a weak <collection> of all the classes that are in the basic development system.
+	These are marked by being in the 'Development' category"
 
-	| devClasses |
-	devClasses := WeakIdentitySet withAll: (Object classCategoryClass name: 'Development') contents.
-	^devClasses
-!
+	^WeakSet withAll: (Object classCategoryClass name: 'Development') contents!
 
 developmentMethodCategoryNames
 	"Answer a <collection> of the names of <MethodCategory>s containing only development methods
@@ -345,7 +435,7 @@ developmentMethods
 
 	| catClass devMethods |
 	catClass := Object methodCategoryClass.
-	devMethods := WeakIdentitySet new: 500.
+	devMethods := WeakSet new: 500.
 	self developmentMethodCategoryNames do: [:name | devMethods addAll: (catClass name: name) contents].
 	^devMethods!
 
@@ -374,13 +464,6 @@ disableDevelopmentSystem
 
 	self systemPackageManager onPreStripImage.
 	Smalltalk removeEventsTriggeredFor: Smalltalk developmentSystem!
-
-displayTerminationMessage
-	"Write a message over the desktop to indicate the the strip is not quite complete - use
-	low-level windows calls directly to avoid creating a dependency on Canvas, Font, etc."
-
-	termWnd := VMLibrary default 
-		displayDesktopMessage: 'Please wait while Dolphin Lagoon terminates'!
 
 emptyMethodDictionariesOfStubbornClasses
 	"Answer whether the method dictionaries of classes that refuse to uninstall with their
@@ -443,25 +526,24 @@ finalActions
 	self collectGarbage: 3.
 	self logManifest.
 	self closeLog.
-	self finishedWithAll: #(#logManifest #collectGarbage: #notify:status: #finalActions)] 
+	self finishedWithAll: #(#logManifest #collectGarbage: #notify:status: #finalActions)]
 			on: Error
 			do: [:ex | self onError: ex].
-	self finishedWithAll: #(#onError: #logError: #closeLog #finishedWithAll: #finishedWith:)!
+	self finishedWithAll: #(#onError: #logStrippingError: #closeLog #finishedWithAll: #finishedWith:)!
 
 finishedStrippingResources
 	self 
 		finishedWithAll: #(#resourcesForClasses: #stripRedundantResources:notifying: #addReferencedViews:to: #scanResourcesForViewReferences:)!
 
 finishedWith: selector
-	"Private - The receiver has finished with its method identified by the selector argument,
-	so it can be stripped. By dynamically reducing its method set as the stripping progresses
-	the received contributes to reducing the set of referenced methods and classes.
-	Note that the removal of methods is disabled in a development session in order to
-	enable debugging."
+	"Private - The receiver has finished with its method identified by the selector argument, so
+	it can be stripped. By dynamically reducing its method set as the stripping progresses the
+	received contributes to reducing the set of referenced methods and classes. Note that the
+	removal of methods is disabled in a development session in order to enable debugging."
 
-	SessionManager current isRuntime 
+	SessionManager current isRuntime
 		ifTrue: 
-			["Remove the method all the way up the superclass chain, including from ImageStripper, but stopping there"
+			["Remove the method all the way up the superclass chain, including from BasicImageStripper, but stopping there"
 			| current |
 			current := self class.
 			[current name == #Model] whileFalse: 
@@ -481,37 +563,29 @@ finishedWithStripping
 	These will mainly be methods that are used by the stripping algorithm itself, and which
 	it cannot therefore remove."
 
-	self finishedWithAll: #(
-		#addClassesReferencedByMethod:to:
-		#addClassesReferencedByClass:to:
-		#allMethodsInClasses:do:
-		#allReferencedClasses
-		#allResourcesStripped
-		#classesReferencedByMethod: 
-		#classReferencesToIgnore
-		#emptyMethodDictionariesOfStubbornClasses
-		#ignoreViewReferences
-		#messagesImplementedBy:
-		#messagesSentBy:
-		#potentialAspectSettersIn:
-		#notRequiredClasses
-		#preservedMessages
-		#preserveAspectSetters
-		#purgeStubbornClass:notifying:
-		#resourcesForClasses:
-		#removeMethod:notifying: #removeMethods:notifying:
-		#rootClasses
-		#speciallySentMessages
-		#stripClassBuilder
-		#stripDeprecatedMethods
-		#stripDevelopmentClasses
-		#stripDevelopmentMethods
-		#stripRedundantClasses
-		#stripRedundantClassesAndResources:notifying:
-		#stripRedundantMethods
-		#stripRedundantMethodsNotifying:
-		#stripRedundantMethodsOnceFrom:notifying:
-		#finishedWithStripping)!
+	self
+		finishedWithAll: #(#addClassesReferencedByMethod:to: #addClassesReferencedByClass:to: #allMethodsInClasses:do: #allReferencedClasses #allResourcesStripped #classesReferencedByMethod: #classReferencesToIgnore #emptyMethodDictionariesOfStubbornClasses #ignoreViewReferences #messagesImplementedBy: #messagesSentBy: #potentialAspectSettersIn: #notRequiredClasses #preserveAspectSetters #purgeStubbornClass:notifying: #resourcesForClasses: #removeMethod:force:notifying: #removeMethods:force:notifying: #logMethod: #rootClasses #speciallySentMessages #stripClassBuilder #stripDeprecatedMethods #stripDevelopmentClasses #stripDevelopmentMethods #stripRedundantClasses #stripRedundantClassesAndResources:notifying: #stripRedundantMethods #stripRedundantMethodsNotifying: #stripRedundantMethodsOnceFrom:notifying: #finishedWithStripping)!
+
+getClassInstanceStats
+	| stats classes totalInstances totalMemory |
+	stats := MemoryManager current primInstanceStats: nil.
+	classes := IdentityDictionary new: stats size // 6.
+	totalInstances := 0.
+	totalMemory := 0.
+	1 to: stats size
+		by: 3
+		do: 
+			[:i |
+			(stats at: i) isMeta
+				ifTrue: 
+					[| instClass |
+					totalInstances := totalInstances + (stats at: i + 1).
+					totalMemory := totalMemory + (stats at: i + 2).
+					instClass := (stats at: i) instanceClass.
+					(classes includesKey: instClass) ifFalse: [classes at: instClass put: #(0 0)]]
+				ifFalse: [classes at: (stats at: i) put: (Array with: (stats at: i + 1) with: (stats at: i + 2))]].
+	classes at: Class put: (Array with: totalInstances with: totalMemory).
+	^classes!
 
 ignoreViewReferences
 	"Answer whether view resources should NOT be scanned for references to other
@@ -556,8 +630,9 @@ initialTidy
 	"We have have done the resource updating."
 
 	versionResource := nil.
-	self 
-		finishedWithAll: #(#actualRequiredPackages #buildMessageMap #buildPreservedMessages #buildRootClasses #canDeploy #checkedStubFilePath #closeAllDevelopmentTools #closeChangeLog #buildManifest:description:version: #appendManifestContent: #copyAndUpdateStub:to: #defaultStubFilePath #developmentClasses #developmentMethodCategoryNames #developmentMethods #disableDevelopmentSystem #executableName #executableName: #executablePath #exeFileExtension #ignoreViewReferences: #includeManifestResource #initialize #initialTidy #installRuntimeSessionManager #isResourceUpdatingPossible #isResourceUpdatingRequired #isToGo #logConfiguration #logFileExtension #logFileName #logPreservedClasses #logPreservedMessages #logReferencesToClasses: #logRemainingPackages #manifestResourceId #notifyClassesOfImminentStrip: #notifyClassesOfStrip #notRequiredMethodCategories #openLogFile #prepareToStrip #preStripCheck #preStripScript #preStripScript: #referencesFromObjectsInClasses: #requiredClasses #requiredMethodCategories #requiredPackageNames #resizeStubFile: #retainInstVarNames: #rootClasses: #rootPackage #rootPackage: #runPreStripScript #runtimeSessionManagerClass #runtimeSessionManagerClass: #snapshotType: #stripAndSave #stripAndSaveWithProgress #stripNotRequiredMethodsNotifying: #stripRedundantPackages #stripRedundantPackagesNotifying: #stripShouldNotImplement #stubFile #stubFilePath #updateIconResource: #updateStringTableResource: #updateStubResources: #updateVersionResource: #updateXPManifestResource: #vmReferencedClasses #writeLogFile)!
+	self logReferencesToClasses ifFalse: [self finishedWith: #logReferencesToClass:count:fugitive:].
+	self
+		finishedWithAll: #(#actualRequiredPackages #addPotentialAspectSettersIn:to:excluding: #buildMessageMap #buildPreservedMessages #buildPreservedAspectSetters #buildRootClasses #canDeploy #checkedStubFilePath #closeAllDevelopmentTools #closeChangeLog #buildManifest:description:version: #appendManifestContent: #copyAndUpdateStub:to: #defaultStubFilePath #developmentClasses #developmentMethodCategoryNames #developmentMethods #disableDevelopmentSystem #executableName #executableName: #executablePath #exeFileExtension #ignoreViewReferences: #includeManifestResource #initialize #initialTidy #installRuntimeSessionManager #isResourceUpdatingPossible #isResourceUpdatingRequired #isToGo #logConfiguration #logFileExtension #logFileName #logPreservedClasses #logPreservedMessages #logReferencesToClasses #logReferencesToClasses: #logRemainingPackages #manifestResourceId #notifyClassesOfImminentStrip: #notifyClassesOfStrip #notRequiredMethodCategories #openLogFile #prepareToStrip #preStripCheck #preStripScript #preStripScript: #referencesFromObjectsInClasses: #requiredClasses #requiredMethodCategories #requiredPackageNames #resizeStubFile: #retainInstVarNames: #rootClasses: #rootPackage #rootPackage: #runPreStripScript #runtimeSessionManagerClass #runtimeSessionManagerClass: #snapshotType: #stripAndSave #stripAndSaveWithProgress #stripNotRequiredMethodsNotifying: #stripRedundantPackages #stripRedundantPackagesNotifying: #stripShouldNotImplement #stubFile #stubFilePath #updateIconResource: #updateStringTableResource: #updateStubResources: #updateVersionResource: #updateXPManifestResource: #vmReferencedClasses #writeLogFile)!
 
 installRuntimeSessionManager
 	"Private - Install the application <SessionManager>. For an application deployed with its
@@ -611,13 +686,6 @@ keepImageFile
 
 	^false!
 
-logComment: aString 
-	logStream
-		crtab: elementStack size;
-		nextPutAll: '<!!-- ';
-		nextPutAll: aString;
-		nextPutAll: ' -->'!
-
 logConfiguration
 	| stamp |
 	self startElement: 'Configuration'.
@@ -659,14 +727,6 @@ logElement: aString value: anObject
 		attributes: #()
 		value: anObject!
 
-logError: anError 
-	logStream isNil ifTrue: [^self].
-	self 
-		logElement: 'Error'
-		attributes: (Array with: 'class' -> anError class name)
-		value: anError description.
-	logStream flush!
-
 logFileExtension
 	"Answer the extension to use for the log file"
 
@@ -703,8 +763,13 @@ logManifest
 	developmentClasses := nil.
 	(flags allMask: AllResourcesStripped) ifFalse: [self logRemainingResources].
 	self endElement.
-	self 
-		finishedWithAll: #(#logReferencesToClasses #logImageStats: #logRemainingResources #logRemainingClasses)!
+	self finishedWithAll: #(#logImageStats: #logRemainingResources #logRemainingClasses)!
+
+logMethod: aCompiledMethod
+	self
+		logElement: 'Method'
+		attributes: (Array with: 'methodClass' -> aCompiledMethod methodClass name)
+		value: aCompiledMethod selector!
 
 logPackagePrerequisites
 	"Answer whether the stripping log should include a package pre-requisites trace showing
@@ -739,12 +804,51 @@ logPreservedMessages
 	"Private - Logs a list of the classes that form the root set for the application."
 
 	self startElement: 'RequiredMethodCategories'.
-	self requiredMethodCategories asSortedCollection 
+	self requiredMethodCategories asSortedCollection
 		do: [:each | self logElement: 'MethodCategory' value: each name].
 	self endElement.
 	self startElement: 'PreservedMessages'.
-	self preservedMessages asSortedCollection do: [:each | self logSelector: each].
+	preservedMessages asSortedCollection do: [:each | self logSelector: each].
 	self endElement!
+
+logReference: anObject
+	self
+		logElement: 'Reference'
+		attributes: (Array with: 'identityHash' -> anObject identityHash)
+		value: ([anObject printString] on: Error do: [:ex | anObject basicPrintString])!
+
+logReferencesToClass: anAssociation
+	| refs fugitive |
+	fugitive := (Smalltalk includesKey: anAssociation key name) not.
+	refs := fugitive
+				ifTrue: 
+					[anAssociation key allReferences reject: 
+							[:r |
+							r == anAssociation key class
+								or: [r == anAssociation or: [(r isKindOf: CompiledMethod) and: [r methodClass == anAssociation key]]]]]
+				ifFalse: 
+					[(Smalltalk associationAt: anAssociation key name) allReferences
+						reject: [:r | r == Smalltalk or: [r == Processor activeProcess]]].
+	refs isEmpty
+		ifFalse: 
+			[self startElement: 'References'.
+			refs do: [:ref | self logReference: ref].
+			self endElement].
+	(fugitive and: [(anAssociation value at: 1) > 0])
+		ifTrue: 
+			[| instances |
+			self startElement: 'Instances'.
+			instances := anAssociation key allInstances.
+			1 to: instances size
+				do: 
+					[:i |
+					| inst |
+					inst := instances at: i.
+					self startElement: 'Instance' attributes: (Array with: 'identityHash' -> inst identityHash).
+					inst allReferences
+						do: [:ref | (ref == instances or: [ref == Processor activeProcess]) ifFalse: [self logReference: ref]].
+					self endElement].
+			self endElement]!
 
 logReferencesToClasses
 	"Answer whether the log of classes remaining in the image should include a column to
@@ -765,101 +869,53 @@ logRemainingClasses
 	is deliberately constructed not to use any full blocks to simplify debug reference tracing
 	to the classes.."
 
-	| classes totalInstances totalMethods totalClassMethods totalMemory stats |
-	stats := MemoryManager current primInstanceStats: nil.
-	classes := IdentityDictionary new: stats size // 6.
-	totalInstances := 0.
-	totalMemory := 0.
-	1 to: stats size
-		by: 3
-		do: 
-			[:i | 
-			| each |
-			each := stats at: i.
-			each isMeta 
-				ifTrue: 
-					[| instClass |
-					totalInstances := totalInstances + (stats at: i + 1).
-					totalMemory := totalMemory + (stats at: i + 2).
-					instClass := each instanceClass.
-					(classes includesKey: instClass) 
-						ifFalse: 
-							[classes at: instClass
-								put: (Array 
-										with: instClass
-										with: 0
-										with: 0)]]
-				ifFalse: 
-					[classes at: each
-						put: (Array 
-								with: each
-								with: (stats at: i + 1)
-								with: (stats at: i + 2))]].
-	classes at: Class
-		put: (Array 
-				with: Class
-				with: totalInstances
-				with: totalMemory).
-	classes := classes asSortedCollection: [:a :b | a first <= b first].
-	totalMethods := totalClassMethods := 0.
+	| classes totals |
+	classes := self getClassInstanceStats.
+	self finishedWith: #getClassInstanceStats.
+	totals := classes at: Class.
+	"Avoid requiring a full block by storing the totals in an Array, the reference to which can be copied into a copying block"
+	totals := Array
+				with: (totals at: 1)
+				with: (totals at: 2)
+				with: 0
+				with: 0.
 	self startElement: 'Classes' attributes: (Array with: 'count' -> classes size).
+	classes := classes associations asSortedCollection.
+	(flags allMask: LogReferencesMask) ifTrue: [self collectGarbage: 2].
 	classes do: 
-			[:triplet | 
-			| fugitive insts attributes memory each |
-			each := triplet at: 1.
+			[:each |
+			| classStats attributes name count memory |
+			classStats := each value.
 			attributes := OrderedCollection new.
-			(fugitive := (Smalltalk includesKey: each name) not) 
-				ifTrue: [attributes addLast: 'unbound' -> true].
-			(developmentClasses includes: each) ifTrue: [attributes addLast: 'development' -> true].
+			name := each key name.
+			attributes addLast: 'name' -> name.
+			count := classStats at: 1.
+			attributes addLast: 'count' -> count.
+			memory := classStats at: 2.
+			attributes addLast: 'memoryUsage' -> memory.
+			(Smalltalk includesKey: name) not ifTrue: [attributes addLast: 'unbound' -> true].
+			(developmentClasses includes: each key) ifTrue: [attributes addLast: 'development' -> true].
 			self startElement: 'Class' attributes: attributes.
-			self logElement: 'Name' value: each name.
-			insts := triplet at: 2.
-			self logElement: 'InstanceCount' value: insts.
-			memory := triplet at: 3.
-			self logElement: 'MemoryUsage' value: memory.
-			self startElement: 'Methods' attributes: (Array with: 'count' -> each methodDictionary size).
-			each methodDictionary keys asSortedCollection 
+			self startElement: 'Methods' attributes: (Array with: 'count' -> each key methodDictionary size).
+			each key methodDictionary keys asSortedCollection
 				do: [:eachMethod | self logElement: 'Method' value: eachMethod].
 			self endElement.
 			self startElement: 'ClassMethods'
-				attributes: (Array with: 'count' -> each class methodDictionary size).
-			each class methodDictionary keys asSortedCollection 
+				attributes: (Array with: 'count' -> each key class methodDictionary size).
+			each key class methodDictionary keys asSortedCollection
 				do: [:eachMethod | self logElement: 'Method' value: eachMethod].
 			self endElement.
-			"			fugitive 
-				ifTrue: 
-					[logStream 
-						print: (each allReferences reject: 
-									[:r | 
-									r == each class 
-										or: [r == classes or: [(r isKindOf: CompiledMethod) and: [r methodClass == each]]]]).
-					logStream nextPutAll: '</EM>']
-				ifFalse: 
-					[self logReferencesToClasses 
-						ifTrue: 
-							[| refs |
-							refs := (Smalltalk associationAt: each name) allReferences 
-										reject: [:r | r == Smalltalk or: [r == Processor activeProcess]].
-							refs notEmpty ifTrue: [logStream display: refs].
-							false
-								ifTrue: 
-									[each methodDictionary keys asSortedCollection do: 
-											[:s | 
-											logStream
-												nextPutAll: '<BR>';
-												print: s]]]].
-"
+			(flags allMask: LogReferencesMask) ifTrue: [self logReferencesToClass: each].
 			self endElement.
-			totalMemory := totalMemory + memory.
-			totalInstances := totalInstances + insts.
-			totalMethods := totalMethods + each methodDictionary size.
-			totalClassMethods := totalClassMethods + each class methodDictionary size].
+			totals at: 1 put: (totals at: 1) + count.
+			totals at: 2 put: (totals at: 2) + memory.
+			totals at: 3 put: (totals at: 3) + each key methodDictionary size.
+			totals at: 4 put: (totals at: 4) + each key class methodDictionary size].
 	self endElement.
-	self logElement: 'TotalInstances' value: totalInstances.
-	self logElement: 'TotalMemory' value: totalMemory.
-	self logElement: 'TotalMethods' value: totalMethods.
-	self logElement: 'TotalClassMethods' value: totalClassMethods.
-	self finishedWith: #logReferencesToClasses!
+	self logElement: 'TotalInstances' value: (totals at: 1).
+	self logElement: 'TotalMemory' value: (totals at: 2).
+	self logElement: 'TotalMethods' value: (totals at: 3).
+	self logElement: 'TotalClassMethods' value: (totals at: 4)!
 
 logRemainingPackages
 	"Private - Write a list of the remaining packages to the stripping log."
@@ -878,7 +934,7 @@ logRemainingResources
 	self startElement: 'RemainingResources'.
 	total := 0.
 	resman := self resourceManager.
-	resman allResourceIdentifiers do: 
+	resman allResourceIdentifiersDo: 
 			[:each | 
 			self startElement: 'Resource'.
 			self logElement: 'OwningClass' value: each owningClass name.
@@ -889,23 +945,18 @@ logRemainingResources
 	self logElement: 'TotalResourcesSize' value: total.
 	self endElement!
 
-logRemoveMethod: aCompiledMethod 
-	self 
-		logElement: 'RemoveMethod'
-		attributes: (Array with: 'methodClass' -> aCompiledMethod methodClass name)
-		value: aCompiledMethod selector!
-
 logSelector: each 
 	^self logElement: 'Selector' value: each!
 
-logSentMessages: aWeakIdentityDictionary 
-	| aCollectionOfClasses implemented originallySent allRefs diff sent |
+logSentMessages: aWeakIdentityDictionary
+	| remainingClasses implemented originallySent allRefs diff sent |
 	self startElement: 'SentMessages'.
 	originallySent := Set new.
 	aWeakIdentityDictionary do: [:each | originallySent addAll: each].
-	aCollectionOfClasses := Class allClasses 
-				reject: [:each | each includesBehavior: BasicImageStripper].
-	allRefs := self messagesSentByClasses: aCollectionOfClasses.
+	remainingClasses := Set new.
+	Class
+		allClassesDo: [:each | (each includesBehavior: BasicImageStripper) ifFalse: [remainingClasses add: each]].
+	allRefs := self messagesSentByClasses: remainingClasses.
 	sent := allRefs intersection: originallySent.
 	sent asSortedCollection do: [:each | self logSelector: each].
 	self endElement.
@@ -915,10 +966,24 @@ logSentMessages: aWeakIdentityDictionary
 	self endElement.
 "
 	self startElement: 'UnimplementedMessages'.
-	implemented := self messagesImplementedBy: aCollectionOfClasses.
+	implemented := self messagesImplementedBy: remainingClasses.
 	diff := sent difference: implemented.
 	diff asSortedCollection do: [:each | self logSelector: each].
-	self endElement!
+	self endElement.
+	preservedAspectSetters isEmpty
+		ifFalse: 
+			["Log the messages preserved only because they are assumed to be aspect setters"
+			self startElement: 'PreservedAspectSetters'.
+			preservedAspectSetters asSortedCollection do: [:each | self logMethod: each].
+			self endElement]!
+
+logStrippingError: anError
+	logStream isNil ifTrue: [^self].
+	self
+		logElement: 'Error'
+		attributes: (Array with: 'class' -> anError class name)
+		value: anError description.
+	logStream flush!
 
 logValue: anObject 
 	| string |
@@ -955,45 +1020,41 @@ messagesImplementedBy: classes
 	self allMethodsInClasses: classes do: [:each | answer add: each selector ].
 	^answer!
 
-messagesSentByClasses: aCollectionOfClasses 
+messagesSentByClasses: aCollectionOfClasses
 	| sent |
 	sent := (IdentitySet new: aCollectionOfClasses size * 10)
-				addAll: self preservedMessages;
+				addAll: preservedMessages;
 				addAll: self speciallySentMessages;
 				yourself.	"presize for an average of 10 unique sends per class"
 	self allMethodsInClasses: aCollectionOfClasses
 		do: 
-			[:eachMethod | 
+			[:eachMethod |
 			| selector |
 			selector := eachMethod selector.
 			eachMethod allSymbolLiteralsDo: 
-					[:eachSymbol | 
+					[:eachSymbol |
 					"Note that self references are now excluded to prevent this particular form of
 					 circular reference preventing a method from being stripped"
 					eachSymbol == selector ifFalse: [sent add: eachSymbol]]].
 
 	"Add all messages that can be triggered by events"
-	Object _eventsRegister 
+	Object._EventsRegister
 		do: [:each | each do: [:mseq | mseq messagesDo: [:ms | sent add: ms selector]]].
-
-	"If it is likely that aspects setter selectors (#blah:) are composed programmatically
-	we will not have them in our list of sent messages. We should add them here unless
-	explicitly told not to."
-	self preserveAspectSetters 
-		ifTrue: 
-			["Assume all one argument keyword messages are potentially setters if a corresponding
-			 zero argument 'getter' exists"
-			aCollectionOfClasses do: 
-					[:each | 
-					sent
-						addAll: (self potentialAspectSettersIn: each);
-						addAll: (self potentialAspectSettersIn: each class)]].
 	^sent!
+
+nonAspectSetterCategories
+	"Answer a collection of the <String> names of categories of methods that are known not to be
+	aspect setters even if they appear to be (i.e. they are have 1 argument selectors, the stem
+	of which is the selector of a zero-arg method that may be an aspect getter). For example
+	Collection implements the 'converting' methods #asSortedCollection: and #asSortedCollection,
+	but of course asSortedCollection is a conversion operation, not an aspect"
+
+	^#('comparing' 'converting' 'copying' 'dependency' 'enumerating' 'evaluating' 'initializing' 'instance creation' 'operations')!
 
 notify: notifier status: aStringMessage 
 	notifier first status: aStringMessage!
 
-notifyClassesOfCompletedStrip: notifier 
+notifyClassesOfCompletedStrip: notifier
 	"Private - Inform all classes that the imagehas been stripped, by sending them an
 	#onPostStripImage message if they implement it directly. This is an opportunity for classes
 	to reverse any tentative uninitialization they may have done in a #onPreStripImage method in
@@ -1001,14 +1062,17 @@ notifyClassesOfCompletedStrip: notifier
 	opportunity to reinitiatlize themselves."
 
 	Class allClassesDo: 
-			[:e | 
-			(e class compiledMethodAt: #onPostStripImage ifAbsent: []) 
+			[:e |
+			(e class compiledMethodAt: #onPostStripImage ifAbsent: [])
 				ifNotNil: 
-					[:method | 
+					[:method |
 					e onPostStripImage.
-					self removeMethod: method notifying: notifier]]!
+					self
+						removeMethod: method
+						force: true
+						notifying: notifier]]!
 
-notifyClassesOfImminentStrip: notifier 
+notifyClassesOfImminentStrip: notifier
 	"Private - Inform all classes that the image is about to be stripped, by sending them an
 	#onPreStripImage message if they implement it directly. This is an opportunity for the
 	classes to contribute to the stripping process, for example by minimizing lazily initialized
@@ -1017,12 +1081,15 @@ notifyClassesOfImminentStrip: notifier
 
 	self startElement: 'PreStrip'.
 	Class allClassesDo: 
-			[:e | 
-			(e class compiledMethodAt: #onPreStripImage ifAbsent: []) 
+			[:e |
+			(e class compiledMethodAt: #onPreStripImage ifAbsent: [])
 				ifNotNil: 
-					[:method | 
+					[:method |
 					e onPreStripImage.
-					self removeMethod: method notifying: notifier]].
+					self
+						removeMethod: method
+						force: true
+						notifying: notifier]].
 	self endElement!
 
 notRequiredClasses
@@ -1037,31 +1104,25 @@ notRequiredMethodCategories
 	"Answer an IdentitySet of MethodCategorys whose methods are known to be not required
 	and should be forcibly dropped during an image strip. Can be overridden by subclasses to 
 	alter the stripping strategy"
-	
-	| catClass cats |
-	catClass := Object methodCategoryClass.
-	cats := IdentitySet
-			with: (catClass name: 'must strip')
-			with: (catClass name: 'examples').
 
-	self stripDeprecatedMethods ifTrue: [
-		cats add: (catClass name: 'deprecated')].
+	| categoryNames |
+	categoryNames := #('must strip' 'examples').
+	self stripDeprecatedMethods ifTrue: [categoryNames := categoryNames copyWith: 'deprecated'].
+	^categoryNames!
 
-	^cats!
-
-onError: anError 
+onError: anError
 	"Private - An error occur while stripping. Heaven knows what state the image may be in
 	now so just report the error and forcibly exit"
 
 	| text |
-	self logError: anError.
+	self logStrippingError: anError.
 	self closeLog.
 	text := 'The following error occurred while stripping. 
 The image MUST exit immediately, but see crash dump (if configured).
 
-' 
+'
 				, anError description.
-	UserLibrary default 
+	UserLibrary default
 		messageBox: nil
 		lpText: text
 		lpCaption: SessionManager current applicationName
@@ -1069,11 +1130,15 @@ The image MUST exit immediately, but see crash dump (if configured).
 	VMLibrary default crashDump: anError description.
 	SessionManager current primQuit: -1!
 
-onNotification: aNotification notifier: notifier 
+onNotification: aNotification notifier: notifier
 	| description |
 	description := aNotification description.
 	self notify: notifier status: description.
-	self logComment: aNotification class name , ': ' , description!
+	logStream
+		crtab: elementStack size;
+		nextPutAll: '<!!-- ';
+		nextPutAll: aNotification class name , ': ' , description;
+		nextPutAll: ' -->'!
 
 openLogFile
 	"Private - Open log stream if requested"
@@ -1088,22 +1153,6 @@ openLogFile
 	self startElement: 'Lagoon'
 		attributes: (Array with: 'xmlns:xsi' -> 'http://www.w3.org/2001/XMLSchema-instance'
 				with: 'xsi:noNamespaceSchemaLocation' -> 'Lagoon.xsd')!
-
-potentialAspectSettersIn: aClass 
-	"Private - Answer a collection of the methods in the specified class that _might_ be aspect
-	setters. These are judged as those with one-argument keyword selectors for which there is a
-	corresponding unary selector implemented in the class or its superclasses. This is, of
-	course, a conservative judgement and will tend to result in more methods being preserved
-	than are strictly required."
-
-	^(aClass methodDictionary select: 
-			[:each | 
-			each selector last = $: and: 
-					[each argumentCount == 1 and: 
-							[| getter |
-							getter := (each selector copyFrom: 1 to: each selector size - 1) asSymbol.
-							aClass canUnderstand: getter]]]) 
-		keys!
 
 prepareToStrip
 	"Perform pre-image stripping actions, such as opening the log file.
@@ -1128,15 +1177,6 @@ preserveAspectSetters: aBoolean
 	See comment in #preserveAspectSetters"
 
 	flags := flags mask: PreserveAspectsMask set: aBoolean!
-
-preservedMessages
-	"Private - Answers a Set of all the message selectors that are to be preserved
-	due to membership of one of the requiredMethodCategories.
-	Implementation Note: The set is recorded so that the category system can
-	be removed as soon as possible."
-
-	preservedMessages isNil ifTrue: [self buildPreservedMessages].
-	^preservedMessages!
 
 preStripCheck
 	"Private - Perform pre-image stripping checks, such as whether any packages have cyclic
@@ -1173,7 +1213,7 @@ queryCommand: query
 	(query canPerformAgainst: self) ifTrue: [query isEnabled: true].
 	^false	"There was no specific enablement of the command at this level"!
 
-referencesFromObjectsInClasses: aCollection 
+referencesFromObjectsInClasses: aCollection
 	"Private - Build a dictionary that maps code objects in the collection of classes,
 	aCollection, to the symbols and classes that they references. This is used to construct an
 	initial picture of true (or probably true) message sends in the image so that later we can
@@ -1185,7 +1225,7 @@ referencesFromObjectsInClasses: aCollection
 	messageMap at: VMLibrary put: self speciallySentMessages.
 	self allMethodsInClasses: aCollection
 		do: 
-			[:eachMethod | 
+			[:eachMethod |
 			| messages |
 			messages := (eachMethod messages)
 						remove: eachMethod selector ifAbsent: [];
@@ -1193,25 +1233,25 @@ referencesFromObjectsInClasses: aCollection
 			messages isEmpty ifFalse: [messageMap at: eachMethod put: messages]].
 
 	"Add all messages that can be triggered by events"
-	Object _eventsRegister 
+	Object._EventsRegister
 		do: [:each | each do: [:mseq | mseq messagesDo: [:ms | messageMap at: ms put: (Array with: ms selector)]]].
 	self preserveAspectSetters ifTrue: [#todo	"How are we going to handle aspect setters?"].
 
 
 	"Finally add any that may be sent from resources in the remaining classes"
 	(self resourcesForClasses: aCollection) do: 
-			[:eachResId | 
+			[:eachResId |
 			| objects res hiddenSymbols hiddenClassNames |
 			hiddenSymbols := Set new.
 			hiddenClassNames := Set new.
 			res := eachResId resource.
 			objects := eachResId hiddenObjects.
 			objects do: 
-					[:eachObject | 
-					eachObject class isMeta 
+					[:eachObject |
+					eachObject class isMeta
 						ifTrue: [hiddenClassNames add: eachObject name]
 						ifFalse: 
-							[(eachObject class conformsToProtocol: #messageSender) 
+							[(eachObject class conformsToProtocol: #messageSender)
 								ifTrue: 
 									[| messages |
 									messages := eachObject messages.
@@ -1219,13 +1259,26 @@ referencesFromObjectsInClasses: aCollection
 			messageMap at: res put: hiddenSymbols].
 	^messageMap!
 
+removeMethod: aCompiledMethod force: aBoolean notifying: notifier
+	"Private - Removes aCompiledMethod from the image.
+	Note that we do this by directly manipulating the method dictionary, which means that
+	a #methodRemoved: event will NOT be fired."
+
+	(aBoolean not and: [preservedAspectSetters includes: aCompiledMethod]) ifTrue: [^false].
+	self logMethod: aCompiledMethod.
+	aCompiledMethod methodClass methodDictionary removeKey: aCompiledMethod selector
+		ifAbsent: 
+			["Could be in a weakly held development class which has evaporated"
+			].
+	^true!
+
 removeMyClass
 	"Private - As one of the last steps, remove the receiver's class from the system.
 	It will still continue to exist while the instance is alive of course."
 
-	preservedMessages := nil.
+	preservedMessages := preservedAspectSetters := nil.
 	
-	[ImageStripper allSubclasses 
+	[BasicImageStripper allSubclasses 
 		reverseDo: [:each | each environment removeClass: each].
 	ImageStripper environment removeClass: ImageStripper] 
 			on: Error
@@ -1290,7 +1343,7 @@ resizeStubFile: exeFilePath
 resourceManager
 	^ResourceIdentifier!
 
-resourcesForClasses: classes 
+resourcesForClasses: classes
 	"Private - Answer a <collection> of the <ResourceIdentifiers> for all resources that are potentially 
 	referenced from the specified <Set> of classes"
 
@@ -1308,14 +1361,12 @@ resourcesForClasses: classes
 		do: [:m | m literalsDo: [:l | l class == String ifTrue: [literalStrings add: l]]].
 	resourceIds := Set new.
 	classes do: 
-			[:class | 
-			| resources |
-			resources := class resourceIdentifiers .
-			resources do: 
-							[:each | 
-							(literalStrings includes: each name) 
-								ifTrue: [resourceIds add: (ResourceIdentifier class: class name: each name)]]].
-	self ignoreViewReferences 
+			[:class |
+			class resourceIdentifiersDo: 
+					[:each |
+					(literalStrings includes: each name)
+						ifTrue: [resourceIds add: (ResourceIdentifier class: class name: each name)]]].
+	self ignoreViewReferences
 		ifFalse: [resourceIds addAll: (self scanResourcesForViewReferences: resourceIds)].
 	^resourceIds!
 
@@ -1388,7 +1439,7 @@ runtimeSessionManagerClass: aSessionManagerClass
 		ifFalse: [^self error: aSessionManagerClass name , ' is not a runtime session manager'].
 	runtimeSessionManagerClass := aSessionManagerClass!
 
-saveExecutable: exePath 
+saveExecutable: exePath
 	"Private - Save a snapshot of the current image to an executable. This is appended to the
 	executable stub at the <readableString> path, exePath.
 	Following the completion of this process the development system MUST exit"
@@ -1398,7 +1449,7 @@ saveExecutable: exePath
 	retainImage := self keepImageFile.
 	self finalActions.
 	image := File change: exePath extension: 'tmp'.
-	self snapshot: image.
+	self snapshotImage: image.
 
 	"We can't send any more messages to the receiver after this point as its method dictionary
 	 has been removed."
@@ -1409,23 +1460,23 @@ saveExecutable: exePath
 	imageFile read: imageData.
 	KernelLibrary default updateResourcesOf: exePath
 		do: 
-			[:hUpdate | 
-			(KernelLibrary default 
+			[:hUpdate |
+			(KernelLibrary default
 				updateResource: hUpdate
 				lpType: RT_RCDATA
 				lpName: 100
 				wLanguage: 0
 				lpData: imageData
-				cbData: imageData size) ifFalse: [KernelLibrary default systemError]]] 
+				cbData: imageData size) ifFalse: [KernelLibrary default systemError]]]
 			ensure: 
 				[imageFile close.
 				retainImage ifFalse: [File delete: image]].
-	unattended 
+	unattended
 		ifFalse: 
-			[UserLibrary default 
+			[UserLibrary default
 				messageBox: nil
 				lpText: 'The image has been stripped and deployed to the executable file:
-' , exePath 
+' , exePath
 						, '
 
 The development system will now exit.'
@@ -1464,7 +1515,7 @@ shrinkSymbolTable
 
 !
 
-snapshot: anImageFilename
+snapshotImage: anImageFilename
 	"Private - Save the current stripped image out to anImageFilename"
 
 	"We can now empty the method dictionary as every method still required
@@ -1472,7 +1523,7 @@ snapshot: anImageFilename
 
 	| sesh type |
 	type := self snapshotType.
-	self class methodDictionary: MethodDictionary new.
+	self class methodDictionary: nil.
 	Smalltalk clearCachedClasses.
 
 	"Flush out the garbage again"
@@ -1536,7 +1587,7 @@ stripAndSave
 	self prepareToStrip ifTrue: [
 		self stripAndSaveNotifying: (Array with: DeafObject current)]!
 
-stripAndSaveNotifying: notifier 
+stripAndSaveNotifying: notifier
 	"Strips the image and saves an executable file according to the configuration held by the
 	receiver. Notification messages are sent to notifier in the form of #status: messages. N.B.
 	This method is in the 'must not strip' category to prevent the receiver pulling the rug out
@@ -1554,7 +1605,9 @@ stripAndSaveNotifying: notifier
 	messages which are still sent - these can arise, for example, where the package stripping
 	process removes loose methods."
 	messageMap := self buildMessageMap.
+	self buildPreservedMessages.
 	self logConfiguration.
+	preservedAspectSetters := #().
 	stubFile := self copyAndUpdateStub: stubFile to: path.
 	self
 		closeAllDevelopmentTools;
@@ -1570,6 +1623,7 @@ stripAndSaveNotifying: notifier
 	self stripRedundantPackagesNotifying: notifier.
 	self logRemainingPackages.
 	self logPreservedClasses.
+	preservedAspectSetters := WeakSet withAll: self buildPreservedAspectSetters.
 	"... and make sure we've garnered all the info we require from development structures to
 	allow these to be removed immediately. This must be done before we disable the package
 	manager."
@@ -1590,7 +1644,7 @@ stripAndSaveNotifying: notifier
 	self finishedWithAll: #(#disableClassChangeFlagging #stripDevelopmentSystemNotifying: #purgeIcons:).
 
 	"Empty the receiver's class' method dictionary"
-	self class class methodDictionary: MethodDictionary new.
+	self class class methodDictionary: nil.
 	self stripRedundantObjects: false notifying: notifier.
 	self stripDuplicatesNotifying: notifier.
 	self finishedWith: #stripDuplicatesNotifying:.
@@ -1624,26 +1678,23 @@ stripAndSaveNotifying: notifier
 	self notifyClassesOfCompletedStrip: notifier.
 
 	"And one final go at the methods that might be hanging around because of class stripping code"
-	self 
+	self
 		finishedWithAll: #(#stripClassRemovalNotifying: #stripRedundantResources #stripRedundantObjects:notifying: #addClassesReferencedByClass:andResources:to: #stripClassInfoNotifying: #notifyClassesOfCompletedStrip: #finishedStrippingResources).
 	self stripRedundantMethodsNotifying: notifier.
 	self finishedWithAll: #(#stripRedundantMethodsNotifying: #stripRedundantMethodsOnceFrom:notifying:).
 	self logSentMessages: messageMap.
 	messageMap := nil.
-	self foldEmptyMethodDictionariesNotifying: notifier.
-	self 
-		finishedWithAll: #(#stripEmptyMethodDictionaries #foldEmptyMethodDictionariesNotifying: #logFold:folded:total:).
-
+	self finishedWithAll: #(#logFold:folded:total:).
 
 	"Remove as much as we can of the remainder of ImageStripper in case it hangs around"
 	self finishedWithStripping.
 	self shrinkHashedCollections.
-	self shrinkSymbolTable] 
+	self shrinkSymbolTable]
 			on: Error
 			do: [:ex | self onError: ex]
 			on: Notification
 			do: 
-				[:ex | 
+				[:ex |
 				self onNotification: ex notifier: notifier.
 				ex resume].
 	self deferredSaveExecutable: path.
@@ -1744,7 +1795,7 @@ stripDevelopmentMethods
 
 	^true!
 
-stripDevelopmentObjects: devMethods notifying: notifier 
+stripDevelopmentObjects: devMethods notifying: notifier
 	"Private - Remove any remaining vestiges of the development system.
 	Answer the number of development classes removed."
 
@@ -1752,14 +1803,18 @@ stripDevelopmentObjects: devMethods notifying: notifier
 	self startElement: 'StripDevelopmentObjects'.
 	self notify: notifier status: 'Removing remaining development classes and methods'.
 	"Remove the methods first in case they reference the development classes"
-	totalRemoved := self stripDevelopmentMethods 
-				ifTrue: [self removeMethods: devMethods notifying: notifier]
+	totalRemoved := self stripDevelopmentMethods
+				ifTrue: 
+					[self
+						removeMethods: devMethods
+						force: true
+						notifying: notifier]
 				ifFalse: [0].
 	self collectGarbage: 3.
-	self stripDevelopmentClasses 
+	self stripDevelopmentClasses
 		ifTrue: 
 			[| removed |
-			[(removed := self removeClasses: developmentClasses asSortedCollection notifying: notifier) > 0] 
+			[(removed := self removeClasses: developmentClasses asSortedCollection notifying: notifier) > 0]
 				whileTrue: 
 					[self collectGarbage: 2.
 					totalRemoved := totalRemoved + removed]].
@@ -1796,20 +1851,6 @@ stripDuplicateStrings: aBoolean
 	"Set the fold duplicate strings option of the stripping process to aBoolean"
 
 	flags := flags mask: FoldStringsMask set: aBoolean!
-
-stripEmptyMethodDictionaries
-	"Answer whether the stripping process will replace empty method dictionaries with a 
-	shared empty dictionary.	This is safe unless the application adds new methods 
-	at run time (most don't)."
-
-	^flags allMask: FoldMethodDictsMask!
-
-stripEmptyMethodDictionaries: aBoolean
-	"Set whether the stripping process will replace empty method dictionaries with a 
-	shared empty dictionary.	This is safe unless the application adds new methods 
-	at run time (most don't)."
-
-	flags := flags mask: FoldMethodDictsMask set: aBoolean!
 
 stripRedundantClasses
 	"Answer true if the receiver will attempt to remove redundant classes not
@@ -2052,18 +2093,22 @@ writeLogFile: aBoolean
 !ImageStripper categoriesFor: #actualRequiredPackages!accessing!private! !
 !ImageStripper categoriesFor: #addClassesReferencedByClass:to:!helpers!private! !
 !ImageStripper categoriesFor: #addClassesReferencedByMethod:to:!helpers!private! !
+!ImageStripper categoriesFor: #addPotentialAspectSettersIn:to:excluding:!helpers!private! !
 !ImageStripper categoriesFor: #addReferencedViews:to:!helpers!private! !
 !ImageStripper categoriesFor: #allMethodsInClasses:do:!helpers!private! !
 !ImageStripper categoriesFor: #allReferencedClasses!operations!private! !
 !ImageStripper categoriesFor: #allResourcesStripped!operations!private! !
 !ImageStripper categoriesFor: #appendManifestContent:!helpers!private! !
+!ImageStripper categoriesFor: #behaviorsWithIgnoredAspectSetters!configuration!public! !
 !ImageStripper categoriesFor: #binaryStoreOn:!binary filing!development!public! !
 !ImageStripper categoriesFor: #buildManifest:description:version:!helpers!private! !
 !ImageStripper categoriesFor: #buildMessageMap!must not strip!private! !
+!ImageStripper categoriesFor: #buildPreservedAspectSetters!helpers!private! !
 !ImageStripper categoriesFor: #buildPreservedMessages!helpers!private! !
 !ImageStripper categoriesFor: #buildRootClasses!helpers!private! !
 !ImageStripper categoriesFor: #canDeploy!public!testing! !
 !ImageStripper categoriesFor: #checkedStubFilePath!accessing!private! !
+!ImageStripper categoriesFor: #classCategoriesToIgnoreAspectSetters!configuration!public! !
 !ImageStripper categoriesFor: #classesReferencedByMethod:!helpers!private! !
 !ImageStripper categoriesFor: #classReferencesToIgnore!configuration!private! !
 !ImageStripper categoriesFor: #clearChangedProperties!operations!private! !
@@ -2082,7 +2127,6 @@ writeLogFile: aBoolean
 !ImageStripper categoriesFor: #developmentResources!configuration!public! !
 !ImageStripper categoriesFor: #disableClassChangeFlagging!operations!private! !
 !ImageStripper categoriesFor: #disableDevelopmentSystem!operations!private! !
-!ImageStripper categoriesFor: #displayTerminationMessage!operations!private! !
 !ImageStripper categoriesFor: #emptyMethodDictionariesOfStubbornClasses!public!testing! !
 !ImageStripper categoriesFor: #endElement!helpers!private! !
 !ImageStripper categoriesFor: #endElement:!helpers!private! !
@@ -2096,6 +2140,7 @@ writeLogFile: aBoolean
 !ImageStripper categoriesFor: #finishedWith:!operations!private! !
 !ImageStripper categoriesFor: #finishedWithAll:!operations!private! !
 !ImageStripper categoriesFor: #finishedWithStripping!operations!private! !
+!ImageStripper categoriesFor: #getClassInstanceStats!helpers!private! !
 !ImageStripper categoriesFor: #ignoreViewReferences!accessing!public! !
 !ImageStripper categoriesFor: #ignoreViewReferences:!accessing!public! !
 !ImageStripper categoriesFor: #includeManifestResource!accessing!public!testing! !
@@ -2111,32 +2156,34 @@ writeLogFile: aBoolean
 !ImageStripper categoriesFor: #isUnattended!public!testing! !
 !ImageStripper categoriesFor: #isUnattended:!accessing!development!public! !
 !ImageStripper categoriesFor: #keepImageFile!public!testing! !
-!ImageStripper categoriesFor: #logComment:!event handling!private! !
 !ImageStripper categoriesFor: #logConfiguration!operations!private! !
 !ImageStripper categoriesFor: #logDevelopmentCategories!operations!private! !
 !ImageStripper categoriesFor: #logElement:attributes:value:!helpers!private! !
 !ImageStripper categoriesFor: #logElement:value:!helpers!private! !
-!ImageStripper categoriesFor: #logError:!event handling!private! !
 !ImageStripper categoriesFor: #logFileExtension!constants!public! !
 !ImageStripper categoriesFor: #logFileName!accessing!public! !
 !ImageStripper categoriesFor: #logFold:folded:total:!operations!private! !
 !ImageStripper categoriesFor: #logImageStats!helpers!private! !
 !ImageStripper categoriesFor: #logManifest!operations!private! !
+!ImageStripper categoriesFor: #logMethod:!operations!private! !
 !ImageStripper categoriesFor: #logPackagePrerequisites!public!testing! !
 !ImageStripper categoriesFor: #logPreservedClasses!operations!private! !
 !ImageStripper categoriesFor: #logPreservedMessages!operations!private! !
-!ImageStripper categoriesFor: #logReferencesToClasses!public!testing! !
+!ImageStripper categoriesFor: #logReference:!helpers!private! !
+!ImageStripper categoriesFor: #logReferencesToClass:!operations!private! !
+!ImageStripper categoriesFor: #logReferencesToClasses!helpers!public! !
 !ImageStripper categoriesFor: #logReferencesToClasses:!accessing!public! !
 !ImageStripper categoriesFor: #logRemainingClasses!operations!private! !
 !ImageStripper categoriesFor: #logRemainingPackages!operations!private! !
 !ImageStripper categoriesFor: #logRemainingResources!operations!private! !
-!ImageStripper categoriesFor: #logRemoveMethod:!operations!private! !
 !ImageStripper categoriesFor: #logSelector:!operations!private! !
 !ImageStripper categoriesFor: #logSentMessages:!helpers!private! !
+!ImageStripper categoriesFor: #logStrippingError:!event handling!private! !
 !ImageStripper categoriesFor: #logValue:!helpers!private! !
 !ImageStripper categoriesFor: #manifestResourceId!constants!private! !
 !ImageStripper categoriesFor: #messagesImplementedBy:!helpers!private! !
 !ImageStripper categoriesFor: #messagesSentByClasses:!helpers!private! !
+!ImageStripper categoriesFor: #nonAspectSetterCategories!configuration!public! !
 !ImageStripper categoriesFor: #notify:status:!operations!private! !
 !ImageStripper categoriesFor: #notifyClassesOfCompletedStrip:!operations!private! !
 !ImageStripper categoriesFor: #notifyClassesOfImminentStrip:!operations!private! !
@@ -2145,11 +2192,9 @@ writeLogFile: aBoolean
 !ImageStripper categoriesFor: #onError:!event handling!private! !
 !ImageStripper categoriesFor: #onNotification:notifier:!event handling!private! !
 !ImageStripper categoriesFor: #openLogFile!operations!private! !
-!ImageStripper categoriesFor: #potentialAspectSettersIn:!helpers!private! !
 !ImageStripper categoriesFor: #prepareToStrip!operations!public! !
 !ImageStripper categoriesFor: #preserveAspectSetters!accessing!public! !
 !ImageStripper categoriesFor: #preserveAspectSetters:!accessing!development!public! !
-!ImageStripper categoriesFor: #preservedMessages!accessing!private! !
 !ImageStripper categoriesFor: #preStripCheck!operations!private! !
 !ImageStripper categoriesFor: #preStripScript!accessing!public! !
 !ImageStripper categoriesFor: #preStripScript:!accessing!public! !
@@ -2157,6 +2202,7 @@ writeLogFile: aBoolean
 !ImageStripper categoriesFor: #purgeIcons:!helpers!private! !
 !ImageStripper categoriesFor: #queryCommand:!commands!development!private! !
 !ImageStripper categoriesFor: #referencesFromObjectsInClasses:!helpers!private! !
+!ImageStripper categoriesFor: #removeMethod:force:notifying:!private!removing! !
 !ImageStripper categoriesFor: #removeMyClass!operations!private! !
 !ImageStripper categoriesFor: #requiredClasses!configuration!public! !
 !ImageStripper categoriesFor: #requiredMethodCategories!configuration!public! !
@@ -2176,7 +2222,7 @@ writeLogFile: aBoolean
 !ImageStripper categoriesFor: #scanResourcesForViewReferences:!helpers!private! !
 !ImageStripper categoriesFor: #shrinkHashedCollections!operations!public! !
 !ImageStripper categoriesFor: #shrinkSymbolTable!operations!private! !
-!ImageStripper categoriesFor: #snapshot:!operations!private! !
+!ImageStripper categoriesFor: #snapshotImage:!operations!private! !
 !ImageStripper categoriesFor: #snapshotType!accessing!public! !
 !ImageStripper categoriesFor: #snapshotType:!accessing!public! !
 !ImageStripper categoriesFor: #speciallySentMessages!configuration!private! !
@@ -2203,8 +2249,6 @@ writeLogFile: aBoolean
 !ImageStripper categoriesFor: #stripDuplicatesNotifying:!operations!private! !
 !ImageStripper categoriesFor: #stripDuplicateStrings!accessing!public!testing! !
 !ImageStripper categoriesFor: #stripDuplicateStrings:!accessing!development!public! !
-!ImageStripper categoriesFor: #stripEmptyMethodDictionaries!accessing!public!testing! !
-!ImageStripper categoriesFor: #stripEmptyMethodDictionaries:!accessing!development!public! !
 !ImageStripper categoriesFor: #stripRedundantClasses!accessing!public!testing! !
 !ImageStripper categoriesFor: #stripRedundantClasses:!accessing!development!public! !
 !ImageStripper categoriesFor: #stripRedundantMethods!accessing!public!testing! !
@@ -2251,37 +2295,6 @@ for: aPackage
 	"Answers an instance of the receiver suitable for stripping aPackage"
 
 	^self new rootPackage: aPackage!
-
-initialize
-	"Private - Initialize the receiver's class variables.
-		self initialize
-	"
-
-	ClearGuidsMask := 16r1.
-	FoldStringsMask := 16r2.
-	PreserveAspectsMask := 16r4.
-	RetainInstVarNamesMask := 16r8.
-	StripClassesMask := 16r10.
-	StripClassInfoMask := 16r20.
-	StripMethodsMask := 16r40.
-	StripResourcesMask := 16r80.
-	CompileStructsMask := 16r100.
-	FoldMethodDictsMask := 16r200.
-	WriteLogMask := 16r400.
-	EmptyMethodDictsMask := 16r800.
-	FoldBytecodesMask := 16r1000.
-	LogReferencesMask := 16r2000.
-	StripClassBuilderMask := 16r4000.
-	StripShouldNotImplMask := 16r8000.
-	StripDeprecatedMask := 16r10000.
-	StripPackagesMask := 16r20000.
-	LogPrerequisitesMask := 16r40000.
-	IgnoreViewReferencesMask := 16r80000.
-	ToGoMask := 16r100000.
-	NoXPManifestMask := 16r200000.
-	AllResourcesStripped := 16r400000.
-	RetainSubclassRespMask := 16r800000.
-	UnattendedMask := 16r1000000!
 
 isSafeToEncryptWithProductProtection
 	"Answer whether it is save to encrypt the receiver's methods as part of the
@@ -2336,7 +2349,6 @@ stbVersion
 	^4! !
 !ImageStripper class categoriesFor: #defaultOptions!constants!private! !
 !ImageStripper class categoriesFor: #for:!development!instance creation!public! !
-!ImageStripper class categoriesFor: #initialize!development!initializing!private! !
 !ImageStripper class categoriesFor: #isSafeToEncryptWithProductProtection!constants!public!testing! !
 !ImageStripper class categoriesFor: #stbConvertFrom:!binary filing!development!public! !
 !ImageStripper class categoriesFor: #stbVersion!binary filing!public! !

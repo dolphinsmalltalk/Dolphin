@@ -41,15 +41,21 @@ testFactorial
 testIndexedAccess
 	"WARNING THIS TEST HANGS THE IMAGE when run for SmallInteger"
 
-	| int |
+	| int matchBlock |
 	int := self canonicalInstance.
-	self should: [int at: 1 put: 0] raise: Error.
-	SessionManager current productVersion >= 6.0 
-		ifTrue: 
-			["These bugs only corrected in D6 and later"
-			self should: [int size] raise: Error.
-			self should: [int at: 1] raise: Error].
-!
+	matchBlock := [:ex | (ex messageText findString: 'should not implement') ~= 0].
+	self
+		should: [int at: 1 put: 0]
+		raise: Error
+		matching: matchBlock.
+	self
+		should: [int size]
+		raise: Error
+		matching: matchBlock.
+	self
+		should: [int at: 1]
+		raise: Error
+		matching: matchBlock!
 
 testIsInteger
 	self assert: self canonicalInstance isInteger!

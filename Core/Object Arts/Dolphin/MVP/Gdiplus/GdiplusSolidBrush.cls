@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 GdiplusBrush subclass: #GdiplusSolidBrush
 	instanceVariableNames: ''
@@ -13,8 +13,8 @@ GdiplusSolidBrush comment: 'A solid brush paints a single, constant color that c
 color
 	| status color |
 	color := DWORD new.
-	(status := GdiplusLibrary default gdipGetSolidFillColor: self asParameter color: color yourAddress) 
-		= Ok ifFalse: [GdiplusError signal: 'GdipGetSolidFillColor failed' with: status].
+	(status := GdiplusLibrary default gdipGetSolidFillColor: self asParameter color: color) = Ok
+		ifFalse: [GdiplusError signal: 'GdipGetSolidFillColor failed' with: status].
 	^ARGB fromInteger: color value!
 
 color: anARGB 

@@ -1,12 +1,12 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ScalarField subclass: #BYTEField
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-BYTEField guid: (GUID fromString: '{87B4C4E7-026E-11D3-9FD7-00A0CC3E4A32}')!
-BYTEField comment: ''!
+BYTEField guid: (GUID fromString: '{87b4c4e7-026e-11d3-9fd7-00a0cc3e4a32}')!
+BYTEField comment: '<BYTEField> is a <ScalarField> class to represent <ExternalStructure> fields that are 8-bit unsigned integers.'!
 !BYTEField categoriesForClass!External-Data-Types! !
 !BYTEField methodsFor!
 
@@ -15,18 +15,17 @@ accessorMessage
 
 	^#byteAtOffset:put:!
 
-readFrom: anExternal
-	"Private - Instantiate an object of the the type the receiver represents
-	at the receiver's offset in anExternal"
+readFrom: anExternalStructure
+	"Private - Answer the 8-bit unsigned <integer> that is the value of the at the receiver's
+	offset in the <ExternalStructure> argument."
 
-	^anExternal byteAtOffset: offset
-!
+	^anExternalStructure bytes byteAtOffset: offset!
 
-writeInto: anExternal value: anObject
-	"Private - Write the value of anObject into anExternal at the receiver's offset, and in a form
-	appropriate for the receiver's External type"
+writeInto: anExternalStructure value: anInteger
+	"Private - Write the 8-bit unsigned <integer>, anInteger, into the <ExternalStructure>,
+	anExternalStructure, at the receiver's offset."
 
-	^anExternal byteAtOffset: offset put: anObject! !
+	^anExternalStructure bytes byteAtOffset: offset put: anInteger! !
 !BYTEField categoriesFor: #accessorMessage!initializing!private! !
 !BYTEField categoriesFor: #readFrom:!indirect accessing!private! !
 !BYTEField categoriesFor: #writeInto:value:!indirect accessing!private! !

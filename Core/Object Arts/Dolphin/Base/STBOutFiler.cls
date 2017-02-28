@@ -18,7 +18,7 @@ Instance Variables:
 !STBOutFiler categoriesForClass!System-Binary storage! !
 !STBOutFiler methodsFor!
 
-basicNextPut: anObject 
+basicNextPut: anObject
 	"Private - Write anObject to the stream in STB format."
 
 	anObject isNil ifTrue: [^self writeInteger: 0].
@@ -27,29 +27,29 @@ basicNextPut: anObject
 	(self objectIsGlobal: anObject) ifTrue: [^self putGlobal: anObject].
 
 	"SmallIntegers can be encoded entirely within the prefix."
-	anObject isImmediate 
+	anObject isImmediate
 		ifTrue: 
-			[anObject class == SmallInteger 
-				ifTrue: [^self writeInteger: (STBPrefix forSmallInteger: anObject) dword].
+			[anObject class == SmallInteger
+				ifTrue: [^self writeInteger: (STBPrefix encodeSmallInteger: anObject)].
 
 			"Characters can be encoded entirely within the prefix."
-			anObject class == Character ifTrue: [^self writeInteger: (STBPrefix forCharacter: anObject) dword].
+			anObject class == Character ifTrue: [^self putCharacter: anObject].
 			self error: 'unrecognised immediate object type'].
 
 	"References to objects already output can also be encoded entirely within the prefix."
-	(self refForObject: anObject) 
-		ifNotNil: [:refIndex | ^self writeInteger: (STBPrefix forObjectRef: refIndex) dword].
+	(self refForObject: anObject)
+		ifNotNil: [:refIndex | ^self writeInteger: (STBPrefix encodeObjectRef: refIndex)].
 
 	"If anObject is the subject of an override:with: message then we output the 'with' proxy object instead."
 	proxyOverrides at: anObject
 		ifPresent: 
-			[:objectToSave | 
+			[:objectToSave |
 			objectToSave notNil ifTrue: [proxyOverrides removeKey: anObject].
 			^self saveObject: anObject as: objectToSave].
-	(self objectIsLiteral: anObject) ifTrue: [^self putLiteral: anObject].
-
-	"Let anObject output itself."
-	anObject stbSaveOn: self!
+	(self tryPutLiteral: anObject)
+		ifFalse: 
+			["Let anObject output itself."
+			anObject stbSaveOn: self]!
 
 nextPut: anObject
 	"Write anObject to the stream in STB format."
@@ -57,16 +57,10 @@ nextPut: anObject
 	self basicNextPut: anObject.
 	^anObject!
 
-objectIsGlobal: anObject 
+objectIsGlobal: anObject
 	"Private - Answer true if anObject has been registered as global."
 
-	anObject isNil ifTrue: [^globalNils notEmpty].
-	^globals includesKey: anObject!
-
-objectIsLiteral: anObject 
-	"Private - Override hook for the STL filter"
-
-	^false!
+	^anObject isNil ifTrue: [globalNils isEmpty not] ifFalse: [globals includesKey: anObject]!
 
 override: anObject with: anObjectToSave
 	"This is an opportunity circumvent the running of anObject's #stbSaveOn: method by
@@ -82,6 +76,9 @@ override: anObject with: anObjectToSave
 
 	anObject isNil ifFalse: [proxyOverrides at: anObject put: anObjectToSave]!
 
+putCharacter: aCharacter
+	self writeInteger: (STBPrefix encodeCharacter: aCharacter)!
+
 putGlobal: anObject 
 	"Private - Wrap anObject up as an STBGlobalObjectProxy and output that instead."
 
@@ -94,9 +91,6 @@ putGlobal: anObject
 			symbol := symbolCollection removeFirst.
 			symbolCollection isEmpty ifTrue: [globals removeKey: anObject]].
 	self basicNextPut: (STBGlobalObjectProxy for: anObject name: symbol)!
-
-putLiteral: anObject
-	self shouldNotImplement!
 
 refForObject: anObject
 	"Private - Answer the map index of anObject or nil if it is not present.
@@ -169,23 +163,31 @@ saveObject: anObject as: anObjectToSave
 setRefOffset: anInteger
 	refOffset := anInteger - writeMap size + 1!
 
+tryPutLiteral: anObject
+	"Private - Emit the <Object> argument to the stream in literal form, answering whether or
+	not this was possible."
+
+	"Override hook for the STL filter"
+
+	^false!
+
 writeClass: anObject withLocator: locatorString 
 	stream nextPutAll: locatorString asByteArray!
 
-writeClass: class withPrefix: anSTBPrefix 
+writeClass: class withPrefix: anSTBPrefix
 	"Private - An object of the <Class>, class, is about to be written to the binary stream,
 	output an appropriate class prefix for it."
 
-	(self refForObject: class) 
+	(self refForObject: class)
 		ifNotNil: 
-			[:refIndex | 
+			[:refIndex |
 			"class has already been output 	so we can encode a short reference to the class within the prefix."
-			self writeInteger: (anSTBPrefix classRef: refIndex) dword]
+			self writeInteger: (anSTBPrefix encodeClassRef: refIndex)]
 		ifNil: 
 			["hitherto unencountered class so we need to save full class details in the object header."
 			| classVersion locatorString |
 			locatorString := class name asString.
-			self writeInteger: (anSTBPrefix class: class locator: locatorString) dword.
+			self writeInteger: (anSTBPrefix encodeClass: class locator: locatorString).
 			(classVersion := class stbVersion) ~~ 0 ifTrue: [self writeInteger: classVersion].
 			self writeClass: class withLocator: locatorString.
 			self register: class]!
@@ -225,13 +227,12 @@ writePreambleFor: anObject
 	self
 		writeClass: anObject class withPrefix: STBPrefix forData;
 		register: anObject! !
-!STBOutFiler categoriesFor: #basicNextPut:!accessing!private! !
+!STBOutFiler categoriesFor: #basicNextPut:!operations!private! !
 !STBOutFiler categoriesFor: #nextPut:!operations!public! !
 !STBOutFiler categoriesFor: #objectIsGlobal:!globals!private! !
-!STBOutFiler categoriesFor: #objectIsLiteral:!helpers!private! !
 !STBOutFiler categoriesFor: #override:with:!proxies!public! !
+!STBOutFiler categoriesFor: #putCharacter:!helpers!private! !
 !STBOutFiler categoriesFor: #putGlobal:!globals!private! !
-!STBOutFiler categoriesFor: #putLiteral:!helpers!private! !
 !STBOutFiler categoriesFor: #refForObject:!private!searching! !
 !STBOutFiler categoriesFor: #register:!accessing!private! !
 !STBOutFiler categoriesFor: #register:asGlobal:!globals!public! !
@@ -240,10 +241,21 @@ writePreambleFor: anObject
 !STBOutFiler categoriesFor: #saveObject:!operations!public! !
 !STBOutFiler categoriesFor: #saveObject:as:!operations!public! !
 !STBOutFiler categoriesFor: #setRefOffset:!accessing!private! !
+!STBOutFiler categoriesFor: #tryPutLiteral:!helpers!private! !
 !STBOutFiler categoriesFor: #writeClass:withLocator:!operations!private! !
 !STBOutFiler categoriesFor: #writeClass:withPrefix:!operations!private! !
 !STBOutFiler categoriesFor: #writeInstanceVariables:!operations!private! !
 !STBOutFiler categoriesFor: #writeInteger:!helpers!private! !
 !STBOutFiler categoriesFor: #writeObject:as:withPrefix:!operations!private! !
 !STBOutFiler categoriesFor: #writePreambleFor:!binary filing!public! !
+
+!STBOutFiler class methodsFor!
+
+uninitialize
+	"Private - STBPrefix is only used by STBOutFiler now so if STBOutFiler is going, we no longer need it.
+	However it has some static instances that will prevent it being stripped if we don't clear
+	them away."
+
+	STBPrefix uninitialize! !
+!STBOutFiler class categoriesFor: #uninitialize!class hierarchy-removing!private! !
 

@@ -91,6 +91,7 @@ defineConstantsPool
 		at: 'CARETSTYLE_LINE' put: 1;
 		at: 'EDGE_BACKGROUND' put: 2;
 		at: 'EDGE_LINE' put: 1;
+		at: 'EDGE_MULTILINE' put: 3;
 		at: 'EDGE_NONE' put: 0;
 		at: 'INDIC_BOX' put: 6;
 		at: 'INDIC_COMPOSITIONTHICK' put: 14;
@@ -106,6 +107,8 @@ defineConstantsPool
 		at: 'INDIC_IME_MAX' put: 35;
 		at: 'INDIC_MAX' put: 35;
 		at: 'INDIC_PLAIN' put: 0;
+		at: 'INDIC_POINT' put: 18;
+		at: 'INDIC_POINTCHARACTER' put: 19;
 		at: 'INDIC_ROUNDBOX' put: 7;
 		at: 'INDIC_SQUIGGLE' put: 1;
 		at: 'INDIC_SQUIGGLELOW' put: 11;
@@ -167,7 +170,6 @@ defineConstantsPool
 		at: 'SC_CHARSET_THAI' put: 222;
 		at: 'SC_CHARSET_TURKISH' put: 162;
 		at: 'SC_CHARSET_VIETNAMESE' put: 163;
-		at: 'SC_CP_DBCS' put: 1;
 		at: 'SC_CP_UTF8' put: 65001;
 		at: 'SC_CURSORARROW' put: 2;
 		at: 'SC_CURSORNORMAL' put: -1;
@@ -184,6 +186,9 @@ defineConstantsPool
 		at: 'SC_FOLDACTION_CONTRACT' put: 0;
 		at: 'SC_FOLDACTION_EXPAND' put: 1;
 		at: 'SC_FOLDACTION_TOGGLE' put: 2;
+		at: 'SC_FOLDDISPLAYTEXT_BOXED' put: 2;
+		at: 'SC_FOLDDISPLAYTEXT_HIDDEN' put: 0;
+		at: 'SC_FOLDDISPLAYTEXT_STANDARD' put: 1;
 		at: 'SC_FOLDFLAG_LEVELNUMBERS' put: 64;
 		at: 'SC_FOLDFLAG_LINEAFTER_CONTRACTED' put: 16;
 		at: 'SC_FOLDFLAG_LINEAFTER_EXPANDED' put: 8;
@@ -212,6 +217,7 @@ defineConstantsPool
 		at: 'SC_LINE_END_TYPE_DEFAULT' put: 0;
 		at: 'SC_LINE_END_TYPE_UNICODE' put: 1;
 		at: 'SC_MARGIN_BACK' put: 2;
+		at: 'SC_MARGIN_COLOUR' put: 6;
 		at: 'SC_MARGIN_FORE' put: 3;
 		at: 'SC_MARGIN_NUMBER' put: 1;
 		at: 'SC_MARGIN_RTEXT' put: 5;
@@ -292,6 +298,9 @@ defineConstantsPool
 		at: 'SC_PHASES_MULTIPLE' put: 2;
 		at: 'SC_PHASES_ONE' put: 0;
 		at: 'SC_PHASES_TWO' put: 1;
+		at: 'SC_POPUP_ALL' put: 1;
+		at: 'SC_POPUP_NEVER' put: 0;
+		at: 'SC_POPUP_TEXT' put: 2;
 		at: 'SC_PRINT_BLACKONWHITE' put: 2;
 		at: 'SC_PRINT_COLOURONWHITE' put: 3;
 		at: 'SC_PRINT_COLOURONWHITEDEFAULTBG' put: 4;
@@ -486,6 +495,7 @@ defineConstantsPool
 		at: 'SCI_FINDTEXT' put: 2150;
 		at: 'SCI_FOLDALL' put: 2662;
 		at: 'SCI_FOLDCHILDREN' put: 2238;
+		at: 'SCI_FOLDDISPLAYTEXTSETSTYLE' put: 2701;
 		at: 'SCI_FOLDLINE' put: 2237;
 		at: 'SCI_FORMATRANGE' put: 2151;
 		at: 'SCI_FORMFEED' put: 2330;
@@ -567,11 +577,13 @@ defineConstantsPool
 		at: 'SCI_GETLINESTATE' put: 2093;
 		at: 'SCI_GETLINEVISIBLE' put: 2228;
 		at: 'SCI_GETMAINSELECTION' put: 2575;
+		at: 'SCI_GETMARGINBACKN' put: 2251;
 		at: 'SCI_GETMARGINCURSORN' put: 2249;
 		at: 'SCI_GETMARGINLEFT' put: 2156;
 		at: 'SCI_GETMARGINMASKN' put: 2245;
 		at: 'SCI_GETMARGINOPTIONS' put: 2557;
 		at: 'SCI_GETMARGINRIGHT' put: 2158;
+		at: 'SCI_GETMARGINS' put: 2253;
 		at: 'SCI_GETMARGINSENSITIVEN' put: 2247;
 		at: 'SCI_GETMARGINTYPEN' put: 2241;
 		at: 'SCI_GETMARGINWIDTHN' put: 2243;
@@ -581,6 +593,7 @@ defineConstantsPool
 		at: 'SCI_GETMOUSEDOWNCAPTURES' put: 2385;
 		at: 'SCI_GETMOUSEDWELLTIME' put: 2265;
 		at: 'SCI_GETMOUSESELECTIONRECTANGULARSWITCH' put: 2669;
+		at: 'SCI_GETMOUSEWHEELCAPTURES' put: 2697;
 		at: 'SCI_GETMULTIPASTE' put: 2615;
 		at: 'SCI_GETMULTIPLESELECTION' put: 2564;
 		at: 'SCI_GETNEXTTABSTOP' put: 2677;
@@ -630,6 +643,7 @@ defineConstantsPool
 		at: 'SCI_GETSUBSTYLEBASES' put: 4026;
 		at: 'SCI_GETSUBSTYLESLENGTH' put: 4022;
 		at: 'SCI_GETSUBSTYLESSTART' put: 4021;
+		at: 'SCI_GETTABDRAWMODE' put: 2698;
 		at: 'SCI_GETTABINDENTS' put: 2261;
 		at: 'SCI_GETTABWIDTH' put: 2121;
 		at: 'SCI_GETTAG' put: 2616;
@@ -642,7 +656,6 @@ defineConstantsPool
 		at: 'SCI_GETTEXTRANGE' put: 2162;
 		at: 'SCI_GETTWOPHASEDRAW' put: 2283;
 		at: 'SCI_GETUNDOCOLLECTION' put: 2019;
-		at: 'SCI_GETUSEPALETTE' put: 2139;
 		at: 'SCI_GETUSETABS' put: 2125;
 		at: 'SCI_GETVIEWEOL' put: 2355;
 		at: 'SCI_GETVIEWWS' put: 2020;
@@ -753,6 +766,8 @@ defineConstantsPool
 		at: 'SCI_MOVECARETINSIDEVIEW' put: 2401;
 		at: 'SCI_MOVESELECTEDLINESDOWN' put: 2621;
 		at: 'SCI_MOVESELECTEDLINESUP' put: 2620;
+		at: 'SCI_MULTIEDGEADDLINE' put: 2694;
+		at: 'SCI_MULTIEDGECLEARALL' put: 2695;
 		at: 'SCI_MULTIPLESELECTADDEACH' put: 2689;
 		at: 'SCI_MULTIPLESELECTADDNEXT' put: 2688;
 		at: 'SCI_NEWLINE' put: 2329;
@@ -869,11 +884,13 @@ defineConstantsPool
 		at: 'SCI_SETLINEINDENTATION' put: 2126;
 		at: 'SCI_SETLINESTATE' put: 2092;
 		at: 'SCI_SETMAINSELECTION' put: 2574;
+		at: 'SCI_SETMARGINBACKN' put: 2250;
 		at: 'SCI_SETMARGINCURSORN' put: 2248;
 		at: 'SCI_SETMARGINLEFT' put: 2155;
 		at: 'SCI_SETMARGINMASKN' put: 2244;
 		at: 'SCI_SETMARGINOPTIONS' put: 2539;
 		at: 'SCI_SETMARGINRIGHT' put: 2157;
+		at: 'SCI_SETMARGINS' put: 2252;
 		at: 'SCI_SETMARGINSENSITIVEN' put: 2246;
 		at: 'SCI_SETMARGINTYPEN' put: 2240;
 		at: 'SCI_SETMARGINWIDTHN' put: 2242;
@@ -881,6 +898,7 @@ defineConstantsPool
 		at: 'SCI_SETMOUSEDOWNCAPTURES' put: 2384;
 		at: 'SCI_SETMOUSEDWELLTIME' put: 2264;
 		at: 'SCI_SETMOUSESELECTIONRECTANGULARSWITCH' put: 2668;
+		at: 'SCI_SETMOUSEWHEELCAPTURES' put: 2696;
 		at: 'SCI_SETMULTIPASTE' put: 2614;
 		at: 'SCI_SETMULTIPLESELECTION' put: 2563;
 		at: 'SCI_SETOVERTYPE' put: 2186;
@@ -922,6 +940,7 @@ defineConstantsPool
 		at: 'SCI_SETSTYLEBITS' put: 2090;
 		at: 'SCI_SETSTYLING' put: 2033;
 		at: 'SCI_SETSTYLINGEX' put: 2073;
+		at: 'SCI_SETTABDRAWMODE' put: 2699;
 		at: 'SCI_SETTABINDENTS' put: 2260;
 		at: 'SCI_SETTABWIDTH' put: 2036;
 		at: 'SCI_SETTARGETEND' put: 2192;
@@ -931,7 +950,6 @@ defineConstantsPool
 		at: 'SCI_SETTEXT' put: 2181;
 		at: 'SCI_SETTWOPHASEDRAW' put: 2284;
 		at: 'SCI_SETUNDOCOLLECTION' put: 2012;
-		at: 'SCI_SETUSEPALETTE' put: 2039;
 		at: 'SCI_SETUSETABS' put: 2124;
 		at: 'SCI_SETVIEWEOL' put: 2356;
 		at: 'SCI_SETVIEWWS' put: 2021;
@@ -1002,6 +1020,7 @@ defineConstantsPool
 		at: 'SCI_TEXTWIDTH' put: 2276;
 		at: 'SCI_TOGGLECARETSTICKY' put: 2459;
 		at: 'SCI_TOGGLEFOLD' put: 2231;
+		at: 'SCI_TOGGLEFOLDSHOWTEXT' put: 2700;
 		at: 'SCI_UNDO' put: 2176;
 		at: 'SCI_UPPERCASE' put: 2341;
 		at: 'SCI_USEPOPUP' put: 2371;
@@ -1087,6 +1106,7 @@ defineConstantsPool
 		at: 'SCLEX_DMAP' put: 112;
 		at: 'SCLEX_DMIS' put: 114;
 		at: 'SCLEX_ECL' put: 105;
+		at: 'SCLEX_EDIFACT' put: 121;
 		at: 'SCLEX_EIFFEL' put: 23;
 		at: 'SCLEX_EIFFELKW' put: 24;
 		at: 'SCLEX_ERLANG' put: 53;
@@ -1197,6 +1217,7 @@ defineConstantsPool
 		at: 'SCN_KEY' put: 2005;
 		at: 'SCN_MACRORECORD' put: 2009;
 		at: 'SCN_MARGINCLICK' put: 2010;
+		at: 'SCN_MARGINRIGHTCLICK' put: 2031;
 		at: 'SCN_MODIFIED' put: 2008;
 		at: 'SCN_MODIFYATTEMPTRO' put: 2004;
 		at: 'SCN_NEEDSHOWN' put: 2011;
@@ -1208,7 +1229,10 @@ defineConstantsPool
 		at: 'SCN_URIDROPPED' put: 2015;
 		at: 'SCN_USERLISTSELECTION' put: 2014;
 		at: 'SCN_ZOOM' put: 2018;
+		at: 'SCTD_LONGARROW' put: 0;
+		at: 'SCTD_STRIKEOUT' put: 1;
 		at: 'SCVS_NONE' put: 0;
+		at: 'SCVS_NOWRAPLINESTART' put: 4;
 		at: 'SCVS_RECTANGULARSELECTION' put: 1;
 		at: 'SCVS_USERACCESSIBLE' put: 2;
 		at: 'SCWS_INVISIBLE' put: 0;
@@ -1220,6 +1244,7 @@ defineConstantsPool
 		at: 'STYLE_CALLTIP' put: 38;
 		at: 'STYLE_CONTROLCHAR' put: 36;
 		at: 'STYLE_DEFAULT' put: 32;
+		at: 'STYLE_FOLDDISPLAYTEXT' put: 39;
 		at: 'STYLE_INDENTGUIDE' put: 37;
 		at: 'STYLE_LASTPREDEFINED' put: 39;
 		at: 'STYLE_LINENUMBER' put: 33;
@@ -1372,7 +1397,6 @@ ignoredMessages
 				add: 'SCI_USEPOPUP';
 				add: 'SCI_SETCURRENTPOS';
 				add: 'SCI_LINELENGTH';
-				add: 'SCI_GETSTYLEAT';
 				yourself.
 
 	"We use the direct function exported by the DLL, and don't need a wrapper method for SCI_GETDIRECTPOINTER as we need to send it directly."
@@ -1401,6 +1425,7 @@ ignoredMessages
 		addAll: #('SCI_GETMARGINWIDTHN' 'SCI_SETMARGINWIDTHN');
 		addAll: #('SCI_GETMARGINSENSITIVEN' 'SCI_SETMARGINSENSITIVEN');
 		addAll: #('SCI_GETMARGINCURSORN' 'SCI_SETMARGINCURSORN');
+		addAll: #('SCI_GETMARGINBACKN' 'SCI_SETMARGINBACKN');
 		yourself.
 
 	"Indicator attributes managed by ScintillaIndicatorStyle"
@@ -1463,22 +1488,65 @@ ignoredMessages
 	ignoredMessages add: 'SCI_GETMODEVENTMASK'.
 
 	"We don't need these as they are for the GTK+ platform only"
-	ignoredMessages 
+	ignoredMessages
 		addAll: #('SCI_GETRECTANGULARSELECTIONMODIFIER' 'SCI_SETRECTANGULARSELECTIONMODIFIER').
 
-	"We always set the selection range start and end as a pair."
-	ignoredMessages addAll: #('SCI_SETSELECTIONEND' 'SCI_SETSELECTIONSTART').
+	"We always get/set the selection range start and end as a pair."
+	ignoredMessages
+		addAll: #('SCI_GETSELECTIONEND' 'SCI_SETSELECTIONEND' 'SCI_GETSELECTIONSTART' 'SCI_SETSELECTIONSTART' 'SCI_SETSEL' 'SCI_GETTARGETSTART' 'SCI_GETTARGETEND' 'SCI_GETSELECTIONNSTART' 'SCI_GETSELECTIONNEND').
 
 	"Likewise the old messages to set the target start and end separately are no longer needed, as we always set an interval and can use SCI_SETTARGETRANGE"
 	ignoredMessages addAll: #('SCI_SETTARGETSTART' 'SCI_SETTARGETEND').
 
 	"Old style-bits indicators."
 	ignoredMessages addAll: #('SCI_SETSTYLEBITS' 'SCI_GETSTYLEBITS' 'SCI_GETSTYLEBITSNEEDED').
+
+	"Some position functions that we want to keep zero-based"
+	ignoredMessages addAll: #('SCI_LINEFROMPOSITION' 'SCI_POSITIONFROMLINE').
 	ignoredMessages
 		shrink;
 		isImmutable: true;
 		yourself)
-!
+
+	"We use the direct function exported by the DLL, and don't need a wrapper method for SCI_GETDIRECTPOINTER as we need to send it directly."
+	"We don't use direct/unsafe access to the scintilla character buffer."
+	"We don't support background loading"
+
+	"The idFrom field of the notification header is not needed to identify the Scintilla
+	control, as we have an object instance associated with each control instance that receives
+	the notifications directly."
+
+	"Scintilla supports standard Windows focus messages, which are used in the MVP framework already"
+
+	"Margin attributes managed by ScintillaMargin"
+
+	"Indicator attributes managed by ScintillaIndicatorStyle"
+
+	"Indicator attributes managed by ScintillaMarkerDefinition"
+
+	"Annotation attributes are managed by ScintillaAnnotation"
+
+	"Style attributes managed by ScintillaTextStyle, but note that as Scintilla wrapping
+	predates when style definitions were queryable, so we don't use these at all"
+
+	"SCI_GETLENGTH is ignored because it duplicates SCI_GETTEXTLENGTH"
+
+	"Don't make use of document ref. stuff at present."
+	"ignoredMessages add: 'SCI_ADDREFDOCUMENT'."
+
+	"Scintilla's cursor management is not required in Dolphin which has its own mechanisms."
+
+	"We don't need SCI_GETMODEVENTMASK because we store the event mask in an instance variable (for some reason that I no longer know)"
+
+	"We don't need these as they are for the GTK+ platform only"
+
+	"We always get/set the selection range start and end as a pair."
+
+	"Likewise the old messages to set the target start and end separately are no longer needed, as we always set an interval and can use SCI_SETTARGETRANGE"
+
+	"Old style-bits indicators."
+
+	"Some position functions that we want to keep zero-based"!
 
 initialize
 	events := OrderedCollection new: 256.
@@ -1601,7 +1669,7 @@ parseShBang: aReadableStream
 
 	!
 
-parseValue: aReadableStream 
+parseValue: aReadableStream
 	| value numberStream radix constName |
 	self getAndResetCommentQueue.
 	constName := aReadableStream upTo: $=.
@@ -1609,11 +1677,7 @@ parseValue: aReadableStream
 	(lexerConstantPrefixes anySatisfy: [:each | constName beginsWith: each]) ifTrue: [^self].
 	value := aReadableStream upToEnd.
 	numberStream := value readStream.
-	radix := (value beginsWith: '0x') 
-				ifTrue: 
-					[numberStream skip: 2.
-					16]
-				ifFalse: [10].
+	radix := (numberStream skipWhileMatchAll: '0x') ifTrue: [16] ifFalse: [10].
 	value := Integer readFrom: numberStream radix: radix.
 	numberStream atEnd ifFalse: [^self].
 	self constantsPool at: constName put: value!

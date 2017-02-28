@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 WriteStream subclass: #ReadWriteStream
 	instanceVariableNames: ''
@@ -55,11 +55,20 @@ next: count into: aSequenceableCollection startingAt: startAt
 		with: collection
 		startingAt: position+1.
 	self position: stop.
-	^aSequenceableCollection! !
+	^aSequenceableCollection!
+
+nextOrNil
+	"Answer a <Character>, or <integer> in the range 0..255, being the next of the 
+	receiver's future sequence values. Answer nil if at EOF."
+
+	<primitive: 65>
+	^position >= readLimit
+		ifFalse: [collection at: (position := position + 1)]! !
 !ReadWriteStream categoriesFor: #contents!accessing!public! !
 !ReadWriteStream categoriesFor: #isReadable!public!testing! !
 !ReadWriteStream categoriesFor: #next!accessing!public! !
 !ReadWriteStream categoriesFor: #next:into:startingAt:!accessing!public! !
+!ReadWriteStream categoriesFor: #nextOrNil!accessing!public! !
 
 ReadWriteStream methodProtocol: #ReadWriteStream attributes: #(#ansi #readOnly) selectors: #(#atEnd #close #contents #cr #do: #flush #isEmpty #next #next: #nextLine #nextMatchFor: #nextPut: #nextPutAll: #peek #peekFor: #position #position: #reset #setToEnd #skip: #skipTo: #space #tab #upTo:)!
 

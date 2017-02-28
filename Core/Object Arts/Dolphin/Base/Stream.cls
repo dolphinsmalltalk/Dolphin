@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #Stream
 	instanceVariableNames: ''
@@ -110,6 +110,12 @@ nextMatchFor: anObject
 
 	^anObject = self next!
 
+nextOrNil
+	"Answer a <Character>, or <integer> in the range 0..255, being the next of the 
+	receiver's future sequence values. Answer nil if at EOF."
+
+	^self atEnd ifFalse: [self next]!
+
 skipThrough: anObject 
 	"Set the receivers position reference to be past the next occurrence of the argument,
 	anObject, in the collection. Answer the receiver, or nil if no such occurrence existed."
@@ -135,9 +141,7 @@ upTo: anObject
 
 	| newStream nextObject |
 	newStream := self contentsSpecies writeStream: 128.
-	[self atEnd or: 
-			[nextObject := self next.
-			nextObject = anObject]] 
+	[(nextObject := self nextOrNil) isNil or: [nextObject = anObject]] 
 		whileFalse: [newStream nextPut: nextObject].
 	^newStream contents!
 
@@ -161,6 +165,7 @@ upToEnd
 !Stream categoriesFor: #next:into:startingAt:!accessing!public! !
 !Stream categoriesFor: #nextAvailable:!accessing!public! !
 !Stream categoriesFor: #nextMatchFor:!accessing!public! !
+!Stream categoriesFor: #nextOrNil!accessing!public! !
 !Stream categoriesFor: #skipThrough:!positioning!public! !
 !Stream categoriesFor: #skipTo:!positioning!public! !
 !Stream categoriesFor: #upTo:!accessing!public! !

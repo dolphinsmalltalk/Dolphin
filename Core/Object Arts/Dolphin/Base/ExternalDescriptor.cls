@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object variableSubclass: #ExternalDescriptor
 	instanceVariableNames: 'descriptor'
@@ -6,6 +6,7 @@ Object variableSubclass: #ExternalDescriptor
 	poolDictionaries: 'ExtCallArgTypes'
 	classInstanceVariableNames: ''!
 ExternalDescriptor guid: (GUID fromString: '{87B4C487-026E-11D3-9FD7-00A0CC3E4A32}')!
+ExternalDescriptor addClassConstant: 'RetTypeMask' value: 63!
 ExternalDescriptor comment: 'The argument/return types supported by the primitive DLL call function are:
 
 	void 	Only valid as a return type - the method answers self
@@ -308,7 +309,7 @@ initialize
 
 	"Maximum arg type value is currently 63"
 
-	RetTypeMask := ExtCallArgMax.
+	self addClassConstant: 'RetTypeMask' value: ExtCallArgMax.
 	self initializeExternalTypes.
 	self initializeExternalRefTypes.
 
@@ -320,7 +321,7 @@ initialize
 				at: ExtCallArgUINTPTR + 1 put: VMConstants.IntPtrSize].
 	self assert: [ExternalValueTypes asSortedCollection last < TypeSizes size].
 	self initializeCallingConventions.
-	RetClassIndex := 4.
+	self addClassConstant: 'RetClassIndex' value: 4.
 	Shared isNil ifTrue: [Shared := WeakLookupTable new]!
 
 initializeCallingConventions
@@ -364,7 +365,8 @@ initializeExternalRefTypes
 		at: ExtCallArgGUID + 1 put: #REFGUID;
 		at: ExtCallArgSTRUCT + 1 put: ExtCallArgLP;
 		at: ExtCallArgSTRUCT4 + 1 put: ExtCallArgLP;
-		at: ExtCallArgSTRUCT8 + 1 put: ExtCallArgLP!
+		at: ExtCallArgSTRUCT8 + 1 put: ExtCallArgLP.
+	ExternalReferenceTypes isImmutable: true!
 
 initializeExternalTypes
 	ExternalValueTypes := LookupTable new.
@@ -403,6 +405,7 @@ initializeExternalTypes
 	TypeNames := Array new: ExtCallArgMax + 1.
 	ExternalValueTypes 
 		keysAndValuesDo: [:eachKey :eachValue | TypeNames at: eachValue + 1 put: eachKey].
+	TypeNames isImmutable: true.
 
 	"Convert a few class types to the special types to save space and time"
 	ExternalValueTypes
@@ -432,7 +435,8 @@ initializeExternalTypes
 		at: 'CLSID' put: ExtCallArgGUID;
 		at: 'VARIANT_BOOL' put: ExtCallArgVARBOOL;
 		at: 'DATE' put: ExtCallArgDATE;
-		shrink!
+		shrink;
+		isImmutable: true!
 
 isPointerToStruct: anInteger 
 	^anInteger == ExtCallArgLP or: [anInteger == ExtCallArgCOMPTR]!
@@ -591,14 +595,13 @@ sizeOf: anInteger type: aClass
 		ifTrue: [aClass byteSize]
 		ifFalse: [TypeSizes at: anInteger + 1]!
 
-structTypeForSize: anInteger 
-	"Private - Answer the structure type to use for structures of the
-	specified byte size."
+structTypeForSize: anInteger
+	"Private - Answer the structure type to use for structures of the specified byte size."
 
-	^anInteger <= 8 
+	anInteger <= 8
 		ifTrue: 
-			[anInteger <= 4 ifTrue: [ExtCallArgSTRUCT4] ifFalse: [ExtCallArgSTRUCT8]]
-		ifFalse: [ExtCallArgSTRUCT]!
+			[anInteger <= 4 ifTrue: [anInteger > 0 ifTrue: [^ExtCallArgSTRUCT4]] ifFalse: [^ExtCallArgSTRUCT8]].
+	^ExtCallArgSTRUCT!
 
 typeFromName: typeName
 	"Answer the type code for the specified <readableString> type name."

@@ -7,7 +7,16 @@ Magnitude subclass: #Character
 	classInstanceVariableNames: ''!
 Character guid: (GUID fromString: '{87B4C651-026E-11D3-9FD7-00A0CC3E4A32}')!
 Character addClassConstant: 'EscapeChars' value: #($0 nil nil nil nil nil nil $a $b $t $n $v $f $r)!
-Character comment: 'Character is the class of objects which serve as the elemental values of Smalltalk Strings. There is a finite set of Characters (256 in the current Dolphin implementation). Characters have a literal syntax which is the $ symbol followed by the normal printed representation of the character.
+Character comment: 'Character is the class of objects which serve as the elemental values of Smalltalk Strings. There is a finite set of Characters (256 in the current Dolphin implementation). Smalltalk characters have a literal syntax which is the $ symbol followed by the normal printed representation of the character. Dolphin also supports the following escaped literal formats to provide a literal representation of any character:
+	$\0	- Null
+	$\a	- Bell
+	$\b	- Backspace
+	$\t	- Tab
+	$\n	- Newline
+	$\v	- Vertical tab
+	$\f	- Form Feed
+	$\r	- Carriage return
+	$\x<HH> - where <HH> is the hex representation of the character''s code point - can be used to represent any character in the set.
 
 Note that the ANSI standard does not require that Characters be identity objects, but they are in Dolphin.
 '!
@@ -161,15 +170,18 @@ hash
 
 	^self asInteger!
 
-identityHash
-	"Answer the <integer> identity hash value for the receiver."
-
-	^self asInteger!
-
 isAlphaNumeric
 	"Answer whether the receiver is a letter or a digit."
 
 	^UserLibrary default isCharAlphaNumeric: self!
+
+isAtomic
+	"Answer whether or not the receiver it the single unique instance of its class that
+	represents its value."
+
+	"Byte characters are atomic"
+
+	^asciiValue <= 255!
 
 isControl
 	"Answer whether the receiver is a control character."
@@ -319,8 +331,8 @@ species
 !Character categoriesFor: #digitValue!accessing!public! !
 !Character categoriesFor: #displayOn:!printing!public! !
 !Character categoriesFor: #hash!comparing!public! !
-!Character categoriesFor: #identityHash!comparing!public! !
 !Character categoriesFor: #isAlphaNumeric!public!testing! !
+!Character categoriesFor: #isAtomic!public!testing! !
 !Character categoriesFor: #isControl!public!testing! !
 !Character categoriesFor: #isDigit!public!testing! !
 !Character categoriesFor: #isEnglishLetter!public!testing! !

@@ -42,6 +42,13 @@ aboutBlockBytes: aByteArray
 
 !
 
+addAllPrerequisitesTo: aSet
+	"Private - Add to <aSet> all those Packages which must be loaded in
+	before the receiver may be loaded in."
+
+	self prerequisites
+		do: [:each | (aSet addNewElement: each) ifTrue: [each addAllPrerequisitesTo: aSet]]!
+
 addClass: aClass
 	"Add aClass to the list of classes owned by the receiver. A class can only be owned by
 	a single package. Answer aClass."
@@ -115,34 +122,30 @@ allMethodsDo: operation
 	| loose |
 	loose := self manager looseMethods.
 	self behaviorsDo: 
-			[:eachBehavior | 
-			eachBehavior methodDictionary 
+			[:eachBehavior |
+			eachBehavior methodDictionary
 				do: [:eachMethod | (loose includesKey: eachMethod name) ifFalse: [operation value: eachMethod]]].
 
 	"Finally evaluate the operation for all the package's own loose methods"
-	self methods do: operation!
+	self methodsDo: operation!
 
 allPrerequisites
 	"Private - Answer a collection of all the Packages objects which must be loaded in before the
 	receiver may be loaded in."
 
-	| answer immediatePrereqs |
-	immediatePrereqs := self prerequisites asIdentitySet.
+	| answer |
 	answer := IdentitySet new.
-	immediatePrereqs do: [:each | 
-		(answer includes: each) ifFalse: [answer add: each; addAll: each allPrerequisites]].
-	^answer!
+	self addAllPrerequisitesTo: answer.
+	^answer.!
 
 allResourceIdentifiers
 	"Answer a Set of all the ResourceIdentifiers directly owned by
 	the receiver or by owning the class in which it is situated."
 
-	| resources resourceMethods |
+	| resources |
 	resources := Set new.
-	self classesDo: [:each | resources addAll: each resourceIdentifiers].
-	resourceMethods := self methods 
-				select: [:each | each selector beginsWith: ResourceIdentifier selectorPrefix].
-	resourceMethods do: [:each | resources add: (ResourceIdentifier forMethod: each)].
+	self classesDo: [:each | each resourceIdentifiersDo: [:eachResId | resources add: eachResId]].
+	self looseResourceIdentifiersDo: [:each | resources add: each].
 	^resources!
 
 allResourceNames
@@ -166,7 +169,7 @@ allSourceObjects
 
 	| answer |
 	answer := OrderedCollection new.
-	self allSourceObjectsDo: [:each | answer add: each].
+	self allSourceObjectsDo: [:each | answer addLast: each].
 	^answer!
 
 allSourceObjectsDo: operation 
@@ -175,17 +178,18 @@ allSourceObjectsDo: operation
 	"Note that the package itself is always enumerated last - this is important"
 	operation value: self!
 
-basicAddClass: aClass 
+basicAddClass: aClass
 	"Private - Add aClass to the list of classes owned by the receiver. A class can only be owned by
 	a single package. Answer aClass. Note that it is assumed that the class is _not_ currently
 	packaged. To correctly add a class regardless of packaging use PackageManager>>addClass:to:"
 
 	"ignore any methods of aClass which we own as they are included by our new ownership of aClass"
+
 	| className |
-	(self methods 
-		select: [:aMethod | aMethod methodClass == aClass or: [aMethod methodClass == aClass class]]) 
+	(self methods
+		select: [:aMethod | aMethod methodClass == aClass or: [aMethod methodClass == aClass class]])
 			do: [:method | self removeLooseMethod: method].
-	className := self nameForClass: aClass.
+	className := aClass name.
 	classNames add: className.
 
 	"Although the class hasn't changed in itself, it will need to be filed out to its new location, if using .PAX format"
@@ -222,7 +226,7 @@ basicRemoveClass: aClass
 	"Private - Remove aClass from the list of Classes owned by the receiver.
 	Answer aClass."
 
-	classNames remove: (self nameForClass: aClass).
+	classNames remove: aClass name.
 	^aClass!
 
 basicRemoveGlobalNamed: globalName 
@@ -245,13 +249,13 @@ basicScriptAt: scriptSymbol put: aString
 			scripts isEmpty ifTrue: [scripts := nil]]
 		ifFalse: [scripts at: scriptSymbol put: aString]!
 
-behaviorFromName: aString ifAbsent: exceptionHandler 
+behaviorFromName: aString ifAbsent: exceptionHandler
 	| index |
-	index := aString identityIndexOf: $ .
-	^index == 0 
+	index := aString identityIndexOf: $\x20.
+	^index == 0
 		ifTrue: [self classFromName: aString ifAbsent: exceptionHandler]
 		ifFalse: 
-			[(self classFromName: (aString leftString: index - 1) ifAbsent: []) 
+			[(self classFromName: (aString first: index - 1) ifAbsent: [])
 				ifNil: [exceptionHandler value]
 				ifNotNil: [:class | class class]]!
 
@@ -279,12 +283,12 @@ beNotUsingPAX
 	| msg names |
 	self isUsingPAX ifFalse: [^self].
 	names := self allFileOutNames.
-	msg := 'Placing this package into PAC mode will delete <2d> PAX source files in the<n>directory <3s>.<n><n>Are you sure that you wish to proceed?' 
+	msg := 'Placing this package into PAC mode will delete <2d> PAX source files in the<n>directory <3s>.<n><n>Are you sure that you wish to proceed?'
 				expandMacrosWith: self name
 				with: names size
 				with: self path.
-	(MessageBox confirm: msg caption: ('Convert <1p> to PAC mode...' expandMacrosWith: self name)) 
-		ifTrue: [names do: [:each | File delete: each]]!
+	(MessageBox confirm: msg caption: ('Convert <1p> to PAC mode...' expandMacrosWith: self name))
+		ifTrue: [names do: [:each | (File exists: each) ifTrue: [File delete: each]]]!
 
 beUsingPAX
 	"Place the receiver into a mode where it is using PAX source files.
@@ -811,17 +815,20 @@ globalFromName: globalName
 
 	^self environment at: globalName!
 
-globalNameOfLiteral: anObject 
+globalNameOfLiteral: anObject
 	"Private - Answer the global name of the argument, anObject, extracted from a CompiledMethods
 	literal frame, or nil if it is not a global."
 
-	^(anObject isKindOf: VariableBinding) 
+	^(anObject isKindOf: VariableBinding)
 		ifTrue: 
 			[| key |
 			key := anObject key.
-			self environment associationAt: key ifPresent: [:v | v == anObject ifTrue: [key]]]
+			"Avoid interning symbols for all the string Pool variable names by checking first if the var name is a symbol"
+			(key isKindOf: Symbol)
+				ifTrue: 
+					[(self environment associationAt: key ifAbsent: []) ifNotNil: [:v | v == anObject ifTrue: [key]]]]
 		ifFalse: 
-			[(anObject isKindOf: Class) 
+			[(anObject isKindOf: Class)
 				ifTrue: 
 					[| key |
 					key := anObject name.
@@ -851,19 +858,23 @@ hasCyclicPrerequisites
 	handle this smoothly though it is possible to load in such a thing by
 	repeatedly trying to load in all packages until it works..."
 
-	^self hasCyclicPrerequisites: IdentitySet new!
+	^self hasCyclicPrerequisites: IdentitySet new safe: IdentitySet new.!
 
-hasCyclicPrerequisites: trail
+hasCyclicPrerequisites: trail safe: safe
 	"Private - Walk the package pre-requisite net looking for a cyclic dependency.
-	The <collection> trail includes all those packages already visited. If we find
-	a duplicate package on the path then we know a cycle exists."
+	The <collection> trail includes all those packages already visited.
+	The <collection> safe includes all those packages which were already checked
+	and found not to have cyclic prerequisites, and thus do not need to be checked again.
+	If we find a duplicate package on the path then we know a cycle exists."
 
 	| answer |
+	(safe includes: self) ifTrue: [^false].
 	trail add: self.
-	answer := self prerequisites anySatisfy: [:prereq | 
-				(trail includes: prereq) or: [prereq hasCyclicPrerequisites: trail]].
+	answer := self prerequisites
+				anySatisfy: [:prereq | (trail includes: prereq) or: [prereq hasCyclicPrerequisites: trail safe: safe]].
 	trail remove: self.
-	^answer!
+	answer ifFalse: [safe add: self].
+	^answer.!
 
 hasImageStripper
 	^imageStripperBytes notNil and: [self imageStripper notNil]!
@@ -871,13 +882,9 @@ hasImageStripper
 hasUncommittedPrerequisites
 	"Private - Answer whether any of the receivers prerequisites or their
 	prerequisites are current uncomitted. If so the package should not be saved
-	as it will not be reloadable into an image without the uncommitted objects.
-	N.B. This method will go infinitely recursive if the package has cyclic
-	pre-requisites as it does not maintain a visit list. It should therefore
-	be called only after hasCyclicPrerequisites has returned false."
+	as it will not be reloadable into an image without the uncommitted objects."
 
-	^self prerequisites anySatisfy: [:prereq | 
-		prereq == _Uncommitted or: [prereq hasUncommittedPrerequisites]]!
+	^self allPrerequisites includes: _Uncommitted.!
 
 hierarchyOrderOfClasses: aCollection 
 	"Private - Answer an OrderedCollection of all the Classes owned
@@ -918,12 +925,11 @@ imageStripperBytes: aByteArray
 
 !
 
-includesClass: aClass 
+includesClass: aClass
 	"Answer whether the receiver owns aClass. aClass's metaclass is
 	automatically owned as well."
 
-	^(classNames includes: (self nameForClass: aClass instanceClass)) 
-		and: [(self isImportedClass: aClass) not]!
+	^(classNames includes: aClass instanceClass name) and: [(self isImportedClass: aClass) not]!
 
 includesGlobalNamed: globalName
 	"Answer whether the receiver owns the global named globalName."
@@ -1013,7 +1019,7 @@ isGlobalAlias: anAssociation
 isImportedClass: aClass
 	"Private - Answer true if aClass is an imported binary class"
 
-	^ClassLocator importedClasses identityIncludes: aClass!
+	^ClassLocator isImportedClass: aClass!
 
 isInstalled
 	"Answer whether the receiver is currently installed in the system."
@@ -1149,6 +1155,22 @@ loadPAX
 	self fileInScript: #postinstall] 
 			ensure: [filer close]!
 
+looseResourceIdentifiers
+	| rids |
+	rids := Set new.
+	self looseResourceIdentifiersDo: [:each | rids add: each].
+	^rids!
+
+looseResourceIdentifiersDo: aMonadicValuable
+	self methodNames do: 
+			[:each |
+			(each value beginsWith: ResourceIdentifier selectorPrefix)
+				ifTrue: 
+					[(self behaviorFromName: each key ifAbsent: [])
+						ifNotNil: 
+							[:methodClass |
+							aMonadicValuable value: (ResourceIdentifier class: methodClass instanceClass selector: each value)]]]!
+
 manager
 	"Answer the object responsible for managing this package."
 
@@ -1215,11 +1237,16 @@ methodNames
 methods
 	"Answer an <IdentitySet> of the <CompiledMethod>s owned by the receiver."
 
-	| newIdentitySet names |
-	names := self methodNames.
-	newIdentitySet := IdentitySet new: names size.
-	names do: [:methodName | newIdentitySet add: (self methodFromName: methodName ifAbsent: [])].
+	| newIdentitySet |
+	newIdentitySet := IdentitySet new: 16.
+	self methodsDo: [:each | newIdentitySet add: each].
 	^newIdentitySet!
+
+methodsDo: aMonadicValuable
+	"Evaluate the <monadicValuable> argument for each of the loose methods owned by the receiver."
+
+	self methodNames
+		do: [:each | (self methodFromName: each ifAbsent: []) ifNotNil: [:method | aMonadicValuable value: method]]!
 
 methodsOfClass: aClass
 	"Answer a Collection of the methods of aClass which the receiver either
@@ -1248,19 +1275,11 @@ name
 
 	^name!
 
-nameForClass: aClass
-	"Private - Answer a String name suitable for adding to the receivers classNames.
-	See: Package>>classFromName for the reverse transformation.
-	Implementation Note: As of package binary file version 1, we store the class names
-	as Symbols to avoid wasting space."
-
-	^aClass name!
-
 nameForMethod: aMethod
 	"Private - Answer an Association of the method class name String -> methods selector Symbol.
 	See: Package>>methodFromName for the reverse transformation."
 
-	^self class nameForMethod: aMethod!
+	^Association key: aMethod methodClass name value: aMethod selector!
 
 nameForResourceIdentifier: aResourceIdentifier
 	"Private - Answer an <Association> that uniquely identifies the <ResourceIdentifier> argument."
@@ -1380,16 +1399,18 @@ packageFileName
 
 	^File fullPathOf: packagePathname relativeTo: SessionManager current imageBase!
 
-packageFileName: pathname 
+packageFileName: pathname
 	"Private - Set the path name (ie Path+Stem+Extension) of the file used
 	to store the binary representation of the receiver. This is always held as
 	relative to the current image base. This name should only be changed
 	through the PackageManager, and in fact it is not advisable to change
 	it any way because other packages may be dependent upon it.."
 
-	self packagePathname: (FileLocator imageRelative 
-				relativePathTo: (File default: pathname
-						extension: self class packageExtension))!
+	(self setPackageFileName: pathname)
+		ifTrue: 
+			[self isChanged: true.
+			"If a package is renamed, then the dependent packages need to be resaved to update their pre-requisite information"
+			self dependentPackages do: [:each | each isChanged: true]]!
 
 packageFolder
 	^File splitPathFrom: self packagePathname!
@@ -1397,18 +1418,15 @@ packageFolder
 packagePathname
 	^packagePathname!
 
-packagePathname: aString 
-	"Private - Set the receiver's path and name."
+packagePathname: aString
+	"Private - Set the receiver's path and name. Answer whether the name was changed."
 
 	| oldname |
 	packagePathname := aString.
-	"The name can no longer be independent of the file name, and is in fact just cached from the file stem"
+	"The name cannot be independent of the file name, and is in fact just cached from the file stem"
 	oldname := name.
 	name := File splitStemFrom: aString.
-	(oldname isNil or: [oldname sameAs: name]) ifTrue: [^self].
-	self isChanged: true.
-	"If a package is renamed, then the dependent packages need to be resaved to update their pre-requisite information"
-	self dependentPackages do: [:each | each isChanged: true]!
+	^oldname isNil or: [(oldname sameAs: name) not]!
 
 packageVersion
 	"Answer the version identification of the receiver as a String"
@@ -1602,7 +1620,7 @@ resetPrerequisites
 resourceIdentifiers
 	"Answer a collection of <ResourceIdentifier> objects owned by the receiver."
 
-	^ResourceIdentifier allResourceIdentifiers select: [:each | each owningPackage == self]!
+	^self allResourceIdentifiers!
 
 save
 	"Save the receiver to a single PAC file. This includes all of the source for the receiver's contents.
@@ -1914,6 +1932,10 @@ setManualPrerequisites: anArrayOfStrings
 
 	manualPrerequisites := anArrayOfStrings!
 
+setPackageFileName: aString
+	^self packagePathname: (FileLocator imageRelative
+				relativePathTo: (File default: aString extension: self class packageExtension))!
+
 setPrerequisites: anIdentitySet
 	"Private - Set the pre-computed pre-requisites of the receiver to specified Set of package names. 
 	**Note that this is sent from the chunks which define a package in .PAC and .PAX files
@@ -2006,11 +2028,9 @@ trace: trace prerequisite: aPackage from: from to: to type: type
 	"Private - Append the supplied details of a prerequisite link
 	to trace."
 
-	| entries prereq |
 	aPackage == self ifTrue: [^self].
-	prereq := aPackage ifNil: [_Uncommitted].
-	entries := trace at: prereq ifAbsentPut: [OrderedCollection new].
-	entries add: (Array 
+	(trace at: (aPackage ifNil: [_Uncommitted]) ifAbsentPut: [OrderedCollection new: 16])
+		addLast: (Array
 				with: from
 				with: to
 				with: type)!
@@ -2054,7 +2074,7 @@ tracePrerequisites: anIdentityDictionary
 	*	'from' is a global that references an instance of the class 'to'."
 
 	| trace |
-	trace := IdentityDictionary new.
+	trace := IdentityDictionary new: 16.
 	self
 		tracePrerequisitesOfClasses: trace packagedGlobals: anIdentityDictionary;
 		tracePrerequisitesOfGlobals: trace packagedGlobals: anIdentityDictionary;
@@ -2146,18 +2166,18 @@ tracePrerequisitesOfImageStripper: anIdentityDictionary
 						to: each
 						type: 'references class']]!
 
-tracePrerequisitesOfMethods: trace 
+tracePrerequisitesOfMethods: trace
 	"Private - Trace the prerequisites of the receiver's loose methods."
 
 	| manager |
 	manager := self manager.
-	self methods do: 
-			[:aMethod | 
-			self 
+	self methodsDo: 
+			[:each |
+			self
 				trace: trace
-				prerequisite: (manager packageOfClass: aMethod methodClass)
-				from: aMethod
-				to: aMethod methodClass
+				prerequisite: (manager packageOfClass: each methodClass)
+				from: each
+				to: each methodClass
 				type: 'is a method of']!
 
 uninstall
@@ -2175,20 +2195,20 @@ uninstallClasses
 	just affirm. The outer handler needs to resume with true in order to actually go ahead
 	and remove the class, otherwise the class will be "
 
-	| classes empty |
+	| classes |
 	classes := self remainingClasses.
 
 	"Remove classes, bottom up so as to remove subclasses first"
 	classes := classes asSortedCollection: [:a :b | (self depthOfClass: a) > (self depthOfClass: b)].
 	classes do: 
-			[:aClass | 
+			[:aClass |
 			"Notification signal: 'Removing class ', aClass name."
-			[ClassBuilder removeClass: aClass ignoreInstances: true] 
+			[ClassBuilder removeClass: aClass ignoreInstances: true]
 				on: ClassBuilder invalidRemoveError
 				do: 
-					[:e | 
+					[:e |
 					e notify.
-					e isNested 
+					e isNested
 						ifTrue: 
 							["Remember that global Error trap will also count as nest"
 							e outer == true ifFalse: [e return]].
@@ -2196,19 +2216,18 @@ uninstallClasses
 					e resume]
 				on: Error
 				do: 
-					[:ignoredException | 
+					[:ignoredException |
 					ignoredException notify
 					"aClass allInstances do: [:e | Notification signal: e allReferences printString]"]].
 
 	"If having difficulty tracking down the source of an image stripping problem which is
 	 keeping references to uninstalled packaged classes, then try commenting in this code."
-	empty := MethodDictionary new.
 	classes do: 
-			[:aClass | 
-			(aClass environment includesKey: aClass name) 
+			[:aClass |
+			(aClass environment includesKey: aClass name)
 				ifFalse: 
-					[aClass class methodDictionary: empty.
-					aClass methodDictionary: empty]]!
+					[aClass class methodDictionary: nil.
+					aClass methodDictionary: nil]]!
 
 uninstallGlobals
 	"Private - Uninstall the globals owned by the receiver. Should be done before classes 
@@ -2252,7 +2271,7 @@ untracedGlobals: aCollectionOfSymbols
 upateFileNames
 	"Private - Update the package filename to match the package name and to be a PAC."
 
-	self packageFileName: (File 
+	self setPackageFileName: (File
 				composePath: self path
 				stem: self name
 				extension: self class packageExtension).
@@ -2302,6 +2321,7 @@ If you experience subsequent problems please contact the package supplier for an
 !Package categoriesFor: #aboutBlock!accessing!public! !
 !Package categoriesFor: #aboutBlock:!accessing!public! !
 !Package categoriesFor: #aboutBlockBytes:!accessing!private! !
+!Package categoriesFor: #addAllPrerequisitesTo:!accessing!private! !
 !Package categoriesFor: #addClass:!adding!public! !
 !Package categoriesFor: #addGlobalNamed:!adding!public! !
 !Package categoriesFor: #addLooseMethod:!adding!private! !
@@ -2394,7 +2414,7 @@ If you experience subsequent problems please contact the package supplier for an
 !Package categoriesFor: #globals!accessing!private! !
 !Package categoriesFor: #globalVariables!private!source filing! !
 !Package categoriesFor: #hasCyclicPrerequisites!private!testing! !
-!Package categoriesFor: #hasCyclicPrerequisites:!private!testing! !
+!Package categoriesFor: #hasCyclicPrerequisites:safe:!private!testing! !
 !Package categoriesFor: #hasImageStripper!private!testing! !
 !Package categoriesFor: #hasUncommittedPrerequisites!private!testing! !
 !Package categoriesFor: #hierarchyOrderOfClasses:!helpers!private! !
@@ -2428,6 +2448,8 @@ If you experience subsequent problems please contact the package supplier for an
 !Package categoriesFor: #loadPAC!private!source filing! !
 !Package categoriesFor: #loadPAC:!private!source filing! !
 !Package categoriesFor: #loadPAX!private!source filing-pax! !
+!Package categoriesFor: #looseResourceIdentifiers!accessing!public! !
+!Package categoriesFor: #looseResourceIdentifiersDo:!enumerating!public! !
 !Package categoriesFor: #manager!accessing!public! !
 !Package categoriesFor: #manualPrerequisites!accessing!public! !
 !Package categoriesFor: #manualPrerequisites:!accessing!public! !
@@ -2437,9 +2459,9 @@ If you experience subsequent problems please contact the package supplier for an
 !Package categoriesFor: #methodFromName:ifAbsent:!mapping!private! !
 !Package categoriesFor: #methodNames!accessing!public! !
 !Package categoriesFor: #methods!enumerating!public! !
+!Package categoriesFor: #methodsDo:!enumerating!public! !
 !Package categoriesFor: #methodsOfClass:!enumerating!public! !
 !Package categoriesFor: #name!accessing!public! !
-!Package categoriesFor: #nameForClass:!mapping!private! !
 !Package categoriesFor: #nameForMethod:!mapping!private! !
 !Package categoriesFor: #nameForResourceIdentifier:!mapping!private! !
 !Package categoriesFor: #okToSaveOrDeploy!helpers!private! !
@@ -2499,6 +2521,7 @@ If you experience subsequent problems please contact the package supplier for an
 !Package categoriesFor: #scripts!accessing!private! !
 !Package categoriesFor: #setEvents:!events!private! !
 !Package categoriesFor: #setManualPrerequisites:!accessing!private! !
+!Package categoriesFor: #setPackageFileName:!accessing!private! !
 !Package categoriesFor: #setPrerequisites:!accessing!private! !
 !Package categoriesFor: #sourceDescriptor!accessing!private! !
 !Package categoriesFor: #sourceDescriptor:!accessing!private! !
@@ -2573,7 +2596,7 @@ fromFile: path
 	answer := ((File splitExtensionFrom: pathname) sameAs: self sourcePackageExtension) 
 		ifTrue: [self fromPAXFile: pathname]
 		ifFalse: [self fromPACFile: pathname].
-	answer packageFileName: pathname.
+	answer setPackageFileName: pathname.
 	^answer!
 
 fromPACFile: pathname 
@@ -2635,17 +2658,9 @@ name: nameString
 	"Answer a new instance of the receiver with the <readableString> name, nameString."
 
 	^self new
-		packageFileName: nameString;
+		setPackageFileName: nameString;
 		yourself
 !
-
-nameForMethod: aMethod
-	"Private - Answer an Association of the method class name String -> methods selector Symbol.
-	See: Package>>methodFromName for the reverse transformation.
-	Implementation Note: As of file version 1 we use a symbolic class name, if one
-	is available, to save space. Metaclasses are not globals, so these _will_ have string names."
-
-	^aMethod methodClass name -> aMethod selector!
 
 new
 	"Answer a new instance of the receiver."
@@ -2894,7 +2909,6 @@ unsaveableSignal
 !Package class categoriesFor: #initialize!initializing!private! !
 !Package class categoriesFor: #manager!accessing!public! !
 !Package class categoriesFor: #name:!instance creation!public! !
-!Package class categoriesFor: #nameForMethod:!mapping!private! !
 !Package class categoriesFor: #new!instance creation!public! !
 !Package class categoriesFor: #onPreStripImage!class hierarchy-removing!private! !
 !Package class categoriesFor: #packageExtension!constants!private! !

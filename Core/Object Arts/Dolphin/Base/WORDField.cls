@@ -1,12 +1,12 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ScalarField subclass: #WORDField
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-WORDField guid: (GUID fromString: '{87B4C4EF-026E-11D3-9FD7-00A0CC3E4A32}')!
-WORDField comment: ''!
+WORDField guid: (GUID fromString: '{87b4c4ef-026e-11d3-9fd7-00a0cc3e4a32}')!
+WORDField comment: '<WORDField> is a <ScalarField> class to represent <ExternalStructure> fields that are 16-bit unsigned integers.'!
 !WORDField categoriesForClass!External-Data-Types! !
 !WORDField methodsFor!
 
@@ -15,18 +15,17 @@ accessorMessage
 
 	^#wordAtOffset:put:!
 
-readFrom: anExternal
-	"Private - Instantiate an object of the the type the receiver represents
-	at the receiver's offset in anExternal"
+readFrom: anExternalStructure
+	"Private - Answer the 16-bit unsigned <integer> that is the value of the at the receiver's
+	offset in the <ExternalStructure> argument."
 
-	^anExternal wordAtOffset: offset
-!
+	^anExternalStructure bytes wordAtOffset: offset!
 
-writeInto: anExternal value: anObject
-	"Private - Write anObject into anExternal at the receiver's offset, and in a form
-	appropriate for the receiver's External type"
+writeInto: anExternalStructure value: anInteger
+	"Private - Write the 16-bit unsigned <integer>, anInteger, into the <ExternalStructure>,
+	anExternalStructure, at the receiver's offset."
 
-	^anExternal wordAtOffset: offset put: anObject! !
+	^anExternalStructure bytes wordAtOffset: offset put: anInteger! !
 !WORDField categoriesFor: #accessorMessage!automatic generation!private! !
 !WORDField categoriesFor: #readFrom:!indirect accessing!private! !
 !WORDField categoriesFor: #writeInto:value:!indirect accessing!private! !

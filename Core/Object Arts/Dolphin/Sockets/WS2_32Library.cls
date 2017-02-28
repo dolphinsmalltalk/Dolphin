@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ExternalLibrary subclass: #WS2_32Library
 	instanceVariableNames: 'wsaData'
@@ -561,7 +561,7 @@ close
 	wsaData notNil 
 		ifTrue: 
 			[wsaData := nil.
-			self WSACleanup].
+			self wsaCleanup].
 	super close!
 
 closesocket: s 
@@ -714,21 +714,24 @@ inet_addr: cp
 	<stdcall: dword inet_addr lpstr>
 	^self invalidCall!
 
-inet_ntoa: in 
-	"Invoke the inet_ntoa() function of the module wrapped by the receiver.
+inet_ntop: saInteger pAddr: anIN_ADDR pStringBuf: aString stringBufSize: sizeInteger
+	"Convert an IN_ADDR or IN6_ADDR to a string in canonical form."
 
-		CHAR* __stdcall inet_ntoa(
-			in_addr in);"
+	<stdcall: lpstr inet_ntop sdword void* lpstr sdword>
+	^self invalidCall!
 
-	<stdcall: lpstr inet_ntoa IN_ADDR>
+inet_pton: saInteger pszAddrString: aString pAddrBuf: anIN_ADDR
+	"Convert an internet address expressed as a string to an IN_ADDR or IN6_ADDR."
+
+	<stdcall: sdword inet_pton sdword lpstr void*>
 	^self invalidCall!
 
 initialize
 	| version res |
 	version := 2 bitOr: (0 bitShift: 8).
 	wsaData := WSADATA new.
-	res := self WSAStartup: version lpWSAData: wsaData.
-	res = 0 
+	res := self wsaStartup: version lpWSAData: wsaData.
+	res = 0
 		ifFalse: 
 			[wsaData := nil.
 			SocketError signalWith: res]!
@@ -871,7 +874,20 @@ socket: af type: type protocol: protocol
 	<stdcall: handle socket sdword sdword sdword>
 	^self invalidCall!
 
-WSACleanup
+wsaAddressToStringA: lpsaAddress dwAddressLength: dwAddressLength lpProtocolInfo: lpProtocolInfo lpszAddressString: lpszAddressString lpdwAddressStringLength: lpdwAddressStringLength
+	"Invoke the WSAAddressToStringA() function of the module wrapped by the receiver.
+
+		int __stdcall WSAAddressToStringA(
+			[in]SOCKADDR* lpsaAddress,
+			[in]unsigned long dwAddressLength,
+			[in]void* lpProtocolInfo,
+			[in, out]LPSTR lpszAddressString,
+			[in, out]unsigned long* lpdwAddressStringLength);"
+
+	<stdcall: sdword WSAAddressToStringA SOCKADDR* dword void* lpstr dword*>
+	^self invalidCall!
+
+wsaCleanup
 	"Invoke the WSACleanup() function of the module wrapped by the receiver.
 
 		int __stdcall WSACleanup();"
@@ -879,7 +895,7 @@ WSACleanup
 	<stdcall: sdword WSACleanup>
 	^self invalidCall!
 
-WSAGetLastError
+wsaGetLastError
 	"Invoke the WSAGetLastError() function of the module wrapped by the receiver.
 
 		int __stdcall WSAGetLastError();"
@@ -887,21 +903,12 @@ WSAGetLastError
 	<stdcall: sdword WSAGetLastError>
 	^self invalidCall!
 
-WSASetLastError: iError 
-	"Invoke the WSASetLastError() function of the module wrapped by the receiver.
-
-		void __stdcall WSASetLastError(
-			int iError);"
-
-	<stdcall: void WSASetLastError sdword>
-	^self invalidCall!
-
-WSAStartup: wVersionRequested lpWSAData: lpWSAData 
+wsaStartup: wVersionRequested lpWSAData: lpWSAData
 	"Invoke the WSAStartup() function of the module wrapped by the receiver.
 
 		int __stdcall WSAStartup(
-			unsigned short wVersionRequested,
-			WSAData* lpWSAData);"
+			[in]unsigned short wVersionRequested,
+			[out]WSAData* lpWSAData);"
 
 	<stdcall: sdword WSAStartup word WSADATA*>
 	^self invalidCall! !
@@ -923,7 +930,8 @@ WSAStartup: wVersionRequested lpWSAData: lpWSAData
 !WS2_32Library categoriesFor: #htonl:!**auto generated**!public!win32 functions-sockets library! !
 !WS2_32Library categoriesFor: #htons:!**auto generated**!public!win32 functions-sockets library! !
 !WS2_32Library categoriesFor: #inet_addr:!public!win32 functions-sockets library! !
-!WS2_32Library categoriesFor: #inet_ntoa:!public!win32 functions-sockets library! !
+!WS2_32Library categoriesFor: #inet_ntop:pAddr:pStringBuf:stringBufSize:!public!win32 functions-sockets library! !
+!WS2_32Library categoriesFor: #inet_pton:pszAddrString:pAddrBuf:!public!win32 functions-sockets library! !
 !WS2_32Library categoriesFor: #initialize!initializing!private! !
 !WS2_32Library categoriesFor: #ioctlsocket:cmd:argp:!**auto generated**!public! !
 !WS2_32Library categoriesFor: #listen:backlog:!**auto generated**!public! !
@@ -937,10 +945,10 @@ WSAStartup: wVersionRequested lpWSAData: lpWSAData
 !WS2_32Library categoriesFor: #setsockopt:level:optname:optval:optlen:!public!win32 functions-sockets library! !
 !WS2_32Library categoriesFor: #shutdown:how:!**auto generated**!public!win32 functions-sockets library! !
 !WS2_32Library categoriesFor: #socket:type:protocol:!public!win32 functions-sockets library! !
-!WS2_32Library categoriesFor: #WSACleanup!**auto generated**!public! !
-!WS2_32Library categoriesFor: #WSAGetLastError!**auto generated**!public!win32 functions-sockets library! !
-!WS2_32Library categoriesFor: #WSASetLastError:!public!win32 functions-sockets library! !
-!WS2_32Library categoriesFor: #WSAStartup:lpWSAData:!**auto generated**!public!win32 functions-sockets library! !
+!WS2_32Library categoriesFor: #wsaAddressToStringA:dwAddressLength:lpProtocolInfo:lpszAddressString:lpdwAddressStringLength:!**auto generated**!public! !
+!WS2_32Library categoriesFor: #wsaCleanup!**auto generated**!public! !
+!WS2_32Library categoriesFor: #wsaGetLastError!**auto generated**!public! !
+!WS2_32Library categoriesFor: #wsaStartup:lpWSAData:!**auto generated**!public! !
 
 !WS2_32Library class methodsFor!
 

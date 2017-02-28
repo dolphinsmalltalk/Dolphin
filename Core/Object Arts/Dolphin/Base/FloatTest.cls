@@ -3,7 +3,7 @@
 DolphinTest subclass: #FloatTest
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'CRTConstants'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 FloatTest guid: (GUID fromString: '{B2B95B67-E8F3-4991-A4B4-94EDC5E83F28}')!
 FloatTest comment: ''!
@@ -44,29 +44,44 @@ predecessor: aFloat
 	ulp := self ulp: aFloat.
 	^aFloat - (0.5 * ulp) = aFloat ifTrue: [aFloat - ulp] ifFalse: [aFloat - (0.5 * ulp)]!
 
+printString: aFloat decimalPlaces: anInteger
+	| stream |
+	stream := String writeStream.
+	aFloat printOn: stream decimalPlaces: anInteger.
+	^stream contents!
+
 setUp
 	Float reset.
 	super setUp!
+
+shouldRaiseInvalidOperation: aBlock
+	Float reset.
+	self
+		should: aBlock
+		raise: FloatingPointException
+		matching: [:e | e _ieeeRecord causeNames includes: #InvalidOperation]!
 
 shouldRaiseOverflow: aBlock
 	| raised |
 	Float reset.
 	raised := false.
-	aBlock 
-		on: FloatingPointException do: [:e | e isOverflow ifTrue: [raised := true]]
-		on: HRESULTError do: [:e | e hresult asInteger = -2147352566 ifTrue: [raised := true]].
+	aBlock
+		on: FloatingPointException
+		do: [:e | (e isOverflow and: [e _ieeeRecord causeNames includes: #Overflow]) ifTrue: [raised := true]]
+		on: HRESULTError
+		do: [:e | e hresult asInteger = AXAutomationErrors.DISP_E_OVERFLOW ifTrue: [raised := true]].
 	self assert: raised!
 
 shouldRaiseUnderflow: aBlockClosure
 	| answer oldMask |
 	Float reset.
-	oldMask := Processor activeProcess 
-				fpeMask: (Processor activeProcess fpeMask maskClear: _EM_UNDERFLOW).
+	oldMask := Processor activeProcess
+				fpeMask: (Processor activeProcess fpeMask maskClear: CRTConstants._EM_UNDERFLOW).
 	
-	[answer := self 
+	[answer := self
 				should: aBlockClosure
 				raise: FloatingPointException
-				matching: [:e | e isUnderflow]] 
+				matching: [:e | e isUnderflow and: [e _ieeeRecord causeNames includes: #Underflow]]]
 			ensure: [Processor activeProcess fpeMask: oldMask].
 	^answer!
 
@@ -297,6 +312,9 @@ testIntegerComparisons
 			self assert: each asFloat hash equals: each hash.
 			self assert: (each hash = 0 or: [each hash sign = each sign])]!
 
+testInvalidOperation
+	self shouldRaiseInvalidOperation: [-1.0 sqrt]!
+
 testIsFinite
 	self deny: self negativeInfinity isFinite.
 	self deny: self infinity isFinite.
@@ -341,61 +359,73 @@ testOverflow
 	self shouldRaiseOverflow: [Float fmax * SmallInteger maximum].
 	self shouldRaiseOverflow: [Float fmax * SmallInteger minimum].
 	self shouldRaiseOverflow: [Float fmax + Float fmax].
+	self shouldRaiseOverflow: [Float fmax / Float fmin].
+	self shouldRaiseOverflow: [Float fmax * -1 - Float fmax].
 !
 
 testPrintOnDecimalPlaces
-	| stream |
-	stream := String writeStream.
-	3.999 printOn: stream decimalPlaces: 4.
-	self assert: stream contents equals: '3.9990'.
-	stream := String writeStream.
-	3.999 printOn: stream decimalPlaces: 3.
-	self assert: stream contents equals: '3.999'.
-	stream := String writeStream.
-	3.999 printOn: stream decimalPlaces: 2.
-	self assert: stream contents equals: '4.00'.
-	stream := String writeStream.
-	3.999 printOn: stream decimalPlaces: 1.
-	self assert: stream contents equals: '4.0'.
-
-	"Defect #373 - produced 3"
-	stream := String writeStream.
-	3.999 printOn: stream decimalPlaces: 0.
-	self assert: stream contents equals: '4'.
-
-	"Previous implementation was failing when sending to zero."
-	stream := String writeStream.
-	0.0 printOn: stream decimalPlaces: 0.
-	self assert: stream contents equals: '0'.
-	stream := String writeStream.
-	0.0 printOn: stream decimalPlaces: 1.
-	self assert: stream contents equals: '0.0'.
-	stream := String writeStream.
-	0.0 printOn: stream decimalPlaces: 2.
-	self assert: stream contents equals: '0.00'.
-
-	"Regression test for negative zero."
-	stream := String writeStream.
-	-0.0 printOn: stream decimalPlaces: 0.
-	self assert: stream contents equals: '-0'.
-	stream := String writeStream.
-	-0.0 printOn: stream decimalPlaces: 1.
-	self assert: stream contents equals: '-0.0'.
-	stream := String writeStream.
-	-0.0 printOn: stream decimalPlaces: 2.
-	self assert: stream contents equals: '-0.00'.!
+	| fmax fminDenorm fmin |
+	self assert: '3.9990' equals: (self printString: 3.999 decimalPlaces: 4).
+	self assert: '3.999' equals: (self printString: 3.999 decimalPlaces: 3).
+	self assert: '4.00' equals: (self printString: 3.999 decimalPlaces: 2).
+	self assert: '4.0' equals: (self printString: 3.999 decimalPlaces: 1).
+	self assert: '4' equals: (self printString: 3.999 decimalPlaces: 0).
+	self assert: '0' equals: (self printString: Float zero decimalPlaces: 0).
+	self assert: '0.0' equals: (self printString: Float zero decimalPlaces: 1).
+	self assert: '0.00' equals: (self printString: Float zero decimalPlaces: 2).
+	self assert: '-0' equals: (self printString: Float negativeZero decimalPlaces: 0).
+	self assert: '-0.0' equals: (self printString: Float negativeZero decimalPlaces: 1).
+	self assert: '-0.000' equals: (self printString: Float negativeZero decimalPlaces: 3).
+	self assert: '3.141592653589793' equals: (self printString: Float pi decimalPlaces: 15).
+	self assert: '3.142' equals: (self printString: Float pi decimalPlaces: 3).
+	fmin := (String writeStream)
+				nextPutAll: '0.';
+				next: 308 - 1 put: $0;
+				nextPutAll: '22250738585072014';
+				contents.
+	self assert: fmin equals: (self printString: Float fminNormalized decimalPlaces: 308 + 16).
+	self assert: '-' , fmin
+		equals: (self printString: Float fminNormalized negated decimalPlaces: 308 + 16).
+	self assert: '0.00' equals: (self printString: Float fminNormalized decimalPlaces: 2).
+	fminDenorm := (String writeStream)
+				nextPutAll: '0.';
+				next: 324 - 1 put: $0;
+				nextPutAll: '5';
+				contents.
+	self assert: fminDenorm equals: (self printString: Float fminDenormalized decimalPlaces: 324).
+	self assert: '-' , fminDenorm
+		equals: (self printString: Float fminDenormalized negated decimalPlaces: 324).
+	fmax := (String writeStream)
+				nextPutAll: '17976931348623157';
+				next: 308 - 16 put: $0;
+				nextPutAll: '.00000';
+				contents.
+	self assert: fmax equals: (self printString: Float fmax decimalPlaces: 5).
+	self assert: '-' , fmax equals: (self printString: Float fmax negated decimalPlaces: 5).
+	self assert: 'Infinity' equals: (self printString: self infinity decimalPlaces: 2).
+	self assert: 'Infinity' equals: (self printString: self infinity decimalPlaces: 0).
+	self assert: '-Infinity' equals: (self printString: self negativeInfinity decimalPlaces: 2).
+	self assert: '-Infinity' equals: (self printString: self negativeInfinity decimalPlaces: 0).
+	self assert: 'NaN' equals: (self printString: self nan decimalPlaces: 1).
+	self assert: 'NaN' equals: (self printString: self nan decimalPlaces: 0).
+	self assert: 'NaN' equals: (self printString: self nan negated decimalPlaces: 2)!
 
 testPrintString
-	self assert: 1.3 printString equals: '1.3'.
-	self assert: (4.0 / 3.0) printString equals: '1.3333333333333333'.
-	self assert: Float negativeZero printString equals: '-0.0'.
-	self assert: Float pi printString equals: '3.141592653589793'.
-	self assert: Float fminNormalized printString equals: '2.2250738585072014e-308'.
-	self assert: Float fminDenormalized printString equals: '5.0e-324'.
-	self assert: Float fmax printString equals: '1.7976931348623157e308'.
-	self assert: self infinity printString equals: 'Infinity'.
-	self assert: self negativeInfinity printString equals: '-Infinity'.
-	self assert: self nan printString equals: 'NaN'!
+	self assert: '1.3' equals: 1.3 printString.
+	self assert: '1.3333333333333333' equals: (4.0 / 3.0) printString.
+	self assert: '0.0' equals: Float zero printString.
+	self assert: '-0.0' equals: Float negativeZero printString.
+	self assert: '3.141592653589793' equals: Float pi printString.
+	self assert: '2.2250738585072014e-308' equals: Float fminNormalized printString.
+	self assert: '-2.2250738585072014e-308' equals: Float fminNormalized negated printString.
+	self assert: '5.0e-324' equals: Float fminDenormalized printString.
+	self assert: '-5.0e-324' equals: Float fminDenormalized negated printString.
+	self assert: '1.7976931348623157e308' equals: Float fmax printString.
+	self assert: '-1.7976931348623157e308' equals: Float fmax negated printString.
+	self assert: 'Infinity' equals: self infinity printString.
+	self assert: '-Infinity' equals: self negativeInfinity printString.
+	self assert: 'NaN' equals: self nan printString.
+	self assert: 'NaN' equals: self nan negated printString!
 
 testPrintStringAndReadBack
 	"Debug reading/printing a Floating point number without accumulating round off errors"
@@ -502,7 +532,9 @@ ulp: aFloat
 !FloatTest categoriesFor: #negativeInfinity!constants!private! !
 !FloatTest categoriesFor: #normals!constants!private! !
 !FloatTest categoriesFor: #predecessor:!helpers!private! !
+!FloatTest categoriesFor: #printString:decimalPlaces:!helpers!private! !
 !FloatTest categoriesFor: #setUp!private!Running! !
+!FloatTest categoriesFor: #shouldRaiseInvalidOperation:!helpers!private! !
 !FloatTest categoriesFor: #shouldRaiseOverflow:!helpers!private! !
 !FloatTest categoriesFor: #shouldRaiseUnderflow:!helpers!private! !
 !FloatTest categoriesFor: #successor:!helpers!private! !
@@ -518,6 +550,7 @@ ulp: aFloat
 !FloatTest categoriesFor: #testHash!public!unit tests! !
 !FloatTest categoriesFor: #testIntegerAsFloat!public!Testing! !
 !FloatTest categoriesFor: #testIntegerComparisons!public!unit tests! !
+!FloatTest categoriesFor: #testInvalidOperation!public!unit tests! !
 !FloatTest categoriesFor: #testIsFinite!public!unit tests! !
 !FloatTest categoriesFor: #testIsInfinite!public!unit tests! !
 !FloatTest categoriesFor: #testIsLiteral!public!unit tests! !

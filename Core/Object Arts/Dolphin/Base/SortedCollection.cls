@@ -1,7 +1,7 @@
 "Filed out from Dolphin Smalltalk 7"!
 
 OrderedCollection variableSubclass: #SortedCollection
-	instanceVariableNames: 'algorithm '
+	instanceVariableNames: 'algorithm'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -294,7 +294,7 @@ stbSaveOn: anSTBOutFiler
 !SortedCollection categoriesFor: #addFirst:!adding!public! !
 !SortedCollection categoriesFor: #addLast:!adding!public! !
 !SortedCollection categoriesFor: #algorithm!accessing!public! !
-!SortedCollection categoriesFor: #algorithm:!accessing!public! !
+!SortedCollection categoriesFor: #algorithm:!accessing!operations!public! !
 !SortedCollection categoriesFor: #asOrderedCollection!converting!public! !
 !SortedCollection categoriesFor: #asSortedCollection!converting!public! !
 !SortedCollection categoriesFor: #at:put:!accessing!public! !
@@ -309,7 +309,7 @@ stbSaveOn: anSTBOutFiler
 !SortedCollection categoriesFor: #reverse!copying!public! !
 !SortedCollection categoriesFor: #setSortAlgorithm:!initializing!private! !
 !SortedCollection categoriesFor: #sortBlock!accessing!public! !
-!SortedCollection categoriesFor: #sortBlock:!accessing!public! !
+!SortedCollection categoriesFor: #sortBlock:!accessing!operations!public! !
 !SortedCollection categoriesFor: #sortFrom:to:!algorithms!private! !
 !SortedCollection categoriesFor: #stbSaveOn:!binary filing!public! !
 
@@ -353,7 +353,7 @@ sortAlgorithm: aSortAlgorithm
 		setSortAlgorithm: aSortAlgorithm;
 		yourself!
 
-sortBlock: aDyadicValuable 
+sortBlock: aDyadicValuable
 	"Answer a new instance of the receiver which uses the <dyadicValuable> argument (referred to
 	as the 'sort block') to sort its elements. When evaluated the sort block should answer
 	whether its first parameter should be ordered before the second parameter.
@@ -362,7 +362,7 @@ sortBlock: aDyadicValuable
 	which is historic), it must simply understand the #value:value: message from the
 	<dyadicValuable> protocol."
 
-	^self sortAlgorithm: (self defaultSortAlgorithmClass sortBlock: aDyadicValuable)!
+	^self sortAlgorithm: (self defaultSortAlgorithmClass newSortBlock: aDyadicValuable)!
 
 value: anObject1 value: anObject2 
 	"Private - Implement this part of the <dyadicValuable> protocol in order that the receiver

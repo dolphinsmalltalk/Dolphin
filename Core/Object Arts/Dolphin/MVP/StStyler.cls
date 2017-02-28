@@ -10,56 +10,6 @@ StStyler comment: 'StStyler is a <StParseNodeVisitor>s that generates visual sty
 !StStyler categoriesForClass!Refactory-ParseTree Matching! !
 !StStyler methodsFor!
 
-acceptAssignmentNode: anAssignmentNode 
-	self visitNode: anAssignmentNode variable.
-	self styleInterstitialSpaceBefore: anAssignmentNode value.
-	self visitNode: anAssignmentNode value!
-
-acceptBlockNode: aBlockNode 
-	| pos |
-	view applyStyle: #specialCharacter toNext: 1.
-	aBlockNode arguments notEmpty 
-		ifTrue: 
-			[aBlockNode arguments do: 
-					[:each | 
-					self colourBefore: each.
-					view applyStyle: #blockArgDecl toNext: each name size.
-					self colorComments: each postComments].
-			pos := view stylingPosition.
-			[(view characterAt: pos) isSeparator] whileTrue: [pos := pos + 1].
-			view applyStyle: #whitespace toNext: pos - view stylingPosition.
-			view applyStyle: #tempCloseBar toNext: 1].
-	aBlockNode body sourceInterval isEmpty ifFalse: [self visitNode: aBlockNode body].
-	self styleIntersticesUpTo: aBlockNode stopWithoutParentheses - 1.
-	view applyStyle: #specialCharacter toNext: 1!
-
-acceptCascadeNode: aCascadeNode 
-	self visitNode: aCascadeNode messages first.
-	(aCascadeNode messages copyFrom: 2) with: aCascadeNode semicolons
-		do: 
-			[:eachNode :eachSemi | 
-			"self colorComments: eachNode preComments.
-			self emitWhitespaceFrom: view getLastStyled to: eachSemi."
-			self styleSelectorAndArguments: eachNode.
-			self colorComments: eachNode postComments]!
-
-acceptExternalCallNode: anStExternalCallNode 
-	self acceptPrimitiveNode: anStExternalCallNode!
-
-acceptLiteralArrayNode: aRBLiteralArrayNode 
-	aRBLiteralArrayNode isForByteArray 
-		ifTrue: 
-			[self acceptLiteralByteArrayNode: aRBLiteralArrayNode.
-			^self].
-	arrayDepth := arrayDepth + 1.
-	view applyStyle: #literalArray
-		toNext: ((view characterAt: view stylingPosition) = $# ifTrue: [2] ifFalse: [1]).
-	"view applyStyle: #specialCharacter toNext: 2."
-	aRBLiteralArrayNode contents do: [:each | self visitNode: each].
-	self styleIntersticesUpTo: aRBLiteralArrayNode stop - 1.
-	view applyStyle: #literalArray toNext: 1.
-	arrayDepth := arrayDepth - 1!
-
 acceptLiteralByteArrayNode: aStLiteralArrayNode 
 	| style |
 	style := #literalBytes.
@@ -73,64 +23,6 @@ acceptLiteralByteArrayNode: aStLiteralArrayNode
 			self].
 	self styleIntersticesUpTo: aStLiteralArrayNode stop - 1.
 	view applyStyle: style toNext: 1!
-
-acceptLiteralNode: aLiteralNode 
-	| value sourceSize |
-	value := aLiteralNode value.
-	sourceSize := aLiteralNode stopWithoutParentheses - aLiteralNode startWithoutParentheses + 1.
-	(value isKindOf: Number) 
-		ifTrue: [view applyStyle: #literalNumber toNext: sourceSize]
-		ifFalse: 
-			[(#(false true nil) includes: value) 
-				ifTrue: [view applyStyle: #literalPseudo toNext: value printString size]
-				ifFalse: 
-					[value class == Symbol 
-						ifTrue: [view applyStyle: #literalSymbol toNext: sourceSize]
-						ifFalse: 
-							[value class == Character 
-								ifTrue: [view applyStyle: #literalCharacter toNext: 2]
-								ifFalse: [view applyStyle: #literalString toNext: value printString size]]]]!
-
-acceptMessageNode: aMessageNode 
-	self visitNode: aMessageNode receiver.
-	self styleSelectorAndArguments: aMessageNode!
-
-acceptMethodNode: aMethodNode 
-	self styleMethodPatternFor: aMethodNode.
-	aMethodNode body acceptVisitor: self.
-	self colorComments: aMethodNode body postComments!
-
-acceptOptimizedNode: anOptimizedNode 
-	view applyStyle: #specialCharacter toNext: 2.
-	self visitNode: anOptimizedNode body
-
-!
-
-acceptPrimitiveNode: anStPrimitiveNode 
-	(view plainTextRange: anStPrimitiveNode sourceInterval) 
-		do: [:each | view applyStyle: (each isSeparator ifTrue: [#whitespace] ifFalse: [#tag]) toNext: 1]!
-
-acceptReturnNode: aReturnNode 
-	view applyStyle: #specialCharacter toNext: 1.
-	self visitNode: aReturnNode value!
-
-acceptSequenceNode: aSequenceNode 
-	aSequenceNode leftBar 
-		ifNotNil: 
-			[:start | 
-			self styleIntersticesUpTo: start - 1.
-			view applyStyle: #tempOpenBar toNext: 1.
-			self styleTemporaries: aSequenceNode temporaries.
-			self styleIntersticesUpTo: aSequenceNode rightBar - 1.
-			view applyStyle: #tempCloseBar toNext: 1].
-	self tagBeforeTemporaries 
-		ifFalse: 
-			[aSequenceNode parent 
-				ifNotNil: [:parent | parent isMethod ifTrue: [parent tag ifNotNil: [:tag | self visitNode: tag]]]].
-	aSequenceNode statements do: [:each | self visitNode: each]!
-
-acceptVariableNode: aVariableNode 
-	view applyStyle: #identifier toNext: aVariableNode name size!
 
 colorComments: aCollection 
 	"Note that the anInteger is the start position in the text of the token stream, not the text
@@ -254,24 +146,117 @@ styleTemporaries: anArray
 			view applyStyle: #tempDecl toNext: each name size.
 			self colorComments: each postComments]!
 
+visitAssignmentNode: anAssignmentNode
+	self visitNode: anAssignmentNode variable.
+	self styleInterstitialSpaceBefore: anAssignmentNode value.
+	self visitNode: anAssignmentNode value!
+
+visitBlockNode: aBlockNode
+	| pos |
+	view applyStyle: #specialCharacter toNext: 1.
+	aBlockNode arguments notEmpty
+		ifTrue: 
+			[aBlockNode arguments do: 
+					[:each |
+					self colourBefore: each.
+					view applyStyle: #blockArgDecl toNext: each name size.
+					self colorComments: each postComments].
+			pos := view stylingPosition.
+			[(view characterAt: pos) isSeparator] whileTrue: [pos := pos + 1].
+			view applyStyle: #whitespace toNext: pos - view stylingPosition.
+			view applyStyle: #tempCloseBar toNext: 1].
+	aBlockNode body sourceInterval isEmpty ifFalse: [self visitNode: aBlockNode body].
+	self styleIntersticesUpTo: aBlockNode stopWithoutParentheses - 1.
+	view applyStyle: #specialCharacter toNext: 1!
+
+visitCascadeNode: aCascadeNode
+	self visitNode: aCascadeNode messages first.
+	(aCascadeNode messages copyFrom: 2) with: aCascadeNode semicolons
+		do: 
+			[:eachNode :eachSemi |
+			"self colorComments: eachNode preComments.
+			self emitWhitespaceFrom: view getLastStyled to: eachSemi."
+			self styleSelectorAndArguments: eachNode.
+			self colorComments: eachNode postComments]!
+
+visitExternalCallNode: anStExternalCallNode
+	self visitPrimitiveNode: anStExternalCallNode!
+
+visitLiteralArrayNode: aRBLiteralArrayNode
+	aRBLiteralArrayNode isForByteArray
+		ifTrue: 
+			[self acceptLiteralByteArrayNode: aRBLiteralArrayNode.
+			^self].
+	arrayDepth := arrayDepth + 1.
+	view applyStyle: #literalArray
+		toNext: ((view characterAt: view stylingPosition) = $# ifTrue: [2] ifFalse: [1]).
+	"view applyStyle: #specialCharacter toNext: 2."
+	aRBLiteralArrayNode contents do: [:each | self visitNode: each].
+	self styleIntersticesUpTo: aRBLiteralArrayNode stop - 1.
+	view applyStyle: #literalArray toNext: 1.
+	arrayDepth := arrayDepth - 1!
+
+visitLiteralNode: aLiteralNode
+	| value sourceSize |
+	value := aLiteralNode value.
+	sourceSize := aLiteralNode stopWithoutParentheses - aLiteralNode startWithoutParentheses + 1.
+	(value isKindOf: Number)
+		ifTrue: [view applyStyle: #literalNumber toNext: sourceSize]
+		ifFalse: 
+			[(#(false true nil) includes: value)
+				ifTrue: [view applyStyle: #literalPseudo toNext: value printString size]
+				ifFalse: 
+					[value class == Symbol
+						ifTrue: [view applyStyle: #literalSymbol toNext: sourceSize]
+						ifFalse: 
+							[value class == Character
+								ifTrue: [view applyStyle: #literalCharacter toNext: 2]
+								ifFalse: [view applyStyle: #literalString toNext: value printString size]]]]!
+
+visitMessageNode: aMessageNode
+	self visitNode: aMessageNode receiver.
+	self styleSelectorAndArguments: aMessageNode!
+
+visitMethodNode: aMethodNode
+	self styleMethodPatternFor: aMethodNode.
+	aMethodNode body acceptVisitor: self.
+	self colorComments: aMethodNode body postComments!
+
 visitNode: aNode 
 	self colourBefore: aNode.
 	aNode acceptVisitor: self.
-	self colorComments: aNode postComments! !
-!StStyler categoriesFor: #acceptAssignmentNode:!public!visitor/double dispatching! !
-!StStyler categoriesFor: #acceptBlockNode:!public!visitor/double dispatching! !
-!StStyler categoriesFor: #acceptCascadeNode:!public!visitor/double dispatching! !
-!StStyler categoriesFor: #acceptExternalCallNode:!public!visitor/double dispatching! !
-!StStyler categoriesFor: #acceptLiteralArrayNode:!public!visitor/double dispatching! !
+	self colorComments: aNode postComments!
+
+visitOptimizedNode: anOptimizedNode
+	view applyStyle: #specialCharacter toNext: 2.
+	self visitNode: anOptimizedNode body!
+
+visitPrimitiveNode: anStPrimitiveNode
+	(view plainTextRange: anStPrimitiveNode sourceInterval)
+		do: [:each | view applyStyle: (each isSeparator ifTrue: [#whitespace] ifFalse: [#tag]) toNext: 1]!
+
+visitReturnNode: aReturnNode
+	view applyStyle: #specialCharacter toNext: 1.
+	self visitNode: aReturnNode value!
+
+visitSequenceNode: aSequenceNode
+	aSequenceNode leftBar
+		ifNotNil: 
+			[:start |
+			self styleIntersticesUpTo: start - 1.
+			view applyStyle: #tempOpenBar toNext: 1.
+			self styleTemporaries: aSequenceNode temporaries.
+			self styleIntersticesUpTo: aSequenceNode rightBar - 1.
+			view applyStyle: #tempCloseBar toNext: 1].
+	self tagBeforeTemporaries
+		ifFalse: 
+			[aSequenceNode parent
+				ifNotNil: [:parent | parent isMethod ifTrue: [parent tag ifNotNil: [:tag | self visitNode: tag]]]].
+	aSequenceNode statements do: [:each | self visitNode: each]!
+
+visitVariableNode: aVariableNode
+	view applyStyle: #identifier toNext: aVariableNode name size! !
 !StStyler categoriesFor: #acceptLiteralByteArrayNode:!public!unit tests! !
-!StStyler categoriesFor: #acceptLiteralNode:!public!visitor/double dispatching! !
-!StStyler categoriesFor: #acceptMessageNode:!public!visitor/double dispatching! !
-!StStyler categoriesFor: #acceptMethodNode:!public!visitor/double dispatching! !
-!StStyler categoriesFor: #acceptOptimizedNode:!public!visitor/double dispatching! !
-!StStyler categoriesFor: #acceptPrimitiveNode:!public!visitor/double dispatching! !
-!StStyler categoriesFor: #acceptReturnNode:!public!visitor/double dispatching! !
-!StStyler categoriesFor: #acceptSequenceNode:!public!visitor/double dispatching! !
-!StStyler categoriesFor: #acceptVariableNode:!public!visitor/double dispatching! !
 !StStyler categoriesFor: #colorComments:!helpers!private! !
 !StStyler categoriesFor: #colourBefore:!helpers!private! !
 !StStyler categoriesFor: #emitWhitespaceBefore:!private!unit tests! !
@@ -285,5 +270,18 @@ visitNode: aNode
 !StStyler categoriesFor: #styleNameFor:!private!visitor/double dispatching! !
 !StStyler categoriesFor: #styleSelectorAndArguments:!private!unit tests! !
 !StStyler categoriesFor: #styleTemporaries:!private!unit tests! !
+!StStyler categoriesFor: #visitAssignmentNode:!public!visitor/double dispatching! !
+!StStyler categoriesFor: #visitBlockNode:!public!visitor/double dispatching! !
+!StStyler categoriesFor: #visitCascadeNode:!public!visitor/double dispatching! !
+!StStyler categoriesFor: #visitExternalCallNode:!public!visitor/double dispatching! !
+!StStyler categoriesFor: #visitLiteralArrayNode:!public!visitor/double dispatching! !
+!StStyler categoriesFor: #visitLiteralNode:!public!visitor/double dispatching! !
+!StStyler categoriesFor: #visitMessageNode:!public!visitor/double dispatching! !
+!StStyler categoriesFor: #visitMethodNode:!public!visitor/double dispatching! !
 !StStyler categoriesFor: #visitNode:!public!visiting! !
+!StStyler categoriesFor: #visitOptimizedNode:!public!visitor/double dispatching! !
+!StStyler categoriesFor: #visitPrimitiveNode:!public!visitor/double dispatching! !
+!StStyler categoriesFor: #visitReturnNode:!public!visitor/double dispatching! !
+!StStyler categoriesFor: #visitSequenceNode:!public!visitor/double dispatching! !
+!StStyler categoriesFor: #visitVariableNode:!public!visitor/double dispatching! !
 

@@ -41,10 +41,10 @@ package setPrerequisites: (IdentitySet new
 	add: '..\..\Base\Dolphin Base Tests';
 	add: '..\..\System\Base64\Dolphin Base64';
 	add: '..\..\MVP\Views\Common Controls\Dolphin Common Controls';
+	add: '..\..\MVP\Base\Dolphin MVP Base';
 	add: '..\..\Registry\Dolphin Registry Access';
 	add: '..\..\Lagoon\Lagoon Image Stripper';
 	add: '..\..\..\..\Contributions\Refactory\Refactoring Browser\Environments\RBEnvironments';
-	add: '..\..\..\..\Contributions\Refactory\Refactoring Browser\Parser\RBParser';
 	add: '..\..\..\..\Contributions\Refactory\Refactoring Browser\SmallLint\RBSmallLint';
 	add: '..\..\..\..\Contributions\Refactory\Refactoring Browser\Tests\RBTests';
 	add: '..\..\System\Compiler\Smalltalk Parser';
@@ -102,7 +102,7 @@ DolphinTest subclass: #RegKeyTest
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 DolphinTest subclass: #SmalltalkParserTest
-	instanceVariableNames: 'currentSelector classSearches rewrites'
+	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'ExtCallArgTypes SmalltalkParseErrorCodes'
 	classInstanceVariableNames: ''!
@@ -117,7 +117,7 @@ DolphinTest subclass: #VersionResourceTest
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 DolphinTest subclass: #VMTest
-	instanceVariableNames: ''
+	instanceVariableNames: 'expiryHandler'
 	classVariableNames: ''
 	poolDictionaries: 'CRTConstants'
 	classInstanceVariableNames: ''!

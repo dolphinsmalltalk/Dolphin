@@ -14,7 +14,6 @@ package classNames
 	add: #ItcBase64EncoderDecoder;
 	add: #ItcConverter;
 	add: #ItcDeferredValue;
-	add: #ItcDelay;
 	add: #ItcInterval;
 	add: #ItcLookupTable;
 	add: #ItcOrderedUniqueCollection;
@@ -67,7 +66,6 @@ package methodNames
 	add: #Date -> #monthsUntil:;
 	add: #Date -> #subtractMonths:;
 	add: #Dictionary -> #at:add:;
-	add: #Dictionary -> #at:ifAbsentPutValue:;
 	add: #Dictionary -> #isDictionaryOrLookupTable;
 	add: #Dictionary -> #replaceAll:with:;
 	add: #Exception -> #exitWith:;
@@ -135,7 +133,6 @@ package methodNames
 	add: #SocketWriteStream -> #itcFlush;
 	add: #SocketWriteStream -> #sendLine:;
 	add: #Stream -> #itcCrLf;
-	add: #Stream -> #nextOrNil;
 	add: #String -> #add:withDelimiter:;
 	add: #String -> #asDateFromDDMMYYYYString;
 	add: #String -> #asDecimalOrFloat;
@@ -187,10 +184,15 @@ package methodNames
 	add: 'Time class' -> #hours:minutes:seconds:milliseconds:;
 	yourself.
 
+package globalNames
+	add: #ItcDelay;
+	yourself.
+
 package binaryGlobalNames: (Set new
 	yourself).
 
 package globalAliases: (Set new
+	add: #ItcDelay;
 	yourself).
 
 package setPrerequisites: (IdentitySet new
@@ -261,11 +263,6 @@ DeferredValue subclass: #ItcDeferredValue
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-Delay subclass: #ItcDelay
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
 ExternalLibrary subclass: #LIBEAY32Library
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -308,6 +305,8 @@ ProtoObject subclass: #ItcProtoObject
 	classInstanceVariableNames: ''!
 
 "Global Aliases"!
+
+ItcDelay := Delay!
 
 
 "Loose Methods"!
@@ -634,12 +633,6 @@ at: key add: value
 	self at: key put: currentValue.
 	^value!
 
-at: key ifAbsentPutValue: value 
-	"V dictionary doda vrednost samo v primeru, ce je pod tem kljucem se ni."
-
-	(self includesKey: key) ifFalse: [self at: key put: value].
-	^value!
-
 isDictionaryOrLookupTable
 	^true!
 
@@ -647,7 +640,6 @@ replaceAll: aValue with: newValue
 	self 
 		keysAndValuesDo: [:eachKey :eachValue | eachValue = aValue ifTrue: [self at: eachKey put: newValue]]! !
 !Dictionary categoriesFor: #at:add:!accessing!public! !
-!Dictionary categoriesFor: #at:ifAbsentPutValue:!accessing!public! !
 !Dictionary categoriesFor: #isDictionaryOrLookupTable!accessing!public! !
 !Dictionary categoriesFor: #replaceAll:with:!accessing!public! !
 
@@ -1224,14 +1216,8 @@ sendLine: aCollection
 
 itcCrLf
 	self nextPutAll: '
-'!
-
-nextOrNil
-	"Squeak compatibility method (for #next)"
-
-	^self atEnd ifFalse: [self next]! !
+'! !
 !Stream categoriesFor: #itcCrLf!accessing!public! !
-!Stream categoriesFor: #nextOrNil!accessing!public! !
 
 !String methodsFor!
 

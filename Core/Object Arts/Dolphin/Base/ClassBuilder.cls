@@ -166,12 +166,10 @@ createProper
 	| metaSuperclass newMetaclass |
 	metaSuperclass := self class classOf: superclass.
 	(newMetaclass := Metaclass new)
-		methodDictionary: MethodDictionary new;
 		instanceSpec: metaSuperclass instanceSpec;
 		superclass: metaSuperclass.
 
 	(currentClass := newMetaclass new)
-		methodDictionary: MethodDictionary new;
 		instanceSpec: instanceSpec;
 		setName: className asSymbol;
 		setSuperclass: superclass.
@@ -488,10 +486,15 @@ mutateInSitu
 	"Private - Mutate the class being modified without mutating its instances.
 	In fact, we only need to change the superclass."
 
-	self superclassIsBeingChanged ifFalse: [^self].
-	currentClass class setSuperclass: (self class classOf: superclass).
-	currentClass setSuperclass: superclass.
-	self recompilationRequired: true!
+	self superclassIsBeingChanged
+		ifTrue:
+			[currentClass class setSuperclass: (self class classOf: superclass).
+			currentClass setSuperclass: superclass.
+			self recompilationRequired: true].
+	self instanceVariablesAreBeingChanged
+		ifTrue:
+			[self setInstanceVariablesOf: currentClass.
+			self recompilationRequired: true].!
 
 mutateToNewClass
 	"Private - Set currentClass to a mutation of itself based on the information
@@ -618,10 +621,10 @@ setCommentOf: aClass
 		ifTrue: [aClass comment: comment]!
 
 setInstanceVariablesOf: aClass
-	"Private - Set the instance variable layout of aClass to those described by
-	the receiver's instanceVariables inst var."
+	"Private - Set the instance variable layout of aClass to those described by the receiver's
+	instanceVariables inst var, or those of currentClass if no changes have been proposed."
 
-	aClass setInstanceVariables: instanceVariables!
+	aClass setInstanceVariables: self instanceVariables!
 
 setNewClassCategories
 	currentClass classCategories: self categories!
@@ -688,13 +691,17 @@ translateInstance: oldInstance intoANewInstanceOf: newClass via: mappingArray
 				ifTrue: [newInstance instVarAt: i put: (oldInstance instVarAt: index)]].
 	^newInstance!
 
-updateVMRegistryWith: aClass 
+updateVMRegistryWith: aClass
 	"Private - Ensure that if aClass is a VM registered class then the VM's
 	entry is updated to the new class."
 
 	| name |
 	name := aClass name asSymbol.
-	(VMLibrary registryKeys includesKey: name) ifTrue: [VMLibrary default registryAt: name put: aClass]!
+	((VMLibrary registryKeys includesKey: name) and: 
+			[| current |
+			current := VMLibrary default registryAt: name.
+			current isNil or: [current class isMetaclass]])
+		ifTrue: [VMLibrary default registryAt: name put: aClass]!
 
 validateClass
 	"Private - Ensure that currentClass is a valid Behavior."

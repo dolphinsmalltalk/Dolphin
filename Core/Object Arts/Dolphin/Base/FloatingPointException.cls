@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ArithmeticError subclass: #FloatingPointException
 	instanceVariableNames: ''
@@ -14,12 +14,14 @@ _descriptionArguments
 	"Answer the arguments to be subsituted into the receiver's description 
 	format string."
 
-	^super _descriptionArguments copyWith: self _ieeeRecord causeNames!
+	| record |
+	record := self _ieeeRecord.
+	^super _descriptionArguments , (Array with: record causeDescription with: record operationName)!
 
 _descriptionFormat
 	"Answer the Win32 format String to be used to format the description for the receiver."
 
-	^'Floating point error: %3'!
+	^'Floating point error: %3 in %4'!
 
 _ieeeRecord
 	"Private - Answer the IEEE exception record associated with the receiver."

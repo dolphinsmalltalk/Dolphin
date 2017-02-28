@@ -1,0 +1,418 @@
+| package |
+package := Package name: 'Windows HTTP Server'.
+package paxVersion: 1;
+	basicComment: 'Dolphin Smalltalk Win32 HTTP Server
+Copyright (c) Object Arts Ltd, 2017
+
+This package contains classes and methods for implementing an HTTP server with the Win32 HTTP Server APIs.
+Currently it contains only the interop classes generated from the IDL description of the functions and structures. It needs a set of wrapper classes implementing a higher-level API, perhaps similar to that in .NET 4.x.
+
+"The HTTP Server API enables applications to communicate over HTTP without using Microsoft Internet Information Server (IIS). Applications can register to receive HTTP requests for particular URLs, receive HTTP requests, and send HTTP responses. The HTTP Server API includes SSL support so that applications can exchange data over secure HTTP connections without IIS. It is also designed to work with I/O completion ports."
+
+(From https://msdn.microsoft.com/en-us/library/windows/desktop/aa364510(v=vs.140).aspx)
+
+A sample illustrating direct use of the V1 API from C++ is here: https://msdn.microsoft.com/en-us/library/windows/desktop/aa364640(v=vs.140).aspx
+
+'.
+
+
+package classNames
+	add: #HTTP_BANDWIDTH_LIMIT_INFO;
+	add: #HTTP_BINDING_INFO;
+	add: #HTTP_BYTE_RANGE;
+	add: #HTTP_CACHE_POLICY;
+	add: #HTTP_CHANNEL_BIND_INFO;
+	add: #HTTP_CONNECTION_LIMIT_INFO;
+	add: #HTTP_COOKED_URL;
+	add: #HTTP_DATA_CHUNK;
+	add: #HTTP_FLOWRATE_INFO;
+	add: #HTTP_HEADERS;
+	add: #HTTP_KNOWN_HEADER;
+	add: #HTTP_LISTEN_ENDPOINT_INFO;
+	add: #HTTP_LOG_FIELDS_DATA;
+	add: #HTTP_LOGGING_INFO;
+	add: #HTTP_MULTIPLE_KNOWN_HEADERS;
+	add: #HTTP_PROPERTY_FLAGS;
+	add: #HTTP_PROTECTION_LEVEL_INFO;
+	add: #HTTP_QOS_SETTING_INFO;
+	add: #HTTP_REQUEST_AUTH_INFO;
+	add: #HTTP_REQUEST_CHANNEL_BIND_STATUS;
+	add: #HTTP_REQUEST_HEADERS;
+	add: #HTTP_REQUEST_INFO;
+	add: #HTTP_REQUEST_TOKEN_BINDING_INFO;
+	add: #HTTP_REQUEST_V1;
+	add: #HTTP_REQUEST_V2;
+	add: #HTTP_RESPONSE_HEADERS;
+	add: #HTTP_RESPONSE_INFO;
+	add: #HTTP_RESPONSE_V1;
+	add: #HTTP_RESPONSE_V2;
+	add: #HTTP_SERVER_AUTHENTICATION_BASIC_PARAMS;
+	add: #HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS;
+	add: #HTTP_SERVER_AUTHENTICATION_INFO;
+	add: #HTTP_SERVICE_BINDING_A;
+	add: #HTTP_SERVICE_BINDING_BASE;
+	add: #HTTP_SERVICE_BINDING_W;
+	add: #HTTP_SERVICE_CONFIG_CACHE_SET;
+	add: #HTTP_SERVICE_CONFIG_IP_LISTEN_PARAM;
+	add: #HTTP_SERVICE_CONFIG_IP_LISTEN_QUERY;
+	add: #HTTP_SERVICE_CONFIG_SSL_CCS_QUERY;
+	add: #HTTP_SERVICE_CONFIG_SSL_CCS_SET;
+	add: #HTTP_SERVICE_CONFIG_SSL_PARAM;
+	add: #HTTP_SERVICE_CONFIG_SSL_QUERY;
+	add: #HTTP_SERVICE_CONFIG_SSL_SET;
+	add: #HTTP_SERVICE_CONFIG_SSL_SNI_KEY;
+	add: #HTTP_SERVICE_CONFIG_SSL_SNI_QUERY;
+	add: #HTTP_SERVICE_CONFIG_SSL_SNI_SET;
+	add: #HTTP_SERVICE_CONFIG_TIMEOUT_SET;
+	add: #HTTP_SERVICE_CONFIG_URLACL_QUERY;
+	add: #HTTP_SERVICE_CONFIG_URLACL_SET;
+	add: #HTTP_SSL_CLIENT_CERT_INFO;
+	add: #HTTP_SSL_INFO;
+	add: #HTTP_SSL_PROTOCOL_INFO;
+	add: #HTTP_STATE_INFO;
+	add: #HTTP_TIMEOUT_LIMIT_INFO;
+	add: #HTTP_UNKNOWN_HEADER;
+	add: #HTTP_VERSION;
+	add: #HttpApiLibrary;
+	add: #HttpQosSetting;
+	add: #HttpServerStructure;
+	add: #HttpServiceConfigQuery;
+	yourself.
+
+package globalNames
+	add: #HTTP_REQUEST;
+	add: #HTTP_RESPONSE;
+	add: #WinHttpServerConsts;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	add: #HTTP_REQUEST;
+	add: #HTTP_RESPONSE;
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\..\Base\Dolphin';
+	add: 'Dolphin Overlapped IO';
+	add: '..\..\Base\Dolphin SizeIs Fields';
+	add: '..\..\Sockets\Dolphin Sockets';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+ExternalLibrary subclass: #HttpApiLibrary
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: 'WinHttpServerConsts'
+	classInstanceVariableNames: ''!
+ExternalStructure subclass: #HttpServerStructure
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: 'WinHttpServerConsts'
+	classInstanceVariableNames: ''!
+HttpServerStructure subclass: #HTTP_BYTE_RANGE
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+HttpServerStructure subclass: #HTTP_CACHE_POLICY
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+HttpServerStructure subclass: #HTTP_CHANNEL_BIND_INFO
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+HttpServerStructure subclass: #HTTP_COOKED_URL
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+HttpServerStructure subclass: #HTTP_DATA_CHUNK
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+HttpServerStructure subclass: #HTTP_HEADERS
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: 'WinHttpServerConsts'
+	classInstanceVariableNames: ''!
+HttpServerStructure subclass: #HTTP_KNOWN_HEADER
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+HttpServerStructure subclass: #HTTP_LOG_FIELDS_DATA
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+HttpServerStructure subclass: #HTTP_MULTIPLE_KNOWN_HEADERS
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+HttpServerStructure subclass: #HTTP_PROPERTY_FLAGS
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+HttpServerStructure subclass: #HTTP_QOS_SETTING_INFO
+	instanceVariableNames: 'setting'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+HttpServerStructure subclass: #HTTP_REQUEST_AUTH_INFO
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+HttpServerStructure subclass: #HTTP_REQUEST_CHANNEL_BIND_STATUS
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+HttpServerStructure subclass: #HTTP_REQUEST_INFO
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+HttpServerStructure subclass: #HTTP_REQUEST_TOKEN_BINDING_INFO
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+HttpServerStructure subclass: #HTTP_REQUEST_V1
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: 'WinHttpServerConsts'
+	classInstanceVariableNames: ''!
+HttpServerStructure subclass: #HTTP_RESPONSE_INFO
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: 'WinHttpServerConsts'
+	classInstanceVariableNames: ''!
+HttpServerStructure subclass: #HTTP_RESPONSE_V1
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+HttpServerStructure subclass: #HTTP_SERVER_AUTHENTICATION_BASIC_PARAMS
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+HttpServerStructure subclass: #HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+HttpServerStructure subclass: #HTTP_SERVICE_BINDING_BASE
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: 'WinHttpServerConsts'
+	classInstanceVariableNames: ''!
+HttpServerStructure subclass: #HTTP_SERVICE_CONFIG_CACHE_SET
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+HttpServerStructure subclass: #HTTP_SERVICE_CONFIG_IP_LISTEN_PARAM
+	instanceVariableNames: 'address'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+HttpServerStructure subclass: #HTTP_SERVICE_CONFIG_IP_LISTEN_QUERY
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+HttpServerStructure subclass: #HTTP_SERVICE_CONFIG_SSL_CCS_SET
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+HttpServerStructure subclass: #HTTP_SERVICE_CONFIG_SSL_PARAM
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+HttpServerStructure subclass: #HTTP_SERVICE_CONFIG_SSL_SET
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+HttpServerStructure subclass: #HTTP_SERVICE_CONFIG_SSL_SNI_KEY
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+HttpServerStructure subclass: #HTTP_SERVICE_CONFIG_SSL_SNI_SET
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+HttpServerStructure subclass: #HTTP_SERVICE_CONFIG_TIMEOUT_SET
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+HttpServerStructure subclass: #HTTP_SERVICE_CONFIG_URLACL_SET
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+HttpServerStructure subclass: #HTTP_SSL_CLIENT_CERT_INFO
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+HttpServerStructure subclass: #HTTP_SSL_INFO
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+HttpServerStructure subclass: #HTTP_SSL_PROTOCOL_INFO
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+HttpServerStructure subclass: #HTTP_UNKNOWN_HEADER
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+HttpServerStructure subclass: #HTTP_VERSION
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+HttpServerStructure subclass: #HttpServiceConfigQuery
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+HTTP_HEADERS subclass: #HTTP_REQUEST_HEADERS
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: 'WinHttpServerConsts'
+	classInstanceVariableNames: ''!
+HTTP_HEADERS subclass: #HTTP_RESPONSE_HEADERS
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+HTTP_PROPERTY_FLAGS subclass: #HTTP_BINDING_INFO
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+HTTP_PROPERTY_FLAGS subclass: #HTTP_LISTEN_ENDPOINT_INFO
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+HTTP_PROPERTY_FLAGS subclass: #HTTP_LOGGING_INFO
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+HTTP_PROPERTY_FLAGS subclass: #HTTP_PROTECTION_LEVEL_INFO
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+HTTP_PROPERTY_FLAGS subclass: #HTTP_SERVER_AUTHENTICATION_INFO
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+HTTP_PROPERTY_FLAGS subclass: #HTTP_STATE_INFO
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+HTTP_PROPERTY_FLAGS subclass: #HTTP_TIMEOUT_LIMIT_INFO
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+HTTP_PROPERTY_FLAGS subclass: #HttpQosSetting
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+HttpQosSetting subclass: #HTTP_BANDWIDTH_LIMIT_INFO
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+HttpQosSetting subclass: #HTTP_CONNECTION_LIMIT_INFO
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+HttpQosSetting subclass: #HTTP_FLOWRATE_INFO
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+HTTP_REQUEST_V1 subclass: #HTTP_REQUEST_V2
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+HTTP_RESPONSE_V1 subclass: #HTTP_RESPONSE_V2
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+HTTP_SERVICE_BINDING_BASE subclass: #HTTP_SERVICE_BINDING_A
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+HTTP_SERVICE_BINDING_BASE subclass: #HTTP_SERVICE_BINDING_W
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+HttpServiceConfigQuery subclass: #HTTP_SERVICE_CONFIG_SSL_CCS_QUERY
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+HttpServiceConfigQuery subclass: #HTTP_SERVICE_CONFIG_SSL_QUERY
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+HttpServiceConfigQuery subclass: #HTTP_SERVICE_CONFIG_SSL_SNI_QUERY
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+HttpServiceConfigQuery subclass: #HTTP_SERVICE_CONFIG_URLACL_QUERY
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+HTTP_REQUEST := HTTP_REQUEST_V2!
+
+HTTP_RESPONSE := HTTP_RESPONSE_V2!
+
+
+"Loose Methods"!
+
+"End of package definition"!
+

@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk XP 2002 release 5.02"!
+"Filed out from Dolphin Smalltalk 7"!
 
 RBPatternBlockNode subclass: #RBPatternWrapperBlockNode
 	instanceVariableNames: 'wrappedNode'
@@ -10,8 +10,8 @@ RBPatternWrapperBlockNode comment: ''!
 !RBPatternWrapperBlockNode categoriesForClass!Refactory-Parser! !
 !RBPatternWrapperBlockNode methodsFor!
 
-acceptVisitor: aProgramNodeVisitor 
-	^aProgramNodeVisitor acceptPatternWrapperBlockNode: self!
+acceptVisitor: aProgramNodeVisitor
+	^aProgramNodeVisitor visitPatternWrapperBlockNode: self!
 
 copyInContext: aDictionary 
 	"I don't know what this would mean, so ignore it."
@@ -21,6 +21,11 @@ copyInContext: aDictionary
 match: aNode inContext: aDictionary 
 	(wrappedNode match: aNode inContext: aDictionary) ifFalse: [^false].
 	^super match: aNode inContext: aDictionary!
+
+postCopy
+	super postCopy.
+	self wrappedNode: wrappedNode copy.
+	^self!
 
 precedence
 	^1!
@@ -34,6 +39,7 @@ wrappedNode: aRBProgramNode
 !RBPatternWrapperBlockNode categoriesFor: #acceptVisitor:!public!visitor! !
 !RBPatternWrapperBlockNode categoriesFor: #copyInContext:!matching!public! !
 !RBPatternWrapperBlockNode categoriesFor: #match:inContext:!matching!public! !
+!RBPatternWrapperBlockNode categoriesFor: #postCopy!copying!public! !
 !RBPatternWrapperBlockNode categoriesFor: #precedence!accessing!public! !
 !RBPatternWrapperBlockNode categoriesFor: #wrappedNode!accessing!public! !
 !RBPatternWrapperBlockNode categoriesFor: #wrappedNode:!accessing!public! !

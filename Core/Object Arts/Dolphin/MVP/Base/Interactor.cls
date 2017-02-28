@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #Interactor
 	instanceVariableNames: 'presenter'
@@ -51,10 +51,10 @@ onLeftButtonReleased: aMouseEvent
 
 	^self presenter onLeftButtonReleased: aMouseEvent!
 
-onMiddleButtonDoubleClicked: aMouseEvent 
+onMiddleButtonDoubleClicked: aMouseEvent
 	"Default handler for a mouse middle button double-click event."
 
-	^self presenter onLeftButtonDoubleClicked: aMouseEvent!
+	^self presenter onMiddleButtonDoubleClicked: aMouseEvent!
 
 onMiddleButtonPressed: aMouseEvent 
 	"Default handler for a mouse middle button down event."
@@ -96,10 +96,10 @@ onRightButtonReleased: aMouseEvent
 
 	^self presenter onRightButtonReleased: aMouseEvent!
 
-onSysKeyPressed: aKeyEvent 
+onSysKeyPressed: aKeyEvent
 	"Default handler for the receiver's view receiving a sys key press event (e.g. Alt down)."
 
-	^self presenter onKeyPressed: aKeyEvent!
+	^self presenter onSysKeyPressed: aKeyEvent!
 
 onSysKeyReleased: aKeyEvent 
 	"Default handler for the receiver's view receiving a sys key up event."

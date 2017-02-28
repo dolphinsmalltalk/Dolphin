@@ -26,7 +26,7 @@ fullCheck
 hash: anObject max: anInteger
 	"Implementation Note: This must match the selector hashing implementation used by the VM."
 
-	^(anObject hash bitAnd: anInteger - 1) + 1!
+	^(anObject basicIdentityHash bitAnd: anInteger - 1) + 1!
 
 removeKey: key ifAbsent: exceptionHandler 
 	"Remove the key (and its associated value), from the receiver. If key is not in the 

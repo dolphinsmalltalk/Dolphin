@@ -1,9 +1,9 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #STBClassConversion
 	instanceVariableNames: 'version instSize isBytes isVariable converterBlock filer'
 	classVariableNames: ''
-	poolDictionaries: 'STBPrefixConstants'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 STBClassConversion guid: (GUID fromString: '{87B4C4C0-026E-11D3-9FD7-00A0CC3E4A32}')!
 STBClassConversion comment: ''!
@@ -62,13 +62,13 @@ version
 
 	^version!
 
-version: versionInteger prefix: anInteger filer: anSTBInFiler 
+version: versionInteger prefix: anInteger filer: anSTBInFiler
 	"Private - Initialise the receiver from the arguments."
 
 	version := versionInteger.
-	instSize := (anInteger bitShift: InstSizeShift) bitAnd: InstSizeMask.
-	isBytes := anInteger allMask: BytesMask.
-	isVariable := anInteger allMask: VariableMask.
+	instSize := (anInteger bitShift: STBPrefix.InstSizeShift) bitAnd: STBPrefix.InstSizeMask.
+	isBytes := anInteger allMask: STBPrefix.BytesMask.
+	isVariable := anInteger allMask: STBPrefix.VariableMask.
 	filer := anSTBInFiler! !
 !STBClassConversion categoriesFor: #converterBlock!accessing!public! !
 !STBClassConversion categoriesFor: #converterBlock:!accessing!public! !

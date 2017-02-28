@@ -11,7 +11,11 @@ package methodNames
 	add: #CompilerTest -> #knownTempsMapIssues;
 	add: #CompilerTest -> #knownTextMapIssues;
 	add: #CompilerTest -> #testTempMapOuterDepthExhaustive;
-	add: #CompilerTest -> #testTextMapExhaustive;
+	add: #CompilerTest -> #testTextMapsExhaustive;
+	add: #DefaultSortAlgorithmTest -> #testBigStringSort;
+	add: #HeapsortAlgorithmTest -> #testBigStringSort;
+	add: #IntrosortAlgorithmTest -> #testBigStringSort;
+	add: #MergesortAlgorithmTest -> #testBigStringSort;
 	add: #VMTest -> #assertLoopInterruptible:;
 	add: #VMTest -> #testLoopsInterruptible;
 	add: #VMTest -> #testQuiesceWhenUIBlocked;
@@ -26,6 +30,7 @@ package globalAliases: (Set new
 package setPrerequisites: (IdentitySet new
 	add: '..\IDE\Base\Development System Tests';
 	add: '..\Base\Dolphin';
+	add: '..\Base\Dolphin Base Tests';
 	add: '..\..\..\Contributions\Refactory\Refactoring Browser\Change Objects\RBChangeObjects';
 	add: '..\..\..\Contributions\Refactory\Refactoring Browser\Environments\RBEnvironments';
 	yourself).
@@ -147,7 +152,7 @@ knownTempsMapIssues
 	^env not!
 
 knownTextMapIssues
-	| bad env |
+	| bad |
 	bad := OrderedCollection new.
 	"These methods are all have optimisation where an unconditional jump is replaced with a
 	return, and the text map for the optimised method then has an extra entry for that return
@@ -159,9 +164,7 @@ knownTextMapIssues
 	Smalltalk at: #ItcSystemManager ifPresent: [:class | bad add: class class >> #imageFilename].
 	Smalltalk at: #WikiDocImageSelectorServlet ifPresent: [:class | bad add: class >> #searchImages:].
 	bad add: DolphinCompilerTestMethods >> #testWarningReadBeforeWrittenBlockTemp.
-	"Different size maps for debug/optimized - due to empty blocks?"
-	env := BrowserEnvironment new.
-	^(env forMethods: bad asArray) | (env referencesTo: [])!
+	^BrowserEnvironment new forMethods: bad asArray!
 
 testTempMapOuterDepthExhaustive
 	"Check that the temp maps for all methods with env temps have the correct outer depth. Note
@@ -170,34 +173,39 @@ testTempMapOuterDepthExhaustive
 
 	self knownTempsMapIssues not methodsDo: [:each | self verifyTempsMapOf: each]!
 
-testTextMapExhaustive
+testTextMapsExhaustive
 	"Check that the release and debug text maps match for every method in the system .... with a
 	couple of exceptions... ahem"
 
-	self knownTextMapIssues not methodsDo: 
-			[:each | 
-			| debugTextMap debugMethod info textMap result |
-			result := self getDebugInfoFor: each debug: true.
-			debugMethod := result method.
-			"If fails then the method failed to compile"
-			self assert: debugMethod notNil.
-			info := each debugInfo.
-			textMap := info textMap.
-			debugTextMap := result textMap.
-			"The text maps should contain exactly the same number of entries, and the text range for each entry should be the same"
-			textMap with: debugTextMap do: [:a :b | self assert: a value = b value].
-			debugTextMap do: 
-					[:assoc | 
-					| byte ip |
-					ip := assoc key.
-					ip == 0 
-						ifFalse: 
-							[byte := debugMethod byteCodes at: ip.
-							self assert: byte ~= 0]]]! !
+	self knownTextMapIssues not methodsDo: [:each | self verifyTextMapsOf: each]! !
 !CompilerTest categoriesFor: #knownTempsMapIssues!public!unit tests-long running! !
 !CompilerTest categoriesFor: #knownTextMapIssues!private! !
 !CompilerTest categoriesFor: #testTempMapOuterDepthExhaustive!public!unit tests-long running! !
-!CompilerTest categoriesFor: #testTextMapExhaustive!public!unit tests-long running! !
+!CompilerTest categoriesFor: #testTextMapsExhaustive!public!unit tests-long running! !
+
+!DefaultSortAlgorithmTest methodsFor!
+
+testBigStringSort
+	self bigStringSort! !
+!DefaultSortAlgorithmTest categoriesFor: #testBigStringSort!public!unit tests! !
+
+!HeapsortAlgorithmTest methodsFor!
+
+testBigStringSort
+	self bigStringSort! !
+!HeapsortAlgorithmTest categoriesFor: #testBigStringSort!public!unit tests! !
+
+!IntrosortAlgorithmTest methodsFor!
+
+testBigStringSort
+	self bigStringSort! !
+!IntrosortAlgorithmTest categoriesFor: #testBigStringSort!public!unit tests! !
+
+!MergesortAlgorithmTest methodsFor!
+
+testBigStringSort
+	self bigStringSort! !
+!MergesortAlgorithmTest categoriesFor: #testBigStringSort!public!unit tests! !
 
 !VMTest methodsFor!
 

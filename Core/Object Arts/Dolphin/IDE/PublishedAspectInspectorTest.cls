@@ -139,10 +139,11 @@ seqCollMoveUpTest: testClass
 !
 
 tearDown
-	inspector isNil 
+	inspector isNil
 		ifFalse: 
 			[inspector view topView destroy.
 			inspector := nil].
+	treePresenter := displayPresenter := nil.
 	super tearDown!
 
 testAddRemoveCollectionElement

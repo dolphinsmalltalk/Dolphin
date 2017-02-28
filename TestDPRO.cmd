@@ -1,7 +1,7 @@
 @ECHO OFF
 ECHO Running regression tests
-START /Wait Dolphin7 DPRO.img7 -f RegressionTestsRun.st -q
-FINDSTR /L /C:"PASSED" DPRO.testlog >nul
+echo. >DPRO.errors
+Dolphin7 DPRO.img7 -u -f RegressionTestsRun.st -q
 set errorCode=%ERRORLEVEL%
-TYPE DPRO.testlog
+TYPE DPRO.errors
 EXIT /b %errorCode%

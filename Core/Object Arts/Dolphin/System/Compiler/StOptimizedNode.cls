@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 StValueNode subclass: #StOptimizedNode
 	instanceVariableNames: 'left right body value methodClass source'
 	classVariableNames: 'UnevaluatedCookie'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-StOptimizedNode guid: (GUID fromString: '{D6CA95FA-6DEC-4CED-8780-C36C6450314F}')!
+StOptimizedNode guid: (GUID fromString: '{d6ca95fa-6dec-4ced-8780-c36c6450314f}')!
 StOptimizedNode comment: 'StOptimizedNode is an parse tree node that represents ##(...) expressions. These expressions are evaluated at compile time and directly inserted into the method.
 
 Instance Variables:
@@ -22,8 +22,8 @@ Instance Variables:
 	self class = anObject class ifFalse: [^false].
 	^self body = anObject body!
 
-acceptVisitor: aProgramNodeVisitor 
-	^aProgramNodeVisitor acceptOptimizedNode: self!
+acceptVisitor: aProgramNodeVisitor
+	^aProgramNodeVisitor visitOptimizedNode: self!
 
 arguments
 	^#()!
@@ -45,13 +45,8 @@ equalTo: anObject withMapping: aDictionary
 evaluateStatements
 	| s |
 	methodClass isNil ifTrue: [^nil].
-	^self source 
-		ifNotNil: 
-			[:s | 
-			Compiler 
-				evaluate: (s copyFrom: body start to: body stop)
-				for: methodClass instanceClass
-				logged: false]!
+	^self source
+		ifNotNil: [:s | Compiler evaluate: (s copyFrom: body start to: body stop) for: methodClass instanceClass]!
 
 hash
 	^self body hash!
@@ -75,6 +70,11 @@ methodClass: anObject
 
 needsParenthesis
 	^false!
+
+postCopy
+	super postCopy.
+	self body: body copy.
+	^self!
 
 precedence
 	^0!
@@ -114,6 +114,7 @@ value: anObject
 !StOptimizedNode categoriesFor: #methodClass!accessing!private! !
 !StOptimizedNode categoriesFor: #methodClass:!accessing!private! !
 !StOptimizedNode categoriesFor: #needsParenthesis!public!testing! !
+!StOptimizedNode categoriesFor: #postCopy!copying!public! !
 !StOptimizedNode categoriesFor: #precedence!accessing!public! !
 !StOptimizedNode categoriesFor: #source!accessing!public! !
 !StOptimizedNode categoriesFor: #source:!accessing!private! !

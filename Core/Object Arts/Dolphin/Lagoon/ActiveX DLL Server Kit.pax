@@ -37,7 +37,6 @@ package setPrerequisites: (IdentitySet new
 	add: '..\MVP\Base\Dolphin MVP Base';
 	add: 'Lagoon Image Stripper';
 	add: '..\ActiveX\COM\OLE COM';
-	add: '..\ActiveX\Shell\Windows Shell';
 	yourself).
 
 package setManualPrerequisites: #(

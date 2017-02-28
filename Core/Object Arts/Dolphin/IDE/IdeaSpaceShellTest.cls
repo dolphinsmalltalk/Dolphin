@@ -16,6 +16,20 @@ create: aClassSymbol subclassOf: aClass
 	self assert: (newClass notNil and: [newClass isKindOf: Class]).
 	^newClass!
 
+createThreeCards
+	| tools |
+	tools := Array new: 3.
+	ideaShell view noRedrawDo: 
+			[tools at: 1 put: self newSystemBrowserCard.
+			tools at: 2 put: self newClassBrowserCard.
+			tools at: 3 put: self newViewComposerCard].
+	self assert: ideaShell cards size = 3.
+	tools do: 
+			[:each |
+			self assert: each view parentView == ideaShell cardsPresenter view.
+			self assert: each parentPresenter == ideaShell cardsPresenter].
+	^tools!
+
 newClassBrowserCard
 	^ideaShell newEmbeddedCardOfClass: ClassBrowserShell!
 
@@ -43,6 +57,7 @@ setUp
 
 tearDown
 	ideaShell destroy.
+	ideaShell := nil.
 	super tearDown!
 
 testAbsorbCard
@@ -93,45 +108,41 @@ testAbsorbedCardRemoval
 	self assert: ideaShell cards isEmpty!
 
 testBreakoutCard
-	| vc sb cb vcToolbar vcCardToolbar |
-	sb := self newSystemBrowserCard.
-	cb := self newClassBrowserCard.
-	vc := self newViewComposerCard.
-	self assert: ideaShell cards size = 3.
-	self assert: vc view parentView==ideaShell cardsPresenter view.
-	self assert: vc parentPresenter==ideaShell cardsPresenter.
+	| toolToolbar cardToolbar tools |
+	tools := self createThreeCards.
 
-	"Find the original VC toolbar nd the newly installed card toolbar"
-	vcToolbar := vc view viewNamed: 'toolbar'.
-	vcCardToolbar := vcToolbar parentView.
-	self assert: vcCardToolbar isOpen.
-	self assert: vcCardToolbar parentView == vc view.
+	"Find the original toolbar and the newly installed card toolbar"
+	toolToolbar := tools third view viewNamed: 'toolbar'.
+	cardToolbar := toolToolbar parentView.
+	self assert: cardToolbar isOpen.
+	self assert: cardToolbar parentView == tools third view.
 
-	"Breakout the VC onto the desktop"
+	"Breakout the card onto the desktop"
 	ideaShell breakoutCurrentCard.
 
 	"There should only be two cards left in the IS"
 	self assert: ideaShell cards size = 2.
 	self assert: ideaShell cardsPresenter subPresenters size = 2.
 
-	"The VC card should now be a child of the desktop"
-	self assert: (vc view isKindOf: ShellView).
-	self assert: vc view isOpen.
-	self assert: vc view parentView == View desktop.
+	"The card should now be a child of the desktop"
+	self assert: (tools third view isKindOf: ShellView).
+	self assert: tools third view isOpen.
+	self assert: tools third view parentView == View desktop.
 
-	"The VC toolbar should have been restored and the card toolbar destroyed"
-	self assert: vcToolbar parentView == vc view.
-	self deny: vcCardToolbar isOpen.
-	vc exit.
-	self assert: vc view isClosed.
+	"The  toolbar should have been restored and the card toolbar destroyed"
+	self assert: toolToolbar parentView == tools third view.
+	self deny: cardToolbar isOpen.
 
 	"Breakout the other cards to leave the IdeaSpace empty"
+	ideaShell hide.
 	ideaShell
 		breakoutCurrentCard;
 		breakoutCurrentCard.
-	sb exit.
-	cb exit.
-
+	tools do: 
+			[:each |
+			each exit.
+			self assert: each view isClosed].
+	ideaShell show.
 	"There should no cards left in the IS"
 	self assert: ideaShell cards isEmpty.
 	self assert: ideaShell cardsPresenter subPresenters isEmpty.
@@ -151,18 +162,16 @@ testBreakoutCardOrdering
 	sb exit!
 
 testHistoryRemove
-	| vc sb cb hist |
-	sb := self newSystemBrowserCard.
-	cb := self newClassBrowserCard.
-	vc := self newViewComposerCard.
-	self assert: ideaShell cards size = 3.
+	| hist cards |
+	ideaShell view disableRedraw.
+	cards := self createThreeCards.
 	hist := ideaShell instVarNamed: 'cardHistory'.
 	self assert: hist position = 3.
 	self deny: hist hasFuture.
-	cb view ensureVisible.
-	sb view ensureVisible.
-	cb view ensureVisible.
-	vc view ensureVisible.
+	cards second view ensureVisible.
+	cards first view ensureVisible.
+	cards second view ensureVisible.
+	cards third view ensureVisible.
 	self assert: hist position = 7.
 	self deny: hist hasFuture.
 	ideaShell closeCard.
@@ -178,25 +187,23 @@ testHistoryRemove
 	self assert: hist isEmpty.
 	"Similar but with non-sequential visit history - idea here is to test that removing cards
 	pops back to the previous visit and does not in itself generate more visits"
-	sb := self newSystemBrowserCard.
-	cb := self newClassBrowserCard.
-	vc := self newViewComposerCard.
+	cards := self createThreeCards.
 	self assert: ideaShell cards size = 3.
 	hist := ideaShell instVarNamed: 'cardHistory'.
 	self assert: hist position = 3.
 	self deny: hist hasFuture.
-	sb view ensureVisible.
-	vc view ensureVisible.
+	cards first view ensureVisible.
+	cards third view ensureVisible.
 	self assert: hist position = 5.
 	self deny: hist hasFuture.
 	ideaShell closeCard.
-	self assert: ideaShell currentCard == sb.
+	self assert: ideaShell currentCard == cards first.
 	self assert: ideaShell cards size = 2.
 	self assert: hist position = 3.
 	self deny: hist hasFuture.
 	self assert: hist hasPast.
 	ideaShell closeCard.
-	self assert: ideaShell currentCard == cb.
+	self assert: ideaShell currentCard == cards second.
 	self assert: ideaShell cards size = 1.
 	self assert: hist position = 1.
 	self deny: hist hasFuture.
@@ -217,9 +224,12 @@ testRemoveCard
 testSaveRestore
 	"Test Save and Restore of various Ideaspace tools"
 
-	"System Browser on False"
-
 	| sb cb eb ws vc rb saveString newIdeaShell newSb newCb newEb newWs newVc newRb definitionPresenter |
+	"This test is pretty slow, but we can speed it up by ~30% by disabling redraw while populating the test subject"
+	(ideaShell view)
+		hide;
+		disableRedraw.
+	"System Browser on False"
 	sb := self newSystemBrowserCard.
 	sb packages: (Array with: False owningPackage with: ClassBrowserShell owningPackage).
 	sb actualClass: False.
@@ -233,8 +243,7 @@ testSaveRestore
 
 	"Environment Browser on Object subclassses"
 	eb := self newEnvironmentBrowserCard.
-	eb 
-		browserEnvironment: (Smalltalk developmentSystem browserEnvironmentForClasses: Object subclasses).
+	eb browserEnvironment: (Smalltalk developmentSystem browserEnvironmentForClasses: Object subclasses).
 	eb method: (Presenter compiledMethodAt: #createComponents).
 
 	"Workspace"
@@ -243,18 +252,22 @@ testSaveRestore
 
 	"View Composer"
 	vc := self newViewComposerCard.
-	vc resourceIdentifier: (ResourceIdentifier class: ClassBrowserShell).
+	vc resourceIdentifier: (ResourceIdentifier class: Shell).
 
 	"View Browser"
 	rb := self newViewBrowserCard.
-	rb resource: (ResourceIdentifier class: ClassBrowserShell).
+	rb resource: (ResourceIdentifier class: Shell).
 
 	"Make the system browser the current card"
 	sb ensureVisible.
+	"Enabling redraw will also unhide"
+	ideaShell view enableRedraw.
 
 	"Save it"
 	saveString := ideaShell saveStateString.
-	newIdeaShell := IdeaSpaceShell show configureFromSavedStateString: saveString.
+	"Restore state into a new idea space"
+	newIdeaShell := IdeaSpaceShell create.
+	newIdeaShell configureFromSavedStateString: saveString.
 	self assert: newIdeaShell cards size = 6.
 	newSb := newIdeaShell cards first.
 	newCb := newIdeaShell cards second.
@@ -262,24 +275,24 @@ testSaveRestore
 	newWs := newIdeaShell cards fourth.
 	newVc := newIdeaShell cards fifth.
 	newRb := newIdeaShell cards sixth.
+	self assert: newIdeaShell currentCard == newSb.
 	self assert: (newSb isKindOf: SystemBrowserShell).
 	self assert: newSb actualClass == sb actualClass.
 	self assert: newSb packages = sb packages.
 	self assert: (newCb isKindOf: ClassBrowserShell).
 	self assert: newCb actualClass == cb actualClass.
+	self assert: newCb method == cb method.
 	self deny: (newCb getPinStateFor: 'filtersSlidey').
 	self assert: (newEb isKindOf: EnvironmentBrowserShell).
-	self assert: (newWs isKindOf: SmalltalkWorkspaceDocument).
-	self assert: (newVc isKindOf: ViewComposer).
-	self assert: (newRb isKindOf: ResourceBrowser).
-	self assert: newCb method == cb method.
-	self assert: newIdeaShell currentCard == newSb.
 	self assert: newEb method == eb method.
+	self assert: (newWs isKindOf: SmalltalkWorkspaceDocument).
 	self assert: newWs getDocumentData = ws getDocumentData.
 	self assert: newWs filename = ws filename.
 	self assert: newWs workspace evaluationPools = ws workspace evaluationPools.
 	self assert: newWs workspace evaluationPools first == ws workspace evaluationPools first.
+	self assert: (newVc isKindOf: ViewComposer).
 	self assert: newVc resourceIdentifier = vc resourceIdentifier.
+	self assert: (newRb isKindOf: ResourceBrowser).
 	self assert: newRb resource = rb resource.
 	newIdeaShell view destroy!
 
@@ -288,7 +301,9 @@ testSaveRestoreEmpty
 
 	| saveString newIdeaShell |
 	saveString := ideaShell saveStateString.
-	newIdeaShell := IdeaSpaceShell show configureFromSavedStateString: saveString.
+	newIdeaShell := IdeaSpaceShell create.
+	newIdeaShell configureFromSavedStateString: saveString.
+	newIdeaShell show.
 	self assert: newIdeaShell cards isEmpty.
 	newIdeaShell view destroy!
 
@@ -306,6 +321,7 @@ testSaveRestoreErrors
 		raise: Compiler notificationClass.
 	newIdeaShell view destroy! !
 !IdeaSpaceShellTest categoriesFor: #create:subclassOf:!helpers!private! !
+!IdeaSpaceShellTest categoriesFor: #createThreeCards!helpers!private! !
 !IdeaSpaceShellTest categoriesFor: #newClassBrowserCard!private!unit tests! !
 !IdeaSpaceShellTest categoriesFor: #newEnvironmentBrowserCard!private!unit tests! !
 !IdeaSpaceShellTest categoriesFor: #newSystemBrowserCard!private!unit tests! !

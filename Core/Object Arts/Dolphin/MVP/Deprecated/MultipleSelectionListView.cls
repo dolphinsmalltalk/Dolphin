@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ListView subclass: #MultipleSelectionListView
 	instanceVariableNames: ''
@@ -64,7 +64,7 @@ selectionOrNil
 icon
 	"Answers an Icon that can be used to represent this class"
 
-	^CompiledMethod deprecatedIcon!
+	^Smalltalk developmentSystem deprecatedMethodIcon!
 
 publishedAspectsOfInstances
 	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."

@@ -107,7 +107,7 @@ inverseMatchVector: matchVector
 		do: [:i | (matchVector at: i) ifNotNil: [:arg | inverseMatchVector at: arg put: i]].
 	^inverseMatchVector!
 
-longestCommonSubsequenceInInterval: aInterval withCollection: anOrderedCollection inInterval: bInterval 
+longestCommonSubsequenceInInterval: aInterval withCollection: anOrderedCollection inInterval: bInterval
 	"This method computes the longest common subsequence in self and anOrderedCollection, restricted to aInterval and bInterval respectively.  It uses the algorithm described in A Fast Algorithm for Computing Longest Common Subsequences, CACM, vol.20, no.5, pp.350-353, May 1977, with a few minor improvements to improve the speed."
 
 	"First we prune off any common elements at the beginning or end."
@@ -119,8 +119,8 @@ longestCommonSubsequenceInInterval: aInterval withCollection: anOrderedCollectio
 	bFinish := bInterval last.
 	matchVector := Array new: aInterval size.
 	
-	[(aStart <= aFinish and: [bStart <= bFinish]) 
-		and: [(self at: aStart) = (anOrderedCollection at: bStart)]] 
+	[(aStart <= aFinish and: [bStart <= bFinish])
+		and: [(self at: aStart) = (anOrderedCollection at: bStart)]]
 			whileTrue: 
 				[matchVector at: aStart - aInterval first + 1 put: bStart.
 				aStart := aStart + 1.
@@ -128,43 +128,42 @@ longestCommonSubsequenceInInterval: aInterval withCollection: anOrderedCollectio
 
 	"now the end"
 	
-	[(aStart <= aFinish and: [bStart <= bFinish]) 
-		and: [(self at: aFinish) = (anOrderedCollection at: bFinish)]] 
+	[(aStart <= aFinish and: [bStart <= bFinish])
+		and: [(self at: aFinish) = (anOrderedCollection at: bFinish)]]
 			whileTrue: 
 				[matchVector at: aFinish - aInterval first + 1 put: bFinish.
 				aFinish := aFinish - 1.
 				bFinish := bFinish - 1].
 
 	"Now compute the equivalence classes of positions of elements"
-	bMatches := LookupTable withPositionsOf: anOrderedCollection
-				inInterval: (bStart to: bFinish).
-	thresh := SortedCollection new sortBlock: [:x :y | x < y].
+	bMatches := LookupTable withPositionsOf: anOrderedCollection inInterval: (bStart to: bFinish).
+	thresh := SortedCollection sortBlock: [:x :y | x < y].
 	links := Array new: (aFinish - aStart + 1 min: bFinish - bStart + 1).
 	aStart to: aFinish
 		do: 
-			[:i | 
+			[:i |
 			| ai |
 			ai := self at: i.
-			(bMatches includesKey: ai) 
+			(bMatches includesKey: ai)
 				ifTrue: 
 					[(bMatches at: ai) reverseDo: 
-							[:j | 
+							[:j |
 							| k |
 							k := thresh replaceNextLargerWith: j.
-							k notNil 
+							k notNil
 								ifTrue: 
 									[| link |
 									link := LinkElement new.
 									k > 1 ifTrue: [link nextLink: (links at: k - 1)].
 									link value: (Array with: i with: j).
 									links at: k put: link]]]].
-	thresh size > 0 
+	thresh size > 0
 		ifTrue: 
 			[| link |
 			link := links at: thresh size.
 			
 			[matchVector at: (link value at: 1) put: (link value at: 2).
-			link nextLink notNil] 
+			link nextLink notNil]
 					whileTrue: [link := link nextLink]].
 	^matchVector! !
 !SequenceableCollection categoriesFor: #inverseMatchVector:!computing differences!public! !

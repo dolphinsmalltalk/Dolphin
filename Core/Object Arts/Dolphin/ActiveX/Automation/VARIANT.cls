@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 OLEFinalizableStructure subclass: #VARIANT
 	instanceVariableNames: 'data'
 	classVariableNames: 'Unspecified VTClasses VTNames'
 	poolDictionaries: 'AXAutomationConstants AXAutomationErrors Win32Constants'
 	classInstanceVariableNames: ''!
-VARIANT guid: (GUID fromString: '{C06F3B65-0868-11D3-93AF-00A024CA708A}')!
+VARIANT guid: (GUID fromString: '{c06f3b65-0868-11d3-93af-00a024ca708a}')!
 VARIANT comment: 'VARIANT is an <ExternalStructure> to represent the OLE Automation VARIANT and VARIANTARG types.
 
 A VARIANT is basically a discriminated union which can represent all the parameter types which can be passed to and returned from member functions of Automation compatible (oleautomation) interfaces by Automation controllers and servers. These types are constrained by those which VB can handle, and hence there are no unsigned integers. A VARIANT''s type tag is stored as a 16-bit <integer> at the start of the structure, and is accessing with the #vt/vt: methods. Note that not all of the VT_XXX types are actually supported by the various variant manipulation functions provided by the Automation library, e.g. VT_LPSTR, as some are intended for type description and other purposes.
@@ -400,6 +400,9 @@ isDispatch
 	^self vt == VT_DISPATCH
 !
 
+isEmpty
+	^self vt == VT_EMPTY!
+
 isObject
 	"Answer whether the receiver wraps a COM object."
 
@@ -762,6 +765,7 @@ word: newValue
 !VARIANT categoriesFor: #isArray!public!testing! !
 !VARIANT categoriesFor: #isByRef!private!testing! !
 !VARIANT categoriesFor: #isDispatch!public!testing! !
+!VARIANT categoriesFor: #isEmpty!public! !
 !VARIANT categoriesFor: #isObject!public!testing! !
 !VARIANT categoriesFor: #lpvoid!accessing!public! !
 !VARIANT categoriesFor: #lVal!accessing!private! !
@@ -812,7 +816,7 @@ classForVT: vartype
 	"Answer a class of object suitable for representing values of the
 	Variant type, vartype."
 
-	^VTClasses at: vartype!
+	^VTClasses at: vartype + 1!
 
 clear: addressOrBytes 
 	"Free an instance of the structure which instances of the receiver wrap
@@ -1020,53 +1024,52 @@ initializeVTClasses
 	"Private - Initialize the map of VARENUM type codes to suitable buffer classes.
 		VARIANT initializeVTClasses
 	N.B. Not all VT_XXX members of the VARENUM enumeration are valid as types in a VARIANT
-	used for Automation purposes (see wtypes.h) so a number have no mapping in the dictionary."
+	used for Automation purposes (see wtypes.h) so a number have no mapping."
 
-	VTClasses := IdentityDictionary new.
-	VTClasses
-		"at: VT_BLOB			put: ByteArray;		Blob - OLE Property sets only"
-		"at: VT_BLOB_OBJECT		put: ByteArray;		Blob containing an object - OLE Property sets only"
-		at: VT_BOOL			put: VARIANT_BOOL;			"Automation (Basic) boolean"
-		at: VT_BSTR			put: BSTR;				"Automation (Basic) String"
-		at: VT_CARRAY			put: ExternalArray;	"C-style array - TYPEDESC only"
-		"at: VT_CF				put: DWORD;		Clipboard format - OLE Property sets only"
-		at: VT_CLSID			put: CLSID;			"Class ID - OLE Property sets only"
-		at: VT_CY				put: CURRENCY;	"Automation Currency - 64-bit fixed point, 4 decimal places"
-		at: VT_DATE			put: DATE;			"Automation (double) date"
-		at: VT_DECIMAL			put: DECIMAL;		"16-byte fixed point"
-		at: VT_DISPATCH		put: IDispatch;		"IDispatch pointer"
-		at: VT_EMPTY			put: UndefinedObject;	"nil (in ST) or Nothing (in VB)"
-		at: VT_ERROR			put: HRESULT;		"Status code (SCODE)"
-		at: VT_FILETIME			put: FILETIME;		"FILETIME - OLE Property sets only"
-		at: VT_HRESULT			put: HRESULT;		"HRESULT return code - TYPEDESC only"
-		at: VT_I1				put: SBYTE;				"Signed 8-bit integer"
-		at: VT_I2				put: SWORD;			"16-bit signed integer"
-		at: VT_I4				put: SDWORD;		"32-bit signed integer"
-		at: VT_I8				put: LARGE_INTEGER;	"64-bit signed integer - supported type on WinXP"
-		at: VT_INT				put: SDWORD;		"signed machine dependent integer - TYPEDESC only"
-		at: VT_LPSTR			put: String;			"Null-terminated ANSI string - OLE Property Sets and TYPEDESC only"
-		at: VT_LPWSTR			put: UnicodeString;		"Null-terminated Unicode string - OLE Property Sets and TYPEDESC only"
-		"at: VT_NULL			put: UndefinedObject;	""SQL Null (i.e. nil)"
-		at: VT_PTR				put: ExternalAddress;	"Pointer type - TYPEDESC only"
-		at: VT_R4				put: FLOAT;			"Single precision floating point"
-		at: VT_R8				put: DOUBLE;		"Double precision floating point"
-		"at: VT_SAFEARRAY		put: SAFEARRAY;	As VT_ARRAY, but TYPEDESC only"
-		"at: VT_STORAGE		put: IStorage;		Name of storage - OLE Property Sets only"
-		"at: VT_STORED_OBJECT	put: IStorage;		Storage containing object - OLE Property Sets only"
-		"at: VT_STREAM			put: IStream;			Name of storage - OLE Property Sets only"
-		"at: VT_STREAMED_OBJECT	put: IStream;			Stream containing object - OLE Property Sets only"
-		at: VT_UINT			put: DWORD;		"unsigned machine dependent integer - TYPEDESC only"
-		at: VT_UI1				put: BYTE;				"8-bit unsigned integer (byte)"
-		at: VT_UI2				put: WORD;			"16-bit unsigned integer (word)"
-		at: VT_UI4				put: DWORD;		"32-bit unsigned integer (qword)"
-		at: VT_UI8				put: ULARGE_INTEGER;"64-bit unsigned integer - OLE Prop Sets, TYPEDESC only"
-		at: VT_UNKNOWN		put: IUnknown;		"IUnknown pointer"
-		at: VT_USERDEFINED		put: AXRecord;	"user defined type, a typedef in face - TYPEDESC only"
-		at: VT_RECORD 			put: ExternalStructure;
-		at: VT_VARIANT			put: VARIANT;		"Reference to another VARIANT"
-		"at: VT_VECTOR			put: ExternalArray;		Simple counted array - OLE property sets only"
-		at: VT_VOID			put: VOID;		"C void - TYPEDESC only, for generic pointer outputs"
-		shrink!
+	VTClasses := (Array new: VT_CLSID + 1)
+		"at: VT_BLOB+1			put: ByteArray;		Blob - OLE Property sets only"
+		"at: VT_BLOB_OBJECT+1	put: ByteArray;		Blob containing an object - OLE Property sets only"
+		at: VT_BOOL+1			put: VARIANT_BOOL;			"Automation (Basic) boolean"
+		at: VT_BSTR+1			put: BSTR;				"Automation (Basic) String"
+		at: VT_CARRAY+1		put: ExternalArray;	"C-style array - TYPEDESC only"
+		at: VT_CF+1			put: DWORD;		"Clipboard format - OLE Property sets only"
+		at: VT_CLSID+1			put: CLSID;			"Class ID - OLE Property sets only"
+		at: VT_CY+1			put: CURRENCY;	"Automation Currency - 64-bit fixed point, 4 decimal places"
+		at: VT_DATE+1			put: DATE;			"Automation (double) date"
+		at: VT_DECIMAL+1		put: DECIMAL;		"16-byte fixed point"
+		at: VT_DISPATCH+1		put: IDispatch;		"IDispatch pointer"
+		at: VT_EMPTY+1		put: UndefinedObject;	"nil (in ST) or Nothing (in VB)"
+		at: VT_ERROR+1		put: HRESULT;		"Status code (SCODE)"
+		at: VT_FILETIME+1		put: FILETIME;		"FILETIME - OLE Property sets only"
+		at: VT_HRESULT		put: HRESULT;		"HRESULT return code - TYPEDESC only"
+		at: VT_I1+1			put: SBYTE;				"Signed 8-bit integer"
+		at: VT_I2+1			put: SWORD;			"16-bit signed integer"
+		at: VT_I4+1			put: SDWORD;		"32-bit signed integer"
+		at: VT_I8+1			put: LARGE_INTEGER;	"64-bit signed integer - supported type on WinXP"
+		at: VT_INT+1			put: SDWORD;		"signed machine dependent integer - TYPEDESC only"
+		at: VT_LPSTR+1		put: String;			"Null-terminated ANSI string - OLE Property Sets and TYPEDESC only"
+		at: VT_LPWSTR+1		put: UnicodeString;		"Null-terminated Unicode string - OLE Property Sets and TYPEDESC only"
+		"at: VT_NULL+1			put: UndefinedObject;	""SQL Null (i.e. nil)"
+		at: VT_PTR+1			put: ExternalAddress;	"Pointer type - TYPEDESC only"
+		at: VT_R4+1			put: FLOAT;			"Single precision floating point"
+		at: VT_R8+1			put: DOUBLE;		"Double precision floating point"
+		at: VT_SAFEARRAY+1		put: SAFEARRAY;	"As VT_ARRAY, but TYPEDESC only"
+		"at: VT_STORAGE+1		put: IStorage;		Name of storage - OLE Property Sets only"
+		"at: VT_STORED_OBJECT+1	put: IStorage;		Storage containing object - OLE Property Sets only"
+		"at: VT_STREAM+1			put: IStream;			Name of storage - OLE Property Sets only"
+		"at: VT_STREAMED_OBJECT+1	put: IStream;			Stream containing object - OLE Property Sets only"
+		at: VT_UINT+1			put: DWORD;		"unsigned machine dependent integer - TYPEDESC only"
+		at: VT_UI1+1			put: BYTE;				"8-bit unsigned integer (byte)"
+		at: VT_UI2+1			put: WORD;			"16-bit unsigned integer (word)"
+		at: VT_UI4+1			put: DWORD;		"32-bit unsigned integer (qword)"
+		at: VT_UI8+1			put: ULARGE_INTEGER;"64-bit unsigned integer - OLE Prop Sets, TYPEDESC only"
+		at: VT_UNKNOWN+1		put: IUnknown;		"IUnknown pointer"
+		at: VT_USERDEFINED+1	put: AXRecord;	"user defined type, a typedef in face - TYPEDESC only"
+		at: VT_RECORD+1		put: ExternalStructure;
+		at: VT_VARIANT+1		put: VARIANT;		"Reference to another VARIANT"
+		"at: VT_VECTOR+1		put: ExternalArray;		Simple counted array - OLE property sets only"
+		at: VT_VOID+1			put: VOID;		"C void - TYPEDESC only, for generic pointer outputs"
+		yourself!
 
 initializeVTNames
 	"Private - Initialize the map of VARENUM type codes ot symbolic type names.

@@ -10,6 +10,9 @@ SequenceableCollectionTest comment: 'SUnitBrowser openOnTestCase: self'!
 !SequenceableCollectionTest categoriesForClass!Unclassified! !
 !SequenceableCollectionTest methodsFor!
 
+assimilateResultElement: anObject
+	^self assimilate: anObject!
+
 byteArrayForSequence: aCollection
 	| answer |
 	answer := ByteArray new: aCollection size.
@@ -102,6 +105,16 @@ testBinarySearch
 	self assert: (searchee binarySearchFor: (searchee at: 1) using: lessThan) = 1.
 	self assert: (searchee binarySearchFor: (searchee at: 8) using: lessThan) = 8.
 	self assert: (searchee binarySearchFor: (searchee at: 26) using: lessThan) = 26!
+
+testConcatenation
+	| a b |
+	#(#(#() #()) #(#() #($a)) #(#() #($a $b)) #(#($a) #($b)) #(#($a) #($b $c)) #(#($a $b) #($c $d)))
+		do: 
+			[:eachPair |
+			a := self newUnsortedCollection: eachPair first.
+			b := self newCollection: eachPair last.
+			self verifyConcatenation: a with: b.
+			self verifyConcatenation: b with: a]!
 
 testCopyFromTo
 	| source empty |
@@ -536,6 +549,41 @@ testLastColon
 	self should: [one last: -1] raise: Error.
 !
 
+testMixedConcatenation
+	"Test concatenating other types of sequenceable collection onto an array"
+
+	| subjects |
+	subjects := #(#() #(100) #(101 102)) collect: [:each | self newCollection: each].
+	(Array
+		with: (Array
+				with: String empty
+				with: UnicodeString empty
+				with: ByteArray new
+				with: OrderedCollection new
+				with: (1 to: 0))
+		with: (Array
+				with: 'c'
+				with: 'c' asUnicodeString
+				with: #[255]
+				with: (OrderedCollection with: 123)
+				with: (200 to: 200))
+		with: (Array
+				with: 'cd'
+				with: 'cd' asUnicodeString
+				with: #[1 255]
+				with: (OrderedCollection with: 123 with: $x)
+				with: (200 to: 201)))
+			do: 
+				[:args |
+				args do: 
+						[:eachCase |
+						subjects do: 
+								[:each |
+								| result |
+								result := self verifyConcatenation: eachCase with: each.
+								self deny: each == result.
+								self assert: result class == self collectionClass]]]!
+
 testReplaceFromToWithStartingAt
 	| a |
 	a := self newCollection: #($1 $2 $3 $4 $5).
@@ -565,9 +613,21 @@ testReplaceFromToWithStartingAt
 unsortedCollectionClass
 	^self collectionClass!
 
+verifyConcatenation: b with: a
+	| result aSize bSize |
+	result := a , b.
+	aSize := a size.
+	bSize := b size.
+	self assert: aSize + bSize equals: result size.
+	1 to: aSize do: [:i | self assert: (a at: i) equals: (result at: i)].
+	1 to: bSize
+		do: [:i | self assert: (self assimilateResultElement: (b at: i)) equals: (result at: i + aSize)].
+	^result!
+
 verifyIndexOfAnyOf: searchFor startingAt: startInteger in: searchee is: foundInteger 
 	self assert: (searchee indexOfAnyOf: searchFor startingAt: startInteger) = foundInteger.
 	self assert: (searchee indexOfAnyOf: searchFor asArray startingAt: startInteger) = foundInteger! !
+!SequenceableCollectionTest categoriesFor: #assimilateResultElement:!private! !
 !SequenceableCollectionTest categoriesFor: #byteArrayForSequence:!helpers!private! !
 !SequenceableCollectionTest categoriesFor: #collectionClass!helpers!private! !
 !SequenceableCollectionTest categoriesFor: #newCopy:!helpers!private! !
@@ -576,6 +636,7 @@ verifyIndexOfAnyOf: searchFor startingAt: startInteger in: searchee is: foundInt
 !SequenceableCollectionTest categoriesFor: #testAsByteArray!public!unit tests! !
 !SequenceableCollectionTest categoriesFor: #testBeginsWith!public!unit tests! !
 !SequenceableCollectionTest categoriesFor: #testBinarySearch!public!unit tests! !
+!SequenceableCollectionTest categoriesFor: #testConcatenation!public!unit tests! !
 !SequenceableCollectionTest categoriesFor: #testCopyFromTo!public!unit tests! !
 !SequenceableCollectionTest categoriesFor: #testEndsWith!public!unit tests! !
 !SequenceableCollectionTest categoriesFor: #testFirst!public!unit tests! !
@@ -587,8 +648,10 @@ verifyIndexOfAnyOf: searchFor startingAt: startInteger in: searchee is: foundInt
 !SequenceableCollectionTest categoriesFor: #testIndexOfAnyOfStartingAt!public!unit tests! !
 !SequenceableCollectionTest categoriesFor: #testLast!public!unit tests! !
 !SequenceableCollectionTest categoriesFor: #testLastColon!public!unit tests! !
+!SequenceableCollectionTest categoriesFor: #testMixedConcatenation!public! !
 !SequenceableCollectionTest categoriesFor: #testReplaceFromToWithStartingAt!public!unit tests! !
 !SequenceableCollectionTest categoriesFor: #unsortedCollectionClass!public!unit tests! !
+!SequenceableCollectionTest categoriesFor: #verifyConcatenation:with:!private!unit tests! !
 !SequenceableCollectionTest categoriesFor: #verifyIndexOfAnyOf:startingAt:in:is:!private!unit tests! !
 
 !SequenceableCollectionTest class methodsFor!

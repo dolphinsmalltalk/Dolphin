@@ -230,10 +230,12 @@ storeOn: aStream
 
 allResourceIdentifiers
 	| rids |
-	rids:= OrderedCollection new: 1000. 
-	Object withAllSubclassesDo: [:each | rids addAll: each resourceIdentifiers].
-	^rids asSortedCollection
-!
+	rids := OrderedCollection new: 512.
+	self allResourceIdentifiersDo: [:rid | rids addLast: rid].
+	^rids!
+
+allResourceIdentifiersDo: aMonadicValuable
+	Object withAllSubclassesDo: [:each | each resourceIdentifiersDo: aMonadicValuable]!
 
 class: aClass 
 	^self class: aClass name: 'Default view'!
@@ -267,25 +269,38 @@ icon
 
 	^(self environment at: #Icon) fromId: 'Resource.ico'!
 
-nameFromSelector: aSymbol 
+nameFromSelector: aSymbol
+	| resname prefixSize nameSize |
 	(aSymbol beginsWith: self selectorPrefix) ifFalse: [^nil].
-	^(aSymbol rightString: aSymbol size - self selectorPrefix size) copyReplacing: $_
-		withObject: Character space!
+	prefixSize := self selectorPrefix size.
+	resname := String new: (nameSize := aSymbol size - prefixSize).
+	1 to: nameSize
+		do: 
+			[:i |
+			| ch |
+			ch := aSymbol at: i + prefixSize.
+			resname at: i put: (ch == $_ ifTrue: [$\x20] ifFalse: [ch])].
+	^resname!
 
 onPreStripImage
 	"Private -  Allow the receiver to be stripped by clearing lazy initialized class variable
 	which holds an instance of the receiver."
 
-	self allResourceIdentifiers do: [:each | each icon: nil]!
+	self allResourceIdentifiersDo: [:each | each icon: nil]!
 
 removeResource: aResourceIdentifier 
 	^aResourceIdentifier owningClass class removeSelector: aResourceIdentifier selector ifAbsent: []!
 
-selectorFromName: aString 
-	| selector |
-	selector := (aString copyReplacing: Character space withObject: $_) 
-				select: [:each | each isAlphaNumeric or: [each = $_]].
-	^('resource_' , selector) asSymbol!
+selectorFromName: aString
+	| selector prefix |
+	prefix := self selectorPrefix.
+	selector := WriteStream on: (String new: prefix size + aString size).
+	aString do: 
+			[:each |
+			each == $\x20
+				ifTrue: [selector nextPut: $_]
+				ifFalse: [each isAlphaNumeric ifTrue: [selector nextPut: each]]].
+	^(prefix , selector contents) asSymbol!
 
 selectorPrefix
 	^'resource_'!
@@ -301,6 +316,7 @@ value: a value: b
 viewResourceCategoryName
 	^'resources-views'! !
 !ResourceIdentifier class categoriesFor: #allResourceIdentifiers!accessing!public! !
+!ResourceIdentifier class categoriesFor: #allResourceIdentifiersDo:!accessing!enumerating!public! !
 !ResourceIdentifier class categoriesFor: #class:!instance creation!public! !
 !ResourceIdentifier class categoriesFor: #class:name:!instance creation!public! !
 !ResourceIdentifier class categoriesFor: #class:selector:!instance creation!public! !

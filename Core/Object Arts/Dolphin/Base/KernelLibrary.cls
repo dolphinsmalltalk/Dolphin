@@ -34,6 +34,10 @@ allocConsole
 	<stdcall: bool AllocConsole>
 	^self invalidCall!
 
+attachConsole: anInteger
+	<stdcall: bool AttachConsole dword>
+	^self invalidCall!
+
 beep: anInteger dwDuration: dwDuration
 	"Generates simple tones on the speaker. 
 		BOOL Beep(
@@ -108,19 +112,15 @@ createDirectory: path lpSecurityAttributes: aSECURITYATTRIBUTES
 	<stdcall: bool CreateDirectoryA lpstr lpvoid>
 	^self invalidCall!
 
-createEvent: aSECURITYATTRIBUTES bManualReset: aBoolManual bInitialState: aBoolState lpName: aStringPathName
-	"Answer a new Win32 Event object (for thread synchronisation), with the specified
-	security attributes (if aSECURITYATTRIBUTES is nil then the default security 
-	attributes are used), mode (manual or automatic), initial state 
-	(signalled/not-signalled), and name (if aStringPathName is nil, then unnamed).
-	Please see Win32 SDK help for more information."
+createEvent: lpEventAttributes bManualReset: bManualReset bInitialState: bInitialState lpName: lpName
+	"Invoke the CreateEvent() function of the module wrapped by the receiver.
+	Helpstring: Creates a named or unnamed event object
 
-	"HANDLE CreateEvent(
-		LPSECURITY_ATTRIBUTES  lpEventAttributes,	// address of security attributes  
-		BOOL  bManualReset,	// flag for manual-reset event 
-		BOOL  bInitialState,	// flag for initial state 
-		LPCTSTR  lpName 	// address of event-object name  
-	);"
+		HANDLE __stdcall CreateEvent(
+			[in]SECURITY_ATTRIBUTES* lpEventAttributes,
+			BOOL bManualReset,
+			BOOL bInitialState,
+			LPCSTR lpName);"
 
 	<stdcall: handle CreateEventA lpvoid bool bool lpstr>
 	^self invalidCall!
@@ -429,16 +429,16 @@ formatMessage: dwFlags lpSource: aStringOrHandleOrNil dwMessageId: dwMessageId d
 	<stdcall: dword FormatMessageA dword lpvoid dword dword lpvoid dword lpvoid>
 	^self invalidCall!
 
-formatMessage: messageId source: aHandleOrString flags: dwFlag withArguments: arguments 
+formatMessage: messageId source: aHandleOrString flags: dwFlag withArguments: arguments
 	"Answer a <readableString> which is a message formatted from the specified Win32 format
 	string (see Win32 help) and the arguments in the <sequencedReadableCollection>, arguments,
 	which will be substitued for the argument identified as %1..%n in the format string."
 
 	| ptr len msg args |
-	ptr := ExternalMemory new.
+	ptr := ExternalAddress new.
 	args := ByteArray new: arguments size * VMConstants.IntPtrSize.
 	arguments keysAndValuesDo: 
-			[:i :a | 
+			[:i :a |
 			args uintPtrAtOffset: (i - 1) * VMConstants.IntPtrSize
 				put: (a isInteger ifTrue: [a] ifFalse: [a yourAddress])].
 	len := self
@@ -452,7 +452,7 @@ formatMessage: messageId source: aHandleOrString flags: dwFlag withArguments: ar
 					arguments: args.	"To enable us to distinguish the error case from the empty string case"
 
 	"FormatMessage() unhelpfully treats the empty string result as an error, so we must handle specially."
-	len == 0 
+	len == 0
 		ifTrue: 
 			[| err |
 			err := self getLastError.
@@ -460,7 +460,10 @@ formatMessage: messageId source: aHandleOrString flags: dwFlag withArguments: ar
 			msg := String new]
 		ifFalse: 
 			[msg := String fromAddress: ptr length: len.
-			ptr free].
+			self
+				heapFree: self getProcessHeap
+				dwFlags: 0
+				lpMem: ptr].
 	^msg
 
 	"
@@ -664,6 +667,10 @@ getFileTime: hFile
 		);"
 
 	<stdcall: bool GetFileTime handle FILETIME* FILETIME* FILETIME*>
+	^self invalidCall!
+
+getFileType: anExternalHandle
+	<stdcall: dword GetFileType handle>
 	^self invalidCall!
 
 getFullPathName: fname nBufferLength: anInteger lpBuffer: path lpFilePart: aDWORD
@@ -1088,6 +1095,15 @@ localFileTimeToFileTime: lpLocalFileTime lpFileTime: lpFileTime
 	<stdcall: bool LocalFileTimeToFileTime FILETIME* FILETIME* >
 	^self invalidCall!
 
+localFree: hMem
+	"Invoke the LocalFree() function of the module wrapped by the receiver.
+
+		wireHGLOBAL __stdcall LocalFree(
+			wireHGLOBAL hMem);"
+
+	<stdcall: handle LocalFree handle>
+	^self invalidCall!
+
 lockResource: anExternalHandle
 	"Lock the specified resource in memory. 
 		LPVOID LockResource(
@@ -1203,17 +1219,12 @@ outputDebugString: aString
 	<stdcall: void OutputDebugStringA lpstr>
 	^self invalidCall!
 
-pulseEvent: aHandle
-	"Set to its 'signalled' state the Win32 Event identified by aHandle, 
-	then reset it to its 'non-signalled' state. Answer whether the function 
-	succeeded or failed. Manual reset Events release all waiting threads when
-	pulsed, auto-reset events release a single waiting thread. If no threads
-	are waiting for the event, then the effect is to reset the Event to its
-	non-signalled state."
+pulseEvent: hEvent
+	"Invoke the PulseEvent() function of the module wrapped by the receiver.
+	Helpstring: Sets the specified event object to the signaled state and then resets it to the nonsignaled state after releasing the appropriate number of waiting threads
 
-	"BOOL PulseEvent(
-		HANDLE  hEvent 	// handle of event object 
-	);"
+		BOOL __stdcall PulseEvent(
+			HANDLE hEvent);"
 
 	<stdcall: bool PulseEvent handle>
 	^self invalidCall!
@@ -1248,7 +1259,7 @@ raiseException: dwExceptionCode dwExceptionFlags: dwExceptionFlags nNumberOfArgu
 			[in]unsigned long nNumberOfArguments,
 			[in]ULONG_PTR* lpArguments);"
 
-	<stdcall: void RaiseException dword dword dword uintptr*>
+	<stdcall: void RaiseException dword dword dword lpvoid>
 	^self invalidCall!
 
 readFile: aHandle lpBuffer: anAddress nNumberOfBytesToRead: anIntegerBytesToRead
@@ -1286,16 +1297,12 @@ removeDirectory: aStringFileName
 	<stdcall: bool RemoveDirectoryA lpstr>
 	^self invalidCall!
 
-resetEvent: aHandle
-	"Set the specified Win32 Event object to its 'signalled' state.
-	Answer whether the function succeeded or failed. Manual reset
-	Events remain in the signalled state until explicitly reset (e.g.
-	using #resetEvent:), auto-reset events remain in the signalled state
-	until a single thread waiting for the event is released.
+resetEvent: hEvent
+	"Invoke the ResetEvent() function of the module wrapped by the receiver.
+	Helpstring: Sets the specified event object to the nonsignaled state
 
-		BOOL ResetEvent(
-			HANDLE  hEvent 	// handle of event object 
-		);"
+		BOOL __stdcall ResetEvent(
+			HANDLE hEvent);"
 
 	<stdcall: bool ResetEvent handle>
 	^self invalidCall!
@@ -1321,16 +1328,12 @@ setEnvironmentVariable: lpName lpValue: lpValue
 	<stdcall: bool SetEnvironmentVariableA lpstr lpstr>
 	^self invalidCall!
 
-setEvent: aHandle
-	"Set the specified Win32 Event object to its 'signalled' state.
-	Answer whether the function succeeded or failed. Manual reset
-	Events remain in the signalled state until explicitly reset (e.g.
-	using #resetEvent:), auto-reset events remain in the signalled state
-	until a single thread waiting for the event is released.
+setEvent: hEvent
+	"Invoke the SetEvent() function of the module wrapped by the receiver.
+	Helpstring: Sets the specified event object to the signaled state
 
-		BOOL SetEvent(
-			HANDLE  hEvent 	// handle of event object 
-		);"
+		BOOL __stdcall SetEvent(
+			HANDLE hEvent);"
 
 	<stdcall: bool SetEvent handle>
 	^self invalidCall!
@@ -1527,7 +1530,18 @@ virtualQuery: lpAddress lpBuffer: lpBuffer dwLength: dwLength
 			MEMORY_BASIC_INFORMATION* lpBuffer,
 			DWORD dwLength);"
 
-	<stdcall: dword VirtualQuery void* MEMORY_BASIC_INFORMATION* dword>
+	<stdcall: dword VirtualQuery void* lpvoid dword>
+	^self invalidCall!
+
+waitForSingleObject: hHandle dwMilliseconds: dwMilliseconds
+	"Invoke the WaitForSingleObject() function of the module wrapped by the receiver.
+	Helpstring: Waits until the specified object reaches the signaled state, or until the time-out elapses
+
+		unsigned long __stdcall WaitForSingleObject(
+			HANDLE hHandle,
+			unsigned long dwMilliseconds);"
+
+	<overlap stdcall: dword WaitForSingleObject handle dword>
 	^self invalidCall!
 
 wideCharToMultiByte: codePage
@@ -1607,13 +1621,14 @@ zeroMemory: pvDest length: cBytes
 	^self invalidCall! !
 !KernelLibrary categoriesFor: #addAtom:!public!win32 functions-atom! !
 !KernelLibrary categoriesFor: #allocConsole!public!win32 functions-console! !
+!KernelLibrary categoriesFor: #attachConsole:!public!win32 functions-console! !
 !KernelLibrary categoriesFor: #beep:dwDuration:!public!win32 functions-error! !
 !KernelLibrary categoriesFor: #beginUpdateResource:bDeleteExistingResources:!public!win32 functions-resource! !
 !KernelLibrary categoriesFor: #close!public!realizing/unrealizing! !
 !KernelLibrary categoriesFor: #closeHandle:!public!win32 functions-handles and objects! !
 !KernelLibrary categoriesFor: #copyFile:lpNewFileName:bfailIfExists:!public!win32 functions-file! !
 !KernelLibrary categoriesFor: #createDirectory:lpSecurityAttributes:!public!win32 functions-file! !
-!KernelLibrary categoriesFor: #createEvent:bManualReset:bInitialState:lpName:!public!win32 functions-synchronization! !
+!KernelLibrary categoriesFor: #createEvent:bManualReset:bInitialState:lpName:!**auto generated**!public!win32 functions-synchronization! !
 !KernelLibrary categoriesFor: #createFile:dwDesiredAccess:dwSharedMode:lpSecurityAttributes:dwCreationDistribution:dwFlagsAndAttributes:hTemplateFile:!public!win32 functions-file! !
 !KernelLibrary categoriesFor: #createMutex:bInitialOwner:lpName:!**auto generated**!public! !
 !KernelLibrary categoriesFor: #createProcess:lpCommandLine:lpProcessAttributes:lpThreadAttributes:bInheritsHandles:dwCreationFlags:lpEnvironment:lpCurrentDirectory:lpStartupInfo:lpProcessInformation:!public!win32 functions-process and thread! !
@@ -1652,6 +1667,7 @@ zeroMemory: pvDest length: cBytes
 !KernelLibrary categoriesFor: #getFileAttributes:!public!win32 functions-file! !
 !KernelLibrary categoriesFor: #getFileSize:lpFileSizeHigh:!public!win32 functions-file system! !
 !KernelLibrary categoriesFor: #getFileTime:lpCreationTime:lpLastAccessTime:lpLastWriteTime:!public!win32 functions-file! !
+!KernelLibrary categoriesFor: #getFileType:!public!win32 functions-file system! !
 !KernelLibrary categoriesFor: #getFullPathName:nBufferLength:lpBuffer:lpFilePart:!public!win32 functions-file! !
 !KernelLibrary categoriesFor: #getLastError!public!win32 functions-error! !
 !KernelLibrary categoriesFor: #getLocaleInfo:lCType:lpLCData:cchData:!public!win32 functions-natural language support! !
@@ -1689,6 +1705,7 @@ zeroMemory: pvDest length: cBytes
 !KernelLibrary categoriesFor: #loadLibraryEx:hFile:dwFlags:!public!win32 functions-dynamic link library! !
 !KernelLibrary categoriesFor: #loadResource:hResInfo:!public!win32 functions-resource! !
 !KernelLibrary categoriesFor: #localFileTimeToFileTime:lpFileTime:!public!win32 functions-date and time! !
+!KernelLibrary categoriesFor: #localFree:!**auto generated**!public! !
 !KernelLibrary categoriesFor: #lockResource:!public!win32 functions-resource! !
 !KernelLibrary categoriesFor: #lstrcmp:lpString2:!public!win32 functions-string manipulation! !
 !KernelLibrary categoriesFor: #lstrcmpi:lpString2:!public!win32 functions-string manipulation! !
@@ -1698,18 +1715,18 @@ zeroMemory: pvDest length: cBytes
 !KernelLibrary categoriesFor: #multiByteToWideChar:dwFlags:lpMultiByteStr:cchMultiByte:lpWideCharStr:cchWideChar:!public!win32 functions-string manipulation! !
 !KernelLibrary categoriesFor: #openProcess:bInheritHandle:dwProcessId:!public!win32 functions-process and thread! !
 !KernelLibrary categoriesFor: #outputDebugString:!public!win32 functions-debugging! !
-!KernelLibrary categoriesFor: #pulseEvent:!public!win32 functions-synchronization! !
+!KernelLibrary categoriesFor: #pulseEvent:!**auto generated**!public!win32 functions-synchronization! !
 !KernelLibrary categoriesFor: #queryPerformanceCounter:!public!win32 functions-performance monitoring! !
 !KernelLibrary categoriesFor: #queryPerformanceFrequency:!public!win32 functions-performance monitoring! !
 !KernelLibrary categoriesFor: #raiseException:dwExceptionFlags:nNumberOfArguments:lpArguments:!**auto generated**!public! !
 !KernelLibrary categoriesFor: #readFile:lpBuffer:nNumberOfBytesToRead:lpNumberOfBytesRead:lpOverlapped:!public!win32 functions-file! !
 !KernelLibrary categoriesFor: #releaseMutex:!**auto generated**!public! !
 !KernelLibrary categoriesFor: #removeDirectory:!public!win32 functions-file! !
-!KernelLibrary categoriesFor: #resetEvent:!public!win32 functions-synchronization! !
+!KernelLibrary categoriesFor: #resetEvent:!**auto generated**!public!win32 functions-synchronization! !
 !KernelLibrary categoriesFor: #setConsoleCtrlHandler:add:!public!win32 functions-console! !
 !KernelLibrary categoriesFor: #setEndOfFile:!public!win32 functions-file! !
 !KernelLibrary categoriesFor: #setEnvironmentVariable:lpValue:!public!win32 functions-process and thread! !
-!KernelLibrary categoriesFor: #setEvent:!public!win32 functions-synchronization! !
+!KernelLibrary categoriesFor: #setEvent:!**auto generated**!public!win32 functions-synchronization! !
 !KernelLibrary categoriesFor: #setFilePointer:lDistanceToMove:lpDistanceToMoveHigh:dwMoveMethod:!public!win32 functions-file! !
 !KernelLibrary categoriesFor: #setLastError:!public!win32 functions-error! !
 !KernelLibrary categoriesFor: #setStdHandle:hHandle:!public!win32 functions-console! !
@@ -1728,6 +1745,7 @@ zeroMemory: pvDest length: cBytes
 !KernelLibrary categoriesFor: #virtualFree:dwSize:dwFreeType:!**auto generated**!public! !
 !KernelLibrary categoriesFor: #virtualProtect:dwSize:flNewProtect:lpflOldProtect:!**auto generated**!public! !
 !KernelLibrary categoriesFor: #virtualQuery:lpBuffer:dwLength:!**auto generated**!public! !
+!KernelLibrary categoriesFor: #waitForSingleObject:dwMilliseconds:!**auto generated**!public!win32 functions-synchronization! !
 !KernelLibrary categoriesFor: #wideCharToMultiByte:dwFlags:lpWideCharStr:cchWideChar:lpMultiByteStr:cchMultiByte:lpDefaultChar:lpUsedDefaultChar:!public!win32 functions-string manipulation! !
 !KernelLibrary categoriesFor: #winExec:uCmdShow:!public!win32 functions-process and thread! !
 !KernelLibrary categoriesFor: #writeFile:lpBuffer:nNumberOfBytesToWrite:lpNumberOfBytesWritten:lpOverlapped:!public!win32 functions-file! !
@@ -1750,10 +1768,6 @@ fileName
 
 	^'KERNEL32'!
 
-isWine
-	Smalltalk at: #NTLibrary ifPresent: [:ntl | ^ntl isWine].
-	^false !
-
 open
 	"Answer a new instance of the receiver to represent the Kernel32 DLL. Special handling 
 	is required for this library because opening a library is normally done through the 
@@ -1763,6 +1777,5 @@ open
 	^self fromHandle: VMLibrary default kernelHandle! !
 !KernelLibrary class categoriesFor: #clear!initializing!private! !
 !KernelLibrary class categoriesFor: #fileName!constants!public! !
-!KernelLibrary class categoriesFor: #isWine!public! !
 !KernelLibrary class categoriesFor: #open!instance creation!public! !
 

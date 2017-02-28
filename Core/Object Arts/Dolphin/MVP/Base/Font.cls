@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 GraphicsTool subclass: #Font
 	instanceVariableNames: 'logfont resolution'
@@ -57,10 +57,9 @@ displayOn: aStream
 	would want to see it."
 
 	self name displayOn: aStream.
-	aStream nextPut: $ .
+	aStream nextPut: $\x20.
 	self pointSize displayOn: aStream.
-	aStream nextPutAll: 'pt'.
-!
+	aStream nextPutAll: 'pt'!
 
 handle: hFont
 	"Sets the non-owned handle for the receiver and queries its logical info."

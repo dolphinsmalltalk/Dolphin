@@ -85,13 +85,15 @@ commandLineParser
 	-h - headless (embedded) mode
 	-i imageFile - initialize a new image
 	-q - quiet startup (no splash)
+	-u - run unattended (i.e. don't prompt the user for input)
 	-x - immediately exit
 	"
 
 	^(super commandLineParser)
+		addOption: $u;
 		addOptionAllowingArgument: $d
 			whenPresentDo: 
-				[:rebasePath | 
+				[:rebasePath |
 				Package manager rebaseBasePackagesTo: (rebasePath ifNil: ['.']).
 				self saveImage];
 		addOptionRequiringArgument: $f
@@ -197,7 +199,7 @@ isBinaryLooseMethodInstallationAllowed
 	by the normal source packages. If you accidentally save these source packages they will
 	contain these methods"
 
-	^true!
+	^false!
 
 isDLL
 	"Private - Answer whether the receiver is a shared library, as opposed to an application.
@@ -245,10 +247,18 @@ logComment: aString
 
 	self class sourceManager logComment: aString!
 
-logError: anException 
+logError: anException
 	"Append details about the unhandled exception, anException, to the session error log.
 	N.B. MUST NOT RAISE ANY EXCEPTIONS OTHERWISE RECURSIVE WALKBACK MAY RESULT."
 
+	self isUnattended
+		ifTrue: 
+			[VMLibrary default
+				dump: anException description
+				path: nil
+				stackDepth: -1
+				walkbackDepth: -1.
+			^self].
 	
 	[| f |
 	f := FileStream write: self errorLogName mode: #append.
@@ -260,19 +270,15 @@ logError: anException
 		next: 100 put: $-;
 		cr;
 		cr;
-		close] 
+		close]
 			on: Error
 			do: 
-				[:e | 
+				[:e |
 				[e toTrace	"Suppress errors writing to log"] on: Error
 					do: 
-						[:e2 | 
+						[:e2 |
 						"Couldn't even write a trace message"
-
 						]]!
-
-main
-!
 
 mainShellClass
 	"Answer the class of the application's main window (a <Shell> presenter)."
@@ -331,6 +337,13 @@ onUnhandledWarning: aWarning
 			response == #abort ifTrue: [Processor activeProcess terminate]].
 	"ignore - Resume execution"!
 
+onUserBreak
+	"Bring up the Smalltalk debugger (suspending the active process) ..."
+
+	| process |
+	process := Processor activeProcess.
+	process halt: process topFrame sender cause: 'Interrupted'!
+
 open: filename
 	"Private - Opens a file identified by the <readableString> filename in this instance of
 	the development environment"
@@ -369,6 +382,10 @@ openWorkspace: filename
 	"Private - Opens a file identified by the <readableString> filename as a workspace file"
 
 	Smalltalk developmentSystem workspaceShellClass filename: filename!
+
+parseCmdLineFlags
+	super parseCmdLineFlags.
+	(self commandLineParser options includesKey: $u) ifTrue: [flags := flags maskSet: UnattendedMask]!
 
 patchLevel
 	"Answer the current patch level of this image"
@@ -679,22 +696,22 @@ traceStream
 		ifTrue: [Transcript]
 		ifFalse: [stdioStreams isNil ifTrue: [Trace] ifFalse: [self stderr]]!
 
-unhandledException: anException 
-	"Private - Pop-up a walkback with details from the argument, anException."
+unhandledException: anException
+	"Private - The <Exception> argument has been raised but not caught and handled. Log the
+	exception to the error log and, if the session is attended, pop up a walkback. Otherwise for
+	unattended sessions either continue from the point of error if the exception is user
+	resumable, or fail fast if not."
 
-	"Attempt to log the error, but don't allow it to become recursive (#logError: does not
-	raise an exception if it fails)"
-
-	| title topFrame |
 	self logError: anException.
-	title := [anException description] on: Error do: [:e | anException class name].
-	topFrame := anException raisingFrame.
-
-	"In a development session, we'll be wanting a walkback..."
-	topFrame process 
-		walkback: title
-		topFrame: topFrame
-		resumable: anException isResumable!
+	self isUnattended
+		ifTrue: [anException isUserResumable ifTrue: [anException resume] ifFalse: [self primQuit: -1]]
+		ifFalse: 
+			[| topFrame |
+			topFrame := anException raisingFrame.
+			topFrame process
+				walkback: ([anException description] on: Error do: [:e | anException class name])
+				topFrame: topFrame
+				resumable: anException isResumable]!
 
 versionInfo
 	"Answer the <VersionInfo> for this session, extracted from the host executable."
@@ -749,7 +766,6 @@ versionString
 !DevelopmentSessionManager categoriesFor: #lastSerialNumberRegistryKeyPre61!accessing!private!product! !
 !DevelopmentSessionManager categoriesFor: #logComment:!operations-logging!public! !
 !DevelopmentSessionManager categoriesFor: #logError:!operations-logging!public! !
-!DevelopmentSessionManager categoriesFor: #main!operations!public! !
 !DevelopmentSessionManager categoriesFor: #mainShellClass!constants!public! !
 !DevelopmentSessionManager categoriesFor: #myDolphinUrl!private! !
 !DevelopmentSessionManager categoriesFor: #objectArtsUrl!constants!private! !
@@ -757,10 +773,12 @@ versionString
 !DevelopmentSessionManager categoriesFor: #onQueryEndSession:!event handling!public! !
 !DevelopmentSessionManager categoriesFor: #onQueryWindowsShutdown!event handling!public! !
 !DevelopmentSessionManager categoriesFor: #onUnhandledWarning:!event handling!public! !
+!DevelopmentSessionManager categoriesFor: #onUserBreak!event handling!private! !
 !DevelopmentSessionManager categoriesFor: #open:!operations-startup!private! !
 !DevelopmentSessionManager categoriesFor: #openPackage:!operations-startup!private! !
 !DevelopmentSessionManager categoriesFor: #openSources!operations-source files!private! !
 !DevelopmentSessionManager categoriesFor: #openWorkspace:!operations-startup!private! !
+!DevelopmentSessionManager categoriesFor: #parseCmdLineFlags!operations-startup!private! !
 !DevelopmentSessionManager categoriesFor: #patchLevel!patching!public! !
 !DevelopmentSessionManager categoriesFor: #patchLevel:!patching!private! !
 !DevelopmentSessionManager categoriesFor: #playImageSaveSound!operations-sounds!private! !

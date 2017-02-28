@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ExternalInteger subclass: #UINT_PTR
 	instanceVariableNames: ''
@@ -11,9 +11,15 @@ UINT_PTR comment: ''!
 !UINT_PTR methodsFor!
 
 asSignedInteger
-	"Answer the signed 32-bit Integer value of the receiver."
+	"Answer the signed pointer-sized <Integer> value of the receiver."
 
 	^bytes intPtrAtOffset: 0!
+
+asUnsignedInteger
+	"Answer the unsigned pointer-sized <Integer> value of the receiver.
+	This can be useful where unsigned values are stored in signed values."
+
+	^bytes uintPtrAtOffset: 0!
 
 highPart
 	"Note: The compiler will optimise out the conditional because it is constant."
@@ -59,6 +65,7 @@ value: anObject
 
 	bytes uintPtrAtOffset: 0 put: anObject! !
 !UINT_PTR categoriesFor: #asSignedInteger!converting!public! !
+!UINT_PTR categoriesFor: #asUnsignedInteger!converting!public! !
 !UINT_PTR categoriesFor: #highPart!accessing!public! !
 !UINT_PTR categoriesFor: #highPart:!accessing!public! !
 !UINT_PTR categoriesFor: #highPartSigned!accessing!public! !
@@ -74,20 +81,6 @@ fieldType
 	"Private - Answer the <ExternalField> type to be used to represent the receiver's field type in 
 	other structures."
 
-	^UINT_PTRField!
-
-initialize
-	"Private - Initialize the receiver's class variables.
-		self initialize
-	"
-
-	VMLibrary default registryAt: self name put: self!
-
-uninitialize
-	"Private - Uninitialize the receiver prior to its removal from the image."
-
-	VMLibrary default registryAt: self name put: nil! !
+	^UINT_PTRField! !
 !UINT_PTR class categoriesFor: #fieldType!constants!development!private! !
-!UINT_PTR class categoriesFor: #initialize!development!initializing!private! !
-!UINT_PTR class categoriesFor: #uninitialize!class hierarchy-removing!private! !
 

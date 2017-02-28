@@ -244,9 +244,9 @@ getSource
 	^self subclassResponsibility!
 
 hash
-	"Answer the <SmallInteger> hash value for the receiver. We use only the selector at the moment."
+	"Answer the <SmallInteger> hash value for the receiver."
 
-	^(selector hash bitShift: 4) bitXor: methodClass hash!
+	^selector identityHash bitXor: methodClass basicIdentityHash!
 
 header
 	^header!
@@ -312,15 +312,17 @@ isUnbound
 
 	^true!
 
-literalArray: literalArray do: operation 
+literalArray: literalArray do: operation
 	"Private - Evaluate the <monadicValuable>, operation, for each of the elements of
 	the <Array>, literalArray, recursively drilling down into any embedded arrays too.
 	Note that it is a pre-order traversal."
 
-	literalArray do: 
-			[:literal | 
-			operation value: literal.
-			(literal class == Array and: [literal isImmutable]) 
+	1 to: literalArray size
+		do: 
+			[:i |
+			| literal |
+			operation value: (literal := literalArray at: i).
+			(literal class == Array and: [literal isImmutable])
 				ifTrue: [self literalArray: literal do: operation]]!
 
 literalAt: anInteger 
@@ -712,7 +714,7 @@ onPreStripImage
 	InfoCacheKeys := InfoCacheValues := nil! !
 !CompiledCode class categoriesFor: #elementsExpired:of:!finalizing!private! !
 !CompiledCode class categoriesFor: #initialize!development!initializing!private! !
-!CompiledCode class categoriesFor: #initializeInfoCache!initializing!private! !
-!CompiledCode class categoriesFor: #initializeInfoCache:!initializing!private! !
-!CompiledCode class categoriesFor: #onPreStripImage!initializing!private! !
+!CompiledCode class categoriesFor: #initializeInfoCache!development!initializing!private! !
+!CompiledCode class categoriesFor: #initializeInfoCache:!development!initializing!private! !
+!CompiledCode class categoriesFor: #onPreStripImage!class hierarchy-removing!private! !
 

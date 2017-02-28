@@ -1,7 +1,7 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 SortAlgorithm subclass: #PluggableSortAlgorithm
-	instanceVariableNames: 'sortBlock '
+	instanceVariableNames: 'sortBlock'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -15,9 +15,6 @@ Instance Variables:
 !PluggableSortAlgorithm categoriesForClass!Kernel-Objects! !
 !PluggableSortAlgorithm methodsFor!
 
-copyWithSortBlock: aDyadicValuable 
-	^self class sortBlock: aDyadicValuable!
-
 setSortBlock: aDyadicValuable 
 	sortBlock := aDyadicValuable!
 
@@ -25,7 +22,6 @@ sortBlock
 	"Answer a <dyadicVariable> that implements the sort-order comparison in use by the receiver."
 
 	^sortBlock! !
-!PluggableSortAlgorithm categoriesFor: #copyWithSortBlock:!copying!private! !
 !PluggableSortAlgorithm categoriesFor: #setSortBlock:!initializing!private! !
 !PluggableSortAlgorithm categoriesFor: #sortBlock!accessing!public! !
 
@@ -34,12 +30,14 @@ sortBlock
 new
 	"Answer a new instance of the receiver with the default sort block."
 
-	^self sortBlock: [:a :b | a <= b]!
+	^(self basicNew)
+		setSortBlock: [:a :b | a <= b];
+		yourself!
 
-sortBlock: aDyadicValuable 
+newSortBlock: aDyadicValuable
 	^(self basicNew)
 		setSortBlock: aDyadicValuable;
 		yourself! !
-!PluggableSortAlgorithm class categoriesFor: #new!instance creation!public! !
-!PluggableSortAlgorithm class categoriesFor: #sortBlock:!instance creation!public! !
+!PluggableSortAlgorithm class categoriesFor: #new!public! !
+!PluggableSortAlgorithm class categoriesFor: #newSortBlock:!instance creation!public! !
 

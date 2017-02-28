@@ -10,6 +10,12 @@ BootSessionManager comment: 'BootSessionManager is the class of <SessionManager>
 !BootSessionManager categoriesForClass!Development! !
 !BootSessionManager methodsFor!
 
+allocConsole
+	"Private - Open a console window for this session."
+
+	"Attach to the existing console so that the output goes to the build log"
+	KernelLibrary default attachConsole: ATTACH_PARENT_PROCESS!
+
 basicTertiaryStartup
 	"Perform tertiary system startup operations."
 
@@ -18,12 +24,20 @@ basicTertiaryStartup
 fileInClass: aClass 
 	aClass sourceManager fileIn: aClass fileOutName!
 
+initializeSystemPackage
+	"Initialize any base system classes that require initialization not performed to create the boot image.
+	We cannot reinitialize all the base system classes after re-load as the class initialize methods are not
+	all safe to re-run. Therefore we must do this selectively."
+
+	STBPrefix initialize.
+	Delay initializeTimingSemaphore!
+
 keepAlive
 	"We stay alive until explicitly terminated."
 
 	^self!
 
-logError: anException 
+logError: anException
 	"Append details about the unhandled exception, anException, to the session error log.
 	Ignored for runtime systems, but it is suggested that subclasses perform some appropriate
 	form of error logging. The VM crash dump is one such facility (it doesn't cause a crash and
@@ -31,9 +45,11 @@ logError: anException
 
 	"Write to the crash dump log - this always works"
 
-	| stderrBad |
-	super logError: anException.
-	stderrBad := false.
+	VMLibrary default
+		dump: anException description
+		path: nil
+		stackDepth: -1
+		walkbackDepth: -1.
 	
 	[| target |
 	target := self stderr.
@@ -45,9 +61,7 @@ logError: anException
 		next: 40 put: $-;
 		cr;
 		cr;
-		flush.
-	"In case the session is attended, pause briefly so the user can see the error"
-	Processor sleep: 10000] 
+		flush]
 			on: Error
 			do: [:e | ]!
 
@@ -112,7 +126,7 @@ productVersion
 !
 
 reloadSystemPackage
-	| srcMgr basePackage baseClasses imageDir obsoleteMethodFilter missingClasses |
+	| srcMgr basePackage baseClasses imageDir obsoleteMethodFilter missingClasses classesBefore |
 	basePackage := PackageManager systemPackage.
 	imageDir := self imageBase.
 	srcMgr := SourceManager default.
@@ -122,10 +136,14 @@ reloadSystemPackage
 		collect: [:each | srcMgr fileIn: (File relativePathOf: each value fileOutName to: imageDir)].
 	Notification signal: 'Updating ClassBuilder...'.
 	self fileInClass: ClassBuilder.
+	classesBefore := basePackage classes.
 	Notification signal: 'Reloading BCL class definitions...'.
-	"First tag all the existing classes so we can spot the dead ones later."
 	srcMgr fileIn: (File relativePathOf: basePackage classDefinitionsFileName to: imageDir).
 	Class subclasses: nil.
+	"Ensure all base classes (including any defined after the boot image was created) are packaged"
+	(Object withAllSubclasses difference: classesBefore) do: [:each | 
+		Notification signal: 'Adding new class ', each name, ' to BCL package'.
+		each owningPackage: basePackage].
 	Smalltalk clearCachedClasses.
 	"Then reload all base package classes in breadth-first order"
 	Notification signal: 'Reloading BCL classes...'.
@@ -156,7 +174,8 @@ reloadSystemPackage
 				yourself) do: 
 						[:m | 
 						Notification signal: 'Removing obsolete boot image method ' , m printString.
-						m methodClass removeSelector: m selector]]!
+						m methodClass removeSelector: m selector]].
+	self initializeSystemPackage!
 
 saveImageDefault
 	"Save an image of the current session to the default persistant store (whatever that is)."
@@ -264,8 +283,10 @@ updateBootImage
 	"The only thing done currently is to reload the BCL."
 
 	self reloadSystemPackage! !
+!BootSessionManager categoriesFor: #allocConsole!operations!private! !
 !BootSessionManager categoriesFor: #basicTertiaryStartup!operations-startup!public! !
 !BootSessionManager categoriesFor: #fileInClass:!private! !
+!BootSessionManager categoriesFor: #initializeSystemPackage!initializing!public! !
 !BootSessionManager categoriesFor: #keepAlive!idling!public! !
 !BootSessionManager categoriesFor: #logError:!operations-logging!public! !
 !BootSessionManager categoriesFor: #main!operations-startup!public! !
@@ -292,6 +313,6 @@ updateBootImage
 imageExtension
 	"Answer the suffix for an executable image file"
 
-	^'img'! !
+	^'img7'.! !
 !BootSessionManager class categoriesFor: #imageExtension!constants!public! !
 

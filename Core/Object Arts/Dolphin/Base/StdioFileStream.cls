@@ -6,7 +6,7 @@ SequencedStream subclass: #StdioFileStream
 	poolDictionaries: 'CRTConstants'
 	classInstanceVariableNames: ''!
 StdioFileStream guid: (GUID fromString: '{7B8405B3-0819-421F-8110-CA2763BCB59A}')!
-StdioFileStream comment: 'StdioFileStream is a <FileStream> implemented over C runtime library stdio streams. Its main purpose is to wrap the stdin, stdout, and stderr streams in console applications, and it is not intended for general use. FileStream itself should be used by preference in most cases.
+StdioFileStream comment: 'StdioFileStream is a <FileStream> implemented over C runtime library stdio streams. Its main purpose is to wrap the stdin, stdout, and stderr streams in console applications, and it is not intended for general use. In order to avoid blocking the main Dolphin thread when attempting to read from stdin, the CRT stream I/O calls are overlapped (i.e. run on a threadpool thread), which makes them rather slow. FileStream itself should be used by preference in most cases.
 
 Instance Variables:
 	stream	<ExternalHandle>. FILE* stream handle.
@@ -14,7 +14,7 @@ Instance Variables:
 	name	<String>. Path of file. Can be nil, e.g. if connected to standard I/O handle
 
 '!
-!StdioFileStream categoriesForClass!I/O-Streams! !
+!StdioFileStream categoriesForClass!Collections-Streams! !
 !StdioFileStream methodsFor!
 
 asParameter
@@ -26,7 +26,14 @@ asParameter
 atEnd
 	"Answer whether the receiver cannot access any more objects"
 
-	^(CRTLibrary default feof: stream) ~~ 0 or: [self peek isNil]!
+	| crt |
+	crt := CRTLibrary default.
+	^(crt feof: stream) ~~ 0 or: 
+			["feof returns non-zero only when an attempt has been made to read past the end of stream, so we have to peek."
+			| ch |
+			(ch := crt fgetc: stream) == -1 or: 
+					[crt ungetc: ch stream: stream.
+					false]]!
 
 attach: anExternalHandle toFd: fdInteger mode: aSymbol text: aBoolean 
 	"Private - Attach the stdio descriptor identified by fdInteger (usually one of 0=stdin,
@@ -112,9 +119,6 @@ display: anObject
 
 	anObject displayOn: self!
 
-elementFor: anInteger 
-	^isText ifTrue: [Character value: anInteger] ifFalse: [anInteger]!
-
 externalType
 	"Answer a <symbol> which names the external stream type of the receiver."
 
@@ -163,7 +167,9 @@ next
 
 	| ch |
 	ch := CRTLibrary default fgetc: stream.
-	^ch == -1 ifTrue: [self errorEndOfStream] ifFalse: [self elementFor: ch]!
+	^ch == -1
+		ifTrue: [self errorEndOfStream]
+		ifFalse: [isText ifTrue: [Character value: ch] ifFalse: [ch]]!
 
 next: countInteger into: aSequenceableCollection startingAt: startInteger 
 	"Destructively replace the elements of the argument, aSequenceableCollection,
@@ -251,6 +257,15 @@ nextLine
 				ifFalse: [answer copyFrom: 1 to: len - 1]]
 		ifFalse: [last == $\r ifTrue: [answer copyFrom: 1 to: len - 1] ifFalse: [answer]]!
 
+nextOrNil
+	"Answer a <Character>, or <integer> in the range 0..255, being the next of the 
+	receiver's future sequence values. Answer nil if at EOF."
+
+	| ch |
+	ch := CRTLibrary default fgetc: stream.
+	^ch == -1
+		ifFalse: [isText ifTrue: [Character value: ch] ifFalse: [ch]]!
+
 nextPut: anObject 
 	"Store the <Character> or <integer> (in the range 0..255) as the next element of the receiver."
 
@@ -269,21 +284,22 @@ peek
 
 	| ch |
 	ch := CRTLibrary default fgetc: stream.
-	^ch == -1 
+	^ch == -1
 		ifFalse: 
 			[CRTLibrary default ungetc: ch stream: stream.
-			self elementFor: ch]!
+			isText ifTrue: [Character value: ch] ifFalse: [ch]]!
 
-peekFor: anObject 
+peekFor: anObject
 	"Determine the response to the message peek. If it is the same as the
 	argument, anObject, then increment the position reference and answer true.
 	Otherwise answer false and do not change the position reference"
 
 	| ch |
 	ch := CRTLibrary default fgetc: stream.
-	^ch ~~ -1 and: 
-			[CRTLibrary default ungetc: ch stream: stream.
-			(self elementFor: ch) = anObject]!
+	^ch ~~ -1
+		and: [anObject asInteger == ch or: 
+					[CRTLibrary default ungetc: ch stream: stream.
+					false]]!
 
 position
 	"Answer the absolute (zero-based) position of the file pointer."
@@ -367,7 +383,6 @@ tab: anInteger
 !StdioFileStream categoriesFor: #crtab!accessing!public! !
 !StdioFileStream categoriesFor: #crtab:!accessing!public! !
 !StdioFileStream categoriesFor: #display:!printing!public! !
-!StdioFileStream categoriesFor: #elementFor:!accessing!private! !
 !StdioFileStream categoriesFor: #externalType!accessing!public! !
 !StdioFileStream categoriesFor: #fileno!accessing!private! !
 !StdioFileStream categoriesFor: #finalize!finalizing!private! !
@@ -383,6 +398,7 @@ tab: anInteger
 !StdioFileStream categoriesFor: #next:putAll:startingAt:!accessing!public! !
 !StdioFileStream categoriesFor: #nextAvailable:!accessing!public! !
 !StdioFileStream categoriesFor: #nextLine!accessing!public! !
+!StdioFileStream categoriesFor: #nextOrNil!accessing!public! !
 !StdioFileStream categoriesFor: #nextPut:!accessing!public! !
 !StdioFileStream categoriesFor: #nextPutAll:!accessing!public! !
 !StdioFileStream categoriesFor: #peek!accessing!public! !

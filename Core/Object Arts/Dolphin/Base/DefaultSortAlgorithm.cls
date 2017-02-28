@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 SortAlgorithm subclass: #DefaultSortAlgorithm
 	instanceVariableNames: ''
@@ -19,9 +19,6 @@ compare: operand1 with: operand2
 	operand2, by this search policy."
 
 	^operand1 <= operand2!
-
-copyWithSortBlock: aDyadicValuable 
-	^self class sortBlock: aDyadicValuable!
 
 insertionSort: anObject from: startInteger to: stopInteger 
 	startInteger + 1 to: stopInteger
@@ -168,7 +165,6 @@ sortBlock
 
 	^[:a :b | a <= b]! !
 !DefaultSortAlgorithm categoriesFor: #compare:with:!comparing!public! !
-!DefaultSortAlgorithm categoriesFor: #copyWithSortBlock:!copying!private! !
 !DefaultSortAlgorithm categoriesFor: #insertionSort:from:to:!private!sorting! !
 !DefaultSortAlgorithm categoriesFor: #sift:from:between:and:!private!sorting! !
 !DefaultSortAlgorithm categoriesFor: #sort:from:to:!public!sorting! !
@@ -183,13 +179,13 @@ current
 initialize
 	Current := self new!
 
-pluggableEquivalentClass
-	^IntrosortAlgorithm!
+newSortBlock: aDyadicValuable
+	^self pluggableEquivalentClass newSortBlock: aDyadicValuable!
 
-sortBlock: aDyadicValuable 
-	^self pluggableEquivalentClass sortBlock: aDyadicValuable! !
+pluggableEquivalentClass
+	^IntrosortAlgorithm! !
 !DefaultSortAlgorithm class categoriesFor: #current!instance creation!public! !
 !DefaultSortAlgorithm class categoriesFor: #initialize!development!initializing!public! !
+!DefaultSortAlgorithm class categoriesFor: #newSortBlock:!instance creation!public! !
 !DefaultSortAlgorithm class categoriesFor: #pluggableEquivalentClass!constants!public! !
-!DefaultSortAlgorithm class categoriesFor: #sortBlock:!instance creation!public! !
 

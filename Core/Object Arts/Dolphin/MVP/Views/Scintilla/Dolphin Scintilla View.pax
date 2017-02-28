@@ -4,7 +4,7 @@ package paxVersion: 1;
 	basicComment: 'Dolphin Scintilla Control Wrapper
 Copyright (c) Object Arts Ltd, 2002-2016.
 
-**Built against Scintilla version 3.6.4**
+**Built against Scintilla version 3.6.7**
 
 This package implements a Dolphin <textView>, <ScintillaView>, that wraps the open-source Scintilla programmers'' editor control. ScintillaView provides at least a basic interface (generated from the ''scintilla.iface'' file supplied with the source) to all of Scintilla''s features. It, and the supporting classes in the package, also provide higher level access to the majority of those features such as annotations, call tips, margins, margin markers, indicators, auto-completion lists, and text styling.
 
@@ -39,15 +39,18 @@ package basicPackageVersion: '3.6.6'.
 package classNames
 	add: #NullScintillaStyler;
 	add: #QueryableScintillaAttribute;
+	add: #QueryableScintillaPropertyDescriptor;
 	add: #ScintillaAnnotation;
 	add: #ScintillaAttribute;
 	add: #ScintillaIndicator;
 	add: #ScintillaIndicatorStyle;
 	add: #ScintillaKeyBinding;
 	add: #ScintillaLibrary;
+	add: #ScintillaListItem;
 	add: #ScintillaMargin;
 	add: #ScintillaMarker;
 	add: #ScintillaMarkerDefinition;
+	add: #ScintillaPropertyDescriptor;
 	add: #ScintillaStyler;
 	add: #ScintillaStylesCollectionPresenter;
 	add: #ScintillaTextStyle;
@@ -107,7 +110,7 @@ Object subclass: #ScintillaAttribute
 	instanceVariableNames: 'id'
 	classVariableNames: ''
 	poolDictionaries: 'ScintillaConstants'
-	classInstanceVariableNames: 'applyMap'!
+	classInstanceVariableNames: 'propertyMap'!
 Object subclass: #ScintillaIndicator
 	instanceVariableNames: 'styleName range tag'
 	classVariableNames: ''
@@ -118,10 +121,20 @@ Object subclass: #ScintillaKeyBinding
 	classVariableNames: 'Commands VirtualKeyMap'
 	poolDictionaries: 'ScintillaConstants Win32Constants'
 	classInstanceVariableNames: ''!
+Object subclass: #ScintillaListItem
+	instanceVariableNames: 'text icon'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
 Object subclass: #ScintillaMarker
 	instanceVariableNames: 'view definition line handle'
 	classVariableNames: ''
 	poolDictionaries: 'ScintillaConstants'
+	classInstanceVariableNames: ''!
+Object subclass: #ScintillaPropertyDescriptor
+	instanceVariableNames: 'getSelector defaultValue setMessage'
+	classVariableNames: ''
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Object subclass: #ScintillaStyler
 	instanceVariableNames: ''
@@ -174,8 +187,13 @@ QueryableScintillaAttribute subclass: #ScintillaIndicatorStyle
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 QueryableScintillaAttribute subclass: #ScintillaMargin
-	instanceVariableNames: 'width type isSensitive mask cursorType'
+	instanceVariableNames: 'width type isSensitive mask cursorType backcolor'
 	classVariableNames: 'CursorTypes MarginTypes'
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ScintillaPropertyDescriptor subclass: #QueryableScintillaPropertyDescriptor
+	instanceVariableNames: 'setSelector getMessage'
+	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ScintillaStyler subclass: #NullScintillaStyler
@@ -184,7 +202,7 @@ ScintillaStyler subclass: #NullScintillaStyler
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 MultilineTextEdit subclass: #ScintillaView
-	instanceVariableNames: 'this currentTextStyles styleIdMap styler markerDefinitions markers wordChars _unused24 modificationEventMask autoCStops autoCFillups whitespaceBackcolor whitespaceForecolor selectionBackcolor selectionForecolor indicators callTipTabWidth punctuation callTipHighlightColor braceChars whitespaces scFlags allTextStyles foldMarginColor foldMarginHiColor foldMarkerStyle foldFlags _unused44 keyBindings indicatorStyles secondarySelectionForecolor secondarySelectionBackcolor annotationStyles _unused50'
+	instanceVariableNames: 'this currentTextStyles styleIdMap styler markerDefinitions markers wordChars registeredImages modificationEventMask autoCStops autoCFillups whitespaceBackcolor whitespaceForecolor selectionBackcolor selectionForecolor indicators callTipTabWidth punctuation callTipHighlightColor braceChars whitespaces scFlags allTextStyles foldMarginColor foldMarginHiColor foldMarkerStyle foldFlags _unused44 keyBindings indicatorStyles secondarySelectionForecolor secondarySelectionBackcolor annotationStyles foldTextTagStyle'
 	classVariableNames: 'AnnotationStylesOffset BackgroundDwellEvents BraceHilightingMask CodePages DefaultCallTipTabWidth DefaultKeyBindings DefaultTextStyles FoldingMask MarginStylesOffset ScnMap'
 	poolDictionaries: 'ScintillaConstants Win32Constants'
 	classInstanceVariableNames: ''!

@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 AXTypeInfoObject subclass: #AXTypeLibraryAnalyzer
 	instanceVariableNames: 'attributes prefix packageName globalName constantsPoolName aliasMap typeAnalyzers'
@@ -145,13 +145,12 @@ documentation
 
 	^[self documentationAt: 0] on: HRESULTError
 		do: 
-			[:ex | 
-			(AXTypeLibDocumentation new)
-				name: globalName;
-				helpstring: ex messageText;
-				helpcontext: 0;
-				helpfile: '';
-				yourself]!
+			[:ex |
+			AXTypeLibDocumentation new
+				name: globalName
+				helpstring: ex messageText
+				helpcontext: 0
+				helpfile: '']!
 
 documentationAt: index
 	"Private - Answer a  new <AXTypeLibraryDocumentation> containing the documentation 
@@ -168,7 +167,7 @@ documentationAt: index
 
 	^self documentationAt: index ifAbsent: [self errorNotFound: index]!
 
-documentationAt: index ifAbsent: exceptionHandler 
+documentationAt: index ifAbsent: exceptionHandler
 	"Private - Answer a  new <AXTypeLibraryDocumentation> containing the documentation 
 	for the type info. identified by the <integer>, index, in the receiver. 
 	The range of indices is 0..<type info count>, with 0 answering docs
@@ -186,22 +185,21 @@ documentationAt: index ifAbsent: exceptionHandler
 	bstrDocString := BSTR new.
 	bstrHelpFile := BSTR new.
 	dwHelpContext := DWORDBytes new.
-	hr := self tlbInterface 
+	hr := self tlbInterface
 				GetDocumentation: index - 1
 				pBstrName: bstrName
 				pBstrDocString: bstrDocString
 				pdwHelpContext: dwHelpContext
 				pBstrHelpFile: bstrHelpFile.
-	hr < 0 
+	hr < 0
 		ifTrue: 
 			[hr = TYPE_E_ELEMENTNOTFOUND ifTrue: [^exceptionHandler value].
 			^HRESULTError signalWith: hr].
-	answer := (AXTypeLibDocumentation new)
-				name: bstrName asString;
-				helpstring: bstrDocString asString;
-				helpcontext: dwHelpContext value;
-				helpfile: bstrHelpFile asString trimNulls;
-				yourself.
+	answer := AXTypeLibDocumentation new
+				name: bstrName asString
+				helpstring: bstrDocString asString
+				helpcontext: dwHelpContext value
+				helpfile: bstrHelpFile asString trimNulls.
 	bstrName free.
 	bstrDocString free.
 	bstrHelpFile free.
@@ -348,6 +346,18 @@ modules
 
 	^self selectTypeKind: TKIND_MODULE!
 
+namedStructs
+	"Answer a <sequencedReadableCollection> of all the named structs (i.e. excluding anonymous
+	structs) described in the receiver."
+
+	^self structs reject: [:each | each isAnonymous]!
+
+namedUnions
+	"Answer a <sequencedReadableCollection> of all the named unions (i.e. excluding anonymous
+	unions) described in the receiver."
+
+	^self unions reject: [:each | each isAnonymous]!
+
 names
 	"Answer the 'names' of all the elements in the receiver."
 
@@ -400,13 +410,13 @@ selectTypes: discriminator
 	^self typeAnalyzers select: discriminator
 !
 
-setTypeLib: lib attributes: attr 
+setTypeLib: anITypeLib attributes: aTLIBATTR
 	"Private - Set the <ITypeLib> which the receiver is wrapping and cache some info
 	which will enable a connection to be re-established subsequently. Answer
 	the receiver."
 
-	tlbInterface := lib.
-	attributes := attr.
+	tlbInterface := anITypeLib.
+	attributes := aTLIBATTR.
 	generationFlags := self defaultGenerationFlags.
 	self initializeAliasMap!
 
@@ -545,8 +555,7 @@ uninitialize
 !
 
 unions
-	"Answer a <sequencedReadableCollection> of all the 
-	unions described in the receiver."
+	"Answer a <sequencedReadableCollection> of all the unions described in the receiver."
 
 	^self selectTypeKind: TKIND_UNION!
 
@@ -595,6 +604,8 @@ vtblInterfaces
 !AXTypeLibraryAnalyzer categoriesFor: #libid!accessing!public! !
 !AXTypeLibraryAnalyzer categoriesFor: #loadTypeLib!accessing!private! !
 !AXTypeLibraryAnalyzer categoriesFor: #modules!enumerating!public! !
+!AXTypeLibraryAnalyzer categoriesFor: #namedStructs!enumerating!public! !
+!AXTypeLibraryAnalyzer categoriesFor: #namedUnions!enumerating!public! !
 !AXTypeLibraryAnalyzer categoriesFor: #names!enumerating!public! !
 !AXTypeLibraryAnalyzer categoriesFor: #path!accessing!public! !
 !AXTypeLibraryAnalyzer categoriesFor: #realize!private!realizing/unrealizing! !

@@ -12,7 +12,12 @@ GDILibrary openDefault!!
 "Opening the CommCtrlLibrary causes the common controls to be registered"
 CommCtrlLibrary default!!
 "Due to a limitation of the Dolphin protocols system, any protocols on a class that are incomplete without loose methods in an add-on package are lost when the add-on package is uninstalled (essentially this is because the package system is largely unaware of protocols, and so only protocols defined in the basic class are maintained). In this case we add #queryCommand: to MessageSend so that it can be used as a closed command. The command routing framework tests for the <commandTarget> protocol to see whether it should include the command itself in the route."
-MessageSend addProtocol: #commandTarget!!'.
+MessageSend addProtocol: #commandTarget!!
+"It was a crap idea to have classes whose names only differed by case wasn''t it - hence we need this bodge even now"
+SourceManager default fileIn: self path , ''BITMAP_Struct.cls''!!
+BITMAP initializeAfterLoad!!
+SourceManager default fileIn: self path , ''DIBSECTION_Struct.cls''!!
+DIBSECTION initializeAfterLoad!!'.
 package basicScriptAt: #postuninstall put: '| resIds |
 resIds := ResourceIdentifier allResourceIdentifiers.
 resIds isEmpty 
@@ -111,7 +116,6 @@ package classNames
 	add: #Interactor;
 	add: #InternalDragDropObject;
 	add: #InternalDragDropSession;
-	add: #INTLIST;
 	add: #KeyEvent;
 	add: #LayoutContext;
 	add: #LayoutManager;
@@ -203,10 +207,10 @@ package classNames
 	add: #WindowsEvent;
 	add: #WinImageList;
 	add: #WNDCLASS;
-	add: #XFORM;
 	yourself.
 
 package methodNames
+	add: #KernelLibrary -> #getConsoleWindow;
 	add: #MessageSend -> #queryCommand:;
 	add: #Object -> #addToImageList:mask:;
 	add: #Point -> #@;
@@ -271,6 +275,7 @@ package methodNames
 	add: #UserLibrary -> #getNextDlgTabItem:hCtl:bPrevious:;
 	add: #UserLibrary -> #getProp:lpString:;
 	add: #UserLibrary -> #getScrollInfo:fnBar:lpsi:;
+	add: #UserLibrary -> #getSystemMenu:bRevert:;
 	add: #UserLibrary -> #getTopWindow:;
 	add: #UserLibrary -> #getUpdateRect:lpRect:bErase:;
 	add: #UserLibrary -> #getWindow:uCmd:;
@@ -336,9 +341,6 @@ package methodNames
 	add: #UserLibrary -> #validate:lpRect:;
 	add: #UserLibrary -> #windowFromPoint:;
 	add: #UserLibrary -> #winHelp:lpszHelp:uCommand:dwData:;
-	add: 'CompiledMethod class' -> #deprecatedIcon;
-	add: 'CompiledMethod class' -> #privateIcon;
-	add: 'CompiledMethod class' -> #publicIcon;
 	add: 'ConsoleSessionManager class' -> #icon;
 	add: 'Error class' -> #icon;
 	add: 'ExternalLibrary class' -> #icon;
@@ -369,7 +371,7 @@ package globalAliases: (Set new
 
 package setPrerequisites: (IdentitySet new
 	add: '..\..\Base\Dolphin';
-	add: '..\..\Base\Dolphin Base';
+	add: '..\..\Base\Dolphin Command-line Parser';
 	add: '..\..\System\Filer\Dolphin Literal Filer';
 	add: '..\Type Converters\Dolphin Type Converters';
 	add: '..\Models\Value\Dolphin Value Models';
@@ -679,11 +681,6 @@ ExternalStructure subclass: #NCCALCSIZE_PARAMS
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ExternalStructure subclass: #XFORM
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
 Win32Structure subclass: #AbstractLOGFONT
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -760,11 +757,6 @@ Win32Structure subclass: #GRADIENT_TRIANGLE
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Win32Structure subclass: #ICONINFO
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-Win32Structure subclass: #INTLIST
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
@@ -1111,7 +1103,7 @@ Dialog subclass: #ValueDialog
 	classInstanceVariableNames: ''!
 SessionManager subclass: #GUISessionManager
 	instanceVariableNames: 'savedWindows'
-	classVariableNames: ''
+	classVariableNames: 'NoSplashMask UnattendedMask'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 GUISessionManager subclass: #RuntimeSessionManager
@@ -1251,27 +1243,6 @@ SIZEL := SIZE!
 
 "Loose Methods"!
 
-!CompiledMethod class methodsFor!
-
-deprecatedIcon
-	"Private - Answers an Icon that can be used to represent a deprecated instance of this class"
-
-	^Icon fromId: 'COMPILEDMETHOD_DEPRECATED.ICO'
-!
-
-privateIcon
-	"Private - Answers an Icon that can be used to represent a private instance of this class"
-
-	^Icon fromId: 'COMPILEDMETHOD_PRIVATE.ICO'!
-
-publicIcon
-	"Private - Answers an Icon that can be used to represent a public instance of this class"
-
-	^Icon fromId: 'COMPILEDMETHOD_PUBLIC.ICO'! !
-!CompiledMethod class categoriesFor: #deprecatedIcon!constants!development!private! !
-!CompiledMethod class categoriesFor: #privateIcon!constants!development!private! !
-!CompiledMethod class categoriesFor: #publicIcon!constants!development!private! !
-
 !ConsoleSessionManager class methodsFor!
 
 icon
@@ -1303,6 +1274,13 @@ icon
 
 	^Icon fromId: 2 in: (ExternalResourceLibrary open: 'Shell32')! !
 !File class categoriesFor: #icon!constants!development!public! !
+
+!KernelLibrary methodsFor!
+
+getConsoleWindow
+	<stdcall: handle GetConsoleWindow>
+	^self invalidCall! !
+!KernelLibrary categoriesFor: #getConsoleWindow!public!win32 functions-console! !
 
 !MessageSend methodsFor!
 
@@ -1989,6 +1967,10 @@ getScrollInfo: aWindowHandle fnBar: flag lpsi: struct
 		);"
 
 	<stdcall: bool GetScrollInfo handle sdword SCROLLINFO* >
+	^self invalidCall!
+
+getSystemMenu: anExternalHandle bRevert: aBoolean
+	<stdcall: handle GetSystemMenu handle bool>
 	^self invalidCall!
 
 getTopWindow: aHandle
@@ -2839,6 +2821,7 @@ winHelp: hwndMain lpszHelp: lpszHelp uCommand: uCommand dwData: dwData
 !UserLibrary categoriesFor: #getNextDlgTabItem:hCtl:bPrevious:!public!win32 functions-window! !
 !UserLibrary categoriesFor: #getProp:lpString:!public!win32 functions-window property! !
 !UserLibrary categoriesFor: #getScrollInfo:fnBar:lpsi:!public!win32 functions-scroll bar! !
+!UserLibrary categoriesFor: #getSystemMenu:bRevert:!public!win32 functions-menu!win32 functions-system information! !
 !UserLibrary categoriesFor: #getTopWindow:!public!win32 functions-window! !
 !UserLibrary categoriesFor: #getUpdateRect:lpRect:bErase:!public!win32 functions-painting and drawing! !
 !UserLibrary categoriesFor: #getWindow:uCmd:!public!win32 functions-window! !

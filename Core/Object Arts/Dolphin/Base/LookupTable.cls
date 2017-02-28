@@ -1,7 +1,7 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Dictionary variableSubclass: #LookupTable
-	instanceVariableNames: 'values '
+	instanceVariableNames: 'values'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -206,7 +206,6 @@ postCopy
 	does not share any state with the original, apart from the elements. Answer the receiver. In
 	the case of a LookupTable we need to copy the values array too."
 
-	super postCopy.
 	values := values copy.
 	^self!
 
@@ -284,7 +283,7 @@ valuesClass
 !LookupTable categoriesFor: #identityIncludes:!public!searching! !
 !LookupTable categoriesFor: #includesAssociation:!public!searching! !
 !LookupTable categoriesFor: #initialize!initializing!private! !
-!LookupTable categoriesFor: #isImmutable:!accessing!public! !
+!LookupTable categoriesFor: #isImmutable:!initializing!public! !
 !LookupTable categoriesFor: #keyAtEqualValue:ifAbsent:!accessing!public! !
 !LookupTable categoriesFor: #keyAtValue:ifAbsent:!accessing!public! !
 !LookupTable categoriesFor: #keysAndValuesDo:!enumerating!public! !

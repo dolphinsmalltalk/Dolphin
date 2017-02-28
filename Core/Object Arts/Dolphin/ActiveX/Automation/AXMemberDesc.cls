@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 AXTypeInfoStructure subclass: #AXMemberDesc
-	instanceVariableNames: ''
+	instanceVariableNames: 'index customAttributes documentation'
 	classVariableNames: ''
 	poolDictionaries: 'AXAutomationConstants'
 	classInstanceVariableNames: ''!
-AXMemberDesc guid: (GUID fromString: '{AC5EB94D-60C1-4C16-AE6D-31ACF5123EB6}')!
+AXMemberDesc guid: (GUID fromString: '{ac5eb94d-60c1-4c16-ae6d-31acf5123eb6}')!
 AXMemberDesc comment: ''!
 !AXMemberDesc categoriesForClass!External-Data-Structured-COM! !
 !AXMemberDesc methodsFor!
@@ -35,6 +35,29 @@ argumentTypeNames
 
 	^self arguments collect: [:e | e typeName]!
 
+basicFree
+	customAttributes isNull
+		ifFalse: 
+			[customAttributes free.
+			customAttributes := nil].
+	^super basicFree!
+
+basicIdlAttributes
+	"Private - Answer a <sequencedReadableCollection> of the string names
+	of the various IDL flags assocated with the receiver."
+
+	| answer |
+	answer := OrderedCollection new.
+	self isBindable ifTrue: [answer add: 'bindable'].
+	self isDefaultBind ifTrue: [answer add: 'defaultbind'].
+	self isDisplayBind ifTrue: [answer add: 'displaybind'].
+	self isHidden ifTrue: [answer add: 'hidden'].
+	self isNonBrowsable ifTrue: [answer add: 'nonbrowsable'].
+	self isRestricted ifTrue: [answer add: 'restricted'].
+	self isRequestEdit ifTrue: [answer add: 'requestedit'].
+	self isUIDefault ifTrue: [answer add: 'uidefault'].
+	^answer!
+
 classDesc
 	"Private - Answer an <Association> between a Dolphin class suitable for representing
 	the external type described by the receiver, and the number of indirections
@@ -51,11 +74,18 @@ cParams
 
 	^0!
 
+customAttributes
+	"Answer the collection of custom attributes defined on the member. This is a lookup table
+	mapping <GUID> attribute id to the attribute value, usally a string."
+
+	^(customAttributes ifNil: [customAttributes := self getAllCustData]) contents!
+
 documentation
 	"Answer a four element array containing the documentation for the receiver itself.
 	See #documentationAt: for more details."
 
-	^piTypeInfo documentationForMember: self memid!
+	documentation isNil ifTrue: [documentation := analyzer documentationForMember: self memid].
+	^documentation!
 
 elemDesc
 	"Private - Answer an <ELEMDESC> describing the receiver's type."
@@ -63,6 +93,9 @@ elemDesc
 	^self subclassResponsibility!
 
 flags
+	^self subclassResponsibility!
+
+getAllCustData
 	^self subclassResponsibility!
 
 hash
@@ -75,25 +108,15 @@ helpstring
 
 	^self documentation helpstring!
 
-idlFlags
-	"Private - Answer a <sequencedReadableCollection> of the string names
-	of the various IDL flags assocated with the receiver."
-
-	| answer |
-	answer := SortedCollection new.
-	self isBindable ifTrue: [answer add: 'bindable'].
-	self isDefaultBind ifTrue: [answer add: 'defaultbind'].
-	self isDisplayBind ifTrue: [answer add: 'displaybind'].
-	self isHidden ifTrue: [answer add: 'hidden'].
-	self isRestricted ifTrue: [answer add: 'restricted'].
-	self isRequestEdit ifTrue: [answer add: 'requestedit'].
-	self isUIDefault ifTrue: [answer add: 'uidefault'].
-	^answer!
-
 idlId
 	"Private - Answer an IDL-style id attribute description for the receiver."
 
 	^'id(%#010x)' sprintfWith: self memid!
+
+index
+	"Private - Answer the receiver's zero-based integer function or variable index within its owning type."
+
+	^index!
 
 isBindable
 	"Answer whether the receiver is describing a 'bindable' property."
@@ -181,28 +204,36 @@ memid
 name
 	"Answer the name of the variable described by the receiver."
 
-	^piTypeInfo nameOfID: self memid!
+	^self documentation name!
+
+setAnalyzer: anAXTypeInfoAnalyzer index: anInteger
+	analyzer := anAXTypeInfoAnalyzer.
+	index := anInteger!
 
 tdesc
-	"Private - Answer a TYPEDESC describing the receiver's return type.
-	N.B. The return type is the type of the argument marked with the 'retval'
-	attribute in the IDL, or, if there is no retval argument, the return type of
-	the function (usually HRESULT)."
+	"Private - Answer a TYPEDESC describing the type of the receiver. For a function this is the
+	return type, for a variable the type of the variable. N.B. The return type of a function is
+	the type of the argument marked with the 'retval' attribute in the IDL, or, if there is no
+	retval argument, the return type of the function (usually HRESULT)."
 
 	^self elemDesc tdesc! !
 !AXMemberDesc categoriesFor: #=!comparing!public! !
 !AXMemberDesc categoriesFor: #argumentCount!accessing!public! !
 !AXMemberDesc categoriesFor: #arguments!accessing!public! !
 !AXMemberDesc categoriesFor: #argumentTypeNames!accessing!public! !
+!AXMemberDesc categoriesFor: #basicFree!private!realizing/unrealizing! !
+!AXMemberDesc categoriesFor: #basicIdlAttributes!printing-IDL!private! !
 !AXMemberDesc categoriesFor: #classDesc!accessing!private! !
 !AXMemberDesc categoriesFor: #cParams!accessing!private! !
+!AXMemberDesc categoriesFor: #customAttributes!accessing!public! !
 !AXMemberDesc categoriesFor: #documentation!accessing!public! !
 !AXMemberDesc categoriesFor: #elemDesc!accessing!private! !
 !AXMemberDesc categoriesFor: #flags!accessing!private! !
+!AXMemberDesc categoriesFor: #getAllCustData!accessing!private! !
 !AXMemberDesc categoriesFor: #hash!comparing!public! !
 !AXMemberDesc categoriesFor: #helpstring!accessing!public! !
-!AXMemberDesc categoriesFor: #idlFlags!printing-IDL!private! !
 !AXMemberDesc categoriesFor: #idlId!printing-IDL!private! !
+!AXMemberDesc categoriesFor: #index!accessing!private! !
 !AXMemberDesc categoriesFor: #isBindable!public!testing! !
 !AXMemberDesc categoriesFor: #isDefaultBind!public!testing! !
 !AXMemberDesc categoriesFor: #isDisplayBind!public!testing! !
@@ -216,5 +247,6 @@ tdesc
 !AXMemberDesc categoriesFor: #isValueProperty!public!testing! !
 !AXMemberDesc categoriesFor: #memid!accessing!public! !
 !AXMemberDesc categoriesFor: #name!accessing!public! !
+!AXMemberDesc categoriesFor: #setAnalyzer:index:!accessing!initializing!private! !
 !AXMemberDesc categoriesFor: #tdesc!accessing!private! !
 

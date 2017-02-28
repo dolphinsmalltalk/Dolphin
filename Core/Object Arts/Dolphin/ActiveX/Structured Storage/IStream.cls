@@ -501,6 +501,17 @@ defineFunctions
 		defineFunction: #Stat:grfStatFlag: argumentTypes: 'STATSTG* dword';
 		defineFunction: #Clone: argumentTypes: 'IStream**'!
 
+fromBytes: aByteArray
+	"Answer a pointer instance of the receiver that can be used to stream over a copy of the bytes in the argument."
+
+	^(ShlwapiLibrary default shCreateMemStream: aByteArray cbInit: aByteArray size)
+		ifNil: [Win32Error signal]
+		ifNotNil: 
+			[:stm |
+			stm
+				beFinalizable;
+				yourself]!
+
 onHGLOBAL
 	"Answer an instance of the receiver which is writing to the system provided
 	ILockBytes implementation on top of a global memory handle."
@@ -533,6 +544,7 @@ onURL: urlString
 		lpfnCB: nil.
 	^answer! !
 !IStream class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!IStream class categoriesFor: #fromBytes:!instance creation!public! !
 !IStream class categoriesFor: #onHGLOBAL!instance creation!public! !
 !IStream class categoriesFor: #onHGLOBAL:!instance creation!public! !
 !IStream class categoriesFor: #onURL:!instance creation!public! !

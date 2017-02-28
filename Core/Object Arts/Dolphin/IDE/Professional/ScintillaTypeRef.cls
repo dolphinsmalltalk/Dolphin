@@ -95,6 +95,8 @@ initialize
 							objectClass: Integer
 							byRef: false)
 							default: 0;
+							toMessage: ' - 1';
+							fromMessage: ' + 1';
 							yourself);
 				at: 'bool'
 					put: ((self 
