@@ -1,7 +1,7 @@
 "Filed out from Dolphin Smalltalk 7"!
 
 ComboBox subclass: #EmbeddedComboBox
-	instanceVariableNames: 'choiceModel cellRect'
+	instanceVariableNames: 'choiceModel allowNilSelection'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -10,17 +10,16 @@ EmbeddedComboBox comment: ''!
 !EmbeddedComboBox categoriesForClass!Unclassified! !
 !EmbeddedComboBox methodsFor!
 
+allowNilSelection
+	^allowNilSelection ifNil: [false]!
+
+allowNilSelection: anObject
+	allowNilSelection := anObject!
+
 cbnSelChange
 
 	self choiceModel value: self selectionOrNil.
 	^super cbnSelChange!
-
-cellRect
-
-	^cellRect!
-
-cellRect: anObject
-	cellRect := anObject!
 
 choiceModel
 	^choiceModel!
@@ -49,6 +48,15 @@ createEmbeddedIn: aView
 		font: self view font;
 		yourself!
 
+cueBanner
+
+	^self propertyAt: #cueBanner ifAbsent: [self propertyAt: #cueBanner put: super cueBanner]!
+
+cueBanner: aString
+
+	super cueBanner: aString.
+	self removePropertyAt: #cueBanner ifAbsent: []!
+
 defaultWindowExStyle
 	"Private - Answer the default extended window creation style.
 	Use the client edge style for the standard Win95 look."
@@ -62,18 +70,28 @@ defaultWindowStyle
 
 display: anObject in: aRectangle on: aCanvas forecolor: fColor backcolor: bColor editable: aBoolean hot: hBoolean
 
-	| text actualOffset |
+	| text color actualOffset |
 
 	text := self displayStringFor: anObject.
+	color := fColor.
+	(text isEmpty and: [self hasCueBanner]) ifTrue: 
+		[text := self cueBanner.
+		color := Color grayText].
 	actualOffset := (self offsetX@self offsetY) + (4@2).
 	
 	aCanvas 
-		forecolor: fColor;
-		formatText: text in: ((aRectangle origin + actualOffset) extent: (aRectangle extent - actualOffset))!
+		forecolor: color;
+		formatText: text in: ((aRectangle origin + actualOffset) extent: (aRectangle extent - actualOffset)) flags: ##(DT_LEFT | DT_END_ELLIPSIS)!
 
 displayOnFormats
 
 	^#(#class)!
+
+editRectFor: aRectangle
+
+	"Private - Return the rectangle to use for the editor within the grid cell aRectangle"
+
+	^(aRectangle origin extent: (aRectangle width@(aRectangle height + self droppedHeight))) insetBy: ((self offsetX@self offsetY) corner: (0@self offsetY))!
 
 embeddedValue
 
@@ -83,15 +101,34 @@ embeddedValue: anObject
 
 	self selectionOrNil: anObject.
 	self choiceModel setValue: anObject.
+	self editView text: (self getTextBlock value: anObject).
 	lastSelIndices := #()!
+
+expectsText
+
+	^false!
+
+hasCueBanner
+
+	^(self cueBanner ifNil: ['']) isEmpty not!
 
 hasEmbeddedHotTracking
 
 	^false!
 
+hide
+
+	"Unlike other embedded widgets, combo box does not lose focus when hidden. Force by setting focus to the containing list"
+
+	super hide.
+
+	(self allowNilSelection and: [self editView text isEmpty]) ifTrue: [self choiceModel value: nil].
+
+	self parentView setFocus!
+
 isDisplayOwnerDrawn
 
-	^false!
+	^self hasCueBanner!
 
 listModel: aListModel
 
@@ -116,14 +153,6 @@ onCursoredLeft
 	"The receiver has been entered by a cursor left action"
 !
 
-onFullyCreated
-
-	super onFullyCreated.
-
-	"CB_SETEXTENDEDUI"
-	self sendMessage: 16r0155 wParam: true asParameter
-!
-
 onKillFocus
 
 	"Need to specify the editor to avoid killing the focus on any new editor(something to do with combo box vs its entry field?)" 
@@ -136,6 +165,14 @@ onRequestDeactivate
 	"Return if OK"
 
 	^true!
+
+onViewCreated
+
+	super onViewCreated.
+
+	"CB_SETEXTENDEDUI"
+	self sendMessage: 16r0155 wParam: true asParameter
+!
 
 preTranslateKeyboardInput: aMSG
 
@@ -154,12 +191,8 @@ preTranslateKeyboardInput: aMSG
 
 showIn: aRectangle
 
-	"need to cache the cellRect since the receiver's height isn't reliable"
-	self cellRect: aRectangle.
-
 	self
-		rectangle: ((aRectangle origin extent: (aRectangle width@(aRectangle height + self droppedHeight))) 
-					insetBy: ((self offsetX@self offsetY) corner: (0@self offsetY)));
+		rectangle: (self editRectFor: aRectangle);
 		show!
 
 stbSaveOn: anSTBOutFiler
@@ -170,49 +203,54 @@ stbSaveOn: anSTBOutFiler
 	handle isNil 
 		ifTrue: [anSTBOutFiler saveObject: self]
 		ifFalse: [super stbSaveOn: anSTBOutFiler]! !
+!EmbeddedComboBox categoriesFor: #allowNilSelection!accessing!public! !
+!EmbeddedComboBox categoriesFor: #allowNilSelection:!accessing!public! !
 !EmbeddedComboBox categoriesFor: #cbnSelChange!event handling!public! !
-!EmbeddedComboBox categoriesFor: #cellRect!accessing!public! !
-!EmbeddedComboBox categoriesFor: #cellRect:!accessing!private! !
 !EmbeddedComboBox categoriesFor: #choiceModel!accessing!private! !
 !EmbeddedComboBox categoriesFor: #choiceModel:!accessing!private! !
 !EmbeddedComboBox categoriesFor: #choices:!public!testing! !
 !EmbeddedComboBox categoriesFor: #column!accessing!public! !
 !EmbeddedComboBox categoriesFor: #createEmbeddedIn:!initialize/release!public! !
+!EmbeddedComboBox categoriesFor: #cueBanner!displaying!public! !
+!EmbeddedComboBox categoriesFor: #cueBanner:!displaying!public! !
 !EmbeddedComboBox categoriesFor: #defaultWindowExStyle!constants!private! !
 !EmbeddedComboBox categoriesFor: #defaultWindowStyle!constants!private! !
 !EmbeddedComboBox categoriesFor: #display:in:on:forecolor:backcolor:editable:hot:!displaying!public! !
 !EmbeddedComboBox categoriesFor: #displayOnFormats!binary filing!public! !
+!EmbeddedComboBox categoriesFor: #editRectFor:!accessing!private! !
 !EmbeddedComboBox categoriesFor: #embeddedValue!accessing!public! !
 !EmbeddedComboBox categoriesFor: #embeddedValue:!accessing!public! !
+!EmbeddedComboBox categoriesFor: #expectsText!public!testing! !
+!EmbeddedComboBox categoriesFor: #hasCueBanner!displaying!public! !
 !EmbeddedComboBox categoriesFor: #hasEmbeddedHotTracking!public!testing! !
+!EmbeddedComboBox categoriesFor: #hide!displaying!public! !
 !EmbeddedComboBox categoriesFor: #isDisplayOwnerDrawn!public!testing! !
 !EmbeddedComboBox categoriesFor: #listModel:!public!testing! !
 !EmbeddedComboBox categoriesFor: #model:!accessing!public! !
 !EmbeddedComboBox categoriesFor: #offsetX!accessing!public! !
 !EmbeddedComboBox categoriesFor: #offsetY!accessing!public! !
 !EmbeddedComboBox categoriesFor: #onCursoredLeft!event handling!public! !
-!EmbeddedComboBox categoriesFor: #onFullyCreated!event handling!public! !
 !EmbeddedComboBox categoriesFor: #onKillFocus!event handling!public! !
 !EmbeddedComboBox categoriesFor: #onRequestDeactivate!event handling!public! !
+!EmbeddedComboBox categoriesFor: #onViewCreated!event handling!public! !
 !EmbeddedComboBox categoriesFor: #preTranslateKeyboardInput:!event handling!public! !
 !EmbeddedComboBox categoriesFor: #showIn:!displaying!public! !
 !EmbeddedComboBox categoriesFor: #stbSaveOn:!binary filing!public! !
 
 !EmbeddedComboBox class methodsFor!
 
-stbConvertFrom: anSTBClassFormat 
-	"Convert from version 9. Version 10 adds cellRect inst var"
+stbConvertFrom: anSTBClassFormat
 
-	^[:data | 
-	| newInstance |
-	newInstance := self basicNew.
-	1 to: data size do: [:i | newInstance instVarAt: i put: (data at: i)].
-	newInstance cellRect: nil.
-	newInstance]!
+	anSTBClassFormat version <= 10 ifTrue:
+		[^[:data || newInstance |
+		newInstance := self basicNew.
+		1 to: data size do: [:i | newInstance instVarAt: i put: (data at: i)].
+		newInstance]].
+
+	^super stbConvertFrom: anSTBClassFormat!
 
 stbVersion
-
-	^10! !
-!EmbeddedComboBox class categoriesFor: #stbConvertFrom:!public! !
-!EmbeddedComboBox class categoriesFor: #stbVersion!public! !
+	^20! !
+!EmbeddedComboBox class categoriesFor: #stbConvertFrom:!binary filing!public! !
+!EmbeddedComboBox class categoriesFor: #stbVersion!binary filing!public! !
 

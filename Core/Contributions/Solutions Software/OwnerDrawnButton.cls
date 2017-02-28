@@ -17,12 +17,14 @@ animateTransitionTo: aSymbol
 
 	| transition params sourceDC destDC animation sourceCanvas destCanvas |
 
-	self displayState = aSymbol ifTrue: [^false].
+	self isOpen ifFalse: [^false].
 
-	transition := self transitionTo: aSymbol.
-	(self shouldAnimateTransition: transition) ifFalse: [^false].
+	"Suppress a second notification to draw the same state whilst a transition to that state is being animated"
+	(self displayState = aSymbol and: [Time millisecondClockValue < self animationEndTime]) ifTrue: [^true].
 
 	ThemeLibrary default bufferedPaintStopAllAnimations: self handle.
+
+	transition := self transitionTo: aSymbol.
 
 	params := BP_ANIMATIONPARAMS new.
 	params cbSize: params size; style: 1 "BPAS_LINEAR"; dwDuration: (self durationOfTransition: transition).
@@ -47,6 +49,7 @@ animateTransitionTo: aSymbol
 
 	sourceCanvas backcolor: self actualBackcolor; erase.
 	destCanvas backcolor: self actualBackcolor; erase.
+
 	self drawOn: sourceCanvas.
 	self displayState: aSymbol.
 	self drawOn: destCanvas.
@@ -65,14 +68,7 @@ animationEndTime: anInteger
 
 defaultTransitionDurations
 
-	^Dictionary new
-		at: #hot put: nil;
-		at: #cold put: nil;
-		at: #pressed put: nil;
-		at: #released put: nil;
-		at: #disabled put: nil;
-		at: #enabled put: nil;
-		yourself!
+	^self nilTransitionDurations!
 
 displayState
 	^displayState!
@@ -126,6 +122,17 @@ iState
 		at: #normal put: PBS_NORMAL;
 		yourself) at: self displayState ifAbsent: [PBS_NORMAL]!
 
+nilTransitionDurations
+
+	^Dictionary new
+		at: #hot put: nil;
+		at: #cold put: nil;
+		at: #pressed put: nil;
+		at: #released put: nil;
+		at: #disabled put: nil;
+		at: #enabled put: nil;
+		yourself!
+
 nmCustomDraw: pNMHDR
 
 	"Private - Intercept a pre-paint notification to handle all painting ourselves"
@@ -143,28 +150,21 @@ onCustomDraw: anNMCUSTOMDRAW
 
 	self isOpen ifFalse: [^self].
 
-	"Primarily to handle displaying the receiver in the ViewComposer"
-	self isOffScreen ifTrue: [^self drawOn: anNMCUSTOMDRAW canvas].
-
 	self isDefault 
 		ifTrue: [newDisplayState := #focus]
 		ifFalse: [newDisplayState := #normal].
 
-	anNMCUSTOMDRAW isHot ifTrue: [newDisplayState := #hot].
+	anNMCUSTOMDRAW isHot ifTrue: 
+		[self displayState = #pressed 
+			ifTrue: [newDisplayState := #released] 
+			ifFalse: [newDisplayState := #hot]].
 	anNMCUSTOMDRAW isSelected ifTrue: [newDisplayState := #pressed].
 	anNMCUSTOMDRAW isDisabled ifTrue: [newDisplayState := #disabled].
-
 	self shouldShowKeyboardCues: (anNMCUSTOMDRAW uItemState allMask: 16r200 "CDIS_SHOWKEYBOARDCUES").
 
-	"Pressing the button when it did not previously have focus appears to have a zero transition period"
-	(self displayState = #hot and: [newDisplayState = #pressed and: [Time millisecondClockValue < (self setFocusTime + 100"ms, nominal")]]) ifTrue: 
-		[self displayState: newDisplayState. 
-		^self drawOn: anNMCUSTOMDRAW canvas].
-
-	"Suppress a second notification to draw the same state whilst a transition to that state is being animated"
-	[(newDisplayState = self displayState
-		ifTrue: [Time millisecondClockValue < self animationEndTime ]
-		ifFalse: [self animateTransitionTo: newDisplayState]) ifFalse: [self displayState: newDisplayState; drawOn: self canvas]] postToInputQueue!
+	(self shouldAnimateTransitionTo: newDisplayState)
+		ifTrue: [[(self animateTransitionTo: newDisplayState) ifFalse: ["Failed" self isOpen ifTrue: [self drawOn: self canvas]]] postToInputQueue]
+		ifFalse: [self animationEndTime: 0; displayState: newDisplayState; drawOn: anNMCUSTOMDRAW canvas]!
 
 setFocusTime
 	^setFocusTime ifNil: [0]!
@@ -172,9 +172,18 @@ setFocusTime
 setFocusTime: anObject
 	setFocusTime := anObject!
 
-shouldAnimateTransition: aSymbol
+shouldAnimateTransitionTo: newDisplayState
 
-	^self isThemed and: [(self durationOfTransition: aSymbol) > 0]!
+	self isThemed ifFalse: [^false].
+	self displayState = newDisplayState ifTrue: [^false].
+
+	"Pressing the button when it did not previously have focus appears to have a zero transition period"
+	(self displayState = #hot and: [newDisplayState = #pressed and: [Time millisecondClockValue < (self setFocusTime + 100"ms, nominal")]]) ifTrue: [^false].
+
+	"To handle displaying the receiver in the ViewComposer or Resource view preview"
+	(self isOffScreen or: [self topShell view hasVisibleStyle not]) ifTrue: [^false].
+
+	^(self durationOfTransition: (self transitionTo: newDisplayState)) > 0!
 
 shouldShowFocusRect
 
@@ -200,8 +209,33 @@ style: aSymbol
 
 	"Always push style - ignore"!
 
+themeTransitionDurations
+
+	| durations lookups |
+
+	self isThemed ifFalse: [^self nilTransitionDurations].
+
+	durations := Dictionary new.
+	lookups := 
+		##(Dictionary new
+			at: #hot put: ##(Array with: PBS_NORMAL with: PBS_HOT);
+			at: #cold put: ##(Array with: PBS_HOT with: PBS_NORMAL);
+			at: #pressed put: ##(Array with: PBS_NORMAL with: PBS_PRESSED);
+			at: #released put: ##(Array with: PBS_PRESSED with: PBS_NORMAL);
+			at: #disabled put: ##(Array with: PBS_NORMAL with: PBS_DISABLED);
+			at: #enabled put: ##(Array with: PBS_DISABLED with: PBS_NORMAL);
+			yourself).
+
+	lookups keysAndValuesDo: 
+		[ :transition :iStates || pdwDuration |
+		pdwDuration := SDWORD new.
+		ThemeLibrary default getThemeTransitionDuration: self theme asParameter iPartId: BP_PUSHBUTTON iStateIdFrom: iStates first iStateIdTo: iStates last iPropId: 6000 "TMT_TRANSITIONDURATIONS" pdwDuration: pdwDuration.
+		durations at: transition put: pdwDuration value].
+
+	^durations!
+
 transitionDurations
-	^transitionDurations!
+	^transitionDurations ifNil: [transitionDurations := self defaultTransitionDurations]!
 
 transitionDurations: anObject
 	transitionDurations := anObject!
@@ -224,14 +258,22 @@ transitionTo: aSymbol
 
 unadornedText
 
-	| index |
+	"Check for doubled &"
 
+	| readStream writeStream |
+
+	"Quick check for common case"
 	(self text includes: $&) ifFalse: [^self text].
 
-	"Check for doubled &"
-	index := 0.
-	^self text reject: [ :char | index := index + 1. char = $& and: [index = self text size or: [(self text at: (index + 1)) ~= $&]]]
-!
+	readStream := ReadStream on: self text.
+	writeStream := WriteStream on: (String new: self text size).
+
+	[readStream atEnd] whileFalse:
+		[| char |
+		char := readStream next.
+		(char = $& and: [readStream peek ~= $&]) ifFalse: [writeStream nextPut: char]].
+
+	^writeStream contents!
 
 uState
 
@@ -275,7 +317,7 @@ wmSetFocus: message wParam: wParam lParam: lParam
 !OwnerDrawnButton categoriesFor: #animateTransitionTo:!operations!private! !
 !OwnerDrawnButton categoriesFor: #animationEndTime!accessing!private! !
 !OwnerDrawnButton categoriesFor: #animationEndTime:!accessing!private! !
-!OwnerDrawnButton categoriesFor: #defaultTransitionDurations!constants!public! !
+!OwnerDrawnButton categoriesFor: #defaultTransitionDurations!accessing!public! !
 !OwnerDrawnButton categoriesFor: #displayState!accessing!private! !
 !OwnerDrawnButton categoriesFor: #displayState:!accessing!private! !
 !OwnerDrawnButton categoriesFor: #displayText!accessing!public! !
@@ -286,17 +328,19 @@ wmSetFocus: message wParam: wParam lParam: lParam
 !OwnerDrawnButton categoriesFor: #isOffScreen!public!testing! !
 !OwnerDrawnButton categoriesFor: #isPressed!public!testing! !
 !OwnerDrawnButton categoriesFor: #iState!accessing!public! !
+!OwnerDrawnButton categoriesFor: #nilTransitionDurations!constants!public! !
 !OwnerDrawnButton categoriesFor: #nmCustomDraw:!event handling-win32!private! !
 !OwnerDrawnButton categoriesFor: #onCustomDraw:!event handling!public! !
-!OwnerDrawnButton categoriesFor: #setFocusTime!public! !
-!OwnerDrawnButton categoriesFor: #setFocusTime:!public! !
-!OwnerDrawnButton categoriesFor: #shouldAnimateTransition:!public!testing! !
+!OwnerDrawnButton categoriesFor: #setFocusTime!accessing!public! !
+!OwnerDrawnButton categoriesFor: #setFocusTime:!accessing!public! !
+!OwnerDrawnButton categoriesFor: #shouldAnimateTransitionTo:!public!testing! !
 !OwnerDrawnButton categoriesFor: #shouldShowFocusRect!public!testing! !
 !OwnerDrawnButton categoriesFor: #shouldShowKeyboardAccelerators!public!testing! !
 !OwnerDrawnButton categoriesFor: #shouldShowKeyboardCues!accessing!private! !
 !OwnerDrawnButton categoriesFor: #shouldShowKeyboardCues:!accessing!private! !
-!OwnerDrawnButton categoriesFor: #style!constants!private! !
-!OwnerDrawnButton categoriesFor: #style:!constants!private! !
+!OwnerDrawnButton categoriesFor: #style!accessing!private! !
+!OwnerDrawnButton categoriesFor: #style:!accessing!private! !
+!OwnerDrawnButton categoriesFor: #themeTransitionDurations!constants!public! !
 !OwnerDrawnButton categoriesFor: #transitionDurations!accessing!private! !
 !OwnerDrawnButton categoriesFor: #transitionDurations:!accessing!private! !
 !OwnerDrawnButton categoriesFor: #transitionTo:!accessing!public! !
