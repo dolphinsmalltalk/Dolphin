@@ -1,7 +1,7 @@
 | package |
 package := Package name: 'SSW ListView Extensions'.
 package paxVersion: 1;
-	basicComment: '© Solutions Software/John Aspinall 2016
+	basicComment: '© Solutions Software/John Aspinall 2017
 Provided under the same licence terms as Dolphin Smalltalk 7'.
 
 package basicPackageVersion: '0.001'.
@@ -18,17 +18,21 @@ package methodNames
 	add: #ListView -> #drawHorizontalGridlinesOn:from:to:by:;
 	add: #ListView -> #drawVerticalGridlinesOn:from:to:;
 	add: #ListView -> #fullItemFromPoint:;
+	add: #ListView -> #getHeaderControl;
 	add: #ListView -> #hasVirtualGridLines;
 	add: #ListView -> #hasVirtualGridLines:;
 	add: #ListView -> #headerControl;
 	add: #ListView -> #headerRect;
 	add: #ListView -> #hideToolTipWindow;
+	add: #ListView -> #horzScrollBy:;
 	add: #ListView -> #horzScrollPos;
+	add: #ListView -> #horzScrollPos:;
 	add: #ListView -> #isHorzPaging;
 	add: #ListView -> #isHorzPaging:;
 	add: #ListView -> #lvmGetItemCount;
 	add: #ListView -> #lvmGetToolTips;
 	add: #ListView -> #lvmGetTopIndex;
+	add: #ListView -> #maxTipWidth:;
 	add: #ListView -> #nmCustomDraw:;
 	add: #ListView -> #onHScroll:;
 	add: #ListView -> #onViewOpened;
@@ -122,16 +126,16 @@ drawHorizontalGridlinesOn: aCanvas from: top to: bottom by: height
 
 drawVerticalGridlinesOn: aCanvas from: top to: bottom
 
-	| left allColumns |
+	| allColumns |
 
-	left := 0 - self horzScrollPos.
 	allColumns := self allColumns.
 
-	self columnOrder do:
-		[ :index || col |
+	self columnOrder inject: (0 - self horzScrollPos) into:
+		[ :prevLeft :index || col left |
 		col := allColumns at: index.
-		left := left + col width.
-		aCanvas lineFrom: (left@top) to: (left@bottom)]!
+		left := prevLeft + col width.
+		aCanvas lineFrom: (left@top) to: (left@bottom).
+		left]!
 
 fullItemFromPoint: coord
 	"Private - Answer a LVHITTESTINFO populated by the control  for the
@@ -143,6 +147,17 @@ fullItemFromPoint: coord
 	self sendMessage: (LVM_HITTEST + 39) "LVM_SUBITEMHITTEST" wParam: 0 lpParam: struct.
 	^struct!
 
+getHeaderControl
+
+	| hHandle |
+
+	hHandle := self lvmGetHeader.
+
+	^(HeaderView fromHandle: hHandle)
+		subclassWindow: hHandle;
+		yourself
+!
+
 hasVirtualGridLines
 
 	^self propertyAt: #hasVirtualGridLines ifAbsent: [false]!
@@ -153,14 +168,7 @@ hasVirtualGridLines: aBoolean
 
 headerControl
 
-	^self propertyAt: #headerControl ifAbsent:
-		[| hHandle |
-		hHandle := self lvmGetHeader.
-		self propertyAt: #headerControl put:
-			((HeaderView fromHandle: hHandle)
-				subclassWindow: hHandle;
-				yourself)]
-!
+	^self propertyAt: #headerControl ifAbsent: [self propertyAt: #headerControl put: self getHeaderControl]!
 
 headerRect
 
@@ -177,6 +185,10 @@ hideToolTipWindow
 
 	self lvmGetToolTips ifNotNil: [ :hwnd | UserLibrary default showWindow: hwnd nCmdShow: SW_HIDE]!
 
+horzScrollBy: anInteger
+
+	self sendMessage: LVM_SCROLL wParam: anInteger!
+
 horzScrollPos
 
 	| struct |
@@ -186,6 +198,10 @@ horzScrollPos
 	self view getScrollInfo: struct bar: SB_HORZ.
 
 	^struct pos!
+
+horzScrollPos: anInteger
+
+	self horzScrollBy: (anInteger - self horzScrollPos)!
 
 isHorzPaging
 
@@ -206,6 +222,12 @@ lvmGetToolTips
 lvmGetTopIndex
 
 	^self sendMessage: ##(16r1000 "LVM_FIRST" + 39) "LVM_GETTOPINDEX"!
+
+maxTipWidth: anInteger
+
+	"Set the width of the receiver's tool tip window. Note it is necessary to set a width to enable multi-line tips" 
+
+	self lvmGetToolTips ifNotNil: [ :hwnd | UserLibrary default sendMessage: hwnd msg: ##(WM_USER+24) "TTM_SETMAXTIPWIDTH" wParam: 0 lParam: anInteger]!
 
 nmCustomDraw: pNMHDR
 
@@ -284,17 +306,21 @@ vertScrollPos
 !ListView categoriesFor: #drawHorizontalGridlinesOn:from:to:by:!helpers!private! !
 !ListView categoriesFor: #drawVerticalGridlinesOn:from:to:!helpers!private! !
 !ListView categoriesFor: #fullItemFromPoint:!accessing!private! !
+!ListView categoriesFor: #getHeaderControl!accessing!private! !
 !ListView categoriesFor: #hasVirtualGridLines!accessing!public! !
 !ListView categoriesFor: #hasVirtualGridLines:!accessing!public! !
-!ListView categoriesFor: #headerControl!public!updating! !
-!ListView categoriesFor: #headerRect!public!updating! !
+!ListView categoriesFor: #headerControl!accessing!public! !
+!ListView categoriesFor: #headerRect!accessing!public! !
 !ListView categoriesFor: #hideToolTipWindow!operations!public! !
+!ListView categoriesFor: #horzScrollBy:!enquiries!public! !
 !ListView categoriesFor: #horzScrollPos!enquiries!public! !
+!ListView categoriesFor: #horzScrollPos:!enquiries!public! !
 !ListView categoriesFor: #isHorzPaging!accessing!public! !
 !ListView categoriesFor: #isHorzPaging:!accessing!public! !
 !ListView categoriesFor: #lvmGetItemCount!accessing!public! !
 !ListView categoriesFor: #lvmGetToolTips!accessing!public! !
 !ListView categoriesFor: #lvmGetTopIndex!accessing!public! !
+!ListView categoriesFor: #maxTipWidth:!helpers!public! !
 !ListView categoriesFor: #nmCustomDraw:!event handling!public! !
 !ListView categoriesFor: #onHScroll:!event handling!public! !
 !ListView categoriesFor: #onViewOpened!event handling!public! !

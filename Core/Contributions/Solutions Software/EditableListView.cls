@@ -1,7 +1,7 @@
 "Filed out from Dolphin Smalltalk 7"!
 
 ListView subclass: #EditableListView
-	instanceVariableNames: 'activeColumn multSelectStack _spare0 rowForecolor rowBackcolor rowHeight smallImageExtent hasVirtualGridlines hotItemAndColumn tipText'
+	instanceVariableNames: 'activeEditorCoords multSelectStack originalColumns rowForecolor rowBackcolor rowHeight smallImageExtent headerControl hotItemAndColumn tipText'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -16,36 +16,30 @@ activateEditorAt: aPoint tabbed: aBoolean
 	if aBoolean is true, act as if tabbed into the field
 	Return the editor activated, or nil if none"
 
-	| itemRect columnIndex column index item |
+	| item column columnRectangle |
 
 	self hideToolTipWindow.
 
-	itemRect := self lvmGetSubItemRect: (aPoint - (1@1)) bounding: LVIR_LABEL.
+	item := self list at: aPoint x.
+	column := self columnAtIndex: aPoint y.
 
-	"Take off default icon spacing added to primary columnn (we handle this ourselves)"
-	columnIndex := aPoint y.
-	(columnIndex = 1 and: [self hasImageBlock or: [self hasColumnImages]]) ifTrue: [itemRect left: (itemRect left - self smallImageExtent x)].
-
-	index := aPoint x.
-	item := self list at: index.
-
-	column := self columnAtIndex: columnIndex.
 	(column isEditableWith: item) ifFalse: 
-		[column isEditable ifTrue: [Sound bell]. "Bell if the column is disabled for the current item only"
+		[column isEditable ifTrue: [Sound beep: 16r30 "MB_ICONEXCLAMATION"]. "Bell if the column is disabled for the current item only"
 		self enableRedraw. 
 		^nil].
 
-	column hasColumnImage ifTrue: [itemRect left: ((itemRect left + self columnImageSpacing) min: itemRect right)].
+	"Ensure the editor is visibile"
+	columnRectangle := column rectangle.
+	(columnRectangle left < 0 or: [columnRectangle right > self width]) ifTrue: [self horzScrollBy: columnRectangle left].
 
 	self activeEditorCoords: aPoint.
 
 	[self activeEditorNeedsHighlight
-		ifTrue: [self activeEditor backcolor: Color face3d]
+		ifTrue: [self activeEditor backcolor: self activeEditorHighlightColor]
 		ifFalse: [self activeEditor backcolor: Color window].
 
 	self activeColumn setEditorValueFrom: item.
-
-	self activeEditor showIn: itemRect.
+	self activeEditor showIn: self activeEditorCellRect.
 
 	aBoolean ifTrue: [self activeEditor tabFocus] ifFalse: [self activeEditor setFocus]]
 		ensure: [self enableRedraw].
@@ -54,7 +48,7 @@ activateEditorAt: aPoint tabbed: aBoolean
 
 activateEditorForColumn: anEditableListViewColumn
 
-	anEditableListViewColumn isEditable ifFalse: [^ self].
+	anEditableListViewColumn isEditable ifFalse: [^self].
 	self activateEditorForColumnIndex: (self allColumns indexOf: anEditableListViewColumn)!
 
 activateEditorForColumnIndex: anInteger
@@ -76,14 +70,16 @@ activateFirstEditor
 	self hasEditableColumn ifFalse: [^nil].
 
 	coords := self firstEditableCoordsOnOrAfter: (self selectionByIndex max: 1).
-	coords = nil ifTrue: [^nil].
+	coords isNil ifTrue: [^nil].
 
 	self selectionByIndex: coords x.
 	^self activateEditorAt: coords tabbed: true!
 
 activateLastEditor
 
-	self selectionByIndex = 0 ifTrue: [self selectionByIndex: self list size].
+	self selectionByIndex = 0 ifTrue: 
+		[self list isEmpty ifTrue: [^self].
+		self selectionByIndex: self list size].
 
 	^self activateEditorAt: (self selectionByIndex@(self allColumns indexOf: self lastEditableColumn)) tabbed: true!
 
@@ -92,24 +88,67 @@ activeColumn
 
 activeColumnIndex
 
-	^self activeEditorCoords y!
+	^self activeEditorCoords ifNotNil: [ :coords | coords y]!
 
 activeEditor
 	^self activeColumn ifNil: [nil] ifNotNil: [ :col | col editor]!
 
+activeEditorCellRect
+
+	| editorCoords cellRect firstCellOffset |
+
+	editorCoords := self activeEditorCoords.
+	editorCoords isNil ifTrue: [^0@0 extent: 0@0].
+
+	"Outside the current list? Invalidate the whole column"
+	(editorCoords x between: 1 and: self itemCount) ifFalse: [^self activeColumn rectangle].
+
+	cellRect  := self lvmGetSubItemRect: (editorCoords - (1@1)) bounding: LVIR_LABEL.	
+
+	"Take off default icon spacing added to primary columnn (we handle this ourselves)"
+	(editorCoords y = 1 and: [self hasRowImage or: [self hasColumnImages]]) 
+		ifTrue: [firstCellOffset := self smallImageExtent x negated]
+		ifFalse: [firstCellOffset := 0].
+
+	"...but we need to add spacing if there is a per-column image"
+	(firstCellOffset ~= 0 or: [self hasColumnImages and: [(self columnAtIndex: editorCoords y) hasColumnImage]]) ifTrue: [cellRect left: ((cellRect left + firstCellOffset + self columnImageSpacing) min: cellRect right)].
+
+	^cellRect!
+
 activeEditorCoords
-	^activeColumn!
+	^activeEditorCoords!
 
 activeEditorCoords: aPoint
-	activeColumn := aPoint!
+	activeEditorCoords := aPoint!
+
+activeEditorHighlightColor
+
+	^Color face3d!
 
 activeEditorModel
 	^self activeEditorCoords ifNotNil: [ :coords | self list at: coords x]!
+
+activeEditorModelIndex
+	^self activeEditorCoords 
+		ifNil: [0]
+		ifNotNil: [ :coords | coords x]!
+
+activeEditorModelIndex: anInteger
+	^self activeEditorCoords ifNotNil: [ :coords | coords x: anInteger]!
 
 activeEditorNeedsHighlight
 
 	^self showsSelAlways and: 
 		[self hasFullRowSelect or: [self activeEditor == self primaryColumn editor]]!
+
+addNewColumn: aListViewColumn
+
+	aListViewColumn
+		createEditorIn: self;
+		customDrawBlock: [ :context | self drawSubItem: context].
+
+	self originalColumns addLast: aListViewColumn.
+	self addColumn: aListViewColumn!
 
 applyImageLists
 	"Private - Set the receiver's image lists from the image managers.
@@ -135,19 +174,17 @@ clearFocusItem
 	1 to: self itemCount do: [ :i | self lvmSetItem: i-1 state: anLvItem]!
 
 clearFocusRect
-
-	(self propertyAt: #focusRectDrawn ifAbsent: [false]) ifTrue:
-		[self drawFocusRect: self clientFocusRectangle.
-		self removePropertyAt: #focusRectDrawn]!
+!
 
 click: aMouseEvent activateEditor: aBoolean at: aPoint
 
 	"Private - aPoint is the row@column coordinates of a subitem.
 	Return the editor created, or nil if none"
 
-	| row |
+	| row activateEditor |
 
 	row := aPoint x.
+	activateEditor := aBoolean.
 
 	self hasFocus ifFalse: [self setFocus].
 
@@ -156,17 +193,14 @@ click: aMouseEvent activateEditor: aBoolean at: aPoint
 	ifTrue:
 		[aMouseEvent isShiftDown
 			ifTrue: [self handleShiftMultSelectOn: row]
-			ifFalse: [self handleCtrlMultSelectOn: row]]
+			ifFalse: [self handleCtrlMultSelectOn: row].
+		activateEditor := false]
 	ifFalse:
 		[self handleSingleSelectOn: row].
 
-	^aBoolean
+	^activateEditor
 		ifTrue: [self activateEditorAt: aPoint tabbed: false]
 		ifFalse: [self enableRedraw. nil]!
-
-clientFocusRectangle
-
-	^self clientRectangle!
 
 columnImagePadding
 
@@ -176,9 +210,21 @@ columnImageSpacing
 
 	^self smallImageExtent x + self columnImagePadding!
 
-columnNamed: aString
+columnNamed: aStringOrSymbol
 
-	^self allColumns detect: [ :each | each name = aString]!
+	^self columnNamed: aStringOrSymbol ifNone: [self error: ('column named <1p> not found' expandMacrosWith: aStringOrSymbol)]!
+
+columnNamed: aStringOrSymbol ifNone: aBlock
+
+	^self originalColumns detect: [ :each | each name = aStringOrSymbol] ifNone: aBlock!
+
+columnUnderPoint: aPoint
+
+	| itemStruct |
+
+	itemStruct := self fullItemFromPoint: aPoint.
+
+	^self allColumns at: (itemStruct iSubItem + 1)!
 
 columnWithEditor: anEmbeddedEdit
 
@@ -188,6 +234,11 @@ commitOngoingEdit
 	"If there is an active editor, then kill it nicely."
 
 	self hasActiveEditor ifTrue: [self deactivateEditor; enableRedraw; invalidate].!
+
+deactivateActiveEditor
+
+	self hasActiveEditor ifTrue: 
+		[[self deactivateEditor] ensure: [self enableRedraw]]!
 
 deactivateEditor
 
@@ -208,14 +259,16 @@ defaultOffsetForEditor: aColumnEditor
 	x := ((21 - fontSize) / 3) rounded max: 0.
 	y := ((self rowPixelHeight - (fontSize + 6)) / 2) rounded max: 0.
 
-	(aColumnEditor column == self primaryColumn and: [self hasImageBlock not and: [self hasColumnImages not]]) ifTrue: [x := x - 4].
+	(aColumnEditor column == self primaryColumn and: [self hasRowImage not and: [self hasColumnImages not]]) ifTrue: [x := x - 4].
 
 	^x@y!
 
-drawFocusRect
+disconnectFromModel
 
-	self drawFocusRect: self clientFocusRectangle.
-	self propertyAt: #focusRectDrawn put: true!
+	"Private - Deactivate any active editor, since the model is about to change under it"
+	self deactivateActiveEditor.
+
+	^super disconnectFromModel!
 
 drawHorizontalGridlinesOn: aCanvas from: top to: bottom by: height
 
@@ -245,18 +298,18 @@ drawSubItem: context
 
 fieldExitDown
 
+	| row |
+
 	self requestDeactivateEditor ifFalse: [^0].
 
 	self selectionByIndex < self list size ifTrue:
-		[| row col |
-		row := self selectionByIndex + 1.
-		col := self activeColumnIndex.
-		self 
-			deactivateEditor;
-			multSelectStack: (OrderedCollection with: row);
-			selectionByIndex: self noSelection;
-			selectionByIndex: row;
-			activateEditorAt: (row@col) tabbed: false]
+		[row := self selectionByIndex + 1.
+		self activeColumnIndex ifNotNil: 
+			[ :col |
+			self 
+				deactivateEditor;
+				singleSelect: row;
+				activateEditorAt: (row@col) tabbed: false]]
 !
 
 fieldExitNextTabbed: aBoolean
@@ -288,8 +341,9 @@ fieldExitPrevTabbed: aBoolean
 
 	self requestDeactivateEditor ifFalse: [^0].
 
-	nextCoords := self prevEditableCoords.
-	self hasActiveEditor ifTrue: [self deactivateEditor].
+	self hasActiveEditor ifTrue: 
+		[nextCoords := self prevEditableCoords.
+		self deactivateEditor].
 
 	nextCoords isNil ifTrue:
 		[self enableRedraw.
@@ -307,14 +361,12 @@ fieldExitUp
 	self requestDeactivateEditor ifFalse: [^self].
 
 	(row := self selectionByIndex - 1) > 0 ifTrue:
-		[| col |
-		col := self activeColumnIndex.
-		self 
-			deactivateEditor;
-			multSelectStack: (OrderedCollection with: row);
-			selectionByIndex: self noSelection;
-			selectionByIndex: row;
-			activateEditorAt: (row@col) tabbed: false]!
+		[self activeColumnIndex ifNotNil: 
+			[ :col |
+			self 
+				deactivateEditor;
+				singleSelect: row;
+				activateEditorAt: (row@col) tabbed: false]]!
 
 firstEditableColumn
 
@@ -351,7 +403,7 @@ handleShiftMultSelectOn: anInteger
 
 	self multSelectStack isEmpty ifTrue: [^self handleSingleSelectOn: anInteger].
 
-	start := self multSelectStack first.
+	start := self multSelectStack last.
 	start < anInteger
 		ifTrue: [newSelections := start to: anInteger]
 		ifFalse: [newSelections := anInteger to: start].
@@ -365,18 +417,14 @@ handleShiftMultSelectOn: anInteger
 		self selectIndex: setRow set: true].
 
 	start < anInteger
-		ifTrue: [self multSelectStack: newSelections asOrderedCollection]
-		ifFalse: [self multSelectStack: newSelections asOrderedCollection reverse]!
+		ifTrue: [self multSelectStack: newSelections asOrderedCollection reverse]
+		ifFalse: [self multSelectStack: newSelections asOrderedCollection]!
 
 handleSingleSelectOn: anInteger
 
 	"anInteger is the row clicked"
 
-	self selectionByIndex = anInteger ifFalse:
-		[self 
-			multSelectStack: (OrderedCollection with: anInteger);
-			selectionByIndex: self noSelection;
-			selectionByIndex: anInteger]!
+	self singleSelect: anInteger!
 
 hasActiveEditor
 
@@ -400,17 +448,26 @@ hasImageBlock
 
 	^self getImageBlock notNil!
 
-hasVirtualGridlines
-	^hasVirtualGridlines ifNil: [hasVirtualGridlines := OSVERSIONINFO current isWinXP] "Non-virtual gridline corruption only an issue on XP"!
+hasMultipleSelections
 
-hasVirtualGridlines: anObject
-	hasVirtualGridlines := anObject!
+	^self multSelectStack size > 1!
+
+hasRowImage
+
+	^self hasImageBlock!
+
+headerControl
+
+	"Repurposed inst var - check for old values"
+	(headerControl == true or: [headerControl == false]) ifTrue: [headerControl := nil].
+
+	^headerControl ifNil: [headerControl := self getHeaderControl]!
 
 hideActiveEditor
 
 	self activeEditor ifNotNil:
 		[ :editor |
-		self invalidateRect: (self lvmGetSubItemRect: (self activeEditorCoords - (1@1)) bounding: LVIR_LABEL).
+		(self list isEmpty not and: [self hasSelection]) ifTrue: [self invalidateRect: self activeEditorCellRect].
 		editor hide.
 		self activeEditorCoords: nil]!
 
@@ -438,6 +495,15 @@ hotItemTipText
 		infoText isEmpty
 			ifTrue: [prefixText]
 			ifFalse: [infoText]]!
+
+imageFromRow: anObject
+
+	"Allow an image to be returned directly"
+	^(super imageFromRow: anObject) ifNotNil: 
+		[ :imageOrInteger |
+		imageOrInteger isInteger 
+			ifTrue: [imageOrInteger]
+			ifFalse: [imageOrInteger imageIndex]]!
 
 isDisplayContextSelectedOrHot: aContext
 
@@ -490,12 +556,7 @@ itemIndexWithFocus
 
 itemIndexWithFocus: anInteger
 
-	| anLvItem |
-
-	anLvItem := LVITEM new.
-	anLvItem stateMask: LVIS_FOCUSED.
-	anLvItem dwState: 1.
-	self lvmSetItem: anInteger-1 state: anLvItem!
+	^self itemIndex: anInteger hasFocus: true!
 
 lastEditableColumn
 
@@ -516,7 +577,7 @@ lvmSetColumn: anLvColumn at: columnIndex
 
 	"Ignore if the receiver is not open"
 
-	^self isOpen ifTrue: [super lvmSetColumn: anLvColumn at: columnIndex]!
+	self isOpen ifTrue: [super lvmSetColumn: anLvColumn at: columnIndex]!
 
 multSelectStack
 	^multSelectStack ifNil: [multSelectStack := OrderedCollection new]!
@@ -559,12 +620,12 @@ nmCustomDraw: pNMHDR
 
 	"Postdraw notification (see below)?"
 	((drawStage := pNMHDR dwordAtOffset: 12) allMask: 65538 "CDDS_ITEMPOSTPAINT") ifTrue:
-		[columnIndex > columns size ifTrue: [^CDRF_DODEFAULT].
-		context rc width = 0 ifTrue: [^CDRF_DODEFAULT].
-		context
-			item: (self objectFromHandle: context itemHandle ifAbsent: [^CDRF_DODEFAULT]);
-			view: self.	"The control attempts to draw stuff that isn't there on occassion"
-		self postDraw: context columnIndex: columnIndex.
+		[(columnIndex > columns size or: [context rc width = 0]) ifFalse: 
+			["The control attempts to draw stuff that isn't there on occasion"
+			(self objectFromHandle: context itemHandle ifAbsent: [nil]) ifNotNil: 
+				[ :item | 
+				context item: item; view: self.	
+				self postDraw: context columnIndex: columnIndex]].
 		^CDRF_DODEFAULT].
 
 	res := super nmCustomDraw: pNMHDR.
@@ -572,9 +633,13 @@ nmCustomDraw: pNMHDR
 	"Request postdraw notification - see above"
 	^((drawStage allMask: CDDS_ITEMPREPAINT) and: [(res = CDRF_DODEFAULT)
 		and: [(self hasColumnImages and: [drawStage allMask: CDDS_SUBITEM])
-				or: [self hasColumnImages not and: [self hasImageBlock and: [columnIndex = 1]]]]])
+				or: [self hasColumnImages not and: [self hasRowImage and: [columnIndex = 1]]]]])
 					ifTrue: [16r10 "CDRF_NOTIFYPOSTPAINT"]
 					ifFalse: [res]!
+
+noSelection
+
+	^0!
 
 onDisplayDetailsRequired: lvitem 
 	"Private - Get the display info for the receiver's row identified by the <LVITEM>, lvitem."
@@ -626,9 +691,37 @@ onDisplayDetailsRequired: lvitem
 			lvitem indent: (self indentFromRow: rowObject)].
 	^0	"suppress default processing"!
 
+onHeaderBeginDrag
+
+	self hideActiveEditor!
+
 onHeaderBeginTrack
 
 	self hideActiveEditor!
+
+onItem: anObject addedAtIndex: anInteger 
+
+	anInteger > self activeEditorModelIndex ifFalse: 
+		["Adjustment needed. Due to ordering of subsequent events, we can't set the index to be > current itemCount (which doesn't include the added item). Fallback to no selection"
+		self activeEditorModelIndex = self itemCount 
+			ifTrue: [self activeEditorModelIndex: 0]
+			ifFalse: [self activeEditorModelIndex: self activeEditorModelIndex + 1]].
+
+	self deactivateActiveEditor.
+
+	^super onItem: anObject addedAtIndex: anInteger !
+
+onItem: anObject removedAtIndex: anInteger
+
+	anInteger > self activeEditorModelIndex ifFalse: 
+		["Adjustment needed"
+		anInteger = self activeEditorModelIndex
+			ifTrue: [self activeEditorModelIndex: 0]
+			ifFalse: [self activeEditorModelIndex: self activeEditorModelIndex - 1]].
+
+	self deactivateActiveEditor.
+
+	^super onItem: anObject removedAtIndex: anInteger !
 
 onKillFocus
 
@@ -639,6 +732,13 @@ onKillFocus
 onLeftButtonDoubleClicked: aMouseEvent
 
 	self onLeftButtonPressed: aMouseEvent.
+
+	(self itemAndColumnAt: aMouseEvent position) ifNotNil: 
+		[ :itemAndColumn || item column |
+		item := self list at: itemAndColumn x.
+		column := self columnAtIndex: itemAndColumn y.
+		(column events hasActionsForEvent: #itemDoubleClicked:) ifTrue: [^column trigger: #itemDoubleClicked: with: item]].
+
 	^super onLeftButtonDoubleClicked: aMouseEvent!
 
 onLeftButtonPressed: aMouseEvent
@@ -667,11 +767,11 @@ onLeftButtonPressed: aMouseEvent
 	self presenter trigger: #leftButtonPressed: with: aMouseEvent.
 
 	"If clicked the icon, then select only"
-	selectOnly := (self lvmGetSubItemRect: (itemCoords - (1@1)) bounding: LVIR_ICON) containsPoint: point.
+	selectOnly := (self columnAtIndex: itemCoords y) hasColumnImage and: [(self lvmGetSubItemRect: (itemCoords - (1@1)) bounding: LVIR_ICON) containsPoint: point].
 
 	^(self click: aMouseEvent activateEditor: selectOnly not at: itemCoords) 
 		ifNil: [0]
-		ifNotNil: [ :editor | SessionManager inputState queueDeferredAction: [aMouseEvent resendTo: editor]. 0]	!
+		ifNotNil: [ :editor | [aMouseEvent resendTo: editor] postToMessageQueue. 0]!
 
 onMouseLeave: aMouseEvent
 
@@ -685,6 +785,17 @@ onMouseMoved: aMouseEvent
 
 	^super onMouseMoved: aMouseEvent!
 
+onMouseWheeled: aMouseEvent
+
+	self deactivateActiveEditor.
+	^super onMouseWheeled: aMouseEvent!
+
+onPositionChanging: aPositionEvent
+
+	self hideActiveEditor.
+
+	^super onPositionChanging: aPositionEvent!
+
 onSelChanged: anObject
 
 	self hideActiveEditor.
@@ -696,34 +807,49 @@ onSetFocus
 
 	self requestTrackMouseLeave.
 
-	self hasSelection ifFalse: 
-		[self clearFocusItem.
-		self shouldShowFocusRect ifTrue: [self drawFocusRect]].
+	self hasSelection ifFalse: [self clearFocusItem].
 
 	^super onSetFocus!
 
 onValueChangedIn: aColumn
 
-	aColumn updateValueIn: self selection.
+	"If the list changed whilst the editor was active the change may be invalid - in this case we set the row being edited to zero"
+	self activeEditorModelIndex > 0 ifFalse: [^self].
+
+	aColumn updateValueIn: self activeEditorModel.
 
 	"attempt to ensure that changes are triggered off the list model"
-	self model updateAtIndex: (self selectionByIndex)!
+	self model refreshAtIndex: self activeEditorModelIndex!
 
 onViewOpened
 
 	super onViewOpened.
 
-	self headerControl when: #beginTrack send: #onHeaderBeginTrack to: self.
+	self headerControl 
+		when: #beginDrag send: #onHeaderBeginDrag to: self;
+		when: #beginTrack send: #onHeaderBeginTrack to: self.
 
+	self originalColumns: self allColumns copy.
 	self allColumns do: 
 		[ :each | 
 		each 
 			createEditorIn: self;
-			customDrawBlock: (MessageSend receiver: self selector: #drawSubItem: arguments: (Array with: nil))]!
+			customDrawBlock: [ :context | self drawSubItem: context]]!
+
+originalColumns
+
+	"Crude test for old views with a value in this (reused) inst var"
+	^(originalColumns isKindOf: Collection) 
+		ifTrue: [originalColumns]
+		ifFalse: [self allColumns]!
+
+originalColumns: aCollection
+
+	originalColumns := aCollection!
 
 postDraw: aContext columnIndex: anInteger
 
-	((anInteger = 1 and: [self hasImageBlock]) or: [self hasColumnImages]) 
+	((anInteger = 1 and: [self hasRowImage]) or: [self hasColumnImages]) 
 		ifTrue: [(self columnAtIndex: anInteger) customDrawIcon: aContext]
 		ifFalse: [aContext canvas free]!
 
@@ -781,7 +907,7 @@ requestDeactivateEditor
 
 	^(self hasActiveEditor not or: [self activeEditor onRequestDeactivate])
 		ifTrue: [true]
-		ifFalse: [self activeEditor show; tabFocus. false]!
+		ifFalse: [self activeEditor ifNotNil: [ :editor | editor show; tabFocus]. false]!
 
 rowBackcolor
 	^rowBackcolor!
@@ -837,8 +963,18 @@ setColumnIcon: anImage atIndex: anInteger
 
 shouldOwnerDrawSelectionHighlight
 
-	"Themed controls appear to draw their own alphas-blended highlights >= Vista(?) (or is there some setting controlling this?)"
+	"Themed controls appear to draw their own alpha-blended highlights >= Vista(?) (or is there some setting controlling this?)"
 	^self isThemed not or: [OSVERSIONINFO current isWinV6OrLater not]!
+
+singleSelect: anInteger
+
+	| hadMultipleSelections |
+
+	hadMultipleSelections := self hasMultipleSelections.		
+	(hadMultipleSelections not and: [self selectionByIndex = anInteger]) ifFalse:
+		[self multSelectStack: (OrderedCollection with: anInteger).
+		hadMultipleSelections ifTrue: [self selectionByIndex: self noSelection "Clear the selections"].
+		self selectionByIndex: anInteger]!
 
 smallImageExtent
 	"Private - Answer the value of the receiver's 'smallImageExtent' instance variable."
@@ -915,7 +1051,8 @@ updateHotItem: nowHot
 			[ :each | 
 			each ifNotNil: 
 				[ :pt |
-				(self allColumns at: pt y) hasHotTracking ifTrue: 
+				"Take account of a column hidden whilst it was hot"
+				((self allColumns size >= pt y) and: [(self allColumns at: pt y) hasHotTracking]) ifTrue: 
 					[self invalidateRect: 
 						(self 
 							lvmGetSubItemRect: (pt - (1@1)) "0-based indexing"
@@ -930,15 +1067,14 @@ validateMultSelectStack
 	((shouldBe size = 1 and: [self multSelectStack size = 1 and: [shouldBe first = self multSelectStack first]]) or: [shouldBe = self multSelectStack asSortedCollection asArray]) ifFalse:
 		[self multSelectStack: shouldBe asOrderedCollection]!
 
+visibleColumns
+
+	^self originalColumns select: [ :each | each isVisible]!
+
 wmHScroll: message wParam: wParam lParam: lParam 
 
-	self hasActiveEditor ifTrue: [self deactivateEditor; enableRedraw].
+	self deactivateActiveEditor.
 	^super wmHScroll: message wParam: wParam lParam: lParam !
-
-wmMouseWheel: message wParam: wParam lParam: lParam 
-
-	self hasActiveEditor ifTrue: [self deactivateEditor; enableRedraw].
-	^super wmMouseWheel: message wParam: wParam lParam: lParam !
 
 wmNotify: message wParam: wParam lParam: lParam
 	"Private - Redirects WM_NOTIFY messages to the appropriate control as a notify message.
@@ -961,7 +1097,7 @@ wmPaint: message wParam: wParam lParam: lParam
 
 wmVScroll: message wParam: wParam lParam: lParam 
 
-	self hasActiveEditor ifTrue: [self deactivateEditor; enableRedraw].
+	self deactivateActiveEditor.
 	^super wmVScroll: message wParam: wParam lParam: lParam ! !
 !EditableListView categoriesFor: #activateEditorAt:tabbed:!helpers!public! !
 !EditableListView categoriesFor: #activateEditorForColumn:!operations!public! !
@@ -971,23 +1107,30 @@ wmVScroll: message wParam: wParam lParam: lParam
 !EditableListView categoriesFor: #activeColumn!accessing!public! !
 !EditableListView categoriesFor: #activeColumnIndex!accessing!public! !
 !EditableListView categoriesFor: #activeEditor!accessing!public! !
+!EditableListView categoriesFor: #activeEditorCellRect!accessing!public! !
 !EditableListView categoriesFor: #activeEditorCoords!accessing!private! !
 !EditableListView categoriesFor: #activeEditorCoords:!accessing!private! !
+!EditableListView categoriesFor: #activeEditorHighlightColor!accessing!public! !
 !EditableListView categoriesFor: #activeEditorModel!accessing!public! !
+!EditableListView categoriesFor: #activeEditorModelIndex!accessing!public! !
+!EditableListView categoriesFor: #activeEditorModelIndex:!accessing!public! !
 !EditableListView categoriesFor: #activeEditorNeedsHighlight!public!testing! !
+!EditableListView categoriesFor: #addNewColumn:!columns!public! !
 !EditableListView categoriesFor: #applyImageLists!image management!private! !
 !EditableListView categoriesFor: #clearFocusItem!helpers!public! !
 !EditableListView categoriesFor: #clearFocusRect!helpers!public! !
 !EditableListView categoriesFor: #click:activateEditor:at:!helpers!private! !
-!EditableListView categoriesFor: #clientFocusRectangle!helpers!public! !
 !EditableListView categoriesFor: #columnImagePadding!accessing!public! !
 !EditableListView categoriesFor: #columnImageSpacing!accessing!public! !
 !EditableListView categoriesFor: #columnNamed:!accessing!public! !
+!EditableListView categoriesFor: #columnNamed:ifNone:!accessing!public! !
+!EditableListView categoriesFor: #columnUnderPoint:!accessing!public! !
 !EditableListView categoriesFor: #columnWithEditor:!accessing!public! !
 !EditableListView categoriesFor: #commitOngoingEdit!operations!public! !
+!EditableListView categoriesFor: #deactivateActiveEditor!helpers!public! !
 !EditableListView categoriesFor: #deactivateEditor!helpers!private! !
 !EditableListView categoriesFor: #defaultOffsetForEditor:!accessing!public! !
-!EditableListView categoriesFor: #drawFocusRect!helpers!public! !
+!EditableListView categoriesFor: #disconnectFromModel!operations!private! !
 !EditableListView categoriesFor: #drawHorizontalGridlinesOn:from:to:by:!helpers!private! !
 !EditableListView categoriesFor: #drawSubItem:!helpers!public! !
 !EditableListView categoriesFor: #fieldExitDown!operations!public! !
@@ -1003,13 +1146,15 @@ wmVScroll: message wParam: wParam lParam: lParam
 !EditableListView categoriesFor: #hasEditableColumn!public!testing! !
 !EditableListView categoriesFor: #hasEditableColumnInCurrentRow!public!testing! !
 !EditableListView categoriesFor: #hasImageBlock!public!testing! !
-!EditableListView categoriesFor: #hasVirtualGridlines!accessing!private! !
-!EditableListView categoriesFor: #hasVirtualGridlines:!accessing!private! !
+!EditableListView categoriesFor: #hasMultipleSelections!public!testing! !
+!EditableListView categoriesFor: #hasRowImage!public!testing! !
+!EditableListView categoriesFor: #headerControl!accessing!public! !
 !EditableListView categoriesFor: #hideActiveEditor!helpers!public! !
 !EditableListView categoriesFor: #hideActiveEditor:!helpers!public! !
 !EditableListView categoriesFor: #hotItemAndColumn!accessing!private! !
 !EditableListView categoriesFor: #hotItemAndColumn:!accessing!private! !
 !EditableListView categoriesFor: #hotItemTipText!accessing!public! !
+!EditableListView categoriesFor: #imageFromRow:!accessing!public! !
 !EditableListView categoriesFor: #isDisplayContextSelectedOrHot:!public!testing! !
 !EditableListView categoriesFor: #isHot:!public!testing! !
 !EditableListView categoriesFor: #isMultiline!public!testing! !
@@ -1026,17 +1171,25 @@ wmVScroll: message wParam: wParam lParam: lParam
 !EditableListView categoriesFor: #nextEditableColumn!accessing!public! !
 !EditableListView categoriesFor: #nextEditableCoordsInOrAfter:!helpers!private! !
 !EditableListView categoriesFor: #nmCustomDraw:!event handling!private! !
+!EditableListView categoriesFor: #noSelection!accessing!public! !
 !EditableListView categoriesFor: #onDisplayDetailsRequired:!event handling!private! !
+!EditableListView categoriesFor: #onHeaderBeginDrag!event handling!public! !
 !EditableListView categoriesFor: #onHeaderBeginTrack!event handling!public! !
+!EditableListView categoriesFor: #onItem:addedAtIndex:!event handling!public! !
+!EditableListView categoriesFor: #onItem:removedAtIndex:!event handling!public! !
 !EditableListView categoriesFor: #onKillFocus!event handling!public! !
 !EditableListView categoriesFor: #onLeftButtonDoubleClicked:!event handling!public! !
 !EditableListView categoriesFor: #onLeftButtonPressed:!event handling!public! !
 !EditableListView categoriesFor: #onMouseLeave:!event handling!public! !
 !EditableListView categoriesFor: #onMouseMoved:!event handling!public! !
+!EditableListView categoriesFor: #onMouseWheeled:!event handling!public! !
+!EditableListView categoriesFor: #onPositionChanging:!event handling!public! !
 !EditableListView categoriesFor: #onSelChanged:!event handling!public! !
 !EditableListView categoriesFor: #onSetFocus!event handling!public! !
 !EditableListView categoriesFor: #onValueChangedIn:!event handling!public! !
 !EditableListView categoriesFor: #onViewOpened!event handling!public! !
+!EditableListView categoriesFor: #originalColumns!accessing!public! !
+!EditableListView categoriesFor: #originalColumns:!accessing!public! !
 !EditableListView categoriesFor: #postDraw:columnIndex:!helpers!private! !
 !EditableListView categoriesFor: #preTranslateKeyboardInput:!event handling!public! !
 !EditableListView categoriesFor: #prevEditableColumn!accessing!public! !
@@ -1055,6 +1208,7 @@ wmVScroll: message wParam: wParam lParam: lParam
 !EditableListView categoriesFor: #selectionsByIndex:!public!selection! !
 !EditableListView categoriesFor: #setColumnIcon:atIndex:!helpers!public! !
 !EditableListView categoriesFor: #shouldOwnerDrawSelectionHighlight!public!testing! !
+!EditableListView categoriesFor: #singleSelect:!helpers!private! !
 !EditableListView categoriesFor: #smallImageExtent!accessing!public! !
 !EditableListView categoriesFor: #smallImageExtent:!accessing!public! !
 !EditableListView categoriesFor: #sortAscending:onColumnIndex:!columns!private! !
@@ -1065,8 +1219,8 @@ wmVScroll: message wParam: wParam lParam: lParam
 !EditableListView categoriesFor: #ttnGetDispInfo:!event handling!public! !
 !EditableListView categoriesFor: #updateHotItem:!helpers!public! !
 !EditableListView categoriesFor: #validateMultSelectStack!helpers!public! !
+!EditableListView categoriesFor: #visibleColumns!accessing!public! !
 !EditableListView categoriesFor: #wmHScroll:wParam:lParam:!event handling!private! !
-!EditableListView categoriesFor: #wmMouseWheel:wParam:lParam:!event handling!private! !
 !EditableListView categoriesFor: #wmNotify:wParam:lParam:!event handling!public! !
 !EditableListView categoriesFor: #wmPaint:wParam:lParam:!event handling!private! !
 !EditableListView categoriesFor: #wmVScroll:wParam:lParam:!event handling!private! !
@@ -1078,17 +1232,20 @@ columnClass
 
 	^EditableListViewColumn!
 
+initialize
+	
+	self registerMessages: (Array with: 16r20E "WM_MOUSEHWHEEL" -> #wmMouseWheel:wParam:lParam:)!
+
 stbConvert: instVarArray fromVersion: verInteger
 
-	| origInstVars instVars offset |
+	| origInstVars instVars offset new |
 
-	origInstVars := super stbConvert: instVarArray fromVersion: verInteger.
+	origInstVars := super stbConvert: instVarArray fromVersion: (verInteger <= 14 ifTrue: [11] ifFalse: [verInteger]).
 	instVars := origInstVars.
 	offset := 0.
 
 	verInteger < 12 ifTrue: 
-		[| new |
-		"Added rowHeight"
+		["Added rowHeight"
 		new := Array new: instVars size + 1.
 		new replaceFrom: 1 to: (##(self) instSize - 3) with: instVars startingAt: 1.
 		new at: (##(self) instSize - 2) put: 1.
@@ -1096,15 +1253,25 @@ stbConvert: instVarArray fromVersion: verInteger
 		offset := offset + 1].
 
 	verInteger < 14 ifTrue:
-		[| new |
-		"Added _spares"
+		["Added _spares"
 		new := Array new: instVars size + 2.
 		new replaceFrom: 1 to: (##(self) instSize - 2) with: instVars startingAt: 1.
 		new 
 			at: ##(self) instSize put: nil;
 			at: (##(self) instSize - 1) put: nil.
+		instVars := new.
+		offset := offset + 2].
 
+	verInteger < 15 ifTrue:
+		["Added hotItemAndColumn tipText'"
+		new := Array new: instVars size + 2.
+		new replaceFrom: 1 to: (##(self) instSize - 2) with: instVars startingAt: 1.
 		offset := offset + 2.
+
+		(new at: 36 "rowHeight") isNil ifTrue: [new at: 36 put: 1].
+		(new at: 33 "old isMultiSelect") == true
+			ifTrue: [(new instVarAt: 3) at: 1 put: ((new instVarAt: 3) first maskClear: LVS_SINGLESEL)]
+			ifFalse: [(new instVarAt: 3) at: 1 put: ((new instVarAt: 3) first maskSet: LVS_SINGLESEL)].
 
 		"Copy inst vars of any subclass"
 		self instSize > ##(self) instSize ifTrue:
@@ -1124,8 +1291,14 @@ stbVersion
 	14 - added _spares
 	15 - added hotItemAndColumn, tipText"
 
-	^15! !
+	^15!
+
+uninitialize
+
+	self unregisterMessages: (Array with: 16r20E "WM_MOUSEHWHEEL")! !
 !EditableListView class categoriesFor: #columnClass!constants!private! !
+!EditableListView class categoriesFor: #initialize!initialize/release!private! !
 !EditableListView class categoriesFor: #stbConvert:fromVersion:!constants!public! !
 !EditableListView class categoriesFor: #stbVersion!constants!private! !
+!EditableListView class categoriesFor: #uninitialize!initialize/release!private! !
 

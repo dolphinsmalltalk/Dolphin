@@ -42,7 +42,11 @@ rating
 	^rating!
 
 rating: anObject
-	rating := anObject! !
+	rating := anObject!
+
+titleAndEpisode
+
+	^'Title: <1s><N>Episode: <2s>'expandMacrosWith: (self title ifNil: ['-']) with: (self episodeTitle ifNil: ['-'])! !
 !PVRRecording categoriesFor: #channel!accessing!private! !
 !PVRRecording categoriesFor: #channel:!accessing!private! !
 !PVRRecording categoriesFor: #description!accessing!private! !
@@ -54,4 +58,5 @@ rating: anObject
 !PVRRecording categoriesFor: #isViewed:!accessing!private! !
 !PVRRecording categoriesFor: #rating!accessing!private! !
 !PVRRecording categoriesFor: #rating:!accessing!private! !
+!PVRRecording categoriesFor: #titleAndEpisode!accessing!public! !
 

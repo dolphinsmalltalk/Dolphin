@@ -14,12 +14,6 @@ actualOffset
 
 	^self offset ifNil: [self defaultOffset]!
 
-cellRect
-
-	"Private - Return the cell rectangle equivalent to the receiver's edit rectangle"
-
-	^(self rectangle topLeft - self actualOffset) extent: (self extent + (self actualOffset + (0@1)))!
-
 column
 
 	^self parentView allColumns detect: [ :each | each editor == self]!
@@ -37,6 +31,15 @@ createEmbeddedIn: aView
 		font: self view font;
 		yourself!
 
+cueBanner
+
+	^self propertyAt: #cueBanner ifAbsent: [self propertyAt: #cueBanner put: super cueBanner]!
+
+cueBanner: aString
+
+	super cueBanner: aString.
+	self removePropertyAt: #cueBanner ifAbsent: []!
+
 defaultOffset
 
 	^self parentView defaultOffsetForEditor: self!
@@ -52,16 +55,24 @@ defaultWindowStyle
 
 	^(super defaultWindowStyle) | ES_AUTOHSCROLL!
 
-display: aString in: aRectangle on: aCanvas forecolor: fColor backcolor: bColor editable: aBoolean hot: hBoolean
+display: aValue in: aRectangle on: aCanvas forecolor: fColor backcolor: bColor editable: aBoolean hot: hBoolean
 
-	| text displayOffset |
+	| text color displayOffset cornerOffset |
 
-	text := aString ifNil: [''].
+	text := self typeconverter convertFromLeftToRight: aValue.
+
+	color := fColor.
+	(text isEmpty and: [self hasCueBanner]) ifTrue: 
+		[text := self cueBanner.
+		color := Color grayText].
 	displayOffset := self actualOffset + (3@0).
+	self alignment = #right 
+		ifTrue: [cornerOffset := displayOffset + (8@0)]
+		ifFalse: [cornerOffset := displayOffset].
 	
 	aCanvas 
-		forecolor: fColor;
-		formatText: text in: ((aRectangle origin + displayOffset) extent: (aRectangle extent - displayOffset))!
+		forecolor: color;
+		formatText: text in: ((aRectangle origin + displayOffset) extent: (aRectangle extent - cornerOffset)) flags: ((AlignmentMap at: self column alignment ifAbsent: [DT_LEFT]) | DT_END_ELLIPSIS)!
 
 displayOnFormats
 
@@ -71,7 +82,15 @@ editRectFor: aRectangle
 
 	"Private - Return the rectangle to use for the editor within the grid cell aRectangle"
 
-	^(aRectangle topLeft + self actualOffset) extent: (aRectangle extent - (self actualOffset + (0@1)))!
+	^(aRectangle topLeft + self actualOffset) extent: (aRectangle extent - (self actualOffset + ((self alignment = #right ifTrue: [5] ifFalse: [0])@1)))!
+
+expectsText
+
+	^self typeconverter isNullConverter!
+
+hasCueBanner
+
+	^(self cueBanner ifNil: ['']) isEmpty not!
 
 hasEmbeddedHotTracking
 
@@ -79,7 +98,7 @@ hasEmbeddedHotTracking
 
 isDisplayOwnerDrawn
 
-	^false!
+	^self hasCueBanner!
 
 offset
 
@@ -144,6 +163,7 @@ show
 showIn: aRectangle
 
 	self
+		alignment: self column alignment;
 		rectangle: (self editRectFor: aRectangle);
 		show!
 
@@ -156,15 +176,18 @@ stbSaveOn: anSTBOutFiler
 		ifTrue: [anSTBOutFiler saveObject: self]
 		ifFalse: [super stbSaveOn: anSTBOutFiler]! !
 !EmbeddedTextEdit categoriesFor: #actualOffset!accessing!public! !
-!EmbeddedTextEdit categoriesFor: #cellRect!displaying!private! !
 !EmbeddedTextEdit categoriesFor: #column!accessing!public! !
 !EmbeddedTextEdit categoriesFor: #createEmbeddedIn:!initializing!public! !
+!EmbeddedTextEdit categoriesFor: #cueBanner!displaying!public! !
+!EmbeddedTextEdit categoriesFor: #cueBanner:!displaying!public! !
 !EmbeddedTextEdit categoriesFor: #defaultOffset!accessing!public! !
 !EmbeddedTextEdit categoriesFor: #defaultWindowExStyle!constants!private! !
 !EmbeddedTextEdit categoriesFor: #defaultWindowStyle!constants!private! !
 !EmbeddedTextEdit categoriesFor: #display:in:on:forecolor:backcolor:editable:hot:!displaying!public! !
 !EmbeddedTextEdit categoriesFor: #displayOnFormats!binary filing!public! !
 !EmbeddedTextEdit categoriesFor: #editRectFor:!displaying!private! !
+!EmbeddedTextEdit categoriesFor: #expectsText!public!testing! !
+!EmbeddedTextEdit categoriesFor: #hasCueBanner!displaying!public! !
 !EmbeddedTextEdit categoriesFor: #hasEmbeddedHotTracking!public!testing! !
 !EmbeddedTextEdit categoriesFor: #isDisplayOwnerDrawn!public!testing! !
 !EmbeddedTextEdit categoriesFor: #offset!accessing!public! !
@@ -176,4 +199,21 @@ stbSaveOn: anSTBOutFiler
 !EmbeddedTextEdit categoriesFor: #show!displaying!public! !
 !EmbeddedTextEdit categoriesFor: #showIn:!displaying!public! !
 !EmbeddedTextEdit categoriesFor: #stbSaveOn:!binary filing!public! !
+
+!EmbeddedTextEdit class methodsFor!
+
+stbConvertFrom: anSTBClassFormat
+
+	(anSTBClassFormat version = 9 or: [anSTBClassFormat version = 13]) ifTrue:
+		[^[:data || newInstance |
+		newInstance := self basicNew.
+		1 to: data size do: [:i | newInstance instVarAt: i put: (data at: i)].
+		newInstance]].
+
+	^super stbConvertFrom: anSTBClassFormat!
+
+stbVersion
+	^20! !
+!EmbeddedTextEdit class categoriesFor: #stbConvertFrom:!binary filing!public! !
+!EmbeddedTextEdit class categoriesFor: #stbVersion!binary filing!public! !
 

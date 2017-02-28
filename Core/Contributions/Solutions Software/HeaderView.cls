@@ -92,10 +92,11 @@ nmNotify: anNMHDR
 
 	msg := anNMHDR sdwordAtOffset: 8.
 
-	msg = (-300 "HDN_FIRST" -26) "HDN_BEGINTRACK" ifTrue: [self trigger: #beginTrack].
-	msg = (-300 "HDN_FIRST" -27) "HDN_ENDTRACK" ifTrue: [self trigger: #endTrack].
-	msg = (-300 "HDN_FIRST" -25) "DIVIDERDBLCLICK" ifTrue: [self trigger: #dividerDoubleClick].
-	msg = (-300 "HDN_FIRST" -11) "HDN_ENDDRAG" ifTrue: [self trigger: #endDrag].
+	msg = ##(-300 "HDN_FIRST"  - 10) "HDN_BEGINDRAG" ifTrue: [self trigger: #beginDrag].
+	msg = ##(-300 "HDN_FIRST" - 11) "HDN_ENDDRAG" ifTrue: [self trigger: #endDrag].
+	msg = ##(-300 "HDN_FIRST" - 25) "DIVIDERDBLCLICK" ifTrue: [self trigger: #dividerDoubleClick].
+	msg = ##(-300 "HDN_FIRST" - 26) "HDN_BEGINTRACK" ifTrue: [self trigger: #beginTrack].
+	msg = ##(-300 "HDN_FIRST" - 27) "HDN_ENDTRACK" ifTrue: [self trigger: #endTrack].
 
 	^super nmNotify: anNMHDR
 !

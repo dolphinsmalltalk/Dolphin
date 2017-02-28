@@ -1,7 +1,7 @@
 | package |
 package := Package name: 'SSW EditableListView'.
 package paxVersion: 1;
-	basicComment: '© Solutions Software/John Aspinall 2016
+	basicComment: '© Solutions Software/John Aspinall 2017
 Provided under the same licence terms as Dolphin Smalltalk 7'.
 
 package basicPackageVersion: '0.001'.
@@ -11,6 +11,7 @@ package classNames
 	add: #EditableListView;
 	add: #EditableListViewColumn;
 	add: #EmbeddedCheckBox;
+	add: #EmbeddedCheckButton;
 	add: #EmbeddedComboBox;
 	add: #EmbeddedFormattedTextEdit;
 	add: #EmbeddedMultilineTextEdit;
@@ -55,7 +56,7 @@ package!
 "Class Definitions"!
 
 ListViewColumn subclass: #EditableListViewColumn
-	instanceVariableNames: 'isEditable setContentsBlock editor forecolor backcolor preDrawBlock getSortContentsBlock isEditableBlock cachedWidth cachedIndex'
+	instanceVariableNames: 'isEditable setContentsBlock editor forecolor backcolor preDrawBlock getSortContentsBlock isEditableBlock cachedWidth cachedParent isValidContentsBlock events _spare0 _spare1'
 	classVariableNames: ''
 	poolDictionaries: 'CommCtrlConstants'
 	classInstanceVariableNames: ''!
@@ -65,24 +66,29 @@ EmulatedPushButton subclass: #EmbeddedPushButton
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ComboBox subclass: #EmbeddedComboBox
-	instanceVariableNames: 'choiceModel cellRect'
+	instanceVariableNames: 'choiceModel allowNilSelection'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ListView subclass: #EditableListView
-	instanceVariableNames: 'activeColumn multSelectStack _spare0 rowForecolor rowBackcolor rowHeight smallImageExtent hasVirtualGridlines hotItemAndColumn tipText'
+	instanceVariableNames: 'activeEditorCoords multSelectStack originalColumns rowForecolor rowBackcolor rowHeight smallImageExtent headerControl hotItemAndColumn tipText'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-CheckBox subclass: #EmbeddedCheckBox
-	instanceVariableNames: 'textExtent text'
+CheckButton subclass: #EmbeddedCheckButton
+	instanceVariableNames: 'textExtent text isAlwaysDrawnEnabled'
 	classVariableNames: ''
 	poolDictionaries: 'ThemeConstants'
 	classInstanceVariableNames: ''!
-RadioButton subclass: #EmbeddedRadioButton
-	instanceVariableNames: 'textExtent text'
+EmbeddedCheckButton subclass: #EmbeddedCheckBox
+	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'ThemeConstants'
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+EmbeddedCheckButton subclass: #EmbeddedRadioButton
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 TextEdit subclass: #EmbeddedTextEdit
 	instanceVariableNames: 'offset'

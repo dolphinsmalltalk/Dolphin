@@ -14,12 +14,6 @@ actualOffset
 
 	^self offset ifNil: [self defaultOffset]!
 
-cellRect
-
-	"Private - Return the cell rectangle equivalent to the receiver's edit rectangle"
-
-	^(self rectangle topLeft - self actualOffset) extent: (self extent + (self actualOffset + (0@1)))!
-
 column
 
 	^self parentView allColumns detect: [ :each | each editor == self]!
@@ -36,6 +30,15 @@ createEmbeddedIn: aView
 		create;
 		font: aView font;
 		yourself!
+
+cueBanner
+
+	^self propertyAt: #cueBanner ifAbsent: [self propertyAt: #cueBanner put: super cueBanner]!
+
+cueBanner: aString
+
+	super cueBanner: aString.
+	self removePropertyAt: #cueBanner ifAbsent: []!
 
 defaultOffset
 
@@ -54,14 +57,21 @@ defaultWindowStyle
 
 display: anObject in: aRectangle on: aCanvas forecolor: fColor backcolor: bColor editable: aBoolean hot: hBoolean
 
-	| text actualOffset |
+	| text color displayOffset cornerOffset |
 
 	text := self typeconverter convertFromLeftToRight: anObject.
-	actualOffset := self actualOffset + (3@0).
+	color := fColor.
+	(text isEmpty and: [self hasCueBanner]) ifTrue: 
+		[text := self cueBanner.
+		color := Color grayText].
+	displayOffset := self actualOffset + (3@0).
+	self alignment = #right 
+		ifTrue: [cornerOffset := displayOffset + (8@0)]
+		ifFalse: [cornerOffset := displayOffset].
 	
 	aCanvas 
-		forecolor: fColor;
-		formatText: text in: ((aRectangle origin + actualOffset) extent: (aRectangle extent - actualOffset))!
+		forecolor: color;
+		formatText: text in: ((aRectangle origin + displayOffset) extent: (aRectangle extent - cornerOffset)) flags: ((AlignmentMap at: self column alignment ifAbsent: [DT_LEFT]) | DT_END_ELLIPSIS)!
 
 displayOnFormats
 
@@ -73,13 +83,21 @@ editRectFor: aRectangle
 
 	^(aRectangle topLeft + self actualOffset) extent: (aRectangle extent - (self actualOffset + (0@1)))!
 
+expectsText
+
+	^self typeconverter isNullConverter!
+
+hasCueBanner
+
+	^(self cueBanner ifNil: ['']) isEmpty not!
+
 hasEmbeddedHotTracking
 
 	^false!
 
 isDisplayOwnerDrawn
 
-	^false!
+	^self hasCueBanner!
 
 offset
 
@@ -158,15 +176,18 @@ stbSaveOn: anSTBOutFiler
 		ifTrue: [anSTBOutFiler saveObject: self]
 		ifFalse: [super stbSaveOn: anSTBOutFiler]! !
 !EmbeddedFormattedTextEdit categoriesFor: #actualOffset!accessing!public! !
-!EmbeddedFormattedTextEdit categoriesFor: #cellRect!displaying!private! !
 !EmbeddedFormattedTextEdit categoriesFor: #column!accessing!public! !
 !EmbeddedFormattedTextEdit categoriesFor: #createEmbeddedIn:!initialize/release!public! !
+!EmbeddedFormattedTextEdit categoriesFor: #cueBanner!displaying!public! !
+!EmbeddedFormattedTextEdit categoriesFor: #cueBanner:!displaying!public! !
 !EmbeddedFormattedTextEdit categoriesFor: #defaultOffset!accessing!public! !
 !EmbeddedFormattedTextEdit categoriesFor: #defaultWindowExStyle!constants!private! !
 !EmbeddedFormattedTextEdit categoriesFor: #defaultWindowStyle!constants!private! !
 !EmbeddedFormattedTextEdit categoriesFor: #display:in:on:forecolor:backcolor:editable:hot:!displaying!public! !
 !EmbeddedFormattedTextEdit categoriesFor: #displayOnFormats!binary filing!public! !
 !EmbeddedFormattedTextEdit categoriesFor: #editRectFor:!displaying!private! !
+!EmbeddedFormattedTextEdit categoriesFor: #expectsText!public!testing! !
+!EmbeddedFormattedTextEdit categoriesFor: #hasCueBanner!displaying!public! !
 !EmbeddedFormattedTextEdit categoriesFor: #hasEmbeddedHotTracking!public!testing! !
 !EmbeddedFormattedTextEdit categoriesFor: #isDisplayOwnerDrawn!public!testing! !
 !EmbeddedFormattedTextEdit categoriesFor: #offset!accessing!public! !
