@@ -1293,6 +1293,7 @@ requiredClasses
 	^(IdentitySet new: 32)
 		add: Process;
 		add: ProcessorScheduler;
+		add: NTLibrary;		"see KernalLibrary class>>#'isWine' "
 		add: self runtimeSessionManagerClass asSessionManagerClass;
 		addAll: self vmReferencedClasses;
 		yourself!
