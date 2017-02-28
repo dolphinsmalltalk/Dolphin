@@ -137,6 +137,17 @@ There is one and only one Symbol #ProfStef. There may be several ''ProfStef'' St
 (Smalltalk at: #ProfStef) next.'
 !
 
+bigNumbersAreGreat
+	^ Lesson
+title: 'Big Numbers' 
+contents: 
+'"Try this in Java"
+
+2000 factorial.
+
+ProfStef next.'
+!
+
 blocks
 	^ Lesson
 title: 'Blocks' 
@@ -349,6 +360,9 @@ Here we want to print all the numbers on the Transcript (a console)"
 
 (Smalltalk allClasses select: [:eachClass | eachClass name = #ProfStef]) do: [:eachProfstef | eachProfstef next].'
 !
+
+listOfLessons
+	^#(#welcomeToSmalltalk #bigNumbersAreGreat #evaluatingVsDisplaying #displaying #basicTypesNumbers #basicTypesCharacters #basicTypesString #basicTypesSymbol #basicTypesArray #messageSyntaxUnary #messageSyntaxBinary #messageSyntaxKeyword #messageSyntaxExecutionOrder #messageSyntaxExecutionOrderParentheses #mathematicalPrecedence #messageSyntaxCascade #messageSyntaxCascadeShouldNotBeHere #blocks #blocksAssignation #conditionals #loops #iterators #instantiation #reflection #reflectionContinued #dolphinEnvironment #debugger #theEnd)!
 
 loops
 	^ Lesson
@@ -598,9 +612,6 @@ ProfStef class methodAt: #goToNextLesson.
 ProfStef perform: #next'
 !
 
-tableOfContents
-	^#(#welcome #evaluatingVsDisplaying #displaying #basicTypesNumbers #basicTypesCharacters #basicTypesString #basicTypesSymbol #basicTypesArray #messageSyntaxUnary #messageSyntaxBinary #messageSyntaxKeyword #messageSyntaxExecutionOrder #messageSyntaxExecutionOrderParentheses #mathematicalPrecedence #messageSyntaxCascade #messageSyntaxCascadeShouldNotBeHere #blocks #blocksAssignation #conditionals #loops #iterators #instantiation #reflection #reflectionContinued #dolphinEnvironment #debugger #theEnd)!
-
 theEnd
 	^ Lesson
 title: 'The End !!' 
@@ -613,23 +624,21 @@ See you soon !!"
 '
 !
 
-welcome
-	^ Lesson
-title: 'Welcome' 
-contents: 
-'"Hello!! I''m Professor Stef. 
+welcomeToSmalltalk
+	^Lesson title: 'Welcome'
+		contents: '"Hello!! I''m Professor Stef. 
 
 You must want me to help you learn Smalltalk.
 
 So let''s go to the first lesson.  Select the text below and click on the ''EvaluateIt'' button"
 
-ProfStef next.'
-! !
+ProfStef next.'! !
 !SmalltalkSyntaxTutorial categoriesFor: #basicTypesArray!pages!public! !
 !SmalltalkSyntaxTutorial categoriesFor: #basicTypesCharacters!pages!public! !
 !SmalltalkSyntaxTutorial categoriesFor: #basicTypesNumbers!pages!public! !
 !SmalltalkSyntaxTutorial categoriesFor: #basicTypesString!pages!public! !
 !SmalltalkSyntaxTutorial categoriesFor: #basicTypesSymbol!pages!public! !
+!SmalltalkSyntaxTutorial categoriesFor: #bigNumbersAreGreat!pages!public! !
 !SmalltalkSyntaxTutorial categoriesFor: #blocks!pages!public! !
 !SmalltalkSyntaxTutorial categoriesFor: #blocksAssignation!pages!public! !
 !SmalltalkSyntaxTutorial categoriesFor: #conditionals!pages!public! !
@@ -639,6 +648,7 @@ ProfStef next.'
 !SmalltalkSyntaxTutorial categoriesFor: #evaluatingVsDisplaying!pages!public! !
 !SmalltalkSyntaxTutorial categoriesFor: #instantiation!pages!public! !
 !SmalltalkSyntaxTutorial categoriesFor: #iterators!pages!public! !
+!SmalltalkSyntaxTutorial categoriesFor: #listOfLessons!contents!public! !
 !SmalltalkSyntaxTutorial categoriesFor: #loops!pages!public! !
 !SmalltalkSyntaxTutorial categoriesFor: #mathematicalPrecedence!pages!public! !
 !SmalltalkSyntaxTutorial categoriesFor: #messageSyntaxBinary!pages!public! !
@@ -651,7 +661,6 @@ ProfStef next.'
 !SmalltalkSyntaxTutorial categoriesFor: #name!accessing!public! !
 !SmalltalkSyntaxTutorial categoriesFor: #reflection!pages!public! !
 !SmalltalkSyntaxTutorial categoriesFor: #reflectionContinued!pages!public! !
-!SmalltalkSyntaxTutorial categoriesFor: #tableOfContents!contents!public! !
 !SmalltalkSyntaxTutorial categoriesFor: #theEnd!pages!public! !
-!SmalltalkSyntaxTutorial categoriesFor: #welcome!pages!public! !
+!SmalltalkSyntaxTutorial categoriesFor: #welcomeToSmalltalk!pages!public! !
 
