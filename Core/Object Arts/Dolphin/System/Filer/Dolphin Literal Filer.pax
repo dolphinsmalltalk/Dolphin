@@ -15,6 +15,7 @@ package classNames
 package methodNames
 	add: #ArrayedCollection -> #literalPrintOn:;
 	add: #Boolean -> #literalPrintOn:;
+	add: #Character -> #literalPrintOn:;
 	add: #Class -> #literalPrintOn:;
 	add: #Number -> #literalPrintOn:;
 	add: #Object -> #literalStoreArray;
@@ -81,6 +82,12 @@ literalPrintOn: aWriteStream
 literalPrintOn: aWriteStream
 	self printOn: aWriteStream! !
 !Boolean categoriesFor: #literalPrintOn:!public! !
+
+!Character methodsFor!
+
+literalPrintOn: aWriteStream 
+	self printOn: aWriteStream! !
+!Character categoriesFor: #literalPrintOn:!public! !
 
 !Class methodsFor!
 
