@@ -22,7 +22,7 @@ printAccessorExpressionSuffixOn: aWriteStream
 		display: #asExternalAddress!
 
 readFrom: anExternalStructure
-	"Private - Answer an <ExternalAddress> representing the pointer value of the field at the
+	"Private - Answer an <ExternalAddress> with the same value as the pointer field at the
 	receiver's offset in the <ExternalStructure> argument."
 
 	^(anExternalStructure bytes uintPtrAtOffset: offset) asExternalAddress! !

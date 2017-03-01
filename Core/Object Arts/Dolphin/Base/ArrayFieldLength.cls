@@ -36,7 +36,7 @@ setElementCount: anInteger of: anExternalField in: anExternalStructure
 	"Private - Set the length field corresponding to this array field, if any."
 
 	^self subclassResponsibility! !
-!ArrayFieldLength categoriesFor: #allocationLength!private! !
+!ArrayFieldLength categoriesFor: #allocationLength!accessing!private! !
 !ArrayFieldLength categoriesFor: #getElementCountOf:in:!indirect accessing!private! !
 !ArrayFieldLength categoriesFor: #isFixedSize!private!testing! !
 !ArrayFieldLength categoriesFor: #printElementCountExpressionFor:on:!automatic generation!private! !

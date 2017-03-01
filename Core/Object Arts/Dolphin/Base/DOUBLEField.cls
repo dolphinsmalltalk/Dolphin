@@ -19,8 +19,8 @@ fieldClassName
 	^Float name!
 
 readFrom: anExternalStructure
-	"Private - Answer a <Float> representing the 64-bit double precision floating value at the
-	receiver's offset in the <ExternalStructure> argument."
+	"Private - Answer a <Float> with the same value as the 64-bit double precision floating
+	point field at the receiver's offset in the <ExternalStructure> argument."
 
 	^anExternalStructure bytes doubleAtOffset: offset!
 

@@ -22,8 +22,8 @@ printAccessorExpressionSuffixOn: aWriteStream
 		display: #asExternalHandle!
 
 readFrom: anExternalStructure
-	"Private - Answer an <ExternalHandler> that is the value of the field at the receiver's
-	offset in the <ExternalStructure> argument."
+	"Private - Answer an <ExternalHandle> with the same value as the unsigned pointer-sized
+	field at the receiver's offset in the <ExternalStructure> argument."
 
 	^(anExternalStructure bytes uintPtrAtOffset: offset) asExternalHandle! !
 !HANDLEField categoriesFor: #fieldClassName!automatic generation!constants!development!private! !

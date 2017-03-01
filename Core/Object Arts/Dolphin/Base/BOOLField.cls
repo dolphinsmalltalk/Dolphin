@@ -37,8 +37,9 @@ printMutatorValueOn: aWriteStream parameter: aString
 		display: #asParameter!
 
 readFrom: anExternalStructure
-	"Private - Answer the <Boolean> value represented by the 32-bit integer value at the receiver's offset in
-	the <ExternalStructure> argument, i.e. false if zero, true for any other value."
+	"Private - Answer a <Boolean> of equivalent value to the 32-bit integer field at the
+	receiver's offset in the <ExternalStructure> argument, i.e. false if zero, true for any
+	other value."
 
 	^(anExternalStructure bytes dwordAtOffset: offset) asBoolean!
 

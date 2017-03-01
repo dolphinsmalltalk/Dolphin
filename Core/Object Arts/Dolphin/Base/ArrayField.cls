@@ -9,9 +9,7 @@ ArrayField guid: (GUID fromString: '{87b4c4de-026e-11d3-9fd7-00a0cc3e4a32}')!
 ArrayField comment: 'ArrayField is an <ExternalField> type to represent <ExternalStructure> fields which are fixed arrays whose contents are actually embedded in the structure, as opposed to being merely pointed at from the structure.
 
 Instance Variables:
-	length		<SmallInteger> or <Symbol>. Either the integer length of fixed arrays, or the symbolic name of the length field for conformant arrays.
-
-'!
+	arrayLength		<ArrayFieldLength> describing the length of the array.'!
 !ArrayField categoriesForClass!External-Data-Types! !
 !ArrayField methodsFor!
 
@@ -35,11 +33,7 @@ arrayLength: anArrayFieldLength
 	arrayLength := anArrayFieldLength!
 
 byteSize
-	"Private - Answer the byte size of the embedded array the receiver represents.
-	By default we assume that the length of the receiver is specified in bytes."
-
-	"N.B. We use the length variable directly, rather than sending the length message as we need
-	the allocation length, not the element count (the latter excludes null-terminators)"
+	"Private - Answer the byte size of the embedded array the receiver represents."
 
 	^arrayLength allocationLength * self elementSize!
 
@@ -59,6 +53,9 @@ elementSizeSelector
 	^#elementSize!
 
 isFixedSize
+	"Private - Answer whether the embedded array field described by the receiver is of fixed
+	length, i.e. known statically as opposed to varying dynamically at runtime."
+
 	^arrayLength isFixedSize!
 
 length
@@ -158,30 +155,31 @@ printStaticElementSizeExpressionOn: aWriteStream
 		on: aWriteStream!
 
 readFrom: anExternalStructure
-	"Private - Answer an byte-object array of the type described by the receiver, and of the
-	size described by the receiver, which is either an <ExternalArray> reference to the data in
-	the <ExternalStructure> argument at the receiver's offset, or a <ByteArray> copy of the data
-	at that offset."
+	"Private - Answer a byte-object array of the type described by the receiver, and of the size
+	described by the receiver. Normally this will be an <ExternalArray> reference to the data in
+	the <ExternalStructure> argument at the receiver's offset, but it can be an object of any
+	class that responds to the #fromAddress:length: instance creation message, e.g. a
+	<ByteArray> or a <String>, which both create a copy of the data."
 
 	^self arrayClass fromAddress: anExternalStructure yourAddress + offset
 		length: (arrayLength getElementCountOf: ExternalField new in: anExternalStructure)!
 
-writeInto: anExternalStructure value: anObject
-	"Private - Write the bytes of anObject into anExternal."
+writeInto: anExternalStructure value: aByteObject
+	"Private - Write the bytes of aByteObject into anExternalStructure."
 
 	| byteSize |
 	byteSize := self isFixedSize
 				ifTrue: 
-					[anObject byteSize
+					[aByteObject byteSize
 						min: (arrayLength getElementCountOf: ExternalField new in: anExternalStructure) * self elementSize]
-				ifFalse: [anObject byteSize].
+				ifFalse: [aByteObject byteSize].
 	anExternalStructure bytes
 		replaceFrom: offset + 1
 		to: offset + byteSize
-		with: anObject
+		with: aByteObject
 		startingAt: 1.
 	arrayLength
-		setElementCount: anObject
+		setElementCount: aByteObject
 		of: self
 		in: anExternalStructure! !
 !ArrayField categoriesFor: #alignment!constants!public! !
@@ -224,7 +222,7 @@ type: aClass length: anInteger
 
 type: aClass lengthField: aSymbol
 	"Answer a new instance of the receiver which is used for describing embedded conformant
-	array objects of type, aClass, where the length is specified by the another field of the
+	array objects of type, aClass, where the length is specified by another field of the
 	structure being described with the specified <Symbol> name."
 
 	^self type: aClass arrayLength: (ConformantArrayFieldLength lengthField: aSymbol)! !

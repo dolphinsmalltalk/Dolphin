@@ -16,8 +16,8 @@ accessorMessage
 	^#uintPtrAtOffset:put:!
 
 readFrom: anExternalStructure
-	"Private - Answer an <integer> representing the pointer-sized unsigned integer value of the
-	field at the receiver's offset in the <ExternalStructure> argument."
+	"Private - Answer an <integer> with the same value as the unsigned pointer-sized field at
+	the receiver's offset in the <ExternalStructure> argument."
 
 	^anExternalStructure bytes uintPtrAtOffset: offset!
 

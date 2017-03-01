@@ -36,7 +36,7 @@ printAccessorExpressionSuffixOn: aWriteStream
 		display: self elementClass!
 
 readFrom: anExternalStructure
-	"Private - Answer an <StructureArray> of the receiver's element class that is a reference to
+	"Private - Answer a <StructureArray> of the receiver's element class that is a reference to
 	the data pointed at by the corresponding pointer field of the <ExternalStructure> argument
 	at the receiver's offset, and which is of the length described by the receiver."
 

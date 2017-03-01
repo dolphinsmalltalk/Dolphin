@@ -465,6 +465,7 @@ package methodNames
 	add: 'ExternalStructure class' -> #arrayType:;
 	add: 'ExternalStructure class' -> #elementType:;
 	add: 'ExternalStructure class' -> #fieldType;
+	add: 'ExternalStructure class' -> #fieldType:indirections:;
 	add: 'ExternalStructure class' -> #mustWrapOptionalArgument:;
 	add: 'ExternalStructure class' -> #printDefaultValue:on:;
 	add: 'ExternalStructure class' -> #printMethodArgument:elemdesc:indirections:on:;
@@ -4499,7 +4500,7 @@ printStructField: aVARDESC indirections: anInteger on: aPuttableStream
 		on: aPuttableStream! !
 !ExternalArray class categoriesFor: #arrayType!constants!development!private! !
 !ExternalArray class categoriesFor: #fieldType!constants!development!private! !
-!ExternalArray class categoriesFor: #fieldType:indirections:!public! !
+!ExternalArray class categoriesFor: #fieldType:indirections:!private! !
 !ExternalArray class categoriesFor: #pointerFieldType!constants!development!private! !
 !ExternalArray class categoriesFor: #printStructField:indirections:on:!development!private! !
 
@@ -4679,6 +4680,26 @@ fieldType
 
 	^StructureField!
 
+fieldType: aVARDESC indirections: anInteger
+	"Private - Answer the <ExternalField> type to be used to represent a field described by the
+	<VARDESC> argument based of the receiver's basic field type in structures with the given
+	number of <integer> indirections."
+
+	^anInteger > 1
+		ifTrue: 
+			["Represent ** (or more) as anon. indirection"
+			LPVOIDField]
+		ifFalse: 
+			[anInteger == 0
+				ifTrue: 
+					[self assert: 
+							["Should not have arrived here for conformant embedded arrays"
+							aVARDESC isConformant not].
+					self fieldType]
+				ifFalse: 
+					["Its a pointer, but could be to an array"
+					aVARDESC isConformant ifTrue: [self arrayType pointerFieldType] ifFalse: [self pointerFieldType]]]!
+
 mustWrapOptionalArgument: anELEMDESC 
 	^anELEMDESC indirections > 0 and: [anELEMDESC isOut not]!
 
@@ -4781,6 +4802,7 @@ unspecifiedParameterValue
 !ExternalStructure class categoriesFor: #arrayType:!constants!development!private! !
 !ExternalStructure class categoriesFor: #elementType:!constants!development!private! !
 !ExternalStructure class categoriesFor: #fieldType!constants!development!private! !
+!ExternalStructure class categoriesFor: #fieldType:indirections:!private! !
 !ExternalStructure class categoriesFor: #mustWrapOptionalArgument:!development!helpers!private! !
 !ExternalStructure class categoriesFor: #printDefaultValue:on:!development!helpers!private! !
 !ExternalStructure class categoriesFor: #printMethodArgument:elemdesc:indirections:on:!development!private! !

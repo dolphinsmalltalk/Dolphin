@@ -46,7 +46,7 @@ setElementCount: anInteger of: anExternalField in: anExternalStructure
 	"Private - Set the length field corresponding to this array field, if any."
 
 	"anExternalField describes a fixed length array - nothing to do here"! !
-!FixedArrayFieldLength categoriesFor: #allocationLength!private! !
+!FixedArrayFieldLength categoriesFor: #allocationLength!accessing!private! !
 !FixedArrayFieldLength categoriesFor: #elementCount!accessing!private! !
 !FixedArrayFieldLength categoriesFor: #elementCount:!accessing!private! !
 !FixedArrayFieldLength categoriesFor: #getElementCountOf:in:!indirect accessing!private! !

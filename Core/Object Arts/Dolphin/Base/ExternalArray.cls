@@ -6,11 +6,11 @@ ExternalStructure subclass: #ExternalArray
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ExternalArray guid: (GUID fromString: '{87b4c593-026e-11d3-9fd7-00a0cc3e4a32}')!
-ExternalArray comment: 'ExternalArray is a specialized class of <ExternalStructure> to represent contiguous heterogeneous arrays of external types, be they scalar of structured. The various subclasses can be used for external interfacing tasks such as where C arrays are expected.
+ExternalArray comment: 'ExternalArray is a specialized class of <ExternalStructure> to represent contiguous heterogeneous arrays of external types, be they scalar of structured. ExternalArray itself can be used to represent arrays of unsigned 8-bit integers (i.e. bytes). It and its various subclasses can be used for external interfacing tasks, such as where C arrays are expected.
 
 StructureArray is the most general of the subclasses in that it supports arbitrary element types (represented by other ExternalStructures), and can in fact perform the task of the other subclasses such as DWORDArray. The more specialized subclasses do, however, offer much greater efficiency where they are applicable.
 
-Specialized subclasses are provided for most standard intrinsic types; signed and unsigned integers of 16 and 32-bits, single and double precision floating point numbers, etc. Note that there is no subclass for arrays of bytes, since the standard ByteArray class already fulfills that requirement.
+Specialized subclasses are provided for most standard intrinsic types; signed and unsigned integers of 16 and 32-bits, single and double precision floating point numbers, etc.
 
 Instance Variables:
 	length		<integer>. Number of elements in the instance.

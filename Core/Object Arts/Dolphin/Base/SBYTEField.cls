@@ -16,8 +16,8 @@ accessorMessage
 	^#sbyteAtOffset:put:!
 
 readFrom: anExternalStructure
-	"Private - Answer the 8-bit signed <integer> that is the value of the at the receiver's
-	offset in the <ExternalStructure> argument."
+	"Private - Answer an <integer> with the same value as the signed 8-bit signed field at the
+	receiver's offset in the <ExternalStructure> argument."
 
 	^anExternalStructure bytes sbyteAtOffset: offset!
 

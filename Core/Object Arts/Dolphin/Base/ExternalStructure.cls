@@ -709,26 +709,6 @@ elementSize
 ensureDefined
 	template isNil ifTrue: [self defineTemplate]	"ensure the structure accessors are correctly defined"!
 
-fieldType: aVARDESC indirections: anInteger
-	"Private - Answer the <ExternalField> type to be used to represent a field described by the
-	<VARDESC> argument based of the receiver's basic field type in structures with the given
-	number of <integer> indirections."
-
-	^anInteger > 1
-		ifTrue: 
-			["Represent ** (or more) as anon. indirection"
-			LPVOIDField]
-		ifFalse: 
-			[anInteger == 0
-				ifTrue: 
-					[self assert: 
-							["Should not have arrived here for conformant embedded arrays"
-							aVARDESC isConformant not].
-					self fieldType]
-				ifFalse: 
-					["Its a pointer, but could be to an array"
-					aVARDESC isConformant ifTrue: [self arrayType pointerFieldType] ifFalse: [self pointerFieldType]]]!
-
 formatAndCompile: aString categories: categories 
 	| source |
 	source := (Smalltalk at: #SmalltalkSystem ifPresent: [:c | c current]) 
@@ -1126,7 +1106,6 @@ withBytes: aByteObject
 !ExternalStructure class categoriesFor: #descriptorClass!constants!private! !
 !ExternalStructure class categoriesFor: #elementSize!accessing!public! !
 !ExternalStructure class categoriesFor: #ensureDefined!instance creation!private! !
-!ExternalStructure class categoriesFor: #fieldType:indirections:!public! !
 !ExternalStructure class categoriesFor: #formatAndCompile:categories:!compiling!private! !
 !ExternalStructure class categoriesFor: #fromAddress:!instance creation!public! !
 !ExternalStructure class categoriesFor: #fromBytes:!instance creation!public! !

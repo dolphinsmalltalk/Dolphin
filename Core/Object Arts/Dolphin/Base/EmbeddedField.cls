@@ -9,10 +9,7 @@ EmbeddedField guid: (GUID fromString: '{87b4c4da-026e-11d3-9fd7-00a0cc3e4a32}')!
 EmbeddedField comment: 'EmbeddedField is the abstract class of <ExternalField>s that describe fields of <ExternalStructure>s that are directly embedded in the structure itself, as opposed to being pointers to external memory where the data resides.
 
 Instance Variables:
-	fieldClass		<Class> of Smalltalk object that can be used to represent the data stored in the field.
-
-
-'!
+	fieldClass		<Class> of Smalltalk object that can be used to represent the data stored in the field.'!
 !EmbeddedField categoriesForClass!External-Data-Types! !
 !EmbeddedField methodsFor!
 

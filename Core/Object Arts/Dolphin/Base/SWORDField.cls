@@ -16,8 +16,8 @@ accessorMessage
 	^#swordAtOffset:put:!
 
 readFrom: anExternalStructure
-	"Private - Answer the 16-bit signed <integer> that is the value of the at the receiver's
-	offset in the <ExternalStructure> argument."
+	"Private - Answer an <integer> with the same value as the signed 16-bit field at the
+	receiver's offset in the <ExternalStructure> argument."
 
 	^anExternalStructure bytes wordAtOffset: offset!
 
