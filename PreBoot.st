@@ -150,3 +150,5 @@ fileOutStem
 NTLibrary addClassVariable: 'IsWine' value: false!
 
 (Array with: ArrayField with: ArrayPointerField) do: [:each | each withAllSubclassesDo: [:f | (f whichSelectorsAccess: 'length') do: [:s | f removeSelector: s]]]!
+
+(Array with: CPINFO with: TIME_ZONE_INFORMATION) do: [:each | each resetTemplate]!
