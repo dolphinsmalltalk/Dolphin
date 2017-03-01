@@ -58,17 +58,20 @@ printElementSizeExpressionBodyOn: aWriteStream
 		space;
 		display: #basicByteSize!
 
-readFrom: anExternal
+readFrom: anExternalStructure
 	"Private - Answer a <StructureArray> of the receiver's field class which references the
 	array of structures embedded in the <ExternalStructure> argument at the receiver's offset."
 
 	^self arrayClass
-		fromAddress: anExternal yourAddress + offset
-		length: (arrayLength getElementCountOf: ExternalField new in: anExternal)
+		fromAddress: anExternalStructure yourAddress + offset
+		length: (arrayLength getElementCountOf: ExternalField new in: anExternalStructure)
 		elementClass: self fieldClass!
 
 valueParameterName
-	^'aStructureArrayOf', self elementClass name! !
+	"Private - Answer the name to use for the value parameter of a setter method generated for
+	the field described by the receiver."
+
+	^'aStructureArrayOf' , self elementClass name! !
 !StructureArrayField categoriesFor: #alignment!constants!public! !
 !StructureArrayField categoriesFor: #arrayClass!constants!private! !
 !StructureArrayField categoriesFor: #elementClass!accessing!private! !

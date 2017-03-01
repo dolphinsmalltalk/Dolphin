@@ -200,12 +200,17 @@ printOn: aStream
 		nextPut: $(; print: self offset; nextPut: $)!
 
 structClass
+	"Private - Answer the <ExternalStructure> class of which the receiver describes a field."
+
 	^structClass!
 
 structClass: anExternalStructureClass
 	structClass := anExternalStructureClass!
 
 valueParameterName
+	"Private - Answer the name to use for the value parameter of a setter method generated for
+	the field described by the receiver."
+
 	^self makeInstanceName: self fieldClassName! !
 !ExternalField categoriesFor: #alignment!constants!public! !
 !ExternalField categoriesFor: #autoGenCategories!development!private! !

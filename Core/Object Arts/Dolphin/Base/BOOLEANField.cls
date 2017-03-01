@@ -16,8 +16,8 @@ accessorMessage
 	^#byteAtOffset:put:!
 
 readFrom: anExternalStructure
-	"Private - Answer the <Boolean> value represented by the 8-bit integer value at the receiver's offset in
-	the <ExternalStructure> argument, i.e. false if zero, true for 1..255."
+	"Private - Answer a <Boolean> of equivalent value to the 8-bit integer field at the
+	receiver's offset in the <ExternalStructure> argument, i.e. false if zero, true for 1..255."
 
 	^(anExternalStructure bytes byteAtOffset: offset) asBoolean!
 

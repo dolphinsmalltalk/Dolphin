@@ -765,7 +765,7 @@ word: newValue
 !VARIANT categoriesFor: #isArray!public!testing! !
 !VARIANT categoriesFor: #isByRef!private!testing! !
 !VARIANT categoriesFor: #isDispatch!public!testing! !
-!VARIANT categoriesFor: #isEmpty!public! !
+!VARIANT categoriesFor: #isEmpty!public!testing! !
 !VARIANT categoriesFor: #isObject!public!testing! !
 !VARIANT categoriesFor: #lpvoid!accessing!public! !
 !VARIANT categoriesFor: #lVal!accessing!private! !

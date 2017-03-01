@@ -16,8 +16,8 @@ accessorMessage
 	^#dwordAtOffset:put:!
 
 readFrom: anExternalStructure
-	"Private - Answer the 32-bit unsigned <integer> that is the value of the at the receiver's
-	offset in the <ExternalStructure> argument."
+	"Private - Answer an <integer> with the same value as the unsigned 32-bit field at the
+	receiver's offset in the <ExternalStructure> argument."
 
 	^anExternalStructure bytes dwordAtOffset: offset!
 

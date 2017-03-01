@@ -6,7 +6,13 @@ PointerField subclass: #ArrayPointerField
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ArrayPointerField guid: (GUID fromString: '{87b4c4e3-026e-11d3-9fd7-00a0cc3e4a32}')!
-ArrayPointerField comment: 'ArrayPointerField is an <ExternalField> type to represent <ExternalStructure> fields which are pointers to external fixed arrays.'!
+ArrayPointerField comment: 'ArrayPointerField is an <ExternalField> type to represent <ExternalStructure> fields which are pointers to external fixed arrays.
+
+Instance Variables:
+	arrayLength		<ArrayFieldLength> describing the length of the array.
+
+
+'!
 !ArrayPointerField categoriesForClass!External-Data-Types! !
 !ArrayPointerField methodsFor!
 
@@ -35,13 +41,13 @@ printMutatorBody: aSymbol on: aWriteStream
 		crtab.
 	arrayLength printSetSizeFor: self on: aWriteStream!
 
-readFrom: anExternal
+readFrom: anExternalStructure
 	"Private - Answer an <ExternalArray> of the receiver's pointer class that is a reference to
 	the data pointed at by the corresponding pointer field of the <ExternalStructure> argument
 	at the receiver's offset, and which is of the length described by the receiver."
 
-	^self pointerClass fromAddress: (anExternal sdwordAtOffset: offset)
-		length: (arrayLength getElementCountOf: ExternalField new in: anExternal)!
+	^self pointerClass fromAddress: (anExternalStructure sdwordAtOffset: offset)
+		length: (arrayLength getElementCountOf: ExternalField new in: anExternalStructure)!
 
 writeInto: anExternalStructure value: anObject
 	"Private - Write the address of the externally addressable Smalltalk object, anObject,

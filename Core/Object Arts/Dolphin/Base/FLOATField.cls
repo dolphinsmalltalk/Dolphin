@@ -18,12 +18,11 @@ accessorMessage
 fieldClassName
 	^Float name!
 
-readFrom: anExternal
+readFrom: anExternalStructure
 	"Private - Answer a <Float> with the same value as the 32-bit single precision floating
-	point value at the receiver's offset in the <ExternalStructure> argument."
+	point field at the receiver's offset in the <ExternalStructure> argument."
 
-	^anExternal bytes floatAtOffset: offset
-!
+	^anExternalStructure bytes floatAtOffset: offset!
 
 writeInto: anExternalStructure value: aFloat
 	"Private - Write a 32-bit IEEE single precision equivalent value to the <Float> argument,

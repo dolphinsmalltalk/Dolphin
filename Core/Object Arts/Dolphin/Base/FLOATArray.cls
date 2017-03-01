@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ExternalArray subclass: #FLOATArray
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-FLOATArray guid: (GUID fromString: '{87B4C5A3-026E-11D3-9FD7-00A0CC3E4A32}')!
+FLOATArray guid: (GUID fromString: '{87b4c5a3-026e-11d3-9fd7-00a0cc3e4a32}')!
 FLOATArray comment: 'Specialized <ExternalArray> to represent contiguous single-dimensioned arrays of single-precision (32-bit) floating point numbers.'!
 !FLOATArray categoriesForClass!External-Data-Structured! !
 !FLOATArray methodsFor!
@@ -19,7 +19,7 @@ uncheckedAt: anInteger
 
 uncheckedAt: anInteger put: aFloat 
 	"Private - Replace the single-precision floating point value at the specified index in the receiver
-	with the Float argument.."
+	with the Float argument."
 
 	^bytes floatAtOffset: (anInteger - 1) * VMConstants.FloatSize put: aFloat! !
 !FLOATArray categoriesFor: #uncheckedAt:!accessing!private! !
