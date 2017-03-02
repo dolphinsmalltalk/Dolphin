@@ -5,7 +5,7 @@ DolphinTest subclass: #ResourceIdentifierTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ResourceIdentifierTest guid: (GUID fromString: '{1E647BF5-1B62-4E30-AF83-80B9BFBE65AD}')!
+ResourceIdentifierTest guid: (GUID fromString: '{1e647bf5-1b62-4e30-af83-80b9bfbe65ad}')!
 ResourceIdentifierTest comment: ''!
 !ResourceIdentifierTest categoriesForClass!Unclassified! !
 !ResourceIdentifierTest methodsFor!
@@ -14,6 +14,12 @@ setUp
 	| shellView filer |
 	super setUp.
 	shellView := ShellView show.
+	shellView model: (Array
+				with: $a
+				with: 'abc'
+				with: 1
+				with: 16rFFFFFFFF
+				with: #($a #abc true nil 1.2)).
 	filer := STLOutFiler on: Array writeStream.
 	filer nextPut: shellView.
 	shellView destroy.
