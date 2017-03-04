@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 MultilineTextEdit subclass: #MultilineTextEditWithImage
 	instanceVariableNames: 'backBitmap backMode backBrush'
 	classVariableNames: 'BackModes'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-MultilineTextEditWithImage guid: (GUID fromString: '{EB99E6AB-3D20-4F85-852B-B521DA845584}')!
+MultilineTextEditWithImage guid: (GUID fromString: '{eb99e6ab-3d20-4f85-852b-b521da845584}')!
 MultilineTextEditWithImage comment: 'MultilineTextEditWithImage is a specialised <MultilineTextEdit> that displays text transparently over a background bitmap. A common use case might be to display a watermark under the text. The bitmap can be tiled to fill the background, centred, or "docked" to one of the eight positions positions around the edges and in the corners of the client area. These modes are as follows:
 
 	#tile		- tile the image at its natural size to fill the entire background
@@ -177,10 +177,10 @@ onEraseRequired: aColorEvent
 
 	^true!
 
-onHScroll: aScrollEvent 
+onHScroll: aScrollEvent
 	"Implementaion Note: We must repaint on scroll to maintain the background image correctly."
 
-	self defaultWindowProcessing: aScrollEvent.
+	aScrollEvent defaultWindowProcessing.
 	self repaintWindow.
 	^0!
 
@@ -223,10 +223,10 @@ onPaintRequired: aPaintEvent
 		rop: SRCCOPY.
 	bmp free!
 
-onVScroll: aScrollEvent 
+onVScroll: aScrollEvent
 	"Implementaion Note: We must repaint on scroll to maintain the background image correctly."
 
-	self defaultWindowProcessing: aScrollEvent.
+	aScrollEvent defaultWindowProcessing.
 	self repaintWindow.
 	^0!
 

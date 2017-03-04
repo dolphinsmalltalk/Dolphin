@@ -227,7 +227,7 @@ onColorRequired: aColorEvent
 	back := self basicActualBackcolor.
 	canvas := aColorEvent canvas.
 	back isDefault
-		ifTrue: [brush := aColorEvent window ifNotNil: [:parent | parent defaultWindowProcessing: aColorEvent]]
+		ifTrue: [brush := aColorEvent defaultWindowProcessing]
 		ifFalse: 
 			[brush := back brush.
 			back isNone
@@ -250,8 +250,8 @@ onInputMaskRequired: anEvent
 	"Handler for a WM_GETDLGCODE request from Windows.
 	Most controls will have their own specific implementation, so we override
 	to just call the controls wndproc."
-	
-	^self defaultWindowProcessing: anEvent!
+
+	^anEvent defaultWindowProcessing!
 
 onViewCreated
 	"The receiver's window has been created. Copy any instance variable information

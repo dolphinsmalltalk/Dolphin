@@ -64,6 +64,7 @@ package methodNames
 	add: #TypeConverter -> #leftExceptionalValue:;
 	add: #TypeConverter -> #rightExceptionalValue;
 	add: #TypeConverter -> #rightExceptionalValue:;
+	add: #View -> #defaultWindowProcessing:;
 	add: #View -> #hasWindowEdge;
 	add: #View -> #hasWindowEdge:;
 	add: 'ChoicePresenter class' -> #resource_Multiselection_list_box;
@@ -72,6 +73,9 @@ package methodNames
 	add: 'Color class' -> #buttonFace;
 	add: 'ListPresenter class' -> #resource_Multiselection_enhanced_list_view;
 	add: 'ListPresenter class' -> #resource_Multiselection_list_box;
+	add: 'PaintEvent class' -> #handle:wParam:hdc:paintStruct:;
+	add: 'WindowsEvent class' -> #fromMSG:;
+	add: 'WindowsEvent class' -> #handle:message:wParam:lParam:;
 	add: 'WindowsEvent class' -> #message:handle:wParam:lParam:;
 	add: 'WinImageList class' -> #width:height:flags:size:growthGranularity:;
 	yourself.
@@ -342,6 +346,17 @@ hasTrackSelect: aBoolean
 !ListView categoriesFor: #hasTrackSelect!accessing-styles!public! !
 !ListView categoriesFor: #hasTrackSelect:!accessing-styles!public! !
 
+!PaintEvent class methodsFor!
+
+handle: hWnd wParam: wParam hdc: hdc paintStruct: ps
+	#deprecated.
+	^self
+		window: (View fromHandle: hWnd)
+		wParam: wParam
+		hdc: hdc
+		paintStruct: ps! !
+!PaintEvent class categoriesFor: #handle:wParam:hdc:paintStruct:!instance creation!public! !
+
 !ScrollingDecorator methodsFor!
 
 continuousTracking
@@ -505,6 +520,10 @@ rightExceptionalValue: anObject
 
 !View methodsFor!
 
+defaultWindowProcessing: anEvent
+	#deprecated.
+	^anEvent defaultWindowProcessing!
+
 hasWindowEdge
 	#deprecated.	"6.0: This style is automatically managed by Windows and changing it has no
 			effect."
@@ -514,10 +533,27 @@ hasWindowEdge: aBoolean
 	#deprecated.	"6.0: This style is automatically managed by Windows and changing it has no
 			effect."
 	(self exStyleMask: WS_EX_WINDOWEDGE set: aBoolean) ifTrue: [self frameChanged]! !
+!View categoriesFor: #defaultWindowProcessing:!dispatching!public! !
 !View categoriesFor: #hasWindowEdge!accessing-styles!public! !
 !View categoriesFor: #hasWindowEdge:!accessing-styles!public! !
 
 !WindowsEvent class methodsFor!
+
+fromMSG: aMSG 
+	#deprecated.
+	^self 
+		handle: aMSG hwnd
+		message: aMSG message
+		wParam: aMSG wParam
+		lParam: aMSG lParam!
+
+handle: wndHandle message: msgInteger wParam: wInteger lParam: lInteger
+	#deprecated.
+	^self
+		window: (View fromHandle: wndHandle)
+		message: msgInteger
+		wParam: wInteger
+		lParam: lInteger!
 
 message: msgInteger handle: wndHandle wParam: wInteger lParam: lInteger 
 	#deprecated.
@@ -526,6 +562,8 @@ message: msgInteger handle: wndHandle wParam: wInteger lParam: lInteger
 		message: msgInteger
 		wParam: wInteger
 		lParam: lInteger! !
+!WindowsEvent class categoriesFor: #fromMSG:!instance creation!public! !
+!WindowsEvent class categoriesFor: #handle:message:wParam:lParam:!instance creation!public! !
 !WindowsEvent class categoriesFor: #message:handle:wParam:lParam:!instance creation!public! !
 
 !WinImageList class methodsFor!

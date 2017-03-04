@@ -1,25 +1,25 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Event subclass: #WindowsEvent
 	instanceVariableNames: 'message wParam lParam lResult'
 	classVariableNames: ''
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
-WindowsEvent guid: (GUID fromString: '{87B4C482-026E-11D3-9FD7-00A0CC3E4A32}')!
+WindowsEvent guid: (GUID fromString: '{87b4c482-026e-11d3-9fd7-00a0cc3e4a32}')!
 WindowsEvent comment: ''!
 !WindowsEvent categoriesForClass!MVP-Views-Events! !
 !WindowsEvent methodsFor!
 
-handle: wndHandle message: msgInteger wParam: wInteger lParam: lInteger 
-	"Private - Initialize the receiver's instance variables from the parameters."
+defaultWindowProcessing
+	"Forward this event to the associated window's default window procedure and answer the
+	intptr value it returns."
 
-	hWnd := wndHandle.
-	message := msgInteger.
-	wParam := wInteger.
-	lParam := lInteger!
-
-hwnd
-	^hWnd!
+	^lResult
+		ifNil: 
+			[window
+				defaultWindowProcessing: message
+				wParam: wParam
+				lParam: lParam]!
 
 isHandled
 	"Answer whether the application has handled the event. This typically suppresses default
@@ -65,16 +65,15 @@ printLParamOn: aStream
 
 	aStream print: self lParam!
 
-printOn: aStream 
+printOn: aStream
 	"Append a textual representation of the receiver to aStream."
 
-	| msg window |
+	| msg |
 	self basicPrintOn: aStream.
 	msg := View selectorForMessage: self message.
 	aStream nextPut: $(.
-	window := self window.
 	aStream
-		print: (window ifNil: [self hwnd]);
+		print: self window;
 		space.
 	msg isNil ifTrue: [self message printOn: aStream base: 16] ifFalse: [aStream nextPutAll: msg].
 	aStream
@@ -84,10 +83,17 @@ printOn: aStream
 	self printLParamOn: aStream.
 	aStream nextPut: $)!
 
+window: aView message: msgInteger wParam: wInteger lParam: lInteger
+	"Private - Initialize the receiver's instance variables from the parameters."
+
+	window := aView.
+	message := msgInteger.
+	wParam := wInteger.
+	lParam := lInteger!
+
 wParam
 	^wParam! !
-!WindowsEvent categoriesFor: #handle:message:wParam:lParam:!initializing!private! !
-!WindowsEvent categoriesFor: #hwnd!accessing!private! !
+!WindowsEvent categoriesFor: #defaultWindowProcessing!event handling!public! !
 !WindowsEvent categoriesFor: #isHandled!public!testing! !
 !WindowsEvent categoriesFor: #lParam!accessing!public! !
 !WindowsEvent categoriesFor: #lParamX!accessing!public! !
@@ -97,20 +103,12 @@ wParam
 !WindowsEvent categoriesFor: #message!accessing!private! !
 !WindowsEvent categoriesFor: #printLParamOn:!printing!private! !
 !WindowsEvent categoriesFor: #printOn:!development!printing!public! !
+!WindowsEvent categoriesFor: #window:message:wParam:lParam:!initializing!private! !
 !WindowsEvent categoriesFor: #wParam!accessing!public! !
 
 !WindowsEvent class methodsFor!
 
-fromMSG: aMSG 
-	"Answer an instance of the receiver instantiated from the Win32 message, aMSG."
-
-	^self 
-		handle: aMSG hwnd
-		message: aMSG message
-		wParam: aMSG wParam
-		lParam: aMSG lParam!
-
-handle: wndHandle message: msgInteger wParam: wInteger lParam: lInteger 
+window: aView message: msgInteger wParam: wInteger lParam: lInteger 
 	"Answer an instance of the receiver containing the message details specified by the
 	parameters."
 
@@ -120,10 +118,9 @@ handle: wndHandle message: msgInteger wParam: wInteger lParam: lInteger
 
 	<primitive: 157>
 	^self new 
-		handle: wndHandle
+		window: aView
 		message: msgInteger
 		wParam: wInteger
 		lParam: lInteger! !
-!WindowsEvent class categoriesFor: #fromMSG:!instance creation!public! !
-!WindowsEvent class categoriesFor: #handle:message:wParam:lParam:!instance creation!public! !
+!WindowsEvent class categoriesFor: #window:message:wParam:lParam:!instance creation!public! !
 

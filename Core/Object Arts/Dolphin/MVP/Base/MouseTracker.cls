@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 CapturingInteractor subclass: #MouseTracker
 	instanceVariableNames: 'dragButton target startPoint startPointLocal origin hysteresis isTracking trackPosition constrain'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-MouseTracker guid: (GUID fromString: '{87B4C711-026E-11D3-9FD7-00A0CC3E4A32}')!
+MouseTracker guid: (GUID fromString: '{87b4c711-026e-11d3-9fd7-00a0cc3e4a32}')!
 MouseTracker comment: '<MouseTracker> is an <Interactor> that is used to manage the visual dragging of objects using the mouse. An instance should be created as the result of a mouse down event and once started using #startTracking: it captures the mouse and relays the drag messages that are part of the <mouseTrackerTarget> protocol to the target that is assigned to it. Once the drag has completed, and the originating button has been released, the mouse capture is also dropped. Tracking will also be cancelled if the user Alt+Tab''s to another application, or presses the ESC (escape) key (assuming the originating view still has focus).
 
 Instance Variables:
@@ -202,7 +202,7 @@ setPresenter: aPresenter
 
 !
 
-simulateMouseMouse: aKeyEvent 
+simulateMouseMouse: aKeyEvent
 	| pos event wParam |
 	pos := Cursor position.
 	wParam := 0.
@@ -214,10 +214,10 @@ simulateMouseMouse: aKeyEvent
 		add: VK_SHIFT -> MK_SHIFT;
 		add: VK_XBUTTON1 -> MK_XBUTTON1;
 		add: VK_XBUTTON2 -> MK_XBUTTON2;
-		asArray) 
+		asArray)
 			do: [:each | (Keyboard default isKeyDown: each key) ifTrue: [wParam := wParam bitOr: each value]].
-	event := MouseEvent 
-				handle: self view asParameter
+	event := MouseEvent
+				window: self view
 				message: WM_MOUSEMOVE
 				wParam: wParam
 				lParam: (View desktop mapPoint: pos to: self view) asUIntPtr.
