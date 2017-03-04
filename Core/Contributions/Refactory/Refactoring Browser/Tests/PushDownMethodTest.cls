@@ -5,7 +5,7 @@ RefactoringTest subclass: #PushDownMethodTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-PushDownMethodTest guid: (GUID fromString: '{0795B490-F7D0-4814-9B01-1F2F86AC9C20}')!
+PushDownMethodTest guid: (GUID fromString: '{0795b490-f7d0-4814-9b01-1f2f86ac9c20}')!
 PushDownMethodTest comment: ''!
 !PushDownMethodTest categoriesForClass!Refactory-Testing! !
 !PushDownMethodTest methodsFor!
@@ -24,8 +24,7 @@ testPushDownMethod
 
 testPushDownMethodOnNonAbstractClass
 	| refactoring |
-	refactoring := PushDownMethodRefactoring pushDown: #(#yourself)
-				from: Object.
+	refactoring := PushDownMethodRefactoring pushDown: #(#key) from: Association.
 	self shouldFail: refactoring!
 
 testPushDownMethodThatReferencesPoolDictionary
