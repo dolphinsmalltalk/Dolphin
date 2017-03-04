@@ -5,7 +5,7 @@ Object subclass: #View
 	classVariableNames: 'CreateCenteredMask DragSourceMask DropTargetMask LayoutValidMask ManagedMask MessageMap MinimizedMask NextId NoInheritMenuMask StateRestoringMask UIValidMask UsePreferredExtentMask ViewClosedError WndClassAtom'
 	poolDictionaries: 'Win32Constants Win32Errors'
 	classInstanceVariableNames: ''!
-View guid: (GUID fromString: '{87B4C4CC-026E-11D3-9FD7-00A0CC3E4A32}')!
+View guid: (GUID fromString: '{87b4c4cc-026e-11d3-9fd7-00a0cc3e4a32}')!
 View addClassConstant: 'CreateCenteredMask' value: 64!
 View addClassConstant: 'DragSourceMask' value: 4!
 View addClassConstant: 'DropTargetMask' value: 8!
@@ -3806,14 +3806,16 @@ wmCreate: message wParam: wParam lParam: lParam
 	self onCreated: event.
 	^self defaultWindowProcessing: event!
 
-wmCtlColor: message wParam: wParam lParam: lParam 
-	"Private - Default handler for a WM_CTLCOLORXXX message."
+wmCtlColor: message wParam: wParam lParam: lParam
+	"Private - Default handler for a WM_CTLCOLORXXX family of messages. This is sent to the
+	parent of the control, but we reflect it back to the ControlView to which it actually
+	relates."
 
-	| window |
-	window := self class withHandle: lParam.
-	^window notNil 
-		ifTrue: 
-			[window onColorRequired: (ColorEvent 
+	^(self class withHandle: lParam)
+		ifNotNil: 
+			[:window |
+			"Note that the event has the handle of the original (parent) window to which the message was sent."
+			window onColorRequired: (ColorEvent
 						handle: handle
 						message: message
 						wParam: wParam

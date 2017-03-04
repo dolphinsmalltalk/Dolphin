@@ -227,7 +227,7 @@ onColorRequired: aColorEvent
 	back := self basicActualBackcolor.
 	canvas := aColorEvent canvas.
 	back isDefault
-		ifTrue: [brush := self defaultWindowProcessing: aColorEvent]
+		ifTrue: [brush := aColorEvent window ifNotNil: [:parent | parent defaultWindowProcessing: aColorEvent]]
 		ifFalse: 
 			[brush := back brush.
 			back isNone
