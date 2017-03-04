@@ -2,10 +2,10 @@
 
 Object subclass: #StProgramNode
 	instanceVariableNames: 'parent comments'
-	classVariableNames: 'FormatterClass InlinedBlockSelectors OptimizedSelectors'
+	classVariableNames: 'FormatterClass InlinedBlockSelectors OptimizedSelectors SuperSearch'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-StProgramNode guid: (GUID fromString: '{3E45084E-5DE8-40C0-B448-C53339A17B52}')!
+StProgramNode guid: (GUID fromString: '{3e45084e-5de8-40c0-b448-c53339a17b52}')!
 StProgramNode addClassConstant: 'InlinedBlockSelectors' value: #(#ifTrue: #ifTrue:ifFalse: #ifFalse: #ifFalse:ifTrue: #whileTrue: #whileTrue #whileFalse: #whileFalse #to:do: #to:by:do: #and: #or: #repeat #ifNil: #ifNotNil: #ifNil:ifNotNil: #ifNotNil:ifNil:)!
 StProgramNode addClassConstant: 'OptimizedSelectors' value: #(#ifTrue: #ifTrue:ifFalse: #ifFalse: #ifFalse:ifTrue: #whileTrue: #whileTrue #whileFalse: #whileFalse #to:do: #to:by:do: #and: #or: #repeat #ifNil: #ifNotNil: #ifNil:ifNotNil: #ifNotNil:ifNil: #yourself)!
 StProgramNode comment: 'StProgramNode is an abstract class that represents a parse tree node in a Smalltalk program.
