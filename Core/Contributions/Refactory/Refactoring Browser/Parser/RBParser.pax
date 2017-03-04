@@ -919,13 +919,19 @@ selfMessages
 
 superMessages
 	| searcher |
+	SuperSearch isNil
+		ifTrue: 
+			[SuperSearch := RBParser parseRewriteExpression: 'super `@msg: ``@args'.
+			SuperSearch
+				selector;
+				isImmutable: true].
 	searcher := ParseTreeSearcher new.
-	searcher matches: 'super `@msg: ``@args'
-		do: 
-			[:aNode :answer | 
-			answer
-				add: aNode selector;
-				yourself].
+	searcher addRule: (RBSearchRule searchForTree: SuperSearch
+				thenDo: 
+					[:aNode :answer |
+					answer
+						add: aNode selector;
+						yourself]).
 	^searcher executeTree: self initialAnswer: Set new! !
 !StProgramNode categoriesFor: #addReplacement:!public!replacing! !
 !StProgramNode categoriesFor: #asReturn!accessing!public! !
