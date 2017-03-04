@@ -5,7 +5,7 @@ MultilineTextEdit subclass: #ScintillaView
 	classVariableNames: 'AnnotationStylesOffset BackgroundDwellEvents BraceHilightingMask CodePages DefaultCallTipTabWidth DefaultKeyBindings DefaultTextStyles FoldingMask MarginStylesOffset ScnMap'
 	poolDictionaries: 'ScintillaConstants Win32Constants'
 	classInstanceVariableNames: ''!
-ScintillaView guid: (GUID fromString: '{47A3310B-B7E4-4AA9-B6E6-640AD9FE7A3A}')!
+ScintillaView guid: (GUID fromString: '{47a3310b-b7e4-4aa9-b6e6-640ad9fe7a3a}')!
 ScintillaView addClassConstant: 'AnnotationStylesOffset' value: 512!
 ScintillaView addClassConstant: 'BackgroundDwellEvents' value: 4!
 ScintillaView addClassConstant: 'BraceHilightingMask' value: 1!
@@ -4868,8 +4868,7 @@ sciAddRefDocument: docInteger
 sciAddSelection: caretInteger anchor: anchorInteger
 	"Private - Add a selection"
 
-	^this isNil
-		ifTrue: [0]
+	this isNil
 		ifFalse: 
 			[ScintillaLibrary default
 				directFunction: this
@@ -8172,8 +8171,7 @@ sciSetSelBack: useSettingBoolean back: backRGB
 sciSetSelection: caretInteger anchor: anchorInteger
 	"Private - Set a simple selection"
 
-	^this isNil
-		ifTrue: [0]
+	this isNil
 		ifFalse: 
 			[ScintillaLibrary default
 				directFunction: this
