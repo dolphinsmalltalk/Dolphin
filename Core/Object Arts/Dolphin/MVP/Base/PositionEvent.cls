@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 WindowsEvent subclass: #PositionEvent
 	instanceVariableNames: 'lpwp'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-PositionEvent guid: (GUID fromString: '{CD69A072-3606-11D3-93BD-00A024CA708A}')!
+PositionEvent guid: (GUID fromString: '{cd69a072-3606-11d3-93bd-00a024ca708a}')!
 PositionEvent comment: 'PositionEvent is the class of <Event> associated with a window reposition event originating from a WM_WINDOWPOSCHANGING or WM_WINDOWPOSCHANGED message.'!
 !PositionEvent categoriesForClass!MVP-Views-Events! !
 !PositionEvent methodsFor!
@@ -152,20 +152,27 @@ y
 
 !PositionEvent class methodsFor!
 
-handle: wndHandle message: msgInteger wParam: wInteger lParam: lInteger 
+handle: wndHandle message: msgInteger wParam: wInteger lParam: lInteger
+	#deprecated.
+	^(super
+		handle: wndHandle
+		message: msgInteger
+		wParam: wInteger
+		lParam: lInteger)
+		makeStruct;
+		yourself!
+
+window: aView message: msgInteger wParam: wInteger lParam: lInteger
 	"Answer an instance of the receiver containing the message details specified by the
 	parameters."
 
-	"Implementation Note: The args are in the order of the receiver's instance variables, and
-	all we need to do to initialize the object is copy them directly across, therefore we can
-	use the special create and initialize primitive."
-
-	^(super 
-		handle: wndHandle
+	^(super
+		window: aView
 		message: msgInteger
 		wParam: wInteger
 		lParam: lInteger)
 		makeStruct;
 		yourself! !
 !PositionEvent class categoriesFor: #handle:message:wParam:lParam:!instance creation!public! !
+!PositionEvent class categoriesFor: #window:message:wParam:lParam:!instance creation!public! !
 

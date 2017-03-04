@@ -427,7 +427,7 @@ Object subclass: #DragDropSession
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
 Object subclass: #Event
-	instanceVariableNames: 'hWnd'
+	instanceVariableNames: 'window'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!

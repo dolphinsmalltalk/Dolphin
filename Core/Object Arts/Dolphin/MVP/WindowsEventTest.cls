@@ -5,14 +5,14 @@ DolphinTest subclass: #WindowsEventTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-WindowsEventTest guid: (GUID fromString: '{08EC4909-75D4-4BEF-BBB8-0F443B78F834}')!
+WindowsEventTest guid: (GUID fromString: '{08ec4909-75d4-4bef-bbb8-0f443b78f834}')!
 WindowsEventTest comment: ''!
 !WindowsEventTest categoriesForClass!Unclassified! !
 !WindowsEventTest methodsFor!
 
 newEvent: anInteger
 	^WindowsEvent
-		handle: 1
+		window: Transcript view
 		message: anInteger
 		wParam: 3
 		lParam: 4!
@@ -22,7 +22,7 @@ testInstanceCreation
 
 	| instance |
 	instance := self newEvent: 2.
-	self assert: instance hwnd = 1.
+	self assert: instance window == Transcript view.
 	self assert: instance message = 2.
 	self assert: instance wParam = 3.
 	self assert: instance lParam = 4!
@@ -32,9 +32,11 @@ testPrintString
 
 	| instance |
 	instance := self newEvent: 2.
-	self assert: instance printString = 'a WindowsEvent(1 wmDestroy:wParam:lParam: 3 4)'.
+	self assert: instance printString
+				= ('a WindowsEvent(<1p> wmDestroy:wParam:lParam: 3 4)' expandMacrosWith: instance window).
 	instance := self newEvent: 999.
-	self assert: instance printString = 'a WindowsEvent(1 16r3E7 3 4)'! !
+	self
+		assert: instance printString = ('a WindowsEvent(<1p> 16r3E7 3 4)' expandMacrosWith: instance window)! !
 !WindowsEventTest categoriesFor: #newEvent:!private!unit tests! !
 !WindowsEventTest categoriesFor: #testInstanceCreation!public!unit tests! !
 !WindowsEventTest categoriesFor: #testPrintString!public!unit tests! !

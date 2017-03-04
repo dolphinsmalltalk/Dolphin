@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 WindowsEvent subclass: #PaintEvent
 	instanceVariableNames: 'hdc paintStruct'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-PaintEvent guid: (GUID fromString: '{87B4C550-026E-11D3-9FD7-00A0CC3E4A32}')!
+PaintEvent guid: (GUID fromString: '{87b4c550-026e-11d3-9fd7-00a0cc3e4a32}')!
 PaintEvent comment: ''!
 !PaintEvent categoriesForClass!Events!MVP-Views-Events! !
 !PaintEvent methodsFor!
@@ -15,16 +15,6 @@ canvas
 
 	^Canvas withNonOwnedDC: hdc
 !
-
-handle: anExternalHandle wParam: anInteger hdc: dcExternalHandle paintStruct: aPAINTSTRUCT
-	"Private - Initialize the receiver's instance variables. Answer the receiver."
-
-	message := WM_PAINT.
-	hWnd := anExternalHandle.
-	wParam := anInteger.
-	lParam := 0.
-	hdc := dcExternalHandle.
-	paintStruct := aPAINTSTRUCT!
 
 hdc
 	^hdc!
@@ -41,18 +31,32 @@ printOn: aStream
 		basicPrint: self;
 		nextPut: $(;
 		print: self paintStruct;
-		nextPut: $)! !
+		nextPut: $)!
+
+window: aView wParam: anInteger hdc: dcExternalHandle paintStruct: aPAINTSTRUCT
+	"Private - Initialize the receiver's instance variables. Answer the receiver."
+
+	message := WM_PAINT.
+	window := aView.
+	wParam := anInteger.
+	lParam := 0.
+	hdc := dcExternalHandle.
+	paintStruct := aPAINTSTRUCT! !
 !PaintEvent categoriesFor: #canvas!accessing!public! !
-!PaintEvent categoriesFor: #handle:wParam:hdc:paintStruct:!accessing!private! !
 !PaintEvent categoriesFor: #hdc!accessing!public! !
 !PaintEvent categoriesFor: #paintStruct!accessing!public! !
 !PaintEvent categoriesFor: #printOn:!development!printing!public! !
+!PaintEvent categoriesFor: #window:wParam:hdc:paintStruct:!accessing!private! !
 
 !PaintEvent class methodsFor!
 
-handle:  hWnd wParam: wParam hdc: hdc paintStruct: ps
+window: aView wParam: wParam hdc: hdc paintStruct: ps
 	"Answer an instance of the receiver with the given properties."
 
-	^self new handle: hWnd wParam: wParam hdc: hdc paintStruct: ps! !
-!PaintEvent class categoriesFor: #handle:wParam:hdc:paintStruct:!instance creation!public! !
+	^self new
+		window: aView
+		wParam: wParam
+		hdc: hdc
+		paintStruct: ps! !
+!PaintEvent class categoriesFor: #window:wParam:hdc:paintStruct:!instance creation!public! !
 

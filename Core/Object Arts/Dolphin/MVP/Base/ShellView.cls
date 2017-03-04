@@ -5,7 +5,7 @@ ContainerView subclass: #ShellView
 	classVariableNames: 'CreateHookBlock DefaultButtonIndex DefaultExtentBlock DialogMessageMap TransientMask'
 	poolDictionaries: 'ButtonConstants'
 	classInstanceVariableNames: ''!
-ShellView guid: (GUID fromString: '{87B4C71A-026E-11D3-9FD7-00A0CC3E4A32}')!
+ShellView guid: (GUID fromString: '{87b4c71a-026e-11d3-9fd7-00a0cc3e4a32}')!
 ShellView addClassConstant: 'DefaultButtonIndex' value: 20!
 ShellView addClassConstant: 'TransientMask' value: 1!
 ShellView comment: 'ShellView implements the <topView> protocol for top-level windows whose parent is the desktop. ShellView is also a <topPresenter> so that it is able to stand in as a <Shell> when there is no associated presenter.
@@ -747,7 +747,7 @@ onViewMinimized: aSizeEvent
 	Accept the default processing."
 
 	self presenter trigger: #viewMinimized.
-	^self defaultWindowProcessing: aSizeEvent!
+	^aSizeEvent defaultWindowProcessing!
 
 onViewNcActivated: anEvent 
 	"Default handler for window frame activation
@@ -770,7 +770,7 @@ onViewRestored: aSizeEvent
 	Accept the default processing."
 
 	self presenter trigger: #viewRestored.
-	^self defaultWindowProcessing: aSizeEvent!
+	^aSizeEvent defaultWindowProcessing!
 
 parentView: aView 
 	"Private - Sets the parent of the receiver to aView. Can only be used when the
@@ -1054,7 +1054,7 @@ wmActivate: message wParam: wParam lParam: lParam
 
 	| event |
 	event := WindowsEvent 
-				handle: handle
+				window: self
 				message: message
 				wParam: wParam
 				lParam: lParam.
@@ -1118,7 +1118,7 @@ wmNcActivate: message wParam: wParam lParam: lParam
 
 	| event |
 	event := WindowsEvent 
-				handle: handle
+				window: self
 				message: message
 				wParam: wParam
 				lParam: lParam.
@@ -1151,7 +1151,7 @@ wmSettingChange: message wParam: wParam lParam: lParam
 	"Private - Handle the Win32 WM_SETTINGCHANGE message."
 
 	^self presenter onSettingChanged: (WindowsEvent 
-				handle: handle
+				window: self
 				message: message
 				wParam: wParam
 				lParam: lParam)!
@@ -1167,7 +1167,7 @@ wmSize: message wParam: wParam lParam: lParam
 			[| event |
 			#todo.	"Work out how we can do this from #wmPositionChanged:etc instead"
 			event := SizeEvent 
-						handle: handle
+						window: self
 						message: message
 						wParam: wParam
 						lParam: lParam.
