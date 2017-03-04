@@ -5,7 +5,7 @@ Presenter subclass: #SmalltalkSearchPresenter
 	classVariableNames: 'AutoCompleteDwell'
 	poolDictionaries: 'ScintillaConstants'
 	classInstanceVariableNames: ''!
-SmalltalkSearchPresenter guid: (GUID fromString: '{A8C5BF80-8660-45E4-865C-F489CA9CA4E8}')!
+SmalltalkSearchPresenter guid: (GUID fromString: '{a8c5bf80-8660-45e4-865c-f489ca9ca4e8}')!
 SmalltalkSearchPresenter comment: ''!
 !SmalltalkSearchPresenter categoriesForClass!Development!MVP-Resources-IDE Tools! !
 !SmalltalkSearchPresenter methodsFor!
@@ -162,23 +162,27 @@ searchItemsStartingWith: aString maxItems: anInteger
 			^matchingSymbols].
 	filter := (aString includes: $>)
 				ifTrue: 
-					[| classNamePrefix |
-					classNamePrefix := aString upTo: $>.
-					[:each | each name asString = classNamePrefix]]
+					[| prefix |
+					prefix := (aString upTo: $>) asSymbol.
+					[:each | each name == prefix]]
 				ifFalse: 
 					[(aString includes: Character space)
 						ifTrue: [[:each | each name beginsWith: aString]]
-						ifFalse: [[:each | each isMetaclass not and: [each name beginsWith: aString]]]].
+						ifFalse: [[:each | each isMeta not and: [each name beginsWith: aString]]]].
 	classes := environment classes select: filter.
 	result := OrderedCollection new.
 	classes size > 1
 		ifTrue: 
-			[classes do: [:eachClass | result add: eachClass].
+			[classes do: 
+					[:each |
+					result
+						add: (each isMeta ifTrue: [VariableBinding key: each name value: each] ifFalse: [each classBinding])].
 			^result].
 	classes do: 
-			[:eachClass |
-			result add: eachClass.
-			(environment selectorsForClass: eachClass) do: [:sel | result add: eachClass >> sel]].
+			[:each |
+			result
+				add: (each isMeta ifTrue: [VariableBinding key: each name value: each] ifFalse: [each classBinding]).
+			(environment selectorsForClass: each) do: [:sel | result add: each >> sel]].
 	Package manager packages do: [:each | result add: each].
 	^result select: [:each | each displayString beginsWith: aString]!
 
