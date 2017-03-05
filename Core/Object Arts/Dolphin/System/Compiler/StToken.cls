@@ -5,7 +5,7 @@ Object subclass: #StToken
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-StToken guid: (GUID fromString: '{91B3208A-A4B2-4319-952D-C260CD7AB80F}')!
+StToken guid: (GUID fromString: '{91b3208a-a4b2-4319-952d-c260cd7ab80f}')!
 StToken comment: ''!
 !StToken categoriesForClass!System-Compiler! !
 !StToken methodsFor!
@@ -16,8 +16,11 @@ acceptVisitor: aTokenVisitor
 comments
 	^comments!
 
-comments: anObject
-	comments := anObject!
+comments: aCollectionOrNil
+	"Set the code comment ranges associated with this token. Answer the receiver."
+
+	comments := aCollectionOrNil.
+	^self!
 
 isAssignment
 	^false!

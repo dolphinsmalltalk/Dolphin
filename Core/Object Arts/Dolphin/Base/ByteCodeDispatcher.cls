@@ -2,10 +2,12 @@
 
 Object subclass: #ByteCodeDispatcher
 	instanceVariableNames: 'byteCodes method ip interpreter instructionLength byteCode'
-	classVariableNames: 'Instructions RunStarts'
+	classVariableNames: 'FirstShowSpecialSend InstructionLengths Instructions RunStarts'
 	poolDictionaries: 'OpcodePool'
 	classInstanceVariableNames: ''!
-ByteCodeDispatcher guid: (GUID fromString: '{87B4C45D-026E-11D3-9FD7-00A0CC3E4A32}')!
+ByteCodeDispatcher guid: (GUID fromString: '{87b4c45d-026e-11d3-9fd7-00a0cc3e4a32}')!
+ByteCodeDispatcher addClassConstant: 'FirstShowSpecialSend' value: 126!
+ByteCodeDispatcher addClassConstant: 'InstructionLengths' value: #[1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 7 4 4 5 ]!
 ByteCodeDispatcher addClassConstant: 'Instructions' value: #(#break #shortPushInstVar: #shortPushInstVar: #shortPushInstVar: #shortPushInstVar: #shortPushInstVar: #shortPushInstVar: #shortPushInstVar: #shortPushInstVar: #shortPushInstVar: #shortPushInstVar: #shortPushInstVar: #shortPushInstVar: #shortPushInstVar: #shortPushInstVar: #shortPushInstVar: #shortPushInstVar: #shortPushTemp: #shortPushTemp: #shortPushTemp: #shortPushTemp: #shortPushTemp: #shortPushTemp: #shortPushTemp: #shortPushTemp: #pushContextTemp: #pushContextTemp: #shortPushOuterTemp: #shortPushOuterTemp: #shortPushConst: #shortPushConst: #shortPushConst: #shortPushConst: #shortPushConst: #shortPushConst: #shortPushConst: #shortPushConst: #shortPushConst: #shortPushConst: #shortPushConst: #shortPushConst: #shortPushConst: #shortPushConst: #shortPushConst: #shortPushConst: #shortPushStatic: #shortPushStatic: #shortPushStatic: #shortPushStatic: #shortPushStatic: #shortPushStatic: #shortPushStatic: #shortPushStatic: #shortPushStatic: #shortPushStatic: #shortPushStatic: #shortPushStatic: #pushSelf #pushPseudo: #pushPseudo: #pushPseudo: #shortPushImmediate: #shortPushImmediate: #shortPushImmediate: #shortPushImmediate: #shortPushSelfAndTemp: #shortPushSelfAndTemp: #shortPushSelfAndTemp: #shortPushSelfAndTemp: #shortStoreTemp: #shortStoreTemp: #shortStoreTemp: #shortStoreTemp: #shortPopPushTemp: #shortPopPushTemp: #popPushSelf #popDup #popContextTemp: #popContextTemp: #shortPopOuterTemp: #shortPopOuterTemp: #shortPopInstVar: #shortPopInstVar: #shortPopInstVar: #shortPopInstVar: #shortPopInstVar: #shortPopInstVar: #shortPopInstVar: #shortPopInstVar: #shortPopTemp: #shortPopTemp: #shortPopTemp: #shortPopTemp: #shortPopTemp: #shortPopTemp: #shortPopTemp: #shortPopTemp: #popStackTop #incrementStackTop #decrementStackTop #duplicateStackTop #returnSelf #returnPseudo: #returnPseudo: #returnPseudo: #returnFromMessage #returnFromBlock #returnFromBlockHome #popReturnSelf #nop #shortJump: #shortJump: #shortJump: #shortJump: #shortJump: #shortJump: #shortJump: #shortJump: #shortJumpIfFalse: #shortJumpIfFalse: #shortJumpIfFalse: #shortJumpIfFalse: #shortJumpIfFalse: #shortJumpIfFalse: #shortJumpIfFalse: #shortJumpIfFalse: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSendZeroArgs: #shortSendZeroArgs: #shortSendZeroArgs: #shortSendZeroArgs: #shortSendZeroArgs: #shortSendZeroArgs: #shortSendZeroArgs: #shortSendZeroArgs: #shortSendZeroArgs: #shortSendZeroArgs: #shortSendZeroArgs: #shortSendZeroArgs: #shortSendZeroArgs: #shortSendSelfZeroArgs: #shortSendSelfZeroArgs: #shortSendSelfZeroArgs: #shortSendSelfZeroArgs: #shortSendSelfZeroArgs: #shortSendOneArg: #shortSendOneArg: #shortSendOneArg: #shortSendOneArg: #shortSendOneArg: #shortSendOneArg: #shortSendOneArg: #shortSendOneArg: #shortSendOneArg: #shortSendOneArg: #shortSendOneArg: #shortSendOneArg: #shortSendOneArg: #shortSendOneArg: #shortSendTwoArgs: #shortSendTwoArgs: #shortSendTwoArgs: #shortSendTwoArgs: #shortSendTwoArgs: #shortSendTwoArgs: #shortSendTwoArgs: #shortSendTwoArgs: #isZero #pushActiveFrame #unused #unused #unused #unused #pushInstVar: #pushTemp: #pushConst: #pushStatic: #storeInstVar: #storeTemp: #storeStatic: #popInstVar: #popTemp: #popStatic: #pushImmediate: #pushChar: #send: #supersend: #specialSend: #nearJump: #nearJumpIfTrue: #nearJumpIfFalse: #nearJumpIfNil: #nearJumpIfNotNil: #unused: #unused: #sendTempZeroArgs: #pushSelfAndTemp: #pushOuterTemp: #storeOuterTemp: #popOuterTemp: #sendSelfZeroArgs: #unused: #pushTempPair: #longPushConst:with: #longPushStatic:with: #longStoreStatic:with: #longPopStoreStatic:with: #longPushImmediate:with: #longSend:with: #longSupersend:with: #longJump:with: #longJumpIfTrue:with: #longJumpIfFalse:with: #longJumpIfNil:with: #longJumpIfNotNil:with: #pushOuter:temp: #storeOuter:temp: #incTemp:temp: #incPushTemp:temp: #decTemp:temp: #decPushTemp:temp: #blockCopy:stack:env:copy:offset1:offset2: #exLongSend:with:with: #exLongSupersend:with:with: #exLongPushImmediate:byte2:byte3:byte4:)!
 ByteCodeDispatcher comment: 'ByteCodeDispatchers decode bytecodes in <CompiledMethod>s and dispatches them to a plug-in <bytecodeInterpreter> client.
 
@@ -93,12 +95,13 @@ byteCodeSegments
 			answer add: (byteCodes copyFrom: start to: ip - 1)].
 	^answer!
 
-containsInstruction: discriminator 
+containsInstruction: discriminator
 	"Answer whether the dyadic valuable, discriminator, evaluates to true for
 	any instruction/parameter pair in the receiver."
 
 	self reset.
-	[self atEnd] whileFalse: [(self nextInstructionDo: discriminator) ifTrue: [^true]].
+	[ip > byteCodes basicSize]
+		whileFalse: [(self instruction: (Instructions at: self next + 1) do: discriminator) ifTrue: [^true]].
 	^false!
 
 dispatchAll
@@ -237,20 +240,19 @@ method
 
 	^method!
 
-method: aCompiledMethod 
-	"Set the method to be decoded by the receiver to aCompiledMethod. Also reset the
-	instruction pointer and cache the methods byte codes (which may have to be generated from "
+method: aCompiledMethod interpreter: anInstructionInterpreter
+	"Private - Initialized the receiver to decode aCompiledMethod on behalf of
+	anInstructionInterpreter."
 
 	ip := 1.
 	method := aCompiledMethod.
-	byteCodes := method byteCodes!
+	byteCodes := aCompiledMethod byteCodes.
+	interpreter := anInstructionInterpreter!
 
 next
 	"Answer the next instruction byte code of the receiver, advancing ip appropriately."
 
-	byteCode := byteCodes at: ip.
-	instructionLength := self class lengthOfInstruction: byteCode.
-	ip := ip + instructionLength.
+	ip := ip + (instructionLength := InstructionLengths at: (byteCode := byteCodes at: ip) + 1).
 	^byteCode!
 
 nextInstructionDo: operation 
@@ -321,20 +323,22 @@ selectorOfMessageSend: aSymbol
 			ifTrue: [^method literalAt: (byteCodes at: ip - 1) + 1].
 	^nil!
 
-selectorOfSpecialSend: anInteger 
+selectorOfSpecialSend: anInteger
 	"Answer the selector which corresponds to the special send with the specified offset from the start
 	of the special send instructions."
 
-	^VMLibrary default specialSelectors at: anInteger + 1!
+	^VMLibrary default selectorOfSpecialSend: anInteger!
 
 sendsSpecialSelector: anInteger
-	"Answer whether the method which the receiver is interpreting sends the special
-	selector with the specified index (one based)."
+	"Answer whether the method which the receiver is interpreting sends the special selector
+	with the specified one-based <integer> index."
 
-	| offset |
-	offset := anInteger - 1.	"instructions use 0 based offsets, not 1 based indices"
-	^self containsInstruction: [:selector :args |
-		(selector == #shortSpecialSend:) and: [args first == offset]]!
+	| instr end |
+	instr := ##(FirstShowSpecialSend - 1) + anInteger.
+	end := byteCodes basicSize.
+	ip := 1.
+	[ip > end] whileFalse: [self next == instr ifTrue: [^true]].
+	^false!
 
 specialMessages
 	"Private - Answer the set of special message sends in the byte code stream."
@@ -392,7 +396,7 @@ writesStatic: anAssociation
 !ByteCodeDispatcher categoriesFor: #ip!accessing!public! !
 !ByteCodeDispatcher categoriesFor: #ip:!accessing!public! !
 !ByteCodeDispatcher categoriesFor: #method!accessing!public! !
-!ByteCodeDispatcher categoriesFor: #method:!accessing!public! !
+!ByteCodeDispatcher categoriesFor: #method:interpreter:!accessing!private! !
 !ByteCodeDispatcher categoriesFor: #next!accessing!public! !
 !ByteCodeDispatcher categoriesFor: #nextInstructionDo:!interpreting!private! !
 !ByteCodeDispatcher categoriesFor: #peekForSelector!interpreting!public! !
@@ -444,7 +448,19 @@ initialize
 			runLength timesRepeat: [instructions add: instruction]].
 	self assert: [Instructions size = 256].
 	self addClassConstant: 'Instructions' value: instructions asArray.
-	RunStarts := runStarts!
+	RunStarts := runStarts.
+	self addClassConstant: 'InstructionLengths'
+		value: ((0 to: 255) collect: 
+					[:i |
+					i < FirstDoubleByte
+						ifTrue: [1]
+						ifFalse: 
+							[i < FirstTripleByte
+								ifTrue: [2]
+								ifFalse: 
+									[i < FirstMultiByte
+										ifTrue: [3]
+										ifFalse: [i == BlockCopy ifTrue: [7] ifFalse: [i == ExLongPushImmediate ifTrue: [5] ifFalse: [4]]]]]]) asByteArray!
 
 instructions
 	^Instructions!
@@ -452,12 +468,7 @@ instructions
 lengthOfInstruction: anInteger
 	"Private - Answer the number of bytes for the bytecode identified by the <integer> argument."
 
-	anInteger < FirstDoubleByte ifTrue: [^1].
-	anInteger < FirstTripleByte ifTrue: [^2].
-	anInteger < FirstMultiByte ifTrue: [^3].
-	^anInteger == BlockCopy
-		ifTrue: [7]
-		ifFalse: [anInteger == ExLongPushImmediate ifTrue: [5] ifFalse: [4]]!
+	^InstructionLengths at: anInteger + 1!
 
 on: aCompiledMethod 
 	"Answer a new instance of the receiver to interpret the <CompiledCode> argument."
@@ -469,7 +480,7 @@ on: aCompiledCode for: anInstructionInterpreter
 	instructions to the specified <bytecodeInterpreter> client."
 
 	^(self new)
-		method: aCompiledCode;
+		method: aCompiledCode
 		interpreter: anInstructionInterpreter! !
 !ByteCodeDispatcher class categoriesFor: #byteCodeSegments:!interpreting!private! !
 !ByteCodeDispatcher class categoriesFor: #decodeLongJump:byte2:!helpers!public! !

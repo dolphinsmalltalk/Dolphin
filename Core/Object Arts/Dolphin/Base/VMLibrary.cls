@@ -5,7 +5,7 @@ PermanentLibrary subclass: #VMLibrary
 	classVariableNames: 'Registry RegistryKeys'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-VMLibrary guid: (GUID fromString: '{87B4C58F-026E-11D3-9FD7-00A0CC3E4A32}')!
+VMLibrary guid: (GUID fromString: '{87b4c58f-026e-11d3-9fd7-00a0cc3e4a32}')!
 VMLibrary comment: 'VMLibrary is an <ExternalLibrary> to represent the Dolphin Smalltalk Virtual Machine (VM). 
 
 The VM contains, for example, a number of exports to implement pseudo-primitive operations, in particular to simplify the interface to other external library functions, and external call methods to access these exported functions are implemented here.
@@ -430,6 +430,9 @@ registryAt: aSymbol put: anObject
 	self primRegistryAt: (RegistryKeys at: aSymbol) put: anObject.
 	^anObject!
 
+selectorOfSpecialSend: anInteger
+	^Registry at: specialSelectorStart + anInteger!
+
 shortName
 	"Answer the localised short name for Dolphin."
 
@@ -560,6 +563,7 @@ versionFormatString
 !VMLibrary categoriesFor: #registry!accessing!private! !
 !VMLibrary categoriesFor: #registryAt:!accessing-registry!private! !
 !VMLibrary categoriesFor: #registryAt:put:!accessing-registry!private! !
+!VMLibrary categoriesFor: #selectorOfSpecialSend:!enquiries!public! !
 !VMLibrary categoriesFor: #shortName!accessing!public! !
 !VMLibrary categoriesFor: #signedFromUnsigned:!helpers!private! !
 !VMLibrary categoriesFor: #specialSelectors!accessing-registry!private! !
