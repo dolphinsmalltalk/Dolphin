@@ -32,7 +32,6 @@ package globalAliases: (Set new
 	yourself).
 
 package setPrerequisites: (IdentitySet new
-	add: '..\..\ActiveX\Automation\ActiveX Automation';
 	add: '..\Community Edition\ActiveX Automation Development';
 	add: '..\..\..\Samples\MVP\Animal Game\Animals';
 	add: '..\..\System\Continuations\Continuation Tests';
@@ -41,6 +40,7 @@ package setPrerequisites: (IdentitySet new
 	add: '..\..\Base\Dolphin Base Tests';
 	add: '..\..\System\Base64\Dolphin Base64';
 	add: '..\..\MVP\Views\Common Controls\Dolphin Common Controls';
+	add: '..\..\MVP\Dialogs\Common\Dolphin Common Dialogs';
 	add: '..\..\MVP\Base\Dolphin MVP Base';
 	add: '..\..\Registry\Dolphin Registry Access';
 	add: '..\..\Lagoon\Lagoon Image Stripper';
