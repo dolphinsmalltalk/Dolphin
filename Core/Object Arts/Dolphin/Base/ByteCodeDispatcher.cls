@@ -240,14 +240,10 @@ method
 
 	^method!
 
-method: aCompiledMethod interpreter: anInstructionInterpreter
-	"Private - Initialized the receiver to decode aCompiledMethod on behalf of
-	anInstructionInterpreter."
-
+method: aCompiledMethod
 	ip := 1.
 	method := aCompiledMethod.
-	byteCodes := aCompiledMethod byteCodes.
-	interpreter := anInstructionInterpreter!
+	byteCodes := aCompiledMethod byteCodes!
 
 next
 	"Answer the next instruction byte code of the receiver, advancing ip appropriately."
@@ -396,7 +392,7 @@ writesStatic: anAssociation
 !ByteCodeDispatcher categoriesFor: #ip!accessing!public! !
 !ByteCodeDispatcher categoriesFor: #ip:!accessing!public! !
 !ByteCodeDispatcher categoriesFor: #method!accessing!public! !
-!ByteCodeDispatcher categoriesFor: #method:interpreter:!accessing!private! !
+!ByteCodeDispatcher categoriesFor: #method:!accessing!private! !
 !ByteCodeDispatcher categoriesFor: #next!accessing!public! !
 !ByteCodeDispatcher categoriesFor: #nextInstructionDo:!interpreting!private! !
 !ByteCodeDispatcher categoriesFor: #peekForSelector!interpreting!public! !
@@ -480,7 +476,7 @@ on: aCompiledCode for: anInstructionInterpreter
 	instructions to the specified <bytecodeInterpreter> client."
 
 	^(self new)
-		method: aCompiledCode
+		method: aCompiledCode;
 		interpreter: anInstructionInterpreter! !
 !ByteCodeDispatcher class categoriesFor: #byteCodeSegments:!interpreting!private! !
 !ByteCodeDispatcher class categoriesFor: #decodeLongJump:byte2:!helpers!public! !
