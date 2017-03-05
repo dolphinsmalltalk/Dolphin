@@ -268,11 +268,11 @@ parseCascadeMessage
 				receiver := node receiver.
 				messages := OrderedCollection new: 3.
 				semicolons := OrderedCollection new: 3.
-				messages add: node.
+				messages addLast: node.
 				[currentToken isSpecial: $;] whileTrue: 
 						[semicolons add: currentToken start.
 						self step.
-						(self parseCascadedMessageFor: receiver) ifNotNil: [:msg | messages add: msg]].
+						(self parseCascadedMessageFor: receiver) ifNotNil: [:msg | messages addLast: msg]].
 				node := self cascadeNodeClass messages: messages semicolons: semicolons].
 	^node!
 

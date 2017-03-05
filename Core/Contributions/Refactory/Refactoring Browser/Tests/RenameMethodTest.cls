@@ -5,10 +5,19 @@ RefactoringTest subclass: #RenameMethodTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-RenameMethodTest guid: (GUID fromString: '{56462B45-7329-483D-AFC5-F1C199753156}')!
+RenameMethodTest guid: (GUID fromString: '{56462b45-7329-483d-afc5-f1c199753156}')!
 RenameMethodTest comment: ''!
 !RenameMethodTest categoriesForClass!Refactory-Testing! !
 !RenameMethodTest methodsFor!
+
+setUp
+	super setUp.
+	model := RBNamespace
+				onEnvironment: (BrowserEnvironment new forClasses: (Array
+								with: Object
+								with: SmallInteger
+								with: OrderedCollection
+								with: DefaultSortAlgorithm))!
 
 testExistingSelector
 	self shouldFail: (RenameMethodRefactoring 
@@ -43,18 +52,15 @@ testRenamePrimitive
 	| refactoring count |
 	count := 0.
 	model allReferencesTo: #basicAt:put: do: [:method | count := count + 1].
-	refactoring := RenameMethodRefactoring 
+	refactoring := RenameMethodRefactoring
 				model: model
 				renameMethod: #basicAt:put:
 				in: Object
 				to: ('at:' , 'bar:') asSymbol
 				permutation: (1 to: 2).
 	self proceedThroughWarning: [self executeRefactoring: refactoring].
-	model allReferencesTo: #basicAt:put:
-		do: 
-			[:method | 
-			count := count - 1.
-			self assert: method source isNil].
+	"All refs should have been rewritten"
+	model allReferencesTo: #basicAt:put: do: [:method | self assert: false].
 	model allReferencesTo: ('at:' , 'bar:') asSymbol do: [:method | count := count - 1].
 	self assert: count = 0!
 
@@ -97,6 +103,7 @@ testRenameTestMethod1
 				= (RBParser parseMethod: 'classBlock: aBlock
 	classBlock := aBlock testMethod2').
 	self deny: (class directlyDefinesMethod: ('test' , 'Method1') asSymbol)! !
+!RenameMethodTest categoriesFor: #setUp!public!set up! !
 !RenameMethodTest categoriesFor: #testExistingSelector!failure tests!public! !
 !RenameMethodTest categoriesFor: #testMultipleSelectors!failure tests!public! !
 !RenameMethodTest categoriesFor: #testRenamePermuteArgs!public!tests! !

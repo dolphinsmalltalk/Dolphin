@@ -42,7 +42,7 @@ Object subclass: #Bytecode
 	classInstanceVariableNames: ''!
 Object subclass: #ByteCodeDispatcher
 	instanceVariableNames: 'byteCodes method ip interpreter instructionLength byteCode'
-	classVariableNames: 'Instructions RunStarts'
+	classVariableNames: 'FirstShowSpecialSend InstructionLengths Instructions RunStarts'
 	poolDictionaries: 'OpcodePool'
 	classInstanceVariableNames: ''!
 Object subclass: #BytecodeRewriter

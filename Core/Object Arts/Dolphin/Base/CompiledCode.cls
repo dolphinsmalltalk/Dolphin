@@ -5,7 +5,7 @@ Object variableSubclass: #CompiledCode
 	classVariableNames: 'InfoCacheKeys InfoCacheValues PrivateMask'
 	poolDictionaries: 'OpcodePool'
 	classInstanceVariableNames: ''!
-CompiledCode guid: (GUID fromString: '{87B4C46F-026E-11D3-9FD7-00A0CC3E4A32}')!
+CompiledCode guid: (GUID fromString: '{87b4c46f-026e-11d3-9fd7-00a0cc3e4a32}')!
 CompiledCode comment: 'CompiledCode is the class of executable objects containing an array of instructions (bytecodes) and an array of literals (the literal frame).
 
 The method header of the receiver is a SmallInteger containing a set of flags containing information such as the number of arguments, the number of temporaries, etc, is layed out as follows (subject to change):
@@ -459,7 +459,7 @@ readsInstVar: aString at: anInteger
 	^((extra between: 1 and: 5) or: [extra == 7]) not 
 		and: [self byteCodeDispatcher readsInstVarAt: anInteger]!
 
-refersToLiteral: anObject 
+refersToLiteral: anObject
 	"Private - Answer whether the receiver refers directly from its literal frame (or indirectly as an 
 	element of an array in the literal frame) to the argument, anObject. Named for compatibility 
 	with VisualWorks."
@@ -467,8 +467,7 @@ refersToLiteral: anObject
 	"Implementation Note: This deliberately does not take account of special selectors and is open
 	coded for speed."
 
-	1 to: self literalCount
-		do: [:i | ((self at: i) refersToLiteral: anObject) ifTrue: [^true]].
+	1 to: self size do: [:i | ((self at: i) refersToLiteral: anObject) ifTrue: [^true]].
 	^false!
 
 replaceElementsOf: anIndexableObject from: startInteger to: stopInteger startingAt: startAtInteger
