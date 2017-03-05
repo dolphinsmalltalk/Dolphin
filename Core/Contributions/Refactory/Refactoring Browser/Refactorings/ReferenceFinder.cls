@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #ReferenceFinder
 	instanceVariableNames: 'backlinks objectsLeft testBlock foundBlock'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ReferenceFinder guid: (GUID fromString: '{BFCFC047-1208-409C-965C-BDA23170A192}')!
+ReferenceFinder guid: (GUID fromString: '{bfcfc047-1208-409c-965c-bda23170a192}')!
 ReferenceFinder comment: ''!
 !ReferenceFinder categoriesForClass!Refactory-Browser! !
 !ReferenceFinder methodsFor!
@@ -20,7 +20,7 @@ backlinkFor: anObject
 	backlinks do: 
 			[:each | 
 			| toObject |
-			toObject := each at: anObject ifAbsent: [nil].
+			toObject := each at: anObject ifAbsent: [].
 			toObject notNil ifTrue: [^toObject]].
 	^nil!
 
@@ -29,7 +29,7 @@ computePathFor: anObject
 	path := OrderedCollection new.
 	object := anObject.
 	[object isNil] whileFalse: 
-			[path add: object.
+			[path addLast: object.
 			object := self backlinkFor: object].
 	^path reverse!
 
@@ -61,30 +61,30 @@ initialize
 
 printToDoNotice
 	Transcript
-		show: 'Level ';
-		show: backlinks size printString;
-		show: ' with ';
-		show: objectsLeft size printString;
-		show: ' objects to search';
+		nextPutAll: 'Level ';
+		print: backlinks size;
+		nextPutAll: ' with ';
+		print: objectsLeft size;
+		nextPutAll: ' objects to search';
 		cr!
 
-processLinkTo: newObject from: anObject 
-	newObject basicClass instSize + newObject basicSize = 0 
+processLinkTo: newObject from: anObject
+	newObject basicClass instSize + newObject basicSize = 0
 		ifTrue: 
-			[^(testBlock value: newObject) 
+			[^(testBlock value: newObject)
 				ifTrue: 
 					[(self computePathFor: anObject)
-						add: newObject;
+						addLast: newObject;
 						yourself]
 				ifFalse: [nil]].
-	(self hasSearched: newObject) 
+	(self hasSearched: newObject)
 		ifFalse: 
-			[(testBlock value: newObject) 
+			[(testBlock value: newObject)
 				ifTrue: 
 					[^(self computePathFor: anObject)
-						add: newObject;
+						addLast: newObject;
 						yourself].
-			objectsLeft add: newObject.
+			objectsLeft addLast: newObject.
 			self addBacklinkFrom: newObject to: anObject].
 	^nil!
 
@@ -103,7 +103,7 @@ searchForObject
 			(path := self searchIndicesIn: each) notNil 
 				ifTrue: [foundBlock value: path]].
 	objectsLeft isEmpty] 
-			whileFalse: []!
+			whileFalse!
 
 searchIndicesIn: anObject 
 	#rbFix.	"Ignore weak pointers - in Dolphin only indexable instance variables can be weak"

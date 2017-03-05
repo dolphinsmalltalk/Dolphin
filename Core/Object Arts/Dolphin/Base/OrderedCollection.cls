@@ -5,7 +5,7 @@ SequencedGrowableCollection variableSubclass: #OrderedCollection
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-OrderedCollection guid: (GUID fromString: '{87B4C523-026E-11D3-9FD7-00A0CC3E4A32}')!
+OrderedCollection guid: (GUID fromString: '{87b4c523-026e-11d3-9fd7-00a0cc3e4a32}')!
 OrderedCollection comment: 'OrderedCollections store an ordered, contiguous sequence of elements. They are much like resizable arrays'!
 !OrderedCollection categoriesForClass!Collections-Sequenceable! !
 !OrderedCollection methodsFor!
@@ -80,6 +80,14 @@ addLast: newObject
 	lastIndex == self basicSize ifTrue: [self makeRoomAtEndFor: 1].
 	lastIndex := lastIndex + 1.
 	^self basicAt: lastIndex put: newObject!
+
+anySatisfy: discriminator
+	"Answer whether the <monadicValuable>, discriminator, evaluates to true for
+	any element of the receiver.
+	Implementation Note: Override for performance reasons only."
+
+	firstIndex to: lastIndex do: [:i | (discriminator value: (self basicAt: i)) ifTrue: [^true]].
+	^false!
 
 asOrderedCollection
 	"Answer an OrderedCollection containing the same elements as the receiver.
@@ -417,6 +425,7 @@ uncheckedFrom: startInteger to: stopInteger keysAndValuesDo: aDyadicValuable
 !OrderedCollection categoriesFor: #addAnsweringIndex:!adding!public! !
 !OrderedCollection categoriesFor: #addFirst:!adding!public! !
 !OrderedCollection categoriesFor: #addLast:!adding!public! !
+!OrderedCollection categoriesFor: #anySatisfy:!enumerating!public! !
 !OrderedCollection categoriesFor: #asOrderedCollection!converting!public! !
 !OrderedCollection categoriesFor: #at:!accessing!public! !
 !OrderedCollection categoriesFor: #at:ifAbsent:!accessing!public! !
