@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk XP"!
+"Filed out from Dolphin Smalltalk 7"!
 
 BrowserEnvironmentWrapper subclass: #MultiEnvironment
 	instanceVariableNames: 'environmentDictionaries'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-MultiEnvironment guid: (GUID fromString: '{402838A2-3847-41D1-BFBA-EF695ABB9D9D}')!
+MultiEnvironment guid: (GUID fromString: '{402838a2-3847-41d1-bfba-ef695abb9d9d}')!
 MultiEnvironment comment: 'MultiEnvironment is a special environment for the "Method defined in all subclasses, but not in superclass" lint rule. It''s basically a hack to get a browser to display the results.
 
 Instance Variables:
@@ -22,8 +22,7 @@ addClass: aClass selector: aSymbol into: aValue
 		addClass: aClass
 		selector: aSymbol!
 
-definesClass: aClass 
-	#rbFix.	"Added"
+definesClass: aClass
 	^environmentDictionaries anySatisfy: [:each | each definesClass: aClass]!
 
 environmentNamed: aString 

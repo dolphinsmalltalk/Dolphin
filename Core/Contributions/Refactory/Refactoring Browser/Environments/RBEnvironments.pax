@@ -29,6 +29,7 @@ package methodNames
 	add: #Behavior -> #allSubBehaviorsPreOrderDo:;
 	add: #Behavior -> #isBehavior;
 	add: #Behavior -> #selectorsAndMethodsDo:;
+	add: #Behavior -> #selectorsDo:;
 	add: #Behavior -> #subBehaviors;
 	add: #Behavior -> #withAllSubBehaviorsDo:;
 	add: #CompiledCode -> #allLiterals;
@@ -153,6 +154,12 @@ selectorsAndMethodsDo: aDyadicValuable
 
 	^methodDictionary ifNotNil: [methodDictionary keysAndValuesDo: aDyadicValuable]!
 
+selectorsDo: aMonadicValuable
+	"Evaluate the <monadicValuable> argument for each of the selectors in the receiver's method
+	dictionary."
+
+	^methodDictionary ifNotNil: [methodDictionary keysDo: aMonadicValuable]!
+
 subBehaviors
 	"Answer a <collection> containing the receiver's immediate subclasses."
 
@@ -168,6 +175,7 @@ withAllSubBehaviorsDo: aMonadicValuable
 !Behavior categoriesFor: #allSubBehaviorsPreOrderDo:!class hierarchy-accessing!private! !
 !Behavior categoriesFor: #isBehavior!public!testing! !
 !Behavior categoriesFor: #selectorsAndMethodsDo:!enumerating!public! !
+!Behavior categoriesFor: #selectorsDo:!enumerating!public! !
 !Behavior categoriesFor: #subBehaviors!class hierarchy-accessing!public! !
 !Behavior categoriesFor: #withAllSubBehaviorsDo:!enumerating!public! !
 

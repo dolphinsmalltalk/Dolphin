@@ -142,6 +142,7 @@ package setPrerequisites: (IdentitySet new
 	add: '..\MVP\Type Converters\Dolphin Type Converters';
 	add: '..\DolphinSure\DolphinSure';
 	add: '..\ActiveX\COM\OLE COM';
+	add: '..\..\..\Contributions\Refactory\Refactoring Browser\Environments\RBEnvironments';
 	add: '..\..\..\Contributions\Refactory\Refactoring Browser\Tests\RBTests';
 	add: '..\System\Compiler\Smalltalk Parser';
 	add: '..\..\..\Contributions\Camp Smalltalk\SUnit\SUnit';

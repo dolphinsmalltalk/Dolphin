@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk XP"!
+"Filed out from Dolphin Smalltalk 7"!
 
 BrowserEnvironment subclass: #BrowserEnvironmentWrapper
 	instanceVariableNames: 'environment'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-BrowserEnvironmentWrapper guid: (GUID fromString: '{73290C8C-A79F-4C55-805C-41C6ED19A64B}')!
+BrowserEnvironmentWrapper guid: (GUID fromString: '{73290c8c-a79f-4c55-805c-41c6ed19a64b}')!
 BrowserEnvironmentWrapper comment: 'BrowserEnvironmentWrapper is a wrapper for BrowserEnvironments that limits what is shown. While it does not have any #subclassResponsibility methods, it is an abstract class since it doesn''t provide any useful behavior by itself
 
 Instance Variables:
@@ -13,8 +13,11 @@ Instance Variables:
 !BrowserEnvironmentWrapper categoriesForClass!Refactory-Environments! !
 !BrowserEnvironmentWrapper methodsFor!
 
-definesClass: aClass 
-	#rbFix.	"Added"
+definesClass: aClass
+	"Answer whether this environment includes the primary definition of the class argument."
+
+	"The majority of environment wrapper types do not include the primary definition."
+
 	^false!
 
 environment

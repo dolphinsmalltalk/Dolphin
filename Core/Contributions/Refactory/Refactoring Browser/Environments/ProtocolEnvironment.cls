@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk XP"!
+"Filed out from Dolphin Smalltalk 7"!
 
 BrowserEnvironmentWrapper subclass: #ProtocolEnvironment
 	instanceVariableNames: 'class protocols'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ProtocolEnvironment guid: (GUID fromString: '{1AFA7DDA-3F75-460A-94FD-E9867B79245C}')!
+ProtocolEnvironment guid: (GUID fromString: '{1afa7dda-3f75-460a-94fd-e9867b79245c}')!
 ProtocolEnvironment comment: 'ProtocolEnvironment represents a collection of method categories in a class to be browsed.
 
 N.B. The "protocol" terminology is historic, and should not be confused with Dolphin''s MethodProtocols. In this sense "protocol" is referring only to method categories.

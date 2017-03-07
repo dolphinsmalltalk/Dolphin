@@ -5,7 +5,7 @@ RefactoringBrowserTest subclass: #BrowserEnvironmentTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-BrowserEnvironmentTest guid: (GUID fromString: '{D900C35C-E907-4C85-A762-35DD60264A6C}')!
+BrowserEnvironmentTest guid: (GUID fromString: '{d900c35c-e907-4c85-a762-35dd60264a6c}')!
 BrowserEnvironmentTest comment: ''!
 !BrowserEnvironmentTest categoriesForClass!Refactory-Testing! !
 !BrowserEnvironmentTest methodsFor!
@@ -30,10 +30,9 @@ classNamesFor: anEnvironment
 	"N.B. A class can be in an environment, and in its inverse, if it is only partially included in the original environment"
 
 	| classNames |
-	classNames := (anEnvironment classNames asSet)
+	classNames := (anEnvironment classNames)
 				addAll: anEnvironment not classNames;
 				yourself.
-	#rbFix.	"Issue here with comparing Sets for equality, use Set>>equals: for now"
 	self assert: classNames = BrowserEnvironment new classNames.
 	self assert: (anEnvironment & anEnvironment not) classNames isEmpty.
 	self assert: (anEnvironment | anEnvironment not) classNames = BrowserEnvironment new classNames!
@@ -214,11 +213,12 @@ testImplementorsMatching
 		classesAndSelectorsDo: [:class :sel | self assert: ('*print*' match: sel)]!
 
 testMatches
-	| envEnvironment environmentEnvironment |
-	envEnvironment := BrowserEnvironment new matches: '*env*'.
-	environmentEnvironment := BrowserEnvironment new 
-				referencesTo: #environment.
-	self assert: (envEnvironment referencesTo: #environment) numberSelectors 
+	| envEnvironment environmentEnvironment env |
+	env := BrowserEnvironment new
+				forClasses: BrowserEnvironment withAllSubclasses , BrowserEnvironment class withAllSubclasses.
+	envEnvironment := env matches: '*env*'.
+	environmentEnvironment := env referencesTo: #environment.
+	self assert: (envEnvironment referencesTo: #environment) numberSelectors
 				= environmentEnvironment numberSelectors!
 
 testNotEnvironment
@@ -298,6 +298,7 @@ testSelectMethods
 testSelectorEnvironment
 	| printString |
 	printString := BrowserEnvironment new referencesTo: #printString.
+	self deny: (printString definesClass: Object).
 	self universalTestFor: printString.
 	self assert: printString numberSelectors 
 				= (printString referencesTo: #printString) numberSelectors.
