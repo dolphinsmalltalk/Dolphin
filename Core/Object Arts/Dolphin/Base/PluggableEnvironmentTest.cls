@@ -5,18 +5,24 @@ BrowserEnvironmentTest subclass: #PluggableEnvironmentTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-PluggableEnvironmentTest guid: (GUID fromString: '{42174ACA-9BF1-402A-843A-D752822B7893}')!
+PluggableEnvironmentTest guid: (GUID fromString: '{42174aca-9bf1-402a-843a-d752822b7893}')!
 PluggableEnvironmentTest comment: ''!
 !PluggableEnvironmentTest categoriesForClass!Unclassified! !
 !PluggableEnvironmentTest methodsFor!
 
 testReferencesTo
-	| printString |
-	printString := Smalltalk developmentSystem referencesTo: #printString.
+	| printString env |
+	env := BrowserEnvironment new forClasses: ((OrderedCollection new)
+						add: Error;
+						add: Error class;
+						add: Object;
+						add: Object class;
+						add: Package;
+						add: Package class;
+						yourself).
+	printString := Smalltalk developmentSystem referencesTo: #printString in: env.
 	self universalTestFor: printString.
-	self assert: printString numberSelectors 
-				= (printString referencesTo: #printString) numberSelectors.
-	self assert: printString numberClasses 
-				= (printString referencesTo: #printString) numberClasses! !
+	self assert: printString numberSelectors = (env referencesTo: #printString) numberSelectors.
+	self assert: printString numberClasses = (env referencesTo: #printString) numberClasses! !
 !PluggableEnvironmentTest categoriesFor: #testReferencesTo!public!unit tests! !
 

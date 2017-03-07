@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk XP"!
+"Filed out from Dolphin Smalltalk 7"!
 
 BrowserEnvironmentWrapper subclass: #SelectorEnvironment
 	instanceVariableNames: 'classSelectors metaClassSelectors'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-SelectorEnvironment guid: (GUID fromString: '{D6DE9B1C-4652-474B-97CD-87838C6D2F62}')!
+SelectorEnvironment guid: (GUID fromString: '{d6de9b1c-4652-474b-97cd-87838c6d2f62}')!
 SelectorEnvironment comment: 'SelectorEnvironment represents a predetermined collection of methods to be browsed.
 
 Instance Variables:
@@ -59,28 +59,25 @@ classesAndSelectorsDo: aBlock
 							[eachSelectors 
 								do: [:each | (meta includesSelector: each) ifTrue: [aBlock value: meta value: each]]]]]!
 
-classesDo: aBlock 
+classesDo: aBlock
 	classSelectors keysDo: 
-			[:each | 
+			[:each |
 			| class |
-			class := Smalltalk at: each ifAbsent: [nil].
-			class notNil 
-				ifTrue: [(self includesClass: class) ifTrue: [aBlock value: class]]].
+			class := Smalltalk at: each ifAbsent: [].
+			(class notNil and: [environment includesClass: class]) ifTrue: [aBlock value: class]].
 	metaClassSelectors keysDo: 
-			[:each | 
+			[:each |
 			| class |
-			class := Smalltalk at: each ifAbsent: [nil].
-			class notNil 
-				ifTrue: 
-					[(self includesClass: class class) ifTrue: [aBlock value: class class]]]!
+			class := Smalltalk at: each ifAbsent: [].
+			(class notNil and: [environment includesClass: class class]) ifTrue: [aBlock value: class class]]!
 
 classNames
-	| names |
-	names := Set new: classSelectors size + metaClassSelectors size.
-	names
-		addAll: classSelectors keys;
-		addAll: metaClassSelectors keys.
-	^names asOrderedCollection!
+	| names collectNames |
+	names := IdentitySet new: classSelectors size + metaClassSelectors size.
+	collectNames := [:each | names add: each].
+	classSelectors keysDo: collectNames.
+	metaClassSelectors keysDo: collectNames.
+	^names!
 
 classSelectors: classSelectorDictionary metaClassSelectors: metaClassSelectorDictionary 
 	classSelectors := classSelectorDictionary.
@@ -96,8 +93,11 @@ includesCategory: aCategory
 					(classSelectors includesKey: className) 
 						or: [metaClassSelectors includesKey: className]]]!
 
-includesClass: aClass 
-	^(self lookupClass: aClass) notNil and: [super includesClass: aClass]!
+includesClass: aClass
+	^(aClass isMeta
+		ifTrue: [metaClassSelectors at: aClass soleInstance name ifAbsent: []]
+		ifFalse: [classSelectors at: aClass name ifAbsent: []]) notNil
+		and: [super includesClass: aClass]!
 
 includesProtocol: aProtocol in: aClass 
 	^(super includesProtocol: aProtocol in: aClass)
@@ -116,12 +116,8 @@ initialize
 isEmpty
 	^classSelectors isEmpty and: [metaClassSelectors isEmpty]!
 
-isSelector
+isSelectorEnvironment
 	^true!
-
-lookupClass: aClass 
-	#rbFix.	"Extracted from privateSelectorsForClass:"
-	^aClass isMeta ifTrue: [metaClassSelectors at: aClass soleInstance name ifAbsent: []] ifFalse: [classSelectors at: aClass name ifAbsent: []]!
 
 numberSelectors
 	"This doesn't compute the correct result when a method that is included in our method list is not in the
@@ -145,8 +141,10 @@ postCopy
 privateIncludesSelector: aSelector inClass: aClass 
 	^(self privateSelectorsForClass: aClass) includes: aSelector!
 
-privateSelectorsForClass: aClass 
-	^(self lookupClass: aClass) ifNil: [#()]!
+privateSelectorsForClass: aClass
+	^(aClass isMeta
+		ifTrue: [metaClassSelectors at: aClass soleInstance name ifAbsent: []]
+		ifFalse: [classSelectors at: aClass name ifAbsent: []]) ?? #()!
 
 privateSelectorsForClassAdd: aClass 
 	^aClass isMeta ifTrue: [metaClassSelectors at: aClass soleInstance name ifAbsentPut: [IdentitySet new: 8]] ifFalse: [classSelectors at: aClass name ifAbsentPut: [IdentitySet new: 8]]!
@@ -210,14 +208,13 @@ storeOn: aStream
 !SelectorEnvironment categoriesFor: #includesSelector:in:!public!testing! !
 !SelectorEnvironment categoriesFor: #initialize!initialize/release!public! !
 !SelectorEnvironment categoriesFor: #isEmpty!public!testing! !
-!SelectorEnvironment categoriesFor: #isSelector!public!testing! !
-!SelectorEnvironment categoriesFor: #lookupClass:!accessing!private! !
+!SelectorEnvironment categoriesFor: #isSelectorEnvironment!public!testing! !
 !SelectorEnvironment categoriesFor: #numberSelectors!accessing!public! !
 !SelectorEnvironment categoriesFor: #on:!initialize/release!public! !
 !SelectorEnvironment categoriesFor: #postCopy!copying!public! !
 !SelectorEnvironment categoriesFor: #privateIncludesSelector:inClass:!private!testing! !
 !SelectorEnvironment categoriesFor: #privateSelectorsForClass:!accessing!private! !
-!SelectorEnvironment categoriesFor: #privateSelectorsForClassAdd:!adding!public! !
+!SelectorEnvironment categoriesFor: #privateSelectorsForClassAdd:!adding!private! !
 !SelectorEnvironment categoriesFor: #removeClass:!public!removing! !
 !SelectorEnvironment categoriesFor: #removeClass:selector:!public!removing! !
 !SelectorEnvironment categoriesFor: #selectorsForClass:do:!accessing!public! !

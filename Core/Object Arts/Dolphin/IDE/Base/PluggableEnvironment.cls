@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 BrowserEnvironmentWrapper subclass: #PluggableEnvironment
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-PluggableEnvironment guid: (GUID fromString: '{09CE2832-6E4A-40F8-83C8-B7685A4F6B62}')!
+PluggableEnvironment guid: (GUID fromString: '{09ce2832-6e4a-40f8-83c8-b7685a4f6b62}')!
 PluggableEnvironment comment: 'PluggableEnvironment is a Dolphin specific <BrowserEnvironment> that includes only those methods (and the classes of those methods) that pass a configurable <monadicValuable> filter. This is very useful for maintaining the contents of dynamically updating method browsers.
 
 Instance Variables:
@@ -20,8 +20,12 @@ addMethods: methodCollection
 		yourself!
 
 classesAndSelectorsDo: aBlock 
-	self 
-		allClassesDo: [:each | self selectorsForClass: each do: [:sel | aBlock value: each value: sel]]!
+	environment classesDo: 
+			[:class | 
+			self selectorsForClass: class do: [:sel | aBlock value: class value: sel]]!
+
+classesDo: aBlock
+	environment classesDo: [:each | (self includesAnyMethodsOf: each) ifTrue: [aBlock value: each]]!
 
 includesAnyMethodsOf: aClass 
 	aClass selectorsAndMethodsDo: 
@@ -58,6 +62,7 @@ storeOn: aStream
 	self snapshot storeOn: aStream! !
 !PluggableEnvironment categoriesFor: #addMethods:!adding!public! !
 !PluggableEnvironment categoriesFor: #classesAndSelectorsDo:!accessing!public! !
+!PluggableEnvironment categoriesFor: #classesDo:!accessing!public! !
 !PluggableEnvironment categoriesFor: #includesAnyMethodsOf:!private!testing! !
 !PluggableEnvironment categoriesFor: #includesClass:!public!testing! !
 !PluggableEnvironment categoriesFor: #includesSelector:in:!public!testing! !

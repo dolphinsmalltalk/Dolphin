@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk XP"!
+"Filed out from Dolphin Smalltalk 7"!
 
 BrowserEnvironmentWrapper subclass: #CategoryEnvironment
 	instanceVariableNames: 'categories'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-CategoryEnvironment guid: (GUID fromString: '{01EA18F1-D09F-4A63-B569-62A1D8D6C1CD}')!
+CategoryEnvironment guid: (GUID fromString: '{01ea18f1-d09f-4a63-b569-62a1d8d6c1cd}')!
 CategoryEnvironment comment: 'CategoryEnvironment represents a collection of classes (and all the methods they own) that belong to at least one of a particular set of class categories. 
 
 Instance Variables:
@@ -20,13 +20,21 @@ categories: aCollection
 	categories := aCollection!
 
 classNames
-	^self categories inject: OrderedCollection new into: [:col :each | col addAll: (self classNamesFor: each); yourself]!
+	^self categories inject: IdentitySet new
+		into: 
+			[:answer :each |
+			answer
+				addAll: (self classNamesFor: each);
+				yourself]!
 
 defaultLabel
 	| stream |
 	stream := String new writeStream.
 	categories do: [:each | stream nextPutAll: each; nextPut: $ ].
 	^stream contents!
+
+definesClass: aClass
+	^self includesClass: aClass!
 
 includesCategory: aCategory
 	^(categories includes: aCategory)
@@ -62,6 +70,7 @@ storeOn: aStream
 !CategoryEnvironment categoriesFor: #categories:!initialize/release!public! !
 !CategoryEnvironment categoriesFor: #classNames!accessing/classes!public! !
 !CategoryEnvironment categoriesFor: #defaultLabel!constants!private! !
+!CategoryEnvironment categoriesFor: #definesClass:!public!testing! !
 !CategoryEnvironment categoriesFor: #includesCategory:!public!testing! !
 !CategoryEnvironment categoriesFor: #includesClass:!public!testing! !
 !CategoryEnvironment categoriesFor: #initialize!initialize/release!public! !

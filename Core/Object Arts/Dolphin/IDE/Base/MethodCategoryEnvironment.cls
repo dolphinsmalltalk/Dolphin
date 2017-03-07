@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 BrowserEnvironmentWrapper subclass: #MethodCategoryEnvironment
 	instanceVariableNames: 'categories'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-MethodCategoryEnvironment guid: (GUID fromString: '{D9A3E87E-16B6-4A73-8469-E08822DCB6DD}')!
+MethodCategoryEnvironment guid: (GUID fromString: '{d9a3e87e-16b6-4a73-8469-e08822dcb6dd}')!
 MethodCategoryEnvironment comment: 'MethodCategoryEnvironment is a Dolphin specific <BrowserEnvironment> that represents the contents of one or more Dolphin method categories. This can be very powerful when used in conjunction with Dolphin''s >VirtualMethodCategory>s, as the latter have an arbitrary filtering capability.
 
 Instance Variables:

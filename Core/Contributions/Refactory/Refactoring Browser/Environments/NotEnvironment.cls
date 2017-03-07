@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 BrowserEnvironmentWrapper subclass: #NotEnvironment
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-NotEnvironment guid: (GUID fromString: '{8AA751C1-7180-4413-8B57-C60FC841BF12}')!
+NotEnvironment guid: (GUID fromString: '{8aa751c1-7180-4413-8b57-c60fc841bf12}')!
 NotEnvironment comment: 'NotEnvironment is a <BrowserEnvironmentWrapper> which includes all methods in the system that are not in the <BrowserEnvironment> it wraps. NotEnvironments are constructed by sending the #not message to an existing <BrowserEnvironment>.
 
 Note that a NotEnvironment may include classes that are also included in the environment it inverts, because both may include methods of that class if the original environment includes only a slice of methods in the class.'!
@@ -15,21 +15,19 @@ Note that a NotEnvironment may include classes that are also included in the env
 defaultLabel
 	^'!!(' , environment label , ')'!
 
-definesClass: aClass 
-	#rbFix.	"Added"
+definesClass: aClass
 	^(environment definesClass: aClass) not!
 
 includesCategory: aCategory 
 	^(self classNamesFor: aCategory) notEmpty!
 
-includesClass: aClass 
+includesClass: aClass
 	"A <NotEnvironment> includes a class if its wrapped environment does not include the class,
 	or only partially includes it."
 
 	(environment includesClass: aClass) ifFalse: [^true].
-	aClass selectorsAndMethodsDo: 
-			[:each :meth | 
-			(environment includesSelector: each in: aClass) ifFalse: [^true]].
+	#rbFix.	"If the inverse environment does not include the whole class, then we must include some of it"
+	aClass selectorsDo: [:each | (environment includesSelector: each in: aClass) ifFalse: [^true]].
 	^false!
 
 includesProtocol: aProtocol in: aClass 

@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk XP"!
+"Filed out from Dolphin Smalltalk 7"!
 
 BrowserEnvironmentWrapper subclass: #ClassEnvironment
 	instanceVariableNames: 'classes metaClasses'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ClassEnvironment guid: (GUID fromString: '{6CED2BFC-A2CA-479F-9EEF-D74B2BAA9D59}')!
+ClassEnvironment guid: (GUID fromString: '{6ced2bfc-a2ca-479f-9eef-d74b2baa9d59}')!
 ClassEnvironment comment: 'A ClassEnvironment defines a slice of the system that includes all the classes, methods, resources, etc in a particular set of classes.
 
 Instance Variables:
@@ -22,33 +22,30 @@ addClass: aClass
 classes: aCollection 
 	aCollection do: [:each | self addClass: each]!
 
-classesAndSelectorsDo: aBlock 
+classesAndSelectorsDo: aBlock
 	#rbFix.	"Override to avoid #includesClass: check in #selectorsForClass:do:"
 	self classesDo: 
-			[:class | 
-			class selectorsAndMethodsDo: 
-					[:eachSelector :eachMethod | 
-					(environment includesSelector: eachSelector in: class) 
+			[:class |
+			class selectorsDo: 
+					[:eachSelector |
+					(environment includesSelector: eachSelector in: class)
 						ifTrue: [aBlock value: class value: eachSelector]]]!
 
-classesDo: aBlock 
-	classes
-		do: 
-			[:each | 
+classesDo: aBlock
+	classes do: 
+			[:each |
 			| class |
-			class := Smalltalk at: each ifAbsent: [nil].
-			(class notNil and: [environment includesClass: class])
-				ifTrue: [aBlock value: class]].
-	metaClasses
-		do: 
-			[:each | 
+			class := Smalltalk at: each ifAbsent: [].
+			(class notNil and: [environment includesClass: class]) ifTrue: [aBlock value: class]].
+	metaClasses do: 
+			[:each |
 			| class |
-			class := Smalltalk at: each ifAbsent: [nil].
-			(class notNil and: [environment includesClass: class class])
-				ifTrue: [aBlock value: class class]]!
+			class := Smalltalk at: each ifAbsent: [].
+			(class notNil and: [environment includesClass: class class]) ifTrue: [aBlock value: class class]]!
 
 classNames
-	^(Set withAll: classes) addAll: metaClasses;
+	^(IdentitySet withAll: classes)
+		addAll: metaClasses;
 		yourself!
 
 defaultLabel
@@ -58,12 +55,8 @@ defaultLabel
 	classes do: [:each | stream nextPutAll: each] separatedBy: [stream space].
 	^stream contents!
 
-definesClass: aClass 
-	#rbFix. "Code from original #includesClass:"
-	^(aClass isMeta
-		ifTrue: [metaClasses includes: aClass soleInstance name]
-		ifFalse: [classes includes: aClass name])
-			and: [super includesClass: aClass]!
+definesClass: aClass
+	^self includesClass: aClass!
 
 includesCategory: aCategory
 	^(super includesCategory: aCategory)
@@ -75,9 +68,10 @@ includesCategory: aCategory
 						class notNil and: [(self includesClass: class)
 								or: [self includesClass: class class]]]]]!
 
-includesClass: aClass 
-	#rbFix.	"Extracted to #definesClass:"
-	^self definesClass: aClass!
+includesClass: aClass
+	^(aClass isMeta
+		ifTrue: [metaClasses includes: aClass soleInstance name]
+		ifFalse: [classes includes: aClass name]) and: [super includesClass: aClass]!
 
 initialize
 	super initialize.
@@ -103,13 +97,12 @@ removeClass: aClass
 		ifTrue: [metaClasses remove: aClass soleInstance name ifAbsent: []]
 		ifFalse: [classes remove: aClass name ifAbsent: []]!
 
-selectorsForClass: aClass do: aBlock 
+selectorsForClass: aClass do: aBlock
 	#rbFix.	"Implement to avoid need for #includesClass: test in loop by performing it up front."
 	(self includesClass: aClass) ifFalse: [^self].
-	aClass selectorsAndMethodsDo: 
-			[:eachSelector :eachMethod | 
-			(environment includesSelector: eachSelector in: aClass) 
-				ifTrue: [aBlock value: eachSelector]]!
+	aClass selectorsDo: 
+			[:eachSelector |
+			(environment includesSelector: eachSelector in: aClass) ifTrue: [aBlock value: eachSelector]]!
 
 storeOn: aStream
 	aStream nextPut: $(.

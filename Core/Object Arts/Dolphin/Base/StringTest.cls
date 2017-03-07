@@ -5,7 +5,7 @@ ArrayedCollectionTest subclass: #StringTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-StringTest guid: (GUID fromString: '{C1474B06-E77D-41D7-AD4D-10D5114F8471}')!
+StringTest guid: (GUID fromString: '{c1474b06-e77d-41d7-ad4d-10d5114f8471}')!
 StringTest comment: 'This is the unit test for the class String. Unit tests are a good way to exercise the functionality of your system in a repeatable and automatic manner. They are therefore recommended if you plan to release anything. For more information, see: 
 	- http://www.c2.com/cgi/wiki?UnitTest
 	- http://minnow.cc.gatech.edu/squeak/1547
@@ -296,6 +296,40 @@ testInvalidComparisons
 	literals do: [:each | self should: [each > str] raise: Error].
 	literals do: [:each | self should: [each >= str] raise: Error]!
 
+testMatch
+	"Match anything"
+
+	self assert: ('*' match: 'zort').
+	self assert: ('*' match: '').
+	"Leading wilcard, matches at end"
+	self assert: ('*baz' match: 'mobaz').
+	"Must match whole sequence"
+	self deny: ('*baz' match: 'mobazo').
+	"Leading and trailing wildcard"
+	self assert: ('*baz*' match: 'mobazo').
+	"No match"
+	self deny: ('*baz*' match: 'mozo').
+	"Trailing wildcard"
+	self assert: ('foo*' match: 'foozo').
+	self deny: ('foo*' match: 'bozo').
+	"* can match any length sequence"
+	self assert: ('foo*baz' match: 'foo23baz').
+	"* matches empty sequence"
+	self assert: ('foo*baz' match: 'foobaz').
+	"Has to match whole sequence"
+	self deny: ('foo*baz' match: 'foo23bazo').
+	"Case insensitive"
+	self assert: ('foo' match: 'Foo').
+	self deny: ('foo*baz*zort' match: 'foobazort').
+	"* should match empty sequence"
+	self assert: ('foo*baz*zort' match: 'foobazzort').
+	"# matches any single char"
+	self assert: ('*foo#zort' match: 'afoo3zortthenfoo3zort').
+	self assert: ('*foo*zort' match: 'afoodezortorfoo3zort').
+	#('**' 'f**' 'f**o' 'f*' '*f*' 'f#*' 'f##' '*oo' '#oo' '*o*' '#o#' '#o*' '*o#' 'fo*' 'fo#' '*foo*' '###' '*#' 'f*#' 'f*#o')
+		do: [:each | self assert: (each match: 'foo')].
+	#('bar' 'foo#' '#foo' '*foo#' '#foo*' '*bar*') do: [:each | self deny: (each match: 'foo')]!
+
 testSubStrings
 	"Test single character delimiter"
 
@@ -432,6 +466,7 @@ testWithNormalizedLineDelimiters
 !StringTest categoriesFor: #testFindStringStartingAtIgnoreCase!public!unit tests! !
 !StringTest categoriesFor: #testIndexOfSubCollectionStartingAtGPF!public!unit tests! !
 !StringTest categoriesFor: #testInvalidComparisons!public!unit tests! !
+!StringTest categoriesFor: #testMatch!public!unit tests! !
 !StringTest categoriesFor: #testSubStrings!public!unit tests! !
 !StringTest categoriesFor: #testTrimNulls!public!unit tests! !
 !StringTest categoriesFor: #testUnescapePercents!public!unit tests! !
