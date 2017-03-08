@@ -5,7 +5,7 @@ SequencedStream subclass: #PositionableStream
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-PositionableStream guid: (GUID fromString: '{87B4C6F8-026E-11D3-9FD7-00A0CC3E4A32}')!
+PositionableStream guid: (GUID fromString: '{87b4c6f8-026e-11d3-9fd7-00a0cc3e4a32}')!
 PositionableStream comment: 'PositionableStream is the abstract class of <SequencedStream>s for which stream over sequence values from a Smalltalk sequenceable collection. Sub-instances of PositionableStream conform to the ANSI <collectionStream> protocol.
 
 Instance Variables
@@ -165,6 +165,9 @@ positionAfterNext: anInteger
 	stop > self lastPosition ifTrue: [^self errorEndOfStream].
 	^stop!
 
+reset
+	position := 0!
+
 reverseContents
 	"Answer a copy of the receiver's contents in reverse order."
 
@@ -238,6 +241,7 @@ upToEnd
 !PositionableStream categoriesFor: #position!positioning!public! !
 !PositionableStream categoriesFor: #position:!positioning!public! !
 !PositionableStream categoriesFor: #positionAfterNext:!positioning!private! !
+!PositionableStream categoriesFor: #reset!positioning!public! !
 !PositionableStream categoriesFor: #reverseContents!accessing!public! !
 !PositionableStream categoriesFor: #setToEnd!positioning!public! !
 !PositionableStream categoriesFor: #size!accessing!public! !
