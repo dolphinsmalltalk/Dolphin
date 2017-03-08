@@ -174,6 +174,14 @@ do: operation
 
 	firstIndex to: lastIndex do: [:i | operation value: (self basicAt: i)]!
 
+first
+	"Answer an <Object> which is the first element of the receiver. Raise an exception if the
+	receiver contains no elements."
+
+	"Implementation Note: Override to provide an optimized implementation."
+
+	^firstIndex <= lastIndex ifTrue: [self basicAt: firstIndex] ifFalse: [self errorSubscriptBounds: 1]!
+
 firstIndex: first lastIndex: last
 	"Private - Initialize the receiver's first and last indices."
 
@@ -243,6 +251,14 @@ isEmpty
 	Implementation Note: Override superclass to provide a more efficient implementation."
 
 	^firstIndex > lastIndex!
+
+last
+	"Answer the <Object> which is the last element of the receiver. Raise an exception if the
+	receiver contains no elements."
+
+	"Implementation Note: Override to provide an optimized implementation."
+
+	^firstIndex <= lastIndex ifTrue: [self basicAt: lastIndex] ifFalse: [self errorSubscriptBounds: 0]!
 
 makeRoomAtEndFor: anInteger
 	"Private - Make room at the end of the receiver to accomodate at least anInteger
@@ -447,12 +463,14 @@ uncheckedFrom: startInteger to: stopInteger keysAndValuesDo: aDyadicValuable
 !OrderedCollection categoriesFor: #copyWith:!copying!public! !
 !OrderedCollection categoriesFor: #copyWithout:!copying!public! !
 !OrderedCollection categoriesFor: #do:!enumerating!public! !
+!OrderedCollection categoriesFor: #first!accessing!public! !
 !OrderedCollection categoriesFor: #firstIndex:lastIndex:!accessing!private! !
 !OrderedCollection categoriesFor: #includes:!public!searching! !
 !OrderedCollection categoriesFor: #initialize!initializing!public! !
 !OrderedCollection categoriesFor: #inject:into:!enumerating!public! !
 !OrderedCollection categoriesFor: #insert:before:!adding!private! !
 !OrderedCollection categoriesFor: #isEmpty!public!testing! !
+!OrderedCollection categoriesFor: #last!accessing!public! !
 !OrderedCollection categoriesFor: #makeRoomAtEndFor:!adding!private! !
 !OrderedCollection categoriesFor: #makeRoomAtFirstFor:!adding!private! !
 !OrderedCollection categoriesFor: #nextIdentityIndexOf:from:to:!public!searching! !
