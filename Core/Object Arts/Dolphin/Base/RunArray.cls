@@ -10,6 +10,24 @@ RunArray comment: ''!
 !RunArray categoriesForClass!Collections-Arrayed! !
 !RunArray methodsFor!
 
+allSatisfy: discriminator
+	"Answer whether the <monadicValuable>, discriminator, evaluates to true for
+	every element of the receiver."
+
+	"Implementation Note: Override back to Collection definition as #at: is very slow for RunArrays."
+
+	self do: [:e | (discriminator value: e) ifFalse: [^false]].
+	^true!
+
+anySatisfy: discriminator
+	"Answer whether the <monadicValuable>, discriminator, evaluates to true for
+	any element of the receiver."
+
+	"Implementation Note: Override back to Collection definition as #at: is very slow for RunArrays."
+
+	self do: [:e | (discriminator value: e) ifTrue: [^true]].
+	^false!
+
 asRunArray
 	^self!
 
@@ -99,6 +117,8 @@ size
 
 species
 	^Array! !
+!RunArray categoriesFor: #allSatisfy:!enumerating!public! !
+!RunArray categoriesFor: #anySatisfy:!enumerating!public! !
 !RunArray categoriesFor: #asRunArray!converting!public! !
 !RunArray categoriesFor: #at:!accessing!public! !
 !RunArray categoriesFor: #at:put:!accessing!public! !

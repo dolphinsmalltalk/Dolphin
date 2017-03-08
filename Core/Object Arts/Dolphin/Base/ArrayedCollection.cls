@@ -15,6 +15,16 @@ add: newElement
 
 	^self shouldNotImplement!
 
+allSatisfy: discriminator
+	"Answer whether the <monadicValuable>, discriminator, evaluates to true for
+	every element of the receiver."
+
+	"Implementation Note: Override for performance reasons only (superclass method requires a
+	full block)."
+
+	1 to: self size do: [:i | (discriminator value: (self at: i)) ifFalse: [^false]].
+	^true!
+
 anySatisfy: discriminator
 	"Answer whether the <monadicValuable>, discriminator, evaluates to true for any element of
 	the receiver."
@@ -151,6 +161,7 @@ sortUsing: aSortAlgorithm
 		from: 1
 		to: self size! !
 !ArrayedCollection categoriesFor: #add:!adding!public! !
+!ArrayedCollection categoriesFor: #allSatisfy:!enumerating!public! !
 !ArrayedCollection categoriesFor: #anySatisfy:!enumerating!public! !
 !ArrayedCollection categoriesFor: #at:!accessing!public! !
 !ArrayedCollection categoriesFor: #at:put:!accessing!public! !

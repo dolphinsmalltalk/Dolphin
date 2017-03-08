@@ -5,7 +5,7 @@ AbstractDictionaryTest subclass: #PoolConstantsDictionaryTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-PoolConstantsDictionaryTest guid: (GUID fromString: '{9C4827FC-93B3-4424-BEC2-99F6BD7D76E9}')!
+PoolConstantsDictionaryTest guid: (GUID fromString: '{9c4827fc-93b3-4424-bec2-99f6bd7d76e9}')!
 PoolConstantsDictionaryTest comment: ''!
 !PoolConstantsDictionaryTest categoriesForClass!Unclassified! !
 !PoolConstantsDictionaryTest methodsFor!
@@ -14,7 +14,7 @@ collectionClass
 	^PoolConstantsDictionary!
 
 makeKey: anObject
-	^anObject displayString!
+	^'_' , anObject displayString!
 
 testAtIfAbsentString
 	| dictionary |

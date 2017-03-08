@@ -81,10 +81,22 @@ addLast: newObject
 	lastIndex := lastIndex + 1.
 	^self basicAt: lastIndex put: newObject!
 
+allSatisfy: discriminator
+	"Answer whether the <monadicValuable>, discriminator, evaluates to true for
+	every element of the receiver."
+
+	"Implementation Note: Override in order to provide an optimized implementation that requires
+	neither a full block nor bounds checks."
+
+	firstIndex to: lastIndex do: [:i | (discriminator value: (self basicAt: i)) ifFalse: [^false]].
+	^true!
+
 anySatisfy: discriminator
 	"Answer whether the <monadicValuable>, discriminator, evaluates to true for
-	any element of the receiver.
-	Implementation Note: Override for performance reasons only."
+	any element of the receiver."
+
+	"Implementation Note: Override in order to provide an optimized implementation that requires
+	neither a full block nor bounds checks."
 
 	firstIndex to: lastIndex do: [:i | (discriminator value: (self basicAt: i)) ifTrue: [^true]].
 	^false!
@@ -158,7 +170,7 @@ do: operation
 	"Evaluate monadic value argument, operation, for each of the element of the 
 	receiver. Answers the receiver."
 
-	"Implementation Note: Override to avoid error checking in #at: for better performance."
+	"Implementation Note: Override to avoid bounds checking in #at: for better performance."
 
 	firstIndex to: lastIndex do: [:i | operation value: (self basicAt: i)]!
 
@@ -425,6 +437,7 @@ uncheckedFrom: startInteger to: stopInteger keysAndValuesDo: aDyadicValuable
 !OrderedCollection categoriesFor: #addAnsweringIndex:!adding!public! !
 !OrderedCollection categoriesFor: #addFirst:!adding!public! !
 !OrderedCollection categoriesFor: #addLast:!adding!public! !
+!OrderedCollection categoriesFor: #allSatisfy:!enumerating!public! !
 !OrderedCollection categoriesFor: #anySatisfy:!enumerating!public! !
 !OrderedCollection categoriesFor: #asOrderedCollection!converting!public! !
 !OrderedCollection categoriesFor: #at:!accessing!public! !
