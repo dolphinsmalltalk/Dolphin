@@ -110,7 +110,6 @@ extendedLiteralExpected
 
 getComments
 	| oldComments |
-	comments isNil ifTrue: [^nil].
 	oldComments := comments.
 	comments := nil.
 	^oldComments!
@@ -177,7 +176,9 @@ next
 				ifTrue: [StToken start: tokenStart + 1	"The EOF token should occur after the end of input"]
 				ifFalse: [self scanToken].
 	self stripSeparators.
-	^token comments: self getComments!
+	token comments: comments.
+	comments := nil.
+	^token!
 
 notificationClass
 	^SmalltalkParser notificationClass!
@@ -558,27 +559,22 @@ step
 					classificationTable at: index].
 	^currentCharacter!
 
-stripComment
-	"Private - Skip to the next end-of-comment marker."
-
-	| start stop |
-	start := stream position.
-	
-	[| ch |
-	stream atEnd ifTrue: [^self unterminatedComment: start].
-	ch := stream next.
-	ch == $\n ifTrue: [line := line + 1].
-	ch == $"]
-			whileFalse.
-	stop := stream position.
-	self step.
-	self addComment: (start to: stop)!
-
 stripSeparators
 	
 	[[characterType == #separator] whileTrue: [self step].
-	currentCharacter == $"] 
-			whileTrue: [self stripComment]!
+	currentCharacter == $"] whileTrue: 
+				[| start stop |
+				start := stream position.
+				
+				[| ch |
+				stream atEnd ifTrue: [^self unterminatedComment: start].
+				ch := stream next.
+				ch == $\n ifTrue: [line := line + 1].
+				ch == $"]
+						whileFalse.
+				stop := stream position.
+				self step.
+				self addComment: (start to: stop)]!
 
 unterminatedComment: anInteger 
 	self lexicalError: LErrCommentNotClosed range: (anInteger to: self errorPosition).
@@ -653,7 +649,6 @@ unterminatedString
 !SmalltalkScanner categoriesFor: #scanToken!accessing!public! !
 !SmalltalkScanner categoriesFor: #separatorsInLiterals:!accessing!private! !
 !SmalltalkScanner categoriesFor: #step!operations!private! !
-!SmalltalkScanner categoriesFor: #stripComment!private!scanning! !
 !SmalltalkScanner categoriesFor: #stripSeparators!private!scanning! !
 !SmalltalkScanner categoriesFor: #unterminatedComment:!error handling!private! !
 !SmalltalkScanner categoriesFor: #unterminatedQualifiedRef!error handling!private! !
