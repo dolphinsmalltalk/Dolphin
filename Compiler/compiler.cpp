@@ -463,7 +463,6 @@ void Compiler::CheckTemporaryName(const Str& name, const TEXTRANGE& range, bool 
 			CompileError(range, pDecl->IsArgument() ? CErrRedefiningArg : CErrDuplicateTempName);
 	}
 
-	//if (m_flags & Boot) return;
 	if (IsInteractive())
 	{
 		if (pDecl)
@@ -1338,7 +1337,7 @@ POTE Compiler::ParseEvalExpression(TokenType closingToken)
 
 void Compiler::WarnIfRestrictedSelector(int start)
 {
-	if (m_flags & Boot) return;
+	if (!IsInteractive()) return;
 
 	for (int i=0; i < NumRestrictedSelectors; i++)
 		if (m_selector == s_restrictedSelectors[i])
