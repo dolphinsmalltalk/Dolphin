@@ -3515,17 +3515,19 @@ STDMETHODIMP_(POTE) Compiler::CompileForEval(IUnknown* piVM, Oop compilerOop, co
 	
 	CHECKREFERENCES
 		
-	char* prevLocale = NULL;
+	wchar_t* prevLocale = NULL;
 	__try
 	{
 #ifdef USE_VM_DLL
-		prevLocale = setlocale(LC_ALL, NULL);
-		if (prevLocale[0] == 'C' && prevLocale[1] == 0)
+		prevLocale = _wsetlocale(LC_ALL, L"C");
+		if (prevLocale[0] == L'C' && prevLocale[1] == 0)
+		{
 			prevLocale = NULL;
+		}
 		else
 		{
-			prevLocale = _strdup(prevLocale);
-			setlocale(LC_ALL, "C");
+			prevLocale = _wcsdup(prevLocale);
+			_wsetlocale(LC_ALL, L"C");
 		}
 #endif
 		
@@ -3560,14 +3562,14 @@ STDMETHODIMP_(POTE) Compiler::CompileForEval(IUnknown* piVM, Oop compilerOop, co
 #ifdef USE_VM_DLL
 		if (prevLocale != NULL)
 		{
-			setlocale(LC_ALL, prevLocale);
+			_wsetlocale(LC_ALL, prevLocale);
 			free(prevLocale);
 		}
 #endif
 	}
 	
 	CHECKREFERENCES
-		
+
 	return resultPointer;
 }
 

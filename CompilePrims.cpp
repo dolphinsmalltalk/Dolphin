@@ -24,35 +24,36 @@ static HINSTANCE LoadCompiler()
 	return hCompiler;
 }
 
+static IClassFactoryPtr piFactory;
+
 static ICompilerPtr NewCompiler()
 {
 	ICompilerPtr piCompiler;
-	HRESULT hr = piCompiler.CreateInstance(__uuidof(DolphinCompiler));
+	HRESULT hr = S_OK;
 
-	if (SUCCEEDED(hr))
-		return piCompiler;
-
-	if (hr == REGDB_E_CLASSNOTREG)
+	if (!piFactory)
 	{
-		// Try and register it
-		HINSTANCE hLib = LoadCompiler();
-		if (hLib)
+		hr = CoGetClassObject(__uuidof(DolphinCompiler), CLSCTX_INPROC_SERVER, NULL, IID_IClassFactory, (void**)&piFactory);
+		if (FAILED(hr))
 		{
-			// It loaded, now try invoking the class factory entry point
-			GETCLASSOBJPROC pfnFactory = (GETCLASSOBJPROC)::GetProcAddress(HMODULE(hLib), "DllGetClassObject");
-			if (pfnFactory)
+			HINSTANCE hLib = LoadCompiler();
+			if (hLib)
 			{
-				// Found the entry point, try retrieving the factory
-				IClassFactoryPtr piFactory;
-				hr = (*pfnFactory)(__uuidof(DolphinCompiler), IID_IClassFactory, (void**)&piFactory);
-
-				if (SUCCEEDED(hr))
+				// It loaded, now try invoking the class factory entry point
+				GETCLASSOBJPROC pfnFactory = (GETCLASSOBJPROC)::GetProcAddress(HMODULE(hLib), "DllGetClassObject");
+				if (pfnFactory)
 				{
-					// Now try creating the VM object directly
-					hr = piFactory->CreateInstance(NULL, __uuidof(ICompiler), (void**)&piCompiler);
+					// Found the entry point, try retrieving the factory
+					hr = (*pfnFactory)(__uuidof(DolphinCompiler), IID_IClassFactory, (void**)&piFactory);
 				}
 			}
 		}
+	}
+
+	if (SUCCEEDED(hr))
+	{
+		// Directly invoke the factory to instantiate a compiler instance
+		hr = piFactory->CreateInstance(NULL, __uuidof(ICompiler), (void**)&piCompiler);
 	}
 
 	return piCompiler;
