@@ -145,12 +145,11 @@ compileForEvaluation: aString in: aBehavior evaluationPools: anArray logged: aBo
 				evaluationPools: anArray
 				flags: anInteger
 				notifying: self.
-	results := (CompilationResult new)
-				method: results first;
-				rawTextMap: results second;
-				rawTempsMap: results third;
-				yourself.
-	expression := results method.
+	expression := results first.
+	results := CompilationResult 
+				method: expression
+				rawTextMap: results second
+				rawTempsMap: results third.
 	expression notNil 
 		ifTrue: 
 			[expression
@@ -259,7 +258,7 @@ evaluate: aString for: anObject evaluationPools: anArray logged: aBoolean ifFail
 				flags: 0.
 	expr := results method.
 	^expr notNil 
-		ifTrue: [expr value: anObject withArguments: Array new]
+		ifTrue: [expr value: anObject withArguments: #()]
 		ifFalse: [failBlock value]!
 
 evaluate: aString for: anObject logged: aBoolean

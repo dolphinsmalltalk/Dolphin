@@ -1,11 +1,11 @@
 "Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #CompilationResult
-	instanceVariableNames: 'method _reserved rawTextMap rawTempsMap textMap tempsMap oldMethod package'
+	instanceVariableNames: 'method rawTextMap rawTempsMap textMap tempsMap oldMethod package'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-CompilationResult guid: (GUID fromString: '{87B4C46E-026E-11D3-9FD7-00A0CC3E4A32}')!
+CompilationResult guid: (GUID fromString: '{87b4c46e-026e-11d3-9fd7-00a0cc3e4a32}')!
 CompilationResult comment: ''!
 !CompilationResult categoriesForClass!System-Support! !
 !CompilationResult methodsFor!
@@ -49,6 +49,11 @@ method: aCompiledMethod
 	"Private - Set the method."
 
 	method := aCompiledMethod!
+
+method: aCompiledMethod rawTextMap: textArray rawTempsMap: tempsArray
+	method := aCompiledMethod.
+	rawTextMap := textArray.
+	rawTempsMap := tempsArray!
 
 oldMethod
 	^oldMethod!
@@ -94,6 +99,7 @@ textMap
 !CompilationResult categoriesFor: #isNew!accessing!public! !
 !CompilationResult categoriesFor: #method!accessing!public! !
 !CompilationResult categoriesFor: #method:!accessing!private! !
+!CompilationResult categoriesFor: #method:rawTextMap:rawTempsMap:!initializing!private! !
 !CompilationResult categoriesFor: #oldMethod!accessing!public! !
 !CompilationResult categoriesFor: #oldMethod:!accessing!public! !
 !CompilationResult categoriesFor: #package!accessing!public! !
@@ -103,4 +109,14 @@ textMap
 !CompilationResult categoriesFor: #tempsAtIp:!accessing!development!private! !
 !CompilationResult categoriesFor: #tempsMap!accessing!development!public! !
 !CompilationResult categoriesFor: #textMap!accessing!development!public! !
+
+!CompilationResult class methodsFor!
+
+method: aCompiledMethod rawTextMap: textArray rawTempsMap: tempsArray
+	<primitive: 157>
+	^self new
+		method: aCompiledMethod
+		rawTextMap: textArray
+		rawTempsMap: tempsArray! !
+!CompilationResult class categoriesFor: #method:rawTextMap:rawTempsMap:!instance creation!public! !
 
