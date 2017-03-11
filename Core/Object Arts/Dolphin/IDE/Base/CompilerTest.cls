@@ -5,7 +5,7 @@ DolphinTest subclass: #CompilerTest
 	classVariableNames: 'TempInstrs'
 	poolDictionaries: 'CompilerFlags OpcodePool SmalltalkParseErrorCodes'
 	classInstanceVariableNames: ''!
-CompilerTest guid: (GUID fromString: '{5AFF22BD-5D99-4B24-9B1D-C8D1EDE77213}')!
+CompilerTest guid: (GUID fromString: '{5aff22bd-5d99-4b24-9b1d-c8d1ede77213}')!
 CompilerTest comment: ''!
 !CompilerTest categoriesForClass!Unclassified! !
 !CompilerTest methodsFor!
@@ -790,22 +790,23 @@ testIntegerScanning
 		matching: [:ex | (self messageFromError: ex) = 'invalid expression start']!
 
 testIntegerScanningBoundaries
-	#(0 1 2 15 16 31 32 63 64 65) do: 
-			[:eachPower | 
-			| values |
-			values := OrderedCollection new.
+	#(0 1 15 16 31 32 63 64 65) do: 
+			[:eachPower |
+			| values x |
+			values := OrderedCollection new: 6.
+			x := 1 bitShift: eachPower.
 			values
-				add: (2 ** eachPower + 1) negated;
-				add: (2 ** eachPower - 1) negated;
-				add: (2 ** eachPower) negated;
-				add: 2 ** eachPower - 1;
-				add: 2 ** eachPower;
-				add: 2 ** eachPower + 1.
+				add: (x + 1) negated;
+				add: (x - 1) negated;
+				add: x negated;
+				add: x - 1;
+				add: x;
+				add: x + 1.
 			values do: 
-					[:eachVal | 
+					[:eachVal |
 					self assert: (self evaluateExpression: eachVal printString) = eachVal.
 					"Now test again with a radix prefix"
-					2 to: 36
+					#(2 10 16 36)
 						do: [:eachRadix | (self evaluateExpression: (eachVal printStringRadix: eachRadix)) = eachVal]]]!
 
 testLiteralArray

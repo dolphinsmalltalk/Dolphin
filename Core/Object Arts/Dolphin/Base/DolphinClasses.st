@@ -71,7 +71,7 @@ Object subclass: #Collection
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Object subclass: #CompilationResult
-	instanceVariableNames: 'method _reserved rawTextMap rawTempsMap textMap tempsMap oldMethod package'
+	instanceVariableNames: 'method rawTextMap rawTempsMap textMap tempsMap oldMethod package'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
