@@ -94,7 +94,7 @@ Object subclass: #SmalltalkScanner
 	poolDictionaries: 'SmalltalkParseErrorCodes'
 	classInstanceVariableNames: ''!
 Object subclass: #StLexicalScope
-	instanceVariableNames: 'node temps argNames flags'
+	instanceVariableNames: 'node outer temps argNames flags'
 	classVariableNames: 'EmptyBlockMask FarReturnMask NeedsOuter NeedsSelfMask OptimizedBlockMask'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -114,7 +114,7 @@ Object subclass: #StToken
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 StParseNodeVisitor subclass: #StParseNodeAnalyzer
-	instanceVariableNames: 'methodNode scopeStack methodClass scopeDepth evaluationContext evaluationPools literals stringLiterals addToFrame tempDecls inStaticExpression'
+	instanceVariableNames: 'methodNode methodClass evaluationContext evaluationPools currentScope scopes literals stringLiterals addToFrame tempDecls inStaticExpression'
 	classVariableNames: 'OptimizedMessages RestrictedSelectors SpecialSelectors'
 	poolDictionaries: 'SmalltalkParseErrorCodes'
 	classInstanceVariableNames: ''!

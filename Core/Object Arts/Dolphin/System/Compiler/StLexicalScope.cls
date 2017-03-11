@@ -1,11 +1,11 @@
 "Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #StLexicalScope
-	instanceVariableNames: 'node temps argNames flags'
+	instanceVariableNames: 'node outer temps argNames flags'
 	classVariableNames: 'EmptyBlockMask FarReturnMask NeedsOuter NeedsSelfMask OptimizedBlockMask'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-StLexicalScope guid: (GUID fromString: '{CF1F5402-A16A-4F0C-8C08-630E2B5FBF47}')!
+StLexicalScope guid: (GUID fromString: '{cf1f5402-a16a-4f0c-8c08-630e2b5fbf47}')!
 StLexicalScope addClassConstant: 'EmptyBlockMask' value: 2!
 StLexicalScope addClassConstant: 'FarReturnMask' value: 8!
 StLexicalScope addClassConstant: 'NeedsOuter' value: 16!
@@ -36,15 +36,19 @@ needsSelf
 needsSelf: aBoolean
 	flags := flags mask: NeedsSelfMask set: aBoolean!
 
+outer
+	^outer!
+
 referenceArg: aString 
 	^(argNames includesKey: aString) and: [argNames at: aString put: true]!
 
 refsToTemp: aString 
 	^temps at: aString ifAbsent: []!
 
-setNode: aBlockOrMethodNode
+setNode: aBlockOrMethodNode outer: anStLexicalScope
 	| argNodes referenced |
 	node := aBlockOrMethodNode.
+	outer := anStLexicalScope.
 	temps := LookupTable new.
 	argNodes := node arguments.
 	argNames := LookupTable new: argNodes size.
@@ -64,17 +68,18 @@ unreferencedArguments
 !StLexicalScope categoriesFor: #isInlined!accessing!public! !
 !StLexicalScope categoriesFor: #needsSelf!accessing!public! !
 !StLexicalScope categoriesFor: #needsSelf:!accessing!public! !
+!StLexicalScope categoriesFor: #outer!accessing!public! !
 !StLexicalScope categoriesFor: #referenceArg:!public! !
 !StLexicalScope categoriesFor: #refsToTemp:!public! !
-!StLexicalScope categoriesFor: #setNode:!initializing!private! !
+!StLexicalScope categoriesFor: #setNode:outer:!initializing!private! !
 !StLexicalScope categoriesFor: #tempCount!public! !
 !StLexicalScope categoriesFor: #unreferencedArguments!accessing!public! !
 
 !StLexicalScope class methodsFor!
 
-forScopeNode: aBlockOrMethodNode 
+forScopeNode: aBlockOrMethodNode outer: anStLexicalScope
 	^(self new)
-		setNode: aBlockOrMethodNode;
+		setNode: aBlockOrMethodNode outer: anStLexicalScope;
 		yourself!
 
 initialize
@@ -83,6 +88,6 @@ initialize
 	self addClassConstant: 'OptimizedBlockMask' value: 16r4.
 	self addClassConstant: 'FarReturnMask' value: 16r8.
 	self addClassConstant: 'NeedsOuter' value: 16r10! !
-!StLexicalScope class categoriesFor: #forScopeNode:!public! !
+!StLexicalScope class categoriesFor: #forScopeNode:outer:!public! !
 !StLexicalScope class categoriesFor: #initialize!public! !
 
