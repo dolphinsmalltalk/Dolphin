@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 StToken subclass: #StValueToken
 	instanceVariableNames: 'value'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-StValueToken guid: (GUID fromString: '{C37072CC-EDDA-4BAC-AA9F-A73B3F4255D5}')!
+StValueToken guid: (GUID fromString: '{c37072cc-edda-4bac-aa9f-a73b3f4255d5}')!
 StValueToken comment: ''!
 !StValueToken categoriesForClass!System-Compiler! !
 !StValueToken methodsFor!
@@ -23,20 +23,15 @@ value
 	^value!
 
 value: anObject
-	value := anObject!
-
-value: aString start: anInteger 
-	value := aString.
-	sourcePointer := anInteger! !
+	value := anObject! !
 !StValueToken categoriesFor: #length!accessing!private! !
 !StValueToken categoriesFor: #printOn:!printing!public! !
 !StValueToken categoriesFor: #value!accessing!public! !
 !StValueToken categoriesFor: #value:!accessing!public! !
-!StValueToken categoriesFor: #value:start:!initializing!public! !
 
 !StValueToken class methodsFor!
 
-value: aString start: anInteger 
-	^self new value: aString start: anInteger! !
+value: aString start: anInteger
+	^(self start: anInteger) value: aString! !
 !StValueToken class categoriesFor: #value:start:!instance creation!public! !
 

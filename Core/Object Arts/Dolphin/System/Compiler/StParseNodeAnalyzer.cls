@@ -1,11 +1,11 @@
 "Filed out from Dolphin Smalltalk 7"!
 
 StParseNodeVisitor subclass: #StParseNodeAnalyzer
-	instanceVariableNames: 'methodNode scopeStack methodClass scopeDepth evaluationContext evaluationPools literals stringLiterals addToFrame tempDecls inStaticExpression'
+	instanceVariableNames: 'methodNode methodClass evaluationContext evaluationPools currentScope scopes literals stringLiterals addToFrame tempDecls inStaticExpression'
 	classVariableNames: 'OptimizedMessages RestrictedSelectors SpecialSelectors'
 	poolDictionaries: 'SmalltalkParseErrorCodes'
 	classInstanceVariableNames: ''!
-StParseNodeAnalyzer guid: (GUID fromString: '{3922CAC3-8A81-45A8-ADB3-2795A6E7BC2F}')!
+StParseNodeAnalyzer guid: (GUID fromString: '{3922cac3-8a81-45a8-adb3-2795a6e7bc2f}')!
 StParseNodeAnalyzer addClassConstant: 'SpecialSelectors' value: #(#+ #- #< #> #<= #>= #= #~= #* #/ #\\ #bitShift: #// #bitAnd: #bitOr: #== #value #value: #class #size #new #new: #at: #at:put: #value:value: #basicNew: #basicClass #basicSize #basicAt: #basicAt:put: #isNil #notNil)!
 StParseNodeAnalyzer comment: ''!
 !StParseNodeAnalyzer categoriesForClass!System-Compiler! !
@@ -56,6 +56,15 @@ bindingFor: aStVariableNode
 				isImmutable: evaluationContext isImmutable;
 				yourself].
 	^methodClass fullBindingFor: identifier!
+
+blockDepth
+	| depth scope |
+	depth := 0.
+	scope := currentScope.
+	[scope isNil] whileFalse: 
+			[scope isInlined ifFalse: [depth := depth + 1].
+			scope := scope outer].
+	^depth!
 
 checkIsLiteralBlockHandler: aStProgramNode forMessage: aStMessageNode 
 	aStProgramNode isBlock 
@@ -231,7 +240,7 @@ checkOptimizedUnaryMessages: aMessageNode
 		and: [self checkMessageHasNiladicBlockReceiver: aMessageNode]!
 
 checkRedefines: aVariableNode
-	| identifier |
+	| identifier scope |
 	identifier := aVariableNode name.
 	(methodClass fullBindingFor: identifier)
 		ifNotNil: 
@@ -246,17 +255,14 @@ checkRedefines: aVariableNode
 	duplicate temporary/argument names at the same scope are not permitted (which is certainly
 	true), but that duplicate names in nested scopes (i.e. temps/args that shadow outer temps)
 	are permitted (which seems appropriate), but for which we issue a warning."
-	scopeStack size - 1 to: 1
-		by: -1
-		do: 
-			[:i |
-			| scope |
-			scope := scopeStack at: i.
-			(scope includesArg: identifier)
+	scope := self currentScope outer.
+	[scope isNil] whileFalse: 
+			[(scope includesArg: identifier)
 				ifTrue: [self signalError: CWarnRedefiningArg forNode: aVariableNode]
 				ifFalse: 
 					[(scope includesTemp: identifier)
-						ifTrue: [self signalError: CWarnRedefiningTemp forNode: aVariableNode]]]!
+						ifTrue: [self signalError: CWarnRedefiningTemp forNode: aVariableNode]].
+			scope := scope outer]!
 
 checkRestrictedSelectors: aMethodNode
 	| last first |
@@ -307,18 +313,17 @@ contextBindingFor: aString
 	^nil!
 
 countOuterTemps
-	| i scope count |
-	i := scopeStack size.
-	scope := scopeStack at: i.
+	| scope count |
+	scope := self currentScope.
 	count := 0.
-	[i > 1 and: [scope isInlined]] whileTrue: 
-			[i := i - 1.
-			scope := scopeStack at: i.
+	[scope outer notNil and: [scope isInlined]] whileTrue: 
+			[scope := scope outer.
 			count := count + scope argumentCount + scope tempCount].
 	^count!
 
-createScope: aNode 
-	^scopeStack add: (StLexicalScope forScopeNode: aNode)!
+createScope: aNode
+	currentScope := StLexicalScope forScopeNode: aNode outer: currentScope.
+	^scopes addLast: currentScope!
 
 currentMethodClass
 	^inStaticExpression 
@@ -326,7 +331,7 @@ currentMethodClass
 		ifFalse: [methodClass]!
 
 currentScope
-	^scopeStack last!
+	^currentScope!
 
 errorAssignConstant: aVariableNode
 	self
@@ -337,8 +342,7 @@ errorAssignConstant: aVariableNode
 
 initialize
 	super initialize.
-	scopeStack := OrderedCollection new.
-	scopeDepth := 0.
+	scopes := OrderedCollection new.
 	literals := IdentityDictionary new.
 	stringLiterals := Set new.
 	addToFrame := [:literal | self addToFrame: literal].
@@ -396,7 +400,7 @@ pushTemp: aVariableNode
 	!
 
 removeScope
-	^scopeStack removeLast!
+	^currentScope := currentScope outer!
 
 restrictedSelectors
 	^RestrictedSelectors!
@@ -481,7 +485,7 @@ tempDecls
 	^tempDecls!
 
 varRef: aVariableNode isAssignment: aBoolean
-	| identifier |
+	| identifier scope |
 	identifier := aVariableNode name.
 	identifier = 'self'
 		ifTrue: [^aBoolean ifTrue: [self errorAssignConstant: aVariableNode] ifFalse: [self pushSelf]].
@@ -489,36 +493,34 @@ varRef: aVariableNode isAssignment: aBoolean
 		ifTrue: [^aBoolean ifTrue: [self errorAssignConstant: aVariableNode] ifFalse: [self pushSuper]].
 	identifier = 'thisContext'
 		ifTrue: [^aBoolean ifTrue: [self errorAssignConstant: aVariableNode] ifFalse: [self pushActiveFrame]].
-	scopeStack size to: 1
-		by: -1
-		do: 
-			[:i |
-			| scope |
-			scope := scopeStack at: i.
-			(scope refsToTemp: identifier)
-				ifNil: 
-					[(scope referenceArg: identifier)
+	scope := self currentScope.
+	
+	[(scope refsToTemp: identifier)
+		ifNil: 
+			[(scope referenceArg: identifier)
+				ifTrue: 
+					[^aBoolean
 						ifTrue: 
-							[^aBoolean
-								ifTrue: 
-									[self
-										signalError: CErrAssignmentToArgument
-										forNode: aVariableNode parent
-										extra: identifier]
-								ifFalse: [self pushTemp: aVariableNode]]]
-				ifNotNil: 
-					[:nodes |
-					^aBoolean
-						ifTrue: 
-							[nodes first ifNil: [nodes at: 1 put: aVariableNode].
-							self storeTemp: aVariableNode]
-						ifFalse: 
-							[nodes second
-								ifNil: 
-									[nodes at: 2 put: aVariableNode.
-									(nodes first isNil and: [(self isReceiverOfNilTest: aVariableNode) not])
-										ifTrue: [self signalError: CWarnReadBeforeWritten forNode: aVariableNode]
-										ifFalse: [self pushTemp: aVariableNode]]]]].
+							[self
+								signalError: CErrAssignmentToArgument
+								forNode: aVariableNode parent
+								extra: identifier]
+						ifFalse: [self pushTemp: aVariableNode]]]
+		ifNotNil: 
+			[:nodes |
+			^aBoolean
+				ifTrue: 
+					[nodes first ifNil: [nodes at: 1 put: aVariableNode].
+					self storeTemp: aVariableNode]
+				ifFalse: 
+					[nodes second
+						ifNil: 
+							[nodes at: 2 put: aVariableNode.
+							(nodes first isNil and: [(self isReceiverOfNilTest: aVariableNode) not])
+								ifTrue: [self signalError: CWarnReadBeforeWritten forNode: aVariableNode]
+								ifFalse: [self pushTemp: aVariableNode]]]].
+	(scope := scope outer) isNil]
+			whileFalse.
 	(self isInstVar: identifier)
 		ifTrue: 
 			[^aBoolean ifTrue: [self storeInstVar: aVariableNode] ifFalse: [self pushInstVar: aVariableNode]].
@@ -534,6 +536,9 @@ varRef: aVariableNode isAssignment: aBoolean
 						ifFalse: [self storeStatic: aVariableNode variable: var]]
 				ifFalse: [self pushStatic: aVariableNode variable: var]]!
 
+visitArgumentNode: anStVariableNode
+	self checkRedefines: anStVariableNode!
+
 visitArgumentNodes: aNodeCollection
 	| count max |
 	aNodeCollection isEmpty ifTrue: [^self].
@@ -541,7 +546,7 @@ visitArgumentNodes: aNodeCollection
 	max := VMConstants.MaxTemps.
 	aNodeCollection do: 
 			[:each |
-			self checkRedefines: each.
+			self visitArgumentNode: each.
 			count := count + 1.
 			count > max
 				ifTrue: 
@@ -555,15 +560,11 @@ visitAssignmentNode: anAssignmentNode
 	self varRef: anAssignmentNode variable isAssignment: true!
 
 visitBlockNode: aBlockNode
-	| inlined |
 	self createScope: aBlockNode.
-	inlined := aBlockNode isInlined.
-	inlined ifFalse: [scopeDepth := scopeDepth + 1].
-	scopeDepth > VMConstants.MaxBlockNesting
+	self blockDepth > VMConstants.MaxBlockNesting
 		ifTrue: [self signalError: CErrBlockNestingTooDeep forNode: aBlockNode].
 	self processBlock: aBlockNode.
-	self removeScope.
-	inlined ifFalse: [scopeDepth := scopeDepth - 1]!
+	self removeScope!
 
 visitLiteralArrayNode: aLiteralArrayNode
 	"We don't want to visit the individual elements"
@@ -622,25 +623,23 @@ visitSequenceNode: aSequenceNode
 					nodes second ifNil: [self signalError: CWarnWrittenNotRead forNode: firstWritten]]].
 	^answer!
 
+visitTemporaryNode: anStVariableNode
+	self checkRedefines: anStVariableNode.
+	self currentScope addTemp: anStVariableNode name!
+
 visitTemporaryNodes: aNodeCollection
-	| max count scope |
+	| count |
 	aNodeCollection isEmpty ifTrue: [^self].
-	scope := self currentScope.
-	max := VMConstants.MaxTemps.
-	count := self countOuterTemps + scope argumentCount.
+	count := self countOuterTemps + self currentScope argumentCount.
 	aNodeCollection do: 
 			[:each |
-			| identifier |
-			self checkRedefines: each.
-			identifier := each name.
-			scope addTemp: identifier.
-			count := count + 1.
-			count > max
+			self visitTemporaryNode: each.
+			(count := count + 1) > VMConstants.MaxTemps
 				ifTrue: 
 					[self
 						signalError: CErrTooManyTemps
 						forNode: each
-						extra: identifier]]!
+						extra: each name]]!
 
 visitVariableNode: aVariableNode
 	self varRef: aVariableNode isAssignment: false! !
@@ -649,6 +648,7 @@ visitVariableNode: aVariableNode
 !StParseNodeAnalyzer categoriesFor: #addToFrame:!helpers!private! !
 !StParseNodeAnalyzer categoriesFor: #addToFrameStatic:!helpers!private! !
 !StParseNodeAnalyzer categoriesFor: #bindingFor:!helpers!private! !
+!StParseNodeAnalyzer categoriesFor: #blockDepth!helpers!private! !
 !StParseNodeAnalyzer categoriesFor: #checkIsLiteralBlockHandler:forMessage:!helpers!private! !
 !StParseNodeAnalyzer categoriesFor: #checkLiteralFrameSize:!helpers!private! !
 !StParseNodeAnalyzer categoriesFor: #checkMessage:hasMonadicBlockArg:!helpers!private! !
@@ -697,6 +697,7 @@ visitVariableNode: aVariableNode
 !StParseNodeAnalyzer categoriesFor: #targetOfMessage:!commands!private!refactoring! !
 !StParseNodeAnalyzer categoriesFor: #tempDecls!accessing!private! !
 !StParseNodeAnalyzer categoriesFor: #varRef:isAssignment:!helpers!private! !
+!StParseNodeAnalyzer categoriesFor: #visitArgumentNode:!public!visiting! !
 !StParseNodeAnalyzer categoriesFor: #visitArgumentNodes:!public!visiting! !
 !StParseNodeAnalyzer categoriesFor: #visitAssignmentNode:!public!visitor/double dispatching! !
 !StParseNodeAnalyzer categoriesFor: #visitBlockNode:!public!visitor/double dispatching! !
@@ -706,6 +707,7 @@ visitVariableNode: aVariableNode
 !StParseNodeAnalyzer categoriesFor: #visitMethodNode:!public!visitor/double dispatching! !
 !StParseNodeAnalyzer categoriesFor: #visitOptimizedNode:!public!visitor/double dispatching! !
 !StParseNodeAnalyzer categoriesFor: #visitSequenceNode:!public!visitor/double dispatching! !
+!StParseNodeAnalyzer categoriesFor: #visitTemporaryNode:!public!visiting! !
 !StParseNodeAnalyzer categoriesFor: #visitTemporaryNodes:!public!visiting! !
 !StParseNodeAnalyzer categoriesFor: #visitVariableNode:!public!visitor/double dispatching! !
 
