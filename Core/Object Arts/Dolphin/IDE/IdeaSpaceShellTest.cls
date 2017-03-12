@@ -5,7 +5,7 @@ DolphinTest subclass: #IdeaSpaceShellTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-IdeaSpaceShellTest guid: (GUID fromString: '{2E6DE900-C47F-4134-B038-B70CD1679C1C}')!
+IdeaSpaceShellTest guid: (GUID fromString: '{2e6de900-c47f-4134-b038-b70cd1679c1c}')!
 IdeaSpaceShellTest comment: ''!
 !IdeaSpaceShellTest categoriesForClass!Unclassified! !
 !IdeaSpaceShellTest methodsFor!
@@ -31,13 +31,19 @@ createThreeCards
 	^tools!
 
 newClassBrowserCard
-	^ideaShell newEmbeddedCardOfClass: ClassBrowserShell!
+	^self newClassBrowserCard: ClassBrowserShell!
+
+newClassBrowserCard: browserClass
+	| plugins |
+	plugins := browserClass plugins.
+	browserClass plugins: #().
+	^[ideaShell newEmbeddedCardOfClass: browserClass] ensure: [browserClass plugins: plugins]!
 
 newEnvironmentBrowserCard
-	^ideaShell newEmbeddedCardOfClass: EnvironmentBrowserShell!
+	^self newClassBrowserCard: EnvironmentBrowserShell!
 
 newSystemBrowserCard
-	^ideaShell newEmbeddedCardOfClass: SystemBrowserShell!
+	^self newClassBrowserCard: SystemBrowserShell!
 
 newViewBrowserCard
 	^ideaShell newEmbeddedCardOfClass: ResourceBrowser!
@@ -323,6 +329,7 @@ testSaveRestoreErrors
 !IdeaSpaceShellTest categoriesFor: #create:subclassOf:!helpers!private! !
 !IdeaSpaceShellTest categoriesFor: #createThreeCards!helpers!private! !
 !IdeaSpaceShellTest categoriesFor: #newClassBrowserCard!private!unit tests! !
+!IdeaSpaceShellTest categoriesFor: #newClassBrowserCard:!private!unit tests! !
 !IdeaSpaceShellTest categoriesFor: #newEnvironmentBrowserCard!private!unit tests! !
 !IdeaSpaceShellTest categoriesFor: #newSystemBrowserCard!private!unit tests! !
 !IdeaSpaceShellTest categoriesFor: #newViewBrowserCard!private!unit tests! !

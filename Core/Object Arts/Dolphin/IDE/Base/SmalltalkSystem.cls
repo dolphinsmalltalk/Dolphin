@@ -3556,6 +3556,29 @@ requestPackageFileName: aString
 requiresDolphinPro: aString 
 	MessageBox warning: ('<1d> is only available in Dolphin Professional' expandMacrosWith: aString)!
 
+resaveViewResourcesMatching: matchBlock do: doBlock
+	"Evaluate matchBlock for all <ResourceIdentifier>s, and when true open the corresponding
+	resource in a ViewComposer and evalute the doBlock passing it the open <ViewComposer>. For
+	each case that the doBlock answers true, resave the view resource. This is useful (for
+	example) for resaving all view resources that reference a particular class in order to
+	update the resource to reflect updates to the class layout that would otherwise need STB
+	class conversion each time the resource is loaded. For example:
+
+	Smalltalk developmentSystem resaveViewResourcesMatching: [:each | each compiledMethod refersToLiteral: ScintillaMargin] do: [:each | true]
+
+	"
+
+	| vc |
+	vc := self openViewComposerEmpty.
+	(vc resourceManager allResourceIdentifiers select: matchBlock) do: 
+			[:rid |
+			vc openOn: rid.
+			(doBlock value: vc) ifTrue: [vc fileSave].
+			(MemoryManager current)
+				collectGarbage;
+				administerLastRites].
+	vc exit!
+
 resetPublishedAspectsToDefaultsFor: aTool 
 	"Private - Resets the published aspect of aTool to the previously stored default values."
 
@@ -4282,6 +4305,7 @@ wrapText: aString toWidth: max indent: colInteger tabWidth: tabInteger
 !SmalltalkSystem categoriesFor: #renameInstanceVariable:to:in:within:!private!refactoring! !
 !SmalltalkSystem categoriesFor: #requestPackageFileName:!operations!private! !
 !SmalltalkSystem categoriesFor: #requiresDolphinPro:!browsing!public! !
+!SmalltalkSystem categoriesFor: #resaveViewResourcesMatching:do:!development!public! !
 !SmalltalkSystem categoriesFor: #resetPublishedAspectsToDefaultsFor:!operations!private!theming! !
 !SmalltalkSystem categoriesFor: #resetSystemOptionsToDefaults!operations!private!theming! !
 !SmalltalkSystem categoriesFor: #resourceBrowserClass!options!public! !
