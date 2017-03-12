@@ -6,7 +6,6 @@ StParseNodeVisitor subclass: #StParseNodeAnalyzer
 	poolDictionaries: 'SmalltalkParseErrorCodes'
 	classInstanceVariableNames: ''!
 StParseNodeAnalyzer guid: (GUID fromString: '{3922cac3-8a81-45a8-adb3-2795a6e7bc2f}')!
-StParseNodeAnalyzer addClassConstant: 'SpecialSelectors' value: #(#+ #- #< #> #<= #>= #= #~= #* #/ #\\ #bitShift: #// #bitAnd: #bitOr: #== #value #value: #class #size #new #new: #at: #at:put: #value:value: #basicNew: #basicClass #basicSize #basicAt: #basicAt:put: #isNil #notNil)!
 StParseNodeAnalyzer comment: ''!
 !StParseNodeAnalyzer categoriesForClass!System-Compiler! !
 !StParseNodeAnalyzer methodsFor!
@@ -718,10 +717,10 @@ initialize
 
 	| boolean |
 	OptimizedMessages := IdentityDictionary new.
-	boolean := #(#and: #or: #ifTrue: #ifFalse: #ifTrue:ifFalse: #ifFalse:ifTrue:).
+	boolean := #(#and: #or: #not #ifTrue: #ifFalse: #ifTrue:ifFalse: #ifFalse:ifTrue:).
 	OptimizedMessages
 		at: Object
-			put: #(#== #basicAt: #basicAt:put: #basicClass #basicSize #ifNil: #ifNotNil: #ifNil:ifNotNil: #ifNotNil:ifNil: #yourself);
+			put: #(#~~ #== #basicAt: #basicAt:put: #basicClass #basicSize #ifNil: #ifNotNil: #ifNil:ifNotNil: #ifNotNil:ifNil: #yourself);
 		at: UndefinedObject put: #(#ifNil: #ifNotNil: #ifNil:ifNotNil: #ifNotNil:ifNil:);
 		at: True put: boolean;
 		at: False put: boolean;

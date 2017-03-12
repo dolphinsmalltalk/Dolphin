@@ -5,7 +5,7 @@ Object subclass: #InstructionInterpreter
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-InstructionInterpreter guid: (GUID fromString: '{369FE97B-C73C-4283-9E17-FF09C8BAC2D8}')!
+InstructionInterpreter guid: (GUID fromString: '{369fe97b-c73c-4283-9e17-ff09c8bac2d8}')!
 InstructionInterpreter comment: 'InstructionInterpreter is the abstract class of <bytecodeInterpreter>s that can act as the client of a <ByteCodeDispatcher>.
 
 Instance Variables:
@@ -546,11 +546,18 @@ shortSendZeroArgs: literalIndex
 
 	self send: literalIndex args: 0!
 
-shortSpecialSend: offset 
+shortSpecialSend: anInteger
 	"Interpret a Short Special Send instruction."
 
 	| selector |
-	selector := dispatcher selectorOfSpecialSend: offset.
+	selector := dispatcher selectorOfSpecialSend: anInteger.
+	self sendSelector: selector args: selector argumentCount!
+
+shortSpecialSendEx: anInteger
+	"Interpret a Short Special Send Ex instruction."
+
+	| selector |
+	selector := dispatcher selectorOfSpecialSendEx: anInteger.
 	self sendSelector: selector args: selector argumentCount!
 
 shortStoreTemp: anInteger
@@ -716,6 +723,7 @@ unused: extensionByte1 with: extensionByte2 with: extensionByte3
 !InstructionInterpreter categoriesFor: #shortSendTwoArgs:!instructions-sending!public! !
 !InstructionInterpreter categoriesFor: #shortSendZeroArgs:!instructions-sending!public! !
 !InstructionInterpreter categoriesFor: #shortSpecialSend:!instructions-sending!public! !
+!InstructionInterpreter categoriesFor: #shortSpecialSendEx:!instructions-sending!public! !
 !InstructionInterpreter categoriesFor: #shortStoreTemp:!instructions-stack ops!public! !
 !InstructionInterpreter categoriesFor: #storeInstVar:!instructions-stack ops!public! !
 !InstructionInterpreter categoriesFor: #storeOuter:temp:!instructions-stack ops!public! !

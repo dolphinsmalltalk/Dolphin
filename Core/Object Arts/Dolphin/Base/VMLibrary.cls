@@ -433,6 +433,9 @@ registryAt: aSymbol put: anObject
 selectorOfSpecialSend: anInteger
 	^Registry at: specialSelectorStart + anInteger!
 
+selectorOfSpecialSendEx: anInteger
+	^Registry at: 71 + anInteger!
+
 shortName
 	"Answer the localised short name for Dolphin."
 
@@ -448,11 +451,15 @@ signedFromUnsigned: anInteger
 		ifFalse: [self invalidCall]!
 
 specialSelectors
-	"Private - Answer the 32 special selectors.
+	"Private - Answer all special messages that have their own individual bytecodes.
 		VMLibrary default specialSelectors
 	"
 
-	^self registry copyFrom: specialSelectorStart to: specialSelectorStart+31!
+	| selectors |
+	selectors := IdentitySet new: 36.
+	specialSelectorStart to: specialSelectorStart + 31 do: [:i | selectors add: (Registry at: i)].
+	71 to: 74 do: [:i | selectors add: (Registry at: i)].
+	^selectors!
 
 stderr
 	"Private - Answer the handle of the CRT stdio standard error stream"
@@ -563,7 +570,8 @@ versionFormatString
 !VMLibrary categoriesFor: #registry!accessing!private! !
 !VMLibrary categoriesFor: #registryAt:!accessing-registry!private! !
 !VMLibrary categoriesFor: #registryAt:put:!accessing-registry!private! !
-!VMLibrary categoriesFor: #selectorOfSpecialSend:!enquiries!public! !
+!VMLibrary categoriesFor: #selectorOfSpecialSend:!enquiries!private! !
+!VMLibrary categoriesFor: #selectorOfSpecialSendEx:!enquiries!private! !
 !VMLibrary categoriesFor: #shortName!accessing!public! !
 !VMLibrary categoriesFor: #signedFromUnsigned:!helpers!private! !
 !VMLibrary categoriesFor: #specialSelectors!accessing-registry!private! !

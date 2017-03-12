@@ -52,7 +52,7 @@ testPrintString
 
 	"Unquoted"
 
-	#('at:' 'a') , VMLibrary default specialSelectors do: 
+	(#('at:' 'a') union: VMLibrary default specialSelectors) do: 
 			[:each |
 			| print sym |
 			sym := each asSymbol.
@@ -61,7 +61,7 @@ testPrintString
 			print := sym printString.
 			self deny: (print includes: $')].
 	"Quoted, e.g. integers, and symbols containing other syntactically relevant characters"
-	#('' '1' 'A#' 'PL/M' '::' '!!STL' 'Object class' 'reply-to' ) do: 
+	#('' '1' 'A#' 'PL/M' '::' '!!STL' 'Object class' 'reply-to') do: 
 			[:each |
 			"Sanity check"
 			| print |

@@ -5,7 +5,7 @@ Model subclass: #SmalltalkSystem
 	classVariableNames: 'Current FileDrops RegisteredTools'
 	poolDictionaries: 'CompilerFlags SmalltalkParseErrorCodes'
 	classInstanceVariableNames: ''!
-SmalltalkSystem guid: (GUID fromString: '{87B4C66C-026E-11D3-9FD7-00A0CC3E4A32}')!
+SmalltalkSystem guid: (GUID fromString: '{87b4c66c-026e-11d3-9fd7-00a0cc3e4a32}')!
 SmalltalkSystem comment: 'SmalltalkSystem is a Facade onto the Dolphin Smalltalk development environment. Most of the development tools hold the Singleton instance of SmalltalkSystem as their model and use it to act as a go-between between programmer, user interface, and the development image.
 
 Instance Variables:
@@ -254,7 +254,7 @@ allSelectorsImplementedIn: aBrowserEnvironment
 	aBrowserEnvironment classesDo: [:each | selectors addAll: each understoodSelectors].
 	^selectors!
 
-allSelectorsSentIn: aBrowserEnvironment 
+allSelectorsSentIn: aBrowserEnvironment
 	"Answer a <Set> of all the <Symbol>s which are directly sent by methods in the specified <BrowserEnvironment>.
 	N.B. This may take some time (depending on the BrowserEnvironment used), and will not contain any selectors 
 	which are only sent dynamically with #perform(etc).
@@ -266,11 +266,11 @@ allSelectorsSentIn: aBrowserEnvironment
 				addAll: VMLibrary default specialSelectors;
 				yourself.
 	excluded := (MethodCategory name: 'examples') contents.
-	aBrowserEnvironment 
+	aBrowserEnvironment
 		methodsDo: [:each | (excluded includes: each) ifFalse: [selectors addAll: each messages]].
 	^selectors!
 
-allSymbolsReferencedIn: aBrowserEnvironment 
+allSymbolsReferencedIn: aBrowserEnvironment
 	"Answer a <Set> of all the <Symbol>s which might be selectors which are referenced from
 	methods in the image. N.B. This might take some time to execute, and may contain some
 	symbols which are not actually selectors. "
@@ -284,27 +284,27 @@ allSymbolsReferencedIn: aBrowserEnvironment
 				addAll: VMLibrary default specialSelectors;
 				yourself.
 	aBrowserEnvironment methodsDo: 
-			[:eachMethod | 
+			[:eachMethod |
 			"Deliberately exclude any #defineFields methods of classes"
-			(eachMethod selector == #defineFields and: [eachMethod methodClass class isMeta]) 
+			(eachMethod selector == #defineFields and: [eachMethod methodClass class isMeta])
 				ifFalse: 
 					[eachMethod literalsDo: 
-							[:eachLiteral | 
-							eachLiteral class == Symbol 
+							[:eachLiteral |
+							eachLiteral class == Symbol
 								ifTrue: [symbols add: eachLiteral]
 								ifFalse: 
 									["Probe 1-level deep into literal arrays"
-									eachLiteral class == Array 
+									eachLiteral class == Array
 										ifTrue: 
 											[eachLiteral do: [:eachElement | eachElement class == Symbol ifTrue: [symbols add: eachElement]]]]]]].
 	"Now remove any event names"
 	aBrowserEnvironment classesDo: 
-			[:eachClass | 
+			[:eachClass |
 			#(#publishedEvents #publishedEventsOfInstances) do: 
-					[:selector | 
-					(eachClass includesSelector: selector) 
+					[:selector |
+					(eachClass includesSelector: selector)
 						ifTrue: 
-							[(eachClass compiledMethodAt: selector) 
+							[(eachClass compiledMethodAt: selector)
 								literalsDo: [:eachLiteral | symbols remove: eachLiteral ifAbsent: []]]]].
 
 	"Remove all global names"
@@ -2155,6 +2155,21 @@ methodsThatFailedToCompileIn: aBrowserEnvironment
 
 methodStylerClass
 	^SmalltalkMethodStyler!
+
+methodsWithBytecode: anInteger in: aBrowserEnvironment
+	"Private - 
+	
+	Smalltalk developmentSystem methodsWithBytecode: OpcodePool.PushActiveFrame in: BrowserEnvironment new
+	"
+
+	^(self
+		selectMethods: 
+			[:each |
+			each byteCodeSegments anySatisfy: [:eachInstruction | eachInstruction first = anInteger]]
+		in: aBrowserEnvironment
+		withProgress: ('Finding methods with bytecode <1p>...' expandMacrosWith: anInteger))
+		label: ('Methods with bytecode <1p>' expandMacrosWith: anInteger);
+		yourself!
 
 methodsWithCompilationIssuesIn: aBrowserEnvironment 
 	| caption filter env |
@@ -4146,6 +4161,7 @@ wrapText: aString toWidth: max indent: colInteger tabWidth: tabInteger
 !SmalltalkSystem categoriesFor: #methodsContainingText:in:prompt:!private!searching! !
 !SmalltalkSystem categoriesFor: #methodsThatFailedToCompileIn:!browsing!public! !
 !SmalltalkSystem categoriesFor: #methodStylerClass!constants!public! !
+!SmalltalkSystem categoriesFor: #methodsWithBytecode:in:!browsing!private! !
 !SmalltalkSystem categoriesFor: #methodsWithCompilationIssuesIn:!private!searching! !
 !SmalltalkSystem categoriesFor: #methodsWithNewBytecodes!browsing!private! !
 !SmalltalkSystem categoriesFor: #methodsWithNewBytecodesIn:!browsing!private! !
