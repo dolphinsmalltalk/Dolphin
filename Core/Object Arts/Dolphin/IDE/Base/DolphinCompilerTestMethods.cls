@@ -5,10 +5,13 @@ Object subclass: #DolphinCompilerTestMethods
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-DolphinCompilerTestMethods guid: (GUID fromString: '{C6D8841D-910D-434F-9FEC-9D821DD7A202}')!
+DolphinCompilerTestMethods guid: (GUID fromString: '{c6d8841d-910d-434f-9fec-9d821dd7a202}')!
 DolphinCompilerTestMethods comment: ''!
 !DolphinCompilerTestMethods categoriesForClass!Kernel-Objects! !
 !DolphinCompilerTestMethods methodsFor!
+
+~~ x
+	^super ~~ x!
 
 == x
 	^super == x!
@@ -475,6 +478,7 @@ testWarnUndefinedSelector
 
 testWarnUnimplementedAbstractMethod
 	^self subclassResponsibility! !
+!DolphinCompilerTestMethods categoriesFor: #~~!public!unit tests! !
 !DolphinCompilerTestMethods categoriesFor: #==!public!unit tests! !
 !DolphinCompilerTestMethods categoriesFor: #basicSize!public!unit tests! !
 !DolphinCompilerTestMethods categoriesFor: #ifNil:!public!unit tests! !

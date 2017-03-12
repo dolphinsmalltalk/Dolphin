@@ -274,7 +274,7 @@ scanBinary: aClass
 	| val |
 	buffer nextPut: currentCharacter.
 	self step.
-	[characterType == #binary and: [currentCharacter == $- == false]] whileTrue: 
+	[characterType == #binary and: [currentCharacter ~~ $-]] whileTrue: 
 			[buffer nextPut: currentCharacter.
 			self step].
 	val := buffer contents.
@@ -409,7 +409,7 @@ scanLiteralString
 	self step.
 	
 	[currentCharacter isNil ifTrue: [^self unterminatedString].
-	currentCharacter == $' and: [self step == $' == false]]
+	currentCharacter == $' and: [self step ~~ $']]
 			whileFalse: 
 				[buffer nextPut: currentCharacter.
 				self step].

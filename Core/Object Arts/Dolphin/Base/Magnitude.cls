@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #Magnitude
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-Magnitude guid: (GUID fromString: '{87B4C49B-026E-11D3-9FD7-00A0CC3E4A32}')!
+Magnitude guid: (GUID fromString: '{87b4c49b-026e-11d3-9fd7-00a0cc3e4a32}')!
 Magnitude comment: 'Magnitude is an abstract class which provides the protocol objects which can be compared
 along a linear dimension, e.g. Numbers, Dates, Times.
 
@@ -24,10 +24,9 @@ Subclasses of Magnitude must implement the following comparing protocol (at the 
 
 <= operand
 	"Answer whether the receiver is less than or equal to the <magnitude>, operand.
-	Implemented in terms of #<, which must be implemented by subclasses, also make use 
-	of compiler optimisation of #== instead of #not"
+	Implemented in terms of #<, which must be implemented by subclasses."
 
-	^(operand < self) == false!
+	^(operand < self) not!
 
 = aMagnitude
 	"Answer whether the receiver is equivalent to the argument, aMagnitude."
@@ -44,7 +43,7 @@ Subclasses of Magnitude must implement the following comparing protocol (at the 
 	"Answer whether the receiver is greater than or equal to the <magnitude>, operand.
 	Implemented in terms of #<, which must be implemented by subclasses."
 
-	^(self < operand) == false!
+	^(self < operand) not!
 
 between: min and: max
 	"Answer whether the receiver is inclusively between the <magnitude> arguments, 

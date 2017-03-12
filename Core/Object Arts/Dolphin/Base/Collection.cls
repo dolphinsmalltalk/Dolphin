@@ -5,7 +5,7 @@ Object subclass: #Collection
 	classVariableNames: 'AbsentCookie'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-Collection guid: (GUID fromString: '{87B4C464-026E-11D3-9FD7-00A0CC3E4A32}')!
+Collection guid: (GUID fromString: '{87b4c464-026e-11d3-9fd7-00a0cc3e4a32}')!
 Collection comment: ''!
 !Collection categoriesForClass!Collections-Abstract! !
 !Collection methodsFor!
@@ -482,11 +482,11 @@ rehash
 	subclass could potentially be implemented as a hashed collection." !
 
 reject: discriminator
-	"Evaluate the <monadicValuable> argument, discriminator, for each of the receiver's elements.
-	Answer a new <collection> like the receiver containing only those elements for which 
-	the discriminator evaluates to false."
+	"Evaluate the <monadicValuable> argument, discriminator, for each of the receiver's
+	elements. Answer a new <collection> like the receiver containing only those elements for
+	which the discriminator evaluates to false."
 
-	^self select: [:elem | (discriminator value: elem) == false]!
+	^self select: [:elem | (discriminator value: elem) not]!
 
 remove: oldElement 
 	"Remove the <Object> argument, oldElement, from the receiver's elements.

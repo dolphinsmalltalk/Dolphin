@@ -307,7 +307,7 @@ testWarnNonNiladicGuardedBlock
 testWarnRestrictedSelector
 	"Test one of each of binary selector, unary, keyword one arg, keyword more than one arg. In each case the entire method signature should be included in the error range"
 
-	#(#== #basicSize #ifNil: #ifNil:ifNotNil:) do: 
+	#(#== #basicSize #ifNil: #ifNil:ifNotNil: #~~) do: 
 			[:each |
 			self
 				parseMethodWarning: each
