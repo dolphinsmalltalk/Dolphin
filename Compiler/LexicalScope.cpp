@@ -451,27 +451,60 @@ TempVarRef* LexicalScope::AddTempRef(TempVarDecl* pDecl, VarRefType refType, con
 	return pNewVarRef;
 }
 
+void LexicalScope::AddSharedDeclsTo(DECLMAP& allSharedDecls) const
+{
+	LexicalScope* outer = GetOuter();
+	if (outer != NULL)
+	{
+		outer->AddSharedDeclsTo(allSharedDecls);
+	}
+
+	const DECLLIST::const_iterator end = this->m_tempVarDecls.end();
+	for (DECLLIST::const_iterator it = this->m_tempVarDecls.begin(); it != end; it++)
+	{
+		TempVarDecl* pDecl = *it;
+		if (pDecl->GetVarType() == tvtShared)
+		{
+			allSharedDecls[pDecl->GetName()] = pDecl;
+		}
+	}
+}
+
 // Recursively add all temp declarations that are visible in this scope 
 // to the map. Note that outer scope is visited before this scope's
 // own variables are added, so that temps declared in this scope that
 // have the same name as outer temps will correctly "hide" those outer
 // temps.
-void LexicalScope::AddVisibleDeclsTo(DECLMAP& allVisibleDecls, bool bIncludeStack) const
+void LexicalScope::AddVisibleDeclsTo(DECLMAP& allVisibleDecls) const
 {
+	LexicalScope* outer = GetOuter();
+
 	bool isOptimized = IsOptimizedBlock();
-	if (isOptimized || m_bRefsOuterTemps)
+	// Optimized blocks are effectively inlined within their enclosing scope so all temps visible in that scope are implicitly visible in the optimized 
+	// block. It is convenient in the debugger to see all the declared values in the outer scopes in this case. 
+	if (isOptimized)
 	{
-		LexicalScope* outer = GetOuter();
 		_ASSERTE(outer != NULL);
-		outer->AddVisibleDeclsTo(allVisibleDecls, m_bIsOptimizedBlock);
+		outer->AddVisibleDeclsTo(allVisibleDecls);
+	}	
+
+	// 	Unoptimized blocks can be stored for later evaluation, so we should only include temps they can actually see - these will be either 
+	// copied values (which, in effect, become declared locally within the block itself), or arguments (again considered locally declared), or 
+	// shared variables from outer scopes in the case of full blocks.
+
+	if (m_bRefsOuterTemps)
+	{
+		_ASSERTE(outer != NULL);
+		outer->AddSharedDeclsTo(allVisibleDecls);
 	}
 	
+	// Now add any locally declared, or copied, temps
 	const int count = m_tempVarDecls.size();
 	for (int i = 0; i < count; i++)
 	{
 		TempVarDecl* pDecl = m_tempVarDecls[i];
 		TempVarDecl* pRealDecl = isOptimized ? pDecl->GetOuter() : pDecl;
-		if (pDecl->IsVisible() && pRealDecl->IsReferenced() && (bIncludeStack || !pRealDecl->IsStack()))
+		if (pDecl->IsVisible() && pRealDecl->IsReferenced())
 		{
 			allVisibleDecls[pDecl->GetName()] = pRealDecl;
 		}
@@ -495,7 +528,7 @@ POTE LexicalScope::BuildTempMapEntry(IDolphin* piVM) const
 	scopeTuple.fields[1] = IntegerObjectOf(m_finalIP+1);
 
 	DECLMAP allVisibleDecls;
-	AddVisibleDeclsTo(allVisibleDecls, true);
+	AddVisibleDeclsTo(allVisibleDecls);
 
 	int numTemps = allVisibleDecls.size();
 	POTE tempsPointer = piVM->NewArray(numTemps);

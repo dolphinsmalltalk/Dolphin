@@ -639,7 +639,8 @@ public:
 private:
 	void PropagateNeedsSelf();
 	void PropagateFarReturn();
-	void AddVisibleDeclsTo(DECLMAP&, bool bIncludeStack) const;
+	void AddVisibleDeclsTo(DECLMAP&) const;
+	void AddSharedDeclsTo(DECLMAP& allSharedDecls) const;
 	void CopyDownOptimizedDecls(Compiler*);
 };
 
