@@ -5,7 +5,7 @@ Number subclass: #Integer
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-Integer guid: (GUID fromString: '{87B4C65C-026E-11D3-9FD7-00A0CC3E4A32}')!
+Integer guid: (GUID fromString: '{87b4c65c-026e-11d3-9fd7-00a0cc3e4a32}')!
 Integer comment: ''!
 !Integer categoriesForClass!Magnitude-Numbers! !
 !Integer methodsFor!
@@ -598,8 +598,8 @@ normalize
 
 notNull
 	"Answer whether the receiver is not 'null' (not equal to zero)"
-	
-	^(self == 0) == false!
+
+	^self ~~ 0!
 
 printDigitsOn: aStream base: anInteger 
 	"Private - Recursively print the digits of the receiver in base anInteger to aStream.

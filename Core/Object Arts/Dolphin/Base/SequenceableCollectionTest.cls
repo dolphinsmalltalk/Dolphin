@@ -414,6 +414,16 @@ testFromToKeysAndValuesDo2
 						keysAndValuesDo: [:i :each | enum add: each]]
 				raise: BoundsError]!
 
+testIdentityIncludes
+	| searchee |
+	searchee := self newCollection: 'abc'.
+	self assert: (searchee identityIncludes: (self assimilate: $a)).
+	self assert: (searchee identityIncludes: (self assimilate: $b)).
+	self assert: (searchee identityIncludes: (self assimilate: $c)).
+	self deny: (searchee identityIncludes: (self assimilate: $A)).
+	self deny: (searchee identityIncludes: (self assimilate: $d)).
+	self deny: (searchee identityIncludes: Object new)!
+
 testIncludes
 	| searchee |
 	searchee := self newCollection: 'abc'.
@@ -658,6 +668,7 @@ verifyIndexOfAnyOf: searchFor startingAt: startInteger in: searchee is: foundInt
 !SequenceableCollectionTest categoriesFor: #testFirstColon!public!unit tests! !
 !SequenceableCollectionTest categoriesFor: #testFromToKeysAndValuesDo!public!unit tests! !
 !SequenceableCollectionTest categoriesFor: #testFromToKeysAndValuesDo2!public!unit tests! !
+!SequenceableCollectionTest categoriesFor: #testIdentityIncludes!public!unit tests! !
 !SequenceableCollectionTest categoriesFor: #testIncludes!public!unit tests! !
 !SequenceableCollectionTest categoriesFor: #testIncludesAnyOf!public!unit tests! !
 !SequenceableCollectionTest categoriesFor: #testIndexOfAnyOfStartingAt!public!unit tests! !

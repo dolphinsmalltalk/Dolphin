@@ -5,7 +5,7 @@ DolphinTest subclass: #BooleanTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-BooleanTest guid: (GUID fromString: '{5AA57122-600D-4018-870D-8425B90179B2}')!
+BooleanTest guid: (GUID fromString: '{5aa57122-600d-4018-870d-8425b90179b2}')!
 BooleanTest comment: ''!
 !BooleanTest categoriesForClass!Unclassified! !
 !BooleanTest methodsFor!
@@ -31,8 +31,15 @@ testEvaluatingDisjunction
 testNew
 	self should: [Boolean new] raise: TestResult error.
 	self should: [True new] raise: TestResult error.
-	self should: [False new] raise: TestResult error! !
+	self should: [False new] raise: TestResult error!
+
+testXor
+	self assert: (true xor: false).
+	self assert: (false xor: true).
+	self deny: (false xor: false).
+	self deny: (true xor: true)! !
 !BooleanTest categoriesFor: #testEvaluatingConjunction!public!unit tests! !
 !BooleanTest categoriesFor: #testEvaluatingDisjunction!public!unit tests! !
 !BooleanTest categoriesFor: #testNew!public!testing! !
+!BooleanTest categoriesFor: #testXor!public!unit tests! !
 

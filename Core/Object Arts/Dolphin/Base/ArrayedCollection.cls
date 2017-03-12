@@ -76,10 +76,12 @@ findFirst: discriminator
 
 identityIncludes: anObject
 	"Answer whether the argument, anObject, is one of the receiver's elements.
-	Override superclass to provide a more efficient implementation (hence the
-	esoteric logic ops)."
+	Override superclass to provide a more efficient implementation."
 
-	^((self nextIdentityIndexOf: anObject from: 1 to: self size) == 0) == false!
+	^(self
+		nextIdentityIndexOf: anObject
+		from: 1
+		to: self size) ~~ 0!
 
 includes: target
 	"Answer whether the argument, target, is one of the elements of the receiver.
