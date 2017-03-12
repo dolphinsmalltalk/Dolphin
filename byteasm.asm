@@ -204,7 +204,7 @@ ENDM
 
 ;; N.B. These must be carefully maintained to ensure that Double Byte instructions start at 204 and Triple Byte
 ;; instructions at 240
-NUMRESERVEDSINGLEBYTE	EQU 4			; Number of extra single byte instructions reserved before start of double byte
+NUMRESERVEDSINGLEBYTE	EQU 2			; Number of extra single byte instructions reserved before start of double byte
 NUMRESERVEDDOUBLEBYTE	EQU 0			; Number of extra double byte instructions reserved before start of triple byte
 NUMRESERVEDTRIPLEBYTE	EQU	0			; Number of extra triple byte instructions reserved before start of quad byte
 
@@ -271,7 +271,7 @@ RETURNMESSAGESTACKTOP	EQU (RETURNNIL+1)
 RETURNBLOCKSTACKTOP		EQU (RETURNMESSAGESTACKTOP+1)
 FARRETURNFROMBLOCK		EQU (RETURNBLOCKSTACKTOP+1)
 POPRETURNSELF			EQU (FARRETURNFROMBLOCK+1)
-NOOP					EQU (PUSHACTIVEFRAME+1)
+NOOP					EQU (POPRETURNSELF+1)
 
 FIRSTSHORTJUMP			EQU (NOOP+1)
 NUMSHORTJUMPS			EQU 8			; Number of short jump instructions
@@ -295,10 +295,7 @@ NUMSHORTSENDONEARG		EQU 14			; Number of short send literal selector N with 1 ar
 FIRSTSHORTSENDTWOARGS	EQU (FIRSTSHORTSENDONEARG+NUMSHORTSENDONEARG)
 NUMSHORTSENDTWOARGS		EQU 8			; Number of short send literal selector N with 2 args instructions
 
-ISZERO					EQU (FIRSTSHORTSENDTWOARGS+NUMSHORTSENDTWOARGS)
-PUSHACTIVEFRAME			EQU (ISZERO+1)
-
-FIRSTDOUBLEBYTE			EQU (PUSHACTIVEFRAME+1+NUMRESERVEDSINGLEBYTE)
+FIRSTDOUBLEBYTE			EQU 204
 
 PUSHINSTVAR				EQU	FIRSTDOUBLEBYTE
 PUSHTEMPORARY			EQU (PUSHINSTVAR+1)
@@ -407,6 +404,9 @@ byteCodeTable DD		break										; All push[0] instructions are now odd
 
 	DWORD		isZero
 	DWORD		pushActiveFrame
+
+	DWORD		shortSpecialSendNotIdentical
+	DWORD		shortSpecialSendNot
 
 	CreateInstructionLabels <invalidByteCode>, <NUMRESERVEDSINGLEBYTE>
 
@@ -3090,8 +3090,7 @@ ENDBYTECODE sendArithmeticBitOr
 
 ;
 ; object == object?
-; This instruction is relatively complex because of the need to maintain the stack
-; N.B. Identity will not fail, so cannot be overridden. The actual primitive (not used
+; N.B. Identity comparisons do not fail, so cannot be overridden. The actual primitive (not used
 ; here) may be invoked for other selectors so we still need it. #== is never 
 ; really sent to objects, but is implemented here directly (it CANNOT be overridden)
 ; as the VM never sends this selector directly (only if #perform'd).
@@ -3109,6 +3108,23 @@ BEGINBYTECODE shortSpecialSendIdentical
 	mov		[_SP], edx									; Overwrite stack top with true/false
 	DispatchNext										; Dispatch the next byte code
 ENDBYTECODE shortSpecialSendIdentical
+
+;
+; object ~~ object?
+;
+BEGINBYTECODE shortSpecialSendNotIdentical
+	mov		ecx, [_SP-OOPSIZE]							; Load receiver into ecx (in prep. for CountDown)
+	mov		eax, [_SP]									; Get argument at stack top into eax, and nil out stack
+	sub		_SP, OOPSIZE								; POP
+	mov		edx, [oteTrue]								; Load oteTrue (default answer)
+	cmp		ecx, eax									; receiver == arg?
+	jne		@F											; Yes, skip false
+	add		edx, OTENTRYSIZE							; No, load false
+@@:
+	MPrefetch
+	mov		[_SP], edx									; Overwrite stack top with true/false
+	DispatchNext										; Dispatch the next byte code
+ENDBYTECODE shortSpecialSendNotIdentical
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; The following special selectors can have their selectors changed, or they
@@ -3461,6 +3477,33 @@ BEGINBYTECODE isZero
 	mov		[_SP], eax									; Overwrite stack top with true/false
 	DispatchNext
 ENDBYTECODE isZero
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+BEGINBYTECODE shortSpecialSendNot
+	mov		eax, [_SP]		
+	cmp		eax, [oteFalse]
+	je		isFalse
+
+	cmp		eax, [oteTrue]
+	jne		notABoolean
+
+	; true, answer false
+	add		eax, OTENTRYSIZE		; false immediately after true in OT
+	MPrefetch
+	mov		[_SP], eax
+	DispatchNext
+
+isFalse:
+	; false, answer true
+	sub		eax, OTENTRYSIZE		; true is immediately before false in OT
+	MPrefetch
+	mov		[_SP], eax									
+	DispatchNext
+
+notABoolean:
+	SendSelectorNoArgs <Pointers.notSymbol>
+ENDBYTECODE shortSpecialSendNot
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Block Copy Instruction (quad byte)

@@ -174,7 +174,11 @@ VMPointers		STRUCT 2t
 	genericCallbackSymbol				POTE	?			; 68
 										POTE	?			; Unused
 	virtualCallbackSymbol				POTE	?			; 70
-										POTE	10t DUP (?)	; Unused (10) reserved for more symbols/selectors
+	notIdenticalSymbol					POTE	?			; 71, #~~
+	notSymbol							POTE	?			; 72, #not
+										POTE	?			; 72 reserved ex special send
+										POTE	?			; 73 reserved ex special send
+										POTE	6t DUP (?)	; Unused & reserved for more symbols/selectors
 
 	ClassMetaclass						POTE	?			; 81
 	ClassCharacter						POTE	?

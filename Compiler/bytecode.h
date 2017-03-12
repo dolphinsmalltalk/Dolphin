@@ -367,7 +367,7 @@ struct BYTECODE
 
 	inline bool isShortSend() const
 	{
-		return byte >= FirstShortSend && byte <= LastShortSend;
+		return (byte >= FirstShortSend && byte <= LastShortSend) || (byte >= FirstExSpecialSend && byte <= LastExSpecialSend);
 	}
 
 	inline bool isSend() const

@@ -121,8 +121,9 @@ enum {
 	SendArithmeticDiv,
 	SendArithmeticBitAnd,
 	SendArithmeticBitOr };
+enum { FirstSpecialSend = SendArithmeticBitOr + 1 };
 enum {
-	SpecialSendIdentical = SendArithmeticBitOr+1,
+	SpecialSendIdentical = FirstSpecialSend,
 	SpecialSendValue0,
 	SpecialSendValue1,
 	SpecialSendClass,
@@ -145,8 +146,18 @@ enum { ShortSendSelfWithNoArgs = ShortSendWithNoArgs + NumShortSendsWithNoArgs }
 enum { ShortSendWith1Arg =  ShortSendSelfWithNoArgs + NumShortSendSelfWithNoArgs };
 enum { ShortSendWith2Args =  ShortSendWith1Arg + NumShortSendsWith1Arg };
 
-enum { SpecialSendIsZero = ShortSendWith2Args+NumShortSendsWith2Args};
-enum { LastShortSend = SpecialSendIsZero, PushActiveFrame };
+enum { LastShortSend = ShortSendWith2Args + NumShortSendsWith2Args - 1};
+enum {
+	IsZero = LastShortSend+1,
+	PushActiveFrame,
+	SpecialSendNotIdentical,
+	SpecialSendNot,
+	UnusedShortSend201,
+	UnusedShortSend202
+};
+enum { FirstExSpecialSend = SpecialSendNotIdentical, LastExSpecialSend = UnusedShortSend202 };
+enum { NumExSpecialSends = LastExSpecialSend - FirstExSpecialSend + 1 };
+
 
 // Some unused space before double byte instructions...
 

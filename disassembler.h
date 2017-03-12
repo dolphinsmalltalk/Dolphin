@@ -420,8 +420,8 @@ public:
 			PrintSendInstruction(ip, stream, opcode - ShortSendWith2Args, 2);
 			break;
 
-		case SpecialSendIsZero:
-			stream << "Special Send Is Zero";
+		case IsZero:
+			stream << "IsZero";
 			break;
 
 		case PushInstVar:

@@ -455,7 +455,7 @@ int Compiler::OptimizePairs()
 					if (byte2 == SpecialSendIdentical)
 					{
 						_ASSERTE(!bytecode1.isJumpSource());
-						bytecode2.byte = SpecialSendIsZero;
+						bytecode2.byte = IsZero;
 						RemoveInstruction(i);
 						count++;
 						continue;	// A new instruction will now be at i to be considered, so don't advance

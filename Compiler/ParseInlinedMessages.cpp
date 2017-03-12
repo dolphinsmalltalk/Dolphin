@@ -853,7 +853,7 @@ bool Compiler::ParseTimesRepeatLoop(const TEXTRANGE& messageRange)
 	{
 		// Using IsZero speeds up empty loop by about 5%.
 		_ASSERTE(loopTimes > 0);
-		GenInstruction(SpecialSendIsZero);
+		GenInstruction(IsZero);
 	}
 	else
 	{

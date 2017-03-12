@@ -21,6 +21,8 @@
 ******************************************************************************/
 #pragma once
 
+#include <bytecdes.h>
+
 #if defined(VM)
 namespace ST
 {
@@ -62,8 +64,6 @@ typedef OTE VariableBindingOTE;
 // Should ideally be sized to a multiple of 16 bytes, accounting for object header size (currently 0)
 struct VMPointers //: public Object
 {
-	enum { NumSpecialSelectors = 32 };
-
 	// 1.. Special constant objects used by the VM - DO NOT CHANGE THE ORDER OF THESE!!!!!!
 	POTE Nil;											// 1
 	POTE True;											// 2
@@ -120,7 +120,8 @@ struct VMPointers //: public Object
 	SymbolOTE* genericCallbackSelector;					// 68
 /**/Oop _unusedSelector3;								// 69
 	SymbolOTE* virtualCallbackSelector;					// 70
-	Oop _reservedSymbols[10];							// 71,72,73,74,75,76,77,78,79,80
+	SymbolOTE* exSpecialSelectors[NumExSpecialSends];	// 71,72,73,74
+	Oop _reservedSymbols[6];							// 75, 76,77,78,79,80
 
 	// Classes required by IST VM
 	// 81..90

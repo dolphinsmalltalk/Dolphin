@@ -268,18 +268,32 @@ inline int Compiler::FindNameAsSpecialMessage(const Str& name) const
 	// special message
 	//
 	
-	const POTE* pSpecialSelectors = GetVMPointers().specialSelectors;
-	const int loopEnd = VMPointers::NumSpecialSelectors;
-	for (int i=0; i<loopEnd; i++)
+	const VMPointers& pointers = GetVMPointers();
+	for (int i = 0; i < NumSpecialSelectors; i++)
 	{
-		const POTE stringPointer = pSpecialSelectors[i];
-		_ASSERTE(m_piVM->IsKindOf(Oop(stringPointer), GetVMPointers().ClassString));
+		const POTE stringPointer = pointers.specialSelectors[i];
+		_ASSERTE(m_piVM->IsKindOf(Oop(stringPointer), pointers.ClassString));
 		const char* psz = (const char*)FetchBytesOf(stringPointer);
 		if (name == psz)
 		{
-			return i;
+			return i + ShortSpecialSend;
 		}
 	}
+
+	for (int i = 0; i < NumExSpecialSends; i++)
+	{
+		const POTE stringPointer = pointers.exSpecialSelectors[i];
+		if (stringPointer != pointers.Nil)
+		{
+			_ASSERTE(m_piVM->IsKindOf(Oop(stringPointer), GetVMPointers().ClassString));
+			const char* psz = (const char*)FetchBytesOf(stringPointer);
+			if (name == psz)
+			{
+				return i + FirstExSpecialSend;
+			}
+		}
+	}
+
 	return -1;
 }
 
@@ -1017,12 +1031,11 @@ int Compiler::GenMessage(const Str& pattern, int argCount, int messageStart)
 	// Generates code to send a message (pattern) with (argCount) arguments
 	if (m_sendType != SendSuper)
 	{
-		// Look for special or maths messages
-		int index = FindNameAsSpecialMessage(pattern);
-		if (index >= 0)
+		// Look for special or arithmetic messages
+		int bytecode = FindNameAsSpecialMessage(pattern);
+		if (bytecode > 0)
 		{
-			_ASSERTE(index < NumSpecialSelectors);
-			return GenInstruction(ShortSpecialSend, static_cast<BYTE>(index));
+			return GenInstruction(bytecode);
 		}
 	}
 	
