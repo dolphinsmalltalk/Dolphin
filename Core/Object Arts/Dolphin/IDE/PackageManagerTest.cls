@@ -5,7 +5,7 @@ DolphinTest subclass: #PackageManagerTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-PackageManagerTest guid: (GUID fromString: '{F161630B-6480-4F0C-B958-A57EC75B9CBD}')!
+PackageManagerTest guid: (GUID fromString: '{f161630b-6480-4f0c-b958-a57ec75b9cbd}')!
 PackageManagerTest comment: ''!
 !PackageManagerTest categoriesForClass!Unclassified! !
 !PackageManagerTest methodsFor!
@@ -18,18 +18,12 @@ testAllClassesPackaged
 	self assert: Package manager unpackagedClasses isEmpty!
 
 testLooseMethodCacheUpToDate
-	| allNames |
+	| allNames loose |
 	allNames := Set new.
-	Package manager looseMethods keysAndValuesDo: 
-			[:eachName :eachPackage | 
-			| method names |
-			method := eachPackage methodFromName: eachName ifAbsent: [].
-			self assert: method notNil.
-			self assert: method name = eachName.
-			names := eachPackage methodNames.
-			allNames addAll: names.
-			self assert: (names includes: eachName)].
-	self assert: Package manager looseMethods size = allNames size! !
+	Package manager packages
+		do: [:eachPackage | eachPackage methodNames do: [:each | allNames add: each key , each value]].
+	loose := Package manager looseMethods keys collect: [:each | each key , each value].
+	self assert: loose = allNames! !
 !PackageManagerTest categoriesFor: #testAllClassesPackaged!public!unit tests! !
 !PackageManagerTest categoriesFor: #testLooseMethodCacheUpToDate!public!unit tests! !
 
