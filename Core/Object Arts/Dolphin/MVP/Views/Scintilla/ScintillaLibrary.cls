@@ -5,7 +5,7 @@ ExternalLibrary subclass: #ScintillaLibrary
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ScintillaLibrary guid: (GUID fromString: '{846BC1F2-AD71-411E-8C63-C99780A5A626}')!
+ScintillaLibrary guid: (GUID fromString: '{846bc1f2-ad71-411e-8c63-c99780a5a626}')!
 ScintillaLibrary comment: 'ExternalLibrary class to wrap the Scintilla DLL (SciLexer.dll).'!
 !ScintillaLibrary categoriesForClass!External-Libraries! !
 !ScintillaLibrary methodsFor!
@@ -53,7 +53,7 @@ realize
 versionString
 	"Answer the version of the Scintilla control for which this library was generated."
 
-	^'3.7.2'! !
+	^'3.7.3'! !
 !ScintillaLibrary class categoriesFor: #default!accessing!public!realizing/unrealizing! !
 !ScintillaLibrary class categoriesFor: #fileName!constants!public! !
 !ScintillaLibrary class categoriesFor: #realize!public!realizing/unrealizing! !

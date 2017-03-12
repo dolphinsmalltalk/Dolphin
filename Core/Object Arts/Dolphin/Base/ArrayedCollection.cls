@@ -5,7 +5,7 @@ SequenceableCollection subclass: #ArrayedCollection
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ArrayedCollection guid: (GUID fromString: '{87B4C50C-026E-11D3-9FD7-00A0CC3E4A32}')!
+ArrayedCollection guid: (GUID fromString: '{87b4c50c-026e-11d3-9fd7-00a0cc3e4a32}')!
 ArrayedCollection comment: 'ArrayedCollection is the class of <SequenceableCollection>s of a fixed size which are indexable by integer keys from 1 to the size of the collection.'!
 !ArrayedCollection categoriesForClass!Collections-Abstract! !
 !ArrayedCollection methodsFor!
@@ -14,6 +14,26 @@ add: newElement
 	"ArrayedCollections are not, in general, extensible."
 
 	^self shouldNotImplement!
+
+allSatisfy: discriminator
+	"Answer whether the <monadicValuable>, discriminator, evaluates to true for
+	every element of the receiver."
+
+	"Implementation Note: Override for performance reasons only (superclass method requires a
+	full block)."
+
+	1 to: self size do: [:i | (discriminator value: (self at: i)) ifFalse: [^false]].
+	^true!
+
+anySatisfy: discriminator
+	"Answer whether the <monadicValuable>, discriminator, evaluates to true for any element of
+	the receiver."
+
+	"Implementation Note: Override for performance reasons only (superclass method requires a
+	full block)."
+
+	1 to: self size do: [:i | (discriminator value: (self at: i)) ifTrue: [^true]].
+	^false!
 
 at: index
 	"Answer the receiver's indexed element at the <integer> argument, index.
@@ -56,10 +76,12 @@ findFirst: discriminator
 
 identityIncludes: anObject
 	"Answer whether the argument, anObject, is one of the receiver's elements.
-	Override superclass to provide a more efficient implementation (hence the
-	esoteric logic ops)."
+	Override superclass to provide a more efficient implementation."
 
-	^((self nextIdentityIndexOf: anObject from: 1 to: self size) == 0) == false!
+	^(self
+		nextIdentityIndexOf: anObject
+		from: 1
+		to: self size) ~~ 0!
 
 includes: target
 	"Answer whether the argument, target, is one of the elements of the receiver.
@@ -141,6 +163,8 @@ sortUsing: aSortAlgorithm
 		from: 1
 		to: self size! !
 !ArrayedCollection categoriesFor: #add:!adding!public! !
+!ArrayedCollection categoriesFor: #allSatisfy:!enumerating!public! !
+!ArrayedCollection categoriesFor: #anySatisfy:!enumerating!public! !
 !ArrayedCollection categoriesFor: #at:!accessing!public! !
 !ArrayedCollection categoriesFor: #at:put:!accessing!public! !
 !ArrayedCollection categoriesFor: #do:!debugger-step through!enumerating!public! !

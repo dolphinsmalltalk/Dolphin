@@ -5,7 +5,7 @@ InstructionInterpreter subclass: #Disassembler
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-Disassembler guid: (GUID fromString: '{87B4C47E-026E-11D3-9FD7-00A0CC3E4A32}')!
+Disassembler guid: (GUID fromString: '{87b4c47e-026e-11d3-9fd7-00a0cc3e4a32}')!
 Disassembler comment: 'Disassembler is an <InstructionInterpreter> for disassembling Dolphin <CompiledMethod>s.
 
 Instance Variables:
@@ -468,7 +468,7 @@ send: literalIndex args: argumentCount
 	self printSendPrefix.
 	self printSendSuffix: literalIndex args: argumentCount!
 
-shortSpecialSend: offset 
+shortSpecialSend: anInteger
 	"Private - Interpret a Short Special Send instruction."
 
 	self printShortPrefix.
@@ -476,7 +476,17 @@ shortSpecialSend: offset
 	self printSendPrefix.
 	stream
 		space;
-		print: (dispatcher selectorOfSpecialSend: offset)!
+		print: (dispatcher selectorOfSpecialSend: anInteger)!
+
+shortSpecialSendEx: anInteger
+	"Private - Interpret a Short Special Send Ex instruction."
+
+	self printShortPrefix.
+	stream nextPutAll: 'Special '.
+	self printSendPrefix.
+	stream
+		space;
+		print: (dispatcher selectorOfSpecialSendEx: anInteger)!
 
 storeInstVar: offset
 	"Private - Interpret a Store Instance Variable instruction."
@@ -615,6 +625,7 @@ unused: extensionByte1 with: extensionByte2 with: extensionByte3
 !Disassembler categoriesFor: #returnSelf!instructions-returning!private! !
 !Disassembler categoriesFor: #send:args:!interpreting!private! !
 !Disassembler categoriesFor: #shortSpecialSend:!instructions-sending!private! !
+!Disassembler categoriesFor: #shortSpecialSendEx:!instructions-sending!private! !
 !Disassembler categoriesFor: #storeInstVar:!instructions-stack ops!private! !
 !Disassembler categoriesFor: #storeOuter:temp:!interpreting!private! !
 !Disassembler categoriesFor: #storeStatic:!instructions-stack ops!private! !

@@ -5,13 +5,28 @@ SequencedGrowableCollectionTest subclass: #OrderedCollectionTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-OrderedCollectionTest guid: (GUID fromString: '{C951706F-236D-4671-B849-626652DDA25E}')!
+OrderedCollectionTest guid: (GUID fromString: '{c951706f-236d-4671-b849-626652dda25e}')!
 OrderedCollectionTest comment: ''!
 !OrderedCollectionTest categoriesForClass!Unclassified! !
 !OrderedCollectionTest methodsFor!
 
 collectionClass
 	^OrderedCollection!
+
+testFirst2
+	| subject |
+	subject := self collectionClass withAll: (1 to: 4).
+	subject removeLast.
+	self assert: 1 equals: subject first.
+	subject removeFirst.
+	self assert: 2 equals: subject first.
+	subject removeFirst.
+	self assert: 3 equals: subject first.
+	subject removeFirst.
+	self
+		should: [subject first]
+		raise: BoundsError
+		matching: [:ex | ex tag = 1]!
 
 testFromToKeysAndValuesDo3
 	"We also need to test that the enumeration raises bounds errors correctly when the 
@@ -46,6 +61,21 @@ testFromToKeysAndValuesDo3
 						to: sequence size + 1
 						keysAndValuesDo: [:i :each | enum add: each]]
 				raise: BoundsError]!
+
+testLast2
+	| subject |
+	subject := self collectionClass withAll: (1 to: 4).
+	subject removeFirst.
+	self assert: 4 equals: subject last.
+	subject removeLast.
+	self assert: 3 equals: subject last.
+	subject removeLast.
+	self assert: 2 equals: subject last.
+	subject removeLast.
+	self
+		should: [subject last]
+		raise: BoundsError
+		matching: [:ex | ex tag = 0]!
 
 testSetSize
 	| o capacity o2 o3 o4 o5 |
@@ -265,7 +295,9 @@ testStrongTalkTests
 						addLast: 3;
 						yourself)! !
 !OrderedCollectionTest categoriesFor: #collectionClass!constants!private! !
+!OrderedCollectionTest categoriesFor: #testFirst2!public!unit tests! !
 !OrderedCollectionTest categoriesFor: #testFromToKeysAndValuesDo3!public!unit tests! !
+!OrderedCollectionTest categoriesFor: #testLast2!public!unit tests! !
 !OrderedCollectionTest categoriesFor: #testSetSize!public!unit tests! !
 !OrderedCollectionTest categoriesFor: #testStrongTalkTests!public!testing! !
 

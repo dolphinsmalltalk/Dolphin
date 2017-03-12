@@ -80,6 +80,7 @@ package classNames
 	add: #ReadStreamTest;
 	add: #ReadWriteStreamTest;
 	add: #RectangleTest;
+	add: #RunArrayTest;
 	add: #SAFEARRAYTest;
 	add: #SDWORDArrayTest;
 	add: #SearchPolicyTest;
@@ -142,6 +143,7 @@ package setPrerequisites: (IdentitySet new
 	add: '..\MVP\Type Converters\Dolphin Type Converters';
 	add: '..\DolphinSure\DolphinSure';
 	add: '..\ActiveX\COM\OLE COM';
+	add: '..\..\..\Contributions\Refactory\Refactoring Browser\Environments\RBEnvironments';
 	add: '..\..\..\Contributions\Refactory\Refactoring Browser\Tests\RBTests';
 	add: '..\System\Compiler\Smalltalk Parser';
 	add: '..\..\..\Contributions\Camp Smalltalk\SUnit\SUnit';
@@ -463,6 +465,11 @@ ArrayedCollectionTest subclass: #ArrayTest
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ArrayedCollectionTest subclass: #ByteArrayTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ArrayedCollectionTest subclass: #RunArrayTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''

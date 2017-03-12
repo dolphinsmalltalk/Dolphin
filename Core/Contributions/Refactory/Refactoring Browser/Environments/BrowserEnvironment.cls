@@ -5,7 +5,7 @@ Object subclass: #BrowserEnvironment
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-BrowserEnvironment guid: (GUID fromString: '{5A20D17B-A65D-4816-8B27-D25D2773698C}')!
+BrowserEnvironment guid: (GUID fromString: '{5a20d17b-a65d-4816-8b27-d25d2773698c}')!
 BrowserEnvironment comment: 'BrowserEnvironments represent a selection of the classes/methods in the system. Not only is BrowserEnvironment itself class the superclass of all environments, it also represents the complete image contents (i.e. the selection that includes all classes and methods).
 
 Instance Variables:
@@ -35,6 +35,14 @@ addSearchString: aString
 							[:a :b | 
 							(a indexOf: $: ifAbsent: [a size]) > (b indexOf: $: ifAbsent: [b size])]].
 	searchStrings add: aString!
+
+allClasses
+	"Answer all the unique non-metaclasses of all the classes and metaclasses in this environment."
+
+	| allClasses |
+	allClasses := Array writeStream: 4096.
+	self allClassesDo: [:each | allClasses nextPut: each].
+	^allClasses contents!
 
 allClassesDo: aBlock
 	"Private - Evaluate the <monadicValuable> argument, aBlock, for every class that could possibly be included in the receiver."
@@ -110,7 +118,7 @@ classesDo: aBlock
 
 classNames
 	| names |
-	names := Set new.
+	names := IdentitySet new.
 	self classesDo: [:each | names add: each instanceClass name].
 	^names!
 
@@ -255,7 +263,7 @@ isClassEnvironment
 isEmpty
 	^false!
 
-isSelector
+isSelectorEnvironment
 	^false!
 
 isSystem
@@ -303,10 +311,7 @@ numberClasses
 numberSelectors
 	| total |
 	total := 0.
-	#rbFix.	"Use #classesDo: (allClassesDo: not necessary and very slow for some subclasses)"
-	self classesDo: 
-			[:eachClass | 
-			self selectorsForClass: eachClass do: [:eachSelector | total := total + 1]].
+	self selectorsDo: [:eachSelector | total := total + 1].
 	^total!
 
 printOn: aStream
@@ -350,22 +355,24 @@ selectMethods: aBlock
 				ifTrue: [env addClass: each selector: sel]].
 	^env!
 
+selectorsDo: aMonadicValuable
+	#rbFix.	"Use #classesDo: (allClassesDo: not necessary and very slow for some subclasses)"
+	self classesAndSelectorsDo: [:eachClass :eachSelector | aMonadicValuable value: eachSelector]!
+
 selectorsFor: aProtocol in: aClass
 	#rbFix. "Category system incompatible. aProtocol can be a <String> or <MethodCategory>"
 	"^(aClass organization listAtCategoryNamed: aProtocol)"
 	^((aClass methodCategoryClass name: aProtocol asString) methodsInBehavior: aClass)
 		select: [:each | self includesSelector: each selector in: aClass] thenCollect: [:each | each selector]!
 
-selectorsForClass: aClass 
+selectorsForClass: aClass
 	| selectors |
-	selectors := Set new: 50.
+	selectors := IdentitySet new: 50.
 	self selectorsForClass: aClass do: [:each | selectors add: each].
 	^selectors!
 
-selectorsForClass: aClass do: aBlock 
-	aClass selectorsAndMethodsDo: 
-			[:each :meth | 
-			(self includesSelector: each in: aClass) ifTrue: [aBlock value: each]]!
+selectorsForClass: aClass do: aBlock
+	aClass selectorsDo: [:each | (self includesSelector: each in: aClass) ifTrue: [aBlock value: each]]!
 
 storeOn: aStream 
 	aStream
@@ -390,6 +397,7 @@ whichProtocolsInclude: aSelector in: aClass
 !BrowserEnvironment categoriesFor: #&!environments!public! !
 !BrowserEnvironment categoriesFor: #|!environments!public! !
 !BrowserEnvironment categoriesFor: #addSearchString:!accessing!public! !
+!BrowserEnvironment categoriesFor: #allClasses!enumerating!public! !
 !BrowserEnvironment categoriesFor: #allClassesDo:!enumerating!private! !
 !BrowserEnvironment categoriesFor: #associationAt:!accessing/classes!accessing-classes!public! !
 !BrowserEnvironment categoriesFor: #at:!accessing/classes!public! !
@@ -428,7 +436,7 @@ whichProtocolsInclude: aSelector in: aClass
 !BrowserEnvironment categoriesFor: #instVarWritersTo:in:!environments!public! !
 !BrowserEnvironment categoriesFor: #isClassEnvironment!public!testing! !
 !BrowserEnvironment categoriesFor: #isEmpty!public!testing! !
-!BrowserEnvironment categoriesFor: #isSelector!public!testing! !
+!BrowserEnvironment categoriesFor: #isSelectorEnvironment!public!testing! !
 !BrowserEnvironment categoriesFor: #isSystem!public!testing! !
 !BrowserEnvironment categoriesFor: #keys!accessing/classes!accessing-classes!public! !
 !BrowserEnvironment categoriesFor: #label!accessing!private! !
@@ -449,6 +457,7 @@ whichProtocolsInclude: aSelector in: aClass
 !BrowserEnvironment categoriesFor: #searchStrings!accessing!public! !
 !BrowserEnvironment categoriesFor: #searchStrings:!accessing!public! !
 !BrowserEnvironment categoriesFor: #selectMethods:!environments!public! !
+!BrowserEnvironment categoriesFor: #selectorsDo:!enumerating!public! !
 !BrowserEnvironment categoriesFor: #selectorsFor:in:!accessing!public! !
 !BrowserEnvironment categoriesFor: #selectorsForClass:!accessing!public! !
 !BrowserEnvironment categoriesFor: #selectorsForClass:do:!accessing!public! !

@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ContainerView subclass: #ScrollingDecorator
 	instanceVariableNames: 'scrollOffset tracking lineExtent'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ScrollingDecorator guid: (GUID fromString: '{87B4C719-026E-11D3-9FD7-00A0CC3E4A32}')!
+ScrollingDecorator guid: (GUID fromString: '{87b4c719-026e-11d3-9fd7-00a0cc3e4a32}')!
 ScrollingDecorator comment: 'A ScrollingDecorator is a <compositeView> that implements the <scrollingDecoratorView> protocol to allow scrolling around the area occupied by the sub-view it decorates. It has a fixed <ScrollingDecoratorLayout> manager and expects to have only one managed sub-view that it is responsible for scrolling around (typically this will be another <compositeView>). The scrollable area is determined by the #layoutExtent: of the sub-view.
 
 Instance Variables:
@@ -125,16 +125,16 @@ onHScroll: aScrollEvent
 			self scrollOffset: newValue @ self scrollOffset y context: context.
 			self layoutManager positionScrolledViewOf: self context: context]!
 
-onMouseWheeled: aMouseEvent 
+onMouseWheeled: aMouseEvent
 	"Handler for a mouse wheel movement event. Scroll the receiver vertically
 	in the direction indicated, and as per the system configuration."
 
 	| rotation config |
 	self presenter trigger: #mouseWheeled: with: aMouseEvent.
 	config := self wheelScrollLines.
-	(config == 0 or: [(rotation := aMouseEvent wheelRotation) abs < 1]) 
-		ifTrue: [^self defaultWindowProcessing: aMouseEvent].
-	config = WHEEL_PAGESCROLL 
+	(config == 0 or: [(rotation := aMouseEvent wheelRotation) abs < 1])
+		ifTrue: [^aMouseEvent defaultWindowProcessing].
+	config = WHEEL_PAGESCROLL
 		ifTrue: [self scrollPages: rotation sign * -1]
 		ifFalse: 
 			["N.B. In some rare configurations rotation might not be integral"

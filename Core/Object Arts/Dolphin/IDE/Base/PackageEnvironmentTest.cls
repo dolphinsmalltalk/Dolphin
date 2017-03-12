@@ -5,7 +5,7 @@ BrowserEnvironmentTest subclass: #PackageEnvironmentTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-PackageEnvironmentTest guid: (GUID fromString: '{4375158A-0238-45AD-86E5-967559575DED}')!
+PackageEnvironmentTest guid: (GUID fromString: '{4375158a-0238-45ad-86e5-967559575ded}')!
 PackageEnvironmentTest comment: 'SUnitBrowser openOnTestCase: self'!
 !PackageEnvironmentTest categoriesForClass!Refactory-Testing! !
 !PackageEnvironmentTest methodsFor!
@@ -29,24 +29,24 @@ classNamesFor: aPackageEnvironment
 
 testPackageEnvironment
 	| env selectors |
-	env := BrowserEnvironment new 
-				forPackages: (Array with: (Package manager packageNamed: 'ActiveX Automation Development')).
+	env := BrowserEnvironment new
+				forPackages: (Array with: (Package manager packageNamed: 'Dolphin Common Dialogs')).
 	self universalTestFor: env.
-	self assert: (env includesClass: AXDispatchImpAbstract).
+	self assert: (env includesClass: Font).
+	self deny: (env definesClass: Font).
 	selectors := OrderedCollection new.
-	env selectorsForClass: AXDispatchImpAbstract do: [:each | selectors add: each].
+	env selectorsForClass: Font do: [:each | selectors add: each].
 	self assert: selectors size = 0.
-	self assert: (env includesClass: AXDispatchImpAbstract class).
-	env selectorsForClass: AXDispatchImpAbstract class do: [:each | selectors add: each].
+	self assert: (env includesClass: Font class).
+	self deny: (env definesClass: Font class).
+	env selectorsForClass: Font class do: [:each | selectors add: each].
 	self assert: selectors size = 1.
-	(Array with:  AXDispatchImpAbstract with: AXDispatchImpAbstract class) do: [:each |
-		self assert: (env includesClass: each).
-		self deny: (env definesClass: each)].
-	(Array with:  AXTypeLibraryPrompter with: AXTypeLibraryPrompter  class) do: [:each |
-		self assert: (env includesClass: each).
-		self assert: (env definesClass: each)].
-	self assert: (env includesSelector: #icon in: AXDispatchImpAbstract class).
-	self deny: (env includesSelector: #icon in: AXDispatchImpAbstract)! !
+	(Array with: FontDialog with: FontDialog class) do: 
+			[:each |
+			self assert: (env includesClass: each).
+			self assert: (env definesClass: each)].
+	self assert: (env includesSelector: #choose in: Font class).
+	self deny: (env includesSelector: #icon in: Font class)! !
 !PackageEnvironmentTest categoriesFor: #classNamesFor:!BrowserEnvironment tests!public! !
 !PackageEnvironmentTest categoriesFor: #testPackageEnvironment!public!unit tests! !
 

@@ -5,7 +5,7 @@ Object subclass: #CommandLineTestRunner
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-CommandLineTestRunner guid: (GUID fromString: '{69CAE7CC-DE76-4748-BC30-E39048DDBB3C}')!
+CommandLineTestRunner guid: (GUID fromString: '{69cae7cc-de76-4748-bc30-e39048ddbb3c}')!
 CommandLineTestRunner comment: ''!
 !CommandLineTestRunner categoriesForClass!Kernel-Objects! !
 !CommandLineTestRunner methodsFor!
@@ -95,7 +95,7 @@ summarizeResults
 		nextPutAll: ' in '.
 	self printRuntime: caseStart - runStart.
 	stream cr.
-	passed ifTrue: [self summarizeTimings: 1000000] ifFalse: [self summarizeFailures].
+	passed ifTrue: [self summarizeTimings: 750000] ifFalse: [self summarizeFailures].
 	stream flush!
 
 summarizeTimings: anInteger

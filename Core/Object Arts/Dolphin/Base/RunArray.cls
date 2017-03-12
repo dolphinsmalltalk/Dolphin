@@ -1,14 +1,32 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ArrayedCollection subclass: #RunArray
-	instanceVariableNames: 'values runs '
+	instanceVariableNames: 'values runs'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-RunArray guid: (GUID fromString: '{87B4C513-026E-11D3-9FD7-00A0CC3E4A32}')!
+RunArray guid: (GUID fromString: '{87b4c513-026e-11d3-9fd7-00a0cc3e4a32}')!
 RunArray comment: ''!
 !RunArray categoriesForClass!Collections-Arrayed! !
 !RunArray methodsFor!
+
+allSatisfy: discriminator
+	"Answer whether the <monadicValuable>, discriminator, evaluates to true for
+	every element of the receiver."
+
+	"Implementation Note: Override back to Collection definition as #at: is very slow for RunArrays."
+
+	self do: [:e | (discriminator value: e) ifFalse: [^false]].
+	^true!
+
+anySatisfy: discriminator
+	"Answer whether the <monadicValuable>, discriminator, evaluates to true for
+	any element of the receiver."
+
+	"Implementation Note: Override back to Collection definition as #at: is very slow for RunArrays."
+
+	self do: [:e | (discriminator value: e) ifTrue: [^true]].
+	^false!
 
 asRunArray
 	^self!
@@ -17,11 +35,13 @@ at: anInteger
 	"Answer the element at index, anInteger, in the receiver."
 
 	| index |
+	anInteger < 1 ifTrue: [^self errorSubscriptBounds: anInteger].
 	index := 0.
-	1 to: runs size do: [:i |
-		index := index + (runs at: i).
-		anInteger <= index
-			ifTrue: [^values at: i]].
+	1 to: runs size
+		do: 
+			[:i |
+			index := index + (runs at: i).
+			anInteger <= index ifTrue: [^values at: i]].
 	^self errorSubscriptBounds: anInteger!
 
 at: index put: newElement
@@ -97,6 +117,8 @@ size
 
 species
 	^Array! !
+!RunArray categoriesFor: #allSatisfy:!enumerating!public! !
+!RunArray categoriesFor: #anySatisfy:!enumerating!public! !
 !RunArray categoriesFor: #asRunArray!converting!public! !
 !RunArray categoriesFor: #at:!accessing!public! !
 !RunArray categoriesFor: #at:put:!accessing!public! !
@@ -134,9 +156,68 @@ runs: runsArray values: valuesArray
 	N.B. The two arrays must be the same size."
 
 	^self basicNew
-		runs: runsArray values: valuesArray! !
+		runs: runsArray values: valuesArray!
+
+with: element1
+	^self runs: #(1) values: (Array with: element1)!
+
+with: element1 with: element2
+	^self runs: #(1 1) values: (Array with: element1 with: element2)!
+
+with: element1 with: element2 with: element3
+	^self runs: #(1 1 1)
+		values: (Array
+				with: element1
+				with: element2
+				with: element3)!
+
+with: element1 with: element2 with: element3 with: element4
+	^self runs: #(1 1 1 1)
+		values: (Array
+				with: element1
+				with: element2
+				with: element3
+				with: element4)!
+
+with: element1 with: element2 with: element3 with: element4 with: element5
+	^self runs: #(1 1 1 1 1)
+		values: (Array
+				with: element1
+				with: element2
+				with: element3
+				with: element4
+				with: element5)!
+
+withAll: aCollection
+	| runs values runLength current |
+	runs := Array writeStream.
+	values := Array writeStream.
+	runLength := 0.
+	current := AbsentCookie.
+	aCollection do: 
+			[:each |
+			current = each
+				ifTrue: [runLength := runLength + 1]
+				ifFalse: 
+					[runLength > 0
+						ifTrue: 
+							[runs nextPut: runLength.
+							values nextPut: current].
+					runLength := 1.
+					current := each]].
+	runLength > 0
+		ifTrue: 
+			[runs nextPut: runLength.
+			values nextPut: current].
+	^self runs: runs contents values: values contents! !
 !RunArray class categoriesFor: #new!instance creation!public! !
 !RunArray class categoriesFor: #new:!instance creation!public! !
 !RunArray class categoriesFor: #new:withAll:!instance creation!public! !
 !RunArray class categoriesFor: #runs:values:!instance creation!public! !
+!RunArray class categoriesFor: #with:!instance creation!public! !
+!RunArray class categoriesFor: #with:with:!instance creation!public! !
+!RunArray class categoriesFor: #with:with:with:!instance creation!public! !
+!RunArray class categoriesFor: #with:with:with:with:!instance creation!public! !
+!RunArray class categoriesFor: #with:with:with:with:with:!instance creation!public! !
+!RunArray class categoriesFor: #withAll:!instance creation!public! !
 

@@ -5,7 +5,7 @@ DolphinCollectionTest subclass: #SequenceableCollectionTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-SequenceableCollectionTest guid: (GUID fromString: '{4C32DBCC-4044-442B-95D9-D6E8AD2396CF}')!
+SequenceableCollectionTest guid: (GUID fromString: '{4c32dbcc-4044-442b-95d9-d6e8ad2396cf}')!
 SequenceableCollectionTest comment: 'SUnitBrowser openOnTestCase: self'!
 !SequenceableCollectionTest categoriesForClass!Unclassified! !
 !SequenceableCollectionTest methodsFor!
@@ -44,6 +44,20 @@ testAsByteArray
 	sequence := #(65 66 67 68).
 	self assert: (self newCollection: sequence) asByteArray = (self byteArrayForSequence: sequence).
 !
+
+testAt
+	| subject |
+	subject := self newCollection: #().
+	-1 to: 1 do: [:i | self should: [subject at: i] raise: BoundsError].
+	subject := self newCollection: #(65).
+	self assert: (self assimilate: 65) equals: (subject at: 1).
+	#(-1 0 2) do: [:i | self should: [subject at: i] raise: BoundsError].
+	subject := self newCollection: #(65 66 67).
+	1 to: subject size do: [:i | self assert: (self assimilate: 65 + i - 1) equals: (subject at: i)].
+	(Array
+		with: -1
+		with: 0
+		with: subject size + 1) do: [:i | self should: [subject at: i] raise: BoundsError]!
 
 testBeginsWith
 	"Test SequenceableCollection>>beginsWith:"
@@ -400,6 +414,16 @@ testFromToKeysAndValuesDo2
 						keysAndValuesDo: [:i :each | enum add: each]]
 				raise: BoundsError]!
 
+testIdentityIncludes
+	| searchee |
+	searchee := self newCollection: 'abc'.
+	self assert: (searchee identityIncludes: (self assimilate: $a)).
+	self assert: (searchee identityIncludes: (self assimilate: $b)).
+	self assert: (searchee identityIncludes: (self assimilate: $c)).
+	self deny: (searchee identityIncludes: (self assimilate: $A)).
+	self deny: (searchee identityIncludes: (self assimilate: $d)).
+	self deny: (searchee identityIncludes: Object new)!
+
 testIncludes
 	| searchee |
 	searchee := self newCollection: 'abc'.
@@ -582,7 +606,7 @@ testMixedConcatenation
 								| result |
 								result := self verifyConcatenation: eachCase with: each.
 								self deny: each == result.
-								self assert: result class == self collectionClass]]]!
+								self assert: result class == each species]]]!
 
 testReplaceFromToWithStartingAt
 	| a |
@@ -634,6 +658,7 @@ verifyIndexOfAnyOf: searchFor startingAt: startInteger in: searchee is: foundInt
 !SequenceableCollectionTest categoriesFor: #newNumericArray:!helpers!private! !
 !SequenceableCollectionTest categoriesFor: #newUnsortedCollection:!helpers!private! !
 !SequenceableCollectionTest categoriesFor: #testAsByteArray!public!unit tests! !
+!SequenceableCollectionTest categoriesFor: #testAt!public!unit tests! !
 !SequenceableCollectionTest categoriesFor: #testBeginsWith!public!unit tests! !
 !SequenceableCollectionTest categoriesFor: #testBinarySearch!public!unit tests! !
 !SequenceableCollectionTest categoriesFor: #testConcatenation!public!unit tests! !
@@ -643,6 +668,7 @@ verifyIndexOfAnyOf: searchFor startingAt: startInteger in: searchee is: foundInt
 !SequenceableCollectionTest categoriesFor: #testFirstColon!public!unit tests! !
 !SequenceableCollectionTest categoriesFor: #testFromToKeysAndValuesDo!public!unit tests! !
 !SequenceableCollectionTest categoriesFor: #testFromToKeysAndValuesDo2!public!unit tests! !
+!SequenceableCollectionTest categoriesFor: #testIdentityIncludes!public!unit tests! !
 !SequenceableCollectionTest categoriesFor: #testIncludes!public!unit tests! !
 !SequenceableCollectionTest categoriesFor: #testIncludesAnyOf!public!unit tests! !
 !SequenceableCollectionTest categoriesFor: #testIndexOfAnyOfStartingAt!public!unit tests! !

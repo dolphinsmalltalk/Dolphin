@@ -5,7 +5,7 @@ String variableByteSubclass: #Symbol
 	classVariableNames: 'Table'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-Symbol guid: (GUID fromString: '{87B4C51D-026E-11D3-9FD7-00A0CC3E4A32}')!
+Symbol guid: (GUID fromString: '{87b4c51d-026e-11d3-9fd7-00a0cc3e4a32}')!
 Symbol isNullTerminated: true!
 Symbol comment: 'Symbol is the class of <String>s which are guaranteed to be unique throughout the system.
 
@@ -223,22 +223,23 @@ allInstancesDo: aMonadicValuable
 
 	Table do: [:eachBucket | eachBucket notNil ifTrue: [eachBucket nonCorpsesDo: aMonadicValuable]]!
 
-findInterned: aString 
+findInterned: aString
 	"Answer the unique <Symbol> for aString if already defined, else nil.	
 	N.B. This method previously had the selector #symbolAt:, and was private,
 	but has been renamed and made public for compatibility with VisualWorks."
 
-	(Table at: aString hashCharacters \\ Table basicSize + 1) ifNotNil: 
-			[:bucket | 
+	(Table at: aString hashCharacters \\ Table basicSize + 1)
+		ifNotNil: 
+			[:bucket |
 			| corpse |
 			corpse := DeadObject current.
 			"Inline ArrayedCollection>>do: to avoid full block for best performance"
 			1 to: bucket size
 				do: 
-					[:i | 
+					[:i |
 					| each |
 					each := bucket at: i.
-					(each == corpse == false and: [(aString trueCompare: each) == 0]) ifTrue: [^each]]].
+					(each ~~ corpse and: [(aString trueCompare: each) == 0]) ifTrue: [^each]]].
 	^nil!
 
 fromString: aString

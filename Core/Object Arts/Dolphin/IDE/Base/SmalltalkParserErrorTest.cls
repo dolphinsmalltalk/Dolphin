@@ -5,7 +5,7 @@ AbstractParserErrorTest subclass: #SmalltalkParserErrorTest
 	classVariableNames: ''
 	poolDictionaries: 'SmalltalkParseErrorCodes'
 	classInstanceVariableNames: ''!
-SmalltalkParserErrorTest guid: (GUID fromString: '{67C4B011-40FA-43B7-83A4-CD8D616C16D0}')!
+SmalltalkParserErrorTest guid: (GUID fromString: '{67c4b011-40fa-43b7-83a4-cd8d616c16d0}')!
 SmalltalkParserErrorTest comment: ''!
 !SmalltalkParserErrorTest categoriesForClass!Unclassified! !
 !SmalltalkParserErrorTest methodsFor!
@@ -133,15 +133,6 @@ testErrorsNonsenseAtEndOfMethod
 		range: (mark to: source size)
 		line: 1
 		code: CErrNonsenseAtExprEnd!
-
-testErrorsStaticExpressionError
-	| source |
-	source := ' ##(self error: ''Bang!!'') '.
-	self
-		parseExprError: source
-		range: ((source indexOf: $() + 1 to: (source indexOf: $)) - 1)
-		line: 1
-		code: CErrErrorInStaticExpression!
 
 testErrorsTempsNotClosedRecovery
 	| source ast |
@@ -316,7 +307,7 @@ testWarnNonNiladicGuardedBlock
 testWarnRestrictedSelector
 	"Test one of each of binary selector, unary, keyword one arg, keyword more than one arg. In each case the entire method signature should be included in the error range"
 
-	#(#== #basicSize #ifNil: #ifNil:ifNotNil:) do: 
+	#(#== #basicSize #ifNil: #ifNil:ifNotNil: #~~) do: 
 			[:each |
 			self
 				parseMethodWarning: each
@@ -375,7 +366,6 @@ writtenNotReadRange: aString
 !SmalltalkParserErrorTest categoriesFor: #testErrorsLexicalUnterminatedQualifier!exceptions!public!unit tests! !
 !SmalltalkParserErrorTest categoriesFor: #testErrorsNonsenseAtEndOfExpression!public!unit tests! !
 !SmalltalkParserErrorTest categoriesFor: #testErrorsNonsenseAtEndOfMethod!public!unit tests! !
-!SmalltalkParserErrorTest categoriesFor: #testErrorsStaticExpressionError!public!unit tests! !
 !SmalltalkParserErrorTest categoriesFor: #testErrorsTempsNotClosedRecovery!public!unit tests! !
 !SmalltalkParserErrorTest categoriesFor: #testInfoHardBreakpoint!public!unit tests! !
 !SmalltalkParserErrorTest categoriesFor: #testInfoSupersendsOther!public!unit tests! !

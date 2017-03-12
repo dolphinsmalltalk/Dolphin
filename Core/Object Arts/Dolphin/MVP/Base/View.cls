@@ -5,7 +5,7 @@ Object subclass: #View
 	classVariableNames: 'CreateCenteredMask DragSourceMask DropTargetMask LayoutValidMask ManagedMask MessageMap MinimizedMask NextId NoInheritMenuMask StateRestoringMask UIValidMask UsePreferredExtentMask ViewClosedError WndClassAtom'
 	poolDictionaries: 'Win32Constants Win32Errors'
 	classInstanceVariableNames: ''!
-View guid: (GUID fromString: '{87B4C4CC-026E-11D3-9FD7-00A0CC3E4A32}')!
+View guid: (GUID fromString: '{87b4c4cc-026e-11d3-9fd7-00a0cc3e4a32}')!
 View addClassConstant: 'CreateCenteredMask' value: 64!
 View addClassConstant: 'DragSourceMask' value: 4!
 View addClassConstant: 'DropTargetMask' value: 8!
@@ -356,47 +356,45 @@ basicInvalidateLayout
 
 	flags := flags maskClear: LayoutValidMask!
 
-basicPaint: message wParam: wParam lParam: lParam 
-	"Private - This window requires painting and this is to be performed in
-	the #onPaintRequired: handler. Generally speaking subclasses should
-	override #onPaintRequired: to implement specialized painting. Note
-	 that the return value from #onPaintRequired: is ignored."
+basicPaint: message wParam: wParam lParam: lParam
+	"Private - This window requires painting and this is to be performed in the
+	#onPaintRequired: handler. Generally speaking subclasses should override #onPaintRequired:
+	to implement specialized painting. Note that the return value from #onPaintRequired: is
+	ignored."
 
 	| user hWnd ps |
 	hWnd := self asParameter.
 	ps := PAINTSTRUCT new.
 	user := UserLibrary default.
-	(user 
+	(user
 		getUpdateRect: hWnd
 		lpRect: nil
-		bErase: false) 
+		bErase: false)
 			ifTrue: 
 				[| hdc |
-				(hdc := user beginPaint: hWnd lpPaint: ps) isNil 
+				(hdc := user beginPaint: hWnd lpPaint: ps) isNil
 					ifFalse: 
 						["Rather than use #ifCurtailed: we use an Error handler so can validate and
 						 prevent recursive walkback"
-
 						
-						[self onPaintRequired: (PaintEvent 
-									handle: hWnd
+						[self onPaintRequired: (PaintEvent
+									window: self
 									wParam: wParam
 									hdc: hdc
-									paintStruct: ps)] 
+									paintStruct: ps)]
 								on: Error
 								do: 
-									[:e | 
+									[:e |
 									user endPaint: hWnd lpPaint: ps.
 									e pass]].
 				user endPaint: hWnd lpPaint: ps]
 			ifFalse: 
 				["No update region, therefore assume an internal paint. We mustn't call
 				 Begin/End paint - see Win32 docs on WM_PAINT."
-
 				| canv |
 				canv := self canvas.
-				self onPaintRequired: (PaintEvent 
-							handle: hWnd
+				self onPaintRequired: (PaintEvent
+							window: self
 							wParam: wParam
 							hdc: canv asParameter
 							paintStruct: ps).
@@ -835,16 +833,6 @@ defaultWindowExStyle
 	"Private - Answer the default extended window creation style"
 
 	^0!
-
-defaultWindowProcessing: anEvent 
-	"Pass an event to the 'default' window procedure of the receiver."
-
-	^anEvent lResult 
-		ifNil: 
-			[self 
-				defaultWindowProcessing: anEvent message
-				wParam: anEvent wParam
-				lParam: anEvent lParam]!
 
 defaultWindowProcessing: message wParam: wParam lParam: lParam
 	"Private - Pass an event to the 'default' window procedure of the receiver.
@@ -2339,29 +2327,29 @@ onInputMaskRequired: anEvent
 	By default we perform the default window processing (which at the time of writing, ansers 0) 
 	and bitOr: in DLGC_WANTCHARS, since this gives more useful and intuitive behaviour for 
 	specialized View subclasses which will often want alpha-numeric keyboard input."
-	
-	^(self defaultWindowProcessing: anEvent) bitOr: DLGC_WANTCHARS!
+
+	^anEvent defaultWindowProcessing bitOr: DLGC_WANTCHARS!
 
 onKeyPressed: aKeyEvent
 	"Default handler for a key press event.
 	Accept the default window processing."
 
 	self presenter trigger: #keyPressed: with: aKeyEvent.
-	^self defaultWindowProcessing: aKeyEvent!
+	^aKeyEvent defaultWindowProcessing!
 
 onKeyReleased: aKeyEvent
 	"Default handler for a key up event.
 	Accept the default window processing."
 
 	self presenter trigger: #keyReleased: with: aKeyEvent.
-	^self defaultWindowProcessing: aKeyEvent!
+	^aKeyEvent defaultWindowProcessing!
 
 onKeyTyped: aKeyEvent
 	"Default handler for a keyboard event.
 	Accept the default window processing."
 
 	self presenter trigger: #keyTyped: with: aKeyEvent.
-	^self defaultWindowProcessing: aKeyEvent!
+	^aKeyEvent defaultWindowProcessing!
 
 onKillFocus
 	"Handler for loss of focus"
@@ -2374,43 +2362,42 @@ onLeftButtonDoubleClicked: aMouseEvent
 	Accept the default window processing."
 
 	self presenter trigger: #leftButtonDoubleClicked: with: aMouseEvent.
-	^self defaultWindowProcessing: aMouseEvent!
+	^aMouseEvent defaultWindowProcessing!
 
 onLeftButtonPressed: aMouseEvent
 	"Default handler for a left button down mouse event.
 	Accept the default window processing."
 
 	self presenter trigger: #leftButtonPressed: with: aMouseEvent.
-	^self defaultWindowProcessing: aMouseEvent!
+	^aMouseEvent defaultWindowProcessing!
 
 onLeftButtonReleased: aMouseEvent
 	"Default handler for a Left button up mouse event.
 	Accept the default window processing."
 
 	self presenter trigger: #leftButtonReleased: with: aMouseEvent.
-	^self defaultWindowProcessing: aMouseEvent!
+	^aMouseEvent defaultWindowProcessing!
 
-onMiddleButtonDoubleClicked: aMouseEvent 
+onMiddleButtonDoubleClicked: aMouseEvent
 	"Default handler for a mouse middle button double-click event.
 	Accept the default window processing."
 
 	self presenter trigger: #middleButtonDoubleClicked: with: aMouseEvent.
-	^self defaultWindowProcessing: aMouseEvent
-!
+	^aMouseEvent defaultWindowProcessing!
 
 onMiddleButtonPressed: aMouseEvent
 	"Default handler for a middle button down mouse event.
 	Accept the default window processing."
 
 	self presenter trigger: #middleButtonPressed: with: aMouseEvent.
-	^self defaultWindowProcessing: aMouseEvent!
+	^aMouseEvent defaultWindowProcessing!
 
 onMiddleButtonReleased: aMouseEvent
 	"Default handler for a middle button up mouse event.
 	Accept the default window processing."
 
 	self presenter trigger: #middleButtonReleased: with: aMouseEvent.
-	^self defaultWindowProcessing: aMouseEvent!
+	^aMouseEvent defaultWindowProcessing!
 
 onModelChanged
 	"The model held by the associated presenter has been replaced (i.e. the complete
@@ -2418,17 +2405,17 @@ onModelChanged
 
 	self isOpen ifTrue: [self refreshContents]!
 
-onMouseHovering: aMouseEvent 
+onMouseHovering: aMouseEvent
 	"Default handler for a mouse leave event. Accept the default processing."
 
 	self presenter trigger: #mouseHovering: with: aMouseEvent.
-	^self defaultWindowProcessing: aMouseEvent!
+	^aMouseEvent defaultWindowProcessing!
 
-onMouseLeave: aMouseEvent 
+onMouseLeave: aMouseEvent
 	"Default handler for a mouse leave event. Accept the default processing."
 
 	self presenter trigger: #mouseLeave: with: aMouseEvent.
-	^self defaultWindowProcessing: aMouseEvent!
+	^aMouseEvent defaultWindowProcessing!
 
 onMouseMoved: aMouseEvent
 	"Default handler for a mouse move event.
@@ -2436,14 +2423,14 @@ onMouseMoved: aMouseEvent
 	Note: As of D6 we do now trigger an event on mouse move."
 
 	self presenter trigger: #mouseMoved: with: aMouseEvent.
-	^self defaultWindowProcessing: aMouseEvent!
+	^aMouseEvent defaultWindowProcessing!
 
-onMouseWheeled: aMouseEvent 
+onMouseWheeled: aMouseEvent
 	"Default handler for a mouse wheel movement event.
 	Accept the default window processing."
 
 	self presenter trigger: #mouseWheeled: with: aMouseEvent.
-	^self defaultWindowProcessing: aMouseEvent!
+	^aMouseEvent defaultWindowProcessing!
 
 onPaintRequired: aPaintEvent
 	"Default handler for paint.
@@ -2475,21 +2462,21 @@ onRightButtonDoubleClicked: aMouseEvent
 	Accept the default window processing."
 
 	self presenter trigger: #rightButtonDoubleClicked: with: aMouseEvent.
-	^self defaultWindowProcessing: aMouseEvent!
+	^aMouseEvent defaultWindowProcessing!
 
 onRightButtonPressed: aMouseEvent
 	"Default handler for a Right button down mouse event.
 	Accept the default window processing."
 
 	self presenter trigger: #rightButtonPressed: with: aMouseEvent.
-	^self defaultWindowProcessing: aMouseEvent!
+	^aMouseEvent defaultWindowProcessing!
 
 onRightButtonReleased: aMouseEvent
 	"Default handler for a Right button up mouse event.
 	Accept the default window processing."
 
 	self presenter trigger: #rightButtonReleased: with: aMouseEvent.
-	^self defaultWindowProcessing: aMouseEvent!
+	^aMouseEvent defaultWindowProcessing!
 
 onSetFocus
 	"Handler for set focus event"
@@ -2518,25 +2505,25 @@ onSubViewRemoved: aView
 
 !
 
-onSysKeyPressed: aKeyEvent 
+onSysKeyPressed: aKeyEvent
 	"Default handler for a sys key press event (e.g. ALT down). Accept the default window
 	processing."
 
 	self presenter trigger: #sysKeyPressed: with: aKeyEvent.
-	^self defaultWindowProcessing: aKeyEvent!
+	^aKeyEvent defaultWindowProcessing!
 
-onSysKeyReleased: aKeyEvent 
+onSysKeyReleased: aKeyEvent
 	"Default handler for a sys key up event (e.g. ALT up). Accept the default window
 	processing."
 
 	self presenter trigger: #sysKeyReleased: with: aKeyEvent.
-	^self defaultWindowProcessing: aKeyEvent!
+	^aKeyEvent defaultWindowProcessing!
 
-onSysKeyTyped: aKeyEvent 
+onSysKeyTyped: aKeyEvent
 	"Default handler for a sys key press sequence. Accept the default window processing."
 
 	self presenter trigger: #sysKeyTyped: with: aKeyEvent.
-	^self defaultWindowProcessing: aKeyEvent!
+	^aKeyEvent defaultWindowProcessing!
 
 onTipDetailsRequired: aNMTTDISPINFO 
 	self presenter trigger: #tipDetailsRequired: with: aNMTTDISPINFO!
@@ -2594,24 +2581,24 @@ onVScroll: aScrollEvent
 
 !
 
-onXButtonDoubleClicked: aMouseEvent 
+onXButtonDoubleClicked: aMouseEvent
 	"Default handler for a mouse X button double-click event. Accept the default window
 	processing."
 
 	self presenter trigger: #xButtonDoubleClicked: with: aMouseEvent.
-	^self defaultWindowProcessing: aMouseEvent!
+	^aMouseEvent defaultWindowProcessing!
 
-onXButtonPressed: aMouseEvent 
+onXButtonPressed: aMouseEvent
 	"Default handler for an X button down mouse event. Accept the default window processing."
 
 	self presenter trigger: #xButtonPressed: with: aMouseEvent.
-	^self defaultWindowProcessing: aMouseEvent!
+	^aMouseEvent defaultWindowProcessing!
 
-onXButtonReleased: aMouseEvent 
+onXButtonReleased: aMouseEvent
 	"Default handler for an X button up mouse event. Accept the default window processing."
 
 	self presenter trigger: #xButtonReleased: with: aMouseEvent.
-	^self defaultWindowProcessing: aMouseEvent!
+	^aMouseEvent defaultWindowProcessing!
 
 onZOrderChanged
 	"Received when the Zorder of the subviews within the receiver has been
@@ -3733,13 +3720,13 @@ wmCaptureChanged: message wParam: wParam lParam: lParam
 
 	^self interactor onCaptureChanged: (self class withHandle: lParam)!
 
-wmChar: message wParam: wParam lParam: lParam 
+wmChar: message wParam: wParam lParam: lParam
 	"Private - Default handler for a WM_CHAR. Forward to the receiver #onKeyTyped: handler
 	which should answer a non-Integer/non-Boolean value if it wants to accept
 	the default processing for the message."
 
-	^self interactor onKeyTyped: (KeyEvent 
-				handle: handle
+	^self interactor onKeyTyped: (KeyEvent
+				window: self
 				message: message
 				wParam: wParam
 				lParam: lParam)!
@@ -3781,40 +3768,42 @@ wmCommand: message wParam: wParam lParam: lParam
 
 					]]!
 
-wmContextMenu: message wParam: wParam lParam: lParam 
+wmContextMenu: message wParam: wParam lParam: lParam
 	"Private - Shows and tracks a context menu for the receiver"
 
-	^self trackContextMenu: (PointEvent 
-				handle: handle
+	^self trackContextMenu: (PointEvent
+				window: self
 				message: message
 				wParam: wParam
 				lParam: lParam)!
 
-wmCreate: message wParam: wParam lParam: lParam 
+wmCreate: message wParam: wParam lParam: lParam
 	"Private - Default handler for a WM_CREATE."
 
 	| event |
-	interactor isNil 
+	interactor isNil
 		ifTrue: 
 			["Necessary for some old resources"
 			interactor := self presenter].
-	event := WindowsEvent 
-				handle: handle
+	event := WindowsEvent
+				window: self
 				message: message
 				wParam: wParam
 				lParam: lParam.
 	self onCreated: event.
-	^self defaultWindowProcessing: event!
+	^event defaultWindowProcessing!
 
-wmCtlColor: message wParam: wParam lParam: lParam 
-	"Private - Default handler for a WM_CTLCOLORXXX message."
+wmCtlColor: message wParam: wParam lParam: lParam
+	"Private - Default handler for a WM_CTLCOLORXXX family of messages. This is sent to the
+	parent of the control, but we reflect it back to the ControlView to which it actually
+	relates."
 
-	| window |
-	window := self class withHandle: lParam.
-	^window notNil 
-		ifTrue: 
-			[window onColorRequired: (ColorEvent 
-						handle: handle
+	^(self class withHandle: lParam)
+		ifNotNil: 
+			[:window |
+			"Note that the event has the handle of the original (parent) window to which the message was sent."
+			window onColorRequired: (ColorEvent
+						window: self
 						message: message
 						wParam: wParam
 						lParam: lParam)]!
@@ -3860,14 +3849,14 @@ wmEnterMenuLoop: message wParam: wParam lParam: lParam
 	SessionManager inputState startIdleTimer: self.
 	^nil!
 
-wmEraseBkGnd: message wParam: wParam lParam: lParam 
+wmEraseBkGnd: message wParam: wParam lParam: lParam
 	"Private - Handle the WM_ERASEBKGND message from Windows. This is sent to clear an area of
 	a window during a repaint (normally when BeginPaint() is called)."
 
 	"self ensureLayoutValid."
 
-	^self onEraseRequired: (ColorEvent 
-				handle: handle
+	^self onEraseRequired: (ColorEvent
+				window: self
 				message: message
 				wParam: wParam
 				lParam: lParam)!
@@ -3880,15 +3869,15 @@ wmExitMenuLoop: message wParam: wParam lParam: lParam
 	SessionManager inputState stopIdleTimer: self.
 	^nil!
 
-wmGetDlgCode: message wParam: wParam lParam: aMSGAddress 
+wmGetDlgCode: message wParam: wParam lParam: aMSGAddress
 	"Private - Low-level handler for a WM_GETDLGCODE sent by Windows to determine what
 	input a particular window would like (usually when the window receivers focus).
 	The lParam is a pointer to the MSG that may be sent depending on the response.
 	The answer should be some combination of DLGC_XXXX flags (e.g. DLGC_WANTARROWS |
 	DLGC_WANTTAB)."
 
-	^self presenter onInputMaskRequired: (WindowsEvent 
-				handle: handle
+	^self presenter onInputMaskRequired: (WindowsEvent
+				window: self
 				message: message
 				wParam: wParam
 				lParam: aMSGAddress)!
@@ -3904,15 +3893,15 @@ wmHotKey: message wParam: wParam lParam: lParam
 
 	^self presenter onHotKey: wParam!
 
-wmHScroll: message wParam: wParam lParam: lParam 
+wmHScroll: message wParam: wParam lParam: lParam
 	"Private - A vertical Scroll event has occured. Pass onto receivers controller. Have to check
 	whether the event came from a standard scrool bar or a scroll bar controller."
 
-	^(lParam == 0 ifTrue: [self] ifFalse: [SessionManager inputState windowAt: lParam ifAbsent: []]) 
+	^(lParam == 0 ifTrue: [self] ifFalse: [SessionManager inputState windowAt: lParam ifAbsent: []])
 		ifNotNil: 
-			[:window | 
-			window onHScroll: (ScrollEvent 
-						handle: handle
+			[:window |
+			window onHScroll: (ScrollEvent
+						window: self
 						message: message
 						wParam: wParam
 						lParam: lParam)]!
@@ -3937,20 +3926,20 @@ wmInitMenuPopup: message wParam: wParam lParam: lParam
 		ifTrue: [subMenu queryAllFromView: self].
 !
 
-wmKeyDown: message wParam: wParam lParam: lParam 
+wmKeyDown: message wParam: wParam lParam: lParam
 	"Private - Default handler for a WM_KEYDOWN."
 
-	^self interactor onKeyPressed: (KeyEvent 
-				handle: handle
+	^self interactor onKeyPressed: (KeyEvent
+				window: self
 				message: message
 				wParam: wParam
 				lParam: lParam)!
 
-wmKeyUp: message wParam: wParam lParam: lParam 
+wmKeyUp: message wParam: wParam lParam: lParam
 	"Private - Default handler for a WM_KEYUP."
 
-	^self interactor onKeyReleased: (KeyEvent 
-				handle: handle
+	^self interactor onKeyReleased: (KeyEvent
+				window: self
 				message: message
 				wParam: wParam
 				lParam: lParam)!
@@ -3960,54 +3949,54 @@ wmKillFocus: message wParam: wParam lParam: lParam
 
 	^self presenter onKillFocus!
 
-wmLButtonDblClk: message wParam: wParam lParam: lParam 
+wmLButtonDblClk: message wParam: wParam lParam: lParam
 	"Private - Default handler for a WM_LBUTTONDBLCLK event."
 
-	^self interactor onLeftButtonDoubleClicked: (MouseEvent 
-				handle: handle
+	^self interactor onLeftButtonDoubleClicked: (MouseEvent
+				window: self
 				message: message
 				wParam: wParam
 				lParam: lParam)!
 
-wmLButtonDown: message wParam: wParam lParam: lParam 
+wmLButtonDown: message wParam: wParam lParam: lParam
 	"Private - Default handler for a WM_LBUTTONDOWN event."
 
-	^self interactor onLeftButtonPressed: (MouseEvent 
-				handle: handle
+	^self interactor onLeftButtonPressed: (MouseEvent
+				window: self
 				message: message
 				wParam: wParam
 				lParam: lParam)!
 
-wmLButtonUp: message wParam: wParam lParam: lParam 
+wmLButtonUp: message wParam: wParam lParam: lParam
 	"Private - Default handler for a WM_LBUTTONUP event."
 
-	^self interactor onLeftButtonReleased: (MouseEvent 
-				handle: handle
+	^self interactor onLeftButtonReleased: (MouseEvent
+				window: self
 				message: message
 				wParam: wParam
 				lParam: lParam)!
 
-wmMButtonDblClk: message wParam: wParam lParam: lParam 
+wmMButtonDblClk: message wParam: wParam lParam: lParam
 	"Private - Default handler for a WM_MBUTTONDBLCLICK event."
 
-	^self interactor onMiddleButtonDoubleClicked: (MouseEvent 
-				handle: handle
+	^self interactor onMiddleButtonDoubleClicked: (MouseEvent
+				window: self
 				message: message
 				wParam: wParam
 				lParam: lParam)!
 
-wmMButtonDown: message wParam: wParam lParam: lParam 
-	^self interactor onMiddleButtonPressed: (MouseEvent 
-				handle: handle
+wmMButtonDown: message wParam: wParam lParam: lParam
+	^self interactor onMiddleButtonPressed: (MouseEvent
+				window: self
 				message: message
 				wParam: wParam
 				lParam: lParam)!
 
-wmMButtonUp: message wParam: wParam lParam: lParam 
+wmMButtonUp: message wParam: wParam lParam: lParam
 	"Private - Default handler for a WM_MBUTTONUP event."
 
-	^self interactor onMiddleButtonReleased: (MouseEvent 
-				handle: handle
+	^self interactor onMiddleButtonReleased: (MouseEvent
+				window: self
 				message: message
 				wParam: wParam
 				lParam: lParam)!
@@ -4033,38 +4022,38 @@ wmMenuCommand: message wParam: wParam lParam: lParam
 		cr.
 "	^nil!
 
-wmMouseHover: message wParam: wParam lParam: lParam 
+wmMouseHover: message wParam: wParam lParam: lParam
 	"Private - Default handler for a WM_MOUSEHOVER event."
 
-	^self interactor onMouseHovering: (MouseEvent 
-				handle: handle
+	^self interactor onMouseHovering: (MouseEvent
+				window: self
 				message: message
 				wParam: wParam
 				lParam: lParam)!
 
-wmMouseLeave: message wParam: wParam lParam: lParam 
+wmMouseLeave: message wParam: wParam lParam: lParam
 	"Private - Default handler for a WM_MOUSELEAVE event."
 
-	^self interactor onMouseLeave: (MouseEvent 
-				handle: handle
+	^self interactor onMouseLeave: (MouseEvent
+				window: self
 				message: message
 				wParam: wParam
 				lParam: lParam)!
 
-wmMouseMove: message wParam: wParam lParam: lParam 
+wmMouseMove: message wParam: wParam lParam: lParam
 	"Private - Default handler for a WM_MOUSEMOVE event."
 
-	^self interactor onMouseMoved: (MouseEvent 
-				handle: handle
+	^self interactor onMouseMoved: (MouseEvent
+				window: self
 				message: message
 				wParam: wParam
 				lParam: lParam)!
 
-wmMouseWheel: message wParam: wParam lParam: lParam 
+wmMouseWheel: message wParam: wParam lParam: lParam
 	"Private - Default handler for a WM_MOUSEWHEEL event."
 
-	^self interactor onMouseWheeled: (MouseEvent 
-				handle: handle
+	^self interactor onMouseWheeled: (MouseEvent
+				window: self
 				message: message
 				wParam: wParam
 				lParam: lParam)!
@@ -4150,10 +4139,10 @@ wmPrint: message wParam: wParam lParam: lParam
 	self ensureLayoutValid.
 	^nil!
 
-wmPrintClient: message wParam: wParam lParam: lParam 
+wmPrintClient: message wParam: wParam lParam: lParam
 	self ensureLayoutValid.
-	^self onPaintRequired: (PaintEvent 
-				handle: handle
+	^self onPaintRequired: (PaintEvent
+				window: self
 				wParam: 0
 				hdc: wParam
 				paintStruct: nil)!
@@ -4163,29 +4152,29 @@ wmQueryEndSession: message wParam: wParam lParam: lParam
 
 	^SessionManager current onQueryWindowsShutdown!
 
-wmRButtonDblClk: message wParam: wParam lParam: lParam 
+wmRButtonDblClk: message wParam: wParam lParam: lParam
 	"Private - Default handler for a WM_RBUTTONDBLCLICK."
 
-	^self interactor onRightButtonDoubleClicked: (MouseEvent 
-				handle: handle
+	^self interactor onRightButtonDoubleClicked: (MouseEvent
+				window: self
 				message: message
 				wParam: wParam
 				lParam: lParam)!
 
-wmRButtonDown: message wParam: wParam lParam: lParam 
+wmRButtonDown: message wParam: wParam lParam: lParam
 	"Private - Default handler for a WM_RBUTTONDOWN."
 
-	^self interactor onRightButtonPressed: (MouseEvent 
-				handle: handle
+	^self interactor onRightButtonPressed: (MouseEvent
+				window: self
 				message: message
 				wParam: wParam
 				lParam: lParam)!
 
-wmRButtonUp: message wParam: wParam lParam: lParam 
+wmRButtonUp: message wParam: wParam lParam: lParam
 	"Private - Default handler for a WM_RBUTTONUP."
 
-	^self interactor onRightButtonReleased: (MouseEvent 
-				handle: handle
+	^self interactor onRightButtonReleased: (MouseEvent
+				window: self
 				message: message
 				wParam: wParam
 				lParam: lParam)!
@@ -4226,15 +4215,15 @@ wmSize: message wParam: wParam lParam: lParam
 
 	^nil!
 
-wmSysChar: message wParam: wParam lParam: lParam 
+wmSysChar: message wParam: wParam lParam: lParam
 	"Private - Handles a WM_SYSCHARmessage. From MSDN:
 
 	The WM_SYSCHAR message is posted to the window with the keyboard focus when a WM_SYSKEYDOWN
 	message is translated by the TranslateMessage function. It specifies the character code of a
 	system character key that is, a character key that is pressed while the ALT key is down. "
 
-	^self interactor onSysKeyTyped: (KeyEvent 
-				handle: handle
+	^self interactor onSysKeyTyped: (KeyEvent
+				window: self
 				message: message
 				wParam: wParam
 				lParam: lParam)!
@@ -4257,20 +4246,20 @@ wmSysDeadChar: message wParam: wParam lParam: lParam
 
 	^nil!
 
-wmSysKeyDown: message wParam: wParam lParam: lParam 
+wmSysKeyDown: message wParam: wParam lParam: lParam
 	"Private - Default handler for a WM_SYSKEYDOWN."
 
-	^self interactor onSysKeyPressed: (KeyEvent 
-				handle: handle
+	^self interactor onSysKeyPressed: (KeyEvent
+				window: self
 				message: message
 				wParam: wParam
 				lParam: lParam)!
 
-wmSysKeyUp: message wParam: wParam lParam: lParam 
+wmSysKeyUp: message wParam: wParam lParam: lParam
 	"Private - Default handler for a WM_SYSKEYUP."
 
-	^self interactor onSysKeyReleased: (KeyEvent 
-				handle: handle
+	^self interactor onSysKeyReleased: (KeyEvent
+				window: self
 				message: message
 				wParam: wParam
 				lParam: lParam)!
@@ -4292,72 +4281,68 @@ wmTimer: message wParam: wParam lParam: lParam
 	self presenter trigger: #timerTick: with: wParam.
 	^nil!
 
-wmVScroll: message wParam: wParam lParam: lParam 
+wmVScroll: message wParam: wParam lParam: lParam
 	"Private - A vertical Scroll event has occured. Pass onto the receivers controller. Have to check
 	whether the event came from a standard scroll bar or a scroll bar controller."
 
-	^(lParam == 0 ifTrue: [self] ifFalse: [SessionManager inputState windowAt: lParam ifAbsent: []]) 
+	^(lParam == 0 ifTrue: [self] ifFalse: [SessionManager inputState windowAt: lParam ifAbsent: []])
 		ifNotNil: 
-			[:window | 
-			window onVScroll: (ScrollEvent 
-						handle: handle
+			[:window |
+			window onVScroll: (ScrollEvent
+						window: self
 						message: message
 						wParam: wParam
 						lParam: lParam)]!
 
-wmWindowPosChanged: message wParam: wParam lParam: lParam 
+wmWindowPosChanged: message wParam: wParam lParam: lParam
 	"Private - The position of the receiver has changed in some manner."
 
-	self isStateRestoring 
+	self isStateRestoring
 		ifFalse: 
-			[| event |
-			event := PositionEvent 
-						handle: handle
+			[self presenter onPositionChanged: (PositionEvent
+						window: self
 						message: message
 						wParam: wParam
-						lParam: lParam.
-			event makeStruct.
-			self presenter onPositionChanged: event].
+						lParam: lParam)].
 	"Ignore any return value from the high-level event, and answer 0 to 
 	prevent the DefWindowProc being invoked, which in turn prevents
 	WM_SIZE and WM_MOVE which we don't use anymore"
 	^0!
 
-wmWindowPosChanging: message wParam: wParam lParam: lParam 
+wmWindowPosChanging: message wParam: wParam lParam: lParam
 	"Private - The position of the receiver is about to change in some manner."
 
-	| event |
-	self isStateRestoring ifTrue: [^nil].
-			event := PositionEvent 
-						handle: handle
+	^self isStateRestoring
+		ifFalse: 
+			[self presenter onPositionChanging: (PositionEvent
+						window: self
 						message: message
 						wParam: wParam
-						lParam: lParam.
-	^self presenter onPositionChanging: event!
+						lParam: lParam)]!
 
-wmXButtonDblClk: message wParam: wParam lParam: lParam 
+wmXButtonDblClk: message wParam: wParam lParam: lParam
 	"Private - Default handler for a WM_XBUTTONDBLCLICK event."
 
-	^self interactor onXButtonDoubleClicked: (MouseEvent 
-				handle: handle
+	^self interactor onXButtonDoubleClicked: (MouseEvent
+				window: self
 				message: message
 				wParam: wParam
 				lParam: lParam)!
 
-wmXButtonDown: message wParam: wParam lParam: lParam 
+wmXButtonDown: message wParam: wParam lParam: lParam
 	"Private - Default handler for a WM_XBUTTONDOWN event."
 
-	^self interactor onXButtonPressed: (MouseEvent 
-				handle: handle
+	^self interactor onXButtonPressed: (MouseEvent
+				window: self
 				message: message
 				wParam: wParam
 				lParam: lParam)!
 
-wmXButtonUp: message wParam: wParam lParam: lParam 
+wmXButtonUp: message wParam: wParam lParam: lParam
 	"Private - Default handler for a WM_XBUTTONUP event."
 
-	^self interactor onXButtonReleased: (MouseEvent 
-				handle: handle
+	^self interactor onXButtonReleased: (MouseEvent
+				window: self
 				message: message
 				wParam: wParam
 				lParam: lParam)!
@@ -4499,7 +4484,6 @@ zOrderTop
 !View categoriesFor: #defaultShowStyle!constants!private! !
 !View categoriesFor: #defaultStyle!constants!private! !
 !View categoriesFor: #defaultWindowExStyle!constants!private! !
-!View categoriesFor: #defaultWindowProcessing:!dispatching!public! !
 !View categoriesFor: #defaultWindowProcessing:wParam:lParam:!dispatching!private! !
 !View categoriesFor: #defaultWindowStyle!constants!private! !
 !View categoriesFor: #deferLayout:!constants!private! !

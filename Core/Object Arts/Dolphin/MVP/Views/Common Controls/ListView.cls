@@ -5,7 +5,7 @@ IconicListAbstract subclass: #ListView
 	classVariableNames: 'LvModes LvnMap RevertSelMessage UnknownItem'
 	poolDictionaries: 'ListViewConstants'
 	classInstanceVariableNames: ''!
-ListView guid: (GUID fromString: '{87B4C730-026E-11D3-9FD7-00A0CC3E4A32}')!
+ListView guid: (GUID fromString: '{87b4c730-026e-11d3-9fd7-00a0cc3e4a32}')!
 ListView addClassConstant: 'LvnMap' value: #(#lvnItemChanging: #lvnItemChanged: #lvnInsertItem: #nmDeleteItem: #lvnDeleteAllItems: #nmBeginLabelEdit: #nmEndLabelEdit: #nmDummy: #lvnColumnClick: #nmBeginDrag: #nmDummy: #nmBeginRDrag: #nmDummy: #nmDummy: #lvnItemActivate: #lvnODStateChanged: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmGetDispInfo: #nmSetDispInfo: #lvnFindItem: #nmDummy: #nmDummy: #nmKeyDown: #lvnMarqueeBegin: #lvnGetInfoTip:)!
 ListView comment: 'ListView is the <listView> implementing the Windows "SysListView32" common control. It is for single selection use and, therefore, implements the <selectableItems> protocol for use with any <listModel>.
 
@@ -1552,16 +1552,16 @@ onButtonPressed: aMouseEvent
 	The mouse event is only allowed to propagate to the control if we are happy that 
 	the selection should indeed be changed."
 
-	| indices |
+| indices |
 	indices := self newSelectionsFromEvent: aMouseEvent.
 	^indices = lastSelIndices
-		ifTrue: [self defaultWindowProcessing: aMouseEvent]
+		ifTrue: [aMouseEvent defaultWindowProcessing]
 		ifFalse: 
 			[(self onSelChanging: indices cause: #mouse)
 				ifTrue: 
 					[| answer |
 					"Selection change permitted?"
-					answer := self defaultWindowProcessing: aMouseEvent.
+					answer := aMouseEvent defaultWindowProcessing.
 					self onSelChanged.	"Selection may have changed"
 					answer]
 				ifFalse: 
@@ -1664,18 +1664,18 @@ onKeyTyped: aKeyEvent
 	self maybeSelChanging: #keyboard.
 	^answer!
 
-onLeftButtonDoubleClicked: aMouseEvent 
+onLeftButtonDoubleClicked: aMouseEvent
 	"Default handler for a mouse left button double-click event."
 
 	| answer handled |
 	self presenter trigger: #leftButtonDoubleClicked: with: aMouseEvent.
 	handled := aMouseEvent isHandled.
-	answer := self defaultWindowProcessing: aMouseEvent.
+	answer := aMouseEvent defaultWindowProcessing.
 	(handled not and: 
 			[self hasFullRowSelect or: 
 					[| hit |
 					hit := self basicItemFromPoint: aMouseEvent position.
-					hit iItem >= 0 and: [hit iSubItem == 0]]]) 
+					hit iItem >= 0 and: [hit iSubItem == 0]]])
 		ifTrue: [self presenter performAction].
 	^answer!
 

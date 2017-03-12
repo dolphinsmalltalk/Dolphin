@@ -5,7 +5,7 @@ Object subclass: #PackageManager
 	classVariableNames: 'Current DuplicatePackageSignal PackageNotFoundSignal PrerequisiteNotFoundSignal SystemPackage'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-PackageManager guid: (GUID fromString: '{87B4C4A7-026E-11D3-9FD7-00A0CC3E4A32}')!
+PackageManager guid: (GUID fromString: '{87b4c4a7-026e-11d3-9fd7-00a0cc3e4a32}')!
 PackageManager comment: 'The PackageManager class contains a collection of all the Packages currently loaded into
 the system. The class obeys the Singleton pattern.
 
@@ -1014,14 +1014,9 @@ packageOfMethod: aCompiledMethod
 	Implementation Note: Use the loose method cache if available, otherwise
 	do the slower search through each package in turn."
 
-	^looseMethods isNil 
+	^looseMethods isNil
 		ifTrue: [self packages detect: [:pkg | pkg includesMethod: aCompiledMethod] ifNone: []]
-		ifFalse: 
-			[looseMethods at: aCompiledMethod name
-				ifPresent: 
-					[:pkg | 
-					self assert: [pkg includesMethod: aCompiledMethod].
-					pkg]]!
+		ifFalse: [looseMethods at: aCompiledMethod name ifAbsent: []]!
 
 packageOfMethodOrItsClass: aMethod
 	"Answer the <Package> which owns the <CompiledMethod>, method,

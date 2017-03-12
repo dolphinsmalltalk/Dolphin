@@ -5,7 +5,7 @@ SortAlgorithm subclass: #PluggableSortAlgorithm
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-PluggableSortAlgorithm guid: (GUID fromString: '{725A8310-4A25-47FA-BA80-9DCEF64B53E2}')!
+PluggableSortAlgorithm guid: (GUID fromString: '{725a8310-4a25-47fa-ba80-9dcef64b53e2}')!
 PluggableSortAlgorithm comment: 'PluggableSortAlgorithm is the class of <SortAlgorithm>s that allow the sort order relationship between elements to be configured by means of a pluggable sort block.
 
 Instance Variables:
@@ -30,11 +30,10 @@ sortBlock
 new
 	"Answer a new instance of the receiver with the default sort block."
 
-	^(self basicNew)
-		setSortBlock: [:a :b | a <= b];
-		yourself!
+	^self newSortBlock: [:a :b | a <= b]!
 
 newSortBlock: aDyadicValuable
+	<primitive: 157>
 	^(self basicNew)
 		setSortBlock: aDyadicValuable;
 		yourself! !

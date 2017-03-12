@@ -5,7 +5,7 @@ StProgramNode subclass: #StMethodNode
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-StMethodNode guid: (GUID fromString: '{A10B25E1-F065-457C-90D9-2571EBF23F51}')!
+StMethodNode guid: (GUID fromString: '{a10b25e1-f065-457c-90d9-2571ebf23f51}')!
 StMethodNode comment: 'StMethodNode is the parse tree node type that represents a Smalltalk method.
 
 Instance Variables:
@@ -98,6 +98,9 @@ hash
 
 isExternalCall
 	^tag notNil and: [tag isExternalCall]!
+
+isInlined
+	^false!
 
 isLast: aNode 
 	^body isLast: aNode!
@@ -205,6 +208,7 @@ uses: aNode
 !StMethodNode categoriesFor: #equalTo:withMapping:!comparing!public! !
 !StMethodNode categoriesFor: #hash!comparing!public! !
 !StMethodNode categoriesFor: #isExternalCall!public!testing! !
+!StMethodNode categoriesFor: #isInlined!public!testing! !
 !StMethodNode categoriesFor: #isLast:!public!testing! !
 !StMethodNode categoriesFor: #isMethod!public!testing! !
 !StMethodNode categoriesFor: #isPrimitive!public!testing! !

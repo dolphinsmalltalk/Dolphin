@@ -1,23 +1,27 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #Event
-	instanceVariableNames: 'hWnd'
+	instanceVariableNames: 'window'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-Event guid: (GUID fromString: '{04134010-906C-40DD-B5E7-7F26E4216AA0}')!
+Event guid: (GUID fromString: '{04134010-906c-40dd-b5e7-7f26e4216aa0}')!
 Event comment: ''!
 !Event categoriesForClass!Kernel-Objects! !
 !Event methodsFor!
 
+hwnd
+	^window asParameter!
+
 setSource: aWindow
-	hWnd := aWindow asParameter!
+	window := aWindow!
 
 window
 	"Answers a window which was the target for this event. This window
 	must be a registered Dolphin window."
 
-	^SessionManager inputState windowAt: hWnd ifAbsent: []! !
+	^window! !
+!Event categoriesFor: #hwnd!accessing!private! !
 !Event categoriesFor: #setSource:!initializing!private! !
 !Event categoriesFor: #window!accessing!public! !
 

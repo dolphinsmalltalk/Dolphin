@@ -330,9 +330,9 @@ needsFree
 	^false!
 
 notNull
-	"Answer whether the receiver is not Null (i.e. not equal to 0)"
+	"Answer whether the receiver is not Null (i.e. not equal to 0)."
 
-	^self isNull == false!
+	^self isNull not!
 
 pointerClass
 	"Private - Answer the default class to use as a pointer"

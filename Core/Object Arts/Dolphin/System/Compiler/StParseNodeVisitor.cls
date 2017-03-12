@@ -5,7 +5,7 @@ Object subclass: #StParseNodeVisitor
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-StParseNodeVisitor guid: (GUID fromString: '{8CF81BE6-059C-46DA-86E3-B21A6781066B}')!
+StParseNodeVisitor guid: (GUID fromString: '{8cf81be6-059c-46da-86e3-b21a6781066b}')!
 StParseNodeVisitor comment: 'BRProgramNodeVisitor is an abstract visitor for the BRProgramNodes.
 
 '!
@@ -19,10 +19,10 @@ processBlock: aBlockNode
 tagBeforeTemporaries
 	^false!
 
-visitArgumentNode: each
+visitArgumentNode: anStVariableNode
 	"Here to allow subclasses to detect arguments or temporaries."
 
-	^self visitVariableNode: each!
+	^self visitVariableNode: anStVariableNode!
 
 visitArgumentNodes: aNodeCollection
 	^aNodeCollection do: [:each | self visitArgumentNode: each]!

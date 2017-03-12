@@ -5,7 +5,7 @@ View subclass: #ControlView
 	classVariableNames: 'CommonControlCallError NmMap'
 	poolDictionaries: 'CommCtrlConstants'
 	classInstanceVariableNames: ''!
-ControlView guid: (GUID fromString: '{87B4C70D-026E-11D3-9FD7-00A0CC3E4A32}')!
+ControlView guid: (GUID fromString: '{87b4c70d-026e-11d3-9fd7-00a0cc3e4a32}')!
 ControlView comment: 'ControlView is the abstract superclass for all <view>s that are based on Windows controls. In general, controls are responsible for their own painting and so it is not necessary, or advisable, to override #onPaintRequired: in any of the ControlView subclasses.
 
 Some controls, but not all, allow control over the foreground and background colours used when painting. If neither of the #forecolor and #backcolor aspects is explicitly set then the default control colours will be used.
@@ -213,7 +213,7 @@ oldWndProc: anAddress
 
 	oldWndProc := anAddress!
 
-onColorRequired: aColorEvent 
+onColorRequired: aColorEvent
 	"Private - Colour event handler for aColorEvent. We set up the canvas provided by the event
 	with the appropriate foreground and background colours for the receiver. Windows
 	WM_CTLCOLORXXX messages require that we answer the background brush handle."
@@ -226,15 +226,17 @@ onColorRequired: aColorEvent
 	| canvas back brush |
 	back := self basicActualBackcolor.
 	canvas := aColorEvent canvas.
+	back isDefault
+		ifTrue: [brush := aColorEvent defaultWindowProcessing]
+		ifFalse: 
+			[brush := back brush.
+			back isNone
+				ifTrue: 
+					[self paintTransparentBackgroundOn: canvas.
+					canvas backgroundMode: TRANSPARENT]
+				ifFalse: [canvas backcolor: back].
+			canvas brush: brush].
 	self forecolor ifNotNil: [:fore | canvas forecolor: fore].
-	back isDefault ifTrue: [^nil].
-	brush := back brush.
-	back isNone 
-		ifTrue: 
-			[self paintTransparentBackgroundOn: canvas.
-			canvas backgroundMode: TRANSPARENT]
-		ifFalse: [canvas backcolor: back].
-	canvas brush: brush.
 	^brush asParameter!
 
 onEraseRequired: aColorEvent 
@@ -248,8 +250,8 @@ onInputMaskRequired: anEvent
 	"Handler for a WM_GETDLGCODE request from Windows.
 	Most controls will have their own specific implementation, so we override
 	to just call the controls wndproc."
-	
-	^self defaultWindowProcessing: anEvent!
+
+	^anEvent defaultWindowProcessing!
 
 onViewCreated
 	"The receiver's window has been created. Copy any instance variable information

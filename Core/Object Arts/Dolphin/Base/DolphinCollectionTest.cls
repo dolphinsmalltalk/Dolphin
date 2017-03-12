@@ -5,7 +5,7 @@ DolphinTest subclass: #DolphinCollectionTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-DolphinCollectionTest guid: (GUID fromString: '{C0608062-BC41-43CF-AEFC-C89E6B500E6D}')!
+DolphinCollectionTest guid: (GUID fromString: '{c0608062-bc41-43cf-aefc-c89e6b500e6d}')!
 DolphinCollectionTest comment: ''!
 !DolphinCollectionTest categoriesForClass!Unclassified! !
 !DolphinCollectionTest methodsFor!
@@ -18,6 +18,66 @@ assimilateElements: aCollection
 
 newCollection: aCollection
 	^self collectionClass withAll: (self assimilateElements: aCollection)!
+
+testAllSatisfy
+	| subject |
+	subject := self newCollection: #().
+	"Empty should satisfy any predicate"
+	self assert: (subject allSatisfy: [:each | false]).
+	"Test with one, two, more than two elements"
+	1 to: 3
+		do: 
+			[:i |
+			| elems visited |
+			elems := (1 to: i) collect: [:c | self assimilate: c].
+			subject := self newCollection: elems.
+			visited := OrderedCollection new.
+			self
+				assert: (subject allSatisfy: 
+							[:e |
+							visited add: e.
+							e between: elems first and: elems last]).
+			self assert: elems asSet equals: visited asSet.
+			"Fail on first, middle, last"
+			elems keysAndValuesDo: 
+					[:k :c |
+					visited := OrderedCollection new.
+					self
+						deny: (subject allSatisfy: 
+									[:e |
+									visited add: e.
+									visited size < k]).
+					self assert: (subject asArray copyFrom: 1 to: k) equals: visited asArray]]!
+
+testAnySatisfy
+	| subject |
+	subject := self newCollection: #().
+	"Empty should not satisfy any predicate"
+	self deny: (subject anySatisfy: [:each | true]).
+	"Test with one, two, more than two elements"
+	1 to: 3
+		do: 
+			[:i |
+			| elems visited |
+			elems := (1 to: i) collect: [:c | self assimilate: c].
+			subject := self newCollection: elems.
+			visited := OrderedCollection new.
+			"None satisfy - whole collection evaluated against predicate"
+			self deny: (subject anySatisfy: 
+							[:e |
+							visited add: e.
+							false]).
+			self assert: elems asSet equals: visited asSet.
+			"Find a match on first, middle, last"
+			elems keysAndValuesDo: 
+					[:k :c |
+					visited := OrderedCollection new.
+					self
+						assert: (subject anySatisfy: 
+									[:e |
+									visited add: e.
+									visited size = k]).
+					self assert: (subject asArray copyFrom: 1 to: k) equals: visited asArray]]!
 
 testDistinct
 	| result |
@@ -52,6 +112,8 @@ testFold
 !DolphinCollectionTest categoriesFor: #assimilate:!private!unit tests! !
 !DolphinCollectionTest categoriesFor: #assimilateElements:!helpers!private! !
 !DolphinCollectionTest categoriesFor: #newCollection:!helpers!private! !
+!DolphinCollectionTest categoriesFor: #testAllSatisfy!public! !
+!DolphinCollectionTest categoriesFor: #testAnySatisfy!public! !
 !DolphinCollectionTest categoriesFor: #testDistinct!public!unit tests! !
 !DolphinCollectionTest categoriesFor: #testFold!public!unit tests! !
 

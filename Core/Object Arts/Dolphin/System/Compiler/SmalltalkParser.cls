@@ -70,14 +70,6 @@ errorBlock: aBlock
 errorPosition
 	^currentToken start!
 
-evaluateStatements: anStSequenceNode
-	methodClass isNil ifTrue: [^nil].
-	^
-	[Compiler evaluate: (self source copyFrom: anStSequenceNode start to: anStSequenceNode stop)
-		for: methodClass instanceClass]
-			on: Error
-			do: [:ex | self parserError: CErrErrorInStaticExpression range: anStSequenceNode sourceInterval]!
-
 externalReferenceTypeFor: anInteger 
 	^(ExternalDescriptor referenceTypeFor: anInteger) ifNil: [ExtCallArgLPPVOID]!
 
@@ -268,11 +260,11 @@ parseCascadeMessage
 				receiver := node receiver.
 				messages := OrderedCollection new: 3.
 				semicolons := OrderedCollection new: 3.
-				messages add: node.
+				messages addLast: node.
 				[currentToken isSpecial: $;] whileTrue: 
 						[semicolons add: currentToken start.
 						self step.
-						(self parseCascadedMessageFor: receiver) ifNotNil: [:msg | messages add: msg]].
+						(self parseCascadedMessageFor: receiver) ifNotNil: [:msg | messages addLast: msg]].
 				node := self cascadeNodeClass messages: messages semicolons: semicolons].
 	^node!
 
@@ -628,8 +620,7 @@ parseOptimizedExpression
 		body: body
 		right: (isClosed ifTrue: [currentToken start] ifFalse: [scanner previousStepPosition]).
 	isClosed ifFalse: [self parserError: CErrStaticExprNotClosed range: node sourceInterval].
-	#rbFix.	"Evaluate the expression now to record its value."
-	node value: (self evaluateStatements: body).
+	node source: source.
 	self step.
 	^node!
 
@@ -1036,7 +1027,6 @@ variableNodeClass
 !SmalltalkParser categoriesFor: #errorBlock!accessing!error handling!public! !
 !SmalltalkParser categoriesFor: #errorBlock:!accessing!public! !
 !SmalltalkParser categoriesFor: #errorPosition!error handling!public! !
-!SmalltalkParser categoriesFor: #evaluateStatements:!parsing!private! !
 !SmalltalkParser categoriesFor: #externalReferenceTypeFor:!parsing!private! !
 !SmalltalkParser categoriesFor: #initialize!initializing!public! !
 !SmalltalkParser categoriesFor: #initializeParserWith:!initializing!private! !

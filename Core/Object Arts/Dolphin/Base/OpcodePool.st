@@ -93,6 +93,7 @@ OpcodePool at: 'ShortSendSelfZeroArgs' put: 16rAB!
 OpcodePool at: 'ShortSendTwoArgs' put: 16rBE!
 OpcodePool at: 'ShortSendZeroArgs' put: 16r9E!
 OpcodePool at: 'ShortSpecialSend' put: 16r7E!
+OpcodePool at: 'ShortSpecialSendEx' put: 16rC8!
 OpcodePool at: 'ShortStoreTemp' put: 16r45!
 OpcodePool at: 'SpecialSend' put: 16rDA!
 OpcodePool at: 'StoreInstVar' put: 16rD0!

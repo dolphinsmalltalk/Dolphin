@@ -5,7 +5,7 @@ BrowserEnvironmentWrapper subclass: #VariableEnvironment
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-VariableEnvironment guid: (GUID fromString: '{E9CADA30-17FA-4434-96E9-1E962BB36333}')!
+VariableEnvironment guid: (GUID fromString: '{e9cada30-17fa-4434-96e9-1e962bb36333}')!
 VariableEnvironment comment: 'VariableEnvironment defines a set of methods (and their classes) that read and/or write to any of a set of named instance and class variables. It is used to implement the browse variable references, readers & writers commands in the browsers.
 
 

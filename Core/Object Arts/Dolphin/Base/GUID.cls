@@ -109,10 +109,10 @@ isNull
 	^self = self class null!
 
 notNull
-	"Answer whether the receiver is a null external data item
-	(that is, a null pointer, or a nilled out structure)."
+	"Answer whether the receiver is a null external data item (that is, a null pointer, or a
+	nilled out structure)."
 
-	^self isNull == false!
+	^self isNull not!
 
 printOn: aStream
 	"Append a textual representation of the receiver to aStream."

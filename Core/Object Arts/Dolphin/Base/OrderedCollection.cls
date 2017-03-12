@@ -5,7 +5,7 @@ SequencedGrowableCollection variableSubclass: #OrderedCollection
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-OrderedCollection guid: (GUID fromString: '{87B4C523-026E-11D3-9FD7-00A0CC3E4A32}')!
+OrderedCollection guid: (GUID fromString: '{87b4c523-026e-11d3-9fd7-00a0cc3e4a32}')!
 OrderedCollection comment: 'OrderedCollections store an ordered, contiguous sequence of elements. They are much like resizable arrays'!
 !OrderedCollection categoriesForClass!Collections-Sequenceable! !
 !OrderedCollection methodsFor!
@@ -81,6 +81,26 @@ addLast: newObject
 	lastIndex := lastIndex + 1.
 	^self basicAt: lastIndex put: newObject!
 
+allSatisfy: discriminator
+	"Answer whether the <monadicValuable>, discriminator, evaluates to true for
+	every element of the receiver."
+
+	"Implementation Note: Override in order to provide an optimized implementation that requires
+	neither a full block nor bounds checks."
+
+	firstIndex to: lastIndex do: [:i | (discriminator value: (self basicAt: i)) ifFalse: [^false]].
+	^true!
+
+anySatisfy: discriminator
+	"Answer whether the <monadicValuable>, discriminator, evaluates to true for
+	any element of the receiver."
+
+	"Implementation Note: Override in order to provide an optimized implementation that requires
+	neither a full block nor bounds checks."
+
+	firstIndex to: lastIndex do: [:i | (discriminator value: (self basicAt: i)) ifTrue: [^true]].
+	^false!
+
 asOrderedCollection
 	"Answer an OrderedCollection containing the same elements as the receiver.
 	No conversion is required in this case."
@@ -150,9 +170,17 @@ do: operation
 	"Evaluate monadic value argument, operation, for each of the element of the 
 	receiver. Answers the receiver."
 
-	"Implementation Note: Override to avoid error checking in #at: for better performance."
+	"Implementation Note: Override to avoid bounds checking in #at: for better performance."
 
 	firstIndex to: lastIndex do: [:i | operation value: (self basicAt: i)]!
+
+first
+	"Answer an <Object> which is the first element of the receiver. Raise an exception if the
+	receiver contains no elements."
+
+	"Implementation Note: Override to provide an optimized implementation."
+
+	^firstIndex <= lastIndex ifTrue: [self basicAt: firstIndex] ifFalse: [self errorSubscriptBounds: 1]!
 
 firstIndex: first lastIndex: last
 	"Private - Initialize the receiver's first and last indices."
@@ -223,6 +251,14 @@ isEmpty
 	Implementation Note: Override superclass to provide a more efficient implementation."
 
 	^firstIndex > lastIndex!
+
+last
+	"Answer the <Object> which is the last element of the receiver. Raise an exception if the
+	receiver contains no elements."
+
+	"Implementation Note: Override to provide an optimized implementation."
+
+	^firstIndex <= lastIndex ifTrue: [self basicAt: lastIndex] ifFalse: [self errorSubscriptBounds: 0]!
 
 makeRoomAtEndFor: anInteger
 	"Private - Make room at the end of the receiver to accomodate at least anInteger
@@ -417,6 +453,8 @@ uncheckedFrom: startInteger to: stopInteger keysAndValuesDo: aDyadicValuable
 !OrderedCollection categoriesFor: #addAnsweringIndex:!adding!public! !
 !OrderedCollection categoriesFor: #addFirst:!adding!public! !
 !OrderedCollection categoriesFor: #addLast:!adding!public! !
+!OrderedCollection categoriesFor: #allSatisfy:!enumerating!public! !
+!OrderedCollection categoriesFor: #anySatisfy:!enumerating!public! !
 !OrderedCollection categoriesFor: #asOrderedCollection!converting!public! !
 !OrderedCollection categoriesFor: #at:!accessing!public! !
 !OrderedCollection categoriesFor: #at:ifAbsent:!accessing!public! !
@@ -425,12 +463,14 @@ uncheckedFrom: startInteger to: stopInteger keysAndValuesDo: aDyadicValuable
 !OrderedCollection categoriesFor: #copyWith:!copying!public! !
 !OrderedCollection categoriesFor: #copyWithout:!copying!public! !
 !OrderedCollection categoriesFor: #do:!enumerating!public! !
+!OrderedCollection categoriesFor: #first!accessing!public! !
 !OrderedCollection categoriesFor: #firstIndex:lastIndex:!accessing!private! !
 !OrderedCollection categoriesFor: #includes:!public!searching! !
 !OrderedCollection categoriesFor: #initialize!initializing!public! !
 !OrderedCollection categoriesFor: #inject:into:!enumerating!public! !
 !OrderedCollection categoriesFor: #insert:before:!adding!private! !
 !OrderedCollection categoriesFor: #isEmpty!public!testing! !
+!OrderedCollection categoriesFor: #last!accessing!public! !
 !OrderedCollection categoriesFor: #makeRoomAtEndFor:!adding!private! !
 !OrderedCollection categoriesFor: #makeRoomAtFirstFor:!adding!private! !
 !OrderedCollection categoriesFor: #nextIdentityIndexOf:from:to:!public!searching! !

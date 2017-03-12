@@ -5,7 +5,7 @@ StringTest subclass: #SymbolTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-SymbolTest guid: (GUID fromString: '{DA460501-580D-4216-8409-405AB77A12AA}')!
+SymbolTest guid: (GUID fromString: '{da460501-580d-4216-8409-405ab77a12aa}')!
 SymbolTest comment: 'This is the unit test for the class Symbol. Unit tests are a good way to exercise the functionality of your system in a repeatable and automatic manner. They are therefore recommended if you plan to release anything. For more information, see: 
 	- http://www.c2.com/cgi/wiki?UnitTest
 	- http://minnow.cc.gatech.edu/squeak/1547
@@ -50,11 +50,25 @@ testPrintLiteral
 testPrintString
 	"Test whether all non-literal symbols print correctly as quoted symbols"
 
-	Symbol allSubinstances do: 
-			[:each | 
+	"Unquoted"
+
+	(#('at:' 'a') union: VMLibrary default specialSelectors) do: 
+			[:each |
+			| print sym |
+			sym := each asSymbol.
+			"Sanity check"
+			self assert: (SmalltalkScanner isSelector: sym).
+			print := sym printString.
+			self deny: (print includes: $')].
+	"Quoted, e.g. integers, and symbols containing other syntactically relevant characters"
+	#('' '1' 'A#' 'PL/M' '::' '!!STL' 'Object class' 'reply-to') do: 
+			[:each |
+			"Sanity check"
 			| print |
-			print := each printString.
-			self assert: ((print at: 2) == $' or: [SmalltalkScanner isSelector: each])]!
+			self deny: (SmalltalkScanner isSelector: each).
+			"Should print quoted"
+			print := each asSymbol printString.
+			self assert: (print second == $' and: [print last == $'])]!
 
 testReplaceFromToWithStartingAt
 	self 

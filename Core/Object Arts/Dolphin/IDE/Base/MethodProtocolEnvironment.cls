@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 BrowserEnvironmentWrapper subclass: #MethodProtocolEnvironment
 	instanceVariableNames: 'protocols'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-MethodProtocolEnvironment guid: (GUID fromString: '{E2DCA651-3BDB-4A9E-A4A7-C13ED6B54082}')!
+MethodProtocolEnvironment guid: (GUID fromString: '{e2dca651-3bdb-4a9e-a4a7-c13ed6b54082}')!
 MethodProtocolEnvironment comment: 'MethodProtocolEnvironment is a Dolphin specific <BrowserEnvironment> that represents the classes that conform to a set of Dolphin method protocols.
 
 Note the confusion of terminology with the Refactory ProtocolEnvironment class. The latter is using the old Smallltalk-80 terminology - in Dolphin we refer to Smalltalk-80 "protocols" as "method categories".

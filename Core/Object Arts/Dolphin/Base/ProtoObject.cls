@@ -5,17 +5,15 @@ nil subclass: #ProtoObject
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ProtoObject guid: (GUID fromString: '{30771B7B-8BF6-4C81-8D54-7ED3B247A81D}')!
+ProtoObject guid: (GUID fromString: '{30771b7b-8bf6-4c81-8d54-7ed3b247a81d}')!
 ProtoObject comment: 'ProtoObject is an abstract class that can be used as a basis for creating a variety of "stub" subclasses.  It supplies the minimum protocol that might be useful for any such stub in order that inspection and debugging may successfully take place.'!
 !ProtoObject categoriesForClass!System-Support! !
 !ProtoObject methodsFor!
 
 ~~ comparand
-	"Answer whether the <Object>, comparand,  is NOT identical to the receiver.
-	Implementation Note: This is faster than the obvious '^(self == anObject) not'
-	because of Compiler optimisation of #==."
+	"Answer whether the <Object>, comparand,  is NOT identical to the receiver."
 
-	^(self == comparand) == false!
+	^(self == comparand) not!
 
 == comparand
 	"Answer whether the <Object>, comparand, is the same, identical, 

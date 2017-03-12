@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 WindowsEvent subclass: #ScrollEvent
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ScrollEvent guid: (GUID fromString: '{87B4C552-026E-11D3-9FD7-00A0CC3E4A32}')!
+ScrollEvent guid: (GUID fromString: '{87b4c552-026e-11d3-9fd7-00a0cc3e4a32}')!
 ScrollEvent comment: ''!
 !ScrollEvent categoriesForClass!Events!MVP-Views-Events! !
 !ScrollEvent methodsFor!
@@ -70,7 +70,7 @@ pos
 				maskIn: SIF_TRACKPOS;
 				yourself.
 	^(UserLibrary default 
-		getScrollInfo: hWnd
+		getScrollInfo: self hwnd
 		fnBar: (message = WM_HSCROLL ifTrue: [SB_HORZ] ifFalse: [SB_VERT])
 		lpsi: struct) ifTrue: [struct nTrackPos] ifFalse: [wParam highWord]!
 

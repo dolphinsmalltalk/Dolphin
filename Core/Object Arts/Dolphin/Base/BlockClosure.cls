@@ -245,10 +245,10 @@ ensure: terminationBlock
 	contains a non-local return, in which case the result of <terminationBlock> will be
 	answered to its home contexts sender, e.g.:
 
-		[^1. 2] ensure2: [Sound bell]		answers 1, but also woofs
-		[^1. 2] ensure2: [Sound bell. 3]	woofs and answers 3.
-		[1. 2] ensure2: [Sound bell. ^3]	ditto
-		[1. 2] ensure2: [Sound bell. 3]	woofs and answers 2
+		[^1. 2] ensure: [Sound bell. 3]		answers 1, but also woofs
+		[^1. 2] ensure: [Sound bell. ^3]	woofs and answers 3.
+		[1. 2] ensure: [Sound bell. ^3]	ditto
+		[1. 2] ensure: [Sound bell. 3]	woofs and answers 2
 
 	See also #ifCurtailed:"
 

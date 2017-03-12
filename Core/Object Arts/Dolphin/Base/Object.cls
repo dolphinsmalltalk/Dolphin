@@ -5,7 +5,7 @@ nil subclass: #Object
 	classVariableNames: '_AssertionFailureSignal _DependentsRegister _EventsRegister _PropertyRegister'
 	poolDictionaries: '_InstanceBehaviorMasks'
 	classInstanceVariableNames: ''!
-Object guid: (GUID fromString: '{87B4C451-026E-11D3-9FD7-00A0CC3E4A32}')!
+Object guid: (GUID fromString: '{87b4c451-026e-11d3-9fd7-00a0cc3e4a32}')!
 Object comment: 'Object is the abstract root of the standard Smalltalk class hierarchy. It has no instance variables (indeed it must not have any), but provides behavior common to all objects.
 
 Instance Variables:
@@ -79,17 +79,17 @@ _deepenShallowCopy: clone trail: copiesDictionary
 
 ~~ comparand
 	"Answer whether the <Object>, comparand,  is NOT identical to the receiver.
-	Implementation Note: This is faster than the obvious '^(self == anObject) not'
-	because of Compiler optimisation of #==."
 
-	^(self == comparand) == false!
+	N.B. This implementation cannot be overridden, and is never, in fact, received (unless
+	#perform'd), because #~~ is inlined by the Compiler and implemented by a specific VM
+	instruction."
+
+	^(self == comparand) not!
 
 ~= comparand
-	"Answer whether the <Object>, comparand, is NOT equivalent to the receiver.
-	Implementation Note: This is faster than '^(self = anObject) not' because
-	of Compiler optimisation of #==."
+	"Answer whether the <Object>, comparand, is NOT equivalent to the receiver."
 
-	^(self = comparand) == false!
+	^(self = comparand) not!
 
 = comparand
 	"Answer whether the receiver and the <Object>, comparand, 

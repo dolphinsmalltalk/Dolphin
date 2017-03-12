@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk XP"!
+"Filed out from Dolphin Smalltalk 7"!
 
 BrowserEnvironmentWrapper subclass: #AndEnvironment
 	instanceVariableNames: 'andedEnvironment'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-AndEnvironment guid: (GUID fromString: '{43ED7ADB-6481-4A93-8EBE-B0861FC1AC52}')!
+AndEnvironment guid: (GUID fromString: '{43ed7adb-6481-4a93-8ebe-b0861fc1ac52}')!
 AndEnvironment comment: ''!
 !AndEnvironment categoriesForClass!Refactory-Environments! !
 !AndEnvironment methodsFor!
@@ -20,8 +20,7 @@ classesDo: aBlock
 	environment 
 		classesDo: [:each | (self includesClass: each) ifTrue: [aBlock value: each]]!
 
-definesClass: aClass 
-	#rbFix.	"Added"
+definesClass: aClass
 	^(environment definesClass: aClass) and: [andedEnvironment definesClass: aClass]!
 
 includesCategory: aCategory 

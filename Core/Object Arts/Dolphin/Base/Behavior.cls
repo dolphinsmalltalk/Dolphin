@@ -5,7 +5,7 @@ Object subclass: #Behavior
 	classVariableNames: '_NullMethodDictionary'
 	poolDictionaries: '_BehaviorMasks'
 	classInstanceVariableNames: ''!
-Behavior guid: (GUID fromString: '{87B4C459-026E-11D3-9FD7-00A0CC3E4A32}')!
+Behavior guid: (GUID fromString: '{87b4c459-026e-11d3-9fd7-00a0cc3e4a32}')!
 Behavior comment: 'Class Behavior is the abstract class which defines the minimum state necessary for objects that have instances, providing the basic information about those instances to the Compiler and the VM.
 
 Instance Variables:
@@ -758,11 +758,11 @@ referenceFilterFor: anObject
 	"Private - Answer a <monadicValuable> that when evaluated for a <CompiledMethod> answers
 	true if the method references anObject, or false if not."
 
-	| index |
 	anObject isSymbol
 		ifTrue: 
-			[index := VMLibrary default indexOfSpecialSelector: anObject ifAbsent: [0].
-			index ~= 0
+			[| index |
+			index := VMLibrary default indexOfSpecialSelector: anObject ifAbsent: [].
+			index notNil
 				ifTrue: [^[:each | (each refersToLiteral: anObject) or: [each sendsSpecialSelector: index]]]]
 		ifFalse: 
 			[(anObject isKindOf: VariableBinding)

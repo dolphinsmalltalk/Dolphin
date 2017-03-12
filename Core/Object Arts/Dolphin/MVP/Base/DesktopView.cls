@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 View subclass: #DesktopView
 	instanceVariableNames: 'resolution defaultExtentBlock dvReserved1 dvReserved2'
 	classVariableNames: 'Current'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-DesktopView guid: (GUID fromString: '{87B4C70E-026E-11D3-9FD7-00A0CC3E4A32}')!
+DesktopView guid: (GUID fromString: '{87b4c70e-026e-11d3-9fd7-00a0cc3e4a32}')!
 DesktopView comment: 'DesktopView is a <compositeView> representing the Windows desktop. 
 
 Instance Variables:
@@ -211,7 +211,7 @@ onViewActivated: anEvent
 	procedures implementation."
 
 	self trigger: #viewActivated.
-	^self defaultWindowProcessing: anEvent!
+	^anEvent defaultWindowProcessing!
 
 onViewDeactivated: anEvent
 	"Default handler for window de-activation.
@@ -220,7 +220,7 @@ onViewDeactivated: anEvent
 	procedures implementation."
 
 	self trigger: #viewDeactivated.
-	^self defaultWindowProcessing: anEvent!
+	^anEvent defaultWindowProcessing!
 
 onViewMinimized: anEvent
 	"Default handler for window iconification.
@@ -229,7 +229,7 @@ onViewMinimized: anEvent
 	procedures implementation."
 
 	self presenter trigger: #viewMinimized.
-	^self defaultWindowProcessing: anEvent!
+	^anEvent defaultWindowProcessing!
 
 onViewRestored: anEvent
 	"Default handler for window restoration from iconic state.
@@ -238,7 +238,7 @@ onViewRestored: anEvent
 	as <ShellView>."
 
 	self presenter trigger: #viewRestored.
-	^self defaultWindowProcessing: anEvent!
+	^anEvent defaultWindowProcessing!
 
 performCommand: aCommand
 	"Performs aCommand on the receiver and answer the result.

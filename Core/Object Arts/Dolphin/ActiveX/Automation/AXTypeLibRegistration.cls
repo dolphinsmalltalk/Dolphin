@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #AXTypeLibRegistration
 	instanceVariableNames: 'description guidString versionString minor major'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-AXTypeLibRegistration guid: (GUID fromString: '{187AAA33-6992-4CFC-BAC1-E8A4CB9EA0F9}')!
+AXTypeLibRegistration guid: (GUID fromString: '{187aaa33-6992-4cfc-bac1-e8a4cb9ea0f9}')!
 AXTypeLibRegistration comment: 'AXTypeLibRegistration is a simple class to hold registration information for a type library which might not yet be loaded.
 
 Instance Variables:
@@ -25,10 +25,10 @@ Instance Variables:
 		or: [self description = operand and: [self versionString < operand versionString]]!
 
 <= operand
-	"Answer whether the receiver collates before or the same as the <AXTypeLibRegistration>, 
+	"Answer whether the receiver collates before or the same as the <AXTypeLibRegistration>,
 	operand. Handy for sorting."
 
-	^(operand < self) == false!
+	^(operand < self) not!
 
 = comparand
 	"Answer whether the receiver and the <Object>, comparand, 

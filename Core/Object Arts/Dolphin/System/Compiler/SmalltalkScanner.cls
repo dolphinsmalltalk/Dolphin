@@ -5,7 +5,7 @@ Object subclass: #SmalltalkScanner
 	classVariableNames: 'ClassificationTable EscapeChars PatternVariableCharacter'
 	poolDictionaries: 'SmalltalkParseErrorCodes'
 	classInstanceVariableNames: ''!
-SmalltalkScanner guid: (GUID fromString: '{F76F2335-9125-488E-A570-5A759A6E67B7}')!
+SmalltalkScanner guid: (GUID fromString: '{f76f2335-9125-488e-a570-5a759a6e67b7}')!
 SmalltalkScanner addClassConstant: 'ClassificationTable' value: #(nil nil nil nil nil nil nil nil #separator #separator #separator #separator #separator nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil #separator #binary nil nil nil #binary #binary nil #special #special #binary #binary #binary #binary #special #binary #digit #digit #digit #digit #digit #digit #digit #digit #digit #digit #special #special #binary #binary #binary #binary #binary #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #special #binary #special #special #alphabetic nil #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic nil #binary nil #binary nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil)!
 SmalltalkScanner comment: 'SmalltalkScanner is the Smalltalk lexical analyzer. It converts source text to a stream of <StToken>''s.
 
@@ -110,7 +110,6 @@ extendedLiteralExpected
 
 getComments
 	| oldComments |
-	comments isNil ifTrue: [^nil].
 	oldComments := comments.
 	comments := nil.
 	^oldComments!
@@ -173,12 +172,12 @@ next
 	| token |
 	buffer reset.
 	tokenStart := stream position.
-	token := characterType == #eof 
-				ifTrue: 
-					[StToken start: tokenStart + 1	"The EOF token should occur after the end of input"]
+	token := characterType == #eof
+				ifTrue: [StToken start: tokenStart + 1	"The EOF token should occur after the end of input"]
 				ifFalse: [self scanToken].
 	self stripSeparators.
-	token comments: self getComments.
+	token comments: comments.
+	comments := nil.
 	^token!
 
 notificationClass
@@ -275,7 +274,7 @@ scanBinary: aClass
 	| val |
 	buffer nextPut: currentCharacter.
 	self step.
-	[characterType == #binary and: [currentCharacter == $- == false]] whileTrue: 
+	[characterType == #binary and: [currentCharacter ~~ $-]] whileTrue: 
 			[buffer nextPut: currentCharacter.
 			self step].
 	val := buffer contents.
@@ -410,7 +409,7 @@ scanLiteralString
 	self step.
 	
 	[currentCharacter isNil ifTrue: [^self unterminatedString].
-	currentCharacter == $' and: [self step == $' == false]]
+	currentCharacter == $' and: [self step ~~ $']]
 			whileFalse: 
 				[buffer nextPut: currentCharacter.
 				self step].
@@ -560,27 +559,22 @@ step
 					classificationTable at: index].
 	^currentCharacter!
 
-stripComment
-	"Private - Skip to the next end-of-comment marker."
-
-	| start stop |
-	start := stream position.
-	
-	[| ch |
-	stream atEnd ifTrue: [^self unterminatedComment: start].
-	ch := stream next.
-	ch == $\n ifTrue: [line := line + 1].
-	ch == $"]
-			whileFalse.
-	stop := stream position.
-	self step.
-	self addComment: (start to: stop)!
-
 stripSeparators
 	
 	[[characterType == #separator] whileTrue: [self step].
-	currentCharacter == $"] 
-			whileTrue: [self stripComment]!
+	currentCharacter == $"] whileTrue: 
+				[| start stop |
+				start := stream position.
+				
+				[| ch |
+				stream atEnd ifTrue: [^self unterminatedComment: start].
+				ch := stream next.
+				ch == $\n ifTrue: [line := line + 1].
+				ch == $"]
+						whileFalse.
+				stop := stream position.
+				self step.
+				self addComment: (start to: stop)]!
 
 unterminatedComment: anInteger 
 	self lexicalError: LErrCommentNotClosed range: (anInteger to: self errorPosition).
@@ -655,7 +649,6 @@ unterminatedString
 !SmalltalkScanner categoriesFor: #scanToken!accessing!public! !
 !SmalltalkScanner categoriesFor: #separatorsInLiterals:!accessing!private! !
 !SmalltalkScanner categoriesFor: #step!operations!private! !
-!SmalltalkScanner categoriesFor: #stripComment!private!scanning! !
 !SmalltalkScanner categoriesFor: #stripSeparators!private!scanning! !
 !SmalltalkScanner categoriesFor: #unterminatedComment:!error handling!private! !
 !SmalltalkScanner categoriesFor: #unterminatedQualifiedRef!error handling!private! !
