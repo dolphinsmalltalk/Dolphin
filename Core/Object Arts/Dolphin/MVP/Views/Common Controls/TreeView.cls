@@ -67,16 +67,13 @@ addRoot: anObject
 	self hasLinesAtRoot ifFalse: [self expand: anObject]!
 
 addVirtualItems: aCollection insertStruct: aTVINSERTSTRUCT
-	| tvItem |
-	tvItem := aTVINSERTSTRUCT item.
-	tvItem allCallbacks.
+	aTVINSERTSTRUCT item allCallbacks.
 	self withOldWndProc: 
 			["Add items with subclassing removed so don't receive TVM_INSERTITEMs"
-
 			aCollection do: 
-					[:each | 
+					[:each |
 					| hItem |
-					hItem := self 
+					hItem := self
 								sendMessage: TVM_INSERTITEM
 								wParam: 0
 								lpParam: aTVINSERTSTRUCT.
@@ -564,7 +561,7 @@ nmNotify: pNMHDR
 		ifNil: [super nmNotify: pNMHDR]
 		ifNotNil: [:action | self perform: action with: pNMHDR]!
 
-nmRClick: pNMHDR 
+nmRClick: pNMHDR
 	"Handle the NM_RCLICK notification message. 
 	Implementation Note: We make some slight modifications to the TreeView control's default behaviour here:
 		1) Add selection on right click.
@@ -583,16 +580,16 @@ nmRClick: pNMHDR
 	curSel := self selectionByIndex.
 	(newSel = curSel or: 
 			["Selection change permitted?"
-			(self 
+			(self
 				onSelChangingFrom: (self objectFromHandle: curSel ifAbsent: [])
 				to: (self objectFromHandle: newSel ifAbsent: [])
 				cause: #mouse) and: 
 						[self selectionByIndex: newSel.
-						true]]) 
+						true]])
 		ifTrue: 
-			[self 
+			[self
 				sendMessage: WM_CONTEXTMENU
-				wParam: self asParameter
+				wParam: handle
 				lParam: pt asUIntPtr].
 	"Suppress default processing"
 	^true!

@@ -5,7 +5,7 @@ Object subclass: #InputState
 	classVariableNames: 'EnumHandlesDescriptor SamplingInterval UserInterruptSignal'
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: 'maxIdleSleep'!
-InputState guid: (GUID fromString: '{87B4C494-026E-11D3-9FD7-00A0CC3E4A32}')!
+InputState guid: (GUID fromString: '{87b4c494-026e-11d3-9fd7-00a0cc3e4a32}')!
 InputState comment: '<InputState> is a singleton responsible for managing the windows message loop and related <Process>es.
 
 Instance Variables:
@@ -656,7 +656,7 @@ windows
 
 	^windows!
 
-wndProc: hWnd message: message wParam: wParam lParam: lParam cookie: cookie 
+wndProc: hWnd message: message wParam: wParam lParam: lParam cookie: cookie
 	"Private - Dispatch a Windows message to the appropriate event handler of the view whose
 	handle is hWnd. If the window handle is not registered, then the default window procedure is
 	invoked."
@@ -669,15 +669,15 @@ wndProc: hWnd message: message wParam: wParam lParam: lParam cookie: cookie
 	disabled."
 
 	| window |
-	lastWindow asParameter = hWnd 
+	lastWindow asParameter = hWnd
 		ifTrue: [window := lastWindow]
 		ifFalse: 
 			[window := windows at: hWnd ifAbsent: [].
-			window isNil 
+			window isNil
 				ifTrue: 
 					[^Processor callback: cookie
 						evaluate: 
-							[UserLibrary default 
+							[UserLibrary default
 								defWindowProc: hWnd
 								msg: message
 								wParam: wParam
@@ -686,11 +686,11 @@ wndProc: hWnd message: message wParam: wParam lParam: lParam cookie: cookie
 	^Processor
 		enableAsyncEvents: true;
 		callback: cookie
-			evaluate: 
-				[(window 
+			return: ([(window
 					dispatchMessage: message
 					wParam: wParam
-					lParam: lParam) asUIntPtr]! !
+					lParam: lParam) asUIntPtr]
+					ifCurtailed: [Processor unwindCallback: cookie])! !
 !InputState categoriesFor: #aboutToForkUI!idling!private! !
 !InputState categoriesFor: #aboutToIdle!idling!public! !
 !InputState categoriesFor: #consoleStartup!operations-startup!private! !

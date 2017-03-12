@@ -163,13 +163,12 @@ onViewDestroyed
 	self freeTheme!
 
 openTheme
-	theme := super isThemed 
-				ifTrue: 
-					[ThemeLibrary default openThemeData: self asParameter pszClassList: 'EXPLORERBAR' asUnicodeString].
+	theme := super isThemed
+				ifTrue: [ThemeLibrary default openThemeData: handle pszClassList: 'EXPLORERBAR' asUnicodeString].
 	pinSize := SystemMetrics current smallIconExtent asParameter.
-	theme isNull 
+	theme isNull
 		ifFalse: 
-			[ThemeLibrary default 
+			[ThemeLibrary default
 				getThemePartSize: theme
 				hdc: nil
 				iPartId: EBP_HEADERPIN

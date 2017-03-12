@@ -28,9 +28,10 @@ TVITEM is used to communicate information about the items (nodes) in a Tree View
 allCallbacks
 	"Set up the receiver to specify that callbacks are required for image, children count, and label text."
 
-	self iImage: I_IMAGECALLBACK.
-	self cChildren: I_CHILDRENCALLBACK.
-	bytes dwordAtOffset: self textPointerOffset put: LPSTR_TEXTCALLBACK.
+	bytes
+		sdwordAtOffset: ##(self offsetOf: #iImage) put: I_IMAGECALLBACK;
+		sdwordAtOffset: ##(self offsetOf: #cChildren) put: I_CHILDRENCALLBACK;
+		dwordAtOffset: ##(self offsetOf: #pszText) put: LPSTR_TEXTCALLBACK.
 	self maskIn: ##(TVIF_TEXT | TVIF_CHILDREN | TVIF_IMAGE)!
 
 beStateExpandedOnce
@@ -198,7 +199,7 @@ stateValidMask
 textPointerOffset
 	"Private - Answer the offset of the text pointer in the receiver. "
 
-	^16!
+	^##(self offsetOf: #pszText)!
 
 textValidMask
 	"Private - Answer the bit mask the receiver uses to denote that the pszText

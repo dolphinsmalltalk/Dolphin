@@ -28,8 +28,9 @@ struct tagLVITEM {
 !LVITEM methodsFor!
 
 allCallbacks
-	self iImage: I_IMAGECALLBACK.
-	bytes dwordAtOffset: self textPointerOffset put: LPSTR_TEXTCALLBACK.
+	bytes
+		sdwordAtOffset: ##(self offsetOf: #iImage) put: I_IMAGECALLBACK;
+		dwordAtOffset: ##(self offsetOf: #pszText) put: LPSTR_TEXTCALLBACK.
 	self maskIn: ##(LVIF_TEXT | LVIF_IMAGE)!
 
 cchTextMaxOffset
@@ -173,7 +174,7 @@ stateValidMask
 textPointerOffset
 	"Private - Answer the offset of the text pointer in the receiver. "
 
-	^20!
+	^##(self offsetOf: #pszText)!
 
 textValidMask
 	"Private - Answer the bit mask the receiver uses to denote that the pszText

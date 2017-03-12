@@ -50,19 +50,15 @@ addBitmap: aBitmap mask: aColorOrNil
 		hbmImage: bmp asParameter
 		crMask: (aColorOrNil isNil ifTrue: [CLR_NONE] ifFalse: [aColorOrNil asColorRef asParameter])!
 
-addIcon: anIcon 
+addIcon: anIcon
 	"Append an icon to the receiver and return the zero-based <integer> index at which it was added. 
 	Answer -1 if the icon could not be added for some reason (we don't throw an error as this is probably 
 	only a cosmetic problem)."
 
-	| index |
-	index := CommCtrlLibrary default 
-				imageList_ReplaceIcon: self asParameter
-				i: -1
-				hicon: anIcon asParameter.
-	index < 0 
-		ifTrue: [Notification signal: self printString , ': Failed to add icon ' , anIcon printString].
-	^index!
+	^CommCtrlLibrary default
+		imageList_ReplaceIcon: self asParameter
+		i: -1
+		hicon: anIcon asParameter!
 
 addImage: anImage
 	"Answer the index at which anImage is added to the receiver or -1 if an error occurs."

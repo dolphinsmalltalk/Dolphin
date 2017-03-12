@@ -27,7 +27,7 @@ asObject
 asRectangle
 	"Answer a new Rectangle that matches the receiver."
 
-	^self topLeft corner: self bottomRight!
+	^Rectangle origin: self topLeft corner: self bottomRight!
 
 bottom
 	"Answer the receiver's bottom field as a Smalltalk object."

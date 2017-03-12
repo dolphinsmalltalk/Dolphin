@@ -36,24 +36,25 @@ clientRectangleOf: aView
 deferRectangles
 	^true!
 
-deferWindowPositions: aSequencedReadableCollection 
-	| hdwp count |
+deferWindowPositions: aSequencedReadableCollection
+	| hdwp count userLib |
 	count := aSequencedReadableCollection size.
 	count == 0 ifTrue: [^self].
-	hdwp := UserLibrary default beginDeferWindowPos: count.
+	userLib := UserLibrary default.
+	hdwp := userLib beginDeferWindowPos: count.
 	aSequencedReadableCollection do: 
-			[:each | 
+			[:each |
 			| rect view flags |
 			view := each at: 1.
 			flags := ##(SWP_NOZORDER | SWP_NOACTIVATE).
-			rect := (each at: 2) 
+			rect := (each at: 2)
 						ifNil: 
 							[flags := flags bitOr: ##(SWP_NOSIZE | SWP_NOMOVE).
 							##(Rectangle new)]
 						ifNotNil: [:r | view adjustRectangle: r].
-			(each at: 3) 
+			(each at: 3)
 				ifNotNil: [:show | flags := flags bitOr: (show ifTrue: [SWP_SHOWWINDOW] ifFalse: [SWP_HIDEWINDOW])].
-			hdwp := UserLibrary default 
+			hdwp := userLib
 						deferWindowPos: hdwp
 						hwnd: view asParameter
 						hwndInsertAfter: 0
@@ -62,7 +63,7 @@ deferWindowPositions: aSequencedReadableCollection
 						cx: rect width
 						cy: rect height
 						uFlags: flags].
-	UserLibrary default endDeferWindowPos: hdwp!
+	userLib endDeferWindowPos: hdwp!
 
 extentOf: aView 
 	"Answer a <Point>, being the window extent (not client extent) of the specified <View>. This
