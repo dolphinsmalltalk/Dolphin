@@ -55,8 +55,8 @@ getScrollPage: anInteger
 	struct := (SCROLLINFO new)
 				maskIn: SIF_PAGE;
 				yourself.
-	UserLibrary default 
-		getScrollInfo: self asParameter
+	UserLibrary default
+		getScrollInfo: handle
 		fnBar: anInteger
 		lpsi: struct.
 	^struct page!
@@ -66,8 +66,8 @@ getScrollRange: anInteger
 	struct := (SCROLLINFO new)
 				maskIn: SIF_RANGE;
 				yourself.
-	UserLibrary default 
-		getScrollInfo: self asParameter
+	UserLibrary default
+		getScrollInfo: handle
 		fnBar: anInteger
 		lpsi: struct.
 	^struct range!
@@ -245,8 +245,8 @@ setScrollInfo: barInteger position: posInteger
 	scrollinfo := (SCROLLINFO new)
 				pos: posInteger;
 				yourself.
-	UserLibrary default 
-		setScrollInfo: self asParameter
+	UserLibrary default
+		setScrollInfo: handle
 		fnBar: barInteger
 		lpsi: scrollinfo
 		fRedraw: true!
@@ -260,8 +260,8 @@ setScrollInfo: barInteger position: positionInteger range: rangeInterval page: p
 				pos: positionInteger;
 				page: pageInteger;
 				yourself.
-	UserLibrary default 
-		setScrollInfo: self asParameter
+	UserLibrary default
+		setScrollInfo: handle
 		fnBar: barInteger
 		lpsi: scrollinfo
 		fRedraw: true!

@@ -541,7 +541,7 @@ onViewCreated
 	bitmapsStart := LookupTable new.
 	self changeButtonSize: [self tbSetBitmapSize: self bitmapSize].
 	#todo.	"Store extended style in an inst. var (appear to be some unused?) and provide accessors/mode settings"
-	self tbSetExtendedStyle: TBSTYLE_EX_DRAWDDARROWS | TBSTYLE_EX_DOUBLEBUFFER.
+	self tbSetExtendedStyle: ##(TBSTYLE_EX_DRAWDDARROWS | TBSTYLE_EX_DOUBLEBUFFER).
 	self clearIdMap.
 	self basicAddItems: items!
 
@@ -585,10 +585,10 @@ tbAddBitmap: struct size: size
 	"Private - Adds the images referenced in struct to the receiver.
 	Answer the index of the first element, or -1 if the call failed."
 
-	| firstIndex |
-	(firstIndex := self sendMessage: TB_ADDBITMAP wParam: size lpParam: struct asParameter) == -1
-		ifTrue: [Notification signal: self printString, ': TB_ADDBITMAP(', size printString, ', ', struct printString, ') failed'].
-	^firstIndex!
+	^self
+		sendMessage: TB_ADDBITMAP
+		wParam: size
+		lpParam: struct asParameter!
 
 tbAddButtons: tbButtons
 	"Private - Adds a StructureArray of tbButtons to the receiver."
@@ -604,7 +604,7 @@ tbAddString: aString
 
 	| buffer index |
 
-	buffer := aString copyWith: Character null.	"Last string must have extra null"
+	buffer := aString copyWith: $\0.	"Last string must have extra null"
 	^(index := self sendMessage: TB_ADDSTRING wParam: 0 lpParam: buffer) == -1
 		ifTrue: [self errorInCommonControlCall]
 		ifFalse: [index]!

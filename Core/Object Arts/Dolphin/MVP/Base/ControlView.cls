@@ -42,10 +42,11 @@ defaultWindowProcessing: message wParam: wParam lParam: lParam
 	"Private - Pass a message to the 'default' window procedure of the receiver."
 
 	^UserLibrary default
-		callWindowProc: self oldWndProc
-			hWnd: self asParameter msg: message
-			wParam: wParam lParam: lParam
-!
+		callWindowProc: oldWndProc
+		hWnd: handle
+		msg: message
+		wParam: wParam
+		lParam: lParam!
 
 defaultWindowStyle
 	"Private - Answer a default style to use when creating an instance of the receiver.

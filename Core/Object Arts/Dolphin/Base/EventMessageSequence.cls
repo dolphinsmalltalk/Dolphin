@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 MessageSequenceAbstract subclass: #EventMessageSequence
 	instanceVariableNames: 'receivers messages tally'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-EventMessageSequence guid: (GUID fromString: '{87B4C664-026E-11D3-9FD7-00A0CC3E4A32}')!
+EventMessageSequence guid: (GUID fromString: '{87b4c664-026e-11d3-9fd7-00a0cc3e4a32}')!
 EventMessageSequence comment: ''!
 !EventMessageSequence categoriesForClass!System-Support! !
 !EventMessageSequence methodsFor!
@@ -87,7 +87,7 @@ size
 !EventMessageSequence categoriesFor: #add:!adding!public! !
 !EventMessageSequence categoriesFor: #elementsExpired:of:!finalizing!private! !
 !EventMessageSequence categoriesFor: #initialize!initializing!private! !
-!EventMessageSequence categoriesFor: #messagesDo:!debugger-step through!enumerating!public! !
+!EventMessageSequence categoriesFor: #messagesDo:!debugger-step through!enumerating!private! !
 !EventMessageSequence categoriesFor: #removeMessagesFor:!public!removing! !
 !EventMessageSequence categoriesFor: #size!accessing!public! !
 

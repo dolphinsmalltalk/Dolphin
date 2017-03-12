@@ -143,8 +143,8 @@ onViewDestroyed
 	self freeTheme!
 
 openTheme
-	theme := super isThemed 
-				ifTrue: [ThemeLibrary default openThemeData: self asParameter pszClassList: 'TAB' asUnicodeString]!
+	theme := super isThemed
+				ifTrue: [ThemeLibrary default openThemeData: handle pszClassList: 'TAB' asUnicodeString]!
 
 paintLabel: anInteger on: aCanvas in: aRectangle 
 	| inverted rcItem textExtent labelRect textOffset text tcItem imageIndex |

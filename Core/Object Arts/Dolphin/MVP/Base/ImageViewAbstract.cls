@@ -44,11 +44,11 @@ centered: imageExtent in: displayRect
 default: imageExtent in: displayRect 
 	^self scale: imageExtent in: displayRect!
 
-defaultWindowProcessing: message wParam: wParam lParam: lParam 
+defaultWindowProcessing: message wParam: wParam lParam: lParam
 	"Private - Pass an event to the 'default' window procedure of the receiver."
 
-	^UserLibrary default 
-		defWindowProc: self asParameter
+	^UserLibrary default
+		defWindowProc: handle
 		msg: message
 		wParam: wParam
 		lParam: lParam!

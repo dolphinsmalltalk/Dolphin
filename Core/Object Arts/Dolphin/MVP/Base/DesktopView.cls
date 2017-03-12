@@ -284,7 +284,7 @@ setDefaultButton: button state: setDefault
 	!
 
 setFocus
-	^UserLibrary default setFocus: self asParameter!
+	^UserLibrary default setFocus: handle!
 
 topShell
 	"Answer the first <topPresenter> located in the parent chain of the receiver."

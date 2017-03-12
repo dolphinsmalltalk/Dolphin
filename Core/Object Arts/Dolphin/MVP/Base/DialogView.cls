@@ -60,11 +60,11 @@ defaultWindowProcessing: message wParam: wParam lParam: lParam
 	our own DialogProc() (dialog procs are not WndProcs), which just returns false
 	to get the DefDlgProc() to do its stuff."
 
-	^UserLibrary default 
-		defDlgProc: self asParameter
-			msg: message 
-			wParam: wParam 
-			lParam: lParam!
+	^UserLibrary default
+		defDlgProc: handle
+		msg: message
+		wParam: wParam
+		lParam: lParam!
 
 defaultWindowStyle
 	"Private - Answer the default basic window creation style"
@@ -141,11 +141,11 @@ enableItem: anInteger state: aBoolean
 	^UserLibrary default
 		enableWindow: (self getItem: anInteger) asParameter bEnable: aBoolean!
 
-endDialog: result 
+endDialog: result
 	"Close the receiver with result as the result of the dialog (should be an Integer
 	or convertible to anInteger by asDword)"
 
-	UserLibrary default endDialog: self asParameter nResult: result asUIntPtr!
+	UserLibrary default endDialog: handle nResult: result asUIntPtr!
 
 getItemText: anInteger
 	"Private - Get the text of the receiver's control with the specified id.
@@ -285,18 +285,21 @@ setItem: anInteger icon: anIcon
 	or if a real error occurred!!. The answer is the handle of the previous icon."
 
 	^UserLibrary default
-		sendDlgItemMessage: self asParameter 
-		nIDDlgItem: anInteger 
-		msg: STM_SETICON 
-		wParam: anIcon asParameter 
+		sendDlgItemMessage: handle
+		nIDDlgItem: anInteger
+		msg: STM_SETICON
+		wParam: anIcon asParameter
 		lParam: 0!
 
 setItem: anIntegerId int: anInteger
 	"Private - Set the text of the receiver's control with the specified id to the string
 	representation of anInteger."
 
-	(UserLibrary default setDlgItemInt: self asParameter nIDDlgItem: anIntegerId uValue: anInteger bSigned: anInteger negative)
-		ifFalse: [UserLibrary default systemError]!
+	(UserLibrary default
+		setDlgItemInt: handle
+		nIDDlgItem: anIntegerId
+		uValue: anInteger
+		bSigned: anInteger negative) ifFalse: [UserLibrary default systemError]!
 
 setItem: anInteger text: aString
 	"Private - Set the text of the receiver's control with the specified id."

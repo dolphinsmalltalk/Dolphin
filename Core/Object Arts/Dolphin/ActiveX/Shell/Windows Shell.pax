@@ -111,8 +111,8 @@ documentsDirectory
 
 !View methodsFor!
 
-acceptDroppedFiles: aBoolean 
-	ShellLibrary default dragAcceptFiles: self asParameter fAccept: aBoolean!
+acceptDroppedFiles: aBoolean
+	ShellLibrary default dragAcceptFiles: handle fAccept: aBoolean!
 
 wmDropFiles: msgInteger wParam: wParamInteger lParam: lParamInteger 
 	| files |

@@ -362,17 +362,16 @@ basicPaint: message wParam: wParam lParam: lParam
 	to implement specialized painting. Note that the return value from #onPaintRequired: is
 	ignored."
 
-	| user hWnd ps |
-	hWnd := self asParameter.
+	| user ps |
 	ps := PAINTSTRUCT new.
 	user := UserLibrary default.
 	(user
-		getUpdateRect: hWnd
+		getUpdateRect: handle
 		lpRect: nil
 		bErase: false)
 			ifTrue: 
 				[| hdc |
-				(hdc := user beginPaint: hWnd lpPaint: ps) isNil
+				(hdc := user beginPaint: handle lpPaint: ps) isNil
 					ifFalse: 
 						["Rather than use #ifCurtailed: we use an Error handler so can validate and
 						 prevent recursive walkback"
@@ -385,9 +384,9 @@ basicPaint: message wParam: wParam lParam: lParam
 								on: Error
 								do: 
 									[:e |
-									user endPaint: hWnd lpPaint: ps.
+									user endPaint: handle lpPaint: ps.
 									e pass]].
-				user endPaint: hWnd lpPaint: ps]
+				user endPaint: handle lpPaint: ps]
 			ifFalse: 
 				["No update region, therefore assume an internal paint. We mustn't call
 				 Begin/End paint - see Win32 docs on WM_PAINT."
@@ -404,7 +403,7 @@ basicPaint: message wParam: wParam lParam: lParam
 beActive
 	"Make the receiver the active window."
 
-	^UserLibrary default setActiveWindow: self asParameter!
+	^UserLibrary default setActiveWindow: handle!
 
 beCentered
 	"Position the receiver in the centre of its parent view."
@@ -428,7 +427,7 @@ beDefaultThemed
 beForeground
 	"Make the receiver the foreground window."
 
-	^UserLibrary default setForegroundWindow: self asParameter!
+	^UserLibrary default setForegroundWindow: handle!
 
 beNotThemed
 	"Turns off any visual theme for the receiver. Only effective on Windows XP and above"
@@ -569,7 +568,7 @@ clientRectangle
 
 	| rect |
 	rect := RECT new.
-	UserLibrary default getClientRect: self asParameter lpRect: rect.
+	UserLibrary default getClientRect: handle lpRect: rect.
 	^rect asRectangle!
 
 clientWidth
@@ -844,11 +843,11 @@ defaultWindowProcessing: message wParam: wParam lParam: lParam
 	(usually nil) so that the VM's window procedure does the job for us, but this
 	method can be used where more flexibility in ordering is required."
 
-	^UserLibrary default 
-		defWindowProc: self asParameter 
-			msg: message 
-			wParam: wParam 
-			lParam: lParam!
+	^UserLibrary default
+		defWindowProc: handle
+		msg: message
+		wParam: wParam
+		lParam: lParam!
 
 defaultWindowStyle
 	"Private - Answer the default basic window creation style.
@@ -1333,7 +1332,7 @@ freeTheme
 getDC
 	"Answer a device context to enable drawing on the receiver."
 
-	^UserLibrary default getDC: self asParameter!
+	^UserLibrary default getDC: handle!
 
 getEvents
 	"Private - Answer the EventsCollection belonging to the receiver, or nil if the receiver
@@ -1385,7 +1384,7 @@ getItemHandle: anInteger ifAbsent: exceptionHandler
 	child windows unique id's."
 
 	| hwnd |
-	hwnd := UserLibrary default getDlgItem: self asParameter nIDDlgItem: anInteger.
+	hwnd := UserLibrary default getDlgItem: handle nIDDlgItem: anInteger.
 	^hwnd ifNil: [exceptionHandler value]!
 
 getNoRedrawCount
@@ -1394,7 +1393,7 @@ getNoRedrawCount
 getParent
 	"Private - Answers the handle of the parent (or owner) window."
 
-	^UserLibrary default getParent: self asParameter!
+	^UserLibrary default getParent: handle!
 
 getPreviousSibling
 	"Private - Answers the handle of the previous sibling window (in Zorder sequence)
@@ -1407,18 +1406,19 @@ getScrollInfo: siStruct bar: bar
 	Answer whether values were retrieved."
 
 	^UserLibrary default
-		getScrollInfo: self asParameter fnBar: bar lpsi: siStruct!
+		getScrollInfo: handle
+		fnBar: bar
+		lpsi: siStruct!
 
 getWindow: anInteger
 	"Private - Answers the handle of the window with the specified relationship to the receiver."
 
-	^UserLibrary default getWindow: self asParameter uCmd: anInteger.
-!
+	^UserLibrary default getWindow: handle uCmd: anInteger!
 
 getWindowDC
 	"Private - Answer a device context to enable drawing on the receiver's non client area."
 
-	^UserLibrary default getWindowDC: self asParameter!
+	^UserLibrary default getWindowDC: handle!
 
 getWindowExStyle
 	"Private - Answer the extended window style of the receiver."
@@ -1426,24 +1426,24 @@ getWindowExStyle
 	^self getWindowLong: GWL_EXSTYLE
 !
 
-getWindowLong: anInteger 
+getWindowLong: anInteger
 	"Private - Answer the unsigned intptr value at the specified offset in the receiver."
 
-	^UserLibrary default getWindowLong: self asParameter nIndex: anInteger!
+	^UserLibrary default getWindowLong: handle nIndex: anInteger!
 
-getWindowLongPtr: anInteger 
+getWindowLongPtr: anInteger
 	"Private - Answer the unsigned intptr value at the specified offset in the receiver."
 
-	^VMConstants.IsWin64 
-		ifTrue: [UserLibrary default getWindowLongPtr: self asParameter nIndex: anInteger]
-		ifFalse: [UserLibrary default getWindowLong: self asParameter nIndex: anInteger]!
+	^VMConstants.IsWin64
+		ifTrue: [UserLibrary default getWindowLongPtr: handle nIndex: anInteger]
+		ifFalse: [UserLibrary default getWindowLong: handle nIndex: anInteger]!
 
 getWindowRect
 	"Private - Answer a raw (unmapped) RECT containing the bounding rectangle of the receiver's non-client window."
 
 	| rect |
 	rect := RECT new.
-	UserLibrary default getWindowRect: self asParameter lpRect: rect.
+	UserLibrary default getWindowRect: handle lpRect: rect.
 	^rect!
 
 getWindowStyle
@@ -1458,7 +1458,10 @@ getWindowText
 	| textLen text |
 	textLen := self textLength.
 	text := String new: textLen.
-	UserLibrary default getWindowText: self asParameter lpString: text nMaxCount: textLen+1.
+	UserLibrary default
+		getWindowText: handle
+		lpString: text
+		nMaxCount: textLen + 1.
 	^text!
 
 getWndProc
@@ -1466,9 +1469,9 @@ getWndProc
 
 	"Note: The compiler will optimise out the conditional because it is constant."
 
-	^VMConstants.IsWin64 
-		ifTrue: [UserLibrary default getWindowULongPtr: self asParameter nIndex: GWLP_WNDPROC]
-		ifFalse: [UserLibrary default getWindowULong: self asParameter nIndex: GWL_WNDPROC]!
+	^VMConstants.IsWin64
+		ifTrue: [UserLibrary default getWindowULongPtr: handle nIndex: GWLP_WNDPROC]
+		ifFalse: [UserLibrary default getWindowULong: handle nIndex: GWL_WNDPROC]!
 
 handle
 	"Private - Answer the receiver's handle (an instance of ExternalHandle or nil)."
@@ -1805,14 +1808,12 @@ isDropTarget: aBoolean
 isEnabled
 	"Answer whether the receiver is enabled for input"
 
-	^UserLibrary default isWindowEnabled: self asParameter
-!
+	^UserLibrary default isWindowEnabled: handle!
 
 isEnabled: aBoolean
 	"Set or reset whether the receiver is enabled for user input"
 
-	UserLibrary default enableWindow: self asParameter bEnable: aBoolean
-!
+	UserLibrary default enableWindow: handle bEnable: aBoolean!
 
 isEnabledDeeply: aBoolean 
 	"Set whether the receiver and all its subviews are or are not enabled for user input,
@@ -1980,8 +1981,7 @@ isWindowVisible
 	"Answer whether both the receiver and its parent have the WS_VISIBLE style,  it is therefore possible
 	that this method will answer true even if the receiver is totally obscured by other windows."
 
-	^UserLibrary default isWindowVisible: self asParameter
-!
+	^UserLibrary default isWindowVisible: handle!
 
 isWindowVisible: aBoolean
 	"Set the window visibility according to aBoolean"
@@ -1997,7 +1997,7 @@ killTimer: anIntegerId
 	is an integer that identifies the particular timer to kill. Answers
 	true if the operation succeeds."
 
-	^UserLibrary default killTimer: self asParameter uIDEvent: anIntegerId!
+	^UserLibrary default killTimer: handle uIDEvent: anIntegerId!
 
 layout
 	"Recalculate the geometry of the receiver. Subclasses should override #layout:."
@@ -2075,9 +2075,9 @@ mapPoint: aPoint to: anotherView
 	"Maps aPoint from the coordinate system of the receiver into that of anotherView"
 
 	| pt |
-	pt:= POINTL fromPoint: aPoint.
+	pt := POINTL fromPoint: aPoint.
 	UserLibrary default
-		mapWindowPoints: self asParameter
+		mapWindowPoints: handle
 		hWndTo: anotherView asParameter
 		lpPoints: pt
 		cPoints: 1.
@@ -2647,7 +2647,7 @@ placement
 
 	| placement |
 	placement := WINDOWPLACEMENT new.
-	(UserLibrary default getWindowPlacement: self asParameter lpwndpl: placement)
+	(UserLibrary default getWindowPlacement: handle lpwndpl: placement)
 		ifFalse: [UserLibrary default systemError].
 
 	"If the receiver is invisible, we have to clear the SW_SHOWNORMAL flag which
@@ -2660,7 +2660,7 @@ placement: aWINDOWPLACEMENT
 	"Sets the current minimized/maximized/restored locations of the receiver and
 	its current state from information in aWINDOWPLACEMENT"
 
-	UserLibrary default setWindowPlacement: self asParameter lpwndpl: aWINDOWPLACEMENT asParameter!
+	UserLibrary default setWindowPlacement: handle lpwndpl: aWINDOWPLACEMENT asParameter!
 
 plainText
 	"Answers the plain, unformatted, text from the receiver."
@@ -2699,8 +2699,11 @@ positionForKeyboardContextMenu
 postMessage: anIntegerMessageID wParam: wParam lParam: lParam
 	"Private - Post the Win32 message anIntegerMessageID with parameters wParam and lParam to the receiver"
 
-	^UserLibrary default postMessage: self asParameter msg: anIntegerMessageID wParam: wParam lParam: lParam
-!
+	^UserLibrary default
+		postMessage: handle
+		msg: anIntegerMessageID
+		wParam: wParam
+		lParam: lParam!
 
 preferredExtent
 	"Answer the preferred size of the receiver or nil if none has been specified"
@@ -2828,7 +2831,7 @@ queryMouseTracking
 	| tme |
 	tme := TRACKMOUSEEVENT new.
 	tme dwFlags: TME_QUERY.
-	tme hwndTrack: self asParameter.
+	tme hwndTrack: handle.
 	^(UserLibrary default trackMouseEvent: tme) ifTrue: [tme] ifFalse: [nil]!
 
 recreate
@@ -2904,9 +2907,7 @@ releaseDC: hDC
 	by the receiver's #getDC). Answer whether the DC was indeed
 	released."
 
-	^(UserLibrary default 
-		releaseDC: self asParameter 
-		hDC: hDC asParameter) == 1!
+	^(UserLibrary default releaseDC: handle hDC: hDC asParameter) == 1!
 
 removeSubView: aView 
 	"Removes aView as a subview of the receiver. The removed view is destroyed. If , for some
@@ -3045,7 +3046,7 @@ scrollBy: aPoint scroll: scrollRectangle clip: clipRectangle
 	"Scroll the contents of the receiver by aPoint."
 
 	^UserLibrary default
-		scrollWindowEx: self asParameter
+		scrollWindowEx: handle
 		dx: aPoint x
 		dy: aPoint y
 		prcScroll: scrollRectangle asParameter
@@ -3057,33 +3058,45 @@ scrollBy: aPoint scroll: scrollRectangle clip: clipRectangle
 sendMessage: anIntegerMessageID
 	"Private - Send the Win32 message anIntegerMessageID to the receiver's real window with wParam and lParam set to 0."
 
-	^UserLibrary default sendMessage: self asParameter msg: anIntegerMessageID wParam: 0 lParam: 0
-!
+	^UserLibrary default
+		sendMessage: handle
+		msg: anIntegerMessageID
+		wParam: 0
+		lParam: 0!
 
 sendMessage: anIntegerMessageID wParam: anInteger
 	"Private - Send the Win32 message anIntegerMessageID to the receiver's real window with the specified
 	wParam and lParam set to 0."
 
-	^UserLibrary default sendMessage: self asParameter msg: anIntegerMessageID wParam: anInteger lParam: 0!
+	^UserLibrary default
+		sendMessage: handle
+		msg: anIntegerMessageID
+		wParam: anInteger
+		lParam: 0!
 
 sendMessage: anIntegerMessageID wParam: wParam lParam: lParam
 	"Private - Send the Win32 message anIntegerMessageID with parameters wParam and lParam to the receiver"
 
-	^UserLibrary default sendMessage: self asParameter msg: anIntegerMessageID wParam: wParam lParam: lParam
-!
+	^UserLibrary default
+		sendMessage: handle
+		msg: anIntegerMessageID
+		wParam: wParam
+		lParam: lParam!
 
 sendMessage: anIntegerMessageID wParam: wParam lpParam: lParam
 	"Private - Send the Win32 message anIntegerMessageID with parameters wParam and lpParam (pointer) to the receiver's
 	Window."
 
-	^UserLibrary default sendMessage: self asParameter msg: anIntegerMessageID wParam: wParam lpParam: lParam
-!
+	^UserLibrary default
+		sendMessage: handle
+		msg: anIntegerMessageID
+		wParam: wParam
+		lpParam: lParam!
 
 setCapture
 	"Sets mouse capture to the receiver."
 
-	UserLibrary default setCapture: self asParameter
-!
+	UserLibrary default setCapture: handle!
 
 setEvents: anEventsCollectionOrNil
 	"Private - Set the EventsCollection of the receiver to be anEventsCollectionOrNil.
@@ -3109,7 +3122,7 @@ setFocus
 	top := self.
 	[top isTopView or: [top isPopup]] whileFalse: [top := top parentView].
 	top isEnabled ifFalse: [top enable].
-	^UserLibrary default setFocus: self asParameter!
+	^UserLibrary default setFocus: handle!
 
 setModel: aModel
 	"Private - Set model for the receiver directly. Don't trigger any change
@@ -3122,12 +3135,12 @@ setNoRedrawCount: anInteger
 	anInteger <= 0 ifTrue: [^self removePropertyAt: #_noRedrawCount ifAbsent: []].
 	^self propertyAt: #_noRedrawCount put: anInteger!
 
-setParent: aView 
+setParent: aView
 	| isDesktopParent |
 	self parentView: aView.
 	isDesktopParent := aView == self class desktop.
 	self setWindowStyle: (self getWindowStyle mask: WS_CHILD set: isDesktopParent not).
-	UserLibrary default setParent: self asParameter hWndNewParent: aView asParameter!
+	UserLibrary default setParent: handle hWndNewParent: aView asParameter!
 
 setRedraw: aBoolean
 	"Private - Enable/disable repainting of the receiver's window."
@@ -3139,11 +3152,11 @@ setScrollInfo: siStruct bar: bar
 	"Private - Set the specified scroll info for the receivers bar.
 	Answer the current position of the bars thumb."
 
-	^UserLibrary default 
-		setScrollInfo: self asParameter 
-			fnBar: bar 
-			lpsi: siStruct 
-			fRedraw: true!
+	^UserLibrary default
+		setScrollInfo: handle
+		fnBar: bar
+		lpsi: siStruct
+		fRedraw: true!
 
 setTimer: id interval: interval
 	"Sets up a timer for this window. The <integer> timer identifier (id)
@@ -3151,8 +3164,13 @@ setTimer: id interval: interval
 	<integer> interval milliseconds. Answers true if the function succeeds."
 
 	id == WM_ENTERIDLE
-		ifTrue: [^self error: 'Sorry, timer id ', WM_ENTERIDLE displayString, ' is reserved for system purposes.'].
-	^(UserLibrary default setTimer: self asParameter nIDEvent: id uElapse: interval lpTimerFunc: nil) ~= 0!
+		ifTrue: 
+			[^self error: 'Sorry, timer id ' , WM_ENTERIDLE displayString , ' is reserved for system purposes.'].
+	^(UserLibrary default
+		setTimer: handle
+		nIDEvent: id
+		uElapse: interval
+		lpTimerFunc: nil) ~= 0!
 
 setWindowExStyle: anInteger
 	"Private - Set the receiver's extended window style bits to anInteger."
@@ -3163,7 +3181,7 @@ setWindowLong: anIntegerOffset to: anIntegerValue
 	"Private - Set the receiver's Window DWORD at the specified offset to the specified integer value."
 
 	^UserLibrary default
-		setWindowLong: self asParameter
+		setWindowLong: handle
 		nIndex: anIntegerOffset
 		dwNewLong: anIntegerValue!
 
@@ -3172,31 +3190,33 @@ setWindowPosAfter: aWindow x: xInteger y: yInteger width: widthInteger height: h
 	succeeded."
 
 	^UserLibrary default
-		setWindowPos: self asParameter 
+		setWindowPos: handle
 		hWndInsertAfter: aWindow asParameter
-		x: xInteger y: yInteger
-		cx: widthInteger cy: heightInteger
+		x: xInteger
+		y: yInteger
+		cx: widthInteger
+		cy: heightInteger
 		uFlags: flagsInteger!
 
 setWindowStyle: aDWORD
 	"Private - Set the receiver's window style bits to aDWORD."
 
 	UserLibrary default
-		setWindowDWORD: self asParameter
+		setWindowDWORD: handle
 		nIndex: GWL_STYLE
 		dwNewDWORD: aDWORD!
 
 setWindowText: aString
 	"Private - Sets the text of the receiver"
 
-	^UserLibrary default setWindowText: self asParameter lpString: aString!
+	^UserLibrary default setWindowText: handle lpString: aString!
 
 setWndProc: anAddress
 	"Private - Set the window procedure of the receiver to the argument, anAddress.
 	Answer the old window procedure address."
 
 	^UserLibrary default
-		setWindowDWORD: self asParameter
+		setWindowDWORD: handle
 		nIndex: GWL_WNDPROC
 		dwNewDWORD: anAddress!
 
@@ -3222,7 +3242,7 @@ showWithStyle: anInteger
 	Answer whether the window was previously visible."
 
 	self invalidateLayoutDeeply.
-	^UserLibrary default showWindow: self asParameter nCmdShow: anInteger!
+	^UserLibrary default showWindow: handle nCmdShow: anInteger!
 
 state
 	"Private - Answer a MessageSequence which, when replayed, will restore the receiver 
@@ -3338,12 +3358,13 @@ subViewFromPoint: aPoint flags: cwpFlags
 	"Private - Answers the View in the receiver beneath aPoint (in the receivers coordinates)."
 
 	| handleFound viewFound |
-	handleFound := UserLibrary default 
-		childWindowFromPointEx: self asParameter pt: aPoint asParameter uFlags: cwpFlags.
-	^(handleFound notNil
-		and: [handleFound ~= self handle
-			and: [(viewFound := self class withHandle: handleFound) notNil
-				and: [viewFound isManaged]]])
+	handleFound := UserLibrary default
+				childWindowFromPointEx: handle
+				pt: aPoint asParameter
+				uFlags: cwpFlags.
+	^(handleFound notNil and: 
+			[handleFound ~= self handle
+				and: [(viewFound := self class withHandle: handleFound) notNil and: [viewFound isManaged]]])
 		ifTrue: [viewFound]!
 
 subViews
@@ -3354,20 +3375,16 @@ subViews
 	self subViewsDo: [:each | answer addLast: each].
 	^answer!
 
-subViewsDo: aMonadicValuable 
+subViewsDo: aMonadicValuable
 	"Evaluate the <monadicValuable> argument for each of the receiver's sub-views, in z-order
 	sequence"
 
-	| child |
-	child := self getWindow: GW_HWNDCHILD.
+	| child userLib |
+	userLib := UserLibrary default.
+	child := userLib getWindow: handle uCmd: GW_HWNDCHILD.
 	[child isNil] whileFalse: 
-			[| childView t |
-			childView := View withHandle: child.
-			childView notNil 
-				ifTrue: [aMonadicValuable value: childView]
-				ifFalse: [childView := View fromHandle: child].
-			t := GW_HWNDNEXT.
-			child := childView getWindow: t]!
+			[(View withHandle: child) ifNotNil: [:childView | aMonadicValuable value: childView].
+			child := userLib getWindow: child uCmd: GW_HWNDNEXT]!
 
 tabFirst
 	"Set focus to the receiver"
@@ -3390,7 +3407,7 @@ tabNext
 		parent := parent parentView].
 	next isNil ifFalse: [next tabFocus]!
 
-tabNextSiblingFrom: aView forward: aBoolean 
+tabNextSiblingFrom: aView forward: aBoolean
 	"Private - Answer the next sibling view after aView in the TAB sequence of the receiver,
 	or nil if there is none."
 
@@ -3400,23 +3417,23 @@ tabNextSiblingFrom: aView forward: aBoolean
 	Instead, it answers nil. We handle this as a special case."
 
 	| nextHandle nextView |
-	(aView isNil and: [aBoolean not]) 
+	(aView isNil and: [aBoolean not])
 		ifTrue: 
 			["Find the first item in the TAB sequence ..."
 			| first |
-			first := UserLibrary default 
-						getNextDlgTabItem: self asParameter
+			first := UserLibrary default
+						getNextDlgTabItem: handle
 						hCtl: nil asParameter
 						bPrevious: false.
 			"... and then ask for the item before it.
 			This will give us the last item."
-			nextHandle := UserLibrary default 
-						getNextDlgTabItem: self asParameter
+			nextHandle := UserLibrary default
+						getNextDlgTabItem: handle
 						hCtl: first
 						bPrevious: true]
 		ifFalse: 
-			[nextHandle := UserLibrary default 
-						getNextDlgTabItem: self asParameter
+			[nextHandle := UserLibrary default
+						getNextDlgTabItem: handle
 						hCtl: aView asParameter
 						bPrevious: aBoolean not].
 	nextView := View fromHandle: nextHandle.
@@ -3452,7 +3469,7 @@ textLength
 	Note that this will send a WM_GETTEXTLENGTH message to the receiver's
 	window."
 
-	^UserLibrary default getWindowTextLength: self asParameter!
+	^UserLibrary default getWindowTextLength: handle!
 
 themeSubAppName
 	"Answer the theme class name to use for the view, or nil to use the default."
@@ -3498,7 +3515,7 @@ trackContextMenu: aPointEvent
 		menu showIn: self position: pos.
 			true]!
 
-trackMouseHover: anInteger 
+trackMouseHover: anInteger
 	"Request that the system send a WM_MOUSEHOVER event should the user hover the mouse over the
 	window for at least the specified <integer> number of milliseconds (if the argument is -1,
 	then the system default hover time is used). The default handling for WM_MOUSEHOVER results
@@ -3509,7 +3526,7 @@ trackMouseHover: anInteger
 	tme := self queryMouseTracking.
 	tme dwFlags: (tme dwFlags bitOr: TME_HOVER).
 	tme dwHoverTime: anInteger.
-	tme hwndTrack: self asParameter.
+	tme hwndTrack: handle.
 	(UserLibrary default trackMouseEvent: tme) ifFalse: [UserLibrary default systemError]!
 
 trackMouseLeave
@@ -3524,7 +3541,7 @@ trackMouseLeave
 	| tme |
 	tme := self queryMouseTracking.
 	tme dwFlags: (tme dwFlags bitOr: TME_LEAVE).
-	tme hwndTrack: self asParameter.
+	tme hwndTrack: handle.
 	UserLibrary default trackMouseEvent: tme!
 
 unhookWindowCreate: hWnd
@@ -3548,7 +3565,7 @@ update
 	"Repaint the receiver as necessary, immediately.
 	N.B. This causes a callback as Windows sends a WM_PAINT directly."
 
-	UserLibrary default updateWindow: self asParameter!
+	UserLibrary default updateWindow: handle!
 
 updateModel
 	"Flush changes in the view back to the associated model.
@@ -3593,7 +3610,7 @@ validateRect: rectangle
 	"Validates the specified client rectangle (a RECT, Rectangle, or nil for the whole client window).
 	Answer whether the function succeeds."
 
-	^UserLibrary default validate: self asParameter lpRect: rectangle asParameter!
+	^UserLibrary default validate: handle lpRect: rectangle asParameter!
 
 validateSubViewLayouts: aLayoutContext 
 	"Private - Validate the layout of the visible sub-views of the receiver."
@@ -4395,8 +4412,8 @@ zOrderTop
 	If the receiver is a top-level window, it is activated.
 	If the receiver is a child window, the top-level parent view associated with the child is activated."
 
-	UserLibrary default bringWindowToTop: self asParameter.
-	self parentView onZOrderChanged.! !
+	UserLibrary default bringWindowToTop: handle.
+	self parentView onZOrderChanged! !
 !View categoriesFor: #actualBackcolor!accessing!private! !
 !View categoriesFor: #actualFont!accessing!private! !
 !View categoriesFor: #actualPreferredExtent:!geometry!private! !

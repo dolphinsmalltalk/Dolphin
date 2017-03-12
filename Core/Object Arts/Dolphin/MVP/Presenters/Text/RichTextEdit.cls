@@ -351,7 +351,7 @@ nmNotify: pNMHDR
 		ifNil: [super nmNotify: pNMHDR]
 		ifNotNil: [:action | self perform: action with: pNMHDR]!
 
-onRightButtonReleased: aMouseEvent 
+onRightButtonReleased: aMouseEvent
 	"Default handler for a Right button up mouse event.
 	Accept the default window processing."
 
@@ -363,9 +363,9 @@ onRightButtonReleased: aMouseEvent
 	v3.0 control emulating 1.0, but as it is very difficult to determine if the original control
 	or the emulation is in place, we take total control of this and suppress the controls
 	own WM_RBUTTONUP handling by return zero."
-	self 
+	self
 		sendMessage: WM_CONTEXTMENU
-		wParam: self asParameter
+		wParam: handle
 		lParam: aMouseEvent screenPosition asUIntPtr.
 	^0!
 

@@ -65,7 +65,7 @@ add: aPresenter name: aNameString helpId: anInteger
 	"Adds aPresenter to the receiver's collection of sub-presenters and
 	gives it aNameString. Answers aPresenter"
 
-	self subPresenters add: aPresenter.
+	self subPresenters addLast: aPresenter.
 	self name: aPresenter as: aNameString.
 	anInteger ifNotNil: [:value | aPresenter helpId: value].
 	aPresenter parentPresenter: self.
@@ -350,9 +350,6 @@ model: anObject
 name: aPresenter as: aNameString 
 	"Sets the name of aPresenter within the receiver to be aNameString"
 
-	"Check that aPresenter is one of our sub-presenters"
-
-	self assert: [self subPresenters includes: aPresenter].
 	names isNil 
 		ifTrue: [(names := IdentityDictionary new) at: aPresenter put: aNameString]
 		ifFalse: 
