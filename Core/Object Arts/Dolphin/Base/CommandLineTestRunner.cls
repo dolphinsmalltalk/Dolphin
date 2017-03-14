@@ -55,6 +55,11 @@ runSuite: aTestSuite
 	self summarizeResults.
 	^results!
 
+slowTestThreshold
+	"Answer the execution time threshold, in milliseconds, over which tests are reported as slow."
+
+	^500!
+
 stream: aPuttableStream
 	stream := aPuttableStream!
 
@@ -95,7 +100,9 @@ summarizeResults
 		nextPutAll: ' in '.
 	self printRuntime: caseStart - runStart.
 	stream cr.
-	passed ifTrue: [self summarizeTimings: 750000] ifFalse: [self summarizeFailures].
+	passed
+		ifTrue: [self summarizeTimings: self slowTestThreshold * 1000]
+		ifFalse: [self summarizeFailures].
 	stream flush!
 
 summarizeTimings: anInteger
@@ -153,6 +160,7 @@ verbose: anObject
 !CommandLineTestRunner categoriesFor: #result!Accessing!public! !
 !CommandLineTestRunner categoriesFor: #resultFor:!helpers!private! !
 !CommandLineTestRunner categoriesFor: #runSuite:!operations!public! !
+!CommandLineTestRunner categoriesFor: #slowTestThreshold!helpers!private! !
 !CommandLineTestRunner categoriesFor: #stream:!accessing!public! !
 !CommandLineTestRunner categoriesFor: #summarizeFailures!helpers!private! !
 !CommandLineTestRunner categoriesFor: #summarizeResults!helpers!private! !
