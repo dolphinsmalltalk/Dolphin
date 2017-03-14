@@ -73,7 +73,7 @@ DolphinTest subclass: #AddMethodChangeTest
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 DolphinTest subclass: #ClassBrowserAbstractTest
-	instanceVariableNames: 'browser methodsPresenter packageA'
+	instanceVariableNames: 'browser methodsPresenter packageA plugins'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!

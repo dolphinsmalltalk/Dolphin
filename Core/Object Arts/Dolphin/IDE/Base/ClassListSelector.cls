@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ClassSelector subclass: #ClassListSelector
 	instanceVariableNames: 'classesListPresenter environment'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ClassListSelector guid: (GUID fromString: '{337EDE86-614B-4281-B0FE-16FFB1E67D72}')!
+ClassListSelector guid: (GUID fromString: '{337ede86-614b-4281-b0fe-16ffb1e67d72}')!
 ClassListSelector comment: 'A ClassListSelector is used to display a list of classes. It implements the class list pane in the <PackagedClassSelector>, as used in the System Browser.
 
 Instance Variables:
@@ -193,7 +193,7 @@ updateClasses
 	environment classesDo: [:each | classes add: each instanceClass].
 	originalSelection := self selections.
 	self noEventsDo: 
-			[classesPresenter list: (classes asSortedCollection: [:a :b | a name <= b name]).
+			[classesPresenter list: classes asSortedCollection.
 			classesPresenter selections: originalSelection ifAbsent: []].
 	self selections == originalSelection ifFalse: [self onSelectionChanged]! !
 !ClassListSelector categoriesFor: #browseItCommand!helpers!private! !
