@@ -1,11 +1,11 @@
 "Filed out from Dolphin Smalltalk 7"!
 
 DolphinTest subclass: #ClassBrowserAbstractTest
-	instanceVariableNames: 'browser methodsPresenter packageA'
+	instanceVariableNames: 'browser methodsPresenter packageA plugins'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ClassBrowserAbstractTest guid: (GUID fromString: '{FA025E63-3880-48AE-82D4-4B3172D507CC}')!
+ClassBrowserAbstractTest guid: (GUID fromString: '{fa025e63-3880-48ae-82d4-4b3172d507cc}')!
 ClassBrowserAbstractTest comment: ''!
 !ClassBrowserAbstractTest categoriesForClass!Unclassified! !
 !ClassBrowserAbstractTest methodsFor!
@@ -185,12 +185,15 @@ inheritedMethodAddRemoveTests
 	self assertIsOnlyMethodVisible: (TestCase compiledMethodAt: method selector)!
 
 setUp
+	plugins := self browserClass plugins.
+	self browserClass plugins: #().
 	browser := self browserClass show.
 	methodsPresenter := browser instVarNamed: 'methodBrowserPresenter'.
 	packageA := DolphinTestPackages current a!
 
 tearDown
 	| methods |
+	self browserClass plugins: plugins.
 	methods := packageA methods.
 	browser destroy.
 	self deleteTestMethods: methods.
