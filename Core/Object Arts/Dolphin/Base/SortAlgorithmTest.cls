@@ -5,7 +5,7 @@ DolphinTest subclass: #SortAlgorithmTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-SortAlgorithmTest guid: (GUID fromString: '{50FDE7DC-5DB4-4EDA-9EE2-61882B8EE3E5}')!
+SortAlgorithmTest guid: (GUID fromString: '{50fde7dc-5db4-4eda-9ee2-61882b8ee3e5}')!
 SortAlgorithmTest comment: ''!
 !SortAlgorithmTest categoriesForClass!Unclassified! !
 !SortAlgorithmTest methodsFor!
@@ -92,26 +92,9 @@ partialSort: source using: algorithm
 					sorted := array copyFrom: i to: j.
 					self assertSorted: sorted by: algorithm sortBlock]]!
 
-sort: aCollection sortBlock: block 
-	| ms sorted comp |
-	comp := 0.
-	ms := Time millisecondsToRun: [sorted := aCollection asSortedCollectionUsing: (self algorithmToTest sortBlock: 
-											[:a :b | 
-											comp := comp + 1.
-											block value: a value: b])].
-	aCollection size > 2000 
-		ifTrue: 
-			[Transcript
-				print: self algorithmToTest;
-				nextPutAll: ': ';
-				print: comp;
-				nextPutAll: ' comparisons required to sort collection of ';
-				print: aCollection size;
-				nextPutAll: ' objects taking ';
-				print: ms;
-				nextPutAll: ' mS';
-				cr;
-				flush].
+sort: aCollection sortBlock: block
+	| sorted |
+	sorted := aCollection asSortedCollectionUsing: (self algorithmToTest sortBlock: block).
 	self assertSorted: sorted.
 	self add: aCollection sortBlock: block.
 	^sorted!
@@ -228,8 +211,8 @@ testIncludes
 
 	| sorted selectorCounts |
 	selectorCounts := Dictionary new.
-	Object owningPackage classes do: 
-			[:each | 
+	Collection withAllSubclassesDo: 
+			[:each |
 			each selectors do: [:sel | selectorCounts at: sel put: (selectorCounts at: sel ifAbsent: [0]) + 1]].
 	sorted := self sort: selectorCounts associations sortBlock: [:a :b | a value < b value].
 
