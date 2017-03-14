@@ -221,7 +221,7 @@ inject: anObject into: aDyadicValuable
 		do: [:i | nextValue := aDyadicValuable value: nextValue value: (self basicAt: i)].
 	^nextValue!
 
-insert: newElement before: anInteger 
+insert: newElement before: anInteger
 	"Private - Insert the argument, newElement, into the receiver at the basic index
 	specified by the argument, anInteger, shuffling any subsequent elements down.
 	index must be between 0 and the receiver's current basic size (if not an exception
@@ -230,7 +230,7 @@ insert: newElement before: anInteger
 	inserted."
 
 	| basicIndex |
-	basicIndex := lastIndex == self basicSize 
+	basicIndex := lastIndex == self basicSize
 				ifTrue: 
 					[| offset |
 					offset := anInteger - firstIndex.
@@ -239,10 +239,11 @@ insert: newElement before: anInteger
 				ifFalse: [anInteger].
 
 	"Slide the elements down the collection toward the new end to make room for the insertion"
-	lastIndex to: basicIndex
-		by: -1
-		do: [:i | self basicAt: i + 1 put: (self basicAt: i)].
-	lastIndex := lastIndex + 1.
+	self
+		basicReplaceElementsOf: self
+		from: basicIndex + 1
+		to: (lastIndex := lastIndex + 1)
+		startingAt: basicIndex.
 	self basicAt: basicIndex put: newElement.
 	^basicIndex - firstIndex + 1!
 
