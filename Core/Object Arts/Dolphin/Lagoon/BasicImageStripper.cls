@@ -156,6 +156,12 @@ prepareExternalStructuresNotifying: notifier
 				removeSelectors: #(#shrink #defineTemplate #byteSize:)
 				of: each
 				notifying: notifier].
+	self compileExternalStructures
+		ifTrue: 
+			[self
+				removeSelector: #offsetOf:
+				of: ExternalStructure class
+				notifying: notifier].
 	self endElement.
 
 	"We no longer need this method. Referenced methods will become eligible to be stripped also"
