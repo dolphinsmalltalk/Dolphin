@@ -5,7 +5,7 @@ Model subclass: #BasicImageStripper
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-BasicImageStripper guid: (GUID fromString: '{51CE4971-61E8-431F-9823-437CF7293E8A}')!
+BasicImageStripper guid: (GUID fromString: '{51ce4971-61e8-431f-9823-437cf7293e8a}')!
 BasicImageStripper comment: 'Base image stripping methods. These can safely be encrypted during release.'!
 !BasicImageStripper categoriesForClass!MVP-Models! !
 !BasicImageStripper methodsFor!
@@ -153,8 +153,14 @@ prepareExternalStructuresNotifying: notifier
 	ExternalStructure class withAllSubclasses do: 
 			[:each |
 			self
-				removeSelectors: #(#shrink #defineTemplate #byteSize: #offsetOf:)
+				removeSelectors: #(#shrink #defineTemplate #byteSize:)
 				of: each
+				notifying: notifier].
+	self compileExternalStructures
+		ifTrue: 
+			[self
+				removeSelector: #offsetOf:
+				of: ExternalStructure class
 				notifying: notifier].
 	self endElement.
 

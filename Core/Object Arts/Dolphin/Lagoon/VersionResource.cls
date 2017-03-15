@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #VersionResource
 	instanceVariableNames: 'fixedInfo stringTables translations'
 	classVariableNames: ''
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
-VersionResource guid: (GUID fromString: '{B76AB5BC-4BA7-40D2-88FE-6A76D28FC30B}')!
+VersionResource guid: (GUID fromString: '{b76ab5bc-4ba7-40d2-88fe-6a76d28fc30b}')!
 VersionResource comment: ''!
 !VersionResource categoriesForClass!System-Support! !
 !VersionResource methodsFor!

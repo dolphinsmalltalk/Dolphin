@@ -5,7 +5,7 @@ BasicImageStripper subclass: #ImageStripper
 	classVariableNames: 'AllResourcesStripped ClearGuidsMask CompileStructsMask EmptyMethodDictsMask FoldBytecodesMask FoldMethodDictsMask FoldStringsMask IgnoreViewReferencesMask LogPrerequisitesMask LogReferencesMask NoXPManifestMask PreserveAspectsMask RetainInstVarNamesMask RetainSubclassRespMask StripClassBuilderMask StripClassesMask StripClassInfoMask StripDeprecatedMask StripMethodsMask StripPackagesMask StripResourcesMask StripShouldNotImplMask ToGoMask UnattendedMask WriteLogMask'
 	poolDictionaries: 'MessageBoxConstants Win32Constants'
 	classInstanceVariableNames: ''!
-ImageStripper guid: (GUID fromString: '{87B4C667-026E-11D3-9FD7-00A0CC3E4A32}')!
+ImageStripper guid: (GUID fromString: '{87b4c667-026e-11d3-9fd7-00a0cc3e4a32}')!
 ImageStripper addClassConstant: 'AllResourcesStripped' value: 4194304!
 ImageStripper addClassConstant: 'ClearGuidsMask' value: 1!
 ImageStripper addClassConstant: 'CompileStructsMask' value: 256!

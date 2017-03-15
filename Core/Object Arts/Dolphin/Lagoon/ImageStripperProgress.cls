@@ -5,7 +5,7 @@ Object subclass: #ImageStripperProgress
 	classVariableNames: 'CaptionId ExplanationId MessageMap ProgressId StatusId'
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
-ImageStripperProgress guid: (GUID fromString: '{3645214B-FFF1-40C6-91D4-32740D2F6A66}')!
+ImageStripperProgress guid: (GUID fromString: '{3645214b-fff1-40c6-91d4-32740d2f6a66}')!
 ImageStripperProgress comment: 'ImageStripperProgress is a <topPresenter> used by the <ImageStripper> to display the progress of an image stripping operation.
 
 Instance Variables:
