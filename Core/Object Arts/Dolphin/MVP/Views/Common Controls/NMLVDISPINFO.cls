@@ -40,7 +40,7 @@ defineFields
 	self defineField: #lvItem type: (StructureField type: LVITEM) beReadOnly!
 
 itemFromNMHDR: anExternalAddress
-	^LVITEM fromAddress: anExternalAddress yourAddress + (self offsetOf: #lvItem)! !
+	^LVITEM fromAddress: anExternalAddress yourAddress + ##(self offsetOf: #lvItem)! !
 !NMLVDISPINFO class categoriesFor: #defineFields!initializing!public! !
 !NMLVDISPINFO class categoriesFor: #itemFromNMHDR:!public! !
 
