@@ -272,14 +272,14 @@ resendTo: aView
 lpszText
 
 	^bytes uintPtrAtOffset: ##(self offsetOf: #lpszText)! !
-!NMTTDISPINFOA categoriesFor: #lpszText!**compiled accessors**!public! !
+!NMTTDISPINFOA categoriesFor: #lpszText!accessing!public! !
 
 !NMTTDISPINFOW methodsFor!
 
 lpszText
 
 	^bytes uintPtrAtOffset: ##(self offsetOf: #lpszText)! !
-!NMTTDISPINFOW categoriesFor: #lpszText!**compiled accessors**!public! !
+!NMTTDISPINFOW categoriesFor: #lpszText!accessing!public! !
 
 !PointEvent methodsFor!
 
