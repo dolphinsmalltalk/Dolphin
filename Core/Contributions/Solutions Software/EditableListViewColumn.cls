@@ -5,7 +5,7 @@ ListViewColumn subclass: #EditableListViewColumn
 	classVariableNames: ''
 	poolDictionaries: 'CommCtrlConstants'
 	classInstanceVariableNames: ''!
-EditableListViewColumn guid: (GUID fromString: '{787A1FF5-1809-4381-AB64-22F338ECAA37}')!
+EditableListViewColumn guid: (GUID fromString: '{787a1ff5-1809-4381-ab64-22f338ecaa37}')!
 EditableListViewColumn comment: ''!
 !EditableListViewColumn categoriesForClass!Unclassified! !
 !EditableListViewColumn methodsFor!
