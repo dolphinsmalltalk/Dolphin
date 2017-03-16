@@ -5,7 +5,7 @@ DolphinTest subclass: #PublishedAspectInspectorTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-PublishedAspectInspectorTest guid: (GUID fromString: '{26C95677-A861-4030-8D8E-B6BED0A6C3EF}')!
+PublishedAspectInspectorTest guid: (GUID fromString: '{26c95677-a861-4030-8d8e-b6bed0a6c3ef}')!
 PublishedAspectInspectorTest comment: ''!
 !PublishedAspectInspectorTest categoriesForClass!Unclassified! !
 !PublishedAspectInspectorTest methodsFor!
@@ -36,8 +36,10 @@ isUsingListTreeView
 		ifNotNil: [:ltv | treePresenter view isKindOf: ltv]!
 
 repaint
-	inspector view update.
-	false ifTrue: [Processor sleep: 1500]!
+	false
+		ifTrue: 
+			[inspector view update.
+			Processor sleep: 1500]!
 
 seqCollMoveDownTest: testClass 
 	| inspectee collection |
@@ -70,16 +72,16 @@ seqCollMoveDownTest: testClass
 			treePresenter view expandAll]!
 
 seqCollMoveFirstTest: testClass
-	| inspectee listPresenter last |
+	| inspectee last |
 	last := 5.
 	inspectee := testClass withAll: (1 to: last).
 	inspector value: inspectee.
 	self assert: treePresenter view itemCount == (last + 1).
 	self repaint.
-	listPresenter := self aspectPresenter instVarNamed: 'listPresenter'.
 	1 to: inspectee size
 		do: 
-			[:i | 
+			[:i |
+			| listPresenter |
 			listPresenter := self aspectPresenter instVarNamed: 'listPresenter'.
 			listPresenter selectionByIndex: i.
 			self aspectPresenter moveFirst.
@@ -87,8 +89,8 @@ seqCollMoveFirstTest: testClass
 			self assert: treePresenter view itemCount == (last + 1).
 			listPresenter := self aspectPresenter instVarNamed: 'listPresenter'.
 			self assert: listPresenter selectionByIndex = 1.
-			self assert: inspectee asArray = ((Array with: i) , (1 to: i-1),  (i + 1 to: last)).
-			inspectee 
+			self assert: inspectee asArray = ((Array with: i) , (1 to: i - 1) , (i + 1 to: last)).
+			inspectee
 				replaceFrom: 1
 				to: last
 				with: (1 to: last)

@@ -14,7 +14,7 @@ addBacklinkFrom: newObject to: anObject
 	backlinks last at: newObject put: anObject!
 
 addBacklinkLevel
-	backlinks add: self identityDictionaryClass new!
+	backlinks addLast: self identityDictionaryClass new!
 
 backlinkFor: anObject 
 	backlinks do: 
