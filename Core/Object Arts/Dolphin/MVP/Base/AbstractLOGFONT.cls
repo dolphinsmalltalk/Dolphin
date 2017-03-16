@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Win32Structure subclass: #AbstractLOGFONT
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-AbstractLOGFONT guid: (GUID fromString: '{8F358AD9-379C-415D-A076-730DB113B289}')!
+AbstractLOGFONT guid: (GUID fromString: '{8f358ad9-379c-415d-a076-730db113b289}')!
 AbstractLOGFONT comment: ''!
 !AbstractLOGFONT categoriesForClass!DxVBLibA-Structs! !
 !AbstractLOGFONT methodsFor!

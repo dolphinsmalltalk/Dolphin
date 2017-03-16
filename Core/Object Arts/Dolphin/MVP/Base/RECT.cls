@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Win32Structure subclass: #RECT
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-RECT guid: (GUID fromString: '{0A6E055D-001B-4817-B07D-FE982CA46330}')!
+RECT guid: (GUID fromString: '{0a6e055d-001b-4817-b07d-fe982ca46330}')!
 RECT comment: '<RECT> is an <ExternalStructure> class to wrap the standard Win32 structure of the same name.
 
 The RECT structure is used in many places in the Windows API to represent a rectangle consisting of 32-bit co-ordinates for top-left and bottom-right corners. <RECTL> is an alias for the same class/structure. RECT supports conversions to and from the Smalltalk <Rectangle> class.'!

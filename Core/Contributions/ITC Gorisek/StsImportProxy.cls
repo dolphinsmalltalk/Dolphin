@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #StsImportProxy
 	instanceVariableNames: 'name developer timestamp comment version'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-StsImportProxy guid: (GUID fromString: '{8A5988DA-7277-445A-8CDF-0DAF93C945F2}')!
+StsImportProxy guid: (GUID fromString: '{8a5988da-7277-445a-8cdf-0daf93c945f2}')!
 StsImportProxy comment: ''!
 !StsImportProxy categoriesForClass!Unclassified! !
 !StsImportProxy methodsFor!

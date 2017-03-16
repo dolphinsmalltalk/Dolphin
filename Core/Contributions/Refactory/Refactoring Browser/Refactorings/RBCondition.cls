@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 RBAbstractCondition subclass: #RBCondition
 	instanceVariableNames: 'block type errorBlock'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-RBCondition guid: (GUID fromString: '{AF1642B9-45BF-427D-A24F-812C3271820D}')!
+RBCondition guid: (GUID fromString: '{af1642b9-45bf-427d-a24f-812c3271820d}')!
 RBCondition comment: 'Condition represents a condition that must be true for a refactoring to be performed.
 
 Instance Variables:

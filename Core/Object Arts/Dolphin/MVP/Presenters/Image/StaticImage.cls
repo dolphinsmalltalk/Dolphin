@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 StaticView subclass: #StaticImage
 	instanceVariableNames: 'image'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-StaticImage guid: (GUID fromString: '{87B4C73F-026E-11D3-9FD7-00A0CC3E4A32}')!
+StaticImage guid: (GUID fromString: '{87b4c73f-026e-11d3-9fd7-00a0cc3e4a32}')!
 StaticImage comment: 'StaticImage is an abstract superclass for Windows STATIC controls that display <images>. The <valueModel> associated with a StaticImage must always yield an <image> value when mapped through the installed type converter. A StaticImage will normally be used in conjunction with a <ImagePresenter>.
 
 Instance Variables:

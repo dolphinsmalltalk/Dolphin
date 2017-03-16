@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 StsEdition subclass: #StsChangeSet
 	instanceVariableNames: 'changeNodes comment browserTitle blessing'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-StsChangeSet guid: (GUID fromString: '{815E49D8-69DA-4FE5-A085-BAE6E7FE7564}')!
+StsChangeSet guid: (GUID fromString: '{815e49d8-69da-4fe5-a085-bae6e7fe7564}')!
 StsChangeSet comment: ''!
 !StsChangeSet categoriesForClass!Unclassified! !
 !StsChangeSet methodsFor!

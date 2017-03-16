@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Socket subclass: #ItcSSLSocket
 	instanceVariableNames: 'method ctx handle'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ItcSSLSocket guid: (GUID fromString: '{A9DDC2AC-1737-49A0-AC5C-835609ED6020}')!
+ItcSSLSocket guid: (GUID fromString: '{a9ddc2ac-1737-49a0-ac5c-835609ed6020}')!
 ItcSSLSocket comment: 'A subclass of Socket that can connect via the SSL protocol using the OpenSSL libraries.
 
 Author: Chris Double

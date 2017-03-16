@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ExternalLibrary subclass: #HTMLHelpLibrary
 	instanceVariableNames: 'cookie'
 	classVariableNames: ''
 	poolDictionaries: 'HTMLHelpConstants'
 	classInstanceVariableNames: ''!
-HTMLHelpLibrary guid: (GUID fromString: '{9E0D2430-3877-11D3-93BD-00A024CA708A}')!
+HTMLHelpLibrary guid: (GUID fromString: '{9e0d2430-3877-11d3-93bd-00a024ca708a}')!
 HTMLHelpLibrary comment: ''!
 !HTMLHelpLibrary categoriesForClass!Unclassified! !
 !HTMLHelpLibrary methodsFor!

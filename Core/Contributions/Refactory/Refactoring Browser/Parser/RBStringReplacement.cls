@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk XP 2002 release 5.02"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #RBStringReplacement
 	instanceVariableNames: 'startPosition stopPosition string'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-RBStringReplacement guid: (GUID fromString: '{F2893320-1A6F-47E8-9052-EB2682FDB92C}')!
+RBStringReplacement guid: (GUID fromString: '{f2893320-1a6f-47e8-9052-eb2682fdb92c}')!
 RBStringReplacement comment: 'Private class used to represent a text replacement in the Refactoring Browser.'!
 !RBStringReplacement categoriesForClass!Kernel-Objects! !
 !RBStringReplacement methodsFor!

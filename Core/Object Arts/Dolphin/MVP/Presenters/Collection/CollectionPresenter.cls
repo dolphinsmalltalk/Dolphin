@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ValuePresenter subclass: #CollectionPresenter
 	instanceVariableNames: 'addItemBlock listPresenter changing flags'
 	classVariableNames: 'ReadOnlyMask'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-CollectionPresenter guid: (GUID fromString: '{CEF6A076-8A4E-4DC8-9732-9241724D99E3}')!
+CollectionPresenter guid: (GUID fromString: '{cef6a076-8a4e-4dc8-9732-9241724d99e3}')!
 CollectionPresenter comment: 'CollectionPresenter is a <valuePresenter> that presents a <Collection> accessed via its <valueModel>. It provides a number of [operations]for editing the list. As changes are made to the list it is applied back to the presenter''s <valueModel>.
 
 Instance Variables:

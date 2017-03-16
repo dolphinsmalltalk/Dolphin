@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 SequenceableCollection subclass: #DBResultSet
 	instanceVariableNames: 'statement buffer columns'
 	classVariableNames: ''
 	poolDictionaries: 'ODBCConstants ODBCRetCodes'
 	classInstanceVariableNames: ''!
-DBResultSet guid: (GUID fromString: '{87B4C512-026E-11D3-9FD7-00A0CC3E4A32}')!
+DBResultSet guid: (GUID fromString: '{87b4c512-026e-11d3-9fd7-00a0cc3e4a32}')!
 DBResultSet comment: 'A DBResultSet represents the results of a <DBStatement>. This provides access to a number of rows which are instances of <DBRow> or one of its subclasses. You can navigate around the rows using #first, #next, #last and #prev. You can also access rows by their integer index in the set using #at:.
 
 Instance Variables:

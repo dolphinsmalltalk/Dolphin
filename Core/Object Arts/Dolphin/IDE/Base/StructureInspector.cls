@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 BasicInspector subclass: #StructureInspector
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-StructureInspector guid: (GUID fromString: '{87B4C697-026E-11D3-9FD7-00A0CC3E4A32}')!
+StructureInspector guid: (GUID fromString: '{87b4c697-026e-11d3-9fd7-00a0cc3e4a32}')!
 StructureInspector comment: 'StructureInspector is a <compositePresenter> that implements a specialised inspect facility onto a <ExternalStructure>. This allows the structure to be inspected via its name fields.'!
 !StructureInspector categoriesForClass!Development!MVP-Presenters! !
 !StructureInspector methodsFor!

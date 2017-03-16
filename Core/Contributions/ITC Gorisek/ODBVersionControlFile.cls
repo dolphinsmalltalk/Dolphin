@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ODBFile subclass: #ODBVersionControlFile
 	instanceVariableNames: 'lastReadTime versionDescriptor'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ODBVersionControlFile guid: (GUID fromString: '{8162EE21-0FB8-11D4-B091-000000000000}')!
+ODBVersionControlFile guid: (GUID fromString: '{8162ee21-0fb8-11d4-b091-000000000000}')!
 ODBVersionControlFile comment: ''!
 !ODBVersionControlFile categoriesForClass!No category! !
 !ODBVersionControlFile methodsFor!

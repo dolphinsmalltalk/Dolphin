@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 StsImportProxy subclass: #StsPackageProxy
 	instanceVariableNames: 'stream classes looseMethods resources globals prerequisiteNames imageStripperBytes aboutBlock scripts manualPrerequisites packagePathname versionComment blessing'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-StsPackageProxy guid: (GUID fromString: '{F810498E-9AB5-47D0-BD85-02980ADD9496}')!
+StsPackageProxy guid: (GUID fromString: '{f810498e-9ab5-47d0-bd85-02980add9496}')!
 StsPackageProxy comment: ''!
 !StsPackageProxy categoriesForClass!Unclassified! !
 !StsPackageProxy methodsFor!

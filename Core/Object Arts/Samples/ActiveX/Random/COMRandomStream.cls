@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 AXDualImp subclass: #COMRandomStream
 	instanceVariableNames: 'lowerBound upperBound stream'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-COMRandomStream guid: (GUID fromString: '{F560CD26-00A1-4A4F-9833-03AE165A2E11}')!
+COMRandomStream guid: (GUID fromString: '{f560cd26-00a1-4a4f-9833-03ae165a2e11}')!
 COMRandomStream comment: 'COMRandomStream is part of the COM Random Stream sample. See the "RandomStream sample" package for further details.'!
 !COMRandomStream categoriesForClass!COM-Implementations! !
 !COMRandomStream methodsFor!

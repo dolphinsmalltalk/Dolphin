@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 StaticText subclass: #StaticPath
 	instanceVariableNames: 'text'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-StaticPath guid: (GUID fromString: '{C79F6206-3E83-4124-B572-D8D54CD25CB1}')!
+StaticPath guid: (GUID fromString: '{c79f6206-3e83-4124-b572-d8d54cd25cb1}')!
 StaticPath comment: 'StaticPath is a <valueView> class for a Window STATIC control specifically intended for displaying file paths, which are truncated to fit by replacing path components with ellipses as necessary. Note that the path is expected to be dsiplayed on a single line, and will not wrap to multiple lines unless the last remaining component would be truncated. See <StaticText> for further details.
 '!
 !StaticPath categoriesForClass!Unclassified! !

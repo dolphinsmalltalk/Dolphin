@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ValueDialog subclass: #ChooseClassDialog
 	instanceVariableNames: 'classesPresenter allowNil'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ChooseClassDialog guid: (GUID fromString: '{7A80FCE1-9F6E-4C81-B2E1-BA93FA3C693A}')!
+ChooseClassDialog guid: (GUID fromString: '{7a80fce1-9f6e-4c81-b2e1-ba93fa3c693a}')!
 ChooseClassDialog comment: 'ChooseClassDialog is a <valueDialogPresenter> that can be used to prompt for a <Class>.
 
 Instance Variables:

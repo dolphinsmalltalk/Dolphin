@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 KeyedAspect subclass: #InstVarAspect
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-InstVarAspect guid: (GUID fromString: '{C92CBDE8-F3B1-4799-9A70-0F2B15A024FC}')!
+InstVarAspect guid: (GUID fromString: '{c92cbde8-f3b1-4799-9a70-0f2b15a024fc}')!
 InstVarAspect comment: ''!
 !InstVarAspect categoriesForClass!Development! !
 !InstVarAspect methodsFor!

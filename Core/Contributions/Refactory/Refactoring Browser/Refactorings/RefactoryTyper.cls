@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk XP 2002 release 5.05"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #RefactoryTyper
 	instanceVariableNames: 'model class variableTypes bestGuesses variableMessages backpointers methodName selectorLookup'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-RefactoryTyper guid: (GUID fromString: '{DF340D5B-5CA0-48CB-8E8C-5153A7BC6A4C}')!
+RefactoryTyper guid: (GUID fromString: '{df340d5b-5ca0-48cb-8e8c-5153a7bc6a4c}')!
 RefactoryTyper comment: ''!
 !RefactoryTyper categoriesForClass!Refactory-Support! !
 !RefactoryTyper methodsFor!

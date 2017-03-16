@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ExternalStructure subclass: #POINTF
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-POINTF guid: (GUID fromString: '{C6F719DE-EEC5-45F6-BD44-71200F76BD34}')!
+POINTF guid: (GUID fromString: '{c6f719de-eec5-45f6-bd44-71200f76bd34}')!
 POINTF comment: '<POINTF> is an <ExternalStructure> class to wrap the struct of the same name.
 
 POINTF is a cartesian coordinate with single precision floating point x and y values.'!

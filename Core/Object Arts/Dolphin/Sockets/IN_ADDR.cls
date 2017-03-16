@@ -5,7 +5,7 @@ AbstractIN_ADDR subclass: #IN_ADDR
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-IN_ADDR guid: (GUID fromString: '{87B4C5F6-026E-11D3-9FD7-00A0CC3E4A32}')!
+IN_ADDR guid: (GUID fromString: '{87b4c5f6-026e-11d3-9fd7-00a0cc3e4a32}')!
 IN_ADDR comment: '<IN_ADDR> is an <ExternalStructure> class to wrap the struct ''Win32.IN_ADDR'' from type information in the ''Win32 API'' library.
 
 The type library contains the following helpstring for this struct

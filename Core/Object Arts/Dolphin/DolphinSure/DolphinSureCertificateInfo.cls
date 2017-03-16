@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #DolphinSureCertificateInfo
 	instanceVariableNames: 'serial owner details issued expiry publicKey'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-DolphinSureCertificateInfo guid: (GUID fromString: '{92DFD157-DE8B-4C95-8ED4-FCC86403EF31}')!
+DolphinSureCertificateInfo guid: (GUID fromString: '{92dfd157-de8b-4c95-8ed4-fcc86403ef31}')!
 DolphinSureCertificateInfo comment: 'A DolphinSureCertificateInfo instance holds the unencoded data for a DolphinSureCertificate.
 
 Instance Variables:

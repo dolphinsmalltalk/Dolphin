@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 RefactoringTool subclass: #MethodRefactoringTool
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-MethodRefactoringTool guid: (GUID fromString: '{10C7F39B-1AC8-431A-BDC8-4ED608D35A1C}')!
+MethodRefactoringTool guid: (GUID fromString: '{10c7f39b-1ac8-431a-bdc8-4ed608d35a1c}')!
 MethodRefactoringTool comment: 'MethodRefactoringTool implements method refactorings for a browser.
 
 There are a number of browser (or browser like tools) that display lists of methods and which support method level refactorings, for example the class & method browsers, the debugger (where the list of methods is those on the stack), and the package browser. This class encapsulates method-level refactoring behaviour so that it does not need to be duplicated in all those places.

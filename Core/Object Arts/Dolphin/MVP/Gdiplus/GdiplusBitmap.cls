@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 GdiplusImage subclass: #GdiplusBitmap
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-GdiplusBitmap guid: (GUID fromString: '{206FB497-CB98-42D3-A48F-1F83E25CCE07}')!
+GdiplusBitmap guid: (GUID fromString: '{206fb497-cb98-42d3-a48f-1f83e25cce07}')!
 GdiplusBitmap comment: 'GdiplusBitmap expands on GdiplusImage by providing additional methods for creating and manipulating raster images.'!
 !GdiplusBitmap categoriesForClass!Unclassified! !
 !GdiplusBitmap methodsFor!

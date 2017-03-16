@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #ODBClassDescription
 	instanceVariableNames: 'name bytes variable instSize instVarNames instVarIndexes class varOrder classID'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ODBClassDescription guid: (GUID fromString: '{8162EDD0-0FB8-11D4-B091-000000000000}')!
+ODBClassDescription guid: (GUID fromString: '{8162edd0-0fb8-11d4-b091-000000000000}')!
 ODBClassDescription comment: ''!
 !ODBClassDescription categoriesForClass!No category! !
 !ODBClassDescription methodsFor!

@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 COMInterfaceImp subclass: #AXPropertyBag
 	instanceVariableNames: 'propertyTable clsid saveAll clearDirty'
 	classVariableNames: ''
 	poolDictionaries: 'AXAutomationConstants'
 	classInstanceVariableNames: ''!
-AXPropertyBag guid: (GUID fromString: '{9C956C61-AF27-11D3-B376-080046056106}')!
+AXPropertyBag guid: (GUID fromString: '{9c956c61-af27-11d3-b376-080046056106}')!
 AXPropertyBag comment: ''!
 !AXPropertyBag categoriesForClass!Unclassified! !
 !AXPropertyBag methodsFor!

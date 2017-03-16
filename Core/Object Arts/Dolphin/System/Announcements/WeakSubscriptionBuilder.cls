@@ -5,7 +5,7 @@ Object subclass: #WeakSubscriptionBuilder
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-WeakSubscriptionBuilder guid: (GUID fromString: '{C8B3FF0E-ED6E-4D0E-BD5C-316314346CC8}')!
+WeakSubscriptionBuilder guid: (GUID fromString: '{c8b3ff0e-ed6e-4d0e-bd5c-316314346cc8}')!
 WeakSubscriptionBuilder comment: 'I am a wrapper around an Announcer, used to create weak subscriptions at subscription time.Use me like this:anAnnouncer weak subscribe: Announcement send: #foo to: barObject.I raise an error for block subscriptions, as they require non-existing Ephemeron support to function correctly.'!
 !WeakSubscriptionBuilder categoriesForClass!Announcements-Core! !
 !WeakSubscriptionBuilder methodsFor!

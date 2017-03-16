@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ODBBTreeIndexDictionary subclass: #ODBBTreeDictionary
 	instanceVariableNames: 'locks initialSize deltaSize'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ODBBTreeDictionary guid: (GUID fromString: '{8162EE31-0FB8-11D4-B091-000000000000}')!
+ODBBTreeDictionary guid: (GUID fromString: '{8162ee31-0fb8-11d4-b091-000000000000}')!
 ODBBTreeDictionary comment: ''!
 !ODBBTreeDictionary categoriesForClass!No category! !
 !ODBBTreeDictionary methodsFor!

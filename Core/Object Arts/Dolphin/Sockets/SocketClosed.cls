@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 SocketError subclass: #SocketClosed
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-SocketClosed guid: (GUID fromString: '{87B4C56A-026E-11D3-9FD7-00A0CC3E4A32}')!
+SocketClosed guid: (GUID fromString: '{87b4c56a-026e-11d3-9fd7-00a0cc3e4a32}')!
 SocketClosed comment: 'This exception signals that a remote Socket has been closed.'!
 !SocketClosed categoriesForClass!Windows Sockets! !
 !SocketClosed class methodsFor!

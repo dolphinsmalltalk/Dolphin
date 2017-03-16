@@ -5,7 +5,7 @@ Object subclass: #ScintillaListItem
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ScintillaListItem guid: (GUID fromString: '{A81939BA-1E36-4FE9-9BE0-575C3C7F91DF}')!
+ScintillaListItem guid: (GUID fromString: '{a81939ba-1e36-4fe9-9be0-575c3c7f91df}')!
 ScintillaListItem comment: 'ScintillaListItems can be used to populate auto-completion and user lists in ScintillaViews when the #displayString and #icon methods of the type being listed does not provide the text and icon (respectively) that are desired in the pop-up list.
 
 Instance Variables:

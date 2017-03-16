@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Win32Structure subclass: #ICONINFO
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ICONINFO guid: (GUID fromString: '{87B4C5F5-026E-11D3-9FD7-00A0CC3E4A32}')!
+ICONINFO guid: (GUID fromString: '{87b4c5f5-026e-11d3-9fd7-00a0cc3e4a32}')!
 ICONINFO comment: ''!
 !ICONINFO categoriesForClass!External-Data-Structured-Win32! !
 !ICONINFO methodsFor!

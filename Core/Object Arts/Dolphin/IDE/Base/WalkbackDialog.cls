@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 DialogView subclass: #WalkbackDialog
 	instanceVariableNames: 'callStack resumable caption debuggable'
 	classVariableNames: 'CallStackId Commands IconId'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-WalkbackDialog guid: (GUID fromString: '{87B4C723-026E-11D3-9FD7-00A0CC3E4A32}')!
+WalkbackDialog guid: (GUID fromString: '{87b4c723-026e-11d3-9fd7-00a0cc3e4a32}')!
 WalkbackDialog comment: '
 Instance Variables:
 	callStack		<readableString> containing the walkback trace.

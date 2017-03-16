@@ -5,7 +5,7 @@ Win32Structure subclass: #NONCLIENTMETRICS
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-NONCLIENTMETRICS guid: (GUID fromString: '{87B4C602-026E-11D3-9FD7-00A0CC3E4A32}')!
+NONCLIENTMETRICS guid: (GUID fromString: '{87b4c602-026e-11d3-9fd7-00a0cc3e4a32}')!
 NONCLIENTMETRICS comment: '<NONCLIENTMETRICS> is an <ExternalStructure> class to wrap the Win32 structure of the same name.
 
 From MSDN: "The NONCLIENTMETRICS structure contains the scalable metrics associated with the nonclient area of a nonminimized window. This structure is used by the SPI_GETNONCLIENTMETRICS and SPI_SETNONCLIENTMETRICS actions of SystemParametersInfo."'!

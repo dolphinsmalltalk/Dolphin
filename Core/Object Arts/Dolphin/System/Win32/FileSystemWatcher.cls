@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 FileSystemChangeReader subclass: #FileSystemWatcher
 	instanceVariableNames: 'events'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-FileSystemWatcher guid: (GUID fromString: '{EB4CDF52-701C-4505-9872-8BFCE6C37830}')!
+FileSystemWatcher guid: (GUID fromString: '{eb4cdf52-701c-4505-9872-8bfce6c37830}')!
 FileSystemWatcher comment: 'FileSystemWatcher is a FileSystemChangeReader that publishes the file-system changes it detects as Smalltalk events on the main UI thread.
 
 Clients of the FileSystemWatcher can register to receive the following events:

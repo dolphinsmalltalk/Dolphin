@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 RegKeyAbstract variableSubclass: #RegKey
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-RegKey guid: (GUID fromString: '{87B4C535-026E-11D3-9FD7-00A0CC3E4A32}')!
+RegKey guid: (GUID fromString: '{87b4c535-026e-11d3-9fd7-00a0cc3e4a32}')!
 RegKey comment: 'RegKey is the class of objects which represent individual keys in the Windows Registration Database. The keys may themselves have sub-keys which are in turn represented by instances of RegKey. A RegKey is also a dictionary of registry values represented in Dolphin by instances of <RegKeyValues>.
 
 RegKey implements the <abstractDictionary> protocol as operations against its sub-keys. In order to operate on the values under the key one must first acquire an instance of RegKeyValues using the #subValues message.'!

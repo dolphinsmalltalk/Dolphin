@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ValuePresenter subclass: #RadioButtonSetPresenter
 	instanceVariableNames: 'ownedRadioButtons'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-RadioButtonSetPresenter guid: (GUID fromString: '{40498D60-542D-11D3-998B-D5CA2C3C1D61}')!
+RadioButtonSetPresenter guid: (GUID fromString: '{40498d60-542d-11d3-998b-d5ca2c3c1d61}')!
 RadioButtonSetPresenter comment: 'RadioButtonSetPresenter is a <valuePresenter> that displays a <valueModel> onto a <Symbol>, where the symbol is the name of the selected <RadioButton> in the set. A RadioButtonSetPresenter expects to be connected to a container view, the child views of which are <RadioButton>s. 
 Only a single <RadioButton> in the set can be selected at any time. When the radio button selection in the set changes (e.g. as a result of user selection), the associated <valueModel> is updated and hence generates a #valueChanged event.
 

@@ -1,14 +1,12 @@
-"Filed out from Dolphin Smalltalk 2000 release 5.00"!
+"Filed out from Dolphin Smalltalk 7"!
 
 CompositeRefactoryChange subclass: #RenameClassChange
 	instanceVariableNames: 'oldName newName'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+RenameClassChange guid: (GUID fromString: '{a88eaba4-304f-4675-8b55-d3301bc1166d}')!
 RenameClassChange comment: ''!
-
-RenameClassChange guid: (GUID fromString: '{A88EABA4-304F-4675-8B55-D3301BC1166D}')!
-
 !RenameClassChange categoriesForClass!Refactory-Change Objects! !
 !RenameClassChange methodsFor!
 
@@ -61,10 +59,10 @@ renameChangesForClass: aClassName to: newClassName
 	^change! !
 !RenameClassChange categoriesFor: #=!comparing!public! !
 !RenameClassChange categoriesFor: #changeClass!accessing!public! !
-!RenameClassChange categoriesFor: #executeNotifying:!*-unclassified!private! !
-!RenameClassChange categoriesFor: #flattenOnto:!*-unclassified!private! !
-!RenameClassChange categoriesFor: #newName!*-unclassified!private! !
-!RenameClassChange categoriesFor: #oldName!*-unclassified!private! !
+!RenameClassChange categoriesFor: #executeNotifying:!private! !
+!RenameClassChange categoriesFor: #flattenOnto:!private! !
+!RenameClassChange categoriesFor: #newName!private! !
+!RenameClassChange categoriesFor: #oldName!private! !
 !RenameClassChange categoriesFor: #rename:to:!initialize/release!public! !
 !RenameClassChange categoriesFor: #renameChangesForClass:to:!accessing!public! !
 

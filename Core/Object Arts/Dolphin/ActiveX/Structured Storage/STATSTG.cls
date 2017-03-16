@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 OLEFinalizableStructure subclass: #STATSTG
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'OLEStructuredStorageConstants'
 	classInstanceVariableNames: ''!
-STATSTG guid: (GUID fromString: '{87B4C5C3-026E-11D3-9FD7-00A0CC3E4A32}')!
+STATSTG guid: (GUID fromString: '{87b4c5c3-026e-11d3-9fd7-00a0cc3e4a32}')!
 STATSTG comment: 'STATSTG is an <ExternalStructure> class to represent the OLE Structured Storage structure of the same name.
 
 STATSTG contains directory type information about a structured storage object (storage, stream, or lock bytes)

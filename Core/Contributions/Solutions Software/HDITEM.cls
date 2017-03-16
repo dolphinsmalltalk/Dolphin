@@ -5,7 +5,7 @@ CCITEM subclass: #HDITEM
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-HDITEM guid: (GUID fromString: '{CFF5DA39-BB38-4499-9527-66449B212B87}')!
+HDITEM guid: (GUID fromString: '{cff5da39-bb38-4499-9527-66449b212b87}')!
 HDITEM comment: ''!
 !HDITEM categoriesForClass!Unclassified! !
 !HDITEM methodsFor!

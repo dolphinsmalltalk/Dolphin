@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 GdiplusInitializer subclass: #GdiplusGraphicsPathFromPointsInitializer
 	instanceVariableNames: 'pathPoints pathTypes fillMode'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-GdiplusGraphicsPathFromPointsInitializer guid: (GUID fromString: '{FCEF1A11-834C-11D7-B609-00E0987E8081}')!
+GdiplusGraphicsPathFromPointsInitializer guid: (GUID fromString: '{fcef1a11-834c-11d7-b609-00e0987e8081}')!
 GdiplusGraphicsPathFromPointsInitializer comment: ''!
 !GdiplusGraphicsPathFromPointsInitializer categoriesForClass!Unclassified! !
 !GdiplusGraphicsPathFromPointsInitializer methodsFor!

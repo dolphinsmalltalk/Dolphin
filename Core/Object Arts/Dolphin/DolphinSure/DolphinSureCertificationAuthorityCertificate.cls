@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 DolphinSureCertificate subclass: #DolphinSureCertificationAuthorityCertificate
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-DolphinSureCertificationAuthorityCertificate guid: (GUID fromString: '{43A98823-A087-4695-B184-D31958F81869}')!
+DolphinSureCertificationAuthorityCertificate guid: (GUID fromString: '{43a98823-a087-4695-b184-d31958f81869}')!
 DolphinSureCertificationAuthorityCertificate comment: 'A DolphinSureCertificationAuthorityCertificate instance is used to represent a certificate that can be used by a DolphinSure certifying authority to issue standard DolphinSureCertificates for publishers.'!
 !DolphinSureCertificationAuthorityCertificate categoriesForClass!Cryptography-Certificates! !
 !DolphinSureCertificationAuthorityCertificate methodsFor!

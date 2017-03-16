@@ -5,7 +5,7 @@ StLiteralNode subclass: #StLiteralArrayNode
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-StLiteralArrayNode guid: (GUID fromString: '{D0AEC5F6-FBC7-4020-8545-2BCA5EEB2BCA}')!
+StLiteralArrayNode guid: (GUID fromString: '{d0aec5f6-fbc7-4020-8545-2bca5eeb2bca}')!
 StLiteralArrayNode comment: ''!
 !StLiteralArrayNode categoriesForClass!Unclassified! !
 !StLiteralArrayNode methodsFor!

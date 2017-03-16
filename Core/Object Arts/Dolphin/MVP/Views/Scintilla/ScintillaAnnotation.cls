@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #ScintillaAnnotation
 	instanceVariableNames: 'line text styles'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ScintillaAnnotation guid: (GUID fromString: '{2D20C021-0CEF-46F7-BA44-4C4191189DF9}')!
+ScintillaAnnotation guid: (GUID fromString: '{2d20c021-0cef-46f7-ba44-4c4191189df9}')!
 ScintillaAnnotation comment: ''!
 !ScintillaAnnotation categoriesForClass!MVP-Views-Support! !
 !ScintillaAnnotation methodsFor!

@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 LookupTable variableSubclass: #ItcLookupTable
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ItcLookupTable guid: (GUID fromString: '{C6EE2DBA-51D3-422B-A879-9D42DEB9E80D}')!
+ItcLookupTable guid: (GUID fromString: '{c6ee2dba-51d3-422b-a879-9d42deb9e80d}')!
 ItcLookupTable comment: ''!
 !ItcLookupTable categoriesForClass!Unclassified! !
 !ItcLookupTable methodsFor!

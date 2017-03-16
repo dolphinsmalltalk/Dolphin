@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Win32Structure subclass: #BP_PAINTPARAMS
 	instanceVariableNames: 'blendFunction'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-BP_PAINTPARAMS guid: (GUID fromString: '{CACA75FF-B81A-424E-9FFE-AE0E691932D5}')!
+BP_PAINTPARAMS guid: (GUID fromString: '{caca75ff-b81a-424e-9ffe-ae0e691932d5}')!
 BP_PAINTPARAMS comment: ''!
 !BP_PAINTPARAMS categoriesForClass!Win32-Structs! !
 !BP_PAINTPARAMS methodsFor!

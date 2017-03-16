@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ListPresenter subclass: #FolderPresenter
 	instanceVariableNames: 'treeItem contentsModel isAutoNavigate openBlock history'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-FolderPresenter guid: (GUID fromString: '{87B4C6C7-026E-11D3-9FD7-00A0CC3E4A32}')!
+FolderPresenter guid: (GUID fromString: '{87b4c6c7-026e-11d3-9fd7-00a0cc3e4a32}')!
 FolderPresenter comment: 'FolderPresenter is a <treePresenter> component that can be used to display the contents of a <treeModel> within a <listView>. The list is used to display the contents of individual parent nodes within the tree. This is similar to the way a folder view (hence the name) is used to display a directory''s contents in the Windows Shell.. For presentation of a tree but viewing it as a complete hierarchy see the TreePresenter class.
 
 A FolderPresenter can navigate the tree hierarchy using the #expand:, #collapse: and #up <treePresenter> methods. 

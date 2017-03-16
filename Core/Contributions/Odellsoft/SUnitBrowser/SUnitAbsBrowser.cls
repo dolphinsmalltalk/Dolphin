@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 SmalltalkToolShell subclass: #SUnitAbsBrowser
 	instanceVariableNames: 'listModel labelTextPresenter listPresenter statusTextPresenter'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-SUnitAbsBrowser guid: (GUID fromString: '{06E4EBDA-12C8-4E54-9880-E09EBA8BC764}')!
+SUnitAbsBrowser guid: (GUID fromString: '{06e4ebda-12c8-4e54-9880-e09eba8bc764}')!
 SUnitAbsBrowser comment: ''!
 !SUnitAbsBrowser categoriesForClass!Unclassified! !
 !SUnitAbsBrowser methodsFor!

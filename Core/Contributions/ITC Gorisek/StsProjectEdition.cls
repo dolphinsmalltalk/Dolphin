@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 StsEdition subclass: #StsProjectEdition
 	instanceVariableNames: 'name versionDescriptor packageEditions previousEdition blessing comment versionComment'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-StsProjectEdition guid: (GUID fromString: '{10D6A002-AF19-11D4-B232-000000000000}')!
+StsProjectEdition guid: (GUID fromString: '{10d6a002-af19-11d4-b232-000000000000}')!
 StsProjectEdition comment: ''!
 !StsProjectEdition categoriesForClass!Unclassified! !
 !StsProjectEdition methodsFor!

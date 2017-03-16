@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #HtmlParserReadStream
 	instanceVariableNames: 'stream replacements'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-HtmlParserReadStream guid: (GUID fromString: '{0D236B62-8A9F-453E-9D99-DAD70EB7AE5B}')!
+HtmlParserReadStream guid: (GUID fromString: '{0d236b62-8a9f-453e-9d99-dad70eb7ae5b}')!
 HtmlParserReadStream comment: ''!
 !HtmlParserReadStream categoriesForClass!Unclassified! !
 !HtmlParserReadStream methodsFor!

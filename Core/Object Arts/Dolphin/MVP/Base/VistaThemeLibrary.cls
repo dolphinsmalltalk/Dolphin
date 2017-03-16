@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ThemeLibrary subclass: #VistaThemeLibrary
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-VistaThemeLibrary guid: (GUID fromString: '{A07FA8A2-68A8-4F59-9459-E71F9BECE9AC}')!
+VistaThemeLibrary guid: (GUID fromString: '{a07fa8a2-68a8-4f59-9459-e71f9bece9ac}')!
 VistaThemeLibrary comment: ''!
 !VistaThemeLibrary categoriesForClass!Win32-Modules! !
 !VistaThemeLibrary methodsFor!

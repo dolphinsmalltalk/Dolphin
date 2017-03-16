@@ -5,7 +5,7 @@ GUISessionManager subclass: #DevelopmentSessionManager
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-DevelopmentSessionManager guid: (GUID fromString: '{5902537A-8D40-49C3-94F3-2CD287656C38}')!
+DevelopmentSessionManager guid: (GUID fromString: '{5902537a-8d40-49c3-94f3-2cd287656c38}')!
 DevelopmentSessionManager comment: ''!
 !DevelopmentSessionManager categoriesForClass!Development!System-Support! !
 !DevelopmentSessionManager methodsFor!

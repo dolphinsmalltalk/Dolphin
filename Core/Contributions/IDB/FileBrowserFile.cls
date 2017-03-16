@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 FileBrowserAbstract subclass: #FileBrowserFile
 	instanceVariableNames: 'size type timeStamp'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-FileBrowserFile guid: (GUID fromString: '{782ED51A-5423-11D3-998B-BCA753D3B065}')!
+FileBrowserFile guid: (GUID fromString: '{782ed51a-5423-11d3-998b-bca753d3b065}')!
 FileBrowserFile comment: 'See [DolphinImageFolder]/Idb/Documentation for details
 
 (C) 2005 Ian Bartholomew

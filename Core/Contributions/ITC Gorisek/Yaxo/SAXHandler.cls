@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #SAXHandler
 	instanceVariableNames: 'document driver eod'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-SAXHandler guid: (GUID fromString: '{5F6867FA-780A-49F2-972E-9F8C0676DDD0}')!
+SAXHandler guid: (GUID fromString: '{5f6867fa-780a-49f2-972e-9f8c0676ddd0}')!
 SAXHandler comment: ''!
 !SAXHandler categoriesForClass!XML-Parser! !
 !SAXHandler methodsFor!

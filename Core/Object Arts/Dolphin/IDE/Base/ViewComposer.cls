@@ -5,7 +5,7 @@ SmalltalkToolShell subclass: #ViewComposer
 	classVariableNames: 'AdornmentModifiedFlag Clipboard DefaultGridResolution ExtentImage ModifiedFlag MouseClickFlag PositionImage'
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
-ViewComposer guid: (GUID fromString: '{045641AA-90D2-43E8-A81C-A3F76D7D35B4}')!
+ViewComposer guid: (GUID fromString: '{045641aa-90d2-43e8-a81c-a3f76d7d35b4}')!
 ViewComposer comment: 'The View Composer is Dolphin''s GUI builder. It is used to graphically create views (the user interface components of the MVP framework). 
 
 The view resources are saved down as class-side methods, usually associated with the presenter classes to which the views will be attached. These methods are given selectors of the form, #resource_xxxx_yyyy, where xxxx_yyyy is the resource identifier. The resource methods answer an array of Smalltalk literals that can be used to rebuild an instance of the view when loaded via an STLInFiler.

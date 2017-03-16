@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 AbstractRecentMenu subclass: #RegistryRecentMenu
 	instanceVariableNames: 'productRegistryKey recentRegistryKey'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-RegistryRecentMenu guid: (GUID fromString: '{24A5959D-A131-48D9-A17D-B8038AEA48B2}')!
+RegistryRecentMenu guid: (GUID fromString: '{24a5959d-a131-48d9-a17d-b8038aea48b2}')!
 RegistryRecentMenu comment: ''!
 !RegistryRecentMenu categoriesForClass!Kernel-Objects! !
 !RegistryRecentMenu methodsFor!

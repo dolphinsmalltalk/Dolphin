@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ClassBrowserPlugin subclass: #SmalllintPlugin
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-SmalllintPlugin guid: (GUID fromString: '{321FCBFB-84D2-40AE-BF8F-F4B816723A1B}')!
+SmalllintPlugin guid: (GUID fromString: '{321fcbfb-84d2-40ae-bf8f-f4b816723a1b}')!
 SmalllintPlugin comment: ''!
 !SmalllintPlugin categoriesForClass!MVP-Presenters! !
 !SmalllintPlugin methodsFor!

@@ -5,7 +5,7 @@ SmalltalkToolShell subclass: #ResourceBrowser
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ResourceBrowser guid: (GUID fromString: '{87B4C6C2-026E-11D3-9FD7-00A0CC3E4A32}')!
+ResourceBrowser guid: (GUID fromString: '{87b4c6c2-026e-11d3-9fd7-00a0cc3e4a32}')!
 ResourceBrowser comment: 'ResourceBrowser is a <SmalltalkToolShell> that implements the Resource Browser tool. This provides an interface onto all the <Resource>s held by the current <ResourceManager>.
 
 Instance Variables:

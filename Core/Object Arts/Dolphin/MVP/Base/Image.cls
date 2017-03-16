@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 GraphicsTool subclass: #Image
 	instanceVariableNames: 'fileLocator identifier instanceHandle'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-Image guid: (GUID fromString: '{87B4C635-026E-11D3-9FD7-00A0CC3E4A32}')!
+Image guid: (GUID fromString: '{87b4c635-026e-11d3-9fd7-00a0cc3e4a32}')!
 Image comment: 'Image is the class of <GraphicsTools>s that represent pictures which can be drawn onto the display (or other device).
 
 Instance Variables:

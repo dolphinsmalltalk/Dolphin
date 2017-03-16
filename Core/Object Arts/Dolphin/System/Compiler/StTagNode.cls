@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 StProgramNode subclass: #StTagNode
 	instanceVariableNames: 'start stop'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-StTagNode guid: (GUID fromString: '{EB694D50-0176-4A1D-A468-8F7A306F573B}')!
+StTagNode guid: (GUID fromString: '{eb694d50-0176-4a1d-a468-8f7a306f573b}')!
 StTagNode comment: ''!
 !StTagNode categoriesForClass!System-Compiler! !
 !StTagNode methodsFor!

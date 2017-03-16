@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ODBClient subclass: #ODBTerminatedClient
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ODBTerminatedClient guid: (GUID fromString: '{8162EE02-0FB8-11D4-B091-000000000000}')!
+ODBTerminatedClient guid: (GUID fromString: '{8162ee02-0fb8-11d4-b091-000000000000}')!
 ODBTerminatedClient comment: '"Terminated clients are clients that were left connected when the database
 was not closed (they still hold locks and their transactions might have been
 interrupted while being committed). "'!

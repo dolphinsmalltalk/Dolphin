@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 SAXHandler subclass: #XMLDOMParser
 	instanceVariableNames: 'entity stack incremental'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-XMLDOMParser guid: (GUID fromString: '{9AA6DF2D-D670-4DA4-AFC3-D47D0003E980}')!
+XMLDOMParser guid: (GUID fromString: '{9aa6df2d-d670-4da4-afc3-d47d0003e980}')!
 XMLDOMParser comment: ''!
 !XMLDOMParser categoriesForClass!XML-Parser! !
 !XMLDOMParser methodsFor!

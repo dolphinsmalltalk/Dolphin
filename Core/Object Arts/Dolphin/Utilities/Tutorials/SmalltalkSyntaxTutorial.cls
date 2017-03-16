@@ -5,7 +5,7 @@ AbstractTutorial subclass: #SmalltalkSyntaxTutorial
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-SmalltalkSyntaxTutorial guid: (GUID fromString: '{3692CC24-6C4C-4441-A0F0-EA8235AC2D25}')!
+SmalltalkSyntaxTutorial guid: (GUID fromString: '{3692cc24-6c4c-4441-a0f0-ea8235ac2d25}')!
 SmalltalkSyntaxTutorial comment: 'The default ProfStef tutorial to learn Smalltalk syntax'!
 !SmalltalkSyntaxTutorial categoriesForClass!Kernel-Objects! !
 !SmalltalkSyntaxTutorial methodsFor!

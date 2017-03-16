@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 XMLNode subclass: #XMLStringNode
 	instanceVariableNames: 'string'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-XMLStringNode guid: (GUID fromString: '{456E6E4A-5391-4DCB-8ECC-A504A9619B52}')!
+XMLStringNode guid: (GUID fromString: '{456e6e4a-5391-4dcb-8ecc-a504a9619b52}')!
 XMLStringNode comment: ''!
 !XMLStringNode categoriesForClass!XML-Parser! !
 !XMLStringNode methodsFor!

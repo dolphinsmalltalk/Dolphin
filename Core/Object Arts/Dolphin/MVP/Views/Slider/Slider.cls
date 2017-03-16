@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ValueConvertingControlView subclass: #Slider
 	instanceVariableNames: 'autoTickFrequency _reserved1 _reserved2'
 	classVariableNames: 'HorizontalTickStyles TickStyleMask VerticalTickStyles'
 	poolDictionaries: 'TrackBarConstants'
 	classInstanceVariableNames: ''!
-Slider guid: (GUID fromString: '{425D0EAB-542E-11D3-998B-D5CA2C3C1D61}')!
+Slider guid: (GUID fromString: '{425d0eab-542e-11d3-998b-d5ca2c3c1d61}')!
 Slider comment: 'Slider is a <valueView> implementing the Windows "msctls_trackbar32" common control. The <valueModel> associated with a Slider must always yield an <integer> value when mapped through the installed type converter. A Slider will normally be used in conjunction with a <NumberPresenter>.
 
 Thanks to Ian Bartholomew for donating his original version of this class.'!

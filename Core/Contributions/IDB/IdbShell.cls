@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 SmalltalkToolShell subclass: #IdbShell
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-IdbShell guid: (GUID fromString: '{D143E0F5-FB16-48B9-999E-C66F61C6FD3E}')!
+IdbShell guid: (GUID fromString: '{d143e0f5-fb16-48b9-999e-c66f61c6fd3e}')!
 IdbShell comment: 'See [DolphinImageFolder]/Idb/Documentation for details
 
 (C) 2006 Ian Bartholomew

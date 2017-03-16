@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 DolphinSureCertificate subclass: #ObjectArtsCertificate
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ObjectArtsCertificate guid: (GUID fromString: '{A543C6D9-2907-46B9-B22E-4C066703C2EE}')!
+ObjectArtsCertificate guid: (GUID fromString: '{a543c6d9-2907-46b9-b22e-4c066703c2ee}')!
 ObjectArtsCertificate comment: ''!
 !ObjectArtsCertificate categoriesForClass!Cryptography-Certificates! !
 !ObjectArtsCertificate class methodsFor!

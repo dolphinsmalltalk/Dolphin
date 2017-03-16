@@ -5,7 +5,7 @@ Object subclass: #ExternalPipe
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ExternalPipe guid: (GUID fromString: '{1EBEE959-7771-41A4-9164-D9BFD2AC4EA5}')!
+ExternalPipe guid: (GUID fromString: '{1ebee959-7771-41a4-9164-d9bfd2ac4ea5}')!
 ExternalPipe comment: ''!
 !ExternalPipe categoriesForClass!Unclassified! !
 !ExternalPipe methodsFor!

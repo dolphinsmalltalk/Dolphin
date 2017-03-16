@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ShellView subclass: #DialogView
 	instanceVariableNames: 'endModal isModal oldWndProc'
 	classVariableNames: 'InProcLoopMask'
 	poolDictionaries: 'ThemeConstants'
 	classInstanceVariableNames: ''!
-DialogView guid: (GUID fromString: '{87B4C71E-026E-11D3-9FD7-00A0CC3E4A32}')!
+DialogView guid: (GUID fromString: '{87b4c71e-026e-11d3-9fd7-00a0cc3e4a32}')!
 DialogView comment: 'DialogView is a specialisation of <topView> that provides the ability to be displayed modally and to return a value.
 
 Instance Variables:

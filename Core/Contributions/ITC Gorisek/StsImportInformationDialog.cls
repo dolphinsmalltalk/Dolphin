@@ -5,7 +5,7 @@ Dialog subclass: #StsImportInformationDialog
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-StsImportInformationDialog guid: (GUID fromString: '{5142405C-A6D0-4A2C-8867-466CC5BFD895}')!
+StsImportInformationDialog guid: (GUID fromString: '{5142405c-a6d0-4a2c-8867-466cc5bfd895}')!
 StsImportInformationDialog comment: ''!
 !StsImportInformationDialog categoriesForClass!Unclassified! !
 !StsImportInformationDialog methodsFor!

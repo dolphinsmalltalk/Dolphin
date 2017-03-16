@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ODBTransaction subclass: #ODBLocalTransaction
 	instanceVariableNames: 'changesPackage inconsistent newObjects application'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ODBLocalTransaction guid: (GUID fromString: '{8162EE2B-0FB8-11D4-B091-000000000000}')!
+ODBLocalTransaction guid: (GUID fromString: '{8162ee2b-0fb8-11d4-b091-000000000000}')!
 ODBLocalTransaction comment: ''!
 !ODBLocalTransaction categoriesForClass!No category! !
 !ODBLocalTransaction methodsFor!

@@ -5,7 +5,7 @@ GraphicsTool subclass: #Font
 	classVariableNames: 'System'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-Font guid: (GUID fromString: '{87B4C634-026E-11D3-9FD7-00A0CC3E4A32}')!
+Font guid: (GUID fromString: '{87b4c634-026e-11d3-9fd7-00a0cc3e4a32}')!
 Font comment: ''!
 !Font categoriesForClass!Graphics-Tools! !
 !Font methodsFor!

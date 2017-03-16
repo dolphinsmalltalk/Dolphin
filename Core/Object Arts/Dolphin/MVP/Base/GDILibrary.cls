@@ -5,7 +5,7 @@ PermanentLibrary subclass: #GDILibrary
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-GDILibrary guid: (GUID fromString: '{64674044-3A82-101B-8181-00AA003743D3}')!
+GDILibrary guid: (GUID fromString: '{64674044-3a82-101b-8181-00aa003743d3}')!
 GDILibrary comment: 'GDILibrary is the <ExternalLibrary> class to represent the Windows system DLL, GDI32.DLL.
 
 The default instance of this class provides access to most of the Win32 graphics API. New functions may be added as required, but the external function naming convention should be followed.

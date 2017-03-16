@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 DolphinSureCertificate subclass: #DolphinSurePersonalCertificate
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-DolphinSurePersonalCertificate guid: (GUID fromString: '{CD23937F-FC74-43FD-B678-BEBEAC42EE59}')!
+DolphinSurePersonalCertificate guid: (GUID fromString: '{cd23937f-fc74-43fd-b678-bebeac42ee59}')!
 DolphinSurePersonalCertificate comment: ''!
 !DolphinSurePersonalCertificate categoriesForClass!Unclassified! !
 !DolphinSurePersonalCertificate methodsFor!

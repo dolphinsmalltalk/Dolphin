@@ -5,7 +5,7 @@ View subclass: #GdiplusDoubleBufferedView
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-GdiplusDoubleBufferedView guid: (GUID fromString: '{3C1E8025-EBA8-41C4-BD23-E8BA0536F783}')!
+GdiplusDoubleBufferedView guid: (GUID fromString: '{3c1e8025-eba8-41c4-bd23-e8ba0536f783}')!
 GdiplusDoubleBufferedView comment: ''!
 !GdiplusDoubleBufferedView categoriesForClass!Unclassified! !
 !GdiplusDoubleBufferedView methodsFor!

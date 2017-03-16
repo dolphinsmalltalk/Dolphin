@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #MemoryMappedFile
 	instanceVariableNames: 'file name handle maximumSize ownsFile'
 	classVariableNames: ''
 	poolDictionaries: 'MMFConstants Win32Constants'
 	classInstanceVariableNames: ''!
-MemoryMappedFile guid: (GUID fromString: '{87C4EEE1-16F8-422B-B9E6-2E1C2963AFFD}')!
+MemoryMappedFile guid: (GUID fromString: '{87c4eee1-16f8-422b-b9e6-2e1c2963affd}')!
 MemoryMappedFile comment: 'MemoryMappedFile is an abstraction over the Win32 Memory-Mapped File API.
 
 Instance Variables:

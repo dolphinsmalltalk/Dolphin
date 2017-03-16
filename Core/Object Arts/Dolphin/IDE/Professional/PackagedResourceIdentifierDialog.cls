@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ResourceIdentifierDialog subclass: #PackagedResourceIdentifierDialog
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-PackagedResourceIdentifierDialog guid: (GUID fromString: '{17C3843C-C032-4108-A7EF-7E784DEA4647}')!
+PackagedResourceIdentifierDialog guid: (GUID fromString: '{17c3843c-c032-4108-a7ef-7e784dea4647}')!
 PackagedResourceIdentifierDialog comment: 'PackagedResourceIdentifierDialog is a specialised <ResourceIdentifierDialog> that uses the <PackagedClassSelector> for class selection, rather than the standard <ClassHierarchySslector>. 
 '!
 !PackagedResourceIdentifierDialog categoriesForClass!Development! !

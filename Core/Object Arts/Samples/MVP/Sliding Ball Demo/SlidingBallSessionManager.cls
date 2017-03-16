@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 RuntimeSessionManager subclass: #SlidingBallSessionManager
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-SlidingBallSessionManager guid: (GUID fromString: '{DF9F9B7F-7863-4331-9258-06E55D9FB118}')!
+SlidingBallSessionManager guid: (GUID fromString: '{df9f9b7f-7863-4331-9258-06e55d9fb118}')!
 SlidingBallSessionManager comment: ''!
 !SlidingBallSessionManager categoriesForClass!Unclassified! !
 !SlidingBallSessionManager methodsFor!

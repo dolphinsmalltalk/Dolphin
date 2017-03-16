@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 CommonDialogStructure subclass: #BROWSEINFO
 	instanceVariableNames: 'title displayName'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-BROWSEINFO guid: (GUID fromString: '{87B4C5CC-026E-11D3-9FD7-00A0CC3E4A32}')!
+BROWSEINFO guid: (GUID fromString: '{87b4c5cc-026e-11d3-9fd7-00a0cc3e4a32}')!
 BROWSEINFO comment: 'BROWSEINFO is an <ExternalStructure> class which represents the Windows common dialog structure of the same name.
 
 BROWSEINFO is used in conjunction with the BrowseFolderDialog.'!

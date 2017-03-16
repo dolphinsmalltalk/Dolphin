@@ -5,7 +5,7 @@ Presenter subclass: #PlimbolePresenter
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-PlimbolePresenter guid: (GUID fromString: '{37200744-DD59-4671-9C52-BEC43269016C}')!
+PlimbolePresenter guid: (GUID fromString: '{37200744-dd59-4671-9c52-bec43269016c}')!
 PlimbolePresenter comment: 'This is the Presenter class for the Plimbole Generative Music Sequencer. It receives user input (mouse clicks and commands) and translates these into effects on the Plimbole model that it holds. Together with the PlimboleView class this forms the user interface part of the MVP triad. Normaly one would create the complete Plimbole user interface usering a PlimboleShell since this adds the UI buttons and provides for a fully functioning application. However, it is possible to instantiate a basic Plimbole-PlimboleView-PlimbolePresenter MVP triad as a demonstration:
 
 presenter := PlimbolePresenter show.

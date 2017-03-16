@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ValueConvertingControlView subclass: #SpinButton
 	instanceVariableNames: ''
 	classVariableNames: 'AlignmentMap AlignmentMask UdnMap'
 	poolDictionaries: 'UpDownControlConstants'
 	classInstanceVariableNames: ''!
-SpinButton guid: (GUID fromString: '{425D0EAC-542E-11D3-998B-D5CA2C3C1D61}')!
+SpinButton guid: (GUID fromString: '{425d0eac-542e-11d3-998b-d5ca2c3c1d61}')!
 SpinButton comment: 'SpinButton is a <valueView> wrapping the Windows Up-Down common control. The <valueModel> associated with a SpinButton must always yield an <integer> value when mapped through the installed type converter.
 
 Note that comctl32.dll version 5.80 or later is required, mandating at least Internet Explorer 5 on the target machine. This is to support the 32-bit integer range, 16-bit seeming hardly worthwhile.

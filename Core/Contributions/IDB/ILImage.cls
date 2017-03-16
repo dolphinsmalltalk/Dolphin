@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #ILImage
 	instanceVariableNames: 'extent colorsUsed colorsUsedCount image bitmapCache hotSpot'
 	classVariableNames: 'TransparentRGB'
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
-ILImage guid: (GUID fromString: '{5402D9A6-19EE-41A2-8586-D104CD17118C}')!
+ILImage guid: (GUID fromString: '{5402d9a6-19ee-41a2-8586-d104cd17118c}')!
 ILImage comment: 'See [DolphinImageFolder]/Idb/Documentation for details
 
 (C) 2005 Ian Bartholomew

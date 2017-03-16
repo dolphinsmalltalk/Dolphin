@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 XMLNode subclass: #XMLPI
 	instanceVariableNames: 'target data'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-XMLPI guid: (GUID fromString: '{2A41E7A7-E44C-4134-9472-1E0AE3FA1C9C}')!
+XMLPI guid: (GUID fromString: '{2a41e7a7-e44c-4134-9472-1e0ae3fa1c9c}')!
 XMLPI comment: ''!
 !XMLPI categoriesForClass!XML-Parser! !
 !XMLPI methodsFor!

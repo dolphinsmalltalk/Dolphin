@@ -5,7 +5,7 @@ TextDocument subclass: #WordPad
 	classVariableNames: 'ResourceLib'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-WordPad guid: (GUID fromString: '{DAF98E5F-3A01-477D-B822-6B0E9BC79D14}')!
+WordPad guid: (GUID fromString: '{daf98e5f-3a01-477d-b822-6b0e9bc79d14}')!
 WordPad comment: 'Wordpad is a <topShell> sample application which implements a limited set of the functionality of the familiar Windows utility. Most of the implementation of the application is actually inherited from Dolphin''s TextDocument framework class or provided by RichTextPresenter and RichTextEdit.
 
 Example:

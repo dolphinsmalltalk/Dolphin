@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 RuntimeSessionManager subclass: #ProtectedProductSessionManager
 	instanceVariableNames: 'encryptedClasses'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ProtectedProductSessionManager guid: (GUID fromString: '{A90C2F6F-8F92-4493-995A-1EC18066D054}')!
+ProtectedProductSessionManager guid: (GUID fromString: '{a90c2f6f-8f92-4493-995a-1ec18066d054}')!
 ProtectedProductSessionManager comment: ''!
 !ProtectedProductSessionManager categoriesForClass!Unclassified! !
 !ProtectedProductSessionManager methodsFor!

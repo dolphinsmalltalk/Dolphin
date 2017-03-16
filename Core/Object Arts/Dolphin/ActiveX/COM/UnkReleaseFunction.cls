@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 COMFunctionAbstract subclass: #UnkReleaseFunction
 	instanceVariableNames: ''
 	classVariableNames: 'Descriptor'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-UnkReleaseFunction guid: (GUID fromString: '{8F012E18-24BD-4BC1-85EB-D0DD5497C142}')!
+UnkReleaseFunction guid: (GUID fromString: '{8f012e18-24bd-4bc1-85eb-d0dd5497c142}')!
 UnkReleaseFunction comment: 'COMReleaseFunction is a specialized class of <COMFunction> intended to represent the IUnknown::Release() method.
 
 As IUnknown is implemented entirely by the <COMObjectStub>, a COMReleaseFunction sends a #Release message to the relevant stub.'!

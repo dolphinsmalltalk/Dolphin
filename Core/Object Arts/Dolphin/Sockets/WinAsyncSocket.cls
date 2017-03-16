@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 View subclass: #WinAsyncSocket
 	instanceVariableNames: '_reserved1 _reserved2'
 	classVariableNames: 'DefaultInstance SocketMessageMap UserMessageMap WsaEvent WsaHostInfo'
 	poolDictionaries: 'WinSocketConstants'
 	classInstanceVariableNames: ''!
-WinAsyncSocket guid: (GUID fromString: '{87B4C717-026E-11D3-9FD7-00A0CC3E4A32}')!
+WinAsyncSocket guid: (GUID fromString: '{87b4c717-026e-11d3-9fd7-00a0cc3e4a32}')!
 WinAsyncSocket comment: '** This class is part of the old asynchronous Sockets Connection package which has been superseded by the Dolphin Sockets package **
 
 WinAsyncSocket  represents a hidden singleton <view> capable of receiving callbacks from the Windows WSA asynchronous socket library functions. Its singleton instance receives notifications of WSA_XXX events by means of Windows messages. These notifications are interpreted and then passed on to the appropriate handler methods within a <SocketAbstract>. 

@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #DolphinSureTrustedData
 	instanceVariableNames: 'data description signature publisherCertificate'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-DolphinSureTrustedData guid: (GUID fromString: '{6BA876E9-8F00-4F03-BED6-F2F6AF4EDBF1}')!
+DolphinSureTrustedData guid: (GUID fromString: '{6ba876e9-8f00-4f03-bed6-f2f6af4edbf1}')!
 DolphinSureTrustedData comment: 'A DolphinSureTrustedData object represents data that has been encrypted with a particular publisher''s certificate.  The intent is that the data can be guaranteed as originating from a particular publisher (identified by the encapsulated certificate) and that it can also be trusted not to have been modified since it was published.  It is not used as a means of transmitting "secret" data (since anyone can directly see it) but as a means of transmitting signed data.
 
 In order to create a piece of signed/trusted data it is necessary to have a DolphinSureCertificate and a matching private key.  These can be obtained by applying to a DolphinSure certificate authority such as Object Arts Ltd (http://www.object-arts.com/DolphinSure). The raw data is signed by first hasing with the SecurehashAlgorithm and then encrypting the result using the DigitalSignatureAlgorithm and the private key of the publisher''s certificate. The point is that, the key can be easily verified to match the hash of the data and it is therefore very difficult to forge another message that pertains to be from the same source.

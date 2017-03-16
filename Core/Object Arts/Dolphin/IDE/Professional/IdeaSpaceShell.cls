@@ -5,7 +5,7 @@ SmalltalkToolShell subclass: #IdeaSpaceShell
 	classVariableNames: ''
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
-IdeaSpaceShell guid: (GUID fromString: '{402CF4F5-0B2E-4533-9664-C99FE1BF84FA}')!
+IdeaSpaceShell guid: (GUID fromString: '{402cf4f5-0b2e-4533-9664-c99fe1bf84fa}')!
 IdeaSpaceShell comment: ''!
 !IdeaSpaceShell categoriesForClass!Development!MVP-Presenters! !
 !IdeaSpaceShell methodsFor!

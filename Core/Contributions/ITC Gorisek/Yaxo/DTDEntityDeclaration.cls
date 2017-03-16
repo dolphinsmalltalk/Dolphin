@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #DTDEntityDeclaration
 	instanceVariableNames: 'name value ndata'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: 'contextBehavior'!
-DTDEntityDeclaration guid: (GUID fromString: '{505107DC-2774-4508-BF9D-517BB42532C7}')!
+DTDEntityDeclaration guid: (GUID fromString: '{505107dc-2774-4508-bf9d-517bb42532c7}')!
 DTDEntityDeclaration comment: ''!
 !DTDEntityDeclaration categoriesForClass!XML-Parser! !
 !DTDEntityDeclaration methodsFor!

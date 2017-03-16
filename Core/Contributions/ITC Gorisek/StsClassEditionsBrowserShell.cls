@@ -5,7 +5,7 @@ SmalltalkToolShell subclass: #StsClassEditionsBrowserShell
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-StsClassEditionsBrowserShell guid: (GUID fromString: '{7610FBD2-232E-11D4-B0C2-000000000000}')!
+StsClassEditionsBrowserShell guid: (GUID fromString: '{7610fbd2-232e-11d4-b0c2-000000000000}')!
 StsClassEditionsBrowserShell comment: 'This shell is used to browse class editions in the repository.'!
 !StsClassEditionsBrowserShell categoriesForClass!Unclassified! !
 !StsClassEditionsBrowserShell methodsFor!

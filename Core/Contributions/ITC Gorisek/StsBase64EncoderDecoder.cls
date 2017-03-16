@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #StsBase64EncoderDecoder
 	instanceVariableNames: 'decodingTable'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-StsBase64EncoderDecoder guid: (GUID fromString: '{D283869C-D796-4D33-9768-2AB1EB314EA8}')!
+StsBase64EncoderDecoder guid: (GUID fromString: '{d283869c-d796-4d33-9768-2ab1eb314ea8}')!
 StsBase64EncoderDecoder comment: ''!
 !StsBase64EncoderDecoder categoriesForClass!Unclassified! !
 !StsBase64EncoderDecoder methodsFor!

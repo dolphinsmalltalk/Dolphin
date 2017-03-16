@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 DolphinSureCertificationAuthorityCertificate subclass: #MyOwnCertificationAuthorityCertificate
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-MyOwnCertificationAuthorityCertificate guid: (GUID fromString: '{3A6B1632-077D-49F5-81BE-ED0688E9C2B0}')!
+MyOwnCertificationAuthorityCertificate guid: (GUID fromString: '{3a6b1632-077d-49f5-81be-ed0688e9c2b0}')!
 MyOwnCertificationAuthorityCertificate comment: ''!
 !MyOwnCertificationAuthorityCertificate categoriesForClass!Cryptography-Certificates! !
 !MyOwnCertificationAuthorityCertificate methodsFor!

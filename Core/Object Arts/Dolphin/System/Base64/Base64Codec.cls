@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #Base64Codec
 	instanceVariableNames: 'quadsPerLine isPadded'
 	classVariableNames: 'DecodingTable EncodingTable'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-Base64Codec guid: (GUID fromString: '{0127A041-211C-4E0B-B214-49AC491B95F8}')!
+Base64Codec guid: (GUID fromString: '{0127a041-211c-4e0b-b214-49ac491b95f8}')!
 Base64Codec comment: 'Base64Codec is a simple but fast implementation of the widely used Base64 binary-to-ASCII text encoding scheme. For further details of Base64 see RFC 3548 (http://www.faqs.org/rfcs/rfc3548.html). Note that the implementation of Base64 provided by this class is compatible with MIME in that it splits encoded output into lines of 76 characters separated by a CR/LF pair. 
 
 At present this class has no public instance protocol. There are class side methods to encode (#encodeFrom:onto:) and decode (#decodeFrom:onto:) the complete contents of one stream onto another. In future it is anticipated that the class will be enhanced so that it can be used as a codec in a hypothetical encoding stream that allows for more flexible usage, and this will almost certainly mean that the instance side protocol is changed. It is also anticipated that the class will permit more control over the output in future, e.g. control over the maximum line length to support different standards, whether or not the encoded data is padded to a multiple of four characters, whether or not invalid characters in the encoded data are ignored, etc.

@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Presenter subclass: #ILColorSelectorPresenter
 	instanceVariableNames: 'selectedRGB colorSelectorView selectedColorView selectedColorText dum5'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ILColorSelectorPresenter guid: (GUID fromString: '{CCA55808-3175-4868-A29C-34B582A8C4E3}')!
+ILColorSelectorPresenter guid: (GUID fromString: '{cca55808-3175-4868-a29c-34b582a8c4e3}')!
 ILColorSelectorPresenter comment: 'See [DolphinImageFolder]/Idb/Documentation for details
 
 (C) 2005 Ian Bartholomew

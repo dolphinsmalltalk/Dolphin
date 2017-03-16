@@ -5,7 +5,7 @@ SmalltalkToolShell subclass: #StsProjectBrowserShell
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-StsProjectBrowserShell guid: (GUID fromString: '{10D6A001-AF19-11D4-B232-000000000000}')!
+StsProjectBrowserShell guid: (GUID fromString: '{10d6a001-af19-11d4-b232-000000000000}')!
 StsProjectBrowserShell comment: ''!
 !StsProjectBrowserShell categoriesForClass!Unclassified! !
 !StsProjectBrowserShell methodsFor!

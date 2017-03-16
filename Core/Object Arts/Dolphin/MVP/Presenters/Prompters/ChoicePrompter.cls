@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ValueDialog subclass: #ChoicePrompter
 	instanceVariableNames: 'choicePresenter newBlock newCaption newPrompt'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ChoicePrompter guid: (GUID fromString: '{87B4C6A7-026E-11D3-9FD7-00A0CC3E4A32}')!
+ChoicePrompter guid: (GUID fromString: '{87b4c6a7-026e-11d3-9fd7-00a0cc3e4a32}')!
 ChoicePrompter comment: 'ChoicePrompter is a <valueDialogPresenter> that allows a value to be chosen from a list of alternatives. 
 
 You can instantiate a single selection ChoicePrompter dialog using the class methods #choices:caption: or #on:choices:caption:. It is also possible to allow multiples selections by using the methods #multipleChoices:caption: and #on:multipleChoices:caption:. Each of these methods answers the model value if Ok (or nil if Cancel) is pressed. When a ChoicePrompter is being used to select multiple choices, the < valueModel> will be used to contain an Array of the selected items.

@@ -5,7 +5,7 @@ Object subclass: #MenuItem
 	classVariableNames: 'Dividers StringSeparator StylesMask'
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
-MenuItem guid: (GUID fromString: '{87B4C49D-026E-11D3-9FD7-00A0CC3E4A32}')!
+MenuItem guid: (GUID fromString: '{87b4c49d-026e-11d3-9fd7-00a0cc3e4a32}')!
 MenuItem addClassConstant: 'StringSeparator' value: $/!
 MenuItem addClassConstant: 'StylesMask' value: 1048575!
 MenuItem comment: 'MenuItem is an abstract class whose subclasses represent the items held by a <Menu>.

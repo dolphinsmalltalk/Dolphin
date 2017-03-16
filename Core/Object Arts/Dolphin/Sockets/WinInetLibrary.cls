@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ExternalLibrary subclass: #WinInetLibrary
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-WinInetLibrary guid: (GUID fromString: '{96152A1D-1214-4ED9-82F2-10021D755F70}')!
+WinInetLibrary guid: (GUID fromString: '{96152a1d-1214-4ed9-82f2-10021d755f70}')!
 WinInetLibrary comment: ''!
 !WinInetLibrary categoriesForClass!External-Libraries-Win32! !
 !WinInetLibrary methodsFor!

@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #ODBChange
 	instanceVariableNames: 'objectID transactionObject transaction'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ODBChange guid: (GUID fromString: '{8162EDCE-0FB8-11D4-B091-000000000000}')!
+ODBChange guid: (GUID fromString: '{8162edce-0fb8-11d4-b091-000000000000}')!
 ODBChange comment: ''!
 !ODBChange categoriesForClass!No category! !
 !ODBChange methodsFor!

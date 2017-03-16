@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 GdiplusInitializer subclass: #GdiplusRegionFromRectangleInitializer
 	instanceVariableNames: 'rectangle'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-GdiplusRegionFromRectangleInitializer guid: (GUID fromString: '{4B87DC0A-0CA6-4F47-93AF-EA525CED5F99}')!
+GdiplusRegionFromRectangleInitializer guid: (GUID fromString: '{4b87dc0a-0ca6-4f47-93af-ea525ced5f99}')!
 GdiplusRegionFromRectangleInitializer comment: ''!
 !GdiplusRegionFromRectangleInitializer categoriesForClass!Unclassified! !
 !GdiplusRegionFromRectangleInitializer methodsFor!

@@ -5,7 +5,7 @@ ExternalArray subclass: #OLECountedArray
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-OLECountedArray guid: (GUID fromString: '{44A86404-B2FE-11D3-B376-080046056106}')!
+OLECountedArray guid: (GUID fromString: '{44a86404-b2fe-11d3-b376-080046056106}')!
 OLECountedArray comment: 'OLECountedArray is an abstract base class for counted array structures used by various OLE/COM interfaces to input/output variable length arrays, where the array storage is allocated from COM task memory.'!
 !OLECountedArray categoriesForClass!Unclassified! !
 !OLECountedArray methodsFor!

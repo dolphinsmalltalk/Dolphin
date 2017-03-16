@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 DBAbstractRow subclass: #DBRowBuffer
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-DBRowBuffer guid: (GUID fromString: '{87B4C476-026E-11D3-9FD7-00A0CC3E4A32}')!
+DBRowBuffer guid: (GUID fromString: '{87b4c476-026e-11d3-9fd7-00a0cc3e4a32}')!
 DBRowBuffer comment: 'DBRowBuffers are used to describe and buffer the columns of the current row in a <DBResultSet>.'!
 !DBRowBuffer categoriesForClass!ODBC Interface! !
 !DBRowBuffer methodsFor!

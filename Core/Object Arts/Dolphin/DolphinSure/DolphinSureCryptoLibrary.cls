@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ExternalLibrary subclass: #DolphinSureCryptoLibrary
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-DolphinSureCryptoLibrary guid: (GUID fromString: '{F030BC36-E69B-4268-A9E2-E3EED659EDD8}')!
+DolphinSureCryptoLibrary guid: (GUID fromString: '{f030bc36-e69b-4268-a9e2-e3eed659edd8}')!
 DolphinSureCryptoLibrary comment: 'DolphinSureCryptoLibrary is the ExternalLibrary class to represent the DolphinSureCrypto DLL. It contains cryptographic functions, currently to implement the Secure Hash Algorithm (SHA) described in the U.S. government''s Secure Hash Standard (SHS). This standard is described in FIPS PUB 180-1, "SECURE HASH STANDARD", April 17, 1995. The algorithm contained in this DLL was implemented from the description on p. 442 of ''Applied Cryptography: Protocols, Algorithms, and Source Code in C'' by Bruce Scheier, Wiley, 1996.'!
 !DolphinSureCryptoLibrary categoriesForClass!External-Libraries-Cryptography! !
 !DolphinSureCryptoLibrary methodsFor!

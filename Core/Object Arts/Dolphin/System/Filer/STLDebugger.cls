@@ -5,7 +5,7 @@ STLInFiler subclass: #STLDebugger
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-STLDebugger guid: (GUID fromString: '{2594EE50-2952-4436-BB8B-A33CAFE7790E}')!
+STLDebugger guid: (GUID fromString: '{2594ee50-2952-4436-bb8b-a33cafe7790e}')!
 STLDebugger comment: 'The <STLDebugger> is an <STLInFiler> that prints an indented trace of the contents of the STL file it is reading as it proceeds. 
 It is useful for debugging issues with serialized objects, such as tracking down the cause of excessive size of a view resource.
 

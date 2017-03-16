@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ODBDatabaseObject subclass: #ODBRootObjectDBHolder
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ODBRootObjectDBHolder guid: (GUID fromString: '{8162EE04-0FB8-11D4-B091-000000000000}')!
+ODBRootObjectDBHolder guid: (GUID fromString: '{8162ee04-0fb8-11d4-b091-000000000000}')!
 ODBRootObjectDBHolder comment: ''!
 !ODBRootObjectDBHolder categoriesForClass!No category! !
 !ODBRootObjectDBHolder methodsFor!

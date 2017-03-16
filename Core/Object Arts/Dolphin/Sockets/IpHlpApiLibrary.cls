@@ -5,7 +5,7 @@ ExternalLibrary subclass: #IpHlpApiLibrary
 	classVariableNames: ''
 	poolDictionaries: 'WinSocketConstants'
 	classInstanceVariableNames: ''!
-IpHlpApiLibrary guid: (GUID fromString: '{A63698AE-5CEF-4F53-BF10-C4A77A8B979A}')!
+IpHlpApiLibrary guid: (GUID fromString: '{a63698ae-5cef-4f53-bf10-c4a77a8b979a}')!
 IpHlpApiLibrary comment: 'IpHlpApiLibrary is the <ExternalLibrary> class to represent the dynamic link library, ''Iphlpapi.DLL''.It was generated generated from type information in the ''Win32 API'' library. It contains methods for each of the functions defined by the corresponding module in that type library.
 
 The type library contains the following helpstring for this module

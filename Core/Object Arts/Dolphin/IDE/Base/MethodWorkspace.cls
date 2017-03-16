@@ -5,7 +5,7 @@ SmalltalkWorkspace subclass: #MethodWorkspace
 	classVariableNames: 'AutoParseDwell AutoParseMask IsAutoParseEnabled'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-MethodWorkspace guid: (GUID fromString: '{D7285D4C-35B2-4B52-A673-2E17FDE39FEC}')!
+MethodWorkspace guid: (GUID fromString: '{d7285d4c-35b2-4b52-a673-2e17fde39fec}')!
 MethodWorkspace comment: 'MethodWorkspace is a specialised <SmalltalkWorkspace> for displaying method source that expects to be contained in a <MethodBrowser>.
 
 MethodWorkspace maintains a parse tree for the current method that allows it to offer syntax-directed browsing, editing, and (in DPRO) refactoring commands. For example the widenSourceSelection command can be used to expand the selection to encompass the syntactic element containing the currently selected syntactic element (or the syntactic element under the caret if there is no selection).

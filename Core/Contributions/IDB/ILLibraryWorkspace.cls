@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 View subclass: #ILLibraryWorkspace
 	instanceVariableNames: 'imageLayout imageLayoutRect lastSelection lastImage dum5'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ILLibraryWorkspace guid: (GUID fromString: '{1C1C2FA1-A653-4A42-A88E-D9DA6C1D9276}')!
+ILLibraryWorkspace guid: (GUID fromString: '{1c1c2fa1-a653-4a42-a88e-d9da6c1d9276}')!
 ILLibraryWorkspace comment: 'See [DolphinImageFolder]/Idb/Documentation for details
 
 (C) 2005 Ian Bartholomew

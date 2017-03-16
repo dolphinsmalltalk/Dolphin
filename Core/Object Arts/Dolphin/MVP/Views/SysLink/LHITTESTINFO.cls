@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Win32Structure subclass: #LHITTESTINFO
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-LHITTESTINFO guid: (GUID fromString: '{1498D0D0-6502-4CE2-8CF9-CAA0625685EF}')!
+LHITTESTINFO guid: (GUID fromString: '{1498d0d0-6502-4ce2-8cf9-caa0625685ef}')!
 LHITTESTINFO comment: ''!
 !LHITTESTINFO categoriesForClass!External-Data-Structured-Win32! !
 !LHITTESTINFO methodsFor!

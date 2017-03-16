@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ToolbarItem subclass: #ToolbarButton
 	instanceVariableNames: 'bitmap bitmapIndex'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ToolbarButton guid: (GUID fromString: '{87B4C700-026E-11D3-9FD7-00A0CC3E4A32}')!
+ToolbarButton guid: (GUID fromString: '{87b4c700-026e-11d3-9fd7-00a0cc3e4a32}')!
 ToolbarButton comment: 'ToolbarButton represents a user defined button for a <Toolbar>. The button is a <commandSource> capable of storing <CommandDescription>s to be fired when the button is pressed. Each button has an image which is identified by an index within a supplied <Bitmap>. The dimensions of the images within the bitmap are held by the parent <Toolbar> in its #bitmapExtent aspect.
 
 Instance Variables:

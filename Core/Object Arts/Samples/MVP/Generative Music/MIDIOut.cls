@@ -5,7 +5,7 @@ Object subclass: #MIDIOut
 	classVariableNames: ''
 	poolDictionaries: 'MidiConstants'
 	classInstanceVariableNames: ''!
-MIDIOut guid: (GUID fromString: '{FEB23957-1BE7-48DB-9EEF-924631F6E9A9}')!
+MIDIOut guid: (GUID fromString: '{feb23957-1be7-48db-9eef-924631f6e9a9}')!
 MIDIOut comment: ''!
 !MIDIOut categoriesForClass!Kernel-Objects! !
 !MIDIOut methodsFor!

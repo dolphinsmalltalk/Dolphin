@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Dialog subclass: #ILExtentDialog
 	instanceVariableNames: 'widthPresenter heightPresenter optionsPresenter'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ILExtentDialog guid: (GUID fromString: '{CB954D0C-F8CC-4AB0-A826-C1A6978A7106}')!
+ILExtentDialog guid: (GUID fromString: '{cb954d0c-f8cc-4ab0-a826-c1a6978a7106}')!
 ILExtentDialog comment: 'See [DolphinImageFolder]/Idb/Documentation for details
 
 (C) 2005 Ian Bartholomew

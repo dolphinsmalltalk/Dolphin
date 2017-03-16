@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 StaticView subclass: #ColorView
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ColorView guid: (GUID fromString: '{87B4C73C-026E-11D3-9FD7-00A0CC3E4A32}')!
+ColorView guid: (GUID fromString: '{87b4c73c-026e-11d3-9fd7-00a0cc3e4a32}')!
 ColorView comment: 'ColorView is a <valueView> for displaying static <color>s. The <valueModel> associated with a ColorView must always yield a <color> value when mapped through the installed type converter. A ColorView will normally be used in conjunction with a <ColorPresenter>.'!
 !ColorView categoriesForClass!MVP-Views! !
 !ColorView methodsFor!

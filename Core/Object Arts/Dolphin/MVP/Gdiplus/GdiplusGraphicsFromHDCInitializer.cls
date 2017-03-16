@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 GdiplusInitializer subclass: #GdiplusGraphicsFromHDCInitializer
 	instanceVariableNames: 'canvas'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-GdiplusGraphicsFromHDCInitializer guid: (GUID fromString: '{83CB0A86-604F-48A0-9336-619CFCE00E47}')!
+GdiplusGraphicsFromHDCInitializer guid: (GUID fromString: '{83cb0a86-604f-48a0-9336-619cfce00e47}')!
 GdiplusGraphicsFromHDCInitializer comment: ''!
 !GdiplusGraphicsFromHDCInitializer categoriesForClass!Unclassified! !
 !GdiplusGraphicsFromHDCInitializer methodsFor!

@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Magnitude subclass: #Money
 	instanceVariableNames: 'currency amount'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-Money guid: (GUID fromString: '{2B710238-2F4B-43C8-8F51-F78E4072C761}')!
+Money guid: (GUID fromString: '{2b710238-2f4b-43c8-8f51-f78e4072c761}')!
 Money comment: ''!
 !Money categoriesForClass!Unclassified! !
 !Money methodsFor!

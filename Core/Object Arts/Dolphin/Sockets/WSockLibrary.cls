@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ExternalLibrary subclass: #WSockLibrary
 	instanceVariableNames: 'wsaData'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-WSockLibrary guid: (GUID fromString: '{87B4C589-026E-11D3-9FD7-00A0CC3E4A32}')!
+WSockLibrary guid: (GUID fromString: '{87b4c589-026e-11d3-9fd7-00a0cc3e4a32}')!
 WSockLibrary comment: '** This class is part of the old asynchronous Sockets Connection package which has been superseded by the Dolphin Sockets package **
 
 This is the ExternalLibrary class to represent the Win32 System DLL, WSOCK32.DLL. 

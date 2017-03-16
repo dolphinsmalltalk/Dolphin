@@ -5,7 +5,7 @@ ImageManager subclass: #IconImageManager
 	classVariableNames: 'Current'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-IconImageManager guid: (GUID fromString: '{87B4C645-026E-11D3-9FD7-00A0CC3E4A32}')!
+IconImageManager guid: (GUID fromString: '{87b4c645-026e-11d3-9fd7-00a0cc3e4a32}')!
 IconImageManager comment: ''!
 !IconImageManager categoriesForClass!Graphics-Tools! !
 !IconImageManager methodsFor!

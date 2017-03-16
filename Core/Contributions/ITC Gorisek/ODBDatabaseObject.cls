@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #ODBDatabaseObject
 	instanceVariableNames: 'objectHolder'
 	classVariableNames: 'ClassIDs'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ODBDatabaseObject guid: (GUID fromString: '{8162EDD5-0FB8-11D4-B091-000000000000}')!
+ODBDatabaseObject guid: (GUID fromString: '{8162edd5-0fb8-11d4-b091-000000000000}')!
 ODBDatabaseObject comment: '"Evaluate ODDatabaseObject>>initialize to initialize the ClassIDs array. "'!
 !ODBDatabaseObject categoriesForClass!No category! !
 !ODBDatabaseObject methodsFor!

@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 GdiplusInitializer subclass: #GdiplusCachedBitmapInitializer
 	instanceVariableNames: 'bitmap graphics'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-GdiplusCachedBitmapInitializer guid: (GUID fromString: '{615DE21C-61B0-11D7-B609-00E0987E8081}')!
+GdiplusCachedBitmapInitializer guid: (GUID fromString: '{615de21c-61b0-11d7-b609-00e0987e8081}')!
 GdiplusCachedBitmapInitializer comment: ''!
 !GdiplusCachedBitmapInitializer categoriesForClass!Unclassified! !
 !GdiplusCachedBitmapInitializer methodsFor!

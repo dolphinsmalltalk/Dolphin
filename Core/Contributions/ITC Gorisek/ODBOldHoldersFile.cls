@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ODBFile subclass: #ODBOldHoldersFile
 	instanceVariableNames: 'buffer bufPos filePos'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ODBOldHoldersFile guid: (GUID fromString: '{8162EE1F-0FB8-11D4-B091-000000000000}')!
+ODBOldHoldersFile guid: (GUID fromString: '{8162ee1f-0fb8-11d4-b091-000000000000}')!
 ODBOldHoldersFile comment: ''!
 !ODBOldHoldersFile categoriesForClass!No category! !
 !ODBOldHoldersFile methodsFor!

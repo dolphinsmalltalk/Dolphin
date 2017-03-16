@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #RBNamespace
 	instanceVariableNames: 'changes environment newClasses removedClasses changedClasses rootClasses implementorsCache sendersCache'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-RBNamespace guid: (GUID fromString: '{E04EE960-3B00-47A4-B10A-E93CB600DAD5}')!
+RBNamespace guid: (GUID fromString: '{e04ee960-3b00-47a4-b10a-e93cb600dad5}')!
 RBNamespace comment: ''!
 !RBNamespace categoriesForClass!Refactory-Model! !
 !RBNamespace methodsFor!

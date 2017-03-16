@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 RuntimeSessionManager subclass: #CalculatorSessionManager
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-CalculatorSessionManager guid: (GUID fromString: '{EAB090FB-D5E2-4975-9CDA-B5A11550DD01}')!
+CalculatorSessionManager guid: (GUID fromString: '{eab090fb-d5e2-4975-9cda-b5a11550dd01}')!
 CalculatorSessionManager comment: ''!
 !CalculatorSessionManager categoriesForClass!Samples! !
 !CalculatorSessionManager methodsFor!

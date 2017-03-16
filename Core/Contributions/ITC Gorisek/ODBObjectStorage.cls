@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ODBFile subclass: #ODBObjectStorage
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ODBObjectStorage guid: (GUID fromString: '{8162EE1E-0FB8-11D4-B091-000000000000}')!
+ODBObjectStorage guid: (GUID fromString: '{8162ee1e-0fb8-11d4-b091-000000000000}')!
 ODBObjectStorage comment: ''!
 !ODBObjectStorage categoriesForClass!No category! !
 !ODBObjectStorage methodsFor!

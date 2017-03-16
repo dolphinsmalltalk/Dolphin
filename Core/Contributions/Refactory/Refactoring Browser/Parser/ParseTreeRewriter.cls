@@ -5,7 +5,7 @@ ParseTreeSearcher subclass: #ParseTreeRewriter
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ParseTreeRewriter guid: (GUID fromString: '{E902BFFE-805D-4946-B0EA-0E7501C75C73}')!
+ParseTreeRewriter guid: (GUID fromString: '{e902bffe-805d-4946-b0ea-0e7501c75c73}')!
 ParseTreeRewriter comment: 'ParseTreeRewriter walks over and transforms its BRProgramNode (tree). If the tree is modified, then answer is set to true, and the modified tree can be retrieved by the #tree method.
 
 Instance Variables:

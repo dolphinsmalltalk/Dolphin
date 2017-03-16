@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ExternalStructure subclass: #ENHMETARECORD
 	instanceVariableNames: ''
 	classVariableNames: 'RecordTypes'
 	poolDictionaries: 'EnhancedMetafileRecordTypes'
 	classInstanceVariableNames: ''!
-ENHMETARECORD guid: (GUID fromString: '{5A360B92-6A3D-40D5-9D88-972FFD1416E6}')!
+ENHMETARECORD guid: (GUID fromString: '{5a360b92-6a3d-40d5-9d88-972ffd1416e6}')!
 ENHMETARECORD comment: '<ENHMETARECORD> is an <ExternalStructure> class to wrap the base struct for all the Enhanced Metafile record structs.'!
 !ENHMETARECORD categoriesForClass!Win32-Structs! !
 !ENHMETARECORD methodsFor!

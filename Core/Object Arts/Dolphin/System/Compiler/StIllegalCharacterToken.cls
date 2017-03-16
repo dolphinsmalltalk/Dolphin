@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 StValueToken subclass: #StIllegalCharacterToken
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-StIllegalCharacterToken guid: (GUID fromString: '{3AA6518C-788D-479B-B7C3-2988A870DDE6}')!
+StIllegalCharacterToken guid: (GUID fromString: '{3aa6518c-788d-479b-b7c3-2988a870dde6}')!
 StIllegalCharacterToken comment: ''!
 !StIllegalCharacterToken categoriesForClass!System-Compiler! !
 !StIllegalCharacterToken methodsFor!

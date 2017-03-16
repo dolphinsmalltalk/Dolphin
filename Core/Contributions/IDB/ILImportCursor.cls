@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ILImportIcon subclass: #ILImportCursor
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ILImportCursor guid: (GUID fromString: '{7CFEE127-28C8-488D-A83B-2A8D6E1F6FA2}')!
+ILImportCursor guid: (GUID fromString: '{7cfee127-28c8-488d-a83b-2a8d6e1f6fa2}')!
 ILImportCursor comment: 'See [DolphinImageFolder]/Idb/Documentation for details
 
 (C) 2005 Ian Bartholomew

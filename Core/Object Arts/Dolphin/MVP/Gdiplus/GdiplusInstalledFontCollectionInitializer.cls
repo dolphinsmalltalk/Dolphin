@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 GdiplusInitializer subclass: #GdiplusInstalledFontCollectionInitializer
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-GdiplusInstalledFontCollectionInitializer guid: (GUID fromString: '{C09D8C04-5F28-11D7-B609-00E0987E8081}')!
+GdiplusInstalledFontCollectionInitializer guid: (GUID fromString: '{c09d8c04-5f28-11d7-b609-00e0987e8081}')!
 GdiplusInstalledFontCollectionInitializer comment: ''!
 !GdiplusInstalledFontCollectionInitializer categoriesForClass!Unclassified! !
 !GdiplusInstalledFontCollectionInitializer methodsFor!

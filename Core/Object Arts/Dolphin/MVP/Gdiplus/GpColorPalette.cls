@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ExternalStructure subclass: #GpColorPalette
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-GpColorPalette guid: (GUID fromString: '{585419F2-D5AB-4E85-BF56-56D115CBE7B2}')!
+GpColorPalette guid: (GUID fromString: '{585419f2-d5ab-4e85-bf56-56d115cbe7b2}')!
 GpColorPalette comment: '<GpColorPalette> is an <ExternalStructure> class to wrap the struct ''Gdiplus.GpColorPalette'' from type information in the ''GDI+ Library 1.0'' library.
 
 The type library contains no documentation for this struct

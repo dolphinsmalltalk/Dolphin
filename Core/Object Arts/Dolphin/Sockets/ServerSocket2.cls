@@ -5,7 +5,7 @@ SocketAbstract2 subclass: #ServerSocket2
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ServerSocket2 guid: (GUID fromString: '{87B4C6E0-026E-11D3-9FD7-00A0CC3E4A32}')!
+ServerSocket2 guid: (GUID fromString: '{87b4c6e0-026e-11d3-9fd7-00a0cc3e4a32}')!
 ServerSocket2 comment: 'This class is used by a server to listen for a connection request from a socket client. 
 
 A ServerSocket2 is instantiated to listen on a particular port with a particular queue size for incoming client connections. Incoming connection requests will be acknowledged and placed on a queue waiting for the ServerSocket2 to accept them. This is done using #accept which then answers the socket for the next client connection in the queue. If the queue becomes full at any time because sufficient #accept calls have not been issued then additional client connections are rejected. The #accept call blocks the calling <Process> until an incoming connection request is available, and so should ideally be performed from a background process dedicated to the job.'!

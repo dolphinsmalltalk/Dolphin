@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 WindowsEvent subclass: #PointEvent
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-PointEvent guid: (GUID fromString: '{87B4C551-026E-11D3-9FD7-00A0CC3E4A32}')!
+PointEvent guid: (GUID fromString: '{87b4c551-026e-11d3-9fd7-00a0cc3e4a32}')!
 PointEvent comment: ''!
 !PointEvent categoriesForClass!Events!MVP-Views-Events! !
 !PointEvent methodsFor!

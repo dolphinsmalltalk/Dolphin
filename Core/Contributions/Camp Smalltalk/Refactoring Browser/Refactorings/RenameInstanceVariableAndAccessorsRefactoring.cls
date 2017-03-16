@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk XP"!
+"Filed out from Dolphin Smalltalk 7"!
 
 RenameInstanceVariableRefactoring subclass: #RenameInstanceVariableAndAccessorsRefactoring
 	instanceVariableNames: 'accessorsRefactoring'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-RenameInstanceVariableAndAccessorsRefactoring guid: (GUID fromString: '{9D161AE8-1686-4173-B598-1114660C578B}')!
+RenameInstanceVariableAndAccessorsRefactoring guid: (GUID fromString: '{9d161ae8-1686-4173-b598-1114660c578b}')!
 RenameInstanceVariableAndAccessorsRefactoring comment: ''!
 !RenameInstanceVariableAndAccessorsRefactoring categoriesForClass!Unclassified! !
 !RenameInstanceVariableAndAccessorsRefactoring methodsFor!

@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ExternalLibrary subclass: #ODBCLibrary
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ODBCLibrary guid: (GUID fromString: '{87B4C580-026E-11D3-9FD7-00A0CC3E4A32}')!
+ODBCLibrary guid: (GUID fromString: '{87b4c580-026e-11d3-9fd7-00a0cc3e4a32}')!
 ODBCLibrary comment: 'This is the ExternalLibrary class to represent the Win32 System DLL, ODBC32.DLL. 
 This library contains functions pertaining to the use of Open Database Connectivity 3.0.
 

@@ -5,7 +5,7 @@ QueryableScintillaAttribute subclass: #ScintillaIndicatorStyle
 	classVariableNames: 'StyleNames'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ScintillaIndicatorStyle guid: (GUID fromString: '{2DE64FD7-5B9F-4AC7-81C6-912B56B41A4F}')!
+ScintillaIndicatorStyle guid: (GUID fromString: '{2de64fd7-5b9f-4ac7-81c6-912b56b41a4f}')!
 ScintillaIndicatorStyle comment: 'ScintillaIndicatorStyle instances represent the indicator configuration for a particular <ScintillaView>.
 
 Indicators are orthogonal to visual styles, and can be used to highlight areas of text regardless of styling. A common example usage would be highlight erroneous text by underlining it with a squiggly line.

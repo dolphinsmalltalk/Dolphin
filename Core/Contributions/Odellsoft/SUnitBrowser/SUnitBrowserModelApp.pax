@@ -63,7 +63,7 @@ package globalAliases: (Set new
 
 package setPrerequisites: (IdentitySet new
 	add: '..\..\..\Object Arts\Dolphin\Base\Dolphin';
-	add: '..\..\..\Object Arts\SUnit\OA SUnit Extensions';
+	add: '..\..\Camp Smalltalk\SUnit\OA SUnit Extensions';
 	add: '..\..\Camp Smalltalk\SUnit\SUnit';
 	yourself).
 

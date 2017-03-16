@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 OLEStructure subclass: #COAUTHINFO
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-COAUTHINFO guid: (GUID fromString: '{27D02683-C29F-450C-A25F-3186B62D47F2}')!
+COAUTHINFO guid: (GUID fromString: '{27d02683-c29f-450c-a25f-3186b62d47f2}')!
 COAUTHINFO comment: '<COAUTHINFO> is an <ExternalStructure> class to wrap the struct ''OBJIDL.COAUTHINFO'' from type information in the ''ObjIDL Library'' library.
 
 The COAUTHINFO structure specifies the authentication settings used while making a remote activation request from a client machine to a server machine.'!

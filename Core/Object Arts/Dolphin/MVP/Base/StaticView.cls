@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ValueConvertingControlView subclass: #StaticView
 	instanceVariableNames: 'unused'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-StaticView guid: (GUID fromString: '{87B4C739-026E-11D3-9FD7-00A0CC3E4A32}')!
+StaticView guid: (GUID fromString: '{87b4c739-026e-11d3-9fd7-00a0cc3e4a32}')!
 StaticView comment: 'StaticView is an abstract <valueView> class for implementing the Windows ''STATIC'' control class. The subclasses are intended to display model data but they do not allow it to be edited by the user.
 
 Instance Variables:

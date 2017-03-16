@@ -5,7 +5,7 @@ Object subclass: #Canvas
 	classVariableNames: 'DesktopResolution'
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
-Canvas guid: (GUID fromString: '{87B4C45E-026E-11D3-9FD7-00A0CC3E4A32}')!
+Canvas guid: (GUID fromString: '{87b4c45e-026e-11d3-9fd7-00a0cc3e4a32}')!
 Canvas comment: 'Canvas is the class that represents device contexts for drawing graphical output such as lines, shapes, bitmaps and text. As a context, Canvas instances maintain not only the current drawing position, but also the current pen, brush, font, foreground and background colors, text drawing mode, etc.
 
 Instance Variables:

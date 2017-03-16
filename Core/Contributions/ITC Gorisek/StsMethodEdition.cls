@@ -5,7 +5,7 @@ StsEdition subclass: #StsMethodEdition
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-StsMethodEdition guid: (GUID fromString: '{BA7BAEAB-0FCA-11D4-B091-000000000000}')!
+StsMethodEdition guid: (GUID fromString: '{ba7baeab-0fca-11d4-b091-000000000000}')!
 StsMethodEdition comment: ''!
 !StsMethodEdition categoriesForClass!Unclassified! !
 !StsMethodEdition methodsFor!

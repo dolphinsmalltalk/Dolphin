@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 HtmlParserElement subclass: #HtmlParserImage
 	instanceVariableNames: 'fileName width height toolTip'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-HtmlParserImage guid: (GUID fromString: '{DCF11741-4DE6-4D8A-979E-AB7451ED0C55}')!
+HtmlParserImage guid: (GUID fromString: '{dcf11741-4de6-4d8a-979e-ab7451ed0c55}')!
 HtmlParserImage comment: ''!
 !HtmlParserImage categoriesForClass!Unclassified! !
 !HtmlParserImage methodsFor!

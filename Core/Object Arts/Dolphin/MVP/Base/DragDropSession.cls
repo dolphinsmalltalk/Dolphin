@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #DragDropSession
 	instanceVariableNames: 'dragSource dragPoint suggestedSource dragObjects defaultOperation dropTarget suggestedTarget operationsSupportedByDropTarget operation inDropTargetScrollZone dragImages scrollProcess'
 	classVariableNames: 'Current DefaultImages OperationDescriptions'
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
-DragDropSession guid: (GUID fromString: '{87B4C481-026E-11D3-9FD7-00A0CC3E4A32}')!
+DragDropSession guid: (GUID fromString: '{87b4c481-026e-11d3-9fd7-00a0cc3e4a32}')!
 DragDropSession comment: 'DragDropSessions are used to manage the modal process of dragging and dropping an object or objects from one window to another. 
 
 Instance Variables:

@@ -5,7 +5,7 @@ Presenter subclass: #DifferencesPresenter
 	classVariableNames: 'WordSeparators'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-DifferencesPresenter guid: (GUID fromString: '{772EC3BD-72DC-4BAE-9E30-92D686EA4E3B}')!
+DifferencesPresenter guid: (GUID fromString: '{772ec3bd-72dc-4bae-9e30-92d686ea4e3b}')!
 DifferencesPresenter comment: 'DifferencesPresenter is a component that can be used to compare two pieces of text, highlighting the differences. 
 
 Two pieces of text are compared using the #compare:with: message. The text can be plain or rich text. If rich text is compared, then the styling will be preserved in the resulting display, except of course that the highlighting of any differences takes precedence. 

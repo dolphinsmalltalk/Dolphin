@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #Command
 	instanceVariableNames: 'commandDescription receiver undoAction redoAction isBenign'
 	classVariableNames: 'Current'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-Command guid: (GUID fromString: '{87B4C468-026E-11D3-9FD7-00A0CC3E4A32}')!
+Command guid: (GUID fromString: '{87b4c468-026e-11d3-9fd7-00a0cc3e4a32}')!
 Command comment: 'A Command is used to perform a user interface command as part of the MVP framework. It is effectively a <CommandDescription> that is bound to a particular receiver and its operation can be performed by sending it a #value message.
 
 Command objects come with the additional capablity of being able to optionally undo and redo the command''s action. We assume that the target responsible for executing the command will also have sufficient information to specify how the command should be undone all re-done. The target may get hold of the currently executing command using:

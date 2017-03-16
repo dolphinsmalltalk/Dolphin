@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 NMHDR subclass: #NMLVODSTATECHANGE
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-NMLVODSTATECHANGE guid: (GUID fromString: '{F44C9148-2B3F-11D3-8368-7A8B5A000000}')!
+NMLVODSTATECHANGE guid: (GUID fromString: '{f44c9148-2b3f-11d3-8368-7a8b5a000000}')!
 NMLVODSTATECHANGE comment: ''!
 !NMLVODSTATECHANGE categoriesForClass!External-Data-Structured-Win32! !
 !NMLVODSTATECHANGE methodsFor!

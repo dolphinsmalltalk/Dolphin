@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 SmalllintPlugin subclass: #CodeRewriterPlugin
 	instanceVariableNames: 'searchTextPresenter replaceTextPresenter isMethodPresenter'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-CodeRewriterPlugin guid: (GUID fromString: '{622A0D86-EE77-4D68-ABC4-24F3E47ECE4B}')!
+CodeRewriterPlugin guid: (GUID fromString: '{622a0d86-ee77-4d68-abc4-24f3e47ece4b}')!
 CodeRewriterPlugin comment: ''!
 !CodeRewriterPlugin categoriesForClass!Browser-Plugins!MVP-Presenters! !
 !CodeRewriterPlugin methodsFor!

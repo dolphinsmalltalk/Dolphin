@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 StsSqueakPackageProxy subclass: #StsSqueakMonticelloPackageImporter
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-StsSqueakMonticelloPackageImporter guid: (GUID fromString: '{79F0659E-6FCD-4D7C-BA68-3C236DACC53A}')!
+StsSqueakMonticelloPackageImporter guid: (GUID fromString: '{79f0659e-6fcd-4d7c-ba68-3c236dacc53a}')!
 StsSqueakMonticelloPackageImporter comment: ''!
 !StsSqueakMonticelloPackageImporter categoriesForClass!Unclassified! !
 !StsSqueakMonticelloPackageImporter methodsFor!

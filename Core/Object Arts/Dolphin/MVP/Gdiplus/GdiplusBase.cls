@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 GraphicsTool subclass: #GdiplusBase
 	instanceVariableNames: 'initializer'
 	classVariableNames: ''
 	poolDictionaries: 'GdiplusConstants GdiplusGUIDs'
 	classInstanceVariableNames: ''!
-GdiplusBase guid: (GUID fromString: '{9368410D-787C-4331-994E-9BC2C3F0FE46}')!
+GdiplusBase guid: (GUID fromString: '{9368410d-787c-4331-994e-9bc2c3f0fe46}')!
 GdiplusBase comment: 'GdiplusBase is an abstract class that represents the Win32 GDI+ GdiplusBase class.  Instances of this class contain a reference to an initializer which creates the Win32 object - see #createHandle.  In most cases, the initializer can also recreate the instance, though not all can (see #isPersistent), and recreation of an instance does not guarantee the instance will be at the same state as when it was freed.
 
 Since instances of this hierarchy have no (or few) instance variables, most state information is accessed directly through calls to Win32 GDI+ functions.  In some cases, calls are made to the initializer which, as mentioned, does reference instance variables.

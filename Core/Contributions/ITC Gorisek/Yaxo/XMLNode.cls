@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #XMLNode
 	instanceVariableNames: ''
 	classVariableNames: 'CanonicalTable'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-XMLNode guid: (GUID fromString: '{F5E6786E-7892-452D-A2C8-37E4DC0D3E55}')!
+XMLNode guid: (GUID fromString: '{f5e6786e-7892-452d-a2c8-37e4dc0d3e55}')!
 XMLNode comment: ''!
 !XMLNode categoriesForClass!XML-Parser! !
 !XMLNode methodsFor!

@@ -5,7 +5,7 @@ Shell subclass: #GdiplusImageViewSampleShell
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-GdiplusImageViewSampleShell guid: (GUID fromString: '{8645634F-E895-424A-A4C8-4DB4AFB9647E}')!
+GdiplusImageViewSampleShell guid: (GUID fromString: '{8645634f-e895-424a-a4c8-4db4afb9647e}')!
 GdiplusImageViewSampleShell comment: 'GdiplusImageViewSampleShell
 
 Evaluate

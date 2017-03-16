@@ -5,7 +5,7 @@ Object subclass: #ScintillaPropertyDescriptor
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ScintillaPropertyDescriptor guid: (GUID fromString: '{49848E62-C4D7-4CBA-B9F5-71B0BF864A2A}')!
+ScintillaPropertyDescriptor guid: (GUID fromString: '{49848e62-c4d7-4cba-b9f5-71b0bf864a2a}')!
 ScintillaPropertyDescriptor comment: 'ScintillaPropertyDescriptors provide metadata for individually settable scalar properties of a <ScintillaView>, e.g. the background colour of a marker.
 
 Instance Variables:

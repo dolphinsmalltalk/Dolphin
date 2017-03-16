@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 COMInterfaceImp subclass: #AXDispatchImpAbstract
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'AXAutomationConstants AXAutomationErrors Win32Constants'
 	classInstanceVariableNames: ''!
-AXDispatchImpAbstract guid: (GUID fromString: '{10DEE4FB-246C-4582-9A3B-2CA93E0636C2}')!
+AXDispatchImpAbstract guid: (GUID fromString: '{10dee4fb-246c-4582-9a3b-2ca93e0636c2}')!
 AXDispatchImpAbstract comment: ''!
 !AXDispatchImpAbstract categoriesForClass!Unclassified! !
 !AXDispatchImpAbstract methodsFor!

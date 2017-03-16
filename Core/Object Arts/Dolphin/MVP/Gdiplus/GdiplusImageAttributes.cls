@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 GdiplusBase subclass: #GdiplusImageAttributes
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-GdiplusImageAttributes guid: (GUID fromString: '{C5F76A31-54E8-45A9-905C-14E9D8AE7C0D}')!
+GdiplusImageAttributes guid: (GUID fromString: '{c5f76a31-54e8-45a9-905c-14e9d8ae7c0d}')!
 GdiplusImageAttributes comment: 'A GdiplusImageAttributes object contains information about how bitmap and metafile colors are manipulated during rendering.  Accessors are available to adjust color, grayscale, gamma, brightness, transparency, and more.  Typically you will initialize an instance, change some settings, and pass the instance to a GdiplusGraphics drawImage method.'!
 !GdiplusImageAttributes categoriesForClass!Unclassified! !
 !GdiplusImageAttributes methodsFor!

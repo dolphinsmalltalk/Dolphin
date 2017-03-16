@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk XP 2002 release 5.05"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Refactoring subclass: #AbstractVariablesRefactoring
 	instanceVariableNames: 'tree fromClass instVarReaders instVarWriters classVarReaders classVarWriters toClasses ignore'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-AbstractVariablesRefactoring guid: (GUID fromString: '{4693691A-7A7D-4B15-A3E9-C4C5554AA27E}')!
+AbstractVariablesRefactoring guid: (GUID fromString: '{4693691a-7a7d-4b15-a3e9-c4c5554aa27e}')!
 AbstractVariablesRefactoring comment: ''!
 !AbstractVariablesRefactoring categoriesForClass!Refactory-Refactorings! !
 !AbstractVariablesRefactoring methodsFor!

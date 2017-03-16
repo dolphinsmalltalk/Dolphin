@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ILExport subclass: #ILExportBitmap
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ILExportBitmap guid: (GUID fromString: '{91828D5F-BA46-43AE-858E-F89635CF232E}')!
+ILExportBitmap guid: (GUID fromString: '{91828d5f-ba46-43ae-858e-f89635cf232e}')!
 ILExportBitmap comment: 'See [DolphinImageFolder]/Idb/Documentation for details
 
 (C) 2005 Ian Bartholomew

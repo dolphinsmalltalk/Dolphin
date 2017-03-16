@@ -5,7 +5,7 @@ WeakArray variableSubclass: #WeakAnnouncementSubscription
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-WeakAnnouncementSubscription guid: (GUID fromString: '{D0E41596-8781-40BB-97FB-9EA63E7E7698}')!
+WeakAnnouncementSubscription guid: (GUID fromString: '{d0e41596-8781-40bb-97fb-9ea63e7e7698}')!
 WeakAnnouncementSubscription comment: 'A WeakAnnouncementSubscription is a subscription which is removed automatically when the subscriber is unreferenced.No support for ephemerons currently prevents this from working for Block actions (blocks hold their receiver, which is the default subscriber strongly). To switch between subscription types, use makeStrong/makeWeak on the subscription returned when initially registering with announcer.Note, that list and next must be first instance variables.'!
 !WeakAnnouncementSubscription categoriesForClass!Announcements-Core! !
 !WeakAnnouncementSubscription methodsFor!

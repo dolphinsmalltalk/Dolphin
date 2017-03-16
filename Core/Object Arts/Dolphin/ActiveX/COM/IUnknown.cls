@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 COMInterface subclass: #IUnknown
 	instanceVariableNames: ''

@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk XP 2002 release 5.05"!
+"Filed out from Dolphin Smalltalk 7"!
 
 LintRule subclass: #BasicLintRule
 	instanceVariableNames: 'result openSymbol'
 	classVariableNames: 'FilterDictionary'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-BasicLintRule guid: (GUID fromString: '{B3FA342A-EAEE-404E-B9A5-C8BC9276F559}')!
+BasicLintRule guid: (GUID fromString: '{b3fa342a-eaee-404e-b9a5-c8bc9276f559}')!
 BasicLintRule comment: 'BasicLintRule represents a check on the code.
 
 Instance Variables:

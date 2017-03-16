@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ProtoObject subclass: #ODBReference
 	instanceVariableNames: 'transactionObject demandLoader'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ODBReference guid: (GUID fromString: '{8162EDCA-0FB8-11D4-B091-000000000000}')!
+ODBReference guid: (GUID fromString: '{8162edca-0fb8-11d4-b091-000000000000}')!
 ODBReference comment: ''!
 !ODBReference categoriesForClass!No category! !
 !ODBReference methodsFor!

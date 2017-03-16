@@ -5,7 +5,7 @@ View subclass: #ILEditorWorkspace
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ILEditorWorkspace guid: (GUID fromString: '{367ECF4D-C63B-44A0-A054-07D7FCC14C7B}')!
+ILEditorWorkspace guid: (GUID fromString: '{367ecf4d-c63b-44a0-a054-07d7fcc14c7b}')!
 ILEditorWorkspace comment: 'See [DolphinImageFolder]/Idb/Documentation for details
 
 (C) 2005 Ian Bartholomew

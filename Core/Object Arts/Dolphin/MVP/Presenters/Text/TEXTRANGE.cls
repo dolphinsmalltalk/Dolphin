@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Win32Structure subclass: #TEXTRANGE
 	instanceVariableNames: 'text'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-TEXTRANGE guid: (GUID fromString: '{87B4C615-026E-11D3-9FD7-00A0CC3E4A32}')!
+TEXTRANGE guid: (GUID fromString: '{87b4c615-026e-11d3-9fd7-00a0cc3e4a32}')!
 TEXTRANGE comment: 'TEXTRANGE is the class of <ExternalStructure> which represent the Windows RichEdit control structure of the same name.
 
 TEXTRANGE is used in conjunction with the EM_GETTEXTRANGE message to specify the range of text to retrieve from a Rich Edit control and to provide a buffer to copy the text into.

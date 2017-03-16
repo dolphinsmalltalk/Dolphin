@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ValueConvertingControlView subclass: #CheckButton
 	instanceVariableNames: 'image'
 	classVariableNames: 'AlignmentMap'
 	poolDictionaries: 'ButtonConstants'
 	classInstanceVariableNames: ''!
-CheckButton guid: (GUID fromString: '{E7A5424E-24CD-4389-A849-591DB02A92D0}')!
+CheckButton guid: (GUID fromString: '{e7a5424e-24cd-4389-a849-591db02a92d0}')!
 CheckButton comment: 'CheckButton is the abstract subclass of <valueView>s implementing the Windows "BUTTON" class in checkbox and radio button styles. The <valueModel> associated with a CheckButton must alway yield a <boolean> value once mapped through the installed type converter, although nil is also an acceptable value for a <CheckBox> in 3-state mode. A CheckButton will normally be used in conjunction with either a <BooleanPresenter>, or in a group connected to a <RadioButtonSetPresenter>.
 
 The text in a button control can be aligned in various ways (this may also affect the alignment of any image displayed in the button):

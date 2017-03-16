@@ -5,7 +5,7 @@ Object subclass: #AXTypeLibDocumentation
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-AXTypeLibDocumentation guid: (GUID fromString: '{C06F3B78-0868-11D3-93AF-00A024CA708A}')!
+AXTypeLibDocumentation guid: (GUID fromString: '{c06f3b78-0868-11d3-93af-00a024ca708a}')!
 AXTypeLibDocumentation comment: 'AXTypeLibDocumentation is a simple class to hold documentary information from a type library - either from an ITypeLib or an ITypeInfo.
 
 Instance Variables:

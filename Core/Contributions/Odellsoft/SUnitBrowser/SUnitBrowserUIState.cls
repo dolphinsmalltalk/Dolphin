@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk XP 2002 release 6.00"!
+"Filed out from Dolphin Smalltalk 7"!
 
 SUnitBrowserAbsUIState subclass: #SUnitBrowserUIState
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-SUnitBrowserUIState guid: (GUID fromString: '{6D60A596-D4BA-4107-81F5-58BA06DDE6DB}')!
+SUnitBrowserUIState guid: (GUID fromString: '{6d60a596-d4ba-4107-81f5-58ba06dde6db}')!
 SUnitBrowserUIState comment: ''!
 !SUnitBrowserUIState categoriesForClass!Unclassified! !
 !SUnitBrowserUIState methodsFor!

@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 StsPackageProxy subclass: #StsVisualWorksParcelPackageProxy
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-StsVisualWorksParcelPackageProxy guid: (GUID fromString: '{8DB019A3-AAAA-4E2C-A5B5-60FFD062BA5A}')!
+StsVisualWorksParcelPackageProxy guid: (GUID fromString: '{8db019a3-aaaa-4e2c-a5b5-60ffd062ba5a}')!
 StsVisualWorksParcelPackageProxy comment: ''!
 !StsVisualWorksParcelPackageProxy categoriesForClass!Unclassified! !
 !StsVisualWorksParcelPackageProxy methodsFor!

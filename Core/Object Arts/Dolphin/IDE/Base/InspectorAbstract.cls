@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ValuePresenter subclass: #InspectorAbstract
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-InspectorAbstract guid: (GUID fromString: '{A5E858B2-45F7-4AE8-8F14-C11AAD5F3BA4}')!
+InspectorAbstract guid: (GUID fromString: '{a5e858b2-45f7-4ae8-8f14-c11aad5f3ba4}')!
 InspectorAbstract comment: ''!
 !InspectorAbstract categoriesForClass!MVP-Presenters! !
 !InspectorAbstract methodsFor!

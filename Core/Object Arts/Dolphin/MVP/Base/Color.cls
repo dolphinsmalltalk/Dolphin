@@ -5,7 +5,7 @@ Object subclass: #Color
 	classVariableNames: ''
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
-Color guid: (GUID fromString: '{87B4C465-026E-11D3-9FD7-00A0CC3E4A32}')!
+Color guid: (GUID fromString: '{87b4c465-026e-11d3-9fd7-00a0cc3e4a32}')!
 Color comment: 'Color is the abstract class of colours. Concreate subclasses represent the different types of colour object, such as the logical system colours (SystemColor), palletized colours (IndexedColor), and colours composed of arbitrary proportions of red, green, and blue elements (RGB).'!
 !Color categoriesForClass!Drawing! !
 !Color methodsFor!

@@ -5,7 +5,7 @@ StValueNode subclass: #StVariableNode
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-StVariableNode guid: (GUID fromString: '{B60D460E-99A6-4378-8B43-67B3BCB4CD16}')!
+StVariableNode guid: (GUID fromString: '{b60d460e-99a6-4378-8b43-67b3bcb4cd16}')!
 StVariableNode comment: 'StVariableNode is an parse tree node that represent a variable (global, inst var, temp, etc.).
 
 Instance Variables:

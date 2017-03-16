@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 NMHDR subclass: #NMTREEVIEW
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-NMTREEVIEW guid: (GUID fromString: '{87B4C62A-026E-11D3-9FD7-00A0CC3E4A32}')!
+NMTREEVIEW guid: (GUID fromString: '{87b4c62a-026e-11d3-9fd7-00a0cc3e4a32}')!
 NMTREEVIEW comment: ''!
 !NMTREEVIEW categoriesForClass!External-Data-Structured-Win32! !
 !NMTREEVIEW methodsFor!

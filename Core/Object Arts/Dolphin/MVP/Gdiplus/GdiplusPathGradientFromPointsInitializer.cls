@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 GdiplusInitializer subclass: #GdiplusPathGradientFromPointsInitializer
 	instanceVariableNames: 'pathPoints wrapMode'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-GdiplusPathGradientFromPointsInitializer guid: (GUID fromString: '{8F2007E1-7D6C-11D7-B609-00E0987E8081}')!
+GdiplusPathGradientFromPointsInitializer guid: (GUID fromString: '{8f2007e1-7d6c-11d7-b609-00e0987e8081}')!
 GdiplusPathGradientFromPointsInitializer comment: ''!
 !GdiplusPathGradientFromPointsInitializer categoriesForClass!Unclassified! !
 !GdiplusPathGradientFromPointsInitializer methodsFor!

@@ -5,7 +5,7 @@ Object subclass: #MidiOutChannel
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-MidiOutChannel guid: (GUID fromString: '{F97D6167-73D1-4A93-8F82-93A9EBC90F5D}')!
+MidiOutChannel guid: (GUID fromString: '{f97d6167-73d1-4a93-8f82-93a9ebc90f5d}')!
 MidiOutChannel comment: ''!
 !MidiOutChannel categoriesForClass!Kernel-Objects! !
 !MidiOutChannel methodsFor!

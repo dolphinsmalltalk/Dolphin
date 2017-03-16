@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ImageView subclass: #ViewComposerArena
 	instanceVariableNames: 'composer'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ViewComposerArena guid: (GUID fromString: '{1CB40E20-1CEF-4EDD-8012-223620292A00}')!
+ViewComposerArena guid: (GUID fromString: '{1cb40e20-1cef-4edd-8012-223620292a00}')!
 ViewComposerArena comment: 'ViewComposerArena is used by the ViewComposer to contain the view being edited. It''s main function is to pass a #drawAdornment
 message to the associated ViewComposer each time a paint message is received.'!
 !ViewComposerArena categoriesForClass!MVP-Views! !

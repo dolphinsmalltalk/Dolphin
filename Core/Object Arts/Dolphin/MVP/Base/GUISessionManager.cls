@@ -5,7 +5,7 @@ SessionManager subclass: #GUISessionManager
 	classVariableNames: 'NoSplashMask UnattendedMask'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-GUISessionManager guid: (GUID fromString: '{81BC839C-BCD6-4502-A491-418ED5A109E6}')!
+GUISessionManager guid: (GUID fromString: '{81bc839c-bcd6-4502-a491-418ed5a109e6}')!
 GUISessionManager addClassConstant: 'NoSplashMask' value: 2!
 GUISessionManager addClassConstant: 'UnattendedMask' value: 4!
 GUISessionManager comment: 'GUISessionManager is the class of <SessionManager>s used to manage the life-cycle of a graphical (as opposed to command line, or console) application.

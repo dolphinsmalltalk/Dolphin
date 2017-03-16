@@ -5,7 +5,7 @@ ExternalStructure subclass: #NET_ADDRESS_INFO
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-NET_ADDRESS_INFO guid: (GUID fromString: '{0451C625-7A0F-4B75-AD7C-EA167EC0F47C}')!
+NET_ADDRESS_INFO guid: (GUID fromString: '{0451c625-7a0f-4b75-ad7c-ea167ec0f47c}')!
 NET_ADDRESS_INFO comment: '<NET_ADDRESS_INFO> is an <ExternalStructure> class to wrap the struct ''Win32.NET_ADDRESS_INFO'' from type information in the ''Win32 API'' library.
 
 The type library contains the following helpstring for this struct

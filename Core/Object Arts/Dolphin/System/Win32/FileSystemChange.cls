@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #FileSystemChange
 	instanceVariableNames: 'time code fileNames'
 	classVariableNames: 'ActionMap'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-FileSystemChange guid: (GUID fromString: '{AD5F4ADA-4F26-46DE-A418-B5A0E0C6B937}')!
+FileSystemChange guid: (GUID fromString: '{ad5f4ada-4f26-46de-a418-b5a0e0c6b937}')!
 FileSystemChange comment: ''!
 !FileSystemChange categoriesForClass!Kernel-Objects! !
 !FileSystemChange methodsFor!

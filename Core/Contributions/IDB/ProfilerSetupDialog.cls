@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Dialog subclass: #ProfilerSetupDialog
 	instanceVariableNames: ''
 	classVariableNames: 'IsCollect IsOn ProfiledBlock ProfiledText ProfilingInterval SampleSetName SamplingInterval'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ProfilerSetupDialog guid: (GUID fromString: '{5BC9A7A0-5833-490B-B342-C0086DCF2AC1}')!
+ProfilerSetupDialog guid: (GUID fromString: '{5bc9a7a0-5833-490b-b342-c0086dcf2ac1}')!
 ProfilerSetupDialog comment: 'See [DolphinImageFolder]/Idb/Documentation for details
 
 (C) 2005 Ian Bartholomew

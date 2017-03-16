@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ValueAspectAdaptor subclass: #ValueModelAspectAdaptor
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ValueModelAspectAdaptor guid: (GUID fromString: '{29F1D21E-3179-4FA5-BEFF-50F95911C88A}')!
+ValueModelAspectAdaptor guid: (GUID fromString: '{29f1d21e-3179-4fa5-beff-50f95911c88a}')!
 ValueModelAspectAdaptor comment: ''!
 !ValueModelAspectAdaptor categoriesForClass!Unclassified! !
 !ValueModelAspectAdaptor methodsFor!

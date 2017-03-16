@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 GdiplusInitializer subclass: #GdiplusGraphicsPathInitializer
 	instanceVariableNames: 'fillMode'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-GdiplusGraphicsPathInitializer guid: (GUID fromString: '{1A1A5EA1-6151-11D7-B609-00E0987E8081}')!
+GdiplusGraphicsPathInitializer guid: (GUID fromString: '{1a1a5ea1-6151-11d7-b609-00e0987e8081}')!
 GdiplusGraphicsPathInitializer comment: ''!
 !GdiplusGraphicsPathInitializer categoriesForClass!Unclassified! !
 !GdiplusGraphicsPathInitializer methodsFor!

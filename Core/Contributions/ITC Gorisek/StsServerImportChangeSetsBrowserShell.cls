@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Dialog subclass: #StsServerImportChangeSetsBrowserShell
 	instanceVariableNames: 'httpClient urlPrefix textDeveloper textComment textIncludesClass listMinBlessing listChangeSetsOnServer listChangeSetsForImport'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-StsServerImportChangeSetsBrowserShell guid: (GUID fromString: '{D3F84E7A-F864-4B7C-B196-F74910C56AA3}')!
+StsServerImportChangeSetsBrowserShell guid: (GUID fromString: '{d3f84e7a-f864-4b7c-b196-f74910c56aa3}')!
 StsServerImportChangeSetsBrowserShell comment: ''!
 !StsServerImportChangeSetsBrowserShell categoriesForClass!Unclassified! !
 !StsServerImportChangeSetsBrowserShell methodsFor!

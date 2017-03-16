@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 IndexedInstVarBatchAccessor subclass: #SetBatchAspectAccessor
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-SetBatchAspectAccessor guid: (GUID fromString: '{CACFD817-4DCB-46BE-BBA9-BCB1585438F2}')!
+SetBatchAspectAccessor guid: (GUID fromString: '{cacfd817-4dcb-46be-bba9-bcb1585438f2}')!
 SetBatchAspectAccessor comment: ''!
 !SetBatchAspectAccessor categoriesForClass!Unclassified! !
 !SetBatchAspectAccessor methodsFor!

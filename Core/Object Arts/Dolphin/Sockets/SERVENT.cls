@@ -5,7 +5,7 @@ Win32Structure subclass: #SERVENT
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-SERVENT guid: (GUID fromString: '{87B4C610-026E-11D3-9FD7-00A0CC3E4A32}')!
+SERVENT guid: (GUID fromString: '{87b4c610-026e-11d3-9fd7-00a0cc3e4a32}')!
 SERVENT comment: '<SERVENT> is an <ExternalStructure> class to wrap the struct ''Win32.SERVENT'' from type information in the ''Win32 API'' library.
 
 The type library contains the following helpstring for this struct

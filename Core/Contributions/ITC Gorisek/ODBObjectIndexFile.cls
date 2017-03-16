@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ODBFile subclass: #ODBObjectIndexFile
 	instanceVariableNames: 'valueLength pageSize start gcPosition gcBuffer gcCount var1'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ODBObjectIndexFile guid: (GUID fromString: '{8162EE1D-0FB8-11D4-B091-000000000000}')!
+ODBObjectIndexFile guid: (GUID fromString: '{8162ee1d-0fb8-11d4-b091-000000000000}')!
 ODBObjectIndexFile comment: ''!
 !ODBObjectIndexFile categoriesForClass!No category! !
 !ODBObjectIndexFile methodsFor!

@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 DOMNamedNodeMap variableSubclass: #DOMEntitiesMap
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-DOMEntitiesMap guid: (GUID fromString: '{E837C00B-9843-4AC2-B072-E44440ECAEC3}')!
+DOMEntitiesMap guid: (GUID fromString: '{e837c00b-9843-4ac2-b072-e44440ecaec3}')!
 DOMEntitiesMap comment: 'Specialized <DOMNamedNodeMap> which contains <IXMLDOMEntity >s. This is used to represent the dictionary of entities associated with an XML DOM document type. The keys and values are strings.'!
 !DOMEntitiesMap categoriesForClass!Collections-Unordered! !
 !DOMEntitiesMap methodsFor!

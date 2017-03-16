@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Win32Structure subclass: #EDITSTREAM
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-EDITSTREAM guid: (GUID fromString: '{87B4C5EF-026E-11D3-9FD7-00A0CC3E4A32}')!
+EDITSTREAM guid: (GUID fromString: '{87b4c5ef-026e-11d3-9fd7-00a0cc3e4a32}')!
 EDITSTREAM comment: ''!
 !EDITSTREAM categoriesForClass!External-Data-Structured-Win32! !
 !EDITSTREAM methodsFor!

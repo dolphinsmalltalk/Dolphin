@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 AXAutomationAspect subclass: #AXRecordAspect
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-AXRecordAspect guid: (GUID fromString: '{0B80A2C6-1C74-4FE7-9A0E-B28BB197D120}')!
+AXRecordAspect guid: (GUID fromString: '{0b80a2c6-1c74-4fe7-9a0e-b28bb197d120}')!
 AXRecordAspect comment: 'AXRecordAspect is a specialised <Aspect> for accessing properties of user-defined Automation structures (as represented by instances of <AXRecord>). It is an extension of the PublishedAspectorInspector framework.'!
 !AXRecordAspect categoriesForClass!Unclassified! !
 !AXRecordAspect methodsFor!

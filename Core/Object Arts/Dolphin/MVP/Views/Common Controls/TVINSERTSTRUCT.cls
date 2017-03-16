@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Win32Structure subclass: #TVINSERTSTRUCT
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-TVINSERTSTRUCT guid: (GUID fromString: '{87B4C618-026E-11D3-9FD7-00A0CC3E4A32}')!
+TVINSERTSTRUCT guid: (GUID fromString: '{87b4c618-026e-11d3-9fd7-00a0cc3e4a32}')!
 TVINSERTSTRUCT comment: ''!
 !TVINSERTSTRUCT categoriesForClass!External-Data-Structured-Win32! !
 !TVINSERTSTRUCT methodsFor!

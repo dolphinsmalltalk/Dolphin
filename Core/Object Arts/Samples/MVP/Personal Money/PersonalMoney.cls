@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Model subclass: #PersonalMoney
 	instanceVariableNames: 'owner accounts'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-PersonalMoney guid: (GUID fromString: '{87B4C66A-026E-11D3-9FD7-00A0CC3E4A32}')!
+PersonalMoney guid: (GUID fromString: '{87b4c66a-026e-11d3-9fd7-00a0cc3e4a32}')!
 PersonalMoney comment: 'PersonalMoney represent the entirety of the Personal Money system for a single user. It hold owner details and a collection of accounts for this user.
 
 Instance Variables

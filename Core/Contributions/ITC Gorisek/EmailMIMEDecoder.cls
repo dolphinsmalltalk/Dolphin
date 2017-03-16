@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #EmailMIMEDecoder
 	instanceVariableNames: 'encodeType'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-EmailMIMEDecoder guid: (GUID fromString: '{13899656-351B-4A5D-8C7A-A1FF98AD12A1}')!
+EmailMIMEDecoder guid: (GUID fromString: '{13899656-351b-4a5d-8c7a-a1ff98ad12a1}')!
 EmailMIMEDecoder comment: ''!
 !EmailMIMEDecoder categoriesForClass!Unclassified! !
 !EmailMIMEDecoder methodsFor!

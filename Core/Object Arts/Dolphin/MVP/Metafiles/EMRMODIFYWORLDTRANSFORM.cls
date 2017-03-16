@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ENHMETARECORD subclass: #EMRMODIFYWORLDTRANSFORM
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-EMRMODIFYWORLDTRANSFORM guid: (GUID fromString: '{2144962D-5610-4388-BB45-8B820EFAC2E7}')!
+EMRMODIFYWORLDTRANSFORM guid: (GUID fromString: '{2144962d-5610-4388-bb45-8b820efac2e7}')!
 EMRMODIFYWORLDTRANSFORM comment: '<EMRMODIFYWORLDTRANSFORM> is an <ExternalStructure> class to wrap the struct ''Win32.EMRMODIFYWORLDTRANSFORM'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct

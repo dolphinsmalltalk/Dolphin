@@ -5,7 +5,7 @@ FormattedTextEdit subclass: #EmbeddedFormattedTextEdit
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-EmbeddedFormattedTextEdit guid: (GUID fromString: '{4EF6ADF7-0642-4BAC-970D-10E4A69EC7F0}')!
+EmbeddedFormattedTextEdit guid: (GUID fromString: '{4ef6adf7-0642-4bac-970d-10e4a69ec7f0}')!
 EmbeddedFormattedTextEdit comment: ''!
 !EmbeddedFormattedTextEdit categoriesForClass!Unclassified! !
 !EmbeddedFormattedTextEdit methodsFor!

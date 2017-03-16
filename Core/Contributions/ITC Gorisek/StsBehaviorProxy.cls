@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 StsImportProxy subclass: #StsBehaviorProxy
 	instanceVariableNames: 'definition methodDictionary'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-StsBehaviorProxy guid: (GUID fromString: '{566CCA11-EA06-49BE-9241-49E726D69609}')!
+StsBehaviorProxy guid: (GUID fromString: '{566cca11-ea06-49be-9241-49e726d69609}')!
 StsBehaviorProxy comment: ''!
 !StsBehaviorProxy categoriesForClass!Unclassified! !
 !StsBehaviorProxy methodsFor!

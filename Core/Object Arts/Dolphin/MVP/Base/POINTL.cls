@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Win32Structure subclass: #POINTL
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-POINTL guid: (GUID fromString: '{DBEAF6A6-D2F7-4153-A02E-A389955A892F}')!
+POINTL guid: (GUID fromString: '{dbeaf6a6-d2f7-4153-a02e-a389955a892f}')!
 POINTL comment: '<POINTL> is an <ExternalStructure> class to wrap the struct ''Win.POINTL'' from type information in the ''Windows API (ANSI)'' library.
 
 The type library contains no documentation for this struct

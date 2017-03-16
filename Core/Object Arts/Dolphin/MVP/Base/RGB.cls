@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ColorRef subclass: #RGB
 	instanceVariableNames: ''
 	classVariableNames: 'StdColours'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-RGB guid: (GUID fromString: '{87B4C53B-026E-11D3-9FD7-00A0CC3E4A32}')!
+RGB guid: (GUID fromString: '{87b4c53b-026e-11d3-9fd7-00a0cc3e4a32}')!
 RGB comment: 'RGB is the class of colour values specified as red, green and blue levels. The magnitude of each the primary colour components can be specified in the range from 0 to 255 inclusive, with 0 indicating minimum intensity.
 
 Some examples specified as the colour name and the corresponding RGB values:

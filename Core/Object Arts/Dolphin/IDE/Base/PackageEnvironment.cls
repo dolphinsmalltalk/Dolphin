@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 BrowserEnvironmentWrapper subclass: #PackageEnvironment
 	instanceVariableNames: 'packages'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-PackageEnvironment guid: (GUID fromString: '{1E100FA3-4C91-4F2C-8415-03D6FBCA4185}')!
+PackageEnvironment guid: (GUID fromString: '{1e100fa3-4c91-4f2c-8415-03d6fbca4185}')!
 PackageEnvironment comment: 'PackageEnvironment is a Dolphin specific BrowserEnvironment that represents the contents of one or more packages.
 
 Instance Variables:

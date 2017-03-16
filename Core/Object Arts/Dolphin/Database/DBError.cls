@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Error subclass: #DBError
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'ODBCConstants ODBCRetCodes'
 	classInstanceVariableNames: ''!
-DBError guid: (GUID fromString: '{87B4C559-026E-11D3-9FD7-00A0CC3E4A32}')!
+DBError guid: (GUID fromString: '{87b4c559-026e-11d3-9fd7-00a0cc3e4a32}')!
 DBError comment: 'Instances of DBError hold exception information for Database Connection errors.'!
 !DBError categoriesForClass!ODBC Interface! !
 !DBError methodsFor!

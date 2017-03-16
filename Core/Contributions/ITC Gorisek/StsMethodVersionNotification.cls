@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #StsMethodVersionNotification
 	instanceVariableNames: 'edition'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-StsMethodVersionNotification guid: (GUID fromString: '{387B8E10-1A83-11D4-B0AA-000000000000}')!
+StsMethodVersionNotification guid: (GUID fromString: '{387b8e10-1a83-11d4-b0aa-000000000000}')!
 StsMethodVersionNotification comment: ''!
 !StsMethodVersionNotification categoriesForClass!Unclassified! !
 !StsMethodVersionNotification methodsFor!

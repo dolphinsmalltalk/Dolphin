@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Link subclass: #LinkElement
 	instanceVariableNames: 'value'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-LinkElement guid: (GUID fromString: '{76B4E91D-D04D-4362-A0A8-57269EBF4CA1}')!
+LinkElement guid: (GUID fromString: '{76b4e91d-d04d-4362-a0a8-57269ebf4ca1}')!
 LinkElement comment: 'I am a link which knows its next link and also has a value.'!
 !LinkElement categoriesForClass!Collections-Support!IDB Goodies! !
 !LinkElement methodsFor!

@@ -5,7 +5,7 @@ Presenter subclass: #ProfilerSamplesPresenter
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ProfilerSamplesPresenter guid: (GUID fromString: '{425D0EB4-542E-11D3-998B-D5CA2C3C1D61}')!
+ProfilerSamplesPresenter guid: (GUID fromString: '{425d0eb4-542e-11d3-998b-d5ca2c3c1d61}')!
 ProfilerSamplesPresenter comment: 'See [DolphinImageFolder]/Idb/Documentation for details
 
 (C) 2005 Ian Bartholomew

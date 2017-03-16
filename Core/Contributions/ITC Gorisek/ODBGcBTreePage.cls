@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ODBBTreePage subclass: #ODBGcBTreePage
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ODBGcBTreePage guid: (GUID fromString: '{8162EDFA-0FB8-11D4-B091-000000000000}')!
+ODBGcBTreePage guid: (GUID fromString: '{8162edfa-0fb8-11d4-b091-000000000000}')!
 ODBGcBTreePage comment: ''!
 !ODBGcBTreePage categoriesForClass!No category! !
 !ODBGcBTreePage methodsFor!

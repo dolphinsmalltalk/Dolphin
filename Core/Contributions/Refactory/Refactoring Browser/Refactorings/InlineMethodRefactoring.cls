@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk XP 2002 release 6.00"!
+"Filed out from Dolphin Smalltalk 7"!
 
 MethodRefactoring subclass: #InlineMethodRefactoring
 	instanceVariableNames: 'sourceInterval inlineParseTree sourceParseTree sourceSelector sourceMessage inlineClass'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-InlineMethodRefactoring guid: (GUID fromString: '{A2564755-9EB0-4805-9BF7-EDBB2FCF1995}')!
+InlineMethodRefactoring guid: (GUID fromString: '{a2564755-9eb0-4805-9bf7-edbb2fcf1995}')!
 InlineMethodRefactoring comment: ''!
 !InlineMethodRefactoring categoriesForClass!Refactory-Refactorings! !
 !InlineMethodRefactoring methodsFor!

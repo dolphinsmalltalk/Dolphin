@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Presenter subclass: #ValuePresenter
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ValuePresenter guid: (GUID fromString: '{87B4C689-026E-11D3-9FD7-00A0CC3E4A32}')!
+ValuePresenter guid: (GUID fromString: '{87b4c689-026e-11d3-9fd7-00a0cc3e4a32}')!
 ValuePresenter comment: 'ValuePresenter is a <valuePresenter>s that presents the contents of a <valueModel> within a <valueView>.
 
 When designing a <presenter> it is necessary to make an initial decision as to how its model data should be displayed and edited. If the model is a mutable object, in that it is legal (and sensible) to modify it in place, then it is usual to treat it as a simple <presenter> and create a class descended directly from Presenter itself. If, on the other hand, the model is to be immutable then the presenter should be implemented as a <valuePresenter>. If the identity of the underlying model data must remain unchanged then use a standard <presenter>. If this is not the case then a <valuePresenter> will be more suitable.

@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ExternalLibrary subclass: #LIBEAY32Library
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-LIBEAY32Library guid: (GUID fromString: '{1350B932-C807-4736-86A4-FF321B526944}')!
+LIBEAY32Library guid: (GUID fromString: '{1350b932-c807-4736-86a4-ff321b526944}')!
 LIBEAY32Library comment: ''!
 !LIBEAY32Library categoriesForClass!Unclassified! !
 !LIBEAY32Library methodsFor!

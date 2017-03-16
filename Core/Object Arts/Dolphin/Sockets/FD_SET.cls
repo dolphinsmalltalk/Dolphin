@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ExternalStructure subclass: #FD_SET
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-FD_SET guid: (GUID fromString: '{B99A7942-497E-4A39-97EF-9040C83D7829}')!
+FD_SET guid: (GUID fromString: '{b99a7942-497e-4a39-97ef-9040c83d7829}')!
 FD_SET comment: '<FD_SET> is an <ExternalStructure> class to wrap the struct ''WINSOCK2Lib.fd_set'' from type information in the ''Windows Sockets 2 Type Library'' library.
 
 IDL definition follows:

@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #StsStbProxy
 	instanceVariableNames: 'bytes'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-StsStbProxy guid: (GUID fromString: '{AACE35A6-609D-11D4-B177-000000000000}')!
+StsStbProxy guid: (GUID fromString: '{aace35a6-609d-11d4-b177-000000000000}')!
 StsStbProxy comment: ''!
 !StsStbProxy categoriesForClass!Unclassified! !
 !StsStbProxy methodsFor!

@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #ODBUndefinedObject
 	instanceVariableNames: 'basicHash variables indexedVariables bytes classInfo basicSize'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ODBUndefinedObject guid: (GUID fromString: '{8162EDE8-0FB8-11D4-B091-000000000000}')!
+ODBUndefinedObject guid: (GUID fromString: '{8162ede8-0fb8-11d4-b091-000000000000}')!
 ODBUndefinedObject comment: 'This object is used as a value holder for persistent objects for which there is no class in the image.
 
 Example:

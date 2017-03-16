@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #COMObjectRegistration
 	instanceVariableNames: 'clsid name toolboxImage'
 	classVariableNames: ''
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
-COMObjectRegistration guid: (GUID fromString: '{E3AACE46-398D-4CB8-8D6E-D9BF407B92FA}')!
+COMObjectRegistration guid: (GUID fromString: '{e3aace46-398d-4cb8-8d6e-d9bf407b92fa}')!
 COMObjectRegistration comment: '<COMObjectRegistration> is a simple class to aggregate the registration information for a COM object such as its CLSID and description. It is used in conjunction with the COM Category Manager interface, <ICatInformation>.
 
 Instance Variables:

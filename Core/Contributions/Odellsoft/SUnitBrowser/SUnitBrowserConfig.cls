@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk XP 2002 release 6.00"!
+"Filed out from Dolphin Smalltalk 7"!
 
 SUnitBrowserAbsConfig subclass: #SUnitBrowserConfig
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-SUnitBrowserConfig guid: (GUID fromString: '{FA1BBE24-E5E3-4931-BB4D-448D0401E1E1}')!
+SUnitBrowserConfig guid: (GUID fromString: '{fa1bbe24-e5e3-4931-bb4d-448d0401e1e1}')!
 SUnitBrowserConfig comment: ''!
 !SUnitBrowserConfig categoriesForClass!Unclassified! !
 !SUnitBrowserConfig methodsFor!

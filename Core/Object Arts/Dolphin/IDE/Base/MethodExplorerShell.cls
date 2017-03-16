@@ -5,7 +5,7 @@ MethodBrowserShell subclass: #MethodExplorerShell
 	classVariableNames: 'HistoryListSize'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-MethodExplorerShell guid: (GUID fromString: '{8D4892FD-F8E1-49BD-87B5-7366078A04FF}')!
+MethodExplorerShell guid: (GUID fromString: '{8d4892fd-f8e1-49bd-87b5-7366078a04ff}')!
 MethodExplorerShell comment: 'MethodExplorerShell is a <MethodBrowserShell> that implements a method browser tool with history tree of searches. Each browse operation (e.g. a definitions or reference search) initiated from the browser results in a new node in the tree. The node is created under the node that was current when the search was performed. This allows one to drill down by performing a series of nested search operations, with the tree maintaining the path. A history list and forward/back buttons allow one to navigate through the chronological history of searches.
 
 Instance Variables:

@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 CommonDialog subclass: #FileDialog
 	instanceVariableNames: 'style fileTypes validationBlock'
 	classVariableNames: 'CDNMap'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-FileDialog guid: (GUID fromString: '{87B4C6B1-026E-11D3-9FD7-00A0CC3E4A32}')!
+FileDialog guid: (GUID fromString: '{87b4c6b1-026e-11d3-9fd7-00a0cc3e4a32}')!
 FileDialog comment: 'FileDialog is an abstract superclass for <valueDialogPresenter>s implementing the Windows common file dialogs. 
 
 '!

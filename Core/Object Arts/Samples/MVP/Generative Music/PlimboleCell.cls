@@ -5,7 +5,7 @@ Object subclass: #PlimboleCell
 	classVariableNames: ''
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
-PlimboleCell guid: (GUID fromString: '{A9D9AE5C-52B6-43B7-9E6C-1BB39EF49F8A}')!
+PlimboleCell guid: (GUID fromString: '{a9d9ae5c-52b6-43b7-9e6c-1bb39ef49f8a}')!
 PlimboleCell comment: ''!
 !PlimboleCell categoriesForClass!Kernel-Objects! !
 !PlimboleCell methodsFor!

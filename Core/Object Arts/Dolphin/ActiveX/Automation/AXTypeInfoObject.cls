@@ -5,7 +5,7 @@ Object subclass: #AXTypeInfoObject
 	classVariableNames: 'ClassCommentStyleMap GuidClash HighLevelWrapperStyleMap SuperclassClash TracingStyleMap'
 	poolDictionaries: 'AXAutomationConstants AXTypeGenerationFlags'
 	classInstanceVariableNames: ''!
-AXTypeInfoObject guid: (GUID fromString: '{27440177-DFAB-46D4-BF61-A8FADA69A263}')!
+AXTypeInfoObject guid: (GUID fromString: '{27440177-dfab-46d4-bf61-a8fada69a263}')!
 AXTypeInfoObject comment: '
 	
 Instance Variables:

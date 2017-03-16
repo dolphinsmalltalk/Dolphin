@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 HttpClient subclass: #HttpsClient
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-HttpsClient guid: (GUID fromString: '{BA0FB7F4-F9D2-41FC-BE2E-544DE795897B}')!
+HttpsClient guid: (GUID fromString: '{ba0fb7f4-f9d2-41fc-be2e-544de795897b}')!
 HttpsClient comment: ''!
 !HttpsClient categoriesForClass!Unclassified! !
 !HttpsClient methodsFor!

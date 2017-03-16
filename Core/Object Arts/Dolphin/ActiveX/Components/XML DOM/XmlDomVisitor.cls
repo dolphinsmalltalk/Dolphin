@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #XmlDomVisitor
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-XmlDomVisitor guid: (GUID fromString: '{92CF165D-8533-4F76-9F0A-FF1C520339F4}')!
+XmlDomVisitor guid: (GUID fromString: '{92cf165d-8533-4f76-9f0a-ff1c520339f4}')!
 XmlDomVisitor comment: ''!
 !XmlDomVisitor categoriesForClass!Kernel-Objects! !
 !XmlDomVisitor methodsFor!

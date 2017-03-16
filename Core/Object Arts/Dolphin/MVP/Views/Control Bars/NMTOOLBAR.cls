@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 NMHDR subclass: #NMTOOLBAR
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-NMTOOLBAR guid: (GUID fromString: '{87B4C629-026E-11D3-9FD7-00A0CC3E4A32}')!
+NMTOOLBAR guid: (GUID fromString: '{87b4c629-026e-11d3-9fd7-00a0cc3e4a32}')!
 NMTOOLBAR comment: 'NMTOOLBAR is the class of <ExternalStructure> which represent the Windows Common Control structure of the same name.
 
 NMTOOLBAR accompanies certain notifications that are sent by a Toolbar control to its parent, e.g. when a drop-down button is pressed, such as the browser history list buttons (TBN_DROPDOWN). See the Win32 documentation for further details.

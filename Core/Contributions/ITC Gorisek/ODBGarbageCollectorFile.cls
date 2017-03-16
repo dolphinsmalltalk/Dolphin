@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ODBFile subclass: #ODBGarbageCollectorFile
 	instanceVariableNames: 'status'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ODBGarbageCollectorFile guid: (GUID fromString: '{8162EE19-0FB8-11D4-B091-000000000000}')!
+ODBGarbageCollectorFile guid: (GUID fromString: '{8162ee19-0fb8-11d4-b091-000000000000}')!
 ODBGarbageCollectorFile comment: ''!
 !ODBGarbageCollectorFile categoriesForClass!No category! !
 !ODBGarbageCollectorFile methodsFor!

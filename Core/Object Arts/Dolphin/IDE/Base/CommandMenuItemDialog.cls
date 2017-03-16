@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 MenuItemDialog subclass: #CommandMenuItemDialog
 	instanceVariableNames: 'acceleratorPresenter isRadioButtonStylePresenter isDefaultPresenter isModalPresenter'
 	classVariableNames: ''
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
-CommandMenuItemDialog guid: (GUID fromString: '{87B4C6A2-026E-11D3-9FD7-00A0CC3E4A32}')!
+CommandMenuItemDialog guid: (GUID fromString: '{87b4c6a2-026e-11d3-9fd7-00a0cc3e4a32}')!
 CommandMenuItemDialog comment: 'CommandMenuItemDialog is a <dialogPresenter> used to edit the contents of an <CommandMenuItem> model.
 
 Instance Variables:

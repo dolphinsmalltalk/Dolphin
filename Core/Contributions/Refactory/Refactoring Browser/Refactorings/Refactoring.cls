@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #Refactoring
 	instanceVariableNames: 'model options'
 	classVariableNames: 'AbortSignal RefactoringOptions'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-Refactoring guid: (GUID fromString: '{FA372B47-A5CE-4CE3-B6DC-F4A2E26195B5}')!
+Refactoring guid: (GUID fromString: '{fa372b47-a5ce-4ce3-b6dc-f4a2e26195b5}')!
 Refactoring comment: ''!
 !Refactoring categoriesForClass!Refactory-Refactorings! !
 !Refactoring methodsFor!

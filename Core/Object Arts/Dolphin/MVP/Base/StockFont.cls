@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Font subclass: #StockFont
 	instanceVariableNames: 'id'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-StockFont guid: (GUID fromString: '{87B4C63C-026E-11D3-9FD7-00A0CC3E4A32}')!
+StockFont guid: (GUID fromString: '{87b4c63c-026e-11d3-9fd7-00a0cc3e4a32}')!
 StockFont comment: ''!
 !StockFont categoriesForClass!Graphics-Tools! !
 !StockFont methodsFor!

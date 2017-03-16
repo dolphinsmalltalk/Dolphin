@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk XP 2002 release 5.05"!
+"Filed out from Dolphin Smalltalk 7"!
 
 MethodRefactoring subclass: #MoveVariableDefinitionRefactoring
 	instanceVariableNames: 'selector interval name parseTree blockNodes definingNode'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-MoveVariableDefinitionRefactoring guid: (GUID fromString: '{FE31FF59-C938-404B-92BB-579E93AF7FE9}')!
+MoveVariableDefinitionRefactoring guid: (GUID fromString: '{fe31ff59-c938-404b-92bb-579e93af7fe9}')!
 MoveVariableDefinitionRefactoring comment: ''!
 !MoveVariableDefinitionRefactoring categoriesForClass!Refactory-Refactorings! !
 !MoveVariableDefinitionRefactoring methodsFor!

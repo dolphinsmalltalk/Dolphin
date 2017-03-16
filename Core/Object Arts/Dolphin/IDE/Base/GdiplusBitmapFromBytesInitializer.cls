@@ -5,7 +5,7 @@ GdiplusFromBytesInitializer subclass: #GdiplusBitmapFromBytesInitializer
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-GdiplusBitmapFromBytesInitializer guid: (GUID fromString: '{6E7E335E-9DD7-44FA-8648-96E7D9528F11}')!
+GdiplusBitmapFromBytesInitializer guid: (GUID fromString: '{6e7e335e-9dd7-44fa-8648-96e7d9528f11}')!
 GdiplusBitmapFromBytesInitializer comment: ''!
 !GdiplusBitmapFromBytesInitializer categoriesForClass!Unclassified! !
 !GdiplusBitmapFromBytesInitializer methodsFor!

@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 SequenceableCollection subclass: #OLEEnumerator
 	instanceVariableNames: 'interface'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-OLEEnumerator guid: (GUID fromString: '{87B4C50E-026E-11D3-9FD7-00A0CC3E4A32}')!
+OLEEnumerator guid: (GUID fromString: '{87b4c50e-026e-11d3-9fd7-00a0cc3e4a32}')!
 OLEEnumerator comment: 'OLEEnumerator is a <sequencedReadableCollection> that wraps an OLE enumeration interface (IEnumXXXX). It provides an efficient way to treat an enumeration supplied by a COM object as a full-blown Smalltalk collection.'!
 !OLEEnumerator categoriesForClass!Collections-Sequenceable! !
 !OLEEnumerator methodsFor!

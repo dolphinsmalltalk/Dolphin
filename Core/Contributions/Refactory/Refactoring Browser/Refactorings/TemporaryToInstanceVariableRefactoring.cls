@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 MethodRefactoring subclass: #TemporaryToInstanceVariableRefactoring
 	instanceVariableNames: 'selector temporaryVariableName'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-TemporaryToInstanceVariableRefactoring guid: (GUID fromString: '{C0AD3FF1-C5D3-48F7-9104-4EE2542C6BA6}')!
+TemporaryToInstanceVariableRefactoring guid: (GUID fromString: '{c0ad3ff1-c5d3-48f7-9104-4ee2542c6ba6}')!
 TemporaryToInstanceVariableRefactoring comment: ''!
 !TemporaryToInstanceVariableRefactoring categoriesForClass!Refactory-Refactorings! !
 !TemporaryToInstanceVariableRefactoring methodsFor!

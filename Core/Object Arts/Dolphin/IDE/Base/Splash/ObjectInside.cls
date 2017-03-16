@@ -5,7 +5,7 @@ Object subclass: #ObjectInside
 	classVariableNames: ''
 	poolDictionaries: 'GdiplusConstants'
 	classInstanceVariableNames: ''!
-ObjectInside guid: (GUID fromString: '{C019A761-9B1C-4F55-8DD3-66B8E8B2864F}')!
+ObjectInside guid: (GUID fromString: '{c019a761-9b1c-4f55-8dd3-66b8e8b2864f}')!
 ObjectInside comment: ''!
 !ObjectInside categoriesForClass!Kernel-Objects! !
 !ObjectInside methodsFor!

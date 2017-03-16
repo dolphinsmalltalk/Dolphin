@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #RefactoringTool
 	instanceVariableNames: 'presenter'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-RefactoringTool guid: (GUID fromString: '{838C8C37-C249-4DB4-B324-65CB5BABDC40}')!
+RefactoringTool guid: (GUID fromString: '{838c8c37-c249-4db4-b324-65cb5babdc40}')!
 RefactoringTool comment: 'RefactoringTool is the abstract class of plugins used to add refactoring functionality to browsers and other coding tools in the Dolphin IDE.
 
 Note that RefactoringTool is neither a presenter nor a model, but it is a <commandTarget>.

@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Chat subclass: #AvatarChat
 	instanceVariableNames: 'agent callerAvatar'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-AvatarChat guid: (GUID fromString: '{F5308C15-8EE9-11D3-9846-444553540000}')!
+AvatarChat guid: (GUID fromString: '{f5308c15-8ee9-11d3-9846-444553540000}')!
 AvatarChat comment: 'AvatarChat is a <topPresenter> implementing a "chat" service that uses an avatar to represent the caller at the other end of the connection. An instance can be opened on any machine that is running TCP/IP and has the Microsoft Agent installed by using:
 
 AvatarChat show.

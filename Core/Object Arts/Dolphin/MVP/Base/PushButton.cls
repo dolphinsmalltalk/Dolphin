@@ -5,7 +5,7 @@ CommandButton subclass: #PushButton
 	classVariableNames: 'ButtonStyleMap'
 	poolDictionaries: 'ButtonConstants'
 	classInstanceVariableNames: ''!
-PushButton guid: (GUID fromString: '{87B4C729-026E-11D3-9FD7-00A0CC3E4A32}')!
+PushButton guid: (GUID fromString: '{87b4c729-026e-11d3-9fd7-00a0cc3e4a32}')!
 PushButton comment: 'PushButton is a <CommandButton> implementing the Windows "BUTTON" class, usually in push button mode, i.e. with the BS_PUSHLIKE style. 
 
 Note that we have chosen not to support the text alignment styles of the BUTTON control on PushButton''s, because the ability to align the text in the push button rectangle doesn''t seem that useful. Alignment styles are, however, supported on the other incarnations of the BUTTON control as represented by the <CheckBox> and <RadioButton> classes, and so if needed the implemenation can be borrowed from there.

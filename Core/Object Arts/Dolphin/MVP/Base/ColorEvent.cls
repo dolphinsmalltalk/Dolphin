@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 WindowsEvent subclass: #ColorEvent
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ColorEvent guid: (GUID fromString: '{87B4C54C-026E-11D3-9FD7-00A0CC3E4A32}')!
+ColorEvent guid: (GUID fromString: '{87b4c54c-026e-11d3-9fd7-00a0cc3e4a32}')!
 ColorEvent comment: ''!
 !ColorEvent categoriesForClass!MVP-Views-Events! !
 !ColorEvent methodsFor!

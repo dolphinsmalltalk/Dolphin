@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #SecureHashAlgorithm
 	instanceVariableNames: 'context'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-SecureHashAlgorithm guid: (GUID fromString: '{44A4E77C-6645-42E0-BCC2-E8129D06655E}')!
+SecureHashAlgorithm guid: (GUID fromString: '{44a4e77c-6645-42e0-bcc2-e8129d06655e}')!
 SecureHashAlgorithm comment: 'This class implements the Secure Hash Algorithm (SHA) described in the U.S. government''s Secure Hash Standard (SHS). 
 This standard is described in FIPS PUB 180-1, "SECURE HASH STANDARD", April 17, 1995. The Secure Hash Algorithm is also described on p. 442 of ''Applied Cryptography: Protocols, Algorithms, and Source Code in C'' by Bruce Scheier, Wiley, 1996.'!
 !SecureHashAlgorithm categoriesForClass!Cryptography-Support! !

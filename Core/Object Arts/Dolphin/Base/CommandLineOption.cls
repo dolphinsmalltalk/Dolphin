@@ -5,7 +5,7 @@ Object subclass: #CommandLineOption
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-CommandLineOption guid: (GUID fromString: '{24FED4FA-6D57-4F07-B973-B1CD9591567A}')!
+CommandLineOption guid: (GUID fromString: '{24fed4fa-6d57-4f07-b973-b1cd9591567a}')!
 CommandLineOption comment: 'This class is used internally by instances of CommandLine to encapsulate option rules.'!
 !CommandLineOption categoriesForClass!Kernel-Objects! !
 !CommandLineOption methodsFor!

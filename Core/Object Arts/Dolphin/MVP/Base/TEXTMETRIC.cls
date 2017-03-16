@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Win32Structure subclass: #TEXTMETRIC
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-TEXTMETRIC guid: (GUID fromString: '{EA0D6DF4-3794-11D3-979E-0080C8D59432}')!
+TEXTMETRIC guid: (GUID fromString: '{ea0d6df4-3794-11d3-979e-0080c8d59432}')!
 TEXTMETRIC comment: '<TEXTMETRIC> is an <ExternalStructure> class to wrap the struct ''Win.TEXTMETRIC'' from type information in the ''Windows API (ANSI)'' library.
 
 The type library contains no documentation for this struct

@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk 2000 release 5.00"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #RefactoringManager
 	instanceVariableNames: 'refactorings'
 	classVariableNames: 'Instance'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-RefactoringManager guid: (GUID fromString: '{91ADEFD7-2941-4E19-BEA0-6541C7033E57}')!
+RefactoringManager guid: (GUID fromString: '{91adefd7-2941-4e19-bea0-6541c7033e57}')!
 RefactoringManager comment: ''!
 !RefactoringManager categoriesForClass!Refactory-Refactorings! !
 !RefactoringManager methodsFor!
@@ -58,7 +58,7 @@ preUnloadActionFor: aParcel
 uninitialize
 	self nuke! !
 !RefactoringManager class categoriesFor: #instance!instance creation!public! !
-!RefactoringManager class categoriesFor: #new!*-should not implement!instance creation!public! !
+!RefactoringManager class categoriesFor: #new!instance creation!public! !
 !RefactoringManager class categoriesFor: #nuke!public!public access! !
 !RefactoringManager class categoriesFor: #onPreStripImage!class hierarchy-removing!public! !
 !RefactoringManager class categoriesFor: #preUnloadActionFor:!parcel load/unload/save!public! !

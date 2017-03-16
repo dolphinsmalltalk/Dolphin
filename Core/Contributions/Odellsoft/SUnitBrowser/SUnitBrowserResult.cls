@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk XP 2002 release 6.00"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #SUnitBrowserResult
 	instanceVariableNames: 'testResult model failures errors passed'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-SUnitBrowserResult guid: (GUID fromString: '{CA60C917-290B-444C-B572-CD6C8A99D198}')!
+SUnitBrowserResult guid: (GUID fromString: '{ca60c917-290b-444c-b572-cd6c8a99d198}')!
 SUnitBrowserResult comment: ''!
 !SUnitBrowserResult categoriesForClass!Unclassified! !
 !SUnitBrowserResult methodsFor!

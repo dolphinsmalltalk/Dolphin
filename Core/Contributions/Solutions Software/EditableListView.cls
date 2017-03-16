@@ -5,7 +5,7 @@ ListView subclass: #EditableListView
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-EditableListView guid: (GUID fromString: '{E2B66E41-55E0-4105-A492-B9DEFD40CD23}')!
+EditableListView guid: (GUID fromString: '{e2b66e41-55e0-4105-a492-b9defd40cd23}')!
 EditableListView comment: ''!
 !EditableListView categoriesForClass!Unclassified! !
 !EditableListView methodsFor!

@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Smalltalk at: #TreeViewConstants put: (PoolConstantsDictionary named: #TreeViewConstants)!
 TreeViewConstants at: 'TVC_BYKEYBOARD' put: 16r2!

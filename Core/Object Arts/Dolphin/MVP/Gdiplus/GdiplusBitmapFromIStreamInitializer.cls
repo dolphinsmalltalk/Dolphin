@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 GdiplusInitializer subclass: #GdiplusBitmapFromIStreamInitializer
 	instanceVariableNames: 'iStream'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-GdiplusBitmapFromIStreamInitializer guid: (GUID fromString: '{F3CD9058-7788-4CFF-95D9-04DDA741EF4E}')!
+GdiplusBitmapFromIStreamInitializer guid: (GUID fromString: '{f3cd9058-7788-4cff-95d9-04dda741ef4e}')!
 GdiplusBitmapFromIStreamInitializer comment: ''!
 !GdiplusBitmapFromIStreamInitializer categoriesForClass!Unclassified! !
 !GdiplusBitmapFromIStreamInitializer methodsFor!

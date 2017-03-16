@@ -1,10 +1,10 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 AXTypeInfoAnalyzer subclass: #AXAPIInfoAnalyzer
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-AXAPIInfoAnalyzer guid: (GUID fromString: '{F78B84AF-C0A2-43D0-9C6D-258D61CC5F04}')!
+AXAPIInfoAnalyzer guid: (GUID fromString: '{f78b84af-c0a2-43d0-9c6d-258d61cc5f04}')!
 AXAPIInfoAnalyzer comment: ''!
 !AXAPIInfoAnalyzer categoriesForClass!ActiveX Automation! !

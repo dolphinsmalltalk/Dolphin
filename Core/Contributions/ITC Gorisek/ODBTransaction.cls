@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #ODBTransaction
 	instanceVariableNames: 'client objects versionDescriptor dbConnection transactionFile objectIndex transactionManager locks cacheMutex'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ODBTransaction guid: (GUID fromString: '{8162EDE5-0FB8-11D4-B091-000000000000}')!
+ODBTransaction guid: (GUID fromString: '{8162ede5-0fb8-11d4-b091-000000000000}')!
 ODBTransaction comment: ''!
 !ODBTransaction categoriesForClass!No category! !
 !ODBTransaction methodsFor!

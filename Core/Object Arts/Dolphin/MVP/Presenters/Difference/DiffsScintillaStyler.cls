@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ScintillaStyler subclass: #DiffsScintillaStyler
 	instanceVariableNames: 'diffs'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-DiffsScintillaStyler guid: (GUID fromString: '{96903AA2-F14B-4DEB-BA96-92A484FB00F6}')!
+DiffsScintillaStyler guid: (GUID fromString: '{96903aa2-f14b-4deb-ba96-92a484fb00f6}')!
 DiffsScintillaStyler comment: ''!
 !DiffsScintillaStyler categoriesForClass!Kernel-Objects! !
 !DiffsScintillaStyler methodsFor!

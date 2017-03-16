@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 OLEFinalizableStructure subclass: #AXRecord
 	instanceVariableNames: 'recordInfo owner'
 	classVariableNames: ''
 	poolDictionaries: 'AXAutomationConstants AXAutomationErrors'
 	classInstanceVariableNames: ''!
-AXRecord guid: (GUID fromString: '{4C783C74-4472-47AD-901F-CEB9DE79DD8B}')!
+AXRecord guid: (GUID fromString: '{4c783c74-4472-47ad-901f-ceb9de79dd8b}')!
 AXRecord comment: ''!
 !AXRecord categoriesForClass!Unclassified! !
 !AXRecord methodsFor!

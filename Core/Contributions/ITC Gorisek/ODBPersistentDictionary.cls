@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 LookupTable variableSubclass: #ODBPersistentDictionary
 	instanceVariableNames: 'transaction'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ODBPersistentDictionary guid: (GUID fromString: '{8162EDEC-0FB8-11D4-B091-000000000000}')!
+ODBPersistentDictionary guid: (GUID fromString: '{8162edec-0fb8-11d4-b091-000000000000}')!
 ODBPersistentDictionary comment: ''!
 !ODBPersistentDictionary categoriesForClass!No category! !
 !ODBPersistentDictionary methodsFor!

@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 CommonDialogStructure subclass: #FINDREPLACE
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'CommonDialogConstants'
 	classInstanceVariableNames: ''!
-FINDREPLACE guid: (GUID fromString: '{87B4C5F2-026E-11D3-9FD7-00A0CC3E4A32}')!
+FINDREPLACE guid: (GUID fromString: '{87b4c5f2-026e-11d3-9fd7-00a0cc3e4a32}')!
 FINDREPLACE comment: 'FINDREPLACE is a <Win32lStructure> which represents the Windows common dialog structure of the same name. It is used in conjunction with the FindText() and ReplaceText() APIs to to contain information about a search or replace operation.
 '!
 !FINDREPLACE categoriesForClass!External-Data-Structured!External-Data-Structured-Win32! !

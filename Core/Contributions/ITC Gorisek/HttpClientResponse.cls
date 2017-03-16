@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #HttpClientResponse
 	instanceVariableNames: 'headerLines headerFields contents parsedPage alreadyUncompressed'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-HttpClientResponse guid: (GUID fromString: '{15400BDF-F7F9-43DF-A8C4-CEAEAA453449}')!
+HttpClientResponse guid: (GUID fromString: '{15400bdf-f7f9-43df-a8c4-ceaeaa453449}')!
 HttpClientResponse comment: ''!
 !HttpClientResponse categoriesForClass!Unclassified! !
 !HttpClientResponse methodsFor!

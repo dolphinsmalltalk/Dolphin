@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #DBTxn
 	instanceVariableNames: 'connection readOnly creator'
 	classVariableNames: ''
 	poolDictionaries: 'ODBCConstants'
 	classInstanceVariableNames: ''!
-DBTxn guid: (GUID fromString: '{87B4C478-026E-11D3-9FD7-00A0CC3E4A32}')!
+DBTxn guid: (GUID fromString: '{87b4c478-026e-11d3-9fd7-00a0cc3e4a32}')!
 DBTxn comment: 'A DBTxn instance represents a Database Connection transaction in progress.
 
 Generally one does not explicitly instantiate DBTxn instances, but rather one uses the methods DBConnection>>beginRWTxn, and DBConnection>>beginTxn to create an appropriate type of transaction on a specific connection. 

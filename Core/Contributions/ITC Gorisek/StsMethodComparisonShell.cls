@@ -5,7 +5,7 @@ SmalltalkToolShell subclass: #StsMethodComparisonShell
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-StsMethodComparisonShell guid: (GUID fromString: '{2826F051-3F9D-11D4-B102-000000000000}')!
+StsMethodComparisonShell guid: (GUID fromString: '{2826f051-3f9d-11d4-b102-000000000000}')!
 StsMethodComparisonShell comment: ''!
 !StsMethodComparisonShell categoriesForClass!Unclassified! !
 !StsMethodComparisonShell methodsFor!

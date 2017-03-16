@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 TypeConverter subclass: #EvaluationConverter
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-EvaluationConverter guid: (GUID fromString: '{D66E11D7-487C-4B0D-972E-6CB3A52FCF06}')!
+EvaluationConverter guid: (GUID fromString: '{d66e11d7-487c-4b0d-972e-6cb3a52fcf06}')!
 EvaluationConverter comment: 'Left to right: Converts from Smalltalk evaluation strings to the objects they evaluate to.
 Right to left: Converts from an object to its #storeString, which is often (but not always) able to evaluate back to an equivalent object.'!
 !EvaluationConverter categoriesForClass!MVP-Type Converters-Abstract! !

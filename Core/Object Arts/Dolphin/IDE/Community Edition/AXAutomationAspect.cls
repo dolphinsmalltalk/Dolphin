@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Aspect subclass: #AXAutomationAspect
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-AXAutomationAspect guid: (GUID fromString: '{4FBB641D-1F5C-4DCF-B8F6-DD525A4BBB0F}')!
+AXAutomationAspect guid: (GUID fromString: '{4fbb641d-1f5c-4dcf-b8f6-dd525a4bbb0f}')!
 AXAutomationAspect comment: 'AXAutomationAspect is the abstract superclass of <Aspect>s specialised for accessing properties and fields of Active-X Automation objects. It is an extension of the PublishedAspectorInspector framework.'!
 !AXAutomationAspect categoriesForClass!Development! !
 !AXAutomationAspect methodsFor!

@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Folder subclass: #PackageFolder
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-PackageFolder guid: (GUID fromString: '{78425858-C3B5-4314-847A-772FF5268A84}')!
+PackageFolder guid: (GUID fromString: '{78425858-c3b5-4314-847a-772ff5268a84}')!
 PackageFolder comment: ''!
 !PackageFolder categoriesForClass!Development! !
 !PackageFolder methodsFor!

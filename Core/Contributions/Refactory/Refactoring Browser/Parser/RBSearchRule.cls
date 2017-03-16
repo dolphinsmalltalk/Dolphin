@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk XP 2002 release 5.02"!
+"Filed out from Dolphin Smalltalk 7"!
 
 RBParseTreeRule subclass: #RBSearchRule
 	instanceVariableNames: 'answerBlock'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-RBSearchRule guid: (GUID fromString: '{47F7B2B8-BDD2-449F-866D-E373A574DC60}')!
+RBSearchRule guid: (GUID fromString: '{47f7b2b8-bdd2-449f-866d-e373a574dc60}')!
 RBSearchRule comment: ''!
 !RBSearchRule categoriesForClass!Refactory-ParseTree Matching! !
 !RBSearchRule methodsFor!

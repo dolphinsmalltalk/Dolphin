@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ReferencesCategory subclass: #SpecialReferencesCategory
 	instanceVariableNames: 'index'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-SpecialReferencesCategory guid: (GUID fromString: '{E9A4ED98-09ED-452E-9FE6-E59AE77DCFDE}')!
+SpecialReferencesCategory guid: (GUID fromString: '{e9a4ed98-09ed-452e-9fe6-e59ae77dcfde}')!
 SpecialReferencesCategory comment: ''!
 !SpecialReferencesCategory categoriesForClass!Development! !
 !SpecialReferencesCategory methodsFor!

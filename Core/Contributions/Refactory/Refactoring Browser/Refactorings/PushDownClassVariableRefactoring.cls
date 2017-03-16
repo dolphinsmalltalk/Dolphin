@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk XP"!
+"Filed out from Dolphin Smalltalk 7"!
 
 VariableRefactoring subclass: #PushDownClassVariableRefactoring
 	instanceVariableNames: 'destinationClass'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-PushDownClassVariableRefactoring guid: (GUID fromString: '{E2937B6B-AA4B-4464-8C56-B8B005F6C4F9}')!
+PushDownClassVariableRefactoring guid: (GUID fromString: '{e2937b6b-aa4b-4464-8c56-b8b005f6c4f9}')!
 PushDownClassVariableRefactoring comment: ''!
 !PushDownClassVariableRefactoring categoriesForClass!Refactory-Refactorings! !
 !PushDownClassVariableRefactoring methodsFor!

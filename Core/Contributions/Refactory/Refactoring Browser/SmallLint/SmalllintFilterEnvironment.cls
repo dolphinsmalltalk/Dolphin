@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk XP 2002 release 5.02"!
+"Filed out from Dolphin Smalltalk 7"!
 
 AndEnvironment subclass: #SmalllintFilterEnvironment
 	instanceVariableNames: 'lintRuleName'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-SmalllintFilterEnvironment guid: (GUID fromString: '{7FCD066A-29BC-4257-8EDE-900B16E13492}')!
+SmalllintFilterEnvironment guid: (GUID fromString: '{7fcd066a-29bc-4257-8ede-900b16e13492}')!
 SmalllintFilterEnvironment comment: 'SmalllintFilterEnvironment is a special environment that is used to filter out invalid Smalllint results.
 
 Instance Variables:

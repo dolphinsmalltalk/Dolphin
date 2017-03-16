@@ -5,7 +5,7 @@ ContainerView subclass: #MenuComposerArena
 	classVariableNames: ''
 	poolDictionaries: 'CommCtrlConstants'
 	classInstanceVariableNames: ''!
-MenuComposerArena guid: (GUID fromString: '{14BE7036-54A3-4888-9A4A-B0166FD82776}')!
+MenuComposerArena guid: (GUID fromString: '{14be7036-54a3-4888-9a4a-b0166fd82776}')!
 MenuComposerArena comment: 'MenuComposerArena is used by the <MenuComposer> to contain the menus being edited. It''s main function is to support the drag and drop of menu items between the menu views, which are dynamically opened and closed.'!
 !MenuComposerArena categoriesForClass!Development! !
 !MenuComposerArena methodsFor!

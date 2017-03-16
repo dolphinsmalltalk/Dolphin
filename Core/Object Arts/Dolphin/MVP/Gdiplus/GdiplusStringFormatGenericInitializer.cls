@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 GdiplusInitializer subclass: #GdiplusStringFormatGenericInitializer
 	instanceVariableNames: 'genericType'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-GdiplusStringFormatGenericInitializer guid: (GUID fromString: '{C8F38621-766B-11D7-B609-00E0987E8081}')!
+GdiplusStringFormatGenericInitializer guid: (GUID fromString: '{c8f38621-766b-11d7-b609-00e0987e8081}')!
 GdiplusStringFormatGenericInitializer comment: ''!
 !GdiplusStringFormatGenericInitializer categoriesForClass!Unclassified! !
 !GdiplusStringFormatGenericInitializer methodsFor!

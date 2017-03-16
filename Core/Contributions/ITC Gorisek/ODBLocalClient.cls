@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ODBClient subclass: #ODBLocalClient
 	instanceVariableNames: 'hasGlobalLock freeTransactionFile'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ODBLocalClient guid: (GUID fromString: '{8162EE01-0FB8-11D4-B091-000000000000}')!
+ODBLocalClient guid: (GUID fromString: '{8162ee01-0fb8-11d4-b091-000000000000}')!
 ODBLocalClient comment: '"Local clients are active. Only local clients can change objects in the database. "'!
 !ODBLocalClient categoriesForClass!No category! !
 !ODBLocalClient methodsFor!

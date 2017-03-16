@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk XP"!
+"Filed out from Dolphin Smalltalk 7"!
 
 MethodRefactoring subclass: #MoveMethodRefactoring
 	instanceVariableNames: 'selector variable moveToClasses parseTree hasOnlySelfReturns selfVariableName'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-MoveMethodRefactoring guid: (GUID fromString: '{12A63BDC-2DED-4523-BC81-881A6BC3F085}')!
+MoveMethodRefactoring guid: (GUID fromString: '{12a63bdc-2ded-4523-bc81-881a6bc3f085}')!
 MoveMethodRefactoring comment: ''!
 !MoveMethodRefactoring categoriesForClass!Refactory-Refactorings! !
 !MoveMethodRefactoring methodsFor!

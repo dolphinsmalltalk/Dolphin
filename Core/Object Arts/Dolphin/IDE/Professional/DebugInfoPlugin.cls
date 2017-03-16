@@ -5,7 +5,7 @@ ClassBrowserPlugin subclass: #DebugInfoPlugin
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-DebugInfoPlugin guid: (GUID fromString: '{D76CCBA1-7398-4191-9068-FB4BCB1AFB88}')!
+DebugInfoPlugin guid: (GUID fromString: '{d76ccba1-7398-4191-9068-fb4bcb1afb88}')!
 DebugInfoPlugin comment: 'DebugInfoPlugin is a <classBrowserPlugin> that shows a debug view of the currently selected method. It has 3 panes:
 	- The left pane is the text map built by the compiler and used by the debugger to relate instruction pointer positions to the corresponding expression in the source text.
 	- The middle pane displays the source of the method. Note that this is not intended for editing.

@@ -5,7 +5,7 @@ GdiplusBrush subclass: #GdiplusPathGradientBrush
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-GdiplusPathGradientBrush guid: (GUID fromString: '{C8F38622-766B-11D7-B609-00E0987E8081}')!
+GdiplusPathGradientBrush guid: (GUID fromString: '{c8f38622-766b-11d7-b609-00e0987e8081}')!
 GdiplusPathGradientBrush comment: 'A path gradient brush paints a color gradient in which the color changes from a center point outward to a boundary that is defined by a closed curve or path. The color gradient has one color at the center point and one or multiple colors at the boundary. '!
 !GdiplusPathGradientBrush categoriesForClass!Unclassified! !
 !GdiplusPathGradientBrush methodsFor!

@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 AspectInspector subclass: #InstVarInspector
 	instanceVariableNames: 'sourcePresenter'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-InstVarInspector guid: (GUID fromString: '{DA630AC4-C186-11D5-9849-0800460222F0}')!
+InstVarInspector guid: (GUID fromString: '{da630ac4-c186-11d5-9849-0800460222f0}')!
 InstVarInspector comment: ''!
 !InstVarInspector categoriesForClass!Development!MVP-Resources-IDE Tools! !
 !InstVarInspector methodsFor!

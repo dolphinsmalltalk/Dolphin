@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 StValueNode subclass: #StLiteralNode
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-StLiteralNode guid: (GUID fromString: '{DAD93C9C-B8B1-43B6-B9EB-DAE76D502022}')!
+StLiteralNode guid: (GUID fromString: '{dad93c9c-b8b1-43b6-b9eb-dae76d502022}')!
 StLiteralNode comment: 'StLiteralNode is a parse tree node that represents literals (e.g., #foo, #(1 2 3), true, etc.).
 
 Instance Variables:

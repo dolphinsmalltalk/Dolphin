@@ -5,7 +5,7 @@ AXTypeInfoObject subclass: #AXTypeLibraryAnalyzer
 	classVariableNames: 'TypeLibs'
 	poolDictionaries: 'AXAutomationErrors Win32Constants'
 	classInstanceVariableNames: ''!
-AXTypeLibraryAnalyzer guid: (GUID fromString: '{C06F3B76-0868-11D3-93AF-00A024CA708A}')!
+AXTypeLibraryAnalyzer guid: (GUID fromString: '{c06f3b76-0868-11d3-93af-00a024ca708a}')!
 AXTypeLibraryAnalyzer comment: 'AXTypeLibraryAnalyzer is a wrapper class around <ITypeLib> which adds higher level wrapper functions which make ITypeLib easier to use. It is also the starting point for Dolphin''s automatic generation of wrapper classes &c for Active-X objects described by type libraries.
 
 A Type Library is a repository of meta-information, typically about Active-X (COM, OLE, choose your favourite name) objects and interfaces. AXTypeLibraryAnalyzer permits one to enquire about general attributes of a Type Library, but more importantly it enables one to enumerate through the individual meta-elements by acquiring <AXTypeInfoAnalyzer> objects which describe them. For example it is easy to acquire all of the meta-information of a particular type from the library by sending one of the following selectors:

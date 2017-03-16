@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 AXStructureTypeAnalyzer subclass: #TKindUnionAnalyzer
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-TKindUnionAnalyzer guid: (GUID fromString: '{C06F3B81-0868-11D3-93AF-00A024CA708A}')!
+TKindUnionAnalyzer guid: (GUID fromString: '{c06f3b81-0868-11d3-93af-00a024ca708a}')!
 TKindUnionAnalyzer comment: ''!
 !TKindUnionAnalyzer categoriesForClass!ActiveX Automation! !
 !TKindUnionAnalyzer methodsFor!

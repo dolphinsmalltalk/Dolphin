@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ValuePresenter subclass: #ChoicePresenter
 	instanceVariableNames: 'choicesModel nilChoice'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ChoicePresenter guid: (GUID fromString: '{87B4C6CC-026E-11D3-9FD7-00A0CC3E4A32}')!
+ChoicePresenter guid: (GUID fromString: '{87b4c6cc-026e-11d3-9fd7-00a0cc3e4a32}')!
 ChoicePresenter comment: 'ChoicePresenter is <valuePresenter> which allows a value to be chosen from a list of alternatives. The range of choices may be supplied as any <sequencedCollection> by using the #choices: method once the ChoicePresenter has been instantiated. The initial selection in the visible list will match the initial value in the ChoicePresenter''s <valueModel>. As different selections are made in list they are transferred directly into the associated model.
 
 By default, a ChoicePresenter allows single selection choices to be made. It is also possible, however, to allow multiple selections by attaching an appropriate <listView> supporting the <multipleSelectableItems> protocol. In this case, the value held by the model will be an <Array> of the chosen items.

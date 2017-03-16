@@ -5,7 +5,7 @@ DragDropSession subclass: #InternalDragDropSession
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-InternalDragDropSession guid: (GUID fromString: '{87B4C54B-026E-11D3-9FD7-00A0CC3E4A32}')!
+InternalDragDropSession guid: (GUID fromString: '{87b4c54b-026e-11d3-9fd7-00a0cc3e4a32}')!
 InternalDragDropSession comment: '
 Instance Variables:
 	lastImageKey			<Symbol> name of the last displayed drag cursor image (e.g. #move or #copyScroll)

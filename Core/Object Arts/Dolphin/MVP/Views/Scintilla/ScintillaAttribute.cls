@@ -5,7 +5,7 @@ Object subclass: #ScintillaAttribute
 	classVariableNames: ''
 	poolDictionaries: 'ScintillaConstants'
 	classInstanceVariableNames: 'propertyMap'!
-ScintillaAttribute guid: (GUID fromString: '{B73F94FE-0BB9-4C23-AEE5-E77B3CF408AF}')!
+ScintillaAttribute guid: (GUID fromString: '{b73f94fe-0bb9-4c23-aee5-e77b3cf408af}')!
 ScintillaAttribute comment: 'ScintillaAttribute is the abstract superclass of objects that wrap various attributes of <ScintillaView>s. It provides a generic mechanism for setting the attribute value into the underlying control.
 
 Instance Variables:

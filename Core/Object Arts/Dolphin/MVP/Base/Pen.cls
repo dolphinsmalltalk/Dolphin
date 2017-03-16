@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 GraphicsTool subclass: #Pen
 	instanceVariableNames: 'logPen'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-Pen guid: (GUID fromString: '{87B4C637-026E-11D3-9FD7-00A0CC3E4A32}')!
+Pen guid: (GUID fromString: '{87b4c637-026e-11d3-9fd7-00a0cc3e4a32}')!
 Pen comment: 'Pen is a <GraphicsTool> that wraps a Windows GDI Pen object. Pens are selected into <Canvas>s to draw lines in various styles, widths, and colours.
 
 Instance Variables:

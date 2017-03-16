@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #ItcBase64EncoderDecoder
 	instanceVariableNames: 'decodingTable'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ItcBase64EncoderDecoder guid: (GUID fromString: '{CCFDF832-98B5-4D7D-A6AF-DD98C66196CC}')!
+ItcBase64EncoderDecoder guid: (GUID fromString: '{ccfdf832-98b5-4d7d-a6af-dd98c66196cc}')!
 ItcBase64EncoderDecoder comment: ''!
 !ItcBase64EncoderDecoder categoriesForClass!Unclassified! !
 !ItcBase64EncoderDecoder methodsFor!

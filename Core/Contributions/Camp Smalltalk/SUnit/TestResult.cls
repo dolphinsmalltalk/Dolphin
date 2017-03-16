@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk XP 2002 release 6.00"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #TestResult
 	instanceVariableNames: 'failures errors passed'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-TestResult guid: (GUID fromString: '{5E96793B-0810-11D4-A876-0050DA643BF9}')!
+TestResult guid: (GUID fromString: '{5e96793b-0810-11d4-a876-0050da643bf9}')!
 TestResult comment: ''!
 !TestResult categoriesForClass!SUnit! !
 !TestResult methodsFor!

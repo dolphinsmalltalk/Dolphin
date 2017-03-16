@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 CCITEM subclass: #LVITEM
 	instanceVariableNames: ''
 	classVariableNames: 'CallbackPrototype'
 	poolDictionaries: 'ListViewConstants'
 	classInstanceVariableNames: ''!
-LVITEM guid: (GUID fromString: '{87B4C620-026E-11D3-9FD7-00A0CC3E4A32}')!
+LVITEM guid: (GUID fromString: '{87b4c620-026e-11d3-9fd7-00a0cc3e4a32}')!
 LVITEM comment: 'LVITEM is an <ExternalStructure> class which represents the Windows common control structure of the same name.
 
 LVITEM is used to communicate information about the items (rows) in a List View control such as the text, icon, state, etc.

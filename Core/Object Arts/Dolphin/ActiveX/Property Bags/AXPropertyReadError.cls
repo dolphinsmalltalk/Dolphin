@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Error subclass: #AXPropertyReadError
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-AXPropertyReadError guid: (GUID fromString: '{395BCBE7-6D49-461D-8E8E-617D944548F7}')!
+AXPropertyReadError guid: (GUID fromString: '{395bcbe7-6d49-461d-8e8e-617d944548f7}')!
 AXPropertyReadError comment: ''!
 !AXPropertyReadError categoriesForClass!Unclassified! !
 !AXPropertyReadError methodsFor!

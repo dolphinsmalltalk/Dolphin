@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 RuntimeSessionManager subclass: #WebBrowserSessionManager
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-WebBrowserSessionManager guid: (GUID fromString: '{3A7BFF88-3535-4B52-BE21-3A61A9A2370E}')!
+WebBrowserSessionManager guid: (GUID fromString: '{3a7bff88-3535-4b52-be21-3a61a9a2370e}')!
 WebBrowserSessionManager comment: ''!
 !WebBrowserSessionManager categoriesForClass!Unclassified! !
 !WebBrowserSessionManager methodsFor!

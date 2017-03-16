@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Dialog subclass: #StsProjectEditionSelectionDialog
 	instanceVariableNames: 'projectsPresenter projectEditionsPresenter packageEditionsPresenter'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-StsProjectEditionSelectionDialog guid: (GUID fromString: '{993CDA8D-7165-4405-8E2C-15F29E796704}')!
+StsProjectEditionSelectionDialog guid: (GUID fromString: '{993cda8d-7165-4405-8e2c-15f29e796704}')!
 StsProjectEditionSelectionDialog comment: ''!
 !StsProjectEditionSelectionDialog categoriesForClass!Unclassified! !
 !StsProjectEditionSelectionDialog methodsFor!

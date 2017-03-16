@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk XP"!
+"Filed out from Dolphin Smalltalk 7"!
 
 RefactoryClassChange subclass: #AddClassChange
 	instanceVariableNames: 'definition superclassName instanceVariableNames classVariableNames poolDictionaryNames category'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-AddClassChange guid: (GUID fromString: '{441F8DC3-4A20-4E6D-9311-C190CEB74F11}')!
+AddClassChange guid: (GUID fromString: '{441f8dc3-4a20-4e6d-9311-c190ceb74f11}')!
 AddClassChange comment: ''!
 !AddClassChange categoriesForClass!Refactory-Change Objects! !
 !AddClassChange methodsFor!

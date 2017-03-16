@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Presenter subclass: #Scribble
 	instanceVariableNames: 'newStroke trackingCanvas'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-Scribble guid: (GUID fromString: '{87B4C686-026E-11D3-9FD7-00A0CC3E4A32}')!
+Scribble guid: (GUID fromString: '{87b4c686-026e-11d3-9fd7-00a0cc3e4a32}')!
 Scribble comment: 'Scribble is a <presenter> component that displays a <listModel> of <InkStroke>s within a <ScribbleView>. It is used to for accepting ''ink'' as a series of mouse or pen strokes and populate the model with this data. Scribble is part of the Scribble sample package. For examples of use please see the package comment.'!
 !Scribble categoriesForClass!MVP-Presenters!Samples! !
 !Scribble methodsFor!

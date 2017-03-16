@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #ProcessCopier
 	instanceVariableNames: 'source delta copied clone'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ProcessCopier guid: (GUID fromString: '{8645A83F-7F36-4167-B325-234F811A2264}')!
+ProcessCopier guid: (GUID fromString: '{8645a83f-7f36-4167-b325-234f811a2264}')!
 ProcessCopier comment: '<ProcessCopier> is responsible for copying the stack of a <Process> in such a way that the copy is an independent runnable process that can be continued from the point at which the source <Process> was when the copy was taken, but which shares no temporary variables (or other execution state) with the source process. This is required to implement <Continuation>s in Dolphin, but may have other uses.
 
 Copying a <Process> in Dolphin involves the following steps:

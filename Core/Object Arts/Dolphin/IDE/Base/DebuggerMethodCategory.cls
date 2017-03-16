@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 MethodCategory subclass: #DebuggerMethodCategory
 	instanceVariableNames: 'mask'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-DebuggerMethodCategory guid: (GUID fromString: '{424B6561-1BA5-4A45-B1E3-6936F126DCD5}')!
+DebuggerMethodCategory guid: (GUID fromString: '{424b6561-1ba5-4a45-b1e3-6936f126dcd5}')!
 DebuggerMethodCategory comment: ''!
 !DebuggerMethodCategory categoriesForClass!Development! !
 !DebuggerMethodCategory methodsFor!

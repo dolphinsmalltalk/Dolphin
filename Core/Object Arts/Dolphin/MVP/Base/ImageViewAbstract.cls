@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 StaticView subclass: #ImageViewAbstract
 	instanceVariableNames: 'image viewMode ivFlags insets imageBorder'
 	classVariableNames: 'DoubleBufferMask EdgeStyles EraseWholeMask'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ImageViewAbstract guid: (GUID fromString: '{49987909-4A1F-4E2E-8B1F-2CC2F3CA2C3C}')!
+ImageViewAbstract guid: (GUID fromString: '{49987909-4a1f-4e2e-8b1f-2cc2f3ca2c3c}')!
 ImageViewAbstract comment: 'ImageViewAbstract is an abstract class of <valueView>s for displaying static <image>s. The <valueModel> associated with an image view must always yield an <image> value when mapped through the installed type converter. An ImageViewAbstract will normally be used in conjunction with a <ImagePresenter>. The mode in which the image is displayed can be controlled using the #viewMode aspect which can be set to one of the following: (#normal, #centered, #scale, #scaleToFit, or #scaleBestFit). 
 
 Instance Variables:

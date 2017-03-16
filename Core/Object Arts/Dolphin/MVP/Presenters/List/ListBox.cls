@@ -5,7 +5,7 @@ BasicListAbstract subclass: #ListBox
 	classVariableNames: 'LbnMap SelectionModeMask SelectionModes'
 	poolDictionaries: 'ListBoxConstants'
 	classInstanceVariableNames: ''!
-ListBox guid: (GUID fromString: '{87B4C72C-026E-11D3-9FD7-00A0CC3E4A32}')!
+ListBox guid: (GUID fromString: '{87b4c72c-026e-11d3-9fd7-00a0cc3e4a32}')!
 ListBox comment: 'ListBox is the <listView> implementing the standard Windows LISTBOX control. It is for single selection use and, therefore, implements the <selectableItems> protocol  for use with any <listModel>.
 
 Instance Variables:

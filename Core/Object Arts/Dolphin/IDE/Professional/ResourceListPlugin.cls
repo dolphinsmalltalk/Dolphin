@@ -5,7 +5,7 @@ ClassBrowserPlugin subclass: #ResourceListPlugin
 	classVariableNames: 'ShowInheritedResourcesMask ShowSubclassResourcesMask'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ResourceListPlugin guid: (GUID fromString: '{9BF86123-58B4-42E2-BDF8-063F7E315276}')!
+ResourceListPlugin guid: (GUID fromString: '{9bf86123-58b4-42e2-bdf8-063f7e315276}')!
 ResourceListPlugin comment: 'ResourceListPlugin is a <classBrowserPlugin> that displays a list of the view resources associated with a class, optionally including those inherited from superclasses and/or those owned by subclasses.
 
 Instance Variables:

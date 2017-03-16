@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #MoenTreeNode
 	instanceVariableNames: 'object contour offset position parent child sibling clip extent flags'
 	classVariableNames: 'ExpandedMask HasExpandedMask'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-MoenTreeNode guid: (GUID fromString: '{63CE49D1-2FAF-11D3-93BA-00A024CA708A}')!
+MoenTreeNode guid: (GUID fromString: '{63ce49d1-2faf-11d3-93ba-00a024ca708a}')!
 MoenTreeNode comment: 'MoenTreeNode is a private helper class which is part of the implementation of the <MoenTreeView>.
 
 Each node in a MoenTreeView is represented by an instance of this class.

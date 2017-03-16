@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Model subclass: #StsImportInformationModel
 	instanceVariableNames: 'version developer previousVersions comment previousEdition versionComment blessingLevels blessing'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-StsImportInformationModel guid: (GUID fromString: '{2A58B366-A4C6-45E6-A35F-2DE5B64ACB08}')!
+StsImportInformationModel guid: (GUID fromString: '{2a58b366-a4c6-45e6-a35f-2de5b64acb08}')!
 StsImportInformationModel comment: ''!
 !StsImportInformationModel categoriesForClass!Unclassified! !
 !StsImportInformationModel methodsFor!

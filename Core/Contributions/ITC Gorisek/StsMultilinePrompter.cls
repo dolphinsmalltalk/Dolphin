@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Prompter subclass: #StsMultilinePrompter
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-StsMultilinePrompter guid: (GUID fromString: '{9B572BAA-611F-4450-828E-842DA52874F8}')!
+StsMultilinePrompter guid: (GUID fromString: '{9b572baa-611f-4450-828e-842da52874f8}')!
 StsMultilinePrompter comment: ''!
 !StsMultilinePrompter categoriesForClass!Unclassified! !
 !StsMultilinePrompter class methodsFor!

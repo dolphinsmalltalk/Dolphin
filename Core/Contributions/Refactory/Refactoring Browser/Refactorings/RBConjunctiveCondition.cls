@@ -1,19 +1,17 @@
-"Filed out from Dolphin Smalltalk 2000 release 4.01"!
+"Filed out from Dolphin Smalltalk 7"!
 
 RBAbstractCondition subclass: #RBConjunctiveCondition
 	instanceVariableNames: 'left right failed'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+RBConjunctiveCondition guid: (GUID fromString: '{a39b3587-7d58-4929-b47c-00c804e537be}')!
 RBConjunctiveCondition comment: 'ConjunctiveCondition represents and-ing two AbstractConditions together.
 
 Instance Variables:
 	failed	<Symbol>	which condition failed (#leftFailed, #rightFailed, or #unknownFailed)
 	left	<AbstractCondition>	the condition on the left side of the and
 	right	<AbstractCondition>	the condition on the right side of the and'!
-
-RBConjunctiveCondition guid: (GUID fromString: '{A39B3587-7D58-4929-B47C-00C804E537BE}')!
-
 !RBConjunctiveCondition categoriesForClass!Refactory-Conditions! !
 !RBConjunctiveCondition methodsFor!
 
@@ -69,14 +67,14 @@ rightFailed
 unknownFailed
 	^(left errorStringFor: false) , ' OR ' , (right errorStringFor: false)! !
 !RBConjunctiveCondition categoriesFor: #check!checking!public! !
-!RBConjunctiveCondition categoriesFor: #errorBlockFor:!*-unclassified!private! !
-!RBConjunctiveCondition categoriesFor: #errorMacro!*-unclassified!private! !
-!RBConjunctiveCondition categoriesFor: #errorStringFor:!*-unclassified!private! !
+!RBConjunctiveCondition categoriesFor: #errorBlockFor:!private! !
+!RBConjunctiveCondition categoriesFor: #errorMacro!private! !
+!RBConjunctiveCondition categoriesFor: #errorStringFor:!private! !
 !RBConjunctiveCondition categoriesFor: #left:right:!initialize/release!public! !
-!RBConjunctiveCondition categoriesFor: #leftFailed!*-unclassified!private! !
-!RBConjunctiveCondition categoriesFor: #longMacro!*-unclassified!private! !
-!RBConjunctiveCondition categoriesFor: #neitherFailed!*-unclassified!private! !
+!RBConjunctiveCondition categoriesFor: #leftFailed!private! !
+!RBConjunctiveCondition categoriesFor: #longMacro!private! !
+!RBConjunctiveCondition categoriesFor: #neitherFailed!private! !
 !RBConjunctiveCondition categoriesFor: #printOn:!printing!public! !
-!RBConjunctiveCondition categoriesFor: #rightFailed!*-unclassified!private! !
-!RBConjunctiveCondition categoriesFor: #unknownFailed!*-unclassified!private! !
+!RBConjunctiveCondition categoriesFor: #rightFailed!private! !
+!RBConjunctiveCondition categoriesFor: #unknownFailed!private! !
 

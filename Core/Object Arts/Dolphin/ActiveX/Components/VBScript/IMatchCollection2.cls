@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 IMatchCollection subclass: #IMatchCollection2
 	instanceVariableNames: ''

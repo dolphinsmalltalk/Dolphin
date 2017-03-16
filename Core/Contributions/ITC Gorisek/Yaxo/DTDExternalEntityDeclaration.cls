@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 DTDEntityDeclaration subclass: #DTDExternalEntityDeclaration
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-DTDExternalEntityDeclaration guid: (GUID fromString: '{5207DAA7-4613-4061-AF6C-804B4D153C68}')!
+DTDExternalEntityDeclaration guid: (GUID fromString: '{5207daa7-4613-4061-af6c-804b4d153c68}')!
 DTDExternalEntityDeclaration comment: ''!
 !DTDExternalEntityDeclaration categoriesForClass!XML-Parser! !
 !DTDExternalEntityDeclaration class methodsFor!

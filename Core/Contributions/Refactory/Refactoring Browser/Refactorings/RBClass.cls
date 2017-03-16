@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 RBAbstractClass subclass: #RBClass
 	instanceVariableNames: 'classVariableNames poolDictionaryNames category'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-RBClass guid: (GUID fromString: '{E6A15C71-6C8C-437D-856C-42CD447DF930}')!
+RBClass guid: (GUID fromString: '{e6a15c71-6c8c-437d-856c-42cd447df930}')!
 RBClass comment: 'RBClass represents a Class.
 
 Instance Variables:

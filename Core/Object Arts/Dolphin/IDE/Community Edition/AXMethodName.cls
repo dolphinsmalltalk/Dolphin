@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #AXMethodName
 	instanceVariableNames: 'keywords argumentNames indices'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-AXMethodName guid: (GUID fromString: '{FDFDEB82-6021-4E02-9882-CC75D3A22B22}')!
+AXMethodName guid: (GUID fromString: '{fdfdeb82-6021-4e02-9882-cc75d3a22b22}')!
 AXMethodName comment: ''!
 !AXMethodName categoriesForClass!Kernel-Objects! !
 !AXMethodName methodsFor!

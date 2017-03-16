@@ -5,7 +5,7 @@ SocketAbstract subclass: #Socket
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-Socket guid: (GUID fromString: '{87B4C6E1-026E-11D3-9FD7-00A0CC3E4A32}')!
+Socket guid: (GUID fromString: '{87b4c6e1-026e-11d3-9fd7-00a0cc3e4a32}')!
 Socket comment: '** This class is part of the old asynchronous Sockets Connection package which has been superseded by the Dolphin Sockets package **
 
 This class represents a socket for one end of a TCP/IP network communication link. Sockets can be instantiated to be associated with a specified port on a host computer at a given internet address. Once a connection is made using #connect the underlying communication mechanism uses a stream-based protocol rather than the alternative unreliable datagram-based protocol.

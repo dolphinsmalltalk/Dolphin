@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #ChunkBrowserChunk
 	instanceVariableNames: 'rawText index identity1 identity2 picked'
 	classVariableNames: 'ChunkClasses IconIndices'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ChunkBrowserChunk guid: (GUID fromString: '{81A73B99-1EF4-4578-B810-1FDB663E27F2}')!
+ChunkBrowserChunk guid: (GUID fromString: '{81a73b99-1ef4-4578-b810-1fdb663e27f2}')!
 ChunkBrowserChunk comment: 'See [DolphinImageFolder]/Idb/Documentation for details
 
 (C) 2006 Ian Bartholomew

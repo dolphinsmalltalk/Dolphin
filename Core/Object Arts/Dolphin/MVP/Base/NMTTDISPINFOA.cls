@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 NMTTDISPINFO subclass: #NMTTDISPINFOA
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-NMTTDISPINFOA guid: (GUID fromString: '{87B4C62D-026E-11D3-9FD7-00A0CC3E4A32}')!
+NMTTDISPINFOA guid: (GUID fromString: '{87b4c62d-026e-11d3-9fd7-00a0cc3e4a32}')!
 NMTTDISPINFOA comment: 'NMTTDISPINFOA is the class of <ExternalStructure> which represent the Windows Common Control structure of the same name.
 
 NMTTDISPINFOA accompanies TTN_NEEDTEXTA notifications that are sent by a Toolbar control to its parent when it wishes to determine the ANSI (single-byte character) tool-tip text to be displayed for a toolbar button which the user is hovering over. See the Win32 documentation for further details.'!

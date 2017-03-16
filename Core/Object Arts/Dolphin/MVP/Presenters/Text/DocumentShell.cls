@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Shell subclass: #DocumentShell
 	instanceVariableNames: 'filename'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-DocumentShell guid: (GUID fromString: '{87B4C69B-026E-11D3-9FD7-00A0CC3E4A32}')!
+DocumentShell guid: (GUID fromString: '{87b4c69b-026e-11d3-9fd7-00a0cc3e4a32}')!
 DocumentShell comment: 'DocumentShell is an abstract class describing <documentPresenter>s that wish to be able to load and save their model data from/to a file. 
 
 The <documentPresenter> protocol defines a number of methods which may be overriden by the concrete subclasses of DocumentShell. In particular, #isText and #isRichText are available to indicate whether the document data can be saved to one of these two common file formats (ASCII and RTF). If both these methods answer false then the default implementation will choose to save the model data to an STB file stream.

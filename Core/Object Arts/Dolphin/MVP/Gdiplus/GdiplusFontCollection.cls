@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 GdiplusBase subclass: #GdiplusFontCollection
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-GdiplusFontCollection guid: (GUID fromString: '{C09D8C02-5F28-11D7-B609-00E0987E8081}')!
+GdiplusFontCollection guid: (GUID fromString: '{c09d8c02-5f28-11d7-b609-00e0987e8081}')!
 GdiplusFontCollection comment: 'GdiplusFontCollection is an abstract class that contains methods for enumerating the font families in a collection of fonts.
 
 '!

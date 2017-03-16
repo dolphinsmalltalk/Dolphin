@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 SelectionChangeEvent subclass: #SelectionChangingEvent
 	instanceVariableNames: 'permit'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-SelectionChangingEvent guid: (GUID fromString: '{CF88CA57-DC8C-46E6-BEAB-59FE115EB945}')!
+SelectionChangingEvent guid: (GUID fromString: '{cf88ca57-dc8c-46e6-beab-59fe115eb945}')!
 SelectionChangingEvent comment: ''!
 !SelectionChangingEvent categoriesForClass!MVP-Views-Events! !
 !SelectionChangingEvent methodsFor!

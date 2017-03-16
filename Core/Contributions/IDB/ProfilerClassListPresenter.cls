@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ProfilerListsPresenter subclass: #ProfilerClassListPresenter
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ProfilerClassListPresenter guid: (GUID fromString: '{425D0EB7-542E-11D3-998B-D5CA2C3C1D61}')!
+ProfilerClassListPresenter guid: (GUID fromString: '{425d0eb7-542e-11d3-998b-d5ca2c3c1d61}')!
 ProfilerClassListPresenter comment: 'See [DolphinImageFolder]/Idb/Documentation for details
 
 (C) 2005 Ian Bartholomew

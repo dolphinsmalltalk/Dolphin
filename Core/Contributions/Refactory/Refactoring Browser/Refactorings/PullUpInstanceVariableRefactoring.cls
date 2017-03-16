@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk XP 2002 release 5.05"!
+"Filed out from Dolphin Smalltalk 7"!
 
 VariableRefactoring subclass: #PullUpInstanceVariableRefactoring
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-PullUpInstanceVariableRefactoring guid: (GUID fromString: '{7845EE3C-DFB0-412E-8FA3-318FDFDD63C2}')!
+PullUpInstanceVariableRefactoring guid: (GUID fromString: '{7845ee3c-dfb0-412e-8fa3-318fdfdd63c2}')!
 PullUpInstanceVariableRefactoring comment: ''!
 !PullUpInstanceVariableRefactoring categoriesForClass!Refactory-Refactorings! !
 !PullUpInstanceVariableRefactoring methodsFor!

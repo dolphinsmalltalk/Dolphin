@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk XP"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Warning subclass: #RefactoringWarning
 	instanceVariableNames: 'refactoring'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-RefactoringWarning guid: (GUID fromString: '{80575EC0-F0F1-47C6-A7D6-2CB4A3440AAA}')!
+RefactoringWarning guid: (GUID fromString: '{80575ec0-f0f1-47c6-a7d6-2cb4a3440aaa}')!
 RefactoringWarning comment: ''!
 !RefactoringWarning categoriesForClass!Refactory-Support! !
 !RefactoringWarning methodsFor!

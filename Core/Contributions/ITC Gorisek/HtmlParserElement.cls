@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #HtmlParserElement
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-HtmlParserElement guid: (GUID fromString: '{84C93B39-A827-44F6-B613-1A309A77FDCE}')!
+HtmlParserElement guid: (GUID fromString: '{84c93b39-a827-44f6-b613-1a309a77fdce}')!
 HtmlParserElement comment: ''!
 !HtmlParserElement categoriesForClass!Unclassified! !
 !HtmlParserElement methodsFor!

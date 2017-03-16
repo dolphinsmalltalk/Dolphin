@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 DBStatement subclass: #DBParameterizedStatement
 	instanceVariableNames: 'values parameters paramCols isPrepared'
 	classVariableNames: ''
 	poolDictionaries: 'ODBCCTypes'
 	classInstanceVariableNames: ''!
-DBParameterizedStatement guid: (GUID fromString: '{87B4C549-026E-11D3-9FD7-00A0CC3E4A32}')!
+DBParameterizedStatement guid: (GUID fromString: '{87b4c549-026e-11d3-9fd7-00a0cc3e4a32}')!
 DBParameterizedStatement comment: 'A DBParameterizedStatement is used to represent a parameterized (prepared) SQL statement to be executed by a <DBConnection>.
 
 In general one does not create DBParameterizedStatements directly but rather by the use of DBConnection>>prepare:. The statement can later be parameterized with the appropriate column attributes using #paramCols: and the parameter values using #values:. The statement must then executed using #exec to perform the actual database query. If any results are expected then a <DBResultSet> can be retrieved by sending it a #results message.

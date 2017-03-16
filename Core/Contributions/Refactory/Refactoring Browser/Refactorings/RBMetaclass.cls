@@ -1,15 +1,13 @@
-"Filed out from Dolphin Smalltalk 2000 release 4.01"!
+"Filed out from Dolphin Smalltalk 7"!
 
 RBAbstractClass subclass: #RBMetaclass
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+RBMetaclass guid: (GUID fromString: '{cf1618c4-6ee9-418d-9fd0-21e81860e79b}')!
 RBMetaclass comment: 'RBMetaclass represents a Metaclass.
 '!
-
-RBMetaclass guid: (GUID fromString: '{CF1618C4-6EE9-418D-9FD0-21E81860E79B}')!
-
 !RBMetaclass categoriesForClass!Refactory-Model! !
 !RBMetaclass methodsFor!
 

@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ILExtentDialog subclass: #ILBitmapExtentDialog
 	instanceVariableNames: 'bitmapExtent'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ILBitmapExtentDialog guid: (GUID fromString: '{563212BC-54F9-430C-ADDD-0101F3B64EC0}')!
+ILBitmapExtentDialog guid: (GUID fromString: '{563212bc-54f9-430c-addd-0101f3b64ec0}')!
 ILBitmapExtentDialog comment: 'See [DolphinImageFolder]/Idb/Documentation for details
 
 (C) 2005 Ian Bartholomew

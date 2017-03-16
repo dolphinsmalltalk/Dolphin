@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 SmalltalkToolShell subclass: #StsVersionTreeDiagram
 	instanceVariableNames: 'treePresenter treeModel status'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-StsVersionTreeDiagram guid: (GUID fromString: '{7105C5B0-BA53-11D4-B24E-000000000000}')!
+StsVersionTreeDiagram guid: (GUID fromString: '{7105c5b0-ba53-11d4-b24e-000000000000}')!
 StsVersionTreeDiagram comment: ''!
 !StsVersionTreeDiagram categoriesForClass!Unclassified! !
 !StsVersionTreeDiagram methodsFor!

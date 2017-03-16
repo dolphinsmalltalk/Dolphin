@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #ItcSemaphoreWithTimeout
 	instanceVariableNames: 'realSemaphore maxWaitTimeout lastCriticalSectionEntryTS lastCriticalSectionWaitTS onMutexResetBlock semaphoreName'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ItcSemaphoreWithTimeout guid: (GUID fromString: '{6770FFD6-2540-4021-8C2A-CFE4A6505500}')!
+ItcSemaphoreWithTimeout guid: (GUID fromString: '{6770ffd6-2540-4021-8c2a-cfe4a6505500}')!
 ItcSemaphoreWithTimeout comment: ''!
 !ItcSemaphoreWithTimeout categoriesForClass!Unclassified! !
 !ItcSemaphoreWithTimeout methodsFor!

@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 GdiplusBrush subclass: #GdiplusTextureBrush
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-GdiplusTextureBrush guid: (GUID fromString: '{1A1A5EA2-6151-11D7-B609-00E0987E8081}')!
+GdiplusTextureBrush guid: (GUID fromString: '{1a1a5ea2-6151-11d7-b609-00e0987e8081}')!
 GdiplusTextureBrush comment: 'A texture brush paints an image. The image or texture is either a portion of a specified image or a scaled version of a specified image. The type of image (metafile or nonmetafile) determines whether the texture is a portion of the image or a scaled version of the image. '!
 !GdiplusTextureBrush categoriesForClass!Unclassified! !
 !GdiplusTextureBrush methodsFor!

@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 COMFunction subclass: #DispFunction
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'Win32Errors'
 	classInstanceVariableNames: ''!
-DispFunction guid: (GUID fromString: '{4596042F-9E7A-4481-8F6C-D71E47FC990C}')!
+DispFunction guid: (GUID fromString: '{4596042f-9e7a-4481-8f6c-d71e47fc990c}')!
 DispFunction comment: ''!
 !DispFunction categoriesForClass!Unclassified! !
 !DispFunction methodsFor!

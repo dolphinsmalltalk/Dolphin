@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ResourceAccessor subclass: #ResourceSTBAccessor
 	instanceVariableNames: 'classLocator'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ResourceSTBAccessor guid: (GUID fromString: '{0CC7574B-24F8-4714-9068-6C282E7BF1F1}')!
+ResourceSTBAccessor guid: (GUID fromString: '{0cc7574b-24f8-4714-9068-6c282e7bf1f1}')!
 ResourceSTBAccessor comment: ''!
 !ResourceSTBAccessor categoriesForClass!MVP-Resources! !
 !ResourceSTBAccessor methodsFor!

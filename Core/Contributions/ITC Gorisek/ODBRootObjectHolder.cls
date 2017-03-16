@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ODBTransactionObject subclass: #ODBRootObjectHolder
 	instanceVariableNames: 'changed'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ODBRootObjectHolder guid: (GUID fromString: '{8162EE2F-0FB8-11D4-B091-000000000000}')!
+ODBRootObjectHolder guid: (GUID fromString: '{8162ee2f-0fb8-11d4-b091-000000000000}')!
 ODBRootObjectHolder comment: ''!
 !ODBRootObjectHolder categoriesForClass!No category! !
 !ODBRootObjectHolder methodsFor!

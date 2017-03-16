@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 OLEStructure subclass: #PICTDESC
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-PICTDESC guid: (GUID fromString: '{A1A65A80-AEF9-11D3-B376-080046056106}')!
+PICTDESC guid: (GUID fromString: '{a1a65a80-aef9-11d3-b376-080046056106}')!
 PICTDESC comment: ''!
 !PICTDESC categoriesForClass!Unclassified! !
 !PICTDESC methodsFor!

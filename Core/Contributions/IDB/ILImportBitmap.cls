@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ILImport subclass: #ILImportBitmap
 	instanceVariableNames: 'bitmapFileHeader bitmap'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ILImportBitmap guid: (GUID fromString: '{A969D8DB-1959-4401-B80D-65349A755BC2}')!
+ILImportBitmap guid: (GUID fromString: '{a969d8db-1959-4401-b80d-65349a755bc2}')!
 ILImportBitmap comment: 'See [DolphinImageFolder]/Idb/Documentation for details
 
 (C) 2005 Ian Bartholomew

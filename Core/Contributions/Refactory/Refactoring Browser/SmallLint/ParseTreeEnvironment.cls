@@ -1,14 +1,12 @@
-"Filed out from Dolphin Smalltalk 2000 release 4.01"!
+"Filed out from Dolphin Smalltalk 7"!
 
 SelectorEnvironment subclass: #ParseTreeEnvironment
 	instanceVariableNames: 'matcher'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+ParseTreeEnvironment guid: (GUID fromString: '{11ad1e72-3575-4044-93b9-434fe1185a07}')!
 ParseTreeEnvironment comment: ''!
-
-ParseTreeEnvironment guid: (GUID fromString: '{11AD1E72-3575-4044-93B9-434FE1185A07}')!
-
 !ParseTreeEnvironment categoriesForClass!Refactory-Lint! !
 !ParseTreeEnvironment methodsFor!
 

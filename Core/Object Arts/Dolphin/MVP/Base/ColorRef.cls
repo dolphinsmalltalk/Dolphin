@@ -5,7 +5,7 @@ Color subclass: #ColorRef
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ColorRef guid: (GUID fromString: '{ED5FCDEB-52E8-4A5C-9EB7-38BF3A3AA575}')!
+ColorRef guid: (GUID fromString: '{ed5fcdeb-52e8-4a5c-9eb7-38bf3a3aa575}')!
 ColorRef comment: 'ColorRef is the abstract class of palette independent (absolute) color values used with most Win32 APIs.
 
 Instance Variables:

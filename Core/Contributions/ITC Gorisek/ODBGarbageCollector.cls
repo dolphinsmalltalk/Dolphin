@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #ODBGarbageCollector
 	instanceVariableNames: 'gcFile containers objectManager reorganizeDictionaries reorganizeIndexSets progressDialog progressValue'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ODBGarbageCollector guid: (GUID fromString: '{8162EDDB-0FB8-11D4-B091-000000000000}')!
+ODBGarbageCollector guid: (GUID fromString: '{8162eddb-0fb8-11d4-b091-000000000000}')!
 ODBGarbageCollector comment: ''!
 !ODBGarbageCollector categoriesForClass!No category! !
 !ODBGarbageCollector methodsFor!

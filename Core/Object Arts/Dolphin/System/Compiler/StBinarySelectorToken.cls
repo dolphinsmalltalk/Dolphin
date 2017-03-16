@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 StValueToken subclass: #StBinarySelectorToken
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-StBinarySelectorToken guid: (GUID fromString: '{D3AA3980-63D1-4EA8-9654-F8FB9CBA525D}')!
+StBinarySelectorToken guid: (GUID fromString: '{d3aa3980-63d1-4ea8-9654-f8fb9cba525d}')!
 StBinarySelectorToken comment: ''!
 !StBinarySelectorToken categoriesForClass!System-Compiler! !
 !StBinarySelectorToken methodsFor!

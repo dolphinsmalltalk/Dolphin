@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Event subclass: #SelectionChangeEvent
 	instanceVariableNames: 'newSelections oldSelections cause'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-SelectionChangeEvent guid: (GUID fromString: '{D0986742-3873-4DCE-8E8F-6693994A4F26}')!
+SelectionChangeEvent guid: (GUID fromString: '{d0986742-3873-4dce-8e8f-6693994a4f26}')!
 SelectionChangeEvent comment: ''!
 !SelectionChangeEvent categoriesForClass!Kernel-Objects! !
 !SelectionChangeEvent methodsFor!

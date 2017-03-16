@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 COMClassFactory subclass: #COMSingletonClassFactory
 	instanceVariableNames: 'current'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-COMSingletonClassFactory guid: (GUID fromString: '{87B4C542-026E-11D3-9FD7-00A0CC3E4A32}')!
+COMSingletonClassFactory guid: (GUID fromString: '{87b4c542-026e-11d3-9fd7-00a0cc3e4a32}')!
 COMSingletonClassFactory comment: 'COMSingletonClassFactory is simple specialization of COMClassFactory which always serves up the same instance of its registered coclass.
 
 Note that although this is a useful concept (it is supported by the ATL for example), it is not strictly supported by COM which expects every call to CoCreateInstance() to answer a brand new instance of the coclass. This can break the apartment threading model when sharing an object since COM assumes that the object is created in the apartment of the caller, and where multiple apartments exist this can result in one apartment erroneously holding an unmarshalled interface pointer to an object in another apartment.

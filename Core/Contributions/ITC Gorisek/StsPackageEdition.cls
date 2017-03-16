@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 StsEdition subclass: #StsPackageEdition
 	instanceVariableNames: 'name versionDescriptor comment methods classes resources globals prerequisiteNames scripts aboutBlock previousEdition imageStripperBytes versionComment pathName manualPrerequisites blessing'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-StsPackageEdition guid: (GUID fromString: '{914F381E-11D6-11D4-B091-000000000000}')!
+StsPackageEdition guid: (GUID fromString: '{914f381e-11d6-11d4-b091-000000000000}')!
 StsPackageEdition comment: ''!
 !StsPackageEdition categoriesForClass!Unclassified! !
 !StsPackageEdition methodsFor!

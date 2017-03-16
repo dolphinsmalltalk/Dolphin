@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Notification subclass: #DBWarning
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-DBWarning guid: (GUID fromString: '{87B4C574-026E-11D3-9FD7-00A0CC3E4A32}')!
+DBWarning guid: (GUID fromString: '{87b4c574-026e-11d3-9fd7-00a0cc3e4a32}')!
 DBWarning comment: 'Instances of DBWarning hold exception information for Database Connection non-fatal warnings (essentially those resulting from SQLSuccessWithInfo return codes).
 
 '!

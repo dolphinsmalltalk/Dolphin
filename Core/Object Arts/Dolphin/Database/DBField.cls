@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #DBField
 	instanceVariableNames: 'column buffer lengthBuf'
 	classVariableNames: 'GetSelectors SetSelectors'
 	poolDictionaries: 'ODBCConstants ODBCCTypes ODBCRetCodes ODBCTypes'
 	classInstanceVariableNames: ''!
-DBField guid: (GUID fromString: '{87B4C475-026E-11D3-9FD7-00A0CC3E4A32}')!
+DBField guid: (GUID fromString: '{87b4c475-026e-11d3-9fd7-00a0cc3e4a32}')!
 DBField comment: 'A DBField instance represents a column buffer for holding data as part of a DBRow.
 
 A field''s value may be converted to a Smalltalk object by sending #value, and conversely may be assigned with #value:.

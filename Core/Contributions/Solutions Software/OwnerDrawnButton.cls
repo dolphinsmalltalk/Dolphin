@@ -5,7 +5,7 @@ PushButton subclass: #OwnerDrawnButton
 	classVariableNames: ''
 	poolDictionaries: 'ThemeConstants'
 	classInstanceVariableNames: ''!
-OwnerDrawnButton guid: (GUID fromString: '{B1B80A82-7D68-47AA-B70A-D079B92FCA12}')!
+OwnerDrawnButton guid: (GUID fromString: '{b1b80a82-7d68-47aa-b70a-d079b92fca12}')!
 OwnerDrawnButton comment: 'Abstract superclass for implementing custom-look buttons with standard Windows behavior, including support for animated transitions.
 As a minimum, subclasses need to implement drawOn:'!
 !OwnerDrawnButton categoriesForClass!Unclassified! !

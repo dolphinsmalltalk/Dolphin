@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ODBTransactionObject subclass: #ODBSerializedObject
 	instanceVariableNames: 'changed'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ODBSerializedObject guid: (GUID fromString: '{8162EE30-0FB8-11D4-B091-000000000000}')!
+ODBSerializedObject guid: (GUID fromString: '{8162ee30-0fb8-11d4-b091-000000000000}')!
 ODBSerializedObject comment: ''!
 !ODBSerializedObject categoriesForClass!No category! !
 !ODBSerializedObject methodsFor!

@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk XP"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #TestSuite
 	instanceVariableNames: 'tests resources name'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-TestSuite guid: (GUID fromString: '{5E96793C-0810-11D4-A876-0050DA643BF9}')!
+TestSuite guid: (GUID fromString: '{5e96793c-0810-11d4-a876-0050da643bf9}')!
 TestSuite comment: ''!
 !TestSuite categoriesForClass!SUnit! !
 !TestSuite methodsFor!

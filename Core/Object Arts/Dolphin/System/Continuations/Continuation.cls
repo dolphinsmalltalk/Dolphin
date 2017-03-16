@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #Continuation
 	instanceVariableNames: 'stack'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-Continuation guid: (GUID fromString: '{04FB1134-B5E1-4651-B95B-AEE8814A0EC6}')!
+Continuation guid: (GUID fromString: '{04fb1134-b5e1-4651-b95b-aee8814a0ec6}')!
 Continuation comment: 'Dolphin implementation of the Call Continuation class inspired by that implemented for Seaside in Squeak by Avi Bryant.
 
 A Continuation represents the pending execution stack of a partially completed computation (or process), captured at some particular point. The Contination can be resumed by restarting it with a particular value (Continuation supports the <monadicValuable> protocol), at which point the computation takes off again from the point at which it was captured. A Continuation may be continued in this way as many times as desired, and because it can be continued with different values the end result of each computation can be different.

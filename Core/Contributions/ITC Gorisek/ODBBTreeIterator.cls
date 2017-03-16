@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ODBFile subclass: #ODBBTreeIterator
 	instanceVariableNames: 'keyLength valueLength rootPagePosition searchPath currentKey currentKeyExists nextKey searchPathHeight version mutex'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ODBBTreeIterator guid: (GUID fromString: '{8162EE16-0FB8-11D4-B091-000000000000}')!
+ODBBTreeIterator guid: (GUID fromString: '{8162ee16-0fb8-11d4-b091-000000000000}')!
 ODBBTreeIterator comment: ''!
 !ODBBTreeIterator categoriesForClass!No category! !
 !ODBBTreeIterator methodsFor!

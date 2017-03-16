@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 LayoutManager subclass: #LinearLayout
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-LinearLayout guid: (GUID fromString: '{F3556FDA-7D0C-4E04-9193-43ADD8DF9FFA}')!
+LinearLayout guid: (GUID fromString: '{f3556fda-7d0c-4e04-9193-43add8df9ffa}')!
 LinearLayout comment: ''!
 !LinearLayout categoriesForClass!MVP-Layout Managers-Abstract! !
 !LinearLayout methodsFor!

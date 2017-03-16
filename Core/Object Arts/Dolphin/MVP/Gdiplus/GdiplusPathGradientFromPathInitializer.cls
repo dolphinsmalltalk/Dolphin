@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 GdiplusInitializer subclass: #GdiplusPathGradientFromPathInitializer
 	instanceVariableNames: 'path'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-GdiplusPathGradientFromPathInitializer guid: (GUID fromString: '{8F2007E2-7D6C-11D7-B609-00E0987E8081}')!
+GdiplusPathGradientFromPathInitializer guid: (GUID fromString: '{8f2007e2-7d6c-11d7-b609-00e0987e8081}')!
 GdiplusPathGradientFromPathInitializer comment: ''!
 !GdiplusPathGradientFromPathInitializer categoriesForClass!Unclassified! !
 !GdiplusPathGradientFromPathInitializer methodsFor!

@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk XP 2002 release 6.00"!
+"Filed out from Dolphin Smalltalk 7"!
 
 SUnitAbsWrapper subclass: #SUnitTestResourceWrapper
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-SUnitTestResourceWrapper guid: (GUID fromString: '{E435E984-8D6C-44E8-8A7F-7341AFBE2EDD}')!
+SUnitTestResourceWrapper guid: (GUID fromString: '{e435e984-8d6c-44e8-8a7f-7341afbe2edd}')!
 SUnitTestResourceWrapper comment: ''!
 !SUnitTestResourceWrapper categoriesForClass!Unclassified! !
 !SUnitTestResourceWrapper methodsFor!

@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 SmalltalkScanner subclass: #RBPatternScanner
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-RBPatternScanner guid: (GUID fromString: '{4164FA94-B687-42C0-9C94-C9E46FC319E5}')!
+RBPatternScanner guid: (GUID fromString: '{4164fa94-b687-42c0-9c94-c9e46fc319e5}')!
 RBPatternScanner comment: 'RBPatternScanner is an extended <SmalltalkScanner> that supports the RB''s extended lexicon for pattern matching.'!
 !RBPatternScanner categoriesForClass!Refactory-Parser! !
 !RBPatternScanner methodsFor!

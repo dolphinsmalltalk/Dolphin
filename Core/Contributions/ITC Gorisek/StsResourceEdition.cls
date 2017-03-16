@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 StsEdition subclass: #StsResourceEdition
 	instanceVariableNames: 'className name resource'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-StsResourceEdition guid: (GUID fromString: '{32425707-1C73-11D4-B0B1-000000000000}')!
+StsResourceEdition guid: (GUID fromString: '{32425707-1c73-11d4-b0b1-000000000000}')!
 StsResourceEdition comment: ''!
 !StsResourceEdition categoriesForClass!Unclassified! !
 !StsResourceEdition methodsFor!

@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 RuntimeSessionManager subclass: #XmlPadSessionManager
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-XmlPadSessionManager guid: (GUID fromString: '{77F1F2C7-314A-4967-B1EA-0367F0546923}')!
+XmlPadSessionManager guid: (GUID fromString: '{77f1f2c7-314a-4967-b1ea-0367f0546923}')!
 XmlPadSessionManager comment: ''!
 !XmlPadSessionManager categoriesForClass!Samples! !
 !XmlPadSessionManager methodsFor!

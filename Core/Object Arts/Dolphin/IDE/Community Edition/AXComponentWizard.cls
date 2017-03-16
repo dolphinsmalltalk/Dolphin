@@ -5,7 +5,7 @@ SmalltalkToolShell subclass: #AXComponentWizard
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-AXComponentWizard guid: (GUID fromString: '{164B0031-3910-11D3-9FE6-00A0CC3E4A32}')!
+AXComponentWizard guid: (GUID fromString: '{164b0031-3910-11d3-9fe6-00a0cc3e4a32}')!
 AXComponentWizard comment: 'AXComponentWizard is a <SmalltalkToolShell> that manages the creation of interface classes for ActiveX components. To bring up an AXComponentWizard, open the appropriate icon in System Folder/Additional Tools/ActiveX Wizards or evaluate:
 
 	AXComponentWizard show

@@ -5,7 +5,7 @@ SmalltalkToolShell subclass: #StsAdminShell
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-StsAdminShell guid: (GUID fromString: '{A45D9132-CDD3-4F44-95E7-BFE294AD1ED9}')!
+StsAdminShell guid: (GUID fromString: '{a45d9132-cdd3-4f44-95e7-bfe294ad1ed9}')!
 StsAdminShell comment: ''!
 !StsAdminShell categoriesForClass!Development! !
 !StsAdminShell methodsFor!

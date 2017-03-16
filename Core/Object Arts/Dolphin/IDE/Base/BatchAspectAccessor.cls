@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 AspectAccessor subclass: #BatchAspectAccessor
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-BatchAspectAccessor guid: (GUID fromString: '{3A00A038-5F65-4669-9966-CBDF3D444A7E}')!
+BatchAspectAccessor guid: (GUID fromString: '{3a00a038-5f65-4669-9966-cbdf3d444a7e}')!
 BatchAspectAccessor comment: ''!
 !BatchAspectAccessor categoriesForClass!Development! !
 !BatchAspectAccessor methodsFor!

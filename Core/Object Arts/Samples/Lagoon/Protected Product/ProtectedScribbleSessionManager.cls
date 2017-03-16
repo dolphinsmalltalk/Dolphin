@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ProtectedProductSessionManager subclass: #ProtectedScribbleSessionManager
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ProtectedScribbleSessionManager guid: (GUID fromString: '{E5617C49-6F9A-4691-9D14-9D880BD4779C}')!
+ProtectedScribbleSessionManager guid: (GUID fromString: '{e5617c49-6f9a-4691-9d14-9d880bd4779c}')!
 ProtectedScribbleSessionManager comment: 'This is a version of the standard Scribble application that is protect by serial number. Try deploying this application and then entering the following serial number on startup:
 
 	CWDH-UA9B-VS9Q-TAVQ-FP0C-YBSY-NZ5G-DB'!

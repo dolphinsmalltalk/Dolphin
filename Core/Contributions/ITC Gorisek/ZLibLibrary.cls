@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ExternalLibrary subclass: #ZLibLibrary
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ZLibLibrary guid: (GUID fromString: '{A7DE047E-8AA5-4394-8359-A45FB6A5CC84}')!
+ZLibLibrary guid: (GUID fromString: '{a7de047e-8aa5-4394-8359-a45fb6a5cc84}')!
 ZLibLibrary comment: ''!
 !ZLibLibrary categoriesForClass!Unclassified! !
 !ZLibLibrary methodsFor!

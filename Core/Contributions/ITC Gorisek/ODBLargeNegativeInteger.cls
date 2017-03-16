@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ODBDeserializers subclass: #ODBLargeNegativeInteger
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ODBLargeNegativeInteger guid: (GUID fromString: '{8162EE11-0FB8-11D4-B091-000000000000}')!
+ODBLargeNegativeInteger guid: (GUID fromString: '{8162ee11-0fb8-11d4-b091-000000000000}')!
 ODBLargeNegativeInteger comment: ''!
 !ODBLargeNegativeInteger categoriesForClass!No category! !
 !ODBLargeNegativeInteger class methodsFor!

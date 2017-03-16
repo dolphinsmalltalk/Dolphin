@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Model subclass: #ChunkBrowserFilter
 	instanceVariableNames: 'selectedChunkTypes selectedComparisonTypes restrictionRange restrictionClass restrictingMostRecent restrictingPicked'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ChunkBrowserFilter guid: (GUID fromString: '{CCA89E53-EEE3-495A-915F-463F69C7009A}')!
+ChunkBrowserFilter guid: (GUID fromString: '{cca89e53-eee3-495a-915f-463f69c7009a}')!
 ChunkBrowserFilter comment: 'See [DolphinImageFolder]/Idb/Documentation for details
 
 (C) 2006 Ian Bartholomew

@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ValueModel subclass: #ValueConverter
 	instanceVariableNames: 'subject typeConverter'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ValueConverter guid: (GUID fromString: '{87B4C677-026E-11D3-9FD7-00A0CC3E4A32}')!
+ValueConverter guid: (GUID fromString: '{87b4c677-026e-11d3-9fd7-00a0cc3e4a32}')!
 ValueConverter comment: 'A ValueConverter sits between a subject <valueModel> and some <value> client of this. It supports the <valueModel> protocol such that when the client attempts to get the subject value it is converted into another type of object that is more palatable to the client. Similarly when the client tries to put a value back into the subject the type can again be converted, this time to suit the subject''s needs.
 
 An assumption is made that the subject will be a <valueModel> and will therefore trigger its own #value events when it is updated. A ValueConverter simply forwards this event to any of its own clients.

@@ -5,7 +5,7 @@ StParseNodeVisitor subclass: #RBSourceFormatter
 	classVariableNames: 'MaxLineLength PeriodsAtEndOfMethod'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-RBSourceFormatter guid: (GUID fromString: '{9FD4DE67-3C87-4496-87B9-7C3CF9655F65}')!
+RBSourceFormatter guid: (GUID fromString: '{9fd4de67-3c87-4496-87b9-7c3cf9655f65}')!
 RBSourceFormatter comment: 'RBSourceFormatter is the abstract class of <StParseNodeVisitor>s that pretty print Smalltalk source code.
 
 Instance Variables:

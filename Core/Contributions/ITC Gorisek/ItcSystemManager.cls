@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #ItcSystemManager
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: 'previousTimeReading rollOverValue isHeadless liveUpdatePatchDict'!
-ItcSystemManager guid: (GUID fromString: '{1BAE3813-906E-4AAB-B758-D8CA80E1500C}')!
+ItcSystemManager guid: (GUID fromString: '{1bae3813-906e-4aab-b758-d8ca80e1500c}')!
 ItcSystemManager comment: ''!
 !ItcSystemManager categoriesForClass!Unclassified! !
 !ItcSystemManager class methodsFor!

@@ -5,7 +5,7 @@ NMCUSTOMDRAW subclass: #NMLVCUSTOMDRAW
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-NMLVCUSTOMDRAW guid: (GUID fromString: '{7FBF7515-C756-4B0E-8D4F-01DEBAFA1178}')!
+NMLVCUSTOMDRAW guid: (GUID fromString: '{7fbf7515-c756-4b0e-8d4f-01debafa1178}')!
 NMLVCUSTOMDRAW comment: 'NMLVCUSTOMDRAW is an <ExternalStructure> class to represent the Win32 structure of the same name.
 
 NMLVCUSTOMDRAW is sent by <ListView> controls to request custom draw information for the text of individual items (and optionally sub-items). We implement the <customDrawContext> protocol against it in order that it can be passed directly to the views customDrawBlock.'!

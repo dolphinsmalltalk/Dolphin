@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #BlockingCallMonitor
 	instanceVariableNames: 'callBlock completionBlock errorBlock monitorProcess priority'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-BlockingCallMonitor guid: (GUID fromString: '{87B4C45B-026E-11D3-9FD7-00A0CC3E4A32}')!
+BlockingCallMonitor guid: (GUID fromString: '{87b4c45b-026e-11d3-9fd7-00a0cc3e4a32}')!
 BlockingCallMonitor comment: 'This class can be used to monitor the progress of blocking calls running on a separate process.
 
 A BlockingCallMonitor instance can be configured to evaluate a particular block or monadic valuable (set using #callBlock:) on it''s own process. The process can be started using either #monitorOnce or #monitor depending on whether the call should be made once or repeatedly. It is expected that the call will block this process for a period of time. When the call does eventually complete, the BlockingCallMonitor is responsible for evaluating another block or monadic valuable (set using #completionBlock:). This is passed the result of the call as its argument. Should an error occur during the evaluation of the blocking call then the monitor will choose to evaluate its error block (set using #errorBlock:).

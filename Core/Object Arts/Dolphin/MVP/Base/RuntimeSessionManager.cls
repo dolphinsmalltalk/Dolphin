@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 GUISessionManager subclass: #RuntimeSessionManager
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-RuntimeSessionManager guid: (GUID fromString: '{87B4C6DC-026E-11D3-9FD7-00A0CC3E4A32}')!
+RuntimeSessionManager guid: (GUID fromString: '{87b4c6dc-026e-11d3-9fd7-00a0cc3e4a32}')!
 RuntimeSessionManager comment: 'RuntimeSessionManager is the class of <SessionManager>s used to manage the life-cycle of a deployed graphical application.
 
 The main entry point hook is the #main method, and typically one opens one''s main application window there, processing any command line arguments held in the receiver''s ''argv'' instance variable. See one of the samples such as Notepad for an example.

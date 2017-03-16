@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Win32Structure subclass: #LOGBRUSH
 	instanceVariableNames: 'hatch'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-LOGBRUSH guid: (GUID fromString: '{87B4C5F8-026E-11D3-9FD7-00A0CC3E4A32}')!
+LOGBRUSH guid: (GUID fromString: '{87b4c5f8-026e-11d3-9fd7-00a0cc3e4a32}')!
 LOGBRUSH comment: '<LOGBRUSH> is an <ExternalStructure> class to wrap the struct ''Win.LOGBRUSH'' from type information in the ''Windows API (ANSI)'' library.
 
 From MSDN: "The LOGBRUSH structure defines the style, color, and pattern of a physical brush. It is used by the CreateBrushIndirect and ExtCreatePen functions."

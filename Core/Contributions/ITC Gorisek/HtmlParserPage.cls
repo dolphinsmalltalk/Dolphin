@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 HtmlParserElement subclass: #HtmlParserPage
 	instanceVariableNames: 'contents formFields links forms inlineFrames selectFields'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-HtmlParserPage guid: (GUID fromString: '{74F8588E-428B-4D67-9F91-BD3AB6409CC7}')!
+HtmlParserPage guid: (GUID fromString: '{74f8588e-428b-4d67-9f91-bd3ab6409cc7}')!
 HtmlParserPage comment: ''!
 !HtmlParserPage categoriesForClass!Unclassified! !
 !HtmlParserPage methodsFor!

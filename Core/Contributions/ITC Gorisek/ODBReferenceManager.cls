@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #ODBReferenceManager
 	instanceVariableNames: 'references'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ODBReferenceManager guid: (GUID fromString: '{8162EDE1-0FB8-11D4-B091-000000000000}')!
+ODBReferenceManager guid: (GUID fromString: '{8162ede1-0fb8-11d4-b091-000000000000}')!
 ODBReferenceManager comment: ''!
 !ODBReferenceManager categoriesForClass!No category! !
 !ODBReferenceManager methodsFor!

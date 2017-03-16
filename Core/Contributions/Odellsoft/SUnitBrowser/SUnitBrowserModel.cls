@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk XP"!
+"Filed out from Dolphin Smalltalk 7"!
 
 SUnitAbsModel subclass: #SUnitBrowserModel
 	instanceVariableNames: 'suiteBuilder suite testResult numberOfTests'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-SUnitBrowserModel guid: (GUID fromString: '{1069426E-B3A6-4841-BC3E-0468720BF1D1}')!
+SUnitBrowserModel guid: (GUID fromString: '{1069426e-b3a6-4841-bc3e-0468720bf1d1}')!
 SUnitBrowserModel comment: ''!
 !SUnitBrowserModel categoriesForClass!Unclassified! !
 !SUnitBrowserModel methodsFor!

@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 EmailMIMEDecoder subclass: #EmailBase64Decoder
 	instanceVariableNames: 'codes'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: 'singelton'!
-EmailBase64Decoder guid: (GUID fromString: '{DFED11EA-3D6F-4F50-B050-9D34A2A63EE9}')!
+EmailBase64Decoder guid: (GUID fromString: '{dfed11ea-3d6f-4f50-b050-9d34a2a63ee9}')!
 EmailBase64Decoder comment: ''!
 !EmailBase64Decoder categoriesForClass!Unclassified! !
 !EmailBase64Decoder methodsFor!

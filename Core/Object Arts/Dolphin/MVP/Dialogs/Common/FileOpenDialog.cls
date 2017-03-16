@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 FileDialog subclass: #FileOpenDialog
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-FileOpenDialog guid: (GUID fromString: '{87B4C6B5-026E-11D3-9FD7-00A0CC3E4A32}')!
+FileOpenDialog guid: (GUID fromString: '{87b4c6b5-026e-11d3-9fd7-00a0cc3e4a32}')!
 FileOpenDialog comment: 'FileOpenDialog is a <valueDialogPresenter> implementing the Windows GetOpenFileName common dialog. The associated <valueModel> contains a <readableString> indicating the path of the chosen file.
 
 The following example illustrates the use of a validation block to limit the choice of file that the user can make:

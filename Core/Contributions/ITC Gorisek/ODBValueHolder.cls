@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ODBExternalBuffer subclass: #ODBValueHolder
 	instanceVariableNames: 'object removed objectSet'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ODBValueHolder guid: (GUID fromString: '{8162EDF9-0FB8-11D4-B091-000000000000}')!
+ODBValueHolder guid: (GUID fromString: '{8162edf9-0fb8-11d4-b091-000000000000}')!
 ODBValueHolder comment: ''!
 !ODBValueHolder categoriesForClass!No category! !
 !ODBValueHolder methodsFor!

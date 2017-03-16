@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 DBSchemaStatement subclass: #DBStatisticsStatement
 	instanceVariableNames: 'type accurate'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-DBStatisticsStatement guid: (GUID fromString: '{F9A75139-7D9A-4FBA-8C1A-249CC03FF080}')!
+DBStatisticsStatement guid: (GUID fromString: '{f9a75139-7d9a-4fba-8c1a-249cc03ff080}')!
 DBStatisticsStatement comment: 'DBTablesStatement is a specialized <DBSchemaStatement> for querying about the indices of tables in a database.'!
 !DBStatisticsStatement categoriesForClass!ODBC Interface! !
 !DBStatisticsStatement methodsFor!

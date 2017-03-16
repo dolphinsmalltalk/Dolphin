@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 AbstractToTextConverter subclass: #BooleanToText
 	instanceVariableNames: 'format'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-BooleanToText guid: (GUID fromString: '{87B4C707-026E-11D3-9FD7-00A0CC3E4A32}')!
+BooleanToText guid: (GUID fromString: '{87b4c707-026e-11d3-9fd7-00a0cc3e4a32}')!
 BooleanToText comment: 'BooleanToString is a <textTypeConverter> that transforms a Boolean subject value to/from a String. If the subject value is nil it is converted to an empty String and vice versa. A format array (e.g. #(''no'' ''yes''), see Boolean) can be specified to dictate the way the subject value is formatted when converted to text. If no explicit format is provided the default is used.
 
 Instance Variables:

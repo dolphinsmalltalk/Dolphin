@@ -5,7 +5,7 @@ Presenter subclass: #PackageDependencyPresenter
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-PackageDependencyPresenter guid: (GUID fromString: '{183E540C-F682-44D4-AC9C-77D4E4CA9487}')!
+PackageDependencyPresenter guid: (GUID fromString: '{183e540c-f682-44d4-ac9c-77d4e4ca9487}')!
 PackageDependencyPresenter comment: 'PackageDependencyPresenter is the abstract superclass of the development tool windows which display a tree representing the dependency relationships between packages. Subclasses show emphasise either the pre-requisite relationship (where the children of a package in the tree are the pre-requisistes for that package) or dependency relationship (where the children of a package in the tree are the packages dependent upon it, i.e. of which it is itself a pre-requisite).
 
 Instance Variables:

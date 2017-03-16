@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 TreePresenter subclass: #TreeListPresenter
 	instanceVariableNames: 'listModel updating visibleNodes'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-TreeListPresenter guid: (GUID fromString: '{2E6F856C-A8B4-4D90-8E8F-ADF2452E4BBF}')!
+TreeListPresenter guid: (GUID fromString: '{2e6f856c-a8b4-4d90-8e8f-adf2452e4bbf}')!
 TreeListPresenter comment: 'TreeListPresenter implements a <listPresenter> component that can be used to display the contents of a <listModel> within a <treeView>.  It also conforms to <selectableItems> and <indexSelectableItems> to provide methods for accessing the current selection(s) in the list. The hierarchical presentation is controlled by a tree model (set separately using #treeModel:) but the actual visible nodes are determined by the contents of the list. Only those nodes that are actually in the list or are parents of those in the list will be displayed.
 
 Note the <treeModel> must be a VirtualTreeModel, and it is assumed that the list represents a view onto the full set (i.e. a subset) of items in the tree. Furthermore it is assumed that when a new item is added to the list, it is already in the underlying tree, therefore items added to the list are not automatically added into the tree model.

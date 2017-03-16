@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #StsEdition
 	instanceVariableNames: 'timestamp developer'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-StsEdition guid: (GUID fromString: '{914F381C-11D6-11D4-B091-000000000000}')!
+StsEdition guid: (GUID fromString: '{914f381c-11d6-11d4-b091-000000000000}')!
 StsEdition comment: ''!
 !StsEdition categoriesForClass!Unclassified! !
 !StsEdition methodsFor!

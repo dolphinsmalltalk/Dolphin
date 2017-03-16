@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Presenter subclass: #EtchASketch
 	instanceVariableNames: 'upDownKnob leftRightKnob sketchPad lastLocation'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-EtchASketch guid: (GUID fromString: '{87B4C68A-026E-11D3-9FD7-00A0CC3E4A32}')!
+EtchASketch guid: (GUID fromString: '{87b4c68a-026e-11d3-9fd7-00a0cc3e4a32}')!
 EtchASketch comment: 'EtchASketch is a <compositePresenter> component that emulates the popular Etch-a-Sketch toy. It allows "ink" to be drawn onto a sketch pad by means of two "knobs"; one for horizontal movement and one for vertical movement. In the basic view the knobs are represented by scroll bars. EtchASketch makes use of the Scribble component for its sketch area.
 
 There are a couple of limitations that make this example not ideal:

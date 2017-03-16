@@ -5,7 +5,7 @@ SmalltalkToolShell subclass: #ClassBrowserAbstract
 	classVariableNames: 'FilterObjectMethodsMask GrayedMethodFadeFactor HistoryListSize LooseMethodColor ShowInheritedMethodsMask WordWrapDefinition'
 	poolDictionaries: ''
 	classInstanceVariableNames: 'defaultShowInheritedMethods defaultFilterObjectMethods plugins'!
-ClassBrowserAbstract guid: (GUID fromString: '{87B4C6BC-026E-11D3-9FD7-00A0CC3E4A32}')!
+ClassBrowserAbstract guid: (GUID fromString: '{87b4c6bc-026e-11d3-9fd7-00a0cc3e4a32}')!
 ClassBrowserAbstract comment: 'ClassBrowserAbstract is an abstract <SmalltalkToolShell> that implements most of the functionality required for a class browser development tool. Concrete subclasses implement the Class Hierarchy Browser and System Browser development tools.
 
 Instance Variables:

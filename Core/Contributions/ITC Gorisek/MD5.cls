@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #MD5
 	instanceVariableNames: 'state'
 	classVariableNames: 'ABCDTable IndexTable ShiftTable SinTable'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-MD5 guid: (GUID fromString: '{FA0C31D4-0F14-4D7E-99E4-7CDA284CC053}')!
+MD5 guid: (GUID fromString: '{fa0c31d4-0f14-4d7e-99e4-7cda284cc053}')!
 MD5 comment: 'From Squeak3.1alpha of 20 February 2001 [latest update: #3679] on 23 February 2001 at 10:54:55 pm'!
 !MD5 categoriesForClass!System-MD5! !
 !MD5 methodsFor!

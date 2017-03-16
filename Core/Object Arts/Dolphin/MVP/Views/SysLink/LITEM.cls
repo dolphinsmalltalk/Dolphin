@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Win32Structure subclass: #LITEM
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'SysLinkConstants'
 	classInstanceVariableNames: ''!
-LITEM guid: (GUID fromString: '{13CD21FB-F5BF-4908-A96B-3801B787A40E}')!
+LITEM guid: (GUID fromString: '{13cd21fb-f5bf-4908-a96b-3801b787a40e}')!
 LITEM comment: 'LITEM is the class of <ExternalStructure> which represent the Windows Common Control structure of the same name.
 
 LITEMs are used in conjunction with the SysLink control, wrapped in Dolphin by <SysLinkView>.

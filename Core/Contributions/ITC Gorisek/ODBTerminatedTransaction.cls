@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ODBTransaction subclass: #ODBTerminatedTransaction
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ODBTerminatedTransaction guid: (GUID fromString: '{8162EE2C-0FB8-11D4-B091-000000000000}')!
+ODBTerminatedTransaction guid: (GUID fromString: '{8162ee2c-0fb8-11d4-b091-000000000000}')!
 ODBTerminatedTransaction comment: ''!
 !ODBTerminatedTransaction categoriesForClass!No category! !
 !ODBTerminatedTransaction methodsFor!

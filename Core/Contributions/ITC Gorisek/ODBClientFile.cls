@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ODBFile subclass: #ODBClientFile
 	instanceVariableNames: 'transactions'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ODBClientFile guid: (GUID fromString: '{8162EE17-0FB8-11D4-B091-000000000000}')!
+ODBClientFile guid: (GUID fromString: '{8162ee17-0fb8-11d4-b091-000000000000}')!
 ODBClientFile comment: ''!
 !ODBClientFile categoriesForClass!No category! !
 !ODBClientFile methodsFor!

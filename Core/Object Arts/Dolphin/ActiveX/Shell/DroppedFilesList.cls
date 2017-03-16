@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 SequenceableCollection subclass: #DroppedFilesList
 	instanceVariableNames: 'handle size'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-DroppedFilesList guid: (GUID fromString: '{63EB134A-0EDD-49F3-85EB-253B0F48741B}')!
+DroppedFilesList guid: (GUID fromString: '{63eb134a-0edd-49f3-85eb-253b0f48741b}')!
 DroppedFilesList comment: 'DroppedFilesList represents a <sequencedReadableCollection> of dropped files. The elements are the <readableString> paths of the files that were dropped over a window which has called the DragAcceptFiles API.'!
 !DroppedFilesList categoriesForClass!Kernel-Objects! !
 !DroppedFilesList methodsFor!

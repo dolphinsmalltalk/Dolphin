@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 GdiplusBase subclass: #GdiplusCachedBitmap
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-GdiplusCachedBitmap guid: (GUID fromString: '{28E34AB0-3F39-40A2-9E59-AF891814C197}')!
+GdiplusCachedBitmap guid: (GUID fromString: '{28e34ab0-3f39-40a2-9e59-af891814c197}')!
 GdiplusCachedBitmap comment: 'GdiplusCachedBitmap stores a bitmap in a format that is optimized for display on a particular device. To display an instance, call the GdiplusGraphics>>drawCachedBitmap method.
 
 '!

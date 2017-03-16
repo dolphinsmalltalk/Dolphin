@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #FramingCalculation
 	instanceVariableNames: 'name framingBlock offsetBlock flags'
 	classVariableNames: 'Calculations IndependentMask ProportionalMask VerticalMask'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-FramingCalculation guid: (GUID fromString: '{D8059738-A2E8-4291-8E24-E31CF4BEE13A}')!
+FramingCalculation guid: (GUID fromString: '{d8059738-a2e8-4291-8e24-e31cf4bee13a}')!
 FramingCalculation comment: 'FramingCalculation instances are used to represent the individual edge constraints in a <FramingConstraints> instance. See that class'' comment for further details.
 
 You can add a new framing calculation by following the pattern of the existing instance creation methods (e.g. #fixedPreviousLeft). Essentially you must extend this class by adding a new class side instance creation method as a loose method in your package. In order to allow for efficient sharing of FramingCalculation instances, and yet not interfere with the stripping process, the instances are created lazily and are normally held in a dictionary and looked up by name. During the deployment process, however, the dictionary is deliberately nilled to allow FramingCalculations to be stripped entirely should it turn out not to be used (i.e. you don''t make any use of <FramingLayout>s in your application), and so that unused calculations are removed too. This mechanism is implemented by #lookupCalc:framingBlock:offsetBlock:flags: method, which you must also call for your own framing calculations.'!

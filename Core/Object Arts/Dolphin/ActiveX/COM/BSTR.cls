@@ -5,7 +5,7 @@ ExternalAddress variableByteSubclass: #BSTR
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-BSTR guid: (GUID fromString: '{87B4C519-026E-11D3-9FD7-00A0CC3E4A32}')!
+BSTR guid: (GUID fromString: '{87b4c519-026e-11d3-9fd7-00a0cc3e4a32}')!
 BSTR isIndirection: true!
 BSTR comment: 'BSTR is an external structure to represent the OLE Automation string type of the same name.
 

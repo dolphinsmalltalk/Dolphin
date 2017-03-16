@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Win32Structure subclass: #LVCOLUMN
 	instanceVariableNames: 'text'
 	classVariableNames: 'AlignmentMap'
 	poolDictionaries: 'ListViewConstants'
 	classInstanceVariableNames: ''!
-LVCOLUMN guid: (GUID fromString: '{87B4C5FC-026E-11D3-9FD7-00A0CC3E4A32}')!
+LVCOLUMN guid: (GUID fromString: '{87b4c5fc-026e-11d3-9fd7-00a0cc3e4a32}')!
 LVCOLUMN comment: 'LVCOLUMN is an <ExternalStructure> class which represents the Windows List View common control structure of the same name.
 
 LVCOLUMN is used in conjunction with the ListView to specify the details of individual columns when in report mode.

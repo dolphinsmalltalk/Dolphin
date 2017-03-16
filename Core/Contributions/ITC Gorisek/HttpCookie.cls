@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #HttpCookie
 	instanceVariableNames: 'name path value'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-HttpCookie guid: (GUID fromString: '{513813E2-3C52-4758-82A1-2532BB6D6319}')!
+HttpCookie guid: (GUID fromString: '{513813e2-3c52-4758-82a1-2532bb6d6319}')!
 HttpCookie comment: ''!
 !HttpCookie categoriesForClass!Unclassified! !
 !HttpCookie methodsFor!

@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 RefactoryChange subclass: #RefactoryClassChange
 	instanceVariableNames: 'className isMeta'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-RefactoryClassChange guid: (GUID fromString: '{5955DFD7-6B22-491C-B86D-3E6A0061C426}')!
+RefactoryClassChange guid: (GUID fromString: '{5955dfd7-6b22-491c-b86d-3e6a0061c426}')!
 RefactoryClassChange comment: ''!
 !RefactoryClassChange categoriesForClass!Refactory-Change Objects! !
 !RefactoryClassChange methodsFor!

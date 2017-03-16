@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 NMHDR subclass: #NMUPDOWN
 	instanceVariableNames: 'allow'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-NMUPDOWN guid: (GUID fromString: '{425D0EA7-542E-11D3-998B-D5CA2C3C1D61}')!
+NMUPDOWN guid: (GUID fromString: '{425d0ea7-542e-11d3-998b-d5ca2c3c1d61}')!
 NMUPDOWN comment: '<NMUPDOWN> is an <ExternalStructure> class to wrap the struct ''UpDownLib.NMUPDOWN'' from type information in the ''Microsoft Windows Up-Down Control'' library.
 
 NMUPDOWN accompanies the UDN_DELTAPOS notifications that are sent by an up-down control to its parent when it has been nudged and is about to change its value. The notification is forwarded as a #nudge: event off the <SpinButton> view''s presenter.

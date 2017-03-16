@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 SerialNumberProtector subclass: #PC1SerialNumberProtector
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-PC1SerialNumberProtector guid: (GUID fromString: '{5C339DF7-5279-436B-87D2-09B67F105263}')!
+PC1SerialNumberProtector guid: (GUID fromString: '{5c339df7-5279-436b-87d2-09b67f105263}')!
 PC1SerialNumberProtector comment: 'A simple PC1-based implementation of encryption for Protected Product serial numbers.
 
 It should be noted that, although PC1 is a fine cypher if used correctly, it is not really suitable for these purposes, and so -- although this is the default implementation -- it is not as strong as it could be.  This implementation mitigates the weakness to some extent by including a checksum with the encrypted data (as described below); however that is still vulnerable to a feasible, but difficult, brute-force attack.

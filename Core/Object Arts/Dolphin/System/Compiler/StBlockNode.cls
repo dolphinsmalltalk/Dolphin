@@ -5,7 +5,7 @@ StValueNode subclass: #StBlockNode
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-StBlockNode guid: (GUID fromString: '{74B8B736-F1FE-4D03-911F-C6F7F11620E8}')!
+StBlockNode guid: (GUID fromString: '{74b8b736-f1fe-4d03-911f-c6f7f11620e8}')!
 StBlockNode comment: 'StBlockNode is a parse tree node that represents a block "[...]".
 
 Instance Variables:

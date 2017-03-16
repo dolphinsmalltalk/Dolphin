@@ -5,7 +5,7 @@ Shell subclass: #EditableListViewDemo
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-EditableListViewDemo guid: (GUID fromString: '{E27B5B72-70DE-474C-A0CC-B14EE3FDC1EB}')!
+EditableListViewDemo guid: (GUID fromString: '{e27b5b72-70de-474c-a0cc-b14ee3fdc1eb}')!
 EditableListViewDemo comment: ''!
 !EditableListViewDemo categoriesForClass!MVP-Presenters! !
 !EditableListViewDemo methodsFor!

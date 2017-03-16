@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 GdiplusPenInitializer subclass: #GdiplusPenFromColorInitializer
 	instanceVariableNames: 'color width'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-GdiplusPenFromColorInitializer guid: (GUID fromString: '{2F244647-43B8-40CB-92F6-F06F2B1CFDAE}')!
+GdiplusPenFromColorInitializer guid: (GUID fromString: '{2f244647-43b8-40cb-92f6-f06f2b1cfdae}')!
 GdiplusPenFromColorInitializer comment: ''!
 !GdiplusPenFromColorInitializer categoriesForClass!Unclassified! !
 !GdiplusPenFromColorInitializer methodsFor!

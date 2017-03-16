@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ExternalStructure subclass: #Xml_error
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-Xml_error guid: (GUID fromString: '{7E913D96-5F75-43D3-A963-8410C627C14E}')!
+Xml_error guid: (GUID fromString: '{7e913d96-5f75-43d3-a963-8410c627c14e}')!
 Xml_error comment: '<Xml_error> is an <ExternalStructure> class to wrap the struct ''MSXML2.xml_error'' from type information in the ''Microsoft XML, v4.0'' library.
 
 The type library contains no documentation for this struct

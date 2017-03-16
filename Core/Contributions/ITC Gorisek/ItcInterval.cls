@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Interval subclass: #ItcInterval
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ItcInterval guid: (GUID fromString: '{5C4D87C4-B737-4AF4-A80E-ED3860229D75}')!
+ItcInterval guid: (GUID fromString: '{5c4d87c4-b737-4af4-a80e-ed3860229d75}')!
 ItcInterval comment: ''!
 !ItcInterval categoriesForClass!Collections-Sequenceable! !
 !ItcInterval methodsFor!

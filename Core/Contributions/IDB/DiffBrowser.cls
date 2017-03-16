@@ -5,7 +5,7 @@ SmalltalkToolShell subclass: #DiffBrowser
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-DiffBrowser guid: (GUID fromString: '{C45E4FF1-7CB1-4EC9-88B4-595B06AE410C}')!
+DiffBrowser guid: (GUID fromString: '{c45e4ff1-7cb1-4ec9-88b4-595b06ae410c}')!
 DiffBrowser comment: 'See [DolphinImageFolder]/Ian Bartholomew/Documentation for details
 
 (C) 2002 Ian Bartholomew

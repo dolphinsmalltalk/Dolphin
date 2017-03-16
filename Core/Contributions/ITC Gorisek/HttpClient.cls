@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #HttpClient
 	instanceVariableNames: 'serverHostname serverPort cookies host location lastUrl acceptEncoding userAgent proxyServer proxyServerPort proxyServerUsername proxyServerPassword lastSocket autoRedirect authorization maxRandomDelay minRequestDelay lastRequestTime randomNumberGenerator mimeMapping'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-HttpClient guid: (GUID fromString: '{0E660ABB-78E7-48F3-BF7A-F578FF32C531}')!
+HttpClient guid: (GUID fromString: '{0e660abb-78e7-48f3-bf7a-f578ff32c531}')!
 HttpClient comment: ''!
 !HttpClient categoriesForClass!Unclassified! !
 !HttpClient methodsFor!

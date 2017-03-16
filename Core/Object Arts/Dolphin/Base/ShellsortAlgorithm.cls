@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 PluggableSortAlgorithm subclass: #ShellsortAlgorithm
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ShellsortAlgorithm guid: (GUID fromString: '{10F42EE9-007E-446C-9C87-5E71A22DD423}')!
+ShellsortAlgorithm guid: (GUID fromString: '{10f42ee9-007e-446c-9c87-5e71a22dd423}')!
 ShellsortAlgorithm comment: 'ShellsortAlgorithm implements the Shellsort algorithm as a pluggable sorting strategy for use in conjunction with <SortedCollection>s.
 
 Shellsort is a relatively simple modification of the basic insertion sort method, which improves performance by allowing the exchange of elements that are far apart, not just those which are adjacent.

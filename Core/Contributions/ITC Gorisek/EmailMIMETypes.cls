@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #EmailMIMETypes
 	instanceVariableNames: 'mimes encodings'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: 'singelton'!
-EmailMIMETypes guid: (GUID fromString: '{945BFA7B-D6DA-42F7-86EA-9C43880CE43F}')!
+EmailMIMETypes guid: (GUID fromString: '{945bfa7b-d6da-42f7-86ea-9c43880ce43f}')!
 EmailMIMETypes comment: ''!
 !EmailMIMETypes categoriesForClass!Unclassified! !
 !EmailMIMETypes methodsFor!

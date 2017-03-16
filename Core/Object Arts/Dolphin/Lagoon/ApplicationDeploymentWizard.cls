@@ -5,7 +5,7 @@ ValueDialog subclass: #ApplicationDeploymentWizard
 	classVariableNames: 'SaveImageOnDeploy'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ApplicationDeploymentWizard guid: (GUID fromString: '{87B4C6A1-026E-11D3-9FD7-00A0CC3E4A32}')!
+ApplicationDeploymentWizard guid: (GUID fromString: '{87b4c6a1-026e-11d3-9fd7-00a0cc3e4a32}')!
 ApplicationDeploymentWizard comment: 'ApplicationDeploymentWizard is a <dialogPresenter> used to edit the contents of an <ImageStripper> model.
 
 Instance Variables:

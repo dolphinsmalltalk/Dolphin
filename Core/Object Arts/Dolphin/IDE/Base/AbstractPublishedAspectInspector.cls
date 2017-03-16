@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 AspectInspector subclass: #AbstractPublishedAspectInspector
 	instanceVariableNames: 'aspectValueHolder aspectPresenter isRootAspectVisible isSingleLevelOnly'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-AbstractPublishedAspectInspector guid: (GUID fromString: '{F1CDCDF4-E0B8-4070-953A-C17010BAB8AD}')!
+AbstractPublishedAspectInspector guid: (GUID fromString: '{f1cdcdf4-e0b8-4070-953a-c17010bab8ad}')!
 AbstractPublishedAspectInspector comment: ''!
 !AbstractPublishedAspectInspector categoriesForClass!Development! !
 !AbstractPublishedAspectInspector methodsFor!

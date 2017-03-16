@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 GdiplusInitializer subclass: #GdiplusPenInitializer
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-GdiplusPenInitializer guid: (GUID fromString: '{B5A5D186-B0EF-421C-BEFB-C5628A17FEE9}')!
+GdiplusPenInitializer guid: (GUID fromString: '{b5a5d186-b0ef-421c-befb-c5628a17fee9}')!
 GdiplusPenInitializer comment: ''!
 !GdiplusPenInitializer categoriesForClass!Unclassified! !
 !GdiplusPenInitializer methodsFor!

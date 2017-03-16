@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 CollectionPresenter subclass: #SequenceableCollectionPresenter
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-SequenceableCollectionPresenter guid: (GUID fromString: '{87B4C68C-026E-11D3-9FD7-00A0CC3E4A32}')!
+SequenceableCollectionPresenter guid: (GUID fromString: '{87b4c68c-026e-11d3-9fd7-00a0cc3e4a32}')!
 SequenceableCollectionPresenter comment: 'SequenceableCollectionPresenter is a <valuePresenter> that presents a <sequencedCollection> accessed via its <valueModel>. It provides a number of [operations]for editing the list. As changes are made to the list it is applied back to the presenter''s <valueModel>.
 
 '!

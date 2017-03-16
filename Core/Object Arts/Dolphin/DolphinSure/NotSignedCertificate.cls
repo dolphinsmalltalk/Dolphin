@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 DolphinSureCertificate subclass: #NotSignedCertificate
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-NotSignedCertificate guid: (GUID fromString: '{1284A49F-307E-4EA7-A404-EA7E7A56CBFE}')!
+NotSignedCertificate guid: (GUID fromString: '{1284a49f-307e-4ea7-a404-ea7e7a56cbfe}')!
 NotSignedCertificate comment: 'A NotSignedCertificate is used to indicate when a piece of data has not been digitally signed using DolphinSure.  Typically it is used by BinaryPackage>>loadUsing: when a binary class file is being loaded and it is discovered that the class data has not been signed. 
 
 Although it may seem strange to have a certificate for this purpose, it does allow the user to elect to install the NotSignedCertificate in his or her temporary trust store.  By doing so, a user can avoid repeated warnings about loading unsigned classes for the duration of the current Dolphin session. The temporary trust store is cleared out whenever an image is started so unsigned classes cannot be trusted indefinitely.

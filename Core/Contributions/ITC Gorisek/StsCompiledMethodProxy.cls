@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 StsImportProxy subclass: #StsCompiledMethodProxy
 	instanceVariableNames: 'methodSource methodClass selector isPrivate categoriesString'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-StsCompiledMethodProxy guid: (GUID fromString: '{2313D087-B7C8-4F1F-8981-EABAF5A0D935}')!
+StsCompiledMethodProxy guid: (GUID fromString: '{2313d087-b7c8-4f1f-8981-eabaf5a0d935}')!
 StsCompiledMethodProxy comment: ''!
 !StsCompiledMethodProxy categoriesForClass!Unclassified! !
 !StsCompiledMethodProxy methodsFor!

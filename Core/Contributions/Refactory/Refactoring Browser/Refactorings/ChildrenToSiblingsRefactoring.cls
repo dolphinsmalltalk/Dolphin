@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ClassRefactoring subclass: #ChildrenToSiblingsRefactoring
 	instanceVariableNames: 'parent subclasses'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ChildrenToSiblingsRefactoring guid: (GUID fromString: '{23F61AB3-E5EF-433B-821D-21C019236BEF}')!
+ChildrenToSiblingsRefactoring guid: (GUID fromString: '{23f61ab3-e5ef-433b-821d-21c019236bef}')!
 ChildrenToSiblingsRefactoring comment: ''!
 !ChildrenToSiblingsRefactoring categoriesForClass!Refactory-Refactorings! !
 !ChildrenToSiblingsRefactoring methodsFor!

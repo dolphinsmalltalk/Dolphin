@@ -5,7 +5,7 @@ ExternalLibrary subclass: #DwmApiLibrary
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-DwmApiLibrary guid: (GUID fromString: '{FCB369E6-2D71-4FF5-AD95-D88DBA33698C}')!
+DwmApiLibrary guid: (GUID fromString: '{fcb369e6-2d71-4ff5-ad95-d88dba33698c}')!
 DwmApiLibrary comment: ''!
 !DwmApiLibrary categoriesForClass!External-Libraries! !
 !DwmApiLibrary methodsFor!

@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ContainerView subclass: #StyledContainer
 	instanceVariableNames: 'edges styledPen styledBrush cornerRadii isAntialiased styledShadow _spare4'
 	classVariableNames: 'Nest'
 	poolDictionaries: 'GdiplusConstants ThemeConstants Win32Constants'
 	classInstanceVariableNames: ''!
-StyledContainer guid: (GUID fromString: '{5C05AF7C-9F44-44B6-A823-0B80C9E8E8CB}')!
+StyledContainer guid: (GUID fromString: '{5c05af7c-9f44-44b6-a823-0b80c9e8e8cb}')!
 StyledContainer comment: 'A GroupContainer is a <ContainerView> with improved edge and frame styling'!
 !StyledContainer categoriesForClass!MVP-Resources-Containers! !
 !StyledContainer methodsFor!

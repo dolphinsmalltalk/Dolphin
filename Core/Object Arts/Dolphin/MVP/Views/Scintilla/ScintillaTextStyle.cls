@@ -5,7 +5,7 @@ ScintillaAttribute subclass: #ScintillaTextStyle
 	classVariableNames: 'EolFilledMask HotspotMask InvisibleMask ItalicMask PredefinedStyleNames ReadOnlyMask UnderlinedMask'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ScintillaTextStyle guid: (GUID fromString: '{441D5422-DB7D-4872-A16D-D6CA9D88E0B8}')!
+ScintillaTextStyle guid: (GUID fromString: '{441d5422-db7d-4872-a16d-d6ca9d88e0b8}')!
 ScintillaTextStyle addClassConstant: 'EolFilledMask' value: 192!
 ScintillaTextStyle addClassConstant: 'HotspotMask' value: 3072!
 ScintillaTextStyle addClassConstant: 'InvisibleMask' value: 12288!

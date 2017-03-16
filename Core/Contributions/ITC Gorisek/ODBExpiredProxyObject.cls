@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #ODBExpiredProxyObject
 	instanceVariableNames: 'oid'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ODBExpiredProxyObject guid: (GUID fromString: '{330E7373-8AC4-4BF6-B5AD-9C46C8271B6D}')!
+ODBExpiredProxyObject guid: (GUID fromString: '{330e7373-8ac4-4bf6-b5ad-9c46c8271b6d}')!
 ODBExpiredProxyObject comment: ''!
 !ODBExpiredProxyObject categoriesForClass!Kernel-Objects! !
 !ODBExpiredProxyObject methodsFor!

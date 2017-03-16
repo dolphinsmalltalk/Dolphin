@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 DBRowBuffer subclass: #DBBoundBuffer
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'ODBCConstants ODBCCTypes'
 	classInstanceVariableNames: ''!
-DBBoundBuffer guid: (GUID fromString: '{87B4C547-026E-11D3-9FD7-00A0CC3E4A32}')!
+DBBoundBuffer guid: (GUID fromString: '{87b4c547-026e-11d3-9fd7-00a0cc3e4a32}')!
 DBBoundBuffer comment: 'A DBBoundRow represnts a database row buffer that is directly bound to allocated memory for its columns. 
 
 This is the normal type of buffer used by the Database Connection as it is more efficient when multiple rows are fetched.

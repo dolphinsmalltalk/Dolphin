@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 IEnumXXXX subclass: #IEnumRECT
 	instanceVariableNames: ''

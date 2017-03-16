@@ -1,14 +1,12 @@
-"Filed out from Dolphin Smalltalk 2000 release 4.01"!
+"Filed out from Dolphin Smalltalk 7"!
 
 RefactoryVariableChange subclass: #RemoveInstanceVariableChange
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+RemoveInstanceVariableChange guid: (GUID fromString: '{e9c39339-a730-4cfc-a1e7-c0c44ec0e681}')!
 RemoveInstanceVariableChange comment: ''!
-
-RemoveInstanceVariableChange guid: (GUID fromString: '{E9C39339-A730-4CFC-A1E7-C0C44EC0E681}')!
-
 !RemoveInstanceVariableChange categoriesForClass!Refactory-Change Objects! !
 !RemoveInstanceVariableChange methodsFor!
 
@@ -31,6 +29,6 @@ printOn: aStream
 		nextPut: $!!! !
 !RemoveInstanceVariableChange categoriesFor: #asUndoOperation!converting!public! !
 !RemoveInstanceVariableChange categoriesFor: #changeString!printing!public! !
-!RemoveInstanceVariableChange categoriesFor: #changeSymbol!*-unclassified!private! !
+!RemoveInstanceVariableChange categoriesFor: #changeSymbol!private! !
 !RemoveInstanceVariableChange categoriesFor: #printOn:!printing!public! !
 

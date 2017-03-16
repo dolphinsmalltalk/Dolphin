@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk XP"!
+"Filed out from Dolphin Smalltalk 7"!
 
 LintRule subclass: #TransformationRule
 	instanceVariableNames: 'rewriteRule changes class'
 	classVariableNames: 'RecursiveSelfRule'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-TransformationRule guid: (GUID fromString: '{9864C788-A659-4CED-8264-C32A2B4327EC}')!
+TransformationRule guid: (GUID fromString: '{9864c788-a659-4ced-8264-c32a2b4327ec}')!
 TransformationRule comment: 'TransformationRule is a LintRule that transforms code using rewrite rules.
 
 Instance Variables:

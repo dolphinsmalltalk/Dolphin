@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 RuntimeSessionManager subclass: #DefaultShellSessionManager
 	instanceVariableNames: 'mainShellClass'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-DefaultShellSessionManager guid: (GUID fromString: '{6554F3CE-3AD5-4EF5-86CE-14AC1596FE2D}')!
+DefaultShellSessionManager guid: (GUID fromString: '{6554f3ce-3ad5-4ef5-86ce-14ac1596fe2d}')!
 DefaultShellSessionManager comment: ''!
 !DefaultShellSessionManager categoriesForClass!System-Support! !
 !DefaultShellSessionManager methodsFor!

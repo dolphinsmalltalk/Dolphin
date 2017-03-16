@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ODBStream subclass: #ODBFileStream
 	instanceVariableNames: 'fileHandle pathName kernelLibrary mutex'
 	classVariableNames: ''
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
-ODBFileStream guid: (GUID fromString: '{8162EE28-0FB8-11D4-B091-000000000000}')!
+ODBFileStream guid: (GUID fromString: '{8162ee28-0fb8-11d4-b091-000000000000}')!
 ODBFileStream comment: ''!
 !ODBFileStream categoriesForClass!No category! !
 !ODBFileStream methodsFor!

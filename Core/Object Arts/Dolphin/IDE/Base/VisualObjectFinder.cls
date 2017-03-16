@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 InspectorAbstract subclass: #VisualObjectFinder
 	instanceVariableNames: 'mouseTracker finderIcon heading workspace foundView'
 	classVariableNames: 'FindNonDolphinWindows'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-VisualObjectFinder guid: (GUID fromString: '{B76A24F7-5FF3-41AC-9AA9-77EBF7B94816}')!
+VisualObjectFinder guid: (GUID fromString: '{b76a24f7-5ff3-41ac-9aa9-77ebf7b94816}')!
 VisualObjectFinder comment: ''!
 !VisualObjectFinder categoriesForClass!MVP-Presenters! !
 !VisualObjectFinder methodsFor!

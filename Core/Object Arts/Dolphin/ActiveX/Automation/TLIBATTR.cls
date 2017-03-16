@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 OLEStructure subclass: #TLIBATTR
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'AXAutomationConstants'
 	classInstanceVariableNames: ''!
-TLIBATTR guid: (GUID fromString: '{C06F3B71-0868-11D3-93AF-00A024CA708A}')!
+TLIBATTR guid: (GUID fromString: '{c06f3b71-0868-11d3-93af-00a024ca708a}')!
 TLIBATTR comment: 'TLIBATTR is an ExternalStructure class to represent the OLE Automation TLIBATTR structure.
 
 TLIBATTR is a simple structure containing basic descriptive details about a type library, namely:

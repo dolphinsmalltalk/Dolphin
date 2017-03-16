@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 StsPackageProxy subclass: #StsXMLPackageProxy
 	instanceVariableNames: 'exporterVersion'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-StsXMLPackageProxy guid: (GUID fromString: '{11B0375D-A3F1-4404-A1FE-59E83D198BE9}')!
+StsXMLPackageProxy guid: (GUID fromString: '{11b0375d-a3f1-4404-a1fe-59e83d198be9}')!
 StsXMLPackageProxy comment: ''!
 !StsXMLPackageProxy categoriesForClass!Unclassified! !
 !StsXMLPackageProxy methodsFor!

@@ -5,7 +5,7 @@ Dialog subclass: #AspectEditorDialog
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-AspectEditorDialog guid: (GUID fromString: '{760C70E7-2B1B-4E1E-9742-397D87529534}')!
+AspectEditorDialog guid: (GUID fromString: '{760c70e7-2b1b-4e1e-9742-397d87529534}')!
 AspectEditorDialog comment: ''!
 !AspectEditorDialog categoriesForClass!MVP-Presenters!MVP-Resources-IDE Tools! !
 !AspectEditorDialog methodsFor!

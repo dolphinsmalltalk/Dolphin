@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #ODBTransactionManager
 	instanceVariableNames: 'dbConnection versionControl oldHolders committingTransaction transactionReferences mutex serializingTransactionsMutex serializingTransactionsSemaphore'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ODBTransactionManager guid: (GUID fromString: '{8162EDE6-0FB8-11D4-B091-000000000000}')!
+ODBTransactionManager guid: (GUID fromString: '{8162ede6-0fb8-11d4-b091-000000000000}')!
 ODBTransactionManager comment: ''!
 !ODBTransactionManager categoriesForClass!No category! !
 !ODBTransactionManager methodsFor!

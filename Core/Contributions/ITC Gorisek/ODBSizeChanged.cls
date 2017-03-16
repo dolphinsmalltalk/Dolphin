@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ODBChange subclass: #ODBSizeChanged
 	instanceVariableNames: 'deltaSize'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ODBSizeChanged guid: (GUID fromString: '{8162EDFF-0FB8-11D4-B091-000000000000}')!
+ODBSizeChanged guid: (GUID fromString: '{8162edff-0fb8-11d4-b091-000000000000}')!
 ODBSizeChanged comment: ''!
 !ODBSizeChanged categoriesForClass!No category! !
 !ODBSizeChanged methodsFor!

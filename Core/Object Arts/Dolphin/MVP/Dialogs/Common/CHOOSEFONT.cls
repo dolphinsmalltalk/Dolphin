@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 CommonDialogStructure subclass: #CHOOSEFONT
 	instanceVariableNames: 'logFont'
 	classVariableNames: ''
 	poolDictionaries: 'CommonDialogConstants'
 	classInstanceVariableNames: ''!
-CHOOSEFONT guid: (GUID fromString: '{87B4C5D2-026E-11D3-9FD7-00A0CC3E4A32}')!
+CHOOSEFONT guid: (GUID fromString: '{87b4c5d2-026e-11d3-9fd7-00a0cc3e4a32}')!
 CHOOSEFONT comment: 'CHOOSEFONT is the class of <ExternalStructure> which represent the Windows Common Dialog structure of the same name.
 
 CHOOSEFONT is used in conjunction with <FontDialog> to pop a common file dialog to select a font.

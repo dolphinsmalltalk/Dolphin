@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Win32Structure subclass: #LVBKIMAGE
 	instanceVariableNames: 'buf'
 	classVariableNames: ''
 	poolDictionaries: 'ListViewConstants'
 	classInstanceVariableNames: ''!
-LVBKIMAGE guid: (GUID fromString: '{33FCCB1A-F5BA-4AE8-93AD-63D00B9AA869}')!
+LVBKIMAGE guid: (GUID fromString: '{33fccb1a-f5ba-4ae8-93ad-63d00b9aa869}')!
 LVBKIMAGE comment: ''!
 !LVBKIMAGE categoriesForClass!External-Data-Structured-Win32! !
 !LVBKIMAGE methodsFor!

@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Smalltalk at: #AXAutomationConstants put: (PoolConstantsDictionary named: #AXAutomationConstants)!
 AXAutomationConstants at: 'ACTIVEOBJECT_STRONG' put: 16r0!

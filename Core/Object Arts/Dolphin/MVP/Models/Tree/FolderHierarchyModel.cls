@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 TreeModel subclass: #FolderHierarchyModel
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-FolderHierarchyModel guid: (GUID fromString: '{2DFE6611-349C-497A-969B-CC0AEA7ECC70}')!
+FolderHierarchyModel guid: (GUID fromString: '{2dfe6611-349c-497a-969b-cc0aea7ecc70}')!
 FolderHierarchyModel comment: 'FolderHierarchyModel is a specialized <TreeModel> that holds a directory hierarchy, with nodes representing each directory/folder in the hierarchy. The nodes are maintained in sorted order.
 '!
 !FolderHierarchyModel categoriesForClass!MVP-Models! !

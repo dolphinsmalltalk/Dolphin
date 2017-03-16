@@ -5,7 +5,7 @@ SmalltalkToolShell subclass: #StsMethodEditionsBrowserShell
 	classVariableNames: ''
 	poolDictionaries: 'CompilerFlags'
 	classInstanceVariableNames: ''!
-StsMethodEditionsBrowserShell guid: (GUID fromString: '{8162EDC9-0FB8-11D4-B091-000000000000}')!
+StsMethodEditionsBrowserShell guid: (GUID fromString: '{8162edc9-0fb8-11d4-b091-000000000000}')!
 StsMethodEditionsBrowserShell comment: ''!
 !StsMethodEditionsBrowserShell categoriesForClass!Unclassified! !
 !StsMethodEditionsBrowserShell methodsFor!
