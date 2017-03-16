@@ -5,7 +5,7 @@ ComboBox subclass: #EmbeddedComboBox
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-EmbeddedComboBox guid: (GUID fromString: '{37AD4011-9526-4F00-ADBB-A2E73C6B5EBC}')!
+EmbeddedComboBox guid: (GUID fromString: '{37ad4011-9526-4f00-adbb-a2e73c6b5ebc}')!
 EmbeddedComboBox comment: ''!
 !EmbeddedComboBox categoriesForClass!Unclassified! !
 !EmbeddedComboBox methodsFor!

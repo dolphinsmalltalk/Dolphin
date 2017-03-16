@@ -5,7 +5,7 @@ CheckBox subclass: #EmbeddedCheckBox
 	classVariableNames: ''
 	poolDictionaries: 'ThemeConstants'
 	classInstanceVariableNames: ''!
-EmbeddedCheckBox guid: (GUID fromString: '{611F80AE-2E05-4E6F-B0C8-A0ADBD00FF31}')!
+EmbeddedCheckBox guid: (GUID fromString: '{611f80ae-2e05-4e6f-b0c8-a0adbd00ff31}')!
 EmbeddedCheckBox comment: ''!
 !EmbeddedCheckBox categoriesForClass!MVP-Views! !
 !EmbeddedCheckBox methodsFor!

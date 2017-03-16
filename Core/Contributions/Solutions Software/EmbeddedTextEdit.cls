@@ -5,7 +5,7 @@ TextEdit subclass: #EmbeddedTextEdit
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-EmbeddedTextEdit guid: (GUID fromString: '{B24A4423-0072-4380-BD67-1E317410EBF8}')!
+EmbeddedTextEdit guid: (GUID fromString: '{b24a4423-0072-4380-bd67-1e317410ebf8}')!
 EmbeddedTextEdit comment: ''!
 !EmbeddedTextEdit categoriesForClass!Unclassified! !
 !EmbeddedTextEdit methodsFor!

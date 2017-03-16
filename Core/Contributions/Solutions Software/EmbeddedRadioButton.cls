@@ -5,7 +5,7 @@ RadioButton subclass: #EmbeddedRadioButton
 	classVariableNames: ''
 	poolDictionaries: 'ThemeConstants'
 	classInstanceVariableNames: ''!
-EmbeddedRadioButton guid: (GUID fromString: '{326BF942-1142-4A1D-A365-F4B0DDA88FFE}')!
+EmbeddedRadioButton guid: (GUID fromString: '{326bf942-1142-4a1d-a365-f4b0dda88ffe}')!
 EmbeddedRadioButton comment: ''!
 !EmbeddedRadioButton categoriesForClass!MVP-Views! !
 !EmbeddedRadioButton methodsFor!
