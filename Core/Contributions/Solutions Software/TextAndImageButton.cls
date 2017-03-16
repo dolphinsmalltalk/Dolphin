@@ -5,7 +5,7 @@ OwnerDrawnButton subclass: #TextAndImageButton
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-TextAndImageButton guid: (GUID fromString: '{7AB8C439-056D-4B01-A5BF-1B454EC864B5}')!
+TextAndImageButton guid: (GUID fromString: '{7ab8c439-056d-4b01-a5bf-1b454ec864b5}')!
 TextAndImageButton comment: ''!
 !TextAndImageButton categoriesForClass!Unclassified! !
 !TextAndImageButton methodsFor!
