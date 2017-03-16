@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 GdiplusInitializer subclass: #GdiplusCustomLineCapInitializer
 	instanceVariableNames: 'fillPath strokePath baseCap baseInset'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-GdiplusCustomLineCapInitializer guid: (GUID fromString: '{EA986B36-8426-11D7-B609-00E0987E8081}')!
+GdiplusCustomLineCapInitializer guid: (GUID fromString: '{ea986b36-8426-11d7-b609-00e0987e8081}')!
 GdiplusCustomLineCapInitializer comment: ''!
 !GdiplusCustomLineCapInitializer categoriesForClass!Unclassified! !
 !GdiplusCustomLineCapInitializer methodsFor!

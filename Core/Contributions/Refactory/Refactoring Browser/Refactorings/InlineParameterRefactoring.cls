@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk XP"!
+"Filed out from Dolphin Smalltalk 7"!
 
 RemoveParameterRefactoring subclass: #InlineParameterRefactoring
 	instanceVariableNames: 'expressions'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-InlineParameterRefactoring guid: (GUID fromString: '{9E2F3B66-4A50-4DA3-97D8-7B1AF9C59EA5}')!
+InlineParameterRefactoring guid: (GUID fromString: '{9e2f3b66-4a50-4da3-97d8-7b1af9c59ea5}')!
 InlineParameterRefactoring comment: ''!
 !InlineParameterRefactoring categoriesForClass!Refactory-Refactorings! !
 !InlineParameterRefactoring methodsFor!

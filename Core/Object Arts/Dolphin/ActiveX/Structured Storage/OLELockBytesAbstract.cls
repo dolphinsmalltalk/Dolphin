@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 COMInterfaceImp subclass: #OLELockBytesAbstract
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'OLEStructuredStorageConstants'
 	classInstanceVariableNames: ''!
-OLELockBytesAbstract guid: (GUID fromString: '{043E5260-AD92-11D3-B376-080046056106}')!
+OLELockBytesAbstract guid: (GUID fromString: '{043e5260-ad92-11d3-b376-080046056106}')!
 OLELockBytesAbstract comment: 'OLELockBytesAbstract is an abstract superclass which provides common behaviour for implementations of the OLE Structured Storage <ILockBytes> interface. <ILockBytes> is the abstraction used by OLE to represent an array of bytes.
 '!
 !OLELockBytesAbstract categoriesForClass!COM-Implementations! !

@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ClassSelector subclass: #ClassHierarchySelector
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ClassHierarchySelector guid: (GUID fromString: '{E11CF5F9-C2EC-47E1-BA1F-FA2FC4C88AD7}')!
+ClassHierarchySelector guid: (GUID fromString: '{e11cf5f9-c2ec-47e1-ba1f-fa2fc4c88ad7}')!
 ClassHierarchySelector comment: 'A ClassHierarchySelector is used to display a tree of classes. It implements the behaviour common to the class hierarchy panes in the <ClassBrowserShell> and <ClassHierarchyDiagram>.'!
 !ClassHierarchySelector categoriesForClass!Development!MVP-Presenters!MVP-Resources-IDE Tools! !
 !ClassHierarchySelector methodsFor!

@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ODBExternalBuffer subclass: #ODBObjectHolder
 	instanceVariableNames: 'container objectID oldVersion'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ODBObjectHolder guid: (GUID fromString: '{8162EDF7-0FB8-11D4-B091-000000000000}')!
+ODBObjectHolder guid: (GUID fromString: '{8162edf7-0fb8-11d4-b091-000000000000}')!
 ODBObjectHolder comment: ''!
 !ODBObjectHolder categoriesForClass!No category! !
 !ODBObjectHolder methodsFor!

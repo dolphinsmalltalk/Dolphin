@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Dialog subclass: #ResourceIdentifierDialog
 	instanceVariableNames: 'classesPresenter resourceNamePresenter classValue'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ResourceIdentifierDialog guid: (GUID fromString: '{87B4C6A4-026E-11D3-9FD7-00A0CC3E4A32}')!
+ResourceIdentifierDialog guid: (GUID fromString: '{87b4c6a4-026e-11d3-9fd7-00a0cc3e4a32}')!
 ResourceIdentifierDialog comment: 'ResourceIdentifierDialog is a <dialogPresenter> used to edit the contents of an <ResourceIdentifier> model.
 
 Instance Variables:

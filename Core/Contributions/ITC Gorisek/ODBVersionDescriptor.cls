@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #ODBVersionDescriptor
 	instanceVariableNames: 'versionNumber readVersionNumber topVersionNumber committingTransactions myCommits'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ODBVersionDescriptor guid: (GUID fromString: '{8162EDE9-0FB8-11D4-B091-000000000000}')!
+ODBVersionDescriptor guid: (GUID fromString: '{8162ede9-0fb8-11d4-b091-000000000000}')!
 ODBVersionDescriptor comment: ''!
 !ODBVersionDescriptor categoriesForClass!No category! !
 !ODBVersionDescriptor methodsFor!

@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ValueConvertingControlView subclass: #DateTimeCommonControl
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'DateTimeCommCtrlConstants'
 	classInstanceVariableNames: 'notificationMap'!
-DateTimeCommonControl guid: (GUID fromString: '{6C107E8A-4CD1-474F-BB07-C61AAC8C12C9}')!
+DateTimeCommonControl guid: (GUID fromString: '{6c107e8a-4cd1-474f-bb07-c61aac8c12c9}')!
 DateTimeCommonControl comment: 'DateTimeCommonControl is the abstract class of <valueView>s implementing the Windows date/time common controls. 
 
 The <valueModel> associated with a DateTimeCommonControl must always yield a value that can be converted to a <TimeStamp> using #asTimeStamp after mapping through the installed type converter. A DateTimeCommonControl will normally be used in conjunction with a <DatePresenter>, or in some cases a <TimePresenter>.

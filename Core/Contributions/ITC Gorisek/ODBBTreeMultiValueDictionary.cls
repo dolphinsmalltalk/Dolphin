@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ODBBTreeIndexDictionary subclass: #ODBBTreeMultiValueDictionary
 	instanceVariableNames: 'initialSize deltaSize newObjects'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ODBBTreeMultiValueDictionary guid: (GUID fromString: '{9C3A735F-1975-434C-B8C5-A8182C9CF1B6}')!
+ODBBTreeMultiValueDictionary guid: (GUID fromString: '{9c3a735f-1975-434c-b8c5-a8182c9cf1b6}')!
 ODBBTreeMultiValueDictionary comment: ''!
 !ODBBTreeMultiValueDictionary categoriesForClass!No category! !
 !ODBBTreeMultiValueDictionary methodsFor!

@@ -5,7 +5,7 @@ GdiplusCustomLineCap subclass: #GdiplusAdjustableArrowCap
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-GdiplusAdjustableArrowCap guid: (GUID fromString: '{C1FCC800-8763-11D7-B609-00E0987E8081}')!
+GdiplusAdjustableArrowCap guid: (GUID fromString: '{c1fcc800-8763-11d7-b609-00e0987e8081}')!
 GdiplusAdjustableArrowCap comment: 'GdiplusAdjustableArrowCap creates a line cap that looks like an arrow.'!
 !GdiplusAdjustableArrowCap categoriesForClass!Unclassified! !
 !GdiplusAdjustableArrowCap methodsFor!

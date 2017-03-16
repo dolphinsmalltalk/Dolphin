@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 RuntimeSessionManager subclass: #NotepadSessionManager
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-NotepadSessionManager guid: (GUID fromString: '{10C33FB0-4C63-4493-8746-29CCFCD29ECE}')!
+NotepadSessionManager guid: (GUID fromString: '{10c33fb0-4c63-4493-8746-29ccfcd29ece}')!
 NotepadSessionManager comment: ''!
 !NotepadSessionManager categoriesForClass!Samples! !
 !NotepadSessionManager methodsFor!

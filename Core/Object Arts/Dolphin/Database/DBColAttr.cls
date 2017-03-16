@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #DBColAttr
 	instanceVariableNames: 'columnNumber name length sqlType precision scale special'
 	classVariableNames: 'SQLToCTypes'
 	poolDictionaries: 'DBColFlags ODBCConstants ODBCCTypes ODBCTypes'
 	classInstanceVariableNames: ''!
-DBColAttr guid: (GUID fromString: '{87B4C471-026E-11D3-9FD7-00A0CC3E4A32}')!
+DBColAttr guid: (GUID fromString: '{87b4c471-026e-11d3-9fd7-00a0cc3e4a32}')!
 DBColAttr comment: 'A DBColAttr instance describes an SQL column in a table or in a DBRow within a DBResultSet. 
 
 Instance Variables:

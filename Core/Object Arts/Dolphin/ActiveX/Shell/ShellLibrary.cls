@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ExternalLibrary subclass: #ShellLibrary
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'ShellConstants Win32Constants'
 	classInstanceVariableNames: ''!
-ShellLibrary guid: (GUID fromString: '{64674052-3A82-101B-8181-00AA003743D3}')!
+ShellLibrary guid: (GUID fromString: '{64674052-3a82-101b-8181-00aa003743d3}')!
 ShellLibrary comment: 'ShellLibrary is the <ExternalLibrary> class to represent the Win32 system library, Shell32.DLL'!
 !ShellLibrary categoriesForClass!External-Libraries-Win32! !
 !ShellLibrary methodsFor!

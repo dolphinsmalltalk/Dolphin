@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Dialog subclass: #StsPackageEditionPrompter
 	instanceVariableNames: 'packages editions result'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-StsPackageEditionPrompter guid: (GUID fromString: '{39805321-5F46-11D4-B175-0080C7B55770}')!
+StsPackageEditionPrompter guid: (GUID fromString: '{39805321-5f46-11d4-b175-0080c7b55770}')!
 StsPackageEditionPrompter comment: ''!
 !StsPackageEditionPrompter categoriesForClass!Unclassified! !
 !StsPackageEditionPrompter methodsFor!

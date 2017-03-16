@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 SmalltalkStyler subclass: #SmalltalkMethodStyler
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-SmalltalkMethodStyler guid: (GUID fromString: '{B4E52620-CC73-45AD-8F07-20A71BB2E287}')!
+SmalltalkMethodStyler guid: (GUID fromString: '{b4e52620-cc73-45ad-8f07-20a71bb2e287}')!
 SmalltalkMethodStyler comment: 'SmalltalkMethodStyler is a <SmalltalkStyler> specialised to colour method definitions. It differs in recognising the method signature, which is not itself a valid Smalltalk expression.'!
 !SmalltalkMethodStyler categoriesForClass!Kernel-Objects! !
 !SmalltalkMethodStyler methodsFor!

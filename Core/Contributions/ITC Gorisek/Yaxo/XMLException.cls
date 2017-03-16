@@ -1,10 +1,10 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Error subclass: #XMLException
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-XMLException guid: (GUID fromString: '{C04E95D9-32A2-4004-ACAB-30ED65AC9A4E}')!
+XMLException guid: (GUID fromString: '{c04e95d9-32a2-4004-acab-30ed65ac9a4e}')!
 XMLException comment: ''!
 !XMLException categoriesForClass!XML-Parser! !

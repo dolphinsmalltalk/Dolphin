@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #AbstractRecentMenu
 	instanceVariableNames: 'openSelector recentMenuName isFullPathAlwaysRequired'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-AbstractRecentMenu guid: (GUID fromString: '{AB893C67-84D1-4718-9D83-44266284C927}')!
+AbstractRecentMenu guid: (GUID fromString: '{ab893c67-84d1-4718-9d83-44266284c927}')!
 AbstractRecentMenu comment: ''!
 !AbstractRecentMenu categoriesForClass!Kernel-Objects! !
 !AbstractRecentMenu methodsFor!

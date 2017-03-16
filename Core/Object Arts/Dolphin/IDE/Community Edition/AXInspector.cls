@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 BasicInspector subclass: #AXInspector
 	instanceVariableNames: 'collection'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-AXInspector guid: (GUID fromString: '{C06F3B62-0868-11D3-93AF-00A024CA708A}')!
+AXInspector guid: (GUID fromString: '{c06f3b62-0868-11d3-93af-00a024ca708a}')!
 AXInspector comment: 'AXInspector is a <compositePresenter> that implements a specialised inspect facility onto a <IDispatch>. This attempts to display the IDispatch properties.
 
 '!

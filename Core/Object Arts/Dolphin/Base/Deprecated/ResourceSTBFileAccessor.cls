@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ResourceSTBAccessor subclass: #ResourceSTBFileAccessor
 	instanceVariableNames: 'fileName'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ResourceSTBFileAccessor guid: (GUID fromString: '{87B4C6DA-026E-11D3-9FD7-00A0CC3E4A32}')!
+ResourceSTBFileAccessor guid: (GUID fromString: '{87b4c6da-026e-11d3-9fd7-00a0cc3e4a32}')!
 ResourceSTBFileAccessor comment: ''!
 !ResourceSTBFileAccessor categoriesForClass!MVP-Resources! !
 !ResourceSTBFileAccessor methodsFor!

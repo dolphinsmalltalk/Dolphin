@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #DBConnection
 	instanceVariableNames: 'handle dsn uid pwd statements transaction connectString flags'
 	classVariableNames: 'Connections DriverCompleteMask HEnv ScrollTypes TxnIsolationLevels'
 	poolDictionaries: 'ODBCConstants ODBCRetCodes'
 	classInstanceVariableNames: ''!
-DBConnection guid: (GUID fromString: '{87B4C472-026E-11D3-9FD7-00A0CC3E4A32}')!
+DBConnection guid: (GUID fromString: '{87b4c472-026e-11d3-9fd7-00a0cc3e4a32}')!
 DBConnection comment: 'A DBConnection represents a connection to an ODBC data source.
 
 One can use a DBConnection to query the capabilities of the underlying driver and the structure of the database. One can then interact with the database by submitting SQL queries using #exec: or #query:[cursorType:]. One can also prepare a DBStatement for later parameterization and execution with #prepare:[cursorType:].

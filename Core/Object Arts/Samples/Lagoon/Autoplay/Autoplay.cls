@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Shell subclass: #Autoplay
 	instanceVariableNames: 'browser navigating pageExtent homePage'
 	classVariableNames: ''
 	poolDictionaries: 'SHDocVwConstants'
 	classInstanceVariableNames: ''!
-Autoplay guid: (GUID fromString: '{6D08642B-1E71-49FE-9C29-C044A21D63D0}')!
+Autoplay guid: (GUID fromString: '{6d08642b-1e71-49fe-9c29-c044a21d63d0}')!
 Autoplay comment: 'Autoplay is a <topShell> sample application which hosts the Microsoft Web Browser Control in order to implement an HTML based setup menu for CD-ROM auto-play. The sample demonstrates how to intercept clicks on the links and use them to invoke external programs (in this case using ShellExecute()).
 
 One of the trickiest aspects of hosting the Web Browser Control is distinguishing between programmatic navigation and navigation that results from the user clicking a link. This sample demonstrates one simple technique for doing that using a flag.

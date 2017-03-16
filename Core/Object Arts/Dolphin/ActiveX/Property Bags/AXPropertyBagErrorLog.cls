@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 COMInterfaceImp subclass: #AXPropertyBagErrorLog
 	instanceVariableNames: 'errors guid'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-AXPropertyBagErrorLog guid: (GUID fromString: '{9C956C62-AF27-11D3-B376-080046056106}')!
+AXPropertyBagErrorLog guid: (GUID fromString: '{9c956c62-af27-11d3-b376-080046056106}')!
 AXPropertyBagErrorLog comment: 'AXErrorLog is a simple implementation of an Active-X error log object which supports the interface <IErrorLog>. It is used, for example, to record errors occurring during a call to IPersistPropertyBag::Load().
 
 Instance Variables:

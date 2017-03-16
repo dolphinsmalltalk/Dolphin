@@ -5,7 +5,7 @@ ProfessionalSmalltalkSystem subclass: #RefactoringSmalltalkSystem
 	classVariableNames: 'RefactoringSignal'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-RefactoringSmalltalkSystem guid: (GUID fromString: '{E3E901A0-A7D5-401C-8230-885E9236D3B4}')!
+RefactoringSmalltalkSystem guid: (GUID fromString: '{e3e901a0-a7d5-401c-8230-885e9236d3b4}')!
 RefactoringSmalltalkSystem comment: 'RefactoringSmalltalkSystem extends SmalltalkSystem to support the refactorings available in the Refactoring Browser''s refactoring engine.
 '!
 !RefactoringSmalltalkSystem categoriesForClass!Development!MVP-Models!System-Support! !

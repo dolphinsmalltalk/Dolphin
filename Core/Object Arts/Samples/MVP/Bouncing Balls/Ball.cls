@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #Ball
 	instanceVariableNames: 'position velocity icon'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-Ball guid: (GUID fromString: '{09652D38-E87C-4CB5-B5FD-2D093FAE268B}')!
+Ball guid: (GUID fromString: '{09652d38-e87c-4cb5-b5fd-2d093fae268b}')!
 Ball comment: ''!
 !Ball categoriesForClass!Unclassified! !
 !Ball methodsFor!

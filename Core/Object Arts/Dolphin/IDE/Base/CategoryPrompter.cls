@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ValueDialog subclass: #CategoryPrompter
 	instanceVariableNames: 'treePresenter flags categoryClass'
 	classVariableNames: 'AllowIntermediatesMask AllowReadOnlyMask'
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
-CategoryPrompter guid: (GUID fromString: '{87B4C6A6-026E-11D3-9FD7-00A0CC3E4A32}')!
+CategoryPrompter guid: (GUID fromString: '{87b4c6a6-026e-11d3-9fd7-00a0cc3e4a32}')!
 CategoryPrompter comment: 'CategoryPrompter is a <valueDialogPresenter> that can be used to prompt for a <Category>.
 
 Example:

@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk 2000 release 5.00"!
+"Filed out from Dolphin Smalltalk 7"!
 
 VariableRefactoring subclass: #AbstractClassVariableRefactoring
 	instanceVariableNames: 'accessorsRefactoring'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-AbstractClassVariableRefactoring guid: (GUID fromString: '{4F0F7EBC-00AB-4A37-8AA9-F879D6B34C5A}')!
+AbstractClassVariableRefactoring guid: (GUID fromString: '{4f0f7ebc-00ab-4a37-8aa9-f879d6b34c5a}')!
 AbstractClassVariableRefactoring comment: ''!
 !AbstractClassVariableRefactoring categoriesForClass!Refactory-Refactorings! !
 !AbstractClassVariableRefactoring methodsFor!

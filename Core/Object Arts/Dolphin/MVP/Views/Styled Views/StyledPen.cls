@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #StyledPen
 	instanceVariableNames: 'color width dashPattern'
 	classVariableNames: ''
 	poolDictionaries: 'GdiplusConstants'
 	classInstanceVariableNames: ''!
-StyledPen guid: (GUID fromString: '{981954B0-D34D-400F-8E8C-01FAA46311AB}')!
+StyledPen guid: (GUID fromString: '{981954b0-d34d-400f-8e8c-01faa46311ab}')!
 StyledPen comment: 'A StyledPen holds persistent details for a GdiplusPen.'!
 !StyledPen categoriesForClass!Kernel-Objects! !
 !StyledPen methodsFor!

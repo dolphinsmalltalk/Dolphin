@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 PluggableSortAlgorithm subclass: #QuicksortAlgorithm
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-QuicksortAlgorithm guid: (GUID fromString: '{4ECBB0CA-01F4-485F-9C80-3D77C661D26B}')!
+QuicksortAlgorithm guid: (GUID fromString: '{4ecbb0ca-01f4-485f-9c80-3d77c661d26b}')!
 QuicksortAlgorithm comment: 'QuicksortAlgorithm implements the Quicksort algorithm as a sorting strategy for use in conjunction with <SortedCollection>s.
 
 Quicksort was invented by C.A.R. Hoare in the early 1960s. It is a fast sort with a short inner loop that requires only about O(N log N) on average to sort N items. Quicksort uses a divide-and-conquer approach, partitioning the elements into two parts and then recurively sorting them. Although it is the most efficient comparison based sorting algorithm on average, it has worst cases in which it can become quadratic. These cases are not only very time consuming, but since the algorithm is recursive they can also require a large amount of stack space (although this disadvantage can be largely overcome by sorting the larger partition iteratively rather than recursively, which limits the stack requirement to O(log N) rather than O(N)).

@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 HtmlParserElement subclass: #HtmlParserForm
 	instanceVariableNames: 'formFields name target action method'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-HtmlParserForm guid: (GUID fromString: '{C07AB3E1-D20E-4855-8E56-FE1CE13B4B5A}')!
+HtmlParserForm guid: (GUID fromString: '{c07ab3e1-d20e-4855-8e56-fe1ce13b4b5a}')!
 HtmlParserForm comment: ''!
 !HtmlParserForm categoriesForClass!Unclassified! !
 !HtmlParserForm methodsFor!

@@ -5,7 +5,7 @@ Color subclass: #IndexedColor
 	classVariableNames: 'ColorNames ColorsByIndex ColorsByName'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-IndexedColor guid: (GUID fromString: '{87B4C53A-026E-11D3-9FD7-00A0CC3E4A32}')!
+IndexedColor guid: (GUID fromString: '{87b4c53a-026e-11d3-9fd7-00a0cc3e4a32}')!
 IndexedColor comment: 'IndexedColor instances represent the 16 standard colours defined by Windows that are always available in the standard system palette. There are actually 20 indexed colours, but 4 of these do not necessarily map to a fixed colour name.
 
 We have used a logical system to name the colours, but Microsoft also use the following name,  e.g. in the common Font dialog:

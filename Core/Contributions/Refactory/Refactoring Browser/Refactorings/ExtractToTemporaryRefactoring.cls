@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk XP 2002 release 6.00"!
+"Filed out from Dolphin Smalltalk 7"!
 
 MethodRefactoring subclass: #ExtractToTemporaryRefactoring
 	instanceVariableNames: 'sourceInterval selector newVariableName parseTree'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ExtractToTemporaryRefactoring guid: (GUID fromString: '{78588408-02AF-46BE-9F03-34D63854D1F1}')!
+ExtractToTemporaryRefactoring guid: (GUID fromString: '{78588408-02af-46be-9f03-34d63854d1f1}')!
 ExtractToTemporaryRefactoring comment: ''!
 !ExtractToTemporaryRefactoring categoriesForClass!Refactory-Refactorings! !
 !ExtractToTemporaryRefactoring methodsFor!

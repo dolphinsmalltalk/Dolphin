@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 SmalltalkToolShell subclass: #UserPreferencesShell
 	instanceVariableNames: 'preferencesPresenter'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-UserPreferencesShell guid: (GUID fromString: '{952571B1-F954-4626-BF12-BDD570B30A14}')!
+UserPreferencesShell guid: (GUID fromString: '{952571b1-f954-4626-bf12-bdd570b30a14}')!
 UserPreferencesShell comment: ''!
 !UserPreferencesShell categoriesForClass!Development! !
 !UserPreferencesShell methodsFor!

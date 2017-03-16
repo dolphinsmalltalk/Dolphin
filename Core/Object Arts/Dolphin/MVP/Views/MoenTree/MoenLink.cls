@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Link subclass: #MoenLink
 	instanceVariableNames: 'x y'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-MoenLink guid: (GUID fromString: '{68F4AC02-2F95-11D3-93BA-00A024CA708A}')!
+MoenLink guid: (GUID fromString: '{68f4ac02-2f95-11d3-93ba-00a024ca708a}')!
 MoenLink comment: 'MoenLink is a private helper class that is part of the implementation of the <MoenTreeView>'!
 !MoenLink categoriesForClass!Collections-Support!MVP-Views-Support! !
 !MoenLink methodsFor!

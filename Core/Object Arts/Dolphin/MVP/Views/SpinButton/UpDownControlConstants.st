@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Smalltalk at: #UpDownControlConstants put: (PoolConstantsDictionary named: #UpDownControlConstants)!
 UpDownControlConstants at: 'UD_MAXVAL' put: 16r7FFF!

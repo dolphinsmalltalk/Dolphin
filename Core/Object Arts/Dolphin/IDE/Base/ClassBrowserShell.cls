@@ -5,7 +5,7 @@ ClassBrowserAbstract subclass: #ClassBrowserShell
 	classVariableNames: 'LocalHierarchyMask'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ClassBrowserShell guid: (GUID fromString: '{5655079D-FA03-4CA0-85C5-73CD64654603}')!
+ClassBrowserShell guid: (GUID fromString: '{5655079d-fa03-4ca0-85c5-73cd64654603}')!
 ClassBrowserShell comment: 'ClassBrowserShell is a <SmalltalkToolShell> implementing the Class Hierarchy Browser development tool.
 
 Instance Variables:

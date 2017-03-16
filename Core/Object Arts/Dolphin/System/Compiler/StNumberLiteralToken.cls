@@ -5,7 +5,7 @@ StLiteralToken subclass: #StNumberLiteralToken
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-StNumberLiteralToken guid: (GUID fromString: '{777F55AE-A939-4A73-9CC8-2CEF3A91F41E}')!
+StNumberLiteralToken guid: (GUID fromString: '{777f55ae-a939-4a73-9cc8-2cef3a91f41e}')!
 StNumberLiteralToken comment: ''!
 !StNumberLiteralToken categoriesForClass!Unclassified! !
 !StNumberLiteralToken methodsFor!
@@ -35,7 +35,7 @@ source: aString
 !StNumberLiteralToken categoriesFor: #acceptVisitor:!public!visitor! !
 !StNumberLiteralToken categoriesFor: #forgetNegative!helpers!private! !
 !StNumberLiteralToken categoriesFor: #formatOn:source:!printing!public! !
-!StNumberLiteralToken categoriesFor: #isNegative!testing!public! !
+!StNumberLiteralToken categoriesFor: #isNegative!public!testing! !
 !StNumberLiteralToken categoriesFor: #source!accessing!public! !
 !StNumberLiteralToken categoriesFor: #source:!accessing!public! !
 

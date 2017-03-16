@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 DoubleBufferedView subclass: #SlidingBallDemo
 	instanceVariableNames: 'start end circle stepProcess'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-SlidingBallDemo guid: (GUID fromString: '{E5BA81F2-42E7-43EE-832F-3A24FADEBFEE}')!
+SlidingBallDemo guid: (GUID fromString: '{e5ba81f2-42e7-43ee-832f-3a24fadebfee}')!
 SlidingBallDemo comment: 'I would like the example to have two rectangles connected by a line.
 One button (called "start") that when presssed will show a small
 circle travel along the line from one rectangle to the other. Upon

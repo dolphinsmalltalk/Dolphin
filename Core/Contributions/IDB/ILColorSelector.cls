@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 View subclass: #ILColorSelector
 	instanceVariableNames: 'colorTable dum2 dum3 dum4 dum5'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ILColorSelector guid: (GUID fromString: '{98275153-D23A-4A14-A9F2-1FF232B7DC14}')!
+ILColorSelector guid: (GUID fromString: '{98275153-d23a-4a14-a9f2-1ff232b7dc14}')!
 ILColorSelector comment: 'See [DolphinImageFolder]/Idb/Documentation for details
 
 (C) 2005 Ian Bartholomew

@@ -5,7 +5,7 @@ ControlView subclass: #AXControlSite
 	classVariableNames: 'AllowContextMenuMask AllowShowUIMask AllowWindowlessMask DisplayAsDefaultMask FireControlEventsMask FirePropertyEventsMask ReflectMask StandardPropNames TraceEventsMask UserModeMask WM_ATLGETHOST WM_FORWARDMSG'
 	poolDictionaries: 'AXAutomationConstants AXAutomationErrors'
 	classInstanceVariableNames: ''!
-AXControlSite guid: (GUID fromString: '{804D8C3F-38C6-4928-BD58-574C2B24A053}')!
+AXControlSite guid: (GUID fromString: '{804d8c3f-38c6-4928-bd58-574c2b24a053}')!
 AXControlSite comment: 'AXControlSite is a <ControlView> which is able to host almost any Active-X control - also referred to as OLE controls, or OCXs. This includes both non-visual controls that require in-place activation (see example1), or to host true visual controls (see AXControlSite class>>example2) including the Microsoft Web Browser control. Events from the control can be enabled, and are triggered off the AXControlSite''s presenter (usually itself).
 
 The best way to experiment with AXControlSite is to try it out in the simple Active-X control browser, <AXTestContainer>.

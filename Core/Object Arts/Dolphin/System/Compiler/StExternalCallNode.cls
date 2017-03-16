@@ -5,7 +5,7 @@ StTagNode subclass: #StExternalCallNode
 	classVariableNames: 'OverlappedMask VirtualMask'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-StExternalCallNode guid: (GUID fromString: '{66ADD179-2714-4FBB-B856-33DEE83E11F4}')!
+StExternalCallNode guid: (GUID fromString: '{66add179-2714-4fbb-b856-33dee83e11f4}')!
 StExternalCallNode comment: ''!
 !StExternalCallNode categoriesForClass!System-Compiler! !
 !StExternalCallNode methodsFor!

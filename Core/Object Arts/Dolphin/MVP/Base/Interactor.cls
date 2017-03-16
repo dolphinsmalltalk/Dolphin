@@ -5,7 +5,7 @@ Object subclass: #Interactor
 	classVariableNames: ''
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
-Interactor guid: (GUID fromString: '{6281DD52-AD59-468B-B5B9-C5594195CEF8}')!
+Interactor guid: (GUID fromString: '{6281dd52-ad59-468b-b5b9-c5594195cef8}')!
 Interactor comment: ''!
 !Interactor categoriesForClass!MVP-Interactors! !
 !Interactor methodsFor!

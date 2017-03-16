@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 MethodBrowserShell subclass: #LintRuleFailuresBrowserShell
 	instanceVariableNames: 'lintRule'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-LintRuleFailuresBrowserShell guid: (GUID fromString: '{1F17DD01-E9D4-4F6B-A722-E0F62AED9B74}')!
+LintRuleFailuresBrowserShell guid: (GUID fromString: '{1f17dd01-e9d4-4f6b-a722-e0f62aed9b74}')!
 LintRuleFailuresBrowserShell comment: ''!
 !LintRuleFailuresBrowserShell categoriesForClass!Development! !
 !LintRuleFailuresBrowserShell methodsFor!

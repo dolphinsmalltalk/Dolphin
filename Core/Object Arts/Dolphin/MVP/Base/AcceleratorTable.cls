@@ -5,7 +5,7 @@ GraphicsTool subclass: #AcceleratorTable
 	classVariableNames: 'KeyNamesToModifiers NamesOfModifiers'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-AcceleratorTable guid: (GUID fromString: '{87B4C632-026E-11D3-9FD7-00A0CC3E4A32}')!
+AcceleratorTable guid: (GUID fromString: '{87b4c632-026e-11d3-9fd7-00a0cc3e4a32}')!
 AcceleratorTable comment: 'AcceleratorTable is the class used to represent the table of "accelerator" key sequences associated with a top-level view. These key-sequences provide keyboard shortcuts to commands on the menu or toolbar (or any other command sources).
 
 Instance Variables:

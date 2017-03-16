@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Win32Structure subclass: #NOTIFYICONDATA
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-NOTIFYICONDATA guid: (GUID fromString: '{70CB825F-18F0-4968-9638-A8444B0BD805}')!
+NOTIFYICONDATA guid: (GUID fromString: '{70cb825f-18f0-4968-9638-a8444b0bd805}')!
 NOTIFYICONDATA comment: ''!
 !NOTIFYICONDATA categoriesForClass!No category! !
 !NOTIFYICONDATA methodsFor!

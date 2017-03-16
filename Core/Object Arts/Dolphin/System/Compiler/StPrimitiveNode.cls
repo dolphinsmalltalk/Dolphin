@@ -5,7 +5,7 @@ StTagNode subclass: #StPrimitiveNode
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-StPrimitiveNode guid: (GUID fromString: '{D70C8417-C320-465F-AC62-6B81D9E844C9}')!
+StPrimitiveNode guid: (GUID fromString: '{d70c8417-c320-465f-ac62-6b81d9e844c9}')!
 StPrimitiveNode comment: ''!
 !StPrimitiveNode categoriesForClass!System-Compiler! !
 !StPrimitiveNode methodsFor!

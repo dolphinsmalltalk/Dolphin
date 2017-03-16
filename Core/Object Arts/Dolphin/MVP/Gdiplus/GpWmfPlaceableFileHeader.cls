@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ExternalStructure subclass: #GpWmfPlaceableFileHeader
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-GpWmfPlaceableFileHeader guid: (GUID fromString: '{E244EDF0-9096-42DD-944D-3BE54248689F}')!
+GpWmfPlaceableFileHeader guid: (GUID fromString: '{e244edf0-9096-42dd-944d-3be54248689f}')!
 GpWmfPlaceableFileHeader comment: '<GpWmfPlaceableFileHeader> is an <ExternalStructure> class to wrap the struct ''Gdiplus.GpWmfPlaceableFileHeader'' from type information in the ''GDI+ Library 1.0'' library.
 
 The type library contains no documentation for this struct

@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Win32Structure subclass: #DOCINFO
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-DOCINFO guid: (GUID fromString: '{87B4C5E8-026E-11D3-9FD7-00A0CC3E4A32}')!
+DOCINFO guid: (GUID fromString: '{87b4c5e8-026e-11d3-9fd7-00a0cc3e4a32}')!
 DOCINFO comment: 'DOCINFO is an <ExternalStructure> class which represents the Win32 DOCINFO structure of the same name.
 
 DOCINFO is used in conjunction with the StartDoc() GDI call.'!

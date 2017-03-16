@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 VirtualMethodCategory subclass: #UnclassifiedMethodsCategory
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-UnclassifiedMethodsCategory guid: (GUID fromString: '{87B4C508-026E-11D3-9FD7-00A0CC3E4A32}')!
+UnclassifiedMethodsCategory guid: (GUID fromString: '{87b4c508-026e-11d3-9fd7-00a0cc3e4a32}')!
 UnclassifiedMethodsCategory comment: 'ReferencesCategory is a virtual method categories class which dynamically determines its membership to be those methods which are categorized only in other virtual categories, i.e. those methods which have not been specifically allocated a category.
 
 Instance Variables:

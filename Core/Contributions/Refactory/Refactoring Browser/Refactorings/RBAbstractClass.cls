@@ -5,7 +5,7 @@ Object subclass: #RBAbstractClass
 	classVariableNames: 'LookupSuperclass'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-RBAbstractClass guid: (GUID fromString: '{99469076-F20A-4A7F-91F1-C2D06D948A14}')!
+RBAbstractClass guid: (GUID fromString: '{99469076-f20a-4a7f-91f1-c2d06d948a14}')!
 RBAbstractClass comment: 'RBAbstractClass is an abstract class. It represents classes in the system. Refactorings operate on these objects, producing change objects. These change objects are then performed on the real code.
 
 Subclasses must implement the following messages:

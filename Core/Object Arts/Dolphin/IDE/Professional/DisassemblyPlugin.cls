@@ -5,7 +5,7 @@ ClassBrowserPlugin subclass: #DisassemblyPlugin
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-DisassemblyPlugin guid: (GUID fromString: '{D582AE85-FC5C-431B-9BC5-D27DDEFD895C}')!
+DisassemblyPlugin guid: (GUID fromString: '{d582ae85-fc5c-431b-9bc5-d27ddefd895c}')!
 DisassemblyPlugin comment: 'DisassemblyPlugin is a <classBrowserPlugin> that decompiles a browser''s currently selected compiled method into it''s bytecode assembly instructions. Since this facility is probably not of interest to most developers it is not installed as one of the default plugins. If you wish to add this plugin to all browsers please evaluate:
 
 	ClassBrowserAbstract allSubclasses do: [:each | each plugins add: self]

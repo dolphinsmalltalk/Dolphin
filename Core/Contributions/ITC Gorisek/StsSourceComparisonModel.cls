@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #StsSourceComparisonModel
 	instanceVariableNames: 'differences lines1 lines2'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-StsSourceComparisonModel guid: (GUID fromString: '{1E36BE55-3ED9-11D4-B101-000000000000}')!
+StsSourceComparisonModel guid: (GUID fromString: '{1e36be55-3ed9-11d4-b101-000000000000}')!
 StsSourceComparisonModel comment: ''!
 !StsSourceComparisonModel categoriesForClass!Unclassified! !
 !StsSourceComparisonModel methodsFor!

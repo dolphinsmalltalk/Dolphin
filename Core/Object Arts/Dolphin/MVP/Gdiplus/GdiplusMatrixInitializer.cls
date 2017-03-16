@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 GdiplusInitializer subclass: #GdiplusMatrixInitializer
 	instanceVariableNames: 'm11 m12 m21 m22 m31 m32'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-GdiplusMatrixInitializer guid: (GUID fromString: '{1A1A5EA6-6151-11D7-B609-00E0987E8081}')!
+GdiplusMatrixInitializer guid: (GUID fromString: '{1a1a5ea6-6151-11d7-b609-00e0987e8081}')!
 GdiplusMatrixInitializer comment: ''!
 !GdiplusMatrixInitializer categoriesForClass!Unclassified! !
 !GdiplusMatrixInitializer methodsFor!

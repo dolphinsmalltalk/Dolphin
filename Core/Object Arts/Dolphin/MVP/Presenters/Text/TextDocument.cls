@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 DocumentShell subclass: #TextDocument
 	instanceVariableNames: 'documentPresenter statusModel'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-TextDocument guid: (GUID fromString: '{87B4C6BB-026E-11D3-9FD7-00A0CC3E4A32}')!
+TextDocument guid: (GUID fromString: '{87b4c6bb-026e-11d3-9fd7-00a0cc3e4a32}')!
 TextDocument comment: 'TextDocument is a <documentPresenter> capable of displaying and editing a <readableString> document.
 
 Instance Variables:

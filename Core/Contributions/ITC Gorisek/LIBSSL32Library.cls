@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ExternalLibrary subclass: #LIBSSL32Library
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: 'isInitialized'!
-LIBSSL32Library guid: (GUID fromString: '{520FB318-EB8B-47CA-A2B0-D406FD2EC7C6}')!
+LIBSSL32Library guid: (GUID fromString: '{520fb318-eb8b-47ca-a2b0-d406fd2ec7c6}')!
 LIBSSL32Library comment: 'The OpenSSL dynamic link library.
 
 Author: Chris Double

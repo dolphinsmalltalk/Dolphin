@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk XP 2002 release 5.05"!
+"Filed out from Dolphin Smalltalk 7"!
 
 MethodRefactoring subclass: #InlineAllSendersRefactoring
 	instanceVariableNames: 'selector numberReplaced numberNotReplaced'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-InlineAllSendersRefactoring guid: (GUID fromString: '{09AC0050-928C-41F2-8A20-8D0490A9C4FB}')!
+InlineAllSendersRefactoring guid: (GUID fromString: '{09ac0050-928c-41f2-8a20-8d0490a9c4fb}')!
 InlineAllSendersRefactoring comment: ''!
 !InlineAllSendersRefactoring categoriesForClass!Refactory-Refactorings! !
 !InlineAllSendersRefactoring methodsFor!

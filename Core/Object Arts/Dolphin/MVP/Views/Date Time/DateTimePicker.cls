@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 DateTimeCommonControl subclass: #DateTimePicker
 	instanceVariableNames: 'displayFormat'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-DateTimePicker guid: (GUID fromString: '{87B4C735-026E-11D3-9FD7-00A0CC3E4A32}')!
+DateTimePicker guid: (GUID fromString: '{87b4c735-026e-11d3-9fd7-00a0cc3e4a32}')!
 DateTimePicker comment: 'DateTimePicker is a <valueView> implementing the Windows "SysDateTimePick32" common control, referred to as the "Date and Time Picker Control" in the MSDN documentation. 
 
 The <valueModel> associated with a DateTimePicker must always yield a value that can be converted to a <TimeStamp> using #asTimeStamp after mapping through the installed type converter. A DateTimePicker  will normally be used in conjunction with a <DatePresenter> or a <TimePresenter>, and indeed when the class'' package is installed a DateTimePicker is used as the default views for both presenters.

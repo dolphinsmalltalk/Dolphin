@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #ODBByteStorageRequest
 	instanceVariableNames: 'objectHolder byteArray'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ODBByteStorageRequest guid: (GUID fromString: '{8162EDCD-0FB8-11D4-B091-000000000000}')!
+ODBByteStorageRequest guid: (GUID fromString: '{8162edcd-0fb8-11d4-b091-000000000000}')!
 ODBByteStorageRequest comment: ''!
 !ODBByteStorageRequest categoriesForClass!No category! !
 !ODBByteStorageRequest methodsFor!

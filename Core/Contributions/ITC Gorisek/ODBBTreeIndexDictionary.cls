@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ODBTransactionObject subclass: #ODBBTreeIndexDictionary
 	instanceVariableNames: 'changed keySize currentKey'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ODBBTreeIndexDictionary guid: (GUID fromString: '{8162EE2E-0FB8-11D4-B091-000000000000}')!
+ODBBTreeIndexDictionary guid: (GUID fromString: '{8162ee2e-0fb8-11d4-b091-000000000000}')!
 ODBBTreeIndexDictionary comment: ''!
 !ODBBTreeIndexDictionary categoriesForClass!No category! !
 !ODBBTreeIndexDictionary methodsFor!

@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ODBFile subclass: #ODBIDTable
 	instanceVariableNames: 'lastID'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ODBIDTable guid: (GUID fromString: '{8162EE1A-0FB8-11D4-B091-000000000000}')!
+ODBIDTable guid: (GUID fromString: '{8162ee1a-0fb8-11d4-b091-000000000000}')!
 ODBIDTable comment: ''!
 !ODBIDTable categoriesForClass!No category! !
 !ODBIDTable methodsFor!

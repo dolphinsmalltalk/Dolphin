@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #ILImportBitmapProxy
 	instanceVariableNames: 'bitmapInfoHeader colorTable imageBytes'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ILImportBitmapProxy guid: (GUID fromString: '{E7A42970-A8AC-4D70-81A2-7BCF6935CDE4}')!
+ILImportBitmapProxy guid: (GUID fromString: '{e7a42970-a8ac-4d70-81a2-7bcf6935cde4}')!
 ILImportBitmapProxy comment: 'See [DolphinImageFolder]/Idb/Documentation for details
 
 (C) 2005 Ian Bartholomew

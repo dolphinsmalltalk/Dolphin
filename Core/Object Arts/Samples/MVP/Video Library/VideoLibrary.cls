@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #VideoLibrary
 	instanceVariableNames: 'owner tapes'
 	classVariableNames: 'DefaultInstance'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-VideoLibrary guid: (GUID fromString: '{E07E20A9-89D7-4F84-941A-7C3365CF6112}')!
+VideoLibrary guid: (GUID fromString: '{e07e20a9-89d7-4f84-941a-7c3365cf6112}')!
 VideoLibrary comment: 'VideoLibrary is represents a collection of VideoTapes that belong to a particular owner. This class is part of the Video Library sample package. Please see the package comment for more details.'!
 !VideoLibrary categoriesForClass!Samples! !
 !VideoLibrary methodsFor!

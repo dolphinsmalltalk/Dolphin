@@ -5,7 +5,7 @@ SmalltalkToolShell subclass: #MethodBrowserShell
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-MethodBrowserShell guid: (GUID fromString: '{87B4C6BF-026E-11D3-9FD7-00A0CC3E4A32}')!
+MethodBrowserShell guid: (GUID fromString: '{87b4c6bf-026e-11d3-9fd7-00a0cc3e4a32}')!
 MethodBrowserShell comment: 'MethodBrowserShell is a <SmalltalkToolShell> that implements a method browser tool in a top-level window. Note that this is really just a "shell" around the real functionality which is obtained by embedding a <MethodBrowser> presenter. 
 
 Instance Variables:

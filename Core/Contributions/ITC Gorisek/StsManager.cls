@@ -5,7 +5,7 @@ Object subclass: #StsManager
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: 'current'!
-StsManager guid: (GUID fromString: '{D2238700-0F19-11D4-B08F-000000000000}')!
+StsManager guid: (GUID fromString: '{d2238700-0f19-11d4-b08f-000000000000}')!
 StsManager comment: '"Evaluate the following line to initialize Source Tracking System."
 
 	StsManager startUp'!

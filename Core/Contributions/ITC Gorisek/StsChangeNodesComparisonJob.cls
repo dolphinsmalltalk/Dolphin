@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #StsChangeNodesComparisonJob
 	instanceVariableNames: 'compareWithImageOrProjectEdition changes'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-StsChangeNodesComparisonJob guid: (GUID fromString: '{0EF8513F-E09D-4676-9C6C-B0ADF1026FBC}')!
+StsChangeNodesComparisonJob guid: (GUID fromString: '{0ef8513f-e09d-4676-9c6c-b0adf1026fbc}')!
 StsChangeNodesComparisonJob comment: ''!
 !StsChangeNodesComparisonJob categoriesForClass!Unclassified! !
 !StsChangeNodesComparisonJob methodsFor!

@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Color subclass: #SystemColor
 	instanceVariableNames: 'id'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-SystemColor guid: (GUID fromString: '{87B4C53C-026E-11D3-9FD7-00A0CC3E4A32}')!
+SystemColor guid: (GUID fromString: '{87b4c53c-026e-11d3-9fd7-00a0cc3e4a32}')!
 SystemColor comment: 'SystemColor instances represent the logical colours defined by the current Windows colour scheme, for example the colour of dialog backgrounds, window captions, etc.'!
 !SystemColor categoriesForClass!Drawing! !
 !SystemColor methodsFor!

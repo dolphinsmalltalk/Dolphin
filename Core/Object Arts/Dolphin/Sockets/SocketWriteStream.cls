@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 WriteStream subclass: #SocketWriteStream
 	instanceVariableNames: 'socket dirty'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-SocketWriteStream guid: (GUID fromString: '{87B4C6FE-026E-11D3-9FD7-00A0CC3E4A32}')!
+SocketWriteStream guid: (GUID fromString: '{87b4c6fe-026e-11d3-9fd7-00a0cc3e4a32}')!
 SocketWriteStream comment: 'This class represents a buffered write stream for sending data across a Socket connection.
 
 From an implementation perspective this class is similar to FileStream, in that it uses the inherited stream collection as a buffer, overridding certain operations to note when the buffer is dirty. Data is not sent to the underlying socket until the stream is explictily flushed, or the buffer overflows.'!

@@ -5,7 +5,7 @@ ExternalStructure subclass: #AbstractIN_ADDR
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-AbstractIN_ADDR guid: (GUID fromString: '{92297CF1-48A8-4480-AA8B-8C04D20683C3}')!
+AbstractIN_ADDR guid: (GUID fromString: '{92297cf1-48a8-4480-aa8b-8c04d20683c3}')!
 AbstractIN_ADDR comment: '<AbstractIN_ADDR> is an abstract <ExternalStructure> class providing common behavior for the IN_ADDR and IN6_ADDR structures, that provide binary representations of IPv4 and IPv6 addresses, respectively.'!
 !AbstractIN_ADDR categoriesForClass!Win32-Structs! !
 !AbstractIN_ADDR methodsFor!

@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #FindDetails
 	instanceVariableNames: 'pattern replaceWith searchMode flags action'
 	classVariableNames: 'IgnoreCaseMask UpMask WholeWordMask WrapMask'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-FindDetails guid: (GUID fromString: '{EC9A373C-74CF-4A2C-B29C-227014E985F9}')!
+FindDetails guid: (GUID fromString: '{ec9a373c-74cf-4a2c-b29c-227014e985f9}')!
 FindDetails comment: ''!
 !FindDetails categoriesForClass!Kernel-Objects! !
 !FindDetails methodsFor!

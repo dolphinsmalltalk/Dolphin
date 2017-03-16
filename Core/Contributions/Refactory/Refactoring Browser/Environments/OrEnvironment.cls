@@ -5,7 +5,7 @@ BrowserEnvironmentWrapper subclass: #OrEnvironment
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-OrEnvironment guid: (GUID fromString: '{72C876B4-B565-41F0-85A5-957532328C69}')!
+OrEnvironment guid: (GUID fromString: '{72c876b4-b565-41f0-85a5-957532328c69}')!
 OrEnvironment comment: ''!
 !OrEnvironment categoriesForClass!Refactoring-Environment! !
 !OrEnvironment methodsFor!

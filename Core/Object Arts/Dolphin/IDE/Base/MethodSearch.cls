@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #MethodSearch
 	instanceVariableNames: 'findDetails regexp literal'
 	classVariableNames: 'IgnoreCaseMask'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-MethodSearch guid: (GUID fromString: '{702AE94A-B32C-4D97-B2A5-8080CF67E3B4}')!
+MethodSearch guid: (GUID fromString: '{702ae94a-b32c-4d97-b2a5-8080cf67e3b4}')!
 MethodSearch comment: 'SelectorSearch represents the information and behaviour necessary to filter the methods of the system according to whether they define or reference a message selector matching specified criteria. This can include regular expression matching when the ''VBScript Regular Expressions'' package is loaded.
 
 Instance Variables:

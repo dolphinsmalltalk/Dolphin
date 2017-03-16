@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #RefactoryChangeManager
 	instanceVariableNames: 'undo redo isPerformingRefactoring'
 	classVariableNames: 'Instance UndoSize'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-RefactoryChangeManager guid: (GUID fromString: '{5BC74F5C-1BCD-4890-AD8B-BF8A58B6DF7F}')!
+RefactoryChangeManager guid: (GUID fromString: '{5bc74f5c-1bcd-4890-ad8b-bf8a58b6df7f}')!
 RefactoryChangeManager comment: ''!
 !RefactoryChangeManager categoriesForClass!Refactory-Change Objects! !
 !RefactoryChangeManager methodsFor!

@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 StsImportProxy subclass: #StsProjectProxy
 	instanceVariableNames: 'packages previousVersionsData blessing versionComment'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-StsProjectProxy guid: (GUID fromString: '{58A0CB78-5A4B-46EC-B9E5-4309ED750F75}')!
+StsProjectProxy guid: (GUID fromString: '{58a0cb78-5a4b-46ec-b9e5-4309ed750f75}')!
 StsProjectProxy comment: ''!
 !StsProjectProxy categoriesForClass!Unclassified! !
 !StsProjectProxy methodsFor!

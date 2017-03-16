@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 EMailObject subclass: #EMailAttachment
 	instanceVariableNames: 'subAttachments'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-EMailAttachment guid: (GUID fromString: '{D2FBD6E5-86F0-40E6-A683-386293BAA48B}')!
+EMailAttachment guid: (GUID fromString: '{d2fbd6e5-86f0-40e6-a683-386293baa48b}')!
 EMailAttachment comment: ''!
 !EMailAttachment categoriesForClass!Unclassified! !
 !EMailAttachment methodsFor!

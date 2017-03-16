@@ -5,7 +5,7 @@ IdbToolShell subclass: #FileBrowser
 	classVariableNames: 'HexEnabled HexFont RemoveCr RootFolder TextFont Warnings'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-FileBrowser guid: (GUID fromString: '{782ED51C-5423-11D3-998B-BCA753D3B065}')!
+FileBrowser guid: (GUID fromString: '{782ed51c-5423-11d3-998b-bca753d3b065}')!
 FileBrowser comment: 'See [DolphinImageFolder]/Idb/Documentation for details
 
 (C) 2005 Ian Bartholomew

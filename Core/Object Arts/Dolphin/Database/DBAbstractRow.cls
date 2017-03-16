@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #DBAbstractRow
 	instanceVariableNames: 'columns contents selectors status'
 	classVariableNames: ''
 	poolDictionaries: 'ODBCConstants'
 	classInstanceVariableNames: ''!
-DBAbstractRow guid: (GUID fromString: '{C829ECE2-5847-4E24-855E-A9C259DD955F}')!
+DBAbstractRow guid: (GUID fromString: '{c829ece2-5847-4e24-855e-a9c259dd955f}')!
 DBAbstractRow comment: 'A DBAbstractRow respresents a row in a <DBResultSet>, either as a buffer containing a collection of field buffers used to receive data from ODBC (subclasses of DBRowBuffer), or as a reified row containing the column values as appropriate types of Smalltalk object (DBRow).
 
 From a DBAbstractRows one can access the column attributes and the actual field data for the columns. The columns can be accessed by name using #at: and by index using #atIndex:. The type of object returned depends on whether the receiver is a buffer (in which case one gets <DBField>s, or a reified <DBRow>, in which case one gets the field values). DBAbstractRows also provide implicit accessor methods for each column by overriding #doesNotUnderstand.

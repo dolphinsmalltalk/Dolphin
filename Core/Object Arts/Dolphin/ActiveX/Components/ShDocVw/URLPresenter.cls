@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ValuePresenter subclass: #URLPresenter
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-URLPresenter guid: (GUID fromString: '{A98215D9-BDA9-4B36-8443-C6A72C049D71}')!
+URLPresenter guid: (GUID fromString: '{a98215d9-bda9-4b36-8443-c6a72c049d71}')!
 URLPresenter comment: ''!
 !URLPresenter categoriesForClass!MVP-Presenters! !
 !URLPresenter class methodsFor!

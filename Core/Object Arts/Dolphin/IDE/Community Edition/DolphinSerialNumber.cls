@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ProtectedProductSerialNumber subclass: #DolphinSerialNumber
 	instanceVariableNames: ''
 	classVariableNames: 'CompromisedSerialNumbersTrusted UpgradeLevelsMap UpgradeLevelsNamesMap VariationMasksMap'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-DolphinSerialNumber guid: (GUID fromString: '{D5924714-DFD8-4B93-93CA-35A0A4318528}')!
+DolphinSerialNumber guid: (GUID fromString: '{d5924714-dfd8-4b93-93ca-35a0a4318528}')!
 DolphinSerialNumber comment: 'Serial Numbers for installation
 
 "New full serial numbers for 2 month expiry"

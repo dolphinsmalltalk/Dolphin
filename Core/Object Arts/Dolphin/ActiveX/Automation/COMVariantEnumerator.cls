@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 COMEnumerator subclass: #COMVariantEnumerator
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-COMVariantEnumerator guid: (GUID fromString: '{537C1340-A1B1-11D3-B376-080046056106}')!
+COMVariantEnumerator guid: (GUID fromString: '{537c1340-a1b1-11d3-b376-080046056106}')!
 COMVariantEnumerator comment: 'COMInterfaceEnumerator is Dolphin''s implementation of <IEnumVARIANT>.'!
 !COMVariantEnumerator categoriesForClass!COM-Implementations! !
 !COMVariantEnumerator methodsFor!

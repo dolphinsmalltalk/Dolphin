@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ControlView subclass: #Tooltip
 	instanceVariableNames: ''
 	classVariableNames: 'TtnMap'
 	poolDictionaries: 'TooltipConstants'
 	classInstanceVariableNames: ''!
-Tooltip guid: (GUID fromString: '{BA32BD21-5167-4BD1-949C-AB76875CDEB7}')!
+Tooltip guid: (GUID fromString: '{ba32bd21-5167-4bd1-949c-ab76875cdeb7}')!
 Tooltip comment: 'Tooltip is a <ControlView> class which wraps the Windows Tool Tip control.'!
 !Tooltip categoriesForClass!MVP-Views! !
 !Tooltip methodsFor!

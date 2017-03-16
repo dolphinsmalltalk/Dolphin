@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #Folder
 	instanceVariableNames: 'pathname canonicalPath'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-Folder guid: (GUID fromString: '{A5B3954D-5310-45C1-B09E-EE7DD70D6CD5}')!
+Folder guid: (GUID fromString: '{a5b3954d-5310-45c1-b09e-ee7dd70d6cd5}')!
 Folder comment: ''!
 !Folder categoriesForClass!MVP-Models! !
 !Folder methodsFor!

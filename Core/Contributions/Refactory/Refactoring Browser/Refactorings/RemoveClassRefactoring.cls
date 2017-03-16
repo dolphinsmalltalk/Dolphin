@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk XP"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Refactoring subclass: #RemoveClassRefactoring
 	instanceVariableNames: 'classNames'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-RemoveClassRefactoring guid: (GUID fromString: '{80687CB5-257C-4125-9D59-58EBCEA2EBCB}')!
+RemoveClassRefactoring guid: (GUID fromString: '{80687cb5-257c-4125-9d59-58ebcea2ebcb}')!
 RemoveClassRefactoring comment: ''!
 !RemoveClassRefactoring categoriesForClass!Refactory-Refactorings! !
 !RemoveClassRefactoring methodsFor!

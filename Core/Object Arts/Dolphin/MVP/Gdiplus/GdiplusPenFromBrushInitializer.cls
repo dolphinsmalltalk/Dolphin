@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 GdiplusPenInitializer subclass: #GdiplusPenFromBrushInitializer
 	instanceVariableNames: 'brush width'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-GdiplusPenFromBrushInitializer guid: (GUID fromString: '{3CEBFBE5-F58D-442F-BF48-8D88151842CF}')!
+GdiplusPenFromBrushInitializer guid: (GUID fromString: '{3cebfbe5-f58d-442f-bf48-8d88151842cf}')!
 GdiplusPenFromBrushInitializer comment: ''!
 !GdiplusPenFromBrushInitializer categoriesForClass!Unclassified! !
 !GdiplusPenFromBrushInitializer methodsFor!

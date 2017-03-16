@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #Filename
 	instanceVariableNames: 'filename file'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-Filename guid: (GUID fromString: '{83BBD9DD-34A1-45F9-B021-CB12199DA3FB}')!
+Filename guid: (GUID fromString: '{83bbd9dd-34a1-45f9-b021-cb12199da3fb}')!
 Filename comment: ''!
 !Filename categoriesForClass!Unclassified! !
 !Filename methodsFor!

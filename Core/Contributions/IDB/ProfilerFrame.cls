@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #ProfilerFrame
 	instanceVariableNames: 'compiledCode methodClass receiverClass selector ip isBlock'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ProfilerFrame guid: (GUID fromString: '{425D0EAE-542E-11D3-998B-D5CA2C3C1D61}')!
+ProfilerFrame guid: (GUID fromString: '{425d0eae-542e-11d3-998b-d5ca2c3c1d61}')!
 ProfilerFrame comment: 'See [DolphinImageFolder]/Idb/Documentation for details
 
 (C) 2005 Ian Bartholomew

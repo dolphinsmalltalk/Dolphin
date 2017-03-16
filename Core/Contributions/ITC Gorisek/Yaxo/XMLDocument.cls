@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 XMLNodeWithEntities subclass: #XMLDocument
 	instanceVariableNames: 'dtd version encoding requiredMarkup'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-XMLDocument guid: (GUID fromString: '{8C7AC663-973D-4B54-9AAE-E08E393B9616}')!
+XMLDocument guid: (GUID fromString: '{8c7ac663-973d-4b54-9aae-e08e393b9616}')!
 XMLDocument comment: ''!
 !XMLDocument categoriesForClass!XML-Parser! !
 !XMLDocument methodsFor!

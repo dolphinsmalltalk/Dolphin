@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Dialog subclass: #KeyValuePrompter
 	instanceVariableNames: 'promptPresenter keyPresenter valuePresenter validationBlock'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-KeyValuePrompter guid: (GUID fromString: '{A84461C7-BE36-46C1-BE33-5752489DE6E5}')!
+KeyValuePrompter guid: (GUID fromString: '{a84461c7-be36-46c1-be33-5752489de6e5}')!
 KeyValuePrompter comment: 'KeyValuePrompter is a <dialogPresenter> that can be used to prompt a user to enter or edit key-value pair strings in response to a question.
 
 Instance Variables:

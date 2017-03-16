@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 WindowsEvent subclass: #KeyEvent
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-KeyEvent guid: (GUID fromString: '{87B4C54E-026E-11D3-9FD7-00A0CC3E4A32}')!
+KeyEvent guid: (GUID fromString: '{87b4c54e-026e-11d3-9fd7-00a0cc3e4a32}')!
 KeyEvent comment: ''!
 !KeyEvent categoriesForClass!Events!MVP-Views-Events! !
 !KeyEvent methodsFor!

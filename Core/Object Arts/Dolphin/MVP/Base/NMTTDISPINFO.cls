@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 NMHDR subclass: #NMTTDISPINFO
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'CommCtrlConstants'
 	classInstanceVariableNames: ''!
-NMTTDISPINFO guid: (GUID fromString: '{FD2F4864-6901-4633-8B54-ACCB5C28A265}')!
+NMTTDISPINFO guid: (GUID fromString: '{fd2f4864-6901-4633-8b54-accb5c28a265}')!
 NMTTDISPINFO comment: ''!
 !NMTTDISPINFO categoriesForClass!External-Data-Structured-Win32! !
 !NMTTDISPINFO methodsFor!

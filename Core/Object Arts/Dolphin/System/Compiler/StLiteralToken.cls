@@ -5,7 +5,7 @@ StValueToken subclass: #StLiteralToken
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-StLiteralToken guid: (GUID fromString: '{85FE993E-366B-4F11-9B9C-E5AC73674129}')!
+StLiteralToken guid: (GUID fromString: '{85fe993e-366b-4f11-9b9c-e5ac73674129}')!
 StLiteralToken comment: ''!
 !StLiteralToken categoriesForClass!System-Compiler! !
 !StLiteralToken methodsFor!

@@ -5,7 +5,7 @@ SingletonSearchPolicy subclass: #CompiledMethodSearchPolicy
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-CompiledMethodSearchPolicy guid: (GUID fromString: '{8CB67A35-E7CC-4C00-A9E0-72DCEDE9D3CF}')!
+CompiledMethodSearchPolicy guid: (GUID fromString: '{8cb67a35-e7cc-4c00-a9e0-72dcede9d3cf}')!
 CompiledMethodSearchPolicy comment: 'CompiledMethodSearchPolicy is a specialised <searchPolicy> to be used in conjunction with collections of <CompiledMethod>s where one wishes to compare by class and selector only. This is used in the development system for most method lists.'!
 !CompiledMethodSearchPolicy categoriesForClass!Development! !
 !CompiledMethodSearchPolicy methodsFor!

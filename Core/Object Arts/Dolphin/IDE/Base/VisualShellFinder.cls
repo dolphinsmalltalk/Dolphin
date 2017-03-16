@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #VisualShellFinder
 	instanceVariableNames: 'mouseTracker foundObject foundCursor notFoundCursor shellClassFilter'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-VisualShellFinder guid: (GUID fromString: '{69DA66CC-5C94-4F46-893B-41BA51969FB8}')!
+VisualShellFinder guid: (GUID fromString: '{69da66cc-5c94-4f46-893b-41ba51969fb8}')!
 VisualShellFinder comment: ''!
 !VisualShellFinder categoriesForClass!Kernel-Objects! !
 !VisualShellFinder methodsFor!

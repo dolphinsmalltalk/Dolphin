@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk XP"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #SUnitAbsModel
 	instanceVariableNames: 'configuration listItems selectedItems builder browser state'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: 'defaultConfiguration'!
-SUnitAbsModel guid: (GUID fromString: '{C2A17045-AF69-4225-BD7D-54001F456F8F}')!
+SUnitAbsModel guid: (GUID fromString: '{c2a17045-af69-4225-bd7d-54001f456f8f}')!
 SUnitAbsModel comment: ''!
 !SUnitAbsModel categoriesForClass!Unclassified! !
 !SUnitAbsModel methodsFor!

@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 DifferencesPresenter subclass: #StsDifferencesPresenter
 	instanceVariableNames: 'diffResult diffProcess'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-StsDifferencesPresenter guid: (GUID fromString: '{6274D04D-5753-4A8A-9A8C-2F04AE66898D}')!
+StsDifferencesPresenter guid: (GUID fromString: '{6274d04d-5753-4a8a-9a8c-2f04ae66898d}')!
 StsDifferencesPresenter comment: ''!
 !StsDifferencesPresenter categoriesForClass!Unclassified! !
 !StsDifferencesPresenter methodsFor!

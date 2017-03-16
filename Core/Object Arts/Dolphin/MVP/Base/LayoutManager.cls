@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #LayoutManager
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-LayoutManager guid: (GUID fromString: '{87B4C497-026E-11D3-9FD7-00A0CC3E4A32}')!
+LayoutManager guid: (GUID fromString: '{87b4c497-026e-11d3-9fd7-00a0cc3e4a32}')!
 LayoutManager comment: 'LayoutManager is the abstract superclass for classes that wish to implement the <layoutManager> protocol for the automatic arrangement of views within a parent <compositeView>. Dolphin supplies a base set of general purpose concrete layout managers which are general purpose enough to cover most requirements. 
 
 To define a new layout manager you must implement the <layoutManager> protocol methods in [subclass responsibility], and you will probably want to override #preferredLayoutExtentOf:context: as well.'!

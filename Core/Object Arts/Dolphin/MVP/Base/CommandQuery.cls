@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #CommandQuery
 	instanceVariableNames: 'commandDescription receiver source text flags image'
 	classVariableNames: 'CheckedMask DefaultMask EnabledMask'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-CommandQuery guid: (GUID fromString: '{87B4C46B-026E-11D3-9FD7-00A0CC3E4A32}')!
+CommandQuery guid: (GUID fromString: '{87b4c46b-026e-11d3-9fd7-00a0cc3e4a32}')!
 CommandQuery comment: 'A CommandQuery is used to determine whether, and how, a particular command can be performed. A command is queried in two situations. The first is to determine whether a command source should be enabled and/or checked. When a menu is pulled down it needs to determine the enable, default, and check state of each of its items. Similarly, a PushButton or ToolbarButton will need to determine its state; usually at idle time during #validateUserInterface processing. The second situation arises when a command is to be dispatched and executed. Again a CommandQuery is used to determine the target object that will actually perform it (i.e. the eventual receiver).
 
 To determine the default/enable/checked state of a command, a CommandQuery is created and routed (using the current CommandPolicy) through each of the #queryCommand: methods of the potential target objects. The #queryCommand: method is responsible for using the #isDefault, #enabled: and #checked: methods to set the state of the command at that target location. If, at any point in the routing, a target object sets the CommandQuery as being enabled then the framework will determine that the target should be the eventual receiver of the command. As of Dolphin 3.0 a #queryCommand: implementation can also explicitly set the receiver to override the frameworks default behaviour. A further enhancement for 3.0 is the ability to specify a default command with #isDefault:, with this becoming the default menu item.

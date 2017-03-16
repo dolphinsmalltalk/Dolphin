@@ -5,7 +5,7 @@ SUnitAbsBrowser subclass: #SUnitBrowser
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-SUnitBrowser guid: (GUID fromString: '{FC3AA1DE-E128-4ADE-A04C-035EBDA3B5C2}')!
+SUnitBrowser guid: (GUID fromString: '{fc3aa1de-e128-4ade-a04c-035ebda3b5c2}')!
 SUnitBrowser comment: ''!
 !SUnitBrowser categoriesForClass!Unclassified! !
 !SUnitBrowser methodsFor!

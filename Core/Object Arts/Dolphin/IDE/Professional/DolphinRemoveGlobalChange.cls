@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 DolphinGlobalChange subclass: #DolphinRemoveGlobalChange
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-DolphinRemoveGlobalChange guid: (GUID fromString: '{B031EF44-3901-49AD-9BE0-EB7CE796F79E}')!
+DolphinRemoveGlobalChange guid: (GUID fromString: '{b031ef44-3901-49ad-9be0-eb7ce796f79e}')!
 DolphinRemoveGlobalChange comment: 'DolphinRemoveGlobalChange is a Dolphin specific <RefactoryChange> that removes a global variable from the system dictionary'!
 !DolphinRemoveGlobalChange categoriesForClass!Refactory-Change Objects! !
 !DolphinRemoveGlobalChange methodsFor!

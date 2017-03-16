@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 StToken subclass: #StOptimizedToken
 	instanceVariableNames: 'stopPosition'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-StOptimizedToken guid: (GUID fromString: '{6FD2C057-1EEF-416C-99A2-60958DE98EB1}')!
+StOptimizedToken guid: (GUID fromString: '{6fd2c057-1eef-416c-99a2-60958de98eb1}')!
 StOptimizedToken comment: ''!
 !StOptimizedToken categoriesForClass!System-Compiler! !
 !StOptimizedToken methodsFor!

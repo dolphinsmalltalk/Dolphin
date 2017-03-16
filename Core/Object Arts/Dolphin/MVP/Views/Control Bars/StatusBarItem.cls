@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 StatusBarItemAbstract subclass: #StatusBarItem
 	instanceVariableNames: 'getTextBlock getImageBlock reserved1'
 	classVariableNames: ''
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
-StatusBarItem guid: (GUID fromString: '{87B4C6E6-026E-11D3-9FD7-00A0CC3E4A32}')!
+StatusBarItem guid: (GUID fromString: '{87b4c6e6-026e-11d3-9fd7-00a0cc3e4a32}')!
 StatusBarItem comment: 'StatusItem is a class describing the standard items that can be held by a <StatusBar>. These can have both text and an image associated with them.
 
 Instance Variables:

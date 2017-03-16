@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk XP"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #RBMethodName
 	instanceVariableNames: 'selector arguments'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-RBMethodName guid: (GUID fromString: '{93E47B87-9470-40BD-8893-A811FD4BEE6B}')!
+RBMethodName guid: (GUID fromString: '{93e47b87-9470-40bd-8893-a811fd4bee6b}')!
 RBMethodName comment: ''!
 !RBMethodName categoriesForClass!Refactory-Support! !
 !RBMethodName methodsFor!

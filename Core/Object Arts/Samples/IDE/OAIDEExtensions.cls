@@ -5,7 +5,7 @@ Object subclass: #OAIDEExtensions
 	classVariableNames: 'ClassCommentTemplateMask Current KeyHelpMask'
 	poolDictionaries: 'SHDocVwConstants'
 	classInstanceVariableNames: ''!
-OAIDEExtensions guid: (GUID fromString: '{7803CF6A-7F63-44A5-80A6-FEB5E0AF07A2}')!
+OAIDEExtensions guid: (GUID fromString: '{7803cf6a-7f63-44a5-80a6-feb5e0af07a2}')!
 OAIDEExtensions comment: 'Class to host Object Arts extensions to the standard Dolphin IDE tools.
 
 This is mainly intended as a sample to demonstrate how to implement IDE extensions in Dolphin. It illustrates:

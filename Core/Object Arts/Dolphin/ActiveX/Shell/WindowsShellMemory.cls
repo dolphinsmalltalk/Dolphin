@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ExternalMemory variableByteSubclass: #WindowsShellMemory
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-WindowsShellMemory guid: (GUID fromString: '{7D4A2961-9F62-11D3-B376-080046056106}')!
+WindowsShellMemory guid: (GUID fromString: '{7d4a2961-9f62-11d3-b376-080046056106}')!
 WindowsShellMemory isIndirection: true!
 WindowsShellMemory comment: ''!
 !WindowsShellMemory categoriesForClass!Unclassified! !

@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 HashedCollectionPresenter subclass: #DictionaryPresenter
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-DictionaryPresenter guid: (GUID fromString: '{8337CB38-A2D9-47DC-95F6-B262E86ADCA6}')!
+DictionaryPresenter guid: (GUID fromString: '{8337cb38-a2d9-47dc-95f6-b262e86adca6}')!
 DictionaryPresenter comment: ''!
 !DictionaryPresenter categoriesForClass!MVP-Presenters! !
 !DictionaryPresenter methodsFor!

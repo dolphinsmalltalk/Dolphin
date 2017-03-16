@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 TreeNode subclass: #ProfilerTreeNode
 	instanceVariableNames: 'tally time classes selectors'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ProfilerTreeNode guid: (GUID fromString: '{425D0EBD-542E-11D3-998B-D5CA2C3C1D61}')!
+ProfilerTreeNode guid: (GUID fromString: '{425d0ebd-542e-11d3-998b-d5ca2c3c1d61}')!
 ProfilerTreeNode comment: 'See [DolphinImageFolder]/Idb/Documentation for details
 
 (C) 2005 Ian Bartholomew

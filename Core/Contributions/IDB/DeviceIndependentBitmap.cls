@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Bitmap subclass: #DeviceIndependentBitmap
 	instanceVariableNames: 'depth bitmapStruct bitmapInfoStruct bitmapInfoHeaderStruct dibSectionStruct'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-DeviceIndependentBitmap guid: (GUID fromString: '{48F23686-5426-11D3-998B-BCA753D3B065}')!
+DeviceIndependentBitmap guid: (GUID fromString: '{48f23686-5426-11d3-998b-bca753d3b065}')!
 DeviceIndependentBitmap comment: 'See [DolphinImageFolder]/Idb/Documentation for details
 
 (C) 2005 Ian Bartholomew

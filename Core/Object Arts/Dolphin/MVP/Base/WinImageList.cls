@@ -5,7 +5,7 @@ GraphicsTool subclass: #WinImageList
 	classVariableNames: ''
 	poolDictionaries: 'CommCtrlConstants'
 	classInstanceVariableNames: ''!
-WinImageList guid: (GUID fromString: '{87B4C639-026E-11D3-9FD7-00A0CC3E4A32}')!
+WinImageList guid: (GUID fromString: '{87b4c639-026e-11d3-9fd7-00a0cc3e4a32}')!
 WinImageList comment: 'WinImageList encapsulates a Windows "image list", which itself can be characterised as a strip of images addressable by integer index.
 
 Instance Variables:

@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Smalltalk at: #MMFConstants put: (PoolConstantsDictionary named: #MMFConstants)!
 MMFConstants at: 'FILE_MAP_ALL_ACCESS' put: 16rF001F!

@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 StsChangedCommentNode subclass: #StsChangedPackageCommentNode
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-StsChangedPackageCommentNode guid: (GUID fromString: '{661CE4CA-289A-11D4-B0D0-000000000000}')!
+StsChangedPackageCommentNode guid: (GUID fromString: '{661ce4ca-289a-11d4-b0d0-000000000000}')!
 StsChangedPackageCommentNode comment: ''!
 !StsChangedPackageCommentNode categoriesForClass!Unclassified! !
 !StsChangedPackageCommentNode methodsFor!

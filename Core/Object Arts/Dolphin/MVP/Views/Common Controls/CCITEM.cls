@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Win32Structure subclass: #CCITEM
 	instanceVariableNames: 'text'
 	classVariableNames: ''
 	poolDictionaries: 'CommCtrlConstants'
 	classInstanceVariableNames: ''!
-CCITEM guid: (GUID fromString: '{87B4C5CE-026E-11D3-9FD7-00A0CC3E4A32}')!
+CCITEM guid: (GUID fromString: '{87b4c5ce-026e-11d3-9fd7-00a0cc3e4a32}')!
 CCITEM comment: 'CCITEM is an <ExternalStructure> class which implements shared behaviour and state for the common controls item structures, LVITEM, TCITEM and TVITEM. There is no actual Win32 common control structure of this name.'!
 !CCITEM categoriesForClass!External-Data-Structured-Win32! !
 !CCITEM methodsFor!

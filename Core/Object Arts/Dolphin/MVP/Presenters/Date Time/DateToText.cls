@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 AbstractToTextConverter subclass: #DateToText
 	instanceVariableNames: 'locale format'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-DateToText guid: (GUID fromString: '{87B4C708-026E-11D3-9FD7-00A0CC3E4A32}')!
+DateToText guid: (GUID fromString: '{87b4c708-026e-11d3-9fd7-00a0cc3e4a32}')!
 DateToText comment: 'DateToText is a <textTypeConverter> dedicated to transformations between <Date>s and text.
 
 Instance Variables:

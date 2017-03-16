@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ODBFile subclass: #ODBObjectIdStack
 	instanceVariableNames: 'cache top filePos valueSize bottom'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ODBObjectIdStack guid: (GUID fromString: '{8162EE1C-0FB8-11D4-B091-000000000000}')!
+ODBObjectIdStack guid: (GUID fromString: '{8162ee1c-0fb8-11d4-b091-000000000000}')!
 ODBObjectIdStack comment: ''!
 !ODBObjectIdStack categoriesForClass!No category! !
 !ODBObjectIdStack methodsFor!

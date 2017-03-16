@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 GdiplusInitializer subclass: #GdiplusFromFileInitializer
 	instanceVariableNames: 'filename fileLocator'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-GdiplusFromFileInitializer guid: (GUID fromString: '{9BCB004E-83E4-4D47-9ADF-EC7927A69088}')!
+GdiplusFromFileInitializer guid: (GUID fromString: '{9bcb004e-83e4-4d47-9adf-ec7927a69088}')!
 GdiplusFromFileInitializer comment: ''!
 !GdiplusFromFileInitializer categoriesForClass!Unclassified! !
 !GdiplusFromFileInitializer methodsFor!

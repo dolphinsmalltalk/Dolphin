@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Win32Structure subclass: #SIZE
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-SIZE guid: (GUID fromString: '{3BFB9CB3-8EBA-450F-9479-BA75ABEB8463}')!
+SIZE guid: (GUID fromString: '{3bfb9cb3-8eba-450f-9479-ba75abeb8463}')!
 SIZE comment: '<SIZE> is an <ExternalStructure> class to wrap the standard Win32 structure of the same name. SIZE is used in many places to represent a 2-dimensional distance where the x and y dimensions are expressed as 32-bit integers. SIZEL is an alias for the same class/structure.'!
 !SIZE categoriesForClass!Win32-Structs! !
 !SIZE methodsFor!

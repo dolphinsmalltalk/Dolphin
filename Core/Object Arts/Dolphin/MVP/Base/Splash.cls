@@ -5,7 +5,7 @@ ShellView subclass: #Splash
 	classVariableNames: ''
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
-Splash guid: (GUID fromString: '{87B4C722-026E-11D3-9FD7-00A0CC3E4A32}')!
+Splash guid: (GUID fromString: '{87b4c722-026e-11d3-9fd7-00a0cc3e4a32}')!
 Splash comment: 'Splash is a class that implements a <topView> for displaying a modal splash screen style bitmap. 
 
 A Splash window stays visible for a defined period of time indicated by the <Delay> passed to #showTimed:. If #showTimed is used, then a default delay period is automatically provided. If #show is used then the window remains visible for an indefinite period of time. One may choose to specify an overlay to be drawn on top of the bitmap using #overlayWith: and providing a suitable <monadicValuable> to perform the painting. 

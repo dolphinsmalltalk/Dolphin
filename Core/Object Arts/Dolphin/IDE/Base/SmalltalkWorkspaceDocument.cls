@@ -5,7 +5,7 @@ DocumentShell subclass: #SmalltalkWorkspaceDocument
 	classVariableNames: 'CanUseIdeaSpace DefaultExtent DefaultView LanguageExtensions ReuseIfOpen VariableTips'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-SmalltalkWorkspaceDocument guid: (GUID fromString: '{87B4C6BA-026E-11D3-9FD7-00A0CC3E4A32}')!
+SmalltalkWorkspaceDocument guid: (GUID fromString: '{87b4c6ba-026e-11d3-9fd7-00a0cc3e4a32}')!
 SmalltalkWorkspaceDocument comment: 'SmalltalkWorkspaceDocument is a <documentPresenter> that can be used for displaying Smalltalk ST and CLS files. It also allows for the evaluation of Smalltalk expressions and the execution of various other commands targeted at the <SmalltalkSystem> singleton instance.
 
 Instance Variables:

@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 GdiplusBrush subclass: #GdiplusLinearGradientBrush
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-GdiplusLinearGradientBrush guid: (GUID fromString: '{0EA671C7-823F-4367-89B3-C28E45A365EA}')!
+GdiplusLinearGradientBrush guid: (GUID fromString: '{0ea671c7-823f-4367-89b3-c28e45a365ea}')!
 GdiplusLinearGradientBrush comment: 'GdiplusLinearGradientBrush paints a color gradient in which the color changes evenly from the starting boundary line of an instance to its ending boundary line. Boundary lines are two parallel straight lines. The color gradient is perpendicular to the boundary lines, changing gradually across the stroke from starting to ending boundary lines. The color gradient has one color at the starting boundary line and another color at the ending boundary line.'!
 !GdiplusLinearGradientBrush categoriesForClass!Unclassified! !
 !GdiplusLinearGradientBrush methodsFor!

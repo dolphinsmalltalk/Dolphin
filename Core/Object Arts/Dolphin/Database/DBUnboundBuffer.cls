@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 DBRowBuffer subclass: #DBUnboundBuffer
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-DBUnboundBuffer guid: (GUID fromString: '{87B4C548-026E-11D3-9FD7-00A0CC3E4A32}')!
+DBUnboundBuffer guid: (GUID fromString: '{87b4c548-026e-11d3-9fd7-00a0cc3e4a32}')!
 DBUnboundBuffer comment: 'A DBUnboundRow represents a row buffer that is not statically bound to allocated memory for its columns, but where instead the data is explicitly and individually read into a buffer for each field after the row has been fetched.
 
 '!

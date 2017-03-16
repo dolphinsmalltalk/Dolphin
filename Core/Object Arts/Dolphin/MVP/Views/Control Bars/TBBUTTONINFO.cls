@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Win32Structure subclass: #TBBUTTONINFO
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-TBBUTTONINFO guid: (GUID fromString: '{7FE067E4-441C-11D3-97AC-0080C8D59432}')!
+TBBUTTONINFO guid: (GUID fromString: '{7fe067e4-441c-11d3-97ac-0080c8d59432}')!
 TBBUTTONINFO comment: ''!
 !TBBUTTONINFO categoriesForClass!External-Data-Structured-Win32! !
 !TBBUTTONINFO methodsFor!

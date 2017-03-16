@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 SmalltalkParser subclass: #RBPatternParser
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-RBPatternParser guid: (GUID fromString: '{EFAE231D-9476-470E-9BEF-E65273B2F157}')!
+RBPatternParser guid: (GUID fromString: '{efae231d-9476-470e-9bef-e65273b2f157}')!
 RBPatternParser comment: 'RBPatternParser is an extended <SmalltalkParser> that supports the RB''s extended syntax for pattern matching trees. The resulting trees are used as inputs to the <ParseTreeSearcher> and <ParseTreeRewriter> for searching and transforming source code (respectively).
 '!
 !RBPatternParser categoriesForClass!Refactory-Parser! !

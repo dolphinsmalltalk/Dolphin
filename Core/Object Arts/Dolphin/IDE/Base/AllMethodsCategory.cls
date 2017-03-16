@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 VirtualMethodCategory subclass: #AllMethodsCategory
 	instanceVariableNames: ''
 	classVariableNames: 'Current'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-AllMethodsCategory guid: (GUID fromString: '{9F018E33-E5E0-4806-A700-6B15A55681E5}')!
+AllMethodsCategory guid: (GUID fromString: '{9f018e33-e5e0-4806-a700-6b15a55681e5}')!
 AllMethodsCategory comment: 'AllMethodsCategory is a virtual method category class the dynamically generated membership of which includes all methods.
 
 Instance Variables:

@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 DolphinSureCertificate subclass: #MyOwnCertificate
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-MyOwnCertificate guid: (GUID fromString: '{A2592B78-B801-4788-885C-E1C32F062980}')!
+MyOwnCertificate guid: (GUID fromString: '{a2592b78-b801-4788-885c-e1c32f062980}')!
 MyOwnCertificate comment: ''!
 !MyOwnCertificate categoriesForClass!Cryptography-Certificates! !
 !MyOwnCertificate methodsFor!

@@ -5,7 +5,7 @@ SmalltalkToolShell subclass: #ProtocolBrowserShell
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ProtocolBrowserShell guid: (GUID fromString: '{E168A511-4549-11D3-9FE9-00A0CC3E4A32}')!
+ProtocolBrowserShell guid: (GUID fromString: '{e168a511-4549-11d3-9fe9-00a0cc3e4a32}')!
 ProtocolBrowserShell comment: 'ProtocolBrowserShell is a <SmalltalkToolShell> that implements the Protocol Browser tool. This displays a list of all the <MethodProtocol>s known to the system. Selecting a protocol displays the selectors within it and the classes that conform to it. From within the Protocol Browser it is possible to perform a wide range of protocol housekeeping activities.
 
 Instance Variables:

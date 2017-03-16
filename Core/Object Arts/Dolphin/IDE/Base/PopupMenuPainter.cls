@@ -5,7 +5,7 @@ MenuPainter subclass: #PopupMenuPainter
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-PopupMenuPainter guid: (GUID fromString: '{BEBDF8C9-6967-41D3-92AF-046EC7B3BFF7}')!
+PopupMenuPainter guid: (GUID fromString: '{bebdf8c9-6967-41d3-92af-046ec7b3bff7}')!
 PopupMenuPainter comment: ''!
 !PopupMenuPainter categoriesForClass!Kernel-Objects! !
 !PopupMenuPainter methodsFor!

@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk XP 2002 release 5.02"!
+"Filed out from Dolphin Smalltalk 7"!
 
 RBReplaceRule subclass: #RBStringReplaceRule
 	instanceVariableNames: 'replaceTree'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-RBStringReplaceRule guid: (GUID fromString: '{BBDB2681-B086-4CDC-9EFD-14D33492C0AA}')!
+RBStringReplaceRule guid: (GUID fromString: '{bbdb2681-b086-4cdc-9efd-14d33492c0aa}')!
 RBStringReplaceRule comment: ''!
 !RBStringReplaceRule categoriesForClass!Refactory-ParseTree Matching! !
 !RBStringReplaceRule methodsFor!

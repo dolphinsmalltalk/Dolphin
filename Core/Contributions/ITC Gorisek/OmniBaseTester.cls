@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #OmniBaseTester
 	instanceVariableNames: 'testDb testDir'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-OmniBaseTester guid: (GUID fromString: '{2CFEC1EF-B746-4249-93C4-E54EF5D7A2D0}')!
+OmniBaseTester guid: (GUID fromString: '{2cfec1ef-b746-4249-93c4-e54ef5d7a2d0}')!
 OmniBaseTester comment: ''!
 !OmniBaseTester categoriesForClass!Unclassified! !
 !OmniBaseTester class methodsFor!

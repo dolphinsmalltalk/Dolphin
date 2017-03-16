@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Brush subclass: #StockBrush
 	instanceVariableNames: 'id'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-StockBrush guid: (GUID fromString: '{87B4C63A-026E-11D3-9FD7-00A0CC3E4A32}')!
+StockBrush guid: (GUID fromString: '{87b4c63a-026e-11d3-9fd7-00a0cc3e4a32}')!
 StockBrush comment: ''!
 !StockBrush categoriesForClass!Graphics-Tools! !
 !StockBrush methodsFor!

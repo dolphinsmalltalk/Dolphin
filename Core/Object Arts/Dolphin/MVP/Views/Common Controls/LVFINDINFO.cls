@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Win32Structure subclass: #LVFINDINFO
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'ListViewConstants'
 	classInstanceVariableNames: ''!
-LVFINDINFO guid: (GUID fromString: '{87B4C5FD-026E-11D3-9FD7-00A0CC3E4A32}')!
+LVFINDINFO guid: (GUID fromString: '{87b4c5fd-026e-11d3-9fd7-00a0cc3e4a32}')!
 LVFINDINFO comment: 'LVFINDINFO is an <ExternalStructure> class which represents the Windows common control structure of the same name.
 
 LVFINDINFO is used to contain information to search for items in a List View.

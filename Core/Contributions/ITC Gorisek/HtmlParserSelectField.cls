@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 HtmlParserElement subclass: #HtmlParserSelectField
 	instanceVariableNames: 'name allItems selectedItems'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-HtmlParserSelectField guid: (GUID fromString: '{3997015F-7F92-4D0C-A368-55C0AA74E2A4}')!
+HtmlParserSelectField guid: (GUID fromString: '{3997015f-7f92-4d0c-a368-55c0aa74e2a4}')!
 HtmlParserSelectField comment: ''!
 !HtmlParserSelectField categoriesForClass!Unclassified! !
 !HtmlParserSelectField methodsFor!

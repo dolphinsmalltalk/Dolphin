@@ -5,7 +5,7 @@ DolphinBaseProduct subclass: #DolphinProfessional
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-DolphinProfessional guid: (GUID fromString: '{48EEC5BD-F329-471A-99D8-41FFD76F7F98}')!
+DolphinProfessional guid: (GUID fromString: '{48eec5bd-f329-471a-99d8-41ffd76f7f98}')!
 DolphinProfessional comment: ''!
 !DolphinProfessional categoriesForClass!Development! !
 !DolphinProfessional methodsFor!

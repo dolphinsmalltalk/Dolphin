@@ -5,7 +5,7 @@ ClassBrowserPlugin subclass: #ClassDiagramPlugin
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ClassDiagramPlugin guid: (GUID fromString: '{2A2213BC-1639-42CF-A5B9-987D7FD36E9A}')!
+ClassDiagramPlugin guid: (GUID fromString: '{2a2213bc-1639-42cf-a5b9-987d7fd36e9a}')!
 ClassDiagramPlugin comment: 'ClassDiagramPlugin is a simple example of a <classBrowserPlugin> that renders the hierarchy below the browser''s currently selected class in a moen tree diagram. Although the time taken to perform this rendition is not significant, for illustrative purposes, we have chosen to defer the building of the class diagram until the plug-in''s card is selected in the browser.
 
 Instance Variables:

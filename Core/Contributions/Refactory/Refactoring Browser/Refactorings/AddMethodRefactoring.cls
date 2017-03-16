@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk XP 2002 release 5.05"!
+"Filed out from Dolphin Smalltalk 7"!
 
 MethodRefactoring subclass: #AddMethodRefactoring
 	instanceVariableNames: 'protocols source'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-AddMethodRefactoring guid: (GUID fromString: '{0B0BB59D-7DE6-47B2-80AA-A0E9868E6AC4}')!
+AddMethodRefactoring guid: (GUID fromString: '{0b0bb59d-7de6-47b2-80aa-a0e9868e6ac4}')!
 AddMethodRefactoring comment: ''!
 !AddMethodRefactoring categoriesForClass!Refactory-Refactorings! !
 !AddMethodRefactoring methodsFor!

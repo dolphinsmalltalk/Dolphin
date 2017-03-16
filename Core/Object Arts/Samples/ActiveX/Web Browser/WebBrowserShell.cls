@@ -5,7 +5,7 @@ Shell subclass: #WebBrowserShell
 	classVariableNames: ''
 	poolDictionaries: 'SHDocVwConstants'
 	classInstanceVariableNames: ''!
-WebBrowserShell guid: (GUID fromString: '{840F8A35-998B-4346-AB86-95DB62F03A47}')!
+WebBrowserShell guid: (GUID fromString: '{840f8a35-998b-4346-ab86-95db62f03a47}')!
 WebBrowserShell comment: 'WebBrowserShell is a simple web browser application built around the Microsoft Web Browser control (the basis of Internet Explorer).
 
 This sample does wire up to a few events from the brower control (mainly for illustrative purposes), but if you want to learn more about what events are fired and when it is recommended that you monitor the behaviour of the control using the ''Active-X Control Browser'' tool.

@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ODBDBBTreeDictionary subclass: #ODBDBBTreeIdentityDictionary
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ODBDBBTreeIdentityDictionary guid: (GUID fromString: '{D6774546-5A08-49C3-B577-14B960A34EFA}')!
+ODBDBBTreeIdentityDictionary guid: (GUID fromString: '{d6774546-5a08-49c3-b577-14b960a34efa}')!
 ODBDBBTreeIdentityDictionary comment: ''!
 !ODBDBBTreeIdentityDictionary categoriesForClass!No category! !
 !ODBDBBTreeIdentityDictionary methodsFor!

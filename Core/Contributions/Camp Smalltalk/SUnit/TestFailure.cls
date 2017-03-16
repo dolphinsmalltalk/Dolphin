@@ -1,10 +1,10 @@
-"Filed out from Dolphin Smalltalk XP 2002 release 6.00"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Error subclass: #TestFailure
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-TestFailure guid: (GUID fromString: '{5E967942-0810-11D4-A876-0050DA643BF9}')!
+TestFailure guid: (GUID fromString: '{5e967942-0810-11d4-a876-0050da643bf9}')!
 TestFailure comment: ''!
 !TestFailure categoriesForClass!SUnitPreload! !

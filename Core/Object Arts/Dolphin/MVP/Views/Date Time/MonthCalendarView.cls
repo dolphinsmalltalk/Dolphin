@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 DateTimeCommonControl subclass: #MonthCalendarView
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-MonthCalendarView guid: (GUID fromString: '{7A3BC35D-5D09-4328-91DE-D863711BE2EA}')!
+MonthCalendarView guid: (GUID fromString: '{7a3bc35d-5d09-4328-91de-d863711be2ea}')!
 MonthCalendarView comment: 'MonthCalendarView is a <valueView> implementing the Windows "SysMonthCal32" common control, referred to as the "Month Calendar Control" in the MSDN documentation. 
 
 The <valueModel> associated with a MonthCalendarView must always yield a value that can be converted to a <TimeStamp> using #asTimeStamp after mapping through the installed type converter, although the <Time> portion is ignored. A MonthCalendarView will normally be used in conjunction with a <DatePresenter>.

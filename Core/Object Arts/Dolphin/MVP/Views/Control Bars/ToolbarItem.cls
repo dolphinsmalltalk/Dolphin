@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #ToolbarItem
 	instanceVariableNames: 'commandId unused window style commandDescription'
 	classVariableNames: ''
 	poolDictionaries: 'ToolbarConstants'
 	classInstanceVariableNames: ''!
-ToolbarItem guid: (GUID fromString: '{87B4C4C6-026E-11D3-9FD7-00A0CC3E4A32}')!
+ToolbarItem guid: (GUID fromString: '{87b4c4c6-026e-11d3-9fd7-00a0cc3e4a32}')!
 ToolbarItem comment: 'ToolbarItem is an abstract class whose subclasses represent the items held by a <Toolbar>.
 
 Instance Variables:

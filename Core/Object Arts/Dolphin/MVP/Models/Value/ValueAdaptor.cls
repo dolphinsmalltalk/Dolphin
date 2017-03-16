@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ValueModel subclass: #ValueAdaptor
 	instanceVariableNames: 'subject'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ValueAdaptor guid: (GUID fromString: '{87B4C676-026E-11D3-9FD7-00A0CC3E4A32}')!
+ValueAdaptor guid: (GUID fromString: '{87b4c676-026e-11d3-9fd7-00a0cc3e4a32}')!
 ValueAdaptor comment: 'An abstract class whose subclasses allow some part of a subject object (typically an aspect or keyed element) to be treated a <valueModel>.
 
 Instance Variables

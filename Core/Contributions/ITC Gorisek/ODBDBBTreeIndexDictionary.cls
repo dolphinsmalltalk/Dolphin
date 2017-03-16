@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ODBDatabaseObject subclass: #ODBDBBTreeIndexDictionary
 	instanceVariableNames: 'iterator'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ODBDBBTreeIndexDictionary guid: (GUID fromString: '{8162EE03-0FB8-11D4-B091-000000000000}')!
+ODBDBBTreeIndexDictionary guid: (GUID fromString: '{8162ee03-0fb8-11d4-b091-000000000000}')!
 ODBDBBTreeIndexDictionary comment: ''!
 !ODBDBBTreeIndexDictionary categoriesForClass!No category! !
 !ODBDBBTreeIndexDictionary methodsFor!

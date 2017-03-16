@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Model subclass: #PersonalAccountTransaction
 	instanceVariableNames: 'date description amount isDebit'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-PersonalAccountTransaction guid: (GUID fromString: '{87B4C669-026E-11D3-9FD7-00A0CC3E4A32}')!
+PersonalAccountTransaction guid: (GUID fromString: '{87b4c669-026e-11d3-9fd7-00a0cc3e4a32}')!
 PersonalAccountTransaction comment: 'A PersonalAccountTransaction holds details regarding a single transaction for an account within the PersonalMoney system.
 
 Instance Variables

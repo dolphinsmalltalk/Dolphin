@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ODBBTreeIterator subclass: #ODBGcBTreeIterator
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ODBGcBTreeIterator guid: (GUID fromString: '{8162EE24-0FB8-11D4-B091-000000000000}')!
+ODBGcBTreeIterator guid: (GUID fromString: '{8162ee24-0fb8-11d4-b091-000000000000}')!
 ODBGcBTreeIterator comment: ''!
 !ODBGcBTreeIterator categoriesForClass!No category! !
 !ODBGcBTreeIterator methodsFor!

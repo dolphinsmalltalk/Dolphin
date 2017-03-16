@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 DOUBLE subclass: #DATE
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'AXAutomationConstants'
 	classInstanceVariableNames: ''!
-DATE guid: (GUID fromString: '{C06F3B6D-0868-11D3-93AF-00A024CA708A}')!
+DATE guid: (GUID fromString: '{c06f3b6d-0868-11d3-93af-00a024ca708a}')!
 DATE comment: ''!
 !DATE categoriesForClass!External-Data-Structured! !
 !DATE methodsFor!

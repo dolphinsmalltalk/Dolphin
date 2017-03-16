@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Win32Structure subclass: #MENUITEMINFOA
 	instanceVariableNames: 'text'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-MENUITEMINFOA guid: (GUID fromString: '{D9F31567-D705-4885-9ED7-F92AE9FEFBF2}')!
+MENUITEMINFOA guid: (GUID fromString: '{d9f31567-d705-4885-9ed7-f92ae9fefbf2}')!
 MENUITEMINFOA comment: '<MENUITEMINFOA> is an <ExternalStructure> class to wrap the Win32 structure of the same name.
 
 See the Win32 SDK documentation for further information.'!

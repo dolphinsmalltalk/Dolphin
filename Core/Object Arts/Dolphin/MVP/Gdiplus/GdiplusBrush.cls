@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 GdiplusBase subclass: #GdiplusBrush
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-GdiplusBrush guid: (GUID fromString: '{9A229A16-873B-4102-946A-B33879A9B261}')!
+GdiplusBrush guid: (GUID fromString: '{9a229a16-873b-4102-946a-b33879a9b261}')!
 GdiplusBrush comment: 'GdiplusBrush is an abstract class that defines an object used to paint the interior of graphics shapes, such as rectangles, ellipses, pies, polygons, strings, regions and paths.
 
 '!

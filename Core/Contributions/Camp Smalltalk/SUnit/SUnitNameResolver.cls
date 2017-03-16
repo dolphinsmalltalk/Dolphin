@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk XP 2002 release 6.00"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #SUnitNameResolver
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-SUnitNameResolver guid: (GUID fromString: '{786377A2-4134-11D4-907E-00E09803ABEF}')!
+SUnitNameResolver guid: (GUID fromString: '{786377a2-4134-11d4-907e-00e09803abef}')!
 SUnitNameResolver comment: ''!
 !SUnitNameResolver categoriesForClass!SUnitPreload! !
 !SUnitNameResolver class methodsFor!

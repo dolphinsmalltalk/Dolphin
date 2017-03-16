@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ExternalStructure subclass: #ODBCTIMESTAMP
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ODBCTIMESTAMP guid: (GUID fromString: '{87B4C599-026E-11D3-9FD7-00A0CC3E4A32}')!
+ODBCTIMESTAMP guid: (GUID fromString: '{87b4c599-026e-11d3-9fd7-00a0cc3e4a32}')!
 ODBCTIMESTAMP comment: 'ODBCTIMESTAMP is a representation of the same named Win32 ODBC structure.
 
 The fraction field is the number of billionths of a second, i.e. a value of 1,000,000 is one millisecond.'!

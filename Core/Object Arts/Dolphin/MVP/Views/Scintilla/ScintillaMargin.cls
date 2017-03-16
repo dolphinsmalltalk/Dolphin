@@ -5,7 +5,7 @@ QueryableScintillaAttribute subclass: #ScintillaMargin
 	classVariableNames: 'CursorTypes MarginTypes'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ScintillaMargin guid: (GUID fromString: '{FD6F73FE-70D8-4E4A-8332-EC147E5BA899}')!
+ScintillaMargin guid: (GUID fromString: '{fd6f73fe-70d8-4e4a-8332-ec147e5ba899}')!
 ScintillaMargin comment: 'ScintillaMargin instances represent the ''margin'' attributes of a <ScintillaView>.
 
 From the Scintilla Documentation:

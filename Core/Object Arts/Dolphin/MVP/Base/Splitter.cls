@@ -5,7 +5,7 @@ View subclass: #Splitter
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-Splitter guid: (GUID fromString: '{87B4C716-026E-11D3-9FD7-00A0CC3E4A32}')!
+Splitter guid: (GUID fromString: '{87b4c716-026e-11d3-9fd7-00a0cc3e4a32}')!
 Splitter comment: 'Splitter is a <view> used for implementing "splitter bars" for resizing adjacent views within a <compositeView>. Normally, a Splitter requires that the parent view in which it is placed is under the control of a ProprtionalLayout manager.'!
 !Splitter categoriesForClass!MVP-Resources-Splitters!MVP-Views! !
 !Splitter methodsFor!

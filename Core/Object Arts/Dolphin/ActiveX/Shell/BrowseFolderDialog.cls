@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 CommonDialog subclass: #BrowseFolderDialog
 	instanceVariableNames: 'style bfFlags'
 	classVariableNames: 'InitializedMask'
 	poolDictionaries: 'ShellConstants'
 	classInstanceVariableNames: ''!
-BrowseFolderDialog guid: (GUID fromString: '{87B4C6AF-026E-11D3-9FD7-00A0CC3E4A32}')!
+BrowseFolderDialog guid: (GUID fromString: '{87b4c6af-026e-11d3-9fd7-00a0cc3e4a32}')!
 BrowseFolderDialog comment: 'BrowserFolderDialog is a <valueDialogPresenter> implementing the Windows SHBrowseForFolder common dialog. The associated <valueModel> contains a <readableString> indicating the path of the chosen folder.
 
 Instance Variables:

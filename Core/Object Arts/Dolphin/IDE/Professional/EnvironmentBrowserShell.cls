@@ -5,7 +5,7 @@ ClassBrowserAbstract subclass: #EnvironmentBrowserShell
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-EnvironmentBrowserShell guid: (GUID fromString: '{B6CCD231-D2FB-4D98-B006-6A3BA26A4849}')!
+EnvironmentBrowserShell guid: (GUID fromString: '{b6ccd231-d2fb-4d98-b006-6a3ba26a4849}')!
 EnvironmentBrowserShell comment: ''!
 !EnvironmentBrowserShell categoriesForClass!Development! !
 !EnvironmentBrowserShell methodsFor!

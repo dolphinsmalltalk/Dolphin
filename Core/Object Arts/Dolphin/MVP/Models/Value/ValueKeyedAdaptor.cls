@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ValueAdaptor subclass: #ValueKeyedAdaptor
 	instanceVariableNames: 'key putSelector getSelector'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ValueKeyedAdaptor guid: (GUID fromString: '{87B4C67A-026E-11D3-9FD7-00A0CC3E4A32}')!
+ValueKeyedAdaptor guid: (GUID fromString: '{87b4c67a-026e-11d3-9fd7-00a0cc3e4a32}')!
 ValueKeyedAdaptor comment: 'A ValueKeyedAdaptor is capable of adapting a keyed element of a subject object (typically a Collection) and treating this as a <value>. A keyed element one which can be accessed from the subject object using #at: and #at:put:.
 
 Instance Variables:

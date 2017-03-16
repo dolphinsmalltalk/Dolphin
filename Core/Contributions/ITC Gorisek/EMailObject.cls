@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #EMailObject
 	instanceVariableNames: 'content contentType contentEncoding contentDisposition contentId boundary'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-EMailObject guid: (GUID fromString: '{8D9FF3EE-2EDC-4EB7-B47F-D3D6B534D4A0}')!
+EMailObject guid: (GUID fromString: '{8d9ff3ee-2edc-4eb7-b47f-d3d6b534d4a0}')!
 EMailObject comment: ''!
 !EMailObject categoriesForClass!Unclassified! !
 !EMailObject methodsFor!

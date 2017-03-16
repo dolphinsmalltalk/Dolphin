@@ -5,7 +5,7 @@ SmalltalkToolShell subclass: #StsComparisonBrowser
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-StsComparisonBrowser guid: (GUID fromString: '{848904C2-2842-11D4-B0CF-000000000000}')!
+StsComparisonBrowser guid: (GUID fromString: '{848904c2-2842-11d4-b0cf-000000000000}')!
 StsComparisonBrowser comment: ''!
 !StsComparisonBrowser categoriesForClass!Unclassified! !
 !StsComparisonBrowser methodsFor!

@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 OLEFinalizableStructure subclass: #EXCEPINFO
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'Win32Errors'
 	classInstanceVariableNames: ''!
-EXCEPINFO guid: (GUID fromString: '{C06F3B63-0868-11D3-93AF-00A024CA708A}')!
+EXCEPINFO guid: (GUID fromString: '{c06f3b63-0868-11d3-93af-00a024ca708a}')!
 EXCEPINFO comment: 'EXCEPINFO is the class of <ExternalStructure>s representing the OLE Automation structure of the same name. EXCEPINFO is used to return exception details from IDispatch::Invoke().'!
 !EXCEPINFO categoriesForClass!External-Data-Structured-COM! !
 !EXCEPINFO methodsFor!

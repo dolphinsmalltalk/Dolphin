@@ -5,7 +5,7 @@ StParseNodeVisitor subclass: #ParseTreeSearcher
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ParseTreeSearcher guid: (GUID fromString: '{88F9B089-E658-4426-8D0A-F18303952CAD}')!
+ParseTreeSearcher guid: (GUID fromString: '{88f9b089-e658-4426-8d0a-f18303952cad}')!
 ParseTreeSearcher comment: 'ParseTreeSearcher walks over a normal source code parse tree using the visitor pattern, and then matches these nodes against the meta-nodes using the match:inContext: methods defined for the meta-nodes.
 
 Instance Variables:

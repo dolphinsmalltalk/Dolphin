@@ -1,10 +1,10 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Error subclass: #SAXMalformedException
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-SAXMalformedException guid: (GUID fromString: '{E05B7B7D-BA20-4843-BC22-940B53D6B547}')!
+SAXMalformedException guid: (GUID fromString: '{e05b7b7d-ba20-4843-bc22-940b53d6b547}')!
 SAXMalformedException comment: ''!
 !SAXMalformedException categoriesForClass!XML-Parser! !

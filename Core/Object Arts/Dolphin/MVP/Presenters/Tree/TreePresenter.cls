@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 SelectableItemsPresenter subclass: #TreePresenter
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-TreePresenter guid: (GUID fromString: '{87B4C688-026E-11D3-9FD7-00A0CC3E4A32}')!
+TreePresenter guid: (GUID fromString: '{87b4c688-026e-11d3-9fd7-00a0cc3e4a32}')!
 TreePresenter comment: 'TreePresenter implements a <treePresenter> component that can be used to display the contents of a <treeModel> within a <treeView>. This is similar to the way a tree view is used to display a file system''s contents in the Window''s explorer. For presentation of a tree as a hierarchy of nested "folders" see the <FolderPresenter> class.
 
 TreePresenter conforms to <selectableItems> to provide methods for accessing the current selection. In addition, the <treePresenter> protocol allows the tree to be navigating using the #expand: , #collapse: and #up methods.

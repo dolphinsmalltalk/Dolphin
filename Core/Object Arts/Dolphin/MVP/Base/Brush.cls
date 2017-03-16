@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 GraphicsTool subclass: #Brush
 	instanceVariableNames: 'logBrush'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-Brush guid: (GUID fromString: '{87B4C633-026E-11D3-9FD7-00A0CC3E4A32}')!
+Brush guid: (GUID fromString: '{87b4c633-026e-11d3-9fd7-00a0cc3e4a32}')!
 Brush comment: ''!
 !Brush categoriesForClass!Graphics-Tools! !
 !Brush methodsFor!

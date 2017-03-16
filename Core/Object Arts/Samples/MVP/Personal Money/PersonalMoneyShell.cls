@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 DocumentShell subclass: #PersonalMoneyShell
 	instanceVariableNames: 'ownerPresenter accountsPresenter'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-PersonalMoneyShell guid: (GUID fromString: '{87B4C6B9-026E-11D3-9FD7-00A0CC3E4A32}')!
+PersonalMoneyShell guid: (GUID fromString: '{87b4c6b9-026e-11d3-9fd7-00a0cc3e4a32}')!
 PersonalMoneyShell comment: 'PersonalMoneyShell is a <documentPresenter> providing the main user interface for the Personal Money sample system. The interface is displayed in a top level shell window. The model data on which the PersonalMoneyShell operates is an instance of <PersonalMoney>. Since the class conforms to <documentPresenter> it automatically has the ability to save and load the PersonalMoney data to/from disk.
 
 To create a new Personal Money system evaluate:

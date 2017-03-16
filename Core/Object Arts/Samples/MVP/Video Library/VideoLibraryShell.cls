@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Shell subclass: #VideoLibraryShell
 	instanceVariableNames: 'ownerPresenter tapesPresenter recordingsPresenter'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-VideoLibraryShell guid: (GUID fromString: '{46AA1198-1908-4799-B06C-C003165D09FF}')!
+VideoLibraryShell guid: (GUID fromString: '{46aa1198-1908-4799-b06c-c003165d09ff}')!
 VideoLibraryShell comment: 'VideoLibraryShell a modeless user interface for displaying and editing the contents of a VideoLibrary. This class is part of the Video Library sample package. Please see the package comment for more details.
 
 Example:usage

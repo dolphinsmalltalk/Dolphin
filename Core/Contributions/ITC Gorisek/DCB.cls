@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Win32Structure subclass: #DCB
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-DCB guid: (GUID fromString: '{96B10742-6075-441F-989B-B6147F5955E4}')!
+DCB guid: (GUID fromString: '{96b10742-6075-441f-989b-b6147f5955e4}')!
 DCB comment: ''!
 !DCB categoriesForClass!IDB Goodies! !
 !DCB methodsFor!

@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 VirtualMethodCategory subclass: #PluggableVirtualMethodCategory
 	instanceVariableNames: 'filter isSlowToEnumerate'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-PluggableVirtualMethodCategory guid: (GUID fromString: '{CF4B4026-94A0-45E3-9949-2DCA5B07B1E8}')!
+PluggableVirtualMethodCategory guid: (GUID fromString: '{cf4b4026-94a0-45e3-9949-2dca5b07b1e8}')!
 PluggableVirtualMethodCategory comment: 'PluggableMethodCategory is a virtual method category class the dynamically generated membership of which includes all methods that pass a configurable filter. See the class side #initialize method for examples.
 
 Instance Variables:

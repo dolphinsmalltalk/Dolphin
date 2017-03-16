@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #CommandPolicy
 	instanceVariableNames: 'source path'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-CommandPolicy guid: (GUID fromString: '{87B4C46A-026E-11D3-9FD7-00A0CC3E4A32}')!
+CommandPolicy guid: (GUID fromString: '{87b4c46a-026e-11d3-9fd7-00a0cc3e4a32}')!
 CommandPolicy comment: 'A CommandPolicy determines how a user interface command is routed from its source (menu, toolbar button or pushbutton) to the eventual target that will be responsible for actually performing the command. A route consists of a sequence of potential command targets which in the standard MVP environment are usually (but not essentially) view, presenters or models. 
 
 The CommandPolicy in use creates a CommandQuery object and use this to discover whether a command can successfully be performed by any of the potential targets. This is done in #query:. The end result will be a CommandQuery that is bound to a target object and filled in appropriately with information such as whether the command should be considered to be enable, checked, etc. This information is used to determine the state of menu items and toolbar buttons. Since the CommandQuery is bound to a target that is known to be able to accept the command, this can then be performed directly.

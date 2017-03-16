@@ -5,7 +5,7 @@ SmalltalkToolShell subclass: #Debugger
 	classVariableNames: 'AnimateMask AnimatePause DefaultStackDepth DisassemblyMask EnableDynamicMenus MainMask RestartOnMethodSave ResumableMask RunMask ShowWalkbacks SkipTable StackDepthIncrement'
 	poolDictionaries: 'CompilerFlags OpcodePool'
 	classInstanceVariableNames: ''!
-Debugger guid: (GUID fromString: '{87B4C6BD-026E-11D3-9FD7-00A0CC3E4A32}')!
+Debugger guid: (GUID fromString: '{87b4c6bd-026e-11d3-9fd7-00a0cc3e4a32}')!
 Debugger comment: 'Debugger is a <SmalltalkToolShell> that implements the standard debugging tool. The debugger is usually invoked from a walkback dialog by pressing the Debug button. Walkbacks are displayed in the development environment when a breakpoint (''self halt'') is encountered, or when an unhandled exception occurs. It is also possible to configure the system so that debuggers are opened automatically when breakpoints are encountered or errors occur (see the Debugger options in Dolphin Options), though this is not particularly recommended as it can make the system crash if the error or breakpoint is in some code that is itself used by the Debugger.
 
 Dolphin''s Debugger does not simulate execution as in some Smalltalk''s, but instead uses the VM''s built-in debugging event generation to run the code and interrupt it at appropriate points. This results in more consistent and faster execution, although note that the debugger will recompile methods being stepped through to insert breakpoints and this may cause some peephole compiler optimisations to be lost.

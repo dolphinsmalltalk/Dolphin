@@ -5,7 +5,7 @@ StProgramNode subclass: #StExternalArgTypeNode
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-StExternalArgTypeNode guid: (GUID fromString: '{49763C2E-001B-471D-9F27-1ACEC000B58D}')!
+StExternalArgTypeNode guid: (GUID fromString: '{49763c2e-001b-471d-9f27-1acec000b58d}')!
 StExternalArgTypeNode comment: ''!
 !StExternalArgTypeNode categoriesForClass!System-Compiler! !
 !StExternalArgTypeNode methodsFor!

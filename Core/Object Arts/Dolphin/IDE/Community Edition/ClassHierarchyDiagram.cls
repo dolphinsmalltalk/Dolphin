@@ -5,7 +5,7 @@ SmalltalkToolShell subclass: #ClassHierarchyDiagram
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ClassHierarchyDiagram guid: (GUID fromString: '{493664D4-3394-11D3-93BD-00A024CA708A}')!
+ClassHierarchyDiagram guid: (GUID fromString: '{493664d4-3394-11d3-93bd-00a024ca708a}')!
 ClassHierarchyDiagram comment: 'ClassHierarchyDiagram is a <SmalltalkToolShell> that displays the current class hierarchy in a graphical format using a <MoenTreeView>.
 
 Instance Variables:

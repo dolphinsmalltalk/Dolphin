@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ConsoleSessionManager subclass: #CommandLineHelloWorld
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-CommandLineHelloWorld guid: (GUID fromString: '{3B286201-8B85-46AE-8E1D-EC1CE757D330}')!
+CommandLineHelloWorld guid: (GUID fromString: '{3b286201-8b85-46ae-8e1d-ec1ce757d330}')!
 CommandLineHelloWorld comment: 'CommandLineHelloWorld is a simple <ConsoleSessionManager> that implements a "Hello World" program entirely in its #main method. It prints the familiar phrase to the standard output stream, along with a prompt for the user to press Enter to finish. When the user has pressed enter the program drops off the end of the #main method and exits.
 
 To test:

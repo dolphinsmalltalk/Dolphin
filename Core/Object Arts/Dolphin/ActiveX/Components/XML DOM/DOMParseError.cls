@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Error subclass: #DOMParseError
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-DOMParseError guid: (GUID fromString: '{80A8E9D9-C230-4610-8994-72021CFDADCB}')!
+DOMParseError guid: (GUID fromString: '{80a8e9d9-c230-4610-8994-72021cfdadcb}')!
 DOMParseError comment: 'DOMParseError is an <Exception> class to wrap the IXMLDOMParseError interface from the Microsoft XML DOM. 
 
 Note that these exceptions are not raised automatically when the parsing of an XML document fails, e.g. in a call to IXMLDOMDocument>>load:, but must be raised (if desired) when the method returns false to indicate a failure.'!

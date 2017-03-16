@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 GdiplusInitializer subclass: #GdiplusTextureBrushInitializer
 	instanceVariableNames: 'image wrapMode rectangle'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-GdiplusTextureBrushInitializer guid: (GUID fromString: '{1A1A5EA3-6151-11D7-B609-00E0987E8081}')!
+GdiplusTextureBrushInitializer guid: (GUID fromString: '{1a1a5ea3-6151-11d7-b609-00e0987e8081}')!
 GdiplusTextureBrushInitializer comment: ''!
 !GdiplusTextureBrushInitializer categoriesForClass!Unclassified! !
 !GdiplusTextureBrushInitializer methodsFor!

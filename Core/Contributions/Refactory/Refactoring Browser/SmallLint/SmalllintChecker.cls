@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk XP 2002 release 5.02"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #SmalllintChecker
 	instanceVariableNames: 'rule environment context methodBlock'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-SmalllintChecker guid: (GUID fromString: '{B66E8888-4615-4250-B1D6-66EC532F9DF1}')!
+SmalllintChecker guid: (GUID fromString: '{b66e8888-4615-4250-b1d6-66ec532f9df1}')!
 SmalllintChecker comment: ''!
 !SmalllintChecker categoriesForClass!Refactory-Lint! !
 !SmalllintChecker methodsFor!

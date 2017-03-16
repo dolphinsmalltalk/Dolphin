@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 FileOpenDialog subclass: #MultipleFileOpenDialog
 	instanceVariableNames: 'buffer maxFileCount'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-MultipleFileOpenDialog guid: (GUID fromString: '{6BF5BAA9-0551-40BD-A72F-E1E38B778543}')!
+MultipleFileOpenDialog guid: (GUID fromString: '{6bf5baa9-0551-40bd-a72f-e1e38b778543}')!
 MultipleFileOpenDialog comment: 'See [DolphinImageFolder]/Idb/Documentation for details
 
 (C) 2005 Ian Bartholomew

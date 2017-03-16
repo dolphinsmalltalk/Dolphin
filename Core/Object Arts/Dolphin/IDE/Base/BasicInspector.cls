@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ValuePresenter subclass: #BasicInspector
 	instanceVariableNames: 'variableNamesPresenter sourcePresenter'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-BasicInspector guid: (GUID fromString: '{87B4C68B-026E-11D3-9FD7-00A0CC3E4A32}')!
+BasicInspector guid: (GUID fromString: '{87b4c68b-026e-11d3-9fd7-00a0cc3e4a32}')!
 BasicInspector comment: 'BasicInspector is a <compositePresenter> that implements a generic inspect facility onto any <Object>.
 
 Example:

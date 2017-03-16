@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk XP 2002 release 5.02"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #RBMethod
 	instanceVariableNames: 'class compiledMethod source selector'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-RBMethod guid: (GUID fromString: '{4F76178D-295E-4B31-9CDA-D786B96C5ED7}')!
+RBMethod guid: (GUID fromString: '{4f76178d-295e-4b31-9cda-d786b96c5ed7}')!
 RBMethod comment: 'RBMethod represents a method in an RBAbstractClass.
 
 Instance Variables:

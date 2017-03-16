@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 GdiplusBase subclass: #GdiplusFont
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-GdiplusFont guid: (GUID fromString: '{5B5D4AE1-5C87-11D7-B609-00E0987E8081}')!
+GdiplusFont guid: (GUID fromString: '{5b5d4ae1-5c87-11d7-b609-00e0987e8081}')!
 GdiplusFont comment: 'GdiplusFont encapsulates the characteristics, such as family, height, size, and style (or combination of styles), of a specific font. A GdiplusFont is used when drawing strings on a GdiplusGraphics.'!
 !GdiplusFont categoriesForClass!Unclassified! !
 !GdiplusFont methodsFor!

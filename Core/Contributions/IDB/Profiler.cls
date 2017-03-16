@@ -5,7 +5,7 @@ Object subclass: #Profiler
 	classVariableNames: 'Default'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-Profiler guid: (GUID fromString: '{425D0EAD-542E-11D3-998B-D5CA2C3C1D61}')!
+Profiler guid: (GUID fromString: '{425d0ead-542e-11d3-998b-d5ca2c3c1d61}')!
 Profiler comment: 'See [DolphinImageFolder]/Idb/Documentation for details
 
 (C) 2005 Ian Bartholomew

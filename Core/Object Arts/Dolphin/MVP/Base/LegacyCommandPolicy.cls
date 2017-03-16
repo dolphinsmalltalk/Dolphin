@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 CommandPolicy subclass: #LegacyCommandPolicy
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-LegacyCommandPolicy guid: (GUID fromString: '{CD4F5C9F-18D7-4B31-94AF-4F76D1E56C08}')!
+LegacyCommandPolicy guid: (GUID fromString: '{cd4f5c9f-18d7-4b31-94af-4f76d1e56c08}')!
 LegacyCommandPolicy comment: ''!
 !LegacyCommandPolicy categoriesForClass!Unclassified! !
 !LegacyCommandPolicy methodsFor!

@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #EmailSMTPConnector
 	instanceVariableNames: 'smtpServer status socket serverID host port'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-EmailSMTPConnector guid: (GUID fromString: '{6B2859B5-0570-43A7-B1DE-0D5E8666A7A5}')!
+EmailSMTPConnector guid: (GUID fromString: '{6b2859b5-0570-43a7-b1de-0d5e8666a7a5}')!
 EmailSMTPConnector comment: ''!
 !EmailSMTPConnector categoriesForClass!Unclassified! !
 !EmailSMTPConnector methodsFor!

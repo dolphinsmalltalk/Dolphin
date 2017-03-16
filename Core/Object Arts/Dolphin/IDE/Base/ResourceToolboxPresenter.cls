@@ -5,7 +5,7 @@ ListPresenter subclass: #ResourceToolboxPresenter
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ResourceToolboxPresenter guid: (GUID fromString: '{9B3E71D1-8684-48C9-B045-890F2CD430E6}')!
+ResourceToolboxPresenter guid: (GUID fromString: '{9b3e71d1-8684-48c9-b045-890f2cd430e6}')!
 ResourceToolboxPresenter comment: ''!
 !ResourceToolboxPresenter categoriesForClass!Development!MVP-Resources-IDE Tools! !
 !ResourceToolboxPresenter methodsFor!

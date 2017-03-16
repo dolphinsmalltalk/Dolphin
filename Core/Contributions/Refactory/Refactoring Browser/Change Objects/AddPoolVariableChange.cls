@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk 2002 release 5.00"!
+"Filed out from Dolphin Smalltalk 7"!
 
 RefactoryVariableChange subclass: #AddPoolVariableChange
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-AddPoolVariableChange guid: (GUID fromString: '{48291CA4-180F-4A5E-B79E-409203E18930}')!
+AddPoolVariableChange guid: (GUID fromString: '{48291ca4-180f-4a5e-b79e-409203e18930}')!
 AddPoolVariableChange comment: ''!
 !AddPoolVariableChange categoriesForClass!Refactory-Change Objects! !
 !AddPoolVariableChange methodsFor!

@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 NMHDR subclass: #OFNOTIFYEX
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-OFNOTIFYEX guid: (GUID fromString: '{4C069709-5FAE-4AF1-AB44-F69E79128090}')!
+OFNOTIFYEX guid: (GUID fromString: '{4c069709-5fae-4af1-ab44-f69e79128090}')!
 OFNOTIFYEX comment: '<OFNOTIFYEX> is an <ExternalStructure> class to wrap the struct ''Win32.OFNOTIFYEX'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct

@@ -5,7 +5,7 @@ OLECountedArray subclass: #CALPOLESTR
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-CALPOLESTR guid: (GUID fromString: '{B4CB3D32-BC0E-4C28-8F52-10F224F37E2F}')!
+CALPOLESTR guid: (GUID fromString: '{b4cb3d32-bc0e-4c28-8f52-10f224f37e2f}')!
 CALPOLESTR comment: '<CALPOLESTR> is an <ExternalStructure> class to wrap the struct ''OCIDL.CALPOLESTR'' from type information in the ''OCIDL Library'' library.
 
 CALPOLESTR is a counted array of Unicode strings. For an example usage see IPerPropertyBrowsing.'!

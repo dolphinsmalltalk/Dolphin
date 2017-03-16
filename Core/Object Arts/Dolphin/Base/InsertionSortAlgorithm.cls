@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 PluggableSortAlgorithm subclass: #InsertionSortAlgorithm
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-InsertionSortAlgorithm guid: (GUID fromString: '{7D2CD205-0902-49B4-8198-38602100293D}')!
+InsertionSortAlgorithm guid: (GUID fromString: '{7d2cd205-0902-49b4-8198-38602100293d}')!
 InsertionSortAlgorithm comment: 'InsertionSortAlgorithm implements the simple Insertion Sort algorithm as a pluggable sorting strategy  for use in conjunction with <SortedCollection>s. 
 
 Insertion sort is slow for anything but very small collections, or those which are already nearly sorted, where it is the sorting algorithm of choice.'!

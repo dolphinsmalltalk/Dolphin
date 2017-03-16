@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 StProgramNode subclass: #StValueNode
 	instanceVariableNames: 'parentheses'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-StValueNode guid: (GUID fromString: '{644CB929-DF4A-4CB9-BD37-42AB7B46490F}')!
+StValueNode guid: (GUID fromString: '{644cb929-df4a-4cb9-bd37-42ab7b46490f}')!
 StValueNode comment: 'StValueNode is an abstract class to represent parse tree nodes that return some value.
 
 Instance Variables:

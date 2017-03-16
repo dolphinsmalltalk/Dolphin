@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ODBDeserializers subclass: #ODBExternalReference
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ODBExternalReference guid: (GUID fromString: '{8162EDD9-0FB8-11D4-B091-000000000000}')!
+ODBExternalReference guid: (GUID fromString: '{8162edd9-0fb8-11d4-b091-000000000000}')!
 ODBExternalReference comment: ''!
 !ODBExternalReference categoriesForClass!No category! !
 !ODBExternalReference class methodsFor!

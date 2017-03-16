@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Error subclass: #GdiplusError
 	instanceVariableNames: 'win32Error'
 	classVariableNames: 'ErrorDescriptions'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-GdiplusError guid: (GUID fromString: '{2FDB3661-122F-4B12-B60D-CE33DBAB46F6}')!
+GdiplusError guid: (GUID fromString: '{2fdb3661-122f-4b12-b60d-ce33dbab46f6}')!
 GdiplusError comment: ''!
 !GdiplusError categoriesForClass!Unclassified! !
 !GdiplusError methodsFor!

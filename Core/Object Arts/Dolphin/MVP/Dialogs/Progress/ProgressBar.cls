@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ValueConvertingControlView subclass: #ProgressBar
 	instanceVariableNames: ''
 	classVariableNames: 'ValidRange'
 	poolDictionaries: 'ProgressBarConstants'
 	classInstanceVariableNames: ''!
-ProgressBar guid: (GUID fromString: '{87B4C737-026E-11D3-9FD7-00A0CC3E4A32}')!
+ProgressBar guid: (GUID fromString: '{87b4c737-026e-11d3-9fd7-00a0cc3e4a32}')!
 ProgressBar comment: 'ProgressBar is a <valueView> implementing the Windows "msctls_progress32" common control. The <valueModel> associated with a ProgressBar must always yield an <integer> value when mapped through the installed type converter. A ProgressBar will normally be used in conjunction with a <NumberPresenter>.
 
 Class Variables:

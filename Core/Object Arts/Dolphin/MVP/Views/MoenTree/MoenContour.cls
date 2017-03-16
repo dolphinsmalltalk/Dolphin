@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #MoenContour
 	instanceVariableNames: 'lowerHead lowerTail upperHead upperTail'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-MoenContour guid: (GUID fromString: '{68F4AC01-2F95-11D3-93BA-00A024CA708A}')!
+MoenContour guid: (GUID fromString: '{68f4ac01-2f95-11d3-93ba-00a024ca708a}')!
 MoenContour comment: 'MoenContour is a private helper class which is part of the implementation of the <MoenTreeView>
 
 Instance Variables:

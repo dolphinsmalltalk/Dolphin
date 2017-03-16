@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Dialog subclass: #WordpadParagraphDialog
 	instanceVariableNames: 'leftPresenter rightPresenter firstLinePresenter alignmentPresenter'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-WordpadParagraphDialog guid: (GUID fromString: '{5AFD840C-A050-45B7-9346-E40A2217B331}')!
+WordpadParagraphDialog guid: (GUID fromString: '{5afd840c-a050-45b7-9346-e40a2217b331}')!
 WordpadParagraphDialog comment: ''!
 !WordpadParagraphDialog categoriesForClass!MVP-Presenters! !
 !WordpadParagraphDialog methodsFor!

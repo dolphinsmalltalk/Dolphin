@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 FolderHierarchyModel subclass: #PackageHierarchyModel
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-PackageHierarchyModel guid: (GUID fromString: '{26DEA10B-1BC7-477F-A6B8-CA9452CE3D3E}')!
+PackageHierarchyModel guid: (GUID fromString: '{26dea10b-1bc7-477f-a6b8-ca9452ce3d3e}')!
 PackageHierarchyModel comment: 'PackageHierarchyModel is a <FolderHierarchyModel> specialized to represent the hierarchy of folders of installed packages.
 '!
 !PackageHierarchyModel categoriesForClass!Development!MVP-Models! !

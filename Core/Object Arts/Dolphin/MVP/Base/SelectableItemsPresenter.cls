@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Presenter subclass: #SelectableItemsPresenter
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-SelectableItemsPresenter guid: (GUID fromString: '{266D2FF0-37E3-4F48-92DF-759D16A0FE97}')!
+SelectableItemsPresenter guid: (GUID fromString: '{266d2ff0-37e3-4f48-92df-759d16a0fe97}')!
 SelectableItemsPresenter comment: 'SelectableItemsPresenter ia an abstract class that implements the <selectableItems> protocol for components that need to make one or more selections from multiple items held by their model. Typically the model will be either a <listModel> or <treeModel>.'!
 !SelectableItemsPresenter categoriesForClass!MVP-Presenters!MVP-Resources-Lists! !
 !SelectableItemsPresenter methodsFor!

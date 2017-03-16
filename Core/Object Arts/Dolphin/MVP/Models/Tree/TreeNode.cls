@@ -5,7 +5,7 @@ Object subclass: #TreeNode
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-TreeNode guid: (GUID fromString: '{87B4C4C7-026E-11D3-9FD7-00A0CC3E4A32}')!
+TreeNode guid: (GUID fromString: '{87b4c4c7-026e-11d3-9fd7-00a0cc3e4a32}')!
 TreeNode comment: 'TreeNode represents a node of a tree in a <TreeModel> hierarchy.
 
 Instance Variables:

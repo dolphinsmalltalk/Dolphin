@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk 2000 release 5.00"!
+"Filed out from Dolphin Smalltalk 7"!
 
 VariableRefactoring subclass: #ProtectInstanceVariableRefactoring
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ProtectInstanceVariableRefactoring guid: (GUID fromString: '{5175A912-5F59-47E5-AB30-66893C7043E5}')!
+ProtectInstanceVariableRefactoring guid: (GUID fromString: '{5175a912-5f59-47e5-ab30-66893c7043e5}')!
 ProtectInstanceVariableRefactoring comment: ''!
 !ProtectInstanceVariableRefactoring categoriesForClass!Refactory-Refactorings! !
 !ProtectInstanceVariableRefactoring methodsFor!

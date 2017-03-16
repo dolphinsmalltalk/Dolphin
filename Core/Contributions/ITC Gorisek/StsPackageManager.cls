@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 PackageManager subclass: #StsPackageManager
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-StsPackageManager guid: (GUID fromString: '{91A522EF-8710-4749-9AC6-42D8E1BA1206}')!
+StsPackageManager guid: (GUID fromString: '{91a522ef-8710-4749-9ac6-42d8e1ba1206}')!
 StsPackageManager comment: ''!
 !StsPackageManager categoriesForClass!Development! !
 !StsPackageManager methodsFor!

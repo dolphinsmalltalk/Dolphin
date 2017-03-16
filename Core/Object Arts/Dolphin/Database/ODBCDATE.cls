@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ExternalStructure subclass: #ODBCDATE
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ODBCDATE guid: (GUID fromString: '{87B4C597-026E-11D3-9FD7-00A0CC3E4A32}')!
+ODBCDATE guid: (GUID fromString: '{87b4c597-026e-11d3-9fd7-00a0cc3e4a32}')!
 ODBCDATE comment: 'ODBCDATE is a representation of the same named Win32 ODBC structure.'!
 !ODBCDATE categoriesForClass!External-Data-Structured-ODBC!ODBC Interface! !
 !ODBCDATE methodsFor!

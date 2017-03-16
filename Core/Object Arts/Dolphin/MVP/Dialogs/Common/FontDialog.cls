@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 CommonDialog subclass: #FontDialog
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-FontDialog guid: (GUID fromString: '{87B4C6B3-026E-11D3-9FD7-00A0CC3E4A32}')!
+FontDialog guid: (GUID fromString: '{87b4c6b3-026e-11d3-9fd7-00a0cc3e4a32}')!
 FontDialog comment: 'FontDialog is a <valueDialogPresenter> implementing the Windows ChooseFont common dialog. The associated <valueModel> contains the <Font> chosen.
 
 Instance Variables:

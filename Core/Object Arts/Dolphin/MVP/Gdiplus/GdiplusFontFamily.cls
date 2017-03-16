@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 GdiplusBase subclass: #GdiplusFontFamily
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-GdiplusFontFamily guid: (GUID fromString: '{C09D8C08-5F28-11D7-B609-00E0987E8081}')!
+GdiplusFontFamily guid: (GUID fromString: '{c09d8c08-5f28-11d7-b609-00e0987e8081}')!
 GdiplusFontFamily comment: 'GdiplusFontFamily represents a set of fonts that make up a font family. A font family is a group of fonts that have the same typeface but different styles.
 
 '!

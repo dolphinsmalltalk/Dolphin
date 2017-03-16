@@ -5,7 +5,7 @@ ValuePresenter subclass: #ScintillaTextStylePresenter
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ScintillaTextStylePresenter guid: (GUID fromString: '{E352DFCB-7063-4B89-9958-074E8500392F}')!
+ScintillaTextStylePresenter guid: (GUID fromString: '{e352dfcb-7063-4b89-9958-074e8500392f}')!
 ScintillaTextStylePresenter comment: 'ScintillaTextStylePresenter provides a detail presentation of a <ScintillaTextStyle>, and can be used to view and modify the settings of that style such as the font, foreground and background colours, etc.
 
 Instance Variables:

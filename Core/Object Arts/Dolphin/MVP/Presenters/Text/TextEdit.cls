@@ -5,7 +5,7 @@ ValueConvertingControlView subclass: #TextEdit
 	classVariableNames: 'AlignmentMap EnMap FindDialogMessage FindDisabledMask FormatMap ModifiedMask ReadOnlyMask StaticMask UpdatePerCharMask WantTabMask'
 	poolDictionaries: 'TextEditConstants'
 	classInstanceVariableNames: ''!
-TextEdit guid: (GUID fromString: '{87B4C73A-026E-11D3-9FD7-00A0CC3E4A32}')!
+TextEdit guid: (GUID fromString: '{87b4c73a-026e-11d3-9fd7-00a0cc3e4a32}')!
 TextEdit comment: 'TextEdit is a <valueView> class that implements the Windows "EDIT" control for the displaying and editing of single line text. The <valueModel> associated with a TextEdit must always yield a <readableString> value when mapped through the installed type converter. A TextEdit will normally be used in conjunction with a <TextPresenter>. 
 
 The alignment of the text can be specified using the alignment aspect which can assume of of the following values: (#left, #center, #right). The #updatePerChar aspect, if set to true, will ensure that the editor''s associated model will be kept up to date with the view as each character is typed. If false, the update only takes place when the view loses focus.

@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 AbstractDelegatingView subclass: #ReferenceView
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ReferenceView guid: (GUID fromString: '{87B4C713-026E-11D3-9FD7-00A0CC3E4A32}')!
+ReferenceView guid: (GUID fromString: '{87b4c713-026e-11d3-9fd7-00a0cc3e4a32}')!
 ReferenceView comment: 'ReferenceView represents a dummy <view> that is capable of loading another view to take its place. This "referee" view is  identified by its resource identifier. The reference view then steps aside and forwards all pertinent messages to the referee. In general, from this point on, the reference view can be assumed to take a minimal part in the view hierarchy.
 
 Typically, ReferenceViews are used to allow existing views held by the ResourceManager to be loaded, as is, into other views. In this way, if the referee view definition is changed then, when the referer is re-loaded, it will automatically get the latest referee definition.

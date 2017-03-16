@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 LayoutManager subclass: #BorderLayout
 	instanceVariableNames: 'horizontalGap verticalGap north south east west center'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-BorderLayout guid: (GUID fromString: '{87B4C646-026E-11D3-9FD7-00A0CC3E4A32}')!
+BorderLayout guid: (GUID fromString: '{87b4c646-026e-11d3-9fd7-00a0cc3e4a32}')!
 BorderLayout comment: 'BorderLayout implements a general purpose <layoutManager> to layout <view> objects within a <compositeView>. It arranges views that have been added to their parent container with the #arrangement aspects #north, #south, #east, #west and #center. These identified views are "docked" along the appropriate edges and in the centre of the container. A BorderLayout attempts to keep the radial dimension of the edge components fixed at either their current size or (if specified) the preferred size, and then resizes the #center view to fill the remaining space.
 
 BorderLayout is a very useful layout manager, and is commonly employed in conjunction with a shell to position a <Toolbar> to the north, a <Statusbar> to the south, and a composite view in the centre that contains the applicaiton views.

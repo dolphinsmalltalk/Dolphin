@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Toolbar subclass: #SUnitToolbar
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-SUnitToolbar guid: (GUID fromString: '{DB61F421-5594-423E-A874-FAE52BA72E64}')!
+SUnitToolbar guid: (GUID fromString: '{db61f421-5594-423e-a874-fae52ba72e64}')!
 SUnitToolbar comment: ''!
 !SUnitToolbar categoriesForClass!Unclassified! !
 !SUnitToolbar class methodsFor!

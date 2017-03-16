@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ToolbarItem subclass: #ToolbarSeparator
 	instanceVariableNames: 'width'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ToolbarSeparator guid: (GUID fromString: '{87B4C701-026E-11D3-9FD7-00A0CC3E4A32}')!
+ToolbarSeparator guid: (GUID fromString: '{87b4c701-026e-11d3-9fd7-00a0cc3e4a32}')!
 ToolbarSeparator comment: 'ToolbarSeparator represents a separator item within a <Toolbar>. A separator can assume a default width, or an explicit pixel width can be set using the #width aspect.
 
 Instance Variables:

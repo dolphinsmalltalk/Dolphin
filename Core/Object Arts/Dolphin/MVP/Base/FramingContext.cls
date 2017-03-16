@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #FramingContext
 	instanceVariableNames: 'layoutContext view rectangle parentRect'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-FramingContext guid: (GUID fromString: '{CCF52B24-63FF-41C2-AB62-FE905A47BA3F}')!
+FramingContext guid: (GUID fromString: '{ccf52b24-63ff-41c2-ab62-fe905a47ba3f}')!
 FramingContext comment: ''!
 !FramingContext categoriesForClass!Kernel-Objects! !
 !FramingContext methodsFor!

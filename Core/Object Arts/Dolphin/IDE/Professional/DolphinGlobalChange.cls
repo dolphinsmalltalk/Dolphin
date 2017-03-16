@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 RefactoryChange subclass: #DolphinGlobalChange
 	instanceVariableNames: 'variable'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-DolphinGlobalChange guid: (GUID fromString: '{BF918303-56E4-4280-8D26-657909A74246}')!
+DolphinGlobalChange guid: (GUID fromString: '{bf918303-56e4-4280-8d26-657909a74246}')!
 DolphinGlobalChange comment: 'DolphinGlobalChange is the class of Dolphin specific <RefactoryChange>s that add, remove, etc global variables in the system dictionary
 
 Instance Variables:

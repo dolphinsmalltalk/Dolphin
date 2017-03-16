@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 GdiplusInitializer subclass: #GdiplusBitmapFromBlankInitializer
 	instanceVariableNames: 'width height format'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-GdiplusBitmapFromBlankInitializer guid: (GUID fromString: '{0A5BEB4B-18F8-4EBE-BB4E-68CE5D088F33}')!
+GdiplusBitmapFromBlankInitializer guid: (GUID fromString: '{0a5beb4b-18f8-4ebe-bb4e-68ce5d088f33}')!
 GdiplusBitmapFromBlankInitializer comment: ''!
 !GdiplusBitmapFromBlankInitializer categoriesForClass!Unclassified! !
 !GdiplusBitmapFromBlankInitializer methodsFor!

@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 StNumberLiteralToken subclass: #StNumberStylingToken
 	instanceVariableNames: 'numberClass'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-StNumberStylingToken guid: (GUID fromString: '{C7C638B9-53CD-4316-803A-A5AC217D7F73}')!
+StNumberStylingToken guid: (GUID fromString: '{c7c638b9-53cd-4316-803a-a5ac217d7f73}')!
 StNumberStylingToken comment: ''!
 !StNumberStylingToken categoriesForClass!Unclassified! !
 !StNumberStylingToken methodsFor!

@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Dialog subclass: #ConvertToSiblingDialog
 	instanceVariableNames: 'classNamePresenter subclassesPresenter statusModel'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ConvertToSiblingDialog guid: (GUID fromString: '{2E1173DA-AD55-42DA-BEB3-E8D674480103}')!
+ConvertToSiblingDialog guid: (GUID fromString: '{2e1173da-ad55-42da-beb3-e8d674480103}')!
 ConvertToSiblingDialog comment: ''!
 !ConvertToSiblingDialog categoriesForClass!Development! !
 !ConvertToSiblingDialog methodsFor!

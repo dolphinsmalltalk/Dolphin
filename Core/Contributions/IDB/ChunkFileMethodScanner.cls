@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #ChunkFileMethodScanner
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ChunkFileMethodScanner guid: (GUID fromString: '{B8B83C19-E601-4265-B607-2A0B2122144B}')!
+ChunkFileMethodScanner guid: (GUID fromString: '{b8b83c19-e601-4265-b607-2a0b2122144b}')!
 ChunkFileMethodScanner comment: 'Scans the sources and changes file and answers a collection of either...
 - all the method versions for a specified class
 - all the method versions for a specified method in a class

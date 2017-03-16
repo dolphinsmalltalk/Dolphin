@@ -5,7 +5,7 @@ ExternalLibrary subclass: #Crypt32Library
 	classVariableNames: ''
 	poolDictionaries: 'WinCryptConstants'
 	classInstanceVariableNames: ''!
-Crypt32Library guid: (GUID fromString: '{02C78993-BA10-47A1-953F-63F60B7693AB}')!
+Crypt32Library guid: (GUID fromString: '{02c78993-ba10-47a1-953f-63f60b7693ab}')!
 Crypt32Library comment: 'Crypt32Library is the <ExternalLibrary> class to represent the dynamic link library, ''Crypt32.dll''.It was generated generated from type information in the ''Win32 API'' library. It contains methods for each of the functions defined by the corresponding module in that type library.
 
 The type library contains the following helpstring for this module
@@ -150,7 +150,6 @@ unprotectData: dataByteArray additionalEntropy: aByteArrayOrNil
 		additionalEntropy: aByteArrayOrNil
 		machineWide: false!
 
-
 unprotectData: aByteObject additionalEntropy: aByteArrayOrNil machineWide: aBoolean
 	"Decrypt the protected data in the byte object argument, aByteObject, answering the
 	decrypted data as an instance of the same class as that of the original data. Additional
@@ -194,3 +193,4 @@ unprotectData: aByteObject additionalEntropy: aByteArrayOrNil machineWide: aBool
 !Crypt32Library class categoriesFor: #unprotectData:!operations!public! !
 !Crypt32Library class categoriesFor: #unprotectData:additionalEntropy:!operations!public! !
 !Crypt32Library class categoriesFor: #unprotectData:additionalEntropy:machineWide:!operations!public! !
+

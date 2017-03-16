@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 SmalltalkStyler subclass: #SmalltalkExpressionStyler
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-SmalltalkExpressionStyler guid: (GUID fromString: '{A79E3E47-8ADC-4B02-B7A5-4B473AD6C632}')!
+SmalltalkExpressionStyler guid: (GUID fromString: '{a79e3e47-8adc-4b02-b7a5-4b473ad6c632}')!
 SmalltalkExpressionStyler comment: 'SmalltalkExpressionStyler is a <SmalltalkStyler> specialised for colouring Smalltalk expressions (as opposed to methods) in workspaces.'!
 !SmalltalkExpressionStyler categoriesForClass!Kernel-Objects! !
 !SmalltalkExpressionStyler methodsFor!

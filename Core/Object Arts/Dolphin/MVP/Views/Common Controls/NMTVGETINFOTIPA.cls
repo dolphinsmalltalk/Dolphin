@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 NMHDR subclass: #NMTVGETINFOTIPA
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-NMTVGETINFOTIPA guid: (GUID fromString: '{F44C9149-2B3F-11D3-8368-7A8B5A000000}')!
+NMTVGETINFOTIPA guid: (GUID fromString: '{f44c9149-2b3f-11d3-8368-7a8b5a000000}')!
 NMTVGETINFOTIPA comment: ''!
 !NMTVGETINFOTIPA categoriesForClass!External-Data-Structured-Win32! !
 !NMTVGETINFOTIPA methodsFor!

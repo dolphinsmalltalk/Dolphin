@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Icon subclass: #NullIcon
 	instanceVariableNames: ''
 	classVariableNames: 'Current'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-NullIcon guid: (GUID fromString: '{126ACBB6-E8DF-45A9-80C0-8CAF5F16875E}')!
+NullIcon guid: (GUID fromString: '{126acbb6-e8df-45a9-80c0-8caf5f16875e}')!
 NullIcon comment: ''!
 !NullIcon categoriesForClass!Graphics-Tools! !
 !NullIcon methodsFor!

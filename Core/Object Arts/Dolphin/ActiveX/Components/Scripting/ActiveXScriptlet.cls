@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #ActiveXScriptlet
 	instanceVariableNames: 'language expression procedures description globalBindings'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ActiveXScriptlet guid: (GUID fromString: '{9271A3A3-D270-11D3-93DA-00A024CA708A}')!
+ActiveXScriptlet guid: (GUID fromString: '{9271a3a3-d270-11d3-93da-00a024ca708a}')!
 ActiveXScriptlet comment: 'ActiveXScriplet represents an executable piece of script code, e.g. in VBScript. 
 
 It consists of a set of the name of the script language, the text of a set of procedures (may be empty), and an expression to be evaluated.

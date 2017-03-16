@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk XP"!
+"Filed out from Dolphin Smalltalk 7"!
 
 MethodRefactoring subclass: #InlineTemporaryRefactoring
 	instanceVariableNames: 'sourceInterval selector sourceTree assignmentNode definingNode'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-InlineTemporaryRefactoring guid: (GUID fromString: '{462B284D-15E3-4D89-AC1A-048036A38C69}')!
+InlineTemporaryRefactoring guid: (GUID fromString: '{462b284d-15e3-4d89-ac1a-048036a38c69}')!
 InlineTemporaryRefactoring comment: ''!
 !InlineTemporaryRefactoring categoriesForClass!Refactory-Refactorings! !
 !InlineTemporaryRefactoring methodsFor!

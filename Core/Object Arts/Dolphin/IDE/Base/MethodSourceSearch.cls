@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 MethodSearch subclass: #MethodSourceSearch
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-MethodSourceSearch guid: (GUID fromString: '{6F058C96-C1BF-4FB5-A2C3-B82976045E6A}')!
+MethodSourceSearch guid: (GUID fromString: '{6f058c96-c1bf-4fb5-a2c3-b82976045e6a}')!
 MethodSourceSearch comment: ''!
 !MethodSourceSearch categoriesForClass!Kernel-Objects! !
 !MethodSourceSearch methodsFor!

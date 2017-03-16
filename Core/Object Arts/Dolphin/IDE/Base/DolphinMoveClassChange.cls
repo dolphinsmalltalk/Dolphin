@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 RefactoryClassChange subclass: #DolphinMoveClassChange
 	instanceVariableNames: 'superclassName'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-DolphinMoveClassChange guid: (GUID fromString: '{BC59A55B-44A6-46B0-BEAD-8E1FBF05E2A9}')!
+DolphinMoveClassChange guid: (GUID fromString: '{bc59a55b-44a6-46b0-bead-8e1fbf05e2a9}')!
 DolphinMoveClassChange comment: 'DolphinMoveClassChange is a Dolphin specific class change that invokes the ClassBuilder to move a class under a new superclass.'!
 !DolphinMoveClassChange categoriesForClass!Refactory-Change Objects! !
 !DolphinMoveClassChange methodsFor!

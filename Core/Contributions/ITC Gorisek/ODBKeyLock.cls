@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ODBLock subclass: #ODBKeyLock
 	instanceVariableNames: 'key'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ODBKeyLock guid: (GUID fromString: '{8162EE26-0FB8-11D4-B091-000000000000}')!
+ODBKeyLock guid: (GUID fromString: '{8162ee26-0fb8-11d4-b091-000000000000}')!
 ODBKeyLock comment: ''!
 !ODBKeyLock categoriesForClass!No category! !
 !ODBKeyLock methodsFor!

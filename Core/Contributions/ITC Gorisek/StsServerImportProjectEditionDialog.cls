@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Dialog subclass: #StsServerImportProjectEditionDialog
 	instanceVariableNames: 'serverUrl httpClient urlPrefix result projects projectEditions selectedProjectEditions projectsAndEditionsCacheDict cachedLocalEditions'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-StsServerImportProjectEditionDialog guid: (GUID fromString: '{235ED5E1-6789-4721-8BFF-30814C09FA4B}')!
+StsServerImportProjectEditionDialog guid: (GUID fromString: '{235ed5e1-6789-4721-8bff-30814c09fa4b}')!
 StsServerImportProjectEditionDialog comment: ''!
 !StsServerImportProjectEditionDialog categoriesForClass!Unclassified! !
 !StsServerImportProjectEditionDialog methodsFor!

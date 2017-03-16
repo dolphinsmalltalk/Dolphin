@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 StsImportProxy subclass: #StsSqueakChangeSetProxy
 	instanceVariableNames: 'stream changes'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-StsSqueakChangeSetProxy guid: (GUID fromString: '{96256785-FE6D-4A1D-9318-F3E49FF1AA39}')!
+StsSqueakChangeSetProxy guid: (GUID fromString: '{96256785-fe6d-4a1d-9318-f3e49ff1aa39}')!
 StsSqueakChangeSetProxy comment: ''!
 !StsSqueakChangeSetProxy categoriesForClass!Unclassified! !
 !StsSqueakChangeSetProxy methodsFor!

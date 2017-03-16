@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #ODBClassManagerForSerialization
 	instanceVariableNames: 'classesToDescription idToClassDescription'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ODBClassManagerForSerialization guid: (GUID fromString: '{9666921E-41F2-47F4-AC93-76C551CEB2A3}')!
+ODBClassManagerForSerialization guid: (GUID fromString: '{9666921e-41f2-47f4-ac93-76c551ceb2a3}')!
 ODBClassManagerForSerialization comment: ''!
 !ODBClassManagerForSerialization categoriesForClass!No category! !
 !ODBClassManagerForSerialization methodsFor!

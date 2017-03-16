@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ValuePresenter subclass: #ScintillaStylesCollectionPresenter
 	instanceVariableNames: 'collectionPresenter detailPresenter settingSelection'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ScintillaStylesCollectionPresenter guid: (GUID fromString: '{DFA721D9-7DE6-4FE7-9998-18DD7B52C0C4}')!
+ScintillaStylesCollectionPresenter guid: (GUID fromString: '{dfa721d9-7de6-4fe7-9998-18dd7b52c0c4}')!
 ScintillaStylesCollectionPresenter comment: 'ScintillaStylesCollectionPresenter provides a master-detail presentation of a collection of <ScintillaTextStyle>s (e.g  those configured for a particular ScintillaView). It is composed of a <CollectionPresenter>, to present the list of styles, and a <ScintillaTextStylePresenter>, to present the detail view. A ScintillaStylesCollectionPresenter can be used to add new styles, and remove and modify existing styles, and as such is used for the #textStyles aspect of a <ScintillaView> when inspected with the Published Aspect Inspector, and also within the <ScintillaTextStylesDialog>. The latter is intended to allow for configuration of text styles in an end-user application that employs Scintilla.
 
 Instance Variables:

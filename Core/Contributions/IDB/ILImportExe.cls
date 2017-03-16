@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ILImportIcon subclass: #ILImportExe
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ILImportExe guid: (GUID fromString: '{460509A0-67D1-48C8-81E9-4356077F5E96}')!
+ILImportExe guid: (GUID fromString: '{460509a0-67d1-48c8-81e9-4356077f5e96}')!
 ILImportExe comment: 'See [DolphinImageFolder]/Idb/Documentation for details
 
 (C) 2005 Ian Bartholomew

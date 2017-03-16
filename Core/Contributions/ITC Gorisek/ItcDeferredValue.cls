@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 DeferredValue subclass: #ItcDeferredValue
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ItcDeferredValue guid: (GUID fromString: '{482A099A-03A8-4EE1-9999-330364D2C101}')!
+ItcDeferredValue guid: (GUID fromString: '{482a099a-03a8-4ee1-9999-330364d2c101}')!
 ItcDeferredValue comment: ''!
 !ItcDeferredValue categoriesForClass!Unclassified! !
 !ItcDeferredValue methodsFor!

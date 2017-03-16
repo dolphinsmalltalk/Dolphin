@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 NMHDR subclass: #NMKEYDOWN
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-NMKEYDOWN guid: (GUID fromString: '{87B4C628-026E-11D3-9FD7-00A0CC3E4A32}')!
+NMKEYDOWN guid: (GUID fromString: '{87b4c628-026e-11d3-9fd7-00a0cc3e4a32}')!
 NMKEYDOWN comment: 'NMKEYDOWN is an ExternalStructure class to represent the Win32 structures NMTVKEYDOWN, NMTCKEYDOWN and NMLVKEYDOWN, all of which have the same fields.
 '!
 !NMKEYDOWN categoriesForClass!External-Data-Structured-Win32! !

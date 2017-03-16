@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #StyledShadow
 	instanceVariableNames: 'color density offset'
 	classVariableNames: ''
 	poolDictionaries: 'GdiplusConstants'
 	classInstanceVariableNames: ''!
-StyledShadow guid: (GUID fromString: '{B7558F23-322B-4C65-AB23-0E43EAD228BF}')!
+StyledShadow guid: (GUID fromString: '{b7558f23-322b-4c65-ab23-0e43ead228bf}')!
 StyledShadow comment: ''!
 !StyledShadow categoriesForClass!Unclassified! !
 !StyledShadow methodsFor!

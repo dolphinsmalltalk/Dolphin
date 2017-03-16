@@ -5,7 +5,7 @@ TextDocument subclass: #XmlPad
 	classVariableNames: 'RememberPlacementMask'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-XmlPad guid: (GUID fromString: '{0B798C7B-C80F-46AB-9DD4-D8832B78D33C}')!
+XmlPad guid: (GUID fromString: '{0b798c7b-c80f-46ab-9dd4-d8832b78d33c}')!
 XmlPad comment: 'XmlPad is a simple XML text editor. It is intended to demonstrate the DocumentShell hierarchy of Dolphin''s application framework, the Scintilla view component, and the use of the MSXML. XmlPad also demonstrates how to use the registry to save and restore user preferences. 
 
 XmlPad show'!

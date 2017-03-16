@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ValuePresenter subclass: #ImagePresenter
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ImagePresenter guid: (GUID fromString: '{87B4C6D0-026E-11D3-9FD7-00A0CC3E4A32}')!
+ImagePresenter guid: (GUID fromString: '{87b4c6d0-026e-11d3-9fd7-00a0cc3e4a32}')!
 ImagePresenter comment: 'ImagePresenter is a <valuePresenter> that displays a <valueModel> onto an <image> value. A ImagePresenter can be connected to any <valueView> capable of displaying <image> values. Normally, this will be an <ImageView> or <StaticImage>, although alternative views may be chosen with the installation of an appropriate <typeConverter>.'!
 !ImagePresenter categoriesForClass!MVP-Presenters!MVP-Resources-Images! !
 !ImagePresenter class methodsFor!

@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 AbstractLOGFONT subclass: #LOGFONTW
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-LOGFONTW guid: (GUID fromString: '{37140088-772D-4F72-AAC2-27311F7805D8}')!
+LOGFONTW guid: (GUID fromString: '{37140088-772d-4f72-aac2-27311f7805d8}')!
 LOGFONTW comment: ''!
 !LOGFONTW categoriesForClass!Win32-Structs! !
 !LOGFONTW methodsFor!

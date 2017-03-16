@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #SelectorParser
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-SelectorParser guid: (GUID fromString: '{BCEF9177-1432-4EB4-80D9-6197B30BC4AB}')!
+SelectorParser guid: (GUID fromString: '{bcef9177-1432-4eb4-80d9-6197b30bc4ab}')!
 SelectorParser comment: 'Parse a method definition string to obtain the method''s selector.
 
 Usage:

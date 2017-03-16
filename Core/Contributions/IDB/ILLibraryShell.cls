@@ -5,7 +5,7 @@ IdbToolShell subclass: #ILLibraryShell
 	classVariableNames: ''
 	poolDictionaries: 'CommonDialogConstants'
 	classInstanceVariableNames: ''!
-ILLibraryShell guid: (GUID fromString: '{1C83FB20-739D-43F4-89F6-026860979F42}')!
+ILLibraryShell guid: (GUID fromString: '{1c83fb20-739d-43f4-89f6-026860979f42}')!
 ILLibraryShell comment: 'See [DolphinImageFolder]/Idb/Documentation for details
 
 (C) 2005 Ian Bartholomew

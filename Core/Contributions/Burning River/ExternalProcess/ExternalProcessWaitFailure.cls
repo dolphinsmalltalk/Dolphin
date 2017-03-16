@@ -5,6 +5,6 @@ Error subclass: #ExternalProcessWaitFailure
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ExternalProcessWaitFailure guid: (GUID fromString: '{40BE858A-8BC0-43EB-92A1-9B449BFE85AD}')!
+ExternalProcessWaitFailure guid: (GUID fromString: '{40be858a-8bc0-43eb-92a1-9b449bfe85ad}')!
 ExternalProcessWaitFailure comment: 'This class of error is signalled when an ExternalProcess object finds that the Win32 function WaitForSingleObject has failed.'!
 !ExternalProcessWaitFailure categoriesForClass!Unclassified! !

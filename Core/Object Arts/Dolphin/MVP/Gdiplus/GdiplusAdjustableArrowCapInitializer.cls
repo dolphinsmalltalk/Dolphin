@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 GdiplusInitializer subclass: #GdiplusAdjustableArrowCapInitializer
 	instanceVariableNames: 'height width isFilled'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-GdiplusAdjustableArrowCapInitializer guid: (GUID fromString: '{C1FCC801-8763-11D7-B609-00E0987E8081}')!
+GdiplusAdjustableArrowCapInitializer guid: (GUID fromString: '{c1fcc801-8763-11d7-b609-00e0987e8081}')!
 GdiplusAdjustableArrowCapInitializer comment: ''!
 !GdiplusAdjustableArrowCapInitializer categoriesForClass!Unclassified! !
 !GdiplusAdjustableArrowCapInitializer methodsFor!

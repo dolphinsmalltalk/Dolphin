@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Win32Structure subclass: #WINDOWPOS
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-WINDOWPOS guid: (GUID fromString: '{CD69A071-3606-11D3-93BD-00A024CA708A}')!
+WINDOWPOS guid: (GUID fromString: '{cd69a071-3606-11d3-93bd-00a024ca708a}')!
 WINDOWPOS comment: ''!
 !WINDOWPOS categoriesForClass!External-Data-Structured-Win32! !
 !WINDOWPOS methodsFor!

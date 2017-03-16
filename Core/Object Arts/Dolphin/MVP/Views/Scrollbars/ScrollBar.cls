@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ValueConvertingControlView subclass: #ScrollBar
 	instanceVariableNames: 'continuousTracking'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ScrollBar guid: (GUID fromString: '{87B4C738-026E-11D3-9FD7-00A0CC3E4A32}')!
+ScrollBar guid: (GUID fromString: '{87b4c738-026e-11d3-9fd7-00a0cc3e4a32}')!
 ScrollBar comment: 'ScrollBar is a <valueView> implementing the Windows "msctls_progress32" common control. The <valueModel> associated with a ScrollBar must always yield an <integer> value when mapped through the installed type converter. A ScrollBar will normally be used in conjunction with a <NumberPresenter>.
 
 Instance Variables:

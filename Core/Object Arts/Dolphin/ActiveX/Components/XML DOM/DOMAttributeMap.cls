@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 DOMNamedNodeMap variableSubclass: #DOMAttributeMap
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-DOMAttributeMap guid: (GUID fromString: '{A514645C-F053-4BE4-87C8-99381EC1C930}')!
+DOMAttributeMap guid: (GUID fromString: '{a514645c-f053-4be4-87c8-99381ec1c930}')!
 DOMAttributeMap comment: 'Specialized <DOMNamedNodeMap> which contains <IXMLDOMAttribute>s. This is used to represent the dictionary of attributes associated with a DOM node. The keys and values are strings.'!
 !DOMAttributeMap categoriesForClass!Collections-Unordered! !
 !DOMAttributeMap methodsFor!

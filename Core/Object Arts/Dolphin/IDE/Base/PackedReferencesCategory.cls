@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ReferencesCategory subclass: #PackedReferencesCategory
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-PackedReferencesCategory guid: (GUID fromString: '{A8CDF33B-5F72-4DF4-9EE0-91E91D37BC3C}')!
+PackedReferencesCategory guid: (GUID fromString: '{a8cdf33b-5f72-4df4-9ee0-91e91d37bc3c}')!
 PackedReferencesCategory comment: 'PackedReferencesCategory is the class of virtual method categories dynamically determines their membership to include only those methods which have packed byte codes and reference a particular object from their literal frame. In practice this will include only those methods that consist of a send to self of a zero argument selector.
 
 PackedReferencesCategory has no instances by default, but you can create your own packed reference categories by following the examples in the class #initialize method.'!

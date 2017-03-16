@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 COMInterfaceImp subclass: #IPDolphin
 	instanceVariableNames: 'plugHole coclasses'
 	classVariableNames: 'Current'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-IPDolphin guid: (GUID fromString: '{B115D2D8-5A00-4A5E-8615-109A3332690F}')!
+IPDolphin guid: (GUID fromString: '{b115d2d8-5a00-4a5e-8615-109a3332690f}')!
 IPDolphin comment: 'IPDolphin is the singleton class whose instance hosts the main inbound COM interface, <IIPPlugHole> from the Dolphin in-process COM DLL stub. It is responsible for initialization and shutdown of the image, and ultimately for implementing the DllGetClassObject, DllCanUnloadNow, DllRegisterServer and DllUnregisterServer functions that are exported by the stub.
 
 Once a Dolphin in-proc COM DLL has been loaded, inbound calls to the DllXXX functions in the stub are forwarded here.

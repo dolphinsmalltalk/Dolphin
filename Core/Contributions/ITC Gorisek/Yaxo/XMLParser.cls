@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 XMLTokenizer subclass: #XMLParser
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-XMLParser guid: (GUID fromString: '{BE04633B-820F-4CFE-B0B1-9545388C6DE8}')!
+XMLParser guid: (GUID fromString: '{be04633b-820f-4cfe-b0b1-9545388c6de8}')!
 XMLParser comment: ''!
 !XMLParser categoriesForClass!XML-Parser! !
 !XMLParser methodsFor!

@@ -5,7 +5,7 @@ Dialog subclass: #AdvancedFindDialog
 	classVariableNames: 'RegExpMask WildCardMask'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-AdvancedFindDialog guid: (GUID fromString: '{480E6494-8305-46D4-9AB9-8D3C9DAFE358}')!
+AdvancedFindDialog guid: (GUID fromString: '{480e6494-8305-46d4-9ab9-8d3c9dafe358}')!
 AdvancedFindDialog comment: 'AdvancedFindDialog is a <valueDialogPresenter> replacement for the standard the Windows FindText common dialog (as wrapped by the FindDialog class). AdvancedFindDialog has additional setttings over and above those in the standard FindDialog. The dialog must be associated with an owner view capable of responding to the <textFinder> protocol. It will then remain on-screen until dismissed and will forward <FindEvent>s to the owner via its #onFind: event handler.
 
 Instance Variables:

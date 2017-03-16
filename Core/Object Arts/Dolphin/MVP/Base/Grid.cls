@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #Grid
 	instanceVariableNames: 'resolution'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-Grid guid: (GUID fromString: '{87B4C48E-026E-11D3-9FD7-00A0CC3E4A32}')!
+Grid guid: (GUID fromString: '{87b4c48e-026e-11d3-9fd7-00a0cc3e4a32}')!
 Grid comment: ''!
 !Grid categoriesForClass!MVP-Views-Support! !
 !Grid methodsFor!

@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ODBChange subclass: #ODBNewObjectVersion
 	instanceVariableNames: 'newVersion oldVersion'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ODBNewObjectVersion guid: (GUID fromString: '{8162EDFE-0FB8-11D4-B091-000000000000}')!
+ODBNewObjectVersion guid: (GUID fromString: '{8162edfe-0fb8-11d4-b091-000000000000}')!
 ODBNewObjectVersion comment: ''!
 !ODBNewObjectVersion categoriesForClass!No category! !
 !ODBNewObjectVersion methodsFor!

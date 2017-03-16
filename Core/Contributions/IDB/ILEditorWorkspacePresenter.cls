@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Presenter subclass: #ILEditorWorkspacePresenter
 	instanceVariableNames: 'dum1 dum2 dum3 dum4 dum5'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ILEditorWorkspacePresenter guid: (GUID fromString: '{D015FFBD-130B-4C43-92B1-541993E215E7}')!
+ILEditorWorkspacePresenter guid: (GUID fromString: '{d015ffbd-130b-4c43-92b1-541993e215e7}')!
 ILEditorWorkspacePresenter comment: 'See [DolphinImageFolder]/Idb/Documentation for details
 
 (C) 2005 Ian Bartholomew

@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 STBProxy subclass: #STBViewProxy
 	instanceVariableNames: 'viewClass instVars state placement subViews resolution events version'
 	classVariableNames: 'CreationParentIndex CreationStyleIndex EventsIndex HandleIndex'
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
-STBViewProxy guid: (GUID fromString: '{87B4C6F4-026E-11D3-9FD7-00A0CC3E4A32}')!
+STBViewProxy guid: (GUID fromString: '{87b4c6f4-026e-11d3-9fd7-00a0cc3e4a32}')!
 STBViewProxy comment: 'STBViewProxy is the class of <STBProxy> objects used to represent <View> instances in STB files.'!
 !STBViewProxy categoriesForClass!System-Binary storage! !
 !STBViewProxy methodsFor!

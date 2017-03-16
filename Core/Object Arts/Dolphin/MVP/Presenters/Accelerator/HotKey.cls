@@ -5,7 +5,7 @@ ValueConvertingControlView subclass: #HotKey
 	classVariableNames: ''
 	poolDictionaries: 'HotKeyConstants'
 	classInstanceVariableNames: ''!
-HotKey guid: (GUID fromString: '{87B4C736-026E-11D3-9FD7-00A0CC3E4A32}')!
+HotKey guid: (GUID fromString: '{87b4c736-026e-11d3-9fd7-00a0cc3e4a32}')!
 HotKey comment: 'HotKey is a <valueView> implementing the Windows "msctls_hotkey32" common control. The <valueModel> associated with a HotKey must always yield an <integer> hot-key value when mapped through the installed type converter. Typically, a HotKey view is configured with an AccelToHotKey <typeConverter> and used to display/edit accelerator key definitions. A HotKey will normally be used in conjunction with a <NumberPresenter>.
 
 Instance Variables:

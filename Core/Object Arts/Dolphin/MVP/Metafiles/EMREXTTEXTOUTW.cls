@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 EMREXTTEXTOUT subclass: #EMREXTTEXTOUTW
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-EMREXTTEXTOUTW guid: (GUID fromString: '{984A2E2C-3699-4A16-9ED7-8F174E2CA081}')!
+EMREXTTEXTOUTW guid: (GUID fromString: '{984a2e2c-3699-4a16-9ed7-8f174e2ca081}')!
 EMREXTTEXTOUTW comment: ''!
 !EMREXTTEXTOUTW categoriesForClass!Win32-Structs! !
 !EMREXTTEXTOUTW methodsFor!

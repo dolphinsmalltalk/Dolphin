@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 AbstractNonReferenceDelegatingView subclass: #ToolButton
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ToolButton guid: (GUID fromString: '{075420D9-DC3B-4222-B99E-ABD8769D41B8}')!
+ToolButton guid: (GUID fromString: '{075420d9-dc3b-4222-b99e-abd8769d41b8}')!
 ToolButton comment: ''!
 !ToolButton categoriesForClass!MVP-Resources-Buttons!MVP-Resources-Misc! !
 !ToolButton methodsFor!

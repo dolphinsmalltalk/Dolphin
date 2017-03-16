@@ -5,7 +5,7 @@ RefactoringTool subclass: #CodeRefactoringTool
 	classVariableNames: ''
 	poolDictionaries: 'SmalltalkParseErrorCodes'
 	classInstanceVariableNames: ''!
-CodeRefactoringTool guid: (GUID fromString: '{9F149EFA-C85C-464F-8EB3-43DE901960B3}')!
+CodeRefactoringTool guid: (GUID fromString: '{9f149efa-c85c-464f-8eb3-43de901960b3}')!
 CodeRefactoringTool comment: '.CodeRefactoringTool implements code refactorings for a code workspace. Its container will typically be a <MethodWorkspace>.
 
 CodeRefactoringTool implements the following refactorings:

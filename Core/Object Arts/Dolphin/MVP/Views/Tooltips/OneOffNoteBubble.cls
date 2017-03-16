@@ -5,7 +5,7 @@ Object subclass: #OneOffNoteBubble
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-OneOffNoteBubble guid: (GUID fromString: '{1B63C41E-9DF7-4C2C-B128-3FC143DAC05A}')!
+OneOffNoteBubble guid: (GUID fromString: '{1b63c41e-9df7-4c2c-b128-3fc143dac05a}')!
 OneOffNoteBubble comment: ''!
 !OneOffNoteBubble categoriesForClass!Kernel-Objects! !
 !OneOffNoteBubble class methodsFor!

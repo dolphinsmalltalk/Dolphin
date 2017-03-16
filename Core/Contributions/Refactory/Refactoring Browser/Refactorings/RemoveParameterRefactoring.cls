@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk XP 2002 release 5.05"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ChangeMethodNameRefactoring subclass: #RemoveParameterRefactoring
 	instanceVariableNames: 'parameterIndex argument'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-RemoveParameterRefactoring guid: (GUID fromString: '{275C77ED-2071-4C69-8D2F-063D31A8D03B}')!
+RemoveParameterRefactoring guid: (GUID fromString: '{275c77ed-2071-4c69-8d2f-063d31a8d03b}')!
 RemoveParameterRefactoring comment: ''!
 !RemoveParameterRefactoring categoriesForClass!Refactory-Refactorings! !
 !RemoveParameterRefactoring methodsFor!

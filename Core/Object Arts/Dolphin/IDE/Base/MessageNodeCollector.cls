@@ -5,7 +5,7 @@ StParseNodeVisitor subclass: #MessageNodeCollector
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-MessageNodeCollector guid: (GUID fromString: '{B98DFE2A-9AA1-44C8-AA19-91E7C68513DE}')!
+MessageNodeCollector guid: (GUID fromString: '{b98dfe2a-9aa1-44c8-aa19-91e7c68513de}')!
 MessageNodeCollector comment: 'MessageNodeCollector is a <StParseNodeVisitor>s that builds an ordered collection of the StMessageNode (message sends) it encounters while walking  a parse tree. Its purpose is to allow one to enumerate all messages sent by a method.'!
 !MessageNodeCollector categoriesForClass!System-Compiler! !
 !MessageNodeCollector methodsFor!

@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 GdiplusInitializer subclass: #GdiplusStringFormatInitializer
 	instanceVariableNames: 'formatFlags language'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-GdiplusStringFormatInitializer guid: (GUID fromString: '{F4B7AA82-5FD1-11D7-B609-00E0987E8081}')!
+GdiplusStringFormatInitializer guid: (GUID fromString: '{f4b7aa82-5fd1-11d7-b609-00e0987e8081}')!
 GdiplusStringFormatInitializer comment: ''!
 !GdiplusStringFormatInitializer categoriesForClass!Unclassified! !
 !GdiplusStringFormatInitializer methodsFor!

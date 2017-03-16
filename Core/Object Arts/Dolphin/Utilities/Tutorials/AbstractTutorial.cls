@@ -5,7 +5,7 @@ Object subclass: #AbstractTutorial
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-AbstractTutorial guid: (GUID fromString: '{8351F1AF-403D-4300-B06D-942CA7ABE1DB}')!
+AbstractTutorial guid: (GUID fromString: '{8351f1af-403d-4300-b06d-942ca7abe1db}')!
 AbstractTutorial comment: 'Parent class of all ProfStef tutorials.
 
 To create your own tutorial:

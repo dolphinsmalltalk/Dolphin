@@ -5,7 +5,7 @@ Object subclass: #DolphinProduct
 	classVariableNames: 'Current EditionsMap'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-DolphinProduct guid: (GUID fromString: '{0BCC007B-10ED-40CE-940E-83882E2F70D8}')!
+DolphinProduct guid: (GUID fromString: '{0bcc007b-10ed-40ce-940e-83882e2f70d8}')!
 DolphinProduct comment: ''!
 !DolphinProduct categoriesForClass!Development! !
 !DolphinProduct methodsFor!

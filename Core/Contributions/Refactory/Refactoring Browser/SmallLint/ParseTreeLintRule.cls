@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk XP"!
+"Filed out from Dolphin Smalltalk 7"!
 
 BasicLintRule subclass: #ParseTreeLintRule
 	instanceVariableNames: 'matcher'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ParseTreeLintRule guid: (GUID fromString: '{DB449DFA-5729-42A3-87E6-340F66C98E20}')!
+ParseTreeLintRule guid: (GUID fromString: '{db449dfa-5729-42a3-87e6-340f66c98e20}')!
 ParseTreeLintRule comment: ''!
 !ParseTreeLintRule categoriesForClass!Refactory-Lint! !
 !ParseTreeLintRule methodsFor!

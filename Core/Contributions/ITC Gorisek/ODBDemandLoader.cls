@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #ODBDemandLoader
 	instanceVariableNames: 'objectID transaction proxyObject'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ODBDemandLoader guid: (GUID fromString: '{8162EDD6-0FB8-11D4-B091-000000000000}')!
+ODBDemandLoader guid: (GUID fromString: '{8162edd6-0fb8-11d4-b091-000000000000}')!
 ODBDemandLoader comment: ''!
 !ODBDemandLoader categoriesForClass!No category! !
 !ODBDemandLoader methodsFor!

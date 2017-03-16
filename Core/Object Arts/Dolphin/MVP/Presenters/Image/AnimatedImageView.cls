@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 DoubleBufferedView subclass: #AnimatedImageView
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-AnimatedImageView guid: (GUID fromString: '{63997D2B-ABCA-455E-917B-8CF248B11E63}')!
+AnimatedImageView guid: (GUID fromString: '{63997d2b-abca-455e-917b-8cf248b11e63}')!
 AnimatedImageView comment: ''!
 !AnimatedImageView categoriesForClass!Unclassified! !
 !AnimatedImageView methodsFor!

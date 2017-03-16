@@ -5,7 +5,7 @@ AXAPIInfoAnalyzer subclass: #TKindModuleAnalyzer
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-TKindModuleAnalyzer guid: (GUID fromString: '{C06F3B7F-0868-11D3-93AF-00A024CA708A}')!
+TKindModuleAnalyzer guid: (GUID fromString: '{c06f3b7f-0868-11d3-93af-00a024ca708a}')!
 TKindModuleAnalyzer comment: 'TKindModuleAnalyzer is a class which wraps an OLE Automation <ITypeInfo> interface pointer that describes a ''module'' (a DLL containing exported functions). It adds higher level behaviours for analyzing the type information associated with that DLL.
 
 As of Dolphin 4.0 TKindModuleAnalyzer now provides for the automatic generation of an ExternalLibrary subclass with appropriate Smalltalk wrapper methods for the module.

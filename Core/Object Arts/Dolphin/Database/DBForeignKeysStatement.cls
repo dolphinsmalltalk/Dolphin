@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 DBSchemaStatement subclass: #DBForeignKeysStatement
 	instanceVariableNames: 'foreignCatalogName foreignSchemaName foreignTableName'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-DBForeignKeysStatement guid: (GUID fromString: '{B6F9E2F2-9DF3-4719-AE44-5F079843683F}')!
+DBForeignKeysStatement guid: (GUID fromString: '{b6f9e2f2-9df3-4719-ae44-5f079843683f}')!
 DBForeignKeysStatement comment: ''!
 !DBForeignKeysStatement categoriesForClass!ODBC Interface! !
 !DBForeignKeysStatement methodsFor!

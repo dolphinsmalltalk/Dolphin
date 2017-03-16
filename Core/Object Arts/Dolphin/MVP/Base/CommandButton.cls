@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ControlView subclass: #CommandButton
 	instanceVariableNames: 'commandDescription'
 	classVariableNames: 'StandardCommands'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-CommandButton guid: (GUID fromString: '{7E1607A8-CDEC-4C98-B2A8-C1376E58380E}')!
+CommandButton guid: (GUID fromString: '{7e1607a8-cdec-4c98-b2a8-c1376e58380e}')!
 CommandButton comment: 'CommandButton is the abstract class of  <ControlView>s that act as <commandSource>s, holding a <CommandDescription> detailing the command that should be fired when the button is clicked. The command is subject to the normal command routing followed by all commands in Dolphin, e.g. those initiated from menus, toolbars and keyboard accelerators. See the <CommandDescription> comment for further details.
 
 Concrete subclasses provide implementations based on the Windows BUTTON (PushButton) and SysLink (LinkButton) controls.

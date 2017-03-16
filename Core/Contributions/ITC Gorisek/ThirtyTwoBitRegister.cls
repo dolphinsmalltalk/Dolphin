@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #ThirtyTwoBitRegister
 	instanceVariableNames: 'hi low'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ThirtyTwoBitRegister guid: (GUID fromString: '{74D0064F-5479-4424-B71C-DAD95909AFFF}')!
+ThirtyTwoBitRegister guid: (GUID fromString: '{74d0064f-5479-4424-b71c-dad95909afff}')!
 ThirtyTwoBitRegister comment: '''From Squeak3.0 of 4 February 2001 [latest update: #3545] on 23 September 2001 at 7:54:45 am
 
 I represent a 32-bit register. An instance of me can hold any non-negative integer in the range [0..(2^32 - 1)]. Operations are performed on my contents in place, like a hardware register, and results are always modulo 2^32.

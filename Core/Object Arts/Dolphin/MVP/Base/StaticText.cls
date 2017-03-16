@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 StaticView subclass: #StaticText
 	instanceVariableNames: ''
 	classVariableNames: 'AlignmentMap'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-StaticText guid: (GUID fromString: '{87B4C740-026E-11D3-9FD7-00A0CC3E4A32}')!
+StaticText guid: (GUID fromString: '{87b4c740-026e-11d3-9fd7-00a0cc3e4a32}')!
 StaticText comment: 'StaticText is a <valueView> class for a Window STATIC control for displaying text in one of a number of text styles. The <valueModel> associated with a StaticText must always yield a <readableString> value when mapped through the installed type converter. A StaticText will normally be used in conjunction with a <TextPresenter>. The alignment of the text (and therefore the style of the underlying Windows control) can be specified using the alignment aspect which can assume of of the following values: (#left, #center, #right, #leftNoWrap, #simple).
 
 Class Variables:

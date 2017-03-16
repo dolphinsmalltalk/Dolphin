@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Win32Structure subclass: #OUTLINETEXTMETRIC
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-OUTLINETEXTMETRIC guid: (GUID fromString: '{52831A87-901F-4A84-894B-AB539352B71F}')!
+OUTLINETEXTMETRIC guid: (GUID fromString: '{52831a87-901f-4a84-894b-ab539352b71f}')!
 OUTLINETEXTMETRIC comment: '<OUTLINETEXTMETRIC> is an <ExternalStructure> class to wrap the struct ''Win.OUTLINETEXTMETRIC'' from type information in the ''Windows API (ANSI)'' library.'!
 !OUTLINETEXTMETRIC categoriesForClass!Win-Structs! !
 !OUTLINETEXTMETRIC methodsFor!

@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ControlView subclass: #GroupBox
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'ButtonConstants'
 	classInstanceVariableNames: ''!
-GroupBox guid: (GUID fromString: '{87B4C727-026E-11D3-9FD7-00A0CC3E4A32}')!
+GroupBox guid: (GUID fromString: '{87b4c727-026e-11d3-9fd7-00a0cc3e4a32}')!
 GroupBox comment: 'GroupBox is the <view> implementing the standard Windows group box control. The actual windows class used is BUTTON, but why Microsoft chose this to implement a group box remains a mystery to this day.
 
 GroupBox is named after the Windows control, but it only "groups" the controls it appears to surround visually; i.e. it is not a container view, just a visual decorator.

@@ -5,7 +5,7 @@ Object subclass: #TextTileIcon
 	classVariableNames: ''
 	poolDictionaries: 'GdiplusConstants'
 	classInstanceVariableNames: ''!
-TextTileIcon guid: (GUID fromString: '{A5C05489-C3FA-486A-9E1B-1660F9B3A55A}')!
+TextTileIcon guid: (GUID fromString: '{a5c05489-c3fa-486a-9e1b-1660f9b3a55a}')!
 TextTileIcon comment: 'An icon representation of one or more letters on a plain solid colour background. The icon has a default size (given by the class side #defaultExtent) is capable of being rendered at high quality into any size image list. '!
 !TextTileIcon categoriesForClass!Unclassified! !
 !TextTileIcon methodsFor!

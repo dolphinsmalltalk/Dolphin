@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #InkStroke
 	instanceVariableNames: 'data'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-InkStroke guid: (GUID fromString: '{87B4C493-026E-11D3-9FD7-00A0CC3E4A32}')!
+InkStroke guid: (GUID fromString: '{87b4c493-026e-11d3-9fd7-00a0cc3e4a32}')!
 InkStroke comment: 'InkStroke consists of an <OrderedCollection> of <Point>s that describe the movement of a pen (or mouse) drawing a single stroke of ink. A <Scribble> presenter operates on a <listModel> of InkStrokes that, when replayed, comprises the scribbled picture.
 
 Instance Variables:

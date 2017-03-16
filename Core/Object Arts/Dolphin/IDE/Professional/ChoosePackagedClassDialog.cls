@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ChooseClassDialog subclass: #ChoosePackagedClassDialog
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ChoosePackagedClassDialog guid: (GUID fromString: '{66F6E532-7D50-44B1-877B-8E46061D0277}')!
+ChoosePackagedClassDialog guid: (GUID fromString: '{66f6e532-7d50-44b1-877b-8e46061d0277}')!
 ChoosePackagedClassDialog comment: 'ChoosePackagedClassDialog is a specialised <ChooseClassDialog> that allows for filtering of the class hierarchy by package selection.
 '!
 !ChoosePackagedClassDialog categoriesForClass!MVP-Presenters! !

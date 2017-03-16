@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 MethodRefactoring subclass: #ExtractMethodRefactoring
 	instanceVariableNames: 'selector extractionInterval extractedParseTree modifiedParseTree parameters needsReturn'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ExtractMethodRefactoring guid: (GUID fromString: '{F5EA0D09-686D-47EF-9A7D-72FE3BB4CBCC}')!
+ExtractMethodRefactoring guid: (GUID fromString: '{f5ea0d09-686d-47ef-9a7d-72fe3bb4cbcc}')!
 ExtractMethodRefactoring comment: ''!
 !ExtractMethodRefactoring categoriesForClass!Refactory-Refactorings! !
 !ExtractMethodRefactoring methodsFor!

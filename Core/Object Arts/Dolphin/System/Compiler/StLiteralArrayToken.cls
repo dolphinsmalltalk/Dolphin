@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 StValueToken subclass: #StLiteralArrayToken
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-StLiteralArrayToken guid: (GUID fromString: '{93797E84-0BE7-4528-8362-983D06286A99}')!
+StLiteralArrayToken guid: (GUID fromString: '{93797e84-0be7-4528-8362-983d06286a99}')!
 StLiteralArrayToken comment: ''!
 !StLiteralArrayToken categoriesForClass!Unclassified! !
 !StLiteralArrayToken methodsFor!

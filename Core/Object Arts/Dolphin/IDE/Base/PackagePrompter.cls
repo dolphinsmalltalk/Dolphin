@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ValueDialog subclass: #PackagePrompter
 	instanceVariableNames: 'packagesPresenter notPackagedPresenter defaultPackage validationBlock'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-PackagePrompter guid: (GUID fromString: '{ED9A3D68-797C-4678-ADF9-520204C0023F}')!
+PackagePrompter guid: (GUID fromString: '{ed9a3d68-797c-4678-adf9-520204c0023f}')!
 PackagePrompter comment: 'self show'!
 !PackagePrompter categoriesForClass!Development!MVP-Presenters! !
 !PackagePrompter methodsFor!

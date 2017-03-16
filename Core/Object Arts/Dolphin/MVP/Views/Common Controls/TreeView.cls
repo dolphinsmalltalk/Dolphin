@@ -5,7 +5,7 @@ IconicListAbstract subclass: #TreeView
 	classVariableNames: 'DisableExpandAllMask NonVirtualMask TvnMap UpdateModeMask UpdateModes'
 	poolDictionaries: 'TreeViewConstants'
 	classInstanceVariableNames: ''!
-TreeView guid: (GUID fromString: '{87B4C732-026E-11D3-9FD7-00A0CC3E4A32}')!
+TreeView guid: (GUID fromString: '{87b4c732-026e-11d3-9fd7-00a0cc3e4a32}')!
 TreeView comment: 'TreeView is a <treeView> wrapping the Windows "SysTreeView32" common control. It is for single selection use and, therefore, implements the <selectableItems> protocol for use with any <treeModel>. 
 
 A TreeView is capable of displaying its items in one of three modes (#smallIcons, #largeIcons, #noIcons) which can be set using the #viewMode aspect. 

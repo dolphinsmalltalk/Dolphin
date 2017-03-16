@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 NMTTDISPINFO subclass: #NMTTDISPINFOW
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-NMTTDISPINFOW guid: (GUID fromString: '{87B4C62E-026E-11D3-9FD7-00A0CC3E4A32}')!
+NMTTDISPINFOW guid: (GUID fromString: '{87b4c62e-026e-11d3-9fd7-00a0cc3e4a32}')!
 NMTTDISPINFOW comment: 'NMTTDISPINFOW is the class of <ExternalStructure> which represent the Windows Common Control structure of the same name.
 
 NMTTDISPINFOW accompanies TTN_NEEDTEXTW notifications that are sent by a Toolbar control to its parent when it wishes to determine the Unicode (double-byte character) tool-tip text to be displayed for a toolbar button which the user is hovering over. See the Win32 documentation for further details.'!

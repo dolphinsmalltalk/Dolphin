@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk XP 2002 release 6.00"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #TestResource
 	instanceVariableNames: 'name description'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: 'current'!
-TestResource guid: (GUID fromString: '{69AEB725-622F-43DB-A9C7-095932055892}')!
+TestResource guid: (GUID fromString: '{69aeb725-622f-43db-a9c7-095932055892}')!
 TestResource comment: ''!
 !TestResource categoriesForClass!Unclassified! !
 !TestResource methodsFor!

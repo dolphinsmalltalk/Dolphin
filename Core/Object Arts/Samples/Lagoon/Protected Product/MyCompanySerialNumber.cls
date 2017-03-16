@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ProtectedProductSerialNumber subclass: #MyCompanySerialNumber
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-MyCompanySerialNumber guid: (GUID fromString: '{C1ED7586-AFE1-4EE9-997A-01C157674E7D}')!
+MyCompanySerialNumber guid: (GUID fromString: '{c1ed7586-afe1-4ee9-997a-01c157674e7d}')!
 MyCompanySerialNumber comment: 'This class is a serial number factory for products of "MyCompany". Any <ProtectedProductSessionManager> that wishes to make use of these serial numbers should override it''s #serialNumberClass to answer this class. New serial numbers can be generated for MyCompany''s products by evaluating:
 
 MyCompanySerialNumber new displayString "Display it"'!

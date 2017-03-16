@@ -5,7 +5,7 @@ SmalltalkToolShell subclass: #SmalltalkSystemShell
 	classVariableNames: 'Backcolor BackImage BackImageAlphaPercent BackImageIsTiled Default HotKey PlaySystemSounds ResetWhenInvisible Textcolor ViewMode'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-SmalltalkSystemShell guid: (GUID fromString: '{87B4C6C3-026E-11D3-9FD7-00A0CC3E4A32}')!
+SmalltalkSystemShell guid: (GUID fromString: '{87b4c6c3-026e-11d3-9fd7-00a0cc3e4a32}')!
 SmalltalkSystemShell comment: 'SmalltalkSystemShell is a <SmalltalkToolShell> that implements the user interface onto theDolphin Smalltalk system folder. This an iconic daunting point for all of the installed tools, sample applications etc.
 
 Instance Variables:

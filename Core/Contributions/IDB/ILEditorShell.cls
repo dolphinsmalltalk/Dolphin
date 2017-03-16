@@ -5,7 +5,7 @@ IdbShell subclass: #ILEditorShell
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ILEditorShell guid: (GUID fromString: '{148DA4FB-3948-4CA6-98EA-8AD12DC0B051}')!
+ILEditorShell guid: (GUID fromString: '{148da4fb-3948-4ca6-98ea-8ad12dc0b051}')!
 ILEditorShell comment: 'See [DolphinImageFolder]/Idb/Documentation for details
 
 (C) 2005 Ian Bartholomew

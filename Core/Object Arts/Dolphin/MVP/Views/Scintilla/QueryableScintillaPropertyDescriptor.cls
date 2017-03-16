@@ -5,7 +5,7 @@ ScintillaPropertyDescriptor subclass: #QueryableScintillaPropertyDescriptor
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-QueryableScintillaPropertyDescriptor guid: (GUID fromString: '{79E183F7-C42E-4A53-8327-D3696FC9B52B}')!
+QueryableScintillaPropertyDescriptor guid: (GUID fromString: '{79e183f7-c42e-4a53-8327-d3696fc9b52b}')!
 QueryableScintillaPropertyDescriptor comment: 'QueryableScintillaPropertyDescriptors provide metadata for individual scalar properties of a <ScintillaView> that can be queries as well as set, e.g. the width of a margin.
 
 Instance Variables:

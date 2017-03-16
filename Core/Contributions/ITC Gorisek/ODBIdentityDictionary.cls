@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #ODBIdentityDictionary
 	instanceVariableNames: 'keys values elementCount sizeLimit emptySlotMarker'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ODBIdentityDictionary guid: (GUID fromString: '{8162EDDC-0FB8-11D4-B091-000000000000}')!
+ODBIdentityDictionary guid: (GUID fromString: '{8162eddc-0fb8-11d4-b091-000000000000}')!
 ODBIdentityDictionary comment: ''!
 !ODBIdentityDictionary categoriesForClass!No category! !
 !ODBIdentityDictionary methodsFor!

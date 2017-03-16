@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #DBAbstractStatement
 	instanceVariableNames: 'handle parent executed cursorType'
 	classVariableNames: 'CursorTypes'
 	poolDictionaries: 'ODBCConstants ODBCRetCodes'
 	classInstanceVariableNames: ''!
-DBAbstractStatement guid: (GUID fromString: '{F63FC993-6A18-49DE-A8D2-07B192C69097}')!
+DBAbstractStatement guid: (GUID fromString: '{f63fc993-6a18-49de-a8d2-07b192c69097}')!
 DBAbstractStatement comment: 'A DBAbstractStatements represent commands that can be executed by against a <DBConnection>. DBAbstractStatement is itself abstract. Its most commonly used concrete subclass is <DBStatement>, which can be used to execute SQL statements. Other subclasses represent individual queries that can be performed against the metadata in the database schema using the specific functions provided for this purpose in ODBC. Whatever the form of the command the subclass of statement represents, all yield a <DBResultSet>.
 
 Instance Variables:

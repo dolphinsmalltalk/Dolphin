@@ -5,7 +5,7 @@ ExternalStructure subclass: #OVERLAPPED
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-OVERLAPPED guid: (GUID fromString: '{301C9A7A-D4B4-42D5-895D-E658D212DF5B}')!
+OVERLAPPED guid: (GUID fromString: '{301c9a7a-d4b4-42d5-895d-e658d212df5b}')!
 OVERLAPPED comment: '<OVERLAPPED> is an <ExternalStructure> class to wrap the struct ''Win32.OVERLAPPED'' from type information in the ''Win32 API'' library.
 
 The type library contains the following helpstring for this struct

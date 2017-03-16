@@ -1,17 +1,15 @@
-"Filed out from Dolphin Smalltalk 2000 release 4.01"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #RBAbstractCondition
 	instanceVariableNames: 'errorMacro'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+RBAbstractCondition guid: (GUID fromString: '{f74a2f07-4669-4626-8d47-0122b7ce23ff}')!
 RBAbstractCondition comment: 'AbstractCondition is an abstract class. It represents a precondition that is used whenever a Refactoring is performed. All preconditions must evaluate successfully in order for the Refactoring to be performed.
 
 Instance Variables:
 	errorMacro	<String>	the error string that is used when the condition fails'!
-
-RBAbstractCondition guid: (GUID fromString: '{F74A2F07-4669-4626-8D47-0122B7CE23FF}')!
-
 !RBAbstractCondition categoriesForClass!Refactory-Conditions! !
 !RBAbstractCondition methodsFor!
 
@@ -50,12 +48,12 @@ not
 	^RBNegationCondition on: self! !
 !RBAbstractCondition categoriesFor: #&!logical operations!public! !
 !RBAbstractCondition categoriesFor: #|!logical operations!public! !
-!RBAbstractCondition categoriesFor: #check!*-subclass responsibility!checking!public! !
+!RBAbstractCondition categoriesFor: #check!checking!public! !
 !RBAbstractCondition categoriesFor: #errorBlock!accessing!public! !
-!RBAbstractCondition categoriesFor: #errorBlockFor:!*-unclassified!private! !
-!RBAbstractCondition categoriesFor: #errorMacro!*-unclassified!private! !
-!RBAbstractCondition categoriesFor: #errorMacro:!*-unclassified!private! !
+!RBAbstractCondition categoriesFor: #errorBlockFor:!private! !
+!RBAbstractCondition categoriesFor: #errorMacro!private! !
+!RBAbstractCondition categoriesFor: #errorMacro:!private! !
 !RBAbstractCondition categoriesFor: #errorString!accessing!public! !
-!RBAbstractCondition categoriesFor: #errorStringFor:!*-unclassified!private! !
+!RBAbstractCondition categoriesFor: #errorStringFor:!private! !
 !RBAbstractCondition categoriesFor: #not!logical operations!public! !
 

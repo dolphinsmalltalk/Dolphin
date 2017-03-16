@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #ODBClassManager
 	instanceVariableNames: 'classes names idTable infoFile mutex'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ODBClassManager guid: (GUID fromString: '{8162EDD1-0FB8-11D4-B091-000000000000}')!
+ODBClassManager guid: (GUID fromString: '{8162edd1-0fb8-11d4-b091-000000000000}')!
 ODBClassManager comment: ''!
 !ODBClassManager categoriesForClass!No category! !
 !ODBClassManager methodsFor!

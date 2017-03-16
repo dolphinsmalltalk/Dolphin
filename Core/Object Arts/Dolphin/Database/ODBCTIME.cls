@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ExternalStructure subclass: #ODBCTIME
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ODBCTIME guid: (GUID fromString: '{87B4C598-026E-11D3-9FD7-00A0CC3E4A32}')!
+ODBCTIME guid: (GUID fromString: '{87b4c598-026e-11d3-9fd7-00a0cc3e4a32}')!
 ODBCTIME comment: 'ODBCTIME is a representation of the same named Win32 ODBC structure.'!
 !ODBCTIME categoriesForClass!External-Data-Structured-ODBC!ODBC Interface! !
 !ODBCTIME methodsFor!

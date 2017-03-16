@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 BatchAspectAccessor subclass: #IndexedInstVarBatchAccessor
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-IndexedInstVarBatchAccessor guid: (GUID fromString: '{234EECDB-D11A-49C1-9C57-68F684CC8B21}')!
+IndexedInstVarBatchAccessor guid: (GUID fromString: '{234eecdb-d11a-49c1-9c57-68f684cc8b21}')!
 IndexedInstVarBatchAccessor comment: 'Part of the InstVarInspector framework. IndexedInstVarBatchAccessors are used to give access to a group of <IndexedInstVarAccessors> for indexed slots of an object. Batching the accessors up in this way allows the InstVarInspector to only display a certain number of elements at a time. This can substantially improve performance when displaying large indexed objects.'!
 !IndexedInstVarBatchAccessor categoriesForClass!Unclassified! !
 !IndexedInstVarBatchAccessor methodsFor!

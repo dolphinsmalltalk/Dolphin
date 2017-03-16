@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 StsProjectEdition subclass: #StsShadowProjectEdition
 	instanceVariableNames: 'isPresentInLocalRepository'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-StsShadowProjectEdition guid: (GUID fromString: '{CD48A80C-D6C0-40AD-8511-9BD875475422}')!
+StsShadowProjectEdition guid: (GUID fromString: '{cd48a80c-d6c0-40ad-8511-9bd875475422}')!
 StsShadowProjectEdition comment: ''!
 !StsShadowProjectEdition categoriesForClass!Unclassified! !
 !StsShadowProjectEdition methodsFor!

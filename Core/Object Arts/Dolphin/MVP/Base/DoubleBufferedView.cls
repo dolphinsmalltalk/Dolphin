@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 View subclass: #DoubleBufferedView
 	instanceVariableNames: 'backSurface requiresRender'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-DoubleBufferedView guid: (GUID fromString: '{F0757E5D-E398-4EDE-9E0F-8C6CCB3699FC}')!
+DoubleBufferedView guid: (GUID fromString: '{f0757e5d-e398-4ede-9e0f-8c6ccb3699fc}')!
 DoubleBufferedView comment: ''!
 !DoubleBufferedView categoriesForClass!Unclassified! !
 !DoubleBufferedView methodsFor!

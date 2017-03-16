@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 OLEStructure subclass: #PARAMDESCEX
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-PARAMDESCEX guid: (GUID fromString: '{C06F3B61-0868-11D3-93AF-00A024CA708A}')!
+PARAMDESCEX guid: (GUID fromString: '{c06f3b61-0868-11d3-93af-00a024ca708a}')!
 PARAMDESCEX comment: 'PARAMDESCEX is an <ExternalStructure> to represent the AX Automation PARAMDESCEX structure.
 
 The PARAMDESCEX structure is used to hold the default value (in a variant) for a particular parameter.

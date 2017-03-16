@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ODBLocalTransaction subclass: #ODBReadOnlyTransaction
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ODBReadOnlyTransaction guid: (GUID fromString: '{D1EB92FD-3F84-11D4-B102-000000000000}')!
+ODBReadOnlyTransaction guid: (GUID fromString: '{d1eb92fd-3f84-11d4-b102-000000000000}')!
 ODBReadOnlyTransaction comment: ''!
 !ODBReadOnlyTransaction categoriesForClass!Unclassified! !
 !ODBReadOnlyTransaction methodsFor!

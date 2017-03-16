@@ -5,7 +5,7 @@ Object subclass: #SystemMetrics
 	classVariableNames: 'Current'
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
-SystemMetrics guid: (GUID fromString: '{E56CC456-8490-47F1-BD85-71118B110166}')!
+SystemMetrics guid: (GUID fromString: '{e56cc456-8490-47f1-bd85-71118b110166}')!
 SystemMetrics comment: 'SystemMetrics is a singleton class that provides a central service for accessing Windows configuration details such as the configurable aspects of the GUI''s appearance (height of title bars, fonts, etc). It has quite a large number of instance variables that cache information in order to avoid the expense of repeatedly querying it from the operating system.
 
 Instance Variables:

@@ -5,7 +5,7 @@ Object subclass: #ScintillaIndicator
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ScintillaIndicator guid: (GUID fromString: '{D8F9D545-39F0-4F15-B405-D14DFE355B3D}')!
+ScintillaIndicator guid: (GUID fromString: '{d8f9d545-39f0-4f15-b405-d14dfe355b3d}')!
 ScintillaIndicator comment: 'ScintillaIndicators represent the indicators displayed as various styles of underlining in a <ScintillaView>.
 
 Instance Variables:

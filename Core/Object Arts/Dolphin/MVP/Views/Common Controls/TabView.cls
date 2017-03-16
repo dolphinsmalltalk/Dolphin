@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 IconicListAbstract subclass: #TabView
 	instanceVariableNames: 'viewMode'
 	classVariableNames: 'OrientationMask TabOrientations TcnMap'
 	poolDictionaries: 'TabViewConstants'
 	classInstanceVariableNames: ''!
-TabView guid: (GUID fromString: '{87B4C731-026E-11D3-9FD7-00A0CC3E4A32}')!
+TabView guid: (GUID fromString: '{87b4c731-026e-11d3-9fd7-00a0cc3e4a32}')!
 TabView comment: 'TabView is the <listView> implementing the Windows "SysTabControl32" common control. It is for single selection use and, therefore, implements the <selectableItems> protocol. Each of the list items displayed by the view appear in separate "tabs". The list operates in one of three modes (#noIcons, #smallIcons, #largeIcons) that can be selected using the #viewMode aspect.
 
 The most typical use of a <TabView> is as part of a <CardContainer> where each of the cards is identified by a separate tab.

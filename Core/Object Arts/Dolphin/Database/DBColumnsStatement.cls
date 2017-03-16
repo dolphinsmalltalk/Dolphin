@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 DBSchemaStatement subclass: #DBColumnsStatement
 	instanceVariableNames: 'columnName'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-DBColumnsStatement guid: (GUID fromString: '{B6FAEF99-50DB-490F-AA8C-B4483998FB14}')!
+DBColumnsStatement guid: (GUID fromString: '{b6faef99-50db-490f-aa8c-b4483998fb14}')!
 DBColumnsStatement comment: 'DBPrimaryKeysStatement is a specialized <DBSchemaStatement> for querying metadata about the columns of tables in a database.'!
 !DBColumnsStatement categoriesForClass!ODBC Interface! !
 !DBColumnsStatement methodsFor!

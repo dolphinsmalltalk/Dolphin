@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 MethodRefactoring subclass: #RenameTemporaryRefactoring
 	instanceVariableNames: 'selector interval oldName newName parseTree'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-RenameTemporaryRefactoring guid: (GUID fromString: '{605981C4-3D80-4CE9-B0AC-9691E8A47DED}')!
+RenameTemporaryRefactoring guid: (GUID fromString: '{605981c4-3d80-4ce9-b0ac-9691e8a47ded}')!
 RenameTemporaryRefactoring comment: ''!
 !RenameTemporaryRefactoring categoriesForClass!Refactory-Refactorings! !
 !RenameTemporaryRefactoring methodsFor!

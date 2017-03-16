@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk XP"!
+"Filed out from Dolphin Smalltalk 7"!
 
 InlineMethodRefactoring subclass: #InlineMethodFromComponentRefactoring
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-InlineMethodFromComponentRefactoring guid: (GUID fromString: '{F56F3DBA-48F3-4B00-8281-FCDFF1F92C33}')!
+InlineMethodFromComponentRefactoring guid: (GUID fromString: '{f56f3dba-48f3-4b00-8281-fcdff1f92c33}')!
 InlineMethodFromComponentRefactoring comment: ''!
 !InlineMethodFromComponentRefactoring categoriesForClass!Refactory-Refactorings! !
 !InlineMethodFromComponentRefactoring methodsFor!

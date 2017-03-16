@@ -5,7 +5,7 @@ Object subclass: #InternetAddress
 	classVariableNames: ''
 	poolDictionaries: 'WinSocketConstants'
 	classInstanceVariableNames: ''!
-InternetAddress guid: (GUID fromString: '{87B4C495-026E-11D3-9FD7-00A0CC3E4A32}')!
+InternetAddress guid: (GUID fromString: '{87b4c495-026e-11d3-9fd7-00a0cc3e4a32}')!
 InternetAddress comment: 'This class represents an Internet IP address. It can be created indirectly from the host name using the #host: class method or, if the IP address is known, from this using #ipAddress:, #fromString: or #readFrom:. 
 
 Since conversion from IP address to host name and vice versa requires a DNS or HOSTS lookup, the #ipAddress and #host accessors may lazily evaluate their answers if the information was not available when the instance was created. This is to save a potentially expensive DNS lookup during instantiation when it may not be appropriate or a TCP/IP connection may not be available. Note that a reverse lookup (ipAddress->host name) seems to be a particularly time consuming operation under Windows.

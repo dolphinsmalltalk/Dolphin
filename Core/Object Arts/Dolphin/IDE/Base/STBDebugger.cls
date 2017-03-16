@@ -5,7 +5,7 @@ STBInFiler subclass: #STBDebugger
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-STBDebugger guid: (GUID fromString: '{87B4C6E9-026E-11D3-9FD7-00A0CC3E4A32}')!
+STBDebugger guid: (GUID fromString: '{87b4c6e9-026e-11d3-9fd7-00a0cc3e4a32}')!
 STBDebugger comment: 'The <STBDebugger> is an <STBInFiler> that prints an indented trace of the contents of the STB file it is reading as it proceeds.
 It is useful for debugging issues with serialized objects..
 

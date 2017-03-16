@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #OmniBaseArchiver
 	instanceVariableNames: 'db newDb versionDescriptor oldHolders newVersionNumber progressDialog progressValue'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-OmniBaseArchiver guid: (GUID fromString: '{1B8A89B7-CAE9-42C3-B085-B3EA2FA89DB4}')!
+OmniBaseArchiver guid: (GUID fromString: '{1b8a89b7-cae9-42c3-b085-b3ea2fa89db4}')!
 OmniBaseArchiver comment: ''!
 !OmniBaseArchiver categoriesForClass!Unclassified! !
 !OmniBaseArchiver methodsFor!

@@ -5,7 +5,7 @@ Object subclass: #SocketAbstract2
 	classVariableNames: ''
 	poolDictionaries: 'WinSocketConstants'
 	classInstanceVariableNames: ''!
-SocketAbstract2 guid: (GUID fromString: '{87B4C4BB-026E-11D3-9FD7-00A0CC3E4A32}')!
+SocketAbstract2 guid: (GUID fromString: '{87b4c4bb-026e-11d3-9fd7-00a0cc3e4a32}')!
 SocketAbstract2 comment: 'This class is the abstract superclass of all sockets classes for TCP/IP network communication.'!
 !SocketAbstract2 categoriesForClass!Windows Sockets! !
 !SocketAbstract2 methodsFor!

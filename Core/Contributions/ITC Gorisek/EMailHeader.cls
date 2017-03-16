@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 EMailObject subclass: #EMailHeader
 	instanceVariableNames: 'subject addressFrom addressTo addressCC addressBCC messageID mimeVersion received sendDate references mailer organization replyTo priority'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-EMailHeader guid: (GUID fromString: '{E0F8B892-4F35-48D8-A43E-C54DEEFB938D}')!
+EMailHeader guid: (GUID fromString: '{e0f8b892-4f35-48d8-a43e-c54deefb938d}')!
 EMailHeader comment: ''!
 !EMailHeader categoriesForClass!Unclassified! !
 !EMailHeader methodsFor!

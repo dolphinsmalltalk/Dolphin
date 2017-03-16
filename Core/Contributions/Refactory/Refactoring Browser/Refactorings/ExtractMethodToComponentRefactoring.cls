@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk XP 2002 release 5.05"!
+"Filed out from Dolphin Smalltalk 7"!
 
 MethodRefactoring subclass: #ExtractMethodToComponentRefactoring
 	instanceVariableNames: 'selector extractionInterval extractedMethodSelector'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ExtractMethodToComponentRefactoring guid: (GUID fromString: '{944C6F77-B242-48B5-BDEE-AE64884630F6}')!
+ExtractMethodToComponentRefactoring guid: (GUID fromString: '{944c6f77-b242-48b5-bdee-ae64884630f6}')!
 ExtractMethodToComponentRefactoring comment: ''!
 !ExtractMethodToComponentRefactoring categoriesForClass!Refactory-Refactorings! !
 !ExtractMethodToComponentRefactoring methodsFor!

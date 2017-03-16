@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ToolbarButton subclass: #ToolbarIconButton
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ToolbarIconButton guid: (GUID fromString: '{EB590073-1214-495B-94BA-9BD4CA08BD32}')!
+ToolbarIconButton guid: (GUID fromString: '{eb590073-1214-495b-94ba-9bd4ca08bd32}')!
 ToolbarIconButton comment: 'ToolbarIconButton represents a user defined button for a <Toolbar>  the image is dynamically generated from the <Image> held by the associated <CommandDescription>. In general, ToolbarIconButtons are much easier to use than ToolbarButtons since they don''t require the creation of a separate image list bitmap for each of the sizes of toolbar button that may be required.  If you change the #bitmapSize aspect of the parent toolbar, the contained ToolbarIconButtons will automatically re-render themselves at the new size.
 
 e.g. 

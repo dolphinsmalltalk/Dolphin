@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk XP 2002 release 5.10"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #LintRule
 	instanceVariableNames: 'name'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-LintRule guid: (GUID fromString: '{0A5056C9-9803-42B3-9C34-5BF472B5D967}')!
+LintRule guid: (GUID fromString: '{0a5056c9-9803-42b3-9c34-5bf472b5d967}')!
 LintRule comment: 'LintRule is an abstract class that represents some check on the code.
 
 Subclasses must implement the following messages:

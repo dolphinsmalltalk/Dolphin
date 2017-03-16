@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 TEXTMETRIC subclass: #NEWTEXTMETRIC
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-NEWTEXTMETRIC guid: (GUID fromString: '{5A49E86C-3D79-4C3D-B5BE-65A1B21F73ED}')!
+NEWTEXTMETRIC guid: (GUID fromString: '{5a49e86c-3d79-4c3d-b5be-65a1b21f73ed}')!
 NEWTEXTMETRIC comment: '<NEWTEXTMETRIC> is an <ExternalStructure> class to wrap the struct ''Win.NEWTEXTMETRIC'' from type information in the ''Windows API (ANSI)'' library.
 
 IDL definition follows:

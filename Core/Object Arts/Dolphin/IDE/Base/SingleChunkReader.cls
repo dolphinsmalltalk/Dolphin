@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ChunkReader subclass: #SingleChunkReader
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-SingleChunkReader guid: (GUID fromString: '{DAFF2A96-8E7C-400E-9FB0-DF8D523F7136}')!
+SingleChunkReader guid: (GUID fromString: '{daff2a96-8e7c-400e-9fb0-df8d523f7136}')!
 SingleChunkReader comment: ''!
 !SingleChunkReader categoriesForClass!Unclassified! !
 !SingleChunkReader methodsFor!

@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 InspectorAbstract subclass: #AspectInspector
 	instanceVariableNames: 'aspectTreePresenter'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: 'treeUpdateMode'!
-AspectInspector guid: (GUID fromString: '{3A705749-14D8-4CD1-9B4E-CCF02A0218DE}')!
+AspectInspector guid: (GUID fromString: '{3a705749-14d8-4cd1-9b4e-ccf02a0218de}')!
 AspectInspector comment: ''!
 !AspectInspector categoriesForClass!MVP-Presenters! !
 !AspectInspector methodsFor!

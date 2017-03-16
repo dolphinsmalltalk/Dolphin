@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk 2000 release 5.00"!
+"Filed out from Dolphin Smalltalk 7"!
 
 CompositeRefactoryChange subclass: #RenameVariableChange
 	instanceVariableNames: 'className isMeta oldName newName'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-RenameVariableChange guid: (GUID fromString: '{E500A4E5-C686-4C27-903E-02242B8AA5F6}')!
+RenameVariableChange guid: (GUID fromString: '{e500a4e5-c686-4c27-903e-02242b8aa5f6}')!
 RenameVariableChange comment: ''!
 !RenameVariableChange categoriesForClass!Refactory-Change Objects! !
 !RenameVariableChange methodsFor!

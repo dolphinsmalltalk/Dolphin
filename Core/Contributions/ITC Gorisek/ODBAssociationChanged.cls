@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ODBChange subclass: #ODBAssociationChanged
 	instanceVariableNames: 'key oldValue newValue'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ODBAssociationChanged guid: (GUID fromString: '{8162EDFC-0FB8-11D4-B091-000000000000}')!
+ODBAssociationChanged guid: (GUID fromString: '{8162edfc-0fb8-11d4-b091-000000000000}')!
 ODBAssociationChanged comment: ''!
 !ODBAssociationChanged categoriesForClass!No category! !
 !ODBAssociationChanged methodsFor!

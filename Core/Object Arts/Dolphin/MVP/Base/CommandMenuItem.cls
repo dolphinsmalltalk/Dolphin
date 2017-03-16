@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 MenuItem subclass: #CommandMenuItem
 	instanceVariableNames: 'commandDescription image _reserved'
 	classVariableNames: 'IsDefaultMask'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-CommandMenuItem guid: (GUID fromString: '{87B4C660-026E-11D3-9FD7-00A0CC3E4A32}')!
+CommandMenuItem guid: (GUID fromString: '{87b4c660-026e-11d3-9fd7-00a0cc3e4a32}')!
 CommandMenuItem comment: 'CommandMenuItem represents a <commandSource> menu item held by a <Menu>. The item is configured with a <CommandDescription> to be fired when the item is chosen.. 
 
 Instance Variables:

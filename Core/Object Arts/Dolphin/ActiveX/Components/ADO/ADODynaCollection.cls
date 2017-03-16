@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ADOCollection subclass: #ADODynaCollection
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ADODynaCollection guid: (GUID fromString: '{CF1FB266-A204-4F8E-B6BB-BCB2806EF724}')!
+ADODynaCollection guid: (GUID fromString: '{cf1fb266-a204-4f8e-b6bb-bcb2806ef724}')!
 ADODynaCollection comment: ''!
 !ADODynaCollection categoriesForClass!Unclassified! !
 !ADODynaCollection methodsFor!

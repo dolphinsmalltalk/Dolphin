@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 PluggableSortAlgorithm subclass: #MergesortAlgorithm
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-MergesortAlgorithm guid: (GUID fromString: '{CC7F696A-5BC0-4AD0-A342-D93AF7CCA0A3}')!
+MergesortAlgorithm guid: (GUID fromString: '{cc7f696a-5bc0-4ad0-a342-d93af7cca0a3}')!
 MergesortAlgorithm comment: 'MergesortAlgorithm implements the Mergesort algorithm as a pluggable sorting strategy for use in conjunction with <SortedCollection>s.
 
 Mergesort is a simple, recursive, divide-and-conquer sort that works by dividing the range to sort in half, recursively sorting the two halves, and then merging the two halves. It requires auxiliary storage of the same size as the range to be sorted.

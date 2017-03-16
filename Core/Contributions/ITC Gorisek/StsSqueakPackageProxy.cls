@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 StsPackageProxy subclass: #StsSqueakPackageProxy
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-StsSqueakPackageProxy guid: (GUID fromString: '{AE63A81C-3E72-44BB-A614-5C152A4EA1F4}')!
+StsSqueakPackageProxy guid: (GUID fromString: '{ae63a81c-3e72-44bb-a614-5c152a4ea1f4}')!
 StsSqueakPackageProxy comment: ''!
 !StsSqueakPackageProxy categoriesForClass!Unclassified! !
 !StsSqueakPackageProxy methodsFor!

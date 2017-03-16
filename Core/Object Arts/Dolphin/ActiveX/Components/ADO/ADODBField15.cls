@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ADODB_ADO subclass: #ADODBField15
 	instanceVariableNames: ''

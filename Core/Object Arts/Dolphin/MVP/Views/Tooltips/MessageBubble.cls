@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 MessageBoxAbstract subclass: #MessageBubble
 	instanceVariableNames: 'iconId tooltip position itemFlags timeout tooltipStyle timeoutProcess font forecolor backcolor margins maxWidth'
 	classVariableNames: 'IconIds'
 	poolDictionaries: 'TooltipConstants Win32Constants'
 	classInstanceVariableNames: ''!
-MessageBubble guid: (GUID fromString: '{00E5C07E-C4FC-471C-B037-25BC55861176}')!
+MessageBubble guid: (GUID fromString: '{00e5c07e-c4fc-471c-b037-25bc55861176}')!
 MessageBubble comment: 'MessageBubble is similar to <MessageBox>, and has a similar protocol. The principle difference is that messages are displayed using a Tooltip (normally a balloon tooltip), rather than in a traditional dialog. This provides a general capability for Dolphin applications to implement speech bubble style help like that which sometimes pops up for tray icons in Windows XP. 
 
 The other main differences from <MessageBox> are:

@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ControlView subclass: #StaticRectangle
 	instanceVariableNames: ''
 	classVariableNames: 'StyleMap'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-StaticRectangle guid: (GUID fromString: '{AAD4F3A9-DC68-42B2-BEDC-0A4FC49880F2}')!
+StaticRectangle guid: (GUID fromString: '{aad4f3a9-dc68-42b2-bedc-0a4fc49880f2}')!
 StaticRectangle comment: 'StaticRectangle is a simple <ControlView> class which wraps Windows STATIC control for simple rectangles and frames.
 
 The rectangle styles () paint a solid block of colour filling the client area. The frame styles draw a border/frame around the edge of the client area of the control allowing the background colour to show through.

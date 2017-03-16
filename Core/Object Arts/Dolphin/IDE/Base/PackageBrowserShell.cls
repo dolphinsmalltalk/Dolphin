@@ -5,7 +5,7 @@ SmalltalkToolShell subclass: #PackageBrowserShell
 	classVariableNames: 'UpdateMap WordWrapComment'
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
-PackageBrowserShell guid: (GUID fromString: '{87B4C6C0-026E-11D3-9FD7-00A0CC3E4A32}')!
+PackageBrowserShell guid: (GUID fromString: '{87b4c6c0-026e-11d3-9fd7-00a0cc3e4a32}')!
 PackageBrowserShell comment: 'PackageBrowserShell is a <SmalltalkToolShell> that implements the Package Browser tool. This provides a user interface onto all the <Package>s held by the current <PackageManager>. 
 
 Instance Variables:

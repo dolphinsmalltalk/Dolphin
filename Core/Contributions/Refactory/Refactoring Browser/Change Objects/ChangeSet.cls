@@ -1,14 +1,12 @@
-"Filed out from Dolphin Smalltalk 2000 release 4.01"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #ChangeSet
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+ChangeSet guid: (GUID fromString: '{8b3cd8e0-529f-484c-9897-a7f024c089a8}')!
 ChangeSet comment: ''!
-
-ChangeSet guid: (GUID fromString: '{8B3CD8E0-529F-484C-9897-A7F024C089A8}')!
-
 !ChangeSet categoriesForClass!Unclassified! !
 !ChangeSet methodsFor!
 

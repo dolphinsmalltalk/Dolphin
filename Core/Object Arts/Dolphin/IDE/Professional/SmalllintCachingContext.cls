@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 SmalllintContext subclass: #SmalllintCachingContext
 	instanceVariableNames: ''
 	classVariableNames: 'Literals Mtx Selectors'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-SmalllintCachingContext guid: (GUID fromString: '{8DC28C1A-EAF8-479B-9393-8E00DA03FC44}')!
+SmalllintCachingContext guid: (GUID fromString: '{8dc28c1a-eaf8-479b-9393-8e00da03fc44}')!
 SmalllintCachingContext comment: ''!
 !SmalllintCachingContext categoriesForClass!Refactory-Lint! !
 !SmalllintCachingContext methodsFor!

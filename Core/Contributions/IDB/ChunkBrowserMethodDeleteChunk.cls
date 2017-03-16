@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ChunkBrowserExpressionChunk subclass: #ChunkBrowserMethodDeleteChunk
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ChunkBrowserMethodDeleteChunk guid: (GUID fromString: '{DEB9428A-51F1-4A3F-A73F-D6CB2C444D99}')!
+ChunkBrowserMethodDeleteChunk guid: (GUID fromString: '{deb9428a-51f1-4a3f-a73f-d6cb2c444d99}')!
 ChunkBrowserMethodDeleteChunk comment: 'See [DolphinImageFolder]/Idb/Documentation for details
 
 (C) 2006 Ian Bartholomew

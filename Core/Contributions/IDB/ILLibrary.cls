@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #ILLibrary
 	instanceVariableNames: 'images selectedImages modified dum4 dum5'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ILLibrary guid: (GUID fromString: '{B60A9A63-5A6E-49A4-9C61-58463387B1D3}')!
+ILLibrary guid: (GUID fromString: '{b60a9a63-5a6e-49a4-9c61-58463387b1d3}')!
 ILLibrary comment: 'See [DolphinImageFolder]/Idb/Documentation for details
 
 (C) 2005 Ian Bartholomew

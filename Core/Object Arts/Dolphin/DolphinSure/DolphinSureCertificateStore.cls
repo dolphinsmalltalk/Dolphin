@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #DolphinSureCertificateStore
 	instanceVariableNames: 'regKey'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-DolphinSureCertificateStore guid: (GUID fromString: '{39C8AFB3-B270-4B5A-BD4F-C370EEB7C57B}')!
+DolphinSureCertificateStore guid: (GUID fromString: '{39c8afb3-b270-4b5a-bd4f-c370eeb7c57b}')!
 DolphinSureCertificateStore comment: 'A DolphinSureCertificateStore is used to store DolphinSureCertificates for later retrieval.  The implementation uses the Windows Registry under HKEY_CURRENT_USER and certificates are stored as binary bytes (streamed out using STB). They can be looked up by serial number.
 
 Currently, three such stores are defined and can be accessed by the following class methods:

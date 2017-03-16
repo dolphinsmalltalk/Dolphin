@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ODBLock subclass: #ODBObjectLock
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ODBObjectLock guid: (GUID fromString: '{8162EE27-0FB8-11D4-B091-000000000000}')!
+ODBObjectLock guid: (GUID fromString: '{8162ee27-0fb8-11d4-b091-000000000000}')!
 ODBObjectLock comment: ''!
 !ODBObjectLock categoriesForClass!No category! !
 !ODBObjectLock methodsFor!

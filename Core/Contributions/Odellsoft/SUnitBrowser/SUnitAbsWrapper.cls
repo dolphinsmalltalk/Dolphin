@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk XP 2002 release 6.00"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #SUnitAbsWrapper
 	instanceVariableNames: 'model subject'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-SUnitAbsWrapper guid: (GUID fromString: '{D5B2A9F9-20FF-4E62-9B3F-5FEDAA755651}')!
+SUnitAbsWrapper guid: (GUID fromString: '{d5b2a9f9-20ff-4e62-9b3f-5fedaa755651}')!
 SUnitAbsWrapper comment: ''!
 !SUnitAbsWrapper categoriesForClass!Unclassified! !
 !SUnitAbsWrapper methodsFor!

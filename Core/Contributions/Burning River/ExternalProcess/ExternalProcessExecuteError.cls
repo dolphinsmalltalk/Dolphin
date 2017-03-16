@@ -5,6 +5,6 @@ Error subclass: #ExternalProcessExecuteError
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ExternalProcessExecuteError guid: (GUID fromString: '{8359BA3E-8750-4DAF-9248-183131742EB2}')!
+ExternalProcessExecuteError guid: (GUID fromString: '{8359ba3e-8750-4daf-9248-183131742eb2}')!
 ExternalProcessExecuteError comment: 'This class is signalled when an ExternalProcess cannot be started.'!
 !ExternalProcessExecuteError categoriesForClass!Unclassified! !

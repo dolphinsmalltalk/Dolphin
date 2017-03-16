@@ -5,7 +5,7 @@ SmalltalkToolShell subclass: #RewriteChangesBrowser
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-RewriteChangesBrowser guid: (GUID fromString: '{99C85442-1F6A-4912-A74B-7449AE28471B}')!
+RewriteChangesBrowser guid: (GUID fromString: '{99c85442-1f6a-4912-a74b-7449ae28471b}')!
 RewriteChangesBrowser comment: ''!
 !RewriteChangesBrowser categoriesForClass!Development!MVP-Presenters! !
 !RewriteChangesBrowser methodsFor!

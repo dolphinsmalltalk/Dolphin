@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 LayoutManager subclass: #ScrollingDecoratorLayout
 	instanceVariableNames: 'stretchToFit'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ScrollingDecoratorLayout guid: (GUID fromString: '{87B4C64C-026E-11D3-9FD7-00A0CC3E4A32}')!
+ScrollingDecoratorLayout guid: (GUID fromString: '{87b4c64c-026e-11d3-9fd7-00a0cc3e4a32}')!
 ScrollingDecoratorLayout comment: 'ScrollingDecoratorLayout implements a specialised <layoutManager> to layout a single <view> object contained within a <scrolllingDecoratorView>. The ScrollingDecoratorLayout does not attempt to resize the managed view (although see the #shouldStretchToFit aspect) but, instead, it repositions it according to scroll information that it receives from the view''s parent. Scrollbars will become available in the parent <scrollingDecoratorView> when its extent goes below the preferred extent recommended by the ScrollingDecoratorLayout.
 
 

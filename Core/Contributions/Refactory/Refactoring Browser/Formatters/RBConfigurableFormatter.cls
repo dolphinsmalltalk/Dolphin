@@ -5,7 +5,7 @@ RBSourceFormatter subclass: #RBConfigurableFormatter
 	classVariableNames: 'FormatCommentWithStatements IndentsForKeywords IndentString LineUpBlockBrackets MethodSignatureOnMultipleLines MinimumNewLinesBetweenStatements NewLineAfterCascade NewLineBeforeFirstCascade NewLineBeforeFirstKeyword NewLinesAfterMethodComment NewLinesAfterMethodPattern NewLinesAfterTemporaries NumberOfArgumentsForMultiLine PeriodsAtEndOfBlock RetainBlankLinesBetweenStatements StringFollowingReturn StringInsideBlocks StringInsideParentheses TraditionalBinaryPrecedence UseTraditionalBinaryPrecedenceForParentheses'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-RBConfigurableFormatter guid: (GUID fromString: '{70FFAAFA-37C2-4408-BFA3-E5417F61CD58}')!
+RBConfigurableFormatter guid: (GUID fromString: '{70ffaafa-37c2-4408-bfa3-e5417f61cd58}')!
 RBConfigurableFormatter comment: 'RBConfigurableFormatter formats the Refactoring Browser''s parse trees. It has many more formatting options than the RBFormatter.  For some refactorings the RB must reformat the code after the change, so it is good to have a formatter configured to your tastes.
 
 To switch to this formatter, execute "StProgramNode formatterClass: RBConfigurableFormatter", or look for the #formatterClass option under ''Development System'' in User Preferences.

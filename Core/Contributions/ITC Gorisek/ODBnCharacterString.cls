@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ODBDeserializers subclass: #ODBnCharacterString
 	instanceVariableNames: 'n'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ODBnCharacterString guid: (GUID fromString: '{8162EE13-0FB8-11D4-B091-000000000000}')!
+ODBnCharacterString guid: (GUID fromString: '{8162ee13-0fb8-11d4-b091-000000000000}')!
 ODBnCharacterString comment: ''!
 !ODBnCharacterString categoriesForClass!No category! !
 !ODBnCharacterString methodsFor!

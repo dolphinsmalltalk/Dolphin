@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 SequenceableCollection subclass: #DOMNodeList
 	instanceVariableNames: 'interface'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-DOMNodeList guid: (GUID fromString: '{E1531D8F-7795-472D-83F8-24C7CD6C0947}')!
+DOMNodeList guid: (GUID fromString: '{e1531d8f-7795-472d-83f8-24c7cd6c0947}')!
 DOMNodeList comment: 'DOMNodeList is a <sequencedReadableCollection> wrapper around the MSXML <IXMLDOMNodeList> interface. Its purpose is to make all the power of Smalltalk sequenceable collections available on the much more limited DOM interface, and to provide seamless integration into the Smalltalk development environment (i.e. so that the node map prints, inspects, and acts like an array). 
 All DOM interface methods that return an IXMLDOMNamedNodeMap have been modified to return a subinstance of this class.
 

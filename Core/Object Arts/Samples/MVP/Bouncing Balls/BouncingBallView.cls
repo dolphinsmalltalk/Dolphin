@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 DoubleBufferedView subclass: #BouncingBallView
 	instanceVariableNames: 'balls stepProcess'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-BouncingBallView guid: (GUID fromString: '{247666E7-6B23-4E88-86D1-76D228924535}')!
+BouncingBallView guid: (GUID fromString: '{247666e7-6b23-4e88-86d1-76d228924535}')!
 BouncingBallView comment: ''!
 !BouncingBallView categoriesForClass!Unclassified! !
 !BouncingBallView methodsFor!

@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ILImage subclass: #ILEditingImage
 	instanceVariableNames: 'modified undoStack redoStack undoCollector brushCache'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ILEditingImage guid: (GUID fromString: '{B234BBCF-8AAA-471D-9BBB-5463BF4D92BE}')!
+ILEditingImage guid: (GUID fromString: '{b234bbcf-8aaa-471d-9bbb-5463bf4d92be}')!
 ILEditingImage comment: 'See [DolphinImageFolder]/Idb/Documentation for details
 
 (C) 2005 Ian Bartholomew

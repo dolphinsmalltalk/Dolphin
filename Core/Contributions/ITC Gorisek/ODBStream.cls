@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #ODBStream
 	instanceVariableNames: 'position'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ODBStream guid: (GUID fromString: '{8162EDE4-0FB8-11D4-B091-000000000000}')!
+ODBStream guid: (GUID fromString: '{8162ede4-0fb8-11d4-b091-000000000000}')!
 ODBStream comment: ''!
 !ODBStream categoriesForClass!No category! !
 !ODBStream methodsFor!

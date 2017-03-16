@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Interactor subclass: #CapturingInteractor
 	instanceVariableNames: 'oldInteractor'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-CapturingInteractor guid: (GUID fromString: '{D6B9EEC9-B8FC-41A9-ABC6-1DF89013C95E}')!
+CapturingInteractor guid: (GUID fromString: '{d6b9eec9-b8fc-41a9-abc6-1df89013c95e}')!
 CapturingInteractor comment: '<CapturingInteractor> is the class of interactors that intercept user input events and absorb them so that they do not reach the presenter. i.e. if a <CapturingInteractor> is installed into a view then it will appear to ignore all user input. Subclasses may use the input for other purposes, or selectively forward it on to the presenter.'!
 !CapturingInteractor categoriesForClass!Unclassified! !
 !CapturingInteractor methodsFor!

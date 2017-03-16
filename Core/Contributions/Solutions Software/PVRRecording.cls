@@ -5,7 +5,7 @@ VideoRecording subclass: #PVRRecording
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-PVRRecording guid: (GUID fromString: '{AFE83110-1D7C-46C1-811C-BC5A22C18ECB}')!
+PVRRecording guid: (GUID fromString: '{afe83110-1d7c-46c1-811c-bc5a22c18ecb}')!
 PVRRecording comment: ''!
 !PVRRecording categoriesForClass!Samples! !
 !PVRRecording methodsFor!

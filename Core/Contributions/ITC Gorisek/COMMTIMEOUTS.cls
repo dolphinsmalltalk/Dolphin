@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Win32Structure subclass: #COMMTIMEOUTS
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-COMMTIMEOUTS guid: (GUID fromString: '{E08F77E3-F05E-4DF3-AB60-64F74D12CE29}')!
+COMMTIMEOUTS guid: (GUID fromString: '{e08f77e3-f05e-4df3-ab60-64f74d12ce29}')!
 COMMTIMEOUTS comment: ''!
 !COMMTIMEOUTS categoriesForClass!IDB Goodies! !
 !COMMTIMEOUTS class methodsFor!

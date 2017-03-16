@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #HttpTranslationService
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: 'languagesDict charactersMaps unicodeTo8bitCodePageMaps unicodeIntegerTo8bitCodePageMaps alphabeticalSortOrders bit8ToUTF8PageMaps defaultLanguage defaultCodePage'!
-HttpTranslationService guid: (GUID fromString: '{0669B386-FC70-47CD-B17C-8B6017FA9511}')!
+HttpTranslationService guid: (GUID fromString: '{0669b386-fc70-47cd-b17c-8b6017fa9511}')!
 HttpTranslationService comment: ''!
 !HttpTranslationService categoriesForClass!Unclassified! !
 !HttpTranslationService class methodsFor!

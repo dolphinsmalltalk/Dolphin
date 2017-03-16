@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk XP 2002 release 5.05"!
+"Filed out from Dolphin Smalltalk 7"!
 
 VariableRefactoring subclass: #CreateAccessorsForVariableRefactoring
 	instanceVariableNames: 'getterMethod setterMethod classVariable needsReturn'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-CreateAccessorsForVariableRefactoring guid: (GUID fromString: '{C3F653B0-6EFE-4CB6-A2A6-781AAC3447EC}')!
+CreateAccessorsForVariableRefactoring guid: (GUID fromString: '{c3f653b0-6efe-4cb6-a2a6-781aac3447ec}')!
 CreateAccessorsForVariableRefactoring comment: ''!
 !CreateAccessorsForVariableRefactoring categoriesForClass!Refactory-Refactorings! !
 !CreateAccessorsForVariableRefactoring methodsFor!

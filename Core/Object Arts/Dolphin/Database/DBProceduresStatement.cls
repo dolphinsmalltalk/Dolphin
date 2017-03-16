@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 DBSchemaStatement subclass: #DBProceduresStatement
 	instanceVariableNames: 'procedureName'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-DBProceduresStatement guid: (GUID fromString: '{3DEE7E8F-6C0C-403C-923A-7677F5E7C810}')!
+DBProceduresStatement guid: (GUID fromString: '{3dee7e8f-6c0c-403c-923a-7677f5e7c810}')!
 DBProceduresStatement comment: 'DBProceduresStatement is a specialized <DBSchemaStatement> for querying about the stored procedures in a database.'!
 !DBProceduresStatement categoriesForClass!ODBC Interface! !
 !DBProceduresStatement methodsFor!

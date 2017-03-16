@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Color subclass: #PluggableColor
 	instanceVariableNames: 'valuable'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-PluggableColor guid: (GUID fromString: '{74B2076A-A07A-4203-AA78-B3FC0AD65E7C}')!
+PluggableColor guid: (GUID fromString: '{74b2076a-a07a-4203-aa78-b3fc0ad65e7c}')!
 PluggableColor comment: ''!
 !PluggableColor categoriesForClass!Drawing! !
 !PluggableColor methodsFor!

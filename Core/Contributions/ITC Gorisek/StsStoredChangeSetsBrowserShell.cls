@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 SmalltalkToolShell subclass: #StsStoredChangeSetsBrowserShell
 	instanceVariableNames: 'toDoChangeSets'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-StsStoredChangeSetsBrowserShell guid: (GUID fromString: '{DEDCEFC0-0509-429F-926B-8A932F9795DA}')!
+StsStoredChangeSetsBrowserShell guid: (GUID fromString: '{dedcefc0-0509-429f-926b-8a932f9795da}')!
 StsStoredChangeSetsBrowserShell comment: ''!
 !StsStoredChangeSetsBrowserShell categoriesForClass!Unclassified! !
 !StsStoredChangeSetsBrowserShell methodsFor!

@@ -5,7 +5,7 @@ BasicLintRule subclass: #BlockLintRule
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-BlockLintRule guid: (GUID fromString: '{7468DD67-0D2D-4F26-8882-01746170E78A}')!
+BlockLintRule guid: (GUID fromString: '{7468dd67-0d2d-4f26-8882-01746170e78a}')!
 BlockLintRule comment: ''!
 !BlockLintRule categoriesForClass!Refactory-Lint! !
 !BlockLintRule methodsFor!

@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #EmailPOP3Reader
 	instanceVariableNames: 'status username password socket serverID host port numberOfMessages'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-EmailPOP3Reader guid: (GUID fromString: '{1D6E2A1B-C4C1-4209-9347-7A32D35F0083}')!
+EmailPOP3Reader guid: (GUID fromString: '{1d6e2a1b-c4c1-4209-9347-7a32d35f0083}')!
 EmailPOP3Reader comment: ''!
 !EmailPOP3Reader categoriesForClass!Unclassified! !
 !EmailPOP3Reader methodsFor!

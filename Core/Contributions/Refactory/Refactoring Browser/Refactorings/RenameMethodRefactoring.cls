@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk XP 2002 release 5.05"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ChangeMethodNameRefactoring subclass: #RenameMethodRefactoring
 	instanceVariableNames: 'hasPermutedArguments'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-RenameMethodRefactoring guid: (GUID fromString: '{FCA8F1A0-DA69-4108-82F9-2B61AA651E4B}')!
+RenameMethodRefactoring guid: (GUID fromString: '{fca8f1a0-da69-4108-82f9-2b61aa651e4b}')!
 RenameMethodRefactoring comment: ''!
 !RenameMethodRefactoring categoriesForClass!Refactory-Refactorings! !
 !RenameMethodRefactoring methodsFor!

@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 GdiplusLinearGradientBrushInitializer subclass: #GdiplusLinearGradientBrushFromPointsInitializer
 	instanceVariableNames: 'point1 point2 color1 color2'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-GdiplusLinearGradientBrushFromPointsInitializer guid: (GUID fromString: '{E82F4257-44C1-45F0-8130-6E92D59AB946}')!
+GdiplusLinearGradientBrushFromPointsInitializer guid: (GUID fromString: '{e82f4257-44c1-45f0-8130-6e92d59ab946}')!
 GdiplusLinearGradientBrushFromPointsInitializer comment: ''!
 !GdiplusLinearGradientBrushFromPointsInitializer categoriesForClass!Unclassified! !
 !GdiplusLinearGradientBrushFromPointsInitializer methodsFor!

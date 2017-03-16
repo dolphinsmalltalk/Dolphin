@@ -5,7 +5,7 @@ RBSourceFormatter subclass: #RBFormatter
 	classVariableNames: 'MaximumArgumentsPerLine SelectorsToLeaveOnLine SelectorsToStartOnNewLine'
 	poolDictionaries: 'ExtCallArgTypes'
 	classInstanceVariableNames: ''!
-RBFormatter guid: (GUID fromString: '{75E99F13-8BA7-47C0-87C4-8987B5A20900}')!
+RBFormatter guid: (GUID fromString: '{75e99f13-8ba7-47c0-87c4-8987b5a20900}')!
 RBFormatter comment: 'RBFormatter is an <StParseNodeVisitor> for pretty printing Smalltalk methods.
 '!
 !RBFormatter categoriesForClass!System-Compiler-Formatters! !

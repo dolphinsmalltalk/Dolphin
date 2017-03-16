@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Bitmap subclass: #DIBSection
 	instanceVariableNames: 'depth imageBits'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-DIBSection guid: (GUID fromString: '{F44C914A-2B3F-11D3-8368-7A8B5A000000}')!
+DIBSection guid: (GUID fromString: '{f44c914a-2b3f-11d3-8368-7a8b5a000000}')!
 DIBSection comment: ''!
 !DIBSection categoriesForClass!Graphics-Tools! !
 !DIBSection methodsFor!

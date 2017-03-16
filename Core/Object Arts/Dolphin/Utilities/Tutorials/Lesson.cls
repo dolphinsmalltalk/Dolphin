@@ -5,7 +5,7 @@ Object subclass: #Lesson
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-Lesson guid: (GUID fromString: '{430B4D82-364A-44FC-9C2B-5B546C048EF9}')!
+Lesson guid: (GUID fromString: '{430b4d82-364a-44fc-9c2b-5b546c048ef9}')!
 Lesson comment: ''!
 !Lesson categoriesForClass!Unclassified! !
 !Lesson methodsFor!

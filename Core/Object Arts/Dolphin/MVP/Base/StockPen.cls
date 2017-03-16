@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Pen subclass: #StockPen
 	instanceVariableNames: 'id'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-StockPen guid: (GUID fromString: '{87B4C642-026E-11D3-9FD7-00A0CC3E4A32}')!
+StockPen guid: (GUID fromString: '{87b4c642-026e-11d3-9fd7-00a0cc3e4a32}')!
 StockPen comment: ''!
 !StockPen categoriesForClass!Graphics-Tools! !
 !StockPen methodsFor!

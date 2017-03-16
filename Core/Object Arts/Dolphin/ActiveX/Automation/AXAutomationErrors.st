@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Smalltalk at: #AXAutomationErrors put: (PoolConstantsDictionary named: #AXAutomationErrors)!
 AXAutomationErrors at: 'DISP_E_ARRAYISLOCKED' put: -16r7FFDFFF3!

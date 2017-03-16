@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #StsXmlWriter
 	instanceVariableNames: 'stream ident'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-StsXmlWriter guid: (GUID fromString: '{77B1FAD1-6B16-4380-A3A3-BC4C2BFFB772}')!
+StsXmlWriter guid: (GUID fromString: '{77b1fad1-6b16-4380-a3a3-bc4c2bffb772}')!
 StsXmlWriter comment: ''!
 !StsXmlWriter categoriesForClass!Kernel-Objects! !
 !StsXmlWriter methodsFor!

@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #EMailMessage
 	instanceVariableNames: 'header message attachments'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-EMailMessage guid: (GUID fromString: '{8D6EDB01-EF40-4904-9476-E6AEF0F0E513}')!
+EMailMessage guid: (GUID fromString: '{8d6edb01-ef40-4904-9476-e6aef0f0e513}')!
 EMailMessage comment: ''!
 !EMailMessage categoriesForClass!Unclassified! !
 !EMailMessage methodsFor!

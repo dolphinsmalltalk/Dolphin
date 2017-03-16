@@ -5,7 +5,7 @@ Object subclass: #SmalllintContext
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-SmalllintContext guid: (GUID fromString: '{3CC8C7DB-8970-4652-BFF7-519CDA9CA376}')!
+SmalllintContext guid: (GUID fromString: '{3cc8c7db-8970-4652-bff7-519cda9ca376}')!
 SmalllintContext comment: ''!
 !SmalllintContext categoriesForClass!Refactory-Lint! !
 !SmalllintContext methodsFor!

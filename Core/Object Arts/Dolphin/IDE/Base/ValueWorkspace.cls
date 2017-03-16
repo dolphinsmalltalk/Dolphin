@@ -5,7 +5,7 @@ SmalltalkWorkspace subclass: #ValueWorkspace
 	classVariableNames: 'ValueIsSelfCookie'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ValueWorkspace guid: (GUID fromString: '{87B4C6C9-026E-11D3-9FD7-00A0CC3E4A32}')!
+ValueWorkspace guid: (GUID fromString: '{87b4c6c9-026e-11d3-9fd7-00a0cc3e4a32}')!
 ValueWorkspace comment: 'ValueWorkspace is a <valuePresenter> for displaying the contents of a <valueModel> using a <ScintillaView>. ValueWorkspace allows Smalltalk expressions to be entered and, when Accepted,  the result of the evaluation is stored back to the model. ValueWorkspace is used as a fundamental part of the PublishedAspectInspector.
 
 Note that this is a somewhat unusual MVP triad; the ValueWorkspace model is not connected directly to the view. Instead, the view is redirected (via #viewModel) to another model that holds the textual rendition of the actual model.

@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk XP"!
+"Filed out from Dolphin Smalltalk 7"!
 
 MethodRefactoring subclass: #ChangeMethodNameRefactoring
 	instanceVariableNames: 'newSelector oldSelector permutation implementors'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ChangeMethodNameRefactoring guid: (GUID fromString: '{3F93D212-D92E-4BBB-B225-17BED064896E}')!
+ChangeMethodNameRefactoring guid: (GUID fromString: '{3f93d212-d92e-4bbb-b225-17bed064896e}')!
 ChangeMethodNameRefactoring comment: 'Abstract superclass for refactorings that change a methods selector, e.g. add/remove parameter and rename.
 
 Dolphin modifications to this class are:

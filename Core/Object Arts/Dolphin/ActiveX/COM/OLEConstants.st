@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Smalltalk at: #OLEConstants put: (PoolConstantsDictionary named: #OLEConstants)!
 OLEConstants at: 'CLSCTX_INPROC_HANDLER' put: 16r2!

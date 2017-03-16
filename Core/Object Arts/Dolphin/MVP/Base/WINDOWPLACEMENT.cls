@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Win32Structure subclass: #WINDOWPLACEMENT
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-WINDOWPLACEMENT guid: (GUID fromString: '{87B4C61B-026E-11D3-9FD7-00A0CC3E4A32}')!
+WINDOWPLACEMENT guid: (GUID fromString: '{87b4c61b-026e-11d3-9fd7-00a0cc3e4a32}')!
 WINDOWPLACEMENT comment: ''!
 !WINDOWPLACEMENT categoriesForClass!External-Data-Structured-Win32! !
 !WINDOWPLACEMENT methodsFor!

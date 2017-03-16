@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 DBSchemaStatement subclass: #DBSpecialColumnsStatement
 	instanceVariableNames: 'columnType scope nullable'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-DBSpecialColumnsStatement guid: (GUID fromString: '{11E39B07-10D8-43B0-8A5C-43C2EECF5EB9}')!
+DBSpecialColumnsStatement guid: (GUID fromString: '{11e39b07-10d8-43b0-8a5c-43c2eecf5eb9}')!
 DBSpecialColumnsStatement comment: ''!
 !DBSpecialColumnsStatement categoriesForClass!ODBC Interface! !
 !DBSpecialColumnsStatement methodsFor!

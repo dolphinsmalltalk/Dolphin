@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ODBDeserializers subclass: #ODB8ByteFloat
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ODB8ByteFloat guid: (GUID fromString: '{8162EE0A-0FB8-11D4-B091-000000000000}')!
+ODB8ByteFloat guid: (GUID fromString: '{8162ee0a-0fb8-11d4-b091-000000000000}')!
 ODB8ByteFloat comment: ''!
 !ODB8ByteFloat categoriesForClass!No category! !
 !ODB8ByteFloat class methodsFor!

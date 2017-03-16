@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Smalltalk at: #ListTreeConstants put: (PoolConstantsDictionary named: #ListTreeConstants)!
 ListTreeConstants at: 'DisableExpandAllMask' put: 16r1!

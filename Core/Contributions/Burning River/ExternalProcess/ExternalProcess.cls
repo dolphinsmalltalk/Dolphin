@@ -5,7 +5,7 @@ Object subclass: #ExternalProcess
 	classVariableNames: ''
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
-ExternalProcess guid: (GUID fromString: '{4C6CE2DA-1739-4610-834E-53A21E4FCBA9}')!
+ExternalProcess guid: (GUID fromString: '{4c6ce2da-1739-4610-834e-53a21e4fcba9}')!
 ExternalProcess comment: 'This class represents a native Win32 process.  Methods are available to allow processes to be executed synchronously (where the Dolphin image blocks until the external process completes - use the #executeSync message) or asynchronously (where the Dolphin image continues on its merry way after the external process has been started - use the #executeAsync message).  If you are running an ExternalProcess asynchronously you can use the #isAlive and #isTerminated methods to determine if the Win32 process has completed
 its work or is still running.
 

@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 NMHDR subclass: #NMITEMACTIVATE
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-NMITEMACTIVATE guid: (GUID fromString: '{78091823-3756-4D5A-816A-A5981291AE81}')!
+NMITEMACTIVATE guid: (GUID fromString: '{78091823-3756-4d5a-816a-a5981291ae81}')!
 NMITEMACTIVATE comment: ''!
 !NMITEMACTIVATE categoriesForClass!External-Data-Structured-Win32! !
 !NMITEMACTIVATE methodsFor!

@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 TimeStamp subclass: #Timestamp
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-Timestamp guid: (GUID fromString: '{31A3E526-25C5-4B34-B325-A0566ED3AFED}')!
+Timestamp guid: (GUID fromString: '{31a3e526-25c5-4b34-b325-a0566ed3afed}')!
 Timestamp comment: ''!
 !Timestamp categoriesForClass!Unclassified! !
 !Timestamp methodsFor!

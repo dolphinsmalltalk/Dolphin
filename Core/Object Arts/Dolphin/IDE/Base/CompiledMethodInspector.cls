@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 BasicInspector subclass: #CompiledMethodInspector
 	instanceVariableNames: ''
 	classVariableNames: 'MethodTypes'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-CompiledMethodInspector guid: (GUID fromString: '{87B4C691-026E-11D3-9FD7-00A0CC3E4A32}')!
+CompiledMethodInspector guid: (GUID fromString: '{87b4c691-026e-11d3-9fd7-00a0cc3e4a32}')!
 CompiledMethodInspector comment: 'CompiledMethodInspector is a <compositePresenter> that implements a specialised inspect facility onto a <CompiledMethod>. This provides additional functionality to view the source, and the decompiled bytecodes.'!
 !CompiledMethodInspector categoriesForClass!Development!MVP-Presenters! !
 !CompiledMethodInspector methodsFor!

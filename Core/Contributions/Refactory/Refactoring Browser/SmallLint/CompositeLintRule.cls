@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk XP"!
+"Filed out from Dolphin Smalltalk 7"!
 
 LintRule subclass: #CompositeLintRule
 	instanceVariableNames: 'rules'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-CompositeLintRule guid: (GUID fromString: '{AC469AC9-0C11-4BE1-90B2-F1A9192E9D98}')!
+CompositeLintRule guid: (GUID fromString: '{ac469ac9-0c11-4be1-90b2-f1a9192e9d98}')!
 CompositeLintRule comment: 'CompositeLintRule groups LintRules into a single rule (composite pattern).
 
 Instance Variables:

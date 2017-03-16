@@ -5,7 +5,7 @@ TextEdit subclass: #MultilineTextEdit
 	classVariableNames: ''
 	poolDictionaries: 'ButtonConstants'
 	classInstanceVariableNames: ''!
-MultilineTextEdit guid: (GUID fromString: '{87B4C743-026E-11D3-9FD7-00A0CC3E4A32}')!
+MultilineTextEdit guid: (GUID fromString: '{87b4c743-026e-11d3-9fd7-00a0cc3e4a32}')!
 MultilineTextEdit comment: 'MultilineTextEdit is a <valueView> class that implements the Windows "EDIT" control with an ES_MULTILINE style for the displaying and editing of multi-line text. The <valueModel> associated with a MultilineTextEdit  must always yield a <readableString> value when mapped through the installed type converter. A MultilineTextEdit will normally be used in conjunction with a <TextPresenter>. '!
 !MultilineTextEdit categoriesForClass!MVP-Views! !
 !MultilineTextEdit methodsFor!

@@ -5,7 +5,7 @@ SmalltalkToolShell subclass: #AXControlBrowser
 	classVariableNames: 'TraceMask'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-AXControlBrowser guid: (GUID fromString: '{E2E33600-AA60-11D3-B376-080046056106}')!
+AXControlBrowser guid: (GUID fromString: '{e2e33600-aa60-11d3-b376-080046056106}')!
 AXControlBrowser comment: 'AXControlBrowser is a simple Active-X control (OCX) browser and test environment.
 
 AXControlBrowser show

@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ListPresenter subclass: #ListTreePresenter
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ListTreePresenter guid: (GUID fromString: '{B4F22156-DF92-493F-81C9-6E74FD4FDCCE}')!
+ListTreePresenter guid: (GUID fromString: '{b4f22156-df92-493f-81c9-6e74fd4fdcce}')!
 ListTreePresenter comment: 'Copyright © Chris Uppal, 2002, 2003.
 chris.uppal@metagnostic.org
 

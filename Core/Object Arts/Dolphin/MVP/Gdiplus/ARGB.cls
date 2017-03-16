@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Color subclass: #ARGB
 	instanceVariableNames: 'code'
 	classVariableNames: 'Default StdColours'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ARGB guid: (GUID fromString: '{5ADF6D2A-72CB-4706-B355-516359E43521}')!
+ARGB guid: (GUID fromString: '{5adf6d2a-72cb-4706-b355-516359e43521}')!
 ARGB comment: ''!
 !ARGB categoriesForClass!Unclassified! !
 !ARGB methodsFor!

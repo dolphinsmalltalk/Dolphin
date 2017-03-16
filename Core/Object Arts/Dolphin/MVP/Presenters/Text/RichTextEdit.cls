@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 MultilineTextEdit subclass: #RichTextEdit
 	instanceVariableNames: 'streamIn winStruct'
 	classVariableNames: 'AutoUrlDetectionMask ParagraphAlignmentMap RtnMap StreamingDescriptor StreamInIndex'
 	poolDictionaries: 'CommonDialogConstants RichEditConstants'
 	classInstanceVariableNames: ''!
-RichTextEdit guid: (GUID fromString: '{87B4C744-026E-11D3-9FD7-00A0CC3E4A32}')!
+RichTextEdit guid: (GUID fromString: '{87b4c744-026e-11d3-9fd7-00a0cc3e4a32}')!
 RichTextEdit comment: 'RichTextEdit is a <valueView> class that implements the Windows "RichEdit" control for the displaying and editing of multi-line rich text. The <valueModel> associated with a RichTextEdit  must always yield a <richString> value when mapped through the installed type converter. A RichTextEdit will normally be used in conjunction with a <RichTextPresenter>. 
 
 Note that the <richString> protocol relies on double dispatch (using #setTextInto:) to set either plain text or rich text into a destination <view> depending on it''s capabilities.

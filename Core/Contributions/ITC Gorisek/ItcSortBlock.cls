@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #ItcSortBlock
 	instanceVariableNames: 'sortSelectors'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ItcSortBlock guid: (GUID fromString: '{44C30491-9056-4142-870D-0F48F98F023B}')!
+ItcSortBlock guid: (GUID fromString: '{44c30491-9056-4142-870d-0f48f98f023b}')!
 ItcSortBlock comment: ''!
 !ItcSortBlock categoriesForClass!Unclassified! !
 !ItcSortBlock methodsFor!

@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #GdiplusInitializer
 	instanceVariableNames: 'library'
 	classVariableNames: ''
 	poolDictionaries: 'GdiplusConstants'
 	classInstanceVariableNames: ''!
-GdiplusInitializer guid: (GUID fromString: '{4687FD64-6607-4BE7-B45B-F533EF511BC5}')!
+GdiplusInitializer guid: (GUID fromString: '{4687fd64-6607-4be7-b45b-f533ef511bc5}')!
 GdiplusInitializer comment: 'An instance of GdiplusInitializer serves as a proxy for a GdiplusBase factory.  Instances of subclasses contain enough information to create and recreate a corresponding GdiplusBase subclass instance. '!
 !GdiplusInitializer categoriesForClass!Unclassified! !
 !GdiplusInitializer methodsFor!

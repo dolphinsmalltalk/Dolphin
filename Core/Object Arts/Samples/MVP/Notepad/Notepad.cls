@@ -5,7 +5,7 @@ TextDocument subclass: #Notepad
 	classVariableNames: 'ResourceLib'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-Notepad guid: (GUID fromString: '{64ABBEC0-8140-42D2-AECD-6D329B3B41E0}')!
+Notepad guid: (GUID fromString: '{64abbec0-8140-42d2-aecd-6d329b3b41e0}')!
 Notepad comment: 'Notepad is a <topShell> sample application which implements most of the functionality of the familiar Windows utility. The major area of missing functionality is printing. Most of the implementation of the application is actually inherited from Dolphin''s TextDocument framework class.
 
 Note that some resources are extracted from the Windows executable, but none of the functionality of that executable is reused (or indeed could be, as Notepad.exe doesn''t export any functions).

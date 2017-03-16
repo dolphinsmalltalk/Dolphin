@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 StsChangedCommentNode subclass: #StsChangedPrerequisitesNode
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-StsChangedPrerequisitesNode guid: (GUID fromString: '{1AEAD018-4539-451E-B703-1622C1A9F8AC}')!
+StsChangedPrerequisitesNode guid: (GUID fromString: '{1aead018-4539-451e-b703-1622c1a9f8ac}')!
 StsChangedPrerequisitesNode comment: ''!
 !StsChangedPrerequisitesNode categoriesForClass!Unclassified! !
 !StsChangedPrerequisitesNode methodsFor!

@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #StyledGradientBrush
 	instanceVariableNames: 'startColor endColor startPoint endPoint'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-StyledGradientBrush guid: (GUID fromString: '{4A31F78C-2126-4B71-BF0B-064199A1F828}')!
+StyledGradientBrush guid: (GUID fromString: '{4a31f78c-2126-4b71-bf0b-064199a1f828}')!
 StyledGradientBrush comment: 'A StyledBrush holds persistent details for a GdiplusLinearGradientBrush.'!
 !StyledGradientBrush categoriesForClass!Kernel-Objects! !
 !StyledGradientBrush methodsFor!

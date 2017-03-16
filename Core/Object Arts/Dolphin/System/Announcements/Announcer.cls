@@ -5,7 +5,7 @@ Object subclass: #Announcer
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-Announcer guid: (GUID fromString: '{1C9ED26A-0EA9-497C-AF74-175569414AE7}')!
+Announcer guid: (GUID fromString: '{1c9ed26a-0ea9-497c-af74-175569414ae7}')!
 Announcer comment: 'The code is based on the announcements as described by Vassili Bykov in <http://www.cincomsmalltalk.com/userblogs/vbykov/blogView?searchCategory=Announcements%20Framework>. The implementation uses a threadsafe subscription registry, in the sense that registering, unregistering, and announcing from an announcer at the same time in different threads should never cause failures.For security reasons, registry is kept private, and has no accessor like in other implementations'!
 !Announcer categoriesForClass!Announcements-Core! !
 !Announcer methodsFor!

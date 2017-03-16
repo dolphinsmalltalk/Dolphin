@@ -5,7 +5,7 @@ Object subclass: #TestCase
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-TestCase guid: (GUID fromString: '{5E96793A-0810-11D4-A876-0050DA643BF9}')!
+TestCase guid: (GUID fromString: '{5e96793a-0810-11d4-a876-0050da643bf9}')!
 TestCase comment: ''!
 !TestCase categoriesForClass!SUnit! !
 !TestCase methodsFor!

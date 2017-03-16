@@ -5,7 +5,7 @@ ControlView subclass: #HeaderView
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-HeaderView guid: (GUID fromString: '{7A6B97FA-0FD4-424D-99DE-515000F88886}')!
+HeaderView guid: (GUID fromString: '{7a6b97fa-0fd4-424d-99de-515000f88886}')!
 HeaderView comment: '#define HDI_WIDTH               0x0001
 #define HDI_HEIGHT              HDI_WIDTH
 #define HDI_TEXT                0x0002

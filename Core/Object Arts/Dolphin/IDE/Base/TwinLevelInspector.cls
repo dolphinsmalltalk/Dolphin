@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Presenter subclass: #TwinLevelInspector
 	instanceVariableNames: 'contentsPresenter inspectorPresenter'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-TwinLevelInspector guid: (GUID fromString: '{DC9A61D9-617E-42A8-BB8A-A84102AE8002}')!
+TwinLevelInspector guid: (GUID fromString: '{dc9a61d9-617e-42a8-bb8a-a84102ae8002}')!
 TwinLevelInspector comment: ''!
 !TwinLevelInspector categoriesForClass!MVP-Presenters! !
 !TwinLevelInspector methodsFor!

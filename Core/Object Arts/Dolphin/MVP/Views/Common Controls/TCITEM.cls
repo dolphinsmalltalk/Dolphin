@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 CCITEM subclass: #TCITEM
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'TabViewConstants'
 	classInstanceVariableNames: ''!
-TCITEM guid: (GUID fromString: '{87B4C621-026E-11D3-9FD7-00A0CC3E4A32}')!
+TCITEM guid: (GUID fromString: '{87b4c621-026e-11d3-9fd7-00a0cc3e4a32}')!
 TCITEM comment: 'TCITEM is an <ExternalStructure> class which represents the Windows common control structure of the same name.
 
 TCITEM is used to communicate information about the items (tabs) in a Tab Control.

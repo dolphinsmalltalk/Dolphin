@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Aspect subclass: #KeyedAspect
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-KeyedAspect guid: (GUID fromString: '{87B4C4D9-026E-11D3-9FD7-00A0CC3E4A32}')!
+KeyedAspect guid: (GUID fromString: '{87b4c4d9-026e-11d3-9fd7-00a0cc3e4a32}')!
 KeyedAspect comment: 'Part of the PublishedAspectorInspector framework. KeyedAspect instances are used to describe the published aspects of a keyed collection. Typically these are accessed via #at: and #at:put: messages as governed by the KeyedAspectAccessor class.'!
 !KeyedAspect categoriesForClass!Development! !
 !KeyedAspect methodsFor!

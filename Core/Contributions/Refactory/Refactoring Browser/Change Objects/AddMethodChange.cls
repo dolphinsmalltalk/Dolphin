@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 RefactoryClassChange subclass: #AddMethodChange
 	instanceVariableNames: 'source selector protocols'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-AddMethodChange guid: (GUID fromString: '{67095785-DE4E-4BB9-AE66-CB2D970C8A5F}')!
+AddMethodChange guid: (GUID fromString: '{67095785-de4e-4bb9-ae66-cb2d970c8a5f}')!
 AddMethodChange comment: ''!
 !AddMethodChange categoriesForClass!Refactory-Change Objects! !
 !AddMethodChange methodsFor!

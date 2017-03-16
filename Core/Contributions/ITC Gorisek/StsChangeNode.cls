@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #StsChangeNode
 	instanceVariableNames: 'description elementDescription leftEdition rightEdition leftSource rightSource owningPackage changeTimestamp'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-StsChangeNode guid: (GUID fromString: '{848904C4-2842-11D4-B0CF-000000000000}')!
+StsChangeNode guid: (GUID fromString: '{848904c4-2842-11d4-b0cf-000000000000}')!
 StsChangeNode comment: ''!
 !StsChangeNode categoriesForClass!Unclassified! !
 !StsChangeNode methodsFor!

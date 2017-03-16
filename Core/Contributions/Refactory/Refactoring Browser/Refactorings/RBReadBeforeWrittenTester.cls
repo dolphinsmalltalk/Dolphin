@@ -5,7 +5,7 @@ StParseNodeVisitor subclass: #RBReadBeforeWrittenTester
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-RBReadBeforeWrittenTester guid: (GUID fromString: '{A344E3A6-5CF4-4EB9-AE6A-990CAE954E18}')!
+RBReadBeforeWrittenTester guid: (GUID fromString: '{a344e3a6-5cf4-4eb9-ae6a-990cae954e18}')!
 RBReadBeforeWrittenTester comment: ''!
 !RBReadBeforeWrittenTester categoriesForClass!Refactory-ParseTree Matching! !
 !RBReadBeforeWrittenTester methodsFor!

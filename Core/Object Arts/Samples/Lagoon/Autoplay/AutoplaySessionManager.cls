@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 RuntimeSessionManager subclass: #AutoplaySessionManager
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-AutoplaySessionManager guid: (GUID fromString: '{4926B46C-437F-4688-A5FF-A86350C68924}')!
+AutoplaySessionManager guid: (GUID fromString: '{4926b46c-437f-4688-a5ff-a86350c68924}')!
 AutoplaySessionManager comment: 'AutoplaySessionManager is the <RuntimeSessionManager> for the Autoplay sample. 
 
 AutoplaySessionManager illustrates starting and parameterizing an applications main shell, simple command-line argument processing, and how to prevent multiple instances of a Dolphin application being started.'!

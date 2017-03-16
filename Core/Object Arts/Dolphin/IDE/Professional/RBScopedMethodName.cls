@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 RBMethodName subclass: #RBScopedMethodName
 	instanceVariableNames: 'methodClass originalArguments originalSelector scope scopes'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-RBScopedMethodName guid: (GUID fromString: '{50A0D881-8784-4DB2-B798-817A44DA9E38}')!
+RBScopedMethodName guid: (GUID fromString: '{50a0d881-8784-4db2-b798-817a44da9e38}')!
 RBScopedMethodName comment: 'Dolphin extension of RBMethodName. Holds a scope (a BrowserEnvironment) that defines the context within which the rename is performed.
 
 Instance Variables:

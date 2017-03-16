@@ -1,10 +1,10 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 XMLException subclass: #XMLMalformedException
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-XMLMalformedException guid: (GUID fromString: '{2C2CD5A1-C6B8-41F9-9D38-0F4875B92CE6}')!
+XMLMalformedException guid: (GUID fromString: '{2c2cd5a1-c6b8-41f9-9d38-0f4875b92ce6}')!
 XMLMalformedException comment: ''!
 !XMLMalformedException categoriesForClass!XML-Parser! !

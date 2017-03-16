@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #XMLTokenizer
 	instanceVariableNames: 'stream nestedStreams entities externalEntities parameterEntities parsingMarkup peekChar validating buffer contentBuffer'
 	classVariableNames: 'CharEscapes NameChars NameDelimiters'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-XMLTokenizer guid: (GUID fromString: '{3504F679-282F-4DED-A387-6493F6C85F67}')!
+XMLTokenizer guid: (GUID fromString: '{3504f679-282f-4ded-a387-6493f6c85f67}')!
 XMLTokenizer comment: 'XMLTokenizer
 
 bolot@cc.gatech.edu

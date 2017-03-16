@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Smalltalk at: #ProgressBarConstants put: (PoolConstantsDictionary named: #ProgressBarConstants)!
 ProgressBarConstants at: 'PBM_DELTAPOS' put: 16r403!

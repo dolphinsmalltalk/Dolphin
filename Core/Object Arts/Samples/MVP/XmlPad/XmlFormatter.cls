@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 XmlDomVisitor subclass: #XmlFormatter
 	instanceVariableNames: 'stream indent line newlineNeeded'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-XmlFormatter guid: (GUID fromString: '{1FC00789-E5C1-4F68-9D36-E5BA475B97F3}')!
+XmlFormatter guid: (GUID fromString: '{1fc00789-e5c1-4f68-9d36-e5ba475b97f3}')!
 XmlFormatter comment: 'XmlFormatter is an <XmlDomVisitor> that pretty-prints an XML node tree. Where appropriate it follows the W3C Canonical XML recommendation (http://www.w3.org/TR/xml-c14n), although it does not remove nodes (such as redundant namespace attributes) as described in that document. Also it will reformat mixed-content nodes where the text content is not in an immediate child. This may be incorrect in a markup document where inter-node whitespace is significant, but for the majority of data documents such whitespace is irrelevent.
 
 Example usage:

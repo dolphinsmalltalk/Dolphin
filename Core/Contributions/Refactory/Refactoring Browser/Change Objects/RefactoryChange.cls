@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk 2002 release 5.00"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #RefactoryChange
 	instanceVariableNames: 'name'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-RefactoryChange guid: (GUID fromString: '{2E46050F-612F-4E62-A0CF-281408D71404}')!
+RefactoryChange guid: (GUID fromString: '{2e46050f-612f-4e62-a0cf-281408d71404}')!
 RefactoryChange comment: 'RefactoryChange is an abstract class that represent some change to a class or method. They are used in combination with RefactoryBuilders to give transaction-like behavior.
 
 Subclasses must implement the following messages:

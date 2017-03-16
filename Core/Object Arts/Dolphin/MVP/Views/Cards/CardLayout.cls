@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 LayoutManager subclass: #CardLayout
 	instanceVariableNames: 'names currentCard'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-CardLayout guid: (GUID fromString: '{87B4C647-026E-11D3-9FD7-00A0CC3E4A32}')!
+CardLayout guid: (GUID fromString: '{87b4c647-026e-11d3-9fd7-00a0cc3e4a32}')!
 CardLayout comment: 'CardLayout implements a specialised <layoutManager> to layout <view> objects within a <cardView>. It arranges the contained views so that they stack on top of one another in z-order sequence. Only one of the views, the so-called current card, is allowed to be visible at any one time.
 
 The arrangement aspects of the managed views are used as a descriptive names for the cards. The containing <cardView> may make use of these names as it sees fit. For example, a CardContainer uses these as the names for the tabs that it displays.

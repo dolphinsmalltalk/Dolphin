@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 TypeConverter subclass: #PluggableTypeConverter
 	instanceVariableNames: 'leftToRightBlock rightToLeftBlock'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-PluggableTypeConverter guid: (GUID fromString: '{54BED5F3-B28B-4731-9BAA-DB8DE92BEF40}')!
+PluggableTypeConverter guid: (GUID fromString: '{54bed5f3-b28b-4731-9baa-db8de92bef40}')!
 PluggableTypeConverter comment: '<PluggableTypeConverter> is a generic <TypeConverter> that supports configurable conversions.
 
 Instance Variables:

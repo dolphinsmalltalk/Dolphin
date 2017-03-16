@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 EmailMIMEDecoder subclass: #EmailQuotedPrintableDecoder
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: 'singelton'!
-EmailQuotedPrintableDecoder guid: (GUID fromString: '{62F05317-D8BF-434C-BE1F-238F64BC9CF3}')!
+EmailQuotedPrintableDecoder guid: (GUID fromString: '{62f05317-d8bf-434c-be1f-238f64bc9cf3}')!
 EmailQuotedPrintableDecoder comment: ''!
 !EmailQuotedPrintableDecoder categoriesForClass!Unclassified! !
 !EmailQuotedPrintableDecoder methodsFor!

@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 StsAbstractClassEditionChangeNode subclass: #StsChangedClassNode
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-StsChangedClassNode guid: (GUID fromString: '{661CE4C7-289A-11D4-B0D0-000000000000}')!
+StsChangedClassNode guid: (GUID fromString: '{661ce4c7-289a-11d4-b0d0-000000000000}')!
 StsChangedClassNode comment: ''!
 !StsChangedClassNode categoriesForClass!Unclassified! !
 !StsChangedClassNode methodsFor!

@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ListView subclass: #ListTreeView
 	instanceVariableNames: 'hasExplicitTreeModel treeModel dummy3 expanded hiddenExpanded options indentSeparation getChildrenBlock hasChildrenBlock getParentBlock sortBlock doSortChildrenBlock dummy2 dummy1'
 	classVariableNames: ''
 	poolDictionaries: 'ListTreeConstants'
 	classInstanceVariableNames: 'stateImageManager stateImageBlock'!
-ListTreeView guid: (GUID fromString: '{F2D6215C-2ADC-4032-AACB-8C4DA10950AB}')!
+ListTreeView guid: (GUID fromString: '{f2d6215c-2adc-4032-aacb-8c4da10950ab}')!
 ListTreeView comment: 'Copyright © Chris Uppal, 2002 - 2004.
 chris.uppal@metagnostic.org
 

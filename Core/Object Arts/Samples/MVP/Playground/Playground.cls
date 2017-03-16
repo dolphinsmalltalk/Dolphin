@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ShellView subclass: #Playground
 	instanceVariableNames: 'shapes'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-Playground guid: (GUID fromString: '{87B4C721-026E-11D3-9FD7-00A0CC3E4A32}')!
+Playground guid: (GUID fromString: '{87b4c721-026e-11d3-9fd7-00a0cc3e4a32}')!
 Playground comment: 'A Playground window is part of the Playground sample package learning aid for Smalltalk. A Playground is a <topView> window into which one or more geometric objects can be placed. These objects can then be manipulated by sending messages to them, usually from a workspace.
 
 The objects to be placed in a Playground are normally of a class that is derived from the class <PlayShape>. Typical shapes might be <Triangle>, <Square>, <Circle> etc.The shapes can be added and removed from a <Playground> using the #add: and #remove: methods respectively. You can request a collection of all the shapes currently in the playground using #shapes. Once you have identified a particular shape you can send messages to communicate with it directly.

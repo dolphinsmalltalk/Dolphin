@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #ODBDeserializer
 	instanceVariableNames: 'classArray classes classesCounter classManager counter objects stream referenceManager transaction'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: 'classArray'!
-ODBDeserializer guid: (GUID fromString: '{8162EDD7-0FB8-11D4-B091-000000000000}')!
+ODBDeserializer guid: (GUID fromString: '{8162edd7-0fb8-11d4-b091-000000000000}')!
 ODBDeserializer comment: ''!
 !ODBDeserializer categoriesForClass!No category! !
 !ODBDeserializer methodsFor!

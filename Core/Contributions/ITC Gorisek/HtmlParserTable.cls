@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 HtmlParserElement subclass: #HtmlParserTable
 	instanceVariableNames: 'rows parseImage collectedString colIndex rowIndex'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-HtmlParserTable guid: (GUID fromString: '{1EEC22E0-AC6B-4A13-9CB4-A190CDEAD611}')!
+HtmlParserTable guid: (GUID fromString: '{1eec22e0-ac6b-4a13-9cb4-a190cdead611}')!
 HtmlParserTable comment: ''!
 !HtmlParserTable categoriesForClass!Unclassified! !
 !HtmlParserTable methodsFor!

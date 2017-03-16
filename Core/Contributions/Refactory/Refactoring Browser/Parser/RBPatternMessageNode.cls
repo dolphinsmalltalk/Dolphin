@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk XP 2002 release 5.02"!
+"Filed out from Dolphin Smalltalk 7"!
 
 StMessageNode subclass: #RBPatternMessageNode
 	instanceVariableNames: 'isList isCascadeList'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-RBPatternMessageNode guid: (GUID fromString: '{880FF09F-AA85-4F4D-BD3E-0416F929352D}')!
+RBPatternMessageNode guid: (GUID fromString: '{880ff09f-aa85-4f4d-bd3e-0416f929352d}')!
 RBPatternMessageNode comment: 'RBPatternMessageNode is an RBMessageNode that will match other message nodes without their selectors being equal. 
 
 Instance Variables:

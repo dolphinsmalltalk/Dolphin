@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #FileBrowserAbstract
 	instanceVariableNames: 'name parent children'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-FileBrowserAbstract guid: (GUID fromString: '{782ED519-5423-11D3-998B-BCA753D3B065}')!
+FileBrowserAbstract guid: (GUID fromString: '{782ed519-5423-11d3-998b-bca753d3b065}')!
 FileBrowserAbstract comment: 'See [DolphinImageFolder]/Idb/Documentation for details
 
 (C) 2005 Ian Bartholomew

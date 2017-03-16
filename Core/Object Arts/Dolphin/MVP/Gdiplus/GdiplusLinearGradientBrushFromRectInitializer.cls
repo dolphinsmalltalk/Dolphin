@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 GdiplusLinearGradientBrushInitializer subclass: #GdiplusLinearGradientBrushFromRectInitializer
 	instanceVariableNames: 'rect color1 color2 mode'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-GdiplusLinearGradientBrushFromRectInitializer guid: (GUID fromString: '{E5737BCA-1AF2-4189-9DE4-D6C506A8C20A}')!
+GdiplusLinearGradientBrushFromRectInitializer guid: (GUID fromString: '{e5737bca-1af2-4189-9de4-d6c506a8c20a}')!
 GdiplusLinearGradientBrushFromRectInitializer comment: ''!
 !GdiplusLinearGradientBrushFromRectInitializer categoriesForClass!Unclassified! !
 !GdiplusLinearGradientBrushFromRectInitializer methodsFor!

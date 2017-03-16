@@ -5,7 +5,7 @@ Shell subclass: #TranscriptShell
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: 'DefaultExtent FlashOnOutput'!
-TranscriptShell guid: (GUID fromString: '{87B4C6C5-026E-11D3-9FD7-00A0CC3E4A32}')!
+TranscriptShell guid: (GUID fromString: '{87b4c6c5-026e-11d3-9fd7-00a0cc3e4a32}')!
 TranscriptShell comment: 'TranscriptShell is a <SmalltalkToolShell> that implements the Transcript notification logging window.
 
 Note that although TranscriptShell is a development tool, it is not dependent on the Development System package to operate. Among the Dolphin development tools it is unusual in that its model is not SmalltalkSystem, which means that it has to reproduce some of the functionality normally implemented there.

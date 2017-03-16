@@ -5,7 +5,7 @@ ClassAspectPlugin subclass: #ClassCommentPlugin
 	classVariableNames: 'TextStyles WordWrap'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ClassCommentPlugin guid: (GUID fromString: '{9BBB729C-F516-492E-B991-7AD0C238A37F}')!
+ClassCommentPlugin guid: (GUID fromString: '{9bbb729c-f516-492e-b991-7ad0c238a37f}')!
 ClassCommentPlugin comment: 'ClassCommentPlugin is a <classBrowserPlugin> for displaying/editing class comments.'!
 !ClassCommentPlugin categoriesForClass!Browser-Plugins! !
 !ClassCommentPlugin methodsFor!

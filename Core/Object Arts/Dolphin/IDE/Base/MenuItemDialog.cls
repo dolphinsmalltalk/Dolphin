@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Dialog subclass: #MenuItemDialog
 	instanceVariableNames: 'titlePresenter commandPresenter iconPresenter imageModel iconIdPresenter inspector cardsPresenter'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-MenuItemDialog guid: (GUID fromString: '{EC0E406D-75F7-437D-8D69-34CFD92846B7}')!
+MenuItemDialog guid: (GUID fromString: '{ec0e406d-75f7-437d-8d69-34cfd92846b7}')!
 MenuItemDialog comment: 'MenuItemDialog is the abstract class of <dialogPresenter>s used to edit menu entries.
 
 Instance Variables:

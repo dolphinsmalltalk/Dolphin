@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #ScintillaMarker
 	instanceVariableNames: 'view definition line handle'
 	classVariableNames: ''
 	poolDictionaries: 'ScintillaConstants'
 	classInstanceVariableNames: ''!
-ScintillaMarker guid: (GUID fromString: '{2AAD3A52-111C-4781-B79B-22F044E4A6F7}')!
+ScintillaMarker guid: (GUID fromString: '{2aad3a52-111c-4781-b79b-22f044e4a6f7}')!
 ScintillaMarker comment: 'ScintillaMarkers represent the visible ''markers'' displayed in the margins of <ScintillaView>s.
 
 Instance Variables:

@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk XP 2002 release 6.00"!
+"Filed out from Dolphin Smalltalk 7"!
 
 SUnitAbsWrapper subclass: #SUnitStatusTextWrapper
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-SUnitStatusTextWrapper guid: (GUID fromString: '{A7174FB3-D519-4E52-9A7C-D777937CAD5F}')!
+SUnitStatusTextWrapper guid: (GUID fromString: '{a7174fb3-d519-4e52-9a7c-d777937cad5f}')!
 SUnitStatusTextWrapper comment: ''!
 !SUnitStatusTextWrapper categoriesForClass!Unclassified! !
 !SUnitStatusTextWrapper methodsFor!

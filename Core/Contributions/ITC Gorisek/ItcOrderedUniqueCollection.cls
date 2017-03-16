@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 OrderedCollection variableSubclass: #ItcOrderedUniqueCollection
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ItcOrderedUniqueCollection guid: (GUID fromString: '{509B4180-A874-4E90-A994-7CC92896057E}')!
+ItcOrderedUniqueCollection guid: (GUID fromString: '{509b4180-a874-4e90-a994-7cc92896057e}')!
 ItcOrderedUniqueCollection comment: ''!
 !ItcOrderedUniqueCollection categoriesForClass!Unclassified! !
 !ItcOrderedUniqueCollection methodsFor!

@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk XP"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ChangeMethodNameRefactoring subclass: #AddParameterRefactoring
 	instanceVariableNames: 'initializer senders'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-AddParameterRefactoring guid: (GUID fromString: '{AFEEAD23-BEFE-4021-BB3B-1D7B14E487BA}')!
+AddParameterRefactoring guid: (GUID fromString: '{afeead23-befe-4021-bb3b-1d7b14e487ba}')!
 AddParameterRefactoring comment: ''!
 !AddParameterRefactoring categoriesForClass!Refactory-Refactorings! !
 !AddParameterRefactoring methodsFor!

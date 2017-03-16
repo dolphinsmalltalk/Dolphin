@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 TreeModel subclass: #ExpandingTreeModel
 	instanceVariableNames: 'getChildrenBlock hasChildrenBlock'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ExpandingTreeModel guid: (GUID fromString: '{14185F62-D296-4F25-80AD-EE85ED9D2E08}')!
+ExpandingTreeModel guid: (GUID fromString: '{14185f62-d296-4f25-80ad-ee85ed9d2e08}')!
 ExpandingTreeModel comment: 'ExpandingTreeModel is a specialized <TreeModel> that dynamically generates the set of child nodes for a node, but only on first request. The tree is still built with a hierarchy of <TreeNodes>, but starts off only with the roots. As the user navigates through the tree (actually as the client view requests them) the tree is fleshed out.
 
 See also VirtualTreeModel, which is a fully dynamic tree model.

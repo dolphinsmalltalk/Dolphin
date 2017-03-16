@@ -5,7 +5,7 @@ ClassBrowserPlugin subclass: #UnitTestPlugin
 	classVariableNames: 'AutoSwitchDelayMs FailColor NoTestsColor PassColor RunningColor'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-UnitTestPlugin guid: (GUID fromString: '{E8B10DCB-9855-41F7-95D2-A91639377D01}')!
+UnitTestPlugin guid: (GUID fromString: '{e8b10dcb-9855-41f7-95d2-a91639377d01}')!
 UnitTestPlugin comment: 'UnitTestPlugin is a <classBrowserPlugin> that provides SUnit test running facilities within a browser. The aim is to allow tests directly relevant to the current class being worked on in the browser to be run quickly and easily using a single hotkey or menu command. Failing tests can be isolated and run within the debugger. The UnitTestPlugin does not provide facilities to run large suites of tests comprising of more than one <TestCase>; this functionaility is left to the SUnitBrowser and TestRunner tools.
 
 When a class is selected in the browser, the UnitTestPlugin deterines if there is a <TestCase> subclass that can be associated with it. By default, ClassDescription>>correspondingTestCase is used to do this by simply appending ''Test'' to the name of the class. If the mapping between a class under test and its <TestCase> is not so straightforward it is alway possible to implement #correspondingTestCase as a class method that directly answers the correct <TestCase> subclass. Typically, if used, this class method would be installed as a loose method in the package containing the tests. 

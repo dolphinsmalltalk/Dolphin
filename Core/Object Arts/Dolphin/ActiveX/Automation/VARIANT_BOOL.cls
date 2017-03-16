@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 SWORD subclass: #VARIANT_BOOL
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-VARIANT_BOOL guid: (GUID fromString: '{C06F3B75-0868-11D3-93AF-00A024CA708A}')!
+VARIANT_BOOL guid: (GUID fromString: '{c06f3b75-0868-11d3-93af-00a024ca708a}')!
 VARIANT_BOOL comment: 'VARIANT_BOOL is an <ExternalStructure> class to represent the Automation type, VARIANT_BOOL, which is VB''s boolean type.
 
 VARIANT_BOOL is a 16-bit signed integer value where -1 is used to represent true, and 0 is used to represent false. This class has a slightly looser definition in that it maps any non-zero value to true on access, and any non-zero/true value to -1 on mutation.'!

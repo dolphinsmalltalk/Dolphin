@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Dialog subclass: #PersonalAccountTransactionDialog
 	instanceVariableNames: 'datePresenter amountPresenter descriptionPresenter isDebitPresenter'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-PersonalAccountTransactionDialog guid: (GUID fromString: '{87B4C6A3-026E-11D3-9FD7-00A0CC3E4A32}')!
+PersonalAccountTransactionDialog guid: (GUID fromString: '{87b4c6a3-026e-11d3-9fd7-00a0cc3e4a32}')!
 PersonalAccountTransactionDialog comment: 'PersonalAccountTransactionDialog is a <dialogPresenter> used to edit the contents of an <PersonalAccountTransaction> model.
 
 To see an example operating on a new transaction evaluate:

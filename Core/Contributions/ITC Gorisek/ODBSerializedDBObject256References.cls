@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ODBSerializedDBObjectWithoutReferences subclass: #ODBSerializedDBObject256References
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ODBSerializedDBObject256References guid: (GUID fromString: '{8162EE07-0FB8-11D4-B091-000000000000}')!
+ODBSerializedDBObject256References guid: (GUID fromString: '{8162ee07-0fb8-11d4-b091-000000000000}')!
 ODBSerializedDBObject256References comment: ''!
 !ODBSerializedDBObject256References categoriesForClass!No category! !
 !ODBSerializedDBObject256References methodsFor!

@@ -5,7 +5,7 @@ StProgramNode subclass: #StSequenceNode
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-StSequenceNode guid: (GUID fromString: '{73C3638C-06A8-4C0D-99AE-A572D08B5150}')!
+StSequenceNode guid: (GUID fromString: '{73c3638c-06a8-4c0d-99ae-a572d08b5150}')!
 StSequenceNode comment: 'StSequenceNode is a parse tree node that represents a sequence of statements. Both StBlockNodes and StMethodNodes contain these.
 
 Instance Variables:

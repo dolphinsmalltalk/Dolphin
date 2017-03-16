@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 MethodRefactoring subclass: #PushUpMethodRefactoring
 	instanceVariableNames: 'removeDuplicates selectors'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-PushUpMethodRefactoring guid: (GUID fromString: '{9124B878-03E9-4E01-ABB4-34CF953777F4}')!
+PushUpMethodRefactoring guid: (GUID fromString: '{9124b878-03e9-4e01-abb4-34cf953777f4}')!
 PushUpMethodRefactoring comment: ''!
 !PushUpMethodRefactoring categoriesForClass!Refactory-Refactorings! !
 !PushUpMethodRefactoring methodsFor!

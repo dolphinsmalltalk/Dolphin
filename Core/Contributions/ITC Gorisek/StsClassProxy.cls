@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 StsBehaviorProxy subclass: #StsClassProxy
 	instanceVariableNames: 'guid metaClass'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-StsClassProxy guid: (GUID fromString: '{B87AA04B-D6DB-4824-BFE0-B0A4E5CF5A04}')!
+StsClassProxy guid: (GUID fromString: '{b87aa04b-d6db-4824-bfe0-b0a4e5cf5a04}')!
 StsClassProxy comment: ''!
 !StsClassProxy categoriesForClass!Unclassified! !
 !StsClassProxy methodsFor!

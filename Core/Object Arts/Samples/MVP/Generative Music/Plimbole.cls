@@ -5,7 +5,7 @@ Model subclass: #Plimbole
 	classVariableNames: 'MidiChannel Registry StepProcess Tempo'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-Plimbole guid: (GUID fromString: '{F27F7FF6-A16B-433C-BF1B-D38B3DB9EC3C}')!
+Plimbole guid: (GUID fromString: '{f27f7ff6-a16b-433c-bf1b-d38b3db9ec3c}')!
 Plimbole comment: 'This is the Model class for the Plimbole Generative Music Sequencer. Plimbole has been designed to embrace the MVP design rules such that the main functionality is based in the model and is independent of the UI. To demostrate this you can create a Plimbole instance, load it with a piece and then start it playing:
 
 plimbole := Plimbole new register.

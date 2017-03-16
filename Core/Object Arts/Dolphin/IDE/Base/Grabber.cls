@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #Grabber
 	instanceVariableNames: 'rectangle aspect constrain view composer'
 	classVariableNames: 'Cursors'
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
-Grabber guid: (GUID fromString: '{7024E3C5-A46A-47FB-A7C0-E17BCF414E66}')!
+Grabber guid: (GUID fromString: '{7024e3c5-a46a-47fb-a7c0-e17bcf414e66}')!
 Grabber comment: ''!
 !Grabber categoriesForClass!Unclassified! !
 !Grabber methodsFor!

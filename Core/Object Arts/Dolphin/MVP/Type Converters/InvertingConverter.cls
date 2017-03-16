@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 TypeConverter subclass: #InvertingConverter
 	instanceVariableNames: 'wrappedConverter'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-InvertingConverter guid: (GUID fromString: '{87B4C705-026E-11D3-9FD7-00A0CC3E4A32}')!
+InvertingConverter guid: (GUID fromString: '{87b4c705-026e-11d3-9fd7-00a0cc3e4a32}')!
 InvertingConverter comment: 'An InvertingConverter is a <typeConverter> used to wrap another converter to reverse the direction of conversion. Normally an InvertingConverter is not instantiated explicitly but by using the #inverted method of TypeConverter.
 
 Example:

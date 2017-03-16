@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 SmalltalkToolShell subclass: #PoolDictionariesShell
 	instanceVariableNames: 'dictionariesPresenter'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-PoolDictionariesShell guid: (GUID fromString: '{558CAC4A-AC5C-43BF-8F8E-247BB36208F5}')!
+PoolDictionariesShell guid: (GUID fromString: '{558cac4a-ac5c-43bf-8f8e-247bb36208f5}')!
 PoolDictionariesShell comment: ''!
 !PoolDictionariesShell categoriesForClass!Development! !
 !PoolDictionariesShell methodsFor!

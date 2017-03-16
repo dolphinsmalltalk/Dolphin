@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 OLELockBytesAbstract subclass: #OLELockFileBytes
 	instanceVariableNames: 'file'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-OLELockFileBytes guid: (GUID fromString: '{043E5261-AD92-11D3-B376-080046056106}')!
+OLELockFileBytes guid: (GUID fromString: '{043e5261-ad92-11d3-b376-080046056106}')!
 OLELockFileBytes comment: 'OLELockFileBytes is an implementation of the <ILockBytes> interface on to an arbitrary <File>. It is useful because the system does not provide a standard implementation of ILockBytes against a file, which makes it difficult to connect an <IStream> to an arbitrary file without first copying its contents into a global memory block.'!
 !OLELockFileBytes categoriesForClass!COM-Implementations! !
 !OLELockFileBytes methodsFor!

@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Notification subclass: #ODBLockNotification
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ODBLockNotification guid: (GUID fromString: '{8162EDF4-0FB8-11D4-B091-000000000000}')!
+ODBLockNotification guid: (GUID fromString: '{8162edf4-0fb8-11d4-b091-000000000000}')!
 ODBLockNotification comment: ''!
 !ODBLockNotification categoriesForClass!No category! !
 !ODBLockNotification methodsFor!

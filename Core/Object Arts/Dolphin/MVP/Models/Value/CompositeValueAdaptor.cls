@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ValueAdaptor subclass: #CompositeValueAdaptor
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-CompositeValueAdaptor guid: (GUID fromString: '{C2011D89-6B90-4844-A5E9-FD4EDF82239D}')!
+CompositeValueAdaptor guid: (GUID fromString: '{c2011d89-6b90-4844-a5e9-fd4edf82239d}')!
 CompositeValueAdaptor comment: 'CompositeValueAdaptor is a <valueModel> that provides access to the individual aspects of a composite object through ValueAspectAdaptors, but which treats changes through those aspect adaptors as changes to the whole composite object, i.e. any change to one of its individual aspect causes a CompositeValueAdaptor to trigger a #valueChanged event. This is a useful when implementing a <ValuePresenter> for a composite object that is considered immutable by its clients.'!
 !CompositeValueAdaptor categoriesForClass!MVP-Models! !
 !CompositeValueAdaptor methodsFor!

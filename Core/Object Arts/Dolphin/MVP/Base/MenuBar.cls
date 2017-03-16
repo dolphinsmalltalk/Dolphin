@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Menu subclass: #MenuBar
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-MenuBar guid: (GUID fromString: '{87B4C641-026E-11D3-9FD7-00A0CC3E4A32}')!
+MenuBar guid: (GUID fromString: '{87b4c641-026e-11d3-9fd7-00a0cc3e4a32}')!
 MenuBar comment: 'MenuBar represents the special class of menus drawn horizontally across the top of the client area of a top-level view, i.e. the menu bar.
 '!
 !MenuBar categoriesForClass!Graphics-Tools! !

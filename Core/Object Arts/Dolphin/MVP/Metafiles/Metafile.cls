@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Image subclass: #Metafile
 	instanceVariableNames: 'header'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-Metafile guid: (GUID fromString: '{9AFEFFE3-F782-4D07-AD88-4AAB4659091E}')!
+Metafile guid: (GUID fromString: '{9afeffe3-f782-4d07-ad88-4aab4659091e}')!
 Metafile comment: 'Metafile is the class of <Image>s that represent Windows'' Enhanced Metafiles.
 
 Instance Variables:

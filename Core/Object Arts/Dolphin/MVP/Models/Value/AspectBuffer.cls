@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Model subclass: #AspectBuffer
 	instanceVariableNames: 'subject subjectCopy aspects gate isValidBlock'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-AspectBuffer guid: (GUID fromString: '{87B4C666-026E-11D3-9FD7-00A0CC3E4A32}')!
+AspectBuffer guid: (GUID fromString: '{87b4c666-026e-11d3-9fd7-00a0cc3e4a32}')!
 AspectBuffer comment: 'An AspectBuffer is used to buffer changes to the aspects of a subject object. These changes are held in a copy of the subject until the buffer receives an #apply message. A client of the buffer can request an aspect for the subject using #aspectValue: and it will receive an appropriate <ValueAspectAdapter>. Only the aspects that have been explicitly requested and then modified will be updated back to the subject when #apply is received.  
  
 In order to be correctly used with an AspectBuffer, a subject object must be able to be sensibly duplicated using #copy. The advantage of keeping a complete copy of the subject within the buffer is that the validity of any changes made to it can be tested using #isValid before the changes are applied back. By default the validation check is made by sending #isValid to the subject copy. This default can be modified  by changing the isValidBlock in the buffer.

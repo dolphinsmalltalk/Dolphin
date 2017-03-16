@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk XP 2002 release 5.02"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #RBParseTreeRule
 	instanceVariableNames: 'searchTree owner'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-RBParseTreeRule guid: (GUID fromString: '{1A6390DF-C5E5-4C38-A2FA-300EA0CDDBFF}')!
+RBParseTreeRule guid: (GUID fromString: '{1a6390df-c5e5-4c38-a2fa-300ea0cddbff}')!
 RBParseTreeRule comment: ''!
 !RBParseTreeRule categoriesForClass!Refactory-ParseTree Matching! !
 !RBParseTreeRule methodsFor!

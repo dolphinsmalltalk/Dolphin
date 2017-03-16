@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 OLEStructure subclass: #FONTDESC
 	instanceVariableNames: 'name'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-FONTDESC guid: (GUID fromString: '{73F5F101-A4DA-11D3-B376-080046056106}')!
+FONTDESC guid: (GUID fromString: '{73f5f101-a4da-11d3-b376-080046056106}')!
 FONTDESC comment: 'FONTDESC is an <ExternalStructure> class to represent the OLE structure of the same name.
 
 FONTDESC is similar to a LOGFONT in that it represents a logical description of a Font, although in this case an OLE Font object (see IFont and IFontDisp). FONTDESC is simpler than LOGFONT, however.'!

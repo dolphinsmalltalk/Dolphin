@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 OLEStructure subclass: #CUSTDATAITEM
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-CUSTDATAITEM guid: (GUID fromString: '{A72E70D7-34D7-4C65-9B12-5941C51FA3C2}')!
+CUSTDATAITEM guid: (GUID fromString: '{a72e70d7-34d7-4c65-9b12-5941c51fa3c2}')!
 CUSTDATAITEM comment: '<CUSTDATAITEM> is an <ExternalStructure> class to wrap the struct ''OAIDL.CUSTDATAITEM'' from type information in the ''Ole Automation Type Library'' library.
 
 CUSTDATAITEM is used to represent blocks of custom data stored in a type library.'!

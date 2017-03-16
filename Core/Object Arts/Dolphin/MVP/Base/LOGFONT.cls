@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 AbstractLOGFONT subclass: #LOGFONT
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-LOGFONT guid: (GUID fromString: '{87B4C5F9-026E-11D3-9FD7-00A0CC3E4A32}')!
+LOGFONT guid: (GUID fromString: '{87b4c5f9-026e-11d3-9fd7-00a0cc3e4a32}')!
 LOGFONT comment: '<LOGFONT> is an <ExternalStructure> class to wrap the Win32 structure of the same name.
 
 LOGFONT contains information that describes a logical font, such as the face name and point size. See the Win32 documentation for further details.'!

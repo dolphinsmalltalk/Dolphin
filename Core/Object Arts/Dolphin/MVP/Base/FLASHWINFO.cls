@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Win32Structure subclass: #FLASHWINFO
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-FLASHWINFO guid: (GUID fromString: '{2A5E4594-F531-486B-A082-17686B820CD4}')!
+FLASHWINFO guid: (GUID fromString: '{2a5e4594-f531-486b-a082-17686b820cd4}')!
 FLASHWINFO comment: 'FLASHWINFO is the class of <ExternalStructure> which represent the Win32 structure of the same name.
 
 FLASHWINFO is used to pass parameters to the FlashWindowEx() API call.

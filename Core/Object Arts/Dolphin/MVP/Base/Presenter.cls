@@ -5,7 +5,7 @@ Object subclass: #Presenter
 	classVariableNames: ''
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
-Presenter guid: (GUID fromString: '{87B4C4A9-026E-11D3-9FD7-00A0CC3E4A32}')!
+Presenter guid: (GUID fromString: '{87b4c4a9-026e-11d3-9fd7-00a0cc3e4a32}')!
 Presenter comment: 'Presenter is an abstract class whose subclasses conform to <presenter> and represent components in the Model-View-Presenter framework. A presenter is the equivalent of a "user interface component" in the Dolphin MVP framework. It achieves flexibility over other component based architectures by allowing its data (its model) and its screen representation (its view) to be pluggable. Thus, one can change the way a user sees and manipulates a component by changing its view and one can change the data that the component is representing  by changing the model. Substituting a presenter''s model also allows several  presenter and view pairs to share and interact with the same data.  
 
 SmalltalkSystem help: ''Overviews/ModelViewPresenter''.

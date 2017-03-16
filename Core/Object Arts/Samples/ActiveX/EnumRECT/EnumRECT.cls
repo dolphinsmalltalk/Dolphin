@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 COMInterfaceImp subclass: #EnumRECT
 	instanceVariableNames: 'm_iCur m_rgrc'
 	classVariableNames: 'CRECTS'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-EnumRECT guid: (GUID fromString: '{E3913C41-9396-11D3-B376-0800460222F0}')!
+EnumRECT guid: (GUID fromString: '{e3913c41-9396-11d3-b376-0800460222f0}')!
 EnumRECT comment: 'EnumRECT is a sample implementation of the generic COM enumeration interface, IEnumXXX, specialized to enumeration RECT (rectangle) structures.'!
 !EnumRECT categoriesForClass!Samples! !
 !EnumRECT methodsFor!

@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #DigitalSignatureAlgorithm
 	instanceVariableNames: 'randKey randSeed'
 	classVariableNames: 'HighBitOfByte SmallPrimes'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-DigitalSignatureAlgorithm guid: (GUID fromString: '{B1B2A1D8-34B1-4C43-90DC-767320F26E47}')!
+DigitalSignatureAlgorithm guid: (GUID fromString: '{b1b2a1d8-34b1-4c43-90dc-767320f26e47}')!
 DigitalSignatureAlgorithm comment: 'This class implements the Digital Signature Algorithm (DSA) of the U.S. government''s "Digital Signature Standard" (DSS). The DSA algorithm was proposed in 1991 and became a standard in May 1994. The official description is available as a Federal Information Processing Standards Publication (FIPS PUB 186, May 19, 1994). A companion standard, the Secure Hash Standard, or SHS (FIPS PUB 180-1, April 17, 1995), describes a 160-bit message digest algorithm known as the Secure Hash Algorithm (SHA). This message digest is used to compute the document signature.
 
 This class was ported from the Squeak original.

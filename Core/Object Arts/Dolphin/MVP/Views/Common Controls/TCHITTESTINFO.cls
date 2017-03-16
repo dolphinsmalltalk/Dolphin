@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 CCHITTESTINFO subclass: #TCHITTESTINFO
 	instanceVariableNames: 'iItem'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-TCHITTESTINFO guid: (GUID fromString: '{A369FA40-E397-4C16-B3F5-B254FD07AEBE}')!
+TCHITTESTINFO guid: (GUID fromString: '{a369fa40-e397-4c16-b3f5-b254fd07aebe}')!
 TCHITTESTINFO comment: 'TCHITTESTINFO is an ExternalStructure class to represent the Win32 common control structure of the same name.
 
 TCHISTTESTINFO is used for hit-testing with Tab View controls.

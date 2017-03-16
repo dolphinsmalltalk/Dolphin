@@ -5,7 +5,7 @@ Object subclass: #COMPortWriter
 	classVariableNames: ''
 	poolDictionaries: 'Win32Constants Win32Errors'
 	classInstanceVariableNames: ''!
-COMPortWriter guid: (GUID fromString: '{C2915EB0-BAE3-41B8-BB21-9DA381CD8932}')!
+COMPortWriter guid: (GUID fromString: '{c2915eb0-bae3-41b8-bb21-9da381cd8932}')!
 COMPortWriter comment: ''!
 !COMPortWriter categoriesForClass!Unclassified! !
 !COMPortWriter methodsFor!

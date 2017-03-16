@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ValueDialog subclass: #CommonDialog
 	instanceVariableNames: 'winStruct hook'
 	classVariableNames: ''
 	poolDictionaries: 'CommonDialogConstants Win32Constants'
 	classInstanceVariableNames: 'hookHandlers'!
-CommonDialog guid: (GUID fromString: '{87B4C6A8-026E-11D3-9FD7-00A0CC3E4A32}')!
+CommonDialog guid: (GUID fromString: '{87b4c6a8-026e-11d3-9fd7-00a0cc3e4a32}')!
 CommonDialog comment: 'CommonDialog is an abstract <valueDialogPresenter> superclass for all Windows common dialogs.
 
 Instance Variables:

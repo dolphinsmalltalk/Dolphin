@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ProtoObject subclass: #ItcProtoObject
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: '_InstanceBehaviorMasks'
 	classInstanceVariableNames: ''!
-ItcProtoObject guid: (GUID fromString: '{02137AE8-01DB-41FE-97F6-C6B5141957CD}')!
+ItcProtoObject guid: (GUID fromString: '{02137ae8-01db-41fe-97f6-c6b5141957cd}')!
 ItcProtoObject comment: ''!
 !ItcProtoObject categoriesForClass!Unclassified! !
 !ItcProtoObject methodsFor!

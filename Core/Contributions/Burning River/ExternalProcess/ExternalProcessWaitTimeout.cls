@@ -5,6 +5,6 @@ Notification subclass: #ExternalProcessWaitTimeout
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ExternalProcessWaitTimeout guid: (GUID fromString: '{B53FDC7C-043C-4F5F-9F4D-AC87A499E019}')!
+ExternalProcessWaitTimeout guid: (GUID fromString: '{b53fdc7c-043c-4f5f-9f4d-ac87a499e019}')!
 ExternalProcessWaitTimeout comment: ''!
 !ExternalProcessWaitTimeout categoriesForClass!Unclassified! !

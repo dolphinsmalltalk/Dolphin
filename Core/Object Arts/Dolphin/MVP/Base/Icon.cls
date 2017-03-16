@@ -5,7 +5,7 @@ Image subclass: #Icon
 	classVariableNames: 'Blank DefaultApplication Error Information Question Warning WinLogo'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-Icon guid: (GUID fromString: '{87B4C63E-026E-11D3-9FD7-00A0CC3E4A32}')!
+Icon guid: (GUID fromString: '{87b4c63e-026e-11d3-9fd7-00a0cc3e4a32}')!
 Icon comment: 'Icon is the class of <Image>s that represent Windows'' icons (essentially a pair of bitmaps, one of which is a mask used to draw the other bitmap transparently).
 
 Class Variables:

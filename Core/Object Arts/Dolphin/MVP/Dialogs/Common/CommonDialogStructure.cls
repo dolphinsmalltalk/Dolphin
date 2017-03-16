@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Win32Structure subclass: #CommonDialogStructure
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'CommonDialogConstants'
 	classInstanceVariableNames: ''!
-CommonDialogStructure guid: (GUID fromString: '{2DDAE63C-F325-47B3-ABC3-4B9F8BD84EE9}')!
+CommonDialogStructure guid: (GUID fromString: '{2ddae63c-f325-47b3-abc3-4b9f8bd84ee9}')!
 CommonDialogStructure comment: ''!
 !CommonDialogStructure categoriesForClass!External-Data-Structured-Win32! !
 !CommonDialogStructure methodsFor!

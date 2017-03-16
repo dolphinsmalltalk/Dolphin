@@ -5,7 +5,7 @@ MENUITEMINFOA subclass: #MENUITEMINFOV5
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-MENUITEMINFOV5 guid: (GUID fromString: '{B3297E1F-24C9-4702-AE63-F2170927F81B}')!
+MENUITEMINFOV5 guid: (GUID fromString: '{b3297e1f-24c9-4702-ae63-f2170927f81b}')!
 MENUITEMINFOV5 comment: '<MENUITEMINFOV5> is an <ExternalStructure> class to wrap the Win32 MENUITEMINFO structure with additional fields added with the introduction of the so-called version 5 user interface (i.e. Windows 98 and 2000). Essentially this adds support for item bitmaps.
 '!
 !MENUITEMINFOV5 categoriesForClass!External-Data-Structured-Win32! !

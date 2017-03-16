@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 COMFunctionAbstract subclass: #UnkAddRefFunction
 	instanceVariableNames: ''
 	classVariableNames: 'Descriptor'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-UnkAddRefFunction guid: (GUID fromString: '{19C5E908-2DB4-4E67-8984-B11C9CF2E982}')!
+UnkAddRefFunction guid: (GUID fromString: '{19c5e908-2db4-4e67-8984-b11c9cf2e982}')!
 UnkAddRefFunction comment: 'COMAddRefFunction is a specialized class of <COMFunction> intended to represent the IUnknown::AddRef() method.
 
 As IUnknown is implemented entirely by the <COMObjectStub>, a COMAddRefFunction sends a #AddRef message to the relevant stub.'!

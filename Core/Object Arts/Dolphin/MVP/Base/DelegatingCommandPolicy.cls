@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 CommandPolicy subclass: #DelegatingCommandPolicy
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-DelegatingCommandPolicy guid: (GUID fromString: '{ABA1D303-40C8-44B1-8BC7-BD99E0EFA423}')!
+DelegatingCommandPolicy guid: (GUID fromString: '{aba1d303-40c8-44b1-8bc7-bd99e0efa423}')!
 DelegatingCommandPolicy comment: ''!
 !DelegatingCommandPolicy categoriesForClass!Unclassified! !
 !DelegatingCommandPolicy methodsFor!

@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Win32Structure subclass: #BITMAPINFOHEADER
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-BITMAPINFOHEADER guid: (GUID fromString: '{87B4C5CB-026E-11D3-9FD7-00A0CC3E4A32}')!
+BITMAPINFOHEADER guid: (GUID fromString: '{87b4c5cb-026e-11d3-9fd7-00a0cc3e4a32}')!
 BITMAPINFOHEADER comment: 'BITMAPINFOHEADER is an <ExternalStructure> class to represent the Win32 structure of the same name.
 
 The BITMAPINFOHEADER structure is used for header information describing device-independent bitmaps.'!

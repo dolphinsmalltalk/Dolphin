@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 StsImportProxy subclass: #StsDolphinResourceProxy
 	instanceVariableNames: 'owningClass resource'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-StsDolphinResourceProxy guid: (GUID fromString: '{FB6A96A8-1FB8-49D8-947B-66A48224AD82}')!
+StsDolphinResourceProxy guid: (GUID fromString: '{fb6a96a8-1fb8-49d8-947b-66a48224ad82}')!
 StsDolphinResourceProxy comment: ''!
 !StsDolphinResourceProxy categoriesForClass!Unclassified! !
 !StsDolphinResourceProxy methodsFor!

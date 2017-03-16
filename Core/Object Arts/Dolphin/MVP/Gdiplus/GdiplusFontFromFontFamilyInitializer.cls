@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 GdiplusInitializer subclass: #GdiplusFontFromFontFamilyInitializer
 	instanceVariableNames: 'fontFamily emSize style unit'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-GdiplusFontFromFontFamilyInitializer guid: (GUID fromString: '{F4B7AA80-5FD1-11D7-B609-00E0987E8081}')!
+GdiplusFontFromFontFamilyInitializer guid: (GUID fromString: '{f4b7aa80-5fd1-11d7-b609-00e0987e8081}')!
 GdiplusFontFromFontFamilyInitializer comment: ''!
 !GdiplusFontFromFontFamilyInitializer categoriesForClass!Unclassified! !
 !GdiplusFontFromFontFamilyInitializer methodsFor!

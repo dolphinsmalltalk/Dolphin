@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ODBExternalBuffer subclass: #ODBBTreePage
 	instanceVariableNames: 'pagePosition keyLength valueLength iterator indexOnPage itemLength'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ODBBTreePage guid: (GUID fromString: '{8162EDF6-0FB8-11D4-B091-000000000000}')!
+ODBBTreePage guid: (GUID fromString: '{8162edf6-0fb8-11d4-b091-000000000000}')!
 ODBBTreePage comment: ''!
 !ODBBTreePage categoriesForClass!No category! !
 !ODBBTreePage methodsFor!

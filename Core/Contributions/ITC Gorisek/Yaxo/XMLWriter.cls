@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #XMLWriter
 	instanceVariableNames: 'stream stack scanner canonical'
 	classVariableNames: 'XMLTranslation'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-XMLWriter guid: (GUID fromString: '{D99A57A4-3582-4065-9544-4B3CFA0BA480}')!
+XMLWriter guid: (GUID fromString: '{d99a57a4-3582-4065-9544-4b3cfa0ba480}')!
 XMLWriter comment: ''!
 !XMLWriter categoriesForClass!XML-Parser! !
 !XMLWriter methodsFor!

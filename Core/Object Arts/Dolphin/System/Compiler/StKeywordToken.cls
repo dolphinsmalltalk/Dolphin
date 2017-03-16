@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 StValueToken subclass: #StKeywordToken
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-StKeywordToken guid: (GUID fromString: '{E61C129A-266F-46B1-A320-25DF7D71AC8F}')!
+StKeywordToken guid: (GUID fromString: '{e61c129a-266f-46b1-a320-25df7d71ac8f}')!
 StKeywordToken comment: ''!
 !StKeywordToken categoriesForClass!System-Compiler! !
 !StKeywordToken methodsFor!

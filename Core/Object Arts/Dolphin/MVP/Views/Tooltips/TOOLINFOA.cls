@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Win32Structure subclass: #TOOLINFOA
 	instanceVariableNames: 'text'
 	classVariableNames: ''
 	poolDictionaries: 'TooltipConstants'
 	classInstanceVariableNames: ''!
-TOOLINFOA guid: (GUID fromString: '{87B4C617-026E-11D3-9FD7-00A0CC3E4A32}')!
+TOOLINFOA guid: (GUID fromString: '{87b4c617-026e-11d3-9fd7-00a0cc3e4a32}')!
 TOOLINFOA comment: 'TOOLINFOA is an <ExternalStructure> class to represent the Win32 structure of the same name.
 
 This structure is used in conjunction with the tooltips.

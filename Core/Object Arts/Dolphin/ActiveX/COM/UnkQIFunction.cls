@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 COMFunctionAbstract subclass: #UnkQIFunction
 	instanceVariableNames: ''
 	classVariableNames: 'Descriptor'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-UnkQIFunction guid: (GUID fromString: '{28DF5741-9369-4150-8E9F-14235FE2E47C}')!
+UnkQIFunction guid: (GUID fromString: '{28df5741-9369-4150-8e9f-14235fe2e47c}')!
 UnkQIFunction comment: 'COMQueryInterfaceFunction is a specialized class of <COMFunction> intended to represent the IUnknown::QueryInterface() method.
 
 As IUnknown is implemented entirely by the <COMObjectStub>, a COMQueryInterfaceFunction sends a #QueryInterface:ppvObject: message to the relevant stub.'!

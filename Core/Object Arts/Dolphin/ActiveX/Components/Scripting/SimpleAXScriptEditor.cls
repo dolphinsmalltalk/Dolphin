@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Dialog subclass: #SimpleAXScriptEditor
 	instanceVariableNames: 'scriptControl languagePresenter scriptPresenter expressionPresenter resultPresenter filename descriptionPresenter'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-SimpleAXScriptEditor guid: (GUID fromString: '{46F9C2FB-D025-11D3-93DA-00A024CA708A}')!
+SimpleAXScriptEditor guid: (GUID fromString: '{46f9c2fb-d025-11d3-93da-00a024ca708a}')!
 SimpleAXScriptEditor comment: 'Simple editor for creating ActiveXScriptlets.'!
 !SimpleAXScriptEditor categoriesForClass!Unclassified! !
 !SimpleAXScriptEditor methodsFor!

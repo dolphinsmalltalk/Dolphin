@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #ItcConverter
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ItcConverter guid: (GUID fromString: '{58334E0D-DB72-43FE-A5AC-5910A3F3A622}')!
+ItcConverter guid: (GUID fromString: '{58334e0d-db72-43fe-a5ac-5910a3f3a622}')!
 ItcConverter comment: ''!
 !ItcConverter categoriesForClass!Unclassified! !
 !ItcConverter class methodsFor!
