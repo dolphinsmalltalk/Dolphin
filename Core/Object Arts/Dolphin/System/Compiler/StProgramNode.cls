@@ -40,6 +40,10 @@ addComments: intervals
 	(intervals isNil or: [intervals isEmpty]) 
 		ifFalse: [comments := comments ifNil: [intervals asArray] ifNotNil: [comments , intervals]]!
 
+addStatementCommentsTo: anOrderedCollection
+	comments ifNotNil: [anOrderedCollection addAllLast: comments].
+	self childrenDo: [:each | each addStatementCommentsTo: anOrderedCollection]!
+
 allArgumentVariableNodesDo: aMonadicValuable 
 	self childrenDo: [:each | each allArgumentVariableNodesDo: aMonadicValuable]!
 
@@ -326,8 +330,8 @@ statementCharacter
 
 statementComments
 	| statementComments |
-	statementComments := OrderedCollection withAll: self comments.
-	self childrenDo: [:each | statementComments addAll: each statementComments].
+	statementComments := OrderedCollection new.
+	self addStatementCommentsTo: statementComments.
 	^statementComments asSortedCollection: [:a :b | a first < b first]!
 
 statementNode
@@ -361,6 +365,7 @@ whoDefines: aName
 		ifFalse: [parent notNil ifTrue: [parent whoDefines: aName] ifFalse: [nil]]! !
 !StProgramNode categoriesFor: #acceptVisitor:!public!visitor! !
 !StProgramNode categoriesFor: #addComments:!accessing!public! !
+!StProgramNode categoriesFor: #addStatementCommentsTo:!helpers!private! !
 !StProgramNode categoriesFor: #allArgumentVariableNodesDo:!enumerating!public! !
 !StProgramNode categoriesFor: #allArgumentVariables!accessing!public! !
 !StProgramNode categoriesFor: #allDefinedVariableNodes!accessing!public! !

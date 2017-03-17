@@ -37,6 +37,9 @@ actualScope
 
 	^self isInlined ifTrue: [self outer actualScope] ifFalse: [self]!
 
+addStatementCommentsTo: anOrderedCollection
+	comments ifNotNil: [anOrderedCollection addAllLast: comments]!
+
 allArgumentVariableNodesDo: aMonadicValuable
 	self arguments do: aMonadicValuable.
 	super allArgumentVariableNodesDo: aMonadicValuable!
@@ -151,9 +154,6 @@ right: anObject
 startWithoutParentheses
 	^left!
 
-statementComments
-	^self comments!
-
 stopWithoutParentheses
 	^right!
 
@@ -168,6 +168,7 @@ uses: aNode
 !StBlockNode categoriesFor: #=!comparing!public! !
 !StBlockNode categoriesFor: #acceptVisitor:!public!visitor! !
 !StBlockNode categoriesFor: #actualScope!public! !
+!StBlockNode categoriesFor: #addStatementCommentsTo:!accessing!private! !
 !StBlockNode categoriesFor: #allArgumentVariableNodesDo:!accessing!public! !
 !StBlockNode categoriesFor: #allDefinedVariableNodesDo:!accessing!public! !
 !StBlockNode categoriesFor: #argumentCount!accessing!public! !
@@ -198,7 +199,6 @@ uses: aNode
 !StBlockNode categoriesFor: #right!accessing!public! !
 !StBlockNode categoriesFor: #right:!accessing!public! !
 !StBlockNode categoriesFor: #startWithoutParentheses!accessing!public! !
-!StBlockNode categoriesFor: #statementComments!accessing!public! !
 !StBlockNode categoriesFor: #stopWithoutParentheses!accessing!public! !
 !StBlockNode categoriesFor: #uses:!public!testing! !
 
