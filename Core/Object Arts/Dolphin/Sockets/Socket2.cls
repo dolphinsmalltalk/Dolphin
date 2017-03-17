@@ -5,7 +5,7 @@ SocketAbstract2 subclass: #Socket2
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-Socket2 guid: (GUID fromString: '{87b4c6e1-026e-11d3-9fd7-00a0cc3e4a32}')!
+Socket2 guid: (GUID fromString: '{dfa0db01-8f76-4b2a-a19c-002ecf488fdc}')!
 Socket2 comment: 'This class represents a socket for one end of a TCP/IP network communication link. Sockets can be instantiated to be associated with a specified port on a host computer at a given internet address. Once a connection is made using #connect the underlying communication mechanism uses a stream-based protocol rather than the alternative unreliable datagram-based protocol.
 
 When connected, a Socket2 can be used to transfer ByteArrays or Strings or (rather more inefficiently) individual bytes across the network using #sendByteArray:, #sendByte:, receiveByteArray: and #receiveByte: methods. For more flexible and efficient transfers, a Socket2 maintains buffered read and write streams that are accessible via the #readStream and #writeStream methods respectively. To transfer entire objects, an appropriate STBFiler may be opened on the streams.
