@@ -5,26 +5,24 @@ Set variableSubclass: #IdentitySet
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-IdentitySet guid: (GUID fromString: '{87B4C527-026E-11D3-9FD7-00A0CC3E4A32}')!
+IdentitySet guid: (GUID fromString: '{87b4c527-026e-11d3-9fd7-00a0cc3e4a32}')!
 IdentitySet comment: ''!
 !IdentitySet categoriesForClass!Collections-Unordered! !
 !IdentitySet methodsFor!
 
-findElementOrNil: anObject 
+findElementOrNil: anObject
 	"Private - Answer the index of the given object in the receiver, or, if not found,
 	the index of the first empty slot including and after that to which the object hashes.
 	Implementation Note: This is a clone of Set>>findElementOrNil: except for the comparison of the elements
 	which use identity (#identityHash and #==) instead of equality (#hash and #=). 
-	The entire method is copied for performance reasons. 	We scale the hash value 
-	for large collections to avoid excessive collisions caused by the small identity hash
-	range (0..65535)."
+	The entire method is copied for performance reasons."
 
 	| capacity index |
 	capacity := self basicSize.
 	index := self hash: anObject max: capacity.
 	
 	[| element |
-	(element := self basicAt: index) isNil or: [anObject == element]] 
+	(element := self basicAt: index) isNil or: [anObject == element]]
 			whileFalse: [index := index \\ capacity + 1].
 	^index!
 
