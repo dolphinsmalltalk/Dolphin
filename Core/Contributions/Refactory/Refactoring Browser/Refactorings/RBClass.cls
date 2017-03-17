@@ -59,8 +59,8 @@ definitionString
 	self printDefinitionOn: definitionStream.
 	^definitionStream contents!
 
-directlyDefinesClassVariable: aString 
-	^self classVariableNames includes: aString asSymbol!
+directlyDefinesClassVariable: aString
+	^self privateClassVariableNames includes: aString asSymbol!
 
 directlyDefinesPoolDictionary: aString 
 	^self poolDictionaryNames includes: aString asSymbol!
@@ -135,7 +135,7 @@ printDefinitionOn: puttableStream
 	puttableStream nextPut: $'!
 
 privateClassVariableNames
-	(self isDefined and: [classVariableNames isNil]) 
+	(classVariableNames isNil and: [self isDefined])
 		ifTrue: [self classVariableNames: self realClass classVarNames].
 	^classVariableNames!
 

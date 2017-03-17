@@ -49,16 +49,16 @@ for: aValue do: doBlock separatedBy: separatorBlock
 	doBlock value: aValue last!
 
 formatMessage: aMessageNode cascade: cascadeBoolean
-	| selectorParts arguments multiLine formattedArgs indentFirst firstArgLength length |
+	| selectorParts arguments multiLine formattedArgs indentFirst firstArgLength length argumentCount |
 	selectorParts := aMessageNode selectorParts.
 	arguments := aMessageNode arguments.
-	formattedArgs := OrderedCollection new.
-	#rbFix.	"Use #argumentCount"
-	multiLine := aMessageNode selector argumentCount > self maximumArgumentsPerLine.
-	length := aMessageNode selector size + arguments size + 1.
+	argumentCount := arguments size.
+	formattedArgs := OrderedCollection new: argumentCount.
+	multiLine := argumentCount > self maximumArgumentsPerLine.
+	length := aMessageNode selector size + argumentCount + 1.
 	firstArgLength := 0.
 	self indentWhile: 
-			[1 to: arguments size
+			[1 to: argumentCount
 				do: 
 					[:i |
 					| formatter string |
@@ -66,7 +66,7 @@ formatMessage: aMessageNode cascade: cascadeBoolean
 								lineStart: (selectorParts at: i) length negated;
 								yourself.
 					string := formatter format: (arguments at: i).
-					formattedArgs add: string.
+					formattedArgs addLast: string.
 					i == 1 ifTrue: [firstArgLength := formatter firstLineLength].
 					length := length + string size.
 					multiLine := multiLine or: [formatter isMultiLine]]].
