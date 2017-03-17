@@ -27,6 +27,11 @@ Instance Variables:
 acceptVisitor: aProgramNodeVisitor
 	^aProgramNodeVisitor visitCascadeNode: self!
 
+addStatementCommentsTo: anOrderedCollection
+	comments ifNotNil: [anOrderedCollection addAllLast: comments].
+	messages first receiver addStatementCommentsTo: anOrderedCollection.
+	messages do: [:each | each arguments do: [:arg | arg addStatementCommentsTo: anOrderedCollection]]!
+
 bestNodeFor: anInterval 
 	| selectedChildren |
 	(self intersectsInterval: anInterval) ifFalse: [^nil].
@@ -96,16 +101,6 @@ semicolons
 startWithoutParentheses
 	^messages first start!
 
-statementComments
-	| statementComments |
-	statementComments := OrderedCollection withAll: self comments.
-	statementComments addAll: messages first receiver statementComments.
-	messages do: 
-			[:each | 
-			each arguments 
-				do: [:arg | statementComments addAll: arg statementComments]].
-	^statementComments asSortedCollection: [:a :b | a first < b first]!
-
 stopWithoutParentheses
 	^messages last stop!
 
@@ -124,6 +119,7 @@ whichNodeIsContainedBy: anInterval
 	^selectedChildren detect: [:each | true] ifNone: [nil]! !
 !StCascadeNode categoriesFor: #=!comparing!public! !
 !StCascadeNode categoriesFor: #acceptVisitor:!public!visitor! !
+!StCascadeNode categoriesFor: #addStatementCommentsTo:!accessing!private! !
 !StCascadeNode categoriesFor: #bestNodeFor:!public!querying! !
 !StCascadeNode categoriesFor: #children!accessing!public! !
 !StCascadeNode categoriesFor: #childrenDo:!accessing!public! !
@@ -140,7 +136,6 @@ whichNodeIsContainedBy: anInterval
 !StCascadeNode categoriesFor: #receiver!accessing!public! !
 !StCascadeNode categoriesFor: #semicolons!accessing!public! !
 !StCascadeNode categoriesFor: #startWithoutParentheses!accessing!public! !
-!StCascadeNode categoriesFor: #statementComments!accessing!public! !
 !StCascadeNode categoriesFor: #stopWithoutParentheses!accessing!public! !
 !StCascadeNode categoriesFor: #uses:!public!testing! !
 !StCascadeNode categoriesFor: #whichNodeIsContainedBy:!public!querying! !
