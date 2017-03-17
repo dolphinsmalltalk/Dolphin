@@ -16,7 +16,8 @@ A word of caution, however. InternalBitmaps will display their full byte array i
 = comperand 
 	"Gdiplus images comapre equal if their initializers are equal. This allows GdiplusImages to be added to ImageManagers"
 
-	^self species = comperand species and: [self bitmap initializer = comperand bitmap initializer]!
+	^self species = comperand species 
+		and: [self gdiplusBitmap initializer = comperand gdiplusBitmap initializer]!
 
 addToImageList: aWinImageList mask: aColorOrNil 
 	"Private - Add a pictorial representation of the receiver to aWinImageList scaled to the
@@ -31,7 +32,7 @@ asBitmap
 				width: self extent x
 				height: self extent y
 				depth: 32.
-	gdiplusBitmap drawOn: bitmap canvas.
+	self drawOn: bitmap canvas.
 	^bitmap!
 
 asByteArray
@@ -62,19 +63,22 @@ bitmap
 bounds
 	"Answer the boundary rectangle of the receiver"
 
-	^self bitmap bounds!
+	^self gdiplusBitmap bounds!
 
 doDrawWithCanvas: aMonadicBlock 
 	self graphics doWithCanvas: aMonadicBlock.
 	self internalize!
 
 drawOn: aCanvas 
-	^self bitmap drawOn: aCanvas!
+	^self drawOn: aCanvas at: Point zero!
 
 drawOn: aCanvas at: aPoint 
 	"Draw the receiver on aCanvas at position aPoint (no stretching)."
 
-	self bitmap drawOn: aCanvas at: aPoint!
+	self 
+		drawOn: aCanvas
+		at: aPoint
+		extent: self extent!
 
 drawOn: aCanvas at: dstOrigin extent: dstExtent 
 	"Draw the receiver on aCanvas at Point dstOrigin, and with size dstExtent. 
@@ -96,19 +100,19 @@ drawOnGraphics: aGraphics at: dstOrigin extent: dstExtent from: srcOrigin extent
 		attributes: aImageAtt!
 
 extent
-	^self bitmap extent!
+	^self gdiplusBitmap extent!
 
 gdiplusBitmap 
 	^gdiplusBitmap!
 
 graphics
-	^self bitmap graphics!
+	^self gdiplusBitmap graphics!
 
 handle
-	^self bitmap handle!
+	^self gdiplusBitmap handle!
 
 hash
-	^self bitmap initializer hash!
+	^self gdiplusBitmap initializer hash!
 
 imageType
 	^Win32Constants.IMAGE_BITMAP!

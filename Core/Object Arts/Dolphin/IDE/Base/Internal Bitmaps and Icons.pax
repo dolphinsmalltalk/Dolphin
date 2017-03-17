@@ -101,7 +101,7 @@ GdiplusFromBytesInitializer subclass: #GdiplusImageFromBytesInitializer
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 InternalBitmap subclass: #InternalIcon
-	instanceVariableNames: ''
+	instanceVariableNames: 'tileColor'
 	classVariableNames: ''
 	poolDictionaries: 'GdiplusConstants'
 	classInstanceVariableNames: ''!
