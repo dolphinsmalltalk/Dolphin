@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 RelativeFileLocator subclass: #InstallRelativeFileLocator
 	instanceVariableNames: ''
 	classVariableNames: 'Current'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-InstallRelativeFileLocator guid: (GUID fromString: '{42513A65-8D78-44A8-B475-BDFD1E7FB6FC}')!
+InstallRelativeFileLocator guid: (GUID fromString: '{2543c5ae-b739-4aae-9aee-fe5537083fb7}')!
 InstallRelativeFileLocator comment: 'An ImageRelativeFileLocator is used to indicate the location of an external file that may be referenced within the image. 
 Instances of this class always locate files relative to the image directory, unless the file is outside the local directory hierarchy below the install directory, in which case an absolute path is used.
 '!
