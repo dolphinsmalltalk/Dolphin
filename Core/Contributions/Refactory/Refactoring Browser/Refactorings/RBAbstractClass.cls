@@ -79,7 +79,7 @@ allSubclasses
 	#rbFix. "asOrderedCollection non-copying in Dolphin"
 	allSubclasses := OrderedCollection withAll: self subclasses.
 	[index <= allSubclasses size] whileTrue: 
-			[allSubclasses addAll: (allSubclasses at: index) subclasses.
+			[allSubclasses addAllLast: (allSubclasses at: index) subclasses.
 			index := index + 1].
 	^allSubclasses!
 
@@ -431,14 +431,12 @@ whichMethodsReferToSymbol: aSymbol
 	self isDefined ifTrue: [selectors addAll: (self existingMethodsThatReferTo: aSymbol)].
 	^selectors collect: [:sel | self methodFor: sel]!
 
-whichSelectorsReferToClass: aRBClass 
+whichSelectorsReferToClass: aRBClass
 	| selectors |
-	selectors := Set new.
-	self newMethods do: 
-			[:each | 
-			(each refersToClassNamed: aRBClass name) 
-				ifTrue: [selectors add: each selector]].
-	(self isDefined and: [aRBClass isDefined]) 
+	selectors := IdentitySet new.
+	self newMethods
+		do: [:each | (each refersToClassNamed: aRBClass name) ifTrue: [selectors add: each selector]].
+	(self isDefined and: [aRBClass isDefined])
 		ifTrue: 
 			[selectors addAll: (self existingMethodsThatReferTo: aRBClass classBinding).
 			selectors addAll: (self existingMethodsThatReferTo: aRBClass name)].
