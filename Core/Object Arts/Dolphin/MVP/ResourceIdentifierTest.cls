@@ -41,6 +41,15 @@ testAssignResource
 				[self class class removeSelector: #resource_Test_view ifAbsent: [].
 				self assert: (self class respondsTo: #resource_Test_view) not]!
 
+testDeserializeAll
+	"Test's that all view resources are deserializable. The most common cause of breakage would
+	be changing the layout of a class with serialized instances in resources without adding an
+	appropriate STB conversion."
+
+	"This will throw an  error if #stbVersion has not been incremented on a class with changed inst vars appearing in a resource."
+
+	ResourceIdentifier allResourceIdentifiers do: [:each | each hiddenObjects]!
+
 testResourceSelector
 	| rid selector |
 	rid := ResourceIdentifier class: self class name: 'Default view'.
@@ -52,5 +61,6 @@ testResourceSelector
 !ResourceIdentifierTest categoriesFor: #setUp!private!unit tests! !
 !ResourceIdentifierTest categoriesFor: #tempViewResource!private!unit tests! !
 !ResourceIdentifierTest categoriesFor: #testAssignResource!public!unit tests! !
+!ResourceIdentifierTest categoriesFor: #testDeserializeAll!public!unit tests! !
 !ResourceIdentifierTest categoriesFor: #testResourceSelector!public!unit tests! !
 
