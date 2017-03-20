@@ -229,11 +229,8 @@ icon
 	icons will inflate the size of the image manager. Should be okay to do this for Colors
 	though."
 
-	^InternalIcon new doDrawWithCanvas: 
-			[:canvas | 
-			| useColor |
-			useColor := self isDefault ifTrue: [ColorRef defaultColorRepresentation] ifFalse: [self asRGB].
-			canvas fillRectangle: (Point zero corner: canvas extent) color: useColor]! !
+	^InternalIcon new
+		tileColor: (self isDefault ifTrue: [ColorRef defaultColorRepresentation] ifFalse: [self asRGB])! !
 !Color categoriesFor: #icon!public! !
 
 !GdiplusImage methodsFor!

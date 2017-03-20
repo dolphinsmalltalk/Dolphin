@@ -127,14 +127,14 @@ tileColor: aColor
 !InternalIcon categoriesFor: #addToImageList:mask:!double dispatch!private! !
 !InternalIcon categoriesFor: #asAlphaBitmap:!converting!public! !
 !InternalIcon categoriesFor: #asMenuBitmap!converting!public! !
-!InternalIcon categoriesFor: #asParameter!public! !
+!InternalIcon categoriesFor: #asParameter!converting!public! !
 !InternalIcon categoriesFor: #bitmap!accessing!public! !
 !InternalIcon categoriesFor: #drawOn:at:extent:!drawing-bitmaps!public! !
 !InternalIcon categoriesFor: #drawOnGraphics:at:extent:from:extent:unit:attributes:!drawing-gdiplus!public! !
 !InternalIcon categoriesFor: #hash!comparing!comparison!public! !
-!InternalIcon categoriesFor: #hotspot!public! !
-!InternalIcon categoriesFor: #imageIndex!public! !
-!InternalIcon categoriesFor: #imageType!public! !
+!InternalIcon categoriesFor: #hotspot!accessing!public! !
+!InternalIcon categoriesFor: #imageIndex!accessing!public! !
+!InternalIcon categoriesFor: #imageType!constants!public! !
 !InternalIcon categoriesFor: #tileBitmapWithExtent:!accessing!helpers!private! !
 !InternalIcon categoriesFor: #tileColor!accessing!private! !
 !InternalIcon categoriesFor: #tileColor:!accessing!private! !
@@ -182,55 +182,43 @@ imageManager
 	^IconImageManager current!
 
 new
-	^self withExtent: self defaultExtent!
+	"Answer a new blank instance of the receiver with the default extent.
+	Note that if the default extent is changed, this method should be regenerated
+	by saving the printString of 'self withExtent: self defaultExtent'"
 
-stbConvert: anArray fromVersion: anInteger 
-	"Private - Convert from earlier version view by updating and answering the array of instance
-	variables, instVarArray. "
+	^InternalIcon
+		fromBytes: #[137 80 78 71 13 10 26 10 0 0 0 13 73 72 68 82 0 0 0 48 0 0 0 48 8 6 0 0 0 87 2 249 135 0 0 0 1 115 82 71 66 0 174 206 28 233 0 0 0 4 103 65 77 65 0 0 177 143 11 252 97 5 0 0 0 9 112 72 89 115 0 0 14 195 0 0 14 195 1 199 111 168 100 0 0 0 31 73 68 65 84 104 67 237 193 1 1 0 0 0 130 32 255 175 110 72 64 0 0 0 0 0 0 0 0 192 137 26 36 48 0 1 192 219 208 191 0 0 0 0 73 69 78 68 174 66 96 130]!
 
-	| instVars |
-	instVars := anArray.
-	anInteger < 1 ifTrue: [instVars := self stbConvertFromVersion0: instVars].
-	^instVars!
+newTile
+	"Answer a new blank instance of the receiver with the default tile extent.
+	Note that if the default extent is changed, this method should be regenerated
+	by saving the printString of 'self withExtent: self defaultTileExtent'"
 
-stbConvertFrom: anSTBClassFormat 
-	"Private - Convert from previous version resource. 
-	Version Changes:
-		1: Added 'tileColor' instance variable to InternalIcon (#346, 349)."
+	^InternalIcon
+		fromBytes: #[137 80 78 71 13 10 26 10 0 0 0 13 73 72 68 82 0 0 0 128 0 0 0 128 8 6 0 0 0 195 62 97 203 0 0 0 1 115 82 71 66 0 174 206 28 233 0 0 0 4 103 65 77 65 0 0 177 143 11 252 97 5 0 0 0 9 112 72 89 115 0 0 14 195 0 0 14 195 1 199 111 168 100 0 0 0 87 73 68 65 84 120 94 237 193 49 1 0 0 0 194 160 245 79 109 12 31 32 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 184 171 1 0 143 0 1 171 181 19 127 0 0 0 0 73 69 78 68 174 66 96 130]!
+
+stbConvertFrom: anSTBClassFormat
+	"Convert from version 0 Resource. Version 1 adds the 'tileColor' instance var"
 
 	^
-	[:data | 
-	| answer instVars |
-	instVars := self stbConvert: data fromVersion: anSTBClassFormat version.
-	answer := self basicNew.
-	1 to: instVars size do: [:i | answer instVarAt: i put: (instVars at: i)].
-	answer]!
-
-stbConvertFromVersion0: anArray 
-	"Private - Perform an STB conversion from a version 0 <InternalIcon> to version 1.
-	i.e. insert 'tileColor' instance variable (which should always be nil in an STB stream)."
-
-	^(Array new: anArray size + 1)
-		replaceFrom: 2
-			to: anArray size + 1
-			with: anArray
-			startingAt: 1;
-		yourself!
+	[:data |
+	| newInstance |
+	newInstance := self basicNew.
+	1 to: data size do: [:i | newInstance instVarAt: i put: (data at: i)].
+	newInstance]!
 
 stbVersion
-
 	^1! !
-!InternalIcon class categoriesFor: #badgeTile:color:!public! !
-!InternalIcon class categoriesFor: #badgeTile:color:extent:!public! !
-!InternalIcon class categoriesFor: #defaultExtent!private! !
-!InternalIcon class categoriesFor: #defaultTileExtent!private! !
+!InternalIcon class categoriesFor: #badgeTile:color:!instance creation!public! !
+!InternalIcon class categoriesFor: #badgeTile:color:extent:!instance creation!public! !
+!InternalIcon class categoriesFor: #defaultExtent!constants!private! !
+!InternalIcon class categoriesFor: #defaultTileExtent!constants!private! !
 !InternalIcon class categoriesFor: #filesType!constants!private! !
 !InternalIcon class categoriesFor: #fromFile:!instance creation!public! !
 !InternalIcon class categoriesFor: #fromFile:extent:!instance creation!public! !
 !InternalIcon class categoriesFor: #imageManager!accessing!private! !
 !InternalIcon class categoriesFor: #new!instance creation!public! !
-!InternalIcon class categoriesFor: #stbConvert:fromVersion:!binary filing!private! !
-!InternalIcon class categoriesFor: #stbConvertFrom:!binary filing!private! !
-!InternalIcon class categoriesFor: #stbConvertFromVersion0:!binary filing!private! !
-!InternalIcon class categoriesFor: #stbVersion!binary filing!private! !
+!InternalIcon class categoriesFor: #newTile!instance creation!public! !
+!InternalIcon class categoriesFor: #stbConvertFrom:!binary filing!public! !
+!InternalIcon class categoriesFor: #stbVersion!binary filing!public! !
 
