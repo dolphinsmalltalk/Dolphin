@@ -20,7 +20,7 @@ compile: aString in: aClass
 		in: aClass
 		flags: aClass defaultCompilationFlags) method!
 
-compile: aString in: aClass flags: anInteger 
+compile: aString in: aClass flags: anInteger
 	"Private - Compiler the method source, aString, in the context of the class, aClass,
 	parameterized by the flags, anInteger, notifying, notifier, of any errors or warnings 
 	which are detected. The flags can be combinations of the following:
@@ -56,17 +56,16 @@ compile: aString in: aClass flags: anInteger
 	"
 
 	| results |
-	results := CompilerLibrary default 
+	results := CompilerLibrary default
 				compile: self
 				source: aString asString
 				in: aClass
 				flags: anInteger
 				notifying: self.
-	^(CompilationResult new)
-		method: results first;
-		rawTextMap: results second;
-		rawTempsMap: results third;
-		yourself!
+	^CompilationResult
+		method: results first
+		rawTextMap: results second
+		rawTempsMap: results third!
 
 compileDebugExpression: aString in: aClass evaluationPools: anArray 
 	"Compile the source text, aString, as if it were method of aClass inserting additional

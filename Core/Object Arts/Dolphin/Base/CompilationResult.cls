@@ -11,13 +11,14 @@ CompilationResult comment: ''!
 !CompilationResult methodsFor!
 
 buildTempsMap
-	tempsMap := OrderedCollection new: rawTempsMap size.
+	| stream |
+	stream := Array writeStream: rawTempsMap size.
 	rawTempsMap do: 
 			[:each |
 			| ipRange |
 			ipRange := (each at: 1) to: (each at: 2).
-			ipRange isEmpty
-				ifFalse: [tempsMap addLast: ipRange -> (each at: 3)]].
+			ipRange isEmpty ifFalse: [stream nextPut: ipRange -> (each at: 3)]].
+	tempsMap := stream contents.
 	"Discard the raw temps map built by the compiler to save space"
 	rawTempsMap := nil!
 

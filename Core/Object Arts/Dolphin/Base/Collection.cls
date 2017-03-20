@@ -447,21 +447,20 @@ printOn: aStream
 
 	| printed |
 	printed := Processor activeProcess _alreadyPrinted.
-	(printed includes: self) ifTrue: [^self printCyclicRefOn: aStream].
-	printed add: self.
+	(printed addNewElement: self) ifFalse: [^self printCyclicRefOn: aStream].
 	
 	[| tooMany |
 	tooMany := aStream position + self maxPrint.
 	self printPrefixOn: aStream.
 	self do: 
-			[:each | 
-			aStream position > tooMany 
+			[:each |
+			aStream position > tooMany
 				ifTrue: 
 					[aStream nextPutAll: '... etc ...'.
 					^self].
 			each printOn: aStream]
 		separatedBy: [aStream space].
-	self printSuffixOn: aStream] 
+	self printSuffixOn: aStream]
 			ensure: [printed remove: self ifAbsent: []]!
 
 printPrefixOn: aStream

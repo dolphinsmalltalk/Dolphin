@@ -404,6 +404,9 @@ removeScope
 restrictedSelectors
 	^RestrictedSelectors!
 
+scopes
+	^scopes!
+
 setMethodNode: aStMethodNode methodClass: aClass context: anObject pools: anArray
 	methodNode := aStMethodNode.
 	methodClass := aClass.
@@ -685,6 +688,7 @@ visitVariableNode: aVariableNode
 !StParseNodeAnalyzer categoriesFor: #pushTemp:!instructions-stack ops!private! !
 !StParseNodeAnalyzer categoriesFor: #removeScope!helpers!private! !
 !StParseNodeAnalyzer categoriesFor: #restrictedSelectors!constants!private! !
+!StParseNodeAnalyzer categoriesFor: #scopes!accessing!public! !
 !StParseNodeAnalyzer categoriesFor: #setMethodNode:methodClass:context:pools:!initializing!private! !
 !StParseNodeAnalyzer categoriesFor: #signalError:forNode:!helpers!private! !
 !StParseNodeAnalyzer categoriesFor: #signalError:forNode:extra:!helpers!private! !
@@ -712,6 +716,16 @@ visitVariableNode: aVariableNode
 
 !StParseNodeAnalyzer class methodsFor!
 
+checkParseTree: aParseTree for: aClass context: anObject pools: anArray
+	| methodNode |
+	methodNode := aParseTree isMethod ifTrue: [aParseTree] ifFalse: [aParseTree methodNode].
+	^(self new)
+		setMethodNode: methodNode
+			methodClass: aClass
+			context: anObject
+			pools: anArray;
+		visitNode: methodNode!
+
 initialize
 	" self initialize "
 
@@ -738,5 +752,6 @@ initialize
 	OptimizedMessages do: [:each | RestrictedSelectors addAll: each].
 	RestrictedSelectors isImmutable: true.
 	self addClassConstant: 'SpecialSelectors' value: VMLibrary default specialSelectors! !
+!StParseNodeAnalyzer class categoriesFor: #checkParseTree:for:context:pools:!accessing!public! !
 !StParseNodeAnalyzer class categoriesFor: #initialize!public! !
 

@@ -115,16 +115,3 @@ visitSequenceNode: aSequenceNode
 !StSemanticAnalyser categoriesFor: #visitMessageNode:!public!visitor/double dispatching! !
 !StSemanticAnalyser categoriesFor: #visitSequenceNode:!public!visitor/double dispatching! !
 
-!StSemanticAnalyser class methodsFor!
-
-checkParseTree: aParseTree for: aClass context: anObject pools: anArray 
-	| methodNode |
-	methodNode := aParseTree isMethod ifTrue: [aParseTree] ifFalse: [aParseTree methodNode].
-	(self new)
-		setMethodNode: methodNode
-			methodClass: aClass
-			context: anObject
-			pools: anArray;
-		visitNode: methodNode! !
-!StSemanticAnalyser class categoriesFor: #checkParseTree:for:context:pools:!accessing!public! !
-

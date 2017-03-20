@@ -164,6 +164,8 @@ knownTextMapIssues
 	Smalltalk at: #ItcSystemManager ifPresent: [:class | bad add: class class >> #imageFilename].
 	Smalltalk at: #WikiDocImageSelectorServlet ifPresent: [:class | bad add: class >> #searchImages:].
 	bad add: DolphinCompilerTestMethods >> #testWarningReadBeforeWrittenBlockTemp.
+	"This case has an extra entry in the debug temps map, apparently due to the optimizatiom of ifNil:ifNotNil:. In the non-debug method the unecessary ifNotNil: branch is optimized away"
+	bad add: Dictionary >> #associationAt:.
 	^BrowserEnvironment new forMethods: bad asArray!
 
 testTempMapOuterDepthExhaustive
