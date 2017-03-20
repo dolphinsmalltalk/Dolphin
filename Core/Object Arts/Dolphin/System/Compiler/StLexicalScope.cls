@@ -36,8 +36,18 @@ needsSelf
 needsSelf: aBoolean
 	flags := flags mask: NeedsSelfMask set: aBoolean!
 
+node
+	^node!
+
 outer
 	^outer!
+
+printOn: aPuttableStream
+	self basicPrintOn: aPuttableStream.
+	aPuttableStream
+		nextPut: $(;
+		print: node;
+		nextPut: $)!
 
 referenceArg: aString 
 	^(argNames includesKey: aString) and: [argNames at: aString put: true]!
@@ -59,6 +69,9 @@ setNode: aBlockOrMethodNode outer: anStLexicalScope
 tempCount
 	^temps size!
 
+temps
+	^temps!
+
 unreferencedArguments
 	^node arguments reject: [:each | argNames at: each name]! !
 !StLexicalScope categoriesFor: #addTemp:!public! !
@@ -68,11 +81,14 @@ unreferencedArguments
 !StLexicalScope categoriesFor: #isInlined!accessing!public! !
 !StLexicalScope categoriesFor: #needsSelf!accessing!public! !
 !StLexicalScope categoriesFor: #needsSelf:!accessing!public! !
+!StLexicalScope categoriesFor: #node!accessing!public! !
 !StLexicalScope categoriesFor: #outer!accessing!public! !
+!StLexicalScope categoriesFor: #printOn:!public! !
 !StLexicalScope categoriesFor: #referenceArg:!public! !
 !StLexicalScope categoriesFor: #refsToTemp:!public! !
 !StLexicalScope categoriesFor: #setNode:outer:!initializing!private! !
 !StLexicalScope categoriesFor: #tempCount!public! !
+!StLexicalScope categoriesFor: #temps!accessing!private! !
 !StLexicalScope categoriesFor: #unreferencedArguments!accessing!public! !
 
 !StLexicalScope class methodsFor!
