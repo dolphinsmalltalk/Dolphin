@@ -182,7 +182,46 @@ imageManager
 	^IconImageManager current!
 
 new
-	^self withExtent: self defaultExtent! !
+	^self withExtent: self defaultExtent!
+
+stbConvert: anArray fromVersion: anInteger 
+	"Private - Convert from earlier version view by updating and answering the array of instance
+	variables, instVarArray. "
+
+	| instVars |
+	instVars := anArray.
+	anInteger < 1 ifTrue: [instVars := self stbConvertFromVersion0: instVars].
+	^instVars!
+
+stbConvertFrom: anSTBClassFormat 
+	"Private - Convert from previous version resource. 
+	Version Changes:
+		1: Added 'tileColor' instance variable to Model."
+
+	^
+	[:data | 
+	| answer instVars |
+	instVars := self stbConvert: data fromVersion: anSTBClassFormat version.
+	answer := self basicNew.
+	1 to: instVars size do: [:i | answer instVarAt: i put: (instVars at: i)].
+	answer]!
+
+stbConvertFromVersion0: anArray 
+	"Private - Perform an STB conversion from a version 0 <InternalIcon> to version 1.
+	i.e. insert 'tileColor' instance variable (which should always be nil in an STB stream)."
+
+	^(Array new: anArray size + 1)
+		replaceFrom: 2
+			to: anArray size + 1
+			with: anArray
+			startingAt: 1;
+		yourself!
+
+stbVersion
+
+	^1! !
+!InternalIcon class categoriesFor: #badgeTile:color:!public! !
+!InternalIcon class categoriesFor: #badgeTile:color:extent:!public! !
 !InternalIcon class categoriesFor: #defaultExtent!private! !
 !InternalIcon class categoriesFor: #defaultTileExtent!private! !
 !InternalIcon class categoriesFor: #filesType!constants!private! !
@@ -190,4 +229,8 @@ new
 !InternalIcon class categoriesFor: #fromFile:extent:!instance creation!public! !
 !InternalIcon class categoriesFor: #imageManager!accessing!private! !
 !InternalIcon class categoriesFor: #new!instance creation!public! !
+!InternalIcon class categoriesFor: #stbConvert:fromVersion:!binary filing!private! !
+!InternalIcon class categoriesFor: #stbConvertFrom:!binary filing!private! !
+!InternalIcon class categoriesFor: #stbConvertFromVersion0:!binary filing!private! !
+!InternalIcon class categoriesFor: #stbVersion!binary filing!private! !
 
