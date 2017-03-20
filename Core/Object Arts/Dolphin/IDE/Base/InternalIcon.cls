@@ -196,7 +196,7 @@ stbConvert: anArray fromVersion: anInteger
 stbConvertFrom: anSTBClassFormat 
 	"Private - Convert from previous version resource. 
 	Version Changes:
-		1: Added 'tileColor' instance variable to Model."
+		1: Added 'tileColor' instance variable to InternalIcon (#346, 349)."
 
 	^
 	[:data | 
