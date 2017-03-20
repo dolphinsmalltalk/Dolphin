@@ -18,9 +18,7 @@ assert: aBoolean
 	aBoolean ifFalse: [self signalFailure: 'Assertion failed']!
 
 assert: aBoolean description: aString
-	aBoolean ifFalse: [
-		self logFailure: aString.
-		TestResult failure sunitSignalWith: aString]!
+	aBoolean ifFalse: [self fail: aString]!
 
 assert: aBoolean description: aString resumable: resumableBoolean 
 
@@ -33,8 +31,8 @@ assert: aBoolean description: aString resumable: resumableBoolean
 		exception sunitSignalWith: aString]!
 
 assert: expectedObject equals: actualObject
-	^self assert: expectedObject = actualObject
-		description: (self comparingStringBetween: expectedObject and: actualObject)!
+	expectedObject = actualObject
+		ifFalse: [self fail: (self comparingStringBetween: expectedObject and: actualObject)]!
 
 comparingStringBetween: expectedObject and: actualObject
 	^(String writeStream: 100)
@@ -78,6 +76,10 @@ executeShould: aBlock inScopeOf: anExceptionalEvent
 			sunitOn: TestResult error
 			do: [:ex | ^false].
 	^false.!
+
+fail: aString
+	self logFailure: aString.
+	TestResult failure sunitSignalWith: aString!
 
 failureLog
 	"dialect-specific"
@@ -198,6 +200,7 @@ tearDown! !
 !TestCase categoriesFor: #deny:description:!Accessing!public! !
 !TestCase categoriesFor: #deny:description:resumable:!Accessing!public! !
 !TestCase categoriesFor: #executeShould:inScopeOf:!helpers!private! !
+!TestCase categoriesFor: #fail:!accessing!public! !
 !TestCase categoriesFor: #failureLog!Accessing!public! !
 !TestCase categoriesFor: #isLogging!Accessing!public! !
 !TestCase categoriesFor: #logFailure:!Accessing!public! !
