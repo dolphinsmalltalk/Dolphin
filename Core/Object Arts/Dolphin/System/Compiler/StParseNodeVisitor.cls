@@ -68,8 +68,14 @@ visitNode: aNode
 visitOptimizedNode: anOptimizedNode
 	self visitNode: anOptimizedNode body!
 
+visitParameterNode: anStParameterNode
+	^self visitVariableNode: anStParameterNode!
+
 visitPrimitiveNode: anStPrimitiveNode
 	!
+
+visitPseudoVariableNode: anStPseudoVariableNode
+	^self visitVariableNode: anStPseudoVariableNode!
 
 visitReturnNode: aReturnNode
 	self visitNode: aReturnNode value!
@@ -84,6 +90,9 @@ visitSequenceNode: aSequenceNode
 
 visitStatements: aNodeCollection
 	aNodeCollection do: [:each | self visitNode: each]!
+
+visitTempDeclNode: anStTempDeclNode
+	^self visitVariableNode: anStTempDeclNode!
 
 visitTemporaryNodes: aNodeCollection
 	"Visit temporary declarations in a method or block body"
@@ -107,10 +116,13 @@ visitVariableNode: aVariableNode
 !StParseNodeVisitor categoriesFor: #visitMethodNode:!public!visiting! !
 !StParseNodeVisitor categoriesFor: #visitNode:!public!visiting! !
 !StParseNodeVisitor categoriesFor: #visitOptimizedNode:!public!visiting! !
+!StParseNodeVisitor categoriesFor: #visitParameterNode:!public!visiting! !
 !StParseNodeVisitor categoriesFor: #visitPrimitiveNode:!public!visiting! !
+!StParseNodeVisitor categoriesFor: #visitPseudoVariableNode:!public!visiting! !
 !StParseNodeVisitor categoriesFor: #visitReturnNode:!public!visiting! !
 !StParseNodeVisitor categoriesFor: #visitSequenceNode:!public!visiting! !
 !StParseNodeVisitor categoriesFor: #visitStatements:!helpers!private! !
+!StParseNodeVisitor categoriesFor: #visitTempDeclNode:!public!visiting! !
 !StParseNodeVisitor categoriesFor: #visitTemporaryNodes:!public!visiting! !
 !StParseNodeVisitor categoriesFor: #visitVariableNode:!public!visiting! !
 

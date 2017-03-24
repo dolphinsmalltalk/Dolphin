@@ -33,8 +33,8 @@ Instance Variables:
 !StProgramNode categoriesForClass!System-Compiler! !
 !StProgramNode methodsFor!
 
-acceptVisitor: aProgramNodeVisitor 
-	self subclassResponsibility!
+acceptVisitor: aProgramNodeVisitor
+	^self subclassResponsibility!
 
 addComments: intervals 
 	(intervals isNil or: [intervals isEmpty]) 

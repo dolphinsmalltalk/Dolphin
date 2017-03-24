@@ -47,6 +47,7 @@ package setPrerequisites: (IdentitySet new
 	add: '..\..\..\..\Contributions\Refactory\Refactoring Browser\Environments\RBEnvironments';
 	add: '..\..\..\..\Contributions\Refactory\Refactoring Browser\SmallLint\RBSmallLint';
 	add: '..\..\..\..\Contributions\Refactory\Refactoring Browser\Tests\RBTests';
+	add: '..\..\System\Compiler\Smalltalk Compiler';
 	add: '..\..\System\Compiler\Smalltalk Parser';
 	add: '..\..\..\..\Contributions\Camp Smalltalk\SUnit\SUnit';
 	add: '..\..\ActiveX\Components\XML DOM\XML DOM';

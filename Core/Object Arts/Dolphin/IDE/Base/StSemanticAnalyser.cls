@@ -103,7 +103,7 @@ visitSequenceNode: aSequenceNode
 	isStub
 		ifFalse: 
 			[self currentScope unreferencedArguments
-				do: [:each | self signalError: CInfoUnreferencedArg forNode: each]].
+				do: [:each | self signalError: CInfoUnreferencedArg forNode: each node]].
 	^answer! !
 !StSemanticAnalyser categoriesFor: #checkHardBreakpoint:!helpers!private! !
 !StSemanticAnalyser categoriesFor: #checkIfStubMessage:!helpers!private! !
