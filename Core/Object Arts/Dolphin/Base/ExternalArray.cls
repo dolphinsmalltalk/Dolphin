@@ -293,6 +293,11 @@ length: anInteger
 	self basicLength: anInteger.
 	self bytes resize: self byteSize!
 
+lookup: keyInteger
+	"Answer the value named by the <Integer> argument, keyInteger, or nil if there is no such key in the receiver."
+
+	^(keyInteger > 0 and: [keyInteger <= self size]) ifTrue: [self uncheckedAt: keyInteger]!
+
 notEmpty
 	"Answer whether the receiver contains any elements."
 
@@ -423,6 +428,7 @@ uncheckedFrom: startInteger to: stopInteger keysAndValuesDo: operation
 !ExternalArray categoriesFor: #last!accessing!public! !
 !ExternalArray categoriesFor: #length!accessing!public! !
 !ExternalArray categoriesFor: #length:!accessing!public! !
+!ExternalArray categoriesFor: #lookup:!accessing!public! !
 !ExternalArray categoriesFor: #notEmpty!public!testing! !
 !ExternalArray categoriesFor: #printOn:!development!printing!public! !
 !ExternalArray categoriesFor: #replaceBytesOf:from:to:startingAt:!double dispatch!private! !

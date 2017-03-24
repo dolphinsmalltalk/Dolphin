@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #ObjectRegistry
 	instanceVariableNames: 'registry'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ObjectRegistry guid: (GUID fromString: '{87B4C4A5-026E-11D3-9FD7-00A0CC3E4A32}')!
+ObjectRegistry guid: (GUID fromString: '{87b4c4a5-026e-11d3-9fd7-00a0cc3e4a32}')!
 ObjectRegistry comment: 'ObjectRegistry is part of Dolphin''s external interfacing support, its purpose being to provide a unique <integer> identifier for a specific object, and, depending on the subclass, to maintain a reference to that object to prevent it from being garbage collected. This can be useful, for example, where one needs some unique identifier for an object to be passed to some external entity. 
 
 Note: The Oop (address) of an object is not a suitable candidate for uniquely identifying an object, because it may change over time as the garbage collector moves objects in memory. The identity hash of an object, although time invariant, is not suitable either because it is of limited range (16-bits), and therefore not guaranteed to be unique.
@@ -53,6 +53,9 @@ initialize: anInteger
 
 	^self subclassResponsibility!
 
+lookup: anInteger
+	^registry lookup: anInteger!
+
 remove: anObject ifAbsent: exceptionHandler
 	"Remove the registration of the argument, anObject, freeing its unique integer id for
 	subsequent re-use."
@@ -69,6 +72,7 @@ removeAtIndex: anInteger
 !ObjectRegistry categoriesFor: #at:ifAbsent:!accessing!public! !
 !ObjectRegistry categoriesFor: #indexOf:ifAbsent:!accessing!public! !
 !ObjectRegistry categoriesFor: #initialize:!initializing!private! !
+!ObjectRegistry categoriesFor: #lookup:!public! !
 !ObjectRegistry categoriesFor: #remove:ifAbsent:!public!removing! !
 !ObjectRegistry categoriesFor: #removeAtIndex:!public!removing! !
 

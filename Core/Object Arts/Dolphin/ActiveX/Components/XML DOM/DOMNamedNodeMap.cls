@@ -136,6 +136,11 @@ length
 
 	^interface length!
 
+lookup: keyObject
+	"Answer the value named by the <Object> argument, keyObject, or nil if there is no such key in the receiver."
+
+	^(self associationAt: keyObject ifAbsent: []) ifNotNil: [:assoc | assoc value]!
+
 nextNode
 	"Answer the <IXMLDOMNode> result of invoking the COM Object's nextNode() method.
 	Helpstring: 'get next node from iterator'"
@@ -230,6 +235,7 @@ uncheckedAdd: newObject
 !DOMNamedNodeMap categoriesFor: #item:!properties!public! !
 !DOMNamedNodeMap categoriesFor: #keysAndValuesDo:!enumerating!public! !
 !DOMNamedNodeMap categoriesFor: #length!properties!public! !
+!DOMNamedNodeMap categoriesFor: #lookup:!accessing!public! !
 !DOMNamedNodeMap categoriesFor: #nextNode!accessing!public! !
 !DOMNamedNodeMap categoriesFor: #postCopy!copying!public! !
 !DOMNamedNodeMap categoriesFor: #privateAt:put:!accessing!private! !

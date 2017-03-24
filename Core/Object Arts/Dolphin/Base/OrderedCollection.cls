@@ -261,6 +261,13 @@ last
 
 	^firstIndex <= lastIndex ifTrue: [self basicAt: lastIndex] ifFalse: [self errorSubscriptBounds: 0]!
 
+lookup: keyInteger
+	"Answer the value named by the <Integer> argument, keyInteger, or nil if there is no such key in the receiver."
+
+	| basicIndex |
+	^(keyInteger < 1 or: [(basicIndex := keyInteger + firstIndex - 1) > lastIndex])
+		ifFalse: [self basicAt: basicIndex]!
+
 makeRoomAtEndFor: anInteger
 	"Private - Make room at the end of the receiver to accomodate at least anInteger
 	more elements. If there is insufficient free space in the receiver, then it is expanded 
@@ -472,6 +479,7 @@ uncheckedFrom: startInteger to: stopInteger keysAndValuesDo: aDyadicValuable
 !OrderedCollection categoriesFor: #insert:before:!adding!private! !
 !OrderedCollection categoriesFor: #isEmpty!public!testing! !
 !OrderedCollection categoriesFor: #last!accessing!public! !
+!OrderedCollection categoriesFor: #lookup:!accessing!public! !
 !OrderedCollection categoriesFor: #makeRoomAtEndFor:!adding!private! !
 !OrderedCollection categoriesFor: #makeRoomAtFirstFor:!adding!private! !
 !OrderedCollection categoriesFor: #nextIdentityIndexOf:from:to:!public!searching! !

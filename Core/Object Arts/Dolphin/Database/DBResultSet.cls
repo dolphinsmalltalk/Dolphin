@@ -337,6 +337,9 @@ lastIndexOf: target
 
 	^self findLast: [:e | target = e]!
 
+lookup: keyInteger
+	^self at: keyInteger!
+
 moveFirst
 	"Private - Scroll to the first row of the receiver's result set.
 	Answer the <integer> row status value."
@@ -573,6 +576,7 @@ with: otherCollection do: operation
 !DBResultSet categoriesFor: #keysAndValuesDo:!enumerating!public! !
 !DBResultSet categoriesFor: #last!accessing!public! !
 !DBResultSet categoriesFor: #lastIndexOf:!public!searching! !
+!DBResultSet categoriesFor: #lookup:!accessing!public! !
 !DBResultSet categoriesFor: #moveFirst!positioning!private! !
 !DBResultSet categoriesFor: #moveLast!positioning!private! !
 !DBResultSet categoriesFor: #moveNext!positioning!private! !
