@@ -162,10 +162,10 @@ itemAtIndex: anIntegerIndex
 
 	^parts at: anIntegerIndex!
 
-itemFromId: dwItemSpec 
+itemFromId: dwItemSpec
 	"Private - Answers the sub-item of the receiver with the specified <integer> item spec."
 
-	^parts at: dwItemSpec + 1 ifAbsent: []!
+	^parts lookup: dwItemSpec + 1!
 
 itemRect: anInteger 
 	"Answer the bounding <Rectangle> for the button at the specified 1-based <Integer> index."

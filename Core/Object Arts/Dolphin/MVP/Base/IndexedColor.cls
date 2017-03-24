@@ -85,11 +85,11 @@ index
 
 	^index!
 
-printOn: aStream 
+printOn: aStream
 	"Put an ASCII representation of receiver onto aStream."
 
 	aStream nextPut: $(.
-	(ColorNames at: self index ifAbsent: []) 
+	(ColorNames lookup: self index)
 		ifNil: 
 			[aStream
 				display: self class;
@@ -98,7 +98,7 @@ printOn: aStream
 				space;
 				print: self index]
 		ifNotNil: 
-			[:colourName | 
+			[:colourName |
 			aStream
 				display: Color;
 				space;

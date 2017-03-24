@@ -175,7 +175,7 @@ stbConvertFromVersion12: anArray
 	anArray at: 6 put: nil.
 	^anArray!
 
-stbConvertFromVersion9: anArray 
+stbConvertFromVersion9: anArray
 	"Private - Perform an STB conversion from a version 9 (or earlier) <ReferenceView> to version 10,
 	Fixes problem under Windows XP where toolbars need a parent reference view to have a backcolor
 	of #face3d."
@@ -183,7 +183,7 @@ stbConvertFromVersion9: anArray
 	| rid array |
 	array := super stbConvertFromVersion9: anArray.
 	rid := array at: 13.
-	rid owningClass == (Smalltalk at: #Toolbar ifAbsent: []) ifTrue: [array at: 6 put: Color face3d].
+	rid owningClass == (Smalltalk lookup: #Toolbar) ifTrue: [array at: 6 put: Color face3d].
 	^array! !
 !ReferenceView class categoriesFor: #icon!constants!public! !
 !ReferenceView class categoriesFor: #new!development!instance creation!public! !

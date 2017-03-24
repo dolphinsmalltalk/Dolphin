@@ -114,7 +114,7 @@ objectAt: anInteger
 	Signal an exception if there is no such entry."
 
 	^anInteger == 0
-		ifFalse: [(readMap at: anInteger ifAbsent: []) ifNil: [self class errorInconsistentSTB: anInteger]]!
+		ifFalse: [(readMap lookup: anInteger) ifNil: [self class errorInconsistentSTB: anInteger]]!
 
 printOffsets
 	^printOffsets!
@@ -122,7 +122,7 @@ printOffsets
 printOffsets: anObject
 	printOffsets := anObject!
 
-readObjectOfClass: aClass format: anObject 
+readObjectOfClass: aClass format: anObject
 	"Private - Read the stream for the data to create an instance of aClass."
 
 	"First, read the basicSize (number of indexed variables)."
@@ -135,7 +135,7 @@ readObjectOfClass: aClass format: anObject
 		nextPut: $].
 
 	"Create a new object of sufficient size to hold the stored data."
-	(stbClassFormat := converters at: aClass ifAbsent: []) isNil 
+	(stbClassFormat := converters lookup: aClass) isNil
 		ifTrue: 
 			["The object is of the current format.
 			Create an instance of the appropriate class."
@@ -151,10 +151,10 @@ readObjectOfClass: aClass format: anObject
 	self register: newObject.
 
 	"Read the object's instance data."
-	newObject class isBytes 
+	newObject class isBytes
 		ifTrue: [1 to: fullSize do: [:i | newObject basicAt: i put: stream next]]
 		ifFalse: [1 to: fullSize do: [:i | newObject instVarAt: i put: self basicNext]].
-	stbClassFormat notNil 
+	stbClassFormat notNil
 		ifTrue: 
 			["Initialise a new instance from the old format object data and become it."
 			newObject become: (stbClassFormat converterBlock value: newObject)].

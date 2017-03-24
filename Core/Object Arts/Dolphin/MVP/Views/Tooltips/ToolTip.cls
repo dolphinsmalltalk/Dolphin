@@ -104,10 +104,10 @@ maxWidth: anInteger
 		wParam: 0
 		lParam: anInteger!
 
-nmNotify: anNMHDR 
+nmNotify: anNMHDR
 	"Handler for a redirected WinListView WM_NOTIFY message."
 
-	^(TtnMap at: (anNMHDR sdwordAtOffset: 8) ifAbsent: []) 
+	^(TtnMap lookup: (anNMHDR sdwordAtOffset: 8))
 		ifNil: [super nmNotify: anNMHDR]
 		ifNotNil: [:action | self perform: action with: anNMHDR]!
 

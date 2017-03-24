@@ -5,7 +5,7 @@ Notification subclass: #CompilerNotification
 	classVariableNames: 'ErrorFormats'
 	poolDictionaries: 'SmalltalkParseErrorCodes'
 	classInstanceVariableNames: ''!
-CompilerNotification guid: (GUID fromString: '{87B4C56D-026E-11D3-9FD7-00A0CC3E4A32}')!
+CompilerNotification guid: (GUID fromString: '{87b4c56d-026e-11d3-9fd7-00a0cc3e4a32}')!
 CompilerNotification comment: 'CompilerNotification is the abstract class of <Notification>s used to represent lexical, syntax, and semantic errors and warnings detected by the Dolphin <Compiler>, <SmalltalkParser>, and <StSemanticChecker>.
 
 Instance Variables:
@@ -64,12 +64,12 @@ errorCode
 errorMessage
 	"Answer a <String> describing the nature of the notification."
 
-	^(self class errorFormats at: self errorCode ifAbsent: []) 
+	^(self class errorFormats lookup: self errorCode)
 		ifNil: ['Unknown Compiler <1d>: <2d>' expandMacrosWith: self severityName with: self errorCode]
 		ifNotNil: 
-			[:format | 
-			format 
-				expandMacrosWithArguments: (Array with: (self source copyFrom: self range start to: self range stop)) 
+			[:format |
+			format
+				expandMacrosWithArguments: (Array with: (self source copyFrom: self range start to: self range stop))
 						, extras]!
 
 extra

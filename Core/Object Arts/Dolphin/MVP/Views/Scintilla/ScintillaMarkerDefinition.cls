@@ -61,7 +61,7 @@ basicForecolor: aColorOrNil
 	forecolor := aColorOrNil!
 
 basicId
-	^id ifNil: [name ifNotNil: [id := FolderNames at: name ifAbsent: []]]!
+	^id ifNil: [name ifNotNil: [id := FolderNames lookup: name]]!
 
 basicSelectionBackcolor
 	^selectionBackcolor!

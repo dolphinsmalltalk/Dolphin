@@ -957,14 +957,15 @@ dispatchUser: userId wParam: wParam lParam: lParam
 
 	^nil 	"accept default processing"!
 
-dispatchUser: userId wParam: wParam lParam: lParam map: aLookupTable 
+dispatchUser: userId wParam: wParam lParam: lParam map: aLookupTable
 	"Private - Dispatch the WM_USER+userId message, aWinMSG, which was sent to the receiver, via
 	the message map, aLookupTable (which maps userIds to selectors). A helper
 	function for subclasses implementing #dispatchUser:wParam:lParam:."
 
-	^(aLookupTable at: userId ifAbsent: []) ifNotNil: 
-			[:selector | 
-			self 
+	^(aLookupTable lookup: userId)
+		ifNotNil: 
+			[:selector |
+			self
 				perform: selector
 				with: WM_USER + userId
 				with: wParam

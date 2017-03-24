@@ -35,12 +35,12 @@ classesDo: aBlock
 	classes do: 
 			[:each |
 			| class |
-			class := Smalltalk at: each ifAbsent: [].
+			class := Smalltalk lookup: each.
 			(class notNil and: [environment includesClass: class]) ifTrue: [aBlock value: class]].
 	metaClasses do: 
 			[:each |
 			| class |
-			class := Smalltalk at: each ifAbsent: [].
+			class := Smalltalk lookup: each.
 			(class notNil and: [environment includesClass: class class]) ifTrue: [aBlock value: class class]]!
 
 classNames

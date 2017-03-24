@@ -706,13 +706,13 @@ getDependents
 	has no dependents. Subclasses may override this if they wish to provide their own storage
 	for dependents (which is more efficient)."
 
-	^_DependentsRegister at: self ifAbsent: []!
+	^_DependentsRegister lookup: self!
 
 getEvents
 	"Private - Answer the EventsCollection belonging to the receiver, or nil if the receiver
 	has no events registered for it"
 
-	^_EventsRegister at: self ifAbsent: []!
+	^_EventsRegister lookup: self!
 
 getSpecialBehavior
 	"Private - Answer the receiver's complete special behavior mask,

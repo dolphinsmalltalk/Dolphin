@@ -201,11 +201,9 @@ nameOf: aView
 
 	"Redirect request to the immediate parent of aView
 	if we are not that parent"
-	aView parentView == self ifFalse: [
-		^aView parentView nameOf: aView].
 
-	^names at: aView ifAbsent: []
-!
+	aView parentView == self ifFalse: [^aView parentView nameOf: aView].
+	^names lookup: aView!
 
 onSubViewAdded: aView
 	"Received when aView has been added to the receiver.

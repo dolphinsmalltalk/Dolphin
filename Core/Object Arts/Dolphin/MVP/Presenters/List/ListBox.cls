@@ -125,10 +125,10 @@ clearSelectionsByIndex: collection
 	force it here"
 	self onSelChanged!
 
-command: anInteger id: id 
+command: anInteger id: id
 	"Private - Handler for a redirected WM_COMMAND notification message."
 
-	^(LbnMap at: anInteger ifAbsent: []) ifNotNil: [:selector | self perform: selector]!
+	^(LbnMap lookup: anInteger) ifNotNil: [:selector | self perform: selector]!
 
 defaultWindowStyle
 	"Private - Answer the default basic window creation style for a list box"

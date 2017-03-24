@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Win32Structure subclass: #FILETIME
 	instanceVariableNames: ''
 	classVariableNames: 'UnixEpoch'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-FILETIME guid: (GUID fromString: '{87B4C5F1-026E-11D3-9FD7-00A0CC3E4A32}')!
+FILETIME guid: (GUID fromString: '{87b4c5f1-026e-11d3-9fd7-00a0cc3e4a32}')!
 FILETIME comment: 'FILETIME is an ExternalStructure class to represent the Win32 FILETIME structure.
 
 A FILETIME is a 64-bit integer count of the number of 100 nanosecond intervals since 01:00:00, 01 January 1601 UTC (i.e. not local time).
@@ -156,9 +156,7 @@ now
 		FILETIME now
 	"
 
-	^(Smalltalk at: #OLELibrary ifAbsent: []) 
-		ifNil: [LocalFILETIME now asUTC]
-		ifNotNil: [:lib | lib default now]! !
+	^(Smalltalk lookup: #OLELibrary) ifNil: [LocalFILETIME now asUTC] ifNotNil: [:lib | lib default now]! !
 !FILETIME class categoriesFor: #defineFields!initializing!public! !
 !FILETIME class categoriesFor: #fromInteger:!instance creation!public! !
 !FILETIME class categoriesFor: #fromLocalTime:!instance creation!public! !

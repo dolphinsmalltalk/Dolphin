@@ -1773,8 +1773,8 @@ viewMode
 
 	^ViewModes keyAtEqualValue: iconExtent ifAbsent: [#custom]!
 
-viewMode: aSymbol 
-	(ViewModes at: aSymbol ifAbsent: []) ifNotNil: [:point | self iconExtent: point]!
+viewMode: aSymbol
+	(ViewModes lookup: aSymbol) ifNotNil: [:point | self iconExtent: point]!
 
 wmKillFocus: message wParam: wParam lParam: lParam
 	"Private - This window is losing focus. Update the colouring of the selection."

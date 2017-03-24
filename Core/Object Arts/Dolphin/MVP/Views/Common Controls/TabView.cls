@@ -283,10 +283,10 @@ makeTcItemStruct: anObject
 				ifNotNil: [:imageIndex | tcItem image: imageIndex - 1]].
 	^tcItem!
 
-nmNotify: pNMHDR 
+nmNotify: pNMHDR
 	"Private - Handler for a redirected WinTab WM_NOTIFY message."
 
-	^(TcnMap at: (pNMHDR sdwordAtOffset: 8) ifAbsent: []) 
+	^(TcnMap lookup: (pNMHDR sdwordAtOffset: 8))
 		ifNil: [super nmNotify: pNMHDR]
 		ifNotNil: [:action | self perform: action with: pNMHDR]!
 

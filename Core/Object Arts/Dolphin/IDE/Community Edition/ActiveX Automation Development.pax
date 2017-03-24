@@ -2088,7 +2088,7 @@ generateTypeLibAccessor
 	self compileClassMethod: target contents categories: self classInitializerCategories!
 
 generateWrapper
-	^(BuiltIns at: self guid ifAbsent: []) ifNil: [super generateWrapper]!
+	^(BuiltIns lookup: self guid) ifNil: [super generateWrapper]!
 
 printAnonymousStruct: aVARDESC offset: anInteger prefix: aString hidden: aBoolean on: aWriteStream
 	| hidden prefix offset structTypeInfo |

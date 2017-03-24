@@ -396,13 +396,13 @@ free
 	host isNull ifFalse: [host free. host := nil].
 	!
 
-getPropertyNameForDispid: dispid 
+getPropertyNameForDispid: dispid
 	"Private - Lookup the name corresponding to the <integer> dispid."
 
 	"Might be one of the standard properties if not strictly positive"
 
 	| name disp tiDisp noTypeInfo |
-	dispid <= 0 ifTrue: [(StandardPropNames at: dispid ifAbsent: []) ifNotNil: [:s | ^s]].
+	dispid <= 0 ifTrue: [(StandardPropNames lookup: dispid) ifNotNil: [:s | ^s]].
 	disp := self controlDispatch.
 	noTypeInfo := [^dispid printString asSymbol].
 	tiDisp := disp typeInfoIfNone: noTypeInfo.
@@ -410,7 +410,7 @@ getPropertyNameForDispid: dispid
 				ifAbsent: 
 					["Not a property exposed through the default interface, so we must search all 
 					non-source interfaces."
-					(disp coclassTypeInfoIfNone: noTypeInfo) nonSourceInterfaces 
+					(disp coclassTypeInfoIfNone: noTypeInfo) nonSourceInterfaces
 						detect: [:ti | ti ~= tiDisp and: [(name := ti nameOfID: dispid ifAbsent: []) notNil]]
 						ifNone: []].
 	^(name ifNil: [dispid printString]) asSymbol!

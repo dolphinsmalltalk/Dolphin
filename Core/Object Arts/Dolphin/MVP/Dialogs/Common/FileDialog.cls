@@ -282,10 +282,10 @@ wmInitDialog: message wParam: wParam lParam: lParam
 
 	^0!
 
-wmNotify: msgInteger wParam: wParamInteger lParam: lParamInteger 
+wmNotify: msgInteger wParam: wParamInteger lParam: lParamInteger
 	| ptr |
 	ptr := lParamInteger asExternalAddress.
-	^(CDNMap at: CDN_FIRST - (ptr sdwordAtOffset: 8) + 1 ifAbsent: []) 
+	^(CDNMap lookup: CDN_FIRST - (ptr sdwordAtOffset: 8) + 1)
 		ifNil: [0]
 		ifNotNil: [:action | self perform: action with: ptr]! !
 !FileDialog categoriesFor: #allFilesType!constants!private! !

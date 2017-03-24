@@ -386,7 +386,7 @@ scanLiteralCharacter
 	"Extended syntax for special characters?"
 	(value == $\ and: [extendedLiterals])
 		ifTrue: 
-			[(EscapeChars at: currentCharacter ifAbsent: [])
+			[(EscapeChars lookup: currentCharacter)
 				ifNil: 
 					[currentCharacter == $x
 						ifTrue: 

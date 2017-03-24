@@ -175,7 +175,7 @@ classForIdentifier: aString
 	^[(self evaluationContext instVarNamed: aString) basicClass] on: NotFoundError
 		do: [:ex | (self selfClass fullBindingFor: aString) ifNotNil: [:var | var value basicClass]]!
 
-classForToken: anAssociation 
+classForToken: anAssociation
 	"Private - Answer the inferred class of the specified token, or nil if not known."
 
 	| style text |
@@ -183,7 +183,7 @@ classForToken: anAssociation
 	style := anAssociation value.
 	text := view plainTextRange: anAssociation key.
 	style == #identifier ifTrue: [^self classForIdentifier: text].
-	style == #literalPseudo 
+	style == #literalPseudo
 		ifTrue: 
 			[| lookup |
 			lookup := ##((LookupTable new)
@@ -192,21 +192,21 @@ classForToken: anAssociation
 						at: 'true' put: true class;
 						shrink;
 						yourself).
-			^lookup at: text ifAbsent: []].
+			^lookup lookup: text].
 	style == #literalNumber ifTrue: [^(SmalltalkStylingScanner on: text readStream) next numberClass].
 	style == #literalString ifTrue: [^String].
 	style == #literalSymbol ifTrue: [^Symbol].
 	style == #literalCharacter ifTrue: [^Character].
-	(style == #specialCharacter and: [(view characterAt: anAssociation key stop) == $]]) 
+	(style == #specialCharacter and: [(view characterAt: anAssociation key stop) == $]])
 		ifTrue: [^BlockClosure].
-	style == #unaryMessage 
+	style == #unaryMessage
 		ifTrue: 
-			[text = 'class' 
+			[text = 'class'
 				ifTrue: 
 					[| penultimate |
 					penultimate := self tokenBefore: anAssociation key start - 1.
 					^(self classForToken: penultimate) ifNotNil: [:class | class basicClass]].
-			(StandardUnaryReturnTypes at: text ifAbsent: []) ifNotNil: [:class | ^class]].
+			(StandardUnaryReturnTypes lookup: text) ifNotNil: [:class | ^class]].
 	^nil!
 
 clear
@@ -779,11 +779,11 @@ insertCompletion: aString at: anInteger
 	view performUndoableAction: 
 			[self completeWordAt: anInteger with: (self completionStringFor: aString at: anInteger)].!
 
-insertKeywordCompletion: aString startingAt: anInteger 
+insertKeywordCompletion: aString startingAt: anInteger
 	| text selectionRange |
-	selectionRange := (KeywordCompletions at: aString ifAbsent: []) 
+	selectionRange := (KeywordCompletions lookup: aString)
 				ifNotNil: 
-					[:template | 
+					[:template |
 					| stream prefix word suffix start |
 					stream := template readStream.
 					prefix := stream upTo: $?.

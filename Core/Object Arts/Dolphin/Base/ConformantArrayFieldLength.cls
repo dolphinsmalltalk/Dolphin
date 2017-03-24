@@ -66,7 +66,7 @@ printSetSizeFor: anExternalField on: aWriteStream
 setElementCount: anInteger of: anExternalField in: anExternalStructure
 	"Private - Set the length field corresponding to this array field, if any."
 
-	(anExternalStructure template at: self setLengthSelector ifAbsent: [])
+	(anExternalStructure template lookup: self setLengthSelector)
 		ifNotNil: [:sizeField | sizeField writeInto: anExternalStructure value: anInteger]!
 
 setLengthSelector

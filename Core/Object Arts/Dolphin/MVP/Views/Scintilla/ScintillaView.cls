@@ -1240,7 +1240,7 @@ codePage
 	"Answer a <Symbol> naming the code page currently in use, either #utf8, or nil if multi-byte
 	character support is disabled."
 
-	^CodePages at: self sciGetCodePage ifAbsent: []!
+	^CodePages lookup: self sciGetCodePage!
 
 codePage: aSymbol
 	"Set the code page currently in use to that named by the <Symbol> argument (one of #utf8 or
@@ -2862,7 +2862,7 @@ indentation: indentSizeInteger
 indentationGuides
 	"Answer the symbolic name of the style of indentation guides visible in the receiver, or nil if none."
 
-	^self class indentationGuideStyles at: self sciGetIndentationGuides ifAbsent: []!
+	^self class indentationGuideStyles lookup: self sciGetIndentationGuides!
 
 indentationGuides: aSymbolOrNil 
 	"Set the style of indication guides to be displayed in the receiver, one of nil (no
@@ -2886,14 +2886,14 @@ indicatorDefinitions: aSequenceableCollection
 	#deprecated.
 	self indicatorStyles: aSequenceableCollection!
 
-indicatorIdFromName: anIntegerOrSymbol 
-	^anIntegerOrSymbol isInteger 
+indicatorIdFromName: anIntegerOrSymbol
+	^anIntegerOrSymbol isInteger
 		ifTrue: 
-			[(anIntegerOrSymbol between: 0 and: INDIC_MAX) 
+			[(anIntegerOrSymbol between: 0 and: INDIC_MAX)
 				ifFalse: [self error: 'Indicator id is out of range: ' , anIntegerOrSymbol printString].
 			anIntegerOrSymbol]
 		ifFalse: 
-			[(indicatorStyles ifNotNil: [:indics | indics at: anIntegerOrSymbol ifAbsent: []]) 
+			[(indicatorStyles ifNotNil: [:indics | indics lookup: anIntegerOrSymbol])
 				ifNil: [-1	"Indicator is not configured in the view, not necessarily an error"]
 				ifNotNil: [:indicStyle | indicStyle id]]!
 
@@ -3176,10 +3176,10 @@ isBackgroundDwellEnabled: aBoolean
 	scFlags := scFlags mask: BackgroundDwellEvents set: aBoolean.
 	(aBoolean and: [self isOpen]) ifTrue: [self startDwellTimer]!
 
-isBraceAt: anInteger 
+isBraceAt: anInteger
 	| style |
 	style := (self styleAt: anInteger) name.
-	^(self braceChars at: style ifAbsent: []) 
+	^(self braceChars lookup: style)
 		ifNil: [false]
 		ifNotNil: [:chars | chars identityIncludes: (self characterAt: anInteger)]!
 
@@ -3388,12 +3388,12 @@ isLine: lineInteger folded: expandedBoolean
 
 	self sciSetFoldExpanded: lineInteger - 1 expanded: expandedBoolean!
 
-isLine: anInteger markedWith: aSymbol 
+isLine: anInteger markedWith: aSymbol
 	"Answer whether the line in the receiver with the specified one-based <integer>
 	index has the named marker."
 
 	| def |
-	def := markerDefinitions at: aSymbol ifAbsent: [].
+	def := markerDefinitions lookup: aSymbol.
 	^def notNil and: [(self sciMarkerGet: anInteger - 1) allMask: (1 bitShift: def id)]!
 
 isLineVisible: anInteger 
@@ -3704,9 +3704,7 @@ lexer
 
 	| id |
 	id := self sciGetLexer.
-	^id == SCLEX_AUTOMATIC 
-		ifTrue: [#automatic]
-		ifFalse: [self class lexerLanguages at: id + 1 ifAbsent: []]!
+	^id == SCLEX_AUTOMATIC ifTrue: [#automatic] ifFalse: [self class lexerLanguages lookup: id + 1]!
 
 lexer: aString 
 	"Set the lexer used in the receiver to be that named by the <Symbol> argument. #container is
@@ -4398,10 +4396,10 @@ newLine
 				wParam: 0
 				lParam: 0]!
 
-nmNotify: pNMHDR 
+nmNotify: pNMHDR
 	"Private - Handler for a redirected generic WM_NOTIFY message."
 
-	^(ScnMap at: (pNMHDR sdwordAtOffset: 8) - 1999 ifAbsent: []) 
+	^(ScnMap lookup: (pNMHDR sdwordAtOffset: 8) - 1999)
 		ifNotNil: [:action | self perform: action with: pNMHDR]!
 
 onEraseRequired: aColorEvent 
@@ -4548,13 +4546,11 @@ primarySelectionIndex: anInteger
 	(anInteger between: 1 and: self selectionCount) ifFalse: [^self errorSubscriptBounds: anInteger].
 	self sciSetMainSelection: anInteger - 1!
 
-printAnnotationStyleBytes: aScintillaAnnotation on: aWriteStream 
+printAnnotationStyleBytes: aScintillaAnnotation on: aWriteStream
 	aScintillaAnnotation styles runsAndValuesDo: 
-			[:run :eachStyleName | 
+			[:run :eachStyleName |
 			| styleId |
-			styleId := (annotationStyles at: eachStyleName ifAbsent: []) 
-						ifNil: [0]
-						ifNotNil: [:style | style id].
+			styleId := (annotationStyles lookup: eachStyleName) ifNil: [0] ifNotNil: [:style | style id].
 			aWriteStream next: run put: styleId]!
 
 printColourMode
@@ -9818,10 +9814,10 @@ styleIdAt: posInteger
 				wParam: posInteger - 1
 				lParam: 0]!
 
-styleNamed: aSymbol 
+styleNamed: aSymbol
 	"Answer a <ScintillaTextStyle> being the named style, or nil if the name is not recognised."
 
-	^currentTextStyles at: aSymbol ifAbsent: []!
+	^currentTextStyles lookup: aSymbol!
 
 styleNext: lengthInteger mask: styleInteger
 	"Change style from current styling position for length characters to a style and move the
@@ -9863,8 +9859,8 @@ styleUnderCaret
 
 	^self styleAt: self caretPosition!
 
-styleWithId: anInteger 
-	^(styleIdMap at: anInteger + 1 ifAbsent: []) 
+styleWithId: anInteger
+	^(styleIdMap lookup: anInteger + 1)
 		ifNil: 
 			[(ScintillaTextStyle new)
 				name: anInteger;
@@ -10196,10 +10192,10 @@ updateIndicatorStyles
 	self hideIndicators.
 	indicatorStyles ifNil: [^self].
 	indicatorStyles do: [:each | each applyToView: self at: each basicId].
-	(indicatorStyles at: #braceHighlight ifAbsent: []) 
+	(indicatorStyles lookup: #braceHighlight)
 		ifNil: [self sciBraceHighlightIndicator: false indicator: 0]
 		ifNotNil: [:indic | self sciBraceHighlightIndicator: true indicator: indic basicId].
-	(indicatorStyles at: #braceMismatch ifAbsent: []) 
+	(indicatorStyles lookup: #braceMismatch)
 		ifNil: [self sciBraceBadLightIndicator: false indicator: 0]
 		ifNotNil: [:indic | self sciBraceBadLightIndicator: true indicator: indic basicId]!
 

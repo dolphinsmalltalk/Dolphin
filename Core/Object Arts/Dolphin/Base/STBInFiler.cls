@@ -5,7 +5,7 @@ STBFiler subclass: #STBInFiler
 	classVariableNames: 'UpgradingMask'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-STBInFiler guid: (GUID fromString: '{87B4C6E7-026E-11D3-9FD7-00A0CC3E4A32}')!
+STBInFiler guid: (GUID fromString: '{87b4c6e7-026e-11d3-9fd7-00a0cc3e4a32}')!
 STBInFiler comment: ''!
 !STBInFiler categoriesForClass!System-Binary storage! !
 !STBInFiler methodsFor!
@@ -141,9 +141,9 @@ readMap
 
 	^readMap!
 
-readObjectOfClass: aClass 
+readObjectOfClass: aClass
 	| converter |
-	converter := converters at: aClass ifAbsent: [].
+	converter := converters lookup: aClass.
 	^aClass stbReadFrom: self format: converter!
 
 readObjectOfClass: aClass format: anSTBClassConversion 

@@ -5,7 +5,7 @@ ClassDescription subclass: #Class
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-Class guid: (GUID fromString: '{87B4C4FB-026E-11D3-9FD7-00A0CC3E4A32}')!
+Class guid: (GUID fromString: '{87b4c4fb-026e-11d3-9fd7-00a0cc3e4a32}')!
 Class comment: '"Instances" of Class describe the representation and behavior of objects. Class adds more comprehensive programming support facilities to the basic ones provided in the abstract superclass Behavior and more descriptive facilities to the ones provided in the abstract superclass ClassDescription. In particular Class adds the representation for class variable names and shared (pool) variables.
 
 In reality, Class has no instances. All classes in the system are actually instances of a parallel hierarchy of Metaclass instances, but they do have the same shape as Class and are logically, if not physically, instances of it.
@@ -388,15 +388,14 @@ owningPackage
 	this development class in a runtime image. The answer should always be nil
 	in a runtime application."
 
-	^(self environment at: #Package ifAbsent: []) 
-		ifNotNil: [:pkgClass | pkgClass manager packageOfClass: self]!
+	^(self environment lookup: #Package) ifNotNil: [:pkgClass | pkgClass manager packageOfClass: self]!
 
-owningPackage: aPackageOrNil 
+owningPackage: aPackageOrNil
 	"Set the receiver's <Package> to be the argument. Any current package association is lost.
 	Note that setting the owning package of a class to the distinguished '_Uncommitted' package
 	is exactly the same as setting it to nil."
 
-	(self environment at: #Package ifAbsent: []) 
+	(self environment lookup: #Package)
 		ifNotNil: [:pkgClass | pkgClass manager addClass: self to: aPackageOrNil]!
 
 printDefinitionOn: puttableStream 
@@ -888,8 +887,7 @@ allRoots
 	Object will be the first class."
 
 	| roots |
-	roots := (self basicAllRoots 
-				select: [:each | (self environment at: each name ifAbsent: []) == each]) asSet.
+	roots := (self basicAllRoots select: [:each | (self environment lookup: each name) == each]) asSet.
 	roots remove: Object.
 	^(roots asOrderedCollection)
 		addFirst: Object;

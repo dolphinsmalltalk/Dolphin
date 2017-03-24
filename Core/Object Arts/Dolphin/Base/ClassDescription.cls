@@ -5,7 +5,7 @@ Behavior subclass: #ClassDescription
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ClassDescription guid: (GUID fromString: '{87B4C4FA-026E-11D3-9FD7-00A0CC3E4A32}')!
+ClassDescription guid: (GUID fromString: '{87b4c4fa-026e-11d3-9fd7-00a0cc3e4a32}')!
 ClassDescription comment: 'ClassDescription is an abstract class which adds descriptive information such as instance variable names and method categories to Behavior. This additional state and behaviour is generally not required or used by the VM, but is important for the development environment, the compiler in particular.
 
 Instance Variables:
@@ -149,7 +149,7 @@ classCategoryClass
 	"Private - Answer the class of object used to categorize classes.
 	Answer nil if the category system is not present."
 
-	^Smalltalk at: #ClassCategory ifAbsent: []!
+	^Smalltalk lookup: #ClassCategory!
 
 classPool
 	"Answer the dictionary of class variables."
@@ -680,14 +680,15 @@ removeProtocol: protocol ifAbsent: exceptionHandler
 	protocols remove: protocol asSymbol ifAbsent: [^exceptionHandler value].
 	protocols isEmpty ifTrue: [protocols := nil]!
 
-removeSelector: aSelector fromCategory: category 
+removeSelector: aSelector fromCategory: category
 	"Private - Remove aSelector from aCategory. If no selectors are associated with
 	aCategory as the outcome of this, then aCategory is removed"
 
 	| catalogue |
 	catalogue := self methodsCatalogue.
-	(catalogue at: category ifAbsent: []) ifNotNil: 
-			[:selectors | 
+	(catalogue lookup: category)
+		ifNotNil: 
+			[:selectors |
 			| sels |
 			(selectors identityIncludes: aSelector) ifFalse: [^self].
 			sels := catalogue at: category put: (selectors copyWithout: aSelector).
@@ -826,9 +827,7 @@ sharedVariableString
 sourceManager
 	"Answer the receiver's source manager. Answer a DeafObject if none is available."
 
-	^(Smalltalk at: #SourceManager ifAbsent: []) 
-		ifNil: [DeafObject current]
-		ifNotNil: [:sm | sm default]!
+	^(Smalltalk lookup: #SourceManager) ifNil: [DeafObject current] ifNotNil: [:sm | sm default]!
 
 stbReadFrom: anSTBInFiler format: anSTBClassConversion 
 	"Read an instance of the receiver from the binary filer, aSTBInFiler. In most cases we can
@@ -849,9 +848,9 @@ storeClassCategories
 
 	self sourceManager storeCategoriesForClass: self!
 
-suggestedPrivacyFor: aCompiledMethod 
+suggestedPrivacyFor: aCompiledMethod
 	| policy |
-	policy := Smalltalk at: #MethodCategorizationPolicy ifAbsent: [].
+	policy := Smalltalk lookup: #MethodCategorizationPolicy.
 	^policy notNil ifTrue: [policy default suggestedPrivacyFor: aCompiledMethod]!
 
 whichCategoriesIncludeSelector: aSelector 

@@ -3171,8 +3171,8 @@ publishedAspects
 	^(aspects isEmpty or: 
 			[aspects size = 1 and: 
 					[| aspect |
-					aspect := aspects at: #yourself ifAbsent: [].
-					aspect notNil and: [aspect editBlock isNil]]]) 
+					aspect := aspects lookup: #yourself.
+					aspect notNil and: [aspect editBlock isNil]]])
 		ifTrue: [self publicAccessorAspects]
 		ifFalse: [aspects]!
 
@@ -3272,11 +3272,11 @@ defaultAboutBitmap
 	the OLEPicture class will not be available. In such cases we just display an empty bitmap"
 
 	| olePicture |
-	olePicture := Smalltalk at: #OLEPicture ifAbsent: [].
-	^olePicture notNil 
+	olePicture := Smalltalk lookup: #OLEPicture.
+	^olePicture notNil
 		ifTrue: 
 			[| bitmapFile |
-			bitmapFile := File 
+			bitmapFile := File
 						composePath: 'Resources\'
 						stem: self name
 						extension: 'jpg'.
@@ -3570,8 +3570,8 @@ showWalkback: titleString callStack: stackTraceString debuggable: debuggableBool
 	system walkback dialog is not available, then use a MessageBox."
 
 	| dialogClass box response |
-	dialogClass := Smalltalk at: #WalkbackDialog ifAbsent: [].
-	dialogClass isNil 
+	dialogClass := Smalltalk lookup: #WalkbackDialog.
+	dialogClass isNil
 		ifFalse: 
 			[response := (dialogClass new)
 						caption: titleString;
@@ -3583,7 +3583,7 @@ showWalkback: titleString callStack: stackTraceString debuggable: debuggableBool
 	box := MessageBox new.
 	box caption: titleString.
 	box beTaskModal.
-	resumableBoolean 
+	resumableBoolean
 		ifTrue: 
 			[box buttonStyle: #abortRetryIgnore.
 			box defaultButton: 2]
@@ -3591,7 +3591,7 @@ showWalkback: titleString callStack: stackTraceString debuggable: debuggableBool
 			[box buttonStyle: #retryCancel.
 			box defaultButton: 1].
 	response := box errorMsg: stackTraceString.
-	^response == #retry 
+	^response == #retry
 		ifTrue: [#debug]
 		ifFalse: [response == #ignore ifTrue: [#resume] ifFalse: [#terminate]]!
 

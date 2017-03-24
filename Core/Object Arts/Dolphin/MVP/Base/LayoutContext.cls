@@ -25,11 +25,11 @@ clientExtentOf: aView
 
 	^(self clientRectangleOf: aView) extent!
 
-clientRectangleOf: aView 
+clientRectangleOf: aView
 	"Answer the client  <Rectangle> of the specified <View>. This may be different to its current
 	client rectangle if it has been repositioned during this operation."
 
-	^(positions at: aView ifAbsent: []) 
+	^(positions lookup: aView)
 		ifNil: [aView clientRectangle]
 		ifNotNil: [:array | aView calcClientRectangleFromRectangle: (array at: 2)]!
 
@@ -75,12 +75,12 @@ extentOf: aView
 hideView: aView 
 	self setView: aView visibility: false!
 
-isViewVisible: aView 
+isViewVisible: aView
 	"Answer whether the specified <View> will be visible after the window repositioning
 	operations specified in this context are applied."
 
-	(positions at: aView ifAbsent: []) ifNotNil: [:pos | (pos at: 3) ifNotNil: [:show | ^show]].
-	^aView hasVisibleStyle !
+	(positions lookup: aView) ifNotNil: [:pos | (pos at: 3) ifNotNil: [:show | ^show]].
+	^aView hasVisibleStyle!
 
 positionForView: aView 
 	^positions at: aView
@@ -90,11 +90,11 @@ positionForView: aView
 				with: nil
 				with: nil]!
 
-rectangleOf: aView 
+rectangleOf: aView
 	"Answer the window <Rectangle> of the specified <View>. This may be different to its current
 	view rectangle if it has been repositioned during this operation."
 
-	(positions at: aView ifAbsent: []) ifNotNil: [:pos | (pos at: 2) ifNotNil: [:rect | ^rect]].
+	(positions lookup: aView) ifNotNil: [:pos | (pos at: 2) ifNotNil: [:rect | ^rect]].
 	^aView rectangle!
 
 repositionSubViewsOf: aView 

@@ -129,22 +129,22 @@ addPotentialAspectSettersIn: aClass to: aSet excluding: aCollection
 									getter notNil and: [aClass canUnderstand: getter]]]])
 				ifTrue: [aSet add: each]]!
 
-addReferencedViews: resid to: referenced 
+addReferencedViews: resid to: referenced
 	"Private - Recursively add any ReferenceViews referenced by the <Resource>, res, to the
 	<Set> argument, referenced."
 
 	| proxies idIndex refView stbProxy |
-	refView := Smalltalk at: #ReferenceView ifAbsent: [].
-	stbProxy := Smalltalk at: #STBViewProxy ifAbsent: [].
+	refView := Smalltalk lookup: #ReferenceView.
+	stbProxy := Smalltalk lookup: #STBViewProxy.
 	(refView isNil or: [stbProxy isNil]) ifTrue: [^self].
 	idIndex := refView superclass instSize - 1.
-	proxies := resid hiddenObjects 
+	proxies := resid hiddenObjects
 				select: [:each | (each isKindOf: stbProxy) and: [each viewClass == refView]].
 	proxies do: 
-			[:each | 
+			[:each |
 			| id |
 			id := each instVars at: idIndex.
-			(referenced includes: id) 
+			(referenced includes: id)
 				ifFalse: 
 					[referenced add: id.
 					self addReferencedViews: id to: referenced]]!
@@ -250,7 +250,7 @@ buildPreservedAspectSetters
 					catalogue := each methodsCatalogue.
 					excluded do: 
 							[:eachCat |
-							(catalogue at: eachCat ifAbsent: [])
+							(catalogue lookup: eachCat)
 								ifNotNil: [:selectors | selectors do: [:eachSelector | nonAspectSetters add: eachSelector]]].
 					self
 						addPotentialAspectSettersIn: each
@@ -2017,32 +2017,32 @@ updateVersionResource: anExternalHandle
 
 	self versionResource ifNotNil: [:version | version updateResource: anExternalHandle]!
 
-updateXPManifestResource: anExternalHandle 
+updateXPManifestResource: anExternalHandle
 	"Private - Update the Windows XP application manifest resource."
 
 	| ver strings file manifest assemblyName |
 	self includeManifestResource ifFalse: [^self].
 	ver := self versionResource.
 	ver isNil ifTrue: [^nil].
-	strings := ver stringTables at: '040904e4' ifAbsent: [ver stringTables values at: 1 ifAbsent: []].
+	strings := ver stringTables at: '040904e4' ifAbsent: [ver stringTables values lookup: 1].
 	strings isNil ifTrue: [^nil].
 	assemblyName := String writeStream.
 	#('CompanyName' 'ProductName') do: 
-			[:each | 
-			(strings at: each ifAbsent: []) 
+			[:each |
+			(strings lookup: each)
 				ifNotNil: 
-					[:string | 
+					[:string |
 					assemblyName
 						nextPutAll: (string copyWithout: $.);
 						nextPut: $.]].
 	file := (strings at: 'InternalName' ifAbsent: ['']) copyWithout: $..
 	file isEmpty ifTrue: [file := File splitStemFrom: self executableName].
 	assemblyName nextPutAll: file.
-	manifest := self 
+	manifest := self
 				buildManifest: assemblyName contents
 				description: (strings at: 'FileDescription' ifAbsent: [file , ' Application'])
 				version: ver.
-	(KernelLibrary default 
+	(KernelLibrary default
 		updateResource: anExternalHandle
 		lpType: RT_MANIFEST
 		lpName: self manifestResourceId

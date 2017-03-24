@@ -33,10 +33,10 @@ addImage: anImage extent: extent
 		extent: extent
 		maskcolor: maskcolor!
 
-addImage: anImage extent: extent maskcolor: aColor 
-	^(images at: anImage ifAbsent: []) 
+addImage: anImage extent: extent maskcolor: aColor
+	^(images lookup: anImage)
 		ifNil: 
-			[self 
+			[self
 				basicAddImage: anImage
 				extent: extent
 				maskcolor: aColor]!
@@ -93,15 +93,14 @@ imageAt: anInteger ifAbsent: exceptionHandler
 
 	^images keyAtValue: anInteger ifAbsent: exceptionHandler!
 
-imageListWithExtent: aPoint 
+imageListWithExtent: aPoint
 	"Answer the image list for the receiver that has an extent that
 	matches the <Point> argument. If no such list has yet been accessed then a new
 	one is created and all of the existing images are added to it."
 
 	| imageList |
-
-	imageList := imageLists at: aPoint ifAbsent: [].
-	(imageList isNil or: [imageList isRealized not]) 
+	imageList := imageLists lookup: aPoint.
+	(imageList isNil or: [imageList isRealized not])
 		ifTrue: [imageList := self buildImageListWithExtent: aPoint].
 	^imageList!
 

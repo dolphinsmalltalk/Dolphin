@@ -786,7 +786,7 @@ onCloseRequested: boolValueHolder
 					self resumeProcess]
 				ifFalse: [boolValueHolder value: false]]!
 
-onExpressionEvaluated: result 
+onExpressionEvaluated: result
 	"Private - An expression has been evaluated in one of the receiver's workspace panes. Copy
 	back the values from the workspace variable pool into same named temporaries in case they
 	have been assigned."
@@ -794,8 +794,8 @@ onExpressionEvaluated: result
 	| frame pool |
 	frame := self frame.
 	pool := inspectorPresenter workspacePool.
-	frame temps 
-		do: [:each | (frame getOuter: (each at: 2)) at: (each at: 3) put: (pool at: each first ifAbsent: [])]!
+	frame temps
+		do: [:each | (frame getOuter: (each at: 2)) at: (each at: 3) put: (pool lookup: each first)]!
 
 onFrameSelected
 	"Private - The selected stack frame/method has changed. Refresh the other models
@@ -1585,16 +1585,16 @@ showNextStatement
 		ifTrue: [self setSourceSelection]
 		ifFalse: [stackPresenter selection: topFrame]!
 
-skipMaskFor: aCompiledMethod 
-	^(SkipTable at: aCompiledMethod methodClass ifAbsent: []) 
+skipMaskFor: aCompiledMethod
+	^(SkipTable lookup: aCompiledMethod methodClass)
 		ifNil: [0]
 		ifNotNil: [:selectors | selectors at: aCompiledMethod selector ifAbsent: [0]]!
 
 source
 	^sourcePresenter source!
 
-sourceRangeAt: anInteger inTextMap: aTextMap 
-	^(aTextMap at: (self frame findIP: anInteger inTextMap: aTextMap) ifAbsent: []) 
+sourceRangeAt: anInteger inTextMap: aTextMap
+	^(aTextMap lookup: (self frame findIP: anInteger inTextMap: aTextMap))
 		ifNil: [1 to: 0]
 		ifNotNil: [:entry | entry value]!
 
@@ -2173,16 +2173,16 @@ showWalkbacks: aBoolean
 
 	ShowWalkbacks := aBoolean!
 
-skipSelector: aSymbol of: aBehavior maskClear: maskInteger 
-	(self skipTable at: aBehavior ifAbsent: []) 
+skipSelector: aSymbol of: aBehavior maskClear: maskInteger
+	(self skipTable lookup: aBehavior)
 		ifNotNil: 
-			[:classTable | 
-			(classTable at: aSymbol ifAbsent: []) 
+			[:classTable |
+			(classTable lookup: aSymbol)
 				ifNotNil: 
-					[:mask | 
+					[:mask |
 					| newMask |
 					newMask := mask maskClear: maskInteger.
-					newMask = 0 
+					newMask = 0
 						ifTrue: 
 							[classTable removeKey: aSymbol.
 							classTable isEmpty ifTrue: [self skipTable removeKey: aBehavior]]
@@ -2212,11 +2212,10 @@ uninitialize
 	self interrupts do: [:each | ProcessorScheduler interruptSelectors at: each first put: #unusedInterrupt:].
 	Smalltalk developmentSystem unregisterTool: self!
 
-unskipSelector: aSymbol of: aClass 
+unskipSelector: aSymbol of: aClass
 	"Private - Remove the specified method to the set of those skipped by the debugger."
 
-	(self skipTable at: aClass ifAbsent: []) 
-		ifNotNil: [:selectors | selectors removeKey: aSymbol ifAbsent: []]! !
+	(self skipTable lookup: aClass) ifNotNil: [:selectors | selectors removeKey: aSymbol ifAbsent: []]! !
 !Debugger class categoriesFor: #animatePause!options!public! !
 !Debugger class categoriesFor: #animatePause:!options!public! !
 !Debugger class categoriesFor: #debugPrintStringFor:!helpers!private! !

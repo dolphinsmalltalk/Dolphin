@@ -205,22 +205,21 @@ errorIllegalMenuString: illegalString
 
 	self error: 'Illegal menu string: ', illegalString!
 
-fromString: menuString 
+fromString: menuString
 	"Answer a new sub-instance of the receiver generated from menuString."
 
 	| divider |
-	divider := Dividers at: menuString ifAbsent: [].
-	divider notNil 
+	divider := Dividers lookup: menuString.
+	divider notNil
 		ifTrue: [^DividerMenuItem perform: divider]
 		ifFalse: 
 			[| subStrings |
-			(subStrings := menuString subStrings: StringSeparator) size == 3 
+			(subStrings := menuString subStrings: StringSeparator) size == 3
 				ifTrue: 
 					[| commandDescription accel |
 					commandDescription := CommandDescription command: (subStrings at: 3) asSymbol.
 					commandDescription description: (subStrings at: 1).
-					(accel := subStrings at: 2) notEmpty 
-						ifTrue: [commandDescription acceleratorKeyString: accel].
+					(accel := subStrings at: 2) notEmpty ifTrue: [commandDescription acceleratorKeyString: accel].
 					^CommandMenuItem new commandDescription: commandDescription]
 				ifFalse: [self errorIllegalMenuString: menuString]]!
 

@@ -824,12 +824,12 @@ onGlobalRemoved: anAssociation
 	"Removing a global resets all pre-rereqs"
 	self resetPrerequisites!
 
-onGlobalRenamed: anAssociation from: aSymbol 
+onGlobalRenamed: anAssociation from: aSymbol
 	"Private - A global has been renamed. Ensure that all the receivers packages
 	are aware of this change. Note that pre-requisites should be unaffected."
 
 	| global pkg newName |
-	pkg := packagedGlobals at: aSymbol ifAbsent: [].
+	pkg := packagedGlobals lookup: aSymbol.
 	newName := anAssociation key.
 	pkg notNil ifTrue: [packagedGlobals changeKey: aSymbol to: newName].
 	self isProcessingEvents ifFalse: [^self].
@@ -837,9 +837,9 @@ onGlobalRenamed: anAssociation from: aSymbol
 	"Unfortunately we get the same event for classes as other globals, so we must test,
 	also we must be careful not to act on the rename of global aliases."
 	global := anAssociation value.
-	(global class isMeta and: [global name == newName]) 
+	(global class isMeta and: [global name == newName])
 		ifTrue: 
-			[self 
+			[self
 				onClassRenamed: global
 				from: aSymbol
 				to: newName]
@@ -1016,7 +1016,7 @@ packageOfMethod: aCompiledMethod
 
 	^looseMethods isNil
 		ifTrue: [self packages detect: [:pkg | pkg includesMethod: aCompiledMethod] ifNone: []]
-		ifFalse: [looseMethods at: aCompiledMethod name ifAbsent: []]!
+		ifFalse: [looseMethods lookup: aCompiledMethod name]!
 
 packageOfMethodOrItsClass: aMethod
 	"Answer the <Package> which owns the <CompiledMethod>, method,

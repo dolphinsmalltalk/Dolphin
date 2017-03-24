@@ -97,7 +97,7 @@ onValueChanged
 
 onViewOpened
 	super onViewOpened.
-	collectionPresenter selectionOrNil: (self model value at: 1 ifAbsent: [])! !
+	collectionPresenter selectionOrNil: (self model value lookup: 1)! !
 !ScintillaStylesCollectionPresenter categoriesFor: #addItem!commands!public! !
 !ScintillaStylesCollectionPresenter categoriesFor: #applyDefaultStyle!private!updating! !
 !ScintillaStylesCollectionPresenter categoriesFor: #createComponents!initializing!private! !

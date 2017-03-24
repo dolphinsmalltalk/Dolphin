@@ -186,7 +186,7 @@ newPattern: aString
 		yourself!
 
 regexpClass
-	^Smalltalk at: #IRegExp2 ifAbsent: []!
+	^Smalltalk lookup: #IRegExp2!
 
 searchModes
 	^#(#text #wildcardExpression #regularExpression)! !

@@ -365,8 +365,7 @@ nameOf: aPresenter
 	"Answer the name of aPresenter within the receiver or nil
 	if it has not been assigned a name"
 
-	^names isNil ifFalse: [names at: aPresenter ifAbsent: []]
-!
+	^names isNil ifFalse: [names lookup: aPresenter]!
 
 on: aSubjectModel
 	"Private - Initializes the model connection for the receiver to aSubjectModel.

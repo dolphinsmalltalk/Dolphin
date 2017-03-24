@@ -140,17 +140,17 @@ unhookWindowCreate: hWnd
 		ifTrue: [Notification signal: 'Failed to open walkback dialog']
 !
 
-wmCommand: message wParam: wParam lParam: lParam 
+wmCommand: message wParam: wParam lParam: lParam
 	"Our command handling requirements are very simple, so to avoid having to create Smalltalk
 	button objects to represent the buttons on the template, we simply implement a rudimentary
 	wmCommand: handler. We set the answer to the command name so that the caller can decide what
 	to do with the process."
 
 	| copyid |
-	self answer: (Commands at: wParam ifAbsent: []).
+	self answer: (Commands lookup: wParam).
 	copyid := Commands keyAtValue: #copy.
 	wParam > copyid ifTrue: [^false].
-	wParam == copyid 
+	wParam == copyid
 		ifTrue: 
 			[self copyWalkbackToClipboard.
 			^false].

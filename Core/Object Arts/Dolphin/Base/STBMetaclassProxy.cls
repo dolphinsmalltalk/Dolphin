@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 STBClassProxy subclass: #STBMetaclassProxy
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-STBMetaclassProxy guid: (GUID fromString: '{87B4C6F5-026E-11D3-9FD7-00A0CC3E4A32}')!
+STBMetaclassProxy guid: (GUID fromString: '{87b4c6f5-026e-11d3-9fd7-00a0cc3e4a32}')!
 STBMetaclassProxy comment: ''!
 !STBMetaclassProxy categoriesForClass!System-Binary storage! !
 !STBMetaclassProxy methodsFor!
@@ -19,8 +19,8 @@ resolveWithClassLocator: aClassLocator
 		ifNotNil: [:availableClass | availableClass class]
 		ifNil: [self withClassLocator: aClassLocator]!
 
-withClassLocator: aClassLocator 
-	^(Smalltalk at: #MetaclassStub ifAbsent: []) 
+withClassLocator: aClassLocator
+	^(Smalltalk lookup: #MetaclassStub)
 		ifNotNil: [:classStub | classStub withClassLocator: aClassLocator]! !
 !STBMetaclassProxy categoriesFor: #resolveWithClassLocator:!converting!private! !
 !STBMetaclassProxy categoriesFor: #withClassLocator:!converting!private! !

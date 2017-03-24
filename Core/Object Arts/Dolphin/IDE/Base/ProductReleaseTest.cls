@@ -10,11 +10,11 @@ ProductReleaseTest comment: ''!
 !ProductReleaseTest categoriesForClass!Unclassified! !
 !ProductReleaseTest methodsFor!
 
-checkNoClass: aSymbol 
-	self specialAssert: (Smalltalk at: aSymbol ifAbsent: []) isNil!
+checkNoClass: aSymbol
+	self specialAssert: (Smalltalk lookup: aSymbol) isNil!
 
 isReleased
-	^(Smalltalk at: #DolphinOAEdition ifAbsent: []) isNil!
+	^(Smalltalk lookup: #DolphinOAEdition) isNil!
 
 specialAssert: aBoolean 
 	"Private - In an released development environment assert that aBoolean is true. In an OA development

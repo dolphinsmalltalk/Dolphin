@@ -39,36 +39,36 @@ classes: classArray metaClasses: metaArray
 	metaArray 
 		do: [:each | metaClassSelectors at: each first put: each last asSet]!
 
-classesAndSelectorsDo: aBlock 
+classesAndSelectorsDo: aBlock
 	classSelectors keysAndValuesDo: 
-			[:eachClassName :eachSelectors | 
-			(Smalltalk at: eachClassName ifAbsent: []) ifNotNil: 
-					[:class | 
-					(environment includesClass: class) 
+			[:eachClassName :eachSelectors |
+			(Smalltalk lookup: eachClassName)
+				ifNotNil: 
+					[:class |
+					(environment includesClass: class)
 						ifTrue: 
-							[eachSelectors 
-								do: [:each | (class includesSelector: each) ifTrue: [aBlock value: class value: each]]]]].
+							[eachSelectors do: [:each | (class includesSelector: each) ifTrue: [aBlock value: class value: each]]]]].
 	metaClassSelectors keysAndValuesDo: 
-			[:eachClassName :eachSelectors | 
-			(Smalltalk at: eachClassName ifAbsent: []) ifNotNil: 
-					[:class | 
+			[:eachClassName :eachSelectors |
+			(Smalltalk lookup: eachClassName)
+				ifNotNil: 
+					[:class |
 					| meta |
 					meta := class class.
-					(environment includesClass: meta) 
+					(environment includesClass: meta)
 						ifTrue: 
-							[eachSelectors 
-								do: [:each | (meta includesSelector: each) ifTrue: [aBlock value: meta value: each]]]]]!
+							[eachSelectors do: [:each | (meta includesSelector: each) ifTrue: [aBlock value: meta value: each]]]]]!
 
 classesDo: aBlock
 	classSelectors keysDo: 
 			[:each |
 			| class |
-			class := Smalltalk at: each ifAbsent: [].
+			class := Smalltalk lookup: each.
 			(class notNil and: [environment includesClass: class]) ifTrue: [aBlock value: class]].
 	metaClassSelectors keysDo: 
 			[:each |
 			| class |
-			class := Smalltalk at: each ifAbsent: [].
+			class := Smalltalk lookup: each.
 			(class notNil and: [environment includesClass: class class]) ifTrue: [aBlock value: class class]]!
 
 classNames
@@ -95,8 +95,8 @@ includesCategory: aCategory
 
 includesClass: aClass
 	^(aClass isMeta
-		ifTrue: [metaClassSelectors at: aClass soleInstance name ifAbsent: []]
-		ifFalse: [classSelectors at: aClass name ifAbsent: []]) notNil
+		ifTrue: [metaClassSelectors lookup: aClass soleInstance name]
+		ifFalse: [classSelectors lookup: aClass name]) notNil
 		and: [super includesClass: aClass]!
 
 includesProtocol: aProtocol in: aClass 
@@ -142,9 +142,9 @@ privateIncludesSelector: aSelector inClass: aClass
 	^(self privateSelectorsForClass: aClass) includes: aSelector!
 
 privateSelectorsForClass: aClass
-	^aClass isMeta
-		ifTrue: [metaClassSelectors at: aClass soleInstance name ifAbsent: [#()]]
-		ifFalse: [classSelectors at: aClass name ifAbsent: [#()]]!
+	^(aClass isMeta
+		ifTrue: [metaClassSelectors lookup: aClass soleInstance name]
+		ifFalse: [classSelectors lookup: aClass name]) ?? #()!
 
 privateSelectorsForClassAdd: aClass 
 	^aClass isMeta ifTrue: [metaClassSelectors at: aClass soleInstance name ifAbsentPut: [IdentitySet new: 8]] ifFalse: [classSelectors at: aClass name ifAbsentPut: [IdentitySet new: 8]]!

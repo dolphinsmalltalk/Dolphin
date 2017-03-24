@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 STBProxy subclass: #STBClassProxy
 	instanceVariableNames: 'packageName locatorKey'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-STBClassProxy guid: (GUID fromString: '{87B4C6EA-026E-11D3-9FD7-00A0CC3E4A32}')!
+STBClassProxy guid: (GUID fromString: '{87b4c6ea-026e-11d3-9fd7-00a0cc3e4a32}')!
 STBClassProxy comment: ''!
 !STBClassProxy categoriesForClass!System-Binary storage! !
 !STBClassProxy methodsFor!
@@ -41,9 +41,8 @@ stbFixup: inFiler at: anInteger
 
 	^behaviourOrStub.!
 
-withClassLocator: aClassLocator 
-	^(Smalltalk at: #ClassStub ifAbsent: []) 
-		ifNotNil: [:classStub | classStub withClassLocator: aClassLocator]! !
+withClassLocator: aClassLocator
+	^(Smalltalk lookup: #ClassStub) ifNotNil: [:classStub | classStub withClassLocator: aClassLocator]! !
 !STBClassProxy categoriesFor: #locatorKey:!accessing!private! !
 !STBClassProxy categoriesFor: #packageName:!accessing!private! !
 !STBClassProxy categoriesFor: #resolveWithClassLocator:!converting!private! !

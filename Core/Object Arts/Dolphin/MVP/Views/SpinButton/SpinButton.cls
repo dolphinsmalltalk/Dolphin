@@ -179,14 +179,14 @@ isWraparound: aBoolean
 
 	self baseStyleMask: UDS_WRAP set: aBoolean recreateIfChanged: true!
 
-nmNotify: pNMHDR 
+nmNotify: pNMHDR
 	"Private - Handle a redirected WM_NOTIFY message from the control."
 
 	"Implementation Note: Rather than create the appropriate header structure object here, we
 	delay that until the handler, because most of the time we don't need to look at the
 	notification at all."
 
-	^(UdnMap at: UDN_FIRST - (pNMHDR sdwordAtOffset: 8) ifAbsent: []) 
+	^(UdnMap lookup: UDN_FIRST - (pNMHDR sdwordAtOffset: 8))
 		ifNil: [super nmNotify: pNMHDR]
 		ifNotNil: [:action | self perform: action with: pNMHDR]!
 
