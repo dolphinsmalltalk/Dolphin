@@ -10,6 +10,9 @@ StParseNodeAnalyzer comment: ''!
 !StParseNodeAnalyzer categoriesForClass!System-Compiler! !
 !StParseNodeAnalyzer methodsFor!
 
+accessStaticVariable: aStVariableNode
+	self addLiteral: aStVariableNode value: aStVariableNode variable binding!
+
 addLiteral: aLiteralNode value: anObject
 	(literals addNewElement: anObject) ifTrue: [self checkLiteralFrameSize: aLiteralNode]!
 
@@ -39,25 +42,18 @@ addToFrameStatic: aLiteralNode
 		ifFalse: [^self].
 	self addLiteral: aLiteralNode value: value!
 
-bindingFor: aStVariableNode
-	| var |
-	var := currentScope lookupVariable: aStVariableNode name.
-	var isNil ifTrue: [^nil].
-	var isLocalVariable
-		ifTrue: 
-			["If hosted in the debugger can make a stab at these"
-			^self contextBindingFor: var name].
-	var isInstanceVariable
-		ifTrue: 
-			[^(evaluationContext isKindOf: methodClass)
-				ifTrue: 
-					["In the debugger will have an evaluation context which is the receiver."
+bindVariable: anStVariableNode
+	"Private - Find the correct variable definition for the identifier of aVariableNode, and
+	associate the StVariable describing that definition with the node."
 
-					"Concoct a fake variable binding"
-					(VariableBinding key: var name value: (evaluationContext instVarAt: var index))
-						isImmutable: evaluationContext isImmutable;
-						yourself]].
-	^var isStaticVariable ifTrue: [var binding]!
+	^(currentScope lookupVariable: anStVariableNode name)
+		ifNil: 
+			[self signalError: CErrUndeclared forNode: anStVariableNode.
+			nil]
+		ifNotNil: 
+			[:var |
+			anStVariableNode variable: var.
+			var]!
 
 blockDepth
 	| depth scope |
@@ -305,9 +301,6 @@ checkTryBlock: aMessageNode
 compilationErrorClass
 	^SmalltalkParser notificationClass!
 
-contextBindingFor: aString
-	^(evalScope lookupVariable: aString) ifNotNil: [:var | var binding]!
-
 countOuterTemps
 	| scope count |
 	scope := self currentScope.
@@ -329,11 +322,18 @@ currentMethodClass
 currentScope
 	^currentScope!
 
-errorAssignConstant: aVariableNode
-	self
-		signalError: CErrAssignConstant
-		forNode: aVariableNode parent
-		extra: aVariableNode name.
+errorAssignConstant: anStVariableNode
+	anStVariableNode variable isArgument
+		ifTrue: 
+			[self
+				signalError: CErrAssignmentToArgument
+				forNode: anStVariableNode parent
+				extra: anStVariableNode name]
+		ifFalse: 
+			[self
+				signalError: CErrAssignConstant
+				forNode: anStVariableNode parent
+				extra: anStVariableNode name].
 	^nil!
 
 initialize
@@ -372,25 +372,23 @@ newLiteralsCollection
 pushActiveFrame
 	!
 
-pushConst: anObject
-	!
-
 pushImmediate: anInteger!
-
-pushInstVar: aVariableNode
-	!
 
 pushSelf
 !
 
-pushStatic: aVariableNode variable: aVariableBinding
-	!
-
 pushSuper
 !
 
-pushTemp: aVariableNode
-	!
+readStaticVariable: aStVariableNode
+	self accessStaticVariable: aStVariableNode!
+
+readVariable: anStVariableNode
+	^(self bindVariable: anStVariableNode)
+		ifNotNil: 
+			[:var |
+			var addRead: anStVariableNode.
+			var]!
 
 removeScope
 	^currentScope := currentScope outer!
@@ -443,97 +441,9 @@ signalError: codeInteger forNode: anStProgramNode range: anInterval extras: anAr
 		range: anInterval
 		extras: anArray) signal!
 
-storeInstVar: aVariableNode
-	!
-
-storeStatic: aVariableNode variable: aVariableBinding
-	!
-
-storeTemp: aVariableNode
-!
-
-targetOfMessage: aStMessageNode 
-	| receiver |
-	receiver := aStMessageNode receiver.
-	receiver isVariable 
-		ifTrue: 
-			[| identifier |
-			identifier := receiver name.
-			identifier = 'self' ifTrue: [^self currentMethodClass].
-			identifier = 'super' ifTrue: [^self currentMethodClass superclass].
-			identifier = 'thisContext' ifTrue: [^Integer].
-			(self bindingFor: receiver) 
-				ifNotNil: 
-					[:var | 
-					"In the case of other variables, we can only offer a
-					variable type with confidence (without resort to type
-					inference) if the variable binding is constant. If it isn't
-					then the variable could assume different types through the
-					course of the method or even across different invocations
-					(if a global, or class variable). This might cause false
-					reports of unimplemented messages in the debugger. Therefore
-					we have to be conservative here in suggesting the variable
-					type."
-					var isImmutable ifTrue: [^var value basicClass]].
-			^nil].
-	receiver isLiteralNode ifTrue: [^aStMessageNode receiver value basicClass].
-	^nil!
-
 tempDecls
 	tempDecls ifNil: [tempDecls := methodNode allDefinedVariableNodes].
 	^tempDecls!
-
-varRef: aVariableNode isAssignment: aBoolean
-	| identifier |
-	identifier := aVariableNode name.
-	aVariableNode isPseudoVariableNode
-		ifTrue: 
-			[aBoolean
-				ifTrue: 
-					["Semantic error, but already reported by parser"
-					^self].
-			identifier = 'self' ifTrue: [^self pushSelf].
-			identifier = 'super' ifTrue: [^self pushSuper].
-			identifier = 'thisContext' ifTrue: [^self pushActiveFrame]].
-	"Starting in the current scope, look through enclosing scopes for a temp or argument that
-	has the same identifier as a variable."
-	(currentScope lookupVariable: identifier)
-		ifNil: [self signalError: CErrUndeclared forNode: aVariableNode]
-		ifNotNil: 
-			[:var |
-			var isArgument
-				ifTrue: 
-					[^aBoolean
-						ifTrue: 
-							[self
-								signalError: CErrAssignmentToArgument
-								forNode: aVariableNode parent
-								extra: identifier]
-						ifFalse: 
-							[var addRead: aVariableNode.
-							self pushTemp: aVariableNode]].
-			var isTempVariable
-				ifTrue: 
-					[^aBoolean
-						ifTrue: 
-							[var addWrite: aVariableNode.
-							self storeTemp: aVariableNode]
-						ifFalse: 
-							[var addRead: aVariableNode.
-							(var writes isEmpty and: [(self isReceiverOfNilTest: aVariableNode) not])
-								ifTrue: [self signalError: CWarnReadBeforeWritten forNode: aVariableNode]
-								ifFalse: [self pushTemp: aVariableNode]]].
-			var isInstanceVariable
-				ifTrue: 
-					[^aBoolean ifTrue: [self storeInstVar: aVariableNode] ifFalse: [self pushInstVar: aVariableNode]].
-			"Must be a static variable."
-			self addLiteral: aVariableNode value: var binding.
-			aBoolean
-				ifTrue: 
-					[var isConstant
-						ifTrue: [self errorAssignConstant: aVariableNode]
-						ifFalse: [self storeStatic: aVariableNode variable: var binding]]
-				ifFalse: [self pushStatic: aVariableNode variable: var binding]]!
 
 visitArgumentNode: anStVariableNode
 	self checkRedefines: anStVariableNode.
@@ -555,12 +465,12 @@ visitArgumentNodes: aNodeCollection
 						forNode: each
 						extra: each name]]!
 
-visitAssignmentNode: anAssignmentNode
-	| variable |
-	self visitNode: anAssignmentNode value.
-	variable := anAssignmentNode variable.
-	variable isConstantNode ifTrue: [^self].
-	self varRef: variable isAssignment: true!
+visitAssignmentNode: anStAssignmentNode
+	| variableNode |
+	self visitNode: anStAssignmentNode value.
+	variableNode := anStAssignmentNode variable.
+	variableNode isConstantNode ifTrue: [^self].
+	self writeVariable: variableNode!
 
 visitBlockNode: aBlockNode
 	self createScope: aBlockNode.
@@ -605,6 +515,13 @@ visitOptimizedNode: anOptimizedNode
 			[inStaticExpression := wasInStaticExpression.
 			addToFrame := outerAddToFrame]!
 
+visitPseudoVariableNode: anStPseudoVariableNode
+	| identifier |
+	identifier := anStPseudoVariableNode name.
+	identifier = 'self' ifTrue: [^self pushSelf].
+	identifier = 'super' ifTrue: [^self pushSuper].
+	identifier = 'thisContext' ifTrue: [^self pushActiveFrame]!
+
 visitSequenceNode: aSequenceNode
 	| answer scope |
 	answer := super visitSequenceNode: aSequenceNode.
@@ -643,13 +560,36 @@ visitTemporaryNodes: aNodeCollection
 						forNode: each
 						extra: each name]]!
 
-visitVariableNode: aVariableNode
-	self varRef: aVariableNode isAssignment: false! !
+visitVariableNode: aStVariableNode
+	(self bindVariable: aStVariableNode)
+		ifNotNil: 
+			[:var |
+			var addRead: aStVariableNode.
+			var isTempVariable
+				ifTrue: 
+					[(var writes isEmpty and: [(self isReceiverOfNilTest: aStVariableNode) not])
+						ifTrue: [self signalError: CWarnReadBeforeWritten forNode: aStVariableNode]]
+				ifFalse: [var isStaticVariable ifTrue: [self readStaticVariable: aStVariableNode]]]!
+
+writeStaticVariable: anStVariableNode
+	self accessStaticVariable: anStVariableNode!
+
+writeVariable: anStVariableNode
+	^(self bindVariable: anStVariableNode)
+		ifNotNil: 
+			[:var |
+			var isConstant
+				ifTrue: [self errorAssignConstant: anStVariableNode]
+				ifFalse: 
+					[var addWrite: anStVariableNode.
+					var isStaticVariable ifTrue: [self writeStaticVariable: anStVariableNode]].
+			var]! !
+!StParseNodeAnalyzer categoriesFor: #accessStaticVariable:!helpers!private! !
 !StParseNodeAnalyzer categoriesFor: #addLiteral:value:!helpers!private! !
 !StParseNodeAnalyzer categoriesFor: #addMessageToFrame:!helpers!private! !
 !StParseNodeAnalyzer categoriesFor: #addToFrame:!helpers!private! !
 !StParseNodeAnalyzer categoriesFor: #addToFrameStatic:!helpers!private! !
-!StParseNodeAnalyzer categoriesFor: #bindingFor:!helpers!private! !
+!StParseNodeAnalyzer categoriesFor: #bindVariable:!helpers!private! !
 !StParseNodeAnalyzer categoriesFor: #blockDepth!helpers!private! !
 !StParseNodeAnalyzer categoriesFor: #checkIsLiteralBlockHandler:forMessage:!helpers!private! !
 !StParseNodeAnalyzer categoriesFor: #checkLiteralFrameSize:!helpers!private! !
@@ -665,40 +605,32 @@ visitVariableNode: aVariableNode
 !StParseNodeAnalyzer categoriesFor: #checkRestrictedSelectors:!helpers!private! !
 !StParseNodeAnalyzer categoriesFor: #checkSupersend:!helpers!private! !
 !StParseNodeAnalyzer categoriesFor: #checkTryBlock:!helpers!private! !
-!StParseNodeAnalyzer categoriesFor: #compilationErrorClass!helpers!private! !
-!StParseNodeAnalyzer categoriesFor: #contextBindingFor:!helpers!private! !
+!StParseNodeAnalyzer categoriesFor: #compilationErrorClass!constants!private! !
 !StParseNodeAnalyzer categoriesFor: #countOuterTemps!helpers!private! !
 !StParseNodeAnalyzer categoriesFor: #createScope:!helpers!private! !
-!StParseNodeAnalyzer categoriesFor: #currentMethodClass!commands!private!refactoring! !
+!StParseNodeAnalyzer categoriesFor: #currentMethodClass!accessing!private! !
 !StParseNodeAnalyzer categoriesFor: #currentScope!accessing!private! !
-!StParseNodeAnalyzer categoriesFor: #errorAssignConstant:!helpers!private! !
+!StParseNodeAnalyzer categoriesFor: #errorAssignConstant:!error handling!private! !
 !StParseNodeAnalyzer categoriesFor: #initialize!initializing!public! !
 !StParseNodeAnalyzer categoriesFor: #isReceiverOfNilTest:!helpers!private! !
-!StParseNodeAnalyzer categoriesFor: #isTempVariable:!private!refactoring! !
+!StParseNodeAnalyzer categoriesFor: #isTempVariable:!helpers!private! !
 !StParseNodeAnalyzer categoriesFor: #lineOfSourcePosition:!helpers!private! !
 !StParseNodeAnalyzer categoriesFor: #newLiteralsCollection!helpers!initializing!private! !
 !StParseNodeAnalyzer categoriesFor: #pushActiveFrame!instructions-stack ops!private! !
-!StParseNodeAnalyzer categoriesFor: #pushConst:!helpers!private! !
 !StParseNodeAnalyzer categoriesFor: #pushImmediate:!instructions-stack ops!private! !
-!StParseNodeAnalyzer categoriesFor: #pushInstVar:!instructions-stack ops!private! !
 !StParseNodeAnalyzer categoriesFor: #pushSelf!instructions-stack ops!private! !
-!StParseNodeAnalyzer categoriesFor: #pushStatic:variable:!instructions-stack ops!private! !
 !StParseNodeAnalyzer categoriesFor: #pushSuper!instructions-stack ops!private! !
-!StParseNodeAnalyzer categoriesFor: #pushTemp:!instructions-stack ops!private! !
+!StParseNodeAnalyzer categoriesFor: #readStaticVariable:!helpers!private! !
+!StParseNodeAnalyzer categoriesFor: #readVariable:!helpers!private! !
 !StParseNodeAnalyzer categoriesFor: #removeScope!helpers!private! !
 !StParseNodeAnalyzer categoriesFor: #restrictedSelectors!constants!private! !
 !StParseNodeAnalyzer categoriesFor: #scopes!accessing!public! !
 !StParseNodeAnalyzer categoriesFor: #setMethodNode:methodClass:context:pools:!initializing!private! !
-!StParseNodeAnalyzer categoriesFor: #signalError:forNode:!helpers!private! !
-!StParseNodeAnalyzer categoriesFor: #signalError:forNode:extra:!helpers!private! !
-!StParseNodeAnalyzer categoriesFor: #signalError:forNode:extras:!helpers!private! !
-!StParseNodeAnalyzer categoriesFor: #signalError:forNode:range:extras:!helpers!private! !
-!StParseNodeAnalyzer categoriesFor: #storeInstVar:!instructions-stack ops!private! !
-!StParseNodeAnalyzer categoriesFor: #storeStatic:variable:!instructions-stack ops!private! !
-!StParseNodeAnalyzer categoriesFor: #storeTemp:!instructions-stack ops!private! !
-!StParseNodeAnalyzer categoriesFor: #targetOfMessage:!commands!private!refactoring! !
+!StParseNodeAnalyzer categoriesFor: #signalError:forNode:!error handling!private! !
+!StParseNodeAnalyzer categoriesFor: #signalError:forNode:extra:!error handling!private! !
+!StParseNodeAnalyzer categoriesFor: #signalError:forNode:extras:!error handling!private! !
+!StParseNodeAnalyzer categoriesFor: #signalError:forNode:range:extras:!error handling!private! !
 !StParseNodeAnalyzer categoriesFor: #tempDecls!accessing!private! !
-!StParseNodeAnalyzer categoriesFor: #varRef:isAssignment:!helpers!private! !
 !StParseNodeAnalyzer categoriesFor: #visitArgumentNode:!public!visiting! !
 !StParseNodeAnalyzer categoriesFor: #visitArgumentNodes:!public!visiting! !
 !StParseNodeAnalyzer categoriesFor: #visitAssignmentNode:!public!visitor/double dispatching! !
@@ -708,10 +640,13 @@ visitVariableNode: aVariableNode
 !StParseNodeAnalyzer categoriesFor: #visitMessageNode:!public!visitor/double dispatching! !
 !StParseNodeAnalyzer categoriesFor: #visitMethodNode:!public!visitor/double dispatching! !
 !StParseNodeAnalyzer categoriesFor: #visitOptimizedNode:!public!visitor/double dispatching! !
+!StParseNodeAnalyzer categoriesFor: #visitPseudoVariableNode:!public!visiting! !
 !StParseNodeAnalyzer categoriesFor: #visitSequenceNode:!public!visitor/double dispatching! !
 !StParseNodeAnalyzer categoriesFor: #visitTemporaryNode:!public!visiting! !
 !StParseNodeAnalyzer categoriesFor: #visitTemporaryNodes:!public!visiting! !
 !StParseNodeAnalyzer categoriesFor: #visitVariableNode:!public!visitor/double dispatching! !
+!StParseNodeAnalyzer categoriesFor: #writeStaticVariable:!helpers!private! !
+!StParseNodeAnalyzer categoriesFor: #writeVariable:!helpers!private! !
 
 !StParseNodeAnalyzer class methodsFor!
 

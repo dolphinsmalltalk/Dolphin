@@ -16,13 +16,7 @@ acceptVisitor: aProgramNodeVisitor
 isConstantNode
 	"Answer whether the receiver describes a constant that cannot be assigned to."
 
-	^true!
-
-isPseudoVariableNode
-	"Answer whether the receiver describes a pseudo-variable such as 'self' or 'super'."
-
 	^true! !
 !StPseudoVariableNode categoriesFor: #acceptVisitor:!public!visitor! !
 !StPseudoVariableNode categoriesFor: #isConstantNode!public!testing! !
-!StPseudoVariableNode categoriesFor: #isPseudoVariableNode!public!testing! !
 

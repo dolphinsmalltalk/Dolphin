@@ -10,6 +10,26 @@ StSemanticAnalyser comment: 'StSemanticAnalyser is a <StParseNodeVisitor> that p
 !StSemanticAnalyser categoriesForClass!System-Compiler! !
 !StSemanticAnalyser methodsFor!
 
+bindingFor: aStVariableNode
+	| var |
+	var := currentScope lookupVariable: aStVariableNode name.
+	var isNil ifTrue: [^nil].
+	var isLocalVariable
+		ifTrue: 
+			["If hosted in the debugger can make a stab at these"
+			^self contextBindingFor: var name].
+	^var isInstanceVariable
+		ifTrue: 
+			[(evaluationContext isKindOf: methodClass)
+				ifTrue: 
+					["In the debugger will have an evaluation context which is the receiver."
+
+					"Concoct a fake variable binding"
+					(VariableBinding key: var name value: (evaluationContext instVarAt: var index))
+						isImmutable: evaluationContext isImmutable;
+						yourself]]
+		ifFalse: [var isStaticVariable ifTrue: [var binding]]!
+
 checkHardBreakpoint: aStMessageNode 
 	aStMessageNode selector == #halt 
 		ifTrue: [self signalError: CInfoHardBreakpoint forNode: aStMessageNode]!
@@ -76,17 +96,50 @@ checkUnimplementedSubclassResponsibility: aStMessageNode
 								with: selector
 								with: class)]]!
 
+contextBindingFor: aString
+	^(evalScope lookupVariable: aString) ifNotNil: [:var | var binding]!
+
 initialize
 	isStub := false.
 	^super initialize!
 
-pushStatic: aVariableNode variable: aVariableBinding
-	(aVariableBinding value == true class or: [aVariableBinding value == false class])
+readStaticVariable: aStVariableNode
+	| binding |
+	super readStaticVariable: aStVariableNode.
+	binding := aStVariableNode variable binding.
+	(binding value == true class or: [binding value == false class])
 		ifTrue: 
 			[self
 				signalError: CWarnUsesBooleanClass
-				forNode: aVariableNode
-				extra: aVariableBinding key asLowercase]!
+				forNode: aStVariableNode
+				extra: binding key asLowercase]!
+
+targetOfMessage: aStMessageNode 
+	| receiver |
+	receiver := aStMessageNode receiver.
+	receiver isVariable 
+		ifTrue: 
+			[| identifier |
+			identifier := receiver name.
+			identifier = 'self' ifTrue: [^self currentMethodClass].
+			identifier = 'super' ifTrue: [^self currentMethodClass superclass].
+			identifier = 'thisContext' ifTrue: [^Integer].
+			(self bindingFor: receiver) 
+				ifNotNil: 
+					[:var | 
+					"In the case of other variables, we can only offer a
+					variable type with confidence (without resort to type
+					inference) if the variable binding is constant. If it isn't
+					then the variable could assume different types through the
+					course of the method or even across different invocations
+					(if a global, or class variable). This might cause false
+					reports of unimplemented messages in the debugger. Therefore
+					we have to be conservative here in suggesting the variable
+					type."
+					var isImmutable ifTrue: [^var value basicClass]].
+			^nil].
+	receiver isLiteralNode ifTrue: [^aStMessageNode receiver value basicClass].
+	^nil!
 
 visitMessageNode: aMessageNode
 	"Process a message send (check for unimplemented selectors)"
@@ -105,13 +158,16 @@ visitSequenceNode: aSequenceNode
 			[self currentScope unreferencedArguments
 				do: [:each | self signalError: CInfoUnreferencedArg forNode: each node]].
 	^answer! !
+!StSemanticAnalyser categoriesFor: #bindingFor:!helpers!private! !
 !StSemanticAnalyser categoriesFor: #checkHardBreakpoint:!helpers!private! !
 !StSemanticAnalyser categoriesFor: #checkIfStubMessage:!helpers!private! !
 !StSemanticAnalyser categoriesFor: #checkSupersend:!helpers!private! !
 !StSemanticAnalyser categoriesFor: #checkUnimplemented:!helpers!private! !
 !StSemanticAnalyser categoriesFor: #checkUnimplementedSubclassResponsibility:!helpers!private! !
+!StSemanticAnalyser categoriesFor: #contextBindingFor:!helpers!private! !
 !StSemanticAnalyser categoriesFor: #initialize!initializing!public! !
-!StSemanticAnalyser categoriesFor: #pushStatic:variable:!helpers!instructions-stack ops!private! !
+!StSemanticAnalyser categoriesFor: #readStaticVariable:!helpers!private! !
+!StSemanticAnalyser categoriesFor: #targetOfMessage:!commands!private!refactoring! !
 !StSemanticAnalyser categoriesFor: #visitMessageNode:!public!visitor/double dispatching! !
 !StSemanticAnalyser categoriesFor: #visitSequenceNode:!public!visitor/double dispatching! !
 
