@@ -1280,16 +1280,16 @@ clearSystemFolder
 
 	systemFolder := nil.!
 
-cloneClass: aClass as: newClassName under: superclass in: package 
+cloneClass: aClass as: newClassName under: superclass in: package
 	| buildVarString aPackage definition changes |
 	aPackage := package.
 	definition := String writeStream.
 	buildVarString := 
-			[:names | 
+			[:names |
 			definition nextPut: $'.
 			names do: [:each | definition display: each] separatedBy: [definition space].
 			definition nextPut: $'].
-	changes := CompositeRefactoryChange 
+	changes := CompositeRefactoryChange
 				named: ('Clone class <1d> as <1d>' expandMacrosWith: aClass with: newClassName).
 	definition
 		print: superclass;
@@ -1299,36 +1299,36 @@ cloneClass: aClass as: newClassName under: superclass in: package
 		print: newClassName;
 		crtab;
 		display: 'instanceVariableNames: '.
-	buildVarString value: (aClass allInstVarNames 
+	buildVarString value: (aClass allInstVarNames
 				difference: (superclass ifNil: [#()] ifNotNil: [superclass allInstVarNames])).
 	definition
 		crtab;
 		display: 'classVariableNames: '.
-	buildVarString value: (aClass allClassVarNames 
+	buildVarString value: (aClass allClassVarNames
 				difference: (superclass ifNil: [#()] ifNotNil: [superclass allClassVarNames])).
 	definition
 		crtab;
 		display: 'poolDictionaries: '.
-	buildVarString value: (aClass allSharedPoolNames 
+	buildVarString value: (aClass allSharedPoolNames
 				difference: (superclass ifNil: [#()] ifNotNil: [superclass allSharedPoolNames])).
 	definition
 		crtab;
 		display: 'classInstanceVariableNames: '.
-	buildVarString value: (aClass class allInstVarNames 
+	buildVarString value: (aClass class allInstVarNames
 				difference: (superclass ifNil: [#()] ifNotNil: [superclass class allInstVarNames])).
 	changes addChange: (AddClassChange definition: definition contents).
-	self 
+	self
 		copyAllMethodsOf: aClass
 		to: newClassName
 		changes: changes.
-	self 
+	self
 		copyAllMethodsOf: aClass class
 		to: newClassName
 		changes: changes.
 	self changeManager performChange: changes.
-	^(Smalltalk at: newClassName ifAbsent: []) 
+	^(Smalltalk lookup: newClassName)
 		ifNotNil: 
-			[:newClass | 
+			[:newClass |
 			newClass owningPackage: aPackage.
 			newClass]!
 
@@ -1795,21 +1795,21 @@ findDetails
 	findDetails isNil ifTrue: [findDetails := FindDetails new].
 	^findDetails!
 
-findMatchingClass: aString in: aBrowserEnvironment 
+findMatchingClass: aString in: aBrowserEnvironment
 	| classes className pattern global |
 	self assert: [aString notEmpty].
-	global := aBrowserEnvironment at: aString asSymbol ifAbsent: [].
+	global := aBrowserEnvironment lookup: aString asSymbol.
 	(global notNil and: [global class isMeta]) ifTrue: [^global].
 	pattern := ('#*' includes: aString last) ifTrue: [aString] ifFalse: [aString copyWith: $*].
-	classes := (aBrowserEnvironment classNames select: [:aSymbol | pattern match: aSymbol asString]) 
+	classes := (aBrowserEnvironment classNames select: [:aSymbol | pattern match: aSymbol asString])
 				asSortedCollection.
-	classes isEmpty 
+	classes isEmpty
 		ifTrue: 
-			[(MessageBox confirm: ('No class matching <1p> in <2p><N><N>Would you like to try again?' 
+			[(MessageBox confirm: ('No class matching <1p> in <2p><N><N>Would you like to try again?'
 						expandMacrosWith: aString
 						with: aBrowserEnvironment)
 				caption: 'Find Class...') ifTrue: [^nil] ifFalse: [OperationAborted signal]].
-	className := classes size = 1 
+	className := classes size = 1
 				ifTrue: [classes first]
 				ifFalse: 
 					[(ChoicePrompter choices: classes caption: 'Matching classes') ifNil: [OperationAborted signal]].
@@ -3792,8 +3792,7 @@ systemOptions
 		, (self class registeredTools asSortedCollection: [:t1 :t2 | t1 displayString < t2 displayString])!
 
 testBrowserClass
-	testBrowserClass isNil 
-		ifTrue: [testBrowserClass := self environment at: #SUnitBrowser ifAbsent: []].
+	testBrowserClass isNil ifTrue: [testBrowserClass := self environment lookup: #SUnitBrowser].
 	^testBrowserClass!
 
 toolBackgroundColor

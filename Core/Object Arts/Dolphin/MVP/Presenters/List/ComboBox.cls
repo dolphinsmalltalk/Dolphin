@@ -143,10 +143,10 @@ cbnSetFocus
 
 	^self presenter onSetFocus!
 
-command: anInteger id: id 
+command: anInteger id: id
 	"Private - Handler for a redirected WM_COMMAND notification message."
 
-	^(CbnMap at: anInteger ifAbsent: []) ifNotNil: [:selector | self perform: selector]!
+	^(CbnMap lookup: anInteger) ifNotNil: [:selector | self perform: selector]!
 
 defaultWindowStyle
 	"Private - Answer a default window base style to use when creating a combobox."

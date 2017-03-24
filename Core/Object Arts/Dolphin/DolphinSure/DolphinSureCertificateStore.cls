@@ -69,8 +69,7 @@ includesSerial: aStringSerialNo
 	"Answers ttrue if the certificate with aStringSerialNo is stored in the receiver. Evaluates
 	the exceptionHandler if no such certificate is found"
 
-	^(self regKey subValues at: aStringSerialNo ifAbsent: []) notNil.
-!
+	^(self regKey subValues lookup: aStringSerialNo) notNil!
 
 name
 	"Answers the <readableString> name of the receiver"

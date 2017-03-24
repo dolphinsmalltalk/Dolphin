@@ -346,8 +346,8 @@ maxTextLimit
 
 	^SmallInteger maximum!
 
-nmNotify: pNMHDR 
-	^(RtnMap at: (pNMHDR sdwordAtOffset: 8) ifAbsent: []) 
+nmNotify: pNMHDR
+	^(RtnMap lookup: (pNMHDR sdwordAtOffset: 8))
 		ifNil: [super nmNotify: pNMHDR]
 		ifNotNil: [:action | self perform: action with: pNMHDR]!
 

@@ -5,7 +5,8 @@ Object variableSubclass: #ExternalDescriptor
 	classVariableNames: 'CallingConventions ExternalReferenceTypes ExternalValueTypes RetClassIndex RetTypeMask Shared TypeNames TypeSizes'
 	poolDictionaries: 'ExtCallArgTypes'
 	classInstanceVariableNames: ''!
-ExternalDescriptor guid: (GUID fromString: '{87B4C487-026E-11D3-9FD7-00A0CC3E4A32}')!
+ExternalDescriptor guid: (GUID fromString: '{87b4c487-026e-11d3-9fd7-00a0cc3e4a32}')!
+ExternalDescriptor addClassConstant: 'RetClassIndex' value: 4!
 ExternalDescriptor addClassConstant: 'RetTypeMask' value: 63!
 ExternalDescriptor comment: 'The argument/return types supported by the primitive DLL call function are:
 
@@ -531,19 +532,15 @@ parseDoubleIndirection: assoc typeName: typeName
 						, ': Only one further level of indirection to an indirection type is possible'].
 	^ExtCallArgLPPVOID -> nil!
 
-parsePointerToStruct: anAssociation 
+parsePointerToStruct: anAssociation
 	| structClass |
 	structClass := self class environment at: anAssociation value.
-	^(structClass isIndirection and: [anAssociation key == ExtCallArgSTRUCT]) 
+	^(structClass isIndirection and: [anAssociation key == ExtCallArgSTRUCT])
 		ifTrue: [ExtCallArgLPPVOID -> nil]
 		ifFalse: 
-			[((self class environment at: #IUnknown ifAbsent: []) 
+			[((self class environment lookup: #IUnknown)
 				ifNil: [ExtCallArgLP]
-				ifNotNil: 
-					[:unkClass | 
-					(structClass includesBehavior: unkClass) 
-						ifTrue: [ExtCallArgCOMPTR]
-						ifFalse: [ExtCallArgLP]]) 
+				ifNotNil: [:unkClass | (structClass includesBehavior: unkClass) ifTrue: [ExtCallArgCOMPTR] ifFalse: [ExtCallArgLP]])
 					-> structClass]!
 
 parseSingleIndirection: anAssociation 

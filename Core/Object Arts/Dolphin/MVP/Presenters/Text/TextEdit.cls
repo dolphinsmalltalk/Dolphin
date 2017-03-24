@@ -195,10 +195,10 @@ clearSelection
 	range isEmpty ifTrue: [self selectionStart: range start end: range start].
 	self basicClearSelection!
 
-command: anInteger id: id 
+command: anInteger id: id
 	"Private - Handler for a redirected WM_COMMAND notification message."
 
-	^(EnMap at: anInteger ifAbsent: []) ifNotNil: [:selector | self perform: selector]!
+	^(EnMap lookup: anInteger) ifNotNil: [:selector | self perform: selector]!
 
 copySelection
 	"Copy the current selection to the clipboard."

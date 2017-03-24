@@ -165,23 +165,23 @@ addParameterToMethod: aCompiledMethod inPackages: aCollectionOfPackages caption:
 				execute;
 				yourself]!
 
-basicCreateSubclass: aSymbol of: aClass subclasses: aCollection 
+basicCreateSubclass: aSymbol of: aClass subclasses: aCollection
 	"Private - Create a subclass a named subclass of the specified class. Answer the new class.
 	Implements the 'Create Subclass' class refactoring: 'This refactoring allows you to insert a
 	new class into an existing hierarchy. For example, you can insert a new class between object
 	and all of its subclasses by using the refactoring (although I wouldn't recommend it).'"
 
 	| categories |
-	categories := aClass isNil 
+	categories := aClass isNil
 				ifTrue: [Array with: ClassCategory unclassified]
 				ifFalse: [aClass categories].
 	self handleRefactoringException: 
-			[(AddClassRefactoring 
+			[(AddClassRefactoring
 				addClass: aSymbol
 				superclass: aClass
 				subclasses: aCollection
 				category: categories first name) execute].
-	^self environment at: aSymbol ifAbsent: []!
+	^self environment lookup: aSymbol!
 
 browseSelectors: aCollection caption: aString environment: aBrowserEnvironment 
 	| browser |

@@ -94,8 +94,8 @@ classNamed: aSymbol
 	| class index |
 	aSymbol isNil ifTrue: [^nil].
 	(self hasRemoved: aSymbol) ifTrue: [^nil].
-	(newClasses at: aSymbol ifAbsent: []) ifNotNil: [:behaviors | ^behaviors first].
-	(changedClasses at: aSymbol ifAbsent: []) ifNotNil: [:behaviors | ^behaviors first].
+	(newClasses lookup: aSymbol) ifNotNil: [:behaviors | ^behaviors first].
+	(changedClasses lookup: aSymbol) ifNotNil: [:behaviors | ^behaviors first].
 	(class := environment at: aSymbol ifAbsent: []) isBehavior
 		ifTrue: 
 			[| classes |

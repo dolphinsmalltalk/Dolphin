@@ -73,13 +73,13 @@ modelClass
 nmFirst
 	^self subclassResponsibility!
 
-nmNotify: pNMHDR 
+nmNotify: pNMHDR
 	"Private - Handler for a redirected MonthCal WM_NOTIFY message.
 	Implementation Note: Rather than create the appropriate header structure
 	object here, we delay that until the handler, because most of the time
 	we don't need to look at the notification at all."
 
-	^(self class notificationMap at: (pNMHDR sdwordAtOffset: 8) - self nmFirst ifAbsent: []) 
+	^(self class notificationMap lookup: (pNMHDR sdwordAtOffset: 8) - self nmFirst)
 		ifNil: [super nmNotify: pNMHDR]
 		ifNotNil: [:action | self perform: action with: pNMHDR]!
 

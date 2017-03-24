@@ -628,7 +628,7 @@ waitForInput: aBoolean
 	aBoolean ifTrue: [self aboutToIdle].
 	self inputSemaphore wait!
 
-windowAt: aHandle ifAbsent: exceptionHandler 
+windowAt: aHandle ifAbsent: exceptionHandler
 	"Answers an open window that has a handle of aHandle (an Integer or ExternalHandle). If the
 	handle is nil, then answers nil."
 
@@ -636,7 +636,7 @@ windowAt: aHandle ifAbsent: exceptionHandler
 	aHandle isNil ifTrue: [^exceptionHandler value].
 	hWnd := aHandle asInteger.
 	wasEnabled := Processor enableAsyncEvents: false.
-	window := windows at: hWnd ifAbsent: [].
+	window := windows lookup: hWnd.
 	Processor enableAsyncEvents: wasEnabled.
 	^window ifNil: [exceptionHandler value]!
 
@@ -672,7 +672,7 @@ wndProc: hWnd message: message wParam: wParam lParam: lParam cookie: cookie
 	lastWindow asParameter = hWnd
 		ifTrue: [window := lastWindow]
 		ifFalse: 
-			[window := windows at: hWnd ifAbsent: [].
+			[window := windows lookup: hWnd.
 			window isNil
 				ifTrue: 
 					[^Processor callback: cookie

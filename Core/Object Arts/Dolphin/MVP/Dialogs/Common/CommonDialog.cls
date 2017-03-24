@@ -38,17 +38,17 @@ checkError
 	^err = 0 ifFalse: [self error: ('Common dialog error: <1d>' expandMacrosWith: err)]!
 
 createHook
-	^self class hookHandlers 
+	^self class hookHandlers
 		ifNotNil: 
-			[:handlers | 
+			[:handlers |
 			ExternalCallback block: 
-					[:hdlg :uiMsg :wParam :lParam | 
+					[:hdlg :uiMsg :wParam :lParam |
 					view isNil ifTrue: [self attachHandle: hdlg].
-					(handlers at: uiMsg ifAbsent: []) 
+					(handlers lookup: uiMsg)
 						ifNil: [0]
 						ifNotNil: 
-							[:selector | 
-							(self 
+							[:selector |
+							(self
 								perform: selector
 								with: uiMsg
 								with: wParam

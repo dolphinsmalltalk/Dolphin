@@ -262,7 +262,7 @@ basicCompile: aString flags: anInteger
 			methodDictionary
 				ifNotNil: 
 					[| oldMethod |
-					oldMethod := methodDictionary at: selector ifAbsent: [].
+					oldMethod := methodDictionary lookup: selector.
 					result oldMethod: oldMethod.
 					oldMethod ifNotNil: [method isPrivate: oldMethod isPrivate]].
 			self addSelector: selector withMethod: method.
@@ -423,7 +423,7 @@ fullBindingFor: aString
 			1 to: count - 1
 				do: 
 					[:i |
-					env := env at: (parts at: i) ifAbsent: [].
+					env := env lookup: (parts at: i).
 					env isNil ifTrue: [^nil]].
 			^env bindingFor: (parts at: count)].
 	^(self bindingFor: aString) ifNil: [self environment bindingFor: aString]!
@@ -917,7 +917,7 @@ sharedPoolsDo: aMonadicValuable
 	| environment |
 	environment := self environment.
 	self sharedPoolNames
-		do: [:symbol | (environment at: symbol ifAbsent: []) ifNotNil: [:p | aMonadicValuable value: p]]!
+		do: [:symbol | (environment lookup: symbol) ifNotNil: [:p | aMonadicValuable value: p]]!
 
 sourceCodeAt: aSymbol
 	"Answer a <String> that is the source code of the receiver's method with selector, aSymbol.

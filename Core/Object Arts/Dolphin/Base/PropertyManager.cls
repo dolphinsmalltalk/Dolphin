@@ -5,7 +5,7 @@ Object subclass: #PropertyManager
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-PropertyManager guid: (GUID fromString: '{87B4C4AB-026E-11D3-9FD7-00A0CC3E4A32}')!
+PropertyManager guid: (GUID fromString: '{87b4c4ab-026e-11d3-9fd7-00a0cc3e4a32}')!
 PropertyManager comment: ''!
 !PropertyManager categoriesForClass!System-Support! !
 !PropertyManager methodsFor!
@@ -27,7 +27,7 @@ propertyOf: anObject at: aSymbol ifAbsent: aBlock
 	"Answers a property value matching aSymbol for anObject. If no such property
 	exists then aBlock will be evaluated"
 
-	^(register at: anObject ifAbsent: [])
+	^(register lookup: anObject)
 		ifNil: [aBlock value]
 		ifNotNil: [:properties | properties at: aSymbol ifAbsent: aBlock]!
 

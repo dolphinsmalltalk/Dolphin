@@ -6,6 +6,7 @@ StSemanticScope subclass: #StLexicalScope
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 StLexicalScope guid: (GUID fromString: '{cf1f5402-a16a-4f0c-8c08-630e2b5fbf47}')!
+StLexicalScope addClassConstant: 'NeedsSelfMask' value: 1!
 StLexicalScope comment: ''!
 !StLexicalScope categoriesForClass!Kernel-Objects! !
 !StLexicalScope methodsFor!
@@ -27,14 +28,14 @@ declareTemp: aString
 
 includesArg: aString
 	| local |
-	^(local := locals at: aString ifAbsent: []) notNil and: [local isArgument]!
+	^(local := locals lookup: aString) notNil and: [local isArgument]!
 
 includesLocal: aString
 	^locals includesKey: aString!
 
 includesTemp: aString
 	| local |
-	^(local := locals at: aString ifAbsent: []) notNil and: [local isTempVariable]!
+	^(local := locals lookup: aString) notNil and: [local isTempVariable]!
 
 initialize
 	super initialize.
@@ -47,7 +48,7 @@ localCount
 	^locals size!
 
 lookupVariable: aString
-	^locals at: aString ifAbsent: [outer ifNotNil: [outer lookupVariable: aString]]!
+	^(locals lookup: aString) ifNil: [outer ifNotNil: [outer lookupVariable: aString]]!
 
 needsSelf
 	^flags anyMask: NeedsSelfMask!

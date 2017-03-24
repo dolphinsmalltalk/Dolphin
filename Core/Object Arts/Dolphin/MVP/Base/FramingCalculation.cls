@@ -233,11 +233,11 @@ initialize
 	IndependentMask := 4.
 	Calculations := IdentityDictionary new!
 
-lookupCalc: aSymbol framingBlock: framingBlock offsetBlock: offsetBlock flags: anInteger 
+lookupCalc: aSymbol framingBlock: framingBlock offsetBlock: offsetBlock flags: anInteger
 	| calc |
-	(Calculations isNil or: [(calc := Calculations at: aSymbol ifAbsent: []) isNil]) 
+	(Calculations isNil or: [(calc := Calculations lookup: aSymbol) isNil])
 		ifTrue: 
-			[calc := self 
+			[calc := self
 						newName: aSymbol
 						framingBlock: framingBlock
 						offsetBlock: offsetBlock

@@ -5,7 +5,7 @@ STBFiler subclass: #STBOutFiler
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-STBOutFiler guid: (GUID fromString: '{87B4C6E8-026E-11D3-9FD7-00A0CC3E4A32}')!
+STBOutFiler guid: (GUID fromString: '{87b4c6e8-026e-11d3-9fd7-00a0cc3e4a32}')!
 STBOutFiler comment: '<STBOutFiler> is the basic binary filer for serializing a tree of <Object>s to a byte stream.
 
 Instance Variables:
@@ -94,12 +94,10 @@ putGlobal: anObject
 
 refForObject: anObject
 	"Private - Answer the map index of anObject or nil if it is not present.
-	The nil object has a conceptual index of zero." 
+	The nil object has a conceptual index of zero."
 
-	anObject isNil
-		ifTrue: [^0].
-
-	^writeMap at: anObject ifAbsent: []!
+	anObject isNil ifTrue: [^0].
+	^writeMap lookup: anObject!
 
 register: anObject
 	"Private - Add anObject to the map of output objects."

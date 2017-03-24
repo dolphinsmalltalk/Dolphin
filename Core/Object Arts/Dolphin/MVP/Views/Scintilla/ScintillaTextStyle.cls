@@ -74,7 +74,7 @@ backcolor: aColorOrNil
 	backcolor := aColorOrNil!
 
 basicId
-	^id ifNil: [name ifNotNil: [id := PredefinedStyleNames at: name ifAbsent: []]]!
+	^id ifNil: [name ifNotNil: [id := PredefinedStyleNames lookup: name]]!
 
 case
 	^case!

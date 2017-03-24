@@ -35,7 +35,7 @@ package!
 
 Object subclass: #StSemanticScope
 	instanceVariableNames: 'outer flags'
-	classVariableNames: 'EmptyBlockMask FarReturnMask OptimizedBlockMask'
+	classVariableNames: 'EmptyBlockMask FarReturnMask NeedsOuter OptimizedBlockMask'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Object subclass: #StVariable

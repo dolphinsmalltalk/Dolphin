@@ -13,11 +13,11 @@ StClassScope comment: ''!
 lookupVariable: aString
 	instanceVariables isNil
 		ifTrue: 
-			[instanceVariables := LookupTable new.
+			[instanceVariables := LookupTable new: 5.
 			methodClass allInstVarNames
 				keysAndValuesDo: [:i :v | instanceVariables at: v put: (StInstanceVariable index: i name: v)]].
-	^instanceVariables at: aString
-		ifAbsent: 
+	^(instanceVariables lookup: aString)
+		ifNil: 
 			[(methodClass fullBindingFor: aString)
 				ifNil: [outer lookupVariable: aString]
 				ifNotNil: [:b | StStaticVariable scope: self binding: b]]!

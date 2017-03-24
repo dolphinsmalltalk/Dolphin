@@ -216,11 +216,11 @@ removeClasses: aCollection notifying: notifier
 	self shrinkEventsRegister.
 	^count!
 
-removeClassNamed: classNameSymbol notifying: notifier 
+removeClassNamed: classNameSymbol notifying: notifier
 	"Private - Removes the named class from the image, if it exists.
 	Answer the number of classes actually removed."
 
-	^(Smalltalk at: classNameSymbol ifAbsent: []) 
+	^(Smalltalk lookup: classNameSymbol)
 		ifNil: [0]
 		ifNotNil: [:class | self removeClass: class notifying: notifier]!
 
@@ -259,21 +259,21 @@ removeSelectors: aCollectionOfSelectors of: aBehavior notifying: notifier
 shrinkEventsRegister
 	Object._EventsRegister keys do: [:each | each setEvents: each getEvents shrink]!
 
-stripCategoryManagementNotifying: notifier 
+stripCategoryManagementNotifying: notifier
 	"Private - Remove categories information"
 
 	self notify: notifier status: 'Removing category management'.
 	self logElement: 'RemoveCategoryManagement' value: nil.
 	Behavior allSubinstances do: [:each | each methodsCatalogue: nil].
 	Class allSubinstances do: 
-			[:each | 
+			[:each |
 			each
 				classCategories: #();
 				sourceDescriptor: nil].
 
 	"Uninitialize the category management system. Make this compatible with
 	older versions of the image where categories were managed by CategoryManager"
-	(Smalltalk at: #CategoryManager ifAbsent: []) 
+	(Smalltalk lookup: #CategoryManager)
 		ifNil: 
 			[Smalltalk at: #Category ifPresent: [:c | c uninitialize].
 			Smalltalk at: #MethodCategory ifPresent: [:c | c uninitialize]]

@@ -5,7 +5,7 @@ FileLocator subclass: #ClassLocator
 	classVariableNames: 'Aliases DefaultFileLocator ImportedClasses ImportedClassesMutex InstallationFileLocator'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ClassLocator guid: (GUID fromString: '{87B4C462-026E-11D3-9FD7-00A0CC3E4A32}')!
+ClassLocator guid: (GUID fromString: '{87b4c462-026e-11d3-9fd7-00a0cc3e4a32}')!
 ClassLocator comment: 'A ClassLocator is used to find a class for an object being read from an external serialized stream (such as STB). The locator first tries to match an exsiting class already in the image and, if this fails, it is then used to indicate the location of an external binary class that may be loaded into the image. To do this, the locator holds the code base where the external BinaryPackage file resides and a key (usually the class name) that can be used to identify a particular class within the package.  The standard ClassLocator is used when the binary package file can be found on a UNC file system.  If the class is part of an applet and is to be located by a URL then a URLClassLocator should be used instead.
 
 Instance Variables:
@@ -61,7 +61,7 @@ findAvailableClass
 
 	| class |
 	(class := self findResidentClass) isNil
-		ifTrue: [class := ImportedClasses at: self fullClassKey ifAbsent: []].
+		ifTrue: [class := ImportedClasses lookup: self fullClassKey].
 	^class!
 
 findResidentClass
@@ -70,7 +70,7 @@ findResidentClass
 
 	| className |
 	className := key asSymbol.
-	^Smalltalk at: className ifAbsent: [Aliases at: className ifAbsent: []]!
+	^Smalltalk at: className ifAbsent: [Aliases lookup: className]!
 
 fullClassKey
 	"Answer the full specification of the class identified by the receiver."

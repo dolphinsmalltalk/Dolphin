@@ -892,14 +892,14 @@ offsetFor: anExternalField base: anInteger
 
 	^anInteger roundUpTo: (anExternalField alignment min: self packing)!
 
-offsetOf: aSymbol 
+offsetOf: aSymbol
 	"Answer the offset of the named field, or -1 if there is no such field."
 
 	"Implementation Note: We want to avoid realising the template when compiling instance side
 	methods before the template definition is available on the class side, so access the inst
 	var directly"
 
-	template ifNotNil: [(template at: aSymbol ifAbsent: []) ifNotNil: [:field | ^field offset]].
+	template ifNotNil: [(template lookup: aSymbol) ifNotNil: [:field | ^field offset]].
 	^-1!
 
 packing

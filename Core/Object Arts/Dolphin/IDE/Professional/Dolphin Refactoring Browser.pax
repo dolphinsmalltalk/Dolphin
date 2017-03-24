@@ -1476,26 +1476,24 @@ getOptionSelfArgumentName
 	newName isNil ifTrue: [^self refactoringAborted: 'Method not moved'].
 	^newName!
 
-getOptionVariableTypes: choicesCollection selected: suggestionsCollection 
-	^(ChoicePrompter 
+getOptionVariableTypes: choicesCollection selected: suggestionsCollection
+	^(ChoicePrompter
 		create: 'Extensible multi-selection choice prompter'
 		on: suggestionsCollection asOrderedCollection
-		multipleChoices: ((choicesCollection union: suggestionsCollection) 
+		multipleChoices: ((choicesCollection union: suggestionsCollection)
 				asSortedCollection: [:a :b | a name < b name])
 		caption: 'Select class(es) of new method... ')
 		newCaption: 'Add Other Class ...';
 		newBlock: 
-				[:aString | 
+				[:aString |
 				| global index |
-				index := aString identityIndexOf: $ .
-				global := index == 0 
-							ifTrue: [Smalltalk at: aString ifAbsent: []]
+				index := aString identityIndexOf: $\x20.
+				global := index == 0
+							ifTrue: [Smalltalk lookup: aString]
 							ifFalse: 
-								[(Smalltalk at: (aString leftString: index - 1) ifAbsent: []) 
-									ifNil: []
-									ifNotNil: [:class | class class]].
-				(global notNil 
-					and: [(global isKindOf: Behavior) and: [self model environment includesClass: global]]) 
+								[(Smalltalk lookup: (aString leftString: index - 1)) ifNil: [] ifNotNil: [:class | class class]].
+				(global notNil
+					and: [(global isKindOf: Behavior) and: [self model environment includesClass: global]])
 						ifFalse: 
 							[MessageBox errorMsg: ('Sorry, but <1s> is not a valid class name' expandMacrosWith: aString).
 							nil]

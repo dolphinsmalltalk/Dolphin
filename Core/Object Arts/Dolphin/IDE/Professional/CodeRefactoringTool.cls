@@ -733,13 +733,13 @@ renameVariable
 
 	(self renameVariableCommand: self selectedNode) value: self!
 
-renameVariableCommand: anStVariableNode 
+renameVariableCommand: anStVariableNode
 	^(##((LookupTable new)
 		at: #temporary put: #renameTemporary:;
 		at: #instance put: #renameInstanceVariable:;
 		at: #class put: #renameClassVariable:;
 		at: #classGlobal put: #renameClass:;
-		yourself) at: (presenter variableClassification: anStVariableNode) ifAbsent: []) 
+		yourself) lookup: (presenter variableClassification: anStVariableNode))
 		ifNotNil: [:selector | Message selector: selector argument: anStVariableNode]!
 
 selectedErrorRange

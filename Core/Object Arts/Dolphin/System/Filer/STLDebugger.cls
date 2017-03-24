@@ -124,7 +124,7 @@ objectAt: anInteger
 	Signal an exception if there is no such entry."
 
 	^anInteger == 0
-		ifFalse: [(readMap at: anInteger ifAbsent: []) ifNil: [self class errorInconsistentSTB: anInteger]]!
+		ifFalse: [(readMap lookup: anInteger) ifNil: [self class errorInconsistentSTB: anInteger]]!
 
 printOffsets
 	^printOffsets!
@@ -148,7 +148,7 @@ readObjectOfClass: aClass format: anObject
 		nextPut: $].
 
 	"Create a new object of sufficient size to hold the stored data."
-	(stbClassFormat := converters at: aClass ifAbsent: []) isNil
+	(stbClassFormat := converters lookup: aClass) isNil
 		ifTrue: 
 			["The object is of the current format.
 			Create an instance of the appropriate class."

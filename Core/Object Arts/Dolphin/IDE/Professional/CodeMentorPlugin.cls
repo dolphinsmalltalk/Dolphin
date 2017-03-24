@@ -55,12 +55,11 @@ browseAllFailedMethods
 	self lintRuleFailuresBrowserClass show lintRule: self failedRule.
 !
 
-browseFailedClass: aString 
+browseFailedClass: aString
 	"Private - Browser the class identified by aString"
 
-	(self class environment at: aString asSymbol ifAbsent: []) ifNotNil: 
-			[:failedClass | 
-			(Smalltalk developmentSystem browseClass: failedClass) caption: self failedRule name]!
+	(self class environment lookup: aString asSymbol)
+		ifNotNil: [:failedClass | (Smalltalk developmentSystem browseClass: failedClass) caption: self failedRule name]!
 
 browseFailedMethodName: aString 
 	"Private - Browser the method identified by aString"

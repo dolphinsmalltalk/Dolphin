@@ -83,14 +83,23 @@ dispatchMessage: message wParam: wParam lParam: lParam
 	"Private - Dispatch a Windows message or pass on for default processing."
 
 	| selector answer |
-	answer := (selector := MessageMap at: message ifAbsent: []) notNil
-				ifTrue: [self perform: selector with: message with: wParam with: lParam].
+	answer := (selector := MessageMap lookup: message) notNil
+				ifTrue: 
+					[self
+						perform: selector
+						with: message
+						with: wParam
+						with: lParam].
 
 	"We MUST answer an integer value. If one was not provided, then assume default
 	window processing is required."
 	^answer isInteger
 		ifTrue: [answer]
-		ifFalse: [self defaultWindowProcessing: message wParam: wParam lParam: lParam]!
+		ifFalse: 
+			[self
+				defaultWindowProcessing: message
+				wParam: wParam
+				lParam: lParam]!
 
 enterIdle
 	^true!

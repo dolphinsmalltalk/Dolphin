@@ -67,15 +67,12 @@ confirmTrustFor: aStringDescription
 
 	| dialog |
 	self isTrusted ifTrue: [^true].
-	#todo "Don't pop a dialog here, just raise the warning. Leave it up to the client code to decide how to handle the warning".
-	dialog := Smalltalk at: #DolphinSureTrustWarning ifAbsent: [].
+	#todo.	"Don't pop a dialog here, just raise the warning. Leave it up to the client code to decide how to handle the warning"
+	dialog := Smalltalk lookup: #DolphinSureTrustWarning.
 	dialog isNil
 		ifTrue: [UntrustedContentWarning signal: aStringDescription with: self]
 		ifFalse: [dialog showModalOn: self description: aStringDescription].
-	^self isTrusted
-
-
-!
+	^self isTrusted!
 
 details
 	"Answers the details of the receiver"

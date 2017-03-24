@@ -5,7 +5,7 @@ Object subclass: #SourceManager
 	classVariableNames: 'ChangesIndex DefaultInstance SourcesIndex'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-SourceManager guid: (GUID fromString: '{87B4C4BD-026E-11D3-9FD7-00A0CC3E4A32}')!
+SourceManager guid: (GUID fromString: '{87b4c4bd-026e-11d3-9fd7-00a0cc3e4a32}')!
 SourceManager comment: ''!
 !SourceManager categoriesForClass!Development!System-Support! !
 !SourceManager methodsFor!
@@ -550,7 +550,7 @@ sourceFileFromDescriptor: sourceDescriptor
 	nil, in which case the source descriptor is expected to be an object which can be resolved
 	to the source by sending it the #asString method."
 
-	^SourceFiles at: (self sourceIndexFromDescriptor: sourceDescriptor) ifAbsent: []!
+	^SourceFiles lookup: (self sourceIndexFromDescriptor: sourceDescriptor)!
 
 sourceFilerClass
 	"Answer the class of <SourceFiler> used by the receiver to write source files."

@@ -31,7 +31,7 @@ getAccessorValueText: anAspectAccessor
 isUsingListTreeView
 	"Private - Answer true if the PAI is using a ListTreeView rather than the older style TreeView"
 
-	^(Smalltalk at: #ListTreeView ifAbsent: []) 
+	^(Smalltalk lookup: #ListTreeView)
 		ifNil: [false]
 		ifNotNil: [:ltv | treePresenter view isKindOf: ltv]!
 

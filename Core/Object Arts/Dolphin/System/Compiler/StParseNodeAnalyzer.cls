@@ -40,24 +40,24 @@ addToFrameStatic: aLiteralNode
 	self addLiteral: aLiteralNode value: value!
 
 bindingFor: aStVariableNode
-	^(self lookupVariable: aStVariableNode name)
-		ifNotNil: 
-			[:var |
-			var isLocalVariable
+	| var |
+	var := currentScope lookupVariable: aStVariableNode name.
+	var isNil ifTrue: [^nil].
+	var isLocalVariable
+		ifTrue: 
+			["If hosted in the debugger can make a stab at these"
+			^self contextBindingFor: var name].
+	var isInstanceVariable
+		ifTrue: 
+			[^(evaluationContext isKindOf: methodClass)
 				ifTrue: 
-					["If hosted in the debugger can make a stab at these"
-					^self contextBindingFor: var name].
-			var isInstanceVariable
-				ifTrue: 
-					[^(evaluationContext isKindOf: methodClass)
-						ifTrue: 
-							["In the debugger will have an evaluation context which is the receiver."
+					["In the debugger will have an evaluation context which is the receiver."
 
-							"Concoct a fake variable binding"
-							(VariableBinding key: var name value: (evaluationContext instVarAt: var index))
-								isImmutable: evaluationContext isImmutable;
-								yourself]].
-			var isStaticVariable ifTrue: [var binding]]!
+					"Concoct a fake variable binding"
+					(VariableBinding key: var name value: (evaluationContext instVarAt: var index))
+						isImmutable: evaluationContext isImmutable;
+						yourself]].
+	^var isStaticVariable ifTrue: [var binding]!
 
 blockDepth
 	| depth scope |
@@ -243,7 +243,7 @@ checkOptimizedUnaryMessages: aMessageNode
 
 checkRedefines: aVariableNode
 	| var |
-	var := self lookupVariable: aVariableNode name.
+	var := currentScope lookupVariable: aVariableNode name.
 	var isNil ifTrue: [^self].
 	var isStaticVariable
 		ifTrue: 
@@ -264,7 +264,7 @@ checkRedefines: aVariableNode
 checkRestrictedSelectors: aMethodNode
 	| last first |
 	(self restrictedSelectors identityIncludes: aMethodNode selector) ifFalse: [^self].
-	(OptimizedMessages at: methodClass ifAbsent: [])
+	(OptimizedMessages lookup: methodClass)
 		ifNotNil: [:selectors | (selectors identityIncludes: aMethodNode selector) ifTrue: [^self]].
 	first := aMethodNode selectorParts first sourceInterval.
 	last := aMethodNode argumentCount > 0
@@ -365,9 +365,6 @@ lineOfSourcePosition: position
 	[stream atEnd not and: [stream position < position]] 
 		whileTrue: [stream next == $\n ifTrue: [line := line + 1]].
 	^line!
-
-lookupVariable: aString
-	^currentScope lookupVariable: aString!
 
 newLiteralsCollection
 	^IdentityDictionary new!
@@ -500,7 +497,7 @@ varRef: aVariableNode isAssignment: aBoolean
 			identifier = 'thisContext' ifTrue: [^self pushActiveFrame]].
 	"Starting in the current scope, look through enclosing scopes for a temp or argument that
 	has the same identifier as a variable."
-	(self lookupVariable: identifier)
+	(currentScope lookupVariable: identifier)
 		ifNil: [self signalError: CErrUndeclared forNode: aVariableNode]
 		ifNotNil: 
 			[:var |
@@ -679,7 +676,6 @@ visitVariableNode: aVariableNode
 !StParseNodeAnalyzer categoriesFor: #isReceiverOfNilTest:!helpers!private! !
 !StParseNodeAnalyzer categoriesFor: #isTempVariable:!private!refactoring! !
 !StParseNodeAnalyzer categoriesFor: #lineOfSourcePosition:!helpers!private! !
-!StParseNodeAnalyzer categoriesFor: #lookupVariable:!helpers!private! !
 !StParseNodeAnalyzer categoriesFor: #newLiteralsCollection!helpers!initializing!private! !
 !StParseNodeAnalyzer categoriesFor: #pushActiveFrame!instructions-stack ops!private! !
 !StParseNodeAnalyzer categoriesFor: #pushConst:!helpers!private! !

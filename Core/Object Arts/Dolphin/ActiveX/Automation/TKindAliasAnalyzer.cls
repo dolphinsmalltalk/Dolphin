@@ -21,9 +21,7 @@ classDesc
 	the external type described by the receiver, and the number of indirections
 	to the type."
 
-	^(BaseTypes at: self name ifAbsent: []) 
-		ifNil: [self tdesc classDesc]
-		ifNotNil: [:class | class -> 0]!
+	^(BaseTypes lookup: self name) ifNil: [self tdesc classDesc] ifNotNil: [:class | class -> 0]!
 
 isUnion
 	"Answer whether the receiver describes a union."

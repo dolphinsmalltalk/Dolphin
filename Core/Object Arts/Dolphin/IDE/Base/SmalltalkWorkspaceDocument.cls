@@ -156,7 +156,7 @@ help
 	self model openHelpTopicForTool: self!
 
 ideaSpace
-	^(self class environment at: #IdeaSpaceShell ifAbsent: []) 
+	^(self class environment lookup: #IdeaSpaceShell)
 		ifNotNil: [:ideaSpaceShellClass | (self topShell isKindOf: ideaSpaceShellClass) ifTrue: [self topShell]]!
 
 inspectSystemOptions

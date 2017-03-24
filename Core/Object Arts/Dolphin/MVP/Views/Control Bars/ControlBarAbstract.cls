@@ -183,12 +183,9 @@ nameOf: aView
 
 	"Redirect request to the immediate parent of aView
 	if we are not that parent"
-	aView parentView == self ifFalse: [
-		^aView parentView nameOf: aView].
 
-	^names isNil ifFalse: [names at: aView ifAbsent: []]
-
-!
+	aView parentView == self ifFalse: [^aView parentView nameOf: aView].
+	^names isNil ifFalse: [names lookup: aView]!
 
 nmClick: pNMHDR 
 	"Default handler for a NM_CLICK notification message, pass 

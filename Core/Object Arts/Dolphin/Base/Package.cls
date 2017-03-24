@@ -5,7 +5,7 @@ Object subclass: #Package
 	classVariableNames: '_Uncommitted ChangedIcon CheckTimestamps ClashSignal SourcePackageIcon UnsaveableSignal'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-Package guid: (GUID fromString: '{87B4C4A6-026E-11D3-9FD7-00A0CC3E4A32}')!
+Package guid: (GUID fromString: '{87b4c4a6-026e-11d3-9fd7-00a0cc3e4a32}')!
 Package comment: ''!
 !Package categoriesForClass!Development! !
 !Package methodsFor!
@@ -2039,12 +2039,22 @@ tracePrerequisiteGlobals: trace packagedGlobals: globalLookup
 	"Private - Trace the prerequisites of the receiver that come about because of
 	references to globals from methods."
 
-	self allMethodsDo: [:aMethod | 
-		aMethod literalReferencesDo: [:literal | | global |
-			global := self globalNameOfLiteral: literal.
-			global notNil ifTrue: [ | prereq |
-				prereq := globalLookup at: global ifAbsent: [].
-				self trace: trace prerequisite: prereq from: aMethod to: global type: 'references global']]]!
+	self allMethodsDo: 
+			[:aMethod |
+			aMethod literalReferencesDo: 
+					[:literal |
+					| global |
+					global := self globalNameOfLiteral: literal.
+					global notNil
+						ifTrue: 
+							[| prereq |
+							prereq := globalLookup lookup: global.
+							self
+								trace: trace
+								prerequisite: prereq
+								from: aMethod
+								to: global
+								type: 'references global']]]!
 
 tracePrerequisites
 	"Private - Answer an IdentityDictionary of prerequisite package keys against an
@@ -2088,29 +2098,28 @@ tracePrerequisitesOfClasses: trace packagedGlobals: globalLookup
 
 	| manager |
 	manager := self manager.
-	self classesDo: [:aClass | | base prereq |
-		base := aClass superclass.
-		"Have to account specially for subclasses of nil to avoid dependency on _Uncommitted"
-		prereq := base isNil 
-					ifTrue: [manager systemPackage] 
-					ifFalse: [manager packageOfClass: base].
-		self 
-			trace: trace 
-			prerequisite: prereq 
-			from: aClass 
-			to: base 
-			type: 'is a subclass of'.
+	self classesDo: 
+			[:aClass |
+			| base prereq |
+			base := aClass superclass.
+			"Have to account specially for subclasses of nil to avoid dependency on _Uncommitted"
+			prereq := base isNil ifTrue: [manager systemPackage] ifFalse: [manager packageOfClass: base].
+			self
+				trace: trace
+				prerequisite: prereq
+				from: aClass
+				to: base
+				type: 'is a subclass of'.
 
-		"Look for references to pool dictionaries"
-		aClass sharedPoolNames do: [:poolName |
-			self 
-				trace: trace 
-				prerequisite: (globalLookup at: poolName ifAbsent: [])
-				from: aClass 
-				to: poolName 
-				type: 'uses the shared pool']]
-
-!
+			"Look for references to pool dictionaries"
+			aClass sharedPoolNames do: 
+					[:poolName |
+					self
+						trace: trace
+						prerequisite: (globalLookup lookup: poolName)
+						from: aClass
+						to: poolName
+						type: 'uses the shared pool']]!
 
 tracePrerequisitesOfGlobals: trace packagedGlobals: anObject 
 	"Private - Trace the prerequisites of the receiver's loose methods."

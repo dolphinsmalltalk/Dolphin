@@ -87,7 +87,7 @@ free
 	"Free any external resources/and or references."
 
 	| factory |
-	factory := Factories at: self serverClass ifAbsent: [].
+	factory := Factories lookup: self serverClass.
 	factory == self ifFalse: [^self].
 	Factories removeKey: self serverClass.
 	self basicFree!

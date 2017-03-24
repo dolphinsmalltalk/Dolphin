@@ -12,7 +12,7 @@ PackageTest comment: ''!
 
 checkNoTestPackageContents
 	| scribbleTestClass scribbleClass |
-	scribbleTestClass := Smalltalk at: #ScribbleTest ifAbsent: [].
+	scribbleTestClass := Smalltalk lookup: #ScribbleTest.
 	self assert: scribbleTestClass isNil.
 	scribbleClass := Smalltalk at: #Scribble.
 	self assert: (scribbleClass compiledMethodAt: #looseA ifAbsent: []) isNil.

@@ -5,7 +5,7 @@ Magnitude subclass: #Character
 	classVariableNames: 'CharacterSet EscapeChars'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-Character guid: (GUID fromString: '{87B4C651-026E-11D3-9FD7-00A0CC3E4A32}')!
+Character guid: (GUID fromString: '{87b4c651-026e-11d3-9fd7-00a0cc3e4a32}')!
 Character addClassConstant: 'EscapeChars' value: #($0 nil nil nil nil nil nil $a $b $t $n $v $f $r)!
 Character comment: 'Character is the class of objects which serve as the elemental values of Smalltalk Strings. There is a finite set of Characters (256 in the current Dolphin implementation). Smalltalk characters have a literal syntax which is the $ symbol followed by the normal printed representation of the character. Dolphin also supports the following escaped literal formats to provide a literal representation of any character:
 	$\0	- Null
@@ -285,7 +285,7 @@ printOn: aStream
 		ifTrue: [aStream nextPut: self]
 		ifFalse: 
 			[aStream nextPut: $\.
-			(EscapeChars at: asciiValue + 1 ifAbsent: [])
+			(EscapeChars lookup: asciiValue + 1)
 				ifNotNil: [:char | aStream nextPut: char]
 				ifNil: 
 					[aStream nextPut: $x.

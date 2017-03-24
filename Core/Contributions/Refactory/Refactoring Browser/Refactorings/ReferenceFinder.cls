@@ -16,11 +16,11 @@ addBacklinkFrom: newObject to: anObject
 addBacklinkLevel
 	backlinks addLast: self identityDictionaryClass new!
 
-backlinkFor: anObject 
+backlinkFor: anObject
 	backlinks do: 
-			[:each | 
+			[:each |
 			| toObject |
-			toObject := each at: anObject ifAbsent: [].
+			toObject := each lookup: anObject.
 			toObject notNil ifTrue: [^toObject]].
 	^nil!
 

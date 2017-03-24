@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #Sound
 	instanceVariableNames: 'name location type fileLocator'
 	classVariableNames: 'Registry'
 	poolDictionaries: 'MessageBoxConstants Win32Constants'
 	classInstanceVariableNames: ''!
-Sound guid: (GUID fromString: '{87B4C4BC-026E-11D3-9FD7-00A0CC3E4A32}')!
+Sound guid: (GUID fromString: '{87b4c4bc-026e-11d3-9fd7-00a0cc3e4a32}')!
 Sound comment: 'Sound is the class of objects that represent wave audio resources (.wav files).
 
 Instance Variables:
@@ -200,10 +200,8 @@ woofAndWaitFor: aSymbol ifAbsent: exceptionBlock
 	"Woofs standard sound from our own registry"
 
 	| sound |
-	sound := (Registry at: aSymbol ifAbsent: []). 
-	sound notNil 
-		ifTrue: [ sound woofAndWait ]
-		ifFalse: [ exceptionBlock value ]!
+	sound := Registry lookup: aSymbol.
+	sound notNil ifTrue: [sound woofAndWait] ifFalse: [exceptionBlock value]!
 
 woofFor: aSymbol
 	"Woofs standard sound from our own registry"
@@ -214,10 +212,8 @@ woofFor: aSymbol ifAbsent: exceptionBlock
 	"Woofs standard sound from our own registry"
 
 	| sound |
-	sound := (Registry at: aSymbol ifAbsent: []). 
-	sound notNil 
-		ifTrue: [ sound woof ]
-		ifFalse: [ exceptionBlock value ]! !
+	sound := Registry lookup: aSymbol.
+	sound notNil ifTrue: [sound woof] ifFalse: [exceptionBlock value]! !
 !Sound class categoriesFor: #beep!parping!public! !
 !Sound class categoriesFor: #beep:!parping!public! !
 !Sound class categoriesFor: #beep:duration:!parping!public! !

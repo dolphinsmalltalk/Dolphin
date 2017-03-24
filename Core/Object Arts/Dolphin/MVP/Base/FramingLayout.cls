@@ -25,15 +25,14 @@ arrangementOf: aView
 
 	^framings at: aView ifAbsentPut: [self newConstraintFor: aView]!
 
-arrangementOf: aView put: aFramingConstraints 
+arrangementOf: aView put: aFramingConstraints
 	"Set the arrangement parameter of the <View>, aView< in the receiver to be the
 	<FramingConstraints> argument."
 
 	| existing |
-	existing := framings at: aView ifAbsent: [].
+	existing := framings lookup: aView.
 	framings at: aView put: aFramingConstraints.
-	existing notNil ifTrue: [
-		aFramingConstraints offsets = existing offsets ifFalse: [^self]].
+	existing notNil ifTrue: [aFramingConstraints offsets = existing offsets ifFalse: [^self]].
 	self resize: aView to: aView rectangle!
 
 initialize
