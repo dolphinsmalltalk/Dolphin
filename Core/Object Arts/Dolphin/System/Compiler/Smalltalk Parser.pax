@@ -180,7 +180,7 @@ StValueNode subclass: #StOptimizedNode
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 StValueNode subclass: #StVariableNode
-	instanceVariableNames: 'name start'
+	instanceVariableNames: 'name start variable'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!

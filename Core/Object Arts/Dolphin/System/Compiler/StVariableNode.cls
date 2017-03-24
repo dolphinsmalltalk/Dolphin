@@ -1,7 +1,7 @@
 "Filed out from Dolphin Smalltalk 7"!
 
 StValueNode subclass: #StVariableNode
-	instanceVariableNames: 'name start'
+	instanceVariableNames: 'name start variable'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -42,11 +42,6 @@ isConstantNode
 isImmediateNode
 	^true!
 
-isPseudoVariableNode
-	"Answer whether the receiver describes a pseudo-variable such as 'self' or 'super'."
-
-	^false!
-
 isVariable
 	^true!
 
@@ -67,7 +62,13 @@ startWithoutParentheses
 	^start!
 
 stopWithoutParentheses
-	^start + name size - 1! !
+	^start + name size - 1!
+
+variable
+	^variable!
+
+variable: anStVariable
+	variable := anStVariable! !
 !StVariableNode categoriesFor: #=!comparing!public! !
 !StVariableNode categoriesFor: #acceptVisitor:!public!visitor! !
 !StVariableNode categoriesFor: #equalTo:withMapping:!comparing!public! !
@@ -75,7 +76,6 @@ stopWithoutParentheses
 !StVariableNode categoriesFor: #identifierToken:!initializing!private! !
 !StVariableNode categoriesFor: #isConstantNode!public!testing! !
 !StVariableNode categoriesFor: #isImmediateNode!public!testing! !
-!StVariableNode categoriesFor: #isPseudoVariableNode!public!testing! !
 !StVariableNode categoriesFor: #isVariable!public!testing! !
 !StVariableNode categoriesFor: #name!accessing!public! !
 !StVariableNode categoriesFor: #name:start:!initializing!private! !
@@ -83,6 +83,8 @@ stopWithoutParentheses
 !StVariableNode categoriesFor: #precedence!accessing!public! !
 !StVariableNode categoriesFor: #startWithoutParentheses!accessing!public! !
 !StVariableNode categoriesFor: #stopWithoutParentheses!accessing!public! !
+!StVariableNode categoriesFor: #variable!accessing!public! !
+!StVariableNode categoriesFor: #variable:!accessing!public! !
 
 !StVariableNode class methodsFor!
 

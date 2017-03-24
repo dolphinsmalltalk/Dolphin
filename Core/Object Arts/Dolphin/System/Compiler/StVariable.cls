@@ -21,6 +21,9 @@ addWrite: anStVariableNode
 isArgument
 	^false!
 
+isConstant
+	^false!
+
 isInstanceVariable
 	^false!
 
@@ -63,6 +66,7 @@ writes
 !StVariable categoriesFor: #addRead:!public! !
 !StVariable categoriesFor: #addWrite:!public! !
 !StVariable categoriesFor: #isArgument!public!testing! !
+!StVariable categoriesFor: #isConstant!public!testing! !
 !StVariable categoriesFor: #isInstanceVariable!public!testing! !
 !StVariable categoriesFor: #isLocalVariable!public!testing! !
 !StVariable categoriesFor: #isRead!public!testing! !

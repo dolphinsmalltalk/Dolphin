@@ -11,6 +11,10 @@ StArgumentVariable comment: ''!
 !StArgumentVariable methodsFor!
 
 isArgument
+	^true!
+
+isConstant
 	^true! !
 !StArgumentVariable categoriesFor: #isArgument!public!testing! !
+!StArgumentVariable categoriesFor: #isConstant!public!testing! !
 
