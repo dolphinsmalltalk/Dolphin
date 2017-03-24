@@ -5,7 +5,7 @@ Collection subclass: #SequenceableCollection
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-SequenceableCollection guid: (GUID fromString: '{87B4C50A-026E-11D3-9FD7-00A0CC3E4A32}')!
+SequenceableCollection guid: (GUID fromString: '{87b4c50a-026e-11d3-9fd7-00a0cc3e4a32}')!
 SequenceableCollection comment: 'SequenceableCollection is the class of Collections whose elements are ordered and which are externally named by integer indices.'!
 !SequenceableCollection categoriesForClass!Collections-Abstract! !
 !SequenceableCollection methodsFor!
@@ -815,6 +815,14 @@ lastIndexOf: anObject ifAbsent: exceptionHandler
 		ifTrue: [exceptionHandler value]
 		ifFalse: [index]!
 
+lookup: keyInteger
+	"Answer the value named by the <Integer> argument, keyInteger, or nil if there is no such key in the receiver.
+	Clearly if the receiver can contain nil values then it will not be possible to distinguish between the absence
+	of the key and the key being associated with a nil value. However, this method expresses the
+	very common pattern of passing an empty block as absent handler to #at:ifAbsent:"
+
+	^(keyInteger > 0 and: [keyInteger <= self size]) ifTrue: [self at: keyInteger]!
+
 nextIdentityIndexOf: anElement from: start to: stop
 	"Answer the index of the next occurrence of anElement in the receiver's indexable
 	variables between startIndex and stopIndex inclusive. If there are no such occurrences, answer 0.
@@ -1206,6 +1214,7 @@ writeStream
 !SequenceableCollection categoriesFor: #last:!copying!public! !
 !SequenceableCollection categoriesFor: #lastIndexOf:!public!searching! !
 !SequenceableCollection categoriesFor: #lastIndexOf:ifAbsent:!public!searching! !
+!SequenceableCollection categoriesFor: #lookup:!accessing!public! !
 !SequenceableCollection categoriesFor: #nextIdentityIndexOf:from:to:!public!searching! !
 !SequenceableCollection categoriesFor: #nextIndexOf:from:to:!public!searching! !
 !SequenceableCollection categoriesFor: #occurrencesOfSubCollection:!private!searching! !

@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 SharedLookupTable variableSubclass: #WeakLookupTable
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-WeakLookupTable guid: (GUID fromString: '{87B4C532-026E-11D3-9FD7-00A0CC3E4A32}')!
+WeakLookupTable guid: (GUID fromString: '{87b4c532-026e-11d3-9fd7-00a0cc3e4a32}')!
 WeakLookupTable comment: ''!
 !WeakLookupTable categoriesForClass!Collections-Unordered!Collections-Weak! !
 !WeakLookupTable methodsFor!
@@ -107,7 +107,7 @@ elementsExpired: losses of: aWeakArray
 							self basicAt: deathAt put: nil.
 							self fixCollisionsIgnoringCorpsesFrom: deathAt]]]!
 
-fixCollisionsIgnoringCorpsesFrom: index 
+fixCollisionsIgnoringCorpsesFrom: index
 	"Private - Rehashes objects in the collection after index to see if any of
 	them hash to index.  If so, that object is copied to index, and the
 	process repeats with that object's index, until a nil is encountered.
@@ -120,12 +120,11 @@ fixCollisionsIgnoringCorpsesFrom: index
 	corpse := DeadObject current.
 	
 	[slotIndex := slotIndex \\ capacity + 1.
-	(element := self basicAt: slotIndex) isNil] 
-			whileFalse: 
-				[element == corpse 
+	(element := self basicAt: slotIndex) isNil] whileFalse: 
+				[element == corpse
 					ifFalse: 
 						[| hashIndex |
-						hashIndex := self findElementOrNil: element.
+						hashIndex := self findKeyOrNil: element.
 						(self basicAt: hashIndex) isNil ifTrue: [self moveFrom: slotIndex to: hashIndex]]]!
 
 hasWeakKeys

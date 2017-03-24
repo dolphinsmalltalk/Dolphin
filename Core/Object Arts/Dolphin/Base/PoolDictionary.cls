@@ -5,7 +5,7 @@ Dictionary variableSubclass: #PoolDictionary
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-PoolDictionary guid: (GUID fromString: '{87B4C52A-026E-11D3-9FD7-00A0CC3E4A32}')!
+PoolDictionary guid: (GUID fromString: '{87b4c52a-026e-11d3-9fd7-00a0cc3e4a32}')!
 PoolDictionary comment: ''!
 !PoolDictionary categoriesForClass!Collections-Unordered!System-Support! !
 !PoolDictionary methodsFor!
@@ -132,6 +132,11 @@ isChanged: aBoolean
 				package isChanged: true]]
 		ifFalse: [self removePropertyAt: #isChanged ifAbsent: []]!
 
+lookup: keyObject
+	"Answer the value named by the <Object> argument, keyObject, or nil if there is no such key in the receiver."
+
+	^super lookup: keyObject asString!
+
 name
 	"Answer the receiver's name."
 
@@ -172,6 +177,7 @@ removeKey: key ifAbsent: exceptionHandler
 !PoolDictionary categoriesFor: #initializerFor:!public!source filing-sif! !
 !PoolDictionary categoriesFor: #isChanged!development!public!source filing!testing! !
 !PoolDictionary categoriesFor: #isChanged:!development!public!source filing! !
+!PoolDictionary categoriesFor: #lookup:!accessing!public! !
 !PoolDictionary categoriesFor: #name!accessing!public! !
 !PoolDictionary categoriesFor: #name:!accessing!private! !
 !PoolDictionary categoriesFor: #owningPackage!development!public!source filing! !

@@ -5,7 +5,7 @@ Dictionary variableSubclass: #LookupTable
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-LookupTable guid: (GUID fromString: '{87B4C529-026E-11D3-9FD7-00A0CC3E4A32}')!
+LookupTable guid: (GUID fromString: '{87b4c529-026e-11d3-9fd7-00a0cc3e4a32}')!
 LookupTable comment: 'A LookupTable is a form of <Dictionary> that does not actually store <Assocation>s, but instead maintains parallel vectors of keys and values. This has the advantage of consuming less space and generally offering higher performance. 
 
 Dictionary behaviour involving <Assocation>s (e.g. #associationsDo:, #associationAt:) is implemented by dynamically generating associations as required. This may adversely affect performance where such behaviour is used extensively, and the transient nature of the associations may not always be appropriate. In these (rare) cases a standard Dictionary should be used.
@@ -190,6 +190,15 @@ keysDo: operation
 
 	1 to: self basicSize do: [:i | (self basicAt: i) ifNotNil: [:key | operation value: key]]!
 
+lookup: keyObject
+	"Answer the value named by the <Object> argument, keyObject, or nil if there is no such key in the receiver.
+	Override for a small efficiency improvement that will only have any significant impact on performance in
+	algorithms that rely heavily on dictionary lookup (which is fairly common)."
+
+	| index |
+	index := self findKeyOrNil: keyObject.
+	^(self basicAt: index) isNil ifTrue: [] ifFalse: [values at: index]!
+
 moveFrom: fromIndex to: toIndex
 	"Private - Destructively move the element at index, fromIndex, over
 	the element (normally nil) at index, toIndex. Overridden to
@@ -288,6 +297,7 @@ valuesClass
 !LookupTable categoriesFor: #keyAtValue:ifAbsent:!accessing!public! !
 !LookupTable categoriesFor: #keysAndValuesDo:!enumerating!public! !
 !LookupTable categoriesFor: #keysDo:!enumerating!public! !
+!LookupTable categoriesFor: #lookup:!accessing!public! !
 !LookupTable categoriesFor: #moveFrom:to:!private!removing! !
 !LookupTable categoriesFor: #postCopy!copying!public! !
 !LookupTable categoriesFor: #removeKey:ifAbsent:!public!removing! !

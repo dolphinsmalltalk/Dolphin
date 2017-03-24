@@ -5,7 +5,7 @@ LookupTable variableSubclass: #SharedLookupTable
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-SharedLookupTable guid: (GUID fromString: '{87B4C52F-026E-11D3-9FD7-00A0CC3E4A32}')!
+SharedLookupTable guid: (GUID fromString: '{87b4c52f-026e-11d3-9fd7-00a0cc3e4a32}')!
 SharedLookupTable comment: 'SharedLookupTable is the class of <LookupTable>s which permits only a single process to access its contents at any one time (it uses a <Mutex> object for this purpose). 
 
 Instance Variables:
@@ -213,6 +213,15 @@ keysDo: operation
 
 	mutex critical: [super keysDo: operation]!
 
+lookup: keyObject
+	"Answer the value named by the <Object> argument, keyObject, or nil if there is no such key in the receiver.
+	Clearly if the receiver can contain nil values then it will not be possible to distinguish between the absence
+	of the key and the key being associated with a nil value. However, this method expresses the
+	very common pattern of passing an empty block as absent handler to #at:ifAbsent:, i.e. as in this 
+	default implementation."
+
+	^mutex critical: [super lookup: keyObject]!
+
 mutex
 	"Private - Answer the receiver's mutual exclusion object"
 
@@ -292,6 +301,7 @@ stbSaveOn: anSTBOutFiler
 !SharedLookupTable categoriesFor: #keyAtValue:ifAbsent:!accessing!public! !
 !SharedLookupTable categoriesFor: #keysAndValuesDo:!enumerating!public! !
 !SharedLookupTable categoriesFor: #keysDo:!enumerating!public! !
+!SharedLookupTable categoriesFor: #lookup:!accessing!public! !
 !SharedLookupTable categoriesFor: #mutex!accessing!private! !
 !SharedLookupTable categoriesFor: #mutex:!initializing!private! !
 !SharedLookupTable categoriesFor: #postCopy!copying!public! !

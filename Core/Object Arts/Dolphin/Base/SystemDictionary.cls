@@ -5,7 +5,7 @@ Dictionary variableSubclass: #SystemDictionary
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-SystemDictionary guid: (GUID fromString: '{87B4C52C-026E-11D3-9FD7-00A0CC3E4A32}')!
+SystemDictionary guid: (GUID fromString: '{87b4c52c-026e-11d3-9fd7-00a0cc3e4a32}')!
 SystemDictionary comment: 'Class of the root of the system. SystemDictionary''s single instance (Smalltalk) 
 provides associative access to all global objects in the system.'!
 !SystemDictionary categoriesForClass!Collections-Unordered! !
@@ -144,6 +144,11 @@ isAtomic
 
 	^true!
 
+lookup: keyObject
+	"Answer the value named by the <Object> argument, keyObject, or nil if there is no such key in the receiver."
+
+	^super lookup: keyObject asSymbol!
+
 postResize: oldMe
 	"Private - This message is sent by the receiver when resizing, after the
 	receiver's elements have been added to a new collection and the
@@ -233,6 +238,7 @@ triggerGlobalRenamed: anAssociation from: oldSymbol
 !SystemDictionary categoriesFor: #getEvents!events!private! !
 !SystemDictionary categoriesFor: #includesKey:!public!searching! !
 !SystemDictionary categoriesFor: #isAtomic!public!testing! !
+!SystemDictionary categoriesFor: #lookup:!accessing!public! !
 !SystemDictionary categoriesFor: #postResize:!adding!private! !
 !SystemDictionary categoriesFor: #removeClass:!private!removing! !
 !SystemDictionary categoriesFor: #removeGlobalNamed:!operations!public! !

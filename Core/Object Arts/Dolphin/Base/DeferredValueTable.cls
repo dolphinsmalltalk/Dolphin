@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 SharedLookupTable variableSubclass: #DeferredValueTable
 	instanceVariableNames: 'priority'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-DeferredValueTable guid: (GUID fromString: '{2ACF1F74-B319-4EED-8755-3BCC738462C0}')!
+DeferredValueTable guid: (GUID fromString: '{2acf1f74-b319-4eed-8755-3bcc738462c0}')!
 DeferredValueTable comment: 'A DeferredValueTable is a <LookupTable> specialised to hold <DeferredValue>s. '!
 !DeferredValueTable categoriesForClass!Unclassified! !
 !DeferredValueTable methodsFor!
@@ -68,6 +68,11 @@ keysAndValuesDo: operation
 
 	super keysAndValuesDo: [:k :v | operation value: k value: v value]!
 
+lookup: keyObject
+	"Answer the value named by the <Object> argument, keyObject, or nil if there is no such key in the receiver."
+
+	^(super lookup: keyObject) ifNotNil: [:deferredValue | deferredValue value]!
+
 priority
 	"Answer the <Process> priority at which the deferred values will be calculated."
 
@@ -85,6 +90,7 @@ priority: anInteger
 !DeferredValueTable categoriesFor: #keyAtEqualValue:ifAbsent:!accessing!public! !
 !DeferredValueTable categoriesFor: #keyAtValue:ifAbsent:!accessing!public! !
 !DeferredValueTable categoriesFor: #keysAndValuesDo:!enumerating!public! !
+!DeferredValueTable categoriesFor: #lookup:!accessing!public! !
 !DeferredValueTable categoriesFor: #priority!accessing!public! !
 !DeferredValueTable categoriesFor: #priority:!accessing!public! !
 
