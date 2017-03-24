@@ -1,0 +1,98 @@
+| package |
+package := Package name: 'Smalltalk Compiler'.
+package paxVersion: 1;
+	basicComment: ''.
+
+
+package classNames
+	add: #StArgumentVariable;
+	add: #StClassScope;
+	add: #StEvalScope;
+	add: #StInstanceVariable;
+	add: #StLexicalScope;
+	add: #StLocalVariable;
+	add: #StParseNodeAnalyzer;
+	add: #StSemanticScope;
+	add: #StStaticVariable;
+	add: #StTempVariable;
+	add: #StVariable;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\..\Base\Dolphin';
+	add: 'Smalltalk Parser';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+Object subclass: #StSemanticScope
+	instanceVariableNames: 'outer flags'
+	classVariableNames: 'EmptyBlockMask FarReturnMask OptimizedBlockMask'
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Object subclass: #StVariable
+	instanceVariableNames: 'scope reads writes'
+	classVariableNames: 'ReadMask WrittenMask'
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+StParseNodeVisitor subclass: #StParseNodeAnalyzer
+	instanceVariableNames: 'methodNode methodClass evaluationContext currentScope scopes literals stringLiterals addToFrame tempDecls inStaticExpression evalScope'
+	classVariableNames: 'OptimizedMessages RestrictedSelectors SpecialSelectors'
+	poolDictionaries: 'SmalltalkParseErrorCodes'
+	classInstanceVariableNames: ''!
+StSemanticScope subclass: #StClassScope
+	instanceVariableNames: 'methodClass instanceVariables'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+StSemanticScope subclass: #StEvalScope
+	instanceVariableNames: 'pools'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+StSemanticScope subclass: #StLexicalScope
+	instanceVariableNames: 'locals node'
+	classVariableNames: 'NeedsSelfMask'
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+StVariable subclass: #StInstanceVariable
+	instanceVariableNames: 'index name'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+StVariable subclass: #StLocalVariable
+	instanceVariableNames: 'node'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+StVariable subclass: #StStaticVariable
+	instanceVariableNames: 'binding'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+StLocalVariable subclass: #StArgumentVariable
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+StLocalVariable subclass: #StTempVariable
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+"End of package definition"!
+

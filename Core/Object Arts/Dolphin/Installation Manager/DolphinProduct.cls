@@ -69,6 +69,7 @@ contents
 		add: #('Core\Object Arts\Dolphin\Registry\Dolphin Registry Access.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\System\Base64\Dolphin Base64.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\System\Compiler\Smalltalk Parser.pax' #plain #imageBased);
+		add: #('Core\Object Arts\Dolphin\System\Compiler\Smalltalk Compiler.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\System\Recent\Dolphin Recent Menu.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\MVP\Models\Value\Dolphin Value Models.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\MVP\Type Converters\Dolphin Type Converters.pax' #plain #imageBased);

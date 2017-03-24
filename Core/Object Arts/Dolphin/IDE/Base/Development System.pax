@@ -297,10 +297,12 @@ package methodNames
 	add: #StMessageNode -> #displayOn:;
 	add: #StNumberLiteralToken -> #textStyle;
 	add: #StOptimizedNode -> #displayOn:;
+	add: #StParameterNode -> #displayOn:;
 	add: #StPrimitiveNode -> #displayOn:;
 	add: #StProgramNode -> #debugPrintString;
 	add: #StProgramNode -> #postComments;
 	add: #StProgramNode -> #preComments;
+	add: #StPseudoVariableNode -> #displayOn:;
 	add: #StReturnNode -> #displayOn:;
 	add: #String -> #aspectDisplayOn:;
 	add: #String -> #debugPrintString;
@@ -590,6 +592,7 @@ package setPrerequisites: (IdentitySet new
 	add: '..\..\..\..\Contributions\Refactory\Refactoring Browser\Environments\RBEnvironments';
 	add: '..\..\..\..\Contributions\Refactory\Refactoring Browser\Formatters\RBFormatters';
 	add: 'Splash\Seeing the Objects Inside';
+	add: '..\..\System\Compiler\Smalltalk Compiler';
 	add: '..\..\System\Compiler\Smalltalk Parser';
 	add: '..\..\ActiveX\Components\VBScript\VBScript Regular Expressions';
 	add: '..\..\ActiveX\Shell\Windows Shell';
@@ -4795,6 +4798,14 @@ displayOn: aStream
 	aStream nextPutAll: '##()'! !
 !StOptimizedNode categoriesFor: #displayOn:!printing!public! !
 
+!StParameterNode methodsFor!
+
+displayOn: aStream
+	aStream
+		nextPutAll: 'Param ';
+		print: self name! !
+!StParameterNode categoriesFor: #displayOn:!development!printing!public! !
+
 !StPrimitiveNode methodsFor!
 
 displayOn: aStream
@@ -4840,6 +4851,12 @@ preComments
 !StProgramNode categoriesFor: #debugPrintString!development!printing!public! !
 !StProgramNode categoriesFor: #postComments!accessing!public! !
 !StProgramNode categoriesFor: #preComments!accessing!public! !
+
+!StPseudoVariableNode methodsFor!
+
+displayOn: aStream
+	aStream display: self name! !
+!StPseudoVariableNode categoriesFor: #displayOn:!development!printing!public! !
 
 !StReturnNode methodsFor!
 

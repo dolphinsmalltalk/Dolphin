@@ -129,20 +129,29 @@ nextToken
 optimizedNodeClass
 	^StOptimizedNode!
 
+parameterNodeClass
+	^StParameterNode!
+
 parseAssignment
 	"Need one token lookahead to see if we have a ':='. This method could 
 	make it possible to assign the literals true, false and nil."
 
-	| node position |
-	(currentToken isIdentifier and: [self nextToken isAssignment]) 
-		ifFalse: [^self parseCascadeMessage].
-	node := self parseVariableNode.
+	| node position assignment |
+	(currentToken isIdentifier and: [self nextToken isAssignment]) ifFalse: [^self parseCascadeMessage].
+	node := self parseVariableNode: self variableNodeClass.
 	position := currentToken start.
 	self step.
-	^self assignmentNodeClass 
-		variable: node
-		value: self parseAssignment
-		position: position!
+	assignment := self assignmentNodeClass
+				variable: node
+				value: self parseAssignment
+				position: position.
+	node isConstantNode
+		ifTrue: 
+			[self
+				parserError: CErrAssignConstant
+				range: assignment sourceInterval
+				extra: node name].
+	^assignment!
 
 parseBinaryMessage
 	| node |
@@ -166,7 +175,7 @@ parseBinaryPattern
 	| binaryToken node args |
 	binaryToken := currentToken.
 	self step.
-	args := Array with: self parseVariableNode.
+	args := Array with: self parseMethodParameter.
 	node := self methodNodeClass selectorParts: (Array with: binaryToken) arguments: args.
 	node addComments: args last comments.
 	args last comments: nil.
@@ -177,11 +186,11 @@ parseBlock
 	position := currentToken start.
 	self step.
 	node := self blockNodeClass new.
-	#rbFix.	"Set start position before attempting to parse the block args so can use for error reporting if necessary"
+	"Set start position before attempting to parse the block args so can use for error reporting if necessary"
 	node left: position.
 	self parseBlockArgsInto: node.
 	node body: (self parseStatementsOf: node allowTag: false).
-	(currentToken isSpecial: $]) 
+	(currentToken isSpecial: $])
 		ifFalse: 
 			[| blockEnd |
 			blockEnd := node body sourceInterval stop.
@@ -194,7 +203,7 @@ parseBlock
 	self step.
 	^node!
 
-parseBlockArgsInto: node 
+parseBlockArgsInto: node
 	| verticalBar args colons |
 	args := OrderedCollection new: 2.
 	colons := OrderedCollection new: 2.
@@ -204,18 +213,18 @@ parseBlockArgsInto: node
 			colons add: currentToken start.
 			self step.	":"
 			verticalBar := true.
-			arg := self parseVariableNode.
+			arg := self parseBlockParameter.
 			self validateArg: arg args: args.
 			args add: arg].
-	verticalBar 
+	verticalBar
 		ifTrue: 
-			[currentToken isBinary 
+			[currentToken isBinary
 				ifTrue: 
 					[node bar: currentToken start.
-					currentToken value == #| 
+					currentToken value == #|
 						ifTrue: [self step]
 						ifFalse: 
-							[currentToken value == #'||' 
+							[currentToken value == #'||'
 								ifTrue: 
 									["Hack the current token to be the start 
 									of temps bar"
@@ -226,7 +235,7 @@ parseBlockArgsInto: node
 									[self parserError: CErrBlockArgListNotClosed range: (node start to: args last sourceInterval stop)]]]
 				ifFalse: 
 					["St-80 allows, for example, [:a] as a valid block, ANSI requires the arg list termination bar, i.e. [:a|]"
-					(st80Syntax and: [currentToken isSpecial: $]]) 
+					(st80Syntax and: [currentToken isSpecial: $]])
 						ifFalse: 
 							["Error ignored, no recovery needed"
 							self parserError: CErrBlockArgListNotClosed range: (node start to: args last sourceInterval stop)]]].
@@ -234,6 +243,9 @@ parseBlockArgsInto: node
 		arguments: args;
 		colons: colons.
 	^node!
+
+parseBlockParameter
+	^self parseVariableNode: self parameterNodeClass!
 
 parseCascadedMessageFor: aStVariableNode 
 	currentToken isIdentifier ifTrue: [^self parseUnaryMessageWith: aStVariableNode].
@@ -489,7 +501,7 @@ parseKeywordPattern
 			[| arg |
 			keywords addLast: currentToken.
 			self step.
-			arg := self parseVariableNode.
+			arg := self parseMethodParameter.
 			(self validateArg: arg args: args) ifTrue: [args addLast: arg]].
 	node := self methodNodeClass selectorParts: keywords arguments: args.
 	"Be resilient to the absence of arguments"
@@ -608,6 +620,9 @@ parseMethod: aString in: aClass errorBlock: monadicBlock
 	self initializeParserWith: aString.
 	^self parseMethod: aString!
 
+parseMethodParameter
+	^self parseVariableNode: self parameterNodeClass!
+
 parseOptimizedExpression
 	| position node body isClosed |
 	position := currentToken start.
@@ -646,11 +661,11 @@ parseParenthesizedExpression
 	node addParenthesis: (leftParen to: rightParen).
 	^node!
 
-parsePrimitiveIdentifier
+parsePrimitiveIdentifier: anStVariableNodeClass
 	| token node |
 	token := currentToken.
 	self step.
-	node := self variableNodeClass identifierToken: token.
+	node := anStVariableNodeClass identifierToken: token.
 	self addCommentsTo: node.
 	^node!
 
@@ -662,20 +677,20 @@ parsePrimitiveLiteral
 
 parsePrimitiveObject
 	| token node |
-	currentToken isIdentifier ifTrue: [^self parsePrimitiveIdentifier].
-	(currentToken isLiteralToken and: [currentToken isMultiKeyword not]) 
+	currentToken isIdentifier ifTrue: [^self parsePrimitiveIdentifier: self variableNodeClass].
+	(currentToken isLiteralToken and: [currentToken isMultiKeyword not])
 		ifTrue: [^self parsePrimitiveLiteral].
-	currentToken isLiteralArrayToken 
+	currentToken isLiteralArrayToken
 		ifTrue: 
 			[^currentToken isForByteArray ifTrue: [self parseLiteralByteArray] ifFalse: [self parseLiteralArray]].
-	currentToken isSpecial 
+	currentToken isSpecial
 		ifTrue: 
 			[currentToken value == $[ ifTrue: [^self parseBlock].
 			currentToken value == $( ifTrue: [^self parseParenthesizedExpression]].
 	currentToken isOptimized ifTrue: [^self parseOptimizedExpression].
 	self parserError: CErrInvalExprStart.
 	"Attempt to recover by treating it as an identifier, the AST will be invalid of course"
-	token := scanner literalTokenClass 
+	token := scanner literalTokenClass
 				value: (self source copyFrom: currentToken start to: currentToken stop)
 				start: currentToken start
 				stop: currentToken stop.
@@ -834,13 +849,16 @@ parseTag: startInteger
 				ifFalse: [self parseExternalCall: startInteger isVirtual: false]]
 		ifFalse: [self parseExtendedExternalCall: startInteger]!
 
-parseTempsOf: aNode 
+parseTempDecl
+	^self parseVariableNode: self tempDeclClass!
+
+parseTempsOf: aNode
 	| temps |
 	temps := OrderedCollection new.
 	[currentToken isIdentifier] whileTrue: 
 			[| temp |
-			temp := self parseVariableNode.
-			(self 
+			temp := self parseTempDecl.
+			(self
 				validateTemp: temp
 				of: aNode
 				temps: temps) ifTrue: [temps add: temp]].
@@ -872,16 +890,16 @@ parseUnaryPattern
 	self step.
 	^self methodNodeClass selectorParts: (Array with: selector) arguments: #()!
 
-parseVariableNode
+parseVariableNode: anStVariableNodeClass
 	| token node |
-	currentToken isIdentifier ifTrue: [^self parsePrimitiveIdentifier].
+	currentToken isIdentifier ifTrue: [^self parsePrimitiveIdentifier: anStVariableNodeClass].
 	self parserError: CErrExpectVariable.
 	"Error ignored, attempt to recover..."
-	token := scanner identifierTokenClass 
+	token := scanner identifierTokenClass
 				value: (self source copyFrom: currentToken start to: currentToken stop)
 				start: currentToken start.
 	self step.
-	node := self variableNodeClass identifierToken: token.
+	node := anStVariableNodeClass identifierToken: token.
 	self addCommentsTo: node.
 	^node!
 
@@ -983,6 +1001,9 @@ step
 			nextToken := nil]
 		ifFalse: [currentToken := scanner next]!
 
+tempDeclClass
+	^StTempDeclNode!
+
 validateArg: aVariableNode args: anOrderedCollection 
 	"...It is erroneous if the same identifier is used as a <method argument> of a <method
 	definition> and also appears in the method's <temporary variable list>...It is erroneous if
@@ -1040,12 +1061,14 @@ variableNodeClass
 !SmalltalkParser categoriesFor: #methodNodeClass!constants!private! !
 !SmalltalkParser categoriesFor: #nextToken!helpers!private! !
 !SmalltalkParser categoriesFor: #optimizedNodeClass!constants!private! !
+!SmalltalkParser categoriesFor: #parameterNodeClass!parsing!private! !
 !SmalltalkParser categoriesFor: #parseAssignment!parsing!private! !
 !SmalltalkParser categoriesFor: #parseBinaryMessage!parsing!private! !
 !SmalltalkParser categoriesFor: #parseBinaryMessageWith:!parsing!private! !
 !SmalltalkParser categoriesFor: #parseBinaryPattern!parsing!private! !
 !SmalltalkParser categoriesFor: #parseBlock!parsing!private! !
 !SmalltalkParser categoriesFor: #parseBlockArgsInto:!parsing!private! !
+!SmalltalkParser categoriesFor: #parseBlockParameter!parsing!private! !
 !SmalltalkParser categoriesFor: #parseCascadedMessageFor:!parsing!private! !
 !SmalltalkParser categoriesFor: #parseCascadeMessage!parsing!private! !
 !SmalltalkParser categoriesFor: #parseExpression:!parsing!public! !
@@ -1068,10 +1091,11 @@ variableNodeClass
 !SmalltalkParser categoriesFor: #parseMethod!parsing!private! !
 !SmalltalkParser categoriesFor: #parseMethod:!accessing!public! !
 !SmalltalkParser categoriesFor: #parseMethod:in:errorBlock:!parsing!public! !
+!SmalltalkParser categoriesFor: #parseMethodParameter!parsing!private! !
 !SmalltalkParser categoriesFor: #parseOptimizedExpression!parsing!private! !
 !SmalltalkParser categoriesFor: #parseOverlappedCall:!parsing!private! !
 !SmalltalkParser categoriesFor: #parseParenthesizedExpression!parsing!private! !
-!SmalltalkParser categoriesFor: #parsePrimitiveIdentifier!parsing!private! !
+!SmalltalkParser categoriesFor: #parsePrimitiveIdentifier:!parsing!private! !
 !SmalltalkParser categoriesFor: #parsePrimitiveLiteral!parsing!private! !
 !SmalltalkParser categoriesFor: #parsePrimitiveObject!parsing!private! !
 !SmalltalkParser categoriesFor: #parserError:!error handling!private! !
@@ -1082,11 +1106,12 @@ variableNodeClass
 !SmalltalkParser categoriesFor: #parseStatementsOf:allowTag:!parsing!private! !
 !SmalltalkParser categoriesFor: #parseTag!parsing!private! !
 !SmalltalkParser categoriesFor: #parseTag:!parsing!private! !
+!SmalltalkParser categoriesFor: #parseTempDecl!parsing!private! !
 !SmalltalkParser categoriesFor: #parseTempsOf:!parsing!private! !
 !SmalltalkParser categoriesFor: #parseUnaryMessage!parsing!private! !
 !SmalltalkParser categoriesFor: #parseUnaryMessageWith:!parsing!private! !
 !SmalltalkParser categoriesFor: #parseUnaryPattern!parsing!private! !
-!SmalltalkParser categoriesFor: #parseVariableNode!parsing!private! !
+!SmalltalkParser categoriesFor: #parseVariableNode:!parsing!private! !
 !SmalltalkParser categoriesFor: #patchExternalDescriptorClose!parsing!private! !
 !SmalltalkParser categoriesFor: #patchLiteralArrayToken!parsing!private! !
 !SmalltalkParser categoriesFor: #patchLiteralMessage!helpers!private! !
@@ -1098,6 +1123,7 @@ variableNodeClass
 !SmalltalkParser categoriesFor: #sequenceNodeClass!constants!private! !
 !SmalltalkParser categoriesFor: #source!accessing!private! !
 !SmalltalkParser categoriesFor: #step!parsing!private! !
+!SmalltalkParser categoriesFor: #tempDeclClass!parsing!private! !
 !SmalltalkParser categoriesFor: #validateArg:args:!parsing!private! !
 !SmalltalkParser categoriesFor: #validateTemp:of:temps:!parsing!private! !
 !SmalltalkParser categoriesFor: #variableNodeClass!constants!private! !

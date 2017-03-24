@@ -1,7 +1,7 @@
 "Filed out from Dolphin Smalltalk 7"!
 
 StParseNodeVisitor subclass: #StParseNodeAnalyzer
-	instanceVariableNames: 'methodNode methodClass evaluationContext evaluationPools currentScope scopes literals stringLiterals addToFrame tempDecls inStaticExpression'
+	instanceVariableNames: 'methodNode methodClass evaluationContext currentScope scopes literals stringLiterals addToFrame tempDecls inStaticExpression evalScope'
 	classVariableNames: 'OptimizedMessages RestrictedSelectors SpecialSelectors'
 	poolDictionaries: 'SmalltalkParseErrorCodes'
 	classInstanceVariableNames: ''!
@@ -40,21 +40,24 @@ addToFrameStatic: aLiteralNode
 	self addLiteral: aLiteralNode value: value!
 
 bindingFor: aStVariableNode
-	| identifier |
-	identifier := aStVariableNode name.
-	(self isTempVariable: aStVariableNode)
-		ifTrue: 
-			["If hosted in the debugger can make a stab at these"
-			^self contextBindingFor: identifier].
-	((evaluationContext isKindOf: methodClass) and: [self isInstVar: identifier])
-		ifTrue: 
-			["In the debugger will have an evaluation context which is the receiver."
+	^(self lookupVariable: aStVariableNode name)
+		ifNotNil: 
+			[:var |
+			var isLocalVariable
+				ifTrue: 
+					["If hosted in the debugger can make a stab at these"
+					^self contextBindingFor: var name].
+			var isInstanceVariable
+				ifTrue: 
+					[^(evaluationContext isKindOf: methodClass)
+						ifTrue: 
+							["In the debugger will have an evaluation context which is the receiver."
 
-			"Concoct a fake variable binding"
-			^(VariableBinding key: identifier value: (evaluationContext instVarNamed: identifier))
-				isImmutable: evaluationContext isImmutable;
-				yourself].
-	^methodClass fullBindingFor: identifier!
+							"Concoct a fake variable binding"
+							(VariableBinding key: var name value: (evaluationContext instVarAt: var index))
+								isImmutable: evaluationContext isImmutable;
+								yourself]].
+			var isStaticVariable ifTrue: [var binding]]!
 
 blockDepth
 	| depth scope |
@@ -239,29 +242,24 @@ checkOptimizedUnaryMessages: aMessageNode
 		and: [self checkMessageHasNiladicBlockReceiver: aMessageNode]!
 
 checkRedefines: aVariableNode
-	| identifier scope |
-	identifier := aVariableNode name.
-	(methodClass fullBindingFor: identifier)
-		ifNotNil: 
-			[self signalError: CWarnRedefiningStatic forNode: aVariableNode.
+	| var |
+	var := self lookupVariable: aVariableNode name.
+	var isNil ifTrue: [^self].
+	var isStaticVariable
+		ifTrue: 
+			[var scope == evalScope ifFalse: [self signalError: CWarnRedefiningStatic forNode: aVariableNode].
 			^self].
-	(self isInstVar: identifier)
+	var isInstanceVariable
 		ifTrue: 
 			[self signalError: CWarnRedefiningInstVar forNode: aVariableNode.
 			^self].
-	"Don''t need to check for duplicate temps/args at the same scope, because the parser has
-	already done that as an error check. Note that we interpret the ANSI standard as stating that
-	duplicate temporary/argument names at the same scope are not permitted (which is certainly
-	true), but that duplicate names in nested scopes (i.e. temps/args that shadow outer temps)
-	are permitted (which seems appropriate), but for which we issue a warning."
-	scope := self currentScope outer.
-	[scope isNil] whileFalse: 
-			[(scope includesArg: identifier)
-				ifTrue: [self signalError: CWarnRedefiningArg forNode: aVariableNode]
-				ifFalse: 
-					[(scope includesTemp: identifier)
-						ifTrue: [self signalError: CWarnRedefiningTemp forNode: aVariableNode]].
-			scope := scope outer]!
+	"Note that we interpret the ANSI standard as stating that duplicate temporary/argument names
+	at the same scope are not permitted (which is certainly true), but that duplicate names in
+	nested scopes (i.e. temps/args that shadow outer temps) are permitted (which seems
+	appropriate), but for which we issue a warning."
+	var isArgument
+		ifTrue: [self signalError: CWarnRedefiningArg forNode: aVariableNode]
+		ifFalse: [self signalError: CWarnRedefiningTemp forNode: aVariableNode]!
 
 checkRestrictedSelectors: aMethodNode
 	| last first |
@@ -307,9 +305,8 @@ checkTryBlock: aMessageNode
 compilationErrorClass
 	^SmalltalkParser notificationClass!
 
-contextBindingFor: aString 
-	evaluationPools do: [:each | (each bindingFor: aString) ifNotNil: [:binding | ^binding]].
-	^nil!
+contextBindingFor: aString
+	^(evalScope lookupVariable: aString) ifNotNil: [:var | var binding]!
 
 countOuterTemps
 	| scope count |
@@ -317,7 +314,7 @@ countOuterTemps
 	count := 0.
 	[scope outer notNil and: [scope isInlined]] whileTrue: 
 			[scope := scope outer.
-			count := count + scope argumentCount + scope tempCount].
+			count := count + scope localCount].
 	^count!
 
 createScope: aNode
@@ -347,9 +344,6 @@ initialize
 	addToFrame := [:literal | self addToFrame: literal].
 	inStaticExpression := false!
 
-isInstVar: aString
-	^(methodClass indexOfInstVar: aString ifAbsent: [0]) > 0!
-
 isReceiverOfNilTest: aVariableNode 
 	| parentNode |
 	parentNode := aVariableNode parent.
@@ -371,6 +365,9 @@ lineOfSourcePosition: position
 	[stream atEnd not and: [stream position < position]] 
 		whileTrue: [stream next == $\n ifTrue: [line := line + 1]].
 	^line!
+
+lookupVariable: aString
+	^currentScope lookupVariable: aString!
 
 newLiteralsCollection
 	^IdentityDictionary new!
@@ -411,7 +408,10 @@ setMethodNode: aStMethodNode methodClass: aClass context: anObject pools: anArra
 	methodNode := aStMethodNode.
 	methodClass := aClass.
 	evaluationContext := anObject.
-	evaluationPools := anArray!
+	evalScope := StEvalScope pools: anArray.
+	currentScope := (StClassScope methodClass: aClass)
+				outer: evalScope;
+				yourself!
 
 signalError: anInteger forNode: aNode 
 	^self 
@@ -487,19 +487,24 @@ tempDecls
 	^tempDecls!
 
 varRef: aVariableNode isAssignment: aBoolean
-	| identifier scope |
+	| identifier |
 	identifier := aVariableNode name.
-	identifier = 'self'
-		ifTrue: [^aBoolean ifTrue: [self errorAssignConstant: aVariableNode] ifFalse: [self pushSelf]].
-	identifier = 'super'
-		ifTrue: [^aBoolean ifTrue: [self errorAssignConstant: aVariableNode] ifFalse: [self pushSuper]].
-	identifier = 'thisContext'
-		ifTrue: [^aBoolean ifTrue: [self errorAssignConstant: aVariableNode] ifFalse: [self pushActiveFrame]].
-	scope := self currentScope.
-	
-	[(scope refsToTemp: identifier)
-		ifNil: 
-			[(scope referenceArg: identifier)
+	aVariableNode isPseudoVariableNode
+		ifTrue: 
+			[aBoolean
+				ifTrue: 
+					["Semantic error, but already reported by parser"
+					^self].
+			identifier = 'self' ifTrue: [^self pushSelf].
+			identifier = 'super' ifTrue: [^self pushSuper].
+			identifier = 'thisContext' ifTrue: [^self pushActiveFrame]].
+	"Starting in the current scope, look through enclosing scopes for a temp or argument that
+	has the same identifier as a variable."
+	(self lookupVariable: identifier)
+		ifNil: [self signalError: CErrUndeclared forNode: aVariableNode]
+		ifNotNil: 
+			[:var |
+			var isArgument
 				ifTrue: 
 					[^aBoolean
 						ifTrue: 
@@ -507,39 +512,35 @@ varRef: aVariableNode isAssignment: aBoolean
 								signalError: CErrAssignmentToArgument
 								forNode: aVariableNode parent
 								extra: identifier]
-						ifFalse: [self pushTemp: aVariableNode]]]
-		ifNotNil: 
-			[:nodes |
-			^aBoolean
+						ifFalse: 
+							[var addRead: aVariableNode.
+							self pushTemp: aVariableNode]].
+			var isTempVariable
 				ifTrue: 
-					[nodes first ifNil: [nodes at: 1 put: aVariableNode].
-					self storeTemp: aVariableNode]
-				ifFalse: 
-					[nodes second
-						ifNil: 
-							[nodes at: 2 put: aVariableNode.
-							(nodes first isNil and: [(self isReceiverOfNilTest: aVariableNode) not])
+					[^aBoolean
+						ifTrue: 
+							[var addWrite: aVariableNode.
+							self storeTemp: aVariableNode]
+						ifFalse: 
+							[var addRead: aVariableNode.
+							(var writes isEmpty and: [(self isReceiverOfNilTest: aVariableNode) not])
 								ifTrue: [self signalError: CWarnReadBeforeWritten forNode: aVariableNode]
-								ifFalse: [self pushTemp: aVariableNode]]]].
-	(scope := scope outer) isNil]
-			whileFalse.
-	(self isInstVar: identifier)
-		ifTrue: 
-			[^aBoolean ifTrue: [self storeInstVar: aVariableNode] ifFalse: [self pushInstVar: aVariableNode]].
-	((methodClass fullBindingFor: identifier) ifNil: [self contextBindingFor: identifier])
-		ifNil: [self signalError: CErrUndeclared forNode: aVariableNode]
-		ifNotNil: 
-			[:var |
-			self addLiteral: aVariableNode value: var.
+								ifFalse: [self pushTemp: aVariableNode]]].
+			var isInstanceVariable
+				ifTrue: 
+					[^aBoolean ifTrue: [self storeInstVar: aVariableNode] ifFalse: [self pushInstVar: aVariableNode]].
+			"Must be a static variable."
+			self addLiteral: aVariableNode value: var binding.
 			aBoolean
 				ifTrue: 
-					[var isImmutable
+					[var isConstant
 						ifTrue: [self errorAssignConstant: aVariableNode]
-						ifFalse: [self storeStatic: aVariableNode variable: var]]
-				ifFalse: [self pushStatic: aVariableNode variable: var]]!
+						ifFalse: [self storeStatic: aVariableNode variable: var binding]]
+				ifFalse: [self pushStatic: aVariableNode variable: var binding]]!
 
 visitArgumentNode: anStVariableNode
-	self checkRedefines: anStVariableNode!
+	self checkRedefines: anStVariableNode.
+	self currentScope declareArgument: anStVariableNode!
 
 visitArgumentNodes: aNodeCollection
 	| count max |
@@ -558,8 +559,11 @@ visitArgumentNodes: aNodeCollection
 						extra: each name]]!
 
 visitAssignmentNode: anAssignmentNode
+	| variable |
 	self visitNode: anAssignmentNode value.
-	self varRef: anAssignmentNode variable isAssignment: true!
+	variable := anAssignmentNode variable.
+	variable isConstantNode ifTrue: [^self].
+	self varRef: variable isAssignment: true!
 
 visitBlockNode: aBlockNode
 	self createScope: aBlockNode.
@@ -608,26 +612,25 @@ visitSequenceNode: aSequenceNode
 	| answer scope |
 	answer := super visitSequenceNode: aSequenceNode.
 	scope := self currentScope.
-	aSequenceNode temporaries do: 
+	scope temporaries do: 
 			[:each |
-			| firstWritten firstRead nodes |
-			nodes := scope refsToTemp: each name.
-			firstWritten := nodes first.
-			firstRead := nodes second.
-			firstWritten
-				ifNil: 
+			| reads writes |
+			reads := each reads.
+			writes := each writes.
+			writes isEmpty
+				ifTrue: 
 					["Not Written..."
-					firstRead
-						ifNil: [self signalError: CWarnUnreferencedTemp forNode: each]
-						ifNotNil: [self signalError: CWarnReadNotWritten forNode: firstRead]]
-				ifNotNil: 
+					reads isEmpty
+						ifTrue: [self signalError: CWarnUnreferencedTemp forNode: each node]
+						ifFalse: [self signalError: CWarnReadNotWritten forNode: reads first]]
+				ifFalse: 
 					["Written..."
-					nodes second ifNil: [self signalError: CWarnWrittenNotRead forNode: firstWritten]]].
+					reads isEmpty ifTrue: [self signalError: CWarnWrittenNotRead forNode: writes first]]].
 	^answer!
 
 visitTemporaryNode: anStVariableNode
 	self checkRedefines: anStVariableNode.
-	self currentScope addTemp: anStVariableNode name!
+	self currentScope declareTemp: anStVariableNode!
 
 visitTemporaryNodes: aNodeCollection
 	| count |
@@ -673,10 +676,10 @@ visitVariableNode: aVariableNode
 !StParseNodeAnalyzer categoriesFor: #currentScope!accessing!private! !
 !StParseNodeAnalyzer categoriesFor: #errorAssignConstant:!helpers!private! !
 !StParseNodeAnalyzer categoriesFor: #initialize!initializing!public! !
-!StParseNodeAnalyzer categoriesFor: #isInstVar:!helpers!private! !
 !StParseNodeAnalyzer categoriesFor: #isReceiverOfNilTest:!helpers!private! !
 !StParseNodeAnalyzer categoriesFor: #isTempVariable:!private!refactoring! !
 !StParseNodeAnalyzer categoriesFor: #lineOfSourcePosition:!helpers!private! !
+!StParseNodeAnalyzer categoriesFor: #lookupVariable:!helpers!private! !
 !StParseNodeAnalyzer categoriesFor: #newLiteralsCollection!helpers!initializing!private! !
 !StParseNodeAnalyzer categoriesFor: #pushActiveFrame!instructions-stack ops!private! !
 !StParseNodeAnalyzer categoriesFor: #pushConst:!helpers!private! !
