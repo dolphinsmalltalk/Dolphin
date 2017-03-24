@@ -1077,8 +1077,8 @@ replaceNode: aNode withNodes: aCollection
 
 !StVariableNode methodsFor!
 
-copyInContext: aDictionary 
-	^self class identifierToken: token removePositions!
+copyInContext: aDictionary
+	^self class named: self name!
 
 references: aVariableName 
 	^self name = aVariableName!

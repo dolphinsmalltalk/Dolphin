@@ -74,7 +74,7 @@ match: aNode inContext: aDictionary
 	self isLiteralNode ifTrue: [^self matchLiteral: aNode inContext: aDictionary].
 	self isStatement 
 		ifTrue: [^self matchStatement: aNode inContext: aDictionary].
-	aNode class == self matchingClass ifFalse: [^false].
+	(aNode isKindOf: self matchingClass) ifFalse: [^false].
 	^(aDictionary at: self ifAbsentPut: [aNode]) = aNode!
 
 matchingClass
@@ -87,6 +87,10 @@ matchLiteral: aNode inContext: aDictionary
 matchStatement: aNode inContext: aDictionary 
 	(aNode parent notNil and: [aNode parent isSequence]) ifFalse: [^false].
 	^(aDictionary at: self ifAbsentPut: [aNode]) = aNode!
+
+name: aString start: anInteger
+	super name: aString start: anInteger.
+	self initializePatternVariables!
 
 parent: aBRProgramNode 
 	"Fix the case where '``@node' should match a single node, not a sequence node."
@@ -101,7 +105,7 @@ recurseInto
 	^recurseInto! !
 !RBPatternVariableNode categoriesFor: #copyInContext:!matching!public! !
 !RBPatternVariableNode categoriesFor: #identifierToken:!initialize/release!public! !
-!RBPatternVariableNode categoriesFor: #initializePatternVariables!initialize/release!public! !
+!RBPatternVariableNode categoriesFor: #initializePatternVariables!initialize/release!private! !
 !RBPatternVariableNode categoriesFor: #isAnything!public!testing/matching! !
 !RBPatternVariableNode categoriesFor: #isList!public!testing/matching! !
 !RBPatternVariableNode categoriesFor: #isLiteralNode!public!testing! !
@@ -111,14 +115,15 @@ recurseInto
 !RBPatternVariableNode categoriesFor: #matchingClass!constants!public! !
 !RBPatternVariableNode categoriesFor: #matchLiteral:inContext:!matching!public! !
 !RBPatternVariableNode categoriesFor: #matchStatement:inContext:!matching!public! !
+!RBPatternVariableNode categoriesFor: #name:start:!initializing!private! !
 !RBPatternVariableNode categoriesFor: #parent:!accessing!public! !
 !RBPatternVariableNode categoriesFor: #recurseInto!public!testing/matching! !
 
 !RBPatternVariableNode class methodsFor!
 
-identifierToken: anIdentifierToken 
-	^anIdentifierToken isPatternVariable 
-		ifTrue: [super identifierToken: anIdentifierToken]
-		ifFalse: [RBVariableNode identifierToken: anIdentifierToken]! !
+identifierToken: anIdentifierToken
+	^anIdentifierToken isPatternVariable
+		ifTrue: [self named: anIdentifierToken value start: anIdentifierToken start]
+		ifFalse: [RBVariableNode named: anIdentifierToken value start: anIdentifierToken start]! !
 !RBPatternVariableNode class categoriesFor: #identifierToken:!instance creation!public! !
 

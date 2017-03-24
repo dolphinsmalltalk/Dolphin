@@ -20,6 +20,9 @@ messageNodeClass
 methodNodeClass
 	^RBPatternMethodNode!
 
+parameterNodeClass
+	^RBPatternVariableNode!
+
 parseLiteralByteArrayObject
 	(currentToken isIdentifier and: [currentToken isPatternVariable]) 
 		ifTrue: 
@@ -87,11 +90,15 @@ patchLiteralArrayToken
 scannerClass
 	^RBPatternScanner!
 
+tempDeclClass
+	^self variableNodeClass!
+
 variableNodeClass
 	^RBPatternVariableNode! !
 !RBPatternParser categoriesFor: #evaluateStatements:!parsing!private! !
 !RBPatternParser categoriesFor: #messageNodeClass!constants!private! !
 !RBPatternParser categoriesFor: #methodNodeClass!constants!private! !
+!RBPatternParser categoriesFor: #parameterNodeClass!constants!private! !
 !RBPatternParser categoriesFor: #parseLiteralByteArrayObject!parsing!public! !
 !RBPatternParser categoriesFor: #parsePatternBlock:!parsing!private! !
 !RBPatternParser categoriesFor: #parsePrimitiveLiteral!parsing!public! !
@@ -99,5 +106,6 @@ variableNodeClass
 !RBPatternParser categoriesFor: #parseUnaryMessage!parsing!private! !
 !RBPatternParser categoriesFor: #patchLiteralArrayToken!helpers!public! !
 !RBPatternParser categoriesFor: #scannerClass!accessing!public! !
+!RBPatternParser categoriesFor: #tempDeclClass!parsing!private! !
 !RBPatternParser categoriesFor: #variableNodeClass!constants!private! !
 
