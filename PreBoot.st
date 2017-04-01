@@ -156,3 +156,23 @@ NTLibrary addClassVariable: 'IsWine' value: false!
 (Array with: CPINFO with: TIME_ZONE_INFORMATION) do: [:each | each resetTemplate]!
 
 ByteCodeDispatcher.RunStarts at: #shortSpecialSendEx: put: 200!
+
+!Dictionary methodsFor!
+
+lookup: keyObject
+	^self at: keyObject ifAbsent: []! !
+
+!LookupTable methodsFor!
+
+lookup: keyObject
+	^self at: keyObject ifAbsent: []! !
+
+!PoolDictionary methodsFor!
+
+lookup: keyObject
+	^super lookup: keyObject asString! !
+
+!SystemDictionary methodsFor!
+
+lookup: keyObject
+	^super lookup: keyObject asSymbol! !
