@@ -46,7 +46,7 @@ bindVariable: anStVariableNode
 	"Private - Find the correct variable definition for the identifier of aVariableNode, and
 	associate the StVariable describing that definition with the node."
 
-	^(currentScope lookupVariable: anStVariableNode name)
+	^(currentScope lookupVariable: anStVariableNode)
 		ifNil: 
 			[self signalError: CErrUndeclared forNode: anStVariableNode.
 			nil]
@@ -237,25 +237,25 @@ checkOptimizedUnaryMessages: aMessageNode
 	^(selector == #whileTrue or: [selector == #whileFalse or: [selector == #repeat]]) 
 		and: [self checkMessageHasNiladicBlockReceiver: aMessageNode]!
 
-checkRedefines: aVariableNode
+checkRedefines: anStVariableNode
 	| var |
-	var := currentScope lookupVariable: aVariableNode name.
+	var := currentScope lookupVariable: anStVariableNode.
 	var isNil ifTrue: [^self].
 	var isStaticVariable
 		ifTrue: 
-			[var scope == evalScope ifFalse: [self signalError: CWarnRedefiningStatic forNode: aVariableNode].
+			[var scope == evalScope ifFalse: [self signalError: CWarnRedefiningStatic forNode: anStVariableNode].
 			^self].
 	var isInstanceVariable
 		ifTrue: 
-			[self signalError: CWarnRedefiningInstVar forNode: aVariableNode.
+			[self signalError: CWarnRedefiningInstVar forNode: anStVariableNode.
 			^self].
 	"Note that we interpret the ANSI standard as stating that duplicate temporary/argument names
 	at the same scope are not permitted (which is certainly true), but that duplicate names in
 	nested scopes (i.e. temps/args that shadow outer temps) are permitted (which seems
 	appropriate), but for which we issue a warning."
 	var isArgument
-		ifTrue: [self signalError: CWarnRedefiningArg forNode: aVariableNode]
-		ifFalse: [self signalError: CWarnRedefiningTemp forNode: aVariableNode]!
+		ifTrue: [self signalError: CWarnRedefiningArg forNode: anStVariableNode]
+		ifFalse: [self signalError: CWarnRedefiningTemp forNode: anStVariableNode]!
 
 checkRestrictedSelectors: aMethodNode
 	| last first |
@@ -403,10 +403,13 @@ setMethodNode: aStMethodNode methodClass: aClass context: anObject pools: anArra
 	methodNode := aStMethodNode.
 	methodClass := aClass.
 	evaluationContext := anObject.
-	evalScope := StEvalScope pools: anArray.
-	currentScope := (StClassScope methodClass: aClass)
-				outer: evalScope;
-				yourself!
+	currentScope := StClassScope methodClass: aClass.
+	anArray isEmpty
+		ifFalse: 
+			[evalScope := (StEvalScope pools: anArray)
+						outer: currentScope;
+						yourself.
+			currentScope := evalScope]!
 
 signalError: anInteger forNode: aNode 
 	^self 
@@ -514,13 +517,6 @@ visitOptimizedNode: anOptimizedNode
 	[super visitOptimizedNode: anOptimizedNode] ensure: 
 			[inStaticExpression := wasInStaticExpression.
 			addToFrame := outerAddToFrame]!
-
-visitPseudoVariableNode: anStPseudoVariableNode
-	| identifier |
-	identifier := anStPseudoVariableNode name.
-	identifier = 'self' ifTrue: [^self pushSelf].
-	identifier = 'super' ifTrue: [^self pushSuper].
-	identifier = 'thisContext' ifTrue: [^self pushActiveFrame]!
 
 visitSequenceNode: aSequenceNode
 	| answer scope |
@@ -640,7 +636,6 @@ writeVariable: anStVariableNode
 !StParseNodeAnalyzer categoriesFor: #visitMessageNode:!public!visitor/double dispatching! !
 !StParseNodeAnalyzer categoriesFor: #visitMethodNode:!public!visitor/double dispatching! !
 !StParseNodeAnalyzer categoriesFor: #visitOptimizedNode:!public!visitor/double dispatching! !
-!StParseNodeAnalyzer categoriesFor: #visitPseudoVariableNode:!public!visiting! !
 !StParseNodeAnalyzer categoriesFor: #visitSequenceNode:!public!visitor/double dispatching! !
 !StParseNodeAnalyzer categoriesFor: #visitTemporaryNode:!public!visiting! !
 !StParseNodeAnalyzer categoriesFor: #visitTemporaryNodes:!public!visiting! !

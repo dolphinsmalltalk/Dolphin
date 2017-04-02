@@ -32,6 +32,10 @@ package methodNames
 	add: #CompileFailedMethod -> #refersToVariable:;
 	add: #RBConfigurableFormatter -> #visitPatternWrapperBlockNode:;
 	add: #RBFormatter -> #visitPatternWrapperBlockNode:;
+	add: #StAbstractVariableNode -> #copyInContext:;
+	add: #StAbstractVariableNode -> #references:;
+	add: #StAbstractVariableNode -> #replaceSourceFrom:;
+	add: #StAbstractVariableNode -> #replaceSourceWith:;
 	add: #StAssignmentNode -> #copyInContext:;
 	add: #StAssignmentNode -> #match:inContext:;
 	add: #StAssignmentNode -> #replaceNode:withNode:;
@@ -112,10 +116,6 @@ package methodNames
 	add: #StSequenceNode -> #removeTemporaryNamed:;
 	add: #StSequenceNode -> #replaceNode:withNode:;
 	add: #StSequenceNode -> #replaceNode:withNodes:;
-	add: #StVariableNode -> #copyInContext:;
-	add: #StVariableNode -> #references:;
-	add: #StVariableNode -> #replaceSourceFrom:;
-	add: #StVariableNode -> #replaceSourceWith:;
 	add: 'SmalltalkParser class' -> #parseRewriteExpression:;
 	add: 'SmalltalkParser class' -> #parseRewriteExpression:onError:;
 	add: 'SmalltalkParser class' -> #parseRewriteMethod:;
@@ -262,6 +262,11 @@ StMethodNode subclass: #RBPatternMethodNode
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+StVariableNode subclass: #RBPatternVariableNode
+	instanceVariableNames: 'recurseInto isList isLiteral isStatement isAnything'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
 StBlockNode subclass: #RBPatternBlockNode
 	instanceVariableNames: 'valueBlock'
 	classVariableNames: ''
@@ -274,11 +279,6 @@ RBPatternBlockNode subclass: #RBPatternWrapperBlockNode
 	classInstanceVariableNames: ''!
 StMessageNode subclass: #RBPatternMessageNode
 	instanceVariableNames: 'isList isCascadeList'
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-StVariableNode subclass: #RBPatternVariableNode
-	instanceVariableNames: 'recurseInto isList isLiteral isStatement isAnything'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -394,6 +394,30 @@ parseRewriteMethod: aString onError: aBlock
 !SmalltalkParser class categoriesFor: #parseRewriteExpression:onError:!parsing!public! !
 !SmalltalkParser class categoriesFor: #parseRewriteMethod:!parsing!public! !
 !SmalltalkParser class categoriesFor: #parseRewriteMethod:onError:!parsing!public! !
+
+!StAbstractVariableNode methodsFor!
+
+copyInContext: aDictionary
+	^self class named: self name!
+
+references: aVariableName 
+	^self name = aVariableName!
+
+replaceSourceFrom: aNode 
+	self addReplacement: (RBStringReplacement 
+				replaceFrom: aNode start
+				to: aNode stop
+				with: self name)!
+
+replaceSourceWith: aNode
+	self addReplacement: (RBStringReplacement 
+				replaceFrom: self start
+				to: self stop
+				with: aNode formattedCode)! !
+!StAbstractVariableNode categoriesFor: #copyInContext:!matching!public! !
+!StAbstractVariableNode categoriesFor: #references:!public!testing! !
+!StAbstractVariableNode categoriesFor: #replaceSourceFrom:!public!replacing! !
+!StAbstractVariableNode categoriesFor: #replaceSourceWith:!public!replacing! !
 
 !StAssignmentNode methodsFor!
 
@@ -1074,30 +1098,6 @@ replaceNode: aNode withNodes: aCollection
 !StSequenceNode categoriesFor: #removeTemporaryNamed:!accessing!public! !
 !StSequenceNode categoriesFor: #replaceNode:withNode:!public!replacing! !
 !StSequenceNode categoriesFor: #replaceNode:withNodes:!public!replacing! !
-
-!StVariableNode methodsFor!
-
-copyInContext: aDictionary
-	^self class named: self name!
-
-references: aVariableName 
-	^self name = aVariableName!
-
-replaceSourceFrom: aNode 
-	self addReplacement: (RBStringReplacement 
-				replaceFrom: aNode start
-				to: aNode stop
-				with: self name)!
-
-replaceSourceWith: aNode
-	self addReplacement: (RBStringReplacement 
-				replaceFrom: self start
-				to: self stop
-				with: aNode formattedCode)! !
-!StVariableNode categoriesFor: #copyInContext:!matching!public! !
-!StVariableNode categoriesFor: #references:!public!testing! !
-!StVariableNode categoriesFor: #replaceSourceFrom:!public!replacing! !
-!StVariableNode categoriesFor: #replaceSourceWith:!public!replacing! !
 
 "End of package definition"!
 

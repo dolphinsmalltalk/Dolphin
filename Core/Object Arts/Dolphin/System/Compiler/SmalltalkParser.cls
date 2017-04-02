@@ -82,11 +82,6 @@ initializeParserWith: aString
 	source := aString.
 	self scanner: (self scannerClass on: (ReadStream on: self source) errorHandler: self)!
 
-isSpecialVariable: aVariableNode 
-	| identifier |
-	identifier := aVariableNode name.
-	^'self' = identifier or: ['super' = identifier or: ['thisContext' = identifier]]!
-
 line
 	"Anwswer one-based <integer> line number of the receiver's current position in the 
 	source text."
@@ -1004,35 +999,35 @@ step
 tempDeclClass
 	^StTempDeclNode!
 
-validateArg: aVariableNode args: anOrderedCollection 
+validateArg: aVariableNode args: anOrderedCollection
 	"...It is erroneous if the same identifier is used as a <method argument> of a <method
 	definition> and also appears in the method's <temporary variable list>...It is erroneous if
 	the same identifier appears more than once in a single method definition's <temporary
 	variable list>. It is erroneous for any one of the reserved identifiers ('nil', 'true',
 	'false', 'self' and 'super') to appear in a <temporary variable list>."
 
-	(anOrderedCollection includes: aVariableNode) 
+	(anOrderedCollection includes: aVariableNode)
 		ifTrue: [self parserError: CErrDuplicateArgName range: aVariableNode sourceInterval]
 		ifFalse: 
-			[(self isSpecialVariable: aVariableNode) 
+			[aVariableNode isSpecialVariable
 				ifTrue: [self parserError: CErrRedefiningPseudoVar range: aVariableNode sourceInterval]
 				ifFalse: [^true]].
 	^false!
 
-validateTemp: aVariableNode of: aNode temps: anOrderedCollection 
+validateTemp: aVariableNode of: aNode temps: anOrderedCollection
 	"...It is erroneous if the same identifier is used as a <method argument> of a <method
 	definition> and also appears in the method's <temporary variable list>...It is erroneous if
 	the same identifier appears more than once in a single method definition's <temporary
 	variable list>. It is erroneous for any one of the reserved identifiers ('nil', 'true',
 	'false', 'self' and 'super') to appear in a <temporary variable list>."
 
-	(anOrderedCollection includes: aVariableNode) 
+	(anOrderedCollection includes: aVariableNode)
 		ifTrue: [self parserError: CErrDuplicateTempName range: aVariableNode sourceInterval]
 		ifFalse: 
-			[(self isSpecialVariable: aVariableNode) 
+			[aVariableNode isSpecialVariable
 				ifTrue: [self parserError: CErrRedefiningPseudoVar range: aVariableNode sourceInterval]
 				ifFalse: 
-					[(aNode arguments includes: aVariableNode) 
+					[(aNode arguments includes: aVariableNode)
 						ifTrue: [self parserError: CErrRedefiningArg range: aVariableNode sourceInterval]
 						ifFalse: [^true]]].
 	^false!
@@ -1051,7 +1046,6 @@ variableNodeClass
 !SmalltalkParser categoriesFor: #externalReferenceTypeFor:!parsing!private! !
 !SmalltalkParser categoriesFor: #initialize!initializing!public! !
 !SmalltalkParser categoriesFor: #initializeParserWith:!initializing!private! !
-!SmalltalkParser categoriesFor: #isSpecialVariable:!parsing!private! !
 !SmalltalkParser categoriesFor: #line!accessing!public! !
 !SmalltalkParser categoriesFor: #literalArrayNodeClass!constants!private! !
 !SmalltalkParser categoriesFor: #literalNodeClass!constants!private! !

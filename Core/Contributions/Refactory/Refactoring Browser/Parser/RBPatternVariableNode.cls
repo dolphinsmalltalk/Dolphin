@@ -88,10 +88,6 @@ matchStatement: aNode inContext: aDictionary
 	(aNode parent notNil and: [aNode parent isSequence]) ifFalse: [^false].
 	^(aDictionary at: self ifAbsentPut: [aNode]) = aNode!
 
-name: aString start: anInteger
-	super name: aString start: anInteger.
-	self initializePatternVariables!
-
 parent: aBRProgramNode 
 	"Fix the case where '``@node' should match a single node, not a sequence node."
 
@@ -102,7 +98,11 @@ parent: aBRProgramNode
 				ifFalse: [isList := false]]!
 
 recurseInto
-	^recurseInto! !
+	^recurseInto!
+
+setName: aString start: anInteger
+	super setName: aString start: anInteger.
+	self initializePatternVariables! !
 !RBPatternVariableNode categoriesFor: #copyInContext:!matching!public! !
 !RBPatternVariableNode categoriesFor: #identifierToken:!initialize/release!public! !
 !RBPatternVariableNode categoriesFor: #initializePatternVariables!initialize/release!private! !
@@ -115,9 +115,9 @@ recurseInto
 !RBPatternVariableNode categoriesFor: #matchingClass!constants!public! !
 !RBPatternVariableNode categoriesFor: #matchLiteral:inContext:!matching!public! !
 !RBPatternVariableNode categoriesFor: #matchStatement:inContext:!matching!public! !
-!RBPatternVariableNode categoriesFor: #name:start:!initializing!private! !
 !RBPatternVariableNode categoriesFor: #parent:!accessing!public! !
 !RBPatternVariableNode categoriesFor: #recurseInto!public!testing/matching! !
+!RBPatternVariableNode categoriesFor: #setName:start:!initializing!private! !
 
 !RBPatternVariableNode class methodsFor!
 

@@ -12,9 +12,13 @@ package classNames
 	add: #StLexicalScope;
 	add: #StLocalVariable;
 	add: #StParseNodeAnalyzer;
+	add: #StSelfVariable;
 	add: #StSemanticScope;
+	add: #StSpecialVariable;
 	add: #StStaticVariable;
+	add: #StSuperVariable;
 	add: #StTempVariable;
+	add: #StThisContextVariable;
 	add: #StVariable;
 	yourself.
 
@@ -49,7 +53,7 @@ StParseNodeVisitor subclass: #StParseNodeAnalyzer
 	poolDictionaries: 'SmalltalkParseErrorCodes'
 	classInstanceVariableNames: ''!
 StSemanticScope subclass: #StClassScope
-	instanceVariableNames: 'methodClass instanceVariables'
+	instanceVariableNames: 'methodClass instanceVariables selfVariable superVariable'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -59,7 +63,7 @@ StSemanticScope subclass: #StEvalScope
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 StSemanticScope subclass: #StLexicalScope
-	instanceVariableNames: 'locals node'
+	instanceVariableNames: 'locals node thisContextVariable'
 	classVariableNames: 'NeedsSelfMask'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -70,6 +74,11 @@ StVariable subclass: #StInstanceVariable
 	classInstanceVariableNames: ''!
 StVariable subclass: #StLocalVariable
 	instanceVariableNames: 'node'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+StVariable subclass: #StSpecialVariable
+	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -84,6 +93,21 @@ StLocalVariable subclass: #StArgumentVariable
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 StLocalVariable subclass: #StTempVariable
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+StSpecialVariable subclass: #StSelfVariable
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+StSpecialVariable subclass: #StSuperVariable
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+StSpecialVariable subclass: #StThisContextVariable
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''

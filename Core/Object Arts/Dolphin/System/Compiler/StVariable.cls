@@ -61,6 +61,13 @@ scope
 scope: anStSemanticScope
 	scope := anStSemanticScope!
 
+valueClass
+	"Answer the class of the variables value, if this is known, or nil if unknown. In Smalltalk
+	we only know the type that a variable can assume in the case of constants as variables are
+	untyped."
+
+	^nil!
+
 writes
 	^writes ?? #()! !
 !StVariable categoriesFor: #addRead:!public! !
@@ -78,6 +85,7 @@ writes
 !StVariable categoriesFor: #reads!accessing!public! !
 !StVariable categoriesFor: #scope!accessing!public! !
 !StVariable categoriesFor: #scope:!accessing!public! !
+!StVariable categoriesFor: #valueClass!accessing!public! !
 !StVariable categoriesFor: #writes!accessing!public! !
 
 !StVariable class methodsFor!
