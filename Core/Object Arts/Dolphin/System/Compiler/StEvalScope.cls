@@ -10,10 +10,13 @@ StEvalScope comment: ''!
 !StEvalScope categoriesForClass!Kernel-Objects! !
 !StEvalScope methodsFor!
 
-lookupVariable: aString
-	pools
-		do: [:each | (each bindingFor: aString) ifNotNil: [:binding | ^StStaticVariable scope: self binding: binding]].
-	^nil!
+lookupVariable: anStVariableNode
+	| identifier |
+	identifier := anStVariableNode name.
+	pools do: 
+			[:each |
+			(each bindingFor: identifier) ifNotNil: [:binding | ^StStaticVariable scope: self binding: binding]].
+	^outer lookupVariable: anStVariableNode!
 
 setPools: anArray
 	pools := anArray! !

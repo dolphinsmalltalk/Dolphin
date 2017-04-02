@@ -74,9 +74,6 @@ visitParameterNode: anStParameterNode
 visitPrimitiveNode: anStPrimitiveNode
 	!
 
-visitPseudoVariableNode: anStPseudoVariableNode
-	^self visitVariableNode: anStPseudoVariableNode!
-
 visitReturnNode: aReturnNode
 	self visitNode: aReturnNode value!
 
@@ -87,6 +84,9 @@ visitSequenceNode: aSequenceNode
 			[aSequenceNode parent
 				ifNotNil: [:parent | parent isMethod ifTrue: [parent tag ifNotNil: [:tag | self visitNode: tag]]]].
 	self visitStatements: aSequenceNode statements!
+
+visitSpecialVariableNode: anStPseudoVariableNode
+	^self visitVariableNode: anStPseudoVariableNode!
 
 visitStatements: aNodeCollection
 	aNodeCollection do: [:each | self visitNode: each]!
@@ -118,9 +118,9 @@ visitVariableNode: aVariableNode
 !StParseNodeVisitor categoriesFor: #visitOptimizedNode:!public!visiting! !
 !StParseNodeVisitor categoriesFor: #visitParameterNode:!public!visiting! !
 !StParseNodeVisitor categoriesFor: #visitPrimitiveNode:!public!visiting! !
-!StParseNodeVisitor categoriesFor: #visitPseudoVariableNode:!public!visiting! !
 !StParseNodeVisitor categoriesFor: #visitReturnNode:!public!visiting! !
 !StParseNodeVisitor categoriesFor: #visitSequenceNode:!public!visiting! !
+!StParseNodeVisitor categoriesFor: #visitSpecialVariableNode:!public!visiting! !
 !StParseNodeVisitor categoriesFor: #visitStatements:!helpers!private! !
 !StParseNodeVisitor categoriesFor: #visitTempDeclNode:!public!visiting! !
 !StParseNodeVisitor categoriesFor: #visitTemporaryNodes:!public!visiting! !

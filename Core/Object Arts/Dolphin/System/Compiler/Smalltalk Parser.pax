@@ -23,6 +23,7 @@ package classNames
 	add: #PatternBlockToken;
 	add: #SmalltalkParser;
 	add: #SmalltalkScanner;
+	add: #StAbstractVariableNode;
 	add: #StAssignmentNode;
 	add: #StAssignmentToken;
 	add: #StBinarySelectorToken;
@@ -48,12 +49,15 @@ package classNames
 	add: #StParseNodeVisitor;
 	add: #StPrimitiveNode;
 	add: #StProgramNode;
-	add: #StPseudoVariableNode;
 	add: #StReturnNode;
+	add: #StSelfVariableNode;
 	add: #StSequenceNode;
 	add: #StSpecialCharacterToken;
+	add: #StSpecialVariableNode;
+	add: #StSuperVariableNode;
 	add: #StTagNode;
 	add: #StTempDeclNode;
+	add: #StThisContextVariableNode;
 	add: #StToken;
 	add: #StValueNode;
 	add: #StValueToken;
@@ -149,6 +153,11 @@ StTagNode subclass: #StPrimitiveNode
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+StValueNode subclass: #StAbstractVariableNode
+	instanceVariableNames: 'start variable'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
 StValueNode subclass: #StAssignmentNode
 	instanceVariableNames: 'variable assignment value'
 	classVariableNames: ''
@@ -179,8 +188,38 @@ StValueNode subclass: #StOptimizedNode
 	classVariableNames: 'UnevaluatedCookie'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-StValueNode subclass: #StVariableNode
-	instanceVariableNames: 'name start variable'
+StAbstractVariableNode subclass: #StSpecialVariableNode
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+StAbstractVariableNode subclass: #StVariableNode
+	instanceVariableNames: 'name'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+StSpecialVariableNode subclass: #StSelfVariableNode
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+StSpecialVariableNode subclass: #StSuperVariableNode
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+StSpecialVariableNode subclass: #StThisContextVariableNode
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+StVariableNode subclass: #StParameterNode
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+StVariableNode subclass: #StTempDeclNode
+	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -191,21 +230,6 @@ StLiteralNode subclass: #StLiteralArrayNode
 	classInstanceVariableNames: ''!
 StLiteralNode subclass: #StLiteralValueNode
 	instanceVariableNames: 'token'
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-StVariableNode subclass: #StParameterNode
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-StVariableNode subclass: #StPseudoVariableNode
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-StVariableNode subclass: #StTempDeclNode
-	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!

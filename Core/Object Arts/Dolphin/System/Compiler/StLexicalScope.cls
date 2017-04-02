@@ -1,7 +1,7 @@
 "Filed out from Dolphin Smalltalk 7"!
 
 StSemanticScope subclass: #StLexicalScope
-	instanceVariableNames: 'locals node'
+	instanceVariableNames: 'locals node thisContextVariable'
 	classVariableNames: 'NeedsSelfMask'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -47,8 +47,10 @@ isInlined
 localCount
 	^locals size!
 
-lookupVariable: aString
-	^(locals lookup: aString) ifNil: [outer ifNotNil: [outer lookupVariable: aString]]!
+lookupVariable: anStVariableNode
+	anStVariableNode isSpecialVariable ifTrue: [^anStVariableNode specialVariableInScope: self].
+	^(locals lookup: anStVariableNode name)
+		ifNil: [outer ifNotNil: [outer lookupVariable: anStVariableNode]]!
 
 needsSelf
 	^flags anyMask: NeedsSelfMask!
@@ -74,6 +76,13 @@ setNode: aBlockOrMethodNode outer: anStLexicalScope
 temporaries
 	^locals select: [:each | each isTempVariable]!
 
+thisContextVariable
+	^thisContextVariable
+		ifNil: 
+			[thisContextVariable := (StThisContextVariable new)
+						scope: self;
+						yourself]!
+
 unreferencedArguments
 	^(node isMethod and: [node isPrimitive])
 		ifTrue: 
@@ -97,6 +106,7 @@ unreferencedArguments
 !StLexicalScope categoriesFor: #printOn:!printing!public! !
 !StLexicalScope categoriesFor: #setNode:outer:!initializing!private! !
 !StLexicalScope categoriesFor: #temporaries!accessing!private! !
+!StLexicalScope categoriesFor: #thisContextVariable!public! !
 !StLexicalScope categoriesFor: #unreferencedArguments!accessing!public! !
 
 !StLexicalScope class methodsFor!

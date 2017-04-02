@@ -284,6 +284,7 @@ package methodNames
 	add: #Slider -> #publishedAspects;
 	add: #SourceManager -> #compressSourcesWith:;
 	add: #SpinButton -> #publishedAspects;
+	add: #StAbstractVariableNode -> #displayOn:;
 	add: #StackFrame -> #debugIpFor:;
 	add: #StackFrame -> #findIP:inTextMap:;
 	add: #StackFrame -> #makeDebug;
@@ -302,7 +303,7 @@ package methodNames
 	add: #StProgramNode -> #debugPrintString;
 	add: #StProgramNode -> #postComments;
 	add: #StProgramNode -> #preComments;
-	add: #StPseudoVariableNode -> #displayOn:;
+	add: #StProgramNode -> #publishedAspects;
 	add: #StReturnNode -> #displayOn:;
 	add: #String -> #aspectDisplayOn:;
 	add: #String -> #debugPrintString;
@@ -310,9 +311,9 @@ package methodNames
 	add: #String -> #newAspect:class:;
 	add: #String -> #publishedAspects;
 	add: #StSequenceNode -> #displayOn:;
+	add: #StSpecialVariableNode -> #displayOn:;
 	add: #StToken -> #postComments;
 	add: #StToken -> #preComments;
-	add: #StVariableNode -> #displayOn:;
 	add: #Symbol -> #aspectDisplayOn:;
 	add: #Symbol -> #literalTextStyle;
 	add: #Symbol -> #searchForInTool:;
@@ -4543,6 +4544,14 @@ publishedAspectsOfInstances
 	^aspects! !
 !Splitter class categoriesFor: #publishedAspectsOfInstances!constants!development!public! !
 
+!StAbstractVariableNode methodsFor!
+
+displayOn: aStream
+	aStream
+		nextPutAll: 'Var ';
+		print: self name! !
+!StAbstractVariableNode categoriesFor: #displayOn:!development!printing!public! !
+
 !StackFrame methodsFor!
 
 debugIpFor: debugMethod 
@@ -4847,16 +4856,27 @@ preComments
 			[:all | 
 			| start |
 			start := self start.
-			all select: [:each | each stop < start]]! !
+			all select: [:each | each stop < start]]!
+
+publishedAspects
+	| aspects |
+	aspects := super publishedAspects.
+	aspects at: #yourself
+		put: (Aspect name: #yourself
+				presenterBlock: 
+					[:p :m |
+					| tree |
+					tree := TreePresenter
+								create: 'Default view'
+								in: p
+								on: (VirtualTreeModel withRoots: (OrderedCollection with: m value)).
+					tree view expandAll.
+					tree]).
+	^aspects! !
 !StProgramNode categoriesFor: #debugPrintString!development!printing!public! !
 !StProgramNode categoriesFor: #postComments!accessing!public! !
 !StProgramNode categoriesFor: #preComments!accessing!public! !
-
-!StPseudoVariableNode methodsFor!
-
-displayOn: aStream
-	aStream display: self name! !
-!StPseudoVariableNode categoriesFor: #displayOn:!development!printing!public! !
+!StProgramNode categoriesFor: #publishedAspects!constants!development!public! !
 
 !StReturnNode methodsFor!
 
@@ -4929,6 +4949,12 @@ displayOn: aStream
 	aStream nextPutAll: '...'! !
 !StSequenceNode categoriesFor: #displayOn:!printing!public! !
 
+!StSpecialVariableNode methodsFor!
+
+displayOn: aStream
+	aStream display: self name! !
+!StSpecialVariableNode categoriesFor: #displayOn:!development!printing!public! !
+
 !StToken methodsFor!
 
 postComments
@@ -4954,14 +4980,6 @@ preComments
 			all select: [:each | each stop < start]]! !
 !StToken categoriesFor: #postComments!accessing!public! !
 !StToken categoriesFor: #preComments!accessing!public! !
-
-!StVariableNode methodsFor!
-
-displayOn: aStream
-	aStream
-		nextPutAll: 'Var ';
-		print: self name! !
-!StVariableNode categoriesFor: #displayOn:!development!printing!public! !
 
 !StyledGradientBrush class methodsFor!
 

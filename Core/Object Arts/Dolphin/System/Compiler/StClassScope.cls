@@ -1,7 +1,7 @@
 "Filed out from Dolphin Smalltalk 7"!
 
 StSemanticScope subclass: #StClassScope
-	instanceVariableNames: 'methodClass instanceVariables'
+	instanceVariableNames: 'methodClass instanceVariables selfVariable superVariable'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -10,23 +10,44 @@ StClassScope comment: ''!
 !StClassScope categoriesForClass!Kernel-Objects! !
 !StClassScope methodsFor!
 
-lookupVariable: aString
+lookupVariable: anStVariableNode
+	| identifier |
+	identifier := anStVariableNode name.
+	anStVariableNode isSpecialVariable ifTrue: [^anStVariableNode specialVariableInScope: self].
 	instanceVariables isNil
 		ifTrue: 
 			[instanceVariables := LookupTable new: 5.
 			methodClass allInstVarNames
 				keysAndValuesDo: [:i :v | instanceVariables at: v put: (StInstanceVariable index: i name: v)]].
-	^(instanceVariables lookup: aString)
+	^(instanceVariables lookup: identifier)
 		ifNil: 
-			[(methodClass fullBindingFor: aString)
-				ifNil: [outer lookupVariable: aString]
-				ifNotNil: [:b | StStaticVariable scope: self binding: b]]!
+			[(methodClass fullBindingFor: identifier) ifNotNil: [:b | StStaticVariable scope: self binding: b]]!
+
+methodClass
+	^methodClass!
+
+selfVariable
+	^selfVariable
+		ifNil: 
+			[selfVariable := (StSelfVariable new)
+						scope: self;
+						yourself]!
 
 setMethodClass: aClassDescription
 	methodClass := aClassDescription.
-	self initialize! !
+	self initialize!
+
+superVariable
+	^superVariable
+		ifNil: 
+			[superVariable := (StSuperVariable new)
+						scope: self;
+						yourself]! !
 !StClassScope categoriesFor: #lookupVariable:!operations!public! !
+!StClassScope categoriesFor: #methodClass!accessing!public! !
+!StClassScope categoriesFor: #selfVariable!operations!public! !
 !StClassScope categoriesFor: #setMethodClass:!accessing!initializing!private! !
+!StClassScope categoriesFor: #superVariable!operations!public! !
 
 !StClassScope class methodsFor!
 
