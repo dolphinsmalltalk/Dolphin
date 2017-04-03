@@ -49,6 +49,16 @@ testAllSatisfy
 									visited size < k]).
 					self assert: (subject asArray copyFrom: 1 to: k) equals: visited asArray]]!
 
+testAnyone
+	| subject any |
+	subject := self newCollection: #().
+	self should: [subject anyOne] raise: Error.
+	subject := self newCollection: #($a).
+	self assert: subject anyOne equals: (self assimilate: $a).
+	subject := self newCollection: #($a $b).
+	any := subject anyOne.
+	self assert: (subject anySatisfy: [:each | each == any])!
+
 testAnySatisfy
 	| subject |
 	subject := self newCollection: #().
@@ -78,6 +88,21 @@ testAnySatisfy
 									visited add: e.
 									visited size = k]).
 					self assert: (subject asArray copyFrom: 1 to: k) equals: visited asArray]]!
+
+testCount
+	| none all odd |
+	all := [:each | true].
+	none := [:each | false].
+	odd := [:each | each asInteger odd].
+	0 to: 5
+		do: 
+			[:i |
+			| elems subject |
+			elems := (1 to: i) collect: [:c | self assimilate: c].
+			subject := self newCollection: elems.
+			self assert: (subject count: all) equals: i.
+			self assert: (subject count: none) equals: 0.
+			self assert: (subject count: odd) equals: (i + 1) // 2]!
 
 testDistinct
 	| result |
@@ -113,7 +138,9 @@ testFold
 !DolphinCollectionTest categoriesFor: #assimilateElements:!helpers!private! !
 !DolphinCollectionTest categoriesFor: #newCollection:!helpers!private! !
 !DolphinCollectionTest categoriesFor: #testAllSatisfy!public! !
+!DolphinCollectionTest categoriesFor: #testAnyone!public!unit tests! !
 !DolphinCollectionTest categoriesFor: #testAnySatisfy!public! !
+!DolphinCollectionTest categoriesFor: #testCount!public! !
 !DolphinCollectionTest categoriesFor: #testDistinct!public!unit tests! !
 !DolphinCollectionTest categoriesFor: #testFold!public!unit tests! !
 

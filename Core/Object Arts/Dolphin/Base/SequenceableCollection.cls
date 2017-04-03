@@ -1063,11 +1063,6 @@ sixth
 
 	^self at: 6!
 
-size
-	"Answer the <integer> number of elements in the receiver."
-
-	^self subclassResponsibility!
-
 skipOver: stream
 	"Private - Answer whether the receiver matches the contents of <sequencedStream> stream
 	taking account of any case differences. Answers true if a complete match is
@@ -1236,7 +1231,6 @@ writeStream
 !SequenceableCollection categoriesFor: #second!accessing!public! !
 !SequenceableCollection categoriesFor: #select:!enumerating!public! !
 !SequenceableCollection categoriesFor: #sixth!accessing!public! !
-!SequenceableCollection categoriesFor: #size!accessing!public! !
 !SequenceableCollection categoriesFor: #skipOver:!private!searching! !
 !SequenceableCollection categoriesFor: #swap:with:!operations!public! !
 !SequenceableCollection categoriesFor: #third!accessing!public! !

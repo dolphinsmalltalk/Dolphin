@@ -257,10 +257,19 @@ copyWithoutDuplicates
 
 	^self distinct!
 
+count: aMonadicValuable
+	"Answer the number of elements of the receiver for which the predicate argument,
+	aMonadicValuable, evaluates to true for that element."
+
+	| tally |
+	tally := 0.
+	self do: [:each | (aMonadicValuable value: each) ifTrue: [tally := tally + 1]].
+	^tally!
+
 countElements
-	"Private - Count, and answer, the number of elements in the receiver.
-	Implementation Note: Could be implemented more elegantly with #inject:into:, but
-	this implementation is about twice as fast."
+	"Private - Count, and answer, the number of elements in the receiver. Implementation Note:
+	Could be implemented more elegantly with #count:, but obviously we can avoid the cost of the
+	redundant always-true predicate to count all the elements."
 
 	| tally |
 	tally := 0.
@@ -606,6 +615,7 @@ union: comperand
 !Collection categoriesFor: #copyLike:!copying!private! !
 !Collection categoriesFor: #copySize!copying!private! !
 !Collection categoriesFor: #copyWithoutDuplicates!copying!public! !
+!Collection categoriesFor: #count:!enumerating!public! !
 !Collection categoriesFor: #countElements!accessing!private! !
 !Collection categoriesFor: #detect:!public!searching! !
 !Collection categoriesFor: #detect:ifNone:!public!searching! !

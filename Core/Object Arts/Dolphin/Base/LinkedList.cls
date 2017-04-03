@@ -1,11 +1,11 @@
 "Filed out from Dolphin Smalltalk 7"!
 
 SequencedGrowableCollection subclass: #LinkedList
-	instanceVariableNames: 'firstLink lastLink '
+	instanceVariableNames: 'firstLink lastLink'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-LinkedList guid: (GUID fromString: '{87B4C521-026E-11D3-9FD7-00A0CC3E4A32}')!
+LinkedList guid: (GUID fromString: '{87b4c521-026e-11d3-9fd7-00a0cc3e4a32}')!
 LinkedList comment: 'LinkedList is a class of <SequencedGrowableCollection> which is sequenced, ordered, contractible, expandable, readable and  writeable. The implementation is as an intrusively, singly, linked list (i.e. the elements hold the pointer to the next element), and requires that the elements of a LinkedList must be a kind of <Link> (or support the same protocol).
 
 N.B. LinkedList is primarily present as an implementation artifact. The fact that it expects its elements to hold the makes it of limited use, since, unlike other SequenceableCollections, it cannot hold any type of object, and each element can only every exist in one linked list.
@@ -178,14 +178,7 @@ removeLastIfAbsent: exceptionHandler
 			[temp nextLink == lastLink] whileFalse: [temp := temp nextLink].
 			temp nextLink: nil.
 			lastLink := temp].
-	^aLink!
-
-size
-	"Answer the number of elements in the receiver.
-	Implementation Note: We maintain no kind of tally, so we must traverse
-	the list to determine this - i.e. it's going to be quite SLOW."
-
-	^self countElements! !
+	^aLink! !
 !LinkedList categoriesFor: #addFirst:!adding!public! !
 !LinkedList categoriesFor: #addLast:!adding!public! !
 !LinkedList categoriesFor: #approxSize!accessing!private! !
@@ -199,5 +192,4 @@ size
 !LinkedList categoriesFor: #removeAtIndex:!public!removing! !
 !LinkedList categoriesFor: #removeFirstIfAbsent:!public!removing! !
 !LinkedList categoriesFor: #removeLastIfAbsent:!public!removing! !
-!LinkedList categoriesFor: #size!accessing!public! !
 
