@@ -481,7 +481,7 @@ parseKeywordMessageWith: node
 				selectorParts: keywords
 				arguments: args]
 		ifFalse: 
-			[node isVariable ifTrue: [node name = 'super' ifTrue: [self parserError: CErrExpectMessage]].
+			[node isSuperVariable ifTrue: [self parserError: CErrExpectMessage].
 			node]!
 
 parseKeywordPattern

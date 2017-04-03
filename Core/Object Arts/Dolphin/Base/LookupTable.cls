@@ -197,7 +197,7 @@ lookup: keyObject
 
 	| index |
 	index := self findKeyOrNil: keyObject.
-	^(self basicAt: index) isNil ifTrue: [] ifFalse: [values at: index]!
+	^(self basicAt: index) isNil ifFalse: [values at: index]!
 
 moveFrom: fromIndex to: toIndex
 	"Private - Destructively move the element at index, fromIndex, over

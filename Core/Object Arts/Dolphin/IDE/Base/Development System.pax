@@ -311,11 +311,15 @@ package methodNames
 	add: #String -> #newAspect:class:;
 	add: #String -> #publishedAspects;
 	add: #StSelfVariable -> #valueClass;
+	add: #StSelfVariableNode -> #valueClassIn:;
 	add: #StSequenceNode -> #displayOn:;
 	add: #StSpecialVariableNode -> #displayOn:;
+	add: #StSpecialVariableNode -> #valueClassIn:;
 	add: #StStaticVariable -> #valueClass;
 	add: #StSuperVariable -> #valueClass;
+	add: #StSuperVariableNode -> #valueClassIn:;
 	add: #StThisContextVariable -> #valueClass;
+	add: #StThisContextVariableNode -> #valueClassIn:;
 	add: #StToken -> #postComments;
 	add: #StToken -> #preComments;
 	add: #StVariable -> #valueClass;
@@ -4953,10 +4957,16 @@ newInstanceAspect: aSymbol class: aspectClass
 valueClass
 	"Answer the class of the variables value, if this is known, or nil if unknown."
 
-	"The scope will be an StClassScope which is know's the method class."
+	"The scope will be an StClassScope which knows the method class."
 
 	^scope methodClass! !
 !StSelfVariable categoriesFor: #valueClass!accessing!public! !
+
+!StSelfVariableNode methodsFor!
+
+valueClassIn: aClass
+	^aClass! !
+!StSelfVariableNode categoriesFor: #valueClassIn:!public! !
 
 !StSequenceNode methodsFor!
 
@@ -4967,8 +4977,12 @@ displayOn: aStream
 !StSpecialVariableNode methodsFor!
 
 displayOn: aStream
-	aStream display: self name! !
+	aStream display: self name!
+
+valueClassIn: aClass
+	^self subclassResponsibility! !
 !StSpecialVariableNode categoriesFor: #displayOn:!development!printing!public! !
+!StSpecialVariableNode categoriesFor: #valueClassIn:!public! !
 
 !StStaticVariable methodsFor!
 
@@ -4993,6 +5007,12 @@ valueClass
 	^scope methodClass superclass! !
 !StSuperVariable categoriesFor: #valueClass!accessing!public! !
 
+!StSuperVariableNode methodsFor!
+
+valueClassIn: aClass
+	^aClass superclass! !
+!StSuperVariableNode categoriesFor: #valueClassIn:!public! !
+
 !StThisContextVariable methodsFor!
 
 valueClass
@@ -5000,6 +5020,12 @@ valueClass
 
 	^Integer! !
 !StThisContextVariable categoriesFor: #valueClass!accessing!public! !
+
+!StThisContextVariableNode methodsFor!
+
+valueClassIn: aClass
+	^Integer! !
+!StThisContextVariableNode categoriesFor: #valueClassIn:!public! !
 
 !StToken methodsFor!
 

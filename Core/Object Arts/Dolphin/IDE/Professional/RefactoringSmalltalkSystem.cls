@@ -472,9 +472,9 @@ inlineMessage: anStMessageNode inMethod: aSelector of: aBehavior
 			[(((anStMessageNode isMessage and: 
 					[| receiver |
 					receiver := anStMessageNode receiver.
-					receiver isVariable and: [#('self' 'super') includes: receiver name]]) 
+					receiver isSelfVariable or: [receiver isSuperVariable]])
 				ifTrue: [InlineMethodRefactoring]
-				ifFalse: [InlineMethodFromComponentRefactoring]) 
+				ifFalse: [InlineMethodFromComponentRefactoring])
 					inline: anStMessageNode sourceInterval
 					inMethod: aSelector
 					forClass: aBehavior) execute]!

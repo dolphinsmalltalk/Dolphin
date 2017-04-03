@@ -268,7 +268,7 @@ testWarningUsesBooleanClass
 				code: CWarnUsesBooleanClass]!
 
 testWarnMsgUnimplemented
-	#(#testWarnMsgUnimplementedBySelf #testWarnMsgUnimplementedBySuper #testWarnMsgUnimplementedByNil)
+	#(#testWarnMsgUnimplementedBySelf #testWarnMsgUnimplementedBySuper #testWarnMsgUnimplementedByConst #testWarnMsgUnimplementedByNil)
 		do: 
 			[:each |
 			self
@@ -276,8 +276,11 @@ testWarnMsgUnimplemented
 				rangeBlock: 
 					[:source |
 					| start name |
-					name := each asPhrase subStrings last asLowercase.
-					start := source indexOfSubCollection: name startingAt: each size + 1.
+					name := each asPhrase subStrings last.
+					start := source
+								findString: name
+								startingAt: each size + 1
+								ignoreCase: true.
 					start to: (source
 								nextIndexOf: $.
 								from: start

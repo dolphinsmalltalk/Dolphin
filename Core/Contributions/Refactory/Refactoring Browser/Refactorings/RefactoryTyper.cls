@@ -239,22 +239,21 @@ processCollectionMessagesFor: variableName in: aParseTree
 				messagesTo: block arguments last name
 				in: block]!
 
-processNode: aNode 
-	(aNode isVariable and: [class instanceVariableNames includes: aNode name]) 
+processNode: aNode
+	(aNode isVariable and: [class instanceVariableNames includes: aNode name])
 		ifTrue: [^self merge: aNode name].
-	(aNode isMessage and: [aNode receiver isVariable and: [aNode receiver name = 'self']]) 
-		ifTrue: [^self merge: aNode selector].
-	aNode isAssignment 
+	(aNode isMessage and: [aNode receiver isSelfVariable]) ifTrue: [^self merge: aNode selector].
+	aNode isAssignment
 		ifTrue: 
 			[self
 				processNode: aNode value;
 				processNode: aNode variable].
-	(aNode isMessage 
-		and: [#(#ifTrue: #ifFalse: #ifTrue:ifFalse: #ifFalse:ifTrue:) includes: aNode selector]) 
+	(aNode isMessage
+		and: [#(#ifTrue: #ifFalse: #ifTrue:ifFalse: #ifFalse:ifTrue:) includes: aNode selector])
 			ifTrue: 
 				[aNode arguments do: 
-						[:each | 
-						each isBlock 
+						[:each |
+						each isBlock
 							ifTrue: [each body statements notEmpty ifTrue: [self processNode: each body statements last]]]]!
 
 refineTypes: aClassCollection with: anotherClassCollection 
