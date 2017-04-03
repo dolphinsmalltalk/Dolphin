@@ -42,6 +42,20 @@ addToFrameStatic: aLiteralNode
 		ifFalse: [^self].
 	self addLiteral: aLiteralNode value: value!
 
+assignStaticVariable: anStVariableNode
+	self accessStaticVariable: anStVariableNode!
+
+assignVariable: anStVariableNode
+	^(self bindVariable: anStVariableNode)
+		ifNotNil: 
+			[:var |
+			var isConstant
+				ifTrue: [self errorAssignConstant: anStVariableNode]
+				ifFalse: 
+					[var addAssignment: anStVariableNode fromScope: currentScope.
+					var isStaticVariable ifTrue: [self assignStaticVariable: anStVariableNode]].
+			var]!
+
 bindVariable: anStVariableNode
 	"Private - Find the correct variable definition for the identifier of aVariableNode, and
 	associate the StVariable describing that definition with the node."
@@ -379,13 +393,6 @@ pushSuper
 readStaticVariable: aStVariableNode
 	self accessStaticVariable: aStVariableNode!
 
-readVariable: anStVariableNode
-	^(self bindVariable: anStVariableNode)
-		ifNotNil: 
-			[:var |
-			var addRead: anStVariableNode.
-			var]!
-
 removeScope
 	^currentScope := currentScope outer!
 
@@ -444,9 +451,9 @@ tempDecls
 	tempDecls ifNil: [tempDecls := methodNode allDefinedVariableNodes].
 	^tempDecls!
 
-visitArgumentNode: anStVariableNode
-	self checkRedefines: anStVariableNode.
-	self currentScope declareArgument: anStVariableNode!
+visitArgumentNode: anStParameterNode
+	self checkRedefines: anStParameterNode.
+	self currentScope declareArgument: anStParameterNode!
 
 visitArgumentNodes: aNodeCollection
 	| count max |
@@ -469,7 +476,7 @@ visitAssignmentNode: anStAssignmentNode
 	self visitNode: anStAssignmentNode value.
 	variableNode := anStAssignmentNode variable.
 	variableNode isConstantNode ifTrue: [^self].
-	self writeVariable: variableNode!
+	self assignVariable: variableNode!
 
 visitBlockNode: aBlockNode
 	currentScope := scopes addLast: (StBlockScope forScopeNode: aBlockNode outer: currentScope).
@@ -514,6 +521,14 @@ visitOptimizedNode: anOptimizedNode
 			[inStaticExpression := wasInStaticExpression.
 			addToFrame := outerAddToFrame]!
 
+visitReturnNode: aReturnNode
+	currentScope markFarReturn.
+	^super visitReturnNode: aReturnNode!
+
+visitSelfVariableNode: anStSelfVariableNode
+	self visitVariableNode: anStSelfVariableNode.
+	currentScope markNeedsSelf!
+
 visitSequenceNode: aSequenceNode
 	| answer scope |
 	answer := super visitSequenceNode: aSequenceNode.
@@ -534,9 +549,13 @@ visitSequenceNode: aSequenceNode
 					reads isEmpty ifTrue: [self signalError: CWarnWrittenNotRead forNode: writes first]]].
 	^answer!
 
-visitTemporaryNode: anStVariableNode
-	self checkRedefines: anStVariableNode.
-	self currentScope declareTemp: anStVariableNode!
+visitSuperVariableNode: anStSuperVariableNode
+	self visitVariableNode: anStSuperVariableNode.
+	currentScope markNeedsSelf!
+
+visitTemporaryNode: anStTempDeclNode
+	self checkRedefines: anStTempDeclNode.
+	self currentScope declareTemp: anStTempDeclNode!
 
 visitTemporaryNodes: aNodeCollection
 	| count |
@@ -556,31 +575,19 @@ visitVariableNode: aStVariableNode
 	(self bindVariable: aStVariableNode)
 		ifNotNil: 
 			[:var |
-			var addRead: aStVariableNode.
+			var addRead: aStVariableNode fromScope: currentScope.
 			var isTempVariable
 				ifTrue: 
 					[(var writes isEmpty and: [(self isReceiverOfNilTest: aStVariableNode) not])
 						ifTrue: [self signalError: CWarnReadBeforeWritten forNode: aStVariableNode]]
-				ifFalse: [var isStaticVariable ifTrue: [self readStaticVariable: aStVariableNode]]]!
-
-writeStaticVariable: anStVariableNode
-	self accessStaticVariable: anStVariableNode!
-
-writeVariable: anStVariableNode
-	^(self bindVariable: anStVariableNode)
-		ifNotNil: 
-			[:var |
-			var isConstant
-				ifTrue: [self errorAssignConstant: anStVariableNode]
-				ifFalse: 
-					[var addWrite: anStVariableNode.
-					var isStaticVariable ifTrue: [self writeStaticVariable: anStVariableNode]].
-			var]! !
+				ifFalse: [var isStaticVariable ifTrue: [self readStaticVariable: aStVariableNode]]]! !
 !StParseNodeAnalyzer categoriesFor: #accessStaticVariable:!helpers!private! !
 !StParseNodeAnalyzer categoriesFor: #addLiteral:value:!helpers!private! !
 !StParseNodeAnalyzer categoriesFor: #addMessageToFrame:!helpers!private! !
 !StParseNodeAnalyzer categoriesFor: #addToFrame:!helpers!private! !
 !StParseNodeAnalyzer categoriesFor: #addToFrameStatic:!helpers!private! !
+!StParseNodeAnalyzer categoriesFor: #assignStaticVariable:!helpers!private! !
+!StParseNodeAnalyzer categoriesFor: #assignVariable:!helpers!private! !
 !StParseNodeAnalyzer categoriesFor: #bindVariable:!helpers!private! !
 !StParseNodeAnalyzer categoriesFor: #blockDepth!helpers!private! !
 !StParseNodeAnalyzer categoriesFor: #checkIsLiteralBlockHandler:forMessage:!helpers!private! !
@@ -612,7 +619,6 @@ writeVariable: anStVariableNode
 !StParseNodeAnalyzer categoriesFor: #pushSelf!instructions-stack ops!private! !
 !StParseNodeAnalyzer categoriesFor: #pushSuper!instructions-stack ops!private! !
 !StParseNodeAnalyzer categoriesFor: #readStaticVariable:!helpers!private! !
-!StParseNodeAnalyzer categoriesFor: #readVariable:!helpers!private! !
 !StParseNodeAnalyzer categoriesFor: #removeScope!helpers!private! !
 !StParseNodeAnalyzer categoriesFor: #restrictedSelectors!constants!private! !
 !StParseNodeAnalyzer categoriesFor: #scopes!accessing!public! !
@@ -631,12 +637,13 @@ writeVariable: anStVariableNode
 !StParseNodeAnalyzer categoriesFor: #visitMessageNode:!public!visitor/double dispatching! !
 !StParseNodeAnalyzer categoriesFor: #visitMethodNode:!public!visitor/double dispatching! !
 !StParseNodeAnalyzer categoriesFor: #visitOptimizedNode:!public!visitor/double dispatching! !
+!StParseNodeAnalyzer categoriesFor: #visitReturnNode:!public!visiting! !
+!StParseNodeAnalyzer categoriesFor: #visitSelfVariableNode:!public!visiting! !
 !StParseNodeAnalyzer categoriesFor: #visitSequenceNode:!public!visitor/double dispatching! !
+!StParseNodeAnalyzer categoriesFor: #visitSuperVariableNode:!public!visiting! !
 !StParseNodeAnalyzer categoriesFor: #visitTemporaryNode:!public!visiting! !
 !StParseNodeAnalyzer categoriesFor: #visitTemporaryNodes:!public!visiting! !
 !StParseNodeAnalyzer categoriesFor: #visitVariableNode:!public!visitor/double dispatching! !
-!StParseNodeAnalyzer categoriesFor: #writeStaticVariable:!helpers!private! !
-!StParseNodeAnalyzer categoriesFor: #writeVariable:!helpers!private! !
 
 !StParseNodeAnalyzer class methodsFor!
 

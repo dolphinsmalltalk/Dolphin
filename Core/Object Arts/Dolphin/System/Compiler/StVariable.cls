@@ -10,12 +10,12 @@ StVariable comment: ''!
 !StVariable categoriesForClass!Kernel-Objects! !
 !StVariable methodsFor!
 
-addRead: anStVariableNode
-	(reads ifNil: [reads := OrderedCollection new]) addLast: anStVariableNode!
-
-addWrite: anStVariableNode
+addAssignment: anStVariableNode fromScope: anStSemanticScope
 	self isConstant ifTrue: [self error: 'Illegal assignment to constant.'].
 	(writes ifNil: [writes := OrderedCollection new]) addLast: anStVariableNode!
+
+addRead: anStVariableNode fromScope: anStSemanticScope
+	(reads ifNil: [reads := OrderedCollection new]) addLast: anStVariableNode!
 
 isArgument
 	"Answer whether the receiver describes an argument variable."
@@ -93,8 +93,8 @@ writes
 	the variable described by the receiver."
 
 	^writes ?? #()! !
-!StVariable categoriesFor: #addRead:!public! !
-!StVariable categoriesFor: #addWrite:!public! !
+!StVariable categoriesFor: #addAssignment:fromScope:!public! !
+!StVariable categoriesFor: #addRead:fromScope:!public! !
 !StVariable categoriesFor: #isArgument!public!testing! !
 !StVariable categoriesFor: #isConstant!public!testing! !
 !StVariable categoriesFor: #isInstanceVariable!public!testing! !

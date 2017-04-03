@@ -318,6 +318,7 @@ package methodNames
 	add: #StStaticVariable -> #valueClass;
 	add: #StSuperVariable -> #valueClass;
 	add: #StSuperVariableNode -> #valueClassIn:;
+	add: #StTempDeclNode -> #displayOn:;
 	add: #StThisContextVariable -> #valueClass;
 	add: #StThisContextVariableNode -> #valueClassIn:;
 	add: #StToken -> #postComments;
@@ -4820,8 +4821,8 @@ displayOn: aStream
 
 displayOn: aStream
 	aStream
-		nextPutAll: 'Param ';
-		print: self name! !
+		nextPut: $:;
+		display: self name! !
 !StParameterNode categoriesFor: #displayOn:!development!printing!public! !
 
 !StPrimitiveNode methodsFor!
@@ -5012,6 +5013,15 @@ valueClass
 valueClassIn: aClass
 	^aClass superclass! !
 !StSuperVariableNode categoriesFor: #valueClassIn:!public! !
+
+!StTempDeclNode methodsFor!
+
+displayOn: aStream
+	aStream
+		nextPut: $|;
+		display: name;
+		nextPut: $|! !
+!StTempDeclNode categoriesFor: #displayOn:!development!printing!public! !
 
 !StThisContextVariable methodsFor!
 

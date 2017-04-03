@@ -11,6 +11,9 @@ StEvalScope comment: ''!
 !StEvalScope methodsFor!
 
 lookupVariable: anStVariableNode
+	"Lookup and return an <StVariable> describing the variable definition in this scope matching
+	the variable reference specified by the <StVariableNode> argument."
+
 	| identifier |
 	identifier := anStVariableNode name.
 	pools do: 

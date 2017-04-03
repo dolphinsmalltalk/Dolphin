@@ -1,7 +1,7 @@
 "Filed out from Dolphin Smalltalk 7"!
 
 StVariable subclass: #StLocalVariable
-	instanceVariableNames: 'node'
+	instanceVariableNames: 'node storage'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -10,10 +10,50 @@ StLocalVariable comment: ''!
 !StLocalVariable categoriesForClass!Kernel-Objects! !
 !StLocalVariable methodsFor!
 
+addAssignment: anStVariableNode fromScope: anStSemanticScope
+	super addAssignment: anStVariableNode fromScope: anStSemanticScope.
+	anStSemanticScope realScope == self scope realScope
+		ifTrue: 
+			["Write to the temp from within its defining scope"
+			storage isNil
+				ifTrue: 
+					["Previously unaccessed temp has been initialised in
+					 defining scope - promote to stack var"
+					storage := #stack]
+				ifFalse: 
+					["Previously accessed temp written again in defining scope"
+					storage == #copied
+						ifTrue: 
+							["... but is read from nested scope, so promote to shared"
+							storage := #shared]]]
+		ifFalse: 
+			["Write from a nested scope - promote to shared."
+			storage := #shared]!
+
+addRead: anStVariableNode fromScope: anStSemanticScope
+	super addRead: anStVariableNode fromScope: anStSemanticScope.
+	anStSemanticScope realScope == self scope realScope
+		ifTrue: 
+			["Temp is read in its defining scope"
+			storage isNil
+				ifTrue: 
+					["Previously unaccessed, promote to stack var (though read before
+				written)"
+					storage := #stack]]
+		ifFalse: 
+			["Temp read in nested scope"
+			storage == #shared
+				ifFalse: 
+					["Not already shared, so promote to copied"
+					storage := #copied]]!
+
 isLocalVariable
 	"Answer whether the receiver describes a local variable, i.e. a temp or argument."
 
 	^true!
+
+markNestedRead
+	storage == #shared ifFalse: [storage := #copied]!
 
 name
 	"Answer the <readableString> identifier of the variable described by the receiver, i.e. the
@@ -28,11 +68,18 @@ node
 	^node!
 
 setNode: anStVariableNode
-	node := anStVariableNode! !
+	node := anStVariableNode!
+
+storage
+	^storage! !
+!StLocalVariable categoriesFor: #addAssignment:fromScope:!public! !
+!StLocalVariable categoriesFor: #addRead:fromScope:!public! !
 !StLocalVariable categoriesFor: #isLocalVariable!public!testing! !
+!StLocalVariable categoriesFor: #markNestedRead!private! !
 !StLocalVariable categoriesFor: #name!accessing!public! !
 !StLocalVariable categoriesFor: #node!accessing!public! !
 !StLocalVariable categoriesFor: #setNode:!accessing!initializing!private! !
+!StLocalVariable categoriesFor: #storage!accessing!private! !
 
 !StLocalVariable class methodsFor!
 

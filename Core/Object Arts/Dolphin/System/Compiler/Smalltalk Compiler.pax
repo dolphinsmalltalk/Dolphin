@@ -41,8 +41,8 @@ package!
 "Class Definitions"!
 
 Object subclass: #StSemanticScope
-	instanceVariableNames: 'outer flags'
-	classVariableNames: 'EmptyBlockMask FarReturnMask NeedsOuter OptimizedBlockMask'
+	instanceVariableNames: 'outer'
+	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Object subclass: #StVariable
@@ -66,13 +66,13 @@ StSemanticScope subclass: #StEvalScope
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 StSemanticScope subclass: #StLexicalScope
-	instanceVariableNames: 'locals node thisContextVariable'
-	classVariableNames: 'NeedsSelfMask'
+	instanceVariableNames: 'locals node thisContextVariable flags'
+	classVariableNames: 'FarReturnMask NeedsSelfMask'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 StLexicalScope subclass: #StBlockScope
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: 'EmptyBlockMask NeedsOuterMask'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 StLexicalScope subclass: #StMethodScope
@@ -91,7 +91,7 @@ StVariable subclass: #StInstanceVariable
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 StVariable subclass: #StLocalVariable
-	instanceVariableNames: 'node'
+	instanceVariableNames: 'node storage'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!

@@ -13,8 +13,8 @@ ArithmeticExpressionVisitor comment: ''!
 errorInvalidArithmeticExpression: aStProgramNode
 	^self error: 'Unexpected node type in expression: ' , aStProgramNode printString!
 
-visitArgumentNode: anStVariableNode
-	^self errorInvalidArithmeticExpression: anStVariableNode!
+visitArgumentNode: anStParameterNode
+	^self errorInvalidArithmeticExpression: anStParameterNode!
 
 visitAssignmentNode: anStAssignmentNode
 	^self errorInvalidArithmeticExpression: anStAssignmentNode!

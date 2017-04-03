@@ -13,6 +13,9 @@ Instance Variables:
 !StVariableNode categoriesForClass!System-Compiler! !
 !StVariableNode methodsFor!
 
+acceptVisitor: aProgramNodeVisitor
+	^aProgramNodeVisitor visitVariableNode: self!
+
 identifierToken: anIdentifierToken
 	name := anIdentifierToken value.
 	start := anIdentifierToken start!
@@ -23,6 +26,7 @@ name
 setName: aString start: anInteger
 	name := aString.
 	start := anInteger! !
+!StVariableNode categoriesFor: #acceptVisitor:!public!visitor! !
 !StVariableNode categoriesFor: #identifierToken:!initializing!private! !
 !StVariableNode categoriesFor: #name!accessing!public! !
 !StVariableNode categoriesFor: #setName:start:!initializing!private! !
