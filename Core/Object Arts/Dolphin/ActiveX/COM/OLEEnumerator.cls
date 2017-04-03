@@ -114,15 +114,6 @@ keysAndValuesDo: operation
 	index := 0.
 	interface do: [:elem | operation value: (index := index + 1) value: elem]!
 
-size
-	"Answer the number of elements in the receiver.
-	Implementation Note: We cannot cache the size because IEnums do not guarantee that 
-	they remain constant, which is unfortunate since it is rather expensive to calculate."
-
-	#todo "Use skip to advance over the collection in blocks until fails. Then reset to last known good 
-		position and move forward in half the increment. Repeat until block size is 1 and reach the end.".
-	^self countElements!
-
 species
 	"Answer the class of object to be used when copying the receiver.
 	For an OLEEnumerator, we copy to an appropriate Smalltalk class
@@ -142,7 +133,6 @@ species
 !OLEEnumerator categoriesFor: #growSize!accessing!private! !
 !OLEEnumerator categoriesFor: #interface:!accessing!private! !
 !OLEEnumerator categoriesFor: #keysAndValuesDo:!enumerating!public! !
-!OLEEnumerator categoriesFor: #size!accessing!public! !
 !OLEEnumerator categoriesFor: #species!constants!public! !
 
 !OLEEnumerator class methodsFor!
