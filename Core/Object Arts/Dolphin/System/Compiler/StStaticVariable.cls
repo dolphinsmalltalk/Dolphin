@@ -11,39 +11,36 @@ StStaticVariable comment: ''!
 !StStaticVariable methodsFor!
 
 binding
+	"Answer the <VariableBinding> which is the underlying representation of the static variable
+	described by the receiver."
+
 	^binding!
 
 isConstant
+	"Answer whether the receiver describes a reference to a variable that has a constant value."
+
 	^binding isImmutable!
 
 isStaticVariable
+	"Answer whether the receiver describes a reference to a 'static' variable such as a class
+	variable, pool constant, or a global."
+
 	^true!
 
 name
+	"Answer the <readableString> identifier of the variable described by the receiver."
+
 	^binding key!
 
 setScope: anStLexicalScope binding: aVariableBinding
 	scope := anStLexicalScope.
 	binding := aVariableBinding.
-	self initialize!
-
-valueClass
-	"Answer the class of the variables value, if this is known, or nil if unknown."
-
-	"In the case of static variables, we can only offer a variable type with confidence (without
-	resort to type inference) if the variable binding is constant. If it isn't then the variable
-	could assume different types through the course of the method or even across different
-	invocations (if a global, or class variable). This might cause false reports of
-	unimplemented messages in the debugger. Therefore we have to be conservative here in
-	suggesting the variable type."
-
-	^binding isImmutable ifTrue: [binding value basicClass]! !
+	self initialize! !
 !StStaticVariable categoriesFor: #binding!public! !
 !StStaticVariable categoriesFor: #isConstant!public!testing! !
 !StStaticVariable categoriesFor: #isStaticVariable!constants!public! !
 !StStaticVariable categoriesFor: #name!accessing!public! !
 !StStaticVariable categoriesFor: #setScope:binding:!initializing!private! !
-!StStaticVariable categoriesFor: #valueClass!accessing!public! !
 
 !StStaticVariable class methodsFor!
 

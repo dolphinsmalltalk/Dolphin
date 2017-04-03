@@ -11,14 +11,8 @@ StSelfVariable comment: ''!
 !StSelfVariable methodsFor!
 
 name
-	^'self'!
+	"Answer the <readableString> identifier of the variable described by the receiver."
 
-valueClass
-	"Answer the class of the variables value, if this is known, or nil if unknown."
-
-	"The scope will be an StClassScope which is know's the method class."
-
-	^scope methodClass! !
+	^'self'! !
 !StSelfVariable categoriesFor: #name!accessing!public! !
-!StSelfVariable categoriesFor: #valueClass!accessing!public! !
 

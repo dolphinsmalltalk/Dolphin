@@ -16,33 +16,55 @@ addRead: anStVariableNode
 	(reads ifNil: [reads := OrderedCollection new]) addLast: anStVariableNode!
 
 addWrite: anStVariableNode
+	self isConstant ifTrue: [self error: 'Illegal assignment to constant.'].
 	(writes ifNil: [writes := OrderedCollection new]) addLast: anStVariableNode!
 
 isArgument
+	"Answer whether the receiver describes an argument variable."
+
 	^false!
 
 isConstant
+	"Answer whether the receiver describes a variable that has a constant value."
+
 	^false!
 
 isInstanceVariable
+	"Answer whether the receiver describes an instance variable."
+
 	^false!
 
 isLocalVariable
+	"Answer whether the receiver describes a local variable, i.e. a temp or argument."
+
 	^false!
 
 isRead
+	"Answer whether the variable described by the receiver is read from anywhere within the
+	method under semantic analysis."
+
 	^reads notNil!
 
 isStaticVariable
+	"Answer whether the receiver describes a reference to a 'static' variable such as a class
+	variable, pool constant, or a global."
+
 	^false!
 
 isTempVariable
+	"Answer whether the receiver describes a temporary variable."
+
 	^false!
 
 isWritten
+	"Answer whether the variable described by the receiver is written to anywhere within the
+	method under semantic analysis."
+
 	^writes notNil!
 
 name
+	"Answer the <readableString> identifier of the variable described by the receiver."
+
 	^self subclassResponsibility!
 
 printOn: aPuttableStream
@@ -53,22 +75,25 @@ printOn: aPuttableStream
 		nextPut: $)!
 
 reads
+	"Answer the <sequencedReadableCollection> of <StVariableNode>'s that describe reads from the
+	variable described by the receiver."
+
 	^reads ?? #()!
 
 scope
+	"Answer the <StSemanticScope> in which the variable described by the receiver is defined."
+
 	^scope!
 
 scope: anStSemanticScope
+	"Set the <StSemanticScope> in which the variable described by the receiver is defined."
+
 	scope := anStSemanticScope!
 
-valueClass
-	"Answer the class of the variables value, if this is known, or nil if unknown. In Smalltalk
-	we only know the type that a variable can assume in the case of constants as variables are
-	untyped."
-
-	^nil!
-
 writes
+	"Answer the <sequencedReadableCollection> of <StVariableNode>'s that describe writes into
+	the variable described by the receiver."
+
 	^writes ?? #()! !
 !StVariable categoriesFor: #addRead:!public! !
 !StVariable categoriesFor: #addWrite:!public! !
@@ -85,7 +110,6 @@ writes
 !StVariable categoriesFor: #reads!accessing!public! !
 !StVariable categoriesFor: #scope!accessing!public! !
 !StVariable categoriesFor: #scope:!accessing!public! !
-!StVariable categoriesFor: #valueClass!accessing!public! !
 !StVariable categoriesFor: #writes!accessing!public! !
 
 !StVariable class methodsFor!

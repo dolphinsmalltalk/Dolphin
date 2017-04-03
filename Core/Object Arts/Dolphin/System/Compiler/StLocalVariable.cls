@@ -11,12 +11,20 @@ StLocalVariable comment: ''!
 !StLocalVariable methodsFor!
 
 isLocalVariable
+	"Answer whether the receiver describes a local variable, i.e. a temp or argument."
+
 	^true!
 
 name
+	"Answer the <readableString> identifier of the variable described by the receiver, i.e. the
+	name of the temporary or argument."
+
 	^node name!
 
 node
+	"Answer the <StParameterNode> or <StTempDeclNode> describing the definition of the variable
+	described by the receiver."
+
 	^node!
 
 setNode: anStVariableNode

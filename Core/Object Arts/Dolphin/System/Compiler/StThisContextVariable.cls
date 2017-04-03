@@ -11,12 +11,8 @@ StThisContextVariable comment: ''!
 !StThisContextVariable methodsFor!
 
 name
-	^'thisContext'!
+	"Answer the <readableString> identifier of the variable described by the receiver."
 
-valueClass
-	"Answer the class of the variables value, if this is known, or nil if unknown."
-
-	^Integer! !
+	^'thisContext'! !
 !StThisContextVariable categoriesFor: #name!accessing!public! !
-!StThisContextVariable categoriesFor: #valueClass!accessing!public! !
 

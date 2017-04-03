@@ -310,10 +310,15 @@ package methodNames
 	add: #String -> #literalTextStyle;
 	add: #String -> #newAspect:class:;
 	add: #String -> #publishedAspects;
+	add: #StSelfVariable -> #valueClass;
 	add: #StSequenceNode -> #displayOn:;
 	add: #StSpecialVariableNode -> #displayOn:;
+	add: #StStaticVariable -> #valueClass;
+	add: #StSuperVariable -> #valueClass;
+	add: #StThisContextVariable -> #valueClass;
 	add: #StToken -> #postComments;
 	add: #StToken -> #preComments;
+	add: #StVariable -> #valueClass;
 	add: #Symbol -> #aspectDisplayOn:;
 	add: #Symbol -> #literalTextStyle;
 	add: #Symbol -> #searchForInTool:;
@@ -4943,6 +4948,16 @@ newInstanceAspect: aSymbol class: aspectClass
 	^aspectClass string: aSymbol! !
 !StringField class categoriesFor: #newInstanceAspect:class:!adapters!development!private! !
 
+!StSelfVariable methodsFor!
+
+valueClass
+	"Answer the class of the variables value, if this is known, or nil if unknown."
+
+	"The scope will be an StClassScope which is know's the method class."
+
+	^scope methodClass! !
+!StSelfVariable categoriesFor: #valueClass!accessing!public! !
+
 !StSequenceNode methodsFor!
 
 displayOn: aStream
@@ -4954,6 +4969,37 @@ displayOn: aStream
 displayOn: aStream
 	aStream display: self name! !
 !StSpecialVariableNode categoriesFor: #displayOn:!development!printing!public! !
+
+!StStaticVariable methodsFor!
+
+valueClass
+	"Answer the class of the variables value, if this is known, or nil if unknown."
+
+	"In the case of static variables, we can only offer a variable type with confidence (without
+	resort to type inference) if the variable binding is constant. If it isn't then the variable
+	could assume different types through the course of the method or even across different
+	invocations (if a global, or class variable). This might cause false reports of
+	unimplemented messages in the debugger. Therefore we have to be conservative here in
+	suggesting the variable type."
+
+	^binding isImmutable ifTrue: [binding value basicClass]! !
+!StStaticVariable categoriesFor: #valueClass!accessing!public! !
+
+!StSuperVariable methodsFor!
+
+valueClass
+	"Answer the class of the variables value, if this is known, or nil if unknown."
+
+	^scope methodClass superclass! !
+!StSuperVariable categoriesFor: #valueClass!accessing!public! !
+
+!StThisContextVariable methodsFor!
+
+valueClass
+	"Answer the class of the variables value, if this is known, or nil if unknown."
+
+	^Integer! !
+!StThisContextVariable categoriesFor: #valueClass!accessing!public! !
 
 !StToken methodsFor!
 
@@ -4980,6 +5026,16 @@ preComments
 			all select: [:each | each stop < start]]! !
 !StToken categoriesFor: #postComments!accessing!public! !
 !StToken categoriesFor: #preComments!accessing!public! !
+
+!StVariable methodsFor!
+
+valueClass
+	"Answer the class of the variables value, if this is known, or nil if unknown. In Smalltalk
+	we only know the type that a variable can assume in the case of constants as variables are
+	untyped."
+
+	^nil! !
+!StVariable categoriesFor: #valueClass!accessing!public! !
 
 !StyledGradientBrush class methodsFor!
 
