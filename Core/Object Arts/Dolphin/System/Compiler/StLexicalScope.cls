@@ -68,6 +68,13 @@ printOn: aPuttableStream
 		print: node;
 		nextPut: $)!
 
+realScope
+	"Answer the nearest real (non-optimized) scope. If the scope is itself unoptimized, then
+	this will be the receiver. The actual scope is the scope in which any variables declared in
+	the receiver will actually be allocated."
+
+	^self!
+
 setNode: aBlockOrMethodNode outer: anStLexicalScope
 	node := aBlockOrMethodNode.
 	outer := anStLexicalScope.
@@ -104,6 +111,7 @@ unreferencedArguments
 !StLexicalScope categoriesFor: #needsSelf:!accessing!public! !
 !StLexicalScope categoriesFor: #node!accessing!public! !
 !StLexicalScope categoriesFor: #printOn:!printing!public! !
+!StLexicalScope categoriesFor: #realScope!public! !
 !StLexicalScope categoriesFor: #setNode:outer:!initializing!private! !
 !StLexicalScope categoriesFor: #temporaries!accessing!private! !
 !StLexicalScope categoriesFor: #thisContextVariable!public! !
@@ -111,13 +119,7 @@ unreferencedArguments
 
 !StLexicalScope class methodsFor!
 
-forScopeNode: aBlockOrMethodNode outer: anStLexicalScope
-	^(self new)
-		setNode: aBlockOrMethodNode outer: anStLexicalScope;
-		yourself!
-
 initialize
 	self addClassConstant: 'NeedsSelfMask' value: 16r1! !
-!StLexicalScope class categoriesFor: #forScopeNode:outer:!instance creation!public! !
 !StLexicalScope class categoriesFor: #initialize!class initialization!public! !
 
