@@ -310,10 +310,6 @@ countOuterTemps
 			count := count + scope localCount].
 	^count!
 
-createScope: aNode
-	currentScope := StLexicalScope forScopeNode: aNode outer: currentScope.
-	^scopes addLast: currentScope!
-
 currentMethodClass
 	^inStaticExpression 
 		ifTrue: [methodClass isMeta ifTrue: [methodClass] ifFalse: [methodClass class]]
@@ -476,7 +472,7 @@ visitAssignmentNode: anStAssignmentNode
 	self writeVariable: variableNode!
 
 visitBlockNode: aBlockNode
-	self createScope: aBlockNode.
+	currentScope := scopes addLast: (StBlockScope forScopeNode: aBlockNode outer: currentScope).
 	self blockDepth > VMConstants.MaxBlockNesting
 		ifTrue: [self signalError: CErrBlockNestingTooDeep forNode: aBlockNode].
 	self processBlock: aBlockNode.
@@ -499,12 +495,12 @@ visitMessageNode: aMessageNode
 	self checkMessageArgumentCount: aMessageNode.
 	self checkOptimizedMessages: aMessageNode.
 	receiver := aMessageNode receiver.
-	(receiver isVariable and: [receiver name = 'super']) ifTrue: [self checkSupersend: aMessageNode].
+	receiver isSuperVariable ifTrue: [self checkSupersend: aMessageNode].
 	self checkTryBlock: aMessageNode!
 
 visitMethodNode: aMethodNode
 	self checkRestrictedSelectors: aMethodNode.
-	self createScope: aMethodNode.
+	currentScope := scopes addLast: (StMethodScope forScopeNode: aMethodNode outer: currentScope).
 	super visitMethodNode: aMethodNode.
 	self removeScope!
 
@@ -603,7 +599,6 @@ writeVariable: anStVariableNode
 !StParseNodeAnalyzer categoriesFor: #checkTryBlock:!helpers!private! !
 !StParseNodeAnalyzer categoriesFor: #compilationErrorClass!constants!private! !
 !StParseNodeAnalyzer categoriesFor: #countOuterTemps!helpers!private! !
-!StParseNodeAnalyzer categoriesFor: #createScope:!helpers!private! !
 !StParseNodeAnalyzer categoriesFor: #currentMethodClass!accessing!private! !
 !StParseNodeAnalyzer categoriesFor: #currentScope!accessing!private! !
 !StParseNodeAnalyzer categoriesFor: #errorAssignConstant:!error handling!private! !
