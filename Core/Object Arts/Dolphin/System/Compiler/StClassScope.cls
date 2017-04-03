@@ -11,6 +11,9 @@ StClassScope comment: ''!
 !StClassScope methodsFor!
 
 lookupVariable: anStVariableNode
+	"Lookup and return an <StVariable> describing the variable definition in this scope matching
+	the variable reference specified by the <StVariableNode> argument."
+
 	| identifier |
 	identifier := anStVariableNode name.
 	anStVariableNode isSpecialVariable ifTrue: [^anStVariableNode specialVariableInScope: self].

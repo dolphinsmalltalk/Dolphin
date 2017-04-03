@@ -11,6 +11,9 @@ StSuperVariableNode comment: 'StSuperVariableNode is an parse tree node that rep
 !StSuperVariableNode categoriesForClass!System-Compiler! !
 !StSuperVariableNode methodsFor!
 
+acceptVisitor: aProgramNodeVisitor
+	^aProgramNodeVisitor visitSuperVariableNode: self!
+
 isSuperVariable
 	"Answer whether the variable described by the receiver is the special variables 'super'."
 
@@ -21,6 +24,7 @@ name
 
 specialVariableInScope: anStSemanticScope
 	^anStSemanticScope superVariable! !
+!StSuperVariableNode categoriesFor: #acceptVisitor:!public!visitor! !
 !StSuperVariableNode categoriesFor: #isSuperVariable!public!testing! !
 !StSuperVariableNode categoriesFor: #name!constants!public! !
 !StSuperVariableNode categoriesFor: #specialVariableInScope:!double dispatch!public! !

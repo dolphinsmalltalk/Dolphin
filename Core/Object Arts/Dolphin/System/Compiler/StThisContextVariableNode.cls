@@ -10,11 +10,15 @@ StThisContextVariableNode comment: ''!
 !StThisContextVariableNode categoriesForClass!System-Compiler! !
 !StThisContextVariableNode methodsFor!
 
+acceptVisitor: aProgramNodeVisitor
+	^aProgramNodeVisitor visitThisContextVariableNode: self!
+
 name
 	^'thisContext'!
 
 specialVariableInScope: anStSemanticScope
 	^anStSemanticScope thisContextVariable! !
+!StThisContextVariableNode categoriesFor: #acceptVisitor:!public!visitor! !
 !StThisContextVariableNode categoriesFor: #name!constants!public! !
 !StThisContextVariableNode categoriesFor: #specialVariableInScope:!double dispatch!public! !
 

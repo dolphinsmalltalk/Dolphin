@@ -21,9 +21,6 @@ Instance Variables:
 	(anObject isKindOf: StAbstractVariableNode) ifFalse: [^false].
 	^self name = anObject name!
 
-acceptVisitor: aProgramNodeVisitor
-	^aProgramNodeVisitor visitVariableNode: self!
-
 equalTo: anObject withMapping: aDictionary 
 	^self class = anObject class and: 
 			[(aDictionary at: self name ifAbsentPut: [anObject name]) = anObject name]!
@@ -66,7 +63,6 @@ variable
 variable: anStVariable
 	variable := anStVariable! !
 !StAbstractVariableNode categoriesFor: #=!comparing!public! !
-!StAbstractVariableNode categoriesFor: #acceptVisitor:!public!visitor! !
 !StAbstractVariableNode categoriesFor: #equalTo:withMapping:!comparing!public! !
 !StAbstractVariableNode categoriesFor: #hash!comparing!public! !
 !StAbstractVariableNode categoriesFor: #isConstantNode!public!testing! !
