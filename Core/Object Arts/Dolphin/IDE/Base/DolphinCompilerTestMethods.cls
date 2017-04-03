@@ -2,10 +2,11 @@
 
 Object subclass: #DolphinCompilerTestMethods
 	instanceVariableNames: 'iv1 iv2'
-	classVariableNames: ''
+	classVariableNames: 'Const'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 DolphinCompilerTestMethods guid: (GUID fromString: '{c6d8841d-910d-434f-9fec-9d821dd7a202}')!
+DolphinCompilerTestMethods addClassConstant: 'Const' value: 1!
 DolphinCompilerTestMethods comment: ''!
 !DolphinCompilerTestMethods categoriesForClass!Kernel-Objects! !
 !DolphinCompilerTestMethods methodsFor!
@@ -436,6 +437,11 @@ testWarningWrittenNotReadMethodTemp
 	_tmp := 1.
 !
 
+testWarnMsgUnimplementedByConst
+	1 asParameter.
+	Const wibblyWobblySillySelectorThatNoOneCouldPossiblyImplementIHope.
+	self asParameter!
+
 testWarnMsgUnimplementedByNil
 	1 asParameter.
 	nil wibblyWobblySillySelectorThatNoOneCouldPossiblyImplementIHope.
@@ -550,6 +556,7 @@ testWarnUnimplementedAbstractMethod
 !DolphinCompilerTestMethods categoriesFor: #testWarningWrittenNotReadBlockTemp!public!unit tests! !
 !DolphinCompilerTestMethods categoriesFor: #testWarningWrittenNotReadFullBlock!public!unit tests! !
 !DolphinCompilerTestMethods categoriesFor: #testWarningWrittenNotReadMethodTemp!public!unit tests! !
+!DolphinCompilerTestMethods categoriesFor: #testWarnMsgUnimplementedByConst!public!unit tests! !
 !DolphinCompilerTestMethods categoriesFor: #testWarnMsgUnimplementedByNil!public!unit tests! !
 !DolphinCompilerTestMethods categoriesFor: #testWarnMsgUnimplementedBySelf!public!unit tests! !
 !DolphinCompilerTestMethods categoriesFor: #testWarnMsgUnimplementedBySuper!public!unit tests! !

@@ -46,7 +46,7 @@ checkSuperMethods
 	self checkReferencesToSuperSendsToAnyOf: superMessages.
 !
 
-justSendsSuper: aSelector 
+justSendsSuper: aSelector
 	| matcher parseTree superclass |
 	matcher := ParseTreeSearcher justSendsSuper.
 	parseTree := class parseTreeFor: aSelector.
@@ -59,12 +59,12 @@ justSendsSuper: aSelector
 	matcher := ParseTreeSearcher new.
 	matcher matches: '^``@object'
 		do: 
-			[:aNode :answer | 
+			[:aNode :answer |
 			answer
 				add: aNode value;
 				yourself].
 	matcher executeTree: parseTree initialAnswer: Set new.
-	^matcher answer allSatisfy: [:each | each isVariable and: [each name = 'self']]!
+	^matcher answer allSatisfy: [:each | each isSelfVariable]!
 
 preconditions
 	^(selectors inject: RBCondition empty

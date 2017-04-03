@@ -227,7 +227,22 @@ isPatternNode
 isReturn
 	^false!
 
+isSelfVariable
+	"Answer whether the variable described by the receiver is the special variables 'super'."
+
+	^false!
+
 isSequence
+	^false!
+
+isSpecialVariable
+	"Answer whether the variable described by the receiver is one of the special (aka pseudo) variables 'self', 'super' or 'thisContext'."
+
+	^false!
+
+isSuperVariable
+	"Answer whether the variable described by the receiver is the special variables 'super'."
+
 	^false!
 
 isUsed
@@ -409,7 +424,10 @@ whoDefines: aName
 !StProgramNode categoriesFor: #isMethod!public!testing! !
 !StProgramNode categoriesFor: #isPatternNode!public!testing/matching! !
 !StProgramNode categoriesFor: #isReturn!public!testing! !
+!StProgramNode categoriesFor: #isSelfVariable!public!testing! !
 !StProgramNode categoriesFor: #isSequence!public!testing! !
+!StProgramNode categoriesFor: #isSpecialVariable!public!testing! !
+!StProgramNode categoriesFor: #isSuperVariable!public!testing! !
 !StProgramNode categoriesFor: #isUsed!public!testing! !
 !StProgramNode categoriesFor: #isValue!public!testing! !
 !StProgramNode categoriesFor: #isVariable!public!testing! !

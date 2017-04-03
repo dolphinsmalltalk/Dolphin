@@ -39,11 +39,6 @@ isConstantNode
 isImmediateNode
 	^true!
 
-isSpecialVariable
-	"Answer whether the variable described by the receiver is one of the special (aka pseudo) variables 'self', 'super' or 'thisContext'."
-
-	^false!
-
 isVariable
 	^true!
 
@@ -76,7 +71,6 @@ variable: anStVariable
 !StAbstractVariableNode categoriesFor: #hash!comparing!public! !
 !StAbstractVariableNode categoriesFor: #isConstantNode!public!testing! !
 !StAbstractVariableNode categoriesFor: #isImmediateNode!public!testing! !
-!StAbstractVariableNode categoriesFor: #isSpecialVariable!public!testing! !
 !StAbstractVariableNode categoriesFor: #isVariable!public!testing! !
 !StAbstractVariableNode categoriesFor: #name!constants!public! !
 !StAbstractVariableNode categoriesFor: #needsParenthesis!public!testing! !

@@ -2,12 +2,10 @@
 
 Object subclass: #StVariable
 	instanceVariableNames: 'scope reads writes'
-	classVariableNames: 'ReadMask WrittenMask'
+	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 StVariable guid: (GUID fromString: '{c0f71430-b170-427f-a259-f06ca5fc44d7}')!
-StVariable addClassConstant: 'ReadMask' value: 1!
-StVariable addClassConstant: 'WrittenMask' value: 2!
 StVariable comment: ''!
 !StVariable categoriesForClass!Kernel-Objects! !
 !StVariable methodsFor!
@@ -111,11 +109,4 @@ writes
 !StVariable categoriesFor: #scope!accessing!public! !
 !StVariable categoriesFor: #scope:!accessing!public! !
 !StVariable categoriesFor: #writes!accessing!public! !
-
-!StVariable class methodsFor!
-
-initialize
-	self addClassConstant: 'ReadMask' value: 1.
-	self addClassConstant: 'WrittenMask' value: 2! !
-!StVariable class categoriesFor: #initialize!public! !
 

@@ -97,8 +97,7 @@ readStaticVariable: aStVariableNode
 targetOfMessage: aStMessageNode
 	| receiver |
 	receiver := aStMessageNode receiver.
-	receiver isVariable
-		ifTrue: [^(currentScope lookupVariable: receiver) ifNotNil: [:var | var valueClass]].
+	receiver isVariable ifTrue: [^receiver variable ifNotNil: [:var | var valueClass]].
 	receiver isLiteralNode ifTrue: [^receiver value basicClass].
 	^nil!
 

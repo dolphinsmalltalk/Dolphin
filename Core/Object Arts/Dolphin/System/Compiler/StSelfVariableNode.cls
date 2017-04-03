@@ -11,11 +11,17 @@ StSelfVariableNode comment: 'StSelfVariableNode is an parse tree node that repre
 !StSelfVariableNode categoriesForClass!System-Compiler! !
 !StSelfVariableNode methodsFor!
 
+isSelfVariable
+	"Answer whether the variable described by the receiver is the special variables 'super'."
+
+	^true!
+
 name
 	^'self'!
 
 specialVariableInScope: anStSemanticScope
 	^anStSemanticScope selfVariable! !
+!StSelfVariableNode categoriesFor: #isSelfVariable!public!testing! !
 !StSelfVariableNode categoriesFor: #name!constants!public! !
 !StSelfVariableNode categoriesFor: #specialVariableInScope:!double dispatch!public! !
 
