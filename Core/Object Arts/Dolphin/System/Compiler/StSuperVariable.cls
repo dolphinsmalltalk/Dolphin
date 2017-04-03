@@ -11,12 +11,8 @@ StSuperVariable comment: ''!
 !StSuperVariable methodsFor!
 
 name
-	^'super'!
+	"Answer the <readableString> identifier of the variable described by the receiver."
 
-valueClass
-	"Answer the class of the variables value, if this is known, or nil if unknown."
-
-	^scope methodClass superclass! !
+	^'super'! !
 !StSuperVariable categoriesFor: #name!accessing!public! !
-!StSuperVariable categoriesFor: #valueClass!accessing!public! !
 

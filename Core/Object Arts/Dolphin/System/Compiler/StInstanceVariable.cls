@@ -11,12 +11,19 @@ StInstanceVariable comment: ''!
 !StInstanceVariable methodsFor!
 
 index
+	"Answer the one-based <integer> index of the instance variable slot in the class of object of the reference instance variable."
+
 	^index!
 
 isInstanceVariable
+	"Answer whether the receiver describes an instance variable."
+
 	^true!
 
 name
+	"Answer the <readableString> identifier of the variable described by the receiver, i.e. the
+	instance variable name."
+
 	^name!
 
 setIndex: anInteger name: aString

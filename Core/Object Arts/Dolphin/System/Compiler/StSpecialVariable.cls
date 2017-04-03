@@ -10,15 +10,10 @@ StSpecialVariable comment: ''!
 !StSpecialVariable categoriesForClass!Kernel-Objects! !
 !StSpecialVariable methodsFor!
 
-addWrite: anStVariableNode
-	self error: 'Cannot assign to pseudo-variables'!
-
 isConstant
-	^true!
+	"Answer whether the receiver describes a variable that has a constant value. The special
+	variables self, super and thisContext, cannot be assigned to."
 
-isWritten
-	^false! !
-!StSpecialVariable categoriesFor: #addWrite:!public! !
+	^true! !
 !StSpecialVariable categoriesFor: #isConstant!public!testing! !
-!StSpecialVariable categoriesFor: #isWritten!public!testing! !
 

@@ -11,9 +11,14 @@ StArgumentVariable comment: ''!
 !StArgumentVariable methodsFor!
 
 isArgument
+	"Answer whether the receiver describes an argument variable."
+
 	^true!
 
 isConstant
+	"Answer whether the receiver describes a reference to a variable that has a constant value.
+	Arguments cannot be assigned to in Smalltalk."
+
 	^true! !
 !StArgumentVariable categoriesFor: #isArgument!public!testing! !
 !StArgumentVariable categoriesFor: #isConstant!public!testing! !

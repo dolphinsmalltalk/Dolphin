@@ -11,6 +11,8 @@ StTempVariable comment: ''!
 !StTempVariable methodsFor!
 
 isTempVariable
+	"Answer whether the receiver describes a temporary variable."
+
 	^true! !
 !StTempVariable categoriesFor: #isTempVariable!public!testing! !
 
