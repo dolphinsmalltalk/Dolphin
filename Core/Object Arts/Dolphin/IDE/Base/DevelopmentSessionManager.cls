@@ -674,6 +674,10 @@ tertiaryStartup
 
 	"Flush any output accumulated in the transcript buffer during startup."
 	TranscriptShell current flush.
+
+	"Force redetermination of product details"
+	productDetails := nil.
+
 	self mainShellClass onStartup.
 	self processCommandLine!
 
