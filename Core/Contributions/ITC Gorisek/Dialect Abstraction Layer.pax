@@ -373,7 +373,12 @@ itcAsHexString
 	^stream contents!
 
 itcAsInteger
-	^self inject: 0 into: [:sum :each | sum * 256 + each]! !
+	"Since the LSB is at index 1, we need to reverse iterate over the receiver"
+
+	| answer |
+	answer := 0.
+	self reverseDo: [:each | answer := answer * 256 + each].
+	^answer! !
 !ByteArray categoriesFor: #itcAsHexString!accessing!public! !
 !ByteArray categoriesFor: #itcAsInteger!accessing!public! !
 
