@@ -6,7 +6,13 @@ StVariable subclass: #StInstanceVariable
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 StInstanceVariable guid: (GUID fromString: '{9e27c3fe-9793-4a23-9fcd-4f2cb4c86f2b}')!
-StInstanceVariable comment: ''!
+StInstanceVariable comment: '<StInstanceVariable> is a concrete class of <StVariable> to describe instance variables.
+
+Instance Variables:
+	index		<SmallInteger> index of the instance variable slot in object''s of the type of which the receiver describes an instance variable.
+	name		<String> identifier of the instance variable.
+
+'!
 !StInstanceVariable categoriesForClass!Kernel-Objects! !
 !StInstanceVariable methodsFor!
 

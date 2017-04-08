@@ -6,7 +6,7 @@ StVariable subclass: #StStaticVariable
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 StStaticVariable guid: (GUID fromString: '{b667998a-be56-4e79-bf77-13e991611554}')!
-StStaticVariable comment: ''!
+StStaticVariable comment: '<StStaticVariable> is a concrete class of <StVariable> to describe static variables, i.e. class variables, pool variables, and global variables.'!
 !StStaticVariable categoriesForClass!Kernel-Objects! !
 !StStaticVariable methodsFor!
 
