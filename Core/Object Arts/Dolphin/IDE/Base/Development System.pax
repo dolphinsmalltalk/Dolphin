@@ -1916,13 +1916,8 @@ disassembly
 
 hasCompilationIssues
 	^
-	[StSemanticAnalyser 
-		checkParseTree: self parseTree
-		for: self methodClass
-		context: nil
-		pools: #().
-	false] 
-			on: Compiler notificationClass
+	[self parseTree analyze.
+	false] on: Compiler notificationClass
 			do: [:ex | ex severityClass == Notification ifTrue: [ex resume] ifFalse: [ex return: true]]!
 
 indexOfIP: ip 

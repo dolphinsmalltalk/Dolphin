@@ -49,14 +49,14 @@ allDefinedVariablesDo: aMonadicValuable
 autoParse
 	self textLength > 0 ifFalse: [^self].
 	
-	[StSemanticAnalyser 
-		checkParseTree: self parseTree
+	[StSemanticAnalyser
+		analyzeParseTree: self parseTree
 		for: self selfClass
 		context: self evaluationContext
-		pools: self allPools] 
+		pools: self allPools]
 			on: SmalltalkParser notificationClass
 			do: 
-				[:err | 
+				[:err |
 				"err toTrace"
 				compilationErrors addLast: err.
 				err resume].

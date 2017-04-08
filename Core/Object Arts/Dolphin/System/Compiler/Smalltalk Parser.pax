@@ -119,7 +119,7 @@ StProgramNode subclass: #StExternalArgTypeNode
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 StProgramNode subclass: #StMethodNode
-	instanceVariableNames: 'selector selectorParts body source arguments tag replacements nodeReplacements'
+	instanceVariableNames: 'selector selectorParts body source arguments tag replacements nodeReplacements methodClass'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!

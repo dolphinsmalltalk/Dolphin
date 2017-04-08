@@ -599,15 +599,17 @@ parseMethod
 	"	methodNode tags: tags."
 	^methodNode!
 
-parseMethod: aString 
+parseMethod: aString
 	| node |
 	node := self parseMethod.
-	self atEnd 
+	self atEnd
 		ifFalse: 
 			[self parserError: CErrNonsenseAtMethodEnd range: (self errorPosition to: aString size)
 			"Error ignored, but at EOF so no recovery needed."].
-	node source: aString.
-	^node!
+	^node
+		source: aString;
+		methodClass: methodClass;
+		yourself!
 
 parseMethod: aString in: aClass errorBlock: monadicBlock 
 	self errorBlock: monadicBlock.
@@ -1083,7 +1085,7 @@ variableNodeClass
 !SmalltalkParser categoriesFor: #parseLiteralByteArrayObject!parsing!private! !
 !SmalltalkParser categoriesFor: #parseMessagePattern!parsing!private! !
 !SmalltalkParser categoriesFor: #parseMethod!parsing!private! !
-!SmalltalkParser categoriesFor: #parseMethod:!accessing!public! !
+!SmalltalkParser categoriesFor: #parseMethod:!accessing!private! !
 !SmalltalkParser categoriesFor: #parseMethod:in:errorBlock:!parsing!public! !
 !SmalltalkParser categoriesFor: #parseMethodParameter!parsing!private! !
 !SmalltalkParser categoriesFor: #parseOptimizedExpression!parsing!private! !
