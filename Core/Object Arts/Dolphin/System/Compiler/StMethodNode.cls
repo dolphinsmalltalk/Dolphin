@@ -1,7 +1,7 @@
 "Filed out from Dolphin Smalltalk 7"!
 
 StProgramNode subclass: #StMethodNode
-	instanceVariableNames: 'selector selectorParts body source arguments tag replacements nodeReplacements'
+	instanceVariableNames: 'selector selectorParts body source arguments tag replacements nodeReplacements methodClass'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -115,6 +115,12 @@ isPrimitive
 lastIsReturn
 	^body lastIsReturn!
 
+methodClass
+	^methodClass!
+
+methodClass: aClass 
+	methodClass := aClass!
+
 methodComments
 	| methodComments |
 	methodComments := OrderedCollection withAll: self comments.
@@ -213,6 +219,8 @@ uses: aNode
 !StMethodNode categoriesFor: #isMethod!public!testing! !
 !StMethodNode categoriesFor: #isPrimitive!public!testing! !
 !StMethodNode categoriesFor: #lastIsReturn!public!testing! !
+!StMethodNode categoriesFor: #methodClass!accessing!public! !
+!StMethodNode categoriesFor: #methodClass:!accessing!public! !
 !StMethodNode categoriesFor: #methodComments!accessing!public! !
 !StMethodNode categoriesFor: #methodNode!accessing!public! !
 !StMethodNode categoriesFor: #numArgs!accessing!public! !

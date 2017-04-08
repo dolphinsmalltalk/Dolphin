@@ -647,7 +647,7 @@ visitVariableNode: aStVariableNode
 
 !StParseNodeAnalyzer class methodsFor!
 
-checkParseTree: aParseTree for: aClass context: anObject pools: anArray
+analyzeParseTree: aParseTree for: aClass context: anObject pools: anArray
 	| methodNode |
 	methodNode := aParseTree isMethod ifTrue: [aParseTree] ifFalse: [aParseTree methodNode].
 	^(self new)
@@ -683,6 +683,6 @@ initialize
 	OptimizedMessages do: [:each | RestrictedSelectors addAll: each].
 	RestrictedSelectors isImmutable: true.
 	self addClassConstant: 'SpecialSelectors' value: VMLibrary default specialSelectors! !
-!StParseNodeAnalyzer class categoriesFor: #checkParseTree:for:context:pools:!accessing!public! !
+!StParseNodeAnalyzer class categoriesFor: #analyzeParseTree:for:context:pools:!accessing!public! !
 !StParseNodeAnalyzer class categoriesFor: #initialize!public! !
 

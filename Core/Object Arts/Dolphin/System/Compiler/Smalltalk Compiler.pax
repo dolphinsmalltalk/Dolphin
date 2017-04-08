@@ -25,6 +25,10 @@ package classNames
 	add: #StVariable;
 	yourself.
 
+package methodNames
+	add: #StMethodNode -> #analyze;
+	yourself.
+
 package binaryGlobalNames: (Set new
 	yourself).
 
@@ -135,6 +139,16 @@ StSpecialVariable subclass: #StThisContextVariable
 
 
 "Loose Methods"!
+
+!StMethodNode methodsFor!
+
+analyze
+	StParseNodeAnalyzer
+		analyzeParseTree: self
+		for: self methodClass
+		context: nil
+		pools: #()! !
+!StMethodNode categoriesFor: #analyze!public! !
 
 "End of package definition"!
 
