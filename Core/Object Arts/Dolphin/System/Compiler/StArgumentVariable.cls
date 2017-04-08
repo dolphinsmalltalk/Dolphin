@@ -6,7 +6,7 @@ StLocalVariable subclass: #StArgumentVariable
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 StArgumentVariable guid: (GUID fromString: '{724d61eb-4b75-4eec-9d01-58a4af61ee45}')!
-StArgumentVariable comment: ''!
+StArgumentVariable comment: '<StArgumentVariable> is a specialised class of <StLocalVariable> to describe method and block parameters (argument definitions).'!
 !StArgumentVariable categoriesForClass!Kernel-Objects! !
 !StArgumentVariable methodsFor!
 
