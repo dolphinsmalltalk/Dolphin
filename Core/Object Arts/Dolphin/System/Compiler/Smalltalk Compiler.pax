@@ -14,8 +14,8 @@ package classNames
 	add: #StLocalVariable;
 	add: #StMethodScope;
 	add: #StOptimizedBlockScope;
-	add: #StParseNodeAnalyzer;
 	add: #StSelfVariable;
+	add: #StSemanticAnalyser;
 	add: #StSemanticScope;
 	add: #StSpecialVariable;
 	add: #StStaticVariable;
@@ -54,7 +54,7 @@ Object subclass: #StVariable
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-StParseNodeVisitor subclass: #StParseNodeAnalyzer
+StParseNodeVisitor subclass: #StSemanticAnalyser
 	instanceVariableNames: 'methodNode methodClass evaluationContext currentScope scopes literals stringLiterals addToFrame tempDecls inStaticExpression evalScope'
 	classVariableNames: 'OptimizedMessages RestrictedSelectors SpecialSelectors'
 	poolDictionaries: 'SmalltalkParseErrorCodes'
@@ -143,7 +143,7 @@ StSpecialVariable subclass: #StThisContextVariable
 !StMethodNode methodsFor!
 
 analyze
-	StParseNodeAnalyzer
+	StSemanticAnalyser
 		analyzeParseTree: self
 		for: self methodClass
 		context: nil

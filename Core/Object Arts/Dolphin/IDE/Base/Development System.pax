@@ -23,6 +23,7 @@ package classNames
 	add: #BasicInspector;
 	add: #BasicKeyedAspect;
 	add: #BatchAspectAccessor;
+	add: #BrowserSemanticAnalyser;
 	add: #CategoryPrompter;
 	add: #CategoryTreeModel;
 	add: #ChangedMethodsCategory;
@@ -117,7 +118,6 @@ package classNames
 	add: #STBDebugger;
 	add: #StNumberStylingToken;
 	add: #StructureInspector;
-	add: #StSemanticAnalyser;
 	add: #TwinLevelInspector;
 	add: #UnclassifiedMethodsCategory;
 	add: #ValueWorkspace;
@@ -1153,10 +1153,10 @@ StParseNodeVisitor subclass: #MessageNodeCollector
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-StParseNodeAnalyzer subclass: #StSemanticAnalyser
+StSemanticAnalyser subclass: #BrowserSemanticAnalyser
 	instanceVariableNames: 'isStub'
 	classVariableNames: ''
-	poolDictionaries: 'SmalltalkParseErrorCodes'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 StNumberLiteralToken subclass: #StNumberStylingToken
 	instanceVariableNames: 'numberClass'
