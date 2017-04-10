@@ -1,14 +1,14 @@
 "Filed out from Dolphin Smalltalk 7"!
 
-StParseNodeAnalyzer subclass: #StSemanticAnalyser
+StSemanticAnalyser subclass: #BrowserSemanticAnalyser
 	instanceVariableNames: 'isStub'
 	classVariableNames: ''
-	poolDictionaries: 'SmalltalkParseErrorCodes'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-StSemanticAnalyser guid: (GUID fromString: '{590e979a-62f2-4b0e-9722-469cfb549990}')!
-StSemanticAnalyser comment: 'StSemanticAnalyser is a <StParseNodeVisitor> that performs checks for semantic errors (e.g. referencing an undeclared variable, sending an unimplemented message, etc) against a parse tree. It is used for dynamic error highlighting in the browsers. Most of the issues are reported as warnings, since they may not definitely be errors. The <SmalltalkParser> itself detects some actual semantic errors.'!
-!StSemanticAnalyser categoriesForClass!System-Compiler! !
-!StSemanticAnalyser methodsFor!
+BrowserSemanticAnalyser guid: (GUID fromString: '{590e979a-62f2-4b0e-9722-469cfb549990}')!
+BrowserSemanticAnalyser comment: 'SemanticAnalyser is a <StParseNodeVisitor> that performs checks for semantic errors (e.g. referencing an undeclared variable, sending an unimplemented message, etc) against a parse tree. It is used for dynamic error highlighting in the browsers. Most of the issues are reported as warnings, since they may not definitely be errors. The <SmalltalkParser> itself detects some actual semantic errors.'!
+!BrowserSemanticAnalyser categoriesForClass!System-Compiler! !
+!BrowserSemanticAnalyser methodsFor!
 
 checkHardBreakpoint: aStMessageNode 
 	aStMessageNode selector == #halt 
@@ -118,15 +118,15 @@ visitSequenceNode: aSequenceNode
 			[self currentScope unreferencedArguments
 				do: [:each | self signalError: CInfoUnreferencedArg forNode: each node]].
 	^answer! !
-!StSemanticAnalyser categoriesFor: #checkHardBreakpoint:!helpers!private! !
-!StSemanticAnalyser categoriesFor: #checkIfStubMessage:!helpers!private! !
-!StSemanticAnalyser categoriesFor: #checkSupersend:!helpers!private! !
-!StSemanticAnalyser categoriesFor: #checkUnimplemented:!helpers!private! !
-!StSemanticAnalyser categoriesFor: #checkUnimplementedSubclassResponsibility:!helpers!private! !
-!StSemanticAnalyser categoriesFor: #contextBindingFor:!helpers!private! !
-!StSemanticAnalyser categoriesFor: #initialize!initializing!public! !
-!StSemanticAnalyser categoriesFor: #readStaticVariable:!helpers!private! !
-!StSemanticAnalyser categoriesFor: #targetOfMessage:!commands!private!refactoring! !
-!StSemanticAnalyser categoriesFor: #visitMessageNode:!public!visitor/double dispatching! !
-!StSemanticAnalyser categoriesFor: #visitSequenceNode:!public!visitor/double dispatching! !
+!BrowserSemanticAnalyser categoriesFor: #checkHardBreakpoint:!helpers!private! !
+!BrowserSemanticAnalyser categoriesFor: #checkIfStubMessage:!helpers!private! !
+!BrowserSemanticAnalyser categoriesFor: #checkSupersend:!helpers!private! !
+!BrowserSemanticAnalyser categoriesFor: #checkUnimplemented:!helpers!private! !
+!BrowserSemanticAnalyser categoriesFor: #checkUnimplementedSubclassResponsibility:!helpers!private! !
+!BrowserSemanticAnalyser categoriesFor: #contextBindingFor:!helpers!private! !
+!BrowserSemanticAnalyser categoriesFor: #initialize!initializing!public! !
+!BrowserSemanticAnalyser categoriesFor: #readStaticVariable:!helpers!private! !
+!BrowserSemanticAnalyser categoriesFor: #targetOfMessage:!commands!private!refactoring! !
+!BrowserSemanticAnalyser categoriesFor: #visitMessageNode:!public!visitor/double dispatching! !
+!BrowserSemanticAnalyser categoriesFor: #visitSequenceNode:!public!visitor/double dispatching! !
 

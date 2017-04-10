@@ -49,7 +49,7 @@ allDefinedVariablesDo: aMonadicValuable
 autoParse
 	self textLength > 0 ifFalse: [^self].
 	
-	[StSemanticAnalyser
+	[BrowserSemanticAnalyser
 		analyzeParseTree: self parseTree
 		for: self selfClass
 		context: self evaluationContext
