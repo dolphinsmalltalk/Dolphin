@@ -484,16 +484,13 @@ mutateClass: oldClass toBeASubclassOf: newSuperclass
 
 mutateInSitu
 	"Private - Mutate the class being modified without mutating its instances.
-	In fact, we only need to change the superclass."
+	We may need to change the superclass or instance variables.
+	N.B. We cannot change instance variables without changing superclass, as this always requires a full mutation."
 
-	self superclassIsBeingChanged
-		ifTrue:
+	self superclassIsBeingChanged ifTrue: 
 			[currentClass class setSuperclass: (self class classOf: superclass).
 			currentClass setSuperclass: superclass.
-			self recompilationRequired: true].
-	self instanceVariablesAreBeingChanged
-		ifTrue:
-			[self setInstanceVariablesOf: currentClass.
+			self instanceVariablesAreBeingChanged ifTrue: [self setInstanceVariablesOf: currentClass].
 			self recompilationRequired: true].!
 
 mutateToNewClass
