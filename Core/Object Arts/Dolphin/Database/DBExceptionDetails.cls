@@ -44,7 +44,7 @@ buildErrorInfoFrom: anExternalHandle type: anIntegerHandleType
 	 for <anExternalHandle>, which is of type <anIntegerHandleType>"
 
 	| szSqlState fNativeError szErrorMsg cbErrorMsg recNumber |
-	szSqlState := String new: SQL_STATE_SIZE + 1.
+	szSqlState := String new: SQL_STATE_SIZE.
 	szErrorMsg := String new: 512.
 	cbErrorMsg := SWORD new.
 	fNativeError := SDWORD new.
