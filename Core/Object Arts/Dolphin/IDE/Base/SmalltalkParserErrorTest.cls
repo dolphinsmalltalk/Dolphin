@@ -50,15 +50,15 @@ lexicalQualifiedRefError: aString code: anInteger range: anInterval
 		code: anInteger!
 
 parseExpression: aString in: aClass 
-	^StSemanticAnalyser 
-		checkParseTree: (SmalltalkParser parseExpression: aString in: aClass)
+	^BrowserSemanticAnalyser 
+		analyzeParseTree: (SmalltalkParser parseExpression: aString in: aClass)
 		for: aClass
 		context: nil
 		pools: #()!
 
-parseMethod: aString in: aClass 
-	^StSemanticAnalyser 
-		checkParseTree: (self parserClass parseMethod: aString in: aClass)
+parseMethod: aString in: aClass
+	^BrowserSemanticAnalyser
+		analyzeParseTree: (self parserClass parseMethod: aString in: aClass)
 		for: aClass
 		context: nil
 		pools: #()!

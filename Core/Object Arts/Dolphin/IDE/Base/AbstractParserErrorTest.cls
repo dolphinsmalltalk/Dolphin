@@ -1208,15 +1208,16 @@ testErrorsTooManyTemps
 	source nextPutAll: '| '.
 	1 to: VMConstants.MaxTemps + 1
 		do: 
-			[:i | 
+			[:i |
 			source
-				nextPut: $a;
+				nextPut: $x;
 				print: i;
 				space].
 	source nextPut: $|.
+	source nextPutAll: ' [ | t1 | [t1] repeat]'.
 	source := source contents.
-	mark := source lastIndexOf: $a.
-	self 
+	mark := source lastIndexOf: $x.
+	self
 		parseExprError: source
 		range: (mark to: mark + 3)
 		line: 1

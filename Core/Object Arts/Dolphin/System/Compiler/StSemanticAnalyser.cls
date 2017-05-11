@@ -667,8 +667,8 @@ initialize
 		at: Object
 			put: #(#~~ #== #basicAt: #basicAt:put: #basicClass #basicSize #ifNil: #ifNotNil: #ifNil:ifNotNil: #ifNotNil:ifNil: #yourself);
 		at: UndefinedObject put: #(#ifNil: #ifNotNil: #ifNil:ifNotNil: #ifNotNil:ifNil:);
-		at: True put: boolean;
-		at: False put: boolean;
+		at: true class put: boolean;
+		at: false class put: boolean;
 		at: Boolean put: boolean;
 		at: Number put: #(#to:do: #to:by:do:);
 		at: Integer put: #(#timesRepeat:);
