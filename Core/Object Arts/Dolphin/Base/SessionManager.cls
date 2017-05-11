@@ -5,7 +5,7 @@ Object subclass: #SessionManager
 	classVariableNames: 'Current EmbeddingMask PreStartFile'
 	poolDictionaries: 'Win32Constants Win32Errors'
 	classInstanceVariableNames: ''!
-SessionManager guid: (GUID fromString: '{87B4C4B7-026E-11D3-9FD7-00A0CC3E4A32}')!
+SessionManager guid: (GUID fromString: '{87b4c4b7-026e-11d3-9fd7-00a0cc3e4a32}')!
 SessionManager addClassConstant: 'EmbeddingMask' value: 1!
 SessionManager comment: 'SessionManager is the class of objects responsible for managing the lifecyle of an application, from startup to shutdown. SessionManagers are also responsible for determining the global policy for dealing with unhandled Exceptions. 
 
@@ -822,7 +822,7 @@ quit
 quit: anInteger
 	"Private - Force a close down of the session with the specified exit code."
 
-	self onExit == true ifTrue: [self primQuit: anInteger].
+	self onExit == true ifTrue: [[self primQuit: anInteger] postToInputQueue].
 	^false	"cancelled"!
 
 registerConsoleCtrlHandler
