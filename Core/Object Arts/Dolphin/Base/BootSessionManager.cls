@@ -5,7 +5,7 @@ SessionManager subclass: #BootSessionManager
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-BootSessionManager guid: (GUID fromString: '{9DBC5FA6-DACE-4809-88B9-83242B7F7D72}')!
+BootSessionManager guid: (GUID fromString: '{9dbc5fa6-dace-4809-88b9-83242b7f7d72}')!
 BootSessionManager comment: 'BootSessionManager is the class of <SessionManager>s installed when the Dolphin image is booting from sources.'!
 !BootSessionManager categoriesForClass!Development! !
 !BootSessionManager methodsFor!

@@ -71,6 +71,6 @@ devsesh onPreSaveImage.
 "Remove unnecessary .chg files"
 File delete: 'DBOOT.chg'!
 
-SessionManager current quit!
+SessionManager current onExit; primQuit: 0!
 
 
