@@ -5,7 +5,7 @@ DolphinTest subclass: #VMTest
 	classVariableNames: ''
 	poolDictionaries: 'CRTConstants'
 	classInstanceVariableNames: ''!
-VMTest guid: (GUID fromString: '{D03F75A2-8C1C-4559-8177-EFF37D37A6E8}')!
+VMTest guid: (GUID fromString: '{d03f75a2-8c1c-4559-8177-eff37d37a6e8}')!
 VMTest comment: 'Test the VM primitives and other VM related operations.
 
 SUnitBrowser openOnTestCase: self'!
@@ -83,7 +83,7 @@ earlyTermination: aBoolean
 			[a := 1.
 			
 			[a := 2.
-			KernelLibrary default sleep: 50] ifCurtailed: [a := 0].
+			KernelLibrary default sleep: 30] ifCurtailed: [a := 0].
 			a := 3] 
 					forkAt: Processor userInterruptPriority.	"High priority background proc runs but then blocks..."
 	self assert: proc isWaiting description: 'Proc should be blocked on the overlapped call semaphore'.
@@ -108,8 +108,8 @@ earlyTermination: aBoolean
 
 			"Let the sleep: complete (allow a reasonable period so we can be fairly sure  it does)"
 			count := 0.
-			[a ~= 0 and: [count < 100]] whileTrue: 
-					[Processor sleep: 5.
+			[a ~= 0 and: [count < 500]] whileTrue: 
+					[Processor sleep: 1.
 					count := count + 1].
 			"The curtailment block should now have run"
 			self assert: a == 0.
@@ -921,9 +921,9 @@ testOverlappedCallTermination
 	problems in the VM, so debugging at the Smalltalk level is not terribly useful anyway."
 
 	"1) Call is terminated before completion, before it has even started in fact"
-	1 to: 10 do: [:i | self earlyTermination: false].
+	1 to: 5 do: [:i | self earlyTermination: false].
 	"2) Call is terminated before completion, but is allowed to start"
-	1 to: 10 do: [:i | self earlyTermination: true]!
+	1 to: 5 do: [:i | self earlyTermination: true]!
 
 testPrimitiveAt
 	"First some error cases - accessing non-indexable objects"
