@@ -1922,6 +1922,15 @@ selectionMarkIndex
 
 	^(self sendMessage: LVM_GETSELECTIONMARK) + 1.!
 
+selectionMarkIndex: anInteger
+	"Private - Set the one-based <integer> index of the item from which
+	a multiple selection will start, or clear it if <anInteger> is 0."
+
+	self
+		sendMessage: LVM_SETSELECTIONMARK
+		wParam: 0
+		lParam: anInteger - 1.!
+
 selections: aCollection ifAbsent: aNiladicOrMonadicValuable 
 	"Select the first occurrences of the specified collection of <Object>s in the receiver and
 	answer the new selection. If any of the elements of the collection are not present in the
@@ -2404,6 +2413,7 @@ wantCustomDrawItemNotifications: pNMHDR
 !ListView categoriesFor: #selectedCount!private!selection! !
 !ListView categoriesFor: #selectIndex:set:!private!selection!wine fix! !
 !ListView categoriesFor: #selectionMarkIndex!private!selection! !
+!ListView categoriesFor: #selectionMarkIndex:!private!selection! !
 !ListView categoriesFor: #selections:ifAbsent:!public!selection! !
 !ListView categoriesFor: #selectionsByIndex:ifAbsent:!public!selection! !
 !ListView categoriesFor: #setColumnIcon:atIndex:!helpers!private! !
