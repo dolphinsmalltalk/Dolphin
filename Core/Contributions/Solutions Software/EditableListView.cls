@@ -126,13 +126,7 @@ applyImageLists
 	self lvmSetImageList: largeImList type: LVSIL_NORMAL!
 
 clearFocusItem
-
-	| anLvItem |
-
-	anLvItem := LVITEM new.
-	anLvItem stateMask: LVIS_FOCUSED.
-	anLvItem dwState: 0.
-	1 to: self itemCount do: [ :i | self lvmSetItem: i-1 state: anLvItem]!
+	self caretIndex: 0.!
 
 clearFocusRect
 
@@ -474,28 +468,6 @@ itemAndColumnAt: aPoint
 	^((itemIndex between: 1 and: self list size) and: [columnIndex between: 1 and: self allColumns size])
 		ifTrue: [itemIndex@columnIndex]
 		ifFalse: [nil]!
-
-itemIndex: anInteger hasFocus: aBoolean
-
-	| anLvItem |
-
-	anLvItem := LVITEM new.
-	anLvItem stateMask: LVIS_FOCUSED.
-	anLvItem dwState: aBoolean.
-	self lvmSetItem: anInteger-1 state: anLvItem!
-
-itemIndexWithFocus
-
-	^(1 to: self itemCount) detect: [ :i | (self lvmGetItemState: (i - 1) mask: LVIS_FOCUSED) = 1] ifNone: [nil]!
-
-itemIndexWithFocus: anInteger
-
-	| anLvItem |
-
-	anLvItem := LVITEM new.
-	anLvItem stateMask: LVIS_FOCUSED.
-	anLvItem dwState: 1.
-	self lvmSetItem: anInteger-1 state: anLvItem!
 
 lastEditableColumn
 
@@ -1015,9 +987,6 @@ wmVScroll: message wParam: wParam lParam: lParam
 !EditableListView categoriesFor: #isMultiline!public!testing! !
 !EditableListView categoriesFor: #isSelected:!public!testing! !
 !EditableListView categoriesFor: #itemAndColumnAt:!accessing!private! !
-!EditableListView categoriesFor: #itemIndex:hasFocus:!helpers!public! !
-!EditableListView categoriesFor: #itemIndexWithFocus!accessing!public! !
-!EditableListView categoriesFor: #itemIndexWithFocus:!accessing!public! !
 !EditableListView categoriesFor: #lastEditableColumn!accessing!public! !
 !EditableListView categoriesFor: #lastEditableCoordsOnOrBefore:!helpers!private! !
 !EditableListView categoriesFor: #lvmSetColumn:at:!columns!private! !
