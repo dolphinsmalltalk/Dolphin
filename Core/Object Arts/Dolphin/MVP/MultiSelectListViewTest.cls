@@ -33,9 +33,9 @@ testNewSelectionsClickOutsideListWithModifiers
 testNewSelectionsCtrlClickOnSelectedItem
 	| event |
 	self setUpForSelectionTesting.
-	presenter selectionsByIndex: #(1 2).
+	presenter selectionsByIndex: #(1 3).
 	event := self mouseDownEventOnItem: 1 buttons: #(#left #control).
-	self assert: (presenter newSelectionsFromEvent: event) = #(2).
+	self assert: (presenter newSelectionsFromEvent: event) = #(3).
 	presenter selectionsByIndex: #(1).
 	self assert: (presenter newSelectionsFromEvent: event) = #().!
 
@@ -44,8 +44,8 @@ testNewSelectionsCtrlClickOnUnselectedItem
 	self setUpForSelectionTesting.
 	event := self mouseDownEventOnItem: 1 buttons: #(#left #control).
 	self assert: (presenter newSelectionsFromEvent: event) = #(1).
-	presenter selectionsByIndex: #(2).
-	self assert: (presenter newSelectionsFromEvent: event) = #(1 2).!
+	presenter selectionsByIndex: #(3).
+	self assert: (presenter newSelectionsFromEvent: event) = #(1 3).!
 
 testNewSelectionsCtrlShiftClickAdditive
 	| event |
@@ -56,6 +56,8 @@ testNewSelectionsCtrlShiftClickAdditive
 	event := self mouseDownEventOnItem: 7 buttons: #(#left #control #shift).
 	self assert: (presenter newSelectionsFromEvent: event) = #(1 3 4 5 6 7).
 	presenter selectionsByIndex: #(1 3 5 7).
+	"Programatically changing selection does not change the selection mark."
+	self assert: presenter selectionMarkIndex = 3.
 	self assert: (presenter newSelectionsFromEvent: event) = #(1 3 4 5 6 7).!
 
 testNewSelectionsCtrlShiftClickSubtractive
