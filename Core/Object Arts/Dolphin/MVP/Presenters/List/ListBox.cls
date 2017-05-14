@@ -17,6 +17,16 @@ Class Variables:
 !ListBox categoriesForClass!MVP-Views! !
 !ListBox methodsFor!
 
+anchorIndex
+	"Answer the 1-based index of the anchor (the item from which a multiple selection will start)."
+
+	^(self sendMessage: LB_GETANCHORINDEX) + 1.!
+
+anchorIndex: anInteger
+	"Private - Set the 1-based index of the anchor (the item from which a multiple selection will start)."
+
+	self sendMessage: LB_SETANCHORINDEX wParam: anInteger - 1.!
+
 basicAdd: anObject 
 	"Private - Adds a string for the <Object> argument to the listbox control at the end of the
 	list. Answers the argument."
@@ -443,13 +453,29 @@ showDropHighlight: anItem
 
 state
 	"Private - Answer a MessageSequence which, when replayed, will restore the receiver 
-	to its current state. Add the horizonatl extent aspect since it is not otherwise cached in an
-	instance variable"
+	to its current state."
 
-	^super state
-		add: (MessageSend receiver: self selector: #horizontalExtent: argument: self horizontalExtent);
-		yourself
-!
+	| messages |
+	messages := super state.
+	"Add the horizontal extent aspect since it is not otherwise cached in an instance variable."
+	messages add: (MessageSend
+				receiver: self
+				selector: #horizontalExtent:
+				argument: self horizontalExtent).
+	"The caret and anchor only need to be restored separately in multi-select mode--
+	in single-select mode they are always equal to the selected item."
+	self isMultiSelect ifTrue: 
+			[self anchorIndex = 0 ifFalse: 
+					[messages add: (MessageSend
+								receiver: self
+								selector: #anchorIndex:
+								argument: self anchorIndex)].
+			self caretIndex = 0 ifFalse: 
+					[messages add: (MessageSend
+								receiver: self
+								selector: #caretIndex:
+								argument: self caretIndex)]].
+	^messages.!
 
 wmRButtonDown: message wParam: wParam lParam: lParam 
 	"Handle a WM_RBUTTONDOWN. We select the item under the mouse before
@@ -462,6 +488,8 @@ wmRButtonDown: message wParam: wParam lParam: lParam
 		wmRButtonDown: message
 		wParam: wParam
 		lParam: lParam! !
+!ListBox categoriesFor: #anchorIndex!public!selection! !
+!ListBox categoriesFor: #anchorIndex:!public!selection! !
 !ListBox categoriesFor: #basicAdd:!adding!private! !
 !ListBox categoriesFor: #basicAdd:atIndex:!adding!private! !
 !ListBox categoriesFor: #basicClear!private!removing! !
