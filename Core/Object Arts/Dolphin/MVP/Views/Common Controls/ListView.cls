@@ -349,6 +349,18 @@ caretIndex
 
 	^(self lvmGetNextItem: -1 flags: LVNI_FOCUSED) + 1!
 
+caretIndex: anInteger
+	"Set the 1-based <integer> index of the item in the list that has focus,
+	or clear the focus if <anInteger> is 0."
+
+	| lvItem |
+	lvItem := LVITEM new.
+	lvItem stateMask: LVIS_FOCUSED.
+	"If we pass -1 to LVM_SETITEMSTATE, the change applies to *all* items in the list,
+	but we must also tell the control to clear the focus state rather than set it."
+	anInteger == 0 ifFalse: [lvItem dwState: LVIS_FOCUSED].
+	self lvmSetItem: anInteger - 1 state: lvItem.!
+
 clearSelectionsByIndex: collection 
 	"Removes selection from the items in the receiver with the Integer
 	indices in collection"
@@ -2053,18 +2065,31 @@ state
 	self isReportMode 
 		ifTrue: 
 			["Ensure the actual column widths are cached"
-			self allColumns 
+			self allColumns
 				keysAndValuesDo: [:eachKey :eachValue | eachValue basicWidth: (self lvmGetColumnWidth: eachKey - 1)]].
 	"Record the column order if anything other than ascending"
 	(order := self columnOrder) = (1 to: self columnCount) 
 		ifFalse: 
-			[sequence add: (MessageSend 
+			[sequence add: (MessageSend
 						receiver: self
 						selector: #columnOrder:
 						argument: order)].
-	self backImage notNil 
+	self backImage notNil
 		ifTrue: [sequence add: (MessageSend receiver: self selector: #backImageChanged)].
-	^sequence!
+	"The caret and selection mark only need to be restored separately in multi-select mode--
+	in single-select mode they are always equal to the selected item."
+	self isMultiSelect ifTrue: 
+			[self caretIndex = 0 ifFalse: 
+					[sequence add: (MessageSend
+								receiver: self
+								selector: #caretIndex:
+								argument: self caretIndex)].
+			self selectionMarkIndex = 0 ifFalse: 
+					[sequence add: (MessageSend
+								receiver: self
+								selector: #selectionMarkIndex:
+								argument: self selectionMarkIndex)]].
+	^sequence.!
 
 stateImageList: aWinImageList
 	"Private - Set the receiver's state image list to aWinImageList."
@@ -2239,6 +2264,7 @@ wantCustomDrawItemNotifications: pNMHDR
 !ListView categoriesFor: #buildViewsPopup!helpers!private! !
 !ListView categoriesFor: #cancelLabelEdit!operations!private! !
 !ListView categoriesFor: #caretIndex!public!selection! !
+!ListView categoriesFor: #caretIndex:!public!selection! !
 !ListView categoriesFor: #clearSelectionsByIndex:!public!selection! !
 !ListView categoriesFor: #columnAtIndex:!columns!public! !
 !ListView categoriesFor: #columnClass!constants!private! !
