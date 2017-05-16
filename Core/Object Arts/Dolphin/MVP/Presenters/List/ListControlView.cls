@@ -522,7 +522,23 @@ state
 	| messages |
 	messages := super state.
 	self hasSelection ifTrue: [messages add: self selectionState].
-	^messages!
+	"Controls in a multi-select mode (if supported) have two additional concepts which we must restore.
+	In single-select mode, or if multi-select is not supported, these are both equal to the selected item."
+	self isMultiSelect ifTrue: 
+			[| caret anchor |
+			caret := self caretIndex.
+			caret = 0 ifFalse: 
+					[messages add: (MessageSend
+								receiver: self
+								selector: #caretIndex:
+								argument: caret)].
+			anchor := self anchorIndex.
+			anchor = 0 ifFalse: 
+					[messages add: (MessageSend
+								receiver: self
+								selector: #anchorIndex:
+								argument: anchor)]].
+	^messages.!
 
 updateAll
 	"Re-render the model's contents. This is a similar operation to #refreshContents, except

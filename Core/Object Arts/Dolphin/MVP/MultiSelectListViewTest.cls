@@ -5,7 +5,7 @@ ListViewTest subclass: #MultiSelectListViewTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-MultiSelectListViewTest guid: (GUID fromString: '{67F073DF-D832-4F4F-A5C1-57D8730E3515}')!
+MultiSelectListViewTest guid: (GUID fromString: '{67f073df-d832-4f4f-a5c1-57d8730e3515}')!
 MultiSelectListViewTest comment: ''!
 !MultiSelectListViewTest categoriesForClass!Unclassified! !
 !MultiSelectListViewTest methodsFor!
@@ -52,12 +52,12 @@ testNewSelectionsCtrlShiftClickAdditive
 	self setUpForSelectionTesting.
 	presenter
 		selectionsByIndex: #(1 3);
-		selectionMarkIndex: 3.
+		anchorIndex: 3.
 	event := self mouseDownEventOnItem: 7 buttons: #(#left #control #shift).
 	self assert: (presenter newSelectionsFromEvent: event) = #(1 3 4 5 6 7).
 	presenter selectionsByIndex: #(1 3 5 7).
-	"Programatically changing selection does not change the selection mark."
-	self assert: presenter selectionMarkIndex = 3.
+	"Programatically changing selection does not change the anchor."
+	self assert: presenter anchorIndex = 3.
 	self assert: (presenter newSelectionsFromEvent: event) = #(1 3 4 5 6 7).!
 
 testNewSelectionsCtrlShiftClickSubtractive
@@ -65,7 +65,7 @@ testNewSelectionsCtrlShiftClickSubtractive
 	self setUpForSelectionTesting.
 	presenter
 		selectionsByIndex: #(1 2 3 4 5 7);
-		selectionMarkIndex: 6.
+		anchorIndex: 6.
 	event := self mouseDownEventOnItem: 2 buttons: #(#left #control #shift).
 	"In Windows Explorer and other applications that use ListView or a similar control,
 	(2) would not be selected at this point. Why is it in Dolphin?
@@ -114,7 +114,7 @@ testNewSelectionsRightClickWithinSelection
 testNewSelectionsShiftClickWithSelectionMark
 	| event |
 	self setUpForSelectionTesting.
-	presenter selectionMarkIndex: 3.
+	presenter anchorIndex: 3.
 	event := self mouseDownEventOnItem: 5 buttons: #(#left #shift).
 	"It does not really matter what is currently selected, only what is marked and what is clicked"
 	(OrderedCollection new)

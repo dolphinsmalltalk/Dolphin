@@ -116,6 +116,29 @@ allColumns
 
 	^columns!
 
+anchorIndex
+	"Answer the one-based <integer> index of the item
+	from which a multiple selection will start, or 0 if there is none.
+	
+	N.B. The ListView documentation calls this concept the 'selection mark',
+	while that for the older ListBox refers to it as the 'anchor'. Since they behave the same,
+	we standardize on what seems like the shorter, clearer name."
+
+	^(self sendMessage: LVM_GETSELECTIONMARK) + 1.!
+
+anchorIndex: anInteger
+	"Set the one-based <integer> index of the item from which
+	a multiple selection will start, or clear it if <anInteger> is 0.
+
+	N.B. The ListView documentation calls this concept the 'selection mark',
+	while that for the older ListBox refers to it as the 'anchor'. Since they behave the same,
+	we standardize on what seems like the shorter, clearer name."
+
+	self
+		sendMessage: LVM_SETSELECTIONMARK
+		wParam: 0
+		lParam: anInteger - 1.!
+
 applyImageLists
 	"Private - Set the receiver's image lists from the image managers."
 
@@ -1489,7 +1512,7 @@ newSelectionsFromEvent: event
 	"Private - Answer a collection of the <integer> selections that would occur if the <MouseEvent>,
 	event, was was passed to the control."
 
-	| itemClicked anyKeysDown newSelections markIndex markRange markIsSelected |
+	| itemClicked anyKeysDown newSelections anchorIndex shiftRange anchorIsSelected |
 	itemClicked := self itemFromPoint: event position.
 	"In single-select mode, the new selection is always the item clicked, or nothing if the click is outside all items."
 	self isMultiSelect ifFalse: [^itemClicked ifNil: [#()] ifNotNil: [:item | Array with: item]].
@@ -1509,24 +1532,24 @@ newSelectionsFromEvent: event
 			[newSelections := newSelections asSortedCollection.
 			newSelections remove: itemClicked ifAbsent: [newSelections add: itemClicked].
 			^newSelections asArray].
-	"At least Shift is down, so we must start examining the 'selection mark'. This is the last item
+	"At least Shift is down, so we must start examining the 'anchor'. This is the last item
 	that was clicked with no modifiers, only ctrl, or ctrl + shift (shift-clicks do *not* move the
-	selection mark). It acts as the 'start point' for operations where shift is held--they affect
-	the range of items from the selection mark to the click point, inclusive. Initially it is zero,
+	anchor). It acts as the 'start point' for operations where shift is held--they affect
+	the range of items from the anchor to the click point, inclusive. Initially it is zero,
 	i.e. out-of-bounds, in which case holding shift essentially has no effect, and we act only on
 	the item actually clicked."
-	markIndex := self selectionMarkIndex.
-	markRange := markIndex == 0
+	anchorIndex := self anchorIndex.
+	shiftRange := anchorIndex == 0
 				ifTrue: [itemClicked to: itemClicked]
-				ifFalse: [(markIndex min: itemClicked) to: (markIndex max: itemClicked)].
+				ifFalse: [(anchorIndex min: itemClicked) to: (anchorIndex max: itemClicked)].
 	"Only shift is down, not ctrl, so the current selection will be entirely replaced by the marked range."
-	event isCtrlDown ifFalse: [^markRange asArray].
-	"Both ctrl and shift are down, so we set the selection state of the marked range to that of the
-	selection mark itself. Note that this ignores the selection state of the item actually clicked
-	and everything in between it and the selection mark."
+	event isCtrlDown ifFalse: [^shiftRange asArray].
+	"Both ctrl and shift are down, so we set the selection state of the affected range to that of the
+	anchor itself. Note that this ignores the selection state of the item actually clicked
+	and everything in between it and the anchor."
 	newSelections := newSelections asSet.
-	markIsSelected := newSelections includes: markIndex.
-	markRange do: (markIsSelected
+	anchorIsSelected := newSelections includes: anchorIndex.
+	shiftRange do: (anchorIsSelected
 				ifTrue: [[:i | newSelections add: i]]
 				ifFalse: [[:i | newSelections remove: i ifAbsent: []]]).
 	"For some reason, the item clicked is always left selected, even if we are deselecting the rest
@@ -1928,21 +1951,6 @@ selectIndex: anInteger set: aBoolean
 	aBoolean ifTrue: [anLvItem dwState: mask].
 	self lvmSetItem: anInteger - 1 state: anLvItem!
 
-selectionMarkIndex
-	"Private - Answer the one-based <integer> index of the item
-	from which a multiple selection will start, or 0 if there is none."
-
-	^(self sendMessage: LVM_GETSELECTIONMARK) + 1.!
-
-selectionMarkIndex: anInteger
-	"Private - Set the one-based <integer> index of the item from which
-	a multiple selection will start, or clear it if <anInteger> is 0."
-
-	self
-		sendMessage: LVM_SETSELECTIONMARK
-		wParam: 0
-		lParam: anInteger - 1.!
-
 selections: aCollection ifAbsent: aNiladicOrMonadicValuable 
 	"Select the first occurrences of the specified collection of <Object>s in the receiver and
 	answer the new selection. If any of the elements of the collection are not present in the
@@ -2065,31 +2073,18 @@ state
 	self isReportMode 
 		ifTrue: 
 			["Ensure the actual column widths are cached"
-			self allColumns
+			self allColumns 
 				keysAndValuesDo: [:eachKey :eachValue | eachValue basicWidth: (self lvmGetColumnWidth: eachKey - 1)]].
 	"Record the column order if anything other than ascending"
 	(order := self columnOrder) = (1 to: self columnCount) 
 		ifFalse: 
-			[sequence add: (MessageSend
+			[sequence add: (MessageSend 
 						receiver: self
 						selector: #columnOrder:
 						argument: order)].
-	self backImage notNil
+	self backImage notNil 
 		ifTrue: [sequence add: (MessageSend receiver: self selector: #backImageChanged)].
-	"The caret and selection mark only need to be restored separately in multi-select mode--
-	in single-select mode they are always equal to the selected item."
-	self isMultiSelect ifTrue: 
-			[self caretIndex = 0 ifFalse: 
-					[sequence add: (MessageSend
-								receiver: self
-								selector: #caretIndex:
-								argument: self caretIndex)].
-			self selectionMarkIndex = 0 ifFalse: 
-					[sequence add: (MessageSend
-								receiver: self
-								selector: #selectionMarkIndex:
-								argument: self selectionMarkIndex)]].
-	^sequence.!
+	^sequence!
 
 stateImageList: aWinImageList
 	"Private - Set the receiver's state image list to aWinImageList."
@@ -2237,6 +2232,8 @@ wantCustomDrawItemNotifications: pNMHDR
 !ListView categoriesFor: #addColumn:atIndex:!adding!columns!public! !
 !ListView categoriesFor: #addOrUpdate:nonVirtualItems:afterIndex:!private!updating! !
 !ListView categoriesFor: #allColumns!columns!public! !
+!ListView categoriesFor: #anchorIndex!public!selection! !
+!ListView categoriesFor: #anchorIndex:!public!selection! !
 !ListView categoriesFor: #applyImageLists!image management!private! !
 !ListView categoriesFor: #autoResizeColumns!operations!private! !
 !ListView categoriesFor: #autoResizeColumns:!helpers!private! !
@@ -2438,8 +2435,6 @@ wantCustomDrawItemNotifications: pNMHDR
 !ListView categoriesFor: #selectAll!public!selection! !
 !ListView categoriesFor: #selectedCount!private!selection! !
 !ListView categoriesFor: #selectIndex:set:!private!selection!wine fix! !
-!ListView categoriesFor: #selectionMarkIndex!private!selection! !
-!ListView categoriesFor: #selectionMarkIndex:!private!selection! !
 !ListView categoriesFor: #selections:ifAbsent:!public!selection! !
 !ListView categoriesFor: #selectionsByIndex:ifAbsent:!public!selection! !
 !ListView categoriesFor: #setColumnIcon:atIndex:!helpers!private! !
