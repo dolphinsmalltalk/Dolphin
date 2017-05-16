@@ -469,6 +469,23 @@ itemAndColumnAt: aPoint
 		ifTrue: [itemIndex@columnIndex]
 		ifFalse: [nil]!
 
+itemIndex: anInteger hasFocus: aBoolean
+	| anLvItem |
+	#deprecated.
+	"Only one item may have focus at a time--use #caretIndex: to set it."
+	anLvItem := LVITEM new.
+	anLvItem stateMask: LVIS_FOCUSED.
+	anLvItem dwState: aBoolean.
+	self lvmSetItem: anInteger - 1 state: anLvItem.!
+
+itemIndexWithFocus
+	#deprecated.
+	^self caretIndex.!
+
+itemIndexWithFocus: anInteger
+	#deprecated.
+	self caretIndex: anInteger.!
+
 lastEditableColumn
 
 	^self allColumns reverse detect: [ :each | each isEditable]!
@@ -987,6 +1004,9 @@ wmVScroll: message wParam: wParam lParam: lParam
 !EditableListView categoriesFor: #isMultiline!public!testing! !
 !EditableListView categoriesFor: #isSelected:!public!testing! !
 !EditableListView categoriesFor: #itemAndColumnAt:!accessing!private! !
+!EditableListView categoriesFor: #itemIndex:hasFocus:!helpers!public! !
+!EditableListView categoriesFor: #itemIndexWithFocus!accessing!public! !
+!EditableListView categoriesFor: #itemIndexWithFocus:!accessing!public! !
 !EditableListView categoriesFor: #lastEditableColumn!accessing!public! !
 !EditableListView categoriesFor: #lastEditableCoordsOnOrBefore:!helpers!private! !
 !EditableListView categoriesFor: #lvmSetColumn:at:!columns!private! !
