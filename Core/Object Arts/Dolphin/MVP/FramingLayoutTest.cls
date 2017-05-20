@@ -5,7 +5,7 @@ LayoutManagerTest subclass: #FramingLayoutTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-FramingLayoutTest guid: (GUID fromString: '{FA16FDD5-BD9E-4198-BC61-F33E43C14EDC}')!
+FramingLayoutTest guid: (GUID fromString: '{fa16fdd5-bd9e-4198-bc61-f33e43c14edc}')!
 FramingLayoutTest comment: ''!
 !FramingLayoutTest categoriesForClass!Unclassified! !
 !FramingLayoutTest methodsFor!

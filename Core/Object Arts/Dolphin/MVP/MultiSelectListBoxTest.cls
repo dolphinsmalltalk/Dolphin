@@ -5,7 +5,7 @@ ListBoxTest subclass: #MultiSelectListBoxTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-MultiSelectListBoxTest guid: (GUID fromString: '{FB3D047D-54AC-4E72-8544-A555167D6AF9}')!
+MultiSelectListBoxTest guid: (GUID fromString: '{fb3d047d-54ac-4e72-8544-a555167d6af9}')!
 MultiSelectListBoxTest comment: 'Test a ListBox in multi-select mode. Inherited tests will exercise the single-selection protocols. As of D6 these should behave for a multi-select list in teh same way as they do for a single-select list.'!
 !MultiSelectListBoxTest categoriesForClass!Unclassified! !
 !MultiSelectListBoxTest methodsFor!

@@ -5,7 +5,7 @@ SelectableListItemsTest subclass: #ListViewTest
 	classVariableNames: ''
 	poolDictionaries: 'ListViewConstants'
 	classInstanceVariableNames: ''!
-ListViewTest guid: (GUID fromString: '{BCE10A8D-244E-4377-846C-BCBEF9D853A1}')!
+ListViewTest guid: (GUID fromString: '{bce10a8d-244e-4377-846c-bcbef9d853a1}')!
 ListViewTest comment: ''!
 !ListViewTest categoriesForClass!Unclassified! !
 !ListViewTest methodsFor!

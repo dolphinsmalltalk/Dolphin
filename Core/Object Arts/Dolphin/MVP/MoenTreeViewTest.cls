@@ -5,7 +5,7 @@ DolphinTest subclass: #MoenTreeViewTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-MoenTreeViewTest guid: (GUID fromString: '{547F1350-3D63-4E8C-9EA3-E13001609555}')!
+MoenTreeViewTest guid: (GUID fromString: '{547f1350-3d63-4e8c-9ea3-e13001609555}')!
 MoenTreeViewTest comment: 'SUnitBrowser openOnTestCase: self'!
 !MoenTreeViewTest categoriesForClass!Unclassified! !
 !MoenTreeViewTest methodsFor!

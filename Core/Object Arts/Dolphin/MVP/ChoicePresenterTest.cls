@@ -5,7 +5,7 @@ PresenterTest subclass: #ChoicePresenterTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ChoicePresenterTest guid: (GUID fromString: '{F39CDA5E-17B7-48EE-AE77-57C882174716}')!
+ChoicePresenterTest guid: (GUID fromString: '{f39cda5e-17b7-48ee-ae77-57c882174716}')!
 ChoicePresenterTest comment: ''!
 !ChoicePresenterTest categoriesForClass!Unclassified! !
 !ChoicePresenterTest methodsFor!

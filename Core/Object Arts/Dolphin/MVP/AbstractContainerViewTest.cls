@@ -5,7 +5,7 @@ DolphinTest subclass: #AbstractContainerViewTest
 	classVariableNames: ''
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
-AbstractContainerViewTest guid: (GUID fromString: '{79C3A28A-CE43-49E3-A030-ADB99DE3EFEA}')!
+AbstractContainerViewTest guid: (GUID fromString: '{79c3a28a-ce43-49e3-a030-adb99de3efea}')!
 AbstractContainerViewTest comment: ''!
 !AbstractContainerViewTest categoriesForClass!Unclassified! !
 !AbstractContainerViewTest methodsFor!

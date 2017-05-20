@@ -5,7 +5,7 @@ PresenterTest subclass: #SelectableItemsTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-SelectableItemsTest guid: (GUID fromString: '{EB11681E-441A-44D4-AF4C-DE1EA399A79E}')!
+SelectableItemsTest guid: (GUID fromString: '{eb11681e-441a-44d4-af4c-de1ea399a79e}')!
 SelectableItemsTest comment: ''!
 !SelectableItemsTest categoriesForClass!Unclassified! !
 !SelectableItemsTest methodsFor!

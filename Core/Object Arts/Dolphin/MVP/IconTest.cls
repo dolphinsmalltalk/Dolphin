@@ -5,7 +5,7 @@ DolphinTest subclass: #IconTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-IconTest guid: (GUID fromString: '{96D9E7D9-8086-4706-B958-791A85A4E86C}')!
+IconTest guid: (GUID fromString: '{96d9e7d9-8086-4706-b958-791a85a4e86c}')!
 IconTest comment: ''!
 !IconTest categoriesForClass!Unclassified! !
 !IconTest methodsFor!

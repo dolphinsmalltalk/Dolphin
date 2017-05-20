@@ -5,7 +5,7 @@ Object subclass: #MockScintillaView
 	classVariableNames: ''
 	poolDictionaries: 'ScintillaConstants'
 	classInstanceVariableNames: ''!
-MockScintillaView guid: (GUID fromString: '{50616A84-12E3-4960-B005-82A37278383B}')!
+MockScintillaView guid: (GUID fromString: '{50616a84-12e3-4960-b005-82a37278383b}')!
 MockScintillaView comment: 'To set up:
 
 	mock := MockScintillaView new.

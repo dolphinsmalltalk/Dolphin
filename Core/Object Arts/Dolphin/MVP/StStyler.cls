@@ -5,7 +5,7 @@ StParseNodeVisitor subclass: #StStyler
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-StStyler guid: (GUID fromString: '{C4F1CF3F-646A-4233-9F38-C110BF4F4DFB}')!
+StStyler guid: (GUID fromString: '{c4f1cf3f-646a-4233-9f38-c110bf4f4dfb}')!
 StStyler comment: 'StStyler is a <StParseNodeVisitor>s that generates visual style runs for Smalltalk source code from a parse tree. It is intended solely for testing the syntax colouring in DX6.'!
 !StStyler categoriesForClass!Refactory-ParseTree Matching! !
 !StStyler methodsFor!

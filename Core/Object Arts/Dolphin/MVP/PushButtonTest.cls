@@ -5,7 +5,7 @@ DolphinTest subclass: #PushButtonTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-PushButtonTest guid: (GUID fromString: '{E927FEC8-865B-4BE1-928D-FD9EB29C16C4}')!
+PushButtonTest guid: (GUID fromString: '{e927fec8-865b-4be1-928d-fd9eb29c16c4}')!
 PushButtonTest comment: ''!
 !PushButtonTest categoriesForClass!Unclassified! !
 !PushButtonTest methodsFor!

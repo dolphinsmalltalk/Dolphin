@@ -5,7 +5,7 @@ DolphinTest subclass: #CanvasTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-CanvasTest guid: (GUID fromString: '{F582D7B1-304E-45AF-A9FD-315EE37DD609}')!
+CanvasTest guid: (GUID fromString: '{f582d7b1-304e-45af-a9fd-315ee37dd609}')!
 CanvasTest comment: ''!
 !CanvasTest categoriesForClass!Unclassified! !
 !CanvasTest methodsFor!

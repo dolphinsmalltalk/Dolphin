@@ -5,7 +5,7 @@ DolphinTest subclass: #AcceleratorTableTest
 	classVariableNames: ''
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
-AcceleratorTableTest guid: (GUID fromString: '{FFC00C13-8DA5-4B75-B82D-F96BBA254EFE}')!
+AcceleratorTableTest guid: (GUID fromString: '{ffc00c13-8da5-4b75-b82d-f96bba254efe}')!
 AcceleratorTableTest comment: ''!
 !AcceleratorTableTest categoriesForClass!Unclassified! !
 !AcceleratorTableTest methodsFor!

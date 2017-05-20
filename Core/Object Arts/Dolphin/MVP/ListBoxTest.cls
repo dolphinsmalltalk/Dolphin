@@ -5,7 +5,7 @@ SelectableListItemsTest subclass: #ListBoxTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ListBoxTest guid: (GUID fromString: '{0CCEAB03-640D-4BD6-8E8C-1DA96BF288D2}')!
+ListBoxTest guid: (GUID fromString: '{0cceab03-640d-4bd6-8e8c-1da96bf288d2}')!
 ListBoxTest comment: ''!
 !ListBoxTest categoriesForClass!Unclassified! !
 !ListBoxTest methodsFor!

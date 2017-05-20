@@ -5,7 +5,7 @@ PresenterTest subclass: #StaticPathTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-StaticPathTest guid: (GUID fromString: '{50B65118-29FF-4B14-B17A-56E21A6FEFCA}')!
+StaticPathTest guid: (GUID fromString: '{50b65118-29ff-4b14-b17a-56e21a6fefca}')!
 StaticPathTest comment: ''!
 !StaticPathTest categoriesForClass!Unclassified! !
 !StaticPathTest methodsFor!
