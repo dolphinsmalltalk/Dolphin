@@ -5,7 +5,7 @@ DolphinTest subclass: #BrushTest
 	classVariableNames: ''
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
-BrushTest guid: (GUID fromString: '{1128DDC3-7330-4539-BC63-7A60B93FE7BC}')!
+BrushTest guid: (GUID fromString: '{1128ddc3-7330-4539-bc63-7a60b93fe7bc}')!
 BrushTest comment: ''!
 !BrushTest categoriesForClass!Unclassified! !
 !BrushTest methodsFor!

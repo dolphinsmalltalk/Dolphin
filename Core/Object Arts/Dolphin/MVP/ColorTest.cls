@@ -5,7 +5,7 @@ DolphinTest subclass: #ColorTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ColorTest guid: (GUID fromString: '{7B5098B5-74D7-46C5-99DE-AE2E0558FE5C}')!
+ColorTest guid: (GUID fromString: '{7b5098b5-74d7-46c5-99de-ae2e0558fe5c}')!
 ColorTest comment: ''!
 !ColorTest categoriesForClass!Unclassified! !
 !ColorTest methodsFor!

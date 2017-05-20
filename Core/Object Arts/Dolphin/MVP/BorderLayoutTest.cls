@@ -5,7 +5,7 @@ LayoutManagerTest subclass: #BorderLayoutTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-BorderLayoutTest guid: (GUID fromString: '{67C32A2B-ADF6-4987-95FA-C9BB9B7A4E9C}')!
+BorderLayoutTest guid: (GUID fromString: '{67c32a2b-adf6-4987-95fa-c9bb9b7a4e9c}')!
 BorderLayoutTest comment: ''!
 !BorderLayoutTest categoriesForClass!Unclassified! !
 !BorderLayoutTest methodsFor!

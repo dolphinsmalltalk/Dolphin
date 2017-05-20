@@ -5,7 +5,7 @@ SelectableTreeItemsTest subclass: #TreePresenterTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-TreePresenterTest guid: (GUID fromString: '{152B5F25-C97C-404F-8E88-B8A27C9E8FFC}')!
+TreePresenterTest guid: (GUID fromString: '{152b5f25-c97c-404f-8e88-b8a27c9e8ffc}')!
 TreePresenterTest comment: ''!
 !TreePresenterTest categoriesForClass!Unclassified! !
 !TreePresenterTest methodsFor!

@@ -5,7 +5,7 @@ LayoutManagerTest subclass: #ProportionalLayoutTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ProportionalLayoutTest guid: (GUID fromString: '{F4808F47-D710-405A-85B3-374BE13718E9}')!
+ProportionalLayoutTest guid: (GUID fromString: '{f4808f47-d710-405a-85b3-374be13718e9}')!
 ProportionalLayoutTest comment: ''!
 !ProportionalLayoutTest categoriesForClass!Unclassified! !
 !ProportionalLayoutTest methodsFor!

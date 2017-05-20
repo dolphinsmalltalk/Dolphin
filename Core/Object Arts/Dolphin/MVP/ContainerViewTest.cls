@@ -5,7 +5,7 @@ AbstractContainerViewTest subclass: #ContainerViewTest
 	classVariableNames: ''
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
-ContainerViewTest guid: (GUID fromString: '{4E892CF1-595A-44AD-9A6D-0C319B32D174}')!
+ContainerViewTest guid: (GUID fromString: '{4e892cf1-595a-44ad-9a6d-0c319b32d174}')!
 ContainerViewTest comment: ''!
 !ContainerViewTest categoriesForClass!Unclassified! !
 !ContainerViewTest methodsFor!

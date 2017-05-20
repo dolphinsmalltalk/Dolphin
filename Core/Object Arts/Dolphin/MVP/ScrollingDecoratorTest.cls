@@ -5,7 +5,7 @@ PresenterTest subclass: #ScrollingDecoratorTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ScrollingDecoratorTest guid: (GUID fromString: '{67F9D5DD-3F9B-4F9F-9D72-207BDF40D661}')!
+ScrollingDecoratorTest guid: (GUID fromString: '{67f9d5dd-3f9b-4f9f-9d72-207bdf40d661}')!
 ScrollingDecoratorTest comment: ''!
 !ScrollingDecoratorTest categoriesForClass!Unclassified! !
 !ScrollingDecoratorTest methodsFor!

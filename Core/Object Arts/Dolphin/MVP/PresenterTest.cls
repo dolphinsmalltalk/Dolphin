@@ -5,7 +5,7 @@ DolphinTest subclass: #PresenterTest
 	classVariableNames: ''
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
-PresenterTest guid: (GUID fromString: '{80E6F4EF-64D4-40F6-857C-5B74578EB87B}')!
+PresenterTest guid: (GUID fromString: '{80e6f4ef-64d4-40f6-857c-5b74578eb87b}')!
 PresenterTest comment: ''!
 !PresenterTest categoriesForClass!Unclassified! !
 !PresenterTest methodsFor!

@@ -5,7 +5,7 @@ LayoutManagerTest subclass: #GridLayoutTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-GridLayoutTest guid: (GUID fromString: '{2E23BF9B-6721-4E35-9700-85D53AD6849B}')!
+GridLayoutTest guid: (GUID fromString: '{2e23bf9b-6721-4e35-9700-85d53ad6849b}')!
 GridLayoutTest comment: ''!
 !GridLayoutTest categoriesForClass!Unclassified! !
 !GridLayoutTest methodsFor!

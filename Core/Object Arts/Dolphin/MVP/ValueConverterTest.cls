@@ -5,7 +5,7 @@ DolphinTest subclass: #ValueConverterTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ValueConverterTest guid: (GUID fromString: '{FD184D86-16E0-422A-A2C7-0084D567972C}')!
+ValueConverterTest guid: (GUID fromString: '{fd184d86-16e0-422a-a2c7-0084d567972c}')!
 ValueConverterTest comment: 'Tests the ValueConverter class.'!
 !ValueConverterTest categoriesForClass!Unclassified! !
 !ValueConverterTest methodsFor!

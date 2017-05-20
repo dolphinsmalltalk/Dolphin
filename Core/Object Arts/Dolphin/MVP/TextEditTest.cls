@@ -5,7 +5,7 @@ PresenterTest subclass: #TextEditTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-TextEditTest guid: (GUID fromString: '{5237B507-A634-4555-81AF-E15822492437}')!
+TextEditTest guid: (GUID fromString: '{5237b507-a634-4555-81af-e15822492437}')!
 TextEditTest comment: ''!
 !TextEditTest categoriesForClass!Unclassified! !
 !TextEditTest methodsFor!

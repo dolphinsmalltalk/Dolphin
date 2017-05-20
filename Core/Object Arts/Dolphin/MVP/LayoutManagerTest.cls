@@ -5,7 +5,7 @@ DolphinTest subclass: #LayoutManagerTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-LayoutManagerTest guid: (GUID fromString: '{A94F94CC-98CB-4A2E-801E-7C115E70D1F8}')!
+LayoutManagerTest guid: (GUID fromString: '{a94f94cc-98cb-4a2e-801e-7c115e70d1f8}')!
 LayoutManagerTest comment: ''!
 !LayoutManagerTest categoriesForClass!Unclassified! !
 !LayoutManagerTest methodsFor!

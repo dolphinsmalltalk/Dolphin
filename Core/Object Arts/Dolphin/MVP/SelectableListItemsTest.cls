@@ -5,7 +5,7 @@ SelectableItemsTest subclass: #SelectableListItemsTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-SelectableListItemsTest guid: (GUID fromString: '{48F12746-E517-4013-8077-973B1D783F60}')!
+SelectableListItemsTest guid: (GUID fromString: '{48f12746-e517-4013-8077-973b1d783f60}')!
 SelectableListItemsTest comment: ''!
 !SelectableListItemsTest categoriesForClass!Unclassified! !
 !SelectableListItemsTest methodsFor!

@@ -5,7 +5,7 @@ MultilineTextEditTest subclass: #RichTextEditTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-RichTextEditTest guid: (GUID fromString: '{BC34BF3F-4B1C-44A8-9C0C-B25DB1E72469}')!
+RichTextEditTest guid: (GUID fromString: '{bc34bf3f-4b1c-44a8-9c0c-b25db1e72469}')!
 RichTextEditTest comment: ''!
 !RichTextEditTest categoriesForClass!Unclassified! !
 !RichTextEditTest methodsFor!

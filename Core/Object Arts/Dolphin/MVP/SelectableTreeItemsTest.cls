@@ -5,7 +5,7 @@ SelectableItemsTest subclass: #SelectableTreeItemsTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-SelectableTreeItemsTest guid: (GUID fromString: '{CCCEC658-6B6A-4D9F-A9AC-2701DA23A46E}')!
+SelectableTreeItemsTest guid: (GUID fromString: '{cccec658-6b6a-4d9f-a9ac-2701da23a46e}')!
 SelectableTreeItemsTest comment: ''!
 !SelectableTreeItemsTest categoriesForClass!Unclassified! !
 !SelectableTreeItemsTest methodsFor!
