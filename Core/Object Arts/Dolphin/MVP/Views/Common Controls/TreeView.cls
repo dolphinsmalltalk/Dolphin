@@ -496,6 +496,16 @@ isExpandAllEnabled: aBoolean
 
 	tvFlags := tvFlags mask: DisableExpandAllMask set: aBoolean not!
 
+isExpanded: anObject
+	"Answers if the node associated with anObject is expanded."
+
+	| hItem tvItem dwState |
+	hItem := self handleFromObject: anObject ifAbsent: [^false].
+	tvItem := self getItemState:  hItem.
+	dwState := tvItem dwState.
+	^(dwState bitAnd: TVIS_EXPANDED) == TVIS_EXPANDED
+!
+
 isLargeIcons
 	"Answer true if the receiver is in large icon mode."
 
@@ -1199,6 +1209,7 @@ wmKeyDown: message wParam: wParam lParam: lParam
 !TreeView categoriesFor: #initialize!initializing!private! !
 !TreeView categoriesFor: #isExpandAllEnabled!accessing!public! !
 !TreeView categoriesFor: #isExpandAllEnabled:!accessing!public! !
+!TreeView categoriesFor: #isExpanded:!public!testing! !
 !TreeView categoriesFor: #isLargeIcons!public!testing! !
 !TreeView categoriesFor: #isMonoExpandable!accessing-styles!public! !
 !TreeView categoriesFor: #isMonoExpandable:!accessing-styles!public! !

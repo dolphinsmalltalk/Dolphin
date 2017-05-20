@@ -36,6 +36,11 @@ hasSelection
 
 	^self view hasSelection!
 
+isExpanded: anObject
+	"Answers if the node associated with anObject is expanded."
+
+	^self view isExpanded: anObject!
+
 onAboutToEditLabel: anObject
 	"The receiver's element, anObject, is about to have its label edited in the receiver.
 	Forward back to the view."
@@ -63,6 +68,7 @@ up
 !TreePresenter categoriesFor: #expand:!operations!public! !
 !TreePresenter categoriesFor: #expandAll:!operations!public! !
 !TreePresenter categoriesFor: #hasSelection!public!selection! !
+!TreePresenter categoriesFor: #isExpanded:!public! !
 !TreePresenter categoriesFor: #onAboutToEditLabel:!event handling!public! !
 !TreePresenter categoriesFor: #onLabelOf:editedTo:!event handling!public! !
 !TreePresenter categoriesFor: #selectableItems!accessing!private! !
