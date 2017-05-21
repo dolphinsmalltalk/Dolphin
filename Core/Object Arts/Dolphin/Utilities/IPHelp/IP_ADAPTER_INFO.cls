@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ExternalStructure subclass: #IP_ADAPTER_INFO
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-IP_ADAPTER_INFO guid: (GUID fromString: '{30F77C44-1F24-4B31-9311-DC3A730C4D4E}')!
+IP_ADAPTER_INFO guid: (GUID fromString: '{30f77c44-1f24-4b31-9311-dc3a730c4d4e}')!
 IP_ADAPTER_INFO comment: '<IP_ADAPTER_INFO> is an <ExternalStructure> class to wrap the struct ''Win32.IP_ADAPTER_INFO'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct

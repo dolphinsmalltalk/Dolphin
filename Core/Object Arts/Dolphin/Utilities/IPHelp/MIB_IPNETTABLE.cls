@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 IpHlpApiTableStruct subclass: #MIB_IPNETTABLE
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-MIB_IPNETTABLE guid: (GUID fromString: '{4AB2727D-D1C0-4AA5-A48D-3C805E4F41BB}')!
+MIB_IPNETTABLE guid: (GUID fromString: '{4ab2727d-d1c0-4aa5-a48d-3c805e4f41bb}')!
 MIB_IPNETTABLE comment: '<MIB_IPNETTABLE> is an <ExternalStructure> class to wrap the struct ''Win32.MIB_IPNETTABLE'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct

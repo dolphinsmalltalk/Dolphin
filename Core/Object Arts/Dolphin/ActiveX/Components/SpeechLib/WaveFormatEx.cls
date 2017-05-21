@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ExternalStructure subclass: #WaveFormatEx
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-WaveFormatEx guid: (GUID fromString: '{236AA950-6713-445A-A791-C83AB1C509B9}')!
+WaveFormatEx guid: (GUID fromString: '{236aa950-6713-445a-a791-c83ab1c509b9}')!
 WaveFormatEx comment: '<WaveFormatEx> is an <ExternalStructure> class to wrap the struct ''SpeechLib.WaveFormatEx'' from type information in the ''Microsoft Speech Object Library'' library.
 
 The type library contains no documentation for this struct

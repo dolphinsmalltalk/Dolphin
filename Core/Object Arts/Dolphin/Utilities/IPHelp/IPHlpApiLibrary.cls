@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ExternalLibrary subclass: #IPHlpApiLibrary
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'IPHlpApiConstants'
 	classInstanceVariableNames: ''!
-IPHlpApiLibrary guid: (GUID fromString: '{A63698AE-5CEF-4F53-BF10-C4A77A8B979A}')!
+IPHlpApiLibrary guid: (GUID fromString: '{a63698ae-5cef-4f53-bf10-c4a77a8b979a}')!
 IPHlpApiLibrary comment: 'IPHlpApiLibrary is the <ExternalLibrary> class to represent the dynamic link library, ''iphlpapi.DLL''.It was generated generated from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library. It contains methods for each of the functions defined by the corresponding module in that type library.
 
 The type library contains the following helpstring for this module

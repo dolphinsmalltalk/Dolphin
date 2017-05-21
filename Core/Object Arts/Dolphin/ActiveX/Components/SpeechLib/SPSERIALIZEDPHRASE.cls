@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ExternalStructure subclass: #SPSERIALIZEDPHRASE
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-SPSERIALIZEDPHRASE guid: (GUID fromString: '{39B4850E-4E3F-4D41-B379-3C4DC5EE2014}')!
+SPSERIALIZEDPHRASE guid: (GUID fromString: '{39b4850e-4e3f-4d41-b379-3c4dc5ee2014}')!
 SPSERIALIZEDPHRASE comment: '<SPSERIALIZEDPHRASE> is an <ExternalStructure> class to wrap the struct ''SpeechLib.SPSERIALIZEDPHRASE'' from type information in the ''Microsoft Speech Object Library'' library.
 
 The type library contains no documentation for this struct

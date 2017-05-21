@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ExternalStructure subclass: #SPWORDPRONUNCIATIONLIST
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-SPWORDPRONUNCIATIONLIST guid: (GUID fromString: '{B01AF98A-48D9-4A8F-88A6-A99412328B63}')!
+SPWORDPRONUNCIATIONLIST guid: (GUID fromString: '{b01af98a-48d9-4a8f-88a6-a99412328b63}')!
 SPWORDPRONUNCIATIONLIST comment: '<SPWORDPRONUNCIATIONLIST> is an <ExternalStructure> class to wrap the struct ''SpeechLib.SPWORDPRONUNCIATIONLIST'' from type information in the ''Microsoft Speech Object Library'' library.
 
 The type library contains no documentation for this struct

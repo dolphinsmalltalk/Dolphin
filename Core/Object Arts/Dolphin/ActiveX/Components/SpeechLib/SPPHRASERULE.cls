@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ExternalStructure subclass: #SPPHRASERULE
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-SPPHRASERULE guid: (GUID fromString: '{64A6F931-7D5C-49A1-A894-9D7A4290BC92}')!
+SPPHRASERULE guid: (GUID fromString: '{64a6f931-7d5c-49a1-a894-9d7a4290bc92}')!
 SPPHRASERULE comment: '<SPPHRASERULE> is an <ExternalStructure> class to wrap the struct ''SpeechLib.SPPHRASERULE'' from type information in the ''Microsoft Speech Object Library'' library.
 
 The type library contains no documentation for this struct

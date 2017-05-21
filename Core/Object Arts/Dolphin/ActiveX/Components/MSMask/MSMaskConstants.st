@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Smalltalk at: #MSMaskConstants put: (PoolConstantsDictionary named: #MSMaskConstants)!
 MSMaskConstants at: 'mskArrow' put: 16r1!

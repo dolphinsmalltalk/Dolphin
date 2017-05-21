@@ -5,7 +5,7 @@ AXValueConvertingControlSite subclass: #MaskedEdit
 	classVariableNames: 'HadErrorsMask ModifiedMask TextModifiedMask'
 	poolDictionaries: 'MSMaskConstants'
 	classInstanceVariableNames: ''!
-MaskedEdit guid: (GUID fromString: '{14C01E05-0749-4E6C-A0A4-EE98E6342079}')!
+MaskedEdit guid: (GUID fromString: '{14c01e05-0749-4e6c-a0a4-ee98e6342079}')!
 MaskedEdit comment: 'MaskedEdit is an Active-X control which is a more sophisticated form of TextEdit control. It has the ability to constrain input to that which matches a user-specified mask, for example only dates of a certain format. This class depends on having the MSMASK control installed, which it commonly is, especially if a Microsoft Visual Studio product (such as VB) is installed on the machine.
 
 If this view class is used in an application then it is necessary to distribute MSMASK32.OCX. Note that this Active-X control is licensed. A Microsoft Installer merge module for the control is available (MSMASK32.MSM).

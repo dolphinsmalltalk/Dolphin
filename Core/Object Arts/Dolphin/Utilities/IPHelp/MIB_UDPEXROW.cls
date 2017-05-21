@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 MIB_UDPROW subclass: #MIB_UDPEXROW
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-MIB_UDPEXROW guid: (GUID fromString: '{FDA0765B-395F-447B-881B-26155C88393A}')!
+MIB_UDPEXROW guid: (GUID fromString: '{fda0765b-395f-447b-881b-26155c88393a}')!
 MIB_UDPEXROW comment: '<MIB_UDPEXROW> is an <ExternalStructure> class to wrap the struct ''Win32.MIB_UDPEXROW'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct

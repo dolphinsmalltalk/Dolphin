@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Smalltalk at: #OLEPersistConstants put: (PoolConstantsDictionary named: #OLEPersistConstants)!
 OLEPersistConstants at: 'ADVF_DATAONSTOP' put: 16r40!

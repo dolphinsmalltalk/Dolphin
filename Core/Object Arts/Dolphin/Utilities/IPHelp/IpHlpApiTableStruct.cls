@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ExternalStructure subclass: #IpHlpApiTableStruct
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-IpHlpApiTableStruct guid: (GUID fromString: '{4571E3B9-BBAC-4C7C-A961-A048818D482B}')!
+IpHlpApiTableStruct guid: (GUID fromString: '{4571e3b9-bbac-4c7c-a961-a048818d482b}')!
 IpHlpApiTableStruct comment: ''!
 !IpHlpApiTableStruct categoriesForClass!External-Data-Structured! !
 !IpHlpApiTableStruct methodsFor!

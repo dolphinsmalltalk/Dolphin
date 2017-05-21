@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ExternalStructure subclass: #SPRECOCONTEXTSTATUS
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-SPRECOCONTEXTSTATUS guid: (GUID fromString: '{C8B55440-F1A9-490F-A3B4-A6FB4158DC7E}')!
+SPRECOCONTEXTSTATUS guid: (GUID fromString: '{c8b55440-f1a9-490f-a3b4-a6fb4158dc7e}')!
 SPRECOCONTEXTSTATUS comment: '<SPRECOCONTEXTSTATUS> is an <ExternalStructure> class to wrap the struct ''SpeechLib.SPRECOCONTEXTSTATUS'' from type information in the ''Microsoft Speech Object Library'' library.
 
 The type library contains no documentation for this struct

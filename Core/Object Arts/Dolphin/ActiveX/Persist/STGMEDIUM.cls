@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 OLEFinalizableStructure subclass: #STGMEDIUM
 	instanceVariableNames: 'value'
 	classVariableNames: 'GetSelectors'
 	poolDictionaries: 'OLEPersistConstants'
 	classInstanceVariableNames: ''!
-STGMEDIUM guid: (GUID fromString: '{CC17569A-49C6-475D-A47C-86EAAE187D18}')!
+STGMEDIUM guid: (GUID fromString: '{cc17569a-49c6-475d-a47c-86eaae187d18}')!
 STGMEDIUM comment: 'Note: It might be preferable to apply the conditional elimination refactoring and employ different STGMEDIUM subclasses to represent the different types, but as we frequently don''t get to create the STGMEDIUM, we''d need some kind of downcast. I''m thinking about it though. At least we can use ReleaseStgMedium() to avoid the need for a switch on release.
 '!
 !STGMEDIUM categoriesForClass!No category! !

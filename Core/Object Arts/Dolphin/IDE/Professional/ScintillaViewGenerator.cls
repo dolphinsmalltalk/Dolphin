@@ -5,7 +5,7 @@ Object subclass: #ScintillaViewGenerator
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ScintillaViewGenerator guid: (GUID fromString: '{BABB8E5D-5EE9-43B2-A88B-0959484C008E}')!
+ScintillaViewGenerator guid: (GUID fromString: '{babb8e5d-5ee9-43b2-a88b-0959484c008e}')!
 ScintillaViewGenerator comment: 'This class reads the Scintilla.iface definition and autogenerates wrapper methods into the ScintillaView class, and defines constants in the ScintillaConstants pool.
 
 The parsing is not sophisticated, but adequate for purpose.

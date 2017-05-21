@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ExternalStructure subclass: #STATPROPSETSTG
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-STATPROPSETSTG guid: (GUID fromString: '{D84B17C5-F75E-4F3D-B9A0-DD0B1FCE58B7}')!
+STATPROPSETSTG guid: (GUID fromString: '{d84b17c5-f75e-4f3d-b9a0-dd0b1fce58b7}')!
 STATPROPSETSTG comment: '<STATPROPSETSTG> is an <ExternalStructure> class to wrap the struct ''OBJIDL.STATPROPSETSTG'' from type information in the ''ObjIDL Library'' library.
 
 The type library contains no documentation for this struct

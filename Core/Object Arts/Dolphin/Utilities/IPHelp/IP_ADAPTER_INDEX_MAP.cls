@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ExternalStructure subclass: #IP_ADAPTER_INDEX_MAP
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-IP_ADAPTER_INDEX_MAP guid: (GUID fromString: '{FC9307A0-B028-4F04-81C9-9D74847A63EF}')!
+IP_ADAPTER_INDEX_MAP guid: (GUID fromString: '{fc9307a0-b028-4f04-81c9-9d74847a63ef}')!
 IP_ADAPTER_INDEX_MAP comment: '<IP_ADAPTER_INDEX_MAP> is an <ExternalStructure> class to wrap the struct ''Win32.IP_ADAPTER_INDEX_MAP'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct

@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #CGI
 	instanceVariableNames: 'paramString'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-CGI guid: (GUID fromString: '{2E575DC8-0BE3-4415-9BB0-B7CDA7515D14}')!
+CGI guid: (GUID fromString: '{2e575dc8-0be3-4415-9bb0-b7cda7515d14}')!
 CGI comment: ''!
 !CGI categoriesForClass!Unclassified! !
 !CGI methodsFor!

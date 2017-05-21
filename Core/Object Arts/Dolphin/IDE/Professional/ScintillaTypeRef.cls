@@ -5,7 +5,7 @@ Object subclass: #ScintillaTypeRef
 	classVariableNames: 'TypeMap'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ScintillaTypeRef guid: (GUID fromString: '{C10BAC58-803F-49DA-939E-1F2522B7856D}')!
+ScintillaTypeRef guid: (GUID fromString: '{c10bac58-803f-49da-939e-1f2522b7856d}')!
 ScintillaTypeRef comment: ''!
 !ScintillaTypeRef categoriesForClass!Development! !
 !ScintillaTypeRef methodsFor!

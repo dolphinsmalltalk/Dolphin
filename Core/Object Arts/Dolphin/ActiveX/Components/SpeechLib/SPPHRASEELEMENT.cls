@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ExternalStructure subclass: #SPPHRASEELEMENT
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-SPPHRASEELEMENT guid: (GUID fromString: '{C0A3B7E6-135C-4E59-A122-1595FE98C1E9}')!
+SPPHRASEELEMENT guid: (GUID fromString: '{c0a3b7e6-135c-4e59-a122-1595fe98c1e9}')!
 SPPHRASEELEMENT comment: '<SPPHRASEELEMENT> is an <ExternalStructure> class to wrap the struct ''SpeechLib.SPPHRASEELEMENT'' from type information in the ''Microsoft Speech Object Library'' library.
 
 The type library contains no documentation for this struct

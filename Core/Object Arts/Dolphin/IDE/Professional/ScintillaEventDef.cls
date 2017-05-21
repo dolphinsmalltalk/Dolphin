@@ -5,7 +5,7 @@ ScintillaDef subclass: #ScintillaEventDef
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ScintillaEventDef guid: (GUID fromString: '{FDF0C39C-6309-4219-A64C-07355E04671C}')!
+ScintillaEventDef guid: (GUID fromString: '{fdf0c39c-6309-4219-a64c-07355e04671c}')!
 ScintillaEventDef comment: ''!
 !ScintillaEventDef categoriesForClass!Development! !
 !ScintillaEventDef methodsFor!

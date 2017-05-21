@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk XP"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Rectangle subclass: #DaRotatedRectangle
 	instanceVariableNames: 'theta precision pPoints boundingBox imageRectangle'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-DaRotatedRectangle guid: (GUID fromString: '{7E39F0DC-90B1-4D3E-9949-2938D56DA83C}')!
+DaRotatedRectangle guid: (GUID fromString: '{7e39f0dc-90b1-4d3e-9949-2938d56da83c}')!
 DaRotatedRectangle comment: ''!
 !DaRotatedRectangle categoriesForClass!Unclassified! !
 !DaRotatedRectangle methodsFor!

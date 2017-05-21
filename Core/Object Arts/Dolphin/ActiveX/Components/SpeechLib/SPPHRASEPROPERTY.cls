@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ExternalStructure subclass: #SPPHRASEPROPERTY
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-SPPHRASEPROPERTY guid: (GUID fromString: '{D002D6D7-8270-4DD7-B0B1-4EC4B188999F}')!
+SPPHRASEPROPERTY guid: (GUID fromString: '{d002d6d7-8270-4dd7-b0b1-4ec4b188999f}')!
 SPPHRASEPROPERTY comment: '<SPPHRASEPROPERTY> is an <ExternalStructure> class to wrap the struct ''SpeechLib.SPPHRASEPROPERTY'' from type information in the ''Microsoft Speech Object Library'' library.
 
 The type library contains no documentation for this struct

@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ExternalStructure subclass: #SPWORD
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-SPWORD guid: (GUID fromString: '{A7375C0E-5CE2-441E-9F2D-4820102170BF}')!
+SPWORD guid: (GUID fromString: '{a7375c0e-5ce2-441e-9f2d-4820102170bf}')!
 SPWORD comment: '<SPWORD> is an <ExternalStructure> class to wrap the struct ''SpeechLib.SPWORD'' from type information in the ''Microsoft Speech Object Library'' library.
 
 The type library contains no documentation for this struct

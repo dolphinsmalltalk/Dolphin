@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 OLEStructure subclass: #FORMATETC
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-FORMATETC guid: (GUID fromString: '{93CC6A56-76B0-48ED-9D91-A4B4B891EF2E}')!
+FORMATETC guid: (GUID fromString: '{93cc6a56-76b0-48ed-9d91-a4b4b891ef2e}')!
 FORMATETC comment: '<FORMATETC> is an <ExternalStructure> class to wrap the struct ''OCIDL.FORMATETC'' from type information in the ''OCIDL Library'' library.
 
 The type library contains no documentation for this struct

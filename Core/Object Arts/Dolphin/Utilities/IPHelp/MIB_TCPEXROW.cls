@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 MIB_TCPROW subclass: #MIB_TCPEXROW
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-MIB_TCPEXROW guid: (GUID fromString: '{F2B03657-A3D2-486F-9D24-D597DE178487}')!
+MIB_TCPEXROW guid: (GUID fromString: '{f2b03657-a3d2-486f-9d24-d597de178487}')!
 MIB_TCPEXROW comment: '<MIB_TCPEXROW> is an <ExternalStructure> class to wrap the struct ''Win32.MIB_TCPEXROW'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct

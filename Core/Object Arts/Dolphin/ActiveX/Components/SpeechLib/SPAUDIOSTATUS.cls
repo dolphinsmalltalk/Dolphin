@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ExternalStructure subclass: #SPAUDIOSTATUS
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-SPAUDIOSTATUS guid: (GUID fromString: '{4129A18F-7568-418B-B743-70B4440E606B}')!
+SPAUDIOSTATUS guid: (GUID fromString: '{4129a18f-7568-418b-b743-70b4440e606b}')!
 SPAUDIOSTATUS comment: '<SPAUDIOSTATUS> is an <ExternalStructure> class to wrap the struct ''SpeechLib.SPAUDIOSTATUS'' from type information in the ''Microsoft Speech Object Library'' library.
 
 The type library contains no documentation for this struct

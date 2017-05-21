@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ExternalStructure subclass: #SPEVENT
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-SPEVENT guid: (GUID fromString: '{F97B7E00-78DC-4C24-826D-863796AA77CA}')!
+SPEVENT guid: (GUID fromString: '{f97b7e00-78dc-4c24-826d-863796aa77ca}')!
 SPEVENT comment: '<SPEVENT> is an <ExternalStructure> class to wrap the struct ''SpeechLib.SPEVENT'' from type information in the ''Microsoft Speech Object Library'' library.
 
 The type library contains no documentation for this struct

@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ExternalStructure subclass: #MIB_UDPROW
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-MIB_UDPROW guid: (GUID fromString: '{3247A36F-48E5-4E25-AE9A-2E76F029E521}')!
+MIB_UDPROW guid: (GUID fromString: '{3247a36f-48e5-4e25-ae9a-2e76f029e521}')!
 MIB_UDPROW comment: '<MIB_UDPROW> is an <ExternalStructure> class to wrap the struct ''Win32.MIB_UDPROW'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct

@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ExternalStructure subclass: #MIBICMPSTATS
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-MIBICMPSTATS guid: (GUID fromString: '{2DAC7CDE-BFEC-4391-A2E5-1DDF10A3C471}')!
+MIBICMPSTATS guid: (GUID fromString: '{2dac7cde-bfec-4391-a2e5-1ddf10a3c471}')!
 MIBICMPSTATS comment: '<MIBICMPSTATS> is an <ExternalStructure> class to wrap the struct ''Win32.MIBICMPSTATS'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct

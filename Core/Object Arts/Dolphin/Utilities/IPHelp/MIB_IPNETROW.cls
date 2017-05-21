@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ExternalStructure subclass: #MIB_IPNETROW
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-MIB_IPNETROW guid: (GUID fromString: '{5AA4FCEA-D4DA-49BB-A756-7CA522C111D3}')!
+MIB_IPNETROW guid: (GUID fromString: '{5aa4fcea-d4da-49bb-a756-7ca522c111d3}')!
 MIB_IPNETROW comment: '<MIB_IPNETROW> is an <ExternalStructure> class to wrap the struct ''Win32.MIB_IPNETROW'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct

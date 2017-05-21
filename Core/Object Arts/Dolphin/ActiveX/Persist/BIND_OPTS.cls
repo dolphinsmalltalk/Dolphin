@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 OLEStructure subclass: #BIND_OPTS
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-BIND_OPTS guid: (GUID fromString: '{87B4C5B3-026E-11D3-9FD7-00A0CC3E4A32}')!
+BIND_OPTS guid: (GUID fromString: '{87b4c5b3-026e-11d3-9fd7-00a0cc3e4a32}')!
 BIND_OPTS comment: 'BIND_OPTS is an external structure class to represent the OLE moniker structure of the same name.
 
 BIND_OPTS is used to specify options to be taken account of when a moniker is being bound. These options are set into the bind context with IBindCtx:::SetBindOptions, and retrived with IBindCtx::GetBindOptions.

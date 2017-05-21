@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Smalltalk at: #SourceSafeTypeLibConstants put: (PoolConstantsDictionary named: #SourceSafeTypeLibConstants)!
 SourceSafeTypeLibConstants at: 'VSSFILE_CHECKEDOUT' put: 16r1!
