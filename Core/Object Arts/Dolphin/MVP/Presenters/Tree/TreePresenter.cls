@@ -68,7 +68,7 @@ up
 !TreePresenter categoriesFor: #expand:!operations!public! !
 !TreePresenter categoriesFor: #expandAll:!operations!public! !
 !TreePresenter categoriesFor: #hasSelection!public!selection! !
-!TreePresenter categoriesFor: #isExpanded:!public! !
+!TreePresenter categoriesFor: #isExpanded:!public!testing! !
 !TreePresenter categoriesFor: #onAboutToEditLabel:!event handling!public! !
 !TreePresenter categoriesFor: #onLabelOf:editedTo:!event handling!public! !
 !TreePresenter categoriesFor: #selectableItems!accessing!private! !

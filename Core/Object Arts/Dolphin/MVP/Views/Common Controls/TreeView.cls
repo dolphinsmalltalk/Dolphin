@@ -503,7 +503,7 @@ isExpanded: anObject
 	hItem := self handleFromObject: anObject ifAbsent: [^false].
 	tvItem := self getItemState:  hItem.
 	dwState := tvItem dwState.
-	^(dwState bitAnd: TVIS_EXPANDED) == TVIS_EXPANDED
+	^dwState allMask: TVIS_EXPANDED
 !
 
 isLargeIcons
