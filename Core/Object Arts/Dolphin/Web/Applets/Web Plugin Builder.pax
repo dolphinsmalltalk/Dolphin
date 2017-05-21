@@ -13,7 +13,7 @@ It is also possible to use the PluginImageStripper class to create customised br
 
 package basicPackageVersion: '6.0'.
 
-package imageStripperBytes: (ByteArray fromBase64String: 'IVNUQiAzIEYPEwAEAAAAUGx1Z2luSW1hZ2VTdHJpcHBlcgAAAABSAAAAEgAAAFdlYiBQbHVnaW4g
+package imageStripperBytes: (ByteArray fromBase64String: 'IVNUQiA0IEYPEwAEAAAAUGx1Z2luSW1hZ2VTdHJpcHBlcgAAAABSAAAAEgAAAFdlYiBQbHVnaW4g
 QnVpbGRlclIAAAANAAAATnBEb2xwaGluLkRMTJoAAABSAAAAEgAAAFdlYiBEZXBsb3ltZW50IEtp
 dFIAAAAUAAAAUGx1Z2luU2Vzc2lvbk1hbmFnZXJfOAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
 AAAAAAAAAAAAAAAAAAAAAA==').

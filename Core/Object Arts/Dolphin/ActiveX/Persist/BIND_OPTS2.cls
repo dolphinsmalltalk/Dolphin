@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 BIND_OPTS subclass: #BIND_OPTS2
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-BIND_OPTS2 guid: (GUID fromString: '{87B4C5BF-026E-11D3-9FD7-00A0CC3E4A32}')!
+BIND_OPTS2 guid: (GUID fromString: '{87b4c5bf-026e-11d3-9fd7-00a0cc3e4a32}')!
 BIND_OPTS2 comment: 'BIND_OPTS2 is an <ExternalStructure> class to represent the COM structure of the same name.
 
 BIND_OPTS2 is a DCOM extentsion of BIND_OPTS which adds a COSERVERINFO field to enable a remote machine to be specified as the bind destination.'!

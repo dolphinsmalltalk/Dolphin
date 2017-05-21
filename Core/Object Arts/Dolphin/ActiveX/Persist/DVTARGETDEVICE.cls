@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 OLEStructure subclass: #DVTARGETDEVICE
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-DVTARGETDEVICE guid: (GUID fromString: '{48447B1A-95E7-4EDE-BE68-A34481486812}')!
+DVTARGETDEVICE guid: (GUID fromString: '{48447b1a-95e7-4ede-be68-a34481486812}')!
 DVTARGETDEVICE comment: '<DVTARGETDEVICE> is an <ExternalStructure> class to wrap the struct ''OCIDL.DVTARGETDEVICE'' from type information in the ''OCIDL Library'' library.
 
 The type library contains no documentation for this struct

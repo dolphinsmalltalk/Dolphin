@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ExternalStructure subclass: #SPPHRASEREPLACEMENT
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-SPPHRASEREPLACEMENT guid: (GUID fromString: '{86E3E2E0-69EF-4FEB-85BA-3D6C671EE46D}')!
+SPPHRASEREPLACEMENT guid: (GUID fromString: '{86e3e2e0-69ef-4feb-85ba-3d6c671ee46d}')!
 SPPHRASEREPLACEMENT comment: '<SPPHRASEREPLACEMENT> is an <ExternalStructure> class to wrap the struct ''SpeechLib.SPPHRASEREPLACEMENT'' from type information in the ''Microsoft Speech Object Library'' library.
 
 The type library contains no documentation for this struct

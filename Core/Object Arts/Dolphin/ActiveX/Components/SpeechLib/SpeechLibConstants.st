@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Smalltalk at: #SpeechLibConstants put: (PoolConstantsDictionary named: #SpeechLibConstants)!
 SpeechLibConstants at: 'DISPID_SABIBufferSize' put: 16r2!

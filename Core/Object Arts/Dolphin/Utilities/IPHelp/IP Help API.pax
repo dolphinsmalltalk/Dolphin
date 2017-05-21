@@ -59,6 +59,7 @@ package globalAliases: (Set new
 
 package setPrerequisites: (IdentitySet new
 	add: '..\..\Base\Dolphin';
+	add: '..\..\Base\Deprecated\Dolphin Base (Deprecated)';
 	add: '..\..\System\Win32\Dolphin Overlapped IO';
 	add: '..\..\Sockets\Dolphin Sockets';
 	yourself).

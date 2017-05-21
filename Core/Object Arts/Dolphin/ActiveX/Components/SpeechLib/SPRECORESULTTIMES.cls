@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ExternalStructure subclass: #SPRECORESULTTIMES
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-SPRECORESULTTIMES guid: (GUID fromString: '{CAE03167-9B57-42AC-A6ED-B53F369AB998}')!
+SPRECORESULTTIMES guid: (GUID fromString: '{cae03167-9b57-42ac-a6ed-b53f369ab998}')!
 SPRECORESULTTIMES comment: '<SPRECORESULTTIMES> is an <ExternalStructure> class to wrap the struct ''SpeechLib.SPRECORESULTTIMES'' from type information in the ''Microsoft Speech Object Library'' library.
 
 The type library contains no documentation for this struct

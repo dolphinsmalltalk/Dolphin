@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ValueConvertingControlView subclass: #IPAddressView
 	instanceVariableNames: ''
 	classVariableNames: 'IpnMap'
 	poolDictionaries: 'IPAddressControlConstants'
 	classInstanceVariableNames: ''!
-IPAddressView guid: (GUID fromString: '{425D0EAA-542E-11D3-998B-D5CA2C3C1D61}')!
+IPAddressView guid: (GUID fromString: '{425d0eaa-542e-11d3-998b-d5ca2c3c1d61}')!
 IPAddressView comment: 'IPAddressView is a <valueView> wrapping the Windows IPAddress common control. The <valueModel> associated with a IPAddress  must always yield an <integer> value when mapped through the installed type converter.
 
 IPAddressView is a convenient way of displaying and editing IPv4 addresses. The interface is limited to using 32-bits to transmit the IP address, so the control is not currently suitable for IPv6 addresses.

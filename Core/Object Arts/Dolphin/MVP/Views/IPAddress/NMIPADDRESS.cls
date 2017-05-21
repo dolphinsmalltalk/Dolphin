@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 NMHDR subclass: #NMIPADDRESS
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'IPAddressControlConstants'
 	classInstanceVariableNames: ''!
-NMIPADDRESS guid: (GUID fromString: '{425D0EA6-542E-11D3-998B-D5CA2C3C1D61}')!
+NMIPADDRESS guid: (GUID fromString: '{425d0ea6-542e-11d3-998b-d5ca2c3c1d61}')!
 NMIPADDRESS comment: 'NMIPADDRESS  is an <ExternalStructure> class to represent the Win32 IP Address control notification structure of the same name.
 
 All the fields in this structure are read-only. Specialized sub-structures provide fields which can be written to in order to pass custom draw settings back to the control (for example the foreground and background text colours). The DC associated with this structure can also be updated by changing the font, and so forth.

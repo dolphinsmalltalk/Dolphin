@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ExternalStructure subclass: #SPTEXTSELECTIONINFO
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-SPTEXTSELECTIONINFO guid: (GUID fromString: '{9CFC5FBB-9585-4E9A-A605-761AB031DB60}')!
+SPTEXTSELECTIONINFO guid: (GUID fromString: '{9cfc5fbb-9585-4e9a-a605-761ab031db60}')!
 SPTEXTSELECTIONINFO comment: '<SPTEXTSELECTIONINFO> is an <ExternalStructure> class to wrap the struct ''SpeechLib.SPTEXTSELECTIONINFO'' from type information in the ''Microsoft Speech Object Library'' library.
 
 The type library contains no documentation for this struct

@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ExternalStructure subclass: #SPAUDIOBUFFERINFO
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-SPAUDIOBUFFERINFO guid: (GUID fromString: '{A2431A7E-AB79-4CB5-9AA4-B33D33C38201}')!
+SPAUDIOBUFFERINFO guid: (GUID fromString: '{a2431a7e-ab79-4cb5-9aa4-b33d33c38201}')!
 SPAUDIOBUFFERINFO comment: '<SPAUDIOBUFFERINFO> is an <ExternalStructure> class to wrap the struct ''SpeechLib.SPAUDIOBUFFERINFO'' from type information in the ''Microsoft Speech Object Library'' library.
 
 The type library contains no documentation for this struct

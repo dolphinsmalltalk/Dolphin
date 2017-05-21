@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 MIB_TCPTABLE subclass: #MIB_TCPEXTABLE
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-MIB_TCPEXTABLE guid: (GUID fromString: '{3582E317-1C8D-46DE-B0AA-21ADA27C614F}')!
+MIB_TCPEXTABLE guid: (GUID fromString: '{3582e317-1c8d-46de-b0aa-21ada27c614f}')!
 MIB_TCPEXTABLE comment: '<MIB_TCPEXTABLE> is an <ExternalStructure> class to wrap the struct ''Win32.MIB_TCPEXTABLE'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct

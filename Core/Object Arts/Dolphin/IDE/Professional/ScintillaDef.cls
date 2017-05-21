@@ -5,7 +5,7 @@ Object subclass: #ScintillaDef
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ScintillaDef guid: (GUID fromString: '{5D1763E5-2A8B-42E5-9A1C-C1973B7E2D8B}')!
+ScintillaDef guid: (GUID fromString: '{5d1763e5-2a8b-42e5-9a1c-c1973b7e2d8b}')!
 ScintillaDef comment: ''!
 !ScintillaDef categoriesForClass!Development! !
 !ScintillaDef methodsFor!

@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 OLEStructure subclass: #STATDATA
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-STATDATA guid: (GUID fromString: '{25F9C177-B0F1-4161-87A4-188C3DE0B3E4}')!
+STATDATA guid: (GUID fromString: '{25f9c177-b0f1-4161-87a4-188c3de0b3e4}')!
 STATDATA comment: '<STATDATA> is an <ExternalStructure> class to wrap the struct ''OCIDL.STATDATA'' from type information in the ''OCIDL Library'' library.
 
 The type library contains no documentation for this struct

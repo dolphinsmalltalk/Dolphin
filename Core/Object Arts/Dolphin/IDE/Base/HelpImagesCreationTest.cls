@@ -5,7 +5,7 @@ TestCase subclass: #HelpImagesCreationTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-HelpImagesCreationTest guid: (GUID fromString: '{69E9952F-6704-4C28-BC09-F93E64883BAD}')!
+HelpImagesCreationTest guid: (GUID fromString: '{69e9952f-6704-4c28-bc09-f93e64883bad}')!
 HelpImagesCreationTest comment: ''!
 !HelpImagesCreationTest categoriesForClass!Unclassified! !
 !HelpImagesCreationTest methodsFor!

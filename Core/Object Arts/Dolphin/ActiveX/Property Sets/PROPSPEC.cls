@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ExternalStructure subclass: #PROPSPEC
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-PROPSPEC guid: (GUID fromString: '{25EB5BE3-CA5D-49BC-8359-1D1EFA196BC5}')!
+PROPSPEC guid: (GUID fromString: '{25eb5be3-ca5d-49bc-8359-1d1efa196bc5}')!
 PROPSPEC comment: '<PROPSPEC> is an <ExternalStructure> class to wrap the OLE Property Set structure  of the same name.
 '!
 !PROPSPEC categoriesForClass!OBJIDL-Structs! !

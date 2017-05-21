@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ExternalStructure subclass: #SPBINARYGRAMMAR
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-SPBINARYGRAMMAR guid: (GUID fromString: '{0F584425-1498-4F41-AB1E-F25E3690B78C}')!
+SPBINARYGRAMMAR guid: (GUID fromString: '{0f584425-1498-4f41-ab1e-f25e3690b78c}')!
 SPBINARYGRAMMAR comment: '<SPBINARYGRAMMAR> is an <ExternalStructure> class to wrap the struct ''SpeechLib.SPBINARYGRAMMAR'' from type information in the ''Microsoft Speech Object Library'' library.
 
 The type library contains no documentation for this struct

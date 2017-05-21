@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 OLEStructure subclass: #BINDINFO
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-BINDINFO guid: (GUID fromString: '{464F7FAC-9BA3-4055-8492-DC95ABA83383}')!
+BINDINFO guid: (GUID fromString: '{464f7fac-9ba3-4055-8492-dc95aba83383}')!
 BINDINFO comment: '<BINDINFO> is an <ExternalStructure> class to wrap the struct ''UrlMon.tagBINDINFO'' from type information in the ''UrlMon Library'' library.
 '!
 !BINDINFO categoriesForClass!OCIDL-Structs! !

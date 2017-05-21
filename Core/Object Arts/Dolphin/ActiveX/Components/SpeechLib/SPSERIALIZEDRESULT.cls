@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ExternalStructure subclass: #SPSERIALIZEDRESULT
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-SPSERIALIZEDRESULT guid: (GUID fromString: '{A9EAC435-2B94-45BA-A3C6-A2962E6812D3}')!
+SPSERIALIZEDRESULT guid: (GUID fromString: '{a9eac435-2b94-45ba-a3c6-a2962e6812d3}')!
 SPSERIALIZEDRESULT comment: '<SPSERIALIZEDRESULT> is an <ExternalStructure> class to wrap the struct ''SpeechLib.SPSERIALIZEDRESULT'' from type information in the ''Microsoft Speech Object Library'' library.
 
 The type library contains no documentation for this struct

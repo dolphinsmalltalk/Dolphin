@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ExternalStructure subclass: #SPWORDLIST
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-SPWORDLIST guid: (GUID fromString: '{5F797D3B-46D2-4199-95D3-48002591D9F8}')!
+SPWORDLIST guid: (GUID fromString: '{5f797d3b-46d2-4199-95d3-48002591d9f8}')!
 SPWORDLIST comment: '<SPWORDLIST> is an <ExternalStructure> class to wrap the struct ''SpeechLib.SPWORDLIST'' from type information in the ''Microsoft Speech Object Library'' library.
 
 The type library contains no documentation for this struct

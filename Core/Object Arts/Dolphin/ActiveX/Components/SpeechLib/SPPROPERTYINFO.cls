@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ExternalStructure subclass: #SPPROPERTYINFO
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-SPPROPERTYINFO guid: (GUID fromString: '{C0190740-CBF2-4609-B954-36A2FACA1581}')!
+SPPROPERTYINFO guid: (GUID fromString: '{c0190740-cbf2-4609-b954-36a2faca1581}')!
 SPPROPERTYINFO comment: '<SPPROPERTYINFO> is an <ExternalStructure> class to wrap the struct ''SpeechLib.SPPROPERTYINFO'' from type information in the ''Microsoft Speech Object Library'' library.
 
 The type library contains no documentation for this struct

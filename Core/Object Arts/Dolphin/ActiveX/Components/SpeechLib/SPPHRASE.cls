@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ExternalStructure subclass: #SPPHRASE
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-SPPHRASE guid: (GUID fromString: '{CBB5366A-334C-4650-8B7E-4AD0C4532F22}')!
+SPPHRASE guid: (GUID fromString: '{cbb5366a-334c-4650-8b7e-4ad0c4532f22}')!
 SPPHRASE comment: '<SPPHRASE> is an <ExternalStructure> class to wrap the struct ''SpeechLib.SPPHRASE'' from type information in the ''Microsoft Speech Object Library'' library.
 
 The type library contains no documentation for this struct

@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ImageStripper subclass: #PluginImageStripper
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-PluginImageStripper guid: (GUID fromString: '{20DCBD0F-26AC-4374-A7BA-3A13B7399B02}')!
+PluginImageStripper guid: (GUID fromString: '{20dcbd0f-26ac-4374-a7ba-3a13b7399b02}')!
 PluginImageStripper comment: 'A PluginImageStripper is used to strip a development image and deploy it as a Web browser plug-in. 
 
 Its default behaviour is somewhat different than a standard ImageStripper in that it is not normally appropriate to remove unreferenced methods or classes from the image, since plug-in must provide a complete base set of classes for applets to use. It would be of no use to an applet if, when trying to make use of a particular base class, it discovered that several of the methods were missing simply because they were not referenced at the time the plug-in image was deployed.

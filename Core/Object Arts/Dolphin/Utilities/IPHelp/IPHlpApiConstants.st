@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Smalltalk at: #IPHlpApiConstants put: (PoolConstantsDictionary named: #IPHlpApiConstants)!
 IPHlpApiConstants at: 'AD_APPLY_ALL' put: 16r7!

@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ExternalStructure subclass: #SPVOICESTATUS
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-SPVOICESTATUS guid: (GUID fromString: '{6809A0AB-64D5-44F6-B7CF-6F79E4EAD98F}')!
+SPVOICESTATUS guid: (GUID fromString: '{6809a0ab-64d5-44f6-b7cf-6f79e4ead98f}')!
 SPVOICESTATUS comment: '<SPVOICESTATUS> is an <ExternalStructure> class to wrap the struct ''SpeechLib.SPVOICESTATUS'' from type information in the ''Microsoft Speech Object Library'' library.
 
 The type library contains no documentation for this struct

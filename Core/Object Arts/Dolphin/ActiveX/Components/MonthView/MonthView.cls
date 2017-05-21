@@ -5,7 +5,7 @@ AXValueConvertingControlSite subclass: #MonthView
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-MonthView guid: (GUID fromString: '{C253BF6B-D8EA-4A15-BABB-79FC15F4F800}')!
+MonthView guid: (GUID fromString: '{c253bf6b-d8ea-4a15-babb-79fc15f4f800}')!
 MonthView comment: 'MonthView is an Active-X control which displays dates in traditional month calendar form, and which can be used to choose new dates.
 
 **N.B. This class depends on having the MS common controls installed, which they commonly are, especially if a Microsoft Visual Studio product (such as VB) is installed on the machine.

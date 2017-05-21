@@ -5,7 +5,7 @@ ScintillaDef subclass: #ScintillaFunctionDef
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ScintillaFunctionDef guid: (GUID fromString: '{1C19FF8A-F7A5-4F32-AD24-5DDB1990984F}')!
+ScintillaFunctionDef guid: (GUID fromString: '{1c19ff8a-f7a5-4f32-ad24-5ddb1990984f}')!
 ScintillaFunctionDef comment: ''!
 !ScintillaFunctionDef categoriesForClass!Development! !
 !ScintillaFunctionDef methodsFor!

@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 DesktopDoubleBufferedView subclass: #DesktopAnimation
 	instanceVariableNames: 'animationView desktopBitmap stepProcess stepStartTime animations'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-DesktopAnimation guid: (GUID fromString: '{BD9E41EF-0B73-476B-895F-A018D06E0FB0}')!
+DesktopAnimation guid: (GUID fromString: '{bd9e41ef-0b73-476b-895f-a018d06e0fb0}')!
 DesktopAnimation comment: ''!
 !DesktopAnimation categoriesForClass!MVP-Views! !
 !DesktopAnimation methodsFor!

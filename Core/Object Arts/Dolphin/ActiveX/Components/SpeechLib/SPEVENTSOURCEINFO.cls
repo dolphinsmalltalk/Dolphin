@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ExternalStructure subclass: #SPEVENTSOURCEINFO
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-SPEVENTSOURCEINFO guid: (GUID fromString: '{19AC5F6D-6863-490B-879B-95D93CB77EF6}')!
+SPEVENTSOURCEINFO guid: (GUID fromString: '{19ac5f6d-6863-490b-879b-95d93cb77ef6}')!
 SPEVENTSOURCEINFO comment: '<SPEVENTSOURCEINFO> is an <ExternalStructure> class to wrap the struct ''SpeechLib.SPEVENTSOURCEINFO'' from type information in the ''Microsoft Speech Object Library'' library.
 
 The type library contains no documentation for this struct

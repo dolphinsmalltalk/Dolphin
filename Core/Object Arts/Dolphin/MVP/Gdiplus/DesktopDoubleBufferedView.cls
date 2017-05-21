@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ShellView subclass: #DesktopDoubleBufferedView
 	instanceVariableNames: 'backSurface frontSurface graphics'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-DesktopDoubleBufferedView guid: (GUID fromString: '{F9BCFADC-355D-4B3D-BE76-3E8481C0511F}')!
+DesktopDoubleBufferedView guid: (GUID fromString: '{f9bcfadc-355d-4b3d-be76-3e8481c0511f}')!
 DesktopDoubleBufferedView comment: ''!
 !DesktopDoubleBufferedView categoriesForClass!Unclassified! !
 !DesktopDoubleBufferedView methodsFor!

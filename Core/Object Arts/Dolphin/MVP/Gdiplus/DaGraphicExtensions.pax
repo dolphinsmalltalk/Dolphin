@@ -1,6 +1,6 @@
 | package |
 package := Package name: 'DaGraphicExtensions'.
-package paxVersion: 0;
+package paxVersion: 1;
 	basicComment: ''.
 
 package basicPackageVersion: '5.0'.
@@ -32,14 +32,10 @@ package binaryGlobalNames: (Set new
 package globalAliases: (Set new
 	yourself).
 
-package allResourceNames: (Set new
-	yourself).
-
 package setPrerequisites: (IdentitySet new
 	add: '..\..\Base\Dolphin';
 	add: '..\Base\Dolphin MVP Base';
 	add: 'Gdiplus';
-	add: '..\..\Lagoon\Lagoon Image Stripper';
 	yourself).
 
 package!
