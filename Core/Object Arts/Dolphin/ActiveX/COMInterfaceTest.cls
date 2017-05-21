@@ -5,7 +5,7 @@ DolphinTest subclass: #COMInterfaceTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-COMInterfaceTest guid: (GUID fromString: '{3CBD4156-925E-437D-B6B6-E862481E60C6}')!
+COMInterfaceTest guid: (GUID fromString: '{3cbd4156-925e-437d-b6b6-e862481e60c6}')!
 COMInterfaceTest comment: ''!
 !COMInterfaceTest categoriesForClass!Unclassified! !
 !COMInterfaceTest methodsFor!

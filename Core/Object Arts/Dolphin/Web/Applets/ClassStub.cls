@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ProtoObject subclass: #ClassStub
 	instanceVariableNames: 'classLocator'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ClassStub guid: (GUID fromString: '{90A6120E-6B86-11D3-97BB-0080C8D59432}')!
+ClassStub guid: (GUID fromString: '{90a6120e-6b86-11d3-97bb-0080c8d59432}')!
 ClassStub comment: 'A ClassStub represents a reference to an, as yet, unresolved class object when a binary class is being loaded from an STB filer. As a class being loaded is fixed up, any other classes that it refers to are replaced by ClassStubs.  These stubs respond to #doesNotUnderstand: by resolving to a real class themselves.  The use of such stubs enables the binary loading system to only load classes on demand rather than by loading an entire net of classes at once.
 
 Instance Variables:

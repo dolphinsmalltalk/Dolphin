@@ -5,7 +5,7 @@ DolphinTest subclass: #StreamTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-StreamTest guid: (GUID fromString: '{F1611EB3-2C1C-491E-A814-C62DCDCE0FFF}')!
+StreamTest guid: (GUID fromString: '{f1611eb3-2c1c-491e-a814-c62dcdce0fff}')!
 StreamTest comment: ''!
 !StreamTest categoriesForClass!Unclassified! !
 !StreamTest methodsFor!

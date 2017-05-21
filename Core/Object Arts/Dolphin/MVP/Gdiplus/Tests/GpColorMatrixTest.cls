@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 GdiplusTests subclass: #GpColorMatrixTest
 	instanceVariableNames: 'matrix'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-GpColorMatrixTest guid: (GUID fromString: '{00610FDC-D988-4D65-A319-78A2DD28B367}')!
+GpColorMatrixTest guid: (GUID fromString: '{00610fdc-d988-4d65-a319-78a2dd28b367}')!
 GpColorMatrixTest comment: ''!
 !GpColorMatrixTest categoriesForClass!Unclassified! !
 !GpColorMatrixTest methodsFor!

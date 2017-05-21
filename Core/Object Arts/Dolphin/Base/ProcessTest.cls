@@ -5,7 +5,7 @@ DolphinTest subclass: #ProcessTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ProcessTest guid: (GUID fromString: '{3601A8C6-DE0F-4218-A7DF-40838259FC47}')!
+ProcessTest guid: (GUID fromString: '{3601a8c6-de0f-4218-a7df-40838259fc47}')!
 ProcessTest comment: ''!
 !ProcessTest categoriesForClass!Unclassified! !
 !ProcessTest methodsFor!

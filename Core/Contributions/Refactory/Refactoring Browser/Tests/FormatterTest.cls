@@ -5,7 +5,7 @@ RefactoringBrowserTest subclass: #FormatterTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-FormatterTest guid: (GUID fromString: '{9EDC9B30-32CA-4970-8068-DD559BB18608}')!
+FormatterTest guid: (GUID fromString: '{9edc9b30-32ca-4970-8068-dd559bb18608}')!
 FormatterTest comment: ''!
 !FormatterTest categoriesForClass!Browser-Testing! !
 !FormatterTest methodsFor!

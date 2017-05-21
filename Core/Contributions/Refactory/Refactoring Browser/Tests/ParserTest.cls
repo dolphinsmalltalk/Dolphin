@@ -5,7 +5,7 @@ RefactoringBrowserTest subclass: #ParserTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ParserTest guid: (GUID fromString: '{947B6D13-1A2A-43C0-8053-BDE0FCCFBD44}')!
+ParserTest guid: (GUID fromString: '{947b6d13-1a2a-43c0-8053-bde0fccfbd44}')!
 ParserTest comment: ''!
 !ParserTest categoriesForClass!Refactory-Testing! !
 !ParserTest methodsFor!

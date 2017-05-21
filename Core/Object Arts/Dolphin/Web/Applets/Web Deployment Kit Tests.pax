@@ -18,7 +18,7 @@ package globalAliases: (Set new
 
 package setPrerequisites: (IdentitySet new
 	add: '..\..\Base\Dolphin';
-	add: '..\..\Tests\Dolphin Tests';
+	add: '..\..\Base\Dolphin Base Tests';
 	add: '..\..\DolphinSure\DolphinSure';
 	add: 'Web Deployment Kit';
 	yourself).

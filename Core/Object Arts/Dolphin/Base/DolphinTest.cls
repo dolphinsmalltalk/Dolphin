@@ -5,7 +5,7 @@ TestCase subclass: #DolphinTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-DolphinTest guid: (GUID fromString: '{6444F9C6-8A25-4F8A-BADE-5F08D7C882BE}')!
+DolphinTest guid: (GUID fromString: '{6444f9c6-8a25-4f8a-bade-5f08d7c882be}')!
 DolphinTest comment: ''!
 !DolphinTest categoriesForClass!Unclassified! !
 !DolphinTest methodsFor!

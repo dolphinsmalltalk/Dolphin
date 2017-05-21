@@ -5,7 +5,7 @@ DolphinTest subclass: #IDispatchTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-IDispatchTest guid: (GUID fromString: '{5F6BE15F-132A-4EEF-B9CB-960A4D8CAB7C}')!
+IDispatchTest guid: (GUID fromString: '{5f6be15f-132a-4eef-b9cb-960a4d8cab7c}')!
 IDispatchTest comment: ''!
 !IDispatchTest categoriesForClass!Unclassified! !
 !IDispatchTest methodsFor!

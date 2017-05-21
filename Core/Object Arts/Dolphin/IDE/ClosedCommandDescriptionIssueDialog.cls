@@ -5,7 +5,7 @@ Dialog subclass: #ClosedCommandDescriptionIssueDialog
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ClosedCommandDescriptionIssueDialog guid: (GUID fromString: '{2C4A1983-3026-4A8F-A9D4-6F33DD5BEA95}')!
+ClosedCommandDescriptionIssueDialog guid: (GUID fromString: '{2c4a1983-3026-4a8f-a9d4-6f33dd5bea95}')!
 ClosedCommandDescriptionIssueDialog comment: ''!
 !ClosedCommandDescriptionIssueDialog categoriesForClass!MVP-Presenters! !
 !ClosedCommandDescriptionIssueDialog methodsFor!

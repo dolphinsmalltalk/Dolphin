@@ -5,7 +5,7 @@ DolphinTest subclass: #SecureHashAlgorithmTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-SecureHashAlgorithmTest guid: (GUID fromString: '{D984B5AB-ADAE-4262-97FA-504683E01CC6}')!
+SecureHashAlgorithmTest guid: (GUID fromString: '{d984b5ab-adae-4262-97fa-504683e01cc6}')!
 SecureHashAlgorithmTest comment: 'This is the unit test for the class SecureHashAlgorithm. Unit tests are a good way to exercise the functionality of your system in a repeatable and automatic manner. They are therefore recommended if you plan to release anything. For more information, see: 
 	- http://www.c2.com/cgi/wiki?UnitTest
 	- http://minnow.cc.gatech.edu/squeak/1547

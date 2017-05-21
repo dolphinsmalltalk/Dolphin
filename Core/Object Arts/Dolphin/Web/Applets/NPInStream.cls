@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 NPStream subclass: #NPInStream
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-NPInStream guid: (GUID fromString: '{2648C8A2-6B87-11D3-97BB-0080C8D59432}')!
+NPInStream guid: (GUID fromString: '{2648c8a2-6b87-11d3-97bb-0080c8d59432}')!
 NPInStream comment: 'An NPInStream is a stream object created by the web browser and supplied to the Dolphin plug-in. It is used for transferring data from the browser to the plug-in.'!
 !NPInStream categoriesForClass!Plugin-Support! !
 !NPInStream methodsFor!

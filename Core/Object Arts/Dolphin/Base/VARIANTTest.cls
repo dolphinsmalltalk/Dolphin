@@ -5,7 +5,7 @@ DolphinTest subclass: #VARIANTTest
 	classVariableNames: ''
 	poolDictionaries: 'AXAutomationConstants'
 	classInstanceVariableNames: ''!
-VARIANTTest guid: (GUID fromString: '{F436BDF8-12FF-47E4-AD1A-C96795760912}')!
+VARIANTTest guid: (GUID fromString: '{f436bdf8-12ff-47e4-ad1a-c96795760912}')!
 VARIANTTest comment: ''!
 !VARIANTTest categoriesForClass!Unclassified! !
 !VARIANTTest methodsFor!

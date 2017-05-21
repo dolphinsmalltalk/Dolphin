@@ -5,7 +5,7 @@ DolphinTest subclass: #XmlFormatterTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-XmlFormatterTest guid: (GUID fromString: '{834290A8-1967-49C5-AD9F-F47CB1ED5D12}')!
+XmlFormatterTest guid: (GUID fromString: '{834290a8-1967-49c5-ad9f-f47cb1ed5d12}')!
 XmlFormatterTest comment: ''!
 !XmlFormatterTest categoriesForClass!Unclassified! !
 !XmlFormatterTest methodsFor!

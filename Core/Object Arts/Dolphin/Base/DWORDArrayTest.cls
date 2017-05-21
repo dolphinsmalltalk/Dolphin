@@ -5,7 +5,7 @@ ExternalArrayTest subclass: #DWORDArrayTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-DWORDArrayTest guid: (GUID fromString: '{4CF3A550-FD9E-46C2-A81B-367815CDF70D}')!
+DWORDArrayTest guid: (GUID fromString: '{4cf3a550-fd9e-46c2-a81b-367815cdf70d}')!
 DWORDArrayTest comment: ''!
 !DWORDArrayTest categoriesForClass!Unclassified! !
 !DWORDArrayTest methodsFor!

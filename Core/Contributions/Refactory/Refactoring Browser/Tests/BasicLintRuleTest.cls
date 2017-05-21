@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk XP 2002 release 6.00"!
+"Filed out from Dolphin Smalltalk 7"!
 
 LintRuleTest subclass: #BasicLintRuleTest
 	instanceVariableNames: 'classBlock methodBlock result'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-BasicLintRuleTest guid: (GUID fromString: '{0C2676B4-1E69-400C-8D24-80F8510C0996}')!
+BasicLintRuleTest guid: (GUID fromString: '{0c2676b4-1e69-400c-8d24-80f8510c0996}')!
 BasicLintRuleTest comment: ''!
 !BasicLintRuleTest categoriesForClass!Refactory-Test data! !
 !BasicLintRuleTest methodsFor!

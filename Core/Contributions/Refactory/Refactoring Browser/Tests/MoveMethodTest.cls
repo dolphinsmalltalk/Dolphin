@@ -5,7 +5,7 @@ RefactoringTest subclass: #MoveMethodTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-MoveMethodTest guid: (GUID fromString: '{7313B46F-A4CC-4401-8345-57823FB459AF}')!
+MoveMethodTest guid: (GUID fromString: '{7313b46f-a4cc-4401-8345-57823fb459af}')!
 MoveMethodTest comment: ''!
 !MoveMethodTest categoriesForClass!Refactory-Testing! !
 !MoveMethodTest methodsFor!

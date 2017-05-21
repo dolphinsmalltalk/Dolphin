@@ -5,7 +5,7 @@ PositionableStreamTest subclass: #WriteStreamTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-WriteStreamTest guid: (GUID fromString: '{9D14176B-5486-40DC-BC22-694ADD104427}')!
+WriteStreamTest guid: (GUID fromString: '{9d14176b-5486-40dc-bc22-694add104427}')!
 WriteStreamTest comment: ''!
 !WriteStreamTest categoriesForClass!Unclassified! !
 !WriteStreamTest methodsFor!

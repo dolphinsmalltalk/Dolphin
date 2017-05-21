@@ -5,7 +5,7 @@ DolphinTest subclass: #NumberTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-NumberTest guid: (GUID fromString: '{12458306-5B30-4C48-8C24-AED051BAABD0}')!
+NumberTest guid: (GUID fromString: '{12458306-5b30-4c48-8c24-aed051baabd0}')!
 NumberTest comment: 'SUnitBrowser openOnTestCase: self'!
 !NumberTest categoriesForClass!Unclassified! !
 !NumberTest methodsFor!

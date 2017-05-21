@@ -5,7 +5,7 @@ DolphinTest subclass: #ShlwapiLibraryTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ShlwapiLibraryTest guid: (GUID fromString: '{DAF20828-D81B-4FB2-ADA8-0607B224C723}')!
+ShlwapiLibraryTest guid: (GUID fromString: '{daf20828-d81b-4fb2-ada8-0607b224c723}')!
 ShlwapiLibraryTest comment: ''!
 !ShlwapiLibraryTest categoriesForClass!Unclassified! !
 !ShlwapiLibraryTest methodsFor!

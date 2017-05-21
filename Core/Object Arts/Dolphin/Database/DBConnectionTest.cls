@@ -5,7 +5,7 @@ DBTest subclass: #DBConnectionTest
 	classVariableNames: ''
 	poolDictionaries: 'ODBCConstants ODBCTypes'
 	classInstanceVariableNames: ''!
-DBConnectionTest guid: (GUID fromString: '{0A84FA8D-F7C4-4BBE-B459-DA0409A391B9}')!
+DBConnectionTest guid: (GUID fromString: '{0a84fa8d-f7c4-4bbe-b459-da0409a391b9}')!
 DBConnectionTest comment: 'SUnitBrowser openOnTestCase: self.
 
 If these tests fail make sure that Tests\NWind.mdb is available and NOT write protected.'!

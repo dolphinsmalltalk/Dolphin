@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 STBProxy subclass: #STBImportedMetaclassProxy
 	instanceVariableNames: 'instanceClass'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-STBImportedMetaclassProxy guid: (GUID fromString: '{87B4C6EF-026E-11D3-9FD7-00A0CC3E4A32}')!
+STBImportedMetaclassProxy guid: (GUID fromString: '{87b4c6ef-026e-11d3-9fd7-00a0cc3e4a32}')!
 STBImportedMetaclassProxy comment: 'An STBImportedMetaclassProxy is used to represent a metaclass that is binary filed out onto an STB stream. When a metaclass is exported in this way (as opposed to with a standard STBMetaclassProxy) it takes with it all of its code so that it can later be imported into another Dolphin image. This can be used as a way of transferring behaviour in a binary fashion from one image to another. Typically, this mode of transportation is used by Dolphin Web Start applets.'!
 !STBImportedMetaclassProxy categoriesForClass!System-Binary class loading! !
 !STBImportedMetaclassProxy methodsFor!

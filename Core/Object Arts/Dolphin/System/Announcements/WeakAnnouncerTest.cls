@@ -5,7 +5,7 @@ AnnouncerTest subclass: #WeakAnnouncerTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-WeakAnnouncerTest guid: (GUID fromString: '{26A69917-162E-4A6F-8383-DF020CBF176F}')!
+WeakAnnouncerTest guid: (GUID fromString: '{26a69917-162e-4a6f-8383-df020cbf176f}')!
 WeakAnnouncerTest comment: 'SUnit tests for weak announcements'!
 !WeakAnnouncerTest categoriesForClass!Announcements-Tests-Core-Tests! !
 !WeakAnnouncerTest methodsFor!

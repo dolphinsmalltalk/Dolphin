@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 GdiplusTests subclass: #ARGBTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ARGBTest guid: (GUID fromString: '{B9D1B1C9-FB62-46E9-A7D5-6807F64E5314}')!
+ARGBTest guid: (GUID fromString: '{b9d1b1c9-fb62-46e9-a7d5-6807f64e5314}')!
 ARGBTest comment: ''!
 !ARGBTest categoriesForClass!Unclassified! !
 !ARGBTest methodsFor!

@@ -5,7 +5,7 @@ DolphinTest subclass: #EvaluationConverterTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-EvaluationConverterTest guid: (GUID fromString: '{E4302154-42E4-4D4F-ACBD-3E3AA6F78982}')!
+EvaluationConverterTest guid: (GUID fromString: '{e4302154-42e4-4d4f-acbd-3e3aa6f78982}')!
 EvaluationConverterTest comment: ''!
 !EvaluationConverterTest categoriesForClass!Unclassified! !
 !EvaluationConverterTest methodsFor!

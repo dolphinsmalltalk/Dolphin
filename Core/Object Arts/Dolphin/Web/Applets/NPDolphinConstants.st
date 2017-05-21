@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Smalltalk at: #NPDolphinConstants put: (PoolConstantsDictionary named: #NPDolphinConstants)!
 NPDolphinConstants at: 'NPPVpluginDescriptionString' put: 16r2!

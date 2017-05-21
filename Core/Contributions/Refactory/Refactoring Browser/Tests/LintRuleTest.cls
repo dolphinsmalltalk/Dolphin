@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk 2000 release 5.00"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #LintRuleTest
 	instanceVariableNames: 'name foo1'
 	classVariableNames: 'Foo1'
 	poolDictionaries: 'CRTConstants'
 	classInstanceVariableNames: ''!
-LintRuleTest guid: (GUID fromString: '{AE7FF107-496E-46A9-8127-3CC651C7CCF7}')!
+LintRuleTest guid: (GUID fromString: '{ae7ff107-496e-46a9-8127-3cc651c7ccf7}')!
 LintRuleTest comment: ''!
 !LintRuleTest categoriesForClass!Refactory-Test data! !
 !LintRuleTest methodsFor!
@@ -77,21 +77,21 @@ viewResults
 !LintRuleTest categoriesFor: #checkClass:!accessing!public! !
 !LintRuleTest categoriesFor: #checkMethod:!accessing!public! !
 !LintRuleTest categoriesFor: #displayName!accessing!public! !
-!LintRuleTest categoriesFor: #failedRules!*-unclassified!private! !
+!LintRuleTest categoriesFor: #failedRules!private! !
 !LintRuleTest categoriesFor: #hasConflicts!public!testing! !
 !LintRuleTest categoriesFor: #initialize!initialize/release!public! !
 !LintRuleTest categoriesFor: #isComposite!public!testing! !
-!LintRuleTest categoriesFor: #isEmpty!*-subclass responsibility!public!testing! !
+!LintRuleTest categoriesFor: #isEmpty!public!testing! !
 !LintRuleTest categoriesFor: #junk!public!testing! !
 !LintRuleTest categoriesFor: #name!accessing!public! !
 !LintRuleTest categoriesFor: #name:!accessing!public! !
-!LintRuleTest categoriesFor: #openEditor!*-compilation failures!accessing!public! !
+!LintRuleTest categoriesFor: #openEditor!accessing!public! !
 !LintRuleTest categoriesFor: #printOn:!printing!public! !
-!LintRuleTest categoriesFor: #problemCount!*-subclass responsibility!accessing!public! !
+!LintRuleTest categoriesFor: #problemCount!accessing!public! !
 !LintRuleTest categoriesFor: #resetResult!initialize/release!public! !
-!LintRuleTest categoriesFor: #run!*-compilation failures!accessing!public! !
-!LintRuleTest categoriesFor: #runOnEnvironment:!*-compilation failures!accessing!public! !
-!LintRuleTest categoriesFor: #viewResults!*-subclass responsibility!*-unclassified!private! !
+!LintRuleTest categoriesFor: #run!accessing!public! !
+!LintRuleTest categoriesFor: #runOnEnvironment:!accessing!public! !
+!LintRuleTest categoriesFor: #viewResults!private! !
 
 !LintRuleTest class methodsFor!
 

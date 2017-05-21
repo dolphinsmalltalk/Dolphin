@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 GdiplusImageTests subclass: #GdiplusImageTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-GdiplusImageTest guid: (GUID fromString: '{913D638B-B96F-42E7-9DD5-DA50E692D4B9}')!
+GdiplusImageTest guid: (GUID fromString: '{913d638b-b96f-42e7-9dd5-da50e692d4b9}')!
 GdiplusImageTest comment: ''!
 !GdiplusImageTest categoriesForClass!Unclassified! !
 !GdiplusImageTest methodsFor!

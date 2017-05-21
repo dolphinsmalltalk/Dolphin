@@ -5,7 +5,7 @@ DolphinTest subclass: #ViewComposerTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ViewComposerTest guid: (GUID fromString: '{84C0E504-BDDA-4D87-92DC-53B89F80F634}')!
+ViewComposerTest guid: (GUID fromString: '{84c0e504-bdda-4d87-92dc-53b89f80f634}')!
 ViewComposerTest comment: ''!
 !ViewComposerTest categoriesForClass!Unclassified! !
 !ViewComposerTest methodsFor!

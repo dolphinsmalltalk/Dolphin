@@ -5,7 +5,7 @@ DolphinTest subclass: #StoreStringForViewsTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-StoreStringForViewsTest guid: (GUID fromString: '{718B74D6-40E5-4CE6-82F3-E931490A1CFF}')!
+StoreStringForViewsTest guid: (GUID fromString: '{718b74d6-40e5-4ce6-82f3-e931490a1cff}')!
 StoreStringForViewsTest comment: ''!
 !StoreStringForViewsTest categoriesForClass!Unclassified! !
 !StoreStringForViewsTest methodsFor!

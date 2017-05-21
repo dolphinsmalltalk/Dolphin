@@ -5,7 +5,7 @@ StableSortAlgorithmTest subclass: #MergesortAlgorithmTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-MergesortAlgorithmTest guid: (GUID fromString: '{0B95C1D0-7833-43D1-9D22-FA3129287940}')!
+MergesortAlgorithmTest guid: (GUID fromString: '{0b95c1d0-7833-43d1-9d22-fa3129287940}')!
 MergesortAlgorithmTest comment: ''!
 !MergesortAlgorithmTest categoriesForClass!Unclassified! !
 !MergesortAlgorithmTest methodsFor!

@@ -5,7 +5,7 @@ GenericExternalArrayTest subclass: #SAFEARRAYTest
 	classVariableNames: ''
 	poolDictionaries: 'Win32Errors'
 	classInstanceVariableNames: ''!
-SAFEARRAYTest guid: (GUID fromString: '{F0FCEC1B-F6CD-4F59-B5DA-115CF8D04805}')!
+SAFEARRAYTest guid: (GUID fromString: '{f0fcec1b-f6cd-4f59-b5da-115cf8d04805}')!
 SAFEARRAYTest comment: ''!
 !SAFEARRAYTest categoriesForClass!Unclassified! !
 !SAFEARRAYTest methodsFor!

@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 GdiplusInitializerTests subclass: #GdiplusLinearGradientBrushFromPointsInitializerTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-GdiplusLinearGradientBrushFromPointsInitializerTest guid: (GUID fromString: '{2CA114C0-DEEE-48F6-ADE7-9BC53B50D22C}')!
+GdiplusLinearGradientBrushFromPointsInitializerTest guid: (GUID fromString: '{2ca114c0-deee-48f6-ade7-9bc53b50d22c}')!
 GdiplusLinearGradientBrushFromPointsInitializerTest comment: ''!
 !GdiplusLinearGradientBrushFromPointsInitializerTest categoriesForClass!Unclassified! !
 !GdiplusLinearGradientBrushFromPointsInitializerTest methodsFor!

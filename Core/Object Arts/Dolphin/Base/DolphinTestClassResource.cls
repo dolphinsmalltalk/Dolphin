@@ -5,7 +5,7 @@ DolphinTestResource subclass: #DolphinTestClassResource
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-DolphinTestClassResource guid: (GUID fromString: '{E358C277-08B0-4FFE-9F5A-C41BE358F898}')!
+DolphinTestClassResource guid: (GUID fromString: '{e358c277-08b0-4ffe-9f5a-c41be358f898}')!
 DolphinTestClassResource comment: ''!
 !DolphinTestClassResource categoriesForClass!Unclassified! !
 !DolphinTestClassResource methodsFor!

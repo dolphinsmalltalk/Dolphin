@@ -5,7 +5,7 @@ RefactoringTest subclass: #MoveVariableDefinitionTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-MoveVariableDefinitionTest guid: (GUID fromString: '{DC2344F4-F0F3-4FC5-AF74-D852D5D036AE}')!
+MoveVariableDefinitionTest guid: (GUID fromString: '{dc2344f4-f0f3-4fc5-af74-d852d5d036ae}')!
 MoveVariableDefinitionTest comment: ''!
 !MoveVariableDefinitionTest categoriesForClass!Refactory-Testing! !
 !MoveVariableDefinitionTest methodsFor!

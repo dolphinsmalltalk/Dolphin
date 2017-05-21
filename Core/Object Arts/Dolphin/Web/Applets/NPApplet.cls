@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 COMInterfaceImp subclass: #NPApplet
 	instanceVariableNames: 'instance attributes mimeType displayMode srcURL browserView site pendingURLHandlers urlNotifications srcStream appletClass classLocator appletHolder accessProtect'
 	classVariableNames: 'DownloadFailedSignal MimeStartContexts TimeoutSignal UserAbortSignal'
 	poolDictionaries: 'FacilityCodes PluginConstants Win32Constants'
 	classInstanceVariableNames: ''!
-NPApplet guid: (GUID fromString: '{2648C8A4-6B87-11D3-97BB-0080C8D59432}')!
+NPApplet guid: (GUID fromString: '{2648c8a4-6b87-11d3-97bb-0080c8d59432}')!
 NPApplet comment: 'An NPApplet instance is used by the web browser plug-in for each Dolphin applet EMBED tag found in a web page. It can be used to allow the applet to gain access to the browser itself or to the various functions it provides. Any view or presenter used by an applet can gain access to the NPApplet instance via its NPAppletSite, as follows:
 
 npApplet := presenter site context.

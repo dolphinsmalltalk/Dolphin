@@ -5,7 +5,7 @@ DolphinTest subclass: #IntegerTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-IntegerTest guid: (GUID fromString: '{025B6E24-5E2B-49B1-9F4B-55B831A5AEF3}')!
+IntegerTest guid: (GUID fromString: '{025b6e24-5e2b-49b1-9f4b-55b831a5aef3}')!
 IntegerTest comment: ''!
 !IntegerTest categoriesForClass!Unclassified! !
 !IntegerTest methodsFor!

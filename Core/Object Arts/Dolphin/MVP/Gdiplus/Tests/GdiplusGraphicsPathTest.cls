@@ -5,7 +5,7 @@ GdiplusTests subclass: #GdiplusGraphicsPathTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-GdiplusGraphicsPathTest guid: (GUID fromString: '{FCEF1A10-834C-11D7-B609-00E0987E8081}')!
+GdiplusGraphicsPathTest guid: (GUID fromString: '{fcef1a10-834c-11d7-b609-00e0987e8081}')!
 GdiplusGraphicsPathTest comment: ''!
 !GdiplusGraphicsPathTest categoriesForClass!Unclassified! !
 !GdiplusGraphicsPathTest methodsFor!

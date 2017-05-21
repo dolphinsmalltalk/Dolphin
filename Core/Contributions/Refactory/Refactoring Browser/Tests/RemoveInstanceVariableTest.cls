@@ -5,7 +5,7 @@ RefactoringTest subclass: #RemoveInstanceVariableTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-RemoveInstanceVariableTest guid: (GUID fromString: '{62348167-8106-437B-98FE-52A63F3B89AE}')!
+RemoveInstanceVariableTest guid: (GUID fromString: '{62348167-8106-437b-98fe-52a63f3b89ae}')!
 RemoveInstanceVariableTest comment: ''!
 !RemoveInstanceVariableTest categoriesForClass!Refactory-Testing! !
 !RemoveInstanceVariableTest methodsFor!

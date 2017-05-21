@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 DolphinTest subclass: #BinaryPackageTest
 	instanceVariableNames: 'privateKey cert'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-BinaryPackageTest guid: (GUID fromString: '{C4AD2C1A-1C62-49C7-ABFE-083A2BD1AE1D}')!
+BinaryPackageTest guid: (GUID fromString: '{c4ad2c1a-1c62-49c7-abfe-083a2bd1ae1d}')!
 BinaryPackageTest comment: ''!
 !BinaryPackageTest categoriesForClass!Unclassified! !
 !BinaryPackageTest methodsFor!

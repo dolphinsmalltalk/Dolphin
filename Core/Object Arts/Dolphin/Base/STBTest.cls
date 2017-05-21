@@ -5,7 +5,7 @@ DolphinTest subclass: #STBTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-STBTest guid: (GUID fromString: '{0E66D9D1-027F-4559-A87A-33E13AE709B8}')!
+STBTest guid: (GUID fromString: '{0e66d9d1-027f-4559-a87a-33e13ae709b8}')!
 STBTest comment: ''!
 !STBTest categoriesForClass!Unclassified! !
 !STBTest methodsFor!

@@ -5,7 +5,7 @@ SequenceableCollectionTest subclass: #SequencedGrowableCollectionTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-SequencedGrowableCollectionTest guid: (GUID fromString: '{7C5C4663-14AC-4420-85AF-2C2644E54463}')!
+SequencedGrowableCollectionTest guid: (GUID fromString: '{7c5c4663-14ac-4420-85af-2c2644e54463}')!
 SequencedGrowableCollectionTest comment: ''!
 !SequencedGrowableCollectionTest categoriesForClass!Unclassified! !
 !SequencedGrowableCollectionTest methodsFor!

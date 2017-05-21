@@ -5,7 +5,7 @@ ArrayedCollectionTest subclass: #ByteArrayTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ByteArrayTest guid: (GUID fromString: '{F83D3BB0-C4B4-4F92-9D89-FD89E6E25DA1}')!
+ByteArrayTest guid: (GUID fromString: '{f83d3bb0-c4b4-4f92-9d89-fd89e6e25da1}')!
 ByteArrayTest comment: ''!
 !ByteArrayTest categoriesForClass!Unclassified! !
 !ByteArrayTest methodsFor!

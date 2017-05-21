@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 NPStream subclass: #NPOutStream
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-NPOutStream guid: (GUID fromString: '{2648C8A3-6B87-11D3-97BB-0080C8D59432}')!
+NPOutStream guid: (GUID fromString: '{2648c8a3-6b87-11d3-97bb-0080c8d59432}')!
 NPOutStream comment: 'An NPOutStream is a stream object created by the Dolphin plug-in and supplied to the web browser. It is used for transferring data from the plug-in to the browser and beyond. Such a stream is created with the #newStream:target:context: class method of NPStream and supports the <puttableStream> protocol.'!
 !NPOutStream categoriesForClass!Plugin-Support! !
 !NPOutStream methodsFor!

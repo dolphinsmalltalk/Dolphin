@@ -5,7 +5,7 @@ IntegerTest subclass: #LargeIntegerTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-LargeIntegerTest guid: (GUID fromString: '{36A14BF1-E5F1-45A2-A72D-6E853AB71F46}')!
+LargeIntegerTest guid: (GUID fromString: '{36a14bf1-e5f1-45a2-a72d-6e853ab71f46}')!
 LargeIntegerTest comment: ''!
 !LargeIntegerTest categoriesForClass!Unclassified! !
 !LargeIntegerTest methodsFor!
