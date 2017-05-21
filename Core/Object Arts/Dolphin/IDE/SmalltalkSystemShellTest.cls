@@ -5,7 +5,7 @@ DolphinTest subclass: #SmalltalkSystemShellTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-SmalltalkSystemShellTest guid: (GUID fromString: '{6D373CD5-F02E-4ADB-BCE9-F0755886A74B}')!
+SmalltalkSystemShellTest guid: (GUID fromString: '{6d373cd5-f02e-4adb-bce9-f0755886a74b}')!
 SmalltalkSystemShellTest comment: ''!
 !SmalltalkSystemShellTest categoriesForClass!Unclassified! !
 !SmalltalkSystemShellTest methodsFor!

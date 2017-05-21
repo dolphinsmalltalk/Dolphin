@@ -5,7 +5,7 @@ TestResource subclass: #TestTypelib
 	classVariableNames: ''
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
-TestTypelib guid: (GUID fromString: '{BDA93D8C-DF4B-4461-8950-9DB6E8797384}')!
+TestTypelib guid: (GUID fromString: '{bda93d8c-df4b-4461-8950-9db6e8797384}')!
 TestTypelib comment: ''!
 !TestTypelib categoriesForClass!Unclassified! !
 !TestTypelib methodsFor!

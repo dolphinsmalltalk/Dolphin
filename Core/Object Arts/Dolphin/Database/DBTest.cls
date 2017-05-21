@@ -5,7 +5,7 @@ DolphinTest subclass: #DBTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-DBTest guid: (GUID fromString: '{B514FD7B-4E03-452F-8178-6EC50E9D670A}')!
+DBTest guid: (GUID fromString: '{b514fd7b-4e03-452f-8178-6ec50e9d670a}')!
 DBTest comment: ''!
 !DBTest categoriesForClass!Unclassified! !
 !DBTest methodsFor!

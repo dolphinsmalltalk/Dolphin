@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 COMInterfaceImp subclass: #NPDolphin
 	instanceVariableNames: 'plugHole versions allAppletHolders namedAppletHolders'
 	classVariableNames: 'Current'
 	poolDictionaries: 'PluginConstants'
 	classInstanceVariableNames: ''!
-NPDolphin guid: (GUID fromString: '{2648C8A1-6B87-11D3-97BB-0080C8D59432}')!
+NPDolphin guid: (GUID fromString: '{2648c8a1-6b87-11d3-97bb-0080c8d59432}')!
 NPDolphin comment: 'NPDolphin is the singleton class whose instance hosts the main inbound COM interface, <INPPlugHole>, from the Dolphin browser plug-in DLL. It is responsible for initialization and shutdown of the plug-in image, and for initiating new applet instances and destroying existing applet instances when instructed. 
 
 Once an applet has been created, inbound messages from the browser plug-in are directed to the applet''s own COM interface. Once up and running an applet calls out to the browser via the NPDolphin singleton which then forwards on the calls via the INPPlugHole interface it recovered from the SessionManager''s startup arguments.

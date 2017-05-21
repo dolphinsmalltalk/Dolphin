@@ -5,7 +5,7 @@ SortAlgorithmTest subclass: #DefaultSortAlgorithmTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-DefaultSortAlgorithmTest guid: (GUID fromString: '{71C746E5-EAD8-4695-8835-1778D1CA56FD}')!
+DefaultSortAlgorithmTest guid: (GUID fromString: '{71c746e5-ead8-4695-8835-1778d1ca56fd}')!
 DefaultSortAlgorithmTest comment: ''!
 !DefaultSortAlgorithmTest categoriesForClass!Unclassified! !
 !DefaultSortAlgorithmTest methodsFor!

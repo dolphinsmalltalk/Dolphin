@@ -5,7 +5,7 @@ DolphinTest subclass: #ExternalLibraryTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ExternalLibraryTest guid: (GUID fromString: '{52518745-7C3C-4567-8599-3090AF0E6567}')!
+ExternalLibraryTest guid: (GUID fromString: '{52518745-7c3c-4567-8599-3090af0e6567}')!
 ExternalLibraryTest comment: ''!
 !ExternalLibraryTest categoriesForClass!Unclassified! !
 !ExternalLibraryTest methodsFor!

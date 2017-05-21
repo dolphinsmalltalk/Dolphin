@@ -5,7 +5,7 @@ TestCase subclass: #CommandLineTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-CommandLineTest guid: (GUID fromString: '{3A8A3BC5-3EF6-46C1-933B-754C6B06457E}')!
+CommandLineTest guid: (GUID fromString: '{3a8a3bc5-3ef6-46c1-933b-754c6b06457e}')!
 CommandLineTest comment: ''!
 !CommandLineTest categoriesForClass!SUnit! !
 !CommandLineTest methodsFor!

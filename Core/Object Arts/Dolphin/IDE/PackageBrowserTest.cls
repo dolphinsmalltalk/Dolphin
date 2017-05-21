@@ -5,7 +5,7 @@ DolphinTest subclass: #PackageBrowserTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-PackageBrowserTest guid: (GUID fromString: '{C635384E-76C1-4B7D-B532-6A2EC1916DBE}')!
+PackageBrowserTest guid: (GUID fromString: '{c635384e-76c1-4b7d-b532-6a2ec1916dbe}')!
 PackageBrowserTest comment: ''!
 !PackageBrowserTest categoriesForClass!Unclassified! !
 !PackageBrowserTest methodsFor!

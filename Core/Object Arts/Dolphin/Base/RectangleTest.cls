@@ -5,7 +5,7 @@ DolphinTest subclass: #RectangleTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-RectangleTest guid: (GUID fromString: '{ACEAFC61-24F9-482C-A8E7-0AFF0E7FCC85}')!
+RectangleTest guid: (GUID fromString: '{aceafc61-24f9-482c-a8e7-0aff0e7fcc85}')!
 RectangleTest comment: ''!
 !RectangleTest categoriesForClass!Unclassified! !
 !RectangleTest methodsFor!

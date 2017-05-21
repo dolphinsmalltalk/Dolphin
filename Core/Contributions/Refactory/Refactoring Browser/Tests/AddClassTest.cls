@@ -5,7 +5,7 @@ RefactoringTest subclass: #AddClassTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-AddClassTest guid: (GUID fromString: '{2113113D-2508-4856-9AE0-868F9AF9AC5C}')!
+AddClassTest guid: (GUID fromString: '{2113113d-2508-4856-9ae0-868f9af9ac5c}')!
 AddClassTest comment: ''!
 !AddClassTest categoriesForClass!Refactory-Testing! !
 !AddClassTest methodsFor!

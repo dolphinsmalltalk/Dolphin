@@ -5,7 +5,7 @@ DBTest subclass: #ADODBTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ADODBTest guid: (GUID fromString: '{CBC7F08C-1041-4E55-A86A-5A963BBA1649}')!
+ADODBTest guid: (GUID fromString: '{cbc7f08c-1041-4e55-a86a-5a963bba1649}')!
 ADODBTest comment: ''!
 !ADODBTest categoriesForClass!Unclassified! !
 !ADODBTest methodsFor!

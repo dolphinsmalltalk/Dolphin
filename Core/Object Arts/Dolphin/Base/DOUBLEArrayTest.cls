@@ -5,7 +5,7 @@ ExternalArrayTest subclass: #DOUBLEArrayTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-DOUBLEArrayTest guid: (GUID fromString: '{D4FA7F6E-7BE8-407B-A002-47D609D8D311}')!
+DOUBLEArrayTest guid: (GUID fromString: '{d4fa7f6e-7be8-407b-a002-47d609d8d311}')!
 DOUBLEArrayTest comment: ''!
 !DOUBLEArrayTest categoriesForClass!Unclassified! !
 !DOUBLEArrayTest methodsFor!

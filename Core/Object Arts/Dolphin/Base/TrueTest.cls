@@ -5,7 +5,7 @@ DolphinTest subclass: #TrueTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-TrueTest guid: (GUID fromString: '{E918B165-E08C-4CB2-8369-A5FFFF502ADB}')!
+TrueTest guid: (GUID fromString: '{e918b165-e08c-4cb2-8369-a5ffff502adb}')!
 TrueTest comment: ''!
 !TrueTest categoriesForClass!Tests-Kernel-Objects! !
 !TrueTest methodsFor!

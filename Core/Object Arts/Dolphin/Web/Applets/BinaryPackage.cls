@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #BinaryPackage
 	instanceVariableNames: 'name classes methods resources keepSource'
 	classVariableNames: 'ImportedPackages'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-BinaryPackage guid: (GUID fromString: '{1F7435D9-2C57-41DD-B302-5D801BA2AD84}')!
+BinaryPackage guid: (GUID fromString: '{1f7435d9-2c57-41dd-b302-5d801ba2ad84}')!
 BinaryPackage comment: 'A BinaryPackage holds the contents of a standard Dolphin source Package but in a binary only format. 
 
 Usually, an instance will be created from a package and then used to file out the contents as binary. This can later be imported into another image that does not have the source package present. 

@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 COMInterfaceImp subclass: #NPStream
 	instanceVariableNames: 'npStream applet mode mimeType handler'
 	classVariableNames: ''
 	poolDictionaries: 'PluginConstants'
 	classInstanceVariableNames: ''!
-NPStream guid: (GUID fromString: '{2648C89F-6B87-11D3-97BB-0080C8D59432}')!
+NPStream guid: (GUID fromString: '{2648c89f-6b87-11d3-97bb-0080c8d59432}')!
 NPStream comment: 'NPStream is an abstract class that provides a Smalltalk interface onto a web browser''s stream objects.
 
 Instance Variables:

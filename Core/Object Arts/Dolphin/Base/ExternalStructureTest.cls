@@ -5,7 +5,7 @@ DolphinTest subclass: #ExternalStructureTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ExternalStructureTest guid: (GUID fromString: '{A9244232-E68C-4A65-BBF2-C8392AEE459B}')!
+ExternalStructureTest guid: (GUID fromString: '{a9244232-e68c-4a65-bbf2-c8392aee459b}')!
 ExternalStructureTest comment: 'SUnitBrowser openOnTestCase: self'!
 !ExternalStructureTest categoriesForClass!Unclassified! !
 !ExternalStructureTest methodsFor!

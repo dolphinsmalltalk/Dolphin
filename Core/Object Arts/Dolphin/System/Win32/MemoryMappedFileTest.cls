@@ -5,7 +5,7 @@ DolphinTest subclass: #MemoryMappedFileTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-MemoryMappedFileTest guid: (GUID fromString: '{C5E2483C-650A-4155-A15C-2C4A79201F0C}')!
+MemoryMappedFileTest guid: (GUID fromString: '{c5e2483c-650a-4155-a15c-2c4a79201f0c}')!
 MemoryMappedFileTest comment: ''!
 !MemoryMappedFileTest categoriesForClass!Kernel-Objects! !
 !MemoryMappedFileTest methodsFor!

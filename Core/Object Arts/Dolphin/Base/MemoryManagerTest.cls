@@ -5,7 +5,7 @@ DolphinTest subclass: #MemoryManagerTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-MemoryManagerTest guid: (GUID fromString: '{088AFEE2-2321-4479-B639-9F5FDC0E4418}')!
+MemoryManagerTest guid: (GUID fromString: '{088afee2-2321-4479-b639-9f5fdc0e4418}')!
 MemoryManagerTest comment: ''!
 !MemoryManagerTest categoriesForClass!Unclassified! !
 !MemoryManagerTest methodsFor!

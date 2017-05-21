@@ -5,7 +5,7 @@ GdiplusTests subclass: #GdiplusGraphicsTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-GdiplusGraphicsTest guid: (GUID fromString: '{C612875A-7F39-4BA6-80BF-C091A74986DB}')!
+GdiplusGraphicsTest guid: (GUID fromString: '{c612875a-7f39-4ba6-80bf-c091a74986db}')!
 GdiplusGraphicsTest comment: 'This TestCase is setup to provide a way to quickly ''test'' a GdiplusGraphics method.
 
 Most of the current tests are kick-the-tyres tests. They all could be extended by adding more asserts, but they are better than nothing

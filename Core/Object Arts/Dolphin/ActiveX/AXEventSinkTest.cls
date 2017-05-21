@@ -5,7 +5,7 @@ DolphinTest subclass: #AXEventSinkTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-AXEventSinkTest guid: (GUID fromString: '{CDBE5D5C-F0BC-4943-B0D4-2D5E7E6419CA}')!
+AXEventSinkTest guid: (GUID fromString: '{cdbe5d5c-f0bc-4943-b0d4-2d5e7e6419ca}')!
 AXEventSinkTest comment: ''!
 !AXEventSinkTest categoriesForClass!Unclassified! !
 !AXEventSinkTest methodsFor!

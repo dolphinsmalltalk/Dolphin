@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #NPSynchronousStreamHandler
 	instanceVariableNames: 'semaphore localFilename url downloadUrl openTimeout openTimer npresult'
 	classVariableNames: 'DefaultOpenTimeout Opened Pending TimedOut Waiting'
 	poolDictionaries: 'PluginConstants'
 	classInstanceVariableNames: ''!
-NPSynchronousStreamHandler guid: (GUID fromString: '{CCB8755B-6C2E-11D3-BDD5-004005A6900B}')!
+NPSynchronousStreamHandler guid: (GUID fromString: '{ccb8755b-6c2e-11d3-bdd5-004005a6900b}')!
 NPSynchronousStreamHandler comment: 'An NPSynchronousStreamHandler is an applet stream handler which blocks its clients Smalltalk process until the full contents of a stream onto a URL have been fully downloaded into a locally held file. 
 
 Instance Variables:

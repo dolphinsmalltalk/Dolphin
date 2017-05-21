@@ -5,7 +5,7 @@ SequenceableCollectionTest subclass: #ArrayedCollectionTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ArrayedCollectionTest guid: (GUID fromString: '{48D15C8E-983B-48D0-8C62-51B644BA6BDB}')!
+ArrayedCollectionTest guid: (GUID fromString: '{48d15c8e-983b-48d0-8c62-51b644ba6bdb}')!
 ArrayedCollectionTest comment: ''!
 !ArrayedCollectionTest categoriesForClass!Unclassified! !
 !ArrayedCollectionTest methodsFor!

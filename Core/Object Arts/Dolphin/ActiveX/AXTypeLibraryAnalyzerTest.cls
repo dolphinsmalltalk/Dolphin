@@ -5,7 +5,7 @@ DolphinTest subclass: #AXTypeLibraryAnalyzerTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-AXTypeLibraryAnalyzerTest guid: (GUID fromString: '{64FC0F8B-7D1A-4A7F-9A9C-3FDBF7BFDAE5}')!
+AXTypeLibraryAnalyzerTest guid: (GUID fromString: '{64fc0f8b-7d1a-4a7f-9a9c-3fdbf7bfdae5}')!
 AXTypeLibraryAnalyzerTest comment: 'If these tests fail make sure you have registered TestTypelib by running regsvr32 on Tests\TLATest\Debug\TLATest.dll'!
 !AXTypeLibraryAnalyzerTest categoriesForClass!Unclassified! !
 !AXTypeLibraryAnalyzerTest methodsFor!

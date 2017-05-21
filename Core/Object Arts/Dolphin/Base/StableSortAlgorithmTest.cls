@@ -5,7 +5,7 @@ SortAlgorithmTest subclass: #StableSortAlgorithmTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-StableSortAlgorithmTest guid: (GUID fromString: '{8720DE2B-A524-4FF9-BFCB-E58828A59138}')!
+StableSortAlgorithmTest guid: (GUID fromString: '{8720de2b-a524-4ff9-bfcb-e58828a59138}')!
 StableSortAlgorithmTest comment: ''!
 !StableSortAlgorithmTest categoriesForClass!Unclassified! !
 !StableSortAlgorithmTest class methodsFor!

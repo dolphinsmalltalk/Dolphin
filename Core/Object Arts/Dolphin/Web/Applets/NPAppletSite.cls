@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ContainerView subclass: #NPAppletSite
 	instanceVariableNames: 'context backgroundImage'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-NPAppletSite guid: (GUID fromString: '{CCB87570-6C2E-11D3-BDD5-004005A6900B}')!
+NPAppletSite guid: (GUID fromString: '{ccb87570-6c2e-11d3-bdd5-004005a6900b}')!
 NPAppletSite comment: 'An NPAppletSite is a container view which is positioned to completly obscure the parent BrowserView that was supplied by the web browser for a particular NPApplet. All views of an applet are added as subviews of the NPAppletSite. All applets (be they presenters or views) can locate their NPAppletSite using #site.  This, in turn, can be used to gain access to the NPApplet browser context by sending #context:.
 
 Instance Variables:

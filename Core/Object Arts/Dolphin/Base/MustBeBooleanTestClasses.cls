@@ -5,7 +5,7 @@ DolphinTestClassResource subclass: #MustBeBooleanTestClasses
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-MustBeBooleanTestClasses guid: (GUID fromString: '{7A283553-A0FA-4C3F-8502-7D21D0BABCA4}')!
+MustBeBooleanTestClasses guid: (GUID fromString: '{7a283553-a0fa-4c3f-8502-7d21d0babca4}')!
 MustBeBooleanTestClasses comment: ''!
 !MustBeBooleanTestClasses categoriesForClass!Unclassified! !
 !MustBeBooleanTestClasses methodsFor!

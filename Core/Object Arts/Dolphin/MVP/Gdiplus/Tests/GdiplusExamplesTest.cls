@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 GdiplusTests subclass: #GdiplusExamplesTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-GdiplusExamplesTest guid: (GUID fromString: '{A138A00E-D195-4A62-8029-E372575E15EA}')!
+GdiplusExamplesTest guid: (GUID fromString: '{a138a00e-d195-4a62-8029-e372575e15ea}')!
 GdiplusExamplesTest comment: ''!
 !GdiplusExamplesTest categoriesForClass!Unclassified! !
 !GdiplusExamplesTest methodsFor!

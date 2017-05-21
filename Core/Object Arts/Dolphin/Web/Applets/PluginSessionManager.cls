@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 GUISessionManager subclass: #PluginSessionManager
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-PluginSessionManager guid: (GUID fromString: '{CCB8756E-6C2E-11D3-BDD5-004005A6900B}')!
+PluginSessionManager guid: (GUID fromString: '{ccb8756e-6c2e-11d3-bdd5-004005a6900b}')!
 PluginSessionManager comment: 'A PluginSessionManager is used as the current SessionManager while Dolphin is running within a web browser.  It keeps Dolphin alive even when all the views are closed, relying on the internet browser to inform us of when we can safely close down.
 
 '!

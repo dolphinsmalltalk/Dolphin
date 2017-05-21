@@ -5,7 +5,7 @@ DolphinTest subclass: #RandomTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-RandomTest guid: (GUID fromString: '{E7D2FEED-3B86-4C49-A1EF-784F24C9007B}')!
+RandomTest guid: (GUID fromString: '{e7d2feed-3b86-4c49-a1ef-784f24c9007b}')!
 RandomTest comment: ''!
 !RandomTest categoriesForClass!Unclassified! !
 !RandomTest methodsFor!

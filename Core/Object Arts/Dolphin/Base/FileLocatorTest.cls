@@ -5,7 +5,7 @@ DolphinTest subclass: #FileLocatorTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-FileLocatorTest guid: (GUID fromString: '{635F7234-BA5A-4A72-97B1-40D81990CAD7}')!
+FileLocatorTest guid: (GUID fromString: '{635f7234-ba5a-4a72-97b1-40d81990cad7}')!
 FileLocatorTest comment: ''!
 !FileLocatorTest categoriesForClass!Unclassified! !
 !FileLocatorTest methodsFor!

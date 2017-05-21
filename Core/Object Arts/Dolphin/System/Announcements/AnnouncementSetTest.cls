@@ -5,7 +5,7 @@ TestCase subclass: #AnnouncementSetTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-AnnouncementSetTest guid: (GUID fromString: '{9DC83CF2-59B5-4C23-9DC7-C8B79487AA22}')!
+AnnouncementSetTest guid: (GUID fromString: '{9dc83cf2-59b5-4c23-9dc7-c8b79487aa22}')!
 AnnouncementSetTest comment: 'SUnit tests for announcement sets'!
 !AnnouncementSetTest categoriesForClass!Announcements-Tests-Core-Tests! !
 !AnnouncementSetTest methodsFor!

@@ -5,7 +5,7 @@ RefactoringBrowserTest subclass: #RBClassTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-RBClassTest guid: (GUID fromString: '{5220987D-F53E-4675-8166-5035964AA131}')!
+RBClassTest guid: (GUID fromString: '{5220987d-f53e-4675-8166-5035964aa131}')!
 RBClassTest comment: ''!
 !RBClassTest categoriesForClass!Refactory-Testing! !
 !RBClassTest methodsFor!

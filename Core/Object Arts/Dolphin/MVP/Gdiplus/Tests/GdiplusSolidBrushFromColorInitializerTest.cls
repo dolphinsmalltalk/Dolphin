@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 GdiplusInitializerTests subclass: #GdiplusSolidBrushFromColorInitializerTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-GdiplusSolidBrushFromColorInitializerTest guid: (GUID fromString: '{039F3379-265A-4958-BA78-22F16A9E1300}')!
+GdiplusSolidBrushFromColorInitializerTest guid: (GUID fromString: '{039f3379-265a-4958-ba78-22f16a9e1300}')!
 GdiplusSolidBrushFromColorInitializerTest comment: ''!
 !GdiplusSolidBrushFromColorInitializerTest categoriesForClass!Unclassified! !
 !GdiplusSolidBrushFromColorInitializerTest methodsFor!

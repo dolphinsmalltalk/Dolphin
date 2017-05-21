@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ClassLocator subclass: #URLClassLocator
 	instanceVariableNames: 'transport'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-URLClassLocator guid: (GUID fromString: '{710058D4-73F5-11D3-97BD-0080C8D59432}')!
+URLClassLocator guid: (GUID fromString: '{710058d4-73f5-11d3-97bd-0080c8d59432}')!
 URLClassLocator comment: 'A URLClassLocator is used to indicate the location of an external binary class that is part of a BinaryPackage file that resides at a particular URL.  This type of locator requests, usually via an associated NPApplet instance, that the package file be downloaded from the URL to a local file location. From here the BinaryPackage can be loaded into the image and the appropriate class located within it. 
 
 Instance Variables:

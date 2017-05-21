@@ -5,7 +5,7 @@ RefactoringBrowserTest subclass: #ReferenceFinderTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ReferenceFinderTest guid: (GUID fromString: '{9403E023-FFA2-4920-AF9D-9B80E6055AC8}')!
+ReferenceFinderTest guid: (GUID fromString: '{9403e023-ffa2-4920-af9d-9b80e6055ac8}')!
 ReferenceFinderTest comment: ''!
 !ReferenceFinderTest categoriesForClass!Refactory-Testing! !
 !ReferenceFinderTest methodsFor!

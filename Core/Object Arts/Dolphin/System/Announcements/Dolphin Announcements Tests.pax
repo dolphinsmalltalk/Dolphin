@@ -1,5 +1,5 @@
 | package |
-package := Package name: 'Dolphin Announcement Tests'.
+package := Package name: 'Dolphin Announcements Tests'.
 package paxVersion: 1;
 	basicComment: ''.
 

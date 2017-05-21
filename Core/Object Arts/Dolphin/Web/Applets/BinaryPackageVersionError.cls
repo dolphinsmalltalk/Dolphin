@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Error subclass: #BinaryPackageVersionError
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-BinaryPackageVersionError guid: (GUID fromString: '{8CB2CAED-E51B-4E89-B474-C1A5DF987DF1}')!
+BinaryPackageVersionError guid: (GUID fromString: '{8cb2caed-e51b-4e89-b474-c1a5df987df1}')!
 BinaryPackageVersionError comment: ''!
 !BinaryPackageVersionError categoriesForClass!Unclassified! !
 !BinaryPackageVersionError methodsFor!
