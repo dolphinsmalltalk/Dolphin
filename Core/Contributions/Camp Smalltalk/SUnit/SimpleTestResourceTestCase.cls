@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 TestCase subclass: #SimpleTestResourceTestCase
 	instanceVariableNames: 'resource'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-SimpleTestResourceTestCase guid: (GUID fromString: '{8998FFB7-787B-4DA1-99FD-2F92B2C4E993}')!
+SimpleTestResourceTestCase guid: (GUID fromString: '{8998ffb7-787b-4da1-99fd-2f92b2c4e993}')!
 SimpleTestResourceTestCase comment: ''!
 !SimpleTestResourceTestCase categoriesForClass!SUnit! !
 !SimpleTestResourceTestCase methodsFor!
