@@ -27,6 +27,7 @@ model: anObject
 	Register with it's #valueChanged event"
 
 	| valueModel |
+	model removeEventsTriggeredFor: self.
 	valueModel := anObject asValue.
 	super model: valueModel.
 	valueModel when: #valueChanged send: #onValueChanged to: self!

@@ -35,6 +35,7 @@ model: aValueModel
 	"Set the model of the receiver to be aValueModel. Register with it's #valueChanged
 	event"
 
+	model removeEventsTriggeredFor: self.
 	super model: aValueModel.
 	aValueModel when: #valueChanged send: #onValueChanged to: self!
 

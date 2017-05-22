@@ -46,6 +46,7 @@ model: anObject
 
 	| valueModel |
 	valueModel := anObject asValue.
+	model removeEventsTriggeredFor: self.
 	super model: valueModel.
 	valueModel when: #valueChanged send: #onValueChanged to: self!
 

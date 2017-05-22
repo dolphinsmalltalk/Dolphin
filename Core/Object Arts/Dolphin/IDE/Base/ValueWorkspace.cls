@@ -94,6 +94,7 @@ isSingleLineMode
 model: aValueModel 
 	"Set the model of the receiver to be a value model on anObject."
 
+	model removeEventsTriggeredFor: self.
 	super model: aValueModel.
 	aValueModel 
 		when: #valueChanged

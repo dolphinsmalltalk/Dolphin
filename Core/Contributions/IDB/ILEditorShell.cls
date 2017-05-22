@@ -118,6 +118,7 @@ fillAll: aSymbol
 model: anILImage
 	"We keep the ILImage passed to here as a backup and use a duplicate for all the editing"
 
+	model removeEventsTriggeredFor: self.
 	backupImage := anILImage.
 	super model: anILImage editingImage.
 	editorWorkspace model: self model.

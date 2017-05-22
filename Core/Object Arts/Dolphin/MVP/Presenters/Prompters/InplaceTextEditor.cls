@@ -119,6 +119,7 @@ model: aValueModel
 	"Set the model of the receiver to be aValueModel. Register with it's #valueChanged event"
 
 	| actualModel |
+	model removeEventsTriggeredFor: self.
 	actualModel := aValueModel notNil ifTrue: [self bufferedModelFor: aValueModel].
 	super model: actualModel.
 	aValueModel 

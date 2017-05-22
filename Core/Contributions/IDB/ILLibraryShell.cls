@@ -143,6 +143,7 @@ insertMarker: aFileStream
 	aFileStream nextPutAll: 'LIB' asByteArray!
 
 model: anILLibrary
+	model removeEventsTriggeredFor: self.
 	super model: anILLibrary.
 	libraryWorkspace model: self model.
 
