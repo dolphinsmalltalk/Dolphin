@@ -5,7 +5,7 @@ DolphinTest subclass: #CodeMentorTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-CodeMentorTest guid: (GUID fromString: '{57AC07F6-6B32-42D2-A0CD-7488AE11EC92}')!
+CodeMentorTest guid: (GUID fromString: '{57ac07f6-6b32-42d2-a0cd-7488ae11ec92}')!
 CodeMentorTest comment: ''!
 !CodeMentorTest categoriesForClass!Unclassified! !
 !CodeMentorTest methodsFor!

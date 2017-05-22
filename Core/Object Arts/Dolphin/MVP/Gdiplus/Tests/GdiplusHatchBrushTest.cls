@@ -5,7 +5,7 @@ GdiplusTests subclass: #GdiplusHatchBrushTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-GdiplusHatchBrushTest guid: (GUID fromString: '{BE9147C0-8247-11D7-B609-00E0987E8081}')!
+GdiplusHatchBrushTest guid: (GUID fromString: '{be9147c0-8247-11d7-b609-00e0987e8081}')!
 GdiplusHatchBrushTest comment: ''!
 !GdiplusHatchBrushTest categoriesForClass!Unclassified! !
 !GdiplusHatchBrushTest methodsFor!

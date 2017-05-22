@@ -5,7 +5,7 @@ DolphinTest subclass: #TimeTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-TimeTest guid: (GUID fromString: '{5EB1CD02-030D-4B2F-B1DF-B06465E5BB19}')!
+TimeTest guid: (GUID fromString: '{5eb1cd02-030d-4b2f-b1df-b06465e5bb19}')!
 TimeTest comment: ''!
 !TimeTest categoriesForClass!Unclassified! !
 !TimeTest methodsFor!

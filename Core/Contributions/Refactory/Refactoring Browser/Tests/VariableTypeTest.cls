@@ -5,7 +5,7 @@ RefactoringBrowserTest subclass: #VariableTypeTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-VariableTypeTest guid: (GUID fromString: '{886B4AFA-23A6-4006-86BC-7F424CAFAD38}')!
+VariableTypeTest guid: (GUID fromString: '{886b4afa-23a6-4006-86bc-7f424cafad38}')!
 VariableTypeTest comment: ''!
 !VariableTypeTest categoriesForClass!Refactory-Testing! !
 !VariableTypeTest methodsFor!

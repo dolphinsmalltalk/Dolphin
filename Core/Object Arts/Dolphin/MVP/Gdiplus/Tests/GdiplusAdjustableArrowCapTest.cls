@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 GdiplusTests subclass: #GdiplusAdjustableArrowCapTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-GdiplusAdjustableArrowCapTest guid: (GUID fromString: '{C1FCC802-8763-11D7-B609-00E0987E8081}')!
+GdiplusAdjustableArrowCapTest guid: (GUID fromString: '{c1fcc802-8763-11d7-b609-00e0987e8081}')!
 GdiplusAdjustableArrowCapTest comment: ''!
 !GdiplusAdjustableArrowCapTest categoriesForClass!Unclassified! !
 !GdiplusAdjustableArrowCapTest methodsFor!

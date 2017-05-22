@@ -5,7 +5,7 @@ DolphinTest subclass: #Point3DTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-Point3DTest guid: (GUID fromString: '{E1ECEDAD-639E-42FC-B8A0-04911E61FCB5}')!
+Point3DTest guid: (GUID fromString: '{e1ecedad-639e-42fc-b8a0-04911e61fcb5}')!
 Point3DTest comment: 'Test the Point3D class'!
 !Point3DTest categoriesForClass!Unclassified! !
 !Point3DTest methodsFor!

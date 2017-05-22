@@ -5,7 +5,7 @@ SortAlgorithmTest subclass: #QuicksortAlgorithmTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-QuicksortAlgorithmTest guid: (GUID fromString: '{2236A686-CA88-4AD4-9EEF-5378F717F2A8}')!
+QuicksortAlgorithmTest guid: (GUID fromString: '{2236a686-ca88-4ad4-9eef-5378f717f2a8}')!
 QuicksortAlgorithmTest comment: ''!
 !QuicksortAlgorithmTest categoriesForClass!Unclassified! !
 !QuicksortAlgorithmTest methodsFor!

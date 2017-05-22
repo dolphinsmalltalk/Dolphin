@@ -5,7 +5,7 @@ DolphinTestClassResource subclass: #CompilerTestClasses
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-CompilerTestClasses guid: (GUID fromString: '{23DB72F8-4A90-4244-ADBC-EA3E9C776D0A}')!
+CompilerTestClasses guid: (GUID fromString: '{23db72f8-4a90-4244-adbc-ea3e9c776d0a}')!
 CompilerTestClasses comment: ''!
 !CompilerTestClasses categoriesForClass!Unclassified! !
 !CompilerTestClasses methodsFor!

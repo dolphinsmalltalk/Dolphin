@@ -5,7 +5,7 @@ TestCase subclass: #GdiplusTests
 	classVariableNames: ''
 	poolDictionaries: 'GdiplusConstants'
 	classInstanceVariableNames: ''!
-GdiplusTests guid: (GUID fromString: '{EA227FDA-3570-490B-B8CF-4973DC534043}')!
+GdiplusTests guid: (GUID fromString: '{ea227fda-3570-490b-b8cf-4973dc534043}')!
 GdiplusTests comment: ''!
 !GdiplusTests categoriesForClass!Unclassified! !
 !GdiplusTests methodsFor!

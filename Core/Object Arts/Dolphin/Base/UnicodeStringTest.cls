@@ -5,7 +5,7 @@ StringTest subclass: #UnicodeStringTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-UnicodeStringTest guid: (GUID fromString: '{E12792F7-8BB1-44B6-84CA-E8A620C9BC70}')!
+UnicodeStringTest guid: (GUID fromString: '{e12792f7-8bb1-44b6-84ca-e8a620c9bc70}')!
 UnicodeStringTest comment: ''!
 !UnicodeStringTest categoriesForClass!Unclassified! !
 !UnicodeStringTest methodsFor!

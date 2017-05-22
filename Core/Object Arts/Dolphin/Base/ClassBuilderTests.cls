@@ -5,7 +5,7 @@ DolphinTest subclass: #ClassBuilderTests
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ClassBuilderTests guid: (GUID fromString: '{889CED5D-011B-4995-82EC-DCC53EE38DA2}')!
+ClassBuilderTests guid: (GUID fromString: '{889ced5d-011b-4995-82ec-dcc53ee38da2}')!
 ClassBuilderTests comment: ''!
 !ClassBuilderTests categoriesForClass!Tests-Kernel-Classes! !
 !ClassBuilderTests methodsFor!

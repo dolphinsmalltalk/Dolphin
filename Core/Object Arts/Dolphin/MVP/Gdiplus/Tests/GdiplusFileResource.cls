@@ -5,7 +5,7 @@ TestResource subclass: #GdiplusFileResource
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-GdiplusFileResource guid: (GUID fromString: '{FCA5BF8A-3E20-4E92-9CB5-DEDF99DAAE36}')!
+GdiplusFileResource guid: (GUID fromString: '{fca5bf8a-3e20-4e92-9cb5-dedf99daae36}')!
 GdiplusFileResource comment: 'A TestResource that writes a number of files to disk that can then be accessed by TestCases.
 
 The motivation behind this resource is to avoid the need to maintain external files that the TestCases depend on.

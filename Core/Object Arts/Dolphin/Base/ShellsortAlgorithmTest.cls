@@ -5,7 +5,7 @@ SortAlgorithmTest subclass: #ShellsortAlgorithmTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ShellsortAlgorithmTest guid: (GUID fromString: '{EB6E9370-5BED-4714-8B47-C9BD05D65BA6}')!
+ShellsortAlgorithmTest guid: (GUID fromString: '{eb6e9370-5bed-4714-8b47-c9bd05d65ba6}')!
 ShellsortAlgorithmTest comment: ''!
 !ShellsortAlgorithmTest categoriesForClass!Unclassified! !
 !ShellsortAlgorithmTest methodsFor!

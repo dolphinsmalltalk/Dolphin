@@ -5,7 +5,7 @@ TestCase subclass: #CRTLibraryImportTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-CRTLibraryImportTest guid: (GUID fromString: '{A3836AC0-E09A-4F44-B33F-3F87F52F2098}')!
+CRTLibraryImportTest guid: (GUID fromString: '{a3836ac0-e09a-4f44-b33f-3f87f52f2098}')!
 CRTLibraryImportTest comment: ''!
 !CRTLibraryImportTest categoriesForClass!SUnit! !
 !CRTLibraryImportTest methodsFor!

@@ -5,7 +5,7 @@ DolphinTest subclass: #ExternalArrayTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ExternalArrayTest guid: (GUID fromString: '{356DAC42-9B9C-4970-87D2-BFD4846FAFA4}')!
+ExternalArrayTest guid: (GUID fromString: '{356dac42-9b9c-4970-87d2-bfd4846fafa4}')!
 ExternalArrayTest comment: ''!
 !ExternalArrayTest categoriesForClass!Unclassified! !
 !ExternalArrayTest methodsFor!

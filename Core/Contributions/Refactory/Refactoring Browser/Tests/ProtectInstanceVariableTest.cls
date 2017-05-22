@@ -5,7 +5,7 @@ RefactoringTest subclass: #ProtectInstanceVariableTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ProtectInstanceVariableTest guid: (GUID fromString: '{4FADB9C6-ABDE-452C-90B8-BC1B80B72555}')!
+ProtectInstanceVariableTest guid: (GUID fromString: '{4fadb9c6-abde-452c-90b8-bc1b80b72555}')!
 ProtectInstanceVariableTest comment: ''!
 !ProtectInstanceVariableTest categoriesForClass!Refactory-Testing! !
 !ProtectInstanceVariableTest methodsFor!

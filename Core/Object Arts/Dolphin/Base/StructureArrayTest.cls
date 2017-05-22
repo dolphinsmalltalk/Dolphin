@@ -5,7 +5,7 @@ GenericExternalArrayTest subclass: #StructureArrayTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-StructureArrayTest guid: (GUID fromString: '{1AB5E35E-9C82-4AA7-9C28-F51CB3BAA646}')!
+StructureArrayTest guid: (GUID fromString: '{1ab5e35e-9c82-4aa7-9c28-f51cb3baa646}')!
 StructureArrayTest comment: ''!
 !StructureArrayTest categoriesForClass!Unclassified! !
 !StructureArrayTest methodsFor!

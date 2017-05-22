@@ -5,7 +5,7 @@ DolphinTest subclass: #Base64CodecTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-Base64CodecTest guid: (GUID fromString: '{29F3CFCA-13C2-49DD-BCAC-20C64297A7F0}')!
+Base64CodecTest guid: (GUID fromString: '{29f3cfca-13c2-49dd-bcac-20c64297a7f0}')!
 Base64CodecTest comment: ''!
 !Base64CodecTest categoriesForClass!Unclassified! !
 !Base64CodecTest methodsFor!

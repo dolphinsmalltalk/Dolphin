@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 GdiplusInitializerTests subclass: #GdiplusImageFromIStreamInitializerTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-GdiplusImageFromIStreamInitializerTest guid: (GUID fromString: '{FD12183C-22DC-4CA1-8EBC-E1D9E66485C2}')!
+GdiplusImageFromIStreamInitializerTest guid: (GUID fromString: '{fd12183c-22dc-4ca1-8ebc-e1d9e66485c2}')!
 GdiplusImageFromIStreamInitializerTest comment: ''!
 !GdiplusImageFromIStreamInitializerTest categoriesForClass!Unclassified! !
 !GdiplusImageFromIStreamInitializerTest methodsFor!

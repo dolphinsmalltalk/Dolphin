@@ -5,7 +5,7 @@ FolderTest subclass: #PackageFolderTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-PackageFolderTest guid: (GUID fromString: '{3A14AFC2-659E-4B7B-AF2F-DC8631AF7128}')!
+PackageFolderTest guid: (GUID fromString: '{3a14afc2-659e-4b7b-af2f-dc8631af7128}')!
 PackageFolderTest comment: ''!
 !PackageFolderTest categoriesForClass!Unclassified! !
 !PackageFolderTest methodsFor!

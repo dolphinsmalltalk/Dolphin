@@ -5,7 +5,7 @@ DolphinTest subclass: #SessionManagerTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-SessionManagerTest guid: (GUID fromString: '{06F1FE94-5AA1-43F9-9D5C-1D4DE4F5B519}')!
+SessionManagerTest guid: (GUID fromString: '{06f1fe94-5aa1-43f9-9d5c-1d4de4f5b519}')!
 SessionManagerTest comment: ''!
 !SessionManagerTest categoriesForClass!Unclassified! !
 !SessionManagerTest methodsFor!

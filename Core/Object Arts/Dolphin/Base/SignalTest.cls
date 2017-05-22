@@ -5,7 +5,7 @@ DolphinTest subclass: #SignalTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-SignalTest guid: (GUID fromString: '{D8A6340D-1716-4AE1-883B-2E16C7812667}')!
+SignalTest guid: (GUID fromString: '{d8a6340d-1716-4ae1-883b-2e16c7812667}')!
 SignalTest comment: ''!
 !SignalTest categoriesForClass!Unclassified! !
 !SignalTest methodsFor!

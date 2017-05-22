@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk XP 2002 release 5.10"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #RefactoryTestDataApp
 	instanceVariableNames: 'temporaryVariable'
 	classVariableNames: ''
 	poolDictionaries: 'CRTConstants'
 	classInstanceVariableNames: ''!
-RefactoryTestDataApp guid: (GUID fromString: '{DD22ADF0-7B3F-4465-AA71-377108619C45}')!
+RefactoryTestDataApp guid: (GUID fromString: '{dd22adf0-7b3f-4465-aa71-377108619c45}')!
 RefactoryTestDataApp comment: 'Test class for Smalllint. Contains lots of smelly code'!
 !RefactoryTestDataApp categoriesForClass!Refactory-Test data! !
 !RefactoryTestDataApp methodsFor!
