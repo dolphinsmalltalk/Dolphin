@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 TestCase subclass: #ResumableTestFailureTestCase
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ResumableTestFailureTestCase guid: (GUID fromString: '{E9E5D84B-1AC0-46B4-AE21-C00825895F1F}')!
+ResumableTestFailureTestCase guid: (GUID fromString: '{e9e5d84b-1ac0-46b4-ae21-c00825895f1f}')!
 ResumableTestFailureTestCase comment: ''!
 !ResumableTestFailureTestCase categoriesForClass!SUnit! !
 !ResumableTestFailureTestCase methodsFor!
