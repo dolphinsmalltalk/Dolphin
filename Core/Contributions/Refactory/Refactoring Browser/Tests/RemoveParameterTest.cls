@@ -5,7 +5,7 @@ RefactoringTest subclass: #RemoveParameterTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-RemoveParameterTest guid: (GUID fromString: '{E5FF0A30-1644-4902-8240-701881D750FE}')!
+RemoveParameterTest guid: (GUID fromString: '{e5ff0a30-1644-4902-8240-701881d750fe}')!
 RemoveParameterTest comment: ''!
 !RemoveParameterTest categoriesForClass!Refactory-Testing! !
 !RemoveParameterTest methodsFor!

@@ -5,7 +5,7 @@ SearchPolicyTest subclass: #AlwaysSearchPolicyTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-AlwaysSearchPolicyTest guid: (GUID fromString: '{260ACD79-36CB-42B0-B7FF-86B9991EBE0F}')!
+AlwaysSearchPolicyTest guid: (GUID fromString: '{260acd79-36cb-42b0-b7ff-86b9991ebe0f}')!
 AlwaysSearchPolicyTest comment: ''!
 !AlwaysSearchPolicyTest categoriesForClass!Unclassified! !
 !AlwaysSearchPolicyTest methodsFor!

@@ -5,7 +5,7 @@ DolphinTest subclass: #ExternalAddressTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ExternalAddressTest guid: (GUID fromString: '{55D8E17D-E5D8-4060-B20D-34DD8826180F}')!
+ExternalAddressTest guid: (GUID fromString: '{55d8e17d-e5d8-4060-b20d-34dd8826180f}')!
 ExternalAddressTest comment: ''!
 !ExternalAddressTest categoriesForClass!Unclassified! !
 !ExternalAddressTest methodsFor!

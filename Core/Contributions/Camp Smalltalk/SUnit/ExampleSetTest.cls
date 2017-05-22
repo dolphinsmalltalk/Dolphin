@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 TestCase subclass: #ExampleSetTest
 	instanceVariableNames: 'full empty'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ExampleSetTest guid: (GUID fromString: '{5E96793D-0810-11D4-A876-0050DA643BF9}')!
+ExampleSetTest guid: (GUID fromString: '{5e96793d-0810-11d4-a876-0050da643bf9}')!
 ExampleSetTest comment: ''!
 !ExampleSetTest categoriesForClass!SUnitTests! !
 !ExampleSetTest methodsFor!

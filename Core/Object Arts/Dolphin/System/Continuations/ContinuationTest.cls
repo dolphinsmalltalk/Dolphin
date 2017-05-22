@@ -5,7 +5,7 @@ TestCase subclass: #ContinuationTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ContinuationTest guid: (GUID fromString: '{5F9FDCB7-FD2F-4EC2-A1DD-68F43F8A41A6}')!
+ContinuationTest guid: (GUID fromString: '{5f9fdcb7-fd2f-4ec2-a1dd-68f43f8a41a6}')!
 ContinuationTest comment: ''!
 !ContinuationTest categoriesForClass!Seaside-Continuations! !
 !ContinuationTest methodsFor!

@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 GdiplusInitializerTests subclass: #GdiplusGraphicsFromHDCInitializerTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-GdiplusGraphicsFromHDCInitializerTest guid: (GUID fromString: '{8FDE00F2-25D2-4046-907F-A52FEBBA1A57}')!
+GdiplusGraphicsFromHDCInitializerTest guid: (GUID fromString: '{8fde00f2-25d2-4046-907f-a52febba1a57}')!
 GdiplusGraphicsFromHDCInitializerTest comment: ''!
 !GdiplusGraphicsFromHDCInitializerTest categoriesForClass!Unclassified! !
 !GdiplusGraphicsFromHDCInitializerTest methodsFor!

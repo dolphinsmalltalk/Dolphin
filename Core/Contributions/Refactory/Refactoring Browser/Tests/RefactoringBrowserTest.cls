@@ -5,7 +5,7 @@ TestCase subclass: #RefactoringBrowserTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-RefactoringBrowserTest guid: (GUID fromString: '{89B8C31B-39F7-49C7-BD85-3B0C202CCF98}')!
+RefactoringBrowserTest guid: (GUID fromString: '{89b8c31b-39f7-49c7-bd85-3b0c202ccf98}')!
 RefactoringBrowserTest comment: 'SUnitBrowser openOnTestCase: self'!
 !RefactoringBrowserTest categoriesForClass!Refactory-Testing! !
 !RefactoringBrowserTest methodsFor!

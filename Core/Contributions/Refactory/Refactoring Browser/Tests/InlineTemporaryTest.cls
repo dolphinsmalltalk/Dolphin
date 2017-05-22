@@ -5,7 +5,7 @@ RefactoringTest subclass: #InlineTemporaryTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-InlineTemporaryTest guid: (GUID fromString: '{241FC5F5-5254-43D6-A840-DCD08C4E6B21}')!
+InlineTemporaryTest guid: (GUID fromString: '{241fc5f5-5254-43d6-a840-dcd08c4e6b21}')!
 InlineTemporaryTest comment: ''!
 !InlineTemporaryTest categoriesForClass!Refactory-Testing! !
 !InlineTemporaryTest methodsFor!

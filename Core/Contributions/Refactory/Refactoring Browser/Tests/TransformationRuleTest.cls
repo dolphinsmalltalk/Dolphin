@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk XP 2002 release 5.10"!
+"Filed out from Dolphin Smalltalk 7"!
 
 FooLintRuleTest subclass: #TransformationRuleTest
 	instanceVariableNames: 'rewriteRule builder class'
 	classVariableNames: 'RecursiveSelfRule'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-TransformationRuleTest guid: (GUID fromString: '{F92D7547-3000-44F7-94AE-0C8B01FC5F2D}')!
+TransformationRuleTest guid: (GUID fromString: '{f92d7547-3000-44f7-94ae-0c8b01fc5f2d}')!
 TransformationRuleTest comment: ''!
 !TransformationRuleTest categoriesForClass!Refactory-Test data! !
 !TransformationRuleTest methodsFor!

@@ -5,7 +5,7 @@ DolphinTest subclass: #ObjectTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ObjectTest guid: (GUID fromString: '{0699F873-06B5-439D-ADCB-6642D40C7360}')!
+ObjectTest guid: (GUID fromString: '{0699f873-06b5-439d-adcb-6642d40c7360}')!
 ObjectTest comment: ''!
 !ObjectTest categoriesForClass!Unclassified! !
 !ObjectTest methodsFor!

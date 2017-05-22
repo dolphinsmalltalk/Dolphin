@@ -5,7 +5,7 @@ PresenterTest subclass: #MethodWorkspaceTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-MethodWorkspaceTest guid: (GUID fromString: '{E5DADB09-1B76-4A90-A763-95CC11D735D8}')!
+MethodWorkspaceTest guid: (GUID fromString: '{e5dadb09-1b76-4a90-a763-95cc11d735d8}')!
 MethodWorkspaceTest comment: ''!
 !MethodWorkspaceTest categoriesForClass!Unclassified! !
 !MethodWorkspaceTest methodsFor!

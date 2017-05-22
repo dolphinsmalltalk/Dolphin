@@ -5,7 +5,7 @@ RefactoringTest subclass: #PushUpInstanceVariableTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-PushUpInstanceVariableTest guid: (GUID fromString: '{08DB86CB-6161-486B-82F5-70846A431AA1}')!
+PushUpInstanceVariableTest guid: (GUID fromString: '{08db86cb-6161-486b-82f5-70846a431aa1}')!
 PushUpInstanceVariableTest comment: ''!
 !PushUpInstanceVariableTest categoriesForClass!Refactory-Testing! !
 !PushUpInstanceVariableTest methodsFor!

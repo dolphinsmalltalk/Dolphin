@@ -5,7 +5,7 @@ RefactoringTest subclass: #InlineAllMethodTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-InlineAllMethodTest guid: (GUID fromString: '{C022453D-1C4D-4BF0-A604-9ABD6F068965}')!
+InlineAllMethodTest guid: (GUID fromString: '{c022453d-1c4d-4bf0-a604-9abd6f068965}')!
 InlineAllMethodTest comment: ''!
 !InlineAllMethodTest categoriesForClass!Refactory-Testing! !
 !InlineAllMethodTest methodsFor!

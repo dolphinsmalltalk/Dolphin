@@ -5,7 +5,7 @@ DolphinTestClassResource subclass: #ClassBuilderTestClasses
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ClassBuilderTestClasses guid: (GUID fromString: '{B9045F26-8B7D-468F-969A-7E228869FE20}')!
+ClassBuilderTestClasses guid: (GUID fromString: '{b9045f26-8b7d-468f-969a-7e228869fe20}')!
 ClassBuilderTestClasses comment: ''!
 !ClassBuilderTestClasses categoriesForClass!Unclassified! !
 !ClassBuilderTestClasses methodsFor!

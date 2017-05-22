@@ -5,7 +5,7 @@ DolphinTest subclass: #SmalltalkStylerTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-SmalltalkStylerTest guid: (GUID fromString: '{A4D5D58A-E2A3-4F2B-8877-0C480D6F3B01}')!
+SmalltalkStylerTest guid: (GUID fromString: '{a4d5d58a-e2a3-4f2b-8877-0c480d6f3b01}')!
 SmalltalkStylerTest comment: ''!
 !SmalltalkStylerTest categoriesForClass!Unclassified! !
 !SmalltalkStylerTest methodsFor!

@@ -5,7 +5,7 @@ ReadWriteStreamTest subclass: #AbstractFileStreamTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-AbstractFileStreamTest guid: (GUID fromString: '{FC7D3BEE-D1B0-477D-A33C-33EE6CFB0339}')!
+AbstractFileStreamTest guid: (GUID fromString: '{fc7d3bee-d1b0-477d-a33c-33ee6cfb0339}')!
 AbstractFileStreamTest comment: ''!
 !AbstractFileStreamTest categoriesForClass!Unclassified! !
 !AbstractFileStreamTest methodsFor!

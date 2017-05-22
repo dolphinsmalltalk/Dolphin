@@ -5,7 +5,7 @@ SearchPolicyTest subclass: #IdentitySearchPolicyTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-IdentitySearchPolicyTest guid: (GUID fromString: '{05134366-7E1D-469D-98B0-5B757F38592B}')!
+IdentitySearchPolicyTest guid: (GUID fromString: '{05134366-7e1d-469d-98b0-5b757f38592b}')!
 IdentitySearchPolicyTest comment: ''!
 !IdentitySearchPolicyTest categoriesForClass!Unclassified! !
 !IdentitySearchPolicyTest methodsFor!

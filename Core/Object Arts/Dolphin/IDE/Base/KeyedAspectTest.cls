@@ -5,7 +5,7 @@ DolphinTest subclass: #KeyedAspectTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-KeyedAspectTest guid: (GUID fromString: '{D76395C9-F61A-49DC-B5B1-87A2ADF2020F}')!
+KeyedAspectTest guid: (GUID fromString: '{d76395c9-f61a-49dc-b5b1-87a2adf2020f}')!
 KeyedAspectTest comment: ''!
 !KeyedAspectTest categoriesForClass!Unclassified! !
 !KeyedAspectTest methodsFor!

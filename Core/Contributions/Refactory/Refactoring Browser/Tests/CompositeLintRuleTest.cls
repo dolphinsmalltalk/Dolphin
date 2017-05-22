@@ -1,14 +1,12 @@
-"Filed out from Dolphin Smalltalk 2000 release 4.01"!
+"Filed out from Dolphin Smalltalk 7"!
 
 LintRuleTest subclass: #CompositeLintRuleTest
 	instanceVariableNames: 'rules'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+CompositeLintRuleTest guid: (GUID fromString: '{e17dd387-d4f7-4713-878e-41a7c57e54dd}')!
 CompositeLintRuleTest comment: ''!
-
-CompositeLintRuleTest guid: (GUID fromString: '{E17DD387-D4F7-4713-878E-41A7C57E54DD}')!
-
 !CompositeLintRuleTest categoriesForClass!Refactory-Test data! !
 !CompositeLintRuleTest methodsFor!
 
@@ -60,7 +58,7 @@ viewResults
 !CompositeLintRuleTest categoriesFor: #resetResult!initialize/release!public! !
 !CompositeLintRuleTest categoriesFor: #rules!accessing!public! !
 !CompositeLintRuleTest categoriesFor: #rules:!initialize/release!public! !
-!CompositeLintRuleTest categoriesFor: #viewResults!*-unclassified!private! !
+!CompositeLintRuleTest categoriesFor: #viewResults!private! !
 
 !CompositeLintRuleTest class methodsFor!
 

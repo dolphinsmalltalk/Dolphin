@@ -5,7 +5,7 @@ DolphinTest subclass: #FileSystemWatcherTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-FileSystemWatcherTest guid: (GUID fromString: '{4566F591-6075-495A-9A86-EE91C2D7BF3A}')!
+FileSystemWatcherTest guid: (GUID fromString: '{4566f591-6075-495a-9a86-ee91c2d7bf3a}')!
 FileSystemWatcherTest comment: ''!
 !FileSystemWatcherTest categoriesForClass!Unclassified! !
 !FileSystemWatcherTest methodsFor!

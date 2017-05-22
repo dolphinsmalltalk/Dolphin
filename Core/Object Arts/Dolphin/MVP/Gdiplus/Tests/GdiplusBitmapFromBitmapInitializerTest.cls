@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 GdiplusInitializerTests subclass: #GdiplusBitmapFromBitmapInitializerTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-GdiplusBitmapFromBitmapInitializerTest guid: (GUID fromString: '{ACEFB85F-8196-4E9B-B4FB-0C12068A6CAD}')!
+GdiplusBitmapFromBitmapInitializerTest guid: (GUID fromString: '{acefb85f-8196-4e9b-b4fb-0c12068a6cad}')!
 GdiplusBitmapFromBitmapInitializerTest comment: ''!
 !GdiplusBitmapFromBitmapInitializerTest categoriesForClass!Unclassified! !
 !GdiplusBitmapFromBitmapInitializerTest methodsFor!

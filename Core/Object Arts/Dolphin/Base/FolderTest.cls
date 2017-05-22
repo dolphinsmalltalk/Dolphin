@@ -5,7 +5,7 @@ DolphinTest subclass: #FolderTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-FolderTest guid: (GUID fromString: '{8B810291-5941-433E-A94C-B16BC3505368}')!
+FolderTest guid: (GUID fromString: '{8b810291-5941-433e-a94c-b16bc3505368}')!
 FolderTest comment: ''!
 !FolderTest categoriesForClass!Unclassified! !
 !FolderTest methodsFor!

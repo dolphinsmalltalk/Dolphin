@@ -5,7 +5,7 @@ DolphinTest subclass: #FileTest
 	classVariableNames: ''
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
-FileTest guid: (GUID fromString: '{26AE9922-21E2-489A-845C-3C1DC1C2A3CF}')!
+FileTest guid: (GUID fromString: '{26ae9922-21e2-489a-845c-3c1dc1c2a3cf}')!
 FileTest comment: ''!
 !FileTest categoriesForClass!Unclassified! !
 !FileTest methodsFor!

@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk XP 2002 release 6.00"!
+"Filed out from Dolphin Smalltalk 7"!
 
 TestResource subclass: #SimpleTestResource
 	instanceVariableNames: 'runningState hasRun hasSetup hasRanOnce'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-SimpleTestResource guid: (GUID fromString: '{8276A29A-E3AA-40AB-83F8-C49D4189CB1E}')!
+SimpleTestResource guid: (GUID fromString: '{8276a29a-e3aa-40ab-83f8-c49d4189cb1e}')!
 SimpleTestResource comment: ''!
 !SimpleTestResource categoriesForClass!Unclassified! !
 !SimpleTestResource methodsFor!

@@ -5,7 +5,7 @@ DolphinTest subclass: #ExternalDescriptorTest
 	classVariableNames: ''
 	poolDictionaries: 'ExtCallArgTypes'
 	classInstanceVariableNames: ''!
-ExternalDescriptorTest guid: (GUID fromString: '{D809EF14-78CF-4E10-8DC1-0249D46B4B5F}')!
+ExternalDescriptorTest guid: (GUID fromString: '{d809ef14-78cf-4e10-8dc1-0249d46b4b5f}')!
 ExternalDescriptorTest comment: ''!
 !ExternalDescriptorTest categoriesForClass!Unclassified! !
 !ExternalDescriptorTest methodsFor!

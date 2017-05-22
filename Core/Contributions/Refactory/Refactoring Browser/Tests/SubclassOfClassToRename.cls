@@ -1,14 +1,12 @@
-"Filed out from Dolphin Smalltalk 2000 release 4.01"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ClassToRename subclass: #SubclassOfClassToRename
 	instanceVariableNames: 'rewriteRule1'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+SubclassOfClassToRename guid: (GUID fromString: '{b07793cb-e421-4358-b250-e15c44d940e5}')!
 SubclassOfClassToRename comment: ''!
-
-SubclassOfClassToRename guid: (GUID fromString: '{B07793CB-E421-4358-B250-E15C44D940E5}')!
-
 !SubclassOfClassToRename categoriesForClass!Refactory-Test data! !
 !SubclassOfClassToRename methodsFor!
 

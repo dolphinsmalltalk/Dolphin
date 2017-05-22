@@ -5,7 +5,7 @@ DolphinTest subclass: #VersionResourceTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-VersionResourceTest guid: (GUID fromString: '{A475B032-CEF9-4AA6-AFFE-32B7DC1C4640}')!
+VersionResourceTest guid: (GUID fromString: '{a475b032-cef9-4aa6-affe-32b7dc1c4640}')!
 VersionResourceTest comment: ''!
 !VersionResourceTest categoriesForClass!Unclassified! !
 !VersionResourceTest methodsFor!

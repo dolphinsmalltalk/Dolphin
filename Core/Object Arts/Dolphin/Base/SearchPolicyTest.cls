@@ -5,7 +5,7 @@ DolphinTest subclass: #SearchPolicyTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-SearchPolicyTest guid: (GUID fromString: '{D8A1527D-15C9-47F0-AFBC-F7BFE4D759A5}')!
+SearchPolicyTest guid: (GUID fromString: '{d8a1527d-15c9-47f0-afbc-f7bfe4d759a5}')!
 SearchPolicyTest comment: ''!
 !SearchPolicyTest categoriesForClass!Unclassified! !
 !SearchPolicyTest methodsFor!

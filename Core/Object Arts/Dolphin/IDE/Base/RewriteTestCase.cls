@@ -5,7 +5,7 @@ TestCase subclass: #RewriteTestCase
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-RewriteTestCase guid: (GUID fromString: '{6A77C1E6-2F15-4ABC-9442-261F617E5BA1}')!
+RewriteTestCase guid: (GUID fromString: '{6a77c1e6-2f15-4abc-9442-261f617e5ba1}')!
 RewriteTestCase comment: ''!
 !RewriteTestCase categoriesForClass!Unclassified! !
 !RewriteTestCase methodsFor!

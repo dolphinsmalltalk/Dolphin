@@ -5,7 +5,7 @@ DolphinTest subclass: #BagTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-BagTest guid: (GUID fromString: '{31D1ECFC-CD30-4437-906F-69585C9E9C94}')!
+BagTest guid: (GUID fromString: '{31d1ecfc-cd30-4437-906f-69585c9e9c94}')!
 BagTest comment: ''!
 !BagTest categoriesForClass!Unclassified! !
 !BagTest methodsFor!

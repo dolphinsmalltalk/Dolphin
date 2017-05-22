@@ -5,7 +5,7 @@ DolphinTest subclass: #DebuggerTest
 	classVariableNames: ''
 	poolDictionaries: 'OpcodePool'
 	classInstanceVariableNames: ''!
-DebuggerTest guid: (GUID fromString: '{29CFD485-34B1-41D6-A030-30D1FE5A9EDD}')!
+DebuggerTest guid: (GUID fromString: '{29cfd485-34b1-41d6-a030-30d1fe5a9edd}')!
 DebuggerTest comment: ''!
 !DebuggerTest categoriesForClass!Unclassified! !
 !DebuggerTest methodsFor!

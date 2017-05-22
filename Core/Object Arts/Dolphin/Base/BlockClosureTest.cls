@@ -5,7 +5,7 @@ DolphinTest subclass: #BlockClosureTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-BlockClosureTest guid: (GUID fromString: '{346B84AA-D94E-4EE6-9461-5195EF00255B}')!
+BlockClosureTest guid: (GUID fromString: '{346b84aa-d94e-4ee6-9461-5195ef00255b}')!
 BlockClosureTest comment: ''!
 !BlockClosureTest categoriesForClass!Unclassified! !
 !BlockClosureTest methodsFor!

@@ -5,7 +5,7 @@ RefactoringTest subclass: #ExtractMethodTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ExtractMethodTest guid: (GUID fromString: '{E6D6D232-8068-4ED9-97F4-59B812529DAF}')!
+ExtractMethodTest guid: (GUID fromString: '{e6d6d232-8068-4ed9-97f4-59b812529daf}')!
 ExtractMethodTest comment: ''!
 !ExtractMethodTest categoriesForClass!Refactory-Testing! !
 !ExtractMethodTest methodsFor!

@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 GdiplusTests subclass: #GdiplusInitializerTests
 	instanceVariableNames: 'constructorArgs'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-GdiplusInitializerTests guid: (GUID fromString: '{6547B0A9-3786-40B7-BACC-48ED66BF651D}')!
+GdiplusInitializerTests guid: (GUID fromString: '{6547b0a9-3786-40b7-bacc-48ed66bf651d}')!
 GdiplusInitializerTests comment: ''!
 !GdiplusInitializerTests categoriesForClass!Unclassified! !
 !GdiplusInitializerTests methodsFor!

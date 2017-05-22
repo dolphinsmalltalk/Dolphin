@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 GdiplusInitializerTests subclass: #GdiplusPenFromBrushInitializerTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-GdiplusPenFromBrushInitializerTest guid: (GUID fromString: '{911C5ADD-1255-427E-B2E6-26D9D8F38CAF}')!
+GdiplusPenFromBrushInitializerTest guid: (GUID fromString: '{911c5add-1255-427e-b2e6-26d9d8f38caf}')!
 GdiplusPenFromBrushInitializerTest comment: ''!
 !GdiplusPenFromBrushInitializerTest categoriesForClass!Unclassified! !
 !GdiplusPenFromBrushInitializerTest methodsFor!
