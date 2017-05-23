@@ -411,7 +411,6 @@ package methodNames
 	add: 'Object class' -> #publishedAspectsOfInstances;
 	add: 'Object class' -> #publishedEvents;
 	add: 'Object class' -> #publishedEventsOfInstances;
-	add: 'Package class' -> #apublishedAspectsOfInstances;
 	add: 'Package class' -> #changedIcon;
 	add: 'Package class' -> #dolphinPackageIcon;
 	add: 'Package class' -> #publishedAspectsOfInstances;
@@ -3307,23 +3306,6 @@ searchForInTool: aSmalltalkToolShell
 
 !Package class methodsFor!
 
-apublishedAspectsOfInstances
-	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
-
-	| answer |
-	answer := (super publishedAspectsOfInstances)
-				add: (Aspect multilineString: #comment);
-				add: (Aspect string: #packageVersion);
-				add: (Aspect block: #aboutBlock);
-				add: (Aspect fileSave: #packageFileName);
-				add: (Aspect sequenceableCollection: #manualPrerequisites
-							addFrom: self manager packageNames asSortedCollection);
-				yourself.
-	"If the image has the ADK loaded, then include the image stripper"
-	self environment at: #ImageStripper
-		ifPresent: [:is | answer add: (Aspect name: #imageStripper) beImmutable].
-	^answer!
-
 changedIcon
     	"Private - Answer the icon to mark packages that have been changed"
     
@@ -3358,7 +3340,6 @@ publishedEventsOfInstances
 		add: #ownedChanged;
 		add: #prerequisitesReset;
 		yourself! !
-!Package class categoriesFor: #apublishedAspectsOfInstances!constants!development!public! !
 !Package class categoriesFor: #changedIcon!constants!private! !
 !Package class categoriesFor: #dolphinPackageIcon!public! !
 !Package class categoriesFor: #publishedAspectsOfInstances!constants!development!public! !
