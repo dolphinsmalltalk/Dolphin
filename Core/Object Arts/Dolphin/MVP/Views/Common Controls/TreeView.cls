@@ -1150,9 +1150,13 @@ wmKeyDown: message wParam: wParam lParam: lParam
 	accelerator (the numeric pad's multiply key), which may be undesirable if the 'tree'
 	being represented is either very large, or has cycles."
 
-	^(wParam == VK_MULTIPLY and: [self disableExpandAll])
+	^(wParam == VK_MULTIPLY and: [self isExpandAllEnabled not]) 
 		ifTrue: [0]
-		ifFalse: [super wmKeyDown: message wParam: wParam lParam: lParam]! !
+		ifFalse: 
+			[super 
+				wmKeyDown: message
+				wParam: wParam
+				lParam: lParam].! !
 !TreeView categoriesFor: #addNonVirtualItems:insertStruct:!adding!private! !
 !TreeView categoriesFor: #addRoot:!adding!private! !
 !TreeView categoriesFor: #addVirtualItems:insertStruct:!adding!private! !

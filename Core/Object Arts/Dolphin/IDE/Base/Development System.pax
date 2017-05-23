@@ -5454,14 +5454,14 @@ publishedAspectsOfInstances
 
 	| aspects |
 	aspects := super publishedAspectsOfInstances.
-	#(#hasLinesAtRoot #hasLines #hasButtons #canEditLabels #showsSelAlways #isMonoExpandable #hasInfoTips #hasCheckBoxes #disableExpandAll) 
+	#(#hasLinesAtRoot #hasLines #hasButtons #canEditLabels #showsSelAlways #isMonoExpandable #hasInfoTips #hasCheckBoxes #isExpandAllEnabled) 
 		do: [:each | aspects add: (Aspect boolean: each)].
 	aspects
 		add: (Aspect name: #indentSeparation);
 		add: (Aspect integer: #indentSeparation);
 		add: (Aspect choice: #updateMode from: UpdateModes);
 		yourself.
-	^aspects! !
+	^aspects.! !
 !TreeView class categoriesFor: #publishedAspectsOfInstances!constants!development!public! !
 
 !TypeConverter class methodsFor!
