@@ -117,6 +117,7 @@ package classNames
 	add: #InternalDragDropObject;
 	add: #InternalDragDropSession;
 	add: #KeyEvent;
+	add: #LASTINPUTINFO;
 	add: #LayoutContext;
 	add: #LayoutManager;
 	add: #LegacyCommandPolicy;
@@ -210,6 +211,7 @@ package classNames
 	yourself.
 
 package methodNames
+	add: #InputState -> #userSessionIdleMs;
 	add: #KernelLibrary -> #getConsoleWindow;
 	add: #MessageSend -> #queryCommand:;
 	add: #Object -> #addToImageList:mask:;
@@ -270,6 +272,7 @@ package methodNames
 	add: #UserLibrary -> #getForegroundWindow;
 	add: #UserLibrary -> #getIconInfo:piconinfo:;
 	add: #UserLibrary -> #getLastActivePopup:;
+	add: #UserLibrary -> #getLastInputInfo:;
 	add: #UserLibrary -> #getMenuInfo:lpcmi:;
 	add: #UserLibrary -> #getNextDlgGroupItem:hCtl:bPrevious:;
 	add: #UserLibrary -> #getNextDlgTabItem:hCtl:bPrevious:;
@@ -757,6 +760,11 @@ Win32Structure subclass: #GRADIENT_TRIANGLE
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Win32Structure subclass: #ICONINFO
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Win32Structure subclass: #LASTINPUTINFO
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
@@ -1274,6 +1282,23 @@ icon
 
 	^Icon fromId: 2 in: (ExternalResourceLibrary open: 'Shell32')! !
 !File class categoriesFor: #icon!constants!development!public! !
+
+!InputState methodsFor!
+
+userSessionIdleMs
+"
+	(Delay forSeconds: 1) wait. SessionManager inputState userSessionIdleMs.
+"
+	| currentTime flag lastInputInfo lastInputTime |
+	lastInputInfo := LASTINPUTINFO new.
+	flag := UserLibrary default getLastInputInfo: lastInputInfo.
+	flag ifFalse: [self error: 'Error obtaining last input time'].
+	currentTime := self millisecondClockValue.
+	lastInputTime := lastInputInfo dwTime.
+	currentTime < lastInputTime ifTrue: [^currentTime].
+	^currentTime - lastInputTime
+! !
+!InputState categoriesFor: #userSessionIdleMs!idling!public! !
 
 !KernelLibrary methodsFor!
 
@@ -1913,6 +1938,15 @@ getLastActivePopup: aHandle
 		);"
 
 	<stdcall: handle GetLastActivePopup handle>
+	^self invalidCall!
+
+getLastInputInfo: plii
+	"Retrieves the time of the last input event.
+		BOOL WINAPI GetLastInputInfo(
+			_Out_ PLASTINPUTINFO plii
+		);"
+
+	<stdcall: bool GetLastInputInfo LASTINPUTINFO*>
 	^self invalidCall!
 
 getMenuInfo: hMenu lpcmi: aMenuItemInfo
@@ -2816,6 +2850,7 @@ winHelp: hwndMain lpszHelp: lpszHelp uCommand: uCommand dwData: dwData
 !UserLibrary categoriesFor: #getForegroundWindow!public!win32 functions-keyboard input! !
 !UserLibrary categoriesFor: #getIconInfo:piconinfo:!public!win32 functions-icon! !
 !UserLibrary categoriesFor: #getLastActivePopup:!public!win32 functions-window! !
+!UserLibrary categoriesFor: #getLastInputInfo:!public!win32 functions-keyboard input!win32 functions-mouse input!win32 functions-timer!win32 functions-window! !
 !UserLibrary categoriesFor: #getMenuInfo:lpcmi:!public!win32 functions-menu! !
 !UserLibrary categoriesFor: #getNextDlgGroupItem:hCtl:bPrevious:!public!win32 functions-window! !
 !UserLibrary categoriesFor: #getNextDlgTabItem:hCtl:bPrevious:!public!win32 functions-window! !

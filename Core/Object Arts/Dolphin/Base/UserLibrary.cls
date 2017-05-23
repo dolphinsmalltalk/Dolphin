@@ -5,7 +5,7 @@ PermanentLibrary subclass: #UserLibrary
 	classVariableNames: ''
 	poolDictionaries: 'MessageBoxConstants'
 	classInstanceVariableNames: ''!
-UserLibrary guid: (GUID fromString: '{64674046-3A82-101B-8181-00AA003743D3}')!
+UserLibrary guid: (GUID fromString: '{64674046-3a82-101b-8181-00aa003743d3}')!
 UserLibrary comment: 'UserLibrary is the <ExternalLibrary> class to represent the Windows system DLL, User32.DLL.
 
 The default instance of this class provides access to most of the Win32 window management API. New functions may be added as required, but the external function naming convention should be followed.
