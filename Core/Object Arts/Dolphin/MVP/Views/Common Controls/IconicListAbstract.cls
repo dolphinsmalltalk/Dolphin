@@ -451,7 +451,8 @@ nmEndLabelEdit: pNMHDR
 	changed. N.B. This notification is not necessarily sent by all subclasses."
 
 	| item object text |
-	item := self dispInfoClass itemFromNMHDR: pNMHDR.
+	"item := self dispInfoClass itemFromNMHDR: pNMHDR."
+	item := (self dispInfoClass fromAddress: pNMHDR) item.
 	text := item pszText.
 	self canEditLabels ifFalse: [self disableLabelEdit].
 	text isNil
@@ -466,7 +467,8 @@ nmGetDispInfo: pNMHDR
 	"Private - Handler for a ?VN_GETDISPINFO notification message.
 	N.B. This notification is not necessarily sent by all subclasses."
 
-	^self onDisplayDetailsRequired: (self dispInfoClass itemFromNMHDR: pNMHDR)!
+	^self onDisplayDetailsRequired: (self dispInfoClass fromAddress: pNMHDR) item
+	"^self onDisplayDetailsRequired: (self dispInfoClass itemFromNMHDR: pNMHDR)"!
 
 nmSelChanged: anExternalAddress 
 	"Private - Default handler for the ??N_SELCHANGED notification message.
@@ -478,7 +480,8 @@ nmSetDispInfo: pNMHDR
 	"Private - Default handler for the ?VN_SETDISPINFO notification message.
 	Forward as an onDisplayDetailsChanged: event."
 
-	^self onDisplayDetailsChanged: (self dispInfoClass itemFromNMHDR: pNMHDR)!
+	^self onDisplayDetailsChanged: (self dispInfoClass fromAddress: pNMHDR) item
+	"^self onDisplayDetailsChanged: (self dispInfoClass itemFromNMHDR: pNMHDR)"!
 
 notificationClass
 	"Private - Answer the class of NMHDR associated with certain notifications sent
