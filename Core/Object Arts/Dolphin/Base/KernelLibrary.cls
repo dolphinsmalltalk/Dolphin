@@ -5,7 +5,7 @@ PermanentLibrary subclass: #KernelLibrary
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-KernelLibrary guid: (GUID fromString: '{64674048-3A82-101B-8181-00AA003743D3}')!
+KernelLibrary guid: (GUID fromString: '{64674048-3a82-101b-8181-00aa003743d3}')!
 KernelLibrary comment: 'KernelLibrary is the <ExternalLibrary> which represents the Win32 System DLL, KERNEL32.DLL. 
 
 The default instance of this class provides access to most of the base operating system services. New functions may be added as required, but the external function naming convention should be followed.
@@ -856,6 +856,30 @@ getThreadTimes: hThread lpCreationTime: creationFILETIME lpExitTime: exitFILETIM
 	<stdcall: bool GetThreadTimes handle FILETIME* FILETIME* FILETIME* FILETIME*>
 	^self invalidCall!
 
+getTickCount
+"
+	KernelLibrary default getTickCount.
+
+The return value is the number of milliseconds that have elapsed since the system was started.
+
+The resolution of the GetTickCount function is limited to the resolution of the system timer, which is typically in the range of 10 milliseconds to 16 milliseconds. 
+The resolution of the GetTickCount function is not affected by adjustments made by the GetSystemTimeAdjustment function.
+
+The elapsed time is stored as a DWORD value. Therefore, the time will wrap around to zero if the system is run continuously for 49.7 days. 
+To avoid this problem, use the GetTickCount64 function. Otherwise, check for an overflow condition when comparing times.
+
+If you need a higher resolution timer, use a multimedia timer or a high-resolution timer.
+
+To obtain the time elapsed since the computer was started, retrieve the System Up Time counter in the performance data in the registry key HKEY_PERFORMANCE_DATA. 
+The value returned is an 8-byte value. For more information, see Performance Counters.
+
+To obtain the time the system has spent in the working state since it was started, use the QueryUnbiasedInterruptTime function.
+
+https://msdn.microsoft.com/en-us/library/windows/desktop/ms724408(v=vs.85).aspx"
+
+	<stdcall: dword GetTickCount>
+	^self invalidCall!
+
 getTimeFormat: locale dwFlags: dwFlags lpTime: aWinSYSTEMTIME lpFormat: formatString lpTimeStr: outputStringOutput cchBuf: anInteger
 	"Format a time as a date string for a specified locale. If formatString is null then the current locale 
 	is used. If aWinSYSTEMTIME is null then the current local time is used.
@@ -1686,6 +1710,7 @@ zeroMemory: pvDest length: cBytes
 !KernelLibrary categoriesFor: #getTempFileName:lpPrefixString:uUnique:lpTempFileName:!public!win32 functions-file! !
 !KernelLibrary categoriesFor: #getTempPath:lpBuffer:!public!win32 functions-file! !
 !KernelLibrary categoriesFor: #getThreadTimes:lpCreationTime:lpExitTime:lpKernelTime:lpUserTime:!public!win32 functions-process and thread! !
+!KernelLibrary categoriesFor: #getTickCount!public!win32 functions-natural language support! !
 !KernelLibrary categoriesFor: #getTimeFormat:dwFlags:lpTime:lpFormat:lpTimeStr:cchBuf:!public!win32 functions-natural language support! !
 !KernelLibrary categoriesFor: #getTimeZoneInformation:!public!win32 functions-date and time! !
 !KernelLibrary categoriesFor: #getUserDefaultLCID!public!win32 functions-natural language support! !

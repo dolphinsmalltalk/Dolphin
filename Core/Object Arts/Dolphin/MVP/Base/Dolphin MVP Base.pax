@@ -272,6 +272,7 @@ package methodNames
 	add: #UserLibrary -> #getForegroundWindow;
 	add: #UserLibrary -> #getIconInfo:piconinfo:;
 	add: #UserLibrary -> #getLastActivePopup:;
+	add: #UserLibrary -> #getLastInputInfo;
 	add: #UserLibrary -> #getLastInputInfo:;
 	add: #UserLibrary -> #getMenuInfo:lpcmi:;
 	add: #UserLibrary -> #getNextDlgGroupItem:hCtl:bPrevious:;
@@ -1289,13 +1290,10 @@ userSessionIdleMs
 "
 	(Delay forSeconds: 1) wait. SessionManager inputState userSessionIdleMs.
 "
-	| currentTime flag lastInputInfo lastInputTime |
-	lastInputInfo := LASTINPUTINFO new.
-	flag := UserLibrary default getLastInputInfo: lastInputInfo.
-	flag ifFalse: [self error: 'Error obtaining last input time'].
-	currentTime := self millisecondClockValue.
-	lastInputTime := lastInputInfo dwTime.
-	currentTime < lastInputTime ifTrue: [^currentTime].
+	| currentTime lastInputTime |
+	currentTime := KernelLibrary default getTickCount.
+	lastInputTime := UserLibrary default getLastInputInfo.
+	currentTime < lastInputTime ifTrue: [^currentTime].	"In case of 49.7-day wrap, we understate the idle time"
 	^currentTime - lastInputTime
 ! !
 !InputState categoriesFor: #userSessionIdleMs!idling!public! !
@@ -1939,6 +1937,17 @@ getLastActivePopup: aHandle
 
 	<stdcall: handle GetLastActivePopup handle>
 	^self invalidCall!
+
+getLastInputInfo
+"
+	UserLibrary default getLastInputInfo.
+"
+	| flag lastInputInfo lastInputTime |
+	lastInputInfo := LASTINPUTINFO new.
+	flag := UserLibrary default getLastInputInfo: lastInputInfo.
+	flag ifFalse: [self error: 'Error obtaining last input time'].
+	lastInputTime := lastInputInfo dwTime.
+	^lastInputTime!
 
 getLastInputInfo: plii
 	"Retrieves the time of the last input event.
@@ -2850,6 +2859,7 @@ winHelp: hwndMain lpszHelp: lpszHelp uCommand: uCommand dwData: dwData
 !UserLibrary categoriesFor: #getForegroundWindow!public!win32 functions-keyboard input! !
 !UserLibrary categoriesFor: #getIconInfo:piconinfo:!public!win32 functions-icon! !
 !UserLibrary categoriesFor: #getLastActivePopup:!public!win32 functions-window! !
+!UserLibrary categoriesFor: #getLastInputInfo!public! !
 !UserLibrary categoriesFor: #getLastInputInfo:!public!win32 functions-keyboard input!win32 functions-mouse input!win32 functions-timer!win32 functions-window! !
 !UserLibrary categoriesFor: #getMenuInfo:lpcmi:!public!win32 functions-menu! !
 !UserLibrary categoriesFor: #getNextDlgGroupItem:hCtl:bPrevious:!public!win32 functions-window! !
