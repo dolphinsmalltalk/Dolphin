@@ -732,7 +732,7 @@ identifiersStartingWith: aString maxItems: anInteger
 			variables add: each.
 			variables size > anInteger ifTrue: [^#()]].
 	selectVars := [:each | (filter value: each) ifTrue: [accum value: each]].
-	(ignoreCase or: [aString isEmpty or: [aString first isLowercase]])
+	(ignoreCase or: [aString isEmpty or: [aString first isUppercase not]])
 		ifTrue: 
 			[(#(nil true false) select: filter)
 				do: [:each | accum value: (ScintillaListItem text: each printString icon: each icon)].
