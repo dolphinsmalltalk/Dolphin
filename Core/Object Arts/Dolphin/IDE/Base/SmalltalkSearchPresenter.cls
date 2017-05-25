@@ -17,7 +17,7 @@ applyOptions
 				select: [:each | (Compiler isAValidIdentifierChar: each) or: [each == $:]]).
 	view maxCompletionListHeight: 10.
 	view maxCompletionListWidth: 40.
-	view autoCompletionSeparator: 16r7F asCharacter!
+	view autoCompletionSeparator: $\x7F.!
 
 autoComplete: aSymbol at: posInteger maxItems: maxInteger 
 	aSymbol == #normal 
