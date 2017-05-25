@@ -381,6 +381,16 @@ completionListSortBlock
 		ifTrue: [[:a :b | (crt _stricmp: a displayString string2: b displayString) <= 0]]
 		ifFalse: [[:a :b | (crt strcmp: a displayString string2: b displayString) <= 0]]!
 
+completionStringFor: aString at: anInteger
+	| rawContents answer |
+	"Completing anything other than a literal symbol is simple enough..."
+	(view styleAt: anInteger) name == #literalSymbol ifFalse: [^aString].
+	rawContents := aString first == $' ifTrue: [String readFrom: aString readStream] ifFalse: [aString].
+	"Include quotes if and only if needed."
+	answer := rawContents asSymbol printString.
+	"Strip the leading # if already present in the view outside the range we will be replacing."
+	^(view characterAt: anInteger - 1) == $# ifTrue: [answer allButFirst] ifFalse: [answer].!
+
 copySelection
 	"Copy the selection to the clipboard, or the line on which the caret is placed if there is
 	no selection."
@@ -766,12 +776,8 @@ initialize
 insertCompletion: aString at: anInteger
 	"Private-"
 
-	| word |
-	"Special case for insertions of unquoted symbols in Smalltalk-80 style literal arrays. Since
-	this is deprecated syntax, correct it..."
-	word := ((view styleAt: anInteger) name == #literalSymbol
-				and: [(view characterAt: anInteger - 1) ~~ $#]) ifTrue: ['#' , aString] ifFalse: [aString].
-	view performUndoableAction: [self completeWordAt: anInteger with: word]!
+	view performUndoableAction: 
+			[self completeWordAt: anInteger with: (self completionStringFor: aString at: anInteger)].!
 
 insertKeywordCompletion: aString startingAt: anInteger 
 	| text selectionRange |
@@ -1415,7 +1421,7 @@ showSelectorCompletionListAt: posInteger maxItems: maxInteger
 	self showCompletionList: choices prefixLength: prefix size!
 
 showSymbolCompletionListAt: posInteger maxItems: maxInteger
-	| prefix start symbols prefixLength |
+	| prefix start symbols quoted prefixLength |
 	start := self tokenStartAt: posInteger.
 	prefix := view plainTextRange: (start to: posInteger).
 	prefixLength := prefix size.
@@ -1423,7 +1429,9 @@ showSymbolCompletionListAt: posInteger maxItems: maxInteger
 		ifTrue: 
 			[prefix := prefix copyFrom: 2.
 			prefixLength := prefixLength - 1].
+	(quoted := prefix notEmpty and: [prefix first == $']) ifTrue: [prefix := prefix copyFrom: 2].
 	symbols := self symbolsStartingWith: prefix maxItems: maxInteger.
+	quoted ifTrue: [symbols := symbols collect: [:each | each displayString printString]].
 	self showCompletionList: symbols prefixLength: prefixLength!
 
 showTipForIdentifier: anStIdentifierToken 
@@ -1580,6 +1588,7 @@ wrapLinesInRange: anInterval indent: anInteger
 !SmalltalkWorkspace categoriesFor: #completeWord!autocompletion!commands!public! !
 !SmalltalkWorkspace categoriesFor: #completeWordAt:with:!autocompletion!helpers!private! !
 !SmalltalkWorkspace categoriesFor: #completionListSortBlock!autocompletion!constants!private! !
+!SmalltalkWorkspace categoriesFor: #completionStringFor:at:!autocompletion!helpers!private! !
 !SmalltalkWorkspace categoriesFor: #copySelection!commands!public! !
 !SmalltalkWorkspace categoriesFor: #createComponents!initializing!private! !
 !SmalltalkWorkspace categoriesFor: #createSchematicWiring!initializing!private! !
