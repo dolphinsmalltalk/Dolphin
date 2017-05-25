@@ -13,7 +13,7 @@ SmalltalkSearchPresenter comment: ''!
 applyOptions
 	"Private - Apply the class options to the receiver"
 
-	view wordChars: (Character byteCharacterSet 
+	view wordChars: (Character byteCharacterSet
 				select: [:each | (Compiler isAValidIdentifierChar: each) or: [each == $:]]).
 	view maxCompletionListHeight: 10.
 	view maxCompletionListWidth: 40.
@@ -151,47 +151,47 @@ rangeToCompleteAt: anInteger
 				ifFalse: [anInteger to: view caretPosition - 1]]!
 
 searchItemsStartingWith: aString maxItems: anInteger
-	| result classes filter |
-	aString first isLowerCase
-		ifTrue: 
-			[| matchingSymbols |
-			matchingSymbols := self selectorsStartingWith: aString maxItems: anInteger.
-			^matchingSymbols].
-	filter := (aString includes: $>)
+	| result classes classFilter addBlock |
+	aString first isUppercase ifFalse: [^self selectorsStartingWith: aString maxItems: anInteger].
+	result := OrderedCollection new.
+	addBlock := 
+			[:obj |
+			(obj displayString beginsWith: aString) ifTrue: 
+					[result add: obj.
+					result size > anInteger ifTrue: [^#()]]].
+	Package manager packages do: addBlock.
+	Smalltalk associationsDo: 
+			[:assoc |
+			((assoc value isBehavior not or: [assoc key ~= assoc value name])
+				and: [assoc value class conformsToProtocol: #sourceObject]) ifTrue: [addBlock value: assoc]].
+	classFilter := (aString includes: $>)
 				ifTrue: 
-					[| prefix |
-					prefix := (aString upTo: $>) asSymbol.
-					[:each | each name == prefix]]
+					[| classNamePrefix |
+					classNamePrefix := aString upTo: $>.
+					"Force string equality--class names are Symbols, but metaclass names are Strings"
+					[:each | each name equals: classNamePrefix]]
 				ifFalse: 
 					[(aString includes: Character space)
 						ifTrue: [[:each | each name beginsWith: aString]]
-						ifFalse: [[:each | each isMeta not and: [each name beginsWith: aString]]]].
-	classes := environment classes select: filter.
-	result := OrderedCollection new.
-	classes size > 1
-		ifTrue: 
-			[classes do: 
-					[:each |
-					result
-						add: (each isMeta ifTrue: [VariableBinding key: each name value: each] ifFalse: [each classBinding])].
-			^result].
+						ifFalse: [[:each | each isMetaclass not and: [each name beginsWith: aString]]]].
+	classes := environment classes select: classFilter.
 	classes do: 
 			[:each |
-			result
-				add: (each isMeta ifTrue: [VariableBinding key: each name value: each] ifFalse: [each classBinding]).
-			(environment selectorsForClass: each) do: [:sel | result add: each >> sel]].
-	Package manager packages do: [:each | result add: each].
-	^result select: [:each | each displayString beginsWith: aString]!
+			addBlock
+				value: (each isMeta ifTrue: [VariableBinding key: each name value: each] ifFalse: [each classBinding])].
+	classes size = 1 ifTrue: 
+			[environment selectorsForClass: classes anyOne do: [:sel | addBlock value: classes anyOne >> sel]].
+	^result.!
 
 searchObject
-	^
-	[| searchText evaluateText |
+	| searchText |
 	searchText := self searchText.
-	searchText first isLowerCase ifTrue: [^Symbol findInterned: searchText].
-	evaluateText := searchText copyReplaceAll: '>>' with: '>>#'.
-	Compiler evaluate: evaluateText] 
-			on: Exception
-			do: [:x | Package manager packages detect: [:each | each name = self searchText] ifNone: []]!
+	searchText isEmpty ifTrue: [^nil].
+	(searchText first isUppercase not and: [Symbol isLiteralSymbol: searchText])
+		ifTrue: [^Symbol findInterned: searchText].
+	(Package manager packageNamed: searchText ifNone: []) ifNotNil: [:a | ^a].
+	Smalltalk at: searchText ifPresent: [:a | ^a].
+	^[Compiler evaluate: (searchText copyReplaceAll: '>>' with: '>>#')] on: Exception do: [:x | ].!
 
 searchText
 	^self view plainText!
@@ -225,9 +225,8 @@ showCompletionListAt: posInteger maxItems: maxInteger
 	start := self tokenStartAt: posInteger.
 	start = 0 ifTrue: [^self].
 	prefix := view plainTextFrom: start to: posInteger.
-	prefix size < 2 ifTrue: [^self].
 	choices := self searchItemsStartingWith: prefix maxItems: maxInteger.
-	self showCompletionList: choices prefixLength: prefix size!
+	self showCompletionList: choices prefixLength: prefix size.!
 
 startAutocompleteTimer
 	self view setTimer: SCI_AUTOCSHOW interval: self class autoCompleteDwell!
