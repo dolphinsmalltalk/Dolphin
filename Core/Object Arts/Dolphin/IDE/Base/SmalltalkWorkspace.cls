@@ -54,7 +54,7 @@ applyOptions
 	view with SmalltalkWorkspace. This is no longer supported."
 	view textStyles: self textStyles.
 	view indicatorStyles: self indicatorStyles.
-	view wordChars: (Character byteCharacterSet 
+	view wordChars: (Character byteCharacterSet
 				select: [:each | (Compiler isAValidIdentifierChar: each) or: [each == $:]]).
 	self hasSmalltalkStyler ifFalse: [self isAutoCompletionEnabled: false].
 	view isAutoCompletionCaseInsensitive: self class isAutoCompletionCaseInsensitive.
@@ -909,46 +909,20 @@ messagesForToken: anAssociation startingWith: aString maxItems: anInteger
 	"Private - Answer the set of selectors that could potentially be sent as messages following
 	the specified token."
 
-	| ignoreCase icon |
+	| selectors class ignoreCase icon |
 	ignoreCase := self isAutoCompletionCaseInsensitive.
 	icon := Message icon.
-	^((self classForToken: anAssociation)
-		ifNil: 
-			[| allSelectors |
-			allSelectors := Smalltalk developmentSystem allSelectors.
-			aString isEmpty
-				ifTrue: [allSelectors size > anInteger ifTrue: [#()] ifFalse: [allSelectors]]
-				ifFalse: 
-					[| messages |
-					messages := Set new.
-					allSelectors do: 
-							[:eachName |
-							(eachName beginsWith: aString ignoreCase: ignoreCase)
-								ifTrue: 
-									[messages add: eachName.
-									messages size > anInteger ifTrue: [^#()]]].
-					messages]]
-		ifNotNil: 
-			[:class |
-			| messages |
-			messages := Set new.
-			class withAllSuperclassesDo: (aString isEmpty
-						ifTrue: 
-							[
-							[:eachClass |
-							messages addAll: eachClass selectors.
-							messages size > anInteger ifTrue: [^#()]]]
-						ifFalse: 
-							[
-							[:eachClass |
-							eachClass selectors do: 
-									[:eachSelector |
-									(eachSelector beginsWith: aString ignoreCase: ignoreCase)
-										ifTrue: 
-											[messages add: eachSelector.
-											messages size > anInteger ifTrue: [^#()]]]]]).
-			messages])
-			collect: [:each | ScintillaListItem text: each icon: icon]!
+	class := self classForToken: anAssociation.
+	class == UndefinedObject ifTrue: [class := nil].
+	selectors := Set new.
+	Smalltalk developmentSystem allSelectors do: 
+			[:each | 
+			((each beginsWith: aString ignoreCase: ignoreCase) 
+				and: [class isNil or: [class canUnderstand: each]]) 
+					ifTrue: 
+						[selectors add: each.
+						selectors size > anInteger ifTrue: [^#()]]].
+	^selectors collect: [:each | ScintillaListItem text: each icon: icon].!
 
 modifiedModel
 	^modifiedModel!
