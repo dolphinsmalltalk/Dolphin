@@ -351,9 +351,9 @@ mainLoop
 millisecondClockValue
 	"Private - Answer the current value of the system millisecond clock."
 
-	"Implementation Note: Primitive 174 is actually just a call to the WinMM function
-	timeGetTime() which should be accurate to 1mS (unlike GetTickCount() which is only accurate
-	to 10mS)."
+	"Implementation Note: Primitive 174 is actually just a call to the QueryPerformanceCounter
+	API which should be accurate sub-1mS (unlike GetTickCount() which is only accurate to 10mS),
+	and which also does not suffer the problem of wrapping after ~49 days of uptime."
 
 	<primitive: 174>
 	^self primitiveFailed!
