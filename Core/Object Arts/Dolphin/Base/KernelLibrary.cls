@@ -1710,7 +1710,7 @@ zeroMemory: pvDest length: cBytes
 !KernelLibrary categoriesFor: #getTempFileName:lpPrefixString:uUnique:lpTempFileName:!public!win32 functions-file! !
 !KernelLibrary categoriesFor: #getTempPath:lpBuffer:!public!win32 functions-file! !
 !KernelLibrary categoriesFor: #getThreadTimes:lpCreationTime:lpExitTime:lpKernelTime:lpUserTime:!public!win32 functions-process and thread! !
-!KernelLibrary categoriesFor: #getTickCount!public!win32 functions-natural language support! !
+!KernelLibrary categoriesFor: #getTickCount!public!win32 functions-date and time!win32 functions-system information! !
 !KernelLibrary categoriesFor: #getTimeFormat:dwFlags:lpTime:lpFormat:lpTimeStr:cchBuf:!public!win32 functions-natural language support! !
 !KernelLibrary categoriesFor: #getTimeZoneInformation:!public!win32 functions-date and time! !
 !KernelLibrary categoriesFor: #getUserDefaultLCID!public!win32 functions-natural language support! !
