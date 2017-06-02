@@ -152,6 +152,8 @@ rangeToCompleteAt: anInteger
 
 searchItemsStartingWith: aString maxItems: anInteger
 	| result classes classFilter addBlock |
+	"Treat searches beginning with punctuation as a selector search,
+	to allow searching for underscore-prefixed or binary selectors."
 	aString first isUppercase ifFalse: [^self selectorsStartingWith: aString maxItems: anInteger].
 	result := OrderedCollection new.
 	addBlock := 

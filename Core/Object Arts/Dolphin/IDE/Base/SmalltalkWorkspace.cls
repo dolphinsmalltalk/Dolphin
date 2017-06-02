@@ -913,7 +913,9 @@ messagesForToken: anAssociation startingWith: aString maxItems: anInteger
 	ignoreCase := self isAutoCompletionCaseInsensitive.
 	icon := Message icon.
 	class := self classForToken: anAssociation.
-	class == UndefinedObject ifTrue: [class := nil].
+	"When completing against a variable that happens to have the value nil,
+	treat it as possibly being of any type, as most likely it is simply uninitialized."
+	(anAssociation value == #identifier and: [class == UndefinedObject]) ifTrue: [class := nil].
 	selectors := Set new.
 	Smalltalk developmentSystem allSelectors do: 
 			[:each | 
