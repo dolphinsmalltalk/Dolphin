@@ -1046,9 +1046,9 @@ buildAllSelectors
 	set := IdentitySet new: classes size * 11.
 	classes do: 
 			[:each |
-			each methodDictionary keysDo: [:selector | set add: selector].
-			each class methodDictionary keysDo: [:selector | set add: selector]].
-	^set!
+			set addAll: each understoodSelectors.
+			set addAll: each class understoodSelectors].
+	^set.!
 
 buildMessageMenu: aMenu forMethods: aCollection browseSelector: browseSelector extraArgs: extraArgs browseOtherSelector: browseOtherSelector 
 	"Private - Build a messages dynamic pop-up for [local] references to/definitions of."
