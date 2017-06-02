@@ -27,7 +27,23 @@ testNoWeakBlock
 	announcer announce: AnnouncementMockA.
 	self assert: counter = 2!
 
-testWeakObject	| counter collector forwarder |	counter := 0.	collector := [ counter := counter + 1 ].	forwarder := MessageSend receiver: collector selector: #value.	(announcer subscribe: AnnouncementMockA send: #value to: forwarder) makeWeak.		" shouldn't go away, we are still holding a reference to 'forwarder': "	MemoryManager current collectGarbage.	announcer announce: AnnouncementMockA.	self assert: counter = 1.		" should go away as we let the only reference to 'forwarder' go: "	forwarder := nil.	MemoryManager current collectGarbage.	announcer announce: AnnouncementMockA.	self assert: counter = 1!
+testWeakObject
+	| counter collector forwarder |
+	counter := 0.
+	collector := [ counter := counter + 1 ].
+	forwarder := MessageSend receiver: collector selector: #value.
+	(announcer subscribe: AnnouncementMockA send: #value to: forwarder) makeWeak.
+	
+	" shouldn't go away, we are still holding a reference to 'forwarder': "
+	MemoryManager current collectGarbage.
+	announcer announce: AnnouncementMockA.
+	self assert: counter = 1.
+	
+	" should go away as we let the only reference to 'forwarder' go: "
+	forwarder := nil.
+	MemoryManager current collectGarbage.
+	announcer announce: AnnouncementMockA.
+	self assert: counter = 1!
 
 testWeakSubscription
 	| obj subscription |
