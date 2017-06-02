@@ -69,13 +69,108 @@ testCopyingBlock
 	and so the result should be the sum of numbers up to 10"
 	self assert: result = ((1 to: 10) inject: 0 into: [:sum :each | sum + each])!
 
-testCull	[  ] cull: 1.	[ :x |  ] cull: 1.	self should: [ [ :x :y |  ] cull: 1 ] raise: Error.	self should: [ [ :x :y :z |  ] cull: 1 ] raise: Error.	self should: [ [ :x :y :z :a |  ] cull: 1 ] raise: Error.	self should: [ [ :x :y :z :a :b |  ] cull: 1 ] raise: Error.	self assert: ([ 0 ] cull: 1) = 0.	self assert: ([ :x | x ] cull: 1) = 1!
+testCull
+	[  ] cull: 1.
+	[ :x |  ] cull: 1.
+	self should: [ [ :x :y |  ] cull: 1 ] raise: Error.
+	self should: [ [ :x :y :z |  ] cull: 1 ] raise: Error.
+	self should: [ [ :x :y :z :a |  ] cull: 1 ] raise: Error.
+	self should: [ [ :x :y :z :a :b |  ] cull: 1 ] raise: Error.
+	self assert: ([ 0 ] cull: 1) = 0.
+	self assert: ([ :x | x ] cull: 1) = 1!
 
-testCullCull	[  ] cull: 1 cull: 2.	[ :x |  ] cull: 1 cull: 2.	[ :x :y |  ] cull: 1 cull: 2.	self should: [ [ :x :y :z |  ] cull: 1 cull: 2 ] raise: Error.	self should: [ [ :x :y :z :a |  ] cull: 1 cull: 2 ] raise: Error.	self should: [ [ :x :y :z :a :b |  ] cull: 1 cull: 2 ] raise: Error.	self assert: ([ 0 ] cull: 1 cull: 2) = 0.	self assert: ([ :x | x ] cull: 1 cull: 2) = 1.	self assert: ([ :x :y | y ] cull: 1 cull: 2) = 2!
+testCullCull
+	[  ] cull: 1 cull: 2.
+	[ :x |  ] cull: 1 cull: 2.
+	[ :x :y |  ] cull: 1 cull: 2.
+	self should: [ [ :x :y :z |  ] cull: 1 cull: 2 ] raise: Error.
+	self should: [ [ :x :y :z :a |  ] cull: 1 cull: 2 ] raise: Error.
+	self should: [ [ :x :y :z :a :b |  ] cull: 1 cull: 2 ] raise: Error.
+	self assert: ([ 0 ] cull: 1 cull: 2) = 0.
+	self assert: ([ :x | x ] cull: 1 cull: 2) = 1.
+	self assert: ([ :x :y | y ] cull: 1 cull: 2) = 2!
 
-testCullCullCull	[  ] cull: 1 cull: 2 cull: 3.	[ :x |  ] cull: 1 cull: 2 cull: 3.	[ :x :y |  ] cull: 1 cull: 2 cull: 3.	[ :x :y :z |  ] cull: 1 cull: 2 cull: 3.	self should: [ [ :x :y :z :a |  ] cull: 1 cull: 2 cull: 3 ] raise: Error.	self should: [ [ :x :y :z :a :b |  ] cull: 1 cull: 2 cull: 3 ] raise: Error.	self assert: ([ 0 ] cull: 1 cull: 2 cull: 3) = 0.	self assert: ([ :x | x ] cull: 1 cull: 2 cull: 3) = 1.	self assert: ([ :x :y | y ] cull: 1 cull: 2 cull: 3) = 2.	self assert: ([ :x :y :z | z ] cull: 1 cull: 2 cull: 3) = 3!
+testCullCullCull
+	[  ] cull: 1 cull: 2 cull: 3.
+	[ :x |  ] cull: 1 cull: 2 cull: 3.
+	[ :x :y |  ] cull: 1 cull: 2 cull: 3.
+	[ :x :y :z |  ] cull: 1 cull: 2 cull: 3.
+	self should: [ [ :x :y :z :a |  ] cull: 1 cull: 2 cull: 3 ] raise: Error.
+	self should: [ [ :x :y :z :a :b |  ] cull: 1 cull: 2 cull: 3 ] raise: Error.
+	self assert: ([ 0 ] cull: 1 cull: 2 cull: 3) = 0.
+	self assert: ([ :x | x ] cull: 1 cull: 2 cull: 3) = 1.
+	self assert: ([ :x :y | y ] cull: 1 cull: 2 cull: 3) = 2.
+	self assert: ([ :x :y :z | z ] cull: 1 cull: 2 cull: 3) = 3!
 
-testCullCullCullCull	[  ]		cull: 1		cull: 2		cull: 3		cull: 4.	[ :x |  ]		cull: 1		cull: 2		cull: 3		cull: 4.	[ :x :y |  ]		cull: 1		cull: 2		cull: 3		cull: 4.	[ :x :y :z |  ]		cull: 1		cull: 2		cull: 3		cull: 4.	[ :x :y :z :a |  ]		cull: 1		cull: 2		cull: 3		cull: 4.	self		should: [ 			[ :x :y :z :a :b |  ]				cull: 1				cull: 2				cull: 3				cull: 4 ]		raise: Error.	self		assert:			([ 0 ]				cull: 1				cull: 2				cull: 3				cull: 4) = 0.	self		assert:			([ :x | x ]				cull: 1				cull: 2				cull: 3				cull: 4) = 1.	self		assert:			([ :x :y | y ]				cull: 1				cull: 2				cull: 3				cull: 4) = 2.	self		assert:			([ :x :y :z | z ]				cull: 1				cull: 2				cull: 3				cull: 4) = 3.	self		assert:			([ :x :y :z :a | a ]				cull: 1				cull: 2				cull: 3				cull: 4) = 4!
+testCullCullCullCull
+	[  ]
+		cull: 1
+		cull: 2
+		cull: 3
+		cull: 4.
+	[ :x |  ]
+		cull: 1
+		cull: 2
+		cull: 3
+		cull: 4.
+	[ :x :y |  ]
+		cull: 1
+		cull: 2
+		cull: 3
+		cull: 4.
+	[ :x :y :z |  ]
+		cull: 1
+		cull: 2
+		cull: 3
+		cull: 4.
+	[ :x :y :z :a |  ]
+		cull: 1
+		cull: 2
+		cull: 3
+		cull: 4.
+	self
+		should: [ 
+			[ :x :y :z :a :b |  ]
+				cull: 1
+				cull: 2
+				cull: 3
+				cull: 4 ]
+		raise: Error.
+	self
+		assert:
+			([ 0 ]
+				cull: 1
+				cull: 2
+				cull: 3
+				cull: 4) = 0.
+	self
+		assert:
+			([ :x | x ]
+				cull: 1
+				cull: 2
+				cull: 3
+				cull: 4) = 1.
+	self
+		assert:
+			([ :x :y | y ]
+				cull: 1
+				cull: 2
+				cull: 3
+				cull: 4) = 2.
+	self
+		assert:
+			([ :x :y :z | z ]
+				cull: 1
+				cull: 2
+				cull: 3
+				cull: 4) = 3.
+	self
+		assert:
+			([ :x :y :z :a | a ]
+				cull: 1
+				cull: 2
+				cull: 3
+				cull: 4) = 4!
 
 testEmptyBlock
 	(Array

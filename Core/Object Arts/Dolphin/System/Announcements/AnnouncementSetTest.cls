@@ -10,9 +10,15 @@ AnnouncementSetTest comment: 'SUnit tests for announcement sets'!
 !AnnouncementSetTest categoriesForClass!Announcements-Tests-Core-Tests! !
 !AnnouncementSetTest methodsFor!
 
-testIncludeOnlyOnce	|set|	set := AnnouncementMockA, AnnouncementMockB, AnnouncementMockA.	self assert: set size = 2!
+testIncludeOnlyOnce
+	|set|
+	set := AnnouncementMockA, AnnouncementMockB, AnnouncementMockA.
+	self assert: set size = 2!
 
-testInstanceCreation	|set|	set := AnnouncementMockA, AnnouncementMockB.	self assert: set size = 2 ! !
+testInstanceCreation
+	|set|
+	set := AnnouncementMockA, AnnouncementMockB.
+	self assert: set size = 2 ! !
 !AnnouncementSetTest categoriesFor: #testIncludeOnlyOnce!public!testing! !
 !AnnouncementSetTest categoriesFor: #testInstanceCreation!public!testing! !
 
