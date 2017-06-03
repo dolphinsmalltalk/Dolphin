@@ -19,6 +19,24 @@ testRecreateMaintainsModelConnection
 	t model value: 'bbb'.
 	"If this fails, then the view did not receive a #valueChanged event from the model"
 	self assert: t view value = 'bbb'.
-	t topShell exit! !
+	t topShell exit!
+
+testReplaceModel
+
+	| t a b flag |
+	[
+		flag := true.
+		t := TextPresenter show.
+		a := 'aaa' asValue.
+		b := 'bbb' asValue.
+		t model: a.
+		t model: b.
+		t when: #'valueChanged' send: #'value' to: [flag := false].
+		a value: 'AAA'.
+		self assert: flag.
+	] ensure: [
+		t topShell exit.
+	].! !
 !ViewTest categoriesFor: #testRecreateMaintainsModelConnection!public!unit tests! !
+!ViewTest categoriesFor: #testReplaceModel!public!unit tests! !
 

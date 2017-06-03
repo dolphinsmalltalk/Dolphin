@@ -171,6 +171,7 @@ help
 model: anImageStripperValueModel
 	"Connects the receiver to anImageStripperValueModel"
 
+	model removeEventsTriggeredFor: self.
 	super model: anImageStripperValueModel.
 	self model when: #valueChanged send: #refreshContents to: self.
 	self value: self value copy.
