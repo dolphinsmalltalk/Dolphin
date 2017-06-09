@@ -114,7 +114,7 @@ actualClassChainMethods
 	^dict values!
 
 addCategoriesOfMethod: aCompiledMethod
-	(aCompiledMethod categories difference: categoriesPresenter model asSet) 
+	(aCompiledMethod realCategories difference: categoriesPresenter model asSet) 
 		do: [:each | categoriesPresenter model addCategory: each]!
 
 addMethod: method toCategory: target 
