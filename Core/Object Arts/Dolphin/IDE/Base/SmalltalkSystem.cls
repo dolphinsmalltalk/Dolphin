@@ -1040,15 +1040,22 @@ browseViewHierarchy: aView
 		caption: ('View hierarchy of a <1p> (<2d>)' expandMacrosWith: aView class with: aView handle)!
 
 buildAllSelectors
-	| set classes |
+	"Private - Answer a set of all message selectors understood by any class in the system. This
+	needs to run as fast as possible to avoid impacting browser perf when editing."
+
+	| set classes count |
 	classes := Smalltalk allClasses.
 	"On average there seem to be between 10 and 11 unique selectors per class"
-	set := IdentitySet new: classes size * 11.
-	classes do: 
-			[:each |
-			set addAll: each understoodSelectors.
-			set addAll: each class understoodSelectors].
-	^set.!
+	count := classes size.
+	set := IdentitySet new: count * 11.
+	1 to: count
+		do: 
+			[:i |
+			| each |
+			each := classes at: i.
+			each understoodSelectors do: [:s | set add: s].
+			each class understoodSelectors do: [:s | set add: s]].
+	^set!
 
 buildMessageMenu: aMenu forMethods: aCollection browseSelector: browseSelector extraArgs: extraArgs browseOtherSelector: browseOtherSelector 
 	"Private - Build a messages dynamic pop-up for [local] references to/definitions of."

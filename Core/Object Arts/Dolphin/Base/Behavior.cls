@@ -862,10 +862,10 @@ selectMethods: aMonadicValuable
 	^answer!
 
 selectors
-	"Answer a <Set> of <Symbol>s, being all the selectors of all the methods
+	"Answer a <collection> of <Symbol>s, being all the selectors of all the methods
 	in the receiver."
 
-	^(methodDictionary ?? _NullMethodDictionary) keys!
+	^(methodDictionary ifNil: [^#()]) keys!
 
 setShapeFlags: anIntegerMask to: aBoolean
 	"Private - Set/Reset the receivers shape/structure flags (as defined by anIntegerMask)

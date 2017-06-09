@@ -1053,9 +1053,10 @@ understoodSelectors
 	they are implemented in superclasses. This should however include those that are not in the method dictionary
 	but will be understood as a result of #doesNotUnderstand: processing, if that is possible."
 
-	^(IdentitySet withAll: super understoodSelectors)
-		addAll: self template keys;
-		yourself!
+	| selectors |
+	selectors := super understoodSelectors asSet.
+	self template keysDo: [:each | selectors add: each].
+	^selectors!
 
 uninitializeBeforeRemove
 	"Perform any pre-removal uninitialisation for the class.
