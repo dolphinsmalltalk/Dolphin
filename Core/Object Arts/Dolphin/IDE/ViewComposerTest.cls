@@ -34,12 +34,6 @@ getButtonResource
 getContainerResource
 	^(ResourceIdentifier class: ContainerView) resource!
 
-getShellResource
-	^(ResourceIdentifier class: Shell) resource!
-
-getStaticTextResource
-	^(ResourceIdentifier class: TextPresenter name: 'Static text') resource!
-
 setUp
 	vc := ViewComposer show.
 	testClass := ViewComposerTest 
@@ -58,18 +52,10 @@ tearDown
 testBasicEdit
 	| sampleResourceIdentifier |
 	self assert: vc caption = 'View Composer'.
-	"Test loading a default shell"
-	vc newShellView.
+	"Test open something reasonably complex"
+	vc openOn: (ResourceIdentifier class: MethodBrowserShell).
 	self assert: vc composingView class == ShellView.
 	self assert: vc primarySelection = vc composingView.
-	"Test closing"
-	vc viewCloseNoPrompt.
-	self assert: vc composingView isNil.
-	self assert: vc hasComposingView not.
-	self assert: vc caption = 'View Composer'.
-	self assert: vc viewHierarchyPresenter model isEmpty.
-	"Test open on something more complex"
-	vc openOn: (ResourceIdentifier class: SystemBrowserShell).
 	"Test saving"
 	sampleResourceIdentifier := ResourceIdentifier class: testClass.
 	vc resourceIdentifier: sampleResourceIdentifier.
@@ -77,6 +63,9 @@ testBasicEdit
 	self assert: (testClass class includesSelector: #resource_Default_view).
 	vc viewCloseNoPrompt.
 	self assert: vc composingView isNil.
+	self assert: vc hasComposingView not.
+	self assert: vc caption = 'View Composer'.
+	self assert: vc viewHierarchyPresenter model isEmpty.
 
 	"Test we can reload what we saved"
 	vc openOn: sampleResourceIdentifier.
@@ -253,8 +242,6 @@ testZOrderPreservedByMutate
 !ViewComposerTest categoriesFor: #dragResourceFor:!private!unit tests! !
 !ViewComposerTest categoriesFor: #getButtonResource!private!unit tests! !
 !ViewComposerTest categoriesFor: #getContainerResource!private!unit tests! !
-!ViewComposerTest categoriesFor: #getShellResource!private!unit tests! !
-!ViewComposerTest categoriesFor: #getStaticTextResource!private!unit tests! !
 !ViewComposerTest categoriesFor: #setUp!private!unit tests! !
 !ViewComposerTest categoriesFor: #tearDown!private!unit tests! !
 !ViewComposerTest categoriesFor: #testBasicEdit!public!unit tests! !
