@@ -88,7 +88,7 @@ DolphinTest subclass: #DebuggerTest
 	poolDictionaries: 'OpcodePool'
 	classInstanceVariableNames: ''!
 DolphinTest subclass: #IdeaSpaceShellTest
-	instanceVariableNames: 'ideaShell'
+	instanceVariableNames: 'ideaShell browserPlugins'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!

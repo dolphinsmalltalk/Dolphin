@@ -70,11 +70,14 @@ addVirtualItems: aCollection insertStruct: aTVINSERTSTRUCT
 	aTVINSERTSTRUCT item allCallbacks.
 	self withOldWndProc: 
 			["Add items with subclassing removed so don't receive TVM_INSERTITEMs"
+			| user |
+			user := UserLibrary default.
 			aCollection do: 
 					[:each |
 					| hItem |
-					hItem := self
-								sendMessage: TVM_INSERTITEM
+					hItem := user
+								sendMessage: handle
+								msg: TVM_INSERTITEM
 								wParam: 0
 								lpParam: aTVINSERTSTRUCT.
 					hItem == 0 ifFalse: [handleObjectMap at: hItem put: each]]]!

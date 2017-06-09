@@ -2193,23 +2193,25 @@ saveNewMethod: aString
 	self method: newMethod.
 	self statusModel value: status!
 
-saveStateOn: aWriteStream 
+saveStateOn: aWriteStream
 	"Private - Write the source of a monadic block that will configure an instance of the receiver's class
 	to match the state current receiver, to aWriteStream. The block expects a fresh instance of
 	the receiver's class as it's parameter"
 
 	aWriteStream nextPutAll: '[:aClassBrowser | '.
-	self hasClassSelected 
-		ifTrue: 
-			[aWriteStream
-				nextPutAll: ('aClassBrowser actualClass: <1p>.' expandMacrosWith: self actualClass);
-				cr].
-	self method notNil 
-		ifTrue: 
-			[aWriteStream
-				nextPutAll: ('aClassBrowser method: (<1p> compiledMethodAt: <2p>).' 
-							expandMacrosWith: self actualClass
-							with: self method selector);
+	self method
+		ifNil: 
+			[self hasClassSelected
+				ifTrue: 
+					[aWriteStream
+						nextPutAll: ('aClassBrowser actualClass: <1p>.' expandMacrosWith: self actualClass);
+						cr]]
+		ifNotNil: 
+			[:method |
+			aWriteStream
+				nextPutAll: ('aClassBrowser method: (<1p> compiledMethodAt: <2p>).'
+							expandMacrosWith: method methodClass
+							with: method selector);
 				cr].
 	super saveStateOn: aWriteStream.
 	aWriteStream nextPutAll: ' value: aClassBrowser.'.

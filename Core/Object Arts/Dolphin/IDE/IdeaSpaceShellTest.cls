@@ -1,7 +1,7 @@
 "Filed out from Dolphin Smalltalk 7"!
 
 DolphinTest subclass: #IdeaSpaceShellTest
-	instanceVariableNames: 'ideaShell'
+	instanceVariableNames: 'ideaShell browserPlugins'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -20,9 +20,9 @@ createThreeCards
 	| tools |
 	tools := Array new: 3.
 	ideaShell view noRedrawDo: 
-			[tools at: 1 put: self newSystemBrowserCard.
-			tools at: 2 put: self newClassBrowserCard.
-			tools at: 3 put: self newViewComposerCard].
+			[tools at: 1 put: self newWorkspaceCard.
+			tools at: 2 put: self newWorkspaceCard.
+			tools at: 3 put: self newWorkspaceCard].
 	self assert: ideaShell cards size = 3.
 	tools do: 
 			[:each |
@@ -31,19 +31,13 @@ createThreeCards
 	^tools!
 
 newClassBrowserCard
-	^self newClassBrowserCard: ClassBrowserShell!
-
-newClassBrowserCard: browserClass
-	| plugins |
-	plugins := browserClass plugins.
-	browserClass plugins: #().
-	^[ideaShell newEmbeddedCardOfClass: browserClass] ensure: [browserClass plugins: plugins]!
+	^ideaShell newEmbeddedCardOfClass: ClassBrowserShell!
 
 newEnvironmentBrowserCard
-	^self newClassBrowserCard: EnvironmentBrowserShell!
+	^ideaShell newEmbeddedCardOfClass: EnvironmentBrowserShell!
 
 newSystemBrowserCard
-	^self newClassBrowserCard: SystemBrowserShell!
+	^ideaShell newEmbeddedCardOfClass: SystemBrowserShell!
 
 newViewBrowserCard
 	^ideaShell newEmbeddedCardOfClass: ResourceBrowser!
@@ -59,15 +53,22 @@ newWorkspaceCard
 
 setUp
 	super setUp.
-	ideaShell := IdeaSpaceShell show!
+	ideaShell := IdeaSpaceShell show.
+	browserPlugins := ClassBrowserAbstract subclasses collect: 
+					[:each |
+					| plugins |
+					plugins := each plugins.
+					each plugins: #().
+					each -> plugins]!
 
 tearDown
 	ideaShell destroy.
 	ideaShell := nil.
+	browserPlugins do: [:each | each key plugins: each value].
 	super tearDown!
 
 testAbsorbCard
-	| vc cb vcToolbar cardLayout |
+	| vc tool2 vcToolbar cardLayout |
 	SmalltalkSystemShell default setFocus.
 	vc := ViewComposer show.
 	self assert: ideaShell cards isEmpty.
@@ -94,8 +95,8 @@ testAbsorbCard
 
 	"Add another card and make sure it goes at the right place"
 	SmalltalkSystemShell default setFocus.
-	cb := ClassBrowserShell show.
-	ideaShell absorbCard: cb.
+	tool2 := SmalltalkWorkspaceDocument show.
+	ideaShell absorbCard: tool2.
 	self assert: ideaShell cards size = 2.
 	self assert: ideaShell isCurrentCardLast!
 
@@ -157,15 +158,13 @@ testBreakoutCard
 	self assert: ideaShell caption = 'Idea Space'!
 
 testBreakoutCardOrdering
-	| vc sb cb |
-	sb := self newSystemBrowserCard.
-	cb := self newClassBrowserCard.
-	vc := self newViewComposerCard.
+	| cards |
+	cards := self createThreeCards.
 
 	"Breakout the first card (this used to fail)"
-	sb ensureVisible.
+	cards first ensureVisible.
 	ideaShell breakoutCurrentCard.
-	sb exit!
+	cards first exit!
 
 testHistoryRemove
 	| hist cards |
@@ -329,7 +328,6 @@ testSaveRestoreErrors
 !IdeaSpaceShellTest categoriesFor: #create:subclassOf:!helpers!private! !
 !IdeaSpaceShellTest categoriesFor: #createThreeCards!helpers!private! !
 !IdeaSpaceShellTest categoriesFor: #newClassBrowserCard!private!unit tests! !
-!IdeaSpaceShellTest categoriesFor: #newClassBrowserCard:!private!unit tests! !
 !IdeaSpaceShellTest categoriesFor: #newEnvironmentBrowserCard!private!unit tests! !
 !IdeaSpaceShellTest categoriesFor: #newSystemBrowserCard!private!unit tests! !
 !IdeaSpaceShellTest categoriesFor: #newViewBrowserCard!private!unit tests! !

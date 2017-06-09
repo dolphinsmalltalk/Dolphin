@@ -829,9 +829,8 @@ iconSpacing: aPointOrNil
 	#smallIcons view mode to aPointOrNil. If nil the receiver uses the default spacing."
 
 	iconSpacing := aPointOrNil.
-	self lvmSetIconSpacing: (iconSpacing isNil ifFalse: [iconSpacing] ifTrue: [-1@-1]).
-	self fontChanged.
-!
+	self lvmSetIconSpacing: aPointOrNil ?? (-1 @ -1).
+	self fontChanged!
 
 imageFromRow: item
 	"Private - Answer the image for row which represents the <Object>, item.
@@ -1801,12 +1800,12 @@ onViewCreated
 	lastSelIndices := #().
 	self setControlBackcolor.
 	self forecolor ifNotNil: [:fore | self forecolor: fore].
-	self allColumns 
+	self allColumns
 		keysAndValuesDo: [:eachIndex :eachColumn | self basicAddColumn: eachColumn atIndex: eachIndex].
 	self viewMode: self viewMode.
 	self lvmSetExtendedListViewStyle: -1 dwExStyle: lvStyle.
 	self refreshContents.
-	self iconSpacing: iconSpacing!
+	self iconSpacing ifNotNil: [:spacing | self lvmSetIconSpacing: spacing]!
 
 onVScroll: aScrollEvent 
 	"Handler for a vertical scroll event. Workaround MS bug 813791: 'Gridlines for list-view
