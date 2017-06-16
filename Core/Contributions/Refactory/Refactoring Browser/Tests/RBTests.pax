@@ -101,7 +101,7 @@ TestCase subclass: #RefactoringBrowserTest
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 RefactoringBrowserTest subclass: #BrowserEnvironmentTest
-	instanceVariableNames: 'browser universalEnvironment'
+	instanceVariableNames: 'browser universalEnvironment totalSelectors'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!

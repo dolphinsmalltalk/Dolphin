@@ -1,7 +1,7 @@
 "Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #BrowserEnvironment
-	instanceVariableNames: 'label searchStrings search filter progressBlock'
+	instanceVariableNames: 'label searchStrings search filter'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -39,28 +39,7 @@ addSearchString: aString
 allClasses
 	"Answer all the unique non-metaclasses of all the classes and metaclasses in this environment."
 
-	| allClasses |
-	allClasses := Array writeStream: 4096.
-	self allClassesDo: [:each | allClasses nextPut: each].
-	^allClasses contents!
-
-allClassesDo: aBlock
-	"Private - Evaluate the <monadicValuable> argument, aBlock, for every class that could possibly be included in the receiver."
-
-	| allClasses numClasses step |
-	allClasses := Smalltalk allClasses.
-	numClasses := allClasses size.
-	step := numClasses // 100.
-	progressBlock value: 0.
-	1 to: numClasses
-		do: 
-			[:i |
-			| class |
-			class := allClasses at: i.
-			aBlock value: class.
-			aBlock value: class class.
-			i \\ step == 0 ifTrue: [progressBlock value: i * 100 // numClasses]].
-	progressBlock value: 100!
+	^Smalltalk allClasses!
 
 associationAt: aKey 
 	| association class |
@@ -112,14 +91,14 @@ classesAndSelectorsDo: aBlock
 			[:class | 
 			self selectorsForClass: class do: [:sel | aBlock value: class value: sel]]!
 
-classesDo: aBlock 
-	self 
-		allClassesDo: [:each | (self includesClass: each) ifTrue: [aBlock value: each]]!
+classesDo: aBlock
+	Smalltalk allBehaviorsDo: aBlock!
 
 classNames
-	| names |
-	names := IdentitySet new.
-	self classesDo: [:each | names add: each instanceClass name].
+	| classes names |
+	classes := self allClasses.
+	names := IdentitySet new: classes size.
+	classes do: [:each | names add: each name].
 	^names!
 
 classNamesFor: aCategoryName
@@ -233,9 +212,6 @@ includesResource: aResourceIdentifier
 includesSelector: aSelector in: aClass
 	^true!
 
-initialize
-	progressBlock := [:i |]!
-
 instanceVariablesFor: aClass 
 	^aClass instVarNames!
 
@@ -311,7 +287,7 @@ numberClasses
 numberSelectors
 	| total |
 	total := 0.
-	self selectorsDo: [:eachSelector | total := total + 1].
+	Smalltalk allBehaviorsDo: [:class | total := total + class numberSelectors].
 	^total!
 
 printOn: aStream
@@ -319,12 +295,6 @@ printOn: aStream
 
 problemCount
 	^self numberSelectors!
-
-progressBlock
-	^progressBlock!
-
-progressBlock: aMonadicValuable 
-	progressBlock := aMonadicValuable!
 
 protocolsFor: aClass
 	#rbFix. "category system again"
@@ -398,7 +368,6 @@ whichProtocolsInclude: aSelector in: aClass
 !BrowserEnvironment categoriesFor: #|!environments!public! !
 !BrowserEnvironment categoriesFor: #addSearchString:!accessing!public! !
 !BrowserEnvironment categoriesFor: #allClasses!enumerating!public! !
-!BrowserEnvironment categoriesFor: #allClassesDo:!enumerating!private! !
 !BrowserEnvironment categoriesFor: #associationAt:!accessing/classes!accessing-classes!public! !
 !BrowserEnvironment categoriesFor: #at:!accessing/classes!public! !
 !BrowserEnvironment categoriesFor: #at:ifAbsent:!accessing/classes!public! !
@@ -429,7 +398,6 @@ whichProtocolsInclude: aSelector in: aClass
 !BrowserEnvironment categoriesFor: #includesProtocol:in:!public!testing! !
 !BrowserEnvironment categoriesFor: #includesResource:!public!testing! !
 !BrowserEnvironment categoriesFor: #includesSelector:in:!public!testing! !
-!BrowserEnvironment categoriesFor: #initialize!public!testing! !
 !BrowserEnvironment categoriesFor: #instanceVariablesFor:!accessing!public! !
 !BrowserEnvironment categoriesFor: #instVarReadersTo:in:!environments!public! !
 !BrowserEnvironment categoriesFor: #instVarRefsTo:in:!environments!public! !
@@ -449,8 +417,6 @@ whichProtocolsInclude: aSelector in: aClass
 !BrowserEnvironment categoriesFor: #numberSelectors!accessing!public! !
 !BrowserEnvironment categoriesFor: #printOn:!printing!public! !
 !BrowserEnvironment categoriesFor: #problemCount!accessing!public! !
-!BrowserEnvironment categoriesFor: #progressBlock!accessing!public! !
-!BrowserEnvironment categoriesFor: #progressBlock:!accessing!public! !
 !BrowserEnvironment categoriesFor: #protocolsFor:!accessing!public! !
 !BrowserEnvironment categoriesFor: #referencesTo:!environments!public! !
 !BrowserEnvironment categoriesFor: #referencesTo:in:!environments!public! !

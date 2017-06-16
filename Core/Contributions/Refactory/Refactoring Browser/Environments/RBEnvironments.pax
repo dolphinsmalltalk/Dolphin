@@ -28,6 +28,7 @@ package methodNames
 	add: #Behavior -> #allSubBehaviorsDo:;
 	add: #Behavior -> #allSubBehaviorsPreOrderDo:;
 	add: #Behavior -> #isBehavior;
+	add: #Behavior -> #numberSelectors;
 	add: #Behavior -> #selectorsAndMethodsDo:;
 	add: #Behavior -> #selectorsDo:;
 	add: #Behavior -> #subBehaviors;
@@ -53,12 +54,12 @@ package!
 "Class Definitions"!
 
 Object subclass: #BrowserEnvironment
-	instanceVariableNames: 'label searchStrings search filter progressBlock'
+	instanceVariableNames: 'label searchStrings search filter'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 BrowserEnvironment subclass: #BrowserEnvironmentWrapper
-	instanceVariableNames: 'environment'
+	instanceVariableNames: 'environment progressBlock'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -148,6 +149,11 @@ isBehavior
 	#rbFix. "Dolphin doesn't normally include these horrid type tests"
 	^true!
 
+numberSelectors
+	"Answer the number of selectors in the receiver's method dictionary."
+
+	^(methodDictionary ?? #()) size!
+
 selectorsAndMethodsDo: aDyadicValuable
 	"Evaluate the <dyadicValuable> argument for each of the selector/method pairs in 
 	the receiver's method dictionary."
@@ -174,6 +180,7 @@ withAllSubBehaviorsDo: aMonadicValuable
 !Behavior categoriesFor: #allSubBehaviorsDo:!class hierarchy-accessing!enumerating!private! !
 !Behavior categoriesFor: #allSubBehaviorsPreOrderDo:!class hierarchy-accessing!private! !
 !Behavior categoriesFor: #isBehavior!public!testing! !
+!Behavior categoriesFor: #numberSelectors!enumerating!public! !
 !Behavior categoriesFor: #selectorsAndMethodsDo:!enumerating!public! !
 !Behavior categoriesFor: #selectorsDo:!enumerating!public! !
 !Behavior categoriesFor: #subBehaviors!class hierarchy-accessing!public! !

@@ -1,7 +1,7 @@
 "Filed out from Dolphin Smalltalk 7"!
 
 BrowserEnvironment subclass: #BrowserEnvironmentWrapper
-	instanceVariableNames: 'environment'
+	instanceVariableNames: 'environment progressBlock'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -12,6 +12,53 @@ Instance Variables:
 	environment	<BrowserEnvironment>	the environment we''re wrapping'!
 !BrowserEnvironmentWrapper categoriesForClass!Refactory-Environments! !
 !BrowserEnvironmentWrapper methodsFor!
+
+allClasses
+	"Answer all the unique non-metaclasses of all the classes and metaclasses in this environment."
+
+	| allClasses |
+	allClasses := Array writeStream: 4096.
+	self allClassesDo: [:each | allClasses nextPut: each].
+	^allClasses contents!
+
+allClassesDo: aBlock
+	"Private - Evaluate the <monadicValuable> argument, aBlock, for every class that could possibly be included in the receiver."
+
+	| allClasses numClasses step |
+	allClasses := Smalltalk allClasses.
+	numClasses := allClasses size.
+	progressBlock
+		ifNil: 
+			[1 to: numClasses
+				do: 
+					[:i |
+					| class |
+					class := allClasses at: i.
+					aBlock value: class.
+					aBlock value: class class]]
+		ifNotNil: 
+			[:progress |
+			step := numClasses // 100.
+			progress value: 0.
+			1 to: numClasses
+				do: 
+					[:i |
+					| class |
+					class := allClasses at: i.
+					aBlock value: class.
+					aBlock value: class class.
+					i \\ step == 0 ifTrue: [progress value: i * 100 // numClasses]].
+			progress value: 100]!
+
+classesDo: aBlock 
+	self 
+		allClassesDo: [:each | (self includesClass: each) ifTrue: [aBlock value: each]]!
+
+classNames
+	| names |
+	names := IdentitySet new.
+	self classesDo: [:each | names add: each instanceClass name].
+	^names!
 
 definesClass: aClass
 	"Answer whether this environment includes the primary definition of the class argument."
@@ -44,8 +91,20 @@ isEmpty
 isSystem
 	^false!
 
+numberSelectors
+	| total |
+	total := 0.
+	self selectorsDo: [:eachSelector | total := total + 1].
+	^total!
+
 onEnvironment: anEnvironment
 	environment := anEnvironment!
+
+progressBlock
+	^progressBlock ?? [:p | ]!
+
+progressBlock: aMonadicValuable 
+	progressBlock := aMonadicValuable!
 
 storeOn: aStream 
 	aStream
@@ -54,6 +113,10 @@ storeOn: aStream
 		nextPutAll: ' onEnvironment: '.
 	environment storeOn: aStream.
 	aStream nextPut: $)! !
+!BrowserEnvironmentWrapper categoriesFor: #allClasses!enumerating!public! !
+!BrowserEnvironmentWrapper categoriesFor: #allClassesDo:!enumerating!private! !
+!BrowserEnvironmentWrapper categoriesFor: #classesDo:!accessing/classes!public! !
+!BrowserEnvironmentWrapper categoriesFor: #classNames!accessing/classes!public! !
 !BrowserEnvironmentWrapper categoriesFor: #definesClass:!public!testing! !
 !BrowserEnvironmentWrapper categoriesFor: #environment!accessing!private! !
 !BrowserEnvironmentWrapper categoriesFor: #includesCategory:!public!testing! !
@@ -62,7 +125,10 @@ storeOn: aStream
 !BrowserEnvironmentWrapper categoriesFor: #includesSelector:in:!public!testing! !
 !BrowserEnvironmentWrapper categoriesFor: #isEmpty!public!testing! !
 !BrowserEnvironmentWrapper categoriesFor: #isSystem!public!testing! !
+!BrowserEnvironmentWrapper categoriesFor: #numberSelectors!accessing!public! !
 !BrowserEnvironmentWrapper categoriesFor: #onEnvironment:!initialize/release!public! !
+!BrowserEnvironmentWrapper categoriesFor: #progressBlock!accessing!public! !
+!BrowserEnvironmentWrapper categoriesFor: #progressBlock:!accessing!public! !
 !BrowserEnvironmentWrapper categoriesFor: #storeOn:!printing!public! !
 
 !BrowserEnvironmentWrapper class methodsFor!
