@@ -1,5 +1,6 @@
 "Load in the tests appropriate for DPRO and run them,"
-SourceManager default fileIn: 'RegressionTestsLoad.st'!
+(Package manager includesPackageNamed: 'Dolphin Base Tests') ifFalse: [
+	SourceManager default fileIn: 'RegressionTestsLoad.st']!
 
 [| results |
 results := SmalltalkSystem current runRegressionTests.

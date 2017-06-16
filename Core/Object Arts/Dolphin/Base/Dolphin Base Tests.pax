@@ -733,7 +733,7 @@ runRegressionTests: aTestSuite logTo: logStream verbose: aBoolean
 	^(CommandLineTestRunner new)
 		stream: logStream;
 		verbose: aBoolean;
-		runSuite: aTestSuite! !
+		runSuite: aTestSuite baseline: self baselinedSlowTests! !
 !SmalltalkSystem categoriesFor: #regressionTestsLogFilename!public!tests! !
 !SmalltalkSystem categoriesFor: #regressionTestSuite!private!tests! !
 !SmalltalkSystem categoriesFor: #runRegressionTests!public!tests! !

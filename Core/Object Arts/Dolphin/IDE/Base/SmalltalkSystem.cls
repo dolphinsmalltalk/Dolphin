@@ -371,6 +371,16 @@ backupOnImageSave
 backupOnImageSave: aBoolean 
 	self sessionManager backupOnImageSave: aBoolean!
 
+baselinedSlowTests
+	| laggards |
+	laggards := Set new.
+	#(#(#ReferenceFinderTest #(#testAllPaths #testAllPathsToInstance #testNotFound)) #(#BrowserEnvironmentTest #(#testOrEnvironment)) #(#IdeaSpaceShellTest #(#testSaveRestore)) #(#ViewComposerTest #(#testWidenSelection)) #(#RenameClassTest #(#testModelRenameClass)))
+		do: 
+			[:each |
+			Smalltalk at: each first
+				ifPresent: [:test | each second do: [:selector | laggards add: (test selector: selector)]]].
+	^laggards!
+
 basicCreateSubclass: aSymbol of: aClass subclasses: aCollection 
 	"Private - Create a subclass a named subclass of the specified class. Answer the new class.
 	Note that the operation is undoable."
@@ -3986,6 +3996,7 @@ wrapText: aString toWidth: max indent: colInteger tabWidth: tabInteger
 !SmalltalkSystem categoriesFor: #availablePools!accessing!public! !
 !SmalltalkSystem categoriesFor: #backupOnImageSave!accessing!public! !
 !SmalltalkSystem categoriesFor: #backupOnImageSave:!accessing!public! !
+!SmalltalkSystem categoriesFor: #baselinedSlowTests!accessing!public! !
 !SmalltalkSystem categoriesFor: #basicCreateSubclass:of:subclasses:!private!refactoring! !
 !SmalltalkSystem categoriesFor: #basicRemoveMethods:!helpers!private! !
 !SmalltalkSystem categoriesFor: #beginDrag:methods:!event handling!helpers!private! !
