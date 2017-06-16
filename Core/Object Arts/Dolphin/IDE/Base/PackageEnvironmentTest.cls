@@ -14,18 +14,18 @@ classNamesFor: aPackageEnvironment
 	"Superclass implementation will fail because PackageEnvironment may contain partial classes
 	and therefore some classes will be in both the environment and its negation."
 
-	| classNames |
+	| classNames allClassNames |
 	classNames := (aPackageEnvironment classNames asSet)
 				addAll: aPackageEnvironment not classNames;
 				yourself.
-	self assert: classNames = BrowserEnvironment new classNames.
+	allClassNames := BrowserEnvironment new classNames.
+	self assert: classNames = allClassNames.
 	"	looseClasses := Set new.
 	aPackageEnvironment packageNames do: [:eachPak | (Package manager packageNamed: eachPak) methods 
 		do: [:each | looseClasses add: each methodClass instanceClass name]].
 	self assert: ((aPackageEnvironment & aPackageEnvironment not) classes symmetricDifference: looseClasses. 
 				difference: looseClasses)."
-	self assert: (aPackageEnvironment | aPackageEnvironment not) classNames asSortedCollection
-				= BrowserEnvironment new classNames asSortedCollection!
+	self assert: (aPackageEnvironment | aPackageEnvironment not) classNames = allClassNames!
 
 testPackageEnvironment
 	| env selectors |

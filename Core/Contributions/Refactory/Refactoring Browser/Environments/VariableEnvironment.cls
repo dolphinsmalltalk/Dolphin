@@ -49,7 +49,7 @@ addClass: aClass instanceVariableWriter: aString
 	self addSearchString: aString!
 
 allClassesDo: aBlock
-	| classes instVarBlock numClasses i |
+	| classes instVarBlock numClasses i progress |
 	classes := IdentitySet new.
 	instVarBlock := 
 			[:each |
@@ -70,21 +70,21 @@ allClassesDo: aBlock
 					classes add: class class.
 					class class allSubclassesDo: [:eachSub | classes add: eachSub]]].
 	numClasses := classes size.
+	progress := self progressBlock.
 	i := 0.0.
-	progressBlock value: i.
+	progress value: i.
 	classes do: 
 			[:class |
 			aBlock value: class.
 			i := i + 1.
-			progressBlock value: i * 100 // numClasses]!
+			progress value: i * 100 // numClasses]!
 
-classForName: aString 
+classForName: aString
 	| name isMeta class |
-	isMeta := aString includes: $ .
-	name := (isMeta 
-				ifTrue: [aString copyFrom: 1 to: (aString size - 6 max: 1)]
-				ifFalse: [aString]) asSymbol.
-	class := Smalltalk at: name ifAbsent: [nil].
+	isMeta := aString identityIncludes: $\x20.
+	name := (isMeta ifTrue: [aString copyFrom: 1 to: (aString size - 6 max: 1)] ifFalse: [aString])
+				asSymbol.
+	class := Smalltalk at: name ifAbsent: [].
 	^class notNil & isMeta ifTrue: [class class] ifFalse: [class]!
 
 classNamesWithVariables
@@ -230,16 +230,15 @@ instanceVariables
 instanceVariables: anObject
 	instanceVariables := anObject!
 
-instanceVariableSelectorsFor: aClass 
+instanceVariableSelectorsFor: aClass
 	| selectors |
 	selectors := Set new.
-	#(#instanceVariables #instanceVariableReaders #instanceVariableWriters) 
-		with: #(#whichSelectorsAccess: #whichSelectorsRead: #whichSelectorsAssign:)
-		do: 
-			[:var :sel | 
-			| instVars |
-			instVars := self instVarsFor: aClass in: (self perform: var).
-			instVars do: [:each | selectors addAll: (aClass perform: sel with: each)]].
+	(self instVarsFor: aClass in: self instanceVariables)
+		do: [:each | selectors addAll: (aClass whichSelectorsAccess: each)].
+	(self instVarsFor: aClass in: self instanceVariableReaders)
+		do: [:each | selectors addAll: (aClass whichSelectorsRead: each)].
+	(self instVarsFor: aClass in: self instanceVariableWriters)
+		do: [:each | selectors addAll: (aClass whichSelectorsAssign: each)].
 	^selectors!
 
 instanceVariablesFor: aClass 
@@ -258,15 +257,15 @@ instanceVariableWriters
 instanceVariableWriters: anObject
 	instanceVariableWriters := anObject!
 
-instVarsFor: aClass in: aDictionary 
+instVarsFor: aClass in: aDictionary
 	| instVars |
-	instVars := Set new.
 	aDictionary keysAndValuesDo: 
-			[:eachKey :eachValue | 
+			[:eachKey :eachValue |
 			| cls |
 			cls := self classForName: eachKey.
-			(cls notNil and: [aClass includesBehavior: cls]) ifTrue: [instVars addAll: eachValue]].
-	^instVars!
+			(cls notNil and: [aClass includesBehavior: cls])
+				ifTrue: [(instVars ifNil: [instVars := OrderedCollection new]) addAll: eachValue]].
+	^instVars ?? #()!
 
 isEmpty
 	self accessorMethods do: [:each | (self perform: each) notEmpty ifTrue: [^false]].
