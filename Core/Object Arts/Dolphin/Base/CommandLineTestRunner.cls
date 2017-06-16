@@ -36,6 +36,9 @@ resultFor: aTestCase
 	^#indeterminate!
 
 runSuite: aTestSuite
+	self runSuyite: aTestSuite excused: #()!
+
+runSuite: aTestSuite baseline: aCollection
 	runStart := Time microsecondClockValue.
 	verbose ifTrue: [aTestSuite addDependentToHierachy: self].
 	results := TestResult new.
@@ -52,7 +55,7 @@ runSuite: aTestSuite
 			ensure: 
 				[verbose ifTrue: [aTestSuite removeDependentFromHierachy: self].
 				aTestSuite resources do: [:each | each reset]].
-	self summarizeResults.
+	self summarizeResults: aCollection.
 	^results!
 
 slowTestThreshold
@@ -90,7 +93,7 @@ summarizeFailures
 						print: each;
 						cr]]!
 
-summarizeResults
+summarizeResults: aCollection
 	| passed |
 	passed := results hasPassed.
 	stream
@@ -101,22 +104,26 @@ summarizeResults
 	self printRuntime: caseStart - runStart.
 	stream cr.
 	passed
-		ifTrue: [self summarizeTimings: self slowTestThreshold * 1000]
+		ifTrue: [self summarizeTimings: self slowTestThreshold * 1000 baseline: aCollection]
 		ifFalse: [self summarizeFailures].
 	stream flush!
 
-summarizeTimings: anInteger
-	| slowTests |
-	slowTests := (timings select: [:each | each value >= anInteger])
+summarizeTimings: anInteger baseline: aCollection
+	| laggards newLaggards |
+	laggards := (timings select: [:each | each value >= anInteger])
 				asSortedCollectionUsing: (MergesortAlgorithm sortBlock: [:a :b | a value > b value]).
+	newLaggards := laggards reject: [:each | aCollection includes: each key].
+	newLaggards size > 0 ifFalse: [^self].
 	stream
-		print: slowTests size;
-		nextPutAll: ' tests took '.
+		print: newLaggards size;
+		nextPutAll: ' test(s) took '.
 	self printRuntime: anInteger.
 	stream
-		nextPutAll: ' or more to run:';
+		nextPutAll: ' or more to run, not including ';
+		print: aCollection size;
+		nextPutAll: ' known laggards:';
 		cr.
-	slowTests do: 
+	newLaggards do: 
 			[:each |
 			stream tab.
 			self printRuntime: each value.
@@ -160,11 +167,12 @@ verbose: anObject
 !CommandLineTestRunner categoriesFor: #result!Accessing!public! !
 !CommandLineTestRunner categoriesFor: #resultFor:!helpers!private! !
 !CommandLineTestRunner categoriesFor: #runSuite:!operations!public! !
+!CommandLineTestRunner categoriesFor: #runSuite:baseline:!operations!public! !
 !CommandLineTestRunner categoriesFor: #slowTestThreshold!helpers!private! !
 !CommandLineTestRunner categoriesFor: #stream:!accessing!public! !
 !CommandLineTestRunner categoriesFor: #summarizeFailures!helpers!private! !
-!CommandLineTestRunner categoriesFor: #summarizeResults!helpers!private! !
-!CommandLineTestRunner categoriesFor: #summarizeTimings:!helpers!private! !
+!CommandLineTestRunner categoriesFor: #summarizeResults:!helpers!private! !
+!CommandLineTestRunner categoriesFor: #summarizeTimings:baseline:!helpers!private! !
 !CommandLineTestRunner categoriesFor: #update:with:from:!private!updating! !
 !CommandLineTestRunner categoriesFor: #verbose:!accessing!public! !
 
