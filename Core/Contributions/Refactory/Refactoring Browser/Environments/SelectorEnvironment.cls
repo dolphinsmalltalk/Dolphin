@@ -142,9 +142,9 @@ privateIncludesSelector: aSelector inClass: aClass
 	^(self privateSelectorsForClass: aClass) includes: aSelector!
 
 privateSelectorsForClass: aClass
-	^(aClass isMeta
-		ifTrue: [metaClassSelectors at: aClass soleInstance name ifAbsent: []]
-		ifFalse: [classSelectors at: aClass name ifAbsent: []]) ?? #()!
+	^aClass isMeta
+		ifTrue: [metaClassSelectors at: aClass soleInstance name ifAbsent: [#()]]
+		ifFalse: [classSelectors at: aClass name ifAbsent: [#()]]!
 
 privateSelectorsForClassAdd: aClass 
 	^aClass isMeta ifTrue: [metaClassSelectors at: aClass soleInstance name ifAbsentPut: [IdentitySet new: 8]] ifFalse: [classSelectors at: aClass name ifAbsentPut: [IdentitySet new: 8]]!

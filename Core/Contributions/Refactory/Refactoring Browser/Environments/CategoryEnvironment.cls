@@ -40,14 +40,10 @@ includesCategory: aCategory
 	^(categories includes: aCategory)
 		and: [super includesCategory: aCategory]!
 
-includesClass: aClass 
+includesClass: aClass
 	^(super includesClass: aClass) and: 
-			[| nonMetaClass |
-			nonMetaClass := aClass isMeta 
-						ifTrue: [aClass soleInstance]
-						ifFalse: [aClass].
-			categories 
-				includes: (environment whichCategoryIncludes: nonMetaClass name)]!
+			[#rbFix.	"Support Dolphin's multi-category system."
+			aClass instanceClass categories anySatisfy: [:each | categories includes: each name]]!
 
 initialize
 	super initialize.
