@@ -31,6 +31,9 @@ testAddAllFirst2
 testAddAllLast
 	self shouldnt: [super testAddAllLast] implement: #addAllLast:!
 
+testAddFirst
+	self shouldnt: [super testAddFirst] implement: #addFirst:!
+
 testBinaryIncludes
 	| searchee |
 	searchee := self newCollection: 'abc'.
@@ -62,6 +65,7 @@ verifyConcatenation: b with: a
 !SortedCollectionTest categoriesFor: #testAddAllFirst!public!unit tests! !
 !SortedCollectionTest categoriesFor: #testAddAllFirst2!public!unit tests! !
 !SortedCollectionTest categoriesFor: #testAddAllLast!public!unit tests! !
+!SortedCollectionTest categoriesFor: #testAddFirst!public!unit tests! !
 !SortedCollectionTest categoriesFor: #testBinaryIncludes!public!unit tests! !
 !SortedCollectionTest categoriesFor: #testReplaceFromToWithStartingAt!public!unit tests! !
 !SortedCollectionTest categoriesFor: #testStrongTalkTests!public!unit tests! !

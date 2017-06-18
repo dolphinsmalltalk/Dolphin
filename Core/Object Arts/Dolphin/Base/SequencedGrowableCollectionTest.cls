@@ -136,10 +136,19 @@ testAddAllLast
 			self assert: sequence = (self newCollection: #(1 2 3) , elems).
 			sequence removeFirst.
 			sequence addAllLast: #().
-			self assert: sequence = (self newCollection: #(2 3) , elems)]! !
+			self assert: sequence = (self newCollection: #(2 3) , elems)]!
+
+testAddFirst
+	| subject interval |
+	subject := self collectionClass new.
+	interval := 1 to: 30.
+	"Collection may have to grow a few times"
+	interval do: [:each | subject addFirst: each].
+	self assert: interval reverse equals: subject asArray! !
 !SequencedGrowableCollectionTest categoriesFor: #testAddAllFirst!public!unit tests! !
 !SequencedGrowableCollectionTest categoriesFor: #testAddAllFirst2!public!unit tests! !
 !SequencedGrowableCollectionTest categoriesFor: #testAddAllLast!public!unit tests! !
+!SequencedGrowableCollectionTest categoriesFor: #testAddFirst!public!unit tests! !
 
 !SequencedGrowableCollectionTest class methodsFor!
 
