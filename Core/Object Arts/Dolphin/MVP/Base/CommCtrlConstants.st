@@ -87,4 +87,8 @@ CommCtrlConstants at: 'NM_SETCURSOR' put: -16r11!
 CommCtrlConstants at: 'NM_SETFOCUS' put: -16r7!
 CommCtrlConstants at: 'TTN_GETDISPINFOA' put: -16r208!
 CommCtrlConstants at: 'TTN_GETDISPINFOW' put: -16r212!
+CommCtrlConstants at: 'TVIF_EXPANDEDIMAGE' put: 16r200!
+CommCtrlConstants at: 'TVIF_STATEEX' put: 16r100!
+CommCtrlConstants at: 'TVIS_EX_DISABLED' put: 16r2!
+CommCtrlConstants at: 'TVIS_EX_FLAT' put: 16r1!
 CommCtrlConstants shrink!
