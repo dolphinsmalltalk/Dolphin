@@ -22,7 +22,13 @@ removalOfSelectionLeaves: aClass
 	siblings := aClass superclass subclasses.
 	^siblings size = 1 
 		ifTrue: [aClass superclass]
-		ifFalse: [siblings after: aClass]! !
+		ifFalse: [siblings after: aClass]!
+
+resetSelection
+	super resetSelection.
+	self assertContains: Object.
+	self assertContains: Behavior! !
 !ClassHierarchySelectorTest categoriesFor: #classToTest!helpers!private! !
 !ClassHierarchySelectorTest categoriesFor: #removalOfSelectionLeaves:!helpers!private! !
+!ClassHierarchySelectorTest categoriesFor: #resetSelection!helpers!private! !
 

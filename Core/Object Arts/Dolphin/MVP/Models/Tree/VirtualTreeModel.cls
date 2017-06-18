@@ -138,7 +138,13 @@ hasChildrenBlock: aMonadicValuable
 
 	hasChildrenBlock := aMonadicValuable ifNil: [self defaultHasChildrenBlock]!
 
-includes: anObject 
+hasRoot: anObject
+	^(filter value: anObject) and: 
+			[| comparer |
+			comparer := self searchPolicy.
+			roots anySatisfy: [:each | comparer compare: anObject with: each]]!
+
+includes: anObject
 	"Answer whether the <Object> argument is one of the elements of the receiver. Uses
 	the receiver's search policy for comparison."
 
@@ -146,10 +152,9 @@ includes: anObject
 	passes the filter and its ultimate root is in the tree."
 
 	^(filter value: anObject) and: 
-			[| comparer progenitor |
-			comparer := self searchPolicy.
-			progenitor := (self withAllParents: anObject) first.
-			self roots anySatisfy: [:each | comparer compare: progenitor with: each]]!
+			[| parents |
+			parents := self allParentsOf: anObject.
+			parents isEmpty or: [self hasRoot: parents first]]!
 
 initialize
 	"Private - Initialize some instance variables to defaults."
@@ -203,7 +208,7 @@ parentOf: anObject
 	receiver. If anObject is a root of the hierarchy then answer nil.
 	The getParentBlock is evaluated for this purpose"
 
-	((self roots includes: anObject) or: [anObject isNil]) ifTrue: [^nil].
+	((self hasRoot: anObject) or: [anObject isNil]) ifTrue: [^nil].
 	^getParentBlock value: anObject!
 
 remove: anObject ifAbsent: aNiladicValuable 
@@ -236,6 +241,7 @@ roots
 !VirtualTreeModel categoriesFor: #getParentBlock:!adapters!public! !
 !VirtualTreeModel categoriesFor: #hasChildren:!hierarchy!public!testing! !
 !VirtualTreeModel categoriesFor: #hasChildrenBlock:!adapters!public! !
+!VirtualTreeModel categoriesFor: #hasRoot:!hierarchy!public!testing! !
 !VirtualTreeModel categoriesFor: #includes:!hierarchy!public!searching! !
 !VirtualTreeModel categoriesFor: #initialize!initializing!private! !
 !VirtualTreeModel categoriesFor: #move:asChildOf:!public!updating! !

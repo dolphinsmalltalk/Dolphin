@@ -232,12 +232,10 @@ rebuildFilter
 	aVirtualTreeModel := self treeModel.
 	visibleNodes := Set new.
 	self list do: 
-			[:each | 
-			| size |
-			size := visibleNodes size.
-			visibleNodes add: each.
-			"Avoid the cost of walking the parent chain if object was already in the set."
-			visibleNodes size > size ifTrue: [visibleNodes addAll: (aVirtualTreeModel allParentsOf: each)]]!
+			[:each |
+			"Avoid the cost of walking the parent chain if object is already in the set."
+			(visibleNodes addNewElement: each)
+				ifTrue: [visibleNodes addAll: (aVirtualTreeModel allParentsOf: each)]]!
 
 refresh
 	"Private - Refresh the display of the receiver"

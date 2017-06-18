@@ -231,15 +231,13 @@ isEmpty
 
 	^self roots isEmpty!
 
-keyOfNode: node in: collection ifAbsent: exceptionHandler 
+keyOfNode: node in: collection ifAbsent: exceptionHandler
 	"Answer the 'key' of the specified <Object> node in the specified keyed collection, or the
 	result of evaluating the <niladicValuable> exception handler if no match is found. This
 	method is used to allow the model to determine the comparison policy used to locate elements
 	in collections (e.g. equality vs. identity)."
 
-	" Implementation Note: Default to #keyAtValue:, which is an identity comparison."
-
-	^self searchPolicy 
+	^self searchPolicy
 		keyAtValue: node
 		in: collection
 		ifAbsent: exceptionHandler!
