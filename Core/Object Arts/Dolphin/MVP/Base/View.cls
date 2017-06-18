@@ -4127,16 +4127,14 @@ wmNcPaint: message wParam: wParam lParam: lParam
 		lParam: lParam!
 
 wmNotify: message wParam: wParam lParam: lParam
-	"Private - Redirects WM_NOTIFY messages to the appropriate control as a notify message.
-	Test control for nil because RichText instances receive a EN_SAVECLIPBOARD if
-	they write to the clipboard, AFTER they receive wmNcDestroy. Don't know why."
+	"Private - Redirects WM_NOTIFY messages to the appropriate control as a notify message."
 
-	| pNMHdr control |
-	"Rather than create a structure here, we just treat as an address as notifications
+	"Implementation Note: Rather than create a structure here, we just treat as an address as notifications
 	 are very frequent and mostly ignored."
-	pNMHdr := lParam asExternalAddress.
-	^(control := self class withHandle: (pNMHdr dwordAtOffset: 0)) notNil
-		ifTrue: [control nmNotify: pNMHdr]!
+
+	| pNMHdr |
+	^(self class withHandle: ((pNMHdr := VMLibrary default addressFromInteger: lParam) dwordAtOffset: 0))
+		ifNotNil: [:control | control nmNotify: pNMHdr]!
 
 wmPaint: message wParam: wParam lParam: lParam
 	"Private - This window requires painting. By default we use the internal painting

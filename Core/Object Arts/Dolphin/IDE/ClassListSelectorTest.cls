@@ -57,7 +57,9 @@ removalOfSelectionLeaves: aClass
 
 resetSelection
 	presenter browserEnvironment: BrowserEnvironment new.
-	super resetSelection!
+	super resetSelection.
+	self assertContains: Object.
+	self assertContains: Behavior.!
 
 testAddRemoveListItems
 	"Test adding and removing classes"

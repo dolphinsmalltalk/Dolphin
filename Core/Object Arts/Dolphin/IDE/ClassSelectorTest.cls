@@ -114,11 +114,11 @@ testAddRemove
 
 	| nilSubclasses |
 	self resetSelection.
-	self assertContains: Object.
-	self assertContains: Behavior.
 
 	"Add classes"
 	self createClassesABC.
+	"If Object was not already present, it needs to be now"
+	self assertContains: Object.
 	self assertContains: dolphinTestB.
 	self assertContains: dolphinTestA.
 	self assertContains: dolphinTestC.
@@ -133,11 +133,11 @@ testAddRemove
 	dolphinTestC := nil.
 	self assertContains: dolphinTestB.
 	self assertContains: dolphinTestA.
-	dolphinTestB removeFromSystem.
 	dolphinTestA removeFromSystem.
 	self denyContains: dolphinTestA.
-	dolphinTestA := nil.
 	self denyContains: dolphinTestB.
+	dolphinTestA := nil.
+	dolphinTestB removeFromSystem.
 	dolphinTestB := nil.
 	self removeClassesGHI.
 	nilSubclasses do: [:each | self denyContains: each]!

@@ -49,7 +49,7 @@ removalOfSelectionLeaves: aClass
 		ifFalse: [siblings after: aClass]"!
 
 resetSelection
-	presenter packagesPresenter filterPresenter selection: PackageFolder root.
+	presenter packagesPresenter filterPresenter selection: (PackageFolder forPackage: packageA) parent.
 	super resetSelection!
 
 testFilteredPackageAddRemove
