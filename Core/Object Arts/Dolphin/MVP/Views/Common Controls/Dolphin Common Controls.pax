@@ -41,6 +41,7 @@ package classNames
 	add: #TVHITTESTINFO;
 	add: #TVINSERTSTRUCT;
 	add: #TVITEM;
+	add: #TVITEMEX;
 	yourself.
 
 package methodNames
@@ -139,6 +140,11 @@ CCITEM subclass: #TVITEM
 	classVariableNames: ''
 	poolDictionaries: 'TreeViewConstants'
 	classInstanceVariableNames: ''!
+TVITEM subclass: #TVITEMEX
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
 NMHDR subclass: #NMCUSTOMDRAW
 	instanceVariableNames: 'item view canvas font'
 	classVariableNames: ''
@@ -220,7 +226,7 @@ IconicListAbstract subclass: #TabView
 	poolDictionaries: 'TabViewConstants'
 	classInstanceVariableNames: ''!
 IconicListAbstract subclass: #TreeView
-	instanceVariableNames: 'handleObjectMap indentSeparation viewMode tvFlags _unused'
+	instanceVariableNames: 'handleObjectMap indentSeparation viewMode tvFlags objectHandleMap'
 	classVariableNames: 'DisableExpandAllMask NonVirtualMask TvnMap UpdateModeMask UpdateModes'
 	poolDictionaries: 'TreeViewConstants'
 	classInstanceVariableNames: ''!

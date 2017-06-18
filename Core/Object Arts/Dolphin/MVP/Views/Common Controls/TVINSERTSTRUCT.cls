@@ -10,28 +10,28 @@ TVINSERTSTRUCT comment: ''!
 !TVINSERTSTRUCT categoriesForClass!External-Data-Structured-Win32! !
 !TVINSERTSTRUCT methodsFor!
 
-hInsertAfter: anObject 
-	"Set the receiver's hInsertAfter field to the value of anObject."
+hInsertAfter: anInteger
+	"Set the receiver's 'hInsertAfter' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #hInsertAfter) put: anObject!
+	bytes dwordAtOffset: ##(self offsetOf: #hInsertAfter) put: anInteger!
 
-hParent: anObject 
-	"Set the receiver's hParent field to the value of anObject."
+hParent: anInteger
+	"Set the receiver's 'hParent' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: 0 put: anObject!
+	bytes dwordAtOffset: 0 put: anInteger!
 
 item
-	"Answer the receiver's item field as a Smalltalk object."
+	"Answer the <TVITEMEX> value of the receiver's 'item' field."
 
-	^TVITEM fromAddress: bytes yourAddress + ##(self offsetOf: #item)!
+	^TVITEMEX fromAddress: bytes yourAddress + ##(self offsetOf: #item)!
 
-item: anObject 
-	"Set the receiver's item field to the value of anObject."
+item: aTVITEMEX
+	"Set the receiver's 'item' field to the value of the argument, aTVITEMEX"
 
-	anObject 
+	aTVITEMEX
 		replaceBytesOf: bytes
 		from: ##((self offsetOf: #item) + 1)
-		to: ##((self offsetOf: #item) + TVITEM basicByteSize)
+		to: ##((self offsetOf: #item) + TVITEMEX basicByteSize)
 		startingAt: 1! !
 !TVINSERTSTRUCT categoriesFor: #hInsertAfter:!**compiled accessors**!public! !
 !TVINSERTSTRUCT categoriesFor: #hParent:!**compiled accessors**!public! !
@@ -45,10 +45,9 @@ defineFields
 		TVINSERTSTRUCT compileDefinition
 	"
 
-	self 
+	self
 		defineField: #hParent type: DWORDField writeOnly;
 		defineField: #hInsertAfter type: DWORDField writeOnly;
-		defineField: #item type: (StructureField type: TVITEM) "read/write so can get pointer to embedded TV_ITEM"
-	! !
+		defineField: #item type: (StructureField type: TVITEMEX)	"read/write so can get pointer to embedded TVITEM"! !
 !TVINSERTSTRUCT class categoriesFor: #defineFields!initializing!public! !
 
