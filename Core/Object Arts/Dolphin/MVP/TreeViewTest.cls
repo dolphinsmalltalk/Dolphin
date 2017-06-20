@@ -94,6 +94,13 @@ testRefreshTreeStatic
 
 	self refreshTree: #static!
 
+testSelectionSetter
+
+	| object1 object2 |
+	object1 := '1'.
+	presenter model: (TreeModel withRoots: (Array with: object1) searchPolicy: SearchPolicy equality).
+	self assert: (object2 := presenter selection: object1) == object1.!
+
 testSetImageBlockDoesNotAffectSelection
 	presenter view class updateModes do: 
 			[:each | 
@@ -116,6 +123,7 @@ testSetTextBlockDoesNotAffectSelection
 !TreeViewTest categoriesFor: #testRefreshTreeDynamic!public!unit tests! !
 !TreeViewTest categoriesFor: #testRefreshTreeLazy!public!unit tests! !
 !TreeViewTest categoriesFor: #testRefreshTreeStatic!public!unit tests! !
+!TreeViewTest categoriesFor: #testSelectionSetter!public!unit tests! !
 !TreeViewTest categoriesFor: #testSetImageBlockDoesNotAffectSelection!public!unit tests! !
 !TreeViewTest categoriesFor: #testSetTextBlockDoesNotAffectSelection!public!unit tests! !
 
