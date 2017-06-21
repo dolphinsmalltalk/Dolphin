@@ -94,13 +94,16 @@ initialize
 	wordSeparators := self class wordSeparators.
 	comparisonMode := #word!
 
+itemsFrom: aString 
+	comparisonMode == #character 
+		ifTrue: [^aString asOrderedCollection collect: [:each | each asString]].
+	comparisonMode == #line ifTrue: [^aString lines].
+	comparisonMode == #word ifTrue: [^self parseWordsFrom: aString].
+	self error: 'Unknown comparison mode'.!
+
 parse: aString 
 	| items positions |
-	comparisonMode == #character 
-		ifTrue: [items := aString asOrderedCollection collect: [:each | each asString]].
-	comparisonMode == #line 
-		ifTrue: [items := aString lines]
-		ifFalse: [items := self parseWordsFrom: aString].
+	items := self itemsFrom: aString.
 	positions := OrderedCollection new.
 	items inject: 1
 		into: 
@@ -267,6 +270,7 @@ wordSeparators: aString
 !DifferencesPresenter categoriesFor: #diff:and:!private!updating! !
 !DifferencesPresenter categoriesFor: #display:items:presenter:!private!updating! !
 !DifferencesPresenter categoriesFor: #initialize!initializing!private! !
+!DifferencesPresenter categoriesFor: #itemsFrom:!helpers!private! !
 !DifferencesPresenter categoriesFor: #parse:!helpers!private! !
 !DifferencesPresenter categoriesFor: #parseWordsFrom:!helpers!private! !
 !DifferencesPresenter categoriesFor: #queryCommand:!commands!private! !
