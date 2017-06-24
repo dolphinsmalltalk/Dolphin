@@ -890,7 +890,7 @@ Win32Constants at: 'WAIT_IO_COMPLETION' put: 16rC0!
 Win32Constants at: 'WAIT_OBJECT_0' put: 16r0!
 Win32Constants at: 'WAIT_TIMEOUT' put: 16r102!
 Win32Constants at: 'WHEEL_DELTA' put: 16r78!
-Win32Constants at: 'WHEEL_PAGESCROLL' put: 16rFFFFFFFF!
+Win32Constants at: 'WHEEL_PAGESCROLL' put: -16r1!
 Win32Constants at: 'WHITE_BRUSH' put: 16r0!
 Win32Constants at: 'WHITE_PEN' put: 16r6!
 Win32Constants at: 'WHITENESS' put: 16rFF0062!

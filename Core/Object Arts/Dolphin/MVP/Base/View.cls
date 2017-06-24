@@ -2425,12 +2425,12 @@ onMouseMoved: aMouseEvent
 	self presenter trigger: #mouseMoved: with: aMouseEvent.
 	^aMouseEvent defaultWindowProcessing!
 
-onMouseWheeled: aMouseEvent
+onMouseWheeled: aMouseWheelEvent
 	"Default handler for a mouse wheel movement event.
 	Accept the default window processing."
 
-	self presenter trigger: #mouseWheeled: with: aMouseEvent.
-	^aMouseEvent defaultWindowProcessing!
+	self presenter trigger: #mouseWheeled: with: aMouseWheelEvent.
+	^aMouseWheelEvent defaultWindowProcessing!
 
 onPaintRequired: aPaintEvent
 	"Default handler for paint.
@@ -4027,22 +4027,24 @@ wmMeasureItem: message wParam: wParam lParam: lParam
 	struct itemHeight: extent y.
 	^TRUE!
 
-wmMenuCommand: message wParam: wParam lParam: lParam 
+wmMenuCommand: message wParam: wParam lParam: lParam
 	"Private - Handles a WM_MENUCOMMAND message."
 
-"	Transcript
-		display: 'WM_MENUCOMMAND(';
-		display: wParam;
-		nextPut: $,;
-		display: lParam;
-		nextPut: $);
-		cr.
-"	^nil!
+	^nil!
 
 wmMouseHover: message wParam: wParam lParam: lParam
 	"Private - Default handler for a WM_MOUSEHOVER event."
 
 	^self interactor onMouseHovering: (MouseEvent
+				window: self
+				message: message
+				wParam: wParam
+				lParam: lParam)!
+
+wmMouseHWheel: message wParam: wParam lParam: lParam
+	"Private - Default handler for a WM_MOUSEHWHEEL event."
+
+	^self interactor onMouseWheeled: (MouseWheelEvent
 				window: self
 				message: message
 				wParam: wParam
@@ -4069,7 +4071,7 @@ wmMouseMove: message wParam: wParam lParam: lParam
 wmMouseWheel: message wParam: wParam lParam: lParam
 	"Private - Default handler for a WM_MOUSEWHEEL event."
 
-	^self interactor onMouseWheeled: (MouseEvent
+	^self interactor onMouseWheeled: (MouseWheelEvent
 				window: self
 				message: message
 				wParam: wParam
@@ -4888,6 +4890,7 @@ zOrderTop
 !View categoriesFor: #wmMeasureItem:wParam:lParam:!event handling-win32!private! !
 !View categoriesFor: #wmMenuCommand:wParam:lParam:!event handling-win32!private! !
 !View categoriesFor: #wmMouseHover:wParam:lParam:!event handling-win32!private! !
+!View categoriesFor: #wmMouseHWheel:wParam:lParam:!private! !
 !View categoriesFor: #wmMouseLeave:wParam:lParam:!event handling-win32!private! !
 !View categoriesFor: #wmMouseMove:wParam:lParam:!event handling-win32!private! !
 !View categoriesFor: #wmMouseWheel:wParam:lParam:!event handling-win32!private! !
@@ -5200,6 +5203,7 @@ initializeMessageMap
 				at: WM_CANCELMODE + 1 put: #wmCancelMode:wParam:lParam:;
 				at: WM_CAPTURECHANGED + 1 put: #wmCaptureChanged:wParam:lParam:;
 				at: WM_MOUSEWHEEL + 1 put: #wmMouseWheel:wParam:lParam:;
+				at: WM_MOUSEHWHEEL + 1 put: #wmMouseHWheel:wParam:lParam:;
 				at: WM_GETMINMAXINFO + 1 put: #wmGetMinMaxInfo:wParam:lParam:;
 				at: WM_MENUCOMMAND + 1 put: #wmMenuCommand:wParam:lParam:;
 				at: WM_MEASUREITEM + 1 put: #wmMeasureItem:wParam:lParam:;

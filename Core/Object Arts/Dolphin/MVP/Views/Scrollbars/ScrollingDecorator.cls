@@ -75,6 +75,19 @@ getScrollRange: anInteger
 horizontalRange
 	^self getScrollRange: SB_HORZ!
 
+horizontalScrollTo: anInteger
+	| range newX currentPos |
+	range := self horizontalRange.
+	newX := (anInteger max: range start) min: range stop - ((self getScrollPage: SB_HORZ) max: 1) + 1.
+	currentPos := self scrollOffset.
+	^newX ~= currentPos x
+		ifTrue: 
+			[self deferLayout: 
+					[:context |
+					self scrollOffset: newX @ currentPos y context: context.
+					self layoutManager positionScrolledViewOf: self context: context].
+			0]!
+
 initialize
 	super initialize.
 	self isTrackingContinuous: true.
@@ -101,44 +114,39 @@ lineExtent: aPoint
 
 	lineExtent := aPoint!
 
-onHScroll: aScrollEvent 
+onHScroll: aScrollEvent
 	"Handler for a horizontal scroll event."
 
-	| currentValue newValue range pageSize |
-	range := self horizontalRange.
-	pageSize := (self getScrollPage: SB_HORZ) max: 1.
-	newValue := currentValue := self scrollOffset x.
-	self isTrackingContinuous 
-		ifTrue: [aScrollEvent thumbTrack ifTrue: [newValue := aScrollEvent pos]]
-		ifFalse: [aScrollEvent thumbPosition ifTrue: [newValue := aScrollEvent pos]].
-	aScrollEvent lineRight ifTrue: [newValue := currentValue + self lineExtent x].
-	aScrollEvent lineLeft ifTrue: [newValue := currentValue - self lineExtent x].
-	aScrollEvent pageRight ifTrue: [newValue := currentValue + pageSize].
-	aScrollEvent pageLeft ifTrue: [newValue := currentValue - pageSize].
-	aScrollEvent top ifTrue: [newValue := range start].
-	aScrollEvent bottom ifTrue: [newValue := range stop].
-	newValue := newValue max: range start.
-	newValue := newValue min: range stop - pageSize + 1.
-	newValue ~= currentValue ifFalse: [^self].
-	self deferLayout: 
-			[:context | 
-			self scrollOffset: newValue @ self scrollOffset y context: context.
-			self layoutManager positionScrolledViewOf: self context: context]!
+	self isTrackingContinuous
+		ifTrue: [aScrollEvent thumbTrack ifTrue: [^self horizontalScrollTo: aScrollEvent pos]]
+		ifFalse: [aScrollEvent thumbPosition ifTrue: [^self horizontalScrollTo: aScrollEvent pos]].
+	aScrollEvent lineRight ifTrue: [^self scrollColumns: 1].
+	aScrollEvent lineLeft ifTrue: [^self scrollColumns: -1].
+	aScrollEvent pageRight ifTrue: [^self scrollHorizontalPages: 1].
+	aScrollEvent pageLeft ifTrue: [^self scrollHorizontalPages: -1].
+	aScrollEvent top ifTrue: [^self horizontalScrollTo: self horizontalRange start].
+	aScrollEvent bottom ifTrue: [^self horizontalScrollTo: self horizontalRange stop].
+	^nil!
 
-onMouseWheeled: aMouseEvent
+onMouseWheeled: aMouseWheelEvent
 	"Handler for a mouse wheel movement event. Scroll the receiver vertically
 	in the direction indicated, and as per the system configuration."
 
 	| rotation config |
-	self presenter trigger: #mouseWheeled: with: aMouseEvent.
-	config := self wheelScrollLines.
-	(config == 0 or: [(rotation := aMouseEvent wheelRotation) abs < 1])
-		ifTrue: [^aMouseEvent defaultWindowProcessing].
+	((config := self wheelScrollLines) == 0 or: [(rotation := aMouseWheelEvent wheelRotation) abs < 1])
+		ifTrue: [^super onMouseWheeled: aMouseWheelEvent].
 	config = WHEEL_PAGESCROLL
-		ifTrue: [self scrollPages: rotation sign * -1]
+		ifTrue: 
+			[| delta |
+			delta := rotation sign * -1.
+			aMouseWheelEvent isVertical
+				ifTrue: [self scrollPages: delta]
+				ifFalse: [self scrollHorizontalPages: delta]]
 		ifFalse: 
 			["N.B. In some rare configurations rotation might not be integral"
-			self scrollLines: (rotation * config * -1) asInteger].
+			| delta |
+			delta := (rotation * config * -1) asInteger.
+			aMouseWheelEvent isVertical ifTrue: [self scrollLines: delta] ifFalse: [self scrollColumns: delta]].
 	^0!
 
 onVScroll: aScrollEvent
@@ -207,6 +215,19 @@ preTranslateKeyboardInput: aMSG
 			"Absorb page-up/page-down for page scrolling"
 			^true].
 	^false!
+
+scrollColumns: anInteger
+	"Scroll the specified number of columns (left if negative, right if positive). Answers 0 if
+	successful, or nil if not."
+
+	^self horizontalScrollTo: self scrollOffset x + (anInteger * self lineExtent x)!
+
+scrollHorizontalPages: anInteger
+	"Scroll the specified number of pages horizontally (left if negative, right if positive)."
+
+	| pageWidth |
+	pageWidth := (self getScrollPage: SB_HORZ) max: 1.
+	^self horizontalScrollTo: self scrollOffset x + (anInteger * pageWidth)!
 
 scrollLines: anInteger
 	"Scroll the specified number of lines (up if negative, down if positive). Answers 0 if
@@ -302,21 +323,21 @@ updateScrollBars: aLayoutContext
 verticalRange
 	^self getScrollRange: SB_VERT!
 
-verticalScrollTo: desiredPos 
-	| range newPos |
+verticalScrollTo: anInteger
+	| range newY currentPos |
 	range := self verticalRange.
-	newPos := (desiredPos max: range start) 
-				min: range stop - ((self getScrollPage: SB_VERT) max: 1) + 1.
-	^newPos ~= self scrollOffset y 
+	newY := (anInteger max: range start) min: range stop - ((self getScrollPage: SB_VERT) max: 1) + 1.
+	currentPos := self scrollOffset.
+	^newY ~= currentPos y
 		ifTrue: 
 			[self deferLayout: 
-					[:context | 
-					self scrollOffset: self scrollOffset x @ newPos context: context.
+					[:context |
+					self scrollOffset: currentPos x @ newY context: context.
 					self layoutManager positionScrolledViewOf: self context: context].
 			0]!
 
 wheelScrollLines
-	^SystemMetrics current getSysParamDword: SPI_GETWHEELSCROLLLINES! !
+	^SystemMetrics current getSysParamSdword: SPI_GETWHEELSCROLLLINES! !
 !ScrollingDecorator categoriesFor: #addSubView:!hierarchy!public!sub views! !
 !ScrollingDecorator categoriesFor: #defaultLayoutManager!constants!private! !
 !ScrollingDecorator categoriesFor: #defaultWindowStyle!constants!private! !
@@ -324,6 +345,7 @@ wheelScrollLines
 !ScrollingDecorator categoriesFor: #getScrollPage:!accessing!private! !
 !ScrollingDecorator categoriesFor: #getScrollRange:!accessing!private! !
 !ScrollingDecorator categoriesFor: #horizontalRange!accessing!private! !
+!ScrollingDecorator categoriesFor: #horizontalScrollTo:!operations!private! !
 !ScrollingDecorator categoriesFor: #initialize!initializing!private! !
 !ScrollingDecorator categoriesFor: #isTrackingContinuous!accessing-styles!public! !
 !ScrollingDecorator categoriesFor: #isTrackingContinuous:!accessing-styles!public! !
@@ -334,10 +356,12 @@ wheelScrollLines
 !ScrollingDecorator categoriesFor: #onVScroll:!event handling!public! !
 !ScrollingDecorator categoriesFor: #placement:!geometry!public! !
 !ScrollingDecorator categoriesFor: #preTranslateKeyboardInput:!dispatching!public! !
+!ScrollingDecorator categoriesFor: #scrollColumns:!operations!public! !
+!ScrollingDecorator categoriesFor: #scrollHorizontalPages:!operations!public! !
 !ScrollingDecorator categoriesFor: #scrollLines:!operations!public! !
 !ScrollingDecorator categoriesFor: #scrollOffset!accessing!public! !
-!ScrollingDecorator categoriesFor: #scrollOffset:!public! !
-!ScrollingDecorator categoriesFor: #scrollOffset:context:!public! !
+!ScrollingDecorator categoriesFor: #scrollOffset:!operations!public! !
+!ScrollingDecorator categoriesFor: #scrollOffset:context:!operations!public! !
 !ScrollingDecorator categoriesFor: #scrollPage!accessing!private! !
 !ScrollingDecorator categoriesFor: #scrollPages:!operations!public! !
 !ScrollingDecorator categoriesFor: #setScrollInfo:position:!accessing!private! !

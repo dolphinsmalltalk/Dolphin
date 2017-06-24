@@ -82,7 +82,7 @@ onMouseMoved: aMouseEvent
 
 	^false!
 
-onMouseWheeled: aMouseEvent 
+onMouseWheeled: aMouseWheelEvent
 	"The event source received a mouse wheel event,
 	gobble it up."
 

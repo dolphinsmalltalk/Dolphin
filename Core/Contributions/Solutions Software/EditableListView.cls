@@ -665,11 +665,9 @@ onMouseMoved: aMouseEvent
 
 	^super onMouseMoved: aMouseEvent!
 
-onMouseWheeled: aMouseEvent
-
+onMouseWheeled: aMouseWheelEvent
 	self hideActiveEditor.
-
-	^super onMouseWheeled: aMouseEvent!
+	^super onMouseWheeled: aMouseWheelEvent!
 
 onPositionChanging: aPositionEvent
 
@@ -1057,10 +1055,6 @@ columnClass
 
 	^EditableListViewColumn!
 
-initialize
-	
-	self registerMessages: (Array with: WM_MOUSEHWHEEL -> #wmMouseWheel:wParam:lParam:)!
-
 stbConvert: instVarArray fromVersion: verInteger
 
 	| origInstVars instVars offset new |
@@ -1123,14 +1117,8 @@ stbVersion
 	15 - added hotItemAndColumn, tipText
 	16 - renamed/reused inst vars"
 
-	^16!
-
-uninitialize
-
-	self unregisterMessages: (Array with: WM_MOUSEHWHEEL)! !
+	^16! !
 !EditableListView class categoriesFor: #columnClass!constants!private! !
-!EditableListView class categoriesFor: #initialize!initialize/release!private! !
 !EditableListView class categoriesFor: #stbConvert:fromVersion:!constants!public! !
 !EditableListView class categoriesFor: #stbVersion!constants!private! !
-!EditableListView class categoriesFor: #uninitialize!initialize/release!private! !
 

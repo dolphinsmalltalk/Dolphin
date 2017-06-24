@@ -489,10 +489,10 @@ onMouseMoved: aMouseEvent
 
 	^self view onMouseMoved: aMouseEvent!
 
-onMouseWheeled: aMouseEvent 
+onMouseWheeled: aMouseWheelEvent
 	"Default handler for a mouse wheel movement event."
 
-	^self view onMouseWheeled: aMouseEvent!
+	^self view onMouseWheeled: aMouseWheelEvent!
 
 onPositionChanged: aPositionEvent
 	"Default handler for a change in position (resize or move) of the receiver's view."
