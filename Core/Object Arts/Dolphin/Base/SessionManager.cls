@@ -841,7 +841,7 @@ registerRunning
 	If we find that we have been beaten to it by a new pretender, then perform SessionManager
 	specific action, which could include bowing out, or perhaps brazenly continuing."
 
-	self createSentinel ifTrue: [self allowDuplicate ifFalse: [self quit: ERROR_ALREADY_EXISTS]].!
+	self createSentinel ifTrue: [self allowDuplicate ifFalse: [self primQuit: ERROR_ALREADY_EXISTS]].!
 
 registerServer: server
 	"Register the argument as a 'server' object which is handling unsolicited
