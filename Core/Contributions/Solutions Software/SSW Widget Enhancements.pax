@@ -1,7 +1,7 @@
 | package |
 package := Package name: 'SSW Widget Enhancements'.
 package paxVersion: 1;
-	basicComment: '© Solutions Software/John Aspinall 2016
+	basicComment: '© Solutions Software/John Aspinall 2017
 Provided under the same licence terms as Dolphin Smalltalk 7'.
 
 package basicPackageVersion: '0.001'.
@@ -16,11 +16,14 @@ package classNames
 	yourself.
 
 package methodNames
+	add: #Canvas -> #clipTo:during:;
 	add: #Canvas -> #erase:;
 	add: #Canvas -> #erase:color:;
-	add: #Canvas -> #prefixText:at:;
 	add: #Canvas -> #prefixTextDisabled:at:;
-	add: #Canvas -> #prefixTextTransparent:at:;
+	add: #ComboBox -> #cueBanner;
+	add: #ComboBox -> #cueBanner:;
+	add: #ComboBox -> #droppedWidth:;
+	add: #ComboBox -> #hasCueBanner;
 	add: #ControlView -> #freeTheme;
 	add: #ControlView -> #hasTheme;
 	add: #ControlView -> #onViewDestroyed;
@@ -34,19 +37,30 @@ package methodNames
 	add: #KeyEvent -> #resendTo:;
 	add: #NMTTDISPINFOA -> #lpszText;
 	add: #NMTTDISPINFOW -> #lpszText;
+	add: #NullConverter -> #isNullConverter;
 	add: #PointEvent -> #resendTo:;
+	add: #PushButton -> #alignment;
+	add: #PushButton -> #alignment:;
+	add: #PushButton -> #isRightButton;
+	add: #PushButton -> #isRightButton:;
 	add: #PushButton -> #themePartName;
 	add: #PushButton -> #tipText;
 	add: #PushButton -> #tipText:;
 	add: #PushButton -> #ttnGetDispInfo:;
 	add: #PushButton -> #wmNotify:wParam:lParam:;
+	add: #SystemMetrics -> #hasListViewAlphaBlendedHighlights;
+	add: #SystemMetrics -> #hasListViewHotTracking;
+	add: #TextEdit -> #cueBanner;
+	add: #TextEdit -> #cueBanner:;
+	add: #TextEdit -> #hasCueBanner;
+	add: #TypeConverter -> #isNullConverter;
 	add: #View -> #addToolTipWithHandle:;
 	add: #View -> #getUICuesState;
-	add: #View -> #requestTrackMouseLeave;
 	add: #View -> #setUICuesState:;
 	add: #View -> #shouldShowFocusRect;
 	add: #View -> #shouldShowFocusRect:;
 	add: #View -> #shouldShowKeyboardAccelerators;
+	add: #View -> #tabPrevious;
 	add: #VistaThemeLibrary -> #endBufferedAnimation:fUpdateTarget:;
 	add: #VistaThemeLibrary -> #getThemeTransitionDuration:iPartId:iStateIdFrom:iStateIdTo:iPropId:pdwDuration:;
 	add: #WinImageList -> #draw:on:at:extent:backcolor:forecolor:flags:;
@@ -64,9 +78,11 @@ package globalAliases: (Set new
 package setPrerequisites: (IdentitySet new
 	add: '..\..\Object Arts\Dolphin\Base\Dolphin';
 	add: '..\..\Object Arts\Dolphin\MVP\Views\Common Controls\Dolphin Common Controls';
+	add: '..\..\Object Arts\Dolphin\MVP\Presenters\List\Dolphin List Presenter';
 	add: '..\..\Object Arts\Dolphin\MVP\Base\Dolphin MVP Base';
 	add: '..\..\Object Arts\Dolphin\MVP\Presenters\Text\Dolphin Text Presenter';
 	add: '..\..\Object Arts\Dolphin\MVP\Views\Tooltips\Dolphin Tooltips';
+	add: '..\..\Object Arts\Dolphin\MVP\Type Converters\Dolphin Type Converters';
 	yourself).
 
 package!
@@ -94,7 +110,7 @@ TextAndImageButton subclass: #EmulatedPushButton
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 TextEdit subclass: #FormattedTextEdit
-	instanceVariableNames: 'isFormatting isErroring format separatorChars placeholderChar'
+	instanceVariableNames: 'isFormatting messageBubble format separatorChars placeholderChar'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -106,6 +122,15 @@ TextEdit subclass: #FormattedTextEdit
 
 !Canvas methodsFor!
 
+clipTo: aRectangle during: aBlock
+
+	| oldClipRegion |
+
+	oldClipRegion := Region empty.
+	GDILibrary default getClipRgn: self asParameter hrgn: oldClipRegion asParameter.
+	[self intersectClipRectangle: aRectangle.
+	aBlock value] ensure: [self selectClipRegion: oldClipRegion]!
+
 erase: aRectangle
 	"Erase the receiver to the current background colour"
 
@@ -115,18 +140,6 @@ erase: aRectangle color: aColor
 	"Erase the receiver to the current background colour"
 
 	self fillRectangle: aRectangle brush: (Brush color: aColor)!
-
-prefixText: aString at: aPoint
-
-	^UserLibrary default 
-		drawState: self asParameter
-		hbr: nil 
-		lpOutputFunc: 0 
-		lData: aString asDword 
-		wData: 0 
-		x: aPoint x y: aPoint y 
-		cx: self extent x cy: self extent y
-		fuFlags: DST_PREFIXTEXT!
 
 prefixTextDisabled: aString at: aPoint
 
@@ -138,17 +151,11 @@ prefixTextDisabled: aString at: aPoint
 		wData: 0 
 		x: aPoint x y: aPoint y 
 		cx: self extent x cy: self extent y
-		fuFlags: DST_PREFIXTEXT | DSS_DISABLED!
-
-prefixTextTransparent: aString at: aPoint
-
-	self setBkMode: TRANSPARENT.
-	self prefixText: aString at: aPoint! !
+		fuFlags: DST_PREFIXTEXT | DSS_DISABLED! !
+!Canvas categoriesFor: #clipTo:during:!drawing!public! !
 !Canvas categoriesFor: #erase:!drawing!public! !
 !Canvas categoriesFor: #erase:color:!drawing!public! !
-!Canvas categoriesFor: #prefixText:at:!drawing!public! !
 !Canvas categoriesFor: #prefixTextDisabled:at:!drawing!public! !
-!Canvas categoriesFor: #prefixTextTransparent:at:!drawing!public! !
 
 !Color class methodsFor!
 
@@ -168,6 +175,34 @@ highlightText
 !Color class categoriesFor: #buttonShadow!constants!public! !
 !Color class categoriesFor: #grayText!constants!public! !
 !Color class categoriesFor: #highlightText!constants!public! !
+
+!ComboBox methodsFor!
+
+cueBanner
+
+	| string |
+
+	string := UnicodeString new: 1024.
+
+	^(self sendMessage: 16r1704 "CB_SETCUEBANNER" wParam: string yourAddress lParam: string size) = 1
+		ifTrue: [string asString upTo: Character null]
+		ifFalse: [nil]!
+
+cueBanner: aString
+
+	self sendMessage: 16r1703 "CB_SETCUEBANNER" wParam: 0 lpParam: aString asUnicodeString!
+
+droppedWidth: anInteger
+
+	self sendMessage: CB_SETDROPPEDWIDTH wParam: anInteger!
+
+hasCueBanner
+
+	^(self sendMessage: 16r1704 "CB_GETCUEBANNER" wParam: (UnicodeString new: 1024) yourAddress lParam: 1024) > 0! !
+!ComboBox categoriesFor: #cueBanner!event handling!public! !
+!ComboBox categoriesFor: #cueBanner:!event handling!public! !
+!ComboBox categoriesFor: #droppedWidth:!hierarchy!public!sub views! !
+!ComboBox categoriesFor: #hasCueBanner!public!testing! !
 
 !ControlView methodsFor!
 
@@ -250,6 +285,7 @@ withExtent: aPoint
 	^IconWithExtent new
 		fileLocator: self fileLocator;
 		identifier: self identifier;
+		instanceHandle: self instanceHandle;
 		extent: aPoint;
 		yourself! !
 !Icon categoriesFor: #asSmallIcon!converting!public! !
@@ -281,6 +317,13 @@ lpszText
 	^bytes uintPtrAtOffset: ##(self offsetOf: #lpszText)! !
 !NMTTDISPINFOW categoriesFor: #lpszText!accessing!public! !
 
+!NullConverter methodsFor!
+
+isNullConverter
+
+	^true! !
+!NullConverter categoriesFor: #isNullConverter!public!testing! !
+
 !PointEvent methodsFor!
 
 resendTo: aView
@@ -302,6 +345,41 @@ resendTo: aView
 !PointEvent categoriesFor: #resendTo:!accessing!private! !
 
 !PushButton methodsFor!
+
+alignment
+
+	| style |
+
+	style := self baseStyle bitAnd: BS_CENTER.
+
+	style = BS_LEFT ifTrue: [^#left].
+	style = BS_CENTER ifTrue: [^#center].
+	style = BS_RIGHT ifTrue: [^#right].
+
+	^#center!
+
+alignment: aSymbol
+
+	| mask |
+
+	self baseStyleMask: BS_CENTER set: false.
+
+	mask := 
+		##(Dictionary new 
+			at: #left put: BS_LEFT;
+			at: #right put: BS_RIGHT;
+			at: #center put: BS_CENTER;
+			yourself) at: aSymbol ifAbsent: [BS_CENTER].
+
+	self baseStyleMask: mask set: true!
+
+isRightButton
+
+	^(self baseStyle bitAnd: 16r20 "BS_RIGHTBUTTON") ~= 0!
+
+isRightButton: aBoolean
+
+	self baseStyleMask: 16r20 "BS_RIGHTBUTTON" set: aBoolean!
 
 themePartName
 
@@ -341,11 +419,59 @@ wmNotify: message wParam: wParam lParam: lParam
 	code := pnmhdr sdwordAtOffset: 8.
 	(code == TTN_GETDISPINFOW or: [code == TTN_GETDISPINFOA]) ifTrue: [^self nmNotify: pnmhdr].
 	^super wmNotify: message wParam: wParam lParam: lParam! !
+!PushButton categoriesFor: #alignment!accessing-styles!public! !
+!PushButton categoriesFor: #alignment:!accessing-styles!public! !
+!PushButton categoriesFor: #isRightButton!accessing-styles!public! !
+!PushButton categoriesFor: #isRightButton:!accessing-styles!public! !
 !PushButton categoriesFor: #themePartName!constants!public! !
 !PushButton categoriesFor: #tipText!accessing!public! !
 !PushButton categoriesFor: #tipText:!accessing!public! !
 !PushButton categoriesFor: #ttnGetDispInfo:!event handling-win32!private! !
 !PushButton categoriesFor: #wmNotify:wParam:lParam:!event handling-win32!private! !
+
+!SystemMetrics methodsFor!
+
+hasListViewAlphaBlendedHighlights
+	"Does the host support alpha-blended list view selection highlights?"
+
+	^VMLibrary default isWindowsVistaOrGreater!
+
+hasListViewHotTracking
+	"Does the host support hot tracking in list views?"
+
+	^VMLibrary default isWindowsVistaOrGreater! !
+!SystemMetrics categoriesFor: #hasListViewAlphaBlendedHighlights!capability enquiries!public! !
+!SystemMetrics categoriesFor: #hasListViewHotTracking!capability enquiries!public! !
+
+!TextEdit methodsFor!
+
+cueBanner
+
+	| string |
+
+	string := UnicodeString new: 1024.
+
+	^(self sendMessage: 16r1502 "EM_GETCUEBANNER" wParam: string yourAddress lParam: string size) = 1
+		ifTrue: [string asString upTo: Character null]
+		ifFalse: [nil]!
+
+cueBanner: aString
+
+	self sendMessage: 16r1501"EM_SETCUEBANNER" wParam: false asParameter lParam: aString asUnicodeString yourAddress!
+
+hasCueBanner
+
+	^(self sendMessage: 16r1502 "EM_GETCUEBANNER" wParam: (UnicodeString new: 1024) yourAddress lParam: 1024) > 0! !
+!TextEdit categoriesFor: #cueBanner!accessing!public! !
+!TextEdit categoriesFor: #cueBanner:!accessing!public! !
+!TextEdit categoriesFor: #hasCueBanner!public!testing! !
+
+!TypeConverter methodsFor!
+
+isNullConverter
+
+	^false! !
+!TypeConverter categoriesFor: #isNullConverter!public!testing! !
 
 !View methodsFor!
 
@@ -385,13 +511,6 @@ getUICuesState
 
 	^self sendMessage: 16r0129 "WM_QUERYUISTATE" wParam: 0 lParam: 0!
 
-requestTrackMouseLeave
-	| tme |
-	tme := TRACKMOUSEEVENT new.
-	tme dwFlags: TME_LEAVE.
-	tme hwndTrack: self asParameter.
-	^(UserLibrary default trackMouseEvent: tme) ifTrue: [tme] ifFalse: [nil]!
-
 setUICuesState: anInteger
 
 	^self sendMessage: 16r0127 "WM_CHANGEUISTATE" wParam: anInteger lParam: 0!
@@ -406,14 +525,24 @@ shouldShowFocusRect: aBoolean
 
 shouldShowKeyboardAccelerators
 
-	^self getUICuesState noMask: 2 "UISF_HIDEACCEL"! !
+	^self getUICuesState noMask: 2 "UISF_HIDEACCEL"!
+
+tabPrevious
+	"Tab to the control before the receiver in the tab order of the parent."
+
+	| parent previous |
+	parent := self parentView.
+	[parent notNil and: [previous isNil]] whileTrue: [
+		previous := parent tabNextSiblingFrom: self forward: false.
+		parent := parent parentView].
+	previous isNil ifFalse: [previous tabFocus]! !
 !View categoriesFor: #addToolTipWithHandle:!operations!public! !
 !View categoriesFor: #getUICuesState!accessing!private! !
-!View categoriesFor: #requestTrackMouseLeave!helpers!public! !
 !View categoriesFor: #setUICuesState:!accessing!private! !
 !View categoriesFor: #shouldShowFocusRect!public!testing! !
 !View categoriesFor: #shouldShowFocusRect:!public!testing! !
 !View categoriesFor: #shouldShowKeyboardAccelerators!public!testing! !
+!View categoriesFor: #tabPrevious!commands!public! !
 
 !VistaThemeLibrary methodsFor!
 
