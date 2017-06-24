@@ -37,6 +37,7 @@ ButtonConstants at: 'BS_PUSHBUTTON' put: 16r0!
 ButtonConstants at: 'BS_PUSHLIKE' put: 16r1000!
 ButtonConstants at: 'BS_RADIOBUTTON' put: 16r4!
 ButtonConstants at: 'BS_RIGHT' put: 16r200!
+ButtonConstants at: 'BS_RIGHTBUTTON' put: 16r20!
 ButtonConstants at: 'BS_TEXT' put: 16r0!
 ButtonConstants at: 'BS_TOP' put: 16r400!
 ButtonConstants at: 'BS_TYPEMASK' put: 16rF!

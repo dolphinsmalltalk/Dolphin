@@ -8,7 +8,9 @@ ComboBoxConstants at: 'CB_ERR' put: -16r1!
 ComboBoxConstants at: 'CB_ERRSPACE' put: -16r2!
 ComboBoxConstants at: 'CB_FINDSTRING' put: 16r14C!
 ComboBoxConstants at: 'CB_FINDSTRINGEXACT' put: 16r158!
+ComboBoxConstants at: 'CB_GETCOMBOBOXINFO' put: 16r164!
 ComboBoxConstants at: 'CB_GETCOUNT' put: 16r146!
+ComboBoxConstants at: 'CB_GETCUEBANNER' put: 16r1704!
 ComboBoxConstants at: 'CB_GETCURSEL' put: 16r147!
 ComboBoxConstants at: 'CB_GETDROPPEDCONTROLRECT' put: 16r152!
 ComboBoxConstants at: 'CB_GETDROPPEDSTATE' put: 16r157!
@@ -21,13 +23,16 @@ ComboBoxConstants at: 'CB_GETITEMHEIGHT' put: 16r154!
 ComboBoxConstants at: 'CB_GETLBTEXT' put: 16r148!
 ComboBoxConstants at: 'CB_GETLBTEXTLEN' put: 16r149!
 ComboBoxConstants at: 'CB_GETLOCALE' put: 16r15A!
+ComboBoxConstants at: 'CB_GETMINVISIBLE' put: 16r1702!
 ComboBoxConstants at: 'CB_GETTOPINDEX' put: 16r15B!
 ComboBoxConstants at: 'CB_INITSTORAGE' put: 16r161!
 ComboBoxConstants at: 'CB_INSERTSTRING' put: 16r14A!
 ComboBoxConstants at: 'CB_LIMITTEXT' put: 16r141!
+ComboBoxConstants at: 'CB_MSGMAX' put: 16r165!
 ComboBoxConstants at: 'CB_OKAY' put: 16r0!
 ComboBoxConstants at: 'CB_RESETCONTENT' put: 16r14B!
 ComboBoxConstants at: 'CB_SELECTSTRING' put: 16r14D!
+ComboBoxConstants at: 'CB_SETCUEBANNER' put: 16r1703!
 ComboBoxConstants at: 'CB_SETCURSEL' put: 16r14E!
 ComboBoxConstants at: 'CB_SETDROPPEDWIDTH' put: 16r160!
 ComboBoxConstants at: 'CB_SETEDITSEL' put: 16r142!
@@ -36,8 +41,10 @@ ComboBoxConstants at: 'CB_SETHORIZONTALEXTENT' put: 16r15E!
 ComboBoxConstants at: 'CB_SETITEMDATA' put: 16r151!
 ComboBoxConstants at: 'CB_SETITEMHEIGHT' put: 16r153!
 ComboBoxConstants at: 'CB_SETLOCALE' put: 16r159!
+ComboBoxConstants at: 'CB_SETMINVISIBLE' put: 16r1701!
 ComboBoxConstants at: 'CB_SETTOPINDEX' put: 16r15C!
 ComboBoxConstants at: 'CB_SHOWDROPDOWN' put: 16r14F!
+ComboBoxConstants at: 'CBM_FIRST' put: 16r1700!
 ComboBoxConstants at: 'CBS_AUTOHSCROLL' put: 16r40!
 ComboBoxConstants at: 'CBS_DISABLENOSCROLL' put: 16r800!
 ComboBoxConstants at: 'CBS_DROPDOWN' put: 16r2!

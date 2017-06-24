@@ -83,6 +83,7 @@ ListViewConstants at: 'LVM_GETCOLUMNORDERARRAY' put: 16r103B!
 ListViewConstants at: 'LVM_GETCOLUMNWIDTH' put: 16r101D!
 ListViewConstants at: 'LVM_GETCOUNTPERPAGE' put: 16r1028!
 ListViewConstants at: 'LVM_GETEXTENDEDLISTVIEWSTYLE' put: 16r1037!
+ListViewConstants at: 'LVM_GETHEADER' put: 16r101F!
 ListViewConstants at: 'LVM_GETHOTCURSOR' put: 16r103F!
 ListViewConstants at: 'LVM_GETHOTITEM' put: 16r103D!
 ListViewConstants at: 'LVM_GETHOVERTIME' put: 16r1048!
@@ -101,6 +102,7 @@ ListViewConstants at: 'LVM_GETSELECTIONMARK' put: 16r1042!
 ListViewConstants at: 'LVM_GETSTRINGWIDTH' put: 16r1011!
 ListViewConstants at: 'LVM_GETSUBITEMRECT' put: 16r1038!
 ListViewConstants at: 'LVM_GETTOOLTIPS' put: 16r104E!
+ListViewConstants at: 'LVM_GETTOPINDEX' put: 16r1027!
 ListViewConstants at: 'LVM_GETVIEW' put: 16r108F!
 ListViewConstants at: 'LVM_GETVIEWRECT' put: 16r1022!
 ListViewConstants at: 'LVM_GETWORKAREAS' put: 16r1046!
