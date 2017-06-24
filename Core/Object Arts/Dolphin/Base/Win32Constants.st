@@ -215,6 +215,7 @@ Win32Constants at: 'DT_CALCRECT' put: 16r400!
 Win32Constants at: 'DT_CENTER' put: 16r1!
 Win32Constants at: 'DT_EDITCONTROL' put: 16r2000!
 Win32Constants at: 'DT_END_ELLIPSIS' put: 16r8000!
+Win32Constants at: 'DT_EXPANDTABS' put: 16r40!
 Win32Constants at: 'DT_EXTERNALLEADING' put: 16r200!
 Win32Constants at: 'DT_LEFT' put: 16r0!
 Win32Constants at: 'DT_NOCLIP' put: 16r100!
@@ -435,7 +436,6 @@ Win32Constants at: 'LR_MONOCHROME' put: 16r1!
 Win32Constants at: 'LR_SHARED' put: 16r8000!
 Win32Constants at: 'LR_VGACOLOR' put: 16r80!
 Win32Constants at: 'LTGRAY_BRUSH' put: 16r1!
-Win32Constants at: 'LVM_GETHEADER' put: 16r101F!
 Win32Constants at: 'LWA_ALPHA' put: 16r2!
 Win32Constants at: 'LWA_COLORKEY' put: 16r1!
 Win32Constants at: 'MAPVK_VK_TO_VSC' put: 16r0!
@@ -792,6 +792,12 @@ Win32Constants at: 'TPM_VERTICAL' put: 16r40!
 Win32Constants at: 'TRANSPARENT' put: 16r1!
 Win32Constants at: 'TRUE' put: 16r1!
 Win32Constants at: 'TRUNCATE_EXISTING' put: 16r5!
+Win32Constants at: 'UIS_CLEAR' put: 16r2!
+Win32Constants at: 'UIS_INITIALIZE' put: 16r3!
+Win32Constants at: 'UIS_SET' put: 16r1!
+Win32Constants at: 'UISF_ACTIVE' put: 16r4!
+Win32Constants at: 'UISF_HIDEACCEL' put: 16r2!
+Win32Constants at: 'UISF_HIDEFOCUS' put: 16r1!
 Win32Constants at: 'VER_NT_DOMAIN_CONTROLLER' put: 16r2!
 Win32Constants at: 'VER_NT_SERVER' put: 16r3!
 Win32Constants at: 'VER_NT_WORKSTATION' put: 16r1!
@@ -897,6 +903,7 @@ Win32Constants at: 'WM_CANCELJOURNAL' put: 16r4B!
 Win32Constants at: 'WM_CANCELMODE' put: 16r1F!
 Win32Constants at: 'WM_CAPTURECHANGED' put: 16r215!
 Win32Constants at: 'WM_CHANGECBCHAIN' put: 16r30D!
+Win32Constants at: 'WM_CHANGEUISTATE' put: 16r127!
 Win32Constants at: 'WM_CHAR' put: 16r102!
 Win32Constants at: 'WM_CHARTOITEM' put: 16r2F!
 Win32Constants at: 'WM_CHILDACTIVATE' put: 16r22!
@@ -974,7 +981,8 @@ Win32Constants at: 'WM_MENUSELECT' put: 16r11F!
 Win32Constants at: 'WM_MOUSEACTIVATE' put: 16r21!
 Win32Constants at: 'WM_MOUSEFIRST' put: 16r200!
 Win32Constants at: 'WM_MOUSEHOVER' put: 16r2A1!
-Win32Constants at: 'WM_MOUSELAST' put: 16r20D!
+Win32Constants at: 'WM_MOUSEHWHEEL' put: 16r20E!
+Win32Constants at: 'WM_MOUSELAST' put: 16r20E!
 Win32Constants at: 'WM_MOUSELEAVE' put: 16r2A3!
 Win32Constants at: 'WM_MOUSEMOVE' put: 16r200!
 Win32Constants at: 'WM_MOUSEWHEEL' put: 16r20A!
@@ -1016,6 +1024,7 @@ Win32Constants at: 'WM_QUERYDRAGICON' put: 16r37!
 Win32Constants at: 'WM_QUERYENDSESSION' put: 16r11!
 Win32Constants at: 'WM_QUERYNEWPALETTE' put: 16r30F!
 Win32Constants at: 'WM_QUERYOPEN' put: 16r13!
+Win32Constants at: 'WM_QUERYUISTATE' put: 16r129!
 Win32Constants at: 'WM_QUEUESYNC' put: 16r23!
 Win32Constants at: 'WM_QUIT' put: 16r12!
 Win32Constants at: 'WM_RBUTTONDBLCLK' put: 16r206!
@@ -1050,6 +1059,7 @@ Win32Constants at: 'WM_THEMECHANGED' put: 16r31A!
 Win32Constants at: 'WM_TIMECHANGE' put: 16r1E!
 Win32Constants at: 'WM_TIMER' put: 16r113!
 Win32Constants at: 'WM_UNDO' put: 16r304!
+Win32Constants at: 'WM_UPDATEUISTATE' put: 16r128!
 Win32Constants at: 'WM_USER' put: 16r400!
 Win32Constants at: 'WM_USER_LAST' put: 16r7FFF!
 Win32Constants at: 'WM_USERCHANGED' put: 16r54!
