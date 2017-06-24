@@ -101,21 +101,11 @@ lParam: anObject
 
 	bytes dwordAtOffset: 24 put: anObject!
 
-mask
-	"Answer the receiver's mask field as a Smalltalk object."
-
-	^(bytes dwordAtOffset: 0)!
-
-mask: anObject
-	"Set the receiver's mask field to the value of anObject."
-
-	bytes dwordAtOffset: 0 put: anObject!
-
 paramValidMask
 	"Private - Answer the bit mask the receiver uses to denote that the pszText
 	field has valid contents."
 
-	^self subclassResponsibility!
+	^16r8 "HDI_LPARAM"!
 
 pszText
 	"Answer the receiver's pszText field as a Smalltalk object."
@@ -147,17 +137,6 @@ stateValidMask
 	field has valid contents."
 
 	^self shouldNotImplement!
-
-text: aString
-	"Sets contents' pszMember to aString. We also hang on to it in our
-	text instance var to ensure that its lifetime is sufficiently long
-	for us to safely use it."
-
-	text := aString.
-	self
-		pszText: aString;
-		cchTextMax: aString size;
-		maskIn: self textValidMask!
 
 textPointerOffset
 	"Private - Answer the offset of the text pointer in the receiver. "
@@ -197,8 +176,6 @@ type: anObject
 !HDITEM categoriesFor: #iOrder:!**compiled accessors**!public! !
 !HDITEM categoriesFor: #lParam!**compiled accessors**!public! !
 !HDITEM categoriesFor: #lParam:!accessing!public! !
-!HDITEM categoriesFor: #mask!accessing!public! !
-!HDITEM categoriesFor: #mask:!accessing!public! !
 !HDITEM categoriesFor: #paramValidMask!constants!private! !
 !HDITEM categoriesFor: #pszText!**compiled accessors**!public! !
 !HDITEM categoriesFor: #pszText:!**compiled accessors**!public! !
@@ -206,7 +183,6 @@ type: anObject
 !HDITEM categoriesFor: #pvFilter:!**compiled accessors**!public! !
 !HDITEM categoriesFor: #stateMask:!**compiled accessors**!public! !
 !HDITEM categoriesFor: #stateValidMask!constants!private! !
-!HDITEM categoriesFor: #text:!accessing!public! !
 !HDITEM categoriesFor: #textPointerOffset!constants!private! !
 !HDITEM categoriesFor: #textValidMask!constants!private! !
 !HDITEM categoriesFor: #type!**compiled accessors**!public! !

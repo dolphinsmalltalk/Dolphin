@@ -28,8 +28,6 @@ createEmbeddedIn: aView
 		create;
 		font: aView font.
 
-	(aView hasFullRowSelect and: [aView showsSelAlways]) ifTrue: [self backcolor: Color face3d].
-
 	"Arrange pass-thru for tooltip requests so we show the same when active as when passive"
 	self addToolTipWithHandle: aView lvmGetToolTips!
 
@@ -42,7 +40,7 @@ display: aValue in: aRectangle on: aCanvas forecolor: fcolor backcolor: bcolor e
 	[self embeddedRectangle: (self displayRectangleWithin: aRectangle).
 	self embeddedText: aValue.
 	self embeddedDisplayState:
-		(aBoolean
+		(aBoolean == true
 			ifTrue: [hBoolean ifTrue: [#hot] ifFalse: [#normal]]
 			ifFalse: [#disabled]).
 	self isDisplayingEmbedded: true.
@@ -58,16 +56,13 @@ displayOnFormats
 
 displayRectangleWithin: aRectangle
 
-	| rectangle maxWidth maxHeight |
+	| rectangle |
 
 	rectangle := aRectangle insetBy: self displayInset.
 	self preferredExtent isNil ifTrue: [^rectangle].
 
-	maxWidth := self preferredExtent x.
-	maxHeight := self preferredExtent y.
-
-	rectangle width > maxWidth ifTrue: [rectangle := rectangle insetBy: (((rectangle width - maxWidth) // 2)@0)].
-	rectangle height > maxHeight ifTrue: [rectangle := rectangle insetBy: (0@((rectangle height - maxHeight) // 2))].
+	self preferredExtent x ifNotNil: [ :maxWidth | rectangle width > maxWidth ifTrue: [rectangle := rectangle insetBy: (((rectangle width - maxWidth) // 2)@0)]].
+	self preferredExtent y ifNotNil: [ :maxHeight | rectangle height > maxHeight ifTrue: [rectangle := rectangle insetBy: (0@((rectangle height - maxHeight) // 2))]].
 
 	^rectangle!
 
@@ -76,6 +71,20 @@ displayState
 	^self isDisplayingEmbedded
 		ifTrue: [self embeddedDisplayState]
 		ifFalse: [super displayState]!
+
+drawBackgroundOn: aCanvas
+
+	self isTransparent
+		ifTrue: [self isDisplayingEmbedded ifFalse: [aCanvas erase: self clientRectangle color: self backcolor]]
+		ifFalse: [super drawBackgroundOn: aCanvas]!
+
+dropDownOffset
+
+	^(-12 - self imageGap)@-10!
+
+durationOfTransition: aSymbol
+
+	^(self transitionDurations at: aSymbol ifAbsent: [nil]) ifNil: [0]!
 
 embeddedDisplayState
 	^embeddedDisplayState!
@@ -99,6 +108,10 @@ embeddedValue: aStringOrNil
 
 	aStringOrNil ifNotNil: [ :string | self text: string]!
 
+expectsText
+
+	^true!
+
 extent
 
 	^self isDisplayingEmbedded
@@ -112,12 +125,6 @@ hasEmbeddedHotTracking
 hasFocus
 
 	^self isDisplayingEmbedded not and: [super hasFocus]!
-
-imagePosOn: aCanvas
-
-	^self isDisplayingEmbedded
-		ifTrue: [(super imagePosOn: aCanvas) + self embeddedRectangle origin]
-		ifFalse: [super imagePosOn: aCanvas]!
 
 isDefault
 
@@ -135,6 +142,12 @@ isDisplayOwnerDrawn
 
 	^true!
 
+isEnabled
+
+	^(self isDisplayingEmbedded and: [self embeddedDisplayState = #disabled])
+		ifTrue: [false]
+		ifFalse: [super isEnabled]!
+
 onCursoredLeft
 
 	"The receiver has been entered by a cursor left action"
@@ -143,7 +156,7 @@ onCursoredLeft
 
 onKillFocus
 
-	self parentView hideActiveEditor.
+	self parentView onEditorLostFocus: self.
 
 	^super onKillFocus!
 
@@ -206,12 +219,6 @@ text: aString
 	text := aString.
 	self handle notNull ifTrue: [super text: aString]!
 
-textPosOn: aCanvas
-
-	^self isDisplayingEmbedded
-		ifTrue: [(super textPosOn: aCanvas) + self embeddedRectangle origin]
-		ifFalse: [super textPosOn: aCanvas]!
-
 ttnGetDispInfo: anNMTTDISPINFO 
 	"Pull in the tip text defined by my column, if any"
 
@@ -232,11 +239,14 @@ wmSetFocus: message wParam: wParam lParam: lParam
 	^super wmSetFocus: message wParam: wParam lParam: lParam! !
 !EmbeddedPushButton categoriesFor: #clientRectangle!accessing!public! !
 !EmbeddedPushButton categoriesFor: #createEmbeddedIn:!initialize/release!public! !
-!EmbeddedPushButton categoriesFor: #display:in:on:forecolor:backcolor:editable:hot:!displaying!public! !
+!EmbeddedPushButton categoriesFor: #display:in:on:forecolor:backcolor:editable:hot:!drawing!public! !
 !EmbeddedPushButton categoriesFor: #displayInset!operations!public! !
 !EmbeddedPushButton categoriesFor: #displayOnFormats!accessing!public! !
 !EmbeddedPushButton categoriesFor: #displayRectangleWithin:!calculating!private! !
 !EmbeddedPushButton categoriesFor: #displayState!accessing!public! !
+!EmbeddedPushButton categoriesFor: #drawBackgroundOn:!drawing!public! !
+!EmbeddedPushButton categoriesFor: #dropDownOffset!accessing!public! !
+!EmbeddedPushButton categoriesFor: #durationOfTransition:!accessing!public! !
 !EmbeddedPushButton categoriesFor: #embeddedDisplayState!accessing!private! !
 !EmbeddedPushButton categoriesFor: #embeddedDisplayState:!accessing!private! !
 !EmbeddedPushButton categoriesFor: #embeddedRectangle!accessing!private! !
@@ -244,14 +254,15 @@ wmSetFocus: message wParam: wParam lParam: lParam
 !EmbeddedPushButton categoriesFor: #embeddedText!accessing!private! !
 !EmbeddedPushButton categoriesFor: #embeddedText:!accessing!private! !
 !EmbeddedPushButton categoriesFor: #embeddedValue:!accessing!public! !
+!EmbeddedPushButton categoriesFor: #expectsText!public!testing! !
 !EmbeddedPushButton categoriesFor: #extent!accessing!public! !
 !EmbeddedPushButton categoriesFor: #hasEmbeddedHotTracking!public!testing! !
 !EmbeddedPushButton categoriesFor: #hasFocus!public!testing! !
-!EmbeddedPushButton categoriesFor: #imagePosOn:!calculating!private! !
 !EmbeddedPushButton categoriesFor: #isDefault!public!testing! !
 !EmbeddedPushButton categoriesFor: #isDisplayingEmbedded!accessing!private! !
 !EmbeddedPushButton categoriesFor: #isDisplayingEmbedded:!accessing!private! !
 !EmbeddedPushButton categoriesFor: #isDisplayOwnerDrawn!public!testing! !
+!EmbeddedPushButton categoriesFor: #isEnabled!public!testing! !
 !EmbeddedPushButton categoriesFor: #onCursoredLeft!event handling!public! !
 !EmbeddedPushButton categoriesFor: #onKillFocus!event handling!public! !
 !EmbeddedPushButton categoriesFor: #onRequestDeactivate!event handling!public! !
@@ -261,8 +272,27 @@ wmSetFocus: message wParam: wParam lParam: lParam
 !EmbeddedPushButton categoriesFor: #stbSaveOn:!binary filing!public! !
 !EmbeddedPushButton categoriesFor: #text!accessing!public! !
 !EmbeddedPushButton categoriesFor: #text:!accessing!public! !
-!EmbeddedPushButton categoriesFor: #textPosOn:!calculating!private! !
 !EmbeddedPushButton categoriesFor: #ttnGetDispInfo:!event handling!public! !
 !EmbeddedPushButton categoriesFor: #validateUserInterface!operations!public! !
-!EmbeddedPushButton categoriesFor: #wmSetFocus:wParam:lParam:!public! !
+!EmbeddedPushButton categoriesFor: #wmSetFocus:wParam:lParam:!event handling-win32!public! !
+
+!EmbeddedPushButton class methodsFor!
+
+stbConvertFrom: anSTBClassFormat
+
+	anSTBClassFormat version = 9 ifTrue:
+		[^[:data || newInstance |
+		newInstance := self basicNew.
+		1 to: 12 do: [:i | newInstance instVarAt: i put: (data at: i)].
+		newInstance instVarAt: 15 put: (data at: 16). "commandDescription"
+		newInstance instVarAt: 16 put: (data at: 18). "image"
+		newInstance instVarAt: 35 put: (data at: 17). "text"
+		newInstance]].
+
+	^super stbConvertFrom: anSTBClassFormat!
+
+stbVersion
+	^20! !
+!EmbeddedPushButton class categoriesFor: #stbConvertFrom:!binary filing!public! !
+!EmbeddedPushButton class categoriesFor: #stbVersion!binary filing!public! !
 

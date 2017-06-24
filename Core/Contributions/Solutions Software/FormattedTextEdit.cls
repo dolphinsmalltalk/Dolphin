@@ -1,7 +1,7 @@
 "Filed out from Dolphin Smalltalk 7"!
 
 TextEdit subclass: #FormattedTextEdit
-	instanceVariableNames: 'isFormatting isErroring format separatorChars placeholderChar'
+	instanceVariableNames: 'isFormatting messageBubble format separatorChars placeholderChar'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -36,6 +36,24 @@ applyFormat
 	
 !
 
+clearMessageBubble
+
+	self hasMessageBubble ifTrue: 
+		[self messageBubble close.
+		self messageBubble: nil]!
+
+createMessageBubble
+
+	"Return the new bubble"
+
+	self messageBubble:
+		(MessageBubble new
+			owner: self;
+			position: (self mapPoint: self clientRectangle bottomCenter to: View desktop);
+			yourself).
+
+	^self messageBubble!
+
 enUpdate
 	"Private - The receiver is about to display altered text.
 	Note that this is fired when selecting text in the edit control, 
@@ -55,11 +73,13 @@ enUpdate
 
 errorTextInvalid
 
-	self isErroring ifTrue: [^self].
+	self hasMessageBubble ifTrue: [^self].
 
-	[self isErroring: true.
-	MessageBox warning: 'Please enter a valid value'.
-	self onModelChanged; tabFocus] ensure: [self isErroring: false]!
+	self createMessageBubble
+		caption: 'Invalid Value';
+		errorMsg: 'Please enter a valid value.'.
+
+	self onModelChanged; tabFocus!
 
 format
 	^format!
@@ -72,18 +92,14 @@ formatDo: aBlock
 	[self isFormatting: true.
 	aBlock value] ensure: [self isFormatting: false]!
 
+hasMessageBubble
+
+	^self messageBubble notNil!
+
 initialize
 
 	super initialize.
-	self 
-		isFormatting: false;
-		isErroring: false!
-
-isErroring
-	^isErroring ifNil: [false]!
-
-isErroring: anObject
-	isErroring := anObject!
+	self isFormatting: false!
 
 isFormatting
 	^isFormatting!
@@ -106,14 +122,17 @@ isTextValid
 		on: InvalidFormat
 		do: [:exception | exception return: false]!
 
-onFullyCreated
+messageBubble
+	^messageBubble!
 
-	super onFullyCreated.
-	self typeconverter rightNullValue: self format!
+messageBubble: anObject
+	messageBubble := anObject!
 
 onKeyPressed: aKeyEvent
 
 	| code pos text |
+
+	self clearMessageBubble.
 
 	code := aKeyEvent code.
 	pos := self caretPosition.
@@ -129,12 +148,14 @@ onKeyPressed: aKeyEvent
 		[self sendMessage: WM_CHAR wParam: (self placeholderChar codePoint).
 		^false].
 
-	^super onKeyTyped: aKeyEvent
+	^super onKeyPressed: aKeyEvent
 !
 
 onKeyTyped: aKeyEvent
 
 	| code char pos text range |
+
+	self clearMessageBubble.
 
 	code := aKeyEvent code.
 	char := Character value: code.
@@ -159,6 +180,8 @@ onKeyTyped: aKeyEvent
 
 onKillFocus
 
+	self clearMessageBubble.
+
 	SessionManager inputState queueDeferredAction: [self invalidate].
 	^super onKillFocus!
 
@@ -171,8 +194,23 @@ onPaintRequired: aPaintEvent
 
 onSetFocus
 
-	self enUpdate; selectAll.
+	self enUpdate.
+
+	"Defer the selectAll if we have no model so that it will always select all
+	(without the defer, if focus was set by a click then the selectAll will be superceeded by moving the cursor to the click pos)"
+	self model value isNil 
+		ifTrue: [[self selectAll] postToInputQueue]
+		ifFalse: [self selectAll].
+
 	^super onSetFocus!
+
+onViewCreated
+
+	super onViewCreated.
+	self typeconverter rightNullValue: self format.
+
+	"Reused inst var; clear it out"
+	self messageBubble: nil!
 
 placeholderChar
 	^placeholderChar!
@@ -213,29 +251,49 @@ wmPaint: message wParam: wParam lParam: lParam
 		ifFalse: [self basicPaint: message wParam: wParam lParam: lParam]
 ! !
 !FormattedTextEdit categoriesFor: #applyFormat!helpers!private! !
+!FormattedTextEdit categoriesFor: #clearMessageBubble!helpers!private! !
+!FormattedTextEdit categoriesFor: #createMessageBubble!helpers!private! !
 !FormattedTextEdit categoriesFor: #enUpdate!event handling-win32!private! !
 !FormattedTextEdit categoriesFor: #errorTextInvalid!helpers!private! !
 !FormattedTextEdit categoriesFor: #format!accessing!private! !
 !FormattedTextEdit categoriesFor: #format:!accessing!private! !
 !FormattedTextEdit categoriesFor: #formatDo:!helpers!private! !
+!FormattedTextEdit categoriesFor: #hasMessageBubble!public!testing! !
 !FormattedTextEdit categoriesFor: #initialize!initialize/release!public! !
-!FormattedTextEdit categoriesFor: #isErroring!accessing!private! !
-!FormattedTextEdit categoriesFor: #isErroring:!accessing!private! !
 !FormattedTextEdit categoriesFor: #isFormatting!accessing!private! !
 !FormattedTextEdit categoriesFor: #isFormatting:!accessing!private! !
 !FormattedTextEdit categoriesFor: #isPlaceholder:!public!testing! !
 !FormattedTextEdit categoriesFor: #isSeparator:!public!testing! !
 !FormattedTextEdit categoriesFor: #isTextValid!private!testing! !
-!FormattedTextEdit categoriesFor: #onFullyCreated!event handling!private! !
+!FormattedTextEdit categoriesFor: #messageBubble!accessing!private! !
+!FormattedTextEdit categoriesFor: #messageBubble:!accessing!private! !
 !FormattedTextEdit categoriesFor: #onKeyPressed:!event handling!public! !
 !FormattedTextEdit categoriesFor: #onKeyTyped:!event handling!public! !
 !FormattedTextEdit categoriesFor: #onKillFocus!event handling!private! !
 !FormattedTextEdit categoriesFor: #onPaintRequired:!event handling!public! !
 !FormattedTextEdit categoriesFor: #onSetFocus!event handling!public! !
+!FormattedTextEdit categoriesFor: #onViewCreated!event handling!private! !
 !FormattedTextEdit categoriesFor: #placeholderChar!accessing!private! !
 !FormattedTextEdit categoriesFor: #placeholderChar:!accessing!private! !
 !FormattedTextEdit categoriesFor: #separatorChars!accessing!private! !
 !FormattedTextEdit categoriesFor: #separatorChars:!accessing!private! !
 !FormattedTextEdit categoriesFor: #updateModel!helpers!private! !
 !FormattedTextEdit categoriesFor: #wmPaint:wParam:lParam:!event handling-win32!public! !
+
+!FormattedTextEdit class methodsFor!
+
+stbConvertFrom: anSTBClassFormat
+
+	anSTBClassFormat version <= 20 ifTrue:
+		[^[:data || newInstance |
+		newInstance := self basicNew.
+		1 to: data size do: [:i | newInstance instVarAt: i put: (data at: i)].
+		newInstance]].
+
+	^super stbConvertFrom: anSTBClassFormat!
+
+stbVersion
+	^21! !
+!FormattedTextEdit class categoriesFor: #stbConvertFrom:!binary filing!public! !
+!FormattedTextEdit class categoriesFor: #stbVersion!binary filing!public! !
 
