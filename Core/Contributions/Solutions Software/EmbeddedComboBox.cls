@@ -66,7 +66,7 @@ defaultWindowExStyle
 defaultWindowStyle
 	"Private - Answer a default style to use when creating an EmbeddedTextEdit."
 
-	^(super defaultWindowStyle) | 128 "ES_AUTOHSCROLL"!
+	^(super defaultWindowStyle) | TextEditConstants.ES_AUTOHSCROLL!
 
 display: anObject in: aRectangle on: aCanvas forecolor: fColor backcolor: bColor editable: aBoolean hot: hBoolean
 
@@ -169,8 +169,7 @@ onViewCreated
 
 	super onViewCreated.
 
-	"CB_SETEXTENDEDUI"
-	self sendMessage: 16r0155 wParam: true asParameter
+	self sendMessage: CB_SETEXTENDEDUI wParam: true asParameter
 !
 
 preTranslateKeyboardInput: aMSG

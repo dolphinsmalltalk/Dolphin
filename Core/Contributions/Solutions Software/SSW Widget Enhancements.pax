@@ -184,13 +184,13 @@ cueBanner
 
 	string := UnicodeString new: 1024.
 
-	^(self sendMessage: 16r1704 "CB_SETCUEBANNER" wParam: string yourAddress lParam: string size) = 1
+	^(self sendMessage: CB_GETCUEBANNER wParam: string yourAddress lParam: string size) = 1
 		ifTrue: [string asString upTo: Character null]
 		ifFalse: [nil]!
 
 cueBanner: aString
 
-	self sendMessage: 16r1703 "CB_SETCUEBANNER" wParam: 0 lpParam: aString asUnicodeString!
+	self sendMessage: CB_SETCUEBANNER wParam: 0 lpParam: aString asUnicodeString!
 
 droppedWidth: anInteger
 
@@ -198,7 +198,7 @@ droppedWidth: anInteger
 
 hasCueBanner
 
-	^(self sendMessage: 16r1704 "CB_GETCUEBANNER" wParam: (UnicodeString new: 1024) yourAddress lParam: 1024) > 0! !
+	^(self sendMessage: CB_GETCUEBANNER wParam: (UnicodeString new: 1024) yourAddress lParam: 1024) > 0! !
 !ComboBox categoriesFor: #cueBanner!event handling!public! !
 !ComboBox categoriesFor: #cueBanner:!event handling!public! !
 !ComboBox categoriesFor: #droppedWidth:!hierarchy!public!sub views! !
@@ -375,11 +375,11 @@ alignment: aSymbol
 
 isRightButton
 
-	^(self baseStyle bitAnd: 16r20 "BS_RIGHTBUTTON") ~= 0!
+	^(self baseStyle bitAnd: BS_RIGHTBUTTON) ~= 0!
 
 isRightButton: aBoolean
 
-	self baseStyleMask: 16r20 "BS_RIGHTBUTTON" set: aBoolean!
+	self baseStyleMask: BS_RIGHTBUTTON set: aBoolean!
 
 themePartName
 
@@ -451,17 +451,17 @@ cueBanner
 
 	string := UnicodeString new: 1024.
 
-	^(self sendMessage: 16r1502 "EM_GETCUEBANNER" wParam: string yourAddress lParam: string size) = 1
+	^(self sendMessage: EM_GETCUEBANNER wParam: string yourAddress lParam: string size) = 1
 		ifTrue: [string asString upTo: Character null]
 		ifFalse: [nil]!
 
 cueBanner: aString
 
-	self sendMessage: 16r1501"EM_SETCUEBANNER" wParam: false asParameter lParam: aString asUnicodeString yourAddress!
+	self sendMessage: EM_SETCUEBANNER wParam: false asParameter lParam: aString asUnicodeString yourAddress!
 
 hasCueBanner
 
-	^(self sendMessage: 16r1502 "EM_GETCUEBANNER" wParam: (UnicodeString new: 1024) yourAddress lParam: 1024) > 0! !
+	^(self sendMessage: EM_GETCUEBANNER wParam: (UnicodeString new: 1024) yourAddress lParam: 1024) > 0! !
 !TextEdit categoriesFor: #cueBanner!accessing!public! !
 !TextEdit categoriesFor: #cueBanner:!accessing!public! !
 !TextEdit categoriesFor: #hasCueBanner!public!testing! !
@@ -509,11 +509,11 @@ addToolTipWithHandle: toolTipHandle
 
 getUICuesState
 
-	^self sendMessage: 16r0129 "WM_QUERYUISTATE" wParam: 0 lParam: 0!
+	^self sendMessage: WM_QUERYUISTATE wParam: 0 lParam: 0!
 
 setUICuesState: anInteger
 
-	^self sendMessage: 16r0127 "WM_CHANGEUISTATE" wParam: anInteger lParam: 0!
+	^self sendMessage: WM_CHANGEUISTATE wParam: anInteger lParam: 0!
 
 shouldShowFocusRect
 

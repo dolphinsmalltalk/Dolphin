@@ -35,7 +35,7 @@ activateEditorAt: aPoint cause: aSymbol tabbed: aBoolean
 	column := self columnAtIndex: aPoint y.
 
 	(column isEditableWith: item) ifFalse: 
-		[column isEditable ifTrue: [Sound beep: 16r30 "MB_ICONEXCLAMATION"]. "Bell if the column is disabled for the current item only"
+		[column isEditable ifTrue: [Sound beep: MessageBoxConstants.MB_ICONWARNING]. "Bell if the column is disabled for the current item only"
 		self enableRedraw. 
 		^nil].
 
@@ -1059,7 +1059,7 @@ columnClass
 
 initialize
 	
-	self registerMessages: (Array with: 16r20E "WM_MOUSEHWHEEL" -> #wmMouseWheel:wParam:lParam:)!
+	self registerMessages: (Array with: WM_MOUSEHWHEEL -> #wmMouseWheel:wParam:lParam:)!
 
 stbConvert: instVarArray fromVersion: verInteger
 
@@ -1127,7 +1127,7 @@ stbVersion
 
 uninitialize
 
-	self unregisterMessages: (Array with: 16r20E "WM_MOUSEHWHEEL")! !
+	self unregisterMessages: (Array with: WM_MOUSEHWHEEL)! !
 !EditableListView class categoriesFor: #columnClass!constants!private! !
 !EditableListView class categoriesFor: #initialize!initialize/release!private! !
 !EditableListView class categoriesFor: #stbConvert:fromVersion:!constants!public! !

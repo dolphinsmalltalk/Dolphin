@@ -58,7 +58,7 @@ display: aValue in: aRectangle on: aCanvas forecolor: fColor backcolor: bColor e
 		color := Color grayText].
 
 	"Get the actual dimensions of the text as formatted in aRectangle"
-	commonFlags := ##(DT_WORDBREAK | DT_END_ELLIPSIS | DT_LEFT| DT_NOPREFIX | DT_EDITCONTROL | 64 "DT_EXPANDTABS").
+	commonFlags := ##(DT_WORDBREAK | DT_END_ELLIPSIS | DT_LEFT| DT_NOPREFIX | DT_EDITCONTROL | DT_EXPANDTABS).
 	horzAlignmentFlag := AlignmentMap at: self column alignment ifAbsent: [DT_LEFT].
 	myRect := aRectangle insetBy: self horzDisplayOffset@0.
 	formatRect := myRect asParameter.
