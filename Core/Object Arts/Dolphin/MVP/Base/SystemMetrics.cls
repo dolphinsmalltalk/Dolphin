@@ -91,7 +91,10 @@ getSysParamBool: anInteger
 		ifError: [^false]) value!
 
 getSysParamDword: anInteger 
-	^(self getSysParamStruct: anInteger type: DWORD) value!
+	^(self getSysParamStruct: anInteger type: DWORDBytes) value!
+
+getSysParamSdword: anInteger
+	^(self getSysParamStruct: anInteger type: DWORDBytes) asSignedInteger!
 
 getSysParamStruct: anInteger type: anExternalStructureClass 
 	^self 
@@ -389,6 +392,7 @@ virtualScreenRectangle
 !SystemMetrics categoriesFor: #getSysParam:type:ifError:!helpers!private! !
 !SystemMetrics categoriesFor: #getSysParamBool:!helpers!private! !
 !SystemMetrics categoriesFor: #getSysParamDword:!helpers!private! !
+!SystemMetrics categoriesFor: #getSysParamSdword:!helpers!private! !
 !SystemMetrics categoriesFor: #getSysParamStruct:type:!helpers!private! !
 !SystemMetrics categoriesFor: #hasButtonNotes!capability enquiries!public! !
 !SystemMetrics categoriesFor: #hasDesktopComposition!capability enquiries!public! !

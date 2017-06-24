@@ -76,10 +76,10 @@ onMouseMoved: aMouseEvent
 
 	^self presenter onMouseMoved: aMouseEvent!
 
-onMouseWheeled: aMouseEvent 
+onMouseWheeled: aMouseWheelEvent
 	"Default handler for a mouse wheel movement event."
 
-	^self presenter onMouseWheeled: aMouseEvent!
+	^self presenter onMouseWheeled: aMouseWheelEvent!
 
 onRightButtonDoubleClicked: aMouseEvent
 	"Default handler for a mouse Right button double-click event."

@@ -138,6 +138,7 @@ package classNames
 	add: #MockThemeLibrary;
 	add: #MouseEvent;
 	add: #MouseTracker;
+	add: #MouseWheelEvent;
 	add: #Msimg32Library;
 	add: #NCCALCSIZE_PARAMS;
 	add: #NEWTEXTMETRIC;
@@ -626,6 +627,11 @@ WindowsEvent subclass: #SizeEvent
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 PointEvent subclass: #MouseEvent
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+MouseEvent subclass: #MouseWheelEvent
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''

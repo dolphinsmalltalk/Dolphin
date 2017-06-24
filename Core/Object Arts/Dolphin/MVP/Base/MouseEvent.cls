@@ -55,14 +55,7 @@ isXButtonDown: anInteger
 keys
 	"Private - Answer the keys flags from the message."
 
-	^self wParam!
-
-wheelRotation
-	"Answer the <number> of notches that the mouse wheel was rotated to generate this
-	event (assuming that this is a WM_MOUSEWHEEL event)."
-
-	self assert: [message == WM_MOUSEWHEEL].
-	^self wParam highPartSigned / WHEEL_DELTA! !
+	^self wParam! !
 !MouseEvent categoriesFor: #button!accessing!public! !
 !MouseEvent categoriesFor: #isCtrlDown!public!testing! !
 !MouseEvent categoriesFor: #isLButtonDown!public!testing! !
@@ -71,5 +64,4 @@ wheelRotation
 !MouseEvent categoriesFor: #isShiftDown!public!testing! !
 !MouseEvent categoriesFor: #isXButtonDown:!public!testing! !
 !MouseEvent categoriesFor: #keys!accessing!private! !
-!MouseEvent categoriesFor: #wheelRotation!accessing!public! !
 

@@ -184,11 +184,11 @@ onHScroll: aScrollEvent
 	self repaintWindow.
 	^0!
 
-onMouseWheeled: aMouseEvent 
+onMouseWheeled: aMouseWheelEvent
 	"Handler for a mouse wheel movement event. We must repaint the background image."
 
 	| result |
-	result := super onMouseWheeled: aMouseEvent.
+	result := super onMouseWheeled: aMouseWheelEvent.
 	self repaintWindow.
 	^result!
 
