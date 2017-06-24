@@ -1,13 +1,16 @@
 | package |
 package := Package name: 'SSW Widget Development'.
 package paxVersion: 1;
-	basicComment: '© Solutions Software/John Aspinall 2016
+	basicComment: '© Solutions Software/John Aspinall 2017
 Provided under the same licence terms as Dolphin Smalltalk 7'.
 
 
 package methodNames
 	add: 'EditableListView class' -> #publishedAspectsOfInstances;
 	add: 'EditableListViewColumn class' -> #publishedAspectsOfInstances;
+	add: 'EmbeddedCheckBox class' -> #publishedAspectsOfInstances;
+	add: 'EmbeddedCheckButton class' -> #publishedAspectsOfInstances;
+	add: 'EmbeddedComboBox class' -> #publishedAspectsOfInstances;
 	add: 'EmbeddedTextEdit class' -> #publishedAspectsOfInstances;
 	add: 'FormattedTextEdit class' -> #publishedAspectsOfInstances;
 	add: 'OwnerDrawnButton class' -> #publishedAspectsOfInstances;
@@ -73,9 +76,39 @@ publishedAspectsOfInstances
 		add: (Aspect color: #forecolor);
 		add: (Aspect color: #backcolor);
 		add: (Aspect string: #infoTip);
-    		yourself
-! !
-!EditableListViewColumn class categoriesFor: #publishedAspectsOfInstances!public! !
+		add: (Aspect block: #isValidContentsBlock);
+    		yourself! !
+!EditableListViewColumn class categoriesFor: #publishedAspectsOfInstances!development!public! !
+
+!EmbeddedCheckBox class methodsFor!
+
+publishedAspectsOfInstances
+	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
+
+	^(super publishedAspectsOfInstances)
+		add: (Aspect boolean: #is3State);
+		yourself! !
+!EmbeddedCheckBox class categoriesFor: #publishedAspectsOfInstances!development!public! !
+
+!EmbeddedCheckButton class methodsFor!
+
+publishedAspectsOfInstances
+	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
+
+	^(super publishedAspectsOfInstances)
+		add: (Aspect boolean: #isAlwaysDrawnEnabled);
+		yourself! !
+!EmbeddedCheckButton class categoriesFor: #publishedAspectsOfInstances!development!public! !
+
+!EmbeddedComboBox class methodsFor!
+
+publishedAspectsOfInstances
+    	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
+    
+    	^(super publishedAspectsOfInstances)
+    		add: (Aspect boolean: #allowNilSelection);
+    		yourself! !
+!EmbeddedComboBox class categoriesFor: #publishedAspectsOfInstances!constants!development!public! !
 
 !EmbeddedTextEdit class methodsFor!
 
@@ -105,6 +138,8 @@ publishedAspectsOfInstances
 	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
 
 	^super publishedAspectsOfInstances
+    		add: (Aspect choice: #alignment from: TextEdit.AlignmentMap keys asSortedCollection);
+		add: (Aspect boolean: #isRightButton);
 		add: (Aspect dictionary: #transitionDurations);
 		yourself! !
 !OwnerDrawnButton class categoriesFor: #publishedAspectsOfInstances!development!public! !

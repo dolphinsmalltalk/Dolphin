@@ -1,250 +1,85 @@
 "Filed out from Dolphin Smalltalk 7"!
 
-CheckBox subclass: #EmbeddedCheckBox
-	instanceVariableNames: 'textExtent text'
+EmbeddedCheckButton subclass: #EmbeddedCheckBox
+	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'ThemeConstants'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 EmbeddedCheckBox guid: (GUID fromString: '{611f80ae-2e05-4e6f-b0c8-a0adbd00ff31}')!
 EmbeddedCheckBox comment: ''!
 !EmbeddedCheckBox categoriesForClass!MVP-Views! !
 !EmbeddedCheckBox methodsFor!
 
-buttonExtent
+basicWindowStyle
+	"Private - Answer a basic default style to use when creating a checkbox."
 
-	| size | 
+	^BS_AUTOCHECKBOX!
 
-	self isThemed ifFalse: [^(UserLibrary default getSystemMetrics: SM_CXMENUCHECK)@(UserLibrary default getSystemMetrics: SM_CYMENUCHECK)].
+defaultIStateId
 
-	size := SIZE new.
-	ThemeLibrary default getThemePartSize: self theme hdc: self canvas asParameter iPartId: BP_CHECKBOX iStateId: CBS_UNCHECKEDNORMAL prc: nil eSize: TS_DRAW psz: size.
-	^size asObject!
+	^CBS_UNCHECKEDNORMAL!
 
-createEmbeddedIn: aView
+iPartId
 
-	interactor := presenter := self.
-	flags := 0.
+	^BP_CHECKBOX!
 
-	self 
-		isManaged: true;
-		initializeModel;
-		parentView: aView;
-		create;
-		font: aView font.
+is3State
+	"Answer whether the receiver is a 3-state check box that can be 'dimmed' as well as checked
+	and unchecked."
 
-	(aView hasFullRowSelect and: [aView showsSelAlways]) ifTrue: [self backcolor: Color face3d]!
+	^(self baseStyle bitAnd: BS_TYPEMASK) = BS_AUTO3STATE!
 
-display: aValue in: aRectangle on: aCanvas forecolor: fColor backcolor: bColor editable: aBoolean hot: hBoolean
+is3State: aBoolean 
+	"Set whether the receiver is a 3-state check box that can be 'dimmed' as well as checked
+	and unchecked."
 
-	| buttonOffset textOffset |
+	self baseStyle: (aBoolean ifTrue: [BS_AUTO3STATE] ifFalse: [self basicWindowStyle])
+		maskedBy: BS_TYPEMASK!
 
-	self hasText 
-		ifTrue: [self textExtent: (aCanvas textExtent: self text)]
-		ifFalse: [self textExtent: 0@0].
+iStateFor: aValue enabled: aBoolean hot: hBoolean
 
-	buttonOffset := (self displayOffset + (((aRectangle width - self totalExtent x) @ (aRectangle height - self buttonExtent y)) // 2) rounded) max: 0@0.
-	textOffset := self textOffset + ((buttonOffset x + self buttonExtent x) @ ((aRectangle height - self textExtent y) // 2)) rounded.
-
-	self isThemed
-		ifTrue: [self drawThemed: aValue in: aRectangle on: aCanvas buttonOffset: buttonOffset textOffset: textOffset]
-		ifFalse: [self drawNonThemed: aValue in: aRectangle on: aCanvas buttonOffset: buttonOffset textOffset: textOffset]!
-
-displayOffset
-
-	^0@0!
-
-displayOnFormats
-
-	^#(#class)!
-
-drawNonThemed: aValue in: aRectangle on: aCanvas buttonOffset: buttonOffset textOffset: textOffset
-
-	| uState textPos |
-
-	uState := DFCS_BUTTONCHECK.
-
-	self isEnabled
+	^(aBoolean or: [self isAlwaysDrawnEnabled])
+	ifTrue: 
+		[(hBoolean & aBoolean)
 		ifTrue: 
 			[aValue isNil
-				ifTrue: [uState := uState | DFCS_BUTTON3STATE | DFCS_CHECKED | DFCS_INACTIVE]
-				ifFalse: [aValue ifTrue: [uState := uState | DFCS_CHECKED]]]
-		ifFalse: [uState := uState | DFCS_INACTIVE].
-
-	UserLibrary default 
-		drawFrameControl: aCanvas handle
-		lprc: ((aRectangle origin + buttonOffset) extent: (self buttonExtent min: aRectangle extent)) asParameter 
-		uType: DFC_BUTTON 
-		uState: uState.
-
-	(self text ifNil: ['']) isEmpty ifFalse:
-		[textPos := aRectangle origin + textOffset.
-		self isEnabled
-			ifTrue: [aCanvas prefixTextTransparent: self text at: textPos]
-			ifFalse: [aCanvas prefixTextDisabled: self text at: textPos]]!
-
-drawThemed: aValue in: aRectangle on: aCanvas buttonOffset: buttonOffset textOffset: textOffset
-
-	| iState textRect |
-	iState := aValue isNil
+				ifTrue: [CBS_MIXEDHOT]
+				ifFalse: [aValue ifTrue: [CBS_CHECKEDHOT] ifFalse: [CBS_UNCHECKEDHOT]]]
+		ifFalse: 
+			[aValue isNil
 				ifTrue: [CBS_MIXEDNORMAL]
-				ifFalse: [aValue ifTrue: [CBS_CHECKEDNORMAL] ifFalse: [CBS_UNCHECKEDNORMAL]].
+				ifFalse: [aValue ifTrue: [CBS_CHECKEDNORMAL] ifFalse: [CBS_UNCHECKEDNORMAL]]]]
+	ifFalse: 
+		[aValue isNil
+			ifTrue: [CBS_MIXEDDISABLED]
+			ifFalse: [aValue ifTrue: [CBS_CHECKEDDISABLED] ifFalse: [CBS_UNCHECKEDDISABLED]]]!
 
-	ThemeLibrary default 
-		drawThemeBackground: self theme 
-		hdc: aCanvas asParameter 
-		iPartId: BP_CHECKBOX
-		iStateId: iState
-		pRect: ((aRectangle origin + buttonOffset) extent: self buttonExtent) asParameter 
-		pClipRect: aRectangle asParameter.
+uStateFor: aValue enabled: aBoolean
 
-	self hasText ifTrue: 
-		[textRect := (aRectangle origin + textOffset) extent: self textExtent.
-		textRect right: (textRect right min: aRectangle right).
-		ThemeLibrary default 
-			drawThemeText: self theme 
-			hdc: aCanvas asParameter 
-			iPartId: BP_CHECKBOX
-			iStateId: iState
-			pszText: self text asUnicodeString 
-			iCharCount: -1 dwTextFlags: 0 dwTextFlags2: 0 
-			pRect: textRect asParameter]!
+	| uState |
 
-hasEmbeddedHotTracking
+	aValue isNil 
+		ifTrue: [uState := DFCS_BUTTON3STATE]
+		ifFalse: [uState := DFCS_BUTTONCHECK].
 
-	^false!
-
-hasText
-
-	^(self text ifNil: ['']) isEmpty not!
-
-isDisplayOwnerDrawn
-
-	^true!
-
-onCursoredLeft
-
-	"The receiver has been entered by a cursor left action"
-
-	^self!
-
-onKillFocus
-
-	self parentView hideActiveEditor.
-
-	^super onKillFocus!
-
-onRequestDeactivate
-
-	"Return if OK"
-
-	^true!
-
-preTranslateKeyboardInput: aMSG
-
-	aMSG message = WM_KEYDOWN ifTrue:
-		[| key action |
-		key := aMSG wParam.
-		key = VK_TAB ifTrue:
-			[Keyboard default isShiftDown
-				ifTrue: [action := MessageSend receiver: self parentView selector: #fieldExitPrevTabbed: arguments: #(true)]
-				ifFalse: [action := MessageSend receiver: self parentView selector: #fieldExitNextTabbed: arguments: #(true)]].
-		key = VK_RIGHT ifTrue: [action := MessageSend receiver: self parentView selector: #fieldExitNextTabbed: arguments: #(false)].
-		key = VK_LEFT ifTrue: [action := MessageSend receiver: self parentView selector: #fieldExitPrevTabbed: arguments: #(false)].
-		key = VK_UP ifTrue: [action := MessageSend receiver: self parentView selector: #fieldExitUp].
-		key = VK_DOWN ifTrue: [action := MessageSend receiver: self parentView selector: #fieldExitDown].
-		action notNil ifTrue:
-			[SessionManager inputState queueDeferredAction: action.
-			^true]].
-
-	^super preTranslateKeyboardInput: aMSG!
-
-showIn: aRectangle
-
-	| offset |
-
-	offset := (aRectangle extent - self totalExtent) // 2.
-
-	self
-		rectangle: (aRectangle insetBy: offset);
-		show!
-
-stbSaveOn: anSTBOutFiler
-
-	"If the receiver is unrealized (i.e. just exists in the spec of a column in the view composer),
-	save as a plain object"
-
-	handle isNil 
-		ifTrue: [anSTBOutFiler saveObject: self]
-		ifFalse: [super stbSaveOn: anSTBOutFiler]!
-
-text
-	^text!
-
-text: aString
-	text := aString.
-	self handle notNull ifTrue: [super text: aString]!
-
-textExtent
-
-	^textExtent ifNil: [0@0]!
-
-textExtent: aPoint
-
-	textExtent := aPoint!
-
-textOffset
-
-	^self textExtent > 0
-		ifTrue: [3@0]
-		ifFalse: [0@0]!
-
-themePartName
-
-	^#BUTTON!
-
-totalExtent
-
-	^(self buttonExtent x + self textOffset x + self textExtent x)@(self buttonExtent y max: self textExtent y).
-! !
-!EmbeddedCheckBox categoriesFor: #buttonExtent!accessing!public! !
-!EmbeddedCheckBox categoriesFor: #createEmbeddedIn:!initialize/release!public! !
-!EmbeddedCheckBox categoriesFor: #display:in:on:forecolor:backcolor:editable:hot:!displaying!public! !
-!EmbeddedCheckBox categoriesFor: #displayOffset!accessing!public! !
-!EmbeddedCheckBox categoriesFor: #displayOnFormats!accessing!public! !
-!EmbeddedCheckBox categoriesFor: #drawNonThemed:in:on:buttonOffset:textOffset:!displaying!private! !
-!EmbeddedCheckBox categoriesFor: #drawThemed:in:on:buttonOffset:textOffset:!displaying!private! !
-!EmbeddedCheckBox categoriesFor: #hasEmbeddedHotTracking!public!testing! !
-!EmbeddedCheckBox categoriesFor: #hasText!public!testing! !
-!EmbeddedCheckBox categoriesFor: #isDisplayOwnerDrawn!public!testing! !
-!EmbeddedCheckBox categoriesFor: #onCursoredLeft!event handling!public! !
-!EmbeddedCheckBox categoriesFor: #onKillFocus!event handling!public! !
-!EmbeddedCheckBox categoriesFor: #onRequestDeactivate!event handling!public! !
-!EmbeddedCheckBox categoriesFor: #preTranslateKeyboardInput:!event handling!public! !
-!EmbeddedCheckBox categoriesFor: #showIn:!operations!public! !
-!EmbeddedCheckBox categoriesFor: #stbSaveOn:!binary filing!public! !
-!EmbeddedCheckBox categoriesFor: #text!accessing!public! !
-!EmbeddedCheckBox categoriesFor: #text:!accessing!public! !
-!EmbeddedCheckBox categoriesFor: #textExtent!accessing!public! !
-!EmbeddedCheckBox categoriesFor: #textExtent:!accessing!public! !
-!EmbeddedCheckBox categoriesFor: #textOffset!accessing!public! !
-!EmbeddedCheckBox categoriesFor: #themePartName!accessing!public! !
-!EmbeddedCheckBox categoriesFor: #totalExtent!accessing!public! !
+	(aBoolean or: [self isAlwaysDrawnEnabled]) ifFalse: [uState := uState | DFCS_INACTIVE].
+	
+	^aValue == false
+		ifTrue: [uState] 
+		ifFalse: [uState | DFCS_CHECKED]! !
+!EmbeddedCheckBox categoriesFor: #basicWindowStyle!constants!private! !
+!EmbeddedCheckBox categoriesFor: #defaultIStateId!constants!public! !
+!EmbeddedCheckBox categoriesFor: #iPartId!constants!public! !
+!EmbeddedCheckBox categoriesFor: #is3State!accessing!public! !
+!EmbeddedCheckBox categoriesFor: #is3State:!accessing!public! !
+!EmbeddedCheckBox categoriesFor: #iStateFor:enabled:hot:!drawing!private! !
+!EmbeddedCheckBox categoriesFor: #uStateFor:enabled:!drawing!private! !
 
 !EmbeddedCheckBox class methodsFor!
 
-stbConvertFrom: anSTBClassFormat
+icon
+	"Answers an Icon that can be used to represent this class"
 
-	^[:data || newInstance |
-	newInstance := self basicNew.
-	1 to: 12 do: [:i | newInstance instVarAt: i put: (data at: i)].
-	newInstance baseStyle: newInstance defaultStyle first; extendedStyle: newInstance defaultStyle last.
-	newInstance]!
-
-stbVersion
-
-	"Reimplemented in ControlView hierarchy"
-
-	^20! !
-!EmbeddedCheckBox class categoriesFor: #stbConvertFrom:!binary filing!public! !
-!EmbeddedCheckBox class categoriesFor: #stbVersion!binary filing!public! !
+	^CheckBox defaultIcon! !
+!EmbeddedCheckBox class categoriesFor: #icon!constants!public! !
 

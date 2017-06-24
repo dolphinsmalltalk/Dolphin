@@ -14,12 +14,6 @@ actualOffset
 
 	^self offset ifNil: [self defaultOffset]!
 
-cellRect
-
-	"Private - Return the cell rectangle equivalent to the receiver's edit rectangle"
-
-	^(self rectangle topLeft - self actualOffset) extent: (self extent + (self actualOffset + (0@1)))!
-
 column
 
 	^self parentView allColumns detect: [ :each | each editor == self]!
@@ -30,12 +24,22 @@ createEmbeddedIn: aView
 	flags := 0.
 
 	self 
+		inheritContextMenu: false;
 		isManaged: true;
 		initializeModel;
 		parentView: aView;
 		create;
 		font: self view font;
 		yourself!
+
+cueBanner
+
+	^self propertyAt: #cueBanner ifAbsent: [self propertyAt: #cueBanner put: super cueBanner]!
+
+cueBanner: aString
+
+	super cueBanner: aString.
+	self removePropertyAt: #cueBanner ifAbsent: []!
 
 defaultOffset
 
@@ -52,16 +56,24 @@ defaultWindowStyle
 
 	^(super defaultWindowStyle) | ES_AUTOHSCROLL!
 
-display: aString in: aRectangle on: aCanvas forecolor: fColor backcolor: bColor editable: aBoolean hot: hBoolean
+display: aValue in: aRectangle on: aCanvas forecolor: fColor backcolor: bColor editable: aBoolean hot: hBoolean
 
-	| text displayOffset |
+	| text color displayOffset cornerOffset |
 
-	text := aString ifNil: [''].
+	text := self typeconverter convertFromLeftToRight: aValue.
+
+	color := fColor.
+	(text isEmpty and: [self hasCueBanner]) ifTrue: 
+		[text := self cueBanner.
+		color := Color grayText].
 	displayOffset := self actualOffset + (3@0).
+	self alignment = #right 
+		ifTrue: [cornerOffset := displayOffset + (8@0)]
+		ifFalse: [cornerOffset := displayOffset].
 	
 	aCanvas 
-		forecolor: fColor;
-		formatText: text in: ((aRectangle origin + displayOffset) extent: (aRectangle extent - displayOffset))!
+		forecolor: color;
+		formatText: text in: ((aRectangle origin + displayOffset) extent: (aRectangle extent - cornerOffset)) flags: ((AlignmentMap at: self column alignment ifAbsent: [DT_LEFT]) | DT_END_ELLIPSIS)!
 
 displayOnFormats
 
@@ -71,7 +83,15 @@ editRectFor: aRectangle
 
 	"Private - Return the rectangle to use for the editor within the grid cell aRectangle"
 
-	^(aRectangle topLeft + self actualOffset) extent: (aRectangle extent - (self actualOffset + (0@1)))!
+	^(aRectangle topLeft + self actualOffset) extent: (aRectangle extent - (self actualOffset + ((self alignment = #right ifTrue: [5] ifFalse: [0])@1)))!
+
+expectsText
+
+	^self typeconverter isNullConverter!
+
+hasCueBanner
+
+	^(self cueBanner ifNil: ['']) isEmpty not!
 
 hasEmbeddedHotTracking
 
@@ -79,7 +99,7 @@ hasEmbeddedHotTracking
 
 isDisplayOwnerDrawn
 
-	^false!
+	^self hasCueBanner!
 
 offset
 
@@ -100,7 +120,7 @@ onCursoredLeft
 
 onKillFocus
 
-	self parentView hideActiveEditor.
+	self parentView onEditorLostFocus: self.
 
 	^super onKillFocus!
 
@@ -112,29 +132,7 @@ onRequestDeactivate
 
 preTranslateKeyboardInput: aMSG
 
-	aMSG message = WM_KEYDOWN ifTrue:
-		[| key action |
-		key := aMSG wParam.
-		key = VK_TAB ifTrue:
-			[Keyboard default isShiftDown
-				ifTrue: [action := MessageSend receiver: self parentView selector: #fieldExitPrevTabbed: arguments: #(true)]
-				ifFalse: [action := MessageSend receiver: self parentView selector: #fieldExitNextTabbed: arguments: #(true)]].
-		(key = VK_RIGHT and: [self caretPosition > self plainText size]) ifTrue: [action := MessageSend receiver: self parentView selector: #fieldExitNextTabbed: arguments: #(false)].
-
-		key = VK_LEFT ifTrue:
-			[(self selectionRange isEmpty and: [self caretPosition = 1]) ifTrue: 
-				[action := MessageSend receiver: self parentView selector: #fieldExitPrevTabbed: arguments: #(false)].
-			(Keyboard default isShiftDown not and: [self basicSelectionRange = (0 to: self textLength)]) ifTrue: 
-				[action := MessageSend receiver: self selector: #caretPosition: arguments: #(1)]].
-
-		key = VK_UP ifTrue: [action := MessageSend receiver: self parentView selector: #fieldExitUp].
-		key = VK_DOWN ifTrue: [action := MessageSend receiver: self parentView selector: #fieldExitDown].
-		key = VK_ESCAPE ifTrue: [action := [self undo; selectAll]].
-		action notNil ifTrue:
-			[SessionManager inputState queueDeferredAction: action.
-			^true]].
-
-	^super preTranslateKeyboardInput: aMSG!
+	^self embeddedPreTranslateKeyboardInput: aMSG!
 
 show
 
@@ -144,6 +142,7 @@ show
 showIn: aRectangle
 
 	self
+		alignment: self column alignment;
 		rectangle: (self editRectFor: aRectangle);
 		show!
 
@@ -156,15 +155,18 @@ stbSaveOn: anSTBOutFiler
 		ifTrue: [anSTBOutFiler saveObject: self]
 		ifFalse: [super stbSaveOn: anSTBOutFiler]! !
 !EmbeddedTextEdit categoriesFor: #actualOffset!accessing!public! !
-!EmbeddedTextEdit categoriesFor: #cellRect!displaying!private! !
 !EmbeddedTextEdit categoriesFor: #column!accessing!public! !
 !EmbeddedTextEdit categoriesFor: #createEmbeddedIn:!initializing!public! !
+!EmbeddedTextEdit categoriesFor: #cueBanner!accessing!public! !
+!EmbeddedTextEdit categoriesFor: #cueBanner:!accessing!public! !
 !EmbeddedTextEdit categoriesFor: #defaultOffset!accessing!public! !
 !EmbeddedTextEdit categoriesFor: #defaultWindowExStyle!constants!private! !
 !EmbeddedTextEdit categoriesFor: #defaultWindowStyle!constants!private! !
-!EmbeddedTextEdit categoriesFor: #display:in:on:forecolor:backcolor:editable:hot:!displaying!public! !
+!EmbeddedTextEdit categoriesFor: #display:in:on:forecolor:backcolor:editable:hot:!drawing!public! !
 !EmbeddedTextEdit categoriesFor: #displayOnFormats!binary filing!public! !
-!EmbeddedTextEdit categoriesFor: #editRectFor:!displaying!private! !
+!EmbeddedTextEdit categoriesFor: #editRectFor:!accessing!private! !
+!EmbeddedTextEdit categoriesFor: #expectsText!public!testing! !
+!EmbeddedTextEdit categoriesFor: #hasCueBanner!public!testing! !
 !EmbeddedTextEdit categoriesFor: #hasEmbeddedHotTracking!public!testing! !
 !EmbeddedTextEdit categoriesFor: #isDisplayOwnerDrawn!public!testing! !
 !EmbeddedTextEdit categoriesFor: #offset!accessing!public! !
@@ -173,7 +175,24 @@ stbSaveOn: anSTBOutFiler
 !EmbeddedTextEdit categoriesFor: #onKillFocus!event handling!public! !
 !EmbeddedTextEdit categoriesFor: #onRequestDeactivate!event handling!public! !
 !EmbeddedTextEdit categoriesFor: #preTranslateKeyboardInput:!event handling!public! !
-!EmbeddedTextEdit categoriesFor: #show!displaying!public! !
-!EmbeddedTextEdit categoriesFor: #showIn:!displaying!public! !
+!EmbeddedTextEdit categoriesFor: #show!operations!public! !
+!EmbeddedTextEdit categoriesFor: #showIn:!operations!public! !
 !EmbeddedTextEdit categoriesFor: #stbSaveOn:!binary filing!public! !
+
+!EmbeddedTextEdit class methodsFor!
+
+stbConvertFrom: anSTBClassFormat
+
+	(anSTBClassFormat version = 9 or: [anSTBClassFormat version = 13]) ifTrue:
+		[^[:data || newInstance |
+		newInstance := self basicNew.
+		1 to: data size do: [:i | newInstance instVarAt: i put: (data at: i)].
+		newInstance]].
+
+	^super stbConvertFrom: anSTBClassFormat!
+
+stbVersion
+	^20! !
+!EmbeddedTextEdit class categoriesFor: #stbConvertFrom:!binary filing!public! !
+!EmbeddedTextEdit class categoriesFor: #stbVersion!binary filing!public! !
 

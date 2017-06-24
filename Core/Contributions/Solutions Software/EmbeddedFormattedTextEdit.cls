@@ -14,12 +14,6 @@ actualOffset
 
 	^self offset ifNil: [self defaultOffset]!
 
-cellRect
-
-	"Private - Return the cell rectangle equivalent to the receiver's edit rectangle"
-
-	^(self rectangle topLeft - self actualOffset) extent: (self extent + (self actualOffset + (0@1)))!
-
 column
 
 	^self parentView allColumns detect: [ :each | each editor == self]!
@@ -30,12 +24,22 @@ createEmbeddedIn: aView
 	flags := 0.
 
 	self 
+		inheritContextMenu: false;
 		isManaged: true;
 		initializeModel;
 		parentView: aView;
 		create;
 		font: aView font;
 		yourself!
+
+cueBanner
+
+	^self propertyAt: #cueBanner ifAbsent: [self propertyAt: #cueBanner put: super cueBanner]!
+
+cueBanner: aString
+
+	super cueBanner: aString.
+	self removePropertyAt: #cueBanner ifAbsent: []!
 
 defaultOffset
 
@@ -54,14 +58,21 @@ defaultWindowStyle
 
 display: anObject in: aRectangle on: aCanvas forecolor: fColor backcolor: bColor editable: aBoolean hot: hBoolean
 
-	| text actualOffset |
+	| text color displayOffset cornerOffset |
 
 	text := self typeconverter convertFromLeftToRight: anObject.
-	actualOffset := self actualOffset + (3@0).
+	color := fColor.
+	(text isEmpty and: [self hasCueBanner]) ifTrue: 
+		[text := self cueBanner.
+		color := Color grayText].
+	displayOffset := self actualOffset + (3@0).
+	self alignment = #right 
+		ifTrue: [cornerOffset := displayOffset + (8@0)]
+		ifFalse: [cornerOffset := displayOffset].
 	
 	aCanvas 
-		forecolor: fColor;
-		formatText: text in: ((aRectangle origin + actualOffset) extent: (aRectangle extent - actualOffset))!
+		forecolor: color;
+		formatText: text in: ((aRectangle origin + displayOffset) extent: (aRectangle extent - cornerOffset)) flags: ((AlignmentMap at: self column alignment ifAbsent: [DT_LEFT]) | DT_END_ELLIPSIS)!
 
 displayOnFormats
 
@@ -73,13 +84,21 @@ editRectFor: aRectangle
 
 	^(aRectangle topLeft + self actualOffset) extent: (aRectangle extent - (self actualOffset + (0@1)))!
 
+expectsText
+
+	^self typeconverter isNullConverter!
+
+hasCueBanner
+
+	^(self cueBanner ifNil: ['']) isEmpty not!
+
 hasEmbeddedHotTracking
 
 	^false!
 
 isDisplayOwnerDrawn
 
-	^false!
+	^self hasCueBanner!
 
 offset
 
@@ -100,7 +119,7 @@ onCursoredLeft
 
 onKillFocus
 
-	self parentView hideActiveEditor.
+	self parentView onEditorLostFocus: self.
 
 	^super onKillFocus!
 
@@ -114,29 +133,7 @@ onRequestDeactivate
 
 preTranslateKeyboardInput: aMSG
 
-	aMSG message = WM_KEYDOWN ifTrue:
-		[| key action |
-		key := aMSG wParam.
-		key = VK_TAB ifTrue:
-			[Keyboard default isShiftDown
-				ifTrue: [action := MessageSend receiver: self parentView selector: #fieldExitPrevTabbed: arguments: #(true)]
-				ifFalse: [action := MessageSend receiver: self parentView selector: #fieldExitNextTabbed: arguments: #(true)]].
-		(key = VK_RIGHT and: [self caretPosition > self plainText size]) ifTrue: [action := MessageSend receiver: self parentView selector: #fieldExitNextTabbed: arguments: #(false)].
-
-		key = VK_LEFT ifTrue:
-			[(self selectionRange isEmpty and: [self caretPosition = 1]) ifTrue: 
-				[action := MessageSend receiver: self parentView selector: #fieldExitPrevTabbed: arguments: #(false)].
-			(Keyboard default isShiftDown not and: [self basicSelectionRange = (0 to: self textLength)]) ifTrue: 
-				[action := MessageSend receiver: self selector: #caretPosition: arguments: #(1)]].
-
-		key = VK_UP ifTrue: [action := MessageSend receiver: self parentView selector: #fieldExitUp].
-		key = VK_DOWN ifTrue: [action := MessageSend receiver: self parentView selector: #fieldExitDown].
-		key = VK_ESCAPE ifTrue: [action := [self undo; selectAll]].
-		action notNil ifTrue:
-			[SessionManager inputState queueDeferredAction: action.
-			^true]].
-
-	^super preTranslateKeyboardInput: aMSG!
+	^self embeddedPreTranslateKeyboardInput: aMSG!
 
 show
 
@@ -158,15 +155,18 @@ stbSaveOn: anSTBOutFiler
 		ifTrue: [anSTBOutFiler saveObject: self]
 		ifFalse: [super stbSaveOn: anSTBOutFiler]! !
 !EmbeddedFormattedTextEdit categoriesFor: #actualOffset!accessing!public! !
-!EmbeddedFormattedTextEdit categoriesFor: #cellRect!displaying!private! !
 !EmbeddedFormattedTextEdit categoriesFor: #column!accessing!public! !
 !EmbeddedFormattedTextEdit categoriesFor: #createEmbeddedIn:!initialize/release!public! !
+!EmbeddedFormattedTextEdit categoriesFor: #cueBanner!accessing!public! !
+!EmbeddedFormattedTextEdit categoriesFor: #cueBanner:!accessing!public! !
 !EmbeddedFormattedTextEdit categoriesFor: #defaultOffset!accessing!public! !
 !EmbeddedFormattedTextEdit categoriesFor: #defaultWindowExStyle!constants!private! !
 !EmbeddedFormattedTextEdit categoriesFor: #defaultWindowStyle!constants!private! !
-!EmbeddedFormattedTextEdit categoriesFor: #display:in:on:forecolor:backcolor:editable:hot:!displaying!public! !
+!EmbeddedFormattedTextEdit categoriesFor: #display:in:on:forecolor:backcolor:editable:hot:!drawing!public! !
 !EmbeddedFormattedTextEdit categoriesFor: #displayOnFormats!binary filing!public! !
-!EmbeddedFormattedTextEdit categoriesFor: #editRectFor:!displaying!private! !
+!EmbeddedFormattedTextEdit categoriesFor: #editRectFor:!accessing!private! !
+!EmbeddedFormattedTextEdit categoriesFor: #expectsText!public!testing! !
+!EmbeddedFormattedTextEdit categoriesFor: #hasCueBanner!public!testing! !
 !EmbeddedFormattedTextEdit categoriesFor: #hasEmbeddedHotTracking!public!testing! !
 !EmbeddedFormattedTextEdit categoriesFor: #isDisplayOwnerDrawn!public!testing! !
 !EmbeddedFormattedTextEdit categoriesFor: #offset!accessing!public! !
@@ -175,8 +175,8 @@ stbSaveOn: anSTBOutFiler
 !EmbeddedFormattedTextEdit categoriesFor: #onKillFocus!event handling!public! !
 !EmbeddedFormattedTextEdit categoriesFor: #onRequestDeactivate!event handling!public! !
 !EmbeddedFormattedTextEdit categoriesFor: #preTranslateKeyboardInput:!event handling!public! !
-!EmbeddedFormattedTextEdit categoriesFor: #show!displaying!public! !
-!EmbeddedFormattedTextEdit categoriesFor: #showIn:!displaying!public! !
+!EmbeddedFormattedTextEdit categoriesFor: #show!operations!public! !
+!EmbeddedFormattedTextEdit categoriesFor: #showIn:!operations!public! !
 !EmbeddedFormattedTextEdit categoriesFor: #stbSaveOn:!binary filing!public! !
 
 !EmbeddedFormattedTextEdit class methodsFor!

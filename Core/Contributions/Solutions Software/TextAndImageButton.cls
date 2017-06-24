@@ -10,6 +10,10 @@ TextAndImageButton comment: ''!
 !TextAndImageButton categoriesForClass!Unclassified! !
 !TextAndImageButton methodsFor!
 
+buildImageManager
+
+	self image ifNotNil: [ :img | self imageIndex: (self imageManager addImage: img)]!
+
 currentBackcolor
 
 	"Modify the backcolor to reflect the receiver's state"
@@ -18,7 +22,11 @@ currentBackcolor
 
 	color := self actualBackcolor.
 
-	self isEnabled ifFalse: [^color fadedBy: 4].
+	self isTransparent ifTrue: 
+		[self isHot ifTrue: [^color intensity: 0.8].
+		self isPressed ifTrue: [^color intensity: 0.55].
+		^color].
+
 	self isHot ifTrue: [^color fadedBy: 2].
 	self isPressed ifTrue: [^color intensity: 3/4].
 
@@ -32,8 +40,8 @@ drawDropDownArrowOn: aCanvas
 
 	| x y |
 
-	x := self extent x + self dropDownOffset x.
-	y := self extent y + self dropDownOffset y.
+	x := self clientRectangle left + self extent x + self dropDownOffset x.
+	y := self clientRectangle top + self extent y + self dropDownOffset y.
 
 	self isEnabled
 		ifTrue: [aCanvas pen: Pen black]
@@ -45,24 +53,14 @@ drawDropDownArrowOn: aCanvas
 
 drawImageOn: aCanvas
 
-	| imagePos |
-
-	imagePos := self imagePosOn: aCanvas.
-
-	self isThemed
-	ifTrue: 
-		[self imageList 
-			draw: self imageIndex 
-			on: aCanvas 
-			at: imagePos
-			extent: self imageExtent 
-			backcolor: nil 
-			forecolor: Color buttonShadow 
-			flags: (self isEnabled ifTrue: [ILD_NORMAL] ifFalse: [ILD_BLEND50])]
-	ifFalse:
-		[self isEnabled
-			ifTrue:  [self image drawOn: aCanvas at: imagePos extent: self imageExtent]
-			ifFalse: [self image drawDisabledOn: aCanvas at: imagePos extent: self imageExtent]]!
+	self imageList 
+		draw: self imageIndex 
+		on: aCanvas 
+		at: (self imagePosOn: aCanvas)
+		extent: self imageExtent 
+		backcolor: nil 
+		forecolor: Color buttonShadow 
+		flags: (self isEnabled ifTrue: [ILD_NORMAL] ifFalse: [ILD_BLEND50])!
 
 drawOn: aCanvas
 
@@ -92,7 +90,7 @@ drawTextOn: aCanvas
 			pRect: (textPos extent: self extent) asParameter]
 	ifFalse:
 		[self isEnabled
-			ifTrue: [aCanvas prefixTextTransparent: self displayText at: textPos]
+			ifTrue: [aCanvas formatText: self displayText in: (textPos extent: self extent)]
 			ifFalse: [aCanvas prefixTextDisabled: self displayText at: textPos]]!
 
 dropDownMenu
@@ -104,6 +102,14 @@ dropDownMenu: anObject
 dropDownOffset
 
 	^-12@-14!
+
+durationOfTransition: aSymbol
+
+	"An open menu prevents animation callbacks being handled, therefore default to non-animated"
+
+	^self isMenuOpen 
+		ifTrue: [0]
+		ifFalse: [super durationOfTransition: aSymbol]!
 
 filerProxy
 	| savedManager proxy |
@@ -168,7 +174,28 @@ imageManager: anObject
 
 imagePosOn: aCanvas
 
-	^((self extent - ((self labelWidthOn: aCanvas) @ (self imageExtent y))) // 2) max: 0@0!
+	| textOffsetX xPos yPos|
+
+	(self isImageFirst or: [self hasText not])
+		ifTrue: [textOffsetX := 0]
+		ifFalse: [textOffsetX := (aCanvas textExtent: self unadornedText) x + self imageGap].
+
+	self alignment = #left ifTrue: [xPos := 8].
+	self alignment = #center ifTrue: [xPos := (self extent x - (self labelWidthOn: aCanvas)) // 2].
+	self alignment = #right ifTrue: [xPos := (self extent x - 8) - (self labelWidthOn: aCanvas)].
+
+	xPos := xPos + textOffsetX.
+	yPos := (self extent y - self imageExtent y) // 2.
+
+	^self clientRectangle topLeft + ((xPos@yPos) max: 0@0)
+
+!
+
+isImageFirst
+
+	"Use the BS_RIGHTBUTTON style (makes a bit of sense if you consider the image to be the buttony-bit)"
+
+	^self isRightButton not!
 
 isMenuOpen
 	^isMenuOpen ifNil: [false]!
@@ -211,19 +238,50 @@ rebuildImageManager
 		ifNil: [self imageManager: ImageManager new]
 		ifNotNil: [ :mgr | mgr purge].
 
-	self image ifNotNil: [ :img | self imageIndex: (self imageManager addImage: img)]!
+	self buildImageManager!
+
+standardTransitionDurations
+
+	"Use the theme-defined durations"
+
+	| durations lookups |
+
+	durations := Dictionary new.
+	lookups := 
+		##(Dictionary new
+			at: #hot put: ##(Array with: PBS_NORMAL with: PBS_HOT);
+			at: #cold put: ##(Array with: PBS_HOT with: PBS_NORMAL);
+			at: #pressed put: ##(Array with: PBS_NORMAL with: PBS_PRESSED);
+			at: #released put: ##(Array with: PBS_PRESSED with: PBS_NORMAL);
+			at: #disabled put: ##(Array with: PBS_NORMAL with: PBS_DISABLED);
+			at: #enabled put: ##(Array with: PBS_DISABLED with: PBS_NORMAL);
+			yourself).
+
+	lookups keysAndValuesDo: 
+		[ :transition :iStates || pdwDuration |
+		pdwDuration := SDWORD new.
+		ThemeLibrary default getThemeTransitionDuration: self theme asParameter iPartId: BP_PUSHBUTTON iStateIdFrom: iStates first iStateIdTo: iStates last iPropId: 6000 "TMT_TRANSITIONDURATIONS" pdwDuration: pdwDuration.
+		durations at: transition put: pdwDuration value].
+
+	^durations!
 
 textPosOn: aCanvas
 
-	| textExtent imageWidth |
+	| textExtent imageOffsetX xPos yPos |
 
 	textExtent := aCanvas textExtent: self unadornedText.
+	(self hasImage and: [self isImageFirst])
+		ifTrue: [imageOffsetX := self imageExtent x + self imageGap]
+		ifFalse: [imageOffsetX := 0].
 
-	self hasImage
-		ifTrue: [imageWidth := self imageExtent x + self imageGap]
-		ifFalse: [imageWidth := 0].
+	self alignment = #left ifTrue: [xPos := 8].
+	self alignment = #center ifTrue: [xPos := (self extent x - (self labelWidthOn: aCanvas)) // 2].
+	self alignment = #right ifTrue: [xPos := (self extent x - 8) - (self labelWidthOn: aCanvas)].
 
-	^(((self extent - (textExtent + (imageWidth@0))) // 2) + (imageWidth@0)) max: 0@0!
+	xPos := xPos + imageOffsetX.
+	yPos := (self extent y - textExtent y) // 2.
+
+	^self clientRectangle topLeft + ((xPos@yPos) max: 0@0)!
 
 trackMenu
 
@@ -255,15 +313,17 @@ wmLButtonDown: message wParam: wParam lParam: lParam
 		^0].
 
 	^super wmLButtonDown: message wParam: wParam lParam: lParam! !
+!TextAndImageButton categoriesFor: #buildImageManager!operations!private! !
 !TextAndImageButton categoriesFor: #currentBackcolor!accessing!public! !
-!TextAndImageButton categoriesFor: #drawBackgroundOn:!operations!private! !
-!TextAndImageButton categoriesFor: #drawDropDownArrowOn:!operations!private! !
-!TextAndImageButton categoriesFor: #drawImageOn:!operations!private! !
-!TextAndImageButton categoriesFor: #drawOn:!operations!private! !
-!TextAndImageButton categoriesFor: #drawTextOn:!operations!private! !
+!TextAndImageButton categoriesFor: #drawBackgroundOn:!drawing!private! !
+!TextAndImageButton categoriesFor: #drawDropDownArrowOn:!drawing!private! !
+!TextAndImageButton categoriesFor: #drawImageOn:!drawing!private! !
+!TextAndImageButton categoriesFor: #drawOn:!drawing!private! !
+!TextAndImageButton categoriesFor: #drawTextOn:!drawing!private! !
 !TextAndImageButton categoriesFor: #dropDownMenu!accessing!public! !
 !TextAndImageButton categoriesFor: #dropDownMenu:!accessing!public! !
 !TextAndImageButton categoriesFor: #dropDownOffset!accessing!public! !
+!TextAndImageButton categoriesFor: #durationOfTransition:!accessing!public! !
 !TextAndImageButton categoriesFor: #filerProxy!accessing!public! !
 !TextAndImageButton categoriesFor: #hasDropDownMenu!public!testing! !
 !TextAndImageButton categoriesFor: #hasImage!public!testing! !
@@ -278,11 +338,13 @@ wmLButtonDown: message wParam: wParam lParam: lParam
 !TextAndImageButton categoriesFor: #imageManager!accessing!private! !
 !TextAndImageButton categoriesFor: #imageManager:!accessing!private! !
 !TextAndImageButton categoriesFor: #imagePosOn:!calculating!private! !
+!TextAndImageButton categoriesFor: #isImageFirst!public!testing! !
 !TextAndImageButton categoriesFor: #isMenuOpen!accessing!private! !
 !TextAndImageButton categoriesFor: #isMenuOpen:!accessing!private! !
 !TextAndImageButton categoriesFor: #labelWidthOn:!calculating!private! !
 !TextAndImageButton categoriesFor: #preTranslateKeyboardInput:!event handling!private! !
 !TextAndImageButton categoriesFor: #rebuildImageManager!operations!private! !
+!TextAndImageButton categoriesFor: #standardTransitionDurations!accessing!public! !
 !TextAndImageButton categoriesFor: #textPosOn:!calculating!private! !
 !TextAndImageButton categoriesFor: #trackMenu!operations!private! !
 !TextAndImageButton categoriesFor: #wmLButtonDown:wParam:lParam:!event handling-win32!private! !

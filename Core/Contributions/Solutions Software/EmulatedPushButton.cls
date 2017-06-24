@@ -19,30 +19,9 @@ Known issue:
 
 defaultTransitionDurations
 
-	"Use the theme-defined durations"
+	"Use the theme-defined durations to emulate real buttons"
 
-	| durations lookups |
-
-	self isThemed ifFalse: [^super defaultTransitionDurations].
-
-	durations := Dictionary new.
-	lookups := 
-		##(Dictionary new
-			at: #hot put: ##(Array with: PBS_NORMAL with: PBS_HOT);
-			at: #cold put: ##(Array with: PBS_HOT with: PBS_NORMAL);
-			at: #pressed put: ##(Array with: PBS_NORMAL with: PBS_PRESSED);
-			at: #released put: ##(Array with: PBS_PRESSED with: PBS_NORMAL);
-			at: #disabled put: ##(Array with: PBS_NORMAL with: PBS_DISABLED);
-			at: #enabled put: ##(Array with: PBS_DISABLED with: PBS_NORMAL);
-			yourself).
-
-	lookups keysAndValuesDo: 
-		[ :transition :iStates || pdwDuration |
-		pdwDuration := SDWORD new.
-		ThemeLibrary default getThemeTransitionDuration: self theme asParameter iPartId: BP_PUSHBUTTON iStateIdFrom: iStates first iStateIdTo: iStates last iPropId: 6000 "TMT_TRANSITIONDURATIONS" pdwDuration: pdwDuration.
-		durations at: transition put: pdwDuration value].
-
-	^durations!
+	^self themeTransitionDurations!
 
 drawBackgroundOn: aCanvas
 
@@ -63,6 +42,6 @@ drawBackgroundOn: aCanvas
 			lprc: self clientRectangle asParameter
 			uType: DFC_BUTTON 
 			uState: self uState]! !
-!EmulatedPushButton categoriesFor: #defaultTransitionDurations!constants!public! !
-!EmulatedPushButton categoriesFor: #drawBackgroundOn:!operations!private! !
+!EmulatedPushButton categoriesFor: #defaultTransitionDurations!accessing!public! !
+!EmulatedPushButton categoriesFor: #drawBackgroundOn:!drawing!private! !
 
