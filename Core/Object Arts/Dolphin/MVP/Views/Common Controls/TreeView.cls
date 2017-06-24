@@ -900,8 +900,9 @@ selection: anObject ifAbsent: exceptionHandler
 						ifNil: 
 							["This may occur if, for example, #= not correctly implemented on objects."
 							^exceptionHandler value]].
-	self selectionByIndex: nodeHandle ifAbsent: [^exceptionHandler value].
-	^anObject!
+	^(self selectionByIndex: nodeHandle ifAbsent: [])
+		ifNil: [exceptionHandler value]
+		ifNotNil: [anObject]!
 
 selectionByIndex: itemHandle ifAbsent: exceptionHandler
 	"Select the object identified by the 'handle', itemHandle, in the receiver.
