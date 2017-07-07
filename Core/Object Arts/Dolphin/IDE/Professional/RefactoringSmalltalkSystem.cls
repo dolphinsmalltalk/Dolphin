@@ -1037,8 +1037,7 @@ renameTemporary: aStVariableNode to: aString in: aClass selector: aSelector
 
 	| oldName |
 	oldName := aStVariableNode name.
-	(aString
-		ifNil: 
+	(aString ifNil: 
 			[| newName |
 			newName := (Prompter
 						createOn: oldName
@@ -1053,17 +1052,17 @@ renameTemporary: aStVariableNode to: aString in: aClass selector: aSelector
 									in: aClass.
 								true]
 										on: RefactoringError
-										do: [:ex | ex exitWith: false]];
+										do: [:ex | ex return: false]];
 						showModal.
 			newName])
-			ifNotNil: 
-				[:newName |
-				self handleRefactoringException: 
-						[(RenameTemporaryRefactoring
-							renameTemporaryFrom: aStVariableNode sourceInterval
-							to: newName
-							in: aClass
-							selector: aSelector) execute]]!
+		ifNotNil: 
+			[:newName |
+			self handleRefactoringException: 
+					[(RenameTemporaryRefactoring
+						renameTemporaryFrom: aStVariableNode sourceInterval
+						to: newName
+						in: aClass
+						selector: aSelector) execute]].!
 
 renameVariable: aString to: newName in: aClass classVariable: aBoolean within: aBrowserEnvironment 
 	^self handleRefactoringException: 
