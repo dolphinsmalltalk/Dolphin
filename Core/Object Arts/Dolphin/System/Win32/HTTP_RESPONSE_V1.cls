@@ -1,7 +1,7 @@
 "Filed out from Dolphin Smalltalk 7"!
 
 HttpServerStructure subclass: #HTTP_RESPONSE_V1
-	instanceVariableNames: ''
+	instanceVariableNames: 'contentType content'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -29,6 +29,15 @@ struct tagHTTP_RESPONSE_V1 {
 '!
 !HTTP_RESPONSE_V1 categoriesForClass!Win32-Structs! !
 !HTTP_RESPONSE_V1 methodsFor!
+
+content: aByteObject
+	content := HTTP_DATA_CHUNK data: aByteObject.
+	bytes uintPtrAtOffset: ##(self offsetOf: #pEntityChunks) put: content yourAddress.
+	self EntityChunkCount: 1!
+
+contentType: aString
+	contentType := aString.
+	(self Headers KnownHeaders at: HttpHeaderContentType + 1) pRawValue: contentType!
 
 EntityChunkCount
 	"Private - Answer the <Integer> value of the receiver's 'EntityChunkCount' field."
@@ -63,6 +72,9 @@ Headers: aHTTP_RESPONSE_HEADERS
 		from: ##((self offsetOf: #Headers) + 1)
 		to: ##((self offsetOf: #Headers) + HTTP_RESPONSE_HEADERS basicByteSize)
 		startingAt: 1!
+
+initialize
+	bytes dwordAtOffset: ##(self offsetOf: #Version) put: 16r10001!
 
 pEntityChunks
 	"Answer the <StructureArray> value of the receiver's 'pEntityChunks' field."
@@ -122,12 +134,15 @@ Version: aHTTP_VERSION
 		from: ##((self offsetOf: #Version) + 1)
 		to: ##((self offsetOf: #Version) + HTTP_VERSION basicByteSize)
 		startingAt: 1! !
+!HTTP_RESPONSE_V1 categoriesFor: #content:!accessing!public! !
+!HTTP_RESPONSE_V1 categoriesFor: #contentType:!accessing!public! !
 !HTTP_RESPONSE_V1 categoriesFor: #EntityChunkCount!**compiled accessors**!private! !
 !HTTP_RESPONSE_V1 categoriesFor: #EntityChunkCount:!**compiled accessors**!private! !
 !HTTP_RESPONSE_V1 categoriesFor: #flags!**compiled accessors**!public! !
 !HTTP_RESPONSE_V1 categoriesFor: #flags:!**compiled accessors**!public! !
 !HTTP_RESPONSE_V1 categoriesFor: #Headers!**compiled accessors**!public! !
 !HTTP_RESPONSE_V1 categoriesFor: #Headers:!**compiled accessors**!public! !
+!HTTP_RESPONSE_V1 categoriesFor: #initialize!initializing!private! !
 !HTTP_RESPONSE_V1 categoriesFor: #pEntityChunks!**compiled accessors**!public! !
 !HTTP_RESPONSE_V1 categoriesFor: #pEntityChunks:!**compiled accessors**!public! !
 !HTTP_RESPONSE_V1 categoriesFor: #pReason!**compiled accessors**!public! !

@@ -2,7 +2,7 @@
 
 HttpServerStructure subclass: #HTTP_CACHE_POLICY
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: 'NoCache UserInvalidates'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 HTTP_CACHE_POLICY guid: (GUID fromString: '{02064551-c601-4e48-85ac-6d19fe34f58b}')!
@@ -24,6 +24,9 @@ struct tagHTTP_CACHE_POLICY {
 !HTTP_CACHE_POLICY categoriesForClass!Win32-Structs! !
 !HTTP_CACHE_POLICY methodsFor!
 
+policy
+	^#(#noCache #userInvalidates #timeToLive:) at: self Policy + 1!
+
 Policy
 	"Answer the <Integer> value of the receiver's 'Policy' field."
 
@@ -34,6 +37,16 @@ Policy: anInteger
 
 	bytes sdwordAtOffset: 0 put: anInteger!
 
+printFields: aCollection on: aStream limit: anInteger
+	| policy |
+	policy := self policy.
+	aStream nextPutAll: policy.
+	policy == #timeToLive:
+		ifTrue: 
+			[aStream
+				space;
+				print: self SecondsToLive]!
+
 SecondsToLive
 	"Answer the <Integer> value of the receiver's 'SecondsToLive' field."
 
@@ -43,8 +56,10 @@ SecondsToLive: anInteger
 	"Set the receiver's 'SecondsToLive' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: ##(self offsetOf: #SecondsToLive) put: anInteger! !
+!HTTP_CACHE_POLICY categoriesFor: #policy!accessing!public! !
 !HTTP_CACHE_POLICY categoriesFor: #Policy!**compiled accessors**!public! !
 !HTTP_CACHE_POLICY categoriesFor: #Policy:!**compiled accessors**!public! !
+!HTTP_CACHE_POLICY categoriesFor: #printFields:on:limit:!development!printing!private! !
 !HTTP_CACHE_POLICY categoriesFor: #SecondsToLive!**compiled accessors**!public! !
 !HTTP_CACHE_POLICY categoriesFor: #SecondsToLive:!**compiled accessors**!public! !
 
@@ -65,6 +80,33 @@ defineFields
 	self
 		defineField: #Policy type: SDWORDField new offset: 0;
 		defineField: #SecondsToLive type: DWORDField new offset: 4.
-	self byteSize: 8! !
+	self byteSize: 8!
+
+initialize
+	self
+		addClassConstant: 'NoCache'
+			value: ((self new)
+					Policy: HttpCachePolicyNocache;
+					yourself);
+		addClassConstant: 'UserInvalidates'
+			value: ((self new)
+					Policy: HttpCachePolicyUserInvalidates;
+					yourself)!
+
+noCache
+	^NoCache!
+
+timeToLive: anInteger
+	^(self new)
+		Policy: HttpCachePolicyTimeToLive;
+		SecondsToLive: anInteger;
+		yourself!
+
+userInvalidates
+	^UserInvalidates! !
 !HTTP_CACHE_POLICY class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!HTTP_CACHE_POLICY class categoriesFor: #initialize!public! !
+!HTTP_CACHE_POLICY class categoriesFor: #noCache!instance creation!public! !
+!HTTP_CACHE_POLICY class categoriesFor: #timeToLive:!instance creation!public! !
+!HTTP_CACHE_POLICY class categoriesFor: #userInvalidates!instance creation!public! !
 

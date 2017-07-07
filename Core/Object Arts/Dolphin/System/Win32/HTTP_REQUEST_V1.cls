@@ -180,7 +180,11 @@ pRawUrl: aString
 	self RawUrlLength: aString size!
 
 printableFields
-	^(super printableFields)
+	| printable |
+	printable := super printableFields.
+	(bytes intPtrAtOffset: ##(self offsetOf: #pSslInfo)) == 0 ifTrue: [printable remove: #pSslInfo].
+	self EntityChunkCount == 0 ifTrue: [printable remove: #pEntityChunks].
+	^printable
 		removeAll: #(#Verb #pUnknownVerb);
 		yourself!
 
