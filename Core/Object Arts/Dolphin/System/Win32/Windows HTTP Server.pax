@@ -121,7 +121,7 @@ HttpServerStructure subclass: #HTTP_BYTE_RANGE
 	classInstanceVariableNames: ''!
 HttpServerStructure subclass: #HTTP_CACHE_POLICY
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: 'NoCache UserInvalidates'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 HttpServerStructure subclass: #HTTP_CHANNEL_BIND_INFO
@@ -135,7 +135,7 @@ HttpServerStructure subclass: #HTTP_COOKED_URL
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 HttpServerStructure subclass: #HTTP_DATA_CHUNK
-	instanceVariableNames: ''
+	instanceVariableNames: 'data'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -200,7 +200,7 @@ HttpServerStructure subclass: #HTTP_RESPONSE_INFO
 	poolDictionaries: 'WinHttpServerConsts'
 	classInstanceVariableNames: ''!
 HttpServerStructure subclass: #HTTP_RESPONSE_V1
-	instanceVariableNames: ''
+	instanceVariableNames: 'contentType content'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!

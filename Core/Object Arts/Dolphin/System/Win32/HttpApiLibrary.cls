@@ -259,7 +259,7 @@ addUrl: aString toUrlGroup: anIntegerUrlGroupId
 				urlContext: 0
 				reserved: 0)!
 
-asyncHttpReceiveHttpRequest: requestQueueHandle requestId: requestId flags: flags requestBuffer: requestBuffer requestBufferLength: requestBufferLength bytesReturned: bytesReturned overlapped: overlapped
+asyncReceiveHttpRequest: requestQueueHandle requestId: requestId flags: flags requestBuffer: requestBuffer requestBufferLength: requestBufferLength bytesReturned: bytesReturned overlapped: overlapped
 	"Invoke the HttpReceiveHttpRequest() function of the module wrapped by the receiver.
 	Helpstring: Retrieve the next available HTTP request from the specified request queue either synchronously or asynchronously.
 
@@ -272,7 +272,26 @@ asyncHttpReceiveHttpRequest: requestQueueHandle requestId: requestId flags: flag
 			unsigned long* BytesReturned,
 			[in]LPOVERLAPPED OVERLAPPED);"
 
-	<overlap stdcall: dword HttpReceiveHttpRequest handle qword dword HTTP_REQUEST* dword dword* OVERLAPPED*>
+	<overlap stdcall: dword HttpReceiveHttpRequest handle qword dword HTTP_REQUEST_V2* dword dword* OVERLAPPED*>
+	^self invalidCall!
+
+asyncSendHttpResponse: requestQueueHandle requestId: requestId flags: flags httpResponse: httpResponse cachePolicy: cachePolicy bytesSent: bytesSent reserved2: reserved2 reserved3: reserved3 overlapped: overlapped logData: logData
+	"Invoke the HttpSendHttpResponse() function of the module wrapped by the receiver.
+	Helpstring: Sends an HTTP response to the specified HTTP request.
+
+		unsigned long __stdcall HttpSendHttpResponse(
+			[in]HANDLE RequestQueueHandle,
+			[in]unsigned __int64 RequestId,
+			[in]unsigned long flags,
+			[in]PHTTP_RESPONSE HttpResponse,
+			[in]PHTTP_CACHE_POLICY CachePolicy,
+			[out]unsigned long* BytesSent,
+			void* Reserved2,
+			unsigned long reserved3,
+			[in]LPOVERLAPPED OVERLAPPED,
+			[in]PHTTP_LOG_DATA LogData);"
+
+	<overlap stdcall: dword HttpSendHttpResponse handle qword dword HTTP_RESPONSE* HTTP_CACHE_POLICY* dword* void* dword OVERLAPPED* HTTP_LOG_FIELDS_DATA*>
 	^self invalidCall!
 
 bindQueue: anExternalHandle toUrlGroup: anIntegerGroupId
@@ -882,7 +901,7 @@ receiveRequest: anExternalHandle
 	
 	[| ret |
 	ret := self
-				asyncHttpReceiveHttpRequest: anExternalHandle
+				asyncReceiveHttpRequest: anExternalHandle
 				requestId: requestId
 				flags: WinHttpServerConsts.HTTP_RECEIVE_REQUEST_FLAG_COPY_BODY
 				requestBuffer: buf
@@ -903,6 +922,23 @@ receiveRequest: anExternalHandle
 					[self checkReturnCode: ret.
 					^buf]]]
 			repeat!
+
+sendResponse: response queue: queue id: request
+	| bytesSent |
+	bytesSent := DWORD new.
+	self checkReturnCode: (self
+		asyncSendHttpResponse: queue
+		requestId: request
+		flags: 0
+		httpResponse: response
+		cachePolicy: nil
+		bytesSent: bytesSent
+		reserved2: 0
+		reserved3: 0
+		overlapped: nil
+		logData: nil).
+	^bytesSent value
+	!
 
 setQueue: anExternalHandle property: aWinHttpPropertyInfo
 	self checkReturnCode: (self
@@ -927,7 +963,8 @@ setUrlGroup: anIntegerGroupId property: aWinHttpPropertyInfo
 				propertyInformation: aWinHttpPropertyInfo
 				propertyInformationLength: aWinHttpPropertyInfo byteSize)! !
 !HttpApiLibrary categoriesFor: #addUrl:toUrlGroup:!operations!public! !
-!HttpApiLibrary categoriesFor: #asyncHttpReceiveHttpRequest:requestId:flags:requestBuffer:requestBufferLength:bytesReturned:overlapped:!public! !
+!HttpApiLibrary categoriesFor: #asyncReceiveHttpRequest:requestId:flags:requestBuffer:requestBufferLength:bytesReturned:overlapped:!public! !
+!HttpApiLibrary categoriesFor: #asyncSendHttpResponse:requestId:flags:httpResponse:cachePolicy:bytesSent:reserved2:reserved3:overlapped:logData:!**auto generated**!public! !
 !HttpApiLibrary categoriesFor: #bindQueue:toUrlGroup:!operations!public! !
 !HttpApiLibrary categoriesFor: #checkReturnCode:!helpers!private! !
 !HttpApiLibrary categoriesFor: #close!public!realizing/unrealizing! !
@@ -973,6 +1010,7 @@ setUrlGroup: anIntegerGroupId property: aWinHttpPropertyInfo
 !HttpApiLibrary categoriesFor: #querySession:qosProperty:!operations!public! !
 !HttpApiLibrary categoriesFor: #queryUrlGroup:qosSetting:!operations!public! !
 !HttpApiLibrary categoriesFor: #receiveRequest:!operations!public! !
+!HttpApiLibrary categoriesFor: #sendResponse:queue:id:!operations!public! !
 !HttpApiLibrary categoriesFor: #setQueue:property:!accessing!public! !
 !HttpApiLibrary categoriesFor: #setSession:property:!public! !
 !HttpApiLibrary categoriesFor: #setUrlGroup:property:!operations!public! !
@@ -994,14 +1032,29 @@ apiVersion
 
 example1
 	"
-	Note that it seems to be necessary to be running as admin to execute this example.
+	Note 1: If you get access denied, either run as admin, or use 'netsh http add urlacl' to add permissions on a URL for your user a/c.
 		self example1
+	
+	Note 2: This will work for https, but some configuration is required to set up a server
+	cert; for test purposes you can generate a self-signed certificate using makecert, and then
+	associate it with the ip/port you want to listen on using 'netsh http add sslcert'. For more
+	info see, for example,
+	https://blogs.msdn.microsoft.com/jpsanders/2009/09/29/how-to-walkthrough-using-httplistener-or-http-server-unmanaged-code-c-as-an-ssl-simple-server/.
+	If you use VS with IIS Express for web development, you can piggy back off the setup it does config a self-signed cert against the range of ports 44300-44399.
 	"
 
-	| lib sessionId queue groupId |
+	| lib sessionId queue groupId urlPrefix iveConfiguredSsl |
+	iveConfiguredSsl := true.
+	urlPrefix := iveConfiguredSsl
+				ifTrue: [
+					"Change this to the URL you've added your SSL cert to."
+					'https://localhost:44300/dolphin/']
+				ifFalse: 
+					["By default, any user should be able to listen on this URL prefix"
+					'http://+:80/Temporary_Listen_Addresses/'].
 	lib := self default.
 	
-	[| urlPrefix listener |
+	[| listener |
 	sessionId := lib createServerSession.
 	Transcript
 		display: 'Created http server session ';
@@ -1013,7 +1066,6 @@ example1
 		display: 'Created http server url group ';
 		display: groupId hex;
 		cr.
-	urlPrefix := 'http://localhost:80/test/'.
 	lib addUrl: urlPrefix toUrlGroup: groupId.
 	Transcript
 		display: 'Registered http server url group ';
@@ -1033,22 +1085,48 @@ example1
 	"Receive a request, this can use either the Windows Overlapped I/O mechanisn, or Dolphin's own overlapped calls. The latter is simpler."
 	listener := 
 			[
-			[| request |
+			[| request response |
 			Transcript
-				display: 'Listening for requests... ';
+				display: 'Listening for requests on ';
+				display: urlPrefix;
+				nextPutAll: ' ... ';
 				cr.
 			request := lib receiveRequest: queue.
 			Transcript
-				display: 'Request received, length=';
-				print: request BytesReceived;
-				cr;
-				print: request;
-				cr;
-				flush.
+				nextPutAll: 'Received request for ';
+				display: request CookedUrl pFullUrl;
+				cr.
+			response := HTTP_RESPONSE new.
+			response
+				StatusCode: 200;
+				pReason: 'OK';
+				contentType: 'text/html';
+				content: ((String writeStream)
+							nextPutAll: '<!!DOCTYPE html>';
+							cr;
+							nextPutAll: '<html><body><h3>Request received:</h3>';
+							print: request;
+							nextPutAll: '</body></html>';
+							contents).
+			Transcript
+				nextPutAll: 'Sent ';
+				print: (lib
+							sendResponse: response
+							queue: queue
+							id: request RequestId);
+				nextPutAll: ' bytes';
+				cr.
 			#todo	"Send a response"]
 					repeat]
 					fork.
-	MessageBox notify: 'Listening for HTTP requests. Press OK to stop...'.
+	MessageBox notify: ((String writeStream)
+				nextPutAll: 'Listening for HTTP requests on ';
+				display: urlPrefix;
+				nextPutAll: ' ... ';
+				cr;
+				cr;
+				nextPutAll: 'Press OK to stop';
+				contents).
 	listener terminate]
 			ensure: 
 				[queue notNil
@@ -1230,6 +1308,49 @@ querySslCertInfo
 				ret == 0 ifFalse: [Win32Error signalWith: ret].
 				answer addLast: buf.
 				count := count + 1].
+	^answer!
+
+queryUrlAclInfo
+	"Example of calling config query API - Returns all URL ACLs settings currently configured.
+		self queryUrlAclInfo
+	"
+
+	| parms bufSize lib count answer ret |
+	parms := HTTP_SERVICE_CONFIG_URLACL_QUERY new.
+	parms QueryDesc: HttpServiceConfigQueryNext.
+	lib := self default.
+	count := 0.
+	bufSize := DWORDBytes new.
+	answer := OrderedCollection new.
+	
+	[parms dwToken: count.
+	ret := lib
+				httpQueryServiceConfiguration: 0
+				configId: HttpServiceConfigUrlAclInfo
+				pInput: parms
+				inputLength: parms byteSize
+				pOutput: nil
+				outputLength: 0
+				pReturnLength: bufSize
+				pOverlapped: nil.
+	ret == Win32Errors.ERROR_NO_MORE_ITEMS]
+			whileFalse: 
+				[| buf sizeRequired |
+				ret == Win32Errors.ERROR_INSUFFICIENT_BUFFER ifFalse: [Win32Error signalWith: ret].
+				sizeRequired := bufSize value.
+				buf := HTTP_SERVICE_CONFIG_URLACL_SET new: sizeRequired.
+				ret := lib
+							httpQueryServiceConfiguration: 0
+							configId: HttpServiceConfigUrlAclInfo
+							pInput: parms
+							inputLength: parms byteSize
+							pOutput: buf
+							outputLength: sizeRequired
+							pReturnLength: bufSize
+							pOverlapped: nil.
+				ret == 0 ifFalse: [Win32Error signalWith: ret].
+				answer addLast: buf.
+				count := count + 1].
 	^answer! !
 !HttpApiLibrary class categoriesFor: #apiVersion!constants!public! !
 !HttpApiLibrary class categoriesFor: #example1!examples!public! !
@@ -1240,4 +1361,5 @@ querySslCertInfo
 !HttpApiLibrary class categoriesFor: #fileName!**auto generated**!constants!public! !
 !HttpApiLibrary class categoriesFor: #initFlags!constants!public! !
 !HttpApiLibrary class categoriesFor: #querySslCertInfo!examples!public! !
+!HttpApiLibrary class categoriesFor: #queryUrlAclInfo!examples!public! !
 

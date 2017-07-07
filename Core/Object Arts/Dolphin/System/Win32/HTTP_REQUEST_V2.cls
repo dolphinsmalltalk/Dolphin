@@ -39,6 +39,12 @@ pRequestInfo: aStructureArray
 	bytes uintPtrAtOffset: ##(self offsetOf: #pRequestInfo) put: aStructureArray yourAddress.
 	self RequestInfoCount: aStructureArray size!
 
+printableFields
+	| printable |
+	printable := super printableFields.
+	self RequestInfoCount == 0 ifTrue: [printable remove: #pRequestInfo].
+	^printable!
+
 RequestInfoCount
 	"Private - Answer the <Integer> value of the receiver's 'RequestInfoCount' field."
 
@@ -50,6 +56,7 @@ RequestInfoCount: anInteger
 	bytes wordAtOffset: ##(self offsetOf: #RequestInfoCount) put: anInteger! !
 !HTTP_REQUEST_V2 categoriesFor: #pRequestInfo!**compiled accessors**!public! !
 !HTTP_REQUEST_V2 categoriesFor: #pRequestInfo:!**compiled accessors**!public! !
+!HTTP_REQUEST_V2 categoriesFor: #printableFields!development!printing!private! !
 !HTTP_REQUEST_V2 categoriesFor: #RequestInfoCount!**compiled accessors**!private! !
 !HTTP_REQUEST_V2 categoriesFor: #RequestInfoCount:!**compiled accessors**!private! !
 

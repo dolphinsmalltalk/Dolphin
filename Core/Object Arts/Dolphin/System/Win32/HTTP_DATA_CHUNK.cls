@@ -1,7 +1,7 @@
 "Filed out from Dolphin Smalltalk 7"!
 
 HttpServerStructure subclass: #HTTP_DATA_CHUNK
-	instanceVariableNames: ''
+	instanceVariableNames: 'data'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -40,6 +40,13 @@ struct tagHTTP_DATA_CHUNK {
 '!
 !HTTP_DATA_CHUNK categoriesForClass!Win32-Structs! !
 !HTTP_DATA_CHUNK methodsFor!
+
+data: aByteObject
+	data := aByteObject.
+	self
+		FromMemory_pBuffer: data yourAddress;
+		FromMemory_BufferLength: data size;
+		DataChunkType: HttpDataChunkFromMemory!
 
 DataChunkType
 	"Answer the <Integer> value of the receiver's 'DataChunkType' field."
@@ -141,7 +148,13 @@ FromMemory_pBuffer
 FromMemory_pBuffer: anExternalAddress
 	"Set the receiver's 'FromMemory_pBuffer' field to the value of the argument, anExternalAddress"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #FromMemory_pBuffer) put: anExternalAddress! !
+	bytes uintPtrAtOffset: ##(self offsetOf: #FromMemory_pBuffer) put: anExternalAddress!
+
+printableFields
+	^Array
+		with: (#(#FromMemory_pBuffer #FromFileHandle_FileHandle #FromFragmentCache_pFragmentName #FromFragmentCacheEx_pFragmentName)
+				at: self DataChunkType + 1)! !
+!HTTP_DATA_CHUNK categoriesFor: #data:!accessing!public! !
 !HTTP_DATA_CHUNK categoriesFor: #DataChunkType!**compiled accessors**!public! !
 !HTTP_DATA_CHUNK categoriesFor: #DataChunkType:!**compiled accessors**!public! !
 !HTTP_DATA_CHUNK categoriesFor: #FromFileHandle_ByteRange!**compiled accessors**!public! !
@@ -160,8 +173,14 @@ FromMemory_pBuffer: anExternalAddress
 !HTTP_DATA_CHUNK categoriesFor: #FromMemory_BufferLength:!**compiled accessors**!public! !
 !HTTP_DATA_CHUNK categoriesFor: #FromMemory_pBuffer!**compiled accessors**!public! !
 !HTTP_DATA_CHUNK categoriesFor: #FromMemory_pBuffer:!**compiled accessors**!public! !
+!HTTP_DATA_CHUNK categoriesFor: #printableFields!development!printing!private! !
 
 !HTTP_DATA_CHUNK class methodsFor!
+
+data: aByteObject
+	^(self new)
+		data: aByteObject;
+		yourself!
 
 defineFields
 	"Define the fields of the HTTP_DATA_CHUNK structure.
@@ -203,5 +222,6 @@ defineFields
 		defineField: #FromFragmentCacheEx_ByteRange type: (StructureField type: HTTP_BYTE_RANGE) offset: 8;
 		defineField: #FromFragmentCacheEx_pFragmentName type: (PointerField type: UnicodeString) offset: 24.
 	self byteSize: 32! !
+!HTTP_DATA_CHUNK class categoriesFor: #data:!instance creation!public! !
 !HTTP_DATA_CHUNK class categoriesFor: #defineFields!**auto generated**!initializing!public! !
 
