@@ -14,7 +14,7 @@
     <ProjectName>GUIStub</ProjectName>
     <ProjectGuid>{47007458-C534-493F-9A4C-936E5E0C91C8}</ProjectGuid>
     <RootNamespace>GUIStub</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.14393.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.15063.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
