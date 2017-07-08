@@ -4,6 +4,9 @@
 // This file will be processed by the MIDL tool to
 // produce the type library (ActiveXHost.tlb) and marshalling code.
 
+// Disable warnings about inapplicable attributes in the standard include files
+midl_pragma warning(disable: 2402)
+
 import "oaidl.idl";
 import "ocidl.idl";
 
@@ -33,6 +36,9 @@ library ActiveXHost
 {
 	importlib("stdole32.tlb");
 	importlib("stdole2.tlb");
+
+	// Disable warning about attributes, etc, that cannot be represented in a type library, e.g. local
+	midl_pragma warning(disable: 2471)
 
 	[
 	object, local,
