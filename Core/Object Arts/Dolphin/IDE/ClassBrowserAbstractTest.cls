@@ -231,7 +231,7 @@ testBrowseItOpensSystemBrowserOnPackageOfLooseMethod
 testEvaluationContext
 	"#832"
 
-	self assert: self browser actualClass equals: methodsPresenter evaluationContext.
+	self assert: methodsPresenter evaluationContext equals: self browser actualClass.
 	browser actualClass: Behavior.
 	self assert: methodsPresenter evaluationContext == Behavior.
 	browser method: (Association compiledMethodAt: #key).

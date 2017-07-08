@@ -37,7 +37,7 @@ testAllSatisfy
 							[:e |
 							visited add: e.
 							e between: elems first and: elems last]).
-			self assert: elems asSet equals: visited asSet.
+			self assert: visited asSet equals: elems asSet.
 			"Fail on first, middle, last"
 			elems keysAndValuesDo: 
 					[:k :c |
@@ -47,7 +47,7 @@ testAllSatisfy
 									[:e |
 									visited add: e.
 									visited size < k]).
-					self assert: (subject asArray copyFrom: 1 to: k) equals: visited asArray]]!
+					self assert: visited asArray equals: (subject asArray copyFrom: 1 to: k)]]!
 
 testAnyone
 	| subject any |
@@ -77,7 +77,7 @@ testAnySatisfy
 							[:e |
 							visited add: e.
 							false]).
-			self assert: elems asSet equals: visited asSet.
+			self assert: visited asSet equals: elems asSet.
 			"Find a match on first, middle, last"
 			elems keysAndValuesDo: 
 					[:k :c |
@@ -87,7 +87,7 @@ testAnySatisfy
 									[:e |
 									visited add: e.
 									visited size = k]).
-					self assert: (subject asArray copyFrom: 1 to: k) equals: visited asArray]]!
+					self assert: visited asArray equals: (subject asArray copyFrom: 1 to: k)]]!
 
 testCount
 	| none all odd |

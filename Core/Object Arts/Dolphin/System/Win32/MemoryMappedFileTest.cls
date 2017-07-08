@@ -52,7 +52,7 @@ testMaximumSize
 	view := mmf mapView.
 	array := DWORDArray fromAddress: view length: count.
 	1 to: count do: [:each | array at: each put: each].
-	self assert: (1 to: count) equals: array asArray.
+	self assert: array asArray equals: (1 to: count).
 	mmf free.
 	view free.
 	self
@@ -63,9 +63,9 @@ testMaximumSize
 		collectGarbage;
 		administerLastRites.
 	file := FileStream read: fname text: false.
-	self assert: count * 4 equals: file size.
+	self assert: file size equals: count * 4.
 	array := (1 to: count) collect: [:each | file nextDWORD].
-	self assert: (1 to: count) equals: array.
+	self assert: array equals: (1 to: count).
 	file close.
 	"If this fails then one or other thing is holding the file open"
 	File delete: fname!

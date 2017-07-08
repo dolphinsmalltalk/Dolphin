@@ -25,18 +25,18 @@ testUpTo
 	| chars stream |
 	chars := 'abcdefghij'.
 	stream := self streamOn: chars.
-	self assert: '' equals: (stream upTo: $a).
-	self assert: '' equals: (stream upTo: $b).
-	self assert: 'c' equals: (stream upTo: $d).
-	self assert: 'ef' equals: (stream upTo: $g).
-	self assert: 'hij' equals: (stream upTo: $z).
+	self assert: (stream upTo: $a) equals: ''.
+	self assert: (stream upTo: $b) equals: ''.
+	self assert: (stream upTo: $d) equals: 'c'.
+	self assert: (stream upTo: $g) equals: 'ef'.
+	self assert: (stream upTo: $z) equals: 'hij'.
 	self assert: stream atEnd.
-	self assert: '' equals: (stream upTo: $z).
+	self assert: (stream upTo: $z) equals: ''.
 	stream reset.
-	self assert: 'abcdefghi' equals: (stream upTo: $j).
+	self assert: (stream upTo: $j) equals: 'abcdefghi'.
 	self assert: stream atEnd.
 	stream reset.
-	self assert: chars equals: (stream upTo: $z).
+	self assert: (stream upTo: $z) equals: chars.
 	self assert: stream atEnd.
 	self closeTempStream: stream! !
 !StreamTest categoriesFor: #closeTempStream:!helpers!private! !

@@ -20,8 +20,8 @@ testAtIfAbsentPutValue
 	initialSize := dictionary size.
 	"Verify equal but not identical keys"
 	f := 2.0.
-	self assert: 2 hash equals: f hash.
-	self assert: 2 equals: f.
+	self assert: f hash equals: 2 hash.
+	self assert: f equals: 2.
 	self assert: (dictionary at: 2 ifAbsentPutValue: f) == f.
 	self assert: dictionary size == (initialSize + 1).
 	self assert: (dictionary at: f ifAbsentPutValue: 2) == f.

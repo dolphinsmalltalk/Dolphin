@@ -144,7 +144,7 @@ testAddFirst
 	interval := 1 to: 30.
 	"Collection may have to grow a few times"
 	interval do: [:each | subject addFirst: each].
-	self assert: interval reverse equals: subject asArray! !
+	self assert: subject asArray equals: interval reverse! !
 !SequencedGrowableCollectionTest categoriesFor: #testAddAllFirst!public!unit tests! !
 !SequencedGrowableCollectionTest categoriesFor: #testAddAllFirst2!public!unit tests! !
 !SequencedGrowableCollectionTest categoriesFor: #testAddAllLast!public!unit tests! !

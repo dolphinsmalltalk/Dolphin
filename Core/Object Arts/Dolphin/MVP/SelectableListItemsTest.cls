@@ -281,13 +281,13 @@ testSelectionByIndex
 				should: [presenter selectionByIndex: n]
 				trigger: #selectionChanged
 				against: presenter.
-			self assert: n equals: presenter selectionByIndex.
+			self assert: presenter selectionByIndex equals: n.
 			"Setting same selection should be a no-op"
 			self
 				shouldnt: [presenter selectionByIndex: n]
 				trigger: #selectionChanged
 				against: presenter.
-			self assert: (objects at: n) equals: presenter selection].
+			self assert: presenter selection equals: (objects at: n)].
 	self
 		should: [presenter selectionByIndex: 0]
 		trigger: #selectionChanged

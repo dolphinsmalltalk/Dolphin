@@ -19,14 +19,14 @@ verifyRoundTrip: aByteObject
 	encrypted := Crypt32Library protectData: aByteObject.
 	encryptedExtra := Crypt32Library protectData: aByteObject additionalEntropy: entropy.
 	decrypted := Crypt32Library unprotectData: encrypted.
-	self assert: aByteObject equals: decrypted.
+	self assert: decrypted equals: aByteObject.
 	"Unprotect with entropy not used on protect should fail."
 	self
 		should: [Crypt32Library unprotectData: encryptedExtra]
 		raise: Win32Error
 		matching: [:ex | ex tag statusCode = Win32Errors.ERROR_INVALID_DATA].
 	decrypted := Crypt32Library unprotectData: encryptedExtra additionalEntropy: entropy.
-	self assert: aByteObject equals: decrypted.
+	self assert: decrypted equals: aByteObject.
 	"Unprotect without entropy used on protect should fail."
 	self
 		should: [Crypt32Library unprotectData: encryptedExtra]

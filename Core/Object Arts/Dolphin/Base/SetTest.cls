@@ -144,8 +144,8 @@ testMaintainsLoadFactor
 
 	| subject expectedSlots |
 	subject := self collectionClass new.
-	self assert: 0 equals: subject size.
-	self assert: self minimumCapacity equals: subject basicSize.
+	self assert: subject size equals: 0.
+	self assert: subject basicSize equals: self minimumCapacity.
 	expectedSlots := self minimumCapacity.
 	(1 to: 1024) keysAndValuesDo: 
 			[:expectedSize :each |
@@ -162,8 +162,8 @@ testMaintainsLoadFactor
 			minGrownSlots := (expectedSize - 1) * 2 / self loadFactor.
 			originalSlots < minimumSlots ceiling
 				ifTrue: [expectedSlots := primes detect: [:p | p >= minGrownSlots]].
-			self assert: expectedSize equals: actualSize.
-			self assert: expectedSlots equals: actualSlots]!
+			self assert: actualSize equals: expectedSize.
+			self assert: actualSlots equals: expectedSlots]!
 
 testNil
 	| set |

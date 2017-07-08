@@ -278,8 +278,8 @@ testFractionComparisons
 		with: 1 / 3
 		with: 1 / 10) do: 
 				[:each |
-				self assert: each asFloat equals: each.
-				self assert: each asFloat hash equals: each hash].
+				self assert: each equals: each asFloat.
+				self assert: each hash equals: each asFloat hash].
 	"This will overflow on conversion to a Fraction, just a kick the tyres test really"
 	self assert: (((200 factorial - 1) / 2) hash isKindOf: SmallInteger)!
 
@@ -365,67 +365,67 @@ testOverflow
 
 testPrintOnDecimalPlaces
 	| fmax fminDenorm fmin |
-	self assert: '3.9990' equals: (self printString: 3.999 decimalPlaces: 4).
-	self assert: '3.999' equals: (self printString: 3.999 decimalPlaces: 3).
-	self assert: '4.00' equals: (self printString: 3.999 decimalPlaces: 2).
-	self assert: '4.0' equals: (self printString: 3.999 decimalPlaces: 1).
-	self assert: '4' equals: (self printString: 3.999 decimalPlaces: 0).
-	self assert: '0' equals: (self printString: Float zero decimalPlaces: 0).
-	self assert: '0.0' equals: (self printString: Float zero decimalPlaces: 1).
-	self assert: '0.00' equals: (self printString: Float zero decimalPlaces: 2).
-	self assert: '-0' equals: (self printString: Float negativeZero decimalPlaces: 0).
-	self assert: '-0.0' equals: (self printString: Float negativeZero decimalPlaces: 1).
-	self assert: '-0.000' equals: (self printString: Float negativeZero decimalPlaces: 3).
-	self assert: '3.141592653589793' equals: (self printString: Float pi decimalPlaces: 15).
-	self assert: '3.142' equals: (self printString: Float pi decimalPlaces: 3).
+	self assert: (self printString: 3.999 decimalPlaces: 4) equals: '3.9990'.
+	self assert: (self printString: 3.999 decimalPlaces: 3) equals: '3.999'.
+	self assert: (self printString: 3.999 decimalPlaces: 2) equals: '4.00'.
+	self assert: (self printString: 3.999 decimalPlaces: 1) equals: '4.0'.
+	self assert: (self printString: 3.999 decimalPlaces: 0) equals: '4'.
+	self assert: (self printString: Float zero decimalPlaces: 0) equals: '0'.
+	self assert: (self printString: Float zero decimalPlaces: 1) equals: '0.0'.
+	self assert: (self printString: Float zero decimalPlaces: 2) equals: '0.00'.
+	self assert: (self printString: Float negativeZero decimalPlaces: 0) equals: '-0'.
+	self assert: (self printString: Float negativeZero decimalPlaces: 1) equals: '-0.0'.
+	self assert: (self printString: Float negativeZero decimalPlaces: 3) equals: '-0.000'.
+	self assert: (self printString: Float pi decimalPlaces: 15) equals: '3.141592653589793'.
+	self assert: (self printString: Float pi decimalPlaces: 3) equals: '3.142'.
 	fmin := (String writeStream)
 				nextPutAll: '0.';
 				next: 308 - 1 put: $0;
 				nextPutAll: '22250738585072014';
 				contents.
-	self assert: fmin equals: (self printString: Float fminNormalized decimalPlaces: 308 + 16).
-	self assert: '-' , fmin
-		equals: (self printString: Float fminNormalized negated decimalPlaces: 308 + 16).
-	self assert: '0.00' equals: (self printString: Float fminNormalized decimalPlaces: 2).
+	self assert: (self printString: Float fminNormalized decimalPlaces: 308 + 16) equals: fmin.
+	self assert: (self printString: Float fminNormalized negated decimalPlaces: 308 + 16)
+		equals: '-' , fmin.
+	self assert: (self printString: Float fminNormalized decimalPlaces: 2) equals: '0.00'.
 	fminDenorm := (String writeStream)
 				nextPutAll: '0.';
 				next: 324 - 1 put: $0;
 				nextPutAll: '5';
 				contents.
-	self assert: fminDenorm equals: (self printString: Float fminDenormalized decimalPlaces: 324).
-	self assert: '-' , fminDenorm
-		equals: (self printString: Float fminDenormalized negated decimalPlaces: 324).
+	self assert: (self printString: Float fminDenormalized decimalPlaces: 324) equals: fminDenorm.
+	self assert: (self printString: Float fminDenormalized negated decimalPlaces: 324)
+		equals: '-' , fminDenorm.
 	fmax := (String writeStream)
 				nextPutAll: '17976931348623157';
 				next: 308 - 16 put: $0;
 				nextPutAll: '.00000';
 				contents.
-	self assert: fmax equals: (self printString: Float fmax decimalPlaces: 5).
-	self assert: '-' , fmax equals: (self printString: Float fmax negated decimalPlaces: 5).
-	self assert: 'Infinity' equals: (self printString: self infinity decimalPlaces: 2).
-	self assert: 'Infinity' equals: (self printString: self infinity decimalPlaces: 0).
-	self assert: '-Infinity' equals: (self printString: self negativeInfinity decimalPlaces: 2).
-	self assert: '-Infinity' equals: (self printString: self negativeInfinity decimalPlaces: 0).
-	self assert: 'NaN' equals: (self printString: self nan decimalPlaces: 1).
-	self assert: 'NaN' equals: (self printString: self nan decimalPlaces: 0).
-	self assert: 'NaN' equals: (self printString: self nan negated decimalPlaces: 2)!
+	self assert: (self printString: Float fmax decimalPlaces: 5) equals: fmax.
+	self assert: (self printString: Float fmax negated decimalPlaces: 5) equals: '-' , fmax.
+	self assert: (self printString: self infinity decimalPlaces: 2) equals: 'Infinity'.
+	self assert: (self printString: self infinity decimalPlaces: 0) equals: 'Infinity'.
+	self assert: (self printString: self negativeInfinity decimalPlaces: 2) equals: '-Infinity'.
+	self assert: (self printString: self negativeInfinity decimalPlaces: 0) equals: '-Infinity'.
+	self assert: (self printString: self nan decimalPlaces: 1) equals: 'NaN'.
+	self assert: (self printString: self nan decimalPlaces: 0) equals: 'NaN'.
+	self assert: (self printString: self nan negated decimalPlaces: 2) equals: 'NaN'!
 
 testPrintString
-	self assert: '1.3' equals: 1.3 printString.
-	self assert: '1.3333333333333333' equals: (4.0 / 3.0) printString.
-	self assert: '0.0' equals: Float zero printString.
-	self assert: '-0.0' equals: Float negativeZero printString.
-	self assert: '3.141592653589793' equals: Float pi printString.
-	self assert: '2.2250738585072014e-308' equals: Float fminNormalized printString.
-	self assert: '-2.2250738585072014e-308' equals: Float fminNormalized negated printString.
-	self assert: '5.0e-324' equals: Float fminDenormalized printString.
-	self assert: '-5.0e-324' equals: Float fminDenormalized negated printString.
-	self assert: '1.7976931348623157e308' equals: Float fmax printString.
-	self assert: '-1.7976931348623157e308' equals: Float fmax negated printString.
-	self assert: 'Infinity' equals: self infinity printString.
-	self assert: '-Infinity' equals: self negativeInfinity printString.
-	self assert: 'NaN' equals: self nan printString.
-	self assert: 'NaN' equals: self nan negated printString!
+	self assert: 1.3 printString equals: '1.3'.
+	self assert: (4.0 / 3.0) printString equals: '1.3333333333333333'.
+	self assert: Float zero printString equals: '0.0'.
+	self assert: Float negativeZero printString equals: '-0.0'.
+	self assert: Float pi printString equals: '3.141592653589793'.
+	self assert: Float fminNormalized printString equals: '2.2250738585072014e-308'.
+	self assert: Float fminNormalized negated printString equals: '-2.2250738585072014e-308'.
+	self assert: Float fminDenormalized printString equals: '5.0e-324'.
+	self assert: Float fminDenormalized negated printString equals: '-5.0e-324'.
+	self assert: Float fmax printString equals: '1.7976931348623157e308'.
+	self assert: Float fmax negated printString equals: '-1.7976931348623157e308'.
+	self assert: self infinity printString equals: 'Infinity'.
+	self assert: self negativeInfinity printString equals: '-Infinity'.
+	self assert: self nan printString equals: 'NaN'.
+	self assert: self nan negated printString equals: 'NaN'!
 
 testPrintStringAndReadBack
 	"Debug reading/printing a Floating point number without accumulating round off errors"

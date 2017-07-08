@@ -50,10 +50,10 @@ testAt
 	subject := self newCollection: #().
 	-1 to: 1 do: [:i | self should: [subject at: i] raise: BoundsError].
 	subject := self newCollection: #(65).
-	self assert: (self assimilate: 65) equals: (subject at: 1).
+	self assert: (subject at: 1) equals: (self assimilate: 65).
 	#(-1 0 2) do: [:i | self should: [subject at: i] raise: BoundsError].
 	subject := self newCollection: #(65 66 67).
-	1 to: subject size do: [:i | self assert: (self assimilate: 65 + i - 1) equals: (subject at: i)].
+	1 to: subject size do: [:i | self assert: (subject at: i) equals: (self assimilate: 65 + i - 1)].
 	(Array
 		with: -1
 		with: 0
@@ -642,10 +642,10 @@ verifyConcatenation: b with: a
 	result := a , b.
 	aSize := a size.
 	bSize := b size.
-	self assert: aSize + bSize equals: result size.
-	1 to: aSize do: [:i | self assert: (a at: i) equals: (result at: i)].
+	self assert: result size equals: aSize + bSize.
+	1 to: aSize do: [:i | self assert: (result at: i) equals: (a at: i)].
 	1 to: bSize
-		do: [:i | self assert: (self assimilateResultElement: (b at: i)) equals: (result at: i + aSize)].
+		do: [:i | self assert: (result at: i + aSize) equals: (self assimilateResultElement: (b at: i))].
 	^result!
 
 verifyIndexOfAnyOf: searchFor startingAt: startInteger in: searchee is: foundInteger 
