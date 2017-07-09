@@ -1423,6 +1423,30 @@ currentLineBackcolor: backRGB
 
 	self sciSetCaretLineBack: (backRGB ifNil: [Color yellow]) asRGB!
 
+currentLineFrameWidth
+	"Retrieve the caret line frame width. Width = 0 means this option is disabled."
+
+	^this isNil
+		ifTrue: [0]
+		ifFalse: 
+			[ScintillaLibrary default
+				directFunction: this
+				msg: SCI_GETCARETLINEFRAME
+				wParam: 0
+				lParam: 0]!
+
+currentLineFrameWidth: widthInteger
+	"Display the caret line framed. Set width !!= 0 to enable this option and width = 0 to
+	disable it."
+
+	this isNil
+		ifFalse: 
+			[ScintillaLibrary default
+				directFunction: this
+				msg: SCI_SETCARETLINEFRAME
+				wParam: widthInteger
+				lParam: 0]!
+
 currentLineText
 	"Retrieve the text of the line containing the caret. Returns the index of the caret on the
 	line. Result is NUL-terminated."
@@ -3010,6 +3034,16 @@ insertText: lengthInteger from: textString
 
 invalidateStyling
 	self startStylingFrom: 1!
+
+isAccessibilityEnabled
+	"Answer whether accessibility features are currently enabled."
+
+	^self sciGetAccessibility asBoolean!
+
+isAccessibilityEnabled: aBoolean
+	"Set whether accessibility features are currently enabled."
+
+	self sciSetAccessibility: aBoolean asParameter!
 
 isActiveHotspotUnderlined
 	"Get whether underlining for active hotspots."
@@ -4819,6 +4853,17 @@ restyleFrom: startInteger to: endInteger
 				wParam: startInteger - 1
 				lParam: endInteger - 1]!
 
+reverseSelectedLines
+	"Reverse order of selected lines."
+
+	this isNil
+		ifFalse: 
+			[ScintillaLibrary default
+				directFunction: this
+				msg: SCI_LINEREVERSE
+				wParam: 0
+				lParam: 0]!
+
 rgbaBitsFromBitmap: aDIBSection
 	"Private - Return a <ByteArray> representing the <DIBSection> in RGBA format (as opposed to the native Windows BRGA format)."
 
@@ -5741,6 +5786,18 @@ sciFreeSubStyles
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_FREESUBSTYLES
+				wParam: 0
+				lParam: 0]!
+
+sciGetAccessibility
+	"Private - Report accessibility status."
+
+	^this isNil
+		ifTrue: [0]
+		ifFalse: 
+			[ScintillaLibrary default
+				directFunction: this
+				msg: SCI_GETACCESSIBILITY
 				wParam: 0
 				lParam: 0]!
 
@@ -7487,6 +7544,17 @@ sciSearchPrev: searchFlagsInteger text: textString
 				msg: SCI_SEARCHPREV
 				wParam: searchFlagsInteger
 				lpParam: textString]!
+
+sciSetAccessibility: accessibilityInteger
+	"Private - Enable or disable accessibility."
+
+	this isNil
+		ifFalse: 
+			[ScintillaLibrary default
+				directFunction: this
+				msg: SCI_SETACCESSIBILITY
+				wParam: accessibilityInteger
+				lParam: 0]!
 
 sciSetAdditionalCaretFore: foreRGB
 	"Private - Set the foreground colour of additional carets."
@@ -9736,7 +9804,7 @@ state
 		to: 0)) #(#sciSetViewWS: #sciGetViewWS ##(SCWS_INVISIBLE)) #(#autoCompletionSeparator: #autoCompletionSeparator $\x20) #(#autoCompletionImageIdSeparator: #autoCompletionImageIdSeparator $?) #(#isAutoCompletionCancelledAtStart: #isAutoCompletionCancelledAtStart true) #(#isAutoCompletionCaseInsensitive: #isAutoCompletionCaseInsensitive false) #(#isAutoCompletionCancelledWhenNoMatch: #isAutoCompletionCancelledWhenNoMatch true) #(#isAutoCompletionTruncating: #isAutoCompletionTruncating false) #(#maxCompletionListHeight: #maxCompletionListHeight 5) #(#maxCompletionListWidth: #maxCompletionListWidth 0) #(#sciSetCodePage: #sciGetCodePage 0) #(#sciSetEdgeMode: #sciGetEdgeMode ##(EDGE_NONE)) #(#edgeColor: #edgeColor ##(Color
 		gray asRGB)) #(#zoomLevel: #zoomLevel 0) #(#setLexerLanguage: #lexer #container) #(#controlCharacter: #controlCharacter nil) #(#selectionAlpha: #selectionAlpha ##(SC_ALPHA_NOALPHA)) #(#secondarySelectionAlpha: #secondarySelectionAlpha ##(SC_ALPHA_NOALPHA)) #(#positionCacheSize: #positionCacheSize 1024) #(#activeHotspotBackcolor: #activeHotspotBackcolor ##(Color
 		white asRGB)) #(#activeHotspotForecolor: #activeHotspotForecolor ##(Color blue asRGB)) #(#areHotspotsSingleLine: #areHotspotsSingleLine true) #(#sciAnnotationSetVisible: #sciAnnotationGetVisible ##(ANNOTATION_HIDDEN)) #(#setRawAnnotations: #getRawAnnotations ##(OrderedCollection
-		new)) #(#extraAscent: #extraAscent 0) #(#extraDescent: #extraDescent 0) #(#areAdditionalCaretsVisible: #areAdditionalCaretsVisible true) #(#sciSetFontQuality: #sciGetFontQuality ##(SC_EFF_QUALITY_DEFAULT)) #(#whitespaceMarkerSize: #whitespaceMarkerSize 1) #(#sciSetMultiPaste: #sciGetMultiPaste ##(SC_MULTIPASTE_ONCE)) #(#sciSetIMEInteraction: #sciGetIMEInteraction ##(SC_IME_WINDOWED)) #(#sciAutoCSetOrder: #sciAutoCGetOrder ##(SC_ORDER_PRESORTED)) #(#sciSetPhasesDraw: #sciGetPhasesDraw ##(SC_PHASES_TWO)) #(#sciSetIdleStyling: #sciGetIdleStyling ##(SC_IDLESTYLING_NONE)) #(#isMouseWheelCaptured: #isMouseWheelCaptured true) #(#sciSetTabDrawMode: #sciGetTabDrawMode 0))
+		new)) #(#extraAscent: #extraAscent 0) #(#extraDescent: #extraDescent 0) #(#areAdditionalCaretsVisible: #areAdditionalCaretsVisible true) #(#sciSetFontQuality: #sciGetFontQuality ##(SC_EFF_QUALITY_DEFAULT)) #(#whitespaceMarkerSize: #whitespaceMarkerSize 1) #(#sciSetMultiPaste: #sciGetMultiPaste ##(SC_MULTIPASTE_ONCE)) #(#sciSetIMEInteraction: #sciGetIMEInteraction ##(SC_IME_WINDOWED)) #(#sciAutoCSetOrder: #sciAutoCGetOrder ##(SC_ORDER_PRESORTED)) #(#sciSetPhasesDraw: #sciGetPhasesDraw ##(SC_PHASES_TWO)) #(#sciSetIdleStyling: #sciGetIdleStyling ##(SC_IDLESTYLING_NONE)) #(#isMouseWheelCaptured: #isMouseWheelCaptured true) #(#sciSetTabDrawMode: #sciGetTabDrawMode 0) #(#sciSetAccessibility: #sciGetAccessibility 0) #(#currentLineFrameWidth: #currentLineFrameWidth 0))
 			do: 
 				[:each |
 				| attrib |
@@ -10453,6 +10521,8 @@ wrapIndentMode: aSymbol
 	self sciSetWrapIndentMode: (self class wrapIndentModes keyAtValue: aSymbol) - 1!
 
 xOffset
+	"Get the xOffset (ie, horizontal scroll position)."
+
 	^this isNil
 		ifTrue: [0]
 		ifFalse: 
@@ -10463,7 +10533,7 @@ xOffset
 				lParam: 0]!
 
 xOffset: xOffsetInteger
-	"Get and Set the xOffset (ie, horizontal scroll position)."
+	"Set the xOffset (ie, horizontal scroll position)."
 
 	this isNil
 		ifFalse: 
@@ -10649,6 +10719,8 @@ zoomOut
 !ScintillaView categoriesFor: #currentLineAlpha:!**auto generated**!caret, selection, and hotspot styles!public!scintilla interface! !
 !ScintillaView categoriesFor: #currentLineBackcolor!**auto generated**!caret, selection, and hotspot styles!public!scintilla interface! !
 !ScintillaView categoriesFor: #currentLineBackcolor:!caret, selection, and hotspot styles!public!scintilla interface! !
+!ScintillaView categoriesFor: #currentLineFrameWidth!**auto generated**!caret, selection, and hotspot styles!public!scintilla interface! !
+!ScintillaView categoriesFor: #currentLineFrameWidth:!**auto generated**!caret, selection, and hotspot styles!public!scintilla interface! !
 !ScintillaView categoriesFor: #currentLineText!**auto generated**!public!scintilla interface!selection! !
 !ScintillaView categoriesFor: #cutLine!**auto generated**!clipboard operations!commands!public!scintilla interface! !
 !ScintillaView categoriesFor: #cutSelection!**auto generated**!clipboard operations!commands!public!scintilla interface! !
@@ -10817,6 +10889,8 @@ zoomOut
 !ScintillaView categoriesFor: #insertText:at:!public!text retrieval & modification! !
 !ScintillaView categoriesFor: #insertText:from:!**auto generated**!public!scintilla interface!text retrieval & modification! !
 !ScintillaView categoriesFor: #invalidateStyling!public!styling! !
+!ScintillaView categoriesFor: #isAccessibilityEnabled!accessibility!public! !
+!ScintillaView categoriesFor: #isAccessibilityEnabled:!accessibility!public! !
 !ScintillaView categoriesFor: #isActiveHotspotUnderlined!**auto generated**!caret, selection, and hotspot styles!public!scintilla interface!testing! !
 !ScintillaView categoriesFor: #isActiveHotspotUnderlined:!**auto generated**!caret, selection, and hotspot styles!public!scintilla interface! !
 !ScintillaView categoriesFor: #isAutoCompletionActive!**auto generated**!autocompletion!public!scintilla interface!testing! !
@@ -10995,6 +11069,7 @@ zoomOut
 !ScintillaView categoriesFor: #resetZoom!commands!public!zooming! !
 !ScintillaView categoriesFor: #restyleAll!public!styling! !
 !ScintillaView categoriesFor: #restyleFrom:to:!**auto generated**!public!scintilla interface!styling! !
+!ScintillaView categoriesFor: #reverseSelectedLines!**auto generated**!commands!public!scintilla interface!selection! !
 !ScintillaView categoriesFor: #rgbaBitsFromBitmap:!autocompletion!helpers!private! !
 !ScintillaView categoriesFor: #rotateSelection!**auto generated**!commands!multiple selection and virtual space!public!scintilla interface!selection! !
 !ScintillaView categoriesFor: #sciAddRefDocument:!**auto generated**!multiple views!private!scintilla interface! !
@@ -11072,6 +11147,7 @@ zoomOut
 !ScintillaView categoriesFor: #sciFoldLine:action:!**auto generated**!folding!private!scintilla interface! !
 !ScintillaView categoriesFor: #sciFormatRange:fr:!**auto generated**!printing!private!scintilla interface! !
 !ScintillaView categoriesFor: #sciFreeSubStyles!**auto generated**!private!scintilla interface!style definition! !
+!ScintillaView categoriesFor: #sciGetAccessibility!**auto generated**!accessibility!private!scintilla interface! !
 !ScintillaView categoriesFor: #sciGetAdditionalSelectionTyping!**auto generated**!multiple selection and virtual space!private!scintilla interface!selection! !
 !ScintillaView categoriesFor: #sciGetAutomaticFold!**auto generated**!folding!private!scintilla interface! !
 !ScintillaView categoriesFor: #sciGetCaretSticky!**auto generated**!caret, selection, and hotspot styles!private!scintilla interface! !
@@ -11209,6 +11285,7 @@ zoomOut
 !ScintillaView categoriesFor: #sciSearchInTarget:text:!**auto generated**!private!scintilla interface!searching & replacing! !
 !ScintillaView categoriesFor: #sciSearchNext:text:!**auto generated**!private!scintilla interface!searching & replacing! !
 !ScintillaView categoriesFor: #sciSearchPrev:text:!**auto generated**!private!scintilla interface!searching & replacing! !
+!ScintillaView categoriesFor: #sciSetAccessibility:!**auto generated**!accessibility!private!scintilla interface! !
 !ScintillaView categoriesFor: #sciSetAdditionalCaretFore:!**auto generated**!caret, selection, and hotspot styles!private!scintilla interface!selection! !
 !ScintillaView categoriesFor: #sciSetAdditionalSelBack:!**auto generated**!caret, selection, and hotspot styles!private!scintilla interface!selection! !
 !ScintillaView categoriesFor: #sciSetAdditionalSelectionTyping:!**auto generated**!multiple selection and virtual space!private!scintilla interface!selection! !
@@ -11777,7 +11854,7 @@ lexerLanguages
 	are not languages as such: #automatic is an instruction to Scintilla to choose a lexer, and #container
 	sends colourization requests back to the control's container (i.e. into our Smalltalk wrapper)."
 
-	^#(#container #text #python #cpp #hypertext #xml #perl #sql #vb #props #errorlist #makefile #batch nil #latex #lua #diff #conf #pascal #ave #ada #lisp #ruby #eiffel #eiffelkw #tcl #nncrontab #bullant #vbscript nil nil #baan #matlab #scriptol #asm #cppnocase #fortran #f77 #css #pov #lout #escript #ps #nsis #mmixal #clarion #clarionnocase #lot #yaml #tex #metapost #powerbasic #forth #erlang #octave #mssql #verilog #kix #gui4cli #specman #au3 #apdl #bash #asn1 #vhdl #caml #blitzbasic #purebasic #haskell #phpscript #tads3 #rebol #smalltalk #flagship #csound #freebasic #inno #opal #spice #d #cmake #gap #'PL/M' #abl #abaqus #asy #r #magiksf #powershell #mysql #po #TAL #COBOL #TACL #sorcins #powerpro #nimrod #SML #markdown #txt2tags #a68k #modula #coffeescript #tcmd #avs #ecl #oscript #visualprolog #literatehaskell #fcST #kvirc #rust #DMAP #as #DMIS #registry #bib #srec #ihex #tehex #json nil nil nil nil nil #automatic)!
+	^#(#container #text #python #cpp #hypertext #xml #perl #sql #vb #props #errorlist #makefile #batch nil #latex #lua #diff #conf #pascal #ave #ada #lisp #ruby #eiffel #eiffelkw #tcl #nncrontab #bullant #vbscript nil nil #baan #matlab #scriptol #asm #cppnocase #fortran #f77 #css #pov #lout #escript #ps #nsis #mmixal #clarion #clarionnocase #lot #yaml #tex #metapost #powerbasic #forth #erlang #octave #mssql #verilog #kix #gui4cli #specman #au3 #apdl #bash #asn1 #vhdl #caml #blitzbasic #purebasic #haskell #phpscript #tads3 #rebol #smalltalk #flagship #csound #freebasic #inno #opal #spice #d #cmake #gap #'PL/M' #abl #abaqus #asy #r #magiksf #powershell #mysql #po #TAL #COBOL #TACL #sorcins #powerpro #nimrod #SML #markdown #txt2tags #a68k #modula #coffeescript #tcmd #avs #ecl #oscript #visualprolog #literatehaskell #fcST #kvirc #rust #DMAP #as #DMIS #registry #bib #srec #ihex #tehex #json #edifact #indent nil nil nil #automatic)!
 
 lineEndings
 	"Answer the symbolic names of the end-of-line modes supported by Scintilla. These correspond

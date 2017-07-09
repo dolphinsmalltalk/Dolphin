@@ -165,6 +165,7 @@ initializeCommands
 				at: SCI_LINEENDRECTEXTEND put: #extendRectangleToEndOfLine;
 				at: SCI_LINEENDWRAP put: #moveToEndOfWrappedLine;
 				at: SCI_LINEENDWRAPEXTEND put: #extendToEndOfWrappedLine;
+				at: SCI_LINEREVERSE put: #reverseSelectedLines;
 				at: SCI_LINESCROLLDOWN put: #scrollDown;
 				at: SCI_LINESCROLLUP put: #scrollUp;
 				at: SCI_LINESJOIN put: #joinTarget;

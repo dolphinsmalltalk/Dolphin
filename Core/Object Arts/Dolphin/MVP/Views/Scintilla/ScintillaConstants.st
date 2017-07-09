@@ -52,6 +52,8 @@ ScintillaConstants at: 'SC_AC_DOUBLECLICK' put: 16r2!
 ScintillaConstants at: 'SC_AC_FILLUP' put: 16r1!
 ScintillaConstants at: 'SC_AC_NEWLINE' put: 16r4!
 ScintillaConstants at: 'SC_AC_TAB' put: 16r3!
+ScintillaConstants at: 'SC_ACCESSIBILITY_DISABLED' put: 16r0!
+ScintillaConstants at: 'SC_ACCESSIBILITY_ENABLED' put: 16r1!
 ScintillaConstants at: 'SC_ALPHA_NOALPHA' put: 16r100!
 ScintillaConstants at: 'SC_ALPHA_OPAQUE' put: 16rFF!
 ScintillaConstants at: 'SC_ALPHA_TRANSPARENT' put: 16r0!
@@ -423,6 +425,7 @@ ScintillaConstants at: 'SCI_FOLDLINE' put: 16r8BD!
 ScintillaConstants at: 'SCI_FORMATRANGE' put: 16r867!
 ScintillaConstants at: 'SCI_FORMFEED' put: 16r91A!
 ScintillaConstants at: 'SCI_FREESUBSTYLES' put: 16rFB7!
+ScintillaConstants at: 'SCI_GETACCESSIBILITY' put: 16rA8F!
 ScintillaConstants at: 'SCI_GETADDITIONALCARETFORE' put: 16rA2D!
 ScintillaConstants at: 'SCI_GETADDITIONALCARETSBLINK' put: 16rA08!
 ScintillaConstants at: 'SCI_GETADDITIONALCARETSVISIBLE' put: 16rA31!
@@ -436,6 +439,7 @@ ScintillaConstants at: 'SCI_GETBUFFEREDDRAW' put: 16r7F2!
 ScintillaConstants at: 'SCI_GETCARETFORE' put: 16r85A!
 ScintillaConstants at: 'SCI_GETCARETLINEBACK' put: 16r831!
 ScintillaConstants at: 'SCI_GETCARETLINEBACKALPHA' put: 16r9A7!
+ScintillaConstants at: 'SCI_GETCARETLINEFRAME' put: 16rA90!
 ScintillaConstants at: 'SCI_GETCARETLINEVISIBLE' put: 16r82F!
 ScintillaConstants at: 'SCI_GETCARETLINEVISIBLEALWAYS' put: 16rA5E!
 ScintillaConstants at: 'SCI_GETCARETPERIOD' put: 16r81B!
@@ -647,6 +651,7 @@ ScintillaConstants at: 'SCI_LINEENDWRAP' put: 16r993!
 ScintillaConstants at: 'SCI_LINEENDWRAPEXTEND' put: 16r994!
 ScintillaConstants at: 'SCI_LINEFROMPOSITION' put: 16r876!
 ScintillaConstants at: 'SCI_LINELENGTH' put: 16r92E!
+ScintillaConstants at: 'SCI_LINEREVERSE' put: 16r932!
 ScintillaConstants at: 'SCI_LINESCROLL' put: 16r878!
 ScintillaConstants at: 'SCI_LINESCROLLDOWN' put: 16r926!
 ScintillaConstants at: 'SCI_LINESCROLLUP' put: 16r927!
@@ -741,6 +746,7 @@ ScintillaConstants at: 'SCI_SEARCHPREV' put: 16r940!
 ScintillaConstants at: 'SCI_SELECTALL' put: 16r7DD!
 ScintillaConstants at: 'SCI_SELECTIONDUPLICATE' put: 16r9A5!
 ScintillaConstants at: 'SCI_SELECTIONISRECTANGLE' put: 16r944!
+ScintillaConstants at: 'SCI_SETACCESSIBILITY' put: 16rA8E!
 ScintillaConstants at: 'SCI_SETADDITIONALCARETFORE' put: 16rA2C!
 ScintillaConstants at: 'SCI_SETADDITIONALCARETSBLINK' put: 16rA07!
 ScintillaConstants at: 'SCI_SETADDITIONALCARETSVISIBLE' put: 16rA30!
@@ -755,6 +761,7 @@ ScintillaConstants at: 'SCI_SETBUFFEREDDRAW' put: 16r7F3!
 ScintillaConstants at: 'SCI_SETCARETFORE' put: 16r815!
 ScintillaConstants at: 'SCI_SETCARETLINEBACK' put: 16r832!
 ScintillaConstants at: 'SCI_SETCARETLINEBACKALPHA' put: 16r9A6!
+ScintillaConstants at: 'SCI_SETCARETLINEFRAME' put: 16rA91!
 ScintillaConstants at: 'SCI_SETCARETLINEVISIBLE' put: 16r830!
 ScintillaConstants at: 'SCI_SETCARETLINEVISIBLEALWAYS' put: 16rA5F!
 ScintillaConstants at: 'SCI_SETCARETPERIOD' put: 16r81C!
@@ -1045,6 +1052,7 @@ ScintillaConstants at: 'SCLEX_GUI4CLI' put: 16r3A!
 ScintillaConstants at: 'SCLEX_HASKELL' put: 16r44!
 ScintillaConstants at: 'SCLEX_HTML' put: 16r4!
 ScintillaConstants at: 'SCLEX_IHEX' put: 16r76!
+ScintillaConstants at: 'SCLEX_INDENT' put: 16r7A!
 ScintillaConstants at: 'SCLEX_INNOSETUP' put: 16r4C!
 ScintillaConstants at: 'SCLEX_JSON' put: 16r78!
 ScintillaConstants at: 'SCLEX_KIX' put: 16r39!
