@@ -915,16 +915,16 @@ messagesForToken: anAssociation startingWith: aString maxItems: anInteger
 	class := self classForToken: anAssociation.
 	"When completing against a variable that happens to have the value nil,
 	treat it as possibly being of any type, as most likely it is simply uninitialized."
-	(anAssociation value == #identifier and: [class == UndefinedObject]) ifTrue: [class := nil].
+	(class == UndefinedObject and: [anAssociation value == #identifier]) ifTrue: [class := nil].
 	selectors := Set new.
 	Smalltalk developmentSystem allSelectors do: 
-			[:each | 
-			((each beginsWith: aString ignoreCase: ignoreCase) 
-				and: [class isNil or: [class canUnderstand: each]]) 
+			[:each |
+			((each beginsWith: aString ignoreCase: ignoreCase)
+				and: [class isNil or: [class canUnderstand: each]])
 					ifTrue: 
 						[selectors add: each.
 						selectors size > anInteger ifTrue: [^#()]]].
-	^selectors collect: [:each | ScintillaListItem text: each icon: icon].!
+	^selectors collect: [:each | ScintillaListItem text: each icon: icon]!
 
 modifiedModel
 	^modifiedModel!
