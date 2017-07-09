@@ -5,7 +5,7 @@ Integer variableByteSubclass: #LargeInteger
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-LargeInteger guid: (GUID fromString: '{87B4C65E-026E-11D3-9FD7-00A0CC3E4A32}')!
+LargeInteger guid: (GUID fromString: '{87b4c65e-026e-11d3-9fd7-00a0cc3e4a32}')!
 LargeInteger isIndirection: true!
 LargeInteger comment: 'Class LargeInteger is the class of Integers which are outside the range of SmallIntegers (i.e. outside (SmallInteger minimum..SmallInteger maximum). Basically any Integer requiring more than 31-bits to be represented in 2''s complement will be a LargeInteger.
 
@@ -48,7 +48,7 @@ LargeInteger includes high performance primitive implementations for the common 
 	"Answer the <integer> remainder defined by division with truncation toward negative 
 	infinity; e.g. 7 \\ 2 = 1, -7 \\ 2 = 1, 7 \\ -2 = -1. 
 	This is the modulo operation, but it is not the same as C modulo (%) which truncates 
-	towards zero (use #mod:). Report an error if the aNumber is zero."
+	towards zero. Report an error if the aNumber is zero."
 
 	<primitive: 31>
 	^super \\ operand!

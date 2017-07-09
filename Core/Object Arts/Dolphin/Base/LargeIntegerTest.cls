@@ -776,6 +776,26 @@ testMod
 	result := b * b % mod.
 	self assert: result = expected!
 
+testModulo
+	"Test #\\, which is mathetical modulo with truncation towards negative infinity (not zero"
+
+	#(-16rFFFFFFFFFFFFFFFFFFFFFFFF -16rFFFFFFFFFFFFFFF -16rFFFFFFFF ##(SmallInteger maximum + 1) ##(SmallInteger
+		maximum + 2) 16rFFFFFFFF 16rFFFFFFFFFFFFFFF 16rFFFFFFFFFFFFFFFFFFFFFFFF)
+		do: 
+			[:dividend |
+			self should: [dividend \\ 0] raise: ZeroDivide.
+			#(-16r7FFFFFFFFFFFFFFFFFFFFFFF -16r7FFFFFFFFFFFFFFF ##(SmallInteger minimum * 2 - 1) ##(SmallInteger
+				minimum / 2) -3 -2 -1 2 3 ##(SmallInteger maximum) ##(SmallInteger maximum + 1) 16r7FFFFFFF 16r7FFFFFFFFFFFFFFF 16r7FFFFFFFFFFFFFFFFFFFFFFF)
+				do: 
+					[:divisor |
+					| expected actual quotient |
+					quotient := dividend // divisor.
+					expected := dividend - (quotient * divisor).
+					actual := dividend \\ divisor.
+					self assert: actual equals: expected.
+					"Sanity check"
+					self assert: quotient * divisor + actual equals: dividend]]!
+
 testMulSmall
 	| res a |
 	a := 16r40000000.
@@ -959,6 +979,26 @@ testQuoRem3
 			"And the remainders should be less than the denominator"
 			self assert: r < v]!
 
+testRem
+	#(-16rFFFFFFFFFFFFFFFFFFFFFFFF -16rFFFFFFFFFFFFFFF -16rFFFFFFFF ##(SmallInteger maximum + 1) ##(SmallInteger
+		maximum + 2) 16rFFFFFFFF 16rFFFFFFFFFFFFFFF 16rFFFFFFFFFFFFFFFFFFFFFFFF)
+		do: 
+			[:dividend |
+			#(-16r7FFFFFFFFFFFFFFFFFFFFFFF -16r7FFFFFFFFFFFFFFF ##(SmallInteger minimum * 2 - 1) ##(SmallInteger
+				minimum / 2) -3 -2 -1 2 3 ##(SmallInteger maximum) ##(SmallInteger maximum + 1) 16r7FFFFFFF 16r7FFFFFFFFFFFFFFF 16r7FFFFFFFFFFFFFFFFFFFFFFF)
+				do: 
+					[:divisor |
+					| expected actual quotient |
+					quotient := dividend quo: divisor.
+					expected := dividend - (quotient * divisor).
+					actual := dividend rem: divisor.
+					self assert: actual equals: expected.
+					"% is the operator equivalent of #rem:"
+					actual := dividend % divisor.
+					self assert: actual equals: expected.
+					"Sanity check"
+					self assert: quotient * divisor + actual equals: dividend]]!
+
 testSubtractSmall
 	| res |
 	res := 16r40000000 - 1.
@@ -1010,6 +1050,7 @@ testSubtractSmall
 !LargeIntegerTest categoriesFor: #testHighBit!public!unit tests! !
 !LargeIntegerTest categoriesFor: #testImmutable!public!unit tests! !
 !LargeIntegerTest categoriesFor: #testMod!public!unit tests! !
+!LargeIntegerTest categoriesFor: #testModulo!public!unit tests! !
 !LargeIntegerTest categoriesFor: #testMulSmall!public!unit tests! !
 !LargeIntegerTest categoriesFor: #testNegate!public!unit tests! !
 !LargeIntegerTest categoriesFor: #testPrintLargeBase2!public!unit tests! !
@@ -1017,5 +1058,6 @@ testSubtractSmall
 !LargeIntegerTest categoriesFor: #testQuoRem!public!unit tests! !
 !LargeIntegerTest categoriesFor: #testQuoRem2!public!unit tests! !
 !LargeIntegerTest categoriesFor: #testQuoRem3!public!unit tests! !
+!LargeIntegerTest categoriesFor: #testRem!public!unit tests! !
 !LargeIntegerTest categoriesFor: #testSubtractSmall!public!unit tests! !
 
