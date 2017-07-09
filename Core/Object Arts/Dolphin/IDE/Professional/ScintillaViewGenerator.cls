@@ -129,6 +129,8 @@ defineConstantsPool
 		at: 'SC_AC_FILLUP' put: 1;
 		at: 'SC_AC_NEWLINE' put: 4;
 		at: 'SC_AC_TAB' put: 3;
+		at: 'SC_ACCESSIBILITY_DISABLED' put: 0;
+		at: 'SC_ACCESSIBILITY_ENABLED' put: 1;
 		at: 'SC_ALPHA_NOALPHA' put: 256;
 		at: 'SC_ALPHA_OPAQUE' put: 255;
 		at: 'SC_ALPHA_TRANSPARENT' put: 0;
@@ -500,6 +502,7 @@ defineConstantsPool
 		at: 'SCI_FORMATRANGE' put: 2151;
 		at: 'SCI_FORMFEED' put: 2330;
 		at: 'SCI_FREESUBSTYLES' put: 4023;
+		at: 'SCI_GETACCESSIBILITY' put: 2703;
 		at: 'SCI_GETADDITIONALCARETFORE' put: 2605;
 		at: 'SCI_GETADDITIONALCARETSBLINK' put: 2568;
 		at: 'SCI_GETADDITIONALCARETSVISIBLE' put: 2609;
@@ -513,6 +516,7 @@ defineConstantsPool
 		at: 'SCI_GETCARETFORE' put: 2138;
 		at: 'SCI_GETCARETLINEBACK' put: 2097;
 		at: 'SCI_GETCARETLINEBACKALPHA' put: 2471;
+		at: 'SCI_GETCARETLINEFRAME' put: 2704;
 		at: 'SCI_GETCARETLINEVISIBLE' put: 2095;
 		at: 'SCI_GETCARETLINEVISIBLEALWAYS' put: 2654;
 		at: 'SCI_GETCARETPERIOD' put: 2075;
@@ -724,6 +728,7 @@ defineConstantsPool
 		at: 'SCI_LINEENDWRAPEXTEND' put: 2452;
 		at: 'SCI_LINEFROMPOSITION' put: 2166;
 		at: 'SCI_LINELENGTH' put: 2350;
+		at: 'SCI_LINEREVERSE' put: 2354;
 		at: 'SCI_LINESCROLL' put: 2168;
 		at: 'SCI_LINESCROLLDOWN' put: 2342;
 		at: 'SCI_LINESCROLLUP' put: 2343;
@@ -818,6 +823,7 @@ defineConstantsPool
 		at: 'SCI_SELECTALL' put: 2013;
 		at: 'SCI_SELECTIONDUPLICATE' put: 2469;
 		at: 'SCI_SELECTIONISRECTANGLE' put: 2372;
+		at: 'SCI_SETACCESSIBILITY' put: 2702;
 		at: 'SCI_SETADDITIONALCARETFORE' put: 2604;
 		at: 'SCI_SETADDITIONALCARETSBLINK' put: 2567;
 		at: 'SCI_SETADDITIONALCARETSVISIBLE' put: 2608;
@@ -832,6 +838,7 @@ defineConstantsPool
 		at: 'SCI_SETCARETFORE' put: 2069;
 		at: 'SCI_SETCARETLINEBACK' put: 2098;
 		at: 'SCI_SETCARETLINEBACKALPHA' put: 2470;
+		at: 'SCI_SETCARETLINEFRAME' put: 2705;
 		at: 'SCI_SETCARETLINEVISIBLE' put: 2096;
 		at: 'SCI_SETCARETLINEVISIBLEALWAYS' put: 2655;
 		at: 'SCI_SETCARETPERIOD' put: 2076;
@@ -1122,6 +1129,7 @@ defineConstantsPool
 		at: 'SCLEX_HASKELL' put: 68;
 		at: 'SCLEX_HTML' put: 4;
 		at: 'SCLEX_IHEX' put: 118;
+		at: 'SCLEX_INDENT' put: 122;
 		at: 'SCLEX_INNOSETUP' put: 76;
 		at: 'SCLEX_JSON' put: 120;
 		at: 'SCLEX_KIX' put: 57;
@@ -1816,6 +1824,7 @@ sciCommands
 		add: 'SCI_SCROLLTOSTART';
 		add: 'SCI_SCROLLTOEND';
 		add: 'SCI_VERTICALCENTRECARET';
+		add: 'SCI_LINEREVERSE';
 		shrink;
 		yourself)!
 

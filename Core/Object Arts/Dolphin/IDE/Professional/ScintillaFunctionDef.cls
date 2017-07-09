@@ -378,6 +378,8 @@ renamedFunctions
 		at: 'SCI_CHOOSECARETX' put: #rememberCaretX;
 		at: 'SCI_GETADDITIONALCARETSVISIBLE' put: #areAdditionalCaretsVisible;
 		at: 'SCI_SETADDITIONALCARETSVISIBLE' put: #areAdditionalCaretsVisible:;
+		at: 'SCI_GETCARETLINEFRAME' put: #currentLineFrameWidth;
+		at: 'SCI_SETCARETLINEFRAME' put: #currentLineFrameWidth:;
 		yourself.
 	"Markers"
 	renamedMessages
@@ -645,6 +647,7 @@ renamedFunctions
 		at: 'SCI_MOVESELECTEDLINESDOWN' put: #moveSelectedLinesDown;
 		at: 'SCI_SCROLLTOSTART' put: #scrollToStart;
 		at: 'SCI_SCROLLTOEND' put: #scrollToEnd;
+		at: 'SCI_LINEREVERSE' put: #reverseSelectedLines;
 		yourself.
 	
 	"Brace highlighting"
