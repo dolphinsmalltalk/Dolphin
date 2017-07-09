@@ -149,18 +149,27 @@ testMinMax
 testMinVal
 	self should: [SmallInteger minimum = (1 bitShift: VMConstants.IntPtrBits - 2) negated]!
 
-testMod
-	"Different forms of mod"
-
-	self assert: 6\\2 == 0.
-	self assert: -6\\2 == 0.
-	self assert: 5\\-3 == -1.
-	self assert: -5\\-3 == -2.
-
-	self assert: 7\\ 2 == 1.
-	self assert: 7\\ 2+1 == 2.
-	self assert: -7\\ 2 == 1.
-!
+testModulo
+	self should: [-1 \\ 0] raise: ZeroDivide.
+	self assert: 6 \\ 2 equals: 0.
+	self assert: -6 \\ 2 equals: 0.
+	self assert: 5 \\ -3 equals: -1.
+	self assert: -5 \\ -3 equals: -2.
+	self assert: 7 \\ 2 equals: 1.
+	self assert: 7 \\ 2 + 1 equals: 2.
+	self assert: 7 \\ 11 equals: 7.
+	self assert: 7 \\ -2 equals: -1.
+	self assert: 7 \\ -3 equals: -2.
+	self assert: 7 \\ -4 equals: -1.
+	self assert: 7 \\ -5 equals: -3.
+	self assert: 7 \\ -6 equals: -5.
+	self assert: 7 \\ -7 equals: 0.
+	self assert: 7 \\ -8 equals: -1.
+	self assert: 7 \\ -11 equals: -4.
+	self assert: -7 \\ 2 equals: 1.
+	self assert: -7 \\ 7 equals: 0.
+	self assert: -7 \\ 11 equals: 4.
+	self assert: -7 \\ -11 equals: -7!
 
 testNew
 	self should: [SmallInteger new] raise: TestResult error!
@@ -273,7 +282,7 @@ testSubtract
 !SmallIntegerTest categoriesFor: #testMaxVal!public!unit tests! !
 !SmallIntegerTest categoriesFor: #testMinMax!public!unit tests! !
 !SmallIntegerTest categoriesFor: #testMinVal!public!unit tests! !
-!SmallIntegerTest categoriesFor: #testMod!public!unit tests! !
+!SmallIntegerTest categoriesFor: #testModulo!public!unit tests! !
 !SmallIntegerTest categoriesFor: #testNew!public!unit tests! !
 !SmallIntegerTest categoriesFor: #testNoMask!public!unit tests! !
 !SmallIntegerTest categoriesFor: #testOverflow!public!unit tests! !
