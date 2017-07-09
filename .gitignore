@@ -17,3 +17,4 @@ Releases/
 Contributions/
 Core/DolphinVM/
 Projects
+*.log
