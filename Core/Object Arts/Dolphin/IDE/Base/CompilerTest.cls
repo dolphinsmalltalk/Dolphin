@@ -237,7 +237,7 @@ testCompileTimeExpressions
 	(Array with: self with: self class) do: 
 			[:each |
 			result := (self compileExpression: '##(self)' in: each class) method value: each.
-			self assert: each class instanceClass equals: result]!
+			self assert: result equals: each class instanceClass]!
 
 testConstExpressionReferences
 	"Test that references in a compile-time evaluated expression are retained in the literal frame 
@@ -287,7 +287,7 @@ testDecrementPushTempOptimisation
 	18	Pop; Push Temp[0]
 	19	Return '
 				expandMacrosWith: expr literalCount.
-	self assert: expected equals: disasm.
+	self assert: disasm equals: expected.
 	self assert: (expr value: nil) = 1.
 	expr := (self
 				compileExpression: '| t1 t2 t3 t4 t5 t6 t7 j | t1 := t2 := t3 := t4 := t5 := t6 := t7 := 1. 5 to: 1 by: -1 do: [:i | j := i]. j')
@@ -320,7 +320,7 @@ testDecrementPushTempOptimisation
 	33	Push Temp[7]
 	34	Return '
 				expandMacrosWith: expr literalCount.
-	self assert: expected equals: disasm.
+	self assert: disasm equals: expected.
 	self assert: (expr value: nil) = 1.
 	"Overflow"
 	expr := (self compileExpression: '| i | i := SmallInteger minimum. i class. i := i - 1. i*1')
@@ -353,7 +353,7 @@ testDecrementTempOptimisation
 	14	Push Temp[0]
 	15	Return '
 				expandMacrosWith: expr literalCount.
-	self assert: expected equals: disasm.
+	self assert: disasm equals: expected.
 	self assert: (expr value: nil) = 0.
 	expr := (self
 				compileExpression: '| t1 t2 t3 t4 t5 t6 t7 t8 i | t1 := t2 := t3 := t4 := t5 := t6 := t7 := t8 := 1. i := 5. [i < 1] whileFalse: [i := i - 1]. i')
@@ -729,7 +729,7 @@ testIncrementTempOptimisation
 	14	Push Temp[0]
 	15	Return '
 				expandMacrosWith: method literalCount.
-	self assert: expected equals: disasm.
+	self assert: disasm equals: expected.
 	self assert: (self evalTestMethod: method) = 6.
 	method := self getTestMethod: #testIncrementTempOptimisationLong.
 	self assert: (method byteCodes at: 24) = IncTemp.
@@ -934,7 +934,7 @@ testReturnImmediate
 			[:each |
 			method := (self compileExpression: (each printStringRadix: 2)) method.
 			self assert: method extraIndex = 5.
-			self assert: (ByteArray with: ShortPushConst + 0 with: ReturnFromMessage) equals: method byteCodes]!
+			self assert: method byteCodes equals: (ByteArray with: ShortPushConst + 0 with: ReturnFromMessage)]!
 
 testReturnPseudoVar
 	| method |
@@ -947,8 +947,8 @@ testReturnPseudoVar
 			bytecodes := retInstr odd
 						ifTrue: [ByteArray with: retInstr]
 						ifFalse: [ByteArray with: Nop with: retInstr].
-			self assert: bytecodes equals: method byteCodes.
-			self assert: eachValue equals: (method value: DolphinCompilerTestMethods new withArguments: #())]!
+			self assert: method byteCodes equals: bytecodes.
+			self assert: (method value: DolphinCompilerTestMethods new withArguments: #()) equals: eachValue]!
 
 testScanningScaledDecimals
 	"Test Number>>readFrom: with ScaledDecimals"
@@ -1160,30 +1160,29 @@ testTextMapOfEmptyBlock
 	block := Compiler evaluate: '| x | x := []. x'.
 	self assert: block == VMLibrary default emptyBlock.
 	method := block method.
-	self assert: (ByteArray
+	self assert: method byteCodes
+		equals: (ByteArray
 				with: ShortPushConst + 0
 				with: ReturnFromMessage
 				with: ShortPushNil
-				with: ReturnFromBlock)
-		equals: method byteCodes.
+				with: ReturnFromBlock).
 	debugMethod := block method asDebugMethod.
-	self
-		assert: (ByteArray
+	self assert: debugMethod byteCodes
+		equals: (ByteArray
 				with: ShortPushConst + 0
 				with: Break
 				with: ReturnFromMessage) , (ByteArray
 							with: ShortPushNil
 							with: Break
-							with: ReturnFromBlock)
-		equals: debugMethod byteCodes.
-	self assert: method textMap size equals: debugMethod textMap size.
+							with: ReturnFromBlock).
+	self assert: debugMethod textMap size equals: method textMap size.
 	2 to: 4
 		do: 
 			[:ip |
 			| debugIp |
 			debugIp := self findIP: ip inTextMap: method textMap.
-			self assert: (method byteCodes at: ip)
-				equals: (debugMethod byteCodes at: (debugMethod textMap at: debugIp) key)]!
+			self assert: (debugMethod byteCodes at: (debugMethod textMap at: debugIp) key)
+				equals: (method byteCodes at: ip)]!
 
 testTextMapsOfCleanBlocks
 	#('[:a|a > 5 ifTrue: [''Many''] ifFalse: [a printString]]' '[1]' '[]')
@@ -1198,7 +1197,7 @@ testTimesRepeat
 	self assert: method notNil.
 	self deny: method needsContext.
 	self deny: (method byteCodeSegments anySatisfy: [:each | each first = BlockCopy]).
-	self assert: 5 equals: (method value: nil withArguments: #()).
+	self assert: (method value: nil withArguments: #()) equals: 5.
 	self
 		shouldnt: [result := self compileExpression: '| a | a := 0. 10 + (5 timesRepeat: [a := a + 1]). a']
 		raise: self compilationWarningClass.
@@ -1206,7 +1205,7 @@ testTimesRepeat
 	self assert: method notNil.
 	self deny: method needsContext.
 	self deny: (method byteCodeSegments anySatisfy: [:each | each first = BlockCopy]).
-	self assert: 5 equals: (method value: nil withArguments: #()).
+	self assert: (method value: nil withArguments: #()) equals: 5.
 
 	"Test case which cannot be inlined"
 	src := '| aBlock i | i := 0. aBlock := [i := i + 1]. 5 timesRepeat: aBlock. i.'.
@@ -1229,12 +1228,12 @@ testTimesRepeat
 	method := result method.
 	self assert: method notNil.
 	self assert: method isPacked.
-	self assert: (ByteArray
+	self assert: method byteCodes
+		equals: (ByteArray
 				with: Nop
 				with: ShortPushZero
-				with: ReturnFromMessage)
-		equals: method byteCodes.
-	self assert: 0 equals: (method value: nil withArguments: #()).
+				with: ReturnFromMessage).
+	self assert: (method value: nil withArguments: #()) equals: 0.
 
 	"Test 0 iterations, which compiler can remove (should come down to just a Return Zero, or at least return literal constant zero"
 	self shouldnt: [result := self compileExpression: '-1 timesRepeat: [Sound bell]']
@@ -1242,18 +1241,20 @@ testTimesRepeat
 	method := result method.
 	self assert: method notNil.
 	self assert: method isPacked.
-	self assert: -1 equals: (method value: nil withArguments: #())!
+	self assert: (method value: nil withArguments: #()) equals: -1!
 
 testTimesRepeatResult
 	#(0 1 2 127 16383 32767 32768) do: 
 			[:each |
-			self assert: each
-				equals: ((self compileExpression: ('<1p> timesRepeat: []' expandMacrosWith: each)) method value: nil
-						withArguments: #()).
-			self assert: each
-				equals: ((self
+			self
+				assert: ((self compileExpression: ('<1p> timesRepeat: []' expandMacrosWith: each)) method value: nil
+						withArguments: #())
+				equals: each.
+			self
+				assert: ((self
 						compileExpression: ('| i | i := 0. <1p> timesRepeat: [i := i + 1]. i' expandMacrosWith: each))
-							method value: nil withArguments: #())]!
+							method value: nil withArguments: #())
+				equals: each]!
 
 testToByDo
 	| result method src |
@@ -1384,7 +1385,7 @@ verifyTempsMapOf: aCompiledMethod
 	"First check that all ip's are covered by the method scope"
 	ipRange := 1 to: method byteCodes size.
 	tempsMap := info tempsMap.
-	self assert: ipRange equals: tempsMap first key.
+	self assert: tempsMap first key equals: ipRange.
 	"All temps map entries should be for ip's that represent some subset of the method's ip's"
 	tempsMap do: 
 			[:each |
@@ -1433,7 +1434,7 @@ verifyTextMapsOf: each
 	textMap := each debugInfo textMap.
 	debugTextMap := debugMethod textMap.
 	"The text maps should contain exactly the same number of entries, and the text range for each entry should be the same"
-	self assert: textMap size equals: debugTextMap size.
+	self assert: debugTextMap size equals: textMap size.
 	textMap with: debugTextMap do: [:a :b | self assert: a value = b value].
 	^debugTextMap do: 
 			[:assoc |

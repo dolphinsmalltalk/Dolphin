@@ -420,15 +420,15 @@ testExtCallRetHRESULT
 			[:each |
 			| result |
 			result := method value: VMLibrary default withArguments: (Array with: each).
-			self assert: each equals: result.
+			self assert: result equals: each.
 			self assert: each class == result class].
 	"Negative HRESULTs should cause the primitive to fail with the failure data set to the HR code."
 	#(-1 -16r40000000 -16r40000001 -16r80000000) do: 
 			[:each |
 			| result |
 			result := method value: VMLibrary default withArguments: (Array with: each).
-			self assert: -1 equals: result key.
-			self assert: each equals: result value.
+			self assert: result key equals: -1.
+			self assert: result value equals: each.
 			self assert: each class == result value class]!
 
 testFPFaultInPrimitive
@@ -597,10 +597,10 @@ testIndirectByteAtOffsetPrimitives
 	#(0 1 127 128 255) do: 
 			[:each |
 			"Should be able to write any 32-bit integer value, and read it back"
-			self assert: each equals: (p byteAtOffset: 1 put: each).
-			self assert: each equals: (b byteAtOffset: 1).
-			self assert: 0 equals: (b byteAtOffset: 0).
-			self assert: 0 equals: (b byteAtOffset: 2)].
+			self assert: (p byteAtOffset: 1 put: each) equals: each.
+			self assert: (b byteAtOffset: 1) equals: each.
+			self assert: (b byteAtOffset: 0) equals: 0.
+			self assert: (b byteAtOffset: 2) equals: 0].
 
 	"Arg must be in range 0..255"
 	#(-1 256) do: [:each | self should: [p byteAtOffset: 1 put: each] raise: Error].
@@ -648,10 +648,10 @@ testIndirectDwordAtOffsetPrimitives
 		do: 
 			[:each |
 			"Should be able to write any 32-bit integer value, and read it back"
-			self assert: each equals: (p dwordAtOffset: 4 put: each).
-			self assert: each asDword equals: (b dwordAtOffset: 4).
-			self assert: 0 equals: (b dwordAtOffset: 0).
-			self assert: 0 equals: (b dwordAtOffset: 8)].
+			self assert: (p dwordAtOffset: 4 put: each) equals: each.
+			self assert: (b dwordAtOffset: 4) equals: each asDword.
+			self assert: (b dwordAtOffset: 0) equals: 0.
+			self assert: (b dwordAtOffset: 8) equals: 0].
 
 	"Error if arg requires more that 32-bits to represent as an unsigned int"
 	#(16r100000000 -16r80000001) do: [:each | self should: [p sdwordAtOffset: 0 put: each] raise: Error].
@@ -701,10 +701,10 @@ testIndirectSdwordAtOffsetPrimitives
 		do: 
 			[:each |
 			"Should be able to write any 32-bit integer value, and read it back"
-			self assert: each equals: (p sdwordAtOffset: 4 put: each).
-			self assert: each equals: (b sdwordAtOffset: 4).
-			self assert: 0 equals: (b sdwordAtOffset: 0).
-			self assert: 0 equals: (b sdwordAtOffset: 8)].
+			self assert: (p sdwordAtOffset: 4 put: each) equals: each.
+			self assert: (b sdwordAtOffset: 4) equals: each.
+			self assert: (b sdwordAtOffset: 0) equals: 0.
+			self assert: (b sdwordAtOffset: 8) equals: 0].
 
 	"If arg requires more than 32-bits to represent in 2's complement, then should be an error"
 	#(16r80000000 -16r80000001) do: [:each | self should: [p sdwordAtOffset: 0 put: each] raise: Error].
@@ -753,10 +753,10 @@ testIndirectSwordAtOffsetPrimitives
 	#(0 -1 1 16r7FFF -16r8000) do: 
 			[:each |
 			"Should be able to write any 32-bit integer value, and read it back"
-			self assert: each equals: (p swordAtOffset: 2 put: each).
-			self assert: each equals: (b swordAtOffset: 2).
-			self assert: 0 equals: (b swordAtOffset: 0).
-			self assert: 0 equals: (b swordAtOffset: 4)].
+			self assert: (p swordAtOffset: 2 put: each) equals: each.
+			self assert: (b swordAtOffset: 2) equals: each.
+			self assert: (b swordAtOffset: 0) equals: 0.
+			self assert: (b swordAtOffset: 4) equals: 0].
 
 	"Error if arg requires more that 16-bits to represent as 2's complement signed int"
 	#(16r10000 -16r8001) do: [:each | self should: [p swordAtOffset: 0 put: each] raise: Error].
@@ -802,10 +802,10 @@ testIndirectWordAtOffsetPrimitives
 	#(0 1 16r7FFF 16r8000 16rFFFF) do: 
 			[:each |
 			"Should be able to write any 32-bit integer value, and read it back"
-			self assert: each equals: (p wordAtOffset: 2 put: each).
-			self assert: each equals: (b wordAtOffset: 2).
-			self assert: 0 equals: (b wordAtOffset: 0).
-			self assert: 0 equals: (b wordAtOffset: 4)].
+			self assert: (p wordAtOffset: 2 put: each) equals: each.
+			self assert: (b wordAtOffset: 2) equals: each.
+			self assert: (b wordAtOffset: 0) equals: 0.
+			self assert: (b wordAtOffset: 4) equals: 0].
 
 	"Error if arg is negative or requires more that 16-bits to represent as an unsigned int"
 	#(-1 16r10000 -16r8001) do: [:each | self should: [p wordAtOffset: 0 put: each] raise: Error].
@@ -851,7 +851,7 @@ testIntDivideByZero
 			[123 perform: op with: 0] on: ZeroDivide
 				do: 
 					[:ex |
-					self assert: 123 equals: ex tag.
+					self assert: ex tag equals: 123.
 					self assert: (self
 								isFault: ex
 								raisedIn: SmallInteger >> op
@@ -1077,14 +1077,14 @@ testPrimitiveBytesIsNull
 	subject := DWORDBytes fromInteger: 1.
 	self deny: (method value: subject withArguments: #()).
 	subject := ExternalIntegerBytes newFixed: 8.
-	self assert: 'failed0' equals: (method value: subject withArguments: #())!
+	self assert: (method value: subject withArguments: #()) equals: 'failed0'!
 
 testPrimitiveEnableInterrupts
 	| enabled method |
 	method := self createPrimitiveMethodLike: ProcessorScheduler >> #enableAsyncEvents:
 				setsFailCode: true.
-	self assert: 'failed0' equals: (method value: Processor withArguments: #(1)).
-	self assert: 'failed0' equals: (method value: Processor withArguments: #('abc')).
+	self assert: (method value: Processor withArguments: #(1)) equals: 'failed0'.
+	self assert: (method value: Processor withArguments: #('abc')) equals: 'failed0'.
 	enabled := method value: Processor withArguments: #(false).
 	self assert: enabled description: 'Interrupts unexpectedly disabled before test'.
 	enabled := method value: Processor withArguments: #(false).
@@ -1113,12 +1113,12 @@ testPrimitiveInstanceCounts
 			class isMetaclass
 				ifTrue: 
 					["Metaclasses should have only a single instance"
-					self assert: 1 equals: (stats at: i + 1)].
-			class == SmallInteger ifTrue: [self assert: 0 equals: (stats at: i + 1)]].
+					self assert: (stats at: i + 1) equals: 1].
+			class == SmallInteger ifTrue: [self assert: (stats at: i + 1) equals: 0]].
 	#(1 'a') do: 
 			[:each |
-			self assert: 'failed0'
-				equals: (method value: MemoryManager current withArguments: (Array with: each))]!
+			self assert: (method value: MemoryManager current withArguments: (Array with: each))
+				equals: 'failed0']!
 
 testPrimitiveIsNullBytes
 	| addr handle |
@@ -1189,7 +1189,7 @@ testPrimitiveMakePoint
 						setsFailCode: true.
 			expected := (1 to: i) asArray.
 			result := method value: Array withArguments: expected.
-			self assert: expected equals: result].
+			self assert: result equals: expected].
 	"Non-indexable type, e.g. Point3D"
 	0 to: 3
 		do: 
@@ -1202,7 +1202,7 @@ testPrimitiveMakePoint
 			expected := Point3D basicNew.
 			1 to: i do: [:j | expected instVarAt: j put: j].
 			result := method value: Point3D withArguments: (1 to: i) asArray.
-			self assert: expected equals: result].
+			self assert: result equals: expected].
 	"Indexable type with fixed fields too, e.g. Context"
 	0 to: 4
 		do: 
@@ -1219,7 +1219,7 @@ testPrimitiveMakePoint
 							startingAt: 1;
 						yourself.
 			result := method value: Context withArguments: (1 to: i) asArray.
-			1 to: expected size do: [:j | self assert: (expected at: j) equals: (result instVarAt: j)]]!
+			1 to: expected size do: [:j | self assert: (result instVarAt: j) equals: (expected at: j)]]!
 
 testPrimitiveObjectCount
 	"Test primitive that returns object instance count."
@@ -1229,7 +1229,7 @@ testPrimitiveObjectCount
 	subject := MemoryManager current.
 	count1 := method value: subject withArguments: #().
 	count2 := method value: subject withArguments: #().
-	self assert: count2 equals: count1.
+	self assert: count1 equals: count2.
 	self assert: count1 > 0!
 
 testPrimitiveReplaceElements
@@ -1264,46 +1264,46 @@ testPrimitiveResume
 			Processor suspendActive.
 			state := state , ', a5']
 					forkAt: Processor userInterruptPriority.
-	self assert: 'a1' equals: state.
+	self assert: state equals: 'a1'.
 	self assert: a isWaiting.
-	self assert: a equals: sem first.
+	self assert: sem first equals: a.
 	a suspend.
 	self assert: a isSuspended.
 	self assert: sem isEmpty.
-	self assert: 'a1' equals: state.
+	self assert: state equals: 'a1'.
 	b := 
 			[a resume: sem.
 			state := state , ', b'] forkAt: Processor userInterruptPriority.
 	"Regression test for #Process>>resume: suspends calling/active process #89"
 	self assert: b isDead.
-	self assert: 'a1, b' equals: state.
+	self assert: state equals: 'a1, b'.
 	"Check that the process was 'resumed' correctly onto the requested list"
 	self assert: a isWaiting.
-	self assert: a equals: sem first.
+	self assert: sem first equals: a.
 	"And that it is runnable."
 	sem signal.
-	self assert: 'a1, b, a2' equals: state.
+	self assert: state equals: 'a1, b, a2'.
 	self assert: a isSuspended.
 	list := (Processor instVarNamed: 'processLists') at: a priority.
 	"Resumed process is schedulable, but lower priority than the active process, so waits."
 	c := 
 			[a resume: list.
 			state := state , ', c'] forkAt: Processor lowIOPriority.
-	self assert: 'a1, b, a2, c, a3' equals: state.
+	self assert: state equals: 'a1, b, a2, c, a3'.
 	self assert: a isSuspended.
 	self assert: c isDead.
 	"Resumed process is same priority, and although we expect a rescheduling it is pushed on the back of the list, so still waits"
 	d := 
 			[a resume: list.
 			state := state , ', d'] forkAt: a priority.
-	self assert: 'a1, b, a2, c, a3, d, a4' equals: state.
+	self assert: state equals: 'a1, b, a2, c, a3, d, a4'.
 	self assert: d isDead.
 	self assert: a isSuspended.
 	"Resumed process is higher priority, so resumes immediately."
 	e := 
 			[a resume: list.
 			state := state , ', e'] forkAt: a priority - 1.
-	self assert: 'a1, b, a2, c, a3, d, a4, a5, e' equals: state.
+	self assert: state equals: 'a1, b, a2, c, a3, d, a4, a5, e'.
 	self assert: e isDead.
 	self assert: a isDead!
 
@@ -1359,27 +1359,27 @@ testPrimitiveStringAtPut
 	method := self createPrimitiveMethodLike: String >> #at:put: setsFailCode: true.
 	subject := String new: 2.
 	"Valid case"
-	self assert: $\0 equals: (subject at: 1).
-	self assert: $\0 equals: (subject at: 2).
-	self assert: $a equals: (method value: subject withArguments: #(1 $a)).
-	self assert: $a equals: (subject at: 1).
-	self assert: $b equals: (method value: subject withArguments: #(2 $b)).
-	self assert: $b equals: (subject at: 2).
+	self assert: (subject at: 1) equals: $\0.
+	self assert: (subject at: 2) equals: $\0.
+	self assert: (method value: subject withArguments: #(1 $a)) equals: $a.
+	self assert: (subject at: 1) equals: $a.
+	self assert: (method value: subject withArguments: #(2 $b)) equals: $b.
+	self assert: (subject at: 2) equals: $b.
 	"Invalid index argument"
-	self assert: 'failed0' equals: (method value: subject withArguments: #($a $b)).
+	self assert: (method value: subject withArguments: #($a $b)) equals: 'failed0'.
 	"Bounds errors"
 	subject := String new: 2.
 	#(0 3 -1 ##(SmallInteger maximum) ##(SmallInteger minimum)) do: 
 			[:each |
-			self assert: $\0 equals: (subject at: 1).
-			self assert: $\0 equals: (subject at: 2).
-			self assert: 'failed1' equals: (method value: subject withArguments: (Array with: each with: $a))].
+			self assert: (subject at: 1) equals: $\0.
+			self assert: (subject at: 2) equals: $\0.
+			self assert: (method value: subject withArguments: (Array with: each with: $a)) equals: 'failed1'].
 	"Objects that strings can't hold, including some special cases that have no object body (issue #234)"
 	#(0 ##(Object new) nil '' #'' true false #() #[]) do: 
 			[:each |
-			self assert: $\0 equals: (subject at: 1).
-			self assert: $\0 equals: (subject at: 2).
-			self assert: 'failed2' equals: (method value: subject withArguments: (Array with: 1 with: each))]!
+			self assert: (subject at: 1) equals: $\0.
+			self assert: (subject at: 2) equals: $\0.
+			self assert: (method value: subject withArguments: (Array with: 1 with: each)) equals: 'failed2']!
 
 testPrimitiveStringCmp
 	"Test case sensitive string comparison primitive"
@@ -1396,7 +1396,7 @@ testPrimitiveStringCmp
 			expected := each third.
 			result := method value: subject withArguments: (Array with: operand).
 			self assert: result class == expected class.
-			self assert: expected equals: result]!
+			self assert: result equals: expected]!
 
 testPrimitiveSubtract
 	"Test the SmallInteger subtract primitive for normal, overflow and failure cases."
@@ -1414,7 +1414,7 @@ testPrimitiveSubtract
 			expected := each third.
 			result := method value: subject withArguments: (Array with: operand).
 			self assert: result class == expected class.
-			self assert: expected equals: result]!
+			self assert: result equals: expected]!
 
 testPrimitiveYourAddress
 	| method |
@@ -1430,7 +1430,7 @@ testPrimitiveYourAddress
 			addr := method value: each withArguments: #().
 			self deny: addr == 0.
 			self assert: (ByteArray fromAddress: addr length: each size) equals: each].
-	self assert: 0 equals: (method value: nil withArguments: #()).
+	self assert: (method value: nil withArguments: #()) equals: 0.
 !
 
 testSignedFromUnsigned
@@ -1495,20 +1495,20 @@ testWeakMournerNotifications
 	obj1 := obj3 := nil.
 	MemoryManager current collectGarbage.
 	"Weak array should have been notified of loss of obj1 and obj3"
-	self assert: 2 equals: (losses at: id1).
+	self assert: (losses at: id1) equals: 2.
 	self assert: subject1 first == DeadObject current.
 	self assert: subject1 second == obj2.
 	self assert: subject1 third == DeadObject current.
-	self assert: 2 equals: (losses at: id2).
+	self assert: (losses at: id2) equals: 2.
 	self assert: subject2 first == DeadObject current.
 	self assert: subject2 second == obj2.
 	self assert: subject2 third == DeadObject current.
 	obj2 := subject1 := subject2 := nil.
 	MemoryManager current collectGarbage.
 	"Garbage weak array should not have been notified of loss of obj2 as it was collected in same GC cycle"
-	self assert: 2 equals: (losses at: id1).
+	self assert: (losses at: id1) equals: 2.
 	"Garbage but finalizable weak array should have been notified of loss of obj2"
-	self assert: 3 equals: (losses at: id2)! !
+	self assert: (losses at: id2) equals: 3! !
 !VMTest categoriesFor: #assertImmutableAtPut:!private!unit tests! !
 !VMTest categoriesFor: #assertImmutableBasicAtPut:!private!unit tests! !
 !VMTest categoriesFor: #assertImmutableInstVarAtPut:!private!unit tests! !

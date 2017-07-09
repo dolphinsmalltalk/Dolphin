@@ -71,7 +71,7 @@ testAtIfAbsentPutModifyingCollection
 	key2 := self makeKey: $b.
 	self assert: key3 ~= key2.
 	"For this test to work the first and third keys must collide, so verify that"
-	self assert: (dictionary findKeyOrNil: key1) equals: (dictionary findKeyOrNil: key3).
+	self assert: (dictionary findKeyOrNil: key3) equals: (dictionary findKeyOrNil: key1).
 	dictionary at: key1
 		ifAbsentPut: 
 			[dictionary at: key3 put: 4.

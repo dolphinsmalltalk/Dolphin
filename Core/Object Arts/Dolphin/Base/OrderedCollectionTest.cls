@@ -17,11 +17,11 @@ testFirst2
 	| subject |
 	subject := self collectionClass withAll: (1 to: 4).
 	subject removeLast.
-	self assert: 1 equals: subject first.
+	self assert: subject first equals: 1.
 	subject removeFirst.
-	self assert: 2 equals: subject first.
+	self assert: subject first equals: 2.
 	subject removeFirst.
-	self assert: 3 equals: subject first.
+	self assert: subject first equals: 3.
 	subject removeFirst.
 	self
 		should: [subject first]
@@ -66,11 +66,11 @@ testLast2
 	| subject |
 	subject := self collectionClass withAll: (1 to: 4).
 	subject removeFirst.
-	self assert: 4 equals: subject last.
+	self assert: subject last equals: 4.
 	subject removeLast.
-	self assert: 3 equals: subject last.
+	self assert: subject last equals: 3.
 	subject removeLast.
-	self assert: 2 equals: subject last.
+	self assert: subject last equals: 2.
 	subject removeLast.
 	self
 		should: [subject last]

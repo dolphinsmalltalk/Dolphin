@@ -35,8 +35,8 @@ testMaintainsLoadFactor
 
 	| subject method |
 	subject := self collectionClass new.
-	self assert: 0 equals: subject size.
-	self assert: 2 equals: subject basicSize.
+	self assert: subject size equals: 0.
+	self assert: subject basicSize equals: 2.
 	method := Object >> #size.
 	"The capacity is increased to the next power of 2 that holds double the current size when the collection grows"
 	#(#(#a 2) #(#b 4) #(#c 4) #(#d 8) #(#e 8) #(#f 8) #(#g 16) #(#h 16) #(#i 16) #(#j 16) #(#k 16) #(#l 16) #(#m 32))
@@ -49,9 +49,9 @@ testMaintainsLoadFactor
 			actualSlots := subject basicSize.
 			actualSize := subject size.
 			self assert: actualSlots >= minimumSlots.
-			self assert: expectedSize equals: actualSize.
+			self assert: actualSize equals: expectedSize.
 			self assert: actualSlots / 2 <= minimumSlots.
-			self assert: expectedSlots equals: actualSlots]! !
+			self assert: actualSlots equals: expectedSlots]! !
 !MethodDictionaryTest categoriesFor: #collectionClass!helpers!private! !
 !MethodDictionaryTest categoriesFor: #loadFactor!constants!private! !
 !MethodDictionaryTest categoriesFor: #testClassSizeFor!public!unit tests! !

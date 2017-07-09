@@ -42,12 +42,12 @@ testCharacterScanning
 	self assertToken: subject next isChar: (Character value: 92).
 	tok := subject next.
 	self assert: tok isIdentifier.
-	self assert: 'c' equals: tok value.
+	self assert: tok value equals: 'c'.
 	subject := self scannerClass on: '$\xAG' readStream.
 	self assertToken: subject next isChar: (Character value: 16rA).
 	tok := subject next.
 	self assert: tok isIdentifier.
-	self assert: 'G' equals: tok value!
+	self assert: tok value equals: 'G'!
 
 testExpressionSolver
 	#(#('y := 3' nil) #('x := 3' 'x := 3') #('y := x' 'x := y') #('y := x + 1' 'x := y - 1') #('y := x >> 2 - 1' 'x := y + 1 << 2') #('y := 1+z/x' 'x := (1 + z) / y') #('y := a - ((b / x) * c)' 'x := b / ((a - y) / c)') #('y := (m*x)+b' 'x := (y - b) / m') #('y := (m/x)-b' 'x := m / (y + b)' #('y:=a-c*x/(d-e)-f')))
@@ -63,7 +63,7 @@ testExpressionSolver
 			solution := expr solveFor: 'x'.
 			pair second
 				ifNil: [self assert: solution isNil]
-				ifNotNil: [:expected | self assert: expected equals: solution formattedCode]]!
+				ifNotNil: [:expected | self assert: solution formattedCode equals: expected]]!
 
 testExternalCallEquality
 	| strings |

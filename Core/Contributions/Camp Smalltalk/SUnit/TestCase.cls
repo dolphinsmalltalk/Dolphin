@@ -30,7 +30,7 @@ assert: aBoolean description: aString resumable: resumableBoolean
 			ifFalse: [TestResult failure].
 		exception sunitSignalWith: aString]!
 
-assert: expectedObject equals: actualObject
+assert: actualObject equals: expectedObject
 	expectedObject = actualObject
 		ifFalse: [self fail: (self comparingStringBetween: expectedObject and: actualObject)]!
 

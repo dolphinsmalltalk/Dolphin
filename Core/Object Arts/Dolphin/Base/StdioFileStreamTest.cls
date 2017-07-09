@@ -23,7 +23,7 @@ testNextLineCrOnly
 			stream := self streamOn: chars.
 			stream reset.
 			"CRT I/O stream in translated text mode does not recognise single CR as a line ending"
-			self assert: chars equals: stream nextLine.
+			self assert: stream nextLine equals: chars.
 			self assert: stream atEnd.
 			self closeTempStream: stream]! !
 !StdioFileStreamTest categoriesFor: #streamClass!helpers!private! !

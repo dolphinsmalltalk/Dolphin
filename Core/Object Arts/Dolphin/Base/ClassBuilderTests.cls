@@ -51,20 +51,20 @@ tearDown
 	^super tearDown!
 
 testAddRemovePools
-	self assert: #(#ClassBuilderTestPool2 #ClassBuilderTestPool1) , Object sharedPoolNames
-		equals: self classBuilderTestSubclass1 allSharedPoolNames.
-	self assert: 'ClassBuilderTestPool2.PoolVar1'
-		equals: (self classBuilderTestSubclass1 bindingFor: 'PoolVar1') value.
+	self assert: self classBuilderTestSubclass1 allSharedPoolNames
+		equals: #(#ClassBuilderTestPool2 #ClassBuilderTestPool1) , Object sharedPoolNames.
+	self assert: (self classBuilderTestSubclass1 bindingFor: 'PoolVar1') value
+		equals: 'ClassBuilderTestPool2.PoolVar1'.
 	"PoolVar1 is defined in local pool, TestPool2, but also in inherited pool, TestPool1"
 	"PoolVar2 is inherited from ref to TestPool1 in base class"
-	self assert: 'ClassBuilderTestPool1.PoolVar2'
-		equals: (self classBuilderTestSubclass1 bindingFor: 'PoolVar2') value.
+	self assert: (self classBuilderTestSubclass1 bindingFor: 'PoolVar2') value
+		equals: 'ClassBuilderTestPool1.PoolVar2'.
 	"Ditto PoolVar3"
-	self assert: 'ClassBuilderTestPool1.PoolVar3'
-		equals: (self classBuilderTestSubclass1 bindingFor: 'PoolVar3') value.
+	self assert: (self classBuilderTestSubclass1 bindingFor: 'PoolVar3') value
+		equals: 'ClassBuilderTestPool1.PoolVar3'.
 	"And pool var 4 is from local ref to TestPool2"
-	self assert: 'ClassBuilderTestPool2.PoolVar4'
-		equals: (self classBuilderTestSubclass1 bindingFor: 'PoolVar4') value.
+	self assert: (self classBuilderTestSubclass1 bindingFor: 'PoolVar4') value
+		equals: 'ClassBuilderTestPool2.PoolVar4'.
 	self classBuilderTestClass
 		subclass: #ClassBuilderTestSubClass
 		instanceVariableNames: 'var3 var4'
@@ -72,34 +72,34 @@ testAddRemovePools
 		poolDictionaries: 'ClassBuilderTestPool1 ClassBuilderTestPool2'
 		classInstanceVariableNames: ''.
 	"Names remain the same, but in reverse order because we added previously inherited pool first"
-	self assert: #(#ClassBuilderTestPool1 #ClassBuilderTestPool2) , Object sharedPoolNames
-		equals: self classBuilderTestSubclass1 allSharedPoolNames.
-	self assert: 'ClassBuilderTestPool1.PoolVar1'
-		equals: (self classBuilderTestSubclass1 bindingFor: 'PoolVar1') value.
+	self assert: self classBuilderTestSubclass1 allSharedPoolNames
+		equals: #(#ClassBuilderTestPool1 #ClassBuilderTestPool2) , Object sharedPoolNames.
+	self assert: (self classBuilderTestSubclass1 bindingFor: 'PoolVar1') value
+		equals: 'ClassBuilderTestPool1.PoolVar1'.
 	"Because we have added TestPool1 before TestPool2, we will now bind to PoolVar1 from there."
-	self assert: 'ClassBuilderTestPool1.PoolVar2'
-		equals: (self classBuilderTestSubclass1 bindingFor: 'PoolVar2') value.
-	self assert: 'ClassBuilderTestPool1.PoolVar3'
-		equals: (self classBuilderTestSubclass1 bindingFor: 'PoolVar3') value.
-	self assert: 'ClassBuilderTestPool2.PoolVar4'
-		equals: (self classBuilderTestSubclass1 bindingFor: 'PoolVar4') value.
+	self assert: (self classBuilderTestSubclass1 bindingFor: 'PoolVar2') value
+		equals: 'ClassBuilderTestPool1.PoolVar2'.
+	self assert: (self classBuilderTestSubclass1 bindingFor: 'PoolVar3') value
+		equals: 'ClassBuilderTestPool1.PoolVar3'.
+	self assert: (self classBuilderTestSubclass1 bindingFor: 'PoolVar4') value
+		equals: 'ClassBuilderTestPool2.PoolVar4'.
 	self classBuilderTestClass
 		subclass: #ClassBuilderTestSubClass
 		instanceVariableNames: 'var3 var4'
 		classVariableNames: ''
 		poolDictionaries: 'ClassBuilderTestPool2 ClassBuilderTestPool3'
 		classInstanceVariableNames: ''.
-	self assert: #(#ClassBuilderTestPool2 #ClassBuilderTestPool3 #ClassBuilderTestPool1)
-				, Object sharedPoolNames
-		equals: self classBuilderTestSubclass1 allSharedPoolNames.
-	self assert: 'ClassBuilderTestPool2.PoolVar1'
-		equals: (self classBuilderTestSubclass1 bindingFor: 'PoolVar1') value.
-	self assert: 'ClassBuilderTestPool3.PoolVar2'
-		equals: (self classBuilderTestSubclass1 bindingFor: 'PoolVar2') value.
-	self assert: 'ClassBuilderTestPool1.PoolVar3'
-		equals: (self classBuilderTestSubclass1 bindingFor: 'PoolVar3') value.
-	self assert: 'ClassBuilderTestPool2.PoolVar4'
-		equals: (self classBuilderTestSubclass1 bindingFor: 'PoolVar4') value.
+	self assert: self classBuilderTestSubclass1 allSharedPoolNames
+		equals: #(#ClassBuilderTestPool2 #ClassBuilderTestPool3 #ClassBuilderTestPool1)
+				, Object sharedPoolNames.
+	self assert: (self classBuilderTestSubclass1 bindingFor: 'PoolVar1') value
+		equals: 'ClassBuilderTestPool2.PoolVar1'.
+	self assert: (self classBuilderTestSubclass1 bindingFor: 'PoolVar2') value
+		equals: 'ClassBuilderTestPool3.PoolVar2'.
+	self assert: (self classBuilderTestSubclass1 bindingFor: 'PoolVar3') value
+		equals: 'ClassBuilderTestPool1.PoolVar3'.
+	self assert: (self classBuilderTestSubclass1 bindingFor: 'PoolVar4') value
+		equals: 'ClassBuilderTestPool2.PoolVar4'.
 	"Remove all the locally referenced pools, so only inheriting TestPool1"
 	self classBuilderTestClass
 		subclass: #ClassBuilderTestSubClass
@@ -107,15 +107,15 @@ testAddRemovePools
 		classVariableNames: ''
 		poolDictionaries: ''
 		classInstanceVariableNames: ''.
-	self assert: #(#ClassBuilderTestPool1) , Object sharedPoolNames
-		equals: self classBuilderTestSubclass1 allSharedPoolNames.
-	self assert: 'ClassBuilderTestPool1.PoolVar1'
-		equals: (self classBuilderTestSubclass1 bindingFor: 'PoolVar1') value.
-	self assert: 'ClassBuilderTestPool1.PoolVar2'
-		equals: (self classBuilderTestSubclass1 bindingFor: 'PoolVar2') value.
-	self assert: 'ClassBuilderTestPool1.PoolVar3'
-		equals: (self classBuilderTestSubclass1 bindingFor: 'PoolVar3') value.
-	self assert: nil equals: (self classBuilderTestSubclass1 bindingFor: 'PoolVar4')!
+	self assert: self classBuilderTestSubclass1 allSharedPoolNames
+		equals: #(#ClassBuilderTestPool1) , Object sharedPoolNames.
+	self assert: (self classBuilderTestSubclass1 bindingFor: 'PoolVar1') value
+		equals: 'ClassBuilderTestPool1.PoolVar1'.
+	self assert: (self classBuilderTestSubclass1 bindingFor: 'PoolVar2') value
+		equals: 'ClassBuilderTestPool1.PoolVar2'.
+	self assert: (self classBuilderTestSubclass1 bindingFor: 'PoolVar3') value
+		equals: 'ClassBuilderTestPool1.PoolVar3'.
+	self assert: (self classBuilderTestSubclass1 bindingFor: 'PoolVar4') equals: nil!
 
 testMoveClassToSuperclassWithInstVars
 	| newClass |
@@ -157,43 +157,43 @@ testMoveVariable
 testPoolVariablePrecedence
 	"Base class has only pool1"
 
-	self assert: #(#ClassBuilderTestPool1) , Object sharedPoolNames
-		equals: self classBuilderTestClass allSharedPoolNames.
-	self assert: 'ClassBuilderTestPool1.PoolVar1'
-		equals: (self classBuilderTestClass bindingFor: 'PoolVar1') value.
-	self assert: 'ClassBuilderTestPool1.PoolVar2'
-		equals: (self classBuilderTestClass bindingFor: 'PoolVar2') value.
-	self assert: 'ClassBuilderTestPool1.PoolVar3'
-		equals: (self classBuilderTestClass bindingFor: 'PoolVar3') value.
+	self assert: self classBuilderTestClass allSharedPoolNames
+		equals: #(#ClassBuilderTestPool1) , Object sharedPoolNames.
+	self assert: (self classBuilderTestClass bindingFor: 'PoolVar1') value
+		equals: 'ClassBuilderTestPool1.PoolVar1'.
+	self assert: (self classBuilderTestClass bindingFor: 'PoolVar2') value
+		equals: 'ClassBuilderTestPool1.PoolVar2'.
+	self assert: (self classBuilderTestClass bindingFor: 'PoolVar3') value
+		equals: 'ClassBuilderTestPool1.PoolVar3'.
 	"Subclass1 has pool2 and inherits pool1"
-	self assert: #(#ClassBuilderTestPool2 #ClassBuilderTestPool1) , Object sharedPoolNames
-		equals: self classBuilderTestSubclass1 allSharedPoolNames.
-	self assert: 'ClassBuilderTestPool2.PoolVar1'
-		equals: (self classBuilderTestSubclass1 bindingFor: 'PoolVar1') value.
-	self assert: 'ClassBuilderTestPool1.PoolVar2'
-		equals: (self classBuilderTestSubclass1 bindingFor: 'PoolVar2') value.
-	self assert: 'ClassBuilderTestPool1.PoolVar3'
-		equals: (self classBuilderTestSubclass1 bindingFor: 'PoolVar3') value.
-	self assert: 'ClassBuilderTestPool2.PoolVar4'
-		equals: (self classBuilderTestSubclass1 bindingFor: 'PoolVar4') value.
-	self assert: 'ClassBuilderTestPool2.PoolVar5'
-		equals: (self classBuilderTestSubclass1 bindingFor: 'PoolVar5') value.
+	self assert: self classBuilderTestSubclass1 allSharedPoolNames
+		equals: #(#ClassBuilderTestPool2 #ClassBuilderTestPool1) , Object sharedPoolNames.
+	self assert: (self classBuilderTestSubclass1 bindingFor: 'PoolVar1') value
+		equals: 'ClassBuilderTestPool2.PoolVar1'.
+	self assert: (self classBuilderTestSubclass1 bindingFor: 'PoolVar2') value
+		equals: 'ClassBuilderTestPool1.PoolVar2'.
+	self assert: (self classBuilderTestSubclass1 bindingFor: 'PoolVar3') value
+		equals: 'ClassBuilderTestPool1.PoolVar3'.
+	self assert: (self classBuilderTestSubclass1 bindingFor: 'PoolVar4') value
+		equals: 'ClassBuilderTestPool2.PoolVar4'.
+	self assert: (self classBuilderTestSubclass1 bindingFor: 'PoolVar5') value
+		equals: 'ClassBuilderTestPool2.PoolVar5'.
 	"Subclass2 has pools3 and 2 (in that order), and inherits pool1"
-	self assert: #(#ClassBuilderTestPool3 #ClassBuilderTestPool2 #ClassBuilderTestPool1)
-				, Object sharedPoolNames
-		equals: self classBuilderTestSubclass2 allSharedPoolNames.
-	self assert: 'ClassBuilderTestPool2.PoolVar1'
-		equals: (self classBuilderTestSubclass2 bindingFor: 'PoolVar1') value.
-	self assert: 'ClassBuilderTestPool3.PoolVar2'
-		equals: (self classBuilderTestSubclass2 bindingFor: 'PoolVar2') value.
-	self assert: 'ClassBuilderTestPool1.PoolVar3'
-		equals: (self classBuilderTestSubclass2 bindingFor: 'PoolVar3') value.
-	self assert: 'ClassBuilderTestPool3.PoolVar4'
-		equals: (self classBuilderTestSubclass2 bindingFor: 'PoolVar4') value.
-	self assert: 'ClassBuilderTestPool2.PoolVar5'
-		equals: (self classBuilderTestSubclass2 bindingFor: 'PoolVar5') value.
-	self assert: 'ClassBuilderTestPool3.PoolVar6'
-		equals: (self classBuilderTestSubclass2 bindingFor: 'PoolVar6') value!
+	self assert: self classBuilderTestSubclass2 allSharedPoolNames
+		equals: #(#ClassBuilderTestPool3 #ClassBuilderTestPool2 #ClassBuilderTestPool1)
+				, Object sharedPoolNames.
+	self assert: (self classBuilderTestSubclass2 bindingFor: 'PoolVar1') value
+		equals: 'ClassBuilderTestPool2.PoolVar1'.
+	self assert: (self classBuilderTestSubclass2 bindingFor: 'PoolVar2') value
+		equals: 'ClassBuilderTestPool3.PoolVar2'.
+	self assert: (self classBuilderTestSubclass2 bindingFor: 'PoolVar3') value
+		equals: 'ClassBuilderTestPool1.PoolVar3'.
+	self assert: (self classBuilderTestSubclass2 bindingFor: 'PoolVar4') value
+		equals: 'ClassBuilderTestPool3.PoolVar4'.
+	self assert: (self classBuilderTestSubclass2 bindingFor: 'PoolVar5') value
+		equals: 'ClassBuilderTestPool2.PoolVar5'.
+	self assert: (self classBuilderTestSubclass2 bindingFor: 'PoolVar6') value
+		equals: 'ClassBuilderTestPool3.PoolVar6'!
 
 testReparentSubClassWithSameAllInstVars
 	| testClass testInstance |

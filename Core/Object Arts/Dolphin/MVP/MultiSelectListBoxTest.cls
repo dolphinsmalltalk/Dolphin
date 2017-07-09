@@ -49,47 +49,47 @@ testSelectionsByIndex
 		should: [presenter selectionsByIndex: sel]
 		trigger: #selectionChanged
 		against: presenter.
-	self assert: sel equals: presenter selectionsByIndex.
+	self assert: presenter selectionsByIndex equals: sel.
 	"Selecting same element should be a no-op"
 	self
 		shouldnt: [presenter selectionsByIndex: sel]
 		trigger: #selectionChanged
 		against: presenter.
-	self assert: sel equals: presenter selectionsByIndex.
+	self assert: presenter selectionsByIndex equals: sel.
 	"Selecting a pair including the existing selection"
 	sel := Array with: 1 with: objects size.
 	self
 		should: [presenter selectionsByIndex: sel]
 		trigger: #selectionChanged
 		against: presenter.
-	self assert: sel equals: presenter selectionsByIndex.
+	self assert: presenter selectionsByIndex equals: sel.
 	"Selecting same pair should be a no-op"
 	self
 		shouldnt: [presenter selectionsByIndex: sel]
 		trigger: #selectionChanged
 		against: presenter.
-	self assert: sel equals: presenter selectionsByIndex.
+	self assert: presenter selectionsByIndex equals: sel.
 	"Selecting single item from existing selection should remove other selections"
 	sel := #(1).
 	self
 		should: [presenter selectionsByIndex: sel]
 		trigger: #selectionChanged
 		against: presenter.
-	self assert: sel equals: presenter selectionsByIndex.
+	self assert: presenter selectionsByIndex equals: sel.
 	"Selecting a different pair not including the existing single selection"
 	sel := Array with: 2 with: objects size - 1.
 	self
 		should: [presenter selectionsByIndex: sel]
 		trigger: #selectionChanged
 		against: presenter.
-	self assert: sel equals: presenter selectionsByIndex.
+	self assert: presenter selectionsByIndex equals: sel.
 	"#selectionByIndex: should also clear other selections"
 	sel := sel copyFrom: 2.
 	self
 		should: [presenter selectionByIndex: sel first]
 		trigger: #selectionChanged
 		against: presenter.
-	self assert: sel equals: presenter selectionsByIndex! !
+	self assert: presenter selectionsByIndex equals: sel! !
 !MultiSelectListBoxTest categoriesFor: #initializePresenter!public!Running! !
 !MultiSelectListBoxTest categoriesFor: #testLastSelectionCacheUpdatedOnRemove!public!unit tests! !
 !MultiSelectListBoxTest categoriesFor: #testSelectionsByIndex!public!unit tests! !

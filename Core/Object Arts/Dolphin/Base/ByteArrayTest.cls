@@ -66,7 +66,7 @@ testMixedConcatenation
 						| result |
 						result := eachArray , eachEmpty.
 						self deny: eachArray == result.
-						self assert: eachArray equals: result]].
+						self assert: result equals: eachArray]].
 	(Array
 		with: 'a'
 		with: 'a' asUnicodeString
