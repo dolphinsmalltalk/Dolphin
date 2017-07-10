@@ -41,6 +41,7 @@ contents
 		add: #('Core\Object Arts\Dolphin\System\Win32\Dolphin File System Watcher.pax' #encrypted #imageBased);
 		add: #('Core\Object Arts\Dolphin\System\Win32\Dolphin Memory-Mapped Files.pax' #encrypted #imageBased);
 		add: #('Core\Object Arts\Dolphin\System\Win32\Dolphin Overlapped IO.pax' #encrypted #imageBased);
+		add: #('Core\Object Arts\Dolphin\ActiveX\Components\WinHttp\WinHttp.pax' #encrypted #imageBased);
 		add: #('Core\Object Arts\Dolphin\System\Win32\Windows HTTP Server.pax' #encrypted #imageBased);
 		add: #('Core\Object Arts\Dolphin\System\Win32\Windows Data Protection API.pax' #encrypted #imageBased);
 		add: #('Core\Object Arts\Dolphin\ActiveX\Property Bags\ActiveX Property Bags.pax' #encrypted #imageBased);
