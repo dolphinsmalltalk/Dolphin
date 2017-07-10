@@ -1,0 +1,53 @@
+| package |
+package := Package name: 'WinHttp'.
+package paxVersion: 1;
+	basicComment: 'Dolphin Smalltalk WinHttp Package. 
+
+This package implements a Smalltalk mapping for the Microsoft WinHttp component, which provides a simple and high performance HTTP client.'.
+
+
+package classNames
+	add: #IWinHttpRequest;
+	add: #IWinHttpRequestEvents;
+	yourself.
+
+package globalNames
+	add: #WinHttpConstants;
+	add: #WinHttpLib;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	add: #WinHttpLib;
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\..\Automation\ActiveX Automation';
+	add: '..\..\..\Base\Dolphin';
+	add: '..\..\COM\OLE COM';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+IUnknown subclass: #IWinHttpRequestEvents
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: 'WinHttpConstants'
+	classInstanceVariableNames: ''!
+IDispatch subclass: #IWinHttpRequest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: 'WinHttpConstants'
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+"End of package definition"!
+
