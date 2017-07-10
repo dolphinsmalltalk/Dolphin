@@ -812,11 +812,11 @@ VARIANT methodProtocol: #variantCompatible attributes: #(#readOnly) selectors: #
 
 !VARIANT class methodsFor!
 
-classForVT: vartype
-	"Answer a class of object suitable for representing values of the
-	Variant type, vartype."
+classForVT: anInteger
+	"Answer a class of object suitable for representing values of the specified Variant type (i.e. a value from the VT_XXX enumeration which describes a scalar type)."
 
-	^VTClasses at: vartype + 1!
+	^(VTClasses at: anInteger + 1)
+		ifNil: [self error: 'Unmapped var type ' , anInteger printString]!
 
 clear: addressOrBytes 
 	"Free an instance of the structure which instances of the receiver wrap
@@ -1069,6 +1069,7 @@ initializeVTClasses
 		at: VT_VARIANT+1		put: VARIANT;		"Reference to another VARIANT"
 		"at: VT_VECTOR+1		put: ExternalArray;		Simple counted array - OLE property sets only"
 		at: VT_VOID+1			put: VOID;		"C void - TYPEDESC only, for generic pointer outputs"
+		at: VT_HRESULT+1		put: HRESULT; 
 		yourself!
 
 initializeVTNames
