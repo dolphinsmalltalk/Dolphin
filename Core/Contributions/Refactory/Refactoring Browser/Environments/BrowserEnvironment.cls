@@ -265,6 +265,9 @@ label
 label: aString
 	label := aString!
 
+lookup: aKey
+	^(self associationAt: aKey) ifNotNil: [:assoc | assoc value]!
+
 matches: aString 
 	^SelectorEnvironment matches: aString in: self!
 
@@ -409,6 +412,7 @@ whichProtocolsInclude: aSelector in: aClass
 !BrowserEnvironment categoriesFor: #keys!accessing/classes!accessing-classes!public! !
 !BrowserEnvironment categoriesFor: #label!accessing!private! !
 !BrowserEnvironment categoriesFor: #label:!initialize/release!public! !
+!BrowserEnvironment categoriesFor: #lookup:!accessing/classes!public! !
 !BrowserEnvironment categoriesFor: #matches:!environments!public! !
 !BrowserEnvironment categoriesFor: #methodsDo:!public! !
 !BrowserEnvironment categoriesFor: #not!environments!public! !
