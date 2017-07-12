@@ -78,11 +78,6 @@ runSuite: aTestSuite knownSlowTests: aCollection
 					knownSlowTests: aCollection].
 	^results!
 
-slowTestThreshold
-	"Answer the execution time threshold, in milliseconds, over which tests are reported as slow."
-
-	^500!
-
 startRun: aTestSuite
 	(verbose and: [loggers isEmpty]) ifTrue: [self addLogger: self newStdOutLogger].
 	aTestSuite addDependentToHierachy: self.
@@ -122,7 +117,6 @@ verbose: anObject
 !CommandLineTestRunner categoriesFor: #resultFor:!helpers!private! !
 !CommandLineTestRunner categoriesFor: #runSuite:!operations!public! !
 !CommandLineTestRunner categoriesFor: #runSuite:knownSlowTests:!operations!public! !
-!CommandLineTestRunner categoriesFor: #slowTestThreshold!helpers!private! !
 !CommandLineTestRunner categoriesFor: #startRun:!operations!private! !
 !CommandLineTestRunner categoriesFor: #update:with:from:!private!updating! !
 !CommandLineTestRunner categoriesFor: #verbose:!accessing!public! !

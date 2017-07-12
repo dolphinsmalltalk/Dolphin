@@ -19,6 +19,11 @@ finishedCase: aTestCase runtime: anInteger
 finishedRun: aTestResult in: anInteger knownSlowTests: aCollection
 	self subclassResponsibility!
 
+slowTestThreshold
+	"Answer the execution time threshold, in milliseconds, over which tests are reported as slow."
+
+	^500!
+
 startingCase: aTestCase
 	"By default, do nothing"!
 
@@ -27,6 +32,7 @@ startingRun: aTestSuite
 !TestRunLogger categoriesFor: #finishedCase:result:in:!private! !
 !TestRunLogger categoriesFor: #finishedCase:runtime:!public! !
 !TestRunLogger categoriesFor: #finishedRun:in:knownSlowTests:!helpers!public! !
+!TestRunLogger categoriesFor: #slowTestThreshold!helpers!private! !
 !TestRunLogger categoriesFor: #startingCase:!public! !
 !TestRunLogger categoriesFor: #startingRun:!public! !
 
