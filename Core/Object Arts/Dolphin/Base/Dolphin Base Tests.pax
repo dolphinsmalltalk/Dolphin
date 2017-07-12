@@ -105,6 +105,8 @@ package classNames
 	add: #StructureArrayTest;
 	add: #SWORDArrayTest;
 	add: #SymbolTest;
+	add: #TestRunConsoleLogger;
+	add: #TestRunLogger;
 	add: #TimeTest;
 	add: #TrueTest;
 	add: #UndefinedObjectTest;
@@ -160,7 +162,12 @@ Object subclass: #CollectionCombinator
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Object subclass: #CommandLineTestRunner
-	instanceVariableNames: 'results lastCase caseStart stream verbose runStart runStop timings'
+	instanceVariableNames: 'results lastCase caseStart loggers verbose'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Object subclass: #TestRunLogger
+	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -689,6 +696,11 @@ DolphinTestClassResource subclass: #MustBeBooleanTestClasses
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+TestRunLogger subclass: #TestRunConsoleLogger
+	instanceVariableNames: 'stream timings'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
 
 "Global Aliases"!
 
@@ -731,9 +743,9 @@ runRegressionTests
 
 runRegressionTests: aTestSuite logTo: logStream verbose: aBoolean
 	^(CommandLineTestRunner new)
-		stream: logStream;
+		addLogger: (TestRunConsoleLogger on: logStream);
 		verbose: aBoolean;
-		runSuite: aTestSuite baseline: self baselinedSlowTests! !
+		runSuite: aTestSuite knownSlowTests: self baselinedSlowTests! !
 !SmalltalkSystem categoriesFor: #regressionTestsLogFilename!public!tests! !
 !SmalltalkSystem categoriesFor: #regressionTestSuite!private!tests! !
 !SmalltalkSystem categoriesFor: #runRegressionTests!public!tests! !
