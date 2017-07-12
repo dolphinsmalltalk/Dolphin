@@ -1077,7 +1077,7 @@ InspectorAbstract subclass: #AspectInspector
 	instanceVariableNames: 'aspectTreePresenter'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: 'treeUpdateMode'!
+	classInstanceVariableNames: 'treeUpdateMode treeHasGridLines'!
 InspectorAbstract subclass: #VisualObjectFinder
 	instanceVariableNames: 'mouseTracker finderIcon heading workspace foundView'
 	classVariableNames: 'FindNonDolphinWindows'
