@@ -248,7 +248,7 @@ startTrackingAt: aPoint
 	"Initially we must be over the drag source"
 	dropTarget := self dropTargetUnder: aPoint.
 	self dropTargetEnter.
-	oldCursor := Cursor current: nil.
+	oldCursor := Cursor reset.
 	self beginDragImage.
 	self giveFeedback.
 	^self dragPoint! !

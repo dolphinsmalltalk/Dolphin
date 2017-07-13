@@ -28,6 +28,34 @@ makeCurrent
 
 	self class current: self!
 
+printOn: aStream
+	instanceHandle == 0
+		ifTrue: 
+			[(##((LookupTable new)
+				at: IDC_APPSTARTING put: #appStarting;
+				at: IDC_ARROW put: #arrow;
+				at: IDC_CROSS put: #cross;
+				at: IDC_HAND put: #hand;
+				at: IDC_HELP put: #help;
+				at: IDC_IBEAM put: #iBeam;
+				at: IDC_NO put: #no;
+				at: IDC_SIZEALL put: #sizeAll;
+				at: IDC_SIZENESW put: #sizeNESW;
+				at: IDC_SIZENS put: #sizeNS;
+				at: IDC_SIZENWSE put: #sizeNWSE;
+				at: IDC_SIZEWE put: #sizeWE;
+				at: IDC_UPARROW put: #upArrow;
+				at: IDC_WAIT put: #wait;
+				shrink) lookup: self identifier)
+				ifNotNil: 
+					[:name |
+					aStream
+						print: self class;
+						space;
+						nextPutAll: name.
+					^self]].
+	super printOn: aStream!
+
 setCursor
 	"Private - Set the receiver as the current Windows cursor. Answers the handle of the old
 	cursor."
@@ -48,6 +76,7 @@ showWhile: aBlock
 !Cursor categoriesFor: #imageType!constants!private! !
 !Cursor categoriesFor: #loadFromInstance:!private!realizing/unrealizing! !
 !Cursor categoriesFor: #makeCurrent!operations!public! !
+!Cursor categoriesFor: #printOn:!development!printing!public! !
 !Cursor categoriesFor: #setCursor!operations!private! !
 !Cursor categoriesFor: #showWhile:!operations!public! !
 
@@ -202,6 +231,11 @@ position
 	^pos asPoint
 !
 
+reset
+	"Clear the global cursor setting. Answers the previous global cursor (or nil if none)."
+
+	^self current: nil!
+
 show
 	"Shows the current cursor"
 
@@ -301,6 +335,7 @@ wait
 !Cursor class categoriesFor: #no!instance creation!public! !
 !Cursor class categoriesFor: #onPreStripImage!class hierarchy-removing!private! !
 !Cursor class categoriesFor: #position!accessing!public! !
+!Cursor class categoriesFor: #reset!initializing!public! !
 !Cursor class categoriesFor: #show!operations!public! !
 !Cursor class categoriesFor: #show:!operations!public! !
 !Cursor class categoriesFor: #sizeAll!instance creation!public! !

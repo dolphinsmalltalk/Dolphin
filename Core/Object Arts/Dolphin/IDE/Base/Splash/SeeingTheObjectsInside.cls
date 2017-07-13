@@ -227,7 +227,7 @@ onLeftButtonPressed: aMouseEvent
 	self class splashPlayTheGame ifFalse: [^self dismiss].
 	(self isActionPoint: aMouseEvent position) 
 		ifTrue: 
-			[Cursor arrow makeCurrent.
+			[Cursor reset.
 			self dismiss]
 		ifFalse: [self showHintBubble]!
 
