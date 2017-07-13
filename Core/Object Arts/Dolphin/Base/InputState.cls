@@ -30,7 +30,7 @@ Class Variables:
 aboutToForkUI
 	"Private - A new main UI process is being started. Reset any global UI state."
 
-	Smalltalk at: #Cursor ifPresent: [:cursorClass | cursorClass current: nil]!
+	Smalltalk at: #Cursor ifPresent: [:cursorClass | cursorClass reset]!
 
 aboutToIdle
 	"The message loop is about to go to sleep - perform any actions necessary before that
