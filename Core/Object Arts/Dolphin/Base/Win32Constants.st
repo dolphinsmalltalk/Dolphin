@@ -575,7 +575,7 @@ Win32Constants at: 'PS_SOLID' put: 16r0!
 Win32Constants at: 'PS_STYLEMASK' put: 16rF!
 Win32Constants at: 'PS_TYPEMASK' put: 16rF0000!
 Win32Constants at: 'PS_USERSTYLE' put: 16r7!
-Win32Constants at: 'QS_ALLINPUT' put: 16rFF!
+Win32Constants at: 'QS_ALLINPUT' put: 16r1CFF!
 Win32Constants at: 'RDW_ALLCHILDREN' put: 16r80!
 Win32Constants at: 'RDW_ERASE' put: 16r4!
 Win32Constants at: 'RDW_ERASENOW' put: 16r200!
