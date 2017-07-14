@@ -828,8 +828,7 @@ iconSpacing: aPointOrNil
 	"Sets the spacing between icons in the receiver if in #largeIcons or
 	#smallIcons view mode to aPointOrNil. If nil the receiver uses the default spacing."
 
-	iconSpacing := aPointOrNil.
-	self lvmSetIconSpacing: aPointOrNil ?? (-1 @ -1).
+	self setIconSpacing: (iconSpacing := aPointOrNil).
 	self fontChanged!
 
 imageFromRow: item
@@ -1002,6 +1001,13 @@ itemRect: itemHandle textOnly: aBoolean
 
 itemsPerPage
 	^self sendMessage: LVM_GETCOUNTPERPAGE!
+
+largeIconExtent: aPointOrNil
+	iconSpacing notNil
+		ifTrue: 
+			["Remove any custom spacing if insufficient for the icon size"
+			self setIconSpacing: ((aPointOrNil notNil and: [aPointOrNil > iconSpacing]) ifFalse: [iconSpacing])].
+	^super largeIconExtent: aPointOrNil!
 
 largeIconMode
 	"Place the receiver in large icons mode"
@@ -2009,6 +2015,9 @@ setControlBackcolor: aColor
 		wParam: 0
 		lParam: clrref!
 
+setIconSpacing: aPointOrNil
+	self lvmSetIconSpacing: aPointOrNil ?? (-1 @ -1)!
+
 setSelectionsByIndex: indices 
 	(indices noDifference: lastSelIndices) ifTrue: [^self].
 	self basicSelectionsByIndex: indices.
@@ -2202,14 +2211,14 @@ viewMode
 	^viewMode!
 
 viewModeChanged
-	| style |
-	viewMode == #largeIcons ifTrue: [self largeIconExtent: Icon largeExtent].
-	viewMode == #tileIcons ifTrue: [self largeIconExtent: Icon tileExtent].
-	viewMode == #extraLargeIcons ifTrue: [self largeIconExtent: Icon extraLargeExtent].
-	viewMode == #thumbnails ifTrue: [self largeIconExtent: self thumbnailExtent].
-	self applyImageLists.
+	| style newIconExtent |
+	viewMode == #largeIcons ifTrue: [newIconExtent := Icon largeExtent].
+	viewMode == #tileIcons ifTrue: [newIconExtent := Icon tileExtent].
+	viewMode == #extraLargeIcons ifTrue: [newIconExtent := Icon extraLargeExtent].
+	viewMode == #thumbnails ifTrue: [newIconExtent := self thumbnailExtent].
+	newIconExtent ifNil: [self applyImageLists] ifNotNil: [self largeIconExtent: newIconExtent].
 	style := LvModes at: viewMode ifAbsent: [LVS_REPORT].
-	self 
+	self
 		baseStyle: style
 		maskedBy: LVS_TYPEMASK
 		recreateIfChanged: false.
@@ -2334,6 +2343,7 @@ wantCustomDrawItemNotifications: pNMHDR
 !ListView categoriesFor: #itemFromPoint:!enquiries!private! !
 !ListView categoriesFor: #itemRect:textOnly:!enquiries!public! !
 !ListView categoriesFor: #itemsPerPage!geometry!public! !
+!ListView categoriesFor: #largeIconExtent:!constants!public! !
 !ListView categoriesFor: #largeIconMode!commands!public! !
 !ListView categoriesFor: #lastSelIndices!accessing!private! !
 !ListView categoriesFor: #lastSelIndices:!accessing!private! !
@@ -2438,6 +2448,7 @@ wantCustomDrawItemNotifications: pNMHDR
 !ListView categoriesFor: #selectionsByIndex:ifAbsent:!public!selection! !
 !ListView categoriesFor: #setColumnIcon:atIndex:!helpers!private! !
 !ListView categoriesFor: #setControlBackcolor:!helpers!private! !
+!ListView categoriesFor: #setIconSpacing:!helpers!private! !
 !ListView categoriesFor: #setSelectionsByIndex:!private!selection! !
 !ListView categoriesFor: #setSingleSelection:!private!selection! !
 !ListView categoriesFor: #setViewMode:!accessing!private! !
