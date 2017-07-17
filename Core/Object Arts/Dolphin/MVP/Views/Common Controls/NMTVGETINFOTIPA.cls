@@ -41,8 +41,11 @@ text: text
 	text, but only up to the maximum number of characters specified by the receiver's
 	#cchTextMax field."
 
-	CRTLibrary default strncpy: self pszText strSource: text displayString count: self cchTextMax
-! !
+	CRTLibrary default
+		strncpy_s: self pszText
+		bufferSize: self cchTextMax
+		strSource: text displayString
+		count: CRTConstants._TRUNCATE! !
 !NMTVGETINFOTIPA categoriesFor: #cchTextMax!**compiled accessors**!public! !
 !NMTVGETINFOTIPA categoriesFor: #hItem!**compiled accessors**!public! !
 !NMTVGETINFOTIPA categoriesFor: #itemHandle!accessing!public! !

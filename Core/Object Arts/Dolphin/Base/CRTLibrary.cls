@@ -60,9 +60,8 @@ _close: anInteger
 	<cdecl: sdword _close sdword>
 	^self invalidCall!
 
-_controlfp: newInteger mask: maskInteger
-	<cdecl: dword _controlfp dword dword>
-	#deprecated.	"Insecure - see MSDN"
+_controlfp_s: currentControl newControl: newInteger mask: maskInteger
+	<cdecl: sdword _controlfp_s dword* dword dword>
 	^self invalidCall!
 
 _dup: anInteger 
@@ -120,9 +119,8 @@ _fpclass: aFloat
 	<cdecl: sdword _fpclass double>
 	^self invalidCall!
 
-_gcvt: aFloat count: anInteger buffer: aString
-	<cdecl: char* _gcvt double sdword char*>
-	#deprecated.	"Insecure - see MSDN"
+_gcvt_s: aString bufferSize: sizeInteger value: aFloat digits: digitsInteger
+	<cdecl: sdword _gcvt_s char* intptr double sdword>
 	^self invalidCall!
 
 _get_osfhandle: anInteger
@@ -142,9 +140,8 @@ _logb: aFloat
 	<cdecl: double _logb double>
 	^self invalidCall!
 
-_makepath: path drive: drive dir: dir fname: fname ext: ext
-	<cdecl: void _makepath char* char* char* char* char*>
-	#deprecated.	"Insecure - see MSDN"
+_makepath_s: path bufferSize: sizeInBytes drive: drive dir: dir fname: fname ext: ext
+	<cdecl: sdword _makepath_s char* intptr char* char* char* char*>
 	^self invalidCall!
 
 _open_osfhandle: osfhandle flags: flags
@@ -183,9 +180,8 @@ _spawnvp: mode cmdname: aString argv: argv
 [CRTLibrary default _spawnvp: 0 cmdname: 'command.com' argv: DWORD new.0] fork
 "!
 
-_splitpath: path drive: drive dir: dir fname: fname ext: ext
-	<cdecl: void _splitpath char* char* char* char* char*>
-	#deprecated.	"Insecure - see MSDN"
+_splitpath_s: path drive: drive driveLen: driveInteger dir: dir dirLen: dirInteger fname: fname fnameLen: nameInteger ext: ext extLen: extInteger
+	<cdecl: sdword _splitpath_s char* char* intptr char* intptr char* intptr char* intptr>
 	^self invalidCall!
 
 _stricmp: string1 string2: string2
@@ -342,23 +338,16 @@ floor: aFloat
 	<cdecl: double floor double>
 	^self invalidCall!
 
-fopen: nameString mode: modeString
-	<cdecl: handle fopen lpstr lpstr>
-	#deprecated.	"Insecure - see MSDN"
+fopen_s: pFile filename: nameString mode: modeString
+	<cdecl: sdword fopen_s handle* lpstr lpstr>
 	^self invalidCall!
 
 fputc: charValue stream: aFILE
 	<cdecl: sdword fputc sdword handle>
 	^self invalidCall!
 
-fread: buffer size: size count: count stream: aFILE
-	<overlap cdecl: sdword fread lpvoid intptr intptr handle>
-	#deprecated.	"Insecure - see MSDN"
-	^self invalidCall!
-
-freopen: pathString mode: modeString stream: anExternalHandle
-	<cdecl: handle freopen char* char* handle>
-	#deprecated.	"Insecure - see MSDN"
+fread_s: buffer bufferSize: bufsizeInteger elementSize: elemSizeInteger count: countInteger stream: aFILE
+	<overlap cdecl: sdword fread_s lpvoid intptr intptr intptr handle>
 	^self invalidCall!
 
 frexp: x expptr: expptr
@@ -507,11 +496,8 @@ srand: anInteger
 	<cdecl: void srand dword>
 	^self invalidCall!
 
-strcat: strDestination strSource: strSource
-	"Be careful: Buffer overruns a distinct possibility if you use this function!!"
-
-	<cdecl: lpstr strcat lpstr lpstr>
-	#deprecated.	"Insecure - see MSDN"
+strcat_s: destString bufferSize: anInteger strSource: sourceString
+	<cdecl: sdword strcat_s lpstr intptr lpstr>
 	^self invalidCall!
 
 strcmp: string1 string2: string2 
@@ -527,11 +513,8 @@ strcspn: string strCharSet: strCharSet
 	<cdecl: dword strcspn lpvoid char*>
 	^self invalidCall!
 
-strerror: errno
-	"Answer a <readableString> description of the specified <integer> CRT error number."
-
-	<cdecl: lpstr strerror sdword>
-	#deprecated.	"Insecure - see MSDN"
+strerror_s: aString bufferSize: sizeInteger errnum: errnoInteger
+	<cdecl: sdword strerror_s lpstr intptr sdword>
 	^self invalidCall!
 
 strncmp: string1 string2: string2 count: count
@@ -544,9 +527,8 @@ strncmp: string1 string2: string2 count: count
 	<cdecl: sdword strncmp lpstr lpstr intptr>
 	^self invalidCall!
 
-strncpy: strDest strSource: strSource count: count
-	<cdecl: lpvoid strncpy lpvoid lpvoid intptr>
-	#deprecated.	"Insecure - see MSDN"
+strncpy_s: desString bufferSize: anInteger strSource: sourceString count: countInteger
+	<cdecl: lpvoid strncpy_s lpvoid intptr lpvoid intptr>
 	^self invalidCall!
 
 strpbrk: string strCharSet: strCharSet
@@ -565,13 +547,13 @@ synchronizeLocale
 
 	| buf |
 	self setlocale: 0 locale: ''.
-	buf := String new: 10.
-	buf := self _gcvt: 0 count: 2 buffer: buf.
-	decimalSeparator := buf copyFrom: 2
-
-
-
-!
+	buf := String newFixed: 10.
+	self
+		_gcvt_s: buf
+		bufferSize: buf size + 1
+		value: 0.0
+		digits: 2.
+	decimalSeparator := buf copyFrom: 2 to: 2!
 
 tan: aFloat
 	"Answer the Tangent of the argument, aFloat."
@@ -602,7 +584,7 @@ wcscspn: aUnicodeString strCharSet: strCharSet
 !CRTLibrary categoriesFor: #_chmod:pmode:!CRT functions-file handling!public! !
 !CRTLibrary categoriesFor: #_clearfp!CRT functions-floating point support!public! !
 !CRTLibrary categoriesFor: #_close:!CRT functions-low level I/O!public! !
-!CRTLibrary categoriesFor: #_controlfp:mask:!CRT functions-floating point support!public! !
+!CRTLibrary categoriesFor: #_controlfp_s:newControl:mask:!CRT functions-floating point support!public! !
 !CRTLibrary categoriesFor: #_dup:!CRT functions-low level I/O!public! !
 !CRTLibrary categoriesFor: #_dup2:handle2:!CRT functions-low level I/O!public! !
 !CRTLibrary categoriesFor: #_eof:!CRT functions-file handling!public! !
@@ -612,17 +594,17 @@ wcscspn: aUnicodeString strCharSet: strCharSet
 !CRTLibrary categoriesFor: #_fileno:!CRT functions-stream I/O!public! !
 !CRTLibrary categoriesFor: #_finite:!CRT functions-floating point support!public! !
 !CRTLibrary categoriesFor: #_fpclass:!CRT functions-floating point support!public! !
-!CRTLibrary categoriesFor: #_gcvt:count:buffer:!CRT functions-floating point support!public! !
+!CRTLibrary categoriesFor: #_gcvt_s:bufferSize:value:digits:!CRT functions-floating point support!public! !
 !CRTLibrary categoriesFor: #_get_osfhandle:!CRT functions-file handling!public! !
 !CRTLibrary categoriesFor: #_getcwd:maxlen:!CRT functions-directory control!public! !
 !CRTLibrary categoriesFor: #_logb:!CRT functions-floating point support!public! !
-!CRTLibrary categoriesFor: #_makepath:drive:dir:fname:ext:!CRT functions-file handling!public! !
+!CRTLibrary categoriesFor: #_makepath_s:bufferSize:drive:dir:fname:ext:!CRT functions-file handling!public! !
 !CRTLibrary categoriesFor: #_open_osfhandle:flags:!CRT functions-file handling!public! !
 !CRTLibrary categoriesFor: #_rotl:shift:!CRT functions-bit manipulation!public! !
 !CRTLibrary categoriesFor: #_rotr:shift:!CRT functions-bit manipulation!public! !
 !CRTLibrary categoriesFor: #_setmode:mode:!CRT functions-file handling!public! !
 !CRTLibrary categoriesFor: #_spawnvp:cmdname:argv:!CRT functions-process and environment control!public! !
-!CRTLibrary categoriesFor: #_splitpath:drive:dir:fname:ext:!CRT functions-file handling!public! !
+!CRTLibrary categoriesFor: #_splitpath_s:drive:driveLen:dir:dirLen:fname:fnameLen:ext:extLen:!CRT functions-file handling!public! !
 !CRTLibrary categoriesFor: #_stricmp:string2:!CRT functions-string manipulation!public! !
 !CRTLibrary categoriesFor: #_stricoll:string2:!CRT functions-string manipulation!public! !
 !CRTLibrary categoriesFor: #_strnicmp:string2:count:!CRT functions-string manipulation!public! !
@@ -645,10 +627,9 @@ wcscspn: aUnicodeString strCharSet: strCharSet
 !CRTLibrary categoriesFor: #fgetc:!CRT functions-stream I/O!public! !
 !CRTLibrary categoriesFor: #fgets:n:stream:!CRT functions-stream I/O!public! !
 !CRTLibrary categoriesFor: #floor:!CRT functions-floating point support!public! !
-!CRTLibrary categoriesFor: #fopen:mode:!CRT functions-stream I/O!public! !
+!CRTLibrary categoriesFor: #fopen_s:filename:mode:!CRT functions-stream I/O!public! !
 !CRTLibrary categoriesFor: #fputc:stream:!CRT functions-stream I/O!public! !
-!CRTLibrary categoriesFor: #fread:size:count:stream:!CRT functions-stream I/O!public! !
-!CRTLibrary categoriesFor: #freopen:mode:stream:!CRT functions-stream I/O!public! !
+!CRTLibrary categoriesFor: #fread_s:bufferSize:elementSize:count:stream:!CRT functions-stream I/O!public! !
 !CRTLibrary categoriesFor: #frexp:expptr:!CRT functions-floating point support!public! !
 !CRTLibrary categoriesFor: #fseek:offset:origin:!CRT functions-stream I/O!public! !
 !CRTLibrary categoriesFor: #ftell:!CRT functions-stream I/O!public! !
@@ -671,12 +652,12 @@ wcscspn: aUnicodeString strCharSet: strCharSet
 !CRTLibrary categoriesFor: #sin:!CRT functions-floating point support!public! !
 !CRTLibrary categoriesFor: #sqrt:!CRT functions-floating point support!public! !
 !CRTLibrary categoriesFor: #srand:!CRT functions-floating point support!public! !
-!CRTLibrary categoriesFor: #strcat:strSource:!CRT functions-string manipulation!public! !
+!CRTLibrary categoriesFor: #strcat_s:bufferSize:strSource:!CRT functions-string manipulation!public! !
 !CRTLibrary categoriesFor: #strcmp:string2:!CRT functions-string manipulation!public! !
 !CRTLibrary categoriesFor: #strcspn:strCharSet:!CRT functions-string manipulation!public! !
-!CRTLibrary categoriesFor: #strerror:!CRT functions-string manipulation!public! !
+!CRTLibrary categoriesFor: #strerror_s:bufferSize:errnum:!CRT functions-string manipulation!public! !
 !CRTLibrary categoriesFor: #strncmp:string2:count:!CRT functions-string manipulation!public! !
-!CRTLibrary categoriesFor: #strncpy:strSource:count:!CRT functions-string manipulation!public! !
+!CRTLibrary categoriesFor: #strncpy_s:bufferSize:strSource:count:!CRT functions-string manipulation!public! !
 !CRTLibrary categoriesFor: #strpbrk:strCharSet:!CRT functions-string manipulation!public! !
 !CRTLibrary categoriesFor: #synchronizeLocale!CRT functions-localization!private! !
 !CRTLibrary categoriesFor: #tan:!CRT functions-floating point support!public! !

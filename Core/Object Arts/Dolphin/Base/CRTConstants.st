@@ -40,6 +40,7 @@ CRTConstants at: '_PC_64' put: 16r0!
 CRTConstants at: '_S_IEXEC' put: 16r40!
 CRTConstants at: '_S_IREAD' put: 16r100!
 CRTConstants at: '_S_IWRITE' put: 16r80!
+CRTConstants at: '_TRUNCATE' put: -16r1!
 CRTConstants at: 'EBADF' put: 16r9!
 CRTConstants at: 'EINVAL' put: 16r16!
 CRTConstants at: 'RAND_MAX' put: 16r7FFF!

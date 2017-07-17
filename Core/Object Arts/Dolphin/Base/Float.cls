@@ -5,7 +5,7 @@ Number variableByteSubclass: #Float
 	classVariableNames: 'EMin FpClassInfinite FpClassNaN FpClassNegative FpClassStrictlyPositive FpClassZero Ln2 MinValLogBase2 Precision SignificantDifference'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-Float guid: (GUID fromString: '{87B4C65A-026E-11D3-9FD7-00A0CC3E4A32}')!
+Float guid: (GUID fromString: '{87b4c65a-026e-11d3-9fd7-00a0cc3e4a32}')!
 Float addClassConstant: 'EMin' value: -1022!
 Float addClassConstant: 'FpClassInfinite' value: 516!
 Float addClassConstant: 'FpClassNaN' value: 3!
@@ -667,12 +667,13 @@ printOn: aStream significantFigures: anInteger
 
 	| buf ptPos |
 	self isFinite ifFalse: [self printOn: aStream].
-	buf := String new: (anInteger bitShift: 1) + 10.
-	buf := CRTLibrary default
-				_gcvt: self
-				count: anInteger
-				buffer: buf.
-
+	buf := String newFixed: (anInteger bitShift: 1) + 10.
+	CRTLibrary default
+		_gcvt_s: buf
+		bufferSize: buf size + 1
+		value: self
+		digits: anInteger.
+	buf := buf trimNulls.
 	"Ensure decimal separator is always a $. for printOn:, which outputs Smalltalk real syntax"
 	ptPos := buf findString: CRTLibrary default decimalSeparator.
 	ptPos == 0
@@ -1030,13 +1031,20 @@ reset
 	self resetPrecision!
 
 resetPrecision
-	CRTLibrary default _controlfp: CRTConstants._PC_64 mask: CRTConstants._MCW_PC!
+	CRTLibrary default
+		_controlfp_s: nil
+		newControl: CRTConstants._PC_64
+		mask: CRTConstants._MCW_PC!
 
 setExceptionMask: anInteger
-	"Private - Set the current floating point exception mask
-	to anInteger. Answer the previous mask."
+	"Private - Set the current floating point exception mask to anInteger."
 
-	^CRTLibrary default _controlfp: anInteger mask: CRTConstants._MCW_EM!
+	| errno |
+	(errno := CRTLibrary default
+				_controlfp_s: nil
+				newControl: anInteger
+				mask: CRTConstants._MCW_EM) == 0
+		ifFalse: [CRTError signalWith: errno]!
 
 zero
 	"Answer the receiver's representation of zero."

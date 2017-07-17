@@ -27,7 +27,7 @@ of SciLexer.dll from it into the Dolphin directory."
 	| scilexer locator currentVer version filename zip dest temp shell scintilla url exists |
 	locator := FileLocator installRelative.
 	version := ScintillaLibrary versionString.
-	scilexer := locator localFileSpecFor: (File change: ScintillaLibrary fileName extension: ''dll'').
+	scilexer := locator localFileSpecFor: (File path: ScintillaLibrary fileName extension: ''dll'').
 	exists := File exists: scilexer.
 	currentVer := exists ifTrue: [(VersionInfo forPath: scilexer) productVersionString].
 	version = currentVer ifTrue: [^self].

@@ -176,3 +176,18 @@ lookup: keyObject
 
 lookup: keyObject
 	^super lookup: keyObject asSymbol! !
+
+!CRTLibrary methodsFor!
+
+_splitpath_s: path drive: drive driveLen: driveInteger dir: dir dirLen: dirInteger fname: fname fnameLen: nameInteger ext: ext extLen: extInteger
+	<cdecl: sdword _splitpath_s char* char* sdword char* sdword char* sdword char* sdword>
+	^self invalidCall!
+
+strcat_s: strDestination bufferSize: anInteger strSource: strSource
+	<cdecl: sdword strcat_s lpstr sdword lpstr>
+	^self invalidCall!
+
+_makepath_s: path bufferSize: sizeInBytes drive: drive dir: dir fname: fname ext: ext
+	<cdecl: sdword _makepath_s char* intptr char* char* char* char*>
+	^self invalidCall! !
+

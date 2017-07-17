@@ -5,7 +5,7 @@ Error subclass: #CRTError
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-CRTError guid: (GUID fromString: '{259AE719-09C3-4401-A9BE-6F089698B6F7}')!
+CRTError guid: (GUID fromString: '{259ae719-09c3-4401-a9be-6f089698b6f7}')!
 CRTError comment: 'Exception to represent C-runtime library errors.'!
 !CRTError categoriesForClass!System-Exception Handling! !
 !CRTError methodsFor!
@@ -44,7 +44,14 @@ messageText
 strerror
 	"Answer a <readableString> description of the receiver's error number."
 
-	^CRTLibrary default strerror: self errno! !
+	| buf |
+	buf := String newFixed: 80.
+	^(CRTLibrary default
+		strerror_s: buf
+		bufferSize: buf size + 1
+		errnum: self errno) == 0
+		ifTrue: [buf trimNulls]
+		ifFalse: [self errno printString]! !
 !CRTError categoriesFor: #_descriptionArguments!displaying!public! !
 !CRTError categoriesFor: #_descriptionFormat!displaying!public! !
 !CRTError categoriesFor: #errno!accessing!public! !

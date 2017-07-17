@@ -185,10 +185,11 @@ textInBuffer: aString
 	"Writes aString into a system buffer pointed to by pszText
 	and of size cchTextMax."
 
-	CRTLibrary default 
-		strncpy: self pszTextAddress	"Raw address of text buffer allocated by control"
-		strSource: aString 
-		count: self cchTextMax!
+	CRTLibrary default
+		strncpy_s: self pszTextAddress
+		bufferSize: self cchTextMax
+		strSource: aString
+		count: CRTConstants._TRUNCATE!
 
 textPointerOffset
 	"Private - Answer the offset of the text pointer in the receiver. "

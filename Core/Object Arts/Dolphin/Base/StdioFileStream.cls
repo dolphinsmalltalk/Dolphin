@@ -5,7 +5,7 @@ SequencedStream subclass: #StdioFileStream
 	classVariableNames: ''
 	poolDictionaries: 'CRTConstants'
 	classInstanceVariableNames: ''!
-StdioFileStream guid: (GUID fromString: '{7B8405B3-0819-421F-8110-CA2763BCB59A}')!
+StdioFileStream guid: (GUID fromString: '{7b8405b3-0819-421f-8110-ca2763bcb59a}')!
 StdioFileStream comment: 'StdioFileStream is a <FileStream> implemented over C runtime library stdio streams. Its main purpose is to wrap the stdin, stdout, and stderr streams in console applications, and it is not intended for general use. In order to avoid blocking the main Dolphin thread when attempting to read from stdin, the CRT stream I/O calls are overlapped (i.e. run on a threadpool thread), which makes them rather slow. FileStream itself should be used by preference in most cases.
 
 Instance Variables:
@@ -171,16 +171,19 @@ next
 		ifTrue: [self errorEndOfStream]
 		ifFalse: [isText ifTrue: [Character value: ch] ifFalse: [ch]]!
 
-next: countInteger into: aSequenceableCollection startingAt: startInteger 
+next: countInteger into: aSequenceableCollection startingAt: startInteger
 	"Destructively replace the elements of the argument, aSequenceableCollection,
 	(which must be some sort of byte object or <ExternalStructure> type object
 	which holds bytes) in the interval (startAt..startAt+count-1) with the next, count, 
 	elements of the receiver. Answer aSequenceableCollection."
 
-	| read |
-	read := CRTLibrary default 
-				fread: aSequenceableCollection yourAddress + startInteger - 1
-				size: aSequenceableCollection class elementSize
+	| read elemSize offset |
+	elemSize := aSequenceableCollection class elementSize.
+	offset := (startInteger - 1) * elemSize.
+	read := CRTLibrary default
+				fread_s: aSequenceableCollection yourAddress + offset
+				bufferSize: aSequenceableCollection byteSize - offset
+				elementSize: elemSize
 				count: countInteger
 				stream: stream.
 	read = countInteger ifFalse: [^self errorEndOfStream].
@@ -204,7 +207,7 @@ next: countInteger putAll: aSequenceableCollection startingAt: startInteger
 		stream: stream.
 	^aSequenceableCollection!
 
-nextAvailable: anInteger 
+nextAvailable: anInteger
 	"Answer up to anInteger elements of the receiver's collection. The answer will be a
 	collection of the same species as the one accessed by the receiver, and will contain anInteger
 	elements, or as many as are left in the receiver's collection."
@@ -214,14 +217,16 @@ nextAvailable: anInteger
 	feof() returns false until one has read off the end of the stream (or read the Ctrl+Z
 	character)."
 
-	| read buf |
-	buf := self contentsSpecies new: anInteger.
-	read := CRTLibrary default 
-				fread: buf yourAddress
-				size: 1
+	| read buf bufClass |
+	bufClass := self contentsSpecies.
+	buf := bufClass newFixed: anInteger.
+	read := CRTLibrary default
+				fread_s: buf
+				bufferSize: buf byteSize
+				elementSize: bufClass elementSize
 				count: anInteger
 				stream: stream.
-	^read < anInteger ifTrue: [buf copyFrom: 1 to: read] ifFalse: [buf].!
+	^read < anInteger ifTrue: [buf copyFrom: 1 to: read] ifFalse: [buf]!
 
 nextLine
 	"Answer a Collection consisting of the receiver contents up to (but not including) the 
@@ -468,11 +473,18 @@ read: aString text: aBoolean
 	based or binary, depending on the <boolean> argument. Raise an exception
 	if the file does not exist."
 
-	^self basicNew 
-		setStream: (CRTLibrary default fopen: aString
-				mode: (aBoolean ifTrue: ['rt'] ifFalse: ['rb']))
-		isText: aBoolean
-		name: aString!
+	| handle errno |
+	handle := ExternalHandle new.
+	^(errno := CRTLibrary default
+				fopen_s: handle
+				filename: aString
+				mode: (aBoolean ifTrue: ['rt'] ifFalse: ['rb'])) == 0
+		ifTrue: 
+			[self basicNew
+				setStream: handle
+				isText: aBoolean
+				name: aString]
+		ifFalse: [CRTError signalWith: errno]!
 
 read: aString type: aSymbol 
 	"Answer an instance of the receiver whose future sequence values consist
@@ -500,7 +512,7 @@ write: aString mode: aSymbol
 		check: false
 		text: true!
 
-write: aString mode: aSymbol check: checkBoolean text: textBoolean 
+write: aString mode: aSymbol check: checkBoolean text: textBoolean
 	"Answer a new instance of the receiver open on the contents of
 	the file identified by the <readableString> argument.
 	The <symbol> argument identifies the manner in which the file is opened.
@@ -514,22 +526,26 @@ write: aString mode: aSymbol check: checkBoolean text: textBoolean
 	The final <boolean> argument specifies the external type (#binary or #text) 
 	for which the new instance is initially configured."
 
-	| answer |
-	checkBoolean 
+	| answer handle |
+	checkBoolean
 		ifTrue: 
 			[| exists |
 			exists := File exists: aString.
-			aSymbol == #create 
+			aSymbol == #create
 				ifTrue: [exists ifTrue: [self error: 'File already exists']]
 				ifFalse: [exists ifFalse: [self error: 'File does not exist']]].
 	"Note that Smalltalk #append mode is unlike the 'a' and 'a+' fopen() modes, because
 	in Smalltalk the mode only controls the initial file position, and it is possible to overwrite
 	the existing data by moving the stream pointer backwards. With the fopen() append
 	modes it is not possible to overwrite the existing data."
+	handle := ExternalHandle new.
+	CRTLibrary default
+		fopen_s: handle
+		filename: aString
+		mode: (aSymbol == #append ifTrue: ['r+'] ifFalse: ['w+'])
+				, (textBoolean ifTrue: ['t'] ifFalse: ['b']).
 	answer := (self basicNew)
-				setStream: (CRTLibrary default fopen: aString
-							mode: (aSymbol == #append ifTrue: ['r+'] ifFalse: ['w+']) 
-									, (textBoolean ifTrue: ['t'] ifFalse: ['b']))
+				setStream: handle
 					isText: textBoolean
 					name: aString;
 				yourself.
