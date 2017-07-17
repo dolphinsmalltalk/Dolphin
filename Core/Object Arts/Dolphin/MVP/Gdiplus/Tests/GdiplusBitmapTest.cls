@@ -72,7 +72,7 @@ testPixelAfterSave
 	extensions with: supportsAlpha
 		do: 
 			[:ext :supported | 
-			toFile := File change: baseFile extension: ext.
+			toFile := File path: baseFile extension: ext.
 			bitmap saveToFile: toFile.
 			image := GdiplusBitmap fromFile: toFile.
 			self assert: (image pixelAt: 1 @ 1) = (ARGB fromArray: #(0 0 0 0)) = supported]! !

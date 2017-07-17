@@ -48,10 +48,13 @@ text: text
 	| t max |
 	t := text asString.
 	max := self cchTextMax.
-	t size >= max ifTrue: [t := (t copyFrom: 1 to: max-4), '...'].
-	CRTLibrary default strncpy: self pszText strSource: t count: max.
-	^t
-! !
+	t size >= max ifTrue: [t := (t copyFrom: 1 to: max - 4) , '...'].
+	CRTLibrary default
+		strncpy_s: self pszText
+		bufferSize: max
+		strSource: t
+		count: CRTConstants._TRUNCATE.
+	^t! !
 !NMLVGETINFOTIPA categoriesFor: #cchTextMax!**compiled accessors**!public! !
 !NMLVGETINFOTIPA categoriesFor: #dwFlags!**compiled accessors**!public! !
 !NMLVGETINFOTIPA categoriesFor: #iItem!**compiled accessors**!public! !

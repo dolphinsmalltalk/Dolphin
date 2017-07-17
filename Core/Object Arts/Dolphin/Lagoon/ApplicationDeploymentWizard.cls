@@ -69,17 +69,17 @@ browseForExecutableName
 	| filename defaultExtension |
 	defaultExtension := self defaultExtension.
 	filename := executableName value.
-	(filename isEmpty and: [rootPackage value notNil]) ifTrue: [
-		"Suggest a sensible default name"
-		defaultExtension := self value exeFileExtension.
-		filename := File change: rootPackage value packageFileName extension: defaultExtension].
-
+	(filename isEmpty and: [rootPackage value notNil])
+		ifTrue: 
+			["Suggest a sensible default name"
+			defaultExtension := self value exeFileExtension.
+			filename := File path: rootPackage value packageFileName extension: defaultExtension].
 	filename := (FileSaveDialog on: filename)
-		fileTypes: (self exeFileTypes copyWith: FileDialog allFilesType);
-		defaultExtension: defaultExtension;
-		caption: 'Choose target';
-		showModal.
-	filename notNil ifTrue: [ executableName value: filename].!
+				fileTypes: (self exeFileTypes copyWith: FileDialog allFilesType);
+				defaultExtension: defaultExtension;
+				caption: 'Choose target';
+				showModal.
+	filename notNil ifTrue: [executableName value: filename]!
 
 canDeploy
 	"Answer true if the receiver can currently deploy"

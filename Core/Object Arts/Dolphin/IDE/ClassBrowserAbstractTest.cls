@@ -192,13 +192,17 @@ inheritedMethodAddRemoveTests
 	self assertIsOnlyMethodVisible: (TestCase compiledMethodAt: method selector)!
 
 setUp
-	plugins := self browserClass plugins.
-	self browserClass plugins: #().
+	plugins := ClassBrowserAbstract allSubclasses collect: 
+					[:each |
+					| a |
+					a := each -> each plugins.
+					each plugins: #().
+					a].
 	packageA := DolphinTestPackages current a!
 
 tearDown
 	| methods |
-	self browserClass plugins: plugins.
+	plugins do: [:a | a key plugins: a value].
 	methods := packageA methods.
 	browser destroy.
 	self deleteTestMethods: methods.

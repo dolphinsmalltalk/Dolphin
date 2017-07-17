@@ -735,7 +735,7 @@ logFileExtension
 logFileName
 	"Answers the file name to use for logging strip info"
 
-	^File change: self executablePath extension: self logFileExtension!
+	^File path: self executablePath extension: self logFileExtension!
 
 logFold: aString folded: count total: total 
 	self startElement: aString.
@@ -1448,7 +1448,7 @@ saveExecutable: exePath
 	unattended := self isUnattended.
 	retainImage := self keepImageFile.
 	self finalActions.
-	image := File change: exePath extension: 'tmp'.
+	image := File path: exePath extension: 'tmp'.
 	self snapshotImage: image.
 
 	"We can't send any more messages to the receiver after this point as its method dictionary

@@ -5,7 +5,7 @@ Object subclass: #File
 	classVariableNames: 'CheckModes NoCheckModes OpenFlagsMask ShareModes'
 	poolDictionaries: 'CRTConstants Win32Constants Win32Errors'
 	classInstanceVariableNames: ''!
-File guid: (GUID fromString: '{87B4C48A-026E-11D3-9FD7-00A0CC3E4A32}')!
+File guid: (GUID fromString: '{87b4c48a-026e-11d3-9fd7-00a0cc3e4a32}')!
 File comment: ''!
 !File categoriesForClass!System-Support! !
 !File methodsFor!
@@ -528,15 +528,6 @@ appendPathDelimiter: aString
 attributes: aFileNameString
 	^KernelLibrary default getFileAttributes: aFileNameString!
 
-change: aPathnameString extension: anExtensionString
- 	"Changes the extension of aPathnameString to anExtensionString.
-	Answers the new filename"
-
-	| components |
-	components := self splitPath: aPathnameString.
-	components at: 4 put: anExtensionString.
-	^self makePath: components!
-
 commonPrefixOf: path1 and: path2
 	"Answer the <readableString> common prefix shared between the two paths.
 	This will be empty if the paths share no common prefix."
@@ -953,19 +944,35 @@ locateFilename: aFilenameString in: searchPath
 	^aFilenameString!
 
 makePath: anArray
-	"Private - Composes a full pathname from its path, stem and extension components.
+	"Composes a full pathname from its path, stem and extension components.
 	The path and extension components can be nil or the empty string if the path
 	does not have either of these components. The stem must be a non-empty String."
 
-	| path |
-	path := self pathBuffer.
-	CRTLibrary default 
-		_makepath: path 
-			drive: (anArray at: 1) 
-			dir: (anArray at: 2) 
-			fname: (anArray at: 3) 
-			ext: (anArray at: 4).
-	^path trimNulls!
+	| size drive dir fname ext path errno |
+	size := 0.
+	(drive := anArray at: 1)
+		ifNotNil: 
+			["Assume the drive doesn't have the colon and that _makepath_s will add it"
+			size := drive size + 1].
+	(dir := anArray at: 2)
+		ifNotNil: 
+			["Assume the terminating path separator is missing"
+			size := size + dir size + 1].
+	(fname := anArray at: 3) ifNotNil: [size := size + fname size].
+	(ext := anArray at: 4)
+		ifNotNil: 
+			["Assume the dot is missing"
+			size := size + ext size + 1].
+	path := String newFixed: size.
+	^(errno := CRTLibrary default
+				_makepath_s: path
+				bufferSize: size + 1
+				drive: drive
+				dir: dir
+				fname: fname
+				ext: ext) == 0
+		ifTrue: [path trimNulls]
+		ifFalse: [CRTError signalWith: errno]!
 
 maxPath
 	"Answers the maximum number of characters in a file pathname"
@@ -1062,24 +1069,29 @@ removeDirectory: aString
 removeExtension: aString
 	"Answer a <readableString> which is the path argument with the extension component removed."
 
-	| drive dir fname path |
-	aString isNil ifTrue: [^self error: 'nil path'].
-	drive := String new: _MAX_DRIVE.
-	dir := String new: _MAX_DIR.
-	fname := String new: _MAX_FNAME.
-	path := String new: aString size.
-	(CRTLibrary default)
-		_splitpath: aString
-			drive: drive
-			dir: dir
-			fname: fname
-			ext: nil;
-		_makepath: path
-			drive: drive
-			dir: dir
-			fname: fname
-			ext: nil.
-	^path trimNulls!
+	| drive dir fname errno max |
+	max := aString size.
+	(errno := CRTLibrary default
+				_splitpath_s: aString
+				drive: (drive := String new: _MAX_DRIVE)
+				driveLen: ##(_MAX_DRIVE + 1)
+				dir: (dir := String new: max)
+				dirLen: max + 1
+				fname: (fname := String new: max)
+				fnameLen: max + 1
+				ext: nil
+				extLen: 0) == 0
+		ifTrue: 
+			[| path |
+			(errno := CRTLibrary default
+						_makepath_s: (path := String new: max)
+						bufferSize: max + 1
+						drive: drive
+						dir: dir
+						fname: fname
+						ext: nil) == 0
+				ifTrue: [^path trimNulls]].
+	^CRTError signalWith: errno!
 
 removePathDelimiter: aString
 	"Answer a <readableString> that is the argument with a path separator at its end, if any, removed."
@@ -1154,54 +1166,98 @@ shortPathOf: aPathnameString
 			KernelLibrary default systemError].
 	^shortpath trimNulls!
 
+splitDriveFrom: aString
+	"Splits the pathname, aString, and answers the drive portion.
+	Answers an empty string if there is no drive component in the path."
+
+	| drive errno |
+	^(errno := CRTLibrary default
+				_splitpath_s: aString
+				drive: (drive := String new: _MAX_DRIVE)
+				driveLen: ##(_MAX_DRIVE + 1)
+				dir: nil
+				dirLen: 0
+				fname: nil
+				fnameLen: 0
+				ext: nil
+				extLen: 0) == 0
+		ifTrue: [drive trimNulls]
+		ifFalse: [CRTError signalWith: errno]!
+
 splitExtensionFrom: aString
 	"Splits aPathname string and answers the extension portion.
 	Answers the empty string if there is no extension."
 
-	^(self splitPath: aString) at: 4
-!
+	| ext errno |
+	ext := String new: aString size.
+	(errno := CRTLibrary default
+				_splitpath_s: aString
+				drive: nil
+				driveLen: 0
+				dir: nil
+				dirLen: 0
+				fname: nil
+				fnameLen: 0
+				ext: ext
+				extLen: ext size + 1) == 0
+		ifFalse: [^CRTError signalWith: errno].
+	"CRT function includes leading period on extension, which we don't"
+	ext := ext trimNulls.
+	^(ext notEmpty and: [ext first == $.]) ifTrue: [ext copyFrom: 2] ifFalse: [ext]!
 
 splitFilenameFrom: aString
-	"Splits aPathname string and answers the file name portion (including extension). Answers an
-	empty string if there is no file stem."
+	"Splits the pathname, aString, and answers the file name portion (including extension).
+	Answers an empty string if there is no filename component in the path."
 
-	| splits |
-	splits := self splitPath: aString.
-	splits
-		at: 1 put: nil;
-		at: 2 put: nil.
-	^self makePath: splits!
+	| fname ext errno max |
+	max := aString size.
+	(errno := CRTLibrary default
+				_splitpath_s: aString
+				drive: nil
+				driveLen: 0
+				dir: nil
+				dirLen: 0
+				fname: (fname := String new: aString size)
+				fnameLen: max + 1
+				ext: (ext := String new: max)
+				extLen: max + 1) == 0
+		ifTrue: 
+			[(errno := CRTLibrary default
+						strcat_s: fname
+						bufferSize: max + 1
+						strSource: ext) == 0
+				ifTrue: [^fname trimNulls]].
+	^CRTError signalWith: errno!
 
-splitPath: aString 
-	"Private - Splits aPathname string into its path, stem and extension components and answers 
+splitPath: aString
+	"Splits the pathname, aString, into its path, stem and extension components and answers 
 	a four element Array of these.
 	Note: We use the C-runtime library to implement this, hence either backward or forward
 	slashes (i.e. $\ or $/) are acceptable as pathname delimiters."
 
-	"Prevent GPF for common error case of nil argument"
+	| drive dir fname ext errno |
+	^(errno := CRTLibrary default
+				_splitpath_s: aString
+				drive: (drive := String new: _MAX_DRIVE)
+				driveLen: ##(_MAX_DRIVE + 1)
+				dir: (dir := String new: _MAX_DIR)
+				dirLen: ##(_MAX_DIR + 1)
+				fname: (fname := String new: _MAX_FNAME)
+				fnameLen: ##(_MAX_FNAME + 1)
+				ext: (ext := String new: _MAX_EXT)
+				extLen: ##(_MAX_EXT + 1)) == 0
+		ifTrue: 
+			["CRT function includes leading period on extension, which we don't"
+			ext := ext trimNulls.
+			(ext notEmpty and: [ext first == $.]) ifTrue: [ext := ext copyFrom: 2].
+			Array
+				with: drive trimNulls
+				with: dir trimNulls
+				with: fname trimNulls
+				with: ext]
+		ifFalse: [CRTError signalWith: errno]!
 
-	| drive dir fname ext |
-	aString isNil ifTrue: [^self error: 'nil path'].
-	drive := String new: _MAX_DRIVE.
-	dir := String new: _MAX_DIR.
-	fname := String new: _MAX_FNAME.
-	ext := String new: _MAX_EXT.	"may be more than 3 chars now"
-	CRTLibrary default 
-		_splitpath: aString
-		drive: drive
-		dir: dir
-		fname: fname
-		ext: ext.
-	"CRT function includes leading period on extension, which we don't"
-	ext := ext trimNulls.
-	(ext notEmpty and: [ext first == $.]) ifTrue: [ext := ext copyFrom: 2].
-	^Array 
-		with: drive trimNulls
-		with: dir trimNulls
-		with: fname trimNulls
-		with: ext!
-
-splitPathFrom: aPathnameString 
+splitPathFrom: aPathnameString
 	"Splits aPathname string and answers the path portion (including the drive letter, if any).
 	Answers an  empty <String> if there is no path."
 
@@ -1209,26 +1265,42 @@ splitPathFrom: aPathnameString
 	API call, PathRemoveFileSpec() does not treat $/ as a path delimiter (only backslash).
 	Also this is carefully implemented to minimise allocations and maximise speed."
 
-	| drive dir |
-	aPathnameString isNil 
+	| drive dir errno |
+	(errno := CRTLibrary default
+				_splitpath_s: aPathnameString
+				drive: (drive := String new: _MAX_PATH)
+				driveLen: ##(_MAX_DRIVE + 1)
+				dir: (dir := String new: _MAX_DIR)
+				dirLen: ##(_MAX_DIR + 1)
+				fname: nil
+				fnameLen: 0
+				ext: nil
+				extLen: 0) == 0
 		ifTrue: 
-			["Passing a null pointer to _splitpath() will cause an unfriendly GPF"
-			self error: 'nil path'].
-	drive := String new: _MAX_DRIVE + aPathnameString size.
-	dir := String new: aPathnameString size.
-	^(CRTLibrary default)
-		_splitpath: aPathnameString
-			drive: drive
-			dir: dir
-			fname: nil
-			ext: nil;
-		strcat: drive strSource: dir!
+			[(errno := CRTLibrary default
+						strcat_s: drive
+						bufferSize: ##(_MAX_PATH + 1)
+						strSource: dir) == 0
+				ifTrue: [^drive trimNulls]].
+	^CRTError signalWith: errno!
 
-splitStemFrom: aString 
+splitStemFrom: aString
 	"Answers the file stem component of the path <String> argument, or an empty string if there
 	is none."
 
-	^(self splitPath: aString) at: 3!
+	| fname errno |
+	^(errno := CRTLibrary default
+				_splitpath_s: aString
+				drive: nil
+				driveLen: 0
+				dir: nil
+				dirLen: 0
+				fname: (fname := String new: _MAX_FNAME)
+				fnameLen: ##(_MAX_FNAME + 1)
+				ext: nil
+				extLen: 0) == 0
+		ifTrue: [fname trimNulls]
+		ifFalse: [CRTError signalWith: errno]!
 
 temporary
 	"Open a temporary file with a unique name generated by the system, for
@@ -1284,7 +1356,6 @@ workingDirectory: aString
 	^CRTLibrary default _chdir: aString! !
 !File class categoriesFor: #appendPathDelimiter:!filename manipulation!public!testing! !
 !File class categoriesFor: #attributes:!file operations!public! !
-!File class categoriesFor: #change:extension:!filename manipulation!public! !
 !File class categoriesFor: #commonPrefixOf:and:!filename manipulation!public! !
 !File class categoriesFor: #composePath:stem:extension:!filename manipulation!public! !
 !File class categoriesFor: #composePath:subPath:!filename manipulation!public! !
@@ -1317,7 +1388,7 @@ workingDirectory: aString
 !File class categoriesFor: #isWriteable:set:!file operations!public! !
 !File class categoriesFor: #lastWriteTime:!enquiries!public! !
 !File class categoriesFor: #locateFilename:in:!filename manipulation!public! !
-!File class categoriesFor: #makePath:!filename manipulation!private! !
+!File class categoriesFor: #makePath:!filename manipulation!public! !
 !File class categoriesFor: #maxPath!constants!public! !
 !File class categoriesFor: #new!instance creation!public! !
 !File class categoriesFor: #open:!instance creation!public! !
@@ -1336,9 +1407,10 @@ workingDirectory: aString
 !File class categoriesFor: #replacePath:with:!filename manipulation!public! !
 !File class categoriesFor: #shortenComponent:max:!helpers!private! !
 !File class categoriesFor: #shortPathOf:!filename manipulation!public! !
+!File class categoriesFor: #splitDriveFrom:!filename manipulation!public! !
 !File class categoriesFor: #splitExtensionFrom:!filename manipulation!public! !
 !File class categoriesFor: #splitFilenameFrom:!filename manipulation!public! !
-!File class categoriesFor: #splitPath:!filename manipulation!private! !
+!File class categoriesFor: #splitPath:!filename manipulation!public! !
 !File class categoriesFor: #splitPathFrom:!filename manipulation!public! !
 !File class categoriesFor: #splitStemFrom:!filename manipulation!public! !
 !File class categoriesFor: #temporary!instance creation!public! !

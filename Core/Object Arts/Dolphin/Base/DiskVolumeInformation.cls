@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #DiskVolumeInformation
 	instanceVariableNames: 'path rootPath label serialNumber maxComponentLength fileSystemFlags fileSystemName sectorsPerCluster bytesPerSector freeClusters totalClusters freeBytes totalBytes totalFreeBytes'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-DiskVolumeInformation guid: (GUID fromString: '{3DE35CEE-9281-49C6-9BD5-7141432D16E4}')!
+DiskVolumeInformation guid: (GUID fromString: '{3de35cee-9281-49c6-9bd5-7141432d16e4}')!
 DiskVolumeInformation comment: 'DiskVolumeInformation can be used to access various statistics and various other items of information available through the Win32 API about disk volumes, for example the disk volumne label and serial number of the disk in a particular drive.
 
 Example Usage:
@@ -222,7 +222,8 @@ printOn: target
 rootPath
 	"Answer the value of the receiver's ''rootPath'' instance variable."
 
-	rootPath isNil ifTrue: [rootPath :=  (File splitPath: path) first asUppercase copyWith: File pathDelimiter].
+	rootPath isNil
+		ifTrue: [rootPath := (File splitDriveFrom: path) asUppercase copyWith: File pathDelimiter].
 	^rootPath!
 
 sectorsPerCluster

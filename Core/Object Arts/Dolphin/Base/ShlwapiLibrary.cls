@@ -5,7 +5,7 @@ ExternalLibrary subclass: #ShlwapiLibrary
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ShlwapiLibrary guid: (GUID fromString: '{64674074-3A82-101B-8181-00AA003743D3}')!
+ShlwapiLibrary guid: (GUID fromString: '{64674074-3a82-101b-8181-00aa003743d3}')!
 ShlwapiLibrary comment: 'ShlwapiLibrary is the <ExternalLibrary> class to represent the Win32 "Shell Lightweight API Library", SHLWAPI.DLL.'!
 !ShlwapiLibrary categoriesForClass!External-Libraries-Win32! !
 !ShlwapiLibrary methodsFor!
@@ -161,6 +161,16 @@ pathSetDlgItemPath: hDlg id: id pszPath: pszPath
 	<stdcall: void PathSetDlgItemPathA handle sdword lpstr>
 	^self invalidCall!
 
+pathStripPath: pszPath
+	"Invoke the PathStripPath () function of the module wrapped by the receiver.
+	Helpstring: Removes the path portion of a fully qualified path and file.
+
+		void __stdcall PathStripPath(
+			LPCSTR pszPath);"
+
+	<stdcall: void PathStripPathA lpstr>
+	^self invalidCall!
+
 shMessageBoxCheck: hwnd pszText: pszText pszTitle: pszTitle uType: uType iDefault: iDefault pszRegVal: pszRegVal
 	"Invoke the SHMessageBoxCheck() function of the module wrapped by the receiver.
 	Helpstring: Displays a message box that gives the user the option of suppressing further occurrences
@@ -188,6 +198,7 @@ shMessageBoxCheck: hwnd pszText: pszText pszTitle: pszTitle uType: uType iDefaul
 !ShlwapiLibrary categoriesFor: #pathParseIconLocation:!**auto generated**!public! !
 !ShlwapiLibrary categoriesFor: #pathRelativePathTo:pszFrom:dwAttrFrom:pszTo:dwAttrTo:!**auto generated**!public! !
 !ShlwapiLibrary categoriesFor: #pathSetDlgItemPath:id:pszPath:!**auto generated**!public! !
+!ShlwapiLibrary categoriesFor: #pathStripPath:!**auto generated**!public! !
 !ShlwapiLibrary categoriesFor: #shMessageBoxCheck:pszText:pszTitle:uType:iDefault:pszRegVal:!**auto generated**!public! !
 
 !ShlwapiLibrary class methodsFor!
