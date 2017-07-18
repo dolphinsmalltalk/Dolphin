@@ -30,10 +30,9 @@ uncompress
 	_chmod
 	_clearfp
 	_close
-	_controlfp
+	_controlfp_s
 	_dup
 	_dup2
-	_ecvt
 	_eof
 	_errno
 	_fdopen
@@ -41,21 +40,18 @@ uncompress
 	_fileno
 	_finite
 	_fpclass
-	_gcvt
+	_gcvt_s
 	_getcwd
-	_i64toa
 	_isnan
 	_logb
-	_ltoa
-	_makepath
+	_makepath_s
 	_get_osfhandle
 	_open_osfhandle
-	_putenv
 	_rotl
 	_rotr
 	_setmode
 	_spawnvp
-	_splitpath
+	_splitpath_s
 	_stricmp
 	_stricoll
 	_strnicmp
@@ -75,10 +71,9 @@ uncompress
 	fgetc
 	fgets
 	floor
-	fopen
+	fopen_s
 	fputc
-	fread
-	freopen
+	fread_s
 	frexp
 	fseek
 	ftell
@@ -92,8 +87,6 @@ uncompress
 	log
 	log10
 	memcmp
-	memcpy
-	memmove
 	memset
 	modf
 	pow
@@ -103,12 +96,12 @@ uncompress
 	sin
 	sqrt
 	srand
-	strcat
+	strcat_s
 	strcmp
 	strcspn
 	strerror
 	strncmp
-	strncpy
+	strncpy_s
 	strpbrk
 	tan
 	ungetc
