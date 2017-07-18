@@ -23,18 +23,18 @@ Class Variables:
 !VMLibrary categoriesForClass!External-Libraries! !
 !VMLibrary methodsFor!
 
-_snprintf: buffer count: maxbuf format: format with: arg
+_snprintf_s: buffer bufferSize: sizeInteger count: countInteger format: format with: arg
 	"Private - Write data formatted by the format string into the buffer.
 	see _snprintf:count:format:with:with:with: for further information."
 
-	<cdecl: sdword _snprintf lpvoid intptr lpstr lpvoid>
+	<cdecl: sdword _snprintf_s lpvoid intptr intptr lpstr lpvoid>
 	^self invalidCall!
 
-_snprintf: buffer count: maxbuf format: format with: arg1 with: arg2
+_snprintf_s: buffer bufferSize: sizeInteger count: countInteger format: format with: arg1 with: arg2
 	"Private - Write data formatted by the format string into the buffer.
 	see _snprintf:count:format:with:with:with: for further information."
 
-	<cdecl: sdword _snprintf lpvoid intptr lpstr lpvoid lpvoid>
+	<cdecl: sdword _snprintf_s lpvoid intptr intptr lpstr lpvoid lpvoid>
 	^self invalidCall!
 
 addressFromInteger: anInteger
@@ -517,8 +517,8 @@ versionFormatString
 	"Private - Answer a String containing the version format used by the receiver."
 
 	^'%3!!d!!.%4!!d!!%5!!d!!'! !
-!VMLibrary categoriesFor: #_snprintf:count:format:with:!helpers!private! !
-!VMLibrary categoriesFor: #_snprintf:count:format:with:with:!helpers!private! !
+!VMLibrary categoriesFor: #_snprintf_s:bufferSize:count:format:with:!helpers!private! !
+!VMLibrary categoriesFor: #_snprintf_s:bufferSize:count:format:with:with:!helpers!private! !
 !VMLibrary categoriesFor: #addressFromInteger:!helpers!private! !
 !VMLibrary categoriesFor: #applicationHandle!accessing-handles!public! !
 !VMLibrary categoriesFor: #argc!accessing!private! !
