@@ -11,8 +11,8 @@ CRTLibraryImportTest comment: ''!
 !CRTLibraryImportTest methodsFor!
 
 devOnlyCrtFunctions
-	^#('_get_osfhandle') , ((MethodCategory deprecatedMethods methodsInBehavior: CRTLibrary)
-				collect: [:each | each functionName])!
+	^(MethodCategory deprecatedMethods methodsInBehavior: CRTLibrary)
+		collect: [:each | each functionName]!
 
 stubNames
 	^#('ConsoleToGo.exe' 'GUIToGo.exe' 'IPDolphinToGo.dll')!

@@ -5,7 +5,7 @@ ArrayedCollection variableByteSubclass: #String
 	classVariableNames: 'LineDelimiter NullPrintCharacter'
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
-String guid: (GUID fromString: '{87B4C514-026E-11D3-9FD7-00A0CC3E4A32}')!
+String guid: (GUID fromString: '{87b4c514-026e-11d3-9fd7-00a0cc3e4a32}')!
 String isNullTerminated: true!
 String comment: 'String is the class of <ArrayedCollection>s whose elements are <Character>s.
 
@@ -846,12 +846,13 @@ sprintfWith: arg1
 	size := self size + 64.
 	
 	[buf := String new: size.
-	n := crt 
-				_snprintf: buf
+	n := crt
+				_snprintf_s: buf
+				bufferSize: size + 1
 				count: size
 				format: self
 				with: arg1.
-	n < 0] 
+	n < 0]
 			whileTrue: [size := size * 2].
 	^buf copyFrom: 1 to: n!
 
@@ -865,17 +866,18 @@ sprintfWith: arg1 with: arg2
 	Note: This is much faster than formatWith:with:."
 
 	| written lib buf size |
-	lib :=  VMLibrary default.
+	lib := VMLibrary default.
 	size := self size + 128.
 	
 	[buf := String new: size.
-	written := lib 
-				_snprintf: buf
+	written := lib
+				_snprintf_s: buf
+				bufferSize: size + 1
 				count: size
 				format: self
 				with: arg1
 				with: arg2.
-	written < 0] 
+	written < 0]
 			whileTrue: [size := size * 2].
 	^buf copyFrom: 1 to: written!
 
