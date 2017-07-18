@@ -11,7 +11,8 @@ CRTLibraryImportTest comment: ''!
 !CRTLibraryImportTest methodsFor!
 
 devOnlyCrtFunctions
-	^#('_get_osfhandle')!
+	^#('_get_osfhandle') , ((MethodCategory deprecatedMethods methodsInBehavior: CRTLibrary)
+				collect: [:each | each functionName])!
 
 stubNames
 	^#('ConsoleToGo.exe' 'GUIToGo.exe' 'IPDolphinToGo.dll')!
@@ -27,10 +28,21 @@ testStubCrtExports
 			f := FileLocator installRelative localFileSpecFor: eachStubName.
 			l := ExternalLibrary open: f.
 			
-			[procs := (CRTLibrary selectMethods: [:each | each isExternalCall])
+			[| unexported |
+			procs := (CRTLibrary selectMethods: [:each | each isExternalCall])
 						collect: [:each | each functionName].
 			missing := procs select: [:each | (l getProcAddress: each ifAbsent: []) isNil].
-			self assert: (missing difference: expected) isEmpty]
+			unexported := missing difference: expected.
+			self assert: unexported isEmpty
+				description: 
+					[| desc |
+					desc := String writeStream.
+					desc
+						nextPutAll: eachStubName;
+						nextPutAll: ' is missing exports for the required CRT functions '.
+					unexported asSortedCollection do: [:export | desc print: export]
+						separatedBy: [desc nextPutAll: ', '].
+					desc contents]]
 					ensure: [l close]]! !
 !CRTLibraryImportTest categoriesFor: #devOnlyCrtFunctions!constants!private! !
 !CRTLibraryImportTest categoriesFor: #stubNames!constants!private! !
