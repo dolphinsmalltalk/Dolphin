@@ -34,7 +34,6 @@ uncompress
 	__iscsymf
 	_chdir
 	_chmod
-	_chmod
 	_clearfp
 	_close
 	_controlfp_s
@@ -48,11 +47,10 @@ uncompress
 	_finite
 	_fpclass
 	_gcvt_s
+	_get_osfhandle
 	_getcwd
-	_isnan
 	_logb
 	_makepath_s
-	_get_osfhandle
 	_open_osfhandle
 	_rotl
 	_rotr
@@ -85,7 +83,6 @@ uncompress
 	fseek
 	ftell
 	fwrite
-	getenv
 	iswcntrl
 	iswprint
 	iswpunct
@@ -103,10 +100,10 @@ uncompress
 	sin
 	sqrt
 	srand
-	strcmp
 	strcat_s
+	strcmp
 	strcspn
-	strerror
+	strerror_s
 	strncmp
 	strncpy_s
 	strpbrk
@@ -116,7 +113,7 @@ uncompress
 
 ; VMLibrary
 
-	_snprintf
+	_snprintf_s
 
 ; Version Helper Functions
 IsWindowsVersionOrGreater
