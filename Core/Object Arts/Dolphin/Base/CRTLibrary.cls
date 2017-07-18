@@ -5,7 +5,7 @@ PermanentLibrary subclass: #CRTLibrary
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-CRTLibrary guid: (GUID fromString: '{87B4C58B-026E-11D3-9FD7-00A0CC3E4A32}')!
+CRTLibrary guid: (GUID fromString: '{87b4c58b-026e-11d3-9fd7-00a0cc3e4a32}')!
 CRTLibrary comment: 'CRTLibrary is the <ExternalLibrary> class to represent the MS C run-time library, MSVCRT.DLL.
 
 The C runtime library is linked with the VM and is therefore permanently available. It provides many useful services (some of which are not wrapped at present) and is used quite extensively by the base image to avoid re-inventing the wheel and to keep the image size down.
@@ -61,11 +61,8 @@ _close: anInteger
 	^self invalidCall!
 
 _controlfp: newInteger mask: maskInteger
-	"Get and set the floating-point control word.
-
-		unsigned int _controlfp( unsigned int new, unsigned int mask );"
-
 	<cdecl: dword _controlfp dword dword>
+	#deprecated.	"Insecure - see MSDN"
 	^self invalidCall!
 
 _dup: anInteger 
@@ -82,16 +79,6 @@ _dup2: anInteger handle2: anInteger2
 	closed."
 
 	<cdecl: sdword _dup2 sdword sdword>
-	^self invalidCall!
-
-_ecvt: aFloat count: anInteger dec: decInteger sign: signInteger
-	"Answer a String representation of the argument, aFloat, with anInteger significant figures.
-	decInteger and signInteger receive the position of the decimal point and the sign of
-	aFloat respectively.
-
-		char *_ecvt( double value, int count, int *dec, int *sign );"
-
-	<cdecl: lpstr _ecvt double sdword sdword* sdword*>
 	^self invalidCall!
 
 _eof: handleInteger
@@ -134,15 +121,8 @@ _fpclass: aFloat
 	^self invalidCall!
 
 _gcvt: aFloat count: anInteger buffer: aString
-	"Answer a String representation of the argument, aFloat, with anInteger significant
-	figures. Includes a sign (if negative) and decimal point. Exponential format may be used.
-	Buffer size should be sufficient to accommodate signed exponential representation with
-	decimal point. aString is overwritten with the printable representation, but the answer
-	is a new String of the correct size.
-
-		char *_gcvt( double value, int count, char* buffer)"
-  
 	<cdecl: char* _gcvt double sdword char*>
+	#deprecated.	"Insecure - see MSDN"
 	^self invalidCall!
 
 _get_osfhandle: anInteger
@@ -156,41 +136,20 @@ _getcwd: aString maxlen: anInteger
 	<cdecl: lpstr _getcwd lpstr sdword>
 	^self invalidCall!
 
-_i64toa: aSmallInteger string: aString radix: anInteger
-	"Answer the String representation of a 64-bit Integer."
-
-	<cdecl: lpstr _i64toa sqword lpstr sdword>
-	^self invalidCall!
-
 _logb: aFloat
 	"Answer the exponent of the argument, aFloat."
 
 	<cdecl: double _logb double>
 	^self invalidCall!
 
-_ltoa: aSmallInteger string: aString radix: anInteger
-	"Answer the String representation of a 32-bit Integer."
-
-	<cdecl: lpstr _ltoa sdword lpstr sdword>
-	^self invalidCall!
-
 _makepath: path drive: drive dir: dir fname: fname ext: ext
-	"Compose a path name from its constituent components.
-
-		void _makepath(char* path, const char* drive, const char* dir, const char* fname, const char* ext);
-	"
-
 	<cdecl: void _makepath char* char* char* char* char*>
+	#deprecated.	"Insecure - see MSDN"
 	^self invalidCall!
 
 _open_osfhandle: osfhandle flags: flags
 	<cdecl: sdword _open_osfhandle handle sdword>
 	^self invalidCall!
-
-_putenv: aString
-	<cdecl: sdword _putenv lpstr>
-	^self invalidCall
-!
 
 _rotl: anUnsignedlInteger shift: anInteger
 	"Answer anUnsignedInteger bit rotated left by anInteger bits."
@@ -225,15 +184,8 @@ _spawnvp: mode cmdname: aString argv: argv
 "!
 
 _splitpath: path drive: drive dir: dir fname: fname ext: ext
-	"Break a path name into its constituent components.
-
-		void _splitpath(const char* path, char* drive, char* dir, char* fname, char* ext);
-
-	Any of the output components (drive, dir, fname, ext), can be nil if that components
-	is not required.
-	"
-
 	<cdecl: void _splitpath char* char* char* char* char*>
+	#deprecated.	"Insecure - see MSDN"
 	^self invalidCall!
 
 _stricmp: string1 string2: string2
@@ -391,15 +343,9 @@ floor: aFloat
 	^self invalidCall!
 
 fopen: nameString mode: modeString
-	"Open the specified file with the specified mode.
-	Note that we treat the stdio FILE* pointer as an opaque handle, as these
-	are automatically nulled on image load.
-
-			FILE *fopen( const char *filename, const char *mode );"
-
 	<cdecl: handle fopen lpstr lpstr>
-	^self invalidCall
-!
+	#deprecated.	"Insecure - see MSDN"
+	^self invalidCall!
 
 fputc: charValue stream: aFILE
 	<cdecl: sdword fputc sdword handle>
@@ -407,15 +353,13 @@ fputc: charValue stream: aFILE
 
 fread: buffer size: size count: count stream: aFILE
 	<overlap cdecl: sdword fread lpvoid intptr intptr handle>
+	#deprecated.	"Insecure - see MSDN"
 	^self invalidCall!
 
 freopen: pathString mode: modeString stream: anExternalHandle
-	"Reassigns a file pointer
-		FILE *freopen(const char* path, int handle, const char *mode );"
-
 	<cdecl: handle freopen char* char* handle>
-	^self invalidCall
-!
+	#deprecated.	"Insecure - see MSDN"
+	^self invalidCall!
 
 frexp: x expptr: expptr
 
@@ -435,16 +379,6 @@ ftell: aFILE
 fwrite: data size: sizeInteger count: countInteger stream: aFILE 
 	<cdecl: sdword fwrite lpvoid intptr intptr handle>
 	^self invalidCall!
-
-getenv: varname
-	"Answer a string containing the named environment variable setting, or nil
-	if no such environment variable exists. The name comparison is case insensitive.
-
-		char *getenv( const char *varname );"
-
-	<cdecl: lpstr getenv lpstr>
-	^self invalidCall
-!
 
 initialize
 	"Private - Initialize and answer the receiver."
@@ -514,14 +448,6 @@ memcmp: buf1 buf2: buf2 count: count
 	<cdecl: sdword memcmp lpvoid lpvoid intptr>
 	^self invalidCall!
 
-memcpy: dest src: src count: count
-	<cdecl: lpvoid memcpy lpvoid lpvoid intptr>
-	^self invalidCall!
-
-memmove: dest src: src count: count
-	<cdecl: void* memmove void* void* intptr>
-	^self invalidCall!
-
 memset: dest c: c count: count
 	"Fill a block of memory.
 				void *memset( void *dest, int c, size_t count );
@@ -581,10 +507,11 @@ srand: anInteger
 	<cdecl: void srand dword>
 	^self invalidCall!
 
-strcat: strDestination strSource: strSource 
+strcat: strDestination strSource: strSource
 	"Be careful: Buffer overruns a distinct possibility if you use this function!!"
 
 	<cdecl: lpstr strcat lpstr lpstr>
+	#deprecated.	"Insecure - see MSDN"
 	^self invalidCall!
 
 strcmp: string1 string2: string2 
@@ -604,6 +531,7 @@ strerror: errno
 	"Answer a <readableString> description of the specified <integer> CRT error number."
 
 	<cdecl: lpstr strerror sdword>
+	#deprecated.	"Insecure - see MSDN"
 	^self invalidCall!
 
 strncmp: string1 string2: string2 count: count
@@ -617,16 +545,9 @@ strncmp: string1 string2: string2 count: count
 	^self invalidCall!
 
 strncpy: strDest strSource: strSource count: count
-	"Copy up to count characters of the <String> strSource to the <String> strDest 
-	and answer strDest. A null appended if there is sufficient space in the destination 
-	buffer. The source and destination must not overlap.
-
-		char *strncpy( char *strDest, const char *strSource, size_t count );
-	"
-
 	<cdecl: lpvoid strncpy lpvoid lpvoid intptr>
-	^self invalidCall
-!
+	#deprecated.	"Insecure - see MSDN"
+	^self invalidCall!
 
 strpbrk: string strCharSet: strCharSet
 	"Answer a pointer to the first occurrence of any of the characters
@@ -684,7 +605,6 @@ wcscspn: aUnicodeString strCharSet: strCharSet
 !CRTLibrary categoriesFor: #_controlfp:mask:!CRT functions-floating point support!public! !
 !CRTLibrary categoriesFor: #_dup:!CRT functions-low level I/O!public! !
 !CRTLibrary categoriesFor: #_dup2:handle2:!CRT functions-low level I/O!public! !
-!CRTLibrary categoriesFor: #_ecvt:count:dec:sign:!CRT functions-floating point support!public! !
 !CRTLibrary categoriesFor: #_eof:!CRT functions-file handling!public! !
 !CRTLibrary categoriesFor: #_errno!CRT functions-process and environment control!public! !
 !CRTLibrary categoriesFor: #_fdopen:mode:!CRT functions-stream I/O!public! !
@@ -695,12 +615,9 @@ wcscspn: aUnicodeString strCharSet: strCharSet
 !CRTLibrary categoriesFor: #_gcvt:count:buffer:!CRT functions-floating point support!public! !
 !CRTLibrary categoriesFor: #_get_osfhandle:!CRT functions-file handling!public! !
 !CRTLibrary categoriesFor: #_getcwd:maxlen:!CRT functions-directory control!public! !
-!CRTLibrary categoriesFor: #_i64toa:string:radix:!CRT functions-data conversion!public! !
 !CRTLibrary categoriesFor: #_logb:!CRT functions-floating point support!public! !
-!CRTLibrary categoriesFor: #_ltoa:string:radix:!CRT functions-data conversion!public! !
 !CRTLibrary categoriesFor: #_makepath:drive:dir:fname:ext:!CRT functions-file handling!public! !
 !CRTLibrary categoriesFor: #_open_osfhandle:flags:!CRT functions-file handling!public! !
-!CRTLibrary categoriesFor: #_putenv:!CRT functions-process and environment control!public! !
 !CRTLibrary categoriesFor: #_rotl:shift:!CRT functions-bit manipulation!public! !
 !CRTLibrary categoriesFor: #_rotr:shift:!CRT functions-bit manipulation!public! !
 !CRTLibrary categoriesFor: #_setmode:mode:!CRT functions-file handling!public! !
@@ -736,7 +653,6 @@ wcscspn: aUnicodeString strCharSet: strCharSet
 !CRTLibrary categoriesFor: #fseek:offset:origin:!CRT functions-stream I/O!public! !
 !CRTLibrary categoriesFor: #ftell:!CRT functions-stream I/O!public! !
 !CRTLibrary categoriesFor: #fwrite:size:count:stream:!CRT functions-stream I/O!public! !
-!CRTLibrary categoriesFor: #getenv:!CRT functions-process and environment control!public! !
 !CRTLibrary categoriesFor: #initialize!initializing!private! !
 !CRTLibrary categoriesFor: #iswcntrl:!CRT functions-character classification!public! !
 !CRTLibrary categoriesFor: #iswprint:!CRT functions-character classification!public! !
@@ -746,8 +662,6 @@ wcscspn: aUnicodeString strCharSet: strCharSet
 !CRTLibrary categoriesFor: #log:!CRT functions-floating point support!public! !
 !CRTLibrary categoriesFor: #log10:!CRT functions-floating point support!public! !
 !CRTLibrary categoriesFor: #memcmp:buf2:count:!CRT functions-buffer manipulation!public! !
-!CRTLibrary categoriesFor: #memcpy:src:count:!CRT functions-buffer manipulation!public! !
-!CRTLibrary categoriesFor: #memmove:src:count:!CRT functions-buffer manipulation!public! !
 !CRTLibrary categoriesFor: #memset:c:count:!CRT functions-buffer manipulation!public! !
 !CRTLibrary categoriesFor: #modf:intptr:!CRT functions-floating point support!public! !
 !CRTLibrary categoriesFor: #pow:y:!CRT functions-floating point support!public! !
