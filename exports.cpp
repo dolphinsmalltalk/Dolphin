@@ -99,11 +99,8 @@ extern "C" char** __cdecl argv()
 	return __argv;
 }
 
-// Temporary until Dolphin code updated to use _snprintf_s
-void* reify_snprintf = &_snprintf;
-
 // _snprintf_s is inlined. We force a non-inline copy to export from the .def file
-int (__cdecl * reify_snprintf_s)(char*, size_t, size_t, const char*,...) = &_snprintf_s;
+int (__cdecl * reifySnprintf)(char*, size_t, size_t, const char*,...) = &_snprintf_s;
 
 // The old stdio _iob stuff is no longer supported in a compatible way. Rather than introduce
 // an image side dependency on the undocumented _acrt_iob_func export, we add some simple

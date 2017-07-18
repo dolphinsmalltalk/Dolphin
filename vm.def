@@ -21,7 +21,6 @@ argv
 StdIn
 StdOut
 StdErr
-_snprintf
 _snprintf_s
 IsUserBreakRequested=?IsUserBreakRequested@Interpreter@@CG_NXZ
 
