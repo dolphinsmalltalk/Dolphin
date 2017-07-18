@@ -27,6 +27,13 @@ package methodNames
 	add: #Behavior -> #makeIndirect;
 	add: #Behavior -> #makeNullTerminated;
 	add: #Class -> #addClassVarName:;
+	add: #CRTLibrary -> #_ecvt:count:dec:sign:;
+	add: #CRTLibrary -> #_i64toa:string:radix:;
+	add: #CRTLibrary -> #_ltoa:string:radix:;
+	add: #CRTLibrary -> #_putenv:;
+	add: #CRTLibrary -> #getenv:;
+	add: #CRTLibrary -> #memcpy:src:count:;
+	add: #CRTLibrary -> #memmove:src:count:;
 	add: #ExternalStructure -> #do:;
 	add: #ExternalStructure -> #do:separatedBy:;
 	add: #Integer -> #digitSize;
@@ -142,6 +149,50 @@ addClassVarName: aString
 	#deprecated.	"Use addClassVarNamed:"
 	^self addClassVarNamed: aString! !
 !Class categoriesFor: #addClassVarName:!class variables!public! !
+
+!CRTLibrary methodsFor!
+
+_ecvt: aFloat count: anInteger dec: decInteger sign: signInteger
+	<cdecl: lpstr _ecvt double sdword sdword* sdword*>
+	#deprecated.	"Insecure - see MSDN"
+	^self invalidCall!
+
+_i64toa: aSmallInteger string: aString radix: anInteger
+	<cdecl: lpstr _i64toa sqword lpstr sdword>
+	#deprecated.	"Insecure - see MSDN"
+	^self invalidCall!
+
+_ltoa: aSmallInteger string: aString radix: anInteger
+	<cdecl: lpstr _ltoa sdword lpstr sdword>
+	#deprecated.	"Insecure - see MSDN"
+	^self invalidCall!
+
+_putenv: aString
+	<cdecl: sdword _putenv lpstr>
+	#deprecated.	"Insecure - see MSDN"
+	^self invalidCall!
+
+getenv: varname
+	<cdecl: lpstr getenv lpstr>
+	#deprecated.	"Insecure - see MSDN"
+	^self invalidCall!
+
+memcpy: dest src: src count: count
+	<cdecl: lpvoid memcpy lpvoid lpvoid intptr>
+	#deprecated.	"Insecure - see MSDN"
+	^self invalidCall!
+
+memmove: dest src: src count: count
+	<cdecl: void* memmove void* void* intptr>
+	#deprecated.	"Insecure - see MSDN"
+	^self invalidCall! !
+!CRTLibrary categoriesFor: #_ecvt:count:dec:sign:!CRT functions-floating point support!public! !
+!CRTLibrary categoriesFor: #_i64toa:string:radix:!CRT functions-data conversion!public! !
+!CRTLibrary categoriesFor: #_ltoa:string:radix:!CRT functions-data conversion!public! !
+!CRTLibrary categoriesFor: #_putenv:!CRT functions-process and environment control!public! !
+!CRTLibrary categoriesFor: #getenv:!CRT functions-process and environment control!public! !
+!CRTLibrary categoriesFor: #memcpy:src:count:!CRT functions-buffer manipulation!public! !
+!CRTLibrary categoriesFor: #memmove:src:count:!CRT functions-buffer manipulation!public! !
 
 !ExternalCallback class methodsFor!
 
