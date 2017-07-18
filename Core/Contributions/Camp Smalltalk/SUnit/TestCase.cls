@@ -17,18 +17,17 @@ addDependentToHierachy: anObject
 assert: aBoolean
 	aBoolean ifFalse: [self signalFailure: 'Assertion failed']!
 
-assert: aBoolean description: aString
-	aBoolean ifFalse: [self fail: aString]!
+assert: aBoolean description: aStringOrValuable
+	aBoolean ifFalse: [self fail: (self getDescription: aStringOrValuable)]!
 
-assert: aBoolean description: aString resumable: resumableBoolean 
-
-	aBoolean ifFalse: [
-		| exception |
-		self logFailure: aString.
-		exception := resumableBoolean
-			ifTrue: [TestResult resumableFailure]
-			ifFalse: [TestResult failure].
-		exception sunitSignalWith: aString]!
+assert: aBoolean description: aStringOrValuable resumable: resumableBoolean
+	aBoolean
+		ifFalse: 
+			[| exception description |
+			description := self getDescription: aStringOrValuable.
+			self logFailure: description.
+			exception := resumableBoolean ifTrue: [TestResult resumableFailure] ifFalse: [TestResult failure].
+			exception sunitSignalWith: description]!
 
 assert: actualObject equals: expectedObject
 	expectedObject = actualObject
@@ -60,13 +59,13 @@ debugAsFailure
 deny: aBoolean
 	self assert: aBoolean not!
 
-deny: aBoolean description: aString
-	self assert: aBoolean not description: aString!
+deny: aBoolean description: aStringOrValuable
+	self assert: aBoolean not description: aStringOrValuable!
 
-deny: aBoolean description: aString resumable: resumableBoolean
-	self 
+deny: aBoolean description: aStringOrValuable resumable: resumableBoolean
+	self
 		assert: aBoolean not
-		description: aString
+		description: aStringOrValuable
 		resumable: resumableBoolean!
 
 executeShould: aBlock inScopeOf: anExceptionalEvent 
@@ -88,6 +87,9 @@ failureLog
 	
 	^self subclassResponsibility
 !
+
+getDescription: aStringOrValuable
+	^aStringOrValuable isString ifTrue: [aStringOrValuable] ifFalse: [aStringOrValuable value]!
 
 isLogging
 	^false!
@@ -162,27 +164,28 @@ setUp!
 should: aBlock
 	self assert: aBlock value!
 
-should: aBlock description: aString
-	self assert: aBlock value description: aString!
+should: aBlock description: aStringOrValuable
+	self assert: aBlock value description: aStringOrValuable!
 
 should: aBlock raise: anExceptionalEvent 
 	^self assert: (self executeShould: aBlock inScopeOf: anExceptionalEvent)!
 
-should: aBlock raise: anExceptionalEvent description: aString 
+should: aBlock raise: anExceptionalEvent description: aStringOrValuable
 	^self assert: (self executeShould: aBlock inScopeOf: anExceptionalEvent)
-		description: aString!
+		description: aStringOrValuable!
 
 shouldnt: aBlock
 	self deny: aBlock value!
 
-shouldnt: aBlock description: aString
-	self deny: aBlock value description: aString!
+shouldnt: aBlock description: aStringOrValuable
+	self deny: aBlock value description: aStringOrValuable!
 
 shouldnt: aBlock raise: anExceptionalEvent 
 	^self assert: (self executeShould: aBlock inScopeOf: anExceptionalEvent) not!
 
-shouldnt: aBlock raise: anExceptionalEvent description: aString 
-	^self assert: (self executeShould: aBlock inScopeOf: anExceptionalEvent) not 		description: aString!
+shouldnt: aBlock raise: anExceptionalEvent description: aStringOrValuable
+	^self assert: (self executeShould: aBlock inScopeOf: anExceptionalEvent) not
+		description: aStringOrValuable!
 
 signalFailure: aString
 	TestResult failure sunitSignalWith: aString!
@@ -202,6 +205,7 @@ tearDown! !
 !TestCase categoriesFor: #executeShould:inScopeOf:!helpers!private! !
 !TestCase categoriesFor: #fail:!accessing!public! !
 !TestCase categoriesFor: #failureLog!Accessing!public! !
+!TestCase categoriesFor: #getDescription:!helpers!private! !
 !TestCase categoriesFor: #isLogging!Accessing!public! !
 !TestCase categoriesFor: #logFailure:!Accessing!public! !
 !TestCase categoriesFor: #openDebuggerOnFailingTestMethod!public!Running! !
