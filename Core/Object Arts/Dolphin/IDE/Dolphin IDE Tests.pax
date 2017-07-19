@@ -51,6 +51,7 @@ package setPrerequisites: (IdentitySet new
 	add: '..\..\..\Contributions\Refactory\Refactoring Browser\Change Objects\RBChangeObjects';
 	add: '..\..\..\Contributions\Refactory\Refactoring Browser\Environments\RBEnvironments';
 	add: '..\..\..\Contributions\Camp Smalltalk\SUnit\SUnit';
+	add: '..\ActiveX\Components\XML DOM\XML DOM';
 	yourself).
 
 package!

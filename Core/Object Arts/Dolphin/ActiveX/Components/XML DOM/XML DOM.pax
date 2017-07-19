@@ -116,11 +116,9 @@ package classNames
 	add: #DOMNodeList;
 	add: #DOMNotationsMap;
 	add: #DOMParseError;
-	add: #IDSOControl;
 	add: #IMXAttributes;
 	add: #IMXNamespaceManager;
 	add: #IMXNamespacePrefixes;
-	add: #IMXReaderControl;
 	add: #IMXSchemaDeclHandler;
 	add: #IMXWriter;
 	add: #IMXXMLFilter;
@@ -132,7 +130,6 @@ package classNames
 	add: #ISAXErrorHandler;
 	add: #ISAXLexicalHandler;
 	add: #ISAXLocator;
-	add: #ISAXXMLFilter;
 	add: #ISAXXMLReader;
 	add: #ISchema;
 	add: #ISchemaAny;
@@ -159,13 +156,7 @@ package classNames
 	add: #IVBSAXErrorHandler;
 	add: #IVBSAXLexicalHandler;
 	add: #IVBSAXLocator;
-	add: #IVBSAXXMLFilter;
 	add: #IVBSAXXMLReader;
-	add: #IXMLAttribute;
-	add: #IXMLDigitalSignature;
-	add: #IXMLDigitalSignatureEx;
-	add: #IXMLDocument;
-	add: #IXMLDocument2;
 	add: #IXMLDOMAttribute;
 	add: #IXMLDOMCDATASection;
 	add: #IXMLDOMCharacterData;
@@ -191,17 +182,9 @@ package classNames
 	add: #IXMLDOMSchemaCollection2;
 	add: #IXMLDOMSelection;
 	add: #IXMLDOMText;
-	add: #IXMLDSigKey;
-	add: #IXMLDSigKeyEx;
-	add: #IXMLElement;
-	add: #IXMLElement2;
-	add: #IXMLElementCollection;
-	add: #IXMLError;
 	add: #IXMLHttpRequest;
 	add: #IXSLProcessor;
 	add: #IXSLTemplate;
-	add: #IXTLRuntime;
-	add: #Xml_error;
 	add: #XmlDomVisitor;
 	yourself.
 
@@ -221,7 +204,6 @@ package setPrerequisites: (IdentitySet new
 	add: '..\..\Automation\ActiveX Automation';
 	add: '..\..\..\Base\Dolphin';
 	add: '..\..\COM\OLE COM';
-	add: '..\..\Structured Storage\OLE Structured Storage';
 	yourself).
 
 package!
@@ -259,11 +241,6 @@ DOMNamedNodeMap variableSubclass: #DOMNotationsMap
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Error subclass: #DOMParseError
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-ExternalStructure subclass: #Xml_error
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
@@ -318,27 +295,12 @@ IUnknown subclass: #ISAXXMLReader
 	classVariableNames: ''
 	poolDictionaries: 'MSXMLConstants'
 	classInstanceVariableNames: ''!
-IUnknown subclass: #IXMLError
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: 'MSXMLConstants'
-	classInstanceVariableNames: ''!
-IDispatch subclass: #IDSOControl
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: 'MSXMLConstants'
-	classInstanceVariableNames: ''!
 IDispatch subclass: #IMXAttributes
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'MSXMLConstants'
 	classInstanceVariableNames: ''!
 IDispatch subclass: #IMXNamespacePrefixes
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: 'MSXMLConstants'
-	classInstanceVariableNames: ''!
-IDispatch subclass: #IMXReaderControl
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'MSXMLConstants'
@@ -418,27 +380,7 @@ IDispatch subclass: #IVBSAXLocator
 	classVariableNames: ''
 	poolDictionaries: 'MSXMLConstants'
 	classInstanceVariableNames: ''!
-IDispatch subclass: #IVBSAXXMLFilter
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: 'MSXMLConstants'
-	classInstanceVariableNames: ''!
 IDispatch subclass: #IVBSAXXMLReader
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: 'MSXMLConstants'
-	classInstanceVariableNames: ''!
-IDispatch subclass: #IXMLAttribute
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: 'MSXMLConstants'
-	classInstanceVariableNames: ''!
-IDispatch subclass: #IXMLDigitalSignature
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: 'MSXMLConstants'
-	classInstanceVariableNames: ''!
-IDispatch subclass: #IXMLDocument
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'MSXMLConstants'
@@ -474,21 +416,6 @@ IDispatch subclass: #IXMLDOMParseErrorCollection
 	poolDictionaries: 'MSXMLConstants'
 	classInstanceVariableNames: ''!
 IDispatch subclass: #IXMLDOMSchemaCollection
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: 'MSXMLConstants'
-	classInstanceVariableNames: ''!
-IDispatch subclass: #IXMLDSigKey
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: 'MSXMLConstants'
-	classInstanceVariableNames: ''!
-IDispatch subclass: #IXMLElement
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: 'MSXMLConstants'
-	classInstanceVariableNames: ''!
-IDispatch subclass: #IXMLElementCollection
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'MSXMLConstants'
@@ -563,16 +490,6 @@ ISchemaType subclass: #ISchemaComplexType
 	classVariableNames: ''
 	poolDictionaries: 'MSXMLConstants'
 	classInstanceVariableNames: ''!
-IXMLDigitalSignature subclass: #IXMLDigitalSignatureEx
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: 'MSXMLConstants'
-	classInstanceVariableNames: ''!
-IXMLDocument subclass: #IXMLDocument2
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: 'MSXMLConstants'
-	classInstanceVariableNames: ''!
 IXMLDOMNode subclass: #IXMLDOMAttribute
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -623,11 +540,6 @@ IXMLDOMNode subclass: #IXMLDOMProcessingInstruction
 	classVariableNames: ''
 	poolDictionaries: 'MSXMLConstants'
 	classInstanceVariableNames: ''!
-IXMLDOMNode subclass: #IXTLRuntime
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: 'MSXMLConstants'
-	classInstanceVariableNames: ''!
 IXMLDOMCharacterData subclass: #IXMLDOMComment
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -668,27 +580,12 @@ IXMLDOMSchemaCollection subclass: #IXMLDOMSchemaCollection2
 	classVariableNames: ''
 	poolDictionaries: 'MSXMLConstants'
 	classInstanceVariableNames: ''!
-IXMLDSigKey subclass: #IXMLDSigKeyEx
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: 'MSXMLConstants'
-	classInstanceVariableNames: ''!
-IXMLElement subclass: #IXMLElement2
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: 'MSXMLConstants'
-	classInstanceVariableNames: ''!
 IXMLHttpRequest subclass: #IServerXMLHTTPRequest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'MSXMLConstants'
 	classInstanceVariableNames: ''!
 IServerXMLHTTPRequest subclass: #IServerXMLHTTPRequest2
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: 'MSXMLConstants'
-	classInstanceVariableNames: ''!
-ISAXXMLReader subclass: #ISAXXMLFilter
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'MSXMLConstants'

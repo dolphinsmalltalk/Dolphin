@@ -789,7 +789,7 @@ validateOnParse: isValidating
 clsid
 	"Answer the <CLSID> of the DOMDocument coclass."
 
-	^CLSID fromString: '{2933BF90-7B36-11D2-B20E-00C04F983E60}'
+	^CLSID fromString: '{88d96a05-f192-11d4-a65f-0040963251e5}'
 !
 
 defineFunctions
