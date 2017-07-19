@@ -293,9 +293,18 @@ getInfoTipBlock: anObject
 
 	getInfoTipBlock := anObject!
 
+hasGridLines
+	"Answer whether the receiver is displaying gridlines."
+
+	^false!
+
 hasGridLines: aBoolean
-	"Exists in ListView but not elsewhere. See
-	PublishedAspectInspectorTest>>testCommandMenuItemEditor"!
+	"If supported, turn on or off the display of grid lines in the receiver depending on the
+	value of the argument, aBoolean"
+
+	"Only supported by some subclasses"
+
+	!
 
 hasHotTracking
 	"Answer whether the receiver's selection will track the mouse as it hovers over items in thel list."
@@ -742,7 +751,8 @@ wmDestroy: message wParam: wParam lParam: lParam
 !IconicListAbstract categoriesFor: #getImageBlock:!adapters!public! !
 !IconicListAbstract categoriesFor: #getInfoTipBlock!accessing!public! !
 !IconicListAbstract categoriesFor: #getInfoTipBlock:!accessing!public! !
-!IconicListAbstract categoriesFor: #hasGridLines:!public! !
+!IconicListAbstract categoriesFor: #hasGridLines!accessing-styles!public! !
+!IconicListAbstract categoriesFor: #hasGridLines:!accessing-styles!public! !
 !IconicListAbstract categoriesFor: #hasHotTracking!accessing-styles!public! !
 !IconicListAbstract categoriesFor: #hasHotTracking:!accessing-styles!public! !
 !IconicListAbstract categoriesFor: #hasIcons!public!testing! !

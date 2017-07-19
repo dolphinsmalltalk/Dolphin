@@ -241,9 +241,13 @@ testAspectChanged
 	self repaint!
 
 testCommandMenuItemEditor
-	"#show reproduces the error and is less complicated to debug/test than #showModal"
+	"Simple kick-the-tyres test that inspector in menu item dialog opens without error."
 
-	(CommandMenuItemDialog createOn: CommandMenuItem new) show view close!
+	| dialog cards |
+	dialog := (CommandMenuItemDialog createOn: CommandMenuItem new) show.
+	cards := dialog view viewNamed: 'cards'.
+	cards tabs selectionByIndex: 3.
+	dialog view exit!
 
 testContextMenuEdit
 	| inspectee |
@@ -707,7 +711,7 @@ testSetToNil
 !PublishedAspectInspectorTest categoriesFor: #tearDown!public!running! !
 !PublishedAspectInspectorTest categoriesFor: #testAddRemoveCollectionElement!public!unit tests! !
 !PublishedAspectInspectorTest categoriesFor: #testAspectChanged!public!unit tests! !
-!PublishedAspectInspectorTest categoriesFor: #testCommandMenuItemEditor!public! !
+!PublishedAspectInspectorTest categoriesFor: #testCommandMenuItemEditor!public!unit tests! !
 !PublishedAspectInspectorTest categoriesFor: #testContextMenuEdit!public!unit tests! !
 !PublishedAspectInspectorTest categoriesFor: #testCopyAndPasteMenu!public!unit tests! !
 !PublishedAspectInspectorTest categoriesFor: #testImmutableAspect!public!unit tests! !
