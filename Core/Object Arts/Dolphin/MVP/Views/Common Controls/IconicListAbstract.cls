@@ -293,6 +293,10 @@ getInfoTipBlock: anObject
 
 	getInfoTipBlock := anObject!
 
+hasGridLines: aBoolean
+	"Exists in ListView but not elsewhere. See
+	PublishedAspectInspectorTest>>testCommandMenuItemEditor"!
+
 hasHotTracking
 	"Answer whether the receiver's selection will track the mouse as it hovers over items in thel list."
 
@@ -738,6 +742,7 @@ wmDestroy: message wParam: wParam lParam: lParam
 !IconicListAbstract categoriesFor: #getImageBlock:!adapters!public! !
 !IconicListAbstract categoriesFor: #getInfoTipBlock!accessing!public! !
 !IconicListAbstract categoriesFor: #getInfoTipBlock:!accessing!public! !
+!IconicListAbstract categoriesFor: #hasGridLines:!public! !
 !IconicListAbstract categoriesFor: #hasHotTracking!accessing-styles!public! !
 !IconicListAbstract categoriesFor: #hasHotTracking:!accessing-styles!public! !
 !IconicListAbstract categoriesFor: #hasIcons!public!testing! !
