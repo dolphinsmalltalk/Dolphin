@@ -240,6 +240,11 @@ testAspectChanged
 	self assert: treePresenter view itemCount == 1.
 	self repaint!
 
+testCommandMenuItemEditor
+	"#show reproduces the error and is less complicated to debug/test than #showModal"
+
+	(CommandMenuItemDialog createOn: CommandMenuItem new) show view close!
+
 testContextMenuEdit
 	| inspectee |
 	inspectee := View new.
@@ -702,6 +707,7 @@ testSetToNil
 !PublishedAspectInspectorTest categoriesFor: #tearDown!public!running! !
 !PublishedAspectInspectorTest categoriesFor: #testAddRemoveCollectionElement!public!unit tests! !
 !PublishedAspectInspectorTest categoriesFor: #testAspectChanged!public!unit tests! !
+!PublishedAspectInspectorTest categoriesFor: #testCommandMenuItemEditor!public! !
 !PublishedAspectInspectorTest categoriesFor: #testContextMenuEdit!public!unit tests! !
 !PublishedAspectInspectorTest categoriesFor: #testCopyAndPasteMenu!public!unit tests! !
 !PublishedAspectInspectorTest categoriesFor: #testImmutableAspect!public!unit tests! !
