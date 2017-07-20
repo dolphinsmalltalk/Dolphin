@@ -737,6 +737,13 @@ getModuleHandle: aString
 
 !
 
+getMyProcessCreationTime
+"
+	KernelLibrary default getMyProcessCreationTime
+"
+	^(self getProcessTimesFor: self getCurrentProcess) first
+!
+
 getProcAddress: aHandle lpProcName: aString
 	"Answer the address of an exported function with name, aString, in the
 	module with handle, aHandle. If the function fails, NULL is returned,
@@ -767,6 +774,44 @@ getProcessHeap
 	^self invalidCall
 
   
+!
+
+getProcessTimes: hProcess lpCreationTime: lpCreationTime lpExitTime: lpExitTime lpKernelTime: lpKernelTime lpUserTime: lpUserTime
+	"Retrieves timing information for the specified process.
+
+		BOOL WINAPI GetProcessTimes(
+			_In_  HANDLE     hProcess,
+			_Out_ LPFILETIME lpCreationTime,
+			_Out_ LPFILETIME lpExitTime,
+			_Out_ LPFILETIME lpKernelTime,
+			_Out_ LPFILETIME lpUserTime
+);"
+
+	<stdcall: bool GetProcessTimes handle FILETIME* FILETIME* FILETIME* FILETIME*>
+	^self invalidCall
+ !
+
+getProcessTimesFor: aProcessHandle
+"
+	KernelLibrary default getProcessTimesFor: KernelLibrary default getCurrentProcess.
+"
+	| flag creationTime exitTime kernelTime userTime |
+	creationTime := FILETIME new.
+	exitTime := FILETIME new.
+	kernelTime := FILETIME new.
+	userTime := FILETIME new.
+	flag := self 
+		getProcessTimes: aProcessHandle
+		lpCreationTime: creationTime 
+		lpExitTime: exitTime 
+		lpKernelTime: kernelTime 
+		lpUserTime: userTime.
+	flag ifFalse: [self error: 'error: ' , self getLastError printString].
+	^Array
+		with: creationTime
+		with: exitTime
+		with: kernelTime
+		with: userTime
 !
 
 getShortPathName: lpszLongPath lpszShortPath: lpszShortPath cchBuffer: cchBuffer
@@ -1698,9 +1743,12 @@ zeroMemory: pvDest length: cBytes
 !KernelLibrary categoriesFor: #getLocalTime:!public!win32 functions-date and time! !
 !KernelLibrary categoriesFor: #getModuleFileName:lpFilename:nSize:!public!win32 functions-dynamic link library! !
 !KernelLibrary categoriesFor: #getModuleHandle:!public!win32 functions-dynamic link library! !
+!KernelLibrary categoriesFor: #getMyProcessCreationTime!helpers!public! !
 !KernelLibrary categoriesFor: #getProcAddress:lpProcName:!public!win32 functions-dynamic link library! !
 !KernelLibrary categoriesFor: #getProcAddressDWORD:lpProcName:!private!win32 functions-dynamic link library! !
 !KernelLibrary categoriesFor: #getProcessHeap!public!win32 functions-memory management! !
+!KernelLibrary categoriesFor: #getProcessTimes:lpCreationTime:lpExitTime:lpKernelTime:lpUserTime:!public!win32 functions-process and thread! !
+!KernelLibrary categoriesFor: #getProcessTimesFor:!helpers!public! !
 !KernelLibrary categoriesFor: #getShortPathName:lpszShortPath:cchBuffer:!public!win32 functions-file! !
 !KernelLibrary categoriesFor: #getStdHandle:!public!win32 functions-console! !
 !KernelLibrary categoriesFor: #getSystemDefaultLCID!public!win32 functions-natural language support! !
