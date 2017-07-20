@@ -261,6 +261,22 @@ indexOfSpecialSelector: aSymbol ifAbsent: exceptionHandler
 		ifTrue: [exceptionHandler value]
 		ifFalse: [index - specialSelectorStart + 1]!
 
+inputQueueMask
+	"Private - Answer the 16-bit <integer> mask to be used when querying for Windows message queue
+	input on the host platform. This may vary depending on the version of Windows on which
+	Dolphin is running."
+
+	"Implementation Note: See the WinUser.h header file in the Windows SDK"
+
+	| qs_Input |
+	qs_Input := self isWindows8OrGreater
+				ifTrue: [##(QS_MOUSE | QS_KEY | QS_RAWINPUT | QS_TOUCH | QS_POINTER)]
+				ifFalse: 
+					[self isWindowsXPOrGreater
+						ifTrue: [##(QS_MOUSE | QS_KEY | QS_RAWINPUT)]
+						ifFalse: [##(QS_MOUSE | QS_KEY)]].
+	^qs_Input | ##(QS_POSTMESSAGE | QS_TIMER | QS_PAINT | QS_HOTKEY | QS_SENDMESSAGE)!
+
 isSlowMachine
 	"Answer true if this machine is judged to be slow."
 
@@ -542,6 +558,7 @@ versionFormatString
 !VMLibrary categoriesFor: #hashBytes:count:!hash algorithms!helpers!private! !
 !VMLibrary categoriesFor: #highBit:!arithmetic!public! !
 !VMLibrary categoriesFor: #indexOfSpecialSelector:ifAbsent:!accessing-registry!private! !
+!VMLibrary categoriesFor: #inputQueueMask!constants!private! !
 !VMLibrary categoriesFor: #isSlowMachine!environment!public! !
 !VMLibrary categoriesFor: #isUserBreakRequested!accessing!helpers!private! !
 !VMLibrary categoriesFor: #isWindows10OrGreater!public!win32 functions-version helpers! !

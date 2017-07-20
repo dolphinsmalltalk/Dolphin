@@ -1,8 +1,8 @@
 "Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #InputState
-	instanceVariableNames: 'inputSemaphore idler idleTimer main windows deferredActions lastWindow wakeupEvent msgWindow'
-	classVariableNames: 'EnumHandlesDescriptor QsAllinput SamplingInterval UserInterruptSignal'
+	instanceVariableNames: 'inputSemaphore idler idleTimer main windows deferredActions lastWindow wakeupEvent msgWindow queueStatusMask'
+	classVariableNames: 'EnumHandlesDescriptor SamplingInterval UserInterruptSignal'
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: 'maxIdleSleep'!
 InputState guid: (GUID fromString: '{87b4c494-026e-11d3-9fd7-00a0cc3e4a32}')!
@@ -195,7 +195,7 @@ idle
 		msgWaitForMultipleObjectsEx: 1
 		pHandles: wakeupEvent
 		dwMilliseconds: self class maxIdleSleep
-		dwWakeMask: QsAllinput
+		dwWakeMask: queueStatusMask
 		dwFlags: Win32Constants.MWMO_ALERTABLE.
 	"Rather than use the return value from MsgWaitForMultipleObjectsEx() we call
 	GetQueueStatus(). This has the effect of clearing the 'new message' flag so that the next
@@ -246,8 +246,8 @@ initializeFrom: anInputState
 		createAndRegisterWakeupEvent;
 		registerAsDispatcher;
 		createAndRegisterInputSemaphore;
-		setSamplingInterval: 60;
-		setQsAllinput!
+		setSamplingInterval: 60.
+	queueStatusMask := VMLibrary default inputQueueMask!
 
 inputSemaphore
 	"Private - Answer the queue empty/not-empty semaphore"
@@ -269,7 +269,7 @@ isInputAvailable
 	arrived since the last call to GetMessage, PeekMessage, or GetQueueStatus, so we have to
 	test against the high word."
 
-	^(UserLibrary default getQueueStatus: QsAllinput) anyMask: 16rFFFF0000!
+	^(UserLibrary default getQueueStatus: queueStatusMask) anyMask: queueStatusMask << 16!
 
 isInputReady: aMSG 
 	"Private - Answer whether there is currently a message waiting in the host system queue (if
@@ -513,11 +513,6 @@ removeWindowAt: aHandle
 	lastWindow := nil.
 	Processor enableAsyncEvents: bEnabled!
 
-setQsAllinput
-	"https://github.com/dolphinsmalltalk/DolphinVM/issues/135"
-
-	QsAllinput := VMLibrary default isWindows8OrGreater ifTrue: [16r1CFF] ifFalse: [16r00FF]!
-
 setSamplingInterval: anInteger 
 	"Private - Set sampling interval. This is the approximate interval, in milliseconds, at
 	which the system will sample the input queue and check for the Break key combination when
@@ -739,7 +734,6 @@ wndProc: hWnd message: message wParam: wParam lParam: lParam cookie: cookie
 !InputState categoriesFor: #queueDeferredAction:!message dispatching!public! !
 !InputState categoriesFor: #registerAsDispatcher!initializing!private! !
 !InputState categoriesFor: #removeWindowAt:!accessing!private! !
-!InputState categoriesFor: #setQsAllinput!initializing!private! !
 !InputState categoriesFor: #setSamplingInterval:!initializing!private! !
 !InputState categoriesFor: #startIdleTimer:!idling!private! !
 !InputState categoriesFor: #stopIdleTimer:!idling!private! !
@@ -764,9 +758,7 @@ icon
 initialize
 	SamplingInterval := 16384.
 	EnumHandlesDescriptor := ExternalDescriptor fromString: 'stdcall: dword handle dword'.
-	maxIdleSleep := 15000.
-	QsAllinput := 16r1CFF.
-!
+	maxIdleSleep := 15000!
 
 maxIdleSleep
 	^maxIdleSleep!
