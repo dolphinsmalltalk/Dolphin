@@ -40,7 +40,7 @@ of SciLexer.dll from it into the Dolphin directory."
 	scintilla := zip invoke: ''ParseName'' with: ''wscite\SciLexer.dll''.
 	dest := shell invoke: ''Namespace'' with: locator basePath.
 	exists
-		ifTrue: [File rename: scilexer to: (File change: scilexer extension: (currentVer copyWithout: $.))].
+		ifTrue: [File rename: scilexer to: (File path: scilexer extension: (currentVer copyWithout: $.))].
 	dest
 		invoke: ''CopyHere''
 		with: scintilla
