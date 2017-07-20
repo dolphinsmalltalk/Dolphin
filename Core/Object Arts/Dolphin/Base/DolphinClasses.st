@@ -166,7 +166,7 @@ Object variableByteSubclass: #GUID
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Object subclass: #InputState
-	instanceVariableNames: 'inputSemaphore idler idleTimer main windows deferredActions lastWindow wakeupEvent msgWindow'
+	instanceVariableNames: 'inputSemaphore idler idleTimer main windows deferredActions lastWindow wakeupEvent msgWindow queueStatusMask'
 	classVariableNames: 'EnumHandlesDescriptor SamplingInterval UserInterruptSignal'
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: 'maxIdleSleep'!

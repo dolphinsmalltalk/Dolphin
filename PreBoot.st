@@ -191,3 +191,10 @@ _makepath_s: path bufferSize: sizeInBytes drive: drive dir: dir fname: fname ext
 	<cdecl: sdword _makepath_s char* intptr char* char* char* char*>
 	^self invalidCall! !
 
+Object subclass: #InputState
+	instanceVariableNames: 'inputSemaphore idler idleTimer main windows deferredActions lastWindow wakeupEvent msgWindow queueStatusMask'
+	classVariableNames: 'EnumHandlesDescriptor SamplingInterval UserInterruptSignal'
+	poolDictionaries: 'Win32Constants'
+	classInstanceVariableNames: 'maxIdleSleep'!
+
+SessionManager inputState instVarAt: 10 put: 16rFF!
