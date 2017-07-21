@@ -2,7 +2,7 @@
 
 PermanentLibrary subclass: #VMLibrary
 	instanceVariableNames: 'wndProc dlgProc genericCallback vtable specialSelectorStart'
-	classVariableNames: 'Registry RegistryKeys'
+	classVariableNames: 'Registry RegistryKeys WinVerOrGreaterMask'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 VMLibrary guid: (GUID fromString: '{87b4c58f-026e-11d3-9fd7-00a0cc3e4a32}')!
@@ -295,52 +295,106 @@ isUserBreakRequested
 	^self invalidCall!
 
 isWindows10OrGreater
-	<stdcall: bool IsWindows10OrGreater>
-	^self invalidCall!
+	^self
+		isWindowsVersionOrGreater: 10
+		wMinorVersion: 0
+		wServicePackMajor: 0!
 
 isWindows7OrGreater
-	<stdcall: bool IsWindows7OrGreater>
-	^self invalidCall!
+	^self
+		isWindowsVersionOrGreater: 6
+		wMinorVersion: 1
+		wServicePackMajor: 0!
 
 isWindows7SP1OrGreater
-	<stdcall: bool IsWindows7SP1OrGreater>
-	^self invalidCall!
+	^self
+		isWindowsVersionOrGreater: 6
+		wMinorVersion: 1
+		wServicePackMajor: 1!
 
 isWindows8OrGreater
-	<stdcall: bool IsWindows8OrGreater>
-	^self invalidCall!
+	^self
+		isWindowsVersionOrGreater: 6
+		wMinorVersion: 2
+		wServicePackMajor: 0!
 
 isWindows8Point1OrGreater
-	<stdcall: bool IsWindows8Point1OrGreater>
-	^self invalidCall!
+	^self
+		isWindowsVersionOrGreater: 6
+		wMinorVersion: 3
+		wServicePackMajor: 0!
 
 isWindowsServer
-	<stdcall: bool IsWindowsServer>
-	^self invalidCall!
+	"Answers whether the current OS is a Windows Server release."
 
-isWindowsThresholdOrGreater
-	<stdcall: bool IsWindowsThresholdOrGreater>
-	^self invalidCall!
+	"Implementation Note: This is the equivalent of the IsWindowsServer() version helper
+	function, which is provided as an inline function in VersionHelpers.h in the Windows SDK."
+
+	| osvi |
+	osvi := (OSVERSIONINFOEX new)
+				wProductType: VER_NT_WORKSTATION;
+				yourself.
+	^(KernelLibrary default
+		verifyVersionInfo: osvi
+		dwTypeMask: VER_PRODUCT_TYPE
+		dwlConditionMask: (KernelLibrary default
+				verSetConditionMask: 0
+				typeMask: VER_PRODUCT_TYPE
+				condition: VER_EQUAL))
+			not!
 
 isWindowsVersionOrGreater: wMajorVersion wMinorVersion: wMinorVersion wServicePackMajor: wServicePackMajor
-	<stdcall: bool IsWindowsVersionOrGreater word word word>
-	^self invalidCall!
+	"Answers whether the current OS version matches, or is greater than, the provided version information."
+
+	"Implementation Note: This is the equivalent of the IsWindowsVersionOrGreater() version
+	helper function, which is provided as an inline function in VersionHelpers.h in the Windows
+	SDK."
+
+	| osvi |
+	osvi := (OSVERSIONINFOEX new)
+				dwMajorVersion: wMajorVersion;
+				dwMinorVersion: wMinorVersion;
+				wServicePackMajor: wServicePackMajor;
+				yourself.
+	^KernelLibrary default
+		verifyVersionInfo: osvi
+		dwTypeMask: ##(VER_MAJORVERSION | VER_MINORVERSION | VER_SERVICEPACKMAJOR)
+		dwlConditionMask: (WinVerOrGreaterMask
+				ifNil: 
+					[WinVerOrGreaterMask := KernelLibrary default
+								verSetConditionMask: (KernelLibrary default
+										verSetConditionMask: (KernelLibrary default
+												verSetConditionMask: 0
+												typeMask: VER_MAJORVERSION
+												condition: VER_GREATER_EQUAL)
+										typeMask: VER_MINORVERSION
+										condition: VER_GREATER_EQUAL)
+								typeMask: VER_SERVICEPACKMAJOR
+								condition: VER_GREATER_EQUAL])!
 
 isWindowsVistaOrGreater
-	<stdcall: bool IsWindowsVistaOrGreater>
-	^self invalidCall!
+	^self
+		isWindowsVersionOrGreater: 6
+		wMinorVersion: 0
+		wServicePackMajor: 0!
 
 isWindowsVistaSP1OrGreater
-	<stdcall: bool IsWindowsVistaSP1OrGreater>
-	^self invalidCall!
+	^self
+		isWindowsVersionOrGreater: 6
+		wMinorVersion: 0
+		wServicePackMajor: 1!
 
 isWindowsVistaSP2OrGreater
-	<stdcall: bool IsWindowsVistaSP2OrGreater>
-	^self invalidCall!
+	^self
+		isWindowsVersionOrGreater: 6
+		wMinorVersion: 0
+		wServicePackMajor: 2!
 
 isWindowsXPOrGreater
-	<stdcall: bool IsWindowsXPOrGreater>
-	^self invalidCall!
+	^self
+		isWindowsVersionOrGreater: 5
+		wMinorVersion: 1
+		wServicePackMajor: 0!
 
 kernelHandle
 	"Private - Answer the handle of the KernelLibrary. This cannot be obtained in the normal way
@@ -401,7 +455,8 @@ onStartup
 
 	handle := Registry at: 122.
 	specialSelectorStart := RegistryKeys at: #arithmeticSelectors.
-	wndProc := dlgProc := vtable := genericCallback := nil!
+	wndProc := dlgProc := vtable := genericCallback := nil.
+	WinVerOrGreaterMask := nil!
 
 primRegistryAt:  anInteger put: anObject
 	"Private - Generic VM object registering primitive. Used to register cookies, Semaphores,
@@ -567,7 +622,6 @@ versionFormatString
 !VMLibrary categoriesFor: #isWindows8OrGreater!public!win32 functions-version helpers! !
 !VMLibrary categoriesFor: #isWindows8Point1OrGreater!public!win32 functions-version helpers! !
 !VMLibrary categoriesFor: #isWindowsServer!public!win32 functions-version helpers! !
-!VMLibrary categoriesFor: #isWindowsThresholdOrGreater!public!win32 functions-version helpers! !
 !VMLibrary categoriesFor: #isWindowsVersionOrGreater:wMinorVersion:wServicePackMajor:!public!win32 functions-version helpers! !
 !VMLibrary categoriesFor: #isWindowsVistaOrGreater!public!win32 functions-version helpers! !
 !VMLibrary categoriesFor: #isWindowsVistaSP1OrGreater!public!win32 functions-version helpers! !

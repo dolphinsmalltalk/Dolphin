@@ -1047,7 +1047,7 @@ PermanentLibrary subclass: #UserLibrary
 	classInstanceVariableNames: ''!
 PermanentLibrary subclass: #VMLibrary
 	instanceVariableNames: 'wndProc dlgProc genericCallback vtable specialSelectorStart'
-	classVariableNames: 'Registry RegistryKeys'
+	classVariableNames: 'Registry RegistryKeys WinVerOrGreaterMask'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ExternalStructure subclass: #_FPIEEE_RECORD
@@ -1279,6 +1279,11 @@ Win32Structure subclass: #MSGBOXPARAMS
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'MessageBoxConstants'
+	classInstanceVariableNames: ''!
+Win32Structure subclass: #OSVERSIONINFOEX
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Win32Structure subclass: #PROCESS_INFORMATION
 	instanceVariableNames: ''
